@@ -302,7 +302,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	{
 		if (!t)
 			continue;
-		agent->addEquipmentByType(state, {&state, t->id});
+		agent->addEquipmentByType(state, {&state, t->id}, type->inventory);
 	}
 
 	agent->updateSpeed();
@@ -442,12 +442,18 @@ bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
 	{
 		if (slot.bounds.within(pos))
 		{
-			// If we are equipping into an armor slot, ensure the item being equipped is armor
+			// If we are equipping into an armor slot, ensure the item being equipped is correct armor
 			if (isArmorEquipmentSlot(slot.type))
 			{
-				slotIsArmor = true;
 				if (type->type != AEquipmentType::Type::Armor)
+				{
 					break;
+				}
+				if (AgentType::getArmorSlotType(type->body_part) != slot.type)
+				{
+					break;
+				}
+				slotIsArmor = true;
 			}
 			slotOrigin = slot.bounds.p0;
 			slotType = slot.type;
@@ -560,7 +566,7 @@ Vec2<int> Agent::findFirstSlotByType(EquipmentSlotType slotType, StateRef<AEquip
 	return pos;
 }
 
-sp<AEquipment> Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type)
+sp<AEquipment> Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type, bool allowFailure)
 {
 	Vec2<int> pos;
 	bool slotFound = false;
@@ -623,8 +629,11 @@ sp<AEquipment> Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentTy
 	}
 	if (!slotFound)
 	{
-		LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id,
-		         this->name);
+		if (!allowFailure)
+		{
+			LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id,
+				this->name);
+		}
 		return nullptr;
 	}
 
@@ -632,13 +641,16 @@ sp<AEquipment> Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentTy
 }
 
 sp<AEquipment> Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type,
-                               EquipmentSlotType slotType)
+                               EquipmentSlotType slotType, bool allowFailure)
 {
 	Vec2<int> pos = findFirstSlotByType(slotType, type);
 	if (pos.x == -1)
 	{
-		LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id,
-		         this->name);
+		if (!allowFailure)
+		{
+			LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id,
+				this->name);
+		}
 		return nullptr;
 	}
 
@@ -708,15 +720,15 @@ void Agent::addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object)
 	}
 	this->equipment.emplace_back(object);
 	updateSpeed();
+	if (unit)
+	{
+		unit->updateDisplayedItem();
+	}
 }
 
 void Agent::removeEquipment(sp<AEquipment> object)
 {
 	this->equipment.remove(object);
-	if (unit)
-	{
-		unit->updateDisplayedItem();
-	}
 	if (object->equippedSlotType == EquipmentSlotType::RightHand)
 	{
 		rightHandItem = nullptr;
@@ -724,6 +736,10 @@ void Agent::removeEquipment(sp<AEquipment> object)
 	if (object->equippedSlotType == EquipmentSlotType::LeftHand)
 	{
 		leftHandItem = nullptr;
+	}
+	if (unit)
+	{
+		unit->updateDisplayedItem();
 	}
 	object->ownerAgent.clear();
 	updateSpeed();
@@ -784,6 +800,7 @@ void Agent::trainPhysical(GameState &state, unsigned ticks)
 		if (randBoundsExclusive(state.rng, 0, 100) >= current_stats.speed)
 		{
 			current_stats.speed++;
+			current_stats.restoreTU();
 		}
 		if (randBoundsExclusive(state.rng, 0, 2000) >= current_stats.stamina)
 		{
@@ -981,6 +998,15 @@ sp<Equipment> Agent::getEquipmentAt(const Vec2<int> &position) const
 			slotPosition = slot.bounds.p0;
 		}
 	}
+	// Find whatever equipped in the slot itself
+	for (auto &eq : this->equipment)
+	{
+		if (eq->equippedPosition == slotPosition)
+		{
+			return eq;
+		}
+	}
+	// Find whatever occupies this space
 	for (auto &eq : this->equipment)
 	{
 		Rect<int> eqBounds{ eq->equippedPosition, eq->equippedPosition + eq->type->equipscreen_size };

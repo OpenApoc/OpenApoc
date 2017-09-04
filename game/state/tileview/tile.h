@@ -244,6 +244,7 @@ class TileMap
 	Vec3<int> size;
 	Vec3<int> voxelMapSize;
 	Vec3<float> velocityScale;
+	bool ceaseBattlescapeUpdates = false;
 
 	TileMap(Vec3<int> size, Vec3<float> velocityScale, Vec3<int> voxelMapSize,
 	        std::vector<std::set<TileObject::Type>> layerMap);

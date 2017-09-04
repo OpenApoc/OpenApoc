@@ -1234,6 +1234,8 @@ void BattleUnit::spendRemainingTU(GameState &state, bool allowInterrupt)
 	}
 }
 
+int BattleUnit::getPickupCost() const { return initialTU * 10 / 100; }
+
 int BattleUnit::getThrowCost() const { return initialTU * 18 / 100; }
 
 int BattleUnit::getMedikitCost() const { return initialTU * 375 / 1000; }

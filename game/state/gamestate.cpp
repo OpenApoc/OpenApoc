@@ -358,17 +358,17 @@ void GameState::fillPlayerStartingProperty()
 								slotType = EquipmentSlotType::ArmorRightHand;
 								break;
 						}
-						agent->addEquipmentByType(*this, {this, t->id}, slotType);
+						agent->addEquipmentByType(*this, {this, t->id}, slotType, false);
 					}
 					else if (t->type == AEquipmentType::Type::Ammo ||
 					         t->type == AEquipmentType::Type::MediKit ||
 					         t->type == AEquipmentType::Type::Grenade)
 					{
-						agent->addEquipmentByType(*this, {this, t->id}, EquipmentSlotType::General);
+						agent->addEquipmentByType(*this, {this, t->id}, EquipmentSlotType::General, false);
 					}
 					else
 					{
-						auto item = agent->addEquipmentByType(*this, {this, t->id});
+						auto item = agent->addEquipmentByType(*this, {this, t->id}, false);
 						// Try loading ammo in
 						if (t->type == AEquipmentType::Type::Weapon && item->ammo == 0 && !itemsToAdd.empty())
 						{

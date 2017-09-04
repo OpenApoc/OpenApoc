@@ -489,6 +489,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	             bool ignoreShootReserve = false, bool allowInterrupt = false);
 	// Spend all tu
 	void spendRemainingTU(GameState &state, bool allowInterrupt = false);
+	int getPickupCost() const;
 	int getThrowCost() const;
 	int getMedikitCost() const;
 	int getMotionScannerCost() const;

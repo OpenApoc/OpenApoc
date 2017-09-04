@@ -61,6 +61,7 @@ Battle::~Battle()
 	TRACE_FN;
 	// Note due to backrefs to Tile*s etc. we need to destroy all tile objects
 	// before the TileMap
+	map->ceaseBattlescapeUpdates = true;
 	for (auto &p : this->projectiles)
 	{
 		if (p->tileObject)
@@ -71,7 +72,9 @@ Battle::~Battle()
 	for (auto &s : this->map_parts)
 	{
 		if (s->tileObject)
+		{
 			s->tileObject->removeFromMap();
+		}
 		s->tileObject = nullptr;
 	}
 	this->map_parts.clear();

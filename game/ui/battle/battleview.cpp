@@ -2566,9 +2566,11 @@ void BattleView::orderUse(bool right, bool automatic)
 
 void BattleView::openAgentInventory()
 {
-	auto unit = battle.battleViewSelectedUnits.front();
-	auto agent = unit ? unit->agent : nullptr;
-	fw().stageQueueCommand({ StageCmd::Command::PUSH, mksp<AEquipScreen>(state, agent) });
+	if (battle.battleViewSelectedUnits.empty())
+	{
+		return;
+	}
+	fw().stageQueueCommand({ StageCmd::Command::PUSH, mksp<AEquipScreen>(state, battle.battleViewSelectedUnits.front()->agent) });
 }
 
 void BattleView::orderDrop(bool right)
@@ -2600,8 +2602,7 @@ void BattleView::orderDrop(bool right)
 		{
 			return;
 		}
-		int cost = 8;
-		if (!unit->spendTU(*state, cost))
+		if (!unit->spendTU(*state, unit->getPickupCost()))
 		{
 			return;
 		}

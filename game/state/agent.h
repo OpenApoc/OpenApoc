@@ -312,10 +312,10 @@ class Agent : public StateObject,
 	Vec2<int> findFirstSlotByType(EquipmentSlotType slotType,
 	                              StateRef<AEquipmentType> type = nullptr);
 	// Add equipment by type to the first available slot of any type
-	sp<AEquipment> addEquipmentByType(GameState &state, StateRef<AEquipmentType> type);
+	sp<AEquipment> addEquipmentByType(GameState &state, StateRef<AEquipmentType> type, bool allowFailure);
 	// Add equipment to the first available slot of a specific type
 	sp<AEquipment> addEquipmentByType(GameState &state, StateRef<AEquipmentType> type,
-	                        EquipmentSlotType slotType);
+	                        EquipmentSlotType slotType, bool allowFailure);
 	// Add equipment by type to a specific position
 	sp<AEquipment> addEquipmentByType(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type);
 	// Add equipment to the first available slot of a specific type

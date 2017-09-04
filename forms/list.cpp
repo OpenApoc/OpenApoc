@@ -116,11 +116,25 @@ void ListBox::postRender()
 		{
 			if (ctrl == hovered)
 			{
-				fw().renderer->drawRect(ctrl->Location, ctrl->Size, HoverColour);
+				if (HoverImage)
+				{
+					fw().renderer->draw(HoverImage, ctrl->Location + ImageOffset);
+				}
+				else
+				{
+					fw().renderer->drawRect(ctrl->Location, ctrl->Size, HoverColour);
+				}
 			}
 			if (ctrl == selected)
 			{
-				fw().renderer->drawRect(ctrl->Location, ctrl->Size, SelectedColour);
+				if (SelectedImage)
+				{
+					fw().renderer->draw(SelectedImage, ctrl->Location + ImageOffset);
+				}
+				else
+				{
+					fw().renderer->drawRect(ctrl->Location, ctrl->Size, SelectedColour);
+				}
 			}
 		}
 	}

@@ -274,6 +274,10 @@ bool Tile::getHeadFits(bool large, int height)
 
 void Tile::updateBattlescapeUIDrawOrder()
 {
+	if (map.ceaseBattlescapeUpdates)
+	{
+		return;
+	}
 	bool backFound = false;
 	bool targetFound = false;
 
@@ -335,6 +339,10 @@ void Tile::updateBattlescapeUnitPresent()
 
 void Tile::updateBattlescapeParameters()
 {
+	if (map.ceaseBattlescapeUpdates)
+	{
+		return;
+	}
 	bool providedGroundUpwards = solidGround && height >= 0.9625f;
 	height = 0.0f;
 	movementCostIn = -1; // -1 means empty, and will be set to 4 afterwards

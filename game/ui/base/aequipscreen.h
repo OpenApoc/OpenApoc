@@ -21,6 +21,7 @@ class AEquipment;
 class Vehicle;
 class Building;
 class BitmapFont;
+class Graphic;
 
 class AEquipScreen : public Stage
 {
@@ -50,19 +51,23 @@ class AEquipScreen : public Stage
 	sp<Agent> currentAgent;
 
 	sp<EquipmentPaperDoll> paperDoll;
+	sp<Graphic> inventoryControl;
 
 	Vec2<int> draggedEquipmentOffset;
+	Vec2<int> draggedEquipmentOrigin;
 	sp<AEquipment> draggedEquipment;
-
+	
 	// Items currently on the "ground"
 	std::list<std::tuple<Rect<int>, int, sp<AEquipment>>> inventoryItems;
+	int inventoryPage = 0;
+	void clampInventoryPage();
 
 	// Items temporarily stored inside vehicle (go into vehicle storage when exiting)
-	std::map<StateRef<Vehicle>, std::list<sp<AEquipment>>> vehicleItems;
+	std::map<sp<Vehicle>, std::list<sp<AEquipment>>> vehicleItems;
 	// Items temporarily stored inside building (vanish when exiting)
-	std::map<StateRef<Building>, std::list<sp<AEquipment>>> buildingItems;
+	std::map<sp<Building>, std::list<sp<AEquipment>>> buildingItems;
 	// Items temporarily stored near agent (vanish when exiting)
-	std::map<StateRef<Agent>, std::list<sp<AEquipment>>> agentItems;
+	std::map<sp<Agent>, std::list<sp<AEquipment>>> agentItems;
 
 	static const Vec2<int> EQUIP_GRID_SLOT_SIZE;
 	static const Vec2<int> EQUIP_GRID_SLOTS;
@@ -75,6 +80,7 @@ class AEquipScreen : public Stage
 	sp<Image> iconShade;
 	std::vector<sp<Image>> unitRanks;
 	std::vector<sp<Image>> bigUnitRanks;
+	std::vector<sp<Image>> unitSelect;
 
 	void displayAgent(sp<Agent> agent);
 	void displayItem(sp<AEquipment> item);
@@ -86,20 +92,20 @@ class AEquipScreen : public Stage
 	void populateInventoryItemsBase();
 	void populateInventoryItemsVehicle();
 	void populateInventoryItemsBuilding();
-	void populateInventoryItemsTemporary();
+	void populateInventoryItemsAgent();
 
 	void removeItemFromInventory(sp<AEquipment> item);
 	void removeItemFromInventoryBase(sp<AEquipment> item);
 	void removeItemFromInventoryBattle(sp<AEquipment> item);
 	void removeItemFromInventoryVehicle(sp<AEquipment> item);
 	void removeItemFromInventoryBuilding(sp<AEquipment> item);
-	void removeItemFromInventoryTemporary(sp<AEquipment> item);
+	void removeItemFromInventoryAgent(sp<AEquipment> item);
 	void addItemToInventory(sp<AEquipment> item);
 	void addItemToInventoryBase(sp<AEquipment> item);
 	void addItemToInventoryBattle(sp<AEquipment> item);
 	void addItemToInventoryVehicle(sp<AEquipment> item);
 	void addItemToInventoryBuilding(sp<AEquipment> item);
-	void addItemToInventoryTemporary(sp<AEquipment> item);
+	void addItemToInventoryAgent(sp<AEquipment> item);
 
 	void closeScreen();
 

@@ -1,4 +1,5 @@
 #include "game/ui/battle/battleprestart.h"
+#include "game/ui/base/aequipscreen.h"
 #include "forms/form.h"
 #include "forms/graphicbutton.h"
 #include "forms/ui.h"
@@ -24,6 +25,11 @@ std::future<void> enterBattle(sp<GameState> state)
 BattlePreStart::BattlePreStart(sp<GameState> state)
     : Stage(), menuform(ui().getForm("battle/prestart")), state(state)
 {
+	menuform->findControlTyped<GraphicButton>("BUTTON_EQUIP")
+		->addCallback(FormEventType::ButtonClick, [this, state](Event *) {
+
+		fw().stageQueueCommand({ StageCmd::Command::PUSH, mksp<AEquipScreen>(state) });
+	});
 	menuform->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick, [this, state](Event *) {
 

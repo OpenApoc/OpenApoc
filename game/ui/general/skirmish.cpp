@@ -275,12 +275,60 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 		{
 			if (!t)
 				continue;
-			agent->addEquipmentByType(state, {&state, t->id});
+			agent->addEquipmentByType(state, {&state, t->id}, true);
 		}
 
 		agent->trainPhysical(state, physTicks);
 		agent->trainPsi(state, psiTicks);
 		agent->home_base = playerBase;
+	}
+	LogWarning("Resetting base inventory");
+	playerBase->inventoryAgentEquipment.clear();
+	for (auto &t : state.agent_equipment)
+	{
+		// Ignore unfinished items and armor
+		if (t.second->type == AEquipmentType::Type::Armor 
+			|| t.second->type == AEquipmentType::Type::AlienDetector 
+			|| t.second->type == AEquipmentType::Type::DimensionForceField
+			|| t.second->type == AEquipmentType::Type::MindShield
+			|| t.second->type == AEquipmentType::Type::MultiTracker
+			|| t.second->type == AEquipmentType::Type::StructureProbe
+			|| t.second->type == AEquipmentType::Type::VortexAnalyzer)
+		{
+			continue;
+		}
+		// Ignore alien builtin weapons
+		if (t.second->store_space == 5 && t.second->manufacturer == state.getAliens())
+		{
+			continue;
+		}
+		// Ignore special attacks
+		if (t.second->store_space == 0)
+		{
+			continue;
+		}
+		// Manual exclusion
+		if (t.first == "AEQUIPMENTTYPE_FORCEWEB" 
+			|| t.first == "AEQUIPMENTTYPE_ENERGY_POD" 
+			|| t.first == "AEQUIPMENTTYPE_DIMENSION_DESTABILISER" 
+			|| t.first == "AEQUIPMENTTYPE_ELERIUM"
+			|| t.first == "AEQUIPMENTTYPE_PSICLONE"
+			|| t.first == "AEQUIPMENTTYPE_TRACKER_GUN"
+			|| t.first == "AEQUIPMENTTYPE_TRACKER_GUN_CLIP"
+			|| t.first == "AEQUIPMENTTYPE_PSI-GRENADE"
+			)
+		{
+			continue;
+		}
+
+		if (t.second->type == AEquipmentType::Type::Ammo)
+		{
+			playerBase->inventoryAgentEquipment[t.first] = 100 * t.second->max_ammo;
+		}
+		else
+		{
+			playerBase->inventoryAgentEquipment[t.first] = 100;
+		}
 	}
 
 	bool hotseat = menuform->findControlTyped<CheckBox>("HOTSEAT")->isChecked();

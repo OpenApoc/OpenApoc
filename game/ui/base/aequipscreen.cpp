@@ -100,7 +100,6 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 	  formItemOther(ui().getForm("aequipscreen_item_other")),
       pal(fw().data->loadPalette("xcom3/ufodata/agenteqp.pcx")), 
 	  labelFont(ui().getFont("smalfont")), state(state)
-
 {
 	this->state = state;
 
@@ -108,6 +107,8 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 
 	this->paperDoll = formMain->createChild<EquipmentPaperDoll>(
 	    paperDollPlaceholder->Location, paperDollPlaceholder->Size, EQUIP_GRID_SLOT_SIZE);
+
+	inventoryControl = formMain->findControlTyped<Graphic>("INVENTORY");
 
 	auto img = mksp<RGBImage>(Vec2<int>{1, 2});
 	{
@@ -143,7 +144,10 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 			"tacbut.tab:%d:xcom3/tacdata/tactical.pal",
 			i)));
 	}
-
+	unitSelect.push_back(fw().data->loadImage(
+		"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:37:xcom3/ufodata/pal_01.dat"));
+	unitSelect.push_back(fw().data->loadImage("battle/battle-icon-38.png"));
+	unitSelect.push_back(fw().data->loadImage("battle/battle-icon-39.png"));
 
 	// Agent list functionality
 	auto agentList = formMain->findControlTyped<ListBox>("AGENT_SELECT_BOX");
@@ -163,6 +167,10 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 		}
 		this->setSelectedAgent(agent);
 	});
+
+	//agentList->ImageOffset = { 1, 1 };
+	agentList->SelectedImage = unitSelect[2];
+	agentList->HoverImage = unitSelect[1];
 }
 
 AEquipScreen::~AEquipScreen() = default;
@@ -216,9 +224,12 @@ void AEquipScreen::begin()
 			continue;
 		}
 		// Unit is not participating in battle
-		if (state->current_battle && !agent.second->unit)
+		if (state->current_battle)
 		{
-			continue;
+			if (!agent.second->unit || agent.second->unit->retreated)
+			{
+				continue;
+			}
 		}
 
 		auto agentControl =
@@ -258,6 +269,18 @@ void AEquipScreen::eventOccurred(Event *e)
 			closeScreen();
 			return;
 		}
+		if (e->forms().RaisedBy->Name == "BUTTON_LEFT")
+		{
+			inventoryPage--;
+			clampInventoryPage();
+			return;
+		}
+		if (e->forms().RaisedBy->Name == "BUTTON_RIGHT")
+		{
+			inventoryPage++;
+			clampInventoryPage();
+			return;
+		}
 	}
 	// Check if we've moused over equipment/vehicle so we can show the stats.
 	if (e->type() == EVENT_MOUSE_MOVE && !this->draggedEquipment)
@@ -277,9 +300,11 @@ void AEquipScreen::eventOccurred(Event *e)
 		}
 
 		// Check if we're over any equipment in the list at the bottom
+		auto posWithinInventory = mousePos;
+		posWithinInventory.x += inventoryPage * inventoryControl->Size.x;
 		for (auto &tuple : this->inventoryItems)
 		{
-			if (std::get<0>(tuple).within(mousePos))
+			if (std::get<0>(tuple).within(posWithinInventory))
 			{
 				highlightedEquipment = std::get<2>(tuple);
 				break;
@@ -297,7 +322,7 @@ void AEquipScreen::eventOccurred(Event *e)
 		}
 	}
 	// Removal of equipment
-	if (e->type() == EVENT_MOUSE_DOWN)
+	if (e->type() == EVENT_MOUSE_DOWN && !this->draggedEquipment)
 	{
 		Vec2<int> mousePos{ e->mouse().X, e->mouse().Y };
 
@@ -307,23 +332,27 @@ void AEquipScreen::eventOccurred(Event *e)
 			std::dynamic_pointer_cast<AEquipment>(currentAgent->getEquipmentAt(mouseSlotPos));
 		if (equipment)
 		{
-			// FIXME: base->addBackToInventory(item); vehicle->unequip(item);
 			this->draggedEquipment = equipment;
 			this->draggedEquipmentOffset = { 0, 0 };
+			this->draggedEquipmentOrigin = equipment->equippedPosition;
 
 			currentAgent->removeEquipment(equipment);
+			displayAgent(currentAgent);
 			this->paperDoll->updateEquipment();
 			return;
 		}
 
 		// Check if we're over any equipment in the list at the bottom
+		auto posWithinInventory = mousePos;
+		posWithinInventory.x += inventoryPage * inventoryControl->Size.x;
 		for (auto &tuple : this->inventoryItems)
 		{
 			auto rect = std::get<0>(tuple);
-			if (rect.within(mousePos))
+			if (rect.within(posWithinInventory))
 			{
 				this->draggedEquipment = std::get<2>(tuple);
-				this->draggedEquipmentOffset = rect.p0 - mousePos;
+				this->draggedEquipmentOffset = rect.p0 - posWithinInventory;
+				this->draggedEquipmentOrigin = { -1, -1 };
 
 				removeItemFromInventory(draggedEquipment);
 				refreshInventoryItems();
@@ -331,32 +360,41 @@ void AEquipScreen::eventOccurred(Event *e)
 			}
 		}
 	}
-	if (e->type() == EVENT_MOUSE_UP)
+	if (e->type() == EVENT_MOUSE_UP && this->draggedEquipment)
 	{
-		if (this->draggedEquipment)
-		{
-			// Are we over the grid? If so try to place it on the agent.
-			auto paperDollControl = this->paperDoll;
-			Vec2<int> equipOffset = paperDollControl->Location + formMain->Location;
+		// Are we over the grid? If so try to place it on the agent.
+		auto paperDollControl = this->paperDoll;
+		Vec2<int> equipOffset = paperDollControl->Location + formMain->Location;
 
-			Vec2<int> equipmentPos = fw().getCursor().getPosition() + this->draggedEquipmentOffset;
-			// If this is within the grid try to snap it
-			Vec2<int> equipmentGridPos = equipmentPos - equipOffset;
-			equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
-			if (currentAgent->canAddEquipment(equipmentGridPos, this->draggedEquipment->type))
-			{
-				currentAgent->addEquipment(*state, equipmentGridPos, this->draggedEquipment);
-				this->paperDoll->updateEquipment();
-			}
-			else
-			{
-				addItemToInventory(draggedEquipment);
-				refreshInventoryItems();
-			}
-			this->draggedEquipment = nullptr;
-			
-			// FIXME: Add AP cost for inventory manipulation
+		Vec2<int> equipmentPos = fw().getCursor().getPosition() + this->draggedEquipmentOffset;
+		// If this is within the grid try to snap it
+		Vec2<int> equipmentGridPos = equipmentPos - equipOffset;
+		equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
+		bool canAdd = currentAgent->canAddEquipment(equipmentGridPos, this->draggedEquipment->type);
+		if (canAdd && draggedEquipmentOrigin.x == -1 && draggedEquipmentOrigin.y == -1
+			&& state->current_battle 
+			&& state->current_battle->mode == Battle::Mode::TurnBased
+			&& !currentAgent->unit->spendTU(*state, currentAgent->unit->getPickupCost()))
+		{
+			canAdd = false;
+			auto message_box = mksp<MessageBox>(
+				tr("NOT ENOUGH TU'S"), format("%s %d",tr("TU cost per item picked up:"), currentAgent->unit->getPickupCost()),
+				MessageBox::ButtonOptions::Ok);
+			fw().stageQueueCommand({ StageCmd::Command::PUSH, message_box });
+
 		}
+		if (canAdd)
+		{
+			currentAgent->addEquipment(*state, equipmentGridPos, this->draggedEquipment);
+			displayAgent(currentAgent);
+			this->paperDoll->updateEquipment();
+		}
+		else
+		{
+			addItemToInventory(draggedEquipment);
+			refreshInventoryItems();
+		}
+		this->draggedEquipment = nullptr;
 	}
 }
 
@@ -364,8 +402,7 @@ void AEquipScreen::update() { formMain->update(); }
 
 void AEquipScreen::render()
 {
-	auto inventoryControl = formMain->findControlTyped<Graphic>("INVENTORY");
-	int inventoryBottom = inventoryControl->Location.y + inventoryControl->Size.y + +formMain->Location.y;
+	int inventoryBottom = inventoryControl->Location.y + inventoryControl->Size.y + formMain->Location.y;
 	fw().stageGetPrevious(this->shared_from_this())->render();
 	fw().renderer->setPalette(this->pal);
 	formMain->render();
@@ -380,20 +417,25 @@ void AEquipScreen::render()
 	{
 		// The gap between the bottom of the inventory image and the count label
 		static const int INVENTORY_COUNT_Y_GAP = 4;
-		// The gap between the end of one inventory image and the start of the next
-		static const int INVENTORY_IMAGE_X_GAP = 4;
 		
 		auto item = std::get<2>(tuple);
 		auto count = std::get<1>(tuple);
 		auto rect = std::get<0>(tuple);
+		auto pos = rect.p0;
+		pos.x -= inventoryPage * inventoryControl->Size.x;
 		auto countImage = count > 0 ? labelFont->getString(format("%d", count)) : nullptr;
 		auto &equipmentImage = item->type->equipscreen_sprite;
 
-		fw().renderer->draw(equipmentImage, rect.p0);
+		if (pos.x < inventoryControl->Location.x + formMain->Location.x || pos.x >= inventoryControl->Location.x + inventoryControl->Size.x + formMain->Location.x)
+		{
+			continue;
+		}
+
+		fw().renderer->draw(equipmentImage, pos);
 
 		if (countImage)
 		{
-			Vec2<int> countLabelPosition = rect.p0;
+			Vec2<int> countLabelPosition = pos;
 			countLabelPosition.x += equipmentImage->size.x / 2 - countImage->size.x / 2;
 			countLabelPosition.y += INVENTORY_COUNT_Y_GAP + equipmentImage->size.y;
 			countLabelPosition.y = std::min(countLabelPosition.y, inventoryBottom - (int)countImage->size.y);
@@ -583,7 +625,7 @@ AEquipScreen::Mode AEquipScreen::getMode()
 	// TODO: Finish implementation after implementing agents traveling the city by themselves and on vehicles
 
 	// If agent in battle
-	if (currentAgent->unit)
+	if (currentAgent->unit && currentAgent->unit->tileObject)
 	{
 		return AEquipScreen::Mode::Battle;
 	}
@@ -616,7 +658,7 @@ void AEquipScreen::refreshInventoryItems()
 	switch (getMode())
 	{
 		case Mode::Agent:
-			populateInventoryItemsTemporary();
+			populateInventoryItemsAgent();
 			break;
 		case Mode::Base:
 			populateInventoryItemsBase();
@@ -631,13 +673,14 @@ void AEquipScreen::refreshInventoryItems()
 			populateInventoryItemsVehicle();
 			break;
 	}
+
+	clampInventoryPage();
 }
 
 void AEquipScreen::populateInventoryItemsBattle()
 {
 	// The gap between the end of one inventory image and the start of the next
 	static const int INVENTORY_IMAGE_X_GAP = 4;
-	auto inventoryControl = formMain->findControlTyped<Graphic>("INVENTORY");
 	Vec2<int> inventoryPosition = inventoryControl->Location + formMain->Location;
 
 	auto itemsOnGround = currentAgent->unit->tileObject->getOwningTile()->getItems();
@@ -659,7 +702,6 @@ void AEquipScreen::populateInventoryItemsBase()
 {
 	// The gap between the end of one inventory image and the start of the next
 	static const int INVENTORY_IMAGE_X_GAP = 4;
-	auto inventoryControl = formMain->findControlTyped<Graphic>("INVENTORY");
 	Vec2<int> inventoryPosition = inventoryControl->Location + formMain->Location;
 
 	// Find base which is in the current building
@@ -727,10 +769,9 @@ void AEquipScreen::populateInventoryItemsVehicle()
 {
 	// The gap between the end of one inventory image and the start of the next
 	static const int INVENTORY_IMAGE_X_GAP = 4;
-	auto inventoryControl = formMain->findControlTyped<Graphic>("INVENTORY");
 	Vec2<int> inventoryPosition = inventoryControl->Location + formMain->Location;
 
-	StateRef<Vehicle> vehicle; //Should be the vehicle agent is in
+	sp<Vehicle> vehicle; //Should be the vehicle agent is in
 	LogError("Implement getting agent's vehicle");
 	auto itemsOnVehicle = vehicleItems[vehicle];
 		
@@ -751,10 +792,9 @@ void AEquipScreen::populateInventoryItemsBuilding()
 {
 	// The gap between the end of one inventory image and the start of the next
 	static const int INVENTORY_IMAGE_X_GAP = 4;
-	auto inventoryControl = formMain->findControlTyped<Graphic>("INVENTORY");
 	Vec2<int> inventoryPosition = inventoryControl->Location + formMain->Location;
 
-	StateRef<Building> building; //Should be the building agent is in
+	sp<Building> building; //Should be the building agent is in
 	LogError("Implement getting agent's building");
 	auto itemsOnBuilding = buildingItems[building];
 
@@ -771,14 +811,13 @@ void AEquipScreen::populateInventoryItemsBuilding()
 	}
 }
 
-void AEquipScreen::populateInventoryItemsTemporary()
+void AEquipScreen::populateInventoryItemsAgent()
 {
 	// The gap between the end of one inventory image and the start of the next
 	static const int INVENTORY_IMAGE_X_GAP = 4;
-	auto inventoryControl = formMain->findControlTyped<Graphic>("INVENTORY");
 	Vec2<int> inventoryPosition = inventoryControl->Location + formMain->Location;
 
-	auto itemsOnAgent = agentItems[{state.get(), Agent::getId(*state, currentAgent)}];
+	auto itemsOnAgent = agentItems[currentAgent];
 
 	for (auto &item : itemsOnAgent)
 	{
@@ -798,7 +837,7 @@ void AEquipScreen::removeItemFromInventory(sp<AEquipment> item)
 	switch (getMode())
 	{
 		case Mode::Agent:
-			removeItemFromInventoryTemporary(item);
+			removeItemFromInventoryAgent(item);
 			break;
 		case Mode::Base:
 			removeItemFromInventoryBase(item);
@@ -869,19 +908,25 @@ void AEquipScreen::removeItemFromInventoryBase(sp<AEquipment> item)
 	}
 }
 
-void AEquipScreen::removeItemFromInventoryTemporary(sp<AEquipment> item)
+void AEquipScreen::removeItemFromInventoryAgent(sp<AEquipment> item)
 {
-
+	agentItems[currentAgent].erase(std::find(agentItems[currentAgent].begin(), agentItems[currentAgent].end(), item));
 }
 
 void AEquipScreen::removeItemFromInventoryBuilding(sp<AEquipment> item)
 {
+	sp<Building> building; //Should be the building agent is in
+	LogError("Implement getting agent's building");
 
+	buildingItems[building].erase(std::find(buildingItems[building].begin(), buildingItems[building].end(), item));
 }
 
 void AEquipScreen::removeItemFromInventoryVehicle(sp<AEquipment> item)
 {
+	sp<Vehicle> vehicle; //Should be the vehicle agent is in
+	LogError("Implement getting agent's vehicle");
 
+	vehicleItems[vehicle].erase(std::find(vehicleItems[vehicle].begin(), vehicleItems[vehicle].end(), item));
 }
 
 void AEquipScreen::addItemToInventory(sp<AEquipment> item)
@@ -889,7 +934,7 @@ void AEquipScreen::addItemToInventory(sp<AEquipment> item)
 	switch (getMode())
 	{
 	case Mode::Agent:
-		addItemToInventoryTemporary(item);
+		addItemToInventoryAgent(item);
 		break;
 	case Mode::Base:
 		addItemToInventoryBase(item);
@@ -958,20 +1003,27 @@ void AEquipScreen::addItemToInventoryBase(sp<AEquipment> item)
 
 }
 
-void AEquipScreen::addItemToInventoryTemporary(sp<AEquipment> item)
+void AEquipScreen::addItemToInventoryAgent(sp<AEquipment> item)
 {
-
+	agentItems[currentAgent].push_back(item);
 }
 
 void AEquipScreen::addItemToInventoryBuilding(sp<AEquipment> item)
 {
+	sp<Building> building; //Should be the building agent is in
+	LogError("Implement getting agent's building");
 
+	buildingItems[building].push_back(item);
 }
 
 void AEquipScreen::addItemToInventoryVehicle(sp<AEquipment> item)
 {
+	sp<Vehicle> vehicle; //Should be the vehicle agent is in
+	LogError("Implement getting agent's vehicle");
 
+	vehicleItems[vehicle].push_back(item);
 }
+
 void AEquipScreen::closeScreen()
 {
 	bool empty = true;
@@ -1041,11 +1093,26 @@ void AEquipScreen::displayAgent(sp<Agent> agent)
 		createStatsBar(agent->initial_stats.reactions, agent->current_stats.reactions,
 			agent->modified_stats.reactions, 100,
 			reactionsInitialColour, reactionsCurrentColour, { 64, 4 }));
-	Colour speedInitialColour{ 12, 156, 56 };
-	Colour speedCurrentColour{ 76, 220, 120 };
-	formAgentStats->findControlTyped<Graphic>("VALUE_4")->setImage(createStatsBar(
-		agent->initial_stats.speed, agent->current_stats.speed, agent->modified_stats.speed,
-		100, speedInitialColour, speedCurrentColour, { 64, 4 }));
+	
+	if (state->current_battle && state->current_battle->mode == Battle::Mode::TurnBased)
+	{
+		formAgentStats->findControlTyped<Label>("LABEL_SPEED")->setText(tr("Time Units"));
+		Colour speedInitialColour{ 12, 156, 56 };
+		Colour speedCurrentColour{ 76, 220, 120 };
+		formAgentStats->findControlTyped<Graphic>("VALUE_4")->setImage(createStatsBar(
+			agent->initial_stats.time_units, agent->current_stats.time_units, agent->modified_stats.time_units,
+			100, speedInitialColour, speedCurrentColour, { 64, 4 }));
+	}
+	else
+	{
+		formAgentStats->findControlTyped<Label>("LABEL_SPEED")->setText(tr("Speed"));
+		Colour speedInitialColour{ 12, 156, 56 };
+		Colour speedCurrentColour{ 76, 220, 120 };
+		formAgentStats->findControlTyped<Graphic>("VALUE_4")->setImage(createStatsBar(
+			agent->initial_stats.speed, agent->current_stats.speed, agent->modified_stats.speed,
+			100, speedInitialColour, speedCurrentColour, { 64, 4 }));
+	}
+	
 	Colour staminaInitialColour{ 12, 156, 56 };
 	Colour staminaCurrentColour{ 76, 220, 120 };
 	formAgentStats->findControlTyped<Graphic>("VALUE_5")->setImage(createStatsBar(
@@ -1093,10 +1160,27 @@ void AEquipScreen::setSelectedAgent(sp<Agent> agent)
 	refreshInventoryItems();
 }
 
-// FIXME: Put this in the rules somewhere?
-// FIXME: This could be shared with the citview ICON_RESOURCES?
-static const UString agentFramePath =
-"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:37:xcom3/ufodata/pal_01.dat";
+void AEquipScreen::clampInventoryPage()
+{
+	if (inventoryPage < 0)
+	{
+		inventoryPage = 0;
+	}
+	if (inventoryPage > 0)
+	{
+		int inventoryLeft = inventoryControl->Location.x + formMain->Location.x;
+		int maxPageSeen = 0;
+		for (auto &item : inventoryItems)
+		{
+			auto rect = std::get<0>(item);
+			maxPageSeen = (rect.p0.x - inventoryLeft) / inventoryControl->Size.x;
+		}
+		if (inventoryPage > maxPageSeen)
+		{
+			inventoryPage = maxPageSeen;
+		}
+	}
+}
 
 sp<Control> AEquipScreen::createAgentControl(Vec2<int> size, StateRef<Agent> agent)
 {
@@ -1105,7 +1189,7 @@ sp<Control> AEquipScreen::createAgentControl(Vec2<int> size, StateRef<Agent> age
 	baseControl->Name = "AGENT_PORTRAIT";
 	baseControl->Size = size;
 
-	auto frameGraphic = baseControl->createChild<Graphic>(fw().data->loadImage(agentFramePath));
+	auto frameGraphic = baseControl->createChild<Graphic>(unitSelect[0]);
 	frameGraphic->AutoSize = true;
 	frameGraphic->Location = { 0, 0 };
 	auto photoGraphic = frameGraphic->createChild<Graphic>(agent->getPortrait().icon);

@@ -27,6 +27,18 @@
         <image/>
         <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
       </graphicbutton>
+	  <graphicbutton id="BUTTON_LEFT">
+        <position x="6" y="449"/>
+        <size width="25" height="21"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:2:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
+	  <graphicbutton id="BUTTON_RIGHT">
+        <position x="566" y="449"/>
+        <size width="25" height="21"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:3:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
       <graphic id="PAPER_DOLL">
         <position x="192" y="65"/>
         <size width="256" height="256"/>
