@@ -708,7 +708,7 @@ void Agent::addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object)
 	}
 	object->equippedPosition =  pos;
 	object->ownerAgent = StateRef<Agent>(&state, shared_from_this());
-	object->ownerUnit = nullptr;
+	object->ownerUnit.clear();
 	object->equippedSlotType = slotType;
 	if (slotType == EquipmentSlotType::RightHand)
 	{
