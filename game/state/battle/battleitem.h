@@ -78,6 +78,5 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 
 	sp<TileObjectBattleItem> tileObject;
 	sp<TileObjectShadow> shadowObject;
-
 };
 } // namespace OpenApoc

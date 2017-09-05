@@ -1,8 +1,8 @@
 #pragma once
 
 #include "framework/image.h"
-#include "game/state/rules/aequipment_type.h"
 #include "game/state/equipment.h"
+#include "game/state/rules/aequipment_type.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -200,6 +200,11 @@ class AgentType : public StateObject
 	int spreadHazardMaxPower = 0;
 	int spreadHazardTTLDivizor = 0;
 
+	// Background used for agent equipment screen
+	sp<Image> inventoryBackground;
+	// Wether agent's rank should be displayed in the equipment screen
+	bool displayRank = false;
+
 	// Sounds unit makes when walking, overrides terrain's walk sounds if present
 	std::vector<sp<Sample>> walkSfx;
 	// Sounds unit randomly makes when acting, used by aliens
@@ -259,9 +264,9 @@ enum class Rank
 	Commander = 6
 };
 
-class Agent : public StateObject, 
-				public std::enable_shared_from_this<Agent>,
-				public EquippableObject
+class Agent : public StateObject,
+              public std::enable_shared_from_this<Agent>,
+              public EquippableObject
 {
 	STATE_OBJECT(Agent)
   public:
@@ -312,12 +317,17 @@ class Agent : public StateObject,
 	Vec2<int> findFirstSlotByType(EquipmentSlotType slotType,
 	                              StateRef<AEquipmentType> type = nullptr);
 	// Add equipment by type to the first available slot of any type
-	sp<AEquipment> addEquipmentByType(GameState &state, StateRef<AEquipmentType> type, bool allowFailure);
+	sp<AEquipment> addEquipmentByType(GameState &state, StateRef<AEquipmentType> type,
+	                                  bool allowFailure);
 	// Add equipment to the first available slot of a specific type
 	sp<AEquipment> addEquipmentByType(GameState &state, StateRef<AEquipmentType> type,
-	                        EquipmentSlotType slotType, bool allowFailure);
+	                                  EquipmentSlotType slotType, bool allowFailure);
 	// Add equipment by type to a specific position
-	sp<AEquipment> addEquipmentByType(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type);
+	sp<AEquipment> addEquipmentByType(GameState &state, Vec2<int> pos,
+	                                  StateRef<AEquipmentType> type);
+	// Add equipment as ammo
+	sp<AEquipment> addEquipmentAsAmmoByType(GameState &state, StateRef<AEquipmentType> type);
+
 	// Add equipment to the first available slot of a specific type
 	void addEquipment(GameState &state, sp<AEquipment> object, EquipmentSlotType slotType);
 	// Add equipment to a specific position

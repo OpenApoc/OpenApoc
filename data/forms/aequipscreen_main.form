@@ -5,16 +5,21 @@
       <position x="centre" y="centre"/>
       <size width="640" height="480"/>
       <graphic id="BACKGROUND">
-        <image>xcom3/ufodata/agenteqp.pcx</image>
+        <image>xcom3/tacdata/equippic/xcom.pcx</image>
         <position x="0" y="0"/>
         <size width="640" height="480"/>
       </graphic>
-      <label text="EQUIP AGENT">
+	  <label text="EQUIP AGENT">
         <position x="20" y="0"/>
         <size width="600" height="36"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>bigfont</font>
       </label>
+      <graphic id="DOLLAR">
+        <image>city/dollar-icon.png</image>
+        <size width="15" height="15"/>
+		<position x="552" y="9"/>
+      </graphic>
       <label id="TEXT_FUNDS">
         <position x="572" y="11"/>
         <size width="60" height="10"/>

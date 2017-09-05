@@ -125,6 +125,8 @@
 		<member>spreadHazardMinPower</member>
 		<member>spreadHazardMaxPower</member>
 		<member>spreadHazardTTLDivizor</member>
+		<member>inventoryBackground</member>
+		<member>displayRank</member>
 		<member>score</member>
 		<member>walkSfx</member>
 		<member>crySfx</member>

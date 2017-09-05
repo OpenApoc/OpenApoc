@@ -103,20 +103,20 @@ void EquipmentPaperDoll::onRender()
 			// Do not draw any frames for armor
 			switch (slot.type)
 			{
-			case EquipmentSlotType::ArmorBody:
-			case EquipmentSlotType::ArmorHelmet:
-			case EquipmentSlotType::ArmorLeftHand:
-			case EquipmentSlotType::ArmorLegs:
-			case EquipmentSlotType::ArmorRightHand:
-				continue;
-			default:
-				break;
+				case EquipmentSlotType::ArmorBody:
+				case EquipmentSlotType::ArmorHelmet:
+				case EquipmentSlotType::ArmorLeftHand:
+				case EquipmentSlotType::ArmorLegs:
+				case EquipmentSlotType::ArmorRightHand:
+					continue;
+				default:
+					break;
 			}
 
 			Vec2<int> p00 = (slot.bounds.p0 * slotSizePixels);
 			Vec2<int> p11 = (slot.bounds.p1 * slotSizePixels);
-			Vec2<int> p01 = { p00.x, p11.y };
-			Vec2<int> p10 = { p11.x, p00.y };
+			Vec2<int> p01 = {p00.x, p11.y};
+			Vec2<int> p10 = {p11.x, p00.y};
 
 			if (this->slotHighlightTypes.find(slot.type) != this->slotHighlightTypes.end())
 			{
@@ -164,7 +164,7 @@ void EquipmentPaperDoll::onRender()
 		int diffY = slotBounds.getHeight() - equipmentSize.y;
 
 		sp<Image> image;
-		
+
 		switch (slot->type)
 		{
 			case EquipmentSlotType::ArmorBody:
@@ -173,34 +173,34 @@ void EquipmentPaperDoll::onRender()
 			case EquipmentSlotType::ArmorLegs:
 			case EquipmentSlotType::ArmorRightHand:
 				image = equipment->getEquipmentArmorImage();
-				pos = { 70, 40 };
+				pos = {70, 40};
 				break;
 			default:
 				image = equipment->getEquipmentImage();
 				switch (alignX)
 				{
-				case AlignmentX::Left:
-					pos.x += 0;
-					break;
-				case AlignmentX::Right:
-					pos.x += diffX * slotSizePixels.x;
-					break;
-				case AlignmentX::Centre:
-					pos.x += (diffX * slotSizePixels.x) / 2;
-					break;
+					case AlignmentX::Left:
+						pos.x += 0;
+						break;
+					case AlignmentX::Right:
+						pos.x += diffX * slotSizePixels.x;
+						break;
+					case AlignmentX::Centre:
+						pos.x += (diffX * slotSizePixels.x) / 2;
+						break;
 				}
 
 				switch (alignY)
 				{
-				case AlignmentY::Top:
-					pos.y += 0;
-					break;
-				case AlignmentY::Bottom:
-					pos.y += diffY * slotSizePixels.y;
-					break;
-				case AlignmentY::Centre:
-					pos.y += (diffY * slotSizePixels.y) / 2;
-					break;
+					case AlignmentY::Top:
+						pos.y += 0;
+						break;
+					case AlignmentY::Bottom:
+						pos.y += diffY * slotSizePixels.y;
+						break;
+					case AlignmentY::Centre:
+						pos.y += (diffY * slotSizePixels.y) / 2;
+						break;
 				}
 				break;
 		}

@@ -590,13 +590,15 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				break;
 		}
 
-		// Used image packs
+		// Used image packs and BGs
+		a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/generic.pcx");
 		a->image_packs.push_back(std::map<BodyPart, StateRef<BattleUnitImagePack>>());
 		switch (i)
 		{
 			case UNIT_TYPE_BIOCHEMIST:
 			case UNIT_TYPE_ENGINEER:
 			case UNIT_TYPE_QUANTUM_PHYSIST:
+				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/scien.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "scntst")};
 				break;
@@ -741,6 +743,8 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "sw3")};
 				break;
 			case UNIT_TYPE_MULTIWORM_EGG:
+				a->inventoryBackground =
+				    fw().data->loadImage("xcom3/tacdata/equippic/mwormegg.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "mwegga")};
 				a->image_packs[0][BodyPart::Helmet] = {
@@ -752,18 +756,23 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "mweggb")};
 				break;
 			case UNIT_TYPE_BRAINSUCKER:
+				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/sucker.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "bsk")};
 				break;
 			case UNIT_TYPE_MULTIWORM:
+				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/mworm.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "multi")};
 				break;
 			case UNIT_TYPE_HYPERWORM:
+				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/hyperwm.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "hypr")};
 				break;
 			case UNIT_TYPE_CHRYSALIS:
+				a->inventoryBackground =
+				    fw().data->loadImage("xcom3/tacdata/equippic/chrysali.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "chrysa")};
 				a->image_packs[0][BodyPart::Helmet] = {
@@ -775,35 +784,46 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "chrysb")};
 				break;
 			case UNIT_TYPE_ANTHROPOD:
+				a->inventoryBackground =
+				    fw().data->loadImage("xcom3/tacdata/equippic/anthropd.pcx");
 				fillAgentImagePacksByDefault(state, a, "antrp");
 				break;
 			case UNIT_TYPE_SKELETOID:
+				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/skelly.pcx");
 				fillAgentImagePacksByDefault(state, a, "skel");
 				break;
 			case UNIT_TYPE_SPITTER:
+				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/spitter.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "spitr")};
 				break;
 			case UNIT_TYPE_POPPER:
+				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/popper.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "popper")};
 				break;
 			case UNIT_TYPE_MEGASPAWN:
+				a->inventoryBackground =
+				    fw().data->loadImage("xcom3/tacdata/equippic/megatron.pcx");
 				fillAgentImagePacksByDefault(state, a, "mega");
 				// Megaspawn has no head (stupid!)
 				a->image_packs[0][BodyPart::Helmet].clear();
 				break;
 			case UNIT_TYPE_PSIMORPH:
+				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/psi_m.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "psi")};
 				break;
 			case UNIT_TYPE_QUEENSPAWN:
+				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/queen.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "queena")};
 				a->image_packs[0][BodyPart::Legs] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "queenb")};
 				break;
 			case UNIT_TYPE_MICRONOID:
+				a->inventoryBackground =
+				    fw().data->loadImage("xcom3/tacdata/equippic/agregate.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "micro")};
 				break;
@@ -1089,11 +1109,9 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 
 		auto a = mksp<AgentEquipmentLayout>();
 		// Located off-screen, invisible in inventory
-		pushEquipmentSlot(a, 1024, 6, 3, 5, EquipmentSlotType::RightHand,
-		                  AlignmentX::Centre,
+		pushEquipmentSlot(a, 1024, 6, 3, 5, EquipmentSlotType::RightHand, AlignmentX::Centre,
 		                  AlignmentY::Centre);
-		pushEquipmentSlot(a, 1028, 6, 3, 5, EquipmentSlotType::LeftHand,
-		                  AlignmentX::Centre,
+		pushEquipmentSlot(a, 1028, 6, 3, 5, EquipmentSlotType::LeftHand, AlignmentX::Centre,
 		                  AlignmentY::Centre);
 
 		state.agent_equipment_layouts[id] = a;
@@ -1142,11 +1160,11 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			pushEquipmentSlot(a, 12 + i, 12);
 		}
 		pushEquipmentSlot(a, 12 + 2, 13);
-		
+
 		// Shoulders
 		pushEquipmentSlot(a, 5, 2);
 		pushEquipmentSlot(a, 10, 2);
-		
+
 		// Backpack
 		for (int j = 0; j < 5; j++)
 		{

@@ -159,7 +159,11 @@ bool VEquipment::canFire() const
 	return this->weaponState == WeaponState::Ready;
 }
 
-sp<Image> VEquipment::getEquipmentArmorImage() const { LogError("Vehicle equipment cannot have armor image"); return 0; }
+sp<Image> VEquipment::getEquipmentArmorImage() const
+{
+	LogError("Vehicle equipment cannot have armor image");
+	return 0;
+}
 
 sp<Image> VEquipment::getEquipmentImage() const { return this->type->equipscreen_sprite; }
 

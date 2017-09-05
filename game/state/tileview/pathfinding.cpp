@@ -997,12 +997,13 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 
 	// Sort remaining units based on proximity to target and speed
 	auto h = BattleUnitTileHelper(map, *leadUnit);
-	localUnits.sort([h, targetLocation](const StateRef<BattleUnit> &a, const StateRef<BattleUnit> &b) {
-		return h.getDistance((Vec3<int>)a->position, targetLocation) /
-		           a->agent->modified_stats.getActualSpeedValue() <
-		       h.getDistance((Vec3<int>)b->position, targetLocation) /
-		           b->agent->modified_stats.getActualSpeedValue();
-	});
+	localUnits.sort(
+	    [h, targetLocation](const StateRef<BattleUnit> &a, const StateRef<BattleUnit> &b) {
+		    return h.getDistance((Vec3<int>)a->position, targetLocation) /
+		               a->agent->modified_stats.getActualSpeedValue() <
+		           h.getDistance((Vec3<int>)b->position, targetLocation) /
+		               b->agent->modified_stats.getActualSpeedValue();
+		});
 
 	// Path every other unit to areas around target
 	log += format("\nTarget location is now %d, %d, %d. Leader is %s", targetLocation.x,

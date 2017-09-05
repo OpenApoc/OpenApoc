@@ -2247,7 +2247,6 @@ void BattleUnit::updateCheckBeginFalling(GameState &state)
 	if (current_movement_state == MovementState::Brainsuck)
 	{
 		return;
-
 	}
 	// Begin falling or changing stance to flying if appropriate
 	if (!falling)

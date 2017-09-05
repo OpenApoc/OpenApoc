@@ -1,6 +1,7 @@
 #include "game/state/gamestate.h"
 #include "framework/framework.h"
 #include "framework/trace.h"
+#include "game/state/aequipment.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
 #include "game/state/battle/battle.h"
@@ -22,7 +23,6 @@
 #include "game/state/message.h"
 #include "game/state/organisation.h"
 #include "game/state/rules/aequipment_type.h"
-#include "game/state/aequipment.h"
 #include "game/state/rules/damage.h"
 #include "game/state/rules/doodad_type.h"
 #include "game/state/rules/ufo_growth.h"
@@ -328,15 +328,8 @@ void GameState::fillPlayerStartingProperty()
 			count--;
 			if (type == AgentType::Role::Soldier && it != initial_agent_equipment.end())
 			{
-				std::list<StateRef<AEquipmentType>> itemsToAdd;
 				for (auto &t : *it)
 				{
-					itemsToAdd.push_back(t);
-				}
-				while (!itemsToAdd.empty())
-				{
-					auto t = itemsToAdd.front();
-					itemsToAdd.pop_front();
 					if (t->type == AEquipmentType::Type::Armor)
 					{
 						EquipmentSlotType slotType = EquipmentSlotType::General;
@@ -364,23 +357,12 @@ void GameState::fillPlayerStartingProperty()
 					         t->type == AEquipmentType::Type::MediKit ||
 					         t->type == AEquipmentType::Type::Grenade)
 					{
-						agent->addEquipmentByType(*this, {this, t->id}, EquipmentSlotType::General, false);
+						agent->addEquipmentByType(*this, {this, t->id}, EquipmentSlotType::General,
+						                          false);
 					}
 					else
 					{
-						auto item = agent->addEquipmentByType(*this, {this, t->id}, false);
-						// Try loading ammo in
-						if (t->type == AEquipmentType::Type::Weapon && item->ammo == 0 && !itemsToAdd.empty())
-						{
-							auto nextItem = itemsToAdd.front();
-							if (std::find(item->type->ammo_types.begin(), item->type->ammo_types.end(), nextItem) != item->type->ammo_types.end())
-							{
-								// Next item is a matching ammo, pop it and load in
-								itemsToAdd.pop_front();
-								item->payloadType = nextItem;
-								item->ammo = nextItem->max_ammo;
-							}
-						}
+						agent->addEquipmentByType(*this, {this, t->id}, false);
 					}
 				}
 				it++;

@@ -1,4 +1,3 @@
-#include "game/ui/base/aequipscreen.h"
 #include "game/ui/battle/battleview.h"
 #include "forms/checkbox.h"
 #include "forms/form.h"
@@ -37,6 +36,7 @@
 #include "game/state/tileview/tileobject_battlehazard.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
 #include "game/state/tileview/tileobject_battleunit.h"
+#include "game/ui/base/aequipscreen.h"
 #include "game/ui/base/basescreen.h"
 #include "game/ui/battle/battledebriefing.h"
 #include "game/ui/battle/battleturnbasedconfirmbox.h"
@@ -178,9 +178,10 @@ BattleView::BattleView(sp<GameState> gameState)
 
 	for (int i = 28; i <= 34; i++)
 	{
-		unitRanks.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-			"tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-			i)));
+		unitRanks.push_back(
+		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
+		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+		                                i)));
 	}
 
 	unitSelect.push_back(fw().data->loadImage(
@@ -986,9 +987,7 @@ BattleView::BattleView(sp<GameState> gameState)
 			orderUse(false, false);
 	};
 
-	std::function<void(FormsEvent * e)> openInventory = [this](Event *) { 		
-		openAgentInventory();
-	};
+	std::function<void(FormsEvent * e)> openInventory = [this](Event *) { openAgentInventory(); };
 
 	std::function<void(FormsEvent * e)> dropRightHand = [this](Event *) { orderDrop(true); };
 
@@ -1195,8 +1194,8 @@ BattleView::BattleView(sp<GameState> gameState)
 	    ->findControlTyped<Graphic>("OVERLAY_LEFT_HAND")
 	    ->addCallback(FormEventType::MouseDown, clickedLeftHand);
 	uiTabsRT[0]
-		->findControlTyped<GraphicButton>("BUTTON_INVENTORY")
-		->addCallback(FormEventType::MouseClick, openInventory);
+	    ->findControlTyped<GraphicButton>("BUTTON_INVENTORY")
+	    ->addCallback(FormEventType::MouseClick, openInventory);
 	uiTabsRT[0]
 	    ->findControlTyped<GraphicButton>("BUTTON_RIGHT_HAND_DROP")
 	    ->addCallback(FormEventType::MouseClick, dropRightHand);
@@ -1204,8 +1203,8 @@ BattleView::BattleView(sp<GameState> gameState)
 	    ->findControlTyped<GraphicButton>("BUTTON_LEFT_HAND_DROP")
 	    ->addCallback(FormEventType::MouseClick, dropLeftHand);
 	uiTabsTB[0]
-		->findControlTyped<GraphicButton>("BUTTON_INVENTORY")
-		->addCallback(FormEventType::MouseClick, openInventory);
+	    ->findControlTyped<GraphicButton>("BUTTON_INVENTORY")
+	    ->addCallback(FormEventType::MouseClick, openInventory);
 	uiTabsTB[0]
 	    ->findControlTyped<GraphicButton>("BUTTON_RIGHT_HAND_DROP")
 	    ->addCallback(FormEventType::MouseClick, dropRightHand);
@@ -2570,7 +2569,9 @@ void BattleView::openAgentInventory()
 	{
 		return;
 	}
-	fw().stageQueueCommand({ StageCmd::Command::PUSH, mksp<AEquipScreen>(state, battle.battleViewSelectedUnits.front()->agent) });
+	fw().stageQueueCommand(
+	    {StageCmd::Command::PUSH,
+	     mksp<AEquipScreen>(state, battle.battleViewSelectedUnits.front()->agent)});
 }
 
 void BattleView::orderDrop(bool right)

@@ -17,6 +17,7 @@
 #include "game/state/rules/vehicle_type.h"
 #include "game/ui/battle/battlebriefing.h"
 #include "game/ui/general/mapselector.h"
+#include "game/ui/general/messagebox.h"
 #include "game/ui/general/selectforces.h"
 namespace OpenApoc
 {
@@ -274,7 +275,9 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 		for (auto &t : initialEquipment)
 		{
 			if (!t)
+			{
 				continue;
+			}
 			agent->addEquipmentByType(state, {&state, t->id}, true);
 		}
 
@@ -287,13 +290,13 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 	for (auto &t : state.agent_equipment)
 	{
 		// Ignore unfinished items and armor
-		if (t.second->type == AEquipmentType::Type::Armor 
-			|| t.second->type == AEquipmentType::Type::AlienDetector 
-			|| t.second->type == AEquipmentType::Type::DimensionForceField
-			|| t.second->type == AEquipmentType::Type::MindShield
-			|| t.second->type == AEquipmentType::Type::MultiTracker
-			|| t.second->type == AEquipmentType::Type::StructureProbe
-			|| t.second->type == AEquipmentType::Type::VortexAnalyzer)
+		if (t.second->type == AEquipmentType::Type::Armor ||
+		    t.second->type == AEquipmentType::Type::AlienDetector ||
+		    t.second->type == AEquipmentType::Type::DimensionForceField ||
+		    t.second->type == AEquipmentType::Type::MindShield ||
+		    t.second->type == AEquipmentType::Type::MultiTracker ||
+		    t.second->type == AEquipmentType::Type::StructureProbe ||
+		    t.second->type == AEquipmentType::Type::VortexAnalyzer)
 		{
 			continue;
 		}
@@ -308,15 +311,11 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 			continue;
 		}
 		// Manual exclusion
-		if (t.first == "AEQUIPMENTTYPE_FORCEWEB" 
-			|| t.first == "AEQUIPMENTTYPE_ENERGY_POD" 
-			|| t.first == "AEQUIPMENTTYPE_DIMENSION_DESTABILISER" 
-			|| t.first == "AEQUIPMENTTYPE_ELERIUM"
-			|| t.first == "AEQUIPMENTTYPE_PSICLONE"
-			|| t.first == "AEQUIPMENTTYPE_TRACKER_GUN"
-			|| t.first == "AEQUIPMENTTYPE_TRACKER_GUN_CLIP"
-			|| t.first == "AEQUIPMENTTYPE_PSI-GRENADE"
-			)
+		if (t.first == "AEQUIPMENTTYPE_FORCEWEB" || t.first == "AEQUIPMENTTYPE_ENERGY_POD" ||
+		    t.first == "AEQUIPMENTTYPE_DIMENSION_DESTABILISER" ||
+		    t.first == "AEQUIPMENTTYPE_ELERIUM" || t.first == "AEQUIPMENTTYPE_PSICLONE" ||
+		    t.first == "AEQUIPMENTTYPE_TRACKER_GUN" ||
+		    t.first == "AEQUIPMENTTYPE_TRACKER_GUN_CLIP" || t.first == "AEQUIPMENTTYPE_PSI-GRENADE")
 		{
 			continue;
 		}
@@ -526,6 +525,12 @@ void Skirmish::battleInBuilding(bool hotseat, StateRef<Base> playerBase,
 void Skirmish::battleInBase(bool hotseat, StateRef<Base> base,
                             std::map<StateRef<AgentType>, int> *aliens)
 {
+	auto message_box =
+	    mksp<MessageBox>("NOT YET IMPLEMENTED", "Base defense missions are not yet implemented.",
+	                     MessageBox::ButtonOptions::Ok);
+	fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+	return;
+
 	fw().stageQueueCommand(
 	    {StageCmd::Command::REPLACEALL,
 	     mksp<BattleBriefing>(
@@ -573,6 +578,13 @@ void Skirmish::eventOccurred(Event *e)
 	{
 		if (e->forms().RaisedBy->Name == "BUTTON_OK")
 		{
+			if (!locBase && !locBuilding && !locVehicle)
+			{
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH, mksp<MapSelector>(state.shared_from_this(), *this)});
+				return;
+			}
+
 			bool customize =
 			    menuform->findControlTyped<CheckBox>("CUSTOMISE_FORCES")->isChecked() || locBase ||
 			    (!menuform->findControlTyped<CheckBox>("ALTERNATIVE_ATTACK")->isChecked() &&

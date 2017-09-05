@@ -1,5 +1,4 @@
 #include "game/ui/battle/battleprestart.h"
-#include "game/ui/base/aequipscreen.h"
 #include "forms/form.h"
 #include "forms/graphicbutton.h"
 #include "forms/ui.h"
@@ -7,6 +6,7 @@
 #include "framework/framework.h"
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/gamestate.h"
+#include "game/ui/base/aequipscreen.h"
 #include "game/ui/battle/battleview.h"
 #include "game/ui/general/loadingscreen.h"
 #include <cmath>
@@ -26,10 +26,10 @@ BattlePreStart::BattlePreStart(sp<GameState> state)
     : Stage(), menuform(ui().getForm("battle/prestart")), state(state)
 {
 	menuform->findControlTyped<GraphicButton>("BUTTON_EQUIP")
-		->addCallback(FormEventType::ButtonClick, [this, state](Event *) {
+	    ->addCallback(FormEventType::ButtonClick, [this, state](Event *) {
 
-		fw().stageQueueCommand({ StageCmd::Command::PUSH, mksp<AEquipScreen>(state) });
-	});
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<AEquipScreen>(state)});
+		});
 	menuform->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick, [this, state](Event *) {
 

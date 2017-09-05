@@ -1,10 +1,10 @@
 #pragma once
 
-#include "game/state/stateobject.h"
 #include "framework/stage.h"
+#include "game/state/stateobject.h"
+#include "library/rect.h"
 #include "library/sp.h"
 #include "library/vec.h"
-#include "library/rect.h"
 #include <map>
 
 namespace OpenApoc
@@ -22,6 +22,7 @@ class Vehicle;
 class Building;
 class BitmapFont;
 class Graphic;
+enum class BodyPart;
 
 class AEquipScreen : public Stage
 {
@@ -34,6 +35,8 @@ class AEquipScreen : public Stage
 		Building,
 		Agent
 	};
+
+	std::map<BodyPart, std::vector<Vec2<int>>> FATAL_WOUND_LOCATIONS;
 
 	sp<Agent> firstAgent;
 
@@ -56,7 +59,7 @@ class AEquipScreen : public Stage
 	Vec2<int> draggedEquipmentOffset;
 	Vec2<int> draggedEquipmentOrigin;
 	sp<AEquipment> draggedEquipment;
-	
+
 	// Items currently on the "ground"
 	std::list<std::tuple<Rect<int>, int, sp<AEquipment>>> inventoryItems;
 	int inventoryPage = 0;
@@ -81,12 +84,13 @@ class AEquipScreen : public Stage
 	std::vector<sp<Image>> unitRanks;
 	std::vector<sp<Image>> bigUnitRanks;
 	std::vector<sp<Image>> unitSelect;
+	sp<Image> woundImage;
 
 	void displayAgent(sp<Agent> agent);
 	void displayItem(sp<AEquipment> item);
-	
+
 	Mode getMode();
-	
+
 	void refreshInventoryItems();
 	void populateInventoryItemsBattle();
 	void populateInventoryItemsBase();
@@ -107,6 +111,7 @@ class AEquipScreen : public Stage
 	void addItemToInventoryBuilding(sp<AEquipment> item);
 	void addItemToInventoryAgent(sp<AEquipment> item);
 
+	void attemptCloseScreen();
 	void closeScreen();
 
   public:

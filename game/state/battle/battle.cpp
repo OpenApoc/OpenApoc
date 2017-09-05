@@ -2390,14 +2390,16 @@ void Battle::exitBattle(GameState &state)
 		player->current_relations[{&state, o.first}] = o.second->getRelationTo(player);
 	}
 
-	LogWarning("Checking item reference consistency, remove code in battle.exitBattleconfirmed correct");
+	LogWarning(
+	    "Checking item reference consistency, remove code in battle.exitBattleconfirmed correct");
 	for (auto &a : state.agents)
 	{
 		for (auto &e : a.second->equipment)
 		{
 			if (e->ownerUnit)
 			{
-				LogError("Agent %s has item %s which is assigned to unit %s and will leak", a.first, e->type.id, e->ownerUnit.id);
+				LogError("Agent %s has item %s which is assigned to unit %s and will leak", a.first,
+				         e->type.id, e->ownerUnit.id);
 			}
 		}
 	}
@@ -2483,7 +2485,6 @@ void Battle::loadImagePacks(GameState &state)
 				imagePacks.insert(brainsucker);
 				imagePacks.insert(brainsucker + "s");
 				brainsuckerFound = true;
-				break;
 			}
 		}
 	}

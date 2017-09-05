@@ -1,9 +1,9 @@
 #pragma once
 #include "game/state/agent.h"
 #include "game/state/battle/battle.h"
-#include "game/state/rules/aequipment_type.h"
 #include "game/state/equipment.h"
 #include "game/state/gametime.h"
+#include "game/state/rules/aequipment_type.h"
 #include "library/sp.h"
 #include "library/vec.h"
 
