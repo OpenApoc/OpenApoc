@@ -73,13 +73,13 @@ class SaveManager
 	SaveManager();
 
 	/* load game with given metadata */
-	std::future<void> loadGame(const SaveMetadata &metadata, sp<GameState> state) const;
+	std::shared_future<void> loadGame(const SaveMetadata &metadata, sp<GameState> state) const;
 
 	/* from given file */
-	std::future<void> loadGame(const UString &savePath, sp<GameState> state) const;
+	std::shared_future<void> loadGame(const UString &savePath, sp<GameState> state) const;
 
 	/* load from predefined save type, eg Quicksave */
-	std::future<void> loadSpecialSave(const SaveType type, sp<GameState> state) const;
+	std::shared_future<void> loadSpecialSave(const SaveType type, sp<GameState> state) const;
 
 	// create new save file with given name
 	// WARNING! Name MUST NOT contain invalid filename characters!

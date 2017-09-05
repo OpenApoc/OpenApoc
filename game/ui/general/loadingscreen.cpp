@@ -20,7 +20,7 @@ namespace OpenApoc
 ConfigOptionBool asyncLoading("Game", "ASyncLoading",
                               "Load in background while displaying animated loading screen", true);
 
-LoadingScreen::LoadingScreen(sp<GameState> state, std::future<void> task,
+LoadingScreen::LoadingScreen(sp<GameState> state, std::shared_future<void> task,
                              std::function<sp<Stage>()> nextScreenFn, sp<Image> background,
                              int scaleDivisor, bool showRotatingImage)
     : Stage(), state(state), loadingTask(std::move(task)), nextScreenFn(std::move(nextScreenFn)),

@@ -43,12 +43,13 @@ static std::map<SaveType, UString> saveTypeNames{{SaveType::Manual, "New saved g
                                                  {SaveType::Quick, "Quicksave"},
                                                  {SaveType::Auto, "Autosave"}};
 
-std::future<void> SaveManager::loadGame(const SaveMetadata &metadata, sp<GameState> state) const
+std::shared_future<void> SaveManager::loadGame(const SaveMetadata &metadata,
+                                               sp<GameState> state) const
 {
 	return loadGame(metadata.getFile(), state);
 }
 
-std::future<void> SaveManager::loadGame(const UString &savePath, sp<GameState> state) const
+std::shared_future<void> SaveManager::loadGame(const UString &savePath, sp<GameState> state) const
 {
 	UString saveArchiveLocation = savePath;
 	auto loadTask = fw().threadPoolEnqueue([saveArchiveLocation, state]() -> void {
@@ -64,7 +65,8 @@ std::future<void> SaveManager::loadGame(const UString &savePath, sp<GameState> s
 	return loadTask;
 }
 
-std::future<void> SaveManager::loadSpecialSave(const SaveType type, sp<GameState> state) const
+std::shared_future<void> SaveManager::loadSpecialSave(const SaveType type,
+                                                      sp<GameState> state) const
 {
 	if (type == SaveType::Manual)
 	{

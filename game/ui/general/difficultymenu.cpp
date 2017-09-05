@@ -27,7 +27,7 @@ void DifficultyMenu::resume() {}
 
 void DifficultyMenu::finish() {}
 
-std::future<void> loadGame(const UString &path, sp<GameState> state)
+std::shared_future<void> loadGame(const UString &path, sp<GameState> state)
 {
 	auto loadTask = fw().threadPoolEnqueue([path, state]() -> void {
 		if (!state->loadGame(fw().getDataDir() + "/gamestate_common"))

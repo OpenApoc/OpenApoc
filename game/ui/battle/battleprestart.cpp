@@ -14,7 +14,7 @@
 namespace OpenApoc
 {
 
-std::future<void> enterBattle(sp<GameState> state)
+std::shared_future<void> enterBattle(sp<GameState> state)
 {
 	auto loadTask =
 	    fw().threadPoolEnqueue([state]() -> void { Battle::enterBattle(*state.get()); });

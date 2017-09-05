@@ -3,6 +3,7 @@
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
+#include <functional>
 #include <future>
 
 namespace OpenApoc
@@ -87,15 +88,19 @@ class Framework
 	// add new work item to the pool
 	template <class F, class... Args>
 	auto threadPoolEnqueue(F &&f, Args &&... args)
-	    -> std::future<typename std::result_of<F(Args...)>::type>
+	    -> std::shared_future<typename std::result_of<F(Args...)>::type>
 	{
 		using return_type = typename std::result_of<F(Args...)>::type;
 
 		auto task = std::make_shared<std::packaged_task<return_type()>>(
 		    std::bind(std::forward<F>(f), std::forward<Args>(args)...));
 
-		std::future<return_type> res = task->get_future();
-		this->threadPoolTaskEnqueue([task]() { (*task)(); });
+		std::shared_future<return_type> res = task->get_future().share();
+		this->threadPoolTaskEnqueue([task, res]() {
+			(*task)();
+			// Without a future.get() any exceptions are dropped on the floor
+			res.get();
+		});
 		return res;
 	}
 

@@ -14,7 +14,7 @@ class GameState;
 class LoadingScreen : public Stage
 {
   private:
-	std::future<void> loadingTask;
+	std::shared_future<void> loadingTask;
 	std::function<sp<Stage>()> nextScreenFn;
 	sp<Image> loadingimage;
 	sp<Image> backgroundimage;
@@ -24,7 +24,7 @@ class LoadingScreen : public Stage
 	sp<GameState> state;
 
   public:
-	LoadingScreen(sp<GameState> state, std::future<void> task,
+	LoadingScreen(sp<GameState> state, std::shared_future<void> task,
 	              std::function<sp<Stage>()> nextScreenFn, sp<Image> background = nullptr,
 	              int scaleDivisor = 3, bool showRotatingImage = true);
 	// Stage control
