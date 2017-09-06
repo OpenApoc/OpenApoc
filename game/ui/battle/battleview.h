@@ -177,6 +177,8 @@ class BattleView : public BattleTileView
 	int rightThrowDelay = 0;
 	int actionImpossibleDelay = 0;
 
+	bool DEBUG_DISABLE_NOTIFICATIONS = false;
+
 	void updateSelectionMode();
 	void updateSelectedUnits();
 	void updateLayerButtons();

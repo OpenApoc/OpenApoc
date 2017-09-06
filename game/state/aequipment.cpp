@@ -348,7 +348,7 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 		}
 		else if (ownerAgent)
 		{
-			ownerAgent->removeEquipment(ammoItem);
+			ownerAgent->removeEquipment(state, ammoItem);
 		}
 	}
 }
@@ -592,7 +592,7 @@ void AEquipment::explode(GameState &state)
 		{
 			ownerUnit = ownerAgent->unit;
 		}
-		ownerAgent->removeEquipment(shared_from_this());
+		ownerAgent->removeEquipment(state, shared_from_this());
 	}
 	switch (type->type)
 	{

@@ -205,6 +205,9 @@ class AgentType : public StateObject
 	// Wether agent's rank should be displayed in the equipment screen
 	bool displayRank = false;
 
+	// This agent must be killed to disable the building it's in
+	bool missionObjective = false;
+
 	// Sounds unit makes when walking, overrides terrain's walk sounds if present
 	std::vector<sp<Sample>> walkSfx;
 	// Sounds unit randomly makes when acting, used by aliens
@@ -332,7 +335,7 @@ class Agent : public StateObject,
 	void addEquipment(GameState &state, sp<AEquipment> object, EquipmentSlotType slotType);
 	// Add equipment to a specific position
 	void addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object);
-	void removeEquipment(sp<AEquipment> object);
+	void removeEquipment(GameState &state, sp<AEquipment> object);
 	void updateSpeed();
 	// Called when current stats were changed and modified stats need to catch up
 	void updateModifiedStats();

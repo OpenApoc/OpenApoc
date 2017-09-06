@@ -1560,7 +1560,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 			// Shield destroyed
 			if (shield->ammo <= 0)
 			{
-				agent->removeEquipment(shield);
+				agent->removeEquipment(state, shield);
 			}
 			state.current_battle->placeDoodad(shield->type->shield_graphic,
 			                                  tileObject->getCenter());
@@ -1633,7 +1633,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 		// Armor destroyed
 		if (armor->armor <= 0)
 		{
-			agent->removeEquipment(armor);
+			agent->removeEquipment(state, armor);
 		}
 	}
 
@@ -2136,11 +2136,11 @@ void BattleUnit::updateIdling(GameState &state)
 		// Sanity checks
 		if (goalFacing != facing)
 		{
-			LogError("Unit turning without a mission, wtf?");
+			LogError("Unit %s (%s) turning without a mission, wtf?", id, agent->type->id);
 		}
 		if (target_body_state != current_body_state)
 		{
-			LogError("Unit changing body state without a mission, wtf?");
+			LogError("Unit %s (%s) changing body state without a mission, wtf?", id, agent->type->id);
 		}
 
 		// Reach goal before everything else
@@ -3735,7 +3735,7 @@ void BattleUnit::applyEnzymeEffect(GameState &state)
 			}
 			else
 			{
-				agent->removeEquipment(item);
+				agent->removeEquipment(state, item);
 			}
 		}
 	}
@@ -4144,6 +4144,7 @@ void BattleUnit::tryToRiseUp(GameState &state)
 void BattleUnit::dropDown(GameState &state)
 {
 	state.current_battle->checkMissionEnd(state, false);
+	state.current_battle->checkIfBuildingDisabled(state);
 	// Reset states, cancel actions
 	cloakTicksAccumulated = 0;
 	stopAttacking();
@@ -4462,6 +4463,8 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 	{
 		sendAgentEvent(state, GameEventType::HostileDied);
 	}
+	// Leave squad
+	removeFromSquad(*state.current_battle);
 	// Animate body
 	dropDown(state);
 }
@@ -4742,7 +4745,7 @@ void BattleUnit::setBodyState(GameState &state, BodyState bodyState)
 {
 	if (!agent->isBodyStateAllowed(bodyState))
 	{
-		LogError("SetBodyState called on %s with %d", id, (int)bodyState);
+		LogError("SetBodyState called on %s (%s) (%s) with bodyState %d", id, agent->name, agent->type->id, (int)bodyState);
 		return;
 	}
 	bool roseUp = current_body_state == BodyState::Downed;

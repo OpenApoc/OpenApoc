@@ -758,7 +758,7 @@ void Agent::addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object)
 	}
 }
 
-void Agent::removeEquipment(sp<AEquipment> object)
+void Agent::removeEquipment(GameState &state, sp<AEquipment> object)
 {
 	this->equipment.remove(object);
 	if (object->equippedSlotType == EquipmentSlotType::RightHand)
@@ -771,6 +771,11 @@ void Agent::removeEquipment(sp<AEquipment> object)
 	}
 	if (unit)
 	{
+		// Stop flying if jetpack lost
+		if (object->type->provides_flight && unit->target_body_state == BodyState::Flying && !isBodyStateAllowed(BodyState::Flying))
+		{
+			unit->setBodyState(state, BodyState::Standing);
+		}
 		unit->updateDisplayedItem();
 	}
 	object->ownerAgent.clear();
@@ -1106,7 +1111,8 @@ void Agent::destroy()
 	rightHandItem = nullptr;
 	while (!equipment.empty())
 	{
-		this->removeEquipment(equipment.front());
+		GameState state;
+		this->removeEquipment(state, equipment.front());
 	}
 }
 

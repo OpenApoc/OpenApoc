@@ -127,6 +127,7 @@
 		<member>spreadHazardTTLDivizor</member>
 		<member>inventoryBackground</member>
 		<member>displayRank</member>
+		<member>missionObjective</member>
 		<member>score</member>
 		<member>walkSfx</member>
 		<member>crySfx</member>
@@ -430,7 +431,10 @@
 		<member>mode</member>
 		<member>score</member>
 		<member>missionEndTimer</member>
+		<member>buildingCanBeDisabled</member>
+		<member>buildingDisabled</member>
 		<member>playerWon</member>
+		<member>targetOrganisation</member>
 		<member>loserHasRetreated</member>
 		<member>winnerHasRetreated</member>
 		<member>player_craft</member>

@@ -60,7 +60,8 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 			b->name = data.alien_building_names->get(entry.function_idx);
 			b->function = {&state,
 			               format("%s%s", BuildingFunction::getPrefix(), canon_string(b->name))};
-			LogInfo("Alien bld %d %s func %d %s", entry.name_idx, b->name, entry.function_idx, b->function.id);
+			LogInfo("Alien bld %d %s func %d %s", entry.name_idx, b->name, entry.function_idx,
+			        b->function.id);
 
 			// Load crew
 			auto crew = ufo2p.crew_alien_building->get(entry.function_idx);

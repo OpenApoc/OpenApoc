@@ -1723,13 +1723,16 @@ void BattleView::update()
 	if (battle.missionEndTimer > TICKS_END_MISSION)
 	{
 		UString message;
-		if (battle.playerWon)
+		if (battle.playerWon || battle.buildingDisabled)
 		{
-			if (battle.loserHasRetreated)
+			if ((battle.loserHasRetreated && battle.playerWon) ||
+			    (battle.winnerHasRetreated && !battle.playerWon))
 			{
 				message = tr("All hostile units have fled the combat zone. You win.");
 			}
-			else if (battle.winnerHasRetreated)
+			else if ((battle.loserHasRetreated && !battle.playerWon) ||
+			         (battle.winnerHasRetreated && battle.playerWon) ||
+			         (!battle.playerWon && !battle.loserHasRetreated && !battle.winnerHasRetreated))
 			{
 				message = tr("All your units have fled the combat zone. You win.");
 			}
@@ -2865,7 +2868,8 @@ void BattleView::eventOccurred(Event *e)
 	     e->keyboard().KeyCode == SDLK_e || e->keyboard().KeyCode == SDLK_t ||
 	     e->keyboard().KeyCode == SDLK_p || e->keyboard().KeyCode == SDLK_h ||
 	     e->keyboard().KeyCode == SDLK_k || e->keyboard().KeyCode == SDLK_q ||
-	     e->keyboard().KeyCode == SDLK_s || e->keyboard().KeyCode == SDLK_j))
+	     e->keyboard().KeyCode == SDLK_s || e->keyboard().KeyCode == SDLK_j ||
+	     e->keyboard().KeyCode == SDLK_n))
 	{
 		switch (e->keyboard().KeyCode)
 		{
@@ -3125,6 +3129,11 @@ void BattleView::eventOccurred(Event *e)
 				}
 				break;
 			}
+			case SDLK_n:
+			{
+				DEBUG_DISABLE_NOTIFICATIONS = !DEBUG_DISABLE_NOTIFICATIONS;
+				break;
+			}
 		}
 	}
 	else if (e->type() == EVENT_MOUSE_MOVE)
@@ -3180,7 +3189,7 @@ void BattleView::eventOccurred(Event *e)
 		{
 			state->logEvent(gameEvent);
 			baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
-			if (battle.mode == Battle::Mode::RealTime)
+			if (battle.mode == Battle::Mode::RealTime && !DEBUG_DISABLE_NOTIFICATIONS)
 			{
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,

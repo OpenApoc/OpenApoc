@@ -19,6 +19,18 @@ GameVehicleEvent::GameVehicleEvent(GameEventType type, StateRef<Vehicle> vehicle
 {
 }
 
+UString GameEvent::message()
+{
+	switch (type)
+	{
+		case GameEventType::BuildingDisabled:
+			return tr("Building has been disabled");
+		default:
+			LogError("Invalid event type");
+			break;
+	}
+}
+
 UString GameVehicleEvent::message()
 {
 	switch (type)

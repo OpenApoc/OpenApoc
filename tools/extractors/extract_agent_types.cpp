@@ -434,6 +434,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				infiltrationID = 11;
 				a->growthChance = 0;
 				a->detectionWeight = 20;
+				a->missionObjective = true;
 				break;
 			// Non-humanoid aliens
 			case UNIT_TYPE_BRAINSUCKER:

@@ -222,11 +222,11 @@ void UnitAIHelper::ensureItemInSlot(GameState &state, sp<AEquipment> item, Equip
 		// Remove item in the desired slot
 		if (curItem)
 		{
-			u->agent->removeEquipment(curItem);
+			u->agent->removeEquipment(state, curItem);
 		}
 
 		// Remove item we will use and equip it in the desired slot
-		u->agent->removeEquipment(item);
+		u->agent->removeEquipment(state, item);
 		u->agent->addEquipment(state, item, slot);
 
 		// Equip back the item removed earlier

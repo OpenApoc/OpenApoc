@@ -27,7 +27,7 @@ class GameEvent : public Event
 
 	GameEvent(GameEventType type);
 	~GameEvent() override = default;
-	virtual UString message() { return ""; }
+	virtual UString message();
 };
 
 class GameVehicleEvent : public GameEvent

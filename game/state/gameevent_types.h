@@ -83,5 +83,6 @@ enum class GameEventType
 	LeaveAlienDimension,
 	MissionStarted,
 	MissionCompleted,
+	BuildingDisabled,
 };
 }

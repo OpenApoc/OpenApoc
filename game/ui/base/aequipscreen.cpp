@@ -373,7 +373,7 @@ void AEquipScreen::eventOccurred(Event *e)
 				this->draggedEquipmentOffset = {0, 0};
 				this->draggedEquipmentOrigin = equipment->equippedPosition;
 
-				currentAgent->removeEquipment(equipment);
+				currentAgent->removeEquipment(*state, equipment);
 				displayAgent(currentAgent);
 				this->paperDoll->updateEquipment();
 				return;

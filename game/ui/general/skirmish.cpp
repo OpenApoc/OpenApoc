@@ -440,9 +440,9 @@ void Skirmish::updateLocationLabel()
 }
 
 std::shared_future<void> loadBattleBuilding(bool hotseat, sp<Building> building, GameState *state,
-                                     StateRef<Base> playerBase, bool raid,
-                                     std::map<StateRef<AgentType>, int> *aliens = nullptr,
-                                     int *guards = nullptr, int *civilians = nullptr)
+                                            StateRef<Base> playerBase, bool raid,
+                                            std::map<StateRef<AgentType>, int> *aliens = nullptr,
+                                            int *guards = nullptr, int *civilians = nullptr)
 {
 	if (guards)
 	{
@@ -493,8 +493,8 @@ std::shared_future<void> loadBattleBuilding(bool hotseat, sp<Building> building,
 }
 
 std::shared_future<void> loadBattleVehicle(bool hotseat, sp<VehicleType> vehicle, GameState *state,
-                                    StateRef<Base> playerBase,
-                                    std::map<StateRef<AgentType>, int> *aliens = nullptr)
+                                           StateRef<Base> playerBase,
+                                           std::map<StateRef<AgentType>, int> *aliens = nullptr)
 {
 
 	auto loadTask = fw().threadPoolEnqueue([hotseat, vehicle, state, aliens, playerBase]() -> void {

@@ -27,6 +27,7 @@ List of incomplete battlescape features:
 - Disabling notifications does not work (even if you uncheck "pause when this happens" the dialog will pop up anyway)
 - Most hotkeys (like numbers 1 to 6 etc.)
 - Grenade priming interface lacks scrollbar texture
+- Agent equipment screen does not yet allow equipping multiple agents
 
 Debug features:
 - Middle click to activate teleportation for any unit (even w/o a teleport in hand)
@@ -41,6 +42,7 @@ Debug features:
 - Shift + "p" gives every unit 0 psi defense and 100 psi energy/attack
 - "h" restores stats of every unit, heals stun damage and fatal wounds
 - "t" restores TU of every player unit
+- "n" will toggle notification popups
 
 Hotkeys, less known features and new stuff in OpenApoc:
 - Right click a grenade to prime it to explode on contact
@@ -74,6 +76,7 @@ This will eventually become a "quick combat" feature like the one OpenXCom has, 
 1. First choose a map. Choose a UFO, alien building or city building map. Base defense is not yet implemented.
 
 2. Next you can specify your squad and other settings.
+- Specify number of agents you will have (Human agents, Hybrids, Androids). Note that you can have at max 36 agents at your command.
 - Specify numer of training days your agents will receive (this allows you to control what stats your agents have - do you want a weak squad or endgame supersoldiers)
 - "Default equipment tech level" will equip your soldiers in same manner that organisation gets equipped in vanilla. This setting goes from 1 to 12, and you get normal starting weapons at 1 and personal shields with disruptors at 12. "NO" will not equip your soldiers with any items 
 - "Alien score level" is the way vanilla chooses alien equipment. It depends on player score - the higher the player score, the better gear aliens have. This allows you to choose your score and thus choose alien equipment.

@@ -17,6 +17,7 @@
 #include "game/state/battle/battleunit.h"
 #include "game/state/battle/battleunitanimationpack.h"
 #include "game/state/battle/battleunitimagepack.h"
+#include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/projectile.h"
@@ -1847,7 +1848,6 @@ void Battle::abortMission(GameState &state)
 
 void Battle::checkMissionEnd(GameState &state, bool retreated, bool forceReCheck)
 {
-	LogWarning("FIXME: Victory/Loss when finishing alien building mission");
 	auto endBeginTimer = std::max((unsigned)1, missionEndTimer);
 	if (forceReCheck)
 	{
@@ -1898,6 +1898,39 @@ void Battle::checkMissionEnd(GameState &state, bool retreated, bool forceReCheck
 			}
 		}
 	}
+}
+
+void Battle::checkIfBuildingDisabled(GameState &state)
+{
+	if (!buildingCanBeDisabled || buildingDisabled)
+	{
+		return;
+	}
+	// Find a mission objective unit
+	for (auto &u : units)
+	{
+		if (u.second->owner != targetOrganisation)
+		{
+			continue;
+		}
+		if (u.second->agent->type->missionObjective && !u.second->isDead())
+		{
+			// Mission objective unit found alive
+			return;
+		}
+	}
+	// Find a mission objective object
+	for (auto &mp : map_parts)
+	{
+		if (mp->type->missionObjective && !mp->destroyed)
+		{
+			// Mission objective unit found alive
+			return;
+		}
+	}
+	// Found nothing, building disabled
+	buildingDisabled = true;
+	fw().pushEvent(new GameEvent(GameEventType::BuildingDisabled));
 }
 
 void Battle::refreshLeadershipBonus(StateRef<Organisation> org)
@@ -2143,6 +2176,7 @@ void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> 
 	{
 		return;
 	}
+	b->targetOrganisation = target_organisation;
 	b->hotseat = hotseat;
 	state.current_battle = b;
 }
@@ -2166,6 +2200,8 @@ void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> 
 		return;
 	}
 	b->hotseat = hotseat;
+	b->targetOrganisation = target_organisation;
+	b->buildingCanBeDisabled = target_organisation == state.getAliens();
 	state.current_battle = b;
 }
 
