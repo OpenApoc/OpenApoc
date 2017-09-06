@@ -182,16 +182,29 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 	StateRef<AgentType> android = {&state, "AGENTTYPE_X-COM_AGENT_ANDROID"};
 	auto player = state.getPlayer();
 	std::list<StateRef<Agent>> agents;
+	int agentLimit = 36;
 	for (int i = 0; i < countHumans; i++)
 	{
+		if (agents.size() >= agentLimit)
+		{
+			break;
+		}
 		agents.emplace_back(state.agent_generator.createAgent(state, player, human));
 	}
 	for (int i = 0; i < countHybrids; i++)
 	{
+		if (agents.size() >= agentLimit)
+		{
+			break;
+		}
 		agents.emplace_back(state.agent_generator.createAgent(state, player, hybrid));
 	}
 	for (int i = 0; i < countAndroids; i++)
 	{
+		if (agents.size() >= agentLimit)
+		{
+			break;
+		}
 		agents.emplace_back(state.agent_generator.createAgent(state, player, android));
 	}
 	for (auto &agent : agents)

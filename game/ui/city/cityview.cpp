@@ -970,7 +970,7 @@ void CityView::eventOccurred(Event *e)
 				auto ev = dynamic_cast<GameBuildingEvent *>(e);
 				if (!ev)
 				{
-					LogError("Invalid research event");
+					LogError("Invalid spotted event");
 				}
 				fw().soundBackend->playSample(listRandomiser(state->rng, alertSounds));
 				fw().stageQueueCommand(

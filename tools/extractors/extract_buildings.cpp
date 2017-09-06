@@ -57,11 +57,11 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 		auto b = mksp<Building>();
 		if (alienBuilding)
 		{
-			LogInfo("Alien bld %d func %d", entry.name_idx, entry.function_idx);
-			// FIXME: albld.bld seems to have unexpected name_idx and function_idx?
-			b->name = data.alien_building_names->get(i);
+			b->name = data.alien_building_names->get(entry.function_idx);
 			b->function = {&state,
 			               format("%s%s", BuildingFunction::getPrefix(), canon_string(b->name))};
+			LogInfo("Alien bld %d %s func %d %s", entry.name_idx, b->name, entry.function_idx, b->function.id);
+
 			// Load crew
 			auto crew = ufo2p.crew_alien_building->get(entry.function_idx);
 			UFO2P::fillCrew(state, crew, b->preset_crew);
@@ -110,36 +110,7 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 			case 33:
 				battle_map_index = 10; // 11 Procreation Park
 				break;
-			// Unfortunately, alien building function indexes are not properly ordered
-			case 38:
-				battle_map_index = 42;
-				break;
-			case 39:
-				battle_map_index = 44;
-				break;
-			case 40:
-				battle_map_index = 39;
-				break;
-			case 41:
-				battle_map_index = 46;
-				break;
-			case 42:
-				battle_map_index = 38;
-				break;
-			case 43:
-				battle_map_index = 45;
-				break;
-			case 44:
-				battle_map_index = 40;
-				break;
-			case 45:
-				battle_map_index = 43;
-				break;
-			case 46:
-				battle_map_index = 41;
-				break;
-			case 47:
-				battle_map_index = 47;
+			default:
 				break;
 		}
 		b->battle_map = {
