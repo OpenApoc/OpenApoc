@@ -86,7 +86,7 @@
       </graphic>
       <graphic id="OVERLAY_RIGHT_HAND">
         <position x="262" y="39"/>
-        <size width="40" height="95"/>
+        <size width="50" height="85"/>
       </graphic>
       <graphicbutton id="BUTTON_RIGHT_HAND_DROP">
         <position x="201" y="101"/>
@@ -116,7 +116,7 @@
       </graphic>
       <graphic id="OVERLAY_LEFT_HAND">
         <position x="328" y="39"/>
-        <size width="40" height="95"/>
+        <size width="50" height="85"/>
       </graphic>
       <graphicbutton id="BUTTON_LEFT_HAND_DROP">
         <position x="411" y="101"/>

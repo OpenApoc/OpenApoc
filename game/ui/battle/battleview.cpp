@@ -3758,7 +3758,7 @@ void BattleView::updateItemInfo(bool right)
 		activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND_SELECTED")->setImage(nullptr);
 	}
 
-	auto overlay = mksp<RGBImage>(Vec2<int>{50, 95});
+	auto overlay = mksp<RGBImage>(Vec2<int>{50, 85});
 	{
 		RGBImageLock l(overlay);
 
@@ -3767,7 +3767,7 @@ void BattleView::updateItemInfo(bool right)
 		{
 			int accuracy = info.accuracy;
 			int colorsCount = (int)accuracyColors.size();
-			int y = 93;
+			int y = 83;
 			if (right)
 			{
 				for (int x = 0; x < accuracy; x++)
@@ -3787,7 +3787,7 @@ void BattleView::updateItemInfo(bool right)
 		}
 		if (info.maxAmmo > 0 && info.curAmmo > 0)
 		{
-			int ammoDisplaySize = 90;
+			int ammoDisplaySize = 80;
 
 			int ammoCount = info.curAmmo;
 			int ammoPadding = 1;
