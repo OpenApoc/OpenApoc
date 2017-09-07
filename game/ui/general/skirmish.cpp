@@ -514,6 +514,7 @@ std::shared_future<void> loadBattleVehicle(bool hotseat, sp<VehicleType> vehicle
 
 		state->vehicles[vID] = v;
 		StateRef<Vehicle> ufo = {state, vID};
+		ufo->owner = state->getAliens();
 		StateRef<Vehicle> veh = {};
 
 		Battle::beginBattle(*state, hotseat, org, agents, aliens, veh, ufo);

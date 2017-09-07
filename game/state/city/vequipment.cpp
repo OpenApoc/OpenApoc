@@ -1,3 +1,4 @@
+#include "game/state/city/city.h"
 #include "game/state/city/vequipment.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
@@ -18,7 +19,7 @@ VEquipment::VEquipment()
 {
 }
 
-sp<Projectile> VEquipment::fire(Vec3<float> targetPosition, StateRef<Vehicle> targetVehicle)
+sp<Projectile> VEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Vehicle> targetVehicle)
 {
 	static const std::map<VEquipment::WeaponState, UString> WeaponStateMap = {
 	    {WeaponState::Ready, "ready"},
@@ -65,12 +66,19 @@ sp<Projectile> VEquipment::fire(Vec3<float> targetPosition, StateRef<Vehicle> ta
 	{
 		this->weaponState = WeaponState::OutOfAmmo;
 	}
-	auto vehicleMuzzle = vehicleTile->getVehicle()->getMuzzleLocation();
-	Vec3<float> velocity = targetPosition - vehicleMuzzle;
+	auto vehicleMuzzle = owner->getMuzzleLocation();
+
+	auto fromScaled = vehicleMuzzle * VELOCITY_SCALE_CITY;
+	auto toScaled = targetPosition * VELOCITY_SCALE_CITY;
+	// FIXME: Account for target's cloak!
+	City::accuracyAlgorithmCity(state, fromScaled, toScaled,
+		type->accuracy + owner->getAccuracy(), false);
+	
+	Vec3<float> velocity = toScaled - fromScaled;
 	velocity = glm::normalize(velocity);
 	// I believe this is the correct formula
 	velocity *= type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
-
+	
 	return mksp<Projectile>(type->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
 	                        owner, targetVehicle, vehicleMuzzle, velocity, type->turn_rate,
 	                        static_cast<int>(this->getRange() / type->speed * TICKS_MULTIPLIER),

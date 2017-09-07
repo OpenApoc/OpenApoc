@@ -465,27 +465,24 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 {
 	static const std::set<TileObject::Type> scenerySet = {TileObject::Type::Scenery};
 
-	auto firePosition = vehicleTile->getVoxelCentrePosition();
+	auto firePosition = getMuzzleLocation();
 	auto target = enemyTile->getVoxelCentrePosition();
+
 	float distance = this->tileObject->getDistanceTo(enemyTile);
 
-	for (auto &equipment : this->equipment)
+	for (auto &eq : this->equipment)
 	{
-		if (equipment->type->type != EquipmentSlotType::VehicleWeapon)
+		if (eq->type->type != EquipmentSlotType::VehicleWeapon)
 			continue;
-		if (equipment->canFire() == false)
+		if (eq->canFire() == false)
 			continue;
 		// Out of range
-		if (distance > equipment->getRange())
+		if (distance > eq->getRange())
 			continue;
 		// No sight to target
 		if (vehicleTile->map.findCollision(firePosition, target, scenerySet))
 			continue;
-
-		City::accuracyAlgorithmCity(state, firePosition, target,
-		                            equipment->type->accuracy + this->getAccuracy(), false);
-
-		auto projectile = equipment->fire(target, {&state, enemyTile->getVehicle()});
+		auto projectile = eq->fire(state, target, {&state, enemyTile->getVehicle()});
 		if (projectile)
 		{
 			vehicleTile->map.addObjectToMap(projectile);

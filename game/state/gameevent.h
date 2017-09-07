@@ -59,6 +59,7 @@ class GameBuildingEvent : public GameEvent
 
 	GameBuildingEvent(GameEventType type, StateRef<Building> building);
 	~GameBuildingEvent() override = default;
+	UString message() override;
 };
 
 class GameOrganisationEvent : public GameEvent

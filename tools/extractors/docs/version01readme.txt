@@ -1,10 +1,21 @@
 OpenApoc 0.1 Playable Alpha
 
+
 I. Intro:
 
 This is the first playable release of OpenApoc. The aim of this release is to showcase project progress so far and allow the community to try the game and give feedback. The game is by no means yet fully playable, however, certain systems are partially or fully implemented and can be tried out and playtested. Please continue reading to find out what can you expect to see in this version and what can you playtest.
 
-II. Battlescape:
+
+II: Cityscape
+
+Cityscape is barely functional right now. Random vehicles fly around and you can equip your vehicles and send them to fly around or fire at stuff. Not much works properly but vehicles should fly around properly, move from building to building properly, attack properly. At night, UFOs appear, and they should fly, deposit aliens and retreat. Attacks should properly hit and deal damage. Vehicle AI is very basic right now and does not represent how it works in vanilla yet (like, vehicles won't "dogfight", won't "dodge" etc., will just fly face on and make attacks). Building destruction algorithm is not fully implemented yet.
+
+There is no way to move agents around yet and no way to initiate missions in a proper way (sending vehicles with agents to ufos or buildings). In order to start a tactical game, use the new Skirmish feature
+
+Do not try to order ground vehicles around as they are not yet implemented and will most likely crash.
+
+
+III. Battlescape:
 
 Most of the battlescape mechanics are fully implemented. Therefore, it is easier to list what is not yet implemented or not yet properly implemented.
 
@@ -47,7 +58,7 @@ Debug features:
 Hotkeys, less known features and new stuff in OpenApoc:
 - Right click a grenade to prime it to explode on contact
 - Right click enemy in RT to make soldier focus that unit
-- Space to start/stop time
+- Space to start/stop time (including TB!)
 - Page Up/Down to go Up/Down levels
 - Tab to go in/out of map mode
 - Ctrl + Click to add agent to selection
@@ -61,13 +72,6 @@ Hotkeys, less known features and new stuff in OpenApoc:
 AI:
 - units should act aggresively, patrol map, attack when seeing enemies, throwing grenades if AI assumes that will do more damage faster than using their weapon, and avoid using AOE attacks if friendly fire is likely to happen.
 
-III: Cityscape
-
-Cityscape is barely functional right now. Random vehicles fly around and you can equip your vehicles and send them to fly around or fire at stuff. Not much works properly but vehicles should fly around properly, move from building to building properly, attack properly. At night, UFOs appear, and they should fly, deposit aliens and retreat. Attacks should properly hit and deal damage. Vehicle AI is very basic right now and does not represent how it works in vanilla yet (like, vehicles won't "dogfight", won't "dodge" etc., will just fly face on and make attacks). Building destruction algorithm is not fully implemented yet.
-
-There is no way to move agents around yet and no way to initiate missions in a proper way (sending vehicles with agents to ufos or buildings). In order to start a tactical game, use the new Skirmish feature
-
-Do not try to order ground vehicles around as they are not yet implemented and will most likely crash.
 
 IV: Skirmish
 
@@ -90,7 +94,7 @@ This will eventually become a "quick combat" feature like the one OpenXCom has, 
 
 If target location already contains aliens (i.e. UFO crash or building with aliens) then you can either leave aliens as "Default" or uncheck that checkbox. If the checkbox is unchecked you can specify how many of every alien species will appear in the mission. 
 
-In the same way, you can specify amount of guards and civilians that will appear in the mission.
+In the same way, you can specify amount of guards and civilians that will appear in the mission. Note that civilians can't spawn if map provides no spawn points for them, neither can they spawn if it's a human building and organisation is hostile to player
 
 You can click "Esc" to go back to the previous screen
 

@@ -2011,6 +2011,8 @@ void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
                                      Vec3<float> &target, int accuracy, bool cloaked, bool thrown)
 {
 	auto dispersion = (float)(100 - accuracy);
+	// Introduce minimal dispersion?
+	dispersion = std::max(0.0f, dispersion);
 	if (cloaked)
 	{
 		dispersion *= dispersion;
@@ -2021,6 +2023,10 @@ void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
 	}
 
 	auto delta = (target - firePosition) * dispersion / 1000.0f;
+	if (delta.x == 0.0f && delta.y == 0.0f && delta.z == 0.0f)
+	{
+		return;
+	}
 
 	float length_vector =
 	    1.0f / std::sqrt(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z);

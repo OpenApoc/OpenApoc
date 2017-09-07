@@ -152,6 +152,23 @@ void Building::detect(GameState &state, bool forced)
 			return;
 		}
 	}
+	else
+	{
+		bool alien_spotted = false;
+		for (auto &pair : current_crew)
+		{
+			if (pair.second == 0)
+			{
+				continue;
+			}
+			alien_spotted = true;
+			break;
+		}
+		if (!alien_spotted)
+		{
+			return;
+		}
+	}
 	state.firstDetection = false;
 	ticksDetectionTimeOut = TICKS_DETECTION_TIMEOUT;
 

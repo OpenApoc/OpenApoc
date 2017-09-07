@@ -26,9 +26,10 @@ UString GameEvent::message()
 		case GameEventType::BuildingDisabled:
 			return tr("Building has been disabled");
 		default:
-			LogError("Invalid event type");
+			LogError("Unimplemented event type");
 			break;
 	}
+	return "";
 }
 
 UString GameVehicleEvent::message()
@@ -78,7 +79,7 @@ UString GameVehicleEvent::message()
 		case GameEventType::NotEnoughFuel:
 			return tr("Not enough fuel to refuel vehicle");
 		default:
-			LogError("Invalid event type");
+			LogError("Invalid vehicle event type");
 			break;
 	}
 	return "";
@@ -129,8 +130,21 @@ UString GameAgentEvent::message()
 		case GameEventType::NoLOF:
 			return format("%s", tr("No line of fire"));
 		default:
-			LogError("Invalid event type");
+			LogError("Invalid agent event type");
 			break;
+	}
+	return "";
+}
+
+UString GameBuildingEvent::message()
+{
+	switch (type)
+	{
+	case GameEventType::AlienSpotted:
+		return tr("Live Alien spotted.");
+	default:
+		LogError("Invalid building event type");
+		break;
 	}
 	return "";
 }
@@ -164,7 +178,7 @@ UString GameBattleEvent::message()
 			return tr("Turn:") + " " + format("%d", battle->currentTurn) + "   " + tr("Side:") +
 			       "  " + tr(battle->currentActiveOrganisation->name);
 		default:
-			LogError("Invalid event type");
+			LogError("Invalid battle event type");
 			break;
 	}
 	return "";

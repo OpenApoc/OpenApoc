@@ -16,7 +16,7 @@ int Organisation::getGuardCount(GameState &state) const
 
 void Organisation::takeOver(GameState &state, bool forced)
 {
-	if (!forced && !randBoundsExclusive(state.rng, 0, 100) < infiltrationValue)
+	if (!forced && randBoundsExclusive(state.rng, 0, 200) > infiltrationValue)
 	{
 		return;
 	}
