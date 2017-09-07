@@ -464,6 +464,9 @@
     <ClInclude Include="battle\ai\aitype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="equipment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

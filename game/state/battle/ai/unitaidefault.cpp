@@ -68,8 +68,8 @@ std::tuple<AIDecision, bool> UnitAIDefault::think(GameState &state, BattleUnit &
 	    (u.missions.empty() || u.missions.front()->type != BattleUnitMission::Type::Snooze))
 	{
 		auto &enemies = state.current_battle->visibleEnemies[u.owner];
-		auto e1 = u.agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
-		auto e2 = u.agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+		auto e1 = u.agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
+		auto e2 = u.agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
 		// Cannot or forbidden to attack:	Turn to enemy
 		if (u.fire_permission_mode == BattleUnit::FirePermissionMode::CeaseFire ||
 		    ((!e1 || !e1->canFire()) && (!e2 || !e2->canFire())))

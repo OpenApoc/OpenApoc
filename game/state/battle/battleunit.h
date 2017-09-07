@@ -355,6 +355,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// [Methods]
 
 	void init(GameState &state);
+	void destroy() override;
 
 	// Squad
 
@@ -488,6 +489,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	             bool ignoreShootReserve = false, bool allowInterrupt = false);
 	// Spend all tu
 	void spendRemainingTU(GameState &state, bool allowInterrupt = false);
+	int getPickupCost() const;
 	int getThrowCost() const;
 	int getMedikitCost() const;
 	int getMotionScannerCost() const;
@@ -581,12 +583,6 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	bool handleCollision(GameState &state, Collision &c);
 
 	const Vec3<float> &getPosition() const { return this->position; }
-
-	int getMaxHealth() const;
-	int getHealth() const;
-
-	int getMaxShield() const;
-	int getShield() const;
 
 	// Update
 

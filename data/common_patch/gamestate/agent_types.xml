@@ -6,6 +6,8 @@
       <id>AGENTTYPE_X-COM_AGENT_HUMAN</id>
       <name>X-COM Agent (Human)</name>
       <role>Soldier</role>
+	  <displayRank>true</displayRank>
+	  <inventoryBackground>xcom3/tacdata/equippic/xcom.pcx</inventoryBackground>
       <possible_genders>
         <entry>Male</entry>
         <entry>Female</entry>
@@ -595,7 +597,9 @@
       <id>AGENTTYPE_X-COM_AGENT_HYBRID</id>
       <name>X-COM Agent (Hybrid)</name>
       <role>Soldier</role>
-      <possible_genders>
+      <inventoryBackground>xcom3/tacdata/equippic/xcom.pcx</inventoryBackground>
+	  <displayRank>true</displayRank>
+	  <possible_genders>
         <entry>Male</entry>
         <entry>Female</entry>
       </possible_genders>
@@ -835,7 +839,9 @@
       <id>AGENTTYPE_X-COM_AGENT_ANDROID</id>
       <name>X-COM Agent (Android)</name>
       <role>Soldier</role>
-      <possible_genders>
+      <inventoryBackground>xcom3/tacdata/equippic/xcom.pcx</inventoryBackground>
+	  <displayRank>true</displayRank>
+	  <possible_genders>
         <entry>Male</entry>
       </possible_genders>
       <gender_chance>

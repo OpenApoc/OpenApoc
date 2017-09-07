@@ -248,7 +248,7 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 		bool has_active_weapon = false;
 		for (auto &equipment : this->equipment)
 		{
-			if (equipment->type->type != VEquipmentType::Type::Weapon)
+			if (equipment->type->type != EquipmentSlotType::VehicleWeapon)
 				continue;
 			equipment->update(ticks);
 			if (!this->isCrashed() && this->attackMode != Vehicle::AttackMode::Evasive &&
@@ -316,7 +316,7 @@ bool Vehicle::applyDamage(GameState &state, int damage, float armour)
 			// destroy the shield modules
 			for (auto it = this->equipment.begin(); it != this->equipment.end();)
 			{
-				if ((*it)->type->type == VEquipmentType::Type::General &&
+				if ((*it)->type->type == EquipmentSlotType::VehicleGeneral &&
 				    (*it)->type->shielding > 0)
 				{
 					it = this->equipment.erase(it);
@@ -465,27 +465,24 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 {
 	static const std::set<TileObject::Type> scenerySet = {TileObject::Type::Scenery};
 
-	auto firePosition = vehicleTile->getVoxelCentrePosition();
+	auto firePosition = getMuzzleLocation();
 	auto target = enemyTile->getVoxelCentrePosition();
+
 	float distance = this->tileObject->getDistanceTo(enemyTile);
 
-	for (auto &equipment : this->equipment)
+	for (auto &eq : this->equipment)
 	{
-		if (equipment->type->type != VEquipmentType::Type::Weapon)
+		if (eq->type->type != EquipmentSlotType::VehicleWeapon)
 			continue;
-		if (equipment->canFire() == false)
+		if (eq->canFire() == false)
 			continue;
 		// Out of range
-		if (distance > equipment->getRange())
+		if (distance > eq->getRange())
 			continue;
 		// No sight to target
 		if (vehicleTile->map.findCollision(firePosition, target, scenerySet))
 			continue;
-
-		City::accuracyAlgorithmCity(state, firePosition, target,
-		                            equipment->type->accuracy + this->getAccuracy(), false);
-
-		auto projectile = equipment->fire(target, {&state, enemyTile->getVehicle()});
+		auto projectile = eq->fire(state, target, {&state, enemyTile->getVehicle()});
 		if (projectile)
 		{
 			vehicleTile->map.addObjectToMap(projectile);
@@ -503,7 +500,7 @@ float Vehicle::getFiringRange() const
 	float range = 0;
 	for (auto &equipment : this->equipment)
 	{
-		if (equipment->type->type != VEquipmentType::Type::Weapon)
+		if (equipment->type->type != EquipmentSlotType::VehicleWeapon)
 			continue;
 
 		if (range < equipment->getRange())
@@ -554,7 +551,7 @@ float Vehicle::getSpeed() const
 
 	for (auto &e : this->equipment)
 	{
-		if (e->type->type != VEquipmentType::Type::Engine)
+		if (e->type->type != EquipmentSlotType::VehicleEngine)
 			continue;
 		speed += e->type->top_speed;
 	}
@@ -576,7 +573,7 @@ int Vehicle::getMaxShield() const
 
 	for (auto &e : this->equipment)
 	{
-		if (e->type->type != VEquipmentType::Type::General)
+		if (e->type->type != EquipmentSlotType::VehicleGeneral)
 			continue;
 		maxShield += e->type->shielding;
 	}
@@ -590,7 +587,7 @@ int Vehicle::getShieldRechargeRate() const
 
 	for (auto &e : this->equipment)
 	{
-		if (e->type->type != VEquipmentType::Type::General)
+		if (e->type->type != EquipmentSlotType::VehicleGeneral)
 			continue;
 		shieldRecharge += e->type->shielding > 0 ? 1 : 0;
 	}
@@ -618,7 +615,7 @@ int Vehicle::getAccuracy() const
 
 	for (auto &e : this->equipment)
 	{
-		if (e->type->type != VEquipmentType::Type::General || e->type->accuracy_modifier <= 0)
+		if (e->type->type != EquipmentSlotType::VehicleGeneral || e->type->accuracy_modifier <= 0)
 			continue;
 		// accuracy percentages are inverted in the data (e.g. 10% module gives 90)
 		accModifiers.push(100 - e->type->accuracy_modifier);
@@ -645,7 +642,7 @@ int Vehicle::getAcceleration() const
 	int power = 0;
 	for (auto &e : this->equipment)
 	{
-		if (e->type->type != VEquipmentType::Type::Engine)
+		if (e->type->type != EquipmentSlotType::VehicleEngine)
 			continue;
 		power += e->type->power;
 	}
@@ -685,7 +682,7 @@ int Vehicle::getFuel() const
 
 	for (auto &e : this->equipment)
 	{
-		if (e->type->type != VEquipmentType::Type::Engine)
+		if (e->type->type != EquipmentSlotType::VehicleEngine)
 			continue;
 		fuel += e->type->max_ammo;
 	}
@@ -699,7 +696,7 @@ int Vehicle::getMaxPassengers() const
 
 	for (auto &e : this->equipment)
 	{
-		if (e->type->type != VEquipmentType::Type::General)
+		if (e->type->type != EquipmentSlotType::VehicleGeneral)
 			continue;
 		passengers += e->type->passengers;
 	}
@@ -717,7 +714,7 @@ int Vehicle::getMaxCargo() const
 
 	for (auto &e : this->equipment)
 	{
-		if (e->type->type != VEquipmentType::Type::General)
+		if (e->type->type != EquipmentSlotType::VehicleGeneral)
 			continue;
 		cargo += e->type->cargo_space;
 	}
@@ -823,7 +820,7 @@ void Vehicle::addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentT
 
 	switch (type->type)
 	{
-		case VEquipmentType::Type::Engine:
+		case EquipmentSlotType::VehicleEngine:
 		{
 			auto engine = mksp<VEquipment>();
 			engine->type = type;
@@ -832,7 +829,7 @@ void Vehicle::addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentT
 			LogInfo("Equipped \"%s\" with engine \"%s\"", this->name, type->name);
 			break;
 		}
-		case VEquipmentType::Type::Weapon:
+		case EquipmentSlotType::VehicleWeapon:
 		{
 			auto thisRef = StateRef<Vehicle>(&state, shared_from_this());
 			auto weapon = mksp<VEquipment>();
@@ -844,7 +841,7 @@ void Vehicle::addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentT
 			LogInfo("Equipped \"%s\" with weapon \"%s\"", this->name, type->name);
 			break;
 		}
-		case VEquipmentType::Type::General:
+		case EquipmentSlotType::VehicleGeneral:
 		{
 			auto equipment = mksp<VEquipment>();
 			equipment->type = type;
@@ -891,6 +888,45 @@ sp<Vehicle> Vehicle::get(const GameState &state, const UString &id)
 		return nullptr;
 	}
 	return it->second;
+}
+
+sp<Equipment> Vehicle::getEquipmentAt(const Vec2<int> &position) const
+{
+	Vec2<int> slotPosition = {0, 0};
+	for (auto &slot : this->type->equipment_layout_slots)
+	{
+		if (slot.bounds.within(position))
+		{
+			slotPosition = slot.bounds.p0;
+		}
+	}
+	for (auto &eq : this->equipment)
+	{
+		Rect<int> eqBounds{eq->equippedPosition, eq->equippedPosition + eq->type->equipscreen_size};
+		if (eqBounds.within(slotPosition))
+		{
+			return eq;
+		}
+	}
+	return nullptr;
+}
+
+const std::list<EquipmentLayoutSlot> &Vehicle::getSlots() const
+{
+	return this->type->equipment_layout_slots;
+}
+
+std::list<std::pair<Vec2<int>, sp<Equipment>>> Vehicle::getEquipment() const
+{
+	std::list<std::pair<Vec2<int>, sp<Equipment>>> equipmentList;
+
+	for (auto &equipmentObject : this->equipment)
+	{
+		equipmentList.emplace_back(
+		    std::make_pair(equipmentObject->equippedPosition, equipmentObject));
+	}
+
+	return equipmentList;
 }
 
 }; // namespace OpenApoc

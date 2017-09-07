@@ -69,15 +69,14 @@ class BattleItem : public std::enable_shared_from_this<BattleItem>
 
 	Collision checkItemCollision(Vec3<float> previousPosition, Vec3<float> nextPosition);
 
+	bool findSupport();
+	void getSupport();
+
 	// Following members are not serialized, but rather are set up in the initBattle method
 
 	sp<Image> strategySprite;
 
 	sp<TileObjectBattleItem> tileObject;
 	sp<TileObjectShadow> shadowObject;
-
-  private:
-	bool findSupport();
-	void getSupport();
 };
 } // namespace OpenApoc

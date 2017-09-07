@@ -1,6 +1,7 @@
 #include "game/state/gamestate.h"
 #include "framework/framework.h"
 #include "framework/trace.h"
+#include "game/state/aequipment.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
 #include "game/state/battle/battle.h"
@@ -45,6 +46,10 @@ GameState::~GameState()
 	{
 		Battle::finishBattle(*this);
 		Battle::exitBattle(*this);
+	}
+	for (auto &a : this->agents)
+	{
+		a.second->destroy();
 	}
 	for (auto &v : this->vehicles)
 	{
@@ -164,9 +169,8 @@ void GameState::initState()
 	}
 	for (auto &a : this->agents)
 	{
-		a.second->leftHandItem = a.second->getFirstItemInSlot(AEquipmentSlotType::LeftHand, false);
-		a.second->rightHandItem =
-		    a.second->getFirstItemInSlot(AEquipmentSlotType::RightHand, false);
+		a.second->leftHandItem = a.second->getFirstItemInSlot(EquipmentSlotType::LeftHand, false);
+		a.second->rightHandItem = a.second->getFirstItemInSlot(EquipmentSlotType::RightHand, false);
 	}
 	// Run nessecary methods for different types
 	research.updateTopicList();
@@ -328,37 +332,37 @@ void GameState::fillPlayerStartingProperty()
 				{
 					if (t->type == AEquipmentType::Type::Armor)
 					{
-						AEquipmentSlotType slotType = AEquipmentSlotType::General;
+						EquipmentSlotType slotType = EquipmentSlotType::General;
 						switch (t->body_part)
 						{
 							case BodyPart::Body:
-								slotType = AEquipmentSlotType::ArmorBody;
+								slotType = EquipmentSlotType::ArmorBody;
 								break;
 							case BodyPart::Legs:
-								slotType = AEquipmentSlotType::ArmorLegs;
+								slotType = EquipmentSlotType::ArmorLegs;
 								break;
 							case BodyPart::Helmet:
-								slotType = AEquipmentSlotType::ArmorHelmet;
+								slotType = EquipmentSlotType::ArmorHelmet;
 								break;
 							case BodyPart::LeftArm:
-								slotType = AEquipmentSlotType::ArmorLeftHand;
+								slotType = EquipmentSlotType::ArmorLeftHand;
 								break;
 							case BodyPart::RightArm:
-								slotType = AEquipmentSlotType::ArmorRightHand;
+								slotType = EquipmentSlotType::ArmorRightHand;
 								break;
 						}
-						agent->addEquipmentByType(*this, {this, t->id}, slotType);
+						agent->addEquipmentByType(*this, {this, t->id}, slotType, false);
 					}
 					else if (t->type == AEquipmentType::Type::Ammo ||
 					         t->type == AEquipmentType::Type::MediKit ||
 					         t->type == AEquipmentType::Type::Grenade)
 					{
-						agent->addEquipmentByType(*this, {this, t->id},
-						                          AEquipmentSlotType::General);
+						agent->addEquipmentByType(*this, {this, t->id}, EquipmentSlotType::General,
+						                          false);
 					}
 					else
 					{
-						agent->addEquipmentByType(*this, {this, t->id});
+						agent->addEquipmentByType(*this, {this, t->id}, false);
 					}
 				}
 				it++;

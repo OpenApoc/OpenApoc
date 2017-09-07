@@ -76,6 +76,28 @@ void BattleUnit::init(GameState &state)
 	aiList.init(state, *this);
 }
 
+void BattleUnit::destroy()
+{
+	targetUnit.clear();
+	focusUnit.clear();
+	focusedByUnits.clear();
+	psiTarget.clear();
+	brainSucker.clear();
+
+	if (agent)
+	{
+		agent->unit.clear();
+	}
+	visibleUnits.clear();
+	visibleEnemies.clear();
+	aiList.aiList.clear();
+
+	for (auto &m : missions)
+	{
+		m->targetUnit.clear();
+	}
+}
+
 void BattleUnit::removeFromSquad(Battle &battle)
 {
 	if (squadNumber != -1)
@@ -717,7 +739,7 @@ bool BattleUnit::startAttacking(GameState &state, WeaponStatus status)
 				if (status == WeaponStatus::FiringBothHands)
 				{
 					// Right hand has priority
-					auto rhItem = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+					auto rhItem = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
 					if (rhItem && rhItem->canFire())
 					{
 						status = WeaponStatus::FiringRightHand;
@@ -731,8 +753,8 @@ bool BattleUnit::startAttacking(GameState &state, WeaponStatus status)
 				}
 				// Check TU
 				auto weapon = (status == WeaponStatus::FiringRightHand)
-				                  ? agent->getFirstItemInSlot(AEquipmentSlotType::RightHand)
-				                  : agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+				                  ? agent->getFirstItemInSlot(EquipmentSlotType::RightHand)
+				                  : agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
 				if (!weapon || !weapon->canFire(targetTile) ||
 				    !canAfford(state, getAttackCost(state, *weapon, targetTile), true, true))
 				{
@@ -805,8 +827,8 @@ void BattleUnit::stopAttacking()
 
 WeaponStatus BattleUnit::canAttackUnit(GameState &state, sp<BattleUnit> unit)
 {
-	return canAttackUnit(state, unit, agent->getFirstItemInSlot(AEquipmentSlotType::RightHand),
-	                     agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand));
+	return canAttackUnit(state, unit, agent->getFirstItemInSlot(EquipmentSlotType::RightHand),
+	                     agent->getFirstItemInSlot(EquipmentSlotType::LeftHand));
 }
 
 WeaponStatus BattleUnit::canAttackUnit(GameState &state, sp<BattleUnit> unit,
@@ -898,8 +920,8 @@ int BattleUnit::getPsiChance(StateRef<BattleUnit> target, PsiStatus status,
 		LogError("Invalid value NotEngaged for psiStatus in getPsiChance()");
 		return 0;
 	}
-	auto e1 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
-	auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+	auto e1 = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
+	auto e2 = agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
 	if (e1 && e1->type != item)
 	{
 		e1 = nullptr;
@@ -1146,8 +1168,8 @@ void BattleUnit::refreshReserveCost()
 	{
 		return;
 	}
-	auto e1 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
-	auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+	auto e1 = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
+	auto e2 = agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
 	auto weapon = e1 && e1->canFire() ? e1 : (e2 && e2->canFire() ? e2 : nullptr);
 	if (weapon)
 	{
@@ -1212,6 +1234,8 @@ void BattleUnit::spendRemainingTU(GameState &state, bool allowInterrupt)
 	}
 }
 
+int BattleUnit::getPickupCost() const { return initialTU * 10 / 100; }
+
 int BattleUnit::getThrowCost() const { return initialTU * 18 / 100; }
 
 int BattleUnit::getMedikitCost() const { return initialTU * 375 / 1000; }
@@ -1231,45 +1255,13 @@ void BattleUnit::beginTurn(GameState &state)
 	}
 }
 
-int BattleUnit::getMaxHealth() const { return this->agent->current_stats.health; }
+bool BattleUnit::isDead() const { return agent->getHealth() <= 0 || destroyed; }
 
-int BattleUnit::getHealth() const { return this->agent->modified_stats.health; }
-
-int BattleUnit::getMaxShield() const
-{
-	int maxShield = 0;
-
-	for (auto &e : this->agent->equipment)
-	{
-		if (e->type->type != AEquipmentType::Type::DisruptorShield)
-			continue;
-		maxShield += e->type->max_ammo;
-	}
-
-	return maxShield;
-}
-
-int BattleUnit::getShield() const
-{
-	int curShield = 0;
-
-	for (auto &e : this->agent->equipment)
-	{
-		if (e->type->type != AEquipmentType::Type::DisruptorShield)
-			continue;
-		curShield += e->ammo;
-	}
-
-	return curShield;
-}
-
-bool BattleUnit::isDead() const { return getHealth() <= 0 || destroyed; }
-
-bool BattleUnit::isUnconscious() const { return !isDead() && stunDamage >= getHealth(); }
+bool BattleUnit::isUnconscious() const { return !isDead() && stunDamage >= agent->getHealth(); }
 
 bool BattleUnit::isConscious() const
 {
-	return !isDead() && !retreated && stunDamage < getHealth() &&
+	return !isDead() && !retreated && stunDamage < agent->getHealth() &&
 	       (current_body_state != BodyState::Downed || target_body_state != BodyState::Downed) &&
 	       target_body_state != BodyState::Dead;
 }
@@ -1568,7 +1560,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 			// Shield destroyed
 			if (shield->ammo <= 0)
 			{
-				agent->removeEquipment(shield);
+				agent->removeEquipment(state, shield);
 			}
 			state.current_battle->placeDoodad(shield->type->shield_graphic,
 			                                  tileObject->getCenter());
@@ -1641,7 +1633,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 		// Armor destroyed
 		if (armor->armor <= 0)
 		{
-			agent->removeEquipment(armor);
+			agent->removeEquipment(state, armor);
 		}
 	}
 
@@ -1749,13 +1741,14 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 		return;
 	}
 
-	auto e1 = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
-	auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
+	auto e1 = agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
+	auto e2 = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
 
 	// Cloak
 	if (isConscious())
 	{
 		if (cloakTicksAccumulated < CLOAK_TICKS_REQUIRED)
+
 		{
 			cloakTicksAccumulated += ticks;
 		}
@@ -2143,11 +2136,11 @@ void BattleUnit::updateIdling(GameState &state)
 		// Sanity checks
 		if (goalFacing != facing)
 		{
-			LogError("Unit turning without a mission, wtf?");
+			LogError("Unit %s (%s) turning without a mission, wtf?", id, agent->type->id);
 		}
 		if (target_body_state != current_body_state)
 		{
-			LogError("Unit changing body state without a mission, wtf?");
+			LogError("Unit %s (%s) changing body state without a mission, wtf?", id, agent->type->id);
 		}
 
 		// Reach goal before everything else
@@ -3090,8 +3083,8 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 
 		// Prepare weapons we can use
 		// We can use a weapon if we're set to fire this hand, and it's a weapon that can be fired
-		auto weaponRight = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
-		auto weaponLeft = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+		auto weaponRight = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
+		auto weaponLeft = agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
 		switch (weaponStatus)
 		{
 			case WeaponStatus::FiringBothHands:
@@ -3292,8 +3285,8 @@ void BattleUnit::updatePsi(GameState &state, unsigned int ticks)
 	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
 	if (psiStatus != PsiStatus::NotEngaged)
 	{
-		auto e1 = agent->getFirstItemInSlot(AEquipmentSlotType::RightHand);
-		auto e2 = agent->getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+		auto e1 = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
+		auto e2 = agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
 		if (e1 && e1->type != psiItem)
 		{
 			e1 = nullptr;
@@ -3742,7 +3735,7 @@ void BattleUnit::applyEnzymeEffect(GameState &state)
 			}
 			else
 			{
-				agent->removeEquipment(item);
+				agent->removeEquipment(state, item);
 			}
 		}
 	}
@@ -3926,7 +3919,7 @@ void BattleUnit::executeAIAction(GameState &state, AIAction &action)
 	// Equip item we're going to use
 	if (action.item)
 	{
-		UnitAIHelper::ensureItemInSlot(state, action.item, AEquipmentSlotType::RightHand);
+		UnitAIHelper::ensureItemInSlot(state, action.item, EquipmentSlotType::RightHand);
 		if (action.type == AIAction::Type::AttackWeaponUnit ||
 		    action.type == AIAction::Type::AttackWeaponTile)
 		{
@@ -4151,6 +4144,7 @@ void BattleUnit::tryToRiseUp(GameState &state)
 void BattleUnit::dropDown(GameState &state)
 {
 	state.current_battle->checkMissionEnd(state, false);
+	state.current_battle->checkIfBuildingDisabled(state);
 	// Reset states, cancel actions
 	cloakTicksAccumulated = 0;
 	stopAttacking();
@@ -4469,6 +4463,8 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 	{
 		sendAgentEvent(state, GameEventType::HostileDied);
 	}
+	// Leave squad
+	removeFromSquad(*state.current_battle);
 	// Animate body
 	dropDown(state);
 }
@@ -4643,8 +4639,8 @@ bool BattleUnit::useBrainsucker(GameState &state)
 
 bool BattleUnit::useItem(GameState &state, sp<AEquipment> item)
 {
-	if (item->ownerAgent != agent || (item->equippedSlotType != AEquipmentSlotType::RightHand &&
-	                                  item->equippedSlotType != AEquipmentSlotType::LeftHand))
+	if (item->ownerAgent != agent || (item->equippedSlotType != EquipmentSlotType::RightHand &&
+	                                  item->equippedSlotType != EquipmentSlotType::LeftHand))
 	{
 		LogError("Unit %s attempting to use item that is not in hand or does not belong to us?",
 		         id);
@@ -4749,7 +4745,7 @@ void BattleUnit::setBodyState(GameState &state, BodyState bodyState)
 {
 	if (!agent->isBodyStateAllowed(bodyState))
 	{
-		LogError("SetBodyState called on %s with %d", id, (int)bodyState);
+		LogError("SetBodyState called on %s (%s) (%s) with bodyState %d", id, agent->name, agent->type->id, (int)bodyState);
 		return;
 	}
 	bool roseUp = current_body_state == BodyState::Downed;

@@ -50,7 +50,7 @@ BattleBriefing::BattleBriefing(sp<GameState> state, StateRef<Organisation> targe
 	else
 	{
 		auto building = StateRef<Building>(&*state, location);
-		if (!isRaid)
+		if (!isRaid && building->owner != state->getAliens())
 		{
 			menuform->findControlTyped<Graphic>("BRIEFING_IMAGE")
 			    ->setImage(fw().data->loadImage("xcom3/tacdata/brief.pcx"));

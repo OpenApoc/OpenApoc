@@ -17,6 +17,7 @@
 #include "game/state/battle/battleunit.h"
 #include "game/state/battle/battleunitanimationpack.h"
 #include "game/state/battle/battleunitimagepack.h"
+#include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/projectile.h"
@@ -61,6 +62,7 @@ Battle::~Battle()
 	TRACE_FN;
 	// Note due to backrefs to Tile*s etc. we need to destroy all tile objects
 	// before the TileMap
+	map->ceaseBattlescapeUpdates = true;
 	for (auto &p : this->projectiles)
 	{
 		if (p->tileObject)
@@ -71,7 +73,9 @@ Battle::~Battle()
 	for (auto &s : this->map_parts)
 	{
 		if (s->tileObject)
+		{
 			s->tileObject->removeFromMap();
+		}
 		s->tileObject = nullptr;
 	}
 	this->map_parts.clear();
@@ -81,8 +85,7 @@ Battle::~Battle()
 	}
 	for (auto &u : this->units)
 	{
-		u.second->agent->unit.clear();
-		u.second->visibleUnits.clear();
+		u.second->destroy();
 	}
 	for (auto &i : this->items)
 	{
@@ -1845,7 +1848,6 @@ void Battle::abortMission(GameState &state)
 
 void Battle::checkMissionEnd(GameState &state, bool retreated, bool forceReCheck)
 {
-	LogWarning("FIXME: Victory/Loss when finishing alien building mission");
 	auto endBeginTimer = std::max((unsigned)1, missionEndTimer);
 	if (forceReCheck)
 	{
@@ -1896,6 +1898,39 @@ void Battle::checkMissionEnd(GameState &state, bool retreated, bool forceReCheck
 			}
 		}
 	}
+}
+
+void Battle::checkIfBuildingDisabled(GameState &state)
+{
+	if (!buildingCanBeDisabled || buildingDisabled)
+	{
+		return;
+	}
+	// Find a mission objective unit
+	for (auto &u : units)
+	{
+		if (u.second->owner != targetOrganisation)
+		{
+			continue;
+		}
+		if (u.second->agent->type->missionObjective && !u.second->isDead())
+		{
+			// Mission objective unit found alive
+			return;
+		}
+	}
+	// Find a mission objective object
+	for (auto &mp : map_parts)
+	{
+		if (mp->type->missionObjective && !mp->destroyed)
+		{
+			// Mission objective unit found alive
+			return;
+		}
+	}
+	// Found nothing, building disabled
+	buildingDisabled = true;
+	fw().pushEvent(new GameEvent(GameEventType::BuildingDisabled));
 }
 
 void Battle::refreshLeadershipBonus(StateRef<Organisation> org)
@@ -1976,6 +2011,8 @@ void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
                                      Vec3<float> &target, int accuracy, bool cloaked, bool thrown)
 {
 	auto dispersion = (float)(100 - accuracy);
+	// Introduce minimal dispersion?
+	dispersion = std::max(0.0f, dispersion);
 	if (cloaked)
 	{
 		dispersion *= dispersion;
@@ -1986,6 +2023,10 @@ void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
 	}
 
 	auto delta = (target - firePosition) * dispersion / 1000.0f;
+	if (delta.x == 0.0f && delta.y == 0.0f && delta.z == 0.0f)
+	{
+		return;
+	}
 
 	float length_vector =
 	    1.0f / std::sqrt(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z);
@@ -2141,6 +2182,7 @@ void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> 
 	{
 		return;
 	}
+	b->targetOrganisation = target_organisation;
 	b->hotseat = hotseat;
 	state.current_battle = b;
 }
@@ -2164,6 +2206,8 @@ void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> 
 		return;
 	}
 	b->hotseat = hotseat;
+	b->targetOrganisation = target_organisation;
+	b->buildingCanBeDisabled = target_organisation == state.getAliens();
 	state.current_battle = b;
 }
 
@@ -2267,7 +2311,9 @@ void Battle::finishBattle(GameState &state)
 	}
 	for (auto &u : unitsToRemove)
 	{
+		u->agent->destroy();
 		state.agents.erase(u->agent.id);
+		u->destroy();
 		state.current_battle->units.erase(u->id);
 	}
 	// Apply experience to stats of living agents + promotions
@@ -2386,6 +2432,20 @@ void Battle::exitBattle(GameState &state)
 		player->current_relations[{&state, o.first}] = o.second->getRelationTo(player);
 	}
 
+	LogWarning(
+	    "Checking item reference consistency, remove code in battle.exitBattleconfirmed correct");
+	for (auto &a : state.agents)
+	{
+		for (auto &e : a.second->equipment)
+		{
+			if (e->ownerUnit)
+			{
+				LogError("Agent %s has item %s which is assigned to unit %s and will leak", a.first,
+				         e->type.id, e->ownerUnit.id);
+			}
+		}
+	}
+
 	state.current_battle = nullptr;
 }
 
@@ -2467,7 +2527,6 @@ void Battle::loadImagePacks(GameState &state)
 				imagePacks.insert(brainsucker);
 				imagePacks.insert(brainsucker + "s");
 				brainsuckerFound = true;
-				break;
 			}
 		}
 	}

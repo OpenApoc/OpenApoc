@@ -130,7 +130,10 @@ class Battle : public std::enable_shared_from_this<Battle>
 	Mode mode = Mode::RealTime;
 	BattleScore score = {};
 	unsigned missionEndTimer = 0;
+	bool buildingCanBeDisabled = false;
+	bool buildingDisabled = false;
 	bool playerWon = false;
+	StateRef<Organisation> targetOrganisation;
 	bool loserHasRetreated = false;
 	bool winnerHasRetreated = false;
 
@@ -221,6 +224,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	int killStrandedUnits(GameState &state, bool preview = false);
 	void abortMission(GameState &state);
 	void checkMissionEnd(GameState &state, bool retreated, bool forceReCheck = false);
+	void checkIfBuildingDisabled(GameState &state);
 	void refreshLeadershipBonus(StateRef<Organisation> org);
 
 	void update(GameState &state, unsigned int ticks);

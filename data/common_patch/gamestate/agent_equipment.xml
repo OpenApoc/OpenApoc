@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <agent_equipment>
   <entry>
-    <!-- DEBUG ENTRY -->
+    <!-- DEBUG ENTRY, USED TO CHECK MAP DESTRUCTION -->
     <key>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL_CLIP</key>
     <value>
-      <max_ammo>9001</max_ammo>
+<!--    
+	  <max_ammo>9001</max_ammo>
       <damage>9001</damage>
+	  -->
     </value>
   </entry>
   <entry>

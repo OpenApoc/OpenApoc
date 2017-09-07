@@ -141,7 +141,7 @@ void City::update(GameState &state, unsigned int ticks)
 		{
 			for (auto &e : v->equipment)
 			{
-				if (e->type->type != VEquipmentType::Type::Weapon)
+				if (e->type->type != EquipmentSlotType::VehicleWeapon)
 					continue;
 				e->reload(std::numeric_limits<int>::max());
 			}
@@ -384,10 +384,16 @@ void City::accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition, Vec
 	int vehy = target.y;
 	int vehz = target.z;
 	int inverseAccuracy = 100 - accuracy;
+	// Introduce minimal dispersion?
+	inverseAccuracy = std::max(0, inverseAccuracy);
 
 	float delta_x = (float)(vehx - projx) * inverseAccuracy / 1000.0f;
 	float delta_y = (float)(vehy - projy) * inverseAccuracy / 1000.0f;
 	float delta_z = (float)(vehz - projz) * inverseAccuracy / 1000.0f;
+	if (delta_x == 0.0f && delta_y == 0.0f && delta_z == 0.0f)
+	{
+		return;
+	}
 
 	float length_vector =
 	    1.0f / std::sqrt(delta_x * delta_x + delta_y * delta_y + delta_z * delta_z);

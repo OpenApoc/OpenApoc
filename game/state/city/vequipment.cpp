@@ -1,3 +1,4 @@
+#include "game/state/city/city.h"
 #include "game/state/city/vequipment.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
@@ -18,7 +19,7 @@ VEquipment::VEquipment()
 {
 }
 
-sp<Projectile> VEquipment::fire(Vec3<float> targetPosition, StateRef<Vehicle> targetVehicle)
+sp<Projectile> VEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Vehicle> targetVehicle)
 {
 	static const std::map<VEquipment::WeaponState, UString> WeaponStateMap = {
 	    {WeaponState::Ready, "ready"},
@@ -27,7 +28,7 @@ sp<Projectile> VEquipment::fire(Vec3<float> targetPosition, StateRef<Vehicle> ta
 	    {WeaponState::OutOfAmmo, "outofammo"},
 	};
 
-	if (this->type->type != VEquipmentType::Type::Weapon)
+	if (this->type->type != EquipmentSlotType::VehicleWeapon)
 	{
 		LogError("fire() called on non-Weapon");
 		return nullptr;
@@ -65,12 +66,19 @@ sp<Projectile> VEquipment::fire(Vec3<float> targetPosition, StateRef<Vehicle> ta
 	{
 		this->weaponState = WeaponState::OutOfAmmo;
 	}
-	auto vehicleMuzzle = vehicleTile->getVehicle()->getMuzzleLocation();
-	Vec3<float> velocity = targetPosition - vehicleMuzzle;
+	auto vehicleMuzzle = owner->getMuzzleLocation();
+
+	auto fromScaled = vehicleMuzzle * VELOCITY_SCALE_CITY;
+	auto toScaled = targetPosition * VELOCITY_SCALE_CITY;
+	// FIXME: Account for target's cloak!
+	City::accuracyAlgorithmCity(state, fromScaled, toScaled,
+		type->accuracy + owner->getAccuracy(), false);
+	
+	Vec3<float> velocity = toScaled - fromScaled;
 	velocity = glm::normalize(velocity);
 	// I believe this is the correct formula
 	velocity *= type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
-
+	
 	return mksp<Projectile>(type->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
 	                        owner, targetVehicle, vehicleMuzzle, velocity, type->turn_rate,
 	                        static_cast<int>(this->getRange() / type->speed * TICKS_MULTIPLIER),
@@ -80,7 +88,7 @@ sp<Projectile> VEquipment::fire(Vec3<float> targetPosition, StateRef<Vehicle> ta
 
 void VEquipment::update(int ticks)
 {
-	if (this->type->type != VEquipmentType::Type::Weapon)
+	if (this->type->type != EquipmentSlotType::VehicleWeapon)
 	{
 		LogError("update() called on non-Weapon");
 		return;
@@ -109,7 +117,7 @@ void VEquipment::update(int ticks)
 
 int VEquipment::reload(int ammoAvailable)
 {
-	if (this->type->type != VEquipmentType::Type::Weapon)
+	if (this->type->type != EquipmentSlotType::VehicleWeapon)
 	{
 		LogError("reload() called on non-Weapon");
 		return 0;
@@ -122,7 +130,7 @@ int VEquipment::reload(int ammoAvailable)
 
 float VEquipment::getRange() const
 {
-	if (this->type->type != VEquipmentType::Type::Weapon)
+	if (this->type->type != EquipmentSlotType::VehicleWeapon)
 	{
 		LogError("getRange() called on non-Weapon");
 		return 0;
@@ -133,7 +141,7 @@ float VEquipment::getRange() const
 
 void VEquipment::setReloadTime(int ticks)
 {
-	if (this->type->type != VEquipmentType::Type::Weapon)
+	if (this->type->type != EquipmentSlotType::VehicleWeapon)
 	{
 		LogError("setReloadTime() called on non-Weapon");
 		return;
@@ -151,12 +159,22 @@ void VEquipment::setReloadTime(int ticks)
 
 bool VEquipment::canFire() const
 {
-	if (this->type->type != VEquipmentType::Type::Weapon)
+	if (this->type->type != EquipmentSlotType::VehicleWeapon)
 	{
 		LogError("canFire() called on non-Weapon");
 		return false;
 	}
 	return this->weaponState == WeaponState::Ready;
 }
+
+sp<Image> VEquipment::getEquipmentArmorImage() const
+{
+	LogError("Vehicle equipment cannot have armor image");
+	return 0;
+}
+
+sp<Image> VEquipment::getEquipmentImage() const { return this->type->equipscreen_sprite; }
+
+Vec2<int> VEquipment::getEquipmentSlotSize() const { return this->type->equipscreen_size; }
 
 } // namespace OpenApoc

@@ -10,6 +10,7 @@ namespace OpenApoc
 {
 
 class ScrollBar;
+class Image;
 
 class ListBox : public Control
 {
@@ -29,6 +30,10 @@ class ListBox : public Control
 	int ItemSize, ItemSpacing;
 	Orientation ListOrientation, ScrollOrientation;
 	Colour HoverColour, SelectedColour;
+	// Image to use instead of frame for hover
+	sp<Image> HoverImage;
+	// Image to use instead of frame for selection
+	sp<Image> SelectedImage;
 	bool AlwaysEmitSelectionEvents;
 
 	ListBox();

@@ -151,31 +151,31 @@ const UString &Agent::getId(const GameState &state, const sp<Agent> ptr)
 
 AgentType::AgentType() : aiType(AIType::None) {}
 
-AEquipmentSlotType AgentType::getArmorSlotType(BodyPart bodyPart)
+EquipmentSlotType AgentType::getArmorSlotType(BodyPart bodyPart)
 {
 	switch (bodyPart)
 	{
 		case BodyPart::Body:
-			return AEquipmentSlotType::ArmorBody;
+			return EquipmentSlotType::ArmorBody;
 			break;
 		case BodyPart::Legs:
-			return AEquipmentSlotType::ArmorLegs;
+			return EquipmentSlotType::ArmorLegs;
 			break;
 		case BodyPart::Helmet:
-			return AEquipmentSlotType::ArmorHelmet;
+			return EquipmentSlotType::ArmorHelmet;
 			break;
 		case BodyPart::LeftArm:
-			return AEquipmentSlotType::ArmorLeftHand;
+			return EquipmentSlotType::ArmorLeftHand;
 			break;
 		case BodyPart::RightArm:
-			return AEquipmentSlotType::ArmorRightHand;
+			return EquipmentSlotType::ArmorRightHand;
 			break;
 	}
 	LogError("Unknown body part?");
-	return AEquipmentSlotType::General;
+	return EquipmentSlotType::General;
 }
 
-AgentEquipmentLayout::EquipmentLayoutSlot *AgentType::getFirstSlot(AEquipmentSlotType type)
+EquipmentLayoutSlot *AgentType::getFirstSlot(EquipmentSlotType type)
 {
 	for (auto &s : equipment_layout->slots)
 	{
@@ -302,7 +302,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	{
 		if (!t)
 			continue;
-		agent->addEquipmentByType(state, {&state, t->id});
+		agent->addEquipmentByType(state, {&state, t->id}, type->inventory);
 	}
 
 	agent->updateSpeed();
@@ -313,10 +313,10 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 
 bool Agent::isBodyStateAllowed(BodyState bodyState) const
 {
-	static const std::list<AEquipmentSlotType> armorslots = {
-	    AEquipmentSlotType::ArmorBody, AEquipmentSlotType::ArmorHelmet,
-	    AEquipmentSlotType::ArmorLeftHand, AEquipmentSlotType::ArmorLegs,
-	    AEquipmentSlotType::ArmorRightHand};
+	static const std::list<EquipmentSlotType> armorslots = {
+	    EquipmentSlotType::ArmorBody, EquipmentSlotType::ArmorHelmet,
+	    EquipmentSlotType::ArmorLeftHand, EquipmentSlotType::ArmorLegs,
+	    EquipmentSlotType::ArmorRightHand};
 
 	if (type->bodyType->allowed_body_states.find(bodyState) !=
 	    type->bodyType->allowed_body_states.end())
@@ -427,12 +427,12 @@ sp<AEquipment> Agent::getArmor(BodyPart bodyPart) const
 
 bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type) const
 {
-	AEquipmentSlotType slotType = AEquipmentSlotType::General;
+	EquipmentSlotType slotType = EquipmentSlotType::General;
 	return canAddEquipment(pos, type, slotType);
 }
 
 bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
-                            AEquipmentSlotType &slotType) const
+                            EquipmentSlotType &slotType) const
 {
 	Vec2<int> slotOrigin;
 	bool slotFound = false;
@@ -442,16 +442,19 @@ bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
 	{
 		if (slot.bounds.within(pos))
 		{
-			// If we are equipping into an armor slot, ensure the item being equipped is armor
-			if (slot.type == AEquipmentSlotType::ArmorBody ||
-			    slot.type == AEquipmentSlotType::ArmorLegs ||
-			    slot.type == AEquipmentSlotType::ArmorHelmet ||
-			    slot.type == AEquipmentSlotType::ArmorLeftHand ||
-			    slot.type == AEquipmentSlotType::ArmorRightHand)
+			// If we are equipping into an armor slot, ensure the item being equipped is correct
+			// armor
+			if (isArmorEquipmentSlot(slot.type))
 			{
-				slotIsArmor = true;
 				if (type->type != AEquipmentType::Type::Armor)
+				{
 					break;
+				}
+				if (AgentType::getArmorSlotType(type->body_part) != slot.type)
+				{
+					break;
+				}
+				slotIsArmor = true;
 			}
 			slotOrigin = slot.bounds.p0;
 			slotType = slot.type;
@@ -484,13 +487,8 @@ bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
 		        bool validSlot = false;
 		        for (auto &slot : this->type->equipment_layout->slots)
 		        {
-		            if (slot.bounds.within(slotPos) && (
-		                slot.type == AgentType::AEquipmentSlotType::ArmorBody
-		                || slot.type == AgentType::AEquipmentSlotType::ArmorLegs
-		                || slot.type == AgentType::AEquipmentSlotType::ArmorHelmet
-		                || slot.type == AgentType::AEquipmentSlotType::ArmorLeftHand
-		                || slot.type == AgentType::AEquipmentSlotType::ArmorRightHand
-		                ))
+		            if (slot.bounds.within(slotPos)
+		                && (isArmorEquipmentSlot(slot.type)))
 		            {
 		                validSlot = true;
 		                break;
@@ -509,6 +507,8 @@ bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
 	}
 	else
 	{
+		pos = slotOrigin;
+		// Check that the equipment doesn't overlap with any other
 		Rect<int> bounds{pos, pos + type->equipscreen_size};
 		for (auto &otherEquipment : this->equipment)
 		{
@@ -525,13 +525,35 @@ bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
 				return false;
 			}
 		}
+		// Check that this doesn't go outside a slot of the correct type
+		for (int y = 0; y < type->equipscreen_size.y; y++)
+		{
+			for (int x = 0; x < type->equipscreen_size.x; x++)
+			{
+				Vec2<int> slotPos = {x, y};
+				slotPos += pos;
+				bool validSlot = false;
+				for (auto &slot : this->type->equipment_layout->slots)
+				{
+					if (slot.bounds.within(slotPos) && slot.type == slotType)
+					{
+						validSlot = true;
+						break;
+					}
+				}
+				if (!validSlot)
+				{
+					return false;
+				}
+			}
+		}
 	}
 
 	return true;
 }
 
 // If type is null we look for any slot, if type is not null we look for slot that can fit the type
-Vec2<int> Agent::findFirstSlotByType(AEquipmentSlotType slotType, StateRef<AEquipmentType> type)
+Vec2<int> Agent::findFirstSlotByType(EquipmentSlotType slotType, StateRef<AEquipmentType> type)
 {
 	Vec2<int> pos = {-1, 0};
 	for (auto &slot : this->type->equipment_layout->slots)
@@ -545,15 +567,21 @@ Vec2<int> Agent::findFirstSlotByType(AEquipmentSlotType slotType, StateRef<AEqui
 	return pos;
 }
 
-void Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type)
+sp<AEquipment> Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type,
+                                         bool allowFailure)
 {
 	Vec2<int> pos;
 	bool slotFound = false;
-	AEquipmentSlotType prefSlotType = AEquipmentSlotType::General;
+	EquipmentSlotType prefSlotType = EquipmentSlotType::General;
 	bool prefSlot = false;
 	if (type->type == AEquipmentType::Type::Ammo)
 	{
-		prefSlotType = AEquipmentSlotType::General;
+		auto wpn = addEquipmentAsAmmoByType(state, type);
+		if (wpn)
+		{
+			return wpn;
+		}
+		prefSlotType = EquipmentSlotType::General;
 		prefSlot = true;
 	}
 	else if (type->type == AEquipmentType::Type::Armor)
@@ -561,19 +589,19 @@ void Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type)
 		switch (type->body_part)
 		{
 			case BodyPart::Body:
-				prefSlotType = AEquipmentSlotType::ArmorBody;
+				prefSlotType = EquipmentSlotType::ArmorBody;
 				break;
 			case BodyPart::Legs:
-				prefSlotType = AEquipmentSlotType::ArmorLegs;
+				prefSlotType = EquipmentSlotType::ArmorLegs;
 				break;
 			case BodyPart::Helmet:
-				prefSlotType = AEquipmentSlotType::ArmorHelmet;
+				prefSlotType = EquipmentSlotType::ArmorHelmet;
 				break;
 			case BodyPart::LeftArm:
-				prefSlotType = AEquipmentSlotType::ArmorLeftHand;
+				prefSlotType = EquipmentSlotType::ArmorLeftHand;
 				break;
 			case BodyPart::RightArm:
-				prefSlotType = AEquipmentSlotType::ArmorRightHand;
+				prefSlotType = EquipmentSlotType::ArmorRightHand;
 				break;
 		}
 		prefSlot = true;
@@ -608,29 +636,44 @@ void Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type)
 	}
 	if (!slotFound)
 	{
-		LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id,
-		         this->name);
-		return;
+		if (!allowFailure)
+		{
+			LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id,
+			         this->name);
+		}
+		return nullptr;
 	}
 
-	this->addEquipmentByType(state, pos, type);
+	return addEquipmentByType(state, pos, type);
 }
 
-void Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type,
-                               AEquipmentSlotType slotType)
+sp<AEquipment> Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentType> type,
+                                         EquipmentSlotType slotType, bool allowFailure)
 {
+	if (type->type == AEquipmentType::Type::Ammo)
+	{
+		auto wpn = addEquipmentAsAmmoByType(state, type);
+		if (wpn)
+		{
+			return wpn;
+		}
+	}
 	Vec2<int> pos = findFirstSlotByType(slotType, type);
 	if (pos.x == -1)
 	{
-		LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id,
-		         this->name);
-		return;
+		if (!allowFailure)
+		{
+			LogError("Trying to add \"%s\" on agent \"%s\" failed: no valid slot found", type.id,
+			         this->name);
+		}
+		return nullptr;
 	}
 
-	this->addEquipmentByType(state, pos, type);
+	return addEquipmentByType(state, pos, type);
 }
 
-void Agent::addEquipmentByType(GameState &state, Vec2<int> pos, StateRef<AEquipmentType> type)
+sp<AEquipment> Agent::addEquipmentByType(GameState &state, Vec2<int> pos,
+                                         StateRef<AEquipmentType> type)
 {
 	auto equipment = mksp<AEquipment>();
 	equipment->type = type;
@@ -644,9 +687,26 @@ void Agent::addEquipmentByType(GameState &state, Vec2<int> pos, StateRef<AEquipm
 	{
 		equipment->loadAmmo(state);
 	}
+	return equipment;
 }
 
-void Agent::addEquipment(GameState &state, sp<AEquipment> object, AEquipmentSlotType slotType)
+sp<AEquipment> Agent::addEquipmentAsAmmoByType(GameState &state, StateRef<AEquipmentType> type)
+{
+	for (auto &e : equipment)
+	{
+		if (e->type->type == AEquipmentType::Type::Weapon && e->ammo == 0 &&
+		    std::find(e->type->ammo_types.begin(), e->type->ammo_types.end(), type) !=
+		        e->type->ammo_types.end())
+		{
+			e->payloadType = type;
+			e->ammo = type->max_ammo;
+			return e;
+		}
+	}
+	return nullptr;
+}
+
+void Agent::addEquipment(GameState &state, sp<AEquipment> object, EquipmentSlotType slotType)
 {
 	Vec2<int> pos = findFirstSlotByType(slotType, object->type);
 	if (pos.x == -1)
@@ -661,7 +721,7 @@ void Agent::addEquipment(GameState &state, sp<AEquipment> object, AEquipmentSlot
 
 void Agent::addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object)
 {
-	AEquipmentSlotType slotType;
+	EquipmentSlotType slotType;
 	if (!canAddEquipment(pos, object->type, slotType))
 	{
 		LogError("Trying to add \"%s\" at %s on agent  \"%s\" failed", object->type.id, pos,
@@ -669,35 +729,54 @@ void Agent::addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object)
 	}
 
 	LogInfo("Equipped \"%s\" with equipment \"%s\"", this->name, object->type->name);
+	// Proper position
+	for (auto &slot : this->type->equipment_layout->slots)
+	{
+		if (slot.bounds.within(pos))
+		{
+			pos = slot.bounds.p0;
+			break;
+		}
+	}
 	object->equippedPosition = pos;
 	object->ownerAgent = StateRef<Agent>(&state, shared_from_this());
+	object->ownerUnit.clear();
 	object->equippedSlotType = slotType;
-	if (slotType == AEquipmentSlotType::RightHand)
+	if (slotType == EquipmentSlotType::RightHand)
 	{
 		rightHandItem = object;
 	}
-	if (slotType == AEquipmentSlotType::LeftHand)
+	if (slotType == EquipmentSlotType::LeftHand)
 	{
 		leftHandItem = object;
 	}
 	this->equipment.emplace_back(object);
 	updateSpeed();
-}
-
-void Agent::removeEquipment(sp<AEquipment> object)
-{
-	this->equipment.remove(object);
 	if (unit)
 	{
 		unit->updateDisplayedItem();
 	}
-	if (object->equippedSlotType == AEquipmentSlotType::RightHand)
+}
+
+void Agent::removeEquipment(GameState &state, sp<AEquipment> object)
+{
+	this->equipment.remove(object);
+	if (object->equippedSlotType == EquipmentSlotType::RightHand)
 	{
 		rightHandItem = nullptr;
 	}
-	if (object->equippedSlotType == AEquipmentSlotType::LeftHand)
+	if (object->equippedSlotType == EquipmentSlotType::LeftHand)
 	{
 		leftHandItem = nullptr;
+	}
+	if (unit)
+	{
+		// Stop flying if jetpack lost
+		if (object->type->provides_flight && unit->target_body_state == BodyState::Flying && !isBodyStateAllowed(BodyState::Flying))
+		{
+			unit->setBodyState(state, BodyState::Standing);
+		}
+		unit->updateDisplayedItem();
 	}
 	object->ownerAgent.clear();
 	updateSpeed();
@@ -758,6 +837,7 @@ void Agent::trainPhysical(GameState &state, unsigned ticks)
 		if (randBoundsExclusive(state.rng, 0, 100) >= current_stats.speed)
 		{
 			current_stats.speed++;
+			current_stats.restoreTU();
 		}
 		if (randBoundsExclusive(state.rng, 0, 2000) >= current_stats.stamina)
 		{
@@ -824,8 +904,8 @@ StateRef<BattleUnitAnimationPack> Agent::getAnimationPack() const
 
 StateRef<AEquipmentType> Agent::getDominantItemInHands(StateRef<AEquipmentType> itemLastFired) const
 {
-	sp<AEquipment> e1 = getFirstItemInSlot(AEquipmentSlotType::RightHand);
-	sp<AEquipment> e2 = getFirstItemInSlot(AEquipmentSlotType::LeftHand);
+	sp<AEquipment> e1 = getFirstItemInSlot(EquipmentSlotType::RightHand);
+	sp<AEquipment> e2 = getFirstItemInSlot(EquipmentSlotType::LeftHand);
 	// If there is only one item - return it, if none - return nothing
 	if (!e1 && !e2)
 		return nullptr;
@@ -874,13 +954,13 @@ StateRef<AEquipmentType> Agent::getDominantItemInHands(StateRef<AEquipmentType> 
 	return e2->type;
 }
 
-sp<AEquipment> Agent::getFirstItemInSlot(AEquipmentSlotType type, bool lazy) const
+sp<AEquipment> Agent::getFirstItemInSlot(EquipmentSlotType type, bool lazy) const
 {
 	if (lazy)
 	{
-		if (type == AEquipmentSlotType::RightHand)
+		if (type == EquipmentSlotType::RightHand)
 			return rightHandItem;
-		if (type == AEquipmentSlotType::LeftHand)
+		if (type == EquipmentSlotType::LeftHand)
 			return leftHandItem;
 	}
 	for (auto &e : equipment)
@@ -934,7 +1014,7 @@ sp<AEquipment> Agent::getFirstShield() const
 
 StateRef<BattleUnitImagePack> Agent::getImagePack(BodyPart bodyPart) const
 {
-	AEquipmentSlotType slotType = AgentType::getArmorSlotType(bodyPart);
+	EquipmentSlotType slotType = AgentType::getArmorSlotType(bodyPart);
 
 	auto e = getFirstItemInSlot(slotType);
 	if (e)
@@ -945,11 +1025,94 @@ StateRef<BattleUnitImagePack> Agent::getImagePack(BodyPart bodyPart) const
 	return nullptr;
 }
 
+sp<Equipment> Agent::getEquipmentAt(const Vec2<int> &position) const
+{
+	Vec2<int> slotPosition = {0, 0};
+	for (auto &slot : this->type->equipment_layout->slots)
+	{
+		if (slot.bounds.within(position))
+		{
+			slotPosition = slot.bounds.p0;
+		}
+	}
+	// Find whatever equipped in the slot itself
+	for (auto &eq : this->equipment)
+	{
+		if (eq->equippedPosition == slotPosition)
+		{
+			return eq;
+		}
+	}
+	// Find whatever occupies this space
+	for (auto &eq : this->equipment)
+	{
+		Rect<int> eqBounds{eq->equippedPosition, eq->equippedPosition + eq->type->equipscreen_size};
+		if (eqBounds.within(slotPosition))
+		{
+			return eq;
+		}
+	}
+	return nullptr;
+}
+
+const std::list<EquipmentLayoutSlot> &Agent::getSlots() const
+{
+	return this->type->equipment_layout->slots;
+}
+
+std::list<std::pair<Vec2<int>, sp<Equipment>>> Agent::getEquipment() const
+{
+	std::list<std::pair<Vec2<int>, sp<Equipment>>> equipmentList;
+
+	for (auto &equipmentObject : this->equipment)
+	{
+		equipmentList.emplace_back(
+		    std::make_pair(equipmentObject->equippedPosition, equipmentObject));
+	}
+
+	return equipmentList;
+}
+
+int Agent::getMaxHealth() const { return current_stats.health; }
+
+int Agent::getHealth() const { return modified_stats.health; }
+
+int Agent::getMaxShield() const
+{
+	int maxShield = 0;
+
+	for (auto &e : equipment)
+	{
+		if (e->type->type != AEquipmentType::Type::DisruptorShield)
+			continue;
+		maxShield += e->type->max_ammo;
+	}
+
+	return maxShield;
+}
+
+int Agent::getShield() const
+{
+	int curShield = 0;
+
+	for (auto &e : equipment)
+	{
+		if (e->type->type != AEquipmentType::Type::DisruptorShield)
+			continue;
+		curShield += e->ammo;
+	}
+
+	return curShield;
+}
+
 void Agent::destroy()
 {
+	leftHandItem = nullptr;
+	rightHandItem = nullptr;
 	while (!equipment.empty())
 	{
-		this->removeEquipment(equipment.front());
+		GameState state;
+		this->removeEquipment(state, equipment.front());
 	}
 }
 

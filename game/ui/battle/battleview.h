@@ -177,6 +177,8 @@ class BattleView : public BattleTileView
 	int rightThrowDelay = 0;
 	int actionImpossibleDelay = 0;
 
+	bool DEBUG_DISABLE_NOTIFICATIONS = false;
+
 	void updateSelectionMode();
 	void updateSelectedUnits();
 	void updateLayerButtons();
@@ -221,6 +223,8 @@ class BattleView : public BattleTileView
 	sp<Image> pauseIcon;
 	int pauseIconTimer = 0;
 
+	void openAgentInventory();
+
 	void updatePathPreview();
 	void updateAttackCost();
 
@@ -259,7 +263,7 @@ class BattleView : public BattleTileView
 	void eventOccurred(Event *e) override;
 	void handleMouseDown(Event *e);
 
-	void exitBattle();
+	void endBattle();
 
 	void setUpdateSpeed(BattleUpdateSpeed updateSpeed);
 	void zoomAt(Vec3<int> location);

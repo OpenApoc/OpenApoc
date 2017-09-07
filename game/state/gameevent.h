@@ -27,7 +27,7 @@ class GameEvent : public Event
 
 	GameEvent(GameEventType type);
 	~GameEvent() override = default;
-	virtual UString message() { return ""; }
+	virtual UString message();
 };
 
 class GameVehicleEvent : public GameEvent
@@ -59,6 +59,7 @@ class GameBuildingEvent : public GameEvent
 
 	GameBuildingEvent(GameEventType type, StateRef<Building> building);
 	~GameBuildingEvent() override = default;
+	UString message() override;
 };
 
 class GameOrganisationEvent : public GameEvent

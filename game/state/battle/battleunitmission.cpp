@@ -1451,6 +1451,17 @@ bool BattleUnitMission::getNextBodyState(GameState &state, BattleUnit &u, BodySt
 		case Type::ReachGoal:
 		case Type::Jump:
 		case Type::Brainsuck:
+			if (!u.agent->isBodyStateAllowed(targetBodyState))
+			{
+				if (targetBodyState == BodyState::Flying)
+				{
+					targetBodyState = BodyState::Standing;
+				}
+				else
+				{
+					LogError("Unit %s (%s) (%s) lost capability to attain bodyState %d?", u.id, u.agent->name, u.agent->type->id, (int)targetBodyState);
+				}
+			}
 			return advanceBodyState(state, u, targetBodyState, dest);
 		default:
 			return false;
@@ -1578,7 +1589,7 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 				// Ensure item still belongs to agent
 				if (item->ownerAgent == u.agent)
 				{
-					item->ownerAgent->removeEquipment(item);
+					item->ownerAgent->removeEquipment(state, item);
 					item->ownerUnit = {&state, u.id};
 					item->throwItem(state, targetLocation, velocityXY, velocityZ);
 				}
@@ -1831,7 +1842,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 			{
 				if (item->ownerAgent)
 				{
-					item->ownerAgent->removeEquipment(item);
+					item->ownerAgent->removeEquipment(state, item);
 				}
 				item->ownerUnit = {&state, u.id};
 				// Drop item

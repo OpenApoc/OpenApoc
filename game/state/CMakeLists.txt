@@ -86,6 +86,7 @@ source_group(gamestate\\sources FILES ${GAMESTATE_SOURCE_FILES})
 set (GAMESTATE_HEADER_FILES
 	aequipment.h
 	agent.h
+	equipment.h
 	gameevent.h
 	gameevent_types.h
 	gamestate.h

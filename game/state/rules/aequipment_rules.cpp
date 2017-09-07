@@ -64,24 +64,30 @@ std::list<sp<AEquipmentType>> EquipmentSet::generateEquipmentList(GameState &sta
 	if (weapons.size() > 0)
 	{
 		auto wd = weapons[randBoundsExclusive(state.rng, 0, (int)weapons.size())];
+		output.push_back(wd.weapon);
 		if (wd.clip)
 		{
 			for (int i = 0; i < wd.clip_amount; i++)
+			{
 				output.push_back(wd.clip);
+			}
 		}
-		output.push_back(wd.weapon);
 	}
 	if (grenades.size() > 0)
 	{
 		auto gd = grenades[randBoundsExclusive(state.rng, 0, (int)grenades.size())];
 		for (int i = 0; i < gd.grenade_amount; i++)
+		{
 			output.push_back(gd.grenade);
+		}
 	}
 	if (equipment.size() > 0)
 	{
 		auto ed = equipment[randBoundsExclusive(state.rng, 0, (int)equipment.size())];
 		for (auto &e : ed.equipment)
+		{
 			output.push_back(e);
+		}
 	}
 
 	return output;

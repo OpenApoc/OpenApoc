@@ -5,17 +5,35 @@
     <entry>
       <key>Male</key>
       <value>
-        <entry>Steve</entry>
+        <entry>Alex</entry>
+		<entry>Steve</entry>
+		<entry>John</entry>
+		<entry>Max</entry>
+		<entry>Zack</entry>
+		<entry>Michael</entry>
+		<entry>Peter</entry>
       </value>
     </entry>
     <entry>
       <key>Female</key>
       <value>
         <entry>Steph</entry>
+		<entry>Alice</entry>
+		<entry>Jane</entry>
+		<entry>Maria</entry>
+		<entry>Naomi</entry>
+		<entry>Clara</entry>
+		<entry>Jennifer</entry>
       </value>
     </entry>
   </first_names>
   <second_names>
     <entry>Smith</entry>
+	<entry>Jones</entry>
+	<entry>Taylor</entry>
+	<entry>Brown</entry>
+	<entry>Williams</entry>
+	<entry>Green</entry>
+	<entry>Clarke</entry>
   </second_names>
 </agent_generator>

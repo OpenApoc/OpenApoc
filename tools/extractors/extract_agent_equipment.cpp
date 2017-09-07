@@ -271,6 +271,8 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 			d->effectType = DamageType::EffectType::Enzyme;
 		}
 
+		d->name = data_t.damage_type_names->get(i);
+
 		d->ignore_shield =
 		    (i < data_t.damage_types->count()) && (data_t.damage_types->get(i).ignore_shield == 1);
 
@@ -440,12 +442,12 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 						break;
 					case AGENT_ARMOR_BODY_PART_LEFT_ARM:
 						bodyPartLetter = "d";
-						armorBodyPicIndex = 1;
+						armorBodyPicIndex = 3;
 						e->body_part = BodyPart::LeftArm;
 						break;
 					case AGENT_ARMOR_BODY_PART_RIGHT_ARM:
 						bodyPartLetter = "e";
-						armorBodyPicIndex = 3;
+						armorBodyPicIndex = 1;
 						e->body_part = BodyPart::RightArm;
 						break;
 					case AGENT_ARMOR_BODY_PART_HELMET:

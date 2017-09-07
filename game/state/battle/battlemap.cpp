@@ -219,6 +219,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				}
 
 				// Civilains will not be actually added if there is no spawn points for them
+				// Or if building owner is not alien but hostile
 				int numCivs = civilians ? *civilians : state.getCivilian()->getGuardCount(state);
 
 				for (int i = 0; i < numCivs; i++)
@@ -1033,6 +1034,11 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 				}
 			}
 		}
+	}
+	// If org is hostile to player don't spawn civilians
+	if (propertyOwner->isRelatedTo(state.getPlayer()) == Organisation::Relation::Hostile && propertyOwner != state.getAliens())
+	{
+		spawnCivilians = false;
 	}
 
 	return b;

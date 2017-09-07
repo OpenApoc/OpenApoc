@@ -1,5 +1,6 @@
 #pragma once
 
+#include "game/state/equipment.h"
 #include "game/state/rules/vequipment_type.h"
 #include "game/state/stateobject.h"
 #include "library/rect.h"
@@ -66,18 +67,6 @@ class VehicleType : public StateObject
 		Left,
 		Right,
 	};
-	enum class AlignmentX
-	{
-		Left,
-		Right,
-		Centre,
-	};
-	enum class AlignmentY
-	{
-		Top,
-		Bottom,
-		Centre,
-	};
 
 	// This is explictly mutable it can be used through a const ref
 	// FIXME: Should this go somewhere else in the state? If the rules are meant to be immutable
@@ -143,20 +132,6 @@ class VehicleType : public StateObject
 	// Gets current facing for purpose of determining size and voxel map
 	Vec3<float> getVoxelMapFacing(Vec3<float> direction) const;
 
-	class EquipmentLayoutSlot
-	{
-	  public:
-		VEquipmentType::Type type = VEquipmentType::Type::Engine;
-		AlignmentX align_x = AlignmentX::Left;
-		AlignmentY align_y = AlignmentY::Top;
-		Rect<int> bounds;
-		EquipmentLayoutSlot() = default;
-		EquipmentLayoutSlot(VEquipmentType::Type type, AlignmentX align_x, AlignmentY align_y,
-		                    Rect<int> bounds)
-		    : type(type), align_x(align_x), align_y(align_y), bounds(bounds)
-		{
-		}
-	};
 	std::list<EquipmentLayoutSlot> equipment_layout_slots;
 	std::list<std::pair<Vec2<int>, StateRef<VEquipmentType>>> initial_equipment_list;
 

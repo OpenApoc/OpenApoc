@@ -379,36 +379,66 @@ void BattleUnitAnimationPack::drawUnit(
 			case AnimationEntry::Frame::UnitImagePart::Body:
 				if (!body)
 					continue;
+				if (body->images.size() <= b->index)
+				{
+					LogError("Missing image: body %s size %u index %d",body.id,body->images.size(), b->index);
+					break;
+				}
 				draw(r, body->images[b->index], screenPosition - b->offset - body->image_offset,
 				     stealth);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::Legs:
 				if (!legs)
 					continue;
+				if (legs->images.size() <= b->index)
+				{
+					LogError("Missing image: legs %s size %u index %d", legs.id, legs->images.size(), b->index);
+					break;
+				}
 				draw(r, legs->images[b->index], screenPosition - b->offset - legs->image_offset,
 				     stealth);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::Helmet:
 				if (!helmet)
 					continue;
+				if (helmet->images.size() <= b->index)
+				{
+					LogError("Missing image: helmet %s size %u index %d", helmet.id, helmet->images.size(), b->index);
+					break;
+				}
 				draw(r, helmet->images[b->index], screenPosition - b->offset - helmet->image_offset,
 				     stealth);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::LeftArm:
 				if (!leftHand)
 					continue;
+				if (leftHand->images.size() <= b->index)
+				{
+					LogError("Missing image: leftHand %s size %u index %d", leftHand.id, leftHand->images.size(), b->index);
+					break;
+				}
 				draw(r, leftHand->images[b->index],
 				     screenPosition - b->offset - leftHand->image_offset, stealth);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::RightArm:
 				if (!rightHand)
 					continue;
+				if (rightHand->images.size() <= b->index)
+				{
+					LogError("Missing image: rightHand %s size %u index %d", rightHand.id, rightHand->images.size(), b->index);
+					break;
+				}
 				draw(r, rightHand->images[b->index],
 				     screenPosition - b->offset - rightHand->image_offset, stealth);
 				break;
 			case AnimationEntry::Frame::UnitImagePart::Weapon:
 				if (!heldItem)
 					continue;
+				if (heldItem->held_image_pack->images.size() <= b->index)
+				{
+					LogError("Missing image: heldItem %s pack %s size %u index %d", heldItem.id, heldItem->held_image_pack.id, heldItem->held_image_pack->images.size(), b->index);
+					break;
+				}
 				draw(r, heldItem->held_image_pack->images[b->index],
 				     screenPosition - b->offset - heldItem->held_image_pack->image_offset, stealth);
 				break;

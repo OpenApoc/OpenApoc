@@ -32,6 +32,8 @@ void BattleMapPart::die(GameState &state, bool explosive, bool violently)
 		}
 	}
 
+	bool mustCheckForObjective = type->missionObjective;
+
 	// If falling just cease to be, do damage
 	if (falling)
 	{
@@ -40,83 +42,89 @@ void BattleMapPart::die(GameState &state, bool explosive, bool violently)
 		destroyed = true;
 
 		LogWarning("Deal falling damage to units!");
-		return;
 	}
-
-	// Doodad
-	switch (type->type)
-	{
-		case BattleMapPartType::Type::Ground:
-			// No dooad for grounds
-			break;
-		case BattleMapPartType::Type::LeftWall:
-			state.current_battle->placeDoodad({&state, "DOODAD_29_EXPLODING_TERRAIN"},
-			                                  tileObject->getCenter() -
-			                                      Vec3<float>(-0.5f, 0.0f, 0.0f));
-			break;
-		case BattleMapPartType::Type::RightWall:
-			state.current_battle->placeDoodad({&state, "DOODAD_29_EXPLODING_TERRAIN"},
-			                                  tileObject->getCenter() -
-			                                      Vec3<float>(0.0f, -0.5f, 0.0f));
-			break;
-		case BattleMapPartType::Type::Feature:
-			state.current_battle->placeDoodad({&state, "DOODAD_29_EXPLODING_TERRAIN"},
-			                                  tileObject->getCenter());
-			break;
-	}
-
-	// Replace with damaged
-	if (type->damaged_map_part)
-	{
-		this->type = type->damaged_map_part;
-		this->damaged = true;
-	}
-	// Destroy
 	else
 	{
-		// Don't destroy bottom tiles, else everything will leak out
-		// Replace ground with destroyed
-		if (this->position.z == 0 && this->type->type == BattleMapPartType::Type::Ground)
+		// Doodad
+		switch (type->type)
 		{
-			this->damaged = true;
-			this->type = type->destroyed_ground_tile;
+			case BattleMapPartType::Type::Ground:
+				// No dooad for grounds
+				break;
+			case BattleMapPartType::Type::LeftWall:
+				state.current_battle->placeDoodad({&state, "DOODAD_29_EXPLODING_TERRAIN"},
+				                                  tileObject->getCenter() -
+				                                      Vec3<float>(-0.5f, 0.0f, 0.0f));
+				break;
+			case BattleMapPartType::Type::RightWall:
+				state.current_battle->placeDoodad({&state, "DOODAD_29_EXPLODING_TERRAIN"},
+				                                  tileObject->getCenter() -
+				                                      Vec3<float>(0.0f, -0.5f, 0.0f));
+				break;
+			case BattleMapPartType::Type::Feature:
+				state.current_battle->placeDoodad({&state, "DOODAD_29_EXPLODING_TERRAIN"},
+				                                  tileObject->getCenter());
+				break;
 		}
-		// Destroy map part
+
+		// Replace with damaged
+		if (type->damaged_map_part)
+		{
+			this->type = type->damaged_map_part;
+			this->damaged = true;
+		}
+		// Destroy
 		else
 		{
-			if (explosive)
+			// Don't destroy bottom tiles, else everything will leak out
+			// Replace ground with destroyed
+			if (this->position.z == 0 && this->type->type == BattleMapPartType::Type::Ground)
+			{
+				this->damaged = true;
+				this->type = type->destroyed_ground_tile;
+			}
+			// Destroy map part
+			else
+			{
+				if (explosive)
+				{
+					queueCollapse();
+				}
+				else
+				{
+					destroyed = true;
+				}
+			}
+		}
+
+		// Queue updates
+		state.current_battle->queueVisionRefresh(position);
+		state.current_battle->queuePathfindingRefresh(position);
+
+		// Cease functioning
+		ceaseBeingSupported();
+		ceaseDoorFunction();
+		ceaseSupportProvision();
+
+		// Re-establish support for this if still alive
+		if (isAlive())
+		{
+			if (!findSupport())
 			{
 				queueCollapse();
 			}
-			else
-			{
-				destroyed = true;
-			}
 		}
-	}
-
-	// Queue updates
-	state.current_battle->queueVisionRefresh(position);
-	state.current_battle->queuePathfindingRefresh(position);
-
-	// Cease functioning
-	ceaseBeingSupported();
-	ceaseDoorFunction();
-	ceaseSupportProvision();
-
-	// Re-establish support for this if still alive
-	if (isAlive())
-	{
-		if (!findSupport())
+		// Destroy if destroyed
+		else if (destroyed)
 		{
-			queueCollapse();
+			this->tileObject->removeFromMap();
+			this->tileObject.reset();
 		}
 	}
-	// Destroy if destroyed
-	else if (destroyed)
+
+	if (mustCheckForObjective)
 	{
-		this->tileObject->removeFromMap();
-		this->tileObject.reset();
+		state.current_battle->checkIfBuildingDisabled(state);
 	}
 }
 

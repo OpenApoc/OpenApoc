@@ -89,11 +89,9 @@ void fillAgentImagePacksByDefault(GameState &state, sp<AgentType> a, UString ima
 	    &state, format("%s%s%s", BattleUnitImagePack::getPrefix(), imagePackName, "e")};
 }
 
-void pushEquipmentSlot(
-    sp<AgentEquipmentLayout> a, int x, int y, int w = 1, int h = 1,
-    AEquipmentSlotType type = AEquipmentSlotType::General,
-    AgentEquipmentLayout::AlignmentX align_x = AgentEquipmentLayout::AlignmentX::Left,
-    AgentEquipmentLayout::AlignmentY align_y = AgentEquipmentLayout::AlignmentY::Top)
+void pushEquipmentSlot(sp<AgentEquipmentLayout> a, int x, int y, int w = 1, int h = 1,
+                       EquipmentSlotType type = EquipmentSlotType::General,
+                       AlignmentX align_x = AlignmentX::Left, AlignmentY align_y = AlignmentY::Top)
 {
 	a->slots.emplace_back();
 	auto &outSlot = a->slots.back();
@@ -436,6 +434,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				infiltrationID = 11;
 				a->growthChance = 0;
 				a->detectionWeight = 20;
+				a->missionObjective = true;
 				break;
 			// Non-humanoid aliens
 			case UNIT_TYPE_BRAINSUCKER:
@@ -592,13 +591,15 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				break;
 		}
 
-		// Used image packs
+		// Used image packs and BGs
+		a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/generic.pcx");
 		a->image_packs.push_back(std::map<BodyPart, StateRef<BattleUnitImagePack>>());
 		switch (i)
 		{
 			case UNIT_TYPE_BIOCHEMIST:
 			case UNIT_TYPE_ENGINEER:
 			case UNIT_TYPE_QUANTUM_PHYSIST:
+				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/scien.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "scntst")};
 				break;
@@ -743,6 +744,8 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "sw3")};
 				break;
 			case UNIT_TYPE_MULTIWORM_EGG:
+				a->inventoryBackground =
+				    fw().data->loadImage("xcom3/tacdata/equippic/mwormegg.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "mwegga")};
 				a->image_packs[0][BodyPart::Helmet] = {
@@ -754,18 +757,23 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "mweggb")};
 				break;
 			case UNIT_TYPE_BRAINSUCKER:
+				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/sucker.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "bsk")};
 				break;
 			case UNIT_TYPE_MULTIWORM:
+				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/mworm.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "multi")};
 				break;
 			case UNIT_TYPE_HYPERWORM:
+				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/hyperwm.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "hypr")};
 				break;
 			case UNIT_TYPE_CHRYSALIS:
+				a->inventoryBackground =
+				    fw().data->loadImage("xcom3/tacdata/equippic/chrysali.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "chrysa")};
 				a->image_packs[0][BodyPart::Helmet] = {
@@ -777,35 +785,46 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "chrysb")};
 				break;
 			case UNIT_TYPE_ANTHROPOD:
+				a->inventoryBackground =
+				    fw().data->loadImage("xcom3/tacdata/equippic/anthropd.pcx");
 				fillAgentImagePacksByDefault(state, a, "antrp");
 				break;
 			case UNIT_TYPE_SKELETOID:
+				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/skelly.pcx");
 				fillAgentImagePacksByDefault(state, a, "skel");
 				break;
 			case UNIT_TYPE_SPITTER:
+				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/spitter.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "spitr")};
 				break;
 			case UNIT_TYPE_POPPER:
+				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/popper.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "popper")};
 				break;
 			case UNIT_TYPE_MEGASPAWN:
+				a->inventoryBackground =
+				    fw().data->loadImage("xcom3/tacdata/equippic/megatron.pcx");
 				fillAgentImagePacksByDefault(state, a, "mega");
 				// Megaspawn has no head (stupid!)
 				a->image_packs[0][BodyPart::Helmet].clear();
 				break;
 			case UNIT_TYPE_PSIMORPH:
+				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/psi_m.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "psi")};
 				break;
 			case UNIT_TYPE_QUEENSPAWN:
+				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/queen.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "queena")};
 				a->image_packs[0][BodyPart::Legs] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "queenb")};
 				break;
 			case UNIT_TYPE_MICRONOID:
+				a->inventoryBackground =
+				    fw().data->loadImage("xcom3/tacdata/equippic/agregate.pcx");
 				a->image_packs[0][BodyPart::Body] = {
 				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "micro")};
 				break;
@@ -1091,12 +1110,10 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 
 		auto a = mksp<AgentEquipmentLayout>();
 		// Located off-screen, invisible in inventory
-		pushEquipmentSlot(a, 1024, 6, 3, 5, AEquipmentSlotType::RightHand,
-		                  AgentEquipmentLayout::AlignmentX::Centre,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 1028, 6, 3, 5, AEquipmentSlotType::LeftHand,
-		                  AgentEquipmentLayout::AlignmentX::Centre,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
+		pushEquipmentSlot(a, 1024, 6, 3, 5, EquipmentSlotType::RightHand, AlignmentX::Centre,
+		                  AlignmentY::Centre);
+		pushEquipmentSlot(a, 1028, 6, 3, 5, EquipmentSlotType::LeftHand, AlignmentX::Centre,
+		                  AlignmentY::Centre);
 
 		state.agent_equipment_layouts[id] = a;
 	}
@@ -1107,58 +1124,52 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 		UString id = format("%s%s", AgentEquipmentLayout::getPrefix(), canon_string(name));
 
 		auto a = mksp<AgentEquipmentLayout>();
-		pushEquipmentSlot(a, 0, 6, 3, 5, AEquipmentSlotType::RightHand,
-		                  AgentEquipmentLayout::AlignmentX::Centre,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 12, 6, 3, 5, AEquipmentSlotType::LeftHand,
-		                  AgentEquipmentLayout::AlignmentX::Centre,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
+		pushEquipmentSlot(a, 1, 6, 3, 5, EquipmentSlotType::RightHand, AlignmentX::Centre,
+		                  AlignmentY::Centre);
+		pushEquipmentSlot(a, 12, 6, 3, 5, EquipmentSlotType::LeftHand, AlignmentX::Centre,
+		                  AlignmentY::Centre);
 
 		// Can humanoids with inventory other than X-Com wear armor in vanilla? Probably not?
 		// But why not let them for fun? :)))) Armored flying anthropod FTW!
 
 		// Armor
-		pushEquipmentSlot(a, 6, 3, 2, 2, AEquipmentSlotType::ArmorHelmet,
-		                  AgentEquipmentLayout::AlignmentX::Centre,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 4, 5, 2, 6, AEquipmentSlotType::ArmorRightHand,
-		                  AgentEquipmentLayout::AlignmentX::Right,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 6, 5, 2, 6, AEquipmentSlotType::ArmorBody,
-		                  AgentEquipmentLayout::AlignmentX::Centre,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 8, 5, 2, 6, AEquipmentSlotType::ArmorLeftHand,
-		                  AgentEquipmentLayout::AlignmentX::Left,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 4, 11, 6, 5, AEquipmentSlotType::ArmorLegs,
-		                  AgentEquipmentLayout::AlignmentX::Centre,
-		                  AgentEquipmentLayout::AlignmentY::Top);
+		pushEquipmentSlot(a, 7, 3, 2, 2, EquipmentSlotType::ArmorHelmet, AlignmentX::Centre,
+		                  AlignmentY::Centre);
+		pushEquipmentSlot(a, 5, 5, 2, 6, EquipmentSlotType::ArmorRightHand, AlignmentX::Right,
+		                  AlignmentY::Centre);
+		pushEquipmentSlot(a, 7, 5, 2, 6, EquipmentSlotType::ArmorBody, AlignmentX::Centre,
+		                  AlignmentY::Centre);
+		pushEquipmentSlot(a, 9, 5, 2, 6, EquipmentSlotType::ArmorLeftHand, AlignmentX::Left,
+		                  AlignmentY::Centre);
+		pushEquipmentSlot(a, 5, 11, 6, 5, EquipmentSlotType::ArmorLegs, AlignmentX::Centre,
+		                  AlignmentY::Top);
 		// Belt #1
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 3; i++)
 		{
-			pushEquipmentSlot(a, i, 12);
+			pushEquipmentSlot(a, 1 + i, 12);
 		}
-		pushEquipmentSlot(a, 0, 13);
+		pushEquipmentSlot(a, 1, 13);
+
 		// Special
-		pushEquipmentSlot(a, 2, 14, 2, 2, AEquipmentSlotType::General,
-		                  AgentEquipmentLayout::AlignmentX::Centre,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
-		pushEquipmentSlot(a, 11, 14, 2, 2, AEquipmentSlotType::General,
-		                  AgentEquipmentLayout::AlignmentX::Centre,
-		                  AgentEquipmentLayout::AlignmentY::Centre);
+		pushEquipmentSlot(a, 3, 14, 2, 2, EquipmentSlotType::General, AlignmentX::Centre,
+		                  AlignmentY::Centre);
+		pushEquipmentSlot(a, 11, 14, 2, 2, EquipmentSlotType::General, AlignmentX::Centre,
+		                  AlignmentY::Centre);
 		// Belt #2
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 3; i++)
 		{
 			pushEquipmentSlot(a, 12 + i, 12);
 		}
-		pushEquipmentSlot(a, 12 + 3, 13);
+		pushEquipmentSlot(a, 12 + 2, 13);
+
 		// Shoulders
-		pushEquipmentSlot(a, 4, 2);
+		pushEquipmentSlot(a, 5, 2);
 		pushEquipmentSlot(a, 10, 2);
+
 		// Backpack
-		for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 5; j++)
 		{
-			for (int j = 0; j < 5; j++)
+			for (int i = 0; i < 4; i++)
 			{
 				pushEquipmentSlot(a, 12 + i, 0 + j);
 			}

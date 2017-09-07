@@ -20,7 +20,10 @@
 // produces projectiles that are too slow.
 // Approximately this multiplier brings them back to speeds matching vanilla
 // However, this may be wrong
-#define PROJECTILE_VELOCITY_MULTIPLIER 8.0f
+// My theory is this value equals to 36, the amount of ticks in the game
+// However since we have four times as many ticks (144) we have to divide this by 4
+// Since we apply the velocity 4 times as frequently
+#define PROJECTILE_VELOCITY_MULTIPLIER 9.0f
 
 namespace OpenApoc
 {

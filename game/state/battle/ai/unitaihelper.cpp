@@ -213,7 +213,7 @@ sp<AIMovement> UnitAIHelper::getTurnMovement(GameState &, BattleUnit &, Vec3<int
 	return result;
 }
 
-void UnitAIHelper::ensureItemInSlot(GameState &state, sp<AEquipment> item, AEquipmentSlotType slot)
+void UnitAIHelper::ensureItemInSlot(GameState &state, sp<AEquipment> item, EquipmentSlotType slot)
 {
 	auto u = item->ownerAgent->unit;
 	auto curItem = u->agent->getFirstItemInSlot(slot);
@@ -222,11 +222,11 @@ void UnitAIHelper::ensureItemInSlot(GameState &state, sp<AEquipment> item, AEqui
 		// Remove item in the desired slot
 		if (curItem)
 		{
-			u->agent->removeEquipment(curItem);
+			u->agent->removeEquipment(state, curItem);
 		}
 
 		// Remove item we will use and equip it in the desired slot
-		u->agent->removeEquipment(item);
+		u->agent->removeEquipment(state, item);
 		u->agent->addEquipment(state, item, slot);
 
 		// Equip back the item removed earlier

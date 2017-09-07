@@ -125,6 +125,9 @@
 		<member>spreadHazardMinPower</member>
 		<member>spreadHazardMaxPower</member>
 		<member>spreadHazardTTLDivizor</member>
+		<member>inventoryBackground</member>
+		<member>displayRank</member>
+		<member>missionObjective</member>
 		<member>score</member>
 		<member>walkSfx</member>
 		<member>crySfx</member>
@@ -133,7 +136,7 @@
 		<member>dieSfx</member>
 	</object>
 	<object>
-		<name>AgentEquipmentLayout::EquipmentLayoutSlot</name>
+		<name>EquipmentLayoutSlot</name>
 		<member>type</member>
 		<member>align_x</member>
 		<member>align_y</member>
@@ -428,7 +431,10 @@
 		<member>mode</member>
 		<member>score</member>
 		<member>missionEndTimer</member>
+		<member>buildingCanBeDisabled</member>
+		<member>buildingDisabled</member>
 		<member>playerWon</member>
+		<member>targetOrganisation</member>
 		<member>loserHasRetreated</member>
 		<member>winnerHasRetreated</member>
 		<member>player_craft</member>
@@ -877,6 +883,7 @@
 	</enum>
 	<object>
 		<name>DamageType</name>
+		<member>name</member>
 		<member>icon_sprite</member>
 		<member>ignore_shield</member>
 		<member>modifiers</member>
@@ -1048,13 +1055,6 @@
 		<member>initial_equipment_list</member>
 	</object>
 	<object>
-		<name>VehicleType::EquipmentLayoutSlot</name>
-		<member>type</member>
-		<member>align_x</member>
-		<member>align_y</member>
-		<member>bounds</member>
-	</object>
-	<object>
 		<name>UfopaediaEntry</name>
 		<member>title</member>
 		<member>description</member>
@@ -1099,12 +1099,6 @@
 		<member>movementState</member>
 		<member>bodyState</member>
 	</object>
-	<enum>
-		<name>VEquipmentType::Type</name>
-		<value>Engine</value>
-		<value>Weapon</value>
-		<value>General</value>
-	</enum>
 	<enum>
 		<name>VEquipmentType::User</name>
 		<value>Ground</value>
@@ -1152,18 +1146,6 @@
 		<value>Rear</value>
 		<value>Left</value>
 		<value>Right</value>
-	</enum>
-	<enum>
-		<name>VehicleType::AlignmentX</name>
-		<value>Left</value>
-		<value>Right</value>
-		<value>Centre</value>
-	</enum>
-	<enum>
-		<name>VehicleType::AlignmentY</name>
-		<value>Top</value>
-		<value>Bottom</value>
-		<value>Centre</value>
 	</enum>
 	<enum>
 		<name>ResearchTopic::Type</name>
@@ -1457,7 +1439,7 @@
 		<value>Female</value>
 	</enum>
 	<enum>
-		<name>AEquipmentSlotType</name>
+		<name>EquipmentSlotType</name>
 		<value>General</value>
 		<value>ArmorBody</value>
 		<value>ArmorLegs</value>
@@ -1466,6 +1448,9 @@
 		<value>ArmorRightHand</value>
 		<value>LeftHand</value>
 		<value>RightHand</value>
+		<value>VehicleGeneral</value>
+		<value>VehicleWeapon</value>
+		<value>VehicleEngine</value>
 	</enum>
 	<enum>
 		<name>TriggerType</name>
@@ -1476,13 +1461,13 @@
 		<value>Boomeroid</value>
 	</enum>
 	<enum>
-		<name>AgentEquipmentLayout::AlignmentX</name>
+		<name>AlignmentX</name>
 		<value>Left</value>
 		<value>Right</value>
 		<value>Centre</value>
 	</enum>
 	<enum>
-		<name>AgentEquipmentLayout::AlignmentY</name>
+		<name>AlignmentY</name>
 		<value>Top</value>
 		<value>Bottom</value>
 		<value>Centre</value>
