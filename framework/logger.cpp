@@ -183,8 +183,22 @@ static std::chrono::time_point<std::chrono::high_resolution_clock> timeInit =
 
 static void initLogger()
 {
-	loggerInited = true;
 	outFile = NULL;
+
+	// Handle Log calls befoore the settings are read, just output everything to stdout
+
+	if (!ConfigFile::getInstance().loaded())
+	{
+		stderrLogLevel = LogLevel::Debug;
+		fileLogLevel = LogLevel::Nothing;
+		backtraceLogLevel = LogLevel::Nothing;
+		showDialogOnError = false;
+		// Returning withoput setting loggerInited causes this to be called evey Log call until the
+		// config is parsed
+		return;
+	}
+
+	loggerInited = true;
 
 	stderrLogLevel = (LogLevel)stderrLogLevelOption.get();
 	fileLogLevel = (LogLevel)fileLogLevelOption.get();

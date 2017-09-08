@@ -146,6 +146,8 @@ class ConfigFileImpl
 		return false;
 	}
 
+	bool loaded() const { return this->parsed; }
+
 	bool save()
 	{
 		// Don't try to save if we've not successfully loaded anything
@@ -432,6 +434,8 @@ bool ConfigFile::parseOptions(int argc, char *argv[])
 {
 	return this->pimpl->parseOptions(argc, argv);
 }
+
+bool ConfigFile::loaded() const { return this->pimpl->loaded(); }
 
 void ConfigFile::showHelp() { this->pimpl->showHelp(); }
 

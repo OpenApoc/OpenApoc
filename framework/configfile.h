@@ -18,6 +18,9 @@ class ConfigFile
 	~ConfigFile();
 	bool save();
 
+	// Returns true if the settings have been read
+	bool loaded() const;
+
 	int getInt(const UString key);
 	bool getBool(const UString key);
 	UString getString(const UString key);
