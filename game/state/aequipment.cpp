@@ -340,6 +340,8 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 	{
 		payloadType = ammoItem->type;
 		ammo = ammoItem->ammo;
+		// Spend ammo
+		ammoItem->ammo = 0;
 		// Remove item from battle/agent
 		auto ownerItem = ammoItem->ownerItem.lock();
 		if (ownerItem)
@@ -351,6 +353,20 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 			ownerAgent->removeEquipment(state, ammoItem);
 		}
 	}
+}
+
+sp<AEquipment> AEquipment::unloadAmmo(GameState & state)
+{
+	if (!payloadType)
+	{
+		return nullptr;
+	}
+	auto clip = mksp<AEquipment>();
+	clip->type = payloadType;
+	clip->ammo = ammo;
+	payloadType = nullptr;
+	ammo = 0;
+	return clip;
 }
 
 void AEquipment::updateInner(GameState &state, unsigned int ticks)

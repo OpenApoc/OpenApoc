@@ -86,6 +86,8 @@ class AEquipScreen : public Stage
 	std::vector<sp<Image>> unitSelect;
 	sp<Image> woundImage;
 
+	bool modifierCtrl = false;
+
 	void displayAgent(sp<Agent> agent);
 	void displayItem(sp<AEquipment> item);
 

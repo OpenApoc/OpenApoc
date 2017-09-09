@@ -800,6 +800,8 @@ void Agent::updateSpeed()
 	modified_stats.speed = std::max(
 	    8, ((strength + encumbrance) / 2 + current_stats.speed * (strength - encumbrance)) /
 	           (strength + encumbrance));
+
+	LogWarning("Str %d Enc %d Spd %d Res %d", strength, encumbrance, current_stats.speed, modified_stats.speed);
 }
 
 void Agent::updateModifiedStats()
