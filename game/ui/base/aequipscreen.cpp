@@ -293,6 +293,17 @@ void AEquipScreen::eventOccurred(Event *e)
 			attemptCloseScreen();
 			return;
 		}
+		if (e->keyboard().KeyCode == SDLK_RCTRL || e->keyboard().KeyCode == SDLK_LCTRL)
+		{
+			modifierCtrl = true;
+		}
+	}
+	if (e->type() == EVENT_KEY_UP)
+	{
+		if (e->keyboard().KeyCode == SDLK_RCTRL || e->keyboard().KeyCode == SDLK_LCTRL)
+		{
+			modifierCtrl = false;
+		}
 	}
 	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::ButtonClick)
 	{
@@ -369,13 +380,20 @@ void AEquipScreen::eventOccurred(Event *e)
 			    std::dynamic_pointer_cast<AEquipment>(currentAgent->getEquipmentAt(mouseSlotPos));
 			if (equipment)
 			{
-				this->draggedEquipment = equipment;
 				this->draggedEquipmentOffset = {0, 0};
 				this->draggedEquipmentOrigin = equipment->equippedPosition;
 
-				currentAgent->removeEquipment(*state, equipment);
+				if (modifierCtrl && equipment->payloadType)
+				{
+					this->draggedEquipment = equipment->unloadAmmo(*state);
+				}
+				else
+				{
+					this->draggedEquipment = equipment;
+					currentAgent->removeEquipment(*state, equipment);
+					this->paperDoll->updateEquipment();
+				}
 				displayAgent(currentAgent);
-				this->paperDoll->updateEquipment();
 				return;
 			}
 
@@ -411,6 +429,24 @@ void AEquipScreen::eventOccurred(Event *e)
 			equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
 			bool canAdd =
 			    currentAgent->canAddEquipment(equipmentGridPos, this->draggedEquipment->type);
+			sp<AEquipment> equipmentUnderCursor = nullptr;
+			if (!canAdd)
+			{
+				Vec2<int> mousePos{ e->mouse().X, e->mouse().Y };
+				auto mouseSlotPos = this->paperDoll->getSlotPositionFromScreenPosition(mousePos);
+				equipmentUnderCursor =
+					std::dynamic_pointer_cast<AEquipment>(currentAgent->getEquipmentAt(mouseSlotPos));
+				if (equipmentUnderCursor 
+					&& equipmentUnderCursor->type->type == AEquipmentType::Type::Weapon 
+					&& std::find(equipmentUnderCursor->type->ammo_types.begin(), equipmentUnderCursor->type->ammo_types.end(), draggedEquipment->type)!= equipmentUnderCursor->type->ammo_types.end())
+				{
+					canAdd = true;
+				}
+				else
+				{
+					equipmentUnderCursor = nullptr;
+				}
+			}
 			if (canAdd && draggedEquipmentOrigin.x == -1 && draggedEquipmentOrigin.y == -1 &&
 			    state->current_battle && state->current_battle->mode == Battle::Mode::TurnBased &&
 			    !currentAgent->unit->spendTU(*state, currentAgent->unit->getPickupCost()))
@@ -424,7 +460,26 @@ void AEquipScreen::eventOccurred(Event *e)
 			}
 			if (canAdd)
 			{
-				currentAgent->addEquipment(*state, equipmentGridPos, this->draggedEquipment);
+				if (equipmentUnderCursor)
+				{
+					equipmentUnderCursor->loadAmmo(*state, draggedEquipment);
+					if (draggedEquipment->ammo > 0)
+					{
+						if (draggedEquipmentOrigin.x != -1 && draggedEquipmentOrigin.y != -1 && currentAgent->canAddEquipment(draggedEquipmentOrigin, draggedEquipment->type))
+						{
+							currentAgent->addEquipment(*state, draggedEquipmentOrigin, this->draggedEquipment);
+						}
+						else
+						{
+							addItemToInventory(draggedEquipment);
+							refreshInventoryItems();
+						}
+					}
+				}
+				else
+				{
+					currentAgent->addEquipment(*state, equipmentGridPos, this->draggedEquipment);
+				}
 				displayAgent(currentAgent);
 				this->paperDoll->updateEquipment();
 			}
@@ -1236,7 +1291,7 @@ void AEquipScreen::displayAgent(sp<Agent> agent)
 		Colour speedInitialColour{12, 156, 56};
 		Colour speedCurrentColour{76, 220, 120};
 		formAgentStats->findControlTyped<Graphic>("VALUE_4")->setImage(createStatsBar(
-		    agent->initial_stats.speed, agent->current_stats.speed, agent->modified_stats.speed,
+		    agent->initial_stats.getDisplaySpeedValue(), agent->current_stats.getDisplaySpeedValue(), agent->modified_stats.getDisplaySpeedValue(),
 		    100, speedInitialColour, speedCurrentColour, {64, 4}));
 	}
 
