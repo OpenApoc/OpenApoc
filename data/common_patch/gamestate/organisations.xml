@@ -3,11 +3,16 @@
   <entry>
     <key>ORG_ALIEN</key>
     <value>
-      <!-- Aliens do not spawn security -->
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_ANTHROPOD</entry>
+		<entry>AGENTTYPE_SPITTER</entry>
+		<entry>AGENTTYPE_SKELETOID</entry>
+	  </guard_types_reinforcements>
+	  <!-- Aliens do not spawn security -->
       <!--
-		<guard_types>
+		<guard_types_human>
           <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-        </guard_types>
+        </guard_types_human>
 		-->
     </value>
   </entry>
@@ -17,7 +22,10 @@
       <!-- Civilians do not spawn security -->
       <!-- However, these fields are used to spawn civilians -->
       <average_guards>10</average_guards>
-      <guard_types>
+      <guard_types_alien>
+	  <entry>AGENTTYPE_ALIEN_GREY</entry>
+	  </guard_types_alien>
+	  <guard_types_human>
         <entry>AGENTTYPE_ANDROID</entry>
         <entry>AGENTTYPE_CIVILIAN_FEMALE</entry>
         <entry>AGENTTYPE_CIVILIAN_FEMALE_1</entry>
@@ -37,13 +45,16 @@
         <entry>AGENTTYPE_UPPER_CLASS_MALE</entry>
         <entry>AGENTTYPE_UPPER_CLASS_MALE_1</entry>
         <entry>AGENTTYPE_UPPER_CLASS_MALE_2</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_CULT_OF_SIRIUS</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_CULTIST</entry>
+	  </guard_types_reinforcements>
+	  <guard_types_human>
         <entry>AGENTTYPE_CULTIST</entry>
         <entry>AGENTTYPE_CULTIST</entry>
         <entry>AGENTTYPE_CULTIST</entry>
@@ -54,21 +65,27 @@
         <entry>AGENTTYPE_CULTIST</entry>
         <entry>AGENTTYPE_CULTIST</entry>
         <entry>AGENTTYPE_CULT_LEADER</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_CYBERWEB</key>
     <value>
-      <guard_types>
+	  <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_DIABLO</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_GANGSTER</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_GANGSTER</entry>
         <entry>AGENTTYPE_GANGSTER</entry>
         <entry>AGENTTYPE_GANGSTER</entry>
@@ -79,109 +96,148 @@
         <entry>AGENTTYPE_GANGSTER</entry>
         <entry>AGENTTYPE_GANGSTER</entry>
         <entry>AGENTTYPE_GANG_LEADER</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_ENERGEN</key>
     <value>
-      <guard_types>
+	  <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_EVONET</key>
     <value>
-      <guard_types>
+	  <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_EXTROPIANS</key>
     <value>
-      <guard_types>
+	  <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_GENERAL_METRO</key>
     <value>
-      <guard_types>
+	  <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_GOVERNMENT</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_GRAVBALL_LEAGUE</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_LIFETREE</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_MARSEC</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_MEGAPOL</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_POLICE</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_POLICE</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_MUTANT_ALLIANCE</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_NANOTECH</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_NUTRIVEND</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_OSIRON</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_GANGSTER</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_GANGSTER</entry>
         <entry>AGENTTYPE_GANGSTER</entry>
         <entry>AGENTTYPE_GANGSTER</entry>
@@ -192,13 +248,16 @@
         <entry>AGENTTYPE_GANGSTER</entry>
         <entry>AGENTTYPE_GANGSTER</entry>
         <entry>AGENTTYPE_GANG_LEADER</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_PSYKE</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_GANGSTER</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_GANGSTER</entry>
         <entry>AGENTTYPE_GANGSTER</entry>
         <entry>AGENTTYPE_GANGSTER</entry>
@@ -209,71 +268,95 @@
         <entry>AGENTTYPE_GANGSTER</entry>
         <entry>AGENTTYPE_GANGSTER</entry>
         <entry>AGENTTYPE_GANG_LEADER</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_SANCTUARY_CLINIC</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_SENSOVISION</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_SOLMINE</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_SUPERDYNAMICS</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_SYNTHEMESH</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_S_E_L_F_</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_TECHNOCRATS</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
     <key>ORG_TRANSTELLAR</key>
     <value>
-      <guard_types>
+      <guard_types_reinforcements>
+		<entry>AGENTTYPE_BUILDING_SECURITY</entry>
+	  </guard_types_reinforcements>
+      <guard_types_human>
         <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-      </guard_types>
+      </guard_types_human>
     </value>
   </entry>
   <entry>
@@ -281,9 +364,9 @@
     <value>
       <!-- X-COM does not spawn security -->
       <!--
-		<guard_types>
+		<guard_types_human>
           <entry>AGENTTYPE_BUILDING_SECURITY</entry>
-        </guard_types>
+        </guard_types_human>
 		-->
     </value>
   </entry>

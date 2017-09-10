@@ -20,6 +20,19 @@ TriStateBox::TriStateBox(sp<Image> Image1, sp<Image> Image2, sp<Image> Image3)
 
 TriStateBox::~TriStateBox() = default;
 
+bool TriStateBox::click()
+{
+	if (!Control::click())
+	{
+		return false;
+	}
+	if (buttonclick)
+	{
+		fw().soundBackend->playSample(buttonclick);
+	}
+	return true;
+}
+
 void TriStateBox::eventOccured(Event *e)
 {
 	Control::eventOccured(e);
@@ -27,7 +40,10 @@ void TriStateBox::eventOccured(Event *e)
 	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
 	    e->forms().EventFlag == FormEventType::MouseDown)
 	{
-		fw().soundBackend->playSample(buttonclick);
+		if (buttonclick)
+		{
+			fw().soundBackend->playSample(buttonclick);
+		}
 	}
 
 	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&

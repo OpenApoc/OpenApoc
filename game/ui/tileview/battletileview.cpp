@@ -311,55 +311,76 @@ BattleTileView::~BattleTileView() = default;
 
 void BattleTileView::eventOccurred(Event *e)
 {
-	if (e->type() == EVENT_KEY_DOWN &&
-	    (e->keyboard().KeyCode == SDLK_F6 || e->keyboard().KeyCode == SDLK_F7 ||
-	     e->keyboard().KeyCode == SDLK_F8 || e->keyboard().KeyCode == SDLK_F9))
+	if (e->type() == EVENT_KEY_DOWN)
 	{
 		switch (e->keyboard().KeyCode)
 		{
-			case SDLK_F6:
+			case SDLK_F1:
 			{
-				LogWarning("Writing voxel view to tileviewvoxels.png");
-				auto imageOffset = -this->getScreenOffset();
-				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-				    {imageOffset, imageOffset + dpySize}, *this, battle.battleViewZLevel));
-				fw().data->writeImage("tileviewvoxels.png", img);
+				debugHotkeyMode = !debugHotkeyMode;
+				LogWarning("DEBUG MODE %s", debugHotkeyMode);
+				return;
 			}
-			break;
-			case SDLK_F7:
-			{
-				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
-				auto imageOffset = -this->getScreenOffset();
-				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-				    {imageOffset, imageOffset + dpySize}, *this, battle.battleViewZLevel, true));
-				fw().data->writeImage("tileviewvoxels.png", img);
-			}
-			case SDLK_F8:
-			{
-				LogWarning("Writing voxel view to tileviewvoxels.png");
-				auto imageOffset = -this->getScreenOffset();
-				auto img = std::dynamic_pointer_cast<RGBImage>(
-				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this,
-				                            battle.battleViewZLevel, false, true));
-				fw().data->writeImage("tileviewvoxels.png", img);
-			}
-			break;
-			case SDLK_F9:
-			{
-				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
-				auto imageOffset = -this->getScreenOffset();
-				auto img = std::dynamic_pointer_cast<RGBImage>(
-				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this,
-				                            battle.battleViewZLevel, true, true));
-				fw().data->writeImage("tileviewvoxels.png", img);
-			}
-			break;
+			default:
+				break;
 		}
+		if (debugHotkeyMode)
+		{
+			switch (e->keyboard().KeyCode)
+			{
+				case SDLK_F6:
+				{
+					LogWarning("Writing voxel view to tileviewvoxels.png");
+					auto imageOffset = -this->getScreenOffset();
+					auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
+					{ imageOffset, imageOffset + dpySize }, *this, battle.battleViewZLevel));
+					fw().data->writeImage("tileviewvoxels.png", img);
+					return;
+				}
+				case SDLK_F7:
+				{
+					LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
+					auto imageOffset = -this->getScreenOffset();
+					auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
+					{ imageOffset, imageOffset + dpySize }, *this, battle.battleViewZLevel, true));
+					fw().data->writeImage("tileviewvoxels.png", img);
+					return;
+				}
+				case SDLK_F8:
+				{
+					LogWarning("Writing voxel view to tileviewvoxels.png");
+					auto imageOffset = -this->getScreenOffset();
+					auto img = std::dynamic_pointer_cast<RGBImage>(
+						this->map.dumpVoxelView({ imageOffset, imageOffset + dpySize }, *this,
+							battle.battleViewZLevel, false, true));
+					fw().data->writeImage("tileviewvoxels.png", img);
+					return;
+				}
+				case SDLK_F9:
+				{
+					LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
+					auto imageOffset = -this->getScreenOffset();
+					auto img = std::dynamic_pointer_cast<RGBImage>(
+						this->map.dumpVoxelView({ imageOffset, imageOffset + dpySize }, *this,
+							battle.battleViewZLevel, true, true));
+					fw().data->writeImage("tileviewvoxels.png", img);
+					return;
+				}
+				default:
+					break;
+			}
+		}
+		else
+		{
+			switch (e->keyboard().KeyCode)
+			{
+				default:
+					break;
+			}
+		}
+			
 	}
-	else
-	{
-		TileView::eventOccurred(e);
-	}
+	TileView::eventOccurred(e);
 }
 
 void BattleTileView::render()

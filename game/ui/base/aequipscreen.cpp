@@ -226,6 +226,15 @@ void AEquipScreen::begin()
 		}
 	}
 
+	if (getMode() == Mode::Enemy)
+	{
+		formMain->findControlTyped<Label>("EQUIP_AGENT")->setText(tr("MIND PROBE"));
+	}
+	else
+	{
+		formMain->findControlTyped<Label>("EQUIP_AGENT")->setText(tr("EQUIP AGENT"));
+	}
+
 	// Populate agent list
 	auto agentList = formMain->findControlTyped<ListBox>("AGENT_SELECT_BOX");
 	auto font = ui().getFont("smalfont");
@@ -236,41 +245,44 @@ void AEquipScreen::begin()
 	{
 		owner = state->current_battle->currentPlayer;
 	}
-	for (auto &agent : state->agents)
+	if (getMode() != Mode::Enemy)
 	{
-		if (agent.second->owner != owner)
+		for (auto &agent : state->agents)
 		{
-			continue;
-		}
-		// Unit is not participating in battle
-		if (state->current_battle)
-		{
-			if (!agent.second->unit || agent.second->unit->retreated ||
-			    agent.second->unit->isDead())
+			if (agent.second->owner != owner)
 			{
 				continue;
 			}
-		}
-		else
-		{
-			// Unit not a soldier
-			if (agent.second->type->role != AgentType::Role::Soldier)
+			// Unit is not participating in battle
+			if (state->current_battle)
+			{
+				if (!agent.second->unit || agent.second->unit->retreated ||
+					agent.second->unit->isDead())
+				{
+					continue;
+				}
+			}
+			else
+			{
+				// Unit not a soldier
+				if (agent.second->type->role != AgentType::Role::Soldier)
+				{
+					continue;
+				}
+			}
+			// Unit does not allow direct control
+			if (!agent.second->type->allowsDirectControl)
 			{
 				continue;
 			}
-		}
-		// Unit does not allow direct control
-		if (!agent.second->type->allowsDirectControl)
-		{
-			continue;
-		}
 
-		auto agentControl =
-		    this->createAgentControl({130, agentEntryHeight}, {state.get(), agent.second});
-		agentList->addItem(agentControl);
-		if (agent.second == currentAgent)
-		{
-			agentList->setSelected(agentControl);
+			auto agentControl =
+				this->createAgentControl({ 130, agentEntryHeight }, { state.get(), agent.second });
+			agentList->addItem(agentControl);
+			if (agent.second == currentAgent)
+			{
+				agentList->setSelected(agentControl);
+			}
 		}
 	}
 	agentList->ItemSize = agentEntryHeight;
@@ -292,6 +304,14 @@ void AEquipScreen::eventOccurred(Event *e)
 		{
 			attemptCloseScreen();
 			return;
+		}
+		if (e->type() == EVENT_KEY_DOWN)
+		{
+			if (e->keyboard().KeyCode == SDLK_RETURN)
+			{
+				formMain->findControl("BUTTON_OK")->click();
+				return;
+			}
 		}
 		if (e->keyboard().KeyCode == SDLK_RCTRL || e->keyboard().KeyCode == SDLK_LCTRL)
 		{
@@ -367,7 +387,7 @@ void AEquipScreen::eventOccurred(Event *e)
 	}
 
 	// Item manipulation
-	if (currentAgent->type->inventory)
+	if (currentAgent->type->inventory && getMode() != Mode::Enemy)
 	{
 		// Picking up items
 		if (e->type() == EVENT_MOUSE_DOWN && !this->draggedEquipment)
@@ -764,30 +784,35 @@ AEquipScreen::Mode AEquipScreen::getMode()
 	// TODO: Finish implementation after implementing agents traveling the city by themselves and on
 	// vehicles
 
+	// If viewing an enemy
+	if (currentAgent->unit && currentAgent->owner != state->current_battle->currentPlayer)
+	{
+		return Mode::Enemy;
+	}
 	// If agent in battle
 	if (currentAgent->unit && currentAgent->unit->tileObject)
 	{
-		return AEquipScreen::Mode::Battle;
+		return Mode::Battle;
 	}
 	// If agent in base and not in vehicle or in vehicle which is parked in base
 	else if (true)
 	{
-		return AEquipScreen::Mode::Base;
+		return Mode::Base;
 	}
 	// If agent is in vehicle which is not at any base
 	else if (false)
 	{
-		return AEquipScreen::Mode::Vehicle;
+		return Mode::Vehicle;
 	}
 	// If agent is in a building which is not any base
 	else if (false)
 	{
-		return AEquipScreen::Mode::Building;
+		return Mode::Building;
 	}
 	// Agent is moving somewhere by foot
 	else
 	{
-		return AEquipScreen::Mode::Agent;
+		return Mode::Agent;
 	}
 }
 
@@ -797,6 +822,8 @@ void AEquipScreen::refreshInventoryItems()
 
 	switch (getMode())
 	{
+		case Mode::Enemy:
+			break;
 		case Mode::Agent:
 			populateInventoryItemsAgent();
 			break;
@@ -980,6 +1007,9 @@ void AEquipScreen::removeItemFromInventory(sp<AEquipment> item)
 {
 	switch (getMode())
 	{
+		case Mode::Enemy:
+			LogError("Trying to remove item from inventory in enemy screen!?");
+			break;
 		case Mode::Agent:
 			removeItemFromInventoryAgent(item);
 			break;
@@ -1079,6 +1109,9 @@ void AEquipScreen::addItemToInventory(sp<AEquipment> item)
 {
 	switch (getMode())
 	{
+		case Mode::Enemy:
+			LogError("Trying to add item to inventory in enemy screen!?");
+			break;
 		case Mode::Agent:
 			addItemToInventoryAgent(item);
 			break;

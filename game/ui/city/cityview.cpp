@@ -958,8 +958,11 @@ void CityView::eventOccurred(Event *e)
 		{
 			state->logEvent(gameEvent);
 			baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
-			fw().stageQueueCommand({StageCmd::Command::PUSH,
-			                        mksp<NotificationScreen>(state, *this, gameEvent->message())});
+			if (gameEvent->type != GameEventType::AlienSpotted)
+			{
+				fw().stageQueueCommand({ StageCmd::Command::PUSH,
+									   mksp<NotificationScreen>(state, *this, gameEvent->message()) });
+			}
 		}
 		switch (gameEvent->type)
 		{
@@ -973,6 +976,8 @@ void CityView::eventOccurred(Event *e)
 					LogError("Invalid spotted event");
 				}
 				fw().soundBackend->playSample(listRandomiser(state->rng, alertSounds));
+				zoomLastEvent();
+				setUpdateSpeed(UpdateSpeed::Speed1);
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH, mksp<AlertScreen>(state, ev->building)});
 				break;

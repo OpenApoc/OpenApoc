@@ -800,8 +800,6 @@ void Agent::updateSpeed()
 	modified_stats.speed = std::max(
 	    8, ((strength + encumbrance) / 2 + current_stats.speed * (strength - encumbrance)) /
 	           (strength + encumbrance));
-
-	LogWarning("Str %d Enc %d Spd %d Res %d", strength, encumbrance, current_stats.speed, modified_stats.speed);
 }
 
 void Agent::updateModifiedStats()
@@ -1116,6 +1114,28 @@ void Agent::destroy()
 		GameState state;
 		this->removeEquipment(state, equipment.front());
 	}
+}
+
+BodyState AgentBodyType::getFirstAllowedState()
+{
+	auto bodyState = BodyState::Standing;
+	if (allowed_body_states.find(bodyState) == allowed_body_states.end())
+	{
+		bodyState = BodyState::Flying;
+	}
+	if (allowed_body_states.find(bodyState) == allowed_body_states.end())
+	{
+		bodyState = BodyState::Kneeling;
+	}
+	if (allowed_body_states.find(bodyState) == allowed_body_states.end())
+	{
+		bodyState = BodyState::Prone;
+	}
+	if (allowed_body_states.find(bodyState) == allowed_body_states.end())
+	{
+		LogError("Body type cannot Stand, Fly, Kneel or go Prone! WTF!?");
+	}
+	return bodyState;
 }
 
 } // namespace OpenApoc

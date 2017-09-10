@@ -476,7 +476,7 @@ void Framework::processEvents()
 		this->cursor->eventOccured(e.get());
 		if (e->type() == EVENT_KEY_DOWN)
 		{
-			if (e->keyboard().KeyCode == SDLK_F5)
+			if (e->keyboard().KeyCode == SDLK_PRINTSCREEN)
 			{
 				UString screenshotName = "screenshot.png";
 				LogWarning("Writing screenshot to \"%s\"", screenshotName);

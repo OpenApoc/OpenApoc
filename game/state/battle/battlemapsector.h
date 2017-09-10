@@ -42,6 +42,7 @@ class BattleMapSector : public StateObject
 		SpawnType spawn_type = SpawnType::Player;
 		int spawn_priority = 0;
 		bool low_priority = false;
+		bool also_allow_civilians = false;
 		bool spawn_large_units = false;
 		bool spawn_walking_units = false;
 

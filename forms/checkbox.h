@@ -26,6 +26,8 @@ class CheckBox : public Control
 	CheckBox(sp<Image> ImageChecked = nullptr, sp<Image> ImageUnchecked = nullptr);
 	~CheckBox() override;
 
+	bool click() override;
+
 	void eventOccured(Event *e) override;
 	void update() override;
 	void unloadResources() override;

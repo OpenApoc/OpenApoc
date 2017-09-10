@@ -52,7 +52,9 @@ class Organisation : public StateObject
 	int tech_level = 1;
 	int average_guards = 1;
 	// What guard types can spawn, supports duplicates to provide variable probability
-	std::list<StateRef<AgentType>> guard_types;
+	std::list<StateRef<AgentType>> guard_types_reinforcements;
+	std::list<StateRef<AgentType>> guard_types_human;
+	std::list<StateRef<AgentType>> guard_types_alien;
 
 	std::map<LootPriority, std::vector<StateRef<AEquipmentType>>> loot;
 

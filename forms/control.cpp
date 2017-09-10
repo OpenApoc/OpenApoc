@@ -946,6 +946,22 @@ void Control::addCallback(FormEventType event, std::function<void(FormsEvent *e)
 	this->callbacks[event].push_back(callback);
 }
 
+bool Control::click()
+{
+	if (!Visible || !Enabled)
+	{
+		return false;
+	}
+	FormsEvent *event = nullptr;
+	event = new FormsEvent();
+	event->forms().RaisedBy = shared_from_this();
+	event->forms().EventFlag = FormEventType::MouseClick;
+	fw().pushEvent(event);
+	this->setDirty();
+	this->triggerEventCallbacks(event);
+	return true;
+}
+
 void Control::setDirty()
 {
 	this->dirty = true;

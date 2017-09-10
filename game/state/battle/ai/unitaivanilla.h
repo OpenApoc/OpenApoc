@@ -34,6 +34,9 @@ class UnitAIVanilla : public UnitAI
 	// If unit has group AI, and patrol decision is made, the group will move together
 	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u, bool interrupt) override;
 
+	//void reportExecuted(AIAction &action) override;
+	void reportExecuted(AIMovement &movement) override;
+
 	void notifyUnderFire(Vec3<int> position) override;
 	void notifyHit(Vec3<int> position) override;
 	void notifyEnemySpotted(Vec3<int> position) override;

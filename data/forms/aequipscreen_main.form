@@ -9,7 +9,7 @@
         <position x="0" y="0"/>
         <size width="640" height="480"/>
       </graphic>
-	  <label text="EQUIP AGENT">
+	  <label id="EQUIP_AGENT">
         <position x="20" y="0"/>
         <size width="600" height="36"/>
         <alignment horizontal="centre" vertical="centre"/>

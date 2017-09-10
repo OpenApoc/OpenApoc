@@ -60,6 +60,7 @@ enum class GameEventType
 	AgentPanicked,
 	AgentPanicOver,
 	AgentPsiAttacked,
+	AgentPsiProbed,
 	AgentPsiControlled,
 	AgentPsiOver,
 	NoLOF,
@@ -68,15 +69,20 @@ enum class GameEventType
 
 	NewTurn,
 
-	// Special events
-
-	ZoomView,
-
-	// Misc
+	// Research
 	ResearchCompleted,
+	
+	// Manufacture
 	ManufactureCompleted,
 	ManufactureHalted,
+
+	// Facility
 	FacilityCompleted,
+
+	// LocationEvent
+	ZoomView,
+	
+	// Misc
 	MarketUpdate,
 	WeeklyReport,
 	EnterAlienDimension,

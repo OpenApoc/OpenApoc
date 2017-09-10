@@ -21,10 +21,7 @@ Most of the battlescape mechanics are fully implemented. Therefore, it is easier
 
 List of unimplemented battlescape features:
 - Base defense missions
-- Reinforcements spawning in alien buildings
-- Alien/xcom spawning positions in alien buildings are maulfunctioning
 - Unit behavior (Cautious and Normal units automatically moving into cover, taking potshots from cover and so on)
-- Psi Probe function
 - Organization relationship changing when doing damage to its units
 - Music (right now just a loop of several tracks plays in the background)
 - Squad assignment screen

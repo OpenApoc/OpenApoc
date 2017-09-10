@@ -1485,8 +1485,13 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 
 		for (auto &entry : voxelInfo)
 		{
+			// FIXME: FIGURE OUT WTF IS THIS!
+			// Alexey Andronov: I don't really remember why I add 4 here
+			// Maybe because it's too small otherwise for low poses?
 			a->height[entry.first] =
-			    entry.first == BodyState::Downed ? entry.second.x : entry.second.x + 4;
+			    entry.first == BodyState::Downed ? entry.second.x :
+				std::min(a->maxHeight, entry.second.x + 4);
+				//entry.second.x + 4;
 			a->muzzleZPosition[entry.first] = entry.second.x;
 
 			if (a->large)

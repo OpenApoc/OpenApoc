@@ -30,6 +30,8 @@ class GraphicButton : public Control
 	              sp<Image> imageHover = nullptr);
 	~GraphicButton() override;
 
+	bool click() override;
+
 	void eventOccured(Event *e) override;
 	void update() override;
 	void unloadResources() override;

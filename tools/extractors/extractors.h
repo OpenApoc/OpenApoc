@@ -72,6 +72,8 @@ class InitialGameStateExtractor
 	static const std::map<OpenApoc::UString, std::set<int>> initialSmokes;
 	// Lookup table for battlemap path -> id of ground that are spawning reinforcements
 	static const std::map<OpenApoc::UString, std::set<int>> reinforcementSpawners;
+	// Lookup table for battlemap path -> reinforcement timers
+	static const std::map<OpenApoc::UString, int> reinforcementTimers;
 	// Lookup table for battlemap path -> id of feature that is a mission objective (to destroy)
 	static const std::map<OpenApoc::UString, std::set<int>> missionObjectives;
 	// List of paths and names for unit image packs

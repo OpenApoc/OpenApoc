@@ -182,10 +182,9 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 	StateRef<AgentType> android = {&state, "AGENTTYPE_X-COM_AGENT_ANDROID"};
 	auto player = state.getPlayer();
 	std::list<StateRef<Agent>> agents;
-	int agentLimit = 36;
 	for (int i = 0; i < countHumans; i++)
 	{
-		if (agents.size() >= agentLimit)
+		if (agents.size() >= MAX_UNITS_PER_SIDE)
 		{
 			break;
 		}
@@ -193,7 +192,7 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 	}
 	for (int i = 0; i < countHybrids; i++)
 	{
-		if (agents.size() >= agentLimit)
+		if (agents.size() >= MAX_UNITS_PER_SIDE)
 		{
 			break;
 		}
@@ -201,7 +200,7 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 	}
 	for (int i = 0; i < countAndroids; i++)
 	{
-		if (agents.size() >= agentLimit)
+		if (agents.size() >= MAX_UNITS_PER_SIDE)
 		{
 			break;
 		}
@@ -584,6 +583,11 @@ void Skirmish::eventOccurred(Event *e)
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			fw().stageQueueCommand({StageCmd::Command::POP});
+			return;
+		}
+		if (e->keyboard().KeyCode == SDLK_RETURN)
+		{
+			menuform->findControl("BUTTON_OK")->click();
 			return;
 		}
 	}

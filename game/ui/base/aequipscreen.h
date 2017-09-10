@@ -29,6 +29,7 @@ class AEquipScreen : public Stage
   private:
 	enum class Mode
 	{
+		Enemy,
 		Battle,
 		Base,
 		Vehicle,

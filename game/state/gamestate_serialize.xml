@@ -434,7 +434,7 @@
 		<member>buildingCanBeDisabled</member>
 		<member>buildingDisabled</member>
 		<member>playerWon</member>
-		<member>targetOrganisation</member>
+		<member>locationOwner</member>
 		<member>loserHasRetreated</member>
 		<member>winnerHasRetreated</member>
 		<member>player_craft</member>
@@ -460,6 +460,8 @@
 		<member>turnEndAllowed</member>
 		<member>interruptQueue</member>
 		<member>interruptUnits</member>
+		<member>reinforcementsInterval</member>
+		<member>ticksUntilNextReinforcement</member>
 		<member>battleViewZLevel</member>
 		<member>battleViewScreenCenter</member>
 		<member>battleViewGroupMove</member>
@@ -479,6 +481,7 @@
 		<member>exit_level_max</member>
 		<member>exitsX</member>
 		<member>exitsY</member>
+		<member>reinforcementsInterval</member>
 		<member>tilesets</member>
 		<member>destroyed_ground_tile</member>
 		<member>rubble_left_wall</member>
@@ -513,6 +516,7 @@
 		<member>ai_target_priority</member>
 		<member>spawn_type</member>
 		<member>spawn_priority</member>
+		<member>also_allow_civilians</member>
 		<member>low_priority</member>
 		<member>spawn_large_units</member>
 		<member>spawn_walking_units</member>
@@ -609,6 +613,7 @@
 		<member>initialTU</member>
 		<member>reserveShotCost</member>
 		<member>cloakTicksAccumulated</member>
+		<member>ticksUntillNextCry</member>
 		<member>behavior_mode</member>
 		<member>fire_aiming_mode</member>
 		<member>fire_permission_mode</member>
@@ -1014,7 +1019,9 @@
 		<member>ticksTakeOverAttemptAccumulated</member>
 		<member>tech_level</member>
 		<member>average_guards</member>
-		<member>guard_types</member>
+		<member>guard_types_reinforcements</member>
+		<member>guard_types_human</member>
+		<member>guard_types_alien</member>
 		<member>loot</member>
 		<member>current_relations</member>
 	</object>

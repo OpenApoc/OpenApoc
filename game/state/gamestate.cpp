@@ -246,6 +246,16 @@ void GameState::startGame()
 		}
 	}
 
+	// Add aliens into random building
+	int buildID = randBoundsExclusive(rng, 0, (int)this->cities["CITYMAP_HUMAN"]->buildings.size());
+	buildingIt = this->cities["CITYMAP_HUMAN"]->buildings.begin();
+	for (int i = 0; i < buildID; i++ )
+	{
+		buildingIt++;
+	}
+	buildingIt->second->current_crew[{this, "AGENTTYPE_ANTHROPOD"}] = 3;
+	buildingIt->second->current_crew[{this, "AGENTTYPE_BRAINSUCKER"}] = 4;
+
 	gameTime = GameTime::midday();
 
 	newGame = true;
@@ -426,9 +436,13 @@ void GameState::update(unsigned int ticks)
 		Trace::end("GameState::update::vehicles");
 
 		gameTime.addTicks(ticks);
-		if (gameTime.hourPassed())
+		if (gameTime.fiveMinutesPassed())
 		{
 			this->updateEndOfFiveMinutes();
+		}
+		if (gameTime.hourPassed())
+		{
+			this->updateEndOfHour();
 		}
 		if (gameTime.dayPassed())
 		{
@@ -462,16 +476,13 @@ void GameState::updateEndOfFiveMinutes()
 
 	// Detection calculation stops when detection happens
 	Trace::start("GameState::updateEndOfFiveMinutes::buildings");
-	for (auto &pair : this->cities)
+	for (auto &b : current_city->buildings)
 	{
-		for (auto &b : pair.second->buildings)
+		bool detected = b.second->ticksDetectionTimeOut > 0;
+		b.second->updateDetection(*this, TICKS_PER_MINUTE * 5);
+		if (b.second->ticksDetectionTimeOut > 0 && !detected)
 		{
-			bool detected = b.second->ticksDetectionTimeOut > 0;
-			b.second->updateDetection(*this, TICKS_PER_MINUTE * 5);
-			if (b.second->ticksDetectionTimeOut > 0 && !detected)
-			{
-				break;
-			}
+			break;
 		}
 	}
 	Trace::end("GameState::updateEndOfFiveMinutes::buildings");
@@ -639,6 +650,10 @@ void GameState::logEvent(GameEvent *ev)
 	if (GameVehicleEvent *gve = dynamic_cast<GameVehicleEvent *>(ev))
 	{
 		location = gve->vehicle->position;
+	}
+	else if (GameBuildingEvent *gve = dynamic_cast<GameBuildingEvent *>(ev))
+	{
+		location = { gve->building->bounds.p0.x, gve->building->bounds.p0.y, 0 };
 	}
 	else if (GameAgentEvent *gae = dynamic_cast<GameAgentEvent *>(ev))
 	{

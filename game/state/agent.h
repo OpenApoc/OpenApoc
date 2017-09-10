@@ -254,6 +254,8 @@ class AgentBodyType : public StateObject
 	std::map<BodyState, std::map<Vec2<int>, Vec3<int>>> size;
 	// Voxel maps for each body state and facing of the agent
 	std::map<BodyState, std::map<Vec2<int>, std::vector<sp<VoxelMap>>>> voxelMaps;
+
+	BodyState getFirstAllowedState();
 };
 
 enum class Rank

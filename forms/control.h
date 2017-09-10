@@ -150,6 +150,9 @@ class Control : public std::enable_shared_from_this<Control>
 	}
 
 	void addCallback(FormEventType event, std::function<void(FormsEvent *e)> callback);
+
+	// Simulate mouse click on control
+	virtual bool click();
 };
 
 }; // namespace OpenApoc

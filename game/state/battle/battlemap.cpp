@@ -55,87 +55,6 @@ const UString &BattleMap::getId(const GameState &state, const sp<BattleMap> ptr)
 	return emptyString;
 }
 
-void addDebugTroops(GameState &state, std::list<StateRef<Agent>> &player_agents)
-{
-	std::list<std::pair<StateRef<Organisation>, StateRef<AgentType>>> otherParticipants;
-	auto aliens = state.getAliens();
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_SKELETOID"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_SKELETOID"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_SKELETOID"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_ANTHROPOD"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_BRAINSUCKER"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_POPPER"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_CHRYSALIS"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_MEGASPAWN"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_PSIMORPH"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM_EGG"});
-	otherParticipants.emplace_back(
-	    aliens, StateRef<AgentType>{&state, "AGENTTYPE_X-COM_BASE_TURRET_LASER"});
-	otherParticipants.emplace_back(
-	    aliens, StateRef<AgentType>{&state, "AGENTTYPE_X-COM_BASE_TURRET_DISRUPTOR"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_MULTIWORM"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_SPITTER"});
-	otherParticipants.emplace_back(aliens,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_MICRONOID_AGGREGATE"});
-	otherParticipants.emplace_back(aliens, StateRef<AgentType>{&state, "AGENTTYPE_QUEENSPAWN"});
-	auto civilian = state.getCivilian();
-	otherParticipants.emplace_back(civilian, StateRef<AgentType>{&state, "AGENTTYPE_ALIEN_GREY"});
-	otherParticipants.emplace_back(civilian, StateRef<AgentType>{&state, "AGENTTYPE_ANDROID"});
-	otherParticipants.emplace_back(civilian,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_FEMALE"});
-	otherParticipants.emplace_back(civilian,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_FEMALE_1"});
-	otherParticipants.emplace_back(civilian,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_FEMALE_2"});
-	otherParticipants.emplace_back(civilian,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_MALE"});
-	otherParticipants.emplace_back(civilian,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_MALE_1"});
-	otherParticipants.emplace_back(civilian,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_CIVILIAN_MALE_2"});
-	otherParticipants.emplace_back(civilian,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE"});
-	otherParticipants.emplace_back(civilian,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE_1"});
-	otherParticipants.emplace_back(civilian,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE_2"});
-	otherParticipants.emplace_back(civilian, StateRef<AgentType>{&state, "AGENTTYPE_POLITICIAN"});
-	otherParticipants.emplace_back(civilian,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_FEMALE"});
-	otherParticipants.emplace_back(civilian,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_FEMALE_1"});
-	otherParticipants.emplace_back(civilian,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_FEMALE_2"});
-	otherParticipants.emplace_back(civilian,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE_1"});
-	otherParticipants.emplace_back(civilian,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_LOWER_CLASS_FEMALE_2"});
-	otherParticipants.emplace_back(civilian,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_MALE"});
-	otherParticipants.emplace_back(civilian,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_MALE_1"});
-	otherParticipants.emplace_back(civilian,
-	                               StateRef<AgentType>{&state, "AGENTTYPE_UPPER_CLASS_MALE_2"});
-	for (auto &pair : otherParticipants)
-	{
-		player_agents.push_back(state.agent_generator.createAgent(state, pair.first, pair.second));
-	}
-
-	// Just for lulz
-	aliens->current_relations[civilian] = -100.0f;
-}
-
 sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> organisation,
                                    std::list<StateRef<Agent>> &player_agents,
                                    const std::map<StateRef<AgentType>, int> *aliens,
@@ -147,11 +66,20 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> orga
 	}
 	auto alienOrg = state.getAliens();
 
+	int countAliens = 0;
 	for (auto &a : *aliens)
 	{
 		for (int i = 0; i < a.second; i++)
 		{
 			player_agents.push_back(state.agent_generator.createAgent(state, alienOrg, a.first));
+			if (++countAliens >= MAX_UNITS_PER_SIDE)
+			{
+				break;
+			}
+		}
+		if (countAliens >= MAX_UNITS_PER_SIDE)
+		{
+			break;
 		}
 	}
 
@@ -168,6 +96,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 {
 	std::list<std::pair<StateRef<Organisation>, StateRef<AgentType>>> otherParticipants;
 	auto missionType = Battle::MissionType::AlienExtermination;
+
+	std::map<StateRef<AgentType>, int> current_crew;
 
 	// Setup mission type and other participants
 	if (building->owner == state.getPlayer())
@@ -192,6 +122,16 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 					aliens = &building->preset_crew;
 				}
 
+				// Civilains will not be actually added if there is no spawn points for them
+				int numCivs = civilians ? *civilians : state.getCivilian()->getGuardCount(state);
+				numCivs = std::min(numCivs, MAX_UNITS_PER_SIDE);
+				for (int i = 0; i < numCivs; i++)
+				{
+					otherParticipants.emplace_back(
+						state.getCivilian(),
+						listRandomiser(state.rng, state.getCivilian()->guard_types_alien));
+				}
+
 				missionType = Battle::MissionType::RaidAliens;
 			}
 			else
@@ -201,8 +141,9 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				// Add aliens
 				if (!aliens)
 				{
-					// FIXME: Add aliens from building's current alien list!
-					// Then clear the list
+					aliens = &current_crew;
+					current_crew = building->current_crew;
+					building->current_crew.clear();
 				}
 
 				// Add building security if hostile to player
@@ -211,22 +152,22 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				                                Organisation::Relation::Hostile
 				                            ? building->owner->getGuardCount(state)
 				                            : 0);
-
+				numGuards = std::min(numGuards, MAX_UNITS_PER_SIDE);
 				for (int i = 0; i < numGuards; i++)
 				{
 					otherParticipants.emplace_back(
-					    building->owner, listRandomiser(state.rng, building->owner->guard_types));
+					    building->owner, listRandomiser(state.rng, building->owner->guard_types_human));
 				}
 
 				// Civilains will not be actually added if there is no spawn points for them
 				// Or if building owner is not alien but hostile
 				int numCivs = civilians ? *civilians : state.getCivilian()->getGuardCount(state);
-
+				numCivs = std::min(numCivs, MAX_UNITS_PER_SIDE);
 				for (int i = 0; i < numCivs; i++)
 				{
 					otherParticipants.emplace_back(
 					    state.getCivilian(),
-					    listRandomiser(state.rng, state.getCivilian()->guard_types));
+					    listRandomiser(state.rng, state.getCivilian()->guard_types_human));
 				}
 
 				missionType = Battle::MissionType::AlienExtermination;
@@ -236,17 +177,27 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 		{
 			// Raid humans mission
 
-			// Add building security
+			// Add aliens
+			if (!aliens)
+			{
+				aliens = &current_crew;
+				current_crew = building->current_crew;
+				building->current_crew.clear();
+			}
+
+			// Add building security always
 			{
 				int numGuards = guards ? *guards : building->owner->getGuardCount(state);
-
+				numGuards = std::min(numGuards, MAX_UNITS_PER_SIDE);
 				for (int i = 0; i < numGuards; i++)
 				{
 					otherParticipants.emplace_back(
 					    target_organisation,
-					    listRandomiser(state.rng, building->owner->guard_types));
+					    listRandomiser(state.rng, building->owner->guard_types_human));
 				}
 			}
+
+			// Never add civilians
 
 			missionType = Battle::MissionType::RaidHumans;
 		}
@@ -256,6 +207,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 
 	if (aliens)
 	{
+		int countAliens = 0;
 		auto alienOrg = state.getAliens();
 		for (auto &a : *aliens)
 		{
@@ -263,9 +215,18 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 			{
 				player_agents.push_back(
 				    state.agent_generator.createAgent(state, alienOrg, a.first));
+				if (++countAliens >= MAX_UNITS_PER_SIDE)
+				{
+					break;
+				}
+			}
+			if (countAliens >= MAX_UNITS_PER_SIDE)
+			{
+				break;
 			}
 		}
 	}
+
 	for (auto &pair : otherParticipants)
 	{
 		player_agents.push_back(state.agent_generator.createAgent(state, pair.first, pair.second));
@@ -845,6 +806,8 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 	b->mission_location_id = mission_location_id;
 	b->player_craft = player_craft;
 	b->loadResources(state);
+	b->reinforcementsInterval = reinforcementsInterval * TICKS_PER_SECOND;
+	b->ticksUntilNextReinforcement = reinforcementsInterval * TICKS_PER_SECOND;
 
 	for (int x = 0; x < size.x; x++)
 	{
@@ -1005,13 +968,12 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 					auto lb = tlb->clone(shift);
 					b->losBlocks.push_back(lb);
 					// At least one civilian spawner required for map to spawn civilians
-					if (lb->spawn_type == SpawnType::Civilian)
+					if (lb->spawn_type == SpawnType::Civilian || lb->also_allow_civilians)
 					{
 						spawnCivilians = true;
 					}
 					// Los block must touch map edge, and it's lowest z must be within spawn
-					// allowance
-					// in order for it to qualify for spawning X-Com agents
+					// allowance in order for it to qualify for spawning X-Com agents
 					else if (lb->spawn_priority > 0 && lb->spawn_type == SpawnType::Player)
 					{
 						bool canSpawn =

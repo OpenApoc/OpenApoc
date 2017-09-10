@@ -324,6 +324,11 @@ void TileObjectBattleUnit::addToDrawnTiles(Tile *tile)
 		return;
 	}
 	Vec3<int> maxCoords = {-1, -1, -1};
+	auto currentHeight = u->getCurrentHeight();
+	while (currentHeight > 40)
+	{
+		currentHeight -= 40;
+	}
 	for (auto &intersectingTile : intersectingTiles)
 	{
 		int x = intersectingTile->position.x;
@@ -333,7 +338,7 @@ void TileObjectBattleUnit::addToDrawnTiles(Tile *tile)
 		// Units are drawn in the topmost tile their head pops into
 		// Otherwise, they can only be drawn in it if it's their owner tile
 		if (maxCoords.z * 1000 + maxCoords.x + maxCoords.y < z * 1000 + x + y &&
-		    u->position.z + (float)u->getCurrentHeight() / 40.0f >= (float)z + 0.25f)
+		    u->position.z + (float)currentHeight / 40.0f >= (float)z + 0.25f)
 		{
 			tile = intersectingTile;
 			maxCoords = {x, y, z};

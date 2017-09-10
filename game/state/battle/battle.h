@@ -24,6 +24,9 @@ namespace OpenApoc
 #define VOXEL_Y_BATTLE (24)
 #define VOXEL_Z_BATTLE (20)
 
+static const int MAX_UNITS_PER_SIDE = 36;
+static const float MAX_HEARING_DISTANCE = 10.0f;
+
 static const unsigned TICKS_PER_TURN = TICKS_PER_SECOND * 4;
 // Amount of ticks that must pass without any action in order for turn end to trigger
 static const unsigned TICKS_END_TURN = TICKS_PER_SECOND * 2;
@@ -133,7 +136,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	bool buildingCanBeDisabled = false;
 	bool buildingDisabled = false;
 	bool playerWon = false;
-	StateRef<Organisation> targetOrganisation;
+	StateRef<Organisation> locationOwner;
 	bool loserHasRetreated = false;
 	bool winnerHasRetreated = false;
 
@@ -167,6 +170,10 @@ class Battle : public std::enable_shared_from_this<Battle>
 	unsigned int ticksWithoutAction = 0;
 	std::map<StateRef<Organisation>, unsigned> ticksWithoutSeenAction;
 	std::map<StateRef<Organisation>, Vec3<int>> lastSeenActionLocation;
+	// RF timer
+	int reinforcementsInterval = 0;
+	int ticksUntilNextReinforcement = 0;
+
 	// Turn end allowed by current org
 	bool turnEndAllowed = false;
 	// Low morale units were processed at turn start
@@ -226,6 +233,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	void checkMissionEnd(GameState &state, bool retreated, bool forceReCheck = false);
 	void checkIfBuildingDisabled(GameState &state);
 	void refreshLeadershipBonus(StateRef<Organisation> org);
+	void spawnReinforcements(GameState &state);
 
 	void update(GameState &state, unsigned int ticks);
 	void updateTBBegin(GameState &state);

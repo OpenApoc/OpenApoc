@@ -102,7 +102,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 	m->exit_level_min = bdata.exit_min_level;
 	m->exit_level_max = bdata.exit_max_level;
 	m->tilesets.emplace_back(tilePrefix.substr(0, tilePrefix.length() - 1));
-
+	
 	// Side 0 = exits by X axis, Side 1 = exits by Y axis
 	for (int l = 0; l < 15; l++)
 	{
@@ -154,6 +154,11 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 		                                            tilePrefix, "GD_", (unsigned)firstExitIdx + i));
 	}
 
+	if (reinforcementTimers.find(dirName) != reinforcementTimers.end())
+	{
+		m->reinforcementsInterval = reinforcementTimers.at(dirName);
+	}
+
 	// Trying all possible names, because game actually has some maps missing sectors in the middle
 	// (like, 05RESCUE has no SEC04 but has SEC05 and on)
 	auto sdtFiles = fw().data->fs.enumerateDirectory(map_prefix + "/" + dirName, ".sdt");
@@ -196,15 +201,29 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 		s->sectorTilesName = tilesName;
 		if (tilesName == "40spawn_01")
 		{
-			s->spawnLocations[{&state, "AGENTTYPE_QUEENSPAWN"}].push_back({22, 15, 2});
+			s->spawnLocations[{&state, "AGENTTYPE_QUEENSPAWN"}].push_back({ 22, 15, 2 });
+			for (int x = 23;x < 28; x++)
+			{
+				for (int y = 13;y < 18;y++)
+				{
+					s->spawnLocations[{&state, "AGENTTYPE_MULTIWORM_EGG"}].push_back({ x, y, 2 });
+				}
+			}
+			for (int x = 16;x < 21; x++)
+			{
+				for (int y = 12;y < 18;y++)
+				{
+					s->spawnLocations[{&state, "AGENTTYPE_MULTIWORM_EGG"}].push_back({ x, y, 2 });
+				}
+			}
 		}
 
 		m->sectors["SEC" + sector] = s;
 	}
 
 	if (bdata.destroyed_ground_idx != 0)
-		m->destroyed_ground_tile = {&state,
-		                            format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix,
+		m->destroyed_ground_tile = { &state,
+		format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix,
 		                                   "GD_", (unsigned)bdata.destroyed_ground_idx)};
 
 	state.battle_maps[id] = m;
@@ -311,6 +330,18 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 				los_block->ai_patrol_priority = ldata.ai_patrol_priority;
 				los_block->ai_target_priority = ldata.ai_target_priority;
 
+				// If this is alien map, then up the spawn priority for player spawns
+				if (ldata.spawn_priority == 0 && ldata.spawn_type == SPAWN_TYPE_PLAYER)
+				{
+					for (auto &entry : missionObjectives)
+					{
+						if (entry.first == mapRootName)
+						{
+							ldata.spawn_priority = 1;
+							break;
+						}
+					}
+				}
 				los_block->spawn_priority = ldata.spawn_priority;
 				// It only matters if spawn priority is >0, so don't bother bloating xml with unused
 				// values
@@ -325,13 +356,21 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 							break;
 						case SPAWN_TYPE_ENEMY:
 							los_block->spawn_type = SpawnType::Enemy;
+							if (mapRootName == "41food")
+							{
+								los_block->also_allow_civilians = true;
+							}
 							break;
 						case SPAWN_TYPE_CIVILIAN:
 							los_block->spawn_type = SpawnType::Civilian;
+							// Prevent civ spawn on spawn map, this was used to spawn queen
+							if (mapRootName == "40spawn" && (los_block->spawn_priority == 4 || los_block->spawn_priority == 1))
+							{
+								los_block->spawn_priority = 0;
+							}
 							break;
 						// TacEdit (map editor from vanilla creators) allows values up to 8, but
-						// they
-						// are unused, so we should accomodate for that
+						// they are unused, so we should accomodate for that
 						default:
 							// Disable spawning and leave the type to its default value
 							los_block->spawn_priority = 0;

@@ -1,3 +1,4 @@
+#include "framework/keycodes.h"
 #include "game/ui/battle/battleprestart.h"
 #include "forms/form.h"
 #include "forms/graphicbutton.h"
@@ -51,7 +52,18 @@ void BattlePreStart::resume() {}
 
 void BattlePreStart::finish() {}
 
-void BattlePreStart::eventOccurred(Event *e) { menuform->eventOccured(e); }
+void BattlePreStart::eventOccurred(Event *e) 
+{ 
+	menuform->eventOccured(e); 
+	if (e->type() == EVENT_KEY_DOWN)
+	{
+		if (e->keyboard().KeyCode == SDLK_RETURN)
+		{
+			menuform->findControl("BUTTON_OK")->click();
+			return;
+		}
+	}
+}
 
 void BattlePreStart::update() { menuform->update(); }
 
