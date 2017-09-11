@@ -95,5 +95,5 @@ make -j4
 ## Contact us
 
 If you're interested, please visit our [website](http://openapoc.org).
-We also have [forums](http://openapoc.pmprog.co.uk) - please pop by and introduce yourself!
+We also have [forums](http://openapoc.org/forums/) - please pop by and introduce yourself!
 We also have an IRC channel on [Freenode](http://freenode.net) - [#openapoc](irc://irc.freenode.net/#openapoc).
