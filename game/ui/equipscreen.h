@@ -27,6 +27,8 @@ class EquipmentPaperDoll : public Control
   public:
 	EquipmentPaperDoll(Vec2<int> position, Vec2<int> size, Vec2<int> slotSizePixels);
 	Vec2<int> getSlotPositionFromScreenPosition(const Vec2<int> &screenPosition) const;
+	Vec2<int> getScreenPositionFromSlotPosition(const Vec2<float> &slot) const;
+	Vec2<int> getScreenPositionFromSlotPosition(const Vec2<int> &slot) const;
 	void setObject(sp<EquippableObject> newObject);
 	void setHighlightColours(const std::array<Colour, 2> &colours);
 	void setHighlight(const std::set<EquipmentSlotType> &types);

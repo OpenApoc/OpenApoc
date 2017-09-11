@@ -18,7 +18,9 @@ bool BattleForces::insert(unsigned squad, sp<BattleUnit> unit)
 bool BattleForces::insertAt(unsigned squad, unsigned position, sp<BattleUnit> unit)
 {
 	if (squads[squad].getNumUnits() == 6 && unit->squadNumber != (int)squad)
+	{
 		return false;
+	}
 	if (unit->squadNumber != -1)
 	{
 		removeAt(unit->squadNumber, unit->squadPosition);
@@ -29,7 +31,10 @@ bool BattleForces::insertAt(unsigned squad, unsigned position, sp<BattleUnit> un
 	}
 	squads[squad].units.insert(squads[squad].units.begin() + position, unit);
 	unit->squadNumber = squad;
-	unit->squadPosition = position;
+	for (int i = 0; i < squads[squad].getNumUnits(); i++)
+	{
+		squads[squad].units[i]->squadPosition = i;
+	}
 	return true;
 }
 

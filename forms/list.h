@@ -48,6 +48,7 @@ class ListBox : public Control
 
 	void clear();
 	void addItem(sp<Control> Item);
+	void replaceItem(sp<Control> Item);
 	sp<Control> removeItem(sp<Control> Item);
 	sp<Control> removeItem(int Index);
 	sp<Control> operator[](int Index);

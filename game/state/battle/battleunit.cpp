@@ -106,29 +106,43 @@ void BattleUnit::removeFromSquad(Battle &battle)
 	}
 }
 
-bool BattleUnit::assignToSquad(Battle &battle, int squad)
+bool BattleUnit::assignToSquad(Battle &battle, int squadNumber, int squadPosition)
 {
-	if (squad == -1)
+	if (squadNumber == -1)
 	{
 		for (int i = 0; i < (int)battle.forces[owner].squads.size(); i++)
 		{
 			auto &squad = battle.forces[owner].squads[i];
 			if (squad.getNumUnits() < 6)
 			{
-				return battle.forces[owner].insert(i, shared_from_this());
+				if (squadPosition == -1)
+				{
+					return battle.forces[owner].insert(i, shared_from_this());
+				}
+				else
+				{
+					return battle.forces[owner].insertAt(i, squadPosition, shared_from_this());
+				}
 			}
 		}
 		return false;
 	}
 	else
 	{
-		return battle.forces[owner].insert(squad, shared_from_this());
+		if (squadPosition == -1)
+		{
+			return battle.forces[owner].insert(squadNumber, shared_from_this());
+		}
+		else
+		{
+			return battle.forces[owner].insertAt(squadNumber, squadPosition, shared_from_this());
+		}
 	}
 }
 
-void BattleUnit::moveToSquadPosition(Battle &battle, int position)
+void BattleUnit::moveToSquadPosition(Battle &battle, int squadPosition)
 {
-	battle.forces[owner].insertAt(squadNumber, position, shared_from_this());
+	battle.forces[owner].insertAt(squadNumber, squadPosition, shared_from_this());
 }
 
 bool BattleUnit::isFatallyWounded()

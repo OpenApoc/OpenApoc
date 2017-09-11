@@ -812,6 +812,7 @@
 		<member>landed_vehicles</member>
 		<member>ticksDetectionTimeOut</member>
 		<member>ticksDetectionAttemptAccumulated</member>
+		<member>detected</member>
 	</object>
 	<object>
 		<name>UFOIncursion</name>

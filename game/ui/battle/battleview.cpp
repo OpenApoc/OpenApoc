@@ -2519,6 +2519,9 @@ void BattleView::orderUse(bool right, bool automatic)
 				}
 				activeTab->findControl("RANGE_TEXT")->setVisible(range);
 				activeTab->findControl("RANGE_SLIDER")->setVisible(range);
+				activeTab->findControl("RANGE_SLIDER_LEFT")->setVisible(range);
+				activeTab->findControl("RANGE_SLIDER_MIDDLE")->setVisible(range);
+				activeTab->findControl("RANGE_SLIDER_RIGHT")->setVisible(range);
 			}
 			break;
 		case AEquipmentType::Type::MindBender:
@@ -3240,7 +3243,10 @@ void BattleView::eventOccurred(Event *e)
 					}
 					return;
 				case SDLK_RETURN:
-					baseForm->findControl("BUTTON_INVENTORY")->click();
+					if (activeTab == mainTab)
+					{
+						activeTab->findControl("BUTTON_INVENTORY")->click();
+					}
 					return;
 				case SDLK_LEFTBRACKET:
 					if (activeTab == mainTab)
@@ -3411,7 +3417,7 @@ void BattleView::handleMouseDown(Event *e)
 		    screenToTileCoords(Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
 		setScreenCenterTile({clickTile.x, clickTile.y});
 	}
-	else if (Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
+	else if (Event::isPressed(e->mouse().Button, Event::MouseButton::Middle) && debugHotkeyMode)
 	{
 		// CHEAT - move unit to mouse
 		if (!battle.battleViewSelectedUnits.empty())

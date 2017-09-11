@@ -99,6 +99,7 @@ void Building::updateDetection(GameState &state, unsigned int ticks)
 		}
 		return;
 	}
+	detected = false;
 	ticksDetectionAttemptAccumulated += ticks;
 	while (ticksDetectionAttemptAccumulated >= TICKS_PER_DETECTION_ATTEMPT[state.difficulty])
 	{
@@ -171,10 +172,63 @@ void Building::detect(GameState &state, bool forced)
 	}
 	state.firstDetection = false;
 	ticksDetectionTimeOut = TICKS_DETECTION_TIMEOUT;
+	detected = true;
 
 	auto event = new GameBuildingEvent(GameEventType::AlienSpotted,
 	                                   {&state, Building::getId(state, shared_from_this())});
 	fw().pushEvent(event);
+}
+
+void Building::alienGrowth(GameState & state)
+{
+	// Calculate changes to building's crew
+	std::map<StateRef<AgentType>, int> change_crew;
+	for (auto &pair : current_crew)
+	{
+		int growth = 0;
+		for (int i = 0; i < pair.second; i++)
+		{
+			if (randBoundsInclusive(state.rng, 0, 100) < pair.first->growthChance)
+			{
+				growth++;
+			}
+		}
+		if (growth == 0)
+		{
+			continue;
+		}
+		// Growing aliens die
+		change_crew[pair.first] -= growth;
+		// And are replaced with a random one from available options
+		// (or simply die if they don't have any)
+		int rand = randBoundsExclusive(state.rng, 0, 100);
+		for (auto &g : pair.first->growthOptions)
+		{
+			if (rand < g.first)
+			{
+				change_crew[g.second.first] += g.second.second * growth;
+				break;
+			}
+		}
+		// Additionally, suckers apply infiltration here
+		if (pair.first.id == "AGENTTYPE_BRAINSUCKER")
+		{
+			owner->infiltrationValue += growth *
+				function->infiltrationSpeed *
+				owner->infiltrationSpeed;
+			if (owner->infiltrationValue > 200)
+			{
+				owner->infiltrationValue = 200;
+			}
+		}
+	}
+	// Apply changes
+	for (auto &pair : change_crew)
+	{
+		current_crew[pair.first] += pair.second;
+	}
+	// Disable detection if no aliens are there
+	detected = detected && hasAliens();
 }
 
 } // namespace OpenApoc

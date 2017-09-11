@@ -53,10 +53,12 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 
 	unsigned ticksDetectionTimeOut = 0;
 	unsigned ticksDetectionAttemptAccumulated = 0;
+	bool detected = false;
 
 	bool hasAliens() const;
 	void updateDetection(GameState &state, unsigned int ticks);
 	void detect(GameState &state, bool forced = false);
+	void alienGrowth(GameState &state);
 };
 
 }; // namespace OpenApoc

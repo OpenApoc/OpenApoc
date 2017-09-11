@@ -160,6 +160,7 @@ bool GameTime::weekPassed() const { return weekPassedFlag; }
 
 void GameTime::clearFlags()
 {
+	fiveMinutesPassedFlag = false;
 	hourPassedFlag = false;
 	dayPassedFlag = false;
 	weekPassedFlag = false;

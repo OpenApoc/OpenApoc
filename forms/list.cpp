@@ -248,6 +248,31 @@ void ListBox::addItem(sp<Control> Item)
 	this->setDirty();
 }
 
+void ListBox::replaceItem(sp<Control> Item)
+{
+	auto newData = Item->getData<void>();
+	this->setDirty();
+	for (int i = 0; i < Controls.size(); i++)
+	{
+		auto oldItem = Controls[i];
+		if (oldItem->getData<void>() == newData)
+		{
+			Controls.erase(Controls.begin() + i);
+			Item->setParent(shared_from_this(), i);
+			resolveLocation();
+			if (oldItem == this->selected)
+			{
+				this->selected = Item;
+			}
+			if (oldItem == this->hovered)
+			{
+				this->hovered = Item;
+			}
+			return;
+		}
+	}
+}
+
 sp<Control> ListBox::removeItem(sp<Control> Item)
 {
 	this->setDirty();
@@ -266,7 +291,7 @@ sp<Control> ListBox::removeItem(sp<Control> Item)
 	}
 	if (Item == this->hovered)
 	{
-		this->selected = nullptr;
+		this->hovered = nullptr;
 	}
 	return nullptr;
 }

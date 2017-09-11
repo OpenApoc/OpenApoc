@@ -1,3 +1,4 @@
+#include "framework/keycodes.h"
 #include "game/ui/general/messagebox.h"
 #include "forms/form.h"
 #include "forms/label.h"
@@ -83,6 +84,33 @@ void MessageBox::eventOccurred(Event *e)
 {
 	form->eventOccured(e);
 
+	if (e->type() == EVENT_KEY_DOWN)
+	{
+		if (e->keyboard().KeyCode == SDLK_ESCAPE)
+		{
+			if (form->findControl("BUTTON_CANCEL"))
+			{
+				form->findControl("BUTTON_CANCEL")->click();
+			}
+			if (form->findControl("BUTTON_NO"))
+			{
+				form->findControl("BUTTON_NO")->click();
+			}
+			return;
+		}
+		if (e->keyboard().KeyCode == SDLK_RETURN)
+		{
+			if (form->findControl("BUTTON_OK"))
+			{
+				form->findControl("BUTTON_OK")->click();
+			}
+			if (form->findControl("BUTTON_YES"))
+			{
+				form->findControl("BUTTON_YES")->click();
+			}
+			return;
+		}
+	}
 	if (e->type() == EVENT_FORM_INTERACTION)
 	{
 		if (e->forms().EventFlag == FormEventType::ButtonClick)

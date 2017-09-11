@@ -3,10 +3,11 @@
   <form id="FORM_ALERT_SCREEN">
     <style minwidth="640" minheight="480">
       <position x="centre" y="centre"/>
-      <size width="640" height="480"/>
+      <size width="644" height="484"/>
+	  <backcolour r="128" g="80" b="80"/>
       <graphic>
         <image>xcom3/ufodata/alert.pcx</image>
-        <position x="0" y="0"/>
+        <position x="2" y="2"/>
         <size width="640" height="480"/>
       </graphic>
       <label id="TEXT_FUNDS">

@@ -1135,14 +1135,15 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 		// Armor
 		pushEquipmentSlot(a, 7, 3, 2, 2, EquipmentSlotType::ArmorHelmet, AlignmentX::Centre,
 		                  AlignmentY::Centre);
-		pushEquipmentSlot(a, 5, 5, 2, 6, EquipmentSlotType::ArmorRightHand, AlignmentX::Right,
+		pushEquipmentSlot(a, 4, 5, 2, 6, EquipmentSlotType::ArmorRightHand, AlignmentX::Right,
 		                  AlignmentY::Centre);
-		pushEquipmentSlot(a, 7, 5, 2, 6, EquipmentSlotType::ArmorBody, AlignmentX::Centre,
+		pushEquipmentSlot(a, 6, 5, 4, 4, EquipmentSlotType::ArmorBody, AlignmentX::Centre,
 		                  AlignmentY::Centre);
-		pushEquipmentSlot(a, 9, 5, 2, 6, EquipmentSlotType::ArmorLeftHand, AlignmentX::Left,
+		pushEquipmentSlot(a, 10, 5, 2, 6, EquipmentSlotType::ArmorLeftHand, AlignmentX::Left,
 		                  AlignmentY::Centre);
-		pushEquipmentSlot(a, 5, 11, 6, 5, EquipmentSlotType::ArmorLegs, AlignmentX::Centre,
+		pushEquipmentSlot(a, 6, 9, 4, 7, EquipmentSlotType::ArmorLegs, AlignmentX::Centre,
 		                  AlignmentY::Top);
+
 		// Belt #1
 		for (int i = 0; i < 3; i++)
 		{

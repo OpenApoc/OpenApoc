@@ -362,7 +362,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Squad
 
 	void removeFromSquad(Battle &b);
-	bool assignToSquad(Battle &b, int squadNumber = -1);
+	bool assignToSquad(Battle &b, int squadNumber = -1, int squadPosition = -1);
 	void moveToSquadPosition(Battle &b, int squadPosition);
 
 	// Stats

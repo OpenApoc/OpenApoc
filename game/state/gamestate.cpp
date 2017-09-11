@@ -247,14 +247,22 @@ void GameState::startGame()
 	}
 
 	// Add aliens into random building
-	int buildID = randBoundsExclusive(rng, 0, (int)this->cities["CITYMAP_HUMAN"]->buildings.size());
-	buildingIt = this->cities["CITYMAP_HUMAN"]->buildings.begin();
-	for (int i = 0; i < buildID; i++ )
+	int counter = 0;
+	int giveUpCount = 100;
+	do
 	{
-		buildingIt++;
-	}
-	buildingIt->second->current_crew[{this, "AGENTTYPE_ANTHROPOD"}] = 3;
-	buildingIt->second->current_crew[{this, "AGENTTYPE_BRAINSUCKER"}] = 4;
+		int buildID = randBoundsExclusive(rng, 0, (int)this->cities["CITYMAP_HUMAN"]->buildings.size());
+		buildingIt = this->cities["CITYMAP_HUMAN"]->buildings.begin();
+		for (int i = 0; i < buildID; i++)
+		{
+			buildingIt++;
+		}
+		counter++;
+	} while (buildingIt->second->owner->current_relations[player] < 0 || counter >= giveUpCount);
+	
+	
+	buildingIt->second->current_crew[{this, "AGENTTYPE_BRAINSUCKER"}] = randBoundsExclusive(rng, 0, difficulty / 2 + 1) + 1;
+	buildingIt->second->current_crew[{this, "AGENTTYPE_ANTHROPOD"}] = randBoundsExclusive(rng, 0, difficulty / 2 + 2) + 1;
 
 	gameTime = GameTime::midday();
 

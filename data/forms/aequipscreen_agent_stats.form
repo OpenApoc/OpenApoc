@@ -84,43 +84,43 @@
       </label>
       <graphic id="VALUE_1">
         <position x="82" y="173"/>
-        <size width="64" height="4"/>
+        <size width="100" height="4"/>
       </graphic>
       <graphic id="VALUE_2">
         <position x="82" y="189"/>
-        <size width="64" height="4"/>
+        <size width="100" height="4"/>
       </graphic>
       <graphic id="VALUE_3">
         <position x="82" y="205"/>
-        <size width="64" height="4"/>
+        <size width="100" height="4"/>
       </graphic>
       <graphic id="VALUE_4">
         <position x="82" y="221"/>
-        <size width="64" height="4"/>
+        <size width="100" height="4"/>
       </graphic>
       <graphic id="VALUE_5">
         <position x="82" y="237"/>
-        <size width="64" height="4"/>
+        <size width="100" height="4"/>
       </graphic>
       <graphic id="VALUE_6">
         <position x="82" y="253"/>
-        <size width="64" height="4"/>
+        <size width="100" height="4"/>
       </graphic>
       <graphic id="VALUE_7">
         <position x="82" y="269"/>
-        <size width="64" height="4"/>
+        <size width="100" height="4"/>
       </graphic>
       <graphic id="VALUE_8">
         <position x="82" y="285"/>
-        <size width="64" height="4"/>
+        <size width="100" height="4"/>
       </graphic>
       <graphic id="VALUE_9">
         <position x="82" y="301"/>
-        <size width="64" height="4"/>
+        <size width="100" height="4"/>
       </graphic>
       <graphic id="VALUE_10">
         <position x="82" y="317"/>
-        <size width="64" height="4"/>
+        <size width="100" height="4"/>
       </graphic>
     </style>
   </form>

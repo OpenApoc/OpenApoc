@@ -56,18 +56,6 @@
         <image/>
         <imageposition>fit</imageposition>
       </graphic>
-      <radiobutton id="BUTTON_SHOW_WEAPONS" groupid="TYPE">
-        <position x="602" y="40"/>
-        <size width="35" height="34"/>
-        <image/>
-        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:6:xcom3/ufodata/agenteqp.pcx</imagechecked>
-      </radiobutton>
-      <radiobutton id="BUTTON_SHOW_ARMOUR" groupid="TYPE">
-        <position x="602" y="80"/>
-        <size width="35" height="34"/>
-        <image/>
-        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:7:xcom3/ufodata/agenteqp.pcx</imagechecked>
-      </radiobutton>
       <scroll id="AGENT_SELECT_SCROLL">
         <position x="571" y="81"/>
         <size width="16" height="242"/>

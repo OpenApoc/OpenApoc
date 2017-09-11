@@ -24,7 +24,6 @@ List of unimplemented battlescape features:
 - Unit behavior (Cautious and Normal units automatically moving into cover, taking potshots from cover and so on)
 - Organization relationship changing when doing damage to its units
 - Music (right now just a loop of several tracks plays in the background)
-- Squad assignment screen
 
 List of incomplete battlescape features:
 - Proper drawing of large and moving units (some graphical glitches may happen when displaying them)
@@ -33,11 +32,9 @@ List of incomplete battlescape features:
 - Proper fire (current implementation is an approximation but may be far from how vanilla works)
 - Proper cloaking (current implementation is an approximation but may be far from how vanilla works)
 - Disabling notifications does not work (even if you uncheck "pause when this happens" the dialog will pop up anyway)
-- Most hotkeys (like numbers 1 to 6 etc.)
-- Grenade priming interface lacks scrollbar texture
-- Agent equipment screen does not yet allow equipping multiple agents
 
 Debug features:
+- F1 toggles between cheat hotkeys and normal hotkeys (for anything from this list to work, press F1 once, to be back to using normal hotkeys again, press F1 again)
 - Middle click to activate teleportation for any unit (even w/o a teleport in hand)
 - "e" will force end current turn in TB mode
 - "r" will reveal whole map and show debug lines for which unit sees which unit
