@@ -1,8 +1,8 @@
-#include "framework/framework.h"
-#include "game/state/gameevent.h"
 #include "game/state/organisation.h"
+#include "framework/framework.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "library/strings.h"
 
@@ -38,7 +38,7 @@ void Organisation::takeOver(GameState &state, bool forced)
 		current_relations[{&state, pair.first}] = 90.0f;
 		pair.second->current_relations[org] = 90.0f;
 	}
-	auto event = new GameOrganisationEvent(GameEventType::AlienTakeover, { &state, id });
+	auto event = new GameOrganisationEvent(GameEventType::AlienTakeover, {&state, id});
 	fw().pushEvent(event);
 }
 

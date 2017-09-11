@@ -179,7 +179,7 @@ void Building::detect(GameState &state, bool forced)
 	fw().pushEvent(event);
 }
 
-void Building::alienGrowth(GameState & state)
+void Building::alienGrowth(GameState &state)
 {
 	// Calculate changes to building's crew
 	std::map<StateRef<AgentType>, int> change_crew;
@@ -213,9 +213,8 @@ void Building::alienGrowth(GameState & state)
 		// Additionally, suckers apply infiltration here
 		if (pair.first.id == "AGENTTYPE_BRAINSUCKER")
 		{
-			owner->infiltrationValue += growth *
-				function->infiltrationSpeed *
-				owner->infiltrationSpeed;
+			owner->infiltrationValue +=
+			    growth * function->infiltrationSpeed * owner->infiltrationSpeed;
 			if (owner->infiltrationValue > 200)
 			{
 				owner->infiltrationValue = 200;

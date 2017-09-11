@@ -9,11 +9,11 @@
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/font.h"
-#include "game/state/agent.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
 #include "game/state/aequipment.h"
+#include "game/state/agent.h"
 #include "game/state/base/base.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battleunit.h"
@@ -191,16 +191,17 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 
 AEquipScreen::~AEquipScreen() = default;
 
-void AEquipScreen::outputAgent(sp<Agent> agent, sp<Form> formAgentStats, std::vector<sp<Image>> &ranks, bool turnBased)
+void AEquipScreen::outputAgent(sp<Agent> agent, sp<Form> formAgentStats,
+                               std::vector<sp<Image>> &ranks, bool turnBased)
 {
 	formAgentStats->findControlTyped<Label>("AGENT_NAME")->setText(agent->name);
 	formAgentStats->findControlTyped<Graphic>("SELECTED_PORTRAIT")
-		->setImage(agent->getPortrait().photo);
+	    ->setImage(agent->getPortrait().photo);
 	if (agent->type->displayRank)
 	{
 		formAgentStats->findControlTyped<Graphic>("SELECTED_RANK")->setVisible(true);
 		formAgentStats->findControlTyped<Graphic>("SELECTED_RANK")
-			->setImage(ranks[(int)agent->rank]);
+		    ->setImage(ranks[(int)agent->rank]);
 	}
 	else
 	{
@@ -208,81 +209,83 @@ void AEquipScreen::outputAgent(sp<Agent> agent, sp<Form> formAgentStats, std::ve
 	}
 	// FIXME: Make stats colours part of GameState
 	// FIXME: 'initial' colours taken from screenshot, 'current' guessed
-	Colour healthInitialColour{ 156, 4, 4 };
-	Colour healthCurrentColour{ 220, 68, 68 };
+	Colour healthInitialColour{156, 4, 4};
+	Colour healthCurrentColour{220, 68, 68};
 	formAgentStats->findControlTyped<Graphic>("VALUE_1")->setImage(createStatsBar(
-		agent->initial_stats.health, agent->current_stats.health, agent->modified_stats.health, 100,
-		healthInitialColour, healthCurrentColour, { 100, 4 }));
-	Colour accuracyInitialColour{ 252, 176, 0 };
-	Colour accuracyCurrentColour{ 255, 240, 64 };
+	    agent->initial_stats.health, agent->current_stats.health, agent->modified_stats.health, 100,
+	    healthInitialColour, healthCurrentColour, {100, 4}));
+	Colour accuracyInitialColour{252, 176, 0};
+	Colour accuracyCurrentColour{255, 240, 64};
 	formAgentStats->findControlTyped<Graphic>("VALUE_2")->setImage(
-		createStatsBar(agent->initial_stats.accuracy, agent->current_stats.accuracy,
-			agent->modified_stats.accuracy, 100, accuracyInitialColour,
-			accuracyCurrentColour, { 100, 4 }));
-	Colour reactionsInitialColour{ 252, 176, 0 };
-	Colour reactionsCurrentColour{ 255, 240, 64 };
+	    createStatsBar(agent->initial_stats.accuracy, agent->current_stats.accuracy,
+	                   agent->modified_stats.accuracy, 100, accuracyInitialColour,
+	                   accuracyCurrentColour, {100, 4}));
+	Colour reactionsInitialColour{252, 176, 0};
+	Colour reactionsCurrentColour{255, 240, 64};
 	formAgentStats->findControlTyped<Graphic>("VALUE_3")->setImage(
-		createStatsBar(agent->initial_stats.reactions, agent->current_stats.reactions,
-			agent->modified_stats.reactions, 100, reactionsInitialColour,
-			reactionsCurrentColour, { 100, 4 }));
+	    createStatsBar(agent->initial_stats.reactions, agent->current_stats.reactions,
+	                   agent->modified_stats.reactions, 100, reactionsInitialColour,
+	                   reactionsCurrentColour, {100, 4}));
 
 	if (turnBased)
 	{
 		formAgentStats->findControlTyped<Label>("LABEL_SPEED")->setText(tr("Time Units"));
-		Colour speedInitialColour{ 12, 156, 56 };
-		Colour speedCurrentColour{ 76, 220, 120 };
+		Colour speedInitialColour{12, 156, 56};
+		Colour speedCurrentColour{76, 220, 120};
 		formAgentStats->findControlTyped<Graphic>("VALUE_4")->setImage(
-			createStatsBar(agent->initial_stats.time_units, agent->current_stats.time_units,
-				agent->modified_stats.time_units, 100, speedInitialColour,
-				speedCurrentColour, { 100, 4 }));
+		    createStatsBar(agent->initial_stats.time_units, agent->current_stats.time_units,
+		                   agent->modified_stats.time_units, 100, speedInitialColour,
+		                   speedCurrentColour, {100, 4}));
 	}
 	else
 	{
 		formAgentStats->findControlTyped<Label>("LABEL_SPEED")->setText(tr("Speed"));
-		Colour speedInitialColour{ 12, 156, 56 };
-		Colour speedCurrentColour{ 76, 220, 120 };
-		formAgentStats->findControlTyped<Graphic>("VALUE_4")->setImage(createStatsBar(
-			agent->initial_stats.getDisplaySpeedValue(), agent->current_stats.getDisplaySpeedValue(), agent->modified_stats.getDisplaySpeedValue(),
-			100, speedInitialColour, speedCurrentColour, { 100, 4 }));
+		Colour speedInitialColour{12, 156, 56};
+		Colour speedCurrentColour{76, 220, 120};
+		formAgentStats->findControlTyped<Graphic>("VALUE_4")->setImage(
+		    createStatsBar(agent->initial_stats.getDisplaySpeedValue(),
+		                   agent->current_stats.getDisplaySpeedValue(),
+		                   agent->modified_stats.getDisplaySpeedValue(), 100, speedInitialColour,
+		                   speedCurrentColour, {100, 4}));
 	}
 
-	Colour staminaInitialColour{ 12, 156, 56 };
-	Colour staminaCurrentColour{ 76, 220, 120 };
+	Colour staminaInitialColour{12, 156, 56};
+	Colour staminaCurrentColour{76, 220, 120};
 	formAgentStats->findControlTyped<Graphic>("VALUE_5")->setImage(
-		createStatsBar(agent->initial_stats.getDisplayStaminaValue(),
-			agent->current_stats.getDisplayStaminaValue(),
-			agent->modified_stats.getDisplayStaminaValue(), 100, staminaInitialColour,
-			staminaCurrentColour, { 100, 4 }));
-	Colour braveryInitialColour{ 0, 128, 164 };
-	Colour braveryCurrentColour{ 100, 192, 228 };
+	    createStatsBar(agent->initial_stats.getDisplayStaminaValue(),
+	                   agent->current_stats.getDisplayStaminaValue(),
+	                   agent->modified_stats.getDisplayStaminaValue(), 100, staminaInitialColour,
+	                   staminaCurrentColour, {100, 4}));
+	Colour braveryInitialColour{0, 128, 164};
+	Colour braveryCurrentColour{100, 192, 228};
 	formAgentStats->findControlTyped<Graphic>("VALUE_6")->setImage(createStatsBar(
-		agent->initial_stats.bravery, agent->current_stats.bravery, agent->modified_stats.bravery,
-		100, braveryInitialColour, braveryCurrentColour, { 100, 4 }));
-	Colour strengthInitialColour{ 140, 136, 136 };
-	Colour strengthCurrentColour{ 204, 200, 200 };
+	    agent->initial_stats.bravery, agent->current_stats.bravery, agent->modified_stats.bravery,
+	    100, braveryInitialColour, braveryCurrentColour, {100, 4}));
+	Colour strengthInitialColour{140, 136, 136};
+	Colour strengthCurrentColour{204, 200, 200};
 	formAgentStats->findControlTyped<Graphic>("VALUE_7")->setImage(
-		createStatsBar(agent->initial_stats.strength, agent->current_stats.strength,
-			agent->modified_stats.strength, 100, strengthInitialColour,
-			strengthCurrentColour, { 100, 4 }));
-	Colour psi_energyInitialColour{ 192, 56, 144 };
-	Colour psi_energyCurrentColour{ 255, 120, 208 };
+	    createStatsBar(agent->initial_stats.strength, agent->current_stats.strength,
+	                   agent->modified_stats.strength, 100, strengthInitialColour,
+	                   strengthCurrentColour, {100, 4}));
+	Colour psi_energyInitialColour{192, 56, 144};
+	Colour psi_energyCurrentColour{255, 120, 208};
 	formAgentStats->findControlTyped<Graphic>("VALUE_8")->setImage(
-		createStatsBar(agent->initial_stats.psi_energy, agent->current_stats.psi_energy,
-			agent->modified_stats.psi_energy, 100, psi_energyInitialColour,
-			psi_energyCurrentColour, { 100, 4 }));
-	Colour psi_attackInitialColour{ 192, 56, 144 };
-	Colour psi_attackCurrentColour{ 255, 120, 208 };
+	    createStatsBar(agent->initial_stats.psi_energy, agent->current_stats.psi_energy,
+	                   agent->modified_stats.psi_energy, 100, psi_energyInitialColour,
+	                   psi_energyCurrentColour, {100, 4}));
+	Colour psi_attackInitialColour{192, 56, 144};
+	Colour psi_attackCurrentColour{255, 120, 208};
 	formAgentStats->findControlTyped<Graphic>("VALUE_9")->setImage(
-		createStatsBar(agent->initial_stats.psi_attack, agent->current_stats.psi_attack,
-			agent->modified_stats.psi_attack, 100, psi_attackInitialColour,
-			psi_attackCurrentColour, { 100, 4 }));
-	Colour psi_defenceInitialColour{ 192, 56, 144 };
-	Colour psi_defenceCurrentColour{ 255, 120, 208 };
+	    createStatsBar(agent->initial_stats.psi_attack, agent->current_stats.psi_attack,
+	                   agent->modified_stats.psi_attack, 100, psi_attackInitialColour,
+	                   psi_attackCurrentColour, {100, 4}));
+	Colour psi_defenceInitialColour{192, 56, 144};
+	Colour psi_defenceCurrentColour{255, 120, 208};
 	formAgentStats->findControlTyped<Graphic>("VALUE_10")
-		->setImage(createStatsBar(agent->initial_stats.psi_defence,
-			agent->current_stats.psi_defence,
-			agent->modified_stats.psi_defence, 100, psi_defenceInitialColour,
-			psi_defenceCurrentColour, { 100, 4 }));
+	    ->setImage(createStatsBar(agent->initial_stats.psi_defence,
+	                              agent->current_stats.psi_defence,
+	                              agent->modified_stats.psi_defence, 100, psi_defenceInitialColour,
+	                              psi_defenceCurrentColour, {100, 4}));
 }
 
 void AEquipScreen::begin()
@@ -449,7 +452,7 @@ void AEquipScreen::eventOccurred(Event *e)
 
 				if (modifierCtrl && equipment->payloadType)
 				{
-					draggedEquipmentOffset = { 0, 0 };
+					draggedEquipmentOffset = {0, 0};
 					draggedEquipment = equipment->unloadAmmo(*state);
 				}
 				else
@@ -461,11 +464,13 @@ void AEquipScreen::eventOccurred(Event *e)
 						{
 							continue;
 						}
-						Vec2<float> offset = (s.bounds.p1 - s.bounds.p0) - equipment->type->equipscreen_size;
+						Vec2<float> offset =
+						    (s.bounds.p1 - s.bounds.p0) - equipment->type->equipscreen_size;
 						slotPos += offset / 2.0f;
 						break;
 					}
-					draggedEquipmentOffset = paperDoll->getScreenPositionFromSlotPosition(slotPos) - mousePos;
+					draggedEquipmentOffset =
+					    paperDoll->getScreenPositionFromSlotPosition(slotPos) - mousePos;
 					draggedEquipment = equipment;
 					currentAgent->removeEquipment(*state, equipment);
 					paperDoll->updateEquipment();
@@ -498,25 +503,27 @@ void AEquipScreen::eventOccurred(Event *e)
 		if (e->type() == EVENT_MOUSE_UP && draggedEquipment)
 		{
 			// Are we over the grid? If so try to place it on the agent.
-			auto paperDollControl =paperDoll;
+			auto paperDollControl = paperDoll;
 			Vec2<int> equipOffset = paperDollControl->Location + formMain->Location;
 
-			Vec2<int> equipmentPos = fw().getCursor().getPosition() +draggedEquipmentOffset;
+			Vec2<int> equipmentPos = fw().getCursor().getPosition() + draggedEquipmentOffset;
 			// If this is within the grid try to snap it
 			Vec2<int> equipmentGridPos = equipmentPos - equipOffset;
 			equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
-			bool canAdd =
-			    currentAgent->canAddEquipment(equipmentGridPos,draggedEquipment->type);
+			bool canAdd = currentAgent->canAddEquipment(equipmentGridPos, draggedEquipment->type);
 			sp<AEquipment> equipmentUnderCursor = nullptr;
 			if (!canAdd)
 			{
-				Vec2<int> mousePos{ e->mouse().X, e->mouse().Y };
-				auto mouseSlotPos =paperDoll->getSlotPositionFromScreenPosition(mousePos);
-				equipmentUnderCursor =
-					std::dynamic_pointer_cast<AEquipment>(currentAgent->getEquipmentAt(mouseSlotPos));
-				if (equipmentUnderCursor 
-					&& equipmentUnderCursor->type->type == AEquipmentType::Type::Weapon 
-					&& std::find(equipmentUnderCursor->type->ammo_types.begin(), equipmentUnderCursor->type->ammo_types.end(), draggedEquipment->type)!= equipmentUnderCursor->type->ammo_types.end())
+				Vec2<int> mousePos{e->mouse().X, e->mouse().Y};
+				auto mouseSlotPos = paperDoll->getSlotPositionFromScreenPosition(mousePos);
+				equipmentUnderCursor = std::dynamic_pointer_cast<AEquipment>(
+				    currentAgent->getEquipmentAt(mouseSlotPos));
+				if (equipmentUnderCursor &&
+				    equipmentUnderCursor->type->type == AEquipmentType::Type::Weapon &&
+				    std::find(equipmentUnderCursor->type->ammo_types.begin(),
+				              equipmentUnderCursor->type->ammo_types.end(),
+				              draggedEquipment->type) !=
+				        equipmentUnderCursor->type->ammo_types.end())
 				{
 					canAdd = true;
 				}
@@ -543,9 +550,12 @@ void AEquipScreen::eventOccurred(Event *e)
 					equipmentUnderCursor->loadAmmo(*state, draggedEquipment);
 					if (draggedEquipment->ammo > 0)
 					{
-						if (draggedEquipmentOrigin.x != -1 && draggedEquipmentOrigin.y != -1 && currentAgent->canAddEquipment(draggedEquipmentOrigin, draggedEquipment->type))
+						if (draggedEquipmentOrigin.x != -1 && draggedEquipmentOrigin.y != -1 &&
+						    currentAgent->canAddEquipment(draggedEquipmentOrigin,
+						                                  draggedEquipment->type))
 						{
-							currentAgent->addEquipment(*state, draggedEquipmentOrigin, draggedEquipment);
+							currentAgent->addEquipment(*state, draggedEquipmentOrigin,
+							                           draggedEquipment);
 						}
 						else
 						{
@@ -1334,8 +1344,9 @@ void AEquipScreen::attemptCloseScreen()
 void AEquipScreen::displayAgent(sp<Agent> agent)
 {
 	formMain->findControlTyped<Graphic>("BACKGROUND")->setImage(agent->type->inventoryBackground);
-	
-	outputAgent(agent, formAgentStats, bigUnitRanks, state->current_battle && state->current_battle->mode == Battle::Mode::TurnBased);
+
+	outputAgent(agent, formAgentStats, bigUnitRanks,
+	            state->current_battle && state->current_battle->mode == Battle::Mode::TurnBased);
 
 	formActive = formAgentStats;
 }
@@ -1361,7 +1372,7 @@ void AEquipScreen::updateAgents()
 			if (state->current_battle)
 			{
 				if (!agent.second->unit || agent.second->unit->retreated ||
-					agent.second->unit->isDead())
+				    agent.second->unit->isDead())
 				{
 					continue;
 				}

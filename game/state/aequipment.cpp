@@ -355,7 +355,7 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 	}
 }
 
-sp<AEquipment> AEquipment::unloadAmmo(GameState & state)
+sp<AEquipment> AEquipment::unloadAmmo(GameState &state)
 {
 	if (!payloadType)
 	{
@@ -723,7 +723,7 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 	else
 	{
 		auto unitPos = unit->getMuzzleLocation();
-		
+
 		auto fromPos = unitPos * VELOCITY_SCALE_BATTLE;
 		auto toPos = targetPosition * VELOCITY_SCALE_BATTLE;
 		// Apply accuracy algorithm
@@ -738,7 +738,8 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 		// Move projectile a little bit forward so that it does not shoot from inside our chest
 		// We are protecting firer from collisison for first frames anyway, so this is redundant
 		// for all cases except when a unit fires with a brainsucker on it's head!
-		// But this also looks better since it does visually fire from the muzzle, not from inside the soldier
+		// But this also looks better since it does visually fire from the muzzle, not from inside
+		// the soldier
 		unitPos += velocity * 3.0f / 8.0f;
 		// Scale velocity according to speed
 		velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;

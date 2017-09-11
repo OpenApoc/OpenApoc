@@ -128,8 +128,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				for (int i = 0; i < numCivs; i++)
 				{
 					otherParticipants.emplace_back(
-						state.getCivilian(),
-						listRandomiser(state.rng, state.getCivilian()->guard_types_alien));
+					    state.getCivilian(),
+					    listRandomiser(state.rng, state.getCivilian()->guard_types_alien));
 				}
 
 				missionType = Battle::MissionType::RaidAliens;
@@ -156,7 +156,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				for (int i = 0; i < numGuards; i++)
 				{
 					otherParticipants.emplace_back(
-					    building->owner, listRandomiser(state.rng, building->owner->guard_types_human));
+					    building->owner,
+					    listRandomiser(state.rng, building->owner->guard_types_human));
 				}
 
 				// Civilains will not be actually added if there is no spawn points for them
@@ -998,7 +999,8 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 		}
 	}
 	// If org is hostile to player don't spawn civilians
-	if (propertyOwner->isRelatedTo(state.getPlayer()) == Organisation::Relation::Hostile && propertyOwner != state.getAliens())
+	if (propertyOwner->isRelatedTo(state.getPlayer()) == Organisation::Relation::Hostile &&
+	    propertyOwner != state.getAliens())
 	{
 		spawnCivilians = false;
 	}

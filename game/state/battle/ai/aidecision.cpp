@@ -136,29 +136,29 @@ bool AIMovement::inProgressInternal(BattleUnit &u)
 		case AIMovement::Type::Patrol:
 		case AIMovement::Type::Retreat:
 		case AIMovement::Type::TakeCover:
-		// Must be moving with proper parameters but not yet there
-		{
-			if (movementMode != u.movement_mode || kneelingMode != u.kneeling_mode)
+			// Must be moving with proper parameters but not yet there
 			{
-				return false;
+				if (movementMode != u.movement_mode || kneelingMode != u.kneeling_mode)
+				{
+					return false;
+				}
+				if (u.missions.empty())
+				{
+					return false;
+				}
+				auto &m = u.missions.front();
+				if (m->type != BattleUnitMission::Type::GotoLocation)
+				{
+					return false;
+				}
+				if (std::abs(m->targetLocation.x - targetLocation.x) > 1 ||
+				    std::abs(m->targetLocation.y - targetLocation.y) > 1 ||
+				    std::abs(m->targetLocation.z - targetLocation.z) > 1)
+				{
+					return false;
+				}
+				return true;
 			}
-			if (u.missions.empty())
-			{
-				return false;
-			}
-			auto &m = u.missions.front();
-			if (m->type != BattleUnitMission::Type::GotoLocation)
-			{
-				return false;
-			}
-			if (std::abs(m->targetLocation.x - targetLocation.x) > 1 ||
-			    std::abs(m->targetLocation.y - targetLocation.y) > 1 ||
-			    std::abs(m->targetLocation.z - targetLocation.z) > 1)
-			{
-				return false;
-			}
-			return true;
-		}
 		case AIMovement::Type::Stop:
 			// Must be still moving
 			return u.isMoving();
@@ -166,19 +166,19 @@ bool AIMovement::inProgressInternal(BattleUnit &u)
 			// Must be still changing stance
 			return movementMode != u.movement_mode || kneelingMode != u.kneeling_mode;
 		case AIMovement::Type::Turn:
-		// Must be turning towards target facing but not yet turned
-		{
-			if (u.missions.empty())
+			// Must be turning towards target facing but not yet turned
 			{
-				return false;
+				if (u.missions.empty())
+				{
+					return false;
+				}
+				auto &m = u.missions.front();
+				if (m->type != BattleUnitMission::Type::Turn)
+				{
+					return false;
+				}
+				return m->targetFacing == BattleUnitMission::getFacing(u, targetLocation);
 			}
-			auto &m = u.missions.front();
-			if (m->type != BattleUnitMission::Type::Turn)
-			{
-				return false;
-			}
-			return m->targetFacing == BattleUnitMission::getFacing(u, targetLocation);
-		}
 	}
 	return false;
 }
