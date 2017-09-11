@@ -66,7 +66,7 @@ void AIBlockUnit::reset(GameState &state, BattleUnit &u)
 	}
 }
 
-//void AIBlockUnit::reportExecuted(AIAction &action)
+// void AIBlockUnit::reportExecuted(AIAction &action)
 //{
 //	for (auto &ai : aiList)
 //	{

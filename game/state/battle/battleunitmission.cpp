@@ -1463,7 +1463,8 @@ bool BattleUnitMission::getNextBodyState(GameState &state, BattleUnit &u, BodySt
 				}
 				else
 				{
-					LogError("Unit %s (%s) (%s) lost capability to attain bodyState %d?", u.id, u.agent->name, u.agent->type->id, (int)targetBodyState);
+					LogError("Unit %s (%s) (%s) lost capability to attain bodyState %d?", u.id,
+					         u.agent->name, u.agent->type->id, (int)targetBodyState);
 				}
 			}
 			return advanceBodyState(state, u, targetBodyState, dest);
@@ -1654,8 +1655,9 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 						         .empty())
 						{
 							fw().soundBackend->playSample(
-							    listRandomiser(state.rng, targetUnit->agent->type->fatalWoundSfx.at(
-							                                  targetUnit->agent->gender)),
+							    listRandomiser(state.rng,
+							                   targetUnit->agent->type->fatalWoundSfx.at(
+							                       targetUnit->agent->gender)),
 							    targetUnit->position);
 						}
 						break;
@@ -1852,10 +1854,11 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				// Drop item
 				auto bi = state.current_battle->placeItem(
 				    state, item,
-				    u.position + Vec3<float>{0.0, 0.0, (u.current_body_state == BodyState::Downed ||
-				                                        u.current_body_state == BodyState::Dead)
-				                                           ? 0.0f
-				                                           : (float)u.getCurrentHeight() / 80.0f});
+				    u.position + Vec3<float>{0.0, 0.0,
+				                             (u.current_body_state == BodyState::Downed ||
+				                              u.current_body_state == BodyState::Dead)
+				                                 ? 0.0f
+				                                 : (float)u.getCurrentHeight() / 80.0f});
 				bi->falling = true;
 			}
 			item = nullptr;

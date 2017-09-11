@@ -102,7 +102,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 	m->exit_level_min = bdata.exit_min_level;
 	m->exit_level_max = bdata.exit_max_level;
 	m->tilesets.emplace_back(tilePrefix.substr(0, tilePrefix.length() - 1));
-	
+
 	// Side 0 = exits by X axis, Side 1 = exits by Y axis
 	for (int l = 0; l < 15; l++)
 	{
@@ -201,19 +201,19 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 		s->sectorTilesName = tilesName;
 		if (tilesName == "40spawn_01")
 		{
-			s->spawnLocations[{&state, "AGENTTYPE_QUEENSPAWN"}].push_back({ 22, 15, 2 });
-			for (int x = 23;x < 28; x++)
+			s->spawnLocations[{&state, "AGENTTYPE_QUEENSPAWN"}].push_back({22, 15, 2});
+			for (int x = 23; x < 28; x++)
 			{
-				for (int y = 13;y < 18;y++)
+				for (int y = 13; y < 18; y++)
 				{
-					s->spawnLocations[{&state, "AGENTTYPE_MULTIWORM_EGG"}].push_back({ x, y, 2 });
+					s->spawnLocations[{&state, "AGENTTYPE_MULTIWORM_EGG"}].push_back({x, y, 2});
 				}
 			}
-			for (int x = 16;x < 21; x++)
+			for (int x = 16; x < 21; x++)
 			{
-				for (int y = 12;y < 18;y++)
+				for (int y = 12; y < 18; y++)
 				{
-					s->spawnLocations[{&state, "AGENTTYPE_MULTIWORM_EGG"}].push_back({ x, y, 2 });
+					s->spawnLocations[{&state, "AGENTTYPE_MULTIWORM_EGG"}].push_back({x, y, 2});
 				}
 			}
 		}
@@ -222,8 +222,8 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 	}
 
 	if (bdata.destroyed_ground_idx != 0)
-		m->destroyed_ground_tile = { &state,
-		format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix,
+		m->destroyed_ground_tile = {&state,
+		                            format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix,
 		                                   "GD_", (unsigned)bdata.destroyed_ground_idx)};
 
 	state.battle_maps[id] = m;
@@ -364,7 +364,8 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 						case SPAWN_TYPE_CIVILIAN:
 							los_block->spawn_type = SpawnType::Civilian;
 							// Prevent civ spawn on spawn map, this was used to spawn queen
-							if (mapRootName == "40spawn" && (los_block->spawn_priority == 4 || los_block->spawn_priority == 1))
+							if (mapRootName == "40spawn" &&
+							    (los_block->spawn_priority == 4 || los_block->spawn_priority == 1))
 							{
 								los_block->spawn_priority = 0;
 							}

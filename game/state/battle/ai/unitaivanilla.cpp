@@ -132,12 +132,12 @@ UnitAIVanilla::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment>
 
 	float time = (float)payload->fire_delay * (float)TICKS_MULTIPLIER / (float)u.fire_aiming_mode /
 	             (float)TICKS_PER_SECOND;
-	float cth =
-	    std::max(1.0f, 100.f -
-	                       (float)(100 -
-	                               e->getAccuracy(u.target_body_state, u.current_movement_state,
-	                                              u.fire_aiming_mode)) *
-	                           distance / 40.0f);
+	float cth = std::max(1.0f,
+	                     100.f -
+	                         (float)(100 -
+	                                 e->getAccuracy(u.target_body_state, u.current_movement_state,
+	                                                u.fire_aiming_mode)) *
+	                             distance / 40.0f);
 	float priority = cth * damage / time;
 
 	// Chance to advance is equal to chance to miss
@@ -567,8 +567,8 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkGreen(GameState &sta
 
 	if (wasEnemyVisible)
 	{
-		auto pursue = UnitAIHelper::getPursueMovement(state, u, (Vec3<int>)u.position +
-		                                                            lastSeenEnemyPosition);
+		auto pursue = UnitAIHelper::getPursueMovement(
+		    state, u, (Vec3<int>)u.position + lastSeenEnemyPosition);
 		if (pursue)
 		{
 			return std::make_tuple(AIDecision(nullptr, pursue), 0.0f, 0);
@@ -850,9 +850,9 @@ void UnitAIVanilla::reset(GameState &state, BattleUnit &)
 	ticksUntilReThink = 0;
 }
 
-//void UnitAIVanilla::reportExecuted(AIAction &action)
+// void UnitAIVanilla::reportExecuted(AIAction &action)
 //{
-//	if (lastDecision.action 
+//	if (lastDecision.action
 //		&& lastDecision.action->type == action.type
 //		&& lastDecision.action->targetUnit == action.targetUnit
 //		&& lastDecision.action->targetLocation == action.targetLocation
@@ -864,11 +864,10 @@ void UnitAIVanilla::reset(GameState &state, BattleUnit &)
 
 void UnitAIVanilla::reportExecuted(AIMovement &movement)
 {
-	if (lastDecision.movement
-		&& lastDecision.movement->type == movement.type
-		&& lastDecision.movement->targetLocation == movement.targetLocation
-		&& lastDecision.movement->movementMode == movement.movementMode
-		&& lastDecision.movement->kneelingMode == movement.kneelingMode)
+	if (lastDecision.movement && lastDecision.movement->type == movement.type &&
+	    lastDecision.movement->targetLocation == movement.targetLocation &&
+	    lastDecision.movement->movementMode == movement.movementMode &&
+	    lastDecision.movement->kneelingMode == movement.kneelingMode)
 	{
 		lastDecision.movement->executed = true;
 	}

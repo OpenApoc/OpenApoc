@@ -66,6 +66,16 @@ if (LTO)
 	endif()
 endif(LTO)
 
+# Clang whines about unused arguments, which is annoying (for example) when
+# using ccache and the clang exe never sees a non-preprocessed file, yet still
+# gets passed the -I include arguments
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Qunused-arguments")
+endif()
+if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Qunused-arguments")
+endif()
+
 set(GLM_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/dependencies/glm)
 MARK_AS_ADVANCED(GLM_INCLUDE_DIR)
 

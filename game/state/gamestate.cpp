@@ -251,7 +251,8 @@ void GameState::startGame()
 	int giveUpCount = 100;
 	do
 	{
-		int buildID = randBoundsExclusive(rng, 0, (int)this->cities["CITYMAP_HUMAN"]->buildings.size());
+		int buildID =
+		    randBoundsExclusive(rng, 0, (int)this->cities["CITYMAP_HUMAN"]->buildings.size());
 		buildingIt = this->cities["CITYMAP_HUMAN"]->buildings.begin();
 		for (int i = 0; i < buildID; i++)
 		{
@@ -259,10 +260,11 @@ void GameState::startGame()
 		}
 		counter++;
 	} while (buildingIt->second->owner->current_relations[player] < 0 || counter >= giveUpCount);
-	
-	
-	buildingIt->second->current_crew[{this, "AGENTTYPE_BRAINSUCKER"}] = randBoundsExclusive(rng, 0, difficulty / 2 + 1) + 1;
-	buildingIt->second->current_crew[{this, "AGENTTYPE_ANTHROPOD"}] = randBoundsExclusive(rng, 0, difficulty / 2 + 2) + 1;
+
+	buildingIt->second->current_crew[{this, "AGENTTYPE_BRAINSUCKER"}] =
+	    randBoundsExclusive(rng, 0, difficulty / 2 + 1) + 1;
+	buildingIt->second->current_crew[{this, "AGENTTYPE_ANTHROPOD"}] =
+	    randBoundsExclusive(rng, 0, difficulty / 2 + 2) + 1;
 
 	gameTime = GameTime::midday();
 
@@ -661,7 +663,7 @@ void GameState::logEvent(GameEvent *ev)
 	}
 	else if (GameBuildingEvent *gve = dynamic_cast<GameBuildingEvent *>(ev))
 	{
-		location = { gve->building->bounds.p0.x, gve->building->bounds.p0.y, 0 };
+		location = {gve->building->bounds.p0.x, gve->building->bounds.p0.y, 0};
 	}
 	else if (GameAgentEvent *gae = dynamic_cast<GameAgentEvent *>(ev))
 	{

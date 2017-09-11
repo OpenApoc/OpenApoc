@@ -892,8 +892,9 @@ bool BattleUnit::hasLineToUnit(const sp<BattleUnit> unit, bool useLOS) const
 	auto cMap = tileObject->map.findCollision(muzzleLocation, targetPosition, mapPartSet,
 	                                          tileObject, useLOS);
 	// Unit that prevents Line to target
-	auto cUnitObj = useLOS ? Collision() : tileObject->map.findCollision(
-	                                           muzzleLocation, targetPosition, unitSet, tileObject);
+	auto cUnitObj =
+	    useLOS ? Collision()
+	           : tileObject->map.findCollision(muzzleLocation, targetPosition, unitSet, tileObject);
 	auto cUnit = cUnitObj ? std::static_pointer_cast<TileObjectBattleUnit>(cUnitObj.obj)->getUnit()
 	                      : nullptr;
 	// Condition:
@@ -1050,8 +1051,9 @@ void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatu
 	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
 	if (impact)
 	{
-		sendAgentEvent(state, status == PsiStatus::Control ? GameEventType::AgentPsiControlled
-		                                                   : GameEventType::AgentPsiAttacked,
+		sendAgentEvent(state,
+		               status == PsiStatus::Control ? GameEventType::AgentPsiControlled
+		                                            : GameEventType::AgentPsiAttacked,
 		               true);
 	}
 	bool finished = false;
@@ -1107,7 +1109,8 @@ void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatu
 			case PsiStatus::Probe:
 				if (impact)
 				{
-					if (attacker.owner == state.current_battle->currentPlayer && attacker.agent->type->allowsDirectControl)
+					if (attacker.owner == state.current_battle->currentPlayer &&
+					    attacker.agent->type->allowsDirectControl)
 					{
 						sendAgentEvent(state, GameEventType::AgentPsiProbed);
 					}
@@ -2157,7 +2160,8 @@ void BattleUnit::updateIdling(GameState &state)
 		}
 		if (target_body_state != current_body_state)
 		{
-			LogError("Unit %s (%s) changing body state without a mission, wtf?", id, agent->type->id);
+			LogError("Unit %s (%s) changing body state without a mission, wtf?", id,
+			         agent->type->id);
 		}
 
 		// Reach goal before everything else
@@ -2255,7 +2259,7 @@ void BattleUnit::updateIdling(GameState &state)
 	} // End of Idling Check
 }
 
-// FIXME: Implement proper crying 
+// FIXME: Implement proper crying
 void BattleUnit::updateCrying(GameState &state)
 {
 	if (!isConscious())
@@ -2278,14 +2282,15 @@ void BattleUnit::updateCrying(GameState &state)
 	{
 		resetCryTimer(state);
 		// Cry chance in TB when it's not enemy's turn is 1/8 th
-		if (state.current_battle->mode == Battle::Mode::TurnBased 
-			&& owner != state.current_battle->currentActiveOrganisation 
-			&& randBoundsInclusive(state.rng, 1, 8) == 1)
+		if (state.current_battle->mode == Battle::Mode::TurnBased &&
+		    owner != state.current_battle->currentActiveOrganisation &&
+		    randBoundsInclusive(state.rng, 1, 8) == 1)
 		{
 			return;
 		}
 		// Actually cry
-		fw().soundBackend->playSample(listRandomiser(state.rng, agent->type->crySfx), getPosition());
+		fw().soundBackend->playSample(listRandomiser(state.rng, agent->type->crySfx),
+		                              getPosition());
 	}
 }
 
@@ -2640,10 +2645,10 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 		{
 			if (flyingSpeedModifier != 100)
 			{
-				flyingSpeedModifier =
-				    std::min((unsigned)100, flyingSpeedModifier +
-				                                moveTicksRemaining / moveTicksConsumeRate /
-				                                    FLYING_ACCELERATION_DIVISOR);
+				flyingSpeedModifier = std::min((unsigned)100,
+				                               flyingSpeedModifier +
+				                                   moveTicksRemaining / moveTicksConsumeRate /
+				                                       FLYING_ACCELERATION_DIVISOR);
 			}
 			movementTicksAccumulated = moveTicksRemaining / moveTicksConsumeRate;
 			auto dir = glm::normalize(vectorToGoal);
@@ -2664,9 +2669,9 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 				movementTicksAccumulated = distanceToGoal;
 				if (flyingSpeedModifier != 100)
 				{
-					flyingSpeedModifier =
-					    std::min((unsigned)100, flyingSpeedModifier +
-					                                distanceToGoal / FLYING_ACCELERATION_DIVISOR);
+					flyingSpeedModifier = std::min(
+					    (unsigned)100,
+					    flyingSpeedModifier + distanceToGoal / FLYING_ACCELERATION_DIVISOR);
 				}
 				moveTicksRemaining -= distanceToGoal * moveTicksConsumeRate;
 				setPosition(state, goalPosition, true);
@@ -3760,7 +3765,8 @@ void BattleUnit::requestGiveWay(const BattleUnit &requestor,
 								{
 									continue;
 								}
-								if (std::find(plannedPath.begin(), plannedPath.end(), nextPos - Vec3<int>{x, y, z}) != plannedPath.end())
+								if (std::find(plannedPath.begin(), plannedPath.end(),
+								              nextPos - Vec3<int>{x, y, z}) != plannedPath.end())
 								{
 									inLargePath = true;
 									break;
@@ -4120,7 +4126,7 @@ void BattleUnit::executeAIMovement(GameState &state, AIMovement &movement)
 			break;
 		case AIMovement::Type::Retreat:
 			if (setMission(state, BattleUnitMission::gotoLocation(*this, movement.targetLocation, 0,
-			                                                  true, true, 1, true)))
+			                                                      true, true, 1, true)))
 			{
 				aiList.reportExecuted(movement);
 			}
@@ -4829,7 +4835,8 @@ void BattleUnit::setBodyState(GameState &state, BodyState bodyState)
 {
 	if (!agent->isBodyStateAllowed(bodyState))
 	{
-		LogError("SetBodyState called on %s (%s) (%s) with bodyState %d", id, agent->name, agent->type->id, (int)bodyState);
+		LogError("SetBodyState called on %s (%s) (%s) with bodyState %d", id, agent->name,
+		         agent->type->id, (int)bodyState);
 		return;
 	}
 	bool roseUp = current_body_state == BodyState::Downed;
@@ -5086,8 +5093,7 @@ void BattleUnit::playDistantSound(GameState &state, sp<Sample> sfx, float gainMu
 	{
 		for (auto &u : state.current_battle->units)
 		{
-			if (u.second->owner != state.current_battle->currentPlayer
-				|| !u.second->isConscious())
+			if (u.second->owner != state.current_battle->currentPlayer || !u.second->isConscious())
 			{
 				continue;
 			}
@@ -5096,20 +5102,24 @@ void BattleUnit::playDistantSound(GameState &state, sp<Sample> sfx, float gainMu
 	}
 	if (distance < MAX_HEARING_DISTANCE)
 	{
-		fw().soundBackend->playSample(sfx, getPosition(), gainMult * (MAX_HEARING_DISTANCE - distance) / MAX_HEARING_DISTANCE);
+		fw().soundBackend->playSample(sfx, getPosition(),
+		                              gainMult * (MAX_HEARING_DISTANCE - distance) /
+		                                  MAX_HEARING_DISTANCE);
 	}
 }
 
-void BattleUnit::initCryTimer(GameState & state)
+void BattleUnit::initCryTimer(GameState &state)
 {
 	// FIXME: Implement proper cry timers
-	ticksUntillNextCry = 2 * TICKS_PER_SECOND + randBoundsInclusive(state.rng, 0, 16 * (int)TICKS_PER_SECOND);
+	ticksUntillNextCry =
+	    2 * TICKS_PER_SECOND + randBoundsInclusive(state.rng, 0, 16 * (int)TICKS_PER_SECOND);
 }
 
 void BattleUnit::resetCryTimer(GameState &state)
 {
 	// FIXME: Implement proper cry timers
-	ticksUntillNextCry = 8 * TICKS_PER_SECOND + randBoundsInclusive(state.rng, 0, 16 * (int)TICKS_PER_SECOND);
+	ticksUntillNextCry =
+	    8 * TICKS_PER_SECOND + randBoundsInclusive(state.rng, 0, 16 * (int)TICKS_PER_SECOND);
 }
 
 bool BattleUnit::getNewGoal(GameState &state)

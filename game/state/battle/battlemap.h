@@ -53,7 +53,7 @@ class BattleMap : public StateObject
 	int entrance_level_max = 0;
 	int exit_level_min = 0;
 	int exit_level_max = 0;
-	
+
 	std::set<Vec3<int>> exitsX;
 	std::set<Vec3<int>> exitsY;
 

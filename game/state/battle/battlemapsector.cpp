@@ -27,7 +27,7 @@ sp<BattleMapSector::LineOfSightBlock> BattleMapSector::LineOfSightBlock::clone(V
 
 	b->ai_patrol_priority = ai_patrol_priority;
 	b->ai_target_priority = ai_target_priority;
-	
+
 	b->also_allow_civilians = also_allow_civilians;
 	b->low_priority = low_priority;
 	b->spawn_type = spawn_type;

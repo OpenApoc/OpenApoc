@@ -111,7 +111,7 @@ class AIMovement
 	// Methods
 
 	UString getName();
-	// Returns wether action is being undertaken by unit right now 
+	// Returns wether action is being undertaken by unit right now
 	// Meaning the unit is doing it but it's not done
 	// Also flags "executed" when it sees it undertaken for the first time
 	bool inProgress(BattleUnit &u);

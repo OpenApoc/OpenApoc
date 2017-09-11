@@ -348,7 +348,7 @@ void UfopaediaCategoryView::setFormStats()
 							relation += UString(" ") + tr(player->name);
 							orgLabels[0]->setText(relation);
 							orgLabels[3]->setText(tr("Alien Infiltration"));
-							orgValues[3]->setText(format("%d%%", ref->infiltrationValue / 2)); 
+							orgValues[3]->setText(format("%d%%", ref->infiltrationValue / 2));
 						}
 					}
 				}

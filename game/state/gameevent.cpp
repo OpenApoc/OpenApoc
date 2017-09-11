@@ -141,11 +141,11 @@ UString GameBuildingEvent::message()
 {
 	switch (type)
 	{
-	case GameEventType::AlienSpotted:
-		return tr("Live Alien spotted.");
-	default:
-		LogError("Invalid building event type");
-		break;
+		case GameEventType::AlienSpotted:
+			return tr("Live Alien spotted.");
+		default:
+			LogError("Invalid building event type");
+			break;
 	}
 	return "";
 }

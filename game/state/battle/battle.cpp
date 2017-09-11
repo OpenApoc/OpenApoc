@@ -592,7 +592,7 @@ void Battle::initialUnitSpawn(GameState &state)
 	std::map<SpawnKey, std::list<sp<SpawnBlock>>> spawnInverse;
 	// Other blocks that have 0 spawn priority, to be used when all others are exhausted
 	std::list<sp<SpawnBlock>> spawnOther;
-	// Spawn types belonging to organisations 
+	// Spawn types belonging to organisations
 	// (X-Com -> Player, Security/Alien -> Enemy, Civ -> Civ)
 	std::map<StateRef<Organisation>, SpawnType> spawnTypeMap;
 
@@ -659,19 +659,21 @@ void Battle::initialUnitSpawn(GameState &state)
 
 			if (lb->also_allow_civilians)
 			{
-				spawnMaps[{SpawnType::Civilian, lb->spawn_large_units ? UnitSize::Large : UnitSize::Small,
-					lb->spawn_walking_units ? UnitMovement::Walking : UnitMovement::Flying,
-					lb->low_priority}]
-					.push_back(sb);
-				spawnMaps[{SpawnType::Civilian, lb->spawn_large_units ? UnitSize::Large : UnitSize::Small,
-					UnitMovement::Any, lb->low_priority}]
-					.push_back(sb);
+				spawnMaps[{SpawnType::Civilian,
+				           lb->spawn_large_units ? UnitSize::Large : UnitSize::Small,
+				           lb->spawn_walking_units ? UnitMovement::Walking : UnitMovement::Flying,
+				           lb->low_priority}]
+				    .push_back(sb);
+				spawnMaps[{SpawnType::Civilian,
+				           lb->spawn_large_units ? UnitSize::Large : UnitSize::Small,
+				           UnitMovement::Any, lb->low_priority}]
+				    .push_back(sb);
 				spawnMaps[{SpawnType::Civilian, UnitSize::Any,
-					lb->spawn_walking_units ? UnitMovement::Walking : UnitMovement::Flying,
-					lb->low_priority}]
-					.push_back(sb);
+				           lb->spawn_walking_units ? UnitMovement::Walking : UnitMovement::Flying,
+				           lb->low_priority}]
+				    .push_back(sb);
 				spawnMaps[{SpawnType::Civilian, UnitSize::Any, UnitMovement::Any, lb->low_priority}]
-					.push_back(sb);
+				    .push_back(sb);
 			}
 
 			for (int j = 0; j < 3; j++)
@@ -689,8 +691,9 @@ void Battle::initialUnitSpawn(GameState &state)
 				spawnInverse[{st, lb->spawn_large_units ? UnitSize::Large : UnitSize::Small,
 				              UnitMovement::Any, lb->low_priority}]
 				    .push_back(sb);
-				spawnInverse[{st, UnitSize::Any, lb->spawn_walking_units ? UnitMovement::Walking
-				                                                         : UnitMovement::Flying,
+				spawnInverse[{st, UnitSize::Any,
+				              lb->spawn_walking_units ? UnitMovement::Walking
+				                                      : UnitMovement::Flying,
 				              lb->low_priority}]
 				    .push_back(sb);
 				spawnInverse[{st, UnitSize::Any, UnitMovement::Any, lb->low_priority}].push_back(
@@ -1078,7 +1081,8 @@ void Battle::initialUnitSpawn(GameState &state)
 		}
 		// Stance
 		u->setBodyState(state, u->agent->type->bodyType->getFirstAllowedState());
-		if (u->current_body_state == BodyState::Kneeling || u->current_body_state == BodyState::Prone)
+		if (u->current_body_state == BodyState::Kneeling ||
+		    u->current_body_state == BodyState::Prone)
 		{
 			u->setMovementMode(MovementMode::Prone);
 		}
@@ -1116,7 +1120,7 @@ sp<BattleUnit> Battle::spawnUnit(GameState &state, StateRef<Organisation> owner,
 	{
 		if (agentType->bodyType->allowed_facing.empty())
 		{
-			facing = { randBoundsInclusive(state.rng, 0, 1), randBoundsInclusive(state.rng, 0, 1) };
+			facing = {randBoundsInclusive(state.rng, 0, 1), randBoundsInclusive(state.rng, 0, 1)};
 			if (facing.x == 0 && facing.y == 0)
 			{
 				facing.y = 1;
@@ -1124,7 +1128,8 @@ sp<BattleUnit> Battle::spawnUnit(GameState &state, StateRef<Organisation> owner,
 		}
 		else
 		{
-			facing = setRandomizer(state.rng, agentType->bodyType->allowed_facing.at(agent->appearance));
+			facing =
+			    setRandomizer(state.rng, agentType->bodyType->allowed_facing.at(agent->appearance));
 		}
 	}
 	unit->setFacing(state, facing);
@@ -1636,8 +1641,8 @@ void Battle::update(GameState &state, unsigned int ticks)
 				for (auto &u : units)
 				{
 					if (u.second->owner != currentActiveOrganisation || !u.second->isConscious() ||
-						u.second->moraleState == MoraleState::Normal ||
-						u.second->agent->modified_stats.time_units == 0)
+					    u.second->moraleState == MoraleState::Normal ||
+					    u.second->agent->modified_stats.time_units == 0)
 					{
 						continue;
 					}
@@ -1645,11 +1650,11 @@ void Battle::update(GameState &state, unsigned int ticks)
 					ticksWithoutAction = TICKS_BEGIN_INTERRUPT;
 					interruptQueue.emplace(StateRef<BattleUnit>(&state, u.first), 0);
 					if (u.second->owner == currentPlayer ||
-						visibleUnits[currentPlayer].find({&state, u.first}) !=
-							visibleUnits[currentPlayer].end())
+					    visibleUnits[currentPlayer].find({&state, u.first}) !=
+					        visibleUnits[currentPlayer].end())
 					{
 						fw().pushEvent(
-							new GameLocationEvent(GameEventType::ZoomView, u.second->position));
+						    new GameLocationEvent(GameEventType::ZoomView, u.second->position));
 					}
 					break;
 				}
@@ -2026,7 +2031,7 @@ void Battle::refreshLeadershipBonus(StateRef<Organisation> org)
 	}
 }
 
-void Battle::spawnReinforcements(GameState & state)
+void Battle::spawnReinforcements(GameState &state)
 {
 	if (locationOwner->guard_types_reinforcements.empty())
 	{
@@ -2070,8 +2075,8 @@ void Battle::spawnReinforcements(GameState & state)
 		reinforcementLocations.erase(pos);
 		auto type = listRandomiser(state.rng, locationOwner->guard_types_reinforcements);
 		auto u = state.current_battle->spawnUnit(state, locationOwner, type,
-		{ pos.x + 0.5f, pos.y + 0.5f, pos.z + 0.1f }, { 0, 0 },
-			type->bodyType->getFirstAllowedState());
+		                                         {pos.x + 0.5f, pos.y + 0.5f, pos.z + 0.1f}, {0, 0},
+		                                         type->bodyType->getFirstAllowedState());
 		if (++countUnits >= MAX_UNITS_PER_SIDE)
 		{
 			break;
@@ -2590,7 +2595,7 @@ void Battle::loadImagePacks(GameState &state)
 	UString hyperworm = "hypr";
 	UString multiworm = "multi";
 	bool hyperwormFound = false;
-	
+
 	for (auto &o : participants)
 	{
 		for (auto &t : o->guard_types_reinforcements)
@@ -2625,7 +2630,7 @@ void Battle::loadImagePacks(GameState &state)
 			}
 		}
 	}
-	
+
 	for (auto &p : units)
 	{
 		auto &bu = p.second;
