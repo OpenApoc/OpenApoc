@@ -1,4 +1,4 @@
-# OpenApocalypse [![Linux Build Status](https://travis-ci.org/JonnyH/OpenApoc.svg?branch=master)](https://travis-ci.org/JonnyH/OpenApoc) [![Windows Build Status](https://ci.appveyor.com/api/projects/status/07ndsvrbyct924a1)](https://ci.appveyor.com/project/JonnyH/openapoc)
+# OpenApocalypse [![Linux Build Status](https://travis-ci.org/OpenApoc/OpenApoc.svg?branch=master)](https://travis-ci.org/OpenApoc/OpenApoc) [![Windows Build Status](https://ci.appveyor.com/api/projects/status/07ndsvrbyct924a1)](https://ci.appveyor.com/project/JonnyH/openapoc)
 
 The OpenApocalypse project aims to build a open-source
 clone of the original X-COM: Apocalypse strategy game.
