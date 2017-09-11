@@ -29,6 +29,5 @@ class CityTileView : public TileView
 	Vec2<int> selectedTileImageOffset;
 	Colour alienDetectionColour;
 	float alienDetectionThickness;
-
 };
 }

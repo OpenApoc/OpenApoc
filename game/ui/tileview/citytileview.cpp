@@ -1,7 +1,4 @@
-#include "game/state/gamestate.h"
 #include "game/state/city/city.h"
-#include "game/state/city/building.h"
-#include "game/ui/tileview/citytileview.h"
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
@@ -9,6 +6,9 @@
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
 #include "framework/trace.h"
+#include "game/state/city/building.h"
+#include "game/state/gamestate.h"
+#include "game/ui/tileview/citytileview.h"
 
 namespace OpenApoc
 {
@@ -20,7 +20,7 @@ CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratT
 	selectedTileImageFront = fw().data->loadImage("city/selected-citytile-front.png");
 	selectedTileImageOffset = {32, 16};
 	pal = fw().data->loadPalette("xcom3/ufodata/pal_01.dat");
-	alienDetectionColour = { 212, 0, 0, 255 };
+	alienDetectionColour = {212, 0, 0, 255};
 	alienDetectionThickness = 3.0f;
 };
 
@@ -46,7 +46,7 @@ void CityTileView::eventOccurred(Event *e)
 				DEBUG_SHOW_ALIEN_CREW = !DEBUG_SHOW_ALIEN_CREW;
 				LogWarning("Debug Alien display set to %s", DEBUG_SHOW_ALIEN_CREW);
 			}
-			return;
+				return;
 			case SDLK_F6:
 			{
 				LogWarning("Writing voxel view to tileviewvoxels.png");
@@ -55,7 +55,7 @@ void CityTileView::eventOccurred(Event *e)
 				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this, 11.0f));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
-			return;
+				return;
 			case SDLK_F7:
 			{
 				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
@@ -64,7 +64,7 @@ void CityTileView::eventOccurred(Event *e)
 				    {imageOffset, imageOffset + dpySize}, *this, 11.0f, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
-			return;
+				return;
 			case SDLK_F8:
 			{
 				LogWarning("Writing voxel view to tileviewvoxels.png");
@@ -73,7 +73,7 @@ void CityTileView::eventOccurred(Event *e)
 				    {imageOffset, imageOffset + dpySize}, *this, 11.0f, false, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
-			return;
+				return;
 			case SDLK_F9:
 			{
 				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
@@ -82,7 +82,7 @@ void CityTileView::eventOccurred(Event *e)
 				    {imageOffset, imageOffset + dpySize}, *this, 11.0f, true, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
-			return;
+				return;
 		}
 	}
 	TileView::eventOccurred(e);
@@ -134,7 +134,7 @@ void CityTileView::render()
 			}
 		}
 	}
-	
+
 	renderStrategyOverlay(r);
 
 	// Detection
@@ -146,20 +146,23 @@ void CityTileView::render()
 			{
 				continue;
 			}
-			Vec2<float> pos = tileToOffsetScreenCoords(Vec3<int>{ (b.second->bounds.p0.x + b.second->bounds.p1.x)/2, (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2 });
-		
-			float radius = 70.0f * (float)b.second->ticksDetectionTimeOut / (float)TICKS_DETECTION_TIMEOUT + 30.0f;
+			Vec2<float> pos = tileToOffsetScreenCoords(
+			    Vec3<int>{(b.second->bounds.p0.x + b.second->bounds.p1.x) / 2,
+			              (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2});
+
+			float radius =
+			    70.0f * (float)b.second->ticksDetectionTimeOut / (float)TICKS_DETECTION_TIMEOUT +
+			    30.0f;
 			float interval = M_PI / 8.0f;
 			float angle = 0.0f;
-			Vec2<float>  posNew = { pos.x + radius, pos.y };
+			Vec2<float> posNew = {pos.x + radius, pos.y};
 			auto posOld = posNew;
 			while (angle < M_PI * 2.0f)
 			{
 				angle += interval;
 				posOld = posNew;
-				posNew = { pos.x + cos(angle)*radius, pos.y + sin(angle)*radius };
-				r.drawLine(posOld , posNew, alienDetectionColour,
-					alienDetectionThickness);
+				posNew = {pos.x + cos(angle) * radius, pos.y + sin(angle) * radius};
+				r.drawLine(posOld, posNew, alienDetectionColour, alienDetectionThickness);
 			}
 		}
 	}
@@ -169,18 +172,19 @@ void CityTileView::render()
 	{
 		for (auto &b : state.current_city->buildings)
 		{
-			Vec2<float> pos = tileToOffsetScreenCoords(Vec3<int>{ b.second->bounds.p0.x, b.second->bounds.p0.y, 2 });
+			Vec2<float> pos = tileToOffsetScreenCoords(
+			    Vec3<int>{b.second->bounds.p0.x, b.second->bounds.p0.y, 2});
 			for (auto &a : b.second->current_crew)
 			{
 				for (int i = 0; i < a.second; i++)
 				{
-					auto icon = a.first->portraits.at(*a.first->possible_genders.begin()).at(0).icon;
+					auto icon =
+					    a.first->portraits.at(*a.first->possible_genders.begin()).at(0).icon;
 					r.draw(icon, pos);
 					pos.x += icon->size.x / 2;
 				}
 			}
 		}
 	}
-
 }
 }

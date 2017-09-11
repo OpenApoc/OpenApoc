@@ -26,8 +26,8 @@
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
-#include "game/state/organisation.h"
 #include "game/state/message.h"
+#include "game/state/organisation.h"
 #include "game/state/research.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/vammo_type.h"
@@ -476,7 +476,7 @@ void CityView::render()
 		this->drawCity = true;
 		this->surface = mksp<Surface>(fw().displayGetSize());
 	}
-	
+
 	if (drawCity)
 	{
 		this->drawCity = false;
@@ -961,8 +961,9 @@ void CityView::eventOccurred(Event *e)
 			baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
 			if (gameEvent->type != GameEventType::AlienSpotted)
 			{
-				fw().stageQueueCommand({ StageCmd::Command::PUSH,
-									   mksp<NotificationScreen>(state, *this, gameEvent->message()) });
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<NotificationScreen>(state, *this, gameEvent->message())});
 			}
 		}
 		switch (gameEvent->type)
@@ -973,8 +974,11 @@ void CityView::eventOccurred(Event *e)
 			{
 				// FIXME: Proper takeover message
 				auto gameOrgEvent = dynamic_cast<GameOrganisationEvent *>(e);
-				fw().stageQueueCommand({ StageCmd::Command::PUSH,
-					mksp<NotificationScreen>(state, *this,format("Aliens have taken over %s", gameOrgEvent->organisation->name))});
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<NotificationScreen>(
+				         state, *this,
+				         format("Aliens have taken over %s", gameOrgEvent->organisation->name))});
 			}
 			break;
 			case GameEventType::AlienSpotted:

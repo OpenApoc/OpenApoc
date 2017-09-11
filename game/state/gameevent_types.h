@@ -71,7 +71,7 @@ enum class GameEventType
 
 	// Research
 	ResearchCompleted,
-	
+
 	// Manufacture
 	ManufactureCompleted,
 	ManufactureHalted,
@@ -81,7 +81,7 @@ enum class GameEventType
 
 	// LocationEvent
 	ZoomView,
-	
+
 	// Misc
 	MarketUpdate,
 	WeeklyReport,

@@ -1,4 +1,3 @@
-#include "framework/keycodes.h"
 #include "game/ui/battle/battlebriefing.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
@@ -8,6 +7,7 @@
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/keycodes.h"
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/city/building.h"
 #include "game/state/gamestate.h"
@@ -161,9 +161,9 @@ void BattleBriefing::resume() {}
 
 void BattleBriefing::finish() {}
 
-void BattleBriefing::eventOccurred(Event *e) 
+void BattleBriefing::eventOccurred(Event *e)
 {
-	menuform->eventOccured(e); 
+	menuform->eventOccured(e);
 	if (e->type() == EVENT_KEY_DOWN)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)

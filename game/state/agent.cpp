@@ -772,7 +772,8 @@ void Agent::removeEquipment(GameState &state, sp<AEquipment> object)
 	if (unit)
 	{
 		// Stop flying if jetpack lost
-		if (object->type->provides_flight && unit->target_body_state == BodyState::Flying && !isBodyStateAllowed(BodyState::Flying))
+		if (object->type->provides_flight && unit->target_body_state == BodyState::Flying &&
+		    !isBodyStateAllowed(BodyState::Flying))
 		{
 			unit->setBodyState(state, BodyState::Standing);
 		}

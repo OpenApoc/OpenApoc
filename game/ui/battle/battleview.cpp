@@ -1,4 +1,3 @@
-#include "game/ui/general/savemenu.h"
 #include "game/ui/battle/battleview.h"
 #include "forms/checkbox.h"
 #include "forms/form.h"
@@ -44,6 +43,7 @@
 #include "game/ui/general/ingameoptions.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/messagelogscreen.h"
+#include "game/ui/general/savemenu.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
 #include <cmath>
@@ -2899,11 +2899,12 @@ void BattleView::eventOccurred(Event *e)
 					for (auto &o : tile->ownedObjects)
 					{
 						if (o->getType() == TileObject::Type::Ground ||
-							o->getType() == TileObject::Type::Feature ||
-							o->getType() == TileObject::Type::LeftWall ||
-							o->getType() == TileObject::Type::RightWall)
+						    o->getType() == TileObject::Type::Feature ||
+						    o->getType() == TileObject::Type::LeftWall ||
+						    o->getType() == TileObject::Type::RightWall)
 						{
-							auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+							auto mp =
+							    std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
 							auto set = mksp<std::set<BattleMapPart *>>();
 							set->insert(mp.get());
 							mp->queueCollapse();
@@ -2951,14 +2952,14 @@ void BattleView::eventOccurred(Event *e)
 						}
 
 						if (((local &&
-							u.second->tileObject->getOwningTile()->position ==
-							selectedTilePosition) ||
-							(!local &&
-								glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
-								5.0f)) == !inverse)
+						      u.second->tileObject->getOwningTile()->position ==
+						          selectedTilePosition) ||
+						     (!local &&
+						      glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
+						          5.0f)) == !inverse)
 						{
 							u.second->applyDamageDirect(*state, 9001, false, BodyPart::Helmet,
-								u.second->agent->getHealth() + 4);
+							                            u.second->agent->getHealth() + 4);
 						}
 					}
 					return;
@@ -2976,11 +2977,11 @@ void BattleView::eventOccurred(Event *e)
 						}
 
 						if (((local &&
-							u.second->tileObject->getOwningTile()->position ==
-							selectedTilePosition) ||
-							(!local &&
-								glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
-								5.0f)) == !inverse)
+						      u.second->tileObject->getOwningTile()->position ==
+						          selectedTilePosition) ||
+						     (!local &&
+						      glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
+						          5.0f)) == !inverse)
 						{
 							if (!u.second->retreated)
 							{
@@ -2990,7 +2991,7 @@ void BattleView::eventOccurred(Event *e)
 					}
 					return;
 				}
-				// Panic / Amplify psi 
+				// Panic / Amplify psi
 				case SDLK_p:
 				{
 					if (modifierLShift || modifierRShift)
@@ -3048,7 +3049,7 @@ void BattleView::eventOccurred(Event *e)
 					for (auto &u : battle.units)
 					{
 						if (!u.second->isConscious() ||
-							u.second->owner != battle.currentActiveOrganisation)
+						    u.second->owner != battle.currentActiveOrganisation)
 						{
 							continue;
 						}
@@ -3064,7 +3065,7 @@ void BattleView::eventOccurred(Event *e)
 						for (auto &u : battle.units)
 						{
 							if (u.second->owner != battle.currentActiveOrganisation ||
-								!u.second->isConscious())
+							    !u.second->isConscious())
 							{
 								continue;
 							}
@@ -3088,8 +3089,8 @@ void BattleView::eventOccurred(Event *e)
 				case SDLK_ESCAPE:
 					if (activeTab != notMyTurnTab)
 					{
-						fw().stageQueueCommand(
-							{StageCmd::Command::PUSH, mksp<InGameOptions>(state->shared_from_this())});
+						fw().stageQueueCommand({StageCmd::Command::PUSH,
+						                        mksp<InGameOptions>(state->shared_from_this())});
 					}
 					return;
 				case SDLK_TAB:
@@ -3097,14 +3098,14 @@ void BattleView::eventOccurred(Event *e)
 					return;
 				case SDLK_PAGEUP:
 					setZLevel(getZLevel() + 1);
-					setSelectedTilePosition(
-						{selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z + 1});
+					setSelectedTilePosition({selectedTilePosition.x, selectedTilePosition.y,
+					                         selectedTilePosition.z + 1});
 					updateLayerButtons();
 					return;
 				case SDLK_PAGEDOWN:
 					setZLevel(getZLevel() - 1);
-					setSelectedTilePosition(
-						{selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z - 1});
+					setSelectedTilePosition({selectedTilePosition.x, selectedTilePosition.y,
+					                         selectedTilePosition.z - 1});
 					updateLayerButtons();
 					return;
 				case SDLK_SPACE:
@@ -3187,7 +3188,7 @@ void BattleView::eventOccurred(Event *e)
 					}
 					return;
 				case SDLK_3:
-					if(modifierLShift || modifierRShift)
+					if (modifierLShift || modifierRShift)
 					{
 						baseForm->findControl("UNIT_3")->click();
 					}
@@ -3296,7 +3297,7 @@ void BattleView::eventOccurred(Event *e)
 						return;
 					}
 					fw().stageQueueCommand(
-					{ StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Save, state) });
+					    {StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Save, state)});
 					return;
 				case SDLK_l:
 					if (activeTab == notMyTurnTab)
@@ -3304,7 +3305,7 @@ void BattleView::eventOccurred(Event *e)
 						return;
 					}
 					fw().stageQueueCommand(
-					{ StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Load, state) });
+					    {StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Load, state)});
 					return;
 				case SDLK_j:
 				{
@@ -3315,7 +3316,6 @@ void BattleView::eventOccurred(Event *e)
 					}
 					return;
 				}
-			
 			}
 		}
 	}
@@ -3390,8 +3390,7 @@ void BattleView::eventOccurred(Event *e)
 			{
 				auto gameAgentEvent = dynamic_cast<GameAgentEvent *>(e);
 				fw().stageQueueCommand(
-				{ StageCmd::Command::PUSH,
-				mksp<AEquipScreen>(state,gameAgentEvent->agent) });
+				    {StageCmd::Command::PUSH, mksp<AEquipScreen>(state, gameAgentEvent->agent)});
 				break;
 			}
 			default:
@@ -3537,12 +3536,12 @@ void BattleView::handleMouseDown(Event *e)
 							{
 								if (pa.second == PsiStatus::Probe)
 								{
-									StateRef<BattleUnit> attacker = { &*state, pa.first };
+									StateRef<BattleUnit> attacker = {&*state, pa.first};
 									if (attacker->owner == state->current_battle->currentPlayer)
 									{
 										fw().stageQueueCommand(
-										{ StageCmd::Command::PUSH,
-											mksp<AEquipScreen>(state, unitOccupying->agent) });
+										    {StageCmd::Command::PUSH,
+										     mksp<AEquipScreen>(state, unitOccupying->agent)});
 									}
 								}
 							}

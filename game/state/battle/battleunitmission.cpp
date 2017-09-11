@@ -1463,7 +1463,8 @@ bool BattleUnitMission::getNextBodyState(GameState &state, BattleUnit &u, BodySt
 				}
 				else
 				{
-					LogError("Unit %s (%s) (%s) lost capability to attain bodyState %d?", u.id, u.agent->name, u.agent->type->id, (int)targetBodyState);
+					LogError("Unit %s (%s) (%s) lost capability to attain bodyState %d?", u.id,
+					         u.agent->name, u.agent->type->id, (int)targetBodyState);
 				}
 			}
 			return advanceBodyState(state, u, targetBodyState, dest);

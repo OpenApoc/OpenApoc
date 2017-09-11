@@ -24,20 +24,20 @@ class BattlePreStart : public Stage
 	const int ROW_WIDTH = 260;
 	const int ROW_HEADER = 90;
 	const Vec2<int> TOP_LEFT;
-	
+
 	class AgentControl
 	{
 	  public:
 		sp<Agent> agent;
 		sp<Control> normalControl;
 		sp<Control> selectedControl;
-		
+
 		void setLocation(Vec2<int> pos);
 
 		AgentControl() = default;
 		AgentControl(sp<Agent> agent, sp<Control> normalControl, sp<Control> selectedControl);
 	};
-	  
+
 	sp<Form> menuform;
 
 	sp<GameState> state;
@@ -49,7 +49,7 @@ class BattlePreStart : public Stage
 	std::vector<sp<Image>> unitRanks;
 	std::vector<sp<Image>> bigUnitRanks;
 	std::vector<sp<Image>> unitSelect;
-	
+
 	std::set<sp<AgentControl>> agents;
 	sp<AgentControl> selectedAgent;
 	sp<Agent> lastSelectedAgent;
@@ -60,7 +60,7 @@ class BattlePreStart : public Stage
 
   public:
 	BattlePreStart(sp<GameState> state);
-	
+
 	void updateAgents();
 
 	// Stage control

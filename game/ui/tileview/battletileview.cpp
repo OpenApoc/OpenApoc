@@ -333,7 +333,7 @@ void BattleTileView::eventOccurred(Event *e)
 					LogWarning("Writing voxel view to tileviewvoxels.png");
 					auto imageOffset = -this->getScreenOffset();
 					auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-					{ imageOffset, imageOffset + dpySize }, *this, battle.battleViewZLevel));
+					    {imageOffset, imageOffset + dpySize}, *this, battle.battleViewZLevel));
 					fw().data->writeImage("tileviewvoxels.png", img);
 					return;
 				}
@@ -341,8 +341,9 @@ void BattleTileView::eventOccurred(Event *e)
 				{
 					LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
 					auto imageOffset = -this->getScreenOffset();
-					auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-					{ imageOffset, imageOffset + dpySize }, *this, battle.battleViewZLevel, true));
+					auto img = std::dynamic_pointer_cast<RGBImage>(
+					    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this,
+					                            battle.battleViewZLevel, true));
 					fw().data->writeImage("tileviewvoxels.png", img);
 					return;
 				}
@@ -351,8 +352,8 @@ void BattleTileView::eventOccurred(Event *e)
 					LogWarning("Writing voxel view to tileviewvoxels.png");
 					auto imageOffset = -this->getScreenOffset();
 					auto img = std::dynamic_pointer_cast<RGBImage>(
-						this->map.dumpVoxelView({ imageOffset, imageOffset + dpySize }, *this,
-							battle.battleViewZLevel, false, true));
+					    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this,
+					                            battle.battleViewZLevel, false, true));
 					fw().data->writeImage("tileviewvoxels.png", img);
 					return;
 				}
@@ -361,8 +362,8 @@ void BattleTileView::eventOccurred(Event *e)
 					LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
 					auto imageOffset = -this->getScreenOffset();
 					auto img = std::dynamic_pointer_cast<RGBImage>(
-						this->map.dumpVoxelView({ imageOffset, imageOffset + dpySize }, *this,
-							battle.battleViewZLevel, true, true));
+					    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this,
+					                            battle.battleViewZLevel, true, true));
 					fw().data->writeImage("tileviewvoxels.png", img);
 					return;
 				}
@@ -378,7 +379,6 @@ void BattleTileView::eventOccurred(Event *e)
 					break;
 			}
 		}
-			
 	}
 	TileView::eventOccurred(e);
 }
