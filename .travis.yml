@@ -59,4 +59,4 @@ before_script:
 script:
 # Create the GameState as that triggers the generated source commands
   - if [ "$PASS" = "build" ]; then echo "Building revision $(git describe --tags --all --long --always)"; $(which time) make -j2 && `which time` ctest -V -j 2; fi
-  - if [ "$PASS" = "lint" ]; then echo "Linting range ${TRAVIS_COMMIT_RANGE}"; ./tools/lint.sh ${TRAVIS_COMMIT_RANGE}; fi
+  - if [ "$PASS" = "lint" ]; then echo "Linting range ${TRAVIS_COMMIT_RANGE}"; CLANG_FORMAT=${CLANG_FORMAT} ./tools/lint.sh ${TRAVIS_COMMIT_RANGE}; fi
