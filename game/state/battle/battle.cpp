@@ -691,8 +691,9 @@ void Battle::initialUnitSpawn(GameState &state)
 				spawnInverse[{st, lb->spawn_large_units ? UnitSize::Large : UnitSize::Small,
 				              UnitMovement::Any, lb->low_priority}]
 				    .push_back(sb);
-				spawnInverse[{st, UnitSize::Any, lb->spawn_walking_units ? UnitMovement::Walking
-				                                                         : UnitMovement::Flying,
+				spawnInverse[{st, UnitSize::Any,
+				              lb->spawn_walking_units ? UnitMovement::Walking
+				                                      : UnitMovement::Flying,
 				              lb->low_priority}]
 				    .push_back(sb);
 				spawnInverse[{st, UnitSize::Any, UnitMovement::Any, lb->low_priority}].push_back(

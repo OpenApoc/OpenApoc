@@ -892,8 +892,9 @@ bool BattleUnit::hasLineToUnit(const sp<BattleUnit> unit, bool useLOS) const
 	auto cMap = tileObject->map.findCollision(muzzleLocation, targetPosition, mapPartSet,
 	                                          tileObject, useLOS);
 	// Unit that prevents Line to target
-	auto cUnitObj = useLOS ? Collision() : tileObject->map.findCollision(
-	                                           muzzleLocation, targetPosition, unitSet, tileObject);
+	auto cUnitObj =
+	    useLOS ? Collision()
+	           : tileObject->map.findCollision(muzzleLocation, targetPosition, unitSet, tileObject);
 	auto cUnit = cUnitObj ? std::static_pointer_cast<TileObjectBattleUnit>(cUnitObj.obj)->getUnit()
 	                      : nullptr;
 	// Condition:
@@ -1050,8 +1051,9 @@ void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatu
 	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
 	if (impact)
 	{
-		sendAgentEvent(state, status == PsiStatus::Control ? GameEventType::AgentPsiControlled
-		                                                   : GameEventType::AgentPsiAttacked,
+		sendAgentEvent(state,
+		               status == PsiStatus::Control ? GameEventType::AgentPsiControlled
+		                                            : GameEventType::AgentPsiAttacked,
 		               true);
 	}
 	bool finished = false;
@@ -2643,10 +2645,10 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 		{
 			if (flyingSpeedModifier != 100)
 			{
-				flyingSpeedModifier =
-				    std::min((unsigned)100, flyingSpeedModifier +
-				                                moveTicksRemaining / moveTicksConsumeRate /
-				                                    FLYING_ACCELERATION_DIVISOR);
+				flyingSpeedModifier = std::min((unsigned)100,
+				                               flyingSpeedModifier +
+				                                   moveTicksRemaining / moveTicksConsumeRate /
+				                                       FLYING_ACCELERATION_DIVISOR);
 			}
 			movementTicksAccumulated = moveTicksRemaining / moveTicksConsumeRate;
 			auto dir = glm::normalize(vectorToGoal);
@@ -2667,9 +2669,9 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 				movementTicksAccumulated = distanceToGoal;
 				if (flyingSpeedModifier != 100)
 				{
-					flyingSpeedModifier =
-					    std::min((unsigned)100, flyingSpeedModifier +
-					                                distanceToGoal / FLYING_ACCELERATION_DIVISOR);
+					flyingSpeedModifier = std::min(
+					    (unsigned)100,
+					    flyingSpeedModifier + distanceToGoal / FLYING_ACCELERATION_DIVISOR);
 				}
 				moveTicksRemaining -= distanceToGoal * moveTicksConsumeRate;
 				setPosition(state, goalPosition, true);
@@ -5100,9 +5102,9 @@ void BattleUnit::playDistantSound(GameState &state, sp<Sample> sfx, float gainMu
 	}
 	if (distance < MAX_HEARING_DISTANCE)
 	{
-		fw().soundBackend->playSample(sfx, getPosition(), gainMult *
-		                                                      (MAX_HEARING_DISTANCE - distance) /
-		                                                      MAX_HEARING_DISTANCE);
+		fw().soundBackend->playSample(sfx, getPosition(),
+		                              gainMult * (MAX_HEARING_DISTANCE - distance) /
+		                                  MAX_HEARING_DISTANCE);
 	}
 }
 

@@ -1,7 +1,6 @@
 #include "game/ui/battle/battleprestart.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
-#include "forms/graphic.h"
 #include "forms/graphicbutton.h"
 #include "forms/label.h"
 #include "forms/ui.h"
