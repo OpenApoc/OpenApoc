@@ -196,7 +196,7 @@ template <typename T> class StateRef
 	}
 	StateRef<T> &operator=(const StateRef<T> &other) = default;
 	// Explicity handle "object = nullptr", as otherwise gcc doesn't know which overload to use
-	StateRef<T> &operator=(nullptr_t)
+	StateRef<T> &operator=(std::nullptr_t)
 	{
 		this->clear();
 		return *this;
