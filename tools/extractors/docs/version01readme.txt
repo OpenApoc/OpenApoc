@@ -32,6 +32,7 @@ List of incomplete battlescape features:
 - Proper fire (current implementation is an approximation but may be far from how vanilla works)
 - Proper cloaking (current implementation is an approximation but may be far from how vanilla works)
 - Disabling notifications does not work (even if you uncheck "pause when this happens" the dialog will pop up anyway)
+- Equipping multiple agents at once
 
 Debug features:
 - F1 toggles between cheat hotkeys and normal hotkeys (for anything from this list to work, press F1 once, to be back to using normal hotkeys again, press F1 again)

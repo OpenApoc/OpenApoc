@@ -2277,15 +2277,15 @@ void BattleUnit::updateCrying(GameState &state)
 	if (ticksUntillNextCry == 0)
 	{
 		resetCryTimer(state);
-		// Cry chance in TB when it's not enemy's turn is 25%
+		// Cry chance in TB when it's not enemy's turn is 1/8 th
 		if (state.current_battle->mode == Battle::Mode::TurnBased 
 			&& owner != state.current_battle->currentActiveOrganisation 
-			&& randBoundsInclusive(state.rng, 1, 4) == 1)
+			&& randBoundsInclusive(state.rng, 1, 8) == 1)
 		{
 			return;
 		}
 		// Actually cry
-		playDistantSound(state, listRandomiser(state.rng, agent->type->crySfx));
+		fw().soundBackend->playSample(listRandomiser(state.rng, agent->type->crySfx), getPosition());
 	}
 }
 
@@ -5100,10 +5100,16 @@ void BattleUnit::playDistantSound(GameState &state, sp<Sample> sfx, float gainMu
 	}
 }
 
+void BattleUnit::initCryTimer(GameState & state)
+{
+	// FIXME: Implement proper cry timers
+	ticksUntillNextCry = 2 * TICKS_PER_SECOND + randBoundsInclusive(state.rng, 0, 16 * (int)TICKS_PER_SECOND);
+}
+
 void BattleUnit::resetCryTimer(GameState &state)
 {
 	// FIXME: Implement proper cry timers
-	ticksUntillNextCry = 4 * TICKS_PER_SECOND + randBoundsInclusive(state.rng, 0, 8 * (int)TICKS_PER_SECOND);
+	ticksUntillNextCry = 8 * TICKS_PER_SECOND + randBoundsInclusive(state.rng, 0, 16 * (int)TICKS_PER_SECOND);
 }
 
 bool BattleUnit::getNewGoal(GameState &state)

@@ -1183,8 +1183,7 @@ sp<BattleUnit> Battle::placeUnit(GameState &state, StateRef<Agent> agent)
 	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
 	unit->squadNumber = -1;
 	unit->cloakTicksAccumulated = CLOAK_TICKS_REQUIRED;
-	unit->resetCryTimer(state);
-	unit->ticksUntillNextCry /= 2;
+	unit->initCryTimer(state);
 	unit->position = {-1.0, -1.0, -1.0};
 	units[id] = unit;
 	unit->init(state);

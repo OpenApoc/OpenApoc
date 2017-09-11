@@ -443,7 +443,9 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void playWalkSound(GameState &state);
 	// Play sound adjusting gain by distance to closest player unit
 	void playDistantSound(GameState &state, sp<Sample> sfx, float gainMult = 1.0f);
+	void initCryTimer(GameState &state);
 	void resetCryTimer(GameState &state);
+
 
 	// Returns true if retreated
 	bool getNewGoal(GameState &state);
