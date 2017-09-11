@@ -11,6 +11,7 @@ All help is appreciated, but there's little point trying to 'play' it as of yet.
 ## Requirements
 
 * This assumes that you have the file 'cd.iso' - a copy of the original X-Com Apocalypse CD (This can be acquired from [Steam](http://store.steampowered.com/app/7660/) - this is _required_ to run)
+ * If you have the real cd, you can copy all the included files to a directory called "cd.iso"
 
 ## Building
 
