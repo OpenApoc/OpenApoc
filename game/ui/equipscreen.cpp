@@ -24,6 +24,17 @@ EquipmentPaperDoll::getSlotPositionFromScreenPosition(const Vec2<int> &screenPos
 	return pos / slotSizePixels;
 }
 
+Vec2<int> EquipmentPaperDoll::getScreenPositionFromSlotPosition(const Vec2<int>& slot) const
+{
+	return this->resolvedLocation + slot * slotSizePixels;
+}
+
+Vec2<int> EquipmentPaperDoll::getScreenPositionFromSlotPosition(const Vec2<float>& slot) const
+{
+	return this->resolvedLocation + Vec2<int>(slot.x  * slotSizePixels.x, slot.y * slotSizePixels.y);
+}
+
+
 void EquipmentPaperDoll::setObject(sp<EquippableObject> newObject)
 {
 	this->object = newObject;
@@ -100,19 +111,6 @@ void EquipmentPaperDoll::onRender()
 	{
 		for (auto &slot : slotList)
 		{
-			// Do not draw any frames for armor
-			switch (slot.type)
-			{
-				case EquipmentSlotType::ArmorBody:
-				case EquipmentSlotType::ArmorHelmet:
-				case EquipmentSlotType::ArmorLeftHand:
-				case EquipmentSlotType::ArmorLegs:
-				case EquipmentSlotType::ArmorRightHand:
-					continue;
-				default:
-					break;
-			}
-
 			Vec2<int> p00 = (slot.bounds.p0 * slotSizePixels);
 			Vec2<int> p11 = (slot.bounds.p1 * slotSizePixels);
 			Vec2<int> p01 = {p00.x, p11.y};

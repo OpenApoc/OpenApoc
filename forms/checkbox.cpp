@@ -21,6 +21,19 @@ CheckBox::CheckBox(sp<Image> ImageChecked, sp<Image> ImageUnchecked)
 
 CheckBox::~CheckBox() = default;
 
+bool CheckBox::click()
+{
+	if (!Control::click())
+	{
+		return false;
+	}
+	if (buttonclick)
+	{
+		fw().soundBackend->playSample(buttonclick);
+	}
+	return true;
+}
+
 void CheckBox::eventOccured(Event *e)
 {
 	Control::eventOccured(e);

@@ -9,6 +9,7 @@
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/font.h"
+#include "game/state/agent.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
@@ -190,6 +191,100 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 
 AEquipScreen::~AEquipScreen() = default;
 
+void AEquipScreen::outputAgent(sp<Agent> agent, sp<Form> formAgentStats, std::vector<sp<Image>> &ranks, bool turnBased)
+{
+	formAgentStats->findControlTyped<Label>("AGENT_NAME")->setText(agent->name);
+	formAgentStats->findControlTyped<Graphic>("SELECTED_PORTRAIT")
+		->setImage(agent->getPortrait().photo);
+	if (agent->type->displayRank)
+	{
+		formAgentStats->findControlTyped<Graphic>("SELECTED_RANK")->setVisible(true);
+		formAgentStats->findControlTyped<Graphic>("SELECTED_RANK")
+			->setImage(ranks[(int)agent->rank]);
+	}
+	else
+	{
+		formAgentStats->findControlTyped<Graphic>("SELECTED_RANK")->setVisible(false);
+	}
+	// FIXME: Make stats colours part of GameState
+	// FIXME: 'initial' colours taken from screenshot, 'current' guessed
+	Colour healthInitialColour{ 156, 4, 4 };
+	Colour healthCurrentColour{ 220, 68, 68 };
+	formAgentStats->findControlTyped<Graphic>("VALUE_1")->setImage(createStatsBar(
+		agent->initial_stats.health, agent->current_stats.health, agent->modified_stats.health, 100,
+		healthInitialColour, healthCurrentColour, { 100, 4 }));
+	Colour accuracyInitialColour{ 252, 176, 0 };
+	Colour accuracyCurrentColour{ 255, 240, 64 };
+	formAgentStats->findControlTyped<Graphic>("VALUE_2")->setImage(
+		createStatsBar(agent->initial_stats.accuracy, agent->current_stats.accuracy,
+			agent->modified_stats.accuracy, 100, accuracyInitialColour,
+			accuracyCurrentColour, { 100, 4 }));
+	Colour reactionsInitialColour{ 252, 176, 0 };
+	Colour reactionsCurrentColour{ 255, 240, 64 };
+	formAgentStats->findControlTyped<Graphic>("VALUE_3")->setImage(
+		createStatsBar(agent->initial_stats.reactions, agent->current_stats.reactions,
+			agent->modified_stats.reactions, 100, reactionsInitialColour,
+			reactionsCurrentColour, { 100, 4 }));
+
+	if (turnBased)
+	{
+		formAgentStats->findControlTyped<Label>("LABEL_SPEED")->setText(tr("Time Units"));
+		Colour speedInitialColour{ 12, 156, 56 };
+		Colour speedCurrentColour{ 76, 220, 120 };
+		formAgentStats->findControlTyped<Graphic>("VALUE_4")->setImage(
+			createStatsBar(agent->initial_stats.time_units, agent->current_stats.time_units,
+				agent->modified_stats.time_units, 100, speedInitialColour,
+				speedCurrentColour, { 100, 4 }));
+	}
+	else
+	{
+		formAgentStats->findControlTyped<Label>("LABEL_SPEED")->setText(tr("Speed"));
+		Colour speedInitialColour{ 12, 156, 56 };
+		Colour speedCurrentColour{ 76, 220, 120 };
+		formAgentStats->findControlTyped<Graphic>("VALUE_4")->setImage(createStatsBar(
+			agent->initial_stats.getDisplaySpeedValue(), agent->current_stats.getDisplaySpeedValue(), agent->modified_stats.getDisplaySpeedValue(),
+			100, speedInitialColour, speedCurrentColour, { 100, 4 }));
+	}
+
+	Colour staminaInitialColour{ 12, 156, 56 };
+	Colour staminaCurrentColour{ 76, 220, 120 };
+	formAgentStats->findControlTyped<Graphic>("VALUE_5")->setImage(
+		createStatsBar(agent->initial_stats.getDisplayStaminaValue(),
+			agent->current_stats.getDisplayStaminaValue(),
+			agent->modified_stats.getDisplayStaminaValue(), 100, staminaInitialColour,
+			staminaCurrentColour, { 100, 4 }));
+	Colour braveryInitialColour{ 0, 128, 164 };
+	Colour braveryCurrentColour{ 100, 192, 228 };
+	formAgentStats->findControlTyped<Graphic>("VALUE_6")->setImage(createStatsBar(
+		agent->initial_stats.bravery, agent->current_stats.bravery, agent->modified_stats.bravery,
+		100, braveryInitialColour, braveryCurrentColour, { 100, 4 }));
+	Colour strengthInitialColour{ 140, 136, 136 };
+	Colour strengthCurrentColour{ 204, 200, 200 };
+	formAgentStats->findControlTyped<Graphic>("VALUE_7")->setImage(
+		createStatsBar(agent->initial_stats.strength, agent->current_stats.strength,
+			agent->modified_stats.strength, 100, strengthInitialColour,
+			strengthCurrentColour, { 100, 4 }));
+	Colour psi_energyInitialColour{ 192, 56, 144 };
+	Colour psi_energyCurrentColour{ 255, 120, 208 };
+	formAgentStats->findControlTyped<Graphic>("VALUE_8")->setImage(
+		createStatsBar(agent->initial_stats.psi_energy, agent->current_stats.psi_energy,
+			agent->modified_stats.psi_energy, 100, psi_energyInitialColour,
+			psi_energyCurrentColour, { 100, 4 }));
+	Colour psi_attackInitialColour{ 192, 56, 144 };
+	Colour psi_attackCurrentColour{ 255, 120, 208 };
+	formAgentStats->findControlTyped<Graphic>("VALUE_9")->setImage(
+		createStatsBar(agent->initial_stats.psi_attack, agent->current_stats.psi_attack,
+			agent->modified_stats.psi_attack, 100, psi_attackInitialColour,
+			psi_attackCurrentColour, { 100, 4 }));
+	Colour psi_defenceInitialColour{ 192, 56, 144 };
+	Colour psi_defenceCurrentColour{ 255, 120, 208 };
+	formAgentStats->findControlTyped<Graphic>("VALUE_10")
+		->setImage(createStatsBar(agent->initial_stats.psi_defence,
+			agent->current_stats.psi_defence,
+			agent->modified_stats.psi_defence, 100, psi_defenceInitialColour,
+			psi_defenceCurrentColour, { 100, 4 }));
+}
+
 void AEquipScreen::begin()
 {
 	if (state->current_battle)
@@ -226,54 +321,16 @@ void AEquipScreen::begin()
 		}
 	}
 
-	// Populate agent list
-	auto agentList = formMain->findControlTyped<ListBox>("AGENT_SELECT_BOX");
-	auto font = ui().getFont("smalfont");
-	auto agentEntryHeight = font->getFontHeight() * 2;
-	agentList->clear();
-	auto owner = state->getPlayer();
-	if (state->current_battle)
+	if (getMode() == Mode::Enemy)
 	{
-		owner = state->current_battle->currentPlayer;
+		formMain->findControlTyped<Label>("EQUIP_AGENT")->setText(tr("MIND PROBE"));
 	}
-	for (auto &agent : state->agents)
+	else
 	{
-		if (agent.second->owner != owner)
-		{
-			continue;
-		}
-		// Unit is not participating in battle
-		if (state->current_battle)
-		{
-			if (!agent.second->unit || agent.second->unit->retreated ||
-			    agent.second->unit->isDead())
-			{
-				continue;
-			}
-		}
-		else
-		{
-			// Unit not a soldier
-			if (agent.second->type->role != AgentType::Role::Soldier)
-			{
-				continue;
-			}
-		}
-		// Unit does not allow direct control
-		if (!agent.second->type->allowsDirectControl)
-		{
-			continue;
-		}
+		formMain->findControlTyped<Label>("EQUIP_AGENT")->setText(tr("EQUIP AGENT"));
+	}
 
-		auto agentControl =
-		    this->createAgentControl({130, agentEntryHeight}, {state.get(), agent.second});
-		agentList->addItem(agentControl);
-		if (agent.second == currentAgent)
-		{
-			agentList->setSelected(agentControl);
-		}
-	}
-	agentList->ItemSize = agentEntryHeight;
+	updateAgents();
 }
 
 void AEquipScreen::pause() {}
@@ -292,6 +349,14 @@ void AEquipScreen::eventOccurred(Event *e)
 		{
 			attemptCloseScreen();
 			return;
+		}
+		if (e->type() == EVENT_KEY_DOWN)
+		{
+			if (e->keyboard().KeyCode == SDLK_RETURN)
+			{
+				formMain->findControl("BUTTON_OK")->click();
+				return;
+			}
 		}
 		if (e->keyboard().KeyCode == SDLK_RCTRL || e->keyboard().KeyCode == SDLK_LCTRL)
 		{
@@ -367,7 +432,7 @@ void AEquipScreen::eventOccurred(Event *e)
 	}
 
 	// Item manipulation
-	if (currentAgent->type->inventory)
+	if (currentAgent->type->inventory && getMode() != Mode::Enemy)
 	{
 		// Picking up items
 		if (e->type() == EVENT_MOUSE_DOWN && !this->draggedEquipment)
@@ -375,39 +440,52 @@ void AEquipScreen::eventOccurred(Event *e)
 			Vec2<int> mousePos{e->mouse().X, e->mouse().Y};
 
 			// Check if we're over any equipment in the paper doll
-			auto mouseSlotPos = this->paperDoll->getSlotPositionFromScreenPosition(mousePos);
+			auto mouseSlotPos = paperDoll->getSlotPositionFromScreenPosition(mousePos);
 			auto equipment =
 			    std::dynamic_pointer_cast<AEquipment>(currentAgent->getEquipmentAt(mouseSlotPos));
 			if (equipment)
 			{
-				this->draggedEquipmentOffset = {0, 0};
-				this->draggedEquipmentOrigin = equipment->equippedPosition;
+				draggedEquipmentOrigin = equipment->equippedPosition;
 
 				if (modifierCtrl && equipment->payloadType)
 				{
-					this->draggedEquipment = equipment->unloadAmmo(*state);
+					draggedEquipmentOffset = { 0, 0 };
+					draggedEquipment = equipment->unloadAmmo(*state);
 				}
 				else
 				{
-					this->draggedEquipment = equipment;
+					Vec2<float> slotPos = draggedEquipmentOrigin;
+					for (auto &s : currentAgent->type->equipment_layout->slots)
+					{
+						if (s.bounds.p0 != draggedEquipmentOrigin)
+						{
+							continue;
+						}
+						Vec2<float> offset = (s.bounds.p1 - s.bounds.p0) - equipment->type->equipscreen_size;
+						slotPos += offset / 2.0f;
+						break;
+					}
+					draggedEquipmentOffset = paperDoll->getScreenPositionFromSlotPosition(slotPos) - mousePos;
+					draggedEquipment = equipment;
 					currentAgent->removeEquipment(*state, equipment);
-					this->paperDoll->updateEquipment();
+					paperDoll->updateEquipment();
 				}
 				displayAgent(currentAgent);
+				updateAgentControl(currentAgent);
 				return;
 			}
 
 			// Check if we're over any equipment in the list at the bottom
 			auto posWithinInventory = mousePos;
 			posWithinInventory.x += inventoryPage * inventoryControl->Size.x;
-			for (auto &tuple : this->inventoryItems)
+			for (auto &tuple : inventoryItems)
 			{
 				auto rect = std::get<0>(tuple);
 				if (rect.within(posWithinInventory))
 				{
-					this->draggedEquipment = std::get<2>(tuple);
-					this->draggedEquipmentOffset = rect.p0 - posWithinInventory;
-					this->draggedEquipmentOrigin = {-1, -1};
+					draggedEquipment = std::get<2>(tuple);
+					draggedEquipmentOffset = rect.p0 - posWithinInventory;
+					draggedEquipmentOrigin = {-1, -1};
 
 					removeItemFromInventory(draggedEquipment);
 					refreshInventoryItems();
@@ -417,23 +495,23 @@ void AEquipScreen::eventOccurred(Event *e)
 		}
 
 		// Placing items
-		if (e->type() == EVENT_MOUSE_UP && this->draggedEquipment)
+		if (e->type() == EVENT_MOUSE_UP && draggedEquipment)
 		{
 			// Are we over the grid? If so try to place it on the agent.
-			auto paperDollControl = this->paperDoll;
+			auto paperDollControl =paperDoll;
 			Vec2<int> equipOffset = paperDollControl->Location + formMain->Location;
 
-			Vec2<int> equipmentPos = fw().getCursor().getPosition() + this->draggedEquipmentOffset;
+			Vec2<int> equipmentPos = fw().getCursor().getPosition() +draggedEquipmentOffset;
 			// If this is within the grid try to snap it
 			Vec2<int> equipmentGridPos = equipmentPos - equipOffset;
 			equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
 			bool canAdd =
-			    currentAgent->canAddEquipment(equipmentGridPos, this->draggedEquipment->type);
+			    currentAgent->canAddEquipment(equipmentGridPos,draggedEquipment->type);
 			sp<AEquipment> equipmentUnderCursor = nullptr;
 			if (!canAdd)
 			{
 				Vec2<int> mousePos{ e->mouse().X, e->mouse().Y };
-				auto mouseSlotPos = this->paperDoll->getSlotPositionFromScreenPosition(mousePos);
+				auto mouseSlotPos =paperDoll->getSlotPositionFromScreenPosition(mousePos);
 				equipmentUnderCursor =
 					std::dynamic_pointer_cast<AEquipment>(currentAgent->getEquipmentAt(mouseSlotPos));
 				if (equipmentUnderCursor 
@@ -467,7 +545,7 @@ void AEquipScreen::eventOccurred(Event *e)
 					{
 						if (draggedEquipmentOrigin.x != -1 && draggedEquipmentOrigin.y != -1 && currentAgent->canAddEquipment(draggedEquipmentOrigin, draggedEquipment->type))
 						{
-							currentAgent->addEquipment(*state, draggedEquipmentOrigin, this->draggedEquipment);
+							currentAgent->addEquipment(*state, draggedEquipmentOrigin, draggedEquipment);
 						}
 						else
 						{
@@ -481,6 +559,7 @@ void AEquipScreen::eventOccurred(Event *e)
 					currentAgent->addEquipment(*state, equipmentGridPos, this->draggedEquipment);
 				}
 				displayAgent(currentAgent);
+				updateAgentControl(currentAgent);
 				this->paperDoll->updateEquipment();
 			}
 			else
@@ -764,30 +843,35 @@ AEquipScreen::Mode AEquipScreen::getMode()
 	// TODO: Finish implementation after implementing agents traveling the city by themselves and on
 	// vehicles
 
+	// If viewing an enemy
+	if (currentAgent->unit && currentAgent->owner != state->current_battle->currentPlayer)
+	{
+		return Mode::Enemy;
+	}
 	// If agent in battle
 	if (currentAgent->unit && currentAgent->unit->tileObject)
 	{
-		return AEquipScreen::Mode::Battle;
+		return Mode::Battle;
 	}
 	// If agent in base and not in vehicle or in vehicle which is parked in base
 	else if (true)
 	{
-		return AEquipScreen::Mode::Base;
+		return Mode::Base;
 	}
 	// If agent is in vehicle which is not at any base
 	else if (false)
 	{
-		return AEquipScreen::Mode::Vehicle;
+		return Mode::Vehicle;
 	}
 	// If agent is in a building which is not any base
 	else if (false)
 	{
-		return AEquipScreen::Mode::Building;
+		return Mode::Building;
 	}
 	// Agent is moving somewhere by foot
 	else
 	{
-		return AEquipScreen::Mode::Agent;
+		return Mode::Agent;
 	}
 }
 
@@ -797,6 +881,8 @@ void AEquipScreen::refreshInventoryItems()
 
 	switch (getMode())
 	{
+		case Mode::Enemy:
+			break;
 		case Mode::Agent:
 			populateInventoryItemsAgent();
 			break;
@@ -980,6 +1066,9 @@ void AEquipScreen::removeItemFromInventory(sp<AEquipment> item)
 {
 	switch (getMode())
 	{
+		case Mode::Enemy:
+			LogError("Trying to remove item from inventory in enemy screen!?");
+			break;
 		case Mode::Agent:
 			removeItemFromInventoryAgent(item);
 			break;
@@ -1079,6 +1168,9 @@ void AEquipScreen::addItemToInventory(sp<AEquipment> item)
 {
 	switch (getMode())
 	{
+		case Mode::Enemy:
+			LogError("Trying to add item to inventory in enemy screen!?");
+			break;
 		case Mode::Agent:
 			addItemToInventoryAgent(item);
 			break;
@@ -1242,98 +1334,67 @@ void AEquipScreen::attemptCloseScreen()
 void AEquipScreen::displayAgent(sp<Agent> agent)
 {
 	formMain->findControlTyped<Graphic>("BACKGROUND")->setImage(agent->type->inventoryBackground);
-	formAgentStats->findControlTyped<Label>("AGENT_NAME")->setText(agent->name);
-	formAgentStats->findControlTyped<Graphic>("SELECTED_PORTRAIT")
-	    ->setImage(agent->getPortrait().photo);
-	if (agent->type->displayRank)
-	{
-		formAgentStats->findControlTyped<Graphic>("SELECTED_RANK")->setVisible(true);
-		formAgentStats->findControlTyped<Graphic>("SELECTED_RANK")
-		    ->setImage(bigUnitRanks[(int)agent->rank]);
-	}
-	else
-	{
-		formAgentStats->findControlTyped<Graphic>("SELECTED_RANK")->setVisible(false);
-	}
-	// FIXME: Make stats colours part of GameState
-	// FIXME: 'initial' colours taken from screenshot, 'current' guessed
-	Colour healthInitialColour{156, 4, 4};
-	Colour healthCurrentColour{220, 68, 68};
-	formAgentStats->findControlTyped<Graphic>("VALUE_1")->setImage(createStatsBar(
-	    agent->initial_stats.health, agent->current_stats.health, agent->modified_stats.health, 100,
-	    healthInitialColour, healthCurrentColour, {64, 4}));
-	Colour accuracyInitialColour{252, 176, 0};
-	Colour accuracyCurrentColour{255, 240, 64};
-	formAgentStats->findControlTyped<Graphic>("VALUE_2")->setImage(
-	    createStatsBar(agent->initial_stats.accuracy, agent->current_stats.accuracy,
-	                   agent->modified_stats.accuracy, 100, accuracyInitialColour,
-	                   accuracyCurrentColour, {64, 4}));
-	Colour reactionsInitialColour{252, 176, 0};
-	Colour reactionsCurrentColour{255, 240, 64};
-	formAgentStats->findControlTyped<Graphic>("VALUE_3")->setImage(
-	    createStatsBar(agent->initial_stats.reactions, agent->current_stats.reactions,
-	                   agent->modified_stats.reactions, 100, reactionsInitialColour,
-	                   reactionsCurrentColour, {64, 4}));
-
-	if (state->current_battle && state->current_battle->mode == Battle::Mode::TurnBased)
-	{
-		formAgentStats->findControlTyped<Label>("LABEL_SPEED")->setText(tr("Time Units"));
-		Colour speedInitialColour{12, 156, 56};
-		Colour speedCurrentColour{76, 220, 120};
-		formAgentStats->findControlTyped<Graphic>("VALUE_4")->setImage(
-		    createStatsBar(agent->initial_stats.time_units, agent->current_stats.time_units,
-		                   agent->modified_stats.time_units, 100, speedInitialColour,
-		                   speedCurrentColour, {64, 4}));
-	}
-	else
-	{
-		formAgentStats->findControlTyped<Label>("LABEL_SPEED")->setText(tr("Speed"));
-		Colour speedInitialColour{12, 156, 56};
-		Colour speedCurrentColour{76, 220, 120};
-		formAgentStats->findControlTyped<Graphic>("VALUE_4")->setImage(createStatsBar(
-		    agent->initial_stats.getDisplaySpeedValue(), agent->current_stats.getDisplaySpeedValue(), agent->modified_stats.getDisplaySpeedValue(),
-		    100, speedInitialColour, speedCurrentColour, {64, 4}));
-	}
-
-	Colour staminaInitialColour{12, 156, 56};
-	Colour staminaCurrentColour{76, 220, 120};
-	formAgentStats->findControlTyped<Graphic>("VALUE_5")->setImage(
-	    createStatsBar(agent->initial_stats.getDisplayStaminaValue(),
-	                   agent->current_stats.getDisplayStaminaValue(),
-	                   agent->modified_stats.getDisplayStaminaValue(), 100, staminaInitialColour,
-	                   staminaCurrentColour, {64, 4}));
-	Colour braveryInitialColour{0, 128, 164};
-	Colour braveryCurrentColour{64, 192, 228};
-	formAgentStats->findControlTyped<Graphic>("VALUE_6")->setImage(createStatsBar(
-	    agent->initial_stats.bravery, agent->current_stats.bravery, agent->modified_stats.bravery,
-	    100, braveryInitialColour, braveryCurrentColour, {64, 4}));
-	Colour strengthInitialColour{140, 136, 136};
-	Colour strengthCurrentColour{204, 200, 200};
-	formAgentStats->findControlTyped<Graphic>("VALUE_7")->setImage(
-	    createStatsBar(agent->initial_stats.strength, agent->current_stats.strength,
-	                   agent->modified_stats.strength, 100, strengthInitialColour,
-	                   strengthCurrentColour, {64, 4}));
-	Colour psi_energyInitialColour{192, 56, 144};
-	Colour psi_energyCurrentColour{255, 120, 208};
-	formAgentStats->findControlTyped<Graphic>("VALUE_8")->setImage(
-	    createStatsBar(agent->initial_stats.psi_energy, agent->current_stats.psi_energy,
-	                   agent->modified_stats.psi_energy, 100, psi_energyInitialColour,
-	                   psi_energyCurrentColour, {64, 4}));
-	Colour psi_attackInitialColour{192, 56, 144};
-	Colour psi_attackCurrentColour{255, 120, 208};
-	formAgentStats->findControlTyped<Graphic>("VALUE_9")->setImage(
-	    createStatsBar(agent->initial_stats.psi_attack, agent->current_stats.psi_attack,
-	                   agent->modified_stats.psi_attack, 100, psi_attackInitialColour,
-	                   psi_attackCurrentColour, {64, 4}));
-	Colour psi_defenceInitialColour{192, 56, 144};
-	Colour psi_defenceCurrentColour{255, 120, 208};
-	formAgentStats->findControlTyped<Graphic>("VALUE_10")
-	    ->setImage(createStatsBar(agent->initial_stats.psi_defence,
-	                              agent->current_stats.psi_defence,
-	                              agent->modified_stats.psi_defence, 100, psi_defenceInitialColour,
-	                              psi_defenceCurrentColour, {64, 4}));
+	
+	outputAgent(agent, formAgentStats, bigUnitRanks, state->current_battle && state->current_battle->mode == Battle::Mode::TurnBased);
 
 	formActive = formAgentStats;
+}
+
+void AEquipScreen::updateAgents()
+{
+	auto agentList = formMain->findControlTyped<ListBox>("AGENT_SELECT_BOX");
+	agentList->clear();
+	auto owner = state->getPlayer();
+	if (state->current_battle)
+	{
+		owner = state->current_battle->currentPlayer;
+	}
+	if (getMode() != Mode::Enemy)
+	{
+		for (auto &agent : state->agents)
+		{
+			if (agent.second->owner != owner)
+			{
+				continue;
+			}
+			// Unit is not participating in battle
+			if (state->current_battle)
+			{
+				if (!agent.second->unit || agent.second->unit->retreated ||
+					agent.second->unit->isDead())
+				{
+					continue;
+				}
+			}
+			else
+			{
+				// Unit not a soldier
+				if (agent.second->type->role != AgentType::Role::Soldier)
+				{
+					continue;
+				}
+			}
+			// Unit does not allow direct control
+			if (!agent.second->type->allowsDirectControl)
+			{
+				continue;
+			}
+
+			auto agentControl = this->createAgentControl(agent.second);
+			agentList->addItem(agentControl);
+			if (agent.second == currentAgent)
+			{
+				agentList->setSelected(agentControl);
+			}
+		}
+	}
+	agentList->ItemSize = labelFont->getFontHeight() * 2;
+}
+
+void AEquipScreen::updateAgentControl(sp<Agent> agent)
+{
+	auto agentList = formMain->findControlTyped<ListBox>("AGENT_SELECT_BOX");
+	agentList->replaceItem(createAgentControl(agent));
 }
 
 void AEquipScreen::setSelectedAgent(sp<Agent> agent)
@@ -1366,10 +1427,12 @@ void AEquipScreen::clampInventoryPage()
 	}
 }
 
-sp<Control> AEquipScreen::createAgentControl(Vec2<int> size, StateRef<Agent> agent)
+sp<Control> AEquipScreen::createAgentControl(sp<Agent> agent)
 {
+	Vec2<int> size = {130, labelFont->getFontHeight() * 2};
+
 	auto baseControl = mksp<Control>();
-	baseControl->setData(agent.getSp());
+	baseControl->setData(agent);
 	baseControl->Name = "AGENT_PORTRAIT";
 	baseControl->Size = size;
 
@@ -1452,11 +1515,9 @@ sp<Control> AEquipScreen::createAgentControl(Vec2<int> size, StateRef<Agent> age
 		healthGraphic->ImagePosition = FillMethod::Stretch;
 	}
 
-	auto font = ui().getFont("smalfont");
-
-	auto nameLabel = baseControl->createChild<Label>(agent->name, font);
+	auto nameLabel = baseControl->createChild<Label>(agent->name, labelFont);
 	nameLabel->Location = {40, 0};
-	nameLabel->Size = {100, font->getFontHeight() * 2};
+	nameLabel->Size = {100, labelFont->getFontHeight() * 2};
 
 	return baseControl;
 }

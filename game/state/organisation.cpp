@@ -1,3 +1,5 @@
+#include "framework/framework.h"
+#include "game/state/gameevent.h"
 #include "game/state/organisation.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
@@ -16,7 +18,7 @@ int Organisation::getGuardCount(GameState &state) const
 
 void Organisation::takeOver(GameState &state, bool forced)
 {
-	if (!forced && randBoundsExclusive(state.rng, 0, 200) > infiltrationValue)
+	if (!forced && randBoundsExclusive(state.rng, 0, 200) >= infiltrationValue)
 	{
 		return;
 	}
@@ -36,9 +38,8 @@ void Organisation::takeOver(GameState &state, bool forced)
 		current_relations[{&state, pair.first}] = 90.0f;
 		pair.second->current_relations[org] = 90.0f;
 	}
-	// FIXME: Ensure above values do not change?
-	// FIXME: Properly announce org taken over
-	LogError("%s taken over by aliens!", name);
+	auto event = new GameOrganisationEvent(GameEventType::AlienTakeover, { &state, id });
+	fw().pushEvent(event);
 }
 
 void Organisation::updateInfiltration(GameState &state)
@@ -85,7 +86,7 @@ void Organisation::updateInfiltration(GameState &state)
 	{
 		infiltrationModifier--;
 	}
-	org->infiltrationValue = clamp(org->infiltrationValue - infiltrationModifier, 0, 200);
+	org->infiltrationValue = clamp(org->infiltrationValue + infiltrationModifier, 0, 200);
 }
 
 void Organisation::updateTakeOver(GameState &state, unsigned int ticks)

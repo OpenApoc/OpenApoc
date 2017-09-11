@@ -36,7 +36,7 @@ void InfiltrationScreen::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			fw().stageQueueCommand({StageCmd::Command::POP});
+			menuform->findControl("BUTTON_QUIT")->click();
 			return;
 		}
 	}

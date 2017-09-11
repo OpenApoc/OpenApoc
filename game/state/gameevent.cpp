@@ -26,7 +26,6 @@ UString GameEvent::message()
 		case GameEventType::BuildingDisabled:
 			return tr("Building has been disabled");
 		default:
-			LogError("Unimplemented event type");
 			break;
 	}
 	return "";
@@ -129,6 +128,8 @@ UString GameAgentEvent::message()
 			return format("%s %s", tr("Unit freed from Psionic control:"), agent->name);
 		case GameEventType::NoLOF:
 			return format("%s", tr("No line of fire"));
+		case GameEventType::AgentPsiProbed:
+			return "";
 		default:
 			LogError("Invalid agent event type");
 			break;

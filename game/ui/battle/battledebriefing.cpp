@@ -1,3 +1,4 @@
+#include "framework/keycodes.h"
 #include "game/ui/battle/battledebriefing.h"
 #include "forms/form.h"
 #include "forms/graphicbutton.h"
@@ -57,7 +58,18 @@ void BattleDebriefing::resume() {}
 
 void BattleDebriefing::finish() {}
 
-void BattleDebriefing::eventOccurred(Event *e) { menuform->eventOccured(e); }
+void BattleDebriefing::eventOccurred(Event *e) 
+{ 
+	menuform->eventOccured(e); 
+	if (e->type() == EVENT_KEY_DOWN)
+	{
+		if (e->keyboard().KeyCode == SDLK_RETURN || e->keyboard().KeyCode == SDLK_ESCAPE || e->keyboard().KeyCode == SDLK_SPACE)
+		{
+			menuform->findControl("BUTTON_OK")->click();
+			return;
+		}
+	}
+}
 
 void BattleDebriefing::update() { menuform->update(); }
 

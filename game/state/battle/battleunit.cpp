@@ -106,29 +106,43 @@ void BattleUnit::removeFromSquad(Battle &battle)
 	}
 }
 
-bool BattleUnit::assignToSquad(Battle &battle, int squad)
+bool BattleUnit::assignToSquad(Battle &battle, int squadNumber, int squadPosition)
 {
-	if (squad == -1)
+	if (squadNumber == -1)
 	{
 		for (int i = 0; i < (int)battle.forces[owner].squads.size(); i++)
 		{
 			auto &squad = battle.forces[owner].squads[i];
 			if (squad.getNumUnits() < 6)
 			{
-				return battle.forces[owner].insert(i, shared_from_this());
+				if (squadPosition == -1)
+				{
+					return battle.forces[owner].insert(i, shared_from_this());
+				}
+				else
+				{
+					return battle.forces[owner].insertAt(i, squadPosition, shared_from_this());
+				}
 			}
 		}
 		return false;
 	}
 	else
 	{
-		return battle.forces[owner].insert(squad, shared_from_this());
+		if (squadPosition == -1)
+		{
+			return battle.forces[owner].insert(squadNumber, shared_from_this());
+		}
+		else
+		{
+			return battle.forces[owner].insertAt(squadNumber, squadPosition, shared_from_this());
+		}
 	}
 }
 
-void BattleUnit::moveToSquadPosition(Battle &battle, int position)
+void BattleUnit::moveToSquadPosition(Battle &battle, int squadPosition)
 {
-	battle.forces[owner].insertAt(squadNumber, position, shared_from_this());
+	battle.forces[owner].insertAt(squadNumber, squadPosition, shared_from_this());
 }
 
 bool BattleUnit::isFatallyWounded()
@@ -1093,7 +1107,10 @@ void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatu
 			case PsiStatus::Probe:
 				if (impact)
 				{
-					LogWarning("Psi Probe Success: Show unit's screen");
+					if (attacker.owner == state.current_battle->currentPlayer && attacker.agent->type->allowsDirectControl)
+					{
+						sendAgentEvent(state, GameEventType::AgentPsiProbed);
+					}
 				}
 				break;
 			case PsiStatus::NotEngaged:
@@ -2238,6 +2255,40 @@ void BattleUnit::updateIdling(GameState &state)
 	} // End of Idling Check
 }
 
+// FIXME: Implement proper crying 
+void BattleUnit::updateCrying(GameState &state)
+{
+	if (!isConscious())
+	{
+		return;
+	}
+	// Our own units don't cry
+	if (owner == state.current_battle->currentPlayer)
+	{
+		return;
+	}
+	// Agent doesn't know how to cry
+	if (agent->type->crySfx.empty())
+	{
+		return;
+	}
+	// Crying timer works on real world time, not game time, so always decrement by 1
+	ticksUntillNextCry -= 1;
+	if (ticksUntillNextCry == 0)
+	{
+		resetCryTimer(state);
+		// Cry chance in TB when it's not enemy's turn is 1/8 th
+		if (state.current_battle->mode == Battle::Mode::TurnBased 
+			&& owner != state.current_battle->currentActiveOrganisation 
+			&& randBoundsInclusive(state.rng, 1, 8) == 1)
+		{
+			return;
+		}
+		// Actually cry
+		fw().soundBackend->playSample(listRandomiser(state.rng, agent->type->crySfx), getPosition());
+	}
+}
+
 void BattleUnit::updateCheckBeginFalling(GameState &state)
 {
 	if (retreated)
@@ -2579,7 +2630,7 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 			bool USER_OPTION_GRAVLIFT_SOUNDS = true;
 			if (USER_OPTION_GRAVLIFT_SOUNDS && !wasUsingLift)
 			{
-				fw().soundBackend->playSample(agent->type->gravLiftSfx, getPosition(), 0.25f);
+				playDistantSound(state, agent->type->gravLiftSfx, 0.25f);
 			}
 			usingLift = true;
 			movement_ticks_passed = 0;
@@ -2647,21 +2698,7 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 		if (shouldPlaySoundNow() && current_body_state != BodyState::Flying &&
 		    current_movement_state != MovementState::Brainsuck)
 		{
-			if (agent->type->walkSfx.size() > 0)
-			{
-				fw().soundBackend->playSample(
-				    agent->type->walkSfx[getWalkSoundIndex() % agent->type->walkSfx.size()],
-				    getPosition());
-			}
-			else
-			{
-				auto t = tileObject->getOwningTile();
-				if (t->walkSfx && t->walkSfx->size() > 0)
-				{
-					fw().soundBackend->playSample(
-					    t->walkSfx->at(getWalkSoundIndex() % t->walkSfx->size()), getPosition());
-				}
-			}
+			playWalkSound(state);
 		}
 	}
 	// We are not moving and not falling
@@ -3383,6 +3420,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 	updateEvents(state);
 	// Idling: Auto-movement, auto-body change when idling
 	updateIdling(state);
+	// Crying: Enemies emit sounds periodically
+	updateCrying(state);
 	// Main bulk - update movement, body, hands and turning
 	{
 		bool wasUsingLift = usingLift;
@@ -3705,6 +3744,40 @@ void BattleUnit::requestGiveWay(const BattleUnit &requestor,
 				                     position.z};
 				if (nextPos == (Vec3<int>)requestor.position ||
 				    std::find(plannedPath.begin(), plannedPath.end(), nextPos) != plannedPath.end())
+				{
+					continue;
+				}
+				bool inLargePath = false;
+				if (requestor.isLarge())
+				{
+					for (int x = 0; x <= 1; x++)
+					{
+						for (int y = 0; y <= 1; y++)
+						{
+							for (int z = 0; z <= 1; z++)
+							{
+								if (x == 0 && y == 0 && z == 0)
+								{
+									continue;
+								}
+								if (std::find(plannedPath.begin(), plannedPath.end(), nextPos - Vec3<int>{x, y, z}) != plannedPath.end())
+								{
+									inLargePath = true;
+									break;
+								}
+							}
+							if (inLargePath)
+							{
+								break;
+							}
+						}
+						if (inLargePath)
+						{
+							break;
+						}
+					}
+				}
+				if (inLargePath)
 				{
 					continue;
 				}
@@ -4033,23 +4106,34 @@ void BattleUnit::executeAIMovement(GameState &state, AIMovement &movement)
 					m->currentPlannedPath.clear();
 				}
 			}
+			aiList.reportExecuted(movement);
 			break;
 		case AIMovement::Type::Advance:
 		case AIMovement::Type::GetInRange:
 		case AIMovement::Type::TakeCover:
 		case AIMovement::Type::Patrol:
 		case AIMovement::Type::Pursue:
-			setMission(state, BattleUnitMission::gotoLocation(*this, movement.targetLocation));
+			if (setMission(state, BattleUnitMission::gotoLocation(*this, movement.targetLocation)))
+			{
+				aiList.reportExecuted(movement);
+			}
 			break;
 		case AIMovement::Type::Retreat:
-			setMission(state, BattleUnitMission::gotoLocation(*this, movement.targetLocation, 0,
-			                                                  true, true, 1, true));
+			if (setMission(state, BattleUnitMission::gotoLocation(*this, movement.targetLocation, 0,
+			                                                  true, true, 1, true)))
+			{
+				aiList.reportExecuted(movement);
+			}
 			break;
 		case AIMovement::Type::Turn:
-			setMission(state, BattleUnitMission::turn(*this, movement.targetLocation));
+			if (setMission(state, BattleUnitMission::turn(*this, movement.targetLocation)))
+			{
+				aiList.reportExecuted(movement);
+			}
 			break;
 		case AIMovement::Type::ChangeStance:
 			// Nothing, already applied above
+			aiList.reportExecuted(movement);
 			break;
 	}
 }
@@ -4968,6 +5052,64 @@ unsigned int BattleUnit::getWalkSoundIndex()
 	{
 		return movement_sounds_played % 2;
 	}
+}
+
+void BattleUnit::playWalkSound(GameState &state)
+{
+	sp<Sample> walkSfx = nullptr;
+	if (agent->type->walkSfx.size() > 0)
+	{
+		walkSfx = agent->type->walkSfx[getWalkSoundIndex() % agent->type->walkSfx.size()];
+	}
+	else
+	{
+		auto t = tileObject->getOwningTile();
+		if (t->walkSfx && t->walkSfx->size() > 0)
+		{
+			walkSfx = t->walkSfx->at(getWalkSoundIndex() % t->walkSfx->size());
+		}
+	}
+	if (walkSfx)
+	{
+		playDistantSound(state, walkSfx);
+	}
+}
+
+void BattleUnit::playDistantSound(GameState &state, sp<Sample> sfx, float gainMult)
+{
+	float distance = FLT_MAX;
+	if (owner == state.current_battle->currentPlayer)
+	{
+		distance = 0.0f;
+	}
+	else
+	{
+		for (auto &u : state.current_battle->units)
+		{
+			if (u.second->owner != state.current_battle->currentPlayer
+				|| !u.second->isConscious())
+			{
+				continue;
+			}
+			distance = std::min(distance, glm::distance(u.second->position, position));
+		}
+	}
+	if (distance < MAX_HEARING_DISTANCE)
+	{
+		fw().soundBackend->playSample(sfx, getPosition(), gainMult * (MAX_HEARING_DISTANCE - distance) / MAX_HEARING_DISTANCE);
+	}
+}
+
+void BattleUnit::initCryTimer(GameState & state)
+{
+	// FIXME: Implement proper cry timers
+	ticksUntillNextCry = 2 * TICKS_PER_SECOND + randBoundsInclusive(state.rng, 0, 16 * (int)TICKS_PER_SECOND);
+}
+
+void BattleUnit::resetCryTimer(GameState &state)
+{
+	// FIXME: Implement proper cry timers
+	ticksUntillNextCry = 8 * TICKS_PER_SECOND + randBoundsInclusive(state.rng, 0, 16 * (int)TICKS_PER_SECOND);
 }
 
 bool BattleUnit::getNewGoal(GameState &state)

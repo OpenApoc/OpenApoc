@@ -253,6 +253,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Stealth, increases each turn, set to 0 when taking action or no stealth in hand
 	// Unit is cloaked when this is >= CLOAK_TICKS_REQUIRED
 	unsigned int cloakTicksAccumulated = 0;
+	// Ticks until spound is emmited
+	int ticksUntillNextCry = 0;
 
 	// User set modes
 
@@ -360,7 +362,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Squad
 
 	void removeFromSquad(Battle &b);
-	bool assignToSquad(Battle &b, int squadNumber = -1);
+	bool assignToSquad(Battle &b, int squadNumber = -1, int squadPosition = -1);
 	void moveToSquadPosition(Battle &b, int squadPosition);
 
 	// Stats
@@ -430,8 +432,21 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void setMovementState(MovementState state);
 	void setMovementMode(MovementMode mode);
 	unsigned int getDistanceTravelled() const;
+	
+	// Sound
+
+	// Should the unit play walk step sound now
 	bool shouldPlaySoundNow();
+	// Current sound index for the unit
 	unsigned int getWalkSoundIndex();
+	// Play walking sound
+	void playWalkSound(GameState &state);
+	// Play sound adjusting gain by distance to closest player unit
+	void playDistantSound(GameState &state, sp<Sample> sfx, float gainMult = 1.0f);
+	void initCryTimer(GameState &state);
+	void resetCryTimer(GameState &state);
+
+
 	// Returns true if retreated
 	bool getNewGoal(GameState &state);
 	bool calculateVelocityForLaunch(float distanceXY, float diffZ, float &velocityXY,
@@ -598,6 +613,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void updateEvents(GameState &state);
 	// Updates unit that is idle
 	void updateIdling(GameState &state);
+	// Update crying
+	void updateCrying(GameState &state);
 	// Checks if unit should begin falling
 	void updateCheckBeginFalling(GameState &state);
 	// Updates unit's body trainsition and acquires new target body state

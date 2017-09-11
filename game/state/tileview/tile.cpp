@@ -521,12 +521,11 @@ std::list<sp<BattleUnit>> Tile::getUnits(bool onlyConscious, bool mustOccupy, bo
                                          bool checkLargeSpace) const
 {
 	std::list<sp<BattleUnit>> result;
-
 	if (checkLargeSpace)
 	{
-		for (int x = -1; x >= 0; x++)
+		for (int x = -1; x <= 0; x++)
 		{
-			for (int y = -1; y >= 0; y++)
+			for (int y = -1; y <= 0; y++)
 			{
 				for (int z = 0; z <= 1; z++)
 				{

@@ -1,3 +1,4 @@
+#include "framework/keycodes.h"
 #include "game/ui/battle/battlebriefing.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
@@ -160,7 +161,23 @@ void BattleBriefing::resume() {}
 
 void BattleBriefing::finish() {}
 
-void BattleBriefing::eventOccurred(Event *e) { menuform->eventOccured(e); }
+void BattleBriefing::eventOccurred(Event *e) 
+{
+	menuform->eventOccured(e); 
+	if (e->type() == EVENT_KEY_DOWN)
+	{
+		if (e->keyboard().KeyCode == SDLK_ESCAPE)
+		{
+			menuform->findControl("BUTTON_REAL_TIME")->click();
+			return;
+		}
+		if (e->keyboard().KeyCode == SDLK_RETURN)
+		{
+			menuform->findControl("BUTTON_TURN_BASED")->click();
+			return;
+		}
+	}
+}
 
 void BattleBriefing::update()
 {

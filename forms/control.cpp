@@ -655,7 +655,7 @@ sp<Form> Control::getForm()
 	return std::dynamic_pointer_cast<Form>(c);
 }
 
-void Control::setParent(sp<Control> Parent)
+void Control::setParent(sp<Control> Parent, int position)
 {
 	if (Parent)
 	{
@@ -664,7 +664,14 @@ void Control::setParent(sp<Control> Parent)
 		{
 			LogError("Reparenting control");
 		}
-		Parent->Controls.push_back(shared_from_this());
+		if (position == -1)
+		{
+			Parent->Controls.push_back(shared_from_this());
+		}
+		else
+		{
+			Parent->Controls.insert(Parent->Controls.begin() + position, shared_from_this());
+		}
 		Parent->setDirty();
 	}
 	owningControl = Parent;
@@ -944,6 +951,22 @@ void Control::triggerEventCallbacks(FormsEvent *e)
 void Control::addCallback(FormEventType event, std::function<void(FormsEvent *e)> callback)
 {
 	this->callbacks[event].push_back(callback);
+}
+
+bool Control::click()
+{
+	if (!Visible || !Enabled)
+	{
+		return false;
+	}
+	FormsEvent *event = nullptr;
+	event = new FormsEvent();
+	event->forms().RaisedBy = shared_from_this();
+	event->forms().EventFlag = FormEventType::MouseClick;
+	fw().pushEvent(event);
+	this->setDirty();
+	this->triggerEventCallbacks(event);
+	return true;
 }
 
 void Control::setDirty()

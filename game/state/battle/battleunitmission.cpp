@@ -294,6 +294,10 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 	else
 	{
 		// Check that no static unit occupies this tile
+		// Actually, in case we are set to ignore static units, we still have to check for large
+		// static units,
+		// because they don't know how to give way, and therefore are considered permanent
+		// obstacles
 		if (!ignoreAllUnits &&
 		    to->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits))
 			return false;
@@ -2217,11 +2221,11 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 	}
 
 	// Is there a unit in the target tile other than us?
-	auto blockingUnitTileObject = tTo->getUnitIfPresent(true, true, false, u.tileObject);
-	if (blockingUnitTileObject)
+	auto blockingUnits = tTo->getUnits(true, true, false, u.tileObject, false, u.isLarge());
+	bool needSnooze = false;
+	for (auto &blockingUnit : blockingUnits)
 	{
 		// FIXME: Check unit's allegiance? Will neutrals give way? I think they did in vanilla!
-		auto blockingUnit = blockingUnitTileObject->getUnit();
 		u.current_movement_state = MovementState::None;
 		// If this unit is still patient enough, and we can ask that unit to give way
 		if (giveWayAttemptsRemaining-- > 0 && blockingUnit->owner == u.owner
@@ -2234,10 +2238,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 		{
 			// Ask unit to give way to us
 			blockingUnit->requestGiveWay(u, currentPlannedPath, pos);
-
-			// Snooze for a moment and try again
-			u.addMission(state, snooze(u, 16));
-			return false;
+			needSnooze = true;
 		}
 		else if (u.owner->isRelatedTo(blockingUnit->owner) == Organisation::Relation::Hostile)
 		{
@@ -2255,6 +2256,12 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 			u.addMission(state, Type::RestartNextMission);
 			return false;
 		}
+	}
+	if (needSnooze)
+	{
+		// Snooze for a moment and try again
+		u.addMission(state, snooze(u, 16));
+		return false;
 	}
 
 	// Is there a door?

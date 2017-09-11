@@ -136,6 +136,7 @@ bool AIMovement::inProgressInternal(BattleUnit &u)
 		case AIMovement::Type::Patrol:
 		case AIMovement::Type::Retreat:
 		case AIMovement::Type::TakeCover:
+		// Must be moving with proper parameters but not yet there
 		{
 			if (movementMode != u.movement_mode || kneelingMode != u.kneeling_mode)
 			{
@@ -159,10 +160,13 @@ bool AIMovement::inProgressInternal(BattleUnit &u)
 			return true;
 		}
 		case AIMovement::Type::Stop:
-			return !u.isMoving();
+			// Must be still moving
+			return u.isMoving();
 		case AIMovement::Type::ChangeStance:
-			return movementMode == u.movement_mode && kneelingMode == u.kneeling_mode;
+			// Must be still changing stance
+			return movementMode != u.movement_mode || kneelingMode != u.kneeling_mode;
 		case AIMovement::Type::Turn:
+		// Must be turning towards target facing but not yet turned
 		{
 			if (u.missions.empty())
 			{

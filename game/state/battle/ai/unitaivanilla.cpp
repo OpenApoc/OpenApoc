@@ -850,6 +850,30 @@ void UnitAIVanilla::reset(GameState &state, BattleUnit &)
 	ticksUntilReThink = 0;
 }
 
+//void UnitAIVanilla::reportExecuted(AIAction &action)
+//{
+//	if (lastDecision.action 
+//		&& lastDecision.action->type == action.type
+//		&& lastDecision.action->targetUnit == action.targetUnit
+//		&& lastDecision.action->targetLocation == action.targetLocation
+//		&& lastDecision.action->item == action.item)
+//	{
+//		lastDecision.action->executed = true;
+//	}
+//}
+
+void UnitAIVanilla::reportExecuted(AIMovement &movement)
+{
+	if (lastDecision.movement
+		&& lastDecision.movement->type == movement.type
+		&& lastDecision.movement->targetLocation == movement.targetLocation
+		&& lastDecision.movement->movementMode == movement.movementMode
+		&& lastDecision.movement->kneelingMode == movement.kneelingMode)
+	{
+		lastDecision.movement->executed = true;
+	}
+}
+
 void UnitAIVanilla::notifyUnderFire(Vec3<int> position) { attackerPosition = position; }
 
 void UnitAIVanilla::notifyHit(Vec3<int> position) { attackerPosition = position; }

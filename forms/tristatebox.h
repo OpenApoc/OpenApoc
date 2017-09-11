@@ -27,6 +27,8 @@ class TriStateBox : public Control
 	TriStateBox(sp<Image> Image1 = nullptr, sp<Image> Image2 = nullptr, sp<Image> Image3 = nullptr);
 	~TriStateBox() override;
 
+	bool click() override;
+
 	void eventOccured(Event *e) override;
 	void update() override;
 	void unloadResources() override;

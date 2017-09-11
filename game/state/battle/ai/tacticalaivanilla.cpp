@@ -26,6 +26,9 @@ void TacticalAIVanilla::beginTurnRoutine(GameState &state, StateRef<Organisation
 std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>>
 TacticalAIVanilla::think(GameState &state, StateRef<Organisation> o)
 {
+	std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>> result = {};
+	int countOrdersGiven = 0;
+
 	// If turn based allow turn end when we're finished
 	if (state.current_battle->mode == Battle::Mode::TurnBased &&
 	    state.current_battle->ticksWithoutAction >= TICKS_END_TURN)
@@ -105,14 +108,17 @@ TacticalAIVanilla::think(GameState &state, StateRef<Organisation> o)
 			}
 		}
 
-		std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>> result = {};
 		result.emplace_back(units, decision);
+		countOrdersGiven++;
 
-		// For now, stop after giving orders to one group of units
-		return result;
+		// For now, stop after giving orders to three group of units
+		if (countOrdersGiven >= 3)
+		{
+			return result;
+		}
 	}
 
-	return {};
+	return result;
 }
 
 // FIXME: Allow for patrol to a point other than block's center

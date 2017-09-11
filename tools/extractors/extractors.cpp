@@ -106,6 +106,19 @@ const std::map<OpenApoc::UString, std::set<int>> InitialGameStateExtractor::rein
 	{ "48gate" ,{ 208,209,210,211,212,213,214,215 } },
 };
 
+const std::map<OpenApoc::UString, int> InitialGameStateExtractor::reinforcementTimers = {
+	{ "39incub"	,{ 20 } },
+	{ "40spawn"	,{ 18 } },
+	{ "41food"	,{ 35 } },
+	{ "42megapd",{ 10 } },
+	{ "43sleep" ,{ 40 } },
+	{ "44organ" ,{ 20 } },
+	{ "45farm"  ,{ 12 } },
+	{ "46contrl",{ 10 } },
+	{ "47maint" ,{ 30 } },
+	{ "48gate"  ,{ 5  } },
+};
+
 const std::map<OpenApoc::UString, std::set<int>> InitialGameStateExtractor::missionObjectives = {
 	{ "39incub"	,{ 139,140,141,142,143,144,145,146} },
 	{ "40spawn"	,{ } },

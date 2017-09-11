@@ -62,7 +62,10 @@ Battle::~Battle()
 	TRACE_FN;
 	// Note due to backrefs to Tile*s etc. we need to destroy all tile objects
 	// before the TileMap
-	map->ceaseBattlescapeUpdates = true;
+	if (map)
+	{
+		map->ceaseBattlescapeUpdates = true;
+	}
 	for (auto &p : this->projectiles)
 	{
 		if (p->tileObject)
@@ -366,11 +369,11 @@ bool Battle::initialMapCheck(GameState &state, std::list<StateRef<Agent>> agents
 	}
 	auto player = state.getPlayer();
 	auto civilian = state.getCivilian();
-	for (auto &u : agents)
+	for (auto &a : agents)
 	{
-		if (u->owner != player && u->owner != civilian)
+		if (a->owner != player && a->owner != civilian)
 		{
-			spawnPointsRequired += u->type->bodyType->large ? 4 : 1;
+			spawnPointsRequired += a->type->bodyType->large ? 4 : 1;
 		}
 	}
 
@@ -583,10 +586,14 @@ void Battle::initialUnitSpawn(GameState &state)
 		}
 	};
 
+	// Spawn maps for specific units of specific orgs
 	std::map<SpawnKey, std::list<sp<SpawnBlock>>> spawnMaps;
+	// Spawn maps for units of different type (spawn aliens in civ spots etc.)
 	std::map<SpawnKey, std::list<sp<SpawnBlock>>> spawnInverse;
 	// Other blocks that have 0 spawn priority, to be used when all others are exhausted
 	std::list<sp<SpawnBlock>> spawnOther;
+	// Spawn types belonging to organisations 
+	// (X-Com -> Player, Security/Alien -> Enemy, Civ -> Civ)
 	std::map<StateRef<Organisation>, SpawnType> spawnTypeMap;
 
 	// Fill organisation -> spawnType maps
@@ -649,10 +656,28 @@ void Battle::initialUnitSpawn(GameState &state)
 			    .push_back(sb);
 			spawnMaps[{lb->spawn_type, UnitSize::Any, UnitMovement::Any, lb->low_priority}]
 			    .push_back(sb);
+
+			if (lb->also_allow_civilians)
+			{
+				spawnMaps[{SpawnType::Civilian, lb->spawn_large_units ? UnitSize::Large : UnitSize::Small,
+					lb->spawn_walking_units ? UnitMovement::Walking : UnitMovement::Flying,
+					lb->low_priority}]
+					.push_back(sb);
+				spawnMaps[{SpawnType::Civilian, lb->spawn_large_units ? UnitSize::Large : UnitSize::Small,
+					UnitMovement::Any, lb->low_priority}]
+					.push_back(sb);
+				spawnMaps[{SpawnType::Civilian, UnitSize::Any,
+					lb->spawn_walking_units ? UnitMovement::Walking : UnitMovement::Flying,
+					lb->low_priority}]
+					.push_back(sb);
+				spawnMaps[{SpawnType::Civilian, UnitSize::Any, UnitMovement::Any, lb->low_priority}]
+					.push_back(sb);
+			}
+
 			for (int j = 0; j < 3; j++)
 			{
 				auto st = (SpawnType)j;
-				if (st == lb->spawn_type)
+				if (st == lb->spawn_type || (st == SpawnType::Civilian && lb->also_allow_civilians))
 				{
 					continue;
 				}
@@ -1052,29 +1077,14 @@ void Battle::initialUnitSpawn(GameState &state)
 			u->facing = setRandomizer(state.rng, *u->agent->getAllowedFacings());
 		}
 		// Stance
-		if (u->agent->isBodyStateAllowed(BodyState::Standing))
+		u->setBodyState(state, u->agent->type->bodyType->getFirstAllowedState());
+		if (u->current_body_state == BodyState::Kneeling || u->current_body_state == BodyState::Prone)
 		{
-			u->setBodyState(state, BodyState::Standing);
-			u->setMovementMode(MovementMode::Walking);
-		}
-		else if (u->agent->isBodyStateAllowed(BodyState::Flying))
-		{
-			u->setBodyState(state, BodyState::Flying);
-			u->setMovementMode(MovementMode::Walking);
-		}
-		else if (u->agent->isBodyStateAllowed(BodyState::Kneeling))
-		{
-			u->setBodyState(state, BodyState::Kneeling);
-			u->setMovementMode(MovementMode::Prone);
-		}
-		else if (u->agent->isBodyStateAllowed(BodyState::Prone))
-		{
-			u->setBodyState(state, BodyState::Prone);
 			u->setMovementMode(MovementMode::Prone);
 		}
 		else
 		{
-			LogError("Unit %s cannot Stand, Fly, Kneel or go Prone!", u->agent->type.id);
+			u->setMovementMode(MovementMode::Walking);
 		}
 		// Miscellaneous
 		u->beginTurn(state);
@@ -1102,6 +1112,21 @@ sp<BattleUnit> Battle::spawnUnit(GameState &state, StateRef<Organisation> owner,
 	auto agent = state.agent_generator.createAgent(state, owner, agentType);
 	auto unit = state.current_battle->placeUnit(state, agent, position);
 	unit->falling = true;
+	if (facing.x == 0 && facing.y == 0)
+	{
+		if (agentType->bodyType->allowed_facing.empty())
+		{
+			facing = { randBoundsInclusive(state.rng, 0, 1), randBoundsInclusive(state.rng, 0, 1) };
+			if (facing.x == 0 && facing.y == 0)
+			{
+				facing.y = 1;
+			}
+		}
+		else
+		{
+			facing = setRandomizer(state.rng, agentType->bodyType->allowed_facing.at(agent->appearance));
+		}
+	}
 	unit->setFacing(state, facing);
 	unit->setBodyState(state, curState);
 	unit->setMission(state, BattleUnitMission::changeStance(*unit, tarState));
@@ -1158,6 +1183,7 @@ sp<BattleUnit> Battle::placeUnit(GameState &state, StateRef<Agent> agent)
 	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
 	unit->squadNumber = -1;
 	unit->cloakTicksAccumulated = CLOAK_TICKS_REQUIRED;
+	unit->initCryTimer(state);
 	unit->position = {-1.0, -1.0, -1.0};
 	units[id] = unit;
 	unit->init(state);
@@ -1593,78 +1619,97 @@ void Battle::update(GameState &state, unsigned int ticks)
 			ticksWithoutSeenAction[p] = 0;
 		}
 	}
-	Trace::start("Battle::update::turnBased");
-	if (mode == Mode::TurnBased)
+	switch (mode)
 	{
-		ticksWithoutAction += ticks;
-		for (auto &p : participants)
+		case Mode::TurnBased:
 		{
-			ticksWithoutSeenAction[p]++;
-		}
-		// Interrupt for lowmorales
-		if (!lowMoraleProcessed && interruptQueue.empty() && interruptUnits.empty())
-		{
-			lowMoraleProcessed = true;
-			for (auto &u : units)
+			Trace::start("Battle::update::turnBased");
+			ticksWithoutAction += ticks;
+			for (auto &p : participants)
 			{
-				if (u.second->owner != currentActiveOrganisation || !u.second->isConscious() ||
-				    u.second->moraleState == MoraleState::Normal ||
-				    u.second->agent->modified_stats.time_units == 0)
-				{
-					continue;
-				}
-				lowMoraleProcessed = false;
-				ticksWithoutAction = TICKS_BEGIN_INTERRUPT;
-				interruptQueue.emplace(StateRef<BattleUnit>(&state, u.first), 0);
-				if (u.second->owner == currentPlayer ||
-				    visibleUnits[currentPlayer].find({&state, u.first}) !=
-				        visibleUnits[currentPlayer].end())
-				{
-					fw().pushEvent(
-					    new GameLocationEvent(GameEventType::ZoomView, u.second->position));
-				}
-				break;
+				ticksWithoutSeenAction[p]++;
 			}
-		}
-		// Add units from queue to interrupt list
-		if (!interruptQueue.empty() && ticksWithoutAction >= TICKS_BEGIN_INTERRUPT)
-		{
-			for (auto &e : interruptQueue)
+			// Interrupt for lowmorales
+			if (!lowMoraleProcessed && interruptQueue.empty() && interruptUnits.empty())
 			{
-				interruptUnits.emplace(e.first, e.second);
-			}
-			interruptQueue.clear();
-			notifyAction();
-			turnEndAllowed = false;
-		}
-		// Turn end condition
-		if (ticksWithoutAction >= TICKS_END_TURN)
-		{
-			if (interruptUnits.empty())
-			{
-				if (turnEndAllowed)
+				lowMoraleProcessed = true;
+				for (auto &u : units)
 				{
-					endTurn(state);
-				}
-			}
-			else
-			{
-				// Spend remaining TUs of low morale units
-				for (auto &e : interruptUnits)
-				{
-					if (e.first->moraleState != MoraleState::Normal)
+					if (u.second->owner != currentActiveOrganisation || !u.second->isConscious() ||
+						u.second->moraleState == MoraleState::Normal ||
+						u.second->agent->modified_stats.time_units == 0)
 					{
-						e.first.getSp()->spendRemainingTU(state);
-						e.first.getSp()->focusUnit.clear();
+						continue;
 					}
+					lowMoraleProcessed = false;
+					ticksWithoutAction = TICKS_BEGIN_INTERRUPT;
+					interruptQueue.emplace(StateRef<BattleUnit>(&state, u.first), 0);
+					if (u.second->owner == currentPlayer ||
+						visibleUnits[currentPlayer].find({&state, u.first}) !=
+							visibleUnits[currentPlayer].end())
+					{
+						fw().pushEvent(
+							new GameLocationEvent(GameEventType::ZoomView, u.second->position));
+					}
+					break;
 				}
-				interruptUnits.clear();
+			}
+			// Add units from queue to interrupt list
+			if (!interruptQueue.empty() && ticksWithoutAction >= TICKS_BEGIN_INTERRUPT)
+			{
+				for (auto &e : interruptQueue)
+				{
+					interruptUnits.emplace(e.first, e.second);
+				}
+				interruptQueue.clear();
 				notifyAction();
 				turnEndAllowed = false;
 			}
+			// Turn end condition
+			if (ticksWithoutAction >= TICKS_END_TURN)
+			{
+				if (interruptUnits.empty())
+				{
+					if (turnEndAllowed)
+					{
+						endTurn(state);
+					}
+				}
+				else
+				{
+					// Spend remaining TUs of low morale units
+					for (auto &e : interruptUnits)
+					{
+						if (e.first->moraleState != MoraleState::Normal)
+						{
+							e.first.getSp()->spendRemainingTU(state);
+							e.first.getSp()->focusUnit.clear();
+						}
+					}
+					interruptUnits.clear();
+					notifyAction();
+					turnEndAllowed = false;
+				}
+			}
+			Trace::end("Battle::end::turnBased");
 		}
+		break;
+		case Mode::RealTime:
+		{
+			Trace::start("Battle::update::realTime");
+			if (reinforcementsInterval > 0)
+			{
+				ticksUntilNextReinforcement -= ticks;
+				while (ticksUntilNextReinforcement <= 0)
+				{
+					ticksUntilNextReinforcement += reinforcementsInterval;
+					spawnReinforcements(state);
+				}
+			}
+			Trace::end("Battle::end::realTime");
+		}
+		break;
 	}
-	Trace::end("Battle::end::turnBased");
 	Trace::start("Battle::update::projectiles->update");
 	updateProjectiles(state, ticks);
 	Trace::end("Battle::update::projectiles->update");
@@ -1746,6 +1791,16 @@ void Battle::updateTBBegin(GameState &state)
 	notifyAction();
 	turnEndAllowed = false;
 	lowMoraleProcessed = false;
+
+	if (reinforcementsInterval > 0 && currentActiveOrganisation == locationOwner)
+	{
+		ticksUntilNextReinforcement -= TICKS_PER_TURN;
+		while (ticksUntilNextReinforcement <= 0)
+		{
+			ticksUntilNextReinforcement += reinforcementsInterval;
+			spawnReinforcements(state);
+		}
+	}
 
 	Trace::start("Battle::updateTBBegin::units->update");
 	for (auto &o : this->units)
@@ -1909,7 +1964,7 @@ void Battle::checkIfBuildingDisabled(GameState &state)
 	// Find a mission objective unit
 	for (auto &u : units)
 	{
-		if (u.second->owner != targetOrganisation)
+		if (u.second->owner != locationOwner)
 		{
 			continue;
 		}
@@ -1968,6 +2023,59 @@ void Battle::refreshLeadershipBonus(StateRef<Organisation> org)
 		case Rank::Commander:
 			leadershipBonus[org] = 50;
 			break;
+	}
+}
+
+void Battle::spawnReinforcements(GameState & state)
+{
+	if (locationOwner->guard_types_reinforcements.empty())
+	{
+		return;
+	}
+	int countUnits = 0;
+	for (auto &u : units)
+	{
+		if (u.second->owner != locationOwner || u.second->retreated || u.second->isDead())
+		{
+			continue;
+		}
+		countUnits++;
+	}
+	if (countUnits >= MAX_UNITS_PER_SIDE)
+	{
+		return;
+	}
+	std::set<Vec3<int>> reinforcementLocations;
+	for (auto &mp : map_parts)
+	{
+		if (!mp->type->reinforcementSpawner || mp->destroyed)
+		{
+			continue;
+		}
+		Vec3<int> pos = mp->position;
+		if (map->getTile(pos)->getUnitIfPresent(true, true))
+		{
+			continue;
+		}
+		reinforcementLocations.insert(pos);
+	}
+	if (reinforcementLocations.empty())
+	{
+		return;
+	}
+	// FIXME: Proper spawning algorightm for reinforcements, for now spawn 4 randoms
+	for (int i = 0; i < 4; i++)
+	{
+		auto pos = setRandomiser(state.rng, reinforcementLocations);
+		reinforcementLocations.erase(pos);
+		auto type = listRandomiser(state.rng, locationOwner->guard_types_reinforcements);
+		auto u = state.current_battle->spawnUnit(state, locationOwner, type,
+		{ pos.x + 0.5f, pos.y + 0.5f, pos.z + 0.1f }, { 0, 0 },
+			type->bodyType->getFirstAllowedState());
+		if (++countUnits >= MAX_UNITS_PER_SIDE)
+		{
+			break;
+		}
 	}
 }
 
@@ -2182,7 +2290,7 @@ void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> 
 	{
 		return;
 	}
-	b->targetOrganisation = target_organisation;
+	b->locationOwner = target_craft->owner;
 	b->hotseat = hotseat;
 	state.current_battle = b;
 }
@@ -2206,7 +2314,7 @@ void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> 
 		return;
 	}
 	b->hotseat = hotseat;
-	b->targetOrganisation = target_organisation;
+	b->locationOwner = target_building->owner;
 	b->buildingCanBeDisabled = target_organisation == state.getAliens();
 	state.current_battle = b;
 }
@@ -2226,6 +2334,11 @@ void Battle::enterBattle(GameState &state)
 	state.current_battle->initialUnitSpawn(state);
 
 	state.current_battle->initBattle(state, true);
+
+	for (auto &u : state.current_battle->units)
+	{
+		u.second->updateCheckBeginFalling(state);
+	}
 
 	// Find first player unit
 	sp<BattleUnit> firstPlayerUnit = nullptr;
@@ -2477,6 +2590,42 @@ void Battle::loadImagePacks(GameState &state)
 	UString hyperworm = "hypr";
 	UString multiworm = "multi";
 	bool hyperwormFound = false;
+	
+	for (auto &o : participants)
+	{
+		for (auto &t : o->guard_types_reinforcements)
+		{
+			{
+				auto packName = BattleUnitImagePack::getNameFromID(t->shadow_pack.id);
+				if (imagePacks.find(packName) == imagePacks.end())
+					imagePacks.insert(packName);
+			}
+			for (auto &pv : t->image_packs)
+			{
+				for (auto &ip : pv)
+				{
+					auto packName = BattleUnitImagePack::getNameFromID(ip.second.id);
+					if (imagePacks.find(packName) == imagePacks.end())
+						imagePacks.insert(packName);
+					if (packName == hyperworm)
+					{
+						hyperwormFound = true;
+					}
+					if (!hyperwormFound && packName == multiworm)
+					{
+						imagePacks.insert(hyperworm);
+						imagePacks.insert(hyperworm + "s");
+						hyperwormFound = true;
+					}
+					if (packName == brainsucker)
+					{
+						brainsuckerFound = true;
+					}
+				}
+			}
+		}
+	}
+	
 	for (auto &p : units)
 	{
 		auto &bu = p.second;
@@ -2582,6 +2731,33 @@ void Battle::loadAnimationPacks(GameState &state)
 	UString hyperworm = "hypr";
 	UString multiworm = "multi";
 	bool hyperwormFound = false;
+	for (auto &o : participants)
+	{
+		for (auto &t : o->guard_types_reinforcements)
+		{
+			for (auto &ap : t->animation_packs)
+			{
+				auto packName = BattleUnitAnimationPack::getNameFromID(ap.id);
+				if (animationPacks.find(packName) == animationPacks.end())
+				{
+					animationPacks.insert(packName);
+				}
+				if (packName == hyperworm)
+				{
+					hyperwormFound = true;
+				}
+				if (!hyperwormFound && packName == multiworm)
+				{
+					animationPacks.insert(hyperworm);
+					hyperwormFound = true;
+				}
+				if (packName == brainsucker)
+				{
+					brainsuckerFound = true;
+				}
+			}
+		}
+	}
 	for (auto &u : units)
 	{
 		for (auto &ap : u.second->agent->type->animation_packs)

@@ -21,6 +21,19 @@ GraphicButton::GraphicButton(sp<Image> image, sp<Image> imageDepressed, sp<Image
 
 GraphicButton::~GraphicButton() = default;
 
+bool GraphicButton::click()
+{
+	if (!Control::click())
+	{
+		return false;
+	}
+	if (buttonclick)
+	{
+		fw().soundBackend->playSample(buttonclick);
+	}
+	return true;
+}
+
 void GraphicButton::eventOccured(Event *e)
 {
 	Control::eventOccured(e);

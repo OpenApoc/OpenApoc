@@ -29,6 +29,7 @@ class AEquipScreen : public Stage
   private:
 	enum class Mode
 	{
+		Enemy,
 		Battle,
 		Base,
 		Vehicle,
@@ -75,8 +76,7 @@ class AEquipScreen : public Stage
 	static const Vec2<int> EQUIP_GRID_SLOT_SIZE;
 	static const Vec2<int> EQUIP_GRID_SLOTS;
 
-	sp<Control> createAgentControl(Vec2<int> size, StateRef<Agent> agent);
-	// FIXME: healthImage has a copy in CityView - maybe opportunity to merge?
+	sp<Control> createAgentControl(sp<Agent> agent);
 	sp<Image> healthImage;
 	sp<Image> shieldImage;
 	sp<Image> stunImage;
@@ -87,6 +87,9 @@ class AEquipScreen : public Stage
 	sp<Image> woundImage;
 
 	bool modifierCtrl = false;
+
+	void updateAgents();
+	void updateAgentControl(sp<Agent> agent);
 
 	void displayAgent(sp<Agent> agent);
 	void displayItem(sp<AEquipment> item);
@@ -119,6 +122,8 @@ class AEquipScreen : public Stage
   public:
 	AEquipScreen(sp<GameState> state, sp<Agent> firstAgent = nullptr);
 	~AEquipScreen() override;
+
+	static void outputAgent(sp<Agent> agent, sp<Form> formAgentStats, std::vector<sp<Image>> &ranks, bool turnBased);
 
 	void begin() override;
 	void pause() override;

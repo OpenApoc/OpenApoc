@@ -66,6 +66,22 @@ void AIBlockUnit::reset(GameState &state, BattleUnit &u)
 	}
 }
 
+//void AIBlockUnit::reportExecuted(AIAction &action)
+//{
+//	for (auto &ai : aiList)
+//	{
+//		ai->reportExecuted(action);
+//	}
+//}
+
+void AIBlockUnit::reportExecuted(AIMovement &movement)
+{
+	for (auto &ai : aiList)
+	{
+		ai->reportExecuted(movement);
+	}
+}
+
 void AIBlockUnit::beginTurnRoutine(GameState &state, BattleUnit &u)
 {
 	for (auto &ai : aiList)

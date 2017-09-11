@@ -36,6 +36,9 @@ class UnitAI
 	};
 	virtual void routine(GameState &state, BattleUnit &u){};
 
+	//virtual void reportExecuted(AIAction &action) {};
+	virtual void reportExecuted(AIMovement &movement) {};
+
 	virtual void notifyUnderFire(Vec3<int>){};
 	virtual void notifyHit(Vec3<int>){};
 	virtual void notifyEnemySpotted(Vec3<int>){};
@@ -55,6 +58,14 @@ class AIBlockUnit
 
 	void init(GameState &state, BattleUnit &u);
 	void reset(GameState &state, BattleUnit &u);
+
+	// Should never be required but in case it is I'll leave it here
+	//void reportExecuted(AIAction &action);
+	// Reports movement execution
+	// Sometimes, movement is executed too quickly and by the time we next check it in ai code
+	// it's already finished. Wether the agent finished executing or never began to is unknown.
+	// Therefore we must manually report we have started to execute the movement
+	void reportExecuted(AIMovement &movement);
 
 	void notifyUnderFire(Vec3<int> position);
 	void notifyHit(Vec3<int> position);

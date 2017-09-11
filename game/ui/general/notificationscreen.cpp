@@ -1,3 +1,4 @@
+#include "forms/checkbox.h"
 #include "game/ui/general/notificationscreen.h"
 #include "forms/form.h"
 #include "forms/label.h"
@@ -44,6 +45,10 @@ NotificationScreen::NotificationScreen(sp<GameState> state, BattleView &battleVi
 		    battleView.setUpdateSpeed(BattleUpdateSpeed::Pause);
 		    fw().stageQueueCommand({StageCmd::Command::POP});
 		});
+
+	menuform->findControlTyped<CheckBox>("CHECKBOX_ALWAYS_PAUSE")->addCallback(FormEventType::CheckBoxChange, [](Event *) {
+		
+	});
 }
 
 NotificationScreen::~NotificationScreen() = default;
@@ -64,7 +69,17 @@ void NotificationScreen::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			fw().stageQueueCommand({StageCmd::Command::POP});
+			menuform->findControl("BUTTON_RESUME")->click();
+			return;
+		}
+		if (e->keyboard().KeyCode == SDLK_SPACE)
+		{
+			menuform->findControl("CHECKBOX_ALWAYS_PAUSE")->click();
+			return;
+		}
+		if (e->keyboard().KeyCode == SDLK_RETURN)
+		{
+			menuform->findControl("BUTTON_PAUSE")->click();
 			return;
 		}
 	}
