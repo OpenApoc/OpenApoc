@@ -82,7 +82,21 @@ class ConfigFileImpl
 		{
 			PHYSFS_init(programName.cStr());
 		}
-		UString settingsPath(PHYSFS_getPrefDir("OpenApoc", programName.cStr()));
+		UString settingsPath;
+		// If a file called 'portable.txt' exists in $(PWD), use a local config folder instead of a
+		// system one.
+		// This can't go through the normal settings system, as it's used by the normal settings
+		// system...
+		std::ifstream portableFile("./portable.txt");
+		if (portableFile)
+		{
+			LogInfo("portable mode set");
+			settingsPath = programName + "_";
+		}
+		else
+		{
+			settingsPath = PHYSFS_getPrefDir("OpenApoc", programName.cStr());
+		}
 		settingsPath += "settings.conf";
 		// Setup some config-related options
 		this->addOption("", "help", "h", "Show help text and exit");
@@ -145,6 +159,8 @@ class ConfigFileImpl
 
 		return false;
 	}
+
+	bool loaded() const { return this->parsed; }
 
 	bool save()
 	{
@@ -432,6 +448,8 @@ bool ConfigFile::parseOptions(int argc, char *argv[])
 {
 	return this->pimpl->parseOptions(argc, argv);
 }
+
+bool ConfigFile::loaded() const { return this->pimpl->loaded(); }
 
 void ConfigFile::showHelp() { this->pimpl->showHelp(); }
 

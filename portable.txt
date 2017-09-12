@@ -1,0 +1,12 @@
+A file called "portable.txt" in the working directory when running any
+executable causes the settings path to default to the current working
+directory, instead of a system-wide location.
+
+This file can have any contents, or be completely empty. It simple must be
+successfully opened.
+
+The config files are then stored in ./${PROGRAM_NAME}_settings.conf - e.g.
+"OpenApoc_settings.conf".
+
+This file ensures that files ran as part of the build, or tests invoked from
+the buildsystem, default to the portable mode.
