@@ -81,6 +81,10 @@
         <alignment horizontal="centre" vertical="centre"/>
       </graphic>
       <graphic id="OVERLAY_RIGHT_HAND">
+        <position x="262" y="29"/>
+        <size width="50" height="95"/>
+      </graphic>
+	  <graphic id="CLICKY_RIGHT_HAND">
         <position x="262" y="39"/>
         <size width="50" height="85"/>
       </graphic>
@@ -111,6 +115,10 @@
         <alignment horizontal="centre" vertical="centre"/>
       </graphic>
       <graphic id="OVERLAY_LEFT_HAND">
+        <position x="328" y="29"/>
+        <size width="50" height="95"/>
+      </graphic>
+	  <graphic id="CLICKY_LEFT_HAND">
         <position x="328" y="39"/>
         <size width="50" height="85"/>
       </graphic>

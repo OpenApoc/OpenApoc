@@ -22,6 +22,7 @@ class Vehicle;
 class Building;
 class BitmapFont;
 class Graphic;
+class Organisation;
 enum class BodyPart;
 
 class AEquipScreen : public Stage
@@ -88,6 +89,8 @@ class AEquipScreen : public Stage
 
 	bool modifierCtrl = false;
 
+	// Checks wether agent should be displayed in the agent list
+	bool checkAgent(sp<Agent> agent, sp<Organisation> owner);
 	void updateAgents();
 	void updateAgentControl(sp<Agent> agent);
 

@@ -1007,6 +1007,7 @@
 		<member>sprite</member>
 		<member>dependency</member>
 		<member>ufopaedia_entry</member>
+		<member>sector</member>
 	</object>
 	<object>
 		<name>Organisation</name>

@@ -315,6 +315,12 @@ bool Battle::initialMapCheck(GameState &state, std::list<StateRef<Agent>> agents
 {
 	initMap();
 
+	// No checks for base defense
+	if (mission_type == MissionType::BaseDefense)
+	{
+		return true;
+	}
+
 	// Mark as low-priority all the enemy spawn los blocks that are seen from any player spawn block
 	for (auto &playerSpawn : losBlocks)
 	{

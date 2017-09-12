@@ -1,6 +1,7 @@
 #include "game/state/battle/battlemap.h"
 #include "game/state/aequipment.h"
 #include "game/state/agent.h"
+#include "game/state/base/base.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battledoor.h"
@@ -786,6 +787,28 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 	return false;
 }
 
+bool BattleMap::generateBase(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int> &size,
+                             GameState &state, UString mission_location_id)
+{
+	StateRef<Building> building = {&state, mission_location_id};
+	StateRef<Base> base;
+	for (auto &b : state.player_bases)
+	{
+		if (b.second->building == building)
+		{
+			base = {&state, b.first};
+			break;
+		}
+	}
+	if (!base)
+	{
+		LogError("Failed to find base in building %s", mission_location_id);
+		return false;
+	}
+
+	LogError("Generate!");
+}
+
 sp<Battle>
 BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>> &doors,
                    bool &spawnCivilians, std::vector<sp<BattleMapSector>> sec_map, Vec3<int> size,
@@ -1225,6 +1248,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> prop
 	auto doors = std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>>(2);
 	bool spawnCivilians = false;
 
+	// Step 01 - 03 : Generate Map
 	sp<Battle> b;
 	sp<Battle> lastB;
 	int genSize = 0;
@@ -1233,6 +1257,11 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> prop
 	{
 		// Step 01: Generate map layout
 		genSizeEnum = (GenerationSize)genSize;
+		if (mission_type == Battle::MissionType::BaseDefense)
+		{
+			generateBase(sec_map, size, state, mission_location_id);
+		}
+
 		if (!generateMap(sec_map, size, state, genSizeEnum))
 		{
 			continue;

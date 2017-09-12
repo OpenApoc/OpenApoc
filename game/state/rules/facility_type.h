@@ -10,6 +10,7 @@ namespace OpenApoc
 {
 class Image;
 class UfopaediaEntry;
+class BattleMapSector;
 class FacilityType : public StateObject
 {
 	STATE_OBJECT(FacilityType)
@@ -29,17 +30,25 @@ class FacilityType : public StateObject
 		Aliens
 	};
 	FacilityType();
+
 	UString name;
+
+	// Facility cannot be built over (concrete)
 	bool fixed;
+
 	int buildCost;
 	int buildTime;
 	int weeklyCost;
+
 	Capacity capacityType;
 	int capacityAmount;
+
 	int size;
 	sp<Image> sprite;
 	ResearchDependency dependency;
 	StateRef<UfopaediaEntry> ufopaedia_entry;
+	StateRef<BattleMapSector> sector;
+
 	bool isVisible() const;
 };
 };

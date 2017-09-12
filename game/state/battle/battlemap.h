@@ -89,6 +89,9 @@ class BattleMap : public StateObject
 	bool generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int> &size, GameState &state,
 	                 GenerationSize genSize);
 
+	bool generateBase(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int> &size, GameState &state,
+	                  UString mission_location_id);
+
 	sp<Battle> fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>> &doors,
 	                   bool &spawnCivilians, std::vector<sp<BattleMapSector>> sec_map,
 	                   Vec3<int> size, GameState &state, StateRef<Organisation> propertyOwner,
