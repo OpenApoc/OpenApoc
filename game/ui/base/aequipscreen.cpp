@@ -1420,6 +1420,7 @@ void AEquipScreen::updateAgents()
 			{
 				continue;
 			}
+
 			auto agentControl = this->createAgentControl(agent.second);
 			agentList->addItem(agentControl);
 			if (agent.second == currentAgent)

@@ -1,4 +1,4 @@
-#include "game/state/city/city.h"
+#include "game/ui/tileview/citytileview.h"
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
@@ -7,8 +7,8 @@
 #include "framework/renderer.h"
 #include "framework/trace.h"
 #include "game/state/city/building.h"
+#include "game/state/city/city.h"
 #include "game/state/gamestate.h"
-#include "game/ui/tileview/citytileview.h"
 
 namespace OpenApoc
 {
