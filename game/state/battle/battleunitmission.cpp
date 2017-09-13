@@ -1293,7 +1293,8 @@ BattleUnitMission *BattleUnitMission::brainsuck(BattleUnit &u, StateRef<BattleUn
 	return mission;
 }
 
-BattleUnitMission *BattleUnitMission::jump(BattleUnit &u, Vec3<float> target, BodyState state, bool requireFacing)
+BattleUnitMission *BattleUnitMission::jump(BattleUnit &u, Vec3<float> target, BodyState state,
+                                           bool requireFacing)
 {
 	auto *mission = new BattleUnitMission();
 	mission->type = Type::Jump;
@@ -1655,9 +1656,8 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 						         .empty())
 						{
 							fw().soundBackend->playSample(
-							    listRandomiser(state.rng,
-							                   targetUnit->agent->type->fatalWoundSfx.at(
-							                       targetUnit->agent->gender)),
+							    listRandomiser(state.rng, targetUnit->agent->type->fatalWoundSfx.at(
+							                                  targetUnit->agent->gender)),
 							    targetUnit->position);
 						}
 						break;
@@ -1854,11 +1854,10 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				// Drop item
 				auto bi = state.current_battle->placeItem(
 				    state, item,
-				    u.position + Vec3<float>{0.0, 0.0,
-				                             (u.current_body_state == BodyState::Downed ||
-				                              u.current_body_state == BodyState::Dead)
-				                                 ? 0.0f
-				                                 : (float)u.getCurrentHeight() / 80.0f});
+				    u.position + Vec3<float>{0.0, 0.0, (u.current_body_state == BodyState::Downed ||
+				                                        u.current_body_state == BodyState::Dead)
+				                                           ? 0.0f
+				                                           : (float)u.getCurrentHeight() / 80.0f});
 				bi->falling = true;
 			}
 			item = nullptr;

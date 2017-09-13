@@ -66,9 +66,10 @@ class BattleMapSectorTiles
 {
   public:
 	std::list<sp<BattleMapSector::LineOfSightBlock>> losBlocks;
-
+	// Where loot spawns
 	std::map<Vec3<int>, Organisation::LootPriority> loot_locations;
-	std::map<StateRef<AgentType>, std::list<Vec3<int>>> turretLocations;
+	// Where guardian units spawn (unlike spawn points, these are always present)
+	std::map<StateRef<AgentType>, std::list<Vec3<int>>> guardianLocations;
 
 	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_grounds;
 	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_left_walls;

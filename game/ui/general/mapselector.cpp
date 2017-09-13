@@ -33,7 +33,7 @@ MapSelector::MapSelector(sp<GameState> state, Skirmish &skirmish)
 	std::set<sp<BattleMap>> seen_maps;
 	for (auto &b : state->player_bases)
 	{
-		listbox->addItem(createMapRowBase({ state.get(), b.first }, state));
+		listbox->addItem(createMapRowBase({state.get(), b.first}, state));
 	}
 	for (auto &v : state->vehicle_types)
 	{

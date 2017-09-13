@@ -5,6 +5,8 @@
 #include "framework/framework.h"
 #include "framework/sound.h"
 #include "game/state/aequipment.h"
+#include "game/state/base/base.h"
+#include "game/state/base/facility.h"
 #include "game/state/battle/ai/unitaihelper.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonsamplelist.h"
@@ -14,6 +16,7 @@
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/damage.h"
+#include "game/state/rules/facility_type.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_shadow.h"
@@ -892,9 +895,8 @@ bool BattleUnit::hasLineToUnit(const sp<BattleUnit> unit, bool useLOS) const
 	auto cMap = tileObject->map.findCollision(muzzleLocation, targetPosition, mapPartSet,
 	                                          tileObject, useLOS);
 	// Unit that prevents Line to target
-	auto cUnitObj =
-	    useLOS ? Collision()
-	           : tileObject->map.findCollision(muzzleLocation, targetPosition, unitSet, tileObject);
+	auto cUnitObj = useLOS ? Collision() : tileObject->map.findCollision(
+	                                           muzzleLocation, targetPosition, unitSet, tileObject);
 	auto cUnit = cUnitObj ? std::static_pointer_cast<TileObjectBattleUnit>(cUnitObj.obj)->getUnit()
 	                      : nullptr;
 	// Condition:
@@ -1051,9 +1053,8 @@ void BattleUnit::applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatu
 	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
 	if (impact)
 	{
-		sendAgentEvent(state,
-		               status == PsiStatus::Control ? GameEventType::AgentPsiControlled
-		                                            : GameEventType::AgentPsiAttacked,
+		sendAgentEvent(state, status == PsiStatus::Control ? GameEventType::AgentPsiControlled
+		                                                   : GameEventType::AgentPsiAttacked,
 		               true);
 	}
 	bool finished = false;
@@ -1302,7 +1303,11 @@ bool BattleUnit::isAttacking() const { return weaponStatus != WeaponStatus::NotF
 
 bool BattleUnit::isThrowing() const { return isDoing(BattleUnitMission::Type::ThrowItem); }
 
-bool BattleUnit::isMoving() const { return isDoing(BattleUnitMission::Type::GotoLocation) || isDoing(BattleUnitMission::Type::ReachGoal); }
+bool BattleUnit::isMoving() const
+{
+	return isDoing(BattleUnitMission::Type::GotoLocation) ||
+	       isDoing(BattleUnitMission::Type::ReachGoal);
+}
 
 bool BattleUnit::isDoing(BattleUnitMission::Type missionType) const
 {
@@ -2485,20 +2490,21 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 					auto unit = presentUnit->getUnit();
 					if (position.z < unit->getMuzzleLocation().z)
 					{
-						StateRef<DamageType> brainsucker = { &state, "DAMAGETYPE_BRAINSUCKER" };
+						StateRef<DamageType> brainsucker = {&state, "DAMAGETYPE_BRAINSUCKER"};
 						if (!unit->brainSucker &&
-							brainsucker->dealDamage(100, unit->agent->type->damage_modifier) == 0)
+						    brainsucker->dealDamage(100, unit->agent->type->damage_modifier) == 0)
 						{
 							applyDamageDirect(state, 9001, false, BodyPart::Body,
-								agent->current_stats.health + TICKS_PER_TURN);
+							                  agent->current_stats.health + TICKS_PER_TURN);
 						}
 						else
 						{
-							int facingDelta = BattleUnitMission::getFacingDelta(facing, unit->facing);
+							int facingDelta =
+							    BattleUnitMission::getFacingDelta(facing, unit->facing);
 							cancelMissions(state, true);
 							spendRemainingTU(state, true);
-							setMission(state, BattleUnitMission::brainsuck(*this, { &state, unit->id },
-								facingDelta));
+							setMission(state, BattleUnitMission::brainsuck(
+							                      *this, {&state, unit->id}, facingDelta));
 						}
 					}
 				}
@@ -2646,10 +2652,10 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 		{
 			if (flyingSpeedModifier != 100)
 			{
-				flyingSpeedModifier = std::min((unsigned)100,
-				                               flyingSpeedModifier +
-				                                   moveTicksRemaining / moveTicksConsumeRate /
-				                                       FLYING_ACCELERATION_DIVISOR);
+				flyingSpeedModifier =
+				    std::min((unsigned)100, flyingSpeedModifier +
+				                                moveTicksRemaining / moveTicksConsumeRate /
+				                                    FLYING_ACCELERATION_DIVISOR);
 			}
 			movementTicksAccumulated = moveTicksRemaining / moveTicksConsumeRate;
 			auto dir = glm::normalize(vectorToGoal);
@@ -2670,9 +2676,9 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 				movementTicksAccumulated = distanceToGoal;
 				if (flyingSpeedModifier != 100)
 				{
-					flyingSpeedModifier = std::min(
-					    (unsigned)100,
-					    flyingSpeedModifier + distanceToGoal / FLYING_ACCELERATION_DIVISOR);
+					flyingSpeedModifier =
+					    std::min((unsigned)100, flyingSpeedModifier +
+					                                distanceToGoal / FLYING_ACCELERATION_DIVISOR);
 				}
 				moveTicksRemaining -= distanceToGoal * moveTicksConsumeRate;
 				setPosition(state, goalPosition, true);
@@ -3223,7 +3229,9 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 					// Lead the target
 					if (targetUnit)
 					{
-						auto projectileVelocity = firingWeapon->getPayloadType()->speed * PROJECTILE_VELOCITY_MULTIPLIER / (float)TICK_SCALE;
+						auto projectileVelocity = firingWeapon->getPayloadType()->speed *
+						                          PROJECTILE_VELOCITY_MULTIPLIER /
+						                          (float)TICK_SCALE;
 						// Target's velocity (if falling/jumping)
 						Vec3<float> targetVelocity = targetUnit->velocity / (float)TICK_SCALE;
 						// If moving instead use movement speed
@@ -3231,11 +3239,13 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 						{
 							// Normalized Vector towards target position
 							targetVelocity = targetUnit->goalPosition - targetUnit->position;
-							if (targetVelocity.x != 0.0f || targetVelocity.y != 0.0f || targetVelocity.z != 0.0f)
+							if (targetVelocity.x != 0.0f || targetVelocity.y != 0.0f ||
+							    targetVelocity.z != 0.0f)
 							{
 								targetVelocity = glm::normalize(targetVelocity);
 								// Account for unit speed and movement state
-								float speedMult = targetUnit->agent->modified_stats.getMovementSpeed();
+								float speedMult =
+								    targetUnit->agent->modified_stats.getMovementSpeed();
 								if (targetUnit->current_movement_state == MovementState::Running)
 								{
 									speedMult *= 2.0f;
@@ -3680,7 +3690,7 @@ bool BattleUnit::canLaunch(Vec3<float> targetPosition)
 }
 
 bool BattleUnit::canLaunch(Vec3<float> targetPosition, Vec3<float> &targetVectorXY,
-	float &velocityXY, float &velocityZ)
+                           float &velocityXY, float &velocityZ)
 {
 	// Flying units cannot jump
 	if (canFly())
@@ -3702,14 +3712,15 @@ bool BattleUnit::canLaunch(Vec3<float> targetPosition, Vec3<float> &targetVector
 		return false;
 	}
 	// Calculate starting velocity
-	targetVectorXY = { targetVector.x, targetVector.y, 0.0f };
+	targetVectorXY = {targetVector.x, targetVector.y, 0.0f};
 	float distance = glm::length(targetVectorXY);
 	float initialXY = 0.5f;
-	if (sucker) 
+	if (sucker)
 	{
 		initialXY *= sqrtf(targetVector.x * targetVector.x + targetVector.y * targetVector.y);
 	}
-	if (!calculateVelocityForLaunch(distance, position.z - targetPosition.z, velocityXY, velocityZ, initialXY))
+	if (!calculateVelocityForLaunch(distance, position.z - targetPosition.z, velocityXY, velocityZ,
+	                                initialXY))
 	{
 		return false;
 	}
@@ -3881,7 +3892,8 @@ void BattleUnit::spawnEnzymeSmoke(GameState &state, Vec3<int> pos)
 void BattleUnit::sendAgentEvent(GameState &state, GameEventType type, bool checkOwnership,
                                 bool checkVisibility) const
 {
-	if ((!checkOwnership || owner == state.current_battle->currentPlayer) &&
+	if ((!checkOwnership ||
+	     (owner == state.current_battle->currentPlayer && agent->type->allowsDirectControl)) &&
 	    (!checkVisibility || owner == state.current_battle->currentPlayer ||
 	     state.current_battle->visibleUnits[state.current_battle->currentPlayer].find(
 	         {&state, id}) !=
@@ -4597,6 +4609,25 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 	}
 	// Leave squad
 	removeFromSquad(*state.current_battle);
+	// Remove from lab
+	for (auto &base : state.player_bases)
+	{
+		if (!agent->assigned_to_lab)
+		{
+			break;
+		}
+		for (auto &fac : base.second->facilities)
+		{
+			auto it = std::find(fac->lab->assigned_agents.begin(), fac->lab->assigned_agents.end(),
+			                    agent);
+			if (it != fac->lab->assigned_agents.end())
+			{
+				fac->lab->assigned_agents.erase(it);
+				agent->assigned_to_lab = false;
+				break;
+			}
+		}
+	}
 	// Animate body
 	dropDown(state);
 }
@@ -4768,7 +4799,8 @@ bool BattleUnit::useBrainsucker(GameState &state)
 				{
 					// Normalized Vector towards target position
 					targetVelocity = target->goalPosition - target->position;
-					if (targetVelocity.x != 0.0f || targetVelocity.y != 0.0f|| targetVelocity.z != 0.0f)
+					if (targetVelocity.x != 0.0f || targetVelocity.y != 0.0f ||
+					    targetVelocity.z != 0.0f)
 					{
 						targetVelocity = glm::normalize(targetVelocity);
 						// Account for unit speed and movement state
@@ -4787,13 +4819,13 @@ bool BattleUnit::useBrainsucker(GameState &state)
 						targetVelocity /= (float)TICKS_PER_UNIT_TRAVELLED;
 					}
 				}
-				// Scale to about 0.8 seconds, that's the amount 
+				// Scale to about 0.8 seconds, that's the amount
 				// it normally takes sucker to arrive
 				targetVelocity *= 0.8f * (float)TICKS_PER_SECOND;
 				// We don't care about z differences
 				targetVelocity.z = 0.0f;
 				targetPosAdjusted += targetVelocity;
-				
+
 				// Go for the head!
 				setMission(state, BattleUnitMission::jump(*this, targetPosAdjusted,
 				                                          BodyState::Jumping, false));

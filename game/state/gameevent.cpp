@@ -163,7 +163,7 @@ UString GameBaseEvent::message()
 		case GameEventType::RecoveryArrived:
 			return tr("Items from tactical combat zone have arrived:") + " " + base->name;
 		case GameEventType::BaseDestroyed:
-			return tr("Vehicle destroyed:") + " " + base->name;
+			return tr("Base destroyed:") + " " + base->name;
 		default:
 			LogError("Invalid event type");
 			break;
@@ -228,6 +228,11 @@ GameBattleEvent::GameBattleEvent(GameEventType type, sp<Battle> battle)
 }
 GameLocationEvent::GameLocationEvent(GameEventType type, Vec3<int> location)
     : GameEvent(type), location(location)
+{
+}
+GameDefenseEvent::GameDefenseEvent(GameEventType type, StateRef<Base> base,
+                                   StateRef<Organisation> organisation)
+    : GameEvent(type), base(base), organisation(organisation)
 {
 }
 }

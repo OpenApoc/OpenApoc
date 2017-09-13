@@ -798,10 +798,9 @@ void Agent::updateSpeed()
 	strength *= strength * 16;
 
 	// Ensure actual speed is at least "1"
-	modified_stats.speed =
-	    std::max(8,
-	             ((strength + encumbrance) / 2 + current_stats.speed * (strength - encumbrance)) /
-	                 (strength + encumbrance));
+	modified_stats.speed = std::max(
+	    8, ((strength + encumbrance) / 2 + current_stats.speed * (strength - encumbrance)) /
+	           (strength + encumbrance));
 }
 
 void Agent::updateModifiedStats()

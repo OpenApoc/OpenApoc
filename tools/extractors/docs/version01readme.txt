@@ -20,7 +20,6 @@ III. Battlescape:
 Most of the battlescape mechanics are fully implemented. Therefore, it is easier to list what is not yet implemented or not yet properly implemented.
 
 List of unimplemented battlescape features:
-- Base defense missions
 - Unit behavior (Cautious and Normal units automatically moving into cover, taking potshots from cover and so on)
 - Organization relationship changing when doing damage to its units
 - Music (right now just a loop of several tracks plays in the background)
@@ -33,6 +32,8 @@ List of incomplete battlescape features:
 - Proper cloaking (current implementation is an approximation but may be far from how vanilla works)
 - Disabling notifications does not work (even if you uncheck "pause when this happens" the dialog will pop up anyway)
 - Equipping multiple agents at once
+- Edit agent names
+- Viewing agent medals and mission stats
 
 Debug features:
 - F1 toggles between cheat hotkeys and normal hotkeys (for anything from this list to work, press F1 once, to be back to using normal hotkeys again, press F1 again)

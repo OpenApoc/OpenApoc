@@ -1,8 +1,8 @@
-#include "game/state/base/facility.h"
 #include "game/state/battle/battlemap.h"
 #include "game/state/aequipment.h"
 #include "game/state/agent.h"
 #include "game/state/base/base.h"
+#include "game/state/base/facility.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battledoor.h"
@@ -28,18 +28,17 @@ int getCorridorSectorID(sp<Base> base, Vec2<int> pos)
 {
 	// key is North South West East (true = occupied, false = vacant)
 	const std::unordered_map<std::vector<bool>, int> TILE_CORRIDORS = {
-		{ { true, false, false, false }, 4 },{ { false, false, false, true }, 5 },
-		{ { true, false, false, true }, 6 },{ { false, true, false, false }, 7 },
-		{ { true, true, false, false }, 8 },{ { false, true, false, true }, 9 },
-		{ { true, true, false, true }, 10 },{ { false, false, true, false }, 11 },
-		{ { true, false, true, false }, 12 },{ { false, false, true, true }, 13 },
-		{ { true, false, true, true }, 14 },{ { false, true, true, false }, 15 },
-		{ { true, true, true, false }, 16 },{ { false, true, true, true }, 17 },
-		{ { true, true, true, true }, 18 } };
-
+	    {{true, false, false, false}, 4}, {{false, false, false, true}, 5},
+	    {{true, false, false, true}, 6},  {{false, true, false, false}, 7},
+	    {{true, true, false, false}, 8},  {{false, true, false, true}, 9},
+	    {{true, true, false, true}, 10},  {{false, false, true, false}, 11},
+	    {{true, false, true, false}, 12}, {{false, false, true, true}, 13},
+	    {{true, false, true, true}, 14},  {{false, true, true, false}, 15},
+	    {{true, true, true, false}, 16},  {{false, true, true, true}, 17},
+	    {{true, true, true, true}, 18}};
 
 	if (pos.x < 0 || pos.y < 0 || pos.x >= Base::SIZE || pos.y >= Base::SIZE ||
-		!base->corridors[pos.x][pos.y])
+	    !base->corridors[pos.x][pos.y])
 	{
 		return 0;
 	}
@@ -47,9 +46,8 @@ int getCorridorSectorID(sp<Base> base, Vec2<int> pos)
 	bool south = pos.y < Base::SIZE - 1 && base->corridors[pos.x][pos.y + 1];
 	bool west = pos.x > 0 && base->corridors[pos.x - 1][pos.y];
 	bool east = pos.x < Base::SIZE - 1 && base->corridors[pos.x + 1][pos.y];
-	return TILE_CORRIDORS.at({ north, south, west, east }) - 3;
+	return TILE_CORRIDORS.at({north, south, west, east}) - 3;
 }
-
 
 BattleMap::BattleMap() {}
 
@@ -86,7 +84,8 @@ const UString &BattleMap::getId(const GameState &state, const sp<BattleMap> ptr)
 	return emptyString;
 }
 
-sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> organisation,
+// Create UFO battle
+sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> opponent,
                                    std::list<StateRef<Agent>> &player_agents,
                                    const std::map<StateRef<AgentType>, int> *aliens,
                                    StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft)
@@ -115,11 +114,12 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> orga
 	}
 
 	return target_craft->type->battle_map->createBattle(
-	    state, target_craft->owner, organisation, player_agents, player_craft,
+	    state, target_craft->owner, opponent, player_agents, player_craft,
 	    Battle::MissionType::UfoRecovery, target_craft.id);
 }
 
-sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> target_organisation,
+// Create building battle
+sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> opponent,
                                    std::list<StateRef<Agent>> &player_agents,
                                    const std::map<StateRef<AgentType>, int> *aliens,
                                    const int *guards, const int *civilians,
@@ -135,10 +135,77 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 	if (building->owner == state.getPlayer())
 	{
 		// Base defense mission
-		map = { &state, "BATTLEMAP_37base" };
-		
-		// FIXME: Generate list of agent types for enemies properly
-		// Also add non-combat personell
+		map = {&state, "BATTLEMAP_37base"};
+
+		if (opponent == state.getAliens() && !aliens)
+		{
+			// Aliens beamed down or walked into our building
+			// They become current_crew!
+			aliens = &current_crew;
+			current_crew = building->current_crew;
+			building->current_crew.clear();
+		}
+		else
+		{
+			// Enemy raid, spawn guards for them
+			int numGuards = guards ? *guards : opponent->getGuardCount(state);
+			numGuards = std::min(numGuards, MAX_UNITS_PER_SIDE);
+			for (int i = 0; i < numGuards; i++)
+			{
+				otherParticipants.emplace_back(
+				    opponent, listRandomiser(state.rng, opponent->guard_types_human));
+			}
+		}
+
+		// Find which base is under attack
+		StateRef<Base> base;
+		for (auto &b : state.player_bases)
+		{
+			if (b.second->building == building)
+			{
+				base = {&state, b.first};
+				break;
+			}
+		}
+
+		// Add combat personel
+		int playerAgentsCount = 0;
+		for (auto &agent : state.agents)
+		{
+			if (agent.second->home_base != base)
+			{
+				continue;
+			}
+			if (agent.second->type->role != AgentType::Role::Soldier)
+			{
+				continue;
+			}
+			player_agents.emplace_back(&state, agent.first);
+			if (++playerAgentsCount >= MAX_UNITS_PER_SIDE)
+			{
+				break;
+			}
+		}
+		// Add non-combat personel
+		if (playerAgentsCount < MAX_UNITS_PER_SIDE)
+		{
+			for (auto &agent : state.agents)
+			{
+				if (agent.second->home_base != base)
+				{
+					continue;
+				}
+				if (agent.second->type->role == AgentType::Role::Soldier)
+				{
+					continue;
+				}
+				player_agents.emplace_back(&state, agent.first);
+				if (++playerAgentsCount >= MAX_UNITS_PER_SIDE)
+				{
+					break;
+				}
+			}
+		}
 
 		missionType = Battle::MissionType::BaseDefense;
 	}
@@ -147,7 +214,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 		// Raid Aliens / Raid Humans / Alien Extermination mission
 		map = building->battle_map;
 
-		if (target_organisation == state.getAliens())
+		if (opponent == state.getAliens())
 		{
 			if (building->owner == state.getAliens())
 			{
@@ -229,8 +296,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 				for (int i = 0; i < numGuards; i++)
 				{
 					otherParticipants.emplace_back(
-					    target_organisation,
-					    listRandomiser(state.rng, building->owner->guard_types_human));
+					    opponent, listRandomiser(state.rng, building->owner->guard_types_human));
 				}
 			}
 
@@ -269,9 +335,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 		player_agents.push_back(state.agent_generator.createAgent(state, pair.first, pair.second));
 	}
 
-	return map->createBattle(state, building->owner, target_organisation,
-	                                          player_agents, player_craft, missionType,
-	                                          building.id);
+	return map->createBattle(state, building->owner, opponent, player_agents, player_craft,
+	                         missionType, building.id);
 }
 
 namespace
@@ -846,10 +911,10 @@ bool BattleMap::generateBase(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int
 	{
 		secRefs.push_back(s.second);
 	}
-	
-	size = { Base::SIZE ,Base::SIZE ,1 };
-	sec_map = { (unsigned)size.x * size.y * size.z, nullptr };
-	
+
+	size = {Base::SIZE, Base::SIZE, 1};
+	sec_map = {(unsigned)size.x * size.y * size.z, nullptr};
+
 	// Fill corridors and earth
 	Vec2<int> i;
 	for (i.x = 0; i.x < Base::SIZE; i.x++)
@@ -863,6 +928,11 @@ bool BattleMap::generateBase(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int
 	// Replace with facilities
 	for (auto &facility : base->facilities)
 	{
+		if (facility->buildTime > 0)
+		{
+			continue;
+		}
+		// Clean ground under facility (for 2x2's)
 		for (i.x = facility->pos.x; i.x < facility->pos.x + facility->type->size; i.x++)
 		{
 			for (i.y = facility->pos.y; i.y < facility->pos.y + facility->type->size; i.y++)
@@ -870,6 +940,7 @@ bool BattleMap::generateBase(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int
 				sec_map[i.x + i.y * size.x] = nullptr;
 			}
 		}
+		// Facility itself
 		sec_map[facility->pos.x + facility->pos.y * size.x] = secRefs[facility->type->sector];
 	}
 
@@ -884,7 +955,6 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
                    StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
                    UString mission_location_id)
 {
-	std::ignore = agents;
 
 	auto b = mksp<Battle>();
 
@@ -913,9 +983,8 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 				{
 					LogInfo("Loading sector tiles \"%s\"", sec->sectorTilesName);
 					sec->tiles.reset(new BattleMapSectorTiles());
-					if (!sec->tiles->loadSector(state,
-					                            BattleMapSectorTiles::getMapSectorPath() + "/" +
-					                                sec->sectorTilesName))
+					if (!sec->tiles->loadSector(state, BattleMapSectorTiles::getMapSectorPath() +
+					                                       "/" + sec->sectorTilesName))
 					{
 						LogError("Failed to load sector tiles \"%s\"", sec->sectorTilesName);
 					}
@@ -1059,28 +1128,49 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 				{
 					auto lb = tlb->clone(shift);
 					b->losBlocks.push_back(lb);
-					// At least one civilian spawner required for map to spawn civilians
-					if (lb->spawn_type == SpawnType::Civilian || lb->also_allow_civilians)
+					if (mission_type == Battle::MissionType::BaseDefense)
 					{
-						spawnCivilians = true;
+						// Base defenses never spawn civilians, so don't raise the flag here
+						// They also never prevent entrance or exit from any vector,
+						// so don't worry about that too
 					}
-					// Los block must touch map edge, and it's lowest z must be within spawn
-					// allowance in order for it to qualify for spawning X-Com agents
-					else if (lb->spawn_priority > 0 && lb->spawn_type == SpawnType::Player)
+					else
 					{
-						bool canSpawn =
-						    lb->start.z >= entrance_level_min && lb->start.z < entrance_level_max;
-						if (canSpawn)
+						// At least one civilian spawner required for map to spawn civilians
+						if (lb->spawn_type == SpawnType::Civilian || lb->also_allow_civilians)
 						{
-							canSpawn = (allow_entrance[MapDirection::West] && lb->start.x == 0 )
-									|| (allow_entrance[MapDirection::North] && lb->start.y == 0)
-									|| (allow_entrance[MapDirection::East] && lb->end.x == size.x * chunk_size.x)
-									|| (allow_entrance[MapDirection::South] && lb->end.y == size.y * chunk_size.y);
+							spawnCivilians = true;
 						}
-						if (!canSpawn)
+						// Los block must touch map edge, and it's lowest z must be within spawn
+						// allowance in order for it to qualify for spawning X-Com agents
+						else if (lb->spawn_priority > 0 && lb->spawn_type == SpawnType::Player)
 						{
-							lb->spawn_priority = 0;
+							bool canSpawn = lb->start.z >= entrance_level_min &&
+							                lb->start.z < entrance_level_max;
+							if (canSpawn)
+							{
+								canSpawn =
+								    (allow_entrance[MapDirection::West] && lb->start.x == 0) ||
+								    (allow_entrance[MapDirection::North] && lb->start.y == 0) ||
+								    (allow_entrance[MapDirection::East] &&
+								     lb->end.x == size.x * chunk_size.x) ||
+								    (allow_entrance[MapDirection::South] &&
+								     lb->end.y == size.y * chunk_size.y);
+							}
+							if (!canSpawn)
+							{
+								lb->spawn_priority = 0;
+							}
 						}
+					}
+				}
+				for (auto &entry : tiles.guardianLocations)
+				{
+					for (auto &pos : entry.second)
+					{
+						b->spawnLocations[entry.first].push_back(pos + shift);
+						agents.emplace_back(
+						    state.agent_generator.createAgent(state, propertyOwner, entry.first));
 					}
 				}
 				for (auto &entry : sec->spawnLocations)
@@ -1202,7 +1292,7 @@ void BattleMap::fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state,
 	}
 	for (auto &u : b->units)
 	{
-		if (u.second->retreated)
+		if (u.second->retreated || !u.second->agent->type->allowsDirectControl)
 		{
 			continue;
 		}
@@ -1212,43 +1302,65 @@ void BattleMap::fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state,
 	// Distribute agents into squads
 	for (auto &o : b->participants)
 	{
-		// First add agents in groups of threes
-		// If only 2 remain, add them still
-		// If only 1 remains, do not add them
-		for (int s = 0; s < 6; s++)
+		// If amount of agents is small, first add agents in groups of threes
+		if (agentCount[o] <= 18)
 		{
-			if (agentCount[o] == 0)
-				break;
-			if (agentCount[o] > 1)
+			// If only 2 remain, add them still
+			// If only 1 remains, do not add them
+			for (int s = 0; s < 6; s++)
 			{
-				for (auto &u : b->units)
+				if (agentCount[o] == 0)
 				{
-					if (b->forces[o].squads[s].getNumUnits() >= 3)
-						break;
-					if (u.second->owner != o || u.second->squadNumber != -1 || u.second->retreated)
-						continue;
-					u.second->assignToSquad(*b, s);
-					agentCount[o]--;
-					if (agentCount[o] == 0)
-						break;
+					break;
+				}
+				if (agentCount[o] > 1)
+				{
+					for (auto &u : b->units)
+					{
+						if (b->forces[o].squads[s].getNumUnits() >= 3)
+						{
+							break;
+						}
+						if (u.second->owner != o || u.second->squadNumber != -1 ||
+						    u.second->retreated || !u.second->agent->type->allowsDirectControl)
+						{
+							continue;
+						}
+						u.second->assignToSquad(*b, s);
+						agentCount[o]--;
+						if (agentCount[o] == 0)
+						{
+							break;
+						}
+					}
 				}
 			}
 		}
+
 		// Now fill squads with remaining agents
 		for (int s = 0; s < 6; s++)
 		{
 			if (agentCount[o] == 0)
+			{
 				break;
+			}
 			for (auto &u : b->units)
 			{
 				if (b->forces[o].squads[s].getNumUnits() == 6)
+				{
 					break;
-				if (u.second->owner != o || u.second->squadNumber != -1)
+				}
+				if (u.second->owner != o || u.second->squadNumber != -1 || u.second->retreated ||
+				    !u.second->agent->type->allowsDirectControl)
+				{
 					continue;
+				}
 				u.second->assignToSquad(*b, s);
 				agentCount[o]--;
 				if (agentCount[o] == 0)
+				{
 					break;
+				}
 			}
 		}
 	}

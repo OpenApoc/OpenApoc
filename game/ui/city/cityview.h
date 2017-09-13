@@ -1,5 +1,6 @@
 #pragma once
 
+#include "game/state/stateobject.h"
 #include "game/ui/tileview/citytileview.h"
 #include "library/sp.h"
 #include <map>
@@ -14,6 +15,8 @@ class GraphicButton;
 class Control;
 class Vehicle;
 class Sample;
+class Base;
+class Organisation;
 
 enum class UpdateSpeed
 {
@@ -111,6 +114,9 @@ class CityView : public CityTileView
   public:
 	CityView(sp<GameState> state);
 	~CityView() override;
+
+	void initiateDefenseMission(StateRef<Base> base, StateRef<Organisation> attacker);
+
 	void begin() override;
 	void resume() override;
 	void update() override;

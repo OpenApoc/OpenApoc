@@ -33,7 +33,7 @@ class FacilityType : public StateObject
 
 	UString name;
 
-	// Facility cannot be built over (concrete)
+	// Facility cannot be built over (concrete, lift)
 	bool fixed;
 
 	int buildCost;
@@ -47,7 +47,7 @@ class FacilityType : public StateObject
 	sp<Image> sprite;
 	ResearchDependency dependency;
 	StateRef<UfopaediaEntry> ufopaedia_entry;
-	int sector;
+	int sector = 0;
 
 	bool isVisible() const;
 };

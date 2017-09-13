@@ -503,7 +503,7 @@
 		<name>BattleMapSectorTiles</name>
 		<member>losBlocks</member>
 		<member>loot_locations</member>
-		<member>turretLocations</member>
+		<member>guardianLocations</member>
 		<member>initial_grounds</member>
 		<member>initial_left_walls</member>
 		<member>initial_right_walls</member>
