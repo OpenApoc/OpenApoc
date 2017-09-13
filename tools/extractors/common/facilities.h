@@ -6,8 +6,7 @@
 
 struct FacilityData
 {
-	uint16_t cost;
-	uint16_t zero; // Always zero? Possibly cost is actually a uint32_t?
+	uint32_t cost;
 	uint8_t image_offset;
 	uint8_t size;
 	uint16_t build_time;

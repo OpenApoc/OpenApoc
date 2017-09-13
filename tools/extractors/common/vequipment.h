@@ -48,7 +48,7 @@ struct VehicleWeaponData
 	uint16_t guided;
 	uint16_t turn_rate; // FIXME: What units?
 	uint16_t range;     // FIXME: What units?
-	uint16_t unknown;
+	uint16_t ttl;
 	uint16_t firing_arc_1; // Firing arc left/right
 	uint16_t firing_arc_2; // Firing arc up/down
 	uint16_t point_defence;

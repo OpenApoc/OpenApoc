@@ -1302,7 +1302,11 @@ bool BattleUnit::isAttacking() const { return weaponStatus != WeaponStatus::NotF
 
 bool BattleUnit::isThrowing() const { return isDoing(BattleUnitMission::Type::ThrowItem); }
 
-bool BattleUnit::isMoving() const { return isDoing(BattleUnitMission::Type::GotoLocation); }
+bool BattleUnit::isMoving() const
+{
+	return isDoing(BattleUnitMission::Type::GotoLocation) ||
+	       isDoing(BattleUnitMission::Type::ReachGoal);
+}
 
 bool BattleUnit::isDoing(BattleUnitMission::Type missionType) const
 {
@@ -2479,23 +2483,28 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 		{
 			if (agent->type->id == "AGENTTYPE_BRAINSUCKER")
 			{
-				auto unit = presentUnit->getUnit();
-				if (position.z < unit->getMuzzleLocation().z)
+				// Must fall from above (almost)
+				if (velocity.z < 0.1f)
 				{
-					StateRef<DamageType> brainsucker = {&state, "DAMAGETYPE_BRAINSUCKER"};
-					if (!unit->brainSucker &&
-					    brainsucker->dealDamage(100, unit->agent->type->damage_modifier) == 0)
+					auto unit = presentUnit->getUnit();
+					if (position.z < unit->getMuzzleLocation().z)
 					{
-						applyDamageDirect(state, 9001, false, BodyPart::Body,
-						                  agent->current_stats.health + TICKS_PER_TURN);
-					}
-					else
-					{
-						int facingDelta = BattleUnitMission::getFacingDelta(facing, unit->facing);
-						cancelMissions(state, true);
-						spendRemainingTU(state, true);
-						setMission(state, BattleUnitMission::brainsuck(*this, {&state, unit->id},
-						                                               facingDelta));
+						StateRef<DamageType> brainsucker = {&state, "DAMAGETYPE_BRAINSUCKER"};
+						if (!unit->brainSucker &&
+						    brainsucker->dealDamage(100, unit->agent->type->damage_modifier) == 0)
+						{
+							applyDamageDirect(state, 9001, false, BodyPart::Body,
+							                  agent->current_stats.health + TICKS_PER_TURN);
+						}
+						else
+						{
+							int facingDelta =
+							    BattleUnitMission::getFacingDelta(facing, unit->facing);
+							cancelMissions(state, true);
+							spendRemainingTU(state, true);
+							setMission(state, BattleUnitMission::brainsuck(
+							                      *this, {&state, unit->id}, facingDelta));
+						}
 					}
 				}
 			}
@@ -2546,9 +2555,6 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 			prevGoalDist.z = 0.0f;
 			if (glm::length(newGoalDist) > glm::length(prevGoalDist))
 			{
-				LogWarning("newPos %s prevPos %s goal %s newlen %f prevlen %f", newPosition,
-				           previousPosition, launchGoal, glm::length(newGoalDist),
-				           glm::length(prevGoalDist));
 				float extraVelocity = sqrt(velocity.x * velocity.x + velocity.y * velocity.y);
 				velocity.x = 0.0f;
 				velocity.y = 0.0f;
@@ -3218,7 +3224,45 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 				// Weapon ready to fire: check if facing the right way
 				if (firingWeapon)
 				{
-					auto targetVector = targetPosition - muzzleLocation;
+					auto targetPosAdjusted = targetPosition;
+					// Lead the target
+					if (targetUnit)
+					{
+						auto projectileVelocity = firingWeapon->getPayloadType()->speed *
+						                          PROJECTILE_VELOCITY_MULTIPLIER /
+						                          (float)TICK_SCALE;
+						// Target's velocity (if falling/jumping)
+						Vec3<float> targetVelocity = targetUnit->velocity / (float)TICK_SCALE;
+						// If moving instead use movement speed
+						if (!targetUnit->atGoal && targetUnit->isMoving())
+						{
+							// Normalized Vector towards target position
+							targetVelocity = targetUnit->goalPosition - targetUnit->position;
+							if (targetVelocity.x != 0.0f || targetVelocity.y != 0.0f ||
+							    targetVelocity.z != 0.0f)
+							{
+								targetVelocity = glm::normalize(targetVelocity);
+								// Account for unit speed and movement state
+								float speedMult =
+								    targetUnit->agent->modified_stats.getMovementSpeed();
+								if (targetUnit->current_movement_state == MovementState::Running)
+								{
+									speedMult *= 2.0f;
+								}
+								else if (targetUnit->current_body_state == BodyState::Prone)
+								{
+									speedMult *= 0.666f;
+								}
+								targetVelocity *= speedMult;
+								// Scale appropriately
+								targetVelocity /= (float)TICKS_PER_UNIT_TRAVELLED;
+							}
+						}
+						auto distance = glm::length(targetPosition - muzzleLocation);
+						targetPosAdjusted += targetVelocity * distance / projectileVelocity;
+					}
+
+					auto targetVector = targetPosAdjusted - muzzleLocation;
 					targetVector = {targetVector.x, targetVector.y, 0.0f};
 					// Target must be within frontal arc, must have LOF to if unit
 					if (glm::angle(glm::normalize(targetVector),
@@ -3239,7 +3283,7 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 						         spendTU(state, getAttackCost(state, *firingWeapon, targetTile),
 						                 true, true, true))
 						{
-							firingWeapon->fire(state, targetPosition,
+							firingWeapon->fire(state, targetPosAdjusted,
 							                   targetingMode == TargetingMode::Unit ? targetUnit
 							                                                        : nullptr);
 							cloakTicksAccumulated = 0;
@@ -3591,12 +3635,12 @@ void BattleUnit::startFalling(GameState &state)
 // Calculate starting velocity among xy and z to reach target
 // For explanation how it works look @ AEquipment::calculateNextVelocityForThrow
 bool BattleUnit::calculateVelocityForLaunch(float distanceXY, float diffZ, float &velocityXY,
-                                            float &velocityZ)
+                                            float &velocityZ, float initialXY)
 {
 	static float dZ = 0.1f;
 
 	// Initial setup
-	velocityXY = 0.5f;
+	velocityXY = initialXY;
 
 	float a = -FALLING_ACCELERATION_UNIT / VELOCITY_SCALE_BATTLE.z / 2.0f / TICK_SCALE;
 	float c = diffZ;
@@ -3658,16 +3702,24 @@ bool BattleUnit::canLaunch(Vec3<float> targetPosition, Vec3<float> &targetVector
 	{
 		return false;
 	}
-	// Cannot jump if target too far away
+	// Cannot jump if target too far away and we are not a sucker
 	Vec3<int> posDiff = (Vec3<int>)position - (Vec3<int>)targetPosition;
-	if (std::abs(posDiff.x) > 1 || std::abs(posDiff.y) > 1 || std::abs(posDiff.z) > 1)
+	bool sucker = agent->type.id == "AGENTTYPE_BRAINSUCKER";
+	int limit = sucker ? 5 : 1;
+	if (std::abs(posDiff.x) > limit || std::abs(posDiff.y) > limit || std::abs(posDiff.z) > 1)
 	{
 		return false;
 	}
 	// Calculate starting velocity
 	targetVectorXY = {targetVector.x, targetVector.y, 0.0f};
 	float distance = glm::length(targetVectorXY);
-	if (!calculateVelocityForLaunch(distance, position.z - targetPosition.z, velocityXY, velocityZ))
+	float initialXY = 0.5f;
+	if (sucker)
+	{
+		initialXY *= sqrtf(targetVector.x * targetVector.x + targetVector.y * targetVector.y);
+	}
+	if (!calculateVelocityForLaunch(distance, position.z - targetPosition.z, velocityXY, velocityZ,
+	                                initialXY))
 	{
 		return false;
 	}
@@ -4718,8 +4770,44 @@ bool BattleUnit::useBrainsucker(GameState &state)
 			auto target = targetTile->getUnitIfPresent(true)->getUnit();
 			if (brainsucker->dealDamage(100, target->agent->type->damage_modifier) != 0)
 			{
-				setMission(state, BattleUnitMission::jump(*this, target->getMuzzleLocation(),
-				                                          BodyState::Jumping));
+				// Account for target movement
+				auto targetPosAdjusted = target->getMuzzleLocation();
+				Vec3<float> targetVelocity = target->velocity / (float)TICK_SCALE;
+				// If moving instead use movement speed
+				if (!target->atGoal && target->isMoving())
+				{
+					// Normalized Vector towards target position
+					targetVelocity = target->goalPosition - target->position;
+					if (targetVelocity.x != 0.0f || targetVelocity.y != 0.0f ||
+					    targetVelocity.z != 0.0f)
+					{
+						targetVelocity = glm::normalize(targetVelocity);
+						// Account for unit speed and movement state
+						float speedMult = target->agent->modified_stats.getMovementSpeed();
+						if (target->current_movement_state == MovementState::Running)
+						{
+							speedMult *= 2.0f;
+						}
+						else if (target->current_body_state == BodyState::Prone)
+						{
+							speedMult *= 0.666f;
+						}
+						targetVelocity *= speedMult;
+						// Scale appropriately
+						targetVelocity /= VELOCITY_SCALE_BATTLE;
+						targetVelocity /= (float)TICKS_PER_UNIT_TRAVELLED;
+					}
+				}
+				// Scale to about 0.8 seconds, that's the amount
+				// it normally takes sucker to arrive
+				targetVelocity *= 0.8f * (float)TICKS_PER_SECOND;
+				// We don't care about z differences
+				targetVelocity.z = 0.0f;
+				targetPosAdjusted += targetVelocity;
+
+				// Go for the head!
+				setMission(state, BattleUnitMission::jump(*this, targetPosAdjusted,
+				                                          BodyState::Jumping, false));
 				return true;
 			}
 		}
@@ -5102,6 +5190,7 @@ void BattleUnit::playDistantSound(GameState &state, sp<Sample> sfx, float gainMu
 	}
 	if (distance < MAX_HEARING_DISTANCE)
 	{
+
 		fw().soundBackend->playSample(sfx, getPosition(),
 		                              gainMult * (MAX_HEARING_DISTANCE - distance) /
 		                                  MAX_HEARING_DISTANCE);

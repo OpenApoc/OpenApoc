@@ -1,5 +1,6 @@
 #include "framework/data.h"
 #include "framework/framework.h"
+#include "game/state/battle/battlemapsector.h"
 #include "game/state/gamestate.h"
 #include "library/strings_format.h"
 #include "tools/extractors/common/ufo2p.h"
@@ -34,6 +35,7 @@ void InitialGameStateExtractor::extractFacilities(GameState &state) const
 		facilityType->weeklyCost = f.maintainance_cost;
 		facilityType->capacityAmount = f.capacity;
 		facilityType->size = f.size;
+		facilityType->sector = i - 2 + 16;
 		facilityType->sprite = fw().data->loadImage(
 		    format("PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:%d:xcom3/ufodata/base.pcx",
 		           (int)f.image_offset));

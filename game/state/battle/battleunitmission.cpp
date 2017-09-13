@@ -1287,19 +1287,20 @@ BattleUnitMission *BattleUnitMission::brainsuck(BattleUnit &u, StateRef<BattleUn
 	auto *mission = new BattleUnitMission();
 	mission->type = Type::Brainsuck;
 	mission->targetUnit = target;
-	mission->targetBodyState = u.target_body_state;
-	mission->targetFacing = u.goalFacing;
+	mission->targetBodyState = BodyState::Jumping;
+	mission->targetFacing = u.facing;
 	mission->facingDelta = facingDelta;
 	return mission;
 }
 
-BattleUnitMission *BattleUnitMission::jump(BattleUnit &u, Vec3<float> target, BodyState state)
+BattleUnitMission *BattleUnitMission::jump(BattleUnit &u, Vec3<float> target, BodyState state,
+                                           bool requireFacing)
 {
 	auto *mission = new BattleUnitMission();
 	mission->type = Type::Jump;
 	mission->jumpTarget = target;
-	mission->targetFacing = getFacing(u, target);
-	mission->requireGoal = true;
+	mission->targetFacing = requireFacing ? getFacing(u, target) : u.goalFacing;
+	mission->requireGoal = requireFacing;
 	mission->targetBodyState = state;
 	return mission;
 }
@@ -1935,6 +1936,10 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 			}
 			return;
 		case Type::Jump:
+			if (!requireGoal)
+			{
+				u.setFacing(state, u.goalFacing);
+			}
 			cancelled = u.isLarge() || !u.canLaunch(jumpTarget);
 			return;
 		case Type::ChangeBodyState:

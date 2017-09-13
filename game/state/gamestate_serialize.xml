@@ -503,6 +503,7 @@
 		<name>BattleMapSectorTiles</name>
 		<member>losBlocks</member>
 		<member>loot_locations</member>
+		<member>turretLocations</member>
 		<member>initial_grounds</member>
 		<member>initial_left_walls</member>
 		<member>initial_right_walls</member>
@@ -971,6 +972,7 @@
 		<member>guided</member>
 		<member>turn_rate</member>
 		<member>range</member>
+		<member>ttl</member>
 		<member>firing_arc_1</member>
 		<member>firing_arc_2</member>
 		<member>point_defence</member>
@@ -1007,6 +1009,7 @@
 		<member>sprite</member>
 		<member>dependency</member>
 		<member>ufopaedia_entry</member>
+		<member>sector</member>
 	</object>
 	<object>
 		<name>Organisation</name>
