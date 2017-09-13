@@ -5212,9 +5212,9 @@ void BattleUnit::playDistantSound(GameState &state, sp<Sample> sfx, float gainMu
 	if (distance < MAX_HEARING_DISTANCE)
 	{
 
-		fw().soundBackend->playSample(sfx, getPosition(), gainMult *
-		                                                      (MAX_HEARING_DISTANCE - distance) /
-		                                                      MAX_HEARING_DISTANCE);
+		fw().soundBackend->playSample(sfx, getPosition(),
+		                              gainMult * (MAX_HEARING_DISTANCE - distance) /
+		                                  MAX_HEARING_DISTANCE);
 	}
 }
 
