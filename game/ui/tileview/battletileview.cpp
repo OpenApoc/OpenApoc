@@ -143,6 +143,9 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 	selectedTileImageOffset = {23, 42};
 	pal = fw().data->loadPalette("xcom3/tacdata/tactical.pal");
 
+	activeUnitSelectionArrow.push_back(fw().data->loadImage("battle/battle-active-squadless.png"));
+	inactiveUnitSelectionArrow.push_back(
+	    fw().data->loadImage("battle/battle-inactive-squadless.png"));
 	for (int i = 0; i < 6; i++)
 	{
 		activeUnitSelectionArrow.push_back(
@@ -793,18 +796,18 @@ void BattleTileView::render()
 								int faceShift = 0;
 								if (unitPsiAttacker)
 								{
-									r.draw(
-									    psiIcons[PsiStatus::NotEngaged][psiIconTicksAccumulated /
-									                                    PSI_ICON_ANIMATION_DELAY],
-									    unitFaceIconPos);
+									r.draw(psiIcons[PsiStatus::NotEngaged]
+									               [psiIconTicksAccumulated /
+									                PSI_ICON_ANIMATION_DELAY],
+									       unitFaceIconPos);
 									faceShift = 1;
 								}
 								if (unitPsiAttackedStatus != PsiStatus::NotEngaged)
 								{
-									r.draw(
-									    psiIcons[unitPsiAttackedStatus][psiIconTicksAccumulated /
-									                                    PSI_ICON_ANIMATION_DELAY],
-									    unitFaceIconPos + Vec2<float>{0, faceShift * 16.0f});
+									r.draw(psiIcons[unitPsiAttackedStatus]
+									               [psiIconTicksAccumulated /
+									                PSI_ICON_ANIMATION_DELAY],
+									       unitFaceIconPos + Vec2<float>{0, faceShift * 16.0f});
 									faceShift = -1;
 								}
 								if (unitLowMorale)
@@ -841,10 +844,9 @@ void BattleTileView::render()
 									}
 									if (img)
 									{
-										r.draw(img,
-										       tileToOffsetScreenCoords(selTilePosOnCurLevel) +
-										           offset -
-										           Vec2<int>{img->size.x / 2, img->size.y / 2});
+										r.draw(img, tileToOffsetScreenCoords(selTilePosOnCurLevel) +
+										                offset - Vec2<int>{img->size.x / 2,
+										                                   img->size.y / 2});
 									}
 								}
 								if (drawAttackCost)
@@ -867,10 +869,9 @@ void BattleTileView::render()
 									}
 									if (img)
 									{
-										r.draw(img,
-										       tileToOffsetScreenCoords(selTilePosOnCurLevel) +
-										           offset -
-										           Vec2<int>{img->size.x / 2, img->size.y / 2});
+										r.draw(img, tileToOffsetScreenCoords(selTilePosOnCurLevel) +
+										                offset - Vec2<int>{img->size.x / 2,
+										                                   img->size.y / 2});
 									}
 								}
 							}
@@ -1099,8 +1100,8 @@ void BattleTileView::render()
 				    offset;
 
 				// Selection arrow
-				r.draw(obj.second ? activeUnitSelectionArrow[obj.first->squadNumber]
-				                  : inactiveUnitSelectionArrow[obj.first->squadNumber],
+				r.draw(obj.second ? activeUnitSelectionArrow[obj.first->squadNumber + 1]
+				                  : inactiveUnitSelectionArrow[obj.first->squadNumber + 1],
 				       pos);
 				r.draw(arrowHealthBars[health], pos + offsetHealth);
 				// Behavior
@@ -1151,9 +1152,8 @@ void BattleTileView::render()
 					if (battle.mode == Battle::Mode::TurnBased)
 					{
 						auto &img = tuIndicators[u.second->agent->modified_stats.time_units];
-						r.draw(img,
-						       pos + offset + offsetTU -
-						           Vec2<float>{img->size.x / 2, img->size.y / 2});
+						r.draw(img, pos + offset + offsetTU -
+						                Vec2<float>{img->size.x / 2, img->size.y / 2});
 					}
 
 					for (auto &t : u.second->visibleEnemies)

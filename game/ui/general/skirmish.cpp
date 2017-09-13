@@ -61,11 +61,10 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), state(*state), menuform(ui().
 	menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
 		    menuform->findControlTyped<Label>("PLAYER_TECH")
-		        ->setText(menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->getValue() ==
-		                          0
-		                      ? "NO"
-		                      : format("%d",
-		                               menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
+		        ->setText(
+		            menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->getValue() == 0
+		                ? "NO"
+		                : format("%d", menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
 		                                   ->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")
@@ -156,8 +155,9 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 	state.score = menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")->getValue() * 1000;
 
 	auto playerBase = locBase ? locBase : StateRef<Base>(&state, "BASE_1");
-	std::set<UString> agentsToRemove;
+
 	LogWarning("Erasing agents from base %s", playerBase.id);
+	std::set<UString> agentsToRemove;
 	for (auto &a : state.agents)
 	{
 		if (a.second->type->role == AgentType::Role::Soldier && a.second->home_base == playerBase)
@@ -170,6 +170,7 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 	{
 		state.agents.erase(a);
 	}
+	LogWarning("Adding new agents to base %s", playerBase.id);
 	int countHumans = menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")->getValue();
 	int countHybrids = menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")->getValue();
 	int countAndroids = menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")->getValue();
@@ -298,6 +299,7 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 		agent->trainPsi(state, psiTicks);
 		agent->home_base = playerBase;
 	}
+
 	LogWarning("Resetting base inventory");
 	playerBase->inventoryAgentEquipment.clear();
 	for (auto &t : state.agent_equipment)
@@ -444,10 +446,6 @@ std::shared_future<void> loadBattleBuilding(bool hotseat, sp<Building> building,
                                             std::map<StateRef<AgentType>, int> *aliens = nullptr,
                                             int *guards = nullptr, int *civilians = nullptr)
 {
-	if (guards)
-	{
-		LogWarning("G");
-	}
 	std::map<StateRef<AgentType>, int> aliensLocal;
 	bool aliensPresent = false;
 	if (aliens)
@@ -473,11 +471,21 @@ std::shared_future<void> loadBattleBuilding(bool hotseat, sp<Building> building,
 	                                        guardsLocal, civiliansLocal, aliensPresent,
 	                                        guardsPresent, civiliansPresent, playerBase]() -> void {
 		std::list<StateRef<Agent>> agents;
-		for (auto &a : state->agents)
-			if (a.second->type->role == AgentType::Role::Soldier &&
-			    a.second->home_base == playerBase)
-				agents.emplace_back(state, a.second);
-
+		if (playerBase->building == building)
+		{
+			// No agents for base defense! Auto-chosen
+		}
+		else
+		{
+			for (auto &a : state->agents)
+			{
+				if (a.second->type->role == AgentType::Role::Soldier &&
+				    a.second->home_base == playerBase)
+				{
+					agents.emplace_back(state, a.second);
+				}
+			}
+		}
 		StateRef<Organisation> org = raid ? building->owner : state->getAliens();
 		StateRef<Building> bld = {state, building};
 		StateRef<Vehicle> veh = {};

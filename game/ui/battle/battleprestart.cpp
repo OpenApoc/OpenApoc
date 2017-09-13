@@ -54,15 +54,10 @@ void BattlePreStart::displayAgent(sp<Agent> agent)
 
 	auto rHand = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
 	auto lHand = agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
-	if (rHand)
-	{
-		menuform->findControlTyped<Graphic>("RIGHT_HAND")
-		    ->setImage(rHand->type->equipscreen_sprite);
-	}
-	if (lHand)
-	{
-		menuform->findControlTyped<Graphic>("LEFT_HAND")->setImage(lHand->type->equipscreen_sprite);
-	}
+	menuform->findControlTyped<Graphic>("RIGHT_HAND")
+	    ->setImage(rHand ? rHand->type->equipscreen_sprite : nullptr);
+	menuform->findControlTyped<Graphic>("LEFT_HAND")
+	    ->setImage(lHand ? lHand->type->equipscreen_sprite : nullptr);
 }
 
 sp<Control> BattlePreStart::createAgentControl(StateRef<Agent> agent, bool selected)
