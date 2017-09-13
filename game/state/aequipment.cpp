@@ -740,7 +740,7 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 		// for all cases except when a unit fires with a brainsucker on it's head!
 		// But this also looks better since it does visually fire from the muzzle, not from inside
 		// the soldier
-		unitPos += velocity * 3.0f / 8.0f;
+		unitPos += velocity * 5.0f / 8.0f;
 		// Scale velocity according to speed
 		velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 

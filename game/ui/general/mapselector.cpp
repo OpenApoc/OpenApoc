@@ -31,6 +31,10 @@ MapSelector::MapSelector(sp<GameState> state, Skirmish &skirmish)
 
 	auto listbox = menuform->findControlTyped<ListBox>("LISTBOX_MAPS");
 	std::set<sp<BattleMap>> seen_maps;
+	for (auto &b : state->player_bases)
+	{
+		listbox->addItem(createMapRowBase({state.get(), b.first}, state));
+	}
 	for (auto &v : state->vehicle_types)
 	{
 		if (!v.second->battle_map || seen_maps.find(v.second->battle_map) != seen_maps.end())
@@ -44,10 +48,6 @@ MapSelector::MapSelector(sp<GameState> state, Skirmish &skirmish)
 		{
 			listbox->addItem(createMapRowBuilding({state.get(), b.first}, state));
 		}
-	}
-	for (auto &b : state->player_bases)
-	{
-		listbox->addItem(createMapRowBase({state.get(), b.first}, state));
 	}
 }
 

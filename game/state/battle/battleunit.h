@@ -449,7 +449,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Returns true if retreated
 	bool getNewGoal(GameState &state);
 	bool calculateVelocityForLaunch(float distanceXY, float diffZ, float &velocityXY,
-	                                float &velocityZ);
+	                                float &velocityZ, float initialXY = 0.5f);
 	void calculateVelocityForJump(float distanceXY, float diffZ, float &velocityXY,
 	                              float &velocityZ, bool diagonAlley);
 	bool canLaunch(Vec3<float> targetPosition);

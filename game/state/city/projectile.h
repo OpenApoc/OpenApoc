@@ -16,14 +16,10 @@
 #define PROJECTILE_TURN_PER_TICK ((float)(M_PI / 2.0f) / 10.0f / TICKS_PER_SECOND)
 
 // Alexey Andronov (Istrebitel):
-// It was observed that progressing projectile's velocity using TICK_SCALE
-// produces projectiles that are too slow.
-// Approximately this multiplier brings them back to speeds matching vanilla
-// However, this may be wrong
-// My theory is this value equals to 36, the amount of ticks in the game
-// However since we have four times as many ticks (144) we have to divide this by 4
-// Since we apply the velocity 4 times as frequently
-#define PROJECTILE_VELOCITY_MULTIPLIER 9.0f
+// For some reason, advancing projectiles using their speed produces improper results
+// With a multiplier of four, it seems to match.
+// Tests with cityscape shown this to work similar to vanilla
+#define PROJECTILE_VELOCITY_MULTIPLIER 4.0f
 
 namespace OpenApoc
 {

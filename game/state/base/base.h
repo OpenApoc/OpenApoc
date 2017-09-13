@@ -30,7 +30,7 @@ class Base : public StateObject
 
 	Base() = default;
 
-	static const int SIZE = 8;
+	static constexpr int SIZE = 8;
 	enum class BuildError
 	{
 		NoError,

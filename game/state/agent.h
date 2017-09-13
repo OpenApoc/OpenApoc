@@ -246,6 +246,7 @@ class AgentBodyType : public StateObject
 	// Unit's height, used in pathfinding
 	int maxHeight = 0;
 	// Unit's height in each body state, used when displaying unit selection arrows
+	// as well as for determining collision model height
 	std::map<BodyState, int> height;
 	// Unit's mullzle location in each body state, used when firing
 	std::map<BodyState, int> muzzleZPosition;

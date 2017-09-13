@@ -22,6 +22,7 @@ namespace OpenApoc
 
 static const Colour COLOUR_BLACK = {0, 0, 0, 255};
 
+// FIXME: Alexey Andronov: Does anyone know why we divide by 4 here?
 static const unsigned TICK_SCALE = TICKS_PER_SECOND / 4;
 
 class Image;

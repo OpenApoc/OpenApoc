@@ -296,7 +296,14 @@ void AEquipScreen::begin()
 	}
 	else
 	{
+		formMain->findControlTyped<Graphic>("DOLLAR")->setVisible(true);
 		formMain->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
+	}
+
+	auto owner = state->getPlayer();
+	if (state->current_battle)
+	{
+		owner = state->current_battle->currentPlayer;
 	}
 
 	if (firstAgent)
@@ -307,15 +314,11 @@ void AEquipScreen::begin()
 	{
 		for (auto &agent : state->agents)
 		{
-			if (agent.second->type->role != AgentType::Role::Soldier)
+			if (!checkAgent(agent.second, owner))
 			{
 				continue;
 			}
 			if (agent.second->unit && !agent.second->unit->isConscious())
-			{
-				continue;
-			}
-			if (state->current_battle && !agent.second->unit)
 			{
 				continue;
 			}
@@ -703,7 +706,7 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 				formItemWeapon->findControlTyped<Label>("VALUE_POWER")
 				    ->setText(format("%d", item->getPayloadType()->damage));
 				formItemWeapon->findControlTyped<Label>("VALUE_ROUNDS")
-				    ->setText(format("%d", item->ammo));
+				    ->setText(format("%d / %d", item->ammo, item->getPayloadType()->max_ammo));
 
 				formItemWeapon->findControlTyped<Label>("VALUE_ACCURACY")
 				    ->setText(format("%d", item->getPayloadType()->accuracy));
@@ -762,20 +765,6 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 			formActive = formItemWeapon;
 		}
 		break;
-		case AEquipmentType::Type::Armor:
-		{
-			formItemArmor->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
-			formItemArmor->findControlTyped<Graphic>("SELECTED_IMAGE")
-			    ->setImage(item->getEquipmentImage());
-
-			formItemArmor->findControlTyped<Label>("VALUE_WEIGHT")
-			    ->setText(format("%d", item->type->weight));
-			formItemArmor->findControlTyped<Label>("VALUE_PROTECTION")
-			    ->setText(format("%d", item->ammo));
-
-			formActive = formItemArmor;
-		}
-		break;
 		case AEquipmentType::Type::Ammo:
 		{
 			formItemWeapon->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
@@ -795,7 +784,7 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 			formItemWeapon->findControlTyped<Label>("LABEL_ROUNDS")->setVisible(true);
 			formItemWeapon->findControlTyped<Label>("VALUE_ROUNDS")->setVisible(true);
 			formItemWeapon->findControlTyped<Label>("LABEL_RECHARGES")
-			    ->setVisible(item->getPayloadType()->recharge > 0);
+			    ->setVisible(item->type->recharge > 0);
 
 			formItemWeapon->findControlTyped<Label>("VALUE_WEIGHT")
 			    ->setText(format("%d", item->type->weight));
@@ -812,9 +801,24 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 			formItemWeapon->findControlTyped<Label>("VALUE_POWER")
 			    ->setText(format("%d", item->type->damage));
 			formItemWeapon->findControlTyped<Label>("VALUE_ROUNDS")
-			    ->setText(format("%d", item->ammo));
+			    ->setText(format("%d / %d", item->ammo, item->type->max_ammo));
 
 			formActive = formItemWeapon;
+		}
+		break;
+		case AEquipmentType::Type::Armor:
+		{
+			formItemArmor->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
+			formItemArmor->findControlTyped<Graphic>("SELECTED_IMAGE")
+			    ->setImage(item->getEquipmentImage());
+			formItemArmor->findControlTyped<Label>("LABEL_PROTECTION")->setText(tr("Protection"));
+
+			formItemArmor->findControlTyped<Label>("VALUE_WEIGHT")
+			    ->setText(format("%d", item->type->weight));
+			formItemArmor->findControlTyped<Label>("VALUE_PROTECTION")
+			    ->setText(format("%d / %d", item->armor, item->type->armor));
+
+			formActive = formItemArmor;
 		}
 		break;
 		case AEquipmentType::Type::Grenade:
@@ -835,14 +839,31 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 		break;
 		default:
 		{
-			formItemOther->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
-			formItemOther->findControlTyped<Graphic>("SELECTED_IMAGE")
-			    ->setImage(item->getEquipmentImage());
+			if (item->type->max_ammo)
+			{
+				formItemArmor->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
+				formItemArmor->findControlTyped<Graphic>("SELECTED_IMAGE")
+				    ->setImage(item->getEquipmentImage());
+				formItemArmor->findControlTyped<Label>("LABEL_PROTECTION")->setText(tr("Power"));
 
-			formItemOther->findControlTyped<Label>("VALUE_WEIGHT")
-			    ->setText(format("%d", item->type->weight));
+				formItemArmor->findControlTyped<Label>("VALUE_WEIGHT")
+				    ->setText(format("%d", item->type->weight));
+				formItemArmor->findControlTyped<Label>("VALUE_PROTECTION")
+				    ->setText(format("%d / %d", item->ammo, item->type->max_ammo));
 
-			formActive = formItemOther;
+				formActive = formItemArmor;
+			}
+			else
+			{
+				formItemOther->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
+				formItemOther->findControlTyped<Graphic>("SELECTED_IMAGE")
+				    ->setImage(item->getEquipmentImage());
+
+				formItemOther->findControlTyped<Label>("VALUE_WEIGHT")
+				    ->setText(format("%d", item->type->weight));
+
+				formActive = formItemOther;
+			}
 		}
 		break;
 	}
@@ -854,7 +875,7 @@ AEquipScreen::Mode AEquipScreen::getMode()
 	// vehicles
 
 	// If viewing an enemy
-	if (currentAgent->unit && currentAgent->owner != state->current_battle->currentPlayer)
+	if (currentAgent->unit && currentAgent->unit->owner != state->current_battle->currentPlayer)
 	{
 		return Mode::Enemy;
 	}
@@ -1351,6 +1372,37 @@ void AEquipScreen::displayAgent(sp<Agent> agent)
 	formActive = formAgentStats;
 }
 
+bool AEquipScreen::checkAgent(sp<Agent> agent, sp<Organisation> owner)
+{
+	if (agent->owner != owner)
+	{
+		return false;
+	}
+	// Battle: Unit is not participating in battle or dead
+	if (state->current_battle)
+	{
+		if (!agent->unit || agent->unit->retreated || agent->unit->isDead())
+		{
+			return false;
+		}
+	}
+	// City: Unit not a soldier
+	else
+	{
+		if (agent->type->role != AgentType::Role::Soldier)
+		{
+			return false;
+		}
+	}
+	// Unit does not allow direct control
+	if (!agent->type->allowsDirectControl)
+	{
+		return false;
+	}
+	// Agent checks out
+	return true;
+}
+
 void AEquipScreen::updateAgents()
 {
 	auto agentList = formMain->findControlTyped<ListBox>("AGENT_SELECT_BOX");
@@ -1364,29 +1416,7 @@ void AEquipScreen::updateAgents()
 	{
 		for (auto &agent : state->agents)
 		{
-			if (agent.second->owner != owner)
-			{
-				continue;
-			}
-			// Unit is not participating in battle
-			if (state->current_battle)
-			{
-				if (!agent.second->unit || agent.second->unit->retreated ||
-				    agent.second->unit->isDead())
-				{
-					continue;
-				}
-			}
-			else
-			{
-				// Unit not a soldier
-				if (agent.second->type->role != AgentType::Role::Soldier)
-				{
-					continue;
-				}
-			}
-			// Unit does not allow direct control
-			if (!agent.second->type->allowsDirectControl)
+			if (!checkAgent(agent.second, owner))
 			{
 				continue;
 			}

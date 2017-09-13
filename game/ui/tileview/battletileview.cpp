@@ -1076,7 +1076,7 @@ void BattleTileView::render()
 			// Draw selected unit arrows
 			for (auto &obj : unitsToDrawSelectionArrows)
 			{
-				static const Vec2<float> offset = {-13.0f, -19.0f};
+				static const Vec2<float> offset = {-13.0f, -14.0f};
 				static const Vec2<float> offsetRunning = {0.0f, 0.0f};
 				static const Vec2<float> offsetBehavior = {0.0f, 0.0f};
 				static const Vec2<float> offsetBleed = {0.0f, 0.0f};

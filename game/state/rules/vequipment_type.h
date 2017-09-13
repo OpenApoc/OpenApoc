@@ -63,6 +63,7 @@ class VEquipmentType : public StateObject
 	// One point of turn rate is equal to PI/20 turned per second
 	int turn_rate;
 	int range;
+	int ttl;
 	int firing_arc_1;
 	int firing_arc_2;
 	bool point_defence;

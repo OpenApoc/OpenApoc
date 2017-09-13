@@ -467,31 +467,34 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 
 	auto firePosition = getMuzzleLocation();
 	auto target = enemyTile->getVoxelCentrePosition();
+	auto distanceTiles = glm::length(position - target);
 
-	float distance = this->tileObject->getDistanceTo(enemyTile);
+	auto distanceVoxels = this->tileObject->getDistanceTo(enemyTile);
 
 	for (auto &eq : this->equipment)
 	{
+		// Not a weapon
 		if (eq->type->type != EquipmentSlotType::VehicleWeapon)
 			continue;
+		// Out of ammo or on cooldown
 		if (eq->canFire() == false)
 			continue;
 		// Out of range
-		if (distance > eq->getRange())
+		if (distanceVoxels > eq->getRange())
 			continue;
+
+		// Lead the target
+		auto targetPosAdjusted = target;
+		auto projectileVelocity = eq->type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
+		auto targetVelocity =
+		    enemyTile->getVehicle()->velocity * enemyTile->getVehicle()->getSpeed();
+		targetPosAdjusted += targetVelocity * distanceTiles / projectileVelocity;
+
 		// No sight to target
-		if (vehicleTile->map.findCollision(firePosition, target, scenerySet))
+		if (vehicleTile->map.findCollision(firePosition, targetPosAdjusted, scenerySet))
 			continue;
-		auto projectile = eq->fire(state, target, {&state, enemyTile->getVehicle()});
-		if (projectile)
-		{
-			vehicleTile->map.addObjectToMap(projectile);
-			this->city->projectiles.insert(projectile);
-		}
-		else
-		{
-			LogWarning("Fire() produced no object");
-		}
+
+		eq->fire(state, targetPosAdjusted, {&state, enemyTile->getVehicle()});
 	}
 }
 

@@ -1183,16 +1183,16 @@ BattleView::BattleView(sp<GameState> gameState)
 	// Hand controls
 
 	uiTabsRT[0]
-	    ->findControlTyped<Graphic>("OVERLAY_RIGHT_HAND")
+	    ->findControlTyped<Graphic>("CLICKY_RIGHT_HAND")
 	    ->addCallback(FormEventType::MouseClick, clickedRightHand);
 	uiTabsRT[0]
-	    ->findControlTyped<Graphic>("OVERLAY_LEFT_HAND")
+	    ->findControlTyped<Graphic>("CLICKY_LEFT_HAND")
 	    ->addCallback(FormEventType::MouseClick, clickedLeftHand);
 	uiTabsTB[0]
-	    ->findControlTyped<Graphic>("OVERLAY_RIGHT_HAND")
+	    ->findControlTyped<Graphic>("CLICKY_RIGHT_HAND")
 	    ->addCallback(FormEventType::MouseClick, clickedRightHand);
 	uiTabsTB[0]
-	    ->findControlTyped<Graphic>("OVERLAY_LEFT_HAND")
+	    ->findControlTyped<Graphic>("CLICKY_LEFT_HAND")
 	    ->addCallback(FormEventType::MouseClick, clickedLeftHand);
 	uiTabsRT[0]
 	    ->findControlTyped<GraphicButton>("BUTTON_INVENTORY")
@@ -3962,7 +3962,7 @@ void BattleView::updateItemInfo(bool right)
 		activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND_SELECTED")->setImage(nullptr);
 	}
 
-	auto overlay = mksp<RGBImage>(Vec2<int>{50, 85});
+	auto overlay = mksp<RGBImage>(Vec2<int>{50, 95});
 	{
 		RGBImageLock l(overlay);
 
@@ -3971,7 +3971,7 @@ void BattleView::updateItemInfo(bool right)
 		{
 			int accuracy = info.accuracy;
 			int colorsCount = (int)accuracyColors.size();
-			int y = 83;
+			int y = 93;
 			if (right)
 			{
 				for (int x = 0; x < accuracy; x++)
@@ -3991,7 +3991,7 @@ void BattleView::updateItemInfo(bool right)
 		}
 		if (info.maxAmmo > 0 && info.curAmmo > 0)
 		{
-			int ammoDisplaySize = 80;
+			int ammoDisplaySize = 90;
 
 			int ammoCount = info.curAmmo;
 			int ammoPadding = 1;
