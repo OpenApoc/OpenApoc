@@ -31,6 +31,7 @@ after_build:
 - xcopy /E data OpenApoc-%APPVEYOR_BUILD_VERSION%\data\
 - 7z a OpenApoc-msvc.zip OpenApoc-%APPVEYOR_BUILD_VERSION%
 - copy bin\%PLATFORM%\%CONFIGURATION%\*.pdb OpenApoc-%APPVEYOR_BUILD_VERSION%\
+- copy portable.txt OpenApoc-%APPVEYOR_BUILD_VERSION%\
 - 7z a OpenApoc-msvc-debug.zip OpenApoc-%APPVEYOR_BUILD_VERSION%\*.pdb
 artifacts:
 - path: OpenApoc-msvc.zip
