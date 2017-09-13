@@ -6,13 +6,18 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 # check compiler
 INCLUDE(CheckCXXCompilerFlag)
 INCLUDE(CheckCCompilerFlag)
 
 set(allow_cotire ON)
+
+if(ANDROID)
+    message("Not enabling cotire for cross compilation")
+    set(allow_cotire OFF)
+endif()
 
 # Sanitize doesn't seem to work with pch on gcc
 string(TOLOWER "${CMAKE_BUILD_TYPE}" lower_build_type)
@@ -29,7 +34,7 @@ option(ENABLE_TESTS "Build some unit tests" ON)
 option(ENABLE_COTIRE "Enable Compile TIme Reducer (AKA use PCH)"
 		${allow_cotire})
 
-set(CD_PATH ${CMAKE_SOURCE_DIR}/data/cd.iso CACHE STRING "Path to cd.iso (used
+set(CD_PATH ${PROJECT_SOURCE_DIR}/data/cd.iso CACHE STRING "Path to cd.iso (used
 by test and extractor")
 
 if (NOT EXISTS ${CD_PATH})
@@ -76,7 +81,8 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Qunused-arguments")
 endif()
 
-set(GLM_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/dependencies/glm)
+
+set(GLM_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/dependencies/glm)
 MARK_AS_ADVANCED(GLM_INCLUDE_DIR)
 
 add_subdirectory(library)
@@ -87,14 +93,20 @@ add_subdirectory(game/ui)
 add_subdirectory(tools)
 add_subdirectory(dependencies)
 
-ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} game/main.cpp ${sources}
-		${FRAMEWORK_SOURCES})
+# Android uses libraries instead of executables
+if (ANDROID)
+	add_library(OpenApoc SHARED game/main.cpp ${sources}
+            ${FRAMEWORK_SOURCES})
+else()
+    ADD_EXECUTABLE(OpenApoc game/main.cpp ${sources}
+	    	${FRAMEWORK_SOURCES})
+endif()
 
-target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Library)
-target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Framework)
-target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Forms)
-target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_GameState)
-target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_GameUI)
+target_link_libraries(OpenApoc OpenApoc_Library)
+target_link_libraries(OpenApoc OpenApoc_Framework)
+target_link_libraries(OpenApoc OpenApoc_Forms)
+target_link_libraries(OpenApoc OpenApoc_GameState)
+target_link_libraries(OpenApoc OpenApoc_GameUI)
 
 set_property(TARGET OpenApoc PROPERTY CXX_STANDARD 11)
 set_property(TARGET OpenApoc PROPERTY CXX_STANDARD_REQUIRED ON)
@@ -110,9 +122,13 @@ INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
 # apoc data copy
 SET( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
 
-install(TARGETS ${CMAKE_PROJECT_NAME}
-		RUNTIME DESTINATION bin)
-install(DIRECTORY ${CMAKE_SOURCE_DIR}data/ DESTINATION share/OpenApoc)
+# Do not attempt to install while cross-compiling
+# FIXME: maybe applicable for *any* cross-compilation, not only Android?
+if (NOT ANDROID)
+    install(TARGETS OpenApoc
+    		RUNTIME DESTINATION bin)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}data/ DESTINATION share/OpenApoc)
+endif()
 
 if(ENABLE_TESTS)
 	enable_testing()
