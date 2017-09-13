@@ -11,6 +11,8 @@
 namespace OpenApoc
 {
 
+constexpr int Base::SIZE;
+
 Base::Base(GameState &state, StateRef<Building> building) : building(building)
 {
 	corridors = std::vector<std::vector<bool>>(SIZE, std::vector<bool>(SIZE, false));
