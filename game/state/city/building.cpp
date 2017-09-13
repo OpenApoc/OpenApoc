@@ -1,5 +1,6 @@
 #include "game/state/city/building.h"
 #include "framework/framework.h"
+#include "game/state/base/base.h"
 #include "game/state/city/city.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
@@ -104,7 +105,7 @@ void Building::updateDetection(GameState &state, unsigned int ticks)
 	while (ticksDetectionAttemptAccumulated >= TICKS_PER_DETECTION_ATTEMPT[state.difficulty])
 	{
 		ticksDetectionAttemptAccumulated -= TICKS_PER_DETECTION_ATTEMPT[state.difficulty];
-		detect(state, state.firstDetection);
+		detect(state, state.firstDetection || owner == state.getPlayer());
 	}
 }
 
@@ -172,11 +173,32 @@ void Building::detect(GameState &state, bool forced)
 	}
 	state.firstDetection = false;
 	ticksDetectionTimeOut = TICKS_DETECTION_TIMEOUT;
-	detected = true;
+	StateRef<Base> base;
+	if (owner == state.getPlayer())
+	{
+		auto thisSP = shared_from_this();
+		for (auto &b : state.player_bases)
+		{
+			if (b.second->building == thisSP)
+			{
+				base = {&state, b.first};
+				break;
+			}
+		}
+	}
+	if (base)
+	{
+		auto event = new GameDefenseEvent(GameEventType::DefendTheBase, base, state.getAliens());
+		fw().pushEvent(event);
+	}
+	else
+	{
+		detected = true;
 
-	auto event = new GameBuildingEvent(GameEventType::AlienSpotted,
-	                                   {&state, Building::getId(state, shared_from_this())});
-	fw().pushEvent(event);
+		auto event = new GameBuildingEvent(GameEventType::AlienSpotted,
+		                                   {&state, Building::getId(state, shared_from_this())});
+		fw().pushEvent(event);
+	}
 }
 
 void Building::alienGrowth(GameState &state)

@@ -53,7 +53,7 @@ void BattleItem::hopTo(GameState &state, Vec3<float> targetPosition)
 	// It was observed that boomeroids hop 1 to 4 tiles away (never overshooting)
 	int distance =
 	    std::min(16.0f, BattleUnitTileHelper::getDistanceStatic(position, targetPosition)) / 4.0f;
-	distance = randBoundsInclusive(state.rng, 1, distance);
+	distance = distance > 1 ? randBoundsInclusive(state.rng, 1, distance) : distance;
 	auto targetVector = targetPosition - position;
 	float velXY = 0.0f;
 	float velZ = 0.0f;

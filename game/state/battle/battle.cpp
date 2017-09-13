@@ -709,27 +709,26 @@ void Battle::initialUnitSpawn(GameState &state)
 	}
 
 	// Spawn agents with spawn locations provided
-	for (auto &f : state.current_battle->forces)
+	for (auto &u : units)
 	{
-		for (auto &s : f.second.squads)
+		if (u.second->retreated || spawnLocations[u.second->agent->type].empty())
 		{
-			for (auto &u : s.units)
-			{
-				if (spawnLocations[u->agent->type].empty())
-				{
-					continue;
-				}
-				auto pos = listRandomiser(state.rng, spawnLocations[u->agent->type]);
-				spawnLocations[u->agent->type].remove(pos);
-				auto tile = map->getTile(pos.x, pos.y, pos.z);
-				u->position = tile->getRestingPosition(u->isLarge());
-			}
+			continue;
 		}
+		auto pos = listRandomiser(state.rng, spawnLocations[u.second->agent->type]);
+		spawnLocations[u.second->agent->type].remove(pos);
+		auto tile = map->getTile(pos.x, pos.y, pos.z);
+		u.second->position = tile->getRestingPosition(u.second->isLarge());
 	}
 
 	// Actually spawn agents
 	for (auto &f : state.current_battle->forces)
 	{
+		// Note if we need to spawn non-combatants at civilian spots
+		bool baseDefendingSide =
+		    state.current_battle->mission_type == Battle::MissionType::BaseDefense &&
+		    f.first == state.current_battle->currentPlayer;
+
 		// All units to spawn, grouped by squads, squadless in the back
 		std::list<std::list<sp<BattleUnit>>> unitGroupsToSpawn;
 		// Add squadless
@@ -764,6 +763,7 @@ void Battle::initialUnitSpawn(GameState &state)
 				// Determine what kind of units we're trying to spawn
 				bool needWalker = false;
 				bool needLarge = false;
+				bool requestCivilian = false;
 				for (auto &u : unitsToSpawn)
 				{
 					if (u->isLarge())
@@ -774,99 +774,104 @@ void Battle::initialUnitSpawn(GameState &state)
 					{
 						needWalker = true;
 					}
+					if (baseDefendingSide && !u->agent->type->inventory)
+					{
+						requestCivilian = true;
+					}
 				}
 
 				// Make a list of priorities, in which order will we try to find a block
 				sp<SpawnBlock> block = nullptr;
 				std::list<std::list<sp<SpawnBlock>> *> priorityList;
+				auto spawnType = requestCivilian ? SpawnType::Civilian : spawnTypeMap[{f.first}];
 				if (needWalker && needLarge)
 				{
-					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Large,
-					                                   UnitMovement::Walking, false}]);
-					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Large,
-					                                   UnitMovement::Walking, true}]);
-					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Large,
-					                                      UnitMovement::Walking, false}]);
-					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Large,
-					                                      UnitMovement::Walking, true}]);
+					priorityList.push_back(
+					    &spawnMaps[{spawnType, UnitSize::Large, UnitMovement::Walking, false}]);
+					priorityList.push_back(
+					    &spawnMaps[{spawnType, UnitSize::Large, UnitMovement::Walking, true}]);
+					priorityList.push_back(
+					    &spawnInverse[{spawnType, UnitSize::Large, UnitMovement::Walking, false}]);
+					priorityList.push_back(
+					    &spawnInverse[{spawnType, UnitSize::Large, UnitMovement::Walking, true}]);
 
-					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Large,
-					                                   UnitMovement::Flying, false}]);
-					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Large,
-					                                   UnitMovement::Flying, true}]);
-					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Large,
-					                                      UnitMovement::Flying, false}]);
-					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Large,
-					                                      UnitMovement::Flying, true}]);
+					priorityList.push_back(
+					    &spawnMaps[{spawnType, UnitSize::Large, UnitMovement::Flying, false}]);
+					priorityList.push_back(
+					    &spawnMaps[{spawnType, UnitSize::Large, UnitMovement::Flying, true}]);
+					priorityList.push_back(
+					    &spawnInverse[{spawnType, UnitSize::Large, UnitMovement::Flying, false}]);
+					priorityList.push_back(
+					    &spawnInverse[{spawnType, UnitSize::Large, UnitMovement::Flying, true}]);
 
-					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Small,
-					                                   UnitMovement::Walking, false}]);
-					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Small,
-					                                   UnitMovement::Walking, true}]);
-					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Small,
-					                                      UnitMovement::Walking, false}]);
-					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Small,
-					                                      UnitMovement::Walking, true}]);
+					priorityList.push_back(
+					    &spawnMaps[{spawnType, UnitSize::Small, UnitMovement::Walking, false}]);
+					priorityList.push_back(
+					    &spawnMaps[{spawnType, UnitSize::Small, UnitMovement::Walking, true}]);
+					priorityList.push_back(
+					    &spawnInverse[{spawnType, UnitSize::Small, UnitMovement::Walking, false}]);
+					priorityList.push_back(
+					    &spawnInverse[{spawnType, UnitSize::Small, UnitMovement::Walking, true}]);
 
-					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Small,
-					                                   UnitMovement::Flying, false}]);
-					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Small,
-					                                   UnitMovement::Flying, true}]);
-					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Small,
-					                                      UnitMovement::Flying, false}]);
-					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Small,
-					                                      UnitMovement::Flying, true}]);
+					priorityList.push_back(
+					    &spawnMaps[{spawnType, UnitSize::Small, UnitMovement::Flying, false}]);
+					priorityList.push_back(
+					    &spawnMaps[{spawnType, UnitSize::Small, UnitMovement::Flying, true}]);
+					priorityList.push_back(
+					    &spawnInverse[{spawnType, UnitSize::Small, UnitMovement::Flying, false}]);
+					priorityList.push_back(
+					    &spawnInverse[{spawnType, UnitSize::Small, UnitMovement::Flying, true}]);
 				}
 				else if (needLarge)
 				{
-					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Large,
-					                                   UnitMovement::Any, false}]);
-					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Large,
-					                                   UnitMovement::Any, true}]);
-					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Large,
-					                                      UnitMovement::Any, false}]);
-					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Large,
-					                                      UnitMovement::Any, true}]);
+					priorityList.push_back(
+					    &spawnMaps[{spawnType, UnitSize::Large, UnitMovement::Any, false}]);
+					priorityList.push_back(
+					    &spawnMaps[{spawnType, UnitSize::Large, UnitMovement::Any, true}]);
+					priorityList.push_back(
+					    &spawnInverse[{spawnType, UnitSize::Large, UnitMovement::Any, false}]);
+					priorityList.push_back(
+					    &spawnInverse[{spawnType, UnitSize::Large, UnitMovement::Any, true}]);
 
-					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Small,
-					                                   UnitMovement::Any, false}]);
-					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Small,
-					                                   UnitMovement::Any, true}]);
-					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Small,
-					                                      UnitMovement::Any, false}]);
-					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Small,
-					                                      UnitMovement::Any, true}]);
+					priorityList.push_back(
+					    &spawnMaps[{spawnType, UnitSize::Small, UnitMovement::Any, false}]);
+					priorityList.push_back(
+					    &spawnMaps[{spawnType, UnitSize::Small, UnitMovement::Any, true}]);
+					priorityList.push_back(
+					    &spawnInverse[{spawnType, UnitSize::Small, UnitMovement::Any, false}]);
+					priorityList.push_back(
+					    &spawnInverse[{spawnType, UnitSize::Small, UnitMovement::Any, true}]);
 				}
 				else if (needWalker)
 				{
-					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Any,
-					                                   UnitMovement::Walking, false}]);
-					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Any,
-					                                   UnitMovement::Walking, true}]);
-					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Any,
-					                                      UnitMovement::Walking, false}]);
-					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Any,
-					                                      UnitMovement::Walking, true}]);
+					priorityList.push_back(
+					    &spawnMaps[{spawnType, UnitSize::Any, UnitMovement::Walking, false}]);
+					priorityList.push_back(
+					    &spawnMaps[{spawnType, UnitSize::Any, UnitMovement::Walking, true}]);
+					priorityList.push_back(
+					    &spawnInverse[{spawnType, UnitSize::Any, UnitMovement::Walking, false}]);
+					priorityList.push_back(
+					    &spawnInverse[{spawnType, UnitSize::Any, UnitMovement::Walking, true}]);
 
-					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Any,
-					                                   UnitMovement::Flying, false}]);
-					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Any,
-					                                   UnitMovement::Flying, true}]);
-					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Any,
-					                                      UnitMovement::Flying, false}]);
-					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Any,
-					                                      UnitMovement::Flying, true}]);
+					priorityList.push_back(
+					    &spawnMaps[{spawnType, UnitSize::Any, UnitMovement::Flying, false}]);
+					priorityList.push_back(
+					    &spawnMaps[{spawnType, UnitSize::Any, UnitMovement::Flying, true}]);
+					priorityList.push_back(
+					    &spawnInverse[{spawnType, UnitSize::Any, UnitMovement::Flying, false}]);
+					priorityList.push_back(
+					    &spawnInverse[{spawnType, UnitSize::Any, UnitMovement::Flying, true}]);
 				}
 				else
 				{
-					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Any,
-					                                   UnitMovement::Any, false}]);
-					priorityList.push_back(&spawnMaps[{spawnTypeMap[{f.first}], UnitSize::Any,
-					                                   UnitMovement::Any, true}]);
-					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Any,
-					                                      UnitMovement::Any, false}]);
-					priorityList.push_back(&spawnInverse[{spawnTypeMap[{f.first}], UnitSize::Any,
-					                                      UnitMovement::Any, true}]);
+					priorityList.push_back(
+					    &spawnMaps[{spawnType, UnitSize::Any, UnitMovement::Any, false}]);
+					priorityList.push_back(
+					    &spawnMaps[{spawnType, UnitSize::Any, UnitMovement::Any, true}]);
+					priorityList.push_back(
+					    &spawnInverse[{spawnType, UnitSize::Any, UnitMovement::Any, false}]);
+					priorityList.push_back(
+					    &spawnInverse[{spawnType, UnitSize::Any, UnitMovement::Any, true}]);
 				}
 				priorityList.push_back(&spawnOther);
 
@@ -996,9 +1001,11 @@ void Battle::initialUnitSpawn(GameState &state)
 								numSpawned++;
 								if (unitsToSpawn.size() == 0
 								    // This makes us spawn every civilian and loner individually
-								    || (numSpawned > 0 && (u->getAIType() == AIType::None ||
-								                           u->getAIType() == AIType::Loner ||
-								                           u->getAIType() == AIType::Civilian)))
+								    // Except X-Com scientists
+								    || (numSpawned > 0 && !requestCivilian &&
+								        (u->getAIType() == AIType::None ||
+								         u->getAIType() == AIType::Loner ||
+								         u->getAIType() == AIType::Civilian)))
 								{
 									stopSpawning = true;
 									break;
@@ -2285,7 +2292,8 @@ void Battle::giveInterruptChanceToUnit(GameState &state, StateRef<BattleUnit> gi
 }
 
 // To be called when battle must be started, before showing battle briefing screen
-void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> target_organisation,
+// In case battle is in a craft (UFO)
+void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> opponent,
                          std::list<StateRef<Agent>> &player_agents,
                          const std::map<StateRef<AgentType>, int> *aliens,
                          StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft)
@@ -2295,8 +2303,8 @@ void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> 
 		LogError("Battle::beginBattle called while another battle is in progress!");
 		return;
 	}
-	auto b = BattleMap::createBattle(state, target_organisation, player_agents, aliens,
-	                                 player_craft, target_craft);
+	auto b =
+	    BattleMap::createBattle(state, opponent, player_agents, aliens, player_craft, target_craft);
 	if (!b)
 	{
 		return;
@@ -2307,7 +2315,8 @@ void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> 
 }
 
 // To be called when battle must be started, before showing battle briefing screen
-void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> target_organisation,
+// In case battle is in a building
+void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> opponent,
                          std::list<StateRef<Agent>> &player_agents,
                          const std::map<StateRef<AgentType>, int> *aliens, const int *guards,
                          const int *civilians, StateRef<Vehicle> player_craft,
@@ -2318,15 +2327,15 @@ void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> 
 		LogError("Battle::beginBattle called while another battle is in progress!");
 		return;
 	}
-	auto b = BattleMap::createBattle(state, target_organisation, player_agents, aliens, guards,
-	                                 civilians, player_craft, target_building);
+	auto b = BattleMap::createBattle(state, opponent, player_agents, aliens, guards, civilians,
+	                                 player_craft, target_building);
 	if (!b)
 	{
 		return;
 	}
 	b->hotseat = hotseat;
 	b->locationOwner = target_building->owner;
-	b->buildingCanBeDisabled = target_organisation == state.getAliens();
+	b->buildingCanBeDisabled = b->locationOwner == state.getAliens();
 	state.current_battle = b;
 }
 
@@ -2457,6 +2466,10 @@ void Battle::finishBattle(GameState &state)
 	std::map<int, std::list<sp<BattleUnit>>> unitsByRating;
 	for (auto &u : state.current_battle->units)
 	{
+		if (!u.second->agent->type->allowsDirectControl)
+		{
+			continue;
+		}
 		u.second->processExperience(state);
 		unitsByRating[-u.second->combatRating].push_back(u.second);
 	}
@@ -2464,6 +2477,11 @@ void Battle::finishBattle(GameState &state)
 	std::map<Rank, int> countRanks;
 	for (auto &a : state.agents)
 	{
+		if (!a.second->type->allowsDirectControl ||
+		    a.second->type->role != AgentType::Role::Soldier)
+		{
+			continue;
+		}
 		countRanks[a.second->rank]++;
 	}
 	// Rank up top 5 units from list that can accept promotion

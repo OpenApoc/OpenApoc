@@ -71,6 +71,16 @@ class GameOrganisationEvent : public GameEvent
 	~GameOrganisationEvent() override = default;
 };
 
+class GameDefenseEvent : public GameEvent
+{
+  public:
+	StateRef<Base> base;
+	StateRef<Organisation> organisation;
+
+	GameDefenseEvent(GameEventType type, StateRef<Base> base, StateRef<Organisation> organisation);
+	~GameDefenseEvent() override = default;
+};
+
 class GameAgentEvent : public GameEvent
 {
   public:

@@ -5,6 +5,8 @@
 #include "framework/framework.h"
 #include "framework/sound.h"
 #include "game/state/aequipment.h"
+#include "game/state/base/base.h"
+#include "game/state/base/facility.h"
 #include "game/state/battle/ai/unitaihelper.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonsamplelist.h"
@@ -14,6 +16,7 @@
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/damage.h"
+#include "game/state/rules/facility_type.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_shadow.h"
@@ -3891,7 +3894,8 @@ void BattleUnit::spawnEnzymeSmoke(GameState &state, Vec3<int> pos)
 void BattleUnit::sendAgentEvent(GameState &state, GameEventType type, bool checkOwnership,
                                 bool checkVisibility) const
 {
-	if ((!checkOwnership || owner == state.current_battle->currentPlayer) &&
+	if ((!checkOwnership ||
+	     (owner == state.current_battle->currentPlayer && agent->type->allowsDirectControl)) &&
 	    (!checkVisibility || owner == state.current_battle->currentPlayer ||
 	     state.current_battle->visibleUnits[state.current_battle->currentPlayer].find(
 	         {&state, id}) !=
@@ -4607,6 +4611,25 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 	}
 	// Leave squad
 	removeFromSquad(*state.current_battle);
+	// Remove from lab
+	for (auto &base : state.player_bases)
+	{
+		if (!agent->assigned_to_lab)
+		{
+			break;
+		}
+		for (auto &fac : base.second->facilities)
+		{
+			auto it = std::find(fac->lab->assigned_agents.begin(), fac->lab->assigned_agents.end(),
+			                    agent);
+			if (it != fac->lab->assigned_agents.end())
+			{
+				fac->lab->assigned_agents.erase(it);
+				agent->assigned_to_lab = false;
+				break;
+			}
+		}
+	}
 	// Animate body
 	dropDown(state);
 }

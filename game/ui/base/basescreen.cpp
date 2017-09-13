@@ -128,6 +128,16 @@ void BaseScreen::eventOccurred(Event *e)
 			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
+		if (e->keyboard().KeyCode == SDLK_F10)
+		{
+			for (auto &facility : state->current_base->facilities)
+			{
+				{
+					facility->buildTime = 0;
+				}
+			}
+			return;
+		}
 	}
 
 	if (e->type() == EVENT_MOUSE_MOVE)

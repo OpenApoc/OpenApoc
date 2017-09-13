@@ -19,6 +19,7 @@
 #include "framework/trace.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
+#include "game/state/battle/battle.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/scenery.h"
@@ -40,6 +41,7 @@
 #include "game/ui/base/basescreen.h"
 #include "game/ui/base/researchscreen.h"
 #include "game/ui/base/vequipscreen.h"
+#include "game/ui/battle/battlebriefing.h"
 #include "game/ui/city/alertscreen.h"
 #include "game/ui/city/baseselectscreen.h"
 #include "game/ui/city/buildingscreen.h"
@@ -777,6 +779,28 @@ void CityView::update()
 	}
 }
 
+std::shared_future<void> loadBattleBase(sp<GameState> state, StateRef<Base> base,
+                                        StateRef<Organisation> attacker)
+{
+	auto loadTask = fw().threadPoolEnqueue([base, state, attacker]() -> void {
+
+		std::list<StateRef<Agent>> agents;
+		StateRef<Vehicle> veh = {};
+
+		Battle::beginBattle(*state, false, attacker, agents, nullptr, nullptr, nullptr, veh,
+		                    base->building);
+	});
+
+	return loadTask;
+}
+
+void CityView::initiateDefenseMission(StateRef<Base> base, StateRef<Organisation> attacker)
+{
+	fw().stageQueueCommand({StageCmd::Command::REPLACEALL,
+	                        mksp<BattleBriefing>(state, attacker, base->building.id, false, false,
+	                                             loadBattleBase(state, base, attacker))});
+}
+
 void CityView::eventOccurred(Event *e)
 {
 	this->drawCity = true;
@@ -981,6 +1005,12 @@ void CityView::eventOccurred(Event *e)
 				         format("Aliens have taken over %s", gameOrgEvent->organisation->name))});
 			}
 			break;
+			case GameEventType::DefendTheBase:
+			{
+				auto gameDefenseEvent = dynamic_cast<GameDefenseEvent *>(e);
+				initiateDefenseMission(gameDefenseEvent->base, gameDefenseEvent->organisation);
+				break;
+			}
 			case GameEventType::AlienSpotted:
 			{
 				auto ev = dynamic_cast<GameBuildingEvent *>(e);

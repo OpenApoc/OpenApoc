@@ -970,6 +970,7 @@ void AEquipScreen::populateInventoryItemsBase()
 		if (b.second->building == currentAgent->home_base->building)
 		{
 			base = {state.get(), b.first};
+			break;
 		}
 	}
 
@@ -1139,6 +1140,7 @@ void AEquipScreen::removeItemFromInventoryBase(sp<AEquipment> item)
 		if (b.second->building == currentAgent->home_base->building)
 		{
 			base = {state.get(), b.first};
+			break;
 		}
 	}
 
@@ -1244,6 +1246,7 @@ void AEquipScreen::addItemToInventoryBase(sp<AEquipment> item)
 		if (b.second->building == currentAgent->home_base->building)
 		{
 			base = {state.get(), b.first};
+			break;
 		}
 	}
 

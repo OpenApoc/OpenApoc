@@ -69,12 +69,12 @@ class BattleMap : public StateObject
 	StateRefMap<BattleMapSector> sectors;
 
   private:
-	static sp<Battle> createBattle(GameState &state, StateRef<Organisation> target_organisation,
+	static sp<Battle> createBattle(GameState &state, StateRef<Organisation> opponent,
 	                               std::list<StateRef<Agent>> &player_agents,
 	                               const std::map<StateRef<AgentType>, int> *aliens,
 	                               StateRef<Vehicle> player_craft, StateRef<Vehicle> target_craft);
 
-	static sp<Battle> createBattle(GameState &state, StateRef<Organisation> target_organisation,
+	static sp<Battle> createBattle(GameState &state, StateRef<Organisation> opponent,
 	                               std::list<StateRef<Agent>> &player_agents,
 	                               const std::map<StateRef<AgentType>, int> *aliens,
 	                               const int *guards, const int *civilians,
@@ -82,9 +82,9 @@ class BattleMap : public StateObject
 	                               StateRef<Building> target_building);
 
 	sp<Battle> createBattle(GameState &state, StateRef<Organisation> propertyOwner,
-	                        StateRef<Organisation> target_organisation,
-	                        std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
-	                        Battle::MissionType mission_type, UString mission_location_id);
+	                        StateRef<Organisation> opponent, std::list<StateRef<Agent>> &agents,
+	                        StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
+	                        UString mission_location_id);
 
 	bool generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int> &size, GameState &state,
 	                 GenerationSize genSize);

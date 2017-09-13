@@ -31,6 +31,9 @@ enum class GameEventType
 	RecoveryArrived,
 	BaseDestroyed,
 
+	// Defense events
+	DefendTheBase,
+
 	// Building events
 	AlienSpotted,
 	BuildingAttacked,

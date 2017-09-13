@@ -3483,7 +3483,8 @@ void BattleView::handleMouseDown(Event *e)
 		{
 			for (auto &u : objsOccupying)
 			{
-				if (player == u->owner && u->moraleState == MoraleState::Normal)
+				if (player == u->owner && u->moraleState == MoraleState::Normal &&
+				    u->agent->type->allowsDirectControl)
 				{
 					selectionTarget = u;
 					break;
@@ -3494,7 +3495,8 @@ void BattleView::handleMouseDown(Event *e)
 		{
 			for (auto &u : objsPresent)
 			{
-				if (player == u->owner && u->moraleState == MoraleState::Normal)
+				if (player == u->owner && u->moraleState == MoraleState::Normal &&
+				    u->agent->type->allowsDirectControl)
 				{
 					selectionTarget = u;
 					break;

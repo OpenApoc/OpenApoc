@@ -143,6 +143,9 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 	selectedTileImageOffset = {23, 42};
 	pal = fw().data->loadPalette("xcom3/tacdata/tactical.pal");
 
+	activeUnitSelectionArrow.push_back(fw().data->loadImage("battle/battle-active-squadless.png"));
+	inactiveUnitSelectionArrow.push_back(
+	    fw().data->loadImage("battle/battle-inactive-squadless.png"));
 	for (int i = 0; i < 6; i++)
 	{
 		activeUnitSelectionArrow.push_back(
@@ -1099,8 +1102,8 @@ void BattleTileView::render()
 				    offset;
 
 				// Selection arrow
-				r.draw(obj.second ? activeUnitSelectionArrow[obj.first->squadNumber]
-				                  : inactiveUnitSelectionArrow[obj.first->squadNumber],
+				r.draw(obj.second ? activeUnitSelectionArrow[obj.first->squadNumber + 1]
+				                  : inactiveUnitSelectionArrow[obj.first->squadNumber + 1],
 				       pos);
 				r.draw(arrowHealthBars[health], pos + offsetHealth);
 				// Behavior

@@ -352,7 +352,9 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 					los_block->spawn_walking_units = ldata.spawn_walkers == 1;
 
 					// Bases are special
-					// Enemy and player spawn spots are reversed (player spawns at 2, enemies at 0)
+					// Enemy and player spawn spots are different.
+					// - Player spawns at Civilian (2)
+					// - Enemy spawns at Player (0)
 					// Priority 4 seems to mean noncombatants and priority 2 seems to mean agents
 					// For enemy spawns, priority 4 is encountered in hangars and 2 in lifts
 					if (baseMap)
@@ -361,8 +363,11 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 						{
 							case SPAWN_TYPE_PLAYER:
 								los_block->spawn_type = SpawnType::Enemy;
+								// Fix this otherwise noone spawns in the lift
+								// since there's so much more spawns in the repair bays
+								los_block->spawn_priority == 2;
 								break;
-							case SPAWN_TYPE_ENEMY:
+							case SPAWN_TYPE_CIVILIAN:
 								if (los_block->spawn_priority == 4)
 								{
 									los_block->spawn_type = SpawnType::Civilian;
@@ -372,7 +377,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 									los_block->spawn_type = SpawnType::Player;
 								}
 								break;
-							case SPAWN_TYPE_CIVILIAN:
+							case SPAWN_TYPE_ENEMY:
 								los_block->spawn_priority = 0;
 								break;
 							default:
@@ -525,20 +530,20 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 						// read scenery
 						if (tdata.FT != 0)
 						{
-							if (baseMap && tdata.FT >= 230 && tdata.FT >= 237)
+							if (baseMap && tdata.FT >= 230 && tdata.FT <= 237)
 							{
 								if (sector == "23")
 								{
 									tiles
-									    ->turretLocations[{&state,
-									                       "AGENTTYPE_X-COM_BASE_TURRET_LASER"}]
+									    ->guardianLocations[{&state,
+									                         "AGENTTYPE_X-COM_BASE_TURRET_LASER"}]
 									    .push_back(Vec3<int>{x, y, z});
 								}
 								else if (sector == "24")
 								{
 									tiles
-									    ->turretLocations[{&state,
-									                       "AGENTTYPE_X-COM_BASE_TURRET_DISRUPTOR"}]
+									    ->guardianLocations[{
+									        &state, "AGENTTYPE_X-COM_BASE_TURRET_DISRUPTOR"}]
 									    .push_back(Vec3<int>{x, y, z});
 								}
 								else

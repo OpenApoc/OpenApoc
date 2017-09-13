@@ -175,7 +175,7 @@
       <range>1000</range>
       <ttl>3000</ttl>
       <explosion_graphic>DOODAD_25_DEVASTATOR</explosion_graphic>
-      <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/dcannon1.raw:22050</fire_sfx>
+      <fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/disruptr.raw:22050</fire_sfx>
       <damage_type>DAMAGETYPE_DISRUPTOR_BEAM</damage_type>
       <trigger_type>Timed</trigger_type>
     </value>
