@@ -1302,7 +1302,11 @@ bool BattleUnit::isAttacking() const { return weaponStatus != WeaponStatus::NotF
 
 bool BattleUnit::isThrowing() const { return isDoing(BattleUnitMission::Type::ThrowItem); }
 
-bool BattleUnit::isMoving() const { return isDoing(BattleUnitMission::Type::GotoLocation) || isDoing(BattleUnitMission::Type::ReachGoal); }
+bool BattleUnit::isMoving() const
+{
+	return isDoing(BattleUnitMission::Type::GotoLocation) ||
+	       isDoing(BattleUnitMission::Type::ReachGoal);
+}
 
 bool BattleUnit::isDoing(BattleUnitMission::Type missionType) const
 {
@@ -2485,20 +2489,21 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 					auto unit = presentUnit->getUnit();
 					if (position.z < unit->getMuzzleLocation().z)
 					{
-						StateRef<DamageType> brainsucker = { &state, "DAMAGETYPE_BRAINSUCKER" };
+						StateRef<DamageType> brainsucker = {&state, "DAMAGETYPE_BRAINSUCKER"};
 						if (!unit->brainSucker &&
-							brainsucker->dealDamage(100, unit->agent->type->damage_modifier) == 0)
+						    brainsucker->dealDamage(100, unit->agent->type->damage_modifier) == 0)
 						{
 							applyDamageDirect(state, 9001, false, BodyPart::Body,
-								agent->current_stats.health + TICKS_PER_TURN);
+							                  agent->current_stats.health + TICKS_PER_TURN);
 						}
 						else
 						{
-							int facingDelta = BattleUnitMission::getFacingDelta(facing, unit->facing);
+							int facingDelta =
+							    BattleUnitMission::getFacingDelta(facing, unit->facing);
 							cancelMissions(state, true);
 							spendRemainingTU(state, true);
-							setMission(state, BattleUnitMission::brainsuck(*this, { &state, unit->id },
-								facingDelta));
+							setMission(state, BattleUnitMission::brainsuck(
+							                      *this, {&state, unit->id}, facingDelta));
 						}
 					}
 				}
@@ -3223,7 +3228,9 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 					// Lead the target
 					if (targetUnit)
 					{
-						auto projectileVelocity = firingWeapon->getPayloadType()->speed * PROJECTILE_VELOCITY_MULTIPLIER / (float)TICK_SCALE;
+						auto projectileVelocity = firingWeapon->getPayloadType()->speed *
+						                          PROJECTILE_VELOCITY_MULTIPLIER /
+						                          (float)TICK_SCALE;
 						// Target's velocity (if falling/jumping)
 						Vec3<float> targetVelocity = targetUnit->velocity / (float)TICK_SCALE;
 						// If moving instead use movement speed
@@ -3231,11 +3238,13 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 						{
 							// Normalized Vector towards target position
 							targetVelocity = targetUnit->goalPosition - targetUnit->position;
-							if (targetVelocity.x != 0.0f || targetVelocity.y != 0.0f || targetVelocity.z != 0.0f)
+							if (targetVelocity.x != 0.0f || targetVelocity.y != 0.0f ||
+							    targetVelocity.z != 0.0f)
 							{
 								targetVelocity = glm::normalize(targetVelocity);
 								// Account for unit speed and movement state
-								float speedMult = targetUnit->agent->modified_stats.getMovementSpeed();
+								float speedMult =
+								    targetUnit->agent->modified_stats.getMovementSpeed();
 								if (targetUnit->current_movement_state == MovementState::Running)
 								{
 									speedMult *= 2.0f;
@@ -3680,7 +3689,7 @@ bool BattleUnit::canLaunch(Vec3<float> targetPosition)
 }
 
 bool BattleUnit::canLaunch(Vec3<float> targetPosition, Vec3<float> &targetVectorXY,
-	float &velocityXY, float &velocityZ)
+                           float &velocityXY, float &velocityZ)
 {
 	// Flying units cannot jump
 	if (canFly())
@@ -3702,14 +3711,15 @@ bool BattleUnit::canLaunch(Vec3<float> targetPosition, Vec3<float> &targetVector
 		return false;
 	}
 	// Calculate starting velocity
-	targetVectorXY = { targetVector.x, targetVector.y, 0.0f };
+	targetVectorXY = {targetVector.x, targetVector.y, 0.0f};
 	float distance = glm::length(targetVectorXY);
 	float initialXY = 0.5f;
-	if (sucker) 
+	if (sucker)
 	{
 		initialXY *= sqrtf(targetVector.x * targetVector.x + targetVector.y * targetVector.y);
 	}
-	if (!calculateVelocityForLaunch(distance, position.z - targetPosition.z, velocityXY, velocityZ, initialXY))
+	if (!calculateVelocityForLaunch(distance, position.z - targetPosition.z, velocityXY, velocityZ,
+	                                initialXY))
 	{
 		return false;
 	}
@@ -4768,7 +4778,8 @@ bool BattleUnit::useBrainsucker(GameState &state)
 				{
 					// Normalized Vector towards target position
 					targetVelocity = target->goalPosition - target->position;
-					if (targetVelocity.x != 0.0f || targetVelocity.y != 0.0f|| targetVelocity.z != 0.0f)
+					if (targetVelocity.x != 0.0f || targetVelocity.y != 0.0f ||
+					    targetVelocity.z != 0.0f)
 					{
 						targetVelocity = glm::normalize(targetVelocity);
 						// Account for unit speed and movement state
@@ -4787,13 +4798,13 @@ bool BattleUnit::useBrainsucker(GameState &state)
 						targetVelocity /= (float)TICKS_PER_UNIT_TRAVELLED;
 					}
 				}
-				// Scale to about 0.8 seconds, that's the amount 
+				// Scale to about 0.8 seconds, that's the amount
 				// it normally takes sucker to arrive
 				targetVelocity *= 0.8f * (float)TICKS_PER_SECOND;
 				// We don't care about z differences
 				targetVelocity.z = 0.0f;
 				targetPosAdjusted += targetVelocity;
-				
+
 				// Go for the head!
 				setMission(state, BattleUnitMission::jump(*this, targetPosAdjusted,
 				                                          BodyState::Jumping, false));
@@ -5180,9 +5191,9 @@ void BattleUnit::playDistantSound(GameState &state, sp<Sample> sfx, float gainMu
 	if (distance < MAX_HEARING_DISTANCE)
 	{
 
-		fw().soundBackend->playSample(sfx, getPosition(), gainMult *
-		                                                      (MAX_HEARING_DISTANCE - distance) /
-		                                                      MAX_HEARING_DISTANCE);
+		fw().soundBackend->playSample(sfx, getPosition(),
+		                              gainMult * (MAX_HEARING_DISTANCE - distance) /
+		                                  MAX_HEARING_DISTANCE);
 	}
 }
 

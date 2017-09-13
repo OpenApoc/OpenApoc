@@ -1293,7 +1293,8 @@ BattleUnitMission *BattleUnitMission::brainsuck(BattleUnit &u, StateRef<BattleUn
 	return mission;
 }
 
-BattleUnitMission *BattleUnitMission::jump(BattleUnit &u, Vec3<float> target, BodyState state, bool requireFacing)
+BattleUnitMission *BattleUnitMission::jump(BattleUnit &u, Vec3<float> target, BodyState state,
+                                           bool requireFacing)
 {
 	auto *mission = new BattleUnitMission();
 	mission->type = Type::Jump;

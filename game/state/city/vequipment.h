@@ -60,7 +60,7 @@ class VEquipment : public Equipment
 	// actually used.
 	int reload(int ammoAvailable);
 	void fire(GameState &state, Vec3<float> targetPosition,
-	                    StateRef<Vehicle> targetVehicle = nullptr);
+	          StateRef<Vehicle> targetVehicle = nullptr);
 
 	sp<Image> getEquipmentArmorImage() const override;
 	sp<Image> getEquipmentImage() const override;

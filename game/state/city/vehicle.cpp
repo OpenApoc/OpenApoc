@@ -486,7 +486,8 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 		// Lead the target
 		auto targetPosAdjusted = target;
 		auto projectileVelocity = eq->type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
-		auto targetVelocity = enemyTile->getVehicle()->velocity * enemyTile->getVehicle()->getSpeed();
+		auto targetVelocity =
+		    enemyTile->getVehicle()->velocity * enemyTile->getVehicle()->getSpeed();
 		targetPosAdjusted += targetVelocity * distanceTiles / projectileVelocity;
 
 		// No sight to target

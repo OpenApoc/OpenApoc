@@ -350,7 +350,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 				{
 					los_block->spawn_large_units = ldata.spawn_large == 1 && z_min != z_max;
 					los_block->spawn_walking_units = ldata.spawn_walkers == 1;
-					
+
 					// Bases are special
 					// Enemy and player spawn spots are reversed (player spawns at 2, enemies at 0)
 					// Priority 4 seems to mean noncombatants and priority 2 seems to mean agents
@@ -385,31 +385,31 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 					{
 						switch (ldata.spawn_type)
 						{
-						case SPAWN_TYPE_PLAYER:
-							los_block->spawn_type = SpawnType::Player;
-							break;
-						case SPAWN_TYPE_ENEMY:
-							los_block->spawn_type = SpawnType::Enemy;
-							if (mapRootName == "41food")
-							{
-								los_block->also_allow_civilians = true;
-							}
-							break;
-						case SPAWN_TYPE_CIVILIAN:
-							los_block->spawn_type = SpawnType::Civilian;
-							// Prevent civ spawn on spawn map, this was used to spawn queen
-							if (mapRootName == "40spawn" &&
-								(los_block->spawn_priority == 4 || los_block->spawn_priority == 1))
-							{
-								los_block->spawn_priority = 0;
-							}
-							break;
+							case SPAWN_TYPE_PLAYER:
+								los_block->spawn_type = SpawnType::Player;
+								break;
+							case SPAWN_TYPE_ENEMY:
+								los_block->spawn_type = SpawnType::Enemy;
+								if (mapRootName == "41food")
+								{
+									los_block->also_allow_civilians = true;
+								}
+								break;
+							case SPAWN_TYPE_CIVILIAN:
+								los_block->spawn_type = SpawnType::Civilian;
+								// Prevent civ spawn on spawn map, this was used to spawn queen
+								if (mapRootName == "40spawn" && (los_block->spawn_priority == 4 ||
+								                                 los_block->spawn_priority == 1))
+								{
+									los_block->spawn_priority = 0;
+								}
+								break;
 							// TacEdit (map editor from vanilla creators) allows values up to 8, but
 							// they are unused, so we should accomodate for that
-						default:
-							// Disable spawning and leave the type to its default value
-							los_block->spawn_priority = 0;
-							break;
+							default:
+								// Disable spawning and leave the type to its default value
+								los_block->spawn_priority = 0;
+								break;
 						}
 					}
 				}
@@ -529,23 +529,30 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 							{
 								if (sector == "23")
 								{
-									tiles->turretLocations[{&state, "AGENTTYPE_X-COM_BASE_TURRET_LASER"}].push_back(Vec3<int>{x, y, z});
-								} 
+									tiles
+									    ->turretLocations[{&state,
+									                       "AGENTTYPE_X-COM_BASE_TURRET_LASER"}]
+									    .push_back(Vec3<int>{x, y, z});
+								}
 								else if (sector == "24")
 								{
-									tiles->turretLocations[{&state, "AGENTTYPE_X-COM_BASE_TURRET_DISRUPTOR"}].push_back(Vec3<int>{x, y, z});
+									tiles
+									    ->turretLocations[{&state,
+									                       "AGENTTYPE_X-COM_BASE_TURRET_DISRUPTOR"}]
+									    .push_back(Vec3<int>{x, y, z});
 								}
 								else
 								{
-									LogError("Encountered gun emplacement %d in sector %s", tdata.FT, sector);
+									LogError("Encountered gun emplacement %d in sector %s",
+									         tdata.FT, sector);
 								}
 							}
 							else
 							{
 								auto tileName = format("%s%s%s%u", BattleMapPartType::getPrefix(),
-									tilePrefix, "FT_", (unsigned)tdata.FT);
+								                       tilePrefix, "FT_", (unsigned)tdata.FT);
 
-								tiles->initial_features[Vec3<int>{x, y, z}] = { &state, tileName };
+								tiles->initial_features[Vec3<int>{x, y, z}] = {&state, tileName};
 							}
 						}
 					}

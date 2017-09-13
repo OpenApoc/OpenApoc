@@ -1,8 +1,8 @@
-#include "game/state/base/facility.h"
 #include "game/state/battle/battlemap.h"
 #include "game/state/aequipment.h"
 #include "game/state/agent.h"
 #include "game/state/base/base.h"
+#include "game/state/base/facility.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battledoor.h"
@@ -28,18 +28,17 @@ int getCorridorSectorID(sp<Base> base, Vec2<int> pos)
 {
 	// key is North South West East (true = occupied, false = vacant)
 	const std::unordered_map<std::vector<bool>, int> TILE_CORRIDORS = {
-		{ { true, false, false, false }, 4 },{ { false, false, false, true }, 5 },
-		{ { true, false, false, true }, 6 },{ { false, true, false, false }, 7 },
-		{ { true, true, false, false }, 8 },{ { false, true, false, true }, 9 },
-		{ { true, true, false, true }, 10 },{ { false, false, true, false }, 11 },
-		{ { true, false, true, false }, 12 },{ { false, false, true, true }, 13 },
-		{ { true, false, true, true }, 14 },{ { false, true, true, false }, 15 },
-		{ { true, true, true, false }, 16 },{ { false, true, true, true }, 17 },
-		{ { true, true, true, true }, 18 } };
-
+	    {{true, false, false, false}, 4}, {{false, false, false, true}, 5},
+	    {{true, false, false, true}, 6},  {{false, true, false, false}, 7},
+	    {{true, true, false, false}, 8},  {{false, true, false, true}, 9},
+	    {{true, true, false, true}, 10},  {{false, false, true, false}, 11},
+	    {{true, false, true, false}, 12}, {{false, false, true, true}, 13},
+	    {{true, false, true, true}, 14},  {{false, true, true, false}, 15},
+	    {{true, true, true, false}, 16},  {{false, true, true, true}, 17},
+	    {{true, true, true, true}, 18}};
 
 	if (pos.x < 0 || pos.y < 0 || pos.x >= Base::SIZE || pos.y >= Base::SIZE ||
-		!base->corridors[pos.x][pos.y])
+	    !base->corridors[pos.x][pos.y])
 	{
 		return 0;
 	}
@@ -47,9 +46,8 @@ int getCorridorSectorID(sp<Base> base, Vec2<int> pos)
 	bool south = pos.y < Base::SIZE - 1 && base->corridors[pos.x][pos.y + 1];
 	bool west = pos.x > 0 && base->corridors[pos.x - 1][pos.y];
 	bool east = pos.x < Base::SIZE - 1 && base->corridors[pos.x + 1][pos.y];
-	return TILE_CORRIDORS.at({ north, south, west, east }) - 3;
+	return TILE_CORRIDORS.at({north, south, west, east}) - 3;
 }
-
 
 BattleMap::BattleMap() {}
 
@@ -135,8 +133,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 	if (building->owner == state.getPlayer())
 	{
 		// Base defense mission
-		map = { &state, "BATTLEMAP_37base" };
-		
+		map = {&state, "BATTLEMAP_37base"};
+
 		// FIXME: Generate list of agent types for enemies properly
 		// Also add non-combat personell
 
@@ -269,9 +267,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 		player_agents.push_back(state.agent_generator.createAgent(state, pair.first, pair.second));
 	}
 
-	return map->createBattle(state, building->owner, target_organisation,
-	                                          player_agents, player_craft, missionType,
-	                                          building.id);
+	return map->createBattle(state, building->owner, target_organisation, player_agents,
+	                         player_craft, missionType, building.id);
 }
 
 namespace
@@ -846,10 +843,10 @@ bool BattleMap::generateBase(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int
 	{
 		secRefs.push_back(s.second);
 	}
-	
-	size = { Base::SIZE ,Base::SIZE ,1 };
-	sec_map = { (unsigned)size.x * size.y * size.z, nullptr };
-	
+
+	size = {Base::SIZE, Base::SIZE, 1};
+	sec_map = {(unsigned)size.x * size.y * size.z, nullptr};
+
 	// Fill corridors and earth
 	Vec2<int> i;
 	for (i.x = 0; i.x < Base::SIZE; i.x++)
@@ -1072,10 +1069,12 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 						    lb->start.z >= entrance_level_min && lb->start.z < entrance_level_max;
 						if (canSpawn)
 						{
-							canSpawn = (allow_entrance[MapDirection::West] && lb->start.x == 0 )
-									|| (allow_entrance[MapDirection::North] && lb->start.y == 0)
-									|| (allow_entrance[MapDirection::East] && lb->end.x == size.x * chunk_size.x)
-									|| (allow_entrance[MapDirection::South] && lb->end.y == size.y * chunk_size.y);
+							canSpawn = (allow_entrance[MapDirection::West] && lb->start.x == 0) ||
+							           (allow_entrance[MapDirection::North] && lb->start.y == 0) ||
+							           (allow_entrance[MapDirection::East] &&
+							            lb->end.x == size.x * chunk_size.x) ||
+							           (allow_entrance[MapDirection::South] &&
+							            lb->end.y == size.y * chunk_size.y);
 						}
 						if (!canSpawn)
 						{

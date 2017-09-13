@@ -134,7 +134,8 @@ class BattleUnitMission
 	static BattleUnitMission *brainsuck(BattleUnit &u, StateRef<BattleUnit> target,
 	                                    int facingDelta);
 	static BattleUnitMission *jump(BattleUnit &u, Vec3<float> target,
-	                               BodyState state = BodyState::Standing, bool requireFacing = true);
+	                               BodyState state = BodyState::Standing,
+	                               bool requireFacing = true);
 
 	UString getName();
 
