@@ -73,7 +73,7 @@ IV: Skirmish
 
 This will eventually become a "quick combat" feature like the one OpenXCom has, but for now it's a way to initiate some tactical missions. To access it, go into options menu from cityscape and click the button in the top right.
 
-1. First choose a map. Choose a UFO, alien building or city building map. Base defense is not yet implemented.
+1. First choose a map. Choose a base, UFO, alien building or city building map. 
 
 2. Next you can specify your squad and other settings.
 - Specify number of agents you will have (Human agents, Hybrids, Androids). Note that you can have at max 36 agents at your command.

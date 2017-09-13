@@ -536,9 +536,7 @@ class FBOData : public RendererImageData
 	FBOData(GLuint fbo, Vec2<int> size)
 	    // FIXME: Check FBO == 0
 	    // FIXME: Warn if trying to texture from FBO 0
-	    : fbo(fbo),
-	      tex(-1),
-	      size(size)
+	    : fbo(fbo), tex(-1), size(size)
 	{
 	}
 
