@@ -2,6 +2,7 @@ version: '{branch}-0.0.{build}'
 branches:
   except:
   - master
+  - /release.*/
 skip_tags: true
 os: Visual Studio 2015
 configuration:
