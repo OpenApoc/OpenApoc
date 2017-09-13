@@ -21,16 +21,19 @@ build:
   project: OpenApoc.sln
   verbosity: normal
 after_build:
-- mkdir OpenApoc-DEV
-- echo %APPVEYOR_REPO_COMMIT% > OpenApoc-DEV\git-commit
-- echo %APPVEYOR_BUILD_VERSION% > OpenApoc-DEV\build-id
-- copy bin\%PLATFORM%\%CONFIGURATION%\*.dll OpenApoc-DEV\
-- copy bin\%PLATFORM%\%CONFIGURATION%\*.exe OpenApoc-DEV\
-- copy bin\%PLATFORM%\%CONFIGURATION%\*.pdb OpenApoc-DEV\
+- mkdir OpenApoc-Dev-%APPVEYOR_BUILD_VERSION%
+- echo %APPVEYOR_REPO_COMMIT% > OpenApoc-Dev-%APPVEYOR_BUILD_VERSION%\git-commit
+- echo %APPVEYOR_BUILD_VERSION% > OpenApoc-Dev-%APPVEYOR_BUILD_VERSION%\build-id
+- copy bin\%PLATFORM%\%CONFIGURATION%\*.dll OpenApoc-Dev-%APPVEYOR_BUILD_VERSION%\
+- copy bin\%PLATFORM%\%CONFIGURATION%\*.exe OpenApoc-Dev-%APPVEYOR_BUILD_VERSION%\
 - del data\cd.iso
 - del data\cd.iso.xz
-- xcopy /E data OpenApoc-DEV\data\
-- 7z a OpenApoc-msvc-dev.zip OpenApoc-DEV
+- xcopy /E data OpenApoc-Dev-%APPVEYOR_BUILD_VERSION%\data\
+- 7z a OpenApoc-dev-msvc.zip OpenApoc-Dev-%APPVEYOR_BUILD_VERSION%
+- copy bin\%PLATFORM%\%CONFIGURATION%\*.pdb OpenApoc-Dev-%APPVEYOR_BUILD_VERSION%\
+- 7z a OpenApoc-dev-msvc-debug.zip OpenApoc-Dev-%APPVEYOR_BUILD_VERSION%\*.pdb
 artifacts:
-- path: OpenApoc-msvc-dev.zip
+- path: OpenApoc-dev-msvc.zip
   name: built-zip
+- path: OpenApoc-dev-msvc-debug.zip
+  name: debug-zip
