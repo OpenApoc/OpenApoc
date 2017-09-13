@@ -68,6 +68,7 @@ class BattleMapSectorTiles
 	std::list<sp<BattleMapSector::LineOfSightBlock>> losBlocks;
 
 	std::map<Vec3<int>, Organisation::LootPriority> loot_locations;
+	std::map<StateRef<AgentType>, std::list<Vec3<int>>> turretLocations;
 
 	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_grounds;
 	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_left_walls;

@@ -88,6 +88,7 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 				e->guided = wData.guided != 0 ? true : false;
 				e->turn_rate = wData.turn_rate;
 				e->range = wData.range;
+				e->ttl = wData.ttl;
 				e->firing_arc_1 = wData.firing_arc_1;
 				e->firing_arc_2 = wData.firing_arc_2;
 				e->point_defence = wData.point_defence != 0 ? true : false;

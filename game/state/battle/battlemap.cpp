@@ -1,3 +1,4 @@
+#include "game/state/base/facility.h"
 #include "game/state/battle/battlemap.h"
 #include "game/state/aequipment.h"
 #include "game/state/agent.h"
@@ -18,9 +19,38 @@
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/vehicle_type.h"
 #include <algorithm>
+#include <unordered_map>
 
 namespace OpenApoc
 {
+
+int getCorridorSectorID(sp<Base> base, Vec2<int> pos)
+{
+	// key is North South West East (true = occupied, false = vacant)
+	const std::unordered_map<std::vector<bool>, int> TILE_CORRIDORS = {
+		{ { true, false, false, false }, 4 },{ { false, false, false, true }, 5 },
+		{ { true, false, false, true }, 6 },{ { false, true, false, false }, 7 },
+		{ { true, true, false, false }, 8 },{ { false, true, false, true }, 9 },
+		{ { true, true, false, true }, 10 },{ { false, false, true, false }, 11 },
+		{ { true, false, true, false }, 12 },{ { false, false, true, true }, 13 },
+		{ { true, false, true, true }, 14 },{ { false, true, true, false }, 15 },
+		{ { true, true, true, false }, 16 },{ { false, true, true, true }, 17 },
+		{ { true, true, true, true }, 18 } };
+
+
+	if (pos.x < 0 || pos.y < 0 || pos.x >= Base::SIZE || pos.y >= Base::SIZE ||
+		!base->corridors[pos.x][pos.y])
+	{
+		return 0;
+	}
+	bool north = pos.y > 0 && base->corridors[pos.x][pos.y - 1];
+	bool south = pos.y < Base::SIZE - 1 && base->corridors[pos.x][pos.y + 1];
+	bool west = pos.x > 0 && base->corridors[pos.x - 1][pos.y];
+	bool east = pos.x < Base::SIZE - 1 && base->corridors[pos.x + 1][pos.y];
+	return TILE_CORRIDORS.at({ north, south, west, east }) - 3;
+}
+
+
 BattleMap::BattleMap() {}
 
 sp<BattleMap> BattleMap::get(const GameState &state, const UString &id)
@@ -99,12 +129,14 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 	auto missionType = Battle::MissionType::AlienExtermination;
 
 	std::map<StateRef<AgentType>, int> current_crew;
+	StateRef<BattleMap> map;
 
 	// Setup mission type and other participants
 	if (building->owner == state.getPlayer())
 	{
 		// Base defense mission
-
+		map = { &state, "BATTLEMAP_37base" };
+		
 		// FIXME: Generate list of agent types for enemies properly
 		// Also add non-combat personell
 
@@ -112,6 +144,9 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 	}
 	else
 	{
+		// Raid Aliens / Raid Humans / Alien Extermination mission
+		map = building->battle_map;
+
 		if (target_organisation == state.getAliens())
 		{
 			if (building->owner == state.getAliens())
@@ -234,7 +269,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> targ
 		player_agents.push_back(state.agent_generator.createAgent(state, pair.first, pair.second));
 	}
 
-	return building->battle_map->createBattle(state, building->owner, target_organisation,
+	return map->createBattle(state, building->owner, target_organisation,
 	                                          player_agents, player_craft, missionType,
 	                                          building.id);
 }
@@ -806,7 +841,39 @@ bool BattleMap::generateBase(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int
 		return false;
 	}
 
-	LogError("Generate!");
+	std::vector<sp<BattleMapSector>> secRefs;
+	for (auto &s : sectors)
+	{
+		secRefs.push_back(s.second);
+	}
+	
+	size = { Base::SIZE ,Base::SIZE ,1 };
+	sec_map = { (unsigned)size.x * size.y * size.z, nullptr };
+	
+	// Fill corridors and earth
+	Vec2<int> i;
+	for (i.x = 0; i.x < Base::SIZE; i.x++)
+	{
+		for (i.y = 0; i.y < Base::SIZE; i.y++)
+		{
+			sec_map[i.x + i.y * size.x] = secRefs[getCorridorSectorID(base, i)];
+		}
+	}
+
+	// Replace with facilities
+	for (auto &facility : base->facilities)
+	{
+		for (i.x = facility->pos.x; i.x < facility->pos.x + facility->type->size; i.x++)
+		{
+			for (i.y = facility->pos.y; i.y < facility->pos.y + facility->type->size; i.y++)
+			{
+				sec_map[i.x + i.y * size.x] = nullptr;
+			}
+		}
+		sec_map[facility->pos.x + facility->pos.y * size.x] = secRefs[facility->type->sector];
+	}
+
+	return true;
 }
 
 sp<Battle>
@@ -1003,9 +1070,13 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 					{
 						bool canSpawn =
 						    lb->start.z >= entrance_level_min && lb->start.z < entrance_level_max;
-						canSpawn =
-						    canSpawn && (lb->start.x == 0 || lb->end.x == size.x * chunk_size.x ||
-						                 lb->start.y == 0 || lb->end.y == size.y * chunk_size.y);
+						if (canSpawn)
+						{
+							canSpawn = (allow_entrance[MapDirection::West] && lb->start.x == 0 )
+									|| (allow_entrance[MapDirection::North] && lb->start.y == 0)
+									|| (allow_entrance[MapDirection::East] && lb->end.x == size.x * chunk_size.x)
+									|| (allow_entrance[MapDirection::South] && lb->end.y == size.y * chunk_size.y);
+						}
 						if (!canSpawn)
 						{
 							lb->spawn_priority = 0;
@@ -1262,10 +1333,12 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> prop
 		{
 			generateBase(sec_map, size, state, mission_location_id);
 		}
-
-		if (!generateMap(sec_map, size, state, genSizeEnum))
+		else
 		{
-			continue;
+			if (!generateMap(sec_map, size, state, genSizeEnum))
+			{
+				continue;
+			}
 		}
 
 		// Step 02: Fill map with map parts

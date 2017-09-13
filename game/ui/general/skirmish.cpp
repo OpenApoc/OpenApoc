@@ -539,12 +539,6 @@ void Skirmish::battleInBuilding(bool hotseat, StateRef<Base> playerBase,
 void Skirmish::battleInBase(bool hotseat, StateRef<Base> base,
                             std::map<StateRef<AgentType>, int> *aliens)
 {
-	auto message_box =
-	    mksp<MessageBox>("NOT YET IMPLEMENTED", "Base defense missions are not yet implemented.",
-	                     MessageBox::ButtonOptions::Ok);
-	fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
-	return;
-
 	fw().stageQueueCommand(
 	    {StageCmd::Command::REPLACEALL,
 	     mksp<BattleBriefing>(

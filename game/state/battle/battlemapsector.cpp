@@ -1,4 +1,6 @@
 #include "game/state/battle/battlemapsector.h"
+#include "game/state/gamestate.h"
+#include "game/state/battle/battlemap.h"
 #include "framework/framework.h"
 
 namespace OpenApoc

@@ -47,7 +47,7 @@ class FacilityType : public StateObject
 	sp<Image> sprite;
 	ResearchDependency dependency;
 	StateRef<UfopaediaEntry> ufopaedia_entry;
-	StateRef<BattleMapSector> sector;
+	int sector;
 
 	bool isVisible() const;
 };

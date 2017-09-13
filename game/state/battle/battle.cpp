@@ -2346,6 +2346,18 @@ void Battle::enterBattle(GameState &state)
 
 	state.current_battle->initBattle(state, true);
 
+	if (b->mission_type == MissionType::BaseDefense)
+	{
+		for (int i = 0; i < b->visibleTiles[b->locationOwner].size(); i++)
+		{
+			b->visibleTiles[b->locationOwner][i] = true;
+		}
+		for (int i = 0; i < b->visibleBlocks[b->locationOwner].size(); i++)
+		{
+			b->visibleBlocks[b->locationOwner][i] = true;
+		}
+	}
+
 	for (auto &u : state.current_battle->units)
 	{
 		u.second->updateCheckBeginFalling(state);

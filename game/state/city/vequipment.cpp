@@ -4,6 +4,7 @@
 #include "framework/sound.h"
 #include "game/state/city/city.h"
 #include "game/state/city/projectile.h"
+#include "game/state/gamestate.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/rules/vequipment_type.h"
 #include "game/state/tileview/tile.h"
@@ -19,7 +20,7 @@ VEquipment::VEquipment()
 {
 }
 
-sp<Projectile> VEquipment::fire(GameState &state, Vec3<float> targetPosition,
+void VEquipment::fire(GameState &state, Vec3<float> targetPosition,
                                 StateRef<Vehicle> targetVehicle)
 {
 	static const std::map<VEquipment::WeaponState, UString> WeaponStateMap = {
@@ -32,7 +33,7 @@ sp<Projectile> VEquipment::fire(GameState &state, Vec3<float> targetPosition,
 	if (this->type->type != EquipmentSlotType::VehicleWeapon)
 	{
 		LogError("fire() called on non-Weapon");
-		return nullptr;
+		return;
 	}
 	auto vehicleTile = owner->tileObject;
 	if (!vehicleTile)
@@ -46,12 +47,12 @@ sp<Projectile> VEquipment::fire(GameState &state, Vec3<float> targetPosition,
 		if (it != WeaponStateMap.end())
 			stateName = it->second;
 		LogWarning("Trying to fire weapon in state %s", stateName);
-		return nullptr;
+		return;
 	}
 	if (this->ammo <= 0 && this->type->max_ammo != 0)
 	{
 		LogWarning("Trying to fire weapon with no ammo");
-		return nullptr;
+		return;
 	}
 	this->reloadTime = type->fire_delay * VEQUIPMENT_RELOAD_TIME_MULTIPLIER * TICKS_MULTIPLIER;
 	this->weaponState = WeaponState::Reloading;
@@ -80,11 +81,16 @@ sp<Projectile> VEquipment::fire(GameState &state, Vec3<float> targetPosition,
 	// I believe this is the correct formula
 	velocity *= type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 
-	return mksp<Projectile>(type->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
-	                        owner, targetVehicle, vehicleMuzzle, velocity, type->turn_rate,
-	                        static_cast<int>(this->getRange() / type->speed * TICKS_MULTIPLIER),
-	                        type->damage, /*delay*/ 0, type->tail_size, type->projectile_sprites,
-	                        type->impact_sfx, type->explosion_graphic);
+	if (state.current_city->map->tileIsValid(vehicleMuzzle))
+	{
+		auto projectile = mksp<Projectile>(type->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
+			owner, targetVehicle, vehicleMuzzle, velocity, type->turn_rate,
+			type->ttl * TICKS_MULTIPLIER,
+			type->damage, /*delay*/ 0, type->tail_size, type->projectile_sprites,
+			type->impact_sfx, type->explosion_graphic);
+		vehicleTile->map.addObjectToMap(projectile);
+		state.current_city->projectiles.insert(projectile);
+	}
 }
 
 void VEquipment::update(int ticks)
