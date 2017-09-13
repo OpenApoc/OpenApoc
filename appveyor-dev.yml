@@ -11,7 +11,7 @@ configuration:
 platform:
   - x64
   - Win32
-clone_depth: 10
+#clone_depth: 10
 before_build:
 - git submodule init
 - git submodule update
@@ -22,19 +22,21 @@ build:
   project: OpenApoc.sln
   verbosity: normal
 after_build:
-- mkdir OpenApoc-Dev-%APPVEYOR_BUILD_VERSION%
-- echo %APPVEYOR_REPO_COMMIT% > OpenApoc-Dev-%APPVEYOR_BUILD_VERSION%\git-commit
-- echo %APPVEYOR_BUILD_VERSION% > OpenApoc-Dev-%APPVEYOR_BUILD_VERSION%\build-id
-- copy bin\%PLATFORM%\%CONFIGURATION%\*.dll OpenApoc-Dev-%APPVEYOR_BUILD_VERSION%\
-- copy bin\%PLATFORM%\%CONFIGURATION%\*.exe OpenApoc-Dev-%APPVEYOR_BUILD_VERSION%\
+- git describe --tags > build-id
+- set /p OPENAPOC_VERSION= < build-id
+- set OPENAPOC_FILENAME=OpenApoc-%PLATFORM%-%OPENAPOC_VERSION%.zip
+- set OPENAPOC_DEBUG_FILENAME=OpenApoc-debug-%PLATFORM%-%OPENAPOC_VERSION%.zip
+- mkdir OpenApoc-%OPENAPOC_VERSION%
+- echo %APPVEYOR_REPO_COMMIT% > OpenApoc-%OPENAPOC_VERSION%\git-commit
+- echo %OPENAPOC_VERSION% > OpenApoc-%OPENAPOC_VERSION%\build-id
+- copy bin\%PLATFORM%\%CONFIGURATION%\*.dll OpenApoc-%OPENAPOC_VERSION%\
+- copy bin\%PLATFORM%\%CONFIGURATION%\*.exe OpenApoc-%OPENAPOC_VERSION%\
 - del data\cd.iso
 - del data\cd.iso.xz
-- xcopy /E data OpenApoc-Dev-%APPVEYOR_BUILD_VERSION%\data\
-- 7z a OpenApoc-dev-msvc.zip OpenApoc-Dev-%APPVEYOR_BUILD_VERSION%
-- copy bin\%PLATFORM%\%CONFIGURATION%\*.pdb OpenApoc-Dev-%APPVEYOR_BUILD_VERSION%\
-- 7z a OpenApoc-dev-msvc-debug.zip OpenApoc-Dev-%APPVEYOR_BUILD_VERSION%\*.pdb
-artifacts:
-- path: OpenApoc-dev-msvc.zip
-  name: built-zip
-- path: OpenApoc-dev-msvc-debug.zip
-  name: debug-zip
+- xcopy /E data OpenApoc-%OPENAPOC_VERSION%\data\
+- 7z a %OPENAPOC_FILENAME% OpenApoc-%OPENAPOC_VERSION%
+- copy bin\%PLATFORM%\%CONFIGURATION%\*.pdb OpenApoc-%OPENAPOC_VERSION%\
+- copy portable.txt OpenApoc-%OPENAPOC_VERSION%\
+- 7z a %OPENAPOC_DEBUG_FILENAME% OpenApoc-%OPENAPOC_VERSION%\*.pdb
+- appveyor PushArtifact %OPENAPOC_FILENAME%
+- appveyor PushArtifact %OPENAPOC_DEBUG_FILENAME%
