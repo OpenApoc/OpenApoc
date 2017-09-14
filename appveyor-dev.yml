@@ -34,9 +34,9 @@ after_build:
 - del data\cd.iso
 - del data\cd.iso.xz
 - xcopy /E data OpenApoc-%OPENAPOC_VERSION%\data\
+- copy portable.txt OpenApoc-%OPENAPOC_VERSION%\
 - 7z a %OPENAPOC_FILENAME% OpenApoc-%OPENAPOC_VERSION%
 - copy bin\%PLATFORM%\%CONFIGURATION%\*.pdb OpenApoc-%OPENAPOC_VERSION%\
-- copy portable.txt OpenApoc-%OPENAPOC_VERSION%\
 - 7z a %OPENAPOC_DEBUG_FILENAME% OpenApoc-%OPENAPOC_VERSION%\*.pdb
 - appveyor PushArtifact %OPENAPOC_FILENAME%
 - appveyor PushArtifact %OPENAPOC_DEBUG_FILENAME%
