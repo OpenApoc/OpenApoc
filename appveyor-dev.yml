@@ -2,6 +2,7 @@ version: '{branch}-0.0.{build}'
 branches:
   except:
   - master
+  - /release.*/
 skip_tags: true
 os: Visual Studio 2015
 configuration:
@@ -10,7 +11,7 @@ configuration:
 platform:
   - x64
   - Win32
-clone_depth: 10
+#clone_depth: 10
 before_build:
 - git submodule init
 - git submodule update
@@ -21,16 +22,21 @@ build:
   project: OpenApoc.sln
   verbosity: normal
 after_build:
-- mkdir OpenApoc-DEV
-- echo %APPVEYOR_REPO_COMMIT% > OpenApoc-DEV\git-commit
-- echo %APPVEYOR_BUILD_VERSION% > OpenApoc-DEV\build-id
-- copy bin\%PLATFORM%\%CONFIGURATION%\*.dll OpenApoc-DEV\
-- copy bin\%PLATFORM%\%CONFIGURATION%\*.exe OpenApoc-DEV\
-- copy bin\%PLATFORM%\%CONFIGURATION%\*.pdb OpenApoc-DEV\
+- git describe --tags > build-id
+- set /p OPENAPOC_VERSION= < build-id
+- set OPENAPOC_FILENAME=OpenApoc-%PLATFORM%-%OPENAPOC_VERSION%.zip
+- set OPENAPOC_DEBUG_FILENAME=OpenApoc-debug-%PLATFORM%-%OPENAPOC_VERSION%.zip
+- mkdir OpenApoc-%OPENAPOC_VERSION%
+- echo %APPVEYOR_REPO_COMMIT% > OpenApoc-%OPENAPOC_VERSION%\git-commit
+- echo %OPENAPOC_VERSION% > OpenApoc-%OPENAPOC_VERSION%\build-id
+- copy bin\%PLATFORM%\%CONFIGURATION%\*.dll OpenApoc-%OPENAPOC_VERSION%\
+- copy bin\%PLATFORM%\%CONFIGURATION%\*.exe OpenApoc-%OPENAPOC_VERSION%\
 - del data\cd.iso
 - del data\cd.iso.xz
-- xcopy /E data OpenApoc-DEV\data\
-- 7z a OpenApoc-msvc-dev.zip OpenApoc-DEV
-artifacts:
-- path: OpenApoc-msvc-dev.zip
-  name: built-zip
+- xcopy /E data OpenApoc-%OPENAPOC_VERSION%\data\
+- 7z a %OPENAPOC_FILENAME% OpenApoc-%OPENAPOC_VERSION%
+- copy bin\%PLATFORM%\%CONFIGURATION%\*.pdb OpenApoc-%OPENAPOC_VERSION%\
+- copy portable.txt OpenApoc-%OPENAPOC_VERSION%\
+- 7z a %OPENAPOC_DEBUG_FILENAME% OpenApoc-%OPENAPOC_VERSION%\*.pdb
+- appveyor PushArtifact %OPENAPOC_FILENAME%
+- appveyor PushArtifact %OPENAPOC_DEBUG_FILENAME%
