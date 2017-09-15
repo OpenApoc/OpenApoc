@@ -822,7 +822,7 @@ void UnitAIVanilla::routine(GameState &state, BattleUnit &u)
 		u.setReserveShotMode(ReserveShotMode::Aimed);
 		int kneelCost = u.reserve_kneel_mode == KneelingMode::None
 		                    ? 0
-		                    : BattleUnitMission::getBodyStateChangeCost(u, BodyState::Standing,
+		                    : u.getBodyStateChangeCost(BodyState::Standing,
 		                                                                BodyState::Kneeling);
 		if (u.reserveShotCost + kneelCost > u.initialTU / 2)
 		{
