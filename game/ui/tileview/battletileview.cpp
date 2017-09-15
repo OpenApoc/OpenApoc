@@ -48,8 +48,8 @@ void BattleTileView::updateHiddenBar()
 		{
 			continue;
 		}
-		int reserve = u.second->reserveShotCost + u.second->getBodyStateChangeCost(BodyState::Standing,
-		                                                        BodyState::Kneeling);
+		int reserve = u.second->reserveShotCost +
+		              u.second->getBodyStateChangeCost(BodyState::Standing, BodyState::Kneeling);
 
 		totalTU += u.second->initialTU - reserve;
 		remainingTU += std::max(0, u.second->agent->modified_stats.time_units - reserve);

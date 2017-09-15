@@ -1991,7 +1991,7 @@ void Battle::checkIfBuildingDisabled(GameState &state)
 	fw().pushEvent(new GameEvent(GameEventType::BuildingDisabled));
 }
 
-bool Battle::tryDisableBuilding(GameState & state)
+bool Battle::tryDisableBuilding(GameState &state)
 {
 	// Find a mission objective unit
 	for (auto &u : units)

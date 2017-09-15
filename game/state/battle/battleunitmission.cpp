@@ -19,16 +19,15 @@ namespace OpenApoc
 {
 namespace
 {
-	static const std::map<Vec2<int>, int> facing_dir_map = {
-		{ { 0, -1 }, 0 },{ { 1, -1 }, 1 },{ { 1, 0 }, 2 },{ { 1, 1 }, 3 },
-		{ { 0, 1 }, 4 },{ { -1, 1 }, 5 },{ { -1, 0 }, 6 },{ { -1, -1 }, 7 } };
-	static const std::map<int, Vec2<int>> dir_facing_map = {
-		{ 0,{ 0, -1 } },{ 1,{ 1, -1 } },{ 2,{ 1, 0 } },{ 3,{ 1, 1 } },
-		{ 4,{ 0, 1 } },{ 5,{ -1, 1 } },{ 6,{ -1, 0 } },{ 7,{ -1, -1 } } };
-	static const std::list<Vec3<float>> angles = {
-		{ 0, -1, 0 },{ 1, -1, 0 },{ 1, 0, 0 },{ 1, 1, 0 },
-		{ 0, 1, 0 },{ -1, 1, 0 },{ -1, 0, 0 },{ -1, -1, 0 },
-	};
+static const std::map<Vec2<int>, int> facing_dir_map = {{{0, -1}, 0}, {{1, -1}, 1}, {{1, 0}, 2},
+                                                        {{1, 1}, 3},  {{0, 1}, 4},  {{-1, 1}, 5},
+                                                        {{-1, 0}, 6}, {{-1, -1}, 7}};
+static const std::map<int, Vec2<int>> dir_facing_map = {{0, {0, -1}}, {1, {1, -1}}, {2, {1, 0}},
+                                                        {3, {1, 1}},  {4, {0, 1}},  {5, {-1, 1}},
+                                                        {6, {-1, 0}}, {7, {-1, -1}}};
+static const std::list<Vec3<float>> angles = {
+    {0, -1, 0}, {1, -1, 0}, {1, 0, 0}, {1, 1, 0}, {0, 1, 0}, {-1, 1, 0}, {-1, 0, 0}, {-1, -1, 0},
+};
 }
 
 BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, BattleUnitType type, bool allowJumping)
@@ -2481,7 +2480,6 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodySt
 	dest = targetState;
 	return true;
 }
-
 
 UString BattleUnitMission::getName()
 {

@@ -210,6 +210,5 @@ class BattleUnitMission
 	StateRef<BattleUnit> targetUnit;
 	unsigned int brainsuckTicksAccumulated = 0;
 	unsigned int brainsuckSoundsPlayed = 0;
-
 };
 } // namespace OpenApoc

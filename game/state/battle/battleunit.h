@@ -371,7 +371,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Fatal wounds
 
-	// Wether unit is fatally wounded 
+	// Wether unit is fatally wounded
 	bool isFatallyWounded();
 	// Add fatal wound to a body part
 	void addFatalWound(BodyPart fatalWoundPart);
@@ -418,7 +418,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	                    StateRef<AEquipmentType> item, bool impact);
 	// Cange unit's owner (mind control)
 	void changeOwner(GameState &state, StateRef<Organisation> newOwner);
-	
+
 	// Items
 
 	// Attempts to use item, returns if success
@@ -497,7 +497,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	bool getNewGoal(GameState &state);
 	// Updates to do when unit reached goal
 	void onReachGoal(GameState &state);
-	// Calculate velocity for jumping (manually) towards target, 
+	// Calculate velocity for jumping (manually) towards target,
 	// returning fastest allowed velocity that makes unit drop on top of the tile.
 	// Returns true if successful, false if not
 	// For explanation how it works look @ AEquipment::calculateNextVelocityForThrow
@@ -530,7 +530,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void setFacing(GameState &state, Vec2<int> newFacing);
 	// Begin turning unit towards new facing
 	void beginTurning(GameState &state, Vec2<int> newFacing);
-	
+
 	// Missions
 
 	// Pops all finished missions, returns true if unit has retreated
@@ -586,7 +586,6 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	int getTurnCost() const;
 	// Get cost to change body state
 	int getBodyStateChangeCost(BodyState from, BodyState to) const;
-
 
 	// AI execution
 
@@ -688,7 +687,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Request this unit give way to other unit
 	void requestGiveWay(const BattleUnit &requestor, const std::list<Vec3<int>> &plannedPath,
-		Vec3<int> pos);
+	                    Vec3<int> pos);
 	// Appply enzyme to this unit
 	void applyEnzymeEffect(GameState &state);
 	// Spawn enzyme smoke on this unit
@@ -697,7 +696,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// checkOwnership means event not set unless agent owned by player
 	// checkVisibility means event not sent unless agent seen by player
 	void sendAgentEvent(GameState &state, GameEventType type, bool checkOwnership = false,
-		bool checkVisibility = false) const;
+	                    bool checkVisibility = false) const;
 	// Trigger proximity mines around unit
 	void triggerProximity(GameState &state);
 	// Trigger brainsucker pods around unit
@@ -712,7 +711,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void fallUnconscious(GameState &state);
 	// Process unit dying
 	void die(GameState &state, StateRef<BattleUnit> attacker = nullptr, bool violently = true,
-		bool bledToDeath = false);
+	         bool bledToDeath = false);
 
 	// Update
 
@@ -771,7 +770,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Updates unit's attacking parameters (gun cooldown, hand states, aiming etc)
 	void updateAttacking(GameState &state, unsigned int ticks);
 	// Updates unit firing weapons
-	void updateFiring(GameState &state, sp<AEquipment> &weaponLeft, sp<AEquipment> &weaponRight, Vec3<float> &targetPosition);
+	void updateFiring(GameState &state, sp<AEquipment> &weaponLeft, sp<AEquipment> &weaponRight,
+	                  Vec3<float> &targetPosition);
 	// Updates unit's psi attack (sustain payment, effect application etc.)
 	void updatePsi(GameState &state, unsigned int ticks);
 	// Updates unit's AI list

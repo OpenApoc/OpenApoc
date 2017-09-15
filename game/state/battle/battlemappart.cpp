@@ -1115,7 +1115,7 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> currentS
 			{
 				supportedPart->queueCollapse(curSetPart->ticksUntilCollapse);
 			}
-			
+
 			// Step 2.1: Try to find support without using map parts that were supported by this
 			// (this prevents map parts supporting each other in a loop)
 			// (it has to find another support that is not supported by it)
@@ -1123,8 +1123,8 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> currentS
 			if (curSetPart->findSupport())
 			{
 #ifdef MAP_PART_LINK_DEBUG_OUTPUT
-				log += format("\n Processing %s at %d %d %d: OK %s", curSetPart->type.id, pos.x, pos.y,
-				              pos.z, curSetPart->providesHardSupport ? "HARD" : "SOFT");
+				log += format("\n Processing %s at %d %d %d: OK %s", curSetPart->type.id, pos.x,
+				              pos.y, pos.z, curSetPart->providesHardSupport ? "HARD" : "SOFT");
 				{
 					auto &map = curSetPart->tileObject->map;
 					for (int x = pos.x - 1; x <= pos.x + 1; x++)
@@ -1151,7 +1151,8 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> currentS
 										        ->getOwner();
 										for (auto &p : mp2->supportedParts)
 										{
-											if (p.first == pos && p.second == curSetPart->type->type)
+											if (p.first == pos &&
+											    p.second == curSetPart->type->type)
 											{
 												log += format("\n - Supported by %s at %d %d %d",
 												              mp2->type.id, x - pos.x, y - pos.y,
@@ -1180,17 +1181,17 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> currentS
 			{
 #ifdef MAP_PART_LINK_DEBUG_OUTPUT
 				log += format("\n Processing %s at %d %d %d: FAIL, remains in next iteration",
-					curSetPart->type.id, pos.x, pos.y, pos.z);
+				              curSetPart->type.id, pos.x, pos.y, pos.z);
 #endif
 				// Step 2.3: Failure [If no support is found]
-				// Finalise collapsed state of all parts supported by this 
+				// Finalise collapsed state of all parts supported by this
 				// (was temporary since Step 1, now properly collapsing with all ties cut)
 				for (auto &supportedPart : *supportedByThisMp)
 				{
 					auto newpos = supportedPart->tileObject->getOwningTile()->position;
 #ifdef MAP_PART_LINK_DEBUG_OUTPUT
-					log += format("\n - %s at %d %d %d added to next iteration", supportedPart->type.id,
-					              newpos.x, newpos.y, newpos.z);
+					log += format("\n - %s at %d %d %d added to next iteration",
+					              supportedPart->type.id, newpos.x, newpos.y, newpos.z);
 #endif
 					supportedPart->ceaseBeingSupported();
 					currentSet->insert(supportedPart);
