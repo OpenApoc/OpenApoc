@@ -43,11 +43,10 @@ class BuildingFunction;
 
 static const int MAX_MESSAGES = 50;
 static const unsigned ORIGINAL_TICKS = 36;
+static const bool UPDATE_EVERY_TICK = false;
+
 class GameState : public std::enable_shared_from_this<GameState>
 {
-  private:
-	void update(unsigned int ticks);
-
   public:
 	StateRefMap<VehicleType> vehicle_types;
 	StateRefMap<Organisation> organisations;
@@ -162,8 +161,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// - there are any projectiles on the current map
 	bool canTurbo() const;
 
-	// Update progresses one 'tick'
-	void update();
+	// Update progress
+	void update(unsigned int ticks);
 	// updateTurbo progresses 5 minutes at a time - can only be called if canTurbo() returns true.
 	// canTurbo() must be re-tested after each call to see if we should drop down to normal speed
 	// (e.g. enemy appeared, other user action required)

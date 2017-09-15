@@ -173,7 +173,8 @@ class Tile
 	void updateBattlescapeUnitPresent();
 	// Updates battlescape ui draw order variables
 	void updateBattlescapeUIDrawOrder();
-	// Updates vision blockage of the tile. returns if changed
+	// Updates vision blockage of the tile
+	// returns true if vision changed
 	bool updateVisionBlockage(int value = 0);
 
 #ifdef PATHFINDING_DEBUG

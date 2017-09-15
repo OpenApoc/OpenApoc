@@ -17,6 +17,19 @@
 
 namespace OpenApoc
 {
+namespace
+{
+	static const std::map<Vec2<int>, int> facing_dir_map = {
+		{ { 0, -1 }, 0 },{ { 1, -1 }, 1 },{ { 1, 0 }, 2 },{ { 1, 1 }, 3 },
+		{ { 0, 1 }, 4 },{ { -1, 1 }, 5 },{ { -1, 0 }, 6 },{ { -1, -1 }, 7 } };
+	static const std::map<int, Vec2<int>> dir_facing_map = {
+		{ 0,{ 0, -1 } },{ 1,{ 1, -1 } },{ 2,{ 1, 0 } },{ 3,{ 1, 1 } },
+		{ 4,{ 0, 1 } },{ 5,{ -1, 1 } },{ 6,{ -1, 0 } },{ 7,{ -1, -1 } } };
+	static const std::list<Vec3<float>> angles = {
+		{ 0, -1, 0 },{ 1, -1, 0 },{ 1, 0, 0 },{ 1, 1, 0 },
+		{ 0, 1, 0 },{ -1, 1, 0 },{ -1, 0, 0 },{ -1, -1, 0 },
+	};
+}
 
 BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, BattleUnitType type, bool allowJumping)
     : BattleUnitTileHelper(
@@ -203,7 +216,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 	// Therefore, I think it's better to do it all here
 	// Plus, we will re-use some of the tiles we got from the map later down the line
 
-	// STEP 01: Check if "to" is passable (large)
+	// STEP 01: Check if "to" is passable [large]
 	if (large)
 	{
 		// Can we fit?
@@ -290,7 +303,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 		doorInTheWay = doorInTheWay || toXZ1->closedDoorRight;
 		doorInTheWay = doorInTheWay || toYZ1->closedDoorLeft;
 	}
-	// STEP 01: Check if "to" is passable (small)
+	// STEP 01: Check if "to" is passable [small]
 	else
 	{
 		// Check that no static unit occupies this tile
@@ -304,7 +317,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 		// Movement cost into the tiles
 		costInt = to->movementCostIn;
 	}
-	// STEP 01: Failure condition
+	// STEP 01: [Failure condition]
 	if (costInt == 255)
 	{
 		return false;
@@ -1115,10 +1128,6 @@ BattleUnitMission *BattleUnitMission::dropItem(BattleUnit &, sp<AEquipment> item
 
 int BattleUnitMission::getFacingDelta(Vec2<int> curFacing, Vec2<int> tarFacing)
 {
-	static const std::map<Vec2<int>, int> facing_dir_map = {
-	    {{0, -1}, 0}, {{1, -1}, 1}, {{1, 0}, 2},  {{1, 1}, 3},
-	    {{0, 1}, 4},  {{-1, 1}, 5}, {{-1, 0}, 6}, {{-1, -1}, 7}};
-
 	int curFac = facing_dir_map.at(curFacing);
 	int tarFac = facing_dir_map.at(tarFacing);
 	int result = curFac - tarFac;
@@ -1137,13 +1146,6 @@ Vec2<int> BattleUnitMission::getFacing(BattleUnit &u, Vec3<int> to, int facingDe
 Vec2<int> BattleUnitMission::getFacingStep(BattleUnit &u, Vec2<int> targetFacing, int facingDelta)
 {
 	Vec2<int> dest = u.facing;
-
-	static const std::map<Vec2<int>, int> facing_dir_map = {
-	    {{0, -1}, 0}, {{1, -1}, 1}, {{1, 0}, 2},  {{1, 1}, 3},
-	    {{0, 1}, 4},  {{-1, 1}, 5}, {{-1, 0}, 6}, {{-1, -1}, 7}};
-	static const std::map<int, Vec2<int>> dir_facing_map = {
-	    {0, {0, -1}}, {1, {1, -1}}, {2, {1, 0}},  {3, {1, 1}},
-	    {4, {0, 1}},  {5, {-1, 1}}, {6, {-1, 0}}, {7, {-1, -1}}};
 
 	// Turn
 	int curFacing = facing_dir_map.at(u.facing);
@@ -1182,17 +1184,6 @@ Vec2<int> BattleUnitMission::getFacingStep(BattleUnit &u, Vec2<int> targetFacing
 Vec2<int> BattleUnitMission::getFacing(BattleUnit &u, Vec3<float> from, Vec3<float> to,
                                        int facingDelta)
 {
-	static const std::map<Vec2<int>, int> facing_dir_map = {
-	    {{0, -1}, 0}, {{1, -1}, 1}, {{1, 0}, 2},  {{1, 1}, 3},
-	    {{0, 1}, 4},  {{-1, 1}, 5}, {{-1, 0}, 6}, {{-1, -1}, 7}};
-	static const std::map<int, Vec2<int>> dir_facing_map = {
-	    {0, {0, -1}}, {1, {1, -1}}, {2, {1, 0}},  {3, {1, 1}},
-	    {4, {0, 1}},  {5, {-1, 1}}, {6, {-1, 0}}, {7, {-1, -1}}};
-	static const std::list<Vec3<float>> angles = {
-	    {0, -1, 0}, {1, -1, 0}, {1, 0, 0},  {1, 1, 0},
-	    {0, 1, 0},  {-1, 1, 0}, {-1, 0, 0}, {-1, -1, 0},
-	};
-
 	float closestAngle = FLT_MAX;
 	Vec3<int> closestVector = {0, 0, 0};
 	Vec3<float> targetFacing = (Vec3<float>)(to - from);
@@ -2407,7 +2398,7 @@ bool BattleUnitMission::advanceFacing(GameState &state, BattleUnit &u, Vec2<int>
 	// If throwing then pay up front so that we can't turn for free
 	if (targetBodyState == BodyState::Throwing)
 	{
-		int cost = getBodyStateChangeCost(u, u.current_body_state, targetBodyState);
+		int cost = u.getBodyStateChangeCost(u.current_body_state, targetBodyState);
 		if (!spendAgentTUs(state, u, cost, true, true, true))
 		{
 			return false;
@@ -2418,7 +2409,7 @@ bool BattleUnitMission::advanceFacing(GameState &state, BattleUnit &u, Vec2<int>
 	dest = getFacingStep(u, targetFacing);
 
 	// Calculate and spend cost
-	int cost = freeTurn ? 0 : getTurnCost(u);
+	int cost = freeTurn ? 0 : u.getTurnCost();
 	if (!spendAgentTUs(state, u, cost, true))
 	{
 		return false;
@@ -2478,7 +2469,7 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodySt
 
 	// Cost to reach goal is free
 	int cost =
-	    type == Type::ReachGoal ? 0 : getBodyStateChangeCost(u, u.target_body_state, targetState);
+	    type == Type::ReachGoal ? 0 : u.getBodyStateChangeCost(u.target_body_state, targetState);
 	// If unsufficient TUs - cancel missions other than GotoLocation
 	if (!spendAgentTUs(state, u, cost, type != Type::GotoLocation,
 	                   targetState == BodyState::Kneeling))
@@ -2491,53 +2482,6 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodySt
 	return true;
 }
 
-int BattleUnitMission::getTurnCost(BattleUnit &) { return 1; }
-
-int BattleUnitMission::getBodyStateChangeCost(const BattleUnit &u, BodyState from, BodyState to)
-{
-	// If not within these conditions, it costs nothing!
-	switch (to)
-	{
-		case BodyState::Flying:
-		case BodyState::Standing:
-			switch (from)
-			{
-				case BodyState::Kneeling:
-					return 8;
-				case BodyState::Prone:
-					return 16;
-				default:
-					return 0;
-			}
-			break;
-		case BodyState::Kneeling:
-			switch (from)
-			{
-				case BodyState::Prone:
-				case BodyState::Standing:
-				case BodyState::Flying:
-					return 8;
-				default:
-					return 0;
-			}
-			break;
-		case BodyState::Prone:
-			switch (from)
-			{
-				case BodyState::Kneeling:
-				case BodyState::Standing:
-				case BodyState::Flying:
-					return 8;
-				default:
-					return 0;
-			}
-			break;
-		case BodyState::Throwing:
-			return u.getThrowCost();
-		default:
-			return 0;
-	}
-}
 
 UString BattleUnitMission::getName()
 {

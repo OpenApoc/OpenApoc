@@ -671,8 +671,6 @@ void GameState::updateEndOfWeek()
 	}
 }
 
-void GameState::update() { this->update(1); }
-
 void GameState::updateTurbo()
 {
 	if (!this->canTurbo())

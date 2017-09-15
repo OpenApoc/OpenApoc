@@ -593,8 +593,9 @@ void CityView::update()
 	{
 		while (ticks > 0)
 		{
-			this->state->update();
-			ticks--;
+			int ticksPerUpdate = UPDATE_EVERY_TICK ? 1 : ticks;
+			state->update(ticksPerUpdate);
+			ticks -= ticksPerUpdate;
 		}
 	}
 	auto clockControl = baseForm->findControlTyped<Label>("CLOCK");

@@ -813,8 +813,8 @@ void UnitAIVanilla::routine(GameState &state, BattleUnit &u)
 	}
 
 	// AI preferences
-	u.fire_aiming_mode = WeaponAimingMode::Snap;
-	u.fire_permission_mode = BattleUnit::FirePermissionMode::AtWill;
+	u.setWeaponAimingMode(WeaponAimingMode::Snap);
+	u.setFirePermissionMode(BattleUnit::FirePermissionMode::AtWill);
 	if (state.current_battle->mode == Battle::Mode::TurnBased)
 	{
 		// Ensure at least half of move is available for moving

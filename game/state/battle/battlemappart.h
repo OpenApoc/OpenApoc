@@ -7,8 +7,8 @@
 #include <list>
 #include <set>
 
+//#define MAP_PART_LINK_DEBUG_OUTPUT
 #define TICKS_PER_FRAME_MAP_PART 8
-
 #define FALLING_ACCELERATION_MAP_PART 0.16666667f // 1/6th
 
 namespace OpenApoc
@@ -69,7 +69,11 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	// Wether mappart is queued to collapse
 	bool willCollapse() const { return ticksUntilCollapse > 0; }
 
+	// Compiles a list of parts supported by this part
+	// Using sp because we switch to a new one constantly in re-linking
+	// Using set because we need to easilly weed out duplicates
 	sp<std::set<BattleMapPart *>> getSupportedParts();
+	// Attempts to re-link map parts to supports in the provided set
 	static void attemptReLinkSupports(sp<std::set<BattleMapPart *>> set);
 
 	void ceaseDoorFunction();

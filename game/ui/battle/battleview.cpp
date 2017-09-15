@@ -464,30 +464,30 @@ BattleView::BattleView(sp<GameState> gameState)
 		    {
 			    if (at_will)
 			    {
-				    u->fire_permission_mode = BattleUnit::FirePermissionMode::CeaseFire;
+				    u->setFirePermissionMode(BattleUnit::FirePermissionMode::CeaseFire);
 			    }
 			    else
 			    {
-				    u->fire_permission_mode = BattleUnit::FirePermissionMode::AtWill;
+				    u->setFirePermissionMode(BattleUnit::FirePermissionMode::AtWill);
 			    }
 		    }
 		});
 	baseForm->findControl("BUTTON_AIMED")->addCallback(FormEventType::MouseClick, [this](Event *) {
 		for (auto &u : this->battle.battleViewSelectedUnits)
 		{
-			u->fire_aiming_mode = WeaponAimingMode::Aimed;
+			u->setWeaponAimingMode(WeaponAimingMode::Aimed);
 		}
 	});
 	baseForm->findControl("BUTTON_SNAP")->addCallback(FormEventType::MouseClick, [this](Event *) {
 		for (auto &u : this->battle.battleViewSelectedUnits)
 		{
-			u->fire_aiming_mode = WeaponAimingMode::Snap;
+			u->setWeaponAimingMode(WeaponAimingMode::Snap);
 		}
 	});
 	baseForm->findControl("BUTTON_AUTO")->addCallback(FormEventType::MouseClick, [this](Event *) {
 		for (auto &u : this->battle.battleViewSelectedUnits)
 		{
-			u->fire_aiming_mode = WeaponAimingMode::Auto;
+			u->setWeaponAimingMode(WeaponAimingMode::Auto);
 		}
 	});
 	baseForm->findControl("BUTTON_KNEEL")->addCallback(FormEventType::MouseClick, [this](Event *) {
@@ -505,11 +505,11 @@ BattleView::BattleView(sp<GameState> gameState)
 		{
 			if (not_kneeling)
 			{
-				u->kneeling_mode = KneelingMode::Kneeling;
+				u->setKneelingMode(KneelingMode::Kneeling);
 			}
 			else
 			{
-				u->kneeling_mode = KneelingMode::None;
+				u->setKneelingMode(KneelingMode::None);
 			}
 		}
 	});
@@ -535,20 +535,20 @@ BattleView::BattleView(sp<GameState> gameState)
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
 		    for (auto &u : this->battle.battleViewSelectedUnits)
 		    {
-			    u->behavior_mode = BattleUnit::BehaviorMode::Evasive;
+			    u->setBehaviorMode(BattleUnit::BehaviorMode::Evasive);
 		    }
 		});
 	baseForm->findControl("BUTTON_NORMAL")->addCallback(FormEventType::MouseClick, [this](Event *) {
 		for (auto &u : this->battle.battleViewSelectedUnits)
 		{
-			u->behavior_mode = BattleUnit::BehaviorMode::Normal;
+			u->setBehaviorMode(BattleUnit::BehaviorMode::Normal);
 		}
 	});
 	baseForm->findControl("BUTTON_AGGRESSIVE")
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
 		    for (auto &u : this->battle.battleViewSelectedUnits)
 		    {
-			    u->behavior_mode = BattleUnit::BehaviorMode::Aggressive;
+			    u->setBehaviorMode(BattleUnit::BehaviorMode::Aggressive);
 		    }
 		});
 
@@ -1049,7 +1049,6 @@ BattleView::BattleView(sp<GameState> gameState)
 		                                                  : EquipmentSlotType::LeftHand);
 
 		int delay = this->primingTab->findControlTyped<ScrollBar>("DELAY_SLIDER")->getValue();
-		LogWarning("Delay %d", delay);
 		int range = this->primingTab->findControlTyped<ScrollBar>("RANGE_SLIDER")->getValue();
 		if (delay == 0 && (item->type->trigger_type != TriggerType::Boomeroid ||
 		                   item->type->trigger_type != TriggerType::Proximity))
@@ -1506,8 +1505,9 @@ void BattleView::update()
 	}
 	while (ticks > 0)
 	{
-		state->update();
-		ticks--;
+		int ticksPerUpdate = UPDATE_EVERY_TICK ? 1 : ticks;
+		state->update(ticksPerUpdate);
+		ticks -= ticksPerUpdate;
 		if (hideDisplay)
 		{
 			if (battle.ticksWithoutSeenAction[battle.currentPlayer] == 0)
@@ -2615,8 +2615,8 @@ void BattleView::orderDrop(bool right)
 			return;
 		}
 		auto item = items.front();
-		unit->agent->addEquipment(
-		    *state, item->item, right ? EquipmentSlotType::RightHand : EquipmentSlotType::LeftHand);
+		unit->agent->addEquipment(*state, item->item, right ? EquipmentSlotType::RightHand
+		                                                    : EquipmentSlotType::LeftHand);
 		item->die(*state, false);
 	}
 }
@@ -4137,9 +4137,9 @@ sp<RGBImage> BattleView::drawMotionScanner(BattleScanner &scanner)
 		{
 			for (int y = 0; y < MOTION_SCANNER_Y; y++)
 			{
-				auto &color = colors.at(std::min(15,
-				                                 scanner.movementTicks[y * MOTION_SCANNER_X + x] *
-				                                     16 / (int)TICKS_SCANNER_REMAIN_LIT));
+				auto &color =
+				    colors.at(std::min(15, scanner.movementTicks[y * MOTION_SCANNER_X + x] * 16 /
+				                               (int)TICKS_SCANNER_REMAIN_LIT));
 				for (int i = 0; i <= 1; i++)
 				{
 					for (int j = 0; j <= 1; j++)
@@ -4432,11 +4432,11 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 				             (selectionState == BattleSelectionState::TeleportRight && rightHand) ||
 				             (selectionState == BattleSelectionState::TeleportLeft && !rightHand);
 			}
-			a.accuracy = std::max(0,
-			                      e->getAccuracy(u->current_body_state, u->current_movement_state,
-			                                     u->fire_aiming_mode,
-			                                     a.itemType->type != AEquipmentType::Type::Weapon) /
-			                          2);
+			a.accuracy =
+			    std::max(0, e->getAccuracy(u->current_body_state, u->current_movement_state,
+			                               u->fire_aiming_mode,
+			                               a.itemType->type != AEquipmentType::Type::Weapon) /
+			                    2);
 
 			/*
 			// Alexey Andronov (Istrebitel):
