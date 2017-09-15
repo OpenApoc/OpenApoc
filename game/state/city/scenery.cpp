@@ -1,8 +1,11 @@
 #include "game/state/city/scenery.h"
 #include "framework/logger.h"
 #include "game/state/city/city.h"
+#include "game/state/tileview/collision.h"
 #include "game/state/city/doodad.h"
 #include "game/state/gamestate.h"
+#include "game/state/city/projectile.h"
+#include "game/state/city/building.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_scenery.h"
@@ -13,6 +16,29 @@ Scenery::Scenery() : damaged(false), falling(false), destroyed(false) {}
 
 void Scenery::handleCollision(GameState &state, Collision &c)
 {
+	// Adjust relationships
+	if (building && c.projectile->firerVehicle)
+	{
+		auto attackerOrg = c.projectile->firerVehicle->owner;
+		auto ourOrg = building->owner;
+		// Lose 5 points
+		ourOrg->adjustRelationTo(attackerOrg, -5.0f);
+		// Our allies lose 2.5 points, enemies gain 1 point
+		for (auto &org : state.organisations)
+		{
+			if (org.first != attackerOrg.id && org.first != state.getCivilian().id)
+			{
+				if (org.second->isRelatedTo(ourOrg) == Organisation::Relation::Hostile)
+				{
+					org.second->adjustRelationTo(attackerOrg, 1.0f);
+				}
+				else if (org.second->isRelatedTo(ourOrg) == Organisation::Relation::Allied)
+				{
+					org.second->adjustRelationTo(attackerOrg, -2.5f);
+				}
+			}
+		}
+	}
 	// FIXME: Proper damage
 	std::ignore = c;
 	// If this tile has a damaged tile, replace it with that. If it's already damaged, destroy as

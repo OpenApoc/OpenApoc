@@ -1988,14 +1988,7 @@ void BattleUnit::updateRegen(GameState &state, unsigned int ticks)
 					int staRegen = agent->current_stats.stamina >= 1920
 					                   ? 30
 					                   : (agent->current_stats.stamina >= 1280 ? 20 : 10);
-
-					for (int i = 0; i < staRegen; i++)
-					{
-						if (agent->modified_stats.stamina < agent->current_stats.stamina)
-						{
-							agent->modified_stats.stamina++;
-						}
-					}
+					agent->modified_stats.stamina = std::min(agent->modified_stats.stamina + staRegen, agent->current_stats.stamina);
 				}
 				break;
 				// No expenditure for special movements
@@ -2040,14 +2033,7 @@ void BattleUnit::updateRegen(GameState &state, unsigned int ticks)
 		                   : (agent->current_stats.stamina >= 1280 ? 40 : 20);
 		int tuLeft = 100 * agent->modified_stats.time_units / agent->current_stats.time_units;
 		staRegen = tuLeft < 9 ? 0 : (tuLeft < 18 ? staRegen / 2 : staRegen);
-
-		for (int i = 0; i < staRegen; i++)
-		{
-			if (agent->modified_stats.stamina < agent->current_stats.stamina)
-			{
-				agent->modified_stats.stamina++;
-			}
-		}
+		agent->modified_stats.stamina = std::min(agent->modified_stats.stamina + staRegen, agent->current_stats.stamina);
 	}
 }
 
@@ -4483,6 +4469,9 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 {
 	agent->modified_stats.health = 0;
 	std::ignore = bledToDeath;
+	auto attackerOrg = attacker ? attacker->agent->owner : nullptr;
+	auto ourOrg = agent->owner;
+	// Violent deaths (spawn stuff, blow up)
 	if (violently)
 	{
 		for (auto &e : agent->equipment)
@@ -4522,44 +4511,73 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 	// Morale and score
 	auto player = state.getPlayer();
 	// Find next highest ranking officer
-	state.current_battle->refreshLeadershipBonus(agent->owner);
+	state.current_battle->refreshLeadershipBonus(ourOrg);
 	// Penalty for teamkills or bonus for eliminating a hostile
-	if (attacker && attacker->agent->owner == agent->owner)
+	if (attacker && attackerOrg == ourOrg)
 	{
 		// Teamkill penalty morale
 		attacker->agent->modified_stats.loseMorale(20);
 		attacker->combatRating -= agent->type->score;
 		// Teamkill penalty score
-		if (agent->owner == player)
+		if (ourOrg == player)
 		{
 			state.current_battle->score.friendlyFire -= 10;
 		}
 	}
 	else if (attacker &&
-	         attacker->agent->owner->isRelatedTo(agent->owner) == Organisation::Relation::Hostile)
+	         attackerOrg->isRelatedTo(ourOrg) == Organisation::Relation::Hostile)
 	{
 		// Bonus for killing a hostile
 		attacker->agent->modified_stats.gainMorale(
-		    20 * state.current_battle->leadershipBonus[attacker->agent->owner]);
+		    20 * state.current_battle->leadershipBonus[attackerOrg]);
 		for (auto &u : state.current_battle->units)
 		{
 			if (u.first != attacker.id || !u.second->isConscious() ||
-			    u.second->agent->owner != attacker->agent->owner)
+			    u.second->agent->owner != attackerOrg)
 			{
 				continue;
 			}
 			// Agents from attacker team gain morale
 			u.second->agent->modified_stats.gainMorale(
-			    10 * state.current_battle->leadershipBonus[attacker->agent->owner]);
+			    10 * state.current_battle->leadershipBonus[attackerOrg]);
+		}
+	}
+	// Adjust relationships
+	if (attacker)
+	{
+		// If we're hostile to attacker - lose 5 points
+		if (ourOrg->isRelatedTo(attackerOrg) == Organisation::Relation::Hostile)
+		{
+			ourOrg->adjustRelationTo(attackerOrg, -5.0f);
+		}
+		// If we're not hostile to attacker - lose 30 points
+		else
+		{
+			ourOrg->adjustRelationTo(attackerOrg, -30.0f);
+		}
+		// Our allies lose 5 points, enemies gain 2 points
+		for (auto &org : state.organisations)
+		{
+			if (org.first != attackerOrg.id && org.first != state.getCivilian().id)
+			{
+				if (org.second->isRelatedTo(ourOrg) == Organisation::Relation::Hostile)
+				{
+					org.second->adjustRelationTo(attackerOrg, 2.0f);
+				}
+				else if (org.second->isRelatedTo(ourOrg) == Organisation::Relation::Allied)
+				{
+					org.second->adjustRelationTo(attackerOrg, -5.0f);
+				}
+			}
 		}
 	}
 	// Score for death/kill
-	if (agent->owner == player)
+	if (ourOrg == player)
 	{
 		state.current_battle->score.casualtyPenalty -= agent->type->score;
 	}
-	else if (attacker && attacker->agent->owner == player &&
-	         player->isRelatedTo(agent->owner) == Organisation::Relation::Hostile)
+	else if (attacker && attackerOrg == player &&
+	         player->isRelatedTo(ourOrg) == Organisation::Relation::Hostile)
 	{
 		attacker->combatRating += agent->type->score;
 		state.current_battle->score.combatRating += agent->type->score;
@@ -4588,16 +4606,16 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 			moraleLossPenalty = 175;
 			break;
 	}
+	// Surviving units lose morale
 	for (auto &u : state.current_battle->units)
 	{
-		if (u.second->agent->owner != agent->owner)
+		if (u.second->agent->owner != ourOrg)
 		{
 			continue;
 		}
-		// Surviving units lose morale
 		u.second->agent->modified_stats.loseMorale(
 		    (110 - u.second->agent->modified_stats.bravery) /
-		    (100 + state.current_battle->leadershipBonus[agent->owner]) * moraleLossPenalty / 500);
+		    (100 + state.current_battle->leadershipBonus[ourOrg]) * moraleLossPenalty / 500);
 	}
 	// Events
 	if (owner == state.current_battle->currentPlayer)

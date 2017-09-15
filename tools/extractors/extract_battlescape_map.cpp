@@ -365,7 +365,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 								los_block->spawn_type = SpawnType::Enemy;
 								// Fix this otherwise noone spawns in the lift
 								// since there's so much more spawns in the repair bays
-								los_block->spawn_priority == 2;
+								los_block->spawn_priority = 2;
 								break;
 							case SPAWN_TYPE_CIVILIAN:
 								if (los_block->spawn_priority == 4)

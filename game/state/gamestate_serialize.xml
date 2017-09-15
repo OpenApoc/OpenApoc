@@ -425,6 +425,7 @@
 		<member>linkCost</member>
 		<member>blockNeedsUpdate</member>
 		<member>linkNeedsUpdate</member>
+		<member>pathfindingUpdateTicksAccumulated</member>
 		<member>tilesChangedForVision</member>
 		<member>mission_type</member>
 		<member>mission_location_id</member>

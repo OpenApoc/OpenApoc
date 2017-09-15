@@ -120,6 +120,11 @@ float Organisation::getRelationTo(const StateRef<Organisation> &other) const
 	return x;
 }
 
+void Organisation::adjustRelationTo(const StateRef<Organisation>& other, float value)
+{
+	current_relations[other] = clamp(current_relations[other] + value, -100.0f, 100.0f);
+}
+
 Organisation::Relation Organisation::isRelatedTo(const StateRef<Organisation> &other) const
 {
 	float x = this->getRelationTo(other);

@@ -222,7 +222,7 @@ void Battle::initBattle(GameState &state, bool first)
 		u.second->refreshUnitVision(state);
 	}
 	// Pathfinding
-	updatePathfinding(state);
+	updatePathfinding(state, PATHFINDING_UPDATE_INTERVAL);
 	// AI
 	aiBlock.init(state);
 	for (auto &o : participants)
@@ -1518,8 +1518,15 @@ bool findLosBlockCenter(TileMap &map, BattleUnitType type,
 	return false;
 }
 
-void Battle::updatePathfinding(GameState &)
+void Battle::updatePathfinding(GameState &, unsigned int ticks)
 {
+	pathfindingUpdateTicksAccumulated += ticks;
+	if (pathfindingUpdateTicksAccumulated < PATHFINDING_UPDATE_INTERVAL)
+	{
+		return;
+	}
+	pathfindingUpdateTicksAccumulated = 0;
+
 	// How much attempts are given to the pathfinding until giving up and concluding that
 	// there is no path between two sectors. This is a multiplier for "distance", which is
 	// a minimum number of iterations required to pathfind between two locations
@@ -1642,7 +1649,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 		case Mode::TurnBased:
 		{
 			Trace::start("Battle::update::turnBased");
-			ticksWithoutAction += ticks;
+			ticksWithoutAction++;
 			for (auto &p : participants)
 			{
 				ticksWithoutSeenAction[p]++;
@@ -1710,11 +1717,12 @@ void Battle::update(GameState &state, unsigned int ticks)
 				}
 			}
 			Trace::end("Battle::end::turnBased");
+			break;
 		}
-		break;
 		case Mode::RealTime:
 		{
 			Trace::start("Battle::update::realTime");
+			// Spawn reinforcements
 			if (reinforcementsInterval > 0)
 			{
 				ticksUntilNextReinforcement -= ticks;
@@ -1725,8 +1733,8 @@ void Battle::update(GameState &state, unsigned int ticks)
 				}
 			}
 			Trace::end("Battle::end::realTime");
+			break;
 		}
-		break;
 	}
 	Trace::start("Battle::update::projectiles->update");
 	updateProjectiles(state, ticks);
@@ -1800,7 +1808,7 @@ void Battle::update(GameState &state, unsigned int ticks)
 	updateVision(state);
 	Trace::end("Battle::update::vision");
 	Trace::start("Battle::update::pathfinding");
-	updatePathfinding(state);
+	updatePathfinding(state, ticks);
 	Trace::end("Battle::update::pathfinding");
 }
 
@@ -1975,10 +1983,16 @@ void Battle::checkMissionEnd(GameState &state, bool retreated, bool forceReCheck
 
 void Battle::checkIfBuildingDisabled(GameState &state)
 {
-	if (!buildingCanBeDisabled || buildingDisabled)
+	if (!buildingCanBeDisabled || buildingDisabled || !tryDisableBuilding(state))
 	{
 		return;
 	}
+	buildingDisabled = true;
+	fw().pushEvent(new GameEvent(GameEventType::BuildingDisabled));
+}
+
+bool Battle::tryDisableBuilding(GameState & state)
+{
 	// Find a mission objective unit
 	for (auto &u : units)
 	{
@@ -1989,7 +2003,7 @@ void Battle::checkIfBuildingDisabled(GameState &state)
 		if (u.second->agent->type->missionObjective && !u.second->isDead())
 		{
 			// Mission objective unit found alive
-			return;
+			return false;
 		}
 	}
 	// Find a mission objective object
@@ -1998,12 +2012,11 @@ void Battle::checkIfBuildingDisabled(GameState &state)
 		if (mp->type->missionObjective && !mp->destroyed)
 		{
 			// Mission objective unit found alive
-			return;
+			return false;
 		}
 	}
 	// Found nothing, building disabled
-	buildingDisabled = true;
-	fw().pushEvent(new GameEvent(GameEventType::BuildingDisabled));
+	return true;
 }
 
 void Battle::refreshLeadershipBonus(StateRef<Organisation> org)
@@ -2335,7 +2348,7 @@ void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> 
 	}
 	b->hotseat = hotseat;
 	b->locationOwner = target_building->owner;
-	b->buildingCanBeDisabled = b->locationOwner == state.getAliens();
+	b->buildingCanBeDisabled = !b->tryDisableBuilding(state);
 	state.current_battle = b;
 }
 

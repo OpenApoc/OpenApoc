@@ -2319,7 +2319,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 		return false;
 	}
 
-	// Spend stamina.  As per Mell from forums it takes:
+	// Spend stamina TB.  As per Mell from forums it takes:
 	// - 0.6 vanilla stamina to run regardless of diagonal or not
 	// - 0.85 vanilla stamina to go prone regradless of diagonal or not
 	if (!realTime)

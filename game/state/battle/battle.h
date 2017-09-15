@@ -33,6 +33,8 @@ static const unsigned TICKS_END_TURN = TICKS_PER_SECOND * 2;
 // Amount of ticks that must pass for interrupt to begin
 static const unsigned TICKS_BEGIN_INTERRUPT = TICKS_PER_SECOND / 2;
 
+static const unsigned PATHFINDING_UPDATE_INTERVAL = TICKS_PER_SECOND / 2;
+
 class BattleCommonImageList;
 class BattleCommonSampleList;
 class GameState;
@@ -121,6 +123,8 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// Example: If there's a link update required between ids 2 and 3,
 	// we will set only [2 + 3 * size] to true
 	std::vector<bool> linkNeedsUpdate;
+	// Ticks accumulated towards pathfinding update
+	unsigned int pathfindingUpdateTicksAccumulated = 0;
 
 	// Tiles that have something changed inside them and require to re-calculate vision
 	// of every soldier who has them in LOS. Triggers include:
@@ -232,6 +236,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	void abortMission(GameState &state);
 	void checkMissionEnd(GameState &state, bool retreated, bool forceReCheck = false);
 	void checkIfBuildingDisabled(GameState &state);
+	bool tryDisableBuilding(GameState &state);
 	void refreshLeadershipBonus(StateRef<Organisation> org);
 	void spawnReinforcements(GameState &state);
 
@@ -241,7 +246,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 
 	void updateProjectiles(GameState &state, unsigned int ticks);
 	void updateVision(GameState &state);
-	void updatePathfinding(GameState &state);
+	void updatePathfinding(GameState &state, unsigned int ticks);
 
 	// Adding objects to battle
 

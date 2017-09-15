@@ -183,6 +183,45 @@ void GameState::startGame()
 	{
 		pair.second->ticksTakeOverAttemptAccumulated =
 		    randBoundsExclusive(rng, (unsigned)0, TICKS_PER_TAKEOVER_ATTEMPT);
+		// Initial relationship randomiser
+		// Not for player or civilians
+		if (pair.first == player.id || pair.first == civilian.id)
+		{
+			continue;
+		}
+		for (auto &entry : pair.second->current_relations)
+		{
+			// Not for civilians or perfect relationships
+			if (entry.second == 100.0f || entry.first == civilian)
+			{
+				continue;
+			}
+			// First step: adjust based on difficulty
+			// higher difficulty will produce a bigger sway
+			if (difficulty > 0)
+			{
+				// Relationship vs player is adjusted by flat 0/5/0/-5/10
+				if (entry.first == player)
+				{
+					entry.second += 10 - 5 * difficulty;
+				}
+				// Positive relationship is improved randomly
+				else if (entry.second >= 0.0f)
+				{
+					entry.second += randBoundsInclusive(rng, 0, 3 * difficulty);
+				}
+				// Negative relationship with non-aliens is worsened randomly
+				else if (entry.first != aliens)
+				{
+					entry.second -= randBoundsInclusive(rng, 0, 5 * difficulty);
+				}
+			}
+			// Second step: random +- 10
+			entry.second += randBoundsInclusive(rng, -10, 10);
+
+			// Finally stay in bounds
+			entry.second = clamp(entry.second, -100.0f, 100.0f);
+		}
 	}
 	// Setup buildings
 	for (auto &pair : this->cities)
@@ -193,7 +232,7 @@ void GameState::startGame()
 			    randBoundsExclusive(rng, (unsigned)0, TICKS_PER_DETECTION_ATTEMPT[difficulty]);
 		}
 	}
-
+	// Setup scenery
 	for (auto &pair : this->cities)
 	{
 		auto &city = pair.second;
