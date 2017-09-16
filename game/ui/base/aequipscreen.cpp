@@ -456,7 +456,7 @@ void AEquipScreen::eventOccurred(Event *e)
 				if (modifierCtrl && equipment->payloadType)
 				{
 					draggedEquipmentOffset = {0, 0};
-					draggedEquipment = equipment->unloadAmmo(*state);
+					draggedEquipment = equipment->unloadAmmo();
 				}
 				else
 				{

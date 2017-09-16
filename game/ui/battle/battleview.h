@@ -230,6 +230,11 @@ class BattleView : public BattleTileView
 
 	void updateSquadIndex(StateRef<BattleUnit> u);
 
+	// Debuggers
+
+	void debugVortex();
+	void debugShot(Vec3<float> velocity);
+
 	// Unit orers
 
 	void orderMove(Vec3<int> target, bool strafe = false, bool demandGiveWay = false);

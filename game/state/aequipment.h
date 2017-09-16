@@ -100,7 +100,7 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>, public Equip
 
 	// Support nullptr ammoItem for auto-reloading
 	void loadAmmo(GameState &state, sp<AEquipment> ammoItem = nullptr);
-	sp<AEquipment> unloadAmmo(GameState &state);
+	sp<AEquipment> unloadAmmo();
 
 	void update(GameState &state, unsigned int ticks);
 	void updateTB(GameState &state);

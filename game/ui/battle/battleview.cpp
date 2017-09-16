@@ -17,6 +17,7 @@
 #include "framework/keycodes.h"
 #include "framework/palette.h"
 #include "framework/renderer.h"
+#include "framework/sound.h"
 #include "framework/trace.h"
 #include "game/state/aequipment.h"
 #include "game/state/battle/ai/aitype.h"
@@ -27,6 +28,7 @@
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/battle/battlescanner.h"
 #include "game/state/battle/battleunit.h"
+#include "game/state/city/projectile.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/message.h"
@@ -1505,7 +1507,7 @@ void BattleView::update()
 	}
 	while (ticks > 0)
 	{
-		int ticksPerUpdate = UPDATE_EVERY_TICK ? 1 : ticks;
+		int ticksPerUpdate = UPDATE_EVERY_TICK ? 1 : hideDisplay ? 4 : ticks;
 		state->update(ticksPerUpdate);
 		ticks -= ticksPerUpdate;
 		if (hideDisplay)
@@ -2368,6 +2370,32 @@ void BattleView::updateSquadIndex(StateRef<BattleUnit> u)
 	}
 }
 
+void BattleView::debugVortex()
+{
+	auto vortex = StateRef<AEquipmentType>(state.get(), "AEQUIPMENTTYPE_VORTEX_MINE");
+	state->current_battle->addExplosion(
+	    *state, selectedTilePosition, vortex->explosion_graphic, vortex->damage_type,
+	    vortex->damage, vortex->explosion_depletion_rate, state->current_battle->currentPlayer);
+}
+
+void BattleView::debugShot(Vec3<float> velocity)
+{
+	auto blaster = StateRef<AEquipmentType>(state.get(), "AEQUIPMENTTYPE_DEBUGGER_CANNON");
+	fw().soundBackend->playSample(blaster->fire_sfx, selectedTilePosition);
+	velocity *= blaster->speed * PROJECTILE_VELOCITY_MULTIPLIER;
+	Vec3<float> position = {0.5f, 0.5f, 0.5f};
+	position += selectedTilePosition;
+	auto p = mksp<Projectile>(
+	    blaster->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
+	    StateRef<BattleUnit>(state.get(), state->current_battle->units.begin()->first),
+	    StateRef<BattleUnit>(), position + velocity, position, velocity, blaster->turn_rate,
+	    blaster->ttl * TICKS_MULTIPLIER, blaster->damage, blaster->projectile_delay,
+	    blaster->explosion_depletion_rate, blaster->tail_size, blaster->projectile_sprites,
+	    blaster->impact_sfx, blaster->explosion_graphic, blaster->damage_type);
+	state->current_battle->map->addObjectToMap(p);
+	state->current_battle->projectiles.insert(p);
+}
+
 void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 {
 	if (battle.battleViewSelectedUnits.empty())
@@ -2860,7 +2888,7 @@ void BattleView::eventOccurred(Event *e)
 	{
 		return;
 	}
-
+	// Hotkeys that work both in debug and normal mode
 	if (e->type() == EVENT_KEY_DOWN)
 	{
 		switch (e->keyboard().KeyCode)
@@ -2882,6 +2910,34 @@ void BattleView::eventOccurred(Event *e)
 				return;
 			case SDLK_LCTRL:
 				modifierLCtrl = true;
+				return;
+			case SDLK_ESCAPE:
+				if (activeTab != notMyTurnTab)
+				{
+					fw().stageQueueCommand(
+					    {StageCmd::Command::PUSH, mksp<InGameOptions>(state->shared_from_this())});
+				}
+				return;
+			case SDLK_TAB:
+				baseForm->findControl("BUTTON_TOGGLE_STRATMAP")->click();
+				return;
+			case SDLK_PAGEUP:
+				setZLevel(getZLevel() + 1);
+				setSelectedTilePosition(
+				    {selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z + 1});
+				updateLayerButtons();
+				return;
+			case SDLK_PAGEDOWN:
+				setZLevel(getZLevel() - 1);
+				setSelectedTilePosition(
+				    {selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z - 1});
+				updateLayerButtons();
+				return;
+			case SDLK_SPACE:
+				if (updateSpeed != BattleUpdateSpeed::Pause)
+					setUpdateSpeed(BattleUpdateSpeed::Pause);
+				else
+					setUpdateSpeed(lastSpeed);
 				return;
 			default:
 				break;
@@ -3080,40 +3136,46 @@ void BattleView::eventOccurred(Event *e)
 					DEBUG_DISABLE_NOTIFICATIONS = !DEBUG_DISABLE_NOTIFICATIONS;
 					return;
 				}
+				// Blow debug vortex
+				case SDLK_KP_0:
+					debugVortex();
+					return;
+				// Fire debug shot
+				case SDLK_KP_1:
+					debugShot({0, 1, 0});
+					return;
+				case SDLK_KP_2:
+					debugShot({1, 1, 0});
+					return;
+				case SDLK_KP_3:
+					debugShot({1, 0, 0});
+					return;
+				case SDLK_KP_6:
+					debugShot({1, -1, 0});
+					return;
+				case SDLK_KP_9:
+					debugShot({0, -1, 0});
+					return;
+				case SDLK_KP_8:
+					debugShot({-1, -1, 0});
+					return;
+				case SDLK_KP_7:
+					debugShot({-1, 0, 0});
+					return;
+				case SDLK_KP_4:
+					debugShot({-1, 1, 0});
+					return;
+				case SDLK_KP_5:
+					debugShot({0, 0, -1});
+					return;
+				default:
+					break;
 			}
 		}
 		else
 		{
 			switch (e->keyboard().KeyCode)
 			{
-				case SDLK_ESCAPE:
-					if (activeTab != notMyTurnTab)
-					{
-						fw().stageQueueCommand({StageCmd::Command::PUSH,
-						                        mksp<InGameOptions>(state->shared_from_this())});
-					}
-					return;
-				case SDLK_TAB:
-					baseForm->findControl("BUTTON_TOGGLE_STRATMAP")->click();
-					return;
-				case SDLK_PAGEUP:
-					setZLevel(getZLevel() + 1);
-					setSelectedTilePosition({selectedTilePosition.x, selectedTilePosition.y,
-					                         selectedTilePosition.z + 1});
-					updateLayerButtons();
-					return;
-				case SDLK_PAGEDOWN:
-					setZLevel(getZLevel() - 1);
-					setSelectedTilePosition({selectedTilePosition.x, selectedTilePosition.y,
-					                         selectedTilePosition.z - 1});
-					updateLayerButtons();
-					return;
-				case SDLK_SPACE:
-					if (updateSpeed != BattleUpdateSpeed::Pause)
-						setUpdateSpeed(BattleUpdateSpeed::Pause);
-					else
-						setUpdateSpeed(lastSpeed);
-					return;
 				case SDLK_v:
 					baseForm->findControl("BUTTON_LAYERING")->click();
 					return;

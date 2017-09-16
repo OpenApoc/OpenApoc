@@ -91,8 +91,6 @@ class CityView : public CityTileView
 
 	std::list<sp<Sample>> alertSounds;
 
-	wp<Vehicle> selectedVehicle;
-
 	// We use a scaled image to implement the health bar
 	sp<Image> healthImage;
 	sp<Image> shieldImage;

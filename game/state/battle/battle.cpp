@@ -1648,91 +1648,16 @@ void Battle::update(GameState &state, unsigned int ticks)
 	{
 		case Mode::TurnBased:
 		{
-			Trace::start("Battle::update::turnBased");
-			ticksWithoutAction++;
-			for (auto &p : participants)
-			{
-				ticksWithoutSeenAction[p]++;
-			}
-			// Interrupt for lowmorales
-			if (!lowMoraleProcessed && interruptQueue.empty() && interruptUnits.empty())
-			{
-				lowMoraleProcessed = true;
-				for (auto &u : units)
-				{
-					if (u.second->owner != currentActiveOrganisation || !u.second->isConscious() ||
-					    u.second->moraleState == MoraleState::Normal ||
-					    u.second->agent->modified_stats.time_units == 0)
-					{
-						continue;
-					}
-					lowMoraleProcessed = false;
-					ticksWithoutAction = TICKS_BEGIN_INTERRUPT;
-					interruptQueue.emplace(StateRef<BattleUnit>(&state, u.first), 0);
-					if (u.second->owner == currentPlayer ||
-					    visibleUnits[currentPlayer].find({&state, u.first}) !=
-					        visibleUnits[currentPlayer].end())
-					{
-						fw().pushEvent(
-						    new GameLocationEvent(GameEventType::ZoomView, u.second->position));
-					}
-					break;
-				}
-			}
-			// Add units from queue to interrupt list
-			if (!interruptQueue.empty() && ticksWithoutAction >= TICKS_BEGIN_INTERRUPT)
-			{
-				for (auto &e : interruptQueue)
-				{
-					interruptUnits.emplace(e.first, e.second);
-				}
-				interruptQueue.clear();
-				notifyAction();
-				turnEndAllowed = false;
-			}
-			// Turn end condition
-			if (ticksWithoutAction >= TICKS_END_TURN)
-			{
-				if (interruptUnits.empty())
-				{
-					if (turnEndAllowed)
-					{
-						endTurn(state);
-					}
-				}
-				else
-				{
-					// Spend remaining TUs of low morale units
-					for (auto &e : interruptUnits)
-					{
-						if (e.first->moraleState != MoraleState::Normal)
-						{
-							e.first.getSp()->spendRemainingTU(state);
-							e.first.getSp()->focusUnit.clear();
-						}
-					}
-					interruptUnits.clear();
-					notifyAction();
-					turnEndAllowed = false;
-				}
-			}
-			Trace::end("Battle::end::turnBased");
+			Trace::start("Battle::updateTB");
+			updateTB(state);
+			Trace::end("Battle::updateTB");
 			break;
 		}
 		case Mode::RealTime:
 		{
-			Trace::start("Battle::update::realTime");
-			// Spawn reinforcements
-			if (reinforcementsInterval > 0)
-			{
-				ticksUntilNextReinforcement -= ticks;
-				while (ticksUntilNextReinforcement <= 0)
-				{
-					ticksUntilNextReinforcement += reinforcementsInterval;
-					spawnReinforcements(state);
-				}
-			}
-			Trace::end("Battle::end::realTime");
+			Trace::start("Battle::updateRT");
+			updateRT(state, ticks);
+			Trace::end("Battle::updateRT");
 			break;
 		}
 	}
@@ -1810,6 +1735,90 @@ void Battle::update(GameState &state, unsigned int ticks)
 	Trace::start("Battle::update::pathfinding");
 	updatePathfinding(state, ticks);
 	Trace::end("Battle::update::pathfinding");
+}
+
+void Battle::updateTB(GameState &state)
+{
+	ticksWithoutAction++;
+	for (auto &p : participants)
+	{
+		ticksWithoutSeenAction[p]++;
+	}
+	// Interrupt for lowmorales
+	if (!lowMoraleProcessed && interruptQueue.empty() && interruptUnits.empty())
+	{
+		lowMoraleProcessed = true;
+		for (auto &u : units)
+		{
+			if (u.second->owner != currentActiveOrganisation || !u.second->isConscious() ||
+			    u.second->moraleState == MoraleState::Normal ||
+			    u.second->agent->modified_stats.time_units == 0)
+			{
+				continue;
+			}
+			lowMoraleProcessed = false;
+			ticksWithoutAction = TICKS_BEGIN_INTERRUPT;
+			interruptQueue.emplace(StateRef<BattleUnit>(&state, u.first), 0);
+			if (u.second->owner == currentPlayer ||
+			    visibleUnits[currentPlayer].find({&state, u.first}) !=
+			        visibleUnits[currentPlayer].end())
+			{
+				fw().pushEvent(new GameLocationEvent(GameEventType::ZoomView, u.second->position));
+			}
+			break;
+		}
+	}
+	// Add units from queue to interrupt list
+	if (!interruptQueue.empty() && ticksWithoutAction >= TICKS_BEGIN_INTERRUPT)
+	{
+		for (auto &e : interruptQueue)
+		{
+			interruptUnits.emplace(e.first, e.second);
+		}
+		interruptQueue.clear();
+		notifyAction();
+		turnEndAllowed = false;
+	}
+	// Turn end condition
+	if (ticksWithoutAction >= TICKS_END_TURN)
+	{
+		if (interruptUnits.empty())
+		{
+			if (turnEndAllowed)
+			{
+				endTurn(state);
+			}
+		}
+		else
+		{
+			// Spend remaining TUs of low morale units
+			for (auto &e : interruptUnits)
+			{
+				if (e.first->moraleState != MoraleState::Normal)
+				{
+					e.first.getSp()->spendRemainingTU(state);
+					e.first.getSp()->focusUnit.clear();
+				}
+			}
+			interruptUnits.clear();
+			notifyAction();
+			turnEndAllowed = false;
+		}
+	}
+}
+
+void Battle::updateRT(GameState &state, unsigned int ticks)
+{
+	// Spawn reinforcements
+	if (reinforcementsInterval > 0)
+	{
+		ticksUntilNextReinforcement -= ticks;
+		while (ticksUntilNextReinforcement <= 0)
+		{
+			ticksUntilNextReinforcement += reinforcementsInterval;
+			spawnReinforcements(state);
+		}
+	}
 }
 
 void Battle::updateTBBegin(GameState &state)

@@ -172,10 +172,13 @@ class Battle : public std::enable_shared_from_this<Battle>
 	unsigned int currentTurn = 0;
 	// Ticks without action in TB
 	unsigned int ticksWithoutAction = 0;
+	// Ticks without action as ween by org
 	std::map<StateRef<Organisation>, unsigned> ticksWithoutSeenAction;
+	// Last action location seen by org
 	std::map<StateRef<Organisation>, Vec3<int>> lastSeenActionLocation;
-	// RF timer
+	// RF interval (how frequently RFs spawn, in ticks)
 	int reinforcementsInterval = 0;
+	// RF timer
 	int ticksUntilNextReinforcement = 0;
 
 	// Turn end allowed by current org
@@ -241,6 +244,8 @@ class Battle : public std::enable_shared_from_this<Battle>
 	void spawnReinforcements(GameState &state);
 
 	void update(GameState &state, unsigned int ticks);
+	void updateTB(GameState &state);
+	void updateRT(GameState &state, unsigned int ticks);
 	void updateTBBegin(GameState &state);
 	void updateTBEnd(GameState &state);
 
@@ -303,7 +308,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	                        const int *civilians, StateRef<Vehicle> player_craft,
 	                        StateRef<Building> target_building);
 
-	// To be called when battle must be started, after briefing screen
+	// To be called when battle must be started, after briefing and squad assign screen
 	static void enterBattle(GameState &state);
 
 	// Battle End Functions

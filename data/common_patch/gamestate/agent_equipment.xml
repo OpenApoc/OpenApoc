@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <agent_equipment>
   <entry>
-    <!-- DEBUG ENTRY, USED TO CHECK MAP DESTRUCTION -->
-    <key>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL_CLIP</key>
-    <value>
-<!--    
-	  <max_ammo>9001</max_ammo>
-      <damage>9001</damage>
-	  -->
-    </value>
+  <key>AEQUIPMENTTYPE_DEBUGGER_CANNON</key>
+  <value>
+    <type>Weapon</type>
+	<id>AEQUIPMENTTYPE_DEBUGGER_CANNON</id>
+	<name>Debugger Cannon</name>
+	<weight>8</weight>
+	<held_image_pack>BATTLEUNITIMAGEPACK_item31</held_image_pack>
+	<dropped_sprite>PCK:xcom3/tacdata/gameobj.pck:xcom3/tacdata/gameobj.tab:31</dropped_sprite>
+	<dropped_offset><x>23</x><y>34</y></dropped_offset>
+	<dropped_shadow_sprite>PCKSHADOW:xcom3/tacdata/oshadow.pck:xcom3/tacdata/oshadow.tab:31</dropped_shadow_sprite>
+	<shadow_offset><x>23</x><y>6</y></shadow_offset>
+	<equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:31:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+	<equipscreen_size><x>1</x><y>3</y></equipscreen_size>
+	<manufacturer>ORG_X-COM</manufacturer>
+	<store_space>30</store_space>
+	<armor>70</armor>
+	<score>10</score>
+	<two_handed>true</two_handed>
+	<max_ammo>100</max_ammo>
+	<recharge>100</recharge>
+	<rechargeTB>100</rechargeTB>
+	<speed>26</speed>
+	<projectile_sprites>
+	  <entry>bulletsprites/battle/34.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry>
+	</projectile_sprites>
+	<damage>9001</damage>
+	<accuracy>75</accuracy>
+	<fire_delay>10</fire_delay>
+	<tail_size>35</tail_size>
+	<range>1000</range>
+	<ttl>3000</ttl>
+	<explosion_graphic>DOODAD_25_DEVASTATOR</explosion_graphic>
+	<fire_sfx>RAWSOUND:xcom3/rawsound/tactical/weapons/dstablsr.raw:22050</fire_sfx>
+	<damage_type>DAMAGETYPE_DISRUPTOR_BEAM</damage_type>
+	<trigger_type>Timed</trigger_type>
+	</value>
   </entry>
   <entry>
     <key>AEQUIPMENTTYPE_SPITTER_S_VOMIT_FUNNEL</key>

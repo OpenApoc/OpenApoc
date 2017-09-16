@@ -8,7 +8,11 @@
 #include "framework/trace.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/city/vehicle.h"
+#include "game/state/city/vehiclemission.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/vehicle_type.h"
+#include "game/state/tileview/tileobject_vehicle.h"
 
 namespace OpenApoc
 {
@@ -20,8 +24,16 @@ CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratT
 	selectedTileImageFront = fw().data->loadImage("city/selected-citytile-front.png");
 	selectedTileImageOffset = {32, 16};
 	pal = fw().data->loadPalette("xcom3/ufodata/pal_01.dat");
-	alienDetectionColour = {212, 0, 0, 255};
-	alienDetectionThickness = 3.0f;
+	alertImage = fw().data->loadImage("city/building-circle.png");
+
+	selectionBracketsFriendly.push_back(fw().data->loadImage("city/vehicle-brackets-f0.png"));
+	selectionBracketsFriendly.push_back(fw().data->loadImage("city/vehicle-brackets-f1.png"));
+	selectionBracketsFriendly.push_back(fw().data->loadImage("city/vehicle-brackets-f2.png"));
+	selectionBracketsFriendly.push_back(fw().data->loadImage("city/vehicle-brackets-f3.png"));
+	selectionBracketsHostile.push_back(fw().data->loadImage("city/vehicle-brackets-h0.png"));
+	selectionBracketsHostile.push_back(fw().data->loadImage("city/vehicle-brackets-h1.png"));
+	selectionBracketsHostile.push_back(fw().data->loadImage("city/vehicle-brackets-h2.png"));
+	selectionBracketsHostile.push_back(fw().data->loadImage("city/vehicle-brackets-h3.png"));
 };
 
 CityTileView::~CityTileView() = default;
@@ -108,83 +120,193 @@ void CityTileView::render()
 	int minY = std::max(0, topRight.y);
 	int maxY = std::min(map.size.y, bottomLeft.y);
 
-	for (int z = 0; z < maxZDraw; z++)
+	switch (this->viewMode)
 	{
-		for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
+		case TileViewMode::Isometric:
 		{
-			for (int y = minY; y < maxY; y++)
+			// List of vehicles that require drawing of brackets
+			std::set<sp<Vehicle>> vehiclesToDrawBracketsFriendly;
+			std::set<sp<Vehicle>> vehiclesToDrawBracketsHostile;
+
+			auto selectedVehicleLocked = selectedVehicle.lock();
+
+			// Go through every selected vehicle and add target to list of bracket draws
+			if (selectedVehicleLocked)
 			{
-				for (int x = minX; x < maxX; x++)
+				for (auto &m : selectedVehicleLocked->missions)
 				{
-					auto tile = map.getTile(x, y, z);
-					auto object_count = tile->drawnObjects[layer].size();
-					for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+					if (m->type == VehicleMission::MissionType::AttackVehicle)
 					{
-						auto &obj = tile->drawnObjects[layer][obj_id];
-						Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
-						obj->draw(r, *this, pos, this->viewMode);
+						vehiclesToDrawBracketsHostile.insert(m->targetVehicle);
 					}
-#ifdef PATHFINDING_DEBUG
-					if (tile->pathfindingDebugFlag && viewMode == TileViewMode::Isometric)
-						r.draw(selectedTileImageFront,
-						       tileToOffsetScreenCoords(Vec3<int>{x, y, z}) -
-						           selectedTileImageOffset);
-#endif
 				}
 			}
-		}
-	}
 
-	renderStrategyOverlay(r);
-
-	// Detection
-	if (this->viewMode == TileViewMode::Strategy)
-	{
-		for (auto &b : state.current_city->buildings)
-		{
-			if (!b.second->detected)
+			for (int z = 0; z < maxZDraw; z++)
 			{
-				continue;
-			}
-			Vec2<float> pos = tileToOffsetScreenCoords(
-			    Vec3<int>{(b.second->bounds.p0.x + b.second->bounds.p1.x) / 2,
-			              (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2});
-
-			float radius =
-			    70.0f * (float)b.second->ticksDetectionTimeOut / (float)TICKS_DETECTION_TIMEOUT +
-			    30.0f;
-			float interval = M_PI / 8.0f;
-			float angle = 0.0f;
-			Vec2<float> posNew = {pos.x + radius, pos.y};
-			auto posOld = posNew;
-			while (angle < M_PI * 2.0f)
-			{
-				angle += interval;
-				posOld = posNew;
-				posNew = {pos.x + cos(angle) * radius, pos.y + sin(angle) * radius};
-				r.drawLine(posOld, posNew, alienDetectionColour, alienDetectionThickness);
-			}
-		}
-	}
-
-	// Alien debug display
-	if (this->viewMode == TileViewMode::Strategy && DEBUG_SHOW_ALIEN_CREW)
-	{
-		for (auto &b : state.current_city->buildings)
-		{
-			Vec2<float> pos = tileToOffsetScreenCoords(
-			    Vec3<int>{b.second->bounds.p0.x, b.second->bounds.p0.y, 2});
-			for (auto &a : b.second->current_crew)
-			{
-				for (int i = 0; i < a.second; i++)
+				for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
 				{
-					auto icon =
-					    a.first->portraits.at(*a.first->possible_genders.begin()).at(0).icon;
-					r.draw(icon, pos);
-					pos.x += icon->size.x / 2;
+					for (int y = minY; y < maxY; y++)
+					{
+						for (int x = minX; x < maxX; x++)
+						{
+							auto tile = map.getTile(x, y, z);
+							auto object_count = tile->drawnObjects[layer].size();
+							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+							{
+								auto &obj = tile->drawnObjects[layer][obj_id];
+								Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
+								obj->draw(r, *this, pos, this->viewMode);
+
+								switch (obj->getType())
+								{
+									case TileObject::Type::Vehicle:
+									{
+										auto v = std::static_pointer_cast<TileObjectVehicle>(obj)
+										             ->getVehicle();
+
+										if (selectedVehicleLocked)
+										{
+											if (v == selectedVehicleLocked)
+											{
+												vehiclesToDrawBracketsFriendly.insert(v);
+											}
+										}
+									}
+									break;
+								}
+							}
+#ifdef PATHFINDING_DEBUG
+							if (tile->pathfindingDebugFlag && viewMode == TileViewMode::Isometric)
+								r.draw(selectedTileImageFront,
+								       tileToOffsetScreenCoords(Vec3<int>{x, y, z}) -
+								           selectedTileImageOffset);
+#endif
+						}
+					}
+				}
+			}
+
+			// Draw brackets
+			for (auto &obj : vehiclesToDrawBracketsFriendly)
+			{
+				Vec3<float> size = obj->type->size.at(obj->type->getVoxelMapFacing(obj->facing));
+				size /= 2;
+				Vec2<float> pTop = tileToOffsetScreenCoords(obj->getPosition() +
+				                                            Vec3<float>{-size.x, -size.y, size.z});
+				Vec2<float> pLeft =
+				    tileToOffsetScreenCoords(obj->getPosition() + Vec3<float>{-size.x, +size.y, 0});
+				Vec2<float> pRight =
+				    tileToOffsetScreenCoords(obj->getPosition() + Vec3<float>{size.x, -size.y, 0});
+				Vec2<float> pBottom = tileToOffsetScreenCoords(
+				    obj->getPosition() + Vec3<float>{size.x, size.y, -size.z});
+
+				r.draw(selectionBracketsFriendly[0], {pLeft.x - 2.0f, pTop.y - 2.0f});
+				r.draw(selectionBracketsFriendly[1], {pLeft.x - 2.0f, pBottom.y - 2.0f});
+				r.draw(selectionBracketsFriendly[2], {pRight.x - 2.0f, pTop.y - 2.0f});
+				r.draw(selectionBracketsFriendly[3], {pRight.x - 2.0f, pBottom.y - 2.0f});
+			}
+			for (auto &obj : vehiclesToDrawBracketsHostile)
+			{
+				Vec3<float> size = obj->type->size.at(obj->type->getVoxelMapFacing(obj->facing));
+				size /= 2;
+				Vec2<float> pTop = tileToOffsetScreenCoords(obj->getPosition() +
+				                                            Vec3<float>{-size.x, -size.y, size.z});
+				Vec2<float> pLeft =
+				    tileToOffsetScreenCoords(obj->getPosition() + Vec3<float>{-size.x, +size.y, 0});
+				Vec2<float> pRight =
+				    tileToOffsetScreenCoords(obj->getPosition() + Vec3<float>{size.x, -size.y, 0});
+				Vec2<float> pBottom = tileToOffsetScreenCoords(
+				    obj->getPosition() + Vec3<float>{size.x, size.y, -size.z});
+
+				r.draw(selectionBracketsHostile[0], {pLeft.x - 2.0f, pTop.y - 2.0f});
+				r.draw(selectionBracketsHostile[1], {pLeft.x - 2.0f, pBottom.y - 2.0f});
+				r.draw(selectionBracketsHostile[2], {pRight.x - 2.0f, pTop.y - 2.0f});
+				r.draw(selectionBracketsHostile[3], {pRight.x - 2.0f, pBottom.y - 2.0f});
+			}
+		}
+		break;
+		case TileViewMode::Strategy:
+		{
+			for (int z = 0; z < maxZDraw; z++)
+			{
+				for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
+				{
+					for (int y = minY; y < maxY; y++)
+					{
+						for (int x = minX; x < maxX; x++)
+						{
+							auto tile = map.getTile(x, y, z);
+							auto object_count = tile->drawnObjects[layer].size();
+							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+							{
+								auto &obj = tile->drawnObjects[layer][obj_id];
+								Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
+								obj->draw(r, *this, pos, this->viewMode);
+							}
+#ifdef PATHFINDING_DEBUG
+							if (tile->pathfindingDebugFlag && viewMode == TileViewMode::Isometric)
+								r.draw(selectedTileImageFront,
+								       tileToOffsetScreenCoords(Vec3<int>{x, y, z}) -
+								           selectedTileImageOffset);
+#endif
+						}
+					}
+				}
+			}
+			renderStrategyOverlay(r);
+
+			// Detection
+			for (auto &b : state.current_city->buildings)
+			{
+				if (!b.second->detected)
+				{
+					continue;
+				}
+				float initialRadius = std::max(alertImage->size.x, alertImage->size.y);
+				// Eventually scale to 1/2 the size, but start with some bonus time of full size,
+				// so that it doesn't become distorted immediately, that's why we add extra 0.05
+				float radius = std::min(initialRadius,
+				                        initialRadius * (float)b.second->ticksDetectionTimeOut /
+				                                (float)TICKS_DETECTION_TIMEOUT / 2.0f +
+				                            0.55f);
+				Vec2<float> pos = tileToOffsetScreenCoords(
+				    Vec3<int>{(b.second->bounds.p0.x + b.second->bounds.p1.x) / 2,
+				              (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2});
+				pos -= Vec2<float>{radius / 2.0f, radius / 2.0f};
+
+				if (radius == initialRadius)
+				{
+					r.draw(alertImage, pos);
+				}
+				else
+				{
+					r.drawScaled(alertImage, pos, {radius, radius});
+				}
+			}
+
+			// Alien debug display
+			if (DEBUG_SHOW_ALIEN_CREW)
+			{
+				for (auto &b : state.current_city->buildings)
+				{
+					Vec2<float> pos = tileToOffsetScreenCoords(
+					    Vec3<int>{b.second->bounds.p0.x, b.second->bounds.p0.y, 2});
+					for (auto &a : b.second->current_crew)
+					{
+						for (int i = 0; i < a.second; i++)
+						{
+							auto icon = a.first->portraits.at(*a.first->possible_genders.begin())
+							                .at(0)
+							                .icon;
+							r.draw(icon, pos);
+							pos.x += icon->size.x / 2;
+						}
+					}
 				}
 			}
 		}
+		break;
 	}
 }
 }

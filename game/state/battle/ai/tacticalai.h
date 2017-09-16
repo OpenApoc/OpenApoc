@@ -27,7 +27,7 @@ class TacticalAI
 	const UString getName();
 
 	virtual void reset(GameState &, StateRef<Organisation>){};
-	virtual void beginTurnRoutine(GameState &state, StateRef<Organisation> o){};
+	virtual void beginTurnRoutine(GameState &, StateRef<Organisation>){};
 	virtual std::list<std::pair<std::list<StateRef<BattleUnit>>, AIDecision>>
 	think(GameState &, StateRef<Organisation>)
 	{

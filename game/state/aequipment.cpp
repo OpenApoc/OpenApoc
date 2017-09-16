@@ -355,7 +355,7 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 	}
 }
 
-sp<AEquipment> AEquipment::unloadAmmo(GameState &state)
+sp<AEquipment> AEquipment::unloadAmmo()
 {
 	if (!payloadType)
 	{

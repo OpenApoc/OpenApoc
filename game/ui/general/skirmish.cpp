@@ -551,7 +551,7 @@ void Skirmish::battleInBase(bool hotseat, StateRef<Base> base,
 	fw().stageQueueCommand(
 	    {StageCmd::Command::REPLACEALL,
 	     mksp<BattleBriefing>(
-	         state.shared_from_this(), state.getAliens(), base->building.id, false, false,
+	         state.shared_from_this(), state.getAliens(), base->building.id, true, true,
 	         loadBattleBuilding(hotseat, base->building, &state, base, false, aliens))});
 }
 

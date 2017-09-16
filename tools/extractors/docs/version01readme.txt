@@ -33,6 +33,7 @@ List of incomplete battlescape features:
 - Equipping multiple agents at once
 - Edit agent names
 - Viewing agent medals and mission stats
+- Square around selected agent on map
 
 Debug features:
 - F1 toggles between cheat hotkeys and normal hotkeys (for anything from this list to work, press F1 once, to be back to using normal hotkeys again, press F1 again)
