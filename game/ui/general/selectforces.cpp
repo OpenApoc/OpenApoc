@@ -16,43 +16,43 @@ namespace OpenApoc
 
 SelectForces::SelectForces(sp<GameState> state, Skirmish &skirmish,
                            std::map<StateRef<AgentType>, int> *aliens, int *guards, int *civilians)
-    : Stage(), skirmish(skirmish), state(*state), menuform(ui().getForm("selectforces"))
+    : Stage(), skirmish(skirmish), menuform(ui().getForm("selectforces")), state(*state)
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 	menuform->findControlTyped<Label>("LOCATION")->setText(skirmish.getLocationText());
 
 	menuform->findControlTyped<ScrollBar>("NUM_BSK_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_BSK")->setText(
 		        format("%d", menuform->findControlTyped<ScrollBar>("NUM_BSK_SLIDER")->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("NUM_CHRYS_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_CHRYS")
 		        ->setText(format(
 		            "%d", menuform->findControlTyped<ScrollBar>("NUM_CHRYS_SLIDER")->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("NUM_EGG_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_EGG")->setText(
 		        format("%d", menuform->findControlTyped<ScrollBar>("NUM_EGG_SLIDER")->getValue()));
 		});
 
 	menuform->findControlTyped<ScrollBar>("NUM_SPITTER_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_SPITTER")
 		        ->setText(format(
 		            "%d", menuform->findControlTyped<ScrollBar>("NUM_SPITTER_SLIDER")->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("NUM_ANTHROPOD_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_ANTHROPOD")
 		        ->setText(format(
 		            "%d",
 		            menuform->findControlTyped<ScrollBar>("NUM_ANTHROPOD_SLIDER")->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("NUM_MULTIWORM_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_MULTIWORM")
 		        ->setText(format(
 		            "%d",
@@ -60,19 +60,19 @@ SelectForces::SelectForces(sp<GameState> state, Skirmish &skirmish,
 		});
 
 	menuform->findControlTyped<ScrollBar>("NUM_POPPER_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_POPPER")
 		        ->setText(format(
 		            "%d", menuform->findControlTyped<ScrollBar>("NUM_POPPER_SLIDER")->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("NUM_SKEL_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_SKEL")
 		        ->setText(format(
 		            "%d", menuform->findControlTyped<ScrollBar>("NUM_SKEL_SLIDER")->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("NUM_HYPERWORM_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_HYPERWORM")
 		        ->setText(format(
 		            "%d",
@@ -80,32 +80,32 @@ SelectForces::SelectForces(sp<GameState> state, Skirmish &skirmish,
 		});
 
 	menuform->findControlTyped<ScrollBar>("NUM_MEGA_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_MEGA")
 		        ->setText(format(
 		            "%d", menuform->findControlTyped<ScrollBar>("NUM_MEGA_SLIDER")->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("NUM_PSI_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_PSI")->setText(
 		        format("%d", menuform->findControlTyped<ScrollBar>("NUM_PSI_SLIDER")->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("NUM_MICRO_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_MICRO")
 		        ->setText(format(
 		            "%d", menuform->findControlTyped<ScrollBar>("NUM_MICRO_SLIDER")->getValue()));
 		});
 
 	menuform->findControlTyped<ScrollBar>("NUM_GUARD_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_GUARD")
 		        ->setText(format(
 		            "%d", menuform->findControlTyped<ScrollBar>("NUM_GUARD_SLIDER")->getValue()));
 		});
 
 	menuform->findControlTyped<ScrollBar>("NUM_CIVILIAN_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_CIVILIAN")
 		        ->setText(format(
 		            "%d",
@@ -113,17 +113,17 @@ SelectForces::SelectForces(sp<GameState> state, Skirmish &skirmish,
 		});
 
 	menuform->findControlTyped<CheckBox>("DEFAULT_ALIENS")
-	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
+	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *) {
 		    menuform->findControlTyped<Graphic>("SHROUD_ALIENS")
 		        ->setVisible(menuform->findControlTyped<CheckBox>("DEFAULT_ALIENS")->isChecked());
 		});
 	menuform->findControlTyped<CheckBox>("DEFAULT_GUARDS")
-	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
+	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *) {
 		    menuform->findControlTyped<Graphic>("SHROUD_GUARDS")
 		        ->setVisible(menuform->findControlTyped<CheckBox>("DEFAULT_GUARDS")->isChecked());
 		});
 	menuform->findControlTyped<CheckBox>("DEFAULT_CIVILIANS")
-	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
+	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *) {
 		    menuform->findControlTyped<Graphic>("SHROUD_CIVILIANS")
 		        ->setVisible(
 		            menuform->findControlTyped<CheckBox>("DEFAULT_CIVILIANS")->isChecked());

@@ -92,7 +92,7 @@ Vec3<int> rotate(Vec3<int> vec, int rotation)
 
 std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destinationStart,
                                                Vec3<int> destinationEnd, int iterationLimit,
-                                               const CanEnterTileHelper &canEnterTile,
+                                               const CanEnterTileHelper &canEnterTileHelper,
                                                bool approachOnly, bool ignoreStaticUnits,
                                                bool ignoreAllUnits, float *cost, float maxCost)
 {
@@ -102,7 +102,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 #endif
 
 	TRACE_FN;
-	maxCost /= canEnterTile.pathOverheadAlloawnce();
+	maxCost /= canEnterTileHelper.pathOverheadAlloawnce();
 	// Faster than looking up in a set
 	std::vector<bool> visitedTiles = std::vector<bool>(size.x * size.y * size.z, false);
 	int strideZ = size.x * size.y;
@@ -166,8 +166,8 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	}
 
 	auto startNode = new PathNode(
-	    0.0f, 0.0f, canEnterTile.getDistance(origin, goalPositionStart, goalPositionEnd), nullptr,
-	    startTile);
+	    0.0f, 0.0f, canEnterTileHelper.getDistance(origin, goalPositionStart, goalPositionEnd),
+	    nullptr, startTile);
 	nodesToDelete.push_back(startNode);
 	fringe.emplace_back(startNode);
 
@@ -244,9 +244,9 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					float thisCost = 0.0f;
 					bool unused = false;
 					bool jumped = false;
-					if (!canEnterTile.canEnterTile(nodeToExpand->thisTile, tile,
-					                               canEnterTile.allowJumping, jumped, thisCost,
-					                               unused, ignoreStaticUnits, ignoreAllUnits))
+					if (!canEnterTileHelper.canEnterTile(nodeToExpand->thisTile, tile, true, jumped,
+					                                     thisCost, unused, ignoreStaticUnits,
+					                                     ignoreAllUnits))
 						continue;
 					// Jumped flag set, must immediately land
 					if (jumped)
@@ -257,8 +257,9 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 							continue;
 						}
 						auto nextTile = this->getTile(nextNextPosition);
-						if (!canEnterTile.canEnterTile(tile, nextTile, false, jumped, thisCost,
-						                               unused, ignoreStaticUnits, ignoreAllUnits))
+						if (!canEnterTileHelper.canEnterTile(tile, nextTile, false, jumped,
+						                                     thisCost, unused, ignoreStaticUnits,
+						                                     ignoreAllUnits))
 						{
 							continue;
 						}
@@ -270,23 +271,23 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					float newTrueCost = nodeToExpand->trueCost;
 
 					newNodeCost += thisCost /* * (jumped ? 2 : 1) */
-					               / canEnterTile.pathOverheadAlloawnce();
+					               / canEnterTileHelper.pathOverheadAlloawnce();
 					newTrueCost += thisCost;
 
 					// make pathfinder biased towards vehicle's altitude preference
-					newNodeCost += canEnterTile.adjustCost(nextPosition, z);
+					newNodeCost += canEnterTileHelper.adjustCost(nextPosition, z);
 
 					// Do not add to the fringe if too far
 					if (maxCost != 0.0f && newNodeCost >= maxCost)
 						continue;
 
-					auto newNode =
-					    new PathNode(newNodeCost, newTrueCost,
-					                 destinationIsSingleTile
-					                     ? canEnterTile.getDistance(nextPosition, goalPositionStart)
-					                     : canEnterTile.getDistance(nextPosition, goalPositionStart,
-					                                                goalPositionEnd),
-					                 nodeToExpand, tile);
+					auto newNode = new PathNode(
+					    newNodeCost, newTrueCost,
+					    destinationIsSingleTile
+					        ? canEnterTileHelper.getDistance(nextPosition, goalPositionStart)
+					        : canEnterTileHelper.getDistance(nextPosition, goalPositionStart,
+					                                         goalPositionEnd),
+					    nodeToExpand, tile);
 					nodesToDelete.push_back(newNode);
 
 					// Put node at appropriate place in the list

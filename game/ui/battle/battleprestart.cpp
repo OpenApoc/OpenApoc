@@ -80,7 +80,6 @@ sp<Control> BattlePreStart::createAgentControl(StateRef<Agent> agent, bool selec
 
 	float maxHealth;
 	float currentHealth;
-	float stunProportion;
 	if (shield)
 	{
 		currentHealth = agent->getShield();
@@ -90,11 +89,6 @@ sp<Control> BattlePreStart::createAgentControl(StateRef<Agent> agent, bool selec
 	{
 		currentHealth = agent->getHealth();
 		maxHealth = agent->getMaxHealth();
-		if (agent->unit)
-		{
-			float stunHealth = agent->unit->stunDamage;
-			stunProportion = stunHealth / maxHealth;
-		}
 	}
 	float healthProportion = maxHealth == 0.0f ? 0.0f : currentHealth / maxHealth;
 
@@ -120,7 +114,7 @@ sp<Control> BattlePreStart::createAgentControl(StateRef<Agent> agent, bool selec
 }
 
 BattlePreStart::BattlePreStart(sp<GameState> state)
-    : Stage(), menuform(ui().getForm("battle/prestart")), state(state), TOP_LEFT({302, 80})
+    : Stage(), menuform(ui().getForm("battle/prestart")), TOP_LEFT({302, 80}), state(state)
 {
 
 	menuform->findControlTyped<GraphicButton>("BUTTON_EQUIP")

@@ -79,6 +79,7 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	void ceaseDoorFunction();
 
 	void update(GameState &state, unsigned int ticks);
+	void updateFalling(GameState &state, unsigned int ticks);
 
 	bool isAlive() const;
 

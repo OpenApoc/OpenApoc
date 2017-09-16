@@ -395,6 +395,16 @@ void VEquipScreen::render()
 
 				break;
 			}
+			case EquipmentSlotType::ArmorBody:
+			case EquipmentSlotType::ArmorHelmet:
+			case EquipmentSlotType::ArmorLeftHand:
+			case EquipmentSlotType::ArmorLegs:
+			case EquipmentSlotType::ArmorRightHand:
+			case EquipmentSlotType::LeftHand:
+			case EquipmentSlotType::RightHand:
+			case EquipmentSlotType::General:
+				LogError("Impossible equipment slot type on vehicle");
+				break;
 		}
 	}
 	else

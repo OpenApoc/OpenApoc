@@ -99,8 +99,8 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
       formItemArmor(ui().getForm("aequipscreen_item_armor")),
       formItemGrenade(ui().getForm("aequipscreen_item_grenade")),
       formItemOther(ui().getForm("aequipscreen_item_other")),
-      pal(fw().data->loadPalette("xcom3/ufodata/agenteqp.pcx")),
-      labelFont(ui().getFont("smalfont")), state(state)
+      pal(fw().data->loadPalette("xcom3/ufodata/agenteqp.pcx")), state(state),
+      labelFont(ui().getFont("smalfont"))
 {
 	this->state = state;
 
@@ -1505,7 +1505,7 @@ sp<Control> AEquipScreen::createAgentControl(sp<Agent> agent)
 
 	float maxHealth;
 	float currentHealth;
-	float stunProportion;
+	float stunProportion = 0.0f;
 	if (shield)
 	{
 		currentHealth = agent->getShield();

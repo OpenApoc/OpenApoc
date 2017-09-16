@@ -174,6 +174,8 @@ void CityTileView::render()
 										}
 									}
 									break;
+									default:
+										break;
 								}
 							}
 #ifdef PATHFINDING_DEBUG

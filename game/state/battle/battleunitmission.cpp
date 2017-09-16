@@ -41,9 +41,9 @@ BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, BattleUnitType type, bo
 
 BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, bool large, bool flying, bool allowJumping,
                                            int maxHeight, sp<TileObjectBattleUnit> tileObject)
-    : map(map), large(large), flying(flying), maxHeight(maxHeight), tileObject(tileObject)
+    : map(map), large(large), flying(flying), maxHeight(maxHeight), tileObject(tileObject),
+      canJump(allowJumping && !flying)
 {
-	this->allowJumping = allowJumping && !flying;
 }
 
 BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, BattleUnit &u)
@@ -161,7 +161,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 	}
 
 	// Large units can't jump, also can't jump to different z
-	allowJumping = allowJumping && !large && toPos.z == fromPos.z;
+	allowJumping = allowJumping && canJump && !large && toPos.z == fromPos.z;
 
 	// If tiles not adjacent -> see if we're checking a jump
 	if (std::abs(toPos.x - fromPos.x) > 1 || std::abs(toPos.y - fromPos.y) > 1 ||
@@ -2358,6 +2358,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 
 bool BattleUnitMission::advanceBrainsucker(GameState &state, BattleUnit &u, Vec3<float> &dest)
 {
+	std::ignore = state;
 	dest = targetUnit->getMuzzleLocation();
 	targetFacing =
 	    getFacing(u, Vec3<float>{0.0f, 0.0f, 0.0f},

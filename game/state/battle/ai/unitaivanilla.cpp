@@ -117,7 +117,8 @@ UnitAIVanilla::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment>
 		armorValue = target->agent->type->armor.at(BodyPart::Legs);
 		damageModifier = target->agent->type->damage_modifier;
 	}
-	damage = payload->damage_type->dealDamage(damage * 1.5f, damageModifier);
+	damage =
+	    std::max(0, payload->damage_type->dealDamage(damage * 1.5f, damageModifier) - armorValue);
 
 	if (u.canAttackUnit(state, target, e) == WeaponStatus::NotFiring)
 	{
@@ -261,7 +262,8 @@ UnitAIVanilla::getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment
 			armorValue = t.second->agent->type->armor.at(BodyPart::Legs);
 			damageModifier = t.second->agent->type->damage_modifier;
 		}
-		localDamage = payload->damage_type->dealDamage(localDamage * 1.5f, damageModifier);
+		localDamage = std::max(
+		    0, payload->damage_type->dealDamage(localDamage * 1.5f, damageModifier) - armorValue);
 		damage +=
 		    (u.owner->isRelatedTo(t.second->owner) == Organisation::Relation::Hostile ? 1.0f
 		                                                                              : -1.0f) *

@@ -388,6 +388,8 @@ void UfopaediaCategoryView::setFormStats()
 							case EquipmentSlotType::VehicleGeneral:
 								generalSpace += space;
 								break;
+							default:
+								break;
 						}
 					}
 					statsLabels[row]->setText(tr("Weapons space"));

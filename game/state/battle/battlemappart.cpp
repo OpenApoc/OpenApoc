@@ -37,11 +37,15 @@ void BattleMapPart::die(GameState &state, bool explosive, bool violently)
 	// If falling just cease to be, do damage
 	if (falling)
 	{
+		for (auto &u : tileObject->getOwningTile()->getUnits(false, true))
+		{
+			// FIXME: Ensure falling damage is correct
+			u->applyDamage(state, 50, {&state, "DAMAGETYPE_FALLING_OBJECT"}, BodyPart::Helmet,
+			               DamageSource::Impact);
+		}
 		this->tileObject->removeFromMap();
 		this->tileObject.reset();
 		destroyed = true;
-
-		LogWarning("Deal falling damage to units!");
 	}
 	else
 	{
@@ -1119,10 +1123,10 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> currentS
 			// Step 2.1: Try to find support without using map parts that were supported by this
 			// (this prevents map parts supporting each other in a loop)
 			// (it has to find another support that is not supported by it)
-			auto pos = curSetPart->tileObject->getOwningTile()->position;
 			if (curSetPart->findSupport())
 			{
 #ifdef MAP_PART_LINK_DEBUG_OUTPUT
+				auto pos = curSetPart->tileObject->getOwningTile()->position;
 				log += format("\n Processing %s at %d %d %d: OK %s", curSetPart->type.id, pos.x,
 				              pos.y, pos.z, curSetPart->providesHardSupport ? "HARD" : "SOFT");
 				{
@@ -1188,8 +1192,8 @@ void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> currentS
 				// (was temporary since Step 1, now properly collapsing with all ties cut)
 				for (auto &supportedPart : *supportedByThisMp)
 				{
-					auto newpos = supportedPart->tileObject->getOwningTile()->position;
 #ifdef MAP_PART_LINK_DEBUG_OUTPUT
+					auto newpos = supportedPart->tileObject->getOwningTile()->position;
 					log += format("\n - %s at %d %d %d added to next iteration",
 					              supportedPart->type.id, newpos.x, newpos.y, newpos.z);
 #endif
@@ -1267,108 +1271,7 @@ void BattleMapPart::update(GameState &state, unsigned int ticks)
 	// Process falling
 	if (falling)
 	{
-		auto fallTicksRemaining = ticks;
-		auto newPosition = position;
-		while (fallTicksRemaining-- > 0)
-		{
-			fallingSpeed += FALLING_ACCELERATION_MAP_PART;
-			newPosition -=
-			    Vec3<float>{0.0f, 0.0f, (fallingSpeed / TICK_SCALE)} / VELOCITY_SCALE_BATTLE;
-		}
-
-		// Collision with this tile happens when map part moves from this tile to the next
-		if (newPosition.z < 0 || floorf(newPosition.z) != floorf(position.z))
-		{
-			sp<BattleMapPart> rubble;
-			for (auto &obj : tileObject->getOwningTile()->ownedObjects)
-			{
-				switch (obj->getType())
-				{
-					// If there's a live ground or map mart of our type here - die
-					case TileObject::Type::Ground:
-					case TileObject::Type::LeftWall:
-					case TileObject::Type::RightWall:
-					case TileObject::Type::Feature:
-					{
-						auto mp =
-						    std::static_pointer_cast<TileObjectBattleMapPart>(obj)->getOwner();
-
-						// Find if we collide into it
-						if (mp->type->type == type->type ||
-						    mp->type->type == BattleMapPartType::Type::Ground)
-						{
-							if (tileObject && mp->isAlive())
-							{
-								destroyed = true;
-							}
-						}
-
-						// Find if we deposit rubble into it
-						if ((type->type != BattleMapPartType::Type::Ground &&
-						     mp->type->type == type->type) ||
-						    (type->type == BattleMapPartType::Type::Ground &&
-						     mp->type->type == BattleMapPartType::Type::Feature))
-						{
-							if (mp->isAlive())
-							{
-								rubble = mp;
-							}
-						}
-
-						break;
-					}
-					default:
-						// Ignore other object types?
-						break;
-				}
-			}
-			// Spawn smoke, more intense if we land here
-			{
-				StateRef<DamageType> dtSmoke = {&state, "DAMAGETYPE_SMOKE"};
-				auto hazard = state.current_battle->placeHazard(
-				    state, owner, nullptr, dtSmoke, position,
-				    dtSmoke->hazardType->getLifetime(state), 2, destroyed ? 6 : 12);
-				if (hazard)
-				{
-					hazard->ticksUntilVisible = 0;
-				}
-			}
-			// Cease to exist if destroyed
-			if (destroyed)
-			{
-				if (!type->rubble.empty())
-				{
-					if (!rubble)
-					{
-						// If no rubble present - spawn rubble
-						auto rubble = mksp<BattleMapPart>();
-						Vec3<int> initialPosition = position;
-						rubble->damaged = true;
-						rubble->owner = owner;
-						rubble->position = initialPosition;
-						rubble->position += Vec3<float>(0.5f, 0.5f, 0.0f);
-						rubble->type = type->rubble.front();
-						state.current_battle->map_parts.push_back(rubble);
-						state.current_battle->map->addObjectToMap(rubble);
-					}
-					else
-					{
-						// If rubble present - increment it if possible
-						auto it = std::find(type->rubble.begin(), type->rubble.end(), rubble->type);
-						if (it != type->rubble.end() && ++it != type->rubble.end())
-						{
-							rubble->type = *it;
-							rubble->setPosition(state, rubble->position);
-						}
-					}
-				}
-
-				die(state);
-				return;
-			}
-		}
-
-		setPosition(state, newPosition);
+		updateFalling(state, ticks);
 		return;
 	}
 
@@ -1378,6 +1281,110 @@ void BattleMapPart::update(GameState &state, unsigned int ticks)
 		animation_frame_ticks += ticks;
 		animation_frame_ticks %= TICKS_PER_FRAME_MAP_PART * type->animation_frames.size();
 	}
+}
+
+void BattleMapPart::updateFalling(GameState &state, unsigned int ticks)
+{
+	auto fallTicksRemaining = ticks;
+	auto newPosition = position;
+	while (fallTicksRemaining-- > 0)
+	{
+		fallingSpeed += FALLING_ACCELERATION_MAP_PART;
+		newPosition -= Vec3<float>{0.0f, 0.0f, (fallingSpeed / TICK_SCALE)} / VELOCITY_SCALE_BATTLE;
+	}
+
+	// Collision with this tile happens when map part moves from this tile to the next
+	if (newPosition.z < 0 || floorf(newPosition.z) != floorf(position.z))
+	{
+		sp<BattleMapPart> rubble;
+		for (auto &obj : tileObject->getOwningTile()->ownedObjects)
+		{
+			switch (obj->getType())
+			{
+				// If there's a live ground or map mart of our type here - die
+				case TileObject::Type::Ground:
+				case TileObject::Type::LeftWall:
+				case TileObject::Type::RightWall:
+				case TileObject::Type::Feature:
+				{
+					auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(obj)->getOwner();
+
+					// Find if we collide into it
+					if (mp->type->type == type->type ||
+					    mp->type->type == BattleMapPartType::Type::Ground)
+					{
+						if (tileObject && mp->isAlive())
+						{
+							destroyed = true;
+						}
+					}
+
+					// Find if we deposit rubble into it
+					if ((type->type != BattleMapPartType::Type::Ground &&
+					     mp->type->type == type->type) ||
+					    (type->type == BattleMapPartType::Type::Ground &&
+					     mp->type->type == BattleMapPartType::Type::Feature))
+					{
+						if (mp->isAlive())
+						{
+							rubble = mp;
+						}
+					}
+
+					break;
+				}
+				default:
+					// Ignore other object types?
+					break;
+			}
+		}
+		// Spawn smoke, more intense if we land here
+		{
+			StateRef<DamageType> dtSmoke = {&state, "DAMAGETYPE_SMOKE"};
+			auto hazard = state.current_battle->placeHazard(
+			    state, owner, nullptr, dtSmoke, position, dtSmoke->hazardType->getLifetime(state),
+			    2, destroyed ? 6 : 12);
+			if (hazard)
+			{
+				hazard->ticksUntilVisible = 0;
+			}
+		}
+		// Cease to exist if destroyed
+		if (destroyed)
+		{
+			if (!type->rubble.empty())
+			{
+				if (!rubble)
+				{
+					// If no rubble present - spawn rubble
+					auto rubble = mksp<BattleMapPart>();
+					Vec3<int> initialPosition = position;
+					rubble->damaged = true;
+					rubble->owner = owner;
+					rubble->position = initialPosition;
+					rubble->position += Vec3<float>(0.5f, 0.5f, 0.0f);
+					rubble->type = type->rubble.front();
+					state.current_battle->map_parts.push_back(rubble);
+					state.current_battle->map->addObjectToMap(rubble);
+				}
+				else
+				{
+					// If rubble present - increment it if possible
+					auto it = std::find(type->rubble.begin(), type->rubble.end(), rubble->type);
+					if (it != type->rubble.end() && ++it != type->rubble.end())
+					{
+						rubble->type = *it;
+						rubble->setPosition(state, rubble->position);
+					}
+				}
+			}
+
+			die(state);
+			return;
+		}
+	}
+
+	setPosition(state, newPosition);
 }
 
 void BattleMapPart::setPosition(GameState &, const Vec3<float> &pos)

@@ -201,7 +201,6 @@ class CanEnterTileHelper
 	// Value here defines how much, in percent, can resulting path afford to be unoptimal
 	// For example 1.05 means resulting path can be 5% longer than an optimal one
 	virtual float pathOverheadAlloawnce() const { return 1.0f; }
-	bool allowJumping = false;
 };
 
 class TileMap

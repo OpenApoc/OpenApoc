@@ -22,44 +22,44 @@
 namespace OpenApoc
 {
 
-Skirmish::Skirmish(sp<GameState> state) : Stage(), state(*state), menuform(ui().getForm("skirmish"))
+Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmish")), state(*state)
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 	updateLocationLabel();
 	menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_HUMANS")
 		        ->setText(format(
 		            "%d", menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_HYBRIDS")
 		        ->setText(format(
 		            "%d", menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_ANDROIDS")
 		        ->setText(format(
 		            "%d",
 		            menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("DAYS_PHYSICAL_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("DAYS_PHYSICAL")
 		        ->setText(format(
 		            "%d",
 		            menuform->findControlTyped<ScrollBar>("DAYS_PHYSICAL_SLIDER")->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("DAYS_PSI_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("DAYS_PSI")
 		        ->setText(format(
 		            "%d", menuform->findControlTyped<ScrollBar>("DAYS_PSI_SLIDER")->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("PLAYER_TECH")
 		        ->setText(menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->getValue() ==
 		                          0
@@ -69,20 +69,20 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), state(*state), menuform(ui().
 		                                   ->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("ALIEN_SCORE")
 		        ->setText(format(
 		            "%dK",
 		            menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("ORG_SCORE")
 		        ->setText(format(
 		            "%d", menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")->getValue()));
 		});
 	menuform->findControlTyped<ScrollBar>("ARMOR_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *e) {
+	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    UString armor = "";
 		    switch (menuform->findControlTyped<ScrollBar>("ARMOR_SLIDER")->getValue())
 		    {

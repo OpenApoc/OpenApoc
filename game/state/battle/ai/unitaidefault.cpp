@@ -34,6 +34,7 @@ void UnitAIDefault::notifyHit(Vec3<int> position) { attackerPosition = position;
 
 std::tuple<AIDecision, bool> UnitAIDefault::think(GameState &state, BattleUnit &u, bool interrupt)
 {
+	std::ignore = interrupt;
 	static const Vec3<int> NONE = {0, 0, 0};
 
 	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;

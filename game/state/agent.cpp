@@ -576,7 +576,7 @@ sp<AEquipment> Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentTy
 	bool prefSlot = false;
 	if (type->type == AEquipmentType::Type::Ammo)
 	{
-		auto wpn = addEquipmentAsAmmoByType(state, type);
+		auto wpn = addEquipmentAsAmmoByType(type);
 		if (wpn)
 		{
 			return wpn;
@@ -652,7 +652,7 @@ sp<AEquipment> Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentTy
 {
 	if (type->type == AEquipmentType::Type::Ammo)
 	{
-		auto wpn = addEquipmentAsAmmoByType(state, type);
+		auto wpn = addEquipmentAsAmmoByType(type);
 		if (wpn)
 		{
 			return wpn;
@@ -690,7 +690,7 @@ sp<AEquipment> Agent::addEquipmentByType(GameState &state, Vec2<int> pos,
 	return equipment;
 }
 
-sp<AEquipment> Agent::addEquipmentAsAmmoByType(GameState &state, StateRef<AEquipmentType> type)
+sp<AEquipment> Agent::addEquipmentAsAmmoByType(StateRef<AEquipmentType> type)
 {
 	for (auto &e : equipment)
 	{

@@ -23,6 +23,7 @@ class BattleUnitTileHelper : public CanEnterTileHelper
 	bool flying;
 	int maxHeight;
 	sp<TileObjectBattleUnit> tileObject;
+	bool canJump = false;
 
   public:
 	BattleUnitTileHelper(TileMap &map, BattleUnit &u);

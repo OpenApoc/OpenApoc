@@ -222,7 +222,7 @@ void Battle::initBattle(GameState &state, bool first)
 		u.second->refreshUnitVision(state);
 	}
 	// Pathfinding
-	updatePathfinding(state, PATHFINDING_UPDATE_INTERVAL);
+	updatePathfinding(state, 0);
 	// AI
 	aiBlock.init(state);
 	for (auto &o : participants)
@@ -421,6 +421,7 @@ void linkUpList(std::list<BattleMapPart *> list)
 // For now, removes only ground
 void Battle::initialMapPartRemoval(GameState &state)
 {
+	std::ignore = state;
 	for (auto &u : units)
 	{
 		if (!u.second->isLarge())
@@ -1520,12 +1521,8 @@ bool findLosBlockCenter(TileMap &map, BattleUnitType type,
 
 void Battle::updatePathfinding(GameState &, unsigned int ticks)
 {
-	pathfindingUpdateTicksAccumulated += ticks;
-	if (pathfindingUpdateTicksAccumulated < PATHFINDING_UPDATE_INTERVAL)
-	{
-		return;
-	}
-	pathfindingUpdateTicksAccumulated = 0;
+	// Throttling updates so that big explosions won't lag
+	static const int LIMIT_PER_TICK = 10;
 
 	// How much attempts are given to the pathfinding until giving up and concluding that
 	// there is no path between two sectors. This is a multiplier for "distance", which is
@@ -1574,6 +1571,8 @@ void Battle::updatePathfinding(GameState &, unsigned int ticks)
 		}
 	}
 
+	int updatesRemaining = ticks > 0 ? LIMIT_PER_TICK * ticks : -1;
+
 	// Now update all paths
 	for (int i = 0; i < lbCount - 1; i++)
 	{
@@ -1582,6 +1581,14 @@ void Battle::updatePathfinding(GameState &, unsigned int ticks)
 			if (!linkNeedsUpdate[i + j * lbCount])
 			{
 				continue;
+			}
+			if (updatesRemaining > 0)
+			{
+				updatesRemaining--;
+				if (updatesRemaining == 0)
+				{
+					return;
+				}
 			}
 			linkNeedsUpdate[i + j * lbCount] = false;
 
@@ -1623,12 +1630,6 @@ void Battle::updatePathfinding(GameState &, unsigned int ticks)
 			}
 		}
 	}
-
-	// FIXME: Somehow introduce multi-threading here or throttle the load
-	// Calculating paths is the more costly operation here. If a big chunk of map is changed,
-	// it can take up to half a second to calculate. One option would be to calculate it
-	// in a different thread (maybe writing results to a different array, and then just swapping)
-	// Another option would be to throttle updates (have a limit on how many can be done per tick)
 }
 
 void Battle::update(GameState &state, unsigned int ticks)
@@ -2379,11 +2380,11 @@ void Battle::enterBattle(GameState &state)
 
 	if (b->mission_type == MissionType::BaseDefense)
 	{
-		for (int i = 0; i < b->visibleTiles[b->locationOwner].size(); i++)
+		for (auto i = 0; i < b->visibleTiles[b->locationOwner].size(); i++)
 		{
 			b->visibleTiles[b->locationOwner][i] = true;
 		}
-		for (int i = 0; i < b->visibleBlocks[b->locationOwner].size(); i++)
+		for (auto i = 0; i < b->visibleBlocks[b->locationOwner].size(); i++)
 		{
 			b->visibleBlocks[b->locationOwner][i] = true;
 		}

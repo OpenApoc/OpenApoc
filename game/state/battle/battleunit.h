@@ -691,7 +691,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Appply enzyme to this unit
 	void applyEnzymeEffect(GameState &state);
 	// Spawn enzyme smoke on this unit
-	void spawnEnzymeSmoke(GameState &state, Vec3<int> pos);
+	void spawnEnzymeSmoke(GameState &state);
 	// Send AgentEvent of specified type
 	// checkOwnership means event not set unless agent owned by player
 	// checkVisibility means event not sent unless agent seen by player

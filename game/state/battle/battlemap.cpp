@@ -24,29 +24,67 @@
 namespace OpenApoc
 {
 
+namespace
+{
 int getCorridorSectorID(sp<Base> base, Vec2<int> pos)
 {
 	// key is North South West East (true = occupied, false = vacant)
 	const std::unordered_map<std::vector<bool>, int> TILE_CORRIDORS = {
-	    {{true, false, false, false}, 4}, {{false, false, false, true}, 5},
-	    {{true, false, false, true}, 6},  {{false, true, false, false}, 7},
-	    {{true, true, false, false}, 8},  {{false, true, false, true}, 9},
-	    {{true, true, false, true}, 10},  {{false, false, true, false}, 11},
-	    {{true, false, true, false}, 12}, {{false, false, true, true}, 13},
-	    {{true, false, true, true}, 14},  {{false, true, true, false}, 15},
-	    {{true, true, true, false}, 16},  {{false, true, true, true}, 17},
-	    {{true, true, true, true}, 18}};
+	    {{false, false, false, false}, 3}, {{true, false, false, false}, 4},
+	    {{false, false, false, true}, 5},  {{true, false, false, true}, 6},
+	    {{false, true, false, false}, 7},  {{true, true, false, false}, 8},
+	    {{false, true, false, true}, 9},   {{true, true, false, true}, 10},
+	    {{false, false, true, false}, 11}, {{true, false, true, false}, 12},
+	    {{false, false, true, true}, 13},  {{true, false, true, true}, 14},
+	    {{false, true, true, false}, 15},  {{true, true, true, false}, 16},
+	    {{false, true, true, true}, 17},   {{true, true, true, true}, 18}};
 
-	if (pos.x < 0 || pos.y < 0 || pos.x >= Base::SIZE || pos.y >= Base::SIZE ||
-	    !base->corridors[pos.x][pos.y])
+	if (pos.x < 0 || pos.y < 0 || pos.x >= Base::SIZE || pos.y >= Base::SIZE)
 	{
+		LogError("Going out of bounds for base");
 		return 0;
 	}
-	bool north = pos.y > 0 && base->corridors[pos.x][pos.y - 1];
-	bool south = pos.y < Base::SIZE - 1 && base->corridors[pos.x][pos.y + 1];
-	bool west = pos.x > 0 && base->corridors[pos.x - 1][pos.y];
-	bool east = pos.x < Base::SIZE - 1 && base->corridors[pos.x + 1][pos.y];
-	return TILE_CORRIDORS.at({north, south, west, east}) - 3;
+	else if (!base->corridors[pos.x][pos.y])
+	{
+		// We need to cap any facilities
+		// For that we need to find where facilities are
+		std::vector<std::vector<bool>> facilities;
+		facilities.resize(Base::SIZE);
+		for (int i = 0; i < Base::SIZE; i++)
+		{
+			facilities[i].resize(Base::SIZE);
+		}
+		for (auto &facility : base->facilities)
+		{
+			if (facility->buildTime > 0)
+			{
+				continue;
+			}
+			for (int x = 0; x < facility->type->size; x++)
+			{
+				for (int y = 0; y < facility->type->size; y++)
+				{
+					facilities[facility->pos.x + x][facility->pos.y + y] = true;
+				}
+			}
+		}
+
+		bool north = pos.y > 0 && facilities[pos.x][pos.y - 1];
+		bool south = pos.y < Base::SIZE - 1 && facilities[pos.x][pos.y + 1];
+		bool west = pos.x > 0 && facilities[pos.x - 1][pos.y];
+		bool east = pos.x < Base::SIZE - 1 && facilities[pos.x + 1][pos.y];
+		return TILE_CORRIDORS.at({north, south, west, east}) - 3;
+		return 0;
+	}
+	else
+	{
+		bool north = pos.y > 0 && base->corridors[pos.x][pos.y - 1];
+		bool south = pos.y < Base::SIZE - 1 && base->corridors[pos.x][pos.y + 1];
+		bool west = pos.x > 0 && base->corridors[pos.x - 1][pos.y];
+		bool east = pos.x < Base::SIZE - 1 && base->corridors[pos.x + 1][pos.y];
+		return TILE_CORRIDORS.at({north, south, west, east}) - 3 + 15;
+	}
+}
 }
 
 BattleMap::BattleMap() {}

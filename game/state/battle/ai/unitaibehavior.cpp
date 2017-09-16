@@ -18,6 +18,7 @@ std::tuple<AIDecision, bool> UnitAIBehavior::think(GameState &state, BattleUnit 
 {
 	std::ignore = state;
 	std::ignore = u;
+	std::ignore = interrupt;
 	active = false;
 
 	if (!active)

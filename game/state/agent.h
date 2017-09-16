@@ -332,7 +332,7 @@ class Agent : public StateObject,
 	sp<AEquipment> addEquipmentByType(GameState &state, Vec2<int> pos,
 	                                  StateRef<AEquipmentType> type);
 	// Add equipment as ammo
-	sp<AEquipment> addEquipmentAsAmmoByType(GameState &state, StateRef<AEquipmentType> type);
+	sp<AEquipment> addEquipmentAsAmmoByType(StateRef<AEquipmentType> type);
 
 	// Add equipment to the first available slot of a specific type
 	void addEquipment(GameState &state, sp<AEquipment> object, EquipmentSlotType slotType);

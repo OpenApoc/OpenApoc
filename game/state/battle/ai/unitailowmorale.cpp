@@ -22,6 +22,7 @@ void UnitAILowMorale::reset(GameState &, BattleUnit &) { ticksActionAvailable = 
 
 std::tuple<AIDecision, bool> UnitAILowMorale::think(GameState &state, BattleUnit &u, bool interrupt)
 {
+	std::ignore = interrupt;
 	switch (u.getAIType())
 	{
 		case AIType::PanicFreeze:

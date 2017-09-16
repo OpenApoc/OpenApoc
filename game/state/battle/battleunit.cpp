@@ -203,7 +203,7 @@ void BattleUnit::setPosition(GameState &state, const Vec3<float> &pos, bool goal
 			// Spawn enzyme hazards
 			else if (enzymeDebuffIntensity > 0)
 			{
-				spawnEnzymeSmoke(state, position);
+				spawnEnzymeSmoke(state);
 			}
 		}
 	}
@@ -564,7 +564,6 @@ void BattleUnit::refreshUnitVision(GameState &state, bool forceBlind,
                                    StateRef<BattleUnit> targetUnit)
 {
 	auto &battle = *state.current_battle;
-	auto &map = *battle.map;
 	auto lastVisibleUnits = visibleUnits;
 	auto ticks = state.gameTime.getTicks();
 	visibleUnits.clear();
@@ -708,6 +707,7 @@ void BattleUnit::onReachGoal(GameState &state)
 
 int BattleUnit::getAttackCost(GameState &state, AEquipment &item, Vec3<int> tile)
 {
+	std::ignore = state;
 	int totalCost = 0;
 
 	// Step 1: Turning cost
@@ -1344,6 +1344,7 @@ int BattleUnit::getBodyStateChangeCost(BodyState from, BodyState to) const
 
 void BattleUnit::beginTurn(GameState &state)
 {
+	std::ignore = state;
 	tilesMoved = 0;
 	agent->modified_stats.restoreTU();
 	initialTU = agent->modified_stats.time_units;
@@ -2642,13 +2643,11 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 	}
 
 	// Check if new position is valid
-	bool collision = false;
 	auto c = (collisionIgnoredTicks > 0 || isConscious())
 	             ? Collision()
 	             : tileObject->map.findCollision(previousPosition, newPosition, {}, tileObject);
 	if (c)
 	{
-		collision = true;
 		// If colliding with anything but ground, bounce back once
 		switch (c.obj->getType())
 		{
@@ -2661,7 +2660,6 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 					if (velocity.x != 0.0f || velocity.y != 0.0f)
 					{
 						// If bounced do not try to find support this time
-						collision = false;
 						bounced = true;
 						newPosition = previousPosition;
 						velocity.x = -velocity.x / 4;
@@ -2707,7 +2705,6 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 		// Collision with ceiling
 		if (newPosition.z >= mapSize.z)
 		{
-			collision = true;
 			newPosition.z = mapSize.z - 0.01f;
 			velocity = {0.0f, 0.0f, 0.0f};
 		}
@@ -2715,7 +2712,6 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 		if (newPosition.x < 0 || newPosition.y < 0 || newPosition.y >= mapSize.y ||
 		    newPosition.x >= mapSize.x || newPosition.y >= mapSize.y)
 		{
-			collision = true;
 			velocity.x = -velocity.x / 4;
 			velocity.y = -velocity.y / 4;
 			velocity.z = 0;
@@ -2782,7 +2778,6 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 			velocity = {0.0f, 0.0f, 0.0f};
 		}
 	}
-	return;
 }
 
 void BattleUnit::updateFallingIntoUnit(GameState &state, BattleUnit &unit)
@@ -2956,6 +2951,7 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 void BattleUnit::updateMovementBrainsucker(GameState &state, unsigned int &moveTicksRemaining,
                                            bool &wasUsingLift)
 {
+	std::ignore = wasUsingLift;
 	Vec3<float> nextGoal;
 	if (!missions.empty() && missions.front()->type == BattleUnitMission::Type::Brainsuck &&
 	    getNextDestination(state, nextGoal))
@@ -2973,12 +2969,12 @@ void BattleUnit::updateMovementBrainsucker(GameState &state, unsigned int &moveT
 		resetGoal();
 		startFalling(state);
 	}
-	return;
 }
 
 void BattleUnit::updateMovementJumping(GameState &state, unsigned int &moveTicksRemaining,
                                        bool &wasUsingLift)
 {
+	std::ignore = wasUsingLift;
 	// Check if jump is complete
 	if (launched)
 	{
@@ -3015,7 +3011,6 @@ void BattleUnit::updateMovementJumping(GameState &state, unsigned int &moveTicks
 		newPosition += this->velocity / (float)TICK_SCALE / VELOCITY_SCALE_BATTLE;
 	}
 	setPosition(state, newPosition);
-	return;
 }
 
 void BattleUnit::updateMovement(GameState &state, unsigned int &moveTicksRemaining,
@@ -3054,7 +3049,6 @@ void BattleUnit::updateMovement(GameState &state, unsigned int &moveTicksRemaini
 			return updateMovementNormal(state, moveTicksRemaining, wasUsingLift);
 		}
 	}
-	return;
 }
 
 void BattleUnit::updateHands(GameState &, unsigned int &handsTicksRemaining)
@@ -3314,8 +3308,6 @@ bool BattleUnit::updateAttackingRunCanFireChecks(GameState &state, unsigned int 
 
 void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 {
-	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
-	// Process attacking
 	if (isAttacking())
 	{
 		// Cancel acquire TU mission if attempting to attack
@@ -3905,7 +3897,7 @@ void BattleUnit::requestGiveWay(const BattleUnit &requestor,
 
 void BattleUnit::applyEnzymeEffect(GameState &state)
 {
-	spawnEnzymeSmoke(state, position);
+	spawnEnzymeSmoke(state);
 
 	// Damage random item
 	if (agent->type->inventory && !agent->equipment.empty())
@@ -3932,7 +3924,7 @@ void BattleUnit::applyEnzymeEffect(GameState &state)
 	enzymeDebuffIntensity--;
 }
 
-void BattleUnit::spawnEnzymeSmoke(GameState &state, Vec3<int> pos)
+void BattleUnit::spawnEnzymeSmoke(GameState &state)
 {
 	// FIXME: Ensure this is proper, for now just emulating vanilla crudely
 	// This makes smoke spawned by enzyme grow smaller when debuff runs out
@@ -4370,6 +4362,9 @@ void BattleUnit::dropDown(GameState &state)
 			case BodyState::Prone:
 			case BodyState::Downed:
 				proposedBodyState = BodyState::Downed;
+				break;
+			case BodyState::Dead:
+				LogError("Impossible");
 				break;
 		}
 		break;
