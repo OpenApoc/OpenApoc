@@ -1432,7 +1432,7 @@ bool BattleUnit::isAIControlled(GameState &state) const
 	return owner != state.current_battle->currentPlayer;
 }
 
-bool BattleUnit::isCloaked() const { return cloakTicksAccumulated >= CLOAK_TICKS_REQUIRED; }
+bool BattleUnit::isCloaked() const { return cloakTicksAccumulated >= CLOAK_TICKS_REQUIRED_UNIT; }
 
 AIType BattleUnit::getAIType() const
 {
@@ -1879,6 +1879,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 		// Unit regeneration
 		updateRegen(state, ticks);
 	}
+	// Unit cloak - even in TB unit returns to cloaked after firing based on time
+	updateCloak(state, ticks);
 	// Unit events - was under fire, was requested to give way etc.
 	updateEvents(state);
 	// Idling: Auto-movement, auto-body change when idling
@@ -1966,8 +1968,28 @@ void BattleUnit::updateTB(GameState &state)
 	}
 
 	// Miscellaneous state updates, as well as unit's stats
+	updateCloak(state, TICKS_PER_TURN);
 	updateStateAndStats(state, TICKS_PER_TURN);
 	updateRegen(state, TICKS_REGEN_PER_TURN);
+}
+
+void BattleUnit::updateCloak(GameState &state, unsigned int ticks)
+{
+	if (isConscious())
+	{
+		auto e1 = agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
+		auto e2 = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
+
+		if (cloakTicksAccumulated < CLOAK_TICKS_REQUIRED_UNIT)
+		{
+			cloakTicksAccumulated += ticks;
+		}
+		if ((!e1 || e1->type->type != AEquipmentType::Type::CloakingField) &&
+		    (!e2 || e2->type->type != AEquipmentType::Type::CloakingField))
+		{
+			cloakTicksAccumulated = 0;
+		}
+	}
 }
 
 void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
@@ -1977,23 +1999,6 @@ void BattleUnit::updateStateAndStats(GameState &state, unsigned int ticks)
 	if (isDead())
 	{
 		return;
-	}
-
-	// Cloak
-	if (isConscious())
-	{
-		auto e1 = agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
-		auto e2 = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
-
-		if (cloakTicksAccumulated < CLOAK_TICKS_REQUIRED)
-		{
-			cloakTicksAccumulated += ticks;
-		}
-		if ((!e1 || e1->type->type != AEquipmentType::Type::CloakingField) &&
-		    (!e2 || e2->type->type != AEquipmentType::Type::CloakingField))
-		{
-			cloakTicksAccumulated = 0;
-		}
 	}
 
 	// Morale (units under mind control cannot have low morale event)

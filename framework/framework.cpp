@@ -353,7 +353,7 @@ Framework *Framework::tryGetInstance() { return instance; }
 
 void Framework::run(sp<Stage> initialStage)
 {
-	auto frameCount = frameLimit.get();
+	size_t frameCount = frameLimit.get();
 	if (!createWindow)
 	{
 		LogError("Trying to run framework without window");

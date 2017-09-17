@@ -205,6 +205,15 @@ Vec3<float> Vehicle::getMuzzleLocation() const
 void Vehicle::update(GameState &state, unsigned int ticks)
 
 {
+	if (cloakTicksAccumulated < CLOAK_TICKS_REQUIRED_VEHICLE)
+	{
+		cloakTicksAccumulated += ticks;
+	}
+	if (!hasCloak())
+	{
+		cloakTicksAccumulated = 0;
+	}
+
 	if (!this->missions.empty())
 		this->missions.front()->update(state, *this, ticks);
 	while (!this->missions.empty() && this->missions.front()->isFinished(state, *this))
@@ -495,6 +504,8 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 			continue;
 
 		eq->fire(state, targetPosAdjusted, {&state, enemyTile->getVehicle()});
+
+		cloakTicksAccumulated = 0;
 	}
 }
 
@@ -596,6 +607,27 @@ int Vehicle::getShieldRechargeRate() const
 	}
 
 	return shieldRecharge;
+}
+
+bool Vehicle::isCloaked() const
+{
+	// FIXME: Ensure vehicle cloak implemented correctly
+	return cloakTicksAccumulated >= CLOAK_TICKS_REQUIRED_VEHICLE;
+}
+
+bool Vehicle::hasCloak() const
+{
+	for (auto &e : this->equipment)
+	{
+		if (e->type->type != EquipmentSlotType::VehicleGeneral)
+			continue;
+		if (e->type->cloaking)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 int Vehicle::getShield() const { return this->shield; }

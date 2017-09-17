@@ -620,7 +620,7 @@ void Battle::initialUnitSpawn(GameState &state)
 
 	// Fill spawn blocks
 	std::vector<sp<SpawnBlock>> spawnBlocks;
-	for (int i = 0; i < losBlocks.size(); i++)
+	for (size_t i = 0; i < losBlocks.size(); i++)
 	{
 		auto sb = mksp<SpawnBlock>();
 		auto &lb = losBlocks[i];
@@ -648,7 +648,7 @@ void Battle::initialUnitSpawn(GameState &state)
 			spawnOther.push_back(sb);
 			continue;
 		}
-		for (int i = 0; i < lb->spawn_priority; i++)
+		for (int j = 0; j < lb->spawn_priority; j++)
 		{
 			spawnMaps[{lb->spawn_type, lb->spawn_large_units ? UnitSize::Large : UnitSize::Small,
 			           lb->spawn_walking_units ? UnitMovement::Walking : UnitMovement::Flying,
@@ -683,9 +683,9 @@ void Battle::initialUnitSpawn(GameState &state)
 				    .push_back(sb);
 			}
 
-			for (int j = 0; j < 3; j++)
+			for (int k = 0; k < 3; k++)
 			{
-				auto st = (SpawnType)j;
+				auto st = (SpawnType)k;
 				if (st == lb->spawn_type || (st == SpawnType::Civilian && lb->also_allow_civilians))
 				{
 					continue;
@@ -1201,7 +1201,7 @@ sp<BattleUnit> Battle::placeUnit(GameState &state, StateRef<Agent> agent)
 	unit->strategyImages = state.battle_common_image_list->strategyImages;
 	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
 	unit->squadNumber = -1;
-	unit->cloakTicksAccumulated = CLOAK_TICKS_REQUIRED;
+	unit->cloakTicksAccumulated = CLOAK_TICKS_REQUIRED_UNIT;
 	unit->initCryTimer(state);
 	unit->position = {-1.0, -1.0, -1.0};
 	units[id] = unit;
@@ -1919,6 +1919,8 @@ void Battle::notifyAction(Vec3<int> location, StateRef<BattleUnit> actorUnit)
 
 int Battle::killStrandedUnits(GameState &state, bool preview)
 {
+	std::ignore = state;
+	std::ignore = preview;
 	LogWarning("Implement killing stranded player units");
 	return 0;
 }
@@ -1993,7 +1995,7 @@ void Battle::checkMissionEnd(GameState &state, bool retreated, bool forceReCheck
 
 void Battle::checkIfBuildingDisabled(GameState &state)
 {
-	if (!buildingCanBeDisabled || buildingDisabled || !tryDisableBuilding(state))
+	if (!buildingCanBeDisabled || buildingDisabled || !tryDisableBuilding())
 	{
 		return;
 	}
@@ -2001,7 +2003,7 @@ void Battle::checkIfBuildingDisabled(GameState &state)
 	fw().pushEvent(new GameEvent(GameEventType::BuildingDisabled));
 }
 
-bool Battle::tryDisableBuilding(GameState &state)
+bool Battle::tryDisableBuilding()
 {
 	// Find a mission objective unit
 	for (auto &u : units)
@@ -2159,9 +2161,10 @@ void Battle::queuePathfindingRefresh(Vec3<int> tile)
 void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
                                      Vec3<float> &target, int accuracy, bool cloaked, bool thrown)
 {
-	auto dispersion = (float)(100 - accuracy);
+	float dispersion = 100 - accuracy;
 	// Introduce minimal dispersion?
 	dispersion = std::max(0.0f, dispersion);
+
 	if (cloaked)
 	{
 		dispersion *= dispersion;
@@ -2358,7 +2361,7 @@ void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> 
 	}
 	b->hotseat = hotseat;
 	b->locationOwner = target_building->owner;
-	b->buildingCanBeDisabled = !b->tryDisableBuilding(state);
+	b->buildingCanBeDisabled = !b->tryDisableBuilding();
 	state.current_battle = b;
 }
 
@@ -2380,11 +2383,11 @@ void Battle::enterBattle(GameState &state)
 
 	if (b->mission_type == MissionType::BaseDefense)
 	{
-		for (auto i = 0; i < b->visibleTiles[b->locationOwner].size(); i++)
+		for (size_t i = 0; i < b->visibleTiles[b->locationOwner].size(); i++)
 		{
 			b->visibleTiles[b->locationOwner][i] = true;
 		}
-		for (auto i = 0; i < b->visibleBlocks[b->locationOwner].size(); i++)
+		for (size_t i = 0; i < b->visibleBlocks[b->locationOwner].size(); i++)
 		{
 			b->visibleBlocks[b->locationOwner][i] = true;
 		}

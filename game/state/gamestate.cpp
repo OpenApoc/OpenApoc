@@ -13,6 +13,7 @@
 #include "game/state/city/baselayout.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/city/citycommonimagelist.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/projectile.h"
 #include "game/state/city/scenery.h"
@@ -134,6 +135,7 @@ void GameState::initState()
 	}
 	for (auto &v : this->vehicles)
 	{
+		v.second->strategyImages = city_common_image_list->strategyImages;
 		if (!v.second->currentlyLandedBuilding)
 		{
 			v.second->setupMover();
@@ -269,6 +271,7 @@ void GameState::startGame()
 			v->currentlyLandedBuilding = {this, buildingIt->first};
 			v->owner = type->manufacturer;
 			v->health = type->health;
+			v->strategyImages = city_common_image_list->strategyImages;
 
 			buildingIt++;
 			if (buildingIt == this->cities["CITYMAP_HUMAN"]->buildings.end())
@@ -357,6 +360,7 @@ void GameState::fillPlayerStartingProperty()
 		v->homeBuilding = {this, bld};
 		v->owner = this->getPlayer();
 		v->health = type->health;
+		v->strategyImages = city_common_image_list->strategyImages;
 		UString vID = Vehicle::generateObjectID(*this);
 		this->vehicles[vID] = v;
 		v->currentlyLandedBuilding->landed_vehicles.insert({this, vID});
@@ -608,6 +612,7 @@ void GameState::updateEndOfDay()
 			v->city = city;
 			v->owner = type->manufacturer;
 			v->health = type->health;
+			v->strategyImages = city_common_image_list->strategyImages;
 
 			// Vehicle::equipDefaultEquipment uses the state reference from itself, so make sure the
 			// vehicle table has the entry before calling it
@@ -655,6 +660,7 @@ void GameState::updateEndOfWeek()
 					v->city = city;
 					v->owner = alienOrg;
 					v->health = type->health;
+					v->strategyImages = city_common_image_list->strategyImages;
 
 					// Vehicle::equipDefaultEquipment uses the state reference from itself, so make
 					// sure the

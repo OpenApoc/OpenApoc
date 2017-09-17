@@ -17,13 +17,13 @@ class Image;
 
 class BattleTileView : public TileView
 {
+  protected:
 	// Formula: FPS / DESIRED_ANIMATIONS_PER_SECOND
 
 	static const int TARGET_ICONS_ANIMATION_DELAY = 60 / 4;
 	static const int HEALING_ICON_ANIMATION_DELAY = 60 / 4;
 	static const int PSI_ICON_ANIMATION_DELAY = 60 / 4;
 	static const int LOWMORALE_ICON_ANIMATION_DELAY = 60 / 2;
-	static const int SELECTION_FRAME_ANIMATION_DELAY = 60 / 5;
 
 	// Total amount of different focus icon states
 	static const int FOCUS_ICONS_ANIMATION_FRAMES = 4;
@@ -75,8 +75,8 @@ class BattleTileView : public TileView
 	std::vector<sp<Image>> waypointDarkIcons;
 	sp<Image> targetTacticalThisLevel;
 	sp<Image> targetTacticalOtherLevel;
-	sp<Image> selectionImageSmall;
-	sp<Image> selectionImageLarge;
+	sp<Image> selectionImageFriendlySmall;
+	sp<Image> selectionImageFriendlyLarge;
 	int iconAnimationTicksAccumulated = 0;
 	int healingIconTicksAccumulated = 0;
 	int lowMoraleIconTicksAccumulated = 0;

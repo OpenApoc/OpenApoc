@@ -3,6 +3,7 @@
 #include "game/state/agent.h"
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/battle/battlecommonsamplelist.h"
+#include "game/state/city/citycommonimagelist.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
@@ -27,6 +28,16 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state) c
 		return;
 	}
 	size_t gameObjectStrategySpriteCount = gameObjectStrategySpriteTabFile.size() / 4;
+
+	state.city_common_image_list = mksp<CityCommonImageList>();
+	state.city_common_image_list->strategyImages = mksp<std::vector<sp<Image>>>();
+	for (size_t i = 544; i <= 589; i++)
+	{
+		state.city_common_image_list->strategyImages->push_back(
+		    fw().data->loadImage(format("PCKSTRAT:xcom3/ufodata/stratmap.pck:xcom3/ufodata/"
+		                                "stratmap.tab:%u",
+		                                (unsigned)i)));
+	}
 
 	state.battle_common_image_list = mksp<BattleCommonImageList>();
 

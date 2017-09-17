@@ -12,12 +12,20 @@ namespace OpenApoc
 {
 
 void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-                             TileViewMode mode, bool, int currentLevel, bool friendly, bool hostile)
+                             TileViewMode mode, bool, int, bool friendly, bool hostile)
 {
+	static const Colour COLOUR_TRANSPARENT = {255, 255, 255, 95};
+
+	static const int offset_arrow = 5;
+	static const int offset_large = 1;
+
+	static const std::map<Vec2<int>, int> offset_dir_map = {
+	    {{0, -1}, 0}, {{1, -1}, 1}, {{1, 0}, 2},  {{1, 1}, 3},
+	    {{0, 1}, 4},  {{-1, 1}, 5}, {{-1, 0}, 6}, {{-1, -1}, 7},
+	};
+
 	std::ignore = transform;
-	std::ignore = currentLevel;
-	std::ignore = friendly;
-	std::ignore = hostile;
+
 	auto vehicle = this->vehicle.lock();
 	if (!vehicle)
 	{
@@ -76,31 +84,58 @@ void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 				LogError("No image found for vehicle");
 				return;
 			}
-			r.draw(closestImage, screenPosition - vehicle->type->image_offset);
+			if (vehicle->isCloaked())
+			{
+				r.drawTinted(closestImage, screenPosition - vehicle->type->image_offset,
+				             COLOUR_TRANSPARENT);
+			}
+			else
+			{
+				r.draw(closestImage, screenPosition - vehicle->type->image_offset);
+			}
 			break;
 		}
 		case TileViewMode::Strategy:
 		{
 			float closestAngle = FLT_MAX;
-			sp<Image> closestImage;
-			for (auto &p : vehicle->type->directional_strategy_sprites)
+			int facing_offset = 0;
+			for (auto &p : offset_dir_map)
 			{
-				float angle =
-				    glm::angle(glm::normalize(p.first), glm::normalize(this->getDirection()));
+				float angle = glm::angle(glm::normalize(Vec3<float>{p.first.x, p.first.y, 0}),
+				                         glm::normalize(this->getDirection()));
 				if (angle < closestAngle)
 				{
 					closestAngle = angle;
-					closestImage = p.second;
+					facing_offset = p.second;
 				}
 			}
-			if (!closestImage)
+
+			// 0 = friendly, 1 = enemy, 2 = neutral
+			int side_offset = friendly ? 0 : (hostile ? 1 : 2);
+
+			switch (vehicle->type->mapIconType)
 			{
-				LogError("No image found for vehicle");
-				return;
+				case VehicleType::MapIconType::Arrow:
+					r.draw(vehicle->strategyImages->at(side_offset * 14 + offset_arrow +
+					                                   facing_offset),
+					       screenPosition - Vec2<float>{4, 4});
+					break;
+				case VehicleType::MapIconType::SmallCircle:
+					r.draw(vehicle->strategyImages->at(side_offset * 14),
+					       screenPosition - Vec2<float>{4, 4});
+					break;
+				case VehicleType::MapIconType::LargeCircle:
+					r.draw(vehicle->strategyImages->at(side_offset * 14 + offset_large + 0),
+					       screenPosition - Vec2<float>{8.0f, 8.0f});
+					r.draw(vehicle->strategyImages->at(side_offset * 14 + offset_large + 1),
+					       screenPosition - Vec2<float>{0.0f, 8.0f});
+					r.draw(vehicle->strategyImages->at(side_offset * 14 + offset_large + 2),
+					       screenPosition - Vec2<float>{8.0f, 0.0f});
+					r.draw(vehicle->strategyImages->at(side_offset * 14 + offset_large + 3),
+					       screenPosition - Vec2<float>{0.0f, 0.0f});
+					break;
 			}
-			// All strategy sprites so far are 8x8 so offset by 4 to draw from the center
-			// FIXME: Not true for large sprites (2x2 UFOs?)
-			r.draw(closestImage, screenPosition - Vec2<float>{4, 4});
+
 			break;
 		}
 		default:

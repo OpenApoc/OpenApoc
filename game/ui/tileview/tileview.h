@@ -20,6 +20,11 @@ class Palette;
 class TileView : public Stage, public TileTransform
 {
   protected:
+	// Formula: FPS / DESIRED_ANIMATIONS_PER_SECOND
+
+	static const int SELECTION_FRAME_ANIMATION_DELAY = 60 / 5;
+
+  protected:
 	TileMap &map;
 	Vec3<int> isoTileSize;
 	Vec2<int> stratTileSize;

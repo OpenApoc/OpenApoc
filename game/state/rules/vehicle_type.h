@@ -67,6 +67,12 @@ class VehicleType : public StateObject
 		Left,
 		Right,
 	};
+	enum class MapIconType
+	{
+		Arrow = 0,
+		SmallCircle = 1,
+		LargeCircle = 2
+	};
 
 	// This is explictly mutable it can be used through a const ref
 	// FIXME: Should this go somewhere else in the state? If the rules are meant to be immutable
@@ -104,8 +110,7 @@ class VehicleType : public StateObject
 
 	sp<Image> equip_icon_small;
 
-	// All vehicles (flying,ground,ufo) have strategy sprites
-	std::map<Vec3<float>, sp<Image>> directional_strategy_sprites;
+	MapIconType mapIconType;
 
 	// Flying and ground vehicles have a directional sprite (with optional non-flat banking)
 	std::map<Banking, std::map<Vec3<float>, sp<Image>>> directional_sprites;

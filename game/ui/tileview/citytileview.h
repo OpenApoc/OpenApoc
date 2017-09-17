@@ -17,6 +17,13 @@ class CityTileView : public TileView
 	std::vector<sp<Image>> selectionBracketsFriendly;
 	std::vector<sp<Image>> selectionBracketsHostile;
 	sp<Image> alertImage;
+	sp<Image> targetTacticalThisLevel;
+	sp<Image> selectionImageFriendlySmall;
+	sp<Image> selectionImageFriendlyLarge;
+	sp<Image> selectionImageHostileSmall;
+	sp<Image> selectionImageHostileLarge;
+
+	int selectionFrameTicksAccumulated = 0;
 
   public:
 	CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game/state/equipment.h"
+#include "game/state/gametime.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -10,6 +11,8 @@
 
 namespace OpenApoc
 {
+
+static const unsigned CLOAK_TICKS_REQUIRED_VEHICLE = TICKS_PER_SECOND / 2;
 
 class Image;
 class TileObjectVehicle;
@@ -77,6 +80,10 @@ class Vehicle : public StateObject,
 	int health;
 	int shield;
 	unsigned int shieldRecharge;
+	// Cloak, increases each turn, set to 0 when firing or no cloaking device on vehicle
+	// Vehicle is cloaked when this is >= CLOAK_TICKS_REQUIRED_VEHICLE
+	unsigned int cloakTicksAccumulated = 0;
+
 	StateRef<Building> homeBuilding;
 	StateRef<Building> currentlyLandedBuilding;
 
@@ -120,6 +127,9 @@ class Vehicle : public StateObject,
 	int getShield() const;
 	int getShieldRechargeRate() const;
 
+	bool isCloaked() const;
+	bool hasCloak() const;
+
 	// This is the 'sum' of all armors?
 	int getArmor() const;
 	int getAccuracy() const;
@@ -140,6 +150,10 @@ class Vehicle : public StateObject,
 	sp<Equipment> getEquipmentAt(const Vec2<int> &position) const override;
 	const std::list<EquipmentLayoutSlot> &getSlots() const override;
 	std::list<std::pair<Vec2<int>, sp<Equipment>>> getEquipment() const override;
+
+	// Following members are not serialized, but rather are set in initCity method
+
+	sp<std::vector<sp<Image>>> strategyImages;
 };
 
 }; // namespace OpenApoc

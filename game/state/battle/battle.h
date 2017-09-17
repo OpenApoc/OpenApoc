@@ -235,7 +235,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	void abortMission(GameState &state);
 	void checkMissionEnd(GameState &state, bool retreated, bool forceReCheck = false);
 	void checkIfBuildingDisabled(GameState &state);
-	bool tryDisableBuilding(GameState &state);
+	bool tryDisableBuilding();
 	void refreshLeadershipBonus(StateRef<Organisation> org);
 	void spawnReinforcements(GameState &state);
 

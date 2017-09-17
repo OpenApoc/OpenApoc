@@ -33,7 +33,7 @@ class BattleScanner : public StateObject
 	std::vector<int> movementTicks;
 	// Updated every update, this indicates conetnt has changed
 	uint64_t version = 0;
-	int updateTicksAccumulated = 0;
+	unsigned int updateTicksAccumulated = 0;
 	Vec3<int> lastPosition;
 	StateRef<BattleUnit> holder;
 

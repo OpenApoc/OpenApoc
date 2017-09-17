@@ -34,6 +34,7 @@ class UfopaediaCategory;
 class BattleMap;
 class EquipmentSet;
 class Battle;
+class CityCommonImageList;
 class BattleCommonImageList;
 class BattleCommonSampleList;
 class BattleMapPartType;
@@ -71,6 +72,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<EquipmentSet> equipment_sets_by_level;
 	StateRefMap<BuildingFunction> building_functions;
 	sp<Battle> current_battle;
+	sp<CityCommonImageList> city_common_image_list;
 	sp<BattleCommonImageList> battle_common_image_list;
 	sp<BattleCommonSampleList> battle_common_sample_list;
 

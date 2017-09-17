@@ -161,11 +161,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 					    fw().data->loadImage(str);
 				}
 			}
-			// Give ground vehicles non-directional stratmap stuff for now
-			// FIXME: How to select hostile/friendly/neutral stratmap sprites?
-			auto str =
-			    format("PCKSTRAT:xcom3/ufodata/stratmaP.pck:xcom3/ufodata/stratmaP.tab:%d", 572);
-			vehicle->directional_strategy_sprites[Vec3<float>{1, 0, 0}] = fw().data->loadImage(str);
+			vehicle->mapIconType = VehicleType::MapIconType::SmallCircle;
 		}
 		else if (v.movement_type == 1)
 		{
@@ -180,18 +176,12 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 				vehicle->type = VehicleType::Type::UFO;
 				if (v.size_x == 1 && v.size_y == 1)
 				{
-					auto str = format(
-					    "PCKSTRAT:xcom3/ufodata/stratmap.pck:xcom3/ufodata/stratmap.tab:%d", 572);
-					vehicle->directional_strategy_sprites[Vec3<float>{1, 0, 0}] =
-					    fw().data->loadImage(str);
+					vehicle->mapIconType = VehicleType::MapIconType::SmallCircle;
 				}
 				else if (v.size_x == 2 && v.size_y == 2)
 				{
 					// FIXME: Support 'large' strategy sprites?
-					auto str = format(
-					    "PCKSTRAT:xcom3/ufodata/stratmap.pck:xcom3/ufodata/stratmap.tab:%d", 572);
-					vehicle->directional_strategy_sprites[Vec3<float>{1, 0, 0}] =
-					    fw().data->loadImage(str);
+					vehicle->mapIconType = VehicleType::MapIconType::LargeCircle;
 #if 0
 					for (int x = 0; x <= 1; x++)
 					{
@@ -263,17 +253,10 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 				    VehicleType::Banking::Ascending, VehicleType::Banking::Left,
 				    VehicleType::Banking::Right,
 				};
-				int image_offset = 577; // stratmap.pck:577 is the first directional sprite
-				for (auto &dir : directions)
-				{
-					auto str =
-					    format("PCKSTRAT:xcom3/ufodata/stratmap.pck:xcom3/ufodata/stratmap.tab:%d",
-					           image_offset++);
-					vehicle->directional_strategy_sprites[VehicleType::directionToVector(dir)] =
-					    fw().data->loadImage(str);
-				}
 
-				image_offset = 0;
+				vehicle->mapIconType = VehicleType::MapIconType::Arrow;
+
+				int image_offset = 0;
 				for (auto &bank : bankings)
 				{
 					auto directionsForThisBanking = directions;

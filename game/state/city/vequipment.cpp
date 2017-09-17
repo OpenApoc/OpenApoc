@@ -73,7 +73,7 @@ void VEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Veh
 	auto toScaled = targetPosition * VELOCITY_SCALE_CITY;
 	// FIXME: Account for target's cloak!
 	City::accuracyAlgorithmCity(state, fromScaled, toScaled, type->accuracy + owner->getAccuracy(),
-	                            false);
+	                            targetVehicle && targetVehicle->hasCloak());
 
 	Vec3<float> velocity = toScaled - fromScaled;
 	velocity = glm::normalize(velocity);

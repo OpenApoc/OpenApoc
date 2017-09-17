@@ -11,6 +11,7 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gamestate.h"
+#include "game/state/organisation.h"
 #include "game/state/rules/vehicle_type.h"
 #include "game/state/tileview/tileobject_vehicle.h"
 
@@ -34,6 +35,13 @@ CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratT
 	selectionBracketsHostile.push_back(fw().data->loadImage("city/vehicle-brackets-h1.png"));
 	selectionBracketsHostile.push_back(fw().data->loadImage("city/vehicle-brackets-h2.png"));
 	selectionBracketsHostile.push_back(fw().data->loadImage("city/vehicle-brackets-h3.png"));
+
+	selectionImageFriendlySmall = fw().data->loadImage("battle/map-selection-small.png");
+	selectionImageFriendlyLarge = fw().data->loadImage("battle/map-selection-large.png");
+	selectionImageHostileSmall = fw().data->loadImage("city/map-selection-hostile-small.png");
+	selectionImageHostileLarge = fw().data->loadImage("city/map-selection-hostile-large.png");
+
+	targetTacticalThisLevel = fw().data->loadImage("city/target.png");
 };
 
 CityTileView::~CityTileView() = default;
@@ -106,6 +114,12 @@ void CityTileView::render()
 	Renderer &r = *fw().renderer;
 	r.clear();
 	r.setPalette(this->pal);
+
+	// Rotate Icons
+	{
+		selectionFrameTicksAccumulated++;
+		selectionFrameTicksAccumulated %= 2 * SELECTION_FRAME_ANIMATION_DELAY;
+	}
 
 	// screenOffset.x/screenOffset.y is the 'amount added to the tile coords' - so we want
 	// the inverse to tell which tiles are at the screen bounds
@@ -230,6 +244,12 @@ void CityTileView::render()
 		break;
 		case TileViewMode::Strategy:
 		{
+			// Params are: friendly, hostile, selected (0 = not, 1 = small, 2 = large)
+			std::list<std::tuple<sp<TileObject>, bool, bool, int>> vehiclesToDraw;
+			std::set<sp<Vehicle>> vehiclesUnderAttack;
+			// Lines to draw between unit and destination, bool is wether target x is drawn
+			std::list<std::tuple<Vec3<float>, Vec3<float>, bool>> targetLocationsToDraw;
+
 			for (int z = 0; z < maxZDraw; z++)
 			{
 				for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
@@ -242,9 +262,85 @@ void CityTileView::render()
 							auto object_count = tile->drawnObjects[layer].size();
 							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 							{
+								bool friendly = false;
+								bool hostile = false;
 								auto &obj = tile->drawnObjects[layer][obj_id];
 								Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
-								obj->draw(r, *this, pos, this->viewMode);
+
+								switch (obj->getType())
+								{
+									case TileObject::Type::Vehicle:
+									{
+										auto v = std::static_pointer_cast<TileObjectVehicle>(obj)
+										             ->getVehicle();
+										friendly = v->owner == state.getPlayer();
+										hostile = state.getPlayer()->isRelatedTo(v->owner) ==
+										          Organisation::Relation::Hostile;
+										bool selected = selectedVehicle.lock() == v;
+										if (friendly)
+										{
+											for (auto &m : v->missions)
+											{
+												if (m->type == VehicleMission::MissionType::
+												                   AttackVehicle ||
+												    m->type ==
+												        VehicleMission::MissionType::FollowVehicle)
+												{
+													targetLocationsToDraw.emplace_back(
+													    m->targetVehicle->position, v->position,
+													    false);
+													vehiclesUnderAttack.insert(m->targetVehicle);
+													break;
+												}
+												if ((m->type == VehicleMission::MissionType::
+												                    AttackBuilding ||
+												     m->type ==
+												         VehicleMission::MissionType::Crash ||
+												     m->type == VehicleMission::MissionType::
+												                    GotoBuilding) &&
+												    !m->currentPlannedPath.empty())
+												{
+													targetLocationsToDraw.emplace_back(
+													    (Vec3<float>)m->currentPlannedPath.back() +
+													        Vec3<float>{0.5f, 0.5f, 0.0f},
+													    v->position, true);
+													break;
+												}
+												if ((m->type == VehicleMission::MissionType::
+												                    GotoLocation ||
+												     m->type == VehicleMission::MissionType::
+												                    InfiltrateSubvert ||
+												     m->type ==
+												         VehicleMission::MissionType::Patrol ||
+												     m->type ==
+												         VehicleMission::MissionType::GotoPortal))
+												{
+													targetLocationsToDraw.emplace_back(
+													    (Vec3<float>)m->targetLocation +
+													        Vec3<float>{0.5f, 0.5f, 0.0f},
+													    v->position, true);
+													break;
+												}
+											}
+										}
+										vehiclesToDraw.emplace_back(
+										    obj, friendly, hostile,
+										    selected
+										        ? (v->type->mapIconType ==
+										                   VehicleType::MapIconType::LargeCircle
+										               ? 2
+										               : 1)
+										        : 0);
+										// Do not draw vehicle yet
+										continue;
+									}
+									break;
+									default:
+										break;
+								}
+
+								obj->draw(r, *this, pos, this->viewMode, true, 0, friendly,
+								          hostile);
 							}
 #ifdef PATHFINDING_DEBUG
 							if (tile->pathfindingDebugFlag && viewMode == TileViewMode::Isometric)
@@ -256,6 +352,54 @@ void CityTileView::render()
 					}
 				}
 			}
+
+			// Draw stuff
+			for (auto &obj : targetLocationsToDraw)
+			{
+				static const auto offsetStrat = Vec2<float>{-4.0f, -4.0f};
+				static const auto lineColor = Colour(150, 250, 20, 255);
+				// Draw line from unit to target tile
+				r.drawLine(tileToOffsetScreenCoords(std::get<0>(obj)),
+				           tileToOffsetScreenCoords(std::get<1>(obj)), lineColor);
+				// Draw location image at target tile
+				if (std::get<2>(obj) &&
+				    selectionFrameTicksAccumulated / SELECTION_FRAME_ANIMATION_DELAY)
+				{
+					r.draw(targetTacticalThisLevel,
+					       tileToOffsetScreenCoords(std::get<0>(obj)) + offsetStrat);
+				}
+			}
+			for (auto &obj : vehiclesToDraw)
+			{
+				auto vehicle = std::get<0>(obj);
+				Vec2<float> pos = tileToOffsetScreenCoords(vehicle->getCenter());
+				vehicle->draw(r, *this, pos, this->viewMode, true, 0, std::get<1>(obj),
+				              std::get<2>(obj));
+				// Draw unit selection brackets
+				if (selectionFrameTicksAccumulated / SELECTION_FRAME_ANIMATION_DELAY)
+				{
+					auto selected = std::get<3>(obj);
+					if (selected)
+					{
+						auto drawn = selected == 1 ? selectionImageFriendlySmall
+						                           : selectionImageFriendlyLarge;
+						r.draw(drawn, pos - Vec2<float>(drawn->size / (unsigned)2));
+					}
+					else
+					{
+						auto v = std::static_pointer_cast<TileObjectVehicle>(vehicle)->getVehicle();
+						if (vehiclesUnderAttack.find(v) != vehiclesUnderAttack.end())
+						{
+							auto drawn =
+							    v->type->mapIconType == VehicleType::MapIconType::LargeCircle
+							        ? selectionImageHostileLarge
+							        : selectionImageHostileSmall;
+							r.draw(drawn, pos - Vec2<float>(drawn->size / (unsigned)2));
+						}
+					}
+				}
+			}
+
 			renderStrategyOverlay(r);
 
 			// Detection

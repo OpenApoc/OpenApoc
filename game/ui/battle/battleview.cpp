@@ -98,16 +98,16 @@ BattleView::BattleView(sp<GameState> gameState)
 		newPal->setColour(255 - 4, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
 		                                  (colorCurrent * 16 * -1 + 255 * 5) / 8));
 		// Red color, for enemy indicators, pulsates from (3/8r 0g 0b) to (8/8r 0g 0b)
-		newPal->setColour(255 - 0, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
-		// Blue color, for misc. indicators, pulsates from (0r 3/8g 3/8b) to (0r 8/8g 8/8b)
-		newPal->setColour(255 - 2, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
-		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8));
+		newPal->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
+		// Yellow color, for owned indicators, pulsates from (3/8r 3/8g 0b) to (8/8r 8/8g 0b)
+		newPal->setColour(255 - 2, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8,
+		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8, 0));
 		// Pink color, for neutral indicators, pulsates from (3/8r 0g 3/8b) to (8/8r 0g 8/8b)
 		newPal->setColour(255 - 1, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0,
 		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8));
-		// Yellow color, for owned indicators, pulsates from (3/8r 3/8g 0b) to (8/8r 8/8g 0b)
-		newPal->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8,
-		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8, 0));
+		// Blue color, for misc. indicators, pulsates from (0r 3/8g 3/8b) to (0r 8/8g 8/8b)
+		newPal->setColour(255 - 0, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
+		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8));
 
 		modPalette.push_back(newPal);
 	}

@@ -20,9 +20,9 @@ namespace OpenApoc
 
 Projectile::Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> target,
                        Vec3<float> position, Vec3<float> velocity, int turnRate,
-                       unsigned int lifetime, int damage, int delay, unsigned int tail_length,
-                       std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
-                       StateRef<DoodadType> doodadType)
+                       unsigned int lifetime, int damage, unsigned int delay,
+                       unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
+                       sp<Sample> impactSfx, StateRef<DoodadType> doodadType)
     : type(type), position(position), velocity(velocity), turnRate(turnRate), age(0),
       lifetime(lifetime), damage(damage), delay_ticks_remaining(delay), firerVehicle(firer),
       firerPosition(firer->position), trackedVehicle(target), previousPosition(position),
@@ -37,7 +37,7 @@ Projectile::Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> tar
 }
 Projectile::Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target,
                        Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity,
-                       int turnRate, unsigned int lifetime, int damage, int delay,
+                       int turnRate, unsigned int lifetime, int damage, unsigned int delay,
                        int depletionRate, unsigned int tail_length,
                        std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
                        StateRef<DoodadType> doodadType, StateRef<DamageType> damageType)

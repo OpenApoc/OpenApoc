@@ -60,7 +60,8 @@ static const unsigned TICKS_TO_BRAINSUCK = TICKS_PER_SECOND * 2;
 // Chance out of 100 to be brainsucked
 static const int BRAINSUCK_CHANCE = 66;
 static const unsigned TICKS_SUPPRESS_SPOTTED_MESSAGES = TICKS_PER_TURN;
-static const unsigned CLOAK_TICKS_REQUIRED = TICKS_PER_TURN;
+// As per Yataka Shimaoka on forums, cloaking effect returns after 2 seconds of inaction
+static const unsigned CLOAK_TICKS_REQUIRED_UNIT = TICKS_PER_SECOND * 2;
 
 class TileObjectBattleUnit;
 class TileObjectShadow;
@@ -251,7 +252,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// TU to reserve for shot
 	int reserveShotCost = 0;
 	// Stealth, increases each turn, set to 0 when taking action or no stealth in hand
-	// Unit is cloaked when this is >= CLOAK_TICKS_REQUIRED
+	// Unit is cloaked when this is >= CLOAK_TICKS_REQUIRED_UNIT
 	unsigned int cloakTicksAccumulated = 0;
 	// Ticks until spound is emmited
 	int ticksUntillNextCry = 0;
@@ -568,6 +569,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Spend all remaining TUs for the unit
 	void spendRemainingTU(GameState &state, bool allowInterrupt = false);
 	// Do routine that must be done at unit's turn start
+	// Called after updateTB was called
 	void beginTurn(GameState &state);
 
 	// TU costs
@@ -717,8 +719,10 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Main update function
 	void update(GameState &state, unsigned int ticks);
-	// Update function for TB
+	// Update function for TB (called when unit's turn begins
 	void updateTB(GameState &state);
+	// Updates unit's cloak status
+	void updateCloak(GameState &state, unsigned int ticks);
 	// Updates unit bleeding, debuffs and morale states
 	void updateStateAndStats(GameState &state, unsigned int ticks);
 	// Updates unit's morale

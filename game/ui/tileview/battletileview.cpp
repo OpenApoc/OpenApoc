@@ -142,8 +142,8 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 	selectedTileImageOffset = {23, 42};
 	pal = fw().data->loadPalette("xcom3/tacdata/tactical.pal");
 
-	selectionImageSmall = fw().data->loadImage("battle/map-selection-small.png");
-	selectionImageLarge = fw().data->loadImage("battle/map-selection-large.png");
+	selectionImageFriendlySmall = fw().data->loadImage("battle/map-selection-small.png");
+	selectionImageFriendlyLarge = fw().data->loadImage("battle/map-selection-large.png");
 
 	activeUnitSelectionArrow.push_back(fw().data->loadImage("battle/battle-active-squadless.png"));
 	inactiveUnitSelectionArrow.push_back(
@@ -1253,25 +1253,22 @@ void BattleTileView::render()
 										    Organisation::Relation::Hostile;
 										bool selected = false;
 
-										if (friendly &&
-										    std::find(battle.battleViewSelectedUnits.begin(),
-										              battle.battleViewSelectedUnits.end(),
-										              u) != battle.battleViewSelectedUnits.end())
+										if (friendly)
 										{
-											selected = true;
+											if (std::find(battle.battleViewSelectedUnits.begin(),
+											              battle.battleViewSelectedUnits.end(),
+											              u) !=
+											    battle.battleViewSelectedUnits.end())
+											{
+												selected = true;
+											}
 											for (auto &m : u->missions)
 											{
-												if (m->type == BattleUnitMission::Type::ReachGoal)
-												{
-													targetLocationsToDraw.emplace_back(
-													    m->targetLocation, (Vec3<int>)u->position,
-													    (obj->getOwningTile()->position.z -
-													     (battle.battleViewZLevel - 1)) == 0);
-													break;
-												}
-												if (m->type ==
-												        BattleUnitMission::Type::GotoLocation &&
-												    !m->currentPlannedPath.empty())
+												if ((m->type ==
+												     BattleUnitMission::Type::ReachGoal) ||
+												    (m->type ==
+												         BattleUnitMission::Type::GotoLocation &&
+												     !m->currentPlannedPath.empty()))
 												{
 													targetLocationsToDraw.emplace_back(
 													    m->targetLocation, (Vec3<int>)u->position,
@@ -1337,25 +1334,22 @@ void BattleTileView::render()
 										    Organisation::Relation::Hostile;
 										bool selected = false;
 
-										if (friendly &&
-										    std::find(battle.battleViewSelectedUnits.begin(),
-										              battle.battleViewSelectedUnits.end(),
-										              u) != battle.battleViewSelectedUnits.end())
+										if (friendly)
 										{
-											selected = true;
+											if (std::find(battle.battleViewSelectedUnits.begin(),
+											              battle.battleViewSelectedUnits.end(),
+											              u) !=
+											    battle.battleViewSelectedUnits.end())
+											{
+												selected = true;
+											}
 											for (auto &m : u->missions)
 											{
-												if (m->type == BattleUnitMission::Type::ReachGoal)
-												{
-													targetLocationsToDraw.emplace_back(
-													    m->targetLocation, (Vec3<int>)u->position,
-													    (obj->getOwningTile()->position.z -
-													     (battle.battleViewZLevel - 1)) == 0);
-													break;
-												}
-												if (m->type ==
-												        BattleUnitMission::Type::GotoLocation &&
-												    !m->currentPlannedPath.empty())
+												if ((m->type ==
+												     BattleUnitMission::Type::ReachGoal) ||
+												    (m->type ==
+												         BattleUnitMission::Type::GotoLocation &&
+												     !m->currentPlannedPath.empty()))
 												{
 													targetLocationsToDraw.emplace_back(
 													    m->targetLocation, (Vec3<int>)u->position,
@@ -1365,7 +1359,6 @@ void BattleTileView::render()
 												}
 											}
 										}
-
 										unitsToDraw.emplace_back(
 										    obj, revealWholeMap || objectVisible,
 										    obj->getOwningTile()->position.z -
@@ -1451,25 +1444,22 @@ void BattleTileView::render()
 										    Organisation::Relation::Hostile;
 										bool selected = false;
 
-										if (friendly &&
-										    std::find(battle.battleViewSelectedUnits.begin(),
-										              battle.battleViewSelectedUnits.end(),
-										              u) != battle.battleViewSelectedUnits.end())
+										if (friendly)
 										{
-											selected = true;
+											if (std::find(battle.battleViewSelectedUnits.begin(),
+											              battle.battleViewSelectedUnits.end(),
+											              u) !=
+											    battle.battleViewSelectedUnits.end())
+											{
+												selected = true;
+											}
 											for (auto &m : u->missions)
 											{
-												if (m->type == BattleUnitMission::Type::ReachGoal)
-												{
-													targetLocationsToDraw.emplace_back(
-													    m->targetLocation, (Vec3<int>)u->position,
-													    (obj->getOwningTile()->position.z -
-													     (battle.battleViewZLevel - 1)) == 0);
-													break;
-												}
-												if (m->type ==
-												        BattleUnitMission::Type::GotoLocation &&
-												    !m->currentPlannedPath.empty())
+												if ((m->type ==
+												     BattleUnitMission::Type::ReachGoal) ||
+												    (m->type ==
+												         BattleUnitMission::Type::GotoLocation &&
+												     !m->currentPlannedPath.empty()))
 												{
 													targetLocationsToDraw.emplace_back(
 													    m->targetLocation, (Vec3<int>)u->position,
@@ -1479,7 +1469,6 @@ void BattleTileView::render()
 												}
 											}
 										}
-
 										unitsToDraw.emplace_back(
 										    obj, revealWholeMap || objectVisible,
 										    obj->getOwningTile()->position.z -
@@ -1520,7 +1509,8 @@ void BattleTileView::render()
 				auto selected = std::get<5>(obj);
 				if (selected && (selectionFrameTicksAccumulated / SELECTION_FRAME_ANIMATION_DELAY))
 				{
-					auto drawn = selected == 1 ? selectionImageSmall : selectionImageLarge;
+					auto drawn =
+					    selected == 1 ? selectionImageFriendlySmall : selectionImageFriendlyLarge;
 					r.draw(drawn, pos - Vec2<float>(drawn->size / (unsigned)2));
 				}
 			}

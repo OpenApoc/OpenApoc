@@ -114,6 +114,41 @@ CityView::CityView(sp<GameState> state)
       twilight_palette(fw().data->loadPalette("xcom3/ufodata/pal_02.dat")),
       night_palette(fw().data->loadPalette("xcom3/ufodata/pal_03.dat"))
 {
+	std::vector<sp<Palette>> newPal;
+	newPal.resize(3);
+	for (int j = 0; j <= 15; j++)
+	{
+		colorCurrent = j;
+		newPal[0] = mksp<Palette>();
+		newPal[1] = mksp<Palette>();
+		newPal[2] = mksp<Palette>();
+
+		for (int i = 0; i < 255 - 4; i++)
+		{
+			newPal[0]->setColour(i, day_palette->getColour(i));
+			newPal[1]->setColour(i, twilight_palette->getColour(i));
+			newPal[2]->setColour(i, night_palette->getColour(i));
+		}
+		for (int i = 0; i < 3; i++)
+		{
+			// Red color, for enemy indicators, pulsates from (3/8r 0g 0b) to (8/8r 0g 0b)
+			newPal[i]->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
+			// Yellow color, for owned indicators, pulsates from (3/8r 3/8g 0b) to (8/8r 8/8g 0b)
+			newPal[i]->setColour(255 - 2, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8,
+			                                     (colorCurrent * 16 * 5 + 255 * 3) / 8, 0));
+			// Pink color, for neutral indicators, pulsates from (3/8r 0g 3/8b) to (8/8r 0g 8/8b)
+			newPal[i]->setColour(255 - 1, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0,
+			                                     (colorCurrent * 16 * 5 + 255 * 3) / 8));
+			// Blue color, for misc. indicators, pulsates from (0r 3/8g 3/8b) to (0r 8/8g 8/8b)
+			newPal[i]->setColour(255 - 0, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
+			                                     (colorCurrent * 16 * 5 + 255 * 3) / 8));
+		}
+
+		mod_day_palette.push_back(newPal[0]);
+		mod_twilight_palette.push_back(newPal[1]);
+		mod_night_palette.push_back(newPal[2]);
+	}
+
 	baseForm->findControlTyped<RadioButton>("BUTTON_SPEED1")->setChecked(true);
 	for (auto &formName : TAB_FORM_NAMES)
 	{
@@ -602,6 +637,14 @@ void CityView::update()
 
 	clockControl->setText(state->gameTime.getLongTimeString());
 
+	// Pulsate palette colors
+	colorCurrent += (colorForward ? 1 : -1);
+	if (colorCurrent <= 0 || colorCurrent >= 15)
+	{
+		colorCurrent = clamp(colorCurrent, 0, 15);
+		colorForward = !colorForward;
+	}
+
 	// The palette fades from pal_03 at 3am to pal_02 at 6am then pal_01 at 9am
 	// The reverse for 3pm, 6pm & 9pm
 
@@ -609,11 +652,11 @@ void CityView::update()
 	sp<Palette> interpolated_palette;
 	if (hour < 3 || hour >= 21)
 	{
-		interpolated_palette = this->night_palette;
+		interpolated_palette = this->mod_night_palette[colorCurrent];
 	}
 	else if (hour >= 9 && hour < 15)
 	{
-		interpolated_palette = this->day_palette;
+		interpolated_palette = this->mod_day_palette[colorCurrent];
 	}
 	else
 	{
@@ -625,26 +668,26 @@ void CityView::update()
 
 		if (hour >= 3 && hour < 6)
 		{
-			palette1 = this->night_palette;
-			palette2 = this->twilight_palette;
+			palette1 = this->mod_night_palette[colorCurrent];
+			palette2 = this->mod_twilight_palette[colorCurrent];
 			factor = clamp((hours_float - 3.0f) / 3.0f, 0.0f, 1.0f);
 		}
 		else if (hour >= 6 && hour < 9)
 		{
-			palette1 = this->twilight_palette;
-			palette2 = this->day_palette;
+			palette1 = this->mod_twilight_palette[colorCurrent];
+			palette2 = this->mod_day_palette[colorCurrent];
 			factor = clamp((hours_float - 6.0f) / 3.0f, 0.0f, 1.0f);
 		}
 		else if (hour >= 15 && hour < 18)
 		{
-			palette1 = this->day_palette;
-			palette2 = this->twilight_palette;
+			palette1 = this->mod_day_palette[colorCurrent];
+			palette2 = this->mod_twilight_palette[colorCurrent];
 			factor = clamp((hours_float - 15.0f) / 3.0f, 0.0f, 1.0f);
 		}
 		else if (hour >= 18 && hour < 21)
 		{
-			palette1 = this->twilight_palette;
-			palette2 = this->night_palette;
+			palette1 = this->mod_twilight_palette[colorCurrent];
+			palette2 = this->mod_night_palette[colorCurrent];
 			factor = clamp((hours_float - 18.0f) / 3.0f, 0.0f, 1.0f);
 		}
 		else

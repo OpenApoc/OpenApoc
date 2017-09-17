@@ -28,6 +28,7 @@
 		<member>current_city</member>
 		<member>current_base</member>
 		<member>objectIdCount</member>
+		<member type="Section">city_common_image_list</member>
 		<member type="Section">battle_common_image_list</member>
 		<member type="Section">battle_common_sample_list</member>
 		<member>player</member>
@@ -533,6 +534,10 @@
 		<member>loadingImage</member>
 		<member>focusArrows</member>
 		<member>burningDoodad</member>
+	</object>
+	<object>
+		<name>CityCommonImageList</name>
+		<member>strategyImages</member>
 	</object>
 	<object>
 		<name>BattleCommonSampleList</name>
@@ -1052,7 +1057,7 @@
 		<member>equipment_screen</member>
 		<member>equip_icon_big</member>
 		<member>equip_icon_small</member>
-		<member>directional_strategy_sprites</member>
+		<member>mapIconType</member>
 		<member>directional_sprites</member>
 		<member>shadow_offset</member>
 		<member>directional_shadow_sprites</member>
@@ -1157,6 +1162,12 @@
 		<value>Rear</value>
 		<value>Left</value>
 		<value>Right</value>
+	</enum>
+	<enum>
+		<name>VehicleType::MapIconType</name>
+		<value>Arrow</value>
+		<value>SmallCircle</value>
+		<value>LargeCircle</value>
 	</enum>
 	<enum>
 		<name>ResearchTopic::Type</name>
