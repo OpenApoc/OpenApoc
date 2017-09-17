@@ -446,11 +446,13 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 				e->research_dependency.topics.emplace(&state, "RESEARCH_ENTROPY_POD");
 				break;
 			case IT_DIMENSIONLAUNCHER:
-				e->research_dependency.topics.emplace(&state, "RESEARCH_DIMENSION_MISSILE_LAUNCHER");
+				e->research_dependency.topics.emplace(&state,
+				                                      "RESEARCH_DIMENSION_MISSILE_LAUNCHER");
 				e->research_dependency.topics.emplace(&state, "RESEARCH_DIMENSION_MISSILE");
 				break;
 			case IT_DIMENSIONMISSILE:
-				e->research_dependency.topics.emplace(&state, "RESEARCH_DIMENSION_MISSILE_LAUNCHER");
+				e->research_dependency.topics.emplace(&state,
+				                                      "RESEARCH_DIMENSION_MISSILE_LAUNCHER");
 				e->research_dependency.topics.emplace(&state, "RESEARCH_DIMENSION_MISSILE");
 				break;
 			case IT_VORTEX:

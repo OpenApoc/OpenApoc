@@ -225,13 +225,16 @@ class EquipmentTemplate
 	class EquipmentTemplateEntry
 	{
 	  public:
-		Vec2<int> pos = { 0,0 };
+		Vec2<int> pos = {0, 0};
 		StateRef<AEquipmentType> type;
 		StateRef<AEquipmentType> payloadType;
-		
+
 		EquipmentTemplateEntry() = default;
 		EquipmentTemplateEntry(Vec2<int> pos, StateRef<AEquipmentType> type,
-			StateRef<AEquipmentType> payloadType) : pos(pos), type(type), payloadType(payloadType) {}
+		                       StateRef<AEquipmentType> payloadType)
+		    : pos(pos), type(type), payloadType(payloadType)
+		{
+		}
 	};
 
 	std::list<EquipmentTemplateEntry> equipment;

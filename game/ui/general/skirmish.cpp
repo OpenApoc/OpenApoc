@@ -313,7 +313,7 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 		    t.second->type == AEquipmentType::Type::StructureProbe ||
 		    t.second->type == AEquipmentType::Type::VortexAnalyzer)
 		{
-			//continue;
+			// continue;
 		}
 		// Ignore alien builtin weapons
 		if (t.second->store_space == 5 && t.second->manufacturer == state.getAliens())

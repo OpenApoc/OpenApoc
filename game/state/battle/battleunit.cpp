@@ -1751,7 +1751,8 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 		damage -= stunDamage;
 	}
 	applyDamageDirect(state, damage, damageType->dealsFatalWounds(), bodyPart,
-	                  damageType->dealsStunDamage() ? power : 0, attacker, !damageType->non_violent);
+	                  damageType->dealsStunDamage() ? power : 0, attacker,
+	                  !damageType->non_violent);
 
 	return false;
 }
@@ -3183,8 +3184,8 @@ void BattleUnit::updateDisplayedItem(GameState &state)
 	if (!foundThrownItem)
 	{
 		// If we're firing - try to keep last displayed item same, even if not dominant
-		displayedItem = agent->getDominantItemInHands(state, 
-		    firing_animation_ticks_remaining > 0 ? lastDisplayedItem : nullptr);
+		displayedItem = agent->getDominantItemInHands(
+		    state, firing_animation_ticks_remaining > 0 ? lastDisplayedItem : nullptr);
 	}
 	// If displayed item changed or we are throwing - bring hands into "AtEase" state immediately
 	if (foundThrownItem || displayedItem != lastDisplayedItem)

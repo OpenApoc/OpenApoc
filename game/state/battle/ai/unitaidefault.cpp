@@ -12,8 +12,7 @@ namespace OpenApoc
 namespace
 {
 static const std::tuple<AIDecision, bool> NULLTUPLE2 = std::make_tuple(AIDecision(), false);
-static const Vec3<int> NONE = { -1, -1, -1 };
-
+static const Vec3<int> NONE = {-1, -1, -1};
 }
 
 // Delay before unit will turn automatically again after doing it once
@@ -37,7 +36,7 @@ void UnitAIDefault::notifyHit(Vec3<int> position) { attackerPosition = position;
 std::tuple<AIDecision, bool> UnitAIDefault::think(GameState &state, BattleUnit &u, bool interrupt)
 {
 	std::ignore = interrupt;
-	
+
 	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
 
 	// Default AI should not work in turn based when it's our turn to act

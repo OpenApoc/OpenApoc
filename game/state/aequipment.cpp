@@ -406,9 +406,10 @@ void AEquipment::updateInner(GameState &state, unsigned int ticks)
 	}
 }
 
-bool AEquipment::canBeUsed(GameState & state) const
+bool AEquipment::canBeUsed(GameState &state) const
 {
-	if (ownerAgent && ownerAgent->owner == state.getPlayer() && !type->research_dependency.satisfied())
+	if (ownerAgent && ownerAgent->owner == state.getPlayer() &&
+	    !type->research_dependency.satisfied())
 	{
 		return false;
 	}

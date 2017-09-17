@@ -566,7 +566,8 @@ BattleView::BattleView(sp<GameState> gameState)
 		    }
 		    for (auto &u : this->battle.battleViewSelectedUnits)
 		    {
-			    u->setReserveShotMode(*state, pushed ? ReserveShotMode::None : ReserveShotMode::Aimed);
+			    u->setReserveShotMode(*state,
+			                          pushed ? ReserveShotMode::None : ReserveShotMode::Aimed);
 		    }
 		});
 
@@ -582,7 +583,8 @@ BattleView::BattleView(sp<GameState> gameState)
 		    }
 		    for (auto &u : this->battle.battleViewSelectedUnits)
 		    {
-			    u->setReserveShotMode(*state, pushed ? ReserveShotMode::None : ReserveShotMode::Snap);
+			    u->setReserveShotMode(*state,
+			                          pushed ? ReserveShotMode::None : ReserveShotMode::Snap);
 		    }
 		});
 
@@ -598,7 +600,8 @@ BattleView::BattleView(sp<GameState> gameState)
 		    }
 		    for (auto &u : this->battle.battleViewSelectedUnits)
 		    {
-			    u->setReserveShotMode(*state, pushed ? ReserveShotMode::None : ReserveShotMode::Auto);
+			    u->setReserveShotMode(*state,
+			                          pushed ? ReserveShotMode::None : ReserveShotMode::Auto);
 		    }
 		});
 

@@ -28,14 +28,14 @@ class UnitAIVanilla : public UnitAI
 	// Relative position of a person who attacked us since last think()
 	Vec3<int> attackerPosition = {-1, -1, -1};
 	// Relative position of last seen enemy's last seen position since last think()
-	Vec3<int> lastSeenEnemyPosition = { -1, -1, -1 };
+	Vec3<int> lastSeenEnemyPosition = {-1, -1, -1};
 
 	// Enemy was spotted since we last re-thinked properly
 	bool flagEnemySpotted = false;
 	// Enemy attacked us since we last re-thinked properly
-	Vec3<int> flagLastSeenPosition = { -1, -1, -1 };
+	Vec3<int> flagLastSeenPosition = {-1, -1, -1};
 	// Enemy went MIA since we last re-thinked properly
-	Vec3<int> flagLastAttackerPosition = { -1, -1, -1 };
+	Vec3<int> flagLastAttackerPosition = {-1, -1, -1};
 
 	void reset(GameState &state, BattleUnit &u) override;
 

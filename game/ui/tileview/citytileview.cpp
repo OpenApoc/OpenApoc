@@ -363,10 +363,10 @@ void CityTileView::render()
 				bool targetDrawn = std::get<2>(obj);
 				// Draw line from unit to target tile
 				r.drawLine(tileToOffsetScreenCoords(std::get<0>(obj)),
-				           tileToOffsetScreenCoords(std::get<1>(obj)), targetDrawn ? lineColorFriend : lineColorEnemy);
+				           tileToOffsetScreenCoords(std::get<1>(obj)),
+				           targetDrawn ? lineColorFriend : lineColorEnemy);
 				// Draw location image at target tile
-				if (targetDrawn &&
-				    selectionFrameTicksAccumulated / SELECTION_FRAME_ANIMATION_DELAY)
+				if (targetDrawn && selectionFrameTicksAccumulated / SELECTION_FRAME_ANIMATION_DELAY)
 				{
 					r.draw(targetTacticalThisLevel,
 					       tileToOffsetScreenCoords(std::get<0>(obj)) + offsetStrat);

@@ -21,7 +21,7 @@ static const std::set<TileObject::Type> unitSet = {TileObject::Type::Unit};
 static const std::tuple<AIDecision, bool> NULLTUPLE2 = std::make_tuple(AIDecision(), false);
 static const std::tuple<AIDecision, float, unsigned> NULLTUPLE3 =
     std::make_tuple(AIDecision(), -FLT_MAX, 0);
-static const Vec3<int> NONE = { -1, -1, -1 };
+static const Vec3<int> NONE = {-1, -1, -1};
 }
 
 /* AI LOGIC: attack()
@@ -147,9 +147,11 @@ UnitAIVanilla::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment>
 
 	// Chance to advance is equal to chance to miss
 	// Only advance if can fire on move
-	if (randBoundsExclusive(state.rng, 0, 100) >= cth && u.agent->getAnimationPack()->getFrameCountFiring(e->type, u.target_body_state, MovementState::Normal, u.goalFacing) > 0)
+	if (randBoundsExclusive(state.rng, 0, 100) >= cth &&
+	    u.agent->getAnimationPack()->getFrameCountFiring(e->type, u.target_body_state,
+	                                                     MovementState::Normal, u.goalFacing) > 0)
 	{
-			
+
 		movement->type = AIMovement::Type::Advance;
 		movement->targetLocation = target->position;
 		movement->kneelingMode = KneelingMode::None;
@@ -567,7 +569,7 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getAttackDecision(GameSta
 		else
 		{
 			decision = std::make_tuple(
-				AIDecision(nullptr, UnitAIHelper::getTakeCoverMovement(state, u, true)), 0.0f, 0);
+			    AIDecision(nullptr, UnitAIHelper::getTakeCoverMovement(state, u, true)), 0.0f, 0);
 		}
 	}
 
@@ -654,12 +656,12 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkGreen(GameState &sta
 std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkRed(GameState &state, BattleUnit &u)
 {
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-	LogWarning("VANILLAAI %s: thinkRed()",u.id);
+	LogWarning("VANILLAAI %s: thinkRed()", u.id);
 #endif
 	bool isUnderAttack = flagLastAttackerPosition != NONE;
 	bool isInterrupted =
 	    ticksUntilReThink > 0 && ticksLastThink + ticksUntilReThink > state.gameTime.getTicks();
-	
+
 	if (isUnderAttack)
 	{
 #ifdef VANILLA_AI_DEBUG_OUTPUT
@@ -694,7 +696,7 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkRed(GameState &state
 			return NULLTUPLE3;
 		}
 	}
-	
+
 	return getAttackDecision(state, u);
 }
 
@@ -779,9 +781,12 @@ AIDecision UnitAIVanilla::thinkInternal(GameState &state, BattleUnit &u)
 	        (!lastDecision.movement || lastDecision.movement->type != AIMovement::Type::GetInRange))
 	    // 4: We have enemies in sight, we are not attacking and we are not carrying out a decision
 	    || (!u.visibleEnemies.empty() && !u.isAttacking() && lastDecision.isEmpty())
-		// 5: We have no enemies in sight, but had one before, and we're not getting in range or retreating
-		|| (u.visibleEnemies.empty() && flagLastSeenPosition != NONE &&
-		(!lastDecision.movement || (lastDecision.movement->type != AIMovement::Type::GetInRange && lastDecision.movement->type != AIMovement::Type::Retreat)));
+	    // 5: We have no enemies in sight, but had one before, and we're not getting in range or
+	    // retreating
+	    ||
+	    (u.visibleEnemies.empty() && flagLastSeenPosition != NONE &&
+	     (!lastDecision.movement || (lastDecision.movement->type != AIMovement::Type::GetInRange &&
+	                                 lastDecision.movement->type != AIMovement::Type::Retreat)));
 
 	// Note: if no enemies are in sight, and we're idle, we will do nothing.
 	// This state is handled by tactical AI
@@ -793,13 +798,13 @@ AIDecision UnitAIVanilla::thinkInternal(GameState &state, BattleUnit &u)
 #endif
 		return lastDecision;
 	}
-	
+
 	auto result = state.current_battle->visibleEnemies[u.owner].empty() ? thinkGreen(state, u)
 	                                                                    : thinkRed(state, u);
 	auto decision = std::get<0>(result);
 	lastDecision = decision;
 	clearFlags(state, u);
-	
+
 	if (decision.isEmpty())
 	{
 #ifdef VANILLA_AI_DEBUG_OUTPUT
@@ -923,7 +928,7 @@ void UnitAIVanilla::routine(GameState &state, BattleUnit &u)
 	}
 }
 
-void UnitAIVanilla::raiseFlags(GameState & state, BattleUnit & u)
+void UnitAIVanilla::raiseFlags(GameState &state, BattleUnit &u)
 {
 #ifdef VANILLA_AI_DEBUG_OUTPUT
 	LogWarning("VANILLA AI %s: raiseFlags()", u.id);
@@ -951,7 +956,7 @@ void UnitAIVanilla::raiseFlags(GameState & state, BattleUnit & u)
 	}
 }
 
-void UnitAIVanilla::clearFlags(GameState & state, BattleUnit & u)
+void UnitAIVanilla::clearFlags(GameState &state, BattleUnit &u)
 {
 #ifdef VANILLA_AI_DEBUG_OUTPUT
 	LogWarning("VANILLA AI %s: clearFlags()", u.id);

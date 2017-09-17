@@ -1,9 +1,9 @@
 #include "game/ui/base/aequipscreen.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
-#include "forms/radiobutton.h"
 #include "forms/label.h"
 #include "forms/list.h"
+#include "forms/radiobutton.h"
 #include "forms/scrollbar.h"
 #include "forms/ui.h"
 #include "framework/apocresources/cursor.h"
@@ -346,7 +346,7 @@ void AEquipScreen::begin()
 	{
 		formMain->findControl("BUTTON_UNDERPANTS")->setVisible(false);
 	}
-	
+
 	updateAgents();
 }
 
@@ -437,7 +437,8 @@ void AEquipScreen::eventOccurred(Event *e)
 			return;
 		}
 	}
-	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::CheckBoxChange)
+	if (e->type() == EVENT_FORM_INTERACTION &&
+	    e->forms().EventFlag == FormEventType::CheckBoxChange)
 	{
 		if (e->forms().RaisedBy->Name == "BUTTON_SHOW_WEAPONS")
 		{
@@ -480,7 +481,8 @@ void AEquipScreen::eventOccurred(Event *e)
 				auto pos = rect.p0;
 				pos.x -= inventoryPage * inventoryControl->Size.x;
 				if (pos.x < inventoryControl->Location.x + formMain->Location.x ||
-					pos.x >= inventoryControl->Location.x + inventoryControl->Size.x + formMain->Location.x)
+				    pos.x >= inventoryControl->Location.x + inventoryControl->Size.x +
+				                 formMain->Location.x)
 				{
 					break;
 				}
@@ -742,20 +744,108 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 	{
 		switch (item->type->type)
 		{
-		case AEquipmentType::Type::Weapon:
-		{
-			formItemWeapon->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
-			formItemWeapon->findControlTyped<Graphic>("SELECTED_IMAGE")
-				->setImage(item->getEquipmentImage());
-
-			formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_1")->setVisible(false);
-			formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_2")->setVisible(false);
-			formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_3")->setVisible(false);
-			formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_4")->setVisible(false);
-
-			if (item->getPayloadType())
+			case AEquipmentType::Type::Weapon:
 			{
+				formItemWeapon->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
+				formItemWeapon->findControlTyped<Graphic>("SELECTED_IMAGE")
+				    ->setImage(item->getEquipmentImage());
+
+				formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_1")->setVisible(false);
+				formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_2")->setVisible(false);
+				formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_3")->setVisible(false);
+				formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_4")->setVisible(false);
+
+				if (item->getPayloadType())
+				{
+					formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPES")->setVisible(false);
+
+					formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE")->setVisible(true);
+					formItemWeapon->findControlTyped<Label>("VALUE_AMMO_TYPE")->setVisible(true);
+					formItemWeapon->findControlTyped<Label>("LABEL_POWER")->setVisible(true);
+					formItemWeapon->findControlTyped<Label>("VALUE_POWER")->setVisible(true);
+					formItemWeapon->findControlTyped<Label>("LABEL_ROUNDS")->setVisible(true);
+					formItemWeapon->findControlTyped<Label>("VALUE_ROUNDS")->setVisible(true);
+					formItemWeapon->findControlTyped<Label>("LABEL_RECHARGES")
+					    ->setVisible(item->getPayloadType()->recharge > 0);
+					formItemWeapon->findControlTyped<Label>("LABEL_ACCURACY")->setVisible(true);
+
+					formItemWeapon->findControlTyped<Label>("VALUE_AMMO_TYPE")
+					    ->setText(item->getPayloadType()->damage_type->name);
+					formItemWeapon->findControlTyped<Label>("VALUE_POWER")
+					    ->setText(format("%d", item->getPayloadType()->damage));
+					formItemWeapon->findControlTyped<Label>("VALUE_ROUNDS")
+					    ->setText(format("%d / %d", item->ammo, item->getPayloadType()->max_ammo));
+
+					formItemWeapon->findControlTyped<Label>("VALUE_ACCURACY")
+					    ->setText(format("%d", item->getPayloadType()->accuracy));
+					formItemWeapon->findControlTyped<Label>("VALUE_FIRE_RATE")
+					    ->setText(format("%d", item->getPayloadType()->fire_delay));
+					formItemWeapon->findControlTyped<Label>("VALUE_RANGE")
+					    ->setText(format("%d", item->getPayloadType()->range));
+				}
+				else
+				{
+					formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPES")->setVisible(true);
+
+					formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE")->setVisible(false);
+					formItemWeapon->findControlTyped<Label>("VALUE_AMMO_TYPE")->setVisible(false);
+					formItemWeapon->findControlTyped<Label>("LABEL_POWER")->setVisible(false);
+					formItemWeapon->findControlTyped<Label>("VALUE_POWER")->setVisible(false);
+					formItemWeapon->findControlTyped<Label>("LABEL_ROUNDS")->setVisible(false);
+					formItemWeapon->findControlTyped<Label>("VALUE_ROUNDS")->setVisible(false);
+					formItemWeapon->findControlTyped<Label>("LABEL_RECHARGES")->setVisible(false);
+
+					int ammoNum = 1;
+					for (auto &ammo : item->type->ammo_types)
+					{
+						formItemWeapon
+						    ->findControlTyped<Label>(format("LABEL_AMMO_TYPE_%d", ammoNum))
+						    ->setVisible(true);
+						formItemWeapon
+						    ->findControlTyped<Label>(format("LABEL_AMMO_TYPE_%d", ammoNum))
+						    ->setText(ammo->name);
+						ammoNum++;
+						if (ammoNum > 4)
+						{
+							break;
+						}
+					}
+
+					if (item->type->ammo_types.empty())
+					{
+						LogError("No ammo types exist for a weapon?");
+						formItemWeapon->findControlTyped<Label>("VALUE_ACCURACY")->setText("");
+						formItemWeapon->findControlTyped<Label>("VALUE_FIRE_RATE")->setText("");
+						formItemWeapon->findControlTyped<Label>("VALUE_RANGE")->setText("");
+					}
+					else
+					{
+						formItemWeapon->findControlTyped<Label>("VALUE_ACCURACY")
+						    ->setText(format("%d", item->type->ammo_types.front()->accuracy));
+						formItemWeapon->findControlTyped<Label>("VALUE_FIRE_RATE")
+						    ->setText(format("%d", item->type->ammo_types.front()->fire_delay));
+						formItemWeapon->findControlTyped<Label>("VALUE_RANGE")
+						    ->setText(format("%d", item->type->ammo_types.front()->range));
+					}
+				}
+
+				formItemWeapon->findControlTyped<Label>("VALUE_WEIGHT")
+				    ->setText(format("%d", item->type->weight));
+
+				formActive = formItemWeapon;
+			}
+				return;
+			case AEquipmentType::Type::Ammo:
+			{
+				formItemWeapon->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
+				formItemWeapon->findControlTyped<Graphic>("SELECTED_IMAGE")
+				    ->setImage(item->getEquipmentImage());
+
 				formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPES")->setVisible(false);
+				formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_1")->setVisible(false);
+				formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_2")->setVisible(false);
+				formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_3")->setVisible(false);
+				formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_4")->setVisible(false);
 
 				formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE")->setVisible(true);
 				formItemWeapon->findControlTyped<Label>("VALUE_AMMO_TYPE")->setVisible(true);
@@ -764,147 +854,62 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 				formItemWeapon->findControlTyped<Label>("LABEL_ROUNDS")->setVisible(true);
 				formItemWeapon->findControlTyped<Label>("VALUE_ROUNDS")->setVisible(true);
 				formItemWeapon->findControlTyped<Label>("LABEL_RECHARGES")
-					->setVisible(item->getPayloadType()->recharge > 0);
-				formItemWeapon->findControlTyped<Label>("LABEL_ACCURACY")->setVisible(true);
+				    ->setVisible(item->type->recharge > 0);
 
+				formItemWeapon->findControlTyped<Label>("VALUE_WEIGHT")
+				    ->setText(format("%d", item->type->weight));
 				formItemWeapon->findControlTyped<Label>("VALUE_AMMO_TYPE")
-					->setText(item->getPayloadType()->damage_type->name);
-				formItemWeapon->findControlTyped<Label>("VALUE_POWER")
-					->setText(format("%d", item->getPayloadType()->damage));
-				formItemWeapon->findControlTyped<Label>("VALUE_ROUNDS")
-					->setText(format("%d / %d", item->ammo, item->getPayloadType()->max_ammo));
+				    ->setText(item->type->damage_type->name);
 
 				formItemWeapon->findControlTyped<Label>("VALUE_ACCURACY")
-					->setText(format("%d", item->getPayloadType()->accuracy));
+				    ->setText(format("%d", item->type->accuracy));
 				formItemWeapon->findControlTyped<Label>("VALUE_FIRE_RATE")
-					->setText(format("%d", item->getPayloadType()->fire_delay));
+				    ->setText(format("%d", item->type->fire_delay));
 				formItemWeapon->findControlTyped<Label>("VALUE_RANGE")
-					->setText(format("%d", item->getPayloadType()->range));
+				    ->setText(format("%d", item->type->range));
+
+				formItemWeapon->findControlTyped<Label>("VALUE_POWER")
+				    ->setText(format("%d", item->type->damage));
+				formItemWeapon->findControlTyped<Label>("VALUE_ROUNDS")
+				    ->setText(format("%d / %d", item->ammo, item->type->max_ammo));
+
+				formActive = formItemWeapon;
 			}
-			else
+				return;
+			case AEquipmentType::Type::Armor:
 			{
-				formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPES")->setVisible(true);
+				formItemArmor->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
+				formItemArmor->findControlTyped<Graphic>("SELECTED_IMAGE")
+				    ->setImage(item->getEquipmentImage());
+				formItemArmor->findControlTyped<Label>("LABEL_PROTECTION")
+				    ->setText(tr("Protection"));
 
-				formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE")->setVisible(false);
-				formItemWeapon->findControlTyped<Label>("VALUE_AMMO_TYPE")->setVisible(false);
-				formItemWeapon->findControlTyped<Label>("LABEL_POWER")->setVisible(false);
-				formItemWeapon->findControlTyped<Label>("VALUE_POWER")->setVisible(false);
-				formItemWeapon->findControlTyped<Label>("LABEL_ROUNDS")->setVisible(false);
-				formItemWeapon->findControlTyped<Label>("VALUE_ROUNDS")->setVisible(false);
-				formItemWeapon->findControlTyped<Label>("LABEL_RECHARGES")->setVisible(false);
+				formItemArmor->findControlTyped<Label>("VALUE_WEIGHT")
+				    ->setText(format("%d", item->type->weight));
+				formItemArmor->findControlTyped<Label>("VALUE_PROTECTION")
+				    ->setText(format("%d / %d", item->armor, item->type->armor));
 
-				int ammoNum = 1;
-				for (auto &ammo : item->type->ammo_types)
-				{
-					formItemWeapon->findControlTyped<Label>(format("LABEL_AMMO_TYPE_%d", ammoNum))
-						->setVisible(true);
-					formItemWeapon->findControlTyped<Label>(format("LABEL_AMMO_TYPE_%d", ammoNum))
-						->setText(ammo->name);
-					ammoNum++;
-					if (ammoNum > 4)
-					{
-						break;
-					}
-				}
-
-				if (item->type->ammo_types.empty())
-				{
-					LogError("No ammo types exist for a weapon?");
-					formItemWeapon->findControlTyped<Label>("VALUE_ACCURACY")->setText("");
-					formItemWeapon->findControlTyped<Label>("VALUE_FIRE_RATE")->setText("");
-					formItemWeapon->findControlTyped<Label>("VALUE_RANGE")->setText("");
-				}
-				else
-				{
-					formItemWeapon->findControlTyped<Label>("VALUE_ACCURACY")
-						->setText(format("%d", item->type->ammo_types.front()->accuracy));
-					formItemWeapon->findControlTyped<Label>("VALUE_FIRE_RATE")
-						->setText(format("%d", item->type->ammo_types.front()->fire_delay));
-					formItemWeapon->findControlTyped<Label>("VALUE_RANGE")
-						->setText(format("%d", item->type->ammo_types.front()->range));
-				}
+				formActive = formItemArmor;
 			}
+				return;
+			case AEquipmentType::Type::Grenade:
+			{
+				formItemGrenade->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
+				formItemGrenade->findControlTyped<Graphic>("SELECTED_IMAGE")
+				    ->setImage(item->getEquipmentImage());
 
-			formItemWeapon->findControlTyped<Label>("VALUE_WEIGHT")
-				->setText(format("%d", item->type->weight));
+				formItemGrenade->findControlTyped<Label>("VALUE_WEIGHT")
+				    ->setText(format("%d", item->type->weight));
+				formItemGrenade->findControlTyped<Label>("VALUE_AMMO_TYPE")
+				    ->setText(item->type->damage_type->name);
+				formItemGrenade->findControlTyped<Label>("VALUE_POWER")
+				    ->setText(format("%d", item->type->damage));
 
-			formActive = formItemWeapon;
-		}
-		return;
-		case AEquipmentType::Type::Ammo:
-		{
-			formItemWeapon->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
-			formItemWeapon->findControlTyped<Graphic>("SELECTED_IMAGE")
-				->setImage(item->getEquipmentImage());
-
-			formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPES")->setVisible(false);
-			formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_1")->setVisible(false);
-			formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_2")->setVisible(false);
-			formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_3")->setVisible(false);
-			formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_4")->setVisible(false);
-
-			formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE")->setVisible(true);
-			formItemWeapon->findControlTyped<Label>("VALUE_AMMO_TYPE")->setVisible(true);
-			formItemWeapon->findControlTyped<Label>("LABEL_POWER")->setVisible(true);
-			formItemWeapon->findControlTyped<Label>("VALUE_POWER")->setVisible(true);
-			formItemWeapon->findControlTyped<Label>("LABEL_ROUNDS")->setVisible(true);
-			formItemWeapon->findControlTyped<Label>("VALUE_ROUNDS")->setVisible(true);
-			formItemWeapon->findControlTyped<Label>("LABEL_RECHARGES")
-				->setVisible(item->type->recharge > 0);
-
-			formItemWeapon->findControlTyped<Label>("VALUE_WEIGHT")
-				->setText(format("%d", item->type->weight));
-			formItemWeapon->findControlTyped<Label>("VALUE_AMMO_TYPE")
-				->setText(item->type->damage_type->name);
-
-			formItemWeapon->findControlTyped<Label>("VALUE_ACCURACY")
-				->setText(format("%d", item->type->accuracy));
-			formItemWeapon->findControlTyped<Label>("VALUE_FIRE_RATE")
-				->setText(format("%d", item->type->fire_delay));
-			formItemWeapon->findControlTyped<Label>("VALUE_RANGE")
-				->setText(format("%d", item->type->range));
-
-			formItemWeapon->findControlTyped<Label>("VALUE_POWER")
-				->setText(format("%d", item->type->damage));
-			formItemWeapon->findControlTyped<Label>("VALUE_ROUNDS")
-				->setText(format("%d / %d", item->ammo, item->type->max_ammo));
-
-			formActive = formItemWeapon;
-		}
-		return;
-		case AEquipmentType::Type::Armor:
-		{
-			formItemArmor->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
-			formItemArmor->findControlTyped<Graphic>("SELECTED_IMAGE")
-				->setImage(item->getEquipmentImage());
-			formItemArmor->findControlTyped<Label>("LABEL_PROTECTION")->setText(tr("Protection"));
-
-			formItemArmor->findControlTyped<Label>("VALUE_WEIGHT")
-				->setText(format("%d", item->type->weight));
-			formItemArmor->findControlTyped<Label>("VALUE_PROTECTION")
-				->setText(format("%d / %d", item->armor, item->type->armor));
-
-			formActive = formItemArmor;
-		}
-		return;
-		case AEquipmentType::Type::Grenade:
-		{
-			formItemGrenade->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
-			formItemGrenade->findControlTyped<Graphic>("SELECTED_IMAGE")
-				->setImage(item->getEquipmentImage());
-
-			formItemGrenade->findControlTyped<Label>("VALUE_WEIGHT")
-				->setText(format("%d", item->type->weight));
-			formItemGrenade->findControlTyped<Label>("VALUE_AMMO_TYPE")
-				->setText(item->type->damage_type->name);
-			formItemGrenade->findControlTyped<Label>("VALUE_POWER")
-				->setText(format("%d", item->type->damage));
-
-			formActive = formItemGrenade;
-		}
-		return;
-		default:
-			break;
+				formActive = formItemGrenade;
+			}
+				return;
+			default:
+				break;
 		}
 	}
 	// Item unresearched or generic type
@@ -912,24 +917,25 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 	{
 		formItemArmor->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
 		formItemArmor->findControlTyped<Graphic>("SELECTED_IMAGE")
-			->setImage(item->getEquipmentImage());
+		    ->setImage(item->getEquipmentImage());
 		formItemArmor->findControlTyped<Label>("LABEL_PROTECTION")->setText(tr("Power"));
 
 		formItemArmor->findControlTyped<Label>("VALUE_WEIGHT")
-			->setText(format("%d", item->type->weight));
+		    ->setText(format("%d", item->type->weight));
 		formItemArmor->findControlTyped<Label>("VALUE_PROTECTION")
-			->setText(format("%d / %d", item->ammo, item->type->max_ammo));
+		    ->setText(format("%d / %d", item->ammo, item->type->max_ammo));
 
 		formActive = formItemArmor;
 	}
 	else
 	{
-		formItemOther->findControlTyped<Label>("ITEM_NAME")->setText(researched ? item->type->name : tr("Alien Artifact"));
+		formItemOther->findControlTyped<Label>("ITEM_NAME")
+		    ->setText(researched ? item->type->name : tr("Alien Artifact"));
 		formItemOther->findControlTyped<Graphic>("SELECTED_IMAGE")
-			->setImage(item->getEquipmentImage());
+		    ->setImage(item->getEquipmentImage());
 
 		formItemOther->findControlTyped<Label>("VALUE_WEIGHT")
-			->setText(format("%d", item->type->weight));
+		    ->setText(format("%d", item->type->weight));
 
 		formActive = formItemOther;
 	}
@@ -1046,7 +1052,8 @@ void AEquipScreen::populateInventoryItemsBase()
 
 		// Skip wrong types
 		bool showArmor = formMain->findControlTyped<RadioButton>("BUTTON_SHOW_ARMOUR")->isChecked();
-		bool showOther = formMain->findControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->isChecked();
+		bool showOther =
+		    formMain->findControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->isChecked();
 		if (type->type == AEquipmentType::Type::Armor && !showArmor)
 		{
 			continue;
@@ -1392,7 +1399,7 @@ void AEquipScreen::processTemplate(int idx, bool remember)
 			// TODO: Fix this to be the building agent is currently in
 			if (b.second->building == currentAgent->home_base->building)
 			{
-				base = { state.get(), b.first };
+				base = {state.get(), b.first};
 				break;
 			}
 		}
@@ -1490,7 +1497,8 @@ void AEquipScreen::processTemplate(int idx, bool remember)
 			}
 			else
 			{
-				LogError("Agent %s cannot apply template, fail at pos %s item %s", currentAgent->name, pos, type.id);
+				LogError("Agent %s cannot apply template, fail at pos %s item %s",
+				         currentAgent->name, pos, type.id);
 			}
 		}
 	}
