@@ -44,6 +44,7 @@
 #define DT_EXPLOSIVE 4
 #define DT_STUNGUN 5
 #define DT_PSIBLAST 6
+#define DT_DISRUPTOR 14
 #define DT_EXPLOSIVE2 15
 #define DT_BRAINSUCKER 18
 #define DT_ENTROPY 16
@@ -59,9 +60,19 @@
 #define IT_STUNGRAPPLE 25
 #define IT_TRACKERGUN 28
 #define IT_FORCEWEB 31
+#define IT_DISRUPTOR 40
 #define IT_DEVASTATOR 41
+#define IT_BOOMEROID 42
 #define IT_BRAINSUCKERLAUNCHER 44
+#define IT_ENTROPYLAUNCHER 45
 #define IT_DIMENSIONLAUNCHER 46
+#define IT_DIMENSIONMISSILE 47
+#define IT_VORTEX 48
+#define IT_PERSHIELD 49
+#define IT_PERTELEPORT 50
+#define IT_PERCLOAK 51
+#define IT_BRAINSUCKERPOD 56
+#define IT_ENTROPYPOD 57
 #define IT_POPPERBOMB 81
 
 namespace OpenApoc
@@ -294,6 +305,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 				d->blockType = DamageType::BlockType::Gas;
 				d->explosionDoodad = {&state, "DOODAD_19_ALIEN_GAS"};
 				d->hazardType = {&state, "HAZARD_ALIEN_GAS"};
+				d->non_violent = true;
 				break;
 			case DT_INCENDARY:
 				d->explosive = true;
@@ -311,6 +323,9 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 			case DT_EXPLOSIVE:
 			case DT_EXPLOSIVE2:
 				d->explosive = true;
+				break;
+			case DT_DISRUPTOR:
+				d->non_violent = true;
 				break;
 			case DT_STUNGUN:
 				d->effectType = DamageType::EffectType::Stun;
@@ -402,6 +417,57 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 				break;
 			default:
 				e->two_handed = false;
+				break;
+		}
+
+		// Dependency
+		e->research_dependency.type = ResearchDependency::Type::All;
+		switch (edata.sprite_idx)
+		{
+			case IT_DISRUPTOR:
+				e->research_dependency.topics.emplace(&state, "RESEARCH_DISRUPTOR_GUN");
+				break;
+			case IT_DEVASTATOR:
+				e->research_dependency.topics.emplace(&state, "RESEARCH_DEVASTATOR_CANNON");
+				break;
+			case IT_BOOMEROID:
+				e->research_dependency.topics.emplace(&state, "RESEARCH_BOOMEROID");
+				break;
+			case IT_BRAINSUCKERLAUNCHER:
+				e->research_dependency.topics.emplace(&state, "RESEARCH_BRAINSUCKER_LAUNCHER");
+				e->research_dependency.topics.emplace(&state, "RESEARCH_BRAINSUCKER_POD");
+				break;
+			case IT_BRAINSUCKERPOD:
+				e->research_dependency.topics.emplace(&state, "RESEARCH_BRAINSUCKER_LAUNCHER");
+				e->research_dependency.topics.emplace(&state, "RESEARCH_BRAINSUCKER_POD");
+				break;
+			case IT_ENTROPYLAUNCHER:
+				e->research_dependency.topics.emplace(&state, "RESEARCH_ENTROPY_LAUNCHER");
+				e->research_dependency.topics.emplace(&state, "RESEARCH_ENTROPY_POD");
+				break;
+			case IT_DIMENSIONLAUNCHER:
+				e->research_dependency.topics.emplace(&state, "RESEARCH_DIMENSION_MISSILE_LAUNCHER");
+				e->research_dependency.topics.emplace(&state, "RESEARCH_DIMENSION_MISSILE");
+				break;
+			case IT_DIMENSIONMISSILE:
+				e->research_dependency.topics.emplace(&state, "RESEARCH_DIMENSION_MISSILE_LAUNCHER");
+				e->research_dependency.topics.emplace(&state, "RESEARCH_DIMENSION_MISSILE");
+				break;
+			case IT_VORTEX:
+				e->research_dependency.topics.emplace(&state, "RESEARCH_VORTEX_MINE");
+				break;
+			case IT_PERSHIELD:
+				e->research_dependency.topics.emplace(&state, "RESEARCH_PERSONAL_DISRUPTOR_SHIELD");
+				break;
+			case IT_PERTELEPORT:
+				e->research_dependency.topics.emplace(&state, "RESEARCH_PERSONAL_TELEPORTER");
+				break;
+			case IT_PERCLOAK:
+				e->research_dependency.topics.emplace(&state, "RESEARCH_PERSONAL_CLOAKING_FIELD");
+				break;
+			case IT_ENTROPYPOD:
+				e->research_dependency.topics.emplace(&state, "RESEARCH_ENTROPY_LAUNCHER");
+				e->research_dependency.topics.emplace(&state, "RESEARCH_ENTROPY_POD");
 				break;
 		}
 

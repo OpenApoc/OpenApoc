@@ -105,6 +105,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRef<City> current_city;
 	StateRef<Base> current_base;
 
+	std::vector<EquipmentTemplate> agentEquipmentTemplates;
+
 	// Used to generate unique names, an incrementing ID for each object type (keyed by StateObject
 	// prefix)
 	std::mutex objectIdCountLock;

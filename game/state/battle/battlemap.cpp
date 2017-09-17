@@ -1319,7 +1319,7 @@ void BattleMap::fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state,
 
 		auto u = b->placeUnit(state, a);
 
-		u->updateDisplayedItem();
+		u->updateDisplayedItem(state);
 	}
 
 	// Find out number of agents in each org

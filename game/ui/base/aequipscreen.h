@@ -119,6 +119,8 @@ class AEquipScreen : public Stage
 	void addItemToInventoryBuilding(sp<AEquipment> item);
 	void addItemToInventoryAgent(sp<AEquipment> item);
 
+	void processTemplate(int idx, bool remember);
+
 	void attemptCloseScreen();
 	void closeScreen();
 

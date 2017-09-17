@@ -51,13 +51,17 @@
         <image/>
       </graphic>
       <graphic id="INVENTORY">
-        <position x="26" y="368"/>
-        <size width="550" height="80"/>
+        <position x="22" y="368"/>
+        <size width="516" height="80"/>
         <image/>
         <imageposition>fit</imageposition>
       </graphic>
-	  <!-- Eventually implement individual pages for base, then these buttons will be useful too-->
-	  <!-- 
+	  <graphic id="BUTTON_UNDERPANTS">
+        <position x="596" y="36"/>
+        <size width="44" height="83"/>
+        <image>city/agent-equip-buttons.png</image>
+        <imageposition>fit</imageposition>
+      </graphic>
 	  <radiobutton id="BUTTON_SHOW_WEAPONS" groupid="TYPE">
         <position x="602" y="40"/>
         <size width="35" height="34"/>
@@ -70,8 +74,7 @@
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:7:xcom3/ufodata/agenteqp.pcx</imagechecked>
 	  </radiobutton>
-	  -->
-      <scroll id="AGENT_SELECT_SCROLL">
+	  <scroll id="AGENT_SELECT_SCROLL">
         <position x="571" y="81"/>
         <size width="16" height="242"/>
       </scroll>

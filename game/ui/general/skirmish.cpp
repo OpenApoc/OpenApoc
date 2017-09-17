@@ -305,16 +305,15 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 	playerBase->inventoryAgentEquipment.clear();
 	for (auto &t : state.agent_equipment)
 	{
-		// Ignore unfinished items and armor
-		if (t.second->type == AEquipmentType::Type::Armor ||
-		    t.second->type == AEquipmentType::Type::AlienDetector ||
+		// Ignore unfinished items
+		if (t.second->type == AEquipmentType::Type::AlienDetector ||
 		    t.second->type == AEquipmentType::Type::DimensionForceField ||
 		    t.second->type == AEquipmentType::Type::MindShield ||
 		    t.second->type == AEquipmentType::Type::MultiTracker ||
 		    t.second->type == AEquipmentType::Type::StructureProbe ||
 		    t.second->type == AEquipmentType::Type::VortexAnalyzer)
 		{
-			continue;
+			//continue;
 		}
 		// Ignore alien builtin weapons
 		if (t.second->store_space == 5 && t.second->manufacturer == state.getAliens())

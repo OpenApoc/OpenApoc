@@ -406,6 +406,15 @@ void AEquipment::updateInner(GameState &state, unsigned int ticks)
 	}
 }
 
+bool AEquipment::canBeUsed(GameState & state) const
+{
+	if (ownerAgent && ownerAgent->owner == state.getPlayer() && !type->research_dependency.satisfied())
+	{
+		return false;
+	}
+	return true;
+}
+
 void AEquipment::update(GameState &state, unsigned int ticks)
 {
 	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
@@ -818,14 +827,14 @@ StateRef<AEquipmentType> AEquipment::getPayloadType() const
 	return type;
 }
 
-bool AEquipment::canFire() const
+bool AEquipment::canFire(GameState &state) const
 {
-	return (type->type == AEquipmentType::Type::Weapon && ammo > 0);
+	return (type->type == AEquipmentType::Type::Weapon && ammo > 0 && canBeUsed(state));
 }
 
-bool AEquipment::canFire(Vec3<float> to) const
+bool AEquipment::canFire(GameState &state, Vec3<float> to) const
 {
-	if (!canFire())
+	if (!canFire(state))
 		return false;
 	float distanceToTarget = glm::length(ownerAgent->unit->getMuzzleLocation() - to);
 	if (getPayloadType()->getRange() < distanceToTarget)

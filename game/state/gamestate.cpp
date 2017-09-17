@@ -180,6 +180,8 @@ void GameState::initState()
 
 void GameState::startGame()
 {
+	agentEquipmentTemplates.resize(10);
+
 	// Setup orgs
 	for (auto &pair : this->organisations)
 	{

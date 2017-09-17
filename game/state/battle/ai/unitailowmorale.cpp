@@ -115,7 +115,7 @@ std::tuple<AIDecision, bool> UnitAILowMorale::think(GameState &state, BattleUnit
 				// Determine if we have a weapon in hand
 				auto e1 = u.agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
 				auto e2 = u.agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
-				auto canFire = ((e1 && e1->canFire()) || (e2 && e2->canFire()));
+				auto canFire = ((e1 && e1->canFire(state)) || (e2 && e2->canFire(state)));
 				// Roll for what kind of action we take with berserk
 				int roll = randBoundsExclusive(state.rng, 0, 100);
 				// 20% chance to attack a friendly, 40% chance to attack an enemy, 40% chance to

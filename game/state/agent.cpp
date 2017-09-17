@@ -754,7 +754,7 @@ void Agent::addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object)
 	updateSpeed();
 	if (unit)
 	{
-		unit->updateDisplayedItem();
+		unit->updateDisplayedItem(state);
 	}
 }
 
@@ -777,7 +777,7 @@ void Agent::removeEquipment(GameState &state, sp<AEquipment> object)
 		{
 			unit->setBodyState(state, BodyState::Standing);
 		}
-		unit->updateDisplayedItem();
+		unit->updateDisplayedItem(state);
 	}
 	object->ownerAgent.clear();
 	updateSpeed();
@@ -904,7 +904,7 @@ StateRef<BattleUnitAnimationPack> Agent::getAnimationPack() const
 	return type->animation_packs[appearance];
 }
 
-StateRef<AEquipmentType> Agent::getDominantItemInHands(StateRef<AEquipmentType> itemLastFired) const
+StateRef<AEquipmentType> Agent::getDominantItemInHands(GameState &state, StateRef<AEquipmentType> itemLastFired) const
 {
 	sp<AEquipment> e1 = getFirstItemInSlot(EquipmentSlotType::RightHand);
 	sp<AEquipment> e2 = getFirstItemInSlot(EquipmentSlotType::LeftHand);
@@ -929,7 +929,7 @@ StateRef<AEquipmentType> Agent::getDominantItemInHands(StateRef<AEquipmentType> 
 	int e1Priority =
 	    e1->isFiring()
 	        ? 1440 - e1->weapon_fire_ticks_remaining
-	        : (e1->canFire() ? 4 : (e1->type->two_handed
+	        : (e1->canFire(state) ? 4 : (e1->type->two_handed
 	                                    ? 3
 	                                    : (e1->type->type == AEquipmentType::Type::Weapon
 	                                           ? 2
@@ -941,7 +941,7 @@ StateRef<AEquipmentType> Agent::getDominantItemInHands(StateRef<AEquipmentType> 
 	int e2Priority =
 	    e2->isFiring()
 	        ? 1440 - e2->weapon_fire_ticks_remaining
-	        : (e2->canFire() ? 4 : (e2->type->two_handed
+	        : (e2->canFire(state) ? 4 : (e2->type->two_handed
 	                                    ? 3
 	                                    : (e2->type->type == AEquipmentType::Type::Weapon
 	                                           ? 2

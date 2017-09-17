@@ -1,6 +1,7 @@
 #include "game/ui/base/aequipscreen.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
+#include "forms/radiobutton.h"
 #include "forms/label.h"
 #include "forms/list.h"
 #include "forms/scrollbar.h"
@@ -336,6 +337,16 @@ void AEquipScreen::begin()
 		formMain->findControlTyped<Label>("EQUIP_AGENT")->setText(tr("EQUIP AGENT"));
 	}
 
+	if (getMode() == Mode::Base)
+	{
+		formMain->findControl("BUTTON_UNDERPANTS")->setVisible(true);
+		formMain->findControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->setChecked(true);
+	}
+	else
+	{
+		formMain->findControl("BUTTON_UNDERPANTS")->setVisible(false);
+	}
+	
 	updateAgents();
 }
 
@@ -349,21 +360,9 @@ void AEquipScreen::eventOccurred(Event *e)
 {
 	formMain->eventOccured(e);
 
+	// Modifiers
 	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->keyboard().KeyCode == SDLK_ESCAPE)
-		{
-			attemptCloseScreen();
-			return;
-		}
-		if (e->type() == EVENT_KEY_DOWN)
-		{
-			if (e->keyboard().KeyCode == SDLK_RETURN)
-			{
-				formMain->findControl("BUTTON_OK")->click();
-				return;
-			}
-		}
 		if (e->keyboard().KeyCode == SDLK_RCTRL || e->keyboard().KeyCode == SDLK_LCTRL)
 		{
 			modifierCtrl = true;
@@ -376,9 +375,50 @@ void AEquipScreen::eventOccurred(Event *e)
 			modifierCtrl = false;
 		}
 	}
+	if (e->type() == EVENT_KEY_DOWN)
+	{
+		switch (e->keyboard().KeyCode)
+		{
+			case SDLK_1:
+				processTemplate(1, modifierCtrl);
+				return;
+			case SDLK_2:
+				processTemplate(2, modifierCtrl);
+				return;
+			case SDLK_3:
+				processTemplate(3, modifierCtrl);
+				return;
+			case SDLK_4:
+				processTemplate(4, modifierCtrl);
+				return;
+			case SDLK_5:
+				processTemplate(5, modifierCtrl);
+				return;
+			case SDLK_6:
+				processTemplate(6, modifierCtrl);
+				return;
+			case SDLK_7:
+				processTemplate(7, modifierCtrl);
+				return;
+			case SDLK_8:
+				processTemplate(8, modifierCtrl);
+				return;
+			case SDLK_9:
+				processTemplate(9, modifierCtrl);
+				return;
+			case SDLK_0:
+				processTemplate(0, modifierCtrl);
+				return;
+			case SDLK_ESCAPE:
+				attemptCloseScreen();
+				return;
+			case SDLK_RETURN:
+				formMain->findControl("BUTTON_OK")->click();
+				return;
+		}
+	}
 	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::ButtonClick)
 	{
-
 		if (e->forms().RaisedBy->Name == "BUTTON_OK")
 		{
 			attemptCloseScreen();
@@ -394,6 +434,19 @@ void AEquipScreen::eventOccurred(Event *e)
 		{
 			inventoryPage++;
 			clampInventoryPage();
+			return;
+		}
+	}
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::CheckBoxChange)
+	{
+		if (e->forms().RaisedBy->Name == "BUTTON_SHOW_WEAPONS")
+		{
+			refreshInventoryItems();
+			return;
+		}
+		if (e->forms().RaisedBy->Name == "BUTTON_SHOW_ARMOUR")
+		{
+			refreshInventoryItems();
 			return;
 		}
 	}
@@ -421,7 +474,17 @@ void AEquipScreen::eventOccurred(Event *e)
 		{
 			if (std::get<0>(tuple).within(posWithinInventory))
 			{
-				highlightedEquipment = std::get<2>(tuple);
+				auto mousedEquipment = std::get<2>(tuple);
+				// Ensure this item is on screen
+				auto rect = std::get<0>(tuple);
+				auto pos = rect.p0;
+				pos.x -= inventoryPage * inventoryControl->Size.x;
+				if (pos.x < inventoryControl->Location.x + formMain->Location.x ||
+					pos.x >= inventoryControl->Location.x + inventoryControl->Size.x + formMain->Location.x)
+				{
+					break;
+				}
+				highlightedEquipment = mousedEquipment;
 				break;
 			}
 		}
@@ -626,7 +689,7 @@ void AEquipScreen::render()
 		{
 			Vec2<int> countLabelPosition = pos;
 			countLabelPosition.x += equipmentImage->size.x / 2 - countImage->size.x / 2;
-			countLabelPosition.y += INVENTORY_COUNT_Y_GAP + equipmentImage->size.y;
+			countLabelPosition.y += INVENTORY_COUNT_Y_GAP + item->type->equipscreen_size.y * 16;
 			countLabelPosition.y =
 			    std::min(countLabelPosition.y, inventoryBottom - (int)countImage->size.y);
 
@@ -674,13 +737,16 @@ bool AEquipScreen::isTransition() { return false; }
 
 void AEquipScreen::displayItem(sp<AEquipment> item)
 {
-	switch (item->type->type)
+	bool researched = item->type->research_dependency.satisfied();
+	if (researched)
 	{
+		switch (item->type->type)
+		{
 		case AEquipmentType::Type::Weapon:
 		{
 			formItemWeapon->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
 			formItemWeapon->findControlTyped<Graphic>("SELECTED_IMAGE")
-			    ->setImage(item->getEquipmentImage());
+				->setImage(item->getEquipmentImage());
 
 			formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_1")->setVisible(false);
 			formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_2")->setVisible(false);
@@ -698,22 +764,22 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 				formItemWeapon->findControlTyped<Label>("LABEL_ROUNDS")->setVisible(true);
 				formItemWeapon->findControlTyped<Label>("VALUE_ROUNDS")->setVisible(true);
 				formItemWeapon->findControlTyped<Label>("LABEL_RECHARGES")
-				    ->setVisible(item->getPayloadType()->recharge > 0);
+					->setVisible(item->getPayloadType()->recharge > 0);
 				formItemWeapon->findControlTyped<Label>("LABEL_ACCURACY")->setVisible(true);
 
 				formItemWeapon->findControlTyped<Label>("VALUE_AMMO_TYPE")
-				    ->setText(item->getPayloadType()->damage_type->name);
+					->setText(item->getPayloadType()->damage_type->name);
 				formItemWeapon->findControlTyped<Label>("VALUE_POWER")
-				    ->setText(format("%d", item->getPayloadType()->damage));
+					->setText(format("%d", item->getPayloadType()->damage));
 				formItemWeapon->findControlTyped<Label>("VALUE_ROUNDS")
-				    ->setText(format("%d / %d", item->ammo, item->getPayloadType()->max_ammo));
+					->setText(format("%d / %d", item->ammo, item->getPayloadType()->max_ammo));
 
 				formItemWeapon->findControlTyped<Label>("VALUE_ACCURACY")
-				    ->setText(format("%d", item->getPayloadType()->accuracy));
+					->setText(format("%d", item->getPayloadType()->accuracy));
 				formItemWeapon->findControlTyped<Label>("VALUE_FIRE_RATE")
-				    ->setText(format("%d", item->getPayloadType()->fire_delay));
+					->setText(format("%d", item->getPayloadType()->fire_delay));
 				formItemWeapon->findControlTyped<Label>("VALUE_RANGE")
-				    ->setText(format("%d", item->getPayloadType()->range));
+					->setText(format("%d", item->getPayloadType()->range));
 			}
 			else
 			{
@@ -731,9 +797,9 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 				for (auto &ammo : item->type->ammo_types)
 				{
 					formItemWeapon->findControlTyped<Label>(format("LABEL_AMMO_TYPE_%d", ammoNum))
-					    ->setVisible(true);
+						->setVisible(true);
 					formItemWeapon->findControlTyped<Label>(format("LABEL_AMMO_TYPE_%d", ammoNum))
-					    ->setText(ammo->name);
+						->setText(ammo->name);
 					ammoNum++;
 					if (ammoNum > 4)
 					{
@@ -751,25 +817,25 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 				else
 				{
 					formItemWeapon->findControlTyped<Label>("VALUE_ACCURACY")
-					    ->setText(format("%d", item->type->ammo_types.front()->accuracy));
+						->setText(format("%d", item->type->ammo_types.front()->accuracy));
 					formItemWeapon->findControlTyped<Label>("VALUE_FIRE_RATE")
-					    ->setText(format("%d", item->type->ammo_types.front()->fire_delay));
+						->setText(format("%d", item->type->ammo_types.front()->fire_delay));
 					formItemWeapon->findControlTyped<Label>("VALUE_RANGE")
-					    ->setText(format("%d", item->type->ammo_types.front()->range));
+						->setText(format("%d", item->type->ammo_types.front()->range));
 				}
 			}
 
 			formItemWeapon->findControlTyped<Label>("VALUE_WEIGHT")
-			    ->setText(format("%d", item->type->weight));
+				->setText(format("%d", item->type->weight));
 
 			formActive = formItemWeapon;
 		}
-		break;
+		return;
 		case AEquipmentType::Type::Ammo:
 		{
 			formItemWeapon->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
 			formItemWeapon->findControlTyped<Graphic>("SELECTED_IMAGE")
-			    ->setImage(item->getEquipmentImage());
+				->setImage(item->getEquipmentImage());
 
 			formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPES")->setVisible(false);
 			formItemWeapon->findControlTyped<Label>("LABEL_AMMO_TYPE_1")->setVisible(false);
@@ -784,88 +850,88 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 			formItemWeapon->findControlTyped<Label>("LABEL_ROUNDS")->setVisible(true);
 			formItemWeapon->findControlTyped<Label>("VALUE_ROUNDS")->setVisible(true);
 			formItemWeapon->findControlTyped<Label>("LABEL_RECHARGES")
-			    ->setVisible(item->type->recharge > 0);
+				->setVisible(item->type->recharge > 0);
 
 			formItemWeapon->findControlTyped<Label>("VALUE_WEIGHT")
-			    ->setText(format("%d", item->type->weight));
+				->setText(format("%d", item->type->weight));
 			formItemWeapon->findControlTyped<Label>("VALUE_AMMO_TYPE")
-			    ->setText(item->type->damage_type->name);
+				->setText(item->type->damage_type->name);
 
 			formItemWeapon->findControlTyped<Label>("VALUE_ACCURACY")
-			    ->setText(format("%d", item->type->accuracy));
+				->setText(format("%d", item->type->accuracy));
 			formItemWeapon->findControlTyped<Label>("VALUE_FIRE_RATE")
-			    ->setText(format("%d", item->type->fire_delay));
+				->setText(format("%d", item->type->fire_delay));
 			formItemWeapon->findControlTyped<Label>("VALUE_RANGE")
-			    ->setText(format("%d", item->type->range));
+				->setText(format("%d", item->type->range));
 
 			formItemWeapon->findControlTyped<Label>("VALUE_POWER")
-			    ->setText(format("%d", item->type->damage));
+				->setText(format("%d", item->type->damage));
 			formItemWeapon->findControlTyped<Label>("VALUE_ROUNDS")
-			    ->setText(format("%d / %d", item->ammo, item->type->max_ammo));
+				->setText(format("%d / %d", item->ammo, item->type->max_ammo));
 
 			formActive = formItemWeapon;
 		}
-		break;
+		return;
 		case AEquipmentType::Type::Armor:
 		{
 			formItemArmor->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
 			formItemArmor->findControlTyped<Graphic>("SELECTED_IMAGE")
-			    ->setImage(item->getEquipmentImage());
+				->setImage(item->getEquipmentImage());
 			formItemArmor->findControlTyped<Label>("LABEL_PROTECTION")->setText(tr("Protection"));
 
 			formItemArmor->findControlTyped<Label>("VALUE_WEIGHT")
-			    ->setText(format("%d", item->type->weight));
+				->setText(format("%d", item->type->weight));
 			formItemArmor->findControlTyped<Label>("VALUE_PROTECTION")
-			    ->setText(format("%d / %d", item->armor, item->type->armor));
+				->setText(format("%d / %d", item->armor, item->type->armor));
 
 			formActive = formItemArmor;
 		}
-		break;
+		return;
 		case AEquipmentType::Type::Grenade:
 		{
 			formItemGrenade->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
 			formItemGrenade->findControlTyped<Graphic>("SELECTED_IMAGE")
-			    ->setImage(item->getEquipmentImage());
+				->setImage(item->getEquipmentImage());
 
 			formItemGrenade->findControlTyped<Label>("VALUE_WEIGHT")
-			    ->setText(format("%d", item->type->weight));
+				->setText(format("%d", item->type->weight));
 			formItemGrenade->findControlTyped<Label>("VALUE_AMMO_TYPE")
-			    ->setText(item->type->damage_type->name);
+				->setText(item->type->damage_type->name);
 			formItemGrenade->findControlTyped<Label>("VALUE_POWER")
-			    ->setText(format("%d", item->type->damage));
+				->setText(format("%d", item->type->damage));
 
 			formActive = formItemGrenade;
 		}
-		break;
+		return;
 		default:
-		{
-			if (item->type->max_ammo)
-			{
-				formItemArmor->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
-				formItemArmor->findControlTyped<Graphic>("SELECTED_IMAGE")
-				    ->setImage(item->getEquipmentImage());
-				formItemArmor->findControlTyped<Label>("LABEL_PROTECTION")->setText(tr("Power"));
-
-				formItemArmor->findControlTyped<Label>("VALUE_WEIGHT")
-				    ->setText(format("%d", item->type->weight));
-				formItemArmor->findControlTyped<Label>("VALUE_PROTECTION")
-				    ->setText(format("%d / %d", item->ammo, item->type->max_ammo));
-
-				formActive = formItemArmor;
-			}
-			else
-			{
-				formItemOther->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
-				formItemOther->findControlTyped<Graphic>("SELECTED_IMAGE")
-				    ->setImage(item->getEquipmentImage());
-
-				formItemOther->findControlTyped<Label>("VALUE_WEIGHT")
-				    ->setText(format("%d", item->type->weight));
-
-				formActive = formItemOther;
-			}
+			break;
 		}
-		break;
+	}
+	// Item unresearched or generic type
+	if (researched && item->type->max_ammo)
+	{
+		formItemArmor->findControlTyped<Label>("ITEM_NAME")->setText(item->type->name);
+		formItemArmor->findControlTyped<Graphic>("SELECTED_IMAGE")
+			->setImage(item->getEquipmentImage());
+		formItemArmor->findControlTyped<Label>("LABEL_PROTECTION")->setText(tr("Power"));
+
+		formItemArmor->findControlTyped<Label>("VALUE_WEIGHT")
+			->setText(format("%d", item->type->weight));
+		formItemArmor->findControlTyped<Label>("VALUE_PROTECTION")
+			->setText(format("%d / %d", item->ammo, item->type->max_ammo));
+
+		formActive = formItemArmor;
+	}
+	else
+	{
+		formItemOther->findControlTyped<Label>("ITEM_NAME")->setText(researched ? item->type->name : tr("Alien Artifact"));
+		formItemOther->findControlTyped<Graphic>("SELECTED_IMAGE")
+			->setImage(item->getEquipmentImage());
+
+		formItemOther->findControlTyped<Label>("VALUE_WEIGHT")
+			->setText(format("%d", item->type->weight));
+
+		formActive = formItemOther;
 	}
 }
 
@@ -977,6 +1043,18 @@ void AEquipScreen::populateInventoryItemsBase()
 	for (auto &invPair : base->inventoryAgentEquipment)
 	{
 		StateRef<AEquipmentType> type = {state.get(), invPair.first};
+
+		// Skip wrong types
+		bool showArmor = formMain->findControlTyped<RadioButton>("BUTTON_SHOW_ARMOUR")->isChecked();
+		bool showOther = formMain->findControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->isChecked();
+		if (type->type == AEquipmentType::Type::Armor && !showArmor)
+		{
+			continue;
+		}
+		if (type->type != AEquipmentType::Type::Armor && !showOther)
+		{
+			continue;
+		}
 
 		// Find the item count
 		int count = 0;
@@ -1275,6 +1353,151 @@ void AEquipScreen::addItemToInventoryBase(sp<AEquipment> item)
 void AEquipScreen::addItemToInventoryAgent(sp<AEquipment> item)
 {
 	agentItems[currentAgent].push_back(item);
+}
+
+void AEquipScreen::processTemplate(int idx, bool remember)
+{
+	if (getMode() != Mode::Base || draggedEquipment)
+	{
+		return;
+	}
+	auto &temp = state->agentEquipmentTemplates[idx];
+	if (remember)
+	{
+		// Clear template
+		temp.equipment.clear();
+		// Copy current inventory
+		for (auto &eq : currentAgent->equipment)
+		{
+			temp.equipment.emplace_back(eq->equippedPosition, eq->type, eq->payloadType);
+		}
+	}
+	else
+	{
+		// Strip agent
+		std::list<sp<AEquipment>> toRemove;
+		for (auto &eq : currentAgent->equipment)
+		{
+			toRemove.push_back(eq);
+		}
+		for (auto &eq : toRemove)
+		{
+			currentAgent->removeEquipment(*state, eq);
+			addItemToInventory(eq);
+		}
+		// Find base which is in the current building
+		StateRef<Base> base;
+		for (auto &b : state->player_bases)
+		{
+			// TODO: Fix this to be the building agent is currently in
+			if (b.second->building == currentAgent->home_base->building)
+			{
+				base = { state.get(), b.first };
+				break;
+			}
+		}
+		// Equip agent according to template
+		for (auto &eq : temp.equipment)
+		{
+			auto pos = eq.pos;
+			auto type = eq.type;
+			auto payloadType = eq.payloadType;
+
+			auto countType = base->inventoryAgentEquipment[type.id];
+			int ammoRemainingType = 0;
+			auto countPayload = base->inventoryAgentEquipment[type.id];
+			int ammoRemainingPayload = 0;
+
+			// Find the type count
+			if (type->type == AEquipmentType::Type::Ammo)
+			{
+				int newCountType = countType / type->max_ammo;
+				ammoRemainingType = countType - newCountType * type->max_ammo;
+				countType = newCountType;
+				if (ammoRemainingType > 0)
+				{
+					countType++;
+				}
+			}
+			// If no main type item on base item we can't add anything
+			if (countType == 0)
+			{
+				continue;
+			}
+
+			// Make item, set payload and ammo
+			auto equipment = mksp<AEquipment>();
+			equipment->type = type;
+			equipment->armor = type->armor;
+			if (payloadType)
+			{
+				// Find the payloadType count
+				if (payloadType->type == AEquipmentType::Type::Ammo)
+				{
+					int newCountPayload = countPayload / payloadType->max_ammo;
+					ammoRemainingPayload = countPayload - newCountPayload * payloadType->max_ammo;
+					countPayload = newCountPayload;
+					if (ammoRemainingPayload > 0)
+					{
+						countPayload++;
+					}
+				}
+
+				// If no payload item on base we can't add it
+				if (countPayload > 0)
+				{
+					equipment->payloadType = payloadType;
+					if (countPayload == 1 && ammoRemainingPayload > 0)
+					{
+						equipment->ammo = ammoRemainingPayload;
+					}
+					else
+					{
+						equipment->ammo = payloadType->max_ammo;
+					}
+				}
+			}
+			else
+			{
+				if (countType == 1 && ammoRemainingType > 0)
+				{
+					equipment->ammo = ammoRemainingType;
+				}
+				else if (type->ammo_types.size() == 0)
+				{
+					equipment->ammo = type->max_ammo;
+				}
+			}
+			// Actual transaction
+			if (currentAgent->canAddEquipment(pos, equipment->type))
+			{
+				// Give item to agent
+				currentAgent->addEquipment(*state, pos, equipment);
+				// Remove item from base
+				if (type->type == AEquipmentType::Type::Ammo)
+				{
+					base->inventoryAgentEquipment[type->id] -= equipment->ammo;
+				}
+				else
+				{
+					base->inventoryAgentEquipment[type->id]--;
+				}
+				// Remove payload from base
+				if (payloadType && countPayload > 0)
+				{
+					base->inventoryAgentEquipment[payloadType->id] -= equipment->ammo;
+				}
+			}
+			else
+			{
+				LogError("Agent %s cannot apply template, fail at pos %s item %s", currentAgent->name, pos, type.id);
+			}
+		}
+	}
+	displayAgent(currentAgent);
+	updateAgentControl(currentAgent);
+	this->paperDoll->updateEquipment();
+	refreshInventoryItems();
 }
 
 void AEquipScreen::addItemToInventoryBuilding(sp<AEquipment> item)

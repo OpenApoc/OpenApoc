@@ -357,12 +357,15 @@ void CityTileView::render()
 			for (auto &obj : targetLocationsToDraw)
 			{
 				static const auto offsetStrat = Vec2<float>{-4.0f, -4.0f};
-				static const auto lineColor = Colour(150, 250, 20, 255);
+				static const auto lineColorFriend = Colour(150, 250, 20, 255);
+				static const auto lineColorEnemy = Colour(255, 0, 0, 255);
+
+				bool targetDrawn = std::get<2>(obj);
 				// Draw line from unit to target tile
 				r.drawLine(tileToOffsetScreenCoords(std::get<0>(obj)),
-				           tileToOffsetScreenCoords(std::get<1>(obj)), lineColor);
+				           tileToOffsetScreenCoords(std::get<1>(obj)), targetDrawn ? lineColorFriend : lineColorEnemy);
 				// Draw location image at target tile
-				if (std::get<2>(obj) &&
+				if (targetDrawn &&
 				    selectionFrameTicksAccumulated / SELECTION_FRAME_ANIMATION_DELAY)
 				{
 					r.draw(targetTacticalThisLevel,

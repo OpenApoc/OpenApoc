@@ -27,6 +27,7 @@
 		<member>initial_base_agent_equipment</member>
 		<member>current_city</member>
 		<member>current_base</member>
+		<member>agentEquipmentTemplates</member>
 		<member>objectIdCount</member>
 		<member type="Section">city_common_image_list</member>
 		<member type="Section">battle_common_image_list</member>
@@ -174,6 +175,16 @@
 		<member>weapons</member>
 		<member>grenades</member>
 		<member>equipment</member>
+	</object>
+	<object>
+		<name>EquipmentTemplate</name>
+		<member>equipment</member>
+	</object>
+		<object>
+		<name>EquipmentTemplate::EquipmentTemplateEntry</name>
+		<member>pos</member>
+		<member>type</member>
+		<member>payloadType</member>
 	</object>
 	<object>
 		<name>EquipmentSet::WeaponData</name>
@@ -898,6 +909,7 @@
 		<member>name</member>
 		<member>icon_sprite</member>
 		<member>ignore_shield</member>
+		<member>non_violent</member>
 		<member>modifiers</member>
 		<member>explosive</member>
 		<member>explosionDoodad</member>
@@ -1650,6 +1662,9 @@
 		<member>enemySpottedPrevious</member>
 		<member>attackerPosition</member>
 		<member>lastSeenEnemyPosition</member>
+		<member>flagEnemySpotted</member>
+		<member>flagLastSeenPosition</member>
+		<member>flagLastAttackerPosition</member>
 	</object>
 	<object external="true" full="true">
 		<name>UnitAIHardcore</name>

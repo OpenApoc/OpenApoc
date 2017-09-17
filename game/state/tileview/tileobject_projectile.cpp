@@ -19,6 +19,11 @@ void TileObjectProjectile::draw(Renderer &r, TileTransform &transform, Vec2<floa
 		return;
 	}
 
+	if (projectile->delay_ticks_remaining > 0)
+	{
+		return;
+	}
+
 	auto sprite_it = projectile->projectile_sprites.begin();
 	for (auto &point : projectile->spritePositions)
 	{

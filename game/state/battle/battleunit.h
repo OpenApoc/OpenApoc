@@ -471,7 +471,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Set unit behavior mode
 	void setBehaviorMode(BehaviorMode mode);
 	// Set unit's reserve TU for fire mode
-	void setReserveShotMode(ReserveShotMode mode);
+	void setReserveShotMode(GameState &state, ReserveShotMode mode);
 	// Set unit's reserve TU for kneeling mode
 	void setReserveKneelMode(KneelingMode mode);
 
@@ -559,7 +559,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// TB / TU functions
 
 	// Refresh unit's reserve cost
-	void refreshReserveCost();
+	void refreshReserveCost(GameState &state);
 	// Returns wether unit can afford action
 	bool canAfford(GameState &state, int cost, bool ignoreKneelReserve = false,
 	               bool ignoreShootReserve = false) const;
@@ -677,7 +677,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Apply damage directly (after all calculations)
 	void applyDamageDirect(GameState &state, int damage, bool generateFatalWounds,
 	                       BodyPart fatalWoundPart, int stunPower,
-	                       StateRef<BattleUnit> attacker = nullptr);
+	                       StateRef<BattleUnit> attacker = nullptr, bool violent = true);
 
 	// Returns true if sound and doodad were handled by it
 	bool handleCollision(GameState &state, Collision &c);
@@ -712,8 +712,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Process unit becoming unconscious
 	void fallUnconscious(GameState &state);
 	// Process unit dying
-	void die(GameState &state, StateRef<BattleUnit> attacker = nullptr, bool violently = true,
-	         bool bledToDeath = false);
+	void die(GameState &state, StateRef<BattleUnit> attacker = nullptr, bool violently = true);
 
 	// Update
 
@@ -766,7 +765,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void updateTurning(GameState &state, unsigned int &turnTicksRemaining,
 	                   unsigned int const handsTicksRemaining);
 	// Updates unit's displayed item (which one will draw in unit's hands on screen)
-	void updateDisplayedItem();
+	void updateDisplayedItem(GameState &state);
 	// Runs all fire checks and returns false if we must stop attacking
 	bool updateAttackingRunCanFireChecks(GameState &state, unsigned int ticks,
 	                                     sp<AEquipment> &weaponRight, sp<AEquipment> &weaponLeft,

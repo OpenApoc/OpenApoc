@@ -785,7 +785,7 @@ bool BattleUnit::startAttacking(GameState &state, WeaponStatus status)
 				{
 					// Right hand has priority
 					auto rhItem = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
-					if (rhItem && rhItem->canFire())
+					if (rhItem && rhItem->canFire(state))
 					{
 						status = WeaponStatus::FiringRightHand;
 					}
@@ -800,7 +800,7 @@ bool BattleUnit::startAttacking(GameState &state, WeaponStatus status)
 				auto weapon = (status == WeaponStatus::FiringRightHand)
 				                  ? agent->getFirstItemInSlot(EquipmentSlotType::RightHand)
 				                  : agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
-				if (!weapon || !weapon->canFire(targetTile) ||
+				if (!weapon || !weapon->canFire(state, targetTile) ||
 				    !canAfford(state, getAttackCost(state, *weapon, targetTile), true, true))
 				{
 					return false;
@@ -885,11 +885,11 @@ WeaponStatus BattleUnit::canAttackUnit(GameState &state, sp<BattleUnit> unit,
 	{
 		// One of held weapons is in range
 		bool rightCanFire =
-		    rightHand && rightHand->canFire(targetPosition) &&
+		    rightHand && rightHand->canFire(state, targetPosition) &&
 		    (realTime ||
 		     canAfford(state, getAttackCost(state, *rightHand, unit->position), true, true));
 		bool leftCanFire =
-		    leftHand && leftHand->canFire(targetPosition) &&
+		    leftHand && leftHand->canFire(state, targetPosition) &&
 		    (realTime ||
 		     canAfford(state, getAttackCost(state, *leftHand, unit->position), true, true));
 		if (rightCanFire && leftCanFire)
@@ -1197,10 +1197,10 @@ void BattleUnit::changeOwner(GameState &state, StateRef<Organisation> newOwner)
 	refreshUnitVisibilityAndVision(state);
 }
 
-void BattleUnit::setReserveShotMode(ReserveShotMode mode)
+void BattleUnit::setReserveShotMode(GameState &state, ReserveShotMode mode)
 {
 	reserve_shot_mode = mode;
-	refreshReserveCost();
+	refreshReserveCost(state);
 }
 
 void BattleUnit::setReserveKneelMode(KneelingMode mode)
@@ -1212,7 +1212,7 @@ void BattleUnit::setReserveKneelMode(KneelingMode mode)
 	reserve_kneel_mode = mode;
 }
 
-void BattleUnit::refreshReserveCost()
+void BattleUnit::refreshReserveCost(GameState &state)
 {
 	reserveShotCost = 0;
 	if (reserve_shot_mode == ReserveShotMode::None)
@@ -1221,7 +1221,7 @@ void BattleUnit::refreshReserveCost()
 	}
 	auto e1 = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
 	auto e2 = agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
-	auto weapon = e1 && e1->canFire() ? e1 : (e2 && e2->canFire() ? e2 : nullptr);
+	auto weapon = e1 && e1->canFire(state) ? e1 : (e2 && e2->canFire(state) ? e2 : nullptr);
 	if (weapon)
 	{
 		reserveShotCost = weapon->getFireCost((WeaponAimingMode)reserve_shot_mode, initialTU);
@@ -1515,7 +1515,7 @@ void BattleUnit::addFatalWound(BodyPart fatalWoundPart) { fatalWounds[fatalWound
 
 void BattleUnit::applyDamageDirect(GameState &state, int damage, bool generateFatalWounds,
                                    BodyPart fatalWoundPart, int stunPower,
-                                   StateRef<BattleUnit> attacker)
+                                   StateRef<BattleUnit> attacker, bool violent)
 {
 	// Just a blank value for checks (if equal to this means no event)
 	static auto NO_EVENT = GameEventType::AgentArrived;
@@ -1564,7 +1564,7 @@ void BattleUnit::applyDamageDirect(GameState &state, int damage, bool generateFa
 	if (isDead())
 	{
 		eventType = NO_EVENT; // cancel event on death
-		die(state, attacker);
+		die(state, attacker, violent);
 		return;
 	}
 	else if (!isConscious() && wasConscious)
@@ -1592,8 +1592,8 @@ void BattleUnit::applyDamageDirect(GameState &state, int damage, bool generateFa
 				    position);
 			}
 		}
-		// Emit sound wound (unless dealing damage from a fatal wound)
-		else if (stunPower == 0 && generateFatalWounds)
+		// Emit sound wound
+		else if (stunPower == 0)
 		{
 			if (agent->type->damageSfx.find(agent->gender) != agent->type->damageSfx.end() &&
 			    !agent->type->damageSfx.at(agent->gender).empty())
@@ -1751,7 +1751,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 		damage -= stunDamage;
 	}
 	applyDamageDirect(state, damage, damageType->dealsFatalWounds(), bodyPart,
-	                  damageType->dealsStunDamage() ? power : 0, attacker);
+	                  damageType->dealsStunDamage() ? power : 0, attacker, !damageType->non_violent);
 
 	return false;
 }
@@ -1926,7 +1926,7 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 			updateHands(state, handsTicksRemaining);
 			updateMovement(state, moveTicksRemaining, wasUsingLift);
 			updateTurning(state, turnTicksRemaining, handsTicksRemaining);
-			updateDisplayedItem();
+			updateDisplayedItem(state);
 		}
 	}
 	if (retreated)
@@ -2157,7 +2157,7 @@ void BattleUnit::updateWoundsAndHealing(GameState &state, unsigned int ticks)
 		{
 			if (w.second > 0)
 			{
-				applyDamageDirect(state, w.second, false, BodyPart::Body, 0);
+				agent->modified_stats.health -= w.second;
 				if (isHealing && healingBodyPart == w.first)
 				{
 					w.second--;
@@ -2174,10 +2174,11 @@ void BattleUnit::updateWoundsAndHealing(GameState &state, unsigned int ticks)
 	{
 		isHealing = false;
 	}
-	// If died or went unconscious
+	// If died or went unconscious due to wounds
 	if (isDead())
 	{
-		die(state, nullptr, true, true);
+		// FIXME: Should units dying to fatal wounds go out violently or non-violently?
+		die(state);
 	}
 	if (!unconscious && isUnconscious())
 	{
@@ -3158,7 +3159,7 @@ void BattleUnit::updateTurning(GameState &state, unsigned int &turnTicksRemainin
 	}
 }
 
-void BattleUnit::updateDisplayedItem()
+void BattleUnit::updateDisplayedItem(GameState &state)
 {
 	if (!agent->type->inventory)
 	{
@@ -3182,7 +3183,7 @@ void BattleUnit::updateDisplayedItem()
 	if (!foundThrownItem)
 	{
 		// If we're firing - try to keep last displayed item same, even if not dominant
-		displayedItem = agent->getDominantItemInHands(
+		displayedItem = agent->getDominantItemInHands(state, 
 		    firing_animation_ticks_remaining > 0 ? lastDisplayedItem : nullptr);
 	}
 	// If displayed item changed or we are throwing - bring hands into "AtEase" state immediately
@@ -3195,7 +3196,7 @@ void BattleUnit::updateDisplayedItem()
 	}
 	if (displayedItem != lastDisplayedItem)
 	{
-		refreshReserveCost();
+		refreshReserveCost(state);
 	}
 }
 
@@ -3271,11 +3272,11 @@ bool BattleUnit::updateAttackingRunCanFireChecks(GameState &state, unsigned int 
 			}
 		}
 		// Check if we are in range
-		if (weaponRight && !weaponRight->canFire(targetPosition))
+		if (weaponRight && !weaponRight->canFire(state, targetPosition))
 		{
 			weaponRight = nullptr;
 		}
-		if (weaponLeft && !weaponLeft->canFire(targetPosition))
+		if (weaponLeft && !weaponLeft->canFire(state, targetPosition))
 		{
 			weaponLeft = nullptr;
 		}
@@ -3296,13 +3297,13 @@ bool BattleUnit::updateAttackingRunCanFireChecks(GameState &state, unsigned int 
 	// Even if it's not time we must check if ready weapons can fire
 	else
 	{
-		if (weaponRight && weaponRight->readyToFire && !weaponRight->canFire(targetPosition))
+		if (weaponRight && weaponRight->readyToFire && !weaponRight->canFire(state, targetPosition))
 		{
 			// Introduce small delay so we're not re-checking every frame
 			weaponRight->weapon_fire_ticks_remaining += WEAPON_MISFIRE_DELAY_TICKS;
 			weaponRight = nullptr;
 		}
-		if (weaponLeft && weaponLeft->readyToFire && !weaponLeft->canFire(targetPosition))
+		if (weaponLeft && weaponLeft->readyToFire && !weaponLeft->canFire(state, targetPosition))
 		{
 			weaponLeft->weapon_fire_ticks_remaining += WEAPON_MISFIRE_DELAY_TICKS;
 			weaponLeft = nullptr;
@@ -3358,7 +3359,7 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 				{
 					weaponRight->loadAmmo(state);
 				}
-				if (weaponRight && !weaponRight->canFire())
+				if (weaponRight && !weaponRight->canFire(state))
 				{
 					weaponRight = nullptr;
 				}
@@ -3366,7 +3367,7 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 				{
 					weaponLeft->loadAmmo(state);
 				}
-				if (weaponLeft && !weaponLeft->canFire())
+				if (weaponLeft && !weaponLeft->canFire(state))
 				{
 					weaponLeft = nullptr;
 				}
@@ -3376,7 +3377,7 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 				{
 					weaponRight->loadAmmo(state);
 				}
-				if (weaponRight && !weaponRight->canFire())
+				if (weaponRight && !weaponRight->canFire(state))
 				{
 					weaponRight = nullptr;
 				}
@@ -3387,7 +3388,7 @@ void BattleUnit::updateAttacking(GameState &state, unsigned int ticks)
 				{
 					weaponLeft->loadAmmo(state);
 				}
-				if (weaponLeft && !weaponLeft->canFire())
+				if (weaponLeft && !weaponLeft->canFire(state))
 				{
 					weaponLeft = nullptr;
 				}
@@ -3516,6 +3517,10 @@ void BattleUnit::updateFiring(GameState &state, sp<AEquipment> &weaponLeft,
 				{
 					stopAttacking();
 				}
+			}
+			else
+			{
+				stopAttacking();
 			}
 		}
 	}
@@ -4503,11 +4508,9 @@ bool BattleUnit::useSpawner(GameState &state, sp<AEquipmentType> item)
 	return true;
 }
 
-void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool violently,
-                     bool bledToDeath)
+void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool violently)
 {
 	agent->modified_stats.health = 0;
-	std::ignore = bledToDeath;
 	auto attackerOrg = attacker ? attacker->agent->owner : nullptr;
 	auto ourOrg = agent->owner;
 	// Violent deaths (spawn stuff, blow up)

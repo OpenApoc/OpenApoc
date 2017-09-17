@@ -12,6 +12,8 @@ namespace OpenApoc
 namespace
 {
 static const std::tuple<AIDecision, bool> NULLTUPLE2 = std::make_tuple(AIDecision(), false);
+static const Vec3<int> NONE = { -1, -1, -1 };
+
 }
 
 // Delay before unit will turn automatically again after doing it once
@@ -25,7 +27,7 @@ void UnitAIDefault::reset(GameState &, BattleUnit &)
 {
 	ticksAutoTargetAvailable = 0;
 	ticksAutoTurnAvailable = 0;
-	attackerPosition = {0, 0, 0};
+	attackerPosition = NONE;
 }
 
 void UnitAIDefault::notifyUnderFire(Vec3<int> position) { attackerPosition = position; }
@@ -35,8 +37,7 @@ void UnitAIDefault::notifyHit(Vec3<int> position) { attackerPosition = position;
 std::tuple<AIDecision, bool> UnitAIDefault::think(GameState &state, BattleUnit &u, bool interrupt)
 {
 	std::ignore = interrupt;
-	static const Vec3<int> NONE = {0, 0, 0};
-
+	
 	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
 
 	// Default AI should not work in turn based when it's our turn to act
@@ -73,7 +74,7 @@ std::tuple<AIDecision, bool> UnitAIDefault::think(GameState &state, BattleUnit &
 		auto e2 = u.agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
 		// Cannot or forbidden to attack:	Turn to enemy
 		if (u.fire_permission_mode == BattleUnit::FirePermissionMode::CeaseFire ||
-		    ((!e1 || !e1->canFire()) && (!e2 || !e2->canFire())))
+		    ((!e1 || !e1->canFire(state)) && (!e2 || !e2->canFire(state))))
 		{
 			if (ticksAutoTurnAvailable <= state.gameTime.getTicks() && !u.isMoving())
 			{

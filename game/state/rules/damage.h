@@ -73,6 +73,8 @@ class DamageType : public StateObject
 	UString name;
 
 	bool ignore_shield = false;
+	// When causing unit death makes it non-violent
+	bool non_violent = false;
 	sp<Image> icon_sprite;
 	std::map<StateRef<DamageModifier>, int> modifiers;
 

@@ -351,7 +351,7 @@ class Agent : public StateObject,
 	// If item was fired before, it should be passed here, and it will remain dominant unless it was
 	// removed
 	StateRef<AEquipmentType>
-	getDominantItemInHands(StateRef<AEquipmentType> itemLastFired = nullptr) const;
+	getDominantItemInHands(GameState &state, StateRef<AEquipmentType> itemLastFired = nullptr) const;
 	sp<AEquipment> getFirstItemInSlot(EquipmentSlotType type, bool lazy = true) const;
 	sp<AEquipment> getFirstShield() const;
 	sp<AEquipment> getFirstItemByType(StateRef<AEquipmentType> type) const;

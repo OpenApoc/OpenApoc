@@ -566,7 +566,7 @@ BattleView::BattleView(sp<GameState> gameState)
 		    }
 		    for (auto &u : this->battle.battleViewSelectedUnits)
 		    {
-			    u->setReserveShotMode(pushed ? ReserveShotMode::None : ReserveShotMode::Aimed);
+			    u->setReserveShotMode(*state, pushed ? ReserveShotMode::None : ReserveShotMode::Aimed);
 		    }
 		});
 
@@ -582,7 +582,7 @@ BattleView::BattleView(sp<GameState> gameState)
 		    }
 		    for (auto &u : this->battle.battleViewSelectedUnits)
 		    {
-			    u->setReserveShotMode(pushed ? ReserveShotMode::None : ReserveShotMode::Snap);
+			    u->setReserveShotMode(*state, pushed ? ReserveShotMode::None : ReserveShotMode::Snap);
 		    }
 		});
 
@@ -598,7 +598,7 @@ BattleView::BattleView(sp<GameState> gameState)
 		    }
 		    for (auto &u : this->battle.battleViewSelectedUnits)
 		    {
-			    u->setReserveShotMode(pushed ? ReserveShotMode::None : ReserveShotMode::Auto);
+			    u->setReserveShotMode(*state, pushed ? ReserveShotMode::None : ReserveShotMode::Auto);
 		    }
 		});
 
@@ -2333,7 +2333,7 @@ void BattleView::updateAttackCost()
 	{
 		// Right hand has priority
 		auto rhItem = lastSelectedUnit->agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
-		if (rhItem && rhItem->canFire())
+		if (rhItem && rhItem->canFire(*state))
 		{
 			status = WeaponStatus::FiringRightHand;
 		}
@@ -2351,7 +2351,7 @@ void BattleView::updateAttackCost()
 	{
 		calculatedAttackCost = -4;
 	}
-	else if (!weapon->canFire(target))
+	else if (!weapon->canFire(*state, target))
 	{
 		calculatedAttackCost = weapon->type->launcher ? -3 : -2;
 	}
@@ -2500,14 +2500,16 @@ void BattleView::orderUse(bool right, bool automatic)
 	auto item = unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
 	                                                  : EquipmentSlotType::LeftHand);
 
-	if (!item)
+	if (!item || !item->canBeUsed(*state))
+	{
 		return;
+	}
 
 	switch (item->type->type)
 	{
 		case AEquipmentType::Type::Weapon:
 			// Weapon has no automatic mode
-			if (!item->canFire() || automatic)
+			if (!item->canFire(*state) || automatic)
 			{
 				break;
 			}
@@ -4459,7 +4461,7 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 	if (e)
 	{
 		a.itemType = e->type;
-		if (a.itemType)
+		if (a.itemType && a.itemType->research_dependency.satisfied())
 		{
 			auto p = e->getPayloadType();
 			if (p)
@@ -4499,22 +4501,6 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 			                                     u->fire_aiming_mode,
 			                                     a.itemType->type != AEquipmentType::Type::Weapon) /
 			                          2);
-
-			/*
-			// Alexey Andronov (Istrebitel):
-			// I used to believe erf is used when displaying accuracy
-			// I might be wrong but until we make sure it's right, I leave this here
-
-			auto accuracy =
-			    (float)e->getAccuracy(u->current_body_state, u->current_movement_state,
-			                          u->fire_aiming_mode,
-			                          a.itemType->type != AEquipmentType::Type::Weapon) /
-			    100.0f;
-			// erf takes values -2 to 2 and returns -1 to 1,
-			// we need it to take values 0 to 1 and return 0 to 1
-			// val -> val * 4 - 2, result -> result /2 + 0,5
-			a.accuracy = (int)(((erf(accuracy * 4.0f - 2.0f)) / 2.0f + 0.5f) * 50.0f);
-			*/
 		}
 	}
 	return a;
