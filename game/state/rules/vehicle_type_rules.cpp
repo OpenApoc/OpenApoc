@@ -12,7 +12,8 @@
 namespace OpenApoc
 {
 
-namespace{
+namespace
+{
 static const std::map<VehicleType::Direction, Vec3<float>> DirectionVectors = {
     {VehicleType::Direction::N, glm::normalize(Vec3<float>{0, -1, 0})},
     {VehicleType::Direction::NNE, glm::normalize(Vec3<float>{1, -2, 0})},

@@ -18,99 +18,99 @@
 #include "game/state/tileview/tileobject_vehicle.h"
 #include "library/sp.h"
 #include <glm/glm.hpp>
+#include <glm/gtx/vector_angle.hpp>
 #include <limits>
 #include <queue>
 #include <random>
-#include <glm/gtx/vector_angle.hpp>
 
 namespace OpenApoc
 {
 
-namespace 
+namespace
 {
-	static const float M_2xPI = 2.0f * M_PI;
+static const float M_2xPI = 2.0f * M_PI;
 
-	VehicleType::Direction getDirectionLarge(float facing)
+VehicleType::Direction getDirectionLarge(float facing)
+{
+	static std::map<float, VehicleType::Direction> DirectionMap = {
+	    {0.0f * (float)M_PI, VehicleType::Direction::N},
+	    {0.125f * (float)M_PI, VehicleType::Direction::NNE},
+	    {0.25f * (float)M_PI, VehicleType::Direction::NE},
+	    {0.375f * (float)M_PI, VehicleType::Direction::NEE},
+	    {0.5f * (float)M_PI, VehicleType::Direction::E},
+	    {0.625f * (float)M_PI, VehicleType::Direction::SEE},
+	    {0.75f * (float)M_PI, VehicleType::Direction::SE},
+	    {0.875f * (float)M_PI, VehicleType::Direction::SSE},
+	    {1.0f * (float)M_PI, VehicleType::Direction::S},
+	    {1.125f * (float)M_PI, VehicleType::Direction::SSW},
+	    {1.25f * (float)M_PI, VehicleType::Direction::SW},
+	    {1.375f * (float)M_PI, VehicleType::Direction::SWW},
+	    {1.5f * (float)M_PI, VehicleType::Direction::W},
+	    {1.625f * (float)M_PI, VehicleType::Direction::NWW},
+	    {1.75f * (float)M_PI, VehicleType::Direction::NW},
+	    {1.875f * (float)M_PI, VehicleType::Direction::NNW},
+	};
+
+	float closestDiff = FLT_MAX;
+	VehicleType::Direction closestDir = VehicleType::Direction::N;
+	for (auto &p : DirectionMap)
 	{
-		static std::map<float, VehicleType::Direction> DirectionMap = {
-			{ 0.0f * (float)M_PI, VehicleType::Direction::N },
-			{ 0.125f * (float)M_PI, VehicleType::Direction::NNE },
-			{ 0.25f * (float)M_PI, VehicleType::Direction::NE },
-			{ 0.375f * (float)M_PI, VehicleType::Direction::NEE },
-			{ 0.5f * (float)M_PI, VehicleType::Direction::E },
-			{ 0.625f * (float)M_PI, VehicleType::Direction::SEE },
-			{ 0.75f * (float)M_PI, VehicleType::Direction::SE },
-			{ 0.875f * (float)M_PI, VehicleType::Direction::SSE },
-			{ 1.0f * (float)M_PI, VehicleType::Direction::S },
-			{ 1.125f * (float)M_PI, VehicleType::Direction::SSW },
-			{ 1.25f * (float)M_PI, VehicleType::Direction::SW },
-			{ 1.375f * (float)M_PI, VehicleType::Direction::SWW },
-			{ 1.5f * (float)M_PI, VehicleType::Direction::W },
-			{ 1.625f * (float)M_PI, VehicleType::Direction::NWW },
-			{ 1.75f * (float)M_PI, VehicleType::Direction::NW },
-			{ 1.875f * (float)M_PI, VehicleType::Direction::NNW },
-		};
-
-		float closestDiff = FLT_MAX;
-		VehicleType::Direction closestDir = VehicleType::Direction::N;
-		for (auto &p : DirectionMap)
+		float d1 = p.first - facing;
+		if (d1 < 0.0f)
 		{
-			float d1 = p.first - facing;
-			if (d1 < 0.0f)
-			{
-				d1 += M_2xPI;
-			}
-			float d2 = facing - p.first;
-			if (d2 < 0.0f)
-			{
-				d2 += M_2xPI;
-			}
-			float diff = std::min(d1, d2);
-			if (diff < closestDiff)
-			{
-				closestDiff = diff;
-				closestDir = p.second;
-			}
+			d1 += M_2xPI;
 		}
-		return closestDir;
+		float d2 = facing - p.first;
+		if (d2 < 0.0f)
+		{
+			d2 += M_2xPI;
+		}
+		float diff = std::min(d1, d2);
+		if (diff < closestDiff)
+		{
+			closestDiff = diff;
+			closestDir = p.second;
+		}
 	}
+	return closestDir;
+}
 
-	VehicleType::Direction getDirectionSmall(float facing)
+VehicleType::Direction getDirectionSmall(float facing)
+{
+	static std::map<float, VehicleType::Direction> DirectionMap = {
+	    {0.0f * (float)M_PI, VehicleType::Direction::N},
+	    {0.25f * (float)M_PI, VehicleType::Direction::NE},
+	    {0.5f * (float)M_PI, VehicleType::Direction::E},
+	    {0.75f * (float)M_PI, VehicleType::Direction::SE},
+	    {1.0f * (float)M_PI, VehicleType::Direction::S},
+	    {1.25f * (float)M_PI, VehicleType::Direction::SW},
+	    {1.5f * (float)M_PI, VehicleType::Direction::W},
+	    {1.75f * (float)M_PI, VehicleType::Direction::NW},
+	};
+
+	float closestDiff = FLT_MAX;
+	VehicleType::Direction closestDir = VehicleType::Direction::N;
+	for (auto &p : DirectionMap)
 	{
-		static std::map<float, VehicleType::Direction> DirectionMap = {
-			{ 0.0f * (float)M_PI, VehicleType::Direction::N },
-			{ 0.25f * (float)M_PI, VehicleType::Direction::NE },
-			{ 0.5f * (float)M_PI, VehicleType::Direction::E },
-			{ 0.75f * (float)M_PI, VehicleType::Direction::SE },
-			{ 1.0f * (float)M_PI, VehicleType::Direction::S },
-			{ 1.25f * (float)M_PI, VehicleType::Direction::SW },
-			{ 1.5f * (float)M_PI, VehicleType::Direction::W },
-			{ 1.75f * (float)M_PI, VehicleType::Direction::NW },
-		};
-
-		float closestDiff = FLT_MAX;
-		VehicleType::Direction closestDir = VehicleType::Direction::N;
-		for (auto &p : DirectionMap)
+		float d1 = p.first - facing;
+		if (d1 < 0.0f)
 		{
-			float d1 = p.first - facing;
-			if (d1 < 0.0f)
-			{
-				d1 += M_2xPI;
-			}
-			float d2 = facing - p.first;
-			if (d2 < 0.0f)
-			{
-				d2 += M_2xPI;
-			}
-			float diff = std::min(d1, d2);
-			if (diff < closestDiff)
-			{
-				closestDiff = diff;
-				closestDir = p.second;
-			}
+			d1 += M_2xPI;
 		}
-		return closestDir;
+		float d2 = facing - p.first;
+		if (d2 < 0.0f)
+		{
+			d2 += M_2xPI;
+		}
+		float diff = std::min(d1, d2);
+		if (diff < closestDiff)
+		{
+			closestDiff = diff;
+			closestDir = p.second;
+		}
 	}
+	return closestDir;
+}
 }
 
 const UString &Vehicle::getPrefix()
@@ -168,7 +168,8 @@ class FlyingVehicleMover : public VehicleMover
 				if (distanceToGoal / curVelocity > ticks)
 				{
 					auto newPos = vehicle.position;
-					newPos += vehicle.velocity * (float)ticks / VELOCITY_SCALE_CITY / (float)TICK_SCALE;
+					newPos +=
+					    vehicle.velocity * (float)ticks / VELOCITY_SCALE_CITY / (float)TICK_SCALE;
 					auto ticksToTurn = std::min(vehicle.ticksToTurn, ticks);
 					vehicle.ticksToTurn -= ticksToTurn;
 					vehicle.facing += vehicle.angularVelocity * (float)ticksToTurn;
@@ -187,7 +188,7 @@ class FlyingVehicleMover : public VehicleMover
 				// Can reach in one go
 				{
 					vehicle.setPosition(goalPosition);
-					vehicle.velocity = { 0.0f, 0.0f, 0.0f };
+					vehicle.velocity = {0.0f, 0.0f, 0.0f};
 					vehicle.facing = vehicle.goalFacing;
 					vehicle.angularVelocity = 0.0f;
 					vehicle.ticksToTurn = 0;
@@ -197,21 +198,22 @@ class FlyingVehicleMover : public VehicleMover
 			// Request new goal
 			if (goalPosition == vehicle.position)
 			{
-				while (!vehicle.missions.empty() && vehicle.missions.front()->isFinished(state, this->vehicle))
+				while (!vehicle.missions.empty() &&
+				       vehicle.missions.front()->isFinished(state, this->vehicle))
 				{
-					LogInfo("Vehicle mission \"%s\" finished",
-						vehicle.missions.front()->getName());
+					LogInfo("Vehicle mission \"%s\" finished", vehicle.missions.front()->getName());
 					vehicle.missions.pop_front();
 					if (!vehicle.missions.empty())
 					{
 						LogInfo("Vehicle mission \"%s\" starting",
-							vehicle.missions.front()->getName());
+						        vehicle.missions.front()->getName());
 						vehicle.missions.front()->start(state, this->vehicle);
 					}
 				}
-				if (vehicle.missions.empty()
-					|| !vehicle.missions.front()->getNextDestination(state, this->vehicle, goalPosition) 
-					|| goalPosition == vehicle.position)
+				if (vehicle.missions.empty() ||
+				    !vehicle.missions.front()->getNextDestination(state, this->vehicle,
+				                                                  goalPosition) ||
+				    goalPosition == vehicle.position)
 				{
 					break;
 				}
@@ -219,9 +221,10 @@ class FlyingVehicleMover : public VehicleMover
 				{
 					// New goal acquired, set velocity and angles
 					float speed = vehicle.getSpeed();
-					Vec3<float> vectorToGoal = (goalPosition - vehicle.position) * VELOCITY_SCALE_CITY;
+					Vec3<float> vectorToGoal =
+					    (goalPosition - vehicle.position) * VELOCITY_SCALE_CITY;
 					vehicle.velocity = glm::normalize(vectorToGoal) * speed;
-					Vec2<float> targetFacingVector = { vectorToGoal.x, vectorToGoal.y };
+					Vec2<float> targetFacingVector = {vectorToGoal.x, vectorToGoal.y};
 					// New facing?
 					if (targetFacingVector.x != 0.0f || targetFacingVector.y != 0.0f)
 					{
@@ -244,7 +247,8 @@ class FlyingVehicleMover : public VehicleMover
 						}
 						// FIXME: Proper turning speed
 						// This value was hand-made to look proper on annihilators
-						float TURNING_MULT = (float)M_PI / (float)TICK_SCALE / VELOCITY_SCALE_CITY.x / 1.5f;
+						float TURNING_MULT =
+						    (float)M_PI / (float)TICK_SCALE / VELOCITY_SCALE_CITY.x / 1.5f;
 						if (d1 <= d2)
 						{
 							vehicle.angularVelocity = speed * TURNING_MULT;
@@ -267,7 +271,7 @@ class FlyingVehicleMover : public VehicleMover
 								vehicle.facing -= M_2xPI;
 							}
 						}
-						// Establish ticks to turn 
+						// Establish ticks to turn
 						// (turn further than we need, again, for animation purposes)
 						float turnDist = std::min(d1, d2);
 						turnDist += 0.12f * (float)M_PI;
@@ -275,7 +279,10 @@ class FlyingVehicleMover : public VehicleMover
 
 						// FIXME: Introduce proper turning speed
 						// Here we just slow down velocity if we're moving too quickly
-						int ticksToMove = floorf(glm::length(vectorToGoal) / glm::length(vehicle.velocity) * (float)TICK_SCALE) - 5.0f;
+						int ticksToMove =
+						    floorf(glm::length(vectorToGoal) / glm::length(vehicle.velocity) *
+						           (float)TICK_SCALE) -
+						    5.0f;
 						if (ticksToMove < vehicle.ticksToTurn)
 						{
 							vehicle.velocity *= (float)ticksToMove / (float)vehicle.ticksToTurn;
@@ -466,7 +473,7 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	}
 }
 
-void Vehicle::updateSprite(GameState & state)
+void Vehicle::updateSprite(GameState &state)
 {
 	// Set banking
 	if (ticksToTurn > 0 && angularVelocity > 0.0f)
@@ -481,7 +488,7 @@ void Vehicle::updateSprite(GameState & state)
 	{
 		banking = VehicleType::Banking::Ascending;
 	}
-	else  if (velocity.z < 0.0f)
+	else if (velocity.z < 0.0f)
 	{
 		banking = VehicleType::Banking::Descending;
 	}
@@ -511,11 +518,12 @@ void Vehicle::updateSprite(GameState & state)
 			{
 				break;
 			}
-			if (type->directional_sprites.at(banking).find(direction) != type->directional_sprites.at(banking).end())
+			if (type->directional_sprites.at(banking).find(direction) !=
+			    type->directional_sprites.at(banking).end())
 			{
 				break;
 			}
-			// Fall-through since this direction is not valid
+		// Fall-through since this direction is not valid
 		case VehicleType::Banking::Ascending:
 		case VehicleType::Banking::Descending:
 		case VehicleType::Banking::Flat:
@@ -525,7 +533,8 @@ void Vehicle::updateSprite(GameState & state)
 
 	// Set shadow direction
 	shadowDirection = direction;
-	if (type->directional_shadow_sprites.find(shadowDirection) == type->directional_shadow_sprites.end())
+	if (type->directional_shadow_sprites.find(shadowDirection) ==
+	    type->directional_shadow_sprites.end())
 	{
 		switch (shadowDirection)
 		{
@@ -539,11 +548,12 @@ void Vehicle::updateSprite(GameState & state)
 			case VehicleType::Direction::NNW:
 				// If direction is from large set then try small set
 				shadowDirection = getDirectionSmall(facing);
-				if (type->directional_shadow_sprites.find(shadowDirection) != type->directional_shadow_sprites.end())
+				if (type->directional_shadow_sprites.find(shadowDirection) !=
+				    type->directional_shadow_sprites.end())
 				{
 					break;
 				}
-				// Fall-through, we have to settle for north
+			// Fall-through, we have to settle for north
 			default:
 				shadowDirection = VehicleType::Direction::N;
 				break;
@@ -740,8 +750,7 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 		// Lead the target
 		auto targetPosAdjusted = target;
 		auto projectileVelocity = eq->type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
-		auto targetVelocity =
-		    enemyTile->getVehicle()->velocity;
+		auto targetVelocity = enemyTile->getVehicle()->velocity;
 		targetPosAdjusted += targetVelocity * distanceTiles / projectileVelocity;
 
 		// No sight to target

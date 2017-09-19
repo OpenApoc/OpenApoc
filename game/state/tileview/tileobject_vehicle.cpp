@@ -23,8 +23,14 @@ void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 	static const int offset_large = 1;
 
 	static const std::map<float, int> offset_dir_map = {
-	    {0.0f, 0}, {0.25f * (float)M_PI, 1}, { 0.5f * (float)M_PI, 2},  { 0.75f * (float)M_PI, 3},
-	    {(float)M_PI, 4},  { 1.25f * (float)M_PI, 5}, { 1.5f * (float)M_PI, 6}, { 1.75f * (float)M_PI, 7},
+	    {0.0f, 0},
+	    {0.25f * (float)M_PI, 1},
+	    {0.5f * (float)M_PI, 2},
+	    {0.75f * (float)M_PI, 3},
+	    {(float)M_PI, 4},
+	    {1.25f * (float)M_PI, 5},
+	    {1.5f * (float)M_PI, 6},
+	    {1.75f * (float)M_PI, 7},
 	};
 
 	std::ignore = transform;
@@ -55,7 +61,8 @@ void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 			}
 			else
 			{
-				closestImage = vehicle->type->directional_sprites.at(vehicle->banking).at(vehicle->direction);
+				closestImage =
+				    vehicle->type->directional_sprites.at(vehicle->banking).at(vehicle->direction);
 			}
 
 			if (!closestImage)

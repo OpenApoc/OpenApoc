@@ -39,7 +39,8 @@ void TileObjectShadow::draw(Renderer &r, TileTransform &transform, Vec2<float> s
 		{
 			if (vehicle)
 			{
-				r.draw(vehicle->type->directional_shadow_sprites[vehicle->shadowDirection], screenPosition - vehicle->type->shadow_offset);
+				r.draw(vehicle->type->directional_shadow_sprites[vehicle->shadowDirection],
+				       screenPosition - vehicle->type->shadow_offset);
 			}
 			if (unit)
 			{
