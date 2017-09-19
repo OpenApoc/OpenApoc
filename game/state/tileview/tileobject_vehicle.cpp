@@ -1,3 +1,6 @@
+#ifndef _USE_MATH_DEFINES
+#define _USE_MATH_DEFINES
+#endif
 #include "game/state/tileview/tileobject_vehicle.h"
 #include "framework/renderer.h"
 #include "game/state/city/vehicle.h"
@@ -19,9 +22,9 @@ void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 	static const int offset_arrow = 5;
 	static const int offset_large = 1;
 
-	static const std::map<Vec2<int>, int> offset_dir_map = {
-	    {{0, -1}, 0}, {{1, -1}, 1}, {{1, 0}, 2},  {{1, 1}, 3},
-	    {{0, 1}, 4},  {{-1, 1}, 5}, {{-1, 0}, 6}, {{-1, -1}, 7},
+	static const std::map<float, int> offset_dir_map = {
+	    {0.0f, 0}, {0.25f * (float)M_PI, 1}, { 0.5f * (float)M_PI, 2},  { 0.75f * (float)M_PI, 3},
+	    {(float)M_PI, 4},  { 1.25f * (float)M_PI, 5}, { 1.5f * (float)M_PI, 6}, { 1.75f * (float)M_PI, 7},
 	};
 
 	std::ignore = transform;
@@ -52,31 +55,7 @@ void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 			}
 			else
 			{
-				auto bank = VehicleType::Banking::Flat;
-				if (this->getDirection().z >= 0.1f)
-					bank = VehicleType::Banking::Ascending;
-				else if (this->getDirection().z <= -0.1f)
-					bank = VehicleType::Banking::Descending;
-				auto it = vehicle->type->directional_sprites.find(bank);
-				if (it == vehicle->type->directional_sprites.end())
-				{
-					// If missing the requested banking try flat
-					it = vehicle->type->directional_sprites.find(VehicleType::Banking::Flat);
-					if (it == vehicle->type->directional_sprites.end())
-					{
-						LogError("Vehicle type missing 'Flat' banking");
-					}
-				}
-				for (auto &p : it->second)
-				{
-					float angle =
-					    glm::angle(glm::normalize(p.first), glm::normalize(this->getDirection()));
-					if (angle < closestAngle)
-					{
-						closestAngle = angle;
-						closestImage = p.second;
-					}
-				}
+				closestImage = vehicle->type->directional_sprites.at(vehicle->banking).at(vehicle->direction);
 			}
 
 			if (!closestImage)
@@ -97,15 +76,24 @@ void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 		}
 		case TileViewMode::Strategy:
 		{
-			float closestAngle = FLT_MAX;
+			float closestDiff = FLT_MAX;
 			int facing_offset = 0;
 			for (auto &p : offset_dir_map)
 			{
-				float angle = glm::angle(glm::normalize(Vec3<float>{p.first.x, p.first.y, 0}),
-				                         glm::normalize(this->getDirection()));
-				if (angle < closestAngle)
+				float d1 = p.first - vehicle->facing;
+				if (d1 < 0.0f)
 				{
-					closestAngle = angle;
+					d1 += 2.0f * (float)M_PI;
+				}
+				float d2 = vehicle->facing - p.first;
+				if (d2 < 0.0f)
+				{
+					d2 += 2.0f * (float)M_PI;
+				}
+				float diff = std::min(d1, d2);
+				if (diff < closestDiff)
+				{
+					closestDiff = diff;
 					facing_offset = p.second;
 				}
 			}
@@ -191,8 +179,9 @@ Vec3<float> TileObjectVehicle::getVoxelCentrePosition() const
 
 sp<VoxelMap> TileObjectVehicle::getVoxelMap(Vec3<int> mapIndex, bool los) const
 {
-	auto vtype = this->getVehicle()->type;
-	auto facing = vtype->getVoxelMapFacing(getDirection());
+	auto v = this->getVehicle();
+	auto vtype = v->type;
+	auto facing = vtype->getVoxelMapFacing(v->facing);
 	auto size = vtype->size.at(facing);
 	if (mapIndex.x >= size.x || mapIndex.y >= size.y || mapIndex.z >= size.z)
 		return nullptr;
@@ -238,8 +227,9 @@ void TileObjectVehicle::nextFrame(int ticks)
 
 void TileObjectVehicle::setPosition(Vec3<float> newPosition)
 {
-	auto vtype = this->getVehicle()->type;
-	auto facing = vtype->getVoxelMapFacing(getDirection());
+	auto v = this->getVehicle();
+	auto vtype = v->type;
+	auto facing = vtype->getVoxelMapFacing(v->facing);
 	auto size = vtype->size.at(facing);
 
 	setBounds({size.x, size.y, size.z});
@@ -278,11 +268,4 @@ void TileObjectVehicle::addToDrawnTiles(Tile *tile)
 	TileObject::addToDrawnTiles(tile);
 }
 
-const Vec3<float> &TileObjectVehicle::getDirection() const { return this->getVehicle()->velocity; }
-
-void TileObjectVehicle::setDirection(const Vec3<float> &dir)
-{
-	this->getVehicle()->facing = dir;
-	this->getVehicle()->velocity = dir;
-}
 } // namespace OpenApoc

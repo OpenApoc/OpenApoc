@@ -1,3 +1,6 @@
+#ifndef _USE_MATH_DEFINES
+#define _USE_MATH_DEFINES
+#endif
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "game/state/battle/battlemap.h"
@@ -142,7 +145,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 				auto str = format("PCK:xcom3/ufodata/vehicle.pck:xcom3/ufodata/vehicle.tab:%d",
 				                  (int)(v.graphic_frame + image_offset++));
 				;
-				vehicle->directional_sprites[bank][VehicleType::directionToVector(dir)] =
+				vehicle->directional_sprites[bank][dir] =
 				    fw().data->loadImage(str);
 			}
 			// Ground vehicles don't have diagonal ascend/descend sprites (As roads don't seem to do
@@ -157,7 +160,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 				{
 					auto str = format("PCK:xcom3/ufodata/vehicle.pck:xcom3/ufodata/vehicle.tab:%d",
 					                  (int)(v.graphic_frame + image_offset++));
-					vehicle->directional_sprites[bank][VehicleType::directionToVector(dir)] =
+					vehicle->directional_sprites[bank][dir] =
 					    fw().data->loadImage(str);
 				}
 			}
@@ -216,7 +219,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 
 				str = format("PCKSHADOW:xcom3/ufodata/shadow.pck:xcom3/ufodata/shadow.tab:%d",
 				             (int)(v.shadow_graphic));
-				vehicle->directional_shadow_sprites[{1, 0, 0}] = fw().data->loadImage(str);
+				vehicle->directional_shadow_sprites[VehicleType::Direction::N] = fw().data->loadImage(str);
 
 				// UFOs starting with trans (id = 2) up to mship (id = 9) have maps from 51 to 58
 				// Therefore 49 + id gives map index for the ufo
@@ -239,19 +242,30 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 				    VehicleType::Direction::W, VehicleType::Direction::NW};
 				// When banking there are more sprites (16 instead of 8) and seem to start in a
 				// slightly different direction?
-				std::vector<VehicleType::Direction> bankingDirections = {
+				std::vector<VehicleType::Direction> bankingDirectionsR = { 
+					VehicleType::Direction::NWW,
+					VehicleType::Direction::NW, VehicleType::Direction::NNW,
 				    VehicleType::Direction::N,  VehicleType::Direction::NNE,
 				    VehicleType::Direction::NE, VehicleType::Direction::NEE,
 				    VehicleType::Direction::E,  VehicleType::Direction::SEE,
 				    VehicleType::Direction::SE, VehicleType::Direction::SSE,
 				    VehicleType::Direction::S,  VehicleType::Direction::SSW,
 				    VehicleType::Direction::SW, VehicleType::Direction::SWW,
-				    VehicleType::Direction::W,  VehicleType::Direction::NWW,
-				    VehicleType::Direction::NW, VehicleType::Direction::NNW};
+				    VehicleType::Direction::W, };
+				std::vector<VehicleType::Direction> bankingDirectionsL = {
+					VehicleType::Direction::SWW, VehicleType::Direction::SW,
+					VehicleType::Direction::SSW, VehicleType::Direction::S,
+					VehicleType::Direction::SSE, VehicleType::Direction::SE,
+					VehicleType::Direction::SEE, VehicleType::Direction::E,
+					VehicleType::Direction::NEE, VehicleType::Direction::NE,
+					VehicleType::Direction::NNE, VehicleType::Direction::N, 
+					VehicleType::Direction::NNW, VehicleType::Direction::NW,
+					VehicleType::Direction::NWW, VehicleType::Direction::W,
+					 };
 				std::vector<VehicleType::Banking> bankings = {
 				    VehicleType::Banking::Flat,      VehicleType::Banking::Descending,
-				    VehicleType::Banking::Ascending, VehicleType::Banking::Left,
-				    VehicleType::Banking::Right,
+				    VehicleType::Banking::Ascending, VehicleType::Banking::Right,
+				    VehicleType::Banking::Left,
 				};
 
 				vehicle->mapIconType = VehicleType::MapIconType::Arrow;
@@ -260,14 +274,16 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 				for (auto &bank : bankings)
 				{
 					auto directionsForThisBanking = directions;
-					if (bank == VehicleType::Banking::Left || bank == VehicleType::Banking::Right)
-						directionsForThisBanking = bankingDirections;
+					if (bank == VehicleType::Banking::Left)
+						directionsForThisBanking = bankingDirectionsL;
+					if (bank == VehicleType::Banking::Right)
+						directionsForThisBanking = bankingDirectionsR;
 					for (auto &dir : directionsForThisBanking)
 					{
 						auto str =
 						    format("PCK:xcom3/ufodata/saucer.pck:xcom3/ufodata/saucer.tab:%d",
 						           (int)(v.graphic_frame + image_offset++));
-						vehicle->directional_sprites[bank][VehicleType::directionToVector(dir)] =
+						vehicle->directional_sprites[bank][dir] =
 						    fw().data->loadImage(str);
 					}
 					// XXX HACK - The space liner doesn't have banking/ascending/descendimg images
@@ -282,7 +298,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 					auto str =
 					    format("PCKSHADOW:xcom3/ufodata/shadow.pck:xcom3/ufodata/shadow.tab:%d",
 					           (int)(v.shadow_graphic + image_offset++));
-					vehicle->directional_shadow_sprites[VehicleType::directionToVector(dir)] =
+					vehicle->directional_shadow_sprites[dir] =
 					    fw().data->loadImage(str);
 				}
 			}
@@ -476,10 +492,10 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		}
 
 		// read voxelmaps
-		static const Vec3<float> FACING_NORTH = {0.0f, -1.0f, 0.0f};
-		static const Vec3<float> FACING_EAST = {1.0f, 0.0f, 0.0f};
-		static const Vec3<float> FACING_SOUTH = {0.0f, 1.0f, 0.0f};
-		static const Vec3<float> FACING_WEST = {-1.0f, 0.0f, 0.0f};
+		static const float FACING_NORTH = 0.0f;
+		static const float FACING_EAST = M_PI / 2.0f;
+		static const float FACING_SOUTH = M_PI;
+		static const float FACING_WEST = M_PI * 1.5f;
 
 		switch (v.loftemps_index)
 		{

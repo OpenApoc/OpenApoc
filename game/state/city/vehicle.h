@@ -3,6 +3,7 @@
 #include "game/state/equipment.h"
 #include "game/state/gametime.h"
 #include "game/state/stateobject.h"
+#include "game/state/rules/vehicle_type.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
@@ -25,7 +26,6 @@ class GameState;
 class VEquipment;
 class VEquipmentType;
 class Base;
-class VehicleType;
 class City;
 class TileMap;
 class Collision;
@@ -73,13 +73,22 @@ class Vehicle : public StateObject,
 	UString name;
 	std::list<up<VehicleMission>> missions;
 	std::list<sp<VEquipment>> equipment;
+	StateRef<City> city;
 	Vec3<float> position;
 	Vec3<float> velocity;
-	Vec3<float> facing;
-	StateRef<City> city;
-	int health;
-	int shield;
-	unsigned int shieldRecharge;
+	float facing = 0.0f;
+	float goalFacing = 0.0f;
+	float angularVelocity = 0.0f;
+	unsigned int ticksToTurn = 0;
+	// Current banking, updated every time vehicle changes facing
+	VehicleType::Banking banking = VehicleType::Banking::Flat;
+	// Current vehicle direction, updated every time vehicle changes facing
+	VehicleType::Direction direction = VehicleType::Direction::N;
+	// Current shadow direction, updated every time vehicle changes facing
+	VehicleType::Direction shadowDirection = VehicleType::Direction::N;
+	int health = 0;
+	int shield = 0;
+	unsigned int shieldRecharge = 0;
 	// Cloak, increases each turn, set to 0 when firing or no cloaking device on vehicle
 	// Vehicle is cloaked when this is >= CLOAK_TICKS_REQUIRED_VEHICLE
 	unsigned int cloakTicksAccumulated = 0;
@@ -146,6 +155,7 @@ class Vehicle : public StateObject,
 	void setPosition(const Vec3<float> &pos);
 
 	virtual void update(GameState &state, unsigned int ticks);
+	void updateSprite(GameState &state);
 
 	sp<Equipment> getEquipmentAt(const Vec2<int> &position) const override;
 	const std::list<EquipmentLayoutSlot> &getSlots() const override;

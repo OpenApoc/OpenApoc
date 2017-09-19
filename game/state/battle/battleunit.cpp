@@ -2888,6 +2888,7 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 			movement_ticks_passed = 0;
 		}
 		unsigned int movementTicksAccumulated = 0;
+		// Cannot reach in one go
 		if (distanceToGoal * moveTicksConsumeRate * 100 / speedModifier > moveTicksRemaining)
 		{
 			if (flyingSpeedModifier != 100)
@@ -2909,6 +2910,7 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 			moveTicksRemaining = moveTicksRemaining % moveTicksConsumeRate;
 			atGoal = false;
 		}
+		// Can reach in one go
 		else
 		{
 			if (distanceToGoal > 0)

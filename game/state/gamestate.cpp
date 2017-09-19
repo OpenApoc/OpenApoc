@@ -590,6 +590,7 @@ void GameState::updateEndOfDay()
 	}
 	Trace::end("GameState::updateEndOfDay::cities");
 
+	// SPAWN ALIENS
 	for (int i = 0; i < 5; i++)
 	{
 		StateRef<City> city = {this, "CITYMAP_HUMAN"};
