@@ -258,6 +258,8 @@ void GameState::startGame()
 	// Create some random vehicles
 	for (int i = 0; i < 5; i++)
 	{
+		// Uncomment below to stop fake traffic
+		// break;
 		for (auto &vehicleType : this->vehicle_types)
 		{
 			auto &type = vehicleType.second;

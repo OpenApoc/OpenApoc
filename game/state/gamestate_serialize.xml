@@ -300,6 +300,8 @@
 		<member>health</member>
 		<member>shield</member>
 		<member>shieldRecharge</member>
+		<member>cloakTicksAccumulated</member>
+		<member>ticksAutoActionAvailable</member>
 		<member>homeBuilding</member>
 		<member>currentlyLandedBuilding</member>
 	</object>

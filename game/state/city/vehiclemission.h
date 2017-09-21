@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game/state/stateobject.h"
+#include "game/state/tileview/tile.h"
 #include "library/strings.h"
 #include "library/vec.h"
 #include <list>
@@ -14,6 +15,38 @@ class Tile;
 class TileMap;
 class Building;
 class UString;
+
+class FlyingVehicleTileHelper : public CanEnterTileHelper
+{
+  private:
+	TileMap &map;
+	Vehicle &v;
+
+  public:
+	FlyingVehicleTileHelper(TileMap &map, Vehicle &v);
+
+	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
+	                  bool ignoreAllUnits = false) const override;
+
+	float pathOverheadAlloawnce() const override;
+
+	// Support 'from' being nullptr for if a vehicle is being spawned in the map
+	bool canEnterTile(Tile *from, Tile *to, bool, bool &, float &cost, bool &, bool,
+	                  bool) const override;
+
+	float adjustCost(Vec3<int> nextPosition, int z) const override;
+
+	float getDistance(Vec3<float> from, Vec3<float> to) const override;
+
+	float getDistance(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd) const override;
+
+	bool canLandOnTile(Tile *to) const;
+
+	Vec3<int> findTileToLandOn(GameState &, sp<TileObjectVehicle> vTile) const;
+
+	Vec3<float> findSidestep(GameState &state, sp<TileObjectVehicle> vTile,
+	                         sp<TileObjectVehicle> targetTile, float distancePref) const;
+};
 
 class VehicleMission
 {
@@ -36,7 +69,7 @@ class VehicleMission
 	void update(GameState &state, Vehicle &v, unsigned int ticks, bool finished = false);
 	bool isFinished(GameState &state, Vehicle &v, bool callUpdateIfFinished = true);
 	void start(GameState &state, Vehicle &v);
-	void setPathTo(GameState &state, Vehicle &v, Vec3<int> target, int maxIterations = 500,
+	void setPathTo(GameState &state, Vehicle &v, Vec3<int> target, int maxIterations = 25,
 	               bool checkValidity = true, bool giveUpIfInvalid = false);
 	bool advanceAlongPath(GameState &state, Vec3<float> &dest, Vehicle &v);
 	bool isTakingOff(Vehicle &v);

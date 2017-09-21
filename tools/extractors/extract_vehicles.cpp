@@ -434,7 +434,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		//  just give vehicles misaligned voxelmaps to make them "dodge" well.
 		//  Therefore, to recreate vanilla behavior, we must do so as well.
 		//
-		//  - 122: should have 123,124,125 for right, bottom, left facings
+		//  - 122: should have 123, 124, 125 for right, bottom, left facings
 		//  - 151: should discard bottom part, but attach a blank voxel map at the bottom
 		//  (or left if facing right, etc.)
 		//

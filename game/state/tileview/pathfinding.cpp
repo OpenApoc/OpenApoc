@@ -318,10 +318,10 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 		}
 		else
 		{
-			LogWarning("No route from %s to %s-%s found after %d iterations, returning "
-			           "closest path %s",
-			           origin, destinationStart, destinationEnd, iterationCount,
-			           closestNodeSoFar->thisTile->position);
+			LogInfo("No route from %s to %s-%s found after %d iterations, returning "
+			        "closest path %s",
+			        origin, destinationStart, destinationEnd, iterationCount,
+			        closestNodeSoFar->thisTile->position);
 		}
 	}
 	else if (closestNodeSoFar->distanceToGoal > 0)

@@ -14,6 +14,7 @@ namespace OpenApoc
 {
 
 static const unsigned CLOAK_TICKS_REQUIRED_VEHICLE = TICKS_PER_SECOND / 2;
+static const unsigned TICKS_AUTO_ACTION_DELAY = TICKS_PER_SECOND / 4;
 
 class Image;
 class TileObjectVehicle;
@@ -93,6 +94,8 @@ class Vehicle : public StateObject,
 	// Vehicle is cloaked when this is >= CLOAK_TICKS_REQUIRED_VEHICLE
 	unsigned int cloakTicksAccumulated = 0;
 
+	uint64_t ticksAutoActionAvailable = 0;
+
 	StateRef<Building> homeBuilding;
 	StateRef<Building> currentlyLandedBuilding;
 
@@ -115,7 +118,8 @@ class Vehicle : public StateObject,
 	bool isCrashed() const;
 	bool applyDamage(GameState &state, int damage, float armour);
 	void handleCollision(GameState &state, Collision &c);
-	sp<TileObjectVehicle> findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile);
+	sp<TileObjectVehicle> findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile,
+	                                       Vec2<int> arc = {8, 8});
 	void attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 	                  sp<TileObjectVehicle> enemyTile);
 	float getFiringRange() const;
@@ -123,7 +127,6 @@ class Vehicle : public StateObject,
 	Vec3<float> getMuzzleLocation() const;
 
 	const Vec3<float> &getPosition() const { return this->position; }
-	const Vec3<float> &getDirection() const;
 
 	//'Constitution' is the sum of health and shield
 	int getMaxConstitution() const;
