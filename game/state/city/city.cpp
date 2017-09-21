@@ -122,6 +122,22 @@ void City::initMap()
 	}
 }
 
+void City::handleProjectileHit(GameState &state, sp<Projectile> projectile, bool displayDoodad,
+                               bool playSound)
+{
+	if (displayDoodad && projectile->doodadType)
+	{
+		placeDoodad(projectile->doodadType, projectile->position);
+	}
+
+	if (playSound && projectile->impactSfx)
+	{
+		fw().soundBackend->playSample(projectile->impactSfx, projectile->position);
+	}
+
+	projectiles.erase(projectile);
+}
+
 void City::update(GameState &state, unsigned int ticks)
 {
 	TRACE_FN_ARGS1("ticks", Strings::fromInteger(static_cast<int>(ticks)));
@@ -171,27 +187,17 @@ void City::update(GameState &state, unsigned int ticks)
 	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
 	{
 		auto p = *it++;
+		// Projectile can die here
 		p->update(state, ticks);
 	}
-	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
+	// Since projectiles can kill projectiles just kill everyone in the end
+	std::set<sp<Projectile>> deadProjectiles;
+	for (auto &p : projectiles)
 	{
-		auto &p = *it++;
 		auto c = p->checkProjectileCollision(*map);
 		if (c)
 		{
-			// FIXME: Handle collision
-			this->projectiles.erase(c.projectile);
-			if (c.projectile->impactSfx)
-			{
-				fw().soundBackend->playSample(c.projectile->impactSfx, c.position);
-			}
-
-			auto doodadType = c.projectile->doodadType;
-			if (doodadType)
-			{
-				auto doodad = this->placeDoodad(doodadType, c.position);
-			}
-
+			deadProjectiles.emplace(c.projectile->shared_from_this());
 			switch (c.obj->getType())
 			{
 				case TileObject::Type::Vehicle:
@@ -212,11 +218,23 @@ void City::update(GameState &state, unsigned int ticks)
 					sceneryTile->getOwner()->handleCollision(state, c);
 					break;
 				}
+				case TileObject::Type::Projectile:
+				{
+					deadProjectiles.emplace(
+					    std::static_pointer_cast<TileObjectProjectile>(c.obj)->getProjectile());
+					break;
+				}
 				default:
 					LogError("Collision with non-collidable object");
 			}
 		}
 	}
+	// Kill projectiles that collided
+	for (auto &p : deadProjectiles)
+	{
+		p->die(state);
+	}
+
 	Trace::end("City::update::projectiles->update");
 	Trace::start("City::update::scenery->update");
 	for (auto &s : this->scenery)

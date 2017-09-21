@@ -1,8 +1,11 @@
 #include "game/state/tileview/collision.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleitem.h"
+#include "game/state/city/projectile.h"
+#include "game/state/city/vehicle.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject.h"
+#include "game/state/tileview/tileobject_projectile.h"
 #include "library/line.h"
 #include "library/sp.h"
 #include "library/voxel.h"
@@ -15,7 +18,8 @@ namespace OpenApoc
 Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
                                  const std::set<TileObject::Type> validTypes,
                                  sp<TileObject> ignoredObject, bool useLOS, bool check_full_path,
-                                 unsigned maxRange, bool recordPassedTiles) const
+                                 unsigned maxRange, bool recordPassedTiles,
+                                 StateRef<Organisation> ignoreOwnedProjectiles) const
 {
 	bool typeChecking = validTypes.size() > 0;
 	bool rangeChecking = maxRange > 0.0f;
@@ -119,6 +123,20 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 			{
 				continue;
 			}
+			if (ignoreOwnedProjectiles && obj->type == TileObject::Type::Projectile)
+			{
+				auto projectile =
+				    std::static_pointer_cast<TileObjectProjectile>(obj)->getProjectile();
+				auto owner =
+				    projectile->firerUnit
+				        ? projectile->firerUnit->owner
+				        : (projectile->firerVehicle ? projectile->firerVehicle->owner : nullptr);
+				if (owner == ignoreOwnedProjectiles)
+				{
+					continue;
+				}
+			}
+
 			// coordinate of the object's voxelmap's min point
 			auto objPos = obj->getCenter();
 			objPos -= obj->getVoxelOffset();
@@ -129,7 +147,9 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 			Vec3<int> voxelMapIndex = voxelPos / tileSize;
 			auto voxelMap = obj->getVoxelMap(voxelMapIndex, useLOS);
 			if (!voxelMap)
+			{
 				continue;
+			}
 			// coordinate of the voxel within map
 			Vec3<int> voxelPosWithinMap = voxelPos % tileSize;
 			if (voxelMap->getBit(voxelPosWithinMap))

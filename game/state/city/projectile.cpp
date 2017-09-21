@@ -22,13 +22,13 @@ Projectile::Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> tar
                        Vec3<float> position, Vec3<float> velocity, int turnRate,
                        unsigned int lifetime, int damage, unsigned int delay,
                        unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
-                       sp<Sample> impactSfx, StateRef<DoodadType> doodadType)
+                       sp<Sample> impactSfx, StateRef<DoodadType> doodadType, sp<VoxelMap> voxelMap)
     : type(type), position(position), velocity(velocity), turnRate(turnRate), age(0),
       lifetime(lifetime), damage(damage), delay_ticks_remaining(delay), firerVehicle(firer),
       firerPosition(firer->position), trackedVehicle(target), previousPosition(position),
       spritePositions({position}), tail_length(tail_length), projectile_sprites(projectile_sprites),
-      sprite_distance(1.0f / TILE_Y_CITY), impactSfx(impactSfx), doodadType(doodadType),
-      velocityScale(VELOCITY_SCALE_CITY)
+      sprite_distance(1.0f / TILE_Y_CITY), voxelMap(voxelMap), impactSfx(impactSfx),
+      doodadType(doodadType), velocityScale(VELOCITY_SCALE_CITY)
 {
 	// 36 / (velocity length) = enough ticks to pass 1 whole tile
 	ownerInvulnerableTicks = (int)ceilf(36.0f / glm::length(velocity / velocityScale)) + 1;
@@ -40,14 +40,15 @@ Projectile::Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUni
                        int turnRate, unsigned int lifetime, int damage, unsigned int delay,
                        int depletionRate, unsigned int tail_length,
                        std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
-                       StateRef<DoodadType> doodadType, StateRef<DamageType> damageType)
+                       StateRef<DoodadType> doodadType, StateRef<DamageType> damageType,
+                       sp<VoxelMap> voxelMap)
     : type(type), position(position), velocity(velocity), turnRate(turnRate), age(0),
       lifetime(lifetime), damage(damage), delay_ticks_remaining(delay),
       depletionRate(depletionRate), firerUnit(firer), firerPosition(firer->position),
       trackedUnit(target), targetPosition(targetPosition), previousPosition(position),
       spritePositions({position}), tail_length(tail_length), projectile_sprites(projectile_sprites),
-      sprite_distance(1.0f / TILE_Y_BATTLE), impactSfx(impactSfx), doodadType(doodadType),
-      damageType(damageType), velocityScale(VELOCITY_SCALE_BATTLE)
+      sprite_distance(1.0f / TILE_Y_BATTLE), voxelMap(voxelMap), impactSfx(impactSfx),
+      doodadType(doodadType), damageType(damageType), velocityScale(VELOCITY_SCALE_BATTLE)
 {
 	// 36 / (velocity length) = enough ticks to pass 1 whole tile
 	ownerInvulnerableTicks = (int)ceilf(36.0f / glm::length(velocity / velocityScale)) + 1;
@@ -131,19 +132,7 @@ void Projectile::update(GameState &state, unsigned int ticks)
 	    newPosition.y >= mapSize.y || newPosition.z < 0 || newPosition.z >= mapSize.z ||
 	    this->age >= this->lifetime)
 	{
-		auto this_shared = shared_from_this();
-		if (firerVehicle)
-		{
-			for (auto &city : state.cities)
-				city.second->projectiles.erase(std::dynamic_pointer_cast<Projectile>(this_shared));
-		}
-		else // firerUnit
-		{
-			state.current_battle->projectiles.erase(
-			    std::dynamic_pointer_cast<Projectile>(this_shared));
-		}
-		this->tileObject->removeFromMap();
-		this->tileObject.reset();
+		die(state);
 		return;
 	}
 
@@ -164,6 +153,21 @@ void Projectile::update(GameState &state, unsigned int ticks)
 	}
 }
 
+void Projectile::die(GameState &state, bool displayDoodad, bool playSound)
+{
+	auto this_shared = shared_from_this();
+	if (firerVehicle)
+	{
+		state.current_city->handleProjectileHit(state, this_shared, displayDoodad, playSound);
+	}
+	else // firerUnit or stray battle projectile
+	{
+		state.current_battle->handleProjectileHit(state, this_shared, displayDoodad, playSound);
+	}
+	this->tileObject->removeFromMap();
+	this->tileObject.reset();
+}
+
 Collision Projectile::checkProjectileCollision(TileMap &map)
 {
 	if (!this->tileObject)
@@ -173,7 +177,8 @@ Collision Projectile::checkProjectileCollision(TileMap &map)
 		return {};
 	}
 
-	sp<TileObject> ignoredObject = nullptr;
+	sp<TileObject> ignoredObject;
+	StateRef<Organisation> firer;
 	if (ownerInvulnerableTicks > 0)
 	{
 		if (firerVehicle)
@@ -185,7 +190,25 @@ Collision Projectile::checkProjectileCollision(TileMap &map)
 			ignoredObject = firerUnit->tileObject;
 		}
 	}
-	Collision c = map.findCollision(this->previousPosition, this->position, {}, ignoredObject);
+	if (firerVehicle)
+	{
+		firer = firerVehicle->owner;
+	}
+	else if (firerUnit)
+	{
+		firer = firerUnit->owner;
+	}
+#ifdef ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE
+	// Missiles should not shooot down non-missiles even when friendly firing
+	// otherwise they kill themselves immediately
+	if (!trackedObject)
+	{
+		firer = nullptr;
+	}
+#endif // ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE
+
+	Collision c = map.findCollision(this->previousPosition, this->position, {}, ignoredObject,
+	                                false, false, 0, false, firer);
 	if (!c)
 		return {};
 

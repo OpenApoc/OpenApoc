@@ -78,12 +78,12 @@ class TileObjectZComparer
 };
 } // anonymous namespace
 
-float TileObject::getDistanceTo(sp<TileObject> target)
+float TileObject::getDistanceTo(sp<TileObject> target) const
 {
 	return getDistanceTo(target->getCenter());
 }
 
-float TileObject::getDistanceTo(Vec3<float> target)
+float TileObject::getDistanceTo(Vec3<float> target) const
 {
 	return glm::length((target - this->getCenter()) * map.velocityScale);
 }

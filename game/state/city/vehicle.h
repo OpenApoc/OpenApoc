@@ -10,6 +10,9 @@
 #include <list>
 #include <map>
 
+// Uncomment to allow projectiles to shoot down friendly projectiles
+//#define ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE
+
 namespace OpenApoc
 {
 
@@ -24,6 +27,7 @@ class Organisation;
 class VehicleMission;
 class Building;
 class GameState;
+class TileObjectProjectile;
 class VEquipment;
 class VEquipmentType;
 class Base;
@@ -120,8 +124,15 @@ class Vehicle : public StateObject,
 	void handleCollision(GameState &state, Collision &c);
 	sp<TileObjectVehicle> findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile,
 	                                       Vec2<int> arc = {8, 8});
+	sp<TileObjectProjectile> findClosestHostileMissile(GameState &state,
+	                                                   sp<TileObjectVehicle> vehicleTile,
+	                                                   Vec2<int> arc = {8, 8});
+	bool firePointDefenseWeapons(GameState &state, Vec2<int> arc = {8, 8});
+	void fireNormalWeapons(GameState &state, Vec2<int> arc = {8, 8});
 	void attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 	                  sp<TileObjectVehicle> enemyTile);
+	bool attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
+	                  sp<TileObjectProjectile> enemyTile);
 	float getFiringRange() const;
 
 	Vec3<float> getMuzzleLocation() const;

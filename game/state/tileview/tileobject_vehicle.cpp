@@ -191,7 +191,9 @@ sp<VoxelMap> TileObjectVehicle::getVoxelMap(Vec3<int> mapIndex, bool los) const
 	auto facing = vtype->getVoxelMapFacing(v->facing);
 	auto size = vtype->size.at(facing);
 	if (mapIndex.x >= size.x || mapIndex.y >= size.y || mapIndex.z >= size.z)
+	{
 		return nullptr;
+	}
 	if (los)
 	{
 		return vtype->voxelMapsLOS.at(facing).at(mapIndex.z * size.y * size.x +

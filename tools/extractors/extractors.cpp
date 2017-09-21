@@ -309,6 +309,7 @@ void InitialGameStateExtractor::extractCommon(GameState &state) const
 
 	this->extractBattlescapeMap(state, battleMapPaths);
 	this->extractSharedBattleResources(state);
+	this->extractSharedCityResources(state);
 }
 
 void InitialGameStateExtractor::extract(GameState &state, Difficulty difficulty) const

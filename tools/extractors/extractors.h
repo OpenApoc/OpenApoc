@@ -106,6 +106,8 @@ class InitialGameStateExtractor
 	                        const UString &mapName, const UString &dirName, const UString &datName,
 	                        const UString &pckName, const UString &stratPckName) const;
 
+	void extractSharedCityResources(GameState &state) const;
+
 	void extractSharedBattleResources(GameState &state) const;
 
 	void extractBuildingFunctions(GameState &state) const;

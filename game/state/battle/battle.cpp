@@ -1375,15 +1375,10 @@ void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 				                              visibleUnits[unit->owner].end());
 			}
 			// Handle collision
-			this->projectiles.erase(c.projectile);
 			bool playSound = true;
 			bool displayDoodad = true;
 			if (c.projectile->damageType->explosive)
 			{
-				auto explosion = addExplosion(
-				    state, c.position, c.projectile->doodadType, c.projectile->damageType,
-				    c.projectile->damage, c.projectile->depletionRate,
-				    c.projectile->firerUnit->owner, c.projectile->firerUnit);
 				displayDoodad = false;
 			}
 			else
@@ -1412,21 +1407,7 @@ void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 						LogError("Collision with non-collidable object");
 				}
 			}
-			if (displayDoodad)
-			{
-				auto doodadType = c.projectile->doodadType;
-				if (doodadType)
-				{
-					auto doodad = this->placeDoodad(doodadType, c.position);
-				}
-			}
-			if (playSound)
-			{
-				if (c.projectile->impactSfx)
-				{
-					fw().soundBackend->playSample(c.projectile->impactSfx, c.position);
-				}
-			}
+			c.projectile->die(state, displayDoodad, playSound);
 		}
 	}
 }
@@ -2120,6 +2101,27 @@ void Battle::spawnReinforcements(GameState &state)
 			break;
 		}
 	}
+}
+
+void Battle::handleProjectileHit(GameState &state, sp<Projectile> projectile, bool displayDoodad,
+                                 bool playSound)
+{
+	if (projectile->damageType->explosive)
+	{
+		auto explosion =
+		    addExplosion(state, projectile->position, projectile->doodadType,
+		                 projectile->damageType, projectile->damage, projectile->depletionRate,
+		                 projectile->firerUnit->owner, projectile->firerUnit);
+	}
+	if (displayDoodad && projectile->doodadType)
+	{
+		this->placeDoodad(projectile->doodadType, projectile->position);
+	}
+	if (playSound && projectile->impactSfx)
+	{
+		fw().soundBackend->playSample(projectile->impactSfx, projectile->position);
+	}
+	projectiles.erase(projectile);
 }
 
 void Battle::queuePathfindingRefresh(Vec3<int> tile)

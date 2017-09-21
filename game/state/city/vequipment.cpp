@@ -3,6 +3,7 @@
 #include "framework/logger.h"
 #include "framework/sound.h"
 #include "game/state/city/city.h"
+#include "game/state/city/citycommonimagelist.h"
 #include "game/state/city/projectile.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
@@ -86,7 +87,8 @@ void VEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Veh
 		    type->guided ? Projectile::Type::Missile : Projectile::Type::Beam, owner, targetVehicle,
 		    vehicleMuzzle, velocity, type->turn_rate, type->ttl * TICKS_MULTIPLIER, type->damage,
 		    /*delay*/ 0, type->tail_size, type->projectile_sprites, type->impact_sfx,
-		    type->explosion_graphic);
+		    type->explosion_graphic,
+		    type->guided ? state.city_common_image_list->projectileVoxelMap : nullptr);
 		vehicleTile->map.addObjectToMap(projectile);
 		state.current_city->projectiles.insert(projectile);
 	}

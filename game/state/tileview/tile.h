@@ -2,6 +2,7 @@
 
 #include "framework/logger.h"
 #include "game/state/gametime.h"
+#include "game/state/stateobject.h"
 #include "game/state/tileview/tileobject.h"
 #include "library/colour.h"
 #include "library/rect.h"
@@ -49,6 +50,7 @@ class TileObjectBattleItem;
 class BattleHazard;
 class TileObjectBattleHazard;
 class Sample;
+class Organisation;
 
 class TileTransform
 {
@@ -274,7 +276,8 @@ class TileMap
 	                        const std::set<TileObject::Type> validTypes = {},
 	                        sp<TileObject> ignoredObject = nullptr, bool useLOS = false,
 	                        bool check_full_path = false, unsigned maxRange = 0,
-	                        bool recordPassedTiles = false) const;
+	                        bool recordPassedTiles = false,
+	                        StateRef<Organisation> ignoreOwnedProjectiles = nullptr) const;
 
 	bool checkThrowTrajectory(const sp<TileObject> thrower, Vec3<float> start, Vec3<int> end,
 	                          Vec3<float> targetVectorXY, float velocityXY, float velocityZ) const;

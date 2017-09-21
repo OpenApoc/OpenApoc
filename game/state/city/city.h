@@ -51,6 +51,9 @@ class City : public StateObject
 
 	up<TileMap> map;
 
+	void handleProjectileHit(GameState &state, sp<Projectile> projectile, bool displayDoodad,
+	                         bool playSound);
+
 	void update(GameState &state, unsigned int ticks);
 	void hourlyLoop(GameState &state);
 	void dailyLoop(GameState &state);

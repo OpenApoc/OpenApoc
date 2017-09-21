@@ -49,7 +49,7 @@ void TileObjectProjectile::draw(Renderer &r, TileTransform &transform, Vec2<floa
 TileObjectProjectile::~TileObjectProjectile() = default;
 
 TileObjectProjectile::TileObjectProjectile(TileMap &map, sp<Projectile> projectile)
-    : TileObject(map, Type::Projectile, Vec3<float>{0, 0, 0}), projectile(projectile)
+    : TileObject(map, Type::Projectile, Vec3<float>{0.25f, 0.25f, 0.25f}), projectile(projectile)
 {
 }
 
@@ -84,5 +84,20 @@ void TileObjectProjectile::addToDrawnTiles(Tile *)
 	}
 	TileObject::addToDrawnTiles(map.getTile(maxCoords));
 }
+
+sp<Projectile> TileObjectProjectile::getProjectile() const { return projectile.lock(); }
+
+bool TileObjectProjectile::hasVoxelMap() const { return projectile.lock()->voxelMap != nullptr; }
+
+sp<VoxelMap> TileObjectProjectile::getVoxelMap(Vec3<int> mapIndex, bool los) const
+{
+	if (mapIndex.x > 0 || mapIndex.y > 0 || mapIndex.z > 0)
+	{
+		return nullptr;
+	}
+	return getProjectile()->voxelMap;
+}
+
+Vec3<float> TileObjectProjectile::getVoxelCentrePosition() const { return getPosition(); }
 
 } // namespace OpenApoc

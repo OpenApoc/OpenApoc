@@ -239,6 +239,9 @@ class Battle : public std::enable_shared_from_this<Battle>
 	void refreshLeadershipBonus(StateRef<Organisation> org);
 	void spawnReinforcements(GameState &state);
 
+	void handleProjectileHit(GameState &state, sp<Projectile> projectile, bool displayDoodad,
+	                         bool playSound);
+
 	void update(GameState &state, unsigned int ticks);
 	void updateTB(GameState &state);
 	void updateRT(GameState &state, unsigned int ticks);

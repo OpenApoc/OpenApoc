@@ -10,6 +10,7 @@ City:
 - vehicles using banking
 - vehicles dodge attacks
 - vehicles auto-adjust height
+- point defense
 
 Battle:
 

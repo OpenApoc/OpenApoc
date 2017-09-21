@@ -560,6 +560,7 @@
 	<object>
 		<name>CityCommonImageList</name>
 		<member>strategyImages</member>
+		<member>projectileVoxelMap</member>
 	</object>
 	<object>
 		<name>BattleCommonSampleList</name>
@@ -788,6 +789,7 @@
 		<member>tail_length</member>
 		<member>projectile_sprites</member>
 		<member>sprite_distance</member>
+		<member>voxelMap</member>
 		<member>impactSfx</member>
 		<member>doodadType</member>
 		<member>damageType</member>
