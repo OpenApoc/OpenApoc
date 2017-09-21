@@ -450,6 +450,8 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		// - 151: 126,127,128,129 are closest fitting loftemps, each is a box in the opposite side,
 		//		  sides going north east south west (so for north box is located at southern edge)
 		//		  therefore, north and south would use 128, 126 east and west would use 127, 129
+		//        However, now that we can load loftemps from png files, we made proper files for
+		//        this
 
 		vehicle->height = v.loftemps_height;
 
@@ -482,7 +484,8 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 				break;
 			// special cases, treated separately below
 			case 150: // use 93 94 first row, 96 95 second row		| los same
-			case 151: // use blank at the "bottom"					| los 128, 126 or 127, 129
+			case 151: // use custom made ones
+				losVoxelMapIndex = 111;
 				break;
 			default:
 				LogError("Unsupported vehicle loftemps index %d!", (int)v.loftemps_index);
@@ -879,10 +882,8 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 				}
 				break;
 			}
-			// use blank at the "bottom"
+			// Custom voxelmap from png file
 			case 151:
-				// Do north and south
-				size = {1, 2, 1};
 				vehicle->size[FACING_NORTH] = size;
 				vehicle->voxelMaps[FACING_NORTH] = std::vector<sp<VoxelMap>>(
 				    vehicle->size[FACING_NORTH].x * vehicle->size[FACING_NORTH].y *
@@ -890,83 +891,6 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 				vehicle->voxelMapsLOS[FACING_NORTH] = std::vector<sp<VoxelMap>>(
 				    vehicle->size[FACING_NORTH].x * vehicle->size[FACING_NORTH].y *
 				    vehicle->size[FACING_NORTH].z);
-				vehicle->size[FACING_SOUTH] = size;
-				vehicle->voxelMaps[FACING_SOUTH] = std::vector<sp<VoxelMap>>(
-				    vehicle->size[FACING_SOUTH].x * vehicle->size[FACING_SOUTH].y *
-				    vehicle->size[FACING_SOUTH].z);
-				vehicle->voxelMapsLOS[FACING_SOUTH] = std::vector<sp<VoxelMap>>(
-				    vehicle->size[FACING_SOUTH].x * vehicle->size[FACING_SOUTH].y *
-				    vehicle->size[FACING_SOUTH].z);
-
-				for (int x = 0; x < size.x; x++)
-				{
-					for (int y = 0; y < size.y; y++)
-					{
-						for (int z = 0; z < size.z; z++)
-						{
-							// Facing north
-							vehicle->voxelMaps[FACING_NORTH][z * size.y * size.x + y * size.x + x] =
-							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
-							vehicle
-							    ->voxelMapsLOS[FACING_NORTH][z * size.y * size.x + y * size.x + x] =
-							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
-							// Facing south
-							vehicle->voxelMaps[FACING_SOUTH][z * size.y * size.x + y * size.x + x] =
-							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
-							vehicle
-							    ->voxelMapsLOS[FACING_SOUTH][z * size.y * size.x + y * size.x + x] =
-							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
-
-							int limit = v.loftemps_height - 16 * z;
-							for (int i = 0; i < limit; i++)
-							{
-								// Facing north (bottom voxelmap empty)
-								if (y == 0)
-								{
-									vehicle
-									    ->voxelMaps[FACING_NORTH]
-									               [z * size.y * size.x + y * size.x + x]
-									    ->setSlice(i,
-									               fw().data->loadVoxelSlice(format(
-									                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-									                   "ufodata/loftemps.tab:%d",
-									                   verticalVoxelMapIdx)));
-								}
-								// Facing south (top voxelmap empty)
-								if (y == 1)
-								{
-									vehicle
-									    ->voxelMaps[FACING_SOUTH]
-									               [z * size.y * size.x + y * size.x + x]
-									    ->setSlice(i,
-									               fw().data->loadVoxelSlice(format(
-									                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-									                   "ufodata/loftemps.tab:%d",
-									                   verticalVoxelMapIdx)));
-								}
-								vehicle
-								    ->voxelMapsLOS[FACING_NORTH]
-								                  [z * size.y * size.x + y * size.x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   y == 1 ? 128 : 126)));
-								vehicle
-								    ->voxelMapsLOS[FACING_SOUTH]
-								                  [z * size.y * size.x + y * size.x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   y == 1 ? 128 : 126)));
-							}
-						}
-					}
-				}
-
-				// Do east and west
-				size = {2, 1, 1};
 				vehicle->size[FACING_EAST] = size;
 				vehicle->voxelMaps[FACING_EAST] = std::vector<sp<VoxelMap>>(
 				    vehicle->size[FACING_EAST].x * vehicle->size[FACING_EAST].y *
@@ -974,6 +898,13 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 				vehicle->voxelMapsLOS[FACING_EAST] = std::vector<sp<VoxelMap>>(
 				    vehicle->size[FACING_EAST].x * vehicle->size[FACING_EAST].y *
 				    vehicle->size[FACING_EAST].z);
+				vehicle->size[FACING_SOUTH] = size;
+				vehicle->voxelMaps[FACING_SOUTH] = std::vector<sp<VoxelMap>>(
+				    vehicle->size[FACING_SOUTH].x * vehicle->size[FACING_SOUTH].y *
+				    vehicle->size[FACING_SOUTH].z);
+				vehicle->voxelMapsLOS[FACING_SOUTH] = std::vector<sp<VoxelMap>>(
+				    vehicle->size[FACING_SOUTH].x * vehicle->size[FACING_SOUTH].y *
+				    vehicle->size[FACING_SOUTH].z);
 				vehicle->size[FACING_WEST] = size;
 				vehicle->voxelMaps[FACING_WEST] = std::vector<sp<VoxelMap>>(
 				    vehicle->size[FACING_WEST].x * vehicle->size[FACING_WEST].y *
@@ -981,69 +912,100 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 				vehicle->voxelMapsLOS[FACING_WEST] = std::vector<sp<VoxelMap>>(
 				    vehicle->size[FACING_WEST].x * vehicle->size[FACING_WEST].y *
 				    vehicle->size[FACING_WEST].z);
-
-				for (int x = 0; x < size.x; x++)
+				for (int x = 0; x < v.size_x; x++)
 				{
-					for (int y = 0; y < size.y; y++)
+					for (int y = 0; y < v.size_y; y++)
 					{
-						for (int z = 0; z < size.z; z++)
+						for (int z = 0; z < v.size_z; z++)
 						{
 							// Four facings
-							// Facing east
-							vehicle->voxelMaps[FACING_EAST][z * size.y * size.x + y * size.x + x] =
+							// Facing north
+							vehicle->voxelMaps[FACING_NORTH]
+							                  [z * v.size_y * v.size_x + y * v.size_x + x] =
 							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
-							vehicle
-							    ->voxelMapsLOS[FACING_EAST][z * size.y * size.x + y * size.x + x] =
+							vehicle->voxelMapsLOS[FACING_NORTH]
+							                     [z * v.size_y * v.size_x + y * v.size_x + x] =
+							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
+							// Facing east
+							vehicle->voxelMaps[FACING_EAST]
+							                  [z * v.size_y * v.size_x + y * v.size_x + x] =
+							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
+							vehicle->voxelMapsLOS[FACING_EAST]
+							                     [z * v.size_y * v.size_x + y * v.size_x + x] =
+							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
+							// Facing south
+							vehicle->voxelMaps[FACING_SOUTH]
+							                  [z * v.size_y * v.size_x + y * v.size_x + x] =
+							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
+							vehicle->voxelMapsLOS[FACING_SOUTH]
+							                     [z * v.size_y * v.size_x + y * v.size_x + x] =
 							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
 							// Facing west
-							vehicle->voxelMaps[FACING_WEST][z * size.y * size.x + y * size.x + x] =
+							vehicle->voxelMaps[FACING_WEST]
+							                  [z * v.size_y * v.size_x + y * v.size_x + x] =
 							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
-							vehicle
-							    ->voxelMapsLOS[FACING_WEST][z * size.y * size.x + y * size.x + x] =
+							vehicle->voxelMapsLOS[FACING_WEST]
+							                     [z * v.size_y * v.size_x + y * v.size_x + x] =
 							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
 							int limit = v.loftemps_height - 16 * z;
 							for (int i = 0; i < limit; i++)
 							{
-								// Facing west (right voxelmap empty)
-								if (x == 0)
-								{
-									vehicle
-									    ->voxelMaps[FACING_WEST]
-									               [z * size.y * size.x + y * size.x + x]
-									    ->setSlice(i,
-									               fw().data->loadVoxelSlice(format(
-									                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-									                   "ufodata/loftemps.tab:%d",
-									                   verticalVoxelMapIdx)));
-								}
-								// Facing east (left voxelmap empty)
-								if (x == 1)
-								{
-									vehicle
-									    ->voxelMaps[FACING_EAST]
-									               [z * size.y * size.x + y * size.x + x]
-									    ->setSlice(i,
-									               fw().data->loadVoxelSlice(format(
-									                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-									                   "ufodata/loftemps.tab:%d",
-									                   verticalVoxelMapIdx)));
-								}
+								// Facing north
 								vehicle
-								    ->voxelMapsLOS[FACING_WEST]
-								                  [z * size.y * size.x + y * size.x + x]
+								    ->voxelMaps[FACING_NORTH]
+								               [z * v.size_y * v.size_x + y * v.size_x + x]
+								    ->setSlice(i,
+								               fw().data->loadVoxelSlice("city/loftemps-151n.png"));
+								vehicle
+								    ->voxelMapsLOS[FACING_NORTH]
+								                  [z * v.size_y * v.size_x + y * v.size_x + x]
 								    ->setSlice(i,
 								               fw().data->loadVoxelSlice(format(
 								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
 								                   "ufodata/loftemps.tab:%d",
-								                   x == 1 ? 127 : 129)));
+								                   losVoxelMapIndex)));
+								// Facing east
+								vehicle
+								    ->voxelMaps[FACING_EAST]
+								               [z * v.size_y * v.size_x + y * v.size_x + x]
+								    ->setSlice(i,
+								               fw().data->loadVoxelSlice("city/loftemps-151e.png"));
 								vehicle
 								    ->voxelMapsLOS[FACING_EAST]
-								                  [z * size.y * size.x + y * size.x + x]
+								                  [z * v.size_y * v.size_x + y * v.size_x + x]
 								    ->setSlice(i,
 								               fw().data->loadVoxelSlice(format(
 								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
 								                   "ufodata/loftemps.tab:%d",
-								                   x == 1 ? 127 : 129)));
+								                   losVoxelMapIndex)));
+								// Facing south
+								vehicle
+								    ->voxelMaps[FACING_SOUTH]
+								               [z * v.size_y * v.size_x + y * v.size_x + x]
+								    ->setSlice(i,
+								               fw().data->loadVoxelSlice("city/loftemps-151s.png"));
+								vehicle
+								    ->voxelMapsLOS[FACING_SOUTH]
+								                  [z * v.size_y * v.size_x + y * v.size_x + x]
+								    ->setSlice(i,
+								               fw().data->loadVoxelSlice(format(
+								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                   "ufodata/loftemps.tab:%d",
+								                   losVoxelMapIndex)));
+								// Facing west
+								vehicle
+								    ->voxelMaps[FACING_WEST]
+								               [z * v.size_y * v.size_x + y * v.size_x + x]
+								    ->setSlice(i,
+								               fw().data->loadVoxelSlice("city/loftemps-151w.png"));
+								vehicle
+								    ->voxelMapsLOS[FACING_WEST]
+								                  [z * v.size_y * v.size_x + y * v.size_x + x]
+								    ->setSlice(i,
+								               fw().data->loadVoxelSlice(format(
+								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                   "ufodata/loftemps.tab:%d",
+								                   losVoxelMapIndex)));
 							}
 						}
 					}

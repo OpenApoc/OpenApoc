@@ -246,6 +246,28 @@ sp<VoxelSlice> DataImpl::loadVoxelSlice(const UString &path)
 			LogError("Invalid idx %d", idx);
 		}
 	}
+	else
+	{
+		auto img = loadImage(path);
+		Vec2<int> size = img->size;
+		slice = mksp<VoxelSlice>(size);
+		if (img)
+		{
+			Colour filledColour{255, 255, 255, 255};
+			RGBImageLock l(std::dynamic_pointer_cast<RGBImage>(img), ImageLockUse::Read);
+			Vec2<int> pos;
+			for (pos.x = 0; pos.x < size.x; pos.x++)
+			{
+				for (pos.y = 0; pos.y < size.y; pos.y++)
+				{
+					if (l.get(pos) == filledColour)
+					{
+						slice->setBit(pos, true);
+					}
+				}
+			}
+		}
+	}
 
 	if (!slice)
 	{
