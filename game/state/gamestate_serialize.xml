@@ -25,6 +25,7 @@
 		<member>initial_facilities</member>
 		<member>initial_agent_equipment</member>
 		<member>initial_base_agent_equipment</member>
+		<member>initial_aliens</member>
 		<member>current_city</member>
 		<member>current_base</member>
 		<member>agentEquipmentTemplates</member>
@@ -122,6 +123,7 @@
 		<member>infiltrationSpeed</member>
 		<member>growthChance</member>
 		<member>growthOptions</member>
+		<member>growthInfiltration</member>
 		<member>detectionWeight</member>
 		<member>spreadHazardDamageType</member>
 		<member>spreadHazardMinPower</member>
@@ -219,6 +221,7 @@
 		<member>owner</member>
 		<member>assigned_to_lab</member>
 		<member>unit</member>
+		<member>isBrainsucker</member>
 		<member>equipment</member>
 	</object>
 	<object>

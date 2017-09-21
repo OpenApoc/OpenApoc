@@ -307,10 +307,11 @@ void GameState::startGame()
 		counter++;
 	} while (buildingIt->second->owner->current_relations[player] < 0 || counter >= giveUpCount);
 
-	buildingIt->second->current_crew[{this, "AGENTTYPE_BRAINSUCKER"}] =
-	    randBoundsExclusive(rng, 0, difficulty / 2 + 1) + 1;
-	buildingIt->second->current_crew[{this, "AGENTTYPE_ANTHROPOD"}] =
-	    randBoundsExclusive(rng, 0, difficulty / 2 + 2) + 1;
+	for (auto &l : initial_aliens.at(difficulty))
+	{
+		buildingIt->second->current_crew[l.first] =
+		    randBoundsExclusive(rng, l.second.x, l.second.y);
+	}
 
 	gameTime = GameTime::midday();
 

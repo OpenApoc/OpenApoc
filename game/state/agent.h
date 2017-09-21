@@ -193,6 +193,8 @@ class AgentType : public StateObject
 	int infiltrationSpeed = 0;
 	int growthChance = 0;
 	std::list<std::pair<int, std::pair<StateRef<AgentType>, int>>> growthOptions;
+	// Apply this infiltration when alien grows
+	int growthInfiltration = 0;
 	int detectionWeight = 0;
 
 	StateRef<DamageType> spreadHazardDamageType;
@@ -343,6 +345,9 @@ class Agent : public StateObject,
 	// Called when current stats were changed and modified stats need to catch up
 	void updateModifiedStats();
 	bool canRun() { return modified_stats.canRun(); }
+
+	void updateIsBrainsucker();
+	bool isBrainsucker = false;
 
 	void trainPhysical(GameState &state, unsigned ticks);
 	void trainPsi(GameState &state, unsigned ticks);

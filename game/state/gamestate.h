@@ -97,6 +97,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	std::map<UString, unsigned> initial_facilities;
 	std::list<std::list<StateRef<AEquipmentType>>> initial_agent_equipment;
 	std::map<UString, int> initial_base_agent_equipment;
+	std::map<int, std::list<std::pair<StateRef<AgentType>, Vec2<int>>>> initial_aliens;
 
 	StateRef<Organisation> player;
 	StateRef<Organisation> aliens;

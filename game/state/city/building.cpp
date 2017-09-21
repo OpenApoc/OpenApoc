@@ -233,10 +233,10 @@ void Building::alienGrowth(GameState &state)
 			}
 		}
 		// Additionally, suckers apply infiltration here
-		if (pair.first.id == "AGENTTYPE_BRAINSUCKER")
+		if (pair.first->growthInfiltration > 0)
 		{
-			owner->infiltrationValue +=
-			    growth * function->infiltrationSpeed * owner->infiltrationSpeed;
+			owner->infiltrationValue += growth * pair.first->growthInfiltration *
+			                            function->infiltrationSpeed * owner->infiltrationSpeed;
 			if (owner->infiltrationValue > 200)
 			{
 				owner->infiltrationValue = 200;

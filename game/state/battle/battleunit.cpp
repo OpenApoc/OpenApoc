@@ -2789,7 +2789,7 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 
 void BattleUnit::updateFallingIntoUnit(GameState &state, BattleUnit &unit)
 {
-	if (agent->type->id == "AGENTTYPE_BRAINSUCKER")
+	if (agent->isBrainsucker)
 	{
 		// Must fall from above (almost)
 		if (velocity.z < 0.1f)
@@ -3772,7 +3772,7 @@ bool BattleUnit::canLaunch(Vec3<float> targetPosition, Vec3<float> &targetVector
 	}
 	// Cannot jump if target too far away and we are not a sucker
 	Vec3<int> posDiff = (Vec3<int>)position - (Vec3<int>)targetPosition;
-	bool sucker = agent->type.id == "AGENTTYPE_BRAINSUCKER";
+	bool sucker = agent->isBrainsucker;
 	int limit = sucker ? 5 : 1;
 	if (std::abs(posDiff.x) > limit || std::abs(posDiff.y) > limit || std::abs(posDiff.z) > 1)
 	{

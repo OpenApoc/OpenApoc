@@ -752,6 +752,7 @@ void Agent::addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object)
 	}
 	this->equipment.emplace_back(object);
 	updateSpeed();
+	updateIsBrainsucker();
 	if (unit)
 	{
 		unit->updateDisplayedItem(state);
@@ -781,6 +782,7 @@ void Agent::removeEquipment(GameState &state, sp<AEquipment> object)
 	}
 	object->ownerAgent.clear();
 	updateSpeed();
+	updateIsBrainsucker();
 }
 
 void Agent::updateSpeed()
@@ -810,6 +812,19 @@ void Agent::updateModifiedStats()
 	modified_stats = current_stats;
 	modified_stats.health = health;
 	updateSpeed();
+}
+
+void Agent::updateIsBrainsucker()
+{
+	isBrainsucker = false;
+	for (auto &e : equipment)
+	{
+		if (e->type->type == AEquipmentType::Type::Brainsucker)
+		{
+			isBrainsucker = true;
+			return;
+		}
+	}
 }
 
 void Agent::trainPhysical(GameState &state, unsigned ticks)
