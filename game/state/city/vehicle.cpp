@@ -1291,6 +1291,7 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 	{
 		missions.emplace_back(mission);
 	}
+	return true;
 }
 
 float Vehicle::getSpeed() const
