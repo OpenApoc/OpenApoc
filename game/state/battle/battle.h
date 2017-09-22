@@ -231,7 +231,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// Notify about action happening
 	void notifyAction(Vec3<int> location = {-1, -1, -1}, StateRef<BattleUnit> actorUnit = nullptr);
 
-	int killStrandedUnits(GameState &state, bool preview = false);
+	int killStrandedUnits(GameState &state, StateRef<Organisation> org, bool preview = false);
 	void abortMission(GameState &state);
 	void checkMissionEnd(GameState &state, bool retreated, bool forceReCheck = false);
 	void checkIfBuildingDisabled(GameState &state);

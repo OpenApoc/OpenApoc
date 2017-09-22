@@ -65,13 +65,13 @@ class VehicleMission
 	VehicleMission() = default;
 
 	// Methods used in pathfinding etc.
-	bool getNextDestination(GameState &state, Vehicle &v, Vec3<float> &dest);
+	bool getNextDestination(GameState &state, Vehicle &v, Vec3<float> &destPos, float &destFacing);
 	void update(GameState &state, Vehicle &v, unsigned int ticks, bool finished = false);
 	bool isFinished(GameState &state, Vehicle &v, bool callUpdateIfFinished = true);
 	void start(GameState &state, Vehicle &v);
 	void setPathTo(GameState &state, Vehicle &v, Vec3<int> target, int maxIterations = 25,
 	               bool checkValidity = true, bool giveUpIfInvalid = false);
-	bool advanceAlongPath(GameState &state, Vec3<float> &dest, Vehicle &v);
+	bool advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> &destPos, float &destFacing);
 	bool isTakingOff(Vehicle &v);
 
 	// Methods to create new missions

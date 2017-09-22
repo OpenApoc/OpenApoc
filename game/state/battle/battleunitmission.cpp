@@ -1883,7 +1883,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 			targetFacing = u.goalFacing;
 
 			// If we have already tried to use this mission, see if path is still valid
-			if (currentPlannedPath.size() > 0)
+			if (!currentPlannedPath.empty())
 			{
 				auto t = u.tileObject->getOwningTile();
 				auto pos = *currentPlannedPath.begin();
@@ -1906,7 +1906,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 					currentPlannedPath.clear();
 				}
 			}
-			if (currentPlannedPath.size() == 0)
+			if (currentPlannedPath.empty() == 0)
 			{
 				this->setPathTo(state, u, targetLocation);
 			}

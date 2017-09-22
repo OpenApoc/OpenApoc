@@ -39,22 +39,38 @@ void Scenery::handleCollision(GameState &state, Collision &c)
 			}
 		}
 	}
-	// FIXME: Proper damage
-	std::ignore = c;
-	// If this tile has a damaged tile, replace it with that. If it's already damaged, destroy as
-	// normal
+
+	applyDamage(state, c.projectile->damage);
+}
+
+bool Scenery::applyDamage(GameState &state, int power)
+{
 	if (!this->tileObject)
 	{
 		// It's possible multiple projectiles hit the same tile in the same
 		// tick, so if the object has already been destroyed just NOP this.
 		// The projectile will still 'hit' this tile though.
-		return;
+		return false;
 	}
 	if (this->falling)
 	{
 		// Already falling, just continue
-		return;
+		return false;
 	}
+
+	int damage = randDamage050150(state.rng, power);
+
+	if (damage <= type->constitution)
+	{
+		return false;
+	}
+
+	die(state);
+	return false;
+}
+
+void Scenery::die(GameState &state)
+{
 	// Landing pads are immortal (else this completely destroys pathing)
 	if (this->type->isLandingPad)
 	{
@@ -74,10 +90,14 @@ void Scenery::handleCollision(GameState &state, Collision &c)
 		}
 	}
 	if (this->overlayDoodad)
+	{
 		this->overlayDoodad->remove(state);
+	}
 	this->overlayDoodad = nullptr;
 	for (auto &s : this->supports)
+	{
 		s->collapse(state);
+	}
 }
 
 void Scenery::collapse(GameState &state)

@@ -375,7 +375,7 @@ CityView::CityView(sp<GameState> state)
 			    LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name, bld->name);
 			    // FIXME: Don't clear missions if not replacing current mission
 			    v->missions.clear();
-			    v->missions.emplace_back(VehicleMission::gotoBuilding(*this->state, *v, bld));
+			    v->missions.emplace_front(VehicleMission::gotoBuilding(*this->state, *v, bld));
 			    v->missions.front()->start(*this->state, *v);
 		    }
 		});
@@ -580,61 +580,68 @@ void CityView::update()
 	this->drawCity = true;
 	CityTileView::update();
 
-	unsigned int ticks = 0;
-	bool turbo = false;
-	switch (this->updateSpeed)
+	// Don't update time if we're doing something
+	if (selectionState == SelectionState::Normal)
 	{
-		case UpdateSpeed::Pause:
-			ticks = 0;
-			break;
-		/* POSSIBLE FIXME: 'vanilla' apoc appears to implement Speed1 as 1/2 speed - that is only
-		 * every other call calls the update loop, meaning that the later update tick counts are
-		 * halved as well.
-		 * This effectively means that all openapoc tick counts count for 1/2 the value of vanilla
-		 * apoc ticks */
-		case UpdateSpeed::Speed1:
-			ticks = 1;
-			break;
-		case UpdateSpeed::Speed2:
-			ticks = 2;
-			break;
-		case UpdateSpeed::Speed3:
-			ticks = 4;
-			break;
-		case UpdateSpeed::Speed4:
-			ticks = 6;
-			break;
-		case UpdateSpeed::Speed5:
+		unsigned int ticks = 0;
+		bool turbo = false;
+		switch (this->updateSpeed)
+		{
+			case UpdateSpeed::Pause:
+				ticks = 0;
+				break;
+			/* POSSIBLE FIXME: 'vanilla' apoc appears to implement Speed1 as 1/2 speed - that is
+			 * only
+			 * every other call calls the update loop, meaning that the later update tick counts are
+			 * halved as well.
+			 * This effectively means that all openapoc tick counts count for 1/2 the value of
+			 * vanilla
+			 * apoc ticks */
+			case UpdateSpeed::Speed1:
+				ticks = 1;
+				break;
+			case UpdateSpeed::Speed2:
+				ticks = 2;
+				break;
+			case UpdateSpeed::Speed3:
+				ticks = 4;
+				break;
+			case UpdateSpeed::Speed4:
+				ticks = 6;
+				break;
+			case UpdateSpeed::Speed5:
+				if (!this->state->canTurbo())
+				{
+					setUpdateSpeed(UpdateSpeed::Speed1);
+					ticks = 1;
+				}
+				else
+				{
+					turbo = true;
+				}
+				break;
+		}
+		baseForm->findControl("BUTTON_SPEED5")->Enabled = this->state->canTurbo();
+
+		if (turbo)
+		{
+			this->state->updateTurbo();
 			if (!this->state->canTurbo())
 			{
 				setUpdateSpeed(UpdateSpeed::Speed1);
-				ticks = 1;
 			}
-			else
+		}
+		else
+		{
+			while (ticks > 0)
 			{
-				turbo = true;
+				int ticksPerUpdate = UPDATE_EVERY_TICK ? 1 : ticks;
+				state->update(ticksPerUpdate);
+				ticks -= ticksPerUpdate;
 			}
-			break;
+		}
 	}
-	baseForm->findControl("BUTTON_SPEED5")->Enabled = this->state->canTurbo();
 
-	if (turbo)
-	{
-		this->state->updateTurbo();
-		if (!this->state->canTurbo())
-		{
-			setUpdateSpeed(UpdateSpeed::Speed1);
-		}
-	}
-	else
-	{
-		while (ticks > 0)
-		{
-			int ticksPerUpdate = UPDATE_EVERY_TICK ? 1 : ticks;
-			state->update(ticksPerUpdate);
-			ticks -= ticksPerUpdate;
-		}
-	}
 	auto clockControl = baseForm->findControlTyped<Label>("CLOCK");
 
 	clockControl->setText(state->gameTime.getLongTimeString());
@@ -951,7 +958,7 @@ void CityView::eventOccurred(Event *e)
 								                    scenery->currentPosition.y, altitude};
 								// FIXME: Don't clear missions if not replacing current mission
 								v->missions.clear();
-								v->missions.emplace_back(
+								v->missions.emplace_front(
 								    VehicleMission::gotoLocation(*state, *v, targetPos));
 								v->missions.front()->start(*this->state, *v);
 								LogWarning("Vehicle \"%s\" going to location %s", v->name,
@@ -971,7 +978,7 @@ void CityView::eventOccurred(Event *e)
 									           building->name);
 									// FIXME: Don't clear missions if not replacing current mission
 									v->missions.clear();
-									v->missions.emplace_back(
+									v->missions.emplace_front(
 									    VehicleMission::gotoBuilding(*state, *v, building));
 									v->missions.front()->start(*this->state, *v);
 								}
@@ -1013,7 +1020,7 @@ void CityView::eventOccurred(Event *e)
 							{
 								// FIXME: Don't clear missions if not replacing current mission
 								v->missions.clear();
-								v->missions.emplace_back(
+								v->missions.emplace_front(
 								    VehicleMission::attackVehicle(*this->state, *v, vehicleRef));
 								v->missions.front()->start(*this->state, *v);
 							}

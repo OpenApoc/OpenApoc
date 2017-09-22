@@ -1,3 +1,6 @@
+#ifndef _USE_MATH_DEFINES
+#define _USE_MATH_DEFINES
+#endif
 #include "game/state/city/vehiclemission.h"
 #include "framework/logger.h"
 #include "game/state/city/building.h"
@@ -6,6 +9,7 @@
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
+#include "game/state/organisation.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "game/state/rules/vehicle_type.h"
 #include "game/state/tileview/tile.h"
@@ -423,7 +427,8 @@ bool VehicleMission::takeOffCheck(GameState &state, Vehicle &v, UString mission)
 	return false;
 }
 
-bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float> &dest)
+bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float> &destPos,
+                                        float &destFacing)
 {
 	switch (this->type)
 	{
@@ -432,10 +437,10 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 		case MissionType::Crash:
 		case MissionType::Land:
 		{
-			return advanceAlongPath(state, dest, v);
+			return advanceAlongPath(state, v, destPos, destFacing);
 		}
 		case MissionType::Patrol:
-			if (!advanceAlongPath(state, dest, v))
+			if (!advanceAlongPath(state, v, destPos, destFacing))
 			{
 				if (missionCounter == 0)
 					return false;
@@ -485,16 +490,34 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 					{
 						currentPlannedPath.clear();
 					}
-					// FIXME: Use vehicle engagement rules here, for now just 33% chance to go in
+					// FIXME: Use vehicle engagement rules here, for now just face target with 33%
+					// chance
 					if (randBoundsExclusive(state.rng, 0, 100) < 33)
 					{
-						distancePreference = 0.0f;
+						Vec2<float> targetFacingVector = {targetVehicle->position.x - v.position.x,
+						                                  targetVehicle->position.y - v.position.y};
+						if (targetFacingVector.x != 0 || targetFacingVector.y != 0)
+						{
+							targetFacingVector = glm::normalize(targetFacingVector);
+							float a1 = acosf(-targetFacingVector.y);
+							float a2 = asinf(targetFacingVector.x);
+							float angleToTarget = a2 >= 0 ? a1 : 2.0f * (float)M_PI - a1;
+							// Bring angle to one of directional alignments
+							int angleToTargetInt = angleToTarget / (float)M_PI * 4.0f + 0.5f;
+							angleToTarget = (float)angleToTargetInt * (float)M_PI / 4.0f;
+							if (destFacing != angleToTarget)
+							{
+								LogWarning("Vehicle %s facing target", v.name);
+								destFacing = angleToTarget;
+								return true;
+							}
+						}
 					}
 					auto newPosition =
 					    tileHelper.findSidestep(state, vTile, targetTile, distancePreference);
 					if (newPosition != vTile->getPosition())
 					{
-						dest = newPosition;
+						destPos = newPosition;
 						return true;
 					}
 					return false;
@@ -515,9 +538,9 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 					if (currentPlannedPath.empty())
 						return false;
 					auto pos = currentPlannedPath.front();
-					dest = Vec3<float>{pos.x, pos.y, pos.z}
-					       // Add {0.5,0.5,0.5} to make it route to the center of the tile
-					       + Vec3<float>{0.5, 0.5, 0.5};
+					destPos = Vec3<float>{pos.x, pos.y, pos.z}
+					          // Add {0.5,0.5,0.5} to make it route to the center of the tile
+					          + Vec3<float>{0.5, 0.5, 0.5};
 					return true;
 				}
 			}
@@ -532,7 +555,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 				         "you've reached the target?",
 				         name);
 			}
-			dest = {0, 0, 9};
+			destPos = {0, 0, 9};
 			return false;
 		}
 		case MissionType::Snooze:
@@ -890,7 +913,10 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			else
 			{
-				this->setPathTo(state, v, this->targetLocation);
+				if (currentPlannedPath.empty())
+				{
+					this->setPathTo(state, v, this->targetLocation);
+				}
 			}
 			return;
 		}
@@ -1145,7 +1171,11 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					// Deposit aliens or subvert
 					if (subvert)
 					{
-						LogError("Implement subversion mechanic!");
+						// FIXME: Proper micronoid rain, for now a flat 33% chance of success
+						if (randBoundsExclusive(state.rng, 0, 100) < 33)
+						{
+							targetBuilding->owner->infiltrationValue = 200;
+						}
 					}
 					else
 					{
@@ -1337,7 +1367,8 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 	}
 }
 
-bool VehicleMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Vehicle &v)
+bool VehicleMission::advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> &destPos,
+                                      float &destFacing)
 {
 	// Add {0.5,0.5,0.5} to make it route to the center of the tile
 	static const Vec3<float> offset{0.5f, 0.5f, 0.5f};
@@ -1353,12 +1384,12 @@ bool VehicleMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Vehic
 	// Land/TakeOff mission does not check for collision or path skips
 	if (type == MissionType::Land)
 	{
-		dest = Vec3<float>{pos.x, pos.y, pos.z} + offsetLand;
+		destPos = Vec3<float>{pos.x, pos.y, pos.z} + offsetLand;
 		return true;
 	}
 	if (type == MissionType::TakeOff)
 	{
-		dest = Vec3<float>{pos.x, pos.y, pos.z} + offset;
+		destPos = Vec3<float>{pos.x, pos.y, pos.z} + offset;
 		return true;
 	}
 
@@ -1397,7 +1428,7 @@ bool VehicleMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Vehic
 		it = ++currentPlannedPath.begin();
 	}
 
-	dest = Vec3<float>{pos.x, pos.y, pos.z} + offset;
+	destPos = Vec3<float>{pos.x, pos.y, pos.z} + offset;
 	return true;
 }
 

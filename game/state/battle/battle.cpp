@@ -1892,17 +1892,75 @@ void Battle::notifyAction(Vec3<int> location, StateRef<BattleUnit> actorUnit)
 	}
 }
 
-int Battle::killStrandedUnits(GameState &state, bool preview)
+int Battle::killStrandedUnits(GameState &state, StateRef<Organisation> org, bool preview)
 {
-	std::ignore = state;
-	std::ignore = preview;
-	LogWarning("Implement killing stranded player units");
-	return 0;
+	int countKilled = 0;
+
+	for (auto &u : units)
+	{
+		if (u.second->owner != org || u.second->isDead())
+		{
+			continue;
+		}
+		// Find closest exit
+		float distanceToExit = FLT_MAX;
+		for (auto &e : exits)
+		{
+			float distance = glm::length(u.second->position - (Vec3<float>)e);
+			if (distance < distanceToExit)
+			{
+				distanceToExit = distance;
+			}
+		}
+		// Find closest enemy from org that sees us
+		float distanceToEnemy = FLT_MAX;
+		for (auto &owner : participants)
+		{
+			if (owner == org || owner->isRelatedTo(org) != Organisation::Relation::Hostile)
+			{
+				continue;
+			}
+			for (auto &spotted : visibleUnits.at(owner))
+			{
+				if (spotted.id != u.first)
+				{
+					continue;
+				}
+				// Org sees this unit
+				// Look for closest unit from this org
+				for (auto &e : units)
+				{
+					if (e.second->owner != owner || e.second->isDead())
+					{
+						continue;
+					}
+					float distance = glm::length(u.second->position - e.second->position);
+					if (distance < distanceToEnemy)
+					{
+						distanceToEnemy = distance;
+					}
+				}
+				// No need to look further, we already processed this org
+				break;
+			}
+		}
+		// Exit must be three times closer than enemy for escape to be possible
+		if (distanceToEnemy / 3.0f > distanceToExit)
+		{
+			countKilled++;
+			if (!preview)
+			{
+				u.second->agent->modified_stats.health = 0;
+				u.second->die(state);
+			}
+		}
+	}
+	return countKilled;
 }
 
 void Battle::abortMission(GameState &state)
 {
-	killStrandedUnits(state);
+	killStrandedUnits(state, currentPlayer);
 	auto player = state.getPlayer();
 	for (auto &u : units)
 	{

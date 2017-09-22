@@ -292,6 +292,7 @@
 		<member>equipment</member>
 		<member>city</member>
 		<member>position</member>
+		<member>goalPosition</member>
 		<member>velocity</member>
 		<member>facing</member>
 		<member>goalFacing</member>

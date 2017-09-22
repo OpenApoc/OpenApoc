@@ -80,6 +80,7 @@ class Vehicle : public StateObject,
 	std::list<sp<VEquipment>> equipment;
 	StateRef<City> city;
 	Vec3<float> position;
+	Vec3<float> goalPosition;
 	Vec3<float> velocity;
 	float facing = 0.0f;
 	float goalFacing = 0.0f;
@@ -167,6 +168,8 @@ class Vehicle : public StateObject,
 	float getSpeed() const;
 
 	void setPosition(const Vec3<float> &pos);
+
+	bool addMission(GameState &state, VehicleMission *mission, bool toBack = false);
 
 	virtual void update(GameState &state, unsigned int ticks);
 	void updateSprite(GameState &state);
