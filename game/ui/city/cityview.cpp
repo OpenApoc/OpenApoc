@@ -22,6 +22,7 @@
 #include "game/state/battle/battle.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/city/projectile.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
@@ -34,6 +35,7 @@
 #include "game/state/rules/vammo_type.h"
 #include "game/state/rules/vehicle_type.h"
 #include "game/state/tileview/collision.h"
+#include "game/state/tileview/tileobject_projectile.h"
 #include "game/state/tileview/tileobject_scenery.h"
 #include "game/state/tileview/tileobject_vehicle.h"
 #include "game/state/ufopaedia.h"
@@ -917,100 +919,122 @@ void CityView::eventOccurred(Event *e)
 			// anything
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
 			auto clickTop = this->screenToTileCoords(
-			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 9.99f);
+			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 12.99f);
 			auto clickBottom = this->screenToTileCoords(
 			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
 			auto collision =
 			    state->current_city->map->findCollision(clickTop, clickBottom, {}, nullptr, true);
 			if (collision)
 			{
-				if (collision.obj->getType() == TileObject::Type::Scenery)
+				switch (collision.obj->getType())
 				{
-					auto scenery =
-					    std::dynamic_pointer_cast<TileObjectScenery>(collision.obj)->getOwner();
-					LogWarning("Clicked on scenery at %s", scenery->currentPosition);
-
-					auto building = scenery->building;
-					if (this->selectionState == SelectionState::VehicleGotoLocation)
+					case TileObject::Type::Scenery:
 					{
+						auto scenery =
+						    std::dynamic_pointer_cast<TileObjectScenery>(collision.obj)->getOwner();
+						LogWarning("Clicked on scenery at %s", scenery->currentPosition);
 
-						auto v = this->selectedVehicle.lock();
-						if (v && v->owner == state->getPlayer())
+						auto building = scenery->building;
+						if (this->selectionState == SelectionState::VehicleGotoLocation)
 						{
-							// Use vehicle altitude preference to select target height, clamp by map
-							// size
-							int altitude =
-							    glm::min((int)v->altitude, state->current_city->map->size.z - 1);
 
-							Vec3<int> targetPos{scenery->currentPosition.x,
-							                    scenery->currentPosition.y, altitude};
-							// FIXME: Don't clear missions if not replacing current mission
-							v->missions.clear();
-							v->missions.emplace_back(
-							    VehicleMission::gotoLocation(*state, *v, targetPos));
-							v->missions.front()->start(*this->state, *v);
-							LogWarning("Vehicle \"%s\" going to location %s", v->name, targetPos);
-						}
-						this->selectionState = SelectionState::Normal;
-					}
-					else if (building)
-					{
-						LogInfo("Scenery owned by building \"%s\"", building->name);
-						if (this->selectionState == SelectionState::VehicleGotoBuilding)
-						{
 							auto v = this->selectedVehicle.lock();
 							if (v && v->owner == state->getPlayer())
 							{
-								LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name,
-								           building->name);
+								// Use vehicle altitude preference to select target height, clamp by
+								// map
+								// size
+								int altitude = glm::min((int)v->altitude,
+								                        state->current_city->map->size.z - 1);
+
+								Vec3<int> targetPos{scenery->currentPosition.x,
+								                    scenery->currentPosition.y, altitude};
 								// FIXME: Don't clear missions if not replacing current mission
 								v->missions.clear();
 								v->missions.emplace_back(
-								    VehicleMission::gotoBuilding(*state, *v, building));
+								    VehicleMission::gotoLocation(*state, *v, targetPos));
+								v->missions.front()->start(*this->state, *v);
+								LogWarning("Vehicle \"%s\" going to location %s", v->name,
+								           targetPos);
+							}
+							this->selectionState = SelectionState::Normal;
+						}
+						else if (building)
+						{
+							LogInfo("Scenery owned by building \"%s\"", building->name);
+							if (this->selectionState == SelectionState::VehicleGotoBuilding)
+							{
+								auto v = this->selectedVehicle.lock();
+								if (v && v->owner == state->getPlayer())
+								{
+									LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name,
+									           building->name);
+									// FIXME: Don't clear missions if not replacing current mission
+									v->missions.clear();
+									v->missions.emplace_back(
+									    VehicleMission::gotoBuilding(*state, *v, building));
+									v->missions.front()->start(*this->state, *v);
+								}
+								this->selectionState = SelectionState::Normal;
+							}
+							else if (this->selectionState == SelectionState::VehicleAttackBuilding)
+							{
+								auto v = this->selectedVehicle.lock();
+								if (v)
+								{
+									// TODO: Attack building mission
+									LogWarning("Vehicle \"%s\" attack building \"%s\"", v->name,
+									           building->name);
+								}
+								this->selectionState = SelectionState::Normal;
+							}
+							else if (this->selectionState == SelectionState::Normal)
+							{
+								fw().stageQueueCommand(
+								    {StageCmd::Command::PUSH,
+								     mksp<BuildingScreen>(this->state, building)});
+							}
+						}
+						return;
+					}
+					case TileObject::Type::Vehicle:
+					{
+						auto vehicle = std::dynamic_pointer_cast<TileObjectVehicle>(collision.obj)
+						                   ->getVehicle();
+						LogWarning("Clicked on vehicle \"%s\" at %s", vehicle->name,
+						           vehicle->position);
+
+						if (this->selectionState == SelectionState::VehicleAttackVehicle)
+						{
+							auto v = this->selectedVehicle.lock();
+							StateRef<Vehicle> vehicleRef(state.get(), vehicle);
+
+							if (v && v->owner == state->getPlayer() && v != vehicle)
+							{
+								// FIXME: Don't clear missions if not replacing current mission
+								v->missions.clear();
+								v->missions.emplace_back(
+								    VehicleMission::attackVehicle(*this->state, *v, vehicleRef));
 								v->missions.front()->start(*this->state, *v);
 							}
 							this->selectionState = SelectionState::Normal;
 						}
-						else if (this->selectionState == SelectionState::VehicleAttackBuilding)
-						{
-							auto v = this->selectedVehicle.lock();
-							if (v)
-							{
-								// TODO: Attack building mission
-								LogWarning("Vehicle \"%s\" attack building \"%s\"", v->name,
-								           building->name);
-							}
-							this->selectionState = SelectionState::Normal;
-						}
-						else if (this->selectionState == SelectionState::Normal)
-						{
-							fw().stageQueueCommand({StageCmd::Command::PUSH,
-							                        mksp<BuildingScreen>(this->state, building)});
-						}
+						return;
+					}
+					case TileObject::Type::Projectile:
+					{
+						auto projectile =
+						    std::dynamic_pointer_cast<TileObjectProjectile>(collision.obj)
+						        ->getProjectile();
+						LogWarning("Clicked on projectile: Power %s at %s", projectile->damage,
+						           projectile->position);
 
 						return;
 					}
-				}
-				else if (collision.obj->getType() == TileObject::Type::Vehicle)
-				{
-					auto vehicle =
-					    std::dynamic_pointer_cast<TileObjectVehicle>(collision.obj)->getVehicle();
-					LogWarning("Clicked on vehicle \"%s\"", vehicle->name);
-
-					if (this->selectionState == SelectionState::VehicleAttackVehicle)
+					default:
 					{
-						auto v = this->selectedVehicle.lock();
-						StateRef<Vehicle> vehicleRef(state.get(), vehicle);
-
-						if (v && v->owner == state->getPlayer() && v != vehicle)
-						{
-							// FIXME: Don't clear missions if not replacing current mission
-							v->missions.clear();
-							v->missions.emplace_back(
-							    VehicleMission::attackVehicle(*this->state, *v, vehicleRef));
-							v->missions.front()->start(*this->state, *v);
-						}
-						this->selectionState = SelectionState::Normal;
+						LogWarning("Clicked on some object we didn't care to process");
+						return;
 					}
 				}
 			}

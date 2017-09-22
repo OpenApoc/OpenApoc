@@ -56,11 +56,11 @@ std::tuple<AIDecision, bool> UnitAIDefault::think(GameState &state, BattleUnit &
 	// Turn to attacker in real time if we're idle
 	if (attackerPosition != NONE && !u.isBusy() && u.isConscious() &&
 	    ticksAutoTurnAvailable <= state.gameTime.getTicks() &&
-	    BattleUnitMission::getFacing(u, u.position + (Vec3<float>)attackerPosition) != u.goalFacing)
+	    BattleUnitMission::getFacing(u, (Vec3<float>)attackerPosition) != u.goalFacing)
 	{
 		movement = mksp<AIMovement>();
 		movement->type = AIMovement::Type::Turn;
-		movement->targetLocation = u.position + (Vec3<float>)attackerPosition;
+		movement->targetLocation = attackerPosition;
 		ticksAutoTurnAvailable = state.gameTime.getTicks() + AUTO_TURN_COOLDOWN;
 	}
 

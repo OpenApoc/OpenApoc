@@ -11,7 +11,7 @@
 #include <map>
 
 // Uncomment to allow projectiles to shoot down friendly projectiles
-//#define ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE
+#define ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE
 
 namespace OpenApoc
 {

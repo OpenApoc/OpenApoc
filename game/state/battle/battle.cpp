@@ -1363,12 +1363,6 @@ void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 			auto unit = c.projectile->trackedUnit;
 			if (unit)
 			{
-				if (unit->visibleUnits.find(c.projectile->firerUnit) == unit->visibleUnits.end())
-				{
-					LogWarning("Notify: unit %s that he's taking fire",
-					           c.projectile->trackedUnit.id);
-				}
-
 				unit->notifyUnderFire(state, c.projectile->firerPosition,
 				                      c.projectile->firerUnit->owner == unit->owner ||
 				                          visibleUnits[unit->owner].find(c.projectile->firerUnit) !=

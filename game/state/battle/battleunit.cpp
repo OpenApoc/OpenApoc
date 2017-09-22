@@ -919,6 +919,12 @@ bool BattleUnit::hasLineToUnit(const sp<BattleUnit> unit, bool useLOS) const
 		auto targetvVectorDelta = glm::normalize(targetPosition - muzzleLocation) * 0.75f;
 		targetPosition -= targetvVectorDelta;
 	}
+	return hasLineToPosition(targetPosition, useLOS);
+}
+
+bool BattleUnit::hasLineToPosition(Vec3<float> targetPosition, bool useLOS) const
+{
+	auto muzzleLocation = getMuzzleLocation();
 	// Map part that prevents Line to target
 	auto cMap = tileObject->map.findCollision(muzzleLocation, targetPosition, mapPartSet,
 	                                          tileObject, useLOS);
@@ -935,7 +941,7 @@ bool BattleUnit::hasLineToUnit(const sp<BattleUnit> unit, bool useLOS) const
 	       && (!cUnit || owner->isRelatedTo(cUnit->owner) == Organisation::Relation::Hostile
 	           // If our head blocks brainsucker on it - no problem, hit will go versus brainsucker
 	           // anyway
-	           || cUnit->brainSucker == unit);
+	           || cUnit->brainSucker);
 }
 
 int BattleUnit::getPsiCost(PsiStatus status, bool attack)
@@ -1826,7 +1832,7 @@ bool BattleUnit::handleCollision(GameState &state, Collision &c)
 			state.current_battle->giveInterruptChanceToUnit(
 			    state, {&state, id}, {&state, id},
 			    projectile->firerUnit->agent->getReactionValue());
-			notifyHit(-projectile->getVelocity());
+			notifyHit(position - glm::normalize(projectile->getVelocity()) * 1.41f);
 			if (projectile->firerUnit)
 			{
 				projectile->firerUnit->experiencePoints.accuracy++;
@@ -2280,11 +2286,10 @@ void BattleUnit::updateEvents(GameState &state)
 	{
 		// our target has a priority over others if enemy
 		auto lastSeenEnemyPosition =
-		    ((targetUnit &&
-		      state.current_battle->visibleEnemies[owner].find(targetUnit) != visibleEnemies.end())
-		         ? targetUnit->position
-		         : (*visibleEnemies.begin())->position) -
-		    position;
+		    (targetUnit &&
+		     state.current_battle->visibleEnemies[owner].find(targetUnit) != visibleEnemies.end())
+		        ? targetUnit->position
+		        : (*visibleEnemies.begin())->position;
 
 		aiList.notifyEnemySpotted(lastSeenEnemyPosition);
 	}
@@ -3478,16 +3483,35 @@ void BattleUnit::updateFiring(GameState &state, sp<AEquipment> &weaponLeft,
 			// Lead the target
 			if (targetUnit)
 			{
-				auto projectileVelocity = firingWeapon->getPayloadType()->speed *
-				                          PROJECTILE_VELOCITY_MULTIPLIER / (float)TICK_SCALE;
+				auto projectileVelocity =
+				    firingWeapon->getPayloadType()->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 				// Target's velocity (if falling/jumping)
-				Vec3<float> targetVelocity = targetUnit->getVelocity() / (float)TICK_SCALE;
-				auto distance = glm::length(targetPosition - muzzleLocation);
-				targetPosAdjusted += targetVelocity * distance / projectileVelocity;
+				Vec3<float> targetVelocity = targetUnit->getVelocity();
+				auto distanceVoxels =
+				    glm::length((targetPosition - muzzleLocation) * VELOCITY_SCALE_BATTLE);
+				float timeToImpact = distanceVoxels * (float)TICK_SCALE / projectileVelocity;
+				targetPosAdjusted += Collision::getLeadingOffset(targetPosition - muzzleLocation,
+				                                                 projectileVelocity * timeToImpact,
+				                                                 targetVelocity * timeToImpact);
 			}
 
 			auto targetVector = targetPosAdjusted - muzzleLocation;
 			targetVector = {targetVector.x, targetVector.y, 0.0f};
+			// If we meddled with target position see that we didn't break stuff
+			if (targetPosAdjusted != targetPosition)
+			{
+				// Target must be within frontal arc, must have LOF to target
+				if (glm::angle(glm::normalize(targetVector),
+				               glm::normalize(Vec3<float>{facing.x, facing.y, 0})) >= M_PI / 2 ||
+				    !hasLineToPosition(targetPosAdjusted))
+				{
+					// Try firing at unit itself if we can't fire at the leading point
+					targetPosAdjusted = targetPosition;
+					targetVector = targetPosAdjusted - muzzleLocation;
+					targetVector = {targetVector.x, targetVector.y, 0.0f};
+				}
+			}
+
 			// Target must be within frontal arc, must have LOF to if unit
 			if (glm::angle(glm::normalize(targetVector),
 			               glm::normalize(Vec3<float>{facing.x, facing.y, 0})) < M_PI / 2)
@@ -3497,6 +3521,7 @@ void BattleUnit::updateFiring(GameState &state, sp<AEquipment> &weaponLeft,
 				         state.current_battle->visibleEnemies[owner].end() ||
 				     !hasLineToUnit(targetUnit)))
 				{
+					// No LOF to target unit
 					// Raise targetMIA flag, so that we start tracking how long is it MIA
 					if (timesTargetMIA == 0)
 					{
@@ -3506,6 +3531,7 @@ void BattleUnit::updateFiring(GameState &state, sp<AEquipment> &weaponLeft,
 				else if (realTime || spendTU(state, getAttackCost(state, *firingWeapon, targetTile),
 				                             true, true, true))
 				{
+					// Can fire and can afford firing, FIRE!
 					firingWeapon->fire(state, targetPosAdjusted,
 					                   targetingMode == TargetingMode::Unit ? targetUnit : nullptr);
 					cloakTicksAccumulated = 0;
@@ -3518,12 +3544,22 @@ void BattleUnit::updateFiring(GameState &state, sp<AEquipment> &weaponLeft,
 				}
 				else
 				{
+					// Can't afford firing
 					stopAttacking();
 				}
 			}
 			else
 			{
-				stopAttacking();
+				// Target not in frontal arc
+				// If this is a unit, start tracking how long is it so
+				if (targetingMode == TargetingMode::Unit)
+				{
+					// Raise targetMIA flag, so that we start tracking how long is it MIA
+					if (timesTargetMIA == 0)
+					{
+						timesTargetMIA = 1;
+					}
+				}
 			}
 		}
 	}
@@ -4232,8 +4268,9 @@ void BattleUnit::executeAIMovement(GameState &state, AIMovement &movement)
 
 void BattleUnit::notifyUnderFire(GameState &state, Vec3<int> position, bool visible)
 {
-	if (visible)
+	if (!visible)
 	{
+		// Alert unit under fire if attacker is unseen
 		sendAgentEvent(state, GameEventType::AgentUnderFire, true);
 	}
 	aiList.notifyUnderFire(position);

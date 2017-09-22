@@ -401,6 +401,9 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Clear LOF means no friendly fire and no map part in between
 	// Clear LOS means nothing in between
 	bool hasLineToUnit(const sp<BattleUnit> unit, bool useLOS = false) const;
+	// Clear LOF means no friendly fire and no map part in between
+	// Clear LOS means nothing in between
+	bool hasLineToPosition(Vec3<float> targetPosition, bool useLOS = false) const;
 
 	// Psi
 

@@ -183,6 +183,8 @@ class FlyingVehicleMover : public VehicleMover
 			{
 				// Step 02.01: Figure out if projectile can theoretically hit the vehicle
 
+				// FIXME: Do not dodge projectiles that are too low damage vs us?
+				// Is this also in rules of engagement?
 				// Do not dodge our own projectiles we just fired
 				if (p->lifetime < 36 && p->firerVehicle == vehicle.shared_from_this())
 				{
@@ -191,9 +193,9 @@ class FlyingVehicleMover : public VehicleMover
 				// Find distance from vehicle to projectile path
 				// Vehicle position relative to projectile
 				auto point = vehicle.position - p->position;
-				// Final projectile position before expiry
-				auto line = p->velocity * ((float)(p->lifetime - p->age) / (float)TICK_SCALE) /
-				            p->velocityScale;
+				// Final projectile position before expiry (or 1 second passes)
+				auto line = p->velocity * (float)std::min(TICKS_PER_SECOND, p->lifetime - p->age) /
+				            (float)TICK_SCALE / p->velocityScale;
 				if (glm::length(line) == 0.0f)
 				{
 					continue;
@@ -323,6 +325,10 @@ class FlyingVehicleMover : public VehicleMover
 				std::list<Vec3<int>> dodgeLocations;
 				for (auto &targetPos : possibleDodgeLocations)
 				{
+					if (!vehicle.tileObject->map.tileIsValid(targetPos))
+					{
+						continue;
+					}
 					auto tFrom = vehicle.tileObject->getOwningTile();
 					auto tTo = tFrom->map.getTile(targetPos);
 					if (FlyingVehicleTileHelper{vehicle.tileObject->map, vehicle}.canEnterTile(
@@ -684,11 +690,11 @@ void Vehicle::updateSprite(GameState &state)
 	{
 		banking = VehicleType::Banking::Left;
 	}
-	else if (velocity.z > 0.0f)
+	else if ((velocity.x != 0.0f || velocity.y != 0.0f) && velocity.z > 0.0f)
 	{
 		banking = VehicleType::Banking::Ascending;
 	}
-	else if (velocity.z < 0.0f)
+	else if ((velocity.x != 0.0f || velocity.y != 0.0f) && velocity.z < 0.0f)
 	{
 		banking = VehicleType::Banking::Descending;
 	}
@@ -1072,11 +1078,24 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 		auto targetPosAdjusted = target;
 		auto projectileVelocity = eq->type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 		auto targetVelocity = enemyTile->getVehicle()->velocity;
-		targetPosAdjusted += targetVelocity * distanceTiles / projectileVelocity;
+		float timeToImpact = distanceVoxels * (float)TICK_SCALE / projectileVelocity;
+		targetPosAdjusted +=
+		    Collision::getLeadingOffset(target - firePosition, projectileVelocity * timeToImpact,
+		                                targetVelocity * timeToImpact);
 
 		// No sight to target
 		if (vehicleTile->map.findCollision(firePosition, targetPosAdjusted, scenerySet))
-			continue;
+		{
+			if (vehicleTile->map.findCollision(firePosition, target, scenerySet))
+			{
+				continue;
+			}
+			else
+			{
+				// Can't fire at where it will be so at least fire at where it's now
+				targetPosAdjusted = target;
+			}
+		}
 
 		// Cancel cloak
 		cloakTicksAccumulated = 0;
@@ -1146,14 +1165,24 @@ bool Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 		// Lead the target
 		auto targetPosAdjusted = target;
 		auto projectileVelocity = eq->type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
-		// Expect to meet projectile halfway
 		auto targetVelocity = enemyTile->getProjectile()->velocity;
-		targetPosAdjusted += targetVelocity * distanceTiles / projectileVelocity;
+		float timeToImpact = distanceVoxels * (float)TICK_SCALE / projectileVelocity;
+		targetPosAdjusted +=
+		    Collision::getLeadingOffset(target - firePosition, projectileVelocity * timeToImpact,
+		                                targetVelocity * timeToImpact);
 
 		// No sight to target
 		if (vehicleTile->map.findCollision(firePosition, targetPosAdjusted, scenerySet))
 		{
-			continue;
+			if (vehicleTile->map.findCollision(firePosition, target, scenerySet))
+			{
+				continue;
+			}
+			else
+			{
+				// Can't fire at where it will be so at least fire at where it's now
+				targetPosAdjusted = target;
+			}
 		}
 
 		// Cancel cloak

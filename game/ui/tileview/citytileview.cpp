@@ -72,7 +72,7 @@ void CityTileView::eventOccurred(Event *e)
 				LogWarning("Writing voxel view to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
 				auto img = std::dynamic_pointer_cast<RGBImage>(
-				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this, 11.0f));
+				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this, 12.99f));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 				return;
@@ -81,7 +81,7 @@ void CityTileView::eventOccurred(Event *e)
 				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
 				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-				    {imageOffset, imageOffset + dpySize}, *this, 11.0f, true));
+				    {imageOffset, imageOffset + dpySize}, *this, 12.99f, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 				return;
@@ -90,7 +90,7 @@ void CityTileView::eventOccurred(Event *e)
 				LogWarning("Writing voxel view to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
 				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-				    {imageOffset, imageOffset + dpySize}, *this, 11.0f, false, true));
+				    {imageOffset, imageOffset + dpySize}, *this, 12.99f, false, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 				return;

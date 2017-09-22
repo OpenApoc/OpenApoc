@@ -613,8 +613,7 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkGreen(GameState &sta
 #ifdef VANILLA_AI_DEBUG_OUTPUT
 		LogWarning("VANILLA AI %s: getPursueMovement()", u.id);
 #endif
-		auto pursue = UnitAIHelper::getPursueMovement(
-		    state, u, (Vec3<int>)u.position + lastSeenEnemyPosition);
+		auto pursue = UnitAIHelper::getPursueMovement(state, u, flagLastSeenPosition);
 		if (pursue)
 		{
 			return std::make_tuple(AIDecision(nullptr, pursue), 0.0f, 0);
@@ -633,8 +632,7 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkGreen(GameState &sta
 #ifdef VANILLA_AI_DEBUG_OUTPUT
 			LogWarning("VANILLA AI %s: getTurnMovement()", u.id);
 #endif
-			auto turn =
-			    UnitAIHelper::getTurnMovement(state, u, (Vec3<int>)u.position + attackerPosition);
+			auto turn = UnitAIHelper::getTurnMovement(state, u, flagLastAttackerPosition);
 			return std::make_tuple(AIDecision(nullptr, turn), 0.0f, 0);
 		}
 	}
