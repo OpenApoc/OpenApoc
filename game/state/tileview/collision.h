@@ -22,7 +22,7 @@ class Collision
 	explicit operator bool() const { return obj != nullptr; }
 
 	static Vec3<float> getLeadingOffset(Vec3<float> tarPosRelative, float ourVelocity,
-	                                               Vec3<float> tarVelocity);
+	                                    Vec3<float> tarVelocity);
 };
 
 }; // namespace OpenApoc
