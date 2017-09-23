@@ -51,6 +51,12 @@ class City : public StateObject
 
 	up<TileMap> map;
 
+	// CityView and CityTileView settings, saved here so that we can return to them
+
+	Vec3<float> cityViewScreenCenter = {0.0f, 0.0f, 0.0f};
+	int cityViewPageIndex = 0;
+	std::list<StateRef<Vehicle>> cityViewSelectedVehicles;
+
 	void handleProjectileHit(GameState &state, sp<Projectile> projectile, bool displayDoodad,
 	                         bool playSound);
 

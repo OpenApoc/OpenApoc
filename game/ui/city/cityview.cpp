@@ -106,9 +106,89 @@ static const std::vector<UString> CITY_ICON_VEHICLE_PASSENGER_COUNT_RESOURCES = 
 
 } // anonymous namespace
 
+void CityView::orderGoToBase()
+{
+	for (auto &v : this->state->current_city->cityViewSelectedVehicles)
+	{
+		if (v && v->owner == this->state->getPlayer())
+		{
+			LogWarning("Goto base for vehicle \"%s\"", v->name);
+			auto bld = v->homeBuilding;
+			if (!bld)
+			{
+				LogError("Vehicle \"%s\" has no building", v->name);
+			}
+			LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name, bld->name);
+			// FIXME: Don't clear missions if not replacing current mission
+			v->setMission(*this->state, VehicleMission::gotoBuilding(*this->state, *v, bld));
+		}
+	}
+}
+
+void CityView::orderMove(Vec3<float> position)
+{
+	// FIXME: Move in formation
+	LogWarning("IMPLEMENT Moving in formation");
+	for (auto &v : this->state->current_city->cityViewSelectedVehicles)
+	{
+		if (v && v->owner == this->state->getPlayer())
+		{
+			// Use vehicle altitude preference to select target height, clamp by
+			// map
+			// size
+			int altitude = glm::min((int)v->altitude, state->current_city->map->size.z - 1);
+
+			Vec3<int> targetPos{position.x, position.y, altitude};
+			// FIXME: Don't clear missions if not replacing current mission
+			v->setMission(*state, VehicleMission::gotoLocation(*state, *v, targetPos));
+			LogWarning("Vehicle \"%s\" going to location %s", v->name, targetPos);
+		}
+	}
+}
+
+void CityView::orderMove(StateRef<Building> building)
+{
+	for (auto &v : this->state->current_city->cityViewSelectedVehicles)
+	{
+		if (v && v->owner == this->state->getPlayer())
+		{
+			LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name, building->name);
+			// FIXME: Don't clear missions if not replacing current mission
+			v->setMission(*state, VehicleMission::gotoBuilding(*state, *v, building));
+		}
+	}
+}
+
+void CityView::orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additive) {}
+
+void CityView::orderAttack(StateRef<Vehicle> vehicle)
+{
+	for (auto &v : this->state->current_city->cityViewSelectedVehicles)
+	{
+		if (v && v->owner == this->state->getPlayer() && v != vehicle)
+		{
+			// FIXME: Don't clear missions if not replacing current mission
+			v->setMission(*state, VehicleMission::attackVehicle(*this->state, *v, vehicle));
+		}
+	}
+}
+
+void CityView::orderAttack(StateRef<Building> building)
+{
+	for (auto &v : this->state->current_city->cityViewSelectedVehicles)
+	{
+		if (v && v->owner == this->state->getPlayer())
+		{
+			// TODO: Attack building mission
+			LogWarning("IMPLEMENT: Vehicle \"%s\" attack building \"%s\"", v->name, building->name);
+		}
+	}
+}
+
 CityView::CityView(sp<GameState> state)
     : CityTileView(*state->current_city->map, Vec3<int>{TILE_X_CITY, TILE_Y_CITY, TILE_Z_CITY},
-                   Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric, *state),
+                   Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric,
+                   state->current_city->cityViewScreenCenter, *state),
       baseForm(ui().getForm("city/city")), overlayTab(ui().getForm("city/overlay")),
       updateSpeed(UpdateSpeed::Speed1), lastSpeed(UpdateSpeed::Pause), state(state),
       followVehicle(false), selectionState(SelectionState::Normal),
@@ -151,6 +231,10 @@ CityView::CityView(sp<GameState> state)
 		mod_night_palette.push_back(newPal[2]);
 	}
 
+	overlayTab->setVisible(false);
+	overlayTab->findControlTyped<GraphicButton>("BUTTON_CLOSE")
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this](Event *) { setSelectionState(SelectionState::Normal); });
 	baseForm->findControlTyped<RadioButton>("BUTTON_SPEED1")->setChecked(true);
 	for (auto &formName : TAB_FORM_NAMES)
 	{
@@ -163,7 +247,7 @@ CityView::CityView(sp<GameState> state)
 		f->takesFocus = false;
 		this->uiTabs.push_back(f);
 	}
-	this->activeTab = this->uiTabs[0];
+	this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
 
 	alertSounds.emplace_back(
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/alert.raw:22050"));
@@ -177,15 +261,18 @@ CityView::CityView(sp<GameState> state)
 	// Refresh base views
 	resume();
 
-	auto bld = state->current_base->building;
-	if (!bld)
+	if (state->newGame)
 	{
-		LogError("Base with invalid bld");
-	}
-	auto bldBounds = bld->bounds;
+		auto bld = state->current_base->building;
+		if (!bld)
+		{
+			LogError("Base with invalid bld");
+		}
+		auto bldBounds = bld->bounds;
 
-	Vec2<int> buildingCenter = (bldBounds.p0 + bldBounds.p1) / 2;
-	this->setScreenCenterTile(buildingCenter);
+		Vec2<int> buildingCenter = (bldBounds.p0 + bldBounds.p1) / 2;
+		this->setScreenCenterTile(buildingCenter);
+	}
 
 	for (auto &iconResource : CITY_ICON_RESOURCES)
 	{
@@ -226,29 +313,45 @@ CityView::CityView(sp<GameState> state)
 	this->shieldImage = img;
 
 	this->baseForm->findControl("BUTTON_TAB_1")
-	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *) { this->activeTab = this->uiTabs[0]; });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    this->state->current_city->cityViewPageIndex = 0;
+		    this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
+		});
 	this->baseForm->findControl("BUTTON_TAB_2")
-	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *) { this->activeTab = this->uiTabs[1]; });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    this->state->current_city->cityViewPageIndex = 1;
+		    this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
+		});
 	this->baseForm->findControl("BUTTON_TAB_3")
-	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *) { this->activeTab = this->uiTabs[2]; });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    this->state->current_city->cityViewPageIndex = 2;
+		    this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
+		});
 	this->baseForm->findControl("BUTTON_TAB_4")
-	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *) { this->activeTab = this->uiTabs[3]; });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    this->state->current_city->cityViewPageIndex = 3;
+		    this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
+		});
 	this->baseForm->findControl("BUTTON_TAB_5")
-	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *) { this->activeTab = this->uiTabs[4]; });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    this->state->current_city->cityViewPageIndex = 4;
+		    this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
+		});
 	this->baseForm->findControl("BUTTON_TAB_6")
-	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *) { this->activeTab = this->uiTabs[5]; });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    this->state->current_city->cityViewPageIndex = 5;
+		    this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
+		});
 	this->baseForm->findControl("BUTTON_TAB_7")
-	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *) { this->activeTab = this->uiTabs[6]; });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    this->state->current_city->cityViewPageIndex = 6;
+		    this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
+		});
 	this->baseForm->findControl("BUTTON_TAB_8")
-	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *) { this->activeTab = this->uiTabs[7]; });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    this->state->current_city->cityViewPageIndex = 7;
+		    this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
+		});
 	this->baseForm->findControl("BUTTON_FOLLOW_VEHICLE")
 	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
 		    this->followVehicle =
@@ -321,145 +424,157 @@ CityView::CityView(sp<GameState> state)
 	vehicleForm->findControl("BUTTON_EQUIP_VEHICLE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    auto equipScreen = mksp<VEquipScreen>(this->state);
-		    auto v = this->selectedVehicle.lock();
-		    if (v && v->owner == this->state->getPlayer())
+		    for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 		    {
-			    equipScreen->setSelectedVehicle(v);
+			    if (v && v->owner == this->state->getPlayer())
+			    {
+				    equipScreen->setSelectedVehicle(v);
+				    fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
+				    break;
+			    }
 		    }
-		    fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
 		});
 	vehicleForm->findControl("BUTTON_VEHICLE_BUILDING")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    auto v = this->selectedVehicle.lock();
-		    if (v && v->owner == this->state->getPlayer())
+		    for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 		    {
-			    auto b = v->currentlyLandedBuilding;
-			    if (b)
+			    if (v && v->owner == this->state->getPlayer())
 			    {
-				    fw().stageQueueCommand(
-				        {StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, b)});
+				    auto b = v->currentlyLandedBuilding;
+				    if (b)
+				    {
+					    fw().stageQueueCommand(
+					        {StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, b)});
+					    break;
+				    }
 			    }
 		    }
 		});
 	vehicleForm->findControl("BUTTON_GOTO_BUILDING")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    auto v = this->selectedVehicle.lock();
-		    if (v && v->owner == this->state->getPlayer())
+		    for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 		    {
-			    LogInfo("Select building for vehicle \"%s\"", v->name);
-			    this->selectionState = SelectionState::VehicleGotoBuilding;
+			    if (v && v->owner == this->state->getPlayer())
+			    {
+				    setSelectionState(SelectionState::VehicleGotoBuilding);
+				    break;
+			    }
 		    }
-
 		});
 	vehicleForm->findControl("BUTTON_GOTO_LOCATION")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    auto v = this->selectedVehicle.lock();
-		    if (v && v->owner == this->state->getPlayer())
+		    for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 		    {
-			    LogInfo("Select building for vehicle \"%s\"", v->name);
-			    this->selectionState = SelectionState::VehicleGotoLocation;
-		    }
-
-		});
-	vehicleForm->findControl("BUTTON_GOTO_BASE")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    auto v = this->selectedVehicle.lock();
-		    if (v && v->owner == this->state->getPlayer())
-		    {
-			    LogWarning("Goto base for vehicle \"%s\"", v->name);
-			    auto bld = v->homeBuilding;
-			    if (!bld)
+			    if (v && v->owner == this->state->getPlayer())
 			    {
-				    LogError("Vehicle \"%s\" has no building", v->name);
+				    setSelectionState(SelectionState::VehicleGotoLocation);
+				    break;
 			    }
-			    LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name, bld->name);
-			    // FIXME: Don't clear missions if not replacing current mission
-			    v->setMission(*this->state, VehicleMission::gotoBuilding(*this->state, *v, bld));
 		    }
 		});
 	vehicleForm->findControl("BUTTON_VEHICLE_ATTACK")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    auto v = this->selectedVehicle.lock();
-		    if (v && v->owner == this->state->getPlayer())
+		    for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 		    {
-			    LogInfo("Select target for vehicle \"%s\"", v->name);
-			    this->selectionState = SelectionState::VehicleAttackVehicle;
+			    if (v && v->owner == this->state->getPlayer())
+			    {
+				    setSelectionState(SelectionState::VehicleAttackVehicle);
+				    break;
+			    }
 		    }
-
 		});
 	vehicleForm->findControl("BUTTON_VEHICLE_ATTACK_BUILDING")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    auto v = this->selectedVehicle.lock();
-		    if (v && v->owner == this->state->getPlayer())
+		    for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 		    {
-			    LogInfo("Select target building for vehicle \"%s\"", v->name);
-			    this->selectionState = SelectionState::VehicleGotoLocation;
+			    if (v && v->owner == this->state->getPlayer())
+			    {
+				    setSelectionState(SelectionState::VehicleGotoLocation);
+				    break;
+			    }
 		    }
-
 		});
+	vehicleForm->findControl("BUTTON_GOTO_BASE")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { orderGoToBase(); });
 
 	vehicleForm->findControl("BUTTON_ATTACK_MODE_AGGRESSIVE")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
-		    auto v = this->selectedVehicle.lock();
-		    if (v && v->owner == this->state->getPlayer())
+		    for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 		    {
-			    v->attackMode = Vehicle::AttackMode::Aggressive;
+			    if (v && v->owner == this->state->getPlayer())
+			    {
+				    v->attackMode = Vehicle::AttackMode::Aggressive;
+			    }
 		    }
 		});
 	vehicleForm->findControl("BUTTON_ATTACK_MODE_STANDARD")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
-		    auto v = this->selectedVehicle.lock();
-		    if (v && v->owner == this->state->getPlayer())
+		    for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 		    {
-			    v->attackMode = Vehicle::AttackMode::Standard;
+			    if (v && v->owner == this->state->getPlayer())
+			    {
+				    v->attackMode = Vehicle::AttackMode::Standard;
+			    }
 		    }
 		});
 	vehicleForm->findControl("BUTTON_ATTACK_MODE_DEFENSIVE")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
-		    auto v = this->selectedVehicle.lock();
-		    if (v && v->owner == this->state->getPlayer())
+		    for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 		    {
-			    v->attackMode = Vehicle::AttackMode::Defensive;
+			    if (v && v->owner == this->state->getPlayer())
+			    {
+				    v->attackMode = Vehicle::AttackMode::Defensive;
+			    }
 		    }
 		});
 	vehicleForm->findControl("BUTTON_ATTACK_MODE_EVASIVE")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
-		    auto v = this->selectedVehicle.lock();
-		    if (v && v->owner == this->state->getPlayer())
+		    for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 		    {
-			    v->attackMode = Vehicle::AttackMode::Evasive;
+			    if (v && v->owner == this->state->getPlayer())
+			    {
+				    v->attackMode = Vehicle::AttackMode::Evasive;
+			    }
 		    }
 		});
 	vehicleForm->findControl("BUTTON_ALTITUDE_HIGHEST")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
-		    auto v = this->selectedVehicle.lock();
-		    if (v && v->owner == this->state->getPlayer())
+		    for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 		    {
-			    v->altitude = Vehicle::Altitude::Highest;
+			    if (v && v->owner == this->state->getPlayer())
+			    {
+				    v->altitude = Vehicle::Altitude::Highest;
+			    }
 		    }
 		});
 	vehicleForm->findControl("BUTTON_ALTITUDE_HIGH")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
-		    auto v = this->selectedVehicle.lock();
-		    if (v && v->owner == this->state->getPlayer())
+		    for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 		    {
-			    v->altitude = Vehicle::Altitude::High;
+			    if (v && v->owner == this->state->getPlayer())
+			    {
+				    v->altitude = Vehicle::Altitude::High;
+			    }
 		    }
 		});
 	vehicleForm->findControl("BUTTON_ALTITUDE_STANDARD")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
-		    auto v = this->selectedVehicle.lock();
-		    if (v && v->owner == this->state->getPlayer())
+		    for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 		    {
-			    v->altitude = Vehicle::Altitude::Standard;
+			    if (v && v->owner == this->state->getPlayer())
+			    {
+				    v->altitude = Vehicle::Altitude::Standard;
+			    }
 		    }
 		});
 	vehicleForm->findControl("BUTTON_ALTITUDE_LOW")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
-		    auto v = this->selectedVehicle.lock();
-		    if (v && v->owner == this->state->getPlayer())
+		    for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 		    {
-			    v->altitude = Vehicle::Altitude::Low;
+			    if (v && v->owner == this->state->getPlayer())
+			    {
+				    v->altitude = Vehicle::Altitude::Low;
+			    }
 		    }
 		});
 }
@@ -552,6 +667,7 @@ void CityView::render()
 		}
 		activeTab->render();
 		baseForm->render();
+		overlayTab->render();
 		if (activeTab == uiTabs[0])
 		{
 			// Highlight selected base
@@ -643,8 +759,10 @@ void CityView::update()
 		}
 	}
 
-	auto clockControl = baseForm->findControlTyped<Label>("CLOCK");
+	updateSelectedUnits();
 
+	// Update time display
+	auto clockControl = baseForm->findControlTyped<Label>("CLOCK");
 	clockControl->setText(state->gameTime.getLongTimeString());
 
 	// Pulsate palette colors
@@ -734,7 +852,6 @@ void CityView::update()
 
 	ownedVehicleList->ItemSpacing = 0;
 
-	auto selected = this->selectedVehicle.lock();
 	std::map<sp<Vehicle>, std::pair<VehicleTileInfo, sp<Control>>> newVehicleListControls;
 
 	ownedVehicleList->clear();
@@ -763,8 +880,10 @@ void CityView::update()
 			newVehicleListControls[vehicle] = std::make_pair(info, control);
 			ownedVehicleList->addItem(control);
 
-			control->addCallback(FormEventType::MouseDown, [this, vehicle](Event *) {
-				this->selectedVehicle = vehicle;
+			control->addCallback(FormEventType::MouseDown, [this, vehicle](Event *e) {
+				orderSelect(StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)},
+				            Event::isPressed(e->mouse().Button, Event::MouseButton::Right),
+				            modifierLCtrl || modifierRCtrl);
 				auto vehicleForm = this->uiTabs[1];
 
 				switch (vehicle->altitude)
@@ -816,21 +935,21 @@ void CityView::update()
 
 	activeTab->update();
 	baseForm->update();
+	overlayTab->update();
 
 	// If we have 'follow vehicle' enabled we clobber any other movement that may have occurred in
 	// this frame
-	if (this->followVehicle)
+	if (this->followVehicle && !state->current_city->cityViewSelectedVehicles.empty())
 	{
-		auto v = this->selectedVehicle.lock();
-		if (v)
+		auto v = state->current_city->cityViewSelectedVehicles.front();
+		// The selected vehicle may not have a tile object if it's not on the map
+		if (v->tileObject)
 		{
-			// The selected vehicle may not have a tile object if it's not on the map
-			if (v->tileObject)
-			{
-				this->setScreenCenterTile(v->tileObject->getCenter());
-			}
+			this->setScreenCenterTile(v->tileObject->getCenter());
 		}
 	}
+	// Store screen center for serialisation
+	state->current_city->cityViewScreenCenter = centerPos;
 }
 
 std::shared_future<void> loadBattleBase(sp<GameState> state, StateRef<Base> base,
@@ -955,7 +1074,14 @@ bool CityView::handleKeyDown(Event *e)
 		switch (e->keyboard().KeyCode)
 		{
 			case SDLK_ESCAPE:
-				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InGameOptions>(state)});
+				if (selectionState == SelectionState::Normal)
+				{
+					fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InGameOptions>(state)});
+				}
+				else
+				{
+					setSelectionState(SelectionState::Normal);
+				}
 				return true;
 			case SDLK_TAB:
 				this->baseForm->findControlTyped<CheckBox>("BUTTON_TOGGLE_STRATMAP")
@@ -1066,183 +1192,170 @@ bool CityView::handleMouseDown(Event *e)
 					break;
 				}
 			}
-			// Right click opens info screens
-			if (buttonPressed == Event::MouseButton::Right)
+			// Alt opens info screens
+			if (modifierLAlt || modifierRAlt)
 			{
-				if (modifierLAlt || modifierRAlt || modifierLCtrl || modifierRCtrl)
+				StateRef<UfopaediaEntry> ufopaediaEntry;
+				// Left =  Object's ufopaedia info
+				if (buttonPressed == Event::MouseButton::Left)
 				{
-					StateRef<UfopaediaEntry> ufopaediaEntry;
-					// ALT = Object owner's ufopaedia info
-					if (modifierLAlt || modifierRAlt)
+					if (vehicle)
 					{
-						StateRef<Organisation> owner;
-						if (vehicle)
-						{
-							owner = vehicle->owner;
-						}
-						if (building)
-						{
-							owner = building->owner;
-						}
-						if (projectile && projectile->firerVehicle)
-						{
-							owner = projectile->firerVehicle->owner;
-						}
-						if (owner)
-						{
-							ufopaediaEntry = owner->ufopaedia_entry;
-						}
+						ufopaediaEntry = vehicle->type->ufopaedia_entry;
 					}
-					// CTRL =  Object's ufopaedia info
-					else if (modifierLCtrl || modifierRCtrl)
+					if (building)
 					{
-						if (vehicle)
-						{
-							ufopaediaEntry = vehicle->type->ufopaedia_entry;
-						}
-						if (building)
-						{
-							ufopaediaEntry = building->function->ufopaedia_entry;
-						}
+						ufopaediaEntry = building->function->ufopaedia_entry;
 					}
-					// Open ufopaedia entry
-					if (ufopaediaEntry && ufopaediaEntry->dependency.satisfied())
+				}
+				// Right = Object owner's ufopaedia info
+				else
+				{
+					StateRef<Organisation> owner;
+					if (vehicle)
 					{
-						sp<UfopaediaCategory> ufopaedia_category;
-						for (auto &cat : this->state->ufopaedia)
+						owner = vehicle->owner;
+					}
+					if (building)
+					{
+						owner = building->owner;
+					}
+					if (projectile && projectile->firerVehicle)
+					{
+						owner = projectile->firerVehicle->owner;
+					}
+					if (owner)
+					{
+						ufopaediaEntry = owner->ufopaedia_entry;
+					}
+				}
+				// Open ufopaedia entry
+				if (ufopaediaEntry && ufopaediaEntry->dependency.satisfied())
+				{
+					sp<UfopaediaCategory> ufopaedia_category;
+					for (auto &cat : this->state->ufopaedia)
+					{
+						for (auto &entry : cat.second->entries)
 						{
-							for (auto &entry : cat.second->entries)
+							if (ufopaediaEntry == entry.second)
 							{
-								if (ufopaediaEntry == entry.second)
-								{
-									ufopaedia_category = cat.second;
-									break;
-								}
-							}
-							if (ufopaedia_category)
+								ufopaedia_category = cat.second;
 								break;
+							}
 						}
-						if (!ufopaedia_category)
-						{
-							LogError("No UFOPaedia category found for entry %s",
-							         ufopaediaEntry->title);
-						}
-						fw().stageQueueCommand({StageCmd::Command::PUSH,
-						                        mksp<UfopaediaCategoryView>(
-						                            state, ufopaedia_category, ufopaediaEntry)});
+						if (ufopaedia_category)
+							break;
 					}
-					return true;
-				}
-				// If no modifier then we show object's info screen normally
-				if (vehicle && vehicle->owner == state->player)
-				{
-					// Equipscreen for owner vehicles
-					auto equipScreen = mksp<VEquipScreen>(this->state);
-					equipScreen->setSelectedVehicle(vehicle);
-					fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
-				}
-				if (building)
-				{
-					// Base screen for base
-					LogWarning("IMPLEMENT: Base screen for bases on right click");
-					// Building screen for any other building
+					if (!ufopaedia_category)
+					{
+						LogError("No UFOPaedia category found for entry %s", ufopaediaEntry->title);
+					}
 					fw().stageQueueCommand(
-					    {StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, building)});
+					    {StageCmd::Command::PUSH,
+					     mksp<UfopaediaCategoryView>(state, ufopaedia_category, ufopaediaEntry)});
 				}
 				return true;
 			}
-			// Left click handles orders and selections
-			if (buttonPressed == Event::MouseButton::Left)
+			// If shift then we show object's info screen
+			if (modifierLShift || modifierLShift)
 			{
-				switch (selectionState)
+				// Left = Normal selection
+				if (buttonPressed == Event::MouseButton::Left)
 				{
-					case SelectionState::Normal:
+					if (vehicle && vehicle->owner == state->player)
 					{
-						if (building)
-						{
-							// Building screen for any building
-							fw().stageQueueCommand({StageCmd::Command::PUSH,
-							                        mksp<BuildingScreen>(this->state, building)});
-						}
-						if (vehicle && vehicle->owner == state->getPlayer())
-						{
-							LogWarning("IMPLEMENT: Vehicle selection");
-						}
-						break;
+						// Equipscreen for owner vehicles
+						auto equipScreen = mksp<VEquipScreen>(this->state);
+						equipScreen->setSelectedVehicle(vehicle);
+						fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
 					}
-					case SelectionState::VehicleAttackBuilding:
+					if (building)
 					{
-						if (building)
-						{
-							auto v = this->selectedVehicle.lock();
-							if (v)
-							{
-								// TODO: Attack building mission
-								LogWarning("IMPLEMENT: Vehicle \"%s\" attack building \"%s\"",
-								           v->name, building->name);
-							}
-							this->selectionState = SelectionState::Normal;
-						}
-						break;
+						// Base screen for base
+						LogWarning("IMPLEMENT: Base screen for bases on right click");
+						// Building screen for any other building
+						fw().stageQueueCommand(
+						    {StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, building)});
 					}
-					case SelectionState::VehicleAttackVehicle:
+				}
+				// Right = Alternative
+				else
+				{
+					if (vehicle && vehicle->owner == state->player)
 					{
-						if (vehicle)
-						{
-							auto v = this->selectedVehicle.lock();
-							StateRef<Vehicle> vehicleRef(state.get(), vehicle);
-
-							if (v && v->owner == state->getPlayer() && v != vehicle)
-							{
-								// FIXME: Don't clear missions if not replacing current mission
-								v->setMission(*state, VehicleMission::attackVehicle(
-								                          *this->state, *v, vehicleRef));
-							}
-							this->selectionState = SelectionState::Normal;
-						}
-						break;
+						LogWarning("IMPLEMENT: Vehicle location screen for right click");
+						// Equipscreen for owner vehicles
+						auto equipScreen = mksp<VEquipScreen>(this->state);
+						equipScreen->setSelectedVehicle(vehicle);
+						fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
 					}
-					case SelectionState::VehicleGotoBuilding:
+					if (building)
 					{
-						if (building)
-						{
-							auto v = this->selectedVehicle.lock();
-							if (v && v->owner == state->getPlayer())
-							{
-								LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name,
-								           building->name);
-								// FIXME: Don't clear missions if not replacing current mission
-								v->setMission(*state,
-								              VehicleMission::gotoBuilding(*state, *v, building));
-							}
-							this->selectionState = SelectionState::Normal;
-						}
-						break;
+						// Base screen for base
+						LogWarning("IMPLEMENT: Base screen for bases on right click");
+						// Building screen for any other building
+						fw().stageQueueCommand(
+						    {StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, building)});
 					}
-					case SelectionState::VehicleGotoLocation:
+				}
+				return true;
+			}
+			// Otherwise proceed as normal
+			switch (selectionState)
+			{
+				case SelectionState::Normal:
+				{
+					if (building)
 					{
-						// We always have a position if we came this far
-						{
-							auto v = this->selectedVehicle.lock();
-							if (v && v->owner == state->getPlayer())
-							{
-								// Use vehicle altitude preference to select target height, clamp by
-								// map
-								// size
-								int altitude = glm::min((int)v->altitude,
-								                        state->current_city->map->size.z - 1);
-
-								Vec3<int> targetPos{position.x, position.y, altitude};
-								// FIXME: Don't clear missions if not replacing current mission
-								v->setMission(*state,
-								              VehicleMission::gotoLocation(*state, *v, targetPos));
-								LogWarning("Vehicle \"%s\" going to location %s", v->name,
-								           targetPos);
-							}
-							this->selectionState = SelectionState::Normal;
-						}
-						break;
+						// Building screen for any building
+						fw().stageQueueCommand(
+						    {StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, building)});
 					}
+					if (vehicle)
+					{
+						orderSelect(StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)},
+						            buttonPressed == Event::MouseButton::Right,
+						            modifierLCtrl || modifierRCtrl);
+					}
+					break;
+				}
+				case SelectionState::VehicleAttackBuilding:
+				{
+					if (building)
+					{
+						orderAttack(
+						    StateRef<Building>{state.get(), Building::getId(*state, building)});
+						setSelectionState(SelectionState::Normal);
+					}
+					break;
+				}
+				case SelectionState::VehicleAttackVehicle:
+				{
+					if (vehicle)
+					{
+						orderAttack(
+						    StateRef<Building>{state.get(), Vehicle::getId(*state, vehicle)});
+						setSelectionState(SelectionState::Normal);
+					}
+					break;
+				}
+				case SelectionState::VehicleGotoBuilding:
+				{
+					if (building)
+					{
+						orderMove(building);
+						setSelectionState(SelectionState::Normal);
+					}
+					break;
+				}
+				case SelectionState::VehicleGotoLocation:
+				{
+					// We always have a position if we came this far
+					{
+						orderMove(position);
+						setSelectionState(SelectionState::Normal);
+					}
+					break;
 				}
 			}
 		}
@@ -1508,11 +1621,58 @@ bool CityView::handleGameStateEvent(Event *e)
 	return true;
 }
 
+void CityView::updateSelectedUnits()
+{
+	auto o = state->getPlayer();
+	StateRef<Vehicle> nonPlayerVehicle;
+	auto it = state->current_city->cityViewSelectedVehicles.begin();
+	while (it != state->current_city->cityViewSelectedVehicles.end())
+	{
+		auto v = *it;
+		bool erase = !v || !v->tileObject;
+		if (!erase && v->owner != o)
+		{
+			if (!nonPlayerVehicle)
+			{
+				nonPlayerVehicle = v;
+			}
+			erase = true;
+		}
+		if (erase)
+		{
+			it = state->current_city->cityViewSelectedVehicles.erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
+	if (nonPlayerVehicle)
+	{
+		state->current_city->cityViewSelectedVehicles.push_front(nonPlayerVehicle);
+	}
+	if (state->current_city->cityViewSelectedVehicles.empty() &&
+	    selectionState != SelectionState::Normal)
+	{
+		setSelectionState(SelectionState::Normal);
+	}
+}
+
 VehicleTileInfo CityView::createVehicleInfo(sp<Vehicle> v)
 {
 	VehicleTileInfo t;
 	t.vehicle = v;
-	t.selected = (v == this->selectedVehicle.lock());
+	t.selected = 0;
+
+	for (auto &veh : state->current_city->cityViewSelectedVehicles)
+	{
+		if (veh == v)
+		{
+			t.selected =
+			    (v->name == state->current_city->cityViewSelectedVehicles.front()->name) ? 2 : 1;
+			break;
+		}
+	}
 
 	float maxHealth;
 	float currentHealth;
@@ -1558,8 +1718,10 @@ sp<Control> CityView::createVehicleInfoControl(const VehicleTileInfo &info)
 {
 	LogInfo("Creating city info control for vehicle \"%s\"", info.vehicle->name);
 
-	auto frame = info.selected ? this->icons[CityIcon::SelectedFrame]
-	                           : this->icons[CityIcon::UnselectedFrame];
+	auto frame = info.selected == 2
+	                 ? this->icons[CityIcon::SelectedFrame]
+	                 : (info.selected == 1 ? this->icons[CityIcon::SelectedSecondaryFrame]
+	                                       : this->icons[CityIcon::UnselectedFrame]);
 	auto baseControl = mksp<GraphicButton>(frame, frame);
 	baseControl->Size = frame->size;
 	// FIXME: There's an extra 1 pixel here that's annoying
@@ -1666,6 +1828,46 @@ void CityView::zoomLastEvent()
 		if (message.location != EventMessage::NO_LOCATION)
 		{
 			setScreenCenterTile(message.location);
+		}
+	}
+}
+void CityView::setSelectionState(SelectionState selectionState)
+{
+	this->selectionState = selectionState;
+	switch (selectionState)
+	{
+		case SelectionState::Normal:
+		{
+			overlayTab->setVisible(false);
+			break;
+		}
+		case SelectionState::VehicleAttackBuilding:
+		{
+			overlayTab->findControlTyped<Label>("TEXT")->setText(
+			    tr("Click on building for selected vehicle to attack"));
+			overlayTab->setVisible(true);
+			break;
+		}
+		case SelectionState::VehicleAttackVehicle:
+		{
+			overlayTab->findControlTyped<Label>("TEXT")->setText(
+			    tr("Click on target vehicle for selected vehicle"));
+			overlayTab->setVisible(true);
+			break;
+		}
+		case SelectionState::VehicleGotoBuilding:
+		{
+			overlayTab->findControlTyped<Label>("TEXT")->setText(
+			    tr("Click on destination building for selected vehicle"));
+			overlayTab->setVisible(true);
+			break;
+		}
+		case SelectionState::VehicleGotoLocation:
+		{
+			overlayTab->findControlTyped<Label>("TEXT")->setText(
+			    tr("Click on destination map point for selected vehicle"));
+			overlayTab->setVisible(true);
+			break;
 		}
 	}
 }

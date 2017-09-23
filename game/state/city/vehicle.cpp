@@ -1299,6 +1299,7 @@ bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 	missions.clear();
 	missions.emplace_front(mission);
 	missions.front()->start(state, *this);
+	return true;
 }
 
 float Vehicle::getSpeed() const

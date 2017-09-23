@@ -1716,12 +1716,9 @@ void BattleView::update()
 	baseForm->update();
 
 	// If we have 'follow agent' enabled we clobber any other movement in this frame
-	if (followAgent)
+	if (followAgent && !battle.battleViewSelectedUnits.empty())
 	{
-		if (battle.battleViewSelectedUnits.size() > 0)
-		{
-			setScreenCenterTile(battle.battleViewSelectedUnits.front()->tileObject->getPosition());
-		}
+		setScreenCenterTile(battle.battleViewSelectedUnits.front()->tileObject->getPosition());
 	}
 	// Store screen center for serialisation
 	battle.battleViewScreenCenter = centerPos;

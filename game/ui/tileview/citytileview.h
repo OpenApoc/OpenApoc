@@ -14,8 +14,7 @@ class Vehicle;
 class CityTileView : public TileView
 {
   private:
-	std::vector<sp<Image>> selectionBracketsFriendly;
-	std::vector<sp<Image>> selectionBracketsHostile;
+	std::vector<std::vector<sp<Image>>> selectionBrackets;
 	sp<Image> alertImage;
 	sp<Image> targetTacticalThisLevel;
 	sp<Image> selectionImageFriendlySmall;
@@ -27,16 +26,13 @@ class CityTileView : public TileView
 
   public:
 	CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
-	             TileViewMode initialMode, GameState &gameState);
+	             TileViewMode initialMode, Vec3<float> screenCenterTile, GameState &gameState);
 	~CityTileView() override;
 
 	void eventOccurred(Event *e) override;
 	void render() override;
 
 	bool DEBUG_SHOW_ALIEN_CREW = false;
-
-  protected:
-	wp<Vehicle> selectedVehicle;
 
   private:
 	GameState &state;

@@ -768,6 +768,9 @@
 		<member type="Section">doodads</member>
 		<member type="Section">portals</member>
 		<member type="Section">projectiles</member>
+		<member>cityViewScreenCenter</member>
+		<member>cityViewPageIndex</member>
+		<member>cityViewSelectedVehicles</member>
 	</object>
 	<object>
 		<name>Projectile</name>

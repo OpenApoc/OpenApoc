@@ -18,7 +18,8 @@
 namespace OpenApoc
 {
 CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
-                           TileViewMode initialMode, GameState &gameState)
+                           TileViewMode initialMode, Vec3<float> screenCenterTile,
+                           GameState &gameState)
     : TileView(map, isoTileSize, stratTileSize, initialMode), state(gameState)
 {
 	selectedTileImageBack = fw().data->loadImage("city/selected-citytile-back.png");
@@ -27,14 +28,19 @@ CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratT
 	pal = fw().data->loadPalette("xcom3/ufodata/pal_01.dat");
 	alertImage = fw().data->loadImage("city/building-circle.png");
 
-	selectionBracketsFriendly.push_back(fw().data->loadImage("city/vehicle-brackets-f0.png"));
-	selectionBracketsFriendly.push_back(fw().data->loadImage("city/vehicle-brackets-f1.png"));
-	selectionBracketsFriendly.push_back(fw().data->loadImage("city/vehicle-brackets-f2.png"));
-	selectionBracketsFriendly.push_back(fw().data->loadImage("city/vehicle-brackets-f3.png"));
-	selectionBracketsHostile.push_back(fw().data->loadImage("city/vehicle-brackets-h0.png"));
-	selectionBracketsHostile.push_back(fw().data->loadImage("city/vehicle-brackets-h1.png"));
-	selectionBracketsHostile.push_back(fw().data->loadImage("city/vehicle-brackets-h2.png"));
-	selectionBracketsHostile.push_back(fw().data->loadImage("city/vehicle-brackets-h3.png"));
+	selectionBrackets.resize(3);
+	selectionBrackets[0].push_back(fw().data->loadImage("city/vehicle-brackets-f0.png"));
+	selectionBrackets[0].push_back(fw().data->loadImage("city/vehicle-brackets-f1.png"));
+	selectionBrackets[0].push_back(fw().data->loadImage("city/vehicle-brackets-f2.png"));
+	selectionBrackets[0].push_back(fw().data->loadImage("city/vehicle-brackets-f3.png"));
+	selectionBrackets[1].push_back(fw().data->loadImage("city/vehicle-brackets-s0.png"));
+	selectionBrackets[1].push_back(fw().data->loadImage("city/vehicle-brackets-s1.png"));
+	selectionBrackets[1].push_back(fw().data->loadImage("city/vehicle-brackets-s2.png"));
+	selectionBrackets[1].push_back(fw().data->loadImage("city/vehicle-brackets-s3.png"));
+	selectionBrackets[2].push_back(fw().data->loadImage("city/vehicle-brackets-h0.png"));
+	selectionBrackets[2].push_back(fw().data->loadImage("city/vehicle-brackets-h1.png"));
+	selectionBrackets[2].push_back(fw().data->loadImage("city/vehicle-brackets-h2.png"));
+	selectionBrackets[2].push_back(fw().data->loadImage("city/vehicle-brackets-h3.png"));
 
 	selectionImageFriendlySmall = fw().data->loadImage("battle/map-selection-small.png");
 	selectionImageFriendlyLarge = fw().data->loadImage("battle/map-selection-large.png");
@@ -42,6 +48,9 @@ CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratT
 	selectionImageHostileLarge = fw().data->loadImage("city/map-selection-hostile-large.png");
 
 	targetTacticalThisLevel = fw().data->loadImage("city/target.png");
+
+	// FIXME: Load from save last screen location?
+	setScreenCenterTile(screenCenterTile);
 };
 
 CityTileView::~CityTileView() = default;
@@ -139,19 +148,22 @@ void CityTileView::render()
 		case TileViewMode::Isometric:
 		{
 			// List of vehicles that require drawing of brackets
-			std::set<sp<Vehicle>> vehiclesToDrawBracketsFriendly;
-			std::set<sp<Vehicle>> vehiclesToDrawBracketsHostile;
-
-			auto selectedVehicleLocked = selectedVehicle.lock();
+			std::set<sp<Vehicle>> vehiclesToDrawBrackets;
+			std::map<sp<Vehicle>, int> vehiclesBracketsIndex;
 
 			// Go through every selected vehicle and add target to list of bracket draws
-			if (selectedVehicleLocked)
+			for (auto &vehicle : state.current_city->cityViewSelectedVehicles)
 			{
-				for (auto &m : selectedVehicleLocked->missions)
+				if (vehicle->owner != state.getPlayer())
+				{
+					continue;
+				}
+				for (auto &m : vehicle->missions)
 				{
 					if (m->type == VehicleMission::MissionType::AttackVehicle)
 					{
-						vehiclesToDrawBracketsHostile.insert(m->targetVehicle);
+						vehiclesToDrawBrackets.insert(m->targetVehicle);
+						vehiclesBracketsIndex[m->targetVehicle] = 2;
 					}
 				}
 			}
@@ -179,11 +191,27 @@ void CityTileView::render()
 										auto v = std::static_pointer_cast<TileObjectVehicle>(obj)
 										             ->getVehicle();
 
-										if (selectedVehicleLocked)
+										if (!state.current_city->cityViewSelectedVehicles.empty())
 										{
-											if (v == selectedVehicleLocked)
+											auto selectedPos = std::find(
+											    state.current_city->cityViewSelectedVehicles
+											        .begin(),
+											    state.current_city->cityViewSelectedVehicles.end(),
+											    v);
+
+											if (selectedPos ==
+											    state.current_city->cityViewSelectedVehicles
+											        .begin())
 											{
-												vehiclesToDrawBracketsFriendly.insert(v);
+												vehiclesToDrawBrackets.insert(v);
+												vehiclesBracketsIndex[v] = 0;
+											}
+											else if (selectedPos !=
+											         state.current_city->cityViewSelectedVehicles
+											             .end())
+											{
+												vehiclesToDrawBrackets.insert(v);
+												vehiclesBracketsIndex[v] = 1;
 											}
 										}
 									}
@@ -204,7 +232,7 @@ void CityTileView::render()
 			}
 
 			// Draw brackets
-			for (auto &obj : vehiclesToDrawBracketsFriendly)
+			for (auto &obj : vehiclesToDrawBrackets)
 			{
 				Vec3<float> size = obj->type->size.at(obj->type->getVoxelMapFacing(obj->facing));
 				size /= 2;
@@ -217,28 +245,11 @@ void CityTileView::render()
 				Vec2<float> pBottom = tileToOffsetScreenCoords(
 				    obj->getPosition() + Vec3<float>{size.x, size.y, -size.z});
 
-				r.draw(selectionBracketsFriendly[0], {pLeft.x - 2.0f, pTop.y - 2.0f});
-				r.draw(selectionBracketsFriendly[1], {pLeft.x - 2.0f, pBottom.y - 2.0f});
-				r.draw(selectionBracketsFriendly[2], {pRight.x - 2.0f, pTop.y - 2.0f});
-				r.draw(selectionBracketsFriendly[3], {pRight.x - 2.0f, pBottom.y - 2.0f});
-			}
-			for (auto &obj : vehiclesToDrawBracketsHostile)
-			{
-				Vec3<float> size = obj->type->size.at(obj->type->getVoxelMapFacing(obj->facing));
-				size /= 2;
-				Vec2<float> pTop = tileToOffsetScreenCoords(obj->getPosition() +
-				                                            Vec3<float>{-size.x, -size.y, size.z});
-				Vec2<float> pLeft =
-				    tileToOffsetScreenCoords(obj->getPosition() + Vec3<float>{-size.x, +size.y, 0});
-				Vec2<float> pRight =
-				    tileToOffsetScreenCoords(obj->getPosition() + Vec3<float>{size.x, -size.y, 0});
-				Vec2<float> pBottom = tileToOffsetScreenCoords(
-				    obj->getPosition() + Vec3<float>{size.x, size.y, -size.z});
-
-				r.draw(selectionBracketsHostile[0], {pLeft.x - 2.0f, pTop.y - 2.0f});
-				r.draw(selectionBracketsHostile[1], {pLeft.x - 2.0f, pBottom.y - 2.0f});
-				r.draw(selectionBracketsHostile[2], {pRight.x - 2.0f, pTop.y - 2.0f});
-				r.draw(selectionBracketsHostile[3], {pRight.x - 2.0f, pBottom.y - 2.0f});
+				int idx = vehiclesBracketsIndex[obj];
+				r.draw(selectionBrackets[idx][0], {pLeft.x - 2.0f, pTop.y - 2.0f});
+				r.draw(selectionBrackets[idx][1], {pLeft.x - 2.0f, pBottom.y - 2.0f});
+				r.draw(selectionBrackets[idx][2], {pRight.x - 2.0f, pTop.y - 2.0f});
+				r.draw(selectionBrackets[idx][3], {pRight.x - 2.0f, pBottom.y - 2.0f});
 			}
 		}
 		break;
@@ -276,7 +287,14 @@ void CityTileView::render()
 										friendly = v->owner == state.getPlayer();
 										hostile = state.getPlayer()->isRelatedTo(v->owner) ==
 										          Organisation::Relation::Hostile;
-										bool selected = selectedVehicle.lock() == v;
+										bool selected =
+										    std::find(
+										        state.current_city->cityViewSelectedVehicles
+										            .begin(),
+										        state.current_city->cityViewSelectedVehicles.end(),
+										        v) !=
+										    state.current_city->cityViewSelectedVehicles.end();
+
 										if (friendly)
 										{
 											for (auto &m : v->missions)

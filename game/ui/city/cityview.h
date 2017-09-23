@@ -16,6 +16,7 @@ class Control;
 class Vehicle;
 class Sample;
 class Base;
+class Building;
 class Organisation;
 
 enum class UpdateSpeed
@@ -63,7 +64,8 @@ class VehicleTileInfo
 {
   public:
 	sp<Vehicle> vehicle;
-	bool selected;
+	// 0 = not selected, 1 = selected, 2 = first selected
+	int selected;
 	float healthProportion;
 	bool shield;
 	bool faded;     // Faded when they enter the alien dimension?
@@ -97,6 +99,8 @@ class CityView : public CityTileView
 
 	bool followVehicle;
 
+	void updateSelectedUnits();
+
 	VehicleTileInfo createVehicleInfo(sp<Vehicle> v);
 	sp<Control> createVehicleInfoControl(const VehicleTileInfo &info);
 
@@ -122,6 +126,15 @@ class CityView : public CityTileView
 	bool drawCity = true;
 	sp<Surface> surface;
 
+	// Orders
+
+	void orderGoToBase();
+	void orderMove(Vec3<float> position);
+	void orderMove(StateRef<Building> building);
+	void orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additive);
+	void orderAttack(StateRef<Vehicle> vehicle);
+	void orderAttack(StateRef<Building> building);
+
   public:
 	CityView(sp<GameState> state);
 	~CityView() override;
@@ -140,6 +153,7 @@ class CityView : public CityTileView
 
 	void setUpdateSpeed(UpdateSpeed updateSpeed);
 	void zoomLastEvent();
+	void setSelectionState(SelectionState selectionState);
 };
 
 }; // namespace OpenApoc
