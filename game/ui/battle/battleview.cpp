@@ -2935,7 +2935,7 @@ void BattleView::eventOccurred(Event *e)
 	BattleTileView::eventOccurred(e);
 }
 
-bool BattleView::handleKeyDown(Event * e)
+bool BattleView::handleKeyDown(Event *e)
 {
 	// Common keys active in both debug and normal mode
 	switch (e->keyboard().KeyCode)
@@ -2962,7 +2962,7 @@ bool BattleView::handleKeyDown(Event * e)
 			if (activeTab != notMyTurnTab)
 			{
 				fw().stageQueueCommand(
-				{ StageCmd::Command::PUSH, mksp<InGameOptions>(state->shared_from_this()) });
+				    {StageCmd::Command::PUSH, mksp<InGameOptions>(state->shared_from_this())});
 			}
 			return true;
 		case SDLK_TAB:
@@ -2971,13 +2971,13 @@ bool BattleView::handleKeyDown(Event * e)
 		case SDLK_PAGEUP:
 			setZLevel(getZLevel() + 1);
 			setSelectedTilePosition(
-			{ selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z + 1 });
+			    {selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z + 1});
 			updateLayerButtons();
 			return true;
 		case SDLK_PAGEDOWN:
 			setZLevel(getZLevel() - 1);
 			setSelectedTilePosition(
-			{ selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z - 1 });
+			    {selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z - 1});
 			updateLayerButtons();
 			return true;
 		case SDLK_SPACE:
@@ -3003,12 +3003,11 @@ bool BattleView::handleKeyDown(Event * e)
 				for (auto &o : tile->ownedObjects)
 				{
 					if (o->getType() == TileObject::Type::Ground ||
-						o->getType() == TileObject::Type::Feature ||
-						o->getType() == TileObject::Type::LeftWall ||
-						o->getType() == TileObject::Type::RightWall)
+					    o->getType() == TileObject::Type::Feature ||
+					    o->getType() == TileObject::Type::LeftWall ||
+					    o->getType() == TileObject::Type::RightWall)
 					{
-						auto mp =
-							std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+						auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
 						auto set = mksp<std::set<BattleMapPart *>>();
 						set->insert(mp.get());
 						mp->queueCollapse();
@@ -3056,14 +3055,14 @@ bool BattleView::handleKeyDown(Event * e)
 					}
 
 					if (((local &&
-						u.second->tileObject->getOwningTile()->position ==
-						selectedTilePosition) ||
-						(!local &&
-							glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
-							5.0f)) == !inverse)
+					      u.second->tileObject->getOwningTile()->position ==
+					          selectedTilePosition) ||
+					     (!local &&
+					      glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
+					          5.0f)) == !inverse)
 					{
 						u.second->applyDamageDirect(*state, 9001, false, BodyPart::Helmet,
-							u.second->agent->getHealth() + 4);
+						                            u.second->agent->getHealth() + 4);
 					}
 				}
 				return true;
@@ -3081,11 +3080,11 @@ bool BattleView::handleKeyDown(Event * e)
 					}
 
 					if (((local &&
-						u.second->tileObject->getOwningTile()->position ==
-						selectedTilePosition) ||
-						(!local &&
-							glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
-							5.0f)) == !inverse)
+					      u.second->tileObject->getOwningTile()->position ==
+					          selectedTilePosition) ||
+					     (!local &&
+					      glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
+					          5.0f)) == !inverse)
 					{
 						if (!u.second->retreated)
 						{
@@ -3153,7 +3152,7 @@ bool BattleView::handleKeyDown(Event * e)
 				for (auto &u : battle.units)
 				{
 					if (!u.second->isConscious() ||
-						u.second->owner != battle.currentActiveOrganisation)
+					    u.second->owner != battle.currentActiveOrganisation)
 					{
 						continue;
 					}
@@ -3169,7 +3168,7 @@ bool BattleView::handleKeyDown(Event * e)
 					for (auto &u : battle.units)
 					{
 						if (u.second->owner != battle.currentActiveOrganisation ||
-							!u.second->isConscious())
+						    !u.second->isConscious())
 						{
 							continue;
 						}
@@ -3178,7 +3177,7 @@ bool BattleView::handleKeyDown(Event * e)
 					battle.endTurn(*state);
 				}
 				return true;
-				// Notification toggle
+			// Notification toggle
 			case SDLK_n:
 			{
 				DEBUG_DISABLE_NOTIFICATIONS = !DEBUG_DISABLE_NOTIFICATIONS;
@@ -3188,33 +3187,33 @@ bool BattleView::handleKeyDown(Event * e)
 			case SDLK_KP_0:
 				debugVortex();
 				return true;
-				// Fire debug shot
+			// Fire debug shot
 			case SDLK_KP_1:
-				debugShot({ 0, 1, 0 });
+				debugShot({0, 1, 0});
 				return true;
 			case SDLK_KP_2:
-				debugShot({ 1, 1, 0 });
+				debugShot({1, 1, 0});
 				return true;
 			case SDLK_KP_3:
-				debugShot({ 1, 0, 0 });
+				debugShot({1, 0, 0});
 				return true;
 			case SDLK_KP_6:
-				debugShot({ 1, -1, 0 });
+				debugShot({1, -1, 0});
 				return true;
 			case SDLK_KP_9:
-				debugShot({ 0, -1, 0 });
+				debugShot({0, -1, 0});
 				return true;
 			case SDLK_KP_8:
-				debugShot({ -1, -1, 0 });
+				debugShot({-1, -1, 0});
 				return true;
 			case SDLK_KP_7:
-				debugShot({ -1, 0, 0 });
+				debugShot({-1, 0, 0});
 				return true;
 			case SDLK_KP_4:
-				debugShot({ -1, 1, 0 });
+				debugShot({-1, 1, 0});
 				return true;
 			case SDLK_KP_5:
-				debugShot({ 0, 0, -1 });
+				debugShot({0, 0, -1});
 				return true;
 			default:
 				break;
@@ -3408,7 +3407,7 @@ bool BattleView::handleKeyDown(Event * e)
 					return true;
 				}
 				fw().stageQueueCommand(
-				{ StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Save, state) });
+				    {StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Save, state)});
 				return true;
 			case SDLK_l:
 				if (activeTab == notMyTurnTab)
@@ -3416,7 +3415,7 @@ bool BattleView::handleKeyDown(Event * e)
 					return true;
 				}
 				fw().stageQueueCommand(
-				{ StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Load, state) });
+				    {StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Load, state)});
 				return true;
 			case SDLK_j:
 			{
@@ -3432,7 +3431,7 @@ bool BattleView::handleKeyDown(Event * e)
 	return false;
 }
 
-bool BattleView::handleKeyUp(Event * e)
+bool BattleView::handleKeyUp(Event *e)
 {
 	switch (e->keyboard().KeyCode)
 	{
@@ -3465,7 +3464,7 @@ bool BattleView::handleMouseDown(Event *e)
 		return true;
 	}
 
-	if (getViewMode() == TileViewMode::Strategy  &&
+	if (getViewMode() == TileViewMode::Strategy &&
 	    Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
 	{
 		Vec2<float> screenOffset = {getScreenOffset().x, getScreenOffset().y};
@@ -3484,7 +3483,7 @@ bool BattleView::handleMouseDown(Event *e)
 		return true;
 	}
 	if (Event::isPressed(e->mouse().Button, Event::MouseButton::Left) ||
-	         Event::isPressed(e->mouse().Button, Event::MouseButton::Right))
+	    Event::isPressed(e->mouse().Button, Event::MouseButton::Right))
 	{
 		auto buttonPressed = Event::isPressed(e->mouse().Button, Event::MouseButton::Left)
 		                         ? Event::MouseButton::Left
@@ -3948,7 +3947,7 @@ bool BattleView::handleMouseDown(Event *e)
 	return true;
 }
 
-bool BattleView::handleGameStateEvent(Event * e)
+bool BattleView::handleGameStateEvent(Event *e)
 {
 	auto gameEvent = dynamic_cast<GameEvent *>(e);
 	if (!gameEvent)
@@ -3962,9 +3961,8 @@ bool BattleView::handleGameStateEvent(Event * e)
 		baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
 		if (battle.mode == Battle::Mode::RealTime && !DEBUG_DISABLE_NOTIFICATIONS)
 		{
-			fw().stageQueueCommand(
-			{ StageCmd::Command::PUSH,
-				mksp<NotificationScreen>(state, *this, gameEvent->message()) });
+			fw().stageQueueCommand({StageCmd::Command::PUSH,
+			                        mksp<NotificationScreen>(state, *this, gameEvent->message())});
 		}
 	}
 	switch (gameEvent->type)
@@ -3979,7 +3977,7 @@ bool BattleView::handleGameStateEvent(Event * e)
 		{
 			auto gameAgentEvent = dynamic_cast<GameAgentEvent *>(e);
 			fw().stageQueueCommand(
-			{ StageCmd::Command::PUSH, mksp<AEquipScreen>(state, gameAgentEvent->agent) });
+			    {StageCmd::Command::PUSH, mksp<AEquipScreen>(state, gameAgentEvent->agent)});
 			break;
 		}
 		default:

@@ -352,7 +352,7 @@ void AEquipScreen::begin()
 
 void AEquipScreen::pause() {}
 
-void AEquipScreen::resume() 
+void AEquipScreen::resume()
 {
 	modifierLCtrl = false;
 	modifierRCtrl = false;

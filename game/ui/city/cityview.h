@@ -137,7 +137,7 @@ class CityView : public CityTileView
 	bool handleKeyUp(Event *e);
 	bool handleMouseDown(Event *e);
 	bool handleGameStateEvent(Event *e);
-	
+
 	void setUpdateSpeed(UpdateSpeed updateSpeed);
 	void zoomLastEvent();
 };
