@@ -55,7 +55,6 @@ enum class SelectionState
 	VehicleGotoLocation,
 	VehicleAttackVehicle,
 	VehicleAttackBuilding,
-	BuildBase,
 };
 
 // All the info required to draw a single vehicle info chunk, kept together to make it easier to
@@ -78,6 +77,7 @@ class CityView : public CityTileView
   private:
 	sp<Form> activeTab, baseForm;
 	std::vector<sp<Form>> uiTabs;
+	sp<Form> overlayTab;
 	std::vector<sp<GraphicButton>> miniViews;
 	UpdateSpeed updateSpeed;
 	UpdateSpeed lastSpeed;
@@ -101,6 +101,12 @@ class CityView : public CityTileView
 	sp<Control> createVehicleInfoControl(const VehicleTileInfo &info);
 
 	SelectionState selectionState;
+	bool modifierLShift = false;
+	bool modifierRShift = false;
+	bool modifierLAlt = false;
+	bool modifierRAlt = false;
+	bool modifierLCtrl = false;
+	bool modifierRCtrl = false;
 
 	sp<Palette> day_palette;
 	sp<Palette> twilight_palette;
@@ -127,7 +133,11 @@ class CityView : public CityTileView
 	void update() override;
 	void render() override;
 	void eventOccurred(Event *e) override;
-
+	bool handleKeyDown(Event *e);
+	bool handleKeyUp(Event *e);
+	bool handleMouseDown(Event *e);
+	bool handleGameStateEvent(Event *e);
+	
 	void setUpdateSpeed(UpdateSpeed updateSpeed);
 	void zoomLastEvent();
 };

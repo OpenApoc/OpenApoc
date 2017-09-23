@@ -266,7 +266,10 @@ class BattleView : public BattleTileView
 	void render() override;
 	void finish() override;
 	void eventOccurred(Event *e) override;
-	void handleMouseDown(Event *e);
+	bool handleKeyDown(Event *e);
+	bool handleKeyUp(Event *e);
+	bool handleMouseDown(Event *e);
+	bool handleGameStateEvent(Event *e);
 
 	void endBattle();
 

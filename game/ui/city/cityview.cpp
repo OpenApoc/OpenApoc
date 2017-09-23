@@ -109,7 +109,7 @@ static const std::vector<UString> CITY_ICON_VEHICLE_PASSENGER_COUNT_RESOURCES = 
 CityView::CityView(sp<GameState> state)
     : CityTileView(*state->current_city->map, Vec3<int>{TILE_X_CITY, TILE_Y_CITY, TILE_Z_CITY},
                    Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric, *state),
-      baseForm(ui().getForm("city/city")), updateSpeed(UpdateSpeed::Speed1),
+      baseForm(ui().getForm("city/city")), overlayTab(ui().getForm("city/overlay")), updateSpeed(UpdateSpeed::Speed1),
       lastSpeed(UpdateSpeed::Pause), state(state), followVehicle(false),
       selectionState(SelectionState::Normal),
       day_palette(fw().data->loadPalette("xcom3/ufodata/pal_01.dat")),
@@ -374,9 +374,7 @@ CityView::CityView(sp<GameState> state)
 			    }
 			    LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name, bld->name);
 			    // FIXME: Don't clear missions if not replacing current mission
-			    v->missions.clear();
-			    v->missions.emplace_front(VehicleMission::gotoBuilding(*this->state, *v, bld));
-			    v->missions.front()->start(*this->state, *v);
+				v->setMission(*this->state, VehicleMission::gotoBuilding(*this->state, *v, bld));
 		    }
 		});
 	vehicleForm->findControl("BUTTON_VEHICLE_ATTACK")
@@ -480,6 +478,13 @@ void CityView::begin()
 
 void CityView::resume()
 {
+	modifierLAlt = false;
+	modifierLCtrl = false;
+	modifierLShift = false;
+	modifierRAlt = false;
+	modifierRCtrl = false;
+	modifierRShift = false;
+
 	this->uiTabs[0]->findControlTyped<Label>("TEXT_BASE_NAME")->setText(state->current_base->name);
 	miniViews.clear();
 	int b = 0;
@@ -580,65 +585,61 @@ void CityView::update()
 	this->drawCity = true;
 	CityTileView::update();
 
-	// Don't update time if we're doing something
-	if (selectionState == SelectionState::Normal)
+	unsigned int ticks = 0;
+	bool turbo = false;
+	switch (this->updateSpeed)
 	{
-		unsigned int ticks = 0;
-		bool turbo = false;
-		switch (this->updateSpeed)
-		{
-			case UpdateSpeed::Pause:
-				ticks = 0;
-				break;
-			/* POSSIBLE FIXME: 'vanilla' apoc appears to implement Speed1 as 1/2 speed - that is
-			 * only
-			 * every other call calls the update loop, meaning that the later update tick counts are
-			 * halved as well.
-			 * This effectively means that all openapoc tick counts count for 1/2 the value of
-			 * vanilla
-			 * apoc ticks */
-			case UpdateSpeed::Speed1:
-				ticks = 1;
-				break;
-			case UpdateSpeed::Speed2:
-				ticks = 2;
-				break;
-			case UpdateSpeed::Speed3:
-				ticks = 4;
-				break;
-			case UpdateSpeed::Speed4:
-				ticks = 6;
-				break;
-			case UpdateSpeed::Speed5:
-				if (!this->state->canTurbo())
-				{
-					setUpdateSpeed(UpdateSpeed::Speed1);
-					ticks = 1;
-				}
-				else
-				{
-					turbo = true;
-				}
-				break;
-		}
-		baseForm->findControl("BUTTON_SPEED5")->Enabled = this->state->canTurbo();
-
-		if (turbo)
-		{
-			this->state->updateTurbo();
+		case UpdateSpeed::Pause:
+			ticks = 0;
+			break;
+		/* POSSIBLE FIXME: 'vanilla' apoc appears to implement Speed1 as 1/2 speed - that is
+			* only
+			* every other call calls the update loop, meaning that the later update tick counts are
+			* halved as well.
+			* This effectively means that all openapoc tick counts count for 1/2 the value of
+			* vanilla
+			* apoc ticks */
+		case UpdateSpeed::Speed1:
+			ticks = 1;
+			break;
+		case UpdateSpeed::Speed2:
+			ticks = 2;
+			break;
+		case UpdateSpeed::Speed3:
+			ticks = 4;
+			break;
+		case UpdateSpeed::Speed4:
+			ticks = 6;
+			break;
+		case UpdateSpeed::Speed5:
 			if (!this->state->canTurbo())
 			{
 				setUpdateSpeed(UpdateSpeed::Speed1);
+				ticks = 1;
 			}
-		}
-		else
-		{
-			while (ticks > 0)
+			else
 			{
-				int ticksPerUpdate = UPDATE_EVERY_TICK ? 1 : ticks;
-				state->update(ticksPerUpdate);
-				ticks -= ticksPerUpdate;
+				turbo = true;
 			}
+			break;
+	}
+	baseForm->findControl("BUTTON_SPEED5")->Enabled = this->state->canTurbo();
+
+	if (turbo)
+	{
+		this->state->updateTurbo();
+		if (!this->state->canTurbo())
+		{
+			setUpdateSpeed(UpdateSpeed::Speed1);
+		}
+	}
+	else
+	{
+		while (ticks > 0)
+		{
+			int ticksPerUpdate = UPDATE_EVERY_TICK ? 1 : ticks;
+			state->update(ticksPerUpdate);
+			ticks -= ticksPerUpdate;
 		}
 	}
 
@@ -859,22 +860,74 @@ void CityView::eventOccurred(Event *e)
 	this->drawCity = true;
 	activeTab->eventOccured(e);
 	baseForm->eventOccured(e);
-
-	if (activeTab->eventIsWithin(e) || baseForm->eventIsWithin(e))
+	overlayTab->eventOccured(e);
+	//| Exclude mouse down events that are over the form
+	if (activeTab->eventIsWithin(e) || baseForm->eventIsWithin(e) || overlayTab->eventIsWithin(e))
 	{
 		return;
 	}
 
-	if (e->type() == EVENT_KEY_DOWN &&
-	    (e->keyboard().KeyCode == SDLK_ESCAPE || e->keyboard().KeyCode == SDLK_SPACE ||
-	     e->keyboard().KeyCode == SDL_SCANCODE_R || e->keyboard().KeyCode == SDLK_TAB))
+	if (e->type() == EVENT_KEY_DOWN)
+	{
+		if (handleKeyDown(e))
+		{
+			return;
+		}
+	}
+	if (e->type() == EVENT_KEY_UP)
+	{
+		if (handleKeyUp(e))
+		{
+			return;
+		}
+	}
+	if (e->type() == EVENT_MOUSE_DOWN)
+	{
+		if (handleMouseDown(e))
+		{
+			return;
+		}
+	}
+	if (e->type() == EVENT_GAME_STATE)
+	{
+		if (handleGameStateEvent(e))
+		{
+			return;
+		}
+	}
+	CityTileView::eventOccurred(e);
+}
+
+bool CityView::handleKeyDown(Event * e)
+{
+	// Common keys active in both debug and normal mode
+	switch (e->keyboard().KeyCode)
+	{
+		case SDLK_RSHIFT:
+			modifierRShift = true;
+			return true;
+		case SDLK_LSHIFT:
+			modifierLShift = true;
+			return true;
+		case SDLK_RALT:
+			modifierRAlt = true;
+			return true;
+		case SDLK_LALT:
+			modifierLAlt = true;
+			return true;
+		case SDLK_RCTRL:
+			modifierRCtrl = true;
+			return true;
+		case SDLK_LCTRL:
+			modifierLCtrl = true;
+			return true;
+	}
+	// Cheat codes
+	if (e->type() == EVENT_KEY_DOWN)
 	{
 		switch (e->keyboard().KeyCode)
 		{
-			case SDLK_ESCAPE:
-				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InGameOptions>(state)});
-				return;
-			case SDL_SCANCODE_R:
+			case SDLK_r:
 			{
 				LogInfo("Repairing...");
 				std::set<sp<Scenery>> stuffToRepair;
@@ -886,132 +939,256 @@ void CityView::eventOccurred(Event *e)
 					}
 				}
 				LogInfo("Repairing %u tiles out of %u", static_cast<unsigned>(stuffToRepair.size()),
-				        static_cast<unsigned>(state->current_city->scenery.size()));
+					static_cast<unsigned>(state->current_city->scenery.size()));
 
 				for (auto &s : stuffToRepair)
 				{
 					s->repair(*state);
 				}
-				break;
+				return true;
 			}
+		}
+	}
+	// Keyboard commands
+	if (e->type() == EVENT_KEY_DOWN)
+	{
+		switch (e->keyboard().KeyCode)
+		{
+			case SDLK_ESCAPE:
+				fw().stageQueueCommand({ StageCmd::Command::PUSH, mksp<InGameOptions>(state) });
+				return true;
 			case SDLK_TAB:
 				this->baseForm->findControlTyped<CheckBox>("BUTTON_TOGGLE_STRATMAP")
-				    ->setChecked(
-				        !this->baseForm->findControlTyped<CheckBox>("BUTTON_TOGGLE_STRATMAP")
-				             ->isChecked());
-				break;
+					->setChecked(
+						!this->baseForm->findControlTyped<CheckBox>("BUTTON_TOGGLE_STRATMAP")
+						->isChecked());
+				return true;
 			case SDLK_SPACE:
 				if (this->updateSpeed != UpdateSpeed::Pause)
 					setUpdateSpeed(UpdateSpeed::Pause);
 				else
 					setUpdateSpeed(this->lastSpeed);
-				break;
+				return true;
 		}
 	}
-	// Exclude mouse down events that are over the form
-	else if (e->type() == EVENT_MOUSE_DOWN)
+	return false;
+}
+
+bool CityView::handleKeyUp(Event * e)
+{
+	switch (e->keyboard().KeyCode)
 	{
-		if (this->getViewMode() == TileViewMode::Strategy && e->type() == EVENT_MOUSE_DOWN &&
-		    Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
+		case SDLK_RSHIFT:
+			modifierRShift = false;
+			return true;
+		case SDLK_LSHIFT:
+			modifierLShift = false;
+			return true;
+		case SDLK_RALT:
+			modifierRAlt = false;
+			return true;
+		case SDLK_LALT:
+			modifierLAlt = false;
+			return true;
+		case SDLK_RCTRL:
+			modifierRCtrl = false;
+			return true;
+		case SDLK_LCTRL:
+			modifierLCtrl = false;
+			return true;
+	}
+	return false;
+}
+
+bool CityView::handleMouseDown(Event * e)
+{
+	if (this->getViewMode() == TileViewMode::Strategy && 
+		Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
+	{
+		Vec2<float> screenOffset = { this->getScreenOffset().x, this->getScreenOffset().y };
+		auto clickTile = this->screenToTileCoords(
+			Vec2<float>{e->mouse().X, e->mouse().Y} -screenOffset, 0.0f);
+		this->setScreenCenterTile(Vec2<float>{clickTile.x, clickTile.y});
+		return true;
+	}
+	if (Event::isPressed(e->mouse().Button, Event::MouseButton::Left) ||
+		Event::isPressed(e->mouse().Button, Event::MouseButton::Right))
+	{
+		auto buttonPressed = Event::isPressed(e->mouse().Button, Event::MouseButton::Left)
+			? Event::MouseButton::Left
+			: Event::MouseButton::Right;
+
+		// If a click has not been handled by a form it's in the map. See if we intersect with
+		// anything
+		Vec2<float> screenOffset = { this->getScreenOffset().x, this->getScreenOffset().y };
+		auto clickTop = this->screenToTileCoords(
+			Vec2<float>{e->mouse().X, e->mouse().Y} -screenOffset, 12.99f);
+		auto clickBottom = this->screenToTileCoords(
+			Vec2<float>{e->mouse().X, e->mouse().Y} -screenOffset, 0.0f);
+		auto collision =
+			state->current_city->map->findCollision(clickTop, clickBottom, {}, nullptr, true);
+		if (collision)
 		{
-			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
-			auto clickTile = this->screenToTileCoords(
-			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
-			this->setScreenCenterTile(Vec2<float>{clickTile.x, clickTile.y});
-		}
-		else if (e->type() == EVENT_MOUSE_DOWN &&
-		         Event::isPressed(e->mouse().Button, Event::MouseButton::Left))
-		{
-			// If a click has not been handled by a form it's in the map. See if we intersect with
-			// anything
-			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
-			auto clickTop = this->screenToTileCoords(
-			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 12.99f);
-			auto clickBottom = this->screenToTileCoords(
-			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
-			auto collision =
-			    state->current_city->map->findCollision(clickTop, clickBottom, {}, nullptr, true);
-			if (collision)
+			auto position = collision.position;
+			sp<Scenery> scenery;
+			StateRef<Building> building;
+			sp<Vehicle> vehicle;
+			sp<Projectile> projectile;
+			switch (collision.obj->getType())
 			{
-				switch (collision.obj->getType())
+				case TileObject::Type::Scenery:
 				{
-					case TileObject::Type::Scenery:
+					scenery =
+						std::dynamic_pointer_cast<TileObjectScenery>(collision.obj)->getOwner();
+					building = scenery->building;
+					LogInfo("CLICKED SCENERY %s at %s BUILDING %s", scenery->type.id, scenery->currentPosition, building.id);
+					break;
+				}
+				case TileObject::Type::Vehicle:
+				{
+					vehicle = std::dynamic_pointer_cast<TileObjectVehicle>(collision.obj)
+						->getVehicle();
+					LogInfo("CLICKED VEHICLE %s at %s", vehicle->name,
+						vehicle->position);
+					break;
+				}
+				case TileObject::Type::Projectile:
+				{
+					projectile =
+						std::dynamic_pointer_cast<TileObjectProjectile>(collision.obj)
+						->getProjectile();
+					LogInfo("CLICKED PROJECTILE %s at %s", projectile->damage,
+						projectile->position);
+					break;
+				}
+				default:
+				{
+					LogError("Clicked on some object we didn't care to process?");
+					break;
+				}
+			}
+			// Right click opens info screens
+			if (buttonPressed == Event::MouseButton::Right)
+			{
+				if (modifierLAlt || modifierRAlt || modifierLCtrl || modifierRCtrl)
+				{
+					StateRef<UfopaediaEntry> ufopaediaEntry;
+					// ALT = Object owner's ufopaedia info
+					if (modifierLAlt || modifierRAlt)
 					{
-						auto scenery =
-						    std::dynamic_pointer_cast<TileObjectScenery>(collision.obj)->getOwner();
-						LogWarning("Clicked on scenery at %s", scenery->currentPosition);
-
-						auto building = scenery->building;
-						if (this->selectionState == SelectionState::VehicleGotoLocation)
+						StateRef<Organisation> owner;
+						if (vehicle)
 						{
-
-							auto v = this->selectedVehicle.lock();
-							if (v && v->owner == state->getPlayer())
+							owner = vehicle->owner;
+						}
+						if (building)
+						{
+							owner = building->owner;
+						}
+						if (projectile && projectile->firerVehicle)
+						{
+							owner = projectile->firerVehicle->owner;
+						}
+						if (owner)
+						{
+							ufopaediaEntry = owner->ufopaedia_entry;
+						}
+					}
+					// CTRL =  Object's ufopaedia info
+					else if (modifierLCtrl || modifierRCtrl)
+					{
+						if (vehicle)
+						{
+							ufopaediaEntry = vehicle->type->ufopaedia_entry;
+						}
+						if (building)
+						{
+							ufopaediaEntry = building->function->ufopaedia_entry;
+						}
+					}
+					// Open ufopaedia entry
+					if (ufopaediaEntry && ufopaediaEntry->dependency.satisfied())
+					{
+						sp<UfopaediaCategory> ufopaedia_category;
+						for (auto &cat : this->state->ufopaedia)
+						{
+							for (auto &entry : cat.second->entries)
 							{
-								// Use vehicle altitude preference to select target height, clamp by
-								// map
-								// size
-								int altitude = glm::min((int)v->altitude,
-								                        state->current_city->map->size.z - 1);
-
-								Vec3<int> targetPos{scenery->currentPosition.x,
-								                    scenery->currentPosition.y, altitude};
-								// FIXME: Don't clear missions if not replacing current mission
-								v->missions.clear();
-								v->missions.emplace_front(
-								    VehicleMission::gotoLocation(*state, *v, targetPos));
-								v->missions.front()->start(*this->state, *v);
-								LogWarning("Vehicle \"%s\" going to location %s", v->name,
-								           targetPos);
+								if (ufopaediaEntry == entry.second)
+								{
+									ufopaedia_category = cat.second;
+									break;
+								}
+							}
+							if (ufopaedia_category)
+								break;
+						}
+						if (!ufopaedia_category)
+						{
+							LogError("No UFOPaedia category found for entry %s",
+								ufopaediaEntry->title);
+						}
+						fw().stageQueueCommand(
+						{ StageCmd::Command::PUSH,
+							mksp<UfopaediaCategoryView>(state, ufopaedia_category, ufopaediaEntry) });
+					}
+					return true;
+				}
+				// If no modifier then we show object's info screen normally
+				if (vehicle && vehicle->owner == state->player)
+				{
+					// Equipscreen for owner vehicles
+					auto equipScreen = mksp<VEquipScreen>(this->state);
+					equipScreen->setSelectedVehicle(vehicle);
+					fw().stageQueueCommand({ StageCmd::Command::PUSH, equipScreen });
+				}
+				if (building)
+				{
+					// Base screen for base
+					LogWarning("IMPLEMENT: Base screen for bases on right click");
+					// Building screen for any other building
+					fw().stageQueueCommand({ StageCmd::Command::PUSH,
+						mksp<BuildingScreen>(this->state, building) });
+				}
+				return true;
+			}
+			// Left click handles orders and selections
+			if (buttonPressed == Event::MouseButton::Left)
+			{
+				switch (selectionState)
+				{
+					case SelectionState::Normal:
+					{
+						if (building)
+						{
+							// Building screen for any building
+							fw().stageQueueCommand({ StageCmd::Command::PUSH,
+								mksp<BuildingScreen>(this->state, building) });
+						}
+						if (vehicle && vehicle->owner == state->getPlayer())
+						{
+							LogWarning("IMPLEMENT: Vehicle selection");
+						}
+						break;
+					}
+					case SelectionState::VehicleAttackBuilding:
+					{
+						if (building)
+						{
+							auto v = this->selectedVehicle.lock();
+							if (v)
+							{
+								// TODO: Attack building mission
+								LogWarning("IMPLEMENT: Vehicle \"%s\" attack building \"%s\"", v->name,
+									building->name);
 							}
 							this->selectionState = SelectionState::Normal;
 						}
-						else if (building)
-						{
-							LogInfo("Scenery owned by building \"%s\"", building->name);
-							if (this->selectionState == SelectionState::VehicleGotoBuilding)
-							{
-								auto v = this->selectedVehicle.lock();
-								if (v && v->owner == state->getPlayer())
-								{
-									LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name,
-									           building->name);
-									// FIXME: Don't clear missions if not replacing current mission
-									v->missions.clear();
-									v->missions.emplace_front(
-									    VehicleMission::gotoBuilding(*state, *v, building));
-									v->missions.front()->start(*this->state, *v);
-								}
-								this->selectionState = SelectionState::Normal;
-							}
-							else if (this->selectionState == SelectionState::VehicleAttackBuilding)
-							{
-								auto v = this->selectedVehicle.lock();
-								if (v)
-								{
-									// TODO: Attack building mission
-									LogWarning("Vehicle \"%s\" attack building \"%s\"", v->name,
-									           building->name);
-								}
-								this->selectionState = SelectionState::Normal;
-							}
-							else if (this->selectionState == SelectionState::Normal)
-							{
-								fw().stageQueueCommand(
-								    {StageCmd::Command::PUSH,
-								     mksp<BuildingScreen>(this->state, building)});
-							}
-						}
-						return;
+						break;
 					}
-					case TileObject::Type::Vehicle:
+					case SelectionState::VehicleAttackVehicle:
 					{
-						auto vehicle = std::dynamic_pointer_cast<TileObjectVehicle>(collision.obj)
-						                   ->getVehicle();
-						LogWarning("Clicked on vehicle \"%s\" at %s", vehicle->name,
-						           vehicle->position);
-
-						if (this->selectionState == SelectionState::VehicleAttackVehicle)
+						if (vehicle)
 						{
 							auto v = this->selectedVehicle.lock();
 							StateRef<Vehicle> vehicleRef(state.get(), vehicle);
@@ -1019,295 +1196,321 @@ void CityView::eventOccurred(Event *e)
 							if (v && v->owner == state->getPlayer() && v != vehicle)
 							{
 								// FIXME: Don't clear missions if not replacing current mission
-								v->missions.clear();
-								v->missions.emplace_front(
-								    VehicleMission::attackVehicle(*this->state, *v, vehicleRef));
-								v->missions.front()->start(*this->state, *v);
+								v->setMission(*state, 
+									VehicleMission::attackVehicle(*this->state, *v, vehicleRef));
 							}
 							this->selectionState = SelectionState::Normal;
 						}
-						return;
+						break;
 					}
-					case TileObject::Type::Projectile:
+					case SelectionState::VehicleGotoBuilding:
 					{
-						auto projectile =
-						    std::dynamic_pointer_cast<TileObjectProjectile>(collision.obj)
-						        ->getProjectile();
-						LogWarning("Clicked on projectile: Power %s at %s", projectile->damage,
-						           projectile->position);
+						if (building)
+						{
+							auto v = this->selectedVehicle.lock();
+							if (v && v->owner == state->getPlayer())
+							{
+								LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name,
+									building->name);
+								// FIXME: Don't clear missions if not replacing current mission
+								v->setMission(*state,
+									VehicleMission::gotoBuilding(*state, *v, building));
+							}
+							this->selectionState = SelectionState::Normal;
+						}
+						break;
+					}
+					case SelectionState::VehicleGotoLocation:
+					{
+						// We always have a position if we came this far
+						{
+							auto v = this->selectedVehicle.lock();
+							if (v && v->owner == state->getPlayer())
+							{
+								// Use vehicle altitude preference to select target height, clamp by
+								// map
+								// size
+								int altitude = glm::min((int)v->altitude,
+									state->current_city->map->size.z - 1);
 
-						return;
-					}
-					default:
-					{
-						LogWarning("Clicked on some object we didn't care to process");
-						return;
+								Vec3<int> targetPos{ position.x,
+									position.y, altitude };
+								// FIXME: Don't clear missions if not replacing current mission
+								v->setMission(*state,
+									VehicleMission::gotoLocation(*state, *v, targetPos));
+								LogWarning("Vehicle \"%s\" going to location %s", v->name,
+									targetPos);
+							}
+							this->selectionState = SelectionState::Normal;
+						}
+						break;
 					}
 				}
 			}
+		}
+		return true;
+	}
+	return true;
+}
+
+bool CityView::handleGameStateEvent(Event * e)
+{
+	auto gameEvent = dynamic_cast<GameEvent *>(e);
+	if (!gameEvent)
+	{
+		LogError("Invalid game state event");
+		return true;
+	}
+	if (!gameEvent->message().empty())
+	{
+		state->logEvent(gameEvent);
+		baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
+		if (gameEvent->type != GameEventType::AlienSpotted)
+		{
+			fw().stageQueueCommand(
+			{ StageCmd::Command::PUSH,
+				mksp<NotificationScreen>(state, *this, gameEvent->message()) });
 		}
 	}
-	else if (e->type() == EVENT_GAME_STATE)
+	switch (gameEvent->type)
 	{
-		auto gameEvent = dynamic_cast<GameEvent *>(e);
-		if (!gameEvent)
+		case GameEventType::AlienTakeover:
 		{
-			LogError("Invalid game state event");
+			// FIXME: Proper takeover message
+			auto gameOrgEvent = dynamic_cast<GameOrganisationEvent *>(e);
+			fw().stageQueueCommand(
+			{ StageCmd::Command::PUSH,
+				mksp<NotificationScreen>(
+					state, *this,
+					format("Aliens have taken over %s", gameOrgEvent->organisation->name)) });
 		}
-		if (!gameEvent->message().empty())
+		break;
+		case GameEventType::DefendTheBase:
 		{
-			state->logEvent(gameEvent);
-			baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
-			if (gameEvent->type != GameEventType::AlienSpotted)
-			{
-				fw().stageQueueCommand(
-				    {StageCmd::Command::PUSH,
-				     mksp<NotificationScreen>(state, *this, gameEvent->message())});
-			}
-		}
-		switch (gameEvent->type)
-		{
-			default:
-				break;
-			case GameEventType::AlienTakeover:
-			{
-				// FIXME: Proper takeover message
-				auto gameOrgEvent = dynamic_cast<GameOrganisationEvent *>(e);
-				fw().stageQueueCommand(
-				    {StageCmd::Command::PUSH,
-				     mksp<NotificationScreen>(
-				         state, *this,
-				         format("Aliens have taken over %s", gameOrgEvent->organisation->name))});
-			}
+			auto gameDefenseEvent = dynamic_cast<GameDefenseEvent *>(e);
+			initiateDefenseMission(gameDefenseEvent->base, gameDefenseEvent->organisation);
 			break;
-			case GameEventType::DefendTheBase:
+		}
+		case GameEventType::AlienSpotted:
+		{
+			auto ev = dynamic_cast<GameBuildingEvent *>(e);
+			if (!ev)
 			{
-				auto gameDefenseEvent = dynamic_cast<GameDefenseEvent *>(e);
-				initiateDefenseMission(gameDefenseEvent->base, gameDefenseEvent->organisation);
-				break;
+				LogError("Invalid spotted event");
 			}
-			case GameEventType::AlienSpotted:
+			fw().soundBackend->playSample(listRandomiser(state->rng, alertSounds));
+			zoomLastEvent();
+			setUpdateSpeed(UpdateSpeed::Speed1);
+			fw().stageQueueCommand(
+			{ StageCmd::Command::PUSH, mksp<AlertScreen>(state, ev->building) });
+			break;
+		}
+		case GameEventType::ResearchCompleted:
+		{
+			auto ev = dynamic_cast<GameResearchEvent *>(e);
+			if (!ev)
 			{
-				auto ev = dynamic_cast<GameBuildingEvent *>(e);
-				if (!ev)
-				{
-					LogError("Invalid spotted event");
-				}
-				fw().soundBackend->playSample(listRandomiser(state->rng, alertSounds));
-				zoomLastEvent();
-				setUpdateSpeed(UpdateSpeed::Speed1);
-				fw().stageQueueCommand(
-				    {StageCmd::Command::PUSH, mksp<AlertScreen>(state, ev->building)});
-				break;
+				LogError("Invalid research event");
 			}
-			case GameEventType::ResearchCompleted:
+			this->state->research.resortTopicList();
+			sp<Facility> lab_facility;
+			for (auto &base : state->player_bases)
 			{
-				auto ev = dynamic_cast<GameResearchEvent *>(e);
-				if (!ev)
+				for (auto &facility : base.second->facilities)
 				{
-					LogError("Invalid research event");
-				}
-				this->state->research.resortTopicList();
-				sp<Facility> lab_facility;
-				for (auto &base : state->player_bases)
-				{
-					for (auto &facility : base.second->facilities)
+					if (ev->lab == facility->lab)
 					{
-						if (ev->lab == facility->lab)
+						lab_facility = facility;
+						break;
+					}
+				}
+				if (lab_facility)
+					break;
+			}
+			if (!lab_facility)
+			{
+				LogError("No facilities matching lab");
+			}
+			auto game_state = this->state;
+			auto ufopaedia_entry = ev->topic->ufopaedia_entry;
+			sp<UfopaediaCategory> ufopaedia_category;
+			if (ufopaedia_entry)
+			{
+				for (auto &cat : this->state->ufopaedia)
+				{
+					for (auto &entry : cat.second->entries)
+					{
+						if (ufopaedia_entry == entry.second)
 						{
-							lab_facility = facility;
+							ufopaedia_category = cat.second;
 							break;
 						}
 					}
-					if (lab_facility)
+					if (ufopaedia_category)
 						break;
 				}
-				if (!lab_facility)
+				if (!ufopaedia_category)
 				{
-					LogError("No facilities matching lab");
+					LogError("No UFOPaedia category found for entry %s",
+						ufopaedia_entry->title);
 				}
-				auto game_state = this->state;
-				auto ufopaedia_entry = ev->topic->ufopaedia_entry;
-				sp<UfopaediaCategory> ufopaedia_category;
+			}
+			auto message_box = mksp<MessageBox>(
+				tr("RESEARCH COMPLETE"),
+				format("%s\n%s\n%s", tr("Research project completed:"), ev->topic->name,
+					tr("Do you wish to view the UFOpaedia report?")),
+				MessageBox::ButtonOptions::YesNo,
+				// Yes callback
+				[game_state, lab_facility, ufopaedia_category, ufopaedia_entry]() {
+				fw().stageQueueCommand({ StageCmd::Command::PUSH,
+					mksp<ResearchScreen>(game_state, lab_facility) });
 				if (ufopaedia_entry)
 				{
-					for (auto &cat : this->state->ufopaedia)
-					{
-						for (auto &entry : cat.second->entries)
-						{
-							if (ufopaedia_entry == entry.second)
-							{
-								ufopaedia_category = cat.second;
-								break;
-							}
-						}
-						if (ufopaedia_category)
-							break;
-					}
-					if (!ufopaedia_category)
-					{
-						LogError("No UFOPaedia category found for entry %s",
-						         ufopaedia_entry->title);
-					}
+					fw().stageQueueCommand(
+					{ StageCmd::Command::PUSH,
+						mksp<UfopaediaCategoryView>(game_state, ufopaedia_category,
+							ufopaedia_entry) });
 				}
-				auto message_box = mksp<MessageBox>(
-				    tr("RESEARCH COMPLETE"),
-				    format("%s\n%s\n%s", tr("Research project completed:"), ev->topic->name,
-				           tr("Do you wish to view the UFOpaedia report?")),
-				    MessageBox::ButtonOptions::YesNo,
-				    // Yes callback
-				    [game_state, lab_facility, ufopaedia_category, ufopaedia_entry]() {
-					    fw().stageQueueCommand({StageCmd::Command::PUSH,
-					                            mksp<ResearchScreen>(game_state, lab_facility)});
-					    if (ufopaedia_entry)
-					    {
-						    fw().stageQueueCommand(
-						        {StageCmd::Command::PUSH,
-						         mksp<UfopaediaCategoryView>(game_state, ufopaedia_category,
-						                                     ufopaedia_entry)});
-					    }
-					},
-				    // No callback
-				    [game_state, lab_facility]() {
-					    fw().stageQueueCommand({StageCmd::Command::PUSH,
-					                            mksp<ResearchScreen>(game_state, lab_facility)});
-					});
-				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
-			}
-			break;
-			case GameEventType::ManufactureCompleted:
-			{
-				auto ev = dynamic_cast<GameManufactureEvent *>(e);
-				if (!ev)
-				{
-					LogError("Invalid manufacture event");
-				}
-				sp<Facility> lab_facility;
-				sp<Base> lab_base;
-				for (auto &base : state->player_bases)
-				{
-					for (auto &facility : base.second->facilities)
-					{
-						if (ev->lab == facility->lab)
-						{
-							lab_facility = facility;
-							lab_base = base.second;
-							break;
-						}
-					}
-					if (lab_facility)
-						break;
-				}
-				if (!lab_facility)
-				{
-					LogError("No facilities matching lab");
-				}
-				auto game_state = this->state;
-
-				UString item_name;
-				switch (ev->topic->item_type)
-				{
-					case ResearchTopic::ItemType::VehicleEquipment:
-						item_name = game_state->vehicle_equipment[ev->topic->item_produced]->name;
-						break;
-					case ResearchTopic::ItemType::VehicleEquipmentAmmo:
-						item_name = game_state->vehicle_ammo[ev->topic->item_produced]->name;
-						break;
-					case ResearchTopic::ItemType::AgentEquipment:
-						item_name = game_state->agent_equipment[ev->topic->item_produced]->name;
-						break;
-					case ResearchTopic::ItemType::Craft:
-						item_name = game_state->vehicle_types[ev->topic->item_produced]->name;
-						break;
-				}
-				auto message_box = mksp<MessageBox>(
-				    tr("MANUFACTURE COMPLETED"),
-				    format("%s\n%s\n%s %d\n%d", lab_base->name, tr(item_name), tr("Quantity:"),
-				           ev->goal, tr("Do you wish to reasign the Workshop?")),
-				    MessageBox::ButtonOptions::YesNo,
-				    // Yes callback
-				    [game_state, lab_facility]() {
-					    fw().stageQueueCommand({StageCmd::Command::PUSH,
-					                            mksp<ResearchScreen>(game_state, lab_facility)});
-					});
-				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
-			}
-			break;
-			case GameEventType::ManufactureHalted:
-			{
-				auto ev = dynamic_cast<GameManufactureEvent *>(e);
-				if (!ev)
-				{
-					LogError("Invalid manufacture event");
-				}
-				sp<Facility> lab_facility;
-				sp<Base> lab_base;
-				for (auto &base : state->player_bases)
-				{
-					for (auto &facility : base.second->facilities)
-					{
-						if (ev->lab == facility->lab)
-						{
-							lab_facility = facility;
-							lab_base = base.second;
-							break;
-						}
-					}
-					if (lab_facility)
-						break;
-				}
-				if (!lab_facility)
-				{
-					LogError("No facilities matching lab");
-				}
-				auto game_state = this->state;
-
-				UString item_name;
-				switch (ev->topic->item_type)
-				{
-					case ResearchTopic::ItemType::VehicleEquipment:
-						item_name = game_state->vehicle_equipment[ev->topic->item_produced]->name;
-						break;
-					case ResearchTopic::ItemType::VehicleEquipmentAmmo:
-						item_name = game_state->vehicle_ammo[ev->topic->item_produced]->name;
-						break;
-					case ResearchTopic::ItemType::AgentEquipment:
-						item_name = game_state->agent_equipment[ev->topic->item_produced]->name;
-						break;
-					case ResearchTopic::ItemType::Craft:
-						item_name = game_state->vehicles[ev->topic->item_produced]->name;
-						break;
-				}
-				auto message_box =
-				    mksp<MessageBox>(tr("MANUFACTURING HALTED"),
-				                     format("%s\n%s\n%s %d/%d\n%d", lab_base->name, tr(item_name),
-				                            tr("Completion status:"), ev->done, ev->goal,
-				                            tr("Production costs exceed your available funds.")),
-				                     MessageBox::ButtonOptions::Ok);
-				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
-			}
-			break;
-			case GameEventType::FacilityCompleted:
-			{
-				auto ev = dynamic_cast<GameFacilityEvent *>(e);
-				if (!ev)
-				{
-					LogError("Invalid facility event");
-					return;
-				}
-				auto message_box =
-				    mksp<MessageBox>(tr("FACILITY COMPLETED"),
-				                     format("%s\n%s", ev->base->name, tr(ev->facility->type->name)),
-				                     MessageBox::ButtonOptions::Ok);
-				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
-			}
-			break;
+			},
+				// No callback
+				[game_state, lab_facility]() {
+				fw().stageQueueCommand({ StageCmd::Command::PUSH,
+					mksp<ResearchScreen>(game_state, lab_facility) });
+			});
+			fw().stageQueueCommand({ StageCmd::Command::PUSH, message_box });
 		}
+		break;
+		case GameEventType::ManufactureCompleted:
+		{
+			auto ev = dynamic_cast<GameManufactureEvent *>(e);
+			if (!ev)
+			{
+				LogError("Invalid manufacture event");
+			}
+			sp<Facility> lab_facility;
+			sp<Base> lab_base;
+			for (auto &base : state->player_bases)
+			{
+				for (auto &facility : base.second->facilities)
+				{
+					if (ev->lab == facility->lab)
+					{
+						lab_facility = facility;
+						lab_base = base.second;
+						break;
+					}
+				}
+				if (lab_facility)
+					break;
+			}
+			if (!lab_facility)
+			{
+				LogError("No facilities matching lab");
+			}
+			auto game_state = this->state;
+
+			UString item_name;
+			switch (ev->topic->item_type)
+			{
+			case ResearchTopic::ItemType::VehicleEquipment:
+				item_name = game_state->vehicle_equipment[ev->topic->item_produced]->name;
+				break;
+			case ResearchTopic::ItemType::VehicleEquipmentAmmo:
+				item_name = game_state->vehicle_ammo[ev->topic->item_produced]->name;
+				break;
+			case ResearchTopic::ItemType::AgentEquipment:
+				item_name = game_state->agent_equipment[ev->topic->item_produced]->name;
+				break;
+			case ResearchTopic::ItemType::Craft:
+				item_name = game_state->vehicle_types[ev->topic->item_produced]->name;
+				break;
+			}
+			auto message_box = mksp<MessageBox>(
+				tr("MANUFACTURE COMPLETED"),
+				format("%s\n%s\n%s %d\n%d", lab_base->name, tr(item_name), tr("Quantity:"),
+					ev->goal, tr("Do you wish to reasign the Workshop?")),
+				MessageBox::ButtonOptions::YesNo,
+				// Yes callback
+				[game_state, lab_facility]() {
+				fw().stageQueueCommand({ StageCmd::Command::PUSH,
+					mksp<ResearchScreen>(game_state, lab_facility) });
+			});
+			fw().stageQueueCommand({ StageCmd::Command::PUSH, message_box });
+		}
+		break;
+		case GameEventType::ManufactureHalted:
+		{
+			auto ev = dynamic_cast<GameManufactureEvent *>(e);
+			if (!ev)
+			{
+				LogError("Invalid manufacture event");
+			}
+			sp<Facility> lab_facility;
+			sp<Base> lab_base;
+			for (auto &base : state->player_bases)
+			{
+				for (auto &facility : base.second->facilities)
+				{
+					if (ev->lab == facility->lab)
+					{
+						lab_facility = facility;
+						lab_base = base.second;
+						break;
+					}
+				}
+				if (lab_facility)
+					break;
+			}
+			if (!lab_facility)
+			{
+				LogError("No facilities matching lab");
+			}
+			auto game_state = this->state;
+
+			UString item_name;
+			switch (ev->topic->item_type)
+			{
+			case ResearchTopic::ItemType::VehicleEquipment:
+				item_name = game_state->vehicle_equipment[ev->topic->item_produced]->name;
+				break;
+			case ResearchTopic::ItemType::VehicleEquipmentAmmo:
+				item_name = game_state->vehicle_ammo[ev->topic->item_produced]->name;
+				break;
+			case ResearchTopic::ItemType::AgentEquipment:
+				item_name = game_state->agent_equipment[ev->topic->item_produced]->name;
+				break;
+			case ResearchTopic::ItemType::Craft:
+				item_name = game_state->vehicles[ev->topic->item_produced]->name;
+				break;
+			}
+			auto message_box =
+				mksp<MessageBox>(tr("MANUFACTURING HALTED"),
+					format("%s\n%s\n%s %d/%d\n%d", lab_base->name, tr(item_name),
+						tr("Completion status:"), ev->done, ev->goal,
+						tr("Production costs exceed your available funds.")),
+					MessageBox::ButtonOptions::Ok);
+			fw().stageQueueCommand({ StageCmd::Command::PUSH, message_box });
+		}
+		break;
+		case GameEventType::FacilityCompleted:
+		{
+			auto ev = dynamic_cast<GameFacilityEvent *>(e);
+			if (!ev)
+			{
+				LogError("Invalid facility event");
+				return true;
+			}
+			auto message_box =
+				mksp<MessageBox>(tr("FACILITY COMPLETED"),
+					format("%s\n%s", ev->base->name, tr(ev->facility->type->name)),
+					MessageBox::ButtonOptions::Ok);
+			fw().stageQueueCommand({ StageCmd::Command::PUSH, message_box });
+		}
+		break;
+		default:
+			break;
 	}
-	else
-	{
-		CityTileView::eventOccurred(e);
-	}
+	return true;
 }
 
 VehicleTileInfo CityView::createVehicleInfo(sp<Vehicle> v)

@@ -169,7 +169,10 @@ class Vehicle : public StateObject,
 
 	void setPosition(const Vec3<float> &pos);
 
+	// Adds mission to list of missions, returns true if successful
 	bool addMission(GameState &state, VehicleMission *mission, bool toBack = false);
+	// Replaces all missions with provided mission, returns true if successful
+	bool setMission(GameState &state, VehicleMission *mission);
 
 	virtual void update(GameState &state, unsigned int ticks);
 	void updateSprite(GameState &state);

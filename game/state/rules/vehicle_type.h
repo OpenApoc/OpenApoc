@@ -19,6 +19,7 @@ class Image;
 class VoxelMap;
 class BattleMap;
 class AgentType;
+class UfopaediaEntry;
 
 class VehicleType : public StateObject
 {
@@ -139,6 +140,8 @@ class VehicleType : public StateObject
 
 	std::list<EquipmentLayoutSlot> equipment_layout_slots;
 	std::list<std::pair<Vec2<int>, StateRef<VEquipmentType>>> initial_equipment_list;
+
+	StateRef<UfopaediaEntry> ufopaedia_entry;
 
 	~VehicleType() override = default;
 	VehicleType() = default;

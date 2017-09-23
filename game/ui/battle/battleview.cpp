@@ -2888,504 +2888,12 @@ void BattleView::eventOccurred(Event *e)
 			}
 		}
 	}
-
+	// Exclude mouse down events that are over the form
 	if (eventWithin || activeTab->eventIsWithin(e) || baseForm->eventIsWithin(e))
 	{
 		return;
 	}
-	// Hotkeys that work both in debug and normal mode
-	if (e->type() == EVENT_KEY_DOWN)
-	{
-		switch (e->keyboard().KeyCode)
-		{
-			case SDLK_RSHIFT:
-				modifierRShift = true;
-				return;
-			case SDLK_LSHIFT:
-				modifierLShift = true;
-				return;
-			case SDLK_RALT:
-				modifierRAlt = true;
-				return;
-			case SDLK_LALT:
-				modifierLAlt = true;
-				return;
-			case SDLK_RCTRL:
-				modifierRCtrl = true;
-				return;
-			case SDLK_LCTRL:
-				modifierLCtrl = true;
-				return;
-			case SDLK_ESCAPE:
-				if (activeTab != notMyTurnTab)
-				{
-					fw().stageQueueCommand(
-					    {StageCmd::Command::PUSH, mksp<InGameOptions>(state->shared_from_this())});
-				}
-				return;
-			case SDLK_TAB:
-				baseForm->findControl("BUTTON_TOGGLE_STRATMAP")->click();
-				return;
-			case SDLK_PAGEUP:
-				setZLevel(getZLevel() + 1);
-				setSelectedTilePosition(
-				    {selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z + 1});
-				updateLayerButtons();
-				return;
-			case SDLK_PAGEDOWN:
-				setZLevel(getZLevel() - 1);
-				setSelectedTilePosition(
-				    {selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z - 1});
-				updateLayerButtons();
-				return;
-			case SDLK_SPACE:
-				if (updateSpeed != BattleUpdateSpeed::Pause)
-					setUpdateSpeed(BattleUpdateSpeed::Pause);
-				else
-					setUpdateSpeed(lastSpeed);
-				return;
-			default:
-				break;
-		}
-		if (debugHotkeyMode)
-		{
-			switch (e->keyboard().KeyCode)
-			{
-				// Force re-link supports
-				case SDLK_f:
-				{
-					auto t = getSelectedTilePosition();
-					auto &map = *battle.map;
-					auto tile = map.getTile(t);
-					for (auto &o : tile->ownedObjects)
-					{
-						if (o->getType() == TileObject::Type::Ground ||
-						    o->getType() == TileObject::Type::Feature ||
-						    o->getType() == TileObject::Type::LeftWall ||
-						    o->getType() == TileObject::Type::RightWall)
-						{
-							auto mp =
-							    std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
-							auto set = mksp<std::set<BattleMapPart *>>();
-							set->insert(mp.get());
-							mp->queueCollapse();
-							BattleMapPart::attemptReLinkSupports(set);
-						}
-					}
-					return;
-				}
-				// Reveal map
-				case SDLK_r:
-				{
-					revealWholeMap = !revealWholeMap;
-					return;
-				}
-				//  Reset ai movement order
-				case SDLK_q:
-				{
-					for (auto &u : battle.units)
-					{
-						if (u.second->isDead())
-						{
-							continue;
-						}
 
-						if (u.second->tileObject->getOwningTile()->position == selectedTilePosition)
-						{
-							auto movement = AIMovement();
-							movement.type = AIMovement::Type::ChangeStance;
-							movement.movementMode = MovementMode::Prone;
-							u.second->executeAIMovement(*state, movement);
-						}
-					}
-					return;
-				}
-				// Stun units
-				case SDLK_s:
-				{
-					bool inverse = modifierLShift || modifierRShift;
-					bool local = !(modifierLCtrl || modifierRCtrl);
-					for (auto &u : battle.units)
-					{
-						if (u.second->isDead())
-						{
-							continue;
-						}
-
-						if (((local &&
-						      u.second->tileObject->getOwningTile()->position ==
-						          selectedTilePosition) ||
-						     (!local &&
-						      glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
-						          5.0f)) == !inverse)
-						{
-							u.second->applyDamageDirect(*state, 9001, false, BodyPart::Helmet,
-							                            u.second->agent->getHealth() + 4);
-						}
-					}
-					return;
-				}
-				// Retreat units
-				case SDLK_k:
-				{
-					bool inverse = modifierLShift || modifierRShift;
-					bool local = !(modifierLCtrl || modifierRCtrl);
-					for (auto &u : battle.units)
-					{
-						if (u.second->isDead() || u.second->retreated)
-						{
-							continue;
-						}
-
-						if (((local &&
-						      u.second->tileObject->getOwningTile()->position ==
-						          selectedTilePosition) ||
-						     (!local &&
-						      glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
-						          5.0f)) == !inverse)
-						{
-							if (!u.second->retreated)
-							{
-								u.second->retreat(*state);
-							}
-						}
-					}
-					return;
-				}
-				// Panic / Amplify psi
-				case SDLK_p:
-				{
-					if (modifierLShift || modifierRShift)
-					{
-						LogWarning("Psi amplified!");
-						for (auto &u : battle.units)
-						{
-							if (u.second->isDead())
-							{
-								continue;
-							}
-
-							u.second->agent->modified_stats.psi_defence = 0;
-							u.second->agent->modified_stats.psi_attack = 100;
-							u.second->agent->modified_stats.psi_energy = 100;
-						}
-					}
-					else
-					{
-						LogWarning("Panic mode engaged!");
-						for (auto &u : battle.units)
-						{
-							if (u.second->isConscious())
-							{
-								u.second->agent->modified_stats.morale = 25;
-							}
-						}
-					}
-					return;
-				}
-				// Heal everybody
-				case SDLK_h:
-				{
-					LogWarning("Heals for everybody!");
-					for (auto &u : battle.units)
-					{
-						if (u.second->isDead())
-						{
-							continue;
-						}
-						u.second->stunDamage = 0;
-						u.second->agent->modified_stats = u.second->agent->current_stats;
-						u.second->fatalWounds[BodyPart::Body] = 0;
-						u.second->fatalWounds[BodyPart::Helmet] = 0;
-						u.second->fatalWounds[BodyPart::LeftArm] = 0;
-						u.second->fatalWounds[BodyPart::Legs] = 0;
-						u.second->fatalWounds[BodyPart::RightArm] = 0;
-					}
-					return;
-				}
-				// Restore TUs
-				case SDLK_t:
-				{
-					LogWarning("Restoring TU");
-					for (auto &u : battle.units)
-					{
-						if (!u.second->isConscious() ||
-						    u.second->owner != battle.currentActiveOrganisation)
-						{
-							continue;
-						}
-						u.second->agent->modified_stats.time_units = u.second->initialTU;
-					}
-					return;
-				}
-				// End turn TB
-				case SDLK_e:
-					if (battle.mode == Battle::Mode::TurnBased)
-					{
-						battle.interruptUnits.clear();
-						for (auto &u : battle.units)
-						{
-							if (u.second->owner != battle.currentActiveOrganisation ||
-							    !u.second->isConscious())
-							{
-								continue;
-							}
-							u.second->cancelMissions(*state);
-						}
-						battle.endTurn(*state);
-					}
-					return;
-				// Notification toggle
-				case SDLK_n:
-				{
-					DEBUG_DISABLE_NOTIFICATIONS = !DEBUG_DISABLE_NOTIFICATIONS;
-					return;
-				}
-				// Blow debug vortex
-				case SDLK_KP_0:
-					debugVortex();
-					return;
-				// Fire debug shot
-				case SDLK_KP_1:
-					debugShot({0, 1, 0});
-					return;
-				case SDLK_KP_2:
-					debugShot({1, 1, 0});
-					return;
-				case SDLK_KP_3:
-					debugShot({1, 0, 0});
-					return;
-				case SDLK_KP_6:
-					debugShot({1, -1, 0});
-					return;
-				case SDLK_KP_9:
-					debugShot({0, -1, 0});
-					return;
-				case SDLK_KP_8:
-					debugShot({-1, -1, 0});
-					return;
-				case SDLK_KP_7:
-					debugShot({-1, 0, 0});
-					return;
-				case SDLK_KP_4:
-					debugShot({-1, 1, 0});
-					return;
-				case SDLK_KP_5:
-					debugShot({0, 0, -1});
-					return;
-				default:
-					break;
-			}
-		}
-		else
-		{
-			switch (e->keyboard().KeyCode)
-			{
-				case SDLK_v:
-					baseForm->findControl("BUTTON_LAYERING")->click();
-					return;
-				case SDLK_c:
-					baseForm->findControl("BUTTON_FOLLOW_AGENT")->click();
-					return;
-				case SDLK_F9:
-					baseForm->findControl("BUTTON_EVASIVE")->click();
-					return;
-				case SDLK_F10:
-					baseForm->findControl("BUTTON_NORMAL")->click();
-					return;
-				case SDLK_F11:
-					baseForm->findControl("BUTTON_AGGRESSIVE")->click();
-					return;
-				case SDLK_F2:
-					baseForm->findControl("BUTTON_PRONE")->click();
-					return;
-				case SDLK_F3:
-					baseForm->findControl("BUTTON_WALK")->click();
-					return;
-				case SDLK_F4:
-					baseForm->findControl("BUTTON_RUN")->click();
-					return;
-				case SDLK_F5:
-					baseForm->findControl("BUTTON_CEASE_FIRE")->click();
-					return;
-				case SDLK_F6:
-					baseForm->findControl("BUTTON_AIMED")->click();
-					return;
-				case SDLK_F7:
-					baseForm->findControl("BUTTON_SNAP")->click();
-					return;
-				case SDLK_F8:
-					baseForm->findControl("BUTTON_AUTO")->click();
-					return;
-				case SDLK_BACKSPACE:
-					baseForm->findControl("BUTTON_KNEEL")->click();
-					return;
-				case SDLK_m:
-					baseForm->findControl("BUTTON_SHOW_LOG")->click();
-					return;
-				case SDLK_HOME:
-					baseForm->findControl("BUTTON_ZOOM_EVENT")->click();
-					return;
-				case SDLK_1:
-					if (modifierLShift || modifierRShift)
-					{
-						baseForm->findControl("UNIT_1")->click();
-					}
-					else if (modifierLAlt || modifierRAlt)
-					{
-						baseForm->findControl("UNIT_1_HOSTILES")->click();
-					}
-					else
-					{
-						baseForm->findControl("SQUAD_1_OVERLAY")->click();
-					}
-					return;
-				case SDLK_2:
-					if (modifierLShift || modifierRShift)
-					{
-						baseForm->findControl("UNIT_2")->click();
-					}
-					else if (modifierLAlt || modifierRAlt)
-					{
-						baseForm->findControl("UNIT_2_HOSTILES")->click();
-					}
-					else
-					{
-						baseForm->findControl("SQUAD_2_OVERLAY")->click();
-					}
-					return;
-				case SDLK_3:
-					if (modifierLShift || modifierRShift)
-					{
-						baseForm->findControl("UNIT_3")->click();
-					}
-					else if (modifierLAlt || modifierRAlt)
-					{
-						baseForm->findControl("UNIT_3_HOSTILES")->click();
-					}
-					else
-					{
-						baseForm->findControl("SQUAD_3_OVERLAY")->click();
-					}
-					return;
-				case SDLK_4:
-					if (modifierLShift || modifierRShift)
-					{
-						baseForm->findControl("UNIT_4")->click();
-					}
-					else if (modifierLAlt || modifierRAlt)
-					{
-						baseForm->findControl("UNIT_4_HOSTILES")->click();
-					}
-					else
-					{
-						baseForm->findControl("SQUAD_4_OVERLAY")->click();
-					}
-					return;
-				case SDLK_5:
-					if (modifierLShift || modifierRShift)
-					{
-						baseForm->findControl("UNIT_5")->click();
-					}
-					else if (modifierLAlt || modifierRAlt)
-					{
-						baseForm->findControl("UNIT_5_HOSTILES")->click();
-					}
-					else
-					{
-						baseForm->findControl("SQUAD_5_OVERLAY")->click();
-					}
-					return;
-				case SDLK_6:
-					if (modifierLShift || modifierRShift)
-					{
-						baseForm->findControl("UNIT_6")->click();
-					}
-					else if (modifierLAlt || modifierRAlt)
-					{
-						baseForm->findControl("UNIT_6_HOSTILES")->click();
-					}
-					else
-					{
-						baseForm->findControl("SQUAD_6_OVERLAY")->click();
-					}
-					return;
-				case SDLK_RETURN:
-					if (activeTab == mainTab)
-					{
-						activeTab->findControl("BUTTON_INVENTORY")->click();
-					}
-					return;
-				case SDLK_LEFTBRACKET:
-					if (activeTab == mainTab)
-					{
-						activeTab->findControl("BUTTON_LEFT_HAND_THROW")->click();
-					}
-					return;
-				case SDLK_RIGHTBRACKET:
-					if (activeTab == mainTab)
-					{
-						activeTab->findControl("BUTTON_RIGHT_HAND_THROW")->click();
-					}
-					return;
-				case SDLK_BACKSLASH:
-					if (activeTab == mainTab)
-					{
-						activeTab->findControl("BUTTON_LEFT_HAND_DROP")->click();
-					}
-					return;
-				case SDLK_QUOTE:
-					if (activeTab == mainTab)
-					{
-						activeTab->findControl("BUTTON_RIGHT_HAND_DROP")->click();
-					}
-					return;
-				case SDLK_y:
-					if (activeTab == primingTab)
-					{
-						activeTab->findControl("BUTTON_OK")->click();
-					}
-					return;
-				case SDLK_n:
-					if (activeTab == primingTab)
-					{
-						activeTab->findControl("BUTTON_CANCEL")->click();
-					}
-					return;
-				case SDLK_e:
-					if (battle.mode == Battle::Mode::TurnBased)
-					{
-						baseForm->findControl("BUTTON_ENDTURN")->click();
-					}
-					return;
-				case SDLK_s:
-					if (activeTab == notMyTurnTab)
-					{
-						return;
-					}
-					fw().stageQueueCommand(
-					    {StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Save, state)});
-					return;
-				case SDLK_l:
-					if (activeTab == notMyTurnTab)
-					{
-						return;
-					}
-					fw().stageQueueCommand(
-					    {StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Load, state)});
-					return;
-				case SDLK_j:
-				{
-					if (!battle.battleViewSelectedUnits.empty())
-					{
-						auto t = getSelectedTilePosition();
-						orderJump(t);
-					}
-					return;
-				}
-			}
-		}
-	}
 	if (e->type() == EVENT_MOUSE_MOVE)
 	{
 		Vec2<float> screenOffset = {getScreenOffset().x, getScreenOffset().y};
@@ -3396,102 +2904,586 @@ void BattleView::eventOccurred(Event *e)
 		    (float)getZLevel() - 1.0f));
 		return;
 	}
-	if (e->type() == EVENT_KEY_UP)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		switch (e->keyboard().KeyCode)
+		if (handleKeyDown(e))
 		{
-			case SDLK_RSHIFT:
-				modifierRShift = false;
-				return;
-			case SDLK_LSHIFT:
-				modifierLShift = false;
-				return;
-			case SDLK_RALT:
-				modifierRAlt = false;
-				return;
-			case SDLK_LALT:
-				modifierLAlt = false;
-				return;
-			case SDLK_RCTRL:
-				modifierRCtrl = false;
-				return;
-			case SDLK_LCTRL:
-				modifierLCtrl = false;
-				return;
+			return;
 		}
 	}
-	// Exclude mouse down events that are over the form
+	if (e->type() == EVENT_KEY_UP)
+	{
+		if (handleKeyUp(e))
+		{
+			return;
+		}
+	}
 	if (e->type() == EVENT_MOUSE_DOWN)
 	{
-		handleMouseDown(e);
-		return;
+		if (handleMouseDown(e))
+		{
+			return;
+		}
 	}
 	if (e->type() == EVENT_GAME_STATE)
 	{
-		auto gameEvent = dynamic_cast<GameEvent *>(e);
-		if (!gameEvent)
+		if (handleGameStateEvent(e))
 		{
-			LogError("Invalid game state event");
 			return;
 		}
-		if (!gameEvent->message().empty())
-		{
-			state->logEvent(gameEvent);
-			baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
-			if (battle.mode == Battle::Mode::RealTime && !DEBUG_DISABLE_NOTIFICATIONS)
-			{
-				fw().stageQueueCommand(
-				    {StageCmd::Command::PUSH,
-				     mksp<NotificationScreen>(state, *this, gameEvent->message())});
-			}
-		}
-		switch (gameEvent->type)
-		{
-			case GameEventType::ZoomView:
-				if (GameLocationEvent *gle = dynamic_cast<GameLocationEvent *>(gameEvent))
-				{
-					zoomAt(gle->location);
-				}
-				break;
-			case GameEventType::AgentPsiProbed:
-			{
-				auto gameAgentEvent = dynamic_cast<GameAgentEvent *>(e);
-				fw().stageQueueCommand(
-				    {StageCmd::Command::PUSH, mksp<AEquipScreen>(state, gameAgentEvent->agent)});
-				break;
-			}
-			default:
-				break;
-		}
-		return;
 	}
 	BattleTileView::eventOccurred(e);
 }
 
-void BattleView::handleMouseDown(Event *e)
+bool BattleView::handleKeyDown(Event * e)
+{
+	// Common keys active in both debug and normal mode
+	switch (e->keyboard().KeyCode)
+	{
+		case SDLK_RSHIFT:
+			modifierRShift = true;
+			return true;
+		case SDLK_LSHIFT:
+			modifierLShift = true;
+			return true;
+		case SDLK_RALT:
+			modifierRAlt = true;
+			return true;
+		case SDLK_LALT:
+			modifierLAlt = true;
+			return true;
+		case SDLK_RCTRL:
+			modifierRCtrl = true;
+			return true;
+		case SDLK_LCTRL:
+			modifierLCtrl = true;
+			return true;
+		case SDLK_ESCAPE:
+			if (activeTab != notMyTurnTab)
+			{
+				fw().stageQueueCommand(
+				{ StageCmd::Command::PUSH, mksp<InGameOptions>(state->shared_from_this()) });
+			}
+			return true;
+		case SDLK_TAB:
+			baseForm->findControl("BUTTON_TOGGLE_STRATMAP")->click();
+			return true;
+		case SDLK_PAGEUP:
+			setZLevel(getZLevel() + 1);
+			setSelectedTilePosition(
+			{ selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z + 1 });
+			updateLayerButtons();
+			return true;
+		case SDLK_PAGEDOWN:
+			setZLevel(getZLevel() - 1);
+			setSelectedTilePosition(
+			{ selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z - 1 });
+			updateLayerButtons();
+			return true;
+		case SDLK_SPACE:
+			if (updateSpeed != BattleUpdateSpeed::Pause)
+				setUpdateSpeed(BattleUpdateSpeed::Pause);
+			else
+				setUpdateSpeed(lastSpeed);
+			return true;
+		default:
+			break;
+	}
+	// Debug keys (cheats)
+	if (debugHotkeyMode)
+	{
+		switch (e->keyboard().KeyCode)
+		{
+			// Force re-link supports
+			case SDLK_f:
+			{
+				auto t = getSelectedTilePosition();
+				auto &map = *battle.map;
+				auto tile = map.getTile(t);
+				for (auto &o : tile->ownedObjects)
+				{
+					if (o->getType() == TileObject::Type::Ground ||
+						o->getType() == TileObject::Type::Feature ||
+						o->getType() == TileObject::Type::LeftWall ||
+						o->getType() == TileObject::Type::RightWall)
+					{
+						auto mp =
+							std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+						auto set = mksp<std::set<BattleMapPart *>>();
+						set->insert(mp.get());
+						mp->queueCollapse();
+						BattleMapPart::attemptReLinkSupports(set);
+					}
+				}
+				return true;
+			}
+			// Reveal map
+			case SDLK_r:
+			{
+				revealWholeMap = !revealWholeMap;
+				return true;
+			}
+			//  Reset ai movement order
+			case SDLK_q:
+			{
+				for (auto &u : battle.units)
+				{
+					if (u.second->isDead())
+					{
+						continue;
+					}
+
+					if (u.second->tileObject->getOwningTile()->position == selectedTilePosition)
+					{
+						auto movement = AIMovement();
+						movement.type = AIMovement::Type::ChangeStance;
+						movement.movementMode = MovementMode::Prone;
+						u.second->executeAIMovement(*state, movement);
+					}
+				}
+				return true;
+			}
+			// Stun units
+			case SDLK_s:
+			{
+				bool inverse = modifierLShift || modifierRShift;
+				bool local = !(modifierLCtrl || modifierRCtrl);
+				for (auto &u : battle.units)
+				{
+					if (u.second->isDead())
+					{
+						continue;
+					}
+
+					if (((local &&
+						u.second->tileObject->getOwningTile()->position ==
+						selectedTilePosition) ||
+						(!local &&
+							glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
+							5.0f)) == !inverse)
+					{
+						u.second->applyDamageDirect(*state, 9001, false, BodyPart::Helmet,
+							u.second->agent->getHealth() + 4);
+					}
+				}
+				return true;
+			}
+			// Retreat units
+			case SDLK_k:
+			{
+				bool inverse = modifierLShift || modifierRShift;
+				bool local = !(modifierLCtrl || modifierRCtrl);
+				for (auto &u : battle.units)
+				{
+					if (u.second->isDead() || u.second->retreated)
+					{
+						continue;
+					}
+
+					if (((local &&
+						u.second->tileObject->getOwningTile()->position ==
+						selectedTilePosition) ||
+						(!local &&
+							glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
+							5.0f)) == !inverse)
+					{
+						if (!u.second->retreated)
+						{
+							u.second->retreat(*state);
+						}
+					}
+				}
+				return true;
+			}
+			// Panic / Amplify psi
+			case SDLK_p:
+			{
+				if (modifierLShift || modifierRShift)
+				{
+					LogWarning("Psi amplified!");
+					for (auto &u : battle.units)
+					{
+						if (u.second->isDead())
+						{
+							continue;
+						}
+
+						u.second->agent->modified_stats.psi_defence = 0;
+						u.second->agent->modified_stats.psi_attack = 100;
+						u.second->agent->modified_stats.psi_energy = 100;
+					}
+				}
+				else
+				{
+					LogWarning("Panic mode engaged!");
+					for (auto &u : battle.units)
+					{
+						if (u.second->isConscious())
+						{
+							u.second->agent->modified_stats.morale = 25;
+						}
+					}
+				}
+				return true;
+			}
+			// Heal everybody
+			case SDLK_h:
+			{
+				LogWarning("Heals for everybody!");
+				for (auto &u : battle.units)
+				{
+					if (u.second->isDead())
+					{
+						continue;
+					}
+					u.second->stunDamage = 0;
+					u.second->agent->modified_stats = u.second->agent->current_stats;
+					u.second->fatalWounds[BodyPart::Body] = 0;
+					u.second->fatalWounds[BodyPart::Helmet] = 0;
+					u.second->fatalWounds[BodyPart::LeftArm] = 0;
+					u.second->fatalWounds[BodyPart::Legs] = 0;
+					u.second->fatalWounds[BodyPart::RightArm] = 0;
+				}
+				return true;
+			}
+			// Restore TUs
+			case SDLK_t:
+			{
+				LogWarning("Restoring TU");
+				for (auto &u : battle.units)
+				{
+					if (!u.second->isConscious() ||
+						u.second->owner != battle.currentActiveOrganisation)
+					{
+						continue;
+					}
+					u.second->agent->modified_stats.time_units = u.second->initialTU;
+				}
+				return true;
+			}
+			// End turn TB
+			case SDLK_e:
+				if (battle.mode == Battle::Mode::TurnBased)
+				{
+					battle.interruptUnits.clear();
+					for (auto &u : battle.units)
+					{
+						if (u.second->owner != battle.currentActiveOrganisation ||
+							!u.second->isConscious())
+						{
+							continue;
+						}
+						u.second->cancelMissions(*state);
+					}
+					battle.endTurn(*state);
+				}
+				return true;
+				// Notification toggle
+			case SDLK_n:
+			{
+				DEBUG_DISABLE_NOTIFICATIONS = !DEBUG_DISABLE_NOTIFICATIONS;
+				return true;
+			}
+			// Blow debug vortex
+			case SDLK_KP_0:
+				debugVortex();
+				return true;
+				// Fire debug shot
+			case SDLK_KP_1:
+				debugShot({ 0, 1, 0 });
+				return true;
+			case SDLK_KP_2:
+				debugShot({ 1, 1, 0 });
+				return true;
+			case SDLK_KP_3:
+				debugShot({ 1, 0, 0 });
+				return true;
+			case SDLK_KP_6:
+				debugShot({ 1, -1, 0 });
+				return true;
+			case SDLK_KP_9:
+				debugShot({ 0, -1, 0 });
+				return true;
+			case SDLK_KP_8:
+				debugShot({ -1, -1, 0 });
+				return true;
+			case SDLK_KP_7:
+				debugShot({ -1, 0, 0 });
+				return true;
+			case SDLK_KP_4:
+				debugShot({ -1, 1, 0 });
+				return true;
+			case SDLK_KP_5:
+				debugShot({ 0, 0, -1 });
+				return true;
+			default:
+				break;
+		}
+	}
+	// Normal game hotkeys
+	else
+	{
+		switch (e->keyboard().KeyCode)
+		{
+			case SDLK_v:
+				baseForm->findControl("BUTTON_LAYERING")->click();
+				return true;
+			case SDLK_c:
+				baseForm->findControl("BUTTON_FOLLOW_AGENT")->click();
+				return true;
+			case SDLK_F9:
+				baseForm->findControl("BUTTON_EVASIVE")->click();
+				return true;
+			case SDLK_F10:
+				baseForm->findControl("BUTTON_NORMAL")->click();
+				return true;
+			case SDLK_F11:
+				baseForm->findControl("BUTTON_AGGRESSIVE")->click();
+				return true;
+			case SDLK_F2:
+				baseForm->findControl("BUTTON_PRONE")->click();
+				return true;
+			case SDLK_F3:
+				baseForm->findControl("BUTTON_WALK")->click();
+				return true;
+			case SDLK_F4:
+				baseForm->findControl("BUTTON_RUN")->click();
+				return true;
+			case SDLK_F5:
+				baseForm->findControl("BUTTON_CEASE_FIRE")->click();
+				return true;
+			case SDLK_F6:
+				baseForm->findControl("BUTTON_AIMED")->click();
+				return true;
+			case SDLK_F7:
+				baseForm->findControl("BUTTON_SNAP")->click();
+				return true;
+			case SDLK_F8:
+				baseForm->findControl("BUTTON_AUTO")->click();
+				return true;
+			case SDLK_BACKSPACE:
+				baseForm->findControl("BUTTON_KNEEL")->click();
+				return true;
+			case SDLK_m:
+				baseForm->findControl("BUTTON_SHOW_LOG")->click();
+				return true;
+			case SDLK_HOME:
+				baseForm->findControl("BUTTON_ZOOM_EVENT")->click();
+				return true;
+			case SDLK_1:
+				if (modifierLShift || modifierRShift)
+				{
+					baseForm->findControl("UNIT_1")->click();
+				}
+				else if (modifierLAlt || modifierRAlt)
+				{
+					baseForm->findControl("UNIT_1_HOSTILES")->click();
+				}
+				else
+				{
+					baseForm->findControl("SQUAD_1_OVERLAY")->click();
+				}
+				return true;
+			case SDLK_2:
+				if (modifierLShift || modifierRShift)
+				{
+					baseForm->findControl("UNIT_2")->click();
+				}
+				else if (modifierLAlt || modifierRAlt)
+				{
+					baseForm->findControl("UNIT_2_HOSTILES")->click();
+				}
+				else
+				{
+					baseForm->findControl("SQUAD_2_OVERLAY")->click();
+				}
+				return true;
+			case SDLK_3:
+				if (modifierLShift || modifierRShift)
+				{
+					baseForm->findControl("UNIT_3")->click();
+				}
+				else if (modifierLAlt || modifierRAlt)
+				{
+					baseForm->findControl("UNIT_3_HOSTILES")->click();
+				}
+				else
+				{
+					baseForm->findControl("SQUAD_3_OVERLAY")->click();
+				}
+				return true;
+			case SDLK_4:
+				if (modifierLShift || modifierRShift)
+				{
+					baseForm->findControl("UNIT_4")->click();
+				}
+				else if (modifierLAlt || modifierRAlt)
+				{
+					baseForm->findControl("UNIT_4_HOSTILES")->click();
+				}
+				else
+				{
+					baseForm->findControl("SQUAD_4_OVERLAY")->click();
+				}
+				return true;
+			case SDLK_5:
+				if (modifierLShift || modifierRShift)
+				{
+					baseForm->findControl("UNIT_5")->click();
+				}
+				else if (modifierLAlt || modifierRAlt)
+				{
+					baseForm->findControl("UNIT_5_HOSTILES")->click();
+				}
+				else
+				{
+					baseForm->findControl("SQUAD_5_OVERLAY")->click();
+				}
+				return true;
+			case SDLK_6:
+				if (modifierLShift || modifierRShift)
+				{
+					baseForm->findControl("UNIT_6")->click();
+				}
+				else if (modifierLAlt || modifierRAlt)
+				{
+					baseForm->findControl("UNIT_6_HOSTILES")->click();
+				}
+				else
+				{
+					baseForm->findControl("SQUAD_6_OVERLAY")->click();
+				}
+				return true;
+			case SDLK_RETURN:
+				if (activeTab == mainTab)
+				{
+					activeTab->findControl("BUTTON_INVENTORY")->click();
+				}
+				return true;
+			case SDLK_LEFTBRACKET:
+				if (activeTab == mainTab)
+				{
+					activeTab->findControl("BUTTON_LEFT_HAND_THROW")->click();
+				}
+				return true;
+			case SDLK_RIGHTBRACKET:
+				if (activeTab == mainTab)
+				{
+					activeTab->findControl("BUTTON_RIGHT_HAND_THROW")->click();
+				}
+				return true;
+			case SDLK_BACKSLASH:
+				if (activeTab == mainTab)
+				{
+					activeTab->findControl("BUTTON_LEFT_HAND_DROP")->click();
+				}
+				return true;
+			case SDLK_QUOTE:
+				if (activeTab == mainTab)
+				{
+					activeTab->findControl("BUTTON_RIGHT_HAND_DROP")->click();
+				}
+				return true;
+			case SDLK_y:
+				if (activeTab == primingTab)
+				{
+					activeTab->findControl("BUTTON_OK")->click();
+				}
+				return true;
+			case SDLK_n:
+				if (activeTab == primingTab)
+				{
+					activeTab->findControl("BUTTON_CANCEL")->click();
+				}
+				return true;
+			case SDLK_e:
+				if (battle.mode == Battle::Mode::TurnBased)
+				{
+					baseForm->findControl("BUTTON_ENDTURN")->click();
+				}
+				return true;
+			case SDLK_s:
+				if (activeTab == notMyTurnTab)
+				{
+					return true;
+				}
+				fw().stageQueueCommand(
+				{ StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Save, state) });
+				return true;
+			case SDLK_l:
+				if (activeTab == notMyTurnTab)
+				{
+					return true;
+				}
+				fw().stageQueueCommand(
+				{ StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Load, state) });
+				return true;
+			case SDLK_j:
+			{
+				if (!battle.battleViewSelectedUnits.empty())
+				{
+					auto t = getSelectedTilePosition();
+					orderJump(t);
+				}
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool BattleView::handleKeyUp(Event * e)
+{
+	switch (e->keyboard().KeyCode)
+	{
+		case SDLK_RSHIFT:
+			modifierRShift = false;
+			return true;
+		case SDLK_LSHIFT:
+			modifierLShift = false;
+			return true;
+		case SDLK_RALT:
+			modifierRAlt = false;
+			return true;
+		case SDLK_LALT:
+			modifierLAlt = false;
+			return true;
+		case SDLK_RCTRL:
+			modifierRCtrl = false;
+			return true;
+		case SDLK_LCTRL:
+			modifierLCtrl = false;
+			return true;
+	}
+	return false;
+}
+
+bool BattleView::handleMouseDown(Event *e)
 {
 	if (activeTab == notMyTurnTab)
 	{
-		return;
+		return true;
 	}
 
-	if (getViewMode() == TileViewMode::Strategy && e->type() == EVENT_MOUSE_DOWN &&
+	if (getViewMode() == TileViewMode::Strategy  &&
 	    Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
 	{
 		Vec2<float> screenOffset = {getScreenOffset().x, getScreenOffset().y};
 		auto clickTile =
 		    screenToTileCoords(Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
 		setScreenCenterTile({clickTile.x, clickTile.y});
+		return true;
 	}
-	else if (Event::isPressed(e->mouse().Button, Event::MouseButton::Middle) && debugHotkeyMode)
+	// CHEAT - move unit to mouse
+	if (Event::isPressed(e->mouse().Button, Event::MouseButton::Middle) && debugHotkeyMode)
 	{
-		// CHEAT - move unit to mouse
 		if (!battle.battleViewSelectedUnits.empty())
 		{
 			selectionState = BattleSelectionState::TeleportLeft;
 		}
+		return true;
 	}
-	else if (Event::isPressed(e->mouse().Button, Event::MouseButton::Left) ||
+	if (Event::isPressed(e->mouse().Button, Event::MouseButton::Left) ||
 	         Event::isPressed(e->mouse().Button, Event::MouseButton::Right))
 	{
 		auto buttonPressed = Event::isPressed(e->mouse().Button, Event::MouseButton::Left)
@@ -3951,7 +3943,49 @@ void BattleView::handleMouseDown(Event *e)
 				}
 				break;
 		}
+		return true;
 	}
+	return true;
+}
+
+bool BattleView::handleGameStateEvent(Event * e)
+{
+	auto gameEvent = dynamic_cast<GameEvent *>(e);
+	if (!gameEvent)
+	{
+		LogError("Invalid game state event");
+		return true;
+	}
+	if (!gameEvent->message().empty())
+	{
+		state->logEvent(gameEvent);
+		baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
+		if (battle.mode == Battle::Mode::RealTime && !DEBUG_DISABLE_NOTIFICATIONS)
+		{
+			fw().stageQueueCommand(
+			{ StageCmd::Command::PUSH,
+				mksp<NotificationScreen>(state, *this, gameEvent->message()) });
+		}
+	}
+	switch (gameEvent->type)
+	{
+		case GameEventType::ZoomView:
+			if (GameLocationEvent *gle = dynamic_cast<GameLocationEvent *>(gameEvent))
+			{
+				zoomAt(gle->location);
+			}
+			break;
+		case GameEventType::AgentPsiProbed:
+		{
+			auto gameAgentEvent = dynamic_cast<GameAgentEvent *>(e);
+			fw().stageQueueCommand(
+			{ StageCmd::Command::PUSH, mksp<AEquipScreen>(state, gameAgentEvent->agent) });
+			break;
+		}
+		default:
+			break;
+	}
+	return true;
 }
 
 void BattleView::endBattle()

@@ -3,6 +3,7 @@
 #endif
 #include "framework/data.h"
 #include "framework/framework.h"
+#include "game/state/ufopaedia.h"
 #include "game/state/battle/battlemap.h"
 #include "game/state/gamestate.h"
 #include "library/strings_format.h"
@@ -130,6 +131,9 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		vehicle->manufacturer = {&state, data.getOrgId(v.manufacturer)};
 		// We draw objects based on centre, therefore we must adjust here
 		vehicle->image_offset = {v.image_position_1, v.image_position_2 * 3.0f / 4.0f};
+
+		auto ped = format("%s%s", UfopaediaEntry::getPrefix(), canon_string(data.vehicle_names->get(i)));
+		vehicle->ufopaedia_entry = { &state, ped };
 
 		if (v.movement_type == 0)
 		{

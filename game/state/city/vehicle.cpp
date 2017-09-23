@@ -1294,6 +1294,13 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 	return true;
 }
 
+bool Vehicle::setMission(GameState & state, VehicleMission * mission)
+{
+	missions.clear();
+	missions.emplace_front(mission);
+	missions.front()->start(state, *this);
+}
+
 float Vehicle::getSpeed() const
 {
 	// FIXME: This is somehow modulated by weight?

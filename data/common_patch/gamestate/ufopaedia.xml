@@ -1899,7 +1899,7 @@
           </value>
         </entry>
         <entry>
-          <key>PAEDIAENTRY_CULTOFSIRIUS</key>
+          <key>PAEDIAENTRY_CULT_OF_SIRIUS</key>
           <value>
             <title>Cult Of Sirius</title>
             <description>This bizarre cult has whipped up a religious frenzy following the appearance of the Dimension Gates. The cult has long believed in redemption of the human race by a superior Alien race. They believe the UFOs and Aliens to be harmless and are rapidly gaining credibility and recruits from the general population. This represents a considerable threat to X-COM because the cultists will do anything to assist the Aliens in their purpose, whatever that might be.</description>
@@ -1965,7 +1965,7 @@
           </value>
         </entry>
         <entry>
-          <key>PAEDIAENTRY_GENERALMETRO</key>
+          <key>PAEDIAENTRY_GENERAL_METRO</key>
           <value>
             <title>General Metro</title>
             <description>The General Metro corporation designs and manufactures road vehicles. Since the corporation installed an efficient anti-grav system inside the road structure it became possible to produce low powered anti-grav road vehicles which were cheap and efficient, despite being limited to the road system. The vehicle designs were based on the exuberant styling of the 1950s according to the requirements of city planners. General Metro is a major competitor to Superdynamics, as both corporations provide transport systems.</description>
@@ -1987,7 +1987,7 @@
           </value>
         </entry>
         <entry>
-          <key>PAEDIAENTRY_GRAVBALLLEAGUE</key>
+          <key>PAEDIAENTRY_GRAVBALL_LEAGUE</key>
           <value>
             <title>GravBall League</title>
             <description>GravBall is a fast paced aerial version of Soccer where the players use anti-grav backpacks to fly around an immense stadium. Due to the fast and violent nature of the game, players wear tough armor, injuries are still common though. Cybernetic implants are used to substitute for mangled limbs, but a GravBall player must be at least 50% original human flesh in order to qualify in the GravBall league. Due to the popularity of the sport the GravBall League, which owns all the stadiums in the city, has become a prosperous corporation. However, alternative recreations such as Sensovision or the illegal Psiclone are proving to be serious competition.</description>
@@ -2031,7 +2031,7 @@
           </value>
         </entry>
         <entry>
-          <key>PAEDIAENTRY_MUTANTALLIANCE</key>
+          <key>PAEDIAENTRY_MUTANT_ALLIANCE</key>
           <value>
             <title>Mutant Alliance</title>
             <description>The first wave of Alien incursions resulted in many genetic experiments involving crossbreeding humans and the Alien species known as Sectoids. These hybrids have survived in human society, but they have been denied the right to procreate within the city. They also suffer discrimination in employment and education. Although they are genetically almost identical to humans, they retain some Alien facial characteristics and are renowned (and distrusted) for their Psionic abilities. Hybrids Psionic abilities may well prove useful to X-COM in the war against the Aliens. The Mutant Alliance is active in city politics and promotes the concerns of the hybrid community.</description>
@@ -2086,7 +2086,7 @@
           </value>
         </entry>
         <entry>
-          <key>PAEDIAENTRY_SANCTUARYCLINIC</key>
+          <key>PAEDIAENTRY_SANCTUARY_CLINIC</key>
           <value>
             <title>Santuary Clinic</title>
             <description>Longevity is the major obsession of medical research. Life can be prolonged by genetically reprogramming cell death mechanisms, but disease is still a major killer. Nano technology is employed to destroy cancer cells and solve all kinds of medical problems. Operations are no longer performed by humans - artificial intelligence's are employed instead. The Sanctuary Clinic controls hospitals, pharmaceutical plants and the procreation parks.</description>
@@ -2097,7 +2097,7 @@
           </value>
         </entry>
         <entry>
-          <key>PAEDIAENTRY_SELF</key>
+          <key>PAEDIAENTRY_S_E_L_F_</key>
           <value>
             <title>Sentient Engine Liberation Front</title>
             <description>The city edict of 2076 effectively banished Androids from most areas of city life. They were forced into slum areas and treated as little more than vermin. They considered themselves to be artificial life forms of equal intellect to human beings and decided to fight back. SELF is an organization dedicated to fight for equality for all sentient life forms, whether flesh or machine. Their activity has been limited to pressure group politics, but there are demands within their ranks to resort to more direct, violent action.</description>
@@ -2174,7 +2174,7 @@
           </value>
         </entry>
         <entry>
-          <key>PAEDIAENTRY_XCOM</key>
+          <key>PAEDIAENTRY_X-COM</key>
           <value>
             <title>X-Com</title>
             <description>The Extraterrestrial combat force known as X-COM was originally founded in 1998 to defend the Earth from Alien invasion. After a period of obsolescence, X-COM was revived in 2040 to fight the second Alien war under the seas of the Earth. X-COM has now been enlisted to investigate recent Alien incursions. The city's senators have agreed to fund a covert initiative, with the assistance of local Megapol stations, who will pass on reports of possible Alien activity directly to the X-COM base commander. X-COM is under pressure to solve the Alien problem before new elections to the Senate. Senators and the corporate elite of Mega-Primus are nervous about the prospect of popular panic undermining the social fabric of the city.</description>
@@ -2656,7 +2656,7 @@
           </value>
         </entry>
         <entry>
-          <key>PAEDIAENTRY_VALKYRIE</key>
+          <key>PAEDIAENTRY_VALKYRIE_INTERCEPTOR</key>
           <value>
             <title>Valkyrie Interceptor</title>
             <description>The Valkyrie is the standard military vehicle manufactured by Marsec. Its sleek lines appear reminiscent of old rocket designs, but it is a fully capable anti-grav dependent craft with a variety of engine configurations. There is space for many types of armaments and equipment loads. It is capable of solar system travel and is feared by the criminal cartels when it is used to police the space lanes to Mars and beyond.</description>

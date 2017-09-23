@@ -20,6 +20,7 @@ class Vehicle;
 class AgentType;
 class AEquipmentType;
 class GameState;
+class UfopaediaEntry;
 
 class Organisation : public StateObject
 {
@@ -57,6 +58,8 @@ class Organisation : public StateObject
 	std::list<StateRef<AgentType>> guard_types_alien;
 
 	std::map<LootPriority, std::vector<StateRef<AEquipmentType>>> loot;
+
+	StateRef<UfopaediaEntry> ufopaedia_entry;
 
 	Organisation() = default;
 	int getGuardCount(GameState &state) const;

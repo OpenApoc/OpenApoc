@@ -828,6 +828,7 @@
 		<member>name</member>
 		<member>infiltrationSpeed</member>
 		<member>detectionWeight</member>
+		<member>ufopaedia_entry</member>
 	</object>
 	<object>
 		<name>Building</name>
@@ -1059,6 +1060,7 @@
 		<member>guard_types_alien</member>
 		<member>loot</member>
 		<member>current_relations</member>
+		<member>ufopaedia_entry</member>
 	</object>
 	<object>
 		<name>VehicleType</name>
@@ -1095,6 +1097,7 @@
 		<member>voxelMapsLOS</member>
 		<member>equipment_layout_slots</member>
 		<member>initial_equipment_list</member>
+		<member>ufopaedia_entry</member>
 	</object>
 	<object>
 		<name>UfopaediaEntry</name>

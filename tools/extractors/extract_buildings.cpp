@@ -5,6 +5,7 @@
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"
 #include "library/strings_format.h"
+#include "game/state/ufopaedia.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
 
@@ -28,6 +29,8 @@ void InitialGameStateExtractor::extractBuildingFunctions(GameState &state) const
 			f->detectionWeight = buildingFunctionDetectionWeights[i];
 		}
 		auto id = format("%s%s", BuildingFunction::getPrefix(), canon_string(f->name));
+		auto ped = format("%s%s", UfopaediaEntry::getPrefix(), canon_string(f->name));
+		f->ufopaedia_entry = { &state, ped };
 		state.building_functions[id] = f;
 	}
 }

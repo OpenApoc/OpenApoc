@@ -352,7 +352,11 @@ void AEquipScreen::begin()
 
 void AEquipScreen::pause() {}
 
-void AEquipScreen::resume() {}
+void AEquipScreen::resume() 
+{
+	modifierLCtrl = false;
+	modifierRCtrl = false;
+}
 
 void AEquipScreen::finish() {}
 
@@ -363,16 +367,24 @@ void AEquipScreen::eventOccurred(Event *e)
 	// Modifiers
 	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->keyboard().KeyCode == SDLK_RCTRL || e->keyboard().KeyCode == SDLK_LCTRL)
+		if (e->keyboard().KeyCode == SDLK_RCTRL)
 		{
-			modifierCtrl = true;
+			modifierRCtrl = true;
+		}
+		if (e->keyboard().KeyCode == SDLK_LCTRL)
+		{
+			modifierLCtrl = true;
 		}
 	}
 	if (e->type() == EVENT_KEY_UP)
 	{
-		if (e->keyboard().KeyCode == SDLK_RCTRL || e->keyboard().KeyCode == SDLK_LCTRL)
+		if (e->keyboard().KeyCode == SDLK_RCTRL)
 		{
-			modifierCtrl = false;
+			modifierRCtrl = false;
+		}
+		if (e->keyboard().KeyCode == SDLK_LCTRL)
+		{
+			modifierLCtrl = false;
 		}
 	}
 	if (e->type() == EVENT_KEY_DOWN)
@@ -380,34 +392,34 @@ void AEquipScreen::eventOccurred(Event *e)
 		switch (e->keyboard().KeyCode)
 		{
 			case SDLK_1:
-				processTemplate(1, modifierCtrl);
+				processTemplate(1, modifierRCtrl || modifierLCtrl);
 				return;
 			case SDLK_2:
-				processTemplate(2, modifierCtrl);
+				processTemplate(2, modifierRCtrl || modifierLCtrl);
 				return;
 			case SDLK_3:
-				processTemplate(3, modifierCtrl);
+				processTemplate(3, modifierRCtrl || modifierLCtrl);
 				return;
 			case SDLK_4:
-				processTemplate(4, modifierCtrl);
+				processTemplate(4, modifierRCtrl || modifierLCtrl);
 				return;
 			case SDLK_5:
-				processTemplate(5, modifierCtrl);
+				processTemplate(5, modifierRCtrl || modifierLCtrl);
 				return;
 			case SDLK_6:
-				processTemplate(6, modifierCtrl);
+				processTemplate(6, modifierRCtrl || modifierLCtrl);
 				return;
 			case SDLK_7:
-				processTemplate(7, modifierCtrl);
+				processTemplate(7, modifierRCtrl || modifierLCtrl);
 				return;
 			case SDLK_8:
-				processTemplate(8, modifierCtrl);
+				processTemplate(8, modifierRCtrl || modifierLCtrl);
 				return;
 			case SDLK_9:
-				processTemplate(9, modifierCtrl);
+				processTemplate(9, modifierRCtrl || modifierLCtrl);
 				return;
 			case SDLK_0:
-				processTemplate(0, modifierCtrl);
+				processTemplate(0, modifierRCtrl || modifierLCtrl);
 				return;
 			case SDLK_ESCAPE:
 				attemptCloseScreen();
@@ -518,7 +530,7 @@ void AEquipScreen::eventOccurred(Event *e)
 			{
 				draggedEquipmentOrigin = equipment->equippedPosition;
 
-				if (modifierCtrl && equipment->payloadType)
+				if (modifierRCtrl || modifierLCtrl && equipment->payloadType)
 				{
 					draggedEquipmentOffset = {0, 0};
 					draggedEquipment = equipment->unloadAmmo();
