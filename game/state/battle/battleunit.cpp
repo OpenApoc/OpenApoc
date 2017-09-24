@@ -4114,7 +4114,7 @@ void BattleUnit::executeGroupAIDecision(GameState &state, AIDecision &decision,
 					u->setKneelingMode(decision.movement->kneelingMode);
 					u->setMovementMode(decision.movement->movementMode);
 				}
-				Battle::groupMove(state, units, decision.movement->targetLocation);
+				state.current_battle->groupMove(state, units, decision.movement->targetLocation);
 				break;
 			default:
 				for (auto &u : units)

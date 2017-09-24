@@ -2416,8 +2416,8 @@ void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 
 	if (battle.battleViewGroupMove && battle.battleViewSelectedUnits.size() > 1 && !runAway)
 	{
-		Battle::groupMove(*state, battle.battleViewSelectedUnits, target, facingDelta,
-		                  demandGiveWay);
+		battle.groupMove(*state, battle.battleViewSelectedUnits, target, facingDelta,
+		                 demandGiveWay);
 	}
 	else
 	{

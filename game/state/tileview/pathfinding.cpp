@@ -3,7 +3,13 @@
 #include "game/state/battle/battlemap.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/battle/battleunitmission.h"
+#include "game/state/city/city.h"
+#include "game/state/city/vehicle.h"
+#include "game/state/city/vehiclemission.h"
+#include "game/state/gamestate.h"
 #include "game/state/tileview/tile.h"
+#include "game/state/tileview/tileobject_battleunit.h"
+#include "game/state/tileview/tileobject_vehicle.h"
 #include "limits.h"
 #include <algorithm>
 #include <glm/glm.hpp>
@@ -853,7 +859,7 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 	    // Sides of the 1st back row
 	    {-3, 1, 0},
 	    {3, 1, 0},
-	    // Flanks
+	    // Flans
 	    {-2, 0, 0},
 	    {2, 0, 0},
 	    {-4, 0, 0},
@@ -880,7 +886,7 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 	{
 		return;
 	}
-	else if (selectedUnits.size() == 1)
+	if (selectedUnits.size() == 1)
 	{
 		selectedUnits.front()->setMission(
 		    state, BattleUnitMission::gotoLocation(*selectedUnits.front(), targetLocation,
@@ -895,7 +901,6 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 
 	// Sort units based on proximity to target and speed
 
-	auto &map = selectedUnits.front()->tileObject->map;
 	auto localUnits = selectedUnits;
 	localUnits.sort([targetLocation](const StateRef<BattleUnit> &a, const StateRef<BattleUnit> &b) {
 		return BattleUnitTileHelper::getDistanceStatic((Vec3<int>)a->position, targetLocation) /
@@ -997,7 +1002,7 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 	int rotation = diagonal ? rotationDiagonal.at(dir) : rotationLinear.at(dir);
 
 	// Sort remaining units based on proximity to target and speed
-	auto h = BattleUnitTileHelper(map, *leadUnit);
+	auto h = BattleUnitTileHelper(*map, *leadUnit);
 	localUnits.sort(
 	    [h, targetLocation](const StateRef<BattleUnit> &a, const StateRef<BattleUnit> &b) {
 		    return h.getDistance((Vec3<int>)a->position, targetLocation) /
@@ -1024,9 +1029,9 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 		{
 			auto offset = rotate(*itOffset, rotation);
 			auto targetLocationOffsetted = targetLocation + offset;
-			if (targetLocationOffsetted.x < 0 || targetLocationOffsetted.x >= map.size.x ||
-			    targetLocationOffsetted.y < 0 || targetLocationOffsetted.y >= map.size.y ||
-			    targetLocationOffsetted.z < 0 || targetLocationOffsetted.z >= map.size.z)
+			if (targetLocationOffsetted.x < 0 || targetLocationOffsetted.x >= map->size.x ||
+			    targetLocationOffsetted.y < 0 || targetLocationOffsetted.y >= map->size.y ||
+			    targetLocationOffsetted.z < 0 || targetLocationOffsetted.z >= map->size.z)
 			{
 				log += format("\nLocation was outside map bounds, trying next one");
 				itOffset++;
@@ -1040,8 +1045,8 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 			    1.50f * 2.0f * (float)(std::max(std::abs(offset.x), std::abs(offset.y)) +
 			                           std::abs(offset.x) + std::abs(offset.y));
 			auto path =
-			    map.findShortestPath(targetLocation, targetLocationOffsetted, costLimit / 2.0f, h,
-			                         false, true, false, nullptr, costLimit);
+			    map->findShortestPath(targetLocation, targetLocationOffsetted, costLimit / 2.0f, h,
+			                          false, true, false, nullptr, costLimit);
 			itOffset++;
 			if (!path.empty() && path.back() == targetLocationOffsetted)
 			{
@@ -1056,5 +1061,178 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 	}
 	log += format("\nSuccessfully pathed everybody to target");
 	LogWarning("%s", log);
+}
+
+void City::groupMove(GameState &state, std::list<StateRef<Vehicle>> &selectedVehicles,
+                     Vec3<int> targetLocation, bool useTeleporter)
+{
+	// Legend:
+	//
+	// (arrive from the southwest)						(arrive from the south)
+	//
+	//         6			G = goal					         7			G = goal
+	//       5   6			F = flanks					       7   7		1 = 1s back row
+	//     4   5   6		1 = 1st back row			     6   6   6		2 = 2nd back row
+	//   3   F   5   6		2 = 2nd back row			   5   5   5   5	3 = 3rd back row
+	// 2   1   G   5   6	3 = sides of 1st back row	 F   F   G   F   F	4 = sides of 1st bk row
+	//   2   1   F   5		4 = sides of flanks			   4   1   1   4	F = flanks
+	//     2   1   4		5 = 1st front row			     2   2   2		5 = 1st front row
+	//       2   3			6 = 2nd front row			       3   3		6 = 2nd front row
+	//         2										         3			7 = 3rd front row
+	//
+	// We will of course rotate this accordingly with the direction from which units come
+
+	static const std::list<Vec3<int>> targetOffsetsDiagonal = {
+	    {0, 0, 0},
+	    // Two locations to the flanks
+	    {-1, -1, 0},
+	    {1, 1, 0},
+	    // Three locations in the 1st back row
+	    {-1, 1, 0},
+	    {-2, 0, 0},
+	    {0, 2, 0},
+	    // 2nd Back row
+	    {-2, 2, 0},
+	    {-3, 1, 0},
+	    {-1, 3, 0},
+	    {-4, 0, 0},
+	    {0, 4, 0},
+	    // Two locations to the side of the 1st back row
+	    {-3, -1, 0},
+	    {1, 3, 0},
+	    // Two locations to the side of the flanks
+	    {-2, -2, 0},
+	    {2, 2, 0},
+	    // 1st Front row
+	    {1, -1, 0},
+	    {0, -2, 0},
+	    {2, 0, 0},
+	    {-1, -3, 0},
+	    {3, 1, 0},
+	    // 2nd Front row
+	    {2, -2, 0},
+	    {1, -3, 0},
+	    {3, -1, 0},
+	    {0, -4, 0},
+	    {4, 0, 0},
+	};
+	static const std::map<Vec2<int>, int> rotationDiagonal = {
+	    {{1, -1}, 0}, {{1, 1}, 1}, {{-1, 1}, 2}, {{-1, -1}, 3},
+	};
+	static const std::list<Vec3<int>> targetOffsetsLinear = {
+	    {0, 0, 0},
+	    // Two locations in the 1st back row
+	    {-1, 1, 0},
+	    {1, 1, 0},
+	    // Three locations in the 2nd back row
+	    {0, 2, 0},
+	    {-2, 2, 0},
+	    {2, 2, 0},
+	    // 3rd Back row
+	    {-1, 3, 0},
+	    {1, 3, 0},
+	    {0, 4, 0},
+	    // Sides of the 1st back row
+	    {-3, 1, 0},
+	    {3, 1, 0},
+	    // Flanks
+	    {-2, 0, 0},
+	    {2, 0, 0},
+	    {-4, 0, 0},
+	    {4, 0, 0},
+	    // 1st front row
+	    {-1, -1, 0},
+	    {1, -1, 0},
+	    {-3, -1, 0},
+	    {3, -1, 0},
+	    // 2nd front row
+	    {0, -2, 0},
+	    {-2, -2, 0},
+	    {2, -2, 0},
+	    // 3rd front row
+	    {-1, -3, 0},
+	    {1, -3, 0},
+	    {0, -4, 0},
+	};
+	static const std::map<Vec2<int>, int> rotationLinear = {
+	    {{0, -1}, 0}, {{1, 0}, 1}, {{0, 1}, 2}, {{-1, 0}, 3},
+	};
+
+	if (selectedVehicles.empty())
+	{
+		return;
+	}
+	if (selectedVehicles.size() == 1 ||
+	    selectedVehicles.size() == 2 && selectedVehicles.front()->owner != state.getPlayer())
+	{
+		auto v = selectedVehicles.front();
+		if (v->owner == state.getPlayer())
+		{
+			// Use vehicle altitude preference to select target height, clamp by
+			// map size
+			int altitude = glm::min((int)v->altitude, map->size.z - 1);
+
+			Vec3<int> targetPos{targetLocation.x, targetLocation.y, altitude};
+			// FIXME: Don't clear missions if not replacing current mission
+			v->setMission(state, VehicleMission::gotoLocation(state, *v, targetPos));
+		}
+		return;
+	}
+
+	auto it = selectedVehicles.begin();
+	if ((*it)->owner != state.getPlayer())
+	{
+		it++;
+	}
+	auto dir = Vec2<int>{(int)targetLocation.x - (*it)->position.x,
+	                     (int)targetLocation.y - (*it)->position.y};
+	if (dir.x != 0 || dir.y != 0)
+	{
+		auto targetVectorNorm =
+		    glm::normalize(Vec2<float>{(float)targetLocation.x - (*it)->position.x,
+		                               (float)targetLocation.y - (*it)->position.y});
+		dir = {roundf(targetVectorNorm.x), roundf(targetVectorNorm.y)};
+	}
+	if (dir.x == 0 && dir.y == 0)
+	{
+		dir.y = -1;
+	}
+	bool diagonal = dir.x != 0 && dir.y != 0;
+	auto &targetOffsets = diagonal ? targetOffsetsDiagonal : targetOffsetsLinear;
+	int rotation = diagonal ? rotationDiagonal.at(dir) : rotationLinear.at(dir);
+
+	auto itOffset = targetOffsets.begin();
+	while (it != selectedVehicles.end())
+	{
+		if (itOffset == targetOffsets.end())
+		{
+			// FIXME: Generate more offsets in an enlarging diamond shape
+			LogWarning("\nRan out of location offsets while pathing vehicles, exiting");
+			return;
+		}
+		while (itOffset != targetOffsets.end())
+		{
+			auto offset = rotate(*itOffset, rotation);
+			auto targetLocationOffsetted = targetLocation + offset;
+			if (targetLocationOffsetted.x < 0 || targetLocationOffsetted.x >= map->size.x ||
+			    targetLocationOffsetted.y < 0 || targetLocationOffsetted.y >= map->size.y ||
+			    targetLocationOffsetted.z < 0 || targetLocationOffsetted.z >= map->size.z)
+			{
+				itOffset++;
+				continue;
+			}
+			itOffset++;
+
+			// Use vehicle altitude preference to select target height, clamp by
+			// map size
+			int altitude = glm::min((int)(*it)->altitude, map->size.z - 1);
+
+			Vec3<int> targetPos{targetLocationOffsetted.x, targetLocationOffsetted.y, altitude};
+			// FIXME: Don't clear missions if not replacing current mission
+			(*it)->setMission(state, VehicleMission::gotoLocation(state, **it, targetPos));
+			it++;
+			break;
+		}
+	}
 }
 }

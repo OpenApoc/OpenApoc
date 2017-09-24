@@ -127,23 +127,10 @@ void CityView::orderGoToBase()
 
 void CityView::orderMove(Vec3<float> position)
 {
-	// FIXME: Move in formation
-	LogWarning("IMPLEMENT Moving in formation");
-	for (auto &v : this->state->current_city->cityViewSelectedVehicles)
-	{
-		if (v && v->owner == this->state->getPlayer())
-		{
-			// Use vehicle altitude preference to select target height, clamp by
-			// map
-			// size
-			int altitude = glm::min((int)v->altitude, state->current_city->map->size.z - 1);
-
-			Vec3<int> targetPos{position.x, position.y, altitude};
-			// FIXME: Don't clear missions if not replacing current mission
-			v->setMission(*state, VehicleMission::gotoLocation(*state, *v, targetPos));
-			LogWarning("Vehicle \"%s\" going to location %s", v->name, targetPos);
-		}
-	}
+	// FIXME: Allow usage of teleporter with some key modifiers?
+	bool useTeleporter = false;
+	state->current_city->groupMove(*state, state->current_city->cityViewSelectedVehicles, position,
+	                               useTeleporter);
 }
 
 void CityView::orderMove(StateRef<Building> building)
@@ -161,8 +148,6 @@ void CityView::orderMove(StateRef<Building> building)
 
 void CityView::orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additive)
 {
-	// Selecting non-owned is always additive
-	additive = additive || vehicle->owner != state->getPlayer();
 	auto pos = std::find(state->current_city->cityViewSelectedVehicles.begin(),
 	                     state->current_city->cityViewSelectedVehicles.end(), vehicle);
 	if (inverse)
@@ -178,7 +163,8 @@ void CityView::orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additiv
 		// Vehicle not selected
 		if (pos == state->current_city->cityViewSelectedVehicles.end())
 		{
-			if (additive)
+			// Selecting non-owned vehicles is always additive to current selection
+			if (additive || vehicle->owner != state->getPlayer())
 			{
 				// Whenever adding clear any non-player vehicles from selection
 				if (!state->current_city->cityViewSelectedVehicles.empty() &&
@@ -199,29 +185,19 @@ void CityView::orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additiv
 		// Vehicle is selected
 		else
 		{
-			// Vehicle in selection and additive => move vehicle to front
-			if (additive)
+			// First move vehicle to front
+			state->current_city->cityViewSelectedVehicles.erase(pos);
+			// If moving vehicle to front, deselect any non-owned vehicle, unless it's that one
+			if (!state->current_city->cityViewSelectedVehicles.empty() &&
+			    state->current_city->cityViewSelectedVehicles.front()->owner != state->getPlayer())
 			{
-				state->current_city->cityViewSelectedVehicles.erase(pos);
-				// If moving vehicle to front, deselect any non-owned vehicle, unless it's that one
-				if (!state->current_city->cityViewSelectedVehicles.empty() &&
-				    state->current_city->cityViewSelectedVehicles.front()->owner !=
-				        state->getPlayer())
-				{
-					state->current_city->cityViewSelectedVehicles.pop_front();
-				}
-				state->current_city->cityViewSelectedVehicles.push_front(vehicle);
+				state->current_city->cityViewSelectedVehicles.pop_front();
 			}
-			// If not additive and in selection - select only this vehicle
-			else if (state->current_city->cityViewSelectedVehicles.size() > 1)
+			state->current_city->cityViewSelectedVehicles.push_front(vehicle);
+			// Then if not additive then zoom to vehicle
+			if (!additive)
 			{
-				state->current_city->cityViewSelectedVehicles.clear();
-				state->current_city->cityViewSelectedVehicles.push_front(vehicle);
-			}
-			// If not in additive mode and clicked on selected vehicle - deselect
-			else
-			{
-				state->current_city->cityViewSelectedVehicles.clear();
+				this->setScreenCenterTile(vehicle->position);
 			}
 		}
 	}

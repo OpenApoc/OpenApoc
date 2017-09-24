@@ -273,6 +273,8 @@ void GameState::startGame()
 			v->name = format("%s %d", type->name, ++type->numCreated);
 			v->city = {this, "CITYMAP_HUMAN"};
 			v->currentlyLandedBuilding = {this, buildingIt->first};
+			v->position = {v->currentlyLandedBuilding->bounds.p0.x,
+			               v->currentlyLandedBuilding->bounds.p0.y, 2};
 			v->owner = type->manufacturer;
 			v->health = type->health;
 			v->strategyImages = city_common_image_list->strategyImages;
@@ -362,6 +364,8 @@ void GameState::fillPlayerStartingProperty()
 		v->name = format("%s %d", type->name, ++type->numCreated);
 		v->city = {this, "CITYMAP_HUMAN"};
 		v->currentlyLandedBuilding = {this, bld};
+		v->position = {v->currentlyLandedBuilding->bounds.p0.x,
+		               v->currentlyLandedBuilding->bounds.p0.y, 2};
 		v->homeBuilding = {this, bld};
 		v->owner = this->getPlayer();
 		v->health = type->health;

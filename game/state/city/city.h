@@ -69,6 +69,10 @@ class City : public StateObject
 
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
 
+	// Move a group of vehicles in formation
+	void groupMove(GameState &state, std::list<StateRef<Vehicle>> &selectedVehicles,
+	               Vec3<int> targetLocation, bool useTeleporter = false);
+
 	static void accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition,
 	                                  Vec3<float> &target, int accuracy, bool cloaked);
 };

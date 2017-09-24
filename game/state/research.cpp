@@ -368,6 +368,8 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 										state->vehicles[vID] = v;
 										v->currentlyLandedBuilding->landed_vehicles.insert(
 										    {state.get(), vID});
+										v->position = {v->currentlyLandedBuilding->bounds.p0.x,
+										               v->currentlyLandedBuilding->bounds.p0.y, 2};
 										v->equipDefaultEquipment(*state);
 										v->strategyImages =
 										    state->city_common_image_list->strategyImages;

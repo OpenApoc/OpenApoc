@@ -2,7 +2,6 @@
 
 #include "game/state/agent.h"
 #include "game/state/tileview/tile.h"
-#include "game/state/tileview/tileobject_battleunit.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
@@ -13,6 +12,7 @@ namespace OpenApoc
 class BattleUnit;
 class Tile;
 class TileMap;
+class TileObjectBattleUnit;
 enum class BattleUnitType;
 
 class BattleUnitTileHelper : public CanEnterTileHelper

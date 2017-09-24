@@ -20,6 +20,7 @@
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/damage.h"
+#include "game/state/tileview/tileobject_battleunit.h"
 #include "game/ui/equipscreen.h"
 #include "game/ui/general/messagebox.h"
 
