@@ -203,8 +203,11 @@ void CityTileView::render()
 											    state.current_city->cityViewSelectedVehicles
 											        .begin())
 											{
-												vehiclesToDrawBrackets.insert(v);
-												vehiclesBracketsIndex[v] = 0;
+												if (v->owner == state.getPlayer())
+												{
+													vehiclesToDrawBrackets.insert(v);
+													vehiclesBracketsIndex[v] = 0;
+												}
 											}
 											else if (selectedPos !=
 											         state.current_city->cityViewSelectedVehicles

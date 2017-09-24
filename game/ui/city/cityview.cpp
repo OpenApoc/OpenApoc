@@ -159,7 +159,73 @@ void CityView::orderMove(StateRef<Building> building)
 	}
 }
 
-void CityView::orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additive) {}
+void CityView::orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additive)
+{
+	// Selecting non-owned is always additive
+	additive = additive || vehicle->owner != state->getPlayer();
+	auto pos = std::find(state->current_city->cityViewSelectedVehicles.begin(),
+	                     state->current_city->cityViewSelectedVehicles.end(), vehicle);
+	if (inverse)
+	{
+		// Vehicle in selection => remove
+		if (pos != state->current_city->cityViewSelectedVehicles.end())
+		{
+			state->current_city->cityViewSelectedVehicles.erase(pos);
+		}
+	}
+	else
+	{
+		// Vehicle not selected
+		if (pos == state->current_city->cityViewSelectedVehicles.end())
+		{
+			if (additive)
+			{
+				// Whenever adding clear any non-player vehicles from selection
+				if (!state->current_city->cityViewSelectedVehicles.empty() &&
+				    state->current_city->cityViewSelectedVehicles.front()->owner !=
+				        state->getPlayer())
+				{
+					state->current_city->cityViewSelectedVehicles.pop_front();
+				}
+				state->current_city->cityViewSelectedVehicles.push_front(vehicle);
+			}
+			else
+			{
+				// Vehicle not in selection => replace selection with vehicle
+				state->current_city->cityViewSelectedVehicles.clear();
+				state->current_city->cityViewSelectedVehicles.push_back(vehicle);
+			}
+		}
+		// Vehicle is selected
+		else
+		{
+			// Vehicle in selection and additive => move vehicle to front
+			if (additive)
+			{
+				state->current_city->cityViewSelectedVehicles.erase(pos);
+				// If moving vehicle to front, deselect any non-owned vehicle, unless it's that one
+				if (!state->current_city->cityViewSelectedVehicles.empty() &&
+				    state->current_city->cityViewSelectedVehicles.front()->owner !=
+				        state->getPlayer())
+				{
+					state->current_city->cityViewSelectedVehicles.pop_front();
+				}
+				state->current_city->cityViewSelectedVehicles.push_front(vehicle);
+			}
+			// If not additive and in selection - select only this vehicle
+			else if (state->current_city->cityViewSelectedVehicles.size() > 1)
+			{
+				state->current_city->cityViewSelectedVehicles.clear();
+				state->current_city->cityViewSelectedVehicles.push_front(vehicle);
+			}
+			// If not in additive mode and clicked on selected vehicle - deselect
+			else
+			{
+				state->current_city->cityViewSelectedVehicles.clear();
+			}
+		}
+	}
+}
 
 void CityView::orderAttack(StateRef<Vehicle> vehicle)
 {
@@ -353,12 +419,12 @@ CityView::CityView(sp<GameState> state)
 		    this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
 		});
 	this->baseForm->findControl("BUTTON_FOLLOW_VEHICLE")
-	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
+	    ->addCallback(FormEventType::CheckBoxChange, [this](FormsEvent *e) {
 		    this->followVehicle =
 		        std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy)->isChecked();
 		});
 	this->baseForm->findControl("BUTTON_TOGGLE_STRATMAP")
-	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
+	    ->addCallback(FormEventType::CheckBoxChange, [this](FormsEvent *e) {
 		    bool strategy = std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy)->isChecked();
 		    this->setViewMode(strategy ? TileViewMode::Strategy : TileViewMode::Isometric);
 		});
@@ -616,7 +682,7 @@ void CityView::resume()
 		auto viewImage = BaseGraphics::drawMiniBase(viewBase);
 		view->setImage(viewImage);
 		view->setDepressedImage(viewImage);
-		view->addCallback(FormEventType::ButtonClick, [this](Event *e) {
+		view->addCallback(FormEventType::ButtonClick, [this](FormsEvent *e) {
 			this->state->current_base = {this->state.get(), e->forms().RaisedBy->getData<Base>()};
 			this->uiTabs[0]
 			    ->findControlTyped<Label>("TEXT_BASE_NAME")
@@ -876,56 +942,59 @@ void CityView::update()
 			else
 			{
 				control = createVehicleInfoControl(info);
+				control->addCallback(FormEventType::MouseDown, [this, vehicle](FormsEvent *e) {
+					orderSelect(
+					    StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)},
+					    Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
+					    modifierLCtrl || modifierRCtrl);
+					auto vehicleForm = this->uiTabs[1];
+
+					switch (vehicle->altitude)
+					{
+						case Vehicle::Altitude::Highest:
+							vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGHEST")
+							    ->setChecked(true);
+							break;
+						case Vehicle::Altitude::High:
+							vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGH")
+							    ->setChecked(true);
+							break;
+						case Vehicle::Altitude::Standard:
+							vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_STANDARD")
+							    ->setChecked(true);
+							break;
+						case Vehicle::Altitude::Low:
+							vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_LOW")
+							    ->setChecked(true);
+							break;
+					}
+
+					switch (vehicle->attackMode)
+					{
+						case Vehicle::AttackMode::Aggressive:
+							vehicleForm
+							    ->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_AGGRESSIVE")
+							    ->setChecked(true);
+							break;
+						case Vehicle::AttackMode::Standard:
+							vehicleForm
+							    ->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_STANDARD")
+							    ->setChecked(true);
+							break;
+						case Vehicle::AttackMode::Defensive:
+							vehicleForm
+							    ->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_DEFENSIVE")
+							    ->setChecked(true);
+							break;
+						case Vehicle::AttackMode::Evasive:
+							vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_EVASIVE")
+							    ->setChecked(true);
+							break;
+					}
+				});
 			}
 			newVehicleListControls[vehicle] = std::make_pair(info, control);
 			ownedVehicleList->addItem(control);
-
-			control->addCallback(FormEventType::MouseDown, [this, vehicle](Event *e) {
-				orderSelect(StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)},
-				            Event::isPressed(e->mouse().Button, Event::MouseButton::Right),
-				            modifierLCtrl || modifierRCtrl);
-				auto vehicleForm = this->uiTabs[1];
-
-				switch (vehicle->altitude)
-				{
-					case Vehicle::Altitude::Highest:
-						vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGHEST")
-						    ->setChecked(true);
-						break;
-					case Vehicle::Altitude::High:
-						vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGH")
-						    ->setChecked(true);
-						break;
-					case Vehicle::Altitude::Standard:
-						vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_STANDARD")
-						    ->setChecked(true);
-						break;
-					case Vehicle::Altitude::Low:
-						vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_LOW")
-						    ->setChecked(true);
-						break;
-				}
-
-				switch (vehicle->attackMode)
-				{
-					case Vehicle::AttackMode::Aggressive:
-						vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_AGGRESSIVE")
-						    ->setChecked(true);
-						break;
-					case Vehicle::AttackMode::Standard:
-						vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_STANDARD")
-						    ->setChecked(true);
-						break;
-					case Vehicle::AttackMode::Defensive:
-						vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_DEFENSIVE")
-						    ->setChecked(true);
-						break;
-					case Vehicle::AttackMode::Evasive:
-						vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_EVASIVE")
-						    ->setChecked(true);
-						break;
-				}
-			});
 		}
 	}
 
@@ -980,7 +1049,7 @@ void CityView::eventOccurred(Event *e)
 	activeTab->eventOccured(e);
 	baseForm->eventOccured(e);
 	overlayTab->eventOccured(e);
-	//| Exclude mouse down events that are over the form
+	// Exclude mouse down events that are over the form
 	if (activeTab->eventIsWithin(e) || baseForm->eventIsWithin(e) || overlayTab->eventIsWithin(e))
 	{
 		return;
@@ -1624,35 +1693,25 @@ bool CityView::handleGameStateEvent(Event *e)
 void CityView::updateSelectedUnits()
 {
 	auto o = state->getPlayer();
-	StateRef<Vehicle> nonPlayerVehicle;
 	auto it = state->current_city->cityViewSelectedVehicles.begin();
+	bool foundOwned = false;
 	while (it != state->current_city->cityViewSelectedVehicles.end())
 	{
 		auto v = *it;
-		bool erase = !v || !v->tileObject;
-		if (!erase && v->owner != o)
-		{
-			if (!nonPlayerVehicle)
-			{
-				nonPlayerVehicle = v;
-			}
-			erase = true;
-		}
-		if (erase)
+		if (!v || v->health <= 0)
 		{
 			it = state->current_city->cityViewSelectedVehicles.erase(it);
 		}
 		else
 		{
+			if (v->owner == o)
+			{
+				foundOwned = true;
+			}
 			it++;
 		}
 	}
-	if (nonPlayerVehicle)
-	{
-		state->current_city->cityViewSelectedVehicles.push_front(nonPlayerVehicle);
-	}
-	if (state->current_city->cityViewSelectedVehicles.empty() &&
-	    selectionState != SelectionState::Normal)
+	if (!foundOwned && selectionState != SelectionState::Normal)
 	{
 		setSelectionState(SelectionState::Normal);
 	}

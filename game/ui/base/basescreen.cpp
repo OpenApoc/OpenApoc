@@ -105,7 +105,7 @@ void BaseScreen::begin()
 		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<ResearchScreen>(state)});
 		});
 	form->findControlTyped<TextEdit>("TEXT_BASE_NAME")
-	    ->addCallback(FormEventType::TextEditFinish, [this](Event *e) {
+	    ->addCallback(FormEventType::TextEditFinish, [this](FormsEvent *e) {
 		    this->state->current_base->name =
 		        std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)->getText();
 		});

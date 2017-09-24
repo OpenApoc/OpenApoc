@@ -60,7 +60,7 @@ void ResearchSelect::begin()
 	auto research_list = form->findControlTyped<ListBox>("LIST");
 	research_list->AlwaysEmitSelectionEvents = true;
 
-	research_list->addCallback(FormEventType::ListBoxChangeSelected, [this](Event *e) {
+	research_list->addCallback(FormEventType::ListBoxChangeSelected, [this](FormsEvent *e) {
 		LogInfo("Research selection change");
 		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
 		auto topic = list->getSelectedData<ResearchTopic>();
@@ -102,7 +102,7 @@ void ResearchSelect::begin()
 		this->redrawResearchList();
 	});
 
-	research_list->addCallback(FormEventType::ListBoxChangeHover, [this](Event *e) {
+	research_list->addCallback(FormEventType::ListBoxChangeHover, [this](FormsEvent *e) {
 		LogInfo("Research display on hover change");
 		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
 		auto topic = list->getHoveredData<ResearchTopic>();
@@ -121,7 +121,7 @@ void ResearchSelect::begin()
 	});
 
 	auto ok_button = form->findControlTyped<GraphicButton>("BUTTON_OK");
-	ok_button->addCallback(FormEventType::ButtonClick, [this](Event *) {
+	ok_button->addCallback(FormEventType::ButtonClick, [this](FormsEvent *) {
 		LogInfo("Research selection OK pressed, applying selection");
 		Lab::setResearch({state.get(), this->lab}, {state.get(), current_topic}, state);
 	});

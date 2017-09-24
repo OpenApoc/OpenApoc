@@ -425,17 +425,17 @@ BattleView::BattleView(sp<GameState> gameState)
 	resume();
 
 	baseForm->findControl("BUTTON_FOLLOW_AGENT")
-	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
+	    ->addCallback(FormEventType::CheckBoxChange, [this](FormsEvent *e) {
 		    this->followAgent =
 		        std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy)->isChecked();
 		});
 	baseForm->findControl("BUTTON_TOGGLE_STRATMAP")
-	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
+	    ->addCallback(FormEventType::CheckBoxChange, [this](FormsEvent *e) {
 		    bool strategy = std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy)->isChecked();
 		    this->setViewMode(strategy ? TileViewMode::Strategy : TileViewMode::Isometric);
 		});
 	baseForm->findControl("BUTTON_LAYERING")
-	    ->addCallback(FormEventType::TriStateBoxChange, [this](Event *e) {
+	    ->addCallback(FormEventType::TriStateBoxChange, [this](FormsEvent *e) {
 		    int state = std::dynamic_pointer_cast<TriStateBox>(e->forms().RaisedBy)->getState();
 		    switch (state)
 		    {
