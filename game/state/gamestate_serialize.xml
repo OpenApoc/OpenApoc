@@ -31,6 +31,7 @@
 		<member>agentEquipmentTemplates</member>
 		<member>objectIdCount</member>
 		<member type="Section">city_common_image_list</member>
+		<member type="Section">city_common_sample_list</member>
 		<member type="Section">battle_common_image_list</member>
 		<member type="Section">battle_common_sample_list</member>
 		<member>player</member>
@@ -305,6 +306,7 @@
 		<member>shield</member>
 		<member>shieldRecharge</member>
 		<member>cloakTicksAccumulated</member>
+		<member>teleportTicksAccumulated</member>
 		<member>ticksAutoActionAvailable</member>
 		<member>homeBuilding</member>
 		<member>currentlyLandedBuilding</member>
@@ -322,6 +324,7 @@
 		<name>VehicleMission</name>
 		<member>type</member>
 		<member>targetLocation</member>
+		<member>allowTeleporter</member>
 		<member>reRouteAttempts</member>
 		<member>pickNearest</member>
 		<member>targetBuilding</member>
@@ -577,6 +580,11 @@
 		<member>throwSounds</member>
 		<member>psiFailSounds</member>
 		<member>psiSuccessSounds</member>
+	</object>
+	<object>
+		<name>CityCommonSampleList</name>
+		<member>teleport</member>
+		<member>alertSounds</member>
 	</object>
 	<object external="true">
 		<name>BattleUnitAnimationPack</name>

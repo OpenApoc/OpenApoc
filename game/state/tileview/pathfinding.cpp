@@ -1229,7 +1229,8 @@ void City::groupMove(GameState &state, std::list<StateRef<Vehicle>> &selectedVeh
 
 			Vec3<int> targetPos{targetLocationOffsetted.x, targetLocationOffsetted.y, altitude};
 			// FIXME: Don't clear missions if not replacing current mission
-			(*it)->setMission(state, VehicleMission::gotoLocation(state, **it, targetPos));
+			(*it)->setMission(state,
+			                  VehicleMission::gotoLocation(state, **it, targetPos, useTeleporter));
 			it++;
 			break;
 		}

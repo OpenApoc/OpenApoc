@@ -633,6 +633,14 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	{
 		cloakTicksAccumulated = 0;
 	}
+	if (teleportTicksAccumulated < TELEPORT_TICKS_REQUIRED_VEHICLE)
+	{
+		teleportTicksAccumulated += ticks;
+	}
+	if (!hasTeleporter())
+	{
+		teleportTicksAccumulated = 0;
+	}
 
 	if (!this->missions.empty())
 		this->missions.front()->update(state, *this, ticks);
@@ -1366,6 +1374,31 @@ bool Vehicle::hasCloak() const
 		if (e->type->type != EquipmentSlotType::VehicleGeneral)
 			continue;
 		if (e->type->cloaking)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool Vehicle::canTeleport() const
+{
+	return teleportTicksAccumulated >= TELEPORT_TICKS_REQUIRED_VEHICLE;
+}
+
+bool Vehicle::hasTeleporter() const
+{
+	// Ground can't use teleporter
+	if (type->type == VehicleType::Type::Ground)
+	{
+		return false;
+	}
+	for (auto &e : this->equipment)
+	{
+		if (e->type->type != EquipmentSlotType::VehicleGeneral)
+			continue;
+		if (e->type->teleporting)
 		{
 			return true;
 		}

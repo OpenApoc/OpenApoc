@@ -14,6 +14,7 @@
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/citycommonimagelist.h"
+#include "game/state/city/citycommonsamplelist.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/projectile.h"
 #include "game/state/city/scenery.h"
@@ -359,21 +360,28 @@ void GameState::fillPlayerStartingProperty()
 		auto &type = it.second;
 		if (!type->equipment_screen)
 			continue;
-		auto v = mksp<Vehicle>();
-		v->type = {this, type};
-		v->name = format("%s %d", type->name, ++type->numCreated);
-		v->city = {this, "CITYMAP_HUMAN"};
-		v->currentlyLandedBuilding = {this, bld};
-		v->position = {v->currentlyLandedBuilding->bounds.p0.x,
-		               v->currentlyLandedBuilding->bounds.p0.y, 2};
-		v->homeBuilding = {this, bld};
-		v->owner = this->getPlayer();
-		v->health = type->health;
-		v->strategyImages = city_common_image_list->strategyImages;
-		UString vID = Vehicle::generateObjectID(*this);
-		this->vehicles[vID] = v;
-		v->currentlyLandedBuilding->landed_vehicles.insert({this, vID});
-		v->equipDefaultEquipment(*this);
+		for (auto i = 0; i < 2; i++)
+		{
+			if (i > 0 && type->type == VehicleType::Type::Ground)
+			{
+				break;
+			}
+			auto v = mksp<Vehicle>();
+			v->type = {this, type};
+			v->name = format("%s %d", type->name, ++type->numCreated);
+			v->city = {this, "CITYMAP_HUMAN"};
+			v->currentlyLandedBuilding = {this, bld};
+			v->position = {v->currentlyLandedBuilding->bounds.p0.x,
+			               v->currentlyLandedBuilding->bounds.p0.y, 2};
+			v->homeBuilding = {this, bld};
+			v->owner = this->getPlayer();
+			v->health = type->health;
+			v->strategyImages = city_common_image_list->strategyImages;
+			UString vID = Vehicle::generateObjectID(*this);
+			this->vehicles[vID] = v;
+			v->currentlyLandedBuilding->landed_vehicles.insert({this, vID});
+			v->equipDefaultEquipment(*this);
+		}
 	}
 	// Give that base some vehicle inventory
 	for (auto &pair : this->vehicle_equipment)

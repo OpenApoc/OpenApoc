@@ -11,7 +11,7 @@ sp<Palette> loadApocPalette(Data &data, const UString fileName)
 	auto f = data.fs.open(fileName);
 	if (!f)
 		return nullptr;
-	auto numEntries = f.size() / 3;
+	auto numEntries = (unsigned)f.size() / 3;
 	auto p = mksp<Palette>(numEntries);
 	for (unsigned int i = 0; i < numEntries; i++)
 	{

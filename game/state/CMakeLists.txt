@@ -134,6 +134,7 @@ set (GAMESTATE_HEADER_FILES
 	city/building.h
 	city/city.h
 	city/citycommonimagelist.h
+	city/citycommonsamplelist.h
 	city/doodad.h
 	city/projectile.h
 	city/scenery.h

@@ -10,6 +10,8 @@
 namespace OpenApoc
 {
 
+static const int TELEPORTER_SPREAD = 10;
+
 class Vehicle;
 class Tile;
 class TileMap;
@@ -59,7 +61,8 @@ class VehicleMission
 	// If it is finished, update() is called by isFinished so that any remaining work could be done
 	bool isFinishedInternal(GameState &state, Vehicle &v);
 
-	bool takeOffCheck(GameState &state, Vehicle &v, UString mission);
+	bool takeOffCheck(GameState &state, Vehicle &v);
+	bool teleportCheck(GameState &state, Vehicle &v);
 
   public:
 	VehicleMission() = default;
@@ -76,10 +79,12 @@ class VehicleMission
 
 	// Methods to create new missions
 	static VehicleMission *gotoLocation(GameState &state, Vehicle &v, Vec3<int> target,
-	                                    bool pickNearest = false, int reRouteAttempts = 10);
+	                                    bool allowTeleporter = false, bool pickNearest = false,
+	                                    int reRouteAttempts = 10);
 	static VehicleMission *gotoPortal(GameState &state, Vehicle &v);
 	static VehicleMission *gotoPortal(GameState &state, Vehicle &v, Vec3<int> target);
-	static VehicleMission *gotoBuilding(GameState &state, Vehicle &v, StateRef<Building> target);
+	static VehicleMission *gotoBuilding(GameState &state, Vehicle &v, StateRef<Building> target,
+	                                    bool allowTeleporter = false);
 	static VehicleMission *infiltrateOrSubvertBuilding(GameState &state, Vehicle &v,
 	                                                   StateRef<Building> target,
 	                                                   bool subvert = false);
@@ -89,7 +94,7 @@ class VehicleMission
 	static VehicleMission *restartNextMission(GameState &state, Vehicle &v);
 	static VehicleMission *crashLand(GameState &state, Vehicle &v);
 	static VehicleMission *patrol(GameState &state, Vehicle &v, unsigned int counter = 10);
-
+	static VehicleMission *teleport(GameState &state, Vehicle &v, Vec3<int> target = {-1, -1, -1});
 	UString getName();
 
 	enum class MissionType
@@ -107,12 +112,15 @@ class VehicleMission
 		Patrol,
 		GotoPortal,
 		InfiltrateSubvert,
+		Teleport
 	};
 
 	MissionType type = MissionType::GotoLocation;
 
 	// GotoLocation InfiltrateSubvert TakeOff GotoPortal Patrol
 	Vec3<int> targetLocation = {0, 0, 0};
+	// GotoLocation GotoBuilding
+	bool allowTeleporter = false;
 	// How many times will vehicle try to re-route until it gives up
 	int reRouteAttempts = 0;
 	// GotoLocation - should it pick nearest point or random point if destination unreachable
