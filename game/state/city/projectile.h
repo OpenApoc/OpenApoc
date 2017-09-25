@@ -34,6 +34,7 @@ class Sample;
 class Vehicle;
 class BattleUnit;
 class TileObject;
+class VoxelMap;
 class Image;
 
 class Projectile : public std::enable_shared_from_this<Projectile>
@@ -49,17 +50,19 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	// FIXME: Make this a non-constant colour?
 	// FIXME: Width is currently just used for drawing - TODO What is "collision" size of beams?
 	Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> target, Vec3<float> position,
-	           Vec3<float> velocity, int turnRate, unsigned int lifetime, int damage, int delay,
-	           unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
-	           sp<Sample> impactSfx, StateRef<DoodadType> doodadType);
+	           Vec3<float> velocity, int turnRate, unsigned int lifetime, int damage,
+	           unsigned int delay, unsigned int tail_length,
+	           std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
+	           StateRef<DoodadType> doodadType, sp<VoxelMap> voxelMap = nullptr);
 	Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target,
 	           Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity, int turnRate,
-	           unsigned int lifetime, int damage, int delay, int depletionRate,
+	           unsigned int lifetime, int damage, unsigned int delay, int depletionRate,
 	           unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
 	           sp<Sample> impactSfx, StateRef<DoodadType> doodadType,
-	           StateRef<DamageType> damageType);
+	           StateRef<DamageType> damageType, sp<VoxelMap> voxelMap = nullptr);
 	Projectile();
 	virtual void update(GameState &state, unsigned int ticks);
+	void die(GameState &state, bool displayDoodad = true, bool playSound = true);
 
 	Vec3<float> getVelocity() const { return this->velocity; }
 	unsigned int getLifetime() const { return this->lifetime; }
@@ -80,7 +83,7 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	unsigned int age = 0;
 	unsigned int lifetime = 0;
 	int damage = 0;
-	int delay_ticks_remaining = 0;
+	unsigned int delay_ticks_remaining = 0;
 	int depletionRate = 0;
 	StateRef<Vehicle> firerVehicle;
 	StateRef<BattleUnit> firerUnit;
@@ -93,6 +96,7 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	unsigned int tail_length = 0;
 	std::list<sp<Image>> projectile_sprites;
 	float sprite_distance = 0.0f;
+	sp<VoxelMap> voxelMap;
 
 	sp<Sample> impactSfx;
 	StateRef<DoodadType> doodadType;

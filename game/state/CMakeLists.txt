@@ -133,6 +133,7 @@ set (GAMESTATE_HEADER_FILES
 	city/baselayout.h
 	city/building.h
 	city/city.h
+	city/citycommonimagelist.h
 	city/doodad.h
 	city/projectile.h
 	city/scenery.h

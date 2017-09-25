@@ -87,7 +87,8 @@ class AEquipScreen : public Stage
 	std::vector<sp<Image>> unitSelect;
 	sp<Image> woundImage;
 
-	bool modifierCtrl = false;
+	bool modifierLCtrl = false;
+	bool modifierRCtrl = false;
 
 	// Checks wether agent should be displayed in the agent list
 	bool checkAgent(sp<Agent> agent, sp<Organisation> owner);
@@ -118,6 +119,8 @@ class AEquipScreen : public Stage
 	void addItemToInventoryVehicle(sp<AEquipment> item);
 	void addItemToInventoryBuilding(sp<AEquipment> item);
 	void addItemToInventoryAgent(sp<AEquipment> item);
+
+	void processTemplate(int idx, bool remember);
 
 	void attemptCloseScreen();
 	void closeScreen();

@@ -1,6 +1,8 @@
 #pragma once
 #include "game/state/battle/ai/unitai.h"
 
+//#define VANILLA_AI_DEBUG_OUTPUT
+
 namespace OpenApoc
 {
 
@@ -23,10 +25,17 @@ class UnitAIVanilla : public UnitAI
 	bool enemySpotted = false;
 	// Previous value, to identify when enemy was first spotted
 	bool enemySpottedPrevious = false;
-	// Relative position of a person who attacked us since last think()
-	Vec3<int> attackerPosition = {0, 0, 0};
-	// Relative position of last seen enemy's last seen position since last think()
-	Vec3<int> lastSeenEnemyPosition = {0, 0, 0};
+	// Pposition of a person who attacked us since last think()
+	Vec3<int> attackerPosition = {-1, -1, -1};
+	// Position of last seen enemy since last think()
+	Vec3<int> lastSeenEnemyPosition = {-1, -1, -1};
+
+	// Enemy was spotted since we last re-thinked properly
+	bool flagEnemySpotted = false;
+	// Enemy attacked us since we last re-thinked properly
+	Vec3<int> flagLastSeenPosition = {-1, -1, -1};
+	// Enemy went MIA since we last re-thinked properly
+	Vec3<int> flagLastAttackerPosition = {-1, -1, -1};
 
 	void reset(GameState &state, BattleUnit &u) override;
 
@@ -45,6 +54,9 @@ class UnitAIVanilla : public UnitAI
 	AIDecision thinkInternal(GameState &state, BattleUnit &u);
 	// Do the AI routine - organise inventory, move speed, stance etc.
 	void routine(GameState &state, BattleUnit &u) override;
+
+	void raiseFlags(GameState &state, BattleUnit &u);
+	void clearFlags(GameState &state, BattleUnit &u);
 
 	// Calculate AI's next decision in case no enemy is engaged
 	// Return values are decision, priority, ticks until re-think

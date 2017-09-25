@@ -19,6 +19,7 @@ class Image;
 class VoxelMap;
 class BattleMap;
 class AgentType;
+class UfopaediaEntry;
 
 class VehicleType : public StateObject
 {
@@ -67,6 +68,12 @@ class VehicleType : public StateObject
 		Left,
 		Right,
 	};
+	enum class MapIconType
+	{
+		Arrow = 0,
+		SmallCircle = 1,
+		LargeCircle = 2
+	};
 
 	// This is explictly mutable it can be used through a const ref
 	// FIXME: Should this go somewhere else in the state? If the rules are meant to be immutable
@@ -104,15 +111,14 @@ class VehicleType : public StateObject
 
 	sp<Image> equip_icon_small;
 
-	// All vehicles (flying,ground,ufo) have strategy sprites
-	std::map<Vec3<float>, sp<Image>> directional_strategy_sprites;
+	MapIconType mapIconType;
 
 	// Flying and ground vehicles have a directional sprite (with optional non-flat banking)
-	std::map<Banking, std::map<Vec3<float>, sp<Image>>> directional_sprites;
+	std::map<Banking, std::map<Direction, sp<Image>>> directional_sprites;
 
 	// Flying vehicles and UFOs have a shadow
 	Vec2<float> shadow_offset = {0, 0};
-	std::map<Vec3<float>, sp<Image>> directional_shadow_sprites;
+	std::map<Direction, sp<Image>> directional_shadow_sprites;
 
 	// UFOs have a non-directional animated sprite
 	std::list<sp<Image>> animation_sprites;
@@ -121,19 +127,21 @@ class VehicleType : public StateObject
 
 	int height = 0;
 	// Vehicle size, depending on facing
-	std::map<Vec3<float>, Vec3<int>> size;
+	std::map<float, Vec3<int>> size;
 	// Vehicle voxel map vector, depending on facing
 	// This set of voxelmaps is for projectile collision
-	std::map<Vec3<float>, std::vector<sp<VoxelMap>>> voxelMaps;
+	std::map<float, std::vector<sp<VoxelMap>>> voxelMaps;
 	// Vehicle voxel map vector, depending on facing
 	// This set of voxelmaps is for selecting vehicle with mouseclick
-	std::map<Vec3<float>, std::vector<sp<VoxelMap>>> voxelMapsLOS;
+	std::map<float, std::vector<sp<VoxelMap>>> voxelMapsLOS;
 
 	// Gets current facing for purpose of determining size and voxel map
-	Vec3<float> getVoxelMapFacing(Vec3<float> direction) const;
+	float getVoxelMapFacing(float direction) const;
 
 	std::list<EquipmentLayoutSlot> equipment_layout_slots;
 	std::list<std::pair<Vec2<int>, StateRef<VEquipmentType>>> initial_equipment_list;
+
+	StateRef<UfopaediaEntry> ufopaedia_entry;
 
 	~VehicleType() override = default;
 	VehicleType() = default;

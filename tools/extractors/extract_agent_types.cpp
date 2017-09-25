@@ -444,6 +444,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				infiltrationID = 1;
 				a->growthChance = 20;
 				a->detectionWeight = 1;
+				a->growthInfiltration = 1;
 				break;
 			case UNIT_TYPE_HYPERWORM:
 				a->animation_packs.emplace_back(
@@ -1177,6 +1178,15 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 		}
 
 		state.agent_equipment_layouts[id] = a;
+	}
+
+	// Initial aliens
+	for (int difficulty = 0; difficulty < 5; difficulty++)
+	{
+		state.initial_aliens[difficulty].emplace_back(
+		    StateRef<AgentType>(&state, "AGENTTYPE_BRAINSUCKER"), Vec2<int>{1, difficulty / 2 + 2});
+		state.initial_aliens[difficulty].emplace_back(
+		    StateRef<AgentType>(&state, "AGENTTYPE_ANTHROPOD"), Vec2<int>{1, difficulty / 2 + 2});
 	}
 }
 

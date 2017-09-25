@@ -30,14 +30,11 @@ class UnitAI
 
 	virtual void reset(GameState &, BattleUnit &){};
 	// Returns decision that was made, and wether we should stop going forward on the AI chain
-	virtual std::tuple<AIDecision, bool> think(GameState &, BattleUnit &, bool interrupt)
-	{
-		return {};
-	};
-	virtual void routine(GameState &state, BattleUnit &u){};
+	virtual std::tuple<AIDecision, bool> think(GameState &, BattleUnit &, bool) { return {}; };
+	virtual void routine(GameState &, BattleUnit &){};
 
 	// virtual void reportExecuted(AIAction &action) {};
-	virtual void reportExecuted(AIMovement &movement){};
+	virtual void reportExecuted(AIMovement &){};
 
 	virtual void notifyUnderFire(Vec3<int>){};
 	virtual void notifyHit(Vec3<int>){};

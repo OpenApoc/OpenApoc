@@ -140,7 +140,8 @@ void InGameOptions::eventOccurred(Event *e)
 		{
 			if (state->current_battle)
 			{
-				int unitsLost = state->current_battle->killStrandedUnits(*state, true);
+				int unitsLost = state->current_battle->killStrandedUnits(
+				    *state, state->current_battle->currentPlayer, true);
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(tr("Abort Mission"),

@@ -17,6 +17,7 @@ class Image;
 
 class BattleTileView : public TileView
 {
+  protected:
 	// Formula: FPS / DESIRED_ANIMATIONS_PER_SECOND
 
 	static const int TARGET_ICONS_ANIMATION_DELAY = 60 / 4;
@@ -74,11 +75,14 @@ class BattleTileView : public TileView
 	std::vector<sp<Image>> waypointDarkIcons;
 	sp<Image> targetTacticalThisLevel;
 	sp<Image> targetTacticalOtherLevel;
+	sp<Image> selectionImageFriendlySmall;
+	sp<Image> selectionImageFriendlyLarge;
 	int iconAnimationTicksAccumulated = 0;
 	int healingIconTicksAccumulated = 0;
 	int lowMoraleIconTicksAccumulated = 0;
 	int psiIconTicksAccumulated = 0;
 	int focusAnimationTicksAccumulated = 0;
+	int selectionFrameTicksAccumulated = 0;
 
   public:
 	BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,

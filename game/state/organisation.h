@@ -20,6 +20,7 @@ class Vehicle;
 class AgentType;
 class AEquipmentType;
 class GameState;
+class UfopaediaEntry;
 
 class Organisation : public StateObject
 {
@@ -58,6 +59,8 @@ class Organisation : public StateObject
 
 	std::map<LootPriority, std::vector<StateRef<AEquipmentType>>> loot;
 
+	StateRef<UfopaediaEntry> ufopaedia_entry;
+
 	Organisation() = default;
 	int getGuardCount(GameState &state) const;
 	void updateInfiltration(GameState &state);
@@ -67,6 +70,7 @@ class Organisation : public StateObject
 	bool isPositiveTo(const StateRef<Organisation> &other) const;
 	bool isNegativeTo(const StateRef<Organisation> &other) const;
 	float getRelationTo(const StateRef<Organisation> &other) const;
+	void adjustRelationTo(const StateRef<Organisation> &other, float value);
 	std::map<StateRef<Organisation>, float> current_relations;
 };
 

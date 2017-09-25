@@ -20,6 +20,7 @@
 #include "game/state/tileview/tileobject_vehicle.h"
 #include <functional>
 #include <future>
+#include <glm/glm.hpp>
 #include <limits>
 
 namespace OpenApoc
@@ -121,6 +122,22 @@ void City::initMap()
 	}
 }
 
+void City::handleProjectileHit(GameState &state, sp<Projectile> projectile, bool displayDoodad,
+                               bool playSound)
+{
+	if (displayDoodad && projectile->doodadType)
+	{
+		placeDoodad(projectile->doodadType, projectile->position);
+	}
+
+	if (playSound && projectile->impactSfx)
+	{
+		fw().soundBackend->playSample(projectile->impactSfx, projectile->position);
+	}
+
+	projectiles.erase(projectile);
+}
+
 void City::update(GameState &state, unsigned int ticks)
 {
 	TRACE_FN_ARGS1("ticks", Strings::fromInteger(static_cast<int>(ticks)));
@@ -170,27 +187,17 @@ void City::update(GameState &state, unsigned int ticks)
 	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
 	{
 		auto p = *it++;
+		// Projectile can die here
 		p->update(state, ticks);
 	}
-	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
+	// Since projectiles can kill projectiles just kill everyone in the end
+	std::set<sp<Projectile>> deadProjectiles;
+	for (auto &p : projectiles)
 	{
-		auto &p = *it++;
 		auto c = p->checkProjectileCollision(*map);
 		if (c)
 		{
-			// FIXME: Handle collision
-			this->projectiles.erase(c.projectile);
-			if (c.projectile->impactSfx)
-			{
-				fw().soundBackend->playSample(c.projectile->impactSfx, c.position);
-			}
-
-			auto doodadType = c.projectile->doodadType;
-			if (doodadType)
-			{
-				auto doodad = this->placeDoodad(doodadType, c.position);
-			}
-
+			deadProjectiles.emplace(c.projectile->shared_from_this());
 			switch (c.obj->getType())
 			{
 				case TileObject::Type::Vehicle:
@@ -211,11 +218,23 @@ void City::update(GameState &state, unsigned int ticks)
 					sceneryTile->getOwner()->handleCollision(state, c);
 					break;
 				}
+				case TileObject::Type::Projectile:
+				{
+					deadProjectiles.emplace(
+					    std::static_pointer_cast<TileObjectProjectile>(c.obj)->getProjectile());
+					break;
+				}
 				default:
 					LogError("Collision with non-collidable object");
 			}
 		}
 	}
+	// Kill projectiles that collided
+	for (auto &p : deadProjectiles)
+	{
+		p->die(state);
+	}
+
 	Trace::end("City::update::projectiles->update");
 	Trace::start("City::update::scenery->update");
 	for (auto &s : this->scenery)
@@ -331,27 +350,26 @@ const UString &City::getId(const GameState &state, const sp<City> ptr)
 void City::accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition, Vec3<float> &target,
                                  int accuracy, bool cloaked)
 {
-	// FIXME: Prettify this code
-	int projx = firePosition.x;
-	int projy = firePosition.y;
-	int projz = firePosition.z;
-	int vehx = target.x;
-	int vehy = target.y;
-	int vehz = target.z;
-	int inverseAccuracy = 100 - accuracy;
+	float dispersion = 100 - accuracy;
 	// Introduce minimal dispersion?
-	inverseAccuracy = std::max(0, inverseAccuracy);
+	dispersion = std::max(0.0f, dispersion);
 
-	float delta_x = (float)(vehx - projx) * inverseAccuracy / 1000.0f;
-	float delta_y = (float)(vehy - projy) * inverseAccuracy / 1000.0f;
-	float delta_z = (float)(vehz - projz) * inverseAccuracy / 1000.0f;
-	if (delta_x == 0.0f && delta_y == 0.0f && delta_z == 0.0f)
+	if (cloaked)
+	{
+		dispersion *= dispersion;
+		float cloakDispersion = 2000.0f / (glm::length(firePosition - target) + 3.0f);
+		dispersion += cloakDispersion * cloakDispersion;
+		dispersion = sqrtf(dispersion);
+	}
+
+	auto delta = (target - firePosition) * dispersion / 1000.0f;
+	if (delta.x == 0.0f && delta.y == 0.0f && delta.z == 0.0f)
 	{
 		return;
 	}
 
 	float length_vector =
-	    1.0f / std::sqrt(delta_x * delta_x + delta_y * delta_y + delta_z * delta_z);
+	    1.0f / std::sqrt(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z);
 
 	std::vector<float> rnd(3);
 	while (true)
@@ -365,30 +383,20 @@ void City::accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition, Vec
 		}
 	}
 
-	// Misses can go both ways on the axis
 	float k1 = (2 * randBoundsInclusive(state.rng, 0, 1) - 1) * rnd[1] *
 	           std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
 	float k2 = (2 * randBoundsInclusive(state.rng, 0, 1) - 1) * rnd[2] *
 	           std::sqrt(-2 * std::log(rnd[0]) / rnd[0]);
 
-	float x1 = length_vector * delta_x * delta_z * k1;
-	float y1 = length_vector * delta_y * delta_z * k1;
-	float z1 = -length_vector * (delta_x * delta_x + delta_y * delta_y) * k1;
+	// Misses can go both ways on the axis
+	auto diffVertical =
+	    Vec3<float>{length_vector * delta.x * delta.z, length_vector * delta.y * delta.z,
+	                -length_vector * (delta.x * delta.x + delta.y * delta.y)} *
+	    k1;
+	auto diffHorizontal = Vec3<float>{-delta.y, delta.x, 0.0f} * k2;
+	auto diff = (diffVertical + diffHorizontal) * Vec3<float>{1.0f, 1.0f, 0.33f};
 
-	float x2 = -delta_y * k2;
-	float y2 = delta_x * k2;
-	float z2 = 0;
-
-	float x3 = (x1 + x2);
-	float y3 = (y1 + y2);
-	float z3 = ((z1 + z2) / 3.0f);
-	x3 = x3 < 0 ? ceilf(x3) : floorf(x3);
-	y3 = y3 < 0 ? ceilf(y3) : floorf(y3);
-	z3 = z3 < 0 ? ceilf(z3) : floorf(z3);
-
-	target.x += x3;
-	target.y += y3;
-	target.z += z3;
+	target += diff;
 }
 
 } // namespace OpenApoc

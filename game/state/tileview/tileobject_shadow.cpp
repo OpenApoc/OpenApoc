@@ -39,24 +39,8 @@ void TileObjectShadow::draw(Renderer &r, TileTransform &transform, Vec2<float> s
 		{
 			if (vehicle)
 			{
-				float closestAngle = FLT_MAX;
-				sp<Image> closestImage;
-				for (auto &p : vehicle->type->directional_shadow_sprites)
-				{
-					float angle = glm::angle(glm::normalize(p.first),
-					                         glm::normalize(vehicle->getDirection()));
-					if (angle < closestAngle)
-					{
-						closestAngle = angle;
-						closestImage = p.second;
-					}
-				}
-				if (!closestImage)
-				{
-					LogError("No image found for vehicle %s", vehicle->type.id);
-					return;
-				}
-				r.draw(closestImage, screenPosition - vehicle->type->shadow_offset);
+				r.draw(vehicle->type->directional_shadow_sprites[vehicle->shadowDirection],
+				       screenPosition - vehicle->type->shadow_offset);
 			}
 			if (unit)
 			{

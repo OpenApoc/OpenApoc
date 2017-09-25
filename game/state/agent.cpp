@@ -576,7 +576,7 @@ sp<AEquipment> Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentTy
 	bool prefSlot = false;
 	if (type->type == AEquipmentType::Type::Ammo)
 	{
-		auto wpn = addEquipmentAsAmmoByType(state, type);
+		auto wpn = addEquipmentAsAmmoByType(type);
 		if (wpn)
 		{
 			return wpn;
@@ -652,7 +652,7 @@ sp<AEquipment> Agent::addEquipmentByType(GameState &state, StateRef<AEquipmentTy
 {
 	if (type->type == AEquipmentType::Type::Ammo)
 	{
-		auto wpn = addEquipmentAsAmmoByType(state, type);
+		auto wpn = addEquipmentAsAmmoByType(type);
 		if (wpn)
 		{
 			return wpn;
@@ -690,7 +690,7 @@ sp<AEquipment> Agent::addEquipmentByType(GameState &state, Vec2<int> pos,
 	return equipment;
 }
 
-sp<AEquipment> Agent::addEquipmentAsAmmoByType(GameState &state, StateRef<AEquipmentType> type)
+sp<AEquipment> Agent::addEquipmentAsAmmoByType(StateRef<AEquipmentType> type)
 {
 	for (auto &e : equipment)
 	{
@@ -752,9 +752,10 @@ void Agent::addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object)
 	}
 	this->equipment.emplace_back(object);
 	updateSpeed();
+	updateIsBrainsucker();
 	if (unit)
 	{
-		unit->updateDisplayedItem();
+		unit->updateDisplayedItem(state);
 	}
 }
 
@@ -777,10 +778,11 @@ void Agent::removeEquipment(GameState &state, sp<AEquipment> object)
 		{
 			unit->setBodyState(state, BodyState::Standing);
 		}
-		unit->updateDisplayedItem();
+		unit->updateDisplayedItem(state);
 	}
 	object->ownerAgent.clear();
 	updateSpeed();
+	updateIsBrainsucker();
 }
 
 void Agent::updateSpeed()
@@ -810,6 +812,19 @@ void Agent::updateModifiedStats()
 	modified_stats = current_stats;
 	modified_stats.health = health;
 	updateSpeed();
+}
+
+void Agent::updateIsBrainsucker()
+{
+	isBrainsucker = false;
+	for (auto &e : equipment)
+	{
+		if (e->type->type == AEquipmentType::Type::Brainsucker)
+		{
+			isBrainsucker = true;
+			return;
+		}
+	}
 }
 
 void Agent::trainPhysical(GameState &state, unsigned ticks)
@@ -904,7 +919,8 @@ StateRef<BattleUnitAnimationPack> Agent::getAnimationPack() const
 	return type->animation_packs[appearance];
 }
 
-StateRef<AEquipmentType> Agent::getDominantItemInHands(StateRef<AEquipmentType> itemLastFired) const
+StateRef<AEquipmentType> Agent::getDominantItemInHands(GameState &state,
+                                                       StateRef<AEquipmentType> itemLastFired) const
 {
 	sp<AEquipment> e1 = getFirstItemInSlot(EquipmentSlotType::RightHand);
 	sp<AEquipment> e2 = getFirstItemInSlot(EquipmentSlotType::LeftHand);
@@ -929,27 +945,29 @@ StateRef<AEquipmentType> Agent::getDominantItemInHands(StateRef<AEquipmentType> 
 	int e1Priority =
 	    e1->isFiring()
 	        ? 1440 - e1->weapon_fire_ticks_remaining
-	        : (e1->canFire() ? 4 : (e1->type->two_handed
-	                                    ? 3
-	                                    : (e1->type->type == AEquipmentType::Type::Weapon
-	                                           ? 2
-	                                           : (e1->type->type != AEquipmentType::Type::Ammo &&
-	                                              e1->type->type != AEquipmentType::Type::Armor &&
-	                                              e1->type->type != AEquipmentType::Type::Loot)
-	                                                 ? 1
-	                                                 : 0)));
+	        : (e1->canFire(state) ? 4
+	                              : (e1->type->two_handed
+	                                     ? 3
+	                                     : (e1->type->type == AEquipmentType::Type::Weapon
+	                                            ? 2
+	                                            : (e1->type->type != AEquipmentType::Type::Ammo &&
+	                                               e1->type->type != AEquipmentType::Type::Armor &&
+	                                               e1->type->type != AEquipmentType::Type::Loot)
+	                                                  ? 1
+	                                                  : 0)));
 	int e2Priority =
 	    e2->isFiring()
 	        ? 1440 - e2->weapon_fire_ticks_remaining
-	        : (e2->canFire() ? 4 : (e2->type->two_handed
-	                                    ? 3
-	                                    : (e2->type->type == AEquipmentType::Type::Weapon
-	                                           ? 2
-	                                           : (e2->type->type != AEquipmentType::Type::Ammo &&
-	                                              e2->type->type != AEquipmentType::Type::Armor &&
-	                                              e2->type->type != AEquipmentType::Type::Loot)
-	                                                 ? 1
-	                                                 : 0)));
+	        : (e2->canFire(state) ? 4
+	                              : (e2->type->two_handed
+	                                     ? 3
+	                                     : (e2->type->type == AEquipmentType::Type::Weapon
+	                                            ? 2
+	                                            : (e2->type->type != AEquipmentType::Type::Ammo &&
+	                                               e2->type->type != AEquipmentType::Type::Armor &&
+	                                               e2->type->type != AEquipmentType::Type::Loot)
+	                                                  ? 1
+	                                                  : 0)));
 	// Right hand has priority in case of a tie
 	if (e1Priority >= e2Priority)
 		return e1->type;

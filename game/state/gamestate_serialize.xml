@@ -25,9 +25,12 @@
 		<member>initial_facilities</member>
 		<member>initial_agent_equipment</member>
 		<member>initial_base_agent_equipment</member>
+		<member>initial_aliens</member>
 		<member>current_city</member>
 		<member>current_base</member>
+		<member>agentEquipmentTemplates</member>
 		<member>objectIdCount</member>
+		<member type="Section">city_common_image_list</member>
 		<member type="Section">battle_common_image_list</member>
 		<member type="Section">battle_common_sample_list</member>
 		<member>player</member>
@@ -120,6 +123,7 @@
 		<member>infiltrationSpeed</member>
 		<member>growthChance</member>
 		<member>growthOptions</member>
+		<member>growthInfiltration</member>
 		<member>detectionWeight</member>
 		<member>spreadHazardDamageType</member>
 		<member>spreadHazardMinPower</member>
@@ -175,6 +179,16 @@
 		<member>equipment</member>
 	</object>
 	<object>
+		<name>EquipmentTemplate</name>
+		<member>equipment</member>
+	</object>
+		<object>
+		<name>EquipmentTemplate::EquipmentTemplateEntry</name>
+		<member>pos</member>
+		<member>type</member>
+		<member>payloadType</member>
+	</object>
+	<object>
 		<name>EquipmentSet::WeaponData</name>
 		<member>weapon</member>
 		<member>clip</member>
@@ -207,6 +221,7 @@
 		<member>owner</member>
 		<member>assigned_to_lab</member>
 		<member>unit</member>
+		<member>isBrainsucker</member>
 		<member>equipment</member>
 	</object>
 	<object>
@@ -275,13 +290,22 @@
 		<member>altitude</member>
 		<member>missions</member>
 		<member>equipment</member>
+		<member>city</member>
 		<member>position</member>
+		<member>goalPosition</member>
 		<member>velocity</member>
 		<member>facing</member>
-		<member>city</member>
+		<member>goalFacing</member>
+		<member>angularVelocity</member>
+		<member>ticksToTurn</member>
+		<member>banking</member>
+		<member>direction</member>
+		<member>shadowDirection</member>
 		<member>health</member>
 		<member>shield</member>
 		<member>shieldRecharge</member>
+		<member>cloakTicksAccumulated</member>
+		<member>ticksAutoActionAvailable</member>
 		<member>homeBuilding</member>
 		<member>currentlyLandedBuilding</member>
 	</object>
@@ -535,6 +559,11 @@
 		<member>burningDoodad</member>
 	</object>
 	<object>
+		<name>CityCommonImageList</name>
+		<member>strategyImages</member>
+		<member>projectileVoxelMap</member>
+	</object>
+	<object>
 		<name>BattleCommonSampleList</name>
 		<member>gravlift</member>
 		<member>door</member>
@@ -739,6 +768,9 @@
 		<member type="Section">doodads</member>
 		<member type="Section">portals</member>
 		<member type="Section">projectiles</member>
+		<member>cityViewScreenCenter</member>
+		<member>cityViewPageIndex</member>
+		<member>cityViewSelectedVehicles</member>
 	</object>
 	<object>
 		<name>Projectile</name>
@@ -761,6 +793,7 @@
 		<member>tail_length</member>
 		<member>projectile_sprites</member>
 		<member>sprite_distance</member>
+		<member>voxelMap</member>
 		<member>impactSfx</member>
 		<member>doodadType</member>
 		<member>damageType</member>
@@ -798,6 +831,7 @@
 		<member>name</member>
 		<member>infiltrationSpeed</member>
 		<member>detectionWeight</member>
+		<member>ufopaedia_entry</member>
 	</object>
 	<object>
 		<name>Building</name>
@@ -893,6 +927,7 @@
 		<member>name</member>
 		<member>icon_sprite</member>
 		<member>ignore_shield</member>
+		<member>non_violent</member>
 		<member>modifiers</member>
 		<member>explosive</member>
 		<member>explosionDoodad</member>
@@ -1028,6 +1063,7 @@
 		<member>guard_types_alien</member>
 		<member>loot</member>
 		<member>current_relations</member>
+		<member>ufopaedia_entry</member>
 	</object>
 	<object>
 		<name>VehicleType</name>
@@ -1052,7 +1088,7 @@
 		<member>equipment_screen</member>
 		<member>equip_icon_big</member>
 		<member>equip_icon_small</member>
-		<member>directional_strategy_sprites</member>
+		<member>mapIconType</member>
 		<member>directional_sprites</member>
 		<member>shadow_offset</member>
 		<member>directional_shadow_sprites</member>
@@ -1064,6 +1100,7 @@
 		<member>voxelMapsLOS</member>
 		<member>equipment_layout_slots</member>
 		<member>initial_equipment_list</member>
+		<member>ufopaedia_entry</member>
 	</object>
 	<object>
 		<name>UfopaediaEntry</name>
@@ -1157,6 +1194,12 @@
 		<value>Rear</value>
 		<value>Left</value>
 		<value>Right</value>
+	</enum>
+	<enum>
+		<name>VehicleType::MapIconType</name>
+		<value>Arrow</value>
+		<value>SmallCircle</value>
+		<value>LargeCircle</value>
 	</enum>
 	<enum>
 		<name>ResearchTopic::Type</name>
@@ -1639,6 +1682,9 @@
 		<member>enemySpottedPrevious</member>
 		<member>attackerPosition</member>
 		<member>lastSeenEnemyPosition</member>
+		<member>flagEnemySpotted</member>
+		<member>flagLastSeenPosition</member>
+		<member>flagLastAttackerPosition</member>
 	</object>
 	<object external="true" full="true">
 		<name>UnitAIHardcore</name>

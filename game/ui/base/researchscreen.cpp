@@ -80,7 +80,7 @@ void ResearchScreen::begin()
 	BaseStage::begin();
 
 	auto unassignedAgentList = form->findControlTyped<ListBox>("LIST_UNASSIGNED");
-	unassignedAgentList->addCallback(FormEventType::ListBoxChangeSelected, [this](Event *e) {
+	unassignedAgentList->addCallback(FormEventType::ListBoxChangeSelected, [this](FormsEvent *e) {
 		LogWarning("unassigned agent selected");
 		if (this->assigned_agent_count >= this->selected_lab->type->capacityAmount)
 		{
@@ -103,7 +103,7 @@ void ResearchScreen::begin()
 		this->selected_lab->lab->assigned_agents.push_back({state.get(), agent});
 		this->setCurrentLabInfo();
 	});
-	auto removeFn = [this](Event *e) {
+	auto removeFn = [this](FormsEvent *e) {
 		LogWarning("assigned agent selected");
 		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
 		auto agent = list->getSelectedData<Agent>();

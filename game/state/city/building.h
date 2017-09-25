@@ -25,6 +25,7 @@ class AgentType;
 class Base;
 class BattleMap;
 class BaseLayout;
+class UfopaediaEntry;
 
 class BuildingFunction : public StateObject
 {
@@ -33,6 +34,7 @@ class BuildingFunction : public StateObject
 	UString name;
 	int infiltrationSpeed = 0;
 	int detectionWeight = 0;
+	StateRef<UfopaediaEntry> ufopaedia_entry;
 };
 
 class Building : public StateObject, public std::enable_shared_from_this<Building>

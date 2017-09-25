@@ -252,7 +252,7 @@ void ListBox::replaceItem(sp<Control> Item)
 {
 	auto newData = Item->getData<void>();
 	this->setDirty();
-	for (int i = 0; i < Controls.size(); i++)
+	for (size_t i = 0; i < Controls.size(); i++)
 	{
 		auto oldItem = Controls[i];
 		if (oldItem->getData<void>() == newData)

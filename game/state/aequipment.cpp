@@ -355,7 +355,7 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 	}
 }
 
-sp<AEquipment> AEquipment::unloadAmmo(GameState &state)
+sp<AEquipment> AEquipment::unloadAmmo()
 {
 	if (!payloadType)
 	{
@@ -404,6 +404,16 @@ void AEquipment::updateInner(GameState &state, unsigned int ticks)
 			triggerDelay = 0;
 		}
 	}
+}
+
+bool AEquipment::canBeUsed(GameState &state) const
+{
+	if (ownerAgent && ownerAgent->owner == state.getPlayer() &&
+	    !type->research_dependency.satisfied())
+	{
+		return false;
+	}
+	return true;
 }
 
 void AEquipment::update(GameState &state, unsigned int ticks)
@@ -740,7 +750,7 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 		// for all cases except when a unit fires with a brainsucker on it's head!
 		// But this also looks better since it does visually fire from the muzzle, not from inside
 		// the soldier
-		unitPos += velocity * 5.0f / 8.0f;
+		unitPos += velocity * 3.5f / 8.0f;
 		// Scale velocity according to speed
 		velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 
@@ -818,14 +828,14 @@ StateRef<AEquipmentType> AEquipment::getPayloadType() const
 	return type;
 }
 
-bool AEquipment::canFire() const
+bool AEquipment::canFire(GameState &state) const
 {
-	return (type->type == AEquipmentType::Type::Weapon && ammo > 0);
+	return (type->type == AEquipmentType::Type::Weapon && ammo > 0 && canBeUsed(state));
 }
 
-bool AEquipment::canFire(Vec3<float> to) const
+bool AEquipment::canFire(GameState &state, Vec3<float> to) const
 {
-	if (!canFire())
+	if (!canFire(state))
 		return false;
 	float distanceToTarget = glm::length(ownerAgent->unit->getMuzzleLocation() - to);
 	if (getPayloadType()->getRange() < distanceToTarget)

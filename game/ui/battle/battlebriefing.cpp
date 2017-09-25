@@ -64,11 +64,11 @@ BattleBriefing::BattleBriefing(sp<GameState> state, StateRef<Organisation> targe
 			{
 				menuform->findControlTyped<Graphic>("BRIEFING_IMAGE")
 				    ->setImage(fw().data->loadImage("xcom3/tacdata/brief4.pcx"));
-				bool lastBase = true;
+				bool lastBase = state->player_bases.size() == 1;
 				briefing = lastBase ? "You must lorem ipisum etc. (Here be briefing text) (Text: "
 				                      "Building Last Base Assault)"
 				                    : "You must lorem ipisum etc. (Here be briefing text) (Text: "
-				                      "Building Base Assault)";
+				                      "Building Non-Last Base Assault)";
 			}
 			else if (building->owner != state->getAliens())
 			{
@@ -130,11 +130,9 @@ BattleBriefing::BattleBriefing(sp<GameState> state, StateRef<Organisation> targe
 		}
 	}
 	menuform->findControlTyped<Label>("TEXT_BRIEFING")->setText(briefing);
-
-	// menuform->findControlTyped<Graphic>("BRIEFING_IMAGE")->setImage();
-	menuform->findControlTyped<Label>("TEXT_BRIEFING")
+	/*menuform->findControlTyped<Label>("TEXT_BRIEFING")
 	    ->setText("You must lorem ipisum etc. (Here be briefing text)");
-
+*/
 	menuform->findControlTyped<GraphicButton>("BUTTON_REAL_TIME")->setVisible(false);
 	menuform->findControlTyped<GraphicButton>("BUTTON_TURN_BASED")->setVisible(false);
 

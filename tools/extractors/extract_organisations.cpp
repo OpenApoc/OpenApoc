@@ -1,5 +1,6 @@
 #include "framework/framework.h"
 #include "game/state/gamestate.h"
+#include "game/state/ufopaedia.h"
 #include "library/strings_format.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
@@ -26,6 +27,10 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 
 		o->name = data.organisation_names->get(i);
 		o->id = id;
+
+		auto ped = format("%s%s", UfopaediaEntry::getPrefix(),
+		                  canon_string(data.organisation_names->get(i)));
+		o->ufopaedia_entry = {&state, ped};
 
 		o->balance = odata.starting_funds;
 		o->income = odata.starting_funding;

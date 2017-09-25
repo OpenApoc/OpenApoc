@@ -51,6 +51,15 @@ class City : public StateObject
 
 	up<TileMap> map;
 
+	// CityView and CityTileView settings, saved here so that we can return to them
+
+	Vec3<float> cityViewScreenCenter = {0.0f, 0.0f, 0.0f};
+	int cityViewPageIndex = 0;
+	std::list<StateRef<Vehicle>> cityViewSelectedVehicles;
+
+	void handleProjectileHit(GameState &state, sp<Projectile> projectile, bool displayDoodad,
+	                         bool playSound);
+
 	void update(GameState &state, unsigned int ticks);
 	void hourlyLoop(GameState &state);
 	void dailyLoop(GameState &state);
@@ -59,6 +68,10 @@ class City : public StateObject
 	void updateInfiltration(GameState &state);
 
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
+
+	// Move a group of vehicles in formation
+	void groupMove(GameState &state, std::list<StateRef<Vehicle>> &selectedVehicles,
+	               Vec3<int> targetLocation, bool useTeleporter = false);
 
 	static void accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition,
 	                                  Vec3<float> &target, int accuracy, bool cloaked);

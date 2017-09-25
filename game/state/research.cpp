@@ -4,6 +4,7 @@
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
 #include "game/state/city/building.h"
+#include "game/state/city/citycommonimagelist.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
@@ -367,7 +368,11 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 										state->vehicles[vID] = v;
 										v->currentlyLandedBuilding->landed_vehicles.insert(
 										    {state.get(), vID});
+										v->position = {v->currentlyLandedBuilding->bounds.p0.x,
+										               v->currentlyLandedBuilding->bounds.p0.y, 2};
 										v->equipDefaultEquipment(*state);
+										v->strategyImages =
+										    state->city_common_image_list->strategyImages;
 									}
 									break;
 								}

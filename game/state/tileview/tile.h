@@ -2,6 +2,7 @@
 
 #include "framework/logger.h"
 #include "game/state/gametime.h"
+#include "game/state/stateobject.h"
 #include "game/state/tileview/tileobject.h"
 #include "library/colour.h"
 #include "library/rect.h"
@@ -49,6 +50,7 @@ class TileObjectBattleItem;
 class BattleHazard;
 class TileObjectBattleHazard;
 class Sample;
+class Organisation;
 
 class TileTransform
 {
@@ -173,7 +175,8 @@ class Tile
 	void updateBattlescapeUnitPresent();
 	// Updates battlescape ui draw order variables
 	void updateBattlescapeUIDrawOrder();
-	// Updates vision blockage of the tile. returns if changed
+	// Updates vision blockage of the tile
+	// returns true if vision changed
 	bool updateVisionBlockage(int value = 0);
 
 #ifdef PATHFINDING_DEBUG
@@ -200,7 +203,6 @@ class CanEnterTileHelper
 	// Value here defines how much, in percent, can resulting path afford to be unoptimal
 	// For example 1.05 means resulting path can be 5% longer than an optimal one
 	virtual float pathOverheadAlloawnce() const { return 1.0f; }
-	bool allowJumping = false;
 };
 
 class TileMap
@@ -274,7 +276,8 @@ class TileMap
 	                        const std::set<TileObject::Type> validTypes = {},
 	                        sp<TileObject> ignoredObject = nullptr, bool useLOS = false,
 	                        bool check_full_path = false, unsigned maxRange = 0,
-	                        bool recordPassedTiles = false) const;
+	                        bool recordPassedTiles = false,
+	                        StateRef<Organisation> ignoreOwnedProjectiles = nullptr) const;
 
 	bool checkThrowTrajectory(const sp<TileObject> thrower, Vec3<float> start, Vec3<int> end,
 	                          Vec3<float> targetVectorXY, float velocityXY, float velocityZ) const;

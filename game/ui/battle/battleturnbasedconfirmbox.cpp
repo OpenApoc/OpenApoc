@@ -14,8 +14,8 @@ namespace OpenApoc
 BattleTurnBasedConfirmBox::BattleTurnBasedConfirmBox(const UString &text,
                                                      std::function<void()> callbackYes,
                                                      std::function<void()> callbackNo)
-    : Stage(), callbackYes(callbackYes), callbackNo(callbackNo),
-      form(ui().getForm("battle/battle_tb_plan_popup"))
+    : Stage(), form(ui().getForm("battle/battle_tb_plan_popup")), callbackYes(callbackYes),
+      callbackNo(callbackNo)
 {
 	form->findControlTyped<Label>("MESSAGE")->setText(text);
 }

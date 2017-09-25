@@ -1,3 +1,6 @@
+#ifndef _USE_MATH_DEFINES
+#define _USE_MATH_DEFINES
+#endif
 #include "game/state/city/vehiclemission.h"
 #include "framework/logger.h"
 #include "game/state/city/building.h"
@@ -6,6 +9,7 @@
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
+#include "game/state/organisation.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "game/state/rules/vehicle_type.h"
 #include "game/state/tileview/tile.h"
@@ -19,254 +23,246 @@
 namespace OpenApoc
 {
 
-class FlyingVehicleTileHelper : public CanEnterTileHelper
+FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, Vehicle &v) : map(map), v(v) {}
+
+bool FlyingVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits,
+                                           bool ignoreAllUnits) const
 {
-  private:
-	TileMap &map;
-	Vehicle &v;
+	float nothing;
+	bool none1;
+	bool none2;
+	return canEnterTile(from, to, false, none1, nothing, none2, ignoreStaticUnits, ignoreAllUnits);
+}
 
-  public:
-	FlyingVehicleTileHelper(TileMap &map, Vehicle &v) : map(map), v(v) {}
+float FlyingVehicleTileHelper::pathOverheadAlloawnce() const { return 1.25f; }
 
-	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
-	                  bool ignoreAllUnits = false) const override
+// Support 'from' being nullptr for if a vehicle is being spawned in the map
+bool FlyingVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, float &cost, bool &,
+                                           bool, bool) const
+{
+	Vec3<int> fromPos = {0, 0, 0};
+	if (from)
 	{
-		float nothing;
-		bool none1;
-		bool none2;
-		return canEnterTile(from, to, false, none1, nothing, none2, ignoreStaticUnits,
-		                    ignoreAllUnits);
+		fromPos = from->position;
+	}
+	if (!to)
+	{
+		LogError("No 'to' position supplied");
+		return false;
+	}
+	Vec3<int> toPos = to->position;
+	if (fromPos == toPos)
+	{
+		LogError("FromPos == ToPos %s", toPos.x);
+		return false;
+	}
+	if (!map.tileIsValid(toPos))
+	{
+		LogError("ToPos %s is not on the map", toPos.x);
+		return false;
 	}
 
-	// Support 'from' being nullptr for if a vehicle is being spawned in the map
-	bool canEnterTile(Tile *from, Tile *to, bool, bool &, float &cost, bool &, bool,
-	                  bool) const override
+	// FIXME: Check for big vehicles
+	// if (v.type->size.x > 1)
+	//{
+	//}
+
+	for (auto &obj : to->ownedObjects)
 	{
-		Vec3<int> fromPos = {0, 0, 0};
-		if (from)
-		{
-			fromPos = from->position;
-		}
-		if (!to)
-		{
-			LogError("No 'to' position supplied");
+		if (obj->getType() == TileObject::Type::Vehicle)
 			return false;
-		}
-		Vec3<int> toPos = to->position;
-		if (fromPos == toPos)
+		if (obj->getType() == TileObject::Type::Scenery)
 		{
-			LogError("FromPos == ToPos %s", toPos.x);
-			return false;
-		}
-		if (!map.tileIsValid(toPos))
-		{
-			LogError("ToPos %s is not on the map", toPos.x);
-			return false;
-		}
-
-		// FIXME: Check for big vehicles
-		// if (v.type->size.x > 1)
-		//{
-		//}
-
-		for (auto &obj : to->ownedObjects)
-		{
-			if (obj->getType() == TileObject::Type::Vehicle)
-				return false;
-			if (obj->getType() == TileObject::Type::Scenery)
+			auto sceneryTile = std::static_pointer_cast<TileObjectScenery>(obj);
+			if (sceneryTile->scenery.lock()->type->isLandingPad)
 			{
-				auto sceneryTile = std::static_pointer_cast<TileObjectScenery>(obj);
-				if (sceneryTile->scenery.lock()->type->isLandingPad)
-				{
-					continue;
-				}
-				return false;
+				continue;
 			}
-		}
-		std::ignore = v;
-		std::ignore = map;
-		// TODO: Try to block diagonal paths clipping past scenery:
-		//
-		// IE in a 2x2 'flat' case:
-		// 'f' = origin tile, 's' = scenery', 't' = target
-		//-------
-		// +-+
-		// |s| t
-		// +-+-+
-		// f |s|
-		//   +-+
-		//-------
-		// we clearly should disallow moving from v->t despite them being 'adjacent' and empty
-		// themselves
-		// TODO: Is this then OK for vehicles? as 'most' don't fill the tile?
-		// TODO: Can fix the above be fixed by restricting the 'bounds' to the actual voxel map,
-		// instead of a while tile? Then comparing against 'intersectingTiles' vehicle objects?
-
-		// FIXME: Handle 'large' vehicles interacting more than with just the 'owned' objects of a
-		// single tile?
-		cost = glm::length(Vec3<float>{fromPos} - Vec3<float>{toPos});
-		return true;
-	}
-
-	float adjustCost(Vec3<int> nextPosition, int z) const override
-	{
-		if ((nextPosition.z < (int)v.altitude && z == 1) ||
-		    (nextPosition.z > (int)v.altitude && z == -1) || nextPosition.z == (int)v.altitude)
-		{
-			return -0.5f;
-		}
-		return 0;
-	}
-
-	float getDistance(Vec3<float> from, Vec3<float> to) const override
-	{
-		return glm::length(to - from);
-	}
-
-	float getDistance(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd) const override
-	{
-		auto diffStart = toStart - from;
-		auto diffEnd = toEnd - from - Vec3<float>{1.0f, 1.0f, 1.0f};
-		auto xDiff = from.x >= toStart.x && from.x < toEnd.x
-		                 ? 0.0f
-		                 : std::min(std::abs(diffStart.x), std::abs(diffEnd.x));
-		auto yDiff = from.y >= toStart.y && from.y < toEnd.y
-		                 ? 0.0f
-		                 : std::min(std::abs(diffStart.y), std::abs(diffEnd.y));
-		auto zDiff = from.z >= toStart.z && from.z < toEnd.z
-		                 ? 0.0f
-		                 : std::min(std::abs(diffStart.z), std::abs(diffEnd.z));
-		return sqrtf(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
-	}
-
-	bool canLandOnTile(Tile *to) const
-	{
-		if (!to)
-		{
-			LogError("No 'to' position supplied");
 			return false;
 		}
-		Vec3<int> toPos = to->position;
+	}
+	std::ignore = v;
+	std::ignore = map;
+	// TODO: Try to block diagonal paths clipping past scenery:
+	//
+	// IE in a 2x2 'flat' case:
+	// 'f' = origin tile, 's' = scenery', 't' = target
+	//-------
+	// +-+
+	// |s| t
+	// +-+-+
+	// f |s|
+	//   +-+
+	//-------
+	// we clearly should disallow moving from v->t despite them being 'adjacent' and empty
+	// themselves
+	// TODO: Is this then OK for vehicles? as 'most' don't fill the tile?
+	// TODO: Can fix the above be fixed by restricting the 'bounds' to the actual voxel map,
+	// instead of a while tile? Then comparing against 'intersectingTiles' vehicle objects?
 
-		int xMax = 0;
-		int yMax = 0;
-		for (auto &s : v.type->size)
-		{
-			xMax = std::max(xMax, s.second.x);
-			yMax = std::max(yMax, s.second.y);
-		}
+	// FIXME: Handle 'large' vehicles interacting more than with just the 'owned' objects of a
+	// single tile?
+	cost = glm::length(Vec3<float>{fromPos} - Vec3<float>{toPos});
+	return true;
+}
 
-		for (int y = 0; y < yMax; y++)
+float FlyingVehicleTileHelper::FlyingVehicleTileHelper::adjustCost(Vec3<int> nextPosition,
+                                                                   int z) const
+{
+	if ((nextPosition.z < (int)v.altitude && z == 1) ||
+	    (nextPosition.z > (int)v.altitude && z == -1) || nextPosition.z == (int)v.altitude)
+	{
+		return -0.5f;
+	}
+	return 0;
+}
+
+float FlyingVehicleTileHelper::getDistance(Vec3<float> from, Vec3<float> to) const
+{
+	return glm::length(to - from);
+}
+
+float FlyingVehicleTileHelper::getDistance(Vec3<float> from, Vec3<float> toStart,
+                                           Vec3<float> toEnd) const
+{
+	auto diffStart = toStart - from;
+	auto diffEnd = toEnd - from - Vec3<float>{1.0f, 1.0f, 1.0f};
+	auto xDiff = from.x >= toStart.x && from.x < toEnd.x ? 0.0f : std::min(std::abs(diffStart.x),
+	                                                                       std::abs(diffEnd.x));
+	auto yDiff = from.y >= toStart.y && from.y < toEnd.y ? 0.0f : std::min(std::abs(diffStart.y),
+	                                                                       std::abs(diffEnd.y));
+	auto zDiff = from.z >= toStart.z && from.z < toEnd.z ? 0.0f : std::min(std::abs(diffStart.z),
+	                                                                       std::abs(diffEnd.z));
+	return sqrtf(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
+}
+
+bool FlyingVehicleTileHelper::canLandOnTile(Tile *to) const
+{
+	if (!to)
+	{
+		LogError("No 'to' position supplied");
+		return false;
+	}
+	Vec3<int> toPos = to->position;
+
+	int xMax = 0;
+	int yMax = 0;
+	for (auto &s : v.type->size)
+	{
+		xMax = std::max(xMax, s.second.x);
+		yMax = std::max(yMax, s.second.y);
+	}
+
+	for (int y = 0; y < yMax; y++)
+	{
+		for (int x = 0; x < xMax; x++)
 		{
-			for (int x = 0; x < xMax; x++)
+			for (auto &obj : map.getTile(x + toPos.x, y + toPos.y, toPos.z)->ownedObjects)
 			{
-				for (auto &obj : map.getTile(x + toPos.x, y + toPos.y, toPos.z)->ownedObjects)
+				if (obj->getType() == TileObject::Type::Scenery)
 				{
-					if (obj->getType() == TileObject::Type::Scenery)
-					{
-						auto scenery =
-						    std::static_pointer_cast<TileObjectScenery>(obj)->scenery.lock();
-						if (scenery->type->tile_type != SceneryTileType::TileType::General ||
-						    scenery->type->walk_mode == SceneryTileType::WalkMode::None ||
-						    scenery->type->isLandingPad || scenery->type->isHill)
-							return false;
-					}
+					auto scenery = std::static_pointer_cast<TileObjectScenery>(obj)->scenery.lock();
+					if (scenery->type->tile_type != SceneryTileType::TileType::General ||
+					    scenery->type->walk_mode == SceneryTileType::WalkMode::None ||
+					    scenery->type->isLandingPad || scenery->type->isHill)
+						return false;
 				}
 			}
 		}
-		return true;
 	}
+	return true;
+}
 
-	Vec3<int> findTileToLandOn(GameState &, sp<TileObjectVehicle> vTile) const
+Vec3<int> FlyingVehicleTileHelper::findTileToLandOn(GameState &, sp<TileObjectVehicle> vTile) const
+{
+	const int lookupRaduis = 10;
+	auto startPos = vTile->getOwningTile()->position;
+	// Make sure we check from high enough altitude
+	auto startZ = std::max(startPos.z, 4);
+
+	for (int r = 0; r < lookupRaduis; r++)
 	{
-		const int lookupRaduis = 10;
-		auto startPos = vTile->getOwningTile()->position;
-		// Make sure we check from high enough altitude
-		auto startZ = std::max(startPos.z, 4);
-
-		for (int r = 0; r < lookupRaduis; r++)
+		for (int y = startPos.y - r; y <= startPos.y + r; y++)
 		{
-			for (int y = startPos.y - r; y <= startPos.y + r; y++)
+			bool middle = y > startPos.y - r && y < startPos.y + r;
+			for (int x = startPos.x - r; x <= startPos.x + r;)
 			{
-				bool middle = y > startPos.y - r && y < startPos.y + r;
-				for (int x = startPos.x - r; x <= startPos.x + r;)
+				// Ensure we're not trying to land into a tile that's blocked
+				bool lastHasScenery = true;
+				for (int z = startZ; z >= 0; z--)
 				{
-					// Ensure we're not trying to land into a tile that's blocked
-					bool lastHasScenery = true;
-					for (int z = startZ; z >= 0; z--)
+					auto tile = map.getTile(x, y, z);
+					bool hasScenery = false;
+					for (auto &obj : tile->ownedObjects)
 					{
-						auto tile = map.getTile(x, y, z);
-						bool hasScenery = false;
-						for (auto &obj : tile->ownedObjects)
+						if (obj->getType() == TileObject::Type::Scenery)
 						{
-							if (obj->getType() == TileObject::Type::Scenery)
-							{
-								hasScenery = true;
-								break;
-							}
+							hasScenery = true;
+							break;
 						}
-						if (hasScenery && !lastHasScenery && canLandOnTile(tile))
-						{
-							auto crashTile = tile->position;
-							crashTile.z++;
-							return crashTile;
-						}
-						lastHasScenery = hasScenery;
 					}
-					if (middle && x == startPos.x - r)
+					if (hasScenery && !lastHasScenery && canLandOnTile(tile))
 					{
-						x = startPos.x + r;
+						auto crashTile = tile->position;
+						crashTile.z++;
+						return crashTile;
 					}
-					else
-					{
-						x++;
-					}
+					lastHasScenery = hasScenery;
 				}
-			}
-		}
-		return startPos;
-	}
-
-	Vec3<float> findSidestep(GameState &state, sp<TileObjectVehicle> vTile,
-	                         sp<TileObjectVehicle> targetTile, float distancePref) const
-	{
-		const int maxIterations = 6;
-		auto bestPosition = vTile->getPosition();
-		float closest = std::numeric_limits<float>::max();
-		std::uniform_real_distribution<float> offset(-1.0f, 1.0f);
-
-		for (int i = 0; i < maxIterations; i++)
-		{
-			float xOffset = offset(state.rng);
-			float yOffset = offset(state.rng);
-			auto newPosition = vTile->getPosition();
-			newPosition.x += xOffset;
-			newPosition.y += yOffset;
-
-			if (static_cast<int>(newPosition.z) < static_cast<int>(v.altitude))
-			{
-				newPosition.z += 1;
-			}
-			else if (static_cast<int>(newPosition.z) > static_cast<int>(v.altitude))
-			{
-				newPosition.z -= 1;
-			}
-			newPosition.z = glm::clamp(newPosition.z, 0.0f, map.size.z - 0.1f);
-
-			if (static_cast<Vec3<int>>(newPosition) != vTile->getOwningTile()->position &&
-			    canEnterTile(vTile->getOwningTile(), map.getTile(newPosition)))
-			{
-				float currentDist = glm::abs(distancePref - targetTile->getDistanceTo(newPosition));
-				if (currentDist < closest)
+				if (middle && x == startPos.x - r)
 				{
-					closest = currentDist;
-					bestPosition = newPosition;
+					x = startPos.x + r;
+				}
+				else
+				{
+					x++;
 				}
 			}
 		}
-		return bestPosition;
 	}
-};
+	return startPos;
+}
+
+Vec3<float> FlyingVehicleTileHelper::findSidestep(GameState &state, sp<TileObjectVehicle> vTile,
+                                                  sp<TileObjectVehicle> targetTile,
+                                                  float distancePref) const
+{
+	const int maxIterations = 6;
+	auto bestPosition = vTile->getPosition();
+	float closest = std::numeric_limits<float>::max();
+	std::uniform_real_distribution<float> offset(-1.0f, 1.0f);
+
+	for (int i = 0; i < maxIterations; i++)
+	{
+		float xOffset = offset(state.rng);
+		float yOffset = offset(state.rng);
+		auto newPosition = vTile->getPosition();
+		newPosition.x += xOffset;
+		newPosition.y += yOffset;
+
+		if (static_cast<int>(newPosition.z) < static_cast<int>(v.altitude))
+		{
+			newPosition.z += 1;
+		}
+		else if (static_cast<int>(newPosition.z) > static_cast<int>(v.altitude))
+		{
+			newPosition.z -= 1;
+		}
+		newPosition.z = glm::clamp(newPosition.z, 0.0f, map.size.z - 0.1f);
+
+		if (static_cast<Vec3<int>>(newPosition) != vTile->getOwningTile()->position &&
+		    canEnterTile(vTile->getOwningTile(), map.getTile(newPosition)))
+		{
+			float currentDist = glm::abs(distancePref - targetTile->getDistanceTo(newPosition));
+			if (currentDist < closest)
+			{
+				closest = currentDist;
+				bestPosition = newPosition;
+			}
+		}
+	}
+	return bestPosition;
+}
 
 VehicleMission *VehicleMission::gotoLocation(GameState &, Vehicle &, Vec3<int> target,
                                              bool pickNearest, int reRouteAttempts)
@@ -431,7 +427,8 @@ bool VehicleMission::takeOffCheck(GameState &state, Vehicle &v, UString mission)
 	return false;
 }
 
-bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float> &dest)
+bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float> &destPos,
+                                        float &destFacing)
 {
 	switch (this->type)
 	{
@@ -440,10 +437,10 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 		case MissionType::Crash:
 		case MissionType::Land:
 		{
-			return advanceAlongPath(state, dest, v);
+			return advanceAlongPath(state, v, destPos, destFacing);
 		}
 		case MissionType::Patrol:
-			if (!advanceAlongPath(state, dest, v))
+			if (!advanceAlongPath(state, v, destPos, destFacing))
 			{
 				if (missionCounter == 0)
 					return false;
@@ -490,13 +487,37 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 				{
 					// target is in range, we're done with pathing and start maneuvering
 					if (!currentPlannedPath.empty())
+					{
 						currentPlannedPath.clear();
-
+					}
+					// FIXME: Use vehicle engagement rules here, for now just face target with 33%
+					// chance
+					if (randBoundsExclusive(state.rng, 0, 100) < 33)
+					{
+						Vec2<float> targetFacingVector = {targetVehicle->position.x - v.position.x,
+						                                  targetVehicle->position.y - v.position.y};
+						if (targetFacingVector.x != 0 || targetFacingVector.y != 0)
+						{
+							targetFacingVector = glm::normalize(targetFacingVector);
+							float a1 = acosf(-targetFacingVector.y);
+							float a2 = asinf(targetFacingVector.x);
+							float angleToTarget = a2 >= 0 ? a1 : 2.0f * (float)M_PI - a1;
+							// Bring angle to one of directional alignments
+							int angleToTargetInt = angleToTarget / (float)M_PI * 4.0f + 0.5f;
+							angleToTarget = (float)angleToTargetInt * (float)M_PI / 4.0f;
+							if (destFacing != angleToTarget)
+							{
+								LogWarning("Vehicle %s facing target", v.name);
+								destFacing = angleToTarget;
+								return true;
+							}
+						}
+					}
 					auto newPosition =
 					    tileHelper.findSidestep(state, vTile, targetTile, distancePreference);
 					if (newPosition != vTile->getPosition())
 					{
-						dest = newPosition;
+						destPos = newPosition;
 						return true;
 					}
 					return false;
@@ -517,9 +538,9 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 					if (currentPlannedPath.empty())
 						return false;
 					auto pos = currentPlannedPath.front();
-					dest = Vec3<float>{pos.x, pos.y, pos.z}
-					       // Add {0.5,0.5,0.5} to make it route to the center of the tile
-					       + Vec3<float>{0.5, 0.5, 0.5};
+					destPos = Vec3<float>{pos.x, pos.y, pos.z}
+					          // Add {0.5,0.5,0.5} to make it route to the center of the tile
+					          + Vec3<float>{0.5, 0.5, 0.5};
 					return true;
 				}
 			}
@@ -534,7 +555,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 				         "you've reached the target?",
 				         name);
 			}
-			dest = {0, 0, 9};
+			destPos = {0, 0, 9};
 			return false;
 		}
 		case MissionType::Snooze:
@@ -892,7 +913,10 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			else
 			{
-				this->setPathTo(state, v, this->targetLocation);
+				if (currentPlannedPath.empty())
+				{
+					this->setPathTo(state, v, this->targetLocation);
+				}
 			}
 			return;
 		}
@@ -1147,7 +1171,11 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					// Deposit aliens or subvert
 					if (subvert)
 					{
-						LogError("Implement subversion mechanic!");
+						// FIXME: Proper micronoid rain, for now a flat 33% chance of success
+						if (randBoundsExclusive(state.rng, 0, 100) < 33)
+						{
+							targetBuilding->owner->infiltrationValue = 200;
+						}
 					}
 					else
 					{
@@ -1339,7 +1367,8 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 	}
 }
 
-bool VehicleMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Vehicle &v)
+bool VehicleMission::advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> &destPos,
+                                      float &destFacing)
 {
 	// Add {0.5,0.5,0.5} to make it route to the center of the tile
 	static const Vec3<float> offset{0.5f, 0.5f, 0.5f};
@@ -1355,12 +1384,12 @@ bool VehicleMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Vehic
 	// Land/TakeOff mission does not check for collision or path skips
 	if (type == MissionType::Land)
 	{
-		dest = Vec3<float>{pos.x, pos.y, pos.z} + offsetLand;
+		destPos = Vec3<float>{pos.x, pos.y, pos.z} + offsetLand;
 		return true;
 	}
 	if (type == MissionType::TakeOff)
 	{
-		dest = Vec3<float>{pos.x, pos.y, pos.z} + offset;
+		destPos = Vec3<float>{pos.x, pos.y, pos.z} + offset;
 		return true;
 	}
 
@@ -1399,7 +1428,7 @@ bool VehicleMission::advanceAlongPath(GameState &state, Vec3<float> &dest, Vehic
 		it = ++currentPlannedPath.begin();
 	}
 
-	dest = Vec3<float>{pos.x, pos.y, pos.z} + offset;
+	destPos = Vec3<float>{pos.x, pos.y, pos.z} + offset;
 	return true;
 }
 

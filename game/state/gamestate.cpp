@@ -13,6 +13,7 @@
 #include "game/state/city/baselayout.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/city/citycommonimagelist.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/projectile.h"
 #include "game/state/city/scenery.h"
@@ -134,6 +135,7 @@ void GameState::initState()
 	}
 	for (auto &v : this->vehicles)
 	{
+		v.second->strategyImages = city_common_image_list->strategyImages;
 		if (!v.second->currentlyLandedBuilding)
 		{
 			v.second->setupMover();
@@ -178,11 +180,52 @@ void GameState::initState()
 
 void GameState::startGame()
 {
+	agentEquipmentTemplates.resize(10);
+
 	// Setup orgs
 	for (auto &pair : this->organisations)
 	{
 		pair.second->ticksTakeOverAttemptAccumulated =
 		    randBoundsExclusive(rng, (unsigned)0, TICKS_PER_TAKEOVER_ATTEMPT);
+		// Initial relationship randomiser
+		// Not for player or civilians
+		if (pair.first == player.id || pair.first == civilian.id)
+		{
+			continue;
+		}
+		for (auto &entry : pair.second->current_relations)
+		{
+			// Not for civilians or perfect relationships
+			if (entry.second == 100.0f || entry.first == civilian)
+			{
+				continue;
+			}
+			// First step: adjust based on difficulty
+			// higher difficulty will produce a bigger sway
+			if (difficulty > 0)
+			{
+				// Relationship vs player is adjusted by flat 0/5/0/-5/10
+				if (entry.first == player)
+				{
+					entry.second += 10 - 5 * difficulty;
+				}
+				// Positive relationship is improved randomly
+				else if (entry.second >= 0.0f)
+				{
+					entry.second += randBoundsInclusive(rng, 0, 3 * difficulty);
+				}
+				// Negative relationship with non-aliens is worsened randomly
+				else if (entry.first != aliens)
+				{
+					entry.second -= randBoundsInclusive(rng, 0, 5 * difficulty);
+				}
+			}
+			// Second step: random +- 10
+			entry.second += randBoundsInclusive(rng, -10, 10);
+
+			// Finally stay in bounds
+			entry.second = clamp(entry.second, -100.0f, 100.0f);
+		}
 	}
 	// Setup buildings
 	for (auto &pair : this->cities)
@@ -193,7 +236,7 @@ void GameState::startGame()
 			    randBoundsExclusive(rng, (unsigned)0, TICKS_PER_DETECTION_ATTEMPT[difficulty]);
 		}
 	}
-
+	// Setup scenery
 	for (auto &pair : this->cities)
 	{
 		auto &city = pair.second;
@@ -215,6 +258,8 @@ void GameState::startGame()
 	// Create some random vehicles
 	for (int i = 0; i < 5; i++)
 	{
+		// Uncomment below to stop fake traffic
+		// break;
 		for (auto &vehicleType : this->vehicle_types)
 		{
 			auto &type = vehicleType.second;
@@ -228,8 +273,11 @@ void GameState::startGame()
 			v->name = format("%s %d", type->name, ++type->numCreated);
 			v->city = {this, "CITYMAP_HUMAN"};
 			v->currentlyLandedBuilding = {this, buildingIt->first};
+			v->position = {v->currentlyLandedBuilding->bounds.p0.x,
+			               v->currentlyLandedBuilding->bounds.p0.y, 2};
 			v->owner = type->manufacturer;
 			v->health = type->health;
+			v->strategyImages = city_common_image_list->strategyImages;
 
 			buildingIt++;
 			if (buildingIt == this->cities["CITYMAP_HUMAN"]->buildings.end())
@@ -261,10 +309,11 @@ void GameState::startGame()
 		counter++;
 	} while (buildingIt->second->owner->current_relations[player] < 0 || counter >= giveUpCount);
 
-	buildingIt->second->current_crew[{this, "AGENTTYPE_BRAINSUCKER"}] =
-	    randBoundsExclusive(rng, 0, difficulty / 2 + 1) + 1;
-	buildingIt->second->current_crew[{this, "AGENTTYPE_ANTHROPOD"}] =
-	    randBoundsExclusive(rng, 0, difficulty / 2 + 2) + 1;
+	for (auto &l : initial_aliens.at(difficulty))
+	{
+		buildingIt->second->current_crew[l.first] =
+		    randBoundsExclusive(rng, l.second.x, l.second.y);
+	}
 
 	gameTime = GameTime::midday();
 
@@ -315,9 +364,12 @@ void GameState::fillPlayerStartingProperty()
 		v->name = format("%s %d", type->name, ++type->numCreated);
 		v->city = {this, "CITYMAP_HUMAN"};
 		v->currentlyLandedBuilding = {this, bld};
+		v->position = {v->currentlyLandedBuilding->bounds.p0.x,
+		               v->currentlyLandedBuilding->bounds.p0.y, 2};
 		v->homeBuilding = {this, bld};
 		v->owner = this->getPlayer();
 		v->health = type->health;
+		v->strategyImages = city_common_image_list->strategyImages;
 		UString vID = Vehicle::generateObjectID(*this);
 		this->vehicles[vID] = v;
 		v->currentlyLandedBuilding->landed_vehicles.insert({this, vID});
@@ -545,6 +597,7 @@ void GameState::updateEndOfDay()
 	}
 	Trace::end("GameState::updateEndOfDay::cities");
 
+	// SPAWN ALIENS
 	for (int i = 0; i < 5; i++)
 	{
 		StateRef<City> city = {this, "CITYMAP_HUMAN"};
@@ -569,6 +622,7 @@ void GameState::updateEndOfDay()
 			v->city = city;
 			v->owner = type->manufacturer;
 			v->health = type->health;
+			v->strategyImages = city_common_image_list->strategyImages;
 
 			// Vehicle::equipDefaultEquipment uses the state reference from itself, so make sure the
 			// vehicle table has the entry before calling it
@@ -616,6 +670,7 @@ void GameState::updateEndOfWeek()
 					v->city = city;
 					v->owner = alienOrg;
 					v->health = type->health;
+					v->strategyImages = city_common_image_list->strategyImages;
 
 					// Vehicle::equipDefaultEquipment uses the state reference from itself, so make
 					// sure the
@@ -631,8 +686,6 @@ void GameState::updateEndOfWeek()
 		}
 	}
 }
-
-void GameState::update() { this->update(1); }
 
 void GameState::updateTurbo()
 {

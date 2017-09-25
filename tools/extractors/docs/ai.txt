@@ -1,7 +1,3 @@
-OpenApoc X-Com Ufo Apocalypse Development Opensource Open Source XCom programming
-
---
-
 Brief AI description
 
 - Panic Run AI

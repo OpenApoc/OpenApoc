@@ -92,15 +92,18 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>, public Equip
 	int getFireCost(WeaponAimingMode fireMode);
 	int getFireCost(WeaponAimingMode fireMode, int maxTU);
 	bool isFiring() const { return weapon_fire_ticks_remaining > 0 || readyToFire; };
-	bool canFire() const;
-	bool canFire(Vec3<float> to) const;
+	bool canFire(GameState &state) const;
+	bool canFire(GameState &state, Vec3<float> to) const;
 	bool needsReload() const;
 	void stopFiring();
 	void startFiring(WeaponAimingMode fireMode, bool instant);
 
 	// Support nullptr ammoItem for auto-reloading
 	void loadAmmo(GameState &state, sp<AEquipment> ammoItem = nullptr);
-	sp<AEquipment> unloadAmmo(GameState &state);
+	sp<AEquipment> unloadAmmo();
+
+	// Can item be used (based on research by agent's owner)
+	bool canBeUsed(GameState &state) const;
 
 	void update(GameState &state, unsigned int ticks);
 	void updateTB(GameState &state);

@@ -168,10 +168,13 @@ class Battle : public std::enable_shared_from_this<Battle>
 	unsigned int currentTurn = 0;
 	// Ticks without action in TB
 	unsigned int ticksWithoutAction = 0;
+	// Ticks without action as ween by org
 	std::map<StateRef<Organisation>, unsigned> ticksWithoutSeenAction;
+	// Last action location seen by org
 	std::map<StateRef<Organisation>, Vec3<int>> lastSeenActionLocation;
-	// RF timer
+	// RF interval (how frequently RFs spawn, in ticks)
 	int reinforcementsInterval = 0;
+	// RF timer
 	int ticksUntilNextReinforcement = 0;
 
 	// Turn end allowed by current org
@@ -211,9 +214,9 @@ class Battle : public std::enable_shared_from_this<Battle>
 	void queuePathfindingRefresh(Vec3<int> tile);
 
 	// Move a group of units in formation
-	static void groupMove(GameState &state, std::list<StateRef<BattleUnit>> &selectedUnits,
-	                      Vec3<int> targetLocation, int facingDelta = 0, bool demandGiveWay = false,
-	                      bool useTeleporter = false);
+	void groupMove(GameState &state, std::list<StateRef<BattleUnit>> &selectedUnits,
+	               Vec3<int> targetLocation, int facingDelta = 0, bool demandGiveWay = false,
+	               bool useTeleporter = false);
 
 	int getLosBlockID(int x, int y, int z) const;
 	bool getVisible(StateRef<Organisation> org, int x, int y, int z) const;
@@ -228,20 +231,26 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// Notify about action happening
 	void notifyAction(Vec3<int> location = {-1, -1, -1}, StateRef<BattleUnit> actorUnit = nullptr);
 
-	int killStrandedUnits(GameState &state, bool preview = false);
+	int killStrandedUnits(GameState &state, StateRef<Organisation> org, bool preview = false);
 	void abortMission(GameState &state);
 	void checkMissionEnd(GameState &state, bool retreated, bool forceReCheck = false);
 	void checkIfBuildingDisabled(GameState &state);
+	bool tryDisableBuilding();
 	void refreshLeadershipBonus(StateRef<Organisation> org);
 	void spawnReinforcements(GameState &state);
 
+	void handleProjectileHit(GameState &state, sp<Projectile> projectile, bool displayDoodad,
+	                         bool playSound);
+
 	void update(GameState &state, unsigned int ticks);
+	void updateTB(GameState &state);
+	void updateRT(GameState &state, unsigned int ticks);
 	void updateTBBegin(GameState &state);
 	void updateTBEnd(GameState &state);
 
 	void updateProjectiles(GameState &state, unsigned int ticks);
 	void updateVision(GameState &state);
-	void updatePathfinding(GameState &state);
+	void updatePathfinding(GameState &state, unsigned int ticks);
 
 	// Adding objects to battle
 
@@ -298,7 +307,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	                        const int *civilians, StateRef<Vehicle> player_craft,
 	                        StateRef<Building> target_building);
 
-	// To be called when battle must be started, after briefing screen
+	// To be called when battle must be started, after briefing and squad assign screen
 	static void enterBattle(GameState &state);
 
 	// Battle End Functions

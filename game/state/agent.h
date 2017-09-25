@@ -193,6 +193,8 @@ class AgentType : public StateObject
 	int infiltrationSpeed = 0;
 	int growthChance = 0;
 	std::list<std::pair<int, std::pair<StateRef<AgentType>, int>>> growthOptions;
+	// Apply this infiltration when alien grows
+	int growthInfiltration = 0;
 	int detectionWeight = 0;
 
 	StateRef<DamageType> spreadHazardDamageType;
@@ -332,7 +334,7 @@ class Agent : public StateObject,
 	sp<AEquipment> addEquipmentByType(GameState &state, Vec2<int> pos,
 	                                  StateRef<AEquipmentType> type);
 	// Add equipment as ammo
-	sp<AEquipment> addEquipmentAsAmmoByType(GameState &state, StateRef<AEquipmentType> type);
+	sp<AEquipment> addEquipmentAsAmmoByType(StateRef<AEquipmentType> type);
 
 	// Add equipment to the first available slot of a specific type
 	void addEquipment(GameState &state, sp<AEquipment> object, EquipmentSlotType slotType);
@@ -344,6 +346,9 @@ class Agent : public StateObject,
 	void updateModifiedStats();
 	bool canRun() { return modified_stats.canRun(); }
 
+	void updateIsBrainsucker();
+	bool isBrainsucker = false;
+
 	void trainPhysical(GameState &state, unsigned ticks);
 	void trainPsi(GameState &state, unsigned ticks);
 
@@ -351,7 +356,8 @@ class Agent : public StateObject,
 	// If item was fired before, it should be passed here, and it will remain dominant unless it was
 	// removed
 	StateRef<AEquipmentType>
-	getDominantItemInHands(StateRef<AEquipmentType> itemLastFired = nullptr) const;
+	getDominantItemInHands(GameState &state,
+	                       StateRef<AEquipmentType> itemLastFired = nullptr) const;
 	sp<AEquipment> getFirstItemInSlot(EquipmentSlotType type, bool lazy = true) const;
 	sp<AEquipment> getFirstShield() const;
 	sp<AEquipment> getFirstItemByType(StateRef<AEquipmentType> type) const;

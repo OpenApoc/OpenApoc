@@ -61,7 +61,7 @@ void BaseStage::begin()
 		view->setImage(viewImage);
 		view->setDepressedImage(viewImage);
 		wp<GraphicButton> weakView(view);
-		view->addCallback(FormEventType::ButtonClick, [this, weakView](Event *e) {
+		view->addCallback(FormEventType::ButtonClick, [this, weakView](FormsEvent *e) {
 			auto base = e->forms().RaisedBy->getData<Base>();
 			if (this->state->current_base != base)
 			{
@@ -69,12 +69,12 @@ void BaseStage::begin()
 				this->currentView = weakView.lock();
 			}
 		});
-		view->addCallback(FormEventType::MouseEnter, [this](Event *e) {
+		view->addCallback(FormEventType::MouseEnter, [this](FormsEvent *e) {
 			auto base = e->forms().RaisedBy->getData<Base>();
 			this->textViewBase->setText(base->name);
 		});
 		view->addCallback(FormEventType::MouseLeave,
-		                  [this](Event *) { this->textViewBase->setText(""); });
+		                  [this](FormsEvent *) { this->textViewBase->setText(""); });
 		miniViews.push_back(view);
 	}
 	textViewBase = form->findControlTyped<Label>("TEXT_BUTTON_BASE");

@@ -24,7 +24,8 @@ static const Colour PLAYER_BASE_AVAILABLE{160, 236, 252};
 
 BaseSelectScreen::BaseSelectScreen(sp<GameState> state, Vec3<float> centerPos)
     : CityTileView(*state->current_city->map, Vec3<int>{TILE_X_CITY, TILE_Y_CITY, TILE_Z_CITY},
-                   Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Strategy, *state),
+                   Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Strategy,
+                   state->current_city->cityViewScreenCenter, *state),
       menuform(ui().getForm("city/baseselect")), state(state), counter(0)
 {
 	this->centerPos = centerPos;

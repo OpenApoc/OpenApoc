@@ -1,12 +1,20 @@
+#ifndef _USE_MATH_DEFINES
+#define _USE_MATH_DEFINES
+#endif
 #include "game/state/tileview/collision.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleitem.h"
+#include "game/state/city/projectile.h"
+#include "game/state/city/vehicle.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject.h"
+#include "game/state/tileview/tileobject_projectile.h"
 #include "library/line.h"
 #include "library/sp.h"
 #include "library/voxel.h"
 #include <algorithm>
+#include <glm/glm.hpp>
+#include <glm/gtx/vector_angle.hpp>
 #include <iterator>
 
 namespace OpenApoc
@@ -15,7 +23,8 @@ namespace OpenApoc
 Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
                                  const std::set<TileObject::Type> validTypes,
                                  sp<TileObject> ignoredObject, bool useLOS, bool check_full_path,
-                                 unsigned maxRange, bool recordPassedTiles) const
+                                 unsigned maxRange, bool recordPassedTiles,
+                                 StateRef<Organisation> ignoreOwnedProjectiles) const
 {
 	bool typeChecking = validTypes.size() > 0;
 	bool rangeChecking = maxRange > 0.0f;
@@ -119,6 +128,20 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 			{
 				continue;
 			}
+			if (ignoreOwnedProjectiles && obj->type == TileObject::Type::Projectile)
+			{
+				auto projectile =
+				    std::static_pointer_cast<TileObjectProjectile>(obj)->getProjectile();
+				auto owner =
+				    projectile->firerUnit
+				        ? projectile->firerUnit->owner
+				        : (projectile->firerVehicle ? projectile->firerVehicle->owner : nullptr);
+				if (owner == ignoreOwnedProjectiles)
+				{
+					continue;
+				}
+			}
+
 			// coordinate of the object's voxelmap's min point
 			auto objPos = obj->getCenter();
 			objPos -= obj->getVoxelOffset();
@@ -129,7 +152,9 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 			Vec3<int> voxelMapIndex = voxelPos / tileSize;
 			auto voxelMap = obj->getVoxelMap(voxelMapIndex, useLOS);
 			if (!voxelMap)
+			{
 				continue;
+			}
 			// coordinate of the voxel within map
 			Vec3<int> voxelPosWithinMap = voxelPos % tileSize;
 			if (voxelMap->getBit(voxelPosWithinMap))
@@ -185,6 +210,56 @@ bool TileMap::checkThrowTrajectory(const sp<TileObject> thrower, Vec3<float> sta
 		curPos = c ? c.position : newPos;
 	} while (!c && ((Vec3<int>)curPos) != end && curPos.z < size.z);
 	return (Vec3<int>)curPos == end;
+}
+
+// Figure out where to fire on a moving target
+Vec3<float> Collision::getLeadingOffset(Vec3<float> tarPosRelative, float ourVelocity,
+                                        Vec3<float> tarVelocity)
+{
+	Vec3<float> tarHeading = glm::normalize(tarVelocity);
+	float tarVelocityLen = glm::length(tarVelocity);
+	// Alexey Andronov:
+	// 1) Given triangle with sides ABC and angles opposite to these sides abc we know that:
+	//   sina/A = sinb/B = sinc/C
+	// 2) In our case, let a = desired point, b = tarPos, c = ourPos
+	// 3) We know:
+	//	  - angle b = angle between -tarPos and tarHeading
+	//    - side A = len(tarPos)
+	//    - B/C = ourVelocity / tarVelocityLen
+	// 4) Multiplying both sides in last equation by B we get
+	//   B = C * ourVelocity / tarVelocityLen
+	// 5) Eq 1 becomes:
+	//   sina/A = sinb/(C * ourVelocity / tarVelocity) = sinc/C
+	// 6) Multiplying both sides of last two by B we get:
+	//   sinc = sinb * tarVelocityLen / ourVelocity
+	// 7) Now we know sinb and sinc, and we can find a, since a+b+c = pi, and thus sina
+	// 8) Now we know sina, sinb, sinc and A, and we can find B and C
+	//   B = A * sinb / sina
+	//   C = A * sinc / sina
+
+	if (tarVelocityLen == 0.0f)
+	{
+		// Target isn't moving, no leading required
+		return {0.0f, 0.0f, 0.0f};
+	}
+
+	float A = glm::length(tarPosRelative);
+	float b = glm::angle(glm::normalize(-tarPosRelative), tarHeading);
+	float sinc = sinf(b) * tarVelocityLen / ourVelocity;
+	if (sinc > 1.0f)
+	{
+		// Target is moving too fast, we can't catch it
+		return tarHeading * tarVelocityLen;
+	}
+	float c = asinf(sinc);
+	float a = M_PI - b - c;
+	if (a < 0.0f)
+	{
+		// Target is moving too fast, we can't catch it
+		return tarHeading * tarVelocityLen;
+	}
+	float C = A / sinf(a) * sinf(c);
+	return tarHeading * C;
 }
 
 }; // namespace OpenApoc

@@ -83,6 +83,7 @@ class AEquipmentType : public StateObject
 	int armor = 0;
 	int score = 0;
 	ResearchDependency research_dependency;
+	// Wether item is carried two-handed (for display purposes)
 	bool two_handed = false;
 
 	// True = when fired from weapon will throw ammunition to target location instead of firing
@@ -216,6 +217,27 @@ class EquipmentSet : public StateObject
 
 	static sp<EquipmentSet> getByScore(const GameState &state, const int score);
 	static sp<EquipmentSet> getByLevel(const GameState &state, const int level);
+};
+
+class EquipmentTemplate
+{
+  public:
+	class EquipmentTemplateEntry
+	{
+	  public:
+		Vec2<int> pos = {0, 0};
+		StateRef<AEquipmentType> type;
+		StateRef<AEquipmentType> payloadType;
+
+		EquipmentTemplateEntry() = default;
+		EquipmentTemplateEntry(Vec2<int> pos, StateRef<AEquipmentType> type,
+		                       StateRef<AEquipmentType> payloadType)
+		    : pos(pos), type(type), payloadType(payloadType)
+		{
+		}
+	};
+
+	std::list<EquipmentTemplateEntry> equipment;
 };
 
 } // namespace OpenApoc

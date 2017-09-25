@@ -21,6 +21,7 @@ static const std::set<TileObject::Type> unitSet = {TileObject::Type::Unit};
 static const std::tuple<AIDecision, bool> NULLTUPLE2 = std::make_tuple(AIDecision(), false);
 static const std::tuple<AIDecision, float, unsigned> NULLTUPLE3 =
     std::make_tuple(AIDecision(), -FLT_MAX, 0);
+static const Vec3<int> NONE = {-1, -1, -1};
 }
 
 /* AI LOGIC: attack()
@@ -89,6 +90,9 @@ std::tuple<AIDecision, float, unsigned>
 UnitAIVanilla::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
                                  StateRef<BattleUnit> target)
 {
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+	LogWarning("VANILLA AI %s: getWeaponDecision()", u.id);
+#endif
 	auto action = mksp<AIAction>();
 	action->item = e;
 	action->targetUnit = target;
@@ -117,7 +121,8 @@ UnitAIVanilla::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment>
 		armorValue = target->agent->type->armor.at(BodyPart::Legs);
 		damageModifier = target->agent->type->damage_modifier;
 	}
-	damage = payload->damage_type->dealDamage(damage * 1.5f, damageModifier);
+	damage =
+	    std::max(0, payload->damage_type->dealDamage(damage * 1.5f, damageModifier) - armorValue);
 
 	if (u.canAttackUnit(state, target, e) == WeaponStatus::NotFiring)
 	{
@@ -141,8 +146,12 @@ UnitAIVanilla::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment>
 	float priority = cth * damage / time;
 
 	// Chance to advance is equal to chance to miss
-	if (randBoundsExclusive(state.rng, 0, 100) >= cth)
+	// Only advance if can fire on move
+	if (randBoundsExclusive(state.rng, 0, 100) >= cth &&
+	    u.agent->getAnimationPack()->getFrameCountFiring(e->type, u.target_body_state,
+	                                                     MovementState::Normal, u.goalFacing) > 0)
 	{
+
 		movement->type = AIMovement::Type::Advance;
 		movement->targetLocation = target->position;
 		movement->kneelingMode = KneelingMode::None;
@@ -156,6 +165,9 @@ std::tuple<AIDecision, float, unsigned>
 UnitAIVanilla::getPsiDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
                               StateRef<BattleUnit> target, PsiStatus status)
 {
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+	LogWarning("VANILLA AI %s: getPsiDecision()", u.id);
+#endif
 	std::ignore = state;
 
 	int chance = u.getPsiChance(target, status, e->type);
@@ -207,6 +219,9 @@ std::tuple<AIDecision, float, unsigned>
 UnitAIVanilla::getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
                                   StateRef<BattleUnit> target)
 {
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+	LogWarning("VANILLA AI %s: getGrenadeDecision()", u.id);
+#endif
 	auto action = mksp<AIAction>();
 	action->item = e;
 	action->targetUnit = target;
@@ -261,7 +276,8 @@ UnitAIVanilla::getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment
 			armorValue = t.second->agent->type->armor.at(BodyPart::Legs);
 			damageModifier = t.second->agent->type->damage_modifier;
 		}
-		localDamage = payload->damage_type->dealDamage(localDamage * 1.5f, damageModifier);
+		localDamage = std::max(
+		    0, payload->damage_type->dealDamage(localDamage * 1.5f, damageModifier) - armorValue);
 		damage +=
 		    (u.owner->isRelatedTo(t.second->owner) == Organisation::Relation::Hostile ? 1.0f
 		                                                                              : -1.0f) *
@@ -290,10 +306,13 @@ UnitAIVanilla::getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment
 std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getBrainsuckerDecision(GameState &state,
                                                                               BattleUnit &u)
 {
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+	LogWarning("VANILLA AI %s: getBrainsuckerDecision()", u.id);
+#endif
 	auto action = mksp<AIAction>();
 	action->type = AIAction::Type::AttackBrainsucker;
 
-	unsigned reThinkDelay = TICKS_PER_SECOND;
+	unsigned reThinkDelay = TICKS_PER_SECOND / 2;
 	float distance = FLT_MAX;
 
 	StateRef<DamageType> brainsucker = {&state, "DAMAGETYPE_BRAINSUCKER"};
@@ -342,6 +361,9 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getBrainsuckerDecision(Ga
 std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getSuicideDecision(GameState &state,
                                                                           BattleUnit &u)
 {
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+	LogWarning("VANILLA AI %s: getSuicideDecision()", u.id);
+#endif
 	std::tuple<AIDecision, float, unsigned> decision = NULLTUPLE3;
 
 	auto action = mksp<AIAction>();
@@ -388,6 +410,9 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getSuicideDecision(GameSt
 std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getAttackDecision(GameState &state,
                                                                          BattleUnit &u)
 {
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+	LogWarning("VANILLA AI %s getAttackDecision()", u.id);
+#endif
 	std::tuple<AIDecision, float, unsigned> decision = NULLTUPLE3;
 
 	auto &visibleEnemies = state.current_battle->visibleEnemies[u.owner];
@@ -411,10 +436,14 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getAttackDecision(GameSta
 
 	for (auto &e : u.agent->equipment)
 	{
+		if (!e->canBeUsed(state))
+		{
+			continue;
+		}
 		switch (e->type->type)
 		{
 			case AEquipmentType::Type::Weapon:
-				if (!e->canFire())
+				if (!e->canFire(state))
 				{
 					break;
 				}
@@ -528,11 +557,20 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getAttackDecision(GameSta
 		}
 	}
 
-	// If cannot attack - take cover!
+	// If cannot attack:
+	// -  if see enemies - cover
+	// -  if see no enemies - move
 	if (std::get<0>(decision).isEmpty())
 	{
-		decision = std::make_tuple(
-		    AIDecision(nullptr, UnitAIHelper::getTakeCoverMovement(state, u, true)), 0.0f, 0);
+		if (u.visibleEnemies.empty())
+		{
+			decision = thinkGreen(state, u);
+		}
+		else
+		{
+			decision = std::make_tuple(
+			    AIDecision(nullptr, UnitAIHelper::getTakeCoverMovement(state, u, true)), 0.0f, 0);
+		}
 	}
 
 	return decision;
@@ -541,11 +579,13 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getAttackDecision(GameSta
 // Calculate AI's next action in case the unit is not attacking
 std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkGreen(GameState &state, BattleUnit &u)
 {
-	static const Vec3<int> NONE = {0, 0, 0};
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+	LogWarning("VANILLA AI %s: thinkGreen()", u.id);
+#endif
 
 	bool isMoving = lastDecision.movement && u.isMoving();
-	bool isUnderAttack = attackerPosition != NONE;
-	bool wasEnemyVisible = enemySpotted && lastSeenEnemyPosition != NONE;
+	bool isUnderAttack = flagLastAttackerPosition != NONE;
+	bool wasEnemyVisible = flagLastSeenPosition != NONE;
 
 	if (isMoving)
 	{
@@ -558,6 +598,9 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkGreen(GameState &sta
 
 	if (isUnderAttack)
 	{
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+		LogWarning("VANILLA AI %s: getTakeCoverMovement()", u.id);
+#endif
 		auto takeCover = UnitAIHelper::getTakeCoverMovement(state, u);
 		if (takeCover)
 		{
@@ -567,8 +610,10 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkGreen(GameState &sta
 
 	if (wasEnemyVisible)
 	{
-		auto pursue = UnitAIHelper::getPursueMovement(
-		    state, u, (Vec3<int>)u.position + lastSeenEnemyPosition);
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+		LogWarning("VANILLA AI %s: getPursueMovement()", u.id);
+#endif
+		auto pursue = UnitAIHelper::getPursueMovement(state, u, flagLastSeenPosition);
 		if (pursue)
 		{
 			return std::make_tuple(AIDecision(nullptr, pursue), 0.0f, 0);
@@ -584,11 +629,17 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkGreen(GameState &sta
 	{
 		if (u.missions.empty() || u.missions.front()->type != BattleUnitMission::Type::Turn)
 		{
-			auto turn =
-			    UnitAIHelper::getTurnMovement(state, u, (Vec3<int>)u.position + attackerPosition);
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+			LogWarning("VANILLA AI %s: getTurnMovement()", u.id);
+#endif
+			auto turn = UnitAIHelper::getTurnMovement(state, u, flagLastAttackerPosition);
 			return std::make_tuple(AIDecision(nullptr, turn), 0.0f, 0);
 		}
 	}
+
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+	LogWarning("VANILLA AI %s: getFallbackMovement()", u.id);
+#endif
 
 	auto fallback = UnitAIHelper::getFallbackMovement(state, u);
 	if (fallback)
@@ -602,26 +653,36 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkGreen(GameState &sta
 // Calculate AI's next action in case enemies are seen
 std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkRed(GameState &state, BattleUnit &u)
 {
-	static const Vec3<int> NONE = {0, 0, 0};
-
-	bool isUnderAttack = attackerPosition != NONE;
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+	LogWarning("VANILLAAI %s: thinkRed()", u.id);
+#endif
+	bool isUnderAttack = flagLastAttackerPosition != NONE;
 	bool isInterrupted =
 	    ticksUntilReThink > 0 && ticksLastThink + ticksUntilReThink > state.gameTime.getTicks();
 
 	if (isUnderAttack)
 	{
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+		LogWarning("VANILLA AI %s: getFallbackMovement()", u.id);
+#endif
 		auto fallback = UnitAIHelper::getFallbackMovement(state, u);
 		if (fallback)
 		{
 			return std::make_tuple(AIDecision(nullptr, fallback), 0.0f, 0);
 		}
 
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+		LogWarning("VANILLA AI %s: getTakeCoverMovement()", u.id);
+#endif
 		auto takeCover = UnitAIHelper::getTakeCoverMovement(state, u);
 		if (takeCover)
 		{
 			return std::make_tuple(AIDecision(nullptr, takeCover), 0.0f, 0);
 		}
 
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+		LogWarning("VANILLA AI %s: getKneelMovement()", u.id);
+#endif
 		auto kneel = UnitAIHelper::getKneelMovement(state, u);
 		if (kneel)
 		{
@@ -639,8 +700,9 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkRed(GameState &state
 
 AIDecision UnitAIVanilla::thinkInternal(GameState &state, BattleUnit &u)
 {
-	static const Vec3<int> NONE = {0, 0, 0};
-
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+	LogWarning("VANILLA AI %s: thinkInternal()", u.id);
+#endif
 	switch (u.getAIType())
 	{
 		case AIType::None:
@@ -696,6 +758,9 @@ AIDecision UnitAIVanilla::thinkInternal(GameState &state, BattleUnit &u)
 	// 1: Decision is never re-thought if currently throwing
 	if (!u.missions.empty() && u.missions.front()->type == BattleUnitMission::Type::ThrowItem)
 	{
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+		LogWarning("VANILLA AI %s: RETHINK PRENVENTED", u.id);
+#endif
 		return {};
 	}
 
@@ -705,21 +770,30 @@ AIDecision UnitAIVanilla::thinkInternal(GameState &state, BattleUnit &u)
 	// Conditions that require re-thinking:
 
 	bool reThink =
-	    // Timer ran out
+	    // 1: Timer ran out
 	    (ticksUntilReThink > 0 && ticksLastThink + ticksUntilReThink <= state.gameTime.getTicks())
-	    // We just spotted a new enemy and we have no timer
-	    || (!u.visibleEnemies.empty() && !enemySpottedPrevious && ticksUntilReThink == 0)
-	    // We were attacked and we are not on a mission to get in range
-	    || (attackerPosition != NONE &&
+	    // 2: We just spotted a new enemy and we have no timer
+	    || (flagEnemySpotted && ticksUntilReThink == 0)
+	    // 3: We were attacked and we are not on a mission to get in range
+	    || (flagLastAttackerPosition != NONE &&
 	        (!lastDecision.movement || lastDecision.movement->type != AIMovement::Type::GetInRange))
-	    // We have enemies in sight, we are not attacking and we are not carrying out a decision
-	    || (!u.visibleEnemies.empty() && !u.isAttacking() && lastDecision.isEmpty());
+	    // 4: We have enemies in sight, we are not attacking and we are not carrying out a decision
+	    || (!u.visibleEnemies.empty() && !u.isAttacking() && lastDecision.isEmpty())
+	    // 5: We have no enemies in sight, but had one before, and we're not getting in range or
+	    // retreating
+	    ||
+	    (u.visibleEnemies.empty() && flagLastSeenPosition != NONE &&
+	     (!lastDecision.movement || (lastDecision.movement->type != AIMovement::Type::GetInRange &&
+	                                 lastDecision.movement->type != AIMovement::Type::Retreat)));
 
 	// Note: if no enemies are in sight, and we're idle, we will do nothing.
 	// This state is handled by tactical AI
 
 	if (!reThink)
 	{
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+		LogWarning("VANILLA AI %s: RETHINK DENIED", u.id);
+#endif
 		return lastDecision;
 	}
 
@@ -727,11 +801,18 @@ AIDecision UnitAIVanilla::thinkInternal(GameState &state, BattleUnit &u)
 	                                                                    : thinkRed(state, u);
 	auto decision = std::get<0>(result);
 	lastDecision = decision;
+	clearFlags(state, u);
 
 	if (decision.isEmpty())
 	{
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+		LogWarning("VANILLA AI %s: RETHINK EMPTY", u.id);
+#endif
 		return {};
 	}
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+	LogWarning("VANILLA AI %s: RETHINK SUCCESS", u.id);
+#endif
 
 	ticksLastThink = state.gameTime.getTicks();
 	ticksUntilReThink = std::get<2>(result);
@@ -749,6 +830,11 @@ std::tuple<AIDecision, bool> UnitAIVanilla::think(GameState &state, BattleUnit &
 		return NULLTUPLE2;
 	}
 
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+	LogWarning("VANILLA AI %s: think()", u.id);
+#endif
+
+	raiseFlags(state, u);
 	auto decision = thinkInternal(state, u);
 	routine(state, u);
 
@@ -766,8 +852,6 @@ std::tuple<AIDecision, bool> UnitAIVanilla::think(GameState &state, BattleUnit &
 
 void UnitAIVanilla::routine(GameState &state, BattleUnit &u)
 {
-	static const Vec3<int> NONE = {0, 0, 0};
-
 	// Reload all guns
 	for (auto &e : u.agent->equipment)
 	{
@@ -794,7 +878,7 @@ void UnitAIVanilla::routine(GameState &state, BattleUnit &u)
 		int maxDamage = 0;
 		for (auto &e : u.agent->equipment)
 		{
-			if (!e->canFire())
+			if (!e->canFire(state))
 			{
 				continue;
 			}
@@ -813,20 +897,19 @@ void UnitAIVanilla::routine(GameState &state, BattleUnit &u)
 	}
 
 	// AI preferences
-	u.fire_aiming_mode = WeaponAimingMode::Snap;
-	u.fire_permission_mode = BattleUnit::FirePermissionMode::AtWill;
+	u.setWeaponAimingMode(WeaponAimingMode::Snap);
+	u.setFirePermissionMode(BattleUnit::FirePermissionMode::AtWill);
 	if (state.current_battle->mode == Battle::Mode::TurnBased)
 	{
 		// Ensure at least half of move is available for moving
 		u.setReserveKneelMode(KneelingMode::Kneeling);
-		u.setReserveShotMode(ReserveShotMode::Aimed);
+		u.setReserveShotMode(state, ReserveShotMode::Aimed);
 		int kneelCost = u.reserve_kneel_mode == KneelingMode::None
 		                    ? 0
-		                    : BattleUnitMission::getBodyStateChangeCost(u, BodyState::Standing,
-		                                                                BodyState::Kneeling);
+		                    : u.getBodyStateChangeCost(BodyState::Standing, BodyState::Kneeling);
 		if (u.reserveShotCost + kneelCost > u.initialTU / 2)
 		{
-			u.setReserveShotMode(ReserveShotMode::Snap);
+			u.setReserveShotMode(state, ReserveShotMode::Snap);
 		}
 		if (u.reserveShotCost + kneelCost > u.initialTU / 2)
 		{
@@ -843,11 +926,55 @@ void UnitAIVanilla::routine(GameState &state, BattleUnit &u)
 	}
 }
 
-void UnitAIVanilla::reset(GameState &state, BattleUnit &)
+void UnitAIVanilla::raiseFlags(GameState &state, BattleUnit &u)
+{
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+	LogWarning("VANILLA AI %s: raiseFlags()", u.id);
+#endif
+	if (!u.visibleEnemies.empty() && !enemySpottedPrevious)
+	{
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+		LogWarning("VANILLA AI %s: RAISED ENEMY SPOTTED", u.id);
+#endif
+		flagEnemySpotted = enemySpotted;
+	}
+	if (lastSeenEnemyPosition != NONE)
+	{
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+		LogWarning("VANILLA AI %s: RAISED LAST SEEN", u.id);
+#endif
+		flagLastSeenPosition = lastSeenEnemyPosition;
+	}
+	if (attackerPosition != NONE)
+	{
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+		LogWarning("VANILLA AI %s: RAISED LAST ATTACKER", u.id);
+#endif
+		flagLastAttackerPosition = attackerPosition;
+	}
+}
+
+void UnitAIVanilla::clearFlags(GameState &state, BattleUnit &u)
+{
+#ifdef VANILLA_AI_DEBUG_OUTPUT
+	LogWarning("VANILLA AI %s: clearFlags()", u.id);
+#endif
+	flagEnemySpotted = false;
+	flagLastSeenPosition = NONE;
+	// Enemy went MIA since we last re-thinked properly
+	flagLastAttackerPosition = NONE;
+}
+
+void UnitAIVanilla::reset(GameState &state, BattleUnit &u)
 {
 	lastDecision = {};
 	ticksLastThink = state.gameTime.getTicks();
 	ticksUntilReThink = 0;
+	attackerPosition = NONE;
+	enemySpottedPrevious = false;
+	enemySpotted = false;
+	lastSeenEnemyPosition = NONE;
+	clearFlags(state, u);
 }
 
 // void UnitAIVanilla::reportExecuted(AIAction &action)

@@ -25,7 +25,7 @@ namespace OpenApoc
 {
 
 MapSelector::MapSelector(sp<GameState> state, Skirmish &skirmish)
-    : Stage(), skirmish(skirmish), menuform(ui().getForm("mapselector"))
+    : Stage(), menuform(ui().getForm("mapselector")), skirmish(skirmish)
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 

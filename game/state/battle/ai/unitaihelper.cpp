@@ -43,7 +43,7 @@ sp<AIMovement> UnitAIHelper::getFallbackMovement(GameState &state, BattleUnit &u
 	float closestDistance = FLT_MAX;
 	for (auto &unit : state.current_battle->units)
 	{
-		if (unit.second->owner != u.owner || !unit.second->isConscious())
+		if (unit.second->owner != u.owner || !unit.second->isConscious() || unit.first == u.id)
 		{
 			continue;
 		}

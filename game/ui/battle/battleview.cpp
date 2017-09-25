@@ -17,6 +17,7 @@
 #include "framework/keycodes.h"
 #include "framework/palette.h"
 #include "framework/renderer.h"
+#include "framework/sound.h"
 #include "framework/trace.h"
 #include "game/state/aequipment.h"
 #include "game/state/battle/ai/aitype.h"
@@ -27,6 +28,7 @@
 #include "game/state/battle/battlemappart_type.h"
 #include "game/state/battle/battlescanner.h"
 #include "game/state/battle/battleunit.h"
+#include "game/state/city/projectile.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/message.h"
@@ -96,16 +98,16 @@ BattleView::BattleView(sp<GameState> gameState)
 		newPal->setColour(255 - 4, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
 		                                  (colorCurrent * 16 * -1 + 255 * 5) / 8));
 		// Red color, for enemy indicators, pulsates from (3/8r 0g 0b) to (8/8r 0g 0b)
-		newPal->setColour(255 - 0, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
-		// Blue color, for misc. indicators, pulsates from (0r 3/8g 3/8b) to (0r 8/8g 8/8b)
-		newPal->setColour(255 - 2, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
-		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8));
+		newPal->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
+		// Yellow color, for owned indicators, pulsates from (3/8r 3/8g 0b) to (8/8r 8/8g 0b)
+		newPal->setColour(255 - 2, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8,
+		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8, 0));
 		// Pink color, for neutral indicators, pulsates from (3/8r 0g 3/8b) to (8/8r 0g 8/8b)
 		newPal->setColour(255 - 1, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0,
 		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8));
-		// Yellow color, for owned indicators, pulsates from (3/8r 3/8g 0b) to (8/8r 8/8g 0b)
-		newPal->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8,
-		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8, 0));
+		// Blue color, for misc. indicators, pulsates from (0r 3/8g 3/8b) to (0r 8/8g 8/8b)
+		newPal->setColour(255 - 0, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
+		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8));
 
 		modPalette.push_back(newPal);
 	}
@@ -423,17 +425,17 @@ BattleView::BattleView(sp<GameState> gameState)
 	resume();
 
 	baseForm->findControl("BUTTON_FOLLOW_AGENT")
-	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
+	    ->addCallback(FormEventType::CheckBoxChange, [this](FormsEvent *e) {
 		    this->followAgent =
 		        std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy)->isChecked();
 		});
 	baseForm->findControl("BUTTON_TOGGLE_STRATMAP")
-	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
+	    ->addCallback(FormEventType::CheckBoxChange, [this](FormsEvent *e) {
 		    bool strategy = std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy)->isChecked();
 		    this->setViewMode(strategy ? TileViewMode::Strategy : TileViewMode::Isometric);
 		});
 	baseForm->findControl("BUTTON_LAYERING")
-	    ->addCallback(FormEventType::TriStateBoxChange, [this](Event *e) {
+	    ->addCallback(FormEventType::TriStateBoxChange, [this](FormsEvent *e) {
 		    int state = std::dynamic_pointer_cast<TriStateBox>(e->forms().RaisedBy)->getState();
 		    switch (state)
 		    {
@@ -464,30 +466,30 @@ BattleView::BattleView(sp<GameState> gameState)
 		    {
 			    if (at_will)
 			    {
-				    u->fire_permission_mode = BattleUnit::FirePermissionMode::CeaseFire;
+				    u->setFirePermissionMode(BattleUnit::FirePermissionMode::CeaseFire);
 			    }
 			    else
 			    {
-				    u->fire_permission_mode = BattleUnit::FirePermissionMode::AtWill;
+				    u->setFirePermissionMode(BattleUnit::FirePermissionMode::AtWill);
 			    }
 		    }
 		});
 	baseForm->findControl("BUTTON_AIMED")->addCallback(FormEventType::MouseClick, [this](Event *) {
 		for (auto &u : this->battle.battleViewSelectedUnits)
 		{
-			u->fire_aiming_mode = WeaponAimingMode::Aimed;
+			u->setWeaponAimingMode(WeaponAimingMode::Aimed);
 		}
 	});
 	baseForm->findControl("BUTTON_SNAP")->addCallback(FormEventType::MouseClick, [this](Event *) {
 		for (auto &u : this->battle.battleViewSelectedUnits)
 		{
-			u->fire_aiming_mode = WeaponAimingMode::Snap;
+			u->setWeaponAimingMode(WeaponAimingMode::Snap);
 		}
 	});
 	baseForm->findControl("BUTTON_AUTO")->addCallback(FormEventType::MouseClick, [this](Event *) {
 		for (auto &u : this->battle.battleViewSelectedUnits)
 		{
-			u->fire_aiming_mode = WeaponAimingMode::Auto;
+			u->setWeaponAimingMode(WeaponAimingMode::Auto);
 		}
 	});
 	baseForm->findControl("BUTTON_KNEEL")->addCallback(FormEventType::MouseClick, [this](Event *) {
@@ -505,11 +507,11 @@ BattleView::BattleView(sp<GameState> gameState)
 		{
 			if (not_kneeling)
 			{
-				u->kneeling_mode = KneelingMode::Kneeling;
+				u->setKneelingMode(KneelingMode::Kneeling);
 			}
 			else
 			{
-				u->kneeling_mode = KneelingMode::None;
+				u->setKneelingMode(KneelingMode::None);
 			}
 		}
 	});
@@ -535,20 +537,20 @@ BattleView::BattleView(sp<GameState> gameState)
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
 		    for (auto &u : this->battle.battleViewSelectedUnits)
 		    {
-			    u->behavior_mode = BattleUnit::BehaviorMode::Evasive;
+			    u->setBehaviorMode(BattleUnit::BehaviorMode::Evasive);
 		    }
 		});
 	baseForm->findControl("BUTTON_NORMAL")->addCallback(FormEventType::MouseClick, [this](Event *) {
 		for (auto &u : this->battle.battleViewSelectedUnits)
 		{
-			u->behavior_mode = BattleUnit::BehaviorMode::Normal;
+			u->setBehaviorMode(BattleUnit::BehaviorMode::Normal);
 		}
 	});
 	baseForm->findControl("BUTTON_AGGRESSIVE")
 	    ->addCallback(FormEventType::MouseClick, [this](Event *) {
 		    for (auto &u : this->battle.battleViewSelectedUnits)
 		    {
-			    u->behavior_mode = BattleUnit::BehaviorMode::Aggressive;
+			    u->setBehaviorMode(BattleUnit::BehaviorMode::Aggressive);
 		    }
 		});
 
@@ -564,7 +566,8 @@ BattleView::BattleView(sp<GameState> gameState)
 		    }
 		    for (auto &u : this->battle.battleViewSelectedUnits)
 		    {
-			    u->setReserveShotMode(pushed ? ReserveShotMode::None : ReserveShotMode::Aimed);
+			    u->setReserveShotMode(*state,
+			                          pushed ? ReserveShotMode::None : ReserveShotMode::Aimed);
 		    }
 		});
 
@@ -580,7 +583,8 @@ BattleView::BattleView(sp<GameState> gameState)
 		    }
 		    for (auto &u : this->battle.battleViewSelectedUnits)
 		    {
-			    u->setReserveShotMode(pushed ? ReserveShotMode::None : ReserveShotMode::Snap);
+			    u->setReserveShotMode(*state,
+			                          pushed ? ReserveShotMode::None : ReserveShotMode::Snap);
 		    }
 		});
 
@@ -596,7 +600,8 @@ BattleView::BattleView(sp<GameState> gameState)
 		    }
 		    for (auto &u : this->battle.battleViewSelectedUnits)
 		    {
-			    u->setReserveShotMode(pushed ? ReserveShotMode::None : ReserveShotMode::Auto);
+			    u->setReserveShotMode(*state,
+			                          pushed ? ReserveShotMode::None : ReserveShotMode::Auto);
 		    }
 		});
 
@@ -699,22 +704,22 @@ BattleView::BattleView(sp<GameState> gameState)
 		}
 	};
 
-	std::function<void(FormsEvent * e)> clickedSquad1 = [this, clickedSquad](FormsEvent *e) {
+	std::function<void(FormsEvent * e)> clickedSquad1 = [this, clickedSquad](FormsEvent *) {
 		clickedSquad(0);
 	};
-	std::function<void(FormsEvent * e)> clickedSquad2 = [this, clickedSquad](FormsEvent *e) {
+	std::function<void(FormsEvent * e)> clickedSquad2 = [this, clickedSquad](FormsEvent *) {
 		clickedSquad(1);
 	};
-	std::function<void(FormsEvent * e)> clickedSquad3 = [this, clickedSquad](FormsEvent *e) {
+	std::function<void(FormsEvent * e)> clickedSquad3 = [this, clickedSquad](FormsEvent *) {
 		clickedSquad(2);
 	};
-	std::function<void(FormsEvent * e)> clickedSquad4 = [this, clickedSquad](FormsEvent *e) {
+	std::function<void(FormsEvent * e)> clickedSquad4 = [this, clickedSquad](FormsEvent *) {
 		clickedSquad(3);
 	};
-	std::function<void(FormsEvent * e)> clickedSquad5 = [this, clickedSquad](FormsEvent *e) {
+	std::function<void(FormsEvent * e)> clickedSquad5 = [this, clickedSquad](FormsEvent *) {
 		clickedSquad(4);
 	};
-	std::function<void(FormsEvent * e)> clickedSquad6 = [this, clickedSquad](FormsEvent *e) {
+	std::function<void(FormsEvent * e)> clickedSquad6 = [this, clickedSquad](FormsEvent *) {
 		clickedSquad(5);
 	};
 	baseForm->findControlTyped<Graphic>("SQUAD_1_OVERLAY")
@@ -759,17 +764,17 @@ BattleView::BattleView(sp<GameState> gameState)
 		}
 	};
 	std::function<void(FormsEvent * e)> clickedUnitPortrait1 =
-	    [this, clickedUnitPortrait](FormsEvent *e) { clickedUnitPortrait(0); };
+	    [this, clickedUnitPortrait](FormsEvent *) { clickedUnitPortrait(0); };
 	std::function<void(FormsEvent * e)> clickedUnitPortrait2 =
-	    [this, clickedUnitPortrait](FormsEvent *e) { clickedUnitPortrait(1); };
+	    [this, clickedUnitPortrait](FormsEvent *) { clickedUnitPortrait(1); };
 	std::function<void(FormsEvent * e)> clickedUnitPortrait3 =
-	    [this, clickedUnitPortrait](FormsEvent *e) { clickedUnitPortrait(2); };
+	    [this, clickedUnitPortrait](FormsEvent *) { clickedUnitPortrait(2); };
 	std::function<void(FormsEvent * e)> clickedUnitPortrait4 =
-	    [this, clickedUnitPortrait](FormsEvent *e) { clickedUnitPortrait(3); };
+	    [this, clickedUnitPortrait](FormsEvent *) { clickedUnitPortrait(3); };
 	std::function<void(FormsEvent * e)> clickedUnitPortrait5 =
-	    [this, clickedUnitPortrait](FormsEvent *e) { clickedUnitPortrait(4); };
+	    [this, clickedUnitPortrait](FormsEvent *) { clickedUnitPortrait(4); };
 	std::function<void(FormsEvent * e)> clickedUnitPortrait6 =
-	    [this, clickedUnitPortrait](FormsEvent *e) { clickedUnitPortrait(5); };
+	    [this, clickedUnitPortrait](FormsEvent *) { clickedUnitPortrait(5); };
 	baseForm->findControlTyped<Graphic>("UNIT_1")->addCallback(FormEventType::MouseClick,
 	                                                           clickedUnitPortrait1);
 	baseForm->findControlTyped<Graphic>("UNIT_2")->addCallback(FormEventType::MouseClick,
@@ -801,17 +806,17 @@ BattleView::BattleView(sp<GameState> gameState)
 		this->zoomAt((*it)->position);
 	};
 	std::function<void(FormsEvent * e)> clickedUnitHostiles1 =
-	    [this, clickedUnitHostiles](FormsEvent *e) { clickedUnitHostiles(0); };
+	    [this, clickedUnitHostiles](FormsEvent *) { clickedUnitHostiles(0); };
 	std::function<void(FormsEvent * e)> clickedUnitHostiles2 =
-	    [this, clickedUnitHostiles](FormsEvent *e) { clickedUnitHostiles(1); };
+	    [this, clickedUnitHostiles](FormsEvent *) { clickedUnitHostiles(1); };
 	std::function<void(FormsEvent * e)> clickedUnitHostiles3 =
-	    [this, clickedUnitHostiles](FormsEvent *e) { clickedUnitHostiles(2); };
+	    [this, clickedUnitHostiles](FormsEvent *) { clickedUnitHostiles(2); };
 	std::function<void(FormsEvent * e)> clickedUnitHostiles4 =
-	    [this, clickedUnitHostiles](FormsEvent *e) { clickedUnitHostiles(3); };
+	    [this, clickedUnitHostiles](FormsEvent *) { clickedUnitHostiles(3); };
 	std::function<void(FormsEvent * e)> clickedUnitHostiles5 =
-	    [this, clickedUnitHostiles](FormsEvent *e) { clickedUnitHostiles(4); };
+	    [this, clickedUnitHostiles](FormsEvent *) { clickedUnitHostiles(4); };
 	std::function<void(FormsEvent * e)> clickedUnitHostiles6 =
-	    [this, clickedUnitHostiles](FormsEvent *e) { clickedUnitHostiles(5); };
+	    [this, clickedUnitHostiles](FormsEvent *) { clickedUnitHostiles(5); };
 	baseForm->findControlTyped<Graphic>("UNIT_1_HOSTILES")
 	    ->addCallback(FormEventType::MouseClick, clickedUnitHostiles1);
 	baseForm->findControlTyped<Graphic>("UNIT_2_HOSTILES")
@@ -1049,7 +1054,6 @@ BattleView::BattleView(sp<GameState> gameState)
 		                                                  : EquipmentSlotType::LeftHand);
 
 		int delay = this->primingTab->findControlTyped<ScrollBar>("DELAY_SLIDER")->getValue();
-		LogWarning("Delay %d", delay);
 		int range = this->primingTab->findControlTyped<ScrollBar>("RANGE_SLIDER")->getValue();
 		if (delay == 0 && (item->type->trigger_type != TriggerType::Boomeroid ||
 		                   item->type->trigger_type != TriggerType::Proximity))
@@ -1506,8 +1510,9 @@ void BattleView::update()
 	}
 	while (ticks > 0)
 	{
-		state->update();
-		ticks--;
+		int ticksPerUpdate = UPDATE_EVERY_TICK ? 1 : hideDisplay ? 4 : ticks;
+		state->update(ticksPerUpdate);
+		ticks -= ticksPerUpdate;
 		if (hideDisplay)
 		{
 			if (battle.ticksWithoutSeenAction[battle.currentPlayer] == 0)
@@ -1711,12 +1716,9 @@ void BattleView::update()
 	baseForm->update();
 
 	// If we have 'follow agent' enabled we clobber any other movement in this frame
-	if (followAgent)
+	if (followAgent && !battle.battleViewSelectedUnits.empty())
 	{
-		if (battle.battleViewSelectedUnits.size() > 0)
-		{
-			setScreenCenterTile(battle.battleViewSelectedUnits.front()->tileObject->getPosition());
-		}
+		setScreenCenterTile(battle.battleViewSelectedUnits.front()->tileObject->getPosition());
 	}
 	// Store screen center for serialisation
 	battle.battleViewScreenCenter = centerPos;
@@ -2324,14 +2326,14 @@ void BattleView::updateAttackCost()
 			status = WeaponStatus::FiringBothHands;
 			break;
 		default:
-			// Do nothing
+			status = WeaponStatus::NotFiring;
 			break;
 	}
 	if (status == WeaponStatus::FiringBothHands)
 	{
 		// Right hand has priority
 		auto rhItem = lastSelectedUnit->agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
-		if (rhItem && rhItem->canFire())
+		if (rhItem && rhItem->canFire(*state))
 		{
 			status = WeaponStatus::FiringRightHand;
 		}
@@ -2349,7 +2351,7 @@ void BattleView::updateAttackCost()
 	{
 		calculatedAttackCost = -4;
 	}
-	else if (!weapon->canFire(target))
+	else if (!weapon->canFire(*state, target))
 	{
 		calculatedAttackCost = weapon->type->launcher ? -3 : -2;
 	}
@@ -2366,6 +2368,32 @@ void BattleView::updateSquadIndex(StateRef<BattleUnit> u)
 	{
 		battle.battleViewSquadIndex = u->squadNumber;
 	}
+}
+
+void BattleView::debugVortex()
+{
+	auto vortex = StateRef<AEquipmentType>(state.get(), "AEQUIPMENTTYPE_VORTEX_MINE");
+	state->current_battle->addExplosion(
+	    *state, selectedTilePosition, vortex->explosion_graphic, vortex->damage_type,
+	    vortex->damage, vortex->explosion_depletion_rate, state->current_battle->currentPlayer);
+}
+
+void BattleView::debugShot(Vec3<float> velocity)
+{
+	auto blaster = StateRef<AEquipmentType>(state.get(), "AEQUIPMENTTYPE_DEBUGGER_CANNON");
+	fw().soundBackend->playSample(blaster->fire_sfx, selectedTilePosition);
+	velocity *= blaster->speed * PROJECTILE_VELOCITY_MULTIPLIER;
+	Vec3<float> position = {0.5f, 0.5f, 0.5f};
+	position += selectedTilePosition;
+	auto p = mksp<Projectile>(
+	    blaster->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
+	    StateRef<BattleUnit>(state.get(), state->current_battle->units.begin()->first),
+	    StateRef<BattleUnit>(), position + velocity, position, velocity, blaster->turn_rate,
+	    blaster->ttl * TICKS_MULTIPLIER, blaster->damage, blaster->projectile_delay,
+	    blaster->explosion_depletion_rate, blaster->tail_size, blaster->projectile_sprites,
+	    blaster->impact_sfx, blaster->explosion_graphic, blaster->damage_type);
+	state->current_battle->map->addObjectToMap(p);
+	state->current_battle->projectiles.insert(p);
 }
 
 void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
@@ -2388,8 +2416,8 @@ void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 
 	if (battle.battleViewGroupMove && battle.battleViewSelectedUnits.size() > 1 && !runAway)
 	{
-		Battle::groupMove(*state, battle.battleViewSelectedUnits, target, facingDelta,
-		                  demandGiveWay);
+		battle.groupMove(*state, battle.battleViewSelectedUnits, target, facingDelta,
+		                 demandGiveWay);
 	}
 	else
 	{
@@ -2472,14 +2500,16 @@ void BattleView::orderUse(bool right, bool automatic)
 	auto item = unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
 	                                                  : EquipmentSlotType::LeftHand);
 
-	if (!item)
+	if (!item || !item->canBeUsed(*state))
+	{
 		return;
+	}
 
 	switch (item->type->type)
 	{
 		case AEquipmentType::Type::Weapon:
 			// Weapon has no automatic mode
-			if (!item->canFire() || automatic)
+			if (!item->canFire(*state) || automatic)
 			{
 				break;
 			}
@@ -2855,470 +2885,12 @@ void BattleView::eventOccurred(Event *e)
 			}
 		}
 	}
-
+	// Exclude mouse down events that are over the form
 	if (eventWithin || activeTab->eventIsWithin(e) || baseForm->eventIsWithin(e))
 	{
 		return;
 	}
 
-	if (e->type() == EVENT_KEY_DOWN)
-	{
-		switch (e->keyboard().KeyCode)
-		{
-			case SDLK_RSHIFT:
-				modifierRShift = true;
-				return;
-			case SDLK_LSHIFT:
-				modifierLShift = true;
-				return;
-			case SDLK_RALT:
-				modifierRAlt = true;
-				return;
-			case SDLK_LALT:
-				modifierLAlt = true;
-				return;
-			case SDLK_RCTRL:
-				modifierRCtrl = true;
-				return;
-			case SDLK_LCTRL:
-				modifierLCtrl = true;
-				return;
-			default:
-				break;
-		}
-		if (debugHotkeyMode)
-		{
-			switch (e->keyboard().KeyCode)
-			{
-				// Force re-link supports
-				case SDLK_f:
-				{
-					auto t = getSelectedTilePosition();
-					auto &map = *battle.map;
-					auto tile = map.getTile(t);
-					for (auto &o : tile->ownedObjects)
-					{
-						if (o->getType() == TileObject::Type::Ground ||
-						    o->getType() == TileObject::Type::Feature ||
-						    o->getType() == TileObject::Type::LeftWall ||
-						    o->getType() == TileObject::Type::RightWall)
-						{
-							auto mp =
-							    std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
-							auto set = mksp<std::set<BattleMapPart *>>();
-							set->insert(mp.get());
-							mp->queueCollapse();
-							BattleMapPart::attemptReLinkSupports(set);
-						}
-					}
-					return;
-				}
-				// Reveal map
-				case SDLK_r:
-				{
-					revealWholeMap = !revealWholeMap;
-					return;
-				}
-				//  Reset ai movement order
-				case SDLK_q:
-				{
-					for (auto &u : battle.units)
-					{
-						if (u.second->isDead())
-						{
-							continue;
-						}
-
-						if (u.second->tileObject->getOwningTile()->position == selectedTilePosition)
-						{
-							auto movement = AIMovement();
-							movement.type = AIMovement::Type::ChangeStance;
-							movement.movementMode = MovementMode::Prone;
-							u.second->executeAIMovement(*state, movement);
-						}
-					}
-					return;
-				}
-				// Stun units
-				case SDLK_s:
-				{
-					bool inverse = modifierLShift || modifierRShift;
-					bool local = !(modifierLCtrl || modifierRCtrl);
-					for (auto &u : battle.units)
-					{
-						if (u.second->isDead())
-						{
-							continue;
-						}
-
-						if (((local &&
-						      u.second->tileObject->getOwningTile()->position ==
-						          selectedTilePosition) ||
-						     (!local &&
-						      glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
-						          5.0f)) == !inverse)
-						{
-							u.second->applyDamageDirect(*state, 9001, false, BodyPart::Helmet,
-							                            u.second->agent->getHealth() + 4);
-						}
-					}
-					return;
-				}
-				// Retreat units
-				case SDLK_k:
-				{
-					bool inverse = modifierLShift || modifierRShift;
-					bool local = !(modifierLCtrl || modifierRCtrl);
-					for (auto &u : battle.units)
-					{
-						if (u.second->isDead() || u.second->retreated)
-						{
-							continue;
-						}
-
-						if (((local &&
-						      u.second->tileObject->getOwningTile()->position ==
-						          selectedTilePosition) ||
-						     (!local &&
-						      glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
-						          5.0f)) == !inverse)
-						{
-							if (!u.second->retreated)
-							{
-								u.second->retreat(*state);
-							}
-						}
-					}
-					return;
-				}
-				// Panic / Amplify psi
-				case SDLK_p:
-				{
-					if (modifierLShift || modifierRShift)
-					{
-						LogWarning("Psi amplified!");
-						for (auto &u : battle.units)
-						{
-							if (u.second->isDead())
-							{
-								continue;
-							}
-
-							u.second->agent->modified_stats.psi_defence = 0;
-							u.second->agent->modified_stats.psi_attack = 100;
-							u.second->agent->modified_stats.psi_energy = 100;
-						}
-					}
-					else
-					{
-						LogWarning("Panic mode engaged!");
-						for (auto &u : battle.units)
-						{
-							if (u.second->isConscious())
-							{
-								u.second->agent->modified_stats.morale = 25;
-							}
-						}
-					}
-					return;
-				}
-				// Heal everybody
-				case SDLK_h:
-				{
-					LogWarning("Heals for everybody!");
-					for (auto &u : battle.units)
-					{
-						if (u.second->isDead())
-						{
-							continue;
-						}
-						u.second->stunDamage = 0;
-						u.second->agent->modified_stats = u.second->agent->current_stats;
-						u.second->fatalWounds[BodyPart::Body] = 0;
-						u.second->fatalWounds[BodyPart::Helmet] = 0;
-						u.second->fatalWounds[BodyPart::LeftArm] = 0;
-						u.second->fatalWounds[BodyPart::Legs] = 0;
-						u.second->fatalWounds[BodyPart::RightArm] = 0;
-					}
-					return;
-				}
-				// Restore TUs
-				case SDLK_t:
-				{
-					LogWarning("Restoring TU");
-					for (auto &u : battle.units)
-					{
-						if (!u.second->isConscious() ||
-						    u.second->owner != battle.currentActiveOrganisation)
-						{
-							continue;
-						}
-						u.second->agent->modified_stats.time_units = u.second->initialTU;
-					}
-					return;
-				}
-				// End turn TB
-				case SDLK_e:
-					if (battle.mode == Battle::Mode::TurnBased)
-					{
-						battle.interruptUnits.clear();
-						for (auto &u : battle.units)
-						{
-							if (u.second->owner != battle.currentActiveOrganisation ||
-							    !u.second->isConscious())
-							{
-								continue;
-							}
-							u.second->cancelMissions(*state);
-						}
-						battle.endTurn(*state);
-					}
-					return;
-				// Notification toggle
-				case SDLK_n:
-				{
-					DEBUG_DISABLE_NOTIFICATIONS = !DEBUG_DISABLE_NOTIFICATIONS;
-					return;
-				}
-			}
-		}
-		else
-		{
-			switch (e->keyboard().KeyCode)
-			{
-				case SDLK_ESCAPE:
-					if (activeTab != notMyTurnTab)
-					{
-						fw().stageQueueCommand({StageCmd::Command::PUSH,
-						                        mksp<InGameOptions>(state->shared_from_this())});
-					}
-					return;
-				case SDLK_TAB:
-					baseForm->findControl("BUTTON_TOGGLE_STRATMAP")->click();
-					return;
-				case SDLK_PAGEUP:
-					setZLevel(getZLevel() + 1);
-					setSelectedTilePosition({selectedTilePosition.x, selectedTilePosition.y,
-					                         selectedTilePosition.z + 1});
-					updateLayerButtons();
-					return;
-				case SDLK_PAGEDOWN:
-					setZLevel(getZLevel() - 1);
-					setSelectedTilePosition({selectedTilePosition.x, selectedTilePosition.y,
-					                         selectedTilePosition.z - 1});
-					updateLayerButtons();
-					return;
-				case SDLK_SPACE:
-					if (updateSpeed != BattleUpdateSpeed::Pause)
-						setUpdateSpeed(BattleUpdateSpeed::Pause);
-					else
-						setUpdateSpeed(lastSpeed);
-					return;
-				case SDLK_v:
-					baseForm->findControl("BUTTON_LAYERING")->click();
-					return;
-				case SDLK_c:
-					baseForm->findControl("BUTTON_FOLLOW_AGENT")->click();
-					return;
-				case SDLK_F9:
-					baseForm->findControl("BUTTON_EVASIVE")->click();
-					return;
-				case SDLK_F10:
-					baseForm->findControl("BUTTON_NORMAL")->click();
-					return;
-				case SDLK_F11:
-					baseForm->findControl("BUTTON_AGGRESSIVE")->click();
-					return;
-				case SDLK_F2:
-					baseForm->findControl("BUTTON_PRONE")->click();
-					return;
-				case SDLK_F3:
-					baseForm->findControl("BUTTON_WALK")->click();
-					return;
-				case SDLK_F4:
-					baseForm->findControl("BUTTON_RUN")->click();
-					return;
-				case SDLK_F5:
-					baseForm->findControl("BUTTON_CEASE_FIRE")->click();
-					return;
-				case SDLK_F6:
-					baseForm->findControl("BUTTON_AIMED")->click();
-					return;
-				case SDLK_F7:
-					baseForm->findControl("BUTTON_SNAP")->click();
-					return;
-				case SDLK_F8:
-					baseForm->findControl("BUTTON_AUTO")->click();
-					return;
-				case SDLK_BACKSPACE:
-					baseForm->findControl("BUTTON_KNEEL")->click();
-					return;
-				case SDLK_m:
-					baseForm->findControl("BUTTON_SHOW_LOG")->click();
-					return;
-				case SDLK_HOME:
-					baseForm->findControl("BUTTON_ZOOM_EVENT")->click();
-					return;
-				case SDLK_1:
-					if (modifierLShift || modifierRShift)
-					{
-						baseForm->findControl("UNIT_1")->click();
-					}
-					else if (modifierLAlt || modifierRAlt)
-					{
-						baseForm->findControl("UNIT_1_HOSTILES")->click();
-					}
-					else
-					{
-						baseForm->findControl("SQUAD_1_OVERLAY")->click();
-					}
-					return;
-				case SDLK_2:
-					if (modifierLShift || modifierRShift)
-					{
-						baseForm->findControl("UNIT_2")->click();
-					}
-					else if (modifierLAlt || modifierRAlt)
-					{
-						baseForm->findControl("UNIT_2_HOSTILES")->click();
-					}
-					else
-					{
-						baseForm->findControl("SQUAD_2_OVERLAY")->click();
-					}
-					return;
-				case SDLK_3:
-					if (modifierLShift || modifierRShift)
-					{
-						baseForm->findControl("UNIT_3")->click();
-					}
-					else if (modifierLAlt || modifierRAlt)
-					{
-						baseForm->findControl("UNIT_3_HOSTILES")->click();
-					}
-					else
-					{
-						baseForm->findControl("SQUAD_3_OVERLAY")->click();
-					}
-					return;
-				case SDLK_4:
-					if (modifierLShift || modifierRShift)
-					{
-						baseForm->findControl("UNIT_4")->click();
-					}
-					else if (modifierLAlt || modifierRAlt)
-					{
-						baseForm->findControl("UNIT_4_HOSTILES")->click();
-					}
-					else
-					{
-						baseForm->findControl("SQUAD_4_OVERLAY")->click();
-					}
-					return;
-				case SDLK_5:
-					if (modifierLShift || modifierRShift)
-					{
-						baseForm->findControl("UNIT_5")->click();
-					}
-					else if (modifierLAlt || modifierRAlt)
-					{
-						baseForm->findControl("UNIT_5_HOSTILES")->click();
-					}
-					else
-					{
-						baseForm->findControl("SQUAD_5_OVERLAY")->click();
-					}
-					return;
-				case SDLK_6:
-					if (modifierLShift || modifierRShift)
-					{
-						baseForm->findControl("UNIT_6")->click();
-					}
-					else if (modifierLAlt || modifierRAlt)
-					{
-						baseForm->findControl("UNIT_6_HOSTILES")->click();
-					}
-					else
-					{
-						baseForm->findControl("SQUAD_6_OVERLAY")->click();
-					}
-					return;
-				case SDLK_RETURN:
-					if (activeTab == mainTab)
-					{
-						activeTab->findControl("BUTTON_INVENTORY")->click();
-					}
-					return;
-				case SDLK_LEFTBRACKET:
-					if (activeTab == mainTab)
-					{
-						activeTab->findControl("BUTTON_LEFT_HAND_THROW")->click();
-					}
-					return;
-				case SDLK_RIGHTBRACKET:
-					if (activeTab == mainTab)
-					{
-						activeTab->findControl("BUTTON_RIGHT_HAND_THROW")->click();
-					}
-					return;
-				case SDLK_BACKSLASH:
-					if (activeTab == mainTab)
-					{
-						activeTab->findControl("BUTTON_LEFT_HAND_DROP")->click();
-					}
-					return;
-				case SDLK_QUOTE:
-					if (activeTab == mainTab)
-					{
-						activeTab->findControl("BUTTON_RIGHT_HAND_DROP")->click();
-					}
-					return;
-				case SDLK_y:
-					if (activeTab == primingTab)
-					{
-						activeTab->findControl("BUTTON_OK")->click();
-					}
-					return;
-				case SDLK_n:
-					if (activeTab == primingTab)
-					{
-						activeTab->findControl("BUTTON_CANCEL")->click();
-					}
-					return;
-				case SDLK_e:
-					if (battle.mode == Battle::Mode::TurnBased)
-					{
-						baseForm->findControl("BUTTON_ENDTURN")->click();
-					}
-					return;
-				case SDLK_s:
-					if (activeTab == notMyTurnTab)
-					{
-						return;
-					}
-					fw().stageQueueCommand(
-					    {StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Save, state)});
-					return;
-				case SDLK_l:
-					if (activeTab == notMyTurnTab)
-					{
-						return;
-					}
-					fw().stageQueueCommand(
-					    {StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Load, state)});
-					return;
-				case SDLK_j:
-				{
-					if (!battle.battleViewSelectedUnits.empty())
-					{
-						auto t = getSelectedTilePosition();
-						orderJump(t);
-					}
-					return;
-				}
-			}
-		}
-	}
 	if (e->type() == EVENT_MOUSE_MOVE)
 	{
 		Vec2<float> screenOffset = {getScreenOffset().x, getScreenOffset().y};
@@ -3329,103 +2901,586 @@ void BattleView::eventOccurred(Event *e)
 		    (float)getZLevel() - 1.0f));
 		return;
 	}
-	if (e->type() == EVENT_KEY_UP)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		switch (e->keyboard().KeyCode)
+		if (handleKeyDown(e))
 		{
-			case SDLK_RSHIFT:
-				modifierRShift = false;
-				return;
-			case SDLK_LSHIFT:
-				modifierLShift = false;
-				return;
-			case SDLK_RALT:
-				modifierRAlt = false;
-				return;
-			case SDLK_LALT:
-				modifierLAlt = false;
-				return;
-			case SDLK_RCTRL:
-				modifierRCtrl = false;
-				return;
-			case SDLK_LCTRL:
-				modifierLCtrl = false;
-				return;
+			return;
 		}
 	}
-	// Exclude mouse down events that are over the form
+	if (e->type() == EVENT_KEY_UP)
+	{
+		if (handleKeyUp(e))
+		{
+			return;
+		}
+	}
 	if (e->type() == EVENT_MOUSE_DOWN)
 	{
-		handleMouseDown(e);
-		return;
+		if (handleMouseDown(e))
+		{
+			return;
+		}
 	}
 	if (e->type() == EVENT_GAME_STATE)
 	{
-		auto gameEvent = dynamic_cast<GameEvent *>(e);
-		if (!gameEvent)
+		if (handleGameStateEvent(e))
 		{
-			LogError("Invalid game state event");
 			return;
 		}
-		if (!gameEvent->message().empty())
-		{
-			state->logEvent(gameEvent);
-			baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
-			if (battle.mode == Battle::Mode::RealTime && !DEBUG_DISABLE_NOTIFICATIONS)
-			{
-				fw().stageQueueCommand(
-				    {StageCmd::Command::PUSH,
-				     mksp<NotificationScreen>(state, *this, gameEvent->message())});
-			}
-		}
-		switch (gameEvent->type)
-		{
-			case GameEventType::ZoomView:
-				if (GameLocationEvent *gle = dynamic_cast<GameLocationEvent *>(gameEvent))
-				{
-					zoomAt(gle->location);
-				}
-				break;
-			case GameEventType::AgentPsiProbed:
-			{
-				auto gameAgentEvent = dynamic_cast<GameAgentEvent *>(e);
-				fw().stageQueueCommand(
-				    {StageCmd::Command::PUSH, mksp<AEquipScreen>(state, gameAgentEvent->agent)});
-				break;
-			}
-			default:
-				break;
-		}
-		return;
 	}
 	BattleTileView::eventOccurred(e);
 }
 
-void BattleView::handleMouseDown(Event *e)
+bool BattleView::handleKeyDown(Event *e)
+{
+	// Common keys active in both debug and normal mode
+	switch (e->keyboard().KeyCode)
+	{
+		case SDLK_RSHIFT:
+			modifierRShift = true;
+			return true;
+		case SDLK_LSHIFT:
+			modifierLShift = true;
+			return true;
+		case SDLK_RALT:
+			modifierRAlt = true;
+			return true;
+		case SDLK_LALT:
+			modifierLAlt = true;
+			return true;
+		case SDLK_RCTRL:
+			modifierRCtrl = true;
+			return true;
+		case SDLK_LCTRL:
+			modifierLCtrl = true;
+			return true;
+		case SDLK_ESCAPE:
+			if (activeTab != notMyTurnTab)
+			{
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH, mksp<InGameOptions>(state->shared_from_this())});
+			}
+			return true;
+		case SDLK_TAB:
+			baseForm->findControl("BUTTON_TOGGLE_STRATMAP")->click();
+			return true;
+		case SDLK_PAGEUP:
+			setZLevel(getZLevel() + 1);
+			setSelectedTilePosition(
+			    {selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z + 1});
+			updateLayerButtons();
+			return true;
+		case SDLK_PAGEDOWN:
+			setZLevel(getZLevel() - 1);
+			setSelectedTilePosition(
+			    {selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z - 1});
+			updateLayerButtons();
+			return true;
+		case SDLK_SPACE:
+			if (updateSpeed != BattleUpdateSpeed::Pause)
+				setUpdateSpeed(BattleUpdateSpeed::Pause);
+			else
+				setUpdateSpeed(lastSpeed);
+			return true;
+		default:
+			break;
+	}
+	// Debug keys (cheats)
+	if (debugHotkeyMode)
+	{
+		switch (e->keyboard().KeyCode)
+		{
+			// Force re-link supports
+			case SDLK_f:
+			{
+				auto t = getSelectedTilePosition();
+				auto &map = *battle.map;
+				auto tile = map.getTile(t);
+				for (auto &o : tile->ownedObjects)
+				{
+					if (o->getType() == TileObject::Type::Ground ||
+					    o->getType() == TileObject::Type::Feature ||
+					    o->getType() == TileObject::Type::LeftWall ||
+					    o->getType() == TileObject::Type::RightWall)
+					{
+						auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
+						auto set = mksp<std::set<BattleMapPart *>>();
+						set->insert(mp.get());
+						mp->queueCollapse();
+						BattleMapPart::attemptReLinkSupports(set);
+					}
+				}
+				return true;
+			}
+			// Reveal map
+			case SDLK_r:
+			{
+				revealWholeMap = !revealWholeMap;
+				return true;
+			}
+			//  Reset ai movement order
+			case SDLK_q:
+			{
+				for (auto &u : battle.units)
+				{
+					if (u.second->isDead())
+					{
+						continue;
+					}
+
+					if (u.second->tileObject->getOwningTile()->position == selectedTilePosition)
+					{
+						auto movement = AIMovement();
+						movement.type = AIMovement::Type::ChangeStance;
+						movement.movementMode = MovementMode::Prone;
+						u.second->executeAIMovement(*state, movement);
+					}
+				}
+				return true;
+			}
+			// Stun units
+			case SDLK_s:
+			{
+				bool inverse = modifierLShift || modifierRShift;
+				bool local = !(modifierLCtrl || modifierRCtrl);
+				for (auto &u : battle.units)
+				{
+					if (u.second->isDead())
+					{
+						continue;
+					}
+
+					if (((local &&
+					      u.second->tileObject->getOwningTile()->position ==
+					          selectedTilePosition) ||
+					     (!local &&
+					      glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
+					          5.0f)) == !inverse)
+					{
+						u.second->applyDamageDirect(*state, 9001, false, BodyPart::Helmet,
+						                            u.second->agent->getHealth() + 4);
+					}
+				}
+				return true;
+			}
+			// Retreat units
+			case SDLK_k:
+			{
+				bool inverse = modifierLShift || modifierRShift;
+				bool local = !(modifierLCtrl || modifierRCtrl);
+				for (auto &u : battle.units)
+				{
+					if (u.second->isDead() || u.second->retreated)
+					{
+						continue;
+					}
+
+					if (((local &&
+					      u.second->tileObject->getOwningTile()->position ==
+					          selectedTilePosition) ||
+					     (!local &&
+					      glm::length(u.second->position - (Vec3<float>)selectedTilePosition) <
+					          5.0f)) == !inverse)
+					{
+						if (!u.second->retreated)
+						{
+							u.second->retreat(*state);
+						}
+					}
+				}
+				return true;
+			}
+			// Panic / Amplify psi
+			case SDLK_p:
+			{
+				if (modifierLShift || modifierRShift)
+				{
+					LogWarning("Psi amplified!");
+					for (auto &u : battle.units)
+					{
+						if (u.second->isDead())
+						{
+							continue;
+						}
+
+						u.second->agent->modified_stats.psi_defence = 0;
+						u.second->agent->modified_stats.psi_attack = 100;
+						u.second->agent->modified_stats.psi_energy = 100;
+					}
+				}
+				else
+				{
+					LogWarning("Panic mode engaged!");
+					for (auto &u : battle.units)
+					{
+						if (u.second->isConscious())
+						{
+							u.second->agent->modified_stats.morale = 25;
+						}
+					}
+				}
+				return true;
+			}
+			// Heal everybody
+			case SDLK_h:
+			{
+				LogWarning("Heals for everybody!");
+				for (auto &u : battle.units)
+				{
+					if (u.second->isDead())
+					{
+						continue;
+					}
+					u.second->stunDamage = 0;
+					u.second->agent->modified_stats = u.second->agent->current_stats;
+					u.second->fatalWounds[BodyPart::Body] = 0;
+					u.second->fatalWounds[BodyPart::Helmet] = 0;
+					u.second->fatalWounds[BodyPart::LeftArm] = 0;
+					u.second->fatalWounds[BodyPart::Legs] = 0;
+					u.second->fatalWounds[BodyPart::RightArm] = 0;
+				}
+				return true;
+			}
+			// Restore TUs
+			case SDLK_t:
+			{
+				LogWarning("Restoring TU");
+				for (auto &u : battle.units)
+				{
+					if (!u.second->isConscious() ||
+					    u.second->owner != battle.currentActiveOrganisation)
+					{
+						continue;
+					}
+					u.second->agent->modified_stats.time_units = u.second->initialTU;
+				}
+				return true;
+			}
+			// End turn TB
+			case SDLK_e:
+				if (battle.mode == Battle::Mode::TurnBased)
+				{
+					battle.interruptUnits.clear();
+					for (auto &u : battle.units)
+					{
+						if (u.second->owner != battle.currentActiveOrganisation ||
+						    !u.second->isConscious())
+						{
+							continue;
+						}
+						u.second->cancelMissions(*state);
+					}
+					battle.endTurn(*state);
+				}
+				return true;
+			// Notification toggle
+			case SDLK_n:
+			{
+				DEBUG_DISABLE_NOTIFICATIONS = !DEBUG_DISABLE_NOTIFICATIONS;
+				return true;
+			}
+			// Blow debug vortex
+			case SDLK_KP_0:
+				debugVortex();
+				return true;
+			// Fire debug shot
+			case SDLK_KP_1:
+				debugShot({0, 1, 0});
+				return true;
+			case SDLK_KP_2:
+				debugShot({1, 1, 0});
+				return true;
+			case SDLK_KP_3:
+				debugShot({1, 0, 0});
+				return true;
+			case SDLK_KP_6:
+				debugShot({1, -1, 0});
+				return true;
+			case SDLK_KP_9:
+				debugShot({0, -1, 0});
+				return true;
+			case SDLK_KP_8:
+				debugShot({-1, -1, 0});
+				return true;
+			case SDLK_KP_7:
+				debugShot({-1, 0, 0});
+				return true;
+			case SDLK_KP_4:
+				debugShot({-1, 1, 0});
+				return true;
+			case SDLK_KP_5:
+				debugShot({0, 0, -1});
+				return true;
+			default:
+				break;
+		}
+	}
+	// Normal game hotkeys
+	else
+	{
+		switch (e->keyboard().KeyCode)
+		{
+			case SDLK_v:
+				baseForm->findControl("BUTTON_LAYERING")->click();
+				return true;
+			case SDLK_c:
+				baseForm->findControl("BUTTON_FOLLOW_AGENT")->click();
+				return true;
+			case SDLK_F9:
+				baseForm->findControl("BUTTON_EVASIVE")->click();
+				return true;
+			case SDLK_F10:
+				baseForm->findControl("BUTTON_NORMAL")->click();
+				return true;
+			case SDLK_F11:
+				baseForm->findControl("BUTTON_AGGRESSIVE")->click();
+				return true;
+			case SDLK_F2:
+				baseForm->findControl("BUTTON_PRONE")->click();
+				return true;
+			case SDLK_F3:
+				baseForm->findControl("BUTTON_WALK")->click();
+				return true;
+			case SDLK_F4:
+				baseForm->findControl("BUTTON_RUN")->click();
+				return true;
+			case SDLK_F5:
+				baseForm->findControl("BUTTON_CEASE_FIRE")->click();
+				return true;
+			case SDLK_F6:
+				baseForm->findControl("BUTTON_AIMED")->click();
+				return true;
+			case SDLK_F7:
+				baseForm->findControl("BUTTON_SNAP")->click();
+				return true;
+			case SDLK_F8:
+				baseForm->findControl("BUTTON_AUTO")->click();
+				return true;
+			case SDLK_BACKSPACE:
+				baseForm->findControl("BUTTON_KNEEL")->click();
+				return true;
+			case SDLK_m:
+				baseForm->findControl("BUTTON_SHOW_LOG")->click();
+				return true;
+			case SDLK_HOME:
+				baseForm->findControl("BUTTON_ZOOM_EVENT")->click();
+				return true;
+			case SDLK_1:
+				if (modifierLShift || modifierRShift)
+				{
+					baseForm->findControl("UNIT_1")->click();
+				}
+				else if (modifierLAlt || modifierRAlt)
+				{
+					baseForm->findControl("UNIT_1_HOSTILES")->click();
+				}
+				else
+				{
+					baseForm->findControl("SQUAD_1_OVERLAY")->click();
+				}
+				return true;
+			case SDLK_2:
+				if (modifierLShift || modifierRShift)
+				{
+					baseForm->findControl("UNIT_2")->click();
+				}
+				else if (modifierLAlt || modifierRAlt)
+				{
+					baseForm->findControl("UNIT_2_HOSTILES")->click();
+				}
+				else
+				{
+					baseForm->findControl("SQUAD_2_OVERLAY")->click();
+				}
+				return true;
+			case SDLK_3:
+				if (modifierLShift || modifierRShift)
+				{
+					baseForm->findControl("UNIT_3")->click();
+				}
+				else if (modifierLAlt || modifierRAlt)
+				{
+					baseForm->findControl("UNIT_3_HOSTILES")->click();
+				}
+				else
+				{
+					baseForm->findControl("SQUAD_3_OVERLAY")->click();
+				}
+				return true;
+			case SDLK_4:
+				if (modifierLShift || modifierRShift)
+				{
+					baseForm->findControl("UNIT_4")->click();
+				}
+				else if (modifierLAlt || modifierRAlt)
+				{
+					baseForm->findControl("UNIT_4_HOSTILES")->click();
+				}
+				else
+				{
+					baseForm->findControl("SQUAD_4_OVERLAY")->click();
+				}
+				return true;
+			case SDLK_5:
+				if (modifierLShift || modifierRShift)
+				{
+					baseForm->findControl("UNIT_5")->click();
+				}
+				else if (modifierLAlt || modifierRAlt)
+				{
+					baseForm->findControl("UNIT_5_HOSTILES")->click();
+				}
+				else
+				{
+					baseForm->findControl("SQUAD_5_OVERLAY")->click();
+				}
+				return true;
+			case SDLK_6:
+				if (modifierLShift || modifierRShift)
+				{
+					baseForm->findControl("UNIT_6")->click();
+				}
+				else if (modifierLAlt || modifierRAlt)
+				{
+					baseForm->findControl("UNIT_6_HOSTILES")->click();
+				}
+				else
+				{
+					baseForm->findControl("SQUAD_6_OVERLAY")->click();
+				}
+				return true;
+			case SDLK_RETURN:
+				if (activeTab == mainTab)
+				{
+					activeTab->findControl("BUTTON_INVENTORY")->click();
+				}
+				return true;
+			case SDLK_LEFTBRACKET:
+				if (activeTab == mainTab)
+				{
+					activeTab->findControl("BUTTON_LEFT_HAND_THROW")->click();
+				}
+				return true;
+			case SDLK_RIGHTBRACKET:
+				if (activeTab == mainTab)
+				{
+					activeTab->findControl("BUTTON_RIGHT_HAND_THROW")->click();
+				}
+				return true;
+			case SDLK_BACKSLASH:
+				if (activeTab == mainTab)
+				{
+					activeTab->findControl("BUTTON_LEFT_HAND_DROP")->click();
+				}
+				return true;
+			case SDLK_QUOTE:
+				if (activeTab == mainTab)
+				{
+					activeTab->findControl("BUTTON_RIGHT_HAND_DROP")->click();
+				}
+				return true;
+			case SDLK_y:
+				if (activeTab == primingTab)
+				{
+					activeTab->findControl("BUTTON_OK")->click();
+				}
+				return true;
+			case SDLK_n:
+				if (activeTab == primingTab)
+				{
+					activeTab->findControl("BUTTON_CANCEL")->click();
+				}
+				return true;
+			case SDLK_e:
+				if (battle.mode == Battle::Mode::TurnBased)
+				{
+					baseForm->findControl("BUTTON_ENDTURN")->click();
+				}
+				return true;
+			case SDLK_s:
+				if (activeTab == notMyTurnTab)
+				{
+					return true;
+				}
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Save, state)});
+				return true;
+			case SDLK_l:
+				if (activeTab == notMyTurnTab)
+				{
+					return true;
+				}
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Load, state)});
+				return true;
+			case SDLK_j:
+			{
+				if (!battle.battleViewSelectedUnits.empty())
+				{
+					auto t = getSelectedTilePosition();
+					orderJump(t);
+				}
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool BattleView::handleKeyUp(Event *e)
+{
+	switch (e->keyboard().KeyCode)
+	{
+		case SDLK_RSHIFT:
+			modifierRShift = false;
+			return true;
+		case SDLK_LSHIFT:
+			modifierLShift = false;
+			return true;
+		case SDLK_RALT:
+			modifierRAlt = false;
+			return true;
+		case SDLK_LALT:
+			modifierLAlt = false;
+			return true;
+		case SDLK_RCTRL:
+			modifierRCtrl = false;
+			return true;
+		case SDLK_LCTRL:
+			modifierLCtrl = false;
+			return true;
+	}
+	return false;
+}
+
+bool BattleView::handleMouseDown(Event *e)
 {
 	if (activeTab == notMyTurnTab)
 	{
-		return;
+		return true;
 	}
 
-	if (getViewMode() == TileViewMode::Strategy && e->type() == EVENT_MOUSE_DOWN &&
+	if (getViewMode() == TileViewMode::Strategy &&
 	    Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
 	{
 		Vec2<float> screenOffset = {getScreenOffset().x, getScreenOffset().y};
 		auto clickTile =
 		    screenToTileCoords(Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
 		setScreenCenterTile({clickTile.x, clickTile.y});
+		return true;
 	}
-	else if (Event::isPressed(e->mouse().Button, Event::MouseButton::Middle) && debugHotkeyMode)
+	// CHEAT - move unit to mouse
+	if (Event::isPressed(e->mouse().Button, Event::MouseButton::Middle) && debugHotkeyMode)
 	{
-		// CHEAT - move unit to mouse
 		if (!battle.battleViewSelectedUnits.empty())
 		{
 			selectionState = BattleSelectionState::TeleportLeft;
 		}
+		return true;
 	}
-	else if (Event::isPressed(e->mouse().Button, Event::MouseButton::Left) ||
-	         Event::isPressed(e->mouse().Button, Event::MouseButton::Right))
+	if (Event::isPressed(e->mouse().Button, Event::MouseButton::Left) ||
+	    Event::isPressed(e->mouse().Button, Event::MouseButton::Right))
 	{
 		auto buttonPressed = Event::isPressed(e->mouse().Button, Event::MouseButton::Left)
 		                         ? Event::MouseButton::Left
@@ -3884,7 +3939,48 @@ void BattleView::handleMouseDown(Event *e)
 				}
 				break;
 		}
+		return true;
 	}
+	return true;
+}
+
+bool BattleView::handleGameStateEvent(Event *e)
+{
+	auto gameEvent = dynamic_cast<GameEvent *>(e);
+	if (!gameEvent)
+	{
+		LogError("Invalid game state event");
+		return true;
+	}
+	if (!gameEvent->message().empty())
+	{
+		state->logEvent(gameEvent);
+		baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
+		if (battle.mode == Battle::Mode::RealTime && !DEBUG_DISABLE_NOTIFICATIONS)
+		{
+			fw().stageQueueCommand({StageCmd::Command::PUSH,
+			                        mksp<NotificationScreen>(state, *this, gameEvent->message())});
+		}
+	}
+	switch (gameEvent->type)
+	{
+		case GameEventType::ZoomView:
+			if (GameLocationEvent *gle = dynamic_cast<GameLocationEvent *>(gameEvent))
+			{
+				zoomAt(gle->location);
+			}
+			break;
+		case GameEventType::AgentPsiProbed:
+		{
+			auto gameAgentEvent = dynamic_cast<GameAgentEvent *>(e);
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH, mksp<AEquipScreen>(state, gameAgentEvent->agent)});
+			break;
+		}
+		default:
+			break;
+	}
+	return true;
 }
 
 void BattleView::endBattle()
@@ -4397,7 +4493,7 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 	if (e)
 	{
 		a.itemType = e->type;
-		if (a.itemType)
+		if (a.itemType && a.itemType->research_dependency.satisfied())
 		{
 			auto p = e->getPayloadType();
 			if (p)
@@ -4437,22 +4533,6 @@ AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 			                                     u->fire_aiming_mode,
 			                                     a.itemType->type != AEquipmentType::Type::Weapon) /
 			                          2);
-
-			/*
-			// Alexey Andronov (Istrebitel):
-			// I used to believe erf is used when displaying accuracy
-			// I might be wrong but until we make sure it's right, I leave this here
-
-			auto accuracy =
-			    (float)e->getAccuracy(u->current_body_state, u->current_movement_state,
-			                          u->fire_aiming_mode,
-			                          a.itemType->type != AEquipmentType::Type::Weapon) /
-			    100.0f;
-			// erf takes values -2 to 2 and returns -1 to 1,
-			// we need it to take values 0 to 1 and return 0 to 1
-			// val -> val * 4 - 2, result -> result /2 + 0,5
-			a.accuracy = (int)(((erf(accuracy * 4.0f - 2.0f)) / 2.0f + 0.5f) * 50.0f);
-			*/
 		}
 	}
 	return a;

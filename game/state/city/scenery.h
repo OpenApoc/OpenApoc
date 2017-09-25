@@ -39,6 +39,10 @@ class Scenery : public std::enable_shared_from_this<Scenery>
 	bool destroyed;
 
 	void handleCollision(GameState &state, Collision &c);
+	// Returns true if sound and doodad were handled by it
+	bool applyDamage(GameState &state, int power);
+	// Handles mappart ceasing to exist (fatal damage or fell on something)
+	void die(GameState &state);
 
 	void update(GameState &state, unsigned int ticks);
 	void collapse(GameState &state);

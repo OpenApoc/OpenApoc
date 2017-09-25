@@ -105,8 +105,9 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 			if (unit->isDead() || !visible)
 				break;
 
-			// 0 = enemy, 3 = friendly, 2 = neutral
-			int side_offset = friendly ? 0 : (hostile ? 3 : 2);
+			// IDK why it won't match city
+			// 1 = friendly, 0 = enemy, 2 = neutral
+			int side_offset = friendly ? 1 : (hostile ? 0 : 2);
 			// Icon type, 0 = normal, 1 = prone, 2 = large
 			int icon_type =
 			    unit->isLarge() ? ICON_LARGE : ((unit->current_body_state == BodyState::Prone ||

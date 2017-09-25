@@ -9,12 +9,24 @@ namespace OpenApoc
 
 class Image;
 class GameState;
+class Vehicle;
 
 class CityTileView : public TileView
 {
+  private:
+	std::vector<std::vector<sp<Image>>> selectionBrackets;
+	sp<Image> alertImage;
+	sp<Image> targetTacticalThisLevel;
+	sp<Image> selectionImageFriendlySmall;
+	sp<Image> selectionImageFriendlyLarge;
+	sp<Image> selectionImageHostileSmall;
+	sp<Image> selectionImageHostileLarge;
+
+	int selectionFrameTicksAccumulated = 0;
+
   public:
 	CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
-	             TileViewMode initialMode, GameState &gameState);
+	             TileViewMode initialMode, Vec3<float> screenCenterTile, GameState &gameState);
 	~CityTileView() override;
 
 	void eventOccurred(Event *e) override;

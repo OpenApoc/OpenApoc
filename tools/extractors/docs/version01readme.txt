@@ -21,7 +21,6 @@ Most of the battlescape mechanics are fully implemented. Therefore, it is easier
 
 List of unimplemented battlescape features:
 - Unit behavior (Cautious and Normal units automatically moving into cover, taking potshots from cover and so on)
-- Organization relationship changing when doing damage to its units
 - Music (right now just a loop of several tracks plays in the background)
 
 List of incomplete battlescape features:

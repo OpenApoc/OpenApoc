@@ -52,8 +52,8 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	// Used to calculate draw order
 	virtual float getZOrder() const { return getCenter().z + (float)getType() / 1000.0f; }
 
-	virtual float getDistanceTo(sp<TileObject> target);
-	virtual float getDistanceTo(Vec3<float> target);
+	virtual float getDistanceTo(sp<TileObject> target) const;
+	virtual float getDistanceTo(Vec3<float> target) const;
 	// For TileObjects, position is usually the location of the object's centre
 	// Usually, owner objects will have the same position (i.e. proj.pos == to_proj.pos)
 	// Some, however, will not (scenery's position points to top left corner, but
@@ -69,7 +69,7 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	std::vector<Tile *> getIntersectingTiles() const { return this->intersectingTiles; }
 
 	virtual sp<VoxelMap> getVoxelMap(Vec3<int> /*mapIndex*/, bool /*los*/) const { return nullptr; }
-	virtual bool hasVoxelMap() { return false; }
+	virtual bool hasVoxelMap() const { return false; }
 	// Vector from voxel map top left back corner to object center
 	virtual Vec3<float> getVoxelOffset() const { return bounds_div_2; }
 	virtual Vec3<float> getVoxelCentrePosition() const { return {0.0, 0.0, 0.0}; }

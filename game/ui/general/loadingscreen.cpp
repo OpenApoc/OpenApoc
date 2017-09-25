@@ -23,8 +23,9 @@ ConfigOptionBool asyncLoading("Game", "ASyncLoading",
 LoadingScreen::LoadingScreen(sp<GameState> state, std::shared_future<void> task,
                              std::function<sp<Stage>()> nextScreenFn, sp<Image> background,
                              int scaleDivisor, bool showRotatingImage)
-    : Stage(), state(state), loadingTask(std::move(task)), nextScreenFn(std::move(nextScreenFn)),
-      backgroundimage(background), showRotatingImage(showRotatingImage), scaleDivisor(scaleDivisor)
+    : Stage(), loadingTask(std::move(task)), nextScreenFn(std::move(nextScreenFn)),
+      backgroundimage(background), showRotatingImage(showRotatingImage), scaleDivisor(scaleDivisor),
+      state(state)
 {
 }
 

@@ -34,6 +34,7 @@ class UfopaediaCategory;
 class BattleMap;
 class EquipmentSet;
 class Battle;
+class CityCommonImageList;
 class BattleCommonImageList;
 class BattleCommonSampleList;
 class BattleMapPartType;
@@ -43,11 +44,10 @@ class BuildingFunction;
 
 static const int MAX_MESSAGES = 50;
 static const unsigned ORIGINAL_TICKS = 36;
+static const bool UPDATE_EVERY_TICK = false;
+
 class GameState : public std::enable_shared_from_this<GameState>
 {
-  private:
-	void update(unsigned int ticks);
-
   public:
 	StateRefMap<VehicleType> vehicle_types;
 	StateRefMap<Organisation> organisations;
@@ -72,6 +72,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<EquipmentSet> equipment_sets_by_level;
 	StateRefMap<BuildingFunction> building_functions;
 	sp<Battle> current_battle;
+	sp<CityCommonImageList> city_common_image_list;
 	sp<BattleCommonImageList> battle_common_image_list;
 	sp<BattleCommonSampleList> battle_common_sample_list;
 
@@ -96,6 +97,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	std::map<UString, unsigned> initial_facilities;
 	std::list<std::list<StateRef<AEquipmentType>>> initial_agent_equipment;
 	std::map<UString, int> initial_base_agent_equipment;
+	std::map<int, std::list<std::pair<StateRef<AgentType>, Vec2<int>>>> initial_aliens;
 
 	StateRef<Organisation> player;
 	StateRef<Organisation> aliens;
@@ -103,6 +105,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	StateRef<City> current_city;
 	StateRef<Base> current_base;
+
+	std::vector<EquipmentTemplate> agentEquipmentTemplates;
 
 	// Used to generate unique names, an incrementing ID for each object type (keyed by StateObject
 	// prefix)
@@ -162,8 +166,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// - there are any projectiles on the current map
 	bool canTurbo() const;
 
-	// Update progresses one 'tick'
-	void update();
+	// Update progress
+	void update(unsigned int ticks);
 	// updateTurbo progresses 5 minutes at a time - can only be called if canTurbo() returns true.
 	// canTurbo() must be re-tested after each call to see if we should drop down to normal speed
 	// (e.g. enemy appeared, other user action required)

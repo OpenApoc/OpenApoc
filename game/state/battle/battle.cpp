@@ -222,7 +222,7 @@ void Battle::initBattle(GameState &state, bool first)
 		u.second->refreshUnitVision(state);
 	}
 	// Pathfinding
-	updatePathfinding(state);
+	updatePathfinding(state, 0);
 	// AI
 	aiBlock.init(state);
 	for (auto &o : participants)
@@ -421,6 +421,7 @@ void linkUpList(std::list<BattleMapPart *> list)
 // For now, removes only ground
 void Battle::initialMapPartRemoval(GameState &state)
 {
+	std::ignore = state;
 	for (auto &u : units)
 	{
 		if (!u.second->isLarge())
@@ -619,7 +620,7 @@ void Battle::initialUnitSpawn(GameState &state)
 
 	// Fill spawn blocks
 	std::vector<sp<SpawnBlock>> spawnBlocks;
-	for (int i = 0; i < losBlocks.size(); i++)
+	for (size_t i = 0; i < losBlocks.size(); i++)
 	{
 		auto sb = mksp<SpawnBlock>();
 		auto &lb = losBlocks[i];
@@ -647,7 +648,7 @@ void Battle::initialUnitSpawn(GameState &state)
 			spawnOther.push_back(sb);
 			continue;
 		}
-		for (int i = 0; i < lb->spawn_priority; i++)
+		for (int j = 0; j < lb->spawn_priority; j++)
 		{
 			spawnMaps[{lb->spawn_type, lb->spawn_large_units ? UnitSize::Large : UnitSize::Small,
 			           lb->spawn_walking_units ? UnitMovement::Walking : UnitMovement::Flying,
@@ -682,9 +683,9 @@ void Battle::initialUnitSpawn(GameState &state)
 				    .push_back(sb);
 			}
 
-			for (int j = 0; j < 3; j++)
+			for (int k = 0; k < 3; k++)
 			{
-				auto st = (SpawnType)j;
+				auto st = (SpawnType)k;
 				if (st == lb->spawn_type || (st == SpawnType::Civilian && lb->also_allow_civilians))
 				{
 					continue;
@@ -1200,7 +1201,7 @@ sp<BattleUnit> Battle::placeUnit(GameState &state, StateRef<Agent> agent)
 	unit->strategyImages = state.battle_common_image_list->strategyImages;
 	unit->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
 	unit->squadNumber = -1;
-	unit->cloakTicksAccumulated = CLOAK_TICKS_REQUIRED;
+	unit->cloakTicksAccumulated = CLOAK_TICKS_REQUIRED_UNIT;
 	unit->initCryTimer(state);
 	unit->position = {-1.0, -1.0, -1.0};
 	units[id] = unit;
@@ -1362,27 +1363,16 @@ void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 			auto unit = c.projectile->trackedUnit;
 			if (unit)
 			{
-				if (unit->visibleUnits.find(c.projectile->firerUnit) == unit->visibleUnits.end())
-				{
-					LogWarning("Notify: unit %s that he's taking fire",
-					           c.projectile->trackedUnit.id);
-				}
-
 				unit->notifyUnderFire(state, c.projectile->firerPosition,
 				                      c.projectile->firerUnit->owner == unit->owner ||
 				                          visibleUnits[unit->owner].find(c.projectile->firerUnit) !=
 				                              visibleUnits[unit->owner].end());
 			}
 			// Handle collision
-			this->projectiles.erase(c.projectile);
 			bool playSound = true;
 			bool displayDoodad = true;
 			if (c.projectile->damageType->explosive)
 			{
-				auto explosion = addExplosion(
-				    state, c.position, c.projectile->doodadType, c.projectile->damageType,
-				    c.projectile->damage, c.projectile->depletionRate,
-				    c.projectile->firerUnit->owner, c.projectile->firerUnit);
 				displayDoodad = false;
 			}
 			else
@@ -1411,21 +1401,7 @@ void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 						LogError("Collision with non-collidable object");
 				}
 			}
-			if (displayDoodad)
-			{
-				auto doodadType = c.projectile->doodadType;
-				if (doodadType)
-				{
-					auto doodad = this->placeDoodad(doodadType, c.position);
-				}
-			}
-			if (playSound)
-			{
-				if (c.projectile->impactSfx)
-				{
-					fw().soundBackend->playSample(c.projectile->impactSfx, c.position);
-				}
-			}
+			c.projectile->die(state, displayDoodad, playSound);
 		}
 	}
 }
@@ -1518,8 +1494,11 @@ bool findLosBlockCenter(TileMap &map, BattleUnitType type,
 	return false;
 }
 
-void Battle::updatePathfinding(GameState &)
+void Battle::updatePathfinding(GameState &, unsigned int ticks)
 {
+	// Throttling updates so that big explosions won't lag
+	static const int LIMIT_PER_TICK = 10;
+
 	// How much attempts are given to the pathfinding until giving up and concluding that
 	// there is no path between two sectors. This is a multiplier for "distance", which is
 	// a minimum number of iterations required to pathfind between two locations
@@ -1567,6 +1546,8 @@ void Battle::updatePathfinding(GameState &)
 		}
 	}
 
+	int updatesRemaining = ticks > 0 ? LIMIT_PER_TICK * ticks : -1;
+
 	// Now update all paths
 	for (int i = 0; i < lbCount - 1; i++)
 	{
@@ -1575,6 +1556,14 @@ void Battle::updatePathfinding(GameState &)
 			if (!linkNeedsUpdate[i + j * lbCount])
 			{
 				continue;
+			}
+			if (updatesRemaining > 0)
+			{
+				updatesRemaining--;
+				if (updatesRemaining == 0)
+				{
+					return;
+				}
 			}
 			linkNeedsUpdate[i + j * lbCount] = false;
 
@@ -1616,12 +1605,6 @@ void Battle::updatePathfinding(GameState &)
 			}
 		}
 	}
-
-	// FIXME: Somehow introduce multi-threading here or throttle the load
-	// Calculating paths is the more costly operation here. If a big chunk of map is changed,
-	// it can take up to half a second to calculate. One option would be to calculate it
-	// in a different thread (maybe writing results to a different array, and then just swapping)
-	// Another option would be to throttle updates (have a limit on how many can be done per tick)
 }
 
 void Battle::update(GameState &state, unsigned int ticks)
@@ -1641,92 +1624,18 @@ void Battle::update(GameState &state, unsigned int ticks)
 	{
 		case Mode::TurnBased:
 		{
-			Trace::start("Battle::update::turnBased");
-			ticksWithoutAction += ticks;
-			for (auto &p : participants)
-			{
-				ticksWithoutSeenAction[p]++;
-			}
-			// Interrupt for lowmorales
-			if (!lowMoraleProcessed && interruptQueue.empty() && interruptUnits.empty())
-			{
-				lowMoraleProcessed = true;
-				for (auto &u : units)
-				{
-					if (u.second->owner != currentActiveOrganisation || !u.second->isConscious() ||
-					    u.second->moraleState == MoraleState::Normal ||
-					    u.second->agent->modified_stats.time_units == 0)
-					{
-						continue;
-					}
-					lowMoraleProcessed = false;
-					ticksWithoutAction = TICKS_BEGIN_INTERRUPT;
-					interruptQueue.emplace(StateRef<BattleUnit>(&state, u.first), 0);
-					if (u.second->owner == currentPlayer ||
-					    visibleUnits[currentPlayer].find({&state, u.first}) !=
-					        visibleUnits[currentPlayer].end())
-					{
-						fw().pushEvent(
-						    new GameLocationEvent(GameEventType::ZoomView, u.second->position));
-					}
-					break;
-				}
-			}
-			// Add units from queue to interrupt list
-			if (!interruptQueue.empty() && ticksWithoutAction >= TICKS_BEGIN_INTERRUPT)
-			{
-				for (auto &e : interruptQueue)
-				{
-					interruptUnits.emplace(e.first, e.second);
-				}
-				interruptQueue.clear();
-				notifyAction();
-				turnEndAllowed = false;
-			}
-			// Turn end condition
-			if (ticksWithoutAction >= TICKS_END_TURN)
-			{
-				if (interruptUnits.empty())
-				{
-					if (turnEndAllowed)
-					{
-						endTurn(state);
-					}
-				}
-				else
-				{
-					// Spend remaining TUs of low morale units
-					for (auto &e : interruptUnits)
-					{
-						if (e.first->moraleState != MoraleState::Normal)
-						{
-							e.first.getSp()->spendRemainingTU(state);
-							e.first.getSp()->focusUnit.clear();
-						}
-					}
-					interruptUnits.clear();
-					notifyAction();
-					turnEndAllowed = false;
-				}
-			}
-			Trace::end("Battle::end::turnBased");
+			Trace::start("Battle::updateTB");
+			updateTB(state);
+			Trace::end("Battle::updateTB");
+			break;
 		}
-		break;
 		case Mode::RealTime:
 		{
-			Trace::start("Battle::update::realTime");
-			if (reinforcementsInterval > 0)
-			{
-				ticksUntilNextReinforcement -= ticks;
-				while (ticksUntilNextReinforcement <= 0)
-				{
-					ticksUntilNextReinforcement += reinforcementsInterval;
-					spawnReinforcements(state);
-				}
-			}
-			Trace::end("Battle::end::realTime");
+			Trace::start("Battle::updateRT");
+			updateRT(state, ticks);
+			Trace::end("Battle::updateRT");
+			break;
 		}
-		break;
 	}
 	Trace::start("Battle::update::projectiles->update");
 	updateProjectiles(state, ticks);
@@ -1800,8 +1709,92 @@ void Battle::update(GameState &state, unsigned int ticks)
 	updateVision(state);
 	Trace::end("Battle::update::vision");
 	Trace::start("Battle::update::pathfinding");
-	updatePathfinding(state);
+	updatePathfinding(state, ticks);
 	Trace::end("Battle::update::pathfinding");
+}
+
+void Battle::updateTB(GameState &state)
+{
+	ticksWithoutAction++;
+	for (auto &p : participants)
+	{
+		ticksWithoutSeenAction[p]++;
+	}
+	// Interrupt for lowmorales
+	if (!lowMoraleProcessed && interruptQueue.empty() && interruptUnits.empty())
+	{
+		lowMoraleProcessed = true;
+		for (auto &u : units)
+		{
+			if (u.second->owner != currentActiveOrganisation || !u.second->isConscious() ||
+			    u.second->moraleState == MoraleState::Normal ||
+			    u.second->agent->modified_stats.time_units == 0)
+			{
+				continue;
+			}
+			lowMoraleProcessed = false;
+			ticksWithoutAction = TICKS_BEGIN_INTERRUPT;
+			interruptQueue.emplace(StateRef<BattleUnit>(&state, u.first), 0);
+			if (u.second->owner == currentPlayer ||
+			    visibleUnits[currentPlayer].find({&state, u.first}) !=
+			        visibleUnits[currentPlayer].end())
+			{
+				fw().pushEvent(new GameLocationEvent(GameEventType::ZoomView, u.second->position));
+			}
+			break;
+		}
+	}
+	// Add units from queue to interrupt list
+	if (!interruptQueue.empty() && ticksWithoutAction >= TICKS_BEGIN_INTERRUPT)
+	{
+		for (auto &e : interruptQueue)
+		{
+			interruptUnits.emplace(e.first, e.second);
+		}
+		interruptQueue.clear();
+		notifyAction();
+		turnEndAllowed = false;
+	}
+	// Turn end condition
+	if (ticksWithoutAction >= TICKS_END_TURN)
+	{
+		if (interruptUnits.empty())
+		{
+			if (turnEndAllowed)
+			{
+				endTurn(state);
+			}
+		}
+		else
+		{
+			// Spend remaining TUs of low morale units
+			for (auto &e : interruptUnits)
+			{
+				if (e.first->moraleState != MoraleState::Normal)
+				{
+					e.first.getSp()->spendRemainingTU(state);
+					e.first.getSp()->focusUnit.clear();
+				}
+			}
+			interruptUnits.clear();
+			notifyAction();
+			turnEndAllowed = false;
+		}
+	}
+}
+
+void Battle::updateRT(GameState &state, unsigned int ticks)
+{
+	// Spawn reinforcements
+	if (reinforcementsInterval > 0)
+	{
+		ticksUntilNextReinforcement -= ticks;
+		while (ticksUntilNextReinforcement <= 0)
+		{
+			ticksUntilNextReinforcement += reinforcementsInterval;
+			spawnReinforcements(state);
+		}
+	}
 }
 
 void Battle::updateTBBegin(GameState &state)
@@ -1899,15 +1892,75 @@ void Battle::notifyAction(Vec3<int> location, StateRef<BattleUnit> actorUnit)
 	}
 }
 
-int Battle::killStrandedUnits(GameState &state, bool preview)
+int Battle::killStrandedUnits(GameState &state, StateRef<Organisation> org, bool preview)
 {
-	LogWarning("Implement killing stranded player units");
-	return 0;
+	int countKilled = 0;
+
+	for (auto &u : units)
+	{
+		if (u.second->owner != org || u.second->isDead())
+		{
+			continue;
+		}
+		// Find closest exit
+		float distanceToExit = FLT_MAX;
+		for (auto &e : exits)
+		{
+			float distance = glm::length(u.second->position - (Vec3<float>)e);
+			if (distance < distanceToExit)
+			{
+				distanceToExit = distance;
+			}
+		}
+		// Find closest enemy from org that sees us
+		float distanceToEnemy = FLT_MAX;
+		for (auto &owner : participants)
+		{
+			if (owner == org || owner->isRelatedTo(org) != Organisation::Relation::Hostile)
+			{
+				continue;
+			}
+			for (auto &spotted : visibleUnits.at(owner))
+			{
+				if (spotted.id != u.first)
+				{
+					continue;
+				}
+				// Org sees this unit
+				// Look for closest unit from this org
+				for (auto &e : units)
+				{
+					if (e.second->owner != owner || e.second->isDead())
+					{
+						continue;
+					}
+					float distance = glm::length(u.second->position - e.second->position);
+					if (distance < distanceToEnemy)
+					{
+						distanceToEnemy = distance;
+					}
+				}
+				// No need to look further, we already processed this org
+				break;
+			}
+		}
+		// Exit must be three times closer than enemy for escape to be possible
+		if (distanceToEnemy / 3.0f > distanceToExit)
+		{
+			countKilled++;
+			if (!preview)
+			{
+				u.second->agent->modified_stats.health = 0;
+				u.second->die(state);
+			}
+		}
+	}
+	return countKilled;
 }
 
 void Battle::abortMission(GameState &state)
 {
-	killStrandedUnits(state);
+	killStrandedUnits(state, currentPlayer);
 	auto player = state.getPlayer();
 	for (auto &u : units)
 	{
@@ -1975,10 +2028,16 @@ void Battle::checkMissionEnd(GameState &state, bool retreated, bool forceReCheck
 
 void Battle::checkIfBuildingDisabled(GameState &state)
 {
-	if (!buildingCanBeDisabled || buildingDisabled)
+	if (!buildingCanBeDisabled || buildingDisabled || !tryDisableBuilding())
 	{
 		return;
 	}
+	buildingDisabled = true;
+	fw().pushEvent(new GameEvent(GameEventType::BuildingDisabled));
+}
+
+bool Battle::tryDisableBuilding()
+{
 	// Find a mission objective unit
 	for (auto &u : units)
 	{
@@ -1989,7 +2048,7 @@ void Battle::checkIfBuildingDisabled(GameState &state)
 		if (u.second->agent->type->missionObjective && !u.second->isDead())
 		{
 			// Mission objective unit found alive
-			return;
+			return false;
 		}
 	}
 	// Find a mission objective object
@@ -1998,12 +2057,11 @@ void Battle::checkIfBuildingDisabled(GameState &state)
 		if (mp->type->missionObjective && !mp->destroyed)
 		{
 			// Mission objective unit found alive
-			return;
+			return false;
 		}
 	}
 	// Found nothing, building disabled
-	buildingDisabled = true;
-	fw().pushEvent(new GameEvent(GameEventType::BuildingDisabled));
+	return true;
 }
 
 void Battle::refreshLeadershipBonus(StateRef<Organisation> org)
@@ -2097,6 +2155,27 @@ void Battle::spawnReinforcements(GameState &state)
 	}
 }
 
+void Battle::handleProjectileHit(GameState &state, sp<Projectile> projectile, bool displayDoodad,
+                                 bool playSound)
+{
+	if (projectile->damageType->explosive)
+	{
+		auto explosion =
+		    addExplosion(state, projectile->position, projectile->doodadType,
+		                 projectile->damageType, projectile->damage, projectile->depletionRate,
+		                 projectile->firerUnit->owner, projectile->firerUnit);
+	}
+	if (displayDoodad && projectile->doodadType)
+	{
+		this->placeDoodad(projectile->doodadType, projectile->position);
+	}
+	if (playSound && projectile->impactSfx)
+	{
+		fw().soundBackend->playSample(projectile->impactSfx, projectile->position);
+	}
+	projectiles.erase(projectile);
+}
+
 void Battle::queuePathfindingRefresh(Vec3<int> tile)
 {
 	blockNeedsUpdate[getLosBlockID(tile.x, tile.y, tile.z)] = true;
@@ -2136,9 +2215,10 @@ void Battle::queuePathfindingRefresh(Vec3<int> tile)
 void Battle::accuracyAlgorithmBattle(GameState &state, Vec3<float> firePosition,
                                      Vec3<float> &target, int accuracy, bool cloaked, bool thrown)
 {
-	auto dispersion = (float)(100 - accuracy);
+	float dispersion = 100 - accuracy;
 	// Introduce minimal dispersion?
 	dispersion = std::max(0.0f, dispersion);
+
 	if (cloaked)
 	{
 		dispersion *= dispersion;
@@ -2335,7 +2415,7 @@ void Battle::beginBattle(GameState &state, bool hotseat, StateRef<Organisation> 
 	}
 	b->hotseat = hotseat;
 	b->locationOwner = target_building->owner;
-	b->buildingCanBeDisabled = b->locationOwner == state.getAliens();
+	b->buildingCanBeDisabled = !b->tryDisableBuilding();
 	state.current_battle = b;
 }
 
@@ -2357,11 +2437,11 @@ void Battle::enterBattle(GameState &state)
 
 	if (b->mission_type == MissionType::BaseDefense)
 	{
-		for (int i = 0; i < b->visibleTiles[b->locationOwner].size(); i++)
+		for (size_t i = 0; i < b->visibleTiles[b->locationOwner].size(); i++)
 		{
 			b->visibleTiles[b->locationOwner][i] = true;
 		}
-		for (int i = 0; i < b->visibleBlocks[b->locationOwner].size(); i++)
+		for (size_t i = 0; i < b->visibleBlocks[b->locationOwner].size(); i++)
 		{
 			b->visibleBlocks[b->locationOwner][i] = true;
 		}

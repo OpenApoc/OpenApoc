@@ -1,3 +1,6 @@
+#ifndef _USE_MATH_DEFINES
+#define _USE_MATH_DEFINES
+#endif
 #include "game/state/gamestate.h"
 #include "game/state/rules/vehicle_type.h"
 #include "library/sp.h"
@@ -9,6 +12,8 @@
 namespace OpenApoc
 {
 
+namespace
+{
 static const std::map<VehicleType::Direction, Vec3<float>> DirectionVectors = {
     {VehicleType::Direction::N, glm::normalize(Vec3<float>{0, -1, 0})},
     {VehicleType::Direction::NNE, glm::normalize(Vec3<float>{1, -2, 0})},
@@ -26,6 +31,7 @@ static const std::map<VehicleType::Direction, Vec3<float>> DirectionVectors = {
     {VehicleType::Direction::NWW, glm::normalize(Vec3<float>{-2, -1, 0})},
     {VehicleType::Direction::NW, glm::normalize(Vec3<float>{-1, -1, 0})},
     {VehicleType::Direction::NNW, glm::normalize(Vec3<float>{-1, -2, 0})}};
+}
 
 const Vec3<float> &VehicleType::directionToVector(Direction d)
 {
@@ -38,19 +44,6 @@ const Vec3<float> &VehicleType::directionToVector(Direction d)
 	}
 	return it->second;
 }
-
-static std::map<VehicleType::Direction, Vec3<float>> direction_vectors = {
-    {VehicleType::Direction::N, {0, -1, 0}}, {VehicleType::Direction::NE, {1, -1, 0}},
-    {VehicleType::Direction::E, {1, 0, 0}},  {VehicleType::Direction::SE, {1, 1, 0}},
-    {VehicleType::Direction::S, {0, 1, 0}},  {VehicleType::Direction::SW, {-1, 1, 0}},
-    {VehicleType::Direction::W, {-1, 0, 0}}, {VehicleType::Direction::NW, {-1, -1, 0}},
-};
-
-static std::map<VehicleType::Banking, Vec3<float>> banking_vectors = {
-    {VehicleType::Banking::Flat, Vec3<float>{0, 0, 0}},
-    {VehicleType::Banking::Ascending, Vec3<float>{0, 0, 1}},
-    {VehicleType::Banking::Descending, Vec3<float>{0, 0, -1}},
-};
 
 sp<VehicleType> VehicleType::get(const GameState &state, const UString &id)
 {
@@ -85,21 +78,30 @@ const UString &VehicleType::getId(const GameState &state, const sp<VehicleType> 
 	return emptyString;
 }
 
-Vec3<float> VehicleType::getVoxelMapFacing(Vec3<float> direction) const
+float VehicleType::getVoxelMapFacing(float facing) const
 {
-
-	float closestAngle = FLT_MAX;
-	Vec3<float> closestFacing;
-	for (auto &p : size)
+	float closestDiff = FLT_MAX;
+	float closestAngle = 0.0f;
+	for (auto &p : voxelMaps)
 	{
-		float angle = glm::angle(glm::normalize(p.first), glm::normalize(direction));
-		if (angle < closestAngle)
+		float d1 = p.first - facing;
+		if (d1 < 0.0f)
 		{
-			closestAngle = angle;
-			closestFacing = p.first;
+			d1 += 2.0f * (float)M_PI;
+		}
+		float d2 = facing - p.first;
+		if (d2 < 0.0f)
+		{
+			d2 += 2.0f * (float)M_PI;
+		}
+		float diff = std::min(d1, d2);
+		if (diff < closestDiff)
+		{
+			closestDiff = diff;
+			closestAngle = p.first;
 		}
 	}
-	return closestFacing;
+	return closestAngle;
 }
 
 }; // namespace OpenApoc

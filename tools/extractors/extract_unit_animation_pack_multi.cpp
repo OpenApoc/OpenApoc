@@ -46,7 +46,6 @@ void extractAnimationPackMultiInternal(sp<BattleUnitAnimationPack> p,
 {
 	// Units per 100 frames
 	static const int pFrames = 300; // Prone
-	static const int wFrames = 300; // Walk
 
 	// Standart animations
 	{
