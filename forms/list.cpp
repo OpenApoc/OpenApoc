@@ -142,7 +142,11 @@ void ListBox::postRender()
 
 void ListBox::eventOccured(Event *e)
 {
-	Control::eventOccured(e);
+	// ListBox does not pass mousedown and mouseup events when out of bounds
+	if ((e->type() != EVENT_MOUSE_DOWN && e->type() != EVENT_MOUSE_UP) || eventIsWithin(e))
+	{
+		Control::eventOccured(e);
+	}
 	if (e->type() == EVENT_FORM_INTERACTION)
 	{
 		sp<Control> ctrl = e->forms().RaisedBy;
@@ -164,7 +168,6 @@ void ListBox::eventOccured(Event *e)
 					scroller->scrollNext();
 				}
 			}
-
 			if (ctrl == shared_from_this() || ctrl == scroller)
 			{
 				child = nullptr;

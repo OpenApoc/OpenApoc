@@ -2,9 +2,12 @@
 #define _USE_MATH_DEFINES
 #endif
 #include "game/state/city/vehiclemission.h"
+#include "framework/framework.h"
 #include "framework/logger.h"
+#include "framework/sound.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/city/citycommonsamplelist.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
@@ -265,7 +268,8 @@ Vec3<float> FlyingVehicleTileHelper::findSidestep(GameState &state, sp<TileObjec
 }
 
 VehicleMission *VehicleMission::gotoLocation(GameState &, Vehicle &, Vec3<int> target,
-                                             bool pickNearest, int reRouteAttempts)
+                                             bool allowTeleporter, bool pickNearest,
+                                             int reRouteAttempts)
 {
 	// TODO
 	// Pseudocode:
@@ -277,6 +281,7 @@ VehicleMission *VehicleMission::gotoLocation(GameState &, Vehicle &, Vec3<int> t
 	mission->targetLocation = target;
 	mission->pickNearest = pickNearest;
 	mission->reRouteAttempts = reRouteAttempts;
+	mission->allowTeleporter = allowTeleporter;
 	return mission;
 }
 
@@ -308,7 +313,8 @@ VehicleMission *VehicleMission::gotoPortal(GameState &, Vehicle &, Vec3<int> tar
 	return mission;
 }
 
-VehicleMission *VehicleMission::gotoBuilding(GameState &, Vehicle &, StateRef<Building> target)
+VehicleMission *VehicleMission::gotoBuilding(GameState &, Vehicle &, StateRef<Building> target,
+                                             bool allowTeleporter)
 {
 	// TODO
 	// Pseudocode:
@@ -327,6 +333,7 @@ VehicleMission *VehicleMission::gotoBuilding(GameState &, Vehicle &, StateRef<Bu
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::GotoBuilding;
 	mission->targetBuilding = target;
+	mission->allowTeleporter = allowTeleporter;
 	return mission;
 }
 
@@ -386,6 +393,14 @@ VehicleMission *VehicleMission::patrol(GameState &, Vehicle &, unsigned int coun
 	return mission;
 }
 
+VehicleMission *VehicleMission::teleport(GameState &state, Vehicle &v, Vec3<int> target)
+{
+	auto *mission = new VehicleMission();
+	mission->type = MissionType::Teleport;
+	mission->targetLocation = target;
+	return mission;
+}
+
 VehicleMission *VehicleMission::takeOff(Vehicle &v)
 {
 	if (!v.currentlyLandedBuilding)
@@ -406,13 +421,12 @@ VehicleMission *VehicleMission::land(Vehicle &, StateRef<Building> b)
 	return mission;
 }
 
-bool VehicleMission::takeOffCheck(GameState &state, Vehicle &v, UString mission)
+bool VehicleMission::takeOffCheck(GameState &state, Vehicle &v)
 {
 	if (!v.tileObject)
 	{
 		if (v.currentlyLandedBuilding)
 		{
-			LogInfo("Mission %s: Taking off first", mission);
 			auto *takeoffMission = VehicleMission::takeOff(v);
 			v.missions.emplace_front(takeoffMission);
 			takeoffMission->start(state, v);
@@ -420,9 +434,22 @@ bool VehicleMission::takeOffCheck(GameState &state, Vehicle &v, UString mission)
 		}
 		else
 		{
-			LogError("Mission %s: Vehicle not in the city and shouldn't recieve orders", mission);
 			return false;
 		}
+	}
+	return false;
+}
+
+bool VehicleMission::teleportCheck(GameState &state, Vehicle &v)
+{
+	if (allowTeleporter && v.canTeleport() &&
+	    (std::abs(targetLocation.x - (int)v.position.x) > TELEPORTER_SPREAD ||
+	     std::abs(targetLocation.y - (int)v.position.y) > TELEPORTER_SPREAD))
+	{
+		auto *teleportMission = VehicleMission::teleport(state, v, targetLocation);
+		v.missions.emplace_front(teleportMission);
+		teleportMission->start(state, v);
+		return true;
 	}
 	return false;
 }
@@ -836,6 +863,7 @@ bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 		case MissionType::Snooze:
 			return this->timeToSnooze == 0;
 		case MissionType::RestartNextMission:
+		case MissionType::Teleport:
 			return true;
 		default:
 			LogWarning("TODO: Implement isFinishedInternal");
@@ -847,6 +875,73 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 {
 	switch (this->type)
 	{
+		case MissionType::Teleport:
+		{
+			if (!v.canTeleport())
+			{
+				return;
+			}
+			auto &map = *state.current_city->map;
+			auto canEnter = FlyingVehicleTileHelper(map, v);
+			Vec3<int> targetTile = {-1, -1, -1};
+			bool found = false;
+			for (int i = 0; i < 100; i++)
+			{
+				// Random teleportation
+				if (targetLocation.x == -1)
+				{
+					targetTile = {randBoundsExclusive(state.rng, 0, map.size.x),
+					              randBoundsExclusive(state.rng, 0, map.size.y),
+					              map.size.z + randBoundsInclusive(
+					                               state.rng, -std::min(TELEPORTER_SPREAD, 5), -1)};
+				}
+				// Targeted teleportation
+				else
+				{
+					targetTile = {
+					    targetLocation.x +
+					        randBoundsInclusive(state.rng, -TELEPORTER_SPREAD, TELEPORTER_SPREAD),
+					    targetLocation.y +
+					        randBoundsInclusive(state.rng, -TELEPORTER_SPREAD, TELEPORTER_SPREAD),
+					    map.size.z +
+					        randBoundsInclusive(state.rng, -std::min(TELEPORTER_SPREAD, 5), -1)};
+				}
+				if (!map.tileIsValid(targetTile))
+				{
+					targetTile.x = targetTile.x < 0 ? 0 : map.size.x - 1;
+					targetTile.y = targetTile.y < 0 ? 0 : map.size.y - 1;
+				}
+				if (canEnter.canEnterTile(nullptr, map.getTile(targetTile)))
+				{
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				targetTile = v.position;
+			}
+			if (v.currentlyLandedBuilding)
+			{
+				v.launch(map, state, targetTile);
+			}
+			else
+			{
+				v.facing = v.goalFacing;
+				v.ticksToTurn = 0;
+				v.angularVelocity = 0.0f;
+				v.setPosition((Vec3<float>)targetTile + Vec3<float>{0.5f, 0.5f, 0.5f});
+				v.goalPosition = v.position;
+				v.velocity = {0.0f, 0.0f, 0.0f};
+				v.updateSprite(state);
+			}
+			if (state.city_common_sample_list->teleport)
+			{
+				fw().soundBackend->playSample(state.city_common_sample_list->teleport,
+				                              v.getPosition());
+			}
+			return;
+		}
 		case MissionType::TakeOff: // Fall-through
 		case MissionType::RestartNextMission:
 		case MissionType::Snooze:
@@ -906,8 +1001,12 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		}
 		case MissionType::GotoLocation:
 		{
+			if (teleportCheck(state, v))
+			{
+				return;
+			}
 			auto vehicleTile = v.tileObject;
-			if (takeOffCheck(state, v, this->getName()))
+			if (takeOffCheck(state, v))
 			{
 				return;
 			}
@@ -945,7 +1044,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				        "at %s",
 				        getName(), randomNearbyPos);
 				auto *gotoMission =
-				    VehicleMission::gotoLocation(state, v, randomNearbyPos, true, 0);
+				    VehicleMission::gotoLocation(state, v, randomNearbyPos, false, true, 0);
 				v.missions.emplace_front(gotoMission);
 				gotoMission->start(state, v);
 				return;
@@ -956,7 +1055,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		}
 		case MissionType::Patrol:
 		{
-			takeOffCheck(state, v, this->getName());
+			takeOffCheck(state, v);
 			return;
 		}
 		case MissionType::FollowVehicle:
@@ -982,7 +1081,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				return;
 			}
 			auto vehicleTile = v.tileObject;
-			if (takeOffCheck(state, v, name))
+			if (takeOffCheck(state, v))
 			{
 				return;
 			}
@@ -1005,8 +1104,18 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				LogInfo("Vehicle mission %s: Already at building", name);
 				return;
 			}
+			if (allowTeleporter)
+			{
+				targetLocation = {(targetBuilding->bounds.p0.x + targetBuilding->bounds.p1.x) / 2,
+				                  (targetBuilding->bounds.p0.y + targetBuilding->bounds.p1.y) / 2,
+				                  0};
+				if (teleportCheck(state, v))
+				{
+					return;
+				}
+			}
 			auto vehicleTile = v.tileObject;
-			if (takeOffCheck(state, v, name))
+			if (takeOffCheck(state, v))
 			{
 				return;
 			}
@@ -1053,7 +1162,8 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 
 			LogInfo("Vehicle mission %s: Pathing to pad at %s", name, shortestPathPad);
-			auto *gotoMission = VehicleMission::gotoLocation(state, v, shortestPathPad);
+			auto *gotoMission =
+			    VehicleMission::gotoLocation(state, v, shortestPathPad, allowTeleporter, false, 10);
 			v.missions.emplace_front(gotoMission);
 			gotoMission->start(state, v);
 			return;
@@ -1073,7 +1183,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						return;
 					}
 					auto vehicleTile = v.tileObject;
-					if (takeOffCheck(state, v, name))
+					if (takeOffCheck(state, v))
 					{
 						return;
 					}
@@ -1133,7 +1243,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 							LogInfo("Vehicle mission %s: Pathing to infiltration spot %s", name,
 							        goodPos);
 							auto *gotoMission =
-							    VehicleMission::gotoLocation(state, v, goodPos, true);
+							    VehicleMission::gotoLocation(state, v, goodPos, false, true);
 							v.missions.emplace_front(gotoMission);
 							gotoMission->start(state, v);
 							return;
@@ -1454,6 +1564,7 @@ UString VehicleMission::getName()
 	    {MissionType::Patrol, "Patrol"},
 	    {MissionType::InfiltrateSubvert, "Infiltrate/Subvert"},
 	    {MissionType::RestartNextMission, "RestartNextMission"},
+	    {MissionType::Teleport, "Teleport"},
 	};
 	UString name = "UNKNOWN";
 	const auto it = TypeMap.find(this->type);
@@ -1493,6 +1604,9 @@ UString VehicleMission::getName()
 			break;
 		case MissionType::GotoPortal:
 			name += format(" %s", this->targetLocation.x);
+			break;
+		case MissionType::Teleport:
+			name += format(" random around %s", this->targetLocation.x);
 			break;
 		case MissionType::InfiltrateSubvert:
 			name += " " + this->targetBuilding.id + " " + (subvert ? "subvert" : "infiltrate");

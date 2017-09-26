@@ -35,6 +35,7 @@
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/citycommonimagelist.h"
+#include "game/state/city/citycommonsamplelist.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/projectile.h"
 #include "game/state/city/scenery.h"

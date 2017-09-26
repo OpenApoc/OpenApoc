@@ -130,6 +130,7 @@
     <ClInclude Include="city\building.h" />
     <ClInclude Include="city\city.h" />
     <ClInclude Include="city\citycommonimagelist.h" />
+    <ClInclude Include="city\citycommonsamplelist.h" />
     <ClInclude Include="city\doodad.h" />
     <ClInclude Include="city\projectile.h" />
     <ClInclude Include="city\scenery.h" />

@@ -91,8 +91,6 @@ class CityView : public CityTileView
 
 	std::map<sp<Vehicle>, std::pair<VehicleTileInfo, sp<Control>>> vehicleListControls;
 
-	std::list<sp<Sample>> alertSounds;
-
 	// We use a scaled image to implement the health bar
 	sp<Image> healthImage;
 	sp<Image> shieldImage;
@@ -129,8 +127,8 @@ class CityView : public CityTileView
 	// Orders
 
 	void orderGoToBase();
-	void orderMove(Vec3<float> position);
-	void orderMove(StateRef<Building> building);
+	void orderMove(Vec3<float> position, bool useTeleporter);
+	void orderMove(StateRef<Building> building, bool useTeleporter);
 	void orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additive);
 	void orderAttack(StateRef<Vehicle> vehicle);
 	void orderAttack(StateRef<Building> building);

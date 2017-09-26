@@ -22,6 +22,7 @@
 #include "game/state/battle/battle.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/city/citycommonsamplelist.h"
 #include "game/state/city/projectile.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
@@ -125,15 +126,13 @@ void CityView::orderGoToBase()
 	}
 }
 
-void CityView::orderMove(Vec3<float> position)
+void CityView::orderMove(Vec3<float> position, bool useTeleporter)
 {
-	// FIXME: Allow usage of teleporter with some key modifiers?
-	bool useTeleporter = false;
 	state->current_city->groupMove(*state, state->current_city->cityViewSelectedVehicles, position,
 	                               useTeleporter);
 }
 
-void CityView::orderMove(StateRef<Building> building)
+void CityView::orderMove(StateRef<Building> building, bool useTeleporter)
 {
 	for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 	{
@@ -141,7 +140,8 @@ void CityView::orderMove(StateRef<Building> building)
 		{
 			LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name, building->name);
 			// FIXME: Don't clear missions if not replacing current mission
-			v->setMission(*state, VehicleMission::gotoBuilding(*state, *v, building));
+			v->setMission(*state,
+			              VehicleMission::gotoBuilding(*state, *v, building, useTeleporter));
 		}
 	}
 }
@@ -290,15 +290,6 @@ CityView::CityView(sp<GameState> state)
 		this->uiTabs.push_back(f);
 	}
 	this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
-
-	alertSounds.emplace_back(
-	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/alert.raw:22050"));
-	alertSounds.emplace_back(
-	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/alert2.raw:22050"));
-	alertSounds.emplace_back(
-	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/alert3.raw:22050"));
-	alertSounds.emplace_back(
-	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/alert4.raw:22050"));
 
 	// Refresh base views
 	resume();
@@ -1388,7 +1379,7 @@ bool CityView::handleMouseDown(Event *e)
 				{
 					if (building)
 					{
-						orderMove(building);
+						orderMove(building, modifierRCtrl || modifierLCtrl);
 						setSelectionState(SelectionState::Normal);
 					}
 					break;
@@ -1397,7 +1388,7 @@ bool CityView::handleMouseDown(Event *e)
 				{
 					// We always have a position if we came this far
 					{
-						orderMove(position);
+						orderMove(position, modifierRCtrl || modifierLCtrl);
 						setSelectionState(SelectionState::Normal);
 					}
 					break;
@@ -1452,7 +1443,8 @@ bool CityView::handleGameStateEvent(Event *e)
 			{
 				LogError("Invalid spotted event");
 			}
-			fw().soundBackend->playSample(listRandomiser(state->rng, alertSounds));
+			fw().soundBackend->playSample(
+			    listRandomiser(state->rng, state->city_common_sample_list->alertSounds));
 			zoomLastEvent();
 			setUpdateSpeed(UpdateSpeed::Speed1);
 			fw().stageQueueCommand(
@@ -1789,16 +1781,16 @@ sp<Control> CityView::createVehicleInfoControl(const VehicleTileInfo &info)
 	switch (info.state)
 	{
 		case CityUnitState::InBase:
-			stateGraphic = vehicleIcon->createChild<Graphic>(this->icons[CityIcon::InBase]);
+			stateGraphic = baseControl->createChild<Graphic>(this->icons[CityIcon::InBase]);
 			break;
 		case CityUnitState::InVehicle:
-			stateGraphic = vehicleIcon->createChild<Graphic>(this->icons[CityIcon::InVehicle]);
+			stateGraphic = baseControl->createChild<Graphic>(this->icons[CityIcon::InVehicle]);
 			break;
 		case CityUnitState::InBuilding:
-			stateGraphic = vehicleIcon->createChild<Graphic>(this->icons[CityIcon::InBuilding]);
+			stateGraphic = baseControl->createChild<Graphic>(this->icons[CityIcon::InBuilding]);
 			break;
 		case CityUnitState::InMotion:
-			stateGraphic = vehicleIcon->createChild<Graphic>(this->icons[CityIcon::InMotion]);
+			stateGraphic = baseControl->createChild<Graphic>(this->icons[CityIcon::InMotion]);
 			break;
 	}
 

@@ -4,6 +4,7 @@
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/city/citycommonimagelist.h"
+#include "game/state/city/citycommonsamplelist.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
@@ -86,6 +87,19 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state) c
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
 	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
 	                                67)));
+
+	state.city_common_sample_list = mksp<CityCommonSampleList>();
+
+	state.city_common_sample_list->teleport =
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/strategc/explosns/teleport.raw:22050");
+	state.city_common_sample_list->alertSounds.emplace_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/alert.raw:22050"));
+	state.city_common_sample_list->alertSounds.emplace_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/alert2.raw:22050"));
+	state.city_common_sample_list->alertSounds.emplace_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/alert3.raw:22050"));
+	state.city_common_sample_list->alertSounds.emplace_back(
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/alert4.raw:22050"));
 
 	// Common Sounds
 

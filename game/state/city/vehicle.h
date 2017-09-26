@@ -17,6 +17,7 @@ namespace OpenApoc
 {
 
 static const unsigned CLOAK_TICKS_REQUIRED_VEHICLE = TICKS_PER_SECOND / 2;
+static const unsigned TELEPORT_TICKS_REQUIRED_VEHICLE = TICKS_PER_SECOND * 30;
 static const unsigned TICKS_AUTO_ACTION_DELAY = TICKS_PER_SECOND / 4;
 
 class Image;
@@ -99,6 +100,8 @@ class Vehicle : public StateObject,
 	// Vehicle is cloaked when this is >= CLOAK_TICKS_REQUIRED_VEHICLE
 	unsigned int cloakTicksAccumulated = 0;
 
+	unsigned int teleportTicksAccumulated = 0;
+
 	uint64_t ticksAutoActionAvailable = 0;
 
 	StateRef<Building> homeBuilding;
@@ -153,6 +156,8 @@ class Vehicle : public StateObject,
 
 	bool isCloaked() const;
 	bool hasCloak() const;
+	bool canTeleport() const;
+	bool hasTeleporter() const;
 
 	// This is the 'sum' of all armors?
 	int getArmor() const;

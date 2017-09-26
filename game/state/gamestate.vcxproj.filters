@@ -470,6 +470,9 @@
     <ClInclude Include="city\citycommonimagelist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="city\citycommonsamplelist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
