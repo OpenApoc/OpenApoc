@@ -1945,7 +1945,7 @@ int Battle::killStrandedUnits(GameState &state, StateRef<Organisation> org, bool
 			}
 		}
 		// Exit must be three times closer than enemy for escape to be possible
-		if (distanceToEnemy / 3.0f > distanceToExit)
+		if (distanceToEnemy / 3.0f < distanceToExit)
 		{
 			countKilled++;
 			if (!preview)

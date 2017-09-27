@@ -1906,7 +1906,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 					currentPlannedPath.clear();
 				}
 			}
-			if (currentPlannedPath.empty() == 0)
+			if (currentPlannedPath.empty())
 			{
 				this->setPathTo(state, u, targetLocation);
 			}

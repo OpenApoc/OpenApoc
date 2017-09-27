@@ -960,12 +960,13 @@ AEquipScreen::Mode AEquipScreen::getMode()
 	// vehicles
 
 	// If viewing an enemy
-	if (currentAgent->unit && currentAgent->unit->owner != state->current_battle->currentPlayer)
+	if (currentAgent && currentAgent->unit &&
+	    currentAgent->unit->owner != state->current_battle->currentPlayer)
 	{
 		return Mode::Enemy;
 	}
 	// If agent in battle
-	if (currentAgent->unit && currentAgent->unit->tileObject)
+	if (currentAgent && currentAgent->unit && currentAgent->unit->tileObject)
 	{
 		return Mode::Battle;
 	}

@@ -116,9 +116,6 @@ void TileObjectShadow::setPosition(Vec3<float> newPosition)
 	}
 	else
 	{
-		// May be a normal occurance (e.g. landing pads have a 'hole'
-		LogInfo("Nothing beneath {%f,%f,%f} to receive shadow", newPosition.x, newPosition.y,
-		        newPosition.z);
 		shadowPosition.z = 0;
 		// Mark it as not to be drawn
 		this->fellOffTheBottomOfTheMap = true;
