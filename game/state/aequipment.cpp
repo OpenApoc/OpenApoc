@@ -633,8 +633,8 @@ void AEquipment::explode(GameState &state)
 		case AEquipmentType::Type::Ammo:
 		{
 			auto payload = getPayloadType();
-			// If brainsucker then nothing
-			if (payload->damage_type->effectType == DamageType::EffectType::Brainsucker)
+			// If no payload or brainsucker then nothing
+			if (!payload || payload->damage_type->effectType == DamageType::EffectType::Brainsucker)
 			{
 				break;
 			}

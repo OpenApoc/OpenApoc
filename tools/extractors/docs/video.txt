@@ -11,6 +11,7 @@ City:
 - vehicles dodge attacks
 - vehicles auto-adjust height
 - point defense
+- teleport
 
 Battle:
 

@@ -1370,7 +1370,7 @@ bool CityView::handleMouseDown(Event *e)
 					if (vehicle)
 					{
 						orderAttack(
-						    StateRef<Building>{state.get(), Vehicle::getId(*state, vehicle)});
+						    StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)});
 						setSelectionState(SelectionState::Normal);
 					}
 					break;

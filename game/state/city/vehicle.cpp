@@ -1010,8 +1010,8 @@ sp<TileObjectProjectile> Vehicle::findClosestHostileMissile(GameState &state,
 	sp<TileObjectProjectile> closestEnemy;
 	for (auto &projectile : state.current_city->projectiles)
 	{
-		// Can't shoot down non-homing projectiles
-		if (!projectile->trackedVehicle)
+		// Can't shoot down projectiles w/o voxelMap
+		if (!projectile->voxelMap)
 		{
 			continue;
 		}
@@ -1304,6 +1304,11 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 
 bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 {
+	if (type->type == VehicleType::Type::Ground)
+	{
+		LogError("Ground vehicles not yet implemented!");
+		return true;
+	}
 	missions.clear();
 	missions.emplace_front(mission);
 	missions.front()->start(state, *this);
