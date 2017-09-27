@@ -13,6 +13,7 @@
 #include "framework/keycodes.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
+#include "game/state/city/building.h"
 #include "game/state/gamestate.h"
 #include "game/ui/base/researchselect.h"
 #include "library/strings_format.h"
@@ -280,7 +281,7 @@ void ResearchScreen::setCurrentLabInfo()
 	for (auto &agent : state->agents)
 	{
 		bool assigned_to_current_lab = false;
-		if (agent.second->home_base != this->state->current_base)
+		if (agent.second->homeBuilding->base != this->state->current_base)
 			continue;
 
 		if (agent.second->type->role != listedAgentType)

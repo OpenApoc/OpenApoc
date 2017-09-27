@@ -42,6 +42,7 @@
 #include "game/state/ufopaedia.h"
 #include "game/ui/base/basegraphics.h"
 #include "game/ui/base/basescreen.h"
+#include "game/ui/city/locationscreen.h"
 #include "game/ui/base/researchscreen.h"
 #include "game/ui/base/vequipscreen.h"
 #include "game/ui/battle/battlebriefing.h"
@@ -255,11 +256,11 @@ CityView::CityView(sp<GameState> state)
 		}
 		for (int i = 0; i < 3; i++)
 		{
-			// Red color, for enemy indicators, pulsates from (3/8r 0g 0b) to (8/8r 0g 0b)
-			newPal[i]->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
 			// Yellow color, for owned indicators, pulsates from (3/8r 3/8g 0b) to (8/8r 8/8g 0b)
-			newPal[i]->setColour(255 - 2, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8,
+			newPal[i]->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8,
 			                                     (colorCurrent * 16 * 5 + 255 * 3) / 8, 0));
+			// Red color, for enemy indicators, pulsates from (3/8r 0g 0b) to (8/8r 0g 0b)
+			newPal[i]->setColour(255 - 2, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
 			// Pink color, for neutral indicators, pulsates from (3/8r 0g 3/8b) to (8/8r 0g 8/8b)
 			newPal[i]->setColour(255 - 1, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0,
 			                                     (colorCurrent * 16 * 5 + 255 * 3) / 8));
@@ -473,13 +474,9 @@ CityView::CityView(sp<GameState> state)
 		    {
 			    if (v && v->owner == this->state->getPlayer())
 			    {
-				    auto b = v->currentlyLandedBuilding;
-				    if (b)
-				    {
-					    fw().stageQueueCommand(
-					        {StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, b)});
-					    break;
-				    }
+					fw().stageQueueCommand(
+					    {StageCmd::Command::PUSH, mksp<LocationScreen>(this->state, v)});
+					break;
 			    }
 		    }
 		});
@@ -610,6 +607,21 @@ CityView::CityView(sp<GameState> state)
 			    }
 		    }
 		});
+	auto agentForm = this->uiTabs[1];
+	agentForm->findControl("BUTTON_AGENT_BUILDING")
+		->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		for (auto &v : this->state->current_city->cityViewSelectedVehicles)
+		{
+			if (v && v->owner == this->state->getPlayer())
+			{
+				// FIXME: Open agent's location screen here
+				LogWarning("Implement agent location scren opening");
+				fw().stageQueueCommand(
+				{ StageCmd::Command::PUSH, mksp<LocationScreen>(this->state, v) });
+				break;
+			}
+		}
+	});
 }
 
 CityView::~CityView() = default;
@@ -1722,7 +1734,7 @@ VehicleTileInfo CityView::createVehicleInfo(sp<Vehicle> v)
 	// FIXME Fade out vehicles that are on the way to/back from the alien dimension
 	t.faded = false;
 
-	auto b = v->currentlyLandedBuilding;
+	auto b = v->currentBuilding;
 	if (b)
 	{
 		if (b == v->homeBuilding)

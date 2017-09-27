@@ -302,6 +302,7 @@ void InitialGameStateExtractor::extractCommon(GameState &state) const
 	// The alien map doesn't change
 	UString alienMapId = City::getPrefix() + "ALIEN";
 	state.cities[alienMapId] = std::make_shared<City>();
+	state.cities[alienMapId]->id = alienMapId;
 	this->extractBuildings(state, "albuild", state.cities[alienMapId], true);
 	this->extractCityMap(state, "alienmap", "ALIENMAP_", state.cities[alienMapId]);
 	this->extractCityScenery(state, "ALIENMAP_", "alienmap", "alien", "stratmap", "loftemps",
@@ -327,6 +328,7 @@ void InitialGameStateExtractor::extract(GameState &state, Difficulty difficulty)
 	UString humanMapId = City::getPrefix() + "HUMAN";
 
 	state.cities[humanMapId] = std::make_shared<City>();
+	state.cities[humanMapId]->id = humanMapId;
 
 	this->extractBuildings(state, humanMapNames[difficulty], state.cities[humanMapId]);
 

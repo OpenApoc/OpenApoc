@@ -19,6 +19,7 @@ namespace OpenApoc
 #define VOXEL_Z_CITY (16)
 
 class Vehicle;
+class VehicleType;
 class GameState;
 class Building;
 class Projectile;
@@ -26,6 +27,7 @@ class Scenery;
 class Doodad;
 class DoodadType;
 class SceneryTileType;
+class Organisation;
 class BaseLayout;
 class TileMap;
 
@@ -38,6 +40,7 @@ class City : public StateObject
 
 	void initMap();
 
+	UString id;
 	Vec3<int> size;
 
 	StateRefMap<SceneryTileType> tile_types;
@@ -68,6 +71,13 @@ class City : public StateObject
 	void updateInfiltration(GameState &state);
 
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
+	sp<Vehicle> placeVehicle(GameState &state, StateRef<VehicleType> type,
+	                         StateRef<Organisation> owner);
+	sp<Vehicle> placeVehicle(GameState &state, StateRef<VehicleType> type,
+	                         StateRef<Organisation> owner, StateRef<Building> building);
+	sp<Vehicle> placeVehicle(GameState &state, StateRef<VehicleType> type,
+	                         StateRef<Organisation> owner, Vec3<float> position,
+	                         float facing = 0.0f);
 
 	// Move a group of vehicles in formation
 	void groupMove(GameState &state, std::list<StateRef<Vehicle>> &selectedVehicles,

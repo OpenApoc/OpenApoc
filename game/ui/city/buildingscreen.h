@@ -9,6 +9,7 @@ namespace OpenApoc
 class GameState;
 class Building;
 class Form;
+class AgentAssignment;
 
 class BuildingScreen : public Stage
 {
@@ -16,6 +17,7 @@ class BuildingScreen : public Stage
 	sp<Form> menuform;
 	sp<GameState> state;
 	sp<Building> building;
+	sp<AgentAssignment> agentAssignment;
 
   public:
 	BuildingScreen(sp<GameState> state, sp<Building> building);

@@ -218,8 +218,13 @@
 		<member>rank</member>
 		<member>trainingPhysicalTicksAccumulated</member>
 		<member>trainingPsiTicksAccumulated</member>
-		<member>home_base</member>
 		<member>owner</member>
+		<member>city</member>
+		<member>homeBuilding</member>
+		<member>currentBuilding</member>
+		<member>currentVehicle</member>
+		<member>position</member>
+		<member>goalPosition</member>
 		<member>assigned_to_lab</member>
 		<member>unit</member>
 		<member>isBrainsucker</member>
@@ -309,7 +314,8 @@
 		<member>teleportTicksAccumulated</member>
 		<member>ticksAutoActionAvailable</member>
 		<member>homeBuilding</member>
-		<member>currentlyLandedBuilding</member>
+		<member>currentBuilding</member>
+		<member>currentAgents</member>
 	</object>
 	<object>
 		<name>VEquipment</name>
@@ -768,6 +774,7 @@
 	</object>
 	<object>
 		<name>City</name>
+		<member>id</member>
 		<member>size</member>
 		<member type="Section">tile_types</member>
 		<member type="Section">initial_tiles</member>
@@ -844,15 +851,18 @@
 	<object>
 		<name>Building</name>
 		<member>name</member>
+		<member>city</member>
 		<member>function</member>
 		<member>owner</member>
 		<member>bounds</member>
 		<member>base_layout</member>
+		<member>base</member>
 		<member>battle_map</member>
 		<member>preset_crew</member>
 		<member>current_crew</member>
 		<member>landingPadLocations</member>
-		<member>landed_vehicles</member>
+		<member>currentVehicles</member>
+		<member>currentAgents</member>
 		<member>ticksDetectionTimeOut</member>
 		<member>ticksDetectionAttemptAccumulated</member>
 		<member>detected</member>

@@ -14,7 +14,6 @@
 namespace OpenApoc
 {
 
-class Base;
 class Organisation;
 class AEquipment;
 class BattleUnitAnimationPack;
@@ -24,7 +23,10 @@ class AgentBodyType;
 class BattleUnit;
 class DamageModifier;
 class DamageType;
+class Building;
+class Vehicle;
 class VoxelMap;
+class City;
 enum class AIType;
 
 enum class BodyPart
@@ -311,8 +313,27 @@ class Agent : public StateObject,
 	int getTULimit(int reactionValue) const;
 	UString getRankName() const;
 
-	StateRef<Base> home_base;
 	StateRef<Organisation> owner;
+
+	StateRef<City> city;
+	StateRef<Building> homeBuilding;
+	// Building the agent is currently stored inside, nullptr if it's in the city or a vehicle
+	StateRef<Building> currentBuilding;
+	// Vehicle the agent is currently stored inside, nullptr if it's in the city in a building
+	StateRef<Vehicle> currentVehicle;
+
+	/* leave the building and put agent into the city */
+	void leaveBuilding(GameState &state, Vec3<float> initialPosition);
+	/* 'enter' the agent in a building from city or vehicle*/
+	void enterBuilding(GameState &state, StateRef<Building> b);
+	/* 'enter' the agent in a vehicle from building*/
+	void enterVehicle(GameState &state, StateRef<Vehicle> v);
+	// Note that agent cannot ever leave vehicle into city, or enter vehicle from citu
+
+	// Agent's position in the city
+	Vec3<float> position;
+	// Position agent is moving towards
+	Vec3<float> goalPosition;
 
 	bool assigned_to_lab = false;
 

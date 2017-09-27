@@ -3,23 +3,7 @@ OpenApoc X-Com Ufo Apocalypse Development Opensource Open Source XCom programmin
 ---
 
 City:
-- rectangle around vehicles
-- vehicle paths
-- city map colored icons
-- vehicle cloak
-- vehicles using banking
-- vehicles dodge attacks
-- vehicles auto-adjust height
-- point defense
-- teleport
+- 
 
 Battle:
-
-- orgs going hostile from attacks vs its units
-- debug arsenal
-- rectangle around units
-- dirt in basescape
-- falling damage
-- aequip buttons
-- aequip templates
-- non-violent deaths from disruptor fire
+-  

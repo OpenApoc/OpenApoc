@@ -2,6 +2,8 @@
 #include "game/state/aequipment.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battleunit.h"
+#include "game/state/city/building.h"
+#include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
 #include "game/state/rules/aequipment_type.h"
@@ -413,6 +415,47 @@ UString Agent::getRankName() const
 	}
 	LogError("Unknown rank %d", (int)rank);
 	return "";
+}
+
+void Agent::leaveBuilding(GameState &state, Vec3<float> initialPosition)
+{
+	if (currentBuilding)
+	{
+		currentBuilding->currentAgents.erase({&state, shared_from_this()});
+		currentBuilding = nullptr;
+	}
+	if (currentVehicle)
+	{
+		currentVehicle->currentAgents.erase({&state, shared_from_this()});
+		currentVehicle = nullptr;
+	}
+	position = initialPosition;
+	goalPosition = initialPosition;
+}
+
+void Agent::enterBuilding(GameState &state, StateRef<Building> b)
+{
+	if (currentVehicle)
+	{
+		currentVehicle->currentAgents.erase({&state, shared_from_this()});
+		currentVehicle = nullptr;
+	}
+	currentBuilding = b;
+	currentBuilding->currentAgents.insert({&state, shared_from_this()});
+	// FIXME: Implement crew quarters coordinate
+	LogWarning("Implement crew quarters coordinate for agents");
+	position = {(b->bounds.p0.x + b->bounds.p1.x) / 2, (b->bounds.p0.y + b->bounds.p1.y) / 2, 3};
+}
+
+void Agent::enterVehicle(GameState &state, StateRef<Vehicle> v)
+{
+	if (currentBuilding)
+	{
+		currentBuilding->currentAgents.erase({&state, shared_from_this()});
+		currentBuilding = nullptr;
+	}
+	currentVehicle = v;
+	currentVehicle->currentAgents.insert({&state, shared_from_this()});
 }
 
 sp<AEquipment> Agent::getArmor(BodyPart bodyPart) const

@@ -161,7 +161,8 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 	std::set<UString> agentsToRemove;
 	for (auto &a : state.agents)
 	{
-		if (a.second->type->role == AgentType::Role::Soldier && a.second->home_base == playerBase)
+		if (a.second->type->role == AgentType::Role::Soldier &&
+		    a.second->homeBuilding->base == playerBase)
 		{
 			agentsToRemove.insert(a.first);
 			a.second->destroy();
@@ -298,7 +299,8 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 
 		agent->trainPhysical(state, physTicks);
 		agent->trainPsi(state, psiTicks);
-		agent->home_base = playerBase;
+		agent->homeBuilding = playerBase->building;
+		agent->enterBuilding(state, agent->homeBuilding);
 	}
 
 	LogWarning("Resetting base inventory");
@@ -480,7 +482,7 @@ std::shared_future<void> loadBattleBuilding(bool hotseat, sp<Building> building,
 			for (auto &a : state->agents)
 			{
 				if (a.second->type->role == AgentType::Role::Soldier &&
-				    a.second->home_base == playerBase)
+				    a.second->homeBuilding == playerBase->building)
 				{
 					agents.emplace_back(state, a.second);
 				}
@@ -509,14 +511,12 @@ std::shared_future<void> loadBattleVehicle(bool hotseat, sp<VehicleType> vehicle
 		std::list<StateRef<Agent>> agents;
 		for (auto &a : state->agents)
 			if (a.second->type->role == AgentType::Role::Soldier &&
-			    a.second->home_base == playerBase)
+			    a.second->homeBuilding == playerBase->building)
 				agents.emplace_back(state, a.second);
 
 		StateRef<Organisation> org = {state, UString("ORG_ALIEN")};
 		auto v = mksp<Vehicle>();
-
 		auto vID = Vehicle::generateObjectID(*state);
-
 		v->type = {state, vehicle};
 		v->name = format("%s %d", v->type->name, ++v->type->numCreated);
 

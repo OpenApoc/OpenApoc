@@ -3,6 +3,7 @@
 #include "framework/sound.h"
 #include "framework/trace.h"
 #include "game/state/city/building.h"
+#include "game/state/city/citycommonimagelist.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/projectile.h"
 #include "game/state/city/scenery.h"
@@ -62,7 +63,8 @@ City::~City()
 
 	for (auto &b : this->buildings)
 	{
-		b.second->landed_vehicles.clear();
+		b.second->currentVehicles.clear();
+		b.second->currentAgents.clear();
 	}
 }
 
@@ -149,12 +151,12 @@ void City::update(GameState &state, unsigned int ticks)
 	// Need to use a 'safe' iterator method (IE keep the next it before calling ->update)
 	// as update() calls can erase it's object from the lists
 
-	Trace::start("City::update::buildings->landed_vehicles");
+	Trace::start("City::update::buildings->currentVehicles");
 	for (auto it = this->buildings.begin(); it != this->buildings.end();)
 	{
 		auto b = it->second;
 		it++;
-		for (auto v : b->landed_vehicles)
+		for (auto v : b->currentVehicles)
 		{
 			for (auto &e : v->equipment)
 			{
@@ -182,7 +184,7 @@ void City::update(GameState &state, unsigned int ticks)
 			}
 		}
 	}
-	Trace::end("City::update::buildings->landed_vehicles");
+	Trace::end("City::update::buildings->currentVehicles");
 	Trace::start("City::update::projectiles->update");
 	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
 	{
@@ -309,6 +311,53 @@ sp<Doodad> City::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 	map->addObjectToMap(doodad);
 	this->doodads.push_back(doodad);
 	return doodad;
+}
+
+sp<Vehicle> City::placeVehicle(GameState &state, StateRef<VehicleType> type,
+                               StateRef<Organisation> owner)
+{
+	auto v = mksp<Vehicle>();
+	v->type = type;
+	v->name = format("%s %d", type->name, ++type->numCreated);
+	v->city = {&state, id};
+	v->owner = owner;
+	v->health = type->health;
+	v->strategyImages = state.city_common_image_list->strategyImages;
+	v->owner = owner;
+
+	// Vehicle::equipDefaultEquipment uses the state reference from itself, so make sure the
+	// vehicle table has the entry before calling it
+	UString vID = Vehicle::generateObjectID(state);
+	state.vehicles[vID] = v;
+
+	v->equipDefaultEquipment(state);
+
+	return v;
+}
+
+sp<Vehicle> City::placeVehicle(GameState &state, StateRef<VehicleType> type,
+                               StateRef<Organisation> owner, StateRef<Building> building)
+{
+	if (building->city.id != id)
+	{
+		LogError("Adding vehicle to a building in a different city?");
+		return nullptr;
+	}
+	auto v = placeVehicle(state, type, owner);
+
+	v->enterBuilding(state, building);
+
+	return v;
+}
+
+sp<Vehicle> City::placeVehicle(GameState &state, StateRef<VehicleType> type,
+                               StateRef<Organisation> owner, Vec3<float> position, float facing)
+{
+	auto v = placeVehicle(state, type, owner);
+
+	v->leaveBuilding(state, position, facing);
+
+	return v;
 }
 
 sp<City> City::get(const GameState &state, const UString &id)

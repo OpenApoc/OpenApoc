@@ -4,6 +4,7 @@
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
 #include "game/state/city/building.h"
+#include "game/state/city/city.h"
 #include "game/state/city/citycommonimagelist.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
@@ -355,24 +356,10 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 										auto type = state->vehicle_types[lab->current_project
 										                                     ->item_produced];
 
-										auto v = mksp<Vehicle>();
-										v->type = {state.get(), type};
-										v->name = format("%s %d", type->name, ++type->numCreated);
-										v->city = {state.get(), "CITYMAP_HUMAN"};
-										v->currentlyLandedBuilding = {state.get(),
-										                              base.second->building};
+										auto v = base.second->building->city->placeVehicle(
+										    *state, {state.get(), type}, state->getPlayer(),
+										    base.second->building);
 										v->homeBuilding = {state.get(), base.second->building};
-										v->owner = state->getPlayer();
-										v->health = (int)type->health;
-										UString vID = Vehicle::generateObjectID(*state);
-										state->vehicles[vID] = v;
-										v->currentlyLandedBuilding->landed_vehicles.insert(
-										    {state.get(), vID});
-										v->position = {v->currentlyLandedBuilding->bounds.p0.x,
-										               v->currentlyLandedBuilding->bounds.p0.y, 2};
-										v->equipDefaultEquipment(*state);
-										v->strategyImages =
-										    state->city_common_image_list->strategyImages;
 									}
 									break;
 								}

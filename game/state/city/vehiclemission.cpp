@@ -403,7 +403,7 @@ VehicleMission *VehicleMission::teleport(GameState &state, Vehicle &v, Vec3<int>
 
 VehicleMission *VehicleMission::takeOff(Vehicle &v)
 {
-	if (!v.currentlyLandedBuilding)
+	if (!v.currentBuilding)
 	{
 		LogError("Trying to take off while not in a building");
 		return nullptr;
@@ -425,7 +425,7 @@ bool VehicleMission::takeOffCheck(GameState &state, Vehicle &v)
 {
 	if (!v.tileObject)
 	{
-		if (v.currentlyLandedBuilding)
+		if (v.currentBuilding)
 		{
 			auto *takeoffMission = VehicleMission::takeOff(v);
 			v.missions.emplace_front(takeoffMission);
@@ -575,7 +575,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 		}
 		case MissionType::GotoBuilding:
 		{
-			if (v.currentlyLandedBuilding != this->targetBuilding)
+			if (v.currentBuilding != this->targetBuilding)
 			{
 				auto name = this->getName();
 				LogError("Vehicle mission %s: getNextDestination() shouldn't be called unless "
@@ -610,7 +610,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 			{
 				return;
 			}
-			auto b = v.currentlyLandedBuilding;
+			auto b = v.currentBuilding;
 			if (!b)
 			{
 				LogError("Building disappeared");
@@ -669,7 +669,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 				LogInfo("Launching vehicle from building \"%s\" at pad %s", b.id, padLocation);
 				this->currentPlannedPath = {belowPadLocation, belowPadLocation, padLocation,
 				                            abovePadLocation};
-				v.launch(map, state, belowPadLocation);
+				v.leaveBuilding(state, belowPadLocation);
 				return;
 			}
 			LogInfo("No pad in building \"%s\" free - waiting", b.id);
@@ -756,7 +756,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 					LogError("Building disappeared");
 					return;
 				}
-				v.land(state, b);
+				v.enterBuilding(state, b);
 				LogInfo("Vehicle mission: Landed in %s", b.id);
 				return;
 			}
@@ -819,7 +819,7 @@ bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 		case MissionType::Patrol:
 			return this->missionCounter == 0 && this->currentPlannedPath.empty();
 		case MissionType::GotoBuilding:
-			return this->targetBuilding == v.currentlyLandedBuilding;
+			return this->targetBuilding == v.currentBuilding;
 		case MissionType::AttackVehicle:
 		{
 			auto t = this->targetVehicle;
@@ -921,9 +921,9 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			{
 				targetTile = v.position;
 			}
-			if (v.currentlyLandedBuilding)
+			if (v.currentBuilding)
 			{
-				v.launch(map, state, targetTile);
+				v.leaveBuilding(state, targetTile);
 			}
 			else
 			{
@@ -1099,7 +1099,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				LogError("Building disappeared");
 				return;
 			}
-			if (b == v.currentlyLandedBuilding)
+			if (b == v.currentBuilding)
 			{
 				LogInfo("Vehicle mission %s: Already at building", name);
 				return;

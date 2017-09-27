@@ -18,6 +18,7 @@
 #include "game/state/base/base.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battleunit.h"
+#include "game/state/city/building.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/damage.h"
 #include "game/state/tileview/tileobject_battleunit.h"
@@ -971,7 +972,7 @@ AEquipScreen::Mode AEquipScreen::getMode()
 		return Mode::Battle;
 	}
 	// If agent in base and not in vehicle or in vehicle which is parked in base
-	else if (true)
+	else if (currentAgent && currentAgent->homeBuilding->base && true)
 	{
 		return Mode::Base;
 	}
@@ -1044,21 +1045,16 @@ void AEquipScreen::populateInventoryItemsBattle()
 
 void AEquipScreen::populateInventoryItemsBase()
 {
+	if (!currentAgent || !currentAgent->currentBuilding || !currentAgent->currentBuilding->base)
+	{
+		return;
+	}
 	// The gap between the end of one inventory image and the start of the next
 	static const int INVENTORY_IMAGE_X_GAP = 4;
 	Vec2<int> inventoryPosition = inventoryControl->Location + formMain->Location;
 
 	// Find base which is in the current building
-	StateRef<Base> base;
-	for (auto &b : state->player_bases)
-	{
-		// TODO: Fix this to be the building agent is currently in
-		if (b.second->building == currentAgent->home_base->building)
-		{
-			base = {state.get(), b.first};
-			break;
-		}
-	}
+	StateRef<Base> base = currentAgent->currentBuilding->base;
 
 	for (auto &invPair : base->inventoryAgentEquipment)
 	{
@@ -1232,16 +1228,7 @@ void AEquipScreen::removeItemFromInventoryBattle(sp<AEquipment> item)
 void AEquipScreen::removeItemFromInventoryBase(sp<AEquipment> item)
 {
 	// Find base which is in the current building
-	StateRef<Base> base;
-	for (auto &b : state->player_bases)
-	{
-		// TODO: Fix this to be the building agent is currently in
-		if (b.second->building == currentAgent->home_base->building)
-		{
-			base = {state.get(), b.first};
-			break;
-		}
-	}
+	StateRef<Base> base = currentAgent->currentBuilding->base;
 
 	// Remove item from base
 	if (item->type->type == AEquipmentType::Type::Ammo)
@@ -1338,16 +1325,7 @@ void AEquipScreen::addItemToInventoryBattle(sp<AEquipment> item)
 void AEquipScreen::addItemToInventoryBase(sp<AEquipment> item)
 {
 	// Find base which is in the current building
-	StateRef<Base> base;
-	for (auto &b : state->player_bases)
-	{
-		// TODO: Fix this to be the building agent is currently in
-		if (b.second->building == currentAgent->home_base->building)
-		{
-			base = {state.get(), b.first};
-			break;
-		}
-	}
+	StateRef<Base> base = currentAgent->currentBuilding->base;
 
 	// Unload ammunition and add it too
 	sp<AEquipment> ammo = nullptr;
@@ -1407,16 +1385,8 @@ void AEquipScreen::processTemplate(int idx, bool remember)
 			addItemToInventory(eq);
 		}
 		// Find base which is in the current building
-		StateRef<Base> base;
-		for (auto &b : state->player_bases)
-		{
-			// TODO: Fix this to be the building agent is currently in
-			if (b.second->building == currentAgent->home_base->building)
-			{
-				base = {state.get(), b.first};
-				break;
-			}
-		}
+		StateRef<Base> base = currentAgent->currentBuilding->base;
+
 		// Equip agent according to template
 		for (auto &eq : temp.equipment)
 		{

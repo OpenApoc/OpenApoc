@@ -25,6 +25,7 @@ set (GAMEUI_SOURCE_FILES
 	city/basebuyscreen.cpp
 	city/baseselectscreen.cpp
 	city/buildingscreen.cpp
+	city/locationscreen.cpp
 	city/alertscreen.cpp
 	city/infiltrationscreen.cpp
 	city/scorescreen.cpp
@@ -50,6 +51,7 @@ set (GAMEUI_SOURCE_FILES
 	tileview/tileview.cpp
 	ufopaedia/ufopaediacategoryview.cpp
 	ufopaedia/ufopaediaview.cpp
+	agentassignment.cpp
 	equipscreen.cpp
 	boot.cpp)
 source_group(gamestate\\sources FILES ${GAMEUI_SOURCE_FILES})
@@ -69,6 +71,7 @@ set (GAMEUI_HEADER_FILES
 	city/basebuyscreen.h
 	city/baseselectscreen.h
 	city/buildingscreen.h
+	city/locationscreen.h
 	city/alertscreen.h
 	city/infiltrationscreen.h
 	city/scorescreen.h
@@ -94,6 +97,7 @@ set (GAMEUI_HEADER_FILES
 	tileview/tileview.h
 	ufopaedia/ufopaediacategoryview.h
 	ufopaedia/ufopaediaview.h
+	agentassignment.h
 	equipscreen.h
 	boot.h)
 source_group(gamestate\\headers FILES ${GAMEUI_HEADER_FILES})

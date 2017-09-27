@@ -1128,6 +1128,7 @@ sp<BattleUnit> Battle::spawnUnit(GameState &state, StateRef<Organisation> owner,
                                  Vec2<int> facing, BodyState curState, BodyState tarState)
 {
 	auto agent = state.agent_generator.createAgent(state, owner, agentType);
+	agent->city = state.current_city;
 	auto unit = state.current_battle->placeUnit(state, agent, position);
 	unit->falling = true;
 	if (facing.x == 0 && facing.y == 0)

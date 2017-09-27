@@ -72,6 +72,7 @@ void BaseBuyScreen::eventOccurred(Event *e)
 			{
 				state->getPlayer()->balance -= price;
 				base->building->owner = state->getPlayer();
+				base->building->base = {state.get(), base};
 				base->name = "Base " + Strings::fromInteger(state->player_bases.size() + 1);
 				state->player_bases[Base::getPrefix() +
 				                    Strings::fromInteger(state->player_bases.size() + 1)] = base;

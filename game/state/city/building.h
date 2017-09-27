@@ -19,12 +19,14 @@ static const unsigned int TICKS_PER_DETECTION_ATTEMPT[5] = {
 static const unsigned int TICKS_DETECTION_TIMEOUT = 6 * TICKS_PER_HOUR;
 
 class BuildingDef;
+class Agent;
 class Organisation;
 class Vehicle;
 class AgentType;
 class Base;
 class BattleMap;
 class BaseLayout;
+class City;
 class UfopaediaEntry;
 
 class BuildingFunction : public StateObject
@@ -42,16 +44,19 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 	STATE_OBJECT(Building)
   public:
 	UString name;
+	StateRef<City> city;
 	StateRef<BuildingFunction> function;
 	StateRef<Organisation> owner;
 	Rect<int> bounds;
 	StateRef<BaseLayout> base_layout;
+	StateRef<Base> base;
 	StateRef<BattleMap> battle_map;
 	std::map<StateRef<AgentType>, int> preset_crew;
 	std::map<StateRef<AgentType>, int> current_crew;
 
 	std::vector<Vec3<int>> landingPadLocations;
-	std::set<StateRef<Vehicle>> landed_vehicles;
+	std::set<StateRef<Vehicle>> currentVehicles;
+	std::set<StateRef<Agent>> currentAgents;
 
 	unsigned ticksDetectionTimeOut = 0;
 	unsigned ticksDetectionAttemptAccumulated = 0;

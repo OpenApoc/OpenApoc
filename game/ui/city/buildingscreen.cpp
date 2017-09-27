@@ -1,5 +1,6 @@
 #include "game/ui/city/buildingscreen.h"
 #include "forms/form.h"
+#include "forms/graphic.h"
 #include "forms/label.h"
 #include "forms/ui.h"
 #include "framework/event.h"
@@ -8,6 +9,7 @@
 #include "game/state/city/building.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
+#include "game/ui/agentassignment.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc
@@ -25,7 +27,14 @@ BuildingScreen::BuildingScreen(sp<GameState> state, sp<Building> building)
 
 BuildingScreen::~BuildingScreen() = default;
 
-void BuildingScreen::begin() {}
+void BuildingScreen::begin()
+{
+	auto agentAssignmentPlaceholder = menuform->findControlTyped<Graphic>("AGENT_ASSIGNMENT");
+	agentAssignment = menuform->createChild<AgentAssignment>(state);
+	agentAssignment->init(ui().getForm("city/agentassignment"),
+	                      agentAssignmentPlaceholder->Location, agentAssignmentPlaceholder->Size);
+	agentAssignment->setLocation(building);
+}
 
 void BuildingScreen::pause() {}
 
@@ -36,6 +45,10 @@ void BuildingScreen::finish() {}
 void BuildingScreen::eventOccurred(Event *e)
 {
 	menuform->eventOccured(e);
+	if (menuform->eventIsWithin(e))
+	{
+		return;
+	}
 
 	if (e->type() == EVENT_KEY_DOWN)
 	{
