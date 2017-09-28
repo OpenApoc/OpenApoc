@@ -30,7 +30,6 @@ class AgentAssignment : public Form
 	std::vector<sp<Image>> unitRanks;
 	std::vector<sp<Image>> bigUnitRanks;
 	std::vector<sp<Image>> unitSelect;
-	std::vector<sp<Image>> vehiclePassengerCountIcons;
 
   public:
 	sp<Agent> currentAgent;
@@ -41,7 +40,6 @@ class AgentAssignment : public Form
 	void init(sp<Form> form, Vec2<int> location, Vec2<int> size);
 
 	sp<Control> createAgentControl(sp<Agent> agent);
-	sp<Control> createVehicleInfoControl(sp<Vehicle> vehicle);
 
 	void setLocation(sp<Agent> agent);
 	void setLocation(sp<Vehicle> vehicle);

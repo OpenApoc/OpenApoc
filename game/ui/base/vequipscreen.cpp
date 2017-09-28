@@ -184,7 +184,7 @@ void VEquipScreen::eventOccurred(Event *e)
 		// TODO: Show vehicle tooltip when hovering over it
 	}
 	// Find the base this vehicle is landed in
-	StateRef<Base> base = selected->currentBuilding->base;
+	StateRef<Base> base = selected->currentBuilding ? selected->currentBuilding->base : nullptr;
 
 	// Only allow removing equipment if we're in a base, otherwise it'll disappear
 	if (e->type() == EVENT_MOUSE_DOWN && base)

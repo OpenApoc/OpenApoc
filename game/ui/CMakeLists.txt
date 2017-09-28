@@ -53,6 +53,7 @@ set (GAMEUI_SOURCE_FILES
 	ufopaedia/ufopaediaview.cpp
 	agentassignment.cpp
 	equipscreen.cpp
+	controlgenerator.cpp
 	boot.cpp)
 source_group(gamestate\\sources FILES ${GAMEUI_SOURCE_FILES})
 set (GAMEUI_HEADER_FILES
@@ -99,6 +100,7 @@ set (GAMEUI_HEADER_FILES
 	ufopaedia/ufopaediaview.h
 	agentassignment.h
 	equipscreen.h
+	controlgenerator.h
 	boot.h)
 source_group(gamestate\\headers FILES ${GAMEUI_HEADER_FILES})
 

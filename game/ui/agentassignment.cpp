@@ -1,6 +1,7 @@
 #define _USE_MATH_DEFINES
 
 #include "game/ui/agentassignment.h"
+#include "game/ui/controlgenerator.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
@@ -19,26 +20,7 @@
 
 namespace OpenApoc
 {
-namespace
-{
 
-static const std::vector<UString> CITY_ICON_VEHICLE_PASSENGER_COUNT_RESOURCES = {
-    {""}, // 0 has no image
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:51:xcom3/ufodata/pal_01.dat"}, // 1
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:52:xcom3/ufodata/pal_01.dat"}, // 2
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:53:xcom3/ufodata/pal_01.dat"}, // 3
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:54:xcom3/ufodata/pal_01.dat"}, // 4
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:55:xcom3/ufodata/pal_01.dat"}, // 5
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:56:xcom3/ufodata/pal_01.dat"}, // 6
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:57:xcom3/ufodata/pal_01.dat"}, // 7
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:58:xcom3/ufodata/pal_01.dat"}, // 8
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:59:xcom3/ufodata/pal_01.dat"}, // 9
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:60:xcom3/ufodata/pal_01.dat"}, // 10
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:61:xcom3/ufodata/pal_01.dat"}, // 11
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:62:xcom3/ufodata/pal_01.dat"}, // 12
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:63:xcom3/ufodata/pal_01.dat"}, // 13+
-};
-}
 AgentAssignment::AgentAssignment(sp<GameState> state)
     : Form(), state(state), labelFont(ui().getFont("smalfont"))
 {
@@ -82,17 +64,6 @@ AgentAssignment::AgentAssignment(sp<GameState> state)
 	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:37:xcom3/ufodata/pal_01.dat"));
 	unitSelect.push_back(fw().data->loadImage("battle/battle-icon-38.png"));
 	unitSelect.push_back(fw().data->loadImage("battle/battle-icon-39.png"));
-
-	for (auto &passengerResource : CITY_ICON_VEHICLE_PASSENGER_COUNT_RESOURCES)
-	{
-		auto image = fw().data->loadImage(passengerResource);
-		if (!image && passengerResource != "")
-		{
-			LogError("Failed to open city vehicle passenger icon resource \"%s\"",
-			         passengerResource);
-		}
-		this->vehiclePassengerCountIcons.push_back(image);
-	}
 }
 
 void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
@@ -276,7 +247,7 @@ void AgentAssignment::updateLocation()
 	}
 	for (auto &vehicle : vehicles)
 	{
-		auto vehicleControl = this->createVehicleInfoControl(vehicle);
+		auto vehicleControl = ControlGenerator::createVehicleControl(*state, vehicle);
 		vehicleList->addItem(vehicleControl);
 		if (vehicle == currentVehicle)
 		{
@@ -378,47 +349,4 @@ sp<Control> AgentAssignment::createAgentControl(sp<Agent> agent)
 	return baseControl;
 }
 
-sp<Control> AgentAssignment::createVehicleInfoControl(sp<Vehicle> vehicle)
-{
-	auto frame = unitSelect[0];
-	auto baseControl = mksp<Graphic>(frame);
-	baseControl->Size = frame->size;
-	baseControl->setData(vehicle);
-
-	auto vehicleIcon = baseControl->createChild<Graphic>(vehicle->type->icon);
-	vehicleIcon->AutoSize = true;
-	vehicleIcon->Location = {1, 1};
-	vehicleIcon->Name = "OWNED_VEHICLE_ICON_" + vehicle->name;
-
-	// FIXME: Put these somewhere slightly less magic?
-	Vec2<int> healthBarOffset = {27, 2};
-	Vec2<int> healthBarSize = {3, 20};
-
-	auto healthImg = vehicle->getMaxShield() > 0 ? this->shieldImage : this->healthImage;
-
-	auto healthGraphic = baseControl->createChild<Graphic>(healthImg);
-	float healthProportion = vehicle->getMaxShield() > 0
-	                             ? (float)vehicle->getShield() / (float)vehicle->getMaxShield()
-	                             : (float)vehicle->getHealth() / (float)vehicle->getMaxHealth();
-	// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
-	// top-left, so fix that up a bit
-	int healthBarHeight = (int)((float)healthBarSize.y * healthProportion);
-	healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
-	healthBarSize.y = healthBarHeight;
-	healthGraphic->Location = healthBarOffset;
-	healthGraphic->Size = healthBarSize;
-	healthGraphic->ImagePosition = FillMethod::Stretch;
-
-	sp<Graphic> stateGraphic;
-
-	if (vehicle->getPassengers() > 0)
-	{
-		auto passengerGraphic = vehicleIcon->createChild<Graphic>(
-		    this->vehiclePassengerCountIcons[vehicle->getPassengers()]);
-		passengerGraphic->AutoSize = true;
-		passengerGraphic->Location = {0, 0};
-	}
-
-	return baseControl;
-}
 }

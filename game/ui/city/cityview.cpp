@@ -6,6 +6,7 @@
 #include "forms/label.h"
 #include "forms/list.h"
 #include "forms/radiobutton.h"
+#include "game/state/city/baselayout.h"
 #include "forms/ticker.h"
 #include "forms/ui.h"
 #include "framework/data.h"
@@ -42,6 +43,7 @@
 #include "game/state/ufopaedia.h"
 #include "game/ui/base/basegraphics.h"
 #include "game/ui/base/basescreen.h"
+#include "game/ui/city/basebuyscreen.h"
 #include "game/ui/city/locationscreen.h"
 #include "game/ui/base/researchscreen.h"
 #include "game/ui/base/vequipscreen.h"
@@ -57,6 +59,7 @@
 #include "game/ui/general/notificationscreen.h"
 #include "game/ui/ufopaedia/ufopaediacategoryview.h"
 #include "game/ui/ufopaedia/ufopaediaview.h"
+#include "game/ui/controlgenerator.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
 #include <glm/glm.hpp>
@@ -66,44 +69,9 @@ namespace OpenApoc
 namespace
 {
 
-static const std::map<CityIcon, UString> CITY_ICON_RESOURCES = {
-    // FIXME: Put this in the rules somewhere?
-    {CityIcon::UnselectedFrame,
-     "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:37:xcom3/ufodata/pal_01.dat"},
-    {CityIcon::SelectedFrame,
-     "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:39:xcom3/ufodata/pal_01.dat"},
-    {CityIcon::SelectedSecondaryFrame,
-     "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:38:xcom3/ufodata/pal_01.dat"},
-
-    {CityIcon::InBase,
-     "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:47:xcom3/ufodata/pal_01.dat"},
-    {CityIcon::InVehicle,
-     "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:48:xcom3/ufodata/pal_01.dat"},
-    {CityIcon::InBuilding,
-     "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:49:xcom3/ufodata/pal_01.dat"},
-    {CityIcon::InMotion,
-     "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:50:xcom3/ufodata/pal_01.dat"},
-};
 static const std::vector<UString> TAB_FORM_NAMES = {
     "city/tab1", "city/tab2", "city/tab3", "city/tab4",
     "city/tab5", "city/tab6", "city/tab7", "city/tab8",
-};
-
-static const std::vector<UString> CITY_ICON_VEHICLE_PASSENGER_COUNT_RESOURCES = {
-    {""}, // 0 has no image
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:51:xcom3/ufodata/pal_01.dat"}, // 1
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:52:xcom3/ufodata/pal_01.dat"}, // 2
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:53:xcom3/ufodata/pal_01.dat"}, // 3
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:54:xcom3/ufodata/pal_01.dat"}, // 4
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:55:xcom3/ufodata/pal_01.dat"}, // 5
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:56:xcom3/ufodata/pal_01.dat"}, // 6
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:57:xcom3/ufodata/pal_01.dat"}, // 7
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:58:xcom3/ufodata/pal_01.dat"}, // 8
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:59:xcom3/ufodata/pal_01.dat"}, // 9
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:60:xcom3/ufodata/pal_01.dat"}, // 10
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:61:xcom3/ufodata/pal_01.dat"}, // 11
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:62:xcom3/ufodata/pal_01.dat"}, // 12
-    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:63:xcom3/ufodata/pal_01.dat"}, // 13+
 };
 
 } // anonymous namespace
@@ -307,44 +275,6 @@ CityView::CityView(sp<GameState> state)
 		Vec2<int> buildingCenter = (bldBounds.p0 + bldBounds.p1) / 2;
 		this->setScreenCenterTile(buildingCenter);
 	}
-
-	for (auto &iconResource : CITY_ICON_RESOURCES)
-	{
-		auto &type = iconResource.first;
-		auto &path = iconResource.second;
-		auto image = fw().data->loadImage(path);
-		if (!image)
-		{
-			LogError("Failed to open city icon resource \"%s\"", path);
-		}
-		this->icons[type] = image;
-	}
-
-	for (auto &passengerResource : CITY_ICON_VEHICLE_PASSENGER_COUNT_RESOURCES)
-	{
-		auto image = fw().data->loadImage(passengerResource);
-		if (!image && passengerResource != "")
-		{
-			LogError("Failed to open city vehicle passenger icon resource \"%s\"",
-			         passengerResource);
-		}
-		this->vehiclePassengerCountIcons.push_back(image);
-	}
-
-	auto img = mksp<RGBImage>(Vec2<int>{1, 2});
-	{
-		RGBImageLock l(img);
-		l.set({0, 0}, Colour{255, 255, 219});
-		l.set({0, 1}, Colour{215, 0, 0});
-	}
-	this->healthImage = img;
-	img = mksp<RGBImage>(Vec2<int>{1, 2});
-	{
-		RGBImageLock l(img);
-		l.set({0, 0}, Colour{160, 236, 252});
-		l.set({0, 1}, Colour{4, 100, 252});
-	}
-	this->shieldImage = img;
 
 	this->baseForm->findControl("BUTTON_TAB_1")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
@@ -607,7 +537,7 @@ CityView::CityView(sp<GameState> state)
 			    }
 		    }
 		});
-	auto agentForm = this->uiTabs[1];
+	auto agentForm = this->uiTabs[2];
 	agentForm->findControl("BUTTON_AGENT_BUILDING")
 		->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		for (auto &v : this->state->current_city->cityViewSelectedVehicles)
@@ -910,7 +840,7 @@ void CityView::update()
 			{
 				continue;
 			}
-			auto info = this->createVehicleInfo(vehicle);
+			auto info = ControlGenerator::createVehicleInfo(*state, vehicle);
 			auto it = this->vehicleListControls.find(vehicle);
 			sp<Control> control;
 			if (it != this->vehicleListControls.end() && it->second.first == info)
@@ -920,7 +850,7 @@ void CityView::update()
 			}
 			else
 			{
-				control = createVehicleInfoControl(info);
+				control = ControlGenerator::createVehicleControl(*state, info);
 				control->addCallback(FormEventType::MouseDown, [this, vehicle](FormsEvent *e) {
 					orderSelect(
 					    StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)},
@@ -1305,9 +1235,9 @@ bool CityView::handleMouseDown(Event *e)
 				return true;
 			}
 			// If shift then we show object's info screen
-			if (modifierLShift || modifierLShift)
+			if (modifierLShift || modifierRShift)
 			{
-				// Left = Normal selection
+				// Left = Normal (Equip/Manage)
 				if (buttonPressed == Event::MouseButton::Left)
 				{
 					if (vehicle && vehicle->owner == state->player)
@@ -1319,31 +1249,43 @@ bool CityView::handleMouseDown(Event *e)
 					}
 					if (building)
 					{
-						// Base screen for base
-						LogWarning("IMPLEMENT: Base screen for bases on right click");
-						// Building screen for any other building
-						fw().stageQueueCommand(
-						    {StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, building)});
+						if (building->base)
+						{
+							// Base screen
+							state->current_base = building->base;
+							this->uiTabs[0]
+								->findControlTyped<Label>("TEXT_BASE_NAME")
+								->setText(this->state->current_base->name);
+							fw().stageQueueCommand(
+							{ StageCmd::Command::PUSH, mksp<BaseScreen>(this->state) });
+						}
+						else if (building->base_layout && building->owner.id == "ORG_GOVERNMENT")
+						{
+							fw().stageQueueCommand(
+							{ StageCmd::Command::PUSH, mksp<BaseBuyScreen>(state, building) });
+						}
+						else
+						{
+							// Building screen
+							fw().stageQueueCommand(
+							{ StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, building) });
+						}
 					}
 				}
-				// Right = Alternative
+				// Right = Alternative (Location)
 				else
 				{
 					if (vehicle && vehicle->owner == state->player)
 					{
-						LogWarning("IMPLEMENT: Vehicle location screen for right click");
-						// Equipscreen for owner vehicles
-						auto equipScreen = mksp<VEquipScreen>(this->state);
-						equipScreen->setSelectedVehicle(vehicle);
-						fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
+						// Location screen
+						fw().stageQueueCommand(
+						{StageCmd::Command::PUSH,  mksp<LocationScreen>(this->state, vehicle) });
 					}
 					if (building)
 					{
-						// Base screen for base
-						LogWarning("IMPLEMENT: Base screen for bases on right click");
-						// Building screen for any other building
+						// Building screen
 						fw().stageQueueCommand(
-						    {StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, building)});
+						{ StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, building) });
 					}
 				}
 				return true;
@@ -1695,138 +1637,6 @@ void CityView::updateSelectedUnits()
 	{
 		setSelectionState(SelectionState::Normal);
 	}
-}
-
-VehicleTileInfo CityView::createVehicleInfo(sp<Vehicle> v)
-{
-	VehicleTileInfo t;
-	t.vehicle = v;
-	t.selected = 0;
-
-	for (auto &veh : state->current_city->cityViewSelectedVehicles)
-	{
-		if (veh == v)
-		{
-			t.selected =
-			    (v->name == state->current_city->cityViewSelectedVehicles.front()->name) ? 2 : 1;
-			break;
-		}
-	}
-
-	float maxHealth;
-	float currentHealth;
-	if (v->getShield() != 0)
-	{
-		maxHealth = v->getMaxShield();
-		currentHealth = v->getShield();
-		t.shield = true;
-	}
-	else
-	{
-		maxHealth = v->getMaxHealth();
-		currentHealth = v->getHealth();
-		t.shield = false;
-	}
-
-	t.healthProportion = currentHealth / maxHealth;
-	// Clamp passengers to 13 as anything beyond that gets the same icon
-	t.passengers = std::min(13, v->getPassengers());
-	// FIXME Fade out vehicles that are on the way to/back from the alien dimension
-	t.faded = false;
-
-	auto b = v->currentBuilding;
-	if (b)
-	{
-		if (b == v->homeBuilding)
-		{
-			t.state = CityUnitState::InBase;
-		}
-		else
-		{
-			t.state = CityUnitState::InBuilding;
-		}
-	}
-	else
-	{
-		t.state = CityUnitState::InMotion;
-	}
-	return t;
-}
-
-sp<Control> CityView::createVehicleInfoControl(const VehicleTileInfo &info)
-{
-	LogInfo("Creating city info control for vehicle \"%s\"", info.vehicle->name);
-
-	auto frame = info.selected == 2
-	                 ? this->icons[CityIcon::SelectedFrame]
-	                 : (info.selected == 1 ? this->icons[CityIcon::SelectedSecondaryFrame]
-	                                       : this->icons[CityIcon::UnselectedFrame]);
-	auto baseControl = mksp<GraphicButton>(frame, frame);
-	baseControl->Size = frame->size;
-	// FIXME: There's an extra 1 pixel here that's annoying
-	baseControl->Size.x -= 1;
-	baseControl->Name = "OWNED_VEHICLE_FRAME_" + info.vehicle->name;
-
-	auto vehicleIcon = baseControl->createChild<Graphic>(info.vehicle->type->icon);
-	vehicleIcon->AutoSize = true;
-	vehicleIcon->Location = {1, 1};
-	vehicleIcon->Name = "OWNED_VEHICLE_ICON_" + info.vehicle->name;
-
-	// FIXME: Put these somewhere slightly less magic?
-	Vec2<int> healthBarOffset = {27, 2};
-	Vec2<int> healthBarSize = {3, 20};
-
-	auto healthImg = info.shield ? this->shieldImage : this->healthImage;
-
-	auto healthGraphic = baseControl->createChild<Graphic>(healthImg);
-	// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
-	// top-left, so fix that up a bit
-	int healthBarHeight = (int)((float)healthBarSize.y * info.healthProportion);
-	healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
-	healthBarSize.y = healthBarHeight;
-	healthGraphic->Location = healthBarOffset;
-	healthGraphic->Size = healthBarSize;
-	healthGraphic->ImagePosition = FillMethod::Stretch;
-
-	sp<Graphic> stateGraphic;
-
-	switch (info.state)
-	{
-		case CityUnitState::InBase:
-			stateGraphic = baseControl->createChild<Graphic>(this->icons[CityIcon::InBase]);
-			break;
-		case CityUnitState::InVehicle:
-			stateGraphic = baseControl->createChild<Graphic>(this->icons[CityIcon::InVehicle]);
-			break;
-		case CityUnitState::InBuilding:
-			stateGraphic = baseControl->createChild<Graphic>(this->icons[CityIcon::InBuilding]);
-			break;
-		case CityUnitState::InMotion:
-			stateGraphic = baseControl->createChild<Graphic>(this->icons[CityIcon::InMotion]);
-			break;
-	}
-
-	stateGraphic->AutoSize = true;
-	stateGraphic->Location = {0, 0};
-	stateGraphic->Name = "OWNED_VEHICLE_STATE_" + info.vehicle->name;
-
-	if (info.passengers)
-	{
-		auto passengerGraphic =
-		    vehicleIcon->createChild<Graphic>(this->vehiclePassengerCountIcons[info.passengers]);
-		passengerGraphic->AutoSize = true;
-		passengerGraphic->Location = {0, 0};
-		passengerGraphic->Name = "OWNED_VEHICLE_PASSENGERS_" + info.vehicle->name;
-	}
-
-	return baseControl;
-}
-
-bool VehicleTileInfo::operator==(const VehicleTileInfo &other) const
-{
-	return (this->vehicle == other.vehicle && this->selected == other.selected &&
-	        this->healthProportion == other.healthProportion && this->shield == other.shield &&
-	        this->passengers == other.passengers && this->state == other.state);
 }
 
 void CityView::setUpdateSpeed(UpdateSpeed updateSpeed)

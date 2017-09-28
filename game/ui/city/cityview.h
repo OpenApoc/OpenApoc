@@ -18,6 +18,7 @@ class Sample;
 class Base;
 class Building;
 class Organisation;
+class VehicleTileInfo;
 
 enum class UpdateSpeed
 {
@@ -41,13 +42,6 @@ enum class CityIcon
 	InMotion,
 };
 
-enum class CityUnitState
-{
-	InBase,
-	InVehicle,
-	InBuilding,
-	InMotion,
-};
 
 enum class SelectionState
 {
@@ -56,22 +50,6 @@ enum class SelectionState
 	VehicleGotoLocation,
 	VehicleAttackVehicle,
 	VehicleAttackBuilding,
-};
-
-// All the info required to draw a single vehicle info chunk, kept together to make it easier to
-// track when something has changed and requires a re-draw
-class VehicleTileInfo
-{
-  public:
-	sp<Vehicle> vehicle;
-	// 0 = not selected, 1 = selected, 2 = first selected
-	int selected;
-	float healthProportion;
-	bool shield;
-	bool faded;     // Faded when they enter the alien dimension?
-	int passengers; // 0-13, 0-12 having numbers, 13+ being '+'
-	CityUnitState state;
-	bool operator==(const VehicleTileInfo &other) const;
 };
 
 class CityView : public CityTileView
@@ -85,22 +63,12 @@ class CityView : public CityTileView
 	UpdateSpeed lastSpeed;
 
 	sp<GameState> state;
-	std::map<CityIcon, sp<Image>> icons;
-
-	std::vector<sp<Image>> vehiclePassengerCountIcons;
 
 	std::map<sp<Vehicle>, std::pair<VehicleTileInfo, sp<Control>>> vehicleListControls;
-
-	// We use a scaled image to implement the health bar
-	sp<Image> healthImage;
-	sp<Image> shieldImage;
 
 	bool followVehicle;
 
 	void updateSelectedUnits();
-
-	VehicleTileInfo createVehicleInfo(sp<Vehicle> v);
-	sp<Control> createVehicleInfoControl(const VehicleTileInfo &info);
 
 	SelectionState selectionState;
 	bool modifierLShift = false;
