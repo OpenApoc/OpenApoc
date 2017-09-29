@@ -69,14 +69,17 @@ bool Control::isPointInsideControlBounds(int x, int y)
 {
 	bool result = true;
 
-	if (x >= resolvedLocation.x && x < resolvedLocation.x + Size.x && y >= resolvedLocation.y && y < resolvedLocation.y + Size.y)
+	if (x >= resolvedLocation.x && x < resolvedLocation.x + Size.x && y >= resolvedLocation.y &&
+	    y < resolvedLocation.y + Size.y)
 	{
 		auto recursiveparent = this->getParent();
-		if(recursiveparent != nullptr)
+		if (recursiveparent != nullptr)
 		{
 			result = recursiveparent->isPointInsideControlBounds(x, y);
 		}
-	} else {
+	}
+	else
+	{
 		result = false;
 	}
 	return result;
@@ -101,8 +104,8 @@ void Control::eventOccured(Event *e)
 	    e->type() == EVENT_MOUSE_UP)
 	{
 		bool newInside = isPointInsideControlBounds(e->mouse().X, e->mouse().Y);
-		    // (e->mouse().X >= resolvedLocation.x && e->mouse().X < resolvedLocation.x + Size.x &&
-		    // e->mouse().Y >= resolvedLocation.y && e->mouse().Y < resolvedLocation.y + Size.y);
+		// (e->mouse().X >= resolvedLocation.x && e->mouse().X < resolvedLocation.x + Size.x &&
+		// e->mouse().Y >= resolvedLocation.y && e->mouse().Y < resolvedLocation.y + Size.y);
 
 		if (e->type() == EVENT_MOUSE_MOVE)
 		{
@@ -157,8 +160,8 @@ void Control::eventOccured(Event *e)
 		// else?
 		// FIXME: Use something other than mouseInside? fingerInside maybe?
 		bool newInside = isPointInsideControlBounds(e->mouse().X, e->mouse().Y);
-		    // (e->finger().X >= resolvedLocation.x && e->finger().X < resolvedLocation.x + Size.x &&
-		    //  e->finger().Y >= resolvedLocation.y && e->finger().Y < resolvedLocation.y + Size.y);
+		// (e->finger().X >= resolvedLocation.x && e->finger().X < resolvedLocation.x + Size.x &&
+		//  e->finger().Y >= resolvedLocation.y && e->finger().Y < resolvedLocation.y + Size.y);
 
 		// FIXME: Right now we'll just copy touch data to the mouse location. That's... not exactly
 		// right.
