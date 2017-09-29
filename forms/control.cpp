@@ -65,6 +65,26 @@ void Control::resolveLocation()
 	}
 }
 
+bool Control::isPointInsideControlBounds(int x, int y)
+{
+	bool result = true;
+
+	if (x >= resolvedLocation.x && x < resolvedLocation.x + Size.x && y >= resolvedLocation.y &&
+	    y < resolvedLocation.y + Size.y)
+	{
+		auto recursiveparent = this->getParent();
+		if (recursiveparent != nullptr)
+		{
+			result = recursiveparent->isPointInsideControlBounds(x, y);
+		}
+	}
+	else
+	{
+		result = false;
+	}
+	return result;
+}
+
 void Control::eventOccured(Event *e)
 {
 	for (auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++)
@@ -83,9 +103,9 @@ void Control::eventOccured(Event *e)
 	if (e->type() == EVENT_MOUSE_MOVE || e->type() == EVENT_MOUSE_DOWN ||
 	    e->type() == EVENT_MOUSE_UP)
 	{
-		bool newInside =
-		    (e->mouse().X >= resolvedLocation.x && e->mouse().X < resolvedLocation.x + Size.x &&
-		     e->mouse().Y >= resolvedLocation.y && e->mouse().Y < resolvedLocation.y + Size.y);
+		bool newInside = isPointInsideControlBounds(e->mouse().X, e->mouse().Y);
+		// (e->mouse().X >= resolvedLocation.x && e->mouse().X < resolvedLocation.x + Size.x &&
+		// e->mouse().Y >= resolvedLocation.y && e->mouse().Y < resolvedLocation.y + Size.y);
 
 		if (e->type() == EVENT_MOUSE_MOVE)
 		{
@@ -139,9 +159,9 @@ void Control::eventOccured(Event *e)
 		// This right now is a carbon copy of mouse event-handling. Maybe we should do something
 		// else?
 		// FIXME: Use something other than mouseInside? fingerInside maybe?
-		bool newInside =
-		    (e->finger().X >= resolvedLocation.x && e->finger().X < resolvedLocation.x + Size.x &&
-		     e->finger().Y >= resolvedLocation.y && e->finger().Y < resolvedLocation.y + Size.y);
+		bool newInside = isPointInsideControlBounds(e->mouse().X, e->mouse().Y);
+		// (e->finger().X >= resolvedLocation.x && e->finger().X < resolvedLocation.x + Size.x &&
+		//  e->finger().Y >= resolvedLocation.y && e->finger().Y < resolvedLocation.y + Size.y);
 
 		// FIXME: Right now we'll just copy touch data to the mouse location. That's... not exactly
 		// right.

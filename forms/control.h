@@ -52,6 +52,7 @@ class Control : public std::enable_shared_from_this<Control>
 	virtual bool isFocused() const;
 
 	void resolveLocation();
+	bool isPointInsideControlBounds(int x, int y);
 
 	// Loads control and all subcontrols from xml
 	void configureFromXml(pugi::xml_node *node);

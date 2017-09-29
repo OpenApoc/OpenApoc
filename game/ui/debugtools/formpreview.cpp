@@ -148,8 +148,11 @@ void FormPreview::eventOccurred(Event *e)
 			}
 
 			currentSelected = std::dynamic_pointer_cast<Label>(e->forms().RaisedBy);
-			currentSelected->BackgroundColour.a = 255;
-			displayform = ui().getForm(currentSelected->Name);
+			if (currentSelected != nullptr)
+			{
+				currentSelected->BackgroundColour.a = 255;
+				displayform = ui().getForm(currentSelected->Name);
+			}
 
 			return;
 		}
