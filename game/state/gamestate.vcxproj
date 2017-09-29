@@ -49,6 +49,7 @@
     <ClCompile Include="battle\battleunitimagepack.cpp" />
     <ClCompile Include="battle\battleunitmission.cpp" />
     <ClCompile Include="battle\battlemaptileset.cpp" />
+    <ClCompile Include="city\agentmission.cpp" />
     <ClCompile Include="city\baselayout.cpp" />
     <ClCompile Include="city\building.cpp" />
     <ClCompile Include="city\city.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="battle\battleunitanimationpack.h" />
     <ClInclude Include="battle\battleunitimagepack.h" />
     <ClInclude Include="battle\battleunitmission.h" />
+    <ClInclude Include="city\agentmission.h" />
     <ClInclude Include="city\baselayout.h" />
     <ClInclude Include="city\building.h" />
     <ClInclude Include="city\city.h" />

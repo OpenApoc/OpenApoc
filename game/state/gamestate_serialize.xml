@@ -228,6 +228,8 @@
 		<member>assigned_to_lab</member>
 		<member>unit</member>
 		<member>isBrainsucker</member>
+		<member>missions</member>
+		<member>teleportTicksAccumulated</member>
 		<member>equipment</member>
 	</object>
 	<object>
@@ -786,6 +788,7 @@
 		<member>cityViewScreenCenter</member>
 		<member>cityViewPageIndex</member>
 		<member>cityViewSelectedVehicles</member>
+		<member>cityViewSelectedAgents</member>
 	</object>
 	<object>
 		<name>Projectile</name>

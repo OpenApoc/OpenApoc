@@ -10,6 +10,30 @@
         <image>RAW:xcom3/ufodata/isobord3.dat:640:128:xcom3/ufodata/pal_01.dat</image>
       </graphic>
 	  
+	  <scroll id="OWNED_AGENT_LIST_SCROLL" visible="N">
+        <position x="105" y="66"/>
+        <size width="431" height="16"/>
+      </scroll>
+      <graphicbutton id="AGENT_SCROLL_LEFT" scrollprev="OWNED_AGENT_LIST_SCROLL">
+        <position x="88" y="45"/>
+        <size width="17" height="23"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:15:xcom3/ufodata/pal_01.dat</imagechecked>
+      </graphicbutton>
+      <graphicbutton id="AGENT_SCROLL_RIGHT" scrollnext="OWNED_AGENT_LIST_SCROLL">
+        <position x="536" y="45"/>
+        <size width="18" height="22"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:16:xcom3/ufodata/pal_01.dat</imagechecked>
+      </graphicbutton>
+      <listbox id="OWNED_AGENT_LIST" scrollbarid="OWNED_AGENT_LIST_SCROLL">
+        <position x="105" y="44"/>
+        <size height="24" width="431"/>
+        <orientation>horizontal</orientation>
+        <item size="0"/>
+      </listbox>
+	  
+	  
 	  <graphicbutton id="BUTTON_GOTO_BUILDING">
         <size width="27" height="46"/>
         <position x="334" y="75"/>

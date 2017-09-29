@@ -19,6 +19,8 @@ class Base;
 class Building;
 class Organisation;
 class VehicleTileInfo;
+class Agent;
+class AgentInfo;
 
 enum class UpdateSpeed
 {
@@ -28,18 +30,6 @@ enum class UpdateSpeed
 	Speed3,
 	Speed4,
 	Speed5,
-};
-
-enum class CityIcon
-{
-	UnselectedFrame,
-	SelectedFrame,
-	SelectedSecondaryFrame,
-
-	InBase,
-	InVehicle,
-	InBuilding,
-	InMotion,
 };
 
 
@@ -65,6 +55,7 @@ class CityView : public CityTileView
 	sp<GameState> state;
 
 	std::map<sp<Vehicle>, std::pair<VehicleTileInfo, sp<Control>>> vehicleListControls;
+	std::map<sp<Agent>, std::pair<AgentInfo, sp<Control>>> agentListControls;
 
 	bool followVehicle;
 
@@ -98,6 +89,7 @@ class CityView : public CityTileView
 	void orderMove(Vec3<float> position, bool useTeleporter);
 	void orderMove(StateRef<Building> building, bool useTeleporter);
 	void orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additive);
+	void orderSelect(StateRef<Agent> agent, bool inverse, bool additive);
 	void orderAttack(StateRef<Vehicle> vehicle);
 	void orderAttack(StateRef<Building> building);
 

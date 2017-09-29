@@ -1663,7 +1663,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	// Hit shield if present
 	if (!damageType->ignore_shield)
 	{
-		auto shield = agent->getFirstShield();
+		auto shield = agent->getFirstShield(state);
 		if (shield)
 		{
 			damage = damageType->dealDamage(damage, shield->type->damage_modifier);

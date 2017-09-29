@@ -31,6 +31,7 @@
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/message.h"
+#include "game/state/agent.h"
 #include "game/state/organisation.h"
 #include "game/state/research.h"
 #include "game/state/rules/aequipment_type.h"
@@ -78,39 +79,48 @@ static const std::vector<UString> TAB_FORM_NAMES = {
 
 void CityView::orderGoToBase()
 {
-	for (auto &v : this->state->current_city->cityViewSelectedVehicles)
+	if (activeTab == uiTabs[1])
 	{
-		if (v && v->owner == this->state->getPlayer())
+		for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 		{
-			LogWarning("Goto base for vehicle \"%s\"", v->name);
-			auto bld = v->homeBuilding;
-			if (!bld)
+			if (v && v->owner == this->state->getPlayer())
 			{
-				LogError("Vehicle \"%s\" has no building", v->name);
+				LogWarning("Goto base for vehicle \"%s\"", v->name);
+				auto bld = v->homeBuilding;
+				if (!bld)
+				{
+					LogError("Vehicle \"%s\" has no building", v->name);
+				}
+				LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name, bld->name);
+				// FIXME: Don't clear missions if not replacing current mission
+				v->setMission(*this->state, VehicleMission::gotoBuilding(*this->state, *v, bld));
 			}
-			LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name, bld->name);
-			// FIXME: Don't clear missions if not replacing current mission
-			v->setMission(*this->state, VehicleMission::gotoBuilding(*this->state, *v, bld));
 		}
 	}
 }
 
 void CityView::orderMove(Vec3<float> position, bool useTeleporter)
 {
-	state->current_city->groupMove(*state, state->current_city->cityViewSelectedVehicles, position,
-	                               useTeleporter);
+	if (activeTab == uiTabs[1])
+	{
+		state->current_city->groupMove(*state, state->current_city->cityViewSelectedVehicles, position,
+			useTeleporter);
+	}
 }
 
 void CityView::orderMove(StateRef<Building> building, bool useTeleporter)
 {
-	for (auto &v : this->state->current_city->cityViewSelectedVehicles)
+	if (activeTab == uiTabs[1])
 	{
-		if (v && v->owner == this->state->getPlayer())
+		for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 		{
-			LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name, building->name);
-			// FIXME: Don't clear missions if not replacing current mission
-			v->setMission(*state,
-			              VehicleMission::gotoBuilding(*state, *v, building, useTeleporter));
+			if (v && v->owner == this->state->getPlayer())
+			{
+				LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name, building->name);
+				// FIXME: Don't clear missions if not replacing current mission
+				v->setMission(*state,
+					VehicleMission::gotoBuilding(*state, *v, building, useTeleporter));
+			}
 		}
 	}
 }
@@ -172,26 +182,76 @@ void CityView::orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additiv
 	}
 }
 
+void CityView::orderSelect(StateRef<Agent> agent, bool inverse, bool additive)
+{
+	auto pos = std::find(state->current_city->cityViewSelectedAgents.begin(),
+		state->current_city->cityViewSelectedAgents.end(), agent);
+	if (inverse)
+	{
+		// Agent in selection => remove
+		if (pos != state->current_city->cityViewSelectedAgents.end())
+		{
+			state->current_city->cityViewSelectedAgents.erase(pos);
+		}
+	}
+	else
+	{
+		// Agent not selected
+		if (pos == state->current_city->cityViewSelectedAgents.end())
+		{
+			// If additive add
+			if (additive)
+			{
+				state->current_city->cityViewSelectedAgents.push_front(agent);
+			}
+			else
+			{
+				// Agent not in selection => replace selection with agent
+				state->current_city->cityViewSelectedAgents.clear();
+				state->current_city->cityViewSelectedAgents.push_back(agent);
+			}
+		}
+		// Agent is selected
+		else
+		{
+			// First move vehicle to front
+			state->current_city->cityViewSelectedAgents.erase(pos);
+			state->current_city->cityViewSelectedAgents.push_front(agent);
+			// Then if not additive then zoom to agent
+			if (!additive)
+			{
+				this->setScreenCenterTile(agent->position);
+			}
+		}
+	}
+}
+
 void CityView::orderAttack(StateRef<Vehicle> vehicle)
 {
-	for (auto &v : this->state->current_city->cityViewSelectedVehicles)
+	if (activeTab == uiTabs[1])
 	{
-		if (v && v->owner == this->state->getPlayer() && v != vehicle)
+		for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 		{
-			// FIXME: Don't clear missions if not replacing current mission
-			v->setMission(*state, VehicleMission::attackVehicle(*this->state, *v, vehicle));
+			if (v && v->owner == this->state->getPlayer() && v != vehicle)
+			{
+				// FIXME: Don't clear missions if not replacing current mission
+				v->setMission(*state, VehicleMission::attackVehicle(*this->state, *v, vehicle));
+			}
 		}
 	}
 }
 
 void CityView::orderAttack(StateRef<Building> building)
 {
-	for (auto &v : this->state->current_city->cityViewSelectedVehicles)
+	if (activeTab == uiTabs[1])
 	{
-		if (v && v->owner == this->state->getPlayer())
+		for (auto &v : this->state->current_city->cityViewSelectedVehicles)
 		{
-			// TODO: Attack building mission
-			LogWarning("IMPLEMENT: Vehicle \"%s\" attack building \"%s\"", v->name, building->name);
+			if (v && v->owner == this->state->getPlayer())
+			{
+				// TODO: Attack building mission
+				LogWarning("IMPLEMENT: Vehicle \"%s\" attack building \"%s\"", v->name, building->name);
+			}
 		}
 	}
 }
@@ -817,99 +877,152 @@ void CityView::update()
 
 	// FIXME: Possibly more efficient ways than re-generating all controls every frame?
 
-	// Setup owned vehicle list controls
-	auto ownedVehicleList = uiTabs[1]->findControlTyped<ListBox>("OWNED_VEHICLE_LIST");
-	if (!ownedVehicleList)
+	// Update owned vehicle controls
 	{
-		LogError("Failed to find \"OWNED_VEHICLE_LIST\" control on city tab \"%s\"",
-		         TAB_FORM_NAMES[1]);
-	}
-
-	ownedVehicleList->ItemSpacing = 0;
-
-	std::map<sp<Vehicle>, std::pair<VehicleTileInfo, sp<Control>>> newVehicleListControls;
-
-	ownedVehicleList->clear();
-
-	if (activeTab == uiTabs[1])
-	{
-		for (auto &v : state->vehicles)
+		auto ownedVehicleList = uiTabs[1]->findControlTyped<ListBox>("OWNED_VEHICLE_LIST");
+		if (!ownedVehicleList)
 		{
-			auto vehicle = v.second;
-			if (vehicle->owner != state->getPlayer())
-			{
-				continue;
-			}
-			auto info = ControlGenerator::createVehicleInfo(*state, vehicle);
-			auto it = this->vehicleListControls.find(vehicle);
-			sp<Control> control;
-			if (it != this->vehicleListControls.end() && it->second.first == info)
-			{
-				// Control unchanged, don't regenerate
-				control = it->second.second;
-			}
-			else
-			{
-				control = ControlGenerator::createVehicleControl(*state, info);
-				control->addCallback(FormEventType::MouseDown, [this, vehicle](FormsEvent *e) {
-					orderSelect(
-					    StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)},
-					    Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
-					    modifierLCtrl || modifierRCtrl);
-					auto vehicleForm = this->uiTabs[1];
+			LogError("Failed to find \"OWNED_VEHICLE_LIST\" control on city tab \"%s\"",
+				TAB_FORM_NAMES[1]);
+		}
 
-					switch (vehicle->altitude)
-					{
+		ownedVehicleList->ItemSpacing = 0;
+		std::map<sp<Vehicle>, std::pair<VehicleTileInfo, sp<Control>>> newVehicleListControls;
+		ownedVehicleList->clear();
+		if (activeTab == uiTabs[1])
+		{
+			for (auto &v : state->vehicles)
+			{
+				auto vehicle = v.second;
+				if (vehicle->owner != state->getPlayer())
+				{
+					continue;
+				}
+				auto info = ControlGenerator::createVehicleInfo(*state, vehicle);
+				auto it = this->vehicleListControls.find(vehicle);
+				sp<Control> control;
+				if (it != this->vehicleListControls.end() && it->second.first == info)
+				{
+					// Control unchanged, don't regenerate
+					control = it->second.second;
+				}
+				else
+				{
+					control = ControlGenerator::createVehicleControl(*state, info);
+					control->addCallback(FormEventType::MouseDown, [this, vehicle](FormsEvent *e) {
+						orderSelect(
+							StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)},
+							Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
+							modifierLCtrl || modifierRCtrl);
+						auto vehicleForm = this->uiTabs[1];
+						//FIXME: Proper multiselect handle for vehicle controls
+						LogWarning("FIX: Proper multiselect handle for vehicle controls");
+						switch (vehicle->altitude)
+						{
 						case Vehicle::Altitude::Highest:
 							vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGHEST")
-							    ->setChecked(true);
+								->setChecked(true);
 							break;
 						case Vehicle::Altitude::High:
 							vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGH")
-							    ->setChecked(true);
+								->setChecked(true);
 							break;
 						case Vehicle::Altitude::Standard:
 							vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_STANDARD")
-							    ->setChecked(true);
+								->setChecked(true);
 							break;
 						case Vehicle::Altitude::Low:
 							vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_LOW")
-							    ->setChecked(true);
+								->setChecked(true);
 							break;
-					}
+						}
 
-					switch (vehicle->attackMode)
-					{
+						switch (vehicle->attackMode)
+						{
 						case Vehicle::AttackMode::Aggressive:
 							vehicleForm
-							    ->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_AGGRESSIVE")
-							    ->setChecked(true);
+								->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_AGGRESSIVE")
+								->setChecked(true);
 							break;
 						case Vehicle::AttackMode::Standard:
 							vehicleForm
-							    ->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_STANDARD")
-							    ->setChecked(true);
+								->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_STANDARD")
+								->setChecked(true);
 							break;
 						case Vehicle::AttackMode::Defensive:
 							vehicleForm
-							    ->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_DEFENSIVE")
-							    ->setChecked(true);
+								->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_DEFENSIVE")
+								->setChecked(true);
 							break;
 						case Vehicle::AttackMode::Evasive:
 							vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_EVASIVE")
-							    ->setChecked(true);
+								->setChecked(true);
 							break;
-					}
-				});
+						}
+					});
+				}
+				newVehicleListControls[vehicle] = std::make_pair(info, control);
+				ownedVehicleList->addItem(control);
 			}
-			newVehicleListControls[vehicle] = std::make_pair(info, control);
-			ownedVehicleList->addItem(control);
 		}
+
+		// Clear the old list and reset to the new one (May be empty is not on a vehicle-displaying tab
+		this->vehicleListControls.clear();
+		this->vehicleListControls = std::move(newVehicleListControls);
 	}
 
-	// Clear the old list and reset to the new one (May be empty is not on a vehicle-displaying tab
-	this->vehicleListControls.clear();
-	this->vehicleListControls = std::move(newVehicleListControls);
+	// Update soldier agent controls
+	{
+		auto ownedAgentList = uiTabs[2]->findControlTyped<ListBox>("OWNED_AGENT_LIST");
+		if (!ownedAgentList)
+		{
+			LogError("Failed to find \"OWNED_AGENT_LIST\" control on city tab \"%s\"",
+				TAB_FORM_NAMES[2]);
+		}
+		ownedAgentList->ItemSpacing = 0;
+		std::map<sp<Agent>, std::pair<AgentInfo, sp<Control>>> newAgentListControls;
+		ownedAgentList->clear();
+		if (activeTab == uiTabs[1])
+		{
+			for (auto &a : state->agents)
+			{
+				auto agent = a.second;
+				if (agent->owner != state->getPlayer() || agent->type->role!=AgentType::Role::Soldier)
+				{
+					continue;
+				}
+				auto info = ControlGenerator::createAgentInfo(*state, agent);
+				auto it = this->agentListControls.find(agent);
+				sp<Control> control;
+				if (it != this->agentListControls.end() && it->second.first == info)
+				{
+					// Control unchanged, don't regenerate
+					control = it->second.second;
+				}
+				else
+				{
+					control = ControlGenerator::createAgentControl(*state, info);
+					control->addCallback(FormEventType::MouseDown, [this, agent](FormsEvent *e) {
+						orderSelect(
+							StateRef<Agent>{state.get(), Agent::getId(*state, agent)},
+							Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
+							modifierLCtrl || modifierRCtrl);
+						auto agentForm = this->uiTabs[2];
+
+						// Set form stuff for agent
+						// FIXME: Implement agent select controls
+						LogWarning("FIX Implement agent select controls");
+					});
+				}
+				newAgentListControls[agent] = std::make_pair(info, control);
+				ownedAgentList->addItem(control);
+			}
+		}
+
+		// Clear the old list and reset to the new one (May be empty is not on a vehicle-displaying tab
+		this->agentListControls.clear();
+		this->agentListControls = std::move(newAgentListControls);
+	}
 
 	activeTab->update();
 	baseForm->update();

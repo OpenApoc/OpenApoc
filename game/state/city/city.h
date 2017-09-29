@@ -29,6 +29,7 @@ class DoodadType;
 class SceneryTileType;
 class Organisation;
 class BaseLayout;
+class Agent;
 class TileMap;
 
 class City : public StateObject
@@ -59,6 +60,7 @@ class City : public StateObject
 	Vec3<float> cityViewScreenCenter = {0.0f, 0.0f, 0.0f};
 	int cityViewPageIndex = 0;
 	std::list<StateRef<Vehicle>> cityViewSelectedVehicles;
+	std::list<StateRef<Agent>> cityViewSelectedAgents;
 
 	void handleProjectileHit(GameState &state, sp<Projectile> projectile, bool displayDoodad,
 	                         bool playSound);

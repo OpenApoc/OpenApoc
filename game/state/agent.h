@@ -13,6 +13,8 @@
 
 namespace OpenApoc
 {
+	
+static const unsigned TELEPORT_TICKS_REQUIRED_AGENT = TICKS_PER_SECOND * 30;
 
 class Organisation;
 class AEquipment;
@@ -25,6 +27,7 @@ class DamageModifier;
 class DamageType;
 class Building;
 class Vehicle;
+class AgentMission;
 class VoxelMap;
 class City;
 enum class AIType;
@@ -299,9 +302,15 @@ class Agent : public StateObject,
 	bool overEncumbred = false;
 	Rank rank = Rank::Rookie;
 
+	unsigned int teleportTicksAccumulated = 0;
+	bool canTeleport() const;
+	bool hasTeleporter() const;
+
+
 	// Training
 	unsigned trainingPhysicalTicksAccumulated = 0;
 	unsigned trainingPsiTicksAccumulated = 0;
+
 
 	sp<AEquipment> getArmor(BodyPart bodyPart) const;
 	bool isBodyStateAllowed(BodyState bodyState) const;
@@ -338,7 +347,8 @@ class Agent : public StateObject,
 	bool assigned_to_lab = false;
 
 	StateRef<BattleUnit> unit;
-
+	
+	std::list<up<AgentMission>> missions;
 	std::list<sp<AEquipment>> equipment;
 	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
 	                     EquipmentSlotType &slotType) const;
@@ -370,6 +380,12 @@ class Agent : public StateObject,
 	void updateIsBrainsucker();
 	bool isBrainsucker = false;
 
+	// Adds mission to list of missions, returns true if successful
+	bool addMission(GameState &state, AgentMission *mission, bool toBack = false);
+	// Replaces all missions with provided mission, returns true if successful
+	bool setMission(GameState &state, AgentMission *mission);
+
+
 	void trainPhysical(GameState &state, unsigned ticks);
 	void trainPsi(GameState &state, unsigned ticks);
 
@@ -380,7 +396,7 @@ class Agent : public StateObject,
 	getDominantItemInHands(GameState &state,
 	                       StateRef<AEquipmentType> itemLastFired = nullptr) const;
 	sp<AEquipment> getFirstItemInSlot(EquipmentSlotType type, bool lazy = true) const;
-	sp<AEquipment> getFirstShield() const;
+	sp<AEquipment> getFirstShield(GameState &state) const;
 	sp<AEquipment> getFirstItemByType(StateRef<AEquipmentType> type) const;
 	sp<AEquipment> getFirstItemByType(AEquipmentType::Type type) const;
 
@@ -394,8 +410,8 @@ class Agent : public StateObject,
 	int getMaxHealth() const;
 	int getHealth() const;
 
-	int getMaxShield() const;
-	int getShield() const;
+	int getMaxShield(GameState &state) const;
+	int getShield(GameState &state) const;
 
 	// Following members are not serialized, but rather are set up in the initBattle method
 

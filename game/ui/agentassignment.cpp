@@ -22,48 +22,8 @@ namespace OpenApoc
 {
 
 AgentAssignment::AgentAssignment(sp<GameState> state)
-    : Form(), state(state), labelFont(ui().getFont("smalfont"))
+    : Form(), state(state)
 {
-	auto img = mksp<RGBImage>(Vec2<int>{1, 2});
-	{
-		RGBImageLock l(img);
-		l.set({0, 0}, Colour{255, 255, 219});
-		l.set({0, 1}, Colour{215, 0, 0});
-	}
-	this->healthImage = img;
-	img = mksp<RGBImage>(Vec2<int>{1, 2});
-	{
-		RGBImageLock l(img);
-		l.set({0, 0}, Colour{160, 236, 252});
-		l.set({0, 1}, Colour{4, 100, 252});
-	}
-	this->shieldImage = img;
-	img = mksp<RGBImage>(Vec2<int>{1, 2});
-	{
-		RGBImageLock l(img);
-		l.set({0, 0}, Colour{150, 150, 150});
-		l.set({0, 1}, Colour{97, 101, 105});
-	}
-	this->stunImage = img;
-	this->iconShade = fw().data->loadImage("battle/battle-icon-shade.png");
-	for (int i = 28; i <= 34; i++)
-	{
-		unitRanks.push_back(
-		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-		                                i)));
-	}
-	for (int i = 12; i <= 18; i++)
-	{
-		bigUnitRanks.push_back(
-		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-		                                i)));
-	}
-	unitSelect.push_back(fw().data->loadImage(
-	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:37:xcom3/ufodata/pal_01.dat"));
-	unitSelect.push_back(fw().data->loadImage("battle/battle-icon-38.png"));
-	unitSelect.push_back(fw().data->loadImage("battle/battle-icon-39.png"));
 }
 
 void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
@@ -230,20 +190,20 @@ void AgentAssignment::updateLocation()
 	auto owner = state->getPlayer();
 	for (auto &agent : agents)
 	{
-		auto agentControl = this->createAgentControl(agent);
+		auto agentControl = ControlGenerator::createAgentControl(*state, agent);
 		agentList->addItem(agentControl);
 		if (agent == currentAgent)
 		{
 			agentList->setSelected(agentControl);
 		}
 	}
-	agentList->ItemSize = labelFont->getFontHeight() * 2;
+	agentList->ItemSize = ControlGenerator::getFontHeight(*state) * 2;
 
 	auto vehicleList = findControlTyped<ListBox>("VEHICLE_SELECT_BOX");
 	vehicleList->clear();
 	if (building)
 	{
-		vehicleList->addItem(mksp<Graphic>(unitSelect[0]));
+		vehicleList->addItem(mksp<Graphic>());
 	}
 	for (auto &vehicle : vehicles)
 	{
@@ -254,99 +214,12 @@ void AgentAssignment::updateLocation()
 			vehicleList->setSelected(vehicleControl);
 		}
 	}
-	vehicleList->ItemSize = labelFont->getFontHeight() * 2;
+	vehicleList->ItemSize = ControlGenerator::getFontHeight(*state) * 2;
 }
 
-void AgentAssignment::update() { Form::update(); }
-
-sp<Control> AgentAssignment::createAgentControl(sp<Agent> agent)
-{
-	Vec2<int> size = {130, labelFont->getFontHeight() * 2};
-
-	auto baseControl = mksp<Control>();
-	baseControl->setData(agent);
-	baseControl->Name = "AGENT_PORTRAIT";
-	baseControl->Size = size;
-
-	auto frameGraphic = baseControl->createChild<Graphic>(unitSelect[0]);
-	frameGraphic->AutoSize = true;
-	frameGraphic->Location = {0, 0};
-	auto photoGraphic = frameGraphic->createChild<Graphic>(agent->getPortrait().icon);
-	photoGraphic->AutoSize = true;
-	photoGraphic->Location = {1, 1};
-
-	// TODO: Fade portraits
-	bool faded = false;
-
-	if (faded)
-	{
-		auto fadeIcon = baseControl->createChild<Graphic>(iconShade);
-		fadeIcon->AutoSize = true;
-		fadeIcon->Location = {2, 1};
-	}
-
-	auto rankIcon = baseControl->createChild<Graphic>(unitRanks[(int)agent->rank]);
-	rankIcon->AutoSize = true;
-	rankIcon->Location = {0, 0};
-
-	bool shield = agent->getMaxShield() > 0;
-
-	float maxHealth;
-	float currentHealth;
-	float stunProportion = 0.0f;
-	if (shield)
-	{
-		currentHealth = agent->getShield();
-		maxHealth = agent->getMaxShield();
-	}
-	else
-	{
-		currentHealth = agent->getHealth();
-		maxHealth = agent->getMaxHealth();
-	}
-	float healthProportion = maxHealth == 0.0f ? 0.0f : currentHealth / maxHealth;
-	stunProportion = clamp(stunProportion, 0.0f, healthProportion);
-
-	if (healthProportion > 0.0f)
-	{
-		// FIXME: Put these somewhere slightly less magic?
-		Vec2<int> healthBarOffset = {27, 2};
-		Vec2<int> healthBarSize = {3, 20};
-
-		auto healthImg = shield ? this->shieldImage : this->healthImage;
-		auto healthGraphic = frameGraphic->createChild<Graphic>(healthImg);
-		// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
-		// top-left, so fix that up a bit
-		int healthBarHeight = (int)((float)healthBarSize.y * healthProportion);
-		healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
-		healthBarSize.y = healthBarHeight;
-		healthGraphic->Location = healthBarOffset;
-		healthGraphic->Size = healthBarSize;
-		healthGraphic->ImagePosition = FillMethod::Stretch;
-	}
-	if (stunProportion > 0.0f)
-	{
-		// FIXME: Put these somewhere slightly less magic?
-		Vec2<int> healthBarOffset = {27, 2};
-		Vec2<int> healthBarSize = {3, 20};
-
-		auto healthImg = this->stunImage;
-		auto healthGraphic = frameGraphic->createChild<Graphic>(healthImg);
-		// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
-		// top-left, so fix that up a bit
-		int healthBarHeight = (int)((float)healthBarSize.y * stunProportion);
-		healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
-		healthBarSize.y = healthBarHeight;
-		healthGraphic->Location = healthBarOffset;
-		healthGraphic->Size = healthBarSize;
-		healthGraphic->ImagePosition = FillMethod::Stretch;
-	}
-
-	auto nameLabel = baseControl->createChild<Label>(agent->name, labelFont);
-	nameLabel->Location = {40, 0};
-	nameLabel->Size = {100, labelFont->getFontHeight() * 2};
-
-	return baseControl;
+void AgentAssignment::update() 
+{ 
+	Form::update(); 
 }
 
 }

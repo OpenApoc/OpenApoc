@@ -2,6 +2,7 @@
 #include "game/state/aequipment.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battleunit.h"
+#include "game/state/city/agentmission.h"
 #include "game/state/city/building.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
@@ -458,6 +459,23 @@ void Agent::enterVehicle(GameState &state, StateRef<Vehicle> v)
 	currentVehicle->currentAgents.insert({&state, shared_from_this()});
 }
 
+bool Agent::canTeleport() const
+{
+	return teleportTicksAccumulated >= TELEPORT_TICKS_REQUIRED_AGENT;
+}
+
+bool Agent::hasTeleporter() const
+{
+	for (auto &e : this->equipment)
+	{
+		if (e->type->type != AEquipmentType::Type::Teleporter)
+			continue;
+		return true;
+	}
+
+	return false;
+}
+
 sp<AEquipment> Agent::getArmor(BodyPart bodyPart) const
 {
 	auto a = getFirstItemInSlot(AgentType::getArmorSlotType(bodyPart));
@@ -870,6 +888,28 @@ void Agent::updateIsBrainsucker()
 	}
 }
 
+bool Agent::addMission(GameState & state, AgentMission * mission, bool toBack)
+{
+	if (missions.empty() || !toBack)
+	{
+		missions.emplace_front(mission);
+		missions.front()->start(state, *this);
+	}
+	else
+	{
+		missions.emplace_back(mission);
+	}
+	return true;
+}
+
+bool Agent::setMission(GameState & state, AgentMission * mission)
+{
+	missions.clear();
+	missions.emplace_front(mission);
+	missions.front()->start(state, *this);
+	return true;
+}
+
 void Agent::trainPhysical(GameState &state, unsigned ticks)
 {
 	if (!type->can_improve)
@@ -1063,11 +1103,11 @@ sp<AEquipment> Agent::getFirstItemByType(AEquipmentType::Type type) const
 	return nullptr;
 }
 
-sp<AEquipment> Agent::getFirstShield() const
+sp<AEquipment> Agent::getFirstShield(GameState &state) const
 {
 	for (auto &e : equipment)
 	{
-		if (e->type->type == AEquipmentType::Type::DisruptorShield)
+		if (e->type->type == AEquipmentType::Type::DisruptorShield && e->canBeUsed(state))
 		{
 			return e;
 		}
@@ -1140,13 +1180,13 @@ int Agent::getMaxHealth() const { return current_stats.health; }
 
 int Agent::getHealth() const { return modified_stats.health; }
 
-int Agent::getMaxShield() const
+int Agent::getMaxShield(GameState &state) const
 {
 	int maxShield = 0;
 
 	for (auto &e : equipment)
 	{
-		if (e->type->type != AEquipmentType::Type::DisruptorShield)
+		if (e->type->type != AEquipmentType::Type::DisruptorShield || !e->canBeUsed(state))
 			continue;
 		maxShield += e->type->max_ammo;
 	}
@@ -1154,13 +1194,13 @@ int Agent::getMaxShield() const
 	return maxShield;
 }
 
-int Agent::getShield() const
+int Agent::getShield(GameState &state) const
 {
 	int curShield = 0;
 
 	for (auto &e : equipment)
 	{
-		if (e->type->type != AEquipmentType::Type::DisruptorShield)
+		if (e->type->type != AEquipmentType::Type::DisruptorShield || !e->canBeUsed(state))
 			continue;
 		curShield += e->ammo;
 	}

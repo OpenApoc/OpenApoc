@@ -231,6 +231,9 @@
     <ClCompile Include="battle\ai\unitaihardcore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="city\agentmission.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agent.h">
@@ -471,6 +474,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="city\citycommonsamplelist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="city\agentmission.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

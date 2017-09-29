@@ -77,12 +77,6 @@ class AEquipScreen : public Stage
 	static const Vec2<int> EQUIP_GRID_SLOT_SIZE;
 	static const Vec2<int> EQUIP_GRID_SLOTS;
 
-	sp<Control> createAgentControl(sp<Agent> agent);
-	sp<Image> healthImage;
-	sp<Image> shieldImage;
-	sp<Image> stunImage;
-	sp<Image> iconShade;
-	std::vector<sp<Image>> unitRanks;
 	std::vector<sp<Image>> bigUnitRanks;
 	std::vector<sp<Image>> unitSelect;
 	sp<Image> woundImage;

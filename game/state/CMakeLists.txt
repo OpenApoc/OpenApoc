@@ -12,6 +12,7 @@ find_package (Threads REQUIRED)
 set (GAMESTATE_SOURCE_FILES
 	aequipment.cpp
 	agent.cpp
+	agentmission.cpp
 	gameevent.cpp
 	gamestate.cpp
 	gamestate_serialize.cpp
@@ -86,6 +87,7 @@ source_group(gamestate\\sources FILES ${GAMESTATE_SOURCE_FILES})
 set (GAMESTATE_HEADER_FILES
 	aequipment.h
 	agent.h
+	agentmission.h
 	equipment.h
 	gameevent.h
 	gameevent_types.h
