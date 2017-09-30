@@ -12,7 +12,6 @@ find_package (Threads REQUIRED)
 set (GAMESTATE_SOURCE_FILES
 	aequipment.cpp
 	agent.cpp
-	agentmission.cpp
 	gameevent.cpp
 	gamestate.cpp
 	gamestate_serialize.cpp
@@ -51,6 +50,7 @@ set (GAMESTATE_SOURCE_FILES
 	battle/battleunitimagepack.cpp
 	battle/battleunitmission.cpp
 	battle/battlemaptileset.cpp
+	city/agentmission.cpp
 	city/baselayout.cpp
 	city/building.cpp
 	city/city.cpp
@@ -87,7 +87,6 @@ source_group(gamestate\\sources FILES ${GAMESTATE_SOURCE_FILES})
 set (GAMESTATE_HEADER_FILES
 	aequipment.h
 	agent.h
-	agentmission.h
 	equipment.h
 	gameevent.h
 	gameevent_types.h
@@ -132,6 +131,7 @@ set (GAMESTATE_HEADER_FILES
 	battle/battleunitanimationpack.h
 	battle/battleunitimagepack.h
 	battle/battleunitmission.h
+	city/agentmission.h
 	city/baselayout.h
 	city/building.h
 	city/city.h

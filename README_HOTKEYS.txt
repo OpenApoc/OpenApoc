@@ -68,7 +68,10 @@ Cityscape Debug:
 - [F10] highlight tube in city
 - [F11] highlight roads in city
 - [F12] show aliens in buildings on strategy map
-
+- [Numpad 1379] show only roads/tubes that have an outgoing connection in this direction
+- [Numpad 28] show only tubes that have an outgoing connection down [2] or up [8]
+- [Numpad 0] show all roads/tubes again
+ 
 Battlescape Mouse:
 * [Alt] When giving moving orders, makes unit keep facing to the target (making unit strafe or move backwards)
 		When firing at a tile, makes the shot aim at the ground of the tile, rather than at unit's level
@@ -131,9 +134,9 @@ Battlescape Debug:
 - [E] Force end current turn in TB mode
 - [R] Reveal whole map and show debug lines for which unit sees which unit
 - [S] Stun units 
-  - with Ctrl held will affect small area around cursor, without will affect only unit under cursor
-  - with Shift held will affect everything except cursor
-  - with Shift and Ctrl held will affect everything except what's in small area around cursor
+  - with [Ctrl] held will affect small area around cursor, without will affect only unit under cursor
+  - with [Shift] held will affect everything except cursor
+  - with [Shift] and Ctrl held will affect everything except what's in small area around cursor
 - [K] Same as [S] but removes units from map (units count as reterated)
 - [P] Lower morale of every unit to the point where they will eventually suffer a low morale event
 - [Shift] + [P] gives every unit 0 psi defense and 100 psi energy/attack
