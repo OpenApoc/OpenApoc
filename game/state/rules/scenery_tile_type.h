@@ -51,6 +51,14 @@ class SceneryTileType : public StateObject
 	TileType tile_type = TileType::General;
 	RoadType road_type = RoadType::StraightBend;
 	WalkMode walk_mode = WalkMode::None;
+
+	// Connection NESW
+	std::vector<bool> connection;
+	// Connection NESW
+	std::vector<bool> hill;
+	// Connection NESWUD
+	std::vector<bool> tube;
+
 	int constitution = 0;
 	int value = 0;
 	int mass = 0;

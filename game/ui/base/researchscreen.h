@@ -28,7 +28,7 @@ class ResearchScreen : public BaseStage
 
 	void setCurrentLabInfo();
 	void updateProgressInfo();
-	
+
 	int assigned_agent_count;
 
 	sp<Graphic> arrow;

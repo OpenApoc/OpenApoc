@@ -12,8 +12,8 @@ namespace OpenApoc
 TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
                    TileViewMode initialMode)
     : Stage(), map(map), isoTileSize(isoTileSize), stratTileSize(stratTileSize),
-      viewMode(initialMode), scrollUp(false), scrollDown(false), scrollLeft(false),
-      scrollRight(false), dpySize(fw().displayGetWidth(), fw().displayGetHeight()),
+      viewMode(initialMode), scrollUpKB(false), scrollDownKB(false), scrollLeftKB(false),
+      scrollRightKB(false), dpySize(fw().displayGetWidth(), fw().displayGetHeight()),
       strategyViewBoxColour(212, 176, 172, 255), strategyViewBoxThickness(2.0f),
       selectedTilePosition(0, 0, 0), maxZDraw(map.size.z), centerPos(0, 0, 0),
       isoScrollSpeed(0.5, 0.5), stratScrollSpeed(2.0f, 2.0f)
@@ -38,16 +38,16 @@ void TileView::eventOccurred(Event *e)
 		switch (e->keyboard().KeyCode)
 		{
 			case SDLK_UP:
-				scrollUp = true;
+				scrollUpKB = true;
 				break;
 			case SDLK_DOWN:
-				scrollDown = true;
+				scrollDownKB = true;
 				break;
 			case SDLK_LEFT:
-				scrollLeft = true;
+				scrollLeftKB = true;
 				break;
 			case SDLK_RIGHT:
-				scrollRight = true;
+				scrollRightKB = true;
 				break;
 			case SDLK_s:
 				if (selectedTilePosition.y < (map.size.y - 1))
@@ -80,16 +80,16 @@ void TileView::eventOccurred(Event *e)
 		switch (e->keyboard().KeyCode)
 		{
 			case SDLK_UP:
-				scrollUp = false;
+				scrollUpKB = false;
 				break;
 			case SDLK_DOWN:
-				scrollDown = false;
+				scrollDownKB = false;
 				break;
 			case SDLK_LEFT:
-				scrollLeft = false;
+				scrollLeftKB = false;
 				break;
 			case SDLK_RIGHT:
-				scrollRight = false;
+				scrollRightKB = false;
 				break;
 		}
 	}
@@ -114,6 +114,13 @@ void TileView::eventOccurred(Event *e)
 			Vec3<float> newPos = this->centerPos - deltaPos;
 			this->setScreenCenterTile(newPos);
 		}
+	}
+	else if (e->type() == EVENT_MOUSE_MOVE)
+	{
+		scrollLeftM = e->mouse().X < MOUSE_SCROLL_MARGIN;
+		scrollRightM = e->mouse().X >= dpySize.x - MOUSE_SCROLL_MARGIN;
+		scrollUpM = e->mouse().Y < MOUSE_SCROLL_MARGIN;
+		scrollDownM = e->mouse().Y >= dpySize.y - MOUSE_SCROLL_MARGIN;
 	}
 }
 
@@ -185,22 +192,22 @@ void TileView::applyScrolling()
 	Vec3<float> newPos = this->centerPos;
 	if (this->viewMode == TileViewMode::Isometric)
 	{
-		if (scrollLeft)
+		if (scrollLeftKB || scrollLeftM)
 		{
 			newPos.x -= isoScrollSpeed.x;
 			newPos.y += isoScrollSpeed.y;
 		}
-		if (scrollRight)
+		if (scrollRightKB || scrollRightM)
 		{
 			newPos.x += isoScrollSpeed.x;
 			newPos.y -= isoScrollSpeed.y;
 		}
-		if (scrollUp)
+		if (scrollUpKB || scrollUpM)
 		{
 			newPos.y -= isoScrollSpeed.y;
 			newPos.x -= isoScrollSpeed.x;
 		}
-		if (scrollDown)
+		if (scrollDownKB || scrollDownM)
 		{
 			newPos.y += isoScrollSpeed.y;
 			newPos.x += isoScrollSpeed.x;
@@ -208,13 +215,13 @@ void TileView::applyScrolling()
 	}
 	else if (this->viewMode == TileViewMode::Strategy)
 	{
-		if (scrollLeft)
+		if (scrollLeftKB || scrollLeftM)
 			newPos.x -= stratScrollSpeed.x;
-		if (scrollRight)
+		if (scrollRightKB || scrollRightM)
 			newPos.x += stratScrollSpeed.x;
-		if (scrollUp)
+		if (scrollUpKB || scrollUpM)
 			newPos.y -= stratScrollSpeed.y;
-		if (scrollDown)
+		if (scrollDownKB || scrollDownM)
 			newPos.y += stratScrollSpeed.y;
 	}
 	else

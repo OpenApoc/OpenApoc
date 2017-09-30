@@ -343,6 +343,15 @@
 		<member>subvert</member>
 	</object>
 	<object>
+		<name>AgentMission</name>
+		<member>type</member>
+		<member>allowTeleporter</member>
+		<member>targetBuilding</member>
+		<member>timeToSnooze</member>
+		<member>currentPlannedPath</member>
+		<member>cancelled</member>
+	</object>
+	<object>
 		<name>BattleUnitMission</name>
 		<member>type</member>
 		<member>targetLocation</member>
@@ -573,6 +582,8 @@
 		<name>CityCommonImageList</name>
 		<member>strategyImages</member>
 		<member>projectileVoxelMap</member>
+		<member>agentIsometric</member>
+		<member>agentStrategic</member>
 	</object>
 	<object>
 		<name>BattleCommonSampleList</name>
@@ -863,7 +874,7 @@
 		<member>battle_map</member>
 		<member>preset_crew</member>
 		<member>current_crew</member>
-		<member>landingPadLocations</member>
+		<member>crewQuarters</member>
 		<member>currentVehicles</member>
 		<member>currentAgents</member>
 		<member>ticksDetectionTimeOut</member>
@@ -893,6 +904,9 @@
 		<member>tile_type</member>
 		<member>road_type</member>
 		<member>walk_mode</member>
+		<member>connection</member>
+		<member>hill</member>
+		<member>tube</member>
 		<member>sprite</member>
 		<member>strategySprite</member>
 		<member>overlaySprite</member>
@@ -1268,6 +1282,15 @@
 		<value>Patrol</value>
 		<value>GotoPortal</value>
 		<value>InfiltrateSubvert</value>
+		<value>Teleport</value>
+	</enum>
+	<enum>
+		<name>AgentMission::MissionType</name>
+		<value>GotoBuilding</value>
+		<value>AwaitPickup</value>
+		<value>RestartNextMission</value>
+		<value>Snooze</value>
+		<value>Teleport</value>
 	</enum>
 	<enum>
 		<name>BattleUnitMission::Type</name>
@@ -1305,6 +1328,8 @@
 		<value>East</value>
 		<value>South</value>
 		<value>West</value>
+		<value>Up</value>
+		<value>Down</value>
 	</enum>
 	<enum>
 		<name>Battle::Mode</name>

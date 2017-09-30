@@ -2,6 +2,7 @@
 
 #include "framework/image.h"
 #include "game/state/equipment.h"
+#include "game/state/gametime.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
@@ -11,9 +12,12 @@
 #include <map>
 #include <set>
 
+// How many in-game ticks are required to travel one in-game unit for battleunits
+#define TICKS_PER_UNIT_TRAVELLED_AGENT 8
+
 namespace OpenApoc
 {
-	
+
 static const unsigned TELEPORT_TICKS_REQUIRED_AGENT = TICKS_PER_SECOND * 30;
 
 class Organisation;
@@ -306,11 +310,9 @@ class Agent : public StateObject,
 	bool canTeleport() const;
 	bool hasTeleporter() const;
 
-
 	// Training
 	unsigned trainingPhysicalTicksAccumulated = 0;
 	unsigned trainingPsiTicksAccumulated = 0;
-
 
 	sp<AEquipment> getArmor(BodyPart bodyPart) const;
 	bool isBodyStateAllowed(BodyState bodyState) const;
@@ -347,7 +349,7 @@ class Agent : public StateObject,
 	bool assigned_to_lab = false;
 
 	StateRef<BattleUnit> unit;
-	
+
 	std::list<up<AgentMission>> missions;
 	std::list<sp<AEquipment>> equipment;
 	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
@@ -385,6 +387,9 @@ class Agent : public StateObject,
 	// Replaces all missions with provided mission, returns true if successful
 	bool setMission(GameState &state, AgentMission *mission);
 
+	// Update agent in city
+	void update(GameState &state, unsigned ticks);
+	void updateMovement(GameState &state, unsigned ticks);
 
 	void trainPhysical(GameState &state, unsigned ticks);
 	void trainPsi(GameState &state, unsigned ticks);

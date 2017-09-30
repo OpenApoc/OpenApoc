@@ -22,7 +22,7 @@ class VehicleTileInfo;
 class Agent;
 class AgentInfo;
 
-enum class UpdateSpeed
+enum class CityUpdateSpeed
 {
 	Pause,
 	Speed1,
@@ -32,14 +32,13 @@ enum class UpdateSpeed
 	Speed5,
 };
 
-
-enum class SelectionState
+enum class CitySelectionState
 {
 	Normal,
-	VehicleGotoBuilding,
-	VehicleGotoLocation,
-	VehicleAttackVehicle,
-	VehicleAttackBuilding,
+	GotoBuilding,
+	GotoLocation,
+	AttackVehicle,
+	AttackBuilding,
 };
 
 class CityView : public CityTileView
@@ -49,8 +48,8 @@ class CityView : public CityTileView
 	std::vector<sp<Form>> uiTabs;
 	sp<Form> overlayTab;
 	std::vector<sp<GraphicButton>> miniViews;
-	UpdateSpeed updateSpeed;
-	UpdateSpeed lastSpeed;
+	CityUpdateSpeed updateSpeed;
+	CityUpdateSpeed lastSpeed;
 
 	sp<GameState> state;
 
@@ -61,7 +60,7 @@ class CityView : public CityTileView
 
 	void updateSelectedUnits();
 
-	SelectionState selectionState;
+	CitySelectionState selectionState;
 	bool modifierLShift = false;
 	bool modifierRShift = false;
 	bool modifierLAlt = false;
@@ -109,9 +108,9 @@ class CityView : public CityTileView
 	bool handleMouseDown(Event *e);
 	bool handleGameStateEvent(Event *e);
 
-	void setUpdateSpeed(UpdateSpeed updateSpeed);
+	void setUpdateSpeed(CityUpdateSpeed updateSpeed);
 	void zoomLastEvent();
-	void setSelectionState(SelectionState selectionState);
+	void setSelectionState(CitySelectionState selectionState);
 };
 
 }; // namespace OpenApoc

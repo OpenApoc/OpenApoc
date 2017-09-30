@@ -7,8 +7,13 @@
 namespace OpenApoc
 {
 
+namespace
+{
+static const Colour COLOUR_TRANSPARENT_BLACK = {255, 255, 255, 128};
+}
+
 void TileObjectScenery::draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-                             TileViewMode mode, bool, int, bool, bool)
+                             TileViewMode mode, bool visible, int, bool, bool)
 {
 	std::ignore = transform;
 	// Mode isn't used as TileView::tileToScreenCoords already transforms according to the mode
@@ -40,10 +45,28 @@ void TileObjectScenery::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 			LogError("Unsupported view mode");
 	}
 	if (sprite)
-		r.draw(sprite, transformedScreenPos);
+	{
+		if (visible)
+		{
+			r.draw(sprite, transformedScreenPos);
+		}
+		else
+		{
+			r.drawTinted(sprite, transformedScreenPos, COLOUR_TRANSPARENT_BLACK);
+		}
+	}
 	// FIXME: Should be drawn at 'later' Z than scenery (IE on top of any vehicles on tile?)
 	if (overlaySprite)
-		r.draw(overlaySprite, transformedScreenPos);
+	{
+		if (visible)
+		{
+			r.draw(overlaySprite, transformedScreenPos);
+		}
+		else
+		{
+			r.drawTinted(overlaySprite, transformedScreenPos, COLOUR_TRANSPARENT_BLACK);
+		}
+	}
 }
 
 TileObjectScenery::~TileObjectScenery() = default;

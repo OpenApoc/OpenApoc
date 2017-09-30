@@ -68,7 +68,7 @@ City::~City()
 	}
 }
 
-void City::initMap()
+void City::initMap(GameState &state)
 {
 	if (this->map)
 	{
@@ -77,22 +77,37 @@ void City::initMap()
 	}
 	this->map.reset(new TileMap(this->size, VELOCITY_SCALE_CITY,
 	                            {VOXEL_X_CITY, VOXEL_Y_CITY, VOXEL_Z_CITY}, layerMap));
+	for (auto &b : this->buildings)
+	{
+		b.second->crewQuarters = {-1, -1, -1};
+	}
 	for (auto &s : this->scenery)
 	{
+		s->city = {&state, id};
 		// FIXME: Should we really add all scenery to the map? What if it's destroyed?
 		this->map->addObjectToMap(s);
+		if (!s->building)
+		{
+			continue;
+		}
 		if (s->type->isLandingPad)
 		{
-			Vec2<int> pos = {s->initialPosition.x, s->initialPosition.y};
-
-			for (auto &b : this->buildings)
+			s->building->landingPadLocations.push_back(s->initialPosition);
+		}
+		if ((s->type->connection[0] || s->type->connection[1] || s->type->connection[2] ||
+		     s->type->connection[3]) &&
+		    s->type->road_type == SceneryTileType::RoadType::Terminal)
+		{
+			s->building->carEntranceLocations.push_back(s->initialPosition);
+			// crew quarters is the closest to camera spot with vehicle access
+			if (s->initialPosition.z > s->building->crewQuarters.z ||
+			    (s->initialPosition.z == s->building->crewQuarters.z &&
+			     s->initialPosition.y > s->building->crewQuarters.y) ||
+			    (s->initialPosition.z == s->building->crewQuarters.z &&
+			     s->initialPosition.y == s->building->crewQuarters.y &&
+			     s->initialPosition.x > s->building->crewQuarters.x))
 			{
-				if (b.second->bounds.within(pos))
-				{
-					b.second->landingPadLocations.push_back(s->initialPosition);
-					LogInfo("Pad %s is within building %s bounds %s", pos, b.first,
-					        b.second->bounds);
-				}
+				s->building->crewQuarters = s->initialPosition;
 			}
 		}
 	}
@@ -104,11 +119,21 @@ void City::initMap()
 		}
 		LogInfo("Building %s has %u landing pads:", b.first,
 		        (unsigned)b.second->landingPadLocations.size());
-
 		for (auto &loc : b.second->landingPadLocations)
 		{
 			LogInfo("Pad: %s", loc);
 		}
+		for (auto &loc : b.second->carEntranceLocations)
+		{
+			LogInfo("Car: %s", loc);
+		}
+		if (b.second->crewQuarters == Vec3<int>{-1, -1, -1})
+		{
+			LogWarning("Building %s has no car exit?", b.first);
+			b.second->crewQuarters = {(b.second->bounds.p0.x + b.second->bounds.p1.x) / 2,
+			                          (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2};
+		}
+		LogInfo("Crew Quarters: %s", b.second->crewQuarters);
 	}
 	for (auto &p : this->projectiles)
 	{

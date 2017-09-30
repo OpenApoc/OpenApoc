@@ -2,8 +2,19 @@ OpenApoc X-Com Ufo Apocalypse Development Opensource Open Source XCom programmin
 
 ---
 
+General:
+- fullscreen
+- mousescroll
+- hotkeys
+
+Bugfixes:
+- brainsucker pod research
+- shield used w/o research
+
 City:
-- 
+- agent display
+- agent interface
+- agent pathfinding
 
 Battle:
--  
+- 

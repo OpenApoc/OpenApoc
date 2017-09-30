@@ -621,7 +621,7 @@ std::list<Vec3<int>> Battle::findShortestPathUsingLB(Vec3<int> origin, Vec3<int>
 		}
 
 		// If we did not reach the block - exit
-		if (getLosBlockID(result.rbegin()->x, result.rbegin()->y, result.rbegin()->z) != lbID)
+		if (getLosBlockID(result.back().x, result.back().y, result.back().z) != lbID)
 		{
 			return result;
 		}

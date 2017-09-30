@@ -1,5 +1,4 @@
 #include "game/ui/base/aequipscreen.h"
-#include "game/ui/controlgenerator.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
@@ -24,6 +23,7 @@
 #include "game/state/gamestate.h"
 #include "game/state/rules/damage.h"
 #include "game/state/tileview/tileobject_battleunit.h"
+#include "game/ui/controlgenerator.h"
 #include "game/ui/equipscreen.h"
 #include "game/ui/general/messagebox.h"
 
@@ -945,12 +945,17 @@ AEquipScreen::Mode AEquipScreen::getMode()
 		return Mode::Battle;
 	}
 	// If agent in base and not in vehicle or in vehicle which is parked in base
-	else if (currentAgent && ((currentAgent->currentBuilding && currentAgent->currentBuilding->base) || (currentAgent->currentVehicle && currentAgent->currentVehicle->currentBuilding && currentAgent->currentVehicle->currentBuilding->base)))
+	else if (currentAgent &&
+	         ((currentAgent->currentBuilding && currentAgent->currentBuilding->base) ||
+	          (currentAgent->currentVehicle && currentAgent->currentVehicle->currentBuilding &&
+	           currentAgent->currentVehicle->currentBuilding->base)))
 	{
 		return Mode::Base;
 	}
 	// If agent is in a building which is not any base or in a vehicle which is not parked in base
-	else if (currentAgent && (currentAgent->currentBuilding || (currentAgent->currentVehicle && currentAgent->currentVehicle->currentBuilding)))
+	else if (currentAgent &&
+	         (currentAgent->currentBuilding ||
+	          (currentAgent->currentVehicle && currentAgent->currentVehicle->currentBuilding)))
 	{
 		return Mode::Building;
 	}

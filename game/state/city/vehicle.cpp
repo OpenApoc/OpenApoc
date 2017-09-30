@@ -604,9 +604,8 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 		this->shadowObject->removeFromMap();
 		this->shadowObject = nullptr;
 	}
-	// FIXME: Implement landing pads for ground vehicles
-	LogWarning("Implement landing pads for ground vehicles");
-	this->position = b->landingPadLocations.front();
+	this->position = type->type == VehicleType::Type::Ground ? b->carEntranceLocations.front()
+	                                                         : b->landingPadLocations.front();
 	this->facing = 0.0f;
 	this->goalFacing = 0.0f;
 	this->ticksToTurn = 0;
@@ -651,7 +650,9 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	}
 
 	if (!this->missions.empty())
+	{
 		this->missions.front()->update(state, *this, ticks);
+	}
 	while (!this->missions.empty() && this->missions.front()->isFinished(state, *this))
 	{
 		LogInfo("Vehicle mission \"%s\" finished", this->missions.front()->getName());
@@ -673,7 +674,7 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	{
 		auto alien_city = state.cities["CITYMAP_ALIEN"];
 		// Make UFOs patrol their city if we're looking at it
-		if (this->city.getSp() == alien_city && state.current_city == this->city)
+		if (this->city == alien_city && state.current_city == this->city)
 		{
 			this->missions.emplace_back(VehicleMission::patrol(state, *this));
 		}

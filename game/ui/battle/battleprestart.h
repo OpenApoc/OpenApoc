@@ -45,7 +45,7 @@ class BattlePreStart : public Stage
 
 	void displayAgent(sp<Agent> agent);
 	std::vector<sp<Image>> bigUnitRanks;
-	
+
 	std::set<sp<AgentControl>> agents;
 	sp<AgentControl> selectedAgent;
 	sp<Agent> lastSelectedAgent;

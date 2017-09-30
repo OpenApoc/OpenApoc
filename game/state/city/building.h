@@ -54,7 +54,6 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 	std::map<StateRef<AgentType>, int> preset_crew;
 	std::map<StateRef<AgentType>, int> current_crew;
 
-	std::vector<Vec3<int>> landingPadLocations;
 	std::set<StateRef<Vehicle>> currentVehicles;
 	std::set<StateRef<Agent>> currentAgents;
 
@@ -66,6 +65,12 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 	void updateDetection(GameState &state, unsigned int ticks);
 	void detect(GameState &state, bool forced = false);
 	void alienGrowth(GameState &state);
+
+	// Following members are not serialized, but rather are set in City::initMap method
+
+	Vec3<int> crewQuarters;
+	std::vector<Vec3<int>> carEntranceLocations;
+	std::vector<Vec3<int>> landingPadLocations;
 };
 
 }; // namespace OpenApoc

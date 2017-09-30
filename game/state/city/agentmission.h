@@ -10,13 +10,14 @@
 namespace OpenApoc
 {
 
-static const int TELEPORTER_SPREAD = 10;
+static const int MIN_REASONABLE_HEIGHT_AGENT = 2;
 
 class Agent;
 class Tile;
 class TileMap;
 class Building;
 class UString;
+class SceneryTileType;
 
 class AgentTileHelper : public CanEnterTileHelper
 {
@@ -40,6 +41,12 @@ class AgentTileHelper : public CanEnterTileHelper
 
 	float getDistance(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd) const override;
 
+	// Convert vector direction into index for tube array
+	int convertDirection(Vec3<int> dir) const;
+
+	float adjustCost(Vec3<int> nextPosition, int z) const override;
+
+	bool isMoveAllowed(Scenery &scenery, int dir) const;
 };
 
 class AgentMission
@@ -57,13 +64,12 @@ class AgentMission
 	void update(GameState &state, Agent &a, unsigned int ticks, bool finished = false);
 	bool isFinished(GameState &state, Agent &a, bool callUpdateIfFinished = true);
 	void start(GameState &state, Agent &a);
-	void setPathTo(GameState &state, Agent &a, Vec3<int> target, int maxIterations = 25,
-	               bool checkValidity = true, bool giveUpIfInvalid = false);
+	void setPathTo(GameState &state, Agent &a, StateRef<Building> target);
 	bool advanceAlongPath(GameState &state, Agent &a, Vec3<float> &destPos);
-	
+
 	// Methods to create new missions
 	static AgentMission *gotoBuilding(GameState &state, Agent &a, StateRef<Building> target,
-						bool allowTeleporter = false);
+	                                  bool allowTeleporter = false);
 	static AgentMission *awaitPickup(GameState &state, Agent &a);
 	static AgentMission *snooze(GameState &state, Agent &a, unsigned int ticks);
 	static AgentMission *restartNextMission(GameState &state, Agent &a);
@@ -79,7 +85,7 @@ class AgentMission
 		Teleport
 	};
 
-	MissionType type = MissionType::GotoLocation;
+	MissionType type = MissionType::GotoBuilding;
 
 	//  GotoBuilding
 	bool allowTeleporter = false;
@@ -87,7 +93,9 @@ class AgentMission
 	StateRef<Building> targetBuilding;
 	// AwaitPickup, Snooze
 	unsigned int timeToSnooze = 0;
-	
+
+	bool cancelled = false;
+
 	std::list<Vec3<int>> currentPlannedPath;
 };
 } // namespace OpenApoc

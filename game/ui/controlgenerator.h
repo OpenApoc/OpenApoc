@@ -57,13 +57,23 @@ class ControlGenerator
 	static VehicleTileInfo createVehicleInfo(GameState &state, sp<Vehicle> v);
 	static sp<Control> createVehicleControl(GameState &state, const VehicleTileInfo &info);
 	static sp<Control> createVehicleControl(GameState &state, sp<Vehicle> v);
-	static AgentInfo createAgentInfo(GameState &state, sp<Agent> a, UnitSelectionState forcedSelectionState = UnitSelectionState::NA, bool forceFade = false);
+	static AgentInfo
+	createAgentInfo(GameState &state, sp<Agent> a,
+	                UnitSelectionState forcedSelectionState = UnitSelectionState::NA,
+	                bool forceFade = false);
 	static void fillAgentControl(GameState &state, sp<Graphic> baseControl, const AgentInfo &info);
 	static sp<Control> createAgentControl(GameState &state, const AgentInfo &info);
-	static sp<Control> createAgentControl(GameState &state, sp<Agent> a, UnitSelectionState forcedSelectionState = UnitSelectionState::NA, bool forceFade = false);
-	static sp<Control> createLargeAgentControl(GameState &state, const AgentInfo &info, bool addSkill = false);
-	static sp<Control> createLargeAgentControl(GameState &state, sp<Agent> a, bool addSkill = false, UnitSelectionState forcedSelectionState = UnitSelectionState::NA, bool forceFade = false);
-	
+	static sp<Control>
+	createAgentControl(GameState &state, sp<Agent> a,
+	                   UnitSelectionState forcedSelectionState = UnitSelectionState::NA,
+	                   bool forceFade = false);
+	static sp<Control> createLargeAgentControl(GameState &state, const AgentInfo &info,
+	                                           bool addSkill = false);
+	static sp<Control>
+	createLargeAgentControl(GameState &state, sp<Agent> a, bool addSkill = false,
+	                        UnitSelectionState forcedSelectionState = UnitSelectionState::NA,
+	                        bool forceFade = false);
+
 	static int getFontHeight(GameState &state);
 };
 
@@ -105,6 +115,4 @@ class AgentInfo
 	bool operator==(const AgentInfo &other) const;
 	bool operator!=(const AgentInfo &other) const;
 };
-
-
 }

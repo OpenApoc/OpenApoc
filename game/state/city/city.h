@@ -39,7 +39,7 @@ class City : public StateObject
 	City() = default;
 	~City() override;
 
-	void initMap();
+	void initMap(GameState &state);
 
 	UString id;
 	Vec3<int> size;

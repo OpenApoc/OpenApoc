@@ -1,5 +1,4 @@
 #include "game/ui/battle/battleprestart.h"
-#include "game/ui/controlgenerator.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
 #include "forms/graphicbutton.h"
@@ -17,6 +16,7 @@
 #include "game/state/gamestate.h"
 #include "game/ui/base/aequipscreen.h"
 #include "game/ui/battle/battleview.h"
+#include "game/ui/controlgenerator.h"
 #include "game/ui/general/loadingscreen.h"
 #include <cmath>
 
@@ -109,9 +109,11 @@ void BattlePreStart::updateAgents()
 		{
 			continue;
 		}
-		agents.insert(mksp<AgentControl>(u.second->agent,
-		                                 ControlGenerator::createAgentControl(*state, u.second->agent, UnitSelectionState::Unselected),
-		                                 ControlGenerator::createAgentControl(*state, u.second->agent, UnitSelectionState::FirstSelected)));
+		agents.insert(mksp<AgentControl>(
+		    u.second->agent, ControlGenerator::createAgentControl(*state, u.second->agent,
+		                                                          UnitSelectionState::Unselected),
+		    ControlGenerator::createAgentControl(*state, u.second->agent,
+		                                         UnitSelectionState::FirstSelected)));
 	}
 
 	// Position agent controls
@@ -239,10 +241,7 @@ void BattlePreStart::eventOccurred(Event *e)
 	}
 }
 
-void BattlePreStart::update() 
-{ 
-	menuform->update();
-}
+void BattlePreStart::update() { menuform->update(); }
 
 void BattlePreStart::render()
 {

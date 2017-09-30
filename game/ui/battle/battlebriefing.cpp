@@ -164,12 +164,12 @@ void BattleBriefing::eventOccurred(Event *e)
 	menuform->eventOccured(e);
 	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->keyboard().KeyCode == SDLK_ESCAPE)
+		if (e->keyboard().KeyCode == SDLK_RETURN)
 		{
 			menuform->findControl("BUTTON_REAL_TIME")->click();
 			return;
 		}
-		if (e->keyboard().KeyCode == SDLK_RETURN)
+		if (e->keyboard().KeyCode == SDLK_SPACE)
 		{
 			menuform->findControl("BUTTON_TURN_BASED")->click();
 			return;

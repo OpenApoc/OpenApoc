@@ -161,8 +161,8 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 	std::set<UString> agentsToRemove;
 	for (auto &a : state.agents)
 	{
-		if (a.second->type->role == AgentType::Role::Soldier &&
-			a.second->homeBuilding && a.second->homeBuilding->base == playerBase)
+		if (a.second->type->role == AgentType::Role::Soldier && a.second->homeBuilding &&
+		    a.second->homeBuilding->base == playerBase)
 		{
 			agentsToRemove.insert(a.first);
 			a.second->destroy();

@@ -52,11 +52,12 @@ class Scenery : public std::enable_shared_from_this<Scenery>
 
 	bool isAlive() const;
 
+	// Following members are not serialized, but rather are set in City::initMap method
+
 	sp<TileObjectScenery> tileObject;
 	sp<Doodad> overlayDoodad;
 	std::set<sp<Scenery>> supports;
 	std::set<sp<Scenery>> supportedBy;
-	// May be NULL for no building
 	StateRef<Building> building;
 	StateRef<City> city;
 

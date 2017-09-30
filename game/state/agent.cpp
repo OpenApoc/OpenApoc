@@ -4,11 +4,16 @@
 #include "game/state/battle/battleunit.h"
 #include "game/state/city/agentmission.h"
 #include "game/state/city/building.h"
+#include "game/state/city/city.h"
+#include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
 #include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/scenery_tile_type.h"
+#include "game/state/tileview/tileobject_scenery.h"
 #include "library/strings_format.h"
+#include <glm/glm.hpp>
 
 namespace OpenApoc
 {
@@ -443,9 +448,8 @@ void Agent::enterBuilding(GameState &state, StateRef<Building> b)
 	}
 	currentBuilding = b;
 	currentBuilding->currentAgents.insert({&state, shared_from_this()});
-	// FIXME: Implement crew quarters coordinate
-	LogWarning("Implement crew quarters coordinate for agents");
-	position = {(b->bounds.p0.x + b->bounds.p1.x) / 2, (b->bounds.p0.y + b->bounds.p1.y) / 2, 3};
+	position = (Vec3<float>)b->crewQuarters + Vec3<float>{0.5f, 0.5f, 0.5f};
+	goalPosition = position;
 }
 
 void Agent::enterVehicle(GameState &state, StateRef<Vehicle> v)
@@ -888,7 +892,7 @@ void Agent::updateIsBrainsucker()
 	}
 }
 
-bool Agent::addMission(GameState & state, AgentMission * mission, bool toBack)
+bool Agent::addMission(GameState &state, AgentMission *mission, bool toBack)
 {
 	if (missions.empty() || !toBack)
 	{
@@ -902,12 +906,114 @@ bool Agent::addMission(GameState & state, AgentMission * mission, bool toBack)
 	return true;
 }
 
-bool Agent::setMission(GameState & state, AgentMission * mission)
+bool Agent::setMission(GameState &state, AgentMission *mission)
 {
 	missions.clear();
 	missions.emplace_front(mission);
 	missions.front()->start(state, *this);
 	return true;
+}
+
+void Agent::update(GameState &state, unsigned ticks)
+{
+	if (teleportTicksAccumulated < TELEPORT_TICKS_REQUIRED_VEHICLE)
+	{
+		teleportTicksAccumulated += ticks;
+	}
+	if (!hasTeleporter())
+	{
+		teleportTicksAccumulated = 0;
+	}
+
+	// Agents in vehicles don't update missions and dont' move
+	if (!currentVehicle)
+	{
+		if (!this->missions.empty())
+		{
+			this->missions.front()->update(state, *this, ticks);
+		}
+		while (!this->missions.empty() && this->missions.front()->isFinished(state, *this))
+		{
+			LogInfo("Agent mission \"%s\" finished", this->missions.front()->getName());
+			this->missions.pop_front();
+			if (!this->missions.empty())
+			{
+				LogInfo("Agent mission \"%s\" starting", this->missions.front()->getName());
+				this->missions.front()->start(state, *this);
+				continue;
+			}
+			else
+			{
+				LogInfo("No next agent mission, going idle");
+				break;
+			}
+		}
+		updateMovement(state, ticks);
+	}
+}
+
+void Agent::updateMovement(GameState &state, unsigned ticks)
+{
+	auto ticksToMove = ticks;
+	unsigned lastTicksToMove = 0;
+
+	// Move until we become idle or run out of ticks
+	while (ticksToMove != lastTicksToMove)
+	{
+		lastTicksToMove = ticksToMove;
+
+		// Advance agent position to goal
+		if (ticksToMove > 0 && position != goalPosition)
+		{
+			Vec3<float> vectorToGoal = goalPosition - position;
+			int distanceToGoal = (unsigned)ceilf(glm::length(
+			    vectorToGoal * VELOCITY_SCALE_CITY * (float)TICKS_PER_UNIT_TRAVELLED_AGENT));
+
+			// Cannot reach in one go
+			if (distanceToGoal > ticksToMove)
+			{
+				auto dir = glm::normalize(vectorToGoal);
+				Vec3<float> newPosition = (float)(ticksToMove)*dir;
+				newPosition /= VELOCITY_SCALE_BATTLE;
+				newPosition /= (float)TICKS_PER_UNIT_TRAVELLED_AGENT;
+				newPosition += position;
+				position = newPosition;
+				ticksToMove = 0;
+			}
+			// Can reach in one go
+			else
+			{
+				ticksToMove -= distanceToGoal;
+				position = goalPosition;
+			}
+		}
+
+		// Request new goal
+		if (position == goalPosition)
+		{
+			while (!missions.empty() && missions.front()->isFinished(state, *this))
+			{
+				LogInfo("Agent mission \"%s\" finished", missions.front()->getName());
+				missions.pop_front();
+				if (!missions.empty())
+				{
+					LogInfo("Agent mission \"%s\" starting", missions.front()->getName());
+					missions.front()->start(state, *this);
+				}
+			}
+			// Get new goal from mission
+			if (missions.empty() ||
+			    !missions.front()->getNextDestination(state, *this, goalPosition))
+			{
+				break;
+			}
+			// New goal acquired
+			if (currentBuilding)
+			{
+				leaveBuilding(state, position);
+			}
+		}
+	}
 }
 
 void Agent::trainPhysical(GameState &state, unsigned ticks)

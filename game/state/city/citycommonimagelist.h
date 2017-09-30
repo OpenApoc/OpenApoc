@@ -14,5 +14,7 @@ class CityCommonImageList
   public:
 	sp<std::vector<sp<Image>>> strategyImages;
 	sp<VoxelMap> projectileVoxelMap;
+	sp<Image> agentIsometric;
+	sp<Image> agentStrategic;
 };
 }

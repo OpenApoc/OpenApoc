@@ -1,7 +1,6 @@
 #define _USE_MATH_DEFINES
 
 #include "game/ui/agentassignment.h"
-#include "game/ui/controlgenerator.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
@@ -16,15 +15,13 @@
 #include "game/state/city/building.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
+#include "game/ui/controlgenerator.h"
 #include <cmath>
 
 namespace OpenApoc
 {
 
-AgentAssignment::AgentAssignment(sp<GameState> state)
-    : Form(), state(state)
-{
-}
+AgentAssignment::AgentAssignment(sp<GameState> state) : Form(), state(state) {}
 
 void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 {
@@ -74,11 +71,10 @@ void AgentAssignment::setLocation(sp<Agent> agent)
 		return;
 	}
 
-	agent = nullptr;
-	vehicle = nullptr;
-	building = nullptr;
-
 	this->agent = agent;
+	this->vehicle = nullptr;
+	this->building = nullptr;
+
 	updateLocation();
 }
 
@@ -91,10 +87,9 @@ void AgentAssignment::setLocation(sp<Vehicle> vehicle)
 	}
 
 	this->agent = nullptr;
-	this->vehicle = nullptr;
+	this->vehicle = vehicle;
 	this->building = nullptr;
 
-	this->vehicle = vehicle;
 	updateLocation();
 }
 
@@ -102,9 +97,8 @@ void AgentAssignment::setLocation(sp<Building> building)
 {
 	this->agent = nullptr;
 	this->vehicle = nullptr;
-	this->building = nullptr;
-
 	this->building = building;
+
 	updateLocation();
 }
 
@@ -217,9 +211,5 @@ void AgentAssignment::updateLocation()
 	vehicleList->ItemSize = ControlGenerator::getFontHeight(*state) * 2;
 }
 
-void AgentAssignment::update() 
-{ 
-	Form::update(); 
-}
-
+void AgentAssignment::update() { Form::update(); }
 }

@@ -3,7 +3,15 @@
   <form id="FORM_AGENT_ASSIGNMENT">
     <style minwidth="529" minheight="373">
       <size width="529" height="373"/>
-       <label text="Unassigned Agents">
+	
+	<label text="This form is a temporary stub____________">
+        <position x="0" y="0"/>
+        <size width="529" height="373"/>
+        <alignment horizontal="right" vertical="bottom"/>
+        <font>smalfont</font>
+      </label>
+
+	 <label text="Unassigned Agents">
         <position x="45" y="3"/>
         <size width="167" height="15"/>
         <alignment horizontal="centre" vertical="centre"/>

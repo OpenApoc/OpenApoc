@@ -6,7 +6,6 @@
 #include "forms/label.h"
 #include "forms/list.h"
 #include "forms/radiobutton.h"
-#include "game/state/city/baselayout.h"
 #include "forms/ticker.h"
 #include "forms/ui.h"
 #include "framework/data.h"
@@ -18,9 +17,12 @@
 #include "framework/renderer.h"
 #include "framework/sound.h"
 #include "framework/trace.h"
+#include "game/state/agent.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
 #include "game/state/battle/battle.h"
+#include "game/state/city/agentmission.h"
+#include "game/state/city/baselayout.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/citycommonsamplelist.h"
@@ -31,10 +33,10 @@
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/message.h"
-#include "game/state/agent.h"
 #include "game/state/organisation.h"
 #include "game/state/research.h"
 #include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/scenery_tile_type.h"
 #include "game/state/rules/vammo_type.h"
 #include "game/state/rules/vehicle_type.h"
 #include "game/state/tileview/collision.h"
@@ -42,25 +44,26 @@
 #include "game/state/tileview/tileobject_scenery.h"
 #include "game/state/tileview/tileobject_vehicle.h"
 #include "game/state/ufopaedia.h"
+#include "game/ui/base/aequipscreen.h"
 #include "game/ui/base/basegraphics.h"
 #include "game/ui/base/basescreen.h"
-#include "game/ui/city/basebuyscreen.h"
-#include "game/ui/city/locationscreen.h"
 #include "game/ui/base/researchscreen.h"
 #include "game/ui/base/vequipscreen.h"
 #include "game/ui/battle/battlebriefing.h"
 #include "game/ui/city/alertscreen.h"
+#include "game/ui/city/basebuyscreen.h"
 #include "game/ui/city/baseselectscreen.h"
 #include "game/ui/city/buildingscreen.h"
 #include "game/ui/city/infiltrationscreen.h"
+#include "game/ui/city/locationscreen.h"
 #include "game/ui/city/scorescreen.h"
+#include "game/ui/controlgenerator.h"
 #include "game/ui/general/ingameoptions.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/messagelogscreen.h"
 #include "game/ui/general/notificationscreen.h"
 #include "game/ui/ufopaedia/ufopaediacategoryview.h"
 #include "game/ui/ufopaedia/ufopaediaview.h"
-#include "game/ui/controlgenerator.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
 #include <glm/glm.hpp>
@@ -96,6 +99,23 @@ void CityView::orderGoToBase()
 				v->setMission(*this->state, VehicleMission::gotoBuilding(*this->state, *v, bld));
 			}
 		}
+		return;
+	}
+	if (activeTab == uiTabs[2])
+	{
+		for (auto &a : this->state->current_city->cityViewSelectedAgents)
+		{
+			LogWarning("Goto base for vehicle \"%s\"", a->name);
+			auto bld = a->homeBuilding;
+			if (!bld)
+			{
+				LogError("Vehicle \"%s\" has no building", a->name);
+			}
+			LogWarning("Vehicle \"%s\" goto building \"%s\"", a->name, bld->name);
+			// FIXME: Don't clear missions if not replacing current mission
+			a->setMission(*this->state, AgentMission::gotoBuilding(*this->state, *a, bld));
+		}
+		return;
 	}
 }
 
@@ -103,8 +123,9 @@ void CityView::orderMove(Vec3<float> position, bool useTeleporter)
 {
 	if (activeTab == uiTabs[1])
 	{
-		state->current_city->groupMove(*state, state->current_city->cityViewSelectedVehicles, position,
-			useTeleporter);
+		state->current_city->groupMove(*state, state->current_city->cityViewSelectedVehicles,
+		                               position, useTeleporter);
+		return;
 	}
 }
 
@@ -119,8 +140,18 @@ void CityView::orderMove(StateRef<Building> building, bool useTeleporter)
 				LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name, building->name);
 				// FIXME: Don't clear missions if not replacing current mission
 				v->setMission(*state,
-					VehicleMission::gotoBuilding(*state, *v, building, useTeleporter));
+				              VehicleMission::gotoBuilding(*state, *v, building, useTeleporter));
 			}
+		}
+		return;
+	}
+	if (activeTab == uiTabs[2])
+	{
+		for (auto &a : this->state->current_city->cityViewSelectedAgents)
+		{
+			LogWarning("Agent \"%s\" goto building \"%s\"", a->name, building->name);
+			// FIXME: Don't clear missions if not replacing current mission
+			a->setMission(*state, AgentMission::gotoBuilding(*state, *a, building, useTeleporter));
 		}
 	}
 }
@@ -185,7 +216,7 @@ void CityView::orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additiv
 void CityView::orderSelect(StateRef<Agent> agent, bool inverse, bool additive)
 {
 	auto pos = std::find(state->current_city->cityViewSelectedAgents.begin(),
-		state->current_city->cityViewSelectedAgents.end(), agent);
+	                     state->current_city->cityViewSelectedAgents.end(), agent);
 	if (inverse)
 	{
 		// Agent in selection => remove
@@ -238,6 +269,7 @@ void CityView::orderAttack(StateRef<Vehicle> vehicle)
 				v->setMission(*state, VehicleMission::attackVehicle(*this->state, *v, vehicle));
 			}
 		}
+		return;
 	}
 }
 
@@ -250,7 +282,8 @@ void CityView::orderAttack(StateRef<Building> building)
 			if (v && v->owner == this->state->getPlayer())
 			{
 				// TODO: Attack building mission
-				LogWarning("IMPLEMENT: Vehicle \"%s\" attack building \"%s\"", v->name, building->name);
+				LogWarning("IMPLEMENT: Vehicle \"%s\" attack building \"%s\"", v->name,
+				           building->name);
 			}
 		}
 	}
@@ -261,8 +294,8 @@ CityView::CityView(sp<GameState> state)
                    Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric,
                    state->current_city->cityViewScreenCenter, *state),
       baseForm(ui().getForm("city/city")), overlayTab(ui().getForm("city/overlay")),
-      updateSpeed(UpdateSpeed::Speed1), lastSpeed(UpdateSpeed::Pause), state(state),
-      followVehicle(false), selectionState(SelectionState::Normal),
+      updateSpeed(CityUpdateSpeed::Speed1), lastSpeed(CityUpdateSpeed::Pause), state(state),
+      followVehicle(false), selectionState(CitySelectionState::Normal),
       day_palette(fw().data->loadPalette("xcom3/ufodata/pal_01.dat")),
       twilight_palette(fw().data->loadPalette("xcom3/ufodata/pal_02.dat")),
       night_palette(fw().data->loadPalette("xcom3/ufodata/pal_03.dat"))
@@ -305,7 +338,7 @@ CityView::CityView(sp<GameState> state)
 	overlayTab->setVisible(false);
 	overlayTab->findControlTyped<GraphicButton>("BUTTON_CLOSE")
 	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *) { setSelectionState(SelectionState::Normal); });
+	                  [this](Event *) { setSelectionState(CitySelectionState::Normal); });
 	baseForm->findControlTyped<RadioButton>("BUTTON_SPEED1")->setChecked(true);
 	for (auto &formName : TAB_FORM_NAMES)
 	{
@@ -388,22 +421,22 @@ CityView::CityView(sp<GameState> state)
 		});
 	this->baseForm->findControl("BUTTON_SPEED0")
 	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->updateSpeed = UpdateSpeed::Pause; });
+	                  [this](Event *) { this->updateSpeed = CityUpdateSpeed::Pause; });
 	this->baseForm->findControl("BUTTON_SPEED1")
 	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->updateSpeed = UpdateSpeed::Speed1; });
+	                  [this](Event *) { this->updateSpeed = CityUpdateSpeed::Speed1; });
 	this->baseForm->findControl("BUTTON_SPEED2")
 	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->updateSpeed = UpdateSpeed::Speed2; });
+	                  [this](Event *) { this->updateSpeed = CityUpdateSpeed::Speed2; });
 	this->baseForm->findControl("BUTTON_SPEED3")
 	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->updateSpeed = UpdateSpeed::Speed3; });
+	                  [this](Event *) { this->updateSpeed = CityUpdateSpeed::Speed3; });
 	this->baseForm->findControl("BUTTON_SPEED4")
 	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->updateSpeed = UpdateSpeed::Speed4; });
+	                  [this](Event *) { this->updateSpeed = CityUpdateSpeed::Speed4; });
 	this->baseForm->findControl("BUTTON_SPEED5")
 	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->updateSpeed = UpdateSpeed::Speed5; });
+	                  [this](Event *) { this->updateSpeed = CityUpdateSpeed::Speed5; });
 	this->baseForm->findControl("BUTTON_SHOW_ALIEN_INFILTRATION")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    fw().stageQueueCommand(
@@ -453,10 +486,10 @@ CityView::CityView(sp<GameState> state)
 			    if (v && v->owner == this->state->getPlayer())
 			    {
 				    equipScreen->setSelectedVehicle(v);
-				    fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
 				    break;
 			    }
 		    }
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
 		});
 	vehicleForm->findControl("BUTTON_VEHICLE_BUILDING")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
@@ -464,9 +497,9 @@ CityView::CityView(sp<GameState> state)
 		    {
 			    if (v && v->owner == this->state->getPlayer())
 			    {
-					fw().stageQueueCommand(
-					    {StageCmd::Command::PUSH, mksp<LocationScreen>(this->state, v)});
-					break;
+				    fw().stageQueueCommand(
+				        {StageCmd::Command::PUSH, mksp<LocationScreen>(this->state, v)});
+				    break;
 			    }
 		    }
 		});
@@ -476,7 +509,7 @@ CityView::CityView(sp<GameState> state)
 		    {
 			    if (v && v->owner == this->state->getPlayer())
 			    {
-				    setSelectionState(SelectionState::VehicleGotoBuilding);
+				    setSelectionState(CitySelectionState::GotoBuilding);
 				    break;
 			    }
 		    }
@@ -487,7 +520,7 @@ CityView::CityView(sp<GameState> state)
 		    {
 			    if (v && v->owner == this->state->getPlayer())
 			    {
-				    setSelectionState(SelectionState::VehicleGotoLocation);
+				    setSelectionState(CitySelectionState::GotoLocation);
 				    break;
 			    }
 		    }
@@ -498,7 +531,7 @@ CityView::CityView(sp<GameState> state)
 		    {
 			    if (v && v->owner == this->state->getPlayer())
 			    {
-				    setSelectionState(SelectionState::VehicleAttackVehicle);
+				    setSelectionState(CitySelectionState::AttackVehicle);
 				    break;
 			    }
 		    }
@@ -509,7 +542,7 @@ CityView::CityView(sp<GameState> state)
 		    {
 			    if (v && v->owner == this->state->getPlayer())
 			    {
-				    setSelectionState(SelectionState::VehicleGotoLocation);
+				    setSelectionState(CitySelectionState::GotoLocation);
 				    break;
 			    }
 		    }
@@ -599,19 +632,34 @@ CityView::CityView(sp<GameState> state)
 		});
 	auto agentForm = this->uiTabs[2];
 	agentForm->findControl("BUTTON_AGENT_BUILDING")
-		->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		for (auto &v : this->state->current_city->cityViewSelectedVehicles)
-		{
-			if (v && v->owner == this->state->getPlayer())
-			{
-				// FIXME: Open agent's location screen here
-				LogWarning("Implement agent location scren opening");
-				fw().stageQueueCommand(
-				{ StageCmd::Command::PUSH, mksp<LocationScreen>(this->state, v) });
-				break;
-			}
-		}
-	});
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    if (!this->state->current_city->cityViewSelectedAgents.empty())
+		    {
+			    fw().stageQueueCommand(
+			        {StageCmd::Command::PUSH,
+			         mksp<LocationScreen>(
+			             this->state, this->state->current_city->cityViewSelectedAgents.front())});
+		    }
+		});
+	agentForm->findControl("BUTTON_EQUIP_AGENT")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    fw().stageQueueCommand(
+		        {StageCmd::Command::PUSH,
+		         mksp<AEquipScreen>(this->state,
+		                            !this->state->current_city->cityViewSelectedAgents.empty()
+		                                ? this->state->current_city->cityViewSelectedAgents.front()
+		                                : nullptr)});
+		});
+
+	agentForm->findControl("BUTTON_GOTO_BUILDING")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    if (!this->state->current_city->cityViewSelectedAgents.empty())
+		    {
+			    setSelectionState(CitySelectionState::GotoBuilding);
+		    }
+		});
+	agentForm->findControl("BUTTON_GOTO_BASE")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { orderGoToBase(); });
 }
 
 CityView::~CityView() = default;
@@ -652,10 +700,21 @@ void CityView::resume()
 		view->setImage(viewImage);
 		view->setDepressedImage(viewImage);
 		view->addCallback(FormEventType::ButtonClick, [this](FormsEvent *e) {
-			this->state->current_base = {this->state.get(), e->forms().RaisedBy->getData<Base>()};
-			this->uiTabs[0]
-			    ->findControlTyped<Label>("TEXT_BASE_NAME")
-			    ->setText(this->state->current_base->name);
+			auto clickedBase =
+			    StateRef<Base>(this->state.get(), e->forms().RaisedBy->getData<Base>());
+			if (clickedBase == this->state->current_base)
+			{
+				this->setScreenCenterTile(Vec2<int>{
+				    (clickedBase->building->bounds.p0.x + clickedBase->building->bounds.p1.x) / 2,
+				    (clickedBase->building->bounds.p0.y + clickedBase->building->bounds.p1.y) / 2});
+			}
+			else
+			{
+				this->state->current_base = clickedBase;
+				this->uiTabs[0]
+				    ->findControlTyped<Label>("TEXT_BASE_NAME")
+				    ->setText(this->state->current_base->name);
+			}
 		});
 		miniViews.push_back(view);
 	}
@@ -740,7 +799,7 @@ void CityView::update()
 	bool turbo = false;
 	switch (this->updateSpeed)
 	{
-		case UpdateSpeed::Pause:
+		case CityUpdateSpeed::Pause:
 			ticks = 0;
 			break;
 		/* POSSIBLE FIXME: 'vanilla' apoc appears to implement Speed1 as 1/2 speed - that is
@@ -750,22 +809,22 @@ void CityView::update()
 		    * This effectively means that all openapoc tick counts count for 1/2 the value of
 		    * vanilla
 		    * apoc ticks */
-		case UpdateSpeed::Speed1:
+		case CityUpdateSpeed::Speed1:
 			ticks = 1;
 			break;
-		case UpdateSpeed::Speed2:
+		case CityUpdateSpeed::Speed2:
 			ticks = 2;
 			break;
-		case UpdateSpeed::Speed3:
+		case CityUpdateSpeed::Speed3:
 			ticks = 4;
 			break;
-		case UpdateSpeed::Speed4:
+		case CityUpdateSpeed::Speed4:
 			ticks = 6;
 			break;
-		case UpdateSpeed::Speed5:
+		case CityUpdateSpeed::Speed5:
 			if (!this->state->canTurbo())
 			{
-				setUpdateSpeed(UpdateSpeed::Speed1);
+				setUpdateSpeed(CityUpdateSpeed::Speed1);
 				ticks = 1;
 			}
 			else
@@ -781,7 +840,7 @@ void CityView::update()
 		this->state->updateTurbo();
 		if (!this->state->canTurbo())
 		{
-			setUpdateSpeed(UpdateSpeed::Speed1);
+			setUpdateSpeed(CityUpdateSpeed::Speed1);
 		}
 	}
 	else
@@ -883,7 +942,7 @@ void CityView::update()
 		if (!ownedVehicleList)
 		{
 			LogError("Failed to find \"OWNED_VEHICLE_LIST\" control on city tab \"%s\"",
-				TAB_FORM_NAMES[1]);
+			         TAB_FORM_NAMES[1]);
 		}
 
 		ownedVehicleList->ItemSpacing = 0;
@@ -910,54 +969,57 @@ void CityView::update()
 				{
 					control = ControlGenerator::createVehicleControl(*state, info);
 					control->addCallback(FormEventType::MouseDown, [this, vehicle](FormsEvent *e) {
-						orderSelect(
-							StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)},
-							Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
-							modifierLCtrl || modifierRCtrl);
+						orderSelect(StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)},
+						            Event::isPressed(e->forms().MouseInfo.Button,
+						                             Event::MouseButton::Right),
+						            modifierLCtrl || modifierRCtrl);
 						auto vehicleForm = this->uiTabs[1];
-						//FIXME: Proper multiselect handle for vehicle controls
+						// FIXME: Proper multiselect handle for vehicle controls
 						LogWarning("FIX: Proper multiselect handle for vehicle controls");
 						switch (vehicle->altitude)
 						{
-						case Vehicle::Altitude::Highest:
-							vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGHEST")
-								->setChecked(true);
-							break;
-						case Vehicle::Altitude::High:
-							vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGH")
-								->setChecked(true);
-							break;
-						case Vehicle::Altitude::Standard:
-							vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_STANDARD")
-								->setChecked(true);
-							break;
-						case Vehicle::Altitude::Low:
-							vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_LOW")
-								->setChecked(true);
-							break;
+							case Vehicle::Altitude::Highest:
+								vehicleForm
+								    ->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGHEST")
+								    ->setChecked(true);
+								break;
+							case Vehicle::Altitude::High:
+								vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGH")
+								    ->setChecked(true);
+								break;
+							case Vehicle::Altitude::Standard:
+								vehicleForm
+								    ->findControlTyped<RadioButton>("BUTTON_ALTITUDE_STANDARD")
+								    ->setChecked(true);
+								break;
+							case Vehicle::Altitude::Low:
+								vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_LOW")
+								    ->setChecked(true);
+								break;
 						}
 
 						switch (vehicle->attackMode)
 						{
-						case Vehicle::AttackMode::Aggressive:
-							vehicleForm
-								->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_AGGRESSIVE")
-								->setChecked(true);
-							break;
-						case Vehicle::AttackMode::Standard:
-							vehicleForm
-								->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_STANDARD")
-								->setChecked(true);
-							break;
-						case Vehicle::AttackMode::Defensive:
-							vehicleForm
-								->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_DEFENSIVE")
-								->setChecked(true);
-							break;
-						case Vehicle::AttackMode::Evasive:
-							vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_EVASIVE")
-								->setChecked(true);
-							break;
+							case Vehicle::AttackMode::Aggressive:
+								vehicleForm
+								    ->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_AGGRESSIVE")
+								    ->setChecked(true);
+								break;
+							case Vehicle::AttackMode::Standard:
+								vehicleForm
+								    ->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_STANDARD")
+								    ->setChecked(true);
+								break;
+							case Vehicle::AttackMode::Defensive:
+								vehicleForm
+								    ->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_DEFENSIVE")
+								    ->setChecked(true);
+								break;
+							case Vehicle::AttackMode::Evasive:
+								vehicleForm
+								    ->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_EVASIVE")
+								    ->setChecked(true);
+								break;
 						}
 					});
 				}
@@ -966,7 +1028,8 @@ void CityView::update()
 			}
 		}
 
-		// Clear the old list and reset to the new one (May be empty is not on a vehicle-displaying tab
+		// Clear the old list and reset to the new one (May be empty is not on a vehicle-displaying
+		// tab
 		this->vehicleListControls.clear();
 		this->vehicleListControls = std::move(newVehicleListControls);
 	}
@@ -977,17 +1040,18 @@ void CityView::update()
 		if (!ownedAgentList)
 		{
 			LogError("Failed to find \"OWNED_AGENT_LIST\" control on city tab \"%s\"",
-				TAB_FORM_NAMES[2]);
+			         TAB_FORM_NAMES[2]);
 		}
 		ownedAgentList->ItemSpacing = 0;
 		std::map<sp<Agent>, std::pair<AgentInfo, sp<Control>>> newAgentListControls;
 		ownedAgentList->clear();
-		if (activeTab == uiTabs[1])
+		if (activeTab == uiTabs[2])
 		{
 			for (auto &a : state->agents)
 			{
 				auto agent = a.second;
-				if (agent->owner != state->getPlayer() || agent->type->role!=AgentType::Role::Soldier)
+				if (agent->owner != state->getPlayer() ||
+				    agent->type->role != AgentType::Role::Soldier)
 				{
 					continue;
 				}
@@ -1003,15 +1067,15 @@ void CityView::update()
 				{
 					control = ControlGenerator::createAgentControl(*state, info);
 					control->addCallback(FormEventType::MouseDown, [this, agent](FormsEvent *e) {
-						orderSelect(
-							StateRef<Agent>{state.get(), Agent::getId(*state, agent)},
-							Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
-							modifierLCtrl || modifierRCtrl);
+						orderSelect(StateRef<Agent>{state.get(), Agent::getId(*state, agent)},
+						            Event::isPressed(e->forms().MouseInfo.Button,
+						                             Event::MouseButton::Right),
+						            modifierLCtrl || modifierRCtrl);
 						auto agentForm = this->uiTabs[2];
 
 						// Set form stuff for agent
-						// FIXME: Implement agent select controls
-						LogWarning("FIX Implement agent select controls");
+						// FIXME: Implement agent select controls for psi and phys train
+						LogWarning("FIX Implement agent select controls for psi and phys train");
 					});
 				}
 				newAgentListControls[agent] = std::make_pair(info, control);
@@ -1019,7 +1083,8 @@ void CityView::update()
 			}
 		}
 
-		// Clear the old list and reset to the new one (May be empty is not on a vehicle-displaying tab
+		// Clear the old list and reset to the new one (May be empty is not on a vehicle-displaying
+		// tab
 		this->agentListControls.clear();
 		this->agentListControls = std::move(newAgentListControls);
 	}
@@ -1074,7 +1139,11 @@ void CityView::eventOccurred(Event *e)
 	// Exclude mouse down events that are over the form
 	if (activeTab->eventIsWithin(e) || baseForm->eventIsWithin(e) || overlayTab->eventIsWithin(e))
 	{
-		return;
+		// We pass this event so that scroll can work
+		if (e->type() != EVENT_MOUSE_MOVE)
+		{
+			return;
+		}
 	}
 
 	if (e->type() == EVENT_KEY_DOWN)
@@ -1165,13 +1234,13 @@ bool CityView::handleKeyDown(Event *e)
 		switch (e->keyboard().KeyCode)
 		{
 			case SDLK_ESCAPE:
-				if (selectionState == SelectionState::Normal)
+				if (selectionState == CitySelectionState::Normal)
 				{
 					fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InGameOptions>(state)});
 				}
 				else
 				{
-					setSelectionState(SelectionState::Normal);
+					setSelectionState(CitySelectionState::Normal);
 				}
 				return true;
 			case SDLK_TAB:
@@ -1181,10 +1250,19 @@ bool CityView::handleKeyDown(Event *e)
 				             ->isChecked());
 				return true;
 			case SDLK_SPACE:
-				if (this->updateSpeed != UpdateSpeed::Pause)
-					setUpdateSpeed(UpdateSpeed::Pause);
+				if (this->updateSpeed != CityUpdateSpeed::Pause)
+					setUpdateSpeed(CityUpdateSpeed::Pause);
 				else
 					setUpdateSpeed(this->lastSpeed);
+				return true;
+			case SDLK_m:
+				baseForm->findControl("BUTTON_SHOW_LOG")->click();
+				return true;
+			case SDLK_HOME:
+				baseForm->findControl("BUTTON_ZOOM_EVENT")->click();
+				return true;
+			case SDLK_c:
+				baseForm->findControl("BUTTON_FOLLOW_AGENT")->click();
 				return true;
 		}
 	}
@@ -1219,8 +1297,7 @@ bool CityView::handleKeyUp(Event *e)
 
 bool CityView::handleMouseDown(Event *e)
 {
-	if (this->getViewMode() == TileViewMode::Strategy &&
-	    Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
+	if (Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
 	{
 		Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
 		auto clickTile =
@@ -1258,8 +1335,21 @@ bool CityView::handleMouseDown(Event *e)
 					scenery =
 					    std::dynamic_pointer_cast<TileObjectScenery>(collision.obj)->getOwner();
 					building = scenery->building;
-					LogInfo("CLICKED SCENERY %s at %s BUILDING %s", scenery->type.id,
-					        scenery->currentPosition, building.id);
+					LogWarning("CLICKED SCENERY %s at %s BUILDING %s", scenery->type.id,
+					           scenery->currentPosition, building.id);
+					LogWarning("Type [%d%d]  Road [%d%d%d%d] Slope [%d%d%d%d] Tube [%d%d%d%d%d%d] ",
+					           (int)scenery->type->tile_type, (int)scenery->type->road_type,
+					           (int)scenery->type->connection[0], (int)scenery->type->connection[1],
+					           (int)scenery->type->connection[2], (int)scenery->type->connection[3],
+					           (int)scenery->type->hill[0], (int)scenery->type->hill[1],
+					           (int)scenery->type->hill[2], (int)scenery->type->hill[3],
+					           (int)scenery->type->tube[0], (int)scenery->type->tube[1],
+					           (int)scenery->type->tube[2], (int)scenery->type->tube[3],
+					           (int)scenery->type->tube[4], (int)scenery->type->tube[5]);
+					if (modifierLAlt && modifierLCtrl && modifierLShift)
+					{
+						scenery->die(*state);
+					}
 					break;
 				}
 				case TileObject::Type::Vehicle:
@@ -1367,21 +1457,22 @@ bool CityView::handleMouseDown(Event *e)
 							// Base screen
 							state->current_base = building->base;
 							this->uiTabs[0]
-								->findControlTyped<Label>("TEXT_BASE_NAME")
-								->setText(this->state->current_base->name);
+							    ->findControlTyped<Label>("TEXT_BASE_NAME")
+							    ->setText(this->state->current_base->name);
 							fw().stageQueueCommand(
-							{ StageCmd::Command::PUSH, mksp<BaseScreen>(this->state) });
+							    {StageCmd::Command::PUSH, mksp<BaseScreen>(this->state)});
 						}
 						else if (building->base_layout && building->owner.id == "ORG_GOVERNMENT")
 						{
+							// Base buy screen
 							fw().stageQueueCommand(
-							{ StageCmd::Command::PUSH, mksp<BaseBuyScreen>(state, building) });
+							    {StageCmd::Command::PUSH, mksp<BaseBuyScreen>(state, building)});
 						}
 						else
 						{
 							// Building screen
-							fw().stageQueueCommand(
-							{ StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, building) });
+							fw().stageQueueCommand({StageCmd::Command::PUSH,
+							                        mksp<BuildingScreen>(this->state, building)});
 						}
 					}
 				}
@@ -1392,13 +1483,13 @@ bool CityView::handleMouseDown(Event *e)
 					{
 						// Location screen
 						fw().stageQueueCommand(
-						{StageCmd::Command::PUSH,  mksp<LocationScreen>(this->state, vehicle) });
+						    {StageCmd::Command::PUSH, mksp<LocationScreen>(this->state, vehicle)});
 					}
 					if (building)
 					{
 						// Building screen
 						fw().stageQueueCommand(
-						{ StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, building) });
+						    {StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, building)});
 					}
 				}
 				return true;
@@ -1406,13 +1497,36 @@ bool CityView::handleMouseDown(Event *e)
 			// Otherwise proceed as normal
 			switch (selectionState)
 			{
-				case SelectionState::Normal:
+				case CitySelectionState::Normal:
 				{
 					if (building)
 					{
-						// Building screen for any building
-						fw().stageQueueCommand(
-						    {StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, building)});
+						if (buttonPressed == Event::MouseButton::Right)
+						{
+							if (building->base)
+							{
+								// Base screen
+								state->current_base = building->base;
+								this->uiTabs[0]
+								    ->findControlTyped<Label>("TEXT_BASE_NAME")
+								    ->setText(this->state->current_base->name);
+								fw().stageQueueCommand(
+								    {StageCmd::Command::PUSH, mksp<BaseScreen>(this->state)});
+							}
+							else if (building->base_layout &&
+							         building->owner.id == "ORG_GOVERNMENT")
+							{
+								// Base buy screen
+								fw().stageQueueCommand({StageCmd::Command::PUSH,
+								                        mksp<BaseBuyScreen>(state, building)});
+							}
+						}
+						else
+						{
+							// Building screen for any building
+							fw().stageQueueCommand({StageCmd::Command::PUSH,
+							                        mksp<BuildingScreen>(this->state, building)});
+						}
 					}
 					if (vehicle)
 					{
@@ -1422,41 +1536,41 @@ bool CityView::handleMouseDown(Event *e)
 					}
 					break;
 				}
-				case SelectionState::VehicleAttackBuilding:
+				case CitySelectionState::AttackBuilding:
 				{
 					if (building)
 					{
 						orderAttack(
 						    StateRef<Building>{state.get(), Building::getId(*state, building)});
-						setSelectionState(SelectionState::Normal);
+						setSelectionState(CitySelectionState::Normal);
 					}
 					break;
 				}
-				case SelectionState::VehicleAttackVehicle:
+				case CitySelectionState::AttackVehicle:
 				{
 					if (vehicle)
 					{
 						orderAttack(
 						    StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)});
-						setSelectionState(SelectionState::Normal);
+						setSelectionState(CitySelectionState::Normal);
 					}
 					break;
 				}
-				case SelectionState::VehicleGotoBuilding:
+				case CitySelectionState::GotoBuilding:
 				{
 					if (building)
 					{
 						orderMove(building, modifierRCtrl || modifierLCtrl);
-						setSelectionState(SelectionState::Normal);
+						setSelectionState(CitySelectionState::Normal);
 					}
 					break;
 				}
-				case SelectionState::VehicleGotoLocation:
+				case CitySelectionState::GotoLocation:
 				{
 					// We always have a position if we came this far
 					{
 						orderMove(position, modifierRCtrl || modifierLCtrl);
-						setSelectionState(SelectionState::Normal);
+						setSelectionState(CitySelectionState::Normal);
 					}
 					break;
 				}
@@ -1513,7 +1627,7 @@ bool CityView::handleGameStateEvent(Event *e)
 			fw().soundBackend->playSample(
 			    listRandomiser(state->rng, state->city_common_sample_list->alertSounds));
 			zoomLastEvent();
-			setUpdateSpeed(UpdateSpeed::Speed1);
+			setUpdateSpeed(CityUpdateSpeed::Speed1);
 			fw().stageQueueCommand(
 			    {StageCmd::Command::PUSH, mksp<AlertScreen>(state, ev->building)});
 			break;
@@ -1729,7 +1843,7 @@ void CityView::updateSelectedUnits()
 {
 	auto o = state->getPlayer();
 	auto it = state->current_city->cityViewSelectedVehicles.begin();
-	bool foundOwned = false;
+	bool foundOwned = !state->current_city->cityViewSelectedAgents.empty();
 	while (it != state->current_city->cityViewSelectedVehicles.end())
 	{
 		auto v = *it;
@@ -1746,13 +1860,13 @@ void CityView::updateSelectedUnits()
 			it++;
 		}
 	}
-	if (!foundOwned && selectionState != SelectionState::Normal)
+	if (!foundOwned && selectionState != CitySelectionState::Normal)
 	{
-		setSelectionState(SelectionState::Normal);
+		setSelectionState(CitySelectionState::Normal);
 	}
 }
 
-void CityView::setUpdateSpeed(UpdateSpeed updateSpeed)
+void CityView::setUpdateSpeed(CityUpdateSpeed updateSpeed)
 {
 	if (this->updateSpeed == updateSpeed)
 	{
@@ -1761,22 +1875,22 @@ void CityView::setUpdateSpeed(UpdateSpeed updateSpeed)
 	this->lastSpeed = this->updateSpeed;
 	switch (updateSpeed)
 	{
-		case UpdateSpeed::Pause:
+		case CityUpdateSpeed::Pause:
 			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED0")->setChecked(true);
 			break;
-		case UpdateSpeed::Speed1:
+		case CityUpdateSpeed::Speed1:
 			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED1")->setChecked(true);
 			break;
-		case UpdateSpeed::Speed2:
+		case CityUpdateSpeed::Speed2:
 			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED2")->setChecked(true);
 			break;
-		case UpdateSpeed::Speed3:
+		case CityUpdateSpeed::Speed3:
 			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED3")->setChecked(true);
 			break;
-		case UpdateSpeed::Speed4:
+		case CityUpdateSpeed::Speed4:
 			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED4")->setChecked(true);
 			break;
-		case UpdateSpeed::Speed5:
+		case CityUpdateSpeed::Speed5:
 			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED5")->setChecked(true);
 			break;
 	}
@@ -1793,38 +1907,60 @@ void CityView::zoomLastEvent()
 		}
 	}
 }
-void CityView::setSelectionState(SelectionState selectionState)
+void CityView::setSelectionState(CitySelectionState selectionState)
 {
 	this->selectionState = selectionState;
 	switch (selectionState)
 	{
-		case SelectionState::Normal:
+		case CitySelectionState::Normal:
 		{
 			overlayTab->setVisible(false);
 			break;
 		}
-		case SelectionState::VehicleAttackBuilding:
+		case CitySelectionState::AttackBuilding:
 		{
 			overlayTab->findControlTyped<Label>("TEXT")->setText(
 			    tr("Click on building for selected vehicle to attack"));
 			overlayTab->setVisible(true);
 			break;
 		}
-		case SelectionState::VehicleAttackVehicle:
+		case CitySelectionState::AttackVehicle:
 		{
 			overlayTab->findControlTyped<Label>("TEXT")->setText(
 			    tr("Click on target vehicle for selected vehicle"));
 			overlayTab->setVisible(true);
 			break;
 		}
-		case SelectionState::VehicleGotoBuilding:
+		case CitySelectionState::GotoBuilding:
 		{
-			overlayTab->findControlTyped<Label>("TEXT")->setText(
-			    tr("Click on destination building for selected vehicle"));
+			UString message;
+			if (activeTab == uiTabs[1])
+			{
+				if (state->current_city->cityViewSelectedVehicles.size() > 1)
+				{
+					message = tr("Click on destination building for selected vehicles");
+				}
+				else
+				{
+					message = tr("Click on destination building for selected vehicle");
+				}
+			}
+			else
+			{
+				if (state->current_city->cityViewSelectedAgents.size() > 1)
+				{
+					message = tr("Click on destination building for selected people");
+				}
+				else
+				{
+					message = tr("Click on destination building for selected person");
+				}
+			}
+			overlayTab->findControlTyped<Label>("TEXT")->setText(message);
 			overlayTab->setVisible(true);
 			break;
 		}
-		case SelectionState::VehicleGotoLocation:
+		case CitySelectionState::GotoLocation:
 		{
 			overlayTab->findControlTyped<Label>("TEXT")->setText(
 			    tr("Click on destination map point for selected vehicle"));

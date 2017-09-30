@@ -5,7 +5,6 @@
 #include "forms/graphicbutton.h"
 #include "forms/label.h"
 #include "forms/radiobutton.h"
-#include "game/ui/controlgenerator.h"
 #include "forms/scrollbar.h"
 #include "forms/ticker.h"
 #include "forms/tristatebox.h"
@@ -43,6 +42,7 @@
 #include "game/ui/base/basescreen.h"
 #include "game/ui/battle/battledebriefing.h"
 #include "game/ui/battle/battleturnbasedconfirmbox.h"
+#include "game/ui/controlgenerator.h"
 #include "game/ui/general/ingameoptions.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/messagelogscreen.h"
@@ -181,7 +181,7 @@ BattleView::BattleView(sp<GameState> gameState)
 	                                                   12)));
 
 	lastClickedHostile.resize(6);
-	
+
 	auto font = ui().getFont("smallset");
 	squadNumber.emplace_back();
 	for (int i = 1; i <= 6; i++)
@@ -752,12 +752,14 @@ BattleView::BattleView(sp<GameState> gameState)
 	                                                           clickedUnitPortrait6);
 
 	std::function<void(int index)> clickedUnitHostiles = [this](int index) {
-		if (!this->unitInfo[index].agent || this->unitInfo[index].agent->unit->visibleEnemies.empty())
+		if (!this->unitInfo[index].agent ||
+		    this->unitInfo[index].agent->unit->visibleEnemies.empty())
 		{
 			return;
 		}
 		this->lastClickedHostile[index]++;
-		if (this->lastClickedHostile[index] >= this->unitInfo[index].agent->unit->visibleEnemies.size())
+		if (this->lastClickedHostile[index] >=
+		    this->unitInfo[index].agent->unit->visibleEnemies.size())
 		{
 			this->lastClickedHostile[index] = 0;
 		}
@@ -1571,12 +1573,13 @@ void BattleView::update()
 				updateUnitInfo(i);
 			}
 
-			int newSpottedInfo = std::min(6, newUnitInfo.agent ? (int)newUnitInfo.agent->unit->visibleEnemies.size() : 0);
+			int newSpottedInfo = std::min(
+			    6, newUnitInfo.agent ? (int)newUnitInfo.agent->unit->visibleEnemies.size() : 0);
 			if (newSpottedInfo != spottedInfo[i])
 			{
 				updateSpottedInfo(i);
 			}
-			
+
 			auto newSquadInfo = createSquadInfo(i);
 			if (newSquadInfo != squadInfo[i])
 			{
@@ -2858,7 +2861,11 @@ void BattleView::eventOccurred(Event *e)
 	// Exclude mouse down events that are over the form
 	if (eventWithin || activeTab->eventIsWithin(e) || baseForm->eventIsWithin(e))
 	{
-		return;
+		// We pass this event so that scroll can work
+		if (e->type() != EVENT_MOUSE_MOVE)
+		{
+			return;
+		}
 	}
 
 	if (e->type() == EVENT_MOUSE_MOVE)
@@ -3431,8 +3438,7 @@ bool BattleView::handleMouseDown(Event *e)
 		return true;
 	}
 
-	if (getViewMode() == TileViewMode::Strategy &&
-	    Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
+	if (!debugHotkeyMode && Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
 	{
 		Vec2<float> screenOffset = {getScreenOffset().x, getScreenOffset().y};
 		auto clickTile =
@@ -4293,7 +4299,10 @@ AgentInfo BattleView::createUnitInfo(int index)
 	    battle.forces[battle.currentPlayer].squads[battle.battleViewSquadIndex].getNumUnits() >
 	        index)
 	{
-		a = battle.forces[battle.currentPlayer].squads[battle.battleViewSquadIndex].units[index]->agent;
+		a = battle.forces[battle.currentPlayer]
+		        .squads[battle.battleViewSquadIndex]
+		        .units[index]
+		        ->agent;
 	}
 	return ControlGenerator::createAgentInfo(*state, a);
 }
@@ -4316,12 +4325,12 @@ void BattleView::updateSpottedInfo(int index)
 	if (spottedInfo[index] == 0)
 	{
 		baseForm->findControlTyped<Graphic>(format("UNIT_%d_HOSTILES", index + 1))
-			->setImage(nullptr);
+		    ->setImage(nullptr);
 	}
 	else
 	{
 		baseForm->findControlTyped<Graphic>(format("UNIT_%d_HOSTILES", index + 1))
-			->setImage(unitHostiles[spottedInfo[index]]);
+		    ->setImage(unitHostiles[spottedInfo[index]]);
 	}
 }
 

@@ -1,80 +1,83 @@
 #include "game/ui/controlgenerator.h"
-#include "framework/logger.h"
-#include "forms/ui.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
+#include "forms/ui.h"
+#include "framework/data.h"
+#include "framework/font.h"
 #include "framework/framework.h"
-#include "game/state/city/city.h"
+#include "framework/logger.h"
+#include "game/state/agent.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/city/building.h"
-#include "framework/font.h"
+#include "game/state/city/city.h"
 #include "game/state/city/vehicle.h"
-#include "game/state/agent.h"
 #include "game/state/gamestate.h"
-#include "framework/data.h"
 
 namespace OpenApoc
 {
 ControlGenerator ControlGenerator::singleton;
 
-void ControlGenerator::init(GameState & state)
+void ControlGenerator::init(GameState &state)
 {
-	LogWarning("Implement properly, without requiring an overlaying unitselects that hover over controls, then we will be using stock stuff");
+	LogWarning("Implement properly, without requiring an overlaying unitselects that hover over "
+	           "controls, then we will be using stock stuff");
 	unitSelect.push_back(fw().data->loadImage(
-		"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:37:xcom3/ufodata/pal_01.dat"));
+	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:37:xcom3/ufodata/pal_01.dat"));
 	unitSelect.push_back(fw().data->loadImage("battle/battle-icon-38.png"));
 	unitSelect.push_back(fw().data->loadImage("battle/battle-icon-39.png"));
 
 	LogWarning("Implement proper fatal, psiin, psiout graphics");
-	iconFatal = fw().data->loadImage(
-		format("PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%s:xcom3/ufodata/pal_01.dat", 50));
-	iconPsiIn = fw().data->loadImage(
-			format("PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%s:xcom3/ufodata/pal_01.dat", 51));
-	iconPsiIn = fw().data->loadImage(
-		format("PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%s:xcom3/ufodata/pal_01.dat", 52));
+	iconFatal = fw().data->loadImage(format(
+	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%s:xcom3/ufodata/pal_01.dat", 50));
+	iconPsiIn = fw().data->loadImage(format(
+	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%s:xcom3/ufodata/pal_01.dat", 51));
+	iconPsiIn = fw().data->loadImage(format(
+	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%s:xcom3/ufodata/pal_01.dat", 52));
 
 	for (int i = 28; i <= 34; i++)
 	{
 		unitRanks.push_back(
-			fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-				"tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-				i)));
+		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
+		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+		                                i)));
 	}
 
 	auto img = mksp<RGBImage>(Vec2<int>{1, 2});
 	{
 		RGBImageLock l(img);
-		l.set({ 0, 0 }, Colour{ 255, 255, 219 });
-		l.set({ 0, 1 }, Colour{ 215, 0, 0 });
+		l.set({0, 0}, Colour{255, 255, 219});
+		l.set({0, 1}, Colour{215, 0, 0});
 	}
 	healthImage = img;
 	img = mksp<RGBImage>(Vec2<int>{1, 2});
 	{
 		RGBImageLock l(img);
-		l.set({ 0, 0 }, Colour{ 160, 236, 252 });
-		l.set({ 0, 1 }, Colour{ 4, 100, 252 });
+		l.set({0, 0}, Colour{160, 236, 252});
+		l.set({0, 1}, Colour{4, 100, 252});
 	}
 	shieldImage = img;
 	img = mksp<RGBImage>(Vec2<int>{1, 2});
 	{
 		RGBImageLock l(img);
-		l.set({ 0, 0 }, Colour{ 150, 150, 150 });
-		l.set({ 0, 1 }, Colour{ 97, 101, 105 });
+		l.set({0, 0}, Colour{150, 150, 150});
+		l.set({0, 1}, Colour{97, 101, 105});
 	}
 	stunImage = img;
 	iconShade = fw().data->loadImage("battle/battle-icon-shade.png");
 
 	for (int i = 47; i <= 50; i++)
 	{
-		icons.push_back(fw().data->loadImage(
-			format("PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%s:xcom3/ufodata/pal_01.dat", i)));
+		icons.push_back(fw().data->loadImage(format(
+		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%s:xcom3/ufodata/pal_01.dat",
+		    i)));
 	}
 
 	for (int i = 51; i <= 63; i++)
 	{
-		vehiclePassengerCountIcons.push_back(fw().data->loadImage(
-			format("PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%s:xcom3/ufodata/pal_01.dat", i)));
+		vehiclePassengerCountIcons.push_back(fw().data->loadImage(format(
+		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%s:xcom3/ufodata/pal_01.dat",
+		    i)));
 	}
 	labelFont = ui().getFont("smalfont");
 
@@ -91,8 +94,9 @@ VehicleTileInfo ControlGenerator::createVehicleInfo(GameState &state, sp<Vehicle
 	{
 		if (veh == v)
 		{
-			t.selected =
-				(veh == state.current_city->cityViewSelectedVehicles.front()) ? UnitSelectionState::FirstSelected : UnitSelectionState::Selected;
+			t.selected = (veh == state.current_city->cityViewSelectedVehicles.front())
+			                 ? UnitSelectionState::FirstSelected
+			                 : UnitSelectionState::Selected;
 			break;
 		}
 	}
@@ -136,15 +140,13 @@ VehicleTileInfo ControlGenerator::createVehicleInfo(GameState &state, sp<Vehicle
 	return t;
 }
 
-sp<Control> ControlGenerator::createVehicleControl(GameState & state, const VehicleTileInfo &info)
+sp<Control> ControlGenerator::createVehicleControl(GameState &state, const VehicleTileInfo &info)
 {
 	if (!singleton.initialised)
 	{
 		singleton.init(state);
 	}
 
-	//FIXME: USE PROPER FRAMES FOR VEHICLE CONTROLS!	
-	LogWarning("FIXME: USE PROPER FRAMES FOR VEHICLE CONTROLS!");
 	auto frame = singleton.unitSelect[(int)info.selected];
 	auto baseControl = mksp<Graphic>(frame);
 	baseControl->Size = frame->size;
@@ -155,12 +157,12 @@ sp<Control> ControlGenerator::createVehicleControl(GameState & state, const Vehi
 
 	auto vehicleIcon = baseControl->createChild<Graphic>(info.vehicle->type->icon);
 	vehicleIcon->AutoSize = true;
-	vehicleIcon->Location = { 1, 1 };
+	vehicleIcon->Location = {1, 1};
 	vehicleIcon->Name = "OWNED_VEHICLE_ICON_" + info.vehicle->name;
 
 	// FIXME: Put these somewhere slightly less magic?
-	Vec2<int> healthBarOffset = { 27, 2 };
-	Vec2<int> healthBarSize = { 3, 20 };
+	Vec2<int> healthBarOffset = {27, 2};
+	Vec2<int> healthBarSize = {3, 20};
 
 	auto healthImg = info.shield ? singleton.shieldImage : singleton.healthImage;
 
@@ -178,34 +180,35 @@ sp<Control> ControlGenerator::createVehicleControl(GameState & state, const Vehi
 
 	stateGraphic = baseControl->createChild<Graphic>(singleton.icons[(int)info.state]);
 	stateGraphic->AutoSize = true;
-	stateGraphic->Location = { 0, 0 };
+	stateGraphic->Location = {0, 0};
 	stateGraphic->Name = "OWNED_VEHICLE_STATE_" + info.vehicle->name;
 
 	if (info.faded)
 	{
 		auto fadeIcon = baseControl->createChild<Graphic>(singleton.iconShade);
 		fadeIcon->AutoSize = true;
-		fadeIcon->Location = { 1, 1 };
+		fadeIcon->Location = {1, 1};
 	}
 	if (info.passengers)
 	{
-		auto passengerGraphic =
-			vehicleIcon->createChild<Graphic>(singleton.vehiclePassengerCountIcons[info.passengers]);
+		auto passengerGraphic = vehicleIcon->createChild<Graphic>(
+		    singleton.vehiclePassengerCountIcons[info.passengers]);
 		passengerGraphic->AutoSize = true;
-		passengerGraphic->Location = { 0, 0 };
+		passengerGraphic->Location = {0, 0};
 		passengerGraphic->Name = "OWNED_VEHICLE_PASSENGERS_" + info.vehicle->name;
 	}
 
 	return baseControl;
 }
 
-sp<Control> ControlGenerator::createVehicleControl(GameState & state, sp<Vehicle> v)
+sp<Control> ControlGenerator::createVehicleControl(GameState &state, sp<Vehicle> v)
 {
 	auto info = createVehicleInfo(state, v);
 	return createVehicleControl(state, info);
 }
 
-AgentInfo ControlGenerator::createAgentInfo(GameState & state, sp<Agent> a, UnitSelectionState forcedSelectionState, bool forceFade)
+AgentInfo ControlGenerator::createAgentInfo(GameState &state, sp<Agent> a,
+                                            UnitSelectionState forcedSelectionState, bool forceFade)
 {
 	AgentInfo i;
 
@@ -241,7 +244,9 @@ AgentInfo ControlGenerator::createAgentInfo(GameState & state, sp<Agent> a, Unit
 			{
 				if (u->agent == a)
 				{
-					i.selected = (u == state.current_battle->battleViewSelectedUnits.front()) ? UnitSelectionState::FirstSelected : UnitSelectionState::Selected;
+					i.selected = (u == state.current_battle->battleViewSelectedUnits.front())
+					                 ? UnitSelectionState::FirstSelected
+					                 : UnitSelectionState::Selected;
 					break;
 				}
 			}
@@ -253,8 +258,9 @@ AgentInfo ControlGenerator::createAgentInfo(GameState & state, sp<Agent> a, Unit
 			{
 				if (ag == a)
 				{
-					i.selected =
-						(ag == state.current_city->cityViewSelectedAgents.front()) ? UnitSelectionState::FirstSelected : UnitSelectionState::Selected;
+					i.selected = (ag == state.current_city->cityViewSelectedAgents.front())
+					                 ? UnitSelectionState::FirstSelected
+					                 : UnitSelectionState::Selected;
 					break;
 				}
 			}
@@ -332,22 +338,23 @@ AgentInfo ControlGenerator::createAgentInfo(GameState & state, sp<Agent> a, Unit
 	return i;
 }
 
-sp<Control> ControlGenerator::createAgentControl(GameState & state, const AgentInfo & info)
+sp<Control> ControlGenerator::createAgentControl(GameState &state, const AgentInfo &info)
 {
 	auto baseControl = mksp<Graphic>();
 	baseControl->AutoSize = true;
-	baseControl->Location = { 0, 0 };
+	baseControl->Location = {0, 0};
 	fillAgentControl(state, baseControl, info);
 	return baseControl;
 }
 
-sp<Control> ControlGenerator::createLargeAgentControl(GameState & state, const AgentInfo & info, bool addSkill)
+sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, const AgentInfo &info,
+                                                      bool addSkill)
 {
 	if (!singleton.initialised)
 	{
 		singleton.init(state);
 	}
-	Vec2<int> size = { 130, singleton.labelFont->getFontHeight() * (addSkill ? 3 : 2) };
+	Vec2<int> size = {130, singleton.labelFont->getFontHeight() * (addSkill ? 3 : 2)};
 
 	auto baseControl = mksp<Control>();
 	baseControl->setData(info.agent);
@@ -356,13 +363,13 @@ sp<Control> ControlGenerator::createLargeAgentControl(GameState & state, const A
 
 	auto frameGraphic = baseControl->createChild<Graphic>();
 	frameGraphic->AutoSize = true;
-	frameGraphic->Location = { 0, 0 };
+	frameGraphic->Location = {0, 0};
 
 	fillAgentControl(state, frameGraphic, info);
 
 	auto nameLabel = baseControl->createChild<Label>(info.agent->name, singleton.labelFont);
-	nameLabel->Location = { 40, 0 };
-	nameLabel->Size = { 100, singleton.labelFont->getFontHeight() * 2 };
+	nameLabel->Location = {40, 0};
+	nameLabel->Size = {100, singleton.labelFont->getFontHeight() * 2};
 
 	if (addSkill)
 	{
@@ -380,15 +387,18 @@ sp<Control> ControlGenerator::createLargeAgentControl(GameState & state, const A
 			skill = info.agent->current_stats.engineering_skill;
 		}
 
-		auto skillLabel = baseControl->createChild<Label>(format(tr("Skill %s"), skill), singleton.labelFont);
-		skillLabel->Size = { 100, singleton.labelFont->getFontHeight() };
-		skillLabel->Location = { 40, singleton.labelFont->getFontHeight() * 2 };
+		auto skillLabel =
+		    baseControl->createChild<Label>(format(tr("Skill %s"), skill), singleton.labelFont);
+		skillLabel->Size = {100, singleton.labelFont->getFontHeight()};
+		skillLabel->Location = {40, singleton.labelFont->getFontHeight() * 2};
 	}
 
 	return baseControl;
 }
 
-sp<Control> ControlGenerator::createLargeAgentControl(GameState & state, sp<Agent> a, bool addSkill, UnitSelectionState forcedSelectionState, bool forceFade)
+sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, sp<Agent> a, bool addSkill,
+                                                      UnitSelectionState forcedSelectionState,
+                                                      bool forceFade)
 {
 	auto info = createAgentInfo(state, a, forcedSelectionState, forceFade);
 	return createLargeAgentControl(state, info, addSkill);
@@ -403,13 +413,16 @@ int ControlGenerator::getFontHeight(GameState &state)
 	return singleton.labelFont->getFontHeight();
 }
 
-sp<Control> ControlGenerator::createAgentControl(GameState & state, sp<Agent> a, UnitSelectionState forcedSelectionState, bool forceFade)
+sp<Control> ControlGenerator::createAgentControl(GameState &state, sp<Agent> a,
+                                                 UnitSelectionState forcedSelectionState,
+                                                 bool forceFade)
 {
 	auto info = createAgentInfo(state, a, forcedSelectionState, forceFade);
 	return createAgentControl(state, info);
 }
 
-void ControlGenerator::fillAgentControl(GameState & state, sp<Graphic> baseControl, const AgentInfo & info)
+void ControlGenerator::fillAgentControl(GameState &state, sp<Graphic> baseControl,
+                                        const AgentInfo &info)
 {
 	if (!singleton.initialised)
 	{
@@ -426,25 +439,25 @@ void ControlGenerator::fillAgentControl(GameState & state, sp<Graphic> baseContr
 
 	auto unitIcon = baseControl->createChild<Graphic>(info.agent->getPortrait().icon);
 	unitIcon->AutoSize = true;
-	unitIcon->Location = { 2, 1 };
+	unitIcon->Location = {2, 1};
 
 	if (info.faded)
 	{
 		auto fadeIcon = baseControl->createChild<Graphic>(singleton.iconShade);
 		fadeIcon->AutoSize = true;
-		fadeIcon->Location = { 2, 1 };
+		fadeIcon->Location = {2, 1};
 	}
 	if (info.useRank)
 	{
 		auto rankIcon = baseControl->createChild<Graphic>(singleton.unitRanks[(int)info.rank]);
 		rankIcon->AutoSize = true;
-		rankIcon->Location = { 0, 0 };
+		rankIcon->Location = {0, 0};
 	}
 	if (info.healthProportion > 0.0f)
 	{
 		// FIXME: Put these somewhere slightly less magic?
-		Vec2<int> healthBarOffset = { 27, 2 };
-		Vec2<int> healthBarSize = { 3, 20 };
+		Vec2<int> healthBarOffset = {27, 2};
+		Vec2<int> healthBarSize = {3, 20};
 
 		auto healthImg = info.shield ? singleton.shieldImage : singleton.healthImage;
 		auto healthGraphic = baseControl->createChild<Graphic>(healthImg);
@@ -460,8 +473,8 @@ void ControlGenerator::fillAgentControl(GameState & state, sp<Graphic> baseContr
 	if (info.stunProportion > 0.0f)
 	{
 		// FIXME: Put these somewhere slightly less magic?
-		Vec2<int> healthBarOffset = { 27, 2 };
-		Vec2<int> healthBarSize = { 3, 20 };
+		Vec2<int> healthBarOffset = {27, 2};
+		Vec2<int> healthBarSize = {3, 20};
 
 		auto healthImg = singleton.stunImage;
 		auto healthGraphic = baseControl->createChild<Graphic>(healthImg);
@@ -478,54 +491,45 @@ void ControlGenerator::fillAgentControl(GameState & state, sp<Graphic> baseContr
 	{
 		auto stateGraphic = baseControl->createChild<Graphic>(singleton.icons[(int)info.state]);
 		stateGraphic->AutoSize = true;
-		stateGraphic->Location = { 0, 0 };
-
+		stateGraphic->Location = {0, 0};
 	}
 	if (info.fatal)
 	{
 		auto icon = baseControl->createChild<Graphic>(singleton.iconFatal);
 		icon->AutoSize = true;
-		icon->Location = { 0, 0 };
+		icon->Location = {0, 0};
 	}
 	if (info.psiIn)
 	{
 		auto icon = baseControl->createChild<Graphic>(singleton.iconPsiIn);
 		icon->AutoSize = true;
-		icon->Location = { 0, 0 };
+		icon->Location = {0, 0};
 	}
 	if (info.psiOut)
 	{
 		auto icon = baseControl->createChild<Graphic>(singleton.iconPsiOut);
 		icon->AutoSize = true;
-		icon->Location = { 0, 0 };
+		icon->Location = {0, 0};
 	}
 }
 
 bool VehicleTileInfo::operator==(const VehicleTileInfo &other) const
 {
 	return (this->vehicle == other.vehicle && this->selected == other.selected &&
-		this->healthProportion == other.healthProportion && this->shield == other.shield &&
-		this->passengers == other.passengers && this->state == other.state);
+	        this->healthProportion == other.healthProportion && this->shield == other.shield &&
+	        this->passengers == other.passengers && this->state == other.state);
 }
 
-bool VehicleTileInfo::operator!=(const VehicleTileInfo &other) const
-{
-	return !(*this == other);
-}
+bool VehicleTileInfo::operator!=(const VehicleTileInfo &other) const { return !(*this == other); }
 bool AgentInfo::operator==(const AgentInfo &other) const
 {
-	return (this->agent == other.agent && this->rank == other.rank && this->useRank == other.useRank 
-		&& this->state == other.state && this->useState == other.useState && this->fatal==other.fatal 
-		&& this->psiIn == other.psiIn && this->psiOut == other.psiOut
-		&& this->selected == other.selected &&
-		this->healthProportion == other.healthProportion &&
-		this->stunProportion == other.stunProportion && this->shield == other.shield);
+	return (this->agent == other.agent && this->rank == other.rank &&
+	        this->useRank == other.useRank && this->state == other.state &&
+	        this->useState == other.useState && this->fatal == other.fatal &&
+	        this->psiIn == other.psiIn && this->psiOut == other.psiOut &&
+	        this->selected == other.selected && this->healthProportion == other.healthProportion &&
+	        this->stunProportion == other.stunProportion && this->shield == other.shield);
 }
 
-bool AgentInfo::operator!=(const AgentInfo &other) const 
-{
-	return !(*this == other); 
-}
-
-
+bool AgentInfo::operator!=(const AgentInfo &other) const { return !(*this == other); }
 }

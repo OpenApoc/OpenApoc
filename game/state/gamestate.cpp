@@ -37,6 +37,9 @@
 #include "library/strings_format.h"
 #include <random>
 
+// ENABLE/DISABLE FAKE TRAFFIC
+#define FAKE_TRAFFIC
+
 namespace OpenApoc
 {
 
@@ -115,7 +118,23 @@ void GameState::initState()
 	for (auto &c : this->cities)
 	{
 		auto &city = c.second;
-		city->initMap();
+		for (auto &s : city->scenery)
+		{
+			for (auto &b : city->buildings)
+			{
+				auto &building = b.second;
+				Vec2<int> pos2d{s->initialPosition.x, s->initialPosition.y};
+				if (building->bounds.within(pos2d))
+				{
+					s->building = {this, building};
+				}
+			}
+		}
+	}
+	for (auto &c : this->cities)
+	{
+		auto &city = c.second;
+		city->initMap(*this);
 		for (auto &v : this->vehicles)
 		{
 			auto vehicle = v.second;
@@ -140,22 +159,6 @@ void GameState::initState()
 		if (!v.second->currentBuilding)
 		{
 			v.second->setupMover();
-		}
-	}
-	for (auto &c : this->cities)
-	{
-		auto &city = c.second;
-		for (auto &s : city->scenery)
-		{
-			for (auto &b : city->buildings)
-			{
-				auto &building = b.second;
-				Vec2<int> pos2d{s->initialPosition.x, s->initialPosition.y};
-				if (building->bounds.within(pos2d))
-				{
-					s->building = {this, building};
-				}
-			}
 		}
 	}
 	// Fill links for weapon's ammo
@@ -186,8 +189,12 @@ void GameState::fillOrgStartingProperty()
 	// Create some random vehicles
 	for (int i = 0; i < 5; i++)
 	{
-		// Uncomment below to stop fake traffic
-		// break;
+#ifndef FAKE_TRAFFIC
+		break;
+#endif
+#ifdef PATHFINDING_DEBUG
+		break;
+#endif
 		for (auto &vehicleType : this->vehicle_types)
 		{
 			auto &type = vehicleType.second;
@@ -487,7 +494,12 @@ void GameState::update(unsigned int ticks)
 			v.second->update(*this, ticks);
 		}
 		Trace::end("GameState::update::vehicles");
-
+		Trace::start("GameState::update::agents");
+		for (auto &a : this->agents)
+		{
+			a.second->update(*this, ticks);
+		}
+		Trace::end("GameState::update::agents");
 		gameTime.addTicks(ticks);
 		if (gameTime.fiveMinutesPassed())
 		{

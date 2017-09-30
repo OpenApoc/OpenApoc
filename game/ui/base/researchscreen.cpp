@@ -1,5 +1,4 @@
 #include "game/ui/base/researchscreen.h"
-#include "game/ui/controlgenerator.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
 #include "forms/graphicbutton.h"
@@ -17,6 +16,7 @@
 #include "game/state/city/building.h"
 #include "game/state/gamestate.h"
 #include "game/ui/base/researchselect.h"
+#include "game/ui/controlgenerator.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc
@@ -299,8 +299,7 @@ void ResearchScreen::setCurrentLabInfo()
 			if (!assigned_to_current_lab)
 				continue;
 		}
-		auto agentControl =
-		    ControlGenerator::createLargeAgentControl(*state, agent.second, true);
+		auto agentControl = ControlGenerator::createLargeAgentControl(*state, agent.second, true);
 
 		if (assigned_to_current_lab)
 		{
