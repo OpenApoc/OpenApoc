@@ -236,7 +236,7 @@ Vec3<float> BattleUnit::getVelocity() const
 				speedMult *= 0.666f;
 			}
 			targetVelocity *= speedMult;
-			targetVelocity *= (float)TICK_SCALE / (float)TICKS_PER_UNIT_TRAVELLED;
+			targetVelocity *= (float)TICK_SCALE / (float)TICKS_PER_UNIT_TRAVELLED_BATTLEUNIT;
 		}
 	}
 	return targetVelocity;
@@ -1663,7 +1663,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	// Hit shield if present
 	if (!damageType->ignore_shield)
 	{
-		auto shield = agent->getFirstShield();
+		auto shield = agent->getFirstShield(state);
 		if (shield)
 		{
 			damage = damageType->dealDamage(damage, shield->type->damage_modifier);
@@ -2857,8 +2857,8 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 			speedModifier = std::max((unsigned)1, flyingSpeedModifier);
 		}
 		Vec3<float> vectorToGoal = goalPosition - getPosition();
-		unsigned int distanceToGoal = (unsigned)ceilf(
-		    glm::length(vectorToGoal * VELOCITY_SCALE_BATTLE * (float)TICKS_PER_UNIT_TRAVELLED));
+		unsigned int distanceToGoal = (unsigned)ceilf(glm::length(
+		    vectorToGoal * VELOCITY_SCALE_BATTLE * (float)TICKS_PER_UNIT_TRAVELLED_BATTLEUNIT));
 		unsigned int moveTicksConsumeRate = BASE_MOVETICKS_CONSUMPTION_RATE;
 		// Bring all jumpers to constant speed so that we can align leg animation with the edge
 		if (target_body_state == BodyState::Jumping)
@@ -2908,7 +2908,7 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 			Vec3<float> newPosition = (float)(moveTicksRemaining / moveTicksConsumeRate) *
 			                          (float)(speedModifier / 100) * dir;
 			newPosition /= VELOCITY_SCALE_BATTLE;
-			newPosition /= (float)TICKS_PER_UNIT_TRAVELLED;
+			newPosition /= (float)TICKS_PER_UNIT_TRAVELLED_BATTLEUNIT;
 			newPosition += getPosition();
 			setPosition(state, newPosition);
 			triggerProximity(state);
@@ -5370,7 +5370,7 @@ Vec3<float> BattleUnit::getThrownItemLocation() const
 
 unsigned int BattleUnit::getDistanceTravelled() const
 {
-	return movement_ticks_passed / TICKS_PER_UNIT_TRAVELLED;
+	return movement_ticks_passed / TICKS_PER_UNIT_TRAVELLED_BATTLEUNIT;
 }
 
 bool BattleUnit::shouldPlaySoundNow()

@@ -16,6 +16,7 @@
 #include "game/state/gamestate.h"
 #include "game/ui/base/aequipscreen.h"
 #include "game/ui/battle/battleview.h"
+#include "game/ui/controlgenerator.h"
 #include "game/ui/general/loadingscreen.h"
 #include <cmath>
 
@@ -59,60 +60,6 @@ void BattlePreStart::displayAgent(sp<Agent> agent)
 	menuform->findControlTyped<Graphic>("LEFT_HAND")
 	    ->setImage(lHand ? lHand->type->equipscreen_sprite : nullptr);
 }
-
-sp<Control> BattlePreStart::createAgentControl(StateRef<Agent> agent, bool selected)
-{
-	auto baseControl = mksp<Graphic>();
-	baseControl->Name = "AGENT_PORTRAIT";
-	baseControl->Size = unitSelect[0]->size;
-	baseControl->setImage(unitSelect[selected ? 2 : 0]);
-
-	auto icon = agent->getPortrait().icon;
-	auto photoGraphic = baseControl->createChild<Graphic>(icon);
-	photoGraphic->Size = icon->size;
-	photoGraphic->Location = {1, 1};
-
-	auto rankIcon = baseControl->createChild<Graphic>(unitRanks[(int)agent->rank]);
-	rankIcon->AutoSize = true;
-	rankIcon->Location = {0, 0};
-
-	bool shield = agent->getMaxShield() > 0;
-
-	float maxHealth;
-	float currentHealth;
-	if (shield)
-	{
-		currentHealth = agent->getShield();
-		maxHealth = agent->getMaxShield();
-	}
-	else
-	{
-		currentHealth = agent->getHealth();
-		maxHealth = agent->getMaxHealth();
-	}
-	float healthProportion = maxHealth == 0.0f ? 0.0f : currentHealth / maxHealth;
-
-	if (healthProportion > 0.0f)
-	{
-		// FIXME: Put these somewhere slightly less magic?
-		Vec2<int> healthBarOffset = {27, 2};
-		Vec2<int> healthBarSize = {3, 20};
-
-		auto healthImg = shield ? this->shieldImage : this->healthImage;
-		auto healthGraphic = baseControl->createChild<Graphic>(healthImg);
-		// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
-		// top-left, so fix that up a bit
-		int healthBarHeight = (int)((float)healthBarSize.y * healthProportion);
-		healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
-		healthBarSize.y = healthBarHeight;
-		healthGraphic->Location = healthBarOffset;
-		healthGraphic->Size = healthBarSize;
-		healthGraphic->ImagePosition = FillMethod::Stretch;
-	}
-
-	return baseControl;
-}
-
 BattlePreStart::BattlePreStart(sp<GameState> state)
     : Stage(), menuform(ui().getForm("battle/prestart")), TOP_LEFT({302, 80}), state(state)
 {
@@ -134,27 +81,6 @@ BattlePreStart::BattlePreStart(sp<GameState> state)
 		                             this->state->battle_common_image_list->loadingImage, 1)});
 		});
 
-	auto img = mksp<RGBImage>(Vec2<int>{1, 2});
-	{
-		RGBImageLock l(img);
-		l.set({0, 0}, Colour{255, 255, 219});
-		l.set({0, 1}, Colour{215, 0, 0});
-	}
-	this->healthImage = img;
-	img = mksp<RGBImage>(Vec2<int>{1, 2});
-	{
-		RGBImageLock l(img);
-		l.set({0, 0}, Colour{160, 236, 252});
-		l.set({0, 1}, Colour{4, 100, 252});
-	}
-	this->shieldImage = img;
-	for (int i = 28; i <= 34; i++)
-	{
-		unitRanks.push_back(
-		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-		                                i)));
-	}
 	for (int i = 12; i <= 18; i++)
 	{
 		bigUnitRanks.push_back(
@@ -162,10 +88,6 @@ BattlePreStart::BattlePreStart(sp<GameState> state)
 		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
 		                                i)));
 	}
-	unitSelect.push_back(fw().data->loadImage(
-	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:37:xcom3/ufodata/pal_01.dat"));
-	unitSelect.push_back(fw().data->loadImage("battle/battle-icon-38.png"));
-	unitSelect.push_back(fw().data->loadImage("battle/battle-icon-39.png"));
 }
 
 void BattlePreStart::updateAgents()
@@ -187,17 +109,20 @@ void BattlePreStart::updateAgents()
 		{
 			continue;
 		}
-		agents.insert(mksp<AgentControl>(u.second->agent,
-		                                 createAgentControl(u.second->agent, false),
-		                                 createAgentControl(u.second->agent, true)));
+		agents.insert(mksp<AgentControl>(
+		    u.second->agent, ControlGenerator::createAgentControl(*state, u.second->agent,
+		                                                          UnitSelectionState::Unselected),
+		    ControlGenerator::createAgentControl(*state, u.second->agent,
+		                                         UnitSelectionState::FirstSelected)));
 	}
 
-	// Position agnet controls
+	// Position agent controls
 	for (auto &a : agents)
 	{
 		a->setLocation(menuform->Location + TOP_LEFT +
 		               Vec2<int>{a->agent->unit->squadPosition * SHIFT_X,
 		                         a->agent->unit->squadNumber * SHIFT_Y});
+		a->update();
 	}
 
 	if (lastSelectedAgent)
@@ -347,6 +272,12 @@ void BattlePreStart::AgentControl::setLocation(Vec2<int> pos)
 {
 	normalControl->Location = pos;
 	selectedControl->Location = pos;
+}
+
+void BattlePreStart::AgentControl::update()
+{
+	normalControl->update();
+	selectedControl->update();
 }
 
 BattlePreStart::AgentControl::AgentControl(sp<Agent> agent, sp<Control> normalControl,

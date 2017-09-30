@@ -31,6 +31,7 @@
 #include "game/state/battle/battleunit.h"
 #include "game/state/battle/battleunitanimationpack.h"
 #include "game/state/battle/battleunitimagepack.h"
+#include "game/state/city/agentmission.h"
 #include "game/state/city/baselayout.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"

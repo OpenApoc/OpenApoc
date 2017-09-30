@@ -61,8 +61,6 @@ class Control : public std::enable_shared_from_this<Control>
 
 	sp<Control> getRootControl();
 
-	void copyControlData(sp<Control> CopyOf);
-
 	void pushFormEvent(FormEventType type, Event *parentEvent);
 
 	void triggerEventCallbacks(FormsEvent *e);
@@ -85,6 +83,8 @@ class Control : public std::enable_shared_from_this<Control>
 	std::vector<sp<Control>> Controls;
 
 	std::map<UString, sp<RadioButtonGroup>> radiogroups;
+
+	void copyControlData(sp<Control> CopyOf);
 
 	Control(bool takesFocus = true);
 	virtual ~Control();

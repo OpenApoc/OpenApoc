@@ -145,6 +145,23 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				LogError("Unexpected scenery walk type %d for ID %s", (int)entry.walk_type, id);
 		}
 
+		tile->connection.resize(4);
+		tile->hill.resize(4);
+		tile->tube.resize(6);
+
+		for (int i = 0; i < 4; i++)
+		{
+			tile->connection[i] = entry.road_junction[i];
+		}
+		for (int i = 0; i < 4; i++)
+		{
+			tile->hill[i] = entry.road_level_change[i];
+		}
+		for (int i = 0; i < 6; i++)
+		{
+			tile->tube[i] = entry.people_tube_connections[i];
+		}
+
 		tile->constitution = entry.constitution;
 		tile->strength = entry.strength;
 		tile->mass = entry.mass;

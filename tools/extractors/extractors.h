@@ -84,6 +84,8 @@ class InitialGameStateExtractor
 	static const std::map<OpenApoc::UString, OpenApoc::UString> unitAnimationPackPaths;
 	// Detection weights for building functions
 	static const std::vector<int> buildingFunctionDetectionWeights;
+	// Lookup value for tube NESW orientation
+	static const std::map<OpenApoc::UString, std::vector<int>> tubes;
 
   private:
 	// 'common' state doesn't rely on difficulty

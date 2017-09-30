@@ -14,8 +14,8 @@
 #include <map>
 #include <vector>
 
-// How many in-game ticks are required to travel one in-game unit
-#define TICKS_PER_UNIT_TRAVELLED 32
+// How many in-game ticks are required to travel one in-game unit for battleunits
+#define TICKS_PER_UNIT_TRAVELLED_BATTLEUNIT 32
 // How many in-game ticks are required to pass 1 animation frame
 #define TICKS_PER_FRAME_UNIT 8
 // Every this amount of units travelled, unit will emit an appropriate sound

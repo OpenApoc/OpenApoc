@@ -33,6 +33,9 @@ class CityTileView : public TileView
 	void render() override;
 
 	bool DEBUG_SHOW_ALIEN_CREW = false;
+	bool DEBUG_SHOW_ROADS = false;
+	bool DEBUG_SHOW_TUBE = false;
+	int DEBUG_DIRECTION = -1;
 
   private:
 	GameState &state;

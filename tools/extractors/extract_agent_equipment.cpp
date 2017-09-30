@@ -435,11 +435,11 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 				break;
 			case IT_BRAINSUCKERLAUNCHER:
 				e->research_dependency.topics.emplace(&state, "RESEARCH_BRAINSUCKER_LAUNCHER");
-				e->research_dependency.topics.emplace(&state, "RESEARCH_BRAINSUCKER_POD");
+				e->research_dependency.topics.emplace(&state, "RESEARCH_BRAINSUCKER_PODS");
 				break;
 			case IT_BRAINSUCKERPOD:
 				e->research_dependency.topics.emplace(&state, "RESEARCH_BRAINSUCKER_LAUNCHER");
-				e->research_dependency.topics.emplace(&state, "RESEARCH_BRAINSUCKER_POD");
+				e->research_dependency.topics.emplace(&state, "RESEARCH_BRAINSUCKER_PODS");
 				break;
 			case IT_ENTROPYLAUNCHER:
 				e->research_dependency.topics.emplace(&state, "RESEARCH_ENTROPY_LAUNCHER");

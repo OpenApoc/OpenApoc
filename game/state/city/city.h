@@ -19,6 +19,7 @@ namespace OpenApoc
 #define VOXEL_Z_CITY (16)
 
 class Vehicle;
+class VehicleType;
 class GameState;
 class Building;
 class Projectile;
@@ -26,7 +27,9 @@ class Scenery;
 class Doodad;
 class DoodadType;
 class SceneryTileType;
+class Organisation;
 class BaseLayout;
+class Agent;
 class TileMap;
 
 class City : public StateObject
@@ -36,8 +39,9 @@ class City : public StateObject
 	City() = default;
 	~City() override;
 
-	void initMap();
+	void initMap(GameState &state);
 
+	UString id;
 	Vec3<int> size;
 
 	StateRefMap<SceneryTileType> tile_types;
@@ -56,6 +60,7 @@ class City : public StateObject
 	Vec3<float> cityViewScreenCenter = {0.0f, 0.0f, 0.0f};
 	int cityViewPageIndex = 0;
 	std::list<StateRef<Vehicle>> cityViewSelectedVehicles;
+	std::list<StateRef<Agent>> cityViewSelectedAgents;
 
 	void handleProjectileHit(GameState &state, sp<Projectile> projectile, bool displayDoodad,
 	                         bool playSound);
@@ -68,6 +73,13 @@ class City : public StateObject
 	void updateInfiltration(GameState &state);
 
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
+	sp<Vehicle> placeVehicle(GameState &state, StateRef<VehicleType> type,
+	                         StateRef<Organisation> owner);
+	sp<Vehicle> placeVehicle(GameState &state, StateRef<VehicleType> type,
+	                         StateRef<Organisation> owner, StateRef<Building> building);
+	sp<Vehicle> placeVehicle(GameState &state, StateRef<VehicleType> type,
+	                         StateRef<Organisation> owner, Vec3<float> position,
+	                         float facing = 0.0f);
 
 	// Move a group of vehicles in formation
 	void groupMove(GameState &state, std::list<StateRef<Vehicle>> &selectedVehicles,

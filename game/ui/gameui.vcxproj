@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="agentassignment.cpp" />
     <ClCompile Include="base\basegraphics.cpp" />
     <ClCompile Include="base\basescreen.cpp" />
     <ClCompile Include="base\basestage.cpp" />
@@ -38,7 +39,9 @@
     <ClCompile Include="city\buildingscreen.cpp" />
     <ClCompile Include="city\cityview.cpp" />
     <ClCompile Include="city\infiltrationscreen.cpp" />
+    <ClCompile Include="city\locationscreen.cpp" />
     <ClCompile Include="city\scorescreen.cpp" />
+    <ClCompile Include="controlgenerator.cpp" />
     <ClCompile Include="debugtools\debugmenu.cpp" />
     <ClCompile Include="debugtools\formpreview.cpp" />
     <ClCompile Include="debugtools\imagepreview.cpp" />
@@ -63,6 +66,7 @@
     <ClCompile Include="ufopaedia\ufopaediaview.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="agentassignment.h" />
     <ClInclude Include="base\basegraphics.h" />
     <ClInclude Include="base\basescreen.h" />
     <ClInclude Include="base\basestage.h" />
@@ -82,7 +86,9 @@
     <ClInclude Include="city\buildingscreen.h" />
     <ClInclude Include="city\cityview.h" />
     <ClInclude Include="city\infiltrationscreen.h" />
+    <ClInclude Include="city\locationscreen.h" />
     <ClInclude Include="city\scorescreen.h" />
+    <ClInclude Include="controlgenerator.h" />
     <ClInclude Include="debugtools\debugmenu.h" />
     <ClInclude Include="debugtools\formpreview.h" />
     <ClInclude Include="debugtools\imagepreview.h" />

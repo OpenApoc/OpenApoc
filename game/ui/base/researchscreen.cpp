@@ -13,8 +13,10 @@
 #include "framework/keycodes.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
+#include "game/state/city/building.h"
 #include "game/state/gamestate.h"
 #include "game/ui/base/researchselect.h"
+#include "game/ui/controlgenerator.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc
@@ -69,14 +71,6 @@ void ResearchScreen::changeBase(sp<Base> newBase)
 
 void ResearchScreen::begin()
 {
-	auto img = mksp<RGBImage>(Vec2<int>{1, 2});
-	{
-		RGBImageLock l(img);
-		l.set({0, 0}, Colour{255, 255, 219});
-		l.set({0, 1}, Colour{215, 0, 0});
-	}
-	this->healthImage = img;
-
 	BaseStage::begin();
 
 	auto unassignedAgentList = form->findControlTyped<ListBox>("LIST_UNASSIGNED");
@@ -270,8 +264,7 @@ void ResearchScreen::setCurrentLabInfo()
 
 	form->findControlTyped<Label>("TEXT_LAB_TYPE")->setText(labTypeName);
 
-	auto font = ui().getFont("smalfont");
-	auto agentEntryHeight = font->getFontHeight() * 3;
+	auto agentEntryHeight = ControlGenerator::getFontHeight(*state) * 3;
 
 	auto unassignedAgentList = form->findControlTyped<ListBox>("LIST_UNASSIGNED");
 	unassignedAgentList->clear();
@@ -280,7 +273,7 @@ void ResearchScreen::setCurrentLabInfo()
 	for (auto &agent : state->agents)
 	{
 		bool assigned_to_current_lab = false;
-		if (agent.second->home_base != this->state->current_base)
+		if (agent.second->homeBuilding->base != this->state->current_base)
 			continue;
 
 		if (agent.second->type->role != listedAgentType)
@@ -306,8 +299,7 @@ void ResearchScreen::setCurrentLabInfo()
 			if (!assigned_to_current_lab)
 				continue;
 		}
-		auto agentControl =
-		    this->createAgentControl({130, agentEntryHeight}, {state.get(), agent.second});
+		auto agentControl = ControlGenerator::createLargeAgentControl(*state, agent.second, true);
 
 		if (assigned_to_current_lab)
 		{
@@ -410,72 +402,6 @@ void ResearchScreen::updateProgressInfo()
 		manufacturing_scroll_left->setVisible(false);
 		manufacturing_scroll_right->setVisible(false);
 	}
-}
-
-// FIXME: Put this in the rules somewhere?
-// FIXME: This could be shared with the citview ICON_RESOURCES?
-static const UString agentFramePath =
-    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:37:xcom3/ufodata/pal_01.dat";
-
-sp<Control> ResearchScreen::createAgentControl(Vec2<int> size, StateRef<Agent> agent)
-{
-	auto baseControl = mksp<Control>();
-	baseControl->setData(agent.getSp());
-	baseControl->Name = "AGENT_PORTRAIT";
-	baseControl->Size = size;
-
-	auto frameGraphic = baseControl->createChild<Graphic>(fw().data->loadImage(agentFramePath));
-	frameGraphic->AutoSize = true;
-	frameGraphic->Location = {5, 5};
-	auto photoGraphic = frameGraphic->createChild<Graphic>(agent->getPortrait().icon);
-	photoGraphic->AutoSize = true;
-	photoGraphic->Location = {1, 1};
-
-	auto healthGraphic = frameGraphic->createChild<Graphic>(this->healthImage);
-	// FIXME: Put these somewhere slightly less magic?
-	// FIXME: Also shared between CityView?
-	Vec2<int> healthBarOffset = {27, 2};
-	Vec2<int> healthBarSize = {3, 20};
-	// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
-	// top-left, so fix that up a bit
-	float healthProportion =
-	    (float)agent->current_stats.health / (float)agent->initial_stats.health;
-	int healthBarHeight = (float)healthBarSize.y * healthProportion;
-	healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
-	healthBarSize.y = healthBarHeight;
-	healthGraphic->Location = healthBarOffset;
-	healthGraphic->Size = healthBarSize;
-	healthGraphic->ImagePosition = FillMethod::Stretch;
-
-	auto font = ui().getFont("smalfont");
-
-	auto nameLabel = baseControl->createChild<Label>(agent->name, font);
-	nameLabel->Location = {40, 0};
-	nameLabel->Size = {100, font->getFontHeight() * 2};
-
-	int skill = 0;
-	if (agent->type->role == AgentType::Role::Physicist)
-	{
-		skill = agent->current_stats.physics_skill;
-	}
-	else if (agent->type->role == AgentType::Role::BioChemist)
-	{
-		skill = agent->current_stats.biochem_skill;
-	}
-	else if (agent->type->role == AgentType::Role::Engineer)
-	{
-		skill = agent->current_stats.engineering_skill;
-	}
-	else
-	{
-		LogError("Trying to show non-scientist agent %s (%s)", agent.id, agent->name);
-	}
-
-	auto skillLabel = baseControl->createChild<Label>(format(tr("Skill %s"), skill), font);
-	skillLabel->Size = {100, font->getFontHeight()};
-	skillLabel->Location = {40, font->getFontHeight() * 2};
-
-	return baseControl;
 }
 
 }; // namespace OpenApoc

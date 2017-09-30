@@ -50,6 +50,7 @@ set (GAMESTATE_SOURCE_FILES
 	battle/battleunitimagepack.cpp
 	battle/battleunitmission.cpp
 	battle/battlemaptileset.cpp
+	city/agentmission.cpp
 	city/baselayout.cpp
 	city/building.cpp
 	city/city.cpp
@@ -130,6 +131,7 @@ set (GAMESTATE_HEADER_FILES
 	battle/battleunitanimationpack.h
 	battle/battleunitimagepack.h
 	battle/battleunitmission.h
+	city/agentmission.h
 	city/baselayout.h
 	city/building.h
 	city/city.h

@@ -1,5 +1,6 @@
 #include "game/ui/city/alertscreen.h"
 #include "forms/form.h"
+#include "forms/graphic.h"
 #include "forms/label.h"
 #include "forms/ui.h"
 #include "framework/event.h"
@@ -8,6 +9,7 @@
 #include "game/state/city/building.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
+#include "game/ui/agentassignment.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc
@@ -24,7 +26,14 @@ AlertScreen::AlertScreen(sp<GameState> state, sp<Building> building)
 
 AlertScreen::~AlertScreen() = default;
 
-void AlertScreen::begin() {}
+void AlertScreen::begin()
+{
+	auto agentAssignmentPlaceholder = menuform->findControlTyped<Graphic>("AGENT_ASSIGNMENT");
+	agentAssignment = menuform->createChild<AgentAssignment>(state);
+	agentAssignment->init(ui().getForm("city/agentassignment"),
+	                      agentAssignmentPlaceholder->Location, agentAssignmentPlaceholder->Size);
+	agentAssignment->setLocation();
+}
 
 void AlertScreen::pause() {}
 
@@ -35,6 +44,10 @@ void AlertScreen::finish() {}
 void AlertScreen::eventOccurred(Event *e)
 {
 	menuform->eventOccured(e);
+	if (menuform->eventIsWithin(e))
+	{
+		return;
+	}
 
 	if (e->type() == EVENT_KEY_DOWN)
 	{

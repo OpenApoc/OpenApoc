@@ -37,6 +37,9 @@
 #include "library/strings_format.h"
 #include <random>
 
+// ENABLE/DISABLE FAKE TRAFFIC
+#define FAKE_TRAFFIC
+
 namespace OpenApoc
 {
 
@@ -67,7 +70,7 @@ GameState::~GameState()
 		//
 		vehicle->city = "";
 		vehicle->homeBuilding = "";
-		vehicle->currentlyLandedBuilding = "";
+		vehicle->currentBuilding = "";
 		vehicle->missions.clear();
 		vehicle->equipment.clear();
 		vehicle->mover = nullptr;
@@ -115,11 +118,27 @@ void GameState::initState()
 	for (auto &c : this->cities)
 	{
 		auto &city = c.second;
-		city->initMap();
+		for (auto &s : city->scenery)
+		{
+			for (auto &b : city->buildings)
+			{
+				auto &building = b.second;
+				Vec2<int> pos2d{s->initialPosition.x, s->initialPosition.y};
+				if (building->bounds.within(pos2d))
+				{
+					s->building = {this, building};
+				}
+			}
+		}
+	}
+	for (auto &c : this->cities)
+	{
+		auto &city = c.second;
+		city->initMap(*this);
 		for (auto &v : this->vehicles)
 		{
 			auto vehicle = v.second;
-			if (vehicle->city == city && !vehicle->currentlyLandedBuilding)
+			if (vehicle->city == city && !vehicle->currentBuilding)
 			{
 				city->map->addObjectToMap(vehicle);
 			}
@@ -137,25 +156,9 @@ void GameState::initState()
 	for (auto &v : this->vehicles)
 	{
 		v.second->strategyImages = city_common_image_list->strategyImages;
-		if (!v.second->currentlyLandedBuilding)
+		if (!v.second->currentBuilding)
 		{
 			v.second->setupMover();
-		}
-	}
-	for (auto &c : this->cities)
-	{
-		auto &city = c.second;
-		for (auto &s : city->scenery)
-		{
-			for (auto &b : city->buildings)
-			{
-				auto &building = b.second;
-				Vec2<int> pos2d{s->initialPosition.x, s->initialPosition.y};
-				if (building->bounds.within(pos2d))
-				{
-					s->building = {this, building};
-				}
-			}
 		}
 	}
 	// Fill links for weapon's ammo
@@ -177,6 +180,41 @@ void GameState::initState()
 	}
 	// Run nessecary methods for different types
 	research.updateTopicList();
+}
+
+void GameState::fillOrgStartingProperty()
+{
+	auto buildingIt = this->cities["CITYMAP_HUMAN"]->buildings.begin();
+
+	// Create some random vehicles
+	for (int i = 0; i < 5; i++)
+	{
+#ifndef FAKE_TRAFFIC
+		break;
+#endif
+#ifdef PATHFINDING_DEBUG
+		break;
+#endif
+		for (auto &vehicleType : this->vehicle_types)
+		{
+			auto &type = vehicleType.second;
+			if (type->type != VehicleType::Type::Flying)
+				continue;
+			if (type->manufacturer == this->getPlayer())
+				continue;
+
+			auto v = cities["CITYMAP_HUMAN"]->placeVehicle(
+			    *this, {this, vehicleType.first}, type->manufacturer, {this, buildingIt->first});
+			v->homeBuilding = {this, buildingIt->first};
+
+			buildingIt++;
+			if (buildingIt == this->cities["CITYMAP_HUMAN"]->buildings.end())
+				buildingIt = this->cities["CITYMAP_HUMAN"]->buildings.begin();
+
+			// Vehicle::equipDefaultEquipment uses the state reference from itself, so make sure the
+			// vehicle table has the entry before calling it
+		}
+	}
 }
 
 void GameState::startGame()
@@ -254,50 +292,10 @@ void GameState::startGame()
 		}
 	}
 
-	auto buildingIt = this->cities["CITYMAP_HUMAN"]->buildings.begin();
-
-	// Create some random vehicles
-	for (int i = 0; i < 5; i++)
-	{
-		// Uncomment below to stop fake traffic
-		// break;
-		for (auto &vehicleType : this->vehicle_types)
-		{
-			auto &type = vehicleType.second;
-			if (type->type != VehicleType::Type::Flying)
-				continue;
-			if (type->manufacturer == this->getPlayer())
-				continue;
-
-			auto v = mksp<Vehicle>();
-			v->type = {this, vehicleType.first};
-			v->name = format("%s %d", type->name, ++type->numCreated);
-			v->city = {this, "CITYMAP_HUMAN"};
-			v->currentlyLandedBuilding = {this, buildingIt->first};
-			v->position = {v->currentlyLandedBuilding->bounds.p0.x,
-			               v->currentlyLandedBuilding->bounds.p0.y, 2};
-			v->owner = type->manufacturer;
-			v->health = type->health;
-			v->strategyImages = city_common_image_list->strategyImages;
-
-			buildingIt++;
-			if (buildingIt == this->cities["CITYMAP_HUMAN"]->buildings.end())
-				buildingIt = this->cities["CITYMAP_HUMAN"]->buildings.begin();
-
-			// Vehicle::equipDefaultEquipment uses the state reference from itself, so make sure the
-			// vehicle table has the entry before calling it
-			UString vID = Vehicle::generateObjectID(*this);
-			this->vehicles[vID] = v;
-
-			v->currentlyLandedBuilding->landed_vehicles.insert({this, vID});
-
-			v->equipDefaultEquipment(*this);
-		}
-	}
-
 	// Add aliens into random building
 	int counter = 0;
 	int giveUpCount = 100;
+	auto buildingIt = this->cities["CITYMAP_HUMAN"]->buildings.begin();
 	do
 	{
 		int buildID =
@@ -352,6 +350,7 @@ void GameState::fillPlayerStartingProperty()
 	this->player_bases[Base::getPrefix() + Strings::fromInteger(this->player_bases.size() + 1)] =
 	    base;
 	bld->owner = this->getPlayer();
+	bld->base = {this, base};
 	this->current_base = {this, base};
 
 	// Give the player one of each equipable vehicle
@@ -366,21 +365,10 @@ void GameState::fillPlayerStartingProperty()
 			{
 				break;
 			}
-			auto v = mksp<Vehicle>();
-			v->type = {this, type};
-			v->name = format("%s %d", type->name, ++type->numCreated);
-			v->city = {this, "CITYMAP_HUMAN"};
-			v->currentlyLandedBuilding = {this, bld};
-			v->position = {v->currentlyLandedBuilding->bounds.p0.x,
-			               v->currentlyLandedBuilding->bounds.p0.y, 2};
-			v->homeBuilding = {this, bld};
-			v->owner = this->getPlayer();
-			v->health = type->health;
-			v->strategyImages = city_common_image_list->strategyImages;
-			UString vID = Vehicle::generateObjectID(*this);
-			this->vehicles[vID] = v;
-			v->currentlyLandedBuilding->landed_vehicles.insert({this, vID});
-			v->equipDefaultEquipment(*this);
+
+			auto v =
+			    current_city->placeVehicle(*this, {this, type}, this->getPlayer(), {this, bld});
+			v->homeBuilding = v->currentBuilding;
 		}
 	}
 	// Give that base some vehicle inventory
@@ -404,7 +392,9 @@ void GameState::fillPlayerStartingProperty()
 		while (count > 0)
 		{
 			auto agent = this->agent_generator.createAgent(*this, this->getPlayer(), type);
-			agent->home_base = {this, base};
+			agent->homeBuilding = base->building;
+			agent->city = agent->homeBuilding->city;
+			agent->enterBuilding(*this, agent->homeBuilding);
 			count--;
 			if (type == AgentType::Role::Soldier && it != initial_agent_equipment.end())
 			{
@@ -504,7 +494,12 @@ void GameState::update(unsigned int ticks)
 			v.second->update(*this, ticks);
 		}
 		Trace::end("GameState::update::vehicles");
-
+		Trace::start("GameState::update::agents");
+		for (auto &a : this->agents)
+		{
+			a.second->update(*this, ticks);
+		}
+		Trace::end("GameState::update::agents");
 		gameTime.addTicks(ticks);
 		if (gameTime.fiveMinutesPassed())
 		{
@@ -624,22 +619,8 @@ void GameState::updateEndOfDay()
 		{
 			auto &type = (*vehicleType).second;
 
-			auto v = mksp<Vehicle>();
-			v->type = {this, (*vehicleType).first};
-			v->name = format("%s %d", type->name, ++type->numCreated);
-			v->city = city;
-			v->owner = type->manufacturer;
-			v->health = type->health;
-			v->strategyImages = city_common_image_list->strategyImages;
-
-			// Vehicle::equipDefaultEquipment uses the state reference from itself, so make sure the
-			// vehicle table has the entry before calling it
-			UString vID = Vehicle::generateObjectID(*this);
-			this->vehicles[vID] = v;
-
-			v->equipDefaultEquipment(*this);
-			v->launch(*city->map, *this, (*portal)->getPosition());
-
+			auto v = city->placeVehicle(*this, {this, (*vehicleType).first}, type->manufacturer,
+			                            (*portal)->getPosition());
 			v->missions.emplace_back(VehicleMission::infiltrateOrSubvertBuilding(*this, *v, bld));
 			v->missions.front()->start(*this, *v);
 
@@ -672,22 +653,8 @@ void GameState::updateEndOfWeek()
 				{
 					auto &type = (*vehicleType).second;
 
-					auto v = mksp<Vehicle>();
-					v->type = {this, (*vehicleType).first};
-					v->name = format("%s %d", type->name, ++type->numCreated);
-					v->city = city;
-					v->owner = alienOrg;
-					v->health = type->health;
-					v->strategyImages = city_common_image_list->strategyImages;
-
-					// Vehicle::equipDefaultEquipment uses the state reference from itself, so make
-					// sure the
-					// vehicle table has the entry before calling it
-					UString vID = Vehicle::generateObjectID(*this);
-					this->vehicles[vID] = v;
-
-					v->equipDefaultEquipment(*this);
-					v->launch(*city->map, *this, {xyPos(rng), xyPos(rng), v->altitude});
+					auto v = city->placeVehicle(*this, {this, (*vehicleType).first}, alienOrg,
+					                            {xyPos(rng), xyPos(rng), city->map->size.z - 1});
 					v->missions.emplace_front(VehicleMission::patrol(*this, *v));
 				}
 			}

@@ -18,8 +18,11 @@ class Sample;
 class Base;
 class Building;
 class Organisation;
+class VehicleTileInfo;
+class Agent;
+class AgentInfo;
 
-enum class UpdateSpeed
+enum class CityUpdateSpeed
 {
 	Pause,
 	Speed1,
@@ -29,49 +32,13 @@ enum class UpdateSpeed
 	Speed5,
 };
 
-enum class CityIcon
-{
-	UnselectedFrame,
-	SelectedFrame,
-	SelectedSecondaryFrame,
-
-	InBase,
-	InVehicle,
-	InBuilding,
-	InMotion,
-};
-
-enum class CityUnitState
-{
-	InBase,
-	InVehicle,
-	InBuilding,
-	InMotion,
-};
-
-enum class SelectionState
+enum class CitySelectionState
 {
 	Normal,
-	VehicleGotoBuilding,
-	VehicleGotoLocation,
-	VehicleAttackVehicle,
-	VehicleAttackBuilding,
-};
-
-// All the info required to draw a single vehicle info chunk, kept together to make it easier to
-// track when something has changed and requires a re-draw
-class VehicleTileInfo
-{
-  public:
-	sp<Vehicle> vehicle;
-	// 0 = not selected, 1 = selected, 2 = first selected
-	int selected;
-	float healthProportion;
-	bool shield;
-	bool faded;     // Faded when they enter the alien dimension?
-	int passengers; // 0-13, 0-12 having numbers, 13+ being '+'
-	CityUnitState state;
-	bool operator==(const VehicleTileInfo &other) const;
+	GotoBuilding,
+	GotoLocation,
+	AttackVehicle,
+	AttackBuilding,
 };
 
 class CityView : public CityTileView
@@ -81,28 +48,19 @@ class CityView : public CityTileView
 	std::vector<sp<Form>> uiTabs;
 	sp<Form> overlayTab;
 	std::vector<sp<GraphicButton>> miniViews;
-	UpdateSpeed updateSpeed;
-	UpdateSpeed lastSpeed;
+	CityUpdateSpeed updateSpeed;
+	CityUpdateSpeed lastSpeed;
 
 	sp<GameState> state;
-	std::map<CityIcon, sp<Image>> icons;
-
-	std::vector<sp<Image>> vehiclePassengerCountIcons;
 
 	std::map<sp<Vehicle>, std::pair<VehicleTileInfo, sp<Control>>> vehicleListControls;
-
-	// We use a scaled image to implement the health bar
-	sp<Image> healthImage;
-	sp<Image> shieldImage;
+	std::map<sp<Agent>, std::pair<AgentInfo, sp<Control>>> agentListControls;
 
 	bool followVehicle;
 
 	void updateSelectedUnits();
 
-	VehicleTileInfo createVehicleInfo(sp<Vehicle> v);
-	sp<Control> createVehicleInfoControl(const VehicleTileInfo &info);
-
-	SelectionState selectionState;
+	CitySelectionState selectionState;
 	bool modifierLShift = false;
 	bool modifierRShift = false;
 	bool modifierLAlt = false;
@@ -130,6 +88,7 @@ class CityView : public CityTileView
 	void orderMove(Vec3<float> position, bool useTeleporter);
 	void orderMove(StateRef<Building> building, bool useTeleporter);
 	void orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additive);
+	void orderSelect(StateRef<Agent> agent, bool inverse, bool additive);
 	void orderAttack(StateRef<Vehicle> vehicle);
 	void orderAttack(StateRef<Building> building);
 
@@ -149,9 +108,9 @@ class CityView : public CityTileView
 	bool handleMouseDown(Event *e);
 	bool handleGameStateEvent(Event *e);
 
-	void setUpdateSpeed(UpdateSpeed updateSpeed);
+	void setUpdateSpeed(CityUpdateSpeed updateSpeed);
 	void zoomLastEvent();
-	void setSelectionState(SelectionState selectionState);
+	void setSelectionState(CitySelectionState selectionState);
 };
 
 }; // namespace OpenApoc

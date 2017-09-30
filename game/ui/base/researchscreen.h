@@ -28,9 +28,6 @@ class ResearchScreen : public BaseStage
 
 	void setCurrentLabInfo();
 	void updateProgressInfo();
-	sp<Control> createAgentControl(Vec2<int> size, StateRef<Agent> agent);
-	// FIXME: healthImage has a copy in CityView - maybe opportunity to merge?
-	sp<Image> healthImage;
 
 	int assigned_agent_count;
 

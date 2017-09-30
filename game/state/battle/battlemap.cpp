@@ -210,7 +210,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 		int playerAgentsCount = 0;
 		for (auto &agent : state.agents)
 		{
-			if (agent.second->home_base != base)
+			if (agent.second->homeBuilding->base != base)
 			{
 				continue;
 			}
@@ -229,7 +229,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 		{
 			for (auto &agent : state.agents)
 			{
-				if (agent.second->home_base != base)
+				if (agent.second->homeBuilding->base != base)
 				{
 					continue;
 				}

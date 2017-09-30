@@ -40,7 +40,8 @@ void BattleMapPart::die(GameState &state, bool explosive, bool violently)
 		for (auto &u : tileObject->getOwningTile()->getUnits(false, true))
 		{
 			// FIXME: Ensure falling damage is correct
-			u->applyDamage(state, 50, {&state, "DAMAGETYPE_FALLING_OBJECT"}, BodyPart::Helmet,
+			u->applyDamage(state, FALLING_MAP_PART_DAMAGE_TO_UNIT,
+			               {&state, "DAMAGETYPE_FALLING_OBJECT"}, BodyPart::Helmet,
 			               DamageSource::Impact);
 		}
 		this->tileObject->removeFromMap();

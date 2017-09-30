@@ -42,6 +42,7 @@
 #include "game/ui/base/basescreen.h"
 #include "game/ui/battle/battledebriefing.h"
 #include "game/ui/battle/battleturnbasedconfirmbox.h"
+#include "game/ui/controlgenerator.h"
 #include "game/ui/general/ingameoptions.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/messagelogscreen.h"
@@ -97,11 +98,11 @@ BattleView::BattleView(sp<GameState> gameState)
 		// Lift color, pulsates from (0r 3/8g 5/8b) to (0r 8/8g 4/8b)
 		newPal->setColour(255 - 4, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
 		                                  (colorCurrent * 16 * -1 + 255 * 5) / 8));
-		// Red color, for enemy indicators, pulsates from (3/8r 0g 0b) to (8/8r 0g 0b)
-		newPal->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
 		// Yellow color, for owned indicators, pulsates from (3/8r 3/8g 0b) to (8/8r 8/8g 0b)
-		newPal->setColour(255 - 2, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8,
+		newPal->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8,
 		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8, 0));
+		// Red color, for enemy indicators, pulsates from (3/8r 0g 0b) to (8/8r 0g 0b)
+		newPal->setColour(255 - 2, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
 		// Pink color, for neutral indicators, pulsates from (3/8r 0g 3/8b) to (8/8r 0g 8/8b)
 		newPal->setColour(255 - 1, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0,
 		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8));
@@ -179,45 +180,7 @@ BattleView::BattleView(sp<GameState> gameState)
 	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
 	                                                   12)));
 
-	for (int i = 28; i <= 34; i++)
-	{
-		unitRanks.push_back(
-		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-		                                i)));
-	}
-
-	unitSelect.push_back(fw().data->loadImage(
-	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:37:xcom3/ufodata/pal_01.dat"));
-	unitSelect.push_back(fw().data->loadImage(
-	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:38:xcom3/ufodata/pal_01.dat"));
-	unitSelect.push_back(fw().data->loadImage(
-	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:39:xcom3/ufodata/pal_01.dat"));
-	iconShade = fw().data->loadImage("battle/battle-icon-shade.png");
-
 	lastClickedHostile.resize(6);
-
-	auto img = mksp<RGBImage>(Vec2<int>{1, 2});
-	{
-		RGBImageLock l(img);
-		l.set({0, 0}, Colour{255, 255, 219});
-		l.set({0, 1}, Colour{215, 0, 0});
-	}
-	healthImage = img;
-	img = mksp<RGBImage>(Vec2<int>{1, 2});
-	{
-		RGBImageLock l(img);
-		l.set({0, 0}, Colour{160, 236, 252});
-		l.set({0, 1}, Colour{4, 100, 252});
-	}
-	shieldImage = img;
-	img = mksp<RGBImage>(Vec2<int>{1, 2});
-	{
-		RGBImageLock l(img);
-		l.set({0, 0}, Colour{150, 150, 150});
-		l.set({0, 1}, Colour{97, 101, 105});
-	}
-	stunImage = img;
 
 	auto font = ui().getFont("smallset");
 	squadNumber.emplace_back();
@@ -736,12 +699,12 @@ BattleView::BattleView(sp<GameState> gameState)
 	    ->addCallback(FormEventType::MouseClick, clickedSquad6);
 
 	std::function<void(int index)> clickedUnitPortrait = [this](int index) {
-		if (!this->unitInfo[index].unit || this->unitInfo[index].faded)
+		if (!this->unitInfo[index].agent || this->unitInfo[index].faded)
 		{
 			return;
 		}
 		bool ctrl = this->modifierRCtrl || this->modifierLCtrl;
-		StateRef<BattleUnit> unit = {&*this->state, this->unitInfo[index].unit->id};
+		StateRef<BattleUnit> unit = this->unitInfo[index].agent->unit;
 		bool needZoom = !this->battle.battleViewSelectedUnits.empty() &&
 		                this->battle.battleViewSelectedUnits.front() == unit;
 		if (!ctrl)
@@ -789,16 +752,18 @@ BattleView::BattleView(sp<GameState> gameState)
 	                                                           clickedUnitPortrait6);
 
 	std::function<void(int index)> clickedUnitHostiles = [this](int index) {
-		if (!this->unitInfo[index].unit || this->unitInfo[index].unit->visibleEnemies.empty())
+		if (!this->unitInfo[index].agent ||
+		    this->unitInfo[index].agent->unit->visibleEnemies.empty())
 		{
 			return;
 		}
 		this->lastClickedHostile[index]++;
-		if (this->lastClickedHostile[index] >= this->unitInfo[index].unit->visibleEnemies.size())
+		if (this->lastClickedHostile[index] >=
+		    this->unitInfo[index].agent->unit->visibleEnemies.size())
 		{
 			this->lastClickedHostile[index] = 0;
 		}
-		auto it = this->unitInfo[index].unit->visibleEnemies.begin();
+		auto it = this->unitInfo[index].agent->unit->visibleEnemies.begin();
 		for (int i = 0; i < this->lastClickedHostile[index]; i++)
 		{
 			it++;
@@ -1249,6 +1214,7 @@ BattleView::BattleView(sp<GameState> gameState)
 	for (int i = 0; i < 6; i++)
 	{
 		unitInfo.emplace_back();
+		spottedInfo.emplace_back(0);
 		squadInfo.emplace_back();
 	}
 
@@ -1605,6 +1571,13 @@ void BattleView::update()
 			{
 				unitInfo[i] = newUnitInfo;
 				updateUnitInfo(i);
+			}
+
+			int newSpottedInfo = std::min(
+			    6, newUnitInfo.agent ? (int)newUnitInfo.agent->unit->visibleEnemies.size() : 0);
+			if (newSpottedInfo != spottedInfo[i])
+			{
+				updateSpottedInfo(i);
 			}
 
 			auto newSquadInfo = createSquadInfo(i);
@@ -2888,7 +2861,11 @@ void BattleView::eventOccurred(Event *e)
 	// Exclude mouse down events that are over the form
 	if (eventWithin || activeTab->eventIsWithin(e) || baseForm->eventIsWithin(e))
 	{
-		return;
+		// We pass this event so that scroll can work
+		if (e->type() != EVENT_MOUSE_MOVE)
+		{
+			return;
+		}
 	}
 
 	if (e->type() == EVENT_MOUSE_MOVE)
@@ -3461,8 +3438,7 @@ bool BattleView::handleMouseDown(Event *e)
 		return true;
 	}
 
-	if (getViewMode() == TileViewMode::Strategy &&
-	    Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
+	if (!debugHotkeyMode && Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
 	{
 		Vec2<float> screenOffset = {getScreenOffset().x, getScreenOffset().y};
 		auto clickTile =
@@ -4316,122 +4292,45 @@ sp<RGBImage> BattleView::drawMotionScanner(Vec2<int> position)
 	return scannerDisplay;
 }
 
-BattleUnitInfo BattleView::createUnitInfo(int index)
+AgentInfo BattleView::createUnitInfo(int index)
 {
-	BattleUnitInfo b;
-	b.faded = false;
-	b.healthProportion = 0.0f;
-	b.stunProportion = 0.0f;
-	b.selected = 0;
-	b.shield = false;
-	b.spotted = 0;
-	b.rank = Rank::Rookie;
-	if (battle.battleViewSquadIndex == -1 ||
-	    battle.forces[battle.currentPlayer].squads[battle.battleViewSquadIndex].getNumUnits() <=
+	sp<Agent> a;
+	if (battle.battleViewSquadIndex != -1 &&
+	    battle.forces[battle.currentPlayer].squads[battle.battleViewSquadIndex].getNumUnits() >
 	        index)
 	{
-		return b;
+		a = battle.forces[battle.currentPlayer]
+		        .squads[battle.battleViewSquadIndex]
+		        .units[index]
+		        ->agent;
 	}
-	b.unit = battle.forces[battle.currentPlayer].squads[battle.battleViewSquadIndex].units[index];
-	b.faded = b.unit->moraleState != MoraleState::Normal || !b.unit->isConscious();
-	b.rank = b.unit->agent->rank;
-	b.spotted = b.unit->visibleEnemies.size();
-	if (b.spotted > 6)
-	{
-		b.spotted = 6;
-	}
-	for (auto &u : battle.battleViewSelectedUnits)
-	{
-		if (u->squadNumber == battle.battleViewSquadIndex && u->squadPosition == index)
-		{
-			b.selected = u == battle.battleViewSelectedUnits.front() ? 2 : 1;
-			break;
-		}
-	}
-	b.shield = b.unit->agent->getMaxShield() > 0;
-	float maxHealth;
-	float currentHealth;
-	if (b.shield)
-	{
-		currentHealth = b.unit->agent->getShield();
-		maxHealth = b.unit->agent->getMaxShield();
-	}
-	else
-	{
-		currentHealth = b.unit->agent->getHealth();
-		maxHealth = b.unit->agent->getMaxHealth();
-		float stunHealth = b.unit->stunDamage;
-		b.stunProportion = stunHealth / maxHealth;
-	}
-	b.healthProportion = maxHealth == 0.0f ? 0.0f : currentHealth / maxHealth;
-	b.stunProportion = clamp(b.stunProportion, 0.0f, b.healthProportion);
-	return b;
+	return ControlGenerator::createAgentInfo(*state, a);
 }
 
 void BattleView::updateUnitInfo(int index)
 {
-	BattleUnitInfo info = unitInfo[index];
+	AgentInfo info = unitInfo[index];
 	auto baseControl = baseForm->findControlTyped<Graphic>(format("UNIT_%d", index + 1));
 	baseControl->Controls.clear();
-	if (!info.unit)
+	if (!info.agent)
 	{
 		baseControl->setImage(nullptr);
-		baseForm->findControlTyped<Graphic>(format("UNIT_%d_HOSTILES", index + 1))
-		    ->setImage(nullptr);
 		return;
 	}
-	baseControl->setImage(unitSelect[info.selected]);
-	baseForm->findControlTyped<Graphic>(format("UNIT_%d_HOSTILES", index + 1))
-	    ->setImage(unitHostiles[info.spotted]);
+	ControlGenerator::fillAgentControl(*state, baseControl, info);
+}
 
-	auto unitIcon = baseControl->createChild<Graphic>(info.unit->agent->getPortrait().icon);
-	unitIcon->AutoSize = true;
-	unitIcon->Location = {2, 1};
-
-	if (info.faded)
+void BattleView::updateSpottedInfo(int index)
+{
+	if (spottedInfo[index] == 0)
 	{
-		auto fadeIcon = baseControl->createChild<Graphic>(iconShade);
-		fadeIcon->AutoSize = true;
-		fadeIcon->Location = {2, 1};
+		baseForm->findControlTyped<Graphic>(format("UNIT_%d_HOSTILES", index + 1))
+		    ->setImage(nullptr);
 	}
-
-	auto rankIcon = baseControl->createChild<Graphic>(unitRanks[(int)info.rank]);
-	rankIcon->AutoSize = true;
-	rankIcon->Location = {0, 0};
-
-	if (info.healthProportion > 0.0f)
+	else
 	{
-		// FIXME: Put these somewhere slightly less magic?
-		Vec2<int> healthBarOffset = {27, 2};
-		Vec2<int> healthBarSize = {3, 20};
-
-		auto healthImg = info.shield ? this->shieldImage : this->healthImage;
-		auto healthGraphic = baseControl->createChild<Graphic>(healthImg);
-		// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
-		// top-left, so fix that up a bit
-		int healthBarHeight = (int)((float)healthBarSize.y * info.healthProportion);
-		healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
-		healthBarSize.y = healthBarHeight;
-		healthGraphic->Location = healthBarOffset;
-		healthGraphic->Size = healthBarSize;
-		healthGraphic->ImagePosition = FillMethod::Stretch;
-	}
-	if (info.stunProportion > 0.0f)
-	{
-		// FIXME: Put these somewhere slightly less magic?
-		Vec2<int> healthBarOffset = {27, 2};
-		Vec2<int> healthBarSize = {3, 20};
-
-		auto healthImg = this->stunImage;
-		auto healthGraphic = baseControl->createChild<Graphic>(healthImg);
-		// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
-		// top-left, so fix that up a bit
-		int healthBarHeight = (int)((float)healthBarSize.y * info.stunProportion);
-		healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
-		healthBarSize.y = healthBarHeight;
-		healthGraphic->Location = healthBarOffset;
-		healthGraphic->Size = healthBarSize;
-		healthGraphic->ImagePosition = FillMethod::Stretch;
+		baseForm->findControlTyped<Graphic>(format("UNIT_%d_HOSTILES", index + 1))
+		    ->setImage(unitHostiles[spottedInfo[index]]);
 	}
 }
 
@@ -4625,16 +4524,6 @@ bool MotionScannerInfo::operator!=(const MotionScannerInfo &other) const
 {
 	return !(*this == other);
 }
-
-bool BattleUnitInfo::operator==(const BattleUnitInfo &other) const
-{
-	return (this->unit == other.unit && this->rank == other.rank &&
-	        this->spotted == other.spotted && this->selected == other.selected &&
-	        this->healthProportion == other.healthProportion &&
-	        this->stunProportion == other.stunProportion && this->shield == other.shield);
-}
-
-bool BattleUnitInfo::operator!=(const BattleUnitInfo &other) const { return !(*this == other); }
 
 void BattleView::zoomAt(Vec3<int> location)
 {

@@ -18,9 +18,12 @@
 #include "game/state/base/base.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battleunit.h"
+#include "game/state/city/building.h"
+#include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/damage.h"
 #include "game/state/tileview/tileobject_battleunit.h"
+#include "game/ui/controlgenerator.h"
 #include "game/ui/equipscreen.h"
 #include "game/ui/general/messagebox.h"
 
@@ -113,35 +116,6 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 
 	inventoryControl = formMain->findControlTyped<Graphic>("INVENTORY");
 
-	auto img = mksp<RGBImage>(Vec2<int>{1, 2});
-	{
-		RGBImageLock l(img);
-		l.set({0, 0}, Colour{255, 255, 219});
-		l.set({0, 1}, Colour{215, 0, 0});
-	}
-	this->healthImage = img;
-	img = mksp<RGBImage>(Vec2<int>{1, 2});
-	{
-		RGBImageLock l(img);
-		l.set({0, 0}, Colour{160, 236, 252});
-		l.set({0, 1}, Colour{4, 100, 252});
-	}
-	this->shieldImage = img;
-	img = mksp<RGBImage>(Vec2<int>{1, 2});
-	{
-		RGBImageLock l(img);
-		l.set({0, 0}, Colour{150, 150, 150});
-		l.set({0, 1}, Colour{97, 101, 105});
-	}
-	this->stunImage = img;
-	this->iconShade = fw().data->loadImage("battle/battle-icon-shade.png");
-	for (int i = 28; i <= 34; i++)
-	{
-		unitRanks.push_back(
-		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-		                                i)));
-	}
 	for (int i = 12; i <= 18; i++)
 	{
 		bigUnitRanks.push_back(
@@ -971,19 +945,24 @@ AEquipScreen::Mode AEquipScreen::getMode()
 		return Mode::Battle;
 	}
 	// If agent in base and not in vehicle or in vehicle which is parked in base
-	else if (true)
+	else if (currentAgent &&
+	         ((currentAgent->currentBuilding && currentAgent->currentBuilding->base) ||
+	          (currentAgent->currentVehicle && currentAgent->currentVehicle->currentBuilding &&
+	           currentAgent->currentVehicle->currentBuilding->base)))
 	{
 		return Mode::Base;
 	}
-	// If agent is in vehicle which is not at any base
-	else if (false)
-	{
-		return Mode::Vehicle;
-	}
-	// If agent is in a building which is not any base
-	else if (false)
+	// If agent is in a building which is not any base or in a vehicle which is not parked in base
+	else if (currentAgent &&
+	         (currentAgent->currentBuilding ||
+	          (currentAgent->currentVehicle && currentAgent->currentVehicle->currentBuilding)))
 	{
 		return Mode::Building;
+	}
+	// If agent is in vehicle which is not at any base
+	else if (currentAgent && currentAgent->currentVehicle)
+	{
+		return Mode::Vehicle;
 	}
 	// Agent is moving somewhere by foot
 	else
@@ -1044,21 +1023,16 @@ void AEquipScreen::populateInventoryItemsBattle()
 
 void AEquipScreen::populateInventoryItemsBase()
 {
+	if (!currentAgent || !currentAgent->currentBuilding || !currentAgent->currentBuilding->base)
+	{
+		return;
+	}
 	// The gap between the end of one inventory image and the start of the next
 	static const int INVENTORY_IMAGE_X_GAP = 4;
 	Vec2<int> inventoryPosition = inventoryControl->Location + formMain->Location;
 
 	// Find base which is in the current building
-	StateRef<Base> base;
-	for (auto &b : state->player_bases)
-	{
-		// TODO: Fix this to be the building agent is currently in
-		if (b.second->building == currentAgent->home_base->building)
-		{
-			base = {state.get(), b.first};
-			break;
-		}
-	}
+	StateRef<Base> base = currentAgent->currentBuilding->base;
 
 	for (auto &invPair : base->inventoryAgentEquipment)
 	{
@@ -1232,16 +1206,7 @@ void AEquipScreen::removeItemFromInventoryBattle(sp<AEquipment> item)
 void AEquipScreen::removeItemFromInventoryBase(sp<AEquipment> item)
 {
 	// Find base which is in the current building
-	StateRef<Base> base;
-	for (auto &b : state->player_bases)
-	{
-		// TODO: Fix this to be the building agent is currently in
-		if (b.second->building == currentAgent->home_base->building)
-		{
-			base = {state.get(), b.first};
-			break;
-		}
-	}
+	StateRef<Base> base = currentAgent->currentBuilding->base;
 
 	// Remove item from base
 	if (item->type->type == AEquipmentType::Type::Ammo)
@@ -1338,16 +1303,7 @@ void AEquipScreen::addItemToInventoryBattle(sp<AEquipment> item)
 void AEquipScreen::addItemToInventoryBase(sp<AEquipment> item)
 {
 	// Find base which is in the current building
-	StateRef<Base> base;
-	for (auto &b : state->player_bases)
-	{
-		// TODO: Fix this to be the building agent is currently in
-		if (b.second->building == currentAgent->home_base->building)
-		{
-			base = {state.get(), b.first};
-			break;
-		}
-	}
+	StateRef<Base> base = currentAgent->currentBuilding->base;
 
 	// Unload ammunition and add it too
 	sp<AEquipment> ammo = nullptr;
@@ -1407,16 +1363,8 @@ void AEquipScreen::processTemplate(int idx, bool remember)
 			addItemToInventory(eq);
 		}
 		// Find base which is in the current building
-		StateRef<Base> base;
-		for (auto &b : state->player_bases)
-		{
-			// TODO: Fix this to be the building agent is currently in
-			if (b.second->building == currentAgent->home_base->building)
-			{
-				base = {state.get(), b.first};
-				break;
-			}
-		}
+		StateRef<Base> base = currentAgent->currentBuilding->base;
+
 		// Equip agent according to template
 		for (auto &eq : temp.equipment)
 		{
@@ -1669,7 +1617,7 @@ void AEquipScreen::updateAgents()
 				continue;
 			}
 
-			auto agentControl = this->createAgentControl(agent.second);
+			auto agentControl = ControlGenerator::createLargeAgentControl(*state, agent.second);
 			agentList->addItem(agentControl);
 			if (agent.second == currentAgent)
 			{
@@ -1683,7 +1631,7 @@ void AEquipScreen::updateAgents()
 void AEquipScreen::updateAgentControl(sp<Agent> agent)
 {
 	auto agentList = formMain->findControlTyped<ListBox>("AGENT_SELECT_BOX");
-	agentList->replaceItem(createAgentControl(agent));
+	agentList->replaceItem(ControlGenerator::createLargeAgentControl(*state, agent));
 }
 
 void AEquipScreen::setSelectedAgent(sp<Agent> agent)
@@ -1714,101 +1662,6 @@ void AEquipScreen::clampInventoryPage()
 			inventoryPage = maxPageSeen;
 		}
 	}
-}
-
-sp<Control> AEquipScreen::createAgentControl(sp<Agent> agent)
-{
-	Vec2<int> size = {130, labelFont->getFontHeight() * 2};
-
-	auto baseControl = mksp<Control>();
-	baseControl->setData(agent);
-	baseControl->Name = "AGENT_PORTRAIT";
-	baseControl->Size = size;
-
-	auto frameGraphic = baseControl->createChild<Graphic>(unitSelect[0]);
-	frameGraphic->AutoSize = true;
-	frameGraphic->Location = {0, 0};
-	auto photoGraphic = frameGraphic->createChild<Graphic>(agent->getPortrait().icon);
-	photoGraphic->AutoSize = true;
-	photoGraphic->Location = {1, 1};
-
-	// TODO: Fade portraits
-	bool faded = false;
-
-	if (faded)
-	{
-		auto fadeIcon = baseControl->createChild<Graphic>(iconShade);
-		fadeIcon->AutoSize = true;
-		fadeIcon->Location = {2, 1};
-	}
-
-	auto rankIcon = baseControl->createChild<Graphic>(unitRanks[(int)agent->rank]);
-	rankIcon->AutoSize = true;
-	rankIcon->Location = {0, 0};
-
-	bool shield = agent->getMaxShield() > 0;
-
-	float maxHealth;
-	float currentHealth;
-	float stunProportion = 0.0f;
-	if (shield)
-	{
-		currentHealth = agent->getShield();
-		maxHealth = agent->getMaxShield();
-	}
-	else
-	{
-		currentHealth = agent->getHealth();
-		maxHealth = agent->getMaxHealth();
-		if (agent->unit)
-		{
-			float stunHealth = agent->unit->stunDamage;
-			stunProportion = stunHealth / maxHealth;
-		}
-	}
-	float healthProportion = maxHealth == 0.0f ? 0.0f : currentHealth / maxHealth;
-	stunProportion = clamp(stunProportion, 0.0f, healthProportion);
-
-	if (healthProportion > 0.0f)
-	{
-		// FIXME: Put these somewhere slightly less magic?
-		Vec2<int> healthBarOffset = {27, 2};
-		Vec2<int> healthBarSize = {3, 20};
-
-		auto healthImg = shield ? this->shieldImage : this->healthImage;
-		auto healthGraphic = frameGraphic->createChild<Graphic>(healthImg);
-		// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
-		// top-left, so fix that up a bit
-		int healthBarHeight = (int)((float)healthBarSize.y * healthProportion);
-		healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
-		healthBarSize.y = healthBarHeight;
-		healthGraphic->Location = healthBarOffset;
-		healthGraphic->Size = healthBarSize;
-		healthGraphic->ImagePosition = FillMethod::Stretch;
-	}
-	if (stunProportion > 0.0f)
-	{
-		// FIXME: Put these somewhere slightly less magic?
-		Vec2<int> healthBarOffset = {27, 2};
-		Vec2<int> healthBarSize = {3, 20};
-
-		auto healthImg = this->stunImage;
-		auto healthGraphic = frameGraphic->createChild<Graphic>(healthImg);
-		// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
-		// top-left, so fix that up a bit
-		int healthBarHeight = (int)((float)healthBarSize.y * stunProportion);
-		healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
-		healthBarSize.y = healthBarHeight;
-		healthGraphic->Location = healthBarOffset;
-		healthGraphic->Size = healthBarSize;
-		healthGraphic->ImagePosition = FillMethod::Stretch;
-	}
-
-	auto nameLabel = baseControl->createChild<Label>(agent->name, labelFont);
-	nameLabel->Location = {40, 0};
-	nameLabel->Size = {100, labelFont->getFontHeight() * 2};
-
-	return baseControl;
 }
 
 } // namespace OpenApoc

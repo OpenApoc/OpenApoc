@@ -43,7 +43,9 @@ void TileObjectBattleMapPart::draw(Renderer &r, TileTransform &transform,
 			LogError("Unsupported view mode");
 	}
 	if (sprite)
+	{
 		drawTinted(r, sprite, transformedScreenPos, visible);
+	}
 }
 
 TileObject::Type TileObjectBattleMapPart::convertType(BattleMapPartType::Type type)

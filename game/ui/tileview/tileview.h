@@ -23,6 +23,8 @@ class TileView : public Stage, public TileTransform
 	// Formula: FPS / DESIRED_ANIMATIONS_PER_SECOND
 
 	static const int SELECTION_FRAME_ANIMATION_DELAY = 60 / 5;
+	// How many pixels from edge trigger scroll
+	static const int MOUSE_SCROLL_MARGIN = 1;
 
   protected:
 	TileMap &map;
@@ -30,10 +32,15 @@ class TileView : public Stage, public TileTransform
 	Vec2<int> stratTileSize;
 	TileViewMode viewMode;
 
-	bool scrollUp;
-	bool scrollDown;
-	bool scrollLeft;
-	bool scrollRight;
+	bool scrollUpKB;
+	bool scrollDownKB;
+	bool scrollLeftKB;
+	bool scrollRightKB;
+
+	bool scrollUpM;
+	bool scrollDownM;
+	bool scrollLeftM;
+	bool scrollRightM;
 
 	Vec2<int> dpySize;
 

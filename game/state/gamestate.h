@@ -158,6 +158,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// game after startGame()
 	void initState();
 
+	void fillOrgStartingProperty();
 	// Fills out initial player property
 	void fillPlayerStartingProperty();
 

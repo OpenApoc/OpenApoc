@@ -25,7 +25,7 @@ NotificationScreen::NotificationScreen(sp<GameState> state, CityView &cityView,
 	menuform->findControl("BUTTON_PAUSE")
 	    ->addCallback(FormEventType::ButtonClick, [&cityView](Event *) {
 		    cityView.zoomLastEvent();
-		    cityView.setUpdateSpeed(UpdateSpeed::Pause);
+		    cityView.setUpdateSpeed(CityUpdateSpeed::Pause);
 		    fw().stageQueueCommand({StageCmd::Command::POP});
 		});
 }

@@ -2,10 +2,18 @@
 #include "game/state/aequipment.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battleunit.h"
+#include "game/state/city/agentmission.h"
+#include "game/state/city/building.h"
+#include "game/state/city/city.h"
+#include "game/state/city/scenery.h"
+#include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
 #include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/scenery_tile_type.h"
+#include "game/state/tileview/tileobject_scenery.h"
 #include "library/strings_format.h"
+#include <glm/glm.hpp>
 
 namespace OpenApoc
 {
@@ -413,6 +421,63 @@ UString Agent::getRankName() const
 	}
 	LogError("Unknown rank %d", (int)rank);
 	return "";
+}
+
+void Agent::leaveBuilding(GameState &state, Vec3<float> initialPosition)
+{
+	if (currentBuilding)
+	{
+		currentBuilding->currentAgents.erase({&state, shared_from_this()});
+		currentBuilding = nullptr;
+	}
+	if (currentVehicle)
+	{
+		currentVehicle->currentAgents.erase({&state, shared_from_this()});
+		currentVehicle = nullptr;
+	}
+	position = initialPosition;
+	goalPosition = initialPosition;
+}
+
+void Agent::enterBuilding(GameState &state, StateRef<Building> b)
+{
+	if (currentVehicle)
+	{
+		currentVehicle->currentAgents.erase({&state, shared_from_this()});
+		currentVehicle = nullptr;
+	}
+	currentBuilding = b;
+	currentBuilding->currentAgents.insert({&state, shared_from_this()});
+	position = (Vec3<float>)b->crewQuarters + Vec3<float>{0.5f, 0.5f, 0.5f};
+	goalPosition = position;
+}
+
+void Agent::enterVehicle(GameState &state, StateRef<Vehicle> v)
+{
+	if (currentBuilding)
+	{
+		currentBuilding->currentAgents.erase({&state, shared_from_this()});
+		currentBuilding = nullptr;
+	}
+	currentVehicle = v;
+	currentVehicle->currentAgents.insert({&state, shared_from_this()});
+}
+
+bool Agent::canTeleport() const
+{
+	return teleportTicksAccumulated >= TELEPORT_TICKS_REQUIRED_AGENT;
+}
+
+bool Agent::hasTeleporter() const
+{
+	for (auto &e : this->equipment)
+	{
+		if (e->type->type != AEquipmentType::Type::Teleporter)
+			continue;
+		return true;
+	}
+
+	return false;
 }
 
 sp<AEquipment> Agent::getArmor(BodyPart bodyPart) const
@@ -827,6 +892,130 @@ void Agent::updateIsBrainsucker()
 	}
 }
 
+bool Agent::addMission(GameState &state, AgentMission *mission, bool toBack)
+{
+	if (missions.empty() || !toBack)
+	{
+		missions.emplace_front(mission);
+		missions.front()->start(state, *this);
+	}
+	else
+	{
+		missions.emplace_back(mission);
+	}
+	return true;
+}
+
+bool Agent::setMission(GameState &state, AgentMission *mission)
+{
+	missions.clear();
+	missions.emplace_front(mission);
+	missions.front()->start(state, *this);
+	return true;
+}
+
+void Agent::update(GameState &state, unsigned ticks)
+{
+	if (teleportTicksAccumulated < TELEPORT_TICKS_REQUIRED_VEHICLE)
+	{
+		teleportTicksAccumulated += ticks;
+	}
+	if (!hasTeleporter())
+	{
+		teleportTicksAccumulated = 0;
+	}
+
+	// Agents in vehicles don't update missions and dont' move
+	if (!currentVehicle)
+	{
+		if (!this->missions.empty())
+		{
+			this->missions.front()->update(state, *this, ticks);
+		}
+		while (!this->missions.empty() && this->missions.front()->isFinished(state, *this))
+		{
+			LogInfo("Agent mission \"%s\" finished", this->missions.front()->getName());
+			this->missions.pop_front();
+			if (!this->missions.empty())
+			{
+				LogInfo("Agent mission \"%s\" starting", this->missions.front()->getName());
+				this->missions.front()->start(state, *this);
+				continue;
+			}
+			else
+			{
+				LogInfo("No next agent mission, going idle");
+				break;
+			}
+		}
+		updateMovement(state, ticks);
+	}
+}
+
+void Agent::updateMovement(GameState &state, unsigned ticks)
+{
+	auto ticksToMove = ticks;
+	unsigned lastTicksToMove = 0;
+
+	// Move until we become idle or run out of ticks
+	while (ticksToMove != lastTicksToMove)
+	{
+		lastTicksToMove = ticksToMove;
+
+		// Advance agent position to goal
+		if (ticksToMove > 0 && position != goalPosition)
+		{
+			Vec3<float> vectorToGoal = goalPosition - position;
+			int distanceToGoal = (unsigned)ceilf(glm::length(
+			    vectorToGoal * VELOCITY_SCALE_CITY * (float)TICKS_PER_UNIT_TRAVELLED_AGENT));
+
+			// Cannot reach in one go
+			if (distanceToGoal > ticksToMove)
+			{
+				auto dir = glm::normalize(vectorToGoal);
+				Vec3<float> newPosition = (float)(ticksToMove)*dir;
+				newPosition /= VELOCITY_SCALE_BATTLE;
+				newPosition /= (float)TICKS_PER_UNIT_TRAVELLED_AGENT;
+				newPosition += position;
+				position = newPosition;
+				ticksToMove = 0;
+			}
+			// Can reach in one go
+			else
+			{
+				ticksToMove -= distanceToGoal;
+				position = goalPosition;
+			}
+		}
+
+		// Request new goal
+		if (position == goalPosition)
+		{
+			while (!missions.empty() && missions.front()->isFinished(state, *this))
+			{
+				LogInfo("Agent mission \"%s\" finished", missions.front()->getName());
+				missions.pop_front();
+				if (!missions.empty())
+				{
+					LogInfo("Agent mission \"%s\" starting", missions.front()->getName());
+					missions.front()->start(state, *this);
+				}
+			}
+			// Get new goal from mission
+			if (missions.empty() ||
+			    !missions.front()->getNextDestination(state, *this, goalPosition))
+			{
+				break;
+			}
+			// New goal acquired
+			if (currentBuilding)
+			{
+				leaveBuilding(state, position);
+			}
+		}
+	}
+}
+
 void Agent::trainPhysical(GameState &state, unsigned ticks)
 {
 	if (!type->can_improve)
@@ -1020,11 +1209,11 @@ sp<AEquipment> Agent::getFirstItemByType(AEquipmentType::Type type) const
 	return nullptr;
 }
 
-sp<AEquipment> Agent::getFirstShield() const
+sp<AEquipment> Agent::getFirstShield(GameState &state) const
 {
 	for (auto &e : equipment)
 	{
-		if (e->type->type == AEquipmentType::Type::DisruptorShield)
+		if (e->type->type == AEquipmentType::Type::DisruptorShield && e->canBeUsed(state))
 		{
 			return e;
 		}
@@ -1097,13 +1286,13 @@ int Agent::getMaxHealth() const { return current_stats.health; }
 
 int Agent::getHealth() const { return modified_stats.health; }
 
-int Agent::getMaxShield() const
+int Agent::getMaxShield(GameState &state) const
 {
 	int maxShield = 0;
 
 	for (auto &e : equipment)
 	{
-		if (e->type->type != AEquipmentType::Type::DisruptorShield)
+		if (e->type->type != AEquipmentType::Type::DisruptorShield || !e->canBeUsed(state))
 			continue;
 		maxShield += e->type->max_ammo;
 	}
@@ -1111,13 +1300,13 @@ int Agent::getMaxShield() const
 	return maxShield;
 }
 
-int Agent::getShield() const
+int Agent::getShield(GameState &state) const
 {
 	int curShield = 0;
 
 	for (auto &e : equipment)
 	{
-		if (e->type->type != AEquipmentType::Type::DisruptorShield)
+		if (e->type->type != AEquipmentType::Type::DisruptorShield || !e->canBeUsed(state))
 			continue;
 		curShield += e->ammo;
 	}

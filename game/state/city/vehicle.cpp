@@ -563,7 +563,7 @@ Vehicle::Vehicle()
 
 Vehicle::~Vehicle() = default;
 
-void Vehicle::launch(TileMap &map, GameState &state, Vec3<float> initialPosition)
+void Vehicle::leaveBuilding(GameState &state, Vec3<float> initialPosition, float initialFacing)
 {
 	LogInfo("Launching %s", this->name);
 	if (this->tileObject)
@@ -571,38 +571,45 @@ void Vehicle::launch(TileMap &map, GameState &state, Vec3<float> initialPosition
 		LogError("Trying to launch already-launched vehicle");
 		return;
 	}
-	auto bld = this->currentlyLandedBuilding;
+	auto bld = this->currentBuilding;
 	if (bld)
 	{
-		bld->landed_vehicles.erase({&state, shared_from_this()});
-		this->currentlyLandedBuilding = "";
+		bld->currentVehicles.erase({&state, shared_from_this()});
+		this->currentBuilding = "";
 	}
 	this->position = initialPosition;
 	this->goalPosition = initialPosition;
+	this->facing = initialFacing;
+	this->goalFacing = initialFacing;
 	this->mover.reset(new FlyingVehicleMover(*this));
-	map.addObjectToMap(shared_from_this());
+	city->map->addObjectToMap(shared_from_this());
 }
 
-void Vehicle::land(GameState &state, StateRef<Building> b)
+void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 {
-	auto vehicleTile = this->tileObject;
-	if (!vehicleTile)
-	{
-		LogError("Trying to land already-landed vehicle");
-		return;
-	}
-	if (this->currentlyLandedBuilding)
+	if (this->currentBuilding)
 	{
 		LogError("Vehicle already in a building?");
 		return;
 	}
-	this->currentlyLandedBuilding = b;
-	b->landed_vehicles.insert({&state, shared_from_this()});
-	this->tileObject->removeFromMap();
-	this->tileObject.reset();
-	this->shadowObject->removeFromMap();
-	this->shadowObject = nullptr;
-	this->position = {0, 0, 0};
+	this->currentBuilding = b;
+	b->currentVehicles.insert({&state, shared_from_this()});
+	if (tileObject)
+	{
+		this->tileObject->removeFromMap();
+		this->tileObject.reset();
+	}
+	if (shadowObject)
+	{
+		this->shadowObject->removeFromMap();
+		this->shadowObject = nullptr;
+	}
+	this->position = type->type == VehicleType::Type::Ground ? b->carEntranceLocations.front()
+	                                                         : b->landingPadLocations.front();
+	this->facing = 0.0f;
+	this->goalFacing = 0.0f;
+	this->ticksToTurn = 0;
+	this->angularVelocity = 0.0f;
 }
 
 void Vehicle::setupMover()
@@ -643,7 +650,9 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	}
 
 	if (!this->missions.empty())
+	{
 		this->missions.front()->update(state, *this, ticks);
+	}
 	while (!this->missions.empty() && this->missions.front()->isFinished(state, *this))
 	{
 		LogInfo("Vehicle mission \"%s\" finished", this->missions.front()->getName());
@@ -665,7 +674,7 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	{
 		auto alien_city = state.cities["CITYMAP_ALIEN"];
 		// Make UFOs patrol their city if we're looking at it
-		if (this->city.getSp() == alien_city && state.current_city == this->city)
+		if (this->city == alien_city && state.current_city == this->city)
 		{
 			this->missions.emplace_back(VehicleMission::patrol(state, *this));
 		}
@@ -1520,10 +1529,7 @@ int Vehicle::getMaxPassengers() const
 	return passengers;
 }
 
-int Vehicle::getPassengers() const
-{ // FIXME: Track passengers
-	return 0;
-}
+int Vehicle::getPassengers() const { return (int)currentAgents.size(); }
 
 int Vehicle::getMaxCargo() const
 {

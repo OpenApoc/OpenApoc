@@ -15,7 +15,6 @@
 #define VELOCITY_SCALE_BATTLE (Vec3<float>{24, 24, 20})
 
 // This enables showing tiles that were tried by the last pathfinding attempt
-// Is only displayed in battlescape right now
 //#define PATHFINDING_DEBUG
 
 namespace OpenApoc
@@ -67,10 +66,12 @@ enum class TileViewMode
 
 enum class MapDirection
 {
-	North = 1,
-	East = 2,
-	South = 3,
-	West = 4
+	North = 0,
+	East = 1,
+	South = 2,
+	West = 3,
+	Up = 4,
+	Down = 5
 };
 
 class Tile
@@ -253,13 +254,14 @@ class TileMap
 	        std::vector<std::set<TileObject::Type>> layerMap);
 	~TileMap();
 
+	// Path to target area (bounds are exclusive)
 	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destinationStart,
 	                                      Vec3<int> destinationEnd, int iterationLimit,
 	                                      const CanEnterTileHelper &canEnterTile,
 	                                      bool approachOnly = false, bool ignoreStaticUnits = false,
 	                                      bool ignoreAllUnits = false, float *cost = nullptr,
 	                                      float maxCost = 0.0f);
-
+	// Path to target position
 	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destination,
 	                                      unsigned int iterationLimit,
 	                                      const CanEnterTileHelper &canEnterTile,

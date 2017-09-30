@@ -2,6 +2,7 @@
 
 #include "framework/image.h"
 #include "game/state/equipment.h"
+#include "game/state/gametime.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
@@ -11,10 +12,14 @@
 #include <map>
 #include <set>
 
+// How many in-game ticks are required to travel one in-game unit for battleunits
+#define TICKS_PER_UNIT_TRAVELLED_AGENT 8
+
 namespace OpenApoc
 {
 
-class Base;
+static const unsigned TELEPORT_TICKS_REQUIRED_AGENT = TICKS_PER_SECOND * 30;
+
 class Organisation;
 class AEquipment;
 class BattleUnitAnimationPack;
@@ -24,7 +29,11 @@ class AgentBodyType;
 class BattleUnit;
 class DamageModifier;
 class DamageType;
+class Building;
+class Vehicle;
+class AgentMission;
 class VoxelMap;
+class City;
 enum class AIType;
 
 enum class BodyPart
@@ -297,6 +306,10 @@ class Agent : public StateObject,
 	bool overEncumbred = false;
 	Rank rank = Rank::Rookie;
 
+	unsigned int teleportTicksAccumulated = 0;
+	bool canTeleport() const;
+	bool hasTeleporter() const;
+
 	// Training
 	unsigned trainingPhysicalTicksAccumulated = 0;
 	unsigned trainingPsiTicksAccumulated = 0;
@@ -311,13 +324,33 @@ class Agent : public StateObject,
 	int getTULimit(int reactionValue) const;
 	UString getRankName() const;
 
-	StateRef<Base> home_base;
 	StateRef<Organisation> owner;
+
+	StateRef<City> city;
+	StateRef<Building> homeBuilding;
+	// Building the agent is currently stored inside, nullptr if it's in the city or a vehicle
+	StateRef<Building> currentBuilding;
+	// Vehicle the agent is currently stored inside, nullptr if it's in the city in a building
+	StateRef<Vehicle> currentVehicle;
+
+	/* leave the building and put agent into the city */
+	void leaveBuilding(GameState &state, Vec3<float> initialPosition);
+	/* 'enter' the agent in a building from city or vehicle*/
+	void enterBuilding(GameState &state, StateRef<Building> b);
+	/* 'enter' the agent in a vehicle from building*/
+	void enterVehicle(GameState &state, StateRef<Vehicle> v);
+	// Note that agent cannot ever leave vehicle into city, or enter vehicle from citu
+
+	// Agent's position in the city
+	Vec3<float> position;
+	// Position agent is moving towards
+	Vec3<float> goalPosition;
 
 	bool assigned_to_lab = false;
 
 	StateRef<BattleUnit> unit;
 
+	std::list<up<AgentMission>> missions;
 	std::list<sp<AEquipment>> equipment;
 	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
 	                     EquipmentSlotType &slotType) const;
@@ -349,6 +382,15 @@ class Agent : public StateObject,
 	void updateIsBrainsucker();
 	bool isBrainsucker = false;
 
+	// Adds mission to list of missions, returns true if successful
+	bool addMission(GameState &state, AgentMission *mission, bool toBack = false);
+	// Replaces all missions with provided mission, returns true if successful
+	bool setMission(GameState &state, AgentMission *mission);
+
+	// Update agent in city
+	void update(GameState &state, unsigned ticks);
+	void updateMovement(GameState &state, unsigned ticks);
+
 	void trainPhysical(GameState &state, unsigned ticks);
 	void trainPsi(GameState &state, unsigned ticks);
 
@@ -359,7 +401,7 @@ class Agent : public StateObject,
 	getDominantItemInHands(GameState &state,
 	                       StateRef<AEquipmentType> itemLastFired = nullptr) const;
 	sp<AEquipment> getFirstItemInSlot(EquipmentSlotType type, bool lazy = true) const;
-	sp<AEquipment> getFirstShield() const;
+	sp<AEquipment> getFirstShield(GameState &state) const;
 	sp<AEquipment> getFirstItemByType(StateRef<AEquipmentType> type) const;
 	sp<AEquipment> getFirstItemByType(AEquipmentType::Type type) const;
 
@@ -373,8 +415,8 @@ class Agent : public StateObject,
 	int getMaxHealth() const;
 	int getHealth() const;
 
-	int getMaxShield() const;
-	int getShield() const;
+	int getMaxShield(GameState &state) const;
+	int getShield(GameState &state) const;
 
 	// Following members are not serialized, but rather are set up in the initBattle method
 

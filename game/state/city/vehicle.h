@@ -31,9 +31,9 @@ class GameState;
 class TileObjectProjectile;
 class VEquipment;
 class VEquipmentType;
-class Base;
 class City;
 class TileMap;
+class Agent;
 class Collision;
 
 class VehicleMover
@@ -105,17 +105,20 @@ class Vehicle : public StateObject,
 	uint64_t ticksAutoActionAvailable = 0;
 
 	StateRef<Building> homeBuilding;
-	StateRef<Building> currentlyLandedBuilding;
+	// Building the vehicle is currently stored inside, nullptr if it's in the city
+	StateRef<Building> currentBuilding;
+	// Agents currently residing in vehicle
+	std::set<StateRef<Agent>> currentAgents;
 
 	sp<TileObjectVehicle> tileObject;
 	sp<TileObjectShadow> shadowObject;
 
 	up<VehicleMover> mover;
 
-	/* 'launch' the vehicle into the city */
-	void launch(TileMap &map, GameState &state, Vec3<float> initialPosition);
-	/* 'land' the vehicle in a building*/
-	void land(GameState &state, StateRef<Building> b);
+	/* leave the building and put vehicle into the city */
+	void leaveBuilding(GameState &state, Vec3<float> initialPosition, float initialFacing = 0.0f);
+	/* 'enter' the vehicle into a building*/
+	void enterBuilding(GameState &state, StateRef<Building> b);
 	/* Sets up the 'mover' after state serialize in */
 	void setupMover();
 

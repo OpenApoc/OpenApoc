@@ -6,13 +6,19 @@
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
 #include "framework/trace.h"
+#include "game/state/agent.h"
+#include "game/state/city/agentmission.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/city/citycommonimagelist.h"
+#include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
+#include "game/state/rules/scenery_tile_type.h"
 #include "game/state/rules/vehicle_type.h"
+#include "game/state/tileview/tileobject_scenery.h"
 #include "game/state/tileview/tileobject_vehicle.h"
 
 namespace OpenApoc
@@ -61,20 +67,59 @@ void CityTileView::eventOccurred(Event *e)
 	{
 		switch (e->keyboard().KeyCode)
 		{
-			case SDLK_1:
-				pal = fw().data->loadPalette("xcom3/ufodata/pal_01.dat");
-				return;
-			case SDLK_2:
-				pal = fw().data->loadPalette("xcom3/ufodata/pal_02.dat");
-				return;
-			case SDLK_3:
-				pal = fw().data->loadPalette("xcom3/ufodata/pal_03.dat");
-				return;
-			case SDLK_F10:
+			case SDLK_F12:
 			{
 				DEBUG_SHOW_ALIEN_CREW = !DEBUG_SHOW_ALIEN_CREW;
+				if (DEBUG_SHOW_ALIEN_CREW)
+				{
+					DEBUG_SHOW_ROADS = false;
+					DEBUG_SHOW_TUBE = false;
+				}
 				LogWarning("Debug Alien display set to %s", DEBUG_SHOW_ALIEN_CREW);
+				return;
 			}
+			case SDLK_F11:
+			{
+				DEBUG_SHOW_ROADS = !DEBUG_SHOW_ROADS;
+				if (DEBUG_SHOW_ROADS)
+				{
+					DEBUG_SHOW_ALIEN_CREW = false;
+					DEBUG_SHOW_TUBE = false;
+				}
+				LogWarning("Debug roads display set to %s", DEBUG_SHOW_ROADS);
+				return;
+			}
+			case SDLK_F10:
+			{
+				DEBUG_SHOW_TUBE = !DEBUG_SHOW_TUBE;
+				if (DEBUG_SHOW_TUBE)
+				{
+					DEBUG_SHOW_ROADS = false;
+					DEBUG_SHOW_ALIEN_CREW = false;
+				}
+				LogWarning("Debug tube display set to %s", DEBUG_SHOW_TUBE);
+				return;
+			}
+			case SDLK_KP_0:
+				DEBUG_DIRECTION = -1;
+				return;
+			case SDLK_KP_9:
+				DEBUG_DIRECTION = 0;
+				return;
+			case SDLK_KP_3:
+				DEBUG_DIRECTION = 1;
+				return;
+			case SDLK_KP_1:
+				DEBUG_DIRECTION = 2;
+				return;
+			case SDLK_KP_7:
+				DEBUG_DIRECTION = 3;
+				return;
+			case SDLK_KP_8:
+				DEBUG_DIRECTION = 4;
+				return;
+			case SDLK_KP_2:
+				DEBUG_DIRECTION = 5;
 				return;
 			case SDLK_F6:
 			{
@@ -83,8 +128,8 @@ void CityTileView::eventOccurred(Event *e)
 				auto img = std::dynamic_pointer_cast<RGBImage>(
 				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this, 12.99f));
 				fw().data->writeImage("tileviewvoxels.png", img);
-			}
 				return;
+			}
 			case SDLK_F7:
 			{
 				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
@@ -92,8 +137,8 @@ void CityTileView::eventOccurred(Event *e)
 				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
 				    {imageOffset, imageOffset + dpySize}, *this, 12.99f, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
-			}
 				return;
+			}
 			case SDLK_F8:
 			{
 				LogWarning("Writing voxel view to tileviewvoxels.png");
@@ -101,8 +146,8 @@ void CityTileView::eventOccurred(Event *e)
 				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
 				    {imageOffset, imageOffset + dpySize}, *this, 12.99f, false, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
-			}
 				return;
+			}
 			case SDLK_F9:
 			{
 				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
@@ -110,8 +155,8 @@ void CityTileView::eventOccurred(Event *e)
 				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
 				    {imageOffset, imageOffset + dpySize}, *this, 11.0f, true, true));
 				fw().data->writeImage("tileviewvoxels.png", img);
-			}
 				return;
+			}
 		}
 	}
 	TileView::eventOccurred(e);
@@ -182,7 +227,7 @@ void CityTileView::render()
 							{
 								auto &obj = tile->drawnObjects[layer][obj_id];
 								Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
-								obj->draw(r, *this, pos, this->viewMode);
+								bool visible = true;
 
 								switch (obj->getType())
 								{
@@ -219,9 +264,44 @@ void CityTileView::render()
 										}
 									}
 									break;
+									case TileObject::Type::Scenery:
+									{
+										auto s = std::static_pointer_cast<TileObjectScenery>(obj)
+										             ->getOwner();
+										if (DEBUG_SHOW_ROADS)
+										{
+											if (DEBUG_DIRECTION == -1)
+											{
+												visible = s->type->connection[0] ||
+												          s->type->connection[1] ||
+												          s->type->connection[2] ||
+												          s->type->connection[3];
+											}
+											else
+											{
+												visible = s->type->connection[DEBUG_DIRECTION];
+											}
+										}
+										if (DEBUG_SHOW_TUBE)
+										{
+											if (DEBUG_DIRECTION == -1)
+											{
+												visible = s->building || s->type->tube[0] ||
+												          s->type->tube[1] || s->type->tube[2] ||
+												          s->type->tube[3] || s->type->tube[4] ||
+												          s->type->tube[5];
+											}
+											else
+											{
+												visible = s->type->tube[DEBUG_DIRECTION];
+											}
+										}
+									}
 									default:
 										break;
 								}
+
+								obj->draw(r, *this, pos, this->viewMode, visible);
 							}
 #ifdef PATHFINDING_DEBUG
 							if (tile->pathfindingDebugFlag && viewMode == TileViewMode::Isometric)
@@ -232,6 +312,18 @@ void CityTileView::render()
 						}
 					}
 				}
+			}
+
+			// Draw units
+			for (auto &a : state.agents)
+			{
+				if (a.second->owner != state.getPlayer() || a.second->city != state.current_city)
+				{
+					continue;
+				}
+				r.draw(state.city_common_image_list->agentIsometric,
+				       (Vec2<int>)tileToOffsetScreenCoords(a.second->position) -
+				           ((Vec2<int>)state.city_common_image_list->agentIsometric->size) / 2);
 			}
 
 			// Draw brackets
@@ -374,7 +466,29 @@ void CityTileView::render()
 				}
 			}
 
-			// Draw stuff
+			// Compile list of agent destinations
+			for (auto &a : state.agents)
+			{
+				if (a.second->owner != state.getPlayer() || a.second->city != state.current_city)
+				{
+					continue;
+				}
+				bool selected =
+				    std::find(state.current_city->cityViewSelectedAgents.begin(),
+				              state.current_city->cityViewSelectedAgents.end(),
+				              a.second) != state.current_city->cityViewSelectedAgents.end();
+
+				for (auto &m : a.second->missions)
+				{
+					if (m->type == AgentMission::MissionType::GotoBuilding)
+					{
+						targetLocationsToDraw.emplace_back(m->targetBuilding->crewQuarters,
+						                                   a.second->position, true);
+						break;
+					}
+				}
+			}
+			// Draw lines to target
 			for (auto &obj : targetLocationsToDraw)
 			{
 				static const auto offsetStrat = Vec2<float>{-4.0f, -4.0f};
@@ -393,6 +507,32 @@ void CityTileView::render()
 					       tileToOffsetScreenCoords(std::get<0>(obj)) + offsetStrat);
 				}
 			}
+			// Draw agent icons
+			for (auto &a : state.agents)
+			{
+				if (a.second->owner != state.getPlayer() || a.second->city != state.current_city)
+				{
+					continue;
+				}
+				r.draw(state.city_common_image_list->agentStrategic,
+				       tileToOffsetScreenCoords(a.second->position) - Vec2<float>{4, 4});
+				// Draw unit selection brackets
+				if (selectionFrameTicksAccumulated / SELECTION_FRAME_ANIMATION_DELAY)
+				{
+					bool selected =
+					    !state.current_city->cityViewSelectedAgents.empty() &&
+					    std::find(state.current_city->cityViewSelectedAgents.begin(),
+					              state.current_city->cityViewSelectedAgents.end(),
+					              a.second) != state.current_city->cityViewSelectedAgents.end();
+					if (selected)
+					{
+						r.draw(selectionImageFriendlySmall,
+						       tileToOffsetScreenCoords(a.second->position) -
+						           Vec2<float>(selectionImageFriendlySmall->size / (unsigned)2));
+					}
+				}
+			}
+			// Draw vehicle icons
 			for (auto &obj : vehiclesToDraw)
 			{
 				auto vehicle = std::get<0>(obj);
@@ -423,7 +563,6 @@ void CityTileView::render()
 					}
 				}
 			}
-
 			renderStrategyOverlay(r);
 
 			// Detection

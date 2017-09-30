@@ -105,8 +105,8 @@ void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 				}
 			}
 
-			// 0 = friendly, 1 = enemy, 2 = neutral
-			int side_offset = friendly ? 0 : (hostile ? 1 : 2);
+			// 1 = friendly, 0 = enemy, 2 = neutral
+			int side_offset = friendly ? 1 : (hostile ? 0 : 2);
 
 			switch (vehicle->type->mapIconType)
 			{

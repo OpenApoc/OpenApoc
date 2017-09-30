@@ -3,6 +3,7 @@
 #include "framework/sound.h"
 #include "framework/trace.h"
 #include "game/state/city/building.h"
+#include "game/state/city/citycommonimagelist.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/projectile.h"
 #include "game/state/city/scenery.h"
@@ -62,11 +63,12 @@ City::~City()
 
 	for (auto &b : this->buildings)
 	{
-		b.second->landed_vehicles.clear();
+		b.second->currentVehicles.clear();
+		b.second->currentAgents.clear();
 	}
 }
 
-void City::initMap()
+void City::initMap(GameState &state)
 {
 	if (this->map)
 	{
@@ -75,22 +77,37 @@ void City::initMap()
 	}
 	this->map.reset(new TileMap(this->size, VELOCITY_SCALE_CITY,
 	                            {VOXEL_X_CITY, VOXEL_Y_CITY, VOXEL_Z_CITY}, layerMap));
+	for (auto &b : this->buildings)
+	{
+		b.second->crewQuarters = {-1, -1, -1};
+	}
 	for (auto &s : this->scenery)
 	{
+		s->city = {&state, id};
 		// FIXME: Should we really add all scenery to the map? What if it's destroyed?
 		this->map->addObjectToMap(s);
+		if (!s->building)
+		{
+			continue;
+		}
 		if (s->type->isLandingPad)
 		{
-			Vec2<int> pos = {s->initialPosition.x, s->initialPosition.y};
-
-			for (auto &b : this->buildings)
+			s->building->landingPadLocations.push_back(s->initialPosition);
+		}
+		if ((s->type->connection[0] || s->type->connection[1] || s->type->connection[2] ||
+		     s->type->connection[3]) &&
+		    s->type->road_type == SceneryTileType::RoadType::Terminal)
+		{
+			s->building->carEntranceLocations.push_back(s->initialPosition);
+			// crew quarters is the closest to camera spot with vehicle access
+			if (s->initialPosition.z > s->building->crewQuarters.z ||
+			    (s->initialPosition.z == s->building->crewQuarters.z &&
+			     s->initialPosition.y > s->building->crewQuarters.y) ||
+			    (s->initialPosition.z == s->building->crewQuarters.z &&
+			     s->initialPosition.y == s->building->crewQuarters.y &&
+			     s->initialPosition.x > s->building->crewQuarters.x))
 			{
-				if (b.second->bounds.within(pos))
-				{
-					b.second->landingPadLocations.push_back(s->initialPosition);
-					LogInfo("Pad %s is within building %s bounds %s", pos, b.first,
-					        b.second->bounds);
-				}
+				s->building->crewQuarters = s->initialPosition;
 			}
 		}
 	}
@@ -102,11 +119,21 @@ void City::initMap()
 		}
 		LogInfo("Building %s has %u landing pads:", b.first,
 		        (unsigned)b.second->landingPadLocations.size());
-
 		for (auto &loc : b.second->landingPadLocations)
 		{
 			LogInfo("Pad: %s", loc);
 		}
+		for (auto &loc : b.second->carEntranceLocations)
+		{
+			LogInfo("Car: %s", loc);
+		}
+		if (b.second->crewQuarters == Vec3<int>{-1, -1, -1})
+		{
+			LogWarning("Building %s has no car exit?", b.first);
+			b.second->crewQuarters = {(b.second->bounds.p0.x + b.second->bounds.p1.x) / 2,
+			                          (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2};
+		}
+		LogInfo("Crew Quarters: %s", b.second->crewQuarters);
 	}
 	for (auto &p : this->projectiles)
 	{
@@ -149,12 +176,12 @@ void City::update(GameState &state, unsigned int ticks)
 	// Need to use a 'safe' iterator method (IE keep the next it before calling ->update)
 	// as update() calls can erase it's object from the lists
 
-	Trace::start("City::update::buildings->landed_vehicles");
+	Trace::start("City::update::buildings->currentVehicles");
 	for (auto it = this->buildings.begin(); it != this->buildings.end();)
 	{
 		auto b = it->second;
 		it++;
-		for (auto v : b->landed_vehicles)
+		for (auto v : b->currentVehicles)
 		{
 			for (auto &e : v->equipment)
 			{
@@ -182,7 +209,7 @@ void City::update(GameState &state, unsigned int ticks)
 			}
 		}
 	}
-	Trace::end("City::update::buildings->landed_vehicles");
+	Trace::end("City::update::buildings->currentVehicles");
 	Trace::start("City::update::projectiles->update");
 	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
 	{
@@ -309,6 +336,53 @@ sp<Doodad> City::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 	map->addObjectToMap(doodad);
 	this->doodads.push_back(doodad);
 	return doodad;
+}
+
+sp<Vehicle> City::placeVehicle(GameState &state, StateRef<VehicleType> type,
+                               StateRef<Organisation> owner)
+{
+	auto v = mksp<Vehicle>();
+	v->type = type;
+	v->name = format("%s %d", type->name, ++type->numCreated);
+	v->city = {&state, id};
+	v->owner = owner;
+	v->health = type->health;
+	v->strategyImages = state.city_common_image_list->strategyImages;
+	v->owner = owner;
+
+	// Vehicle::equipDefaultEquipment uses the state reference from itself, so make sure the
+	// vehicle table has the entry before calling it
+	UString vID = Vehicle::generateObjectID(state);
+	state.vehicles[vID] = v;
+
+	v->equipDefaultEquipment(state);
+
+	return v;
+}
+
+sp<Vehicle> City::placeVehicle(GameState &state, StateRef<VehicleType> type,
+                               StateRef<Organisation> owner, StateRef<Building> building)
+{
+	if (building->city.id != id)
+	{
+		LogError("Adding vehicle to a building in a different city?");
+		return nullptr;
+	}
+	auto v = placeVehicle(state, type, owner);
+
+	v->enterBuilding(state, building);
+
+	return v;
+}
+
+sp<Vehicle> City::placeVehicle(GameState &state, StateRef<VehicleType> type,
+                               StateRef<Organisation> owner, Vec3<float> position, float facing)
+{
+	auto v = placeVehicle(state, type, owner);
+
+	v->leaveBuilding(state, position, facing);
+
+	return v;
 }
 
 sp<City> City::get(const GameState &state, const UString &id)

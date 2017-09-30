@@ -2,24 +2,19 @@ OpenApoc X-Com Ufo Apocalypse Development Opensource Open Source XCom programmin
 
 ---
 
+General:
+- fullscreen
+- mousescroll
+- hotkeys
+
+Bugfixes:
+- brainsucker pod research
+- shield used w/o research
+
 City:
-- rectangle around vehicles
-- vehicle paths
-- city map colored icons
-- vehicle cloak
-- vehicles using banking
-- vehicles dodge attacks
-- vehicles auto-adjust height
-- point defense
-- teleport
+- agent display
+- agent interface
+- agent pathfinding
 
 Battle:
-
-- orgs going hostile from attacks vs its units
-- debug arsenal
-- rectangle around units
-- dirt in basescape
-- falling damage
-- aequip buttons
-- aequip templates
-- non-violent deaths from disruptor fire
+- 

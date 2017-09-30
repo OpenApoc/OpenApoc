@@ -13,6 +13,7 @@
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
 #include "game/state/base/base.h"
+#include "game/state/city/building.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vequipment.h"
 #include "game/state/gamestate.h"
@@ -183,12 +184,8 @@ void VEquipScreen::eventOccurred(Event *e)
 		// TODO: Show vehicle tooltip when hovering over it
 	}
 	// Find the base this vehicle is landed in
-	StateRef<Base> base;
-	for (auto &b : state->player_bases)
-	{
-		if (b.second->building == selected->currentlyLandedBuilding)
-			base = {state.get(), b.first};
-	}
+	StateRef<Base> base = selected->currentBuilding ? selected->currentBuilding->base : nullptr;
+
 	// Only allow removing equipment if we're in a base, otherwise it'll disappear
 	if (e->type() == EVENT_MOUSE_DOWN && base)
 	{
@@ -480,7 +477,7 @@ void VEquipScreen::render()
 	StateRef<Base> base;
 	for (auto &b : state->player_bases)
 	{
-		if (b.second->building == selected->currentlyLandedBuilding)
+		if (b.second->building == selected->currentBuilding)
 			base = {state.get(), b.first};
 	}
 	if (base)

@@ -33,6 +33,7 @@ class BattlePreStart : public Stage
 		sp<Control> selectedControl;
 
 		void setLocation(Vec2<int> pos);
+		void update();
 
 		AgentControl() = default;
 		AgentControl(sp<Agent> agent, sp<Control> normalControl, sp<Control> selectedControl);
@@ -43,12 +44,7 @@ class BattlePreStart : public Stage
 	sp<GameState> state;
 
 	void displayAgent(sp<Agent> agent);
-	sp<Control> createAgentControl(StateRef<Agent> agent, bool selected);
-	sp<Image> healthImage;
-	sp<Image> shieldImage;
-	std::vector<sp<Image>> unitRanks;
 	std::vector<sp<Image>> bigUnitRanks;
-	std::vector<sp<Image>> unitSelect;
 
 	std::set<sp<AgentControl>> agents;
 	sp<AgentControl> selectedAgent;
