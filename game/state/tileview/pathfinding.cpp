@@ -14,6 +14,9 @@
 #include <algorithm>
 #include <glm/glm.hpp>
 
+// Debug pathfinding output
+//#define PATHFINDING_DEBUG
+
 namespace OpenApoc
 {
 
@@ -204,6 +207,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 		             nodeToExpand->thisTile->position.x] = true;
 
 #ifdef PATHFINDING_DEBUG
+		LogInfo("EXPAND %s", nodeToExpand->thisTile->position);
 		nodeToExpand->thisTile->pathfindingDebugFlag = true;
 #endif
 
@@ -295,6 +299,9 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					                                         goalPositionEnd),
 					    nodeToExpand, tile);
 					nodesToDelete.push_back(newNode);
+
+					LogInfo("NEW ND %s [%f, %f]", nextPosition, newNode->costToGetHere,
+					        newNode->distanceToGoal);
 
 					// Put node at appropriate place in the list
 					auto it = fringe.begin();

@@ -141,13 +141,13 @@ bool AgentTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, float &co
 		}
 	}
 
-	cost = glm::length(Vec3<float>{fromPos} - Vec3<float>{toPos});
+	cost = 1.0f;
 	return true;
 }
 
 float AgentTileHelper::getDistance(Vec3<float> from, Vec3<float> to) const
 {
-	return glm::length(to - from);
+	return std::abs(from.x - to.x) + std::abs(from.y - to.y) + std::abs(from.z - to.z);
 }
 
 float AgentTileHelper::getDistance(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd) const
@@ -160,7 +160,7 @@ float AgentTileHelper::getDistance(Vec3<float> from, Vec3<float> toStart, Vec3<f
 	                                                                       std::abs(diffEnd.y));
 	auto zDiff = from.z >= toStart.z && from.z < toEnd.z ? 0.0f : std::min(std::abs(diffStart.z),
 	                                                                       std::abs(diffEnd.z));
-	return sqrtf(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
+	return xDiff + yDiff + zDiff;
 }
 
 int AgentTileHelper::convertDirection(Vec3<int> dir) const
@@ -199,7 +199,7 @@ float AgentTileHelper::adjustCost(Vec3<int> nextPosition, int z) const
 	// Quite unlikely that we ever need to dig
 	if (nextPosition.z < MIN_REASONABLE_HEIGHT_AGENT && z == -1)
 	{
-		return -50.0f;
+		return 50.0f;
 	}
 	return 0;
 }

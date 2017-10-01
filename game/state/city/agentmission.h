@@ -10,7 +10,7 @@
 namespace OpenApoc
 {
 
-static const int MIN_REASONABLE_HEIGHT_AGENT = 2;
+static const int MIN_REASONABLE_HEIGHT_AGENT = 1;
 
 class Agent;
 class Tile;

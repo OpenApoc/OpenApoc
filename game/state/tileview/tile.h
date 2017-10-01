@@ -14,9 +14,6 @@
 #define VELOCITY_SCALE_CITY (Vec3<float>{32, 32, 16})
 #define VELOCITY_SCALE_BATTLE (Vec3<float>{24, 24, 20})
 
-// This enables showing tiles that were tried by the last pathfinding attempt
-//#define PATHFINDING_DEBUG
-
 namespace OpenApoc
 {
 
@@ -180,9 +177,7 @@ class Tile
 	// returns true if vision changed
 	bool updateVisionBlockage(int value = 0);
 
-#ifdef PATHFINDING_DEBUG
 	bool pathfindingDebugFlag = false;
-#endif
 };
 
 class CanEnterTileHelper

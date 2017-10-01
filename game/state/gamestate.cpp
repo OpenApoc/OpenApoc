@@ -186,15 +186,11 @@ void GameState::fillOrgStartingProperty()
 {
 	auto buildingIt = this->cities["CITYMAP_HUMAN"]->buildings.begin();
 
+#ifdef FAKE_TRAFFIC
 	// Create some random vehicles
 	for (int i = 0; i < 5; i++)
 	{
-#ifndef FAKE_TRAFFIC
 		break;
-#endif
-#ifdef PATHFINDING_DEBUG
-		break;
-#endif
 		for (auto &vehicleType : this->vehicle_types)
 		{
 			auto &type = vehicleType.second;
@@ -215,6 +211,7 @@ void GameState::fillOrgStartingProperty()
 			// vehicle table has the entry before calling it
 		}
 	}
+#endif
 }
 
 void GameState::startGame()
