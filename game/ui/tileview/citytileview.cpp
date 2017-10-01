@@ -303,12 +303,10 @@ void CityTileView::render()
 
 								obj->draw(r, *this, pos, this->viewMode, visible);
 							}
-#ifdef PATHFINDING_DEBUG
-							if (tile->pathfindingDebugFlag && viewMode == TileViewMode::Isometric)
+							if (tile->pathfindingDebugFlag)
 								r.draw(selectedTileImageFront,
 								       tileToOffsetScreenCoords(Vec3<int>{x, y, z}) -
 								           selectedTileImageOffset);
-#endif
 						}
 					}
 				}
@@ -455,12 +453,6 @@ void CityTileView::render()
 								obj->draw(r, *this, pos, this->viewMode, true, 0, friendly,
 								          hostile);
 							}
-#ifdef PATHFINDING_DEBUG
-							if (tile->pathfindingDebugFlag && viewMode == TileViewMode::Isometric)
-								r.draw(selectedTileImageFront,
-								       tileToOffsetScreenCoords(Vec3<int>{x, y, z}) -
-								           selectedTileImageOffset);
-#endif
 						}
 					}
 				}

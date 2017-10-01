@@ -881,12 +881,10 @@ void BattleTileView::render()
 									}
 								}
 							}
-#ifdef PATHFINDING_DEBUG
 							if (tile->pathfindingDebugFlag)
 								r.draw(waypointIcons[0],
 								       tileToOffsetScreenCoords(Vec3<int>{x, y, z}) -
 								           selectedTileImageOffset);
-#endif
 						}
 					}
 				}
