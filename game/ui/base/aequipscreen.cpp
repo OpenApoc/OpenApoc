@@ -1239,8 +1239,9 @@ void AEquipScreen::removeItemFromInventoryBase(sp<AEquipment> item)
 
 void AEquipScreen::removeItemFromInventoryAgent(sp<AEquipment> item)
 {
-	agentItems[currentAgent->position].erase(
-	    std::find(agentItems[currentAgent->position].begin(), agentItems[currentAgent->position].end(), item));
+	agentItems[currentAgent->position].erase(std::find(agentItems[currentAgent->position].begin(),
+	                                                   agentItems[currentAgent->position].end(),
+	                                                   item));
 }
 
 void AEquipScreen::removeItemFromInventoryBuilding(sp<AEquipment> item)

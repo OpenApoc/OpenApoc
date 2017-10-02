@@ -22,14 +22,15 @@ void ControlGenerator::init(GameState &state)
 {
 	LogWarning("Implement properly, without requiring an overlaying unitselects that hover over "
 	           "controls, then we will be using stock stuff");
-	for (int i = 0;i < 3;i++)
+	for (int i = 0; i < 3; i++)
 	{
-		battleSelect.push_back(fw().data->loadImage(
-			format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-				"tacbut.tab:%d:xcom3/tacdata/tactical.pal", 25 + i)));
-		citySelect.push_back(fw().data->loadImage(
-			format("PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%d:xcom3/ufodata/pal_01.dat", 37 + i)));
-
+		battleSelect.push_back(
+		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
+		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+		                                25 + i)));
+		citySelect.push_back(fw().data->loadImage(format(
+		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
+		    37 + i)));
 	}
 
 	LogWarning("Implement proper fatal, psiin, psiout graphics");

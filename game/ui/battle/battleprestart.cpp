@@ -281,7 +281,7 @@ void BattlePreStart::AgentIcon::update()
 }
 
 BattlePreStart::AgentIcon::AgentIcon(sp<Agent> agent, sp<Control> normalControl,
-                                           sp<Control> selectedControl)
+                                     sp<Control> selectedControl)
     : agent(agent), normalControl(normalControl), selectedControl(selectedControl)
 {
 }

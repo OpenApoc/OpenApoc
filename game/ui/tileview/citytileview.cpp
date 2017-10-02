@@ -281,7 +281,9 @@ void CityTileView::render()
 											{
 												visible = s->type->connection[DEBUG_DIRECTION];
 											}
-											visible = visible && s->type->tile_type == SceneryTileType::TileType::Road;
+											visible = visible &&
+											          s->type->tile_type ==
+											              SceneryTileType::TileType::Road;
 										}
 										if (DEBUG_SHOW_TUBE)
 										{
@@ -316,7 +318,8 @@ void CityTileView::render()
 			// Draw units
 			for (auto &a : state.agents)
 			{
-				if (a.second->owner != state.getPlayer() || a.second->city != state.current_city || a.second->currentVehicle)
+				if (a.second->owner != state.getPlayer() || a.second->city != state.current_city ||
+				    a.second->currentVehicle)
 				{
 					continue;
 				}
@@ -503,7 +506,8 @@ void CityTileView::render()
 			// Draw agent icons
 			for (auto &a : state.agents)
 			{
-				if (a.second->owner != state.getPlayer() || a.second->city != state.current_city || a.second->currentVehicle)
+				if (a.second->owner != state.getPlayer() || a.second->city != state.current_city ||
+				    a.second->currentVehicle)
 				{
 					continue;
 				}
