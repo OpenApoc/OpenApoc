@@ -24,11 +24,11 @@ TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
 
 TileView::~TileView() = default;
 
-void TileView::begin() { autoScroll = config().getBool("Framework.Misc.AutoScroll"); }
+void TileView::begin() { autoScroll = config().getBool("Options.Misc.AutoScroll"); }
 
 void TileView::pause() {}
 
-void TileView::resume() { autoScroll = config().getBool("Framework.Misc.AutoScroll"); }
+void TileView::resume() { autoScroll = config().getBool("Options.Misc.AutoScroll"); }
 
 void TileView::finish() {}
 

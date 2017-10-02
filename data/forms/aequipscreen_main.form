@@ -82,8 +82,8 @@
         <position x="463" y="70"/>
         <size width="98" height="260"/>
         <item size="0" spacing="5"/>
-        <hovercolour r="255" g="255" b="255" a="255"/>
-        <selcolour r="0" g="255" b="0" a="255"/>
+        <hovercolour r="255" g="255" b="255" a="0"/>
+        <selcolour r="255" g="255" b="255" a="0"/>
       </listbox>
       <graphicbutton id="AGENT_SCROLL_UP" scrollprev="AGENT_SELECT_SCROLL">
         <position x="568" y="56"/>

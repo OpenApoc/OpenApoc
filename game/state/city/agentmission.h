@@ -18,15 +18,15 @@ class TileMap;
 class Building;
 class UString;
 class SceneryTileType;
+class City;
 
 class AgentTileHelper : public CanEnterTileHelper
 {
   private:
 	TileMap &map;
-	Agent &a;
 
   public:
-	AgentTileHelper(TileMap &map, Agent &a);
+	AgentTileHelper(TileMap &map);
 
 	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
 	                  bool ignoreAllUnits = false) const override;
@@ -58,6 +58,9 @@ class AgentMission
 
   public:
 	AgentMission() = default;
+
+	static std::map<StateRef<City>, std::map<Vec3<int>, std::list<Vec3<int>>>> agentPathCache;
+	static void clearPathCache(StateRef<City> city);
 
 	// Methods used in pathfinding etc.
 	bool getNextDestination(GameState &state, Agent &a, Vec3<float> &destPos);

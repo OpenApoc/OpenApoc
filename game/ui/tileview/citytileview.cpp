@@ -470,7 +470,7 @@ void CityTileView::render()
 			// Compile list of agent destinations
 			for (auto &a : state.agents)
 			{
-				if (a.second->owner != state.getPlayer() || a.second->city != state.current_city)
+				if (a.second->owner != state.getPlayer() || a.second->city != state.current_city || a.second->currentVehicle)
 				{
 					continue;
 				}

@@ -18,6 +18,7 @@ class EquipmentPaperDoll;
 class Control;
 class Image;
 class AEquipment;
+class AEquipmentType;
 class Vehicle;
 class Building;
 class BitmapFont;
@@ -53,7 +54,7 @@ class AEquipScreen : public Stage
 	sp<Palette> pal;
 	sp<GameState> state;
 	sp<BitmapFont> labelFont;
-	sp<Agent> currentAgent;
+	std::list<sp<Agent>> selectedAgents;
 
 	sp<EquipmentPaperDoll> paperDoll;
 	sp<Graphic> inventoryControl;
@@ -61,6 +62,7 @@ class AEquipScreen : public Stage
 	Vec2<int> draggedEquipmentOffset;
 	Vec2<int> draggedEquipmentOrigin;
 	sp<AEquipment> draggedEquipment;
+	bool draggedEquipmentAlternativePickup = false;
 
 	// Items currently on the "ground"
 	std::list<std::tuple<Rect<int>, int, sp<AEquipment>>> inventoryItems;
@@ -78,7 +80,6 @@ class AEquipScreen : public Stage
 	static const Vec2<int> EQUIP_GRID_SLOTS;
 
 	std::vector<sp<Image>> bigUnitRanks;
-	std::vector<sp<Image>> unitSelect;
 	sp<Image> woundImage;
 
 	bool modifierLCtrl = false;
@@ -107,17 +108,28 @@ class AEquipScreen : public Stage
 	void removeItemFromInventoryVehicle(sp<AEquipment> item);
 	void removeItemFromInventoryBuilding(sp<AEquipment> item);
 	void removeItemFromInventoryAgent(sp<AEquipment> item);
+
 	void addItemToInventory(sp<AEquipment> item);
 	void addItemToInventoryBase(sp<AEquipment> item);
 	void addItemToInventoryBattle(sp<AEquipment> item);
 	void addItemToInventoryVehicle(sp<AEquipment> item);
 	void addItemToInventoryBuilding(sp<AEquipment> item);
 	void addItemToInventoryAgent(sp<AEquipment> item);
+	
+	// Try pick up item from agent's slot
+	// if alternative and forced is set then only do alternative or none at all
+	bool tryPickUpItem(sp<Agent> agent, Vec2<int> slotPos, bool alternative, bool forced = false);
+	bool tryPickUpItem(Vec2<int> inventoryPos);
+	bool tryPickUpItem(sp<AEquipmentType> item);
+	void pickUpItem(sp<AEquipment> item);
+	bool tryPlaceItem(sp<Agent> agent, Vec2<int> slotPos, bool * insufficientTU = nullptr);
 
 	void processTemplate(int idx, bool remember);
 
 	void attemptCloseScreen();
 	void closeScreen();
+
+	bool isInVicinity(sp<Agent> agent);
 
   public:
 	AEquipScreen(sp<GameState> state, sp<Agent> firstAgent = nullptr);
@@ -135,7 +147,9 @@ class AEquipScreen : public Stage
 	void render() override;
 	bool isTransition() override;
 
-	void setSelectedAgent(sp<Agent> agent);
+	void selectAgent(sp<Agent> agent, bool inverse = false, bool additive = false);
+
+	void updateFirstAgent();
 };
 
 } // namespace OpenApoc

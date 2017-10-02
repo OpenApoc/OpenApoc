@@ -17,9 +17,11 @@ class Vehicle;
 class Sample;
 class Base;
 class Building;
+class Projectile;
 class Organisation;
 class VehicleTileInfo;
 class Agent;
+class UfopaediaEntry;
 class AgentInfo;
 
 enum class CityUpdateSpeed
@@ -81,6 +83,15 @@ class CityView : public CityTileView
 
 	bool drawCity = true;
 	sp<Surface> surface;
+
+	// Click handlers
+
+	bool handleClickedBuilding(StateRef<Building> building, bool rightClick, CitySelectionState selState);
+	bool handleClickedVehicle(StateRef<Vehicle> vehicle, bool rightClick, CitySelectionState selState);
+	bool handleClickedAgent(StateRef<Agent> agent, bool rightClick, CitySelectionState selState);
+	bool handleClickedProjectile(sp<Projectile> projectile, bool rightClick, CitySelectionState selState);
+
+	void tryOpenUfopaediaEntry(StateRef<UfopaediaEntry> ufopaediaEntry);
 
 	// Orders
 

@@ -28,27 +28,27 @@
         </graphicbutton>
         <textbutton id="BUTTON_SAVEGAME" text="Save Game">
           <position x="18" y="48"/>
-          <size width="260" height="28"/>
+          <size width="259" height="28"/>
           <font>smalfont</font>
         </textbutton>
         <textbutton id="BUTTON_LOADGAME" text="Load Game">
           <position x="18" y="76"/>
-          <size width="260" height="28"/>
+          <size width="259" height="28"/>
           <font>smalfont</font>
         </textbutton>
         <textbutton id="BUTTON_DELETESAVEDGAME" text="Delete Old Saved Game">
-          <position x="18" y="113"/>
-          <size width="260" height="28"/>
+          <position x="18" y="112"/>
+          <size width="259" height="28"/>
           <font>smalfont</font>
         </textbutton>
         <textbutton id="BUTTON_ABANDONGAME" text="Abandon and Restart Game">
           <position x="18" y="167"/>
-          <size width="260" height="28"/>
+          <size width="259" height="28"/>
           <font>smalfont</font>
         </textbutton>
         <textbutton id="BUTTON_QUIT" text="Quit X-COM Apocalypse">
           <position x="18" y="195"/>
-          <size width="260" height="28"/>
+          <size width="259" height="28"/>
           <font>smalfont</font>
         </textbutton>
         <scroll id="GLOBAL_GAIN_SLIDER">
@@ -107,80 +107,107 @@
           <position x="305" y="52"/>
           <font>smallset</font>
           <size width="270" height="16"/>
-		<alignment horizontal="centre" vertical="centre"/>
+		  <alignment horizontal="centre" vertical="centre"/>
         </label>
+		
+	    <scroll id="NOTIFICATIONS_SCROLL">
+          <position x="555" y="101"/>
+          <size width="16" height="281"/>
+        </scroll>
+        <listbox id="NOTIFICATIONS_LIST" scrollbarid="NOTIFICATIONS_SCROLL">
+          <position x="311" y="76"/>
+          <size width="244" height="334"/>
+          <item size="0" spacing="4"/>
+          <hovercolour r="255" g="255" b="255" a="0"/>
+          <selcolour r="255" g="255" b="255" a="0"/>
+        </listbox>
+        <graphicbutton id="NOTIFICATIONS_SCROLL_UP" scrollprev="NOTIFICATIONS_SCROLL">
+          <position x="555" y="76"/>
+          <size width="22" height="21"/>
+          <image/>
+          <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
+        </graphicbutton>
+        <graphicbutton id="NOTIFICATIONS_SCROLL_UP" scrollnext="NOTIFICATIONS_SCROLL">
+          <position x="555" y="388"/>
+          <size width="22" height="21"/>
+          <image/>
+          <imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
+        </graphicbutton>
 		
 		<label text="Options">
           <position x="305" y="410"/>
           <font>smallset</font>
           <size width="270" height="16"/>
-		<alignment horizontal="centre" vertical="centre"/>
+		  <alignment horizontal="centre" vertical="centre"/>
         </label>
-		
-		 <graphic>
-        <image>city/menu-hr.png</image>
-        <position x="309" y="425"/>
-        <size width="252" height="1"/>
-		 </graphic>
+		<graphic>
+          <image>city/menu-hr.png</image>
+          <position x="309" y="425"/>
+          <size width="252" height="1"/>
+		</graphic>
 		 
 		<checkbox id="AUTO_SCROLL">
           <position x="310" y="430"/>
-          <size width="19" height="16"/>
+          <size width="120" height="16"/>
           <image>BUTTON_CHECKBOX_FALSE</image>
           <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
-        </checkbox>
-        <label text="Auto Scroll">
-          <position x="330" y="430"/>
-          <font>smallset</font>
-          <size width="90" height="16"/>
-        </label>
-		
+		  <label text="Auto Scroll">
+			<position x="20" y="0"/>
+			<font>smallset</font>
+			<size width="90" height="16"/>
+		  </label>
+		</checkbox>
+       
         <checkbox id="TOOL_TIPS">
           <position x="310" y="450"/>
-          <size width="19" height="16"/>
+          <size width="120" height="16"/>
           <image>BUTTON_CHECKBOX_FALSE</image>
           <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
-        </checkbox>
-        <label text="Tool tips">
-          <position x="330" y="450"/>
-          <font>smallset</font>
-          <size width="90" height="16"/>
-        </label>
-		
-		  
+          <label text="Tool tips">
+			<position x="20" y="0"/>
+			<font>smallset</font>
+			<size width="90" height="16"/>
+          </label>
+		</checkbox>
+       
 		<checkbox id="ACTION_MUSIC">
           <position x="440" y="430"/>
-          <size width="19" height="16"/>
+          <size width="120" height="16"/>
           <image>BUTTON_CHECKBOX_FALSE</image>
           <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+		  <label text="Action music">
+			<position x="20" y="0"/>
+			<font>smallset</font>
+			<size width="90" height="16"/>
+          </label>
         </checkbox>
-        <label text="Action music">
-          <position x="460" y="430"/>
-          <font>smallset</font>
-          <size width="90" height="16"/>
-        </label>
 		
         <checkbox id="AUTO_EXECUTE_ORDERS">
           <position x="440" y="450"/>
-          <size width="19" height="16"/>
+          <size width="150" height="16"/>
           <image>BUTTON_CHECKBOX_FALSE</image>
           <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
-        </checkbox>
-        <label text="Exec. rem. orders">
-          <position x="460" y="450"/>
-          <font>smallset</font>
-          <size width="100" height="16"/>
-        </label>
+          <label text="Exec. rem. orders">
+			<position x="20" y="0"/>
+			<font>smallset</font>
+			<size width="120" height="16"/>
+          </label>
+		</checkbox>
         
 		<textbutton text="Give all research" id="BUTTON_GIVE_ALL_RESEARCH">
-          <position x="310" y="140"/>
           <font>smallset</font>
-          <size width="200" height="32"/>
+          <position x="18" y="379"/>
+          <size width="259" height="28"/>
         </textbutton>
-        <textbutton id="BUTTON_BATTLE">
-          <position x="310" y="172"/>
+        <textbutton id="BUTTON_PLACEHOLDER">
           <font>smallset</font>
-          <size width="200" height="32"/>
+          <position x="18" y="407"/>
+          <size width="259" height="28"/>
+        </textbutton>
+		<textbutton id="BUTTON_BATTLE">
+          <font>smallset</font>
+          <position x="18" y="435"/>
+          <size width="259" height="28"/>
         </textbutton>
       </graphic>
     </style>

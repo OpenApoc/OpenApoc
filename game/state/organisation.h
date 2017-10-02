@@ -6,6 +6,7 @@
 #include <list>
 #include <map>
 #include <vector>
+#include <set>
 
 namespace OpenApoc
 {
@@ -20,6 +21,7 @@ class Vehicle;
 class AgentType;
 class AEquipmentType;
 class GameState;
+class VehicleType;
 class UfopaediaEntry;
 
 class Organisation : public StateObject
@@ -39,6 +41,39 @@ class Organisation : public StateObject
 		A,
 		B,
 		C
+	};
+	class MissionPattern
+	{
+	  public:
+		enum class UnitType
+		{
+			Agent,
+			Vehicle
+		};
+		enum class Target
+		{
+			Owned,
+			Allied,
+			Friendly,
+			FriendlyPlus,
+			Neutral,
+			Unfriendly,
+			UnfriendlyMinus,
+			Hostile,
+			Any,
+			ArriveFromSpace,
+			DepartToSpace
+		};
+		uint64_t minIntervalRepeat = 0;
+		uint64_t maxIntervalRepeat = 0;
+		UnitType unitType = UnitType::Agent;
+		unsigned minAmount = 0;
+		unsigned maxAmount = 0;
+		std::set<StateRef<VehicleType>> allowedTypes;
+		Target target = Target::Owned;
+
+		MissionPattern() = default;
+		MissionPattern(uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat, UnitType unitType, unsigned minAmount, unsigned maxAmount, std::set<StateRef<VehicleType>> allowedTypes, Target target);
 	};
 	UString id;
 	UString name;
@@ -60,6 +95,11 @@ class Organisation : public StateObject
 	std::map<LootPriority, std::vector<StateRef<AEquipmentType>>> loot;
 
 	StateRef<UfopaediaEntry> ufopaedia_entry;
+
+	std::list<std::pair<uint64_t, MissionPattern>> missionQueue;
+	std::map<StateRef<VehicleType>, int> vehiclePark;
+	int agentPark = 0;
+	bool providesTransportationServices = false;
 
 	Organisation() = default;
 	int getGuardCount(GameState &state) const;

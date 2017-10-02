@@ -51,6 +51,8 @@ class UFO2P
 	std::unique_ptr<DataChunk<OrgRaidLootData>> organisation_raid_loot_data;
 	std::unique_ptr<DataChunk<OrgStartingRelationshipsData>>
 	    organisation_starting_relationships_data;
+	std::unique_ptr<DataChunk<OrgVehicleParkData>>
+		vehicle_park;
 
 	std::unique_ptr<StrTab> ufopaedia_group;
 

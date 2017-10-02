@@ -21,7 +21,7 @@
 namespace OpenApoc
 {
 
-AgentTileHelper::AgentTileHelper(TileMap &map, Agent &a) : map(map), a(a) {}
+AgentTileHelper::AgentTileHelper(TileMap &map) : map(map) {}
 
 bool AgentTileHelper::canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits,
                                    bool ignoreAllUnits) const
@@ -278,6 +278,11 @@ bool AgentMission::teleportCheck(GameState &state, Agent &a)
 	return false;
 }
 
+void AgentMission::clearPathCache(StateRef<City> city)
+{
+	//agentPathCache[city].clear();
+}
+
 bool AgentMission::getNextDestination(GameState &state, Agent &a, Vec3<float> &destPos)
 {
 	if (cancelled)
@@ -431,7 +436,21 @@ void AgentMission::setPathTo(GameState &state, Agent &a, StateRef<Building> b)
 {
 	this->currentPlannedPath.clear();
 	auto &map = *a.city->map;
-	auto path = map.findShortestPath(a.position, b->crewQuarters, 1000, AgentTileHelper{map, a});
+
+	std::list<Vec3<int>> path;
+	static std::map<StateRef<City>, std::map<Vec3<int>, std::list<Vec3<int>>>> pathCache;
+	auto key = Vec3<int>{ (Vec3<int>)a.position * map.size + b->crewQuarters };
+	// disbles path as if city gets amaged this is not good
+	pathCache[a.city].clear();
+	if (pathCache[a.city].find(key) != pathCache[a.city].end())
+	{
+		path = pathCache[a.city][key];
+	}
+	else
+	{
+		path = map.findShortestPath(a.position, b->crewQuarters, 2000, AgentTileHelper{ map });
+		pathCache[a.city][key] = path;
+	}
 	if (path.empty())
 	{
 		cancelled = true;
@@ -469,7 +488,7 @@ bool AgentMission::advanceAlongPath(GameState &state, Agent &a, Vec3<float> &des
 	if (tFrom->position != pos &&
 	    (std::abs(tFrom->position.x - pos.x) > 1 || std::abs(tFrom->position.y - pos.y) > 1 ||
 	     std::abs(tFrom->position.z - pos.z) > 1 ||
-	     !AgentTileHelper{tFrom->map, a}.canEnterTile(tFrom, tTo)))
+	     !AgentTileHelper{tFrom->map}.canEnterTile(tFrom, tTo)))
 	{
 		// Next tile became impassable, pick a new path
 		currentPlannedPath.clear();
@@ -490,7 +509,7 @@ bool AgentMission::advanceAlongPath(GameState &state, Agent &a, Vec3<float> &des
 	       (tFrom->position == *it ||
 	        (std::abs(tFrom->position.x - it->x) <= 1 && std::abs(tFrom->position.y - it->y) <= 1 &&
 	         std::abs(tFrom->position.z - it->z) <= 1 &&
-	         AgentTileHelper{tFrom->map, a}.canEnterTile(tFrom, tFrom->map.getTile(*it)))))
+	         AgentTileHelper{tFrom->map}.canEnterTile(tFrom, tFrom->map.getTile(*it)))))
 	{
 		currentPlannedPath.pop_front();
 		pos = currentPlannedPath.front();

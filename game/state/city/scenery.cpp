@@ -7,6 +7,7 @@
 #include "game/state/gamestate.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "game/state/tileview/collision.h"
+#include "game/state/city/agentmission.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_scenery.h"
 
@@ -76,6 +77,7 @@ void Scenery::die(GameState &state)
 	{
 		return;
 	}
+	AgentMission::clearPathCache(city);
 	if (!this->damaged && type->damagedTile)
 	{
 		this->damaged = true;
@@ -110,6 +112,8 @@ void Scenery::collapse(GameState &state)
 	if (this->type->isLandingPad)
 		return;
 	this->falling = true;
+
+	AgentMission::clearPathCache(city);
 
 	for (auto &s : this->supports)
 		s->collapse(state);
@@ -210,6 +214,7 @@ void Scenery::repair(GameState &state)
 		    mksp<Doodad>(this->getPosition(), type->imageOffset, false, 1, type->overlaySprite);
 		map->addObjectToMap(this->overlayDoodad);
 	}
+	AgentMission::clearPathCache(city);
 }
 
 bool Scenery::isAlive() const

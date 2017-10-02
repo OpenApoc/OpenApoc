@@ -4,9 +4,11 @@
 #include "forms/label.h"
 #include "forms/ui.h"
 #include "framework/event.h"
+#include "game/state/gameevent.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "game/state/gamestate.h"
+#include "framework/configfile.h"
 #include "game/ui/battle/battleview.h"
 #include "game/ui/city/cityview.h"
 
@@ -14,8 +16,8 @@ namespace OpenApoc
 {
 
 NotificationScreen::NotificationScreen(sp<GameState> state, CityView &cityView,
-                                       const UString &message)
-    : Stage(), menuform(ui().getForm("notification")), state(state)
+                                       const UString &message, GameEventType eventType)
+    : Stage(), menuform(ui().getForm("notification")), eventType(eventType), state(state)
 {
 	menuform->findControlTyped<Label>("TEXT_NOTIFICATION")->setText(message);
 
@@ -31,8 +33,8 @@ NotificationScreen::NotificationScreen(sp<GameState> state, CityView &cityView,
 }
 
 NotificationScreen::NotificationScreen(sp<GameState> state, BattleView &battleView,
-                                       const UString &message)
-    : Stage(), menuform(ui().getForm("notification")), state(state)
+                                       const UString &message, GameEventType eventType)
+    : Stage(), menuform(ui().getForm("notification")), eventType(eventType), state(state)
 {
 	menuform->findControlTyped<Label>("TEXT_NOTIFICATION")->setText(message);
 
@@ -60,7 +62,13 @@ void NotificationScreen::pause() {}
 
 void NotificationScreen::resume() {}
 
-void NotificationScreen::finish() {}
+void NotificationScreen::finish() 
+{
+	if (GameEvent::optionsMap.find(eventType) != GameEvent::optionsMap.end())
+	{
+		 config().set(GameEvent::optionsMap.at(eventType), menuform->findControlTyped<CheckBox>("CHECKBOX_ALWAYS_PAUSE")->isChecked());
+	}
+}
 
 void NotificationScreen::eventOccurred(Event *e)
 {

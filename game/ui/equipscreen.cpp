@@ -101,7 +101,6 @@ void EquipmentPaperDoll::onRender()
 {
 	if (!object)
 	{
-		LogError("No object selected");
 		return;
 	}
 	// Draw all equipment after slot lines to ensure they're on top

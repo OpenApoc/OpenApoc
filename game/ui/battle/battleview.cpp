@@ -7,6 +7,7 @@
 #include "forms/radiobutton.h"
 #include "forms/scrollbar.h"
 #include "forms/ticker.h"
+#include "framework/configfile.h"
 #include "forms/tristatebox.h"
 #include "forms/ui.h"
 #include "framework/apocresources/cursor.h"
@@ -3154,12 +3155,6 @@ bool BattleView::handleKeyDown(Event *e)
 					battle.endTurn(*state);
 				}
 				return true;
-			// Notification toggle
-			case SDLK_n:
-			{
-				DEBUG_DISABLE_NOTIFICATIONS = !DEBUG_DISABLE_NOTIFICATIONS;
-				return true;
-			}
 			// Blow debug vortex
 			case SDLK_KP_0:
 				debugVortex();
@@ -3935,10 +3930,18 @@ bool BattleView::handleGameStateEvent(Event *e)
 	{
 		state->logEvent(gameEvent);
 		baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
-		if (battle.mode == Battle::Mode::RealTime && !DEBUG_DISABLE_NOTIFICATIONS)
+		if (battle.mode == Battle::Mode::RealTime)
 		{
-			fw().stageQueueCommand({StageCmd::Command::PUSH,
-			                        mksp<NotificationScreen>(state, *this, gameEvent->message())});
+			bool pause = false;
+			if (GameEvent::optionsMap.find(gameEvent->type) != GameEvent::optionsMap.end()) 
+			{
+				pause = config().getBool(GameEvent::optionsMap.at(gameEvent->type));
+			}
+			if (pause)
+			{
+				fw().stageQueueCommand({ StageCmd::Command::PUSH,
+										mksp<NotificationScreen>(state, *this, gameEvent->message(), gameEvent->type) });
+			}
 		}
 	}
 	switch (gameEvent->type)

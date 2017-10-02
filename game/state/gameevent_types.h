@@ -47,9 +47,10 @@ enum class GameEventType
 
 	// Agent events
 	AgentArrived,
+	AgentDiedCity,
 	HostileSpotted,
 	AgentBrainsucked,
-	AgentDied,
+	AgentDiedBattle,
 	HostileDied,
 	UnknownDied,
 	AgentCriticallyWounded,
