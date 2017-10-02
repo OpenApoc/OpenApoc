@@ -199,7 +199,7 @@ float AgentTileHelper::adjustCost(Vec3<int> nextPosition, int z) const
 	// Quite unlikely that we ever need to dig
 	if (nextPosition.z < MIN_REASONABLE_HEIGHT_AGENT && z == -1)
 	{
-		return 50.0f;
+		return 100.0f;
 	}
 	return 0;
 }

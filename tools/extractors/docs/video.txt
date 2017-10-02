@@ -1,20 +1,19 @@
 OpenApoc X-Com Ufo Apocalypse Development Opensource Open Source XCom programming
 
+Support me:
+- PayPal: https://paypal.me/AVAndronov
+- Russian options: https://vk.com/avandronov?w=wall237508246_168
+
 ---
 
 General:
-- fullscreen
-- mousescroll
-- hotkeys
+- 
 
 Bugfixes:
-- brainsucker pod research
-- shield used w/o research
+- agents drawn in vehicles
 
 City:
-- agent display
-- agent interface
-- agent pathfinding
+- 
 
 Battle:
-- 
+- agent display fatal wounds and psi

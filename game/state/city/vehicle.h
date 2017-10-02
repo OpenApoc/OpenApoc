@@ -16,7 +16,7 @@
 namespace OpenApoc
 {
 
-static const unsigned CLOAK_TICKS_REQUIRED_VEHICLE = TICKS_PER_SECOND / 2;
+static const unsigned CLOAK_TICKS_REQUIRED_VEHICLE = TICKS_PER_SECOND * 3 / 2;
 static const unsigned TELEPORT_TICKS_REQUIRED_VEHICLE = TICKS_PER_SECOND * 30;
 static const unsigned TICKS_AUTO_ACTION_DELAY = TICKS_PER_SECOND / 4;
 

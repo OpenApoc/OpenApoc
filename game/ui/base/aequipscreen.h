@@ -72,7 +72,7 @@ class AEquipScreen : public Stage
 	// Items temporarily stored inside building (vanish when exiting)
 	std::map<sp<Building>, std::list<sp<AEquipment>>> buildingItems;
 	// Items temporarily stored near agent (vanish when exiting)
-	std::map<sp<Agent>, std::list<sp<AEquipment>>> agentItems;
+	std::map<Vec3<int>, std::list<sp<AEquipment>>> agentItems;
 
 	static const Vec2<int> EQUIP_GRID_SLOT_SIZE;
 	static const Vec2<int> EQUIP_GRID_SLOTS;
