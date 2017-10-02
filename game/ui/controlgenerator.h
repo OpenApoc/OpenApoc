@@ -49,7 +49,8 @@ class ControlGenerator
 	sp<Image> iconPsiIn;
 	sp<Image> iconPsiOut;
 	std::vector<sp<Image>> unitRanks;
-	std::vector<sp<Image>> unitSelect;
+	std::vector<sp<Image>> battleSelect;
+	std::vector<sp<Image>> citySelect;
 	std::vector<sp<Image>> vehiclePassengerCountIcons;
 	std::vector<sp<Image>> icons;
 

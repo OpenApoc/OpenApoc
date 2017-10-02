@@ -1151,7 +1151,7 @@ void AEquipScreen::populateInventoryItemsAgent()
 	static const int INVENTORY_IMAGE_X_GAP = 4;
 	Vec2<int> inventoryPosition = inventoryControl->Location + formMain->Location;
 
-	auto itemsOnAgent = agentItems[currentAgent];
+	auto itemsOnAgent = agentItems[currentAgent->position];
 
 	for (auto &item : itemsOnAgent)
 	{
@@ -1239,8 +1239,8 @@ void AEquipScreen::removeItemFromInventoryBase(sp<AEquipment> item)
 
 void AEquipScreen::removeItemFromInventoryAgent(sp<AEquipment> item)
 {
-	agentItems[currentAgent].erase(
-	    std::find(agentItems[currentAgent].begin(), agentItems[currentAgent].end(), item));
+	agentItems[currentAgent->position].erase(
+	    std::find(agentItems[currentAgent->position].begin(), agentItems[currentAgent->position].end(), item));
 }
 
 void AEquipScreen::removeItemFromInventoryBuilding(sp<AEquipment> item)
@@ -1329,7 +1329,7 @@ void AEquipScreen::addItemToInventoryBase(sp<AEquipment> item)
 
 void AEquipScreen::addItemToInventoryAgent(sp<AEquipment> item)
 {
-	agentItems[currentAgent].push_back(item);
+	agentItems[currentAgent->position].push_back(item);
 }
 
 void AEquipScreen::processTemplate(int idx, bool remember)

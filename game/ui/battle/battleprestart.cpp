@@ -109,7 +109,7 @@ void BattlePreStart::updateAgents()
 		{
 			continue;
 		}
-		agents.insert(mksp<AgentControl>(
+		agents.insert(mksp<AgentIcon>(
 		    u.second->agent, ControlGenerator::createAgentControl(*state, u.second->agent,
 		                                                          UnitSelectionState::Unselected),
 		    ControlGenerator::createAgentControl(*state, u.second->agent,
@@ -268,19 +268,19 @@ void BattlePreStart::render()
 
 bool BattlePreStart::isTransition() { return false; }
 
-void BattlePreStart::AgentControl::setLocation(Vec2<int> pos)
+void BattlePreStart::AgentIcon::setLocation(Vec2<int> pos)
 {
 	normalControl->Location = pos;
 	selectedControl->Location = pos;
 }
 
-void BattlePreStart::AgentControl::update()
+void BattlePreStart::AgentIcon::update()
 {
 	normalControl->update();
 	selectedControl->update();
 }
 
-BattlePreStart::AgentControl::AgentControl(sp<Agent> agent, sp<Control> normalControl,
+BattlePreStart::AgentIcon::AgentIcon(sp<Agent> agent, sp<Control> normalControl,
                                            sp<Control> selectedControl)
     : agent(agent), normalControl(normalControl), selectedControl(selectedControl)
 {

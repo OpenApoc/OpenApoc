@@ -300,8 +300,10 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					    nodeToExpand, tile);
 					nodesToDelete.push_back(newNode);
 
+#ifdef PATHFINDING_DEBUG
 					LogInfo("NEW ND %s [%f, %f]", nextPosition, newNode->costToGetHere,
 					        newNode->distanceToGoal);
+#endif
 
 					// Put node at appropriate place in the list
 					auto it = fringe.begin();

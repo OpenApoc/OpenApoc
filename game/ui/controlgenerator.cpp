@@ -22,18 +22,20 @@ void ControlGenerator::init(GameState &state)
 {
 	LogWarning("Implement properly, without requiring an overlaying unitselects that hover over "
 	           "controls, then we will be using stock stuff");
-	unitSelect.push_back(fw().data->loadImage(
-	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:37:xcom3/ufodata/pal_01.dat"));
-	unitSelect.push_back(fw().data->loadImage("battle/battle-icon-38.png"));
-	unitSelect.push_back(fw().data->loadImage("battle/battle-icon-39.png"));
+	for (int i = 0;i < 3;i++)
+	{
+		battleSelect.push_back(fw().data->loadImage(
+			format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
+				"tacbut.tab:%d:xcom3/tacdata/tactical.pal", 25 + i)));
+		citySelect.push_back(fw().data->loadImage(
+			format("PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%d:xcom3/ufodata/pal_01.dat", 37 + i)));
+
+	}
 
 	LogWarning("Implement proper fatal, psiin, psiout graphics");
-	iconFatal = fw().data->loadImage(format(
-	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%s:xcom3/ufodata/pal_01.dat", 50));
-	iconPsiIn = fw().data->loadImage(format(
-	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%s:xcom3/ufodata/pal_01.dat", 51));
-	iconPsiIn = fw().data->loadImage(format(
-	    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%s:xcom3/ufodata/pal_01.dat", 52));
+	iconFatal = fw().data->loadImage("battle/battle-fatal.png");
+	iconPsiIn = fw().data->loadImage("battle/battle-psi-in.png");
+	iconPsiOut = fw().data->loadImage("battle/battle-psi-out.png");
 
 	for (int i = 28; i <= 34; i++)
 	{
@@ -147,7 +149,7 @@ sp<Control> ControlGenerator::createVehicleControl(GameState &state, const Vehic
 		singleton.init(state);
 	}
 
-	auto frame = singleton.unitSelect[(int)info.selected];
+	auto frame = singleton.citySelect[(int)info.selected];
 	auto baseControl = mksp<Graphic>(frame);
 	baseControl->Size = frame->size;
 	// FIXME: There's an extra 1 pixel here that's annoying
@@ -435,7 +437,7 @@ void ControlGenerator::fillAgentControl(GameState &state, sp<Graphic> baseContro
 		baseControl->setImage(nullptr);
 		return;
 	}
-	baseControl->setImage(singleton.unitSelect[(int)info.selected]);
+	baseControl->setImage(singleton.battleSelect[(int)info.selected]);
 
 	auto unitIcon = baseControl->createChild<Graphic>(info.agent->getPortrait().icon);
 	unitIcon->AutoSize = true;
