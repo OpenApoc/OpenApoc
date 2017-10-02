@@ -89,6 +89,16 @@ ConfigOptionInt frameLimit("Framework", "FrameLimit", "Quit after this many fram
 ConfigOptionInt swapInterval("Framework", "SwapInterval",
                              "Swap interval (0 = tear, 1 = wait for vsync", 0);
 
+ConfigOptionBool autoScrollOption("Framework.Misc", "AutoScroll", "Enable scrolling with mouse",
+                                  true);
+ConfigOptionBool actionMusicOption("Framework.Misc", "ActionMusic",
+                                   "Music changes according to action in battle", true);
+ConfigOptionBool autoExecuteOption("Framework.Misc", "AutoExecute",
+                                   "Execute remaining orders when player presses end turn button",
+                                   false);
+ConfigOptionBool toolTipsOption("Framework.Misc", "ToolTips",
+                                "Show tool tips when hovering over controls", true);
+
 } // anonymous namespace
 
 namespace OpenApoc

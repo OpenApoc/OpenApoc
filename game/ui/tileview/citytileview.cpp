@@ -67,6 +67,11 @@ void CityTileView::eventOccurred(Event *e)
 	{
 		switch (e->keyboard().KeyCode)
 		{
+			case SDLK_F5:
+			{
+				DEBUG_SHOW_VEHICLE_PATH = !DEBUG_SHOW_VEHICLE_PATH;
+				return;
+			}
 			case SDLK_F12:
 			{
 				DEBUG_SHOW_ALIEN_CREW = !DEBUG_SHOW_ALIEN_CREW;

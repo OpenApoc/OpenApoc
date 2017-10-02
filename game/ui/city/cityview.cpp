@@ -666,6 +666,7 @@ CityView::~CityView() = default;
 
 void CityView::begin()
 {
+	CityTileView::begin();
 	if (state->newGame)
 	{
 		state->newGame = false;
@@ -676,6 +677,7 @@ void CityView::begin()
 
 void CityView::resume()
 {
+	CityTileView::resume();
 	modifierLAlt = false;
 	modifierLCtrl = false;
 	modifierLShift = false;
@@ -736,7 +738,7 @@ void CityView::render()
 		RendererSurfaceBinding b(*fw().renderer, this->surface);
 
 		CityTileView::render();
-		if (state->showVehiclePath)
+		if (DEBUG_SHOW_VEHICLE_PATH)
 		{
 			for (auto &pair : state->vehicles)
 			{

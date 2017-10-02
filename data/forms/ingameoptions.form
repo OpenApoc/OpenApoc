@@ -102,40 +102,77 @@
           <image/>
           <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
         </graphicbutton>
-        <checkbox id="SHOW_TILE_ORIGIN">
-          <position x="310" y="80"/>
+        
+		<label text="Message Toggles">
+          <position x="305" y="52"/>
+          <font>smallset</font>
+          <size width="270" height="16"/>
+		<alignment horizontal="centre" vertical="centre"/>
+        </label>
+		
+		<label text="Options">
+          <position x="305" y="410"/>
+          <font>smallset</font>
+          <size width="270" height="16"/>
+		<alignment horizontal="centre" vertical="centre"/>
+        </label>
+		
+		 <graphic>
+        <image>city/menu-hr.png</image>
+        <position x="309" y="425"/>
+        <size width="252" height="1"/>
+		 </graphic>
+		 
+		<checkbox id="AUTO_SCROLL">
+          <position x="310" y="430"/>
           <size width="19" height="16"/>
           <image>BUTTON_CHECKBOX_FALSE</image>
           <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
         </checkbox>
-        <label text="Show Tile Origin">
-          <position x="330" y="80"/>
+        <label text="Auto Scroll">
+          <position x="330" y="430"/>
           <font>smallset</font>
-          <size width="300" height="16"/>
+          <size width="90" height="16"/>
         </label>
-        <checkbox id="SHOW_VEHICLE_PATH">
-          <position x="310" y="100"/>
+		
+        <checkbox id="TOOL_TIPS">
+          <position x="310" y="450"/>
           <size width="19" height="16"/>
           <image>BUTTON_CHECKBOX_FALSE</image>
           <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
         </checkbox>
-        <label text="Show Vehicle Path">
-          <position x="330" y="100"/>
+        <label text="Tool tips">
+          <position x="330" y="450"/>
           <font>smallset</font>
-          <size width="300" height="16"/>
+          <size width="90" height="16"/>
         </label>
-        <checkbox id="SHOW_SELECTABLE_BOUNDS">
-          <position x="310" y="120"/>
+		
+		  
+		<checkbox id="ACTION_MUSIC">
+          <position x="440" y="430"/>
           <size width="19" height="16"/>
           <image>BUTTON_CHECKBOX_FALSE</image>
           <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
         </checkbox>
-        <label text="Show Selectable Bounds">
-          <position x="330" y="120"/>
+        <label text="Action music">
+          <position x="460" y="430"/>
           <font>smallset</font>
-          <size width="300" height="16"/>
+          <size width="90" height="16"/>
         </label>
-        <textbutton text="Give all research" id="BUTTON_GIVE_ALL_RESEARCH">
+		
+        <checkbox id="AUTO_EXECUTE_ORDERS">
+          <position x="440" y="450"/>
+          <size width="19" height="16"/>
+          <image>BUTTON_CHECKBOX_FALSE</image>
+          <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+        </checkbox>
+        <label text="Exec. rem. orders">
+          <position x="460" y="450"/>
+          <font>smallset</font>
+          <size width="100" height="16"/>
+        </label>
+        
+		<textbutton text="Give all research" id="BUTTON_GIVE_ALL_RESEARCH">
           <position x="310" y="140"/>
           <font>smallset</font>
           <size width="200" height="32"/>

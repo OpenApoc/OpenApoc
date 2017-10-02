@@ -37,26 +37,20 @@ InGameOptions::InGameOptions(sp<GameState> state)
 	menuform->findControlTyped<ScrollBar>("SAMPLE_GAIN_SLIDER")
 	    ->setValue(config().getInt("Framework.Audio.SampleGain"));
 
-	menuform->findControlTyped<CheckBox>("SHOW_VEHICLE_PATH")->setChecked(state->showVehiclePath);
-	menuform->findControlTyped<CheckBox>("SHOW_TILE_ORIGIN")->setChecked(state->showTileOrigin);
-	menuform->findControlTyped<CheckBox>("SHOW_SELECTABLE_BOUNDS")
-	    ->setChecked(state->showSelectableBounds);
+	menuform->findControlTyped<CheckBox>("AUTO_SCROLL")
+	    ->setChecked(config().getBool("Framework.Misc.AutoScroll"));
+	menuform->findControlTyped<CheckBox>("TOOL_TIPS")
+	    ->setChecked(config().getBool("Framework.Misc.ToolTips"));
+	menuform->findControlTyped<CheckBox>("ACTION_MUSIC")
+	    ->setChecked(config().getBool("Framework.Misc.ActionMusic"));
+	menuform->findControlTyped<CheckBox>("AUTO_EXECUTE_ORDERS")
+	    ->setChecked(config().getBool("Framework.Misc.AutoExecute"));
 
 	menuform->findControlTyped<TextButton>("BUTTON_BATTLE")
 	    ->setText(state->current_battle ? "Exit Battle" : "Skirmish Mode");
 }
 
-InGameOptions::~InGameOptions()
-{
-	/* Store persistent options */
-
-	config().set("Framework.Audio.GlobalGain",
-	             menuform->findControlTyped<ScrollBar>("GLOBAL_GAIN_SLIDER")->getValue());
-	config().set("Framework.Audio.MusicGain",
-	             menuform->findControlTyped<ScrollBar>("MUSIC_GAIN_SLIDER")->getValue());
-	config().set("Framework.Audio.SampleGain",
-	             menuform->findControlTyped<ScrollBar>("SAMPLE_GAIN_SLIDER")->getValue());
-}
+InGameOptions::~InGameOptions() {}
 
 void InGameOptions::begin()
 {
@@ -67,7 +61,26 @@ void InGameOptions::pause() {}
 
 void InGameOptions::resume() {}
 
-void InGameOptions::finish() {}
+void InGameOptions::finish()
+{
+	/* Store persistent options */
+
+	config().set("Framework.Audio.GlobalGain",
+	             menuform->findControlTyped<ScrollBar>("GLOBAL_GAIN_SLIDER")->getValue());
+	config().set("Framework.Audio.MusicGain",
+	             menuform->findControlTyped<ScrollBar>("MUSIC_GAIN_SLIDER")->getValue());
+	config().set("Framework.Audio.SampleGain",
+	             menuform->findControlTyped<ScrollBar>("SAMPLE_GAIN_SLIDER")->getValue());
+
+	config().set("Framework.Misc.AutoScroll",
+	             menuform->findControlTyped<CheckBox>("AUTO_SCROLL")->isChecked());
+	config().set("Framework.Misc.ToolTips",
+	             menuform->findControlTyped<CheckBox>("TOOL_TIPS")->isChecked());
+	config().set("Framework.Misc.ActionMusic",
+	             menuform->findControlTyped<CheckBox>("ACTION_MUSIC")->isChecked());
+	config().set("Framework.Misc.AutoExecute",
+	             menuform->findControlTyped<CheckBox>("AUTO_EXECUTE_ORDERS")->isChecked());
+}
 
 void InGameOptions::eventOccurred(Event *e)
 {
@@ -202,23 +215,10 @@ void InGameOptions::eventOccurred(Event *e)
 	if (e->type() == EVENT_FORM_INTERACTION &&
 	    e->forms().EventFlag == FormEventType::CheckBoxChange)
 	{
-		if (e->forms().RaisedBy->Name == "SHOW_VEHICLE_PATH")
+		if (e->forms().RaisedBy->Name == "SOME_NON_CONFIG_FILE_OPTION_OR_HAS_TO_EFFECT_IMMEDIATELY")
 		{
 			auto box = std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy);
-			state->showVehiclePath = box->isChecked();
-			LogWarning("Set SHOW_VEHICLE_PATH to %d", box->isChecked());
-		}
-		if (e->forms().RaisedBy->Name == "SHOW_TILE_ORIGIN")
-		{
-			auto box = std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy);
-			state->showTileOrigin = box->isChecked();
-			LogWarning("Set SHOW_TILE_ORIGIN to %d", box->isChecked());
-		}
-		if (e->forms().RaisedBy->Name == "SHOW_SELECTABLE_BOUNDS")
-		{
-			auto box = std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy);
-			state->showSelectableBounds = box->isChecked();
-			LogWarning("Set SHOW_SELECTABLE_BOUNDS to %d", box->isChecked());
+			// Set non-config option here or do the effect
 		}
 	}
 }

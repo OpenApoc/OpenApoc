@@ -1246,6 +1246,7 @@ BattleView::~BattleView() = default;
 
 void BattleView::begin()
 {
+	BattleTileView::begin();
 	uiTabsRT[0]->findControl("BUTTON_LAYER_1")->setVisible(maxZDraw >= 1);
 	uiTabsRT[0]->findControl("BUTTON_LAYER_2")->setVisible(maxZDraw >= 2);
 	uiTabsRT[0]->findControl("BUTTON_LAYER_3")->setVisible(maxZDraw >= 3);
@@ -1282,6 +1283,7 @@ void BattleView::begin()
 
 void BattleView::resume()
 {
+	BattleTileView::resume();
 	modifierLAlt = false;
 	modifierLCtrl = false;
 	modifierLShift = false;
@@ -2868,43 +2870,44 @@ void BattleView::eventOccurred(Event *e)
 		}
 	}
 
-	if (e->type() == EVENT_MOUSE_MOVE)
+	switch (e->type())
 	{
-		Vec2<float> screenOffset = {getScreenOffset().x, getScreenOffset().y};
-		// Offset by 4 since ingame 4 is the typical height of the ground, and game displays cursor
-		// on top of the ground
-		setSelectedTilePosition(screenToTileCoords(
-		    Vec2<float>((float)e->mouse().X, (float)e->mouse().Y + 4) - screenOffset,
-		    (float)getZLevel() - 1.0f));
-		return;
-	}
-	if (e->type() == EVENT_KEY_DOWN)
-	{
-		if (handleKeyDown(e))
+		case EVENT_MOUSE_MOVE:
 		{
-			return;
+			Vec2<float> screenOffset = {getScreenOffset().x, getScreenOffset().y};
+			// Offset by 4 since ingame 4 is the typical height of the ground, and game displays
+			// cursor
+			// on top of the ground
+			setSelectedTilePosition(screenToTileCoords(
+			    Vec2<float>((float)e->mouse().X, (float)e->mouse().Y + 4) - screenOffset,
+			    (float)getZLevel() - 1.0f));
+			// do not return, pass on to allow scrolling
+			break;
 		}
-	}
-	if (e->type() == EVENT_KEY_UP)
-	{
-		if (handleKeyUp(e))
-		{
-			return;
-		}
-	}
-	if (e->type() == EVENT_MOUSE_DOWN)
-	{
-		if (handleMouseDown(e))
-		{
-			return;
-		}
-	}
-	if (e->type() == EVENT_GAME_STATE)
-	{
-		if (handleGameStateEvent(e))
-		{
-			return;
-		}
+		case EVENT_KEY_DOWN:
+			if (handleKeyDown(e))
+			{
+				return;
+			}
+			break;
+		case EVENT_KEY_UP:
+			if (handleKeyUp(e))
+			{
+				return;
+			}
+			break;
+		case EVENT_MOUSE_DOWN:
+			if (handleMouseDown(e))
+			{
+				return;
+			}
+			break;
+		case EVENT_GAME_STATE:
+			if (handleGameStateEvent(e))
+			{
+				return;
+			}
+			break;
 	}
 	BattleTileView::eventOccurred(e);
 }
@@ -4370,7 +4373,11 @@ void BattleView::updateSquadInfo(int index)
 	    ->setImage(squadOverlay[info.selectedMode]);
 }
 
-void BattleView::finish() { fw().getCursor().CurrentType = ApocCursor::CursorType::Normal; }
+void BattleView::finish()
+{
+	BattleTileView::finish();
+	fw().getCursor().CurrentType = ApocCursor::CursorType::Normal;
+}
 
 AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 {
