@@ -4,7 +4,7 @@
 #include "forms/graphic.h"
 #include "forms/graphicbutton.h"
 #include "forms/label.h"
-#include "forms/list.h"
+#include "forms/listbox.h"
 #include "forms/radiobutton.h"
 #include "forms/ticker.h"
 #include "forms/ui.h"
@@ -1338,7 +1338,14 @@ void CityView::update()
 			auto a = state->current_city->cityViewSelectedAgents.front();
 			if (a->city == state->current_city)
 			{
-				this->setScreenCenterTile(a->position);
+				if (a->currentVehicle)
+				{
+					this->setScreenCenterTile(a->currentVehicle->position);
+				}
+				else
+				{
+					this->setScreenCenterTile(a->position);
+				}
 			}
 		}
 	}

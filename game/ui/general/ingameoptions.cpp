@@ -2,7 +2,7 @@
 #include "forms/checkbox.h"
 #include "forms/form.h"
 #include "forms/label.h"
-#include "forms/list.h"
+#include "forms/listbox.h"
 #include "forms/scrollbar.h"
 #include "forms/textbutton.h"
 #include "forms/ui.h"

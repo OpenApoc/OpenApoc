@@ -72,15 +72,28 @@ void CityTileView::eventOccurred(Event *e)
 				DEBUG_SHOW_VEHICLE_PATH = !DEBUG_SHOW_VEHICLE_PATH;
 				return;
 			}
-			case SDLK_F12:
+			case SDLK_F4:
 			{
 				DEBUG_SHOW_ALIEN_CREW = !DEBUG_SHOW_ALIEN_CREW;
 				if (DEBUG_SHOW_ALIEN_CREW)
 				{
 					DEBUG_SHOW_ROADS = false;
+					DEBUG_SHOW_SLOPES = false;
 					DEBUG_SHOW_TUBE = false;
 				}
 				LogWarning("Debug Alien display set to %s", DEBUG_SHOW_ALIEN_CREW);
+				return;
+			}
+			case SDLK_F12:
+			{
+				DEBUG_SHOW_SLOPES = !DEBUG_SHOW_SLOPES;
+				if (DEBUG_SHOW_SLOPES)
+				{
+					DEBUG_SHOW_ALIEN_CREW = false;
+					DEBUG_SHOW_TUBE = false;
+					DEBUG_SHOW_ROADS = false;
+				}
+				LogWarning("Debug slopes display set to %s", DEBUG_SHOW_SLOPES);
 				return;
 			}
 			case SDLK_F11:
@@ -90,6 +103,7 @@ void CityTileView::eventOccurred(Event *e)
 				{
 					DEBUG_SHOW_ALIEN_CREW = false;
 					DEBUG_SHOW_TUBE = false;
+					DEBUG_SHOW_SLOPES = false;
 				}
 				LogWarning("Debug roads display set to %s", DEBUG_SHOW_ROADS);
 				return;
@@ -100,6 +114,7 @@ void CityTileView::eventOccurred(Event *e)
 				if (DEBUG_SHOW_TUBE)
 				{
 					DEBUG_SHOW_ROADS = false;
+					DEBUG_SHOW_SLOPES = false;
 					DEBUG_SHOW_ALIEN_CREW = false;
 				}
 				LogWarning("Debug tube display set to %s", DEBUG_SHOW_TUBE);
@@ -276,6 +291,22 @@ void CityTileView::render()
 									{
 										auto s = std::static_pointer_cast<TileObjectScenery>(obj)
 										             ->getOwner();
+										if (DEBUG_SHOW_SLOPES)
+										{
+											if (DEBUG_DIRECTION == -1)
+											{
+												visible = s->type->hill[0] || s->type->hill[1] ||
+												          s->type->hill[2] || s->type->hill[3];
+											}
+											else
+											{
+												visible = s->type->hill[DEBUG_DIRECTION];
+											}
+											visible =
+											    visible && (!DEBUG_ONLY_TYPE ||
+											                s->type->tile_type ==
+											                    SceneryTileType::TileType::Road);
+										}
 										if (DEBUG_SHOW_ROADS)
 										{
 											if (DEBUG_DIRECTION == -1)
@@ -494,6 +525,56 @@ void CityTileView::render()
 					}
 				}
 			}
+			// Compile list of vehicle
+			for (auto &v : state.vehicles)
+			{
+				if (v.second->owner != state.getPlayer() || v.second->city != state.current_city ||
+				    !v.second->currentBuilding)
+				{
+					continue;
+				}
+				bool selected =
+				    std::find(state.current_city->cityViewSelectedVehicles.begin(),
+				              state.current_city->cityViewSelectedVehicles.end(),
+				              v.second) != state.current_city->cityViewSelectedVehicles.end();
+
+				for (auto &m : v.second->missions)
+				{
+					for (auto &m : v.second->missions)
+					{
+						if (m->type == VehicleMission::MissionType::AttackVehicle ||
+						    m->type == VehicleMission::MissionType::FollowVehicle)
+						{
+							targetLocationsToDraw.emplace_back(m->targetVehicle->position,
+							                                   v.second->position, false);
+							vehiclesUnderAttack.insert(m->targetVehicle);
+							break;
+						}
+						if ((m->type == VehicleMission::MissionType::AttackBuilding ||
+						     m->type == VehicleMission::MissionType::Crash ||
+						     m->type == VehicleMission::MissionType::GotoBuilding) &&
+						    !m->currentPlannedPath.empty())
+						{
+							targetLocationsToDraw.emplace_back(
+							    (Vec3<float>)m->currentPlannedPath.back() +
+							        Vec3<float>{0.5f, 0.5f, 0.0f},
+							    v.second->position, true);
+							break;
+						}
+						if ((m->type == VehicleMission::MissionType::GotoLocation ||
+						     m->type == VehicleMission::MissionType::InfiltrateSubvert ||
+						     m->type == VehicleMission::MissionType::Patrol ||
+						     m->type == VehicleMission::MissionType::GotoPortal))
+						{
+							targetLocationsToDraw.emplace_back((Vec3<float>)m->targetLocation +
+							                                       Vec3<float>{0.5f, 0.5f, 0.0f},
+							                                   v.second->position, true);
+							break;
+						}
+					}
+				}
+			}
+
 			// Draw lines to target
 			for (auto &obj : targetLocationsToDraw)
 			{

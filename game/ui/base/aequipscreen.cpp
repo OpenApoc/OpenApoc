@@ -2,7 +2,7 @@
 #include "forms/form.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
-#include "forms/list.h"
+#include "forms/listbox.h"
 #include "forms/radiobutton.h"
 #include "forms/scrollbar.h"
 #include "forms/ui.h"
@@ -541,7 +541,6 @@ void AEquipScreen::eventOccurred(Event *e)
 			auto draggedAlternative = draggedEquipmentAlternativePickup;
 
 			bool insufficientTU = false;
-			bool refreshRequired = false;
 			if (tryPlaceItem(currentAgent, equipmentGridPos, &insufficientTU))
 			{
 				displayAgent(currentAgent);
@@ -550,7 +549,7 @@ void AEquipScreen::eventOccurred(Event *e)
 			}
 			else
 			{
-				refreshRequired = true;
+				refreshInventoryItems();
 			}
 			if (insufficientTU)
 			{
@@ -573,26 +572,23 @@ void AEquipScreen::eventOccurred(Event *e)
 				{
 					continue;
 				}
-				else if (draggedType)
-				{
-					// Refresh Inventory Items if we just picked one up
-					refreshInventoryItems();
-				}
 				if (tryPlaceItem(agent, equipmentGridPos))
 				{
 					updateAgentControl(agent);
-					// refresh if picked up from ground and placed on agent
-					refreshRequired = refreshRequired || draggedType;
+					// Refresh if picked up from ground and placed on agent
+					if (draggedType)
+					{
+						refreshInventoryItems();
+					}
 				}
 				else
 				{
-					// refresh if picked up from agent and placed on ground
-					refreshRequired = refreshRequired || !draggedType;
+					// Refresh if picked up from agent and placed on ground
+					if (!draggedType)
+					{
+						refreshInventoryItems();
+					}
 				}
-			}
-			if (refreshRequired)
-			{
-				refreshInventoryItems();
 			}
 		}
 	}
@@ -1802,12 +1798,31 @@ StateRef<Base> AEquipScreen::getAgentBase(sp<Agent> agent)
 
 void AEquipScreen::attemptCloseScreen()
 {
+	auto owner = state->getPlayer();
+	if (state->current_battle)
+	{
+		owner = state->current_battle->currentPlayer;
+	}
 	bool empty = true;
 	for (auto &entry : vehicleItems)
 	{
 		if (!entry.second.empty())
 		{
 			empty = false;
+
+			for (auto &a : state->agents)
+			{
+				if (!checkAgent(a.second, owner))
+				{
+					continue;
+				}
+
+				if (getAgentVehicle(a.second) == entry.first)
+				{
+					selectAgent(a.second);
+					break;
+				}
+			}
 			break;
 		}
 	}
@@ -1816,6 +1831,20 @@ void AEquipScreen::attemptCloseScreen()
 		if (!entry.second.empty())
 		{
 			empty = false;
+
+			for (auto &a : state->agents)
+			{
+				if (!checkAgent(a.second, owner))
+				{
+					continue;
+				}
+
+				if (getAgentBuilding(a.second) == entry.first)
+				{
+					selectAgent(a.second);
+					break;
+				}
+			}
 			break;
 		}
 	}
@@ -1824,6 +1853,25 @@ void AEquipScreen::attemptCloseScreen()
 		if (!entry.second.empty())
 		{
 			empty = false;
+
+			for (auto &a : state->agents)
+			{
+				if (!checkAgent(a.second, owner))
+				{
+					continue;
+				}
+
+				if (getAgentBase(a.second) || getAgentBuilding(a.second) ||
+				    getAgentVehicle(a.second))
+				{
+					continue;
+				}
+				if (entry.first == (Vec3<int>)a.second->position)
+				{
+					selectAgent(a.second);
+					break;
+				}
+			}
 			break;
 		}
 	}

@@ -51,8 +51,8 @@
         <image/>
       </graphic>
       <graphic id="INVENTORY">
-        <position x="22" y="368"/>
-        <size width="516" height="80"/>
+        <position x="16" y="364"/>
+        <size width="522" height="84"/>
         <image/>
         <imageposition>fit</imageposition>
       </graphic>

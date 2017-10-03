@@ -76,6 +76,7 @@ void ControlGenerator::init(GameState &state)
 		    i)));
 	}
 
+	vehiclePassengerCountIcons.emplace_back();
 	for (int i = 51; i <= 63; i++)
 	{
 		vehiclePassengerCountIcons.push_back(fw().data->loadImage(format(
@@ -344,9 +345,9 @@ AgentInfo ControlGenerator::createAgentInfo(GameState &state, sp<Agent> a,
 sp<Control> ControlGenerator::createAgentControl(GameState &state, const AgentInfo &info)
 {
 	auto baseControl = mksp<Graphic>();
-	baseControl->AutoSize = true;
-	baseControl->Location = {0, 0};
 	fillAgentControl(state, baseControl, info);
+	baseControl->Location = {0, 0};
+	baseControl->Size = singleton.battleSelect[(int)info.selected]->size;
 	return baseControl;
 }
 

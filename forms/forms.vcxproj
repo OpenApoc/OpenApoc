@@ -25,7 +25,7 @@
     <ClCompile Include="graphic.cpp" />
     <ClCompile Include="graphicbutton.cpp" />
     <ClCompile Include="label.cpp" />
-    <ClCompile Include="list.cpp" />
+    <ClCompile Include="listbox.cpp" />
     <ClCompile Include="radiobutton.cpp" />
     <ClCompile Include="scrollbar.cpp" />
     <ClCompile Include="textbutton.cpp" />
@@ -43,7 +43,7 @@
     <ClInclude Include="graphic.h" />
     <ClInclude Include="graphicbutton.h" />
     <ClInclude Include="label.h" />
-    <ClInclude Include="list.h" />
+    <ClInclude Include="listbox.h" />
     <ClInclude Include="radiobutton.h" />
     <ClInclude Include="scrollbar.h" />
     <ClInclude Include="textbutton.h" />

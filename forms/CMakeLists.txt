@@ -16,7 +16,7 @@ set (FORMS_SOURCE_FILES
 	graphicbutton.cpp
 	graphic.cpp
 	label.cpp
-	list.cpp
+	listbox.cpp
 	radiobutton.cpp
 	scrollbar.cpp
 	textbutton.cpp
@@ -35,7 +35,7 @@ set (FORMS_HEADER_FILES
 	graphicbutton.h
 	graphic.h
 	label.h
-	list.h
+	listbox.h
 	radiobutton.h
 	scrollbar.h
 	textbutton.h

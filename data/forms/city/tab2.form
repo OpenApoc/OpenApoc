@@ -29,8 +29,8 @@
       <listbox id="OWNED_VEHICLE_LIST" scrollbarid="OWNED_VEHICLE_LIST_SCROLL">
         <position x="105" y="44"/>
         <size height="24" width="431"/>
+		<item size="0" spacing="0"/>
         <orientation>horizontal</orientation>
-        <item size="0"/>
       </listbox>
       <radiobutton id="BUTTON_ATTACK_MODE_AGGRESSIVE" groupid="ATTACK_MODE">
         <position x="245" y="72"/>

@@ -2,7 +2,7 @@
 #include "forms/form.h"
 #include "forms/graphicbutton.h"
 #include "forms/label.h"
-#include "forms/list.h"
+#include "forms/listbox.h"
 #include "forms/ui.h"
 #include "framework/data.h"
 #include "framework/event.h"

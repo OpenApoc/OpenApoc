@@ -1580,6 +1580,7 @@ void BattleView::update()
 			    6, newUnitInfo.agent ? (int)newUnitInfo.agent->unit->visibleEnemies.size() : 0);
 			if (newSpottedInfo != spottedInfo[i])
 			{
+				spottedInfo[i] = newSpottedInfo;
 				updateSpottedInfo(i);
 			}
 
