@@ -11,10 +11,12 @@
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlemap.h"
 #include "game/state/city/building.h"
+#include "game/state/city/city.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/vehicle_type.h"
+#include "game/ui/base/aequipscreen.h"
 #include "game/ui/battle/battlebriefing.h"
 #include "game/ui/general/mapselector.h"
 #include "game/ui/general/messagebox.h"
@@ -349,25 +351,28 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 
 	bool hotseat = menuform->findControlTyped<CheckBox>("HOTSEAT")->isChecked();
 
-	if (locBuilding)
-	{
-		bool raid = menuform->findControlTyped<CheckBox>("ALTERNATIVE_ATTACK")->isChecked();
-		if (raid)
+	loadBattle = [this, hotseat, playerBase, aliens, guards, civilians]() {
+		if (locBuilding)
 		{
-			locBuilding->owner->tech_level =
-			    menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")->getValue();
+			bool raid = menuform->findControlTyped<CheckBox>("ALTERNATIVE_ATTACK")->isChecked();
+			if (raid)
+			{
+				locBuilding->owner->tech_level =
+				    menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")->getValue();
+			}
+			battleInBuilding(hotseat, playerBase, locBuilding, raid, aliens, guards, civilians);
 		}
-		battleInBuilding(hotseat, playerBase, locBuilding, raid, aliens, guards, civilians);
-	}
-	else if (locVehicle)
-	{
-		battleInVehicle(hotseat, playerBase, locVehicle, aliens);
-	}
-	else if (locBase)
-	{
-		battleInBase(hotseat, locBase, aliens);
-	}
-	// No map selected
+		else if (locVehicle)
+		{
+			battleInVehicle(hotseat, playerBase, locVehicle, aliens);
+		}
+		else if (locBase)
+		{
+			battleInBase(hotseat, locBase, aliens);
+		}
+	};
+
+	fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<AEquipScreen>(state.shared_from_this())});
 }
 
 void Skirmish::customizeForces(bool force)
@@ -484,6 +489,7 @@ std::shared_future<void> loadBattleBuilding(bool hotseat, sp<Building> building,
 				if (a.second->type->role == AgentType::Role::Soldier &&
 				    a.second->homeBuilding == playerBase->building)
 				{
+					a.second->enterBuilding(*state, {state, building});
 					agents.emplace_back(state, a.second);
 				}
 			}
@@ -498,7 +504,6 @@ std::shared_future<void> loadBattleBuilding(bool hotseat, sp<Building> building,
 
 		Battle::beginBattle(*state, hotseat, org, agents, aliens, guards, civilians, veh, bld);
 	});
-
 	return loadTask;
 }
 
@@ -523,9 +528,20 @@ std::shared_future<void> loadBattleVehicle(bool hotseat, sp<VehicleType> vehicle
 		state->vehicles[vID] = v;
 		StateRef<Vehicle> ufo = {state, vID};
 		ufo->owner = state->getAliens();
-		StateRef<Vehicle> veh = {};
 
-		Battle::beginBattle(*state, hotseat, org, agents, aliens, veh, ufo);
+		auto playerVeh = state->current_city->placeVehicle(
+		    *state, StateRef<VehicleType>{state, "VEHICLETYPE_BIOTRANS"}, state->getPlayer(),
+		    playerBase->building);
+		playerVeh->homeBuilding = playerBase->building;
+		StateRef<Vehicle> playerVehRef = {state, playerVeh};
+		playerVehRef->leaveBuilding(*state, {20, 20, 11});
+
+		for (auto &agent : agents)
+		{
+			agent->enterVehicle(*state, playerVehRef);
+		}
+
+		Battle::beginBattle(*state, hotseat, org, agents, aliens, playerVehRef, ufo);
 	});
 
 	return loadTask;
@@ -573,7 +589,13 @@ void Skirmish::begin()
 
 void Skirmish::pause() {}
 
-void Skirmish::resume() {}
+void Skirmish::resume()
+{
+	if (loadBattle)
+	{
+		loadBattle();
+	}
+}
 
 void Skirmish::finish() {}
 

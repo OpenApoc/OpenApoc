@@ -826,4 +826,6 @@ void TileMap::updateAllBattlescapeInfo()
 	}
 }
 
+void TileMap::clearPathCaches() { agentPathCache.clear(); }
+
 }; // namespace OpenApoc

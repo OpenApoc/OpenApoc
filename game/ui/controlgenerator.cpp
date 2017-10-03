@@ -439,17 +439,12 @@ void ControlGenerator::fillAgentControl(GameState &state, sp<Graphic> baseContro
 		return;
 	}
 	baseControl->setImage(singleton.battleSelect[(int)info.selected]);
+	baseControl->setData(info.agent);
 
 	auto unitIcon = baseControl->createChild<Graphic>(info.agent->getPortrait().icon);
 	unitIcon->AutoSize = true;
 	unitIcon->Location = {2, 1};
 
-	if (info.faded)
-	{
-		auto fadeIcon = baseControl->createChild<Graphic>(singleton.iconShade);
-		fadeIcon->AutoSize = true;
-		fadeIcon->Location = {2, 1};
-	}
 	if (info.useRank)
 	{
 		auto rankIcon = baseControl->createChild<Graphic>(singleton.unitRanks[(int)info.rank]);
@@ -513,6 +508,12 @@ void ControlGenerator::fillAgentControl(GameState &state, sp<Graphic> baseContro
 		auto icon = baseControl->createChild<Graphic>(singleton.iconPsiOut);
 		icon->AutoSize = true;
 		icon->Location = {0, 0};
+	}
+	if (info.faded)
+	{
+		auto fadeIcon = baseControl->createChild<Graphic>(singleton.iconShade);
+		fadeIcon->AutoSize = true;
+		fadeIcon->Location = {2, 1};
 	}
 }
 

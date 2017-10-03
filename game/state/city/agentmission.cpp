@@ -278,11 +278,6 @@ bool AgentMission::teleportCheck(GameState &state, Agent &a)
 	return false;
 }
 
-void AgentMission::clearPathCache(StateRef<City> city)
-{
-	//agentPathCache[city].clear();
-}
-
 bool AgentMission::getNextDestination(GameState &state, Agent &a, Vec3<float> &destPos)
 {
 	if (cancelled)
@@ -438,18 +433,16 @@ void AgentMission::setPathTo(GameState &state, Agent &a, StateRef<Building> b)
 	auto &map = *a.city->map;
 
 	std::list<Vec3<int>> path;
-	static std::map<StateRef<City>, std::map<Vec3<int>, std::list<Vec3<int>>>> pathCache;
-	auto key = Vec3<int>{ (Vec3<int>)a.position * map.size + b->crewQuarters };
-	// disbles path as if city gets amaged this is not good
-	pathCache[a.city].clear();
-	if (pathCache[a.city].find(key) != pathCache[a.city].end())
+	auto key = Vec3<int>{(Vec3<int>)a.position * map.size + b->crewQuarters};
+	if (map.agentPathCache.find(key) != map.agentPathCache.end())
 	{
-		path = pathCache[a.city][key];
+		LogWarning("Found cached path from %s to %s, using it", a.position, b->crewQuarters);
+		path = map.agentPathCache[key];
 	}
 	else
 	{
-		path = map.findShortestPath(a.position, b->crewQuarters, 2000, AgentTileHelper{ map });
-		pathCache[a.city][key] = path;
+		path = map.findShortestPath(a.position, b->crewQuarters, 2000, AgentTileHelper{map});
+		map.agentPathCache[key] = path;
 	}
 	if (path.empty())
 	{

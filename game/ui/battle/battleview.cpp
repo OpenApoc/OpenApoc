@@ -7,10 +7,10 @@
 #include "forms/radiobutton.h"
 #include "forms/scrollbar.h"
 #include "forms/ticker.h"
-#include "framework/configfile.h"
 #include "forms/tristatebox.h"
 #include "forms/ui.h"
 #include "framework/apocresources/cursor.h"
+#include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/font.h"
@@ -3933,14 +3933,15 @@ bool BattleView::handleGameStateEvent(Event *e)
 		if (battle.mode == Battle::Mode::RealTime)
 		{
 			bool pause = false;
-			if (GameEvent::optionsMap.find(gameEvent->type) != GameEvent::optionsMap.end()) 
+			if (GameEvent::optionsMap.find(gameEvent->type) != GameEvent::optionsMap.end())
 			{
 				pause = config().getBool(GameEvent::optionsMap.at(gameEvent->type));
 			}
 			if (pause)
 			{
-				fw().stageQueueCommand({ StageCmd::Command::PUSH,
-										mksp<NotificationScreen>(state, *this, gameEvent->message(), gameEvent->type) });
+				fw().stageQueueCommand({StageCmd::Command::PUSH,
+				                        mksp<NotificationScreen>(state, *this, gameEvent->message(),
+				                                                 gameEvent->type)});
 			}
 		}
 	}

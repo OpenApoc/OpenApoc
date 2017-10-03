@@ -296,5 +296,8 @@ class TileMap
 	                        bool fast = false, bool los = false) const;
 
 	void updateAllBattlescapeInfo();
+
+	std::map<Vec3<int>, std::list<Vec3<int>>> agentPathCache;
+	void clearPathCaches();
 };
 }; // namespace OpenApoc

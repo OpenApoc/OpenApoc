@@ -5,8 +5,8 @@
 #include "library/strings.h"
 #include <list>
 #include <map>
-#include <vector>
 #include <set>
+#include <vector>
 
 namespace OpenApoc
 {
@@ -73,7 +73,9 @@ class Organisation : public StateObject
 		Target target = Target::Owned;
 
 		MissionPattern() = default;
-		MissionPattern(uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat, UnitType unitType, unsigned minAmount, unsigned maxAmount, std::set<StateRef<VehicleType>> allowedTypes, Target target);
+		MissionPattern(uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat, UnitType unitType,
+		               unsigned minAmount, unsigned maxAmount,
+		               std::set<StateRef<VehicleType>> allowedTypes, Target target);
 	};
 	UString id;
 	UString name;

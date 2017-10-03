@@ -98,35 +98,35 @@ const Vec2<int> AEquipScreen::EQUIP_GRID_SLOT_SIZE{16, 16};
 const Vec2<int> AEquipScreen::EQUIP_GRID_SLOTS{16, 16};
 
 AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
-	: Stage(), firstAgent(firstAgent), formMain(ui().getForm("aequipscreen_main")),
-	formAgentStats(ui().getForm("aequipscreen_agent_stats")),
-	formItemWeapon(ui().getForm("aequipscreen_item_weapon")),
-	formItemArmor(ui().getForm("aequipscreen_item_armor")),
-	formItemGrenade(ui().getForm("aequipscreen_item_grenade")),
-	formItemOther(ui().getForm("aequipscreen_item_other")),
-	pal(fw().data->loadPalette("xcom3/ufodata/agenteqp.pcx")), state(state),
-	labelFont(ui().getFont("smalfont"))
+    : Stage(), firstAgent(firstAgent), formMain(ui().getForm("aequipscreen_main")),
+      formAgentStats(ui().getForm("aequipscreen_agent_stats")),
+      formItemWeapon(ui().getForm("aequipscreen_item_weapon")),
+      formItemArmor(ui().getForm("aequipscreen_item_armor")),
+      formItemGrenade(ui().getForm("aequipscreen_item_grenade")),
+      formItemOther(ui().getForm("aequipscreen_item_other")),
+      pal(fw().data->loadPalette("xcom3/ufodata/agenteqp.pcx")), state(state),
+      labelFont(ui().getFont("smalfont"))
 {
 	this->state = state;
 
 	auto paperDollPlaceholder = formMain->findControlTyped<Graphic>("PAPER_DOLL");
 
 	this->paperDoll = formMain->createChild<EquipmentPaperDoll>(
-		paperDollPlaceholder->Location, paperDollPlaceholder->Size, EQUIP_GRID_SLOT_SIZE);
+	    paperDollPlaceholder->Location, paperDollPlaceholder->Size, EQUIP_GRID_SLOT_SIZE);
 
 	inventoryControl = formMain->findControlTyped<Graphic>("INVENTORY");
 
 	for (int i = 12; i <= 18; i++)
 	{
 		bigUnitRanks.push_back(
-			fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-				"tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-				i)));
+		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
+		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+		                                i)));
 	}
-
 
 	// Agent list functionality
 	auto agentList = formMain->findControlTyped<ListBox>("AGENT_SELECT_BOX");
+	agentList->AlwaysEmitSelectionEvents = true;
 	agentList->addCallback(FormEventType::ListBoxChangeSelected, [this](FormsEvent *e) {
 		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
 		auto agent = list->getSelectedData<Agent>();
@@ -139,7 +139,8 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 		{
 			return;
 		}
-		selectAgent(agent, Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right), modifierLCtrl || modifierRCtrl);
+		selectAgent(agent, Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
+		            modifierLCtrl || modifierRCtrl);
 	});
 
 	woundImage = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
@@ -305,15 +306,7 @@ void AEquipScreen::begin()
 		formMain->findControlTyped<Label>("EQUIP_AGENT")->setText(tr("EQUIP AGENT"));
 	}
 
-	if (mode == Mode::Base)
-	{
-		formMain->findControl("BUTTON_UNDERPANTS")->setVisible(true);
-		formMain->findControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->setChecked(true);
-	}
-	else
-	{
-		formMain->findControl("BUTTON_UNDERPANTS")->setVisible(false);
-	}
+	formMain->findControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->setChecked(true);
 
 	updateAgents();
 }
@@ -402,36 +395,36 @@ void AEquipScreen::eventOccurred(Event *e)
 	// Templates:
 	switch (e->keyboard().KeyCode)
 	{
-	case SDLK_1:
-		processTemplate(1, modifierRCtrl || modifierLCtrl);
-		return;
-	case SDLK_2:
-		processTemplate(2, modifierRCtrl || modifierLCtrl);
-		return;
-	case SDLK_3:
-		processTemplate(3, modifierRCtrl || modifierLCtrl);
-		return;
-	case SDLK_4:
-		processTemplate(4, modifierRCtrl || modifierLCtrl);
-		return;
-	case SDLK_5:
-		processTemplate(5, modifierRCtrl || modifierLCtrl);
-		return;
-	case SDLK_6:
-		processTemplate(6, modifierRCtrl || modifierLCtrl);
-		return;
-	case SDLK_7:
-		processTemplate(7, modifierRCtrl || modifierLCtrl);
-		return;
-	case SDLK_8:
-		processTemplate(8, modifierRCtrl || modifierLCtrl);
-		return;
-	case SDLK_9:
-		processTemplate(9, modifierRCtrl || modifierLCtrl);
-		return;
-	case SDLK_0:
-		processTemplate(0, modifierRCtrl || modifierLCtrl);
-		return;
+		case SDLK_1:
+			processTemplate(1, modifierRCtrl || modifierLCtrl);
+			return;
+		case SDLK_2:
+			processTemplate(2, modifierRCtrl || modifierLCtrl);
+			return;
+		case SDLK_3:
+			processTemplate(3, modifierRCtrl || modifierLCtrl);
+			return;
+		case SDLK_4:
+			processTemplate(4, modifierRCtrl || modifierLCtrl);
+			return;
+		case SDLK_5:
+			processTemplate(5, modifierRCtrl || modifierLCtrl);
+			return;
+		case SDLK_6:
+			processTemplate(6, modifierRCtrl || modifierLCtrl);
+			return;
+		case SDLK_7:
+			processTemplate(7, modifierRCtrl || modifierLCtrl);
+			return;
+		case SDLK_8:
+			processTemplate(8, modifierRCtrl || modifierLCtrl);
+			return;
+		case SDLK_9:
+			processTemplate(9, modifierRCtrl || modifierLCtrl);
+			return;
+		case SDLK_0:
+			processTemplate(0, modifierRCtrl || modifierLCtrl);
+			return;
 	}
 
 	// Switch between showing armor or items
@@ -449,7 +442,7 @@ void AEquipScreen::eventOccurred(Event *e)
 			return;
 		}
 	}
-	
+
 	// Check if we've moused over equipment so we can show the stats.
 	if (e->type() == EVENT_MOUSE_MOVE && !this->draggedEquipment)
 	{
@@ -514,19 +507,19 @@ void AEquipScreen::eventOccurred(Event *e)
 			if (tryPickUpItem(currentAgent, slotPos, modifierLCtrl || modifierRCtrl))
 			{
 				draggedEquipmentOffset =
-					paperDoll->getScreenPositionFromSlotPosition(slotPos) - mousePos;
+				    paperDoll->getScreenPositionFromSlotPosition(slotPos) - mousePos;
 				paperDoll->updateEquipment();
 				displayAgent(currentAgent);
 				updateAgentControl(currentAgent);
 			}
-			else //no doll equipment under cursor
+			else // no doll equipment under cursor
 			{
 				// Check if we're over any equipment in the list at the bottom
 				auto posWithinInventory = mousePos;
 				posWithinInventory.x += inventoryPage * inventoryControl->Size.x;
 				if (tryPickUpItem(posWithinInventory))
 				{
-					refreshInventoryItems(); 
+					refreshInventoryItems();
 				}
 			}
 		}
@@ -537,15 +530,16 @@ void AEquipScreen::eventOccurred(Event *e)
 			// Are we over the grid? If so try to place it on the agent.
 			auto paperDollControl = paperDoll;
 			Vec2<int> equipOffset = paperDollControl->Location + formMain->Location;
-			Vec2<int> equipmentPos = Vec2<int>{ e->mouse().X, e->mouse().Y} + draggedEquipmentOffset;
+			Vec2<int> equipmentPos = Vec2<int>{e->mouse().X, e->mouse().Y} + draggedEquipmentOffset;
 			// If this is within the grid try to snap it
 			Vec2<int> equipmentGridPos = equipmentPos - equipOffset;
 			equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
-			
+
 			auto draggedFrom = draggedEquipmentOrigin;
-			auto draggedType = (draggedFrom.x==-1 && draggedFrom.y ==-1) ? draggedEquipment->type : nullptr;
+			auto draggedType =
+			    (draggedFrom.x == -1 && draggedFrom.y == -1) ? draggedEquipment->type : nullptr;
 			auto draggedAlternative = draggedEquipmentAlternativePickup;
-			
+
 			bool insufficientTU = false;
 			bool refreshRequired = false;
 			if (tryPlaceItem(currentAgent, equipmentGridPos, &insufficientTU))
@@ -561,10 +555,10 @@ void AEquipScreen::eventOccurred(Event *e)
 			if (insufficientTU)
 			{
 				auto message_box = mksp<MessageBox>(
-					tr("NOT ENOUGH TU'S"), format("%s %d", tr("TU cost per item picked up:"),
-						currentAgent->unit->getPickupCost()),
-					MessageBox::ButtonOptions::Ok);
-				fw().stageQueueCommand({ StageCmd::Command::PUSH, message_box });
+				    tr("NOT ENOUGH TU'S"), format("%s %d", tr("TU cost per item picked up:"),
+				                                  currentAgent->unit->getPickupCost()),
+				    MessageBox::ButtonOptions::Ok);
+				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 			}
 			// Other agents
 			for (auto &agent : selectedAgents)
@@ -573,10 +567,16 @@ void AEquipScreen::eventOccurred(Event *e)
 				{
 					continue;
 				}
-				bool pickedUp = draggedType ? tryPickUpItem(draggedType) : tryPickUpItem(agent, draggedFrom, draggedAlternative);
+				bool pickedUp = draggedType ? tryPickUpItem(draggedType)
+				                            : tryPickUpItem(agent, draggedFrom, draggedAlternative);
 				if (!pickedUp)
 				{
 					continue;
+				}
+				else if (draggedType)
+				{
+					// Refresh Inventory Items if we just picked one up
+					refreshInventoryItems();
 				}
 				if (tryPlaceItem(agent, equipmentGridPos))
 				{
@@ -695,16 +695,16 @@ bool AEquipScreen::isTransition() { return false; }
 void AEquipScreen::selectAgent(sp<Agent> agent, bool inverse, bool additive)
 {
 	auto firstAgent = selectedAgents.empty() ? nullptr : selectedAgents.front();
+	bool fullUpdate = !isInVicinity(agent) && !inverse;
 	std::set<sp<Agent>> agentsToUpdate;
-	auto pos = std::find(selectedAgents.begin(),
-		selectedAgents.end(), agent);
+	auto pos = std::find(selectedAgents.begin(), selectedAgents.end(), agent);
 	// Can't deselect last
 	if (inverse && selectedAgents.size() <= 1)
 	{
 		return;
 	}
 	// Can't additive if not in vicinity or in battle
-	if (additive && (!isInVicinity(agent) || state->current_battle))
+	if (additive && (!isInVicinity(agent) || (agent->unit && agent->unit->tileObject)))
 	{
 		additive = false;
 	}
@@ -756,9 +756,16 @@ void AEquipScreen::selectAgent(sp<Agent> agent, bool inverse, bool additive)
 		}
 	}
 	updateFirstAgent();
-	for (auto &a : agentsToUpdate)
+	if (fullUpdate)
 	{
-		updateAgentControl(a);
+		updateAgents();
+	}
+	else
+	{
+		for (auto &a : agentsToUpdate)
+		{
+			updateAgentControl(a);
+		}
 	}
 }
 
@@ -982,22 +989,17 @@ AEquipScreen::Mode AEquipScreen::getMode()
 		return Mode::Battle;
 	}
 	// If agent in base and not in vehicle or in vehicle which is parked in base
-	else if (currentAgent &&
-	         ((currentAgent->currentBuilding && currentAgent->currentBuilding->base) ||
-	          (currentAgent->currentVehicle && currentAgent->currentVehicle->currentBuilding &&
-	           currentAgent->currentVehicle->currentBuilding->base)))
+	else if (currentAgent && getAgentBase(currentAgent))
 	{
 		return Mode::Base;
 	}
 	// If agent is in a building which is not any base or in a vehicle which is not parked in base
-	else if (currentAgent &&
-	         (currentAgent->currentBuilding ||
-	          (currentAgent->currentVehicle && currentAgent->currentVehicle->currentBuilding)))
+	else if (currentAgent && getAgentBuilding(currentAgent))
 	{
 		return Mode::Building;
 	}
 	// If agent is in vehicle which is not at any base
-	else if (currentAgent && currentAgent->currentVehicle)
+	else if (currentAgent && getAgentVehicle(currentAgent))
 	{
 		return Mode::Vehicle;
 	}
@@ -1012,7 +1014,8 @@ void AEquipScreen::refreshInventoryItems()
 {
 	inventoryItems.clear();
 
-	switch (getMode())
+	auto mode = getMode();
+	switch (mode)
 	{
 		case Mode::Enemy:
 			break;
@@ -1033,14 +1036,27 @@ void AEquipScreen::refreshInventoryItems()
 			break;
 	}
 
+	if (mode == Mode::Base)
+	{
+		formMain->findControl("BUTTON_UNDERPANTS")->setVisible(true);
+		formMain->findControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->setVisible(true);
+		formMain->findControlTyped<RadioButton>("BUTTON_SHOW_ARMOUR")->setVisible(true);
+	}
+	else
+	{
+		formMain->findControl("BUTTON_UNDERPANTS")->setVisible(false);
+		formMain->findControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->setVisible(false);
+		formMain->findControlTyped<RadioButton>("BUTTON_SHOW_ARMOUR")->setVisible(false);
+	}
+
 	clampInventoryPage();
 }
 
 void AEquipScreen::populateInventoryItemsBattle()
 {
 	// Expecting to have an agent
-	auto currentAgent = selectedAgents.front();	
-	
+	auto currentAgent = selectedAgents.front();
+
 	// The gap between the end of one inventory image and the start of the next
 	static const int INVENTORY_IMAGE_X_GAP = 4;
 	Vec2<int> inventoryPosition = inventoryControl->Location + formMain->Location;
@@ -1063,19 +1079,15 @@ void AEquipScreen::populateInventoryItemsBattle()
 
 void AEquipScreen::populateInventoryItemsBase()
 {
-	// Expecting to have an agent
+	// Expecting to have an agent and that agent to have a base
 	auto currentAgent = selectedAgents.front();
 
-	if (!currentAgent->currentBuilding || !currentAgent->currentBuilding->base)
-	{
-		return;
-	}
 	// The gap between the end of one inventory image and the start of the next
 	static const int INVENTORY_IMAGE_X_GAP = 4;
 	Vec2<int> inventoryPosition = inventoryControl->Location + formMain->Location;
 
 	// Find base which is in the current building
-	StateRef<Base> base = currentAgent->currentBuilding->base;
+	StateRef<Base> base = getAgentBase(currentAgent);
 
 	for (auto &invPair : base->inventoryAgentEquipment)
 	{
@@ -1149,8 +1161,7 @@ void AEquipScreen::populateInventoryItemsVehicle()
 	static const int INVENTORY_IMAGE_X_GAP = 4;
 	Vec2<int> inventoryPosition = inventoryControl->Location + formMain->Location;
 
-	sp<Vehicle> vehicle; // Should be the vehicle agent is in
-	LogError("Implement getting agent's vehicle");
+	sp<Vehicle> vehicle = getAgentVehicle(currentAgent);
 	auto itemsOnVehicle = vehicleItems[vehicle];
 
 	for (auto &item : itemsOnVehicle)
@@ -1176,8 +1187,7 @@ void AEquipScreen::populateInventoryItemsBuilding()
 	static const int INVENTORY_IMAGE_X_GAP = 4;
 	Vec2<int> inventoryPosition = inventoryControl->Location + formMain->Location;
 
-	sp<Building> building; // Should be the building agent is in
-	LogError("Implement getting agent's building");
+	sp<Building> building = getAgentBuilding(currentAgent);
 	auto itemsOnBuilding = buildingItems[building];
 
 	for (auto &item : itemsOnBuilding)
@@ -1260,11 +1270,11 @@ void AEquipScreen::removeItemFromInventoryBattle(sp<AEquipment> item)
 
 void AEquipScreen::removeItemFromInventoryBase(sp<AEquipment> item)
 {
-	// Expecting to have an agent
+	// Expecting to have an agent in a base
 	auto currentAgent = selectedAgents.front();
 
 	// Find base which is in the current building
-	StateRef<Base> base = currentAgent->currentBuilding->base;
+	StateRef<Base> base = getAgentBase(currentAgent);
 
 	// Remove item from base
 	if (item->type->type == AEquipmentType::Type::Ammo)
@@ -1307,8 +1317,7 @@ void AEquipScreen::removeItemFromInventoryAgent(sp<AEquipment> item)
 
 void AEquipScreen::removeItemFromInventoryBuilding(sp<AEquipment> item)
 {
-	sp<Building> building; // Should be the building agent is in
-	LogError("Implement getting agent's building");
+	sp<Building> building = getAgentBuilding(selectedAgents.front());
 
 	buildingItems[building].erase(
 	    std::find(buildingItems[building].begin(), buildingItems[building].end(), item));
@@ -1316,8 +1325,7 @@ void AEquipScreen::removeItemFromInventoryBuilding(sp<AEquipment> item)
 
 void AEquipScreen::removeItemFromInventoryVehicle(sp<AEquipment> item)
 {
-	sp<Vehicle> vehicle; // Should be the vehicle agent is in
-	LogError("Implement getting agent's vehicle");
+	sp<Vehicle> vehicle = getAgentVehicle(selectedAgents.front());
 
 	vehicleItems[vehicle].erase(
 	    std::find(vehicleItems[vehicle].begin(), vehicleItems[vehicle].end(), item));
@@ -1371,7 +1379,7 @@ void AEquipScreen::addItemToInventoryBase(sp<AEquipment> item)
 	auto currentAgent = selectedAgents.front();
 
 	// Find base which is in the current building
-	StateRef<Base> base = currentAgent->currentBuilding->base;
+	StateRef<Base> base = getAgentBase(currentAgent);
 
 	// Unload ammunition and add it too
 	sp<AEquipment> ammo = nullptr;
@@ -1410,7 +1418,7 @@ bool AEquipScreen::tryPickUpItem(sp<Agent> agent, Vec2<int> slotPos, bool altern
 	{
 		return false;
 	}
-	draggedEquipmentOffset = { 0, 0 };
+	draggedEquipmentOffset = {0, 0};
 	draggedEquipmentOrigin = equipment->equippedPosition;
 	draggedEquipmentAlternativePickup = false;
 	if (alternative && equipment->payloadType)
@@ -1431,8 +1439,7 @@ bool AEquipScreen::tryPickUpItem(sp<Agent> agent, Vec2<int> slotPos, bool altern
 			{
 				continue;
 			}
-			Vec2<float> offset =
-				(s.bounds.p1 - s.bounds.p0) - equipment->type->equipscreen_size;
+			Vec2<float> offset = (s.bounds.p1 - s.bounds.p0) - equipment->type->equipscreen_size;
 			slotPos += offset / 2.0f;
 			break;
 		}
@@ -1473,28 +1480,27 @@ bool AEquipScreen::tryPickUpItem(sp<AEquipmentType> item)
 void AEquipScreen::pickUpItem(sp<AEquipment> item)
 {
 	draggedEquipment = item;
-	draggedEquipmentOffset = { 0, 0 };
-	draggedEquipmentOrigin = { -1, -1 };
+	draggedEquipmentOffset = {0, 0};
+	draggedEquipmentOrigin = {-1, -1};
 	draggedEquipmentAlternativePickup = false;
 
 	removeItemFromInventory(draggedEquipment);
 }
 
-bool AEquipScreen::tryPlaceItem(sp<Agent> agent, Vec2<int> slotPos, bool * insufficientTU)
+bool AEquipScreen::tryPlaceItem(sp<Agent> agent, Vec2<int> slotPos, bool *insufficientTU)
 {
 	bool canAdd = agent->canAddEquipment(slotPos, draggedEquipment->type);
 	sp<AEquipment> equipmentUnderCursor = nullptr;
 	// If can't add maybe we can insert a clip?
 	if (!canAdd)
 	{
-		equipmentUnderCursor = std::dynamic_pointer_cast<AEquipment>(
-			agent->getEquipmentAt(slotPos));
+		equipmentUnderCursor =
+		    std::dynamic_pointer_cast<AEquipment>(agent->getEquipmentAt(slotPos));
 		if (equipmentUnderCursor &&
-			equipmentUnderCursor->type->type == AEquipmentType::Type::Weapon &&
-			std::find(equipmentUnderCursor->type->ammo_types.begin(),
-				equipmentUnderCursor->type->ammo_types.end(),
-				draggedEquipment->type) !=
-			equipmentUnderCursor->type->ammo_types.end())
+		    equipmentUnderCursor->type->type == AEquipmentType::Type::Weapon &&
+		    std::find(equipmentUnderCursor->type->ammo_types.begin(),
+		              equipmentUnderCursor->type->ammo_types.end(),
+		              draggedEquipment->type) != equipmentUnderCursor->type->ammo_types.end())
 		{
 			canAdd = true;
 		}
@@ -1503,9 +1509,10 @@ bool AEquipScreen::tryPlaceItem(sp<Agent> agent, Vec2<int> slotPos, bool * insuf
 			equipmentUnderCursor = nullptr;
 		}
 	}
-	if (canAdd && state->current_battle && state->current_battle->mode == Battle::Mode::TurnBased 
-		&& draggedEquipmentOrigin.x == -1 && draggedEquipmentOrigin.y == -1 &&
-		!agent->unit->spendTU(*state, agent->unit->getPickupCost()))
+	if (canAdd && agent->unit && agent->unit->tileObject &&
+	    state->current_battle->mode == Battle::Mode::TurnBased && draggedEquipmentOrigin.x == -1 &&
+	    draggedEquipmentOrigin.y == -1 &&
+	    !agent->unit->spendTU(*state, agent->unit->getPickupCost()))
 	{
 		canAdd = false;
 		if (insufficientTU)
@@ -1528,11 +1535,9 @@ bool AEquipScreen::tryPlaceItem(sp<Agent> agent, Vec2<int> slotPos, bool * insuf
 			if (draggedEquipment->ammo > 0)
 			{
 				if (draggedEquipmentOrigin.x != -1 && draggedEquipmentOrigin.y != -1 &&
-					agent->canAddEquipment(draggedEquipmentOrigin,
-						draggedEquipment->type))
+				    agent->canAddEquipment(draggedEquipmentOrigin, draggedEquipment->type))
 				{
-					agent->addEquipment(*state, draggedEquipmentOrigin,
-						draggedEquipment);
+					agent->addEquipment(*state, draggedEquipmentOrigin, draggedEquipment);
 				}
 				else
 				{
@@ -1590,7 +1595,7 @@ void AEquipScreen::processTemplate(int idx, bool remember)
 				addItemToInventory(eq);
 			}
 			// Find base which is in the current building
-			StateRef<Base> base = currentAgent->currentBuilding->base;
+			StateRef<Base> base = getAgentBase(currentAgent);
 
 			// Equip agent according to template
 			for (auto &eq : temp.equipment)
@@ -1631,7 +1636,8 @@ void AEquipScreen::processTemplate(int idx, bool remember)
 					if (payloadType->type == AEquipmentType::Type::Ammo)
 					{
 						int newCountPayload = countPayload / payloadType->max_ammo;
-						ammoRemainingPayload = countPayload - newCountPayload * payloadType->max_ammo;
+						ammoRemainingPayload =
+						    countPayload - newCountPayload * payloadType->max_ammo;
 						countPayload = newCountPayload;
 						if (ammoRemainingPayload > 0)
 						{
@@ -1687,7 +1693,7 @@ void AEquipScreen::processTemplate(int idx, bool remember)
 				else
 				{
 					LogError("Agent %s cannot apply template, fail at pos %s item %s",
-						currentAgent->name, pos, type.id);
+					         currentAgent->name, pos, type.id);
 				}
 			}
 			updateAgentControl(currentAgent);
@@ -1703,7 +1709,7 @@ void AEquipScreen::addItemToInventoryBuilding(sp<AEquipment> item)
 	// Expecting to have an agent
 	auto currentAgent = selectedAgents.front();
 
-	buildingItems[currentAgent->currentBuilding].push_back(item);
+	buildingItems[getAgentBuilding(currentAgent)].push_back(item);
 }
 
 void AEquipScreen::addItemToInventoryVehicle(sp<AEquipment> item)
@@ -1711,7 +1717,7 @@ void AEquipScreen::addItemToInventoryVehicle(sp<AEquipment> item)
 	// Expecting to have an agent
 	auto currentAgent = selectedAgents.front();
 
-	vehicleItems[currentAgent->currentVehicle].push_back(item);
+	vehicleItems[getAgentVehicle(currentAgent)].push_back(item);
 }
 
 void AEquipScreen::closeScreen()
@@ -1757,18 +1763,41 @@ bool AEquipScreen::isInVicinity(sp<Agent> agent)
 	{
 		case Mode::Enemy:
 		case Mode::Battle:
-			LogError("Should not be possible for enemy or battle mode to be with no current battle?");
+			LogError(
+			    "Should not be possible for enemy or battle mode to be with no current battle?");
 			return true;
 		case Mode::Agent:
-			return (Vec3<int>)currentAgent->position == (Vec3<int>)agent->position;
+			return (Vec3<int>)agent->position == (Vec3<int>)currentAgent->position &&
+			       !agent->currentVehicle && !agent->currentBuilding;
 		case Mode::Base:
 		case Mode::Building:
-			return currentAgent->currentBuilding == agent->currentBuilding;
+			return getAgentBuilding(agent) &&
+			       (getAgentBuilding(agent) == getAgentBuilding(currentAgent));
 		case Mode::Vehicle:
-			return currentAgent->currentVehicle == agent->currentVehicle;
+			return getAgentVehicle(agent) &&
+			       (getAgentVehicle(agent) == getAgentVehicle(currentAgent));
 			break;
 	}
 	return false;
+}
+
+StateRef<Building> AEquipScreen::getAgentBuilding(sp<Agent> agent)
+{
+	return agent->currentBuilding
+	           ? agent->currentBuilding
+	           : ((agent->currentVehicle && agent->currentVehicle->currentBuilding)
+	                  ? agent->currentVehicle->currentBuilding
+	                  : nullptr);
+}
+
+StateRef<Vehicle> AEquipScreen::getAgentVehicle(sp<Agent> agent)
+{
+	return agent->currentBuilding ? nullptr : agent->currentVehicle;
+}
+
+StateRef<Base> AEquipScreen::getAgentBase(sp<Agent> agent)
+{
+	return getAgentBuilding(agent) ? getAgentBuilding(agent)->base : nullptr;
 }
 
 void AEquipScreen::attemptCloseScreen()
@@ -1885,12 +1914,9 @@ void AEquipScreen::updateAgents()
 				}
 			}
 
-			auto agentControl = ControlGenerator::createLargeAgentControl(*state, agent.second, false, selstate, !isInVicinity(agent.second));
+			auto agentControl = ControlGenerator::createLargeAgentControl(
+			    *state, agent.second, false, selstate, !isInVicinity(agent.second));
 			agentList->addItem(agentControl);
-			/*if (agent.second == currentAgent)
-			{
-				agentList->setSelected(agentControl);
-			}*/
 		}
 	}
 	agentList->ItemSize = labelFont->getFontHeight() * 2;
@@ -1913,7 +1939,8 @@ void AEquipScreen::updateAgentControl(sp<Agent> agent)
 	}
 
 	auto agentList = formMain->findControlTyped<ListBox>("AGENT_SELECT_BOX");
-	agentList->replaceItem(ControlGenerator::createLargeAgentControl(*state, agent, false, selstate, !isInVicinity(agent)));
+	agentList->replaceItem(ControlGenerator::createLargeAgentControl(*state, agent, false, selstate,
+	                                                                 !isInVicinity(agent)));
 }
 
 void AEquipScreen::updateFirstAgent()

@@ -86,10 +86,13 @@ class CityView : public CityTileView
 
 	// Click handlers
 
-	bool handleClickedBuilding(StateRef<Building> building, bool rightClick, CitySelectionState selState);
-	bool handleClickedVehicle(StateRef<Vehicle> vehicle, bool rightClick, CitySelectionState selState);
+	bool handleClickedBuilding(StateRef<Building> building, bool rightClick,
+	                           CitySelectionState selState);
+	bool handleClickedVehicle(StateRef<Vehicle> vehicle, bool rightClick,
+	                          CitySelectionState selState);
 	bool handleClickedAgent(StateRef<Agent> agent, bool rightClick, CitySelectionState selState);
-	bool handleClickedProjectile(sp<Projectile> projectile, bool rightClick, CitySelectionState selState);
+	bool handleClickedProjectile(sp<Projectile> projectile, bool rightClick,
+	                             CitySelectionState selState);
 
 	void tryOpenUfopaediaEntry(StateRef<UfopaediaEntry> ufopaediaEntry);
 

@@ -7,9 +7,9 @@
 #include "forms/textbutton.h"
 #include "forms/ui.h"
 #include "framework/configfile.h"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
-#include "framework/data.h"
 #include "framework/keycodes.h"
 #include "framework/sound.h"
 #include "game/state/battle/battle.h"
@@ -26,55 +26,53 @@ namespace OpenApoc
 {
 namespace
 {
-	const std::list<std::pair<UString, UString>> battleNotificationList = {
-		{ "Notifications.Battle.HostileSpotted", "Hostile unit spotted" },
-		{ "Notifications.Battle.HostileDied", "Hostile unit has died" },
-		{ "Notifications.Battle.UnknownDied", "Unknown Unit has died" },
-		{ "Notifications.Battle.AgentDiedBattle", "Unit has died" },
-		{ "Notifications.Battle.AgentBrainsucked", "Unit Brainsucked" },
-		{ "Notifications.Battle.AgentCriticallyWounded", "Unit critically wounded" },
-		{ "Notifications.Battle.AgentBadlyInjured", "Unit badly injured" },
-		{ "Notifications.Battle.AgentInjured", "Unit injured" },
-		{ "Notifications.Battle.AgentUnderFire", "Unit under fire" },
-		{ "Notifications.Battle.AgentUnconscious", "Unit has lost consciousness" },
-		{ "Notifications.Battle.AgentLeftCombat", "Unit has left combat zone" },
-		{ "Notifications.Battle.AgentFrozen", "Unit has frozen" },
-		{ "Notifications.Battle.AgentBerserk", "Unit has gone beserk" },
-		{ "Notifications.Battle.AgentPanicked", "Unit has panicked" },
-		{ "Notifications.Battle.AgentPanicOver", "Unit has stopped panicking" },
-		{ "Notifications.Battle.AgentPsiAttacked", "Psionic attack on unit" },
-		{ "Notifications.Battle.AgentPsiControlled", "Unit under Psionic control" },
-		{ "Notifications.Battle.AgentPsiOver", "Unit freed from Psionic control" },
-	};
+const std::list<std::pair<UString, UString>> battleNotificationList = {
+    {"Notifications.Battle.HostileSpotted", "Hostile unit spotted"},
+    {"Notifications.Battle.HostileDied", "Hostile unit has died"},
+    {"Notifications.Battle.UnknownDied", "Unknown Unit has died"},
+    {"Notifications.Battle.AgentDiedBattle", "Unit has died"},
+    {"Notifications.Battle.AgentBrainsucked", "Unit Brainsucked"},
+    {"Notifications.Battle.AgentCriticallyWounded", "Unit critically wounded"},
+    {"Notifications.Battle.AgentBadlyInjured", "Unit badly injured"},
+    {"Notifications.Battle.AgentInjured", "Unit injured"},
+    {"Notifications.Battle.AgentUnderFire", "Unit under fire"},
+    {"Notifications.Battle.AgentUnconscious", "Unit has lost consciousness"},
+    {"Notifications.Battle.AgentLeftCombat", "Unit has left combat zone"},
+    {"Notifications.Battle.AgentFrozen", "Unit has frozen"},
+    {"Notifications.Battle.AgentBerserk", "Unit has gone beserk"},
+    {"Notifications.Battle.AgentPanicked", "Unit has panicked"},
+    {"Notifications.Battle.AgentPanicOver", "Unit has stopped panicking"},
+    {"Notifications.Battle.AgentPsiAttacked", "Psionic attack on unit"},
+    {"Notifications.Battle.AgentPsiControlled", "Unit under Psionic control"},
+    {"Notifications.Battle.AgentPsiOver", "Unit freed from Psionic control"},
+};
 
-	const std::list<std::pair<UString, UString>> cityNotificationList = {
-		{ "Notifications.City.UfoSpotted", "UFO spotted" },
-		{ "Notifications.City.VehicleLightDamage", "Vehicle lightly damaged" },
-		{ "Notifications.City.VehicleModerateDamage", "Vehicle moderately damaged" },
-		{ "Notifications.City.VehicleHeavyDamage", "Vehicle heavily damaged" },
-		{ "Notifications.City.VehicleDestroyed", "Vehicle destroyed" },
-		{ "Notifications.City.VehicleEscaping", "Vehicle damaged and returning to base" },
-		{ "Notifications.City.VehicleNoAmmo", "Weapon out of ammo" },
-		{ "Notifications.City.VehicleLowFuel", "Vehicle low on fuel" },
-		{ "Notifications.City.AgentDiedCity", "Agent died" },
-		{ "Notifications.City.AgentArrived", "Agent arrived at base" },
-		{ "Notifications.City.CargoArrived", "Cargo has arrived at base" },
-		{ "Notifications.City.TransferArrived", "Transfer arrived at base" },
-		{ "Notifications.City.RecoveryArrived", "Crash recovery arrived at base" },
-		{ "Notifications.City.VehicleRepaired", "Vehicle repaired" },
-		{ "Notifications.City.VehicleRearmed", "Vehicle rearmed" },
-		{ "Notifications.City.NotEnoughAmmo", "Not enough ammo to rearm vehicle" },
-		{ "Notifications.City.VehicleRefuelled", "Vehicle refuelled" },
-		{ "Notifications.City.NotEnoughFuel", "Not enough fuel to refuel vehicle" },
-		{ "Notifications.City.UnauthorizedVehicle", "Unauthorized vehicle detected" },
-	};
+const std::list<std::pair<UString, UString>> cityNotificationList = {
+    {"Notifications.City.UfoSpotted", "UFO spotted"},
+    {"Notifications.City.VehicleLightDamage", "Vehicle lightly damaged"},
+    {"Notifications.City.VehicleModerateDamage", "Vehicle moderately damaged"},
+    {"Notifications.City.VehicleHeavyDamage", "Vehicle heavily damaged"},
+    {"Notifications.City.VehicleDestroyed", "Vehicle destroyed"},
+    {"Notifications.City.VehicleEscaping", "Vehicle damaged and returning to base"},
+    {"Notifications.City.VehicleNoAmmo", "Weapon out of ammo"},
+    {"Notifications.City.VehicleLowFuel", "Vehicle low on fuel"},
+    {"Notifications.City.AgentDiedCity", "Agent died"},
+    {"Notifications.City.AgentArrived", "Agent arrived at base"},
+    {"Notifications.City.CargoArrived", "Cargo has arrived at base"},
+    {"Notifications.City.TransferArrived", "Transfer arrived at base"},
+    {"Notifications.City.RecoveryArrived", "Crash recovery arrived at base"},
+    {"Notifications.City.VehicleRepaired", "Vehicle repaired"},
+    {"Notifications.City.VehicleRearmed", "Vehicle rearmed"},
+    {"Notifications.City.NotEnoughAmmo", "Not enough ammo to rearm vehicle"},
+    {"Notifications.City.VehicleRefuelled", "Vehicle refuelled"},
+    {"Notifications.City.NotEnoughFuel", "Not enough fuel to refuel vehicle"},
+    {"Notifications.City.UnauthorizedVehicle", "Unauthorized vehicle detected"},
+};
 }
 
 InGameOptions::InGameOptions(sp<GameState> state)
     : Stage(), menuform(ui().getForm("ingameoptions")), state(state)
 {
-
-	
 }
 
 InGameOptions::~InGameOptions() {}
@@ -84,40 +82,41 @@ void InGameOptions::begin()
 	/* Initialse all initial values */
 
 	menuform->findControlTyped<ScrollBar>("GLOBAL_GAIN_SLIDER")
-		->setValue(config().getInt("Framework.Audio.GlobalGain"));
+	    ->setValue(config().getInt("Framework.Audio.GlobalGain"));
 
 	menuform->findControlTyped<ScrollBar>("MUSIC_GAIN_SLIDER")
-		->setValue(config().getInt("Framework.Audio.MusicGain"));
+	    ->setValue(config().getInt("Framework.Audio.MusicGain"));
 
 	menuform->findControlTyped<ScrollBar>("SAMPLE_GAIN_SLIDER")
-		->setValue(config().getInt("Framework.Audio.SampleGain"));
+	    ->setValue(config().getInt("Framework.Audio.SampleGain"));
 
 	menuform->findControlTyped<CheckBox>("AUTO_SCROLL")
-		->setChecked(config().getBool("Options.Misc.AutoScroll"));
+	    ->setChecked(config().getBool("Options.Misc.AutoScroll"));
 	menuform->findControlTyped<CheckBox>("TOOL_TIPS")
-		->setChecked(config().getBool("Options.Misc.ToolTips"));
+	    ->setChecked(config().getBool("Options.Misc.ToolTips"));
 	menuform->findControlTyped<CheckBox>("ACTION_MUSIC")
-		->setChecked(config().getBool("Options.Misc.ActionMusic"));
+	    ->setChecked(config().getBool("Options.Misc.ActionMusic"));
 	menuform->findControlTyped<CheckBox>("AUTO_EXECUTE_ORDERS")
-		->setChecked(config().getBool("Options.Misc.AutoExecute"));
+	    ->setChecked(config().getBool("Options.Misc.AutoExecute"));
 
 	menuform->findControlTyped<TextButton>("BUTTON_BATTLE")
-		->setText(state->current_battle ? "Exit Battle" : "Skirmish Mode");
+	    ->setText(state->current_battle ? "Exit Battle" : "Skirmish Mode");
 
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 
 	auto &notificationList = state->current_battle ? battleNotificationList : cityNotificationList;
 	auto listControl = menuform->findControlTyped<ListBox>("NOTIFICATIONS_LIST");
-	auto font = ui().getFont("smallset");
+	auto font = ui().getFont("smalfont");
 	for (auto &p : notificationList)
 	{
-		auto checkBox = mksp<CheckBox>(fw().data->loadImage("BUTTON_CHECKBOX_TRUE"), fw().data->loadImage("BUTTON_CHECKBOX_FALSE"));
-		checkBox->Size = { 240,16 };
+		auto checkBox = mksp<CheckBox>(fw().data->loadImage("BUTTON_CHECKBOX_TRUE"),
+		                               fw().data->loadImage("BUTTON_CHECKBOX_FALSE"));
+		checkBox->Size = {240, 16};
 		checkBox->setData(mksp<UString>(p.first));
 		checkBox->setChecked(config().getBool(p.first));
 		auto label = checkBox->createChild<Label>(p.second, font);
-		label->Size = { 220,16 };
-		label->Location = { 20,0 };
+		label->Size = {216, 16};
+		label->Location = {24, 0};
 		listControl->addItem(checkBox);
 	}
 }

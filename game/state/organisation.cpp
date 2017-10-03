@@ -181,8 +181,14 @@ const UString &Organisation::getTypeName()
 	static UString name = "Organisation";
 	return name;
 }
-Organisation::MissionPattern::MissionPattern(uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat, UnitType unitType, unsigned minAmount, unsigned maxAmount, std::set<StateRef<VehicleType>> allowedTypes, Target target)
-	: minIntervalRepeat(minIntervalRepeat), maxIntervalRepeat(maxIntervalRepeat), unitType(unitType), minAmount(minAmount), maxAmount(maxAmount), allowedTypes(allowedTypes), target(target)
+Organisation::MissionPattern::MissionPattern(uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat,
+                                             UnitType unitType, unsigned minAmount,
+                                             unsigned maxAmount,
+                                             std::set<StateRef<VehicleType>> allowedTypes,
+                                             Target target)
+    : minIntervalRepeat(minIntervalRepeat), maxIntervalRepeat(maxIntervalRepeat),
+      unitType(unitType), minAmount(minAmount), maxAmount(maxAmount), allowedTypes(allowedTypes),
+      target(target)
 {
 }
 }; // namespace OpenApoc

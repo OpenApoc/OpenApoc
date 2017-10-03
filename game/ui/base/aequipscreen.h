@@ -24,6 +24,7 @@ class Building;
 class BitmapFont;
 class Graphic;
 class Organisation;
+class Base;
 enum class BodyPart;
 
 class AEquipScreen : public Stage
@@ -115,14 +116,14 @@ class AEquipScreen : public Stage
 	void addItemToInventoryVehicle(sp<AEquipment> item);
 	void addItemToInventoryBuilding(sp<AEquipment> item);
 	void addItemToInventoryAgent(sp<AEquipment> item);
-	
+
 	// Try pick up item from agent's slot
 	// if alternative and forced is set then only do alternative or none at all
 	bool tryPickUpItem(sp<Agent> agent, Vec2<int> slotPos, bool alternative, bool forced = false);
 	bool tryPickUpItem(Vec2<int> inventoryPos);
 	bool tryPickUpItem(sp<AEquipmentType> item);
 	void pickUpItem(sp<AEquipment> item);
-	bool tryPlaceItem(sp<Agent> agent, Vec2<int> slotPos, bool * insufficientTU = nullptr);
+	bool tryPlaceItem(sp<Agent> agent, Vec2<int> slotPos, bool *insufficientTU = nullptr);
 
 	void processTemplate(int idx, bool remember);
 
@@ -130,6 +131,9 @@ class AEquipScreen : public Stage
 	void closeScreen();
 
 	bool isInVicinity(sp<Agent> agent);
+	StateRef<Building> getAgentBuilding(sp<Agent> agent);
+	StateRef<Vehicle> getAgentVehicle(sp<Agent> agent);
+	StateRef<Base> getAgentBase(sp<Agent> agent);
 
   public:
 	AEquipScreen(sp<GameState> state, sp<Agent> firstAgent = nullptr);

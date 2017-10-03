@@ -108,6 +108,9 @@ void CityTileView::eventOccurred(Event *e)
 			case SDLK_KP_0:
 				DEBUG_DIRECTION = -1;
 				return;
+			case SDLK_KP_5:
+				DEBUG_ONLY_TYPE = !DEBUG_ONLY_TYPE;
+				return;
 			case SDLK_KP_9:
 				DEBUG_DIRECTION = 0;
 				return;
@@ -286,23 +289,24 @@ void CityTileView::render()
 											{
 												visible = s->type->connection[DEBUG_DIRECTION];
 											}
-											visible = visible &&
-											          s->type->tile_type ==
-											              SceneryTileType::TileType::Road;
+											visible =
+											    visible && (!DEBUG_ONLY_TYPE ||
+											                s->type->tile_type ==
+											                    SceneryTileType::TileType::Road);
 										}
 										if (DEBUG_SHOW_TUBE)
 										{
 											if (DEBUG_DIRECTION == -1)
 											{
-												visible = s->building || s->type->tube[0] ||
-												          s->type->tube[1] || s->type->tube[2] ||
-												          s->type->tube[3] || s->type->tube[4] ||
-												          s->type->tube[5];
+												visible = s->type->tube[0] || s->type->tube[1] ||
+												          s->type->tube[2] || s->type->tube[3] ||
+												          s->type->tube[4] || s->type->tube[5];
 											}
 											else
 											{
 												visible = s->type->tube[DEBUG_DIRECTION];
 											}
+											visible = visible || (!DEBUG_ONLY_TYPE && s->building);
 										}
 									}
 									default:
@@ -470,7 +474,8 @@ void CityTileView::render()
 			// Compile list of agent destinations
 			for (auto &a : state.agents)
 			{
-				if (a.second->owner != state.getPlayer() || a.second->city != state.current_city || a.second->currentVehicle)
+				if (a.second->owner != state.getPlayer() || a.second->city != state.current_city ||
+				    a.second->currentVehicle)
 				{
 					continue;
 				}

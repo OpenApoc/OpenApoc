@@ -49,7 +49,6 @@ static_assert(sizeof(struct OrgInfiltrationSpeed) == 4, "Invalid OrgInfiltration
 #define ORGANISATION_INFILTRATION_SPEED_OFFSET_START 1320112
 #define ORGANISATION_INFILTRATION_SPEED_OFFSET_END 1320224
 
-
 struct OrgVehicleParkData
 {
 	uint32_t vehiclePark;

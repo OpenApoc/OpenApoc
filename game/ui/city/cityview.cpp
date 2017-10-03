@@ -6,9 +6,9 @@
 #include "forms/label.h"
 #include "forms/list.h"
 #include "forms/radiobutton.h"
-#include "framework/configfile.h"
 #include "forms/ticker.h"
 #include "forms/ui.h"
+#include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
@@ -81,7 +81,8 @@ static const std::vector<UString> TAB_FORM_NAMES = {
 
 } // anonymous namespace
 
-bool CityView::handleClickedBuilding(StateRef<Building> building, bool rightClick, CitySelectionState selState)
+bool CityView::handleClickedBuilding(StateRef<Building> building, bool rightClick,
+                                     CitySelectionState selState)
 {
 	// Alt opens info screens
 	if (modifierLAlt || modifierRAlt)
@@ -105,7 +106,7 @@ bool CityView::handleClickedBuilding(StateRef<Building> building, bool rightClic
 		{
 			// Building screen
 			fw().stageQueueCommand(
-			{ StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, building) });
+			    {StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, building)});
 		}
 		else
 		{
@@ -114,22 +115,21 @@ bool CityView::handleClickedBuilding(StateRef<Building> building, bool rightClic
 				// Base screen
 				state->current_base = building->base;
 				this->uiTabs[0]
-					->findControlTyped<Label>("TEXT_BASE_NAME")
-					->setText(this->state->current_base->name);
-				fw().stageQueueCommand(
-				{ StageCmd::Command::PUSH, mksp<BaseScreen>(this->state) });
+				    ->findControlTyped<Label>("TEXT_BASE_NAME")
+				    ->setText(this->state->current_base->name);
+				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BaseScreen>(this->state)});
 			}
 			else if (building->base_layout && building->owner.id == "ORG_GOVERNMENT")
 			{
 				// Base buy screen
 				fw().stageQueueCommand(
-				{ StageCmd::Command::PUSH, mksp<BaseBuyScreen>(state, building) });
+				    {StageCmd::Command::PUSH, mksp<BaseBuyScreen>(state, building)});
 			}
 			else
 			{
 				// Building screen
-				fw().stageQueueCommand({ StageCmd::Command::PUSH,
-					mksp<BuildingScreen>(this->state, building) });
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, building)});
 			}
 		}
 		return true;
@@ -145,31 +145,29 @@ bool CityView::handleClickedBuilding(StateRef<Building> building, bool rightClic
 					// Base screen
 					state->current_base = building->base;
 					this->uiTabs[0]
-						->findControlTyped<Label>("TEXT_BASE_NAME")
-						->setText(this->state->current_base->name);
+					    ->findControlTyped<Label>("TEXT_BASE_NAME")
+					    ->setText(this->state->current_base->name);
 					fw().stageQueueCommand(
-					{ StageCmd::Command::PUSH, mksp<BaseScreen>(this->state) });
+					    {StageCmd::Command::PUSH, mksp<BaseScreen>(this->state)});
 				}
-				else if (building->base_layout &&
-					building->owner.id == "ORG_GOVERNMENT")
+				else if (building->base_layout && building->owner.id == "ORG_GOVERNMENT")
 				{
 					// Base buy screen
-					fw().stageQueueCommand({ StageCmd::Command::PUSH,
-						mksp<BaseBuyScreen>(state, building) });
+					fw().stageQueueCommand(
+					    {StageCmd::Command::PUSH, mksp<BaseBuyScreen>(state, building)});
 				}
 			}
 			else
 			{
 				// Building screen for any building
-				fw().stageQueueCommand({ StageCmd::Command::PUSH,
-					mksp<BuildingScreen>(this->state, building) });
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, building)});
 			}
 			break;
 		}
 		case CitySelectionState::AttackBuilding:
 		{
-			orderAttack(
-				StateRef<Building>{state.get(), Building::getId(*state, building)});
+			orderAttack(StateRef<Building>{state.get(), Building::getId(*state, building)});
 			setSelectionState(CitySelectionState::Normal);
 			break;
 		}
@@ -183,7 +181,8 @@ bool CityView::handleClickedBuilding(StateRef<Building> building, bool rightClic
 	return true;
 }
 
-bool CityView::handleClickedVehicle(StateRef<Vehicle> vehicle, bool rightClick, CitySelectionState selState)
+bool CityView::handleClickedVehicle(StateRef<Vehicle> vehicle, bool rightClick,
+                                    CitySelectionState selState)
 {
 	// Alt opens info screens
 	if (modifierLAlt || modifierRAlt)
@@ -209,7 +208,7 @@ bool CityView::handleClickedVehicle(StateRef<Vehicle> vehicle, bool rightClick, 
 			{
 				// Location screen
 				fw().stageQueueCommand(
-				{ StageCmd::Command::PUSH, mksp<LocationScreen>(this->state, vehicle) });
+				    {StageCmd::Command::PUSH, mksp<LocationScreen>(this->state, vehicle)});
 			}
 		}
 		else
@@ -219,7 +218,7 @@ bool CityView::handleClickedVehicle(StateRef<Vehicle> vehicle, bool rightClick, 
 				// Equipscreen for owner vehicles
 				auto equipScreen = mksp<VEquipScreen>(this->state);
 				equipScreen->setSelectedVehicle(vehicle);
-				fw().stageQueueCommand({ StageCmd::Command::PUSH, equipScreen });
+				fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
 			}
 		}
 		return true;
@@ -228,29 +227,28 @@ bool CityView::handleClickedVehicle(StateRef<Vehicle> vehicle, bool rightClick, 
 	{
 		case CitySelectionState::Normal:
 		{
-			orderSelect(vehicle,
-				rightClick,
-				modifierLCtrl || modifierRCtrl);
+			orderSelect(vehicle, rightClick, modifierLCtrl || modifierRCtrl);
 			break;
 		}
 		case CitySelectionState::AttackVehicle:
 		{
 			orderAttack(vehicle);
-				setSelectionState(CitySelectionState::Normal);
+			setSelectionState(CitySelectionState::Normal);
 			break;
 		}
 	}
 	return true;
 }
 
-bool CityView::handleClickedAgent(StateRef<Agent> agent, bool rightClick, CitySelectionState selState)
+bool CityView::handleClickedAgent(StateRef<Agent> agent, bool rightClick,
+                                  CitySelectionState selState)
 {
-	orderSelect(agent,rightClick,
-		modifierLCtrl || modifierRCtrl);
+	orderSelect(agent, rightClick, modifierLCtrl || modifierRCtrl);
 	return true;
 }
 
-bool CityView::handleClickedProjectile(sp<Projectile> projectile, bool rightClick, CitySelectionState selState)
+bool CityView::handleClickedProjectile(sp<Projectile> projectile, bool rightClick,
+                                       CitySelectionState selState)
 {
 	if (modifierLAlt || modifierRAlt)
 	{
@@ -286,8 +284,8 @@ void CityView::tryOpenUfopaediaEntry(StateRef<UfopaediaEntry> ufopaediaEntry)
 			LogError("No UFOPaedia category found for entry %s", ufopaediaEntry->title);
 		}
 		fw().stageQueueCommand(
-		{ StageCmd::Command::PUSH,
-			mksp<UfopaediaCategoryView>(state, ufopaedia_category, ufopaediaEntry) });
+		    {StageCmd::Command::PUSH,
+		     mksp<UfopaediaCategoryView>(state, ufopaedia_category, ufopaediaEntry)});
 	}
 }
 
@@ -422,7 +420,8 @@ void CityView::orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additiv
 			}
 		}
 	}
-	if (state->current_city->cityViewSelectedVehicles.empty() || state->current_city->cityViewSelectedVehicles.front()->owner != state->getPlayer())
+	if (state->current_city->cityViewSelectedVehicles.empty() ||
+	    state->current_city->cityViewSelectedVehicles.front()->owner != state->getPlayer())
 	{
 		return;
 	}
@@ -436,48 +435,39 @@ void CityView::orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additiv
 	LogWarning("FIX: Proper multiselect handle for vehicle controls");
 	switch (vehicle->altitude)
 	{
-	case Vehicle::Altitude::Highest:
-		vehicleForm
-			->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGHEST")
-			->setChecked(true);
-		break;
-	case Vehicle::Altitude::High:
-		vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGH")
-			->setChecked(true);
-		break;
-	case Vehicle::Altitude::Standard:
-		vehicleForm
-			->findControlTyped<RadioButton>("BUTTON_ALTITUDE_STANDARD")
-			->setChecked(true);
-		break;
-	case Vehicle::Altitude::Low:
-		vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_LOW")
-			->setChecked(true);
-		break;
+		case Vehicle::Altitude::Highest:
+			vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGHEST")->setChecked(true);
+			break;
+		case Vehicle::Altitude::High:
+			vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGH")->setChecked(true);
+			break;
+		case Vehicle::Altitude::Standard:
+			vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_STANDARD")
+			    ->setChecked(true);
+			break;
+		case Vehicle::Altitude::Low:
+			vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_LOW")->setChecked(true);
+			break;
 	}
 
 	switch (vehicle->attackMode)
 	{
-	case Vehicle::AttackMode::Aggressive:
-		vehicleForm
-			->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_AGGRESSIVE")
-			->setChecked(true);
-		break;
-	case Vehicle::AttackMode::Standard:
-		vehicleForm
-			->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_STANDARD")
-			->setChecked(true);
-		break;
-	case Vehicle::AttackMode::Defensive:
-		vehicleForm
-			->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_DEFENSIVE")
-			->setChecked(true);
-		break;
-	case Vehicle::AttackMode::Evasive:
-		vehicleForm
-			->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_EVASIVE")
-			->setChecked(true);
-		break;
+		case Vehicle::AttackMode::Aggressive:
+			vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_AGGRESSIVE")
+			    ->setChecked(true);
+			break;
+		case Vehicle::AttackMode::Standard:
+			vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_STANDARD")
+			    ->setChecked(true);
+			break;
+		case Vehicle::AttackMode::Defensive:
+			vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_DEFENSIVE")
+			    ->setChecked(true);
+			break;
+		case Vehicle::AttackMode::Evasive:
+			vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_EVASIVE")
+			    ->setChecked(true);
+			break;
 	}
 }
 
@@ -1257,8 +1247,11 @@ void CityView::update()
 				{
 					control = ControlGenerator::createVehicleControl(*state, info);
 					control->addCallback(FormEventType::MouseDown, [this, vehicle](FormsEvent *e) {
-						handleClickedVehicle(StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)}, Event::isPressed(e->forms().MouseInfo.Button,
-							Event::MouseButton::Right), CitySelectionState::Normal);
+						handleClickedVehicle(
+						    StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)},
+						    Event::isPressed(e->forms().MouseInfo.Button,
+						                     Event::MouseButton::Right),
+						    CitySelectionState::Normal);
 					});
 				}
 				newVehicleListControls[vehicle] = std::make_pair(info, control);
@@ -1305,9 +1298,12 @@ void CityView::update()
 				{
 					control = ControlGenerator::createAgentControl(*state, info);
 					control->addCallback(FormEventType::MouseDown, [this, agent](FormsEvent *e) {
-						handleClickedAgent(StateRef<Agent>{state.get(), Agent::getId(*state, agent)},
-							Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right), CitySelectionState::Normal);
-					
+						handleClickedAgent(
+						    StateRef<Agent>{state.get(), Agent::getId(*state, agent)},
+						    Event::isPressed(e->forms().MouseInfo.Button,
+						                     Event::MouseButton::Right),
+						    CitySelectionState::Normal);
+
 					});
 				}
 				newAgentListControls[agent] = std::make_pair(info, control);
@@ -1616,15 +1612,21 @@ bool CityView::handleMouseDown(Event *e)
 				}
 			}
 			// Try to handle clicks on objects
-			if (vehicle && handleClickedVehicle(StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)}, buttonPressed == Event::MouseButton::Right, selectionState))
+			if (vehicle && handleClickedVehicle(
+			                   StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)},
+			                   buttonPressed == Event::MouseButton::Right, selectionState))
 			{
 				return true;
 			}
-			if (building && handleClickedBuilding(building, buttonPressed == Event::MouseButton::Right, selectionState))
+			if (building &&
+			    handleClickedBuilding(building, buttonPressed == Event::MouseButton::Right,
+			                          selectionState))
 			{
 				return true;
 			}
-			if (projectile && handleClickedProjectile(projectile, buttonPressed == Event::MouseButton::Right, selectionState))
+			if (projectile &&
+			    handleClickedProjectile(projectile, buttonPressed == Event::MouseButton::Right,
+			                            selectionState))
 			{
 				return true;
 			}
@@ -1668,8 +1670,9 @@ bool CityView::handleGameStateEvent(Event *e)
 			}
 			if (pause)
 			{
-				fw().stageQueueCommand({ StageCmd::Command::PUSH,
-										mksp<NotificationScreen>(state, *this, gameEvent->message(), gameEvent->type) });
+				fw().stageQueueCommand({StageCmd::Command::PUSH,
+				                        mksp<NotificationScreen>(state, *this, gameEvent->message(),
+				                                                 gameEvent->type)});
 			}
 		}
 	}
@@ -1682,7 +1685,8 @@ bool CityView::handleGameStateEvent(Event *e)
 			fw().stageQueueCommand(
 			    {StageCmd::Command::PUSH,
 			     mksp<NotificationScreen>(state, *this, format("Aliens have taken over %s",
-			                                                   gameOrgEvent->organisation->name), gameEvent->type)});
+			                                                   gameOrgEvent->organisation->name),
+			                              gameEvent->type)});
 		}
 		break;
 		case GameEventType::DefendTheBase:

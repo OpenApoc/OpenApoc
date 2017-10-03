@@ -36,6 +36,7 @@ class CityTileView : public TileView
 	bool DEBUG_SHOW_ALIEN_CREW = false;
 	bool DEBUG_SHOW_ROADS = false;
 	bool DEBUG_SHOW_TUBE = false;
+	bool DEBUG_ONLY_TYPE = false;
 	int DEBUG_DIRECTION = -1;
 
   private:

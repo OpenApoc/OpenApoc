@@ -59,9 +59,6 @@ class AgentMission
   public:
 	AgentMission() = default;
 
-	static std::map<StateRef<City>, std::map<Vec3<int>, std::list<Vec3<int>>>> agentPathCache;
-	static void clearPathCache(StateRef<City> city);
-
 	// Methods used in pathfinding etc.
 	bool getNextDestination(GameState &state, Agent &a, Vec3<float> &destPos);
 	void update(GameState &state, Agent &a, unsigned int ticks, bool finished = false);

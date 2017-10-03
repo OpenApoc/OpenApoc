@@ -109,4 +109,16 @@ float TileObjectScenery::getZOrder() const
 	return getCenter().z - 3.5f + (float)getType() / 1000.0f;
 }
 
+void TileObjectScenery::setPosition(Vec3<float> newPosition)
+{
+	TileObject::setPosition(newPosition);
+	map.clearPathCaches();
+}
+
+void TileObjectScenery::removeFromMap()
+{
+	TileObject::removeFromMap();
+	map.clearPathCaches();
+}
+
 } // namespace OpenApoc

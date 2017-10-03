@@ -128,8 +128,8 @@ UFO2P::UFO2P(std::string file_name)
 	    new DataChunk<OrgInfiltrationSpeed>(file, ORGANISATION_INFILTRATION_SPEED_OFFSET_START,
 	                                        ORGANISATION_INFILTRATION_SPEED_OFFSET_END));
 	this->vehicle_park.reset(
-		new DataChunk<OrgVehicleParkData>(file, ORGANISATION_VEHICLE_PARK_DATA_OFFSET_START,
-			ORGANISATION_VEHICLE_PARK_DATA_OFFSET_END));
+	    new DataChunk<OrgVehicleParkData>(file, ORGANISATION_VEHICLE_PARK_DATA_OFFSET_START,
+	                                      ORGANISATION_VEHICLE_PARK_DATA_OFFSET_END));
 
 	this->infiltration_speed_agent.reset(new DataChunk<AgentInfiltrationSpeed>(
 	    file, AGENT_INFILTRATION_SPEED_OFFSET_START, AGENT_INFILTRATION_SPEED_OFFSET_END));

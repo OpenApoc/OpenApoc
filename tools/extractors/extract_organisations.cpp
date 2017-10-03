@@ -113,7 +113,7 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 			o->current_relations[o2] = (float)rdata.relationships[j];
 		}
 
-		if (i!=ORG_CIVILIAN)
+		if (i != ORG_CIVILIAN)
 		{
 			auto vdata = data.vehicle_park->get(i);
 
@@ -154,7 +154,8 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 					break;
 				// Miscellaneous (many orgs have this value)
 				default:
-					LogError("Modded game? Found unexpected vehiclePark value of %d", (int)vdata.vehiclePark);
+					LogError("Modded game? Found unexpected vehiclePark value of %d",
+					         (int)vdata.vehiclePark);
 				case 4:
 					o->vehiclePark[{&state, "VEHICLETYPE_PHOENIX_HOVERCAR"}] = 2;
 					o->vehiclePark[{&state, "VEHICLETYPE_HOVERBIKE"}] = 1;
@@ -196,7 +197,7 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 					o->vehiclePark[{&state, "VEHICLETYPE_VALKYRIE_INTERCEPTOR"}] = 8;
 					o->vehiclePark[{&state, "VEHICLETYPE_HAWK_AIR_WARRIOR"}] = 7;
 					break;
-				//Megapol
+				// Megapol
 				case 55:
 					if (i != ORG_MEGAPOL)
 					{
@@ -222,7 +223,8 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 			{
 				// Government
 				case 0:
-					o->missionQueue.emplace_back((uint64_t)TICKS_PER_MINUTE, Organisation::MissionPattern{});
+					o->missionQueue.emplace_back((uint64_t)TICKS_PER_MINUTE,
+					                             Organisation::MissionPattern{});
 					break;
 				// Transtellar
 				case 3:

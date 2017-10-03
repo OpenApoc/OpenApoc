@@ -7,13 +7,18 @@ Support me:
 ---
 
 General:
-- 
-
-Bugfixes:
-- agents drawn in vehicles
+- agent equipment screen fully done (multi select, different inventory types, faded images, template and multi-applied actions)
+- options menu allows disabling scroll and notifications
+- skirmish now gives optiojn to arm then launches
+- getting closer to properly starting battles
 
 City:
 - 
 
 Battle:
 - agent display fatal wounds and psi
+
+Bugfixes:
+- agents no longer drawn in vehicles
+- mouse scroll working in battle
+- numerous in aequip

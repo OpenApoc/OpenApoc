@@ -1,5 +1,6 @@
 #include "game/state/city/scenery.h"
 #include "framework/logger.h"
+#include "game/state/city/agentmission.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/doodad.h"
@@ -7,7 +8,6 @@
 #include "game/state/gamestate.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "game/state/tileview/collision.h"
-#include "game/state/city/agentmission.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_scenery.h"
 
@@ -77,7 +77,6 @@ void Scenery::die(GameState &state)
 	{
 		return;
 	}
-	AgentMission::clearPathCache(city);
 	if (!this->damaged && type->damagedTile)
 	{
 		this->damaged = true;
@@ -112,8 +111,6 @@ void Scenery::collapse(GameState &state)
 	if (this->type->isLandingPad)
 		return;
 	this->falling = true;
-
-	AgentMission::clearPathCache(city);
 
 	for (auto &s : this->supports)
 		s->collapse(state);
@@ -195,7 +192,7 @@ bool Scenery::canRepair() const
 
 void Scenery::repair(GameState &state)
 {
-	auto &map = this->city->map;
+	auto &map = *this->city->map;
 	if (this->isAlive())
 		LogError("Trying to fix something that isn't broken");
 	this->damaged = false;
@@ -207,14 +204,14 @@ void Scenery::repair(GameState &state)
 	if (this->overlayDoodad)
 		this->overlayDoodad->remove(state);
 	this->overlayDoodad = nullptr;
-	map->addObjectToMap(shared_from_this());
+	map.addObjectToMap(shared_from_this());
 	if (type->overlaySprite)
 	{
 		this->overlayDoodad =
 		    mksp<Doodad>(this->getPosition(), type->imageOffset, false, 1, type->overlaySprite);
-		map->addObjectToMap(this->overlayDoodad);
+		map.addObjectToMap(this->overlayDoodad);
 	}
-	AgentMission::clearPathCache(city);
+	map.clearPathCaches();
 }
 
 bool Scenery::isAlive() const
