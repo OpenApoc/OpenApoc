@@ -3,9 +3,11 @@
 #include "forms/form.h"
 #include "forms/label.h"
 #include "forms/ui.h"
+#include "framework/configfile.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
+#include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/ui/battle/battleview.h"
 #include "game/ui/city/cityview.h"
@@ -14,14 +16,11 @@ namespace OpenApoc
 {
 
 NotificationScreen::NotificationScreen(sp<GameState> state, CityView &cityView,
-                                       const UString &message)
-    : Stage(), menuform(ui().getForm("notification")), state(state)
+                                       const UString &message, GameEventType eventType)
+    : Stage(), menuform(ui().getForm("notification")), eventType(eventType), state(state)
 {
 	menuform->findControlTyped<Label>("TEXT_NOTIFICATION")->setText(message);
 
-	menuform->findControl("BUTTON_RESUME")->addCallback(FormEventType::ButtonClick, [](Event *) {
-		fw().stageQueueCommand({StageCmd::Command::POP});
-	});
 	menuform->findControl("BUTTON_PAUSE")
 	    ->addCallback(FormEventType::ButtonClick, [&cityView](Event *) {
 		    cityView.zoomLastEvent();
@@ -31,36 +30,49 @@ NotificationScreen::NotificationScreen(sp<GameState> state, CityView &cityView,
 }
 
 NotificationScreen::NotificationScreen(sp<GameState> state, BattleView &battleView,
-                                       const UString &message)
-    : Stage(), menuform(ui().getForm("notification")), state(state)
+                                       const UString &message, GameEventType eventType)
+    : Stage(), menuform(ui().getForm("notification")), eventType(eventType), state(state)
 {
 	menuform->findControlTyped<Label>("TEXT_NOTIFICATION")->setText(message);
 
-	menuform->findControl("BUTTON_RESUME")->addCallback(FormEventType::ButtonClick, [](Event *) {
-		fw().stageQueueCommand({StageCmd::Command::POP});
-	});
 	menuform->findControl("BUTTON_PAUSE")
 	    ->addCallback(FormEventType::ButtonClick, [&battleView](Event *) {
 		    battleView.zoomLastEvent();
 		    battleView.setUpdateSpeed(BattleUpdateSpeed::Pause);
 		    fw().stageQueueCommand({StageCmd::Command::POP});
 		});
-
-	menuform->findControlTyped<CheckBox>("CHECKBOX_ALWAYS_PAUSE")
-	    ->addCallback(FormEventType::CheckBoxChange, [](Event *) {
-
-		});
 }
 
 NotificationScreen::~NotificationScreen() = default;
 
-void NotificationScreen::begin() {}
+void NotificationScreen::begin()
+{
+	menuform->findControl("BUTTON_RESUME")->addCallback(FormEventType::ButtonClick, [](Event *) {
+		fw().stageQueueCommand({StageCmd::Command::POP});
+	});
+
+	menuform->findControlTyped<CheckBox>("CHECKBOX_ALWAYS_PAUSE")->setChecked(true);
+}
 
 void NotificationScreen::pause() {}
 
-void NotificationScreen::resume() {}
+void NotificationScreen::resume()
+{
+	if (!config().getBool(GameEvent::optionsMap.at(eventType)))
+	{
+		fw().stageQueueCommand({StageCmd::Command::POP});
+		menuform->findControlTyped<CheckBox>("CHECKBOX_ALWAYS_PAUSE")->setChecked(false);
+	}
+}
 
-void NotificationScreen::finish() {}
+void NotificationScreen::finish()
+{
+	if (GameEvent::optionsMap.find(eventType) != GameEvent::optionsMap.end())
+	{
+		config().set(GameEvent::optionsMap.at(eventType),
+		             menuform->findControlTyped<CheckBox>("CHECKBOX_ALWAYS_PAUSE")->isChecked());
+	}
+}
 
 void NotificationScreen::eventOccurred(Event *e)
 {

@@ -36,6 +36,9 @@ class AgentAssignment : public Form
 	void setLocation();
 	void updateLocation();
 
+	void updateControl(sp<Agent> agent);
+	void updateControl(sp<Vehicle> vehicle);
+
 	void update() override;
 };
 

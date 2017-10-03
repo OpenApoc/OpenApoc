@@ -61,16 +61,22 @@ Cityscape Keyboard:
 Cityscape Debug:
 - Debug hotkeys are always active
 - [R] repairs all buildings
+- [F4] show aliens in buildings on strategy map
+- [F5] show vehicle paths
 - [F6] dump voxelmap for line of sight to tileviewvoxels.png
 - [F7] dump voxelmap for line of sight to tileviewvoxels.png (fast way, calculate 1/4 of points)
 - [F8] dump voxelmap for line of fire to tileviewvoxels.png
 - [F9] dump voxelmap for line of fire to tileviewvoxels.png (fast way, calculate 1/4 of points)
 - [F10] highlight tube in city
 - [F11] highlight roads in city
-- [F12] show aliens in buildings on strategy map
+- [F12] highlight hills in city
 - [Numpad 1379] show only roads/tubes that have an outgoing connection in this direction
 - [Numpad 28] show only tubes that have an outgoing connection down [2] or up [8]
 - [Numpad 0] show all roads/tubes again
+- [Numpad 5] 
+  - For tubes, switch between showing only tiles with defined tube passability, or to also include tiles belonging to buildings
+  - For roads, switch between showing only tiles marked as "road", or to also include tiles marked with road direction
+  - For hills, switch between showing only tiles marked as "road", or to also include tiles marked with hill direction
  
 Battlescape Mouse:
 * [Alt] When giving moving orders, makes unit keep facing to the target (making unit strafe or move backwards)
@@ -142,7 +148,6 @@ Battlescape Debug:
 - [Shift] + [P] gives every unit 0 psi defense and 100 psi energy/attack
 - [H] Restore stats of every unit, heals stun damage and fatal wounds
 - [T] Restore TU of every player unit
-- [N] Toggle notification popups
 - [F] Re-link support lines for battlescape map parts
 - [Numpad 0] Spawn vortex mine explosion at cursor
 - [Numpad 1-9] Spawn a shot with over 9000 at cursor in specified direction (5 being "down")

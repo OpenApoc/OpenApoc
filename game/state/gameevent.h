@@ -6,6 +6,7 @@
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
+#include <map>
 
 namespace OpenApoc
 {
@@ -24,6 +25,8 @@ class GameEvent : public Event
 {
   public:
 	GameEventType type;
+
+	static const std::map<GameEventType, UString> optionsMap;
 
 	GameEvent(GameEventType type);
 	~GameEvent() override = default;

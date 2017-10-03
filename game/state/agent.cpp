@@ -459,8 +459,17 @@ void Agent::enterVehicle(GameState &state, StateRef<Vehicle> v)
 		currentBuilding->currentAgents.erase({&state, shared_from_this()});
 		currentBuilding = nullptr;
 	}
+	if (currentVehicle)
+	{
+		currentVehicle->currentAgents.erase({&state, shared_from_this()});
+		currentVehicle = nullptr;
+	}
 	currentVehicle = v;
 	currentVehicle->currentAgents.insert({&state, shared_from_this()});
+	if (currentVehicle->getMaxPassengers() < currentVehicle->getPassengers())
+	{
+		LogWarning("WHAT THE HELL!? Vehicle over passenger limit??");
+	}
 }
 
 bool Agent::canTeleport() const
@@ -540,6 +549,16 @@ bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
 	// So there is no point checking if there's an overlap (there will be)
 	if (slotIsArmor)
 	{
+		// We still have to check that slot itself isn't full
+		for (auto &otherEquipment : this->equipment)
+		{
+			// Something is already in that slot, fail
+			if (otherEquipment->equippedPosition == slotOrigin)
+			{
+				return false;
+			}
+		}
+
 		// This could would check that every slot is of appropriate type,
 		// But for units armor this is unnecesary
 		/*

@@ -18,15 +18,15 @@ class TileMap;
 class Building;
 class UString;
 class SceneryTileType;
+class City;
 
 class AgentTileHelper : public CanEnterTileHelper
 {
   private:
 	TileMap &map;
-	Agent &a;
 
   public:
-	AgentTileHelper(TileMap &map, Agent &a);
+	AgentTileHelper(TileMap &map);
 
 	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
 	                  bool ignoreAllUnits = false) const override;

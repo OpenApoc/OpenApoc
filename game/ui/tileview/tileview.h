@@ -42,6 +42,8 @@ class TileView : public Stage, public TileTransform
 	bool scrollLeftM;
 	bool scrollRightM;
 
+	bool autoScroll = false;
+
 	Vec2<int> dpySize;
 
 	Colour strategyViewBoxColour;

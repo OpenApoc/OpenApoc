@@ -10,6 +10,7 @@
 #include "forms/tristatebox.h"
 #include "forms/ui.h"
 #include "framework/apocresources/cursor.h"
+#include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/font.h"
@@ -1246,6 +1247,7 @@ BattleView::~BattleView() = default;
 
 void BattleView::begin()
 {
+	BattleTileView::begin();
 	uiTabsRT[0]->findControl("BUTTON_LAYER_1")->setVisible(maxZDraw >= 1);
 	uiTabsRT[0]->findControl("BUTTON_LAYER_2")->setVisible(maxZDraw >= 2);
 	uiTabsRT[0]->findControl("BUTTON_LAYER_3")->setVisible(maxZDraw >= 3);
@@ -1282,6 +1284,7 @@ void BattleView::begin()
 
 void BattleView::resume()
 {
+	BattleTileView::resume();
 	modifierLAlt = false;
 	modifierLCtrl = false;
 	modifierLShift = false;
@@ -1577,6 +1580,7 @@ void BattleView::update()
 			    6, newUnitInfo.agent ? (int)newUnitInfo.agent->unit->visibleEnemies.size() : 0);
 			if (newSpottedInfo != spottedInfo[i])
 			{
+				spottedInfo[i] = newSpottedInfo;
 				updateSpottedInfo(i);
 			}
 
@@ -2868,43 +2872,44 @@ void BattleView::eventOccurred(Event *e)
 		}
 	}
 
-	if (e->type() == EVENT_MOUSE_MOVE)
+	switch (e->type())
 	{
-		Vec2<float> screenOffset = {getScreenOffset().x, getScreenOffset().y};
-		// Offset by 4 since ingame 4 is the typical height of the ground, and game displays cursor
-		// on top of the ground
-		setSelectedTilePosition(screenToTileCoords(
-		    Vec2<float>((float)e->mouse().X, (float)e->mouse().Y + 4) - screenOffset,
-		    (float)getZLevel() - 1.0f));
-		return;
-	}
-	if (e->type() == EVENT_KEY_DOWN)
-	{
-		if (handleKeyDown(e))
+		case EVENT_MOUSE_MOVE:
 		{
-			return;
+			Vec2<float> screenOffset = {getScreenOffset().x, getScreenOffset().y};
+			// Offset by 4 since ingame 4 is the typical height of the ground, and game displays
+			// cursor
+			// on top of the ground
+			setSelectedTilePosition(screenToTileCoords(
+			    Vec2<float>((float)e->mouse().X, (float)e->mouse().Y + 4) - screenOffset,
+			    (float)getZLevel() - 1.0f));
+			// do not return, pass on to allow scrolling
+			break;
 		}
-	}
-	if (e->type() == EVENT_KEY_UP)
-	{
-		if (handleKeyUp(e))
-		{
-			return;
-		}
-	}
-	if (e->type() == EVENT_MOUSE_DOWN)
-	{
-		if (handleMouseDown(e))
-		{
-			return;
-		}
-	}
-	if (e->type() == EVENT_GAME_STATE)
-	{
-		if (handleGameStateEvent(e))
-		{
-			return;
-		}
+		case EVENT_KEY_DOWN:
+			if (handleKeyDown(e))
+			{
+				return;
+			}
+			break;
+		case EVENT_KEY_UP:
+			if (handleKeyUp(e))
+			{
+				return;
+			}
+			break;
+		case EVENT_MOUSE_DOWN:
+			if (handleMouseDown(e))
+			{
+				return;
+			}
+			break;
+		case EVENT_GAME_STATE:
+			if (handleGameStateEvent(e))
+			{
+				return;
+			}
+			break;
 	}
 	BattleTileView::eventOccurred(e);
 }
@@ -3151,12 +3156,6 @@ bool BattleView::handleKeyDown(Event *e)
 					battle.endTurn(*state);
 				}
 				return true;
-			// Notification toggle
-			case SDLK_n:
-			{
-				DEBUG_DISABLE_NOTIFICATIONS = !DEBUG_DISABLE_NOTIFICATIONS;
-				return true;
-			}
 			// Blow debug vortex
 			case SDLK_KP_0:
 				debugVortex();
@@ -3932,10 +3931,19 @@ bool BattleView::handleGameStateEvent(Event *e)
 	{
 		state->logEvent(gameEvent);
 		baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
-		if (battle.mode == Battle::Mode::RealTime && !DEBUG_DISABLE_NOTIFICATIONS)
+		if (battle.mode == Battle::Mode::RealTime)
 		{
-			fw().stageQueueCommand({StageCmd::Command::PUSH,
-			                        mksp<NotificationScreen>(state, *this, gameEvent->message())});
+			bool pause = false;
+			if (GameEvent::optionsMap.find(gameEvent->type) != GameEvent::optionsMap.end())
+			{
+				pause = config().getBool(GameEvent::optionsMap.at(gameEvent->type));
+			}
+			if (pause)
+			{
+				fw().stageQueueCommand({StageCmd::Command::PUSH,
+				                        mksp<NotificationScreen>(state, *this, gameEvent->message(),
+				                                                 gameEvent->type)});
+			}
 		}
 	}
 	switch (gameEvent->type)
@@ -4370,7 +4378,11 @@ void BattleView::updateSquadInfo(int index)
 	    ->setImage(squadOverlay[info.selectedMode]);
 }
 
-void BattleView::finish() { fw().getCursor().CurrentType = ApocCursor::CursorType::Normal; }
+void BattleView::finish()
+{
+	BattleTileView::finish();
+	fw().getCursor().CurrentType = ApocCursor::CursorType::Normal;
+}
 
 AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 {

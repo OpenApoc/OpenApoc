@@ -62,15 +62,7 @@ void CheckBox::onRender()
 
 	if (useimage != nullptr)
 	{
-		if (useimage->size == Vec2<unsigned int>{Size.x, Size.y})
-		{
-			fw().renderer->draw(useimage, Vec2<float>{0, 0});
-		}
-		else
-		{
-			fw().renderer->drawScaled(useimage, Vec2<float>{0, 0},
-			                          Vec2<float>{this->Size.x, this->Size.y});
-		}
+		fw().renderer->draw(useimage, Vec2<float>{0, 0});
 	}
 }
 

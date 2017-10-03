@@ -196,7 +196,6 @@ Global
 		{D7563548-254B-46EF-A911-999CEE6BCDD8}.Release|Win32.ActiveCfg = Release|Win32
 		{D7563548-254B-46EF-A911-999CEE6BCDD8}.Release|Win32.Build.0 = Release|Win32
 		{D7563548-254B-46EF-A911-999CEE6BCDD8}.Release|x64.ActiveCfg = Release|x64
-		{D7563548-254B-46EF-A911-999CEE6BCDD8}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

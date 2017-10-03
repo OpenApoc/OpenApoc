@@ -3,6 +3,7 @@
 #include "framework/stage.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
+#include <functional>
 
 namespace OpenApoc
 {
@@ -23,6 +24,8 @@ class Skirmish : public Stage
 	StateRef<Building> locBuilding;
 	StateRef<VehicleType> locVehicle;
 	StateRef<Base> locBase;
+
+	std::function<void()> loadBattle = 0;
 
 	void clearLocation();
 	void updateLocationLabel();

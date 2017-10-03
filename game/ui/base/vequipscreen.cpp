@@ -2,7 +2,7 @@
 #include "forms/form.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
-#include "forms/list.h"
+#include "forms/listbox.h"
 #include "forms/radiobutton.h"
 #include "forms/ui.h"
 #include "framework/apocresources/cursor.h"

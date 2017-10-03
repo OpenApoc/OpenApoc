@@ -7,13 +7,9 @@ Support me:
 ---
 
 General:
-- 
-
-Bugfixes:
-- agents drawn in vehicles
 
 City:
-- 
 
 Battle:
-- agent display fatal wounds and psi
+
+Bugfixes:

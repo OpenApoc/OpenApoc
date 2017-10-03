@@ -1,4 +1,5 @@
 #include "game/ui/tileview/tileview.h"
+#include "framework/configfile.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
@@ -23,11 +24,11 @@ TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
 
 TileView::~TileView() = default;
 
-void TileView::begin() {}
+void TileView::begin() { autoScroll = config().getBool("Options.Misc.AutoScroll"); }
 
 void TileView::pause() {}
 
-void TileView::resume() {}
+void TileView::resume() { autoScroll = config().getBool("Options.Misc.AutoScroll"); }
 
 void TileView::finish() {}
 
@@ -117,10 +118,10 @@ void TileView::eventOccurred(Event *e)
 	}
 	else if (e->type() == EVENT_MOUSE_MOVE)
 	{
-		scrollLeftM = e->mouse().X < MOUSE_SCROLL_MARGIN;
-		scrollRightM = e->mouse().X >= dpySize.x - MOUSE_SCROLL_MARGIN;
-		scrollUpM = e->mouse().Y < MOUSE_SCROLL_MARGIN;
-		scrollDownM = e->mouse().Y >= dpySize.y - MOUSE_SCROLL_MARGIN;
+		scrollLeftM = autoScroll && e->mouse().X < MOUSE_SCROLL_MARGIN;
+		scrollRightM = autoScroll && e->mouse().X >= dpySize.x - MOUSE_SCROLL_MARGIN;
+		scrollUpM = autoScroll && e->mouse().Y < MOUSE_SCROLL_MARGIN;
+		scrollDownM = autoScroll && e->mouse().Y >= dpySize.y - MOUSE_SCROLL_MARGIN;
 	}
 }
 

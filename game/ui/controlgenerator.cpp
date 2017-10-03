@@ -76,6 +76,7 @@ void ControlGenerator::init(GameState &state)
 		    i)));
 	}
 
+	vehiclePassengerCountIcons.emplace_back();
 	for (int i = 51; i <= 63; i++)
 	{
 		vehiclePassengerCountIcons.push_back(fw().data->loadImage(format(
@@ -344,9 +345,9 @@ AgentInfo ControlGenerator::createAgentInfo(GameState &state, sp<Agent> a,
 sp<Control> ControlGenerator::createAgentControl(GameState &state, const AgentInfo &info)
 {
 	auto baseControl = mksp<Graphic>();
-	baseControl->AutoSize = true;
-	baseControl->Location = {0, 0};
 	fillAgentControl(state, baseControl, info);
+	baseControl->Location = {0, 0};
+	baseControl->Size = singleton.battleSelect[(int)info.selected]->size;
 	return baseControl;
 }
 
@@ -439,17 +440,12 @@ void ControlGenerator::fillAgentControl(GameState &state, sp<Graphic> baseContro
 		return;
 	}
 	baseControl->setImage(singleton.battleSelect[(int)info.selected]);
+	baseControl->setData(info.agent);
 
 	auto unitIcon = baseControl->createChild<Graphic>(info.agent->getPortrait().icon);
 	unitIcon->AutoSize = true;
 	unitIcon->Location = {2, 1};
 
-	if (info.faded)
-	{
-		auto fadeIcon = baseControl->createChild<Graphic>(singleton.iconShade);
-		fadeIcon->AutoSize = true;
-		fadeIcon->Location = {2, 1};
-	}
 	if (info.useRank)
 	{
 		auto rankIcon = baseControl->createChild<Graphic>(singleton.unitRanks[(int)info.rank]);
@@ -513,6 +509,12 @@ void ControlGenerator::fillAgentControl(GameState &state, sp<Graphic> baseContro
 		auto icon = baseControl->createChild<Graphic>(singleton.iconPsiOut);
 		icon->AutoSize = true;
 		icon->Location = {0, 0};
+	}
+	if (info.faded)
+	{
+		auto fadeIcon = baseControl->createChild<Graphic>(singleton.iconShade);
+		fadeIcon->AutoSize = true;
+		fadeIcon->Location = {2, 1};
 	}
 }
 

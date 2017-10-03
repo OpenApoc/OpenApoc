@@ -1,5 +1,6 @@
 #include "game/state/city/scenery.h"
 #include "framework/logger.h"
+#include "game/state/city/agentmission.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/doodad.h"
@@ -191,7 +192,7 @@ bool Scenery::canRepair() const
 
 void Scenery::repair(GameState &state)
 {
-	auto &map = this->city->map;
+	auto &map = *this->city->map;
 	if (this->isAlive())
 		LogError("Trying to fix something that isn't broken");
 	this->damaged = false;
@@ -203,13 +204,14 @@ void Scenery::repair(GameState &state)
 	if (this->overlayDoodad)
 		this->overlayDoodad->remove(state);
 	this->overlayDoodad = nullptr;
-	map->addObjectToMap(shared_from_this());
+	map.addObjectToMap(shared_from_this());
 	if (type->overlaySprite)
 	{
 		this->overlayDoodad =
 		    mksp<Doodad>(this->getPosition(), type->imageOffset, false, 1, type->overlaySprite);
-		map->addObjectToMap(this->overlayDoodad);
+		map.addObjectToMap(this->overlayDoodad);
 	}
+	map.clearPathCaches();
 }
 
 bool Scenery::isAlive() const

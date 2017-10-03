@@ -4701,7 +4701,7 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 	// Events
 	if (owner == state.current_battle->currentPlayer)
 	{
-		sendAgentEvent(state, GameEventType::AgentDied);
+		sendAgentEvent(state, GameEventType::AgentDiedBattle);
 	}
 	else if (state.current_battle->currentPlayer->isRelatedTo(owner) ==
 	         Organisation::Relation::Hostile)

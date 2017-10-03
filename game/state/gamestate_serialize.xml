@@ -1081,6 +1081,35 @@
 		<member>ufopaedia_entry</member>
 		<member>sector</member>
 	</object>
+	<enum>
+		<name>Organisation::MissionPattern::UnitType</name>
+		<value>Agent</value>
+		<value>Vehicle</value>
+	</enum>
+	<enum>
+		<name>Organisation::MissionPattern::Target</name>
+		<value>Owned</value>
+		<value>Allied</value>
+		<value>Friendly</value>
+		<value>FriendlyPlus</value>
+		<value>Neutral</value>
+		<value>Unfriendly</value>
+		<value>UnfriendlyMinus</value>
+		<value>Hostile</value>
+		<value>Any</value>
+		<value>ArriveFromSpace</value>
+		<value>DepartToSpace</value>
+	</enum>
+	<object>
+		<name>Organisation::MissionPattern</name>
+		<member>minIntervalRepeat</member>
+		<member>maxIntervalRepeat</member>
+		<member>unitType</member>
+		<member>minAmount</member>
+		<member>maxAmount</member>
+		<member>allowedTypes</member>
+		<member>target</member>
+	</object>
 	<object>
 		<name>Organisation</name>
 		<member>id</member>
@@ -1099,6 +1128,10 @@
 		<member>loot</member>
 		<member>current_relations</member>
 		<member>ufopaedia_entry</member>
+		<member>missionQueue</member>
+		<member>vehiclePark</member>
+		<member>agentPark</member>
+		<member>providesTransportationServices</member>
 	</object>
 	<object>
 		<name>VehicleType</name>

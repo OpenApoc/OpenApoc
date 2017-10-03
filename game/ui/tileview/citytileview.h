@@ -32,9 +32,12 @@ class CityTileView : public TileView
 	void eventOccurred(Event *e) override;
 	void render() override;
 
+	bool DEBUG_SHOW_VEHICLE_PATH = false;
 	bool DEBUG_SHOW_ALIEN_CREW = false;
 	bool DEBUG_SHOW_ROADS = false;
 	bool DEBUG_SHOW_TUBE = false;
+	bool DEBUG_SHOW_SLOPES = false;
+	bool DEBUG_ONLY_TYPE = false;
 	int DEBUG_DIRECTION = -1;
 
   private:

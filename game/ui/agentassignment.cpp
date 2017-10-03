@@ -4,7 +4,7 @@
 #include "forms/form.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
-#include "forms/list.h"
+#include "forms/listbox.h"
 #include "forms/ui.h"
 #include "framework/data.h"
 #include "framework/event.h"
@@ -39,15 +39,30 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 			return;
 		}
 		this->currentAgent = agent;
-		if (currentVehicle && currentAgent->currentVehicle != currentVehicle)
+		if (currentVehicle)
 		{
-			currentAgent->enterVehicle(*this->state, {this->state.get(), currentVehicle});
-			updateLocation();
+			if (currentAgent->currentVehicle != currentVehicle &&
+			    currentVehicle->getMaxPassengers() > currentVehicle->getPassengers())
+			{
+				auto oldVehicle = currentAgent->currentVehicle;
+				currentAgent->enterVehicle(*this->state, {this->state.get(), currentVehicle});
+				updateControl(currentAgent);
+				updateControl(currentVehicle);
+				if (oldVehicle)
+				{
+					updateControl(oldVehicle);
+				}
+			}
 		}
 		else if (this->building)
 		{
+			auto oldVehicle = currentAgent->currentVehicle;
 			currentAgent->enterBuilding(*this->state, {this->state.get(), this->building});
-			updateLocation();
+			updateControl(currentAgent);
+			if (oldVehicle)
+			{
+				updateControl(oldVehicle);
+			}
 		}
 	});
 	auto vehicleList = findControlTyped<ListBox>("VEHICLE_SELECT_BOX");
@@ -181,34 +196,54 @@ void AgentAssignment::updateLocation()
 
 	auto agentList = findControlTyped<ListBox>("AGENT_SELECT_BOX");
 	agentList->clear();
+	agentList->AlwaysEmitSelectionEvents = true;
 	auto owner = state->getPlayer();
 	for (auto &agent : agents)
 	{
 		auto agentControl = ControlGenerator::createAgentControl(*state, agent);
+		agentControl->Size = {agentList->Size.x, ControlGenerator::getFontHeight(*state) * 2};
 		agentList->addItem(agentControl);
 		if (agent == currentAgent)
 		{
 			agentList->setSelected(agentControl);
 		}
 	}
-	agentList->ItemSize = ControlGenerator::getFontHeight(*state) * 2;
 
 	auto vehicleList = findControlTyped<ListBox>("VEHICLE_SELECT_BOX");
 	vehicleList->clear();
 	if (building)
 	{
-		vehicleList->addItem(mksp<Graphic>());
+		auto blank = mksp<Graphic>();
+		blank->Size = {vehicleList->Size.x, ControlGenerator::getFontHeight(*state) * 2};
+		vehicleList->addItem(blank);
 	}
 	for (auto &vehicle : vehicles)
 	{
 		auto vehicleControl = ControlGenerator::createVehicleControl(*state, vehicle);
+		vehicleControl->Size = {vehicleList->Size.x, ControlGenerator::getFontHeight(*state) * 2};
 		vehicleList->addItem(vehicleControl);
 		if (vehicle == currentVehicle)
 		{
 			vehicleList->setSelected(vehicleControl);
 		}
 	}
-	vehicleList->ItemSize = ControlGenerator::getFontHeight(*state) * 2;
+}
+
+void AgentAssignment::updateControl(sp<Agent> agent)
+{
+	auto agentList = findControlTyped<ListBox>("AGENT_SELECT_BOX");
+	auto agentControl = ControlGenerator::createAgentControl(*state, agent);
+	agentControl->Size = {agentList->Size.x, ControlGenerator::getFontHeight(*state) * 2};
+	agentList->replaceItem(agentControl);
+}
+
+void AgentAssignment::updateControl(sp<Vehicle> vehicle)
+{
+	auto vehicleList = findControlTyped<ListBox>("VEHICLE_SELECT_BOX");
+
+	auto vehicleControl = ControlGenerator::createVehicleControl(*state, vehicle);
+	vehicleControl->Size = {vehicleList->Size.x, ControlGenerator::getFontHeight(*state) * 2};
+	vehicleList->replaceItem(vehicleControl);
 }
 
 void AgentAssignment::update() { Form::update(); }
