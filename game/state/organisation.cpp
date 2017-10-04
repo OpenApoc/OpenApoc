@@ -332,7 +332,7 @@ void Organisation::Mission::execute(GameState &state, StateRef<Organisation> own
 				if (v->owner == owner &&
 				    pattern.allowedTypes.find(v->type) != pattern.allowedTypes.end())
 				{
-					availableVehicles[b.second].emplace_back(v);
+					availableVehicles[b.second].push_back(v);
 				}
 			}
 		}
@@ -348,7 +348,7 @@ void Organisation::Mission::execute(GameState &state, StateRef<Organisation> own
 		{
 			if ((int)e.second.size() >= count)
 			{
-				buildingsRandomizer.emplace_back(e.first);
+				buildingsRandomizer.push_back(e.first);
 			}
 			else if (maxSeenCount < (int)e.second.size())
 			{
@@ -363,7 +363,7 @@ void Organisation::Mission::execute(GameState &state, StateRef<Organisation> own
 			{
 				if ((int)e.second.size() == maxSeenCount)
 				{
-					buildingsRandomizer.emplace_back(e.first);
+					buildingsRandomizer.push_back(e.first);
 				}
 			}
 		}
@@ -421,7 +421,7 @@ void Organisation::Mission::execute(GameState &state, StateRef<Organisation> own
 					LogError("Impossible to arrive/depart at this point?");
 					return;
 			}
-			buildingsRandomizer.emplace_back(b.second);
+			buildingsRandomizer.push_back(b.second);
 		}
 		if (buildingsRandomizer.size() == 0)
 		{
