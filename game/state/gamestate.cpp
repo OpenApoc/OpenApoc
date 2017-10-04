@@ -188,7 +188,10 @@ void GameState::fillOrgStartingProperty()
 		o.second->updateVehicleAgentPark(*this);
 		for (auto &m : o.second->missions)
 		{
-			m.next += TICKS_PER_HOUR * 12 + randBoundsInclusive(rng,(uint64_t)0,  m.pattern.maxIntervalRepeat - m.pattern.minIntervalRepeat) - m.pattern.minIntervalRepeat / 2;
+			m.next += TICKS_PER_HOUR * 12 + randBoundsInclusive(rng, (uint64_t)0,
+			                                                    m.pattern.maxIntervalRepeat -
+			                                                        m.pattern.minIntervalRepeat) -
+			          m.pattern.minIntervalRepeat / 2;
 		}
 	}
 }
@@ -467,7 +470,8 @@ void GameState::update(unsigned int ticks)
 				{
 					continue;
 				}
-				player->current_relations[{this, pair.first}] = pair.second->current_relations[player];
+				player->current_relations[{this, pair.first}] =
+				    pair.second->current_relations[player];
 			}
 		}
 
@@ -677,7 +681,8 @@ void GameState::updateTurbo()
 		ticksToUpdate -= align;
 	}
 	this->update(ticksToUpdate);
-	// When turbo ends it updates vehicles a bit in the end so that they don't appear to always be at exist
+	// When turbo ends it updates vehicles a bit in the end so that they don't appear to always be
+	// at exist
 	if (!this->canTurbo())
 	{
 		this->updateAfterTurbo();

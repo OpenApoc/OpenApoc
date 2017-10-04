@@ -419,7 +419,9 @@ class FlyingVehicleMover : public VehicleMover
 			{
 				updateSprite = true;
 				Vec3<float> vectorToGoal = vehicle.goalPosition - vehicle.position;
-				int distanceToGoal = glm::length(vectorToGoal * VELOCITY_SCALE_CITY) / std::max(0.00001f, glm::length(vehicle.velocity / (float)TICK_SCALE));
+				int distanceToGoal =
+				    glm::length(vectorToGoal * VELOCITY_SCALE_CITY) /
+				    std::max(0.00001f, glm::length(vehicle.velocity / (float)TICK_SCALE));
 				// Cannot reach in one go
 				if (distanceToGoal > ticksToMove)
 				{
@@ -550,10 +552,9 @@ class FlyingVehicleMover : public VehicleMover
 	}
 };
 
-
 class GroundVehicleMover : public VehicleMover
 {
-public:
+  public:
 	GroundVehicleMover(Vehicle &v) : VehicleMover(v) {}
 	// Vehicle is considered idle whenever it's at goal in its tile, even if it has missions to do
 	void updateIdle(GameState &state)
@@ -593,21 +594,23 @@ public:
 			{
 				updateSprite = true;
 				Vec3<float> vectorToGoal = vehicle.goalPosition - vehicle.position;
-				int distanceToGoal = glm::length(vectorToGoal * VELOCITY_SCALE_CITY) / std::max(0.00001f, glm::length(vehicle.velocity / (float)TICK_SCALE));
+				int distanceToGoal =
+				    glm::length(vectorToGoal * VELOCITY_SCALE_CITY) /
+				    std::max(0.00001f, glm::length(vehicle.velocity / (float)TICK_SCALE));
 				// Cannot reach in one go
 				if (distanceToGoal > ticksToMove)
 				{
 					auto newPos = vehicle.position;
 					newPos += vehicle.velocity * (float)ticksToMove / VELOCITY_SCALE_CITY /
-						(float)TICK_SCALE;
+					          (float)TICK_SCALE;
 					vehicle.setPosition(newPos);
 					ticksToMove = 0;
 				}
 				else
-					// Can reach in one go
+				// Can reach in one go
 				{
 					vehicle.setPosition(vehicle.goalPosition);
-					vehicle.velocity = { 0.0f, 0.0f, 0.0f };
+					vehicle.velocity = {0.0f, 0.0f, 0.0f};
 					ticksToMove -= distanceToGoal;
 				}
 			}
@@ -626,14 +629,15 @@ public:
 				{
 
 					while (!vehicle.missions.empty() &&
-						vehicle.missions.front()->isFinished(state, this->vehicle))
+					       vehicle.missions.front()->isFinished(state, this->vehicle))
 					{
-						LogInfo("Vehicle mission \"%s\" finished", vehicle.missions.front()->getName());
+						LogInfo("Vehicle mission \"%s\" finished",
+						        vehicle.missions.front()->getName());
 						vehicle.missions.pop_front();
 						if (!vehicle.missions.empty())
 						{
 							LogInfo("Vehicle mission \"%s\" starting",
-								vehicle.missions.front()->getName());
+							        vehicle.missions.front()->getName());
 							vehicle.missions.front()->start(state, this->vehicle);
 						}
 					}
@@ -641,8 +645,8 @@ public:
 					updateIdle(state);
 					// Get new goal from mission
 					if (vehicle.missions.empty() ||
-						!vehicle.missions.front()->getNextDestination(
-							state, this->vehicle, vehicle.goalPosition, vehicle.goalFacing))
+					    !vehicle.missions.front()->getNextDestination(
+					        state, this->vehicle, vehicle.goalPosition, vehicle.goalFacing))
 					{
 						break;
 					}
@@ -657,13 +661,16 @@ public:
 						// If changing height
 						if (vehicle.position.z != vehicle.goalPosition.z)
 						{
-							// If we're on flat surface then first move to midpoint then start to change Z
+							// If we're on flat surface then first move to midpoint then start to
+							// change Z
 							if (vehicle.position.z - floorf(vehicle.position.z) < 0.1f)
 							{
 								vehicle.goalWaypoints.push_back(vehicle.goalPosition);
 								// Add midpoint waypoint at target z level
-								vehicle.goalPosition.x = (vehicle.position.x + vehicle.goalPosition.x) / 2.0f;
-								vehicle.goalPosition.y = (vehicle.position.y + vehicle.goalPosition.y) / 2.0f;
+								vehicle.goalPosition.x =
+								    (vehicle.position.x + vehicle.goalPosition.x) / 2.0f;
+								vehicle.goalPosition.y =
+								    (vehicle.position.y + vehicle.goalPosition.y) / 2.0f;
 								vehicle.goalPosition.z = vehicle.position.z;
 							}
 							// Else if we end on flat surface first change Z then move flat
@@ -671,17 +678,20 @@ public:
 							{
 								vehicle.goalWaypoints.push_back(vehicle.goalPosition);
 								// Add midpoint waypoint at current z level
-								vehicle.goalPosition.x = (vehicle.position.x + vehicle.goalPosition.x) / 2.0f;
-								vehicle.goalPosition.y = (vehicle.position.y + vehicle.goalPosition.y) / 2.0f;
+								vehicle.goalPosition.x =
+								    (vehicle.position.x + vehicle.goalPosition.x) / 2.0f;
+								vehicle.goalPosition.y =
+								    (vehicle.position.y + vehicle.goalPosition.y) / 2.0f;
 							}
-							// If we're moving from nonflat to nonflat then we need no midpoint at all
+							// If we're moving from nonflat to nonflat then we need no midpoint at
+							// all
 						}
 					}
 
 					Vec3<float> vectorToGoal =
-						(vehicle.goalPosition - vehicle.position) * VELOCITY_SCALE_CITY;
+					    (vehicle.goalPosition - vehicle.position) * VELOCITY_SCALE_CITY;
 					vehicle.velocity = glm::normalize(vectorToGoal) * speed;
-					Vec2<float> targetFacingVector = { vectorToGoal.x, vectorToGoal.y };
+					Vec2<float> targetFacingVector = {vectorToGoal.x, vectorToGoal.y};
 					// New facing as well?
 					if (targetFacingVector.x != 0.0f || targetFacingVector.y != 0.0f)
 					{
@@ -706,7 +716,6 @@ public:
 		}
 	}
 };
-
 
 VehicleMover::VehicleMover(Vehicle &v) : vehicle(v) {}
 
@@ -790,13 +799,13 @@ Vec3<float> Vehicle::getMuzzleLocation() const
 {
 	if (type->type == VehicleType::Type::Ground)
 	{
-		return Vec3<float>(position.x, position.y,
-			position.z + (float)type->height / 16.0f);
+		return Vec3<float>(position.x, position.y, position.z + (float)type->height / 16.0f);
 	}
 	else
 	{
 		return Vec3<float>(position.x, position.y,
-			position.z - tileObject->getVoxelOffset().z + (float)type->height / 16.0f);
+		                   position.z - tileObject->getVoxelOffset().z +
+		                       (float)type->height / 16.0f);
 	}
 }
 
@@ -976,8 +985,8 @@ void Vehicle::updateSprite(GameState &state)
 	// Set shadow direction
 	shadowDirection = direction;
 	if (!type->directional_shadow_sprites.empty() &&
-		type->directional_shadow_sprites.find(shadowDirection) ==
-	    type->directional_shadow_sprites.end())
+	    type->directional_shadow_sprites.find(shadowDirection) ==
+	        type->directional_shadow_sprites.end())
 	{
 		switch (shadowDirection)
 		{

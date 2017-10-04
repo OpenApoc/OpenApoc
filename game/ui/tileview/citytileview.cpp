@@ -307,7 +307,8 @@ void CityTileView::render()
 										             ->getOwner();
 										if (DEBUG_SHOW_WALK_TYPE)
 										{
-											visible = (int)s->type->walk_mode == DEBUG_SHOW_WALK_TYPE - 1;
+											visible =
+											    (int)s->type->walk_mode == DEBUG_SHOW_WALK_TYPE - 1;
 										}
 										if (DEBUG_SHOW_SLOPES)
 										{
@@ -557,13 +558,11 @@ void CityTileView::render()
 				              v.second) != state.current_city->cityViewSelectedVehicles.end();
 
 				vehiclesToDraw.emplace_back(
-					v.second, true, false,
-					selected
-					? (v.second->type->mapIconType ==
-						VehicleType::MapIconType::LargeCircle
-						? 2
-						: 1)
-					: 0);
+				    v.second, true, false,
+				    selected
+				        ? (v.second->type->mapIconType == VehicleType::MapIconType::LargeCircle ? 2
+				                                                                                : 1)
+				        : 0);
 
 				for (auto &m : v.second->missions)
 				{
@@ -654,13 +653,13 @@ void CityTileView::render()
 				Vec2<float> pos = tileToOffsetScreenCoords(vehicle->position);
 				if (vehicle->tileObject)
 				{
-					vehicle->tileObject->draw(r, *this, pos, this->viewMode, true, 0, std::get<1>(obj),
-						std::get<2>(obj));
+					vehicle->tileObject->draw(r, *this, pos, this->viewMode, true, 0,
+					                          std::get<1>(obj), std::get<2>(obj));
 				}
 				else
 				{
-					TileObjectVehicle::drawStatic(r, vehicle, *this, pos, viewMode, true,0, std::get<1>(obj),
-						std::get<2>(obj));
+					TileObjectVehicle::drawStatic(r, vehicle, *this, pos, viewMode, true, 0,
+					                              std::get<1>(obj), std::get<2>(obj));
 				}
 				// Draw unit selection brackets
 				if (selectionFrameTicksAccumulated / SELECTION_FRAME_ANIMATION_DELAY)
@@ -677,7 +676,7 @@ void CityTileView::render()
 						if (vehiclesUnderAttack.find(vehicle) != vehiclesUnderAttack.end())
 						{
 							auto drawn =
-								vehicle->type->mapIconType == VehicleType::MapIconType::LargeCircle
+							    vehicle->type->mapIconType == VehicleType::MapIconType::LargeCircle
 							        ? selectionImageHostileLarge
 							        : selectionImageHostileSmall;
 							r.draw(drawn, pos - Vec2<float>(drawn->size / (unsigned)2));

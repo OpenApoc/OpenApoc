@@ -52,21 +52,21 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 
 class GroundVehicleTileHelper : public CanEnterTileHelper
 {
-private:
+  private:
 	TileMap &map;
 	Vehicle &v;
 
-public:
+  public:
 	GroundVehicleTileHelper(TileMap &map, Vehicle &v);
 
 	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
-		bool ignoreAllUnits = false) const override;
+	                  bool ignoreAllUnits = false) const override;
 
 	float pathOverheadAlloawnce() const override;
 
 	// Support 'from' being nullptr for if a vehicle is being spawned in the map
 	bool canEnterTile(Tile *from, Tile *to, bool, bool &, float &cost, bool &, bool,
-		bool) const override;
+	                  bool) const override;
 
 	float getDistance(Vec3<float> from, Vec3<float> to) const override;
 
@@ -106,7 +106,7 @@ class VehicleMission
 	bool advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> &destPos, float &destFacing);
 	bool isTakingOff(Vehicle &v);
 	int getDefaultIterationCount(Vehicle &v);
-	
+
 	// Methods to create new missions
 	static VehicleMission *gotoLocation(GameState &state, Vehicle &v, Vec3<int> target,
 	                                    bool allowTeleporter = false, bool pickNearest = false,
@@ -165,7 +165,7 @@ class VehicleMission
 	unsigned int missionCounter = 0;
 	// InfiltrateSubvert: mode
 	bool subvert = false;
-	
+
 	bool cancelled = false;
 
 	std::list<Vec3<int>> currentPlannedPath;

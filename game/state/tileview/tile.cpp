@@ -343,7 +343,7 @@ void Tile::updateCityscapeParameters()
 	{
 		return;
 	}
-	
+
 	intactScenery = nullptr;
 	for (auto &o : ownedObjects)
 	{

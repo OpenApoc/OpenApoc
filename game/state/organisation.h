@@ -62,9 +62,9 @@ class Organisation : public StateObject
 		std::set<Relation> relation;
 
 		MissionPattern() = default;
-		MissionPattern(uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat, 
-		               unsigned minAmount, unsigned maxAmount,
-		               std::set<StateRef<VehicleType>> allowedTypes, Target target, std::set<Relation> relation = {});
+		MissionPattern(uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat, unsigned minAmount,
+		               unsigned maxAmount, std::set<StateRef<VehicleType>> allowedTypes,
+		               Target target, std::set<Relation> relation = {});
 	};
 	class Mission
 	{
@@ -76,8 +76,9 @@ class Organisation : public StateObject
 
 		Mission() = default;
 		Mission(uint64_t next, uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat,
-			unsigned minAmount, unsigned maxAmount,
-			std::set<StateRef<VehicleType>> allowedTypes, MissionPattern::Target target, std::set<Relation> relation = {});
+		        unsigned minAmount, unsigned maxAmount,
+		        std::set<StateRef<VehicleType>> allowedTypes, MissionPattern::Target target,
+		        std::set<Relation> relation = {});
 	};
 
 	UString id;
@@ -107,16 +108,16 @@ class Organisation : public StateObject
 	bool providesTransportationServices = false;
 
 	Organisation() = default;
-	
+
 	void update(GameState &state, unsigned int ticks);
 	void updateInfiltration(GameState &state);
 	void updateTakeOver(GameState &state, unsigned int ticks);
 	void updateVehicleAgentPark(GameState &state);
-	
+
 	int getGuardCount(GameState &state) const;
 
 	void takeOver(GameState &state, bool forced = false);
-	
+
 	Relation isRelatedTo(const StateRef<Organisation> &other) const;
 	bool isPositiveTo(const StateRef<Organisation> &other) const;
 	bool isNegativeTo(const StateRef<Organisation> &other) const;

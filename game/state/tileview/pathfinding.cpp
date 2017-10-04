@@ -1179,7 +1179,9 @@ void City::groupMove(GameState &state, std::list<StateRef<Vehicle>> &selectedVeh
 		{
 			// Use vehicle altitude preference to select target height, clamp by
 			// map size
-			int altitude = v->type->type == VehicleType::Type::Ground ? targetLocation.z : glm::min((int)v->altitude, map->size.z - 1);
+			int altitude = v->type->type == VehicleType::Type::Ground
+			                   ? targetLocation.z
+			                   : glm::min((int)v->altitude, map->size.z - 1);
 
 			Vec3<int> targetPos{targetLocation.x, targetLocation.y, altitude};
 			// FIXME: Don't clear missions if not replacing current mission

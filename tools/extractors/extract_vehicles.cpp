@@ -45,10 +45,9 @@ std::map<UString, int> EquipscreenSprite = {{"VEHICLETYPE_ANNIHILATOR", 0},
                                             {"VEHICLETYPE_HAWK_AIR_WARRIOR", 11},
                                             {"VEHICLETYPE_GRIFFON_AFV", 12}};
 
-std::set<UString> AgentFreight = { "VEHICLETYPE_AIRTAXI", "VEHICLETYPE_AUTOTAXI" };
-std::set<UString> CargoFreight = { "VEHICLETYPE_AIRTRANS", "VEHICLETYPE_AUTOTRANS" };
-std::set<UString> BioFreight = { "VEHICLETYPE_AIRTRANS" };
-
+std::set<UString> AgentFreight = {"VEHICLETYPE_AIRTAXI", "VEHICLETYPE_AUTOTAXI"};
+std::set<UString> CargoFreight = {"VEHICLETYPE_AIRTRANS", "VEHICLETYPE_AUTOTRANS"};
+std::set<UString> BioFreight = {"VEHICLETYPE_AIRTRANS"};
 }
 static void extract_equipment_layout(GameState &state, sp<VehicleType> vehicle, const UFO2P &data,
                                      VehicleEquipmentLayout layout,
@@ -336,7 +335,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		vehicle->provideFreightAgent = AgentFreight.find(id) != AgentFreight.end();
 		vehicle->provideFreightCargo = AgentFreight.find(id) != CargoFreight.end();
 		vehicle->provideFreightBio = AgentFreight.find(id) != BioFreight.end();
-		
+
 		// The equipment_screen_name is up to 8 chars, any may have NULLs. Memcpy() that to a char[]
 		// and add a trailing null (in case all 8 are used) and it's just like a c-string!
 		// Then we can use the const char* std::string constructor to convert to something we can
@@ -519,11 +518,12 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		end = end % 16;
 		if (freeSpace > 32)
 		{
-			LogError("Modded game? too much free space in voxelmap, logic below won't work properly");
+			LogError(
+			    "Modded game? too much free space in voxelmap, logic below won't work properly");
 		}
 		if (vehicle->type == VehicleType::Type::Ground)
 		{
-			//Ground vehicles instead start at center
+			// Ground vehicles instead start at center
 			start = v.size_z * 16 / 2;
 			end = start + v.loftemps_height;
 			if (end > v.size_z * 16)

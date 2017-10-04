@@ -14,8 +14,9 @@ class Image;
 class TileObjectVehicle : public TileObject
 {
   public:
-	static void drawStatic(Renderer &r, sp<Vehicle> v, TileTransform &transform, Vec2<float> screenPosition, TileViewMode mode,
-		  bool visible, int currentLevel, bool friendly, bool hostile);
+	static void drawStatic(Renderer &r, sp<Vehicle> v, TileTransform &transform,
+	                       Vec2<float> screenPosition, TileViewMode mode, bool visible,
+	                       int currentLevel, bool friendly, bool hostile);
 
 	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition, TileViewMode mode,
 	          bool visible, int currentLevel, bool friendly, bool hostile) override;
@@ -33,7 +34,6 @@ class TileObjectVehicle : public TileObject
   private:
 	friend class TileMap;
 	wp<Vehicle> vehicle;
-
 
 	TileObjectVehicle(TileMap &map, sp<Vehicle> vehicle);
 };

@@ -44,13 +44,13 @@ void Organisation::takeOver(GameState &state, bool forced)
 	fw().pushEvent(event);
 }
 
-void Organisation::update(GameState & state, unsigned int ticks)
+void Organisation::update(GameState &state, unsigned int ticks)
 {
 	for (auto &m : missions)
 	{
 		if (m.next < state.gameTime.getTicks())
 		{
-			m.execute(state, { &state, id });
+			m.execute(state, {&state, id});
 		}
 	}
 }
@@ -152,15 +152,16 @@ void Organisation::updateVehicleAgentPark(GameState &state)
 		sp<Building> building = listRandomiser(state.rng, buildingsRandomizer);
 		while (countAgents < agentPark)
 		{
-			auto agent = state.agent_generator.createAgent(state, { &state, id }, { &state, "AGENTTYPE_BUILDING_SECURITY" });
-			agent->homeBuilding = { &state, building };
+			auto agent = state.agent_generator.createAgent(state, {&state, id},
+			                                               {&state, "AGENTTYPE_BUILDING_SECURITY"});
+			agent->homeBuilding = {&state, building};
 			agent->city = agent->homeBuilding->city;
 			agent->enterBuilding(state, agent->homeBuilding);
-			
+
 			countAgents++;
 		}
 	}
-	
+
 	for (auto &entry : vehiclePark)
 	{
 		int countVehicles = 0;
@@ -174,7 +175,7 @@ void Organisation::updateVehicleAgentPark(GameState &state)
 		while (countVehicles < entry.second)
 		{
 			// FIXME: Check if org has funds before buying vehicle
-		
+
 			std::list<sp<Building>> buildingsRandomizer;
 
 			for (auto &b : state.cities["CITYMAP_HUMAN"]->buildings)
@@ -192,9 +193,9 @@ void Organisation::updateVehicleAgentPark(GameState &state)
 
 			sp<Building> building = listRandomiser(state.rng, buildingsRandomizer);
 
-			auto v = building->city->placeVehicle(
-				state, entry.first, { &state, id }, { &state, building });
-			v->homeBuilding = { &state, building };
+			auto v =
+			    building->city->placeVehicle(state, entry.first, {&state, id}, {&state, building});
+			v->homeBuilding = {&state, building};
 
 			countVehicles++;
 		}
@@ -289,24 +290,23 @@ const UString &Organisation::getTypeName()
 	return name;
 }
 Organisation::MissionPattern::MissionPattern(uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat,
-                                             unsigned minAmount,
-                                             unsigned maxAmount,
+                                             unsigned minAmount, unsigned maxAmount,
                                              std::set<StateRef<VehicleType>> allowedTypes,
                                              Target target, std::set<Relation> relation)
     : minIntervalRepeat(minIntervalRepeat), maxIntervalRepeat(maxIntervalRepeat),
-      minAmount(minAmount), maxAmount(maxAmount), allowedTypes(allowedTypes),
-      target(target), relation(relation)
+      minAmount(minAmount), maxAmount(maxAmount), allowedTypes(allowedTypes), target(target),
+      relation(relation)
 {
 }
 
-void Organisation::Mission::execute(GameState & state, StateRef<Organisation> owner)
+void Organisation::Mission::execute(GameState &state, StateRef<Organisation> owner)
 {
-	next = state.gameTime.getTicks() + randBoundsInclusive(state.rng, pattern.minIntervalRepeat, pattern.maxIntervalRepeat);
+	next = state.gameTime.getTicks() +
+	       randBoundsInclusive(state.rng, pattern.minIntervalRepeat, pattern.maxIntervalRepeat);
 
 	// Agent mission
 	if (pattern.allowedTypes.empty())
 	{
-
 	}
 	// Vehicle mission
 	else
@@ -329,7 +329,8 @@ void Organisation::Mission::execute(GameState & state, StateRef<Organisation> ow
 
 			for (auto &v : b.second->currentVehicles)
 			{
-				if (v->owner == owner && pattern.allowedTypes.find(v->type) != pattern.allowedTypes.end())
+				if (v->owner == owner &&
+				    pattern.allowedTypes.find(v->type) != pattern.allowedTypes.end())
 				{
 					availableVehicles[b.second].emplace_back(v);
 				}
@@ -367,7 +368,7 @@ void Organisation::Mission::execute(GameState & state, StateRef<Organisation> ow
 			}
 		}
 		auto sourceBuilding = listRandomiser(state.rng, buildingsRandomizer);
-		
+
 		// Special case
 		if (pattern.target == Organisation::MissionPattern::Target::DepartToSpace)
 		{
@@ -409,7 +410,8 @@ void Organisation::Mission::execute(GameState & state, StateRef<Organisation> ow
 					{
 						break;
 					}
-					if (pattern.relation.find(owner->isRelatedTo(b.second->owner)) != pattern.relation.end())
+					if (pattern.relation.find(owner->isRelatedTo(b.second->owner)) !=
+					    pattern.relation.end())
 					{
 						break;
 					}
@@ -425,7 +427,7 @@ void Organisation::Mission::execute(GameState & state, StateRef<Organisation> ow
 		{
 			return;
 		}
-		
+
 		auto destBuilding = listRandomiser(state.rng, buildingsRandomizer);
 
 		// Do it
@@ -433,20 +435,27 @@ void Organisation::Mission::execute(GameState & state, StateRef<Organisation> ow
 		{
 			auto v = availableVehicles[sourceBuilding].front();
 			availableVehicles[sourceBuilding].pop_front();
-			v->setMission(state, VehicleMission::gotoBuilding(state, *v, { &state, destBuilding }, false));
+			v->setMission(state,
+			              VehicleMission::gotoBuilding(state, *v, {&state, destBuilding}, false));
 			// Come back if we are going to another org
 			if (destBuilding->owner != owner)
 			{
-				v->addMission(state, VehicleMission::snooze(state, *v, 10 * TICKS_PER_SECOND), true);
-				v->addMission(state, VehicleMission::gotoBuilding(state, *v, { &state, sourceBuilding }), true);
+				v->addMission(state, VehicleMission::snooze(state, *v, 10 * TICKS_PER_SECOND),
+				              true);
+				v->addMission(
+				    state, VehicleMission::gotoBuilding(state, *v, {&state, sourceBuilding}), true);
 			}
 		}
 	}
 }
 
-Organisation::Mission::Mission(uint64_t next, uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat, unsigned minAmount, unsigned maxAmount, std::set<StateRef<VehicleType>> allowedTypes, MissionPattern::Target target, std::set<Relation> relation)
-	: next(next)
+Organisation::Mission::Mission(uint64_t next, uint64_t minIntervalRepeat,
+                               uint64_t maxIntervalRepeat, unsigned minAmount, unsigned maxAmount,
+                               std::set<StateRef<VehicleType>> allowedTypes,
+                               MissionPattern::Target target, std::set<Relation> relation)
+    : next(next)
 {
-	pattern = { minIntervalRepeat,maxIntervalRepeat,minAmount,maxAmount,allowedTypes,target ,relation};
+	pattern = {minIntervalRepeat, maxIntervalRepeat, minAmount, maxAmount, allowedTypes, target,
+	           relation};
 }
 }; // namespace OpenApoc
