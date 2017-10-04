@@ -419,10 +419,9 @@ class FlyingVehicleMover : public VehicleMover
 			{
 				updateSprite = true;
 				Vec3<float> vectorToGoal = vehicle.goalPosition - vehicle.position;
-				int distanceToGoal = glm::length(vectorToGoal * VELOCITY_SCALE_CITY);
-				int curVelocity = std::max(1.0f, glm::length(vehicle.velocity / (float)TICK_SCALE));
+				int distanceToGoal = glm::length(vectorToGoal * VELOCITY_SCALE_CITY) / std::max(0.00001f, glm::length(vehicle.velocity / (float)TICK_SCALE));
 				// Cannot reach in one go
-				if (distanceToGoal / curVelocity > ticksToMove)
+				if (distanceToGoal > ticksToMove)
 				{
 					auto newPos = vehicle.position;
 					newPos += vehicle.velocity * (float)ticksToMove / VELOCITY_SCALE_CITY /
@@ -435,7 +434,7 @@ class FlyingVehicleMover : public VehicleMover
 				{
 					vehicle.setPosition(vehicle.goalPosition);
 					vehicle.velocity = {0.0f, 0.0f, 0.0f};
-					ticksToMove -= distanceToGoal / curVelocity;
+					ticksToMove -= distanceToGoal;
 				}
 			}
 
@@ -551,6 +550,164 @@ class FlyingVehicleMover : public VehicleMover
 	}
 };
 
+
+class GroundVehicleMover : public VehicleMover
+{
+public:
+	GroundVehicleMover(Vehicle &v) : VehicleMover(v) {}
+	// Vehicle is considered idle whenever it's at goal in its tile, even if it has missions to do
+	void updateIdle(GameState &state)
+	{
+		if (vehicle.ticksAutoActionAvailable > state.gameTime.getTicks())
+		{
+			return;
+		}
+		vehicle.ticksAutoActionAvailable = state.gameTime.getTicks() + TICKS_AUTO_ACTION_DELAY;
+
+		// Do ground vehicles even do anything when idle? Do they dodge?
+	}
+
+	void update(GameState &state, unsigned int ticks) override
+	{
+		auto ticksToMove = ticks;
+
+		unsigned lastTicksToTurn = 0;
+		unsigned lastTicksToMove = 0;
+
+		// Flag wether we need to update banking and direction
+		bool updateSprite = false;
+		// Move until we become idle or run out of ticks
+		while (ticksToMove != lastTicksToMove)
+		{
+			lastTicksToMove = ticksToMove;
+
+			// We may have left the map and need to cease to move
+			auto vehicleTile = this->vehicle.tileObject;
+			if (!vehicleTile)
+			{
+				break;
+			}
+
+			// Advance vehicle position to goal
+			if (ticksToMove > 0 && vehicle.goalPosition != vehicle.position)
+			{
+				updateSprite = true;
+				Vec3<float> vectorToGoal = vehicle.goalPosition - vehicle.position;
+				int distanceToGoal = glm::length(vectorToGoal * VELOCITY_SCALE_CITY) / std::max(0.00001f, glm::length(vehicle.velocity / (float)TICK_SCALE));
+				// Cannot reach in one go
+				if (distanceToGoal > ticksToMove)
+				{
+					auto newPos = vehicle.position;
+					newPos += vehicle.velocity * (float)ticksToMove / VELOCITY_SCALE_CITY /
+						(float)TICK_SCALE;
+					vehicle.setPosition(newPos);
+					ticksToMove = 0;
+				}
+				else
+					// Can reach in one go
+				{
+					vehicle.setPosition(vehicle.goalPosition);
+					vehicle.velocity = { 0.0f, 0.0f, 0.0f };
+					ticksToMove -= distanceToGoal;
+				}
+			}
+
+			// Request new goal
+			if (vehicle.position == vehicle.goalPosition)
+			{
+				bool waypoint = false;
+				if (!vehicle.goalWaypoints.empty())
+				{
+					vehicle.goalPosition = vehicle.goalWaypoints.front();
+					vehicle.goalWaypoints.pop_front();
+					waypoint = true;
+				}
+				else
+				{
+
+					while (!vehicle.missions.empty() &&
+						vehicle.missions.front()->isFinished(state, this->vehicle))
+					{
+						LogInfo("Vehicle mission \"%s\" finished", vehicle.missions.front()->getName());
+						vehicle.missions.pop_front();
+						if (!vehicle.missions.empty())
+						{
+							LogInfo("Vehicle mission \"%s\" starting",
+								vehicle.missions.front()->getName());
+							vehicle.missions.front()->start(state, this->vehicle);
+						}
+					}
+					// Vehicle is considered idle if at goal even if there's more missions to do
+					updateIdle(state);
+					// Get new goal from mission
+					if (vehicle.missions.empty() ||
+						!vehicle.missions.front()->getNextDestination(
+							state, this->vehicle, vehicle.goalPosition, vehicle.goalFacing))
+					{
+						break;
+					}
+				}
+				float speed = vehicle.getSpeed();
+				// New position goal acquired, set velocity and angles
+				if (vehicle.position != vehicle.goalPosition)
+				{
+					// Set up waypoint if got new position from mission
+					if (!waypoint)
+					{
+						// If changing height
+						if (vehicle.position.z != vehicle.goalPosition.z)
+						{
+							// If we're on flat surface then first move to midpoint then start to change Z
+							if (vehicle.position.z - floorf(vehicle.position.z) < 0.1f)
+							{
+								vehicle.goalWaypoints.push_back(vehicle.goalPosition);
+								// Add midpoint waypoint at target z level
+								vehicle.goalPosition.x = (vehicle.position.x + vehicle.goalPosition.x) / 2.0f;
+								vehicle.goalPosition.y = (vehicle.position.y + vehicle.goalPosition.y) / 2.0f;
+								vehicle.goalPosition.z = vehicle.position.z;
+							}
+							// Else if we end on flat surface first change Z then move flat
+							else if (vehicle.goalPosition.z - floorf(vehicle.goalPosition.z) < 0.1f)
+							{
+								vehicle.goalWaypoints.push_back(vehicle.goalPosition);
+								// Add midpoint waypoint at current z level
+								vehicle.goalPosition.x = (vehicle.position.x + vehicle.goalPosition.x) / 2.0f;
+								vehicle.goalPosition.y = (vehicle.position.y + vehicle.goalPosition.y) / 2.0f;
+							}
+							// If we're moving from nonflat to nonflat then we need no midpoint at all
+						}
+					}
+
+					Vec3<float> vectorToGoal =
+						(vehicle.goalPosition - vehicle.position) * VELOCITY_SCALE_CITY;
+					vehicle.velocity = glm::normalize(vectorToGoal) * speed;
+					Vec2<float> targetFacingVector = { vectorToGoal.x, vectorToGoal.y };
+					// New facing as well?
+					if (targetFacingVector.x != 0.0f || targetFacingVector.y != 0.0f)
+					{
+						targetFacingVector = glm::normalize(targetFacingVector);
+						float a1 = acosf(-targetFacingVector.y);
+						float a2 = asinf(targetFacingVector.x);
+						vehicle.goalFacing = a2 >= 0 ? a1 : M_2xPI - a1;
+					}
+				}
+				// If new position requires new facing or we acquired new facing only
+				if (vehicle.facing != vehicle.goalFacing)
+				{
+					vehicle.facing = vehicle.goalFacing;
+					updateSprite = true;
+				}
+			}
+		}
+		// Update sprite if required
+		if (updateSprite)
+		{
+			vehicle.updateSprite(state);
+		}
+	}
+};
+
+
 VehicleMover::VehicleMover(Vehicle &v) : vehicle(v) {}
 
 VehicleMover::~VehicleMover() = default;
@@ -581,7 +738,7 @@ void Vehicle::leaveBuilding(GameState &state, Vec3<float> initialPosition, float
 	this->goalPosition = initialPosition;
 	this->facing = initialFacing;
 	this->goalFacing = initialFacing;
-	this->mover.reset(new FlyingVehicleMover(*this));
+	this->setupMover();
 	city->map->addObjectToMap(shared_from_this());
 }
 
@@ -606,6 +763,7 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 	}
 	this->position = type->type == VehicleType::Type::Ground ? b->carEntranceLocations.front()
 	                                                         : b->landingPadLocations.front();
+	this->position += Vec3<float>{0.5f, 0.5f, 0.5f};
 	this->facing = 0.0f;
 	this->goalFacing = 0.0f;
 	this->ticksToTurn = 0;
@@ -617,16 +775,29 @@ void Vehicle::setupMover()
 	switch (this->type->type)
 	{
 		case VehicleType::Type::Flying:
+		case VehicleType::Type::UFO:
 			this->mover.reset(new FlyingVehicleMover(*this));
-		default:
-			LogWarning("TODO: non flying vehicle movers");
+			break;
+		case VehicleType::Type::Ground:
+			this->mover.reset(new GroundVehicleMover(*this));
+			break;
 	}
+	animationDelay = 0;
+	animationFrame = type->animation_sprites.begin();
 }
 
 Vec3<float> Vehicle::getMuzzleLocation() const
 {
-	return Vec3<float>(position.x, position.y,
-	                   position.z - tileObject->getVoxelOffset().z + (float)type->height / 16.0f);
+	if (type->type == VehicleType::Type::Ground)
+	{
+		return Vec3<float>(position.x, position.y,
+			position.z + (float)type->height / 16.0f);
+	}
+	else
+	{
+		return Vec3<float>(position.x, position.y,
+			position.z - tileObject->getVoxelOffset().z + (float)type->height / 16.0f);
+	}
 }
 
 void Vehicle::update(GameState &state, unsigned int ticks)
@@ -681,14 +852,16 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	}
 
 	if (this->mover)
+	{
 		this->mover->update(state, ticks);
+	}
 
 	auto vehicleTile = this->tileObject;
 	if (vehicleTile)
 	{
 		if (!this->type->animation_sprites.empty())
 		{
-			vehicleTile->nextFrame(ticks);
+			nextFrame(ticks);
 		}
 
 		bool has_active_weapon = false;
@@ -802,7 +975,8 @@ void Vehicle::updateSprite(GameState &state)
 
 	// Set shadow direction
 	shadowDirection = direction;
-	if (type->directional_shadow_sprites.find(shadowDirection) ==
+	if (!type->directional_shadow_sprites.empty() &&
+		type->directional_shadow_sprites.find(shadowDirection) ==
 	    type->directional_shadow_sprites.end())
 	{
 		switch (shadowDirection)
@@ -937,10 +1111,13 @@ void Vehicle::handleCollision(GameState &state, Collision &c)
 			auto doodad = city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_3_EXPLOSION"},
 			                                this->tileObject->getCenter());
 
-			this->shadowObject->removeFromMap();
 			this->tileObject->removeFromMap();
-			this->shadowObject.reset();
 			this->tileObject.reset();
+			if (shadowObject)
+			{
+				this->shadowObject->removeFromMap();
+				this->shadowObject.reset();
+			}
 			state.vehicles.erase(this->getId(state, this->shared_from_this()));
 			return;
 		}
@@ -950,7 +1127,7 @@ void Vehicle::handleCollision(GameState &state, Collision &c)
 sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile,
                                                 Vec2<int> arc)
 {
-	// Find the closest missile within the firing arc
+	// Find the closest enemy within the firing arc
 	float closestEnemyRange = std::numeric_limits<float>::max();
 	sp<TileObjectVehicle> closestEnemy;
 	for (auto &pair : state.vehicles)
@@ -1287,11 +1464,7 @@ void Vehicle::setPosition(const Vec3<float> &pos)
 		this->tileObject->setPosition(pos);
 	}
 
-	if (!this->shadowObject)
-	{
-		LogError("setPosition called on vehicle with no shadow object");
-	}
-	else
+	if (this->shadowObject)
 	{
 		this->shadowObject->setPosition(pos);
 	}
@@ -1313,11 +1486,6 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 
 bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 {
-	if (type->type == VehicleType::Type::Ground)
-	{
-		LogError("Ground vehicles not yet implemented!");
-		return true;
-	}
 	missions.clear();
 	missions.emplace_front(mission);
 	missions.front()->start(state, *this);
@@ -1702,6 +1870,19 @@ void Vehicle::equipDefaultEquipment(GameState &state)
 	}
 }
 
+void Vehicle::nextFrame(int ticks)
+{
+	animationDelay += ticks;
+	if (animationDelay > 10)
+	{
+		animationDelay = 0;
+		animationFrame++;
+		if (animationFrame == type->animation_sprites.end())
+		{
+			animationFrame = type->animation_sprites.begin();
+		}
+	}
+}
 sp<Vehicle> Vehicle::get(const GameState &state, const UString &id)
 {
 	auto it = state.vehicles.find(id);

@@ -171,6 +171,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// canTurbo() must be re-tested after each call to see if we should drop down to normal speed
 	// (e.g. enemy appeared, other user action required)
 	void updateTurbo();
+	void updateAfterTurbo();
 
 	void updateEndOfFiveMinutes();
 	void updateEndOfHour();

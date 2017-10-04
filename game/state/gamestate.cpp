@@ -37,9 +37,6 @@
 #include "library/strings_format.h"
 #include <random>
 
-// ENABLE/DISABLE FAKE TRAFFIC
-#define FAKE_TRAFFIC
-
 namespace OpenApoc
 {
 
@@ -186,32 +183,14 @@ void GameState::fillOrgStartingProperty()
 {
 	auto buildingIt = this->cities["CITYMAP_HUMAN"]->buildings.begin();
 
-#ifdef FAKE_TRAFFIC
-	// Create some random vehicles
-	for (int i = 0; i < 5; i++)
+	for (auto &o : this->organisations)
 	{
-		break;
-		for (auto &vehicleType : this->vehicle_types)
+		o.second->updateVehicleAgentPark(*this);
+		for (auto &m : o.second->missions)
 		{
-			auto &type = vehicleType.second;
-			if (type->type != VehicleType::Type::Flying)
-				continue;
-			if (type->manufacturer == this->getPlayer())
-				continue;
-
-			auto v = cities["CITYMAP_HUMAN"]->placeVehicle(
-			    *this, {this, vehicleType.first}, type->manufacturer, {this, buildingIt->first});
-			v->homeBuilding = {this, buildingIt->first};
-
-			buildingIt++;
-			if (buildingIt == this->cities["CITYMAP_HUMAN"]->buildings.end())
-				buildingIt = this->cities["CITYMAP_HUMAN"]->buildings.begin();
-
-			// Vehicle::equipDefaultEquipment uses the state reference from itself, so make sure the
-			// vehicle table has the entry before calling it
+			m.next += TICKS_PER_HOUR * 12 + randBoundsInclusive(rng,(uint64_t)0,  m.pattern.maxIntervalRepeat - m.pattern.minIntervalRepeat) - m.pattern.minIntervalRepeat / 2;
 		}
 	}
-#endif
 }
 
 void GameState::startGame()
@@ -463,7 +442,9 @@ void GameState::update(unsigned int ticks)
 	{
 		// Save time to roll back to
 		if (gameTimeBeforeBattle.getTicks() == 0)
+		{
 			gameTimeBeforeBattle = GameTime(gameTime.getTicks());
+		}
 
 		Trace::start("GameState::update::battles");
 		this->current_battle->update(*this, ticks);
@@ -472,11 +453,22 @@ void GameState::update(unsigned int ticks)
 	}
 	else
 	{
-		// Roll back to time before battle
+		// Roll back to time before battle and stuff
 		if (gameTimeBeforeBattle.getTicks() != 0)
 		{
 			gameTime = GameTime(gameTimeBeforeBattle.getTicks());
 			gameTimeBeforeBattle = GameTime(0);
+
+			// Set player relationship to orgs
+			for (auto &pair : this->organisations)
+			{
+				// Not for player or civilians
+				if (pair.first == player.id)
+				{
+					continue;
+				}
+				player->current_relations[{this, pair.first}] = pair.second->current_relations[player];
+			}
 		}
 
 		Trace::start("GameState::update::cities");
@@ -497,6 +489,13 @@ void GameState::update(unsigned int ticks)
 			a.second->update(*this, ticks);
 		}
 		Trace::end("GameState::update::agents");
+		Trace::start("GameState::update::organisations");
+		for (auto &o : this->organisations)
+		{
+			o.second->update(*this, ticks);
+		}
+		Trace::end("GameState::update::organisations");
+
 		gameTime.addTicks(ticks);
 		if (gameTime.fiveMinutesPassed())
 		{
@@ -589,7 +588,12 @@ void GameState::updateEndOfDay()
 			}
 		}
 	}
-
+	Trace::start("GameState::updateEndOfDay::organisations");
+	for (auto &o : this->organisations)
+	{
+		o.second->updateVehicleAgentPark(*this);
+	}
+	Trace::end("GameState::updateEndOfDay::organisations");
 	Trace::start("GameState::updateEndOfDay::cities");
 	for (auto &c : this->cities)
 	{
@@ -673,6 +677,29 @@ void GameState::updateTurbo()
 		ticksToUpdate -= align;
 	}
 	this->update(ticksToUpdate);
+	// When turbo ends it updates vehicles a bit in the end so that they don't appear to always be at exist
+	if (!this->canTurbo())
+	{
+		this->updateAfterTurbo();
+	}
+}
+
+void GameState::updateAfterTurbo()
+{
+	Trace::start("GameState::updateAfterTurbo::vehicles");
+	for (auto &v : this->vehicles)
+	{
+		if (player->isRelatedTo(v.second->owner) == Organisation::Relation::Hostile)
+		{
+			continue;
+		}
+		if (v.second->city != current_city)
+		{
+			continue;
+		}
+		v.second->update(*this, randBoundsExclusive(rng, (unsigned)0, 20 * TICKS_PER_SECOND));
+	}
+	Trace::end("GameState::updateAfterTurbo::vehicles");
 }
 
 void GameState::logEvent(GameEvent *ev)

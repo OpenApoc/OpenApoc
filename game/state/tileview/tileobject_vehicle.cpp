@@ -15,135 +15,139 @@ namespace OpenApoc
 {
 
 void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-                             TileViewMode mode, bool, int, bool friendly, bool hostile)
+                             TileViewMode mode, bool visible, int currentLevel, bool friendly, bool hostile)
 {
-	static const Colour COLOUR_TRANSPARENT = {255, 255, 255, 95};
-
-	static const int offset_arrow = 5;
-	static const int offset_large = 1;
-
-	static const std::map<float, int> offset_dir_map = {
-	    {0.0f, 0},
-	    {0.25f * (float)M_PI, 1},
-	    {0.5f * (float)M_PI, 2},
-	    {0.75f * (float)M_PI, 3},
-	    {(float)M_PI, 4},
-	    {1.25f * (float)M_PI, 5},
-	    {1.5f * (float)M_PI, 6},
-	    {1.75f * (float)M_PI, 7},
-	};
-
-	std::ignore = transform;
-
 	auto vehicle = this->vehicle.lock();
 	if (!vehicle)
 	{
 		LogError("Called with no owning vehicle object");
 		return;
 	}
+	drawStatic(r, vehicle, transform, screenPosition, mode, visible, currentLevel, friendly, hostile);
+}
+
+void TileObjectVehicle::drawStatic(Renderer & r, sp<Vehicle> vehicle, TileTransform & transform, Vec2<float> screenPosition, TileViewMode mode, bool , int , bool friendly, bool hostile)
+{
+	static const Colour COLOUR_TRANSPARENT = { 255, 255, 255, 95 };
+
+	static const int offset_arrow = 5;
+	static const int offset_large = 1;
+
+	static const std::map<float, int> offset_dir_map = {
+		{ 0.0f, 0 },
+		{ 0.25f * (float)M_PI, 1 },
+		{ 0.5f * (float)M_PI, 2 },
+		{ 0.75f * (float)M_PI, 3 },
+		{ (float)M_PI, 4 },
+		{ 1.25f * (float)M_PI, 5 },
+		{ 1.5f * (float)M_PI, 6 },
+		{ 1.75f * (float)M_PI, 7 },
+	};
+
+	std::ignore = transform;
+
 	switch (mode)
 	{
-		case TileViewMode::Isometric:
-		{
-			float closestAngle = FLT_MAX;
-			sp<Image> closestImage;
+	case TileViewMode::Isometric:
+	{
+		float closestAngle = FLT_MAX;
+		sp<Image> closestImage;
 
-			if (vehicle->type->type == VehicleType::Type::UFO)
+		if (vehicle->type->type == VehicleType::Type::UFO)
+		{
+			if (vehicle->isCrashed())
 			{
-				if (vehicle->isCrashed())
-				{
-					closestImage = vehicle->type->crashed_sprite;
-				}
-				else
-				{
-					closestImage = *animationFrame;
-				}
+				closestImage = vehicle->type->crashed_sprite;
 			}
 			else
 			{
-				closestImage =
-				    vehicle->type->directional_sprites.at(vehicle->banking).at(vehicle->direction);
+				closestImage = *vehicle->animationFrame;
 			}
-
-			if (!closestImage)
-			{
-				LogError("No image found for vehicle");
-				return;
-			}
-			if (vehicle->isCloaked())
-			{
-				r.drawTinted(closestImage, screenPosition - vehicle->type->image_offset,
-				             COLOUR_TRANSPARENT);
-			}
-			else
-			{
-				r.draw(closestImage, screenPosition - vehicle->type->image_offset);
-			}
-			break;
 		}
-		case TileViewMode::Strategy:
+		else
 		{
-			float closestDiff = FLT_MAX;
-			int facing_offset = 0;
-			for (auto &p : offset_dir_map)
+			closestImage =
+				vehicle->type->directional_sprites.at(vehicle->banking).at(vehicle->direction);
+		}
+
+		if (!closestImage)
+		{
+			LogError("No image found for vehicle");
+			return;
+		}
+		if (vehicle->isCloaked())
+		{
+			r.drawTinted(closestImage, screenPosition - vehicle->type->image_offset,
+				COLOUR_TRANSPARENT);
+		}
+		else
+		{
+			r.draw(closestImage, screenPosition - vehicle->type->image_offset);
+		}
+		break;
+	}
+	case TileViewMode::Strategy:
+	{
+		float closestDiff = FLT_MAX;
+		int facing_offset = 0;
+		for (auto &p : offset_dir_map)
+		{
+			float d1 = p.first - vehicle->facing;
+			if (d1 < 0.0f)
 			{
-				float d1 = p.first - vehicle->facing;
-				if (d1 < 0.0f)
-				{
-					d1 += 2.0f * (float)M_PI;
-				}
-				float d2 = vehicle->facing - p.first;
-				if (d2 < 0.0f)
-				{
-					d2 += 2.0f * (float)M_PI;
-				}
-				float diff = std::min(d1, d2);
-				if (diff < closestDiff)
-				{
-					closestDiff = diff;
-					facing_offset = p.second;
-				}
+				d1 += 2.0f * (float)M_PI;
 			}
-
-			// 1 = friendly, 0 = enemy, 2 = neutral
-			int side_offset = friendly ? 1 : (hostile ? 0 : 2);
-
-			switch (vehicle->type->mapIconType)
+			float d2 = vehicle->facing - p.first;
+			if (d2 < 0.0f)
 			{
-				case VehicleType::MapIconType::Arrow:
-					r.draw(vehicle->strategyImages->at(side_offset * 14 + offset_arrow +
-					                                   facing_offset),
-					       screenPosition - Vec2<float>{4, 4});
-					break;
-				case VehicleType::MapIconType::SmallCircle:
-					r.draw(vehicle->strategyImages->at(side_offset * 14),
-					       screenPosition - Vec2<float>{4, 4});
-					break;
-				case VehicleType::MapIconType::LargeCircle:
-					r.draw(vehicle->strategyImages->at(side_offset * 14 + offset_large + 0),
-					       screenPosition - Vec2<float>{8.0f, 8.0f});
-					r.draw(vehicle->strategyImages->at(side_offset * 14 + offset_large + 1),
-					       screenPosition - Vec2<float>{0.0f, 8.0f});
-					r.draw(vehicle->strategyImages->at(side_offset * 14 + offset_large + 2),
-					       screenPosition - Vec2<float>{8.0f, 0.0f});
-					r.draw(vehicle->strategyImages->at(side_offset * 14 + offset_large + 3),
-					       screenPosition - Vec2<float>{0.0f, 0.0f});
-					break;
+				d2 += 2.0f * (float)M_PI;
 			}
+			float diff = std::min(d1, d2);
+			if (diff < closestDiff)
+			{
+				closestDiff = diff;
+				facing_offset = p.second;
+			}
+		}
 
+		// 1 = friendly, 0 = enemy, 2 = neutral
+		int side_offset = friendly ? 1 : (hostile ? 0 : 2);
+
+		switch (vehicle->type->mapIconType)
+		{
+		case VehicleType::MapIconType::Arrow:
+			r.draw(vehicle->strategyImages->at(side_offset * 14 + offset_arrow +
+				facing_offset),
+				screenPosition - Vec2<float>{4, 4});
+			break;
+		case VehicleType::MapIconType::SmallCircle:
+			r.draw(vehicle->strategyImages->at(side_offset * 14),
+				screenPosition - Vec2<float>{4, 4});
+			break;
+		case VehicleType::MapIconType::LargeCircle:
+			r.draw(vehicle->strategyImages->at(side_offset * 14 + offset_large + 0),
+				screenPosition - Vec2<float>{8.0f, 8.0f});
+			r.draw(vehicle->strategyImages->at(side_offset * 14 + offset_large + 1),
+				screenPosition - Vec2<float>{0.0f, 8.0f});
+			r.draw(vehicle->strategyImages->at(side_offset * 14 + offset_large + 2),
+				screenPosition - Vec2<float>{8.0f, 0.0f});
+			r.draw(vehicle->strategyImages->at(side_offset * 14 + offset_large + 3),
+				screenPosition - Vec2<float>{0.0f, 0.0f});
 			break;
 		}
-		default:
-			LogError("Unsupported view mode");
+
+		break;
+	}
+	default:
+		LogError("Unsupported view mode");
 	}
 }
 
 TileObjectVehicle::~TileObjectVehicle() = default;
 
 TileObjectVehicle::TileObjectVehicle(TileMap &map, sp<Vehicle> vehicle)
-    : TileObject(map, Type::Vehicle, {0.0f, 0.0f, 0.0f}), vehicle(vehicle), animationDelay(0)
+    : TileObject(map, Type::Vehicle, {0.0f, 0.0f, 0.0f}), vehicle(vehicle)
 {
-	animationFrame = vehicle->type->animation_sprites.begin();
 }
 
 Vec3<float> TileObjectVehicle::getVoxelCentrePosition() const
@@ -219,20 +223,6 @@ Vec3<float> TileObjectVehicle::getPosition() const
 	return v->getPosition();
 }
 
-void TileObjectVehicle::nextFrame(int ticks)
-{
-	auto v = this->vehicle.lock();
-	animationDelay += ticks;
-	if (v && animationDelay > 10)
-	{
-		animationDelay = 0;
-		animationFrame++;
-		if (animationFrame == v->type->animation_sprites.end())
-		{
-			animationFrame = v->type->animation_sprites.begin();
-		}
-	}
-}
 
 void TileObjectVehicle::setPosition(Vec3<float> newPosition)
 {

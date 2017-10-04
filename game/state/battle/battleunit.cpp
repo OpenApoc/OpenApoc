@@ -4629,12 +4629,12 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 		// If we're hostile to attacker - lose 5 points
 		if (ourOrg->isRelatedTo(attackerOrg) == Organisation::Relation::Hostile)
 		{
-			ourOrg->adjustRelationTo(attackerOrg, -5.0f);
+			ourOrg->adjustRelationTo(state, attackerOrg, -5.0f);
 		}
 		// If we're not hostile to attacker - lose 30 points
 		else
 		{
-			ourOrg->adjustRelationTo(attackerOrg, -30.0f);
+			ourOrg->adjustRelationTo(state, attackerOrg, -30.0f);
 		}
 		// Our allies lose 5 points, enemies gain 2 points
 		for (auto &org : state.organisations)
@@ -4643,11 +4643,11 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 			{
 				if (org.second->isRelatedTo(ourOrg) == Organisation::Relation::Hostile)
 				{
-					org.second->adjustRelationTo(attackerOrg, 2.0f);
+					org.second->adjustRelationTo(state, attackerOrg, 2.0f);
 				}
 				else if (org.second->isRelatedTo(ourOrg) == Organisation::Relation::Allied)
 				{
-					org.second->adjustRelationTo(attackerOrg, -5.0f);
+					org.second->adjustRelationTo(state, attackerOrg, -5.0f);
 				}
 			}
 		}

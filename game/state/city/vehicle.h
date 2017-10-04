@@ -82,6 +82,7 @@ class Vehicle : public StateObject,
 	StateRef<City> city;
 	Vec3<float> position;
 	Vec3<float> goalPosition;
+	std::list<Vec3<float>> goalWaypoints;
 	Vec3<float> velocity;
 	float facing = 0.0f;
 	float goalFacing = 0.0f;
@@ -175,6 +176,8 @@ class Vehicle : public StateObject,
 	int getCargo() const;
 	float getSpeed() const;
 
+	void nextFrame(int ticks);
+
 	void setPosition(const Vec3<float> &pos);
 
 	// Adds mission to list of missions, returns true if successful
@@ -188,6 +191,10 @@ class Vehicle : public StateObject,
 	sp<Equipment> getEquipmentAt(const Vec2<int> &position) const override;
 	const std::list<EquipmentLayoutSlot> &getSlots() const override;
 	std::list<std::pair<Vec2<int>, sp<Equipment>>> getEquipment() const override;
+
+	// Following members are not serialized, but rather setup when vehicle moves into the city
+	std::list<sp<Image>>::iterator animationFrame;
+	int animationDelay;
 
 	// Following members are not serialized, but rather are set in initCity method
 

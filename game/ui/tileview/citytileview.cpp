@@ -67,6 +67,20 @@ void CityTileView::eventOccurred(Event *e)
 	{
 		switch (e->keyboard().KeyCode)
 		{
+			case SDLK_F3:
+			{
+				DEBUG_SHOW_WALK_TYPE++;
+				DEBUG_SHOW_WALK_TYPE = DEBUG_SHOW_WALK_TYPE % 4;
+				if (DEBUG_SHOW_WALK_TYPE)
+				{
+					DEBUG_SHOW_SLOPES = false;
+					DEBUG_SHOW_ALIEN_CREW = false;
+					DEBUG_SHOW_TUBE = false;
+					DEBUG_SHOW_ROADS = false;
+				}
+				LogWarning("Debug walk type display set to %s", DEBUG_SHOW_WALK_TYPE);
+				return;
+			}
 			case SDLK_F5:
 			{
 				DEBUG_SHOW_VEHICLE_PATH = !DEBUG_SHOW_VEHICLE_PATH;
@@ -146,7 +160,7 @@ void CityTileView::eventOccurred(Event *e)
 				return;
 			case SDLK_F6:
 			{
-				LogWarning("Writing voxel view to tileviewvoxels.png");
+				LogWarning("Writing voxel view LOF to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
 				auto img = std::dynamic_pointer_cast<RGBImage>(
 				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this, 12.99f));
@@ -155,7 +169,7 @@ void CityTileView::eventOccurred(Event *e)
 			}
 			case SDLK_F7:
 			{
-				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
+				LogWarning("Writing voxel view LOF (fast) to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
 				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
 				    {imageOffset, imageOffset + dpySize}, *this, 12.99f, true));
@@ -164,7 +178,7 @@ void CityTileView::eventOccurred(Event *e)
 			}
 			case SDLK_F8:
 			{
-				LogWarning("Writing voxel view to tileviewvoxels.png");
+				LogWarning("Writing voxel view LOS to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
 				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
 				    {imageOffset, imageOffset + dpySize}, *this, 12.99f, false, true));
@@ -173,7 +187,7 @@ void CityTileView::eventOccurred(Event *e)
 			}
 			case SDLK_F9:
 			{
-				LogWarning("Writing voxel view (fast) to tileviewvoxels.png");
+				LogWarning("Writing voxel view LOS (fast) to tileviewvoxels.png");
 				auto imageOffset = -this->getScreenOffset();
 				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
 				    {imageOffset, imageOffset + dpySize}, *this, 11.0f, true, true));
@@ -291,6 +305,10 @@ void CityTileView::render()
 									{
 										auto s = std::static_pointer_cast<TileObjectScenery>(obj)
 										             ->getOwner();
+										if (DEBUG_SHOW_WALK_TYPE)
+										{
+											visible = (int)s->type->walk_mode == DEBUG_SHOW_WALK_TYPE - 1;
+										}
 										if (DEBUG_SHOW_SLOPES)
 										{
 											if (DEBUG_DIRECTION == -1)
@@ -393,7 +411,7 @@ void CityTileView::render()
 		case TileViewMode::Strategy:
 		{
 			// Params are: friendly, hostile, selected (0 = not, 1 = small, 2 = large)
-			std::list<std::tuple<sp<TileObject>, bool, bool, int>> vehiclesToDraw;
+			std::list<std::tuple<sp<Vehicle>, bool, bool, int>> vehiclesToDraw;
 			std::set<sp<Vehicle>> vehiclesUnderAttack;
 			// Lines to draw between unit and destination, bool is wether target x is drawn
 			std::list<std::tuple<Vec3<float>, Vec3<float>, bool>> targetLocationsToDraw;
@@ -479,7 +497,7 @@ void CityTileView::render()
 											}
 										}
 										vehiclesToDraw.emplace_back(
-										    obj, friendly, hostile,
+										    v, friendly, hostile,
 										    selected
 										        ? (v->type->mapIconType ==
 										                   VehicleType::MapIconType::LargeCircle
@@ -525,7 +543,7 @@ void CityTileView::render()
 					}
 				}
 			}
-			// Compile list of vehicle
+			// Compile list of vehicle destinations and add to draw for those that are in buildings
 			for (auto &v : state.vehicles)
 			{
 				if (v.second->owner != state.getPlayer() || v.second->city != state.current_city ||
@@ -537,6 +555,15 @@ void CityTileView::render()
 				    std::find(state.current_city->cityViewSelectedVehicles.begin(),
 				              state.current_city->cityViewSelectedVehicles.end(),
 				              v.second) != state.current_city->cityViewSelectedVehicles.end();
+
+				vehiclesToDraw.emplace_back(
+					v.second, true, false,
+					selected
+					? (v.second->type->mapIconType ==
+						VehicleType::MapIconType::LargeCircle
+						? 2
+						: 1)
+					: 0);
 
 				for (auto &m : v.second->missions)
 				{
@@ -624,9 +651,17 @@ void CityTileView::render()
 			for (auto &obj : vehiclesToDraw)
 			{
 				auto vehicle = std::get<0>(obj);
-				Vec2<float> pos = tileToOffsetScreenCoords(vehicle->getCenter());
-				vehicle->draw(r, *this, pos, this->viewMode, true, 0, std::get<1>(obj),
-				              std::get<2>(obj));
+				Vec2<float> pos = tileToOffsetScreenCoords(vehicle->position);
+				if (vehicle->tileObject)
+				{
+					vehicle->tileObject->draw(r, *this, pos, this->viewMode, true, 0, std::get<1>(obj),
+						std::get<2>(obj));
+				}
+				else
+				{
+					TileObjectVehicle::drawStatic(r, vehicle, *this, pos, viewMode, true,0, std::get<1>(obj),
+						std::get<2>(obj));
+				}
 				// Draw unit selection brackets
 				if (selectionFrameTicksAccumulated / SELECTION_FRAME_ANIMATION_DELAY)
 				{
@@ -639,11 +674,10 @@ void CityTileView::render()
 					}
 					else
 					{
-						auto v = std::static_pointer_cast<TileObjectVehicle>(vehicle)->getVehicle();
-						if (vehiclesUnderAttack.find(v) != vehiclesUnderAttack.end())
+						if (vehiclesUnderAttack.find(vehicle) != vehiclesUnderAttack.end())
 						{
 							auto drawn =
-							    v->type->mapIconType == VehicleType::MapIconType::LargeCircle
+								vehicle->type->mapIconType == VehicleType::MapIconType::LargeCircle
 							        ? selectionImageHostileLarge
 							        : selectionImageHostileSmall;
 							r.draw(drawn, pos - Vec2<float>(drawn->size / (unsigned)2));

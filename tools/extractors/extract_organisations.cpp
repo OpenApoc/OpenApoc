@@ -5,6 +5,8 @@
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
 
+#define ORG_XCOM 0
+#define ORG_ALIENS 1
 #define ORG_MEGAPOL 3
 #define ORG_TRANSTELLAR 9
 #define ORG_CIVILIAN 27
@@ -113,7 +115,7 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 			o->current_relations[o2] = (float)rdata.relationships[j];
 		}
 
-		if (i != ORG_CIVILIAN)
+		if (i != ORG_CIVILIAN && i != ORG_XCOM && i!=ORG_ALIENS)
 		{
 			auto vdata = data.vehicle_park->get(i);
 
@@ -219,15 +221,46 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 			}
 
 			// Missions
+			// Minute shortcut
+			uint64_t m = (uint64_t)TICKS_PER_MINUTE;
+			// Second shortcut
+			uint64_t s = (uint64_t)TICKS_PER_SECOND;
+			// Relation sets
+			std::set<Organisation::Relation> Allied = { Organisation::Relation::Allied };
+			std::set<Organisation::Relation> NeutralPlus = { Organisation::Relation::Allied, Organisation::Relation::Friendly,Organisation::Relation::Neutral };
+			std::set<Organisation::Relation> UnfriendlyMinus = { Organisation::Relation::Unfriendly, Organisation::Relation::Hostile};
+			// Agents
+			o->missions.emplace_back(m, 7 * m, 13 * m,
+				1, 1, std::set<StateRef<VehicleType>>{ {}},
+				Organisation::MissionPattern::Target::Other);
 			switch (vdata.vehiclePark)
 			{
 				// Government
 				case 0:
-					o->missionQueue.emplace_back((uint64_t)TICKS_PER_MINUTE,
-					                             Organisation::MissionPattern{});
+					o->missions.emplace_back(0, 3 * m, 7 * m,
+						1, 1, std::set<StateRef<VehicleType>>{ {&state, "VEHICLETYPE_RESCUE_TRANSPORT"} },
+						Organisation::MissionPattern::Target::OwnedOrOther);
+					o->missions.emplace_back(0, 3 * m, 7 * m,
+						1, 1, std::set<StateRef<VehicleType>>{ {&state, "VEHICLETYPE_CONSTRUCTION_VEHICLE" } },
+						Organisation::MissionPattern::Target::OwnedOrOther);
+					o->missions.emplace_back(0, 2 * m, 4 * m,
+						1, 1, std::set<StateRef<VehicleType>>{ {&state, "VEHICLETYPE_CIVILIAN_CAR" } , { &state, "VEHICLETYPE_BLAZER_TURBO_BIKE" } },
+						Organisation::MissionPattern::Target::OwnedOrOther);
 					break;
 				// Transtellar
 				case 3:
+					o->missions.emplace_back(0, 30 * s, 90 * s,
+						1, 1, std::set<StateRef<VehicleType>>{ {&state, "VEHICLETYPE_SPACE_LINER" } },
+						Organisation::MissionPattern::Target::DepartToSpace);
+					o->missions.emplace_back(0, 30 * s, 90 * s,
+						1, 1, std::set<StateRef<VehicleType>>{ {&state, "VEHICLETYPE_SPACE_LINER" } },
+						Organisation::MissionPattern::Target::ArriveFromSpace);
+					o->missions.emplace_back(0, 5 * m, 11 * m,
+						1, 1, std::set<StateRef<VehicleType>>{ {&state, "VEHICLETYPE_AUTOTRANS" } },
+						Organisation::MissionPattern::Target::Other, NeutralPlus);
+					o->missions.emplace_back(0, 5 * m, 11 * m,
+						1, 3, std::set<StateRef<VehicleType>>{ {&state, "VEHICLETYPE_AIRRANS" } },
+						Organisation::MissionPattern::Target::Other, NeutralPlus);
 					break;
 				// Most orgs
 				case 2:
@@ -235,16 +268,37 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 				case 5:
 				case 6:
 				case 10:
-				case 30:
-					break;
-				// SELF / Mutant Alliance
 				case 20:
+					o->missions.emplace_back(0, 15 * m, 25 * m,
+						1, 1, std::set<StateRef<VehicleType>>{ {&state, "VEHICLETYPE_CIVILIAN_CAR" } , { &state, "VEHICLETYPE_BLAZER_TURBO_BIKE" } },
+						Organisation::MissionPattern::Target::OwnedOrOther, Allied);
+					break;
+				// Sirius
+				case 30:
+					o->missions.emplace_back(0, 7 * m, 13 * m,
+						1, 1, std::set<StateRef<VehicleType>>{ {&state, "VEHICLETYPE_CIVILIAN_CAR" } , { &state, "VEHICLETYPE_BLAZER_TURBO_BIKE" }},
+						Organisation::MissionPattern::Target::OwnedOrOther);
 					break;
 				// Crime
 				case 60:
+					o->missions.emplace_back(5 * m, 11 * m, 19 * m,
+						1, 1, std::set<StateRef<VehicleType>>{ {&state, "VEHICLETYPE_CIVILIAN_CAR" }, { &state, "VEHICLETYPE_BLAZER_TURBO_BIKE" } },
+						Organisation::MissionPattern::Target::OwnedOrOther);
 					break;
 				// Police
 				case 55:
+					o->missions.emplace_back(0, 20 * s, 40 * s,
+						1, 1, std::set<StateRef<VehicleType>>{ {&state, "VEHICLETYPE_POLICE_CAR" } },
+						Organisation::MissionPattern::Target::Owned);
+					o->missions.emplace_back(5 * m, 3 * m, 7 * m,
+						3, 5, std::set<StateRef<VehicleType>>{ {&state, "VEHICLETYPE_POLICE_CAR" } },
+						Organisation::MissionPattern::Target::Owned);
+					o->missions.emplace_back(0, 20 * s, 40 * s,
+						1, 1, std::set<StateRef<VehicleType>>{ {&state, "VEHICLETYPE_POLICE_HOVERCAR" } },
+						Organisation::MissionPattern::Target::Owned);
+					o->missions.emplace_back(3 * m, 7 * m, 13 * m,
+						3, 5, std::set<StateRef<VehicleType>>{ {&state, "VEHICLETYPE_POLICE_HOVERCAR" } },
+						Organisation::MissionPattern::Target::Other, UnfriendlyMinus);
 					break;
 			}
 		}

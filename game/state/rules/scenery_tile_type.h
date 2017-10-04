@@ -52,11 +52,11 @@ class SceneryTileType : public StateObject
 	RoadType road_type = RoadType::StraightBend;
 	WalkMode walk_mode = WalkMode::None;
 
-	// Connection NESW
+	// Road Connection NESW
 	std::vector<bool> connection;
-	// Connection NESW
+	// Road going up when moving NESW
 	std::vector<bool> hill;
-	// Connection NESWUD
+	// Tube connection NESWUD
 	std::vector<bool> tube;
 
 	int constitution = 0;

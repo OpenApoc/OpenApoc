@@ -20,8 +20,6 @@ ControlGenerator ControlGenerator::singleton;
 
 void ControlGenerator::init(GameState &state)
 {
-	LogWarning("Implement properly, without requiring an overlaying unitselects that hover over "
-	           "controls, then we will be using stock stuff");
 	for (int i = 0; i < 3; i++)
 	{
 		battleSelect.push_back(
@@ -33,7 +31,6 @@ void ControlGenerator::init(GameState &state)
 		    37 + i)));
 	}
 
-	LogWarning("Implement proper fatal, psiin, psiout graphics");
 	iconFatal = fw().data->loadImage("battle/battle-fatal.png");
 	iconPsiIn = fw().data->loadImage("battle/battle-psi-in.png");
 	iconPsiOut = fw().data->loadImage("battle/battle-psi-out.png");

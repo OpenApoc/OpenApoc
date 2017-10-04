@@ -301,6 +301,7 @@
 		<member>city</member>
 		<member>position</member>
 		<member>goalPosition</member>
+		<member>goalWaypoints</member>
 		<member>velocity</member>
 		<member>facing</member>
 		<member>goalFacing</member>
@@ -341,6 +342,7 @@
 		<member>missionCounter</member>
 		<member>currentPlannedPath</member>
 		<member>subvert</member>
+		<member>cancelled</member>
 	</object>
 	<object>
 		<name>AgentMission</name>
@@ -1082,33 +1084,35 @@
 		<member>sector</member>
 	</object>
 	<enum>
-		<name>Organisation::MissionPattern::UnitType</name>
-		<value>Agent</value>
-		<value>Vehicle</value>
-	</enum>
-	<enum>
 		<name>Organisation::MissionPattern::Target</name>
 		<value>Owned</value>
-		<value>Allied</value>
-		<value>Friendly</value>
-		<value>FriendlyPlus</value>
-		<value>Neutral</value>
-		<value>Unfriendly</value>
-		<value>UnfriendlyMinus</value>
-		<value>Hostile</value>
-		<value>Any</value>
+		<value>OwnedOrOther</value>
+		<value>Other</value>
 		<value>ArriveFromSpace</value>
 		<value>DepartToSpace</value>
 	</enum>
+	<enum>
+		<name>Organisation::Relation</name>
+		<value>Allied</value>
+		<value>Friendly</value>
+		<value>Neutral</value>
+		<value>Unfriendly</value>
+		<value>Hostile</value>
+	</enum>
+	<object>
+		<name>Organisation::Mission</name>
+		<member>next</member>
+		<member>pattern</member>
+	</object>
 	<object>
 		<name>Organisation::MissionPattern</name>
 		<member>minIntervalRepeat</member>
 		<member>maxIntervalRepeat</member>
-		<member>unitType</member>
 		<member>minAmount</member>
 		<member>maxAmount</member>
 		<member>allowedTypes</member>
 		<member>target</member>
+		<member>relation</member>
 	</object>
 	<object>
 		<name>Organisation</name>
@@ -1128,7 +1132,7 @@
 		<member>loot</member>
 		<member>current_relations</member>
 		<member>ufopaedia_entry</member>
-		<member>missionQueue</member>
+		<member>missions</member>
 		<member>vehiclePark</member>
 		<member>agentPark</member>
 		<member>providesTransportationServices</member>
@@ -1169,6 +1173,9 @@
 		<member>equipment_layout_slots</member>
 		<member>initial_equipment_list</member>
 		<member>ufopaedia_entry</member>
+		<member>provideFreightAgent</member>
+		<member>provideFreightCargo</member>
+		<member>provideFreightBio</member>
 	</object>
 	<object>
 		<name>UfopaediaEntry</name>

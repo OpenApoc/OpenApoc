@@ -143,6 +143,10 @@ class VehicleType : public StateObject
 
 	StateRef<UfopaediaEntry> ufopaedia_entry;
 
+	bool provideFreightAgent = false;
+	bool provideFreightCargo = false;
+	bool provideFreightBio = false;
+
 	~VehicleType() override = default;
 	VehicleType() = default;
 };
