@@ -1,5 +1,8 @@
 OpenApoc X-Com Ufo Apocalypse Development Opensource Open Source XCom programming
 
+Get the latest version:
+- https://ci.appveyor.com/project/JonnyH/openapoc-iq0ey
+
 Support me:
 - PayPal: https://paypal.me/AVAndronov
 - Russian options: https://vk.com/avandronov?w=wall237508246_168
@@ -7,11 +10,12 @@ Support me:
 ---
 
 General:
-- fonts
+- 
 
 City:
-- ground vehicles
-- vehicle parks and missions
+- everybody dies
+- buttons in building and location work
+- can initiate combat in building
 
 Battle:
 

@@ -120,6 +120,7 @@ class VehicleMission
 	                                                   bool subvert = false);
 	static VehicleMission *attackVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *followVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
+	static VehicleMission *recoverVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *snooze(GameState &state, Vehicle &v, unsigned int ticks);
 	static VehicleMission *restartNextMission(GameState &state, Vehicle &v);
 	static VehicleMission *crashLand(GameState &state, Vehicle &v);
@@ -132,6 +133,7 @@ class VehicleMission
 		GotoLocation,
 		GotoBuilding,
 		FollowVehicle,
+		RecoverVehicle,
 		AttackVehicle,
 		AttackBuilding,
 		RestartNextMission,
@@ -161,7 +163,7 @@ class VehicleMission
 	StateRef<Vehicle> targetVehicle;
 	// Snooze
 	unsigned int timeToSnooze = 0;
-	// InfiltrateSubvert, Patrol: waypoints
+	// RecoverVehicle, InfiltrateSubvert, Patrol: waypoints
 	unsigned int missionCounter = 0;
 	// InfiltrateSubvert: mode
 	bool subvert = false;

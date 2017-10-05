@@ -123,13 +123,17 @@ class Vehicle : public StateObject,
 	/* Sets up the 'mover' after state serialize in */
 	void setupMover();
 
+	void die(GameState &state, StateRef<Vehicle> attacker = nullptr, bool silent = false);
+	bool isDead() const;
+
 	bool canAddEquipment(Vec2<int> pos, StateRef<VEquipmentType> type) const;
 	void addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentType> type);
 	void removeEquipment(sp<VEquipment> object);
 
 	bool isCrashed() const;
-	bool applyDamage(GameState &state, int damage, float armour);
-	void handleCollision(GameState &state, Collision &c);
+	bool applyDamage(GameState &state, int damage, float armour,
+	                 StateRef<Vehicle> attacker = nullptr);
+	bool handleCollision(GameState &state, Collision &c);
 	sp<TileObjectVehicle> findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile,
 	                                       Vec2<int> arc = {8, 8});
 	sp<TileObjectProjectile> findClosestHostileMissile(GameState &state,

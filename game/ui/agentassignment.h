@@ -23,6 +23,9 @@ class AgentAssignment : public Form
 	sp<GameState> state;
 
   public:
+	std::list<sp<Agent>> agents;
+	std::list<sp<Vehicle>> vehicles;
+
 	sp<Agent> currentAgent;
 	sp<Vehicle> currentVehicle;
 

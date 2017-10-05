@@ -98,6 +98,16 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state) c
 
 	state.city_common_sample_list->teleport =
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/strategc/explosns/teleport.raw:22050");
+	state.city_common_sample_list->vehicleExplosion =
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/strategc/explosns/explosn2.raw:22050");
+	state.city_common_sample_list->sceneryExplosion =
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/extra/expterr.raw:11025");
+	state.city_common_sample_list->shieldHit =
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/strategc/explosns/shldhit1.raw:22050");
+	state.city_common_sample_list->dimensionShiftIn =
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/strategc/terrain/dgate_in.raw:22050");
+	state.city_common_sample_list->dimensionShiftOut =
+	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/strategc/terrain/dgat_out.raw:22050");
 	state.city_common_sample_list->alertSounds.emplace_back(
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/zextra/alert.raw:22050"));
 	state.city_common_sample_list->alertSounds.emplace_back(

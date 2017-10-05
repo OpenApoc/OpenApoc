@@ -13,6 +13,8 @@
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
 #include "game/ui/agentassignment.h"
+#include "game/ui/base/aequipscreen.h"
+#include "game/ui/base/vequipscreen.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc
@@ -100,6 +102,20 @@ void LocationScreen::eventOccurred(Event *e)
 		if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
 			fw().stageQueueCommand({StageCmd::Command::POP});
+			return;
+		}
+		if (e->forms().RaisedBy->Name == "BUTTON_EQUIPAGENT")
+		{
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH,
+			     mksp<AEquipScreen>(this->state, agentAssignment->currentAgent)});
+			return;
+		}
+		if (e->forms().RaisedBy->Name == "BUTTON_EQUIPVEHICLE")
+		{
+			auto equipScreen = mksp<VEquipScreen>(this->state);
+			equipScreen->setSelectedVehicle(agentAssignment->currentVehicle);
+			fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
 			return;
 		}
 	}

@@ -1353,9 +1353,10 @@ void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 		auto p = *it++;
 		p->update(state, ticks);
 	}
-	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
+	// Since projectiles can kill projectiles just kill everyone in the end
+	std::set<std::tuple<sp<Projectile>, bool, bool>> deadProjectiles;
+	for (auto &p : projectiles)
 	{
-		auto &p = *it++;
 		notifyAction(p->position);
 		auto c = p->checkProjectileCollision(*map);
 		if (c)
@@ -1402,8 +1403,13 @@ void Battle::updateProjectiles(GameState &state, unsigned int ticks)
 						LogError("Collision with non-collidable object");
 				}
 			}
-			c.projectile->die(state, displayDoodad, playSound);
+			deadProjectiles.emplace(c.projectile->shared_from_this(), displayDoodad, playSound);
 		}
+	}
+	// Kill projectiles that collided
+	for (auto &p : deadProjectiles)
+	{
+		std::get<0>(p)->die(state, std::get<1>(p), std::get<2>(p));
 	}
 }
 

@@ -115,7 +115,7 @@ ConfigOptionBool optionPauseOnVehicleNoAmmo("Notifications.City", "VehicleNoAmmo
                                             "Weapon out of ammo", true);
 ConfigOptionBool optionPauseOnVehicleLowFuel("Notifications.City", "VehicleLowFuel",
                                              "Vehicle low on fuel", true);
-ConfigOptionBool optionPauseOnAgentDiedCity("Notifications.City", "AgentDiedCity", "Agent died",
+ConfigOptionBool optionPauseOnAgentDiedCity("Notifications.City", "AgentDiedCity", "Agent has died",
                                             true);
 ConfigOptionBool optionPauseOnAgentArrived("Notifications.City", "AgentArrived",
                                            "Agent arrived at base", true);

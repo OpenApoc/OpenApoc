@@ -38,6 +38,20 @@
         <imageposition>tile</imageposition>
         <image/>
       </graphic>
+	  
+	  <graphicbutton id="BUTTON_EQUIPAGENT">
+        <position x="602" y="40"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:29:xcom3/ufodata/base.pcx</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_EQUIPVEHICLE">
+        <position x="602" y="80"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:30:xcom3/ufodata/base.pcx</imagedepressed>
+      </graphicbutton>
+	  
       <graphicbutton id="BUTTON_QUIT">
         <position x="602" y="443"/>
         <size width="40" height="40"/>

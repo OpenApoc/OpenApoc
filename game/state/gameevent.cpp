@@ -81,8 +81,14 @@ UString GameVehicleEvent::message()
 			return tr("UFO spotted.");
 		case GameEventType::UfoCrashed:
 			return format("%s %s", tr("UFO crash landed:"), vehicle->name);
-		case GameEventType::UfoRecovered:
+		case GameEventType::UfoRecoveryUnmanned:
 			return format("%s %s", tr("Unmanned UFO recovered:"), vehicle->name);
+		case GameEventType::UfoRecoverySuccess:
+			return format("%s", tr("X-COM returning from UFO mission."));
+		case GameEventType::UfoRecoveryFailure:
+			return format("%s", tr("X-COM returning from UFO mission."));
+		case GameEventType::UfoRecoveryBegin:
+			return "";
 		case GameEventType::VehicleLightDamage:
 			return format("%s %s", tr("Vehicle lightly damaged:"), vehicle->name);
 		case GameEventType::VehicleModerateDamage:
@@ -90,8 +96,15 @@ UString GameVehicleEvent::message()
 		case GameEventType::VehicleHeavyDamage:
 			return format("%s %s", tr("Vehicle heavily damaged:"), vehicle->name);
 		case GameEventType::VehicleDestroyed:
-			return format("%s %s %s: %s", tr("Vehicle destroyed:"), vehicle->name,
-			              tr("destroyed by"), actor->name);
+			if (actor)
+			{
+				return format("%s %s %s: %s", tr("Vehicle destroyed:"), vehicle->name,
+				              tr("destroyed by"), actor->name);
+			}
+			else
+			{
+				return format("%s %s", tr("Vehicle destroyed:"), vehicle->name);
+			}
 		case GameEventType::VehicleEscaping:
 			return format("%s %s", tr("Vehicle returning to base as damaged:"), vehicle->name);
 		case GameEventType::VehicleNoAmmo:
@@ -138,6 +151,8 @@ UString GameAgentEvent::message()
 			return format("%s %s", tr("Unit Brainsucked:"), agent->name);
 		case GameEventType::AgentDiedBattle:
 			return format("%s %s", tr("Unit has died:"), agent->name);
+		case GameEventType::AgentDiedCity:
+			return format("%s %s", tr("Agent has died:"), agent->name);
 		case GameEventType::HostileDied:
 			return format("%s %s", tr("Hostile unit has died"), agent->name);
 		case GameEventType::UnknownDied:

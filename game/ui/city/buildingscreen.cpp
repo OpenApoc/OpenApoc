@@ -6,15 +6,46 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
+#include "game/state/battle/battle.h"
 #include "game/state/city/building.h"
+#include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
 #include "game/ui/agentassignment.h"
+#include "game/ui/base/aequipscreen.h"
+#include "game/ui/base/vequipscreen.h"
+#include "game/ui/battle/battlebriefing.h"
+#include "game/ui/general/messagebox.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc
 {
 
+namespace
+{
+
+std::shared_future<void> loadBattleBuilding(sp<GameState> state, sp<Building> building,
+                                            bool hotseat, bool raid,
+                                            std::list<StateRef<Agent>> playerAgents,
+                                            StateRef<Vehicle> playerVehicle)
+{
+	auto loadTask = fw().threadPoolEnqueue(
+	    [hotseat, building, state, raid, playerAgents, playerVehicle]() -> void {
+		    StateRef<Organisation> org = raid ? building->owner : state->getAliens();
+		    StateRef<Building> bld = {state.get(), building};
+
+		    const std::map<StateRef<AgentType>, int> *aliens = nullptr;
+		    const int *guards = nullptr;
+		    const int *civilians = nullptr;
+
+		    // Won't work if I don't copy it!? Whatever
+		    auto agents = playerAgents;
+		    Battle::beginBattle(*state, hotseat, org, agents, aliens, guards, civilians,
+		                        playerVehicle, bld);
+		});
+	return loadTask;
+}
+}
 BuildingScreen::BuildingScreen(sp<GameState> state, sp<Building> building)
     : Stage(), menuform(ui().getForm("city/building")), state(state), building(building)
 {
@@ -64,6 +95,151 @@ void BuildingScreen::eventOccurred(Event *e)
 		if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
 			fw().stageQueueCommand({StageCmd::Command::POP});
+			return;
+		}
+		if (e->forms().RaisedBy->Name == "BUTTON_EXTERMINATE" ||
+		    e->forms().RaisedBy->Name == "BUTTON_RAID")
+		{
+			// FIXME: Implement selecting agents that will do the mission
+			LogWarning("Implement selecting agents that will do the mission");
+			std::list<StateRef<Agent>> agents;
+			StateRef<Vehicle> vehicle;
+			if (agentAssignment->currentVehicle)
+			{
+				vehicle = {state.get(), Vehicle::getId(*state, agentAssignment->currentVehicle)};
+				for (auto &a : agentAssignment->currentVehicle->currentAgents)
+				{
+					agents.push_back(a);
+				}
+			}
+			else
+			{
+				for (auto &a : agentAssignment->agents)
+				{
+					agents.emplace_back(state.get(), a);
+				}
+			}
+			if (agents.empty())
+			{
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<MessageBox>(tr("No Agents Selected"),
+				                      tr("You need to select the agents you want to become active "
+				                         "within the building."),
+				                      MessageBox::ButtonOptions::Ok)});
+			}
+			else
+			{
+				if (e->forms().RaisedBy->Name == "BUTTON_EXTERMINATE")
+				{
+					bool foundAlien = false;
+					for (auto &e : building->current_crew)
+					{
+						if (e.second > 0)
+						{
+							foundAlien = true;
+							break;
+						}
+					}
+					if (!foundAlien)
+					{
+						LogWarning("Implement proper disposition decrease when XCOM fails an "
+						           "extermination attempt");
+
+						UString message = "You have not found any Aliens in this building.";
+						if (building->owner != state->getPlayer())
+						{
+							building->owner->adjustRelationTo(*state, state->getPlayer(), -10);
+							switch (building->owner->isRelatedTo(state->getPlayer()))
+							{
+								case Organisation::Relation::Allied:
+								case Organisation::Relation::Friendly:
+								case Organisation::Relation::Neutral:
+									message = "You have not found any Aliens in this building. "
+									          "As a consequence of your "
+									          "unwelcome intrusion the owner of the building is "
+									          "less favorably disposed "
+									          "towards X-Com.";
+									break;
+								case Organisation::Relation::Unfriendly:
+									message = "You have not found any Aliens in this building. As "
+									          "a consequence of your "
+									          "unwelcome intrusion the owner of the building has "
+									          "now become unfriendly "
+									          "towards X-Com.";
+									break;
+								case Organisation::Relation::Hostile:
+									message = "You have not found any Aliens in this building. As "
+									          "a consequence of your "
+									          "unwelcome intrusion the owner of the building has "
+									          "now become hostile towards"
+									          " X-Com.";
+									break;
+								default:
+									LogError("Unhandled relationship enum!?");
+									return;
+							}
+						}
+						fw().stageQueueCommand(
+						    {StageCmd::Command::PUSH,
+						     mksp<MessageBox>(tr("No Hostile Forces Discovered"), tr(message),
+						                      MessageBox::ButtonOptions::Ok)});
+					}
+					else
+					{
+						bool inBuilding = true;
+						bool raid = false;
+						bool hotseat = false;
+						fw().stageQueueCommand(
+						    {StageCmd::Command::REPLACEALL,
+						     mksp<BattleBriefing>(
+						         state, building->owner, Building::getId(*state, building),
+						         inBuilding, raid, loadBattleBuilding(state, building, hotseat,
+						                                              raid, agents, vehicle))});
+						return;
+					}
+				}
+				else
+				{
+					if (building->owner == state->getPlayer())
+					{
+						fw().stageQueueCommand(
+						    {StageCmd::Command::PUSH,
+						     mksp<MessageBox>(
+						         tr("No Hostile Forces Discovered"),
+						         tr("You have not found any hostile forces in this building."),
+						         MessageBox::ButtonOptions::Ok)});
+						return;
+					}
+					bool inBuilding = true;
+					bool raid = true;
+					bool hotseat = false;
+					fw().stageQueueCommand(
+					    {StageCmd::Command::REPLACEALL,
+					     mksp<BattleBriefing>(
+					         state, building->owner, Building::getId(*state, building), inBuilding,
+					         raid,
+					         loadBattleBuilding(state, building, hotseat, raid, agents, vehicle))});
+					return;
+				}
+			}
+			return;
+		}
+		if (e->forms().RaisedBy->Name == "BUTTON_EQUIPAGENT")
+		{
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH,
+			     mksp<AEquipScreen>(this->state, agentAssignment->currentAgent)});
+			return;
+		}
+		if (e->forms().RaisedBy->Name == "BUTTON_EQUIPVEHICLE")
+		{
+			auto equipScreen = mksp<VEquipScreen>(this->state);
+			if (agentAssignment->currentVehicle)
+			{
+				equipScreen->setSelectedVehicle(agentAssignment->currentVehicle);
+			}
+			fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
 			return;
 		}
 	}

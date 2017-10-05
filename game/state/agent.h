@@ -387,6 +387,9 @@ class Agent : public StateObject,
 	// Replaces all missions with provided mission, returns true if successful
 	bool setMission(GameState &state, AgentMission *mission);
 
+	void die(GameState &state, bool silent = false);
+	bool isDead() const;
+
 	// Update agent in city
 	void update(GameState &state, unsigned ticks);
 	void updateMovement(GameState &state, unsigned ticks);

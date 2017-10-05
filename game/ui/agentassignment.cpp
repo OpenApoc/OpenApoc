@@ -42,6 +42,9 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 		if (currentVehicle)
 		{
 			if (currentAgent->currentVehicle != currentVehicle &&
+			    (currentAgent->currentBuilding == currentVehicle->currentBuilding ||
+			     currentAgent->currentVehicle->currentBuilding ==
+			         currentVehicle->currentBuilding) &&
 			    currentVehicle->getMaxPassengers() > currentVehicle->getPassengers())
 			{
 				auto oldVehicle = currentAgent->currentVehicle;
@@ -54,15 +57,13 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 				}
 			}
 		}
-		else if (this->building)
+		else if (currentAgent->currentVehicle && currentAgent->currentVehicle->currentBuilding)
 		{
 			auto oldVehicle = currentAgent->currentVehicle;
-			currentAgent->enterBuilding(*this->state, {this->state.get(), this->building});
+			currentAgent->enterBuilding(*this->state,
+			                            currentAgent->currentVehicle->currentBuilding);
 			updateControl(currentAgent);
-			if (oldVehicle)
-			{
-				updateControl(oldVehicle);
-			}
+			updateControl(oldVehicle);
 		}
 	});
 	auto vehicleList = findControlTyped<ListBox>("VEHICLE_SELECT_BOX");
@@ -128,9 +129,8 @@ void AgentAssignment::setLocation()
 
 void AgentAssignment::updateLocation()
 {
-	std::list<sp<Agent>> agents;
-	std::list<sp<Vehicle>> vehicles;
-
+	agents.clear();
+	vehicles.clear();
 	if (building)
 	{
 		for (auto &a : state->agents)
