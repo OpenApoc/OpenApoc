@@ -17,7 +17,8 @@
 
 namespace OpenApoc
 {
-
+namespace
+{
 // XXX HACK - UFOs have different number of animation frames, I don't know any
 //  link between this and stored data, hence a lookup table
 std::map<UString, int> UFOAnimationFrames = {
@@ -44,6 +45,10 @@ std::map<UString, int> EquipscreenSprite = {{"VEHICLETYPE_ANNIHILATOR", 0},
                                             {"VEHICLETYPE_HAWK_AIR_WARRIOR", 11},
                                             {"VEHICLETYPE_GRIFFON_AFV", 12}};
 
+std::set<UString> AgentFreight = {"VEHICLETYPE_AIRTAXI", "VEHICLETYPE_AUTOTAXI"};
+std::set<UString> CargoFreight = {"VEHICLETYPE_AIRTRANS", "VEHICLETYPE_AUTOTRANS"};
+std::set<UString> BioFreight = {"VEHICLETYPE_AIRTRANS"};
+}
 static void extract_equipment_layout(GameState &state, sp<VehicleType> vehicle, const UFO2P &data,
                                      VehicleEquipmentLayout layout,
                                      const uint8_t initial_equipment[45])
@@ -327,6 +332,10 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		vehicle->aggressiveness = v.aggressiveness;
 		vehicle->score = v.score;
 
+		vehicle->provideFreightAgent = AgentFreight.find(id) != AgentFreight.end();
+		vehicle->provideFreightCargo = AgentFreight.find(id) != CargoFreight.end();
+		vehicle->provideFreightBio = AgentFreight.find(id) != BioFreight.end();
+
 		// The equipment_screen_name is up to 8 chars, any may have NULLs. Memcpy() that to a char[]
 		// and add a trailing null (in case all 8 are used) and it's just like a c-string!
 		// Then we can use the const char* std::string constructor to convert to something we can
@@ -502,6 +511,27 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		static const float FACING_SOUTH = M_PI;
 		static const float FACING_WEST = M_PI * 1.5f;
 
+		// Free space in voxelmap
+		int freeSpace = v.size_z * 16 - v.loftemps_height;
+		int start = (freeSpace + 1) / 2;
+		int end = v.size_z * 16 - freeSpace / 2;
+		end = end % 16;
+		if (freeSpace > 32)
+		{
+			LogError(
+			    "Modded game? too much free space in voxelmap, logic below won't work properly");
+		}
+		if (vehicle->type == VehicleType::Type::Ground)
+		{
+			// Ground vehicles instead start at center
+			start = v.size_z * 16 / 2;
+			end = start + v.loftemps_height;
+			if (end > v.size_z * 16)
+			{
+				LogError("Modded game? Too high ground vehicle");
+			}
+		}
+
 		switch (v.loftemps_index)
 		{
 			// omnidirectional
@@ -526,8 +556,9 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 							vehicle->voxelMapsLOS[FACING_NORTH]
 							                     [z * v.size_y * v.size_x + y * v.size_x + x] =
 							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
-							int limit = v.loftemps_height - 16 * z;
-							for (int i = 0; i < limit; i++)
+							int locStart = z == 0 ? start : 0;
+							int locEnd = z == v.size_z - 1 ? end : 16;
+							for (int i = locStart; i < locEnd; i++)
 							{
 								vehicle
 								    ->voxelMaps[FACING_NORTH]
@@ -616,8 +647,9 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 							vehicle->voxelMapsLOS[FACING_WEST]
 							                     [z * v.size_y * v.size_x + y * v.size_x + x] =
 							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
-							int limit = v.loftemps_height - 16 * z;
-							for (int i = 0; i < limit; i++)
+							int locStart = z == 0 ? start : 0;
+							int locEnd = z == v.size_z - 1 ? end : 16;
+							for (int i = locStart; i < locEnd; i++)
 							{
 								// Facing north
 								vehicle
@@ -757,8 +789,9 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 							vehicle->voxelMapsLOS[FACING_WEST]
 							                     [z * v.size_y * v.size_x + y * v.size_x + x] =
 							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
-							int limit = v.loftemps_height - 16 * z;
-							for (int i = 0; i < limit; i++)
+							int locStart = z == 0 ? start : 0;
+							int locEnd = z == v.size_z - 1 ? end : 16;
+							for (int i = locStart; i < locEnd; i++)
 							{
 								// Facing north
 								vehicle
@@ -863,8 +896,9 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 						    ->voxelMapsLOS[FACING_NORTH][z * v.size_y * v.size_x +
 						                                 pair.first.y * v.size_x + pair.first.x] =
 						    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
-						int limit = v.loftemps_height - 16 * z;
-						for (int i = 0; i < limit; i++)
+						int locStart = z == 0 ? start : 0;
+						int locEnd = z == v.size_z - 1 ? end : 16;
+						for (int i = locStart; i < locEnd; i++)
 						{
 							vehicle
 							    ->voxelMaps[FACING_NORTH][z * v.size_y * v.size_x +
@@ -952,8 +986,9 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 							vehicle->voxelMapsLOS[FACING_WEST]
 							                     [z * v.size_y * v.size_x + y * v.size_x + x] =
 							    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
-							int limit = v.loftemps_height - 16 * z;
-							for (int i = 0; i < limit; i++)
+							int locStart = z == 0 ? start : 0;
+							int locEnd = z == v.size_z - 1 ? end : 16;
+							for (int i = locStart; i < locEnd; i++)
 							{
 								// Facing north
 								vehicle

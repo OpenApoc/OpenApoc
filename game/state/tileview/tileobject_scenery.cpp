@@ -113,12 +113,20 @@ void TileObjectScenery::setPosition(Vec3<float> newPosition)
 {
 	TileObject::setPosition(newPosition);
 	map.clearPathCaches();
+	owningTile->updateCityscapeParameters();
 }
 
 void TileObjectScenery::removeFromMap()
 {
+	bool requireRecalc = owningTile != nullptr;
+	auto prevOwningTile = owningTile;
+
 	TileObject::removeFromMap();
-	map.clearPathCaches();
+
+	if (requireRecalc)
+	{
+		prevOwningTile->updateCityscapeParameters();
+	}
 }
 
 } // namespace OpenApoc

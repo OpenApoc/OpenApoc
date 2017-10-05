@@ -274,7 +274,7 @@ bool Tile::getHeadFits(bool large, int height)
 
 void Tile::updateBattlescapeUIDrawOrder()
 {
-	if (map.ceaseBattlescapeUpdates)
+	if (map.ceaseUpdates)
 	{
 		return;
 	}
@@ -337,9 +337,32 @@ void Tile::updateBattlescapeUnitPresent()
 	}
 }
 
+void Tile::updateCityscapeParameters()
+{
+	if (map.ceaseUpdates)
+	{
+		return;
+	}
+
+	intactScenery = nullptr;
+	for (auto &o : ownedObjects)
+	{
+		if (o->getType() == TileObject::Type::Scenery)
+		{
+			auto mp = std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
+			if (!mp->isAlive())
+			{
+				continue;
+			}
+			intactScenery = mp;
+			break;
+		}
+	}
+}
+
 void Tile::updateBattlescapeParameters()
 {
-	if (map.ceaseBattlescapeUpdates)
+	if (map.ceaseUpdates)
 	{
 		return;
 	}
@@ -640,9 +663,12 @@ void TileMap::addObjectToMap(sp<Vehicle> vehicle)
 	obj->setPosition(vehicle->getPosition());
 	vehicle->tileObject = obj;
 
-	sp<TileObjectShadow> shadow(new TileObjectShadow(*this, vehicle));
-	shadow->setPosition(vehicle->getPosition());
-	vehicle->shadowObject = shadow;
+	if (vehicle->type->directional_shadow_sprites.size() > 0)
+	{
+		sp<TileObjectShadow> shadow(new TileObjectShadow(*this, vehicle));
+		shadow->setPosition(vehicle->getPosition());
+		vehicle->shadowObject = shadow;
+	}
 }
 
 void TileMap::addObjectToMap(sp<Scenery> scenery)

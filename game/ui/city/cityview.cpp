@@ -163,22 +163,22 @@ bool CityView::handleClickedBuilding(StateRef<Building> building, bool rightClic
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, building)});
 			}
-			break;
+			return true;
 		}
 		case CitySelectionState::AttackBuilding:
 		{
 			orderAttack(StateRef<Building>{state.get(), Building::getId(*state, building)});
 			setSelectionState(CitySelectionState::Normal);
-			break;
+			return true;
 		}
 		case CitySelectionState::GotoBuilding:
 		{
 			orderMove(building, modifierRCtrl || modifierLCtrl);
 			setSelectionState(CitySelectionState::Normal);
-			break;
+			return true;
 		}
 	}
-	return true;
+	return false;
 }
 
 bool CityView::handleClickedVehicle(StateRef<Vehicle> vehicle, bool rightClick,
@@ -1024,6 +1024,10 @@ void CityView::render()
 				auto vTile = v->tileObject;
 				if (!vTile)
 					continue;
+				if (v->missions.empty())
+				{
+					continue;
+				}
 				auto &path = v->missions.front()->currentPlannedPath;
 				Vec3<float> prevPos = vTile->getPosition();
 				for (auto &pos : path)
@@ -1031,7 +1035,7 @@ void CityView::render()
 					Vec2<float> screenPosA = this->tileToOffsetScreenCoords(prevPos);
 					Vec2<float> screenPosB = this->tileToOffsetScreenCoords(pos);
 
-					fw().renderer->drawLine(screenPosA, screenPosB, Colour{255, 0, 0, 128});
+					fw().renderer->drawLine(screenPosA, screenPosB, Colour{255, 255, 192, 255});
 
 					prevPos = pos;
 				}
@@ -1713,6 +1717,7 @@ bool CityView::handleGameStateEvent(Event *e)
 			    listRandomiser(state->rng, state->city_common_sample_list->alertSounds));
 			zoomLastEvent();
 			setUpdateSpeed(CityUpdateSpeed::Speed1);
+			state->updateAfterTurbo();
 			fw().stageQueueCommand(
 			    {StageCmd::Command::PUSH, mksp<AlertScreen>(state, ev->building)});
 			break;

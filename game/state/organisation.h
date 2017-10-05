@@ -45,38 +45,42 @@ class Organisation : public StateObject
 	class MissionPattern
 	{
 	  public:
-		enum class UnitType
-		{
-			Agent,
-			Vehicle
-		};
 		enum class Target
 		{
 			Owned,
-			Allied,
-			Friendly,
-			FriendlyPlus,
-			Neutral,
-			Unfriendly,
-			UnfriendlyMinus,
-			Hostile,
-			Any,
+			OwnedOrOther,
+			Other,
 			ArriveFromSpace,
 			DepartToSpace
 		};
 		uint64_t minIntervalRepeat = 0;
 		uint64_t maxIntervalRepeat = 0;
-		UnitType unitType = UnitType::Agent;
 		unsigned minAmount = 0;
 		unsigned maxAmount = 0;
 		std::set<StateRef<VehicleType>> allowedTypes;
 		Target target = Target::Owned;
+		std::set<Relation> relation;
 
 		MissionPattern() = default;
-		MissionPattern(uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat, UnitType unitType,
-		               unsigned minAmount, unsigned maxAmount,
-		               std::set<StateRef<VehicleType>> allowedTypes, Target target);
+		MissionPattern(uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat, unsigned minAmount,
+		               unsigned maxAmount, std::set<StateRef<VehicleType>> allowedTypes,
+		               Target target, std::set<Relation> relation = {});
 	};
+	class Mission
+	{
+	  public:
+		uint64_t next = 0;
+		MissionPattern pattern;
+
+		void execute(GameState &state, StateRef<Organisation> owner);
+
+		Mission() = default;
+		Mission(uint64_t next, uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat,
+		        unsigned minAmount, unsigned maxAmount,
+		        std::set<StateRef<VehicleType>> allowedTypes, MissionPattern::Target target,
+		        std::set<Relation> relation = {});
+	};
+
 	UString id;
 	UString name;
 	int balance = 0;
@@ -98,21 +102,27 @@ class Organisation : public StateObject
 
 	StateRef<UfopaediaEntry> ufopaedia_entry;
 
-	std::list<std::pair<uint64_t, MissionPattern>> missionQueue;
+	std::list<Mission> missions;
 	std::map<StateRef<VehicleType>, int> vehiclePark;
 	int agentPark = 0;
 	bool providesTransportationServices = false;
 
 	Organisation() = default;
-	int getGuardCount(GameState &state) const;
+
+	void update(GameState &state, unsigned int ticks);
 	void updateInfiltration(GameState &state);
 	void updateTakeOver(GameState &state, unsigned int ticks);
+	void updateVehicleAgentPark(GameState &state);
+
+	int getGuardCount(GameState &state) const;
+
 	void takeOver(GameState &state, bool forced = false);
+
 	Relation isRelatedTo(const StateRef<Organisation> &other) const;
 	bool isPositiveTo(const StateRef<Organisation> &other) const;
 	bool isNegativeTo(const StateRef<Organisation> &other) const;
 	float getRelationTo(const StateRef<Organisation> &other) const;
-	void adjustRelationTo(const StateRef<Organisation> &other, float value);
+	void adjustRelationTo(GameState &state, StateRef<Organisation> &other, float value);
 	std::map<StateRef<Organisation>, float> current_relations;
 };
 

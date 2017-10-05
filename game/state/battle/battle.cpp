@@ -64,7 +64,7 @@ Battle::~Battle()
 	// before the TileMap
 	if (map)
 	{
-		map->ceaseBattlescapeUpdates = true;
+		map->ceaseUpdates = true;
 	}
 	for (auto &p : this->projectiles)
 	{

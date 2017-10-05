@@ -114,7 +114,7 @@ void InGameOptions::begin()
 		checkBox->Size = {240, 16};
 		checkBox->setData(mksp<UString>(p.first));
 		checkBox->setChecked(config().getBool(p.first));
-		auto label = checkBox->createChild<Label>(p.second, font);
+		auto label = checkBox->createChild<Label>(tr(p.second), font);
 		label->Size = {216, 16};
 		label->Location = {24, 0};
 		listControl->addItem(checkBox);

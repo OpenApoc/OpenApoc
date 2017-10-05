@@ -133,6 +133,8 @@ class Tile
 	sp<BattleMapPart> supportProviderForItems;
 	// How much tiles are added to vision distance after passing this tile
 	int visionBlockValue = 0;
+	// Intact scenery present in this tile
+	sp<Scenery> intactScenery;
 
 	// Methods
 
@@ -166,6 +168,9 @@ class Tile
 	bool getHasExit(bool large = false);
 
 	// Updaters
+
+	// Updates most battlescape tile parameters
+	void updateCityscapeParameters();
 
 	// Updates most battlescape tile parameters
 	void updateBattlescapeParameters();
@@ -243,7 +248,7 @@ class TileMap
 	Vec3<int> size;
 	Vec3<int> voxelMapSize;
 	Vec3<float> velocityScale;
-	bool ceaseBattlescapeUpdates = false;
+	bool ceaseUpdates = false;
 
 	TileMap(Vec3<int> size, Vec3<float> velocityScale, Vec3<int> voxelMapSize,
 	        std::vector<std::set<TileObject::Type>> layerMap);

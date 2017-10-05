@@ -67,26 +67,9 @@ bool AgentTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, float &co
 		return false;
 	}
 
-	sp<Scenery> sceneryFrom;
-	for (auto &obj : from->ownedObjects)
-	{
-		if (obj->getType() == TileObject::Type::Scenery)
-		{
-			sceneryFrom = std::static_pointer_cast<TileObjectScenery>(obj)->scenery.lock();
-			break;
-		}
-	}
-	sp<Scenery> sceneryTo;
-	for (auto &obj : to->ownedObjects)
-	{
-		if (obj->getType() == TileObject::Type::Scenery)
-		{
-			sceneryTo = std::static_pointer_cast<TileObjectScenery>(obj)->scenery.lock();
-			break;
-		}
-	}
-	if (!sceneryFrom || !sceneryTo || sceneryFrom->damaged || sceneryTo->damaged ||
-	    sceneryFrom->falling || sceneryTo->falling)
+	sp<Scenery> sceneryFrom = from->intactScenery;
+	sp<Scenery> sceneryTo = to->intactScenery;
+	if (!sceneryFrom || !sceneryTo)
 	{
 		return false;
 	}
@@ -119,16 +102,7 @@ bool AgentTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, float &co
 				break;
 			}
 			auto checkedTile = map.getTile(checkedPos);
-			sp<Scenery> checkedScenery;
-			for (auto &obj : checkedTile->ownedObjects)
-			{
-				if (obj->getType() == TileObject::Type::Scenery)
-				{
-					checkedScenery =
-					    std::static_pointer_cast<TileObjectScenery>(obj)->scenery.lock();
-					break;
-				}
-			}
+			sp<Scenery> checkedScenery = checkedTile->intactScenery;
 			if (checkedScenery &&
 			    checkedScenery->type->tile_type == SceneryTileType::TileType::PeopleTubeJunction)
 			{

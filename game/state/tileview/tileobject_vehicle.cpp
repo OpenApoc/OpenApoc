@@ -15,7 +15,22 @@ namespace OpenApoc
 {
 
 void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
-                             TileViewMode mode, bool, int, bool friendly, bool hostile)
+                             TileViewMode mode, bool visible, int currentLevel, bool friendly,
+                             bool hostile)
+{
+	auto vehicle = this->vehicle.lock();
+	if (!vehicle)
+	{
+		LogError("Called with no owning vehicle object");
+		return;
+	}
+	drawStatic(r, vehicle, transform, screenPosition, mode, visible, currentLevel, friendly,
+	           hostile);
+}
+
+void TileObjectVehicle::drawStatic(Renderer &r, sp<Vehicle> vehicle, TileTransform &transform,
+                                   Vec2<float> screenPosition, TileViewMode mode, bool, int,
+                                   bool friendly, bool hostile)
 {
 	static const Colour COLOUR_TRANSPARENT = {255, 255, 255, 95};
 
@@ -35,12 +50,6 @@ void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 
 	std::ignore = transform;
 
-	auto vehicle = this->vehicle.lock();
-	if (!vehicle)
-	{
-		LogError("Called with no owning vehicle object");
-		return;
-	}
 	switch (mode)
 	{
 		case TileViewMode::Isometric:
@@ -56,7 +65,7 @@ void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 				}
 				else
 				{
-					closestImage = *animationFrame;
+					closestImage = *vehicle->animationFrame;
 				}
 			}
 			else
@@ -141,9 +150,8 @@ void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 TileObjectVehicle::~TileObjectVehicle() = default;
 
 TileObjectVehicle::TileObjectVehicle(TileMap &map, sp<Vehicle> vehicle)
-    : TileObject(map, Type::Vehicle, {0.0f, 0.0f, 0.0f}), vehicle(vehicle), animationDelay(0)
+    : TileObject(map, Type::Vehicle, {0.0f, 0.0f, 0.0f}), vehicle(vehicle)
 {
-	animationFrame = vehicle->type->animation_sprites.begin();
 }
 
 Vec3<float> TileObjectVehicle::getVoxelCentrePosition() const
@@ -217,21 +225,6 @@ Vec3<float> TileObjectVehicle::getPosition() const
 		return {0, 0, 0};
 	}
 	return v->getPosition();
-}
-
-void TileObjectVehicle::nextFrame(int ticks)
-{
-	auto v = this->vehicle.lock();
-	animationDelay += ticks;
-	if (v && animationDelay > 10)
-	{
-		animationDelay = 0;
-		animationFrame++;
-		if (animationFrame == v->type->animation_sprites.end())
-		{
-			animationFrame = v->type->animation_sprites.begin();
-		}
-	}
 }
 
 void TileObjectVehicle::setPosition(Vec3<float> newPosition)

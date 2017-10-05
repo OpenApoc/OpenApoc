@@ -23,7 +23,7 @@ void Scenery::handleCollision(GameState &state, Collision &c)
 		auto attackerOrg = c.projectile->firerVehicle->owner;
 		auto ourOrg = building->owner;
 		// Lose 5 points
-		ourOrg->adjustRelationTo(attackerOrg, -5.0f);
+		ourOrg->adjustRelationTo(state, attackerOrg, -5.0f);
 		// Our allies lose 2.5 points, enemies gain 1 point
 		for (auto &org : state.organisations)
 		{
@@ -31,11 +31,11 @@ void Scenery::handleCollision(GameState &state, Collision &c)
 			{
 				if (org.second->isRelatedTo(ourOrg) == Organisation::Relation::Hostile)
 				{
-					org.second->adjustRelationTo(attackerOrg, 1.0f);
+					org.second->adjustRelationTo(state, attackerOrg, 1.0f);
 				}
 				else if (org.second->isRelatedTo(ourOrg) == Organisation::Relation::Allied)
 				{
-					org.second->adjustRelationTo(attackerOrg, -2.5f);
+					org.second->adjustRelationTo(state, attackerOrg, -2.5f);
 				}
 			}
 		}

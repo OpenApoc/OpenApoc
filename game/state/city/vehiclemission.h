@@ -50,6 +50,34 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 	                         sp<TileObjectVehicle> targetTile, float distancePref) const;
 };
 
+class GroundVehicleTileHelper : public CanEnterTileHelper
+{
+  private:
+	TileMap &map;
+	Vehicle &v;
+
+  public:
+	GroundVehicleTileHelper(TileMap &map, Vehicle &v);
+
+	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
+	                  bool ignoreAllUnits = false) const override;
+
+	float pathOverheadAlloawnce() const override;
+
+	// Support 'from' being nullptr for if a vehicle is being spawned in the map
+	bool canEnterTile(Tile *from, Tile *to, bool, bool &, float &cost, bool &, bool,
+	                  bool) const override;
+
+	float getDistance(Vec3<float> from, Vec3<float> to) const override;
+
+	float getDistance(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd) const override;
+
+	// Convert vector direction into index for tube array
+	int convertDirection(Vec3<int> dir) const;
+
+	bool isMoveAllowed(Scenery &scenery, int dir) const;
+};
+
 class VehicleMission
 {
   private:
@@ -61,6 +89,7 @@ class VehicleMission
 	// If it is finished, update() is called by isFinished so that any remaining work could be done
 	bool isFinishedInternal(GameState &state, Vehicle &v);
 
+	static void adjustTargetToClosestRoad(Vehicle &v, Vec3<int> &target);
 	bool takeOffCheck(GameState &state, Vehicle &v);
 	bool teleportCheck(GameState &state, Vehicle &v);
 
@@ -72,15 +101,16 @@ class VehicleMission
 	void update(GameState &state, Vehicle &v, unsigned int ticks, bool finished = false);
 	bool isFinished(GameState &state, Vehicle &v, bool callUpdateIfFinished = true);
 	void start(GameState &state, Vehicle &v);
-	void setPathTo(GameState &state, Vehicle &v, Vec3<int> target, int maxIterations = 25,
+	void setPathTo(GameState &state, Vehicle &v, Vec3<int> target, int maxIterations,
 	               bool checkValidity = true, bool giveUpIfInvalid = false);
 	bool advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> &destPos, float &destFacing);
 	bool isTakingOff(Vehicle &v);
+	int getDefaultIterationCount(Vehicle &v);
 
 	// Methods to create new missions
 	static VehicleMission *gotoLocation(GameState &state, Vehicle &v, Vec3<int> target,
 	                                    bool allowTeleporter = false, bool pickNearest = false,
-	                                    int reRouteAttempts = 10);
+	                                    int reRouteAttempts = 100);
 	static VehicleMission *gotoPortal(GameState &state, Vehicle &v);
 	static VehicleMission *gotoPortal(GameState &state, Vehicle &v, Vec3<int> target);
 	static VehicleMission *gotoBuilding(GameState &state, Vehicle &v, StateRef<Building> target,
@@ -135,6 +165,8 @@ class VehicleMission
 	unsigned int missionCounter = 0;
 	// InfiltrateSubvert: mode
 	bool subvert = false;
+
+	bool cancelled = false;
 
 	std::list<Vec3<int>> currentPlannedPath;
 };
