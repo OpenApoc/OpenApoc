@@ -319,7 +319,7 @@ void Organisation::Mission::execute(GameState &state, StateRef<Organisation> own
 			return;
 		}
 		// Compile list of matching buildings with vehicles
-		std::map<sp<Building>, std::list<sp<Vehicle>>> availableVehicles;
+		std::map<sp<Building>, std::list<StateRef<Vehicle>>> availableVehicles;
 		for (auto &b : state.current_city->buildings)
 		{
 			if (b.second->owner != owner)
