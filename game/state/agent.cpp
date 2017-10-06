@@ -1,5 +1,8 @@
 #include "game/state/agent.h"
+#include "framework/framework.h"
 #include "game/state/aequipment.h"
+#include "game/state/base/base.h"
+#include "game/state/base/facility.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/city/agentmission.h"
@@ -7,6 +10,7 @@
 #include "game/state/city/city.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
+#include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
 #include "game/state/rules/aequipment_type.h"
@@ -933,8 +937,52 @@ bool Agent::setMission(GameState &state, AgentMission *mission)
 	return true;
 }
 
+void Agent::die(GameState &state, bool silent)
+{
+	auto thisRef = StateRef<Agent>{&state, shared_from_this()};
+	// Actually die
+	modified_stats.health = 0;
+	// Remove from lab
+	if (assigned_to_lab)
+	{
+		for (auto &fac : homeBuilding->base->facilities)
+		{
+			auto it = std::find(fac->lab->assigned_agents.begin(), fac->lab->assigned_agents.end(),
+			                    thisRef);
+			if (it != fac->lab->assigned_agents.end())
+			{
+				fac->lab->assigned_agents.erase(it);
+				assigned_to_lab = false;
+				break;
+			}
+		}
+	}
+	// Remove from building
+	if (currentBuilding)
+	{
+		currentBuilding->currentAgents.erase(thisRef);
+	}
+	// Remove from vehicle
+	if (currentVehicle)
+	{
+		currentVehicle->currentAgents.erase(thisRef);
+	}
+	// In city (if not died in a vehicle) we make an event
+	if (!silent && !state.current_battle && owner == state.getPlayer())
+	{
+		fw().pushEvent(new GameAgentEvent(GameEventType::AgentDiedCity, thisRef));
+	}
+}
+
+bool Agent::isDead() const { return getHealth() <= 0; }
+
 void Agent::update(GameState &state, unsigned ticks)
 {
+	if (isDead() || !city)
+	{
+		return;
+	}
+
 	if (teleportTicksAccumulated < TELEPORT_TICKS_REQUIRED_VEHICLE)
 	{
 		teleportTicksAccumulated += ticks;
@@ -975,6 +1023,13 @@ void Agent::updateMovement(GameState &state, unsigned ticks)
 {
 	auto ticksToMove = ticks;
 	unsigned lastTicksToMove = 0;
+
+	// See that we're not in the air
+	if (!city->map->getTile(position)->intactScenery)
+	{
+		die(state);
+		return;
+	}
 
 	// Move until we become idle or run out of ticks
 	while (ticksToMove != lastTicksToMove)

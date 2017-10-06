@@ -52,6 +52,8 @@ City::~City()
 		if (s->tileObject)
 			s->tileObject->removeFromMap();
 		s->tileObject = nullptr;
+		s->city.clear();
+		s->building.clear();
 	}
 	// FIXME: Due to tiles possibly being cross-supported we need to clear that sp<> to avoid leaks
 	// Should this be pushed into a weak_ptr<> or some other ref?
@@ -65,6 +67,8 @@ City::~City()
 	{
 		b.second->currentVehicles.clear();
 		b.second->currentAgents.clear();
+		b.second->city.clear();
+		b.second->base.clear();
 	}
 }
 
@@ -200,48 +204,48 @@ void City::update(GameState &state, unsigned int ticks)
 		p->update(state, ticks);
 	}
 	// Since projectiles can kill projectiles just kill everyone in the end
-	std::set<sp<Projectile>> deadProjectiles;
+	std::set<std::tuple<sp<Projectile>, bool, bool>> deadProjectiles;
 	for (auto &p : projectiles)
 	{
 		auto c = p->checkProjectileCollision(*map);
 		if (c)
 		{
-			deadProjectiles.emplace(c.projectile->shared_from_this());
+			bool displayDoodad = true;
+			bool playSound = true;
 			switch (c.obj->getType())
 			{
 				case TileObject::Type::Vehicle:
 				{
 					auto vehicle = std::static_pointer_cast<TileObjectVehicle>(c.obj)->getVehicle();
-					vehicle->handleCollision(state, c);
+					displayDoodad = vehicle->handleCollision(state, c);
+					playSound = displayDoodad;
 					LogWarning("Vehicle collision");
 					break;
 				}
 				case TileObject::Type::Scenery:
 				{
 					auto sceneryTile = std::static_pointer_cast<TileObjectScenery>(c.obj);
-					// FIXME: Don't just explode scenery, but damaged tiles/falling stuff? Different
-					// explosion doodads? Not all weapons instantly destory buildings too
-
-					auto doodad =
-					    this->placeDoodad({&state, "DOODAD_3_EXPLOSION"}, sceneryTile->getCenter());
-					sceneryTile->getOwner()->handleCollision(state, c);
+					displayDoodad = sceneryTile->getOwner()->handleCollision(state, c);
+					playSound = displayDoodad;
 					break;
 				}
 				case TileObject::Type::Projectile:
 				{
 					deadProjectiles.emplace(
-					    std::static_pointer_cast<TileObjectProjectile>(c.obj)->getProjectile());
+					    std::static_pointer_cast<TileObjectProjectile>(c.obj)->getProjectile(),
+					    true, true);
 					break;
 				}
 				default:
 					LogError("Collision with non-collidable object");
 			}
+			deadProjectiles.emplace(c.projectile->shared_from_this(), displayDoodad, playSound);
 		}
 	}
 	// Kill projectiles that collided
 	for (auto &p : deadProjectiles)
 	{
-		p->die(state);
+		std::get<0>(p)->die(state, std::get<1>(p), std::get<2>(p));
 	}
 
 	Trace::end("City::update::projectiles->update");

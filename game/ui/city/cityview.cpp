@@ -22,6 +22,7 @@
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
 #include "game/state/battle/battle.h"
+#include "game/state/battle/battlemap.h"
 #include "game/state/city/agentmission.h"
 #include "game/state/city/baselayout.h"
 #include "game/state/city/building.h"
@@ -79,6 +80,48 @@ static const std::vector<UString> TAB_FORM_NAMES = {
     "city/tab5", "city/tab6", "city/tab7", "city/tab8",
 };
 
+std::shared_future<void> loadBattleBase(sp<GameState> state, StateRef<Base> base,
+                                        StateRef<Organisation> attacker)
+{
+	auto loadTask = fw().threadPoolEnqueue([base, state, attacker]() -> void {
+
+		std::list<StateRef<Agent>> agents;
+		StateRef<Vehicle> veh = {};
+
+		bool hotseat = false;
+		const std::map<StateRef<AgentType>, int> *aliens = nullptr;
+		const int *guards = nullptr;
+		const int *civilians = nullptr;
+
+		Battle::beginBattle(*state, hotseat, attacker, agents, aliens, guards, civilians, veh,
+		                    base->building);
+	});
+
+	return loadTask;
+}
+
+std::shared_future<void> loadBattleVehicle(sp<GameState> state, StateRef<Vehicle> ufo,
+                                           StateRef<Vehicle> playerVehicle)
+{
+
+	auto loadTask = fw().threadPoolEnqueue([state, ufo, playerVehicle]() -> void {
+		std::list<StateRef<Agent>> agents;
+		for (auto &a : playerVehicle->currentAgents)
+		{
+			if (a->type->role == AgentType::Role::Soldier)
+			{
+				agents.push_back(a);
+			}
+		}
+
+		StateRef<Organisation> org = ufo->owner;
+		bool hotseat = false;
+		const std::map<StateRef<AgentType>, int> *aliens = nullptr;
+		Battle::beginBattle(*state, hotseat, org, agents, aliens, playerVehicle, ufo);
+	});
+
+	return loadTask;
+}
 } // anonymous namespace
 
 bool CityView::handleClickedBuilding(StateRef<Building> building, bool rightClick,
@@ -232,7 +275,7 @@ bool CityView::handleClickedVehicle(StateRef<Vehicle> vehicle, bool rightClick,
 		}
 		case CitySelectionState::AttackVehicle:
 		{
-			orderAttack(vehicle);
+			orderAttack(vehicle, modifierLCtrl || modifierRCtrl);
 			setSelectionState(CitySelectionState::Normal);
 			break;
 		}
@@ -533,7 +576,7 @@ void CityView::orderSelect(StateRef<Agent> agent, bool inverse, bool additive)
 	LogWarning("FIX Implement agent select controls for psi and phys train");
 }
 
-void CityView::orderAttack(StateRef<Vehicle> vehicle)
+void CityView::orderAttack(StateRef<Vehicle> vehicle, bool forced)
 {
 	if (activeTab == uiTabs[1])
 	{
@@ -541,8 +584,27 @@ void CityView::orderAttack(StateRef<Vehicle> vehicle)
 		{
 			if (v && v->owner == this->state->getPlayer() && v != vehicle)
 			{
-				// FIXME: Don't clear missions if not replacing current mission
-				v->setMission(*state, VehicleMission::attackVehicle(*this->state, *v, vehicle));
+				if (forced || !vehicle->isCrashed())
+				{
+					v->setMission(*state, VehicleMission::attackVehicle(*this->state, *v, vehicle));
+				}
+				else
+				{
+					bool foundSoldier = false;
+					for (auto &a : v->currentAgents)
+					{
+						if (a->type->role == AgentType::Role::Soldier)
+						{
+							foundSoldier = true;
+							break;
+						}
+					}
+					if (foundSoldier)
+					{
+						v->setMission(*state,
+						              VehicleMission::recoverVehicle(*this->state, *v, vehicle));
+					}
+				}
 			}
 		}
 		return;
@@ -1032,12 +1094,14 @@ void CityView::render()
 				Vec3<float> prevPos = vTile->getPosition();
 				for (auto &pos : path)
 				{
+					Vec3<float> posf = pos;
+					posf += Vec3<float>{0.5f, 0.5f, 0.5f};
 					Vec2<float> screenPosA = this->tileToOffsetScreenCoords(prevPos);
-					Vec2<float> screenPosB = this->tileToOffsetScreenCoords(pos);
+					Vec2<float> screenPosB = this->tileToOffsetScreenCoords(posf);
 
 					fw().renderer->drawLine(screenPosA, screenPosB, Colour{255, 255, 192, 255});
 
-					prevPos = pos;
+					prevPos = posf;
 				}
 			}
 		}
@@ -1235,7 +1299,7 @@ void CityView::update()
 			for (auto &v : state->vehicles)
 			{
 				auto vehicle = v.second;
-				if (vehicle->owner != state->getPlayer())
+				if (vehicle->owner != state->getPlayer() || v.second->isDead())
 				{
 					continue;
 				}
@@ -1285,7 +1349,7 @@ void CityView::update()
 			for (auto &a : state->agents)
 			{
 				auto agent = a.second;
-				if (agent->owner != state->getPlayer() ||
+				if (agent->owner != state->getPlayer() || agent->isDead() ||
 				    agent->type->role != AgentType::Role::Soldier)
 				{
 					continue;
@@ -1357,26 +1421,22 @@ void CityView::update()
 	state->current_city->cityViewScreenCenter = centerPos;
 }
 
-std::shared_future<void> loadBattleBase(sp<GameState> state, StateRef<Base> base,
-                                        StateRef<Organisation> attacker)
-{
-	auto loadTask = fw().threadPoolEnqueue([base, state, attacker]() -> void {
-
-		std::list<StateRef<Agent>> agents;
-		StateRef<Vehicle> veh = {};
-
-		Battle::beginBattle(*state, false, attacker, agents, nullptr, nullptr, nullptr, veh,
-		                    base->building);
-	});
-
-	return loadTask;
-}
-
 void CityView::initiateDefenseMission(StateRef<Base> base, StateRef<Organisation> attacker)
 {
+	bool isBuilding = true;
+	bool isRaid = false;
 	fw().stageQueueCommand({StageCmd::Command::REPLACEALL,
-	                        mksp<BattleBriefing>(state, attacker, base->building.id, false, false,
-	                                             loadBattleBase(state, base, attacker))});
+	                        mksp<BattleBriefing>(state, attacker, base->building.id, isBuilding,
+	                                             isRaid, loadBattleBase(state, base, attacker))});
+}
+
+void CityView::initiateUfoMission(StateRef<Vehicle> ufo, StateRef<Vehicle> playerCraft)
+{
+	bool isBuilding = false;
+	bool isRaid = false;
+	fw().stageQueueCommand({StageCmd::Command::REPLACEALL,
+	                        mksp<BattleBriefing>(state, ufo->owner, ufo.id, isBuilding, isRaid,
+	                                             loadBattleVehicle(state, ufo, playerCraft))});
 }
 
 void CityView::eventOccurred(Event *e)
@@ -1473,6 +1533,28 @@ bool CityView::handleKeyDown(Event *e)
 				{
 					s->repair(*state);
 				}
+				return true;
+			}
+			case SDLK_u:
+			{
+				LogWarning("Spawning crashed UFOs...");
+
+				auto pos = centerPos;
+				pos.z = 10;
+				auto ufo = state->current_city->placeVehicle(
+				    *state, {state.get(), "VEHICLETYPE_ALIEN_PROBE"}, state->getAliens(), pos);
+				ufo->health = 2;
+				ufo->applyDamage(*state, 1, 0);
+				ufo = state->current_city->placeVehicle(
+				    *state, {state.get(), "VEHICLETYPE_ALIEN_BATTLESHIP"}, state->getAliens(), pos);
+				ufo->health = 2;
+				ufo->applyDamage(*state, 1, 0);
+				ufo = state->current_city->placeVehicle(
+				    *state, {state.get(), "VEHICLETYPE_ALIEN_TRANSPORTER"}, state->getAliens(),
+				    pos);
+				ufo->health = 2;
+				ufo->applyDamage(*state, 1, 0);
+
 				return true;
 			}
 		}
@@ -1598,6 +1680,7 @@ bool CityView::handleMouseDown(Event *e)
 					if (modifierLAlt && modifierLCtrl && modifierLShift)
 					{
 						scenery->die(*state);
+						return true;
 					}
 					break;
 				}
@@ -1605,7 +1688,11 @@ bool CityView::handleMouseDown(Event *e)
 				{
 					vehicle =
 					    std::dynamic_pointer_cast<TileObjectVehicle>(collision.obj)->getVehicle();
-					LogInfo("CLICKED VEHICLE %s at %s", vehicle->name, vehicle->position);
+					LogWarning("CLICKED VEHICLE %s at %s", vehicle->name, vehicle->position);
+					for (auto &m : vehicle->missions)
+					{
+						LogWarning("Mission %s", m->getName());
+					}
 					break;
 				}
 				case TileObject::Type::Projectile:
@@ -1672,18 +1759,32 @@ bool CityView::handleGameStateEvent(Event *e)
 	{
 		state->logEvent(gameEvent);
 		baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
-		if (gameEvent->type != GameEventType::AlienSpotted)
+		switch (gameEvent->type)
 		{
-			bool pause = false;
-			if (GameEvent::optionsMap.find(gameEvent->type) != GameEvent::optionsMap.end())
+			case GameEventType::AlienSpotted:
+			case GameEventType::AlienTakeover:
+			case GameEventType::UfoRecoverySuccess:
+			case GameEventType::UfoRecoveryFailure:
+			case GameEventType::UfoRecoveryUnmanned:
 			{
-				pause = config().getBool(GameEvent::optionsMap.at(gameEvent->type));
+				// Never pause for these
+				break;
 			}
-			if (pause)
+			default:
 			{
-				fw().stageQueueCommand({StageCmd::Command::PUSH,
-				                        mksp<NotificationScreen>(state, *this, gameEvent->message(),
-				                                                 gameEvent->type)});
+				bool pause = false;
+				if (GameEvent::optionsMap.find(gameEvent->type) != GameEvent::optionsMap.end())
+				{
+					pause = config().getBool(GameEvent::optionsMap.at(gameEvent->type));
+				}
+				if (pause)
+				{
+					fw().stageQueueCommand(
+					    {StageCmd::Command::PUSH,
+					     mksp<NotificationScreen>(state, *this, gameEvent->message(),
+					                              gameEvent->type)});
+				}
+				break;
 			}
 		}
 	}
@@ -1704,6 +1805,31 @@ bool CityView::handleGameStateEvent(Event *e)
 		{
 			auto gameDefenseEvent = dynamic_cast<GameDefenseEvent *>(e);
 			initiateDefenseMission(gameDefenseEvent->base, gameDefenseEvent->organisation);
+			break;
+		}
+		case GameEventType::UfoRecoveryBegin:
+		{
+			auto gameRecoveryEvent = dynamic_cast<GameVehicleEvent *>(e);
+			if (gameRecoveryEvent->vehicle->type->battle_map)
+			{
+				initiateUfoMission(gameRecoveryEvent->vehicle, gameRecoveryEvent->actor);
+			}
+			else
+			{
+				fw().pushEvent(new GameVehicleEvent(GameEventType::UfoRecoveryUnmanned,
+				                                    gameRecoveryEvent->vehicle,
+				                                    gameRecoveryEvent->actor));
+			}
+			break;
+		}
+		case GameEventType::UfoRecoveryFailure:
+		case GameEventType::UfoRecoverySuccess:
+		case GameEventType::UfoRecoveryUnmanned:
+		{
+			auto gameRecoveryEvent = dynamic_cast<GameVehicleEvent *>(e);
+			gameRecoveryEvent->actor->setMission(
+			    *state, VehicleMission::gotoBuilding(*state, *gameRecoveryEvent->actor,
+			                                         gameRecoveryEvent->actor->homeBuilding));
 			break;
 		}
 		case GameEventType::AlienSpotted:
@@ -1932,22 +2058,45 @@ bool CityView::handleGameStateEvent(Event *e)
 void CityView::updateSelectedUnits()
 {
 	auto o = state->getPlayer();
-	auto it = state->current_city->cityViewSelectedVehicles.begin();
-	bool foundOwned = !state->current_city->cityViewSelectedAgents.empty();
-	while (it != state->current_city->cityViewSelectedVehicles.end())
+	bool foundOwned = false;
+	// Vehicles
 	{
-		auto v = *it;
-		if (!v || v->health <= 0)
+		auto it = state->current_city->cityViewSelectedVehicles.begin();
+		while (it != state->current_city->cityViewSelectedVehicles.end())
 		{
-			it = state->current_city->cityViewSelectedVehicles.erase(it);
-		}
-		else
-		{
-			if (v->owner == o)
+			auto v = *it;
+			if (!v || v->isDead())
 			{
-				foundOwned = true;
+				it = state->current_city->cityViewSelectedVehicles.erase(it);
 			}
-			it++;
+			else
+			{
+				if (v->owner == o)
+				{
+					foundOwned = true;
+				}
+				it++;
+			}
+		}
+	}
+	// Agents
+	{
+		auto it = state->current_city->cityViewSelectedAgents.begin();
+		while (it != state->current_city->cityViewSelectedAgents.end())
+		{
+			auto a = *it;
+			if (!a || a->isDead())
+			{
+				it = state->current_city->cityViewSelectedAgents.erase(it);
+			}
+			else
+			{
+				if (a->owner == o)
+				{
+					foundOwned = true;
+				}
+				it++;
+			}
 		}
 	}
 	if (!foundOwned && selectionState != CitySelectionState::Normal)

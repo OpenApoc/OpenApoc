@@ -1,5 +1,6 @@
 #include "game/state/gamestate.h"
 #include "framework/framework.h"
+#include "framework/sound.h"
 #include "framework/trace.h"
 #include "game/state/aequipment.h"
 #include "game/state/base/base.h"
@@ -65,9 +66,9 @@ GameState::~GameState()
 		// FIXME: This is not a 'good' way of doing this, maybe add a destroyVehicle() function? Or
 		// make StateRefWeak<> or something?
 		//
-		vehicle->city = "";
-		vehicle->homeBuilding = "";
-		vehicle->currentBuilding = "";
+		vehicle->city.clear();
+		vehicle->homeBuilding.clear();
+		vehicle->currentBuilding.clear();
 		vehicle->missions.clear();
 		vehicle->equipment.clear();
 		vehicle->mover = nullptr;
@@ -80,6 +81,7 @@ GameState::~GameState()
 				f->lab->current_project = "";
 			f->lab = "";
 		}
+		b.second->building.clear();
 	}
 	for (auto &org : this->organisations)
 	{
@@ -132,6 +134,7 @@ void GameState::initState()
 	{
 		auto &city = c.second;
 		city->initMap(*this);
+		// Add vehicles to map
 		for (auto &v : this->vehicles)
 		{
 			auto vehicle = v.second;
@@ -428,12 +431,24 @@ bool GameState::canTurbo() const
 	}
 	for (auto &v : this->vehicles)
 	{
-		if (v.second->city == this->current_city && v.second->tileObject != nullptr &&
-		    v.second->type->aggressiveness > 0 &&
-		    v.second->owner->isRelatedTo(this->getPlayer()) == Organisation::Relation::Hostile &&
-		    !v.second->isCrashed())
+		if (!v.second->isDead() && v.second->city == this->current_city &&
+		    v.second->tileObject != nullptr)
 		{
-			return false;
+			if (v.second->type->aggressiveness > 0 &&
+			    v.second->owner->isRelatedTo(this->getPlayer()) ==
+			        Organisation::Relation::Hostile &&
+			    !v.second->isCrashed())
+			{
+				return false;
+			}
+			for (auto &m : v.second->missions)
+			{
+				if (m->type == VehicleMission::MissionType::AttackBuilding ||
+				    m->type == VehicleMission::MissionType::AttackVehicle)
+				{
+					return false;
+				}
+			}
 		}
 	}
 	return true;
@@ -628,6 +643,7 @@ void GameState::updateEndOfDay()
 			                            (*portal)->getPosition());
 			v->missions.emplace_back(VehicleMission::infiltrateOrSubvertBuilding(*this, *v, bld));
 			v->missions.front()->start(*this, *v);
+			fw().soundBackend->playSample(city_common_sample_list->dimensionShiftOut, v->position);
 
 			fw().pushEvent(new GameVehicleEvent(GameEventType::UfoSpotted, {this, v}));
 		}

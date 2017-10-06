@@ -11,6 +11,7 @@
 #include "game/state/city/doodad.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
+#include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
 #include "game/state/rules/scenery_tile_type.h"
@@ -73,15 +74,17 @@ bool FlyingVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, f
 		return false;
 	}
 
-	// FIXME: Check for big vehicles
-	// if (v.type->size.x > 1)
-	//{
-	//}
-
 	for (auto &obj : to->ownedObjects)
 	{
 		if (obj->getType() == TileObject::Type::Vehicle)
-			return false;
+		{
+			auto vehicleTile = std::static_pointer_cast<TileObjectVehicle>(obj);
+			// Non-crashed can go into crashed
+			if (v.isCrashed() || !vehicleTile->getVehicle()->isCrashed())
+			{
+				return false;
+			}
+		}
 		if (obj->getType() == TileObject::Type::Scenery)
 		{
 			auto sceneryTile = std::static_pointer_cast<TileObjectScenery>(obj);
@@ -371,6 +374,15 @@ VehicleMission *VehicleMission::followVehicle(GameState &, Vehicle &, StateRef<V
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::FollowVehicle;
+	mission->targetVehicle = target;
+	return mission;
+}
+
+VehicleMission *VehicleMission::recoverVehicle(GameState &state, Vehicle &v,
+                                               StateRef<Vehicle> target)
+{
+	auto *mission = new VehicleMission();
+	mission->type = MissionType::RecoverVehicle;
 	mission->targetVehicle = target;
 	return mission;
 }
@@ -789,6 +801,8 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 				{
 					if (city.second != v.city.getSp())
 					{
+						fw().soundBackend->playSample(
+						    state.city_common_sample_list->dimensionShiftIn, v.position);
 						v.shadowObject->removeFromMap();
 						v.tileObject->removeFromMap();
 						v.shadowObject.reset();
@@ -854,6 +868,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 		case MissionType::FollowVehicle:
 		case MissionType::RestartNextMission:
 		case MissionType::TakeOff:
+		case MissionType::RecoverVehicle:
 			return;
 		case MissionType::Snooze:
 		{
@@ -907,6 +922,10 @@ bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 		case MissionType::InfiltrateSubvert:
 		{
 			return missionCounter > 1;
+		}
+		case MissionType::RecoverVehicle:
+		{
+			return missionCounter > 0;
 		}
 		case MissionType::Patrol:
 			return this->missionCounter == 0 && this->currentPlannedPath.empty();
@@ -1084,19 +1103,28 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						Vec3<float> leaveLocation = exitLocation;
 						leaveLocation += offsetLand;
 						float facing = 0.0f;
-						if (scenery->type->connection[1])
+						if (scenery->type->connection[0])
+						{
+							facing = 0.0f;
+							leaveLocation += Vec3<float>{0.0f, 0.5f, 0.0f};
+						}
+						else if (scenery->type->connection[1])
 						{
 							facing = (float)M_PI_2;
+							leaveLocation += Vec3<float>{0.5f, 0.0f, 0.0f};
 						}
-						if (scenery->type->connection[2])
+						else if (scenery->type->connection[2])
 						{
 							facing = (float)M_PI;
+							leaveLocation += Vec3<float>{0.0f, -0.5f, 0.0f};
 						}
-						if (scenery->type->connection[3])
+						else if (scenery->type->connection[3])
 						{
 							facing = (float)M_PI + (float)M_PI_2;
+							leaveLocation += Vec3<float>{-0.5f, 0.0f, 0.0f};
 						}
 						v.leaveBuilding(state, leaveLocation, facing);
+						this->currentPlannedPath = {exitLocation, exitLocation};
 						return;
 					}
 					break;
@@ -1464,6 +1492,69 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				}
 			}
 		}
+		case MissionType::RecoverVehicle:
+		{
+			// Ground can't recover
+			if (v.type->type == VehicleType::Type::Ground)
+			{
+				cancelled = true;
+				return;
+			}
+			if (!targetVehicle)
+			{
+				LogError("Vehicle disappeared");
+				return;
+			}
+			// Target not crashed or dead
+			if (!targetVehicle->isCrashed())
+			{
+				cancelled = true;
+				return;
+			}
+			// Find soldier
+			bool foundSoldier = false;
+			for (auto &a : v.currentAgents)
+			{
+				if (a->type->role == AgentType::Role::Soldier)
+				{
+					foundSoldier = true;
+					break;
+				}
+			}
+			if (!foundSoldier)
+			{
+				cancelled = true;
+				return;
+			}
+			// Try to advance on vehicle
+			if (missionCounter == 0)
+			{
+				// Vehicle has crashed successfully and we're on top of it
+				if (targetVehicle->missions.empty() &&
+				    (Vec3<int>)v.position == (Vec3<int>)targetVehicle->position)
+				{
+					missionCounter++;
+					// Launch vehicle assault
+					StateRef<Vehicle> thisRef = {&state,
+					                             Vehicle::getId(state, v.shared_from_this())};
+					auto event = new GameVehicleEvent(GameEventType::UfoRecoveryBegin,
+					                                  targetVehicle, thisRef);
+					fw().pushEvent(event);
+					// Remove ufo
+					targetVehicle->die(state, thisRef, true);
+					// Mission will now begin
+					return;
+				}
+				// Route towards target
+				v.addMission(state,
+				             VehicleMission::gotoLocation(state, v, targetVehicle->position));
+			}
+			else
+			{
+				LogError("Starting a completed recovery mission?");
+			}
+			return;
+		}
 		case MissionType::InfiltrateSubvert:
 		{
 			// Ground can't infiltrate
@@ -1672,8 +1763,13 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 			{
 				if (obj->getType() == TileObject::Type::Vehicle)
 				{
-					containsVehicle = true;
-					break;
+					auto vehicleTile = std::static_pointer_cast<TileObjectVehicle>(obj);
+					// Non-crashed can go into crashed
+					if (v.isCrashed() || !vehicleTile->getVehicle()->isCrashed())
+					{
+						containsVehicle = true;
+						break;
+					}
 				}
 			}
 			if (containsVehicle)
@@ -1807,7 +1903,8 @@ bool VehicleMission::advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> 
 	}
 	if (type == MissionType::TakeOff)
 	{
-		destPos = Vec3<float>{pos.x, pos.y, pos.z} + offsetFlying;
+		destPos = Vec3<float>{pos.x, pos.y, pos.z} +
+		          (v.type->type == VehicleType::Type::Ground ? offsetLand : offsetFlying);
 		return true;
 	}
 
@@ -1926,6 +2023,7 @@ UString VehicleMission::getName()
 	    {MissionType::GotoBuilding, "GotoBuilding"},
 	    {MissionType::GotoPortal, "GotoBuilding"},
 	    {MissionType::FollowVehicle, "FollowVehicle"},
+	    {MissionType::RecoverVehicle, "RecoverVehicle"},
 	    {MissionType::AttackVehicle, "AttackVehicle"},
 	    {MissionType::AttackBuilding, "AttackBuilding"},
 	    {MissionType::Snooze, "Snooze"},
@@ -1950,6 +2048,9 @@ UString VehicleMission::getName()
 			name += " " + this->targetBuilding.id;
 			break;
 		case MissionType::FollowVehicle:
+			name += " " + this->targetVehicle.id;
+			break;
+		case MissionType::RecoverVehicle:
 			name += " " + this->targetVehicle.id;
 			break;
 		case MissionType::AttackBuilding:

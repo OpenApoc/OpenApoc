@@ -122,7 +122,7 @@ class Organisation : public StateObject
 	bool isPositiveTo(const StateRef<Organisation> &other) const;
 	bool isNegativeTo(const StateRef<Organisation> &other) const;
 	float getRelationTo(const StateRef<Organisation> &other) const;
-	void adjustRelationTo(GameState &state, StateRef<Organisation> &other, float value);
+	void adjustRelationTo(GameState &state, StateRef<Organisation> other, float value);
 	std::map<StateRef<Organisation>, float> current_relations;
 };
 

@@ -94,7 +94,11 @@ void Projectile::update(GameState &state, unsigned int ticks)
 	// Tracking
 	if (turnRate > 0)
 	{
-		if (trackedObject)
+		if (trackedVehicle && trackedVehicle->isDead())
+		{
+			turnRate = 0;
+		}
+		else if (trackedObject)
 		{
 			targetPosition = trackedObject->getVoxelCentrePosition();
 		}

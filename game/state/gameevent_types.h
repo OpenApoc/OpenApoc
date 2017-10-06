@@ -8,7 +8,10 @@ enum class GameEventType
 	// Vehicle events
 	UfoSpotted,
 	UfoCrashed,
-	UfoRecovered,
+	UfoRecoverySuccess,
+	UfoRecoveryUnmanned,
+	UfoRecoveryFailure,
+	UfoRecoveryBegin,
 	VehicleLightDamage,
 	VehicleModerateDamage,
 	VehicleHeavyDamage,

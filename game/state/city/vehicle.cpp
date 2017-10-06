@@ -2,12 +2,16 @@
 #define _USE_MATH_DEFINES
 #endif
 #include "game/state/city/vehicle.h"
+#include "framework/framework.h"
 #include "framework/logger.h"
+#include "framework/sound.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/city/citycommonsamplelist.h"
 #include "game/state/city/projectile.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/city/vequipment.h"
+#include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
 #include "game/state/rules/vehicle_type.h"
@@ -144,6 +148,10 @@ class FlyingVehicleMover : public VehicleMover
 	// Vehicle is considered idle whenever it's at goal in its tile, even if it has missions to do
 	void updateIdle(GameState &state)
 	{
+		if (vehicle.isCrashed())
+		{
+			return;
+		}
 		if (vehicle.ticksAutoActionAvailable > state.gameTime.getTicks())
 		{
 			return;
@@ -575,6 +583,16 @@ class GroundVehicleMover : public VehicleMover
 		unsigned lastTicksToTurn = 0;
 		unsigned lastTicksToMove = 0;
 
+		// See that we're not in the air
+		if (vehicle.tileObject && !vehicle.tileObject->getOwningTile()->intactScenery &&
+		    !vehicle.city->map->getTile(vehicle.goalPosition)->intactScenery &&
+		    (vehicle.goalWaypoints.empty() ||
+		     !vehicle.city->map->getTile(vehicle.goalWaypoints.back())->intactScenery))
+		{
+			vehicle.die(state);
+			return;
+		}
+
 		// Flag wether we need to update banking and direction
 		bool updateSprite = false;
 		// Move until we become idle or run out of ticks
@@ -795,6 +813,73 @@ void Vehicle::setupMover()
 	animationFrame = type->animation_sprites.begin();
 }
 
+void Vehicle::die(GameState &state, StateRef<Vehicle> attacker, bool silent)
+{
+	health = 0;
+	if (!silent)
+	{
+		auto doodad = city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_3_EXPLOSION"},
+		                                this->tileObject->getCenter());
+		fw().soundBackend->playSample(state.city_common_sample_list->vehicleExplosion, position);
+	}
+	this->tileObject->removeFromMap();
+	this->tileObject.reset();
+	if (shadowObject)
+	{
+		this->shadowObject->removeFromMap();
+		this->shadowObject.reset();
+	}
+	this->mover = nullptr;
+
+	while (!currentAgents.empty())
+	{
+		// For some reason need to assign first before calling die()
+		auto agent = *currentAgents.begin();
+		// Dying will remove agent from current agents list
+		agent->die(state, true);
+	}
+
+	// Adjust relationships
+	// FIXME: Properly do vehicle death relationship adjust
+	LogWarning("Properly do vehicle death relationship adjust");
+	if (attacker)
+	{
+		// If we're hostile to attacker - lose 5 points
+		if (owner->isRelatedTo(attacker->owner) == Organisation::Relation::Hostile)
+		{
+			owner->adjustRelationTo(state, attacker->owner, -5.0f);
+		}
+		// If we're not hostile to attacker - lose 30 points
+		else
+		{
+			owner->adjustRelationTo(state, attacker->owner, -30.0f);
+		}
+		// Our allies lose 5 points, enemies gain 2 points
+		for (auto &org : state.organisations)
+		{
+			if (org.first != attacker->owner.id && org.first != state.getCivilian().id)
+			{
+				if (org.second->isRelatedTo(owner) == Organisation::Relation::Hostile)
+				{
+					org.second->adjustRelationTo(state, attacker->owner, 2.0f);
+				}
+				else if (org.second->isRelatedTo(owner) == Organisation::Relation::Allied)
+				{
+					org.second->adjustRelationTo(state, attacker->owner, -5.0f);
+				}
+			}
+		}
+	}
+
+	if (!silent && city == state.current_city)
+	{
+		fw().pushEvent(new GameVehicleEvent(GameEventType::VehicleDestroyed,
+		                                    {&state, getId(state, shared_from_this())}, attacker));
+	}
+}
+
+bool Vehicle::isDead() const { return getHealth() <= 0; }
+
 Vec3<float> Vehicle::getMuzzleLocation() const
 {
 	if (type->type == VehicleType::Type::Ground)
@@ -812,6 +897,11 @@ Vec3<float> Vehicle::getMuzzleLocation() const
 void Vehicle::update(GameState &state, unsigned int ticks)
 
 {
+	if (isDead())
+	{
+		return;
+	}
+
 	if (cloakTicksAccumulated < CLOAK_TICKS_REQUIRED_VEHICLE)
 	{
 		cloakTicksAccumulated += ticks;
@@ -860,6 +950,21 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 		}
 	}
 
+	int maxShield = this->getMaxShield();
+	if (maxShield)
+	{
+		this->shieldRecharge += ticks;
+		if (this->shieldRecharge > TICKS_PER_SECOND)
+		{
+			this->shield += this->getShieldRechargeRate() * this->shieldRecharge / TICKS_PER_SECOND;
+			this->shieldRecharge %= TICKS_PER_SECOND;
+			if (this->shield > maxShield)
+			{
+				this->shield = maxShield;
+			}
+		}
+	}
+
 	if (this->mover)
 	{
 		this->mover->update(state, ticks);
@@ -905,21 +1010,6 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 		{
 			// Fire normal weapons
 			fireNormalWeapons(state, arc);
-		}
-	}
-
-	int maxShield = this->getMaxShield();
-	if (maxShield)
-	{
-		this->shieldRecharge += ticks;
-		if (this->shieldRecharge > TICKS_PER_SECOND)
-		{
-			this->shield += this->getShieldRechargeRate() * this->shieldRecharge / TICKS_PER_SECOND;
-			this->shieldRecharge %= TICKS_PER_SECOND;
-			if (this->shield > maxShield)
-			{
-				this->shield = maxShield;
-			}
 		}
 	}
 }
@@ -1013,14 +1103,14 @@ void Vehicle::updateSprite(GameState &state)
 	}
 }
 
-bool Vehicle::isCrashed() const { return this->health < this->type->crash_health; }
+bool Vehicle::isCrashed() const { return !isDead() && this->health < this->type->crash_health; }
 /* // Test code to make UFOs crash immediately upon hit,
 // may be useful in the future as crashing is not yet perfect
  bool Vehicle::isCrashed() const
 { return this->health < this->type->health && this->type->crash_health > 0; }
 */
 
-bool Vehicle::applyDamage(GameState &state, int damage, float armour)
+bool Vehicle::applyDamage(GameState &state, int damage, float armour, StateRef<Vehicle> attacker)
 {
 	if (this->shield <= damage)
 	{
@@ -1051,6 +1141,7 @@ bool Vehicle::applyDamage(GameState &state, int damage, float armour)
 			if (this->health <= 0)
 			{
 				this->health = 0;
+				die(state, attacker);
 				return true;
 			}
 			else if (isCrashed())
@@ -1065,16 +1156,18 @@ bool Vehicle::applyDamage(GameState &state, int damage, float armour)
 	else
 	{
 		this->shield -= damage;
+		fw().soundBackend->playSample(state.city_common_sample_list->shieldHit, position);
+		return true;
 	}
 	return false;
 }
 
-void Vehicle::handleCollision(GameState &state, Collision &c)
+bool Vehicle::handleCollision(GameState &state, Collision &c)
 {
 	if (!this->tileObject)
 	{
 		LogError("It's possible multiple projectiles hit the same tile in the same tick (?)");
-		return;
+		return false;
 	}
 
 	auto projectile = c.projectile.get();
@@ -1115,22 +1208,10 @@ void Vehicle::handleCollision(GameState &state, Collision &c)
 			armourValue = armour->second;
 		}
 
-		if (applyDamage(state, randDamage050150(state.rng, projectile->damage), armourValue))
-		{
-			auto doodad = city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_3_EXPLOSION"},
-			                                this->tileObject->getCenter());
-
-			this->tileObject->removeFromMap();
-			this->tileObject.reset();
-			if (shadowObject)
-			{
-				this->shadowObject->removeFromMap();
-				this->shadowObject.reset();
-			}
-			state.vehicles.erase(this->getId(state, this->shared_from_this()));
-			return;
-		}
+		return applyDamage(state, randDamage050150(state.rng, projectile->damage), armourValue,
+		                   projectile->firerVehicle);
 	}
+	return false;
 }
 
 sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile,

@@ -1,8 +1,11 @@
 #include "game/state/city/scenery.h"
+#include "framework/framework.h"
 #include "framework/logger.h"
+#include "framework/sound.h"
 #include "game/state/city/agentmission.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/city/citycommonsamplelist.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/projectile.h"
 #include "game/state/gamestate.h"
@@ -10,12 +13,13 @@
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_scenery.h"
+#include "game/state/tileview/tileobject_vehicle.h"
 
 namespace OpenApoc
 {
 Scenery::Scenery() : damaged(false), falling(false), destroyed(false) {}
 
-void Scenery::handleCollision(GameState &state, Collision &c)
+bool Scenery::handleCollision(GameState &state, Collision &c)
 {
 	// Adjust relationships
 	if (building && c.projectile->firerVehicle)
@@ -41,7 +45,7 @@ void Scenery::handleCollision(GameState &state, Collision &c)
 		}
 	}
 
-	applyDamage(state, c.projectile->damage);
+	return applyDamage(state, c.projectile->damage);
 }
 
 bool Scenery::applyDamage(GameState &state, int power)
@@ -77,6 +81,14 @@ void Scenery::die(GameState &state)
 	{
 		return;
 	}
+
+	if (falling)
+	{
+		this->tileObject->removeFromMap();
+		this->tileObject.reset();
+		this->destroyed = true;
+		return;
+	}
 	if (!this->damaged && type->damagedTile)
 	{
 		this->damaged = true;
@@ -86,8 +98,14 @@ void Scenery::die(GameState &state)
 		// Don't destroy bottom tiles, else everything will leak out
 		if (this->initialPosition.z != 1)
 		{
+			auto doodad =
+			    city->placeDoodad({&state, "DOODAD_3_EXPLOSION"}, tileObject->getCenter());
+			fw().soundBackend->playSample(state.city_common_sample_list->sceneryExplosion,
+			                              tileObject->getCenter());
+
 			this->tileObject->removeFromMap();
 			this->tileObject.reset();
+			this->destroyed = true;
 		}
 	}
 	if (this->overlayDoodad)

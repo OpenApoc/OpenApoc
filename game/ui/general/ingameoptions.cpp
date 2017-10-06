@@ -56,7 +56,7 @@ const std::list<std::pair<UString, UString>> cityNotificationList = {
     {"Notifications.City.VehicleEscaping", "Vehicle damaged and returning to base"},
     {"Notifications.City.VehicleNoAmmo", "Weapon out of ammo"},
     {"Notifications.City.VehicleLowFuel", "Vehicle low on fuel"},
-    {"Notifications.City.AgentDiedCity", "Agent died"},
+    {"Notifications.City.AgentDiedCity", "Agent has died"},
     {"Notifications.City.AgentArrived", "Agent arrived at base"},
     {"Notifications.City.CargoArrived", "Cargo has arrived at base"},
     {"Notifications.City.TransferArrived", "Transfer arrived at base"},

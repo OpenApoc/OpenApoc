@@ -242,7 +242,8 @@ void CityTileView::render()
 				}
 				for (auto &m : vehicle->missions)
 				{
-					if (m->type == VehicleMission::MissionType::AttackVehicle)
+					if (m->type == VehicleMission::MissionType::AttackVehicle ||
+					    m->type == VehicleMission::MissionType::RecoverVehicle)
 					{
 						vehiclesToDrawBrackets.insert(m->targetVehicle);
 						vehiclesBracketsIndex[m->targetVehicle] = 2;
@@ -374,11 +375,11 @@ void CityTileView::render()
 				}
 			}
 
-			// Draw units
+			// Draw agents
 			for (auto &a : state.agents)
 			{
 				if (a.second->owner != state.getPlayer() || a.second->city != state.current_city ||
-				    a.second->currentVehicle)
+				    a.second->currentVehicle || a.second->isDead())
 				{
 					continue;
 				}
@@ -525,7 +526,7 @@ void CityTileView::render()
 			for (auto &a : state.agents)
 			{
 				if (a.second->owner != state.getPlayer() || a.second->city != state.current_city ||
-				    a.second->currentVehicle)
+				    a.second->currentVehicle || a.second->isDead())
 				{
 					continue;
 				}
@@ -548,7 +549,7 @@ void CityTileView::render()
 			for (auto &v : state.vehicles)
 			{
 				if (v.second->owner != state.getPlayer() || v.second->city != state.current_city ||
-				    !v.second->currentBuilding)
+				    !v.second->currentBuilding || v.second->isDead())
 				{
 					continue;
 				}
@@ -624,7 +625,7 @@ void CityTileView::render()
 			for (auto &a : state.agents)
 			{
 				if (a.second->owner != state.getPlayer() || a.second->city != state.current_city ||
-				    a.second->currentVehicle)
+				    a.second->currentVehicle || a.second->isDead())
 				{
 					continue;
 				}

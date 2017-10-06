@@ -5,8 +5,6 @@
 #include "framework/framework.h"
 #include "framework/sound.h"
 #include "game/state/aequipment.h"
-#include "game/state/base/base.h"
-#include "game/state/base/facility.h"
 #include "game/state/battle/ai/unitaihelper.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonsamplelist.h"
@@ -1360,7 +1358,7 @@ void BattleUnit::beginTurn(GameState &state)
 	}
 }
 
-bool BattleUnit::isDead() const { return agent->getHealth() <= 0 || destroyed; }
+bool BattleUnit::isDead() const { return agent->isDead() || destroyed; }
 
 bool BattleUnit::isUnconscious() const { return !isDead() && stunDamage >= agent->getHealth(); }
 
@@ -4550,7 +4548,6 @@ bool BattleUnit::useSpawner(GameState &state, sp<AEquipmentType> item)
 
 void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool violently)
 {
-	agent->modified_stats.health = 0;
 	auto attackerOrg = attacker ? attacker->agent->owner : nullptr;
 	auto ourOrg = agent->owner;
 	// Violent deaths (spawn stuff, blow up)
@@ -4710,25 +4707,8 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 	}
 	// Leave squad
 	removeFromSquad(*state.current_battle);
-	// Remove from lab
-	for (auto &base : state.player_bases)
-	{
-		if (!agent->assigned_to_lab)
-		{
-			break;
-		}
-		for (auto &fac : base.second->facilities)
-		{
-			auto it = std::find(fac->lab->assigned_agents.begin(), fac->lab->assigned_agents.end(),
-			                    agent);
-			if (it != fac->lab->assigned_agents.end())
-			{
-				fac->lab->assigned_agents.erase(it);
-				agent->assigned_to_lab = false;
-				break;
-			}
-		}
-	}
+	// Agent also dies
+	agent->die(state);
 	// Animate body
 	dropDown(state);
 }

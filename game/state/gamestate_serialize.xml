@@ -605,6 +605,11 @@
 	<object>
 		<name>CityCommonSampleList</name>
 		<member>teleport</member>
+		<member>vehicleExplosion</member>
+		<member>sceneryExplosion</member>
+		<member>shieldHit</member>
+		<member>dimensionShiftIn</member>
+		<member>dimensionShiftOut</member>
 		<member>alertSounds</member>
 	</object>
 	<object external="true">
@@ -1313,6 +1318,7 @@
 		<value>GotoLocation</value>
 		<value>GotoBuilding</value>
 		<value>FollowVehicle</value>
+		<value>RecoverVehicle</value>
 		<value>AttackVehicle</value>
 		<value>AttackBuilding</value>
 		<value>Snooze</value>
