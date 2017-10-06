@@ -123,7 +123,7 @@ void InGameOptions::saveList()
 void InGameOptions::loadList(int id)
 {
 	curId = id;
-	std::list<std::pair<UString, UString>> *notificationList;
+	std::list<std::pair<UString, UString>> *notificationList = nullptr;
 	switch (curId)
 	{
 		case 0:
@@ -157,6 +157,7 @@ void InGameOptions::loadNextList()
 	{
 		curId = 0;
 	}
+	loadList(curId);
 }
 
 void InGameOptions::begin()

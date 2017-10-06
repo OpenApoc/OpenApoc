@@ -3,6 +3,7 @@
 #include "forms/graphic.h"
 #include "forms/ui.h"
 #include "framework/data.h"
+#include "framework/configfile.h"
 #include "framework/event.h"
 #include "framework/font.h"
 #include "framework/framework.h"
@@ -481,8 +482,7 @@ void BattleTileView::render()
 			// List of waypointLocations to draw
 			// std::map<Vec3<int>, std::list<Vec3<float>>> waypointLocations;
 			std::set<Vec3<int>> waypointLocations;
-			// FIXME: Actually read ingame option
-			bool USER_OPTION_DRAW_WAYPOINTS = true;
+			bool drawWaypoints = config().getBool("OpenApoc.NewFeature.DisplayUnitPaths");
 			bool darkenWaypoints = false;
 			std::list<StateRef<BattleUnit>> allUnits;
 			if (revealWholeMap)
@@ -505,7 +505,7 @@ void BattleTileView::render()
 						    !m->currentPlannedPath.empty())
 						{
 							targetIconLocations.insert(m->targetLocation);
-							if (USER_OPTION_DRAW_WAYPOINTS)
+							if (drawWaypoints)
 							{
 								for (auto &w : m->currentPlannedPath)
 								{
@@ -535,7 +535,7 @@ void BattleTileView::render()
 						    !m->currentPlannedPath.empty())
 						{
 							targetIconLocations.insert(m->targetLocation);
-							if (USER_OPTION_DRAW_WAYPOINTS)
+							if (drawWaypoints)
 							{
 								for (auto &w : m->currentPlannedPath)
 								{
@@ -550,7 +550,7 @@ void BattleTileView::render()
 					}
 				}
 			}
-			if (previewedPathCost != -1 && USER_OPTION_DRAW_WAYPOINTS && waypointLocations.empty())
+			if (previewedPathCost != -1 && drawWaypoints && waypointLocations.empty())
 			{
 				darkenWaypoints = true;
 				for (auto &w : pathPreview)

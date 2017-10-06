@@ -8,6 +8,7 @@
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battledoor.h"
 #include "game/state/battle/battleexplosion.h"
+#include "framework/configfile.h"
 #include "game/state/battle/battlehazard.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemap.h"
@@ -1168,9 +1169,6 @@ sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position,
                                          int depletionRate, StateRef<Organisation> ownerOrg,
                                          StateRef<BattleUnit> ownerUnit)
 {
-	// FIXME: Actually read this option
-	bool USER_OPTION_EXPLOSIONS_DAMAGE_IN_THE_END = true;
-
 	// Doodad
 	if (!doodadType)
 	{
@@ -1188,7 +1186,7 @@ sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position,
 	// Explosion
 	auto explosion =
 	    mksp<BattleExplosion>(position, damageType, power, depletionRate,
-	                          USER_OPTION_EXPLOSIONS_DAMAGE_IN_THE_END, ownerOrg, ownerUnit);
+			!config().getBool("OpenApoc.NewFeature.InstantExplosionDamage"), ownerOrg, ownerUnit);
 	explosions.insert(explosion);
 	return explosion;
 }
