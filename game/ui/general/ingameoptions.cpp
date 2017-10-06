@@ -26,7 +26,7 @@ namespace OpenApoc
 {
 namespace
 {
-const std::list<std::pair<UString, UString>> battleNotificationList = {
+ std::list<std::pair<UString, UString>> battleNotificationList = {
     {"Notifications.Battle.HostileSpotted", "Hostile unit spotted"},
     {"Notifications.Battle.HostileDied", "Hostile unit has died"},
     {"Notifications.Battle.UnknownDied", "Unknown Unit has died"},
@@ -47,7 +47,7 @@ const std::list<std::pair<UString, UString>> battleNotificationList = {
     {"Notifications.Battle.AgentPsiOver", "Unit freed from Psionic control"},
 };
 
-const std::list<std::pair<UString, UString>> cityNotificationList = {
+ std::list<std::pair<UString, UString>> cityNotificationList = {
     {"Notifications.City.UfoSpotted", "UFO spotted"},
     {"Notifications.City.VehicleLightDamage", "Vehicle lightly damaged"},
     {"Notifications.City.VehicleModerateDamage", "Vehicle moderately damaged"},
@@ -68,6 +68,39 @@ const std::list<std::pair<UString, UString>> cityNotificationList = {
     {"Notifications.City.NotEnoughFuel", "Not enough fuel to refuel vehicle"},
     {"Notifications.City.UnauthorizedVehicle", "Unauthorized vehicle detected"},
 };
+
+std::list<std::pair<UString, UString>> openApocList = 
+{
+    { "OpenApoc.NewFeature.UFODamageModel", "X-Com 1 Damage model (0-200%)" },
+    { "OpenApoc.NewFeature.Fully3DExplosions", "Fully 3D explosions" },
+    { "OpenApoc.NewFeature.InstantExplosionDamage", "Explosions damage instantly" },
+    { "OpenApoc.NewFeature.GravliftSounds", "Gravlift sounds" },
+	{ "OpenApoc.NewFeature.NoInstantThrows", "Throwing requires standing upright" },
+	{ "OpenApoc.NewFeature.FerryChecksRelationshipWhenBuying", "Transtellar checks relationship when buying items" },
+	{ "OpenApoc.NewFeature.AllowManualCityTeleporters", "NYI Allow manual use of teleporters in city" },
+	{ "OpenApoc.NewFeature.AllowManualCargoFerry", "NYI Allow manual ferrying of cargo and non-combatants" },
+	{ "OpenApoc.NewFeature.AllowSoldierTaxiUse", "NYI Allow soldiers to call taxi" },
+	{ "OpenApoc.NewFeature.AllowUnloadingClips", "NYI Allow manually unloading clips from weapons" },
+	{ "OpenApoc.NewFeature.PayloadExplosion", "NYI Ammunition explodes when blown up" },
+	{ "OpenApoc.NewFeature.DisplayUnitPaths", "Display unit paths in battle" },
+	{ "OpenApoc.NewFeature.AdditionalUnitIcons", "NYI Display additional unit icons (fatal, psi)" },
+	{ "OpenApoc.NewFeature.AllowForceFiringParallel", "NYI Allow force-firing parallel to the ground" },
+	{ "OpenApoc.NewFeature.RequireLOSToMaintainPsi", "NYI Require LOS to maintain psi attack" },
+	{ "OpenApoc.NewFeature.AllowAttackingOwnedVehicles", "NYI Allow attacking owned vehicles" },
+	{ "OpenApoc.NewFeature.CallExistingFerry", "NYI Call existing transport instead of spawning them" },
+	{ "OpenApoc.NewFeature.AlternateVehicleShieldSound", "NYI Hitting vehicle shield produces alternate sound" },
+	{ "OpenApoc.NewFeature.EnableAgentTemplates", "NYI Enable agent equipment templates" },
+	{ "OpenApoc.NewFeature.StoreDroppedEquipment", "NYI Attempt to recover agent equipment dropped in city" },
+	{ "OpenApoc.NewFeature.AbsorbingVehicles", "NYI Ground vehicles absorb damage dealt to roads under them" },
+	{ "OpenApoc.NewFeature.RecoverGroundVehicles", "NYI Ground vehicles crash when road dies and can be recovered" },
+	{ "OpenApoc.NewFeature.EnforceCargoLimits", "NYI Enforce vehicle cargo limits" },
+	{ "OpenApoc.NewFeature.AllowNearbyVehicleLootPickup", "NYI Allow nearby vehicles to pick up loot" },
+	{ "OpenApoc.NewFeature.AllowBuildingLootDeposit", "NYI Allow loot to be stashed in the building" },
+	{ "OpenApoc.Mod.BSKLauncherSound", "(MOD) NYI Original Brainsucker Launcher SFX" },
+	{ "OpenApoc.Mod.ArmoredRoads", "(MOD) NYI Armored roads" },
+	{ "OpenApoc.Mod.InvulnerableRoads", "(MOD) NYI Invulnerable roads" },
+	{ "OpenApoc.Mod.ATVTank", "(MOD) NYI Griffon becomes an All-Terrain Vehicle" },
+};
 }
 
 InGameOptions::InGameOptions(sp<GameState> state)
@@ -76,6 +109,55 @@ InGameOptions::InGameOptions(sp<GameState> state)
 }
 
 InGameOptions::~InGameOptions() {}
+
+void InGameOptions::saveList()
+{
+	auto listControl = menuform->findControlTyped<ListBox>("NOTIFICATIONS_LIST");
+	for (auto &c : listControl->Controls)
+	{
+		auto name = c->getData<UString>();
+		config().set(*name, std::dynamic_pointer_cast<CheckBox>(c)->isChecked());
+	}
+}
+
+void InGameOptions::loadList(int id)
+{
+	curId = id;
+	std::list<std::pair<UString, UString>> *notificationList;
+	switch (curId)
+	{
+		case 0:
+			notificationList = state->current_battle ? &battleNotificationList : &cityNotificationList;
+			break;
+		case 1:
+			notificationList = &openApocList;
+			break;
+	}
+	auto listControl = menuform->findControlTyped<ListBox>("NOTIFICATIONS_LIST");
+	listControl->clear();
+	auto font = ui().getFont("smalfont");
+	for (auto &p : *notificationList)
+	{
+		auto checkBox = mksp<CheckBox>(fw().data->loadImage("BUTTON_CHECKBOX_TRUE"),
+			fw().data->loadImage("BUTTON_CHECKBOX_FALSE"));
+		checkBox->Size = { 240, 16 };
+		checkBox->setData(mksp<UString>(p.first));
+		checkBox->setChecked(config().getBool(p.first));
+		auto label = checkBox->createChild<Label>(tr(p.second), font);
+		label->Size = { 216, 16 };
+		label->Location = { 24, 0 };
+		listControl->addItem(checkBox);
+	}
+}
+
+void InGameOptions::loadNextList()
+{
+	curId++;
+	if (curId > 1)
+	{
+		curId = 0;
+	}
+}
 
 void InGameOptions::begin()
 {
@@ -104,21 +186,7 @@ void InGameOptions::begin()
 
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 
-	auto &notificationList = state->current_battle ? battleNotificationList : cityNotificationList;
-	auto listControl = menuform->findControlTyped<ListBox>("NOTIFICATIONS_LIST");
-	auto font = ui().getFont("smalfont");
-	for (auto &p : notificationList)
-	{
-		auto checkBox = mksp<CheckBox>(fw().data->loadImage("BUTTON_CHECKBOX_TRUE"),
-		                               fw().data->loadImage("BUTTON_CHECKBOX_FALSE"));
-		checkBox->Size = {240, 16};
-		checkBox->setData(mksp<UString>(p.first));
-		checkBox->setChecked(config().getBool(p.first));
-		auto label = checkBox->createChild<Label>(tr(p.second), font);
-		label->Size = {216, 16};
-		label->Location = {24, 0};
-		listControl->addItem(checkBox);
-	}
+	loadList(0);
 }
 
 void InGameOptions::pause() {}
@@ -145,12 +213,6 @@ void InGameOptions::finish()
 	config().set("Options.Misc.AutoExecute",
 	             menuform->findControlTyped<CheckBox>("AUTO_EXECUTE_ORDERS")->isChecked());
 
-	auto listControl = menuform->findControlTyped<ListBox>("NOTIFICATIONS_LIST");
-	for (auto &c : listControl->Controls)
-	{
-		auto name = c->getData<UString>();
-		config().set(*name, std::dynamic_pointer_cast<CheckBox>(c)->isChecked());
-	}
 }
 
 void InGameOptions::eventOccurred(Event *e)

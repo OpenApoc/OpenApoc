@@ -16,7 +16,7 @@ class Facility;
 class GameState;
 class Organisation;
 
-class Base : public StateObject
+class Base : public StateObject, public std::enable_shared_from_this<Base>
 {
 	STATE_OBJECT(Base)
   public:
@@ -42,6 +42,8 @@ class Base : public StateObject
 	};
 
 	Base(GameState &state, StateRef<Building> building);
+
+	void die(GameState &state, bool collapse);
 
 	sp<Facility> getFacility(Vec2<int> pos) const;
 	void startingBase(GameState &state);

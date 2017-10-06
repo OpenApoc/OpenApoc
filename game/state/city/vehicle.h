@@ -36,6 +36,54 @@ class TileMap;
 class Agent;
 class Collision;
 
+class Cargo
+{
+  public:
+    enum class Type
+	{
+		Agent,
+		Bio,
+		VehicleAmmo,
+		VehicleEquipment
+	};
+
+	// Item type (Agent equipment, bio-containment item or vehicle equipment
+	Type type = Type::Agent;
+	// Item id
+	UString id;
+	// Amount of items
+	int count = 0;
+	// For agent ammo this is equal to max ammo
+	int multiplier = 0;
+	// Space one item takes
+	int space = 0;
+	// Cost of one item
+	int cost = 0;
+	// Original owner
+	StateRef<Organisation> originalOwner;
+	// Destination building
+	StateRef<Building> destination;
+	// Time when cargo expires and is refunded
+	uint64_t expirationDate = 0;
+	// Warned player that cargo is about to expire
+	bool warned = false;
+	// Do not make events about this cargo, set if this is items left on floor
+	bool suppressEvents = false;
+
+	// Check expiry date, expire if past expiration date, return true if expires soon
+	bool checkExpiryDate(GameState &state);
+	// Refund cargo to destination org
+	void refund(GameState &state);
+	// Put cargo into base
+	void arrive(GameState &state);
+	// Put cargo into base
+	void arrive(GameState &state, bool &cargoArrived, bool &bioArrived, bool &recoveryArrived, bool &transferArrived, std::set<StateRef<Organisation>> &suppliers);
+	// Seize cargo
+	void seize(GameState &state, StateRef<Organisation> org);
+	// Clear cargo (set count to zero, will be removed)
+	void clear();
+};
+
 class VehicleMover
 {
   public:
@@ -110,6 +158,7 @@ class Vehicle : public StateObject,
 	StateRef<Building> currentBuilding;
 	// Agents currently residing in vehicle
 	std::set<StateRef<Agent>> currentAgents;
+	std::list<Cargo> cargo;
 
 	sp<TileObjectVehicle> tileObject;
 	sp<TileObjectShadow> shadowObject;
@@ -123,7 +172,19 @@ class Vehicle : public StateObject,
 	/* Sets up the 'mover' after state serialize in */
 	void setupMover();
 
+	// Provide cargo or passenger service. Loads cargo or passengers or bio.
+	// If otherOrg true - provides service to other orgs but only if type provides freight
+	// If otherOrg false - provides service only to own org and ignores type flag
+	void provideService(GameState &state, bool otherOrg);
+	void provideServiceCargo(GameState &state, bool bio, bool otherOrg);
+	void provideServicePassengers(GameState &state, bool otherOrg);
+	// Get destination for current cargo or passengers, nullptr if none
+	// Also offloads arrived cargo or passengers
+	StateRef<Building> getServiceDestination(GameState &state);
+
 	void die(GameState &state, StateRef<Vehicle> attacker = nullptr, bool silent = false);
+	void crash(GameState &state, StateRef<Vehicle> attacker);
+	void adjustRelationshipOnDowned(GameState &state, StateRef<Vehicle> attacker);
 	bool isDead() const;
 
 	bool canAddEquipment(Vec2<int> pos, StateRef<VEquipmentType> type) const;
@@ -178,6 +239,8 @@ class Vehicle : public StateObject,
 	int getPassengers() const;
 	int getMaxCargo() const;
 	int getCargo() const;
+	int getMaxBio() const;
+	int getBio() const;
 	float getSpeed() const;
 
 	void nextFrame(int ticks);
@@ -189,7 +252,8 @@ class Vehicle : public StateObject,
 	// Replaces all missions with provided mission, returns true if successful
 	bool setMission(GameState &state, VehicleMission *mission);
 
-	virtual void update(GameState &state, unsigned int ticks);
+	void update(GameState &state, unsigned int ticks);
+	void updateCargo(GameState &state);
 	void updateSprite(GameState &state);
 
 	sp<Equipment> getEquipmentAt(const Vec2<int> &position) const override;

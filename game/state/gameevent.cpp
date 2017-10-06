@@ -95,16 +95,6 @@ UString GameVehicleEvent::message()
 			return format("%s %s", tr("Vehicle moderately damaged:"), vehicle->name);
 		case GameEventType::VehicleHeavyDamage:
 			return format("%s %s", tr("Vehicle heavily damaged:"), vehicle->name);
-		case GameEventType::VehicleDestroyed:
-			if (actor)
-			{
-				return format("%s %s %s: %s", tr("Vehicle destroyed:"), vehicle->name,
-				              tr("destroyed by"), actor->name);
-			}
-			else
-			{
-				return format("%s %s", tr("Vehicle destroyed:"), vehicle->name);
-			}
 		case GameEventType::VehicleEscaping:
 			return format("%s %s", tr("Vehicle returning to base as damaged:"), vehicle->name);
 		case GameEventType::VehicleNoAmmo:
@@ -144,15 +134,23 @@ UString GameAgentEvent::message()
 	switch (type)
 	{
 		case GameEventType::AgentArrived:
-			return format("%s %s", tr("New recruit arrived:"), agent->name);
+			if (flag)
+			{
+				return format("%s %s", tr("New transfer arrived:"), agent->name);
+			}
+			else
+			{
+				return format("%s %s", tr("New recruit arrived:"), agent->name);
+			}
+		case GameEventType::AgentUnableToReach:
+			return format("%s%s", agent->name, tr(": Unable to reach destination due to damaged people tube network and / or "
+				"poor diplomatic relations with Transtellar."));
 		case GameEventType::HostileSpotted:
 			return format("%s", tr("Hostile unit spotted"));
 		case GameEventType::AgentBrainsucked:
 			return format("%s %s", tr("Unit Brainsucked:"), agent->name);
 		case GameEventType::AgentDiedBattle:
 			return format("%s %s", tr("Unit has died:"), agent->name);
-		case GameEventType::AgentDiedCity:
-			return format("%s %s", tr("Agent has died:"), agent->name);
 		case GameEventType::HostileDied:
 			return format("%s %s", tr("Hostile unit has died"), agent->name);
 		case GameEventType::UnknownDied:
@@ -214,13 +212,23 @@ UString GameBaseEvent::message()
 		case GameEventType::AgentRearmed:
 			return tr("Agent(s) rearmed:") + " " + base->name;
 		case GameEventType::CargoArrived:
-			return tr("Cargo arrived:") + " " + base->name;
+			if (actor)
+				return tr("Cargo arrived:") + " " + base->name + " " + tr("Supplier: ") + actor->name;
+			else
+			{
+				return tr("Cargo arrived:") + " " + base->name;
+			}
 		case GameEventType::TransferArrived:
-			return tr("Transferred goods have arrived:") + " " + base->name;
+			if (flag)
+			{
+				return tr("Transferred Alien specimens have arrived:") + " " + base->name;
+			}
+			else
+			{
+				return tr("Transferred goods have arrived:") + " " + base->name;
+			}
 		case GameEventType::RecoveryArrived:
 			return tr("Items from tactical combat zone have arrived:") + " " + base->name;
-		case GameEventType::BaseDestroyed:
-			return tr("Base destroyed:") + " " + base->name;
 		default:
 			LogError("Invalid event type");
 			break;
@@ -242,7 +250,7 @@ UString GameBattleEvent::message()
 	return "";
 }
 
-GameBaseEvent::GameBaseEvent(GameEventType type, StateRef<Base> base) : GameEvent(type), base(base)
+GameBaseEvent::GameBaseEvent(GameEventType type, StateRef<Base> base, StateRef<Organisation> actor, bool flag) : GameEvent(type), base(base), actor(actor), flag(flag)
 {
 }
 
@@ -257,8 +265,8 @@ GameOrganisationEvent::GameOrganisationEvent(GameEventType type,
 {
 }
 
-GameAgentEvent::GameAgentEvent(GameEventType type, StateRef<Agent> agent)
-    : GameEvent(type), agent(agent)
+GameAgentEvent::GameAgentEvent(GameEventType type, StateRef<Agent> agent, bool flag)
+    : GameEvent(type), agent(agent), flag(flag)
 {
 }
 
@@ -291,5 +299,42 @@ GameDefenseEvent::GameDefenseEvent(GameEventType type, StateRef<Base> base,
                                    StateRef<Organisation> organisation)
     : GameEvent(type), base(base), organisation(organisation)
 {
+}
+
+GameSomethingDiedEvent::GameSomethingDiedEvent(GameEventType type, UString name, Vec3<int> location) : GameSomethingDiedEvent(type, name, "", location) {}
+
+GameSomethingDiedEvent::GameSomethingDiedEvent(GameEventType type, UString name, UString actor, Vec3<int> location) : GameEvent(type), location(location)
+{
+	switch (type)
+	{
+		case GameEventType::AgentDiedCity:
+			messageInner = format("%s %s", tr("Agent has died:"), name);
+			break;
+		case GameEventType::BaseDestroyed:
+			if (actor.length() > 0)
+			{
+				messageInner = tr("X-COM base destroyed by hostile forces.");
+			}
+			else
+			{
+				messageInner = tr("X-COM Base destroyed due to collapsing building.");
+			}
+			break;
+		case GameEventType::VehicleDestroyed:
+			if (actor.length() > 0)
+			{
+				messageInner = format("%s %s %s: %s", tr("Vehicle destroyed:"), name,
+					tr("destroyed by"), actor);
+			}
+			else
+			{
+				messageInner = format("%s %s", tr("Vehicle destroyed:"), name);
+			}
+			break;
+	}
+}
+UString GameSomethingDiedEvent::message()
+{
+	return messageInner;
 }
 }

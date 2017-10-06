@@ -493,6 +493,22 @@ bool Agent::hasTeleporter() const
 	return false;
 }
 
+void Agent::hire(GameState & state, StateRef<Building> newHome)
+{
+	owner = newHome->owner;
+	homeBuilding = newHome;
+	recentlyHired = true;
+	setMission(state, AgentMission::gotoBuilding(state, *this, newHome, true, true));
+}
+
+void Agent::transfer(GameState & state, StateRef<Building> newHome)
+{
+	homeBuilding = newHome;
+	recentlyHired = false;
+	recentryTransferred = true;
+	setMission(state, AgentMission::gotoBuilding(state, *this, newHome, true, true));
+}
+
 sp<AEquipment> Agent::getArmor(BodyPart bodyPart) const
 {
 	auto a = getFirstItemInSlot(AgentType::getArmorSlotType(bodyPart));
@@ -968,9 +984,13 @@ void Agent::die(GameState &state, bool silent)
 		currentVehicle->currentAgents.erase(thisRef);
 	}
 	// In city (if not died in a vehicle) we make an event
-	if (!silent && !state.current_battle && owner == state.getPlayer())
+	if (!state.current_battle)
 	{
-		fw().pushEvent(new GameAgentEvent(GameEventType::AgentDiedCity, thisRef));
+		if (!silent && owner == state.getPlayer())
+		{
+			fw().pushEvent(new GameSomethingDiedEvent(GameEventType::AgentDiedCity, name, "", position));
+		}
+		state.agents.erase(getId(state, shared_from_this()));
 	}
 }
 
@@ -1017,6 +1037,19 @@ void Agent::update(GameState &state, unsigned ticks)
 		}
 		updateMovement(state, ticks);
 	}
+}
+
+void Agent::updateFiveSeconds(GameState & state)
+{
+	if (type->role != AgentType::Role::Soldier && currentBuilding != homeBuilding && missions.empty())
+	{
+		setMission(state, AgentMission::gotoBuilding(state, *this, homeBuilding));
+	}
+}
+
+void Agent::updateDaily(GameState & state)
+{
+	recentlyFought = false;
 }
 
 void Agent::updateMovement(GameState &state, unsigned ticks)

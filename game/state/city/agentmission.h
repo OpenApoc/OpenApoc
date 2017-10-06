@@ -10,7 +10,8 @@
 namespace OpenApoc
 {
 
-static const int MIN_REASONABLE_HEIGHT_AGENT = 1;
+static const int SUBWAY_HEIGHT_AGENT = 1;
+static const int PICKUP_TIMEOUT = 3 * TICKS_PER_HOUR;
 
 class Agent;
 class Tile;
@@ -44,8 +45,6 @@ class AgentTileHelper : public CanEnterTileHelper
 	// Convert vector direction into index for tube array
 	int convertDirection(Vec3<int> dir) const;
 
-	float adjustCost(Vec3<int> nextPosition, int z) const override;
-
 	bool isMoveAllowed(Scenery &scenery, int dir) const;
 };
 
@@ -69,8 +68,8 @@ class AgentMission
 
 	// Methods to create new missions
 	static AgentMission *gotoBuilding(GameState &state, Agent &a, StateRef<Building> target,
-	                                  bool allowTeleporter = false);
-	static AgentMission *awaitPickup(GameState &state, Agent &a);
+	                                  bool allowTeleporter = false, bool allowTaxi = false);
+	static AgentMission *awaitPickup(GameState &state, Agent &a, StateRef<Building> target);
 	static AgentMission *snooze(GameState &state, Agent &a, unsigned int ticks);
 	static AgentMission *restartNextMission(GameState &state, Agent &a);
 	static AgentMission *teleport(GameState &state, Agent &a, StateRef<Building> b);
@@ -89,6 +88,7 @@ class AgentMission
 
 	//  GotoBuilding
 	bool allowTeleporter = false;
+	bool allowTaxi = false;
 	// GotoBuilding AttackBuilding Land Infiltrate
 	StateRef<Building> targetBuilding;
 	// AwaitPickup, Snooze

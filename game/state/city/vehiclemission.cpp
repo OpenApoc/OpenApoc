@@ -387,6 +387,21 @@ VehicleMission *VehicleMission::recoverVehicle(GameState &state, Vehicle &v,
 	return mission;
 }
 
+VehicleMission * VehicleMission::offerService(GameState & state, Vehicle & v, StateRef<Building> target)
+{
+	auto *mission = new VehicleMission();
+	mission->type = MissionType::OfferService;
+	if (target)
+	{
+		mission->targetBuilding = target;
+	}
+	else
+	{
+		mission->missionCounter = 1;
+	}
+	return mission;
+}
+
 VehicleMission *VehicleMission::snooze(GameState &, Vehicle &, unsigned int snoozeTicks)
 {
 	auto *mission = new VehicleMission();
@@ -762,6 +777,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 		case MissionType::Snooze:
 		case MissionType::RestartNextMission:
 		case MissionType::GotoPortal:
+		case MissionType::OfferService:
 		case MissionType::InfiltrateSubvert:
 		{
 			return false;
@@ -822,6 +838,11 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 		}
 		case MissionType::Crash:
 		{
+			if (finished)
+			{
+				fw().pushEvent(new GameVehicleEvent(GameEventType::UfoCrashed, { &state, v.shared_from_this() }));
+				return;
+			}
 			auto vTile = v.tileObject;
 			if (vTile && !finished && this->currentPlannedPath.empty())
 			{
@@ -838,7 +859,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 				if (reRouteAttempts > 0)
 				{
 					reRouteAttempts--;
-					setPathTo(state, v, targetLocation, getDefaultIterationCount(v));
+					setPathTo(state, v, targetLocation, getDefaultIterationCount(v), true);
 				}
 				else
 				{
@@ -864,6 +885,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 			return;
 		case MissionType::InfiltrateSubvert:
 		case MissionType::GotoBuilding:
+		case MissionType::OfferService:
 		case MissionType::AttackVehicle:
 		case MissionType::FollowVehicle:
 		case MissionType::RestartNextMission:
@@ -920,13 +942,11 @@ bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 			return false;
 		}
 		case MissionType::InfiltrateSubvert:
-		{
 			return missionCounter > 1;
-		}
+		case MissionType::OfferService:
+			return missionCounter > 1;
 		case MissionType::RecoverVehicle:
-		{
 			return missionCounter > 0;
-		}
 		case MissionType::Patrol:
 			return this->missionCounter == 0 && this->currentPlannedPath.empty();
 		case MissionType::GotoBuilding:
@@ -1555,6 +1575,57 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			return;
 		}
+		case MissionType::OfferService:
+		{
+			// Go to target building and pick up cargo
+			if (missionCounter == 0)
+			{
+				if (!targetBuilding)
+				{
+					LogError("Building disappeared");
+					return;
+				}
+				// Already in target building - pick up cargo and restart mission to start ferrying
+				if (v.currentBuilding == targetBuilding)
+				{
+					missionCounter++;
+					v.provideService(state, true);
+					// Restart mission with counter = 1, start offering service
+					v.addMission(state, VehicleMission::restartNextMission(state, v));
+				}
+				// Not in target building yet - move to it
+				else
+				{
+					v.addMission(state, VehicleMission::gotoBuilding(state, v, targetBuilding));
+				}
+			}
+			// Provide service
+			else if (missionCounter == 1)
+			{
+				// Find our ferry destination
+				auto destination = v.getServiceDestination(state);
+				if (destination)
+				{
+					// We still have stuff to ferry
+					// Wait a bit and go to destination
+					v.addMission(state, VehicleMission::gotoBuilding(state, v, destination));
+					v.addMission(state, VehicleMission::snooze(state, v, 5 * TICKS_PER_SECOND));
+				}
+				else
+				{
+					// We finished ferrying
+					// Wait a bit and return home
+					missionCounter++;
+					v.addMission(state, VehicleMission::gotoBuilding(state, v, v.homeBuilding));
+					v.addMission(state, VehicleMission::snooze(state, v, 5 * TICKS_PER_SECOND));
+				}
+			}
+			else
+			{
+				LogError("Starting a completed service mission?");
+			}
+			return;
+		}
 		case MissionType::InfiltrateSubvert:
 		{
 			// Ground can't infiltrate
@@ -2013,7 +2084,7 @@ bool VehicleMission::isTakingOff(Vehicle &v)
 
 int VehicleMission::getDefaultIterationCount(Vehicle &v)
 {
-	return (v.type->type == VehicleType::Type::Ground) ? 500 : 25;
+	return (v.type->type == VehicleType::Type::Ground) ? 500 : 75;
 }
 
 UString VehicleMission::getName()
@@ -2033,6 +2104,7 @@ UString VehicleMission::getName()
 	    {MissionType::Patrol, "Patrol"},
 	    {MissionType::InfiltrateSubvert, "Infiltrate/Subvert"},
 	    {MissionType::RestartNextMission, "RestartNextMission"},
+		{MissionType::OfferService, "OfferServices" },
 	    {MissionType::Teleport, "Teleport"},
 	};
 	UString name = "UNKNOWN";

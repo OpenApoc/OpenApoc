@@ -103,6 +103,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	StateRef<Organisation> player;
 	StateRef<Organisation> aliens;
+	StateRef<Organisation> government;
 	StateRef<Organisation> civilian;
 
 	StateRef<City> current_city;
@@ -126,6 +127,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRef<Organisation> getPlayer();
 	const StateRef<Organisation> &getAliens() const;
 	StateRef<Organisation> getAliens();
+	const StateRef<Organisation> &getGovernment() const;
+	StateRef<Organisation> getGovernment();
 	const StateRef<Organisation> &getCivilian() const;
 	StateRef<Organisation> getCivilian();
 
@@ -173,6 +176,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	void updateTurbo();
 	void updateAfterTurbo();
 
+	void updateEndOfFiveSeconds();
 	void updateEndOfFiveMinutes();
 	void updateEndOfHour();
 	void updateEndOfDay();

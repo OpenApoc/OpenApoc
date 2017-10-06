@@ -11,11 +11,9 @@ enum class GameEventType
 	UfoRecoverySuccess,
 	UfoRecoveryUnmanned,
 	UfoRecoveryFailure,
-	UfoRecoveryBegin,
 	VehicleLightDamage,
 	VehicleModerateDamage,
 	VehicleHeavyDamage,
-	VehicleDestroyed,
 	VehicleEscaping,
 	VehicleNoAmmo,
 	VehicleLowFuel,
@@ -26,17 +24,23 @@ enum class GameEventType
 	UnauthorizedVehicle,
 	NotEnoughAmmo,
 	NotEnoughFuel,
+	// Vehicle event that starts recovery mission
+	UfoRecoveryBegin,
+
+	// Defense event that starts base defense mission
+	DefendTheBase,
 
 	// Base events
 	AgentRearmed,
 	CargoArrived,
 	TransferArrived,
 	RecoveryArrived,
+
+	// Something died events
 	BaseDestroyed,
-
-	// Defense events
-	DefendTheBase,
-
+	AgentDiedCity,
+	VehicleDestroyed,
+	
 	// Building events
 	AlienSpotted,
 	BuildingAttacked,
@@ -50,7 +54,7 @@ enum class GameEventType
 
 	// Agent events
 	AgentArrived,
-	AgentDiedCity,
+	AgentUnableToReach,
 	HostileSpotted,
 	AgentBrainsucked,
 	AgentDiedBattle,

@@ -4,6 +4,7 @@
 #include "game/state/battle/battleunit.h"
 #include "framework/framework.h"
 #include "framework/sound.h"
+#include "framework/configfile.h"
 #include "game/state/aequipment.h"
 #include "game/state/battle/ai/unitaihelper.h"
 #include "game/state/battle/battle.h"
@@ -1621,7 +1622,6 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 
 	// Calculate damage
 	int damage = 0;
-	bool USER_OPTION_UFO_DAMAGE_MODEL = false;
 	if (damageType->effectType == DamageType::EffectType::Smoke) // smoke deals 1-3 stun damage
 	{
 		power = 2;
@@ -1649,7 +1649,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	{
 		damage = randDamage050150(state.rng, power);
 	}
-	else if (USER_OPTION_UFO_DAMAGE_MODEL)
+	else if (config().getBool("OpenApoc.NewFeature.UFODamageModel"))
 	{
 		damage = randDamage000200(state.rng, power);
 	}
@@ -2882,8 +2882,7 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 		    vectorToGoal.y == 0 && tileObject->getOwningTile()->hasLift)
 		{
 			// FIXME: Actually read set option
-			bool USER_OPTION_GRAVLIFT_SOUNDS = true;
-			if (USER_OPTION_GRAVLIFT_SOUNDS && !wasUsingLift)
+			if (config().getBool("OpenApoc.NewFeature.GravliftSounds") && !wasUsingLift)
 			{
 				playDistantSound(state, agent->type->gravLiftSfx, 0.25f);
 			}
@@ -4064,8 +4063,9 @@ void BattleUnit::processExperience(GameState &state)
 	{
 		if (agent->current_stats.health < 100)
 		{
-			agent->current_stats.health +=
-			    randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.health) / 10;
+			int healthBoost = randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.health) / 10;
+			agent->current_stats.health += healthBoost;
+			agent->modified_stats.health += healthBoost;
 		}
 		if (agent->current_stats.speed < 100)
 		{
@@ -5618,8 +5618,7 @@ bool BattleUnit::setMission(GameState &state, BattleUnitMission *mission)
 			case BattleUnitMission::Type::ThrowItem:
 			{
 				// FIXME: actually read the option
-				bool USER_OPTION_ALLOW_INSTANT_THROWS = true;
-				if (USER_OPTION_ALLOW_INSTANT_THROWS && canAfford(state, getThrowCost(), true))
+				if (!config().getBool("OpenApoc.NewFeature.NoInstantThrows") && canAfford(state, getThrowCost(), true))
 				{
 					setMovementState(MovementState::None);
 					setBodyState(state, BodyState::Standing);

@@ -345,6 +345,7 @@ void Tile::updateCityscapeParameters()
 	}
 
 	intactScenery = nullptr;
+	presentScenery = nullptr;
 	for (auto &o : ownedObjects)
 	{
 		if (o->getType() == TileObject::Type::Scenery)
@@ -352,9 +353,14 @@ void Tile::updateCityscapeParameters()
 			auto mp = std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
 			if (!mp->isAlive())
 			{
+				if (!mp->falling && !mp->destroyed)
+				{
+					presentScenery = mp;
+				}
 				continue;
 			}
 			intactScenery = mp;
+			presentScenery = mp;
 			break;
 		}
 	}

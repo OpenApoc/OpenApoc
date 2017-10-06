@@ -5,6 +5,7 @@
 #include "game/state/agent.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/city/building.h"
+#include "game/state/gameevent.h"
 #include "game/state/city/city.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/scenery.h"
@@ -60,40 +61,47 @@ bool AgentTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, float &co
 		return false;
 	}
 
-	auto dir = toPos - fromPos;
 	// Agents can only move along one axis
+	auto dir = toPos - fromPos;
 	if (std::abs(dir.x) + std::abs(dir.y) + std::abs(dir.z) > 1)
 	{
 		return false;
 	}
-
+	
+	// Agents can only move to and from scenery
 	sp<Scenery> sceneryFrom = from->intactScenery;
 	sp<Scenery> sceneryTo = to->intactScenery;
 	if (!sceneryFrom || !sceneryTo)
 	{
 		return false;
 	}
-	int forward = convertDirection(dir);
+	
 	// General passability check
+	int forward = convertDirection(dir);
 	if (!isMoveAllowed(*sceneryFrom, forward) || !isMoveAllowed(*sceneryTo, convertDirection(-dir)))
 	{
 		return false;
 	}
-	// If going sideways from junction we can only go into another junction or tube
-	if (forward < 4 &&
-	    sceneryFrom->type->tile_type == SceneryTileType::TileType::PeopleTubeJunction)
+	
+	// If going sideways we can only go:
+	// - into junction or tube
+	// - on subway level
+	if (forward < 4)
 	{
 		if (sceneryTo->type->tile_type != SceneryTileType::TileType::PeopleTubeJunction &&
-		    sceneryTo->type->tile_type != SceneryTileType::TileType::PeopleTube)
+		    sceneryTo->type->tile_type != SceneryTileType::TileType::PeopleTube &&
+			toPos.z != SUBWAY_HEIGHT_AGENT)
 		{
 			return false;
 		}
 	}
-	// If going up we can't go to building unless there's a people tube junction up there
-	if (forward == 4 && sceneryTo->type->tile_type == SceneryTileType::TileType::General)
+
+	// If going up/down into general we must have a tube junction or crew quarters above
+	if (forward >= 4 && sceneryTo->type->tile_type == SceneryTileType::TileType::General)
 	{
-		bool foundJunction = false;
-		auto checkedPos = sceneryTo->currentPosition;
+		auto building = sceneryTo->building;
+		bool foundJunctionOrCrew = false;
+		Vec3<int> checkedPos = sceneryTo->currentPosition;
 		do
 		{
 			checkedPos.z++;
@@ -101,15 +109,21 @@ bool AgentTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, float &co
 			{
 				break;
 			}
+			if (building->crewQuarters == checkedPos)
+			{
+				foundJunctionOrCrew = true;
+				continue;
+			}
 			auto checkedTile = map.getTile(checkedPos);
 			sp<Scenery> checkedScenery = checkedTile->intactScenery;
 			if (checkedScenery &&
 			    checkedScenery->type->tile_type == SceneryTileType::TileType::PeopleTubeJunction)
 			{
-				foundJunction = true;
+				foundJunctionOrCrew = true;
+				continue;
 			}
-		} while (!foundJunction);
-		if (!foundJunction)
+		} while (!foundJunctionOrCrew);
+		if (!foundJunctionOrCrew)
 		{
 			return false;
 		}
@@ -168,16 +182,6 @@ int AgentTileHelper::convertDirection(Vec3<int> dir) const
 	return -1;
 }
 
-float AgentTileHelper::adjustCost(Vec3<int> nextPosition, int z) const
-{
-	// Quite unlikely that we ever need to dig
-	if (nextPosition.z < MIN_REASONABLE_HEIGHT_AGENT && z == -1)
-	{
-		return 100.0f;
-	}
-	return 0;
-}
-
 bool AgentTileHelper::isMoveAllowed(Scenery &scenery, int dir) const
 {
 	switch (scenery.type->tile_type)
@@ -200,13 +204,14 @@ bool AgentTileHelper::isMoveAllowed(Scenery &scenery, int dir) const
 	return false;
 }
 
-AgentMission *AgentMission::gotoBuilding(GameState &, Agent &, StateRef<Building> target,
-                                         bool allowTeleporter)
+AgentMission *AgentMission::gotoBuilding(GameState &, Agent &a, StateRef<Building> target,
+                                         bool allowTeleporter, bool allowTaxi)
 {
 	auto *mission = new AgentMission();
 	mission->type = MissionType::GotoBuilding;
 	mission->targetBuilding = target;
-	mission->allowTeleporter = allowTeleporter;
+	mission->allowTeleporter = allowTeleporter && a.type->role == AgentType::Role::Soldier;
+	mission->allowTaxi = allowTaxi || a.type->role != AgentType::Role::Soldier;
 	return mission;
 }
 
@@ -225,10 +230,12 @@ AgentMission *AgentMission::restartNextMission(GameState &, Agent &)
 	return mission;
 }
 
-AgentMission *AgentMission::awaitPickup(GameState &, Agent &)
+AgentMission *AgentMission::awaitPickup(GameState &, Agent &, StateRef<Building> target)
 {
 	auto *mission = new AgentMission();
 	mission->type = MissionType::AwaitPickup;
+	mission->timeToSnooze = PICKUP_TIMEOUT;
+	mission->targetBuilding = target;
 	return mission;
 }
 
@@ -302,11 +309,9 @@ void AgentMission::update(GameState &state, Agent &a, unsigned int ticks, bool f
 			}
 			return;
 		}
-		case MissionType::AwaitPickup:
-			LogError("Check if pickup coming or order pickup");
-			return;
 		case MissionType::RestartNextMission:
 			return;
+		case MissionType::AwaitPickup:
 		case MissionType::Snooze:
 		{
 			if (ticks >= this->timeToSnooze)
@@ -343,12 +348,10 @@ bool AgentMission::isFinishedInternal(GameState &, Agent &a)
 	switch (this->type)
 	{
 		case MissionType::GotoBuilding:
+		case MissionType::AwaitPickup:
 			return this->targetBuilding == a.currentBuilding;
 		case MissionType::Snooze:
 			return this->timeToSnooze == 0;
-		case MissionType::AwaitPickup:
-			LogError("Implement awaitpickup isfinished");
-			return true;
 		case MissionType::RestartNextMission:
 		case MissionType::Teleport:
 			return true;
@@ -368,13 +371,42 @@ void AgentMission::start(GameState &state, Agent &a)
 			{
 				return;
 			}
-			if (targetBuilding->bounds.within(Vec2<int>{a.position.x, a.position.y}))
+			if ((Vec3<int>)a.position == targetBuilding->crewQuarters)
 			{
 				a.enterBuilding(state, targetBuilding);
+				if (a.recentlyHired)
+				{
+					fw().pushEvent(new GameAgentEvent(GameEventType::AgentArrived, { &state, a.shared_from_this() }));
+					a.recentlyHired = false;
+				}
+				if (a.recentryTransferred)
+				{
+					fw().pushEvent(new GameAgentEvent(GameEventType::AgentArrived, { &state, a.shared_from_this() }, true));
+					a.recentryTransferred = false;
+				}
+				return;
 			}
-			else if (currentPlannedPath.empty())
+			if (a.currentBuilding && allowTaxi)
+			{
+				allowTaxi = false;
+				a.addMission(state, AgentMission::awaitPickup(state, a, targetBuilding));
+				return;
+			}
+			if (currentPlannedPath.empty())
 			{
 				this->setPathTo(state, a, this->targetBuilding);
+				// Could not path
+				if (cancelled)
+				{
+					if (a.currentBuilding)
+					{
+						fw().pushEvent(new GameAgentEvent(GameEventType::AgentUnableToReach, { &state, a.shared_from_this() }, true));
+					}
+					else
+					{
+						LogError("Implement agent acting when in the field and unable to path to building");
+					}
+				}
 			}
 		}
 		case MissionType::Teleport:
@@ -391,6 +423,7 @@ void AgentMission::start(GameState &state, Agent &a)
 			}
 			return;
 		}
+		case MissionType::AwaitPickup:
 		case MissionType::RestartNextMission:
 		case MissionType::Snooze:
 			// No setup
@@ -418,7 +451,7 @@ void AgentMission::setPathTo(GameState &state, Agent &a, StateRef<Building> b)
 		path = map.findShortestPath(a.position, b->crewQuarters, 2000, AgentTileHelper{map});
 		map.agentPathCache[key] = path;
 	}
-	if (path.empty())
+	if (path.empty() || path.back() != b->crewQuarters)
 	{
 		cancelled = true;
 		return;

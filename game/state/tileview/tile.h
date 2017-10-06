@@ -135,6 +135,8 @@ class Tile
 	int visionBlockValue = 0;
 	// Intact scenery present in this tile
 	sp<Scenery> intactScenery;
+	// Non-dead scenery present in this tile
+	sp<Scenery> presentScenery;
 
 	// Methods
 

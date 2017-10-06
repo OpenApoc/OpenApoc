@@ -104,6 +104,14 @@ const StateRef<Organisation> &GameState::getPlayer() const { return this->player
 StateRef<Organisation> GameState::getPlayer() { return this->player; }
 const StateRef<Organisation> &GameState::getAliens() const { return this->aliens; }
 StateRef<Organisation> GameState::getAliens() { return this->aliens; }
+const StateRef<Organisation>& GameState::getGovernment() const
+{
+	return this->government;
+}
+StateRef<Organisation> GameState::getGovernment()
+{
+	return this->government;
+}
 const StateRef<Organisation> &GameState::getCivilian() const { return this->civilian; }
 StateRef<Organisation> GameState::getCivilian() { return this->civilian; }
 
@@ -225,7 +233,7 @@ void GameState::startGame()
 			// higher difficulty will produce a bigger sway
 			if (difficulty > 0)
 			{
-				// Relationship vs player is adjusted by flat 0/5/0/-5/10
+				// Relationship vs player is adjusted by flat 0/5/0/-5/-10
 				if (entry.first == player)
 				{
 					entry.second += 10 - 5 * difficulty;
@@ -508,14 +516,12 @@ void GameState::update(unsigned int ticks)
 			a.second->update(*this, ticks);
 		}
 		Trace::end("GameState::update::agents");
-		Trace::start("GameState::update::organisations");
-		for (auto &o : this->organisations)
-		{
-			o.second->update(*this, ticks);
-		}
-		Trace::end("GameState::update::organisations");
-
+		
 		gameTime.addTicks(ticks);
+		if (gameTime.fiveSecondsPassed())
+		{
+			this->updateEndOfFiveSeconds();
+		}
 		if (gameTime.fiveMinutesPassed())
 		{
 			this->updateEndOfFiveMinutes();
@@ -534,6 +540,34 @@ void GameState::update(unsigned int ticks)
 		}
 		gameTime.clearFlags();
 	}
+}
+
+void GameState::updateEndOfFiveSeconds()
+{
+	Trace::start("GameState::updateEndOfFiveSeconds::organisations");
+	for (auto &o : this->organisations)
+	{
+		o.second->updateMissions(*this);
+	}
+	Trace::end("GameState::updateEndOfFiveSeconds::organisations");
+	Trace::start("GameState::updateEndOfFiveSeconds::buildings");
+	for (auto &b : current_city->buildings)
+	{
+		b.second->updateCargo(*this);
+	}
+	Trace::end("GameState::updateEndOfFiveSeconds::buildings");
+	Trace::start("GameState::updateEndOfFiveSeconds::vehicles");
+	for (auto &v : vehicles)
+	{
+		v.second->updateCargo(*this);
+	}
+	Trace::end("GameState::updateEndOfFiveSeconds::vehicles");
+	Trace::start("GameState::updateEndOfFiveSeconds::agents");
+	for (auto &a : this->agents)
+	{
+		a.second->updateFiveSeconds(*this);
+	}
+	Trace::end("GameState::updateEndOfFiveSeconds::agents");
 }
 
 void GameState::updateEndOfFiveMinutes()
@@ -564,6 +598,10 @@ void GameState::updateEndOfFiveMinutes()
 		{
 			break;
 		}
+	}
+	for (auto &b : current_city->buildings)
+	{
+		b.second->updateCargo(*this);
 	}
 	Trace::end("GameState::updateEndOfFiveMinutes::buildings");
 }
@@ -611,8 +649,15 @@ void GameState::updateEndOfDay()
 	for (auto &o : this->organisations)
 	{
 		o.second->updateVehicleAgentPark(*this);
+		o.second->updateHirableAgents(*this);
 	}
 	Trace::end("GameState::updateEndOfDay::organisations");
+	Trace::start("GameState::updateEndOfDay::agents");
+	for (auto &a : this->agents)
+	{
+		a.second->updateDaily(*this);
+	}
+	Trace::end("GameState::updateEndOfDay::agents");
 	Trace::start("GameState::updateEndOfDay::cities");
 	for (auto &c : this->cities)
 	{
@@ -744,7 +789,10 @@ void GameState::logEvent(GameEvent *ev)
 		{
 			location = gae->agent->unit->position;
 		}
-		// FIXME: Introduce agent position when in city
+		else
+		{
+			location = gae->agent->position;
+		}
 	}
 	else if (GameBaseEvent *gbe = dynamic_cast<GameBaseEvent *>(ev))
 	{

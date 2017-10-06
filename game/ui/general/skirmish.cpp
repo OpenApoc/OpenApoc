@@ -29,33 +29,14 @@ namespace
 
 std::shared_future<void> loadBattleBuilding(bool hotseat, sp<Building> building, GameState *state,
                                             StateRef<Base> playerBase, bool raid,
-                                            std::map<StateRef<AgentType>, int> *aliens = nullptr,
-                                            int *guards = nullptr, int *civilians = nullptr)
+	bool customAliens, std::map<StateRef<AgentType>, int> aliens, bool customGuards, int guards, bool customCivilians,
+	int civilians)
 {
 	std::map<StateRef<AgentType>, int> aliensLocal;
-	bool aliensPresent = false;
-	if (aliens)
-	{
-		aliensLocal = *aliens;
-		aliensPresent = true;
-	}
-	int guardsLocal = 0;
-	bool guardsPresent = false;
-	if (guards)
-	{
-		guardsLocal = *guards;
-		guardsPresent = true;
-	}
-	int civiliansLocal = 0;
-	bool civiliansPresent = false;
-	if (civilians)
-	{
-		civiliansLocal = *civilians;
-		civiliansPresent = true;
-	}
+	
 	auto loadTask = fw().threadPoolEnqueue([hotseat, building, state, raid, aliensLocal,
-	                                        guardsLocal, civiliansLocal, aliensPresent,
-	                                        guardsPresent, civiliansPresent, playerBase]() -> void {
+		guards, civilians, aliens, customAliens,
+	                                        customGuards, customCivilians, playerBase]() -> void {
 		std::list<StateRef<Agent>> agents;
 		if (playerBase->building == building)
 		{
@@ -77,21 +58,21 @@ std::shared_future<void> loadBattleBuilding(bool hotseat, sp<Building> building,
 		StateRef<Building> bld = {state, building};
 		StateRef<Vehicle> veh = {};
 
-		const std::map<StateRef<AgentType>, int> *aliens = aliensPresent ? &aliensLocal : nullptr;
-		const int *guards = guardsPresent ? &guardsLocal : nullptr;
-		const int *civilians = civiliansPresent ? &civiliansLocal : nullptr;
+		const std::map<StateRef<AgentType>, int> *aliensRef = customAliens ? &aliens : nullptr;
+		const int *guardsRef = customGuards ? &guards : nullptr;
+		const int *civiliansRef = customCivilians ? &civilians : nullptr;
 
-		Battle::beginBattle(*state, hotseat, org, agents, aliens, guards, civilians, veh, bld);
+		Battle::beginBattle(*state, hotseat, org, agents, aliensRef, guardsRef, civiliansRef, veh, bld);
 	});
 	return loadTask;
 }
 
 std::shared_future<void> loadBattleVehicle(bool hotseat, sp<VehicleType> vehicle, GameState *state,
                                            StateRef<Base> playerBase,
-                                           std::map<StateRef<AgentType>, int> *aliens = nullptr)
+	bool customAliens, std::map<StateRef<AgentType>, int> aliens)
 {
 
-	auto loadTask = fw().threadPoolEnqueue([hotseat, vehicle, state, aliens, playerBase]() -> void {
+	auto loadTask = fw().threadPoolEnqueue([hotseat, vehicle, state, customAliens, aliens, playerBase]() -> void {
 		std::list<StateRef<Agent>> agents;
 		for (auto &a : state->agents)
 			if (a.second->type->role == AgentType::Role::Soldier &&
@@ -119,8 +100,8 @@ std::shared_future<void> loadBattleVehicle(bool hotseat, sp<VehicleType> vehicle
 		{
 			agent->enterVehicle(*state, playerVehRef);
 		}
-
-		Battle::beginBattle(*state, hotseat, org, agents, aliens, playerVehRef, ufo);
+		const std::map<StateRef<AgentType>, int> *aliensRef = customAliens ? &aliens : nullptr;
+		Battle::beginBattle(*state, hotseat, org, agents,  aliensRef, playerVehRef, ufo);
 	});
 
 	return loadTask;
@@ -256,7 +237,8 @@ void Skirmish::setLocation(StateRef<Base> base)
 	updateLocationLabel();
 }
 
-void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guards, int *civilians)
+void Skirmish::goToBattle(bool customAliens, std::map<StateRef<AgentType>, int> aliens, bool customGuards,  int guards,
+	bool customCivilians, int civilians)
 {
 	state.score = menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")->getValue() * 1000;
 
@@ -454,7 +436,7 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 
 	bool hotseat = menuform->findControlTyped<CheckBox>("HOTSEAT")->isChecked();
 
-	loadBattle = [this, hotseat, playerBase, aliens, guards, civilians]() {
+	loadBattle = [this, hotseat, playerBase, customAliens, aliens, customGuards, guards, customCivilians, civilians]() {
 		if (locBuilding)
 		{
 			bool raid = menuform->findControlTyped<CheckBox>("ALTERNATIVE_ATTACK")->isChecked();
@@ -463,15 +445,15 @@ void Skirmish::goToBattle(std::map<StateRef<AgentType>, int> *aliens, int *guard
 				locBuilding->owner->tech_level =
 				    menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")->getValue();
 			}
-			battleInBuilding(hotseat, playerBase, locBuilding, raid, aliens, guards, civilians);
+			battleInBuilding(hotseat, playerBase, locBuilding, raid, customAliens, aliens, customGuards, guards, customCivilians, civilians);
 		}
 		else if (locVehicle)
 		{
-			battleInVehicle(hotseat, playerBase, locVehicle, aliens);
+			battleInVehicle(hotseat, playerBase, locVehicle,  customAliens, aliens);
 		}
 		else if (locBase)
 		{
-			battleInBase(hotseat, locBase, aliens);
+			battleInBase(hotseat, locBase,  customAliens, aliens);
 		}
 	};
 
@@ -551,38 +533,37 @@ void Skirmish::updateLocationLabel()
 	menuform->findControlTyped<Label>("LOCATION")->setText(format("LOCATION: %s", text));
 }
 
-void Skirmish::battleInBuilding(bool hotseat, StateRef<Base> playerBase,
-                                StateRef<Building> building, bool raid,
-                                std::map<StateRef<AgentType>, int> *aliens, int *guards,
-                                int *civilians)
+void Skirmish::battleInBuilding(bool hotseat, StateRef<Base> playerBase, StateRef<Building> building,
+	bool raid, bool customAliens, std::map<StateRef<AgentType>, int> aliens, bool customGuards, int guards, bool customCivilians,
+	int civilians)
 {
 	fw().stageQueueCommand(
 	    {StageCmd::Command::REPLACEALL,
 	     mksp<BattleBriefing>(state.shared_from_this(), building->owner,
 	                          Building::getId(state, building), true, raid,
 	                          loadBattleBuilding(hotseat, building, &state, playerBase, raid,
-	                                             aliens, guards, civilians))});
+	                                             customAliens, aliens, customGuards, guards, customCivilians, civilians))});
 }
 
 void Skirmish::battleInBase(bool hotseat, StateRef<Base> base,
-                            std::map<StateRef<AgentType>, int> *aliens)
+	bool customAliens, std::map<StateRef<AgentType>, int> aliens)
 {
 	fw().stageQueueCommand(
 	    {StageCmd::Command::REPLACEALL,
 	     mksp<BattleBriefing>(
 	         state.shared_from_this(), state.getAliens(), base->building.id, true, true,
-	         loadBattleBuilding(hotseat, base->building, &state, base, false, aliens))});
+	         loadBattleBuilding(hotseat, base->building, &state, base, false, customAliens, aliens, false, 0, false, 0))});
 }
 
 void Skirmish::battleInVehicle(bool hotseat, StateRef<Base> playerBase,
                                StateRef<VehicleType> vehicle,
-                               std::map<StateRef<AgentType>, int> *aliens)
+	bool customAliens, std::map<StateRef<AgentType>, int> aliens)
 {
 	fw().stageQueueCommand(
 	    {StageCmd::Command::REPLACEALL,
 	     mksp<BattleBriefing>(state.shared_from_this(), state.getAliens(),
 	                          VehicleType::getId(state, vehicle), false, false,
-	                          loadBattleVehicle(hotseat, vehicle, &state, playerBase, aliens))});
+	                          loadBattleVehicle(hotseat, vehicle, &state, playerBase, customAliens, aliens))});
 }
 
 void Skirmish::begin()

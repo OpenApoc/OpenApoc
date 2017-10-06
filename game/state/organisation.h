@@ -18,7 +18,10 @@ namespace OpenApoc
 static const unsigned TICKS_PER_TAKEOVER_ATTEMPT = TICKS_PER_MINUTE * 125;
 
 class Vehicle;
+class VehicleType;
+class Building;
 class AgentType;
+class VEquipmentType;
 class AEquipmentType;
 class GameState;
 class VehicleType;
@@ -28,6 +31,13 @@ class Organisation : public StateObject
 {
 	STATE_OBJECT(Organisation)
   public:
+	enum class PurchaseResult
+	{
+		OK,
+		NoTransportAvailable,
+		OrgHostile,
+		OrgHasNoBuildings,
+	};
 	enum class Relation
 	{
 		Allied,
@@ -106,10 +116,14 @@ class Organisation : public StateObject
 	std::map<StateRef<VehicleType>, int> vehiclePark;
 	int agentPark = 0;
 	bool providesTransportationServices = false;
+	int minHireePool = 0;
+	int maxHireePool = 0;
+	std::set<StateRef<AgentType>> hirableTypes;
 
 	Organisation() = default;
 
-	void update(GameState &state, unsigned int ticks);
+	void updateMissions(GameState &state);
+	void updateHirableAgents(GameState &state);
 	void updateInfiltration(GameState &state);
 	void updateTakeOver(GameState &state, unsigned int ticks);
 	void updateVehicleAgentPark(GameState &state);
@@ -117,6 +131,11 @@ class Organisation : public StateObject
 	int getGuardCount(GameState &state) const;
 
 	void takeOver(GameState &state, bool forced = false);
+
+	PurchaseResult canPurchaseFrom(GameState &state, const StateRef<Building> &buyer) const;
+	void purchase(GameState &state, const StateRef<Building> &buyer, StateRef<VEquipmentType> vehicleEquipment, int count);
+	void purchase(GameState &state, const StateRef<Building> &buyer, StateRef<AEquipmentType> agentEquipment, int count);
+	void purchase(GameState &state, const StateRef<Building> &buyer, StateRef<VehicleType> vehicle, int count);
 
 	Relation isRelatedTo(const StateRef<Organisation> &other) const;
 	bool isPositiveTo(const StateRef<Organisation> &other) const;

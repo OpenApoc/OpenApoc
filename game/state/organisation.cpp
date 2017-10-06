@@ -44,14 +44,83 @@ void Organisation::takeOver(GameState &state, bool forced)
 	fw().pushEvent(event);
 }
 
-void Organisation::update(GameState &state, unsigned int ticks)
+Organisation::PurchaseResult Organisation::canPurchaseFrom(GameState & state, const StateRef<Building>& buyer) const
+{
+	// Check if org has buildings in city with buying building
+	// Check if org likes buyer
+	// Check if ferry provider likes both
+	// Check if ferry provider has free ferries
+	LogError("Implement canPurchaseFrom");
+	return PurchaseResult::OK;
+}
+
+void Organisation::purchase(GameState & state, const StateRef<Building>& buyer, StateRef<VEquipmentType> vehicleEquipment, int count)
+{
+	LogError("Implement purchase vehicleEquipment");
+}
+
+void Organisation::purchase(GameState &state, const StateRef<Building> &buyer, StateRef<AEquipmentType> agentEquipment, int count)
+{
+	LogError("Implement purchase agentEquipment");
+}
+
+void Organisation::purchase(GameState &state, const StateRef<Building> &buyer, StateRef<VehicleType> vehicle, int count)
+{
+	LogError("Implement purchase vehicle");
+}
+
+void Organisation::updateMissions(GameState & state)
 {
 	for (auto &m : missions)
 	{
 		if (m.next < state.gameTime.getTicks())
 		{
-			m.execute(state, {&state, id});
+			m.execute(state, { &state, id });
 		}
+	}
+}
+
+void Organisation::updateHirableAgents(GameState & state)
+{
+	if (hirableTypes.empty())
+	{
+		return;
+	}
+	StateRef<Building> hireeLocation;
+	for (auto &c : state.cities)
+	{
+		for (auto &b : c.second->buildings)
+		{
+			if (b.second->owner.id != id)
+			{
+				continue;
+			}
+			hireeLocation = { &state, b.first };
+			break;
+		}
+	}
+	if (!hireeLocation)
+	{
+		return;
+	}
+	std::set<sp<Agent>> agentsToRemove;
+	for (auto &a : state.agents)
+	{
+		if (a.second->owner.id == id && hirableTypes.find(a.second->type) != hirableTypes.end())
+		{
+			agentsToRemove.insert(a.second);
+		}
+	}
+	for (auto &a : agentsToRemove)
+	{
+		a->die(state, true);
+	}
+	int newAgents = randBoundsInclusive(state.rng, minHireePool, maxHireePool);
+	for (int i = 0; i < newAgents; i++)
+	{
+		auto a = state.agent_generator.createAgent(state, { &state, id }, setRandomiser(state.rng, hirableTypes));
+		a->homeBuilding = hireeLocation;
+		a->enterBuilding(state, hireeLocation);
 	}
 }
 

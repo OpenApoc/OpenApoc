@@ -3,6 +3,7 @@
 #include "framework/logger.h"
 #include "framework/sound.h"
 #include "game/state/battle/battle.h"
+#include "framework/configfile.h"
 #include "game/state/battle/battlehazard.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart.h"
@@ -280,9 +281,8 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 		}
 	}
 	// FIXME: Actually read this option
-	bool USER_OPTION_FULLY_3D_EXPLOSIONS = false;
 	int distance = (1 + (dir.x != 0 ? 1 : 0) + (dir.y != 0 ? 1 : 0) +
-	                (dir.z != 0 ? (USER_OPTION_FULLY_3D_EXPLOSIONS ? 1 : 2) : 0));
+	                (dir.z != 0 ? (config().getBool("OpenApoc.NewFeature.Fully3DExplosions") ? 1 : 2) : 0));
 	nextPower -= depletionRate * distance / 2;
 
 	// If we reach the tile, and our type has no range dissipation, just apply power

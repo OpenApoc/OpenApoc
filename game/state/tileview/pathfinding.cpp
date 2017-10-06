@@ -14,7 +14,7 @@
 #include <algorithm>
 #include <glm/glm.hpp>
 
-// Debug pathfinding output
+// Show debug pathfinding output
 //#define PATHFINDING_DEBUG
 
 namespace OpenApoc

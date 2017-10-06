@@ -198,7 +198,7 @@ class AgentType : public StateObject
 	AIType aiType;
 	// Fatal woulds immunity
 	bool immuneToFatalWounds = false;
-
+	
 	int infiltrationSpeed = 0;
 	int growthChance = 0;
 	std::list<std::pair<int, std::pair<StateRef<AgentType>, int>>> growthOptions;
@@ -314,6 +314,13 @@ class Agent : public StateObject,
 	unsigned trainingPhysicalTicksAccumulated = 0;
 	unsigned trainingPsiTicksAccumulated = 0;
 
+	bool recentlyHired = false;
+	bool recentryTransferred = false;
+	bool recentlyFought = false;
+
+	void hire(GameState &state, StateRef<Building> newHome);
+	void transfer(GameState &state, StateRef<Building> newHome);
+
 	sp<AEquipment> getArmor(BodyPart bodyPart) const;
 	bool isBodyStateAllowed(BodyState bodyState) const;
 	bool isMovementStateAllowed(MovementState movementState) const;
@@ -392,6 +399,8 @@ class Agent : public StateObject,
 
 	// Update agent in city
 	void update(GameState &state, unsigned ticks);
+	void updateFiveSeconds(GameState &state);
+	void updateDaily(GameState &state);
 	void updateMovement(GameState &state, unsigned ticks);
 
 	void trainPhysical(GameState &state, unsigned ticks);

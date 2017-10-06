@@ -45,8 +45,8 @@ std::map<UString, int> EquipscreenSprite = {{"VEHICLETYPE_ANNIHILATOR", 0},
                                             {"VEHICLETYPE_HAWK_AIR_WARRIOR", 11},
                                             {"VEHICLETYPE_GRIFFON_AFV", 12}};
 
-std::set<UString> AgentFreight = {"VEHICLETYPE_AIRTAXI", "VEHICLETYPE_AUTOTAXI"};
-std::set<UString> CargoFreight = {"VEHICLETYPE_AIRTRANS", "VEHICLETYPE_AUTOTRANS"};
+std::set<UString> AgentFreight = {"VEHICLETYPE_AIRTAXI" /*, "VEHICLETYPE_AUTOTAXI"*/};
+std::set<UString> CargoFreight = {"VEHICLETYPE_AIRTRANS"/*, "VEHICLETYPE_AUTOTRANS"*/};
 std::set<UString> BioFreight = {"VEHICLETYPE_AIRTRANS"};
 }
 static void extract_equipment_layout(GameState &state, sp<VehicleType> vehicle, const UFO2P &data,

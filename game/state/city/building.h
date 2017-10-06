@@ -27,6 +27,7 @@ class Base;
 class BattleMap;
 class BaseLayout;
 class City;
+class Cargo;
 class UfopaediaEntry;
 
 class BuildingFunction : public StateObject
@@ -56,6 +57,7 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 
 	std::set<StateRef<Vehicle>> currentVehicles;
 	std::set<StateRef<Agent>> currentAgents;
+	std::list<Cargo> cargo;
 
 	unsigned ticksDetectionTimeOut = 0;
 	unsigned ticksDetectionAttemptAccumulated = 0;
@@ -63,6 +65,7 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 
 	bool hasAliens() const;
 	void updateDetection(GameState &state, unsigned int ticks);
+	void updateCargo(GameState &state);
 	void detect(GameState &state, bool forced = false);
 	void alienGrowth(GameState &state);
 

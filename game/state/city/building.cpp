@@ -1,8 +1,12 @@
 #include "game/state/city/building.h"
 #include "framework/framework.h"
+#include "framework/configfile.h"
 #include "game/state/base/base.h"
 #include "game/state/city/city.h"
+#include "game/state/city/vehicle.h"
+#include "game/state/city/vehiclemission.h"
 #include "game/state/gameevent.h"
+#include "game/state/city/agentmission.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
 
@@ -106,6 +110,273 @@ void Building::updateDetection(GameState &state, unsigned int ticks)
 	{
 		ticksDetectionAttemptAccumulated -= TICKS_PER_DETECTION_ATTEMPT[state.difficulty];
 		detect(state, state.firstDetection || owner == state.getPlayer());
+	}
+}
+
+void Building::updateCargo(GameState & state)
+{
+	// Update cargo, update vehicles and agents in this bld
+	// FIXME: Implement calling for pickup
+	
+	StateRef<Building> thisPtr = { &state, getId(state, shared_from_this()) };
+	// Step 01: Consume cargo with destination here
+	for (auto &c : cargo)
+	{
+		if (c.destination == shared_from_this())
+		{
+			c.arrive(state);
+		}
+	}
+	// Step 02: Check expiry dates and expire cargo
+	for (auto &c : cargo)
+	{
+		if (c.checkExpiryDate(state) && c.destination->owner == state.getPlayer())
+		{
+			// FIXME: Implement warning player that cargo expires soon
+			LogWarning("Implement warning player that cargo expires soon");
+		}
+	}
+	// Step 03: Compile list of carrying capacity required
+	std::map<StateRef<Building>, std::vector<int>> spaceNeeded;
+	std::set<StateRef<Building>> inboundFerries;
+	std::set<StateRef<Building>> containsPurchase;
+	for (auto &c : cargo)
+	{
+		if (c.count == 0)
+		{
+			continue;
+		}
+		spaceNeeded[c.destination].resize(3);
+		if (c.type == Cargo::Type::Bio)
+		{
+			spaceNeeded[c.destination][0] += c.count * c.space;
+		}
+		else
+		{
+			spaceNeeded[c.destination][1] += c.count * c.space;
+		}
+		if (c.cost > 0)
+		{
+			containsPurchase.insert(c.destination);
+		}
+	}
+	for (auto &a : currentAgents)
+	{
+		if (a->missions.empty() || a->missions.front()->type != AgentMission::MissionType::AwaitPickup)
+		{
+			continue;
+		}
+		spaceNeeded[a->missions.front()->targetBuilding].resize(3);
+		spaceNeeded[a->missions.front()->targetBuilding][2]++;
+	}
+	// Step 04: Find if carrying capacity is satisfied by incoming ferries
+	if (!spaceNeeded.empty())
+	{
+		for (auto &v : state.vehicles)
+		{
+			// Check if in this city
+			if (v.second->city != city)
+			{
+				continue;
+			}
+			// Check if is a ferry
+			if (v.second->missions.empty() || v.second->missions.back()->type != VehicleMission::MissionType::OfferService || v.second->missions.back()->missionCounter > 0)
+			{
+				continue;
+			}
+			// Check which target building can reserve this transport
+			for (auto &e : spaceNeeded)
+			{
+				// Already satisfied
+				if (e.second[0] == 0 && e.second[1] == 0 && e.second[2] == 0)
+				{
+					continue;
+				}
+				// Not bound for this building
+				if (v.second->missions.back()->targetBuilding != thisPtr)
+				{
+					continue;
+				}
+				// Check if agrees to ferry for us:
+				// - if this is not a purchase
+				// - or if we're set to check purchases
+				if (config().getBool("OpenApoc.NewFeature.FerryChecksRelationshipWhenBuying") || containsPurchase.find(e.first) == containsPurchase.end())
+				{
+					if (v.second->owner->isRelatedTo(owner) == Organisation::Relation::Hostile
+						|| v.second->owner->isRelatedTo(e.first->owner) == Organisation::Relation::Hostile)
+					{
+						continue;
+					}
+				}
+				// Check what exactly can it ferry
+				bool reserved = false;
+				if (v.second->type->provideFreightAgent && e.second[2] > 0)
+				{
+					reserved = true;
+					int maxAmount = std::min(v.second->getMaxPassengers() - v.second->getPassengers(), e.second[2]);
+					e.second[2] -= maxAmount;
+				}
+				if (v.second->type->provideFreightCargo && e.second[1] > 0)
+				{
+					reserved = true;
+					int maxAmount = std::min(v.second->getMaxCargo() - v.second->getCargo(), e.second[1]);
+					e.second[1] -= maxAmount;
+				}
+				if (v.second->type->provideFreightBio && e.second[0] > 0)
+				{
+					reserved = true;
+					int maxAmount = std::min(v.second->getMaxBio() - v.second->getBio(), e.second[0]);
+					e.second[0] -= maxAmount;
+				}
+				if (reserved)
+				{
+					inboundFerries.insert(thisPtr);
+					break;
+				}
+			}
+		}
+		// Clear those satisfied
+		std::set<StateRef<Building>> satisfiedBuildings;
+		for (auto &e : spaceNeeded)
+		{
+			// Already satisfied
+			if (e.second[0] == 0 && e.second[1] == 0 && e.second[2] == 0)
+			{
+				satisfiedBuildings.insert(e.first);
+			}
+		}
+		for (auto &b : satisfiedBuildings)
+		{
+			spaceNeeded.erase(b);
+		}
+	}
+	// Step 05: Order new ferries for remaining capacity
+	if (!spaceNeeded.empty())
+	{
+		for (auto &v : state.vehicles)
+		{
+			// Check if in this city
+			if (v.second->city != city)
+			{
+				continue;
+			}
+			// Check if company provides ferries and vehicle available
+			if (!v.second->missions.empty() || !v.second->owner->providesTransportationServices)
+			{
+				continue;
+			}
+			// Check if is a ferry
+			if (!v.second->type->provideFreightAgent && !v.second->type->provideFreightBio && !v.second->type->provideFreightCargo)
+			{
+				continue;
+			}
+			// Check which target building can reserve this transport
+			for (auto &e : spaceNeeded)
+			{
+				// Already satisfied
+				if (e.second[0] == 0 && e.second[1] == 0 && e.second[2] == 0)
+				{
+					continue;
+				}
+				// Agrees to ferry for us
+				if (config().getBool("OpenApoc.NewFeature.FerryChecksRelationshipWhenBuying") || containsPurchase.find(e.first) == containsPurchase.end())
+				{
+					if (v.second->owner->isRelatedTo(owner) == Organisation::Relation::Hostile
+						|| v.second->owner->isRelatedTo(e.first->owner) == Organisation::Relation::Hostile)
+					{
+						continue;
+					}
+				}
+				// Check what exactly can it ferry
+				bool reserved = false;
+				if (v.second->type->provideFreightAgent && e.second[2] > 0)
+				{
+					reserved = true;
+					int maxAmount = std::min(v.second->getMaxPassengers() - v.second->getPassengers(), e.second[2]);
+					e.second[2] -= maxAmount;
+				}
+				if (v.second->type->provideFreightCargo && e.second[1] > 0)
+				{
+					reserved = true;
+					int maxAmount = std::min(v.second->getMaxCargo() - v.second->getCargo(), e.second[1]);
+					e.second[1] -= maxAmount;
+				}
+				if (v.second->type->provideFreightBio && e.second[0] > 0)
+				{
+					reserved = true;
+					int maxAmount = std::min(v.second->getMaxBio() - v.second->getBio(), e.second[0]);
+					e.second[0] -= maxAmount;
+				}
+				// Order if we need it
+				if (reserved)
+				{
+					v.second->setMission(state, VehicleMission::offerService(state, *v.second, thisPtr));
+					inboundFerries.insert(thisPtr);
+					break;
+				}
+			}
+		}
+		// Clear those satisfied
+		std::set<StateRef<Building>> satisfiedBuildings;
+		for (auto &e : spaceNeeded)
+		{
+			// Already satisfied
+			if (e.second[0] == 0 && e.second[1] == 0 && e.second[2] == 0)
+			{
+				satisfiedBuildings.insert(e.first);
+			}
+		}
+		for (auto &b : satisfiedBuildings)
+		{
+			spaceNeeded.erase(b);
+		}
+	}
+	// Step 06: Try to load cargo on owner's vehicles if:
+	// - Cargo is expriring
+	// - Cargo had no ferries ordered for it
+	for (auto &c : cargo)
+	{
+		if (c.count == 0)
+		{
+			continue;
+		}
+		if (c.warned || inboundFerries.find(c.destination) == inboundFerries.end())
+		{
+			for (auto v : currentVehicles)
+			{
+				if (v->homeBuilding == c.destination)
+				{
+					v->provideService(state, false);
+				}
+			}
+		}
+	}
+	// Step 07: Try to load agents on owner's vehicles if:
+	// - Agents are not to be serviced by incoming ferries
+	for (auto &e : spaceNeeded)
+	{
+		if (e.second[2] > 0)
+		{
+			for (auto v : currentVehicles)
+			{
+				if (v->homeBuilding == e.first)
+				{
+					v->provideService(state, false);
+				}
+			}
+		}
+	}
+	// Step 08: Clear empty cargo
+	for (auto it = cargo.begin(); it !=cargo.end();)
+	{
+		if (it->count = 0)
+		{
+			it = cargo.erase(it);
+		}
+		else
+		{
+			it++;
+		}
 	}
 }
 

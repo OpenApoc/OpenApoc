@@ -162,7 +162,7 @@ bool CityView::handleClickedBuilding(StateRef<Building> building, bool rightClic
 				    ->setText(this->state->current_base->name);
 				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BaseScreen>(this->state)});
 			}
-			else if (building->base_layout && building->owner.id == "ORG_GOVERNMENT")
+			else if (building->base_layout && building->owner == state->getGovernment())
 			{
 				// Base buy screen
 				fw().stageQueueCommand(
@@ -193,7 +193,7 @@ bool CityView::handleClickedBuilding(StateRef<Building> building, bool rightClic
 					fw().stageQueueCommand(
 					    {StageCmd::Command::PUSH, mksp<BaseScreen>(this->state)});
 				}
-				else if (building->base_layout && building->owner.id == "ORG_GOVERNMENT")
+				else if (building->base_layout && building->owner == state->getGovernment())
 				{
 					// Base buy screen
 					fw().stageQueueCommand(
@@ -1044,9 +1044,7 @@ void CityView::resume()
 			    StateRef<Base>(this->state.get(), e->forms().RaisedBy->getData<Base>());
 			if (clickedBase == this->state->current_base)
 			{
-				this->setScreenCenterTile(Vec2<int>{
-				    (clickedBase->building->bounds.p0.x + clickedBase->building->bounds.p1.x) / 2,
-				    (clickedBase->building->bounds.p0.y + clickedBase->building->bounds.p1.y) / 2});
+				this->setScreenCenterTile(clickedBase->building->crewQuarters);
 			}
 			else
 			{
@@ -1540,21 +1538,47 @@ bool CityView::handleKeyDown(Event *e)
 				LogWarning("Spawning crashed UFOs...");
 
 				auto pos = centerPos;
-				pos.z = 10;
+				pos.z = 9;
 				auto ufo = state->current_city->placeVehicle(
 				    *state, {state.get(), "VEHICLETYPE_ALIEN_PROBE"}, state->getAliens(), pos);
 				ufo->health = 2;
 				ufo->applyDamage(*state, 1, 0);
+				pos.z++;
 				ufo = state->current_city->placeVehicle(
 				    *state, {state.get(), "VEHICLETYPE_ALIEN_BATTLESHIP"}, state->getAliens(), pos);
 				ufo->health = 2;
 				ufo->applyDamage(*state, 1, 0);
+				pos.z++;
 				ufo = state->current_city->placeVehicle(
 				    *state, {state.get(), "VEHICLETYPE_ALIEN_TRANSPORTER"}, state->getAliens(),
 				    pos);
 				ufo->health = 2;
 				ufo->applyDamage(*state, 1, 0);
 
+				return true;
+			}
+			case SDLK_b:
+			{
+				LogWarning("Spawning some bought stuff");
+				StateRef<Organisation> marsec = { state.get(), "ORG_MARSEC" };
+				marsec->purchase(*state, state->current_base->building, StateRef<VehicleType>{ state.get(), "VEHICLETYPE_HAWK_AIR_WARRIOR" }, 1);
+				marsec->purchase(*state, state->current_base->building, StateRef<AEquipmentType>{ state.get(), "AEQUIPMENTTYPE_MARSEC_BODY_UNIT" }, 1);
+				marsec->purchase(*state, state->current_base->building, StateRef<VEquipmentType>{ state.get(), "VEQUIPMENTTYPE_LANCER_7000_LASER_GUN" }, 1);
+				for (auto &b : state->cities["CITYMAP_HUMAN"]->buildings)
+				{
+					if (b.second->owner == marsec)
+					{
+						auto a = state->agent_generator.createAgent(*state, marsec, StateRef<AgentType>{state.get(), "AGENTTYPE_X-COM_AGENT_HUMAN" });
+						a->homeBuilding = { state.get(), b.first };
+						a->enterBuilding(*state, a->homeBuilding);
+						a->hire(*state, state->current_base->building);
+						a = state->agent_generator.createAgent(*state, marsec, StateRef<AgentType>{ state.get(), "AGENTTYPE_X-COM_BIOCHEMIST" });
+						a->homeBuilding = { state.get(), b.first };
+						a->enterBuilding(*state, a->homeBuilding);
+						a->hire(*state, state->current_base->building);
+						break;
+					}
+				}
 				return true;
 			}
 		}
@@ -1763,6 +1787,7 @@ bool CityView::handleGameStateEvent(Event *e)
 		{
 			case GameEventType::AlienSpotted:
 			case GameEventType::AlienTakeover:
+			case GameEventType::UfoCrashed:
 			case GameEventType::UfoRecoverySuccess:
 			case GameEventType::UfoRecoveryFailure:
 			case GameEventType::UfoRecoveryUnmanned:
@@ -2065,7 +2090,7 @@ void CityView::updateSelectedUnits()
 		while (it != state->current_city->cityViewSelectedVehicles.end())
 		{
 			auto v = *it;
-			if (!v || v->isDead())
+			if (!v || v->isDead() || v->isCrashed())
 			{
 				it = state->current_city->cityViewSelectedVehicles.erase(it);
 			}

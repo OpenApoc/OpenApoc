@@ -1665,7 +1665,7 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 				{
 					targetUnit->sendAgentEvent(state, GameEventType::AgentBrainsucked, true);
 					// Extra score penalty for being brainsucked
-					if (state.getPlayer() == targetUnit->agent->owner)
+					if (targetUnit->agent->owner == state.getPlayer())
 					{
 						state.current_battle->score.casualtyPenalty -=
 						    targetUnit->agent->type->score;

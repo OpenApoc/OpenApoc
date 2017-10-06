@@ -94,11 +94,7 @@ void Projectile::update(GameState &state, unsigned int ticks)
 	// Tracking
 	if (turnRate > 0)
 	{
-		if (trackedVehicle && trackedVehicle->isDead())
-		{
-			turnRate = 0;
-		}
-		else if (trackedObject)
+		if (trackedObject)
 		{
 			targetPosition = trackedObject->getVoxelCentrePosition();
 		}
@@ -205,7 +201,7 @@ Collision Projectile::checkProjectileCollision(TileMap &map)
 #ifdef ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE
 	// Missiles should not shooot down non-missiles even when friendly firing
 	// otherwise they kill themselves immediately
-	if (!trackedObject)
+	if (type == Type::Beam)
 	{
 		firer = nullptr;
 	}

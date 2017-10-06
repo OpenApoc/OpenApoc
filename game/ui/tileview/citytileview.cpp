@@ -549,7 +549,7 @@ void CityTileView::render()
 			for (auto &v : state.vehicles)
 			{
 				if (v.second->owner != state.getPlayer() || v.second->city != state.current_city ||
-				    !v.second->currentBuilding || v.second->isDead())
+				    !v.second->currentBuilding)
 				{
 					continue;
 				}

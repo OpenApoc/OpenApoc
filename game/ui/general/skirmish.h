@@ -31,12 +31,10 @@ class Skirmish : public Stage
 	void updateLocationLabel();
 
 	void battleInBuilding(bool hotseat, StateRef<Base> playerBase, StateRef<Building> building,
-	                      bool raid, std::map<StateRef<AgentType>, int> *aliens, int *guards,
-	                      int *civilians);
-	void battleInBase(bool hotseat, StateRef<Base> base,
-	                  std::map<StateRef<AgentType>, int> *aliens);
-	void battleInVehicle(bool hotseat, StateRef<Base> playerBase, StateRef<VehicleType>,
-	                     std::map<StateRef<AgentType>, int> *aliens);
+	                      bool raid, bool customAliens, std::map<StateRef<AgentType>, int> aliens, bool customGuards, int guards, bool customCivilians,
+		int civilians);
+	void battleInBase(bool hotseat, StateRef<Base> base, bool customAliens, std::map<StateRef<AgentType>, int> aliens);
+	void battleInVehicle(bool hotseat, StateRef<Base> playerBase, StateRef<VehicleType>, bool customAliens, std::map<StateRef<AgentType>, int> aliens);
 
   public:
 	Skirmish(sp<GameState> state);
@@ -48,8 +46,8 @@ class Skirmish : public Stage
 	void setLocation(StateRef<VehicleType> veh);
 	void setLocation(StateRef<Base> base);
 
-	void goToBattle(std::map<StateRef<AgentType>, int> *aliens = nullptr, int *guards = nullptr,
-	                int *civilians = nullptr);
+	void goToBattle(bool customAliens = false,  std::map<StateRef<AgentType>, int> aliens = {}, bool customGuards = false, int guards = 0,
+		bool customCivilians = false, int civilians = 0);
 	void customizeForces(bool force = false);
 
 	// Stage control
