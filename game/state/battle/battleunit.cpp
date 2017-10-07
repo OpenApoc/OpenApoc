@@ -2,9 +2,9 @@
 #define _USE_MATH_DEFINES
 #endif
 #include "game/state/battle/battleunit.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/sound.h"
-#include "framework/configfile.h"
 #include "game/state/aequipment.h"
 #include "game/state/battle/ai/unitaihelper.h"
 #include "game/state/battle/battle.h"
@@ -4063,7 +4063,8 @@ void BattleUnit::processExperience(GameState &state)
 	{
 		if (agent->current_stats.health < 100)
 		{
-			int healthBoost = randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.health) / 10;
+			int healthBoost =
+			    randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.health) / 10;
 			agent->current_stats.health += healthBoost;
 			agent->modified_stats.health += healthBoost;
 		}
@@ -5618,7 +5619,8 @@ bool BattleUnit::setMission(GameState &state, BattleUnitMission *mission)
 			case BattleUnitMission::Type::ThrowItem:
 			{
 				// FIXME: actually read the option
-				if (!config().getBool("OpenApoc.NewFeature.NoInstantThrows") && canAfford(state, getThrowCost(), true))
+				if (!config().getBool("OpenApoc.NewFeature.NoInstantThrows") &&
+				    canAfford(state, getThrowCost(), true))
 				{
 					setMovementState(MovementState::None);
 					setBodyState(state, BodyState::Standing);

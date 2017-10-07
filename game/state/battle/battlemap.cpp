@@ -196,15 +196,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 		}
 
 		// Find which base is under attack
-		StateRef<Base> base;
-		for (auto &b : state.player_bases)
-		{
-			if (b.second->building == building)
-			{
-				base = {&state, b.first};
-				break;
-			}
-		}
+		StateRef<Base> base = building->base;
 
 		// Add combat personel
 		int playerAgentsCount = 0;

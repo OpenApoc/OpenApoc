@@ -1,4 +1,5 @@
 #include "game/state/aequipment.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "framework/sound.h"
@@ -635,6 +636,10 @@ void AEquipment::explode(GameState &state)
 			auto payload = getPayloadType();
 			// If no payload or brainsucker then nothing
 			if (!payload || payload->damage_type->effectType == DamageType::EffectType::Brainsucker)
+			{
+				break;
+			}
+			if (!config().getBool("OpenApoc.NewFeature.PayloadExplosion"))
 			{
 				break;
 			}

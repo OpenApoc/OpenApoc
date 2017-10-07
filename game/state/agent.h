@@ -198,7 +198,7 @@ class AgentType : public StateObject
 	AIType aiType;
 	// Fatal woulds immunity
 	bool immuneToFatalWounds = false;
-	
+
 	int infiltrationSpeed = 0;
 	int growthChance = 0;
 	std::list<std::pair<int, std::pair<StateRef<AgentType>, int>>> growthOptions;

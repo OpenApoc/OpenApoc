@@ -89,7 +89,7 @@ void BaseSelectScreen::eventOccurred(Event *e)
 					auto building = scenery->building;
 					if (building)
 					{
-						if (building->base_layout && building->owner==state->getGovernment())
+						if (building->base_layout && building->owner == state->getGovernment())
 						{
 							fw().stageQueueCommand(
 							    {StageCmd::Command::PUSH, mksp<BaseBuyScreen>(state, building)});

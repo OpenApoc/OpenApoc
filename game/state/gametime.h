@@ -18,7 +18,7 @@ class GameTime
 {
   private:
 	bool fiveSecondsPassedFlag = false;
-    bool fiveMinutesPassedFlag = false;
+	bool fiveMinutesPassedFlag = false;
 	bool hourPassedFlag = false;
 	bool dayPassedFlag = false;
 	bool weekPassedFlag = false;
@@ -57,7 +57,7 @@ class GameTime
 
 	// set at end of each 5 seconds
 	bool fiveSecondsPassed() const;
-	
+
 	// set at end of each 5 minutes
 	bool fiveMinutesPassed() const;
 

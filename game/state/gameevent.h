@@ -53,7 +53,8 @@ class GameBaseEvent : public GameEvent
 	StateRef<Organisation> actor;
 	bool flag = false;
 
-	GameBaseEvent(GameEventType type, StateRef<Base> base, StateRef<Organisation> actor = nullptr, bool flag = false);
+	GameBaseEvent(GameEventType type, StateRef<Base> base, StateRef<Organisation> actor = nullptr,
+	              bool flag = false);
 	~GameBaseEvent() override = default;
 	UString message() override;
 };
@@ -100,7 +101,7 @@ class GameAgentEvent : public GameEvent
 
 class GameSomethingDiedEvent : public GameEvent
 {
-public:
+  public:
 	UString messageInner;
 	Vec3<int> location;
 

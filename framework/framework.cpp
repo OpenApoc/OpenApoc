@@ -175,37 +175,72 @@ ConfigOptionBool optionPauseOnAgentPsiControlled("Notifications.Battle", "AgentP
 ConfigOptionBool optionPauseOnAgentPsiOver("Notifications.Battle", "AgentPsiOver",
                                            "Unit freed from Psionic control", true);
 
-ConfigOptionBool optionUFODamageModel("OpenApoc.NewFeature", "UFODamageModel", "X-Com 1 Damage model (0-200%)", false);
-ConfigOptionBool optionFully3DExplosions("OpenApoc.NewFeature", "Fully3DExplosions", "Fully 3D explosions", false);
-ConfigOptionBool optionInstantExplosionDamage("OpenApoc.NewFeature", "InstantExplosionDamage", "Explosions damage instantly", false);
-ConfigOptionBool optionGravliftSounds( "OpenApoc.NewFeature","GravliftSounds", "Gravlift sounds" , true);
-ConfigOptionBool optionNoInstantThrows( "OpenApoc.NewFeature","NoInstantThrows", "Throwing requires standing upright" , true);
-ConfigOptionBool optionFerryChecksRelationshipWhenBuying( "OpenApoc.NewFeature","FerryChecksRelationshipWhenBuying", "Transtellar checks relationship when buying items" , true);
-ConfigOptionBool optionAllowManualCityTeleporters( "OpenApoc.NewFeature","AllowManualCityTeleporters", "Allow manual use of teleporters in city" , true);
-ConfigOptionBool optionAllowManualCargoFerry( "OpenApoc.NewFeature","AllowManualCargoFerry", "Allow manual ferrying of cargo and non-combatants" , true);
-ConfigOptionBool optionAllowSoldierTaxiUse( "OpenApoc.NewFeature","AllowSoldierTaxiUse", "Allow soldiers to call taxi" , true);
-ConfigOptionBool optionAllowUnloadingClips( "OpenApoc.NewFeature","AllowUnloadingClips", "Allow manually unloading clips from weapons" , true);
-ConfigOptionBool optionPayloadExplosion( "OpenApoc.NewFeature","PayloadExplosion", "Ammunition explodes when blown up" , true);
-ConfigOptionBool optionDisplayUnitPaths( "OpenApoc.NewFeature","DisplayUnitPaths", "Display unit paths in battle" , true);
-ConfigOptionBool optionAdditionalUnitIcons( "OpenApoc.NewFeature","AdditionalUnitIcons", "Display additional unit icons (fatal, psi)" , true);
-ConfigOptionBool optionAllowForceFiringParallel( "OpenApoc.NewFeature","AllowForceFiringParallel", "Allow force-firing parallel to the ground" , true);
-ConfigOptionBool optionRequireLOSToMaintainPsi( "OpenApoc.NewFeature","RequireLOSToMaintainPsi", "Require LOS to maintain psi attack" , true);
-ConfigOptionBool optionAllowAttackingOwnedVehicles( "OpenApoc.NewFeature","AllowAttackingOwnedVehicles", "Allow attacking owned vehicles" , true);
-ConfigOptionBool optionCallExistingFerry( "OpenApoc.NewFeature","CallExistingFerry", "Call existing transport instead of spawning them" , true);
-ConfigOptionBool optionAlternateVehicleShieldSound( "OpenApoc.NewFeature","AlternateVehicleShieldSound", "Hitting vehicle shield produces alternate sound" , true);
-ConfigOptionBool optionEnableAgentTemplates( "OpenApoc.NewFeature","EnableAgentTemplates", "Enable agent equipment templates" , true);
-ConfigOptionBool optionStoreDroppedEquipment( "OpenApoc.NewFeature","StoreDroppedEquipment", "Attempt to recover agent equipment dropped in city" , true);
-ConfigOptionBool optionAbsorbingVehicles( "OpenApoc.NewFeature","AbsorbingVehicles", "Ground vehicles absorb damage dealt to roads under them" , false);
-ConfigOptionBool optionRecoverGroundVehicles( "OpenApoc.NewFeature","RecoverGroundVehicles", "Ground vehicles crash when road dies and can be recovered" , true);
-ConfigOptionBool optionEnforceCargoLimits( "OpenApoc.NewFeature","EnforceCargoLimits", "Enforce vehicle cargo limits" , false);
-ConfigOptionBool optionAllowNearbyVehicleLootPickup( "OpenApoc.NewFeature","AllowNearbyVehicleLootPickup", "Allow nearby vehicles to pick up loot" , true);
-ConfigOptionBool optionAllowBuildingLootDeposit( "OpenApoc.NewFeature","AllowBuildingLootDeposit", "Allow loot to be stashed in the building" , true);
-ConfigOptionBool optionBSKLauncherSound( "OpenApoc.Mod","BSKLauncherSound", "(MOD) Original Brainsucker Launcher SFX" , true);
-ConfigOptionBool optionArmoredRoads( "OpenApoc.Mod","ArmoredRoads", "(MOD) Armored roads" , false);
-ConfigOptionBool optionInvulnerableRoads( "OpenApoc.Mod","InvulnerableRoads", "(MOD) Invulnerable roads" , false);
-ConfigOptionBool optionATVTank( "OpenApoc.Mod","ATVTank", "(MOD) Griffon becomes an All-Terrain Vehicle" , true);
-
-
+ConfigOptionBool optionUFODamageModel("OpenApoc.NewFeature", "UFODamageModel",
+                                      "X-Com 1 Damage model (0-200%)", false);
+ConfigOptionBool optionFully3DExplosions("OpenApoc.NewFeature", "Fully3DExplosions",
+                                         "Fully 3D explosions", false);
+ConfigOptionBool optionInstantExplosionDamage("OpenApoc.NewFeature", "InstantExplosionDamage",
+                                              "Explosions damage instantly", false);
+ConfigOptionBool optionGravliftSounds("OpenApoc.NewFeature", "GravliftSounds", "Gravlift sounds",
+                                      true);
+ConfigOptionBool optionNoInstantThrows("OpenApoc.NewFeature", "NoInstantThrows",
+                                       "Throwing requires standing upright", true);
+ConfigOptionBool optionFerryChecksRelationshipWhenBuying(
+    "OpenApoc.NewFeature", "FerryChecksRelationshipWhenBuying",
+    "Transtellar checks relationship when buying items", true);
+ConfigOptionBool optionAllowManualCityTeleporters("OpenApoc.NewFeature",
+                                                  "AllowManualCityTeleporters",
+                                                  "Allow manual use of teleporters in city", true);
+ConfigOptionBool optionAllowManualCargoFerry("OpenApoc.NewFeature", "AllowManualCargoFerry",
+                                             "Allow manual ferrying of cargo and non-combatants",
+                                             true);
+ConfigOptionBool optionAllowSoldierTaxiUse("OpenApoc.NewFeature", "AllowSoldierTaxiUse",
+                                           "Allow soldiers to call taxi", true);
+ConfigOptionBool optionAllowUnloadingClips("OpenApoc.NewFeature", "AllowUnloadingClips",
+                                           "Allow manually unloading clips from weapons", true);
+ConfigOptionBool optionPayloadExplosion("OpenApoc.NewFeature", "PayloadExplosion",
+                                        "Ammunition explodes when blown up", true);
+ConfigOptionBool optionDisplayUnitPaths("OpenApoc.NewFeature", "DisplayUnitPaths",
+                                        "Display unit paths in battle", true);
+ConfigOptionBool optionAdditionalUnitIcons("OpenApoc.NewFeature", "AdditionalUnitIcons",
+                                           "Display additional unit icons (fatal, psi)", true);
+ConfigOptionBool optionAllowForceFiringParallel("OpenApoc.NewFeature", "AllowForceFiringParallel",
+                                                "Allow force-firing parallel to the ground", true);
+ConfigOptionBool optionRequireLOSToMaintainPsi("OpenApoc.NewFeature", "RequireLOSToMaintainPsi",
+                                               "Require LOS to maintain psi attack", true);
+ConfigOptionBool optionAllowAttackingOwnedVehicles("OpenApoc.NewFeature",
+                                                   "AllowAttackingOwnedVehicles",
+                                                   "Allow attacking owned vehicles", true);
+ConfigOptionBool optionCallExistingFerry("OpenApoc.NewFeature", "CallExistingFerry",
+                                         "Call existing transport instead of spawning them", true);
+ConfigOptionBool
+    optionAlternateVehicleShieldSound("OpenApoc.NewFeature", "AlternateVehicleShieldSound",
+                                      "Hitting vehicle shield produces alternate sound", true);
+ConfigOptionBool optionEnableAgentTemplates("OpenApoc.NewFeature", "EnableAgentTemplates",
+                                            "Enable agent equipment templates", true);
+ConfigOptionBool optionStoreDroppedEquipment("OpenApoc.NewFeature", "StoreDroppedEquipment",
+                                             "Attempt to recover agent equipment dropped in city",
+                                             true);
+ConfigOptionBool optionAbsorbingVehicles("OpenApoc.NewFeature", "AbsorbingVehicles",
+                                         "Ground vehicles absorb damage dealt to roads under them",
+                                         false);
+ConfigOptionBool
+    optionRecoverGroundVehicles("OpenApoc.NewFeature", "RecoverGroundVehicles",
+                                "Ground vehicles crash when road dies and can be recovered", true);
+ConfigOptionBool optionEnforceCargoLimits("OpenApoc.NewFeature", "EnforceCargoLimits",
+                                          "Enforce vehicle cargo limits", false);
+ConfigOptionBool optionAllowNearbyVehicleLootPickup("OpenApoc.NewFeature",
+                                                    "AllowNearbyVehicleLootPickup",
+                                                    "Allow nearby vehicles to pick up loot", true);
+ConfigOptionBool optionAllowBuildingLootDeposit("OpenApoc.NewFeature", "AllowBuildingLootDeposit",
+                                                "Allow loot to be stashed in the building", true);
+ConfigOptionBool optionBSKLauncherSound("OpenApoc.Mod", "BSKLauncherSound",
+                                        "(MOD) Original Brainsucker Launcher SFX", true);
+ConfigOptionBool optionArmoredRoads("OpenApoc.Mod", "ArmoredRoads", "(MOD) Armored roads", false);
+ConfigOptionBool optionInvulnerableRoads("OpenApoc.Mod", "InvulnerableRoads",
+                                         "(MOD) Invulnerable roads", false);
+ConfigOptionBool optionATVTank("OpenApoc.Mod", "ATVTank",
+                               "(MOD) Griffon becomes an All-Terrain Vehicle", true);
 
 } // anonymous namespace
 

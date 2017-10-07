@@ -2,6 +2,7 @@
 #include "forms/graphic.h"
 #include "forms/label.h"
 #include "forms/ui.h"
+#include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/font.h"
 #include "framework/framework.h"
@@ -489,23 +490,26 @@ void ControlGenerator::fillAgentControl(GameState &state, sp<Graphic> baseContro
 		stateGraphic->AutoSize = true;
 		stateGraphic->Location = {0, 0};
 	}
-	if (info.fatal)
+	if (config().getBool("OpenApoc.NewFeature.AdditionalUnitIcons"))
 	{
-		auto icon = baseControl->createChild<Graphic>(singleton.iconFatal);
-		icon->AutoSize = true;
-		icon->Location = {0, 0};
-	}
-	if (info.psiIn)
-	{
-		auto icon = baseControl->createChild<Graphic>(singleton.iconPsiIn);
-		icon->AutoSize = true;
-		icon->Location = {0, 0};
-	}
-	if (info.psiOut)
-	{
-		auto icon = baseControl->createChild<Graphic>(singleton.iconPsiOut);
-		icon->AutoSize = true;
-		icon->Location = {0, 0};
+		if (info.fatal)
+		{
+			auto icon = baseControl->createChild<Graphic>(singleton.iconFatal);
+			icon->AutoSize = true;
+			icon->Location = {0, 0};
+		}
+		if (info.psiIn)
+		{
+			auto icon = baseControl->createChild<Graphic>(singleton.iconPsiIn);
+			icon->AutoSize = true;
+			icon->Location = {0, 0};
+		}
+		if (info.psiOut)
+		{
+			auto icon = baseControl->createChild<Graphic>(singleton.iconPsiOut);
+			icon->AutoSize = true;
+			icon->Location = {0, 0};
+		}
 	}
 	if (info.faded)
 	{

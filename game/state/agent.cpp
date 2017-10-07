@@ -493,20 +493,20 @@ bool Agent::hasTeleporter() const
 	return false;
 }
 
-void Agent::hire(GameState & state, StateRef<Building> newHome)
+void Agent::hire(GameState &state, StateRef<Building> newHome)
 {
 	owner = newHome->owner;
 	homeBuilding = newHome;
 	recentlyHired = true;
-	setMission(state, AgentMission::gotoBuilding(state, *this, newHome, true, true));
+	setMission(state, AgentMission::gotoBuilding(state, *this, newHome, false, true));
 }
 
-void Agent::transfer(GameState & state, StateRef<Building> newHome)
+void Agent::transfer(GameState &state, StateRef<Building> newHome)
 {
 	homeBuilding = newHome;
 	recentlyHired = false;
 	recentryTransferred = true;
-	setMission(state, AgentMission::gotoBuilding(state, *this, newHome, true, true));
+	setMission(state, AgentMission::gotoBuilding(state, *this, newHome, false, true));
 }
 
 sp<AEquipment> Agent::getArmor(BodyPart bodyPart) const
@@ -988,7 +988,8 @@ void Agent::die(GameState &state, bool silent)
 	{
 		if (!silent && owner == state.getPlayer())
 		{
-			fw().pushEvent(new GameSomethingDiedEvent(GameEventType::AgentDiedCity, name, "", position));
+			fw().pushEvent(
+			    new GameSomethingDiedEvent(GameEventType::AgentDiedCity, name, "", position));
 		}
 		state.agents.erase(getId(state, shared_from_this()));
 	}
@@ -1039,18 +1040,16 @@ void Agent::update(GameState &state, unsigned ticks)
 	}
 }
 
-void Agent::updateFiveSeconds(GameState & state)
+void Agent::updateFiveSeconds(GameState &state)
 {
-	if (type->role != AgentType::Role::Soldier && currentBuilding != homeBuilding && missions.empty())
+	if (type->role != AgentType::Role::Soldier && currentBuilding != homeBuilding &&
+	    missions.empty())
 	{
 		setMission(state, AgentMission::gotoBuilding(state, *this, homeBuilding));
 	}
 }
 
-void Agent::updateDaily(GameState & state)
-{
-	recentlyFought = false;
-}
+void Agent::updateDaily(GameState &state) { recentlyFought = false; }
 
 void Agent::updateMovement(GameState &state, unsigned ticks)
 {

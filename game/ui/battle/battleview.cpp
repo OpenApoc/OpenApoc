@@ -2730,21 +2730,16 @@ void BattleView::orderTeleport(Vec3<int> target, bool right)
 
 void BattleView::orderFire(Vec3<int> target, WeaponStatus status, bool modifier)
 {
+	bool atGround = modifier || !config().getBool("OpenApoc.NewFeature.AllowForceFiringParallel");
 	for (auto &unit : battle.battleViewSelectedUnits)
 	{
-		if (!unit->startAttacking(*state, target, status, modifier))
-		{
-			LogWarning("Unsufficient TU to fire");
-		}
+		unit->startAttacking(*state, target, status, atGround);
 	}
 }
 
 void BattleView::orderFire(StateRef<BattleUnit> shooter, Vec3<int> target, WeaponStatus status)
 {
-	if (!shooter->startAttacking(*state, target, status))
-	{
-		LogWarning("Unsufficient TU to fire");
-	}
+	shooter->startAttacking(*state, target, status);
 }
 
 void BattleView::orderFire(StateRef<BattleUnit> u, WeaponStatus status, bool forced)

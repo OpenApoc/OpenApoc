@@ -104,14 +104,8 @@ const StateRef<Organisation> &GameState::getPlayer() const { return this->player
 StateRef<Organisation> GameState::getPlayer() { return this->player; }
 const StateRef<Organisation> &GameState::getAliens() const { return this->aliens; }
 StateRef<Organisation> GameState::getAliens() { return this->aliens; }
-const StateRef<Organisation>& GameState::getGovernment() const
-{
-	return this->government;
-}
-StateRef<Organisation> GameState::getGovernment()
-{
-	return this->government;
-}
+const StateRef<Organisation> &GameState::getGovernment() const { return this->government; }
+StateRef<Organisation> GameState::getGovernment() { return this->government; }
 const StateRef<Organisation> &GameState::getCivilian() const { return this->civilian; }
 StateRef<Organisation> GameState::getCivilian() { return this->civilian; }
 
@@ -504,6 +498,13 @@ void GameState::update(unsigned int ticks)
 			c.second->update(*this, ticks);
 		}
 		Trace::end("GameState::update::cities");
+		Trace::start("GameState::update::organisations");
+		for (auto &o : this->organisations)
+		{
+			o.second->updateMissions(*this);
+		}
+		Trace::end("GameState::update::organisations");
+
 		Trace::start("GameState::update::vehicles");
 		for (auto &v : this->vehicles)
 		{
@@ -516,7 +517,7 @@ void GameState::update(unsigned int ticks)
 			a.second->update(*this, ticks);
 		}
 		Trace::end("GameState::update::agents");
-		
+
 		gameTime.addTicks(ticks);
 		if (gameTime.fiveSecondsPassed())
 		{
@@ -544,12 +545,6 @@ void GameState::update(unsigned int ticks)
 
 void GameState::updateEndOfFiveSeconds()
 {
-	Trace::start("GameState::updateEndOfFiveSeconds::organisations");
-	for (auto &o : this->organisations)
-	{
-		o.second->updateMissions(*this);
-	}
-	Trace::end("GameState::updateEndOfFiveSeconds::organisations");
 	Trace::start("GameState::updateEndOfFiveSeconds::buildings");
 	for (auto &b : current_city->buildings)
 	{

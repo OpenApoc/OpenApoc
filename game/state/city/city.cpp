@@ -217,9 +217,7 @@ void City::update(GameState &state, unsigned int ticks)
 				case TileObject::Type::Vehicle:
 				{
 					auto vehicle = std::static_pointer_cast<TileObjectVehicle>(c.obj)->getVehicle();
-					displayDoodad = vehicle->handleCollision(state, c);
-					playSound = displayDoodad;
-					LogWarning("Vehicle collision");
+					displayDoodad = vehicle->handleCollision(state, c, playSound);
 					break;
 				}
 				case TileObject::Type::Scenery:

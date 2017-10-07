@@ -7,6 +7,7 @@
 #include "forms/scrollbar.h"
 #include "forms/ui.h"
 #include "framework/apocresources/cursor.h"
+#include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/font.h"
@@ -393,38 +394,41 @@ void AEquipScreen::eventOccurred(Event *e)
 	auto currentAgent = selectedAgents.front();
 
 	// Templates:
-	switch (e->keyboard().KeyCode)
+	if (config().getBool("OpenApoc.NewFeature.EnableAgentTemplates"))
 	{
-		case SDLK_1:
-			processTemplate(1, modifierRCtrl || modifierLCtrl);
-			return;
-		case SDLK_2:
-			processTemplate(2, modifierRCtrl || modifierLCtrl);
-			return;
-		case SDLK_3:
-			processTemplate(3, modifierRCtrl || modifierLCtrl);
-			return;
-		case SDLK_4:
-			processTemplate(4, modifierRCtrl || modifierLCtrl);
-			return;
-		case SDLK_5:
-			processTemplate(5, modifierRCtrl || modifierLCtrl);
-			return;
-		case SDLK_6:
-			processTemplate(6, modifierRCtrl || modifierLCtrl);
-			return;
-		case SDLK_7:
-			processTemplate(7, modifierRCtrl || modifierLCtrl);
-			return;
-		case SDLK_8:
-			processTemplate(8, modifierRCtrl || modifierLCtrl);
-			return;
-		case SDLK_9:
-			processTemplate(9, modifierRCtrl || modifierLCtrl);
-			return;
-		case SDLK_0:
-			processTemplate(0, modifierRCtrl || modifierLCtrl);
-			return;
+		switch (e->keyboard().KeyCode)
+		{
+			case SDLK_1:
+				processTemplate(1, modifierRCtrl || modifierLCtrl);
+				return;
+			case SDLK_2:
+				processTemplate(2, modifierRCtrl || modifierLCtrl);
+				return;
+			case SDLK_3:
+				processTemplate(3, modifierRCtrl || modifierLCtrl);
+				return;
+			case SDLK_4:
+				processTemplate(4, modifierRCtrl || modifierLCtrl);
+				return;
+			case SDLK_5:
+				processTemplate(5, modifierRCtrl || modifierLCtrl);
+				return;
+			case SDLK_6:
+				processTemplate(6, modifierRCtrl || modifierLCtrl);
+				return;
+			case SDLK_7:
+				processTemplate(7, modifierRCtrl || modifierLCtrl);
+				return;
+			case SDLK_8:
+				processTemplate(8, modifierRCtrl || modifierLCtrl);
+				return;
+			case SDLK_9:
+				processTemplate(9, modifierRCtrl || modifierLCtrl);
+				return;
+			case SDLK_0:
+				processTemplate(0, modifierRCtrl || modifierLCtrl);
+				return;
+		}
 	}
 
 	// Switch between showing armor or items
@@ -1409,6 +1413,7 @@ void AEquipScreen::addItemToInventoryAgent(sp<AEquipment> item)
 
 bool AEquipScreen::tryPickUpItem(sp<Agent> agent, Vec2<int> slotPos, bool alternative, bool forced)
 {
+	alternative = alternative && config().getBool("OpenApoc.NewFeature.AllowUnloadingClips");
 	auto equipment = std::dynamic_pointer_cast<AEquipment>(agent->getEquipmentAt(slotPos));
 	if (!equipment)
 	{

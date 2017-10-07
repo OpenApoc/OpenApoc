@@ -23,6 +23,7 @@ class Building;
 class AgentType;
 class VEquipmentType;
 class AEquipmentType;
+class VAmmoType;
 class GameState;
 class VehicleType;
 class UfopaediaEntry;
@@ -114,7 +115,6 @@ class Organisation : public StateObject
 
 	std::list<Mission> missions;
 	std::map<StateRef<VehicleType>, int> vehiclePark;
-	int agentPark = 0;
 	bool providesTransportationServices = false;
 	int minHireePool = 0;
 	int maxHireePool = 0;
@@ -132,10 +132,17 @@ class Organisation : public StateObject
 
 	void takeOver(GameState &state, bool forced = false);
 
-	PurchaseResult canPurchaseFrom(GameState &state, const StateRef<Building> &buyer) const;
-	void purchase(GameState &state, const StateRef<Building> &buyer, StateRef<VEquipmentType> vehicleEquipment, int count);
-	void purchase(GameState &state, const StateRef<Building> &buyer, StateRef<AEquipmentType> agentEquipment, int count);
-	void purchase(GameState &state, const StateRef<Building> &buyer, StateRef<VehicleType> vehicle, int count);
+	PurchaseResult canPurchaseFrom(GameState &state, const StateRef<Building> &buyer,
+	                               bool vehicle) const;
+	StateRef<Building> getPurchaseBuilding(GameState &state, const StateRef<Building> &buyer) const;
+	void purchase(GameState &state, const StateRef<Building> &buyer,
+	              StateRef<VEquipmentType> vehicleEquipment, int count);
+	void purchase(GameState &state, const StateRef<Building> &buyer,
+	              StateRef<VAmmoType> vehicleAmmo, int count);
+	void purchase(GameState &state, const StateRef<Building> &buyer,
+	              StateRef<AEquipmentType> agentEquipment, int count);
+	void purchase(GameState &state, const StateRef<Building> &buyer, StateRef<VehicleType> vehicle,
+	              int count);
 
 	Relation isRelatedTo(const StateRef<Organisation> &other) const;
 	bool isPositiveTo(const StateRef<Organisation> &other) const;

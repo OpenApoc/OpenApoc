@@ -11,7 +11,7 @@
 #include <map>
 
 // Uncomment to allow projectiles to shoot down friendly projectiles
-#define ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE
+#define DEBUG_ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE
 
 namespace OpenApoc
 {
@@ -24,6 +24,7 @@ class Image;
 class TileObjectVehicle;
 class TileObjectShadow;
 class Vehicle;
+class AEquipmentType;
 class Organisation;
 class VehicleMission;
 class Building;
@@ -31,6 +32,7 @@ class GameState;
 class TileObjectProjectile;
 class VEquipment;
 class VEquipmentType;
+class VAmmoType;
 class City;
 class TileMap;
 class Agent;
@@ -39,7 +41,7 @@ class Collision;
 class Cargo
 {
   public:
-    enum class Type
+	enum class Type
 	{
 		Agent,
 		Bio,
@@ -70,14 +72,25 @@ class Cargo
 	// Do not make events about this cargo, set if this is items left on floor
 	bool suppressEvents = false;
 
+	Cargo() = default;
+	Cargo(GameState &state, StateRef<AEquipmentType> equipment, int count,
+	      StateRef<Organisation> originalOwner, StateRef<Building> destination);
+	Cargo(GameState &state, StateRef<VEquipmentType> equipment, int count,
+	      StateRef<Organisation> originalOwner, StateRef<Building> destination);
+	Cargo(GameState &state, StateRef<VAmmoType> equipment, int count,
+	      StateRef<Organisation> originalOwner, StateRef<Building> destination);
+	Cargo(GameState &state, Type type, UString id, int count, int multiplier, int space, int cost,
+	      StateRef<Organisation> originalOwner, StateRef<Building> destination);
+
 	// Check expiry date, expire if past expiration date, return true if expires soon
-	bool checkExpiryDate(GameState &state);
+	bool checkExpiryDate(GameState &state, StateRef<Building> currentBuilding);
 	// Refund cargo to destination org
-	void refund(GameState &state);
+	void refund(GameState &state, StateRef<Building> currentBuilding);
 	// Put cargo into base
 	void arrive(GameState &state);
 	// Put cargo into base
-	void arrive(GameState &state, bool &cargoArrived, bool &bioArrived, bool &recoveryArrived, bool &transferArrived, std::set<StateRef<Organisation>> &suppliers);
+	void arrive(GameState &state, bool &cargoArrived, bool &bioArrived, bool &recoveryArrived,
+	            bool &transferArrived, std::set<StateRef<Organisation>> &suppliers);
 	// Seize cargo
 	void seize(GameState &state, StateRef<Organisation> org);
 	// Clear cargo (set count to zero, will be removed)
@@ -192,9 +205,9 @@ class Vehicle : public StateObject,
 	void removeEquipment(sp<VEquipment> object);
 
 	bool isCrashed() const;
-	bool applyDamage(GameState &state, int damage, float armour,
+	bool applyDamage(GameState &state, int damage, float armour, bool &soundHandled,
 	                 StateRef<Vehicle> attacker = nullptr);
-	bool handleCollision(GameState &state, Collision &c);
+	bool handleCollision(GameState &state, Collision &c, bool &soundHandled);
 	sp<TileObjectVehicle> findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile,
 	                                       Vec2<int> arc = {8, 8});
 	sp<TileObjectProjectile> findClosestHostileMissile(GameState &state,

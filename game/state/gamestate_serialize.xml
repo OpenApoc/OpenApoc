@@ -1167,7 +1167,6 @@
 		<member>ufopaedia_entry</member>
 		<member>missions</member>
 		<member>vehiclePark</member>
-		<member>agentPark</member>
 		<member>providesTransportationServices</member>
 		<member>minHireePool</member>
 		<member>maxHireePool</member>

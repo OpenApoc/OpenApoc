@@ -35,15 +35,17 @@ enum class GameEventType
 	CargoArrived,
 	TransferArrived,
 	RecoveryArrived,
+	CargoExpired,
 
 	// Something died events
 	BaseDestroyed,
 	AgentDiedCity,
 	VehicleDestroyed,
-	
+
 	// Building events
 	AlienSpotted,
 	BuildingAttacked,
+	CargoExpiresSoon,
 
 	// Organization events
 	AlienTakeover,

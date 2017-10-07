@@ -5,6 +5,7 @@
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "framework/sound.h"
+#include "game/state/base/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/citycommonsamplelist.h"
@@ -387,7 +388,8 @@ VehicleMission *VehicleMission::recoverVehicle(GameState &state, Vehicle &v,
 	return mission;
 }
 
-VehicleMission * VehicleMission::offerService(GameState & state, Vehicle & v, StateRef<Building> target)
+VehicleMission *VehicleMission::offerService(GameState &state, Vehicle &v,
+                                             StateRef<Building> target)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::OfferService;
@@ -840,7 +842,8 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 		{
 			if (finished)
 			{
-				fw().pushEvent(new GameVehicleEvent(GameEventType::UfoCrashed, { &state, v.shared_from_this() }));
+				fw().pushEvent(new GameVehicleEvent(GameEventType::UfoCrashed,
+				                                    {&state, v.shared_from_this()}));
 				return;
 			}
 			auto vTile = v.tileObject;
@@ -1547,84 +1550,100 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				return;
 			}
 			// Try to advance on vehicle
-			if (missionCounter == 0)
+			switch (missionCounter)
 			{
-				// Vehicle has crashed successfully and we're on top of it
-				if (targetVehicle->missions.empty() &&
-				    (Vec3<int>)v.position == (Vec3<int>)targetVehicle->position)
+				case 0:
 				{
-					missionCounter++;
-					// Launch vehicle assault
-					StateRef<Vehicle> thisRef = {&state,
-					                             Vehicle::getId(state, v.shared_from_this())};
-					auto event = new GameVehicleEvent(GameEventType::UfoRecoveryBegin,
-					                                  targetVehicle, thisRef);
-					fw().pushEvent(event);
-					// Remove ufo
-					targetVehicle->die(state, thisRef, true);
-					// Mission will now begin
+					// Vehicle has crashed successfully and we're on top of it
+					if (targetVehicle->missions.empty() &&
+					    (Vec3<int>)v.position == (Vec3<int>)targetVehicle->position)
+					{
+						missionCounter++;
+						// Launch vehicle assault
+						StateRef<Vehicle> thisRef = {&state,
+						                             Vehicle::getId(state, v.shared_from_this())};
+						auto event = new GameVehicleEvent(GameEventType::UfoRecoveryBegin,
+						                                  targetVehicle, thisRef);
+						fw().pushEvent(event);
+						// Remove ufo
+						targetVehicle->die(state, thisRef, true);
+						// Mission will now begin
+						return;
+					}
+					// Route towards target
+					v.addMission(state,
+					             VehicleMission::gotoLocation(state, v, targetVehicle->position));
 					return;
 				}
-				// Route towards target
-				v.addMission(state,
-				             VehicleMission::gotoLocation(state, v, targetVehicle->position));
-			}
-			else
-			{
-				LogError("Starting a completed recovery mission?");
+				default:
+					// Nothing to do, launched battle by now
+					return;
 			}
 			return;
 		}
 		case MissionType::OfferService:
 		{
-			// Go to target building and pick up cargo
-			if (missionCounter == 0)
+			switch (missionCounter)
 			{
-				if (!targetBuilding)
+				// Go to target building and pick up cargo
+				case 0:
 				{
-					LogError("Building disappeared");
+					if (!targetBuilding)
+					{
+						LogError("Building disappeared");
+						return;
+					}
+					// Already in target building - pick up cargo and restart mission to start
+					// ferrying
+					if (v.currentBuilding == targetBuilding)
+					{
+						missionCounter++;
+						v.provideService(state, true);
+						// Restart mission with counter = 1, start offering service
+						v.addMission(state, VehicleMission::restartNextMission(state, v));
+					}
+					// Not in target building yet - move to it
+					else
+					{
+						v.addMission(state, VehicleMission::gotoBuilding(state, v, targetBuilding));
+					}
 					return;
 				}
-				// Already in target building - pick up cargo and restart mission to start ferrying
-				if (v.currentBuilding == targetBuilding)
+				// Provide service
+				case 1:
 				{
-					missionCounter++;
-					v.provideService(state, true);
-					// Restart mission with counter = 1, start offering service
-					v.addMission(state, VehicleMission::restartNextMission(state, v));
+					// Find our ferry destination
+					auto destination = v.getServiceDestination(state);
+					if (destination)
+					{
+						// We still have stuff to ferry
+						// Wait a bit and go to destination
+						v.addMission(state, VehicleMission::gotoBuilding(state, v, destination));
+						v.addMission(state, VehicleMission::snooze(state, v, TICKS_PER_SECOND));
+					}
+					else
+					{
+						// We finished ferrying
+						// Wait a bit and return home
+						missionCounter++;
+						if (v.homeBuilding)
+						{
+							v.addMission(state,
+							             VehicleMission::gotoBuilding(state, v, v.homeBuilding));
+							v.addMission(state, VehicleMission::snooze(state, v, TICKS_PER_SECOND));
+						}
+						else
+						{
+							// Was a temporal ferry, vanish now
+							v.die(state, nullptr, true);
+						}
+					}
+					return;
 				}
-				// Not in target building yet - move to it
-				else
-				{
-					v.addMission(state, VehicleMission::gotoBuilding(state, v, targetBuilding));
-				}
+				default:
+					// Mission complete, nothing to do
+					return;
 			}
-			// Provide service
-			else if (missionCounter == 1)
-			{
-				// Find our ferry destination
-				auto destination = v.getServiceDestination(state);
-				if (destination)
-				{
-					// We still have stuff to ferry
-					// Wait a bit and go to destination
-					v.addMission(state, VehicleMission::gotoBuilding(state, v, destination));
-					v.addMission(state, VehicleMission::snooze(state, v, 5 * TICKS_PER_SECOND));
-				}
-				else
-				{
-					// We finished ferrying
-					// Wait a bit and return home
-					missionCounter++;
-					v.addMission(state, VehicleMission::gotoBuilding(state, v, v.homeBuilding));
-					v.addMission(state, VehicleMission::snooze(state, v, 5 * TICKS_PER_SECOND));
-				}
-			}
-			else
-			{
-				LogError("Starting a completed service mission?");
-			}
-			return;
 		}
 		case MissionType::InfiltrateSubvert:
 		{
@@ -1731,11 +1750,11 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					    StateRef<DoodadType>{&state, "DOODAD_14_INFILTRATION_BIG"},
 					    v.tileObject->getPosition() - Vec3<float>{0, 0, 0.5f});
 
-					v.addMission(state, VehicleMission::snooze(state, v, doodad->lifetime * 2));
+					v.addMission(state, VehicleMission::snooze(state, v, doodad->lifetime));
 					missionCounter++;
 					return;
 				}
-				// Deposited aliens, place aliens in building and retreat
+				// Played deposit animation fully, place aliens in building and retreat
 				case 1:
 				{
 					// Deposit aliens or subvert
@@ -1754,13 +1773,21 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						{
 							targetBuilding->current_crew[pair.first] += pair.second;
 						}
+						if (targetBuilding->base)
+						{
+							fw().pushEvent(new GameDefenseEvent(GameEventType::DefendTheBase,
+							                                    targetBuilding->base, v.owner));
+						}
 					}
 					// Retreat
 					v.addMission(state, VehicleMission::gotoPortal(state, v), true);
+					v.addMission(state, VehicleMission::snooze(state, v, TICKS_PER_SECOND));
 					missionCounter++;
 					return;
 				}
 				default:
+					// Should never reach this, as we're gone through portal by the end of this
+					// mision
 					LogError("Starting a completed Infiltration mission?");
 					return;
 			}
@@ -2104,7 +2131,7 @@ UString VehicleMission::getName()
 	    {MissionType::Patrol, "Patrol"},
 	    {MissionType::InfiltrateSubvert, "Infiltrate/Subvert"},
 	    {MissionType::RestartNextMission, "RestartNextMission"},
-		{MissionType::OfferService, "OfferServices" },
+	    {MissionType::OfferService, "OfferServices"},
 	    {MissionType::Teleport, "Teleport"},
 	};
 	UString name = "UNKNOWN";

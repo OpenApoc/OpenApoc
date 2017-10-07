@@ -121,7 +121,8 @@ class VehicleMission
 	static VehicleMission *attackVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *followVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *recoverVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
-	static VehicleMission *offerService(GameState &state, Vehicle &v, StateRef<Building> target = nullptr);
+	static VehicleMission *offerService(GameState &state, Vehicle &v,
+	                                    StateRef<Building> target = nullptr);
 	static VehicleMission *snooze(GameState &state, Vehicle &v, unsigned int ticks);
 	static VehicleMission *restartNextMission(GameState &state, Vehicle &v);
 	static VehicleMission *crashLand(GameState &state, Vehicle &v);

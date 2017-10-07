@@ -6,14 +6,14 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
+#include "game/state/agent.h"
 #include "game/state/base/base.h"
+#include "game/state/city/agentmission.h"
 #include "game/state/city/building.h"
+#include "game/state/city/city.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
-#include "game/state/city/agentmission.h"
-#include "game/state/city/city.h"
 #include "game/state/gamestate.h"
-#include "game/state/agent.h"
 #include "game/state/organisation.h"
 #include "game/ui/base/basegraphics.h"
 #include "game/ui/city/cityview.h"
@@ -81,13 +81,14 @@ void BaseBuyScreen::eventOccurred(Event *e)
 				{
 					if (base->building != b.second && b.second->owner == base->building->owner)
 					{
-						newBuilding = { state.get(), b.first };
+						newBuilding = {state.get(), b.first};
 						break;
 					}
 				}
 				if (!newBuilding)
 				{
-					LogError("We just bought %s's last building? WTF?", base->building->owner->name);
+					LogError("We just bought %s's last building? WTF?",
+					         base->building->owner->name);
 				}
 				base->building->owner = state->getPlayer();
 				// Boot organisation's vehicles and agents
@@ -100,7 +101,9 @@ void BaseBuyScreen::eventOccurred(Event *e)
 							v.second->homeBuilding = newBuilding;
 							if (v.second->currentBuilding == base->building)
 							{
-								v.second->setMission(*state, VehicleMission::gotoBuilding(*state, *v.second, v.second->homeBuilding));
+								v.second->setMission(
+								    *state, VehicleMission::gotoBuilding(*state, *v.second,
+								                                         v.second->homeBuilding));
 							}
 						}
 						else
@@ -108,9 +111,12 @@ void BaseBuyScreen::eventOccurred(Event *e)
 							v.second->die(*state, nullptr, true);
 						}
 					}
-					else if (v.second->currentBuilding == base->building && v.second->owner != state->getPlayer())
+					else if (v.second->currentBuilding == base->building &&
+					         v.second->owner != state->getPlayer())
 					{
-						v.second->setMission(*state, VehicleMission::gotoBuilding(*state, *v.second, v.second->homeBuilding));
+						v.second->setMission(*state,
+						                     VehicleMission::gotoBuilding(*state, *v.second,
+						                                                  v.second->homeBuilding));
 					}
 				}
 				for (auto &a : state->agents)
@@ -122,7 +128,9 @@ void BaseBuyScreen::eventOccurred(Event *e)
 							a.second->homeBuilding = newBuilding;
 							if (a.second->currentBuilding == base->building)
 							{
-								a.second->setMission(*state, AgentMission::gotoBuilding(*state, *a.second, a.second->homeBuilding));
+								a.second->setMission(
+								    *state, AgentMission::gotoBuilding(*state, *a.second,
+								                                       a.second->homeBuilding));
 							}
 						}
 						else
@@ -130,9 +138,12 @@ void BaseBuyScreen::eventOccurred(Event *e)
 							a.second->die(*state, true);
 						}
 					}
-					else if (a.second->currentBuilding == base->building && a.second->owner != state->getPlayer())
+					else if (a.second->currentBuilding == base->building &&
+					         a.second->owner != state->getPlayer())
 					{
-						a.second->setMission(*state, AgentMission::gotoBuilding(*state, *a.second, a.second->homeBuilding));
+						a.second->setMission(
+						    *state,
+						    AgentMission::gotoBuilding(*state, *a.second, a.second->homeBuilding));
 					}
 				}
 				base->name = "Base " + Strings::fromInteger(state->player_bases.size() + 1);

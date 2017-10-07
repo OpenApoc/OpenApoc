@@ -103,7 +103,7 @@
           <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
         </graphicbutton>
         
-		<label text="Message Toggles">
+		<label id="LIST_NAME">
           <position x="305" y="50"/>
           <font>smalfont</font>
           <size width="270" height="16"/>
@@ -194,17 +194,17 @@
           </label>
 		</checkbox>
         
-		<textbutton text="Give all research" id="BUTTON_GIVE_ALL_RESEARCH">
+		<textbutton text="More options" id="BUTTON_NEXT_LIST">
           <font>smalfont</font>
           <position x="18" y="379"/>
           <size width="259" height="28"/>
         </textbutton>
-        <textbutton id="BUTTON_PLACEHOLDER">
+		<textbutton text="Give all research" id="BUTTON_GIVE_ALL_RESEARCH">
           <font>smalfont</font>
           <position x="18" y="407"/>
           <size width="259" height="28"/>
         </textbutton>
-		<textbutton id="BUTTON_BATTLE">
+        <textbutton id="BUTTON_BATTLE">
           <font>smalfont</font>
           <position x="18" y="435"/>
           <size width="259" height="28"/>

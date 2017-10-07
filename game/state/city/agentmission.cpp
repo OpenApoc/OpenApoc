@@ -5,10 +5,10 @@
 #include "game/state/agent.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/city/building.h"
-#include "game/state/gameevent.h"
 #include "game/state/city/city.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/scenery.h"
+#include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
 #include "game/state/rules/scenery_tile_type.h"
@@ -67,7 +67,7 @@ bool AgentTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, float &co
 	{
 		return false;
 	}
-	
+
 	// Agents can only move to and from scenery
 	sp<Scenery> sceneryFrom = from->intactScenery;
 	sp<Scenery> sceneryTo = to->intactScenery;
@@ -75,14 +75,14 @@ bool AgentTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, float &co
 	{
 		return false;
 	}
-	
+
 	// General passability check
 	int forward = convertDirection(dir);
 	if (!isMoveAllowed(*sceneryFrom, forward) || !isMoveAllowed(*sceneryTo, convertDirection(-dir)))
 	{
 		return false;
 	}
-	
+
 	// If going sideways we can only go:
 	// - into junction or tube
 	// - on subway level
@@ -90,7 +90,7 @@ bool AgentTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, float &co
 	{
 		if (sceneryTo->type->tile_type != SceneryTileType::TileType::PeopleTubeJunction &&
 		    sceneryTo->type->tile_type != SceneryTileType::TileType::PeopleTube &&
-			toPos.z != SUBWAY_HEIGHT_AGENT)
+		    toPos.z != SUBWAY_HEIGHT_AGENT)
 		{
 			return false;
 		}
@@ -367,31 +367,37 @@ void AgentMission::start(GameState &state, Agent &a)
 	{
 		case MissionType::GotoBuilding:
 		{
-			if (teleportCheck(state, a))
-			{
-				return;
-			}
+			// Already there?
 			if ((Vec3<int>)a.position == targetBuilding->crewQuarters)
 			{
 				a.enterBuilding(state, targetBuilding);
 				if (a.recentlyHired)
 				{
-					fw().pushEvent(new GameAgentEvent(GameEventType::AgentArrived, { &state, a.shared_from_this() }));
+					fw().pushEvent(new GameAgentEvent(GameEventType::AgentArrived,
+					                                  {&state, a.shared_from_this()}));
 					a.recentlyHired = false;
 				}
 				if (a.recentryTransferred)
 				{
-					fw().pushEvent(new GameAgentEvent(GameEventType::AgentArrived, { &state, a.shared_from_this() }, true));
+					fw().pushEvent(new GameAgentEvent(GameEventType::AgentArrived,
+					                                  {&state, a.shared_from_this()}, true));
 					a.recentryTransferred = false;
 				}
 				return;
 			}
+			// Can teleport there?
+			if (teleportCheck(state, a))
+			{
+				return;
+			}
+			// Can order a taxi?
 			if (a.currentBuilding && allowTaxi)
 			{
 				allowTaxi = false;
 				a.addMission(state, AgentMission::awaitPickup(state, a, targetBuilding));
 				return;
 			}
+			// Need to path there?
 			if (currentPlannedPath.empty())
 			{
 				this->setPathTo(state, a, this->targetBuilding);
@@ -400,11 +406,13 @@ void AgentMission::start(GameState &state, Agent &a)
 				{
 					if (a.currentBuilding)
 					{
-						fw().pushEvent(new GameAgentEvent(GameEventType::AgentUnableToReach, { &state, a.shared_from_this() }, true));
+						fw().pushEvent(new GameAgentEvent(GameEventType::AgentUnableToReach,
+						                                  {&state, a.shared_from_this()}, true));
 					}
 					else
 					{
-						LogError("Implement agent acting when in the field and unable to path to building");
+						LogError("Implement agent acting when in the field and unable to path to "
+						         "building");
 					}
 				}
 			}

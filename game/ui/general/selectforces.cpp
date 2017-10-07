@@ -258,10 +258,7 @@ void SelectForces::begin() {}
 
 void SelectForces::pause() {}
 
-void SelectForces::resume() 
-{
-	fw().stageQueueCommand({ StageCmd::Command::POP });
-}
+void SelectForces::resume() { fw().stageQueueCommand({StageCmd::Command::POP}); }
 
 void SelectForces::finish() {}
 
@@ -370,10 +367,8 @@ void SelectForces::eventOccurred(Event *e)
 
 			skirmish.goToBattle(
 			    !aliens.empty(), aliens,
-			    !menuform->findControlTyped<CheckBox>("DEFAULT_GUARDS")->isChecked(),
-			                                                                        guards,
-			    !menuform->findControlTyped<CheckBox>("DEFAULT_CIVILIANS")->isChecked(),
-			        civilians);
+			    !menuform->findControlTyped<CheckBox>("DEFAULT_GUARDS")->isChecked(), guards,
+			    !menuform->findControlTyped<CheckBox>("DEFAULT_CIVILIANS")->isChecked(), civilians);
 
 			return;
 		}

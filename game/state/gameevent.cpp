@@ -4,6 +4,7 @@
 #include "game/state/agent.h"
 #include "game/state/base/base.h"
 #include "game/state/battle/battle.h"
+#include "game/state/city/building.h"
 #include "game/state/organisation.h"
 #include "game/state/rules/vehicle_type.h"
 #include "library/strings_format.h"
@@ -143,8 +144,10 @@ UString GameAgentEvent::message()
 				return format("%s %s", tr("New recruit arrived:"), agent->name);
 			}
 		case GameEventType::AgentUnableToReach:
-			return format("%s%s", agent->name, tr(": Unable to reach destination due to damaged people tube network and / or "
-				"poor diplomatic relations with Transtellar."));
+			return format(
+			    "%s%s", agent->name,
+			    tr(": Unable to reach destination due to damaged people tube network and / or "
+			       "poor diplomatic relations with Transtellar."));
 		case GameEventType::HostileSpotted:
 			return format("%s", tr("Hostile unit spotted"));
 		case GameEventType::AgentBrainsucked:
@@ -198,6 +201,8 @@ UString GameBuildingEvent::message()
 	{
 		case GameEventType::AlienSpotted:
 			return tr("Live Alien spotted.");
+		case GameEventType::CargoExpiresSoon:
+			return format("%s %s", tr("Cargo expires soon:"), building->name);
 		default:
 			LogError("Invalid building event type");
 			break;
@@ -211,9 +216,24 @@ UString GameBaseEvent::message()
 	{
 		case GameEventType::AgentRearmed:
 			return tr("Agent(s) rearmed:") + " " + base->name;
+		case GameEventType::CargoExpired:
+			if (actor)
+			{
+				return tr("Cargo expired:") + " " + base->name;
+			}
+			else if (actor == base->building->owner)
+			{
+				return tr("Cargo expired:") + " " + base->name + " " + tr("Returned to base");
+			}
+			else
+			{
+				return tr("Cargo expired:") + " " + base->name + " " +
+				       tr("Refunded by supplier: ") + actor->name;
+			}
 		case GameEventType::CargoArrived:
 			if (actor)
-				return tr("Cargo arrived:") + " " + base->name + " " + tr("Supplier: ") + actor->name;
+				return tr("Cargo arrived:") + " " + base->name + " " + tr("Supplier: ") +
+				       actor->name;
 			else
 			{
 				return tr("Cargo arrived:") + " " + base->name;
@@ -250,7 +270,9 @@ UString GameBattleEvent::message()
 	return "";
 }
 
-GameBaseEvent::GameBaseEvent(GameEventType type, StateRef<Base> base, StateRef<Organisation> actor, bool flag) : GameEvent(type), base(base), actor(actor), flag(flag)
+GameBaseEvent::GameBaseEvent(GameEventType type, StateRef<Base> base, StateRef<Organisation> actor,
+                             bool flag)
+    : GameEvent(type), base(base), actor(actor), flag(flag)
 {
 }
 
@@ -301,9 +323,14 @@ GameDefenseEvent::GameDefenseEvent(GameEventType type, StateRef<Base> base,
 {
 }
 
-GameSomethingDiedEvent::GameSomethingDiedEvent(GameEventType type, UString name, Vec3<int> location) : GameSomethingDiedEvent(type, name, "", location) {}
+GameSomethingDiedEvent::GameSomethingDiedEvent(GameEventType type, UString name, Vec3<int> location)
+    : GameSomethingDiedEvent(type, name, "", location)
+{
+}
 
-GameSomethingDiedEvent::GameSomethingDiedEvent(GameEventType type, UString name, UString actor, Vec3<int> location) : GameEvent(type), location(location)
+GameSomethingDiedEvent::GameSomethingDiedEvent(GameEventType type, UString name, UString actor,
+                                               Vec3<int> location)
+    : GameEvent(type), location(location)
 {
 	switch (type)
 	{
@@ -324,7 +351,7 @@ GameSomethingDiedEvent::GameSomethingDiedEvent(GameEventType type, UString name,
 			if (actor.length() > 0)
 			{
 				messageInner = format("%s %s %s: %s", tr("Vehicle destroyed:"), name,
-					tr("destroyed by"), actor);
+				                      tr("destroyed by"), actor);
 			}
 			else
 			{
@@ -333,8 +360,5 @@ GameSomethingDiedEvent::GameSomethingDiedEvent(GameEventType type, UString name,
 			break;
 	}
 }
-UString GameSomethingDiedEvent::message()
-{
-	return messageInner;
-}
+UString GameSomethingDiedEvent::message() { return messageInner; }
 }

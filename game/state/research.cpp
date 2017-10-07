@@ -234,6 +234,11 @@ int Lab::getTotalSkill() const
 	int totalLabSkill = 0;
 	for (auto &agent : this->assigned_agents)
 	{
+		// Disregard agents not at base
+		if (agent->currentBuilding != agent->homeBuilding)
+		{
+			continue;
+		}
 		switch (this->type)
 		{
 			case ResearchTopic::Type::Physics:
@@ -246,8 +251,8 @@ int Lab::getTotalSkill() const
 				totalLabSkill += agent->current_stats.engineering_skill;
 				break;
 			default:
-				// TODO Workshop 'labs'?
 				LogError("Unexpected lab type");
+				break;
 		}
 	}
 	return totalLabSkill;

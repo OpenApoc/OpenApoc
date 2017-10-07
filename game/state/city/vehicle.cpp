@@ -2,20 +2,23 @@
 #define _USE_MATH_DEFINES
 #endif
 #include "game/state/city/vehicle.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "framework/sound.h"
-#include "game/state/city/building.h"
 #include "game/state/base/base.h"
+#include "game/state/city/agentmission.h"
+#include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/citycommonsamplelist.h"
 #include "game/state/city/projectile.h"
 #include "game/state/city/vehiclemission.h"
-#include "game/state/city/agentmission.h"
 #include "game/state/city/vequipment.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
+#include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/vammo_type.h"
 #include "game/state/rules/vehicle_type.h"
 #include "game/state/rules/vequipment_type.h"
 #include "game/state/tileview/collision.h"
@@ -815,7 +818,7 @@ void Vehicle::setupMover()
 	animationFrame = type->animation_sprites.begin();
 }
 
-void Vehicle::provideService(GameState & state, bool otherOrg)
+void Vehicle::provideService(GameState &state, bool otherOrg)
 {
 	if (!currentBuilding)
 	{
@@ -828,7 +831,7 @@ void Vehicle::provideService(GameState & state, bool otherOrg)
 		provideServicePassengers(state, otherOrg);
 		if (type->provideFreightBio || !otherOrg)
 		{
-			provideServiceCargo(state,true, otherOrg);
+			provideServiceCargo(state, true, otherOrg);
 		}
 		if (type->provideFreightCargo || !otherOrg)
 		{
@@ -852,7 +855,7 @@ void Vehicle::provideService(GameState & state, bool otherOrg)
 	}
 }
 
-void Vehicle::provideServiceCargo(GameState & state, bool bio, bool otherOrg)
+void Vehicle::provideServiceCargo(GameState &state, bool bio, bool otherOrg)
 {
 	StateRef<Building> destination = getServiceDestination(state);
 	int spaceRemaining = bio ? getMaxBio() - getBio() : getMaxCargo() - getCargo();
@@ -872,6 +875,21 @@ void Vehicle::provideServiceCargo(GameState & state, bool bio, bool otherOrg)
 		if (c.destination->owner != owner && !otherOrg)
 		{
 			continue;
+		}
+		// Won't ferry because dislikes
+		if (otherOrg &&
+		    (config().getBool("OpenApoc.NewFeature.FerryChecksRelationshipWhenBuying") ||
+		     c.cost == 0))
+		{
+			if (owner->isRelatedTo(c.destination->owner) == Organisation::Relation::Hostile)
+			{
+				continue;
+			}
+			if (c.originalOwner &&
+			    owner->isRelatedTo(c.originalOwner) == Organisation::Relation::Hostile)
+			{
+				continue;
+			}
 		}
 		// Won't ferry different kind of cargo
 		if ((c.type == Cargo::Type::Bio) != bio)
@@ -903,44 +921,57 @@ void Vehicle::provideServiceCargo(GameState & state, bool bio, bool otherOrg)
 	}
 }
 
-void Vehicle::provideServicePassengers(GameState & state, bool otherOrg)
+void Vehicle::provideServicePassengers(GameState &state, bool otherOrg)
 {
 	StateRef<Building> destination = getServiceDestination(state);
 	int spaceRemaining = getMaxPassengers() - getPassengers();
-	for (auto a : currentBuilding->currentAgents)
+	bool pickedUpPassenger = false;
+	do
 	{
-		// No space left
-		if (spaceRemaining == 0)
+		pickedUpPassenger = false;
+		for (auto a : currentBuilding->currentAgents)
 		{
+			// No space left
+			if (spaceRemaining == 0)
+			{
+				break;
+			}
+			// Agent doesn't want pickup
+			if (a->missions.empty() ||
+			    a->missions.front()->type != AgentMission::MissionType::AwaitPickup)
+			{
+				continue;
+			}
+			// Won't ferry other orgs
+			if (a->missions.front()->targetBuilding->owner != owner && !otherOrg)
+			{
+				continue;
+			}
+			// Won't ferry because dislikes
+			if (otherOrg && owner->isRelatedTo(a->owner) == Organisation::Relation::Hostile)
+			{
+				continue;
+			}
+			// Won't ferry if already picked destination and doesn't match
+			if (destination && a->missions.front()->targetBuilding != destination)
+			{
+				continue;
+			}
+			// Here's where we're going
+			if (!destination)
+			{
+				destination = a->missions.front()->targetBuilding;
+			}
+			// Load up
+			a->enterVehicle(state, {&state, shared_from_this()});
+			spaceRemaining--;
+			pickedUpPassenger = true;
 			break;
 		}
-		// Agent doesn't want pickup
-		if (a->missions.empty() || a->missions.front()->type != AgentMission::MissionType::AwaitPickup)
-		{
-			continue;
-		}
-		// Won't ferry other orgs
-		if (a->missions.front()->targetBuilding->owner != owner && !otherOrg)
-		{
-			continue;
-		}
-		// Won't ferry if already picked destination and doesn't match
-		if (destination && a->missions.front()->targetBuilding != destination)
-		{
-			continue;
-		}
-		// Here's where we're going
-		if (!destination)
-		{
-			destination = a->missions.front()->targetBuilding;
-		}
-		// Load up
-		a->enterVehicle(state, { &state, shared_from_this() });
-		spaceRemaining--;
-	}
+	} while (pickedUpPassenger);
 }
 
-StateRef<Building> Vehicle::getServiceDestination(GameState & state) 
+StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 {
 	bool fromTactical = false;
 	bool agentsArrived = false;
@@ -950,44 +981,52 @@ StateRef<Building> Vehicle::getServiceDestination(GameState & state)
 	bool transferArrived = false;
 	std::set<StateRef<Organisation>> suppliers;
 	StateRef<Building> destination;
-	for (auto &c : cargo)
+
+	// Step 01: Find first cargo destination and remove arrived cargo
+	for (auto it = cargo.begin(); it != cargo.end();)
 	{
-		if (c.destination == currentBuilding)
+		if (it->destination == currentBuilding)
 		{
-			// If no original owner this is loot from tactical
-			if (!c.originalOwner)
+			if (!it->originalOwner)
 			{
 				fromTactical = true;
 			}
-			c.arrive(state, cargoArrived, bioArrived, recoveryArrived, transferArrived, suppliers);
-			continue;
+			it->arrive(state, cargoArrived, bioArrived, recoveryArrived, transferArrived,
+			           suppliers);
+			it = cargo.erase(it);
 		}
-		if (c.count == 0)
+		else
 		{
-			continue;
-		}
-		if (!destination)
-		{
-			destination = c.destination;
+			if (it->count != 0 && !destination)
+			{
+				destination = it->destination;
+			}
+			it++;
 		}
 	}
+	// Step 02: Find first agent destination and remove arrived agents
 	std::list<StateRef<Agent>> agentsToRemove;
 	for (auto a : currentAgents)
 	{
-		if (a->missions.empty() || a->missions.front()->type != AgentMission::MissionType::AwaitPickup)
+		if (a->missions.empty() ||
+		    a->missions.front()->type != AgentMission::MissionType::AwaitPickup)
 		{
 			continue;
 		}
 		if (a->missions.front()->targetBuilding == currentBuilding)
 		{
+			// Clear mission if they're from tactical
+			if (fromTactical)
+			{
+				a->missions.clear();
+			}
+			// Remove agents if they're not from tactical or wounded
 			if (!fromTactical || a->modified_stats.health < a->current_stats.health)
 			{
 				agentsToRemove.push_back(a);
-				agentsArrived = agentsArrived || fromTactical;
 			}
 			else
 			{
-				a->missions.clear();
 				agentsArrived = true;
 			}
 			continue;
@@ -1001,6 +1040,8 @@ StateRef<Building> Vehicle::getServiceDestination(GameState & state)
 	{
 		a->enterBuilding(state, currentBuilding);
 	}
+
+	// Step 03: Arrival events
 	if (agentsArrived)
 	{
 		// Do something if agent arrived from combat mission
@@ -1008,11 +1049,13 @@ StateRef<Building> Vehicle::getServiceDestination(GameState & state)
 	// Transfer
 	if (transferArrived)
 	{
-		fw().pushEvent(new GameBaseEvent(GameEventType::TransferArrived, currentBuilding->base, nullptr, false));
+		fw().pushEvent(new GameBaseEvent(GameEventType::TransferArrived, currentBuilding->base,
+		                                 nullptr, false));
 	}
 	if (bioArrived)
 	{
-		fw().pushEvent(new GameBaseEvent(GameEventType::TransferArrived, currentBuilding->base, nullptr, true));
+		fw().pushEvent(new GameBaseEvent(GameEventType::TransferArrived, currentBuilding->base,
+		                                 nullptr, true));
 	}
 	// Loot
 	if (recoveryArrived)
@@ -1024,7 +1067,8 @@ StateRef<Building> Vehicle::getServiceDestination(GameState & state)
 	{
 		for (auto &o : suppliers)
 		{
-			fw().pushEvent(new GameBaseEvent(GameEventType::CargoArrived, currentBuilding->base, o));
+			fw().pushEvent(
+			    new GameBaseEvent(GameEventType::CargoArrived, currentBuilding->base, o));
 		}
 	}
 	return destination;
@@ -1049,8 +1093,11 @@ void Vehicle::die(GameState &state, StateRef<Vehicle> attacker, bool silent)
 			p->trackedObject = nullptr;
 		}
 	}
-	this->tileObject->removeFromMap();
-	this->tileObject.reset();
+	if (tileObject)
+	{
+		this->tileObject->removeFromMap();
+		this->tileObject.reset();
+	}
 	if (shadowObject)
 	{
 		this->shadowObject->removeFromMap();
@@ -1074,12 +1121,13 @@ void Vehicle::die(GameState &state, StateRef<Vehicle> attacker, bool silent)
 
 	if (!silent && city == state.current_city)
 	{
-		fw().pushEvent(new GameSomethingDiedEvent(GameEventType::VehicleDestroyed, name, attacker ? attacker->name : "", position));
+		fw().pushEvent(new GameSomethingDiedEvent(GameEventType::VehicleDestroyed, name,
+		                                          attacker ? attacker->name : "", position));
 		state.vehicles.erase(id);
 	}
 }
 
-void Vehicle::crash(GameState & state, StateRef<Vehicle> attacker)
+void Vehicle::crash(GameState &state, StateRef<Vehicle> attacker)
 {
 	this->missions.clear();
 	this->missions.emplace_back(VehicleMission::crashLand(state, *this));
@@ -1090,7 +1138,7 @@ void Vehicle::crash(GameState & state, StateRef<Vehicle> attacker)
 	}
 }
 
-void Vehicle::adjustRelationshipOnDowned(GameState & state, StateRef<Vehicle> attacker)
+void Vehicle::adjustRelationshipOnDowned(GameState &state, StateRef<Vehicle> attacker)
 {
 	// If we're hostile to attacker - lose 5 points
 	if (owner->isRelatedTo(attacker->owner) == Organisation::Relation::Hostile)
@@ -1140,10 +1188,7 @@ void Vehicle::adjustRelationshipOnDowned(GameState & state, StateRef<Vehicle> at
 	}
 }
 
-bool Vehicle::isDead() const
-{
-	return health <= 0;
-}
+bool Vehicle::isDead() const { return health <= 0; }
 
 Vec3<float> Vehicle::getMuzzleLocation() const
 {
@@ -1274,7 +1319,7 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	}
 }
 
-void Vehicle::updateCargo(GameState & state)
+void Vehicle::updateCargo(GameState &state)
 {
 	if (isCrashed())
 	{
@@ -1296,7 +1341,8 @@ void Vehicle::updateCargo(GameState & state)
 	{
 		for (auto &a : currentAgents)
 		{
-			if (!a->missions.empty() && a->missions.front()->type == AgentMission::MissionType::AwaitPickup)
+			if (!a->missions.empty() &&
+			    a->missions.front()->type == AgentMission::MissionType::AwaitPickup)
 			{
 				needFerry = true;
 				break;
@@ -1405,7 +1451,8 @@ bool Vehicle::isCrashed() const { return this->health < this->type->crash_health
 { return this->health < this->type->health && this->type->crash_health > 0; }
 */
 
-bool Vehicle::applyDamage(GameState &state, int damage, float armour, StateRef<Vehicle> attacker)
+bool Vehicle::applyDamage(GameState &state, int damage, float armour, bool &soundHandled,
+                          StateRef<Vehicle> attacker)
 {
 	if (this->shield <= damage)
 	{
@@ -1441,6 +1488,7 @@ bool Vehicle::applyDamage(GameState &state, int damage, float armour, StateRef<V
 					adjustRelationshipOnDowned(state, attacker);
 				}
 				die(state, attacker);
+				soundHandled = true;
 				return true;
 			}
 			else if (isCrashed())
@@ -1453,13 +1501,16 @@ bool Vehicle::applyDamage(GameState &state, int damage, float armour, StateRef<V
 	else
 	{
 		this->shield -= damage;
-		fw().soundBackend->playSample(state.city_common_sample_list->shieldHit, position);
-		return true;
+		if (config().getBool("OpenApoc.NewFeature.AlternateVehicleShieldSound"))
+		{
+			fw().soundBackend->playSample(state.city_common_sample_list->shieldHit, position);
+			soundHandled = true;
+		}
 	}
 	return false;
 }
 
-bool Vehicle::handleCollision(GameState &state, Collision &c)
+bool Vehicle::handleCollision(GameState &state, Collision &c, bool &soundHandled)
 {
 	if (!this->tileObject)
 	{
@@ -1506,7 +1557,7 @@ bool Vehicle::handleCollision(GameState &state, Collision &c)
 		}
 
 		return applyDamage(state, randDamage050150(state.rng, projectile->damage), armourValue,
-		                   projectile->firerVehicle);
+		                   soundHandled, projectile->firerVehicle);
 	}
 	return false;
 }
@@ -1588,14 +1639,14 @@ sp<TileObjectProjectile> Vehicle::findClosestHostileMissile(GameState &state,
 		{
 			continue;
 		}
-#ifndef ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE
+#ifndef DEBUG_ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE
 		// Can't fire at friendly projectiles
 		if (projectile->firerVehicle->owner == owner ||
 		    owner->isRelatedTo(projectile->firerVehicle->owner) != Organisation::Relation::Hostile)
 		{
 			continue;
 		}
-#endif // ! ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE
+#endif // ! DEBUG_ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE
 		// Check firing arc
 		if (arc.x < 8 || arc.y < 8)
 		{
@@ -2104,7 +2155,7 @@ int Vehicle::getMaxCargo() const
 }
 
 int Vehicle::getCargo() const
-{ 
+{
 	int cargoAmount = 0;
 	for (auto &c : cargo)
 	{
@@ -2362,7 +2413,41 @@ std::list<std::pair<Vec2<int>, sp<Equipment>>> Vehicle::getEquipment() const
 	return equipmentList;
 }
 
-bool Cargo::checkExpiryDate(GameState & state)
+// FIXME: Implement economy
+Cargo::Cargo(GameState &state, StateRef<AEquipmentType> equipment, int count,
+             StateRef<Organisation> originalOwner, StateRef<Building> destination)
+    : Cargo(state, Type::Agent, equipment.id, count,
+            equipment->type == AEquipmentType::Type::Ammo ? equipment->max_ammo : 1,
+            equipment->store_space, 1, originalOwner, destination)
+{
+}
+
+// FIXME: Implement economy
+Cargo::Cargo(GameState &state, StateRef<VEquipmentType> equipment, int count,
+             StateRef<Organisation> originalOwner, StateRef<Building> destination)
+    : Cargo(state, Type::VehicleEquipment, equipment.id, count, 1, equipment->store_space, 1,
+            originalOwner, destination)
+{
+}
+
+// FIXME: Implement economy
+Cargo::Cargo(GameState &state, StateRef<VAmmoType> equipment, int count,
+             StateRef<Organisation> originalOwner, StateRef<Building> destination)
+    : Cargo(state, Type::VehicleAmmo, equipment.id, count, 1, equipment->store_space, 1,
+            originalOwner, destination)
+{
+}
+
+Cargo::Cargo(GameState &state, Type type, UString id, int count, int multiplier, int space,
+             int cost, StateRef<Organisation> originalOwner, StateRef<Building> destination)
+    : type(type), id(id), count(count), multiplier(multiplier), space(space), cost(cost),
+      originalOwner(originalOwner), destination(destination)
+{
+	suppressEvents = count == 0;
+	expirationDate = state.gameTime.getTicks() + 6 * TICKS_PER_HOUR;
+}
+
+bool Cargo::checkExpiryDate(GameState &state, StateRef<Building> currentBuilding)
 {
 	if (expirationDate == 0)
 	{
@@ -2370,7 +2455,7 @@ bool Cargo::checkExpiryDate(GameState & state)
 	}
 	if (expirationDate < state.gameTime.getTicks())
 	{
-		refund(state);
+		refund(state, currentBuilding);
 		return false;
 	}
 	if (warned)
@@ -2385,21 +2470,44 @@ bool Cargo::checkExpiryDate(GameState & state)
 	return false;
 }
 
-void Cargo::refund(GameState & state)
+void Cargo::refund(GameState &state, StateRef<Building> currentBuilding)
 {
 	if (cost > 0)
 	{
 		destination->owner->balance += cost * count;
-		if (originalOwner)
+		if (!originalOwner)
 		{
-			originalOwner->balance -= cost * count;
+			LogError("Bought cargo from nobody!? WTF?");
+			return;
 		}
-		LogWarning("Implement cargo refund message");
+		originalOwner->balance -= cost * count;
+		if (destination->owner == state.getPlayer())
+		{
+			fw().pushEvent(
+			    new GameBaseEvent(GameEventType::CargoExpired, destination->base, originalOwner));
+		}
+	}
+	else if (currentBuilding && originalOwner == destination->owner)
+	{
+		destination = currentBuilding;
+		if (destination->base && destination->owner == state.getPlayer())
+		{
+			fw().pushEvent(
+			    new GameBaseEvent(GameEventType::CargoExpired, destination->base, originalOwner));
+		}
+		arrive(state);
+	}
+	else
+	{
+		if (destination->base && destination->owner == state.getPlayer())
+		{
+			fw().pushEvent(new GameBaseEvent(GameEventType::CargoExpired, destination->base));
+		}
 	}
 	clear();
 }
 
-void Cargo::arrive(GameState & state)
+void Cargo::arrive(GameState &state)
 {
 	bool cargoArrived;
 	bool bioArrived;
@@ -2409,7 +2517,8 @@ void Cargo::arrive(GameState & state)
 	arrive(state, cargoArrived, bioArrived, recoveryArrived, transferArrived, suppliers);
 }
 
-void Cargo::arrive(GameState & state, bool &cargoArrived, bool &bioArrived, bool &recoveryArrived, bool &transferArrived, std::set<StateRef<Organisation>> &suppliers)
+void Cargo::arrive(GameState &state, bool &cargoArrived, bool &bioArrived, bool &recoveryArrived,
+                   bool &transferArrived, std::set<StateRef<Organisation>> &suppliers)
 {
 	if (count == 0)
 	{
@@ -2456,19 +2565,18 @@ void Cargo::arrive(GameState & state, bool &cargoArrived, bool &bioArrived, bool
 			suppliers.insert(originalOwner);
 		}
 	}
+	destination.clear();
 	count = 0;
 }
 
-void Cargo::seize(GameState & state, StateRef<Organisation> org)
+void Cargo::seize(GameState &state, StateRef<Organisation> org)
 {
 	int worth = cost * count;
-	LogWarning("Implement cargo seize message and adjust relationship accordingly to worth: %d", worth);
+	LogWarning("Implement cargo seize message and adjust relationship accordingly to worth: %d",
+	           worth);
 	clear();
 }
 
-void Cargo::clear()
-{
-	count = 0;
-}
+void Cargo::clear() { count = 0; }
 
 }; // namespace OpenApoc
