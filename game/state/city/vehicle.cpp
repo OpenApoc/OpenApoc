@@ -2444,7 +2444,7 @@ Cargo::Cargo(GameState &state, Type type, UString id, int count, int multiplier,
       originalOwner(originalOwner), destination(destination)
 {
 	suppressEvents = count == 0;
-	expirationDate = state.gameTime.getTicks() + 6 * TICKS_PER_HOUR;
+	expirationDate = state.gameTime.getTicks() + TICKS_CARGO_TTL;
 }
 
 bool Cargo::checkExpiryDate(GameState &state, StateRef<Building> currentBuilding)
@@ -2462,7 +2462,7 @@ bool Cargo::checkExpiryDate(GameState &state, StateRef<Building> currentBuilding
 	{
 		return false;
 	}
-	if (expirationDate - state.gameTime.getTicks() < TICKS_PER_HOUR)
+	if (expirationDate - state.gameTime.getTicks() < TICKS_CARGO_WARNING)
 	{
 		warned = true;
 		return true;
@@ -2497,7 +2497,8 @@ void Cargo::refund(GameState &state, StateRef<Building> currentBuilding)
 		}
 		arrive(state);
 	}
-	else
+	// If no currentBuilding means cargo expired since base destroyed
+	else if (currentBuilding)
 	{
 		if (destination->base && destination->owner == state.getPlayer())
 		{

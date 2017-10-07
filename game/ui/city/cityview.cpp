@@ -1388,7 +1388,7 @@ void CityView::update()
 	// this frame
 	if (this->followVehicle)
 	{
-		if (activeTab == uiTabs[1] && !state->current_city->cityViewSelectedVehicles.empty())
+		if (!state->current_city->cityViewSelectedVehicles.empty())
 		{
 			auto v = state->current_city->cityViewSelectedVehicles.front();
 			if (v->city == state->current_city)
@@ -1396,7 +1396,7 @@ void CityView::update()
 				this->setScreenCenterTile(v->position);
 			}
 		}
-		if (activeTab == uiTabs[2] && !state->current_city->cityViewSelectedAgents.empty())
+		else if (!state->current_city->cityViewSelectedAgents.empty())
 		{
 			auto a = state->current_city->cityViewSelectedAgents.front();
 			if (a->city == state->current_city)

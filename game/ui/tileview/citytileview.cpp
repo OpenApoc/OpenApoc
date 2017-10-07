@@ -32,7 +32,8 @@ CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratT
 	selectedTileImageFront = fw().data->loadImage("city/selected-citytile-front.png");
 	selectedTileImageOffset = {32, 16};
 	pal = fw().data->loadPalette("xcom3/ufodata/pal_01.dat");
-	alertImage = fw().data->loadImage("city/building-circle.png");
+	alertImage = fw().data->loadImage("city/building-circle-red.png");
+	cargoImage = fw().data->loadImage("city/building-circle-yellow.png");
 
 	selectionBrackets.resize(3);
 	selectionBrackets[0].push_back(fw().data->loadImage("city/vehicle-brackets-f0.png"));
@@ -687,32 +688,69 @@ void CityTileView::render()
 			}
 			renderStrategyOverlay(r);
 
-			// Detection
+			// Building selection circles
 			for (auto &b : state.current_city->buildings)
 			{
-				if (!b.second->detected)
+				// Detection of aliens
+				if (b.second->detected)
 				{
-					continue;
-				}
-				float initialRadius = std::max(alertImage->size.x, alertImage->size.y);
-				// Eventually scale to 1/2 the size, but start with some bonus time of full size,
-				// so that it doesn't become distorted immediately, that's why we add extra 0.05
-				float radius = std::min(initialRadius,
-				                        initialRadius * (float)b.second->ticksDetectionTimeOut /
-				                                (float)TICKS_DETECTION_TIMEOUT / 2.0f +
-				                            0.55f);
-				Vec2<float> pos = tileToOffsetScreenCoords(
-				    Vec3<int>{(b.second->bounds.p0.x + b.second->bounds.p1.x) / 2,
-				              (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2});
-				pos -= Vec2<float>{radius / 2.0f, radius / 2.0f};
+					float initialRadius = std::max(alertImage->size.x, alertImage->size.y);
+					// Eventually scale to 1/2 the size, but start with some bonus time of full
+					// size,
+					// so that it doesn't become distorted immediately, that's why we add extra 0.05
+					float radius = std::min(initialRadius,
+					                        initialRadius * (float)b.second->ticksDetectionTimeOut /
+					                                (float)TICKS_DETECTION_TIMEOUT / 2.0f +
+					                            0.55f);
+					Vec2<float> pos = tileToOffsetScreenCoords(
+					    Vec3<int>{(b.second->bounds.p0.x + b.second->bounds.p1.x) / 2,
+					              (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2});
+					pos -= Vec2<float>{radius / 2.0f, radius / 2.0f};
 
-				if (radius == initialRadius)
-				{
-					r.draw(alertImage, pos);
+					if (radius == initialRadius)
+					{
+						r.draw(alertImage, pos);
+					}
+					else
+					{
+						r.drawScaled(alertImage, pos, {radius, radius});
+					}
 				}
-				else
+				// Cargo for player
+				bool hasCargo = false;
+				uint64_t nearestExpiry = UINT64_MAX;
+				for (auto &c : b.second->cargo)
 				{
-					r.drawScaled(alertImage, pos, {radius, radius});
+					if (c.count > 0 && c.destination->owner == state.getPlayer())
+					{
+						hasCargo = true;
+						nearestExpiry = std::min(nearestExpiry, c.expirationDate);
+					}
+				}
+				if (hasCargo)
+				{
+					nearestExpiry -= state.gameTime.getTicks();
+					float initialRadius = std::max(cargoImage->size.x, cargoImage->size.y);
+					// Eventually scale to 1/2 the size, but start with some bonus time of full
+					// size,
+					// so that it doesn't become distorted immediately, that's why we add extra 0.05
+					float radius = std::min(initialRadius,
+					                        initialRadius * (float)nearestExpiry /
+					                                (float)TICKS_CARGO_TTL / 2.0f +
+					                            0.55f);
+					Vec2<float> pos = tileToOffsetScreenCoords(
+					    Vec3<int>{(b.second->bounds.p0.x + b.second->bounds.p1.x) / 2,
+					              (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2});
+					pos -= Vec2<float>{radius / 2.0f, radius / 2.0f};
+
+					if (radius == initialRadius)
+					{
+						r.draw(cargoImage, pos);
+					}
+					else
+					{
+						r.drawScaled(cargoImage, pos, {radius, radius});
+					}
 				}
 			}
 

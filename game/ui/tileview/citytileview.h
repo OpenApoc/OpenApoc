@@ -16,6 +16,7 @@ class CityTileView : public TileView
   private:
 	std::vector<std::vector<sp<Image>>> selectionBrackets;
 	sp<Image> alertImage;
+	sp<Image> cargoImage;
 	sp<Image> targetTacticalThisLevel;
 	sp<Image> selectionImageFriendlySmall;
 	sp<Image> selectionImageFriendlyLarge;

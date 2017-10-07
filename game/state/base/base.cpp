@@ -46,8 +46,6 @@ void Base::die(GameState &state, bool collapse)
 	fw().pushEvent(new GameSomethingDiedEvent(
 	    GameEventType::BaseDestroyed, name,
 	    collapse ? /*by collapsing building*/ "" : "byEnemyForces", building->crewQuarters));
-	building->base.clear();
-	building->owner = state.getGovernment();
 	for (auto &b : building->city->buildings)
 	{
 		for (auto &c : b.second->cargo)
@@ -64,7 +62,24 @@ void Base::die(GameState &state, bool collapse)
 		{
 			if (c.destination == building)
 			{
-				c.refund(state, nullptr);
+				// This is base transfer in progress
+				if (c.originalOwner == c.destination->owner)
+				{
+					// Re-route to another base
+					for (auto &b : state.player_bases)
+					{
+						if (b.second->building = building)
+						{
+							continue;
+						}
+						c.destination = b.second->building;
+						break;
+					}
+				}
+				else
+				{
+					c.refund(state, nullptr);
+				}
 			}
 		}
 	}
@@ -76,6 +91,8 @@ void Base::die(GameState &state, bool collapse)
 	{
 		v->die(state, nullptr, true);
 	}
+	building->base.clear();
+	building->owner = state.getGovernment();
 	building.clear();
 
 	state.player_bases.erase(Base::getId(state, shared_from_this()));
