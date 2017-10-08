@@ -535,4 +535,25 @@
       </research>
     </value>
   </entry>
+  <entry>
+	<key>AEQUIPMENTTYPE_OVERSPAWN_DEAD</key>
+	<value>
+		<name>Dead Overspawn</name>
+		<equipscreen_sprite>PCK:xcom3/ufodata/contico.pck:xcom3/ufodata/contico.tab:7:xcom3/ufodata/research.pcx</equipscreen_sprite>
+		<equipscreen_size><x>5</x><y>5</y></equipscreen_size>
+		<store_space>20</store_space>
+		<bioStorage>true</bioStorage>
+	</value>
+  </entry>
+  <entry>
+	<key>AEQUIPMENTTYPE_OVERSPAWN_ALIVE</key>
+	<value>
+	<name>Live Overspawn</name>
+	<equipscreen_sprite>PCK:xcom3/ufodata/contico.pck:xcom3/ufodata/contico.tab:7:xcom3/ufodata/research.pcx</equipscreen_sprite>
+	<equipscreen_size><x>5</x><y>5</y></equipscreen_size>
+	<store_space>20</store_space>
+	<bioStorage>true</bioStorage>
+	<bioRemains>AEQUIPMENTTYPE_OVERSPAWN_DEAD</bioRemains>
+	</value>
+  </entry>
 </agent_equipment>

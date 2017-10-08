@@ -1805,9 +1805,12 @@ bool CityView::handleGameStateEvent(Event *e)
 			case GameEventType::AlienSpotted:
 			case GameEventType::AlienTakeover:
 			case GameEventType::UfoCrashed:
-			case GameEventType::UfoRecoverySuccess:
-			case GameEventType::UfoRecoveryFailure:
 			case GameEventType::UfoRecoveryUnmanned:
+			case GameEventType::MissionCompletedBase:
+			case GameEventType::MissionCompletedBuildingAlien:
+			case GameEventType::MissionCompletedBuildingNormal:
+			case GameEventType::MissionCompletedBuildingRaid:
+			case GameEventType::MissionCompletedVehicle:
 			{
 				// Never pause for these
 				break;
@@ -1867,11 +1870,13 @@ bool CityView::handleGameStateEvent(Event *e)
 			}
 			break;
 		}
-		case GameEventType::UfoRecoveryFailure:
-		case GameEventType::UfoRecoverySuccess:
 		case GameEventType::UfoRecoveryUnmanned:
 		{
 			auto gameRecoveryEvent = dynamic_cast<GameVehicleEvent *>(e);
+			LogWarning("Load unmanned ufo loot on craft!");
+			// Remove ufo
+			gameRecoveryEvent->vehicle->die(*state, nullptr, true);
+			// Return to base
 			gameRecoveryEvent->actor->setMission(
 			    *state, VehicleMission::gotoBuilding(*state, *gameRecoveryEvent->actor,
 			                                         gameRecoveryEvent->actor->homeBuilding));
@@ -2000,16 +2005,16 @@ bool CityView::handleGameStateEvent(Event *e)
 			switch (ev->topic->item_type)
 			{
 				case ResearchTopic::ItemType::VehicleEquipment:
-					item_name = game_state->vehicle_equipment[ev->topic->item_produced]->name;
+					item_name = game_state->vehicle_equipment[ev->topic->itemId]->name;
 					break;
 				case ResearchTopic::ItemType::VehicleEquipmentAmmo:
-					item_name = game_state->vehicle_ammo[ev->topic->item_produced]->name;
+					item_name = game_state->vehicle_ammo[ev->topic->itemId]->name;
 					break;
 				case ResearchTopic::ItemType::AgentEquipment:
-					item_name = game_state->agent_equipment[ev->topic->item_produced]->name;
+					item_name = game_state->agent_equipment[ev->topic->itemId]->name;
 					break;
 				case ResearchTopic::ItemType::Craft:
-					item_name = game_state->vehicle_types[ev->topic->item_produced]->name;
+					item_name = game_state->vehicle_types[ev->topic->itemId]->name;
 					break;
 			}
 			auto message_box = mksp<MessageBox>(
@@ -2058,16 +2063,16 @@ bool CityView::handleGameStateEvent(Event *e)
 			switch (ev->topic->item_type)
 			{
 				case ResearchTopic::ItemType::VehicleEquipment:
-					item_name = game_state->vehicle_equipment[ev->topic->item_produced]->name;
+					item_name = game_state->vehicle_equipment[ev->topic->itemId]->name;
 					break;
 				case ResearchTopic::ItemType::VehicleEquipmentAmmo:
-					item_name = game_state->vehicle_ammo[ev->topic->item_produced]->name;
+					item_name = game_state->vehicle_ammo[ev->topic->itemId]->name;
 					break;
 				case ResearchTopic::ItemType::AgentEquipment:
-					item_name = game_state->agent_equipment[ev->topic->item_produced]->name;
+					item_name = game_state->agent_equipment[ev->topic->itemId]->name;
 					break;
 				case ResearchTopic::ItemType::Craft:
-					item_name = game_state->vehicles[ev->topic->item_produced]->name;
+					item_name = game_state->vehicles[ev->topic->itemId]->name;
 					break;
 			}
 			auto message_box =

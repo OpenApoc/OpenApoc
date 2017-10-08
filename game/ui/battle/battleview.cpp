@@ -2252,7 +2252,7 @@ void BattleView::updatePathPreview()
 	    (float)lastSelectedUnit->agent->modified_stats.time_units * 2 / cost_multiplier_x_2;
 	pathPreview = map.findShortestPath(lastSelectedUnit->goalPosition, target, 1000,
 	                                   BattleUnitTileHelper{map, *lastSelectedUnit}, false, false,
-	                                   false, &cost, maxCost);
+	                                   true, false, &cost, maxCost);
 	if (pathPreview.empty())
 	{
 		LogError("Empty path returned for path preview!?");

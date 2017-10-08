@@ -74,12 +74,12 @@ std::list<std::pair<UString, UString>> openApocList = {
     {"OpenApoc.NewFeature.Fully3DExplosions", "Fully 3D explosions"},
     {"OpenApoc.NewFeature.InstantExplosionDamage", "Explosions deal damage instantly"},
     {"OpenApoc.NewFeature.GravliftSounds", "Gravlift sounds"},
-    {"OpenApoc.NewFeature.NoInstantThrows", "Throwing requires standing upright"},
+    {"OpenApoc.NewFeature.NoInstantThrows", "Throwing requires proper facing and pose"},
     {"OpenApoc.NewFeature.PayloadExplosion", "Ammunition explodes when blown up"},
     {"OpenApoc.NewFeature.DisplayUnitPaths", "Display unit paths in battle"},
     {"OpenApoc.NewFeature.AdditionalUnitIcons", "Display additional unit icons (fatal, psi)"},
     {"OpenApoc.NewFeature.AllowForceFiringParallel", "Allow force-firing parallel to the ground"},
-    {"OpenApoc.NewFeature.RequireLOSToMaintainPsi", "(NYI) Require LOS to maintain psi attack"},
+    {"OpenApoc.NewFeature.RequireLOSToMaintainPsi", "(N) Require LOS to maintain psi attack"},
     {"OpenApoc.NewFeature.AllowUnloadingClips", "Allow manually unloading clips from weapons"},
     {"OpenApoc.NewFeature.EnableAgentTemplates", "Enable agent equipment templates"},
     {"OpenApoc.NewFeature.FerryChecksRelationshipWhenBuying",
@@ -91,15 +91,13 @@ std::list<std::pair<UString, UString>> openApocList = {
     {"OpenApoc.NewFeature.CallExistingFerry", "Call existing transport instead of spawning them"},
     {"OpenApoc.NewFeature.AlternateVehicleShieldSound", "Alternate vehicle shield hit SFX"},
     {"OpenApoc.NewFeature.StoreDroppedEquipment",
-     "(N) Attempt to recover agent equipment dropped in city"},
+     "Attempt to recover agent equipment dropped in city"},
     {"OpenApoc.NewFeature.AbsorbingVehicles",
      "(N) Ground vehicles absorb damage dealt to roads under them"},
     {"OpenApoc.NewFeature.RecoverGroundVehicles", "(N) Allow recovery of crashed ground vehicles"},
     {"OpenApoc.NewFeature.EnforceCargoLimits", "(N) Enforce vehicle cargo limits"},
-    {"OpenApoc.NewFeature.AllowNearbyVehicleLootPickup",
-     "(N) Allow nearby vehicles to pick up loot"},
-    {"OpenApoc.NewFeature.AllowBuildingLootDeposit",
-     "(N) Allow loot to be stashed in the building"},
+    {"OpenApoc.NewFeature.AllowNearbyVehicleLootPickup", "Allow nearby vehicles to pick up loot"},
+    {"OpenApoc.NewFeature.AllowBuildingLootDeposit", "Allow loot to be stashed in the building"},
     {"OpenApoc.Mod.ArmoredRoads", "(M)(N) Armored roads"},
     {"OpenApoc.Mod.InvulnerableRoads", "(M)(N) Invulnerable roads"},
     {"OpenApoc.Mod.ATVTank", "(M)(N) Griffon becomes an All-Terrain Vehicle"},
@@ -291,6 +289,7 @@ void InGameOptions::eventOccurred(Event *e)
 				}
 
 				{
+					topic->started = true;
 					topic->man_hours_progress = topic->man_hours;
 					LogWarning("Topic \"%s\" marked as complete", r.first);
 				}
@@ -315,7 +314,7 @@ void InGameOptions::eventOccurred(Event *e)
 					                                              mksp<BattleDebriefing>(state)});
 					                  })});
 			}
-
+			else
 			{
 				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<Skirmish>(state)});
 			}

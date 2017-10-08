@@ -455,49 +455,6 @@ void CityTileView::render()
 
 										if (friendly)
 										{
-											for (auto &m : v->missions)
-											{
-												if (m->type == VehicleMission::MissionType::
-												                   AttackVehicle ||
-												    m->type ==
-												        VehicleMission::MissionType::FollowVehicle)
-												{
-													targetLocationsToDraw.emplace_back(
-													    m->targetVehicle->position, v->position,
-													    false);
-													vehiclesUnderAttack.insert(m->targetVehicle);
-													break;
-												}
-												if ((m->type == VehicleMission::MissionType::
-												                    AttackBuilding ||
-												     m->type ==
-												         VehicleMission::MissionType::Crash ||
-												     m->type == VehicleMission::MissionType::
-												                    GotoBuilding) &&
-												    !m->currentPlannedPath.empty())
-												{
-													targetLocationsToDraw.emplace_back(
-													    (Vec3<float>)m->currentPlannedPath.back() +
-													        Vec3<float>{0.5f, 0.5f, 0.0f},
-													    v->position, true);
-													break;
-												}
-												if ((m->type == VehicleMission::MissionType::
-												                    GotoLocation ||
-												     m->type == VehicleMission::MissionType::
-												                    InfiltrateSubvert ||
-												     m->type ==
-												         VehicleMission::MissionType::Patrol ||
-												     m->type ==
-												         VehicleMission::MissionType::GotoPortal))
-												{
-													targetLocationsToDraw.emplace_back(
-													    (Vec3<float>)m->targetLocation +
-													        Vec3<float>{0.5f, 0.5f, 0.0f},
-													    v->position, true);
-													break;
-												}
-											}
 										}
 										vehiclesToDraw.emplace_back(
 										    v, friendly, hostile,
@@ -549,8 +506,7 @@ void CityTileView::render()
 			// Compile list of vehicle destinations and add to draw for those that are in buildings
 			for (auto &v : state.vehicles)
 			{
-				if (v.second->owner != state.getPlayer() || v.second->city != state.current_city ||
-				    !v.second->currentBuilding)
+				if (v.second->owner != state.getPlayer() || v.second->city != state.current_city)
 				{
 					continue;
 				}
@@ -559,13 +515,19 @@ void CityTileView::render()
 				              state.current_city->cityViewSelectedVehicles.end(),
 				              v.second) != state.current_city->cityViewSelectedVehicles.end();
 
-				vehiclesToDraw.emplace_back(
-				    v.second, true, false,
-				    selected
-				        ? (v.second->type->mapIconType == VehicleType::MapIconType::LargeCircle ? 2
-				                                                                                : 1)
-				        : 0);
+				// Draw those in buildings
+				if (v.second->currentBuilding)
+				{
+					vehiclesToDraw.emplace_back(
+					    v.second, true, false,
+					    selected
+					        ? (v.second->type->mapIconType == VehicleType::MapIconType::LargeCircle
+					               ? 2
+					               : 1)
+					        : 0);
+				}
 
+				// Destinations
 				for (auto &m : v.second->missions)
 				{
 					for (auto &m : v.second->missions)

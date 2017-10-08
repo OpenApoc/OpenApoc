@@ -30,12 +30,12 @@ class AgentTileHelper : public CanEnterTileHelper
 	AgentTileHelper(TileMap &map);
 
 	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
-	                  bool ignoreAllUnits = false) const override;
+	                  bool ignoreMovingUnits = true, bool ignoreAllUnits = false) const override;
 
 	float pathOverheadAlloawnce() const override;
 
 	// Support 'from' being nullptr for if a vehicle is being spawned in the map
-	bool canEnterTile(Tile *from, Tile *to, bool, bool &, float &cost, bool &, bool,
+	bool canEnterTile(Tile *from, Tile *to, bool, bool &, float &cost, bool &, bool, bool,
 	                  bool) const override;
 
 	float getDistance(Vec3<float> from, Vec3<float> to) const override;

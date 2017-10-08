@@ -93,6 +93,7 @@ void Base::die(GameState &state, bool collapse)
 	}
 	building->base.clear();
 	building->owner = state.getGovernment();
+	building->collapse(state);
 	building.clear();
 
 	state.player_bases.erase(Base::getId(state, shared_from_this()));

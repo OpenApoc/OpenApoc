@@ -66,6 +66,10 @@ UString GameEvent::message()
 {
 	switch (type)
 	{
+		case GameEventType::MissionCompletedBuildingAlien:
+			return tr("Mission completed in Alien building.");
+		case GameEventType::MissionCompletedVehicle:
+			return tr("X-COM returning from UFO mission.");
 		case GameEventType::BuildingDisabled:
 			return tr("Building has been disabled");
 		default:
@@ -84,10 +88,6 @@ UString GameVehicleEvent::message()
 			return format("%s %s", tr("UFO crash landed:"), vehicle->name);
 		case GameEventType::UfoRecoveryUnmanned:
 			return format("%s %s", tr("Unmanned UFO recovered:"), vehicle->name);
-		case GameEventType::UfoRecoverySuccess:
-			return format("%s", tr("X-COM returning from UFO mission."));
-		case GameEventType::UfoRecoveryFailure:
-			return format("%s", tr("X-COM returning from UFO mission."));
 		case GameEventType::UfoRecoveryBegin:
 			return "";
 		case GameEventType::VehicleLightDamage:
@@ -199,6 +199,10 @@ UString GameBuildingEvent::message()
 {
 	switch (type)
 	{
+		case GameEventType::MissionCompletedBuildingNormal:
+			return format("%s %s", tr("X-COM returning from mission at:"), building->name);
+		case GameEventType::MissionCompletedBuildingRaid:
+			return format("%s %s", tr("X-COM returning from raid at:"), building->name);
 		case GameEventType::AlienSpotted:
 			return tr("Live Alien spotted.");
 		case GameEventType::CargoExpiresSoon:
@@ -249,6 +253,9 @@ UString GameBaseEvent::message()
 			}
 		case GameEventType::RecoveryArrived:
 			return tr("Items from tactical combat zone have arrived:") + " " + base->name;
+		case GameEventType::MissionCompletedBase:
+			return tr("Base mission completed at:") + " " + base->name;
+
 		default:
 			LogError("Invalid event type");
 			break;

@@ -37,13 +37,13 @@ class BattleUnitTileHelper : public CanEnterTileHelper
 	float getDistance(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd) const override;
 
 	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
-	                  bool ignoreAllUnits = false) const override;
+	                  bool ignoreMovingUnits = true, bool ignoreAllUnits = false) const override;
 	// Alexey Andronov:
 	// This huge function figures out wether unit can go from one tile to another
 	// It's huge but I see no way to split it
 	bool canEnterTile(Tile *from, Tile *to, bool allowJumping, bool &jumped, float &cost,
 	                  bool &doorInTheWay, bool ignoreStaticUnits = false,
-	                  bool ignoreAllUnits = false) const override;
+	                  bool ignoreMovingUnits = true, bool ignoreAllUnits = false) const override;
 
 	float pathOverheadAlloawnce() const override { return 1.25f; }
 
@@ -171,6 +171,8 @@ class BattleUnitMission
 	bool allowSkipNodes = false;
 	// Unit will ignore static non-large units when pathfinding
 	bool demandGiveWay = false;
+	// Unit will path around moving units as it is blocked by one
+	bool blockedByMovingUnit = false;
 	// Unit paid for movement before turning and will be refunded when actually moving
 	int costPaidUpFront = 0;
 

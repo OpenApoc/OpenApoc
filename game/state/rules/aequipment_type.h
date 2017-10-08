@@ -86,6 +86,11 @@ class AEquipmentType : public StateObject
 	// Wether item is carried two-handed (for display purposes)
 	bool two_handed = false;
 
+	// Item goes to alien containment
+	bool bioStorage = false;
+	// Item that remains after this is researched
+	StateRef<AEquipmentType> bioRemains;
+
 	// True = when fired from weapon will throw ammunition to target location instead of firing
 	// properly
 	bool launcher = false;

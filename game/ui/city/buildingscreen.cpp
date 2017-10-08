@@ -143,41 +143,39 @@ void BuildingScreen::eventOccurred(Event *e)
 					}
 					if (!foundAlien)
 					{
-						LogWarning("Implement proper disposition decrease when XCOM fails an "
-						           "extermination attempt");
-
 						UString message = "You have not found any Aliens in this building.";
 						if (building->owner != state->getPlayer())
 						{
-							building->owner->adjustRelationTo(*state, state->getPlayer(), -10);
-							switch (building->owner->isRelatedTo(state->getPlayer()))
+							auto priorRelationship =
+							    building->owner->isRelatedTo(state->getPlayer());
+							building->owner->adjustRelationTo(*state, state->getPlayer(),
+							                                  -5 - state->difficulty);
+							auto newRelationship = building->owner->isRelatedTo(state->getPlayer());
+							if (newRelationship != priorRelationship &&
+							    newRelationship == Organisation::Relation::Unfriendly)
 							{
-								case Organisation::Relation::Allied:
-								case Organisation::Relation::Friendly:
-								case Organisation::Relation::Neutral:
-									message = "You have not found any Aliens in this building. "
-									          "As a consequence of your "
-									          "unwelcome intrusion the owner of the building is "
-									          "less favorably disposed "
-									          "towards X-Com.";
-									break;
-								case Organisation::Relation::Unfriendly:
-									message = "You have not found any Aliens in this building. As "
-									          "a consequence of your "
-									          "unwelcome intrusion the owner of the building has "
-									          "now become unfriendly "
-									          "towards X-Com.";
-									break;
-								case Organisation::Relation::Hostile:
-									message = "You have not found any Aliens in this building. As "
-									          "a consequence of your "
-									          "unwelcome intrusion the owner of the building has "
-									          "now become hostile towards"
-									          " X-Com.";
-									break;
-								default:
-									LogError("Unhandled relationship enum!?");
-									return;
+								message = "You have not found any Aliens in this building. As "
+								          "a consequence of your "
+								          "unwelcome intrusion the owner of the building has "
+								          "now become unfriendly "
+								          "towards X-Com.";
+							}
+							else if (newRelationship != priorRelationship &&
+							         newRelationship == Organisation::Relation::Hostile)
+							{
+								message = "You have not found any Aliens in this building. As "
+								          "a consequence of your "
+								          "unwelcome intrusion the owner of the building has "
+								          "now become hostile towards"
+								          " X-Com.";
+							}
+							else
+							{
+								message = "You have not found any Aliens in this building. "
+								          "As a consequence of your "
+								          "unwelcome intrusion the owner of the building is "
+								          "less favorably disposed "
+								          "towards X-Com.";
 							}
 						}
 						fw().stageQueueCommand(

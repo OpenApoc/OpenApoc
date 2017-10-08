@@ -456,25 +456,16 @@ class FlyingVehicleMover : public VehicleMover
 			// Request new goal
 			if (vehicle.position == vehicle.goalPosition && vehicle.facing == vehicle.goalFacing)
 			{
-				while (!vehicle.missions.empty() &&
-				       vehicle.missions.front()->isFinished(state, this->vehicle))
-				{
-					LogInfo("Vehicle mission \"%s\" finished", vehicle.missions.front()->getName());
-					vehicle.missions.pop_front();
-					if (!vehicle.missions.empty())
-					{
-						LogInfo("Vehicle mission \"%s\" starting",
-						        vehicle.missions.front()->getName());
-						vehicle.missions.front()->start(state, this->vehicle);
-					}
-				}
+				vehicle.popFinishedMissions(state);
 				// Vehicle is considered idle if at goal even if there's more missions to do
 				updateIdle(state);
 				// Get new goal from mission
-				if (vehicle.missions.empty() ||
-				    !vehicle.missions.front()->getNextDestination(
-				        state, this->vehicle, vehicle.goalPosition, vehicle.goalFacing))
+				if (!vehicle.getNewGoal(state))
 				{
+					if (vehicle.tileObject)
+					{
+						return;
+					}
 					break;
 				}
 				float speed = vehicle.getSpeed();
@@ -650,27 +641,16 @@ class GroundVehicleMover : public VehicleMover
 				}
 				else
 				{
-
-					while (!vehicle.missions.empty() &&
-					       vehicle.missions.front()->isFinished(state, this->vehicle))
-					{
-						LogInfo("Vehicle mission \"%s\" finished",
-						        vehicle.missions.front()->getName());
-						vehicle.missions.pop_front();
-						if (!vehicle.missions.empty())
-						{
-							LogInfo("Vehicle mission \"%s\" starting",
-							        vehicle.missions.front()->getName());
-							vehicle.missions.front()->start(state, this->vehicle);
-						}
-					}
+					vehicle.popFinishedMissions(state);
 					// Vehicle is considered idle if at goal even if there's more missions to do
 					updateIdle(state);
 					// Get new goal from mission
-					if (vehicle.missions.empty() ||
-					    !vehicle.missions.front()->getNextDestination(
-					        state, this->vehicle, vehicle.goalPosition, vehicle.goalFacing))
+					if (!vehicle.getNewGoal(state))
 					{
+						if (vehicle.tileObject)
+						{
+							return;
+						}
 						break;
 					}
 				}
@@ -770,7 +750,6 @@ void Vehicle::leaveBuilding(GameState &state, Vec3<float> initialPosition, float
 	this->goalPosition = initialPosition;
 	this->facing = initialFacing;
 	this->goalFacing = initialFacing;
-	this->setupMover();
 	city->map->addObjectToMap(shared_from_this());
 }
 
@@ -902,7 +881,7 @@ void Vehicle::provideServiceCargo(GameState &state, bool bio, bool otherOrg)
 			continue;
 		}
 		// How much can we pick up
-		int maxAmount = std::min(spaceRemaining / c.space, c.count);
+		int maxAmount = std::min(spaceRemaining / c.space * c.divisor, c.count);
 		if (maxAmount == 0)
 		{
 			continue;
@@ -917,7 +896,7 @@ void Vehicle::provideServiceCargo(GameState &state, bool bio, bool otherOrg)
 		newCargo.count = maxAmount;
 		c.count -= maxAmount;
 		cargo.push_back(newCargo);
-		spaceRemaining -= maxAmount * c.space;
+		spaceRemaining -= maxAmount * c.space / c.divisor;
 	}
 }
 
@@ -1008,6 +987,13 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 	std::list<StateRef<Agent>> agentsToRemove;
 	for (auto a : currentAgents)
 	{
+		// Remove agents if wounded and this is their home base
+		if (a->modified_stats.health < a->current_stats.health &&
+		    a->homeBuilding == currentBuilding)
+		{
+			agentsToRemove.push_back(a);
+		}
+		// Skip agents that are just on this craft without a mission
 		if (a->missions.empty() ||
 		    a->missions.front()->type != AgentMission::MissionType::AwaitPickup)
 		{
@@ -1015,20 +1001,7 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 		}
 		if (a->missions.front()->targetBuilding == currentBuilding)
 		{
-			// Clear mission if they're from tactical
-			if (fromTactical)
-			{
-				a->missions.clear();
-			}
-			// Remove agents if they're not from tactical or wounded
-			if (!fromTactical || a->modified_stats.health < a->current_stats.health)
-			{
-				agentsToRemove.push_back(a);
-			}
-			else
-			{
-				agentsArrived = true;
-			}
+			agentsToRemove.push_back(a);
 			continue;
 		}
 		if (!destination)
@@ -1042,10 +1015,6 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 	}
 
 	// Step 03: Arrival events
-	if (agentsArrived)
-	{
-		// Do something if agent arrived from combat mission
-	}
 	// Transfer
 	if (transferArrived)
 	{
@@ -1103,7 +1072,6 @@ void Vehicle::die(GameState &state, StateRef<Vehicle> attacker, bool silent)
 		this->shadowObject->removeFromMap();
 		this->shadowObject.reset();
 	}
-	this->mover = nullptr;
 
 	while (!currentAgents.empty())
 	{
@@ -1228,22 +1196,7 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	{
 		this->missions.front()->update(state, *this, ticks);
 	}
-	while (!this->missions.empty() && this->missions.front()->isFinished(state, *this))
-	{
-		LogInfo("Vehicle mission \"%s\" finished", this->missions.front()->getName());
-		this->missions.pop_front();
-		if (!this->missions.empty())
-		{
-			LogInfo("Vehicle mission \"%s\" starting", this->missions.front()->getName());
-			this->missions.front()->start(state, *this);
-			continue;
-		}
-		else
-		{
-			LogInfo("No next vehicle mission, going idle");
-			break;
-		}
-	}
+	popFinishedMissions(state);
 
 	if (this->type->type == VehicleType::Type::UFO && this->missions.empty())
 	{
@@ -1930,6 +1883,49 @@ bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 	return true;
 }
 
+bool Vehicle::popFinishedMissions(GameState &state)
+{
+	bool popped = false;
+	while (missions.size() > 0 && missions.front()->isFinished(state, *this))
+	{
+		LogWarning("Vehicle %s mission \"%s\" finished", name, missions.front()->getName());
+		missions.pop_front();
+		popped = true;
+		if (!missions.empty())
+		{
+			LogWarning("Vehicle %s mission \"%s\" starting", name, missions.front()->getName());
+			missions.front()->start(state, *this);
+			continue;
+		}
+		else
+		{
+			LogWarning("No next vehicle mission, going idle");
+			break;
+		}
+	}
+	return popped;
+}
+
+bool Vehicle::getNewGoal(GameState &state)
+{
+	bool popped = false;
+	bool acquired = false;
+	Vec3<float> nextGoal;
+	// Pop finished missions if present
+	popped = popFinishedMissions(state);
+	do
+	{
+		// Try to get new destination
+		if (!missions.empty())
+		{
+			acquired = missions.front()->getNextDestination(state, *this, goalPosition, goalFacing);
+		}
+		// Pop finished missions if present
+		popped = popFinishedMissions(state);
+	} while (popped && !acquired);
+	return acquired;
+}
+
 float Vehicle::getSpeed() const
 {
 	// FIXME: This is somehow modulated by weight?
@@ -2163,7 +2159,7 @@ int Vehicle::getCargo() const
 		{
 			continue;
 		}
-		cargoAmount += c.count * c.space;
+		cargoAmount += c.count * c.space / c.divisor;
 	}
 	return cargoAmount;
 }
@@ -2416,7 +2412,7 @@ std::list<std::pair<Vec2<int>, sp<Equipment>>> Vehicle::getEquipment() const
 // FIXME: Implement economy
 Cargo::Cargo(GameState &state, StateRef<AEquipmentType> equipment, int count,
              StateRef<Organisation> originalOwner, StateRef<Building> destination)
-    : Cargo(state, Type::Agent, equipment.id, count,
+    : Cargo(state, equipment->bioStorage ? Type::Bio : Type::Agent, equipment.id, count,
             equipment->type == AEquipmentType::Type::Ammo ? equipment->max_ammo : 1,
             equipment->store_space, 1, originalOwner, destination)
 {
@@ -2438,9 +2434,9 @@ Cargo::Cargo(GameState &state, StateRef<VAmmoType> equipment, int count,
 {
 }
 
-Cargo::Cargo(GameState &state, Type type, UString id, int count, int multiplier, int space,
-             int cost, StateRef<Organisation> originalOwner, StateRef<Building> destination)
-    : type(type), id(id), count(count), multiplier(multiplier), space(space), cost(cost),
+Cargo::Cargo(GameState &state, Type type, UString id, int count, int divisor, int space, int cost,
+             StateRef<Organisation> originalOwner, StateRef<Building> destination)
+    : type(type), id(id), count(count), divisor(divisor), space(space), cost(cost),
       originalOwner(originalOwner), destination(destination)
 {
 	suppressEvents = count == 0;
@@ -2530,16 +2526,16 @@ void Cargo::arrive(GameState &state, bool &cargoArrived, bool &bioArrived, bool 
 		switch (type)
 		{
 			case Type::Bio:
-				LogError("Implement bio cargo arrival");
+				destination->base->inventoryBioEquipment[id] += count;
 				break;
 			case Type::Agent:
-				destination->base->inventoryAgentEquipment[id] += count * multiplier;
+				destination->base->inventoryAgentEquipment[id] += count;
 				break;
 			case Type::VehicleAmmo:
-				destination->base->inventoryVehicleAmmo[id] += count * multiplier;
+				destination->base->inventoryVehicleAmmo[id] += count;
 				break;
 			case Type::VehicleEquipment:
-				destination->base->inventoryVehicleEquipment[id] += count * multiplier;
+				destination->base->inventoryVehicleEquipment[id] += count;
 				break;
 		}
 		// Transfer

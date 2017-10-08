@@ -333,6 +333,7 @@ sp<Vehicle> City::placeVehicle(GameState &state, StateRef<VehicleType> type,
 	v->health = type->health;
 	v->strategyImages = state.city_common_image_list->strategyImages;
 	v->owner = owner;
+	v->setupMover();
 
 	// Vehicle::equipDefaultEquipment uses the state reference from itself, so make sure the
 	// vehicle table has the entry before calling it

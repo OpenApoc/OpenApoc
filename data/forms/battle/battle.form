@@ -275,8 +275,8 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:150:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <label id="CLOCK" text="TICK TOCK">
-        <position x="568" y="34"/>
-        <size width="68" height="12"/>
+        <position x="580" y="34"/>
+        <size width="59" height="12"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>

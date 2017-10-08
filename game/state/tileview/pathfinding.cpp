@@ -103,7 +103,8 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
                                                Vec3<int> destinationEnd, int iterationLimit,
                                                const CanEnterTileHelper &canEnterTileHelper,
                                                bool approachOnly, bool ignoreStaticUnits,
-                                               bool ignoreAllUnits, float *cost, float maxCost)
+                                               bool ignoreMovingUnits, bool ignoreAllUnits,
+                                               float *cost, float maxCost)
 {
 #ifdef PATHFINDING_DEBUG
 	for (auto &t : tiles)
@@ -256,7 +257,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					bool jumped = false;
 					if (!canEnterTileHelper.canEnterTile(nodeToExpand->thisTile, tile, true, jumped,
 					                                     thisCost, unused, ignoreStaticUnits,
-					                                     ignoreAllUnits))
+					                                     ignoreMovingUnits, ignoreAllUnits))
 						continue;
 					// Jumped flag set, must immediately land
 					if (jumped)
@@ -269,7 +270,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 						auto nextTile = this->getTile(nextNextPosition);
 						if (!canEnterTileHelper.canEnterTile(tile, nextTile, false, jumped,
 						                                     thisCost, unused, ignoreStaticUnits,
-						                                     ignoreAllUnits))
+						                                     ignoreMovingUnits, ignoreAllUnits))
 						{
 							continue;
 						}
@@ -373,8 +374,9 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 std::list<Vec3<int>> Battle::findShortestPath(Vec3<int> origin, Vec3<int> destination,
                                               const BattleUnitTileHelper &canEnterTile,
                                               bool approachOnly, bool ignoreStaticUnits,
-                                              int iterationLimitDirect, bool forceDirect,
-                                              bool ignoreAllUnits, float *cost, float maxCost)
+                                              bool ignoreMovingUnits, int iterationLimitDirect,
+                                              bool forceDirect, bool ignoreAllUnits, float *cost,
+                                              float maxCost)
 {
 	// Maximum distance, in tiless, that will result in trying the direct pathfinding first
 	// Otherwise, we start with pathfinding using LOS blocks immediately
@@ -403,11 +405,12 @@ std::list<Vec3<int>> Battle::findShortestPath(Vec3<int> origin, Vec3<int> destin
 	std::list<Vec3<int>> result;
 	if (forceDirect || distance < MAX_DISTANCE_TO_PATHFIND_DIRECTLY)
 	{
-		result = map->findShortestPath(
-		    origin, destination,
-		    iterationLimitDirect > 0 ? iterationLimitDirect
-		                             : distance * PATH_ITERATION_LIMIT_MULTIPLIER,
-		    canEnterTile, approachOnly, ignoreStaticUnits, ignoreAllUnits, cost, maxCost);
+		result = map->findShortestPath(origin, destination,
+		                               iterationLimitDirect > 0
+		                                   ? iterationLimitDirect
+		                                   : distance * PATH_ITERATION_LIMIT_MULTIPLIER,
+		                               canEnterTile, approachOnly, ignoreStaticUnits,
+		                               ignoreMovingUnits, ignoreAllUnits, cost, maxCost);
 		auto finalTile = result.back();
 		if (forceDirect || finalTile == destination ||
 		    (approachOnly &&
@@ -507,16 +510,17 @@ std::list<Vec3<int>> Battle::findShortestPath(Vec3<int> origin, Vec3<int> destin
 					if (!destinationEncountered)
 					{
 						destinationEncountered = true;
-						result =
-						    findShortestPathUsingLB(origin, destination, canEnterTile, approachOnly,
-						                            ignoreAllUnits, ignoreAllUnits, cost, maxCost);
+						result = findShortestPathUsingLB(
+						    origin, destination, canEnterTile, approachOnly, ignoreStaticUnits,
+						    ignoreMovingUnits, ignoreAllUnits, cost, maxCost);
 					}
 				}
 				// Otherwise path specifically to the destination if it can be entered
 				else if (canEnterTile.canEnterTile(nullptr, map->getTile(curDest)))
 				{
 					result = findShortestPathUsingLB(origin, curDest, canEnterTile, false,
-					                                 ignoreAllUnits, ignoreAllUnits, cost, maxCost);
+					                                 ignoreStaticUnits, ignoreMovingUnits,
+					                                 ignoreAllUnits, cost, maxCost);
 				}
 				// Process results
 				if (result.empty())
@@ -545,15 +549,17 @@ std::list<Vec3<int>> Battle::findShortestPath(Vec3<int> origin, Vec3<int> destin
 		}
 	}
 
-	return findShortestPathUsingLB(origin, destination, canEnterTile, approachOnly, ignoreAllUnits,
+	return findShortestPathUsingLB(origin, destination, canEnterTile, approachOnly,
+	                               ignoreStaticUnits, ignoreMovingUnits,
+
 	                               ignoreAllUnits, cost, maxCost);
 }
 
 std::list<Vec3<int>> Battle::findShortestPathUsingLB(Vec3<int> origin, Vec3<int> destination,
                                                      const BattleUnitTileHelper &canEnterTile,
                                                      bool approachOnly, bool ignoreStaticUnits,
-                                                     bool ignoreAllUnits, float *cost,
-                                                     float maxCost)
+                                                     bool ignoreMovingUnits, bool ignoreAllUnits,
+                                                     float *cost, float maxCost)
 {
 	// How much attempts are given to the pathfinding until giving up and concluding that
 	// there is no simple path between orig and dest. This is a multiplier for "distance", which is
@@ -586,7 +592,7 @@ std::list<Vec3<int>> Battle::findShortestPathUsingLB(Vec3<int> origin, Vec3<int>
 		{
 			return map->findShortestPath(
 			    origin, destination, distance * PATH_ITERATION_LIMIT_MULTIPLIER, canEnterTile,
-			    approachOnly, ignoreStaticUnits, ignoreAllUnits, cost, maxCost);
+			    approachOnly, ignoreStaticUnits, ignoreMovingUnits, ignoreAllUnits, cost, maxCost);
 		}
 	}
 
@@ -609,10 +615,11 @@ std::list<Vec3<int>> Battle::findShortestPathUsingLB(Vec3<int> origin, Vec3<int>
 		auto distToNext = canEnterTile.getDistance(curOrigin, (lb.start + lb.end) / 2) / 4.0f;
 
 		// Pathfind to next LOS Block
-		auto path = map->findShortestPath(
-		    curOrigin, lb.start, lb.end,
-		    distToNext * GRAPH_ITERATION_LIMIT_MULTIPLIER + GRAPH_ITERATION_LIMIT_EXTRA,
-		    canEnterTile, false, ignoreStaticUnits, ignoreAllUnits, &curCost, curMaxCost);
+		auto path = map->findShortestPath(curOrigin, lb.start, lb.end,
+		                                  distToNext * GRAPH_ITERATION_LIMIT_MULTIPLIER +
+		                                      GRAPH_ITERATION_LIMIT_EXTRA,
+		                                  canEnterTile, false, ignoreStaticUnits, ignoreMovingUnits,
+		                                  ignoreAllUnits, &curCost, curMaxCost);
 		// Include new entries into result
 		while (!path.empty())
 		{
@@ -644,7 +651,7 @@ std::list<Vec3<int>> Battle::findShortestPathUsingLB(Vec3<int> origin, Vec3<int>
 	auto path = map->findShortestPath(
 	    curOrigin, destination,
 	    distToNext * GRAPH_ITERATION_LIMIT_MULTIPLIER + GRAPH_ITERATION_LIMIT_EXTRA, canEnterTile,
-	    approachOnly, ignoreStaticUnits, ignoreAllUnits, &curCost, curMaxCost);
+	    approachOnly, ignoreStaticUnits, ignoreMovingUnits, ignoreAllUnits, &curCost, curMaxCost);
 	// Include new entries into result
 	while (!path.empty())
 	{
@@ -1055,7 +1062,7 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 			                           std::abs(offset.x) + std::abs(offset.y));
 			auto path =
 			    map->findShortestPath(targetLocation, targetLocationOffsetted, costLimit / 2.0f, h,
-			                          false, true, false, nullptr, costLimit);
+			                          false, true, true, false, nullptr, costLimit);
 			itOffset++;
 			if (!path.empty() && path.back() == targetLocationOffsetted)
 			{

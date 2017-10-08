@@ -67,6 +67,10 @@ void InitialGameStateExtractor::extractResearch(GameState &state) const
 
 		r->dependencies.research.push_back(dependency);
 
+		/*ItemDependency itemdep;
+		itemdep.agentItemsRequired[{&state, "AEQUIPMENTTYPE_PSICLONE"}] = 1;
+		r->dependencies.items.push_back(itemdep);*/
+
 		r->score = rdata.score;
 
 		if (state.research.topics.find(id) != state.research.topics.end())

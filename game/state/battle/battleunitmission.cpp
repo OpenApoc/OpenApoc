@@ -116,17 +116,18 @@ BattleUnitType BattleUnitTileHelper::getType() const
 }
 
 bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits,
-                                        bool ignoreAllUnits) const
+                                        bool ignoreMovingUnits, bool ignoreAllUnits) const
 {
 	float nothing;
 	bool none1;
 	bool none2;
-	return canEnterTile(from, to, false, none1, nothing, none2, ignoreStaticUnits, ignoreAllUnits);
+	return canEnterTile(from, to, false, none1, nothing, none2, ignoreStaticUnits,
+	                    ignoreMovingUnits, ignoreAllUnits);
 }
 
 bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping, bool &jumped,
                                         float &cost, bool &doorInTheWay, bool ignoreStaticUnits,
-                                        bool ignoreAllUnits) const
+                                        bool ignoreMovingUnits, bool ignoreAllUnits) const
 {
 	int costInt = 0;
 	doorInTheWay = false;
@@ -177,9 +178,9 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 			}
 			auto middle = map.getTile(fromPos + (toPos - fromPos) / 2);
 			if (canEnterTile(from, middle, true, jumped, cost, doorInTheWay, ignoreStaticUnits,
-			                 ignoreAllUnits) &&
+			                 ignoreMovingUnits, ignoreAllUnits) &&
 			    jumped && canEnterTile(middle, to, false, jumped, cost, doorInTheWay,
-			                           ignoreStaticUnits, ignoreAllUnits))
+			                           ignoreStaticUnits, ignoreMovingUnits, ignoreAllUnits))
 			{
 				return true;
 			}
@@ -258,21 +259,28 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 			// static units,
 			// because they don't know how to give way, and therefore are considered permanent
 			// obstacles
-			if (to->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits))
+			if (to->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject, ignoreStaticUnits))
 				return false;
-			if (toX1->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits))
+			if (toX1->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject,
+			                           ignoreStaticUnits))
 				return false;
-			if (toY1->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits))
+			if (toY1->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject,
+			                           ignoreStaticUnits))
 				return false;
-			if (toXY1->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits))
+			if (toXY1->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject,
+			                            ignoreStaticUnits))
 				return false;
-			if (toZ1->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits))
+			if (toZ1->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject,
+			                           ignoreStaticUnits))
 				return false;
-			if (toXZ1->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits))
+			if (toXZ1->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject,
+			                            ignoreStaticUnits))
 				return false;
-			if (toYZ1->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits))
+			if (toYZ1->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject,
+			                            ignoreStaticUnits))
 				return false;
-			if (toXYZ1->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits))
+			if (toXYZ1->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject,
+			                             ignoreStaticUnits))
 				return false;
 		}
 		// Movement cost into the tiles
@@ -311,7 +319,7 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 		// because they don't know how to give way, and therefore are considered permanent
 		// obstacles
 		if (!ignoreAllUnits &&
-		    to->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits))
+		    to->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject, ignoreStaticUnits))
 			return false;
 		// Movement cost into the tiles
 		costInt = to->movementCostIn;
@@ -560,11 +568,11 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 					return false;
 				}
 				if (!ignoreAllUnits &&
-				    (bottomLeftZ0->getUnitIfPresent(true, true, true, tileObject,
+				    (bottomLeftZ0->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject,
 				                                    ignoreStaticUnits) ||
-				     rightTopZ0->getUnitIfPresent(true, true, true, tileObject,
+				     rightTopZ0->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject,
 				                                  ignoreStaticUnits) ||
-				     bottomLeftZ1->getUnitIfPresent(true, true, true, tileObject,
+				     bottomLeftZ1->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject,
 				                                    ignoreStaticUnits) ||
 				     rightTopZ1->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits)))
 				{
@@ -683,10 +691,12 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 					return false;
 				}
 				if (!ignoreAllUnits &&
-				    (topLeftZ0->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits) ||
-				     bottomRightZ0->getUnitIfPresent(true, true, true, tileObject,
+				    (topLeftZ0->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject,
+				                                 ignoreStaticUnits) ||
+				     bottomRightZ0->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject,
 				                                     ignoreStaticUnits) ||
-				     topLeftZ1->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits) ||
+				     topLeftZ1->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject,
+				                                 ignoreStaticUnits) ||
 				     bottomRightZ1->getUnitIfPresent(true, true, true, tileObject,
 				                                     ignoreStaticUnits)))
 				{
@@ -897,9 +907,10 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 					return false;
 				}
 				if (!ignoreAllUnits &&
-				    (bottomLeft->getUnitIfPresent(true, true, true, tileObject,
+				    (bottomLeft->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject,
 				                                  ignoreStaticUnits) ||
-				     topRight->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits)))
+				     topRight->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject,
+				                                ignoreStaticUnits)))
 				{
 					return false;
 				}
@@ -913,8 +924,9 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 					return false;
 				}
 				if (!ignoreAllUnits &&
-				    (topLeft->getUnitIfPresent(true, true, true, tileObject, ignoreStaticUnits) ||
-				     bottomRight->getUnitIfPresent(true, true, true, tileObject,
+				    (topLeft->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject,
+				                               ignoreStaticUnits) ||
+				     bottomRight->getUnitIfPresent(true, true, ignoreMovingUnits, tileObject,
 				                                   ignoreStaticUnits)))
 				{
 					return false;
@@ -2035,7 +2047,8 @@ void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> tar
 		}
 
 		auto path = state.current_battle->findShortestPath(
-		    u.goalPosition, target, BattleUnitTileHelper{map, u}, approachOnly, demandGiveWay);
+		    u.goalPosition, target, BattleUnitTileHelper{map, u}, approachOnly, demandGiveWay,
+		    !blockedByMovingUnit);
 
 		// Always start with the current position
 		this->currentPlannedPath.push_back(u.goalPosition);
@@ -2251,6 +2264,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 			currentPlannedPath.clear();
 			demandGiveWay = false;
 			giveWayAttemptsRemaining = 1;
+			blockedByMovingUnit = !blockingUnit->isStatic();
 			u.addMission(state, Type::RestartNextMission);
 			return false;
 		}

@@ -58,7 +58,7 @@ class Cargo
 	// Amount of items
 	int count = 0;
 	// For agent ammo this is equal to max ammo
-	int multiplier = 0;
+	int divisor = 0;
 	// Space one item takes
 	int space = 0;
 	// Cost of one item
@@ -81,7 +81,7 @@ class Cargo
 	      StateRef<Organisation> originalOwner, StateRef<Building> destination);
 	Cargo(GameState &state, StateRef<VAmmoType> equipment, int count,
 	      StateRef<Organisation> originalOwner, StateRef<Building> destination);
-	Cargo(GameState &state, Type type, UString id, int count, int multiplier, int space, int cost,
+	Cargo(GameState &state, Type type, UString id, int count, int divisor, int space, int cost,
 	      StateRef<Organisation> originalOwner, StateRef<Building> destination);
 
 	// Check expiry date, expire if past expiration date, return true if expires soon
@@ -266,6 +266,11 @@ class Vehicle : public StateObject,
 	bool addMission(GameState &state, VehicleMission *mission, bool toBack = false);
 	// Replaces all missions with provided mission, returns true if successful
 	bool setMission(GameState &state, VehicleMission *mission);
+
+	// Pops all finished missions, returns true if popped
+	bool popFinishedMissions(GameState &state);
+	// Get new goal for vehicle position or facing
+	bool getNewGoal(GameState &state);
 
 	void update(GameState &state, unsigned int ticks);
 	void updateCargo(GameState &state);

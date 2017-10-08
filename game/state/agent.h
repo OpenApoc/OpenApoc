@@ -219,6 +219,9 @@ class AgentType : public StateObject
 	// This agent must be killed to disable the building it's in
 	bool missionObjective = false;
 
+	StateRef<AEquipmentType> liveSpeciesItem;
+	StateRef<AEquipmentType> deadSpeciesItem;
+
 	// Sounds unit makes when walking, overrides terrain's walk sounds if present
 	std::vector<sp<Sample>> walkSfx;
 	// Sounds unit randomly makes when acting, used by aliens

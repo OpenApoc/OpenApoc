@@ -184,7 +184,7 @@ ConfigOptionBool optionInstantExplosionDamage("OpenApoc.NewFeature", "InstantExp
 ConfigOptionBool optionGravliftSounds("OpenApoc.NewFeature", "GravliftSounds", "Gravlift sounds",
                                       true);
 ConfigOptionBool optionNoInstantThrows("OpenApoc.NewFeature", "NoInstantThrows",
-                                       "Throwing requires standing upright", true);
+                                       "Throwing requires proper facing and pose", true);
 ConfigOptionBool optionFerryChecksRelationshipWhenBuying(
     "OpenApoc.NewFeature", "FerryChecksRelationshipWhenBuying",
     "Transtellar checks relationship when buying items", true);

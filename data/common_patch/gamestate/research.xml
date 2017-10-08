@@ -41,6 +41,7 @@
       <key>RESEARCH_DIMENSION_PROBE</key>
       <value>
         <order>20100</order>
+		<picture>PCK:xcom3/ufodata/smalveh.pck:xcom3/ufodata/smalveh.tab:6:xcom3/ufodata/research.pcx</picture>
         <ufopaedia_entry>PAEDIAENTRY_DIMENSION_PROBE</ufopaedia_entry>
       </value>
     </entry>
@@ -48,6 +49,7 @@
       <key>RESEARCH_BIO-TRANSPORT</key>
       <value>
         <order>20110</order>
+		<picture>PCK:xcom3/ufodata/smalveh.pck:xcom3/ufodata/smalveh.tab:3:xcom3/ufodata/research.pcx</picture>
         <ufopaedia_entry>PAEDIAENTRY_BIOTRANS</ufopaedia_entry>
       </value>
     </entry>
@@ -55,6 +57,7 @@
       <key>RESEARCH_EXPLORER</key>
       <value>
         <order>20120</order>
+		<picture>PCK:xcom3/ufodata/smalveh.pck:xcom3/ufodata/smalveh.tab:9:xcom3/ufodata/research.pcx</picture>
         <ufopaedia_entry>PAEDIAENTRY_EXPLORER</ufopaedia_entry>
       </value>
     </entry>
@@ -62,6 +65,7 @@
       <key>RESEARCH_RETALIATOR</key>
       <value>
         <order>20130</order>
+		<picture>PCK:xcom3/ufodata/smalveh.pck:xcom3/ufodata/smalveh.tab:7:xcom3/ufodata/research.pcx</picture>
         <ufopaedia_entry>PAEDIAENTRY_RETALIATOR</ufopaedia_entry>
       </value>
     </entry>
@@ -69,6 +73,7 @@
       <key>RESEARCH_ANNIHILATOR</key>
       <value>
         <order>20140</order>
+		<picture>PCK:xcom3/ufodata/smalveh.pck:xcom3/ufodata/smalveh.tab:0:xcom3/ufodata/research.pcx</picture>
         <ufopaedia_entry>PAEDIAENTRY_ANNIHILATOR</ufopaedia_entry>
       </value>
     </entry>
@@ -78,6 +83,7 @@
       <key>RESEARCH_ADVANCED_SECURITY_STATION</key>
       <value>
         <order>30100</order>
+		<picture>PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:35:xcom3/ufodata/base.pcx</picture>
         <ufopaedia_entry>PAEDIAENTRY_ADVANCED_SECURITY_STATION</ufopaedia_entry>
       </value>
     </entry>
@@ -85,6 +91,7 @@
       <key>RESEARCH_ADVANCED_QUANTUM_PHYSICS_LAB</key>
       <value>
         <order>30110</order>
+		<picture>PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:40:xcom3/ufodata/base.pcx</picture>
         <ufopaedia_entry>PAEDIAENTRY_ADVANCED_QUANTUM_PHYSICS_LAB</ufopaedia_entry>
         <dependencies>
           <research>
@@ -105,6 +112,7 @@
       <key>RESEARCH_ADVANCED_WORKSHOP</key>
       <value>
         <order>30120</order>
+		<picture>PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:44:xcom3/ufodata/base.pcx</picture>
         <ufopaedia_entry>PAEDIAENTRY_ADVANCED_WORKSHOP</ufopaedia_entry>
       </value>
     </entry>
@@ -115,6 +123,13 @@
       <value>
         <order>40100</order>
         <ufopaedia_entry>PAEDIAENTRY_DISRUPTOR_GUN</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_DISRUPTOR_GUN</key><value>1</value></entry>
+		</agentItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -122,6 +137,13 @@
       <value>
         <order>40110</order>
         <ufopaedia_entry>PAEDIAENTRY_DEVASTATOR_CANNON</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_DEVASTATOR_CANNON</key><value>1</value></entry>
+		</agentItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -129,6 +151,13 @@
       <value>
         <order>40120</order>
         <ufopaedia_entry>PAEDIAENTRY_BOOMEROID</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_BOOMEROID</key><value>1</value></entry>
+		</agentItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -136,6 +165,13 @@
       <value>
         <order>40130</order>
         <ufopaedia_entry>PAEDIAENTRY_DIMENSION_MISSILE_LAUNCHER</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_DIMENSION_MISSILE_LAUNCHER</key><value>1</value></entry>
+		</agentItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -143,6 +179,13 @@
       <value>
         <order>40140</order>
         <ufopaedia_entry>PAEDIAENTRY_DIMENSION_MISSILE</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_DIMENSION_MISSILE</key><value>1</value></entry>
+		</agentItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -150,6 +193,13 @@
       <value>
         <order>40150</order>
         <ufopaedia_entry>PAEDIAENTRY_VORTEX_MINE</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_VORTEX_MINE</key><value>1</value></entry>
+		</agentItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -157,6 +207,13 @@
       <value>
         <order>40160</order>
         <ufopaedia_entry>PAEDIAENTRY_PERSONAL_DISRUPTOR_SHIELD</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_PERSONAL_DISRUPTOR_SHIELD</key><value>1</value></entry>
+		</agentItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -164,6 +221,13 @@
       <value>
         <order>40170</order>
         <ufopaedia_entry>PAEDIAENTRY_PERSONAL_TELEPORTER</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_PERSONAL_TELEPORTER</key><value>1</value></entry>
+		</agentItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -171,6 +235,13 @@
       <value>
         <order>40180</order>
         <ufopaedia_entry>PAEDIAENTRY_PERSONAL_CLOAKING_FIELD</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_PERSONAL_CLOAKING_FIELD</key><value>1</value></entry>
+		</agentItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <!-- Quantum Physics Agent Equipment & Ammo Topics End -->
@@ -189,6 +260,13 @@
       <value>
         <order>60100</order>
         <ufopaedia_entry>PAEDIAENTRY_LIGHT_DISRUPTOR_BEAM</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<vehicleItemsRequired>
+		<entry><key>VEQUIPMENTTYPE_LIGHT_DISRUPTOR_BEAM</key><value>1</value></entry>
+		</vehicleItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -196,6 +274,13 @@
       <value>
         <order>60110</order>
         <ufopaedia_entry>PAEDIAENTRY_MEDIUM_DISRUPTOR_BEAM</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<vehicleItemsRequired>
+		<entry><key>VEQUIPMENTTYPE_MEDIUM_DISRUPTOR_BEAM</key><value>1</value></entry>
+		</vehicleItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -203,6 +288,13 @@
       <value>
         <order>60120</order>
         <ufopaedia_entry>PAEDIAENTRY_HEAVY_DISRUPTOR_BEAM</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<vehicleItemsRequired>
+		<entry><key>VEQUIPMENTTYPE_HEAVY_DISRUPTOR_BEAM</key><value>1</value></entry>
+		</vehicleItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -210,6 +302,13 @@
       <value>
         <order>60130</order>
         <ufopaedia_entry>PAEDIAENTRY_DISRUPTOR_BOMB_LAUNCHER</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<vehicleItemsRequired>
+		<entry><key>VEQUIPMENTTYPE_DISRUPTOR_BOMB_LAUNCHER</key><value>1</value></entry>
+		</vehicleItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -217,6 +316,13 @@
       <value>
         <order>60140</order>
         <ufopaedia_entry>PAEDIAENTRY_STATIS_BOMB_LAUNCHER</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<vehicleItemsRequired>
+		<entry><key>VEQUIPMENTTYPE_STASIS_BOMB_LAUNCHER</key><value>1</value></entry>
+		</vehicleItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -224,6 +330,13 @@
       <value>
         <order>60150</order>
         <ufopaedia_entry>PAEDIAENTRY_DISRUPTOR_MULTI_BOMB_LAUNCHER</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<vehicleItemsRequired>
+		<entry><key>VEQUIPMENTTYPE_DISRUPTOR_MULTI-BOMB_LAUNCHER</key><value>1</value></entry>
+		</vehicleItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -248,6 +361,7 @@
       <key>RESEARCH_X-COM_ADVANCED_CONTROL_SYSTEM</key>
       <value>
         <order>70100</order>
+		<picture>PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:38:xcom3/ufodata/vhawk.pcx</picture>
         <ufopaedia_entry>PAEDIAENTRY_ADVANCED_CONTROL_SYSTEM</ufopaedia_entry>
       </value>
     </entry>
@@ -256,6 +370,13 @@
       <value>
         <order>70110</order>
         <ufopaedia_entry>PAEDIAENTRY_SMALL_DISRUPTION_SHIELD</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<vehicleItemsRequired>
+		<entry><key>VEQUIPMENTTYPE_SMALL_DISRUPTION_SHIELD</key><value>1</value></entry>
+		</vehicleItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -263,6 +384,13 @@
       <value>
         <order>70120</order>
         <ufopaedia_entry>PAEDIAENTRY_LARGE_DISRUPTION_SHIELD</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<vehicleItemsRequired>
+		<entry><key>VEQUIPMENTTYPE_LARGE_DISRUPTION_SHIELD</key><value>1</value></entry>
+		</vehicleItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -270,6 +398,13 @@
       <value>
         <order>70130</order>
         <ufopaedia_entry>PAEDIAENTRY_CLOAKING_FIELD</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<vehicleItemsRequired>
+		<entry><key>VEQUIPMENTTYPE_CLOAKING_FIELD</key><value>1</value></entry>
+		</vehicleItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -277,6 +412,13 @@
       <value>
         <order>70140</order>
         <ufopaedia_entry>PAEDIAENTRY_TELEPORTER</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<vehicleItemsRequired>
+		<entry><key>VEQUIPMENTTYPE_TELEPORTER</key><value>1</value></entry>
+		</vehicleItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -400,6 +542,16 @@
       <value>
         <order>10100</order>
         <ufopaedia_entry>PAEDIAENTRY_BRAINSUCKER_POD</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_BRAINSUCKER_POD</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_BRAINSUCKER_POD</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -407,6 +559,16 @@
       <value>
         <order>10110</order>
         <ufopaedia_entry>PAEDIAENTRY_BRAINSUCKER_AUTOPSY</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_BRAINSUCKER_DEAD</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_BRAINSUCKER_DEAD</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -414,6 +576,16 @@
       <value>
         <order>10120</order>
         <ufopaedia_entry>PAEDIAENTRY_BRAINSUCKER</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_BRAINSUCKER_ALIVE</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_BRAINSUCKER_ALIVE</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -421,6 +593,16 @@
       <value>
         <order>10130</order>
         <ufopaedia_entry>PAEDIAENTRY_MULTIWORM_EGG_AUTOPSY</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_MULTIWORM_EGG_DEAD</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_MULTIWORM_EGG_DEAD</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -428,6 +610,16 @@
       <value>
         <order>10140</order>
         <ufopaedia_entry>PAEDIAENTRY_MULTIWORM_EGG</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_MULTIWORM_EGG_ALIVE</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_MULTIWORM_EGG_ALIVE</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -435,6 +627,16 @@
       <value>
         <order>10150</order>
         <ufopaedia_entry>PAEDIAENTRY_MULTIWORM_AUTOPSY</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_MULTIWORM_DEAD</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_MULTIWORM_DEAD</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -442,6 +644,16 @@
       <value>
         <order>10160</order>
         <ufopaedia_entry>PAEDIAENTRY_MULTIWORM</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_MULTIWORM_ALIVE</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_MULTIWORM_ALIVE</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -449,6 +661,16 @@
       <value>
         <order>10170</order>
         <ufopaedia_entry>PAEDIAENTRY_HYPERWORM_AUTOPSY</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_HYPERWORM_DEAD</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_HYPERWORM_DEAD</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -456,6 +678,16 @@
       <value>
         <order>10180</order>
         <ufopaedia_entry>PAEDIAENTRY_HYPERWORM</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_HYPERWORM_ALIVE</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_HYPERWORM_ALIVE</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -463,6 +695,16 @@
       <value>
         <order>10190</order>
         <ufopaedia_entry>PAEDIAENTRY_CHRYSALIS_AUTOPSY</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_CHRYSALIS_DEAD</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_CHRYSALIS_DEAD</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -470,6 +712,16 @@
       <value>
         <order>10200</order>
         <ufopaedia_entry>PAEDIAENTRY_CHRYSALIS</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_CHRYSALIS_ALIVE</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_CHRYSALIS_ALIVE</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -477,6 +729,16 @@
       <value>
         <order>10210</order>
         <ufopaedia_entry>PAEDIAENTRY_ANTHROPOD_AUTOPSY</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_ANTHROPOD_DEAD</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_ANTHROPOD_DEAD</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -484,6 +746,16 @@
       <value>
         <order>10220</order>
         <ufopaedia_entry>PAEDIAENTRY_ANTHROPOD</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_ANTHROPOD_ALIVE</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_ANTHROPOD_ALIVE</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -491,6 +763,16 @@
       <value>
         <order>10230</order>
         <ufopaedia_entry>PAEDIAENTRY_PSIMORPH_AUTOPSY</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_PSIMORPH_DEAD</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_PSIMORPH_DEAD</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -498,6 +780,16 @@
       <value>
         <order>10240</order>
         <ufopaedia_entry>PAEDIAENTRY_PSIMORPH</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_PSIMORPH_ALIVE</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_PSIMORPH_ALIVE</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -505,6 +797,16 @@
       <value>
         <order>10250</order>
         <ufopaedia_entry>PAEDIAENTRY_SPITTER_AUTOPSY</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_SPITTER_DEAD</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_SPITTER_DEAD</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -512,6 +814,16 @@
       <value>
         <order>10260</order>
         <ufopaedia_entry>PAEDIAENTRY_SPITTER</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_SPITTER_ALIVE</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_SPITTER_ALIVE</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -519,6 +831,16 @@
       <value>
         <order>10270</order>
         <ufopaedia_entry>PAEDIAENTRY_MEGASPAWN_AUTOPSY</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_MEGASPAWN_DEAD</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_MEGASPAWN_DEAD</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -526,6 +848,16 @@
       <value>
         <order>10280</order>
         <ufopaedia_entry>PAEDIAENTRY_MEGASPAWN</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_MEGASPAWN_ALIVE</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_MEGASPAWN_ALIVE</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -533,6 +865,16 @@
       <value>
         <order>10290</order>
         <ufopaedia_entry>PAEDIAENTRY_POPPER_AUTOPSY</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_POPPER_DEAD</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_POPPER_DEAD</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -540,6 +882,16 @@
       <value>
         <order>10300</order>
         <ufopaedia_entry>PAEDIAENTRY_POPPER</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_POPPER_ALIVE</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_POPPER_ALIVE</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -547,6 +899,16 @@
       <value>
         <order>10310</order>
         <ufopaedia_entry>PAEDIAENTRY_SKELETOID_AUTOPSY</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_SKELETOID_DEAD</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_SKELETOID_DEAD</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -554,6 +916,16 @@
       <value>
         <order>10320</order>
         <ufopaedia_entry>PAEDIAENTRY_SKELETOID</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_SKELETOID_ALIVE</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_SKELETOID_ALIVE</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -561,6 +933,16 @@
       <value>
         <order>10330</order>
         <ufopaedia_entry>PAEDIAENTRY_MICRONOID_AGGREGATE_AUTOPSY</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_MICRONOID_AGGREGATE_DEAD</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_MICRONOID_AGGREGATE_DEAD</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -568,6 +950,16 @@
       <value>
         <order>10340</order>
         <ufopaedia_entry>PAEDIAENTRY_MICRONOID_AGGREGATE</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_MICRONOID_AGGREGATE_ALIVE</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_MICRONOID_AGGREGATE_ALIVE</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -575,6 +967,16 @@
       <value>
         <order>10350</order>
         <ufopaedia_entry>PAEDIAENTRY_QUEENSPAWN_AUTOPSY</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_QUEENSPAWN_DEAD</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_QUEENSPAWN_DEAD</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -582,6 +984,16 @@
       <value>
         <order>10360</order>
         <ufopaedia_entry>PAEDIAENTRY_QUEENSPAWN</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_QUEENSPAWN_ALIVE</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_QUEENSPAWN_ALIVE</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -589,6 +1001,16 @@
       <value>
         <order>10370</order>
         <ufopaedia_entry>PAEDIAENTRY_OVERSPAWN_AUTOPSY</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_OVERSPAWN_DEAD</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_OVERSPAWN_DEAD</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -597,14 +1019,15 @@
         <order>10380</order>
         <ufopaedia_entry>PAEDIAENTRY_OVERSPAWN_AUTOPSY_1</ufopaedia_entry>
         <dependencies>
-          <research>
-            <entry>
-              <type>Unused</type>
-              <topics/>
-            </entry>
-          </research>
-          <items/>
-        </dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_OVERSPAWN_ALIVE</key><value>1</value></entry>
+		</agentItemsRequired>
+		<agentItemsConsumed>
+		<entry><key>AEQUIPMENTTYPE_OVERSPAWN_ALIVE</key><value>1</value></entry>
+		</agentItemsConsumed>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <!-- Bio-Chemistry Alien Species Topics End -->
@@ -716,6 +1139,7 @@
       <key>RESEARCH_ADVANCED_BIOCHEMISTRY_LAB</key>
       <value>
         <order>40100</order>
+		<picture>PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:38:xcom3/ufodata/base.pcx</picture>
         <ufopaedia_entry>PAEDIAENTRY_ADVANCED_BIOCHEMISTRY_LAB</ufopaedia_entry>
         <dependencies>
           <research>
@@ -759,6 +1183,7 @@
       <key>RESEARCH_ADVANCED_ALIEN_CONTAINMENT</key>
       <value>
         <order>40110</order>
+		<picture>PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:42:xcom3/ufodata/base.pcx</picture>
         <ufopaedia_entry>PAEDIAENTRY_ADVANCED_ALIEN_CONTAINMENT</ufopaedia_entry>
         <dependencies>
           <research>
@@ -778,6 +1203,13 @@
       <value>
         <order>50100</order>
         <ufopaedia_entry>PAEDIAENTRY_BRAINSUCKER_LAUNCHER</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER</key><value>1</value></entry>
+		</agentItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -785,6 +1217,13 @@
       <value>
         <order>50110</order>
         <ufopaedia_entry>PAEDIAENTRY_ENTROPY_LAUNCHER</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_ENTROPY_LAUNCHER</key><value>1</value></entry>
+		</agentItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <entry>
@@ -792,6 +1231,13 @@
       <value>
         <order>50120</order>
         <ufopaedia_entry>PAEDIAENTRY_ENTROPY_POD</ufopaedia_entry>
+		<dependencies>
+		<items>
+		<agentItemsRequired>
+		<entry><key>AEQUIPMENTTYPE_ENTROPY_POD</key><value>1</value></entry>
+		</agentItemsRequired>
+		</items>
+		</dependencies>
       </value>
     </entry>
     <!-- Bio-Chemistry Alien Equipment & Ammo Topics End -->
@@ -800,6 +1246,7 @@
       <key>RESEARCH_BIO-TRANSPORT_MODULE</key>
       <value>
         <order>60100</order>
+		<picture>PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:41:xcom3/ufodata/vhawk.pcx</picture>
         <ufopaedia_entry>PAEDIAENTRY_BIO_TRANSPORT_MODULE</ufopaedia_entry>
       </value>
     </entry>
@@ -904,7 +1351,7 @@
         </dependencies>
         <cost>6000</cost>
         <item_type>Craft</item_type>
-        <item_produced>VEHICLETYPE_DIMENSION_PROBE</item_produced>
+        <itemId>VEHICLETYPE_DIMENSION_PROBE</itemId>
       </value>
     </entry>
     <entry>
@@ -931,7 +1378,7 @@
         </dependencies>
         <cost>12000</cost>
         <item_type>Craft</item_type>
-        <item_produced>VEHICLETYPE_BIO-TRANSPORT</item_produced>
+        <itemId>VEHICLETYPE_BIOTRANS</itemId>
       </value>
     </entry>
     <entry>
@@ -958,7 +1405,7 @@
         </dependencies>
         <cost>22000</cost>
         <item_type>Craft</item_type>
-        <item_produced>VEHICLETYPE_EXPLORER</item_produced>
+        <itemId>VEHICLETYPE_EXPLORER</itemId>
       </value>
     </entry>
     <entry>
@@ -985,7 +1432,7 @@
         </dependencies>
         <cost>35000</cost>
         <item_type>Craft</item_type>
-        <item_produced>VEHICLETYPE_RETALIATOR</item_produced>
+        <itemId>VEHICLETYPE_RETALIATOR</itemId>
       </value>
     </entry>
     <entry>
@@ -1011,7 +1458,7 @@
         </dependencies>
         <cost>50000</cost>
         <item_type>Craft</item_type>
-        <item_produced>VEHICLETYPE_ANNIHILATOR</item_produced>
+        <itemId>VEHICLETYPE_ANNIHILATOR</itemId>
       </value>
     </entry>
     <!-- Manufacture Topics - Craft End -->
@@ -1040,7 +1487,7 @@
         </dependencies>
         <cost>2000</cost>
         <item_type>VehicleEquipment</item_type>
-        <item_produced>VEQUIPMENTTYPE_LIGHT_DISRUPTOR_BEAM</item_produced>
+        <itemId>VEQUIPMENTTYPE_LIGHT_DISRUPTOR_BEAM</itemId>
       </value>
     </entry>
     <entry>
@@ -1067,7 +1514,7 @@
         </dependencies>
         <cost>4000</cost>
         <item_type>VehicleEquipment</item_type>
-        <item_produced>VEQUIPMENTTYPE_MEDIUM_DISRUPTOR_BEAM</item_produced>
+        <itemId>VEQUIPMENTTYPE_MEDIUM_DISRUPTOR_BEAM</itemId>
       </value>
     </entry>
     <entry>
@@ -1094,7 +1541,7 @@
         </dependencies>
         <cost>8000</cost>
         <item_type>VehicleEquipment</item_type>
-        <item_produced>VEQUIPMENTTYPE_HEAVY_DISRUPTOR_BEAM</item_produced>
+        <itemId>VEQUIPMENTTYPE_HEAVY_DISRUPTOR_BEAM</itemId>
       </value>
     </entry>
     <entry>
@@ -1120,7 +1567,7 @@
         </dependencies>
         <cost>3000</cost>
         <item_type>VehicleEquipment</item_type>
-        <item_produced>VEQUIPMENTTYPE_DISRUPTOR_BOMB_LAUNCHER</item_produced>
+        <itemId>VEQUIPMENTTYPE_DISRUPTOR_BOMB_LAUNCHER</itemId>
       </value>
     </entry>
     <entry>
@@ -1146,7 +1593,7 @@
         </dependencies>
         <cost>1500</cost>
         <item_type>VehicleEquipmentAmmo</item_type>
-        <item_produced>VEQUIPMENTAMMOTYPE_DISRUPTOR_BOMB</item_produced>
+        <itemId>VEQUIPMENTAMMOTYPE_DISRUPTOR_BOMB</itemId>
       </value>
     </entry>
     <entry>
@@ -1173,7 +1620,7 @@
         </dependencies>
         <cost>2000</cost>
         <item_type>VehicleEquipment</item_type>
-        <item_produced>VEQUIPMENTTYPE_STASIS_BOMB_LAUNCHER</item_produced>
+        <itemId>VEQUIPMENTTYPE_STASIS_BOMB_LAUNCHER</itemId>
       </value>
     </entry>
     <entry>
@@ -1200,7 +1647,7 @@
         </dependencies>
         <cost>1200</cost>
         <item_type>VehicleEquipmentAmmo</item_type>
-        <item_produced>VEQUIPMENTAMMOTYPE_STASIS_BOMB</item_produced>
+        <itemId>VEQUIPMENTAMMOTYPE_STASIS_BOMB</itemId>
       </value>
     </entry>
     <entry>
@@ -1227,7 +1674,7 @@
         </dependencies>
         <cost>4000</cost>
         <item_type>VehicleEquipment</item_type>
-        <item_produced>VEQUIPMENTTYPE_DISRUPTOR_MULTI-BOMB_LAUNCHER</item_produced>
+        <itemId>VEQUIPMENTTYPE_DISRUPTOR_MULTI-BOMB_LAUNCHER</itemId>
       </value>
     </entry>
     <entry>
@@ -1254,7 +1701,7 @@
         </dependencies>
         <cost>1800</cost>
         <item_type>VehicleEquipmentAmmo</item_type>
-        <item_produced>VEQUIPMENTAMMOTYPE_DISRUPTOR_MULTI-BOMB</item_produced>
+        <itemId>VEQUIPMENTAMMOTYPE_DISRUPTOR_MULTI-BOMB</itemId>
       </value>
     </entry>
     <!-- Manufacture Topics - Vehicle Weapons & Ammo End -->
@@ -1283,7 +1730,7 @@
         </dependencies>
         <cost>4000</cost>
         <item_type>VehicleEquipment</item_type>
-        <item_produced>VEQUIPMENTTYPE_ADVANCED_CONTROL_SYSTEM</item_produced>
+        <itemId>VEQUIPMENTTYPE_ADVANCED_CONTROL_SYSTEM</itemId>
       </value>
     </entry>
     <entry>
@@ -1308,7 +1755,7 @@
         </dependencies>
         <cost>700</cost>
         <item_type>VehicleEquipment</item_type>
-        <item_produced>VEQUIPMENTTYPE_BIO-TRANSPORT_MODULE</item_produced>
+        <itemId>VEQUIPMENTTYPE_BIO-TRANSPORT_MODULE</itemId>
       </value>
     </entry>
     <entry>
@@ -1335,7 +1782,7 @@
         </dependencies>
         <cost>5000</cost>
         <item_type>VehicleEquipment</item_type>
-        <item_produced>VEQUIPMENTTYPE_SMALL_DISRUPTION_SHIELD</item_produced>
+        <itemId>VEQUIPMENTTYPE_SMALL_DISRUPTION_SHIELD</itemId>
       </value>
     </entry>
     <entry>
@@ -1362,7 +1809,7 @@
         </dependencies>
         <cost>8000</cost>
         <item_type>VehicleEquipment</item_type>
-        <item_produced>VEQUIPMENTTYPE_LARGE_DISRUPTION_SHIELD</item_produced>
+        <itemId>VEQUIPMENTTYPE_LARGE_DISRUPTION_SHIELD</itemId>
       </value>
     </entry>
     <entry>
@@ -1389,7 +1836,7 @@
         </dependencies>
         <cost>6000</cost>
         <item_type>VehicleEquipment</item_type>
-        <item_produced>VEQUIPMENTTYPE_CLOAKING_FIELD</item_produced>
+        <itemId>VEQUIPMENTTYPE_CLOAKING_FIELD</itemId>
       </value>
     </entry>
     <entry>
@@ -1416,13 +1863,13 @@
         </dependencies>
         <cost>11000</cost>
         <item_type>VehicleEquipment</item_type>
-        <item_produced>VEQUIPMENTTYPE_TELEPORTER</item_produced>
+        <itemId>VEQUIPMENTTYPE_TELEPORTER</itemId>
       </value>
     </entry>
     <entry>
       <key>MANUFACTURE_DIMENSION_SHIFTER</key>
       <value>
-        <name>Teleporter</name>
+        <name>Dimension Shifter</name>
         <order>30160</order>
         <description/>
         <ufopaedia_entry/>
@@ -1443,6 +1890,7 @@
         </dependencies>
         <cost>14000</cost>
         <item_type>VehicleEquipment</item_type>
+		<itemId>VEQUIPMENTTYPE_DIMENSION_SHIFTER</itemId>
       </value>
     </entry>
     <!-- Manufacture Topics - Vehicle Equipment End -->
@@ -1471,7 +1919,7 @@
         </dependencies>
         <cost>1200</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_TOXIGUN</item_produced>
+        <itemId>AEQUIPMENTTYPE_TOXIGUN</itemId>
       </value>
     </entry>
     <entry>
@@ -1498,7 +1946,7 @@
         </dependencies>
         <cost>200</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_TOXIN_TYPE_A</item_produced>
+        <itemId>AEQUIPMENTTYPE_TOXIGUN_A-CLIP</itemId>
       </value>
     </entry>
     <entry>
@@ -1525,7 +1973,7 @@
         </dependencies>
         <cost>300</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_TOXIN_TYPE_B</item_produced>
+        <itemId>AEQUIPMENTTYPE_TOXIGUN_B-CLIP</itemId>
       </value>
     </entry>
     <entry>
@@ -1552,7 +2000,7 @@
         </dependencies>
         <cost>400</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_TOXIN_TYPE_C</item_produced>
+        <itemId>AEQUIPMENTTYPE_TOXIGUN_C-CLIP</itemId>
       </value>
     </entry>
     <entry>
@@ -1579,7 +2027,7 @@
         </dependencies>
         <cost>250</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_ALIEN_GAS_GRENADE</item_produced>
+        <itemId>AEQUIPMENTTYPE_ALIEN_GAS_GRENADE</itemId>
       </value>
     </entry>
     <entry>
@@ -1606,7 +2054,7 @@
         </dependencies>
         <cost>280</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_HEAVY_LAUNCHER_AG_MISSILE</item_produced>
+        <itemId>AEQUIPMENTTYPE_HEAVY_LAUNCHER_AG_MISSILE</itemId>
       </value>
     </entry>
     <entry>
@@ -1633,7 +2081,7 @@
         </dependencies>
         <cost>360</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_MINILAUNCHER_AG_MISSILE</item_produced>
+        <itemId>AEQUIPMENTTYPE_MINILAUNCHER_AG_MISSILE</itemId>
       </value>
     </entry>
     <entry>
@@ -1660,7 +2108,7 @@
         </dependencies>
         <cost>600</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_DISRUPTOR_GUN</item_produced>
+        <itemId>AEQUIPMENTTYPE_DISRUPTOR_GUN</itemId>
       </value>
     </entry>
     <entry>
@@ -1687,7 +2135,7 @@
         </dependencies>
         <cost>1200</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_DEVASTATOR_CANNON</item_produced>
+        <itemId>AEQUIPMENTTYPE_DEVASTATOR_CANNON</itemId>
       </value>
     </entry>
     <entry>
@@ -1714,7 +2162,7 @@
         </dependencies>
         <cost>230</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_BOOMEROID</item_produced>
+        <itemId>AEQUIPMENTTYPE_BOOMEROID</itemId>
       </value>
     </entry>
     <entry>
@@ -1741,7 +2189,7 @@
         </dependencies>
         <cost>1200</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_DIMENSION_MISSILE_LAUNCHER</item_produced>
+        <itemId>AEQUIPMENTTYPE_DIMENSION_MISSILE_LAUNCHER</itemId>
       </value>
     </entry>
     <entry>
@@ -1768,7 +2216,7 @@
         </dependencies>
         <cost>400</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_DIMENSION_MISSILE</item_produced>
+        <itemId>AEQUIPMENTTYPE_DIMENSION_MISSILE</itemId>
       </value>
     </entry>
     <entry>
@@ -1795,7 +2243,7 @@
         </dependencies>
         <cost>250</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_VORTEX_MINE</item_produced>
+        <itemId>AEQUIPMENTTYPE_VORTEX_MINE</itemId>
       </value>
     </entry>
     <entry>
@@ -1822,7 +2270,7 @@
         </dependencies>
         <cost>2000</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_PERSONAL_DISRUPTOR_SHIELD</item_produced>
+        <itemId>AEQUIPMENTTYPE_PERSONAL_DISRUPTOR_SHIELD</itemId>
       </value>
     </entry>
     <entry>
@@ -1849,7 +2297,7 @@
         </dependencies>
         <cost>6000</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_PERSONAL_TELEPORTER</item_produced>
+        <itemId>AEQUIPMENTTYPE_PERSONAL_TELEPORTER</itemId>
       </value>
     </entry>
     <entry>
@@ -1876,7 +2324,7 @@
         </dependencies>
         <cost>3000</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_PERSONAL_CLOAKING_FIELD</item_produced>
+        <itemId>AEQUIPMENTTYPE_PERSONAL_CLOAKING_FIELD</itemId>
       </value>
     </entry>
     <!-- Manufacture Topics - Agent Equipment & Ammo End -->
@@ -1905,7 +2353,7 @@
         </dependencies>
         <cost>1200</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(LEGS)</item_produced>
+        <itemId>AEQUIPMENTTYPE_X-COM_LEG_SHIELDS</itemId>
       </value>
     </entry>
     <entry>
@@ -1932,7 +2380,7 @@
         </dependencies>
         <cost>1500</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(TORSO)</item_produced>
+        <itemId>AEQUIPMENTTYPE_X-COM_BODY_SHIELD</itemId>
       </value>
     </entry>
     <entry>
@@ -1959,7 +2407,7 @@
         </dependencies>
         <cost>1200</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(RIGHT_ARM)</item_produced>
+        <itemId>AEQUIPMENTTYPE_X-COM_RIGHT_ARM_SHIELD</itemId>
       </value>
     </entry>
     <entry>
@@ -1986,7 +2434,7 @@
         </dependencies>
         <cost>1200</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(LEFT_ARM)</item_produced>
+        <itemId>AEQUIPMENTTYPE_X-COM_LEFT_ARM_SHIELD</itemId>
       </value>
     </entry>
     <entry>
@@ -2013,7 +2461,7 @@
         </dependencies>
         <cost>1500</cost>
         <item_type>AgentEquipment</item_type>
-        <item_produced>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(HEAD)</item_produced>
+        <itemId>AEQUIPMENTTYPE_X-COM_HEAD_SHIELD</itemId>
       </value>
     </entry>
     <!-- Manufacture Topics - Agent Armor End -->

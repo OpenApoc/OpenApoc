@@ -35,7 +35,7 @@ struct VehicleEquipmentData
 
 static_assert(sizeof(struct VehicleEquipmentData) == 24, "Invalid vehicle_equpment_data size");
 #define VEHICLE_EQUIPMENT_DATA_OFFSET_START 1617224
-#define VEHICLE_EQUIPMENT_DATA_OFFSET_END 1618398
+#define VEHICLE_EQUIPMENT_DATA_OFFSET_END 1618400
 
 struct VehicleWeaponData
 {

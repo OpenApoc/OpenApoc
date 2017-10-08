@@ -20,6 +20,7 @@
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/city/building.h"
+#include "game/state/city/city.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/damage.h"
@@ -962,7 +963,9 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 	else
 	{
 		formItemOther->findControlTyped<Label>("ITEM_NAME")
-		    ->setText(researched ? item->type->name : tr("Alien Artifact"));
+		    ->setText(researched
+		                  ? item->type->name
+		                  : (item->type->bioStorage ? tr("Alien Organism") : tr("Alien Artifact")));
 		formItemOther->findControlTyped<Graphic>("SELECTED_IMAGE")
 		    ->setImage(item->getEquipmentImage());
 
@@ -1723,6 +1726,122 @@ void AEquipScreen::addItemToInventoryVehicle(sp<AEquipment> item)
 
 void AEquipScreen::closeScreen()
 {
+	// Try to dump gear
+	if (config().getBool("OpenApoc.NewFeature.StoreDroppedEquipment"))
+	{
+		for (auto &entry : vehicleItems)
+		{
+			if (!entry.second.empty())
+			{
+				// First unload clips
+				std::list<sp<AEquipment>> clips;
+				for (auto &e : entry.second)
+				{
+					auto clip = e->unloadAmmo();
+					if (clip)
+					{
+						clips.push_back(clip);
+					}
+				}
+				for (auto &c : clips)
+				{
+					entry.second.push_back(c);
+				}
+				// Then create cargo (ferry to vehicle's home base)
+				for (auto &e : entry.second)
+				{
+					entry.first->cargo.emplace_back(
+					    *state, e->type, e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1,
+					    nullptr, entry.first->homeBuilding);
+				}
+			}
+		}
+		for (auto &entry : buildingItems)
+		{
+			if (!entry.second.empty())
+			{
+				// First unload clips
+				std::list<sp<AEquipment>> clips;
+				for (auto &e : entry.second)
+				{
+					auto clip = e->unloadAmmo();
+					if (clip)
+					{
+						clips.push_back(clip);
+					}
+				}
+				for (auto &c : clips)
+				{
+					entry.second.push_back(c);
+				}
+				// Then create cargo (ferry to current base)
+				for (auto &e : entry.second)
+				{
+					entry.first->cargo.emplace_back(
+					    *state, e->type, e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1,
+					    nullptr, state->current_base->building);
+				}
+			}
+		}
+		for (auto &entry : agentItems)
+		{
+			if (!entry.second.empty())
+			{
+				// First unload clips
+				std::list<sp<AEquipment>> clips;
+				for (auto &e : entry.second)
+				{
+					auto clip = e->unloadAmmo();
+					if (clip)
+					{
+						clips.push_back(clip);
+					}
+				}
+				for (auto &c : clips)
+				{
+					entry.second.push_back(c);
+				}
+				// First agent in this position
+				sp<Agent> dropperAgent;
+				for (auto &a : state->agents)
+				{
+					if (a.second->owner == state->getPlayer() && !a.second->currentBuilding &&
+					    !a.second->currentVehicle && (Vec3<int>)a.second->position == entry.first)
+					{
+						dropperAgent = a.second;
+						break;
+					}
+				}
+				if (!dropperAgent)
+				{
+					LogError("Somehow items got dropped but no agent dropped them!?");
+					return;
+				}
+				// Find building to drop to
+				StateRef<Building> buildingToDropTo;
+				Vec2<int> pos = {entry.first.x, entry.first.y};
+				for (auto &b : dropperAgent->city->buildings)
+				{
+					if (b.second->bounds.within(pos))
+					{
+						buildingToDropTo = {state.get(), b.first};
+						break;
+					}
+				}
+				if (buildingToDropTo)
+				{
+					// Create cargo
+					for (auto &e : entry.second)
+					{
+						buildingToDropTo->cargo.emplace_back(
+						    *state, e->type,
+						    e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1, nullptr,
+						    dropperAgent->homeBuilding);
+					}
+				}
+			}
+		}
+	}
 	if (!selectedAgents.empty() && state->current_battle)
 	{
 		auto currentAgent = selectedAgents.front();

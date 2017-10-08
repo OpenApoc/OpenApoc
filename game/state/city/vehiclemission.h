@@ -28,12 +28,12 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 	FlyingVehicleTileHelper(TileMap &map, Vehicle &v);
 
 	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
-	                  bool ignoreAllUnits = false) const override;
+	                  bool ignoreMovingUnits = true, bool ignoreAllUnits = false) const override;
 
 	float pathOverheadAlloawnce() const override;
 
 	// Support 'from' being nullptr for if a vehicle is being spawned in the map
-	bool canEnterTile(Tile *from, Tile *to, bool, bool &, float &cost, bool &, bool,
+	bool canEnterTile(Tile *from, Tile *to, bool, bool &, float &cost, bool &, bool, bool,
 	                  bool) const override;
 
 	float adjustCost(Vec3<int> nextPosition, int z) const override;
@@ -60,12 +60,12 @@ class GroundVehicleTileHelper : public CanEnterTileHelper
 	GroundVehicleTileHelper(TileMap &map, Vehicle &v);
 
 	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
-	                  bool ignoreAllUnits = false) const override;
+	                  bool ignoreMovingUnits = true, bool ignoreAllUnits = false) const override;
 
 	float pathOverheadAlloawnce() const override;
 
 	// Support 'from' being nullptr for if a vehicle is being spawned in the map
-	bool canEnterTile(Tile *from, Tile *to, bool, bool &, float &cost, bool &, bool,
+	bool canEnterTile(Tile *from, Tile *to, bool, bool &, float &cost, bool &, bool, bool,
 	                  bool) const override;
 
 	float getDistance(Vec3<float> from, Vec3<float> to) const override;
@@ -110,7 +110,7 @@ class VehicleMission
 	// Methods to create new missions
 	static VehicleMission *gotoLocation(GameState &state, Vehicle &v, Vec3<int> target,
 	                                    bool allowTeleporter = false, bool pickNearest = false,
-	                                    int reRouteAttempts = 100);
+	                                    int reRouteAttempts = 20);
 	static VehicleMission *gotoPortal(GameState &state, Vehicle &v);
 	static VehicleMission *gotoPortal(GameState &state, Vehicle &v, Vec3<int> target);
 	static VehicleMission *gotoBuilding(GameState &state, Vehicle &v, StateRef<Building> target,

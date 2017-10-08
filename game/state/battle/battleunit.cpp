@@ -1541,7 +1541,7 @@ void BattleUnit::applyDamageDirect(GameState &state, int damage, bool generateFa
 	// Deal stun damage
 	if (stunPower > 0)
 	{
-		stunDamage += clamp(damage, 0, std::max(0, stunPower - stunDamage));
+		stunDamage += clamp(damage, 0, std::max(0, stunPower + agent->getMaxHealth() - stunDamage));
 	}
 	// Deal health damage
 	else
@@ -2604,7 +2604,8 @@ void BattleUnit::updateBody(GameState &state, unsigned int &bodyTicksRemaining)
 				setBodyState(state, target_body_state);
 			}
 			// Pop finished missions if present
-			if (popFinishedMissions(state))
+			popFinishedMissions(state);
+			if (retreated)
 			{
 				return;
 			}
@@ -2840,7 +2841,8 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 		atGoal = goalPosition == getPosition();
 		if (atGoal)
 		{
-			if (getNewGoal(state))
+			getNewGoal(state);
+			if (retreated)
 			{
 				return;
 			}
@@ -2929,7 +2931,8 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 				triggerProximity(state);
 				goalPosition = position;
 			}
-			if (getNewGoal(state))
+			getNewGoal(state);
+			if (retreated)
 			{
 				return;
 			}
@@ -3143,7 +3146,8 @@ void BattleUnit::updateTurning(GameState &state, unsigned int &turnTicksRemainin
 				setFacing(state, goalFacing);
 			}
 			// Pop finished missions if present
-			if (popFinishedMissions(state))
+			popFinishedMissions(state);
+			if (retreated)
 			{
 				return;
 			}
@@ -4521,7 +4525,7 @@ bool BattleUnit::useSpawner(GameState &state, sp<AEquipmentType> item)
 		{
 			continue;
 		}
-		if (state.current_battle->findShortestPath(curPos, pos, helper, false, false, 0, true)
+		if (state.current_battle->findShortestPath(curPos, pos, helper, false, false, true, 0, true)
 		        .back() == pos)
 		{
 			numToSpawn--;
@@ -4864,7 +4868,7 @@ bool BattleUnit::useBrainsucker(GameState &state)
 			continue;
 		}
 		auto targetTile = map.getTile(pos);
-		if (!helper.canEnterTile(ourTile, targetTile, false, true))
+		if (!helper.canEnterTile(ourTile, targetTile, true, true, true))
 		{
 			continue;
 		}
@@ -5302,14 +5306,27 @@ bool BattleUnit::getNewGoal(GameState &state)
 {
 	atGoal = true;
 	launched = false;
-	// Pop finished missions if present
-	if (popFinishedMissions(state))
-	{
-		return true;
-	}
-	// Try to get new destination
+
+	bool popped = false;
+	bool acquired = false;
 	Vec3<float> nextGoal;
-	if (getNextDestination(state, nextGoal))
+	popped = popFinishedMissions(state);
+	if (retreated)
+	{
+		return false;
+	}
+	do
+	{
+		// Try to get new destination
+		acquired = getNextDestination(state, nextGoal);
+		// Pop finished missions if present
+		popped = popFinishedMissions(state);
+		if (retreated)
+		{
+			return false;
+		}
+	} while (popped && !acquired);
+	if (acquired)
 	{
 		goalPosition = nextGoal;
 		atGoal = false;
@@ -5319,7 +5336,7 @@ bool BattleUnit::getNewGoal(GameState &state)
 	{
 		setMovementState(MovementState::None);
 	}
-	return false;
+	return acquired;
 }
 
 Vec3<float> BattleUnit::getMuzzleLocation() const
@@ -5375,14 +5392,17 @@ bool BattleUnit::shouldPlaySoundNow()
 
 bool BattleUnit::popFinishedMissions(GameState &state)
 {
+	bool popped = false;
 	while (missions.size() > 0 && missions.front()->isFinished(state, *this))
 	{
 		LogWarning("Unit %s mission \"%s\" finished", id, missions.front()->getName());
 		missions.pop_front();
-
+		popped = true;
 		// We may have retreated as a result of finished mission
 		if (retreated)
-			return true;
+		{
+			return popped;
+		}
 
 		if (!missions.empty())
 		{
@@ -5395,7 +5415,7 @@ bool BattleUnit::popFinishedMissions(GameState &state)
 			break;
 		}
 	}
-	return false;
+	return popped;
 }
 
 bool BattleUnit::hasMovementQueued()
@@ -5488,9 +5508,9 @@ bool BattleUnit::cancelMissions(GameState &state, bool forced)
 	}
 	else
 	{
-		if (popFinishedMissions(state))
+		popFinishedMissions(state);
+		if (retreated)
 		{
-			// Unit retreated
 			return false;
 		}
 		if (missions.empty())

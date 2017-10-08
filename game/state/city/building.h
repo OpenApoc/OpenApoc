@@ -69,6 +69,8 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 	void detect(GameState &state, bool forced = false);
 	void alienGrowth(GameState &state);
 
+	void collapse(GameState &state);
+
 	// Following members are not serialized, but rather are set in City::initMap method
 
 	Vec3<int> crewQuarters;

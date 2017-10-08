@@ -409,7 +409,16 @@ void AEquipment::updateInner(GameState &state, unsigned int ticks)
 
 bool AEquipment::canBeUsed(GameState &state) const
 {
-	if (ownerAgent && ownerAgent->owner == state.getPlayer() &&
+	if (ownerAgent)
+	{
+		return canBeUsed(state, ownerAgent->owner);
+	}
+	return true;
+}
+
+bool AEquipment::canBeUsed(GameState &state, StateRef<Organisation> owner) const
+{
+	if (owner == state.getPlayer() && !(state.current_battle && state.current_battle->skirmish) &&
 	    !type->research_dependency.satisfied())
 	{
 		return false;

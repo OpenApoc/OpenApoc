@@ -438,6 +438,9 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 				e->research_dependency.topics.emplace(&state, "RESEARCH_BRAINSUCKER_PODS");
 				break;
 			case IT_BRAINSUCKERPOD:
+				e->bioStorage = true;
+				e->bioRemains = {&state, "AEQUIPMENTTYPE_BRAINSUCKER_ALIVE"};
+				e->store_space = 1;
 				e->research_dependency.topics.emplace(&state, "RESEARCH_BRAINSUCKER_LAUNCHER");
 				e->research_dependency.topics.emplace(&state, "RESEARCH_BRAINSUCKER_PODS");
 				break;

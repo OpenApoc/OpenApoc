@@ -193,9 +193,11 @@ class CanEnterTileHelper
 	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
 	virtual bool canEnterTile(Tile *from, Tile *to, bool allowJumping, bool &jumped, float &cost,
 	                          bool &doorInTheWay, bool ignoreStaticUnits = false,
+	                          bool ignoreMovingUnits = false,
 	                          bool ignoreAllUnits = false) const = 0;
 	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
 	virtual bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
+	                          bool ignoreMovingUnits = false,
 	                          bool ignoreAllUnits = false) const = 0;
 	virtual float adjustCost(Vec3<int> /*  nextPosition */, int /* z */) const { return 0; }
 	virtual float getDistance(Vec3<float> from, Vec3<float> to) const = 0;
@@ -261,19 +263,19 @@ class TileMap
 	                                      Vec3<int> destinationEnd, int iterationLimit,
 	                                      const CanEnterTileHelper &canEnterTile,
 	                                      bool approachOnly = false, bool ignoreStaticUnits = false,
+	                                      bool ignoreMovingUnits = true,
 	                                      bool ignoreAllUnits = false, float *cost = nullptr,
 	                                      float maxCost = 0.0f);
 	// Path to target position
-	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destination,
-	                                      unsigned int iterationLimit,
-	                                      const CanEnterTileHelper &canEnterTile,
-	                                      bool approachOnly = false, bool ignoreStaticUnits = false,
-	                                      bool ignoreAllUnits = false, float *cost = nullptr,
-	                                      float maxCost = 0.0f)
+	std::list<Vec3<int>>
+	findShortestPath(Vec3<int> origin, Vec3<int> destination, unsigned int iterationLimit,
+	                 const CanEnterTileHelper &canEnterTile, bool approachOnly = false,
+	                 bool ignoreStaticUnits = false, bool ignoreMovingUnits = true,
+	                 bool ignoreAllUnits = false, float *cost = nullptr, float maxCost = 0.0f)
 	{
 		return findShortestPath(origin, destination, destination + Vec3<int>{1, 1, 1},
 		                        iterationLimit, canEnterTile, approachOnly, ignoreStaticUnits,
-		                        ignoreAllUnits, cost, maxCost);
+		                        ignoreMovingUnits, ignoreAllUnits, cost, maxCost);
 	}
 
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,

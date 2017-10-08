@@ -983,9 +983,10 @@ void Agent::die(GameState &state, bool silent)
 	{
 		currentVehicle->currentAgents.erase(thisRef);
 	}
-	// In city (if not died in a vehicle) we make an event
+	// In city we remove agent
 	if (!state.current_battle)
 	{
+		// In city (if not died in a vehicle) we make an event
 		if (!silent && owner == state.getPlayer())
 		{
 			fw().pushEvent(

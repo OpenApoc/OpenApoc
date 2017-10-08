@@ -23,6 +23,7 @@ class Base : public StateObject, public std::enable_shared_from_this<Base>
 	std::vector<std::vector<bool>> corridors;
 	std::vector<sp<Facility>> facilities;
 	// For ammunition, this is actually the count of bullets, not clips
+	std::map<UString, unsigned> inventoryBioEquipment;
 	std::map<UString, unsigned> inventoryAgentEquipment;
 	std::map<UString, unsigned> inventoryVehicleEquipment;
 	std::map<UString, unsigned> inventoryVehicleAmmo;

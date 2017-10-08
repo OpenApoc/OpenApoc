@@ -25,18 +25,19 @@ namespace OpenApoc
 AgentTileHelper::AgentTileHelper(TileMap &map) : map(map) {}
 
 bool AgentTileHelper::canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits,
-                                   bool ignoreAllUnits) const
+                                   bool ignoreMovingUnits, bool ignoreAllUnits) const
 {
 	float nothing;
 	bool none1;
 	bool none2;
-	return canEnterTile(from, to, false, none1, nothing, none2, ignoreStaticUnits, ignoreAllUnits);
+	return canEnterTile(from, to, false, none1, nothing, none2, ignoreStaticUnits,
+	                    ignoreMovingUnits, ignoreAllUnits);
 }
 
 float AgentTileHelper::pathOverheadAlloawnce() const { return 1.25f; }
 
 bool AgentTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, float &cost, bool &, bool,
-                                   bool) const
+                                   bool, bool) const
 {
 	if (!from)
 	{

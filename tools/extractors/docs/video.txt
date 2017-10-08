@@ -10,13 +10,15 @@ Support me:
 ---
 
 General:
-- 
+- options
 
 City:
-- everybody dies
-- buttons in building and location work
-- can initiate combat in building
+- ferrying
+- hiring and buying framework
+- researching requires and consumes items
+- skirmish completely virtual
 
 Battle:
+- provide loot and bio stuff
 
 Bugfixes:

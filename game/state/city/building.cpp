@@ -322,18 +322,18 @@ void Building::updateCargo(GameState &state)
 		if (c.type == Cargo::Type::Bio)
 		{
 #ifdef DEBUG_VERBOSE_CARGO_SYSTEM
-			LogWarning("BIOCARGO: %s needs to deliver %d to %s", thisRef.id, c.count * c.space,
-			           c.destination.id);
+			LogWarning("BIOCARGO: %s needs to deliver %d to %s", thisRef.id,
+			           c.count * c.space / c.divisor, c.destination.id);
 #endif
-			spaceNeeded[c.destination][sourceOrg][0] += c.count * c.space;
+			spaceNeeded[c.destination][sourceOrg][0] += std::max(1, c.count * c.space / c.divisor);
 		}
 		else
 		{
 #ifdef DEBUG_VERBOSE_CARGO_SYSTEM
-			LogWarning("CARGO: %s needs to deliver %d to %s", thisRef.id, c.count * c.space,
-			           c.destination.id);
+			LogWarning("CARGO: %s needs to deliver %d to %s", thisRef.id,
+			           c.count * c.space / c.divisor, c.destination.id);
 #endif
-			spaceNeeded[c.destination][sourceOrg][1] += c.count * c.space;
+			spaceNeeded[c.destination][sourceOrg][1] += std::max(1, c.count * c.space / c.divisor);
 		}
 		if (c.cost > 0)
 		{
@@ -818,5 +818,7 @@ void Building::alienGrowth(GameState &state)
 	// Disable detection if no aliens are there
 	detected = detected && hasAliens();
 }
+
+void Building::collapse(GameState &state) { LogWarning("Collpase the whole building!"); }
 
 } // namespace OpenApoc
