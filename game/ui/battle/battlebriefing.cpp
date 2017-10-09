@@ -8,6 +8,7 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
+#include "game/state/base/base.h"
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/city/building.h"
 #include "game/state/gamestate.h"
@@ -51,7 +52,17 @@ BattleBriefing::BattleBriefing(sp<GameState> state, StateRef<Organisation> targe
 	else
 	{
 		auto building = StateRef<Building>(&*state, location);
-		if (!isRaid && building->owner != state->getAliens())
+		if (building->base && building->owner == state->getPlayer())
+		{
+			menuform->findControlTyped<Graphic>("BRIEFING_IMAGE")
+			    ->setImage(fw().data->loadImage("xcom3/tacdata/brief4.pcx"));
+			bool lastBase = state->player_bases.size() == 1;
+			briefing = lastBase ? "You must lorem ipisum etc. (Here be briefing text) (Text: "
+			                      "Building Last Base Assault)"
+			                    : "You must lorem ipisum etc. (Here be briefing text) (Text: "
+			                      "Building Non-Last Base Assault)";
+		}
+		else if (!isRaid && building->owner != state->getAliens())
 		{
 			menuform->findControlTyped<Graphic>("BRIEFING_IMAGE")
 			    ->setImage(fw().data->loadImage("xcom3/tacdata/brief.pcx"));
@@ -60,17 +71,7 @@ BattleBriefing::BattleBriefing(sp<GameState> state, StateRef<Organisation> targe
 		}
 		else
 		{
-			if (building->owner == state->getPlayer())
-			{
-				menuform->findControlTyped<Graphic>("BRIEFING_IMAGE")
-				    ->setImage(fw().data->loadImage("xcom3/tacdata/brief4.pcx"));
-				bool lastBase = state->player_bases.size() == 1;
-				briefing = lastBase ? "You must lorem ipisum etc. (Here be briefing text) (Text: "
-				                      "Building Last Base Assault)"
-				                    : "You must lorem ipisum etc. (Here be briefing text) (Text: "
-				                      "Building Non-Last Base Assault)";
-			}
-			else if (building->owner != state->getAliens())
+			if (building->owner != state->getAliens())
 			{
 				menuform->findControlTyped<Graphic>("BRIEFING_IMAGE")
 				    ->setImage(fw().data->loadImage("xcom3/tacdata/brief2.pcx"));

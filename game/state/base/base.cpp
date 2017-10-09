@@ -1,7 +1,11 @@
 #include "game/state/base/base.h"
+#include "framework/framework.h"
 #include "game/state/base/facility.h"
 #include "game/state/city/baselayout.h"
 #include "game/state/city/building.h"
+#include "game/state/city/city.h"
+#include "game/state/city/vehicle.h"
+#include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
 #include "game/state/rules/facility_type.h"
@@ -34,6 +38,69 @@ Base::Base(GameState &state, StateRef<Building> building) : building(building)
 	else
 	{
 		buildFacility(state, type, building->base_layout->baseLift, true);
+	}
+}
+
+void Base::die(GameState &state, bool collapse)
+{
+	fw().pushEvent(new GameSomethingDiedEvent(
+	    GameEventType::BaseDestroyed, name,
+	    collapse ? /*by collapsing building*/ "" : "byEnemyForces", building->crewQuarters));
+	for (auto &b : building->city->buildings)
+	{
+		for (auto &c : b.second->cargo)
+		{
+			if (c.destination == building)
+			{
+				c.refund(state, {&state, b.first});
+			}
+		}
+	}
+	for (auto &v : state.vehicles)
+	{
+		for (auto &c : v.second->cargo)
+		{
+			if (c.destination == building)
+			{
+				// This is base transfer in progress
+				if (c.originalOwner == c.destination->owner)
+				{
+					// Re-route to another base
+					for (auto &b : state.player_bases)
+					{
+						if (b.second->building = building)
+						{
+							continue;
+						}
+						c.destination = b.second->building;
+						break;
+					}
+				}
+				else
+				{
+					c.refund(state, nullptr);
+				}
+			}
+		}
+	}
+	for (auto a : building->currentAgents)
+	{
+		a->die(state, true);
+	}
+	for (auto v : building->currentVehicles)
+	{
+		v->die(state, nullptr, true);
+	}
+	building->base.clear();
+	building->owner = state.getGovernment();
+	building->collapse(state);
+	building.clear();
+
+	state.player_bases.erase(Base::getId(state, shared_from_this()));
+	state.current_base.clear();
+	if (!state.player_bases.empty())
+	{
+		state.current_base = {&state, state.player_bases.begin()->first};
 	}
 }
 

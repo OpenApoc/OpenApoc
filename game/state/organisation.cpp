@@ -1,4 +1,5 @@
 #include "game/state/organisation.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
@@ -44,7 +45,168 @@ void Organisation::takeOver(GameState &state, bool forced)
 	fw().pushEvent(event);
 }
 
-void Organisation::update(GameState &state, unsigned int ticks)
+Organisation::PurchaseResult
+Organisation::canPurchaseFrom(GameState &state, const StateRef<Building> &buyer, bool vehicle) const
+{
+	// Step 01: Check if org likes buyer
+	if (isRelatedTo(buyer->owner) == Relation::Hostile)
+	{
+		return PurchaseResult::OrgHostile;
+	}
+	// Step 02: Check if org has buildings in buyer's city
+	if (!getPurchaseBuilding(state, buyer))
+	{
+		return PurchaseResult::OrgHasNoBuildings;
+	}
+	// Step 03: Checks for cargo delivery
+	if (!vehicle)
+	{
+		// Step 03.01: Find out who provides transportation services
+		std::list<StateRef<Organisation>> ferryCompanies;
+		for (auto &o : state.organisations)
+		{
+			if (o.second->providesTransportationServices)
+			{
+				ferryCompanies.emplace_back(&state, o.first);
+			}
+		}
+		// Step 03.02: Check if a ferry provider exists that likes us both
+		if (config().getBool("OpenApoc.NewFeature.FerryChecksRelationshipWhenBuying"))
+		{
+			// Clear those that don't like either
+			for (auto it = ferryCompanies.begin(); it != ferryCompanies.end();)
+			{
+				if ((*it)->isRelatedTo({&state, id}) == Relation::Hostile ||
+				    (*it)->isRelatedTo(buyer->owner) == Relation::Hostile)
+				{
+					it = ferryCompanies.erase(it);
+				}
+				else
+				{
+					it++;
+				}
+			}
+			if (ferryCompanies.empty())
+			{
+				return PurchaseResult::NoTransportAvailable;
+			}
+		}
+		// Step 03.03: Check if ferry provider has free ferries
+		if (config().getBool("OpenApoc.NewFeature.CallExistingFerry"))
+		{
+			bool ferryFound = false;
+			for (auto &o : ferryCompanies)
+			{
+				for (auto &v : state.vehicles)
+				{
+					if (v.second->owner != o || !v.second->type->provideFreightCargo ||
+					    !v.second->missions.empty())
+					{
+						continue;
+					}
+					ferryFound = true;
+					break;
+				}
+			}
+			if (!ferryFound)
+			{
+				return PurchaseResult::NoTransportAvailable;
+			}
+		}
+	}
+	return PurchaseResult::OK;
+}
+
+StateRef<Building> Organisation::getPurchaseBuilding(GameState &state,
+                                                     const StateRef<Building> &buyer) const
+{
+	std::list<StateRef<Building>> purchaseBuildings;
+	for (auto &b : buyer->city->buildings)
+	{
+		if (b.second->owner.id == id && b.first != buyer.id)
+		{
+			purchaseBuildings.emplace_back(&state, b.first);
+		}
+	}
+	if (purchaseBuildings.empty())
+	{
+		return nullptr;
+	}
+	else
+	{
+		// Prioritize building with cargo already bound to this buyer
+		for (auto &b : purchaseBuildings)
+		{
+			for (auto &c : b->cargo)
+			{
+				if (c.destination == buyer)
+				{
+					return b;
+				}
+			}
+		}
+		return listRandomiser(state.rng, purchaseBuildings);
+	}
+}
+
+void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
+                            StateRef<VEquipmentType> vehicleEquipment, int count)
+{
+	// Expecting to be able to purchase
+	auto building = getPurchaseBuilding(state, buyer);
+	building->cargo.emplace_back(state, vehicleEquipment, count, StateRef<Organisation>{&state, id},
+	                             buyer);
+	LogWarning("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count,
+	           vehicleEquipment.id, building.id, buyer.id);
+	// FIXME: Economy
+	auto owner = buyer->owner;
+	owner->balance -= count * 1;
+}
+
+void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
+                            StateRef<VAmmoType> vehicleAmmo, int count)
+{
+	// Expecting to be able to purchase
+	auto building = getPurchaseBuilding(state, buyer);
+	building->cargo.emplace_back(state, vehicleAmmo, count, StateRef<Organisation>{&state, id},
+	                             buyer);
+	LogWarning("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count, vehicleAmmo.id,
+	           building.id, buyer.id);
+	// FIXME: Economy
+	auto owner = buyer->owner;
+	owner->balance -= count * 1;
+}
+
+void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
+                            StateRef<AEquipmentType> agentEquipment, int count)
+{
+	// Expecting to be able to purchase
+	auto building = getPurchaseBuilding(state, buyer);
+	building->cargo.emplace_back(state, agentEquipment, count, StateRef<Organisation>{&state, id},
+	                             buyer);
+	LogWarning("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count, agentEquipment.id,
+	           building.id, buyer.id);
+	// FIXME: Economy
+	auto owner = buyer->owner;
+	owner->balance -= count * 1;
+}
+
+void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
+                            StateRef<VehicleType> vehicle, int count)
+{
+	// Expecting to be able to purchase
+	auto building = getPurchaseBuilding(state, buyer);
+	LogWarning("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count, vehicle.id,
+	           building.id, buyer.id);
+	auto v = building->city->placeVehicle(state, vehicle, buyer->owner, building);
+	v->homeBuilding = buyer;
+	v->setMission(state, VehicleMission::gotoBuilding(state, *v, v->homeBuilding));
+	// FIXME: Economy
+	auto owner = buyer->owner;
+	owner->balance -= count * 1;
+}
+
+void Organisation::updateMissions(GameState &state)
 {
 	for (auto &m : missions)
 	{
@@ -52,6 +214,51 @@ void Organisation::update(GameState &state, unsigned int ticks)
 		{
 			m.execute(state, {&state, id});
 		}
+	}
+}
+
+void Organisation::updateHirableAgents(GameState &state)
+{
+	if (hirableTypes.empty())
+	{
+		return;
+	}
+	StateRef<Building> hireeLocation;
+	for (auto &c : state.cities)
+	{
+		for (auto &b : c.second->buildings)
+		{
+			if (b.second->owner.id != id)
+			{
+				continue;
+			}
+			hireeLocation = {&state, b.first};
+			break;
+		}
+	}
+	if (!hireeLocation)
+	{
+		return;
+	}
+	std::set<sp<Agent>> agentsToRemove;
+	for (auto &a : state.agents)
+	{
+		if (a.second->owner.id == id && hirableTypes.find(a.second->type) != hirableTypes.end())
+		{
+			agentsToRemove.insert(a.second);
+		}
+	}
+	for (auto &a : agentsToRemove)
+	{
+		a->die(state, true);
+	}
+	int newAgents = randBoundsInclusive(state.rng, minHireePool, maxHireePool);
+	for (int i = 0; i < newAgents; i++)
+	{
+		auto a = state.agent_generator.createAgent(state, {&state, id},
+		                                           setRandomiser(state.rng, hirableTypes));
+		a->homeBuilding = hireeLocation;
+		a->enterBuilding(state, hireeLocation);
 	}
 }
 
@@ -130,37 +337,37 @@ void Organisation::updateVehicleAgentPark(GameState &state)
 		return;
 	}
 
-	if (agentPark > 0)
-	{
-		int countAgents = 0;
-		for (auto &a : state.agents)
-		{
-			if (a.second->owner.id == id)
-			{
-				countAgents++;
-			}
-		}
-		std::list<sp<Building>> buildingsRandomizer;
-		for (auto &b : state.cities["CITYMAP_HUMAN"]->buildings)
-		{
-			if (b.second->owner.id != id)
-			{
-				continue;
-			}
-			buildingsRandomizer.push_back(b.second);
-		}
-		sp<Building> building = listRandomiser(state.rng, buildingsRandomizer);
-		while (countAgents < agentPark)
-		{
-			auto agent = state.agent_generator.createAgent(state, {&state, id},
-			                                               {&state, "AGENTTYPE_BUILDING_SECURITY"});
-			agent->homeBuilding = {&state, building};
-			agent->city = agent->homeBuilding->city;
-			agent->enterBuilding(state, agent->homeBuilding);
+	// if (agentPark > 0)
+	//{
+	//	int countAgents = 0;
+	//	for (auto &a : state.agents)
+	//	{
+	//		if (a.second->owner.id == id)
+	//		{
+	//			countAgents++;
+	//		}
+	//	}
+	//	std::list<sp<Building>> buildingsRandomizer;
+	//	for (auto &b : state.cities["CITYMAP_HUMAN"]->buildings)
+	//	{
+	//		if (b.second->owner.id != id)
+	//		{
+	//			continue;
+	//		}
+	//		buildingsRandomizer.push_back(b.second);
+	//	}
+	//	sp<Building> building = listRandomiser(state.rng, buildingsRandomizer);
+	//	while (countAgents < agentPark)
+	//	{
+	//		auto agent = state.agent_generator.createAgent(state, {&state, id},
+	//		                                               {&state, "AGENTTYPE_BUILDING_SECURITY"});
+	//		agent->homeBuilding = {&state, building};
+	//		agent->city = agent->homeBuilding->city;
+	//		agent->enterBuilding(state, agent->homeBuilding);
 
-			countAgents++;
-		}
-	}
+	//		countAgents++;
+	//	}
+	//}
 
 	for (auto &entry : vehiclePark)
 	{
@@ -304,147 +511,138 @@ void Organisation::Mission::execute(GameState &state, StateRef<Organisation> own
 	next = state.gameTime.getTicks() +
 	       randBoundsInclusive(state.rng, pattern.minIntervalRepeat, pattern.maxIntervalRepeat);
 
-	// Agent mission
-	if (pattern.allowedTypes.empty())
+	int count = randBoundsInclusive(state.rng, pattern.minAmount, pattern.maxAmount);
+	// Special case
+	if (pattern.target == Organisation::MissionPattern::Target::ArriveFromSpace)
 	{
+		LogWarning("Implement space liner arrival");
+		return;
 	}
-	// Vehicle mission
-	else
+	// Compile list of matching buildings with vehicles
+	std::map<sp<Building>, std::list<StateRef<Vehicle>>> availableVehicles;
+	for (auto &b : state.current_city->buildings)
 	{
-		int count = randBoundsInclusive(state.rng, pattern.minAmount, pattern.maxAmount);
-		// Special case
-		if (pattern.target == Organisation::MissionPattern::Target::ArriveFromSpace)
+		if (b.second->owner != owner)
 		{
-			LogWarning("Implement space liner arrival");
-			return;
+			continue;
 		}
-		// Compile list of matching buildings with vehicles
-		std::map<sp<Building>, std::list<StateRef<Vehicle>>> availableVehicles;
-		for (auto &b : state.current_city->buildings)
-		{
-			if (b.second->owner != owner)
-			{
-				continue;
-			}
 
-			for (auto &v : b.second->currentVehicles)
+		for (auto &v : b.second->currentVehicles)
+		{
+			if (v->owner == owner &&
+			    pattern.allowedTypes.find(v->type) != pattern.allowedTypes.end())
 			{
-				if (v->owner == owner &&
-				    pattern.allowedTypes.find(v->type) != pattern.allowedTypes.end())
-				{
-					availableVehicles[b.second].push_back(v);
-				}
+				availableVehicles[b.second].push_back(v);
 			}
 		}
-		if (availableVehicles.size() == 0)
+	}
+	if (availableVehicles.size() == 0)
+	{
+		// None available to take mission
+		return;
+	}
+	std::list<sp<Building>> buildingsRandomizer;
+	// Try pick one that has enough vehicles
+	int maxSeenCount = 0;
+	for (auto &e : availableVehicles)
+	{
+		if ((int)e.second.size() >= count)
 		{
-			// None available to take mission
-			return;
+			buildingsRandomizer.push_back(e.first);
 		}
-		std::list<sp<Building>> buildingsRandomizer;
-		// Try pick one that has enough vehicles
-		int maxSeenCount = 0;
+		else if (maxSeenCount < (int)e.second.size())
+		{
+			maxSeenCount = (int)e.second.size();
+		}
+	}
+	// Pick one with highest count
+	if (buildingsRandomizer.size() == 0)
+	{
+		count = maxSeenCount;
 		for (auto &e : availableVehicles)
 		{
-			if ((int)e.second.size() >= count)
+			if ((int)e.second.size() == maxSeenCount)
 			{
 				buildingsRandomizer.push_back(e.first);
 			}
-			else if (maxSeenCount < (int)e.second.size())
-			{
-				maxSeenCount = (int)e.second.size();
-			}
 		}
-		// Pick one with highest count
-		if (buildingsRandomizer.size() == 0)
+	}
+	auto sourceBuilding = listRandomiser(state.rng, buildingsRandomizer);
+
+	// Special case
+	if (pattern.target == Organisation::MissionPattern::Target::DepartToSpace)
+	{
+		LogWarning("Implement space liner departure");
+		return;
+	}
+
+	// Pick destination building
+	buildingsRandomizer.clear();
+	for (auto &b : state.current_city->buildings)
+	{
+		if (b.second == sourceBuilding)
 		{
-			count = maxSeenCount;
-			for (auto &e : availableVehicles)
-			{
-				if ((int)e.second.size() == maxSeenCount)
+			continue;
+		}
+		// Check if building fits
+		switch (pattern.target)
+		{
+			case Organisation::MissionPattern::Target::Owned:
+				if (b.second->owner == owner)
 				{
-					buildingsRandomizer.push_back(e.first);
+					break;
 				}
-			}
-		}
-		auto sourceBuilding = listRandomiser(state.rng, buildingsRandomizer);
-
-		// Special case
-		if (pattern.target == Organisation::MissionPattern::Target::DepartToSpace)
-		{
-			LogWarning("Implement space liner departure");
-			return;
-		}
-
-		// Pick destination building
-		buildingsRandomizer.clear();
-		for (auto &b : state.current_city->buildings)
-		{
-			if (b.second == sourceBuilding)
-			{
 				continue;
-			}
-			// Check if building fits
-			switch (pattern.target)
-			{
-				case Organisation::MissionPattern::Target::Owned:
-					if (b.second->owner == owner)
+			case Organisation::MissionPattern::Target::OwnedOrOther:
+			case Organisation::MissionPattern::Target::Other:
+				if (b.second->owner == owner)
+				{
+					if (pattern.target == Organisation::MissionPattern::Target::OwnedOrOther)
 					{
 						break;
 					}
-					continue;
-				case Organisation::MissionPattern::Target::OwnedOrOther:
-				case Organisation::MissionPattern::Target::Other:
-					if (b.second->owner == owner)
+					else
 					{
-						if (pattern.target == Organisation::MissionPattern::Target::OwnedOrOther)
-						{
-							break;
-						}
-						else
-						{
-							continue;
-						}
+						continue;
 					}
-					if (pattern.relation.empty())
-					{
-						break;
-					}
-					if (pattern.relation.find(owner->isRelatedTo(b.second->owner)) !=
-					    pattern.relation.end())
-					{
-						break;
-					}
-					continue;
-				case Organisation::MissionPattern::Target::ArriveFromSpace:
-				case Organisation::MissionPattern::Target::DepartToSpace:
-					LogError("Impossible to arrive/depart at this point?");
-					return;
-			}
-			buildingsRandomizer.push_back(b.second);
+				}
+				if (pattern.relation.empty())
+				{
+					break;
+				}
+				if (pattern.relation.find(owner->isRelatedTo(b.second->owner)) !=
+				    pattern.relation.end())
+				{
+					break;
+				}
+				continue;
+			case Organisation::MissionPattern::Target::ArriveFromSpace:
+			case Organisation::MissionPattern::Target::DepartToSpace:
+				LogError("Impossible to arrive/depart at this point?");
+				return;
 		}
-		if (buildingsRandomizer.size() == 0)
-		{
-			return;
-		}
+		buildingsRandomizer.push_back(b.second);
+	}
+	if (buildingsRandomizer.size() == 0)
+	{
+		return;
+	}
 
-		auto destBuilding = listRandomiser(state.rng, buildingsRandomizer);
+	auto destBuilding = listRandomiser(state.rng, buildingsRandomizer);
 
-		// Do it
-		while (count-- > 0)
+	// Do it
+	while (count-- > 0)
+	{
+		auto v = availableVehicles[sourceBuilding].front();
+		availableVehicles[sourceBuilding].pop_front();
+		v->setMission(state,
+		              VehicleMission::gotoBuilding(state, *v, {&state, destBuilding}, false));
+		// Come back if we are going to another org
+		if (destBuilding->owner != owner)
 		{
-			auto v = availableVehicles[sourceBuilding].front();
-			availableVehicles[sourceBuilding].pop_front();
-			v->setMission(state,
-			              VehicleMission::gotoBuilding(state, *v, {&state, destBuilding}, false));
-			// Come back if we are going to another org
-			if (destBuilding->owner != owner)
-			{
-				v->addMission(state, VehicleMission::snooze(state, *v, 10 * TICKS_PER_SECOND),
-				              true);
-				v->addMission(
-				    state, VehicleMission::gotoBuilding(state, *v, {&state, sourceBuilding}), true);
-			}
+			v->addMission(state, VehicleMission::snooze(state, *v, 10 * TICKS_PER_SECOND), true);
+			v->addMission(state, VehicleMission::gotoBuilding(state, *v, {&state, sourceBuilding}),
+			              true);
 		}
 	}
 }

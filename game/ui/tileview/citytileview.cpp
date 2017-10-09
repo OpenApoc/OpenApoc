@@ -32,7 +32,8 @@ CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratT
 	selectedTileImageFront = fw().data->loadImage("city/selected-citytile-front.png");
 	selectedTileImageOffset = {32, 16};
 	pal = fw().data->loadPalette("xcom3/ufodata/pal_01.dat");
-	alertImage = fw().data->loadImage("city/building-circle.png");
+	alertImage = fw().data->loadImage("city/building-circle-red.png");
+	cargoImage = fw().data->loadImage("city/building-circle-yellow.png");
 
 	selectionBrackets.resize(3);
 	selectionBrackets[0].push_back(fw().data->loadImage("city/vehicle-brackets-f0.png"));
@@ -454,49 +455,6 @@ void CityTileView::render()
 
 										if (friendly)
 										{
-											for (auto &m : v->missions)
-											{
-												if (m->type == VehicleMission::MissionType::
-												                   AttackVehicle ||
-												    m->type ==
-												        VehicleMission::MissionType::FollowVehicle)
-												{
-													targetLocationsToDraw.emplace_back(
-													    m->targetVehicle->position, v->position,
-													    false);
-													vehiclesUnderAttack.insert(m->targetVehicle);
-													break;
-												}
-												if ((m->type == VehicleMission::MissionType::
-												                    AttackBuilding ||
-												     m->type ==
-												         VehicleMission::MissionType::Crash ||
-												     m->type == VehicleMission::MissionType::
-												                    GotoBuilding) &&
-												    !m->currentPlannedPath.empty())
-												{
-													targetLocationsToDraw.emplace_back(
-													    (Vec3<float>)m->currentPlannedPath.back() +
-													        Vec3<float>{0.5f, 0.5f, 0.0f},
-													    v->position, true);
-													break;
-												}
-												if ((m->type == VehicleMission::MissionType::
-												                    GotoLocation ||
-												     m->type == VehicleMission::MissionType::
-												                    InfiltrateSubvert ||
-												     m->type ==
-												         VehicleMission::MissionType::Patrol ||
-												     m->type ==
-												         VehicleMission::MissionType::GotoPortal))
-												{
-													targetLocationsToDraw.emplace_back(
-													    (Vec3<float>)m->targetLocation +
-													        Vec3<float>{0.5f, 0.5f, 0.0f},
-													    v->position, true);
-													break;
-												}
-											}
 										}
 										vehiclesToDraw.emplace_back(
 										    v, friendly, hostile,
@@ -548,8 +506,7 @@ void CityTileView::render()
 			// Compile list of vehicle destinations and add to draw for those that are in buildings
 			for (auto &v : state.vehicles)
 			{
-				if (v.second->owner != state.getPlayer() || v.second->city != state.current_city ||
-				    !v.second->currentBuilding || v.second->isDead())
+				if (v.second->owner != state.getPlayer() || v.second->city != state.current_city)
 				{
 					continue;
 				}
@@ -558,13 +515,19 @@ void CityTileView::render()
 				              state.current_city->cityViewSelectedVehicles.end(),
 				              v.second) != state.current_city->cityViewSelectedVehicles.end();
 
-				vehiclesToDraw.emplace_back(
-				    v.second, true, false,
-				    selected
-				        ? (v.second->type->mapIconType == VehicleType::MapIconType::LargeCircle ? 2
-				                                                                                : 1)
-				        : 0);
+				// Draw those in buildings
+				if (v.second->currentBuilding)
+				{
+					vehiclesToDraw.emplace_back(
+					    v.second, true, false,
+					    selected
+					        ? (v.second->type->mapIconType == VehicleType::MapIconType::LargeCircle
+					               ? 2
+					               : 1)
+					        : 0);
+				}
 
+				// Destinations
 				for (auto &m : v.second->missions)
 				{
 					for (auto &m : v.second->missions)
@@ -687,32 +650,69 @@ void CityTileView::render()
 			}
 			renderStrategyOverlay(r);
 
-			// Detection
+			// Building selection circles
 			for (auto &b : state.current_city->buildings)
 			{
-				if (!b.second->detected)
+				// Detection of aliens
+				if (b.second->detected)
 				{
-					continue;
-				}
-				float initialRadius = std::max(alertImage->size.x, alertImage->size.y);
-				// Eventually scale to 1/2 the size, but start with some bonus time of full size,
-				// so that it doesn't become distorted immediately, that's why we add extra 0.05
-				float radius = std::min(initialRadius,
-				                        initialRadius * (float)b.second->ticksDetectionTimeOut /
-				                                (float)TICKS_DETECTION_TIMEOUT / 2.0f +
-				                            0.55f);
-				Vec2<float> pos = tileToOffsetScreenCoords(
-				    Vec3<int>{(b.second->bounds.p0.x + b.second->bounds.p1.x) / 2,
-				              (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2});
-				pos -= Vec2<float>{radius / 2.0f, radius / 2.0f};
+					float initialRadius = std::max(alertImage->size.x, alertImage->size.y);
+					// Eventually scale to 1/2 the size, but start with some bonus time of full
+					// size,
+					// so that it doesn't become distorted immediately, that's why we add extra 0.05
+					float radius = std::min(initialRadius,
+					                        initialRadius * (float)b.second->ticksDetectionTimeOut /
+					                                (float)TICKS_DETECTION_TIMEOUT / 2.0f +
+					                            0.55f);
+					Vec2<float> pos = tileToOffsetScreenCoords(
+					    Vec3<int>{(b.second->bounds.p0.x + b.second->bounds.p1.x) / 2,
+					              (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2});
+					pos -= Vec2<float>{radius / 2.0f, radius / 2.0f};
 
-				if (radius == initialRadius)
-				{
-					r.draw(alertImage, pos);
+					if (radius == initialRadius)
+					{
+						r.draw(alertImage, pos);
+					}
+					else
+					{
+						r.drawScaled(alertImage, pos, {radius, radius});
+					}
 				}
-				else
+				// Cargo for player
+				bool hasCargo = false;
+				uint64_t nearestExpiry = UINT64_MAX;
+				for (auto &c : b.second->cargo)
 				{
-					r.drawScaled(alertImage, pos, {radius, radius});
+					if (c.count > 0 && c.destination->owner == state.getPlayer())
+					{
+						hasCargo = true;
+						nearestExpiry = std::min(nearestExpiry, c.expirationDate);
+					}
+				}
+				if (hasCargo)
+				{
+					nearestExpiry -= state.gameTime.getTicks();
+					float initialRadius = std::max(cargoImage->size.x, cargoImage->size.y);
+					// Eventually scale to 1/2 the size, but start with some bonus time of full
+					// size,
+					// so that it doesn't become distorted immediately, that's why we add extra 0.05
+					float radius = std::min(initialRadius,
+					                        initialRadius * (float)nearestExpiry /
+					                                (float)TICKS_CARGO_TTL / 2.0f +
+					                            0.55f);
+					Vec2<float> pos = tileToOffsetScreenCoords(
+					    Vec3<int>{(b.second->bounds.p0.x + b.second->bounds.p1.x) / 2,
+					              (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2});
+					pos -= Vec2<float>{radius / 2.0f, radius / 2.0f};
+
+					if (radius == initialRadius)
+					{
+						r.draw(cargoImage, pos);
+					}
+					else
+					{
+						r.drawScaled(cargoImage, pos, {radius, radius});
+					}
 				}
 			}
 

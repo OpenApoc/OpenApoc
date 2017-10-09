@@ -20,6 +20,7 @@ class Battle;
 class ResearchTopic;
 class Lab;
 class Facility;
+class Organisation;
 
 class GameEvent : public Event
 {
@@ -49,8 +50,11 @@ class GameBaseEvent : public GameEvent
 {
   public:
 	StateRef<Base> base;
+	StateRef<Organisation> actor;
+	bool flag = false;
 
-	GameBaseEvent(GameEventType type, StateRef<Base> base);
+	GameBaseEvent(GameEventType type, StateRef<Base> base, StateRef<Organisation> actor = nullptr,
+	              bool flag = false);
 	~GameBaseEvent() override = default;
 	UString message() override;
 };
@@ -88,9 +92,22 @@ class GameAgentEvent : public GameEvent
 {
   public:
 	StateRef<Agent> agent;
+	bool flag;
 
-	GameAgentEvent(GameEventType type, StateRef<Agent> agent);
+	GameAgentEvent(GameEventType type, StateRef<Agent> agent, bool flag = false);
 	~GameAgentEvent() override = default;
+	UString message() override;
+};
+
+class GameSomethingDiedEvent : public GameEvent
+{
+  public:
+	UString messageInner;
+	Vec3<int> location;
+
+	GameSomethingDiedEvent(GameEventType type, UString name, UString actor, Vec3<int> location);
+	GameSomethingDiedEvent(GameEventType type, UString name, Vec3<int> location);
+	~GameSomethingDiedEvent() override = default;
 	UString message() override;
 };
 

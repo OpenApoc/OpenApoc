@@ -138,8 +138,8 @@
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:33:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
       <label id="CLOCK" text="TICK TOCK">
-        <position x="568" y="34"/>
-        <size width="68" height="12"/>
+        <position x="563" y="34"/>
+        <size width="76" height="12"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>

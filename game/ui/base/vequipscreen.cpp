@@ -266,7 +266,7 @@ void VEquipScreen::render()
 	// "reset unused entries" code around
 	std::vector<sp<Label>> statsLabels;
 	std::vector<sp<Label>> statsValues;
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		auto labelName = format("LABEL_%d", i + 1);
 		auto label = form->findControlTyped<Label>(labelName);
@@ -449,6 +449,9 @@ void VEquipScreen::render()
 
 		statsLabels[8]->setText(tr("Cargo"));
 		statsValues[8]->setText(format("%d/%d", vehicle->getCargo(), vehicle->getMaxCargo()));
+
+		statsLabels[9]->setText(tr("Aliens"));
+		statsValues[9]->setText(format("%d/%d", vehicle->getBio(), vehicle->getMaxBio()));
 
 		iconGraphic->setImage(vehicle->type->equip_icon_small);
 	}

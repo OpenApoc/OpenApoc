@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game/state/agent.h"
+#include "game/state/gameevent_types.h"
 #include "game/state/gametime.h"
 #include "game/state/research.h"
 #include "game/state/stateobject.h"
@@ -103,12 +104,20 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	StateRef<Organisation> player;
 	StateRef<Organisation> aliens;
+	StateRef<Organisation> government;
 	StateRef<Organisation> civilian;
 
 	StateRef<City> current_city;
 	StateRef<Base> current_base;
 
 	std::vector<EquipmentTemplate> agentEquipmentTemplates;
+
+	// Used to move events from battle to city and remember time
+
+	GameTime gameTimeBeforeBattle = GameTime(0);
+	UString missionLocationBattle;
+	UString eventFromBattleText;
+	GameEventType eventFromBattle;
 
 	// Used to generate unique names, an incrementing ID for each object type (keyed by StateObject
 	// prefix)
@@ -126,12 +135,13 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRef<Organisation> getPlayer();
 	const StateRef<Organisation> &getAliens() const;
 	StateRef<Organisation> getAliens();
+	const StateRef<Organisation> &getGovernment() const;
+	StateRef<Organisation> getGovernment();
 	const StateRef<Organisation> &getCivilian() const;
 	StateRef<Organisation> getCivilian();
 
 	// The time from game start in ticks
 	GameTime gameTime;
-	GameTime gameTimeBeforeBattle = GameTime(0);
 
 	// high level api for loading game
 	bool loadGame(const UString &path);
@@ -153,6 +163,9 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// that is serialized but not serialized itself). This should also be called on starting a new
 	// game after startGame()
 	void initState();
+	// Validates gamestate, sanity checks for all the possible fuck-ups
+	void validate();
+	void validateResearch();
 
 	void fillOrgStartingProperty();
 	// Fills out initial player property
@@ -173,6 +186,10 @@ class GameState : public std::enable_shared_from_this<GameState>
 	void updateTurbo();
 	void updateAfterTurbo();
 
+	void updateBeforeBattle();
+	void upateAfterBattle();
+
+	void updateEndOfFiveSeconds();
 	void updateEndOfFiveMinutes();
 	void updateEndOfHour();
 	void updateEndOfDay();

@@ -32,6 +32,8 @@ static const unsigned TICKS_PER_TURN = TICKS_PER_SECOND * 4;
 static const unsigned TICKS_END_TURN = TICKS_PER_SECOND * 2;
 // Amount of ticks that must pass for interrupt to begin
 static const unsigned TICKS_BEGIN_INTERRUPT = TICKS_PER_SECOND / 2;
+// If vehicle is this close it can receive loot from UFO crash
+static const float VEHICLE_NEARBY_THRESHOLD = 5.0f;
 
 class BattleCommonImageList;
 class BattleCommonSampleList;
@@ -186,6 +188,9 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// Units currently interrupting
 	std::map<StateRef<BattleUnit>, int> interruptUnits;
 
+	bool skirmish = false;
+	std::map<StateRef<Organisation>, float> relationshipsBeforeSkirmish;
+
 	// BattleView and BattleTileView settings, saved here so that we can return to them
 
 	// Need separate one because float does not work
@@ -325,6 +330,7 @@ class Battle : public std::enable_shared_from_this<Battle>
 	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destination,
 	                                      const BattleUnitTileHelper &canEnterTile,
 	                                      bool approachOnly = false, bool ignoreStaticUnits = false,
+	                                      bool ignoreMovingUnits = true,
 	                                      int iterationLimitDirect = 0, bool forceDirect = false,
 	                                      bool ignoreAllUnits = false, float *cost = nullptr,
 	                                      float maxCost = 0.0f);
@@ -335,12 +341,10 @@ class Battle : public std::enable_shared_from_this<Battle>
 
   private:
 	// The part of findShortestPath that uses LBs
-	std::list<Vec3<int>> findShortestPathUsingLB(Vec3<int> origin, Vec3<int> destination,
-	                                             const BattleUnitTileHelper &canEnterTile,
-	                                             bool approachOnly = false,
-	                                             bool ignoreStaticUnits = false,
-	                                             bool ignoreAllUnits = false, float *cost = nullptr,
-	                                             float maxCost = 0.0f);
+	std::list<Vec3<int>> findShortestPathUsingLB(
+	    Vec3<int> origin, Vec3<int> destination, const BattleUnitTileHelper &canEnterTile,
+	    bool approachOnly = false, bool ignoreStaticUnits = false, bool ignoreMovingUnits = true,
+	    bool ignoreAllUnits = false, float *cost = nullptr, float maxCost = 0.0f);
 
   private:
 	void loadResources(GameState &state);
@@ -362,13 +366,18 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// enemies are hiding where, and so we need to pop notifications again for every enemy
 	std::map<StateRef<Organisation>, std::map<StateRef<BattleUnit>, uint64_t>> lastVisibleTime;
 
-	// List of promoted units
-	// we cannot save game in briefing screen so this is not saved
-	std::list<StateRef<BattleUnit>> unitsPromoted;
-
 	// List of locations for priority spawning of specific agent types
 	// we cannot save game in briefing screen so this is not saved
 	std::map<StateRef<AgentType>, std::list<Vec3<int>>> spawnLocations;
+
+	// We cannot save game in debriefing screen so these debriefing parameters are not saved
+
+	// List of promoted units
+	std::list<StateRef<BattleUnit>> unitsPromoted;
+	// List of bio-containment loot
+	std::map<StateRef<AEquipmentType>, int> bioLoot;
+	// List of cargo bay loot
+	std::map<StateRef<AEquipmentType>, int> cargoLoot;
 
 	// Following members are not serialized, but rather are set in initBattle method
 

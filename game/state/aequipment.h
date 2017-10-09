@@ -104,6 +104,7 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>, public Equip
 
 	// Can item be used (based on research by agent's owner)
 	bool canBeUsed(GameState &state) const;
+	bool canBeUsed(GameState &state, StateRef<Organisation> user) const;
 
 	void update(GameState &state, unsigned int ticks);
 	void updateTB(GameState &state);

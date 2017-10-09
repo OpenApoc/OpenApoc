@@ -104,6 +104,8 @@ const StateRef<Organisation> &GameState::getPlayer() const { return this->player
 StateRef<Organisation> GameState::getPlayer() { return this->player; }
 const StateRef<Organisation> &GameState::getAliens() const { return this->aliens; }
 StateRef<Organisation> GameState::getAliens() { return this->aliens; }
+const StateRef<Organisation> &GameState::getGovernment() const { return this->government; }
+StateRef<Organisation> GameState::getGovernment() { return this->government; }
 const StateRef<Organisation> &GameState::getCivilian() const { return this->civilian; }
 StateRef<Organisation> GameState::getCivilian() { return this->civilian; }
 
@@ -156,10 +158,7 @@ void GameState::initState()
 	for (auto &v : this->vehicles)
 	{
 		v.second->strategyImages = city_common_image_list->strategyImages;
-		if (!v.second->currentBuilding)
-		{
-			v.second->setupMover();
-		}
+		v.second->setupMover();
 	}
 	// Fill links for weapon's ammo
 	for (auto &t : this->agent_equipment)
@@ -180,6 +179,157 @@ void GameState::initState()
 	}
 	// Run nessecary methods for different types
 	research.updateTopicList();
+	// Validate
+	validate();
+}
+
+void GameState::validate()
+{
+	LogWarning("Validating GameState");
+	validateResearch();
+	LogWarning("Validated GameState");
+}
+
+void GameState::validateResearch()
+{
+	for (auto &t : research.topics)
+	{
+		if (t.second->type == ResearchTopic::Type::Engineering)
+		{
+			if (t.second->itemId.length() == 0)
+			{
+				LogError("EMPTY REFERENCE resulting item for %s", t.first);
+			}
+			else
+			{
+				bool fail = false;
+				switch (t.second->item_type)
+				{
+					case ResearchTopic::ItemType::VehicleEquipment:
+						if (vehicle_equipment.find(t.second->itemId) == vehicle_equipment.end())
+						{
+							fail = true;
+						}
+						break;
+					case ResearchTopic::ItemType::VehicleEquipmentAmmo:
+						if (vehicle_ammo.find(t.second->itemId) == vehicle_ammo.end())
+						{
+							fail = true;
+						}
+						break;
+					case ResearchTopic::ItemType::AgentEquipment:
+						if (agent_equipment.find(t.second->itemId) == agent_equipment.end())
+						{
+							fail = true;
+						}
+						break;
+					case ResearchTopic::ItemType::Craft:
+						if (vehicle_types.find(t.second->itemId) == vehicle_types.end())
+						{
+							fail = true;
+						}
+						break;
+				}
+				if (fail)
+				{
+					LogError("%s DOES NOT EXIST: referenced as manufactured by %s",
+					         t.second->itemId, t.first);
+				}
+			}
+		}
+		for (auto &rd : t.second->dependencies.research)
+		{
+			for (auto &topic : rd.topics)
+			{
+				if (topic.id.length() == 0)
+				{
+					LogError("EMPTY REFERENCE required topic for %s", t.first);
+				}
+				else if (research.topics.find(topic.id) == research.topics.end())
+				{
+					LogError("%s DOES NOT EXIST: referenced as required topic for %s", topic.id,
+					         t.first);
+				}
+			}
+		}
+		for (auto &entry : t.second->dependencies.items.agentItemsRequired)
+		{
+			if (entry.first.id.length() == 0)
+			{
+				LogError("EMPTY REFERENCE required item for %s", t.first);
+			}
+			else if (agent_equipment.find(entry.first.id) == agent_equipment.end())
+			{
+				LogError("%s DOES NOT EXIST: referenced as required item for %s", entry.first.id,
+				         t.first);
+			}
+		}
+		for (auto &entry : t.second->dependencies.items.agentItemsConsumed)
+		{
+			if (entry.first.id.length() == 0)
+			{
+				LogError("EMPTY REFERENCE consumed item for %s", t.first);
+			}
+			else if (agent_equipment.find(entry.first.id) == agent_equipment.end())
+			{
+				LogError("%s DOES NOT EXIST: referenced as consumed item for %s", entry.first.id,
+				         t.first);
+			}
+		}
+		for (auto &entry : t.second->dependencies.items.vehicleItemsRequired)
+		{
+			if (entry.first.id.length() == 0)
+			{
+				LogError("EMPTY REFERENCE required item for %s", t.first);
+			}
+			else if (vehicle_equipment.find(entry.first.id) == vehicle_equipment.end())
+			{
+				LogError("%s DOES NOT EXIST: referenced as required item for %s", entry.first.id,
+				         t.first);
+			}
+		}
+		for (auto &entry : t.second->dependencies.items.vehicleItemsConsumed)
+		{
+			if (entry.first.id.length() == 0)
+			{
+				LogError("EMPTY REFERENCE consumed item for %s", t.first);
+			}
+			else if (vehicle_equipment.find(entry.first.id) == vehicle_equipment.end())
+			{
+				LogError("%s DOES NOT EXIST: referenced as consumed item for %s", entry.first.id,
+				         t.first);
+			}
+		}
+		for (auto &entry : t.second->dependencies.items.agentItemsConsumed)
+		{
+			if (t.second->dependencies.items.agentItemsRequired.find(entry.first) ==
+			    t.second->dependencies.items.agentItemsRequired.end())
+			{
+				LogError("Consumed agent item %s not in required list for topic %s", entry.first.id,
+				         t.first);
+			}
+			else if (t.second->dependencies.items.agentItemsRequired.at(entry.first) < entry.second)
+			{
+				LogError("Consumed agent items %s has bigger count than required for topic %s",
+				         entry.first.id, t.first);
+			}
+		}
+		for (auto &entry : t.second->dependencies.items.vehicleItemsConsumed)
+		{
+			if (t.second->dependencies.items.vehicleItemsRequired.find(entry.first) ==
+			    t.second->dependencies.items.vehicleItemsRequired.end())
+			{
+				LogError("Consumed vehicle item %s not in required list for topic %s",
+				         entry.first.id, t.first);
+			}
+			else if (t.second->dependencies.items.vehicleItemsRequired.at(entry.first) <
+			         entry.second)
+			{
+				LogError("Consumed vehicle item %s has bigger count than required for topic %s",
+				         entry.first.id, t.first);
+			}
+		}
+	}
 }
 
 void GameState::fillOrgStartingProperty()
@@ -225,7 +375,7 @@ void GameState::startGame()
 			// higher difficulty will produce a bigger sway
 			if (difficulty > 0)
 			{
-				// Relationship vs player is adjusted by flat 0/5/0/-5/10
+				// Relationship vs player is adjusted by flat 0/5/0/-5/-10
 				if (entry.first == player)
 				{
 					entry.second += 10 - 5 * difficulty;
@@ -458,12 +608,6 @@ void GameState::update(unsigned int ticks)
 {
 	if (this->current_battle)
 	{
-		// Save time to roll back to
-		if (gameTimeBeforeBattle.getTicks() == 0)
-		{
-			gameTimeBeforeBattle = GameTime(gameTime.getTicks());
-		}
-
 		Trace::start("GameState::update::battles");
 		this->current_battle->update(*this, ticks);
 		Trace::end("GameState::update::battles");
@@ -474,20 +618,7 @@ void GameState::update(unsigned int ticks)
 		// Roll back to time before battle and stuff
 		if (gameTimeBeforeBattle.getTicks() != 0)
 		{
-			gameTime = GameTime(gameTimeBeforeBattle.getTicks());
-			gameTimeBeforeBattle = GameTime(0);
-
-			// Set player relationship to orgs
-			for (auto &pair : this->organisations)
-			{
-				// Not for player or civilians
-				if (pair.first == player.id)
-				{
-					continue;
-				}
-				player->current_relations[{this, pair.first}] =
-				    pair.second->current_relations[player];
-			}
+			upateAfterBattle();
 		}
 
 		Trace::start("GameState::update::cities");
@@ -496,6 +627,13 @@ void GameState::update(unsigned int ticks)
 			c.second->update(*this, ticks);
 		}
 		Trace::end("GameState::update::cities");
+		Trace::start("GameState::update::organisations");
+		for (auto &o : this->organisations)
+		{
+			o.second->updateMissions(*this);
+		}
+		Trace::end("GameState::update::organisations");
+
 		Trace::start("GameState::update::vehicles");
 		for (auto &v : this->vehicles)
 		{
@@ -508,14 +646,12 @@ void GameState::update(unsigned int ticks)
 			a.second->update(*this, ticks);
 		}
 		Trace::end("GameState::update::agents");
-		Trace::start("GameState::update::organisations");
-		for (auto &o : this->organisations)
-		{
-			o.second->update(*this, ticks);
-		}
-		Trace::end("GameState::update::organisations");
 
 		gameTime.addTicks(ticks);
+		if (gameTime.fiveSecondsPassed())
+		{
+			this->updateEndOfFiveSeconds();
+		}
 		if (gameTime.fiveMinutesPassed())
 		{
 			this->updateEndOfFiveMinutes();
@@ -534,6 +670,28 @@ void GameState::update(unsigned int ticks)
 		}
 		gameTime.clearFlags();
 	}
+}
+
+void GameState::updateEndOfFiveSeconds()
+{
+	Trace::start("GameState::updateEndOfFiveSeconds::buildings");
+	for (auto &b : current_city->buildings)
+	{
+		b.second->updateCargo(*this);
+	}
+	Trace::end("GameState::updateEndOfFiveSeconds::buildings");
+	Trace::start("GameState::updateEndOfFiveSeconds::vehicles");
+	for (auto &v : vehicles)
+	{
+		v.second->updateCargo(*this);
+	}
+	Trace::end("GameState::updateEndOfFiveSeconds::vehicles");
+	Trace::start("GameState::updateEndOfFiveSeconds::agents");
+	for (auto &a : this->agents)
+	{
+		a.second->updateFiveSeconds(*this);
+	}
+	Trace::end("GameState::updateEndOfFiveSeconds::agents");
 }
 
 void GameState::updateEndOfFiveMinutes()
@@ -564,6 +722,10 @@ void GameState::updateEndOfFiveMinutes()
 		{
 			break;
 		}
+	}
+	for (auto &b : current_city->buildings)
+	{
+		b.second->updateCargo(*this);
 	}
 	Trace::end("GameState::updateEndOfFiveMinutes::buildings");
 }
@@ -611,8 +773,15 @@ void GameState::updateEndOfDay()
 	for (auto &o : this->organisations)
 	{
 		o.second->updateVehicleAgentPark(*this);
+		o.second->updateHirableAgents(*this);
 	}
 	Trace::end("GameState::updateEndOfDay::organisations");
+	Trace::start("GameState::updateEndOfDay::agents");
+	for (auto &a : this->agents)
+	{
+		a.second->updateDaily(*this);
+	}
+	Trace::end("GameState::updateEndOfDay::agents");
 	Trace::start("GameState::updateEndOfDay::cities");
 	for (auto &c : this->cities)
 	{
@@ -621,6 +790,7 @@ void GameState::updateEndOfDay()
 	Trace::end("GameState::updateEndOfDay::cities");
 
 	// SPAWN ALIENS
+	return;
 	for (int i = 0; i < 5; i++)
 	{
 		StateRef<City> city = {this, "CITYMAP_HUMAN"};
@@ -641,6 +811,7 @@ void GameState::updateEndOfDay()
 
 			auto v = city->placeVehicle(*this, {this, (*vehicleType).first}, type->manufacturer,
 			                            (*portal)->getPosition());
+			v->city = city;
 			v->missions.emplace_back(VehicleMission::infiltrateOrSubvertBuilding(*this, *v, bld));
 			v->missions.front()->start(*this, *v);
 			fw().soundBackend->playSample(city_common_sample_list->dimensionShiftOut, v->position);
@@ -723,6 +894,58 @@ void GameState::updateAfterTurbo()
 	Trace::end("GameState::updateAfterTurbo::vehicles");
 }
 
+void GameState::updateBeforeBattle()
+{
+	// Save time to roll back to
+	gameTimeBeforeBattle = GameTime(gameTime.getTicks());
+	// Some useless event just to know if something was reported
+	eventFromBattle = GameEventType::WeeklyReport;
+	missionLocationBattle = current_battle->mission_location_id;
+}
+
+void GameState::upateAfterBattle()
+{
+	gameTime = GameTime(gameTimeBeforeBattle.getTicks());
+	gameTimeBeforeBattle = GameTime(0);
+
+	switch (eventFromBattle)
+	{
+		case GameEventType::MissionCompletedBuildingAlien:
+		{
+			fw().pushEvent(new GameEvent(eventFromBattle));
+			break;
+		}
+		case GameEventType::MissionCompletedBuildingNormal:
+		{
+			fw().pushEvent(new GameBuildingEvent(eventFromBattle, {this, missionLocationBattle}));
+			break;
+		}
+		case GameEventType::MissionCompletedBase:
+		{
+			fw().pushEvent(new GameBaseEvent(
+			    eventFromBattle, StateRef<Building>(this, missionLocationBattle)->base));
+			break;
+		}
+		case GameEventType::BaseDestroyed:
+		{
+			auto building = StateRef<Building>{this, missionLocationBattle};
+			fw().pushEvent(new GameSomethingDiedEvent(eventFromBattle, eventFromBattleText,
+			                                          "bySomeone", building->crewQuarters));
+			break;
+		}
+		case GameEventType::MissionCompletedBuildingRaid:
+		{
+			fw().pushEvent(new GameBuildingEvent(eventFromBattle, {this, missionLocationBattle}));
+			break;
+		}
+		case GameEventType::MissionCompletedVehicle:
+		{
+			fw().pushEvent(new GameEvent(eventFromBattle));
+			break;
+		}
+	}
+}
+
 void GameState::logEvent(GameEvent *ev)
 {
 	if (messages.size() == MAX_MESSAGES)
@@ -744,7 +967,10 @@ void GameState::logEvent(GameEvent *ev)
 		{
 			location = gae->agent->unit->position;
 		}
-		// FIXME: Introduce agent position when in city
+		else
+		{
+			location = gae->agent->position;
+		}
 	}
 	else if (GameBaseEvent *gbe = dynamic_cast<GameBaseEvent *>(ev))
 	{

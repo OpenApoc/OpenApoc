@@ -99,8 +99,8 @@ class CityView : public CityTileView
 	// Orders
 
 	void orderGoToBase();
-	void orderMove(Vec3<float> position, bool useTeleporter);
-	void orderMove(StateRef<Building> building, bool useTeleporter);
+	void orderMove(Vec3<float> position, bool alternative);
+	void orderMove(StateRef<Building> building, bool alternative);
 	void orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additive);
 	void orderSelect(StateRef<Agent> agent, bool inverse, bool additive);
 	void orderAttack(StateRef<Vehicle> vehicle, bool forced);
@@ -110,7 +110,6 @@ class CityView : public CityTileView
 	CityView(sp<GameState> state);
 	~CityView() override;
 
-	void initiateDefenseMission(StateRef<Base> base, StateRef<Organisation> attacker);
 	void initiateUfoMission(StateRef<Vehicle> ufo, StateRef<Vehicle> playerCraft);
 
 	void begin() override;

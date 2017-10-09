@@ -1091,6 +1091,149 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 		a->can_improve = false;
 		a->score = data.score;
 
+		// Bodies
+		int liveIdx = 0;
+		int deadIdx = 0;
+		int liveSpace = 0;
+		int deadSpace = 0;
+		switch (i)
+		{
+			case UNIT_TYPE_ANTHROPOD:
+				liveIdx = 0;
+				deadIdx = 14;
+				liveSpace = 2;
+				deadSpace = 2;
+				break;
+			case UNIT_TYPE_BRAINSUCKER:
+				liveIdx = 1;
+				deadIdx = 15;
+				liveSpace = 1;
+				deadSpace = 1;
+				break;
+			case UNIT_TYPE_CHRYSALIS:
+				liveIdx = 2;
+				deadIdx = 17;
+				liveSpace = 2;
+				deadSpace = 2;
+				break;
+			case UNIT_TYPE_MEGASPAWN:
+				liveIdx = 3;
+				deadIdx = 17;
+				liveSpace = 5;
+				deadSpace = 5;
+				break;
+			case UNIT_TYPE_MULTIWORM_EGG:
+				liveIdx = 4;
+				deadIdx = 18;
+				liveSpace = 1;
+				deadSpace = 1;
+				break;
+			case UNIT_TYPE_HYPERWORM:
+				liveIdx = 5;
+				deadIdx = 19;
+				liveSpace = 1;
+				deadSpace = 1;
+				break;
+			case UNIT_TYPE_MULTIWORM:
+				liveIdx = 6;
+				deadIdx = 20;
+				liveSpace = 4;
+				deadSpace = 4;
+				break;
+			// OVerspawn 7 / ?
+			case UNIT_TYPE_POPPER:
+				liveIdx = 8;
+				deadIdx = 21;
+				liveSpace = 2;
+				deadSpace = 2;
+				break;
+			case UNIT_TYPE_PSIMORPH:
+				liveIdx = 9;
+				deadIdx = 22;
+				liveSpace = 5;
+				deadSpace = 5;
+				break;
+			case UNIT_TYPE_QUEENSPAWN:
+				liveIdx = 10;
+				deadIdx = 23;
+				liveSpace = 20;
+				deadSpace = 20;
+				break;
+			case UNIT_TYPE_SKELETOID:
+				liveIdx = 11;
+				deadIdx = 24;
+				liveSpace = 2;
+				deadSpace = 2;
+				break;
+			case UNIT_TYPE_SPITTER:
+				liveIdx = 12;
+				deadIdx = 25;
+				liveSpace = 2;
+				deadSpace = 2;
+				break;
+			case UNIT_TYPE_MICRONOID:
+				liveIdx = 13;
+				deadIdx = 26;
+				liveSpace = 1;
+				deadSpace = 1;
+				break;
+		}
+		switch (i)
+		{
+			case UNIT_TYPE_MULTIWORM_EGG:
+			case UNIT_TYPE_BRAINSUCKER:
+			case UNIT_TYPE_MULTIWORM:
+			case UNIT_TYPE_HYPERWORM:
+			case UNIT_TYPE_CHRYSALIS:
+			case UNIT_TYPE_ANTHROPOD:
+			case UNIT_TYPE_SKELETOID:
+			case UNIT_TYPE_SPITTER:
+			case UNIT_TYPE_POPPER:
+			case UNIT_TYPE_MEGASPAWN:
+			case UNIT_TYPE_PSIMORPH:
+			case UNIT_TYPE_QUEENSPAWN:
+			case UNIT_TYPE_MICRONOID:
+			{
+				auto liveName =
+				    format("%s%s_ALIVE", AEquipmentType::getPrefix(), canon_string(a->name));
+				auto deadName =
+				    format("%s%s_DEAD", AEquipmentType::getPrefix(), canon_string(a->name));
+
+				auto liveItem = mksp<AEquipmentType>();
+				liveItem->bioStorage = true;
+				liveItem->equipscreen_size = {6, 5};
+				liveItem->equipscreen_sprite =
+				    fw().data->loadImage(format("PCK:xcom3/ufodata/contico.pck:xcom3/ufodata/"
+				                                "contico.tab:%d:xcom3/ufodata/research.pcx",
+				                                liveIdx));
+				liveItem->store_space = liveSpace;
+				liveItem->type = AEquipmentType::Type::Loot;
+				liveItem->bioRemains = {&state, deadName};
+				liveItem->name = format("Live %s", a->name);
+				liveItem->score = a->score;
+				state.agent_equipment[liveName] = liveItem;
+				a->liveSpeciesItem = {&state, liveName};
+
+				auto deadItem = mksp<AEquipmentType>();
+				deadItem->bioStorage = true;
+				deadItem->equipscreen_size = {6, 5};
+				deadItem->equipscreen_sprite =
+				    fw().data->loadImage(format("PCK:xcom3/ufodata/contico.pck:xcom3/ufodata/"
+				                                "contico.tab:%d:xcom3/ufodata/research.pcx",
+				                                deadIdx));
+				deadItem->store_space = deadSpace;
+				deadItem->type = AEquipmentType::Type::Loot;
+				deadItem->name = format("Dead %s", a->name);
+				deadItem->score = 0;
+				state.agent_equipment[deadName] = deadItem;
+				a->deadSpeciesItem = {&state, deadName};
+
+				break;
+			}
+			default:
+				break;
+		}
+
 		state.agent_types[id] = a;
 	}
 

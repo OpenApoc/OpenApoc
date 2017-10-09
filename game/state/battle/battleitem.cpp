@@ -28,7 +28,8 @@ void BattleItem::die(GameState &state, bool violently)
 	{
 		item->explode(state);
 	}
-	if (item->ownerOrganisation && state.getPlayer() == item->ownerOrganisation)
+	// Lose score if item that dies and it's not a primed grenade
+	if (!item->primed && item->ownerOrganisation && item->ownerOrganisation == state.getPlayer())
 	{
 		state.current_battle->score.equipmentLost -= item->type->score;
 		if (item->payloadType)

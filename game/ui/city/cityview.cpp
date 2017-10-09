@@ -54,6 +54,7 @@
 #include "game/ui/battle/battlebriefing.h"
 #include "game/ui/city/alertscreen.h"
 #include "game/ui/city/basebuyscreen.h"
+#include "game/ui/city/basedefensescreen.h"
 #include "game/ui/city/baseselectscreen.h"
 #include "game/ui/city/buildingscreen.h"
 #include "game/ui/city/infiltrationscreen.h"
@@ -79,26 +80,6 @@ static const std::vector<UString> TAB_FORM_NAMES = {
     "city/tab1", "city/tab2", "city/tab3", "city/tab4",
     "city/tab5", "city/tab6", "city/tab7", "city/tab8",
 };
-
-std::shared_future<void> loadBattleBase(sp<GameState> state, StateRef<Base> base,
-                                        StateRef<Organisation> attacker)
-{
-	auto loadTask = fw().threadPoolEnqueue([base, state, attacker]() -> void {
-
-		std::list<StateRef<Agent>> agents;
-		StateRef<Vehicle> veh = {};
-
-		bool hotseat = false;
-		const std::map<StateRef<AgentType>, int> *aliens = nullptr;
-		const int *guards = nullptr;
-		const int *civilians = nullptr;
-
-		Battle::beginBattle(*state, hotseat, attacker, agents, aliens, guards, civilians, veh,
-		                    base->building);
-	});
-
-	return loadTask;
-}
 
 std::shared_future<void> loadBattleVehicle(sp<GameState> state, StateRef<Vehicle> ufo,
                                            StateRef<Vehicle> playerVehicle)
@@ -162,7 +143,7 @@ bool CityView::handleClickedBuilding(StateRef<Building> building, bool rightClic
 				    ->setText(this->state->current_base->name);
 				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BaseScreen>(this->state)});
 			}
-			else if (building->base_layout && building->owner.id == "ORG_GOVERNMENT")
+			else if (building->base_layout && building->owner == state->getGovernment())
 			{
 				// Base buy screen
 				fw().stageQueueCommand(
@@ -193,7 +174,7 @@ bool CityView::handleClickedBuilding(StateRef<Building> building, bool rightClic
 					fw().stageQueueCommand(
 					    {StageCmd::Command::PUSH, mksp<BaseScreen>(this->state)});
 				}
-				else if (building->base_layout && building->owner.id == "ORG_GOVERNMENT")
+				else if (building->base_layout && building->owner == state->getGovernment())
 				{
 					// Base buy screen
 					fw().stageQueueCommand(
@@ -371,8 +352,10 @@ void CityView::orderGoToBase()
 	}
 }
 
-void CityView::orderMove(Vec3<float> position, bool useTeleporter)
+void CityView::orderMove(Vec3<float> position, bool alternative)
 {
+	bool useTeleporter =
+	    alternative && config().getBool("OpenApoc.NewFeature.AllowManualCityTeleporters");
 	if (activeTab == uiTabs[1])
 	{
 		state->current_city->groupMove(*state, state->current_city->cityViewSelectedVehicles,
@@ -381,8 +364,10 @@ void CityView::orderMove(Vec3<float> position, bool useTeleporter)
 	}
 }
 
-void CityView::orderMove(StateRef<Building> building, bool useTeleporter)
+void CityView::orderMove(StateRef<Building> building, bool alternative)
 {
+	bool useTeleporter =
+	    alternative && config().getBool("OpenApoc.NewFeature.AllowManualCityTeleporters");
 	if (activeTab == uiTabs[1])
 	{
 		for (auto &v : this->state->current_city->cityViewSelectedVehicles)
@@ -399,11 +384,13 @@ void CityView::orderMove(StateRef<Building> building, bool useTeleporter)
 	}
 	if (activeTab == uiTabs[2])
 	{
+		bool useTaxi = alternative && config().getBool("OpenApoc.NewFeature.AllowSoldierTaxiUse");
 		for (auto &a : this->state->current_city->cityViewSelectedAgents)
 		{
 			LogWarning("Agent \"%s\" goto building \"%s\"", a->name, building->name);
 			// FIXME: Don't clear missions if not replacing current mission
-			a->setMission(*state, AgentMission::gotoBuilding(*state, *a, building, useTeleporter));
+			a->setMission(*state,
+			              AgentMission::gotoBuilding(*state, *a, building, useTeleporter, useTaxi));
 		}
 	}
 }
@@ -586,7 +573,17 @@ void CityView::orderAttack(StateRef<Vehicle> vehicle, bool forced)
 			{
 				if (forced || !vehicle->isCrashed())
 				{
-					v->setMission(*state, VehicleMission::attackVehicle(*this->state, *v, vehicle));
+					if (vehicle->owner == state->getPlayer() &&
+					    !config().getBool("OpenApoc.NewFeature.AllowAttackingOwnedVehicles"))
+					{
+						v->setMission(*state,
+						              VehicleMission::followVehicle(*this->state, *v, vehicle));
+					}
+					else
+					{
+						v->setMission(*state,
+						              VehicleMission::attackVehicle(*this->state, *v, vehicle));
+					}
 				}
 				else
 				{
@@ -1044,9 +1041,7 @@ void CityView::resume()
 			    StateRef<Base>(this->state.get(), e->forms().RaisedBy->getData<Base>());
 			if (clickedBase == this->state->current_base)
 			{
-				this->setScreenCenterTile(Vec2<int>{
-				    (clickedBase->building->bounds.p0.x + clickedBase->building->bounds.p1.x) / 2,
-				    (clickedBase->building->bounds.p0.y + clickedBase->building->bounds.p1.y) / 2});
+				this->setScreenCenterTile(clickedBase->building->crewQuarters);
 			}
 			else
 			{
@@ -1393,7 +1388,7 @@ void CityView::update()
 	// this frame
 	if (this->followVehicle)
 	{
-		if (activeTab == uiTabs[1] && !state->current_city->cityViewSelectedVehicles.empty())
+		if (!state->current_city->cityViewSelectedVehicles.empty())
 		{
 			auto v = state->current_city->cityViewSelectedVehicles.front();
 			if (v->city == state->current_city)
@@ -1401,7 +1396,7 @@ void CityView::update()
 				this->setScreenCenterTile(v->position);
 			}
 		}
-		if (activeTab == uiTabs[2] && !state->current_city->cityViewSelectedAgents.empty())
+		else if (!state->current_city->cityViewSelectedAgents.empty())
 		{
 			auto a = state->current_city->cityViewSelectedAgents.front();
 			if (a->city == state->current_city)
@@ -1419,15 +1414,6 @@ void CityView::update()
 	}
 	// Store screen center for serialisation
 	state->current_city->cityViewScreenCenter = centerPos;
-}
-
-void CityView::initiateDefenseMission(StateRef<Base> base, StateRef<Organisation> attacker)
-{
-	bool isBuilding = true;
-	bool isRaid = false;
-	fw().stageQueueCommand({StageCmd::Command::REPLACEALL,
-	                        mksp<BattleBriefing>(state, attacker, base->building.id, isBuilding,
-	                                             isRaid, loadBattleBase(state, base, attacker))});
 }
 
 void CityView::initiateUfoMission(StateRef<Vehicle> ufo, StateRef<Vehicle> playerCraft)
@@ -1539,22 +1525,77 @@ bool CityView::handleKeyDown(Event *e)
 			{
 				LogWarning("Spawning crashed UFOs...");
 
+				bool nothing = false;
 				auto pos = centerPos;
-				pos.z = 10;
+				pos.z = 9;
 				auto ufo = state->current_city->placeVehicle(
 				    *state, {state.get(), "VEHICLETYPE_ALIEN_PROBE"}, state->getAliens(), pos);
 				ufo->health = 2;
-				ufo->applyDamage(*state, 1, 0);
+				ufo->applyDamage(*state, 1, 0, nothing);
+				pos.z++;
 				ufo = state->current_city->placeVehicle(
 				    *state, {state.get(), "VEHICLETYPE_ALIEN_BATTLESHIP"}, state->getAliens(), pos);
 				ufo->health = 2;
-				ufo->applyDamage(*state, 1, 0);
+				ufo->applyDamage(*state, 1, 0, nothing);
+				pos.z++;
 				ufo = state->current_city->placeVehicle(
 				    *state, {state.get(), "VEHICLETYPE_ALIEN_TRANSPORTER"}, state->getAliens(),
 				    pos);
 				ufo->health = 2;
-				ufo->applyDamage(*state, 1, 0);
+				ufo->applyDamage(*state, 1, 0, nothing);
 
+				return true;
+			}
+			case SDLK_b:
+			{
+				LogWarning("Spawning base defense mission");
+				Vec3<float> pos = {state->current_base->building->bounds.p0.x - 1,
+				                   state->current_base->building->bounds.p0.y - 1, 10};
+				auto v = state->cities["CITYMAP_HUMAN"]->placeVehicle(
+				    *state, StateRef<VehicleType>{state.get(), "VEHICLETYPE_ALIEN_TRANSPORTER"},
+				    state->getAliens(), pos);
+				v->setMission(*state, VehicleMission::infiltrateOrSubvertBuilding(
+				                          *state, *v, state->current_base->building));
+				return true;
+			}
+			case SDLK_p:
+			{
+				LogWarning("Spawning some bought stuff");
+				StateRef<Organisation> marsec = {state.get(), "ORG_MARSEC"};
+				marsec->purchase(*state, state->current_base->building,
+				                 StateRef<VehicleType>{state.get(), "VEHICLETYPE_HAWK_AIR_WARRIOR"},
+				                 1);
+				marsec->purchase(
+				    *state, state->current_base->building,
+				    StateRef<AEquipmentType>{state.get(), "AEQUIPMENTTYPE_MARSEC_BODY_UNIT"}, 1);
+				marsec->purchase(
+				    *state, state->current_base->building,
+				    StateRef<VEquipmentType>{state.get(), "VEQUIPMENTTYPE_LANCER_7000_LASER_GUN"},
+				    1);
+				marsec->purchase(
+				    *state, state->current_base->building,
+				    StateRef<VAmmoType>{state.get(), "VEQUIPMENTAMMOTYPE_DISRUPTOR_BOMB"}, 1);
+				for (auto &b : state->cities["CITYMAP_HUMAN"]->buildings)
+				{
+					if (b.second->owner == marsec)
+					{
+						auto a = state->agent_generator.createAgent(
+						    *state, marsec,
+						    StateRef<AgentType>{state.get(), "AGENTTYPE_X-COM_AGENT_HUMAN"});
+						a->homeBuilding = {state.get(), b.first};
+						a->enterBuilding(*state, a->homeBuilding);
+						a->city = a->homeBuilding->city;
+						a->hire(*state, state->current_base->building);
+						a = state->agent_generator.createAgent(
+						    *state, marsec,
+						    StateRef<AgentType>{state.get(), "AGENTTYPE_X-COM_BIOCHEMIST"});
+						a->homeBuilding = {state.get(), b.first};
+						a->enterBuilding(*state, a->homeBuilding);
+						a->city = a->homeBuilding->city;
+						a->hire(*state, state->current_base->building);
+						break;
+					}
+				}
 				return true;
 			}
 		}
@@ -1693,6 +1734,10 @@ bool CityView::handleMouseDown(Event *e)
 					{
 						LogWarning("Mission %s", m->getName());
 					}
+					for (auto &c : vehicle->cargo)
+					{
+						LogWarning("Cargo %dx%s", c.id, c.count);
+					}
 					break;
 				}
 				case TileObject::Type::Projectile:
@@ -1763,9 +1808,13 @@ bool CityView::handleGameStateEvent(Event *e)
 		{
 			case GameEventType::AlienSpotted:
 			case GameEventType::AlienTakeover:
-			case GameEventType::UfoRecoverySuccess:
-			case GameEventType::UfoRecoveryFailure:
+			case GameEventType::UfoCrashed:
 			case GameEventType::UfoRecoveryUnmanned:
+			case GameEventType::MissionCompletedBase:
+			case GameEventType::MissionCompletedBuildingAlien:
+			case GameEventType::MissionCompletedBuildingNormal:
+			case GameEventType::MissionCompletedBuildingRaid:
+			case GameEventType::MissionCompletedVehicle:
 			{
 				// Never pause for these
 				break;
@@ -1804,7 +1853,9 @@ bool CityView::handleGameStateEvent(Event *e)
 		case GameEventType::DefendTheBase:
 		{
 			auto gameDefenseEvent = dynamic_cast<GameDefenseEvent *>(e);
-			initiateDefenseMission(gameDefenseEvent->base, gameDefenseEvent->organisation);
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH, mksp<BaseDefenseScreen>(state, gameDefenseEvent->base,
+			                                                      gameDefenseEvent->organisation)});
 			break;
 		}
 		case GameEventType::UfoRecoveryBegin:
@@ -1812,6 +1863,7 @@ bool CityView::handleGameStateEvent(Event *e)
 			auto gameRecoveryEvent = dynamic_cast<GameVehicleEvent *>(e);
 			if (gameRecoveryEvent->vehicle->type->battle_map)
 			{
+				setUpdateSpeed(CityUpdateSpeed::Pause);
 				initiateUfoMission(gameRecoveryEvent->vehicle, gameRecoveryEvent->actor);
 			}
 			else
@@ -1822,11 +1874,13 @@ bool CityView::handleGameStateEvent(Event *e)
 			}
 			break;
 		}
-		case GameEventType::UfoRecoveryFailure:
-		case GameEventType::UfoRecoverySuccess:
 		case GameEventType::UfoRecoveryUnmanned:
 		{
 			auto gameRecoveryEvent = dynamic_cast<GameVehicleEvent *>(e);
+			LogWarning("Load unmanned ufo loot on craft!");
+			// Remove ufo
+			gameRecoveryEvent->vehicle->die(*state, nullptr, true);
+			// Return to base
 			gameRecoveryEvent->actor->setMission(
 			    *state, VehicleMission::gotoBuilding(*state, *gameRecoveryEvent->actor,
 			                                         gameRecoveryEvent->actor->homeBuilding));
@@ -1955,16 +2009,16 @@ bool CityView::handleGameStateEvent(Event *e)
 			switch (ev->topic->item_type)
 			{
 				case ResearchTopic::ItemType::VehicleEquipment:
-					item_name = game_state->vehicle_equipment[ev->topic->item_produced]->name;
+					item_name = game_state->vehicle_equipment[ev->topic->itemId]->name;
 					break;
 				case ResearchTopic::ItemType::VehicleEquipmentAmmo:
-					item_name = game_state->vehicle_ammo[ev->topic->item_produced]->name;
+					item_name = game_state->vehicle_ammo[ev->topic->itemId]->name;
 					break;
 				case ResearchTopic::ItemType::AgentEquipment:
-					item_name = game_state->agent_equipment[ev->topic->item_produced]->name;
+					item_name = game_state->agent_equipment[ev->topic->itemId]->name;
 					break;
 				case ResearchTopic::ItemType::Craft:
-					item_name = game_state->vehicle_types[ev->topic->item_produced]->name;
+					item_name = game_state->vehicle_types[ev->topic->itemId]->name;
 					break;
 			}
 			auto message_box = mksp<MessageBox>(
@@ -2013,16 +2067,16 @@ bool CityView::handleGameStateEvent(Event *e)
 			switch (ev->topic->item_type)
 			{
 				case ResearchTopic::ItemType::VehicleEquipment:
-					item_name = game_state->vehicle_equipment[ev->topic->item_produced]->name;
+					item_name = game_state->vehicle_equipment[ev->topic->itemId]->name;
 					break;
 				case ResearchTopic::ItemType::VehicleEquipmentAmmo:
-					item_name = game_state->vehicle_ammo[ev->topic->item_produced]->name;
+					item_name = game_state->vehicle_ammo[ev->topic->itemId]->name;
 					break;
 				case ResearchTopic::ItemType::AgentEquipment:
-					item_name = game_state->agent_equipment[ev->topic->item_produced]->name;
+					item_name = game_state->agent_equipment[ev->topic->itemId]->name;
 					break;
 				case ResearchTopic::ItemType::Craft:
-					item_name = game_state->vehicles[ev->topic->item_produced]->name;
+					item_name = game_state->vehicles[ev->topic->itemId]->name;
 					break;
 			}
 			auto message_box =
@@ -2065,7 +2119,7 @@ void CityView::updateSelectedUnits()
 		while (it != state->current_city->cityViewSelectedVehicles.end())
 		{
 			auto v = *it;
-			if (!v || v->isDead())
+			if (!v || v->isDead() || v->isCrashed())
 			{
 				it = state->current_city->cityViewSelectedVehicles.erase(it);
 			}

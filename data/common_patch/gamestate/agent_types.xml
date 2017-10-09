@@ -1117,7 +1117,7 @@
       <damage_modifier>DAMAGEMODIFIER_GUN_EMPLACEMENT</damage_modifier>
       <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
       <aiType>Loner</aiType>
-      <score>10</score>
+      <score>0</score>
       <built_in_weapon_right>AEQUIPMENTTYPE_X-COM_BASE_TURRET_LASER</built_in_weapon_right>
     </value>
   </entry>
@@ -1214,7 +1214,7 @@
       <damage_modifier>DAMAGEMODIFIER_GUN_EMPLACEMENT</damage_modifier>
       <equipment_layout>AGENTEQUIPMENTLAYOUT_BUILTIN</equipment_layout>
       <aiType>Loner</aiType>
-      <score>10</score>
+      <score>0</score>
       <built_in_weapon_right>AEQUIPMENTTYPE_X-COM_BASE_TURRET_DISRUPTOR</built_in_weapon_right>
     </value>
   </entry>

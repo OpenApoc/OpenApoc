@@ -9,6 +9,7 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
+#include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/vehicle_type.h"
 #include "gameevent.h"
 #include "library/strings_format.h"
@@ -24,9 +25,9 @@ bool ResearchTopic::isComplete() const
 
 bool ResearchDependency::satisfied() const
 {
-	if (this->topics.empty())
+	if (this->topics.empty() && this->type != Type::Unused)
 	{
-		// No dependencies == always satisfied
+		// No dependencies == always satisfied (unless marked as Unused)
 		return true;
 	}
 	switch (this->type)
@@ -57,10 +58,80 @@ bool ResearchDependency::satisfied() const
 	}
 }
 
-bool ItemDependency::satisfied(StateRef<Base>) const
+bool ItemDependency::satisfied(StateRef<Base> base) const
 {
-	// FIXME: Add item tracking
+	for (auto &e : agentItemsRequired)
+	{
+		int mult = e.first->type == AEquipmentType::Type::Ammo ? e.first->max_ammo : 1;
+		if (e.first->bioStorage)
+		{
+			if (base->inventoryBioEquipment[e.first.id] < e.second * mult)
+			{
+				return false;
+			}
+		}
+		else
+		{
+			if (base->inventoryAgentEquipment[e.first.id] < e.second * mult)
+			{
+				return false;
+			}
+		}
+	}
+	for (auto &e : vehicleItemsRequired)
+	{
+		if (base->inventoryVehicleEquipment[e.first.id] < e.second)
+		{
+			return false;
+		}
+	}
 	return true;
+}
+
+void ItemDependency::consume(StateRef<Base> base)
+{
+	for (auto &e : agentItemsConsumed)
+	{
+		int mult = e.first->type == AEquipmentType::Type::Ammo ? e.first->max_ammo : 1;
+		if (e.first->bioStorage)
+		{
+			base->inventoryBioEquipment[e.first.id] -= e.second * mult;
+		}
+		else
+		{
+			base->inventoryAgentEquipment[e.first.id] -= e.second * mult;
+		}
+	}
+	for (auto &e : vehicleItemsConsumed)
+	{
+		base->inventoryVehicleEquipment[e.first.id] -= e.second;
+	}
+}
+
+void ItemDependency::produceRemains(StateRef<Base> base)
+{
+	std::map<StateRef<AEquipmentType>, int> remains;
+	for (auto &e : agentItemsConsumed)
+	{
+		if (e.first->bioRemains)
+		{
+			remains[e.first->bioRemains] = remains[e.first->bioRemains] + e.second;
+		}
+	}
+	for (auto &e : remains)
+	{
+		if (e.first->bioStorage)
+		{
+			base->inventoryBioEquipment[e.first.id] =
+			    base->inventoryBioEquipment[e.first.id] + e.second;
+		}
+		else
+		{
+			int mult = e.first->type == AEquipmentType::Type::Ammo ? e.first->max_ammo : 1;
+			base->inventoryAgentEquipment[e.first.id] =
+			    base->inventoryAgentEquipment[e.first.id] + e.second * mult;
+		}
+	}
 }
 
 bool ProjectDependencies::satisfied(StateRef<Base> base) const
@@ -70,11 +141,8 @@ bool ProjectDependencies::satisfied(StateRef<Base> base) const
 		if (r.satisfied() == false)
 			return false;
 	}
-	for (auto &i : this->items)
-	{
-		if (i.satisfied(base) == false)
-			return false;
-	}
+	if (items.satisfied(base) == false)
+		return false;
 	return true;
 }
 
@@ -180,14 +248,18 @@ void Lab::setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic, sp<GameS
 			return;
 		}
 		if (lab->current_project == topic)
+		{
 			return;
+		}
 	}
 	if (lab->current_project)
 	{
 		// Refund if haven't started working on the manufacturing topic
 		if (lab->type == ResearchTopic::Type::Engineering &&
 		    lab->manufacture_man_hours_invested == 0)
+		{
 			state->player->balance += lab->current_project->cost;
+		}
 		lab->current_project->current_lab = "";
 		lab->manufacture_man_hours_invested = 0;
 		lab->manufacture_done = 0;
@@ -204,6 +276,27 @@ void Lab::setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic, sp<GameS
 			case ResearchTopic::Type::BioChem:
 			case ResearchTopic::Type::Physics:
 				topic->current_lab = lab;
+				if (!topic->started)
+				{
+					StateRef<Base> thisBase;
+					for (auto &base : state->player_bases)
+					{
+						for (auto &facility : base.second->facilities)
+						{
+							if (facility->lab == lab)
+							{
+								thisBase = {state.get(), base.first};
+								break;
+							}
+						}
+						if (thisBase)
+						{
+							break;
+						}
+					}
+					topic->dependencies.items.consume(thisBase);
+					topic->started = true;
+				}
 				break;
 			case ResearchTopic::Type::Engineering:
 				LogAssert(state->player->balance >= topic->cost);
@@ -234,6 +327,11 @@ int Lab::getTotalSkill() const
 	int totalLabSkill = 0;
 	for (auto &agent : this->assigned_agents)
 	{
+		// Disregard agents not at base
+		if (agent->currentBuilding != agent->homeBuilding)
+		{
+			continue;
+		}
 		switch (this->type)
 		{
 			case ResearchTopic::Type::Physics:
@@ -246,8 +344,8 @@ int Lab::getTotalSkill() const
 				totalLabSkill += agent->current_stats.engineering_skill;
 				break;
 			default:
-				// TODO Workshop 'labs'?
 				LogError("Unexpected lab type");
+				break;
 		}
 	}
 	return totalLabSkill;
@@ -300,6 +398,25 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 				lab->current_project->man_hours_progress += progress_hours;
 				if (lab->current_project->isComplete())
 				{
+					// Produce a research remains item
+					StateRef<Base> thisBase;
+					for (auto &base : state->player_bases)
+					{
+						for (auto &facility : base.second->facilities)
+						{
+							if (facility->lab == lab)
+							{
+								thisBase = {state.get(), base.first};
+								break;
+							}
+						}
+						if (thisBase)
+						{
+							break;
+						}
+					}
+					lab->current_project->dependencies.items.produceRemains(thisBase);
+
 					auto event = new GameResearchEvent(GameEventType::ResearchCompleted,
 					                                   lab->current_project, lab);
 					fw().pushEvent(event);
@@ -324,19 +441,19 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 								{
 									case ResearchTopic::ItemType::VehicleEquipment:
 									{
-										base.second->inventoryVehicleEquipment
-										    [lab->current_project->item_produced] =
+										base.second->inventoryVehicleEquipment[lab->current_project
+										                                           ->itemId] =
 										    base.second->inventoryVehicleEquipment
-										        [lab->current_project->item_produced] +
+										        [lab->current_project->itemId] +
 										    1;
 									}
 									break;
 									case ResearchTopic::ItemType::VehicleEquipmentAmmo:
 									{
-										base.second->inventoryVehicleAmmo[lab->current_project
-										                                      ->item_produced] =
+										base.second
+										    ->inventoryVehicleAmmo[lab->current_project->itemId] =
 										    base.second->inventoryVehicleAmmo[lab->current_project
-										                                          ->item_produced] +
+										                                          ->itemId] +
 										    1;
 									}
 									break;
@@ -345,16 +462,16 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 										// Apparently if we ++ it doesn't work on new entries
 										// properly
 										base.second->inventoryAgentEquipment[lab->current_project
-										                                         ->item_produced] =
+										                                         ->itemId] =
 										    base.second->inventoryAgentEquipment
-										        [lab->current_project->item_produced] +
+										        [lab->current_project->itemId] +
 										    1;
 									}
 									break;
 									case ResearchTopic::ItemType::Craft:
 									{
-										auto type = state->vehicle_types[lab->current_project
-										                                     ->item_produced];
+										auto type =
+										    state->vehicle_types[lab->current_project->itemId];
 
 										auto v = base.second->building->city->placeVehicle(
 										    *state, {state.get(), type}, state->getPlayer(),

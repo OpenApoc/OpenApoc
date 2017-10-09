@@ -2,6 +2,7 @@
 #define _USE_MATH_DEFINES
 #endif
 #include "game/state/battle/battleunit.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/sound.h"
 #include "game/state/aequipment.h"
@@ -1540,7 +1541,7 @@ void BattleUnit::applyDamageDirect(GameState &state, int damage, bool generateFa
 	// Deal stun damage
 	if (stunPower > 0)
 	{
-		stunDamage += clamp(damage, 0, std::max(0, stunPower - stunDamage));
+		stunDamage += clamp(damage, 0, std::max(0, stunPower + agent->getMaxHealth() - stunDamage));
 	}
 	// Deal health damage
 	else
@@ -1621,7 +1622,6 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 
 	// Calculate damage
 	int damage = 0;
-	bool USER_OPTION_UFO_DAMAGE_MODEL = false;
 	if (damageType->effectType == DamageType::EffectType::Smoke) // smoke deals 1-3 stun damage
 	{
 		power = 2;
@@ -1649,7 +1649,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	{
 		damage = randDamage050150(state.rng, power);
 	}
-	else if (USER_OPTION_UFO_DAMAGE_MODEL)
+	else if (config().getBool("OpenApoc.NewFeature.UFODamageModel"))
 	{
 		damage = randDamage000200(state.rng, power);
 	}
@@ -2604,7 +2604,8 @@ void BattleUnit::updateBody(GameState &state, unsigned int &bodyTicksRemaining)
 				setBodyState(state, target_body_state);
 			}
 			// Pop finished missions if present
-			if (popFinishedMissions(state))
+			popFinishedMissions(state);
+			if (retreated)
 			{
 				return;
 			}
@@ -2840,7 +2841,8 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 		atGoal = goalPosition == getPosition();
 		if (atGoal)
 		{
-			if (getNewGoal(state))
+			getNewGoal(state);
+			if (retreated)
 			{
 				return;
 			}
@@ -2882,8 +2884,7 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 		    vectorToGoal.y == 0 && tileObject->getOwningTile()->hasLift)
 		{
 			// FIXME: Actually read set option
-			bool USER_OPTION_GRAVLIFT_SOUNDS = true;
-			if (USER_OPTION_GRAVLIFT_SOUNDS && !wasUsingLift)
+			if (config().getBool("OpenApoc.NewFeature.GravliftSounds") && !wasUsingLift)
 			{
 				playDistantSound(state, agent->type->gravLiftSfx, 0.25f);
 			}
@@ -2930,7 +2931,8 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 				triggerProximity(state);
 				goalPosition = position;
 			}
-			if (getNewGoal(state))
+			getNewGoal(state);
+			if (retreated)
 			{
 				return;
 			}
@@ -3144,7 +3146,8 @@ void BattleUnit::updateTurning(GameState &state, unsigned int &turnTicksRemainin
 				setFacing(state, goalFacing);
 			}
 			// Pop finished missions if present
-			if (popFinishedMissions(state))
+			popFinishedMissions(state);
+			if (retreated)
 			{
 				return;
 			}
@@ -4064,8 +4067,10 @@ void BattleUnit::processExperience(GameState &state)
 	{
 		if (agent->current_stats.health < 100)
 		{
-			agent->current_stats.health +=
+			int healthBoost =
 			    randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.health) / 10;
+			agent->current_stats.health += healthBoost;
+			agent->modified_stats.health += healthBoost;
 		}
 		if (agent->current_stats.speed < 100)
 		{
@@ -4520,7 +4525,7 @@ bool BattleUnit::useSpawner(GameState &state, sp<AEquipmentType> item)
 		{
 			continue;
 		}
-		if (state.current_battle->findShortestPath(curPos, pos, helper, false, false, 0, true)
+		if (state.current_battle->findShortestPath(curPos, pos, helper, false, false, true, 0, true)
 		        .back() == pos)
 		{
 			numToSpawn--;
@@ -4863,7 +4868,7 @@ bool BattleUnit::useBrainsucker(GameState &state)
 			continue;
 		}
 		auto targetTile = map.getTile(pos);
-		if (!helper.canEnterTile(ourTile, targetTile, false, true))
+		if (!helper.canEnterTile(ourTile, targetTile, true, true, true))
 		{
 			continue;
 		}
@@ -5301,14 +5306,27 @@ bool BattleUnit::getNewGoal(GameState &state)
 {
 	atGoal = true;
 	launched = false;
-	// Pop finished missions if present
-	if (popFinishedMissions(state))
-	{
-		return true;
-	}
-	// Try to get new destination
+
+	bool popped = false;
+	bool acquired = false;
 	Vec3<float> nextGoal;
-	if (getNextDestination(state, nextGoal))
+	popped = popFinishedMissions(state);
+	if (retreated)
+	{
+		return false;
+	}
+	do
+	{
+		// Try to get new destination
+		acquired = getNextDestination(state, nextGoal);
+		// Pop finished missions if present
+		popped = popFinishedMissions(state);
+		if (retreated)
+		{
+			return false;
+		}
+	} while (popped && !acquired);
+	if (acquired)
 	{
 		goalPosition = nextGoal;
 		atGoal = false;
@@ -5318,7 +5336,7 @@ bool BattleUnit::getNewGoal(GameState &state)
 	{
 		setMovementState(MovementState::None);
 	}
-	return false;
+	return acquired;
 }
 
 Vec3<float> BattleUnit::getMuzzleLocation() const
@@ -5374,14 +5392,17 @@ bool BattleUnit::shouldPlaySoundNow()
 
 bool BattleUnit::popFinishedMissions(GameState &state)
 {
+	bool popped = false;
 	while (missions.size() > 0 && missions.front()->isFinished(state, *this))
 	{
 		LogWarning("Unit %s mission \"%s\" finished", id, missions.front()->getName());
 		missions.pop_front();
-
+		popped = true;
 		// We may have retreated as a result of finished mission
 		if (retreated)
-			return true;
+		{
+			return popped;
+		}
 
 		if (!missions.empty())
 		{
@@ -5394,7 +5415,7 @@ bool BattleUnit::popFinishedMissions(GameState &state)
 			break;
 		}
 	}
-	return false;
+	return popped;
 }
 
 bool BattleUnit::hasMovementQueued()
@@ -5487,9 +5508,9 @@ bool BattleUnit::cancelMissions(GameState &state, bool forced)
 	}
 	else
 	{
-		if (popFinishedMissions(state))
+		popFinishedMissions(state);
+		if (retreated)
 		{
-			// Unit retreated
 			return false;
 		}
 		if (missions.empty())
@@ -5618,8 +5639,8 @@ bool BattleUnit::setMission(GameState &state, BattleUnitMission *mission)
 			case BattleUnitMission::Type::ThrowItem:
 			{
 				// FIXME: actually read the option
-				bool USER_OPTION_ALLOW_INSTANT_THROWS = true;
-				if (USER_OPTION_ALLOW_INSTANT_THROWS && canAfford(state, getThrowCost(), true))
+				if (!config().getBool("OpenApoc.NewFeature.NoInstantThrows") &&
+				    canAfford(state, getThrowCost(), true))
 				{
 					setMovementState(MovementState::None);
 					setBodyState(state, BodyState::Standing);

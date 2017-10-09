@@ -217,9 +217,7 @@ void City::update(GameState &state, unsigned int ticks)
 				case TileObject::Type::Vehicle:
 				{
 					auto vehicle = std::static_pointer_cast<TileObjectVehicle>(c.obj)->getVehicle();
-					displayDoodad = vehicle->handleCollision(state, c);
-					playSound = displayDoodad;
-					LogWarning("Vehicle collision");
+					displayDoodad = vehicle->handleCollision(state, c, playSound);
 					break;
 				}
 				case TileObject::Type::Scenery:
@@ -335,6 +333,7 @@ sp<Vehicle> City::placeVehicle(GameState &state, StateRef<VehicleType> type,
 	v->health = type->health;
 	v->strategyImages = state.city_common_image_list->strategyImages;
 	v->owner = owner;
+	v->setupMover();
 
 	// Vehicle::equipDefaultEquipment uses the state reference from itself, so make sure the
 	// vehicle table has the entry before calling it

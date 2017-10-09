@@ -13,17 +13,33 @@ namespace OpenApoc
 class UfopaediaEntry;
 class Base;
 class ResearchDependency;
-class ItemDependency;
 class Agent;
 class Lab;
 class GameState;
+class AEquipmentType;
+class VEquipmentType;
+class Image;
+
+class ItemDependency
+{
+  public:
+	ItemDependency() = default;
+	std::map<StateRef<AEquipmentType>, int> agentItemsRequired;
+	std::map<StateRef<VEquipmentType>, int> vehicleItemsRequired;
+	std::map<StateRef<AEquipmentType>, int> agentItemsConsumed;
+	std::map<StateRef<VEquipmentType>, int> vehicleItemsConsumed;
+
+	bool satisfied(StateRef<Base> base) const;
+	void consume(StateRef<Base> base);
+	void produceRemains(StateRef<Base> base);
+};
 
 class ProjectDependencies
 {
   public:
 	ProjectDependencies() = default;
 	std::list<ResearchDependency> research;
-	std::list<ItemDependency> items;
+	ItemDependency items;
 
 	bool satisfied(StateRef<Base> base) const;
 };
@@ -67,13 +83,14 @@ class ResearchTopic : public StateObject
 	StateRef<UfopaediaEntry> ufopaedia_entry;
 	StateRef<Lab> current_lab;
 	unsigned score = 0;
+	sp<Image> picture;
 	bool started = false;
 	bool isComplete() const;
 
 	// Manufacture only
 	int cost = 0;
 	ItemType item_type = ItemType::VehicleEquipment;
-	UString item_produced;
+	UString itemId;
 };
 
 class ResearchDependency
@@ -91,16 +108,6 @@ class ResearchDependency
 	std::set<StateRef<ResearchTopic>> topics;
 
 	bool satisfied() const;
-};
-
-class ItemDependency
-{
-  public:
-	ItemDependency() = default;
-	// FIXME: Replace with StateRef<GenericItemClass> or something?
-	std::map<UString, int> items;
-
-	bool satisfied(StateRef<Base> base) const;
 };
 
 class Lab : public StateObject

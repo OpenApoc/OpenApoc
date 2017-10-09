@@ -5,6 +5,7 @@
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "framework/sound.h"
+#include "game/state/base/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/citycommonsamplelist.h"
@@ -38,19 +39,20 @@ static const Vec3<float> offsetLaunch{0.5f, 0.5f, -1.0f};
 FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, Vehicle &v) : map(map), v(v) {}
 
 bool FlyingVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits,
-                                           bool ignoreAllUnits) const
+                                           bool ignoreMovingUnits, bool ignoreAllUnits) const
 {
 	float nothing;
 	bool none1;
 	bool none2;
-	return canEnterTile(from, to, false, none1, nothing, none2, ignoreStaticUnits, ignoreAllUnits);
+	return canEnterTile(from, to, false, none1, nothing, none2, ignoreStaticUnits,
+	                    ignoreMovingUnits, ignoreAllUnits);
 }
 
 float FlyingVehicleTileHelper::pathOverheadAlloawnce() const { return 1.25f; }
 
 // Support 'from' being nullptr for if a vehicle is being spawned in the map
 bool FlyingVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, float &cost, bool &,
-                                           bool, bool) const
+                                           bool, bool, bool) const
 {
 	Vec3<int> fromPos = {0, 0, 0};
 	if (from)
@@ -291,7 +293,7 @@ VehicleMission *VehicleMission::gotoLocation(GameState &, Vehicle &v, Vec3<int> 
 	mission->type = MissionType::GotoLocation;
 	mission->targetLocation = target;
 	mission->pickNearest = pickNearest;
-	mission->reRouteAttempts = reRouteAttempts;
+	mission->reRouteAttempts = reRouteAttempts + 1;
 	mission->allowTeleporter = allowTeleporter;
 	if (v.type->type == VehicleType::Type::Ground)
 	{
@@ -384,6 +386,22 @@ VehicleMission *VehicleMission::recoverVehicle(GameState &state, Vehicle &v,
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::RecoverVehicle;
 	mission->targetVehicle = target;
+	return mission;
+}
+
+VehicleMission *VehicleMission::offerService(GameState &state, Vehicle &v,
+                                             StateRef<Building> target)
+{
+	auto *mission = new VehicleMission();
+	mission->type = MissionType::OfferService;
+	if (target)
+	{
+		mission->targetBuilding = target;
+	}
+	else
+	{
+		mission->missionCounter = 1;
+	}
 	return mission;
 }
 
@@ -563,7 +581,9 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 			if (!advanceAlongPath(state, v, destPos, destFacing))
 			{
 				if (missionCounter == 0)
+				{
 					return false;
+				}
 
 				missionCounter--;
 				std::uniform_int_distribution<int> xyPos(25, 115);
@@ -762,6 +782,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 		case MissionType::Snooze:
 		case MissionType::RestartNextMission:
 		case MissionType::GotoPortal:
+		case MissionType::OfferService:
 		case MissionType::InfiltrateSubvert:
 		{
 			return false;
@@ -778,6 +799,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 	finished = finished || isFinishedInternal(state, v);
 	switch (this->type)
 	{
+		// Pick attack target
 		case MissionType::Patrol:
 		{
 			float range = v.getFiringRange();
@@ -792,11 +814,17 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 			}
 			return;
 		}
+		// Port out or path to portal
 		case MissionType::GotoPortal:
 		{
 			auto vTile = v.tileObject;
-			if (vTile && finished)
+			if (!vTile)
 			{
+				return;
+			}
+			if (finished)
+			{
+				// Port out
 				for (auto &city : state.cities)
 				{
 					if (city.second != v.city.getSp())
@@ -813,15 +841,22 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 					}
 				}
 			}
-			if (vTile && !finished && this->currentPlannedPath.empty())
+			else if (this->currentPlannedPath.empty())
 			{
 				// Forever path to portal, eventually it will work
 				setPathTo(state, v, targetLocation, getDefaultIterationCount(v));
 			}
 			return;
 		}
+		// Move to the ground spot
 		case MissionType::Crash:
 		{
+			if (finished)
+			{
+				fw().pushEvent(new GameVehicleEvent(GameEventType::UfoCrashed,
+				                                    {&state, v.shared_from_this()}));
+				return;
+			}
 			auto vTile = v.tileObject;
 			if (vTile && !finished && this->currentPlannedPath.empty())
 			{
@@ -831,39 +866,10 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 			return;
 		}
 		case MissionType::GotoLocation:
-		{
-			auto vTile = v.tileObject;
-			if (vTile && !finished && this->currentPlannedPath.empty())
-			{
-				if (reRouteAttempts > 0)
-				{
-					reRouteAttempts--;
-					setPathTo(state, v, targetLocation, getDefaultIterationCount(v));
-				}
-				else
-				{
-					// Finall attempt, give up if fails
-					setPathTo(state, v, targetLocation, 500, true, true);
-				}
-			}
-			return;
-		}
 		case MissionType::Land:
-			if (finished && v.tileObject)
-			{
-				auto b = this->targetBuilding;
-				if (!b)
-				{
-					LogError("Building disappeared");
-					return;
-				}
-				v.enterBuilding(state, b);
-				LogInfo("Vehicle mission: Landed in %s", b.id);
-				return;
-			}
-			return;
 		case MissionType::InfiltrateSubvert:
 		case MissionType::GotoBuilding:
+		case MissionType::OfferService:
 		case MissionType::AttackVehicle:
 		case MissionType::FollowVehicle:
 		case MissionType::RestartNextMission:
@@ -905,10 +911,6 @@ bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 	}
 	switch (this->type)
 	{
-		case MissionType::TakeOff:
-			return v.tileObject && this->currentPlannedPath.empty();
-		case MissionType::Land:
-			return currentPlannedPath.empty();
 		case MissionType::GotoPortal:
 		case MissionType::GotoLocation:
 		case MissionType::Crash:
@@ -919,18 +921,6 @@ bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 				return true;
 			return false;
 		}
-		case MissionType::InfiltrateSubvert:
-		{
-			return missionCounter > 1;
-		}
-		case MissionType::RecoverVehicle:
-		{
-			return missionCounter > 0;
-		}
-		case MissionType::Patrol:
-			return this->missionCounter == 0 && this->currentPlannedPath.empty();
-		case MissionType::GotoBuilding:
-			return this->targetBuilding == v.currentBuilding;
 		case MissionType::AttackVehicle:
 		{
 			auto t = this->targetVehicle;
@@ -971,6 +961,20 @@ bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 			}
 			return this->targetVehicle->health == 0;
 		}
+		case MissionType::TakeOff:
+			return v.tileObject && this->currentPlannedPath.empty();
+		case MissionType::Land:
+			return missionCounter > 1;
+		case MissionType::InfiltrateSubvert:
+			return missionCounter > 1;
+		case MissionType::OfferService:
+			return missionCounter > 1;
+		case MissionType::RecoverVehicle:
+			return missionCounter > 0;
+		case MissionType::Patrol:
+			return this->missionCounter == 0 && this->currentPlannedPath.empty();
+		case MissionType::GotoBuilding:
+			return this->targetBuilding == v.currentBuilding;
 		case MissionType::Snooze:
 			return this->timeToSnooze == 0;
 		case MissionType::RestartNextMission:
@@ -1053,7 +1057,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			return;
 		}
-		case MissionType::TakeOff: // Fall-through
+		case MissionType::TakeOff:
 		{
 			if (v.tileObject)
 			{
@@ -1189,58 +1193,84 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			if (!b)
 			{
 				LogError("Building disappeared");
+				cancelled = true;
 				return;
 			}
-			auto vehicleTile = v.tileObject;
-			if (!vehicleTile)
+			switch (missionCounter)
 			{
-				LogError("Trying to land vehicle not in the city?");
-				return;
-			}
-			switch (v.type->type)
-			{
-				case VehicleType::Type::Ground:
+				case 0:
 				{
-					auto vehiclePosition = vehicleTile->getOwningTile()->position;
-					if (std::find(targetBuilding->carEntranceLocations.begin(),
-					              targetBuilding->carEntranceLocations.end(),
-					              vehiclePosition) == targetBuilding->carEntranceLocations.end())
+					auto vehicleTile = v.tileObject;
+					if (!vehicleTile)
 					{
-						LogError("Vehicle at %s not inside vehicle entrance for building %s",
-						         vehiclePosition, b.id);
+						LogError("Trying to land vehicle not in the city?");
 						return;
 					}
-					// No action required for ground vehicles, they just disappear into the depot
-					return;
-				}
-				case VehicleType::Type::Flying:
-				case VehicleType::Type::UFO:
-				{
-					auto vehiclePosition = vehicleTile->getOwningTile()->position;
-					if (vehiclePosition.z < 2)
+					switch (v.type->type)
 					{
-						LogError("Vehicle trying to land off bottom of map %s", vehiclePosition);
-						return;
-					}
-					auto padPosition = vehiclePosition - Vec3<int>{0, 0, 1};
-
-					bool padFound = false;
-
-					for (auto &landingPadPos : b->landingPadLocations)
-					{
-						if (landingPadPos == padPosition)
+						case VehicleType::Type::Ground:
 						{
-							padFound = true;
-							break;
+							auto vehiclePosition = vehicleTile->getOwningTile()->position;
+							if (std::find(targetBuilding->carEntranceLocations.begin(),
+							              targetBuilding->carEntranceLocations.end(),
+							              vehiclePosition) ==
+							    targetBuilding->carEntranceLocations.end())
+							{
+								LogError(
+								    "Vehicle at %s not inside vehicle entrance for building %s",
+								    vehiclePosition, b.id);
+								return;
+							}
+							// No action required for ground vehicles, they just disappear into the
+							// depot
+							v.enterBuilding(state, b);
+							missionCounter = 2;
+							return;
+						}
+						case VehicleType::Type::Flying:
+						case VehicleType::Type::UFO:
+						{
+							auto vehiclePosition = vehicleTile->getOwningTile()->position;
+							if (vehiclePosition.z < 2)
+							{
+								LogError("Vehicle trying to land off bottom of map %s",
+								         vehiclePosition);
+								cancelled = true;
+								return;
+							}
+							auto padPosition = vehiclePosition - Vec3<int>{0, 0, 1};
+
+							bool padFound = false;
+
+							for (auto &landingPadPos : b->landingPadLocations)
+							{
+								if (landingPadPos == padPosition)
+								{
+									padFound = true;
+									break;
+								}
+							}
+							if (!padFound)
+							{
+								LogError("Vehicle at %s not directly above a landing pad for "
+								         "building %s",
+								         vehiclePosition, b.id);
+								cancelled = true;
+								return;
+							}
+							this->currentPlannedPath = {padPosition,
+							                            padPosition - Vec3<int>{0, 0, 1}};
+							missionCounter++;
+							return;
 						}
 					}
-					if (!padFound)
-					{
-						LogError("Vehicle at %s not directly above a landing pad for building %s",
-						         vehiclePosition, b.id);
-						return;
-					}
-					this->currentPlannedPath = {padPosition, padPosition - Vec3<int>{0, 0, 1}};
+					return;
+				}
+				case 1:
+				{
+					// Flying vehicle reached landing spot
+					v.enterBuilding(state, b);
+					missionCounter++;
 					return;
 				}
 			}
@@ -1262,20 +1292,39 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		}
 		case MissionType::GotoLocation:
 		{
+			if (isFinishedInternal(state, v))
+			{
+				return;
+			}
 			if (teleportCheck(state, v))
 			{
 				return;
 			}
-			auto vehicleTile = v.tileObject;
 			if (takeOffCheck(state, v))
 			{
 				return;
 			}
 			else
 			{
-				if (currentPlannedPath.empty())
+				if (this->currentPlannedPath.empty())
 				{
-					this->setPathTo(state, v, this->targetLocation, getDefaultIterationCount(v));
+					if (reRouteAttempts > 0)
+					{
+						reRouteAttempts--;
+						int iterationCount = getDefaultIterationCount(v);
+						// More thorough pathing to closer location for flying vehicles
+						if (v.type->type != VehicleType::Type::Ground)
+						{
+							iterationCount *=
+							    glm::length((Vec3<float>)targetLocation - v.position) < 33 ? 3 : 1;
+						}
+						setPathTo(state, v, targetLocation, iterationCount, true);
+					}
+					else
+					{
+						// Finall attempt, give up if fails
+						setPathTo(state, v, targetLocation, 500, true, true);
+					}
 				}
 			}
 			return;
@@ -1527,33 +1576,105 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				return;
 			}
 			// Try to advance on vehicle
-			if (missionCounter == 0)
+			switch (missionCounter)
 			{
-				// Vehicle has crashed successfully and we're on top of it
-				if (targetVehicle->missions.empty() &&
-				    (Vec3<int>)v.position == (Vec3<int>)targetVehicle->position)
+				case 0:
 				{
-					missionCounter++;
-					// Launch vehicle assault
-					StateRef<Vehicle> thisRef = {&state,
-					                             Vehicle::getId(state, v.shared_from_this())};
-					auto event = new GameVehicleEvent(GameEventType::UfoRecoveryBegin,
-					                                  targetVehicle, thisRef);
-					fw().pushEvent(event);
-					// Remove ufo
-					targetVehicle->die(state, thisRef, true);
-					// Mission will now begin
+					// Vehicle has crashed successfully and we're on top of it
+					if (targetVehicle->missions.empty() &&
+					    (Vec3<int>)v.position == (Vec3<int>)targetVehicle->position)
+					{
+						missionCounter++;
+						// Launch vehicle assault
+						StateRef<Vehicle> thisRef = {&state,
+						                             Vehicle::getId(state, v.shared_from_this())};
+						auto event = new GameVehicleEvent(GameEventType::UfoRecoveryBegin,
+						                                  targetVehicle, thisRef);
+						fw().pushEvent(event);
+						// Mission will now begin
+						return;
+					}
+					// Route towards target
+					v.addMission(state,
+					             VehicleMission::gotoLocation(state, v, targetVehicle->position));
 					return;
 				}
-				// Route towards target
-				v.addMission(state,
-				             VehicleMission::gotoLocation(state, v, targetVehicle->position));
-			}
-			else
-			{
-				LogError("Starting a completed recovery mission?");
+				default:
+					// Nothing to do, launched battle by now
+					return;
 			}
 			return;
+		}
+		case MissionType::OfferService:
+		{
+			switch (missionCounter)
+			{
+				// Go to target building and pick up cargo
+				case 0:
+				{
+					if (!targetBuilding)
+					{
+						LogError("Building disappeared");
+						return;
+					}
+					// Already in target building - pick up cargo and restart mission to start
+					// ferrying
+					if (v.currentBuilding == targetBuilding)
+					{
+						missionCounter++;
+						v.provideService(state, true);
+						// Restart mission with counter = 1, start offering service
+						v.addMission(state, VehicleMission::restartNextMission(state, v));
+					}
+					// Not in target building yet - move to it
+					else
+					{
+						v.addMission(state, VehicleMission::gotoBuilding(state, v, targetBuilding));
+					}
+					return;
+				}
+				// Provide service
+				case 1:
+				{
+					// Find our ferry destination
+					auto destination = v.getServiceDestination(state);
+					if (destination)
+					{
+						// We still have stuff to ferry
+						// Wait a bit and go to destination
+						v.addMission(state, VehicleMission::gotoBuilding(state, v, destination));
+						if (v.owner != state.getPlayer())
+						{
+							v.addMission(state, VehicleMission::snooze(state, v, TICKS_PER_SECOND));
+						}
+					}
+					else
+					{
+						// We finished ferrying
+						// Wait a bit and return home
+						missionCounter++;
+						if (v.homeBuilding)
+						{
+							v.addMission(state,
+							             VehicleMission::gotoBuilding(state, v, v.homeBuilding));
+							if (v.owner != state.getPlayer())
+							{
+								v.addMission(state,
+								             VehicleMission::snooze(state, v, TICKS_PER_SECOND));
+							}
+						}
+						else
+						{
+							// Was a temporal ferry, vanish now
+							v.die(state, nullptr, true);
+						}
+					}
+					return;
+				}
+				default:
+					// Mission complete, nothing to do
+					return;
+			}
 		}
 		case MissionType::InfiltrateSubvert:
 		{
@@ -1660,11 +1781,11 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					    StateRef<DoodadType>{&state, "DOODAD_14_INFILTRATION_BIG"},
 					    v.tileObject->getPosition() - Vec3<float>{0, 0, 0.5f});
 
-					v.addMission(state, VehicleMission::snooze(state, v, doodad->lifetime * 2));
+					v.addMission(state, VehicleMission::snooze(state, v, doodad->lifetime));
 					missionCounter++;
 					return;
 				}
-				// Deposited aliens, place aliens in building and retreat
+				// Played deposit animation fully, place aliens in building and retreat
 				case 1:
 				{
 					// Deposit aliens or subvert
@@ -1683,13 +1804,21 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						{
 							targetBuilding->current_crew[pair.first] += pair.second;
 						}
+						if (targetBuilding->base)
+						{
+							fw().pushEvent(new GameDefenseEvent(GameEventType::DefendTheBase,
+							                                    targetBuilding->base, v.owner));
+						}
 					}
 					// Retreat
 					v.addMission(state, VehicleMission::gotoPortal(state, v), true);
+					v.addMission(state, VehicleMission::snooze(state, v, TICKS_PER_SECOND));
 					missionCounter++;
 					return;
 				}
 				default:
+					// Should never reach this, as we're gone through portal by the end of this
+					// mision
 					LogError("Starting a completed Infiltration mission?");
 					return;
 			}
@@ -1889,10 +2018,16 @@ bool VehicleMission::advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> 
                                       float &destFacing)
 {
 	if (currentPlannedPath.empty())
+	{
+		v.addMission(state, restartNextMission(state, v));
 		return false;
+	}
 	currentPlannedPath.pop_front();
 	if (currentPlannedPath.empty())
+	{
+		v.addMission(state, restartNextMission(state, v));
 		return false;
+	}
 	auto pos = currentPlannedPath.front();
 
 	// Land/TakeOff mission does not check for collision or path skips
@@ -2013,7 +2148,7 @@ bool VehicleMission::isTakingOff(Vehicle &v)
 
 int VehicleMission::getDefaultIterationCount(Vehicle &v)
 {
-	return (v.type->type == VehicleType::Type::Ground) ? 500 : 25;
+	return (v.type->type == VehicleType::Type::Ground) ? 500 : 50;
 }
 
 UString VehicleMission::getName()
@@ -2033,6 +2168,7 @@ UString VehicleMission::getName()
 	    {MissionType::Patrol, "Patrol"},
 	    {MissionType::InfiltrateSubvert, "Infiltrate/Subvert"},
 	    {MissionType::RestartNextMission, "RestartNextMission"},
+	    {MissionType::OfferService, "OfferServices"},
 	    {MissionType::Teleport, "Teleport"},
 	};
 	UString name = "UNKNOWN";
@@ -2042,7 +2178,7 @@ UString VehicleMission::getName()
 	switch (this->type)
 	{
 		case MissionType::GotoLocation:
-			name += format(" %s", this->targetLocation.x);
+			name += format(" %s", this->targetLocation);
 			break;
 		case MissionType::GotoBuilding:
 			name += " " + this->targetBuilding.id;
@@ -2072,13 +2208,13 @@ UString VehicleMission::getName()
 			name += format(" target \"%s\"", this->targetVehicle.id);
 			break;
 		case MissionType::Patrol:
-			name += format(" %s", this->targetLocation.x);
+			name += format(" %s", this->targetLocation);
 			break;
 		case MissionType::GotoPortal:
-			name += format(" %s", this->targetLocation.x);
+			name += format(" %s", this->targetLocation);
 			break;
 		case MissionType::Teleport:
-			name += format(" random around %s", this->targetLocation.x);
+			name += format(" random around %s", this->targetLocation);
 			break;
 		case MissionType::InfiltrateSubvert:
 			name += " " + this->targetBuilding.id + " " + (subvert ? "subvert" : "infiltrate");
@@ -2092,18 +2228,19 @@ UString VehicleMission::getName()
 GroundVehicleTileHelper::GroundVehicleTileHelper(TileMap &map, Vehicle &v) : map(map), v(v) {}
 
 bool GroundVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits,
-                                           bool ignoreAllUnits) const
+                                           bool ignoreMovingUnits, bool ignoreAllUnits) const
 {
 	float nothing;
 	bool none1;
 	bool none2;
-	return canEnterTile(from, to, false, none1, nothing, none2, ignoreStaticUnits, ignoreAllUnits);
+	return canEnterTile(from, to, false, none1, nothing, none2, ignoreStaticUnits,
+	                    ignoreMovingUnits, ignoreAllUnits);
 }
 
 float GroundVehicleTileHelper::pathOverheadAlloawnce() const { return 1.25f; }
 
 bool GroundVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, float &cost, bool &,
-                                           bool, bool) const
+                                           bool, bool, bool) const
 {
 	if (!from)
 	{

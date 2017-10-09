@@ -1,30 +1,31 @@
 #pragma once
 
 #include "framework/stage.h"
+#include "game/state/stateobject.h"
 #include "library/sp.h"
 
 namespace OpenApoc
 {
 
-class GameState;
 class Form;
+class GameState;
+class Base;
+class Organisation;
 
-class InGameOptions : public Stage
+class BaseDefenseScreen : public Stage
 {
   private:
 	sp<Form> menuform;
 
 	sp<GameState> state;
+	StateRef<Base> base;
+	StateRef<Organisation> attacker;
+
+	void initiateDefenseMission(StateRef<Base> base, StateRef<Organisation> attacker);
 
   public:
-	InGameOptions(sp<GameState> state);
-	~InGameOptions() override;
-
-	void saveList();
-	void loadList(int id);
-	void loadNextList();
-	int curId = 0;
-
+	BaseDefenseScreen(sp<GameState> state, StateRef<Base> base, StateRef<Organisation> attacker);
+	~BaseDefenseScreen() override;
 	// Stage control
 	void begin() override;
 	void pause() override;

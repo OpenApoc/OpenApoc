@@ -1,8 +1,10 @@
 #include "game/state/battle/battle.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/sound.h"
 #include "framework/trace.h"
 #include "game/state/aequipment.h"
+#include "game/state/base/base.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/battle/battlecommonsamplelist.h"
@@ -17,11 +19,13 @@
 #include "game/state/battle/battleunit.h"
 #include "game/state/battle/battleunitanimationpack.h"
 #include "game/state/battle/battleunitimagepack.h"
+#include "game/state/city/agentmission.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/projectile.h"
 #include "game/state/city/vehicle.h"
+#include "game/state/city/vehiclemission.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/message.h"
@@ -1168,9 +1172,6 @@ sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position,
                                          int depletionRate, StateRef<Organisation> ownerOrg,
                                          StateRef<BattleUnit> ownerUnit)
 {
-	// FIXME: Actually read this option
-	bool USER_OPTION_EXPLOSIONS_DAMAGE_IN_THE_END = true;
-
 	// Doodad
 	if (!doodadType)
 	{
@@ -1186,9 +1187,9 @@ sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position,
 	}
 
 	// Explosion
-	auto explosion =
-	    mksp<BattleExplosion>(position, damageType, power, depletionRate,
-	                          USER_OPTION_EXPLOSIONS_DAMAGE_IN_THE_END, ownerOrg, ownerUnit);
+	auto explosion = mksp<BattleExplosion>(
+	    position, damageType, power, depletionRate,
+	    !config().getBool("OpenApoc.NewFeature.InstantExplosionDamage"), ownerOrg, ownerUnit);
 	explosions.insert(explosion);
 	return explosion;
 }
@@ -1597,7 +1598,7 @@ void Battle::updatePathfinding(GameState &, unsigned int ticks)
 				auto path = mapRef.findShortestPath(
 				    blockCenterPos[type][i], blockCenterPos[type][j],
 				    distance * PATH_ITERATION_LIMIT_MULTIPLIER, helperMap[(int)type], false, true,
-				    true, &cost, distance * 4 * PATH_COST_LIMIT_MULTIPLIER);
+				    true, true, &cost, distance * 4 * PATH_COST_LIMIT_MULTIPLIER);
 
 				if (path.empty() || (*path.rbegin()) != blockCenterPos[type][j])
 				{
@@ -2481,6 +2482,9 @@ void Battle::enterBattle(GameState &state)
 		state.current_battle->battleViewZLevel = (int)ceilf(firstPlayerUnit->position.z);
 	}
 	state.current_battle->battleViewGroupMove = true;
+
+	// Remember time
+	state.updateBeforeBattle();
 }
 
 // To be called when battle must be finished and before showing score screen
@@ -2493,6 +2497,7 @@ void Battle::finishBattle(GameState &state)
 	}
 
 	auto player = state.getPlayer();
+	auto aliens = state.getAliens();
 	state.current_battle->unloadResources(state);
 
 	// Remove active battle scanners
@@ -2503,6 +2508,7 @@ void Battle::finishBattle(GameState &state)
 			e->battleScanner.clear();
 		}
 	}
+
 	// Proces MCed units
 	for (auto &u : state.current_battle->units)
 	{
@@ -2525,13 +2531,237 @@ void Battle::finishBattle(GameState &state)
 			u.second->owner = u.second->agent->owner;
 		}
 	}
+
+	// Loot (temporary storage for items that become loot)
+	std::list<sp<AEquipment>> loot;
+
 	//	- Prepare list of surviving aliens
-	//	- (Success) Convert remaining unconscious and dead aliens into research items
-	//  - Remove brainsucker pods from agent inventories and convert into research items
-	//  - Calculate score for live captured aliens
-	//  - (Failure) Handle remaining aliens (retreat them if ufo, put them in the building if
-	//  building)
-	//  - Handle retreated aliens (put them to random closest building)
+	std::list<sp<BattleUnit>> retreatedAliens;
+	std::list<sp<BattleUnit>> liveAliens;
+	std::list<sp<BattleUnit>> deadAliens;
+	for (auto &u : state.current_battle->units)
+	{
+		if (u.second->owner != aliens)
+		{
+			continue;
+		}
+		if (u.second->retreated)
+		{
+			retreatedAliens.push_back(u.second);
+		}
+		else if (u.second->isDead())
+		{
+			deadAliens.push_back(u.second);
+		}
+		else
+		{
+			liveAliens.push_back(u.second);
+		}
+	}
+
+	// Process player agents
+	// - strip them of bio items and artifacts
+	// - strip dead ones
+	// - mark as fought
+	// - give mission to return if need to
+	for (auto &u : state.current_battle->units)
+	{
+		if (u.second->owner != player)
+		{
+			continue;
+		}
+		u.second->agent->recentlyFought = true;
+		std::list<sp<AEquipment>> itemsToStrip;
+		for (auto &e : u.second->agent->equipment)
+		{
+			if (u.second->isDead() || e->type->bioStorage || !e->canBeUsed(state, player))
+			{
+				itemsToStrip.push_back(e);
+			}
+			else
+			{
+				// Reward for captured loot that stayed on agents
+				if (e->ownerOrganisation != player)
+				{
+					state.current_battle->score.equipmentCaptured += e->type->score;
+				}
+			}
+		}
+		for (auto &e : itemsToStrip)
+		{
+			u.second->agent->removeEquipment(state, e);
+			auto clip = e->unloadAmmo();
+			if (clip)
+			{
+				loot.push_back(clip);
+			}
+			loot.push_back(e);
+		}
+		// Send home if not on vehicle
+		if (!u.second->agent->currentVehicle && !state.current_battle->skirmish)
+		{
+			u.second->agent->setMission(
+			    state, AgentMission::gotoBuilding(state, *u.second->agent,
+			                                      u.second->agent->homeBuilding, false, false));
+		}
+	}
+
+	// If player won and didn't retreat, player secures the area
+	// - give him loot
+	// - give him alien remains
+	if (state.current_battle->playerWon && !state.current_battle->winnerHasRetreated)
+	{
+		bool playerHasBioStorage = state.current_battle->player_craft &&
+		                           state.current_battle->player_craft->getMaxBio() > 0;
+		// Live alien loot
+		for (auto &u : liveAliens)
+		{
+			if (u->agent->type->liveSpeciesItem)
+			{
+				if (playerHasBioStorage)
+				{
+					state.current_battle->score.liveAlienCaptured +=
+					    u->agent->type->liveSpeciesItem->score;
+				}
+				if (u->agent->type->liveSpeciesItem->bioStorage)
+				{
+					state.current_battle->bioLoot[u->agent->type->liveSpeciesItem] =
+					    state.current_battle->bioLoot[u->agent->type->liveSpeciesItem] + 1;
+				}
+				else
+				{
+					state.current_battle->cargoLoot[u->agent->type->liveSpeciesItem] =
+					    state.current_battle->cargoLoot[u->agent->type->liveSpeciesItem] + 1;
+				}
+			}
+		}
+		// Dead alien loot
+		for (auto &u : deadAliens)
+		{
+			if (u->agent->type->deadSpeciesItem)
+			{
+				if (u->agent->type->deadSpeciesItem->bioStorage)
+				{
+					state.current_battle->bioLoot[u->agent->type->deadSpeciesItem] =
+					    state.current_battle->bioLoot[u->agent->type->deadSpeciesItem] + 1;
+				}
+				else
+				{
+					state.current_battle->cargoLoot[u->agent->type->deadSpeciesItem] =
+					    state.current_battle->cargoLoot[u->agent->type->deadSpeciesItem] + 1;
+				}
+			}
+		}
+		// Item loot
+		for (auto &e : state.current_battle->items)
+		{
+			loot.push_back(e->item);
+		}
+		LogWarning("Implement UFO parts loot");
+	}
+	// Player didn't secure the area
+	// - doesn't get loot
+	// - kill all items (and make player suffer penalties)
+	// - deal with surviving aliens
+	else
+	{
+		std::list<sp<BattleItem>> itemsToKill;
+		for (auto &e : state.current_battle->items)
+		{
+			itemsToKill.push_back(e);
+		}
+		for (auto &e : itemsToKill)
+		{
+			e->die(state, false);
+		}
+		// If UFO - aliens retreat,
+		if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
+		{
+			for (auto &a : liveAliens)
+			{
+				retreatedAliens.push_back(a);
+			}
+		}
+		// If non-alien building - aliens get back in
+		// If alien building - all aliens vanish
+		else
+		{
+			StateRef<Building> location = {&state, state.current_battle->mission_location_id};
+			if (location->owner != aliens)
+			{
+				for (auto &a : liveAliens)
+				{
+					location->current_crew[a->agent->type] =
+					    location->current_crew[a->agent->type] + 1;
+				}
+			}
+			else
+			{
+				liveAliens.clear();
+				retreatedAliens.clear();
+			}
+		}
+	}
+	// Regardless what happened, give player loot (if player retreated - will only get agent loot)
+	for (auto &e : loot)
+	{
+		// Reward for captured loot
+		if (e->ownerOrganisation != player)
+		{
+			state.current_battle->score.equipmentCaptured += e->type->score;
+		}
+		int mult = e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1;
+		if (e->type->bioStorage)
+		{
+			state.current_battle->bioLoot[e->type] = state.current_battle->bioLoot[e->type] + mult;
+		}
+		else
+		{
+			state.current_battle->cargoLoot[e->type] =
+			    state.current_battle->cargoLoot[e->type] + mult;
+		}
+	}
+	// Regardless of what happened, retreated aliens go to a nearby building
+	if (!retreatedAliens.empty())
+	{
+		LogWarning("Properly find building to house retreated aliens");
+		Vec2<int> battleLocation;
+		StateRef<City> city;
+		if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
+		{
+			StateRef<Vehicle> location = {&state, state.current_battle->mission_location_id};
+			city = location->city;
+			battleLocation = {location->position.x, location->position.y};
+		}
+		else
+		{
+			StateRef<Building> location = {&state, state.current_battle->mission_location_id};
+			city = location->city;
+			battleLocation = location->bounds.p0;
+		}
+		StateRef<Building> closestBuilding;
+		int closestDistance = INT_MAX;
+		for (auto &b : city->buildings)
+		{
+			int distance = std::abs(b.second->bounds.p0.x - battleLocation.x) +
+			               std::abs(b.second->bounds.p0.y - battleLocation.y);
+			if (distance < closestDistance)
+			{
+				closestDistance = distance;
+				closestBuilding = {&state, b.first};
+			}
+		}
+		if (!closestBuilding)
+		{
+			LogError("WTF? No building in city closer than INT_MAX?");
+			return;
+		}
+		for (auto &a : retreatedAliens)
+		{
+			closestBuilding->current_crew[a->agent->type] =
+			    closestBuilding->current_crew[a->agent->type] + 1;
+		}
+	}
 	// Remove dead player agents and all enemy agents from the game and from vehicles
 	std::list<sp<BattleUnit>> unitsToRemove;
 	for (auto &u : state.current_battle->units)
@@ -2543,11 +2773,13 @@ void Battle::finishBattle(GameState &state)
 	}
 	for (auto &u : unitsToRemove)
 	{
+		u->agent->die(state, true);
 		u->agent->destroy();
 		state.agents.erase(u->agent.id);
 		u->destroy();
 		state.current_battle->units.erase(u->id);
 	}
+
 	// Apply experience to stats of living agents + promotions
 	// Create list of units ranked by combatRating
 	std::map<int, std::list<sp<BattleUnit>>> unitsByRating;
@@ -2631,12 +2863,6 @@ void Battle::finishBattle(GameState &state)
 			break;
 		}
 	}
-	//  - (Failure) Kill all items on the battlefield
-	//	- (Success) Prepare list of loot (including alien saucer equipment), give score for it
-	//  - Move unresearched items from agent inventory into loot list
-	//  - Convert living aliens to bodies if no bio trans
-	//	- Calculate score for captured loot
-	//  - Calculate score for captured live aliens
 }
 
 // To be called after battle was finished, score screen was shown and before returning to cityscape
@@ -2648,20 +2874,59 @@ void Battle::exitBattle(GameState &state)
 		return;
 	}
 
-	//  - Apply score to player score
-	// (UFO mission) Remove UFO crash
-	if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
+	// Fake battle, remove fake stuff, restore relationships
+	if (state.current_battle->skirmish)
 	{
-		StateRef<Vehicle> ufo = {&state, state.current_battle->mission_location_id};
-		if (state.current_battle->playerWon)
+		// Erase agents
+		std::list<UString> agentsToRemove;
+		for (auto &a : state.agents)
 		{
-			LogWarning("FIXME: Give player score for captured ufo");
+			if (!a.second->city)
+			{
+				if (a.second->currentBuilding)
+				{
+					a.second->currentBuilding->currentAgents.erase({&state, a.first});
+				}
+				if (a.second->currentVehicle)
+				{
+					a.second->currentVehicle->currentAgents.erase({&state, a.first});
+				}
+				agentsToRemove.push_back(a.first);
+			}
 		}
-		state.vehicles.erase(ufo.id);
+		for (auto &a : agentsToRemove)
+		{
+			state.agents.erase(a);
+		}
+
+		// Erase base and building
+		StateRef<Base> fakeBase = {&state, "SKIRMISH_BASE"};
+		auto city = fakeBase->building->city;
+		fakeBase->building->currentAgents.clear();
+		fakeBase->building->base.clear();
+		fakeBase->building.clear();
+		city->buildings.erase("SKIRMISH_BUILDING");
+		state.player_bases.erase("SKIRMISH_BASE");
+
+		// Erase vehicle
+		if (state.current_battle->player_craft)
+		{
+			state.current_battle->player_craft->die(state, nullptr, true);
+		}
+
+		// Restore relationships
+		for (auto e : state.current_battle->relationshipsBeforeSkirmish)
+		{
+			auto org = e.first;
+			org->current_relations[state.getPlayer()] = e.second;
+			state.getPlayer()->current_relations[e.first] = e.second;
+		}
+
+		// That's it for fake battle, return
+		state.current_battle = nullptr;
+		return;
 	}
-	//  - (If mod then give player choice of what to load and what to leave behind)
-	//	- Load loot into vehicles
-	//	- Load aliens into bio - trans
+
 	// Restore X-Com relationship to organisations
 	auto player = state.getPlayer();
 	for (auto &o : state.organisations)
@@ -2673,17 +2938,223 @@ void Battle::exitBattle(GameState &state)
 		player->current_relations[{&state, o.first}] = o.second->getRelationTo(player);
 	}
 
-	LogWarning(
-	    "Checking item reference consistency, remove code in battle.exitBattleconfirmed correct");
-	for (auto &a : state.agents)
+	// Apply score to player score
+	LogWarning("Apply score to player score");
+
+	// LOOT!
+
+	// Compile list of player vehicles
+	std::list<StateRef<Vehicle>> playerVehicles;
+	std::set<StateRef<Vehicle>> returningVehicles;
+	if (state.current_battle->player_craft)
 	{
-		for (auto &e : a.second->equipment)
+		playerVehicles.push_back(state.current_battle->player_craft);
+		returningVehicles.insert(state.current_battle->player_craft);
+	}
+	if (config().getBool("OpenApoc.NewFeature.AllowNearbyVehicleLootPickup"))
+	{
+		if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
 		{
-			if (e->ownerUnit)
+			Vec2<int> battleLocation;
+			StateRef<City> city;
+			StateRef<Vehicle> location = {&state, state.current_battle->mission_location_id};
+			city = location->city;
+
+			for (auto &v : state.vehicles)
 			{
-				LogError("Agent %s has item %s which is assigned to unit %s and will leak", a.first,
-				         e->type.id, e->ownerUnit.id);
+				// Check every player owned vehicle located in city
+				if (v.second->owner != player || v.second->city != city || v.second->currentBuilding
+				    // Player's vehicle was already added and has priority
+				    || v.first == state.current_battle->player_craft.id)
+				{
+					continue;
+				}
+				if (glm::length(location->position - v.second->position) < VEHICLE_NEARBY_THRESHOLD)
+				{
+					playerVehicles.emplace_back(&state, v.first);
+				}
 			}
+		}
+		else
+		{
+			StateRef<Building> location = {&state, state.current_battle->mission_location_id};
+			for (auto &v : location->currentVehicles)
+			{
+				// Player's vehicle was already added and has priority
+				if (v->owner == player && v != state.current_battle->player_craft)
+				{
+					playerVehicles.push_back(v);
+				}
+			}
+		}
+	}
+
+	// Check cargo limits
+	if (config().getBool("OpenApoc.NewFeature.EnforceCargoLimits"))
+	{
+		LogWarning("Implement feature: Enforce containment limits");
+	}
+
+	// Load cargo into vehicles
+	if (!playerVehicles.empty())
+	{
+		// Go through every loot position
+		// Try to load into every vehicle until amount remaining is zero
+		std::list<StateRef<AEquipmentType>> cargoLootToRemove;
+		for (auto &e : state.current_battle->cargoLoot)
+		{
+			for (auto &v : playerVehicles)
+			{
+				if (e.second == 0)
+				{
+					continue;
+				}
+				int divisor = e.first->type == AEquipmentType::Type::Ammo ? e.first->max_ammo : 1;
+				int maxAmount = config().getBool("OpenApoc.NewFeature.EnforceCargoLimits")
+				                    ? std::min(e.second,
+				                               (v->getMaxCargo() - v->getCargo()) /
+				                                   e.first->store_space * divisor)
+				                    : e.second;
+				if (maxAmount > 0)
+				{
+					e.second -= maxAmount;
+					v->cargo.emplace_back(state, e.first, maxAmount, nullptr, v->homeBuilding);
+					returningVehicles.insert(v);
+				}
+			}
+			if (e.second == 0)
+			{
+				cargoLootToRemove.push_back(e.first);
+			}
+		}
+		for (auto &e : cargoLootToRemove)
+		{
+			state.current_battle->cargoLoot.erase(e);
+		}
+		// Go through every bio loot position
+		// Try to load into every vehicle until amount remaining is zero
+		std::list<StateRef<AEquipmentType>> bioLootToRemove;
+		for (auto &e : state.current_battle->bioLoot)
+		{
+			for (auto &v : playerVehicles)
+			{
+				if (e.second == 0)
+				{
+					continue;
+				}
+				int divisor = e.first->type == AEquipmentType::Type::Ammo ? e.first->max_ammo : 1;
+				int maxAmount =
+				    config().getBool("OpenApoc.NewFeature.EnforceCargoLimits")
+				        ? std::min(e.second,
+				                   (v->getMaxBio() - v->getBio()) / e.first->store_space * divisor)
+				        : e.second;
+				if (maxAmount > 0)
+				{
+					e.second -= maxAmount;
+					v->cargo.emplace_back(state, e.first, maxAmount, nullptr, v->homeBuilding);
+					returningVehicles.insert(v);
+				}
+			}
+			if (e.second == 0)
+			{
+				bioLootToRemove.push_back(e.first);
+			}
+		}
+		for (auto &e : bioLootToRemove)
+		{
+			state.current_battle->bioLoot.erase(e);
+		}
+	}
+
+	// Bio loot remaining?
+	if (!state.current_battle->bioLoot.empty())
+	{
+		// Bio loot is wasted if can't be loaded on player craft
+	}
+
+	// Cargo loot remaining?
+	if (!state.current_battle->cargoLoot.empty())
+	{
+		if (config().getBool("OpenApoc.NewFeature.AllowBuildingLootDeposit"))
+		{
+			if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
+			{
+				// Still cant't do anything if we're recovering UFO
+			}
+			else
+			{
+				// Deposit loot into building, call for pickup
+				StateRef<Building> location = {&state, state.current_battle->mission_location_id};
+				auto homeBuilding =
+				    playerVehicles.empty() ? nullptr : playerVehicles.front()->homeBuilding;
+				if (!homeBuilding)
+				{
+					homeBuilding = state.player_bases.begin()->second->building;
+				}
+				for (auto &e : state.current_battle->cargoLoot)
+				{
+					location->cargo.emplace_back(state, e.first, e.second, nullptr, homeBuilding);
+				}
+			}
+		}
+	}
+
+	// Give player vehicle a null cargo just so it comes back to base once
+	for (auto v : returningVehicles)
+	{
+		v->cargo.emplace_front(
+		    state, StateRef<AEquipmentType>(&state, state.agent_equipment.begin()->first), 0,
+		    nullptr, v->homeBuilding);
+		v->setMission(state, VehicleMission::gotoBuilding(state, *v, v->homeBuilding));
+		v->addMission(state, VehicleMission::offerService(state, *v), true);
+	}
+
+	// Event and result
+	// FIXME: IS there a better way to pass events? They get cleared if we just pushEvent() them!
+	switch (state.current_battle->mission_type)
+	{
+		case Battle::MissionType::RaidAliens:
+		{
+			if (state.current_battle->playerWon)
+			{
+				state.eventFromBattle = GameEventType::MissionCompletedBuildingAlien;
+				StateRef<Building>(&state, state.current_battle->mission_location_id)
+				    ->collapse(state);
+			}
+			break;
+		}
+		case Battle::MissionType::AlienExtermination:
+		{
+			state.eventFromBattle = GameEventType::MissionCompletedBuildingNormal;
+			break;
+		}
+		case Battle::MissionType::BaseDefense:
+		{
+			if (state.current_battle->playerWon)
+			{
+				state.eventFromBattle = GameEventType::MissionCompletedBase;
+			}
+			else
+			{
+				auto building =
+				    StateRef<Building>{&state, state.current_battle->mission_location_id};
+				state.eventFromBattle = GameEventType::BaseDestroyed;
+				state.eventFromBattleText = building->base->name;
+				building->base->die(state, false);
+			}
+			break;
+		}
+		case Battle::MissionType::RaidHumans:
+		{
+			state.eventFromBattle = GameEventType::MissionCompletedBuildingRaid;
+			break;
+		}
+		case Battle::MissionType::UfoRecovery:
+		{
+			state.eventFromBattle = GameEventType::MissionCompletedVehicle;
+			StateRef<Vehicle>(&state, state.current_battle->mission_location_id)
+			    ->die(state, nullptr, true);
+			break;
 		}
 	}
 

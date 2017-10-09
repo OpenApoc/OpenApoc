@@ -85,6 +85,11 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>
+	  <graphic id="GRAPHIC_SELECTED">
+        <position x="23" y="383"/>
+        <size height="80" width="96"/>
+        <font>smalfont</font>
+      </graphic>
     </style>
   </form>
 </openapoc>

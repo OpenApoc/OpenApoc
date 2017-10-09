@@ -37,6 +37,7 @@
 		<member>player</member>
 		<member>aliens</member>
 		<member>civilian</member>
+		<member>government</member>
 		<member>rng</member>
 		<member>gameTime</member>
 		<member>gameTimeBeforeBattle</member>
@@ -133,6 +134,8 @@
 		<member>inventoryBackground</member>
 		<member>displayRank</member>
 		<member>missionObjective</member>
+		<member>liveSpeciesItem</member>
+		<member>deadSpeciesItem</member>
 		<member>score</member>
 		<member>walkSfx</member>
 		<member>crySfx</member>
@@ -218,6 +221,9 @@
 		<member>rank</member>
 		<member>trainingPhysicalTicksAccumulated</member>
 		<member>trainingPsiTicksAccumulated</member>
+		<member>recentlyHired</member>
+		<member>recentryTransferred</member>
+		<member>recentlyFought</member>
 		<member>owner</member>
 		<member>city</member>
 		<member>homeBuilding</member>
@@ -271,7 +277,8 @@
 		<member>started</member>
 		<member>cost</member>
 		<member>item_type</member>
-		<member>item_produced</member>
+		<member>itemId</member>
+		<member>picture</member>
 	</object>
 	<object>
 		<name>ProjectDependencies</name>
@@ -280,7 +287,10 @@
 	</object>
 	<object>
 		<name>ItemDependency</name>
-		<member>items</member>
+		<member>agentItemsRequired</member>
+		<member>vehicleItemsRequired</member>
+		<member>agentItemsConsumed</member>
+		<member>vehicleItemsConsumed</member>
 	</object>
 	<object>
 		<name>UfopaediaCategory</name>
@@ -288,6 +298,27 @@
 		<member>description</member>
 		<member>background</member>
 		<member>entries</member>
+	</object>
+	<enum>
+		<name>Cargo::Type</name>
+		<value>Agent</value>
+		<value>Bio</value>
+		<value>VehicleAmmo</value>
+		<value>VehicleEquipment</value>
+	</enum>
+	<object>
+		<name>Cargo</name>
+		<member>type</member>
+		<member>id</member>
+		<member>count</member>
+		<member>divisor</member>
+		<member>space</member>
+		<member>cost</member>
+		<member>originalOwner</member>
+		<member>destination</member>
+		<member>expirationDate</member>
+		<member>warned</member>
+		<member>suppressEvents</member>
 	</object>
 	<object>
 		<name>Vehicle</name>
@@ -319,6 +350,7 @@
 		<member>homeBuilding</member>
 		<member>currentBuilding</member>
 		<member>currentAgents</member>
+		<member>cargo</member>
 	</object>
 	<object>
 		<name>VEquipment</name>
@@ -348,6 +380,7 @@
 		<name>AgentMission</name>
 		<member>type</member>
 		<member>allowTeleporter</member>
+		<member>allowTaxi</member>
 		<member>targetBuilding</member>
 		<member>timeToSnooze</member>
 		<member>currentPlannedPath</member>
@@ -384,6 +417,7 @@
 		<name>Base</name>
 		<member>corridors</member>
 		<member>facilities</member>
+		<member>inventoryBioEquipment</member>
 		<member>inventoryAgentEquipment</member>
 		<member>inventoryVehicleEquipment</member>
 		<member>inventoryVehicleAmmo</member>
@@ -506,6 +540,8 @@
 		<member>turnEndAllowed</member>
 		<member>interruptQueue</member>
 		<member>interruptUnits</member>
+		<member>skirmish</member>
+		<member>relationshipsBeforeSkirmish</member>
 		<member>reinforcementsInterval</member>
 		<member>ticksUntilNextReinforcement</member>
 		<member>battleViewZLevel</member>
@@ -884,6 +920,7 @@
 		<member>crewQuarters</member>
 		<member>currentVehicles</member>
 		<member>currentAgents</member>
+		<member>cargo</member>
 		<member>ticksDetectionTimeOut</member>
 		<member>ticksDetectionAttemptAccumulated</member>
 		<member>detected</member>
@@ -997,6 +1034,8 @@
 		<member>score</member>
 		<member>research_dependency</member>
 		<member>two_handed</member>
+		<member>bioStorage</member>
+		<member>bioRemains</member>
 		<member>launcher</member>
 		<member>body_sprite</member>
 		<member>damage_modifier</member>
@@ -1139,8 +1178,10 @@
 		<member>ufopaedia_entry</member>
 		<member>missions</member>
 		<member>vehiclePark</member>
-		<member>agentPark</member>
 		<member>providesTransportationServices</member>
+		<member>minHireePool</member>
+		<member>maxHireePool</member>
+		<member>hirableTypes</member>
 	</object>
 	<object>
 		<name>VehicleType</name>
@@ -1328,6 +1369,7 @@
 		<value>Patrol</value>
 		<value>GotoPortal</value>
 		<value>InfiltrateSubvert</value>
+		<value>OfferService</value>
 		<value>Teleport</value>
 	</enum>
 	<enum>

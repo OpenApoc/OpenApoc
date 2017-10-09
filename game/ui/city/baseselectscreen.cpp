@@ -89,7 +89,7 @@ void BaseSelectScreen::eventOccurred(Event *e)
 					auto building = scenery->building;
 					if (building)
 					{
-						if (building->base_layout && building->owner.id == "ORG_GOVERNMENT")
+						if (building->base_layout && building->owner == state->getGovernment())
 						{
 							fw().stageQueueCommand(
 							    {StageCmd::Command::PUSH, mksp<BaseBuyScreen>(state, building)});
@@ -136,7 +136,7 @@ void BaseSelectScreen::render()
 			{
 				borderColour = PLAYER_BASE_OWNED;
 			}
-			else if (building->owner.id == "ORG_GOVERNMENT")
+			else if (building->owner == state->getGovernment())
 			{
 				borderColour = PLAYER_BASE_AVAILABLE;
 			}

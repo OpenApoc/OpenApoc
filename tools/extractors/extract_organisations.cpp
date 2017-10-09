@@ -124,7 +124,6 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 			o->vehiclePark[{&state, "VEHICLETYPE_RESCUE_TRANSPORT"}] = 3;
 			o->vehiclePark[{&state, "VEHICLETYPE_CIVILIAN_CAR"}] = 3;
 			o->vehiclePark[{&state, "VEHICLETYPE_BLAZER_TURBO_BIKE"}] = 3;
-			o->agentPark = 3;
 
 			// Vehicle park
 			switch (vdata.vehiclePark)
@@ -233,8 +232,8 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 			std::set<Organisation::Relation> UnfriendlyMinus = {Organisation::Relation::Unfriendly,
 			                                                    Organisation::Relation::Hostile};
 			// Agents
-			o->missions.emplace_back(m, 7 * m, 13 * m, 1, 1, std::set<StateRef<VehicleType>>{{}},
-			                         Organisation::MissionPattern::Target::Other);
+			/*o->missions.emplace_back(m, 7 * m, 13 * m, 1, 1, std::set<StateRef<VehicleType>>{{}},
+			                         Organisation::MissionPattern::Target::Other);*/
 			switch (vdata.vehiclePark)
 			{
 				// Government
@@ -327,6 +326,7 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 	state.player = {&state, "ORG_X-COM"};
 	state.aliens = {&state, "ORG_ALIEN"};
 	state.civilian = {&state, "ORG_CIVILIAN"};
+	state.government = {&state, "ORG_GOVERNMENT"};
 }
 
 } // namespace OpenApoc

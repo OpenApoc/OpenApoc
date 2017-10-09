@@ -28,6 +28,7 @@ set (GAMEUI_SOURCE_FILES
 	city/locationscreen.cpp
 	city/alertscreen.cpp
 	city/infiltrationscreen.cpp
+	city/basedefensescreen.cpp
 	city/scorescreen.cpp
 	city/cityview.cpp
 	debugtools/debugmenu.cpp
@@ -75,6 +76,7 @@ set (GAMEUI_HEADER_FILES
 	city/locationscreen.h
 	city/alertscreen.h
 	city/infiltrationscreen.h
+	city/basedefensescreen.h
 	city/scorescreen.h
 	city/cityview.h
 	debugtools/debugmenu.h

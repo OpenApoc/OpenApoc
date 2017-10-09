@@ -1,4 +1,5 @@
 #include "game/state/aequipment.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "framework/sound.h"
@@ -408,7 +409,16 @@ void AEquipment::updateInner(GameState &state, unsigned int ticks)
 
 bool AEquipment::canBeUsed(GameState &state) const
 {
-	if (ownerAgent && ownerAgent->owner == state.getPlayer() &&
+	if (ownerAgent)
+	{
+		return canBeUsed(state, ownerAgent->owner);
+	}
+	return true;
+}
+
+bool AEquipment::canBeUsed(GameState &state, StateRef<Organisation> owner) const
+{
+	if (owner == state.getPlayer() && !(state.current_battle && state.current_battle->skirmish) &&
 	    !type->research_dependency.satisfied())
 	{
 		return false;
@@ -635,6 +645,10 @@ void AEquipment::explode(GameState &state)
 			auto payload = getPayloadType();
 			// If no payload or brainsucker then nothing
 			if (!payload || payload->damage_type->effectType == DamageType::EffectType::Brainsucker)
+			{
+				break;
+			}
+			if (!config().getBool("OpenApoc.NewFeature.PayloadExplosion"))
 			{
 				break;
 			}

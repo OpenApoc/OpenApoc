@@ -45,8 +45,8 @@ std::map<UString, int> EquipscreenSprite = {{"VEHICLETYPE_ANNIHILATOR", 0},
                                             {"VEHICLETYPE_HAWK_AIR_WARRIOR", 11},
                                             {"VEHICLETYPE_GRIFFON_AFV", 12}};
 
-std::set<UString> AgentFreight = {"VEHICLETYPE_AIRTAXI", "VEHICLETYPE_AUTOTAXI"};
-std::set<UString> CargoFreight = {"VEHICLETYPE_AIRTRANS", "VEHICLETYPE_AUTOTRANS"};
+std::set<UString> AgentFreight = {"VEHICLETYPE_AIRTAXI" /*, "VEHICLETYPE_AUTOTAXI"*/};
+std::set<UString> CargoFreight = {"VEHICLETYPE_AIRTRANS" /*, "VEHICLETYPE_AUTOTRANS"*/};
 std::set<UString> BioFreight = {"VEHICLETYPE_AIRTRANS"};
 }
 static void extract_equipment_layout(GameState &state, sp<VehicleType> vehicle, const UFO2P &data,
@@ -333,8 +333,8 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		vehicle->score = v.score;
 
 		vehicle->provideFreightAgent = AgentFreight.find(id) != AgentFreight.end();
-		vehicle->provideFreightCargo = AgentFreight.find(id) != CargoFreight.end();
-		vehicle->provideFreightBio = AgentFreight.find(id) != BioFreight.end();
+		vehicle->provideFreightCargo = CargoFreight.find(id) != CargoFreight.end();
+		vehicle->provideFreightBio = BioFreight.find(id) != BioFreight.end();
 
 		// The equipment_screen_name is up to 8 chars, any may have NULLs. Memcpy() that to a char[]
 		// and add a trailing null (in case all 8 are used) and it's just like a c-string!

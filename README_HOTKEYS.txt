@@ -60,7 +60,9 @@ Cityscape Keyboard:
 
 Cityscape Debug:
 - Debug hotkeys are always active
+- [Ctrl] + [Alt] + [Shift] + [Left Click] destroys scenery
 - [R] repairs all buildings
+- [U] spawns three crashed UFOs
 - [F4] show aliens in buildings on strategy map
 - [F5] show vehicle paths
 - [F6] dump voxelmap for line of sight to tileviewvoxels.png

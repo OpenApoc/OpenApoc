@@ -219,6 +219,9 @@ class AgentType : public StateObject
 	// This agent must be killed to disable the building it's in
 	bool missionObjective = false;
 
+	StateRef<AEquipmentType> liveSpeciesItem;
+	StateRef<AEquipmentType> deadSpeciesItem;
+
 	// Sounds unit makes when walking, overrides terrain's walk sounds if present
 	std::vector<sp<Sample>> walkSfx;
 	// Sounds unit randomly makes when acting, used by aliens
@@ -314,6 +317,13 @@ class Agent : public StateObject,
 	unsigned trainingPhysicalTicksAccumulated = 0;
 	unsigned trainingPsiTicksAccumulated = 0;
 
+	bool recentlyHired = false;
+	bool recentryTransferred = false;
+	bool recentlyFought = false;
+
+	void hire(GameState &state, StateRef<Building> newHome);
+	void transfer(GameState &state, StateRef<Building> newHome);
+
 	sp<AEquipment> getArmor(BodyPart bodyPart) const;
 	bool isBodyStateAllowed(BodyState bodyState) const;
 	bool isMovementStateAllowed(MovementState movementState) const;
@@ -392,6 +402,8 @@ class Agent : public StateObject,
 
 	// Update agent in city
 	void update(GameState &state, unsigned ticks);
+	void updateFiveSeconds(GameState &state);
+	void updateDaily(GameState &state);
 	void updateMovement(GameState &state, unsigned ticks);
 
 	void trainPhysical(GameState &state, unsigned ticks);

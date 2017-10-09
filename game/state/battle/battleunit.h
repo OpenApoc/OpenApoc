@@ -497,7 +497,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Set unit's goal to unit's position
 	void resetGoal();
-	// Get new goal for unit position, returns true if unit has retreated
+	// Get new goal for unit position, returns true if goal acquired
 	bool getNewGoal(GameState &state);
 	// Updates to do when unit reached goal
 	void onReachGoal(GameState &state);
@@ -537,7 +537,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Missions
 
-	// Pops all finished missions, returns true if unit has retreated
+	// Pops all finished missions, returns true if popped
 	bool popFinishedMissions(GameState &state);
 	// Returns wether unit has a mission queued that will make it move
 	bool hasMovementQueued();

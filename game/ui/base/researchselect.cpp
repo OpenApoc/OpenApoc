@@ -12,6 +12,10 @@
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
 #include "game/state/research.h"
+#include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/vammo_type.h"
+#include "game/state/rules/vehicle_type.h"
+#include "game/state/rules/vequipment_type.h"
 #include "game/ui/general/messagebox.h"
 #include "library/strings_format.h"
 
@@ -108,15 +112,62 @@ void ResearchSelect::begin()
 		auto topic = list->getHoveredData<ResearchTopic>();
 		auto title = this->form->findControlTyped<Label>("TEXT_SELECTED_TITLE");
 		auto description = this->form->findControlTyped<Label>("TEXT_SELECTED_DESCRIPTION");
+		auto pic = this->form->findControlTyped<Graphic>("GRAPHIC_SELECTED");
 		if (topic)
 		{
 			title->setText(tr(topic->name));
 			description->setText(tr(topic->description));
+			if (topic->picture)
+			{
+				pic->setImage(topic->picture);
+			}
+			else
+			{
+				if (topic->type == ResearchTopic::Type::Engineering)
+				{
+					switch (topic->item_type)
+					{
+						case ResearchTopic::ItemType::VehicleEquipment:
+							pic->setImage(
+							    this->state->vehicle_equipment[topic->itemId]->equipscreen_sprite);
+							break;
+						case ResearchTopic::ItemType::VehicleEquipmentAmmo:
+							pic->setImage(nullptr);
+							break;
+						case ResearchTopic::ItemType::AgentEquipment:
+							pic->setImage(
+							    this->state->agent_equipment[topic->itemId]->equipscreen_sprite);
+							break;
+						case ResearchTopic::ItemType::Craft:
+							pic->setImage(
+							    this->state->vehicle_types[topic->itemId]->equip_icon_small);
+							break;
+					}
+				}
+				else
+				{
+					if (!topic->dependencies.items.agentItemsRequired.empty())
+					{
+						pic->setImage(topic->dependencies.items.agentItemsRequired.begin()
+						                  ->first->equipscreen_sprite);
+					}
+					else if (!topic->dependencies.items.vehicleItemsRequired.empty())
+					{
+						pic->setImage(topic->dependencies.items.vehicleItemsRequired.begin()
+						                  ->first->equipscreen_sprite);
+					}
+					else
+					{
+						pic->setImage(nullptr);
+					}
+				}
+			}
 		}
 		else
 		{
 			title->setText("");
 			description->setText("");
+			pic->setImage(nullptr);
 		}
 	});
 
