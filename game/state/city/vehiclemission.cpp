@@ -1659,7 +1659,8 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 							             VehicleMission::gotoBuilding(state, v, v.homeBuilding));
 							if (v.owner != state.getPlayer())
 							{
-								v.addMission(state, VehicleMission::snooze(state, v, TICKS_PER_SECOND));
+								v.addMission(state,
+								             VehicleMission::snooze(state, v, TICKS_PER_SECOND));
 							}
 						}
 						else

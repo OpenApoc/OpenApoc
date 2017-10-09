@@ -449,7 +449,7 @@ void VEquipScreen::render()
 
 		statsLabels[8]->setText(tr("Cargo"));
 		statsValues[8]->setText(format("%d/%d", vehicle->getCargo(), vehicle->getMaxCargo()));
-		
+
 		statsLabels[9]->setText(tr("Aliens"));
 		statsValues[9]->setText(format("%d/%d", vehicle->getBio(), vehicle->getMaxBio()));
 

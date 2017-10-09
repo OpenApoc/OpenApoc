@@ -976,6 +976,7 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 		}
 		else
 		{
+			// Only force-ferry non-loot cargoes
 			if (it->count != 0 && !destination && it->originalOwner)
 			{
 				destination = it->destination;
@@ -1289,7 +1290,17 @@ void Vehicle::updateCargo(GameState &state)
 		return;
 	}
 	// See if need to ferry
-	bool needFerry = !cargo.empty();
+	bool needFerry = false;
+	for (auto &c : cargo)
+	{
+		// Either this is not combat loot, or this loot belongs to this building
+		// Don't keep trying to ferry combat loot to other building as we're NOT going to do so
+		if (c.originalOwner || c.destination == currentBuilding)
+		{
+			needFerry = true;
+			break;
+		}
+	}
 	if (!needFerry)
 	{
 		for (auto &a : currentAgents)
