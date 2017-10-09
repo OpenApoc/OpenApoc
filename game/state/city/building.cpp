@@ -121,7 +121,7 @@ void Building::updateCargo(GameState &state)
 	// Step 01: Consume cargo with destination = this or zero count
 	for (auto it = cargo.begin(); it != cargo.end();)
 	{
-		if (it->destination == thisRef)
+		if (it->count != 0 && it->destination == thisRef)
 		{
 			it->arrive(state);
 		}

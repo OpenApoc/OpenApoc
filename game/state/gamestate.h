@@ -186,6 +186,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	void updateTurbo();
 	void updateAfterTurbo();
 
+	void updateBeforeBattle();
 	void upateAfterBattle();
 
 	void updateEndOfFiveSeconds();

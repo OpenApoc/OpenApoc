@@ -1643,7 +1643,10 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						// We still have stuff to ferry
 						// Wait a bit and go to destination
 						v.addMission(state, VehicleMission::gotoBuilding(state, v, destination));
-						v.addMission(state, VehicleMission::snooze(state, v, TICKS_PER_SECOND));
+						if (v.owner != state.getPlayer())
+						{
+							v.addMission(state, VehicleMission::snooze(state, v, TICKS_PER_SECOND));
+						}
 					}
 					else
 					{
@@ -1654,7 +1657,10 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						{
 							v.addMission(state,
 							             VehicleMission::gotoBuilding(state, v, v.homeBuilding));
-							v.addMission(state, VehicleMission::snooze(state, v, TICKS_PER_SECOND));
+							if (v.owner != state.getPlayer())
+							{
+								v.addMission(state, VehicleMission::snooze(state, v, TICKS_PER_SECOND));
+							}
 						}
 						else
 						{

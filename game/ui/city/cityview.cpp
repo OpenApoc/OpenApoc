@@ -1734,6 +1734,10 @@ bool CityView::handleMouseDown(Event *e)
 					{
 						LogWarning("Mission %s", m->getName());
 					}
+					for (auto &c : vehicle->cargo)
+					{
+						LogWarning("Cargo %dx%s", c.id, c.count);
+					}
 					break;
 				}
 				case TileObject::Type::Projectile:

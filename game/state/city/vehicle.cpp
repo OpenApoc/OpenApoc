@@ -976,7 +976,7 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 		}
 		else
 		{
-			if (it->count != 0 && !destination)
+			if (it->count != 0 && !destination && it->originalOwner)
 			{
 				destination = it->destination;
 			}
@@ -2517,10 +2517,6 @@ void Cargo::arrive(GameState &state)
 void Cargo::arrive(GameState &state, bool &cargoArrived, bool &bioArrived, bool &recoveryArrived,
                    bool &transferArrived, std::set<StateRef<Organisation>> &suppliers)
 {
-	if (count == 0)
-	{
-		return;
-	}
 	if (destination->base)
 	{
 		switch (type)

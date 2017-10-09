@@ -2482,6 +2482,9 @@ void Battle::enterBattle(GameState &state)
 		state.current_battle->battleViewZLevel = (int)ceilf(firstPlayerUnit->position.z);
 	}
 	state.current_battle->battleViewGroupMove = true;
+
+	// Remember time
+	state.updateBeforeBattle();
 }
 
 // To be called when battle must be finished and before showing score screen
@@ -3103,6 +3106,7 @@ void Battle::exitBattle(GameState &state)
 		    state, StateRef<AEquipmentType>(&state, state.agent_equipment.begin()->first), 0,
 		    nullptr, v->homeBuilding);
 		v->setMission(state, VehicleMission::gotoBuilding(state, *v, v->homeBuilding));
+		v->addMission(state, VehicleMission::offerService(state, *v), true);
 	}
 
 	// Event and result

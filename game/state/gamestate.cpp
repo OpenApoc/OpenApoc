@@ -608,15 +608,6 @@ void GameState::update(unsigned int ticks)
 {
 	if (this->current_battle)
 	{
-		// Save time to roll back to
-		if (gameTimeBeforeBattle.getTicks() == 0)
-		{
-			gameTimeBeforeBattle = GameTime(gameTime.getTicks());
-			// Some useless event just to know if something was reported
-			eventFromBattle = GameEventType::WeeklyReport;
-			missionLocationBattle = current_battle->mission_location_id;
-		}
-
 		Trace::start("GameState::update::battles");
 		this->current_battle->update(*this, ticks);
 		Trace::end("GameState::update::battles");
@@ -901,6 +892,15 @@ void GameState::updateAfterTurbo()
 		v.second->update(*this, randBoundsExclusive(rng, (unsigned)0, 20 * TICKS_PER_SECOND));
 	}
 	Trace::end("GameState::updateAfterTurbo::vehicles");
+}
+
+void GameState::updateBeforeBattle()
+{
+	// Save time to roll back to
+	gameTimeBeforeBattle = GameTime(gameTime.getTicks());
+	// Some useless event just to know if something was reported
+	eventFromBattle = GameEventType::WeeklyReport;
+	missionLocationBattle = current_battle->mission_location_id;
 }
 
 void GameState::upateAfterBattle()
