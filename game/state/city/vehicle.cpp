@@ -11,13 +11,16 @@
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/citycommonsamplelist.h"
+#include "game/state/city/doodad.h"
 #include "game/state/city/projectile.h"
+#include "game/state/city/scenery.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/city/vequipment.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
 #include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/scenery_tile_type.h"
 #include "game/state/rules/vammo_type.h"
 #include "game/state/rules/vehicle_type.h"
 #include "game/state/rules/vequipment_type.h"
@@ -153,7 +156,7 @@ class FlyingVehicleMover : public VehicleMover
 	// Vehicle is considered idle whenever it's at goal in its tile, even if it has missions to do
 	void updateIdle(GameState &state)
 	{
-		if (vehicle.isCrashed())
+		if (vehicle.crashed || vehicle.falling)
 		{
 			return;
 		}
@@ -163,7 +166,16 @@ class FlyingVehicleMover : public VehicleMover
 		}
 		vehicle.ticksAutoActionAvailable = state.gameTime.getTicks() + TICKS_AUTO_ACTION_DELAY;
 
-		// Step 01: Try to move to preferred height if no mission
+		// Step 01: Drop carried vehicle if we ever are w/o mission
+		if (vehicle.missions.empty() && vehicle.carriedVehicle)
+		{
+			vehicle.carriedVehicle->crashed = false;
+			vehicle.carriedVehicle->startFalling(state);
+			vehicle.carriedVehicle->carriedByVehicle.clear();
+			vehicle.carriedVehicle.clear();
+		}
+
+		// Step 02: Try to move to preferred height if no mission
 		if (vehicle.missions.empty() && (int)vehicle.position.z != (int)vehicle.altitude)
 		{
 			auto targetPos = vehicle.position;
@@ -192,7 +204,7 @@ class FlyingVehicleMover : public VehicleMover
 			}
 		}
 
-		// Step 02: Find projectiles to dodge
+		// Step 03: Find projectiles to dodge
 		// FIXME: Read vehicle engagement rules, instead for now chance to dodge is flat 80%
 		if (randBoundsExclusive(state.rng, 0, 100) < 80)
 		{
@@ -375,6 +387,20 @@ class FlyingVehicleMover : public VehicleMover
 
 	void update(GameState &state, unsigned int ticks) override
 	{
+		if (vehicle.falling)
+		{
+			updateFalling(state, ticks);
+			return;
+		}
+		if (vehicle.carriedByVehicle)
+		{
+			auto newPos = vehicle.carriedByVehicle->position;
+			newPos.z = std::max(0.0f, newPos.z - 0.5f);
+			vehicle.setPosition(newPos);
+			vehicle.facing = vehicle.carriedByVehicle->facing;
+			vehicle.updateSprite(state);
+			return;
+		}
 		auto ticksToTurn = ticks;
 		auto ticksToMove = ticks;
 
@@ -574,18 +600,40 @@ class GroundVehicleMover : public VehicleMover
 
 	void update(GameState &state, unsigned int ticks) override
 	{
+		if (vehicle.falling)
+		{
+			updateFalling(state, ticks);
+			return;
+		}
+		if (vehicle.carriedByVehicle)
+		{
+			auto newPos = vehicle.carriedByVehicle->position;
+			newPos.z = std::max(0.0f, newPos.z - 0.5f);
+			vehicle.setPosition(newPos);
+			vehicle.facing = vehicle.carriedByVehicle->facing;
+			vehicle.updateSprite(state);
+			return;
+		}
+
 		auto ticksToMove = ticks;
 
 		unsigned lastTicksToTurn = 0;
 		unsigned lastTicksToMove = 0;
 
 		// See that we're not in the air
-		if (vehicle.tileObject && !vehicle.tileObject->getOwningTile()->intactScenery &&
-		    !vehicle.city->map->getTile(vehicle.goalPosition)->intactScenery &&
+		if (vehicle.tileObject && !vehicle.tileObject->getOwningTile()->presentScenery &&
+		    !vehicle.city->map->getTile(vehicle.goalPosition)->presentScenery &&
 		    (vehicle.goalWaypoints.empty() ||
-		     !vehicle.city->map->getTile(vehicle.goalWaypoints.back())->intactScenery))
+		     !vehicle.city->map->getTile(vehicle.goalWaypoints.back())->presentScenery))
 		{
-			vehicle.die(state);
+			if (config().getBool("OpenApoc.NewFeature.CrashingGroundVehicles"))
+			{
+				vehicle.startFalling(state);
+			}
+			else
+			{
+				vehicle.die(state);
+			}
 			return;
 		}
 
@@ -664,9 +712,34 @@ class GroundVehicleMover : public VehicleMover
 						// If changing height
 						if (vehicle.position.z != vehicle.goalPosition.z)
 						{
-							// If we're on flat surface then first move to midpoint then start to
-							// change Z
-							if (vehicle.position.z - floorf(vehicle.position.z) < 0.1f)
+							auto heightCurrent = vehicle.position.z - floorf(vehicle.position.z);
+							auto heightGoal =
+							    vehicle.goalPosition.z - floorf(vehicle.goalPosition.z);
+							bool fromFlat = heightCurrent < 0.1f || heightCurrent > 0.9f;
+							bool toFlat = heightGoal < 0.1f || heightGoal > 0.9f;
+							// If we move from flat to flat then we're changing from into to onto
+							// Change Z in the middle of the way
+							if (fromFlat && toFlat)
+							{
+								vehicle.goalWaypoints.push_back(vehicle.goalPosition);
+								// Add waypoint after midpoint at target z level
+								Vec3<float> waypoint = {
+								    vehicle.position.x * 0.45f + vehicle.goalPosition.x * 0.55f,
+								    vehicle.position.y * 0.45f + vehicle.goalPosition.y * 0.55f,
+								    vehicle.goalPosition.z};
+								vehicle.goalWaypoints.push_front(waypoint);
+								// Add waypoint before midpoint at current z level
+								vehicle.goalPosition.x =
+								    vehicle.position.x * 0.55f + vehicle.goalPosition.x * 0.45f;
+								vehicle.goalPosition.y =
+								    vehicle.position.y * 0.55f + vehicle.goalPosition.y * 0.45f;
+								vehicle.goalPosition.z = vehicle.position.z;
+							}
+							else
+							    // If we're on flat surface then first move to midpoint then start
+							    // to
+							    // change Z
+							    if (fromFlat)
 							{
 								vehicle.goalWaypoints.push_back(vehicle.goalPosition);
 								// Add midpoint waypoint at target z level
@@ -677,7 +750,7 @@ class GroundVehicleMover : public VehicleMover
 								vehicle.goalPosition.z = vehicle.position.z;
 							}
 							// Else if we end on flat surface first change Z then move flat
-							else if (vehicle.goalPosition.z - floorf(vehicle.goalPosition.z) < 0.1f)
+							else if (toFlat)
 							{
 								vehicle.goalWaypoints.push_back(vehicle.goalPosition);
 								// Add midpoint waypoint at current z level
@@ -722,6 +795,292 @@ class GroundVehicleMover : public VehicleMover
 
 VehicleMover::VehicleMover(Vehicle &v) : vehicle(v) {}
 
+namespace
+{
+int inline reduceAbsValue(int value, int by)
+{
+	if (value > 0)
+	{
+		if (value > by)
+		{
+			value -= by;
+		}
+		else
+		{
+			value = 0;
+		}
+	}
+	else
+	{
+		if (value < -by)
+		{
+			value += by;
+		}
+		else
+		{
+			value = 0;
+		}
+	}
+	return value;
+}
+}
+
+void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
+{
+	auto fallTicksRemaining = ticks;
+
+	auto &map = *vehicle.city->map;
+
+	if (vehicle.angularVelocity != 0)
+	{
+		vehicle.facing += vehicle.angularVelocity * (float)ticks;
+		if (vehicle.facing < 0.0f)
+		{
+			vehicle.facing += M_2xPI;
+		}
+		if (vehicle.facing >= M_2xPI)
+		{
+			vehicle.facing -= M_2xPI;
+		}
+	}
+
+	while (fallTicksRemaining-- > 0)
+	{
+		auto newPosition = vehicle.position;
+
+		// Random doodads 2% chance if low health
+		if (vehicle.getMaxHealth() / vehicle.getHealth() >= 3 &&
+		    randBoundsExclusive(state.rng, 0, 100) < 2)
+		{
+			UString doodadId = randBool(state.rng) ? "DOODAD_1_AUTOCANNON" : "DOODAD_2_AIRGUARD";
+			auto doodadPos = vehicle.position;
+			doodadPos.x += (float)randBoundsInclusive(state.rng, -3, 3) / 10.0f;
+			doodadPos.y += (float)randBoundsInclusive(state.rng, -3, 3) / 10.0f;
+			doodadPos.z += (float)randBoundsInclusive(state.rng, -3, 3) / 10.0f;
+			vehicle.city->placeDoodad({&state, doodadId}, doodadPos);
+			fw().soundBackend->playSample(state.city_common_sample_list->vehicleExplosion,
+			                              vehicle.position, 0.25f);
+		}
+
+		vehicle.velocity.z -= FALLING_ACCELERATION_VEHICLE;
+		vehicle.velocity.x = reduceAbsValue(vehicle.velocity.x, FALLING_ACCELERATION_VEHICLE / 2);
+		vehicle.velocity.y = reduceAbsValue(vehicle.velocity.y, FALLING_ACCELERATION_VEHICLE / 2);
+		newPosition += vehicle.velocity / (float)TICK_SCALE / VELOCITY_SCALE_BATTLE;
+
+		// If we fell downwards see if we went from a tile with into scenery
+		if ((int)vehicle.position.z != (int)newPosition.z)
+		{
+			auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
+			if (presentScenery &&
+			    presentScenery->type->getATVMode() == SceneryTileType::WalkMode::Into)
+			{
+				// We went through "Into" scenery, force landing on it
+				newPosition = vehicle.position;
+				newPosition.z = floorf(vehicle.position.z);
+			}
+		}
+
+		// Fell outside map
+		if (!map.tileIsValid(newPosition))
+		{
+			vehicle.die(state, nullptr);
+			return;
+		}
+
+		// Check tile we're in (or falling into)
+		auto tile = map.getTile(newPosition);
+		bool newTile = (Vec3<int>)newPosition != (Vec3<int>)vehicle.position;
+		if (tile->presentScenery)
+		{
+			auto collisionDamage = std::min(VEHICLE_COLLISION_DAMAGE_LIMIT,
+			                                tile->presentScenery->type->constitution / 3);
+			auto atvMode = tile->presentScenery->type->getATVMode();
+			bool tryPlowThrough = tile->presentScenery->initialPosition.z != -1;
+			if (tryPlowThrough)
+			{
+				switch (atvMode)
+				{
+					case SceneryTileType::WalkMode::Into:
+						if (newPosition.z - floorf(newPosition.z) > 0.05f)
+						{
+							tryPlowThrough = false;
+						}
+						break;
+					case SceneryTileType::WalkMode::None:
+					case SceneryTileType::WalkMode::Onto:
+						// Only try to plow through those once
+						tryPlowThrough = newTile;
+						break;
+				}
+			}
+			bool plowedThrough = false;
+			if (tryPlowThrough)
+			{
+				// Chance for vehicle to plow through is: [velocity * 5] percent
+				// ( velocity of 20 is roughly equivalent of a full speed annihilator
+				//   ramming the building, which would result in a 100% chance here)
+				// Chance for scenery to survive (subtracted from above) is: [constitution / 2]
+				// percent
+				plowedThrough =
+				    randBoundsExclusive(state.rng, 0, 100) <
+				    glm::length(vehicle.velocity) - tile->presentScenery->type->constitution / 2;
+				if (plowedThrough)
+				{
+					tile->presentScenery->damaged = true;
+					tile->presentScenery->die(state);
+					// Scenery damages our face if we plowed through it
+					bool soundHandled = false;
+					// A 12.5% chance to evade damage
+					if (randBoundsExclusive(state.rng, 0, 8) > 0 &&
+					    vehicle.applyDamage(state, collisionDamage, 0, soundHandled))
+					{
+						// Died
+						return;
+					}
+				}
+			}
+			if (!plowedThrough)
+			{
+				switch (atvMode)
+				{
+					case SceneryTileType::WalkMode::None:
+					{
+						// Didn't plow through
+						bool movedToTheSide = false;
+						if ((int)vehicle.position.x != (int)newPosition.x)
+						{
+							movedToTheSide = true;
+							newPosition.x = vehicle.position.x;
+							vehicle.velocity.x = 0.0f;
+						}
+						if ((int)vehicle.position.y != (int)newPosition.y)
+						{
+							movedToTheSide = true;
+							newPosition.y = vehicle.position.y;
+							vehicle.velocity.y = 0.0f;
+						}
+						// If we moved to the side of other tile into scenery then
+						// cancel movement on this tick and try again with capped velocity
+						if (movedToTheSide)
+						{
+							// Get half damage for bouncing off
+							bool soundHandled = false;
+							if (randBoundsExclusive(state.rng, 0, 8) > 0 &&
+							    vehicle.applyDamage(state, collisionDamage / 2, 0, soundHandled))
+							{
+								// Died
+								return;
+							}
+							continue;
+						}
+						// If we moved only downwards then we land on the scenery, so force it
+						newPosition.z = floorf(newPosition.z);
+						break;
+					}
+					// Force a landing by setting a low position z
+					case SceneryTileType::WalkMode::Onto:
+					{
+						newPosition.z = floorf(newPosition.z);
+						break;
+					}
+					// Continue falling through normally
+					case SceneryTileType::WalkMode::Into:
+					{
+						break;
+					}
+				}
+			}
+		}
+		vehicle.setPosition(newPosition);
+		// See if we've landed
+		auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
+		if (presentScenery)
+		{
+			auto atvMode = presentScenery->type->getATVMode();
+			switch (atvMode)
+			{
+				case SceneryTileType::WalkMode::None:
+				{
+					vehicle.falling = false;
+					break;
+				}
+				case SceneryTileType::WalkMode::Onto:
+				{
+					if (newPosition.z - floorf(newPosition.z) < 0.95f)
+					{
+						vehicle.falling = false;
+					}
+					break;
+				}
+				case SceneryTileType::WalkMode::Into:
+				{
+					if (newPosition.z - floorf(newPosition.z) <
+					    (presentScenery->type->isHill ? 0.5f : 0.05f))
+					{
+						vehicle.falling = false;
+					}
+					break;
+				}
+			}
+			// Landed
+			if (!vehicle.falling)
+			{
+				bool soundHandled = false;
+				if (randBoundsExclusive(state.rng, 0, 8) > 0 &&
+				    vehicle.applyDamage(state,
+				                        std::min(presentScenery->type->constitution / 3,
+				                                 VEHICLE_COLLISION_DAMAGE_LIMIT) /
+				                            2,
+				                        0, soundHandled))
+				{
+					// Died
+					return;
+				}
+				// Move to resting position in the tile
+				Vec3<float> newGoal = (Vec3<int>)newPosition;
+				if (atvMode == SceneryTileType::WalkMode::Onto ||
+				    atvMode == SceneryTileType::WalkMode::None)
+				{
+					newGoal += Vec3<float>{0.5f, 0.5f, 0.99f};
+				}
+				else
+				{
+					if (presentScenery->type->isHill)
+					{
+						newGoal += Vec3<float>{0.5f, 0.5f, 0.5f};
+					}
+					else
+					{
+						newGoal += Vec3<float>{0.5f, 0.5f, 0.05f};
+					}
+				}
+				vehicle.goalWaypoints.push_back(newGoal);
+				newPosition.z = newGoal.z;
+				vehicle.velocity = {0.0f, 0.0f, 0.0f};
+				vehicle.setPosition(newPosition);
+				vehicle.goalPosition = vehicle.position;
+				vehicle.angularVelocity = 0.0f;
+				// Flying vehicle or fell into an unpassable tile -> crash
+				if (!vehicle.type->isGround() || atvMode == SceneryTileType::WalkMode::None ||
+				    (vehicle.type->type == VehicleType::Type::Road &&
+				     presentScenery->type->tile_type != SceneryTileType::TileType::Road))
+				{
+					vehicle.crash(state, nullptr);
+					vehicle.goalWaypoints.clear();
+				}
+				// Fell into passable tile -> will move to resting position
+				else
+				{
+					// Already set above
+				}
+				break;
+			}
+		}
+	}
+
+	vehicle.updateSprite(state);
+}
+
 VehicleMover::~VehicleMover() = default;
 
 Vehicle::Vehicle()
@@ -755,6 +1114,8 @@ void Vehicle::leaveBuilding(GameState &state, Vec3<float> initialPosition, float
 
 void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 {
+	carriedByVehicle.clear();
+	crashed = false;
 	if (this->currentBuilding)
 	{
 		LogError("Vehicle already in a building?");
@@ -762,6 +1123,11 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 	}
 	this->currentBuilding = b;
 	b->currentVehicles.insert({&state, shared_from_this()});
+	if (carriedVehicle)
+	{
+		carriedVehicle->enterBuilding(state, b);
+		carriedVehicle.clear();
+	}
 	if (tileObject)
 	{
 		this->tileObject->removeFromMap();
@@ -772,8 +1138,8 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 		this->shadowObject->removeFromMap();
 		this->shadowObject = nullptr;
 	}
-	this->position = type->type == VehicleType::Type::Ground ? b->carEntranceLocations.front()
-	                                                         : b->landingPadLocations.front();
+	this->position =
+	    type->isGround() ? b->carEntranceLocations.front() : b->landingPadLocations.front();
 	this->position += Vec3<float>{0.5f, 0.5f, 0.5f};
 	this->facing = 0.0f;
 	this->goalFacing = 0.0f;
@@ -783,15 +1149,13 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 
 void Vehicle::setupMover()
 {
-	switch (this->type->type)
+	if (type->isGround())
 	{
-		case VehicleType::Type::Flying:
-		case VehicleType::Type::UFO:
-			this->mover.reset(new FlyingVehicleMover(*this));
-			break;
-		case VehicleType::Type::Ground:
-			this->mover.reset(new GroundVehicleMover(*this));
-			break;
+		this->mover.reset(new GroundVehicleMover(*this));
+	}
+	else
+	{
+		this->mover.reset(new FlyingVehicleMover(*this));
 	}
 	animationDelay = 0;
 	animationFrame = type->animation_sprites.begin();
@@ -1054,6 +1418,12 @@ void Vehicle::die(GameState &state, StateRef<Vehicle> attacker, bool silent)
 		fw().soundBackend->playSample(state.city_common_sample_list->vehicleExplosion, position);
 	}
 	auto id = getId(state, shared_from_this());
+	if (carriedByVehicle)
+	{
+		carriedByVehicle->carriedVehicle.clear();
+		carriedByVehicle.clear();
+	}
+	// Clear projectiles
 	for (auto &p : city->projectiles)
 	{
 		if (p->trackedVehicle && p->trackedVehicle.id == id)
@@ -1061,6 +1431,17 @@ void Vehicle::die(GameState &state, StateRef<Vehicle> attacker, bool silent)
 			p->turnRate = 0;
 			p->trackedVehicle.clear();
 			p->trackedObject = nullptr;
+		}
+	}
+	// Clear targets
+	for (auto &v : state.vehicles)
+	{
+		for (auto &m : v.second->missions)
+		{
+			if (m->targetVehicle.id == id)
+			{
+				m->targetVehicle.clear();
+			}
 		}
 	}
 	if (tileObject)
@@ -1073,7 +1454,11 @@ void Vehicle::die(GameState &state, StateRef<Vehicle> attacker, bool silent)
 		this->shadowObject->removeFromMap();
 		this->shadowObject.reset();
 	}
-
+	if (smokeDoodad)
+	{
+		smokeDoodad->remove(state);
+		smokeDoodad.reset();
+	}
 	while (!currentAgents.empty())
 	{
 		// For some reason need to assign first before calling die()
@@ -1083,7 +1468,7 @@ void Vehicle::die(GameState &state, StateRef<Vehicle> attacker, bool silent)
 	}
 
 	// Adjust relationships
-	if (attacker && type->crash_health == 0)
+	if (attacker && !crashed)
 	{
 		adjustRelationshipOnDowned(state, attacker);
 	}
@@ -1092,18 +1477,53 @@ void Vehicle::die(GameState &state, StateRef<Vehicle> attacker, bool silent)
 	{
 		fw().pushEvent(new GameSomethingDiedEvent(GameEventType::VehicleDestroyed, name,
 		                                          attacker ? attacker->name : "", position));
-		state.vehicles.erase(id);
 	}
+	state.vehicles.erase(id);
 }
 
 void Vehicle::crash(GameState &state, StateRef<Vehicle> attacker)
 {
-	this->missions.clear();
-	this->missions.emplace_back(VehicleMission::crashLand(state, *this));
-	this->missions.front()->start(state, *this);
+	crashed = true;
 	if (attacker)
 	{
 		adjustRelationshipOnDowned(state, attacker);
+	}
+	switch (type->type)
+	{
+		case VehicleType::Type::UFO:
+			setMission(state, VehicleMission::crashLand(state, *this));
+			addMission(state, VehicleMission::selfDestruct(state, *this), true);
+			break;
+		case VehicleType::Type::Flying:
+		case VehicleType::Type::ATV:
+		case VehicleType::Type::Road:
+			setMission(state, VehicleMission::selfDestruct(state, *this));
+			break;
+	}
+}
+
+void Vehicle::startFalling(GameState &state, StateRef<Vehicle> attacker)
+{
+	if (attacker)
+	{
+		adjustRelationshipOnDowned(state, attacker);
+	}
+	falling = true;
+	if (angularVelocity == 0.0f)
+	{
+		float vel = getSpeed() * (float)M_PI / (float)TICK_SCALE / VELOCITY_SCALE_CITY.x / 1.5f;
+
+		switch (randBoundsInclusive(state.rng, -1, 1))
+		{
+			case -1:
+				angularVelocity = -vel;
+				break;
+			case 0:
+				break;
+			case 1:
+				angularVelocity = vel;
+				break;
+		}
 	}
 }
 
@@ -1161,16 +1581,11 @@ bool Vehicle::isDead() const { return health <= 0; }
 
 Vec3<float> Vehicle::getMuzzleLocation() const
 {
-	if (type->type == VehicleType::Type::Ground)
-	{
-		return Vec3<float>(position.x, position.y, position.z + (float)type->height / 16.0f);
-	}
-	else
-	{
-		return Vec3<float>(position.x, position.y,
-		                   position.z - tileObject->getVoxelOffset().z +
-		                       (float)type->height / 16.0f);
-	}
+	return type->isGround()
+	           ? Vec3<float>(position.x, position.y, position.z + (float)type->height / 16.0f)
+	           : Vec3<float>(position.x, position.y,
+	                         position.z - tileObject->getVoxelOffset().z +
+	                             (float)type->height / 16.0f);
 }
 
 void Vehicle::update(GameState &state, unsigned int ticks)
@@ -1246,7 +1661,7 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 			if (equipment->type->type != EquipmentSlotType::VehicleWeapon)
 				continue;
 			equipment->update(ticks);
-			if (!this->isCrashed() && this->attackMode != Vehicle::AttackMode::Evasive &&
+			if (!crashed && !falling && this->attackMode != Vehicle::AttackMode::Evasive &&
 			    equipment->canFire())
 			{
 				has_active_weapon = true;
@@ -1275,7 +1690,7 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 
 void Vehicle::updateCargo(GameState &state)
 {
-	if (isCrashed())
+	if (crashed || falling)
 	{
 		return;
 	}
@@ -1293,8 +1708,9 @@ void Vehicle::updateCargo(GameState &state)
 	bool needFerry = false;
 	for (auto &c : cargo)
 	{
-		// Either this is not combat loot, or this loot belongs to this building
-		// Don't keep trying to ferry combat loot to other building as we're NOT going to do so
+		// Either this is non-combat loot, or this loot belongs to this building
+		// Don't keep trying to ferry combat loot to other building as we're NOT going to move
+		// when we check it in getServiceDestination method!
 		if (c.originalOwner || c.destination == currentBuilding)
 		{
 			needFerry = true;
@@ -1408,13 +1824,6 @@ void Vehicle::updateSprite(GameState &state)
 	}
 }
 
-bool Vehicle::isCrashed() const { return this->health < this->type->crash_health; }
-/* // Test code to make UFOs crash immediately upon hit,
-// may be useful in the future as crashing is not yet perfect
- bool Vehicle::isCrashed() const
-{ return this->health < this->type->health && this->type->crash_health > 0; }
-*/
-
 bool Vehicle::applyDamage(GameState &state, int damage, float armour, bool &soundHandled,
                           StateRef<Vehicle> attacker)
 {
@@ -1443,21 +1852,27 @@ bool Vehicle::applyDamage(GameState &state, int damage, float armour, bool &soun
 		damage -= (int)armour;
 		if (damage > 0)
 		{
-			bool wasCrashed = isCrashed();
+			bool wasCrashed = crashed;
 			this->health -= damage;
 			if (this->health <= 0)
 			{
-				if (!wasCrashed && type->crash_health > 0)
-				{
-					adjustRelationshipOnDowned(state, attacker);
-				}
 				die(state, attacker);
 				soundHandled = true;
 				return true;
 			}
-			else if (isCrashed())
+			else if (health < type->crash_health && !crashed)
 			{
-				crash(state, attacker);
+				if (type->type == VehicleType::Type::UFO)
+				{
+					crash(state, attacker);
+				}
+				else
+				{
+					if (!falling)
+					{
+						startFalling(state, attacker);
+					}
+				}
 				return false;
 			}
 		}
@@ -1540,7 +1955,7 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 			/* Can't fire at yourself */
 			continue;
 		}
-		if (otherVehicle->isCrashed())
+		if (otherVehicle->crashed)
 		{
 			// Can't fire at crashed vehicles
 			continue;
@@ -1672,7 +2087,8 @@ void Vehicle::fireNormalWeapons(GameState &state, Vec2<int> arc)
 void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
                            sp<TileObjectVehicle> enemyTile)
 {
-	static const std::set<TileObject::Type> scenerySet = {TileObject::Type::Scenery};
+	static const std::set<TileObject::Type> scenerySet = {TileObject::Type::Scenery,
+	                                                      TileObject::Type::Vehicle};
 
 	auto firePosition = getMuzzleLocation();
 	auto target = enemyTile->getVoxelCentrePosition();
@@ -1725,18 +2141,39 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 		    Collision::getLeadingOffset(target - firePosition, projectileVelocity * timeToImpact,
 		                                targetVelocity * timeToImpact);
 
-		// No sight to target
-		if (vehicleTile->map.findCollision(firePosition, targetPosAdjusted, scenerySet))
+		// Check if have sight to target
+		// Two attempts, at second attempt try to fire at target itself
+		bool hitSomethingBad = false;
+		for (int i = 0; i < 2; i++)
 		{
-			if (vehicleTile->map.findCollision(firePosition, target, scenerySet))
+			bool hitSomethingBad = false;
+			auto hitObject = vehicleTile->map.findCollision(firePosition, targetPosAdjusted,
+			                                                scenerySet, tileObject);
+			if (hitObject)
 			{
-				continue;
+				if (hitObject.obj->getType() == TileObject::Type::Vehicle)
+				{
+					auto vehicle = std::static_pointer_cast<TileObjectVehicle>(hitObject.obj);
+					if (owner->isRelatedTo(vehicle->getVehicle()->owner) !=
+					    Organisation::Relation::Hostile)
+					{
+						hitSomethingBad = true;
+					}
+				}
+				else if (hitObject.obj->getType() == TileObject::Type::Scenery)
+				{
+					hitSomethingBad = true;
+				}
 			}
-			else
+			if (hitSomethingBad)
 			{
 				// Can't fire at where it will be so at least fire at where it's now
 				targetPosAdjusted = target;
 			}
+		}
+		if (hitSomethingBad)
+		{
+			continue;
 		}
 
 		// Cancel cloak
@@ -1755,7 +2192,8 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 bool Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
                            sp<TileObjectProjectile> enemyTile)
 {
-	static const std::set<TileObject::Type> scenerySet = {TileObject::Type::Scenery};
+	static const std::set<TileObject::Type> scenerySet = {TileObject::Type::Scenery,
+	                                                      TileObject::Type::Vehicle};
 
 	auto firePosition = getMuzzleLocation();
 	auto target = enemyTile->getVoxelCentrePosition();
@@ -1813,18 +2251,39 @@ bool Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 		    Collision::getLeadingOffset(target - firePosition, projectileVelocity * timeToImpact,
 		                                targetVelocity * timeToImpact);
 
-		// No sight to target
-		if (vehicleTile->map.findCollision(firePosition, targetPosAdjusted, scenerySet))
+		// Check if have sight to target
+		// Two attempts, at second attempt try to fire at target itself
+		bool hitSomethingBad = false;
+		for (int i = 0; i < 2; i++)
 		{
-			if (vehicleTile->map.findCollision(firePosition, target, scenerySet))
+			bool hitSomethingBad = false;
+			auto hitObject = vehicleTile->map.findCollision(firePosition, targetPosAdjusted,
+			                                                scenerySet, tileObject);
+			if (hitObject)
 			{
-				continue;
+				if (hitObject.obj->getType() == TileObject::Type::Vehicle)
+				{
+					auto vehicle = std::static_pointer_cast<TileObjectVehicle>(hitObject.obj);
+					if (owner->isRelatedTo(vehicle->getVehicle()->owner) !=
+					    Organisation::Relation::Hostile)
+					{
+						hitSomethingBad = true;
+					}
+				}
+				else if (hitObject.obj->getType() == TileObject::Type::Scenery)
+				{
+					hitSomethingBad = true;
+				}
 			}
-			else
+			if (hitSomethingBad)
 			{
 				// Can't fire at where it will be so at least fire at where it's now
 				targetPosAdjusted = target;
 			}
+		}
+		if (hitSomethingBad)
+		{
+			continue;
 		}
 
 		// Cancel cloak
@@ -1874,6 +2333,39 @@ void Vehicle::setPosition(const Vec3<float> &pos)
 
 bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 {
+	switch (mission->type)
+	{
+		case VehicleMission::MissionType::Crash:
+		case VehicleMission::MissionType::SelfDestruct:
+			break;
+		case VehicleMission::MissionType::GotoBuilding:
+		case VehicleMission::MissionType::FollowVehicle:
+		case VehicleMission::MissionType::RecoverVehicle:
+		case VehicleMission::MissionType::AttackVehicle:
+		case VehicleMission::MissionType::AttackBuilding:
+		case VehicleMission::MissionType::Snooze:
+		case VehicleMission::MissionType::TakeOff:
+		case VehicleMission::MissionType::Patrol:
+		case VehicleMission::MissionType::GotoPortal:
+		case VehicleMission::MissionType::InfiltrateSubvert:
+		case VehicleMission::MissionType::OfferService:
+		case VehicleMission::MissionType::Teleport:
+			if (crashed || carriedVehicle)
+			{
+				delete mission;
+				return false;
+			}
+			break;
+		case VehicleMission::MissionType::RestartNextMission:
+		case VehicleMission::MissionType::GotoLocation:
+		case VehicleMission::MissionType::Land:
+			if (crashed)
+			{
+				delete mission;
+				return false;
+			}
+			break;
+	}
 	if (missions.empty() || !toBack)
 	{
 		missions.emplace_front(mission);
@@ -1888,9 +2380,35 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 
 bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 {
+	switch (mission->type)
+	{
+		case VehicleMission::MissionType::Crash:
+		case VehicleMission::MissionType::SelfDestruct:
+			break;
+		case VehicleMission::MissionType::GotoLocation:
+		case VehicleMission::MissionType::GotoBuilding:
+		case VehicleMission::MissionType::FollowVehicle:
+		case VehicleMission::MissionType::RecoverVehicle:
+		case VehicleMission::MissionType::AttackVehicle:
+		case VehicleMission::MissionType::AttackBuilding:
+		case VehicleMission::MissionType::RestartNextMission:
+		case VehicleMission::MissionType::Snooze:
+		case VehicleMission::MissionType::TakeOff:
+		case VehicleMission::MissionType::Land:
+		case VehicleMission::MissionType::Patrol:
+		case VehicleMission::MissionType::GotoPortal:
+		case VehicleMission::MissionType::InfiltrateSubvert:
+		case VehicleMission::MissionType::OfferService:
+		case VehicleMission::MissionType::Teleport:
+			if (crashed)
+			{
+				delete mission;
+				return false;
+			}
+			break;
+	}
 	missions.clear();
-	missions.emplace_front(mission);
-	missions.front()->start(state, *this);
+	addMission(state, mission);
 	return true;
 }
 
@@ -2017,7 +2535,7 @@ bool Vehicle::canTeleport() const
 bool Vehicle::hasTeleporter() const
 {
 	// Ground can't use teleporter
-	if (type->type == VehicleType::Type::Ground)
+	if (type->isGround())
 	{
 		return false;
 	}

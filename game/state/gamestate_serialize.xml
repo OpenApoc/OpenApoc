@@ -344,6 +344,8 @@
 		<member>health</member>
 		<member>shield</member>
 		<member>shieldRecharge</member>
+		<member>falling</member>
+		<member>crashed</member>
 		<member>cloakTicksAccumulated</member>
 		<member>teleportTicksAccumulated</member>
 		<member>ticksAutoActionAvailable</member>
@@ -351,6 +353,8 @@
 		<member>currentBuilding</member>
 		<member>currentAgents</member>
 		<member>cargo</member>
+		<member>carriedVehicle</member>
+		<member>carriedByVehicle</member>
 	</object>
 	<object>
 		<name>VEquipment</name>
@@ -368,6 +372,7 @@
 		<member>allowTeleporter</member>
 		<member>reRouteAttempts</member>
 		<member>pickNearest</member>
+		<member>pickedNearest</member>
 		<member>targetBuilding</member>
 		<member>targetVehicle</member>
 		<member>timeToSnooze</member>
@@ -393,6 +398,7 @@
 		<member>facingDelta</member>
 		<member>giveWayAttemptsRemaining</member>
 		<member>demandGiveWay</member>
+		<member>blockedByMovingUnit</member>
 		<member>costPaidUpFront</member>
 		<member>allowSkipNodes</member>
 		<member>targetFacing</member>
@@ -1222,6 +1228,7 @@
 		<member>provideFreightAgent</member>
 		<member>provideFreightCargo</member>
 		<member>provideFreightBio</member>
+		<member>canRescueCrashed</member>
 	</object>
 	<object>
 		<name>UfopaediaEntry</name>
@@ -1277,8 +1284,9 @@
 	<enum>
 		<name>VehicleType::Type</name>
 		<value>Flying</value>
-		<value>Ground</value>
 		<value>UFO</value>
+		<value>Road</value>
+		<value>ATV</value>
 	</enum>
 	<enum>
 		<name>VehicleType::Direction</name>
@@ -1371,6 +1379,7 @@
 		<value>InfiltrateSubvert</value>
 		<value>OfferService</value>
 		<value>Teleport</value>
+		<value>SelfDestruct</value>
 	</enum>
 	<enum>
 		<name>AgentMission::MissionType</name>

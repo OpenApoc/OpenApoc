@@ -163,6 +163,9 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// that is serialized but not serialized itself). This should also be called on starting a new
 	// game after startGame()
 	void initState();
+	// Stub until we have actual mods
+	void applyMods();
+
 	// Validates gamestate, sanity checks for all the possible fuck-ups
 	void validate();
 	void validateResearch();

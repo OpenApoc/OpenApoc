@@ -28,4 +28,13 @@ const UString &SceneryTileType::getTypeName()
 	return name;
 }
 
+SceneryTileType::WalkMode SceneryTileType::getATVMode() const
+{
+	if (walk_mode == WalkMode::None && tile_type == TileType::Road)
+	{
+		return WalkMode::Into;
+	}
+	return walk_mode;
+}
+
 } // namespace OpenApoc

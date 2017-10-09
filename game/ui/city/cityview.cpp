@@ -571,7 +571,7 @@ void CityView::orderAttack(StateRef<Vehicle> vehicle, bool forced)
 		{
 			if (v && v->owner == this->state->getPlayer() && v != vehicle)
 			{
-				if (forced || !vehicle->isCrashed())
+				if (forced || !vehicle->crashed)
 				{
 					if (vehicle->owner == state->getPlayer() &&
 					    !config().getBool("OpenApoc.NewFeature.AllowAttackingOwnedVehicles"))
@@ -587,7 +587,9 @@ void CityView::orderAttack(StateRef<Vehicle> vehicle, bool forced)
 				}
 				else
 				{
-					bool foundSoldier = false;
+					bool foundSoldier = vehicle->owner == state->getPlayer() ||
+					                    state->getPlayer()->isRelatedTo(vehicle->owner) !=
+					                        Organisation::Relation::Hostile;
 					for (auto &a : v->currentAgents)
 					{
 						if (a->type->role == AgentType::Role::Soldier)
@@ -595,6 +597,10 @@ void CityView::orderAttack(StateRef<Vehicle> vehicle, bool forced)
 							foundSoldier = true;
 							break;
 						}
+					}
+					if (vehicle->owner != state->getAliens() && !v->type->canRescueCrashed)
+					{
+						foundSoldier = false;
 					}
 					if (foundSoldier)
 					{
@@ -1521,6 +1527,20 @@ bool CityView::handleKeyDown(Event *e)
 				}
 				return true;
 			}
+			case SDLK_c:
+			{
+				LogWarning("Crashing!");
+				for (auto &v : state->vehicles)
+				{
+					if (v.second->currentBuilding || v.second->city != state->current_city ||
+					    v.second->crashed || v.second->falling)
+					{
+						continue;
+					}
+					v.second->startFalling(*state);
+				}
+				return true;
+			}
 			case SDLK_u:
 			{
 				LogWarning("Spawning crashed UFOs...");
@@ -1737,6 +1757,15 @@ bool CityView::handleMouseDown(Event *e)
 					for (auto &c : vehicle->cargo)
 					{
 						LogWarning("Cargo %dx%s", c.id, c.count);
+					}
+					if (modifierLAlt && modifierLCtrl && modifierLShift)
+					{
+						if (!vehicle->falling && !vehicle->crashed)
+						{
+							vehicle->health = vehicle->getMaxHealth() / 4;
+							vehicle->startFalling(*state);
+						}
+						return true;
 					}
 					break;
 				}
@@ -2119,7 +2148,7 @@ void CityView::updateSelectedUnits()
 		while (it != state->current_city->cityViewSelectedVehicles.end())
 		{
 			auto v = *it;
-			if (!v || v->isDead() || v->isCrashed())
+			if (!v || v->isDead() || v->crashed)
 			{
 				it = state->current_city->cityViewSelectedVehicles.erase(it);
 			}

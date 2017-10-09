@@ -48,6 +48,9 @@ std::map<UString, int> EquipscreenSprite = {{"VEHICLETYPE_ANNIHILATOR", 0},
 std::set<UString> AgentFreight = {"VEHICLETYPE_AIRTAXI" /*, "VEHICLETYPE_AUTOTAXI"*/};
 std::set<UString> CargoFreight = {"VEHICLETYPE_AIRTRANS" /*, "VEHICLETYPE_AUTOTRANS"*/};
 std::set<UString> BioFreight = {"VEHICLETYPE_AIRTRANS"};
+std::set<UString> Rescue = {"VEHICLETYPE_ANNIHILATOR",      "VEHICLETYPE_VALKYRIE_INTERCEPTOR",
+                            "VEHICLETYPE_RETALIATOR",       "VEHICLETYPE_HAWK_AIR_WARRIOR",
+                            "VEHICLETYPE_RESCUE_TRANSPORT", "VEHICLETYPE_CONSTRUCTION_VEHICLE"};
 }
 static void extract_equipment_layout(GameState &state, sp<VehicleType> vehicle, const UFO2P &data,
                                      VehicleEquipmentLayout layout,
@@ -143,7 +146,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 
 		if (v.movement_type == 0)
 		{
-			vehicle->type = VehicleType::Type::Ground;
+			vehicle->type = VehicleType::Type::Road;
 			int image_offset = 0;
 			std::vector<VehicleType::Direction> directions = {
 			    VehicleType::Direction::N,  VehicleType::Direction::NE, VehicleType::Direction::E,
@@ -335,6 +338,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		vehicle->provideFreightAgent = AgentFreight.find(id) != AgentFreight.end();
 		vehicle->provideFreightCargo = CargoFreight.find(id) != CargoFreight.end();
 		vehicle->provideFreightBio = BioFreight.find(id) != BioFreight.end();
+		vehicle->canRescueCrashed = Rescue.find(id) != Rescue.end();
 
 		// The equipment_screen_name is up to 8 chars, any may have NULLs. Memcpy() that to a char[]
 		// and add a trailing null (in case all 8 are used) and it's just like a c-string!
@@ -521,7 +525,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 			LogError(
 			    "Modded game? too much free space in voxelmap, logic below won't work properly");
 		}
-		if (vehicle->type == VehicleType::Type::Ground)
+		if (vehicle->type == VehicleType::Type::Road)
 		{
 			// Ground vehicles instead start at center
 			start = v.size_z * 16 / 2;

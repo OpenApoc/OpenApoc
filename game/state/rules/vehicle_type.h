@@ -28,8 +28,9 @@ class VehicleType : public StateObject
 	enum class Type
 	{
 		Flying,
-		Ground,
 		UFO,
+		Road,
+		ATV,
 	};
 	enum class Direction
 	{
@@ -81,6 +82,7 @@ class VehicleType : public StateObject
 	mutable unsigned numCreated = 0;
 
 	Type type = Type::Flying;
+	bool isGround() const;
 
 	UString name;
 	StateRef<Organisation> manufacturer;
@@ -146,6 +148,7 @@ class VehicleType : public StateObject
 	bool provideFreightAgent = false;
 	bool provideFreightCargo = false;
 	bool provideFreightBio = false;
+	bool canRescueCrashed = false;
 
 	~VehicleType() override = default;
 	VehicleType() = default;

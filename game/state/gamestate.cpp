@@ -1,10 +1,13 @@
 #include "game/state/gamestate.h"
+#include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/sound.h"
 #include "framework/trace.h"
 #include "game/state/aequipment.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
+
+#include "framework/configfile.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battlemap.h"
@@ -159,6 +162,11 @@ void GameState::initState()
 	{
 		v.second->strategyImages = city_common_image_list->strategyImages;
 		v.second->setupMover();
+		if (v.second->crashed)
+		{
+			v.second->smokeDoodad =
+			    v.second->city->placeDoodad({this, "DOODAD_13_SMOKE_FUME"}, v.second->position);
+		}
 	}
 	// Fill links for weapon's ammo
 	for (auto &t : this->agent_equipment)
@@ -179,8 +187,42 @@ void GameState::initState()
 	}
 	// Run nessecary methods for different types
 	research.updateTopicList();
+	// Apply mods (Stub until we actually have mods)
+	applyMods();
 	// Validate
 	validate();
+}
+
+void GameState::applyMods()
+{
+	if (config().getBool("OpenApoc.Mod.ATVTank"))
+	{
+		vehicle_types["VEHICLETYPE_GRIFFON_AFV"]->type = VehicleType::Type::ATV;
+	}
+	else
+	{
+		vehicle_types["VEHICLETYPE_GRIFFON_AFV"]->type = VehicleType::Type::Road;
+	}
+
+	if (config().getBool("OpenApoc.Mod.BSKLauncherSound"))
+	{
+		agent_equipment["AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER"]->fire_sfx =
+		    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/sucklaun.raw:22050");
+	}
+	else
+	{
+		agent_equipment["AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER"]->fire_sfx =
+		    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/powers.raw:22050");
+	}
+
+	bool crashVehicles = config().getBool("OpenApoc.Mod.CrashingVehicles");
+	for (auto &e : vehicle_types)
+	{
+		if (e.second->type != VehicleType::Type::UFO)
+		{
+			e.second->crash_health = crashVehicles ? e.second->health / 8 : 0;
+		}
+	}
 }
 
 void GameState::validate()
@@ -491,17 +533,8 @@ void GameState::fillPlayerStartingProperty()
 		auto &type = it.second;
 		if (!type->equipment_screen)
 			continue;
-		for (auto i = 0; i < 2; i++)
-		{
-			if (i > 0 && type->type == VehicleType::Type::Ground)
-			{
-				break;
-			}
-
-			auto v =
-			    current_city->placeVehicle(*this, {this, type}, this->getPlayer(), {this, bld});
-			v->homeBuilding = v->currentBuilding;
-		}
+		auto v = current_city->placeVehicle(*this, {this, type}, this->getPlayer(), {this, bld});
+		v->homeBuilding = v->currentBuilding;
 	}
 	// Give that base some vehicle inventory
 	for (auto &pair : this->vehicle_equipment)
@@ -587,7 +620,7 @@ bool GameState::canTurbo() const
 			if (v.second->type->aggressiveness > 0 &&
 			    v.second->owner->isRelatedTo(this->getPlayer()) ==
 			        Organisation::Relation::Hostile &&
-			    !v.second->isCrashed())
+			    !v.second->crashed)
 			{
 				return false;
 			}

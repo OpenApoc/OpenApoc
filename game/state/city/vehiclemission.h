@@ -11,6 +11,7 @@ namespace OpenApoc
 {
 
 static const int TELEPORTER_SPREAD = 10;
+static const int SELF_DESTRUCT_TIMER = 12 * TICKS_PER_HOUR;
 
 class Vehicle;
 class Tile;
@@ -75,7 +76,8 @@ class GroundVehicleTileHelper : public CanEnterTileHelper
 	// Convert vector direction into index for tube array
 	int convertDirection(Vec3<int> dir) const;
 
-	bool isMoveAllowed(Scenery &scenery, int dir) const;
+	bool isMoveAllowedRoad(Scenery &scenery, int dir) const;
+	bool isMoveAllowedATV(Scenery &scenery, int dir) const;
 };
 
 class VehicleMission
@@ -89,7 +91,8 @@ class VehicleMission
 	// If it is finished, update() is called by isFinished so that any remaining work could be done
 	bool isFinishedInternal(GameState &state, Vehicle &v);
 
-	static void adjustTargetToClosestRoad(Vehicle &v, Vec3<int> &target);
+	static bool adjustTargetToClosestRoad(Vehicle &v, Vec3<int> &target);
+	static bool adjustTargetToClosestGround(Vehicle &v, Vec3<int> &target);
 	bool takeOffCheck(GameState &state, Vehicle &v);
 	bool teleportCheck(GameState &state, Vehicle &v);
 
@@ -124,6 +127,7 @@ class VehicleMission
 	static VehicleMission *offerService(GameState &state, Vehicle &v,
 	                                    StateRef<Building> target = nullptr);
 	static VehicleMission *snooze(GameState &state, Vehicle &v, unsigned int ticks);
+	static VehicleMission *selfDestruct(GameState &state, Vehicle &v);
 	static VehicleMission *restartNextMission(GameState &state, Vehicle &v);
 	static VehicleMission *crashLand(GameState &state, Vehicle &v);
 	static VehicleMission *patrol(GameState &state, Vehicle &v, unsigned int counter = 10);
@@ -147,7 +151,8 @@ class VehicleMission
 		GotoPortal,
 		InfiltrateSubvert,
 		OfferService,
-		Teleport
+		Teleport,
+		SelfDestruct
 	};
 
 	MissionType type = MissionType::GotoLocation;
@@ -160,11 +165,13 @@ class VehicleMission
 	int reRouteAttempts = 0;
 	// GotoLocation - should it pick nearest point or random point if destination unreachable
 	bool pickNearest = false;
+	// GotoLocation - picked nearest (allows finishing mission without reaching destination)
+	bool pickedNearest = false;
 	// GotoBuilding AttackBuilding Land Infiltrate
 	StateRef<Building> targetBuilding;
 	// FollowVehicle AttackVehicle
 	StateRef<Vehicle> targetVehicle;
-	// Snooze
+	// Snooze, SelfDestruct
 	unsigned int timeToSnooze = 0;
 	// RecoverVehicle, InfiltrateSubvert, Patrol: waypoints
 	unsigned int missionCounter = 0;

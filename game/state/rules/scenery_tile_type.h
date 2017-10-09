@@ -51,6 +51,7 @@ class SceneryTileType : public StateObject
 	TileType tile_type = TileType::General;
 	RoadType road_type = RoadType::StraightBend;
 	WalkMode walk_mode = WalkMode::None;
+	WalkMode getATVMode() const;
 
 	// Road Connection NESW
 	std::vector<bool> connection;
