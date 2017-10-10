@@ -139,6 +139,13 @@ void GameState::initState()
 	{
 		auto &city = c.second;
 		city->initMap(*this);
+		if (newGame)
+		{
+			if (c.first == "CITYMAP_HUMAN")
+			{
+				city->initialSceneryLinkUp();
+			}
+		}
 		// Add vehicles to map
 		for (auto &v : this->vehicles)
 		{

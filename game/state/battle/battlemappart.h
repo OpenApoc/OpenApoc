@@ -1,13 +1,13 @@
 #pragma once
 
 #include "game/state/battle/battlemappart_type.h"
+#include "game/state/rules/supportedmappart.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
 #include <list>
 #include <set>
 
-//#define MAP_PART_LINK_DEBUG_OUTPUT
 #define TICKS_PER_FRAME_MAP_PART 8
 #define FALLING_ACCELERATION_MAP_PART 0.16666667f // 1/6th
 #define FALLING_MAP_PART_DAMAGE_TO_UNIT 50
@@ -19,9 +19,10 @@ class Collision;
 class TileObjectBattleMapPart;
 class BattleItem;
 class BattleDoor;
+class TileMap;
 class Organisation;
 
-class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
+class BattleMapPart : public SupportedMapPart, public std::enable_shared_from_this<BattleMapPart>
 {
   public:
 	StateRef<BattleMapPartType> type;
@@ -62,20 +63,8 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
 	void die(GameState &state, bool explosive = false, bool violently = true);
 	// Collapses mappart immediately
 	void collapse(GameState &state);
-
-	// Makes mappart stop being valid for support and collapse in 1 vanilla tick
-	void queueCollapse(unsigned additionalDelay = 0);
-	// Cancels queued collapse
-	void cancelCollapse();
 	// Wether mappart is queued to collapse
 	bool willCollapse() const { return ticksUntilCollapse > 0; }
-
-	// Compiles a list of parts supported by this part
-	// Using sp because we switch to a new one constantly in re-linking
-	// Using set because we need to easilly weed out duplicates
-	sp<std::set<BattleMapPart *>> getSupportedParts();
-	// Attempts to re-link map parts to supports in the provided set
-	static void attemptReLinkSupports(sp<std::set<BattleMapPart *>> set);
 
 	void ceaseDoorFunction();
 
@@ -93,16 +82,45 @@ class BattleMapPart : public std::enable_shared_from_this<BattleMapPart>
   private:
 	friend class Battle;
 
-	// Find map parts that support this one and set "hard supported" flag where appropriate
-	bool findSupport();
-
 	// Try to attach to at least something, called for unlinked map parts when map starts
 	bool attachToSomething(bool checkType, bool checkHard);
 
 	// Cease providing or requiring support
 	void ceaseSupportProvision();
 
+	// Supported map part code
+  public:
+	// Makes mappart stop being valid for support and collapse in 1 vanilla tick
+	void queueCollapse(unsigned additionalDelay = 0) override;
+	// Cancels queued collapse
+	void cancelCollapse() override;
+	// Get ticks until this collapses (used to space out collapses)
+	unsigned int getTicksUntilCollapse() const override { return ticksUntilCollapse; };
+
+	// Compiles a list of parts supported by this part
+	// Using sp because we switch to a new one constantly in re-linking
+	// Using set because we need to easilly weed out duplicates
+	sp<std::set<SupportedMapPart *>> getSupportedParts() override;
+
+	// Clears parts supported by this
+	void clearSupportedParts() override;
+
+	// Find map parts that support this one and set "hard supported" flag where appropriate
+	bool findSupport() override;
+
+	// Supported map part code
+  protected:
 	// Cease using support
-	void ceaseBeingSupported();
+	void ceaseBeingSupported() override;
+
+	//
+	// Debug output
+	//
+
+	Vec3<int> getTilePosition() const override;
+	const TileMap &getMap() const override;
+	UString getId() const override;
+	int getType() const override;
+	UString getSupportString() const override;
 };
 }

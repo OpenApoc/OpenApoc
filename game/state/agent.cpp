@@ -1058,7 +1058,7 @@ void Agent::updateMovement(GameState &state, unsigned ticks)
 	unsigned lastTicksToMove = 0;
 
 	// See that we're not in the air
-	if (!city->map->getTile(position)->intactScenery)
+	if (!city->map->getTile(position)->presentScenery)
 	{
 		die(state);
 		return;

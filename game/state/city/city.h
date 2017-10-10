@@ -72,6 +72,8 @@ class City : public StateObject
 	void generatePortals(GameState &state);
 	void updateInfiltration(GameState &state);
 
+	void initialSceneryLinkUp();
+
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
 	sp<Vehicle> placeVehicle(GameState &state, StateRef<VehicleType> type,
 	                         StateRef<Organisation> owner);

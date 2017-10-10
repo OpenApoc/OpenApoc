@@ -71,7 +71,6 @@ std::list<std::pair<UString, UString>> cityNotificationList = {
 
 std::list<std::pair<UString, UString>> openApocList = {
     {"OpenApoc.NewFeature.UFODamageModel", "X-Com: EU Damage Model (0-200%)"},
-    {"OpenApoc.NewFeature.Fully3DExplosions", "Fully 3D explosions"},
     {"OpenApoc.NewFeature.InstantExplosionDamage", "Explosions deal damage instantly"},
     {"OpenApoc.NewFeature.GravliftSounds", "Gravlift sounds"},
     {"OpenApoc.NewFeature.NoInstantThrows", "Throwing requires proper facing and pose"},

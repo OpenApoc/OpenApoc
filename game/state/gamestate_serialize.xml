@@ -902,8 +902,11 @@
 		<member>type</member>
 		<member>initialPosition</member>
 		<member>currentPosition</member>
+		<member>ticksUntilCollapse</member>
+		<member>supportedParts</member>
 		<member>damaged</member>
 		<member>falling</member>
+		<member>fallingSpeed</member>
 		<member>destroyed</member>
 	</object>
 	<object>
@@ -972,6 +975,7 @@
 		<member>mass</member>
 		<member>strength</member>
 		<member>height</member>
+		<member>supportedBy</member>
 		<member>isHill</member>
 	</object>
 	<object>

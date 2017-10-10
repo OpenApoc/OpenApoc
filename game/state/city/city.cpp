@@ -55,14 +55,6 @@ City::~City()
 		s->city.clear();
 		s->building.clear();
 	}
-	// FIXME: Due to tiles possibly being cross-supported we need to clear that sp<> to avoid leaks
-	// Should this be pushed into a weak_ptr<> or some other ref?
-	for (auto &s : this->scenery)
-	{
-		s->supports.clear();
-		s->supportedBy.clear();
-	}
-
 	for (auto &b : this->buildings)
 	{
 		b.second->currentVehicles.clear();
@@ -312,6 +304,73 @@ void City::updateInfiltration(GameState &state)
 	{
 		b.second->alienGrowth(state);
 	}
+}
+
+void City::initialSceneryLinkUp()
+{
+	LogWarning("Begun scenery parts link up!");
+	auto &mapref = *map;
+
+	for (auto &s : this->scenery)
+	{
+		if (!s->destroyed)
+		{
+			s->queueCollapse();
+		}
+	}
+
+	for (int z = 0; z < mapref.size.z; z++)
+	{
+		for (auto &s : this->scenery)
+		{
+			if ((int)s->currentPosition.z == z && !s->destroyed && s->findSupport())
+			{
+				s->cancelCollapse();
+			}
+		}
+	}
+	LogWarning("Begun scenery link up cycle!");
+	bool foundSupport;
+	// Establish support based on existing supported map parts
+	do
+	{
+		foundSupport = false;
+		for (auto &s : this->scenery)
+		{
+			if (!s->willCollapse())
+			{
+				continue;
+			}
+			if (s->findSupport())
+			{
+				s->cancelCollapse();
+				foundSupport = true;
+			}
+		}
+	} while (foundSupport);
+
+	//// Report unlinked parts
+	// for (auto &mp : this->scenery)
+	//{
+	//	if (mp->willCollapse())
+	//	{
+	//		auto pos = mp->tileObject->getOwningTile()->position;
+	//		LogWarning("SC %s at %s is UNLINKED", mp->type.id, pos);
+	//	}
+	//}
+
+	// Report unlinked parts
+	for (auto &mp : this->scenery)
+	{
+		if (mp->willCollapse())
+		{
+			auto pos = mp->tileObject->getOwningTile()->position;
+			LogWarning("SC %s at %s is going to fall", mp->type.id, pos);
+		}
+	}
+
+	mapref.updateAllBattlescapeInfo();
+	LogWarning("Link up finished!");
 }
 
 sp<Doodad> City::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)

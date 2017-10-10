@@ -11,6 +11,7 @@
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_battleitem.h"
 #include "game/state/tileview/tileobject_battlemappart.h"
+#include "game/state/tileview/tileobject_battleunit.h"
 #include "library/strings_format.h"
 #include <algorithm>
 #include <set>
@@ -37,13 +38,6 @@ void BattleMapPart::die(GameState &state, bool explosive, bool violently)
 	// If falling just cease to be, do damage
 	if (falling)
 	{
-		for (auto &u : tileObject->getOwningTile()->getUnits(false, true))
-		{
-			// FIXME: Ensure falling damage is correct
-			u->applyDamage(state, FALLING_MAP_PART_DAMAGE_TO_UNIT,
-			               {&state, "DAMAGETYPE_FALLING_OBJECT"}, BodyPart::Helmet,
-			               DamageSource::Impact);
-		}
 		this->tileObject->removeFromMap();
 		this->tileObject.reset();
 		destroyed = true;
@@ -926,7 +920,7 @@ bool BattleMapPart::findSupport()
 					}
 				}
 				// Could not find map part of this type or it cannot provide support
-				// We ignore those that have positive "ticksUntilFalling" as those can be saved yet
+				// We ignore those that have positive "ticksUntilCollapse" as those can be saved yet
 				if (!mp || mp->destroyed || mp->damaged || mp->falling)
 				{
 					// fail
@@ -981,9 +975,9 @@ bool BattleMapPart::findSupport()
 	return false;
 }
 
-sp<std::set<BattleMapPart *>> BattleMapPart::getSupportedParts()
+sp<std::set<SupportedMapPart *>> BattleMapPart::getSupportedParts()
 {
-	sp<std::set<BattleMapPart *>> supportedParts = mksp<std::set<BattleMapPart *>>();
+	sp<std::set<SupportedMapPart *>> supportedParts = mksp<std::set<SupportedMapPart *>>();
 	auto &map = tileObject->map;
 	// Since we reference supported parts by type we have to find each in it's tile by type
 	for (auto &p : this->supportedParts)
@@ -1004,6 +998,8 @@ sp<std::set<BattleMapPart *>> BattleMapPart::getSupportedParts()
 	}
 	return supportedParts;
 }
+
+void BattleMapPart::clearSupportedParts() { supportedParts.clear(); }
 
 void BattleMapPart::ceaseBeingSupported()
 {
@@ -1067,155 +1063,6 @@ void BattleMapPart::ceaseSupportProvision()
 		}
 		supportedItems = false;
 	}
-}
-
-void BattleMapPart::attemptReLinkSupports(sp<std::set<BattleMapPart *>> currentSet)
-{
-	if (currentSet->empty())
-	{
-		return;
-	}
-
-#ifdef MAP_PART_LINK_DEBUG_OUTPUT
-	UString log = "ATTEMPTING RE-LINK OF SUPPORTS";
-#endif
-
-	// First mark all those in list as about to fall
-	// (this prevents map parts to link to each other )
-	// (they will have to find a new support outside of their now unsupported group)
-	for (auto &mp : *currentSet)
-	{
-		mp->queueCollapse();
-		mp->ceaseBeingSupported();
-	}
-
-	// Then try to re-establish support links
-	// (in every iteration we add new unsupported items and remove those now supported)
-	// (we do this as long as list keeps being changed)
-	// (in the end we're left with map parts that are no longer supported and will fall)
-	bool listChanged;
-	do
-	{
-#ifdef MAP_PART_LINK_DEBUG_OUTPUT
-		LogWarning("%s", log);
-		log = "";
-		log += format("\nIteration begins. List contains %d items:", (int)currentSet->size());
-		for (auto &mp : *currentSet)
-		{
-			auto pos = mp->tileObject->getOwningTile()->position;
-			log += format("\n %s at %d %d %d", mp->type.id, pos.x, pos.y, pos.z);
-		}
-		log += format("\n");
-#endif
-		// Attempt to re-link every entry in current set
-		// Put those that were not re-linked into next set
-		auto lastSet = currentSet;
-		currentSet = mksp<std::set<BattleMapPart *>>();
-		listChanged = false;
-		for (auto &curSetPart : *lastSet)
-		{
-			// Step 1 : Temporary mark every map part supported by this part as collapsing
-			auto supportedByThisMp = curSetPart->getSupportedParts();
-			for (auto &supportedPart : *supportedByThisMp)
-			{
-				supportedPart->queueCollapse(curSetPart->ticksUntilCollapse);
-			}
-
-			// Step 2.1: Try to find support without using map parts that were supported by this
-			// (this prevents map parts supporting each other in a loop)
-			// (it has to find another support that is not supported by it)
-			if (curSetPart->findSupport())
-			{
-#ifdef MAP_PART_LINK_DEBUG_OUTPUT
-				auto pos = curSetPart->tileObject->getOwningTile()->position;
-				log += format("\n Processing %s at %d %d %d: OK %s", curSetPart->type.id, pos.x,
-				              pos.y, pos.z, curSetPart->providesHardSupport ? "HARD" : "SOFT");
-				{
-					auto &map = curSetPart->tileObject->map;
-					for (int x = pos.x - 1; x <= pos.x + 1; x++)
-					{
-						for (int y = pos.y - 1; y <= pos.y + 1; y++)
-						{
-							for (int z = pos.z - 1; z <= pos.z + 1; z++)
-							{
-								if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y || z < 0 ||
-								    z >= map.size.z)
-								{
-									continue;
-								}
-								auto tile2 = map.getTile(x, y, z);
-								for (auto &o2 : tile2->ownedObjects)
-								{
-									if (o2->getType() == TileObject::Type::Ground ||
-									    o2->getType() == TileObject::Type::Feature ||
-									    o2->getType() == TileObject::Type::LeftWall ||
-									    o2->getType() == TileObject::Type::RightWall)
-									{
-										auto mp2 =
-										    std::static_pointer_cast<TileObjectBattleMapPart>(o2)
-										        ->getOwner();
-										for (auto &p : mp2->supportedParts)
-										{
-											if (p.first == pos &&
-											    p.second == curSetPart->type->type)
-											{
-												log += format("\n - Supported by %s at %d %d %d",
-												              mp2->type.id, x - pos.x, y - pos.y,
-												              z - pos.z);
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-#endif
-				// Step 2.3: Success [If support is found]
-				// Resume support for every part supported by this
-				for (auto &supportedPart : *supportedByThisMp)
-				{
-					supportedPart->cancelCollapse();
-				}
-				// This part is also unmarked as collapsing and not added to the next set,
-				// effectively removing it from the list of map parts in need of re-support
-				curSetPart->cancelCollapse();
-				listChanged = true;
-			}
-			else
-			{
-#ifdef MAP_PART_LINK_DEBUG_OUTPUT
-				log += format("\n Processing %s at %d %d %d: FAIL, remains in next iteration",
-				              curSetPart->type.id, pos.x, pos.y, pos.z);
-#endif
-				// Step 2.3: Failure [If no support is found]
-				// Finalise collapsed state of all parts supported by this
-				// (was temporary since Step 1, now properly collapsing with all ties cut)
-				for (auto &supportedPart : *supportedByThisMp)
-				{
-#ifdef MAP_PART_LINK_DEBUG_OUTPUT
-					auto newpos = supportedPart->tileObject->getOwningTile()->position;
-					log += format("\n - %s at %d %d %d added to next iteration",
-					              supportedPart->type.id, newpos.x, newpos.y, newpos.z);
-#endif
-					supportedPart->ceaseBeingSupported();
-					currentSet->insert(supportedPart);
-					listChanged = true;
-				}
-				// Cut all ties for this part and add it to the next set,
-				// meaning it will try to find support again in next pass
-				currentSet->insert(curSetPart);
-				curSetPart->supportedParts.clear();
-			}
-		}
-#ifdef MAP_PART_LINK_DEBUG_OUTPUT
-		log += format("\n");
-#endif
-	} while (listChanged);
-
-#ifdef MAP_PART_LINK_DEBUG_OUTPUT
-	LogWarning("%s", log);
-#endif
 }
 
 void BattleMapPart::collapse(GameState &state)
@@ -1334,6 +1181,15 @@ void BattleMapPart::updateFalling(GameState &state, unsigned int ticks)
 
 					break;
 				}
+				case TileObject::Type::Unit:
+				{
+					auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)->getUnit();
+					// FIXME: Ensure falling damage is correct
+					u->applyDamage(state, FALLING_MAP_PART_DAMAGE_TO_UNIT,
+					               {&state, "DAMAGETYPE_FALLING_OBJECT"}, BodyPart::Helmet,
+					               DamageSource::Impact);
+					break;
+				}
 				default:
 					// Ignore other object types?
 					break;
@@ -1387,6 +1243,16 @@ void BattleMapPart::updateFalling(GameState &state, unsigned int ticks)
 
 	setPosition(state, newPosition);
 }
+
+Vec3<int> BattleMapPart::getTilePosition() const { return tileObject->getOwningTile()->position; }
+
+const TileMap &BattleMapPart::getMap() const { return tileObject->map; }
+
+UString BattleMapPart::getId() const { return type.id; }
+
+int BattleMapPart::getType() const { return (int)type->type; }
+
+UString BattleMapPart::getSupportString() const { return providesHardSupport ? "HARD" : "SOFT"; }
 
 void BattleMapPart::setPosition(GameState &, const Vec3<float> &pos)
 {
