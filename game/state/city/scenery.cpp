@@ -1,4 +1,5 @@
 #include "game/state/city/scenery.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "framework/sound.h"
@@ -65,6 +66,18 @@ bool Scenery::applyDamage(GameState &state, int power)
 
 	int damage = randDamage050150(state.rng, power);
 
+	if (type->tile_type == SceneryTileType::TileType::Road)
+	{
+		if (config().getBool("OpenApoc.Mod.InvulnerableRoads"))
+		{
+			return false;
+		}
+		if (config().getBool("OpenApoc.NewFeature.ArmoredRoads"))
+		{
+			damage -= ROAD_ARMOR;
+		}
+	}
+
 	if (damage <= type->constitution)
 	{
 		return false;
@@ -84,6 +97,9 @@ void Scenery::die(GameState &state)
 
 	if (falling)
 	{
+		auto doodad = city->placeDoodad({&state, "DOODAD_3_EXPLOSION"}, tileObject->getCenter());
+		fw().soundBackend->playSample(state.city_common_sample_list->sceneryExplosion,
+		                              tileObject->getCenter());
 		this->tileObject->removeFromMap();
 		this->tileObject.reset();
 		this->destroyed = true;
@@ -92,6 +108,18 @@ void Scenery::die(GameState &state)
 	if (!this->damaged && type->damagedTile)
 	{
 		this->damaged = true;
+		if (this->overlayDoodad)
+			this->overlayDoodad->remove(state);
+		this->overlayDoodad = nullptr;
+		type = type->damagedTile;
+		if (type->overlaySprite)
+		{
+			this->overlayDoodad =
+			    mksp<Doodad>(this->getPosition(), type->imageOffset, false, 1, type->overlaySprite);
+			city->map->addObjectToMap(this->overlayDoodad);
+		}
+		// Reapply tile params
+		tileObject->setPosition(currentPosition);
 	}
 	else
 	{
@@ -100,7 +128,7 @@ void Scenery::die(GameState &state)
 		{
 			auto doodad =
 			    city->placeDoodad({&state, "DOODAD_3_EXPLOSION"}, tileObject->getCenter());
-			fw().soundBackend->playSample(state.city_common_sample_list->sceneryExplosion,
+			fw().soundBackend->playSample(state.city_common_sample_list->vehicleExplosion,
 			                              tileObject->getCenter());
 
 			this->tileObject->removeFromMap();

@@ -465,9 +465,11 @@ void VEquipScreen::render()
 	switch (this->selected->type->type)
 	{
 		case VehicleType::Type::Flying:
+		case VehicleType::Type::UFO:
 			allowedEquipmentUser = VEquipmentType::User::Air;
 			break;
-		case VehicleType::Type::Ground:
+		case VehicleType::Type::Road:
+		case VehicleType::Type::ATV:
 			allowedEquipmentUser = VEquipmentType::User::Ground;
 			break;
 		default:
@@ -475,6 +477,7 @@ void VEquipScreen::render()
 			    "Trying to draw equipment screen of unsupported vehicle type for vehicle \"%s\"",
 			    this->selected->name);
 			allowedEquipmentUser = VEquipmentType::User::Air;
+			break;
 	}
 	// Draw the inventory if the selected is in a building, and that is a base
 	StateRef<Base> base;

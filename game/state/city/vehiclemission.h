@@ -1,6 +1,8 @@
 #pragma once
 
+#include "game/state/rules/vehicle_type.h"
 #include "game/state/stateobject.h"
+
 #include "game/state/tileview/tile.h"
 #include "library/strings.h"
 #include "library/vec.h"
@@ -11,6 +13,7 @@ namespace OpenApoc
 {
 
 static const int TELEPORTER_SPREAD = 10;
+static const int SELF_DESTRUCT_TIMER = 12 * TICKS_PER_HOUR;
 
 class Vehicle;
 class Tile;
@@ -22,10 +25,17 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 {
   private:
 	TileMap &map;
-	Vehicle &v;
+	VehicleType::Type type;
+	bool crashed;
+	Vec2<int> size;
+	bool large;
+	int altitude;
 
   public:
 	FlyingVehicleTileHelper(TileMap &map, Vehicle &v);
+	FlyingVehicleTileHelper(TileMap &map, VehicleType &vehType, bool crashed, int altitude);
+	FlyingVehicleTileHelper(TileMap &map, VehicleType::Type type, bool crashed, Vec2<int> size,
+	                        int altitude);
 
 	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
 	                  bool ignoreMovingUnits = true, bool ignoreAllUnits = false) const override;
@@ -54,10 +64,12 @@ class GroundVehicleTileHelper : public CanEnterTileHelper
 {
   private:
 	TileMap &map;
-	Vehicle &v;
+	VehicleType::Type type;
+	bool crashed;
 
   public:
 	GroundVehicleTileHelper(TileMap &map, Vehicle &v);
+	GroundVehicleTileHelper(TileMap &map, VehicleType::Type type, bool crashed);
 
 	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
 	                  bool ignoreMovingUnits = true, bool ignoreAllUnits = false) const override;
@@ -75,7 +87,8 @@ class GroundVehicleTileHelper : public CanEnterTileHelper
 	// Convert vector direction into index for tube array
 	int convertDirection(Vec3<int> dir) const;
 
-	bool isMoveAllowed(Scenery &scenery, int dir) const;
+	bool isMoveAllowedRoad(Scenery &scenery, int dir) const;
+	bool isMoveAllowedATV(Scenery &scenery, int dir) const;
 };
 
 class VehicleMission
@@ -89,7 +102,18 @@ class VehicleMission
 	// If it is finished, update() is called by isFinished so that any remaining work could be done
 	bool isFinishedInternal(GameState &state, Vehicle &v);
 
-	static void adjustTargetToClosestRoad(Vehicle &v, Vec3<int> &target);
+	// Adjusts target to match closest tile valid for road vehicles
+	static bool adjustTargetToClosestRoad(Vehicle &v, Vec3<int> &target);
+	// Adjusts target to match closest tile valid for ATVs
+	static bool adjustTargetToClosestGround(Vehicle &v, Vec3<int> &target);
+	// Adjusts target to match closest tile valid for Flyers
+	// Ignore vehicles short version
+	static bool adjustTargetToClosestFlying(GameState &state, Vehicle &v, Vec3<int> &target);
+	// Adjusts target to match closest tile valid for Flyers
+	static bool adjustTargetToClosestFlying(GameState &state, Vehicle &v, Vec3<int> &target,
+	                                        bool ignoreVehicles, bool pickNearest,
+	                                        bool &pickedNearest);
+
 	bool takeOffCheck(GameState &state, Vehicle &v);
 	bool teleportCheck(GameState &state, Vehicle &v);
 
@@ -124,6 +148,7 @@ class VehicleMission
 	static VehicleMission *offerService(GameState &state, Vehicle &v,
 	                                    StateRef<Building> target = nullptr);
 	static VehicleMission *snooze(GameState &state, Vehicle &v, unsigned int ticks);
+	static VehicleMission *selfDestruct(GameState &state, Vehicle &v);
 	static VehicleMission *restartNextMission(GameState &state, Vehicle &v);
 	static VehicleMission *crashLand(GameState &state, Vehicle &v);
 	static VehicleMission *patrol(GameState &state, Vehicle &v, unsigned int counter = 10);
@@ -147,7 +172,8 @@ class VehicleMission
 		GotoPortal,
 		InfiltrateSubvert,
 		OfferService,
-		Teleport
+		Teleport,
+		SelfDestruct
 	};
 
 	MissionType type = MissionType::GotoLocation;
@@ -160,16 +186,20 @@ class VehicleMission
 	int reRouteAttempts = 0;
 	// GotoLocation - should it pick nearest point or random point if destination unreachable
 	bool pickNearest = false;
+	// GotoLocation - picked nearest (allows finishing mission without reaching destination)
+	bool pickedNearest = false;
 	// GotoBuilding AttackBuilding Land Infiltrate
 	StateRef<Building> targetBuilding;
 	// FollowVehicle AttackVehicle
 	StateRef<Vehicle> targetVehicle;
-	// Snooze
+	// Snooze, SelfDestruct
 	unsigned int timeToSnooze = 0;
 	// RecoverVehicle, InfiltrateSubvert, Patrol: waypoints
 	unsigned int missionCounter = 0;
 	// InfiltrateSubvert: mode
 	bool subvert = false;
+	// AttackVehicle
+	bool attackCrashed = false;
 
 	bool cancelled = false;
 

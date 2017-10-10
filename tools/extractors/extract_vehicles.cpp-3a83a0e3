@@ -51,6 +51,7 @@ std::set<UString> BioFreight = {"VEHICLETYPE_AIRTRANS"};
 std::set<UString> Rescue = {"VEHICLETYPE_ANNIHILATOR",      "VEHICLETYPE_VALKYRIE_INTERCEPTOR",
                             "VEHICLETYPE_RETALIATOR",       "VEHICLETYPE_HAWK_AIR_WARRIOR",
                             "VEHICLETYPE_RESCUE_TRANSPORT", "VEHICLETYPE_CONSTRUCTION_VEHICLE"};
+std::set<UString> MakePeaceful = {"VEHICLETYPE_POLICE_HOVERCAR"};
 }
 static void extract_equipment_layout(GameState &state, sp<VehicleType> vehicle, const UFO2P &data,
                                      VehicleEquipmentLayout layout,
@@ -339,6 +340,10 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		vehicle->provideFreightCargo = CargoFreight.find(id) != CargoFreight.end();
 		vehicle->provideFreightBio = BioFreight.find(id) != BioFreight.end();
 		vehicle->canRescueCrashed = Rescue.find(id) != Rescue.end();
+		if (MakePeaceful.find(id) != MakePeaceful.end())
+		{
+			vehicle->aggressiveness = 1;
+		}
 
 		// The equipment_screen_name is up to 8 chars, any may have NULLs. Memcpy() that to a char[]
 		// and add a trailing null (in case all 8 are used) and it's just like a c-string!

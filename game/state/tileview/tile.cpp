@@ -789,6 +789,13 @@ unsigned int TileMap::getLayer(TileObject::Type type) const
 
 unsigned int TileMap::getLayerCount() const { return (unsigned)this->layerMap.size(); }
 
+bool TileMap::tileIsValid(int x, int y, int z) const
+{
+	if (z < 0 || z >= this->size.z || y < 0 || y >= this->size.y || x < 0 || x >= this->size.x)
+		return false;
+	return true;
+}
+
 bool TileMap::tileIsValid(Vec3<int> tile) const
 {
 	if (tile.z < 0 || tile.z >= this->size.z || tile.y < 0 || tile.y >= this->size.y ||

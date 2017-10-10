@@ -59,7 +59,7 @@ void TileObjectVehicle::drawStatic(Renderer &r, sp<Vehicle> vehicle, TileTransfo
 
 			if (vehicle->type->type == VehicleType::Type::UFO)
 			{
-				if (vehicle->isCrashed())
+				if (vehicle->crashed)
 				{
 					closestImage = vehicle->type->crashed_sprite;
 				}
@@ -202,7 +202,8 @@ sp<VoxelMap> TileObjectVehicle::getVoxelMap(Vec3<int> mapIndex, bool los) const
 	{
 		return nullptr;
 	}
-	if (los)
+	// Crashed vehicles have proper voxel models
+	if (los || v->crashed)
 	{
 		return vtype->voxelMapsLOS.at(facing).at(mapIndex.z * size.y * size.x +
 		                                         mapIndex.y * size.x + mapIndex.x);

@@ -11,7 +11,7 @@
 #include <map>
 
 // Uncomment to allow projectiles to shoot down friendly projectiles
-#define DEBUG_ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE
+//#define DEBUG_ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE
 
 namespace OpenApoc
 {
@@ -21,6 +21,29 @@ static const unsigned TELEPORT_TICKS_REQUIRED_VEHICLE = TICKS_PER_SECOND * 30;
 static const unsigned TICKS_AUTO_ACTION_DELAY = TICKS_PER_SECOND / 4;
 static const unsigned TICKS_CARGO_TTL = 6 * TICKS_PER_HOUR;
 static const unsigned TICKS_CARGO_WARNING = TICKS_PER_HOUR;
+
+// Falling vehicle params
+
+static const float FV_ACCELERATION = 0.16666667f;
+// How much max damage can colliding with scenery deal to us
+static const float FV_COLLISION_DAMAGE_LIMIT = 10.0f;
+// Minimal collision damage as percentage of health
+static const float FV_COLLISION_DAMAGE_MIN = 1.0f / 100.0f;
+// How much is constitution multiplied by to figure out collision damage to us
+static const float FV_COLLISION_DAMAGE_CONSTITUTION_MULTIPLIER = 0.5f;
+// Flat chance (in percent) to plow through scenery
+static const float FV_PLOW_CHANCE_FLAT = 50.0f;
+// Vehicle weight multiplied by this and by speed multiplier below
+// is added to percent chance of plowing through
+static const float FV_PLOW_CHANCE_WEIGHT_MULTIPLIER = 1.0f / 125.0f;
+// If velocity > this then a multiplier is applied to above chance
+static const float FV_PLOW_CHANCE_HIGH_SPEED_THRESHOLD = 15.0f;
+// If velocity > threshold then this multiplier is applied to weight-based chance
+static const float FV_PLOW_CHANCE_HIGH_SPEED_MULTIPLIER = 1.5f;
+// How many percent per constitution is plow through chance decreased by
+static const float FV_PLOW_CHANCE_CONSTITUTION_MULTIPLIER = 2.0f;
+// How much 1 of X is the damage evasion chance (i.e. 8 means 1/8th or 12.5%)
+static const int FV_COLLISION_DAMAGE_ONE_IN_CHANCE_TO_EVADE = 8;
 
 class Image;
 class TileObjectVehicle;
@@ -36,6 +59,7 @@ class VEquipment;
 class VEquipmentType;
 class VAmmoType;
 class City;
+class Doodad;
 class TileMap;
 class Agent;
 class Collision;
@@ -105,6 +129,9 @@ class VehicleMover
 	Vehicle &vehicle;
 	VehicleMover(Vehicle &vehicle);
 	virtual void update(GameState &state, unsigned int ticks) = 0;
+	void updateFalling(GameState &state, unsigned int ticks);
+	void updateSliding(GameState &state, unsigned int ticks);
+	void updateCrashed(GameState &state, unsigned int ticks);
 	virtual ~VehicleMover();
 };
 
@@ -160,6 +187,9 @@ class Vehicle : public StateObject,
 	int health = 0;
 	int shield = 0;
 	unsigned int shieldRecharge = 0;
+	bool crashed = false;
+	bool falling = false;
+	bool sliding = false;
 	// Cloak, increases each turn, set to 0 when firing or no cloaking device on vehicle
 	// Vehicle is cloaked when this is >= CLOAK_TICKS_REQUIRED_VEHICLE
 	unsigned int cloakTicksAccumulated = 0;
@@ -173,12 +203,14 @@ class Vehicle : public StateObject,
 	StateRef<Building> currentBuilding;
 	// Agents currently residing in vehicle
 	std::set<StateRef<Agent>> currentAgents;
+	// Cargo loaded on vehicle
 	std::list<Cargo> cargo;
+
+	StateRef<Vehicle> carriedVehicle;
+	StateRef<Vehicle> carriedByVehicle;
 
 	sp<TileObjectVehicle> tileObject;
 	sp<TileObjectShadow> shadowObject;
-
-	up<VehicleMover> mover;
 
 	/* leave the building and put vehicle into the city */
 	void leaveBuilding(GameState &state, Vec3<float> initialPosition, float initialFacing = 0.0f);
@@ -199,6 +231,7 @@ class Vehicle : public StateObject,
 
 	void die(GameState &state, StateRef<Vehicle> attacker = nullptr, bool silent = false);
 	void crash(GameState &state, StateRef<Vehicle> attacker);
+	void startFalling(GameState &state, StateRef<Vehicle> attacker = nullptr);
 	void adjustRelationshipOnDowned(GameState &state, StateRef<Vehicle> attacker);
 	bool isDead() const;
 
@@ -206,7 +239,6 @@ class Vehicle : public StateObject,
 	void addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentType> type);
 	void removeEquipment(sp<VEquipment> object);
 
-	bool isCrashed() const;
 	bool applyDamage(GameState &state, int damage, float armour, bool &soundHandled,
 	                 StateRef<Vehicle> attacker = nullptr);
 	bool handleCollision(GameState &state, Collision &c, bool &soundHandled);
@@ -280,7 +312,10 @@ class Vehicle : public StateObject,
 	const std::list<EquipmentLayoutSlot> &getSlots() const override;
 	std::list<std::pair<Vec2<int>, sp<Equipment>>> getEquipment() const override;
 
-	// Following members are not serialized, but rather setup when vehicle moves into the city
+	// Following members are not serialized, but rather setup during game
+
+	up<VehicleMover> mover;
+	sp<Doodad> smokeDoodad;
 	std::list<sp<Image>>::iterator animationFrame;
 	int animationDelay;
 

@@ -221,12 +221,9 @@ ConfigOptionBool optionEnableAgentTemplates("OpenApoc.NewFeature", "EnableAgentT
 ConfigOptionBool optionStoreDroppedEquipment("OpenApoc.NewFeature", "StoreDroppedEquipment",
                                              "Attempt to recover agent equipment dropped in city",
                                              true);
-ConfigOptionBool optionAbsorbingVehicles("OpenApoc.NewFeature", "AbsorbingVehicles",
-                                         "Ground vehicles absorb damage dealt to roads under them",
-                                         false);
-ConfigOptionBool
-    optionRecoverGroundVehicles("OpenApoc.NewFeature", "RecoverGroundVehicles",
-                                "Ground vehicles crash when road dies and can be recovered", true);
+ConfigOptionBool optionFallingGroundVehicles("OpenApoc.NewFeature", "CrashingGroundVehicles",
+                                             "Unsupported ground vehicles crash", true);
+
 ConfigOptionBool optionEnforceCargoLimits("OpenApoc.NewFeature", "EnforceCargoLimits",
                                           "Enforce vehicle cargo limits", false);
 ConfigOptionBool optionAllowNearbyVehicleLootPickup("OpenApoc.NewFeature",
@@ -234,13 +231,15 @@ ConfigOptionBool optionAllowNearbyVehicleLootPickup("OpenApoc.NewFeature",
                                                     "Allow nearby vehicles to pick up loot", true);
 ConfigOptionBool optionAllowBuildingLootDeposit("OpenApoc.NewFeature", "AllowBuildingLootDeposit",
                                                 "Allow loot to be stashed in the building", true);
+ConfigOptionBool optionArmoredRoads("OpenApoc.NewFeature", "ArmoredRoads", "Armored roads", false);
 ConfigOptionBool optionBSKLauncherSound("OpenApoc.Mod", "BSKLauncherSound",
                                         "(MOD) Original Brainsucker Launcher SFX", true);
-ConfigOptionBool optionArmoredRoads("OpenApoc.Mod", "ArmoredRoads", "(MOD) Armored roads", false);
 ConfigOptionBool optionInvulnerableRoads("OpenApoc.Mod", "InvulnerableRoads",
                                          "(MOD) Invulnerable roads", false);
-ConfigOptionBool optionATVTank("OpenApoc.Mod", "ATVTank",
-                               "(MOD) Griffon becomes an All-Terrain Vehicle", true);
+ConfigOptionBool optionATVTank("OpenApoc.Mod", "ATVTank", "(MOD) Griffon becomes All-Terrain",
+                               true);
+ConfigOptionBool optionCrashingVehicles("OpenApoc.Mod", "CrashingVehicles",
+                                        "Vehicles crash on low HP", false);
 
 } // anonymous namespace
 

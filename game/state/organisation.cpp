@@ -9,6 +9,9 @@
 #include "game/state/gamestate.h"
 #include "library/strings.h"
 
+// Uncomment to turn off org missions
+//#define DEBUG_TURN_OFF_ORG_MISSIONS
+
 namespace OpenApoc
 {
 
@@ -208,11 +211,106 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 
 void Organisation::updateMissions(GameState &state)
 {
+#ifdef DEBUG_TURN_OFF_ORG_MISSIONS
+	return;
+#endif
+	if (state.getPlayer().id == id)
+	{
+		return;
+	}
 	for (auto &m : missions)
 	{
 		if (m.next < state.gameTime.getTicks())
 		{
 			m.execute(state, {&state, id});
+		}
+	}
+	// Find rescue-capable craft
+	StateRef<Vehicle> rescueTransport;
+	for (auto &v : state.vehicles)
+	{
+		if (v.second->owner.id == id && v.second->missions.empty() &&
+		    v.second->type->canRescueCrashed)
+		{
+			rescueTransport = {&state, v.first};
+			break;
+		}
+	}
+	// Attempt rescue someone
+	if (rescueTransport)
+	{
+		// Rescue owned
+		for (auto &v : state.vehicles)
+		{
+			if (v.second->city == rescueTransport->city && v.second->crashed &&
+			    !v.second->carriedByVehicle && v.second->owner.id == id &&
+			    v.second->owner != state.getPlayer())
+			{
+				bool foundRescuer = false;
+				for (auto &r : state.vehicles)
+				{
+					if (r.second->city == rescueTransport->city && r.second->type->canRescueCrashed)
+					{
+						for (auto &m : r.second->missions)
+						{
+							if (m->type == VehicleMission::MissionType::RecoverVehicle &&
+							    m->targetVehicle.id == v.first)
+							{
+								foundRescuer = true;
+								break;
+							}
+						}
+					}
+				}
+				if (!foundRescuer)
+				{
+					rescueTransport->setMission(
+					    state,
+					    VehicleMission::recoverVehicle(state, *rescueTransport, {&state, v.first}));
+					rescueTransport->addMission(
+					    state, VehicleMission::gotoBuilding(state, *rescueTransport,
+					                                        rescueTransport->homeBuilding),
+					    true);
+					break;
+				}
+			}
+		}
+		// Rescue friends
+		for (auto &v : state.vehicles)
+		{
+			if (v.second->city == rescueTransport->city && v.second->crashed &&
+			    !v.second->carriedByVehicle && v.second->owner.id != id &&
+			    v.second->owner != state.getPlayer() &&
+			    current_relations.at(v.second->owner) > 25.0f)
+			{
+				bool foundRescuer = false;
+				for (auto &r : state.vehicles)
+				{
+					if (r.second->city == rescueTransport->city && r.second->type->canRescueCrashed)
+					{
+						for (auto &m : r.second->missions)
+						{
+							if (m->type == VehicleMission::MissionType::RecoverVehicle &&
+							    m->targetVehicle.id == v.first)
+							{
+								foundRescuer = true;
+								break;
+							}
+						}
+					}
+				}
+				if (!foundRescuer)
+				{
+					rescueTransport->setMission(
+					    state,
+					    VehicleMission::recoverVehicle(state, *rescueTransport, {&state, v.first}));
+					rescueTransport->addMission(
+					    state, VehicleMission::gotoBuilding(state, *rescueTransport,
+					                                        rescueTransport->homeBuilding),
+					    true);
+					break;
+				}
+			}
 		}
 	}
 }

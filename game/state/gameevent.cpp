@@ -111,7 +111,7 @@ UString GameVehicleEvent::message()
 		case GameEventType::VehicleNoEngine:
 			return format("%s %s", tr("Vehicle has no engine:"), vehicle->name);
 		case GameEventType::UnauthorizedVehicle:
-			if (vehicle->type->type == VehicleType::Type::Ground)
+			if (vehicle->type->isGround())
 			{
 				return tr("An illegal road vehicle has been detected.");
 			}

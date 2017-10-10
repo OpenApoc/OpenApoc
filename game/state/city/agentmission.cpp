@@ -53,12 +53,12 @@ bool AgentTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, float &co
 	Vec3<int> toPos = to->position;
 	if (fromPos == toPos)
 	{
-		LogError("FromPos == ToPos %s", toPos.x);
+		LogError("FromPos == ToPos %s", toPos);
 		return false;
 	}
 	if (!map.tileIsValid(toPos))
 	{
-		LogError("ToPos %s is not on the map", toPos.x);
+		LogError("ToPos %s is not on the map", toPos);
 		return false;
 	}
 
@@ -70,8 +70,8 @@ bool AgentTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, float &co
 	}
 
 	// Agents can only move to and from scenery
-	sp<Scenery> sceneryFrom = from->intactScenery;
-	sp<Scenery> sceneryTo = to->intactScenery;
+	sp<Scenery> sceneryFrom = from->presentScenery;
+	sp<Scenery> sceneryTo = to->presentScenery;
 	if (!sceneryFrom || !sceneryTo)
 	{
 		return false;
@@ -116,7 +116,7 @@ bool AgentTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, float &co
 				continue;
 			}
 			auto checkedTile = map.getTile(checkedPos);
-			sp<Scenery> checkedScenery = checkedTile->intactScenery;
+			sp<Scenery> checkedScenery = checkedTile->presentScenery;
 			if (checkedScenery &&
 			    checkedScenery->type->tile_type == SceneryTileType::TileType::PeopleTubeJunction)
 			{

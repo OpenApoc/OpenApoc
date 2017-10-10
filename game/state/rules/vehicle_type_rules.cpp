@@ -45,6 +45,8 @@ const Vec3<float> &VehicleType::directionToVector(Direction d)
 	return it->second;
 }
 
+bool VehicleType::isGround() const { return type == Type::Road || type == Type::ATV; }
+
 sp<VehicleType> VehicleType::get(const GameState &state, const UString &id)
 {
 	auto it = state.vehicle_types.find(id);

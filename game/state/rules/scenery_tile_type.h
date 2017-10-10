@@ -51,6 +51,7 @@ class SceneryTileType : public StateObject
 	TileType tile_type = TileType::General;
 	RoadType road_type = RoadType::StraightBend;
 	WalkMode walk_mode = WalkMode::None;
+	WalkMode getATVMode() const;
 
 	// Road Connection NESW
 	std::vector<bool> connection;
@@ -63,6 +64,7 @@ class SceneryTileType : public StateObject
 	int value = 0;
 	int mass = 0;
 	int strength = 0;
+	int height = 0;
 
 	// instead of road_level_change; should be enough for now
 	bool isHill = false;

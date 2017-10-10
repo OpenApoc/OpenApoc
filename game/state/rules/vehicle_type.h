@@ -28,8 +28,9 @@ class VehicleType : public StateObject
 	enum class Type
 	{
 		Flying,
-		Ground,
 		UFO,
+		Road,
+		ATV,
 	};
 	enum class Direction
 	{
@@ -81,6 +82,7 @@ class VehicleType : public StateObject
 	mutable unsigned numCreated = 0;
 
 	Type type = Type::Flying;
+	bool isGround() const;
 
 	UString name;
 	StateRef<Organisation> manufacturer;
@@ -88,9 +90,9 @@ class VehicleType : public StateObject
 	Vec2<float> image_offset = {0, 0};
 	float acceleration = 0;
 	float top_speed = 0;
-	float health = 0;
-	float crash_health = 0;
-	float weight = 0;
+	int health = 0;
+	int crash_health = 0;
+	int weight = 0;
 	std::map<ArmourDirection, float> armour;
 	int passengers = 0;
 	float aggressiveness = 0;
@@ -146,6 +148,7 @@ class VehicleType : public StateObject
 	bool provideFreightAgent = false;
 	bool provideFreightCargo = false;
 	bool provideFreightBio = false;
+	bool canRescueCrashed = false;
 
 	~VehicleType() override = default;
 	VehicleType() = default;

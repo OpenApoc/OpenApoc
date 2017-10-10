@@ -1,4 +1,6 @@
 #include "game/state/gamestate.h"
+#include "framework/configfile.h"
+#include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/sound.h"
 #include "framework/trace.h"
@@ -28,6 +30,7 @@
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
 #include "game/state/rules/doodad_type.h"
+#include "game/state/rules/scenery_tile_type.h"
 #include "game/state/rules/ufo_growth.h"
 #include "game/state/rules/ufo_incursion.h"
 #include "game/state/rules/vammo_type.h"
@@ -159,6 +162,11 @@ void GameState::initState()
 	{
 		v.second->strategyImages = city_common_image_list->strategyImages;
 		v.second->setupMover();
+		if (v.second->crashed)
+		{
+			v.second->smokeDoodad =
+			    v.second->city->placeDoodad({this, "DOODAD_13_SMOKE_FUME"}, v.second->position);
+		}
 	}
 	// Fill links for weapon's ammo
 	for (auto &t : this->agent_equipment)
@@ -179,14 +187,49 @@ void GameState::initState()
 	}
 	// Run nessecary methods for different types
 	research.updateTopicList();
+	// Apply mods (Stub until we actually have mods)
+	applyMods();
 	// Validate
 	validate();
+}
+
+void GameState::applyMods()
+{
+	if (config().getBool("OpenApoc.Mod.ATVTank"))
+	{
+		vehicle_types["VEHICLETYPE_GRIFFON_AFV"]->type = VehicleType::Type::ATV;
+	}
+	else
+	{
+		vehicle_types["VEHICLETYPE_GRIFFON_AFV"]->type = VehicleType::Type::Road;
+	}
+
+	if (config().getBool("OpenApoc.Mod.BSKLauncherSound"))
+	{
+		agent_equipment["AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER"]->fire_sfx =
+		    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/sucklaun.raw:22050");
+	}
+	else
+	{
+		agent_equipment["AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER"]->fire_sfx =
+		    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/powers.raw:22050");
+	}
+
+	bool crashVehicles = config().getBool("OpenApoc.Mod.CrashingVehicles");
+	for (auto &e : vehicle_types)
+	{
+		if (e.second->type != VehicleType::Type::UFO)
+		{
+			e.second->crash_health = crashVehicles ? e.second->health / 7 : 0;
+		}
+	}
 }
 
 void GameState::validate()
 {
 	LogWarning("Validating GameState");
 	validateResearch();
+	validateScenery();
 	LogWarning("Validated GameState");
 }
 
@@ -327,6 +370,22 @@ void GameState::validateResearch()
 			{
 				LogError("Consumed vehicle item %s has bigger count than required for topic %s",
 				         entry.first.id, t.first);
+			}
+		}
+	}
+}
+
+void GameState::validateScenery()
+{
+	for (auto &c : cities)
+	{
+		for (auto &sc : c.second->tile_types)
+		{
+			if (sc.second->getATVMode() == SceneryTileType::WalkMode::Onto &&
+			    sc.second->height == 0)
+			{
+				LogError("City %s Scenery %s has no height and WalkMode::Onto? Missing voxelmap?",
+				         c.first, sc.first);
 			}
 		}
 	}
@@ -491,17 +550,8 @@ void GameState::fillPlayerStartingProperty()
 		auto &type = it.second;
 		if (!type->equipment_screen)
 			continue;
-		for (auto i = 0; i < 2; i++)
-		{
-			if (i > 0 && type->type == VehicleType::Type::Ground)
-			{
-				break;
-			}
-
-			auto v =
-			    current_city->placeVehicle(*this, {this, type}, this->getPlayer(), {this, bld});
-			v->homeBuilding = v->currentBuilding;
-		}
+		auto v = current_city->placeVehicle(*this, {this, type}, this->getPlayer(), {this, bld});
+		v->homeBuilding = v->currentBuilding;
 	}
 	// Give that base some vehicle inventory
 	for (auto &pair : this->vehicle_equipment)
@@ -587,7 +637,7 @@ bool GameState::canTurbo() const
 			if (v.second->type->aggressiveness > 0 &&
 			    v.second->owner->isRelatedTo(this->getPlayer()) ==
 			        Organisation::Relation::Hostile &&
-			    !v.second->isCrashed())
+			    !v.second->crashed)
 			{
 				return false;
 			}
@@ -868,12 +918,7 @@ void GameState::updateTurbo()
 		ticksToUpdate -= align;
 	}
 	this->update(ticksToUpdate);
-	// When turbo ends it updates vehicles a bit in the end so that they don't appear to always be
-	// at exist
-	if (!this->canTurbo())
-	{
-		this->updateAfterTurbo();
-	}
+	this->updateAfterTurbo();
 }
 
 void GameState::updateAfterTurbo()
