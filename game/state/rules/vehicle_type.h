@@ -90,9 +90,9 @@ class VehicleType : public StateObject
 	Vec2<float> image_offset = {0, 0};
 	float acceleration = 0;
 	float top_speed = 0;
-	float health = 0;
-	float crash_health = 0;
-	float weight = 0;
+	int health = 0;
+	int crash_health = 0;
+	int weight = 0;
 	std::map<ArmourDirection, float> armour;
 	int passengers = 0;
 	float aggressiveness = 0;

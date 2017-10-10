@@ -1,4 +1,5 @@
 #include "game/state/gamestate.h"
+#include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/sound.h"
@@ -6,8 +7,6 @@
 #include "game/state/aequipment.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
-
-#include "framework/configfile.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battlemap.h"
@@ -31,6 +30,7 @@
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/damage.h"
 #include "game/state/rules/doodad_type.h"
+#include "game/state/rules/scenery_tile_type.h"
 #include "game/state/rules/ufo_growth.h"
 #include "game/state/rules/ufo_incursion.h"
 #include "game/state/rules/vammo_type.h"
@@ -220,7 +220,7 @@ void GameState::applyMods()
 	{
 		if (e.second->type != VehicleType::Type::UFO)
 		{
-			e.second->crash_health = crashVehicles ? e.second->health / 8 : 0;
+			e.second->crash_health = crashVehicles ? e.second->health / 7 : 0;
 		}
 	}
 }
@@ -229,6 +229,7 @@ void GameState::validate()
 {
 	LogWarning("Validating GameState");
 	validateResearch();
+	validateScenery();
 	LogWarning("Validated GameState");
 }
 
@@ -369,6 +370,22 @@ void GameState::validateResearch()
 			{
 				LogError("Consumed vehicle item %s has bigger count than required for topic %s",
 				         entry.first.id, t.first);
+			}
+		}
+	}
+}
+
+void GameState::validateScenery()
+{
+	for (auto &c : cities)
+	{
+		for (auto &sc : c.second->tile_types)
+		{
+			if (sc.second->getATVMode() == SceneryTileType::WalkMode::Onto &&
+			    sc.second->height == 0)
+			{
+				LogError("City %s Scenery %s has no height and WalkMode::Onto? Missing voxelmap?",
+				         c.first, sc.first);
 			}
 		}
 	}
@@ -901,12 +918,7 @@ void GameState::updateTurbo()
 		ticksToUpdate -= align;
 	}
 	this->update(ticksToUpdate);
-	// When turbo ends it updates vehicles a bit in the end so that they don't appear to always be
-	// at exist
-	if (!this->canTurbo())
-	{
-		this->updateAfterTurbo();
-	}
+	this->updateAfterTurbo();
 }
 
 void GameState::updateAfterTurbo()

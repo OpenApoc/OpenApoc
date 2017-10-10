@@ -328,9 +328,8 @@ class FlyingVehicleMover : public VehicleMover
 								continue;
 							}
 							// Dodging horizontally
-							possibleDodgeLocations.emplace_back(vehicle.position.x + x,
-							                                    vehicle.position.y + y,
-							                                    vehicle.position.z + 0.0f);
+							possibleDodgeLocations.emplace_back(
+							    vehicle.position.x + x, vehicle.position.y + y, vehicle.position.z);
 						}
 						// Dodging vertically
 						if (dodgeUp)
@@ -392,6 +391,11 @@ class FlyingVehicleMover : public VehicleMover
 			updateFalling(state, ticks);
 			return;
 		}
+		if (vehicle.sliding)
+		{
+			updateSliding(state, ticks);
+			return;
+		}
 		if (vehicle.carriedByVehicle)
 		{
 			auto newPos = vehicle.carriedByVehicle->position;
@@ -399,6 +403,11 @@ class FlyingVehicleMover : public VehicleMover
 			vehicle.setPosition(newPos);
 			vehicle.facing = vehicle.carriedByVehicle->facing;
 			vehicle.updateSprite(state);
+			return;
+		}
+		if (vehicle.crashed)
+		{
+			updateCrashed(state, ticks);
 			return;
 		}
 		auto ticksToTurn = ticks;
@@ -488,7 +497,7 @@ class FlyingVehicleMover : public VehicleMover
 				// Get new goal from mission
 				if (!vehicle.getNewGoal(state))
 				{
-					if (vehicle.tileObject)
+					if (!vehicle.tileObject)
 					{
 						return;
 					}
@@ -605,6 +614,11 @@ class GroundVehicleMover : public VehicleMover
 			updateFalling(state, ticks);
 			return;
 		}
+		if (vehicle.sliding)
+		{
+			updateSliding(state, ticks);
+			return;
+		}
 		if (vehicle.carriedByVehicle)
 		{
 			auto newPos = vehicle.carriedByVehicle->position;
@@ -612,6 +626,11 @@ class GroundVehicleMover : public VehicleMover
 			vehicle.setPosition(newPos);
 			vehicle.facing = vehicle.carriedByVehicle->facing;
 			vehicle.updateSprite(state);
+			return;
+		}
+		if (vehicle.crashed)
+		{
+			updateCrashed(state, ticks);
 			return;
 		}
 
@@ -695,7 +714,7 @@ class GroundVehicleMover : public VehicleMover
 					// Get new goal from mission
 					if (!vehicle.getNewGoal(state))
 					{
-						if (vehicle.tileObject)
+						if (!vehicle.tileObject)
 						{
 							return;
 						}
@@ -715,8 +734,8 @@ class GroundVehicleMover : public VehicleMover
 							auto heightCurrent = vehicle.position.z - floorf(vehicle.position.z);
 							auto heightGoal =
 							    vehicle.goalPosition.z - floorf(vehicle.goalPosition.z);
-							bool fromFlat = heightCurrent < 0.1f || heightCurrent > 0.9f;
-							bool toFlat = heightGoal < 0.1f || heightGoal > 0.9f;
+							bool fromFlat = heightCurrent < 0.25f || heightCurrent > 0.75f;
+							bool toFlat = heightGoal < 0.25f || heightGoal > 0.75f;
 							// If we move from flat to flat then we're changing from into to onto
 							// Change Z in the middle of the way
 							if (fromFlat && toFlat)
@@ -797,7 +816,7 @@ VehicleMover::VehicleMover(Vehicle &v) : vehicle(v) {}
 
 namespace
 {
-int inline reduceAbsValue(int value, int by)
+float inline reduceAbsValue(float value, float by)
 {
 	if (value > 0)
 	{
@@ -862,9 +881,9 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 			                              vehicle.position, 0.25f);
 		}
 
-		vehicle.velocity.z -= FALLING_ACCELERATION_VEHICLE;
-		vehicle.velocity.x = reduceAbsValue(vehicle.velocity.x, FALLING_ACCELERATION_VEHICLE / 2);
-		vehicle.velocity.y = reduceAbsValue(vehicle.velocity.y, FALLING_ACCELERATION_VEHICLE / 2);
+		vehicle.velocity.z -= FV_ACCELERATION;
+		vehicle.velocity.x = reduceAbsValue(vehicle.velocity.x, FV_ACCELERATION / 8);
+		vehicle.velocity.y = reduceAbsValue(vehicle.velocity.y, FV_ACCELERATION / 8);
 		newPosition += vehicle.velocity / (float)TICK_SCALE / VELOCITY_SCALE_BATTLE;
 
 		// If we fell downwards see if we went from a tile with into scenery
@@ -892,8 +911,11 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 		bool newTile = (Vec3<int>)newPosition != (Vec3<int>)vehicle.position;
 		if (tile->presentScenery)
 		{
-			auto collisionDamage = std::min(VEHICLE_COLLISION_DAMAGE_LIMIT,
-			                                tile->presentScenery->type->constitution / 3);
+			auto collisionDamage =
+			    std::max((float)vehicle.type->health * FV_COLLISION_DAMAGE_MIN,
+			             (float)std::min(FV_COLLISION_DAMAGE_LIMIT,
+			                             (float)tile->presentScenery->type->constitution *
+			                                 FV_COLLISION_DAMAGE_CONSTITUTION_MULTIPLIER));
 			auto atvMode = tile->presentScenery->type->getATVMode();
 			bool tryPlowThrough = tile->presentScenery->initialPosition.z != -1;
 			if (tryPlowThrough)
@@ -901,37 +923,72 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 				switch (atvMode)
 				{
 					case SceneryTileType::WalkMode::Into:
-						if (newPosition.z - floorf(newPosition.z) > 0.05f)
+						if (newPosition.z - floorf(newPosition.z) >=
+						    (tile->presentScenery->type->isHill ? 0.5f : 0.05f))
+						{
+							tryPlowThrough = false;
+						}
+						break;
+					case SceneryTileType::WalkMode::Onto:
+						if (newPosition.z - floorf(newPosition.z) >=
+						    (float)tile->presentScenery->type->height / 15.0f)
 						{
 							tryPlowThrough = false;
 						}
 						break;
 					case SceneryTileType::WalkMode::None:
-					case SceneryTileType::WalkMode::Onto:
-						// Only try to plow through those once
-						tryPlowThrough = newTile;
+						if (tile->presentScenery->type->height >= 12)
+						{
+							// Only try to plow through high Nones once
+							tryPlowThrough = newTile;
+						}
+						else if (newPosition.z - floorf(newPosition.z) >=
+						         (float)tile->presentScenery->type->height / 15.0f)
+						{
+							tryPlowThrough = false;
+						}
 						break;
 				}
 			}
 			bool plowedThrough = false;
 			if (tryPlowThrough)
 			{
-				// Chance for vehicle to plow through is: [velocity * 5] percent
-				// ( velocity of 20 is roughly equivalent of a full speed annihilator
-				//   ramming the building, which would result in a 100% chance here)
-				// Chance for scenery to survive (subtracted from above) is: [constitution / 2]
-				// percent
-				plowedThrough =
-				    randBoundsExclusive(state.rng, 0, 100) <
-				    glm::length(vehicle.velocity) - tile->presentScenery->type->constitution / 2;
+				// Crash chance depends on velocity and weight, scenery resists with constitution
+				// Weight of Annihilator is >4500, Hawk >5300, Valkyrie >3300, Phoenix ~900
+				// Provided:
+				// - Velocity mult of 1.5 for high speed, divisor of 125 and flat value of 50
+				// - Constitution of 20
+				// Typical results are:
+				// - Fast Hawk			: 113%/73% plow chance before/after reduction
+				// - Fast Annihilator	: 104%/64% plow chance before/after reduction
+				// - Fast Valkyrie		: 90%/50% plow chance before/after reduction
+				// - Fast Phoenix		: 61%/21% plow chance before/after reduction
+				float velocityMult =
+				    (glm::length(vehicle.velocity) > FV_PLOW_CHANCE_HIGH_SPEED_THRESHOLD)
+				        ? FV_PLOW_CHANCE_HIGH_SPEED_MULTIPLIER
+				        : 1.0f;
+				int plowThroughChance =
+				    FV_PLOW_CHANCE_FLAT +
+				    velocityMult * vehicle.getWeight() * FV_PLOW_CHANCE_WEIGHT_MULTIPLIER -
+				    (float)tile->presentScenery->type->constitution *
+				        FV_PLOW_CHANCE_CONSTITUTION_MULTIPLIER;
+				plowedThrough = randBoundsExclusive(state.rng, 0, 100) < plowThroughChance;
 				if (plowedThrough)
 				{
-					tile->presentScenery->damaged = true;
+					// Allow "into" to remain damaged, kill others outright
+					if (atvMode != SceneryTileType::WalkMode::Into)
+					{
+						tile->presentScenery->damaged = true;
+					}
 					tile->presentScenery->die(state);
-					// Scenery damages our face if we plowed through it
-					bool soundHandled = false;
+
+					// "None" scenery damages our face if we plowed through it
+					// Otherwise (Into/Onto) no damage as we will still get damage on landing
 					// A 12.5% chance to evade damage
-					if (randBoundsExclusive(state.rng, 0, 8) > 0 &&
+					bool soundHandled = false;
+					if (atvMode == SceneryTileType::WalkMode::None &&
+					    randBoundsExclusive(state.rng, 0,
+					                        FV_COLLISION_DAMAGE_ONE_IN_CHANCE_TO_EVADE) > 0 &&
 					    vehicle.applyDamage(state, collisionDamage, 0, soundHandled))
 					{
 						// Died
@@ -939,59 +996,46 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 					}
 				}
 			}
-			if (!plowedThrough)
+			if (!plowedThrough && atvMode == SceneryTileType::WalkMode::None &&
+			    tile->presentScenery->type->height >= 12)
 			{
-				switch (atvMode)
+				// Didn't plow through
+				bool movedToTheSide = false;
+				if ((int)vehicle.position.x != (int)newPosition.x)
 				{
-					case SceneryTileType::WalkMode::None:
-					{
-						// Didn't plow through
-						bool movedToTheSide = false;
-						if ((int)vehicle.position.x != (int)newPosition.x)
-						{
-							movedToTheSide = true;
-							newPosition.x = vehicle.position.x;
-							vehicle.velocity.x = 0.0f;
-						}
-						if ((int)vehicle.position.y != (int)newPosition.y)
-						{
-							movedToTheSide = true;
-							newPosition.y = vehicle.position.y;
-							vehicle.velocity.y = 0.0f;
-						}
-						// If we moved to the side of other tile into scenery then
-						// cancel movement on this tick and try again with capped velocity
-						if (movedToTheSide)
-						{
-							// Get half damage for bouncing off
-							bool soundHandled = false;
-							if (randBoundsExclusive(state.rng, 0, 8) > 0 &&
-							    vehicle.applyDamage(state, collisionDamage / 2, 0, soundHandled))
-							{
-								// Died
-								return;
-							}
-							continue;
-						}
-						// If we moved only downwards then we land on the scenery, so force it
-						newPosition.z = floorf(newPosition.z);
-						break;
-					}
-					// Force a landing by setting a low position z
-					case SceneryTileType::WalkMode::Onto:
-					{
-						newPosition.z = floorf(newPosition.z);
-						break;
-					}
-					// Continue falling through normally
-					case SceneryTileType::WalkMode::Into:
-					{
-						break;
-					}
+					movedToTheSide = true;
+					newPosition.x = vehicle.position.x;
+					vehicle.velocity.x = 0.0f;
 				}
+				if ((int)vehicle.position.y != (int)newPosition.y)
+				{
+					movedToTheSide = true;
+					newPosition.y = vehicle.position.y;
+					vehicle.velocity.y = 0.0f;
+				}
+				// If we moved to the side of other tile into scenery then
+				// cancel movement on this tick and try again with capped velocity
+				if (movedToTheSide)
+				{
+					// "None" scenery gives half damage for bouncing off
+					// A 12.5% chance to evade damage
+					bool soundHandled = false;
+					if (randBoundsExclusive(state.rng, 0,
+					                        FV_COLLISION_DAMAGE_ONE_IN_CHANCE_TO_EVADE) > 0 &&
+					    vehicle.applyDamage(state, collisionDamage / 2, 0, soundHandled))
+					{
+						// Died
+						return;
+					}
+					// Cancel movement
+					continue;
+				}
+				// If we moved only downwards then we land on the scenery, so force it
+				newPosition.z = floorf(newPosition.z);
 			}
 		}
 		vehicle.setPosition(newPosition);
+
 		// See if we've landed
 		auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
 		if (presentScenery)
@@ -1000,13 +1044,10 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 			switch (atvMode)
 			{
 				case SceneryTileType::WalkMode::None:
-				{
-					vehicle.falling = false;
-					break;
-				}
 				case SceneryTileType::WalkMode::Onto:
 				{
-					if (newPosition.z - floorf(newPosition.z) < 0.95f)
+					if (newPosition.z - floorf(newPosition.z) <
+					    (float)presentScenery->type->height / 15.0f)
 					{
 						vehicle.falling = false;
 					}
@@ -1025,59 +1066,223 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 			// Landed
 			if (!vehicle.falling)
 			{
+				// A 12.5% chance to evade damage
+				auto collisionDamage =
+				    std::max((float)vehicle.type->health * FV_COLLISION_DAMAGE_MIN,
+				             std::min(FV_COLLISION_DAMAGE_LIMIT,
+				                      (float)presentScenery->type->constitution *
+				                          FV_COLLISION_DAMAGE_CONSTITUTION_MULTIPLIER));
 				bool soundHandled = false;
-				if (randBoundsExclusive(state.rng, 0, 8) > 0 &&
-				    vehicle.applyDamage(state,
-				                        std::min(presentScenery->type->constitution / 3,
-				                                 VEHICLE_COLLISION_DAMAGE_LIMIT) /
-				                            2,
-				                        0, soundHandled))
+				if (randBoundsExclusive(state.rng, 0, FV_COLLISION_DAMAGE_ONE_IN_CHANCE_TO_EVADE) >
+				        0 &&
+				    vehicle.applyDamage(state, collisionDamage / 2, 0, soundHandled))
 				{
 					// Died
 					return;
 				}
 				// Move to resting position in the tile
 				Vec3<float> newGoal = (Vec3<int>)newPosition;
-				if (atvMode == SceneryTileType::WalkMode::Onto ||
-				    atvMode == SceneryTileType::WalkMode::None)
+				switch (atvMode)
 				{
-					newGoal += Vec3<float>{0.5f, 0.5f, 0.99f};
-				}
-				else
-				{
-					if (presentScenery->type->isHill)
-					{
-						newGoal += Vec3<float>{0.5f, 0.5f, 0.5f};
-					}
-					else
-					{
-						newGoal += Vec3<float>{0.5f, 0.5f, 0.05f};
-					}
+					case SceneryTileType::WalkMode::None:
+					case SceneryTileType::WalkMode::Onto:
+						newGoal += Vec3<float>{0.5f, 0.5f,
+						                       (float)presentScenery->type->height / 15.0f - 0.01f};
+						break;
+					case SceneryTileType::WalkMode::Into:
+						if (presentScenery->type->isHill)
+						{
+							newGoal += Vec3<float>{0.5f, 0.5f, 0.5f};
+						}
+						else
+						{
+							newGoal += Vec3<float>{0.5f, 0.5f, 0.05f};
+						}
+						break;
 				}
 				vehicle.goalWaypoints.push_back(newGoal);
 				newPosition.z = newGoal.z;
-				vehicle.velocity = {0.0f, 0.0f, 0.0f};
+				// Translate Z velocity into XY velocity
+				Vec2<float> vel2d = {vehicle.velocity.x, vehicle.velocity.y};
+				if (vel2d.x != 0.0f || vel2d.y != 0.0f)
+				{
+					vel2d = glm::normalize(vel2d) * vehicle.velocity.z / 3.0f;
+					vehicle.velocity.x -= vel2d.x;
+					vehicle.velocity.y -= vel2d.y;
+				}
+				vehicle.velocity.z = 0;
 				vehicle.setPosition(newPosition);
 				vehicle.goalPosition = vehicle.position;
-				vehicle.angularVelocity = 0.0f;
-				// Flying vehicle or fell into an unpassable tile -> crash
+				vehicle.angularVelocity /= 2.0f;
+				// Flying vehicle or fell into an unpassable tile -> start sliding and eventually
+				// crash
 				if (!vehicle.type->isGround() || atvMode == SceneryTileType::WalkMode::None ||
 				    (vehicle.type->type == VehicleType::Type::Road &&
 				     presentScenery->type->tile_type != SceneryTileType::TileType::Road))
 				{
-					vehicle.crash(state, nullptr);
+					vehicle.sliding = true;
 					vehicle.goalWaypoints.clear();
 				}
 				// Fell into passable tile -> will move to resting position
 				else
 				{
-					// Already set above
+					// Stop residual movement
+					vehicle.velocity = {0.0f, 0.0f, 0.0f};
+					vehicle.angularVelocity = 0.0f;
 				}
 				break;
 			}
 		}
 	}
 
+	vehicle.updateSprite(state);
+}
+
+void VehicleMover::updateCrashed(GameState &state, unsigned int ticks)
+{
+	// Tile underneath us is dead?
+	auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
+	if (!presentScenery)
+	{
+		if (vehicle.type->type == VehicleType::Type::UFO)
+		{
+			vehicle.die(state);
+		}
+		else
+		{
+			vehicle.crashed = false;
+			if (vehicle.smokeDoodad)
+			{
+				vehicle.smokeDoodad->remove(state);
+				vehicle.smokeDoodad.reset();
+			}
+			vehicle.startFalling(state);
+		}
+	}
+}
+
+void VehicleMover::updateSliding(GameState &state, unsigned int ticks)
+{
+	// Slided off?
+	auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
+	if (!presentScenery)
+	{
+		vehicle.sliding = false;
+		vehicle.startFalling(state);
+		return;
+	}
+
+	auto crashTicksRemaining = ticks;
+
+	auto &map = *vehicle.city->map;
+
+	if (vehicle.angularVelocity != 0)
+	{
+		vehicle.facing += vehicle.angularVelocity * (float)ticks;
+		if (vehicle.facing < 0.0f)
+		{
+			vehicle.facing += M_2xPI;
+		}
+		if (vehicle.facing >= M_2xPI)
+		{
+			vehicle.facing -= M_2xPI;
+		}
+	}
+
+	while (crashTicksRemaining-- > 0)
+	{
+		auto newPosition = vehicle.position;
+
+		// Random doodads 2% chance if low health
+		if (vehicle.getMaxHealth() / vehicle.getHealth() >= 3 &&
+		    randBoundsExclusive(state.rng, 0, 100) < 2)
+		{
+			UString doodadId = randBool(state.rng) ? "DOODAD_1_AUTOCANNON" : "DOODAD_2_AIRGUARD";
+			auto doodadPos = vehicle.position;
+			doodadPos.x += (float)randBoundsInclusive(state.rng, -3, 3) / 10.0f;
+			doodadPos.y += (float)randBoundsInclusive(state.rng, -3, 3) / 10.0f;
+			doodadPos.z += (float)randBoundsInclusive(state.rng, -3, 3) / 10.0f;
+			vehicle.city->placeDoodad({&state, doodadId}, doodadPos);
+			fw().soundBackend->playSample(state.city_common_sample_list->vehicleExplosion,
+			                              vehicle.position, 0.25f);
+		}
+
+		vehicle.velocity.x = reduceAbsValue(vehicle.velocity.x, FV_ACCELERATION);
+		vehicle.velocity.y = reduceAbsValue(vehicle.velocity.y, FV_ACCELERATION);
+		if (vehicle.velocity.x == 0.0f && vehicle.velocity.y == 0.0f)
+		{
+			vehicle.angularVelocity = 0.0f;
+			vehicle.sliding = false;
+			vehicle.crash(state, nullptr);
+			vehicle.updateSprite(state);
+			break;
+		}
+
+		newPosition += vehicle.velocity / (float)TICK_SCALE / VELOCITY_SCALE_BATTLE;
+
+		// Fell outside map
+		if (!map.tileIsValid(newPosition))
+		{
+			vehicle.die(state, nullptr);
+			return;
+		}
+
+		// If moved do a different tile it must not have higher resting position than us and be
+		// valid
+		if ((Vec3<int>)newPosition != (Vec3<int>)vehicle.position)
+		{
+			// If no scenery in toTile that means we've slided off
+			auto toTile = map.getTile(newPosition);
+			if (!toTile->presentScenery)
+			{
+				vehicle.setPosition(newPosition);
+				vehicle.updateSprite(state);
+				vehicle.sliding = false;
+				vehicle.startFalling(state);
+				return;
+			}
+			// Expecting to have scenery in fromTile as checked above
+			auto fromTile = map.getTile(newPosition);
+
+			auto fromATVMode = fromTile->presentScenery->type->getATVMode();
+			auto toATVMode = toTile->presentScenery->type->getATVMode();
+			switch (fromATVMode)
+			{
+				case SceneryTileType::WalkMode::Into:
+					// Bumped into something, stop
+					if (toATVMode != SceneryTileType::WalkMode::Into)
+					{
+						// Stop moving and cancel this tick movement (will crash on next update)
+						vehicle.velocity = {0.0f, 0.0f, 0.0f};
+						continue;
+					}
+					break;
+				case SceneryTileType::WalkMode::None:
+				case SceneryTileType::WalkMode::Onto:
+					// Went from high enough onto/none to into, falling
+					if (toATVMode == SceneryTileType::WalkMode::Into &&
+					    newPosition.z - floorf(newPosition.z) > 0.15f)
+					{
+						vehicle.setPosition(newPosition);
+						vehicle.updateSprite(state);
+						vehicle.sliding = false;
+						vehicle.startFalling(state);
+						return;
+					}
+					// Otherwise see that nothing blocks us
+					auto upPos = newPosition;
+					upPos.z += 1.0f;
+					if (map.tileIsValid(upPos) && map.getTile(upPos)->presentScenery)
+					{
+						// Stop moving and cancel this tick movement (will crash on next update)
+						vehicle.velocity = {0.0f, 0.0f, 0.0f};
+						continue;
+					}
+					break;
+			}
+		}
+		vehicle.setPosition(newPosition);
+	}
 	vehicle.updateSprite(state);
 }
 
@@ -1483,6 +1688,7 @@ void Vehicle::die(GameState &state, StateRef<Vehicle> attacker, bool silent)
 
 void Vehicle::crash(GameState &state, StateRef<Vehicle> attacker)
 {
+	health = std::min(health, (type->crash_health > 0) ? type->crash_health : type->health / 10);
 	crashed = true;
 	if (attacker)
 	{
@@ -1589,8 +1795,9 @@ Vec3<float> Vehicle::getMuzzleLocation() const
 }
 
 void Vehicle::update(GameState &state, unsigned int ticks)
-
 {
+	bool turbo = ticks > TICKS_PER_SECOND;
+
 	if (cloakTicksAccumulated < CLOAK_TICKS_REQUIRED_VEHICLE)
 	{
 		cloakTicksAccumulated += ticks;
@@ -1607,7 +1814,6 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	{
 		teleportTicksAccumulated = 0;
 	}
-
 	if (!this->missions.empty())
 	{
 		this->missions.front()->update(state, *this, ticks);
@@ -1639,13 +1845,15 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 		}
 	}
 
+	// Moving
 	if (this->mover)
 	{
 		this->mover->update(state, ticks);
 	}
 
+	// Animation and firing (not on turbo)
 	auto vehicleTile = this->tileObject;
-	if (vehicleTile)
+	if (vehicleTile && !turbo)
 	{
 		if (!this->type->animation_sprites.empty())
 		{
@@ -1790,6 +1998,13 @@ void Vehicle::updateSprite(GameState &state)
 		case VehicleType::Banking::Descending:
 		case VehicleType::Banking::Flat:
 			direction = getDirectionSmall(facing);
+			// If still invalid we must cancel banking (can happen for grounds)
+			if (type->directional_sprites.at(banking).find(direction) !=
+			    type->directional_sprites.at(banking).end())
+			{
+				break;
+			}
+			banking = VehicleType::Banking::Flat;
 			break;
 	}
 
@@ -1852,7 +2067,7 @@ bool Vehicle::applyDamage(GameState &state, int damage, float armour, bool &soun
 		damage -= (int)armour;
 		if (damage > 0)
 		{
-			bool wasCrashed = crashed;
+			bool wasBelowCrashThreshold = health <= type->crash_health;
 			this->health -= damage;
 			if (this->health <= 0)
 			{
@@ -1860,7 +2075,7 @@ bool Vehicle::applyDamage(GameState &state, int damage, float armour, bool &soun
 				soundHandled = true;
 				return true;
 			}
-			else if (health < type->crash_health && !crashed)
+			else if (!wasBelowCrashThreshold && health <= type->crash_health && !crashed)
 			{
 				if (type->type == VehicleType::Type::UFO)
 				{
@@ -2076,7 +2291,10 @@ void Vehicle::fireNormalWeapons(GameState &state, Vec2<int> arc)
 	}
 	else
 	{
-		enemy = findClosestEnemy(state, tileObject, arc);
+		if (type->aggressiveness > 0)
+		{
+			enemy = findClosestEnemy(state, tileObject, arc);
+		}
 	}
 
 	if (enemy)

@@ -346,6 +346,7 @@
 		<member>shieldRecharge</member>
 		<member>falling</member>
 		<member>crashed</member>
+		<member>sliding</member>
 		<member>cloakTicksAccumulated</member>
 		<member>teleportTicksAccumulated</member>
 		<member>ticksAutoActionAvailable</member>
@@ -379,6 +380,7 @@
 		<member>missionCounter</member>
 		<member>currentPlannedPath</member>
 		<member>subvert</member>
+		<member>attackCrashed</member>
 		<member>cancelled</member>
 	</object>
 	<object>
@@ -969,6 +971,7 @@
 		<member>value</member>
 		<member>mass</member>
 		<member>strength</member>
+		<member>height</member>
 		<member>isHill</member>
 	</object>
 	<object>

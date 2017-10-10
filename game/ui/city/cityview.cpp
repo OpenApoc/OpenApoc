@@ -1537,6 +1537,9 @@ bool CityView::handleKeyDown(Event *e)
 					{
 						continue;
 					}
+					v.second->health = v.second->type->crash_health > 0
+					                       ? v.second->type->crash_health
+					                       : v.second->getMaxHealth() / 4;
 					v.second->startFalling(*state);
 				}
 				return true;
@@ -1729,15 +1732,18 @@ bool CityView::handleMouseDown(Event *e)
 					building = scenery->building;
 					LogWarning("CLICKED SCENERY %s at %s BUILDING %s", scenery->type.id,
 					           scenery->currentPosition, building.id);
-					LogWarning("Type [%d%d]  Road [%d%d%d%d] Slope [%d%d%d%d] Tube [%d%d%d%d%d%d] ",
+					LogWarning("H%d C%d Type [%d%d%d] Road [%d%d%d%d] Hill [%d%d%d%d] Tube "
+					           "[%d%d%d%d%d%d] ",
+					           scenery->type->height, scenery->type->constitution,
 					           (int)scenery->type->tile_type, (int)scenery->type->road_type,
-					           (int)scenery->type->connection[0], (int)scenery->type->connection[1],
-					           (int)scenery->type->connection[2], (int)scenery->type->connection[3],
-					           (int)scenery->type->hill[0], (int)scenery->type->hill[1],
-					           (int)scenery->type->hill[2], (int)scenery->type->hill[3],
-					           (int)scenery->type->tube[0], (int)scenery->type->tube[1],
-					           (int)scenery->type->tube[2], (int)scenery->type->tube[3],
-					           (int)scenery->type->tube[4], (int)scenery->type->tube[5]);
+					           (int)scenery->type->walk_mode, (int)scenery->type->connection[0],
+					           (int)scenery->type->connection[1], (int)scenery->type->connection[2],
+					           (int)scenery->type->connection[3], (int)scenery->type->hill[0],
+					           (int)scenery->type->hill[1], (int)scenery->type->hill[2],
+					           (int)scenery->type->hill[3], (int)scenery->type->tube[0],
+					           (int)scenery->type->tube[1], (int)scenery->type->tube[2],
+					           (int)scenery->type->tube[3], (int)scenery->type->tube[4],
+					           (int)scenery->type->tube[5]);
 					if (modifierLAlt && modifierLCtrl && modifierLShift)
 					{
 						scenery->die(*state);
@@ -1762,7 +1768,9 @@ bool CityView::handleMouseDown(Event *e)
 					{
 						if (!vehicle->falling && !vehicle->crashed)
 						{
-							vehicle->health = vehicle->getMaxHealth() / 4;
+							vehicle->health = vehicle->type->crash_health > 0
+							                      ? vehicle->type->crash_health
+							                      : vehicle->getMaxHealth() / 4;
 							vehicle->startFalling(*state);
 						}
 						return true;
@@ -1926,7 +1934,6 @@ bool CityView::handleGameStateEvent(Event *e)
 			    listRandomiser(state->rng, state->city_common_sample_list->alertSounds));
 			zoomLastEvent();
 			setUpdateSpeed(CityUpdateSpeed::Speed1);
-			state->updateAfterTurbo();
 			fw().stageQueueCommand(
 			    {StageCmd::Command::PUSH, mksp<AlertScreen>(state, ev->building)});
 			break;
@@ -2148,7 +2155,7 @@ void CityView::updateSelectedUnits()
 		while (it != state->current_city->cityViewSelectedVehicles.end())
 		{
 			auto v = *it;
-			if (!v || v->isDead() || v->crashed)
+			if (!v || v->isDead())
 			{
 				it = state->current_city->cityViewSelectedVehicles.erase(it);
 			}

@@ -169,6 +169,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// Validates gamestate, sanity checks for all the possible fuck-ups
 	void validate();
 	void validateResearch();
+	void validateScenery();
 
 	void fillOrgStartingProperty();
 	// Fills out initial player property

@@ -53,12 +53,12 @@ bool AgentTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, float &co
 	Vec3<int> toPos = to->position;
 	if (fromPos == toPos)
 	{
-		LogError("FromPos == ToPos %s", toPos.x);
+		LogError("FromPos == ToPos %s", toPos);
 		return false;
 	}
 	if (!map.tileIsValid(toPos))
 	{
-		LogError("ToPos %s is not on the map", toPos.x);
+		LogError("ToPos %s is not on the map", toPos);
 		return false;
 	}
 

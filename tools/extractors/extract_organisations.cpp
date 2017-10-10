@@ -307,16 +307,12 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 					    std::set<StateRef<VehicleType>>{{&state, "VEHICLETYPE_POLICE_CAR"}},
 					    Organisation::MissionPattern::Target::Owned);
 					o->missions.emplace_back(
-					    5 * m, 3 * m, 7 * m, 3, 5,
+					    5 * m, 13 * m, 17 * m, 3, 5,
 					    std::set<StateRef<VehicleType>>{{&state, "VEHICLETYPE_POLICE_CAR"}},
 					    Organisation::MissionPattern::Target::Owned);
 					o->missions.emplace_back(
-					    0, 20 * s, 40 * s, 1, 1,
-					    std::set<StateRef<VehicleType>>{{&state, "VEHICLETYPE_POLICE_HOVERCAR"}},
-					    Organisation::MissionPattern::Target::Owned);
-					o->missions.emplace_back(
-					    3 * m, 7 * m, 13 * m, 3, 5,
-					    std::set<StateRef<VehicleType>>{{&state, "VEHICLETYPE_POLICE_HOVERCAR"}},
+					    3 * m, 30 * m, 90 * m, 3, 5,
+					    std::set<StateRef<VehicleType>>{{&state, "VEHICLETYPE_POLICE_CAR"}},
 					    Organisation::MissionPattern::Target::Other, UnfriendlyMinus);
 					break;
 			}

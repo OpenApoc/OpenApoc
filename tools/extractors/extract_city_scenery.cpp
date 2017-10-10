@@ -193,6 +193,8 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		{
 			if (entry.voxelIdx[z] == 0)
 				continue;
+			// Highest achieved voxelmap layer
+			tile->height = z;
 			auto lofString = format("LOFTEMPS:xcom3/ufodata/" + lofFile + ".dat:xcom3/ufodata/" +
 			                            lofFile + ".tab:%d",
 			                        (int)entry.voxelIdx[z]);

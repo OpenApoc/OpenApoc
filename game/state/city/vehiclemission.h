@@ -1,6 +1,8 @@
 #pragma once
 
+#include "game/state/rules/vehicle_type.h"
 #include "game/state/stateobject.h"
+
 #include "game/state/tileview/tile.h"
 #include "library/strings.h"
 #include "library/vec.h"
@@ -23,10 +25,17 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 {
   private:
 	TileMap &map;
-	Vehicle &v;
+	VehicleType::Type type;
+	bool crashed;
+	Vec2<int> size;
+	bool large;
+	int altitude;
 
   public:
 	FlyingVehicleTileHelper(TileMap &map, Vehicle &v);
+	FlyingVehicleTileHelper(TileMap &map, VehicleType &vehType, bool crashed, int altitude);
+	FlyingVehicleTileHelper(TileMap &map, VehicleType::Type type, bool crashed, Vec2<int> size,
+	                        int altitude);
 
 	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
 	                  bool ignoreMovingUnits = true, bool ignoreAllUnits = false) const override;
@@ -55,10 +64,12 @@ class GroundVehicleTileHelper : public CanEnterTileHelper
 {
   private:
 	TileMap &map;
-	Vehicle &v;
+	VehicleType::Type type;
+	bool crashed;
 
   public:
 	GroundVehicleTileHelper(TileMap &map, Vehicle &v);
+	GroundVehicleTileHelper(TileMap &map, VehicleType::Type type, bool crashed);
 
 	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
 	                  bool ignoreMovingUnits = true, bool ignoreAllUnits = false) const override;
@@ -91,8 +102,18 @@ class VehicleMission
 	// If it is finished, update() is called by isFinished so that any remaining work could be done
 	bool isFinishedInternal(GameState &state, Vehicle &v);
 
+	// Adjusts target to match closest tile valid for road vehicles
 	static bool adjustTargetToClosestRoad(Vehicle &v, Vec3<int> &target);
+	// Adjusts target to match closest tile valid for ATVs
 	static bool adjustTargetToClosestGround(Vehicle &v, Vec3<int> &target);
+	// Adjusts target to match closest tile valid for Flyers
+	// Ignore vehicles short version
+	static bool adjustTargetToClosestFlying(GameState &state, Vehicle &v, Vec3<int> &target);
+	// Adjusts target to match closest tile valid for Flyers
+	static bool adjustTargetToClosestFlying(GameState &state, Vehicle &v, Vec3<int> &target,
+	                                        bool ignoreVehicles, bool pickNearest,
+	                                        bool &pickedNearest);
+
 	bool takeOffCheck(GameState &state, Vehicle &v);
 	bool teleportCheck(GameState &state, Vehicle &v);
 
@@ -177,6 +198,8 @@ class VehicleMission
 	unsigned int missionCounter = 0;
 	// InfiltrateSubvert: mode
 	bool subvert = false;
+	// AttackVehicle
+	bool attackCrashed = false;
 
 	bool cancelled = false;
 

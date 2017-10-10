@@ -97,6 +97,9 @@ void Scenery::die(GameState &state)
 
 	if (falling)
 	{
+		auto doodad = city->placeDoodad({&state, "DOODAD_3_EXPLOSION"}, tileObject->getCenter());
+		fw().soundBackend->playSample(state.city_common_sample_list->sceneryExplosion,
+		                              tileObject->getCenter());
 		this->tileObject->removeFromMap();
 		this->tileObject.reset();
 		this->destroyed = true;
@@ -125,7 +128,7 @@ void Scenery::die(GameState &state)
 		{
 			auto doodad =
 			    city->placeDoodad({&state, "DOODAD_3_EXPLOSION"}, tileObject->getCenter());
-			fw().soundBackend->playSample(state.city_common_sample_list->sceneryExplosion,
+			fw().soundBackend->playSample(state.city_common_sample_list->vehicleExplosion,
 			                              tileObject->getCenter());
 
 			this->tileObject->removeFromMap();
