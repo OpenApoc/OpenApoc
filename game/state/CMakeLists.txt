@@ -65,7 +65,7 @@ set (GAMESTATE_SOURCE_FILES
 	rules/doodad_type.cpp
 	rules/facility_type.cpp
 	rules/scenery_tile_type.cpp
-	rules/supportedmappartlist.cpp
+	rules/supportedmappart.cpp
 	rules/ufo_growth.cpp
 	rules/ufo_incursion.cpp
 	rules/vammo_rules.cpp
@@ -149,7 +149,7 @@ set (GAMESTATE_HEADER_FILES
 	rules/doodad_type.h
 	rules/facility_type.h
 	rules/scenery_tile_type.h
-	rules/supportedmappartlist.h
+	rules/supportedmappart.h
 	rules/ufo_growth.h
 	rules/ufo_incursion.h
 	rules/vammo_type.h

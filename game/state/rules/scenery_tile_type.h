@@ -64,6 +64,7 @@ class SceneryTileType : public StateObject
 	int value = 0;
 	int mass = 0;
 	int strength = 0;
+	// Max value 15
 	int height = 0;
 
 	// instead of road_level_change; should be enough for now

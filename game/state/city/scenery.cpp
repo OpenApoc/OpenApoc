@@ -71,6 +71,16 @@ bool Scenery::findSupport()
 	auto tileType = tileObject->getType();
 	auto thisPtr = shared_from_this();
 
+	// Forward lookup for adding increments
+	static const std::map<int, Vec2<int>> intToVec = {
+	    {0, {0, -1}}, {1, {1, 0}}, {2, {0, 1}}, {3, {-1, 0}}};
+	// Forward lookup for connection/hill checking
+	static const std::map<Vec2<int>, int> vecToIntForward = {
+	    {{0, -1}, 0}, {{1, 0}, 1}, {{0, 1}, 2}, {{-1, 0}, 3}};
+	// Reverse lookup for connection checking
+	static const std::map<Vec2<int>, int> vecToIntBack = {
+	    {{0, -1}, 2}, {{1, 0}, 3}, {{0, 1}, 0}, {{-1, 0}, 1}};
+
 	// Scenery gets supported in a different way than battle map parts
 	//
 	// - When first checked it finds what supports it in a generous way
@@ -82,18 +92,20 @@ bool Scenery::findSupport()
 	// part below dies, but will come crashing down
 	// - However, roads and tubes are an exception and will try to re-establish their "supportedby"
 
-	// Scenery gets support in the following way:
+	// Scenery gets (hard) support in the following way:
 	//
-	// - The only proper way to support scenery is by !INTO from below
-	// - All other forms of support are considered "soft" supported
+	// - The only way to hard-support is by having non-road/tube !INTO below
+	//   (in this case tube must have a downward connection)
+	// - The exception is that tube can be supported by tube below if connected
 	//
 	// (following conditions provide "soft" support)
 	//
-	// - General/Wall !INTO can cling to one adjacent "hard" supported General/Wall !INTO
-	// - General/Wall !INTO can cling to two adjacent "soft" supported General/Wall !INTO
+	// - General/Wall/Junk !INTO can cling to one adjacent "hard" supported General/Wall/Junk !INTO
+	// - General/Wall/Junk !INTO can cling to two adjacent "soft" supported General/Wall/Junk !INTO
+	// - People tube can cling onto adjacent "hard" !INTO General, adhering to its direction
 	//
-	// Finally, every UNDAMAGED map part can be supported if it has established support lines
-	// on both sides that connect to an object providing support
+	// Finally, can be supported if it has established support lines
+	// on both sides that connect to an object providing support (any kind)
 	//  - Object "shoots" a line in both directions and as long as there is an object on every tile
 	//    the line continues, and if an object providing hard support is reached,
 	//	  then "soft" support can be attained
@@ -144,26 +156,41 @@ bool Scenery::findSupport()
 		}
 	}
 
-	// Step 02: Check below (for any type)
+	// Step 02: Check below
 	if (true)
 	{
-		// Expecting to always have below in city
+		// Expecting to always have space below in city
 		auto tile = map.getTile(currentPosition.x, currentPosition.y, currentPosition.z - 1);
 		for (auto &o : tile->ownedObjects)
 		{
 			if (o->getType() == TileObject::Type::Scenery)
 			{
 				auto mp = std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
-
+				// Can't be supported by dead or yourself
 				if (mp == thisPtr || !mp->isAlive())
 				{
 					continue;
 				}
+				// Can't be supported on top of INTO
 				if (mp->type->walk_mode == SceneryTileType::WalkMode::Into)
 				{
 					continue;
 				}
-
+				// Only support tube if has connection below
+				if (type->tile_type == SceneryTileType::TileType::PeopleTube && !type->tube[5])
+				{
+					continue;
+				}
+				// Only tubes with connection can be supported by tubes
+				if (mp->type->tile_type == SceneryTileType::TileType::PeopleTube)
+				{
+					// If ain't tube or no connection down from us or no connection up from below
+					if (type->tile_type != SceneryTileType::TileType::PeopleTube ||
+					    !mp->type->tube[4] || !type->tube[5])
+					{
+						continue;
+					}
+				}
 				mp->supportedParts.insert(currentPosition);
 				supportedBy.emplace_back(mp->currentPosition);
 				return true;
@@ -171,10 +198,11 @@ bool Scenery::findSupport()
 		}
 	}
 
-	// Step 03: Check adjacents (for General/Wall !INTO)
+	// Step 03.01: Check adjacents (for General/Wall !INTO)
 	if (type->walk_mode != SceneryTileType::WalkMode::Into &&
 	    (type->tile_type == SceneryTileType::TileType::General ||
-	     type->tile_type == SceneryTileType::TileType::CityWall))
+	     type->tile_type == SceneryTileType::TileType::CityWall ||
+	     type->tile_type == SceneryTileType::TileType::PeopleTubeJunction))
 	{
 		std::set<sp<Scenery>> supports;
 		int startX = pos.x - 1;
@@ -210,9 +238,18 @@ bool Scenery::findSupport()
 							{
 								continue;
 							}
-							// Must be a matching(General/Wall) !INTO
+							// Must not be a tube, junk or road
+							if (mp->type->tile_type == SceneryTileType::TileType::Road ||
+							    mp->type->tile_type == SceneryTileType::TileType::PeopleTube ||
+							    mp->type->tile_type ==
+							        SceneryTileType::TileType::PeopleTubeJunction)
+							{
+								continue;
+							}
+							// Must be a matching(Wall for Wall, General for General/Junk) !INTO
 							if (mp->type->walk_mode == SceneryTileType::WalkMode::Into ||
-							    mp->type->tile_type != type->tile_type)
+							    (mp->type->tile_type == SceneryTileType::TileType::CityWall &&
+							     type->tile_type != SceneryTileType::TileType::CityWall))
 							{
 								continue;
 							}
@@ -223,16 +260,19 @@ bool Scenery::findSupport()
 							{
 								continue;
 							}
-							// Expecting alive part to have supportedBy already set
+							// Cannot be soft-supported
 							if (mp->supportedBy.size() > 1)
 							{
 								continue;
 							}
-							// Must be supported by below
-							auto dir = mp->supportedBy.front() - tile->position;
-							if (dir.x != 0 || dir.y != 0 || dir.z != -1)
+							// Must be supported by below or by being the earth
+							if (!mp->supportedBy.empty())
 							{
-								continue;
+								auto dir = mp->supportedBy.front() - tile->position;
+								if (dir.x != 0 || dir.y != 0 || dir.z != -1)
+								{
+									continue;
+								}
 							}
 							// Is supported!
 							mp->supportedParts.insert(currentPosition);
@@ -254,6 +294,62 @@ bool Scenery::findSupport()
 			return true;
 		}
 	}
+	// Step 03.02: Check adjacents (for Tube)
+	if (type->tile_type == SceneryTileType::TileType::PeopleTube)
+	{
+		std::set<sp<Scenery>> supports;
+		int startX = pos.x - 1;
+		int endX = pos.x + 1;
+		int startY = pos.y - 1;
+		int endY = pos.y + 1;
+		for (int x = startX; x <= endX; x++)
+		{
+			for (int y = startY; y <= endY; y++)
+			{
+				if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y)
+				{
+					continue;
+				}
+				// Cannot support diagonally on xy
+				if (x != pos.x && y != pos.y)
+				{
+					continue;
+				}
+				if (x == pos.x && y == pos.y)
+				{
+					continue;
+				}
+				// Cannot support if no connection
+				if (!type->tube[vecToIntForward.at({x - pos.x, y - pos.y})])
+				{
+					continue;
+				}
+				auto tile = map.getTile(x, y, pos.z);
+				for (auto &o : tile->ownedObjects)
+				{
+					if (o->getType() == TileObject::Type::Scenery)
+					{
+						auto mp = std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
+
+						if (mp == thisPtr || !mp->isAlive())
+						{
+							continue;
+						}
+						// Must be a General !INTO
+						if (mp->type->walk_mode == SceneryTileType::WalkMode::Into ||
+						    mp->type->tile_type != SceneryTileType::TileType::General)
+						{
+							continue;
+						}
+						// Is supported!
+						mp->supportedParts.insert(currentPosition);
+						supportedBy.emplace_back(mp->currentPosition);
+						return true;
+					}
+				}
+			}
+		}
+	}
 
 	// Step 04: Shoot "support lines" and try to find something
 	// With roads and tubes we can actually shoot in any directions, not just on X or Y
@@ -261,16 +357,6 @@ bool Scenery::findSupport()
 	if (type->tile_type == SceneryTileType::TileType::Road ||
 	    type->tile_type == SceneryTileType::TileType::PeopleTube)
 	{
-		// Forward lookup for adding increments
-		static const std::map<int, Vec2<int>> intToVec = {
-		    {0, {0, -1}}, {1, {1, 0}}, {2, {0, 1}}, {3, {-1, 0}}};
-		// Forward lookup for hill checking
-		static const std::map<Vec2<int>, int> vecToIntForward = {
-		    {{0, -1}, 0}, {{1, 0}, 1}, {{0, 1}, 2}, {{-1, 0}, 3}};
-		// Reverse lookup for connection checking
-		static const std::map<Vec2<int>, int> vecToIntBack = {
-		    {{0, -1}, 2}, {{1, 0}, 3}, {{0, 1}, 0}, {{-1, 0}, 1}};
-
 		std::list<std::pair<Vec2<int>, Vec2<bool>>> increments;
 		std::list<std::pair<Vec2<int>, Vec2<bool>>> foundIncrements;
 
@@ -757,7 +843,7 @@ bool Scenery::applyDamage(GameState &state, int power)
 	return false;
 }
 
-void Scenery::die(GameState &state)
+void Scenery::die(GameState &state, bool forced)
 {
 	if (falling)
 	{
@@ -839,7 +925,7 @@ void Scenery::die(GameState &state)
 		this->destroyed = true;
 		return;
 	}
-	if (type->damagedTile)
+	if (!forced && type->damagedTile)
 	{
 		this->damaged = true;
 		if (this->overlayDoodad)
@@ -934,6 +1020,7 @@ void Scenery::collapse(GameState &state)
 		// If we would somehow call collapse() in a way that would set falling to true but
 		// would not trigger the setPosition() afterwards, this logic would fail
 	}
+	ceaseBeingSupported();
 	ceaseSupportProvision();
 }
 
@@ -984,8 +1071,10 @@ void Scenery::updateFalling(GameState &state, unsigned int ticks)
 	// Collision happens when map part moves from this tile to the next
 	// With this tile's Into and low Onto, as well as vehicles
 	// With next tile's None and high Onto
+	std::set<sp<Scenery>> killedScenery;
 	if (floorf(newPosition.z) != floorf(currentPosition.z))
 	{
+		// Leaving tile: collide with everything left
 		for (auto &obj : tileObject->getOwningTile()->ownedObjects)
 		{
 			switch (obj->getType())
@@ -995,7 +1084,14 @@ void Scenery::updateFalling(GameState &state, unsigned int ticks)
 					auto mp = std::static_pointer_cast<TileObjectScenery>(obj)->getOwner();
 					if (mp->tileObject && mp->isAlive())
 					{
-						destroyed = true;
+						if (mp->type->strength < type->mass)
+						{
+							killedScenery.insert(mp);
+						}
+						else
+						{
+							destroyed = true;
+						}
 					}
 					break;
 				}
@@ -1005,7 +1101,7 @@ void Scenery::updateFalling(GameState &state, unsigned int ticks)
 					v->applyDamage(state,
 					               (v->falling || v->crashed || v->sliding)
 					                   ? FV_COLLISION_DAMAGE_LIMIT
-					                   : type->strength,
+					                   : SC_COLLISION_DAMAGE,
 					               0);
 					break;
 				}
@@ -1014,6 +1110,7 @@ void Scenery::updateFalling(GameState &state, unsigned int ticks)
 					break;
 			}
 		}
+		// New tile: If not destroyed yet collid with everything high enough
 		if (!destroyed)
 		{
 			auto newTile = tileObject->map.getTile(newPosition);
@@ -1030,16 +1127,24 @@ void Scenery::updateFalling(GameState &state, unsigned int ticks)
 							switch (mp->type->walk_mode)
 							{
 								case SceneryTileType::WalkMode::None:
-									destroyed = true;
-									break;
-								case SceneryTileType::WalkMode::Onto:
 									if (mp->type->height >= 12)
 									{
-										destroyed = true;
+										// Collide if high
+										break;
 									}
-									break;
+									// No collision now
+									continue;
 								case SceneryTileType::WalkMode::Into:
-									break;
+									// No collision now
+									continue;
+							}
+							if (mp->type->strength < type->mass)
+							{
+								killedScenery.insert(mp);
+							}
+							else
+							{
+								destroyed = true;
 							}
 						}
 						break;
@@ -1048,6 +1153,11 @@ void Scenery::updateFalling(GameState &state, unsigned int ticks)
 						break;
 				}
 			}
+		}
+		for (auto &mp : killedScenery)
+		{
+			mp->collapse(state);
+			mp->die(state);
 		}
 
 		// Spawn smoke, more intense if we land here

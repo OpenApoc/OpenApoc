@@ -976,11 +976,7 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 				if (plowedThrough)
 				{
 					// Allow "into" to remain damaged, kill others outright
-					if (atvMode != SceneryTileType::WalkMode::Into)
-					{
-						tile->presentScenery->damaged = true;
-					}
-					tile->presentScenery->die(state);
+					tile->presentScenery->die(state, atvMode != SceneryTileType::WalkMode::Into);
 
 					// "None" scenery damages our face if we plowed through it
 					// Otherwise (Into/Onto) no damage as we will still get damage on landing

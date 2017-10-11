@@ -12,6 +12,7 @@ namespace OpenApoc
 {
 
 static const int ROAD_ARMOR = 20;
+static const int SC_COLLISION_DAMAGE = 50;
 
 class TileObjectScenery;
 class SceneryTileType;
@@ -52,7 +53,8 @@ class Scenery : public SupportedMapPart, public std::enable_shared_from_this<Sce
 	// Returns true if sound and doodad were handled by it
 	bool applyDamage(GameState &state, int power);
 	// Handles scenery ceasing to exist (fatal damage or fell on something)
-	void die(GameState &state);
+	// Forced to destroy regardless of damaged types
+	void die(GameState &state, bool forced = false);
 	// Collapses mappart immediately
 	void collapse(GameState &state);
 	// Wether mappart is queued to collapse

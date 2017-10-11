@@ -26,6 +26,7 @@ class TileObjectScenery : public TileObject
 	float getZOrder() const override;
 	void setPosition(Vec3<float> newPosition) override;
 	void removeFromMap() override;
+	void addToDrawnTiles(Tile *tile) override;
 
   private:
 	friend class TileMap;

@@ -1092,6 +1092,7 @@ void BattleMapPart::collapse(GameState &state)
 		// If we would somehow call collapse() in a way that would set falling to true but
 		// would not trigger the setPosition() afterwards, this logic would fail
 	}
+	ceaseBeingSupported();
 	ceaseSupportProvision();
 	ceaseDoorFunction();
 }
