@@ -9,7 +9,6 @@
 #include <map>
 
 // TUBE DEBUG OUTPUT
-// BREAKS THE GAME
 //#define TUBE_DEBUG_OUTPUT
 
 namespace OpenApoc
@@ -92,30 +91,30 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 		}
 	}
 
-// FIXME: FIX BUGGY TUBES
-/*
-citymap1 at 13,12,1 in dir 3
-citymap1 at 43,41,1 in dir 3
-citymap1 at 58,53,1 in dir 0
-citymap1 at 44,54,1 in dir 3
-citymap1 at 57,54,1 in dir 0
-citymap1 at 56,55,1 in dir 0
-citymap1 at 53,56,1 in dir 0
-citymap1 at 28,73,1 in dir 3
-citymap1 at 34,73,1 in dir 3
-citymap1 at 31,75,1 in dir 3
-citymap1 at 30,77,1 in dir 3
-citymap1 at 28,80,1 in dir 3
-citymap1 at 67,80,1 in dir 3
-citymap1 at 31,87,1 in dir 3
-citymap1 at 36,49,2 in dir 3
-citymap1 at 50,53,2 in dir 3
-citymap1 at 29,74,2 in dir 3
-citymap1 at 34,77,2 in dir 0
-citymap1 at 37,78,2 in dir 0
-citymap1 at 68,81,2 in dir 3
-citymap1 at 29,89,3 in dir 1
-*/
+	// Fixing buggy city
+	if (fileName == "citymap1")
+	{
+		city->initial_tiles[Vec3<int>{50, 109, 4}] = {&state, "CITYTILE_CITYMAP_78"};
+	}
+	if (fileName == "citymap2")
+	{
+		// Erase two bugs
+		city->initial_tiles.erase(Vec3<int>{47, 86, 4});
+		city->initial_tiles.erase(Vec3<int>{45, 98, 6});
+		city->initial_tiles.erase(Vec3<int>{69, 80, 4});
+		city->initial_tiles.erase(Vec3<int>{77, 80, 4});
+	}
+	if (fileName == "citymap3")
+	{
+		// Support hanging road
+		city->initial_tiles[Vec3<int>{95, 68, 2}] = {&state, "CITYTILE_CITYMAP_92"};
+		city->initial_tiles[Vec3<int>{95, 72, 2}] = {&state, "CITYTILE_CITYMAP_92"};
+	}
+	if (fileName == "citymap5")
+	{
+		// Support hanging road
+		city->initial_tiles[Vec3<int>{116, 100, 2}] = {&state, "CITYTILE_CITYMAP_949"};
+	}
 
 #ifdef TUBE_DEBUG_OUTPUT
 	for (unsigned int z = 0; z < sizeZ; z++)
@@ -124,7 +123,12 @@ citymap1 at 29,89,3 in dir 1
 		{
 			for (unsigned int x = 0; x < sizeX; x++)
 			{
-				auto curTileName = city->initial_tiles[Vec3<int>{x + 20, y + 20, z + 1}].id;
+				if (city->initial_tiles.find(Vec3<int>{x + 20, y + 20, z + 1}) ==
+				    city->initial_tiles.end())
+				{
+					continue;
+				}
+				auto curTileName = city->initial_tiles.at(Vec3<int>{x + 20, y + 20, z + 1}).id;
 				if (tubes.find(curTileName) != tubes.end())
 				{
 					auto curTileMap = tubes.at(curTileName);
@@ -136,28 +140,36 @@ citymap1 at 29,89,3 in dir 1
 						continue;
 					}
 					// North
-					if (curTileMap[0] && y - 1 >= 0)
+					if (curTileMap[0] && y - 1 >= 0 &&
+					    city->initial_tiles.find(Vec3<int>{x + 20, y - 1 + 20, z + 1}) !=
+					        city->initial_tiles.end())
 					{
 						toCheck.emplace(
-						    city->initial_tiles[Vec3<int>{x + 20, y - 1 + 20, z + 1}].id, 0);
+						    city->initial_tiles.at(Vec3<int>{x + 20, y - 1 + 20, z + 1}).id, 0);
 					}
 					// East
-					if (curTileMap[1] && x + 1 < sizeX)
+					if (curTileMap[1] && x + 1 < sizeX &&
+					    city->initial_tiles.find(Vec3<int>{x + 1 + 20, y + 20, z + 1}) !=
+					        city->initial_tiles.end())
 					{
 						toCheck.emplace(
-						    city->initial_tiles[Vec3<int>{x + 1 + 20, y + 20, z + 1}].id, 1);
+						    city->initial_tiles.at(Vec3<int>{x + 1 + 20, y + 20, z + 1}).id, 1);
 					}
 					// South
-					if (curTileMap[2] && y + 1 < sizeY)
+					if (curTileMap[2] && y + 1 < sizeY &&
+					    city->initial_tiles.find(Vec3<int>{x + 20, y + 1 + 20, z + 1}) !=
+					        city->initial_tiles.end())
 					{
 						toCheck.emplace(
-						    city->initial_tiles[Vec3<int>{x + 20, y + 1 + 20, z + 1}].id, 2);
+						    city->initial_tiles.at(Vec3<int>{x + 20, y + 1 + 20, z + 1}).id, 2);
 					}
 					// West
-					if (curTileMap[3] && x - 1 >= 0)
+					if (curTileMap[3] && x - 1 >= 0 &&
+					    city->initial_tiles.find(Vec3<int>{x - 1 + 20, y + 20, z + 1}) !=
+					        city->initial_tiles.end())
 					{
 						toCheck.emplace(
-						    city->initial_tiles[Vec3<int>{x - 1 + 20, y + 20, z + 1}].id, 3);
+						    city->initial_tiles.at(Vec3<int>{x - 1 + 20, y + 20, z + 1}).id, 3);
 					}
 					for (auto &p : toCheck)
 					{
@@ -185,8 +197,9 @@ citymap1 at 29,89,3 in dir 1
 
 							if (!tarTileMap[invDir])
 							{
-								LogWarning("BUGGY TUBE DETECTED IN %s at %d,%d,%d in dir %d",
-								           fileName, x, y, z, dir);
+								LogWarning("MAP %s TILE %s at %d,%d,%d mismatch %s at dir %d",
+								           fileName, curTileName, x + 20, y + 20, z + 1, p.first,
+								           dir);
 							}
 						}
 					}

@@ -2982,10 +2982,10 @@ bool BattleView::handleKeyDown(Event *e)
 					    o->getType() == TileObject::Type::RightWall)
 					{
 						auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
-						auto set = mksp<std::set<BattleMapPart *>>();
+						auto set = mksp<std::set<SupportedMapPart *>>();
 						set->insert(mp.get());
 						mp->queueCollapse();
-						BattleMapPart::attemptReLinkSupports(set);
+						SupportedMapPart::attemptReLinkSupports(set);
 					}
 				}
 				return true;

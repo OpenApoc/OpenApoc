@@ -133,8 +133,6 @@ class Tile
 	sp<BattleMapPart> supportProviderForItems;
 	// How much tiles are added to vision distance after passing this tile
 	int visionBlockValue = 0;
-	// Intact scenery present in this tile
-	sp<Scenery> intactScenery;
 	// Non-dead scenery present in this tile
 	sp<Scenery> presentScenery;
 
@@ -306,6 +304,7 @@ class TileMap
 	                        bool fast = false, bool los = false) const;
 
 	void updateAllBattlescapeInfo();
+	void updateAllCityInfo();
 
 	std::map<Vec3<int>, std::list<Vec3<int>>> agentPathCache;
 	void clearPathCaches();

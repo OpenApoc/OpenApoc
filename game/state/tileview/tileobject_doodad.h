@@ -17,6 +17,7 @@ class TileObjectDoodad : public TileObject
 	~TileObjectDoodad() override;
 
 	wp<Doodad> doodad;
+	sp<Doodad> getOwner() const;
 
 	Vec3<float> getPosition() const override;
 	float getZOrder() const override;

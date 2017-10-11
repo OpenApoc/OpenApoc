@@ -129,4 +129,26 @@ void TileObjectScenery::removeFromMap()
 	}
 }
 
+void TileObjectScenery::addToDrawnTiles(Tile *tile)
+{
+	auto sc = scenery.lock();
+	Vec3<int> maxCoords = {-1, -1, -1};
+	for (auto &intersectingTile : intersectingTiles)
+	{
+		int x = intersectingTile->position.x;
+		int y = intersectingTile->position.y;
+		int z = intersectingTile->position.z;
+
+		// Map parts are drawn in the topmost tile their head pops into
+		// Otherwise, they can only be drawn in it if it's their owner tile
+		if (maxCoords.z * 1000 + maxCoords.x + maxCoords.y < z * 1000 + x + y &&
+		    sc->currentPosition.z + (float)sc->type->height / 15.1f >= (float)z)
+		{
+			tile = intersectingTile;
+			maxCoords = {x, y, z};
+		}
+	}
+	TileObject::addToDrawnTiles(tile);
+}
+
 } // namespace OpenApoc

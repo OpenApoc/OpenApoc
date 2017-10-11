@@ -177,8 +177,6 @@ ConfigOptionBool optionPauseOnAgentPsiOver("Notifications.Battle", "AgentPsiOver
 
 ConfigOptionBool optionUFODamageModel("OpenApoc.NewFeature", "UFODamageModel",
                                       "X-Com 1 Damage model (0-200%)", false);
-ConfigOptionBool optionFully3DExplosions("OpenApoc.NewFeature", "Fully3DExplosions",
-                                         "Fully 3D explosions", false);
 ConfigOptionBool optionInstantExplosionDamage("OpenApoc.NewFeature", "InstantExplosionDamage",
                                               "Explosions damage instantly", false);
 ConfigOptionBool optionGravliftSounds("OpenApoc.NewFeature", "GravliftSounds", "Gravlift sounds",

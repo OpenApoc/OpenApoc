@@ -344,7 +344,6 @@ void Tile::updateCityscapeParameters()
 		return;
 	}
 
-	intactScenery = nullptr;
 	presentScenery = nullptr;
 	for (auto &o : ownedObjects)
 	{
@@ -353,13 +352,8 @@ void Tile::updateCityscapeParameters()
 			auto mp = std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
 			if (!mp->isAlive())
 			{
-				if (!mp->falling && !mp->destroyed)
-				{
-					presentScenery = mp;
-				}
 				continue;
 			}
-			intactScenery = mp;
 			presentScenery = mp;
 			break;
 		}
@@ -862,6 +856,14 @@ void TileMap::updateAllBattlescapeInfo()
 		t.updateBattlescapeParameters();
 		t.updateBattlescapeUIDrawOrder();
 		t.updateBattlescapeUnitPresent();
+	}
+}
+
+void TileMap::updateAllCityInfo()
+{
+	for (auto &t : tiles)
+	{
+		t.updateCityscapeParameters();
 	}
 }
 

@@ -71,6 +71,9 @@
 #include "library/strings_format.h"
 #include <glm/glm.hpp>
 
+// Uncomment to start with paused
+#define DEBUG_START_PAUSE
+
 namespace OpenApoc
 {
 namespace
@@ -1001,6 +1004,10 @@ CityView::CityView(sp<GameState> state)
 		});
 	agentForm->findControl("BUTTON_GOTO_BASE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { orderGoToBase(); });
+
+#ifdef DEBUG_START_PAUSE
+	setUpdateSpeed(CityUpdateSpeed::Pause);
+#endif
 }
 
 CityView::~CityView() = default;
@@ -1730,20 +1737,75 @@ bool CityView::handleMouseDown(Event *e)
 					scenery =
 					    std::dynamic_pointer_cast<TileObjectScenery>(collision.obj)->getOwner();
 					building = scenery->building;
-					LogWarning("CLICKED SCENERY %s at %s BUILDING %s", scenery->type.id,
-					           scenery->currentPosition, building.id);
-					LogWarning("H%d C%d Type [%d%d%d] Road [%d%d%d%d] Hill [%d%d%d%d] Tube "
-					           "[%d%d%d%d%d%d] ",
-					           scenery->type->height, scenery->type->constitution,
-					           (int)scenery->type->tile_type, (int)scenery->type->road_type,
-					           (int)scenery->type->walk_mode, (int)scenery->type->connection[0],
-					           (int)scenery->type->connection[1], (int)scenery->type->connection[2],
-					           (int)scenery->type->connection[3], (int)scenery->type->hill[0],
-					           (int)scenery->type->hill[1], (int)scenery->type->hill[2],
-					           (int)scenery->type->hill[3], (int)scenery->type->tube[0],
-					           (int)scenery->type->tube[1], (int)scenery->type->tube[2],
-					           (int)scenery->type->tube[3], (int)scenery->type->tube[4],
-					           (int)scenery->type->tube[5]);
+					if (true)
+					{
+						Vec3<int> t = scenery->currentPosition;
+						UString debug = "";
+						debug +=
+						    format("\nCLICKED %s SCENERY %s at %s BUILDING %s",
+						           scenery->falling || scenery->willCollapse() ? "FALLING" : "OK",
+						           scenery->type.id, t, building.id);
+						// debug += format("\n LOS BLOCK %d", battle.getLosBlockID(t.x, t.y, t.z));
+
+						debug += format(
+						    "\nHt [%d] Con [%d] Type [%d|%d|%d] Road [%d%d%d%d] Hill [%d%d%d%d] "
+						    "Tube "
+						    "[%d%d%d%d%d%d]",
+						    scenery->type->height, scenery->type->constitution,
+						    (int)scenery->type->tile_type, (int)scenery->type->road_type,
+						    (int)scenery->type->walk_mode, (int)scenery->type->connection[0],
+						    (int)scenery->type->connection[1], (int)scenery->type->connection[2],
+						    (int)scenery->type->connection[3], (int)scenery->type->hill[0],
+						    (int)scenery->type->hill[1], (int)scenery->type->hill[2],
+						    (int)scenery->type->hill[3], (int)scenery->type->tube[0],
+						    (int)scenery->type->tube[1], (int)scenery->type->tube[2],
+						    (int)scenery->type->tube[3], (int)scenery->type->tube[4],
+						    (int)scenery->type->tube[5]);
+						auto &map = *state->current_city->map;
+						for (auto &p : scenery->supportedBy)
+						{
+							debug += format("\nCan be supported by %s", p);
+						}
+						for (auto &p : scenery->supportedParts)
+						{
+							debug += format("\nSupports %s", p);
+						}
+						for (int x = t.x - 1; x <= t.x + 1; x++)
+						{
+							for (int y = t.y - 1; y <= t.y + 1; y++)
+							{
+								for (int z = t.z - 1; z <= t.z + 1; z++)
+								{
+									if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y ||
+									    z < 0 || z >= map.size.z)
+									{
+										continue;
+									}
+									auto tile2 = map.getTile(x, y, z);
+									for (auto &o2 : tile2->ownedObjects)
+									{
+										if (o2->getType() == TileObject::Type::Scenery)
+										{
+											auto mp2 =
+											    std::static_pointer_cast<TileObjectScenery>(o2)
+											        ->getOwner();
+											for (auto &p : mp2->supportedParts)
+											{
+												if (p == t)
+												{
+													debug += format(
+													    "\nActually supported by %s at %d %d %d",
+													    mp2->type.id, x - t.x, y - t.y, z - t.z);
+												}
+											}
+										}
+									}
+								}
+							}
+							LogWarning("%s", debug);
+						}
+					}
+
 					if (modifierLAlt && modifierLCtrl && modifierLShift)
 					{
 						scenery->die(*state);

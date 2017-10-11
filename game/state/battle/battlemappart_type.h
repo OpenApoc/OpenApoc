@@ -64,6 +64,7 @@ class BattleMapPartType : public StateObject
 	bool floor = false;
 	bool gravlift = false;
 	int movement_cost = 0;
+	// Max value 39
 	int height = 0;
 	// Does not require support
 	bool floating = false;

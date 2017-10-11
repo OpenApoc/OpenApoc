@@ -510,8 +510,8 @@ void Battle::initialMapPartLinkUp()
 		if (mp->willCollapse())
 		{
 			auto pos = mp->tileObject->getOwningTile()->position;
-			LogWarning("MP %s SBT %d at %d %d %d is UNLINKED", mp->type.id,
-			           (int)mp->type->getVanillaSupportedById(), pos.x, pos.y, pos.z);
+			LogWarning("MP %s SBT %d at %s is UNLINKED", mp->type.id,
+			           (int)mp->type->getVanillaSupportedById(), pos);
 		}
 	}
 
@@ -545,8 +545,8 @@ void Battle::initialMapPartLinkUp()
 		if (mp->willCollapse())
 		{
 			auto pos = mp->tileObject->getOwningTile()->position;
-			LogWarning("MP %s SBT %d at %d %d %d is going to fall", mp->type.id,
-			           (int)mp->type->getVanillaSupportedById(), pos.x, pos.y, pos.z);
+			LogWarning("MP %s SBT %d at %s is going to fall", mp->type.id,
+			           (int)mp->type->getVanillaSupportedById(), pos);
 		}
 	}
 

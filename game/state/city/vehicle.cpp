@@ -976,20 +976,15 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 				if (plowedThrough)
 				{
 					// Allow "into" to remain damaged, kill others outright
-					if (atvMode != SceneryTileType::WalkMode::Into)
-					{
-						tile->presentScenery->damaged = true;
-					}
-					tile->presentScenery->die(state);
+					tile->presentScenery->die(state, atvMode != SceneryTileType::WalkMode::Into);
 
 					// "None" scenery damages our face if we plowed through it
 					// Otherwise (Into/Onto) no damage as we will still get damage on landing
 					// A 12.5% chance to evade damage
-					bool soundHandled = false;
 					if (atvMode == SceneryTileType::WalkMode::None &&
 					    randBoundsExclusive(state.rng, 0,
 					                        FV_COLLISION_DAMAGE_ONE_IN_CHANCE_TO_EVADE) > 0 &&
-					    vehicle.applyDamage(state, collisionDamage, 0, soundHandled))
+					    vehicle.applyDamage(state, collisionDamage, 0))
 					{
 						// Died
 						return;
@@ -1019,10 +1014,9 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 				{
 					// "None" scenery gives half damage for bouncing off
 					// A 12.5% chance to evade damage
-					bool soundHandled = false;
 					if (randBoundsExclusive(state.rng, 0,
 					                        FV_COLLISION_DAMAGE_ONE_IN_CHANCE_TO_EVADE) > 0 &&
-					    vehicle.applyDamage(state, collisionDamage / 2, 0, soundHandled))
+					    vehicle.applyDamage(state, collisionDamage / 2, 0))
 					{
 						// Died
 						return;
@@ -1072,10 +1066,9 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 				             std::min(FV_COLLISION_DAMAGE_LIMIT,
 				                      (float)presentScenery->type->constitution *
 				                          FV_COLLISION_DAMAGE_CONSTITUTION_MULTIPLIER));
-				bool soundHandled = false;
 				if (randBoundsExclusive(state.rng, 0, FV_COLLISION_DAMAGE_ONE_IN_CHANCE_TO_EVADE) >
 				        0 &&
-				    vehicle.applyDamage(state, collisionDamage / 2, 0, soundHandled))
+				    vehicle.applyDamage(state, collisionDamage / 2, 0))
 				{
 					// Died
 					return;
@@ -2037,6 +2030,12 @@ void Vehicle::updateSprite(GameState &state)
 				break;
 		}
 	}
+}
+
+bool Vehicle::applyDamage(GameState &state, int damage, float armour)
+{
+	bool soundHandled = false;
+	return applyDamage(state, damage, armour, soundHandled, nullptr);
 }
 
 bool Vehicle::applyDamage(GameState &state, int damage, float armour, bool &soundHandled,

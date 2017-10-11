@@ -71,7 +71,7 @@ void CityTileView::eventOccurred(Event *e)
 			case SDLK_F3:
 			{
 				DEBUG_SHOW_WALK_TYPE++;
-				DEBUG_SHOW_WALK_TYPE = DEBUG_SHOW_WALK_TYPE % 4;
+				DEBUG_SHOW_WALK_TYPE = DEBUG_SHOW_WALK_TYPE % 5;
 				if (DEBUG_SHOW_WALK_TYPE)
 				{
 					DEBUG_SHOW_SLOPES = false;
@@ -309,8 +309,15 @@ void CityTileView::render()
 										             ->getOwner();
 										if (DEBUG_SHOW_WALK_TYPE)
 										{
-											visible =
-											    (int)s->type->walk_mode == DEBUG_SHOW_WALK_TYPE - 1;
+											if (DEBUG_SHOW_WALK_TYPE == 4)
+											{
+												visible = s->willCollapse() || s->falling;
+											}
+											else
+											{
+												visible = (int)s->type->walk_mode ==
+												          DEBUG_SHOW_WALK_TYPE - 1;
+											}
 										}
 										if (DEBUG_SHOW_SLOPES)
 										{
