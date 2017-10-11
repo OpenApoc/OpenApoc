@@ -46,6 +46,8 @@ TileObjectDoodad::TileObjectDoodad(TileMap &map, sp<Doodad> doodad)
 {
 }
 
+sp<Doodad> TileObjectDoodad::getOwner() const { return doodad.lock(); }
+
 Vec3<float> TileObjectDoodad::getPosition() const
 {
 	auto d = this->doodad.lock();

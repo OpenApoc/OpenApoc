@@ -65,7 +65,6 @@ class SceneryTileType : public StateObject
 	int mass = 0;
 	int strength = 0;
 	int height = 0;
-	int supportedBy = 0;
 
 	// instead of road_level_change; should be enough for now
 	bool isHill = false;

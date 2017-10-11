@@ -38,8 +38,10 @@ class Scenery : public SupportedMapPart, public std::enable_shared_from_this<Sce
 
 	Vec3<int> initialPosition;
 	Vec3<float> currentPosition;
+	void setPosition(const Vec3<float> &pos);
 	unsigned int ticksUntilCollapse = 0;
-	std::list<Vec3<int>> supportedParts;
+	std::set<Vec3<int>> supportedParts;
+	std::list<Vec3<int>> supportedBy;
 
 	bool damaged;
 	bool falling;

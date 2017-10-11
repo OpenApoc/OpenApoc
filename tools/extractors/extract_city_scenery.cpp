@@ -166,7 +166,6 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		tile->strength = entry.strength;
 		tile->mass = entry.mass;
 		tile->value = entry.value;
-		tile->supportedBy = entry.supportile_idx;
 
 		for (unsigned i = 0; i < 4; i++)
 		{

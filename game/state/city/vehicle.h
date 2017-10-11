@@ -239,6 +239,7 @@ class Vehicle : public StateObject,
 	void addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentType> type);
 	void removeEquipment(sp<VEquipment> object);
 
+	bool applyDamage(GameState &state, int damage, float armour);
 	bool applyDamage(GameState &state, int damage, float armour, bool &soundHandled,
 	                 StateRef<Vehicle> attacker = nullptr);
 	bool handleCollision(GameState &state, Collision &c, bool &soundHandled);

@@ -1741,15 +1741,16 @@ bool CityView::handleMouseDown(Event *e)
 					{
 						Vec3<int> t = scenery->currentPosition;
 						UString debug = "";
-						debug += format("\nCLICKED %s SCENERY %s at %s BUILDING %s",
-						                scenery->falling ? "FALLING" : "OK", scenery->type.id, t,
-						                building.id);
+						debug +=
+						    format("\nCLICKED %s SCENERY %s at %s BUILDING %s",
+						           scenery->falling || scenery->willCollapse() ? "FALLING" : "OK",
+						           scenery->type.id, t, building.id);
 						// debug += format("\n LOS BLOCK %d", battle.getLosBlockID(t.x, t.y, t.z));
 
 						debug += format(
 						    "\nHt [%d] Con [%d] Type [%d|%d|%d] Road [%d%d%d%d] Hill [%d%d%d%d] "
 						    "Tube "
-						    "[%d%d%d%d%d%d] SBT [%d]",
+						    "[%d%d%d%d%d%d]",
 						    scenery->type->height, scenery->type->constitution,
 						    (int)scenery->type->tile_type, (int)scenery->type->road_type,
 						    (int)scenery->type->walk_mode, (int)scenery->type->connection[0],
@@ -1759,8 +1760,16 @@ bool CityView::handleMouseDown(Event *e)
 						    (int)scenery->type->hill[3], (int)scenery->type->tube[0],
 						    (int)scenery->type->tube[1], (int)scenery->type->tube[2],
 						    (int)scenery->type->tube[3], (int)scenery->type->tube[4],
-						    (int)scenery->type->tube[5], scenery->type->supportedBy);
+						    (int)scenery->type->tube[5]);
 						auto &map = *state->current_city->map;
+						for (auto &p : scenery->supportedBy)
+						{
+							debug += format("\nCan be supported by %s", p);
+						}
+						for (auto &p : scenery->supportedParts)
+						{
+							debug += format("\nSupports %s", p);
+						}
 						for (int x = t.x - 1; x <= t.x + 1; x++)
 						{
 							for (int y = t.y - 1; y <= t.y + 1; y++)
@@ -1784,9 +1793,9 @@ bool CityView::handleMouseDown(Event *e)
 											{
 												if (p == t)
 												{
-													debug += format("\nSupported by %s at %d %d %d",
-													                mp2->type.id, x - t.x, y - t.y,
-													                z - t.z);
+													debug += format(
+													    "\nActually supported by %s at %d %d %d",
+													    mp2->type.id, x - t.x, y - t.y, z - t.z);
 												}
 											}
 										}
@@ -1800,11 +1809,6 @@ bool CityView::handleMouseDown(Event *e)
 					if (modifierLAlt && modifierLCtrl && modifierLShift)
 					{
 						scenery->die(*state);
-						return true;
-					}
-					else if (modifierLAlt && modifierLShift)
-					{
-						// Don't open fucking building screen!
 						return true;
 					}
 					break;

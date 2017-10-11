@@ -27,6 +27,7 @@ void InitialGameStateExtractor::extractDoodads(GameState &state) const
 		{
 			auto d = mksp<DoodadType>();
 			UString doodad_id;
+			bool slow = false;
 			switch (i)
 			{
 				case UFO_DOODAD_1:
@@ -43,9 +44,11 @@ void InitialGameStateExtractor::extractDoodads(GameState &state) const
 					break;
 				case UFO_DOODAD_5:
 					doodad_id = "DOODAD_5_SMOKE_EXPLOSION";
+					slow = true;
 					break;
 				case UFO_DOODAD_6:
 					doodad_id = "DOODAD_6_DIMENSION_GATE";
+					slow = true;
 					d->repeatable = true;
 					break;
 				case UFO_DOODAD_7:
@@ -81,14 +84,15 @@ void InitialGameStateExtractor::extractDoodads(GameState &state) const
 			auto tabOffsets = doodadTabOffsets[i - 1];
 
 			d->imageOffset = CITY_IMAGE_OFFSET;
-			d->lifetime = (tabOffsets.y - tabOffsets.x) * frameTTL;
+			d->lifetime = (tabOffsets.y - tabOffsets.x) * frameTTL * (slow ? 2 : 1);
 			for (int j = tabOffsets.x; j < tabOffsets.y; j++)
 			{
+
 				d->frames.push_back(
 				    {fw().data->loadImage(format("PCK:xcom3/ufodata/ptang.pck:xcom3/ufodata/"
 				                                 "ptang.tab:%d",
 				                                 j)),
-				     frameTTL});
+				     frameTTL * (slow ? 2 : 1)});
 			}
 
 			state.doodad_types[doodad_id] = d;

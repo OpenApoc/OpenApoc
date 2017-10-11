@@ -243,8 +243,7 @@ void Organisation::updateMissions(GameState &state)
 		for (auto &v : state.vehicles)
 		{
 			if (v.second->city == rescueTransport->city && v.second->crashed &&
-			    !v.second->carriedByVehicle && v.second->owner.id == id &&
-			    v.second->owner != state.getPlayer())
+			    !v.second->carriedByVehicle && v.second->owner.id == id)
 			{
 				bool foundRescuer = false;
 				for (auto &r : state.vehicles)
@@ -275,13 +274,12 @@ void Organisation::updateMissions(GameState &state)
 				}
 			}
 		}
-		// Rescue friends
+		// Rescue allies
 		for (auto &v : state.vehicles)
 		{
 			if (v.second->city == rescueTransport->city && v.second->crashed &&
 			    !v.second->carriedByVehicle && v.second->owner.id != id &&
-			    v.second->owner != state.getPlayer() &&
-			    current_relations.at(v.second->owner) > 25.0f)
+			    isRelatedTo(v.second->owner) == Relation::Allied)
 			{
 				bool foundRescuer = false;
 				for (auto &r : state.vehicles)

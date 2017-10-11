@@ -977,10 +977,10 @@ bool BattleMapPart::findSupport()
 
 sp<std::set<SupportedMapPart *>> BattleMapPart::getSupportedParts()
 {
-	sp<std::set<SupportedMapPart *>> supportedParts = mksp<std::set<SupportedMapPart *>>();
+	sp<std::set<SupportedMapPart *>> supportedMapParts = mksp<std::set<SupportedMapPart *>>();
 	auto &map = tileObject->map;
 	// Since we reference supported parts by type we have to find each in it's tile by type
-	for (auto &p : this->supportedParts)
+	for (auto &p : supportedParts)
 	{
 		auto tile = map.getTile(p.first);
 		for (auto &obj : tile->ownedObjects)
@@ -992,11 +992,11 @@ sp<std::set<SupportedMapPart *>> BattleMapPart::getSupportedParts()
 				{
 					continue;
 				}
-				supportedParts->insert(mp.get());
+				supportedMapParts->insert(mp.get());
 			}
 		}
 	}
-	return supportedParts;
+	return supportedMapParts;
 }
 
 void BattleMapPart::clearSupportedParts() { supportedParts.clear(); }
