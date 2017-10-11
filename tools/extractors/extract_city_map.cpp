@@ -94,7 +94,7 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 	// Fixing buggy city
 	if (fileName == "citymap1")
 	{
-		city->initial_tiles[Vec3<int>{49, 109, 4}] = {&state, "CITYTILE_CITYMAP_78"};
+		city->initial_tiles[Vec3<int>{50, 109, 4}] = {&state, "CITYTILE_CITYMAP_78"};
 	}
 	if (fileName == "citymap2")
 	{

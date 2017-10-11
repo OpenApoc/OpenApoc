@@ -6,7 +6,8 @@
 #include "library/vec.h"
 #include <set>
 
-#define MAP_PART_LINK_DEBUG_OUTPUT
+// Uncomment to have verbose map part link up output
+//#define MAP_PART_LINK_DEBUG_OUTPUT
 
 namespace OpenApoc
 {

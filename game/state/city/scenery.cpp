@@ -112,7 +112,7 @@ bool Scenery::findSupport()
 				{
 					auto mp = std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
 
-					if (mp == thisPtr || !mp->isAlive() || mp->damaged)
+					if (mp == thisPtr || !mp->isAlive())
 					{
 						continue;
 					}
@@ -155,7 +155,7 @@ bool Scenery::findSupport()
 			{
 				auto mp = std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
 
-				if (mp == thisPtr || !mp->isAlive() || mp->damaged)
+				if (mp == thisPtr || !mp->isAlive())
 				{
 					continue;
 				}
@@ -206,7 +206,7 @@ bool Scenery::findSupport()
 						{
 							auto mp = std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
 
-							if (mp == thisPtr || !mp->isAlive() || mp->damaged)
+							if (mp == thisPtr || !mp->isAlive())
 							{
 								continue;
 							}
@@ -258,221 +258,66 @@ bool Scenery::findSupport()
 	// Step 04: Shoot "support lines" and try to find something
 	// With roads and tubes we can actually shoot in any directions, not just on X or Y
 
-	// Forward lookup for adding increments
-	static const std::map<int, Vec2<int>> intToVec = {
-	    {0, {0, -1}}, {1, {1, 0}}, {2, {0, 1}}, {3, {-1, 0}}};
-	// Forward lookup for hill checking
-	static const std::map<Vec2<int>, int> vecToIntForward = {
-	    {{0, -1}, 0}, {{1, 0}, 1}, {{0, 1}, 2}, {{-1, 0}, 3}};
-	// Reverse lookup for connection checking
-	static const std::map<Vec2<int>, int> vecToIntBack = {
-	    {{0, -1}, 2}, {{1, 0}, 3}, {{0, 1}, 0}, {{-1, 0}, 1}};
-
-	std::list<std::pair<Vec2<int>, Vec2<bool>>> increments;
-	std::list<std::pair<Vec2<int>, Vec2<bool>>> foundIncrements;
-
-	for (int i = 0; i < 4; i++)
+	if (type->tile_type == SceneryTileType::TileType::Road ||
+	    type->tile_type == SceneryTileType::TileType::PeopleTube)
 	{
-		bool road = type->connection[i];
-		bool tube = type->tube[i];
-		if (!tube && !road)
-		{
-			continue;
-		}
-		increments.emplace_back(intToVec.at(i), Vec2<bool>{road, tube});
-	}
+		// Forward lookup for adding increments
+		static const std::map<int, Vec2<int>> intToVec = {
+		    {0, {0, -1}}, {1, {1, 0}}, {2, {0, 1}}, {3, {-1, 0}}};
+		// Forward lookup for hill checking
+		static const std::map<Vec2<int>, int> vecToIntForward = {
+		    {{0, -1}, 0}, {{1, 0}, 1}, {{0, 1}, 2}, {{-1, 0}, 3}};
+		// Reverse lookup for connection checking
+		static const std::map<Vec2<int>, int> vecToIntBack = {
+		    {{0, -1}, 2}, {{1, 0}, 3}, {{0, 1}, 0}, {{-1, 0}, 1}};
 
-	if (increments.size() > 1)
-	{
-		bool found;
-		for (auto &increment : increments)
-		{
-			found = false;
-			int x = pos.x + increment.first.x;
-			int y = pos.y + increment.first.y;
-			int z = pos.z;
-			int lastTubeZInc = 0;
-			bool clearLastTubeZInc = false;
-			auto lastMp = thisPtr;
-			do
-			{
-				if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y)
-				{
-					found = true;
-					break;
-				}
-				sp<Scenery> mp = nullptr;
-				auto tile = map.getTile(x, y, z);
+		std::list<std::pair<Vec2<int>, Vec2<bool>>> increments;
+		std::list<std::pair<Vec2<int>, Vec2<bool>>> foundIncrements;
 
-				for (auto &o : tile->ownedObjects)
-				{
-					if (o->getType() == TileObject::Type::Scenery)
-					{
-						mp = std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
-						// No good if destroyed or falling
-						// No good if no good as both road and tube
-						//  - no good as road if not road or no road connection
-						//  - no good as tube if not tube or no tube connection/terminus
-						//    (if tube connection is up/down we already checked it before arrival)
-						if (mp->destroyed || mp->falling ||
-						    (!increment.second.x ||
-						     (increment.second.x &&
-						      !mp->type->connection[vecToIntBack.at(increment.first)])) &&
-						        (!increment.second.y ||
-						         (increment.second.y &&
-						          (int)mp->currentPosition.z == (int)lastMp->currentPosition.z &&
-						          !mp->type->tube[vecToIntBack.at(increment.first)] &&
-						          mp->type->tile_type != SceneryTileType::TileType::General)))
-						{
-							mp = nullptr;
-						}
-					}
-				}
-				// Could not find map part of this type or it cannot provide support
-				// We ignore those that have positive "ticksUntilFalling" as those can be saved yet
-				if (!mp)
-				{
-					// If we're a road - try to go one down, look for a hill facing towards us
-					if (increment.second.x)
-					{
-						int zDiff =
-						    lastMp->type->hill[vecToIntForward.at(increment.first)] ? 1 : -1;
-						if (z + zDiff < map.size.z)
-						{
-							tile = map.getTile(x, y, z + zDiff);
-							for (auto &o : tile->ownedObjects)
-							{
-								if (o->getType() == TileObject::Type::Scenery)
-								{
-									mp = std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
-									if (mp->destroyed || mp->falling ||
-									    mp->type->hill[vecToIntBack.at(increment.first)] !=
-									        (zDiff == -1))
-									{
-										mp = nullptr;
-									}
-								}
-							}
-						}
-						if (mp)
-						{
-							z += zDiff;
-						}
-						else
-						{
-							// fail for road, found no supporting hill
-							break;
-						}
-					}
-					else
-					{
-						// If we're a tube we can go up and down
-						// Check for up
-						bool success = false;
-						for (int zInc = -1; zInc <= 1; zInc += 2)
-						{
-							if (zInc == -lastTubeZInc)
-							{
-								continue;
-							}
-							int forward = zInc == -1 ? 5 : 4;
-							int backward = zInc == 1 ? 5 : 4;
-							if (lastMp->type->tube[forward])
-							{
-								if (lastMp->currentPosition.z + zInc < map.size.z)
-								{
-									tile = map.getTile(lastMp->currentPosition.x,
-									                   lastMp->currentPosition.y,
-									                   lastMp->currentPosition.z + zInc);
-									for (auto &o : tile->ownedObjects)
-									{
-										if (o->getType() == TileObject::Type::Scenery)
-										{
-											mp = std::static_pointer_cast<TileObjectScenery>(o)
-											         ->getOwner();
-											if (mp->destroyed || mp->falling ||
-											    !mp->type->tube[backward])
-											{
-												mp = nullptr;
-											}
-										}
-									}
-									// Found a valid tube upwards, change z and continue
-									if (mp)
-									{
-										x = lastMp->currentPosition.x;
-										y = lastMp->currentPosition.y;
-										z = lastMp->currentPosition.z + zInc;
-										lastTubeZInc = zInc;
-										clearLastTubeZInc = false;
-										success = true;
-										break;
-									}
-								}
-							}
-						}
-						if (success)
-						{
-							continue;
-						}
-						// fail for tube, found nothing up or down
-						break;
-					}
-				}
-				lastMp = mp;
-				// Found map part that won't collapse
-				if (!mp->willCollapse())
-				{
-					// success
-					found = true;
-					break;
-				}
-				// continue
-				x += increment.first.x;
-				y += increment.first.y;
-				if (clearLastTubeZInc)
-				{
-					clearLastTubeZInc = false;
-					lastTubeZInc = 0;
-				}
-				if (lastTubeZInc != 0)
-				{
-					clearLastTubeZInc = true;
-				}
-			} while (true);
-			if (found)
+		for (int i = 0; i < 4; i++)
+		{
+			bool road = type->connection[i];
+			bool tube = type->tube[i];
+			if (!tube && !road)
 			{
-				foundIncrements.emplace_back(increment);
+				continue;
 			}
+			increments.emplace_back(intToVec.at(i), Vec2<bool>{road, tube});
 		}
-		// If found both ways - cling to neighbours (and mark them as having support so they can
-		// cling to us
-		if (foundIncrements.size() > 1)
+
+		if (increments.size() > 1)
 		{
-			for (auto &increment : foundIncrements)
+			bool found;
+			for (auto &increment : increments)
 			{
+				found = false;
 				int x = pos.x + increment.first.x;
 				int y = pos.y + increment.first.y;
 				int z = pos.z;
 				int lastTubeZInc = 0;
 				bool clearLastTubeZInc = false;
 				auto lastMp = thisPtr;
-				bool lastMPSupportedByFilled = false;
 				do
 				{
 					if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y)
 					{
+						found = true;
 						break;
 					}
 					sp<Scenery> mp = nullptr;
 					auto tile = map.getTile(x, y, z);
+
 					for (auto &o : tile->ownedObjects)
 					{
 						if (o->getType() == TileObject::Type::Scenery)
 						{
 							mp = std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
-							// Still have to double-check this because maybe we went up/down here
-							// because it didn't fit
+							// No good if destroyed or falling
+							// No good if no good as both road and tube
+							//  - no good as road if not road or no road connection
+							//  - no good as tube if not tube or no tube connection/terminus
+							//    (if tube connection is up/down we already checked it before
+							//    arrival)
 							if (mp->destroyed || mp->falling ||
 							    (!increment.second.x ||
 							     (increment.second.x &&
@@ -488,28 +333,48 @@ bool Scenery::findSupport()
 							}
 						}
 					}
+					// Could not find map part of this type or it cannot provide support
+					// We ignore those that have positive "ticksUntilFalling" as those can be saved
+					// yet
 					if (!mp)
 					{
+						// If we're a road - try to go one down, look for a hill facing towards us
 						if (increment.second.x)
 						{
-							z += lastMp->type->hill[vecToIntForward.at(increment.first)] ? 1 : -1;
-							tile = map.getTile(x, y, z);
-							for (auto &o : tile->ownedObjects)
+							int zDiff =
+							    lastMp->type->hill[vecToIntForward.at(increment.first)] ? 1 : -1;
+							if (z + zDiff < map.size.z)
 							{
-								if (o->getType() == TileObject::Type::Scenery)
+								tile = map.getTile(x, y, z + zDiff);
+								for (auto &o : tile->ownedObjects)
 								{
-									mp = std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
-									// Don't have to check this, we know it's ok
+									if (o->getType() == TileObject::Type::Scenery)
+									{
+										mp = std::static_pointer_cast<TileObjectScenery>(o)
+										         ->getOwner();
+										if (mp->destroyed || mp->falling ||
+										    mp->type->hill[vecToIntBack.at(increment.first)] !=
+										        (zDiff == -1))
+										{
+											mp = nullptr;
+										}
+									}
 								}
 							}
-							if (!mp)
+							if (mp)
 							{
-								LogError("Map part disappeared? %d %d %d", x, y, z);
-								return false;
+								z += zDiff;
+							}
+							else
+							{
+								// fail for road, found no supporting hill
+								break;
 							}
 						}
 						else
 						{
+							// If we're a tube we can go up and down
+							// Check for up
 							bool success = false;
 							for (int zInc = -1; zInc <= 1; zInc += 2)
 							{
@@ -545,9 +410,9 @@ bool Scenery::findSupport()
 											x = lastMp->currentPosition.x;
 											y = lastMp->currentPosition.y;
 											z = lastMp->currentPosition.z + zInc;
-											success = true;
 											lastTubeZInc = zInc;
 											clearLastTubeZInc = false;
+											success = true;
 											break;
 										}
 									}
@@ -557,37 +422,28 @@ bool Scenery::findSupport()
 							{
 								continue;
 							}
-							if (!mp)
-							{
-								LogError("Map part disappeared? %d %d %d", x, y, z);
-								return false;
-							}
+							// fail for tube, found nothing up or down
+							break;
 						}
 					}
-					mp->supportedParts.insert(lastMp->currentPosition);
-					if (!lastMPSupportedByFilled)
-					{
-						lastMp->supportedBy.emplace_back(mp->currentPosition);
-					}
+					lastMp = mp;
 					// Found map part that won't collapse
 					if (!mp->willCollapse())
 					{
-						// stop where we stopped originally
+						// success
+						found = true;
 						break;
-					}
-					// If it's a midpart then it's also supported by us
-					mp->cancelCollapse();
-					lastMp->supportedParts.insert(mp->currentPosition);
-					if (mp->supportedBy.empty())
-					{
-						lastMPSupportedByFilled = false;
-						mp->supportedBy.emplace_back(lastMp->currentPosition);
 					}
 					else
 					{
-						lastMPSupportedByFilled = true;
+						// Can only link through unsupported roads or tubes
+						if (mp->type->tile_type != SceneryTileType::TileType::Road &&
+						    mp->type->tile_type != SceneryTileType::TileType::PeopleTube)
+						{
+							// failure, trying to link through unsupported non-road/tube
+							break;
+						}
 					}
-					lastMp = mp;
 					// continue
 					x += increment.first.x;
 					y += increment.first.y;
@@ -601,10 +457,178 @@ bool Scenery::findSupport()
 						clearLastTubeZInc = true;
 					}
 				} while (true);
+				if (found)
+				{
+					foundIncrements.emplace_back(increment);
+				}
 			}
-			return true;
-		}
-	}
+			// If found at least two ways ways - cling to neighbours
+			// (and mark them as having support so they can cling to us)
+			if (foundIncrements.size() > 1)
+			{
+				for (auto &increment : foundIncrements)
+				{
+					int x = pos.x + increment.first.x;
+					int y = pos.y + increment.first.y;
+					int z = pos.z;
+					int lastTubeZInc = 0;
+					bool clearLastTubeZInc = false;
+					auto lastMp = thisPtr;
+					bool lastMPSupportedByFilled = false;
+					do
+					{
+						if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y)
+						{
+							break;
+						}
+						sp<Scenery> mp = nullptr;
+						auto tile = map.getTile(x, y, z);
+						for (auto &o : tile->ownedObjects)
+						{
+							if (o->getType() == TileObject::Type::Scenery)
+							{
+								mp = std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
+								// Still have to double-check this because maybe we went up/down
+								// here
+								// because it didn't fit
+								if (mp->destroyed || mp->falling ||
+								    (!increment.second.x ||
+								     (increment.second.x &&
+								      !mp->type->connection[vecToIntBack.at(increment.first)])) &&
+								        (!increment.second.y ||
+								         (increment.second.y &&
+								          (int)mp->currentPosition.z ==
+								              (int)lastMp->currentPosition.z &&
+								          !mp->type->tube[vecToIntBack.at(increment.first)] &&
+								          mp->type->tile_type !=
+								              SceneryTileType::TileType::General)))
+								{
+									mp = nullptr;
+								}
+							}
+						}
+						if (!mp)
+						{
+							if (increment.second.x)
+							{
+								z += lastMp->type->hill[vecToIntForward.at(increment.first)] ? 1
+								                                                             : -1;
+								tile = map.getTile(x, y, z);
+								for (auto &o : tile->ownedObjects)
+								{
+									if (o->getType() == TileObject::Type::Scenery)
+									{
+										mp = std::static_pointer_cast<TileObjectScenery>(o)
+										         ->getOwner();
+										// Don't have to check this, we know it's ok
+									}
+								}
+								if (!mp)
+								{
+									LogError("Map part disappeared? %d %d %d", x, y, z);
+									return false;
+								}
+							}
+							else
+							{
+								bool success = false;
+								for (int zInc = -1; zInc <= 1; zInc += 2)
+								{
+									if (zInc == -lastTubeZInc)
+									{
+										continue;
+									}
+									int forward = zInc == -1 ? 5 : 4;
+									int backward = zInc == 1 ? 5 : 4;
+									if (lastMp->type->tube[forward])
+									{
+										if (lastMp->currentPosition.z + zInc < map.size.z)
+										{
+											tile = map.getTile(lastMp->currentPosition.x,
+											                   lastMp->currentPosition.y,
+											                   lastMp->currentPosition.z + zInc);
+											for (auto &o : tile->ownedObjects)
+											{
+												if (o->getType() == TileObject::Type::Scenery)
+												{
+													mp =
+													    std::static_pointer_cast<TileObjectScenery>(
+													        o)
+													        ->getOwner();
+													if (mp->destroyed || mp->falling ||
+													    !mp->type->tube[backward])
+													{
+														mp = nullptr;
+													}
+												}
+											}
+											// Found a valid tube upwards, change z and continue
+											if (mp)
+											{
+												x = lastMp->currentPosition.x;
+												y = lastMp->currentPosition.y;
+												z = lastMp->currentPosition.z + zInc;
+												success = true;
+												lastTubeZInc = zInc;
+												clearLastTubeZInc = false;
+												break;
+											}
+										}
+									}
+								}
+								if (success)
+								{
+									continue;
+								}
+								if (!mp)
+								{
+									LogError("Map part disappeared? %d %d %d", x, y, z);
+									return false;
+								}
+							}
+						}
+						mp->supportedParts.insert(lastMp->currentPosition);
+						if (!lastMPSupportedByFilled)
+						{
+							lastMp->supportedBy.emplace_back(mp->currentPosition);
+						}
+						// Found map part that won't collapse
+						if (!mp->willCollapse())
+						{
+							// stop where we stopped originally
+							break;
+						}
+						// If it's a midpart then it's also supported by us
+						mp->cancelCollapse();
+						lastMp->supportedParts.insert(mp->currentPosition);
+						if (mp->supportedBy.empty())
+						{
+							lastMPSupportedByFilled = false;
+							mp->supportedBy.emplace_back(lastMp->currentPosition);
+						}
+						else
+						{
+							lastMPSupportedByFilled = true;
+						}
+						lastMp = mp;
+						// continue
+						x += increment.first.x;
+						y += increment.first.y;
+						if (clearLastTubeZInc)
+						{
+							clearLastTubeZInc = false;
+							lastTubeZInc = 0;
+						}
+						if (lastTubeZInc != 0)
+						{
+							clearLastTubeZInc = true;
+						}
+					} while (true);
+				} // for every connected way
+				return true;
+			} // if connected to more than one way
+		}     // if more than 2 ways to connect to
+	}         // If road or tube
 
 	return false;
 }
@@ -797,8 +821,9 @@ void Scenery::die(GameState &state)
 					for (auto &v : vehiclesToDamage)
 					{
 						v->applyDamage(state,
-						               (v->falling || v->crashed || v->sliding) ? FV_COLLISION_DAMAGE_LIMIT
-						                                          : type->strength,
+						               (v->falling || v->crashed || v->sliding)
+						                   ? FV_COLLISION_DAMAGE_LIMIT
+						                   : type->strength,
 						               0);
 					}
 					if (!spawnBlocked)
@@ -977,9 +1002,11 @@ void Scenery::updateFalling(GameState &state, unsigned int ticks)
 				case TileObject::Type::Vehicle:
 				{
 					auto v = std::static_pointer_cast<TileObjectVehicle>(obj)->getVehicle();
-					v->applyDamage(
-					    state,
-					    (v->falling || v->crashed || v->sliding) ? FV_COLLISION_DAMAGE_LIMIT : type->strength, 0);
+					v->applyDamage(state,
+					               (v->falling || v->crashed || v->sliding)
+					                   ? FV_COLLISION_DAMAGE_LIMIT
+					                   : type->strength,
+					               0);
 					break;
 				}
 				default:
