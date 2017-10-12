@@ -203,7 +203,7 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 	           building.id, buyer.id);
 	auto v = building->city->placeVehicle(state, vehicle, buyer->owner, building);
 	v->homeBuilding = buyer;
-	v->setMission(state, VehicleMission::gotoBuilding(state, *v, v->homeBuilding));
+	v->setMission(state, VehicleMission::gotoBuilding(state, *v));
 	// FIXME: Economy
 	auto owner = buyer->owner;
 	owner->balance -= count * 1;
@@ -218,7 +218,7 @@ void Organisation::updateMissions(GameState &state)
 	{
 		return;
 	}
-	for (auto &m : missions)
+	for (auto &m : missions[state.current_city])
 	{
 		if (m.next < state.gameTime.getTicks())
 		{
@@ -267,9 +267,7 @@ void Organisation::updateMissions(GameState &state)
 					    state,
 					    VehicleMission::recoverVehicle(state, *rescueTransport, {&state, v.first}));
 					rescueTransport->addMission(
-					    state, VehicleMission::gotoBuilding(state, *rescueTransport,
-					                                        rescueTransport->homeBuilding),
-					    true);
+					    state, VehicleMission::gotoBuilding(state, *rescueTransport), true);
 					break;
 				}
 			}
@@ -303,9 +301,7 @@ void Organisation::updateMissions(GameState &state)
 					    state,
 					    VehicleMission::recoverVehicle(state, *rescueTransport, {&state, v.first}));
 					rescueTransport->addMission(
-					    state, VehicleMission::gotoBuilding(state, *rescueTransport,
-					                                        rescueTransport->homeBuilding),
-					    true);
+					    state, VehicleMission::gotoBuilding(state, *rescueTransport), true);
 					break;
 				}
 			}
@@ -354,6 +350,7 @@ void Organisation::updateHirableAgents(GameState &state)
 		auto a = state.agent_generator.createAgent(state, {&state, id},
 		                                           setRandomiser(state.rng, hirableTypes));
 		a->homeBuilding = hireeLocation;
+		a->city = hireeLocation->city;
 		a->enterBuilding(state, hireeLocation);
 	}
 }

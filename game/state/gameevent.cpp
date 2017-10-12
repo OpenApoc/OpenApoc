@@ -203,6 +203,9 @@ UString GameBuildingEvent::message()
 			return format("%s %s", tr("X-COM returning from mission at:"), building->name);
 		case GameEventType::MissionCompletedBuildingRaid:
 			return format("%s %s", tr("X-COM returning from raid at:"), building->name);
+		case GameEventType::BuildingAttacked:
+			return format("%s %s %s %s", tr("Building under attack :"), building->name,
+			              tr("Attacked by:"), actor->name);
 		case GameEventType::AlienSpotted:
 			return tr("Live Alien spotted.");
 		case GameEventType::CargoExpiresSoon:
@@ -283,8 +286,9 @@ GameBaseEvent::GameBaseEvent(GameEventType type, StateRef<Base> base, StateRef<O
 {
 }
 
-GameBuildingEvent::GameBuildingEvent(GameEventType type, StateRef<Building> building)
-    : GameEvent(type), building(building)
+GameBuildingEvent::GameBuildingEvent(GameEventType type, StateRef<Building> building,
+                                     StateRef<Organisation> actor)
+    : GameEvent(type), building(building), actor(actor)
 {
 }
 

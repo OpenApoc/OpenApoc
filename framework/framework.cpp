@@ -229,7 +229,13 @@ ConfigOptionBool optionAllowNearbyVehicleLootPickup("OpenApoc.NewFeature",
                                                     "Allow nearby vehicles to pick up loot", true);
 ConfigOptionBool optionAllowBuildingLootDeposit("OpenApoc.NewFeature", "AllowBuildingLootDeposit",
                                                 "Allow loot to be stashed in the building", true);
-ConfigOptionBool optionArmoredRoads("OpenApoc.NewFeature", "ArmoredRoads", "Armored roads", false);
+ConfigOptionBool optionArmoredRoads("OpenApoc.NewFeature", "ArmoredRoads", "Armored roads", true);
+ConfigOptionBool optionVanillaCityControls("OpenApoc.NewFeature", "OpenApocCityControls",
+                                           "Improved city control scheme", true);
+ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
+                                         "Stunning hurts relationships", false);
+ConfigOptionBool optionRaidHostileAction("OpenApoc.Mod", "RaidHostileAction",
+                                         "Initiating raid hurts relationships", false);
 ConfigOptionBool optionBSKLauncherSound("OpenApoc.Mod", "BSKLauncherSound",
                                         "(MOD) Original Brainsucker Launcher SFX", true);
 ConfigOptionBool optionInvulnerableRoads("OpenApoc.Mod", "InvulnerableRoads",

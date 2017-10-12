@@ -11,6 +11,7 @@
 #include "game/state/city/projectile.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
+#include "game/state/rules/scenery_tile_type.h"
 #include "game/state/tileview/collision.h"
 #include "game/state/tileview/tileobject_battlehazard.h"
 #include "game/state/tileview/tileobject_battleitem.h"
@@ -68,7 +69,7 @@ Tile::Tile(TileMap &map, Vec3<int> position, int layerCount)
 }
 
 // Position for items and units to be located on
-Vec3<float> Tile::getRestingPosition(bool large)
+Vec3<float> Tile::getRestingPosition(bool large, bool overlay)
 {
 	if (large)
 	{
@@ -79,17 +80,30 @@ Vec3<float> Tile::getRestingPosition(bool large)
 			    position.x, position.y, position.z);
 			return Vec3<float>{position.x + 0.5, position.y + 0.5, position.z};
 		}
-		float maxHeight = height;
-		maxHeight =
-		    std::max(maxHeight, map.getTile(position.x - 1, position.y, position.z)->height);
-		maxHeight =
-		    std::max(maxHeight, map.getTile(position.x, position.y - 1, position.z)->height);
-		maxHeight =
-		    std::max(maxHeight, map.getTile(position.x - 1, position.y - 1, position.z)->height);
+		float maxHeight = overlay ? overlayHeight : height;
+		if (overlay)
+		{
+			maxHeight = std::max(
+			    maxHeight, map.getTile(position.x - 1, position.y, position.z)->overlayHeight);
+			maxHeight = std::max(
+			    maxHeight, map.getTile(position.x, position.y - 1, position.z)->overlayHeight);
+			maxHeight = std::max(
+			    maxHeight, map.getTile(position.x - 1, position.y - 1, position.z)->overlayHeight);
+		}
+		else
+		{
+			maxHeight =
+			    std::max(maxHeight, map.getTile(position.x - 1, position.y, position.z)->height);
+			maxHeight =
+			    std::max(maxHeight, map.getTile(position.x, position.y - 1, position.z)->height);
+			maxHeight = std::max(maxHeight,
+			                     map.getTile(position.x - 1, position.y - 1, position.z)->height);
+		}
 
 		return Vec3<float>{position.x, position.y, position.z + maxHeight};
 	}
-	return Vec3<float>{position.x + 0.5, position.y + 0.5, position.z + height};
+	return Vec3<float>{position.x + 0.5f, position.y + 0.5f,
+	                   position.z + (overlay ? overlayHeight : height)};
 }
 
 sp<BattleMapPart> Tile::getItemSupportingObject() { return supportProviderForItems; }
@@ -343,7 +357,8 @@ void Tile::updateCityscapeParameters()
 	{
 		return;
 	}
-
+	height = 0.0f;
+	overlayHeight = 0.0f;
 	presentScenery = nullptr;
 	for (auto &o : ownedObjects)
 	{
@@ -355,6 +370,8 @@ void Tile::updateCityscapeParameters()
 				continue;
 			}
 			presentScenery = mp;
+			height = (float)mp->type->height / 16.1f;
+			overlayHeight = (float)mp->type->overlayHeight / 16.1f;
 			break;
 		}
 	}

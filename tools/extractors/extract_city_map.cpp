@@ -94,15 +94,15 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 	// Fixing buggy city
 	if (fileName == "citymap1")
 	{
-		city->initial_tiles[Vec3<int>{50, 109, 4}] = {&state, "CITYTILE_CITYMAP_78"};
+		city->initial_tiles[Vec3<int>{50, 109, 4}] = {&state, "CITYTILE_CITYMAP_83"};
 	}
 	if (fileName == "citymap2")
 	{
-		// Erase two bugs
 		city->initial_tiles.erase(Vec3<int>{47, 86, 4});
 		city->initial_tiles.erase(Vec3<int>{45, 98, 6});
 		city->initial_tiles.erase(Vec3<int>{69, 80, 4});
 		city->initial_tiles.erase(Vec3<int>{77, 80, 4});
+		city->initial_tiles[Vec3<int>{44, 71, 4}] = {&state, "CITYTILE_CITYMAP_82"};
 	}
 	if (fileName == "citymap3")
 	{

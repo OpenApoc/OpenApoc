@@ -373,6 +373,7 @@
 		<member>allowTeleporter</member>
 		<member>reRouteAttempts</member>
 		<member>pickNearest</member>
+		<member>patrolHome</member>
 		<member>pickedNearest</member>
 		<member>targetBuilding</member>
 		<member>targetVehicle</member>
@@ -936,6 +937,7 @@
 		<member>ticksDetectionTimeOut</member>
 		<member>ticksDetectionAttemptAccumulated</member>
 		<member>detected</member>
+		<member>timeOfLastAttackEvent</member>
 	</object>
 	<object>
 		<name>UFOIncursion</name>
@@ -976,6 +978,8 @@
 		<member>mass</member>
 		<member>strength</member>
 		<member>height</member>
+		<member>overlayHeight</member>
+		<member>basement</member>
 		<member>isHill</member>
 	</object>
 	<object>

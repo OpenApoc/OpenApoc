@@ -156,10 +156,26 @@ class FlyingVehicleMover : public VehicleMover
 	// Vehicle is considered idle whenever it's at goal in its tile, even if it has missions to do
 	void updateIdle(GameState &state)
 	{
-		if (vehicle.crashed || vehicle.falling)
+		// Crashed/falling/sliding aren't doing anything
+		if (vehicle.crashed || vehicle.falling || vehicle.sliding)
 		{
 			return;
 		}
+		// Vehicles on take off mission don't do anything
+		if (!vehicle.missions.empty())
+		{
+			if (vehicle.missions.front()->type == VehicleMission::MissionType::TakeOff ||
+			    vehicle.missions.front()->type == VehicleMission::MissionType::Land)
+			{
+				return;
+			}
+		}
+		// Vehicles below ground don't do anything
+		if (vehicle.position.z < 2.0f)
+		{
+			return;
+		}
+		// Don't idle every frame
 		if (vehicle.ticksAutoActionAvailable > state.gameTime.getTicks())
 		{
 			return;
@@ -175,7 +191,7 @@ class FlyingVehicleMover : public VehicleMover
 			vehicle.carriedVehicle.clear();
 		}
 
-		// Step 02: Try to move to preferred height if no mission
+		// Step 02: Try to move to preferred altitude if no mission
 		if (vehicle.missions.empty() && (int)vehicle.position.z != (int)vehicle.altitude)
 		{
 			auto targetPos = vehicle.position;
@@ -491,6 +507,7 @@ class FlyingVehicleMover : public VehicleMover
 			// Request new goal
 			if (vehicle.position == vehicle.goalPosition && vehicle.facing == vehicle.goalFacing)
 			{
+				// Need to pop before checking idle
 				vehicle.popFinishedMissions(state);
 				// Vehicle is considered idle if at goal even if there's more missions to do
 				updateIdle(state);
@@ -708,6 +725,7 @@ class GroundVehicleMover : public VehicleMover
 				}
 				else
 				{
+					// Need to pop before checking idle
 					vehicle.popFinishedMissions(state);
 					// Vehicle is considered idle if at goal even if there's more missions to do
 					updateIdle(state);
@@ -923,15 +941,8 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 				switch (atvMode)
 				{
 					case SceneryTileType::WalkMode::Into:
-						if (newPosition.z - floorf(newPosition.z) >=
-						    (tile->presentScenery->type->isHill ? 0.5f : 0.05f))
-						{
-							tryPlowThrough = false;
-						}
-						break;
 					case SceneryTileType::WalkMode::Onto:
-						if (newPosition.z - floorf(newPosition.z) >=
-						    (float)tile->presentScenery->type->height / 15.0f)
+						if (newPosition.z >= tile->getRestingPosition(false, true).z)
 						{
 							tryPlowThrough = false;
 						}
@@ -942,8 +953,7 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 							// Only try to plow through high Nones once
 							tryPlowThrough = newTile;
 						}
-						else if (newPosition.z - floorf(newPosition.z) >=
-						         (float)tile->presentScenery->type->height / 15.0f)
+						else if (newPosition.z >= tile->getRestingPosition(false, true).z)
 						{
 							tryPlowThrough = false;
 						}
@@ -1031,7 +1041,8 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 		vehicle.setPosition(newPosition);
 
 		// See if we've landed
-		auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
+		tile = vehicle.tileObject->getOwningTile();
+		auto presentScenery = tile->presentScenery;
 		if (presentScenery)
 		{
 			auto atvMode = presentScenery->type->getATVMode();
@@ -1039,18 +1050,9 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 			{
 				case SceneryTileType::WalkMode::None:
 				case SceneryTileType::WalkMode::Onto:
-				{
-					if (newPosition.z - floorf(newPosition.z) <
-					    (float)presentScenery->type->height / 15.0f)
-					{
-						vehicle.falling = false;
-					}
-					break;
-				}
 				case SceneryTileType::WalkMode::Into:
 				{
-					if (newPosition.z - floorf(newPosition.z) <
-					    (presentScenery->type->isHill ? 0.5f : 0.05f))
+					if (newPosition.z < tile->getRestingPosition(false, true).z)
 					{
 						vehicle.falling = false;
 					}
@@ -1075,24 +1077,7 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 				}
 				// Move to resting position in the tile
 				Vec3<float> newGoal = (Vec3<int>)newPosition;
-				switch (atvMode)
-				{
-					case SceneryTileType::WalkMode::None:
-					case SceneryTileType::WalkMode::Onto:
-						newGoal += Vec3<float>{0.5f, 0.5f,
-						                       (float)presentScenery->type->height / 15.0f - 0.01f};
-						break;
-					case SceneryTileType::WalkMode::Into:
-						if (presentScenery->type->isHill)
-						{
-							newGoal += Vec3<float>{0.5f, 0.5f, 0.5f};
-						}
-						else
-						{
-							newGoal += Vec3<float>{0.5f, 0.5f, 0.05f};
-						}
-						break;
-				}
+				newGoal.z = tile->getRestingPosition(false, true).z;
 				vehicle.goalWaypoints.push_back(newGoal);
 				newPosition.z = newGoal.z;
 				// Translate Z velocity into XY velocity
@@ -1107,11 +1092,16 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 				vehicle.setPosition(newPosition);
 				vehicle.goalPosition = vehicle.position;
 				vehicle.angularVelocity /= 2.0f;
-				// Flying vehicle or fell into an unpassable tile -> start sliding and eventually
-				// crash
+				// Start sliding and eventually crash if:
+				// - Flying vehicle
+				// - Ground vehicle fell into an unpassable tile
+				// - Ground vehicle fell into a tile which has different resting height and vehicle
+				// height
+				//   (which is something like a tunnel or terminus at base)
 				if (!vehicle.type->isGround() || atvMode == SceneryTileType::WalkMode::None ||
 				    (vehicle.type->type == VehicleType::Type::Road &&
-				     presentScenery->type->tile_type != SceneryTileType::TileType::Road))
+				     presentScenery->type->tile_type != SceneryTileType::TileType::Road) ||
+				    vehicle.position.z != tile->getRestingPosition(false, true).z)
 				{
 					vehicle.sliding = true;
 					vehicle.goalWaypoints.clear();
@@ -1813,16 +1803,6 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	}
 	popFinishedMissions(state);
 
-	if (this->type->type == VehicleType::Type::UFO && this->missions.empty())
-	{
-		auto alien_city = state.cities["CITYMAP_ALIEN"];
-		// Make UFOs patrol their city if we're looking at it
-		if (this->city == alien_city && state.current_city == this->city)
-		{
-			this->missions.emplace_back(VehicleMission::patrol(state, *this));
-		}
-	}
-
 	int maxShield = this->getMaxShield();
 	if (maxShield)
 	{
@@ -1853,39 +1833,74 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 			nextFrame(ticks);
 		}
 
-		bool has_active_weapon = false;
-		bool has_active_pd = false;
-		Vec2<int> arc = {0, 0};
-		Vec2<int> arcPD = {0, 0};
-		for (auto &equipment : this->equipment)
+		// Vehicles that are taking off or landing don't attempt to fire
+		bool attemptFire = true;
+		if (!type->isGround() && !missions.empty())
 		{
-			if (equipment->type->type != EquipmentSlotType::VehicleWeapon)
-				continue;
-			equipment->update(ticks);
-			if (!crashed && !falling && this->attackMode != Vehicle::AttackMode::Evasive &&
-			    equipment->canFire())
+			if (missions.front()->type == VehicleMission::MissionType::TakeOff ||
+			    missions.front()->type == VehicleMission::MissionType::Land)
 			{
-				has_active_weapon = true;
-				if (arc.x < equipment->type->firing_arc_1)
+				attemptFire = false;
+			}
+		}
+		if (attemptFire)
+		{
+			bool has_active_weapon = false;
+			bool has_active_pd = false;
+			Vec2<int> arc = {0, 0};
+			Vec2<int> arcPD = {0, 0};
+			for (auto &equipment : this->equipment)
+			{
+				if (equipment->type->type != EquipmentSlotType::VehicleWeapon)
+					continue;
+				equipment->update(ticks);
+				if (!crashed && !falling && this->attackMode != Vehicle::AttackMode::Evasive &&
+				    equipment->canFire())
 				{
-					// FIXME: Are vertical firing arcs actually working in vanilla? I think not..
-					arc = {equipment->type->firing_arc_1, 8};
+					has_active_weapon = true;
+					if (arc.x < equipment->type->firing_arc_1)
+					{
+						// FIXME: Are vertical firing arcs actually working in vanilla? I think
+						// not..
+						arc = {equipment->type->firing_arc_1, 8};
+					}
+					has_active_pd = equipment->type->point_defence;
+					if (has_active_pd && arcPD.x < equipment->type->firing_arc_1)
+					{
+						// FIXME: Are vertical firing arcs actually working in vanilla? I think
+						// not..
+						arcPD = {equipment->type->firing_arc_1, 8};
+					}
 				}
-				has_active_pd = equipment->type->point_defence;
-				if (has_active_pd && arcPD.x < equipment->type->firing_arc_1)
+			}
+
+			if (has_active_weapon)
+			{
+				// First fire where told to manually
+				if (manualFire)
 				{
-					// FIXME: Are vertical firing arcs actually working in vanilla? I think not..
-					arcPD = {equipment->type->firing_arc_1, 8};
+					fireWeaponsManual(state, arc);
+				}
+				// Try firing point defense weapons
+				else if (!has_active_pd || !fireWeaponsPointDefense(state, arcPD))
+				{
+					// Fire normal weapons
+					fireWeaponsNormal(state, arc);
 				}
 			}
 		}
+	}
+	manualFire = false;
+}
 
-		// First try firing point defense weapons
-		if (has_active_weapon && (!has_active_pd || !firePointDefenseWeapons(state, arcPD)))
-		{
-			// Fire normal weapons
-			fireNormalWeapons(state, arc);
-		}
+void Vehicle::updateEachSecond(GameState &state)
+{
+	updateCargo(state);
+	if (missions.empty() && !currentBuilding && owner != state.getPlayer())
+	{
+		setMission(state,
+		           owner == state.getAliens() ? VehicleMission::patrol(state, *this)
+		                                      : VehicleMission::gotoBuilding(state, *this));
 	}
 }
 
@@ -2169,7 +2184,7 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 			/* Can't fire at yourself */
 			continue;
 		}
-		if (otherVehicle->crashed)
+		if (otherVehicle->crashed || otherVehicle->falling || otherVehicle->sliding)
 		{
 			// Can't fire at crashed vehicles
 			continue;
@@ -2268,18 +2283,18 @@ sp<TileObjectProjectile> Vehicle::findClosestHostileMissile(GameState &state,
 	return closestEnemy;
 }
 
-bool Vehicle::firePointDefenseWeapons(GameState &state, Vec2<int> arc)
+bool Vehicle::fireWeaponsPointDefense(GameState &state, Vec2<int> arc)
 {
 	// Find something to shoot at!
 	sp<TileObjectProjectile> missile = findClosestHostileMissile(state, tileObject, arc);
 	if (missile)
 	{
-		return attackTarget(state, tileObject, missile);
+		return attackTarget(state, missile);
 	}
 	return false;
 }
 
-void Vehicle::fireNormalWeapons(GameState &state, Vec2<int> arc)
+void Vehicle::fireWeaponsNormal(GameState &state, Vec2<int> arc)
 {
 	// Find something to shoot at!
 	sp<TileObjectVehicle> enemy;
@@ -2298,11 +2313,16 @@ void Vehicle::fireNormalWeapons(GameState &state, Vec2<int> arc)
 
 	if (enemy)
 	{
-		attackTarget(state, tileObject, enemy);
+		attackTarget(state, enemy);
 	}
 }
-void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
-                           sp<TileObjectVehicle> enemyTile)
+
+void Vehicle::fireWeaponsManual(GameState &state, Vec2<int> arc)
+{
+	attackTarget(state, manualFirePosition);
+}
+
+void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile)
 {
 	static const std::set<TileObject::Type> scenerySet = {TileObject::Type::Scenery,
 	                                                      TileObject::Type::Vehicle};
@@ -2364,8 +2384,8 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 		for (int i = 0; i < 2; i++)
 		{
 			bool hitSomethingBad = false;
-			auto hitObject = vehicleTile->map.findCollision(firePosition, targetPosAdjusted,
-			                                                scenerySet, tileObject);
+			auto hitObject = tileObject->map.findCollision(firePosition, targetPosAdjusted,
+			                                               scenerySet, tileObject);
 			if (hitObject)
 			{
 				if (hitObject.obj->getType() == TileObject::Type::Vehicle)
@@ -2406,8 +2426,7 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 	return;
 }
 
-bool Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
-                           sp<TileObjectProjectile> enemyTile)
+bool Vehicle::attackTarget(GameState &state, sp<TileObjectProjectile> enemyTile)
 {
 	static const std::set<TileObject::Type> scenerySet = {TileObject::Type::Scenery,
 	                                                      TileObject::Type::Vehicle};
@@ -2474,8 +2493,8 @@ bool Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 		for (int i = 0; i < 2; i++)
 		{
 			bool hitSomethingBad = false;
-			auto hitObject = vehicleTile->map.findCollision(firePosition, targetPosAdjusted,
-			                                                scenerySet, tileObject);
+			auto hitObject = tileObject->map.findCollision(firePosition, targetPosAdjusted,
+			                                               scenerySet, tileObject);
 			if (hitObject)
 			{
 				if (hitObject.obj->getType() == TileObject::Type::Vehicle)
@@ -2514,6 +2533,60 @@ bool Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
 	return false;
 }
 
+void Vehicle::attackTarget(GameState &state, Vec3<float> target)
+{
+	auto firePosition = getMuzzleLocation();
+	auto distanceTiles = glm::length(position - target);
+
+	auto distanceVoxels = this->tileObject->getDistanceTo(target);
+
+	for (auto &eq : this->equipment)
+	{
+		// Not a weapon
+		if (eq->type->type != EquipmentSlotType::VehicleWeapon)
+		{
+			continue;
+		}
+		// Out of ammo or on cooldown
+		if (eq->canFire() == false)
+		{
+			continue;
+		}
+		// Out of range
+		if (distanceVoxels > eq->getRange())
+		{
+			continue;
+		}
+		// Check firing arc
+		if (eq->type->firing_arc_1 < 8 || eq->type->firing_arc_2 < 8)
+		{
+			Vec2<int> arc = {eq->type->firing_arc_1, 8};
+			auto facing = type->directionToVector(direction);
+			auto vecToTarget = target - position;
+			float angleXY = glm::angle(glm::normalize(Vec2<float>{facing.x, facing.y}),
+			                           glm::normalize(Vec2<float>{vecToTarget.x, vecToTarget.y}));
+			float vecToTargetXY =
+			    sqrtf(vecToTarget.x * vecToTarget.x + vecToTarget.y * vecToTarget.y);
+			float angleZ = glm::angle(Vec2<float>{1.0f, 0.0f},
+			                          glm::normalize(Vec2<float>{vecToTargetXY, vecToTarget.z}));
+			if (angleXY > (float)arc.x * (float)M_PI / 8.0f ||
+			    angleZ > (float)arc.y * (float)M_PI / 8.0f)
+			{
+				continue;
+			}
+		}
+
+		// Cancel cloak
+		cloakTicksAccumulated = 0;
+
+		// Fire
+		eq->fire(state, target);
+		return;
+	}
+
+	return;
+}
+
 float Vehicle::getFiringRange() const
 {
 	float range = 0;
@@ -2546,6 +2619,12 @@ void Vehicle::setPosition(const Vec3<float> &pos)
 	{
 		this->shadowObject->setPosition(pos);
 	}
+}
+
+void Vehicle::setManualFirePosition(const Vec3<float> &pos)
+{
+	manualFirePosition = pos;
+	manualFire = true;
 }
 
 bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
@@ -2656,7 +2735,6 @@ bool Vehicle::getNewGoal(GameState &state)
 {
 	bool popped = false;
 	bool acquired = false;
-	Vec3<float> nextGoal;
 	// Pop finished missions if present
 	popped = popFinishedMissions(state);
 	do
@@ -3002,7 +3080,8 @@ bool Vehicle::canAddEquipment(Vec2<int> pos, StateRef<VEquipmentType> type) cons
 	return true;
 }
 
-void Vehicle::addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentType> type)
+sp<VEquipment> Vehicle::addEquipment(GameState &state, Vec2<int> pos,
+                                     StateRef<VEquipmentType> equipmentType)
 {
 	// We can't check this here, as some of the non-buyable vehicles have insane initial equipment
 	// layouts
@@ -3026,47 +3105,70 @@ void Vehicle::addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentT
 	// If this was not within a slow fail
 	if (!slotFound)
 	{
-		LogError("Equipping \"%s\" on \"%s\" at %s failed: No valid slot", type->name, this->name,
-		         pos);
-		return;
+		LogError("Equipping \"%s\" on \"%s\" at %s failed: No valid slot", equipmentType->name,
+		         this->name, pos);
+		return nullptr;
 	}
 
-	switch (type->type)
+	switch (equipmentType->type)
 	{
 		case EquipmentSlotType::VehicleEngine:
 		{
 			auto engine = mksp<VEquipment>();
-			engine->type = type;
+			engine->type = equipmentType;
 			this->equipment.emplace_back(engine);
 			engine->equippedPosition = slotOrigin;
-			LogInfo("Equipped \"%s\" with engine \"%s\"", this->name, type->name);
-			break;
+			LogInfo("Equipped \"%s\" with engine \"%s\"", this->name, equipmentType->name);
+			return engine;
 		}
 		case EquipmentSlotType::VehicleWeapon:
 		{
 			auto thisRef = StateRef<Vehicle>(&state, shared_from_this());
 			auto weapon = mksp<VEquipment>();
-			weapon->type = type;
+			weapon->type = equipmentType;
 			weapon->owner = thisRef;
-			weapon->ammo = type->max_ammo;
+			weapon->ammo = equipmentType->max_ammo;
 			this->equipment.emplace_back(weapon);
 			weapon->equippedPosition = slotOrigin;
-			LogInfo("Equipped \"%s\" with weapon \"%s\"", this->name, type->name);
-			break;
+			LogInfo("Equipped \"%s\" with weapon \"%s\"", this->name, equipmentType->name);
+			return weapon;
 		}
 		case EquipmentSlotType::VehicleGeneral:
 		{
 			auto equipment = mksp<VEquipment>();
-			equipment->type = type;
-			LogInfo("Equipped \"%s\" with general equipment \"%s\"", this->name, type->name);
+			equipment->type = equipmentType;
+			LogInfo("Equipped \"%s\" with general equipment \"%s\"", this->name,
+			        equipmentType->name);
 			equipment->equippedPosition = slotOrigin;
 			this->equipment.emplace_back(equipment);
-			break;
+			return equipment;
 		}
 		default:
-			LogError("Equipment \"%s\" for \"%s\" at pos (%d,%d} has invalid type", type->name,
-			         this->name, pos.x, pos.y);
+			LogError("Equipment \"%s\" for \"%s\" at pos (%d,%d} has invalid type",
+			         equipmentType->name, this->name, pos.x, pos.y);
+			return nullptr;
 	}
+}
+
+sp<VEquipment> Vehicle::addEquipment(GameState &state, StateRef<VEquipmentType> equipmentType)
+{
+	Vec2<int> pos;
+	bool slotFound = false;
+	for (auto &slot : type->equipment_layout_slots)
+	{
+		if (canAddEquipment(slot.bounds.p0, equipmentType))
+		{
+			pos = slot.bounds.p0;
+			slotFound = true;
+			break;
+		}
+	}
+	if (!slotFound)
+	{
+		return nullptr;
+	}
+
+	return addEquipment(state, pos, equipmentType);
 }
 
 void Vehicle::removeEquipment(sp<VEquipment> object)

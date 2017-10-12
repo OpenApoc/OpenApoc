@@ -819,6 +819,28 @@ void Building::alienGrowth(GameState &state)
 	detected = detected && hasAliens();
 }
 
+void Building::underAttack(GameState &state, StateRef<Organisation> attacker)
+{
+	if (owner->isRelatedTo(attacker) == Organisation::Relation::Hostile)
+	{
+		std::list<StateRef<Vehicle>> toLaunch;
+		for (auto v : currentVehicles)
+		{
+			toLaunch.push_back(v);
+		}
+		for (auto v : toLaunch)
+		{
+			v->setMission(state, VehicleMission::patrol(state, *v, true, 5));
+		}
+		if (timeOfLastAttackEvent + TICKS_ATTACK_EVENT_TIMEOUT < state.gameTime.getTicks())
+		{
+			timeOfLastAttackEvent = state.gameTime.getTicks();
+			fw().pushEvent(new GameBuildingEvent(GameEventType::BuildingAttacked,
+			                                     {&state, shared_from_this()}, attacker));
+		}
+	}
+}
+
 void Building::collapse(GameState &state) { LogWarning("Collpase the whole building!"); }
 
 } // namespace OpenApoc

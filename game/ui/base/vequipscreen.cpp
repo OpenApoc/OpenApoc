@@ -88,13 +88,41 @@ void VEquipScreen::begin()
 
 void VEquipScreen::pause() {}
 
-void VEquipScreen::resume() {}
+void VEquipScreen::resume()
+{
+	modifierLShift = false;
+	modifierRShift = false;
+}
 
 void VEquipScreen::finish() {}
 
 void VEquipScreen::eventOccurred(Event *e)
 {
 	form->eventOccured(e);
+
+	// Modifiers
+	if (e->type() == EVENT_KEY_DOWN)
+	{
+		if (e->keyboard().KeyCode == SDLK_RSHIFT)
+		{
+			modifierRShift = true;
+		}
+		if (e->keyboard().KeyCode == SDLK_LSHIFT)
+		{
+			modifierLShift = true;
+		}
+	}
+	if (e->type() == EVENT_KEY_UP)
+	{
+		if (e->keyboard().KeyCode == SDLK_RSHIFT)
+		{
+			modifierRShift = false;
+		}
+		if (e->keyboard().KeyCode == SDLK_LSHIFT)
+		{
+			modifierLShift = false;
+		}
+	}
 
 	if (e->type() == EVENT_KEY_DOWN)
 	{
@@ -207,6 +235,12 @@ void VEquipScreen::eventOccurred(Event *e)
 			this->paperDoll->updateEquipment();
 			// FIXME: Return ammo to inventory
 			// FIXME: what happens if we don't have the stores to return?
+
+			// Immediate action: put to the base
+			if (modifierLShift || modifierRShift)
+			{
+				this->draggedEquipment = nullptr;
+			}
 			return;
 		}
 
@@ -218,6 +252,21 @@ void VEquipScreen::eventOccurred(Event *e)
 				// Dragging an object doesn't (Yet) remove it from the inventory
 				this->draggedEquipment = pair.second;
 				this->draggedEquipmentOffset = pair.first.p0 - mousePos;
+
+				// Immediate action: try put on vehicle
+				if (modifierLShift || modifierRShift)
+				{
+					if (this->selected->addEquipment(*state, this->draggedEquipment))
+					{
+						base->inventoryVehicleEquipment[draggedEquipment->id]--;
+						this->paperDoll->updateEquipment();
+						// FIXME: Add ammo to equipment
+					}
+					else
+					{
+						this->draggedEquipment = nullptr;
+					}
+				}
 				return;
 			}
 		}

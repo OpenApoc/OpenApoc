@@ -391,8 +391,8 @@ void GameState::validateScenery()
 			if (sc.second->getATVMode() == SceneryTileType::WalkMode::Onto &&
 			    sc.second->height == 0)
 			{
-				LogError("City %s Scenery %s has no height and WalkMode::Onto? Missing voxelmap?",
-				         c.first, sc.first);
+				/*LogError("City %s Scenery %s has no height and WalkMode::Onto? Missing voxelmap?",
+				         c.first, sc.first);*/
 			}
 		}
 	}
@@ -405,7 +405,7 @@ void GameState::fillOrgStartingProperty()
 	for (auto &o : this->organisations)
 	{
 		o.second->updateVehicleAgentPark(*this);
-		for (auto &m : o.second->missions)
+		for (auto &m : o.second->missions[{this, "CITYMAP_HUMAN"}])
 		{
 			m.next += TICKS_PER_HOUR * 12 + randBoundsInclusive(rng, (uint64_t)0,
 			                                                    m.pattern.maxIntervalRepeat -
@@ -679,11 +679,9 @@ void GameState::update(unsigned int ticks)
 		}
 
 		Trace::start("GameState::update::cities");
-		for (auto &c : this->cities)
-		{
-			c.second->update(*this, ticks);
-		}
+		current_city->update(*this, ticks);
 		Trace::end("GameState::update::cities");
+
 		Trace::start("GameState::update::organisations");
 		for (auto &o : this->organisations)
 		{
@@ -694,20 +692,27 @@ void GameState::update(unsigned int ticks)
 		Trace::start("GameState::update::vehicles");
 		for (auto &v : this->vehicles)
 		{
-			v.second->update(*this, ticks);
+			if (v.second->city == current_city)
+			{
+				v.second->update(*this, ticks);
+			}
 		}
 		Trace::end("GameState::update::vehicles");
+
 		Trace::start("GameState::update::agents");
 		for (auto &a : this->agents)
 		{
-			a.second->update(*this, ticks);
+			if (a.second->city == current_city)
+			{
+				a.second->update(*this, ticks);
+			}
 		}
 		Trace::end("GameState::update::agents");
 
 		gameTime.addTicks(ticks);
-		if (gameTime.fiveSecondsPassed())
+		if (gameTime.secondPassed())
 		{
-			this->updateEndOfFiveSeconds();
+			this->updateEndOfSecond();
 		}
 		if (gameTime.fiveMinutesPassed())
 		{
@@ -729,26 +734,32 @@ void GameState::update(unsigned int ticks)
 	}
 }
 
-void GameState::updateEndOfFiveSeconds()
+void GameState::updateEndOfSecond()
 {
-	Trace::start("GameState::updateEndOfFiveSeconds::buildings");
+	Trace::start("GameState::updateEachSecond::buildings");
 	for (auto &b : current_city->buildings)
 	{
 		b.second->updateCargo(*this);
 	}
-	Trace::end("GameState::updateEndOfFiveSeconds::buildings");
-	Trace::start("GameState::updateEndOfFiveSeconds::vehicles");
+	Trace::end("GameState::updateEachSecond::buildings");
+	Trace::start("GameState::updateEachSecond::vehicles");
 	for (auto &v : vehicles)
 	{
-		v.second->updateCargo(*this);
+		if (v.second->city == current_city)
+		{
+			v.second->updateEachSecond(*this);
+		}
 	}
-	Trace::end("GameState::updateEndOfFiveSeconds::vehicles");
-	Trace::start("GameState::updateEndOfFiveSeconds::agents");
+	Trace::end("GameState::updateEachSecond::vehicles");
+	Trace::start("GameState::updateEachSecond::agents");
 	for (auto &a : this->agents)
 	{
-		a.second->updateFiveSeconds(*this);
+		if (a.second->city == current_city)
+		{
+			a.second->updateEachSecond(*this);
+		}
 	}
-	Trace::end("GameState::updateEndOfFiveSeconds::agents");
+	Trace::end("GameState::updateEachSecond::agents");
 }
 
 void GameState::updateEndOfFiveMinutes()
@@ -904,7 +915,6 @@ void GameState::updateEndOfWeek()
 
 					auto v = city->placeVehicle(*this, {this, (*vehicleType).first}, alienOrg,
 					                            {xyPos(rng), xyPos(rng), city->map->size.z - 1});
-					v->missions.emplace_front(VehicleMission::patrol(*this, *v));
 				}
 			}
 		}

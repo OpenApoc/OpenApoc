@@ -236,7 +236,9 @@ class Vehicle : public StateObject,
 	bool isDead() const;
 
 	bool canAddEquipment(Vec2<int> pos, StateRef<VEquipmentType> type) const;
-	void addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentType> type);
+	sp<VEquipment> addEquipment(GameState &state, Vec2<int> pos,
+	                            StateRef<VEquipmentType> equipmentType);
+	sp<VEquipment> addEquipment(GameState &state, StateRef<VEquipmentType> equipmentType);
 	void removeEquipment(sp<VEquipment> object);
 
 	bool applyDamage(GameState &state, int damage, float armour);
@@ -248,12 +250,12 @@ class Vehicle : public StateObject,
 	sp<TileObjectProjectile> findClosestHostileMissile(GameState &state,
 	                                                   sp<TileObjectVehicle> vehicleTile,
 	                                                   Vec2<int> arc = {8, 8});
-	bool firePointDefenseWeapons(GameState &state, Vec2<int> arc = {8, 8});
-	void fireNormalWeapons(GameState &state, Vec2<int> arc = {8, 8});
-	void attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
-	                  sp<TileObjectVehicle> enemyTile);
-	bool attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
-	                  sp<TileObjectProjectile> enemyTile);
+	bool fireWeaponsPointDefense(GameState &state, Vec2<int> arc = {8, 8});
+	void fireWeaponsNormal(GameState &state, Vec2<int> arc = {8, 8});
+	void fireWeaponsManual(GameState &state, Vec2<int> arc = {8, 8});
+	void attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile);
+	bool attackTarget(GameState &state, sp<TileObjectProjectile> enemyTile);
+	void attackTarget(GameState &state, Vec3<float> target);
 	float getFiringRange() const;
 
 	Vec3<float> getMuzzleLocation() const;
@@ -295,6 +297,8 @@ class Vehicle : public StateObject,
 
 	void setPosition(const Vec3<float> &pos);
 
+	void setManualFirePosition(const Vec3<float> &pos);
+
 	// Adds mission to list of missions, returns true if successful
 	bool addMission(GameState &state, VehicleMission *mission, bool toBack = false);
 	// Replaces all missions with provided mission, returns true if successful
@@ -306,6 +310,7 @@ class Vehicle : public StateObject,
 	bool getNewGoal(GameState &state);
 
 	void update(GameState &state, unsigned int ticks);
+	void updateEachSecond(GameState &state);
 	void updateCargo(GameState &state);
 	void updateSprite(GameState &state);
 
@@ -323,6 +328,12 @@ class Vehicle : public StateObject,
 	// Following members are not serialized, but rather are set in initCity method
 
 	sp<std::vector<sp<Image>>> strategyImages;
+
+	// Following members are not serialized, since there is no need
+
+  private:
+	Vec3<float> manualFirePosition = {0.0f, 0.0f, 0.0f};
+	bool manualFire = false;
 };
 
 }; // namespace OpenApoc

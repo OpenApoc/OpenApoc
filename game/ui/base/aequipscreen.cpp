@@ -319,6 +319,8 @@ void AEquipScreen::resume()
 {
 	modifierLCtrl = false;
 	modifierRCtrl = false;
+	modifierLShift = false;
+	modifierRShift = false;
 }
 
 void AEquipScreen::finish() {}
@@ -338,6 +340,14 @@ void AEquipScreen::eventOccurred(Event *e)
 		{
 			modifierLCtrl = true;
 		}
+		if (e->keyboard().KeyCode == SDLK_RSHIFT)
+		{
+			modifierRShift = true;
+		}
+		if (e->keyboard().KeyCode == SDLK_LSHIFT)
+		{
+			modifierLShift = true;
+		}
 	}
 	if (e->type() == EVENT_KEY_UP)
 	{
@@ -348,6 +358,14 @@ void AEquipScreen::eventOccurred(Event *e)
 		if (e->keyboard().KeyCode == SDLK_LCTRL)
 		{
 			modifierLCtrl = false;
+		}
+		if (e->keyboard().KeyCode == SDLK_RSHIFT)
+		{
+			modifierRShift = false;
+		}
+		if (e->keyboard().KeyCode == SDLK_LSHIFT)
+		{
+			modifierLShift = false;
 		}
 	}
 
@@ -505,96 +523,13 @@ void AEquipScreen::eventOccurred(Event *e)
 		// Picking up items
 		if (e->type() == EVENT_MOUSE_DOWN && !this->draggedEquipment)
 		{
-			Vec2<int> mousePos{e->mouse().X, e->mouse().Y};
-
-			// Check if we're over any equipment in the paper doll
-			auto slotPos = paperDoll->getSlotPositionFromScreenPosition(mousePos);
-			if (tryPickUpItem(currentAgent, slotPos, modifierLCtrl || modifierRCtrl))
-			{
-				draggedEquipmentOffset =
-				    paperDoll->getScreenPositionFromSlotPosition(slotPos) - mousePos;
-				paperDoll->updateEquipment();
-				displayAgent(currentAgent);
-				updateAgentControl(currentAgent);
-			}
-			else // no doll equipment under cursor
-			{
-				// Check if we're over any equipment in the list at the bottom
-				auto posWithinInventory = mousePos;
-				posWithinInventory.x += inventoryPage * inventoryControl->Size.x;
-				if (tryPickUpItem(posWithinInventory))
-				{
-					refreshInventoryItems();
-				}
-			}
+			handleItemPickup({e->mouse().X, e->mouse().Y});
 		}
 
 		// Placing items
 		if (e->type() == EVENT_MOUSE_UP && draggedEquipment)
 		{
-			// Are we over the grid? If so try to place it on the agent.
-			auto paperDollControl = paperDoll;
-			Vec2<int> equipOffset = paperDollControl->Location + formMain->Location;
-			Vec2<int> equipmentPos = Vec2<int>{e->mouse().X, e->mouse().Y} + draggedEquipmentOffset;
-			// If this is within the grid try to snap it
-			Vec2<int> equipmentGridPos = equipmentPos - equipOffset;
-			equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
-
-			auto draggedFrom = draggedEquipmentOrigin;
-			auto draggedType =
-			    (draggedFrom.x == -1 && draggedFrom.y == -1) ? draggedEquipment->type : nullptr;
-			auto draggedAlternative = draggedEquipmentAlternativePickup;
-
-			bool insufficientTU = false;
-			if (tryPlaceItem(currentAgent, equipmentGridPos, &insufficientTU))
-			{
-				displayAgent(currentAgent);
-				updateAgentControl(currentAgent);
-				this->paperDoll->updateEquipment();
-			}
-			else
-			{
-				refreshInventoryItems();
-			}
-			if (insufficientTU)
-			{
-				auto message_box = mksp<MessageBox>(
-				    tr("NOT ENOUGH TU'S"), format("%s %d", tr("TU cost per item picked up:"),
-				                                  currentAgent->unit->getPickupCost()),
-				    MessageBox::ButtonOptions::Ok);
-				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
-			}
-			// Other agents
-			for (auto &agent : selectedAgents)
-			{
-				if (agent == currentAgent)
-				{
-					continue;
-				}
-				bool pickedUp = draggedType ? tryPickUpItem(draggedType)
-				                            : tryPickUpItem(agent, draggedFrom, draggedAlternative);
-				if (!pickedUp)
-				{
-					continue;
-				}
-				if (tryPlaceItem(agent, equipmentGridPos))
-				{
-					updateAgentControl(agent);
-					// Refresh if picked up from ground and placed on agent
-					if (draggedType)
-					{
-						refreshInventoryItems();
-					}
-				}
-				else
-				{
-					// Refresh if picked up from agent and placed on ground
-					if (!draggedType)
-					{
-						refreshInventoryItems();
-					}
-				}
-			}
+			handleItemPlacement({e->mouse().X, e->mouse().Y});
 		}
 	}
 }
@@ -692,6 +627,177 @@ void AEquipScreen::render()
 }
 
 bool AEquipScreen::isTransition() { return false; }
+
+void AEquipScreen::handleItemPickup(Vec2<int> mousePos)
+{
+	// Expecting to have an agent
+	auto currentAgent = selectedAgents.front();
+
+	// Check if we're over any equipment in the paper doll
+	auto slotPos = paperDoll->getSlotPositionFromScreenPosition(mousePos);
+	if (tryPickUpItem(currentAgent, slotPos, modifierLCtrl || modifierRCtrl))
+	{
+		draggedEquipmentOffset = paperDoll->getScreenPositionFromSlotPosition(slotPos) - mousePos;
+		paperDoll->updateEquipment();
+		displayAgent(currentAgent);
+		updateAgentControl(currentAgent);
+
+		// Immediate action: put at the ground
+		if (modifierLShift || modifierLShift)
+		{
+			handleItemPlacement(false);
+		}
+	}
+	else // no doll equipment under cursor
+	{
+		// Check if we're over any equipment in the list at the bottom
+		auto posWithinInventory = mousePos;
+		posWithinInventory.x += inventoryPage * inventoryControl->Size.x;
+		if (tryPickUpItem(posWithinInventory))
+		{
+			refreshInventoryItems();
+
+			// Immediate action: try put in the agent
+			if (modifierLShift || modifierLShift)
+			{
+				handleItemPlacement(true);
+			}
+		}
+	}
+}
+
+void AEquipScreen::handleItemPlacement(Vec2<int> mousePos)
+{
+	// Expecting to have an agent
+	auto currentAgent = selectedAgents.front();
+
+	// Are we over the grid? If so try to place it on the agent.
+	auto paperDollControl = paperDoll;
+	Vec2<int> equipOffset = paperDollControl->Location + formMain->Location;
+	Vec2<int> equipmentPos = mousePos + draggedEquipmentOffset;
+	// If this is within the grid try to snap it
+	Vec2<int> equipmentGridPos = equipmentPos - equipOffset;
+	equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
+
+	auto draggedFrom = draggedEquipmentOrigin;
+	auto draggedType =
+	    (draggedFrom.x == -1 && draggedFrom.y == -1) ? draggedEquipment->type : nullptr;
+	auto draggedAlternative = draggedEquipmentAlternativePickup;
+
+	bool insufficientTU = false;
+	if (tryPlaceItem(currentAgent, equipmentGridPos, &insufficientTU))
+	{
+		displayAgent(currentAgent);
+		updateAgentControl(currentAgent);
+		this->paperDoll->updateEquipment();
+	}
+	else
+	{
+		refreshInventoryItems();
+	}
+	if (insufficientTU)
+	{
+		auto message_box = mksp<MessageBox>(
+		    tr("NOT ENOUGH TU'S"),
+		    format("%s %d", tr("TU cost per item picked up:"), currentAgent->unit->getPickupCost()),
+		    MessageBox::ButtonOptions::Ok);
+		fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+	}
+	// Other agents
+	for (auto &agent : selectedAgents)
+	{
+		if (agent == currentAgent)
+		{
+			continue;
+		}
+		bool pickedUp = draggedType ? tryPickUpItem(draggedType)
+		                            : tryPickUpItem(agent, draggedFrom, draggedAlternative);
+		if (!pickedUp)
+		{
+			continue;
+		}
+		if (tryPlaceItem(agent, equipmentGridPos))
+		{
+			updateAgentControl(agent);
+			// Refresh if picked up from ground and placed on agent
+			if (draggedType)
+			{
+				refreshInventoryItems();
+			}
+		}
+		else
+		{
+			// Refresh if picked up from agent and placed on ground
+			if (!draggedType)
+			{
+				refreshInventoryItems();
+			}
+		}
+	}
+}
+
+void AEquipScreen::handleItemPlacement(bool toAgent)
+{
+	// Expecting to have an agent
+	auto currentAgent = selectedAgents.front();
+
+	// Are we over the grid? If so try to place it on the agent.
+	auto draggedFrom = draggedEquipmentOrigin;
+	auto draggedType =
+	    (draggedFrom.x == -1 && draggedFrom.y == -1) ? draggedEquipment->type : nullptr;
+	auto draggedAlternative = draggedEquipmentAlternativePickup;
+
+	bool insufficientTU = false;
+	if (tryPlaceItem(currentAgent, toAgent, &insufficientTU))
+	{
+		displayAgent(currentAgent);
+		updateAgentControl(currentAgent);
+		this->paperDoll->updateEquipment();
+	}
+	else
+	{
+		refreshInventoryItems();
+	}
+	if (insufficientTU)
+	{
+		auto message_box = mksp<MessageBox>(
+		    tr("NOT ENOUGH TU'S"),
+		    format("%s %d", tr("TU cost per item picked up:"), currentAgent->unit->getPickupCost()),
+		    MessageBox::ButtonOptions::Ok);
+		fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+	}
+	// Other agents
+	for (auto &agent : selectedAgents)
+	{
+		if (agent == currentAgent)
+		{
+			continue;
+		}
+		bool pickedUp = draggedType ? tryPickUpItem(draggedType)
+		                            : tryPickUpItem(agent, draggedFrom, draggedAlternative);
+		if (!pickedUp)
+		{
+			continue;
+		}
+		if (tryPlaceItem(agent, toAgent))
+		{
+			updateAgentControl(agent);
+			// Refresh if picked up from ground and placed on agent
+			if (draggedType)
+			{
+				refreshInventoryItems();
+			}
+		}
+		else
+		{
+			// Refresh if picked up from agent and placed on ground
+			if (!draggedType)
+			{
+				refreshInventoryItems();
+			}
+		}
+	}
+}
 
 void AEquipScreen::selectAgent(sp<Agent> agent, bool inverse, bool additive)
 {
@@ -1550,6 +1656,64 @@ bool AEquipScreen::tryPlaceItem(sp<Agent> agent, Vec2<int> slotPos, bool *insuff
 				}
 			}
 		}
+	}
+	else // cannot add to agent
+	{
+		addItemToInventory(draggedEquipment);
+	}
+	this->draggedEquipment = nullptr;
+	return canAdd;
+}
+
+bool AEquipScreen::tryPlaceItem(sp<Agent> agent, bool toAgent, bool *insufficientTU)
+{
+	Vec2<int> slotPos = {-1, 0};
+	bool canAdd = toAgent;
+	if (canAdd)
+	{
+		if (slotPos.x == -1 && draggedEquipment->type->type == AEquipmentType::Type::Weapon)
+		{
+			slotPos =
+			    agent->findFirstSlotByType(EquipmentSlotType::RightHand, draggedEquipment->type);
+		}
+		if (slotPos.x == -1 && draggedEquipment->type->type == AEquipmentType::Type::Weapon)
+		{
+			slotPos =
+			    agent->findFirstSlotByType(EquipmentSlotType::RightHand, draggedEquipment->type);
+		}
+		if (slotPos.x == -1 && draggedEquipment->type->type == AEquipmentType::Type::Armor)
+		{
+			slotPos = agent->findFirstSlotByType(
+			    AgentType::getArmorSlotType(draggedEquipment->type->body_part),
+			    draggedEquipment->type);
+		}
+		if (slotPos.x == -1 && draggedEquipment->type->type != AEquipmentType::Type::Weapon)
+		{
+			slotPos =
+			    agent->findFirstSlotByType(EquipmentSlotType::General, draggedEquipment->type);
+		}
+		if (slotPos.x == -1)
+		{
+			slotPos = agent->findFirstSlot(draggedEquipment->type);
+		}
+		canAdd = agent->canAddEquipment(slotPos, draggedEquipment->type);
+	}
+	if (canAdd && agent->unit && agent->unit->tileObject &&
+	    state->current_battle->mode == Battle::Mode::TurnBased && draggedEquipmentOrigin.x == -1 &&
+	    draggedEquipmentOrigin.y == -1 &&
+	    !agent->unit->spendTU(*state, agent->unit->getPickupCost()))
+	{
+		canAdd = false;
+		if (insufficientTU)
+		{
+			*insufficientTU = true;
+		}
+	}
+	// Can add item
+	if (canAdd)
+	{
+		// Adding to empty slot
+		agent->addEquipment(*state, slotPos, this->draggedEquipment);
 	}
 	else // cannot add to agent
 	{

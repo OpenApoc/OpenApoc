@@ -362,22 +362,23 @@ class Agent : public StateObject,
 
 	std::list<up<AgentMission>> missions;
 	std::list<sp<AEquipment>> equipment;
-	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type,
+	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> equipmentType,
 	                     EquipmentSlotType &slotType) const;
-	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> type) const;
+	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> equipmentType) const;
 	Vec2<int> findFirstSlotByType(EquipmentSlotType slotType,
-	                              StateRef<AEquipmentType> type = nullptr);
+	                              StateRef<AEquipmentType> equipmentType = nullptr);
+	Vec2<int> findFirstSlot(StateRef<AEquipmentType> equipmentType = nullptr);
 	// Add equipment by type to the first available slot of any type
-	sp<AEquipment> addEquipmentByType(GameState &state, StateRef<AEquipmentType> type,
+	sp<AEquipment> addEquipmentByType(GameState &state, StateRef<AEquipmentType> equipmentType,
 	                                  bool allowFailure);
 	// Add equipment to the first available slot of a specific type
-	sp<AEquipment> addEquipmentByType(GameState &state, StateRef<AEquipmentType> type,
+	sp<AEquipment> addEquipmentByType(GameState &state, StateRef<AEquipmentType> equipmentType,
 	                                  EquipmentSlotType slotType, bool allowFailure);
 	// Add equipment by type to a specific position
 	sp<AEquipment> addEquipmentByType(GameState &state, Vec2<int> pos,
-	                                  StateRef<AEquipmentType> type);
+	                                  StateRef<AEquipmentType> equipmentType);
 	// Add equipment as ammo
-	sp<AEquipment> addEquipmentAsAmmoByType(StateRef<AEquipmentType> type);
+	sp<AEquipment> addEquipmentAsAmmoByType(StateRef<AEquipmentType> equipmentType);
 
 	// Add equipment to the first available slot of a specific type
 	void addEquipment(GameState &state, sp<AEquipment> object, EquipmentSlotType slotType);
@@ -397,12 +398,17 @@ class Agent : public StateObject,
 	// Replaces all missions with provided mission, returns true if successful
 	bool setMission(GameState &state, AgentMission *mission);
 
+	// Pops all finished missions, returns true if popped
+	bool popFinishedMissions(GameState &state);
+	// Get new goal for vehicle position or facing
+	bool getNewGoal(GameState &state);
+
 	void die(GameState &state, bool silent = false);
 	bool isDead() const;
 
 	// Update agent in city
 	void update(GameState &state, unsigned ticks);
-	void updateFiveSeconds(GameState &state);
+	void updateEachSecond(GameState &state);
 	void updateDaily(GameState &state);
 	void updateMovement(GameState &state, unsigned ticks);
 
@@ -415,10 +421,10 @@ class Agent : public StateObject,
 	StateRef<AEquipmentType>
 	getDominantItemInHands(GameState &state,
 	                       StateRef<AEquipmentType> itemLastFired = nullptr) const;
-	sp<AEquipment> getFirstItemInSlot(EquipmentSlotType type, bool lazy = true) const;
+	sp<AEquipment> getFirstItemInSlot(EquipmentSlotType equipmentSlotType, bool lazy = true) const;
 	sp<AEquipment> getFirstShield(GameState &state) const;
-	sp<AEquipment> getFirstItemByType(StateRef<AEquipmentType> type) const;
-	sp<AEquipment> getFirstItemByType(AEquipmentType::Type type) const;
+	sp<AEquipment> getFirstItemByType(StateRef<AEquipmentType> equipmentType) const;
+	sp<AEquipment> getFirstItemByType(AEquipmentType::Type itemType) const;
 
 	StateRef<BattleUnitImagePack> getImagePack(BodyPart bodyPart) const;
 

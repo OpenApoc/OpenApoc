@@ -91,9 +91,12 @@ class Tile
 
 	// Vars
 
-	// Height, 0-0.975, of the tile's ground and feature's height
+	// Height, in battle its 0-0.975, of the tile's ground and feature's height (height / 40)
+	//         in city its 0-0.999, of the tile's scenery height (height / 16.1)
 	// Height cannot be 1 as that is equal to 0.000 on the tile below
 	float height = 0.0f;
+	// Same but for city overlays
+	float overlayHeight = 0.0f;
 	// Movement cost through the tile's ground (or feature)
 	int movementCostIn = 4;
 	// Movement cost to walk on the level above this, if next level is empty and this height is
@@ -153,7 +156,7 @@ class Tile
 	// Returns items that can be collected by standing in this tile)
 	std::list<sp<BattleItem>> getItems();
 	// Returns resting position for items and units in the tile
-	Vec3<float> getRestingPosition(bool large = false);
+	Vec3<float> getRestingPosition(bool large = false, bool overlay = false);
 	// Returns the object that provides support (resting position) for items
 	sp<BattleMapPart> getItemSupportingObject();
 	// Returns if the tile is passable (including side tiles for large)

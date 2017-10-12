@@ -94,12 +94,16 @@ std::list<std::pair<UString, UString>> openApocList = {
     {"OpenApoc.NewFeature.EnforceCargoLimits", "(N) Enforce vehicle cargo limits"},
     {"OpenApoc.NewFeature.AllowNearbyVehicleLootPickup", "Allow nearby vehicles to pick up loot"},
     {"OpenApoc.NewFeature.AllowBuildingLootDeposit", "Allow loot to be stashed in the building"},
-    {"OpenApoc.NewFeature.ArmoredRoads", "Armored roads"},
+    {"OpenApoc.NewFeature.ArmoredRoads", "Armored roads (20 armor value)"},
     {"OpenApoc.NewFeature.CrashingGroundVehicles", "Unsupported ground vehicles crash"},
+    {"OpenApoc.NewFeature.OpenApocCityControls", "Improved city control scheme"},
+    {"OpenApoc.Mod.StunHostileAction", "(M) Stunning hurts relationships"},
+    {"OpenApoc.Mod.RaidHostileAction", "(M) Initiating raid hurts relationships"},
     {"OpenApoc.Mod.CrashingVehicles", "(M) Vehicles crash on low HP"},
     {"OpenApoc.Mod.InvulnerableRoads", "(M) Invulnerable roads"},
     {"OpenApoc.Mod.ATVTank", "(M) Griffon becomes All-Terrain"},
     {"OpenApoc.Mod.BSKLauncherSound", "(M) Original Brainsucker Launcher SFX"},
+
 };
 
 std::vector<UString> listNames = {"Message Toggles", "OpenApoc Features"};

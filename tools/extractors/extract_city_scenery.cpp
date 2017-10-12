@@ -94,6 +94,25 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 
 		auto tile = mksp<SceneryTileType>();
 
+		tile->overlayHeight = entry.height;
+		tile->height = entry.height;
+
+		switch (entry.walk_type)
+		{
+			case WALK_TYPE_NONE:
+				tile->walk_mode = SceneryTileType::WalkMode::None;
+				break;
+			case WALK_TYPE_INTO:
+				tile->walk_mode = SceneryTileType::WalkMode::Into;
+				tile->height = 0;
+				break;
+			case WALK_TYPE_ONTO:
+				tile->walk_mode = SceneryTileType::WalkMode::Onto;
+				break;
+			default:
+				LogError("Unexpected scenery walk type %d for ID %s", (int)entry.walk_type, id);
+		}
+
 		switch (entry.tile_type)
 		{
 			case TILE_TYPE_GENERAL:
@@ -101,6 +120,11 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				break;
 			case TILE_TYPE_ROAD:
 				tile->tile_type = SceneryTileType::TileType::Road;
+				tile->height = 0;
+				if (tile->walk_mode == SceneryTileType::WalkMode::None)
+				{
+					tile->walk_mode = SceneryTileType::WalkMode::Into;
+				}
 				break;
 			case TILE_TYPE_PEOPLE_TUBE_JUNCTION:
 				tile->tile_type = SceneryTileType::TileType::PeopleTubeJunction;
@@ -130,21 +154,6 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				LogError("Unexpected scenery road type %d for ID %s", (int)entry.road_type, id);
 		}
 
-		switch (entry.walk_type)
-		{
-			case WALK_TYPE_NONE:
-				tile->walk_mode = SceneryTileType::WalkMode::None;
-				break;
-			case WALK_TYPE_INTO:
-				tile->walk_mode = SceneryTileType::WalkMode::Into;
-				break;
-			case WALK_TYPE_ONTO:
-				tile->walk_mode = SceneryTileType::WalkMode::Onto;
-				break;
-			default:
-				LogError("Unexpected scenery walk type %d for ID %s", (int)entry.walk_type, id);
-		}
-
 		tile->connection.resize(4);
 		tile->hill.resize(4);
 		tile->tube.resize(6);
@@ -166,14 +175,26 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		tile->strength = entry.strength;
 		tile->mass = entry.mass;
 		tile->value = entry.value;
+		tile->basement = entry.has_basement > 0;
 
 		for (unsigned i = 0; i < 4; i++)
 		{
 			if (entry.road_level_change[i] != 0)
 			{
 				tile->isHill = true;
+				tile->overlayHeight = 8;
+				tile->height = 8;
 				break;
 			}
+		}
+		// Correct walk modes
+		if (tile->height < 8 && tile->walk_mode == SceneryTileType::WalkMode::Onto)
+		{
+			tile->walk_mode = SceneryTileType::WalkMode::Into;
+		}
+		if (tile->height >= 8 && tile->walk_mode == SceneryTileType::WalkMode::Into)
+		{
+			tile->walk_mode = SceneryTileType::WalkMode::Onto;
 		}
 
 		if (entry.damagedtile_idx)
@@ -193,17 +214,10 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		{
 			if (entry.voxelIdx[z] == 0)
 				continue;
-			// Highest achieved voxelmap layer
-			tile->height = z;
 			auto lofString = format("LOFTEMPS:xcom3/ufodata/" + lofFile + ".dat:xcom3/ufodata/" +
 			                            lofFile + ".tab:%d",
 			                        (int)entry.voxelIdx[z]);
 			tile->voxelMap->slices[z] = fw().data->loadVoxelSlice(lofString);
-			// Bogus values
-			if (z == 15 && entry.walk_type == WALK_TYPE_INTO)
-			{
-				tile->walk_mode = SceneryTileType::WalkMode::Onto;
-			}
 		}
 
 		if (entry.stratmap_idx != 0)
@@ -217,6 +231,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		if (entry.landing_pad == 1)
 		{
 			tile->isLandingPad = true;
+			tile->walk_mode = SceneryTileType::WalkMode::None;
 		}
 		else
 		{

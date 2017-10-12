@@ -22,6 +22,7 @@ class VehicleType;
 class Building;
 class AgentType;
 class VEquipmentType;
+class City;
 class AEquipmentType;
 class VAmmoType;
 class GameState;
@@ -62,7 +63,7 @@ class Organisation : public StateObject
 			OwnedOrOther,
 			Other,
 			ArriveFromSpace,
-			DepartToSpace
+			DepartToSpace,
 		};
 		uint64_t minIntervalRepeat = 0;
 		uint64_t maxIntervalRepeat = 0;
@@ -113,7 +114,7 @@ class Organisation : public StateObject
 
 	StateRef<UfopaediaEntry> ufopaedia_entry;
 
-	std::list<Mission> missions;
+	std::map<StateRef<City>, std::list<Mission>> missions;
 	std::map<StateRef<VehicleType>, int> vehiclePark;
 	bool providesTransportationServices = false;
 	int minHireePool = 0;

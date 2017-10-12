@@ -41,6 +41,7 @@ enum class CitySelectionState
 	GotoLocation,
 	AttackVehicle,
 	AttackBuilding,
+	ManualControl
 };
 
 class CityView : public CityTileView
@@ -69,6 +70,8 @@ class CityView : public CityTileView
 	bool modifierRAlt = false;
 	bool modifierLCtrl = false;
 	bool modifierRCtrl = false;
+
+	bool vanillaControls = false;
 
 	sp<Palette> day_palette;
 	sp<Palette> twilight_palette;
@@ -103,7 +106,9 @@ class CityView : public CityTileView
 	void orderMove(StateRef<Building> building, bool alternative);
 	void orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additive);
 	void orderSelect(StateRef<Agent> agent, bool inverse, bool additive);
+	void orderFire(Vec3<float> position);
 	void orderAttack(StateRef<Vehicle> vehicle, bool forced);
+	void orderFollow(StateRef<Vehicle> vehicle);
 	void orderAttack(StateRef<Building> building);
 
   public:

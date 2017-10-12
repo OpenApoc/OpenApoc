@@ -713,7 +713,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Try to make unit rise (may fail if other unit stands on top)
 	void tryToRiseUp(GameState &state);
 	// Process unit becoming unconscious
-	void fallUnconscious(GameState &state);
+	void fallUnconscious(GameState &state, StateRef<BattleUnit> attacker = nullptr);
 	// Process unit dying
 	void die(GameState &state, StateRef<BattleUnit> attacker = nullptr, bool violently = true);
 

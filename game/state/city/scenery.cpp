@@ -9,6 +9,8 @@
 #include "game/state/city/citycommonsamplelist.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/projectile.h"
+#include "game/state/city/vehicle.h"
+#include "game/state/city/vehiclemission.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "game/state/tileview/collision.h"
@@ -94,15 +96,15 @@ bool Scenery::findSupport()
 
 	// Scenery gets (hard) support in the following way:
 	//
-	// - The only way to hard-support is by having non-road/tube !INTO below
+	// - The only way to hard-support is by having non-road/tube below
 	//   (in this case tube must have a downward connection)
 	// - The exception is that tube can be supported by tube below if connected
 	//
 	// (following conditions provide "soft" support)
 	//
-	// - General/Wall/Junk !INTO can cling to one adjacent "hard" supported General/Wall/Junk !INTO
-	// - General/Wall/Junk !INTO can cling to two adjacent "soft" supported General/Wall/Junk !INTO
-	// - People tube can cling onto adjacent "hard" !INTO General, adhering to its direction
+	// - General/Wall/Junk can cling to one adjacent "hard" supported General/Wall/Junk
+	// - General/Wall/Junk can cling to two adjacent "soft" supported General/Wall/Junk
+	// - People tube can cling onto adjacent "hard" General, adhering to its direction
 	//
 	// Finally, can be supported if it has established support lines
 	// on both sides that connect to an object providing support (any kind)
@@ -171,11 +173,6 @@ bool Scenery::findSupport()
 				{
 					continue;
 				}
-				// Can't be supported on top of INTO
-				if (mp->type->walk_mode == SceneryTileType::WalkMode::Into)
-				{
-					continue;
-				}
 				// Only support tube if has connection below
 				if (type->tile_type == SceneryTileType::TileType::PeopleTube && !type->tube[5])
 				{
@@ -199,10 +196,9 @@ bool Scenery::findSupport()
 	}
 
 	// Step 03.01: Check adjacents (for General/Wall !INTO)
-	if (type->walk_mode != SceneryTileType::WalkMode::Into &&
-	    (type->tile_type == SceneryTileType::TileType::General ||
-	     type->tile_type == SceneryTileType::TileType::CityWall ||
-	     type->tile_type == SceneryTileType::TileType::PeopleTubeJunction))
+	if (type->tile_type == SceneryTileType::TileType::General ||
+	    type->tile_type == SceneryTileType::TileType::CityWall ||
+	    type->tile_type == SceneryTileType::TileType::PeopleTubeJunction)
 	{
 		std::set<sp<Scenery>> supports;
 		int startX = pos.x - 1;
@@ -246,10 +242,9 @@ bool Scenery::findSupport()
 							{
 								continue;
 							}
-							// Must be a matching(Wall for Wall, General for General/Junk) !INTO
-							if (mp->type->walk_mode == SceneryTileType::WalkMode::Into ||
-							    (mp->type->tile_type == SceneryTileType::TileType::CityWall &&
-							     type->tile_type != SceneryTileType::TileType::CityWall))
+							// Must be a matching(Wall for Wall, General for General/Junk)
+							if (mp->type->tile_type == SceneryTileType::TileType::CityWall &&
+							    type->tile_type != SceneryTileType::TileType::CityWall)
 							{
 								continue;
 							}
@@ -335,9 +330,8 @@ bool Scenery::findSupport()
 						{
 							continue;
 						}
-						// Must be a General !INTO
-						if (mp->type->walk_mode == SceneryTileType::WalkMode::Into ||
-						    mp->type->tile_type != SceneryTileType::TileType::General)
+						// Must be a General
+						if (mp->type->tile_type != SceneryTileType::TileType::General)
 						{
 							continue;
 						}
@@ -785,6 +779,13 @@ bool Scenery::handleCollision(GameState &state, Collision &c)
 		auto ourOrg = building->owner;
 		// Lose 5 points
 		ourOrg->adjustRelationTo(state, attackerOrg, -5.0f);
+		// If intentional lose additional 15 points
+		if (!c.projectile->firerVehicle->missions.empty() &&
+		    c.projectile->firerVehicle->missions.front()->type ==
+		        VehicleMission::MissionType::AttackBuilding)
+		{
+			ourOrg->adjustRelationTo(state, attackerOrg, -25.0f);
+		}
 		// Our allies lose 2.5 points, enemies gain 1 point
 		for (auto &org : state.organisations)
 		{
@@ -800,6 +801,7 @@ bool Scenery::handleCollision(GameState &state, Collision &c)
 				}
 			}
 		}
+		building->underAttack(state, attackerOrg);
 	}
 
 	return applyDamage(state, c.projectile->damage);
@@ -817,6 +819,11 @@ bool Scenery::applyDamage(GameState &state, int power)
 	if (this->falling)
 	{
 		// Already falling, just continue
+		return false;
+	}
+	// Landing pads are invincible to direct damage
+	if (type->isLandingPad)
+	{
 		return false;
 	}
 

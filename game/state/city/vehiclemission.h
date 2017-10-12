@@ -132,17 +132,21 @@ class VehicleMission
 	int getDefaultIterationCount(Vehicle &v);
 
 	// Methods to create new missions
+
 	static VehicleMission *gotoLocation(GameState &state, Vehicle &v, Vec3<int> target,
 	                                    bool allowTeleporter = false, bool pickNearest = false,
 	                                    int reRouteAttempts = 20);
 	static VehicleMission *gotoPortal(GameState &state, Vehicle &v);
 	static VehicleMission *gotoPortal(GameState &state, Vehicle &v, Vec3<int> target);
-	static VehicleMission *gotoBuilding(GameState &state, Vehicle &v, StateRef<Building> target,
+	// With now building goes home
+	static VehicleMission *gotoBuilding(GameState &state, Vehicle &v,
+	                                    StateRef<Building> target = nullptr,
 	                                    bool allowTeleporter = false);
 	static VehicleMission *infiltrateOrSubvertBuilding(GameState &state, Vehicle &v,
 	                                                   StateRef<Building> target,
 	                                                   bool subvert = false);
 	static VehicleMission *attackVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
+	static VehicleMission *attackBuilding(GameState &state, Vehicle &v, StateRef<Building> target);
 	static VehicleMission *followVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *recoverVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *offerService(GameState &state, Vehicle &v,
@@ -151,7 +155,8 @@ class VehicleMission
 	static VehicleMission *selfDestruct(GameState &state, Vehicle &v);
 	static VehicleMission *restartNextMission(GameState &state, Vehicle &v);
 	static VehicleMission *crashLand(GameState &state, Vehicle &v);
-	static VehicleMission *patrol(GameState &state, Vehicle &v, unsigned int counter = 10);
+	static VehicleMission *patrol(GameState &state, Vehicle &v, bool home = false,
+	                              unsigned int counter = 10);
 	static VehicleMission *teleport(GameState &state, Vehicle &v, Vec3<int> target = {-1, -1, -1});
 	UString getName();
 
@@ -186,6 +191,8 @@ class VehicleMission
 	int reRouteAttempts = 0;
 	// GotoLocation - should it pick nearest point or random point if destination unreachable
 	bool pickNearest = false;
+	// Patrol - should patrol around home building only
+	bool patrolHome = false;
 	// GotoLocation - picked nearest (allows finishing mission without reaching destination)
 	bool pickedNearest = false;
 	// GotoBuilding AttackBuilding Land Infiltrate

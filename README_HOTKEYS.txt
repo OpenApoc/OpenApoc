@@ -23,28 +23,37 @@ General Hotkeys:
 - [M] Show Log
 - [Home] Zoom to last event
 
+Cityscape Vanilla Controls Note
+* Vanilla city controls were not very consistent and quite limited. For starters, right-clicking mouse in city moved map, while in battle, it didn't. There were no ways to quickly open frequently used screens (namely equipment, location, base screens) without clicking their buttons, and when using Alt/Shift hotkeys, they acted as if you clicked a corresponding button, meaning that if you missed your selection mode changed.
+* Instead, OpenApoc introduces a new, consistent control scheme, which is explained in the next two sections
+* For those who prefer to still use the vanilla control scheme, there is a feature to disable in the options menu called "Improved city control scheme". When disabled, vanilla control scheme will apply:
+- Right click will move screen to cursor
+- Alt+LMB will order vehicle attack
+- Shift+LMB will order moving to building
+- Left-clicking on building will always open building screen
+- No mouse controls introduced by OpenApoc will function
+
 Cityscape Mouse:
 * [Ctrl] when giving order that includes moving, forces Agents to move on foot (never call a taxi), as well as allows Vehicles and Agents manual use of teleporter
-* [Alt] Opens object's ufopaedia screens
-* [Shift] Opens object's management screens
+* [Alt] Opens ufopaedia
+* [Alt/Shift] + [Click] orders vehicles directly, Alt+Shift targets buildings and Shift targets vehicles or locations, while left click is aggressive and right is non-aggressive
 - [Alt] + [Left Click] Opens ufopaedia screen for the object (vehicle type, building function or who fired the missile)
 - [Alt] + [Right Click] Opens ufopaedia screen for object's owner (be that vehicle or building)
-- [Shift] + [Left Click] 
-  - Equipment screen for vehicles
-  - Base screen for building that contains a base
-  - Base buy screen for non-owned building that house a base
-  - Building screen for other buildings
-- [Shift] + [Right Click] 
-  - Location screens for vehicles
-  - Building screen for buildings
+- [Alt] + [Shift] + [Left Click] Order Attack Building
+- [Alt] + [Shift] + [Right Click] Order Goto Building
+- [Shift] + [Left Click] Order Attack Vehicle
+- [Shift] + [Right Click] Order Follow Vehicle / Goto Location
 - [Left Click]
   - Issues orders
-  - Open building screen
-- [Right Click]
-  - Issues orders
   - Base screen for building that contains a base
   - Base buy screen for non-owned building that house a base
-  - Building screen for other buildings
+- [Right Click]
+  - Building screen for buildings
+
+Cityscape Mouse Clicks on Vehicle / Agent icons:
+- [Shift] + [Right Click] Open Location Screen
+- [Ctrl] + [Shift] + [Right Click] Open Equipment Screen
+- [Alt] + [Shift] + [Right Click] Open Equipment Screen
 
 Cityscape Mouse Unit Selection:
 * [Ctrl] makes selection additive
@@ -54,9 +63,10 @@ Cityscape Mouse Unit Selection:
   - Add Agent/Vehicle to selection and make it first in the list
 - [Right Click]
   - Remove Agent/Vehicle from selection
-
+  
 Cityscape Keyboard:
-- ... (none yet)
+- [0],[1]...[5] control time 
+- [N] Manual control (if using vanilla scheme then [M] is the manual control key and there is no way to open message log, as per vanilla)
 
 Cityscape Debug:
 - Debug hotkeys are always active
@@ -80,6 +90,16 @@ Cityscape Debug:
   - For roads, switch between showing only tiles marked as "road", or to also include tiles marked with road direction
   - For hills, switch between showing only tiles marked as "road", or to also include tiles marked with hill direction
  
+Vehicle Equipment:
+- [Shift] makes item auto-equip into first available slot, or auto-remove to base stores
+ 
+Agent Equipment:
+* Usual selection controls apply, with option to de-select with right click as well
+- [Shift] makes item auto-equip into first available slot, or auto-remove to base stores / ground
+- [Ctrl] makes you remove clip when clicking on weapon
+- [1]...[0] applies equipment template to every selected agent
+- [Ctrl] + [1]...[0] remembers current agent's equipment set as a template
+
 Battlescape Mouse:
 * [Alt] When giving moving orders, makes unit keep facing to the target (making unit strafe or move backwards)
 		When firing at a tile, makes the shot aim at the ground of the tile, rather than at unit's level

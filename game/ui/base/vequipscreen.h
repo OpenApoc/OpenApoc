@@ -52,6 +52,9 @@ class VEquipScreen : public Stage
 
 	sp<GameState> state;
 
+	bool modifierLShift = false;
+	bool modifierRShift = false;
+
   public:
 	VEquipScreen(sp<GameState> state);
 	~VEquipScreen() override;

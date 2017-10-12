@@ -85,6 +85,8 @@ class AEquipScreen : public Stage
 
 	bool modifierLCtrl = false;
 	bool modifierRCtrl = false;
+	bool modifierLShift = false;
+	bool modifierRShift = false;
 
 	// Checks wether agent should be displayed in the agent list
 	bool checkAgent(sp<Agent> agent, sp<Organisation> owner);
@@ -124,6 +126,7 @@ class AEquipScreen : public Stage
 	bool tryPickUpItem(sp<AEquipmentType> item);
 	void pickUpItem(sp<AEquipment> item);
 	bool tryPlaceItem(sp<Agent> agent, Vec2<int> slotPos, bool *insufficientTU = nullptr);
+	bool tryPlaceItem(sp<Agent> agent, bool toAgent, bool *insufficientTU = nullptr);
 
 	void processTemplate(int idx, bool remember);
 
@@ -150,6 +153,10 @@ class AEquipScreen : public Stage
 	void update() override;
 	void render() override;
 	bool isTransition() override;
+
+	void handleItemPickup(Vec2<int> mousePos);
+	void handleItemPlacement(Vec2<int> mousePos);
+	void handleItemPlacement(bool toAgent);
 
 	void selectAgent(sp<Agent> agent, bool inverse = false, bool additive = false);
 

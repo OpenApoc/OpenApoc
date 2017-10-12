@@ -19,19 +19,21 @@ namespace OpenApoc
 {
 
 Projectile::Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> target,
-                       Vec3<float> position, Vec3<float> velocity, int turnRate,
-                       unsigned int lifetime, int damage, unsigned int delay,
+                       Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity,
+                       int turnRate, unsigned int lifetime, int damage, unsigned int delay,
                        unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
                        sp<Sample> impactSfx, StateRef<DoodadType> doodadType, sp<VoxelMap> voxelMap)
     : type(type), position(position), velocity(velocity), turnRate(turnRate), age(0),
       lifetime(lifetime), damage(damage), delay_ticks_remaining(delay), firerVehicle(firer),
-      firerPosition(firer->position), trackedVehicle(target), previousPosition(position),
-      spritePositions({position}), tail_length(tail_length), projectile_sprites(projectile_sprites),
-      sprite_distance(1.0f / TILE_Y_CITY), voxelMap(voxelMap), impactSfx(impactSfx),
-      doodadType(doodadType), velocityScale(VELOCITY_SCALE_CITY)
+      firerPosition(firer->position), trackedVehicle(target), targetPosition(targetPosition),
+      previousPosition(position), spritePositions({position}), tail_length(tail_length),
+      projectile_sprites(projectile_sprites), sprite_distance(1.0f / TILE_Y_CITY),
+      voxelMap(voxelMap), impactSfx(impactSfx), doodadType(doodadType),
+      velocityScale(VELOCITY_SCALE_CITY)
 {
-	// 36 / (velocity length) = enough ticks to pass 1 whole tile
-	ownerInvulnerableTicks = (int)ceilf(36.0f / glm::length(velocity / velocityScale)) + 1;
+	// enough ticks to pass 1 tile diagonally and some more since vehicles can move quite quickly
+	ownerInvulnerableTicks =
+	    (int)ceilf(1.33f * 1.5f * (float)TICK_SCALE / glm::length(velocity / velocityScale)) + 1;
 	if (target)
 		trackedObject = target->tileObject;
 }
@@ -50,8 +52,9 @@ Projectile::Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUni
       sprite_distance(1.0f / TILE_Y_BATTLE), voxelMap(voxelMap), impactSfx(impactSfx),
       doodadType(doodadType), damageType(damageType), velocityScale(VELOCITY_SCALE_BATTLE)
 {
-	// 36 / (velocity length) = enough ticks to pass 1 whole tile
-	ownerInvulnerableTicks = (int)ceilf(36.0f / glm::length(velocity / velocityScale)) + 1;
+	// enough ticks to pass 1 tile diagonally
+	ownerInvulnerableTicks =
+	    (int)ceilf(1.5f * (float)TICK_SCALE / glm::length(velocity / velocityScale)) + 1;
 	if (target)
 		trackedObject = target->tileObject;
 }
