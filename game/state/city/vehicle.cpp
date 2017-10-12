@@ -1671,12 +1671,22 @@ void Vehicle::die(GameState &state, StateRef<Vehicle> attacker, bool silent)
 
 void Vehicle::crash(GameState &state, StateRef<Vehicle> attacker)
 {
-	health = std::min(health, (type->crash_health > 0) ? type->crash_health : type->health / 10);
-	crashed = true;
+	// Dislike attacker
 	if (attacker)
 	{
 		adjustRelationshipOnDowned(state, attacker);
 	}
+	// Drop carried vehicle
+	if (carriedVehicle)
+	{
+		carriedVehicle->crashed = false;
+		carriedVehicle->startFalling(state);
+		carriedVehicle->carriedByVehicle.clear();
+		carriedVehicle.clear();
+	}
+	// Actually crash
+	crashed = true;
+	health = std::min(health, (type->crash_health > 0) ? type->crash_health : type->health / 10);
 	switch (type->type)
 	{
 		case VehicleType::Type::UFO:
@@ -1693,10 +1703,20 @@ void Vehicle::crash(GameState &state, StateRef<Vehicle> attacker)
 
 void Vehicle::startFalling(GameState &state, StateRef<Vehicle> attacker)
 {
+	// Dislike attacker
 	if (attacker)
 	{
 		adjustRelationshipOnDowned(state, attacker);
 	}
+	// Drop carried vehicle
+	if (carriedVehicle)
+	{
+		carriedVehicle->crashed = false;
+		carriedVehicle->startFalling(state);
+		carriedVehicle->carriedByVehicle.clear();
+		carriedVehicle.clear();
+	}
+	// Actually start falling
 	falling = true;
 	if (angularVelocity == 0.0f)
 	{
@@ -2296,10 +2316,57 @@ bool Vehicle::fireWeaponsPointDefense(GameState &state, Vec2<int> arc)
 
 void Vehicle::fireWeaponsNormal(GameState &state, Vec2<int> arc)
 {
+	auto firingRange = getFiringRange();
+	if (!missions.empty() && missions.front()->type == VehicleMission::MissionType::AttackBuilding)
+	{
+		auto target = missions.front()->targetBuilding;
+		if (!target->buildingParts.empty())
+		{
+			bool inRange = target->bounds.within(Vec2<int>{position.x, position.y});
+			if (!inRange)
+			{
+				auto targetVector =
+				    Vec3<float>{std::min(std::abs(position.x - target->bounds.p0.x),
+				                         std::abs(position.x - target->bounds.p1.x)),
+				                std::min(std::abs(position.y - target->bounds.p0.y),
+				                         std::abs(position.x - target->bounds.p1.y)),
+				                0};
+				inRange = tileObject->getDistanceTo(position + targetVector) <= firingRange;
+			}
+			// Look for a tile in front of us so that we can hit it easilly
+			auto forwardPos = position;
+			if (velocity.x != 0 || velocity.y != 0)
+			{
+				forwardPos += glm::normalize(Vec3<float>{velocity.x, velocity.y, 0.0f}) * 4.0f;
+			}
+			if (inRange)
+			{
+				float closestDistance = FLT_MAX;
+				Vec3<float> closestPart;
+				for (auto &p : target->buildingParts)
+				{
+					auto distance = glm::length((Vec3<float>)p - forwardPos);
+					if (distance < closestDistance)
+					{
+						closestDistance = distance;
+						closestPart = p;
+					}
+				}
+				closestPart += Vec3<float>{0.5f, 0.5f, 0.5f};
+				// Expecting to have a part ready
+				if (tileObject->getDistanceTo(closestPart) <= firingRange)
+				{
+					attackTarget(state, closestPart);
+					return;
+				}
+			}
+		}
+	}
+
 	// Find something to shoot at!
 	sp<TileObjectVehicle> enemy;
 	if (!missions.empty() && missions.front()->type == VehicleMission::MissionType::AttackVehicle &&
-	    tileObject->getDistanceTo(missions.front()->targetVehicle->tileObject) <= getFiringRange())
+	    tileObject->getDistanceTo(missions.front()->targetVehicle->tileObject) <= firingRange)
 	{
 		enemy = missions.front()->targetVehicle->tileObject;
 	}
@@ -2383,7 +2450,7 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile)
 		bool hitSomethingBad = false;
 		for (int i = 0; i < 2; i++)
 		{
-			bool hitSomethingBad = false;
+			hitSomethingBad = false;
 			auto hitObject = tileObject->map.findCollision(firePosition, targetPosAdjusted,
 			                                               scenerySet, tileObject);
 			if (hitObject)
@@ -2394,6 +2461,7 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile)
 					if (owner->isRelatedTo(vehicle->getVehicle()->owner) !=
 					    Organisation::Relation::Hostile)
 					{
+						LogWarning("Hit vehicle");
 						hitSomethingBad = true;
 					}
 				}
@@ -2406,6 +2474,10 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile)
 			{
 				// Can't fire at where it will be so at least fire at where it's now
 				targetPosAdjusted = target;
+			}
+			else
+			{
+				break;
 			}
 		}
 		if (hitSomethingBad)
@@ -2426,16 +2498,16 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile)
 	return;
 }
 
-bool Vehicle::attackTarget(GameState &state, sp<TileObjectProjectile> enemyTile)
+bool Vehicle::attackTarget(GameState &state, sp<TileObjectProjectile> projectileTile)
 {
 	static const std::set<TileObject::Type> scenerySet = {TileObject::Type::Scenery,
 	                                                      TileObject::Type::Vehicle};
 
 	auto firePosition = getMuzzleLocation();
-	auto target = enemyTile->getVoxelCentrePosition();
+	auto target = projectileTile->getVoxelCentrePosition();
 	auto distanceTiles = glm::length(position - target);
 
-	auto distanceVoxels = this->tileObject->getDistanceTo(enemyTile->getPosition());
+	auto distanceVoxels = this->tileObject->getDistanceTo(projectileTile->getPosition());
 
 	for (auto &eq : this->equipment)
 	{
@@ -2464,7 +2536,7 @@ bool Vehicle::attackTarget(GameState &state, sp<TileObjectProjectile> enemyTile)
 		{
 			Vec2<int> arc = {eq->type->firing_arc_1, 8};
 			auto facing = type->directionToVector(direction);
-			auto vecToTarget = enemyTile->getPosition() - position;
+			auto vecToTarget = projectileTile->getPosition() - position;
 			float angleXY = glm::angle(glm::normalize(Vec2<float>{facing.x, facing.y}),
 			                           glm::normalize(Vec2<float>{vecToTarget.x, vecToTarget.y}));
 			float vecToTargetXY =
@@ -2481,7 +2553,7 @@ bool Vehicle::attackTarget(GameState &state, sp<TileObjectProjectile> enemyTile)
 		// Lead the target
 		auto targetPosAdjusted = target;
 		auto projectileVelocity = eq->type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
-		auto targetVelocity = enemyTile->getProjectile()->velocity;
+		auto targetVelocity = projectileTile->getProjectile()->velocity;
 		float timeToImpact = distanceVoxels * (float)TICK_SCALE / projectileVelocity;
 		targetPosAdjusted +=
 		    Collision::getLeadingOffset(target - firePosition, projectileVelocity * timeToImpact,
@@ -2492,7 +2564,7 @@ bool Vehicle::attackTarget(GameState &state, sp<TileObjectProjectile> enemyTile)
 		bool hitSomethingBad = false;
 		for (int i = 0; i < 2; i++)
 		{
-			bool hitSomethingBad = false;
+			hitSomethingBad = false;
 			auto hitObject = tileObject->map.findCollision(firePosition, targetPosAdjusted,
 			                                               scenerySet, tileObject);
 			if (hitObject)
@@ -2515,6 +2587,10 @@ bool Vehicle::attackTarget(GameState &state, sp<TileObjectProjectile> enemyTile)
 			{
 				// Can't fire at where it will be so at least fire at where it's now
 				targetPosAdjusted = target;
+			}
+			else
+			{
+				break;
 			}
 		}
 		if (hitSomethingBad)
@@ -2629,40 +2705,61 @@ void Vehicle::setManualFirePosition(const Vec3<float> &pos)
 
 bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 {
+	bool canPlaceInFront = false;
 	switch (mission->type)
 	{
+		// - Can place in front
+		// - Can place on crashed vehicles
+		// - Can place on carrying vehicles
+		case VehicleMission::MissionType::Snooze:
+		case VehicleMission::MissionType::RestartNextMission:
+			canPlaceInFront = true;
+			break;
+		// - Cannot place in front but
+		// - Can place on crashed vehicles
+		// - Can place on carrying vehicles
 		case VehicleMission::MissionType::Crash:
 		case VehicleMission::MissionType::SelfDestruct:
 			break;
+		// - Cannot place in front
+		// - Cannot place on crashed vehicles
+		// - Can place on carrying vehicles
+		case VehicleMission::MissionType::GotoLocation:
+		case VehicleMission::MissionType::Land:
+			if (crashed || sliding || falling)
+			{
+				delete mission;
+				return false;
+			}
+			break;
+		// - Cannot place in front
+		// - Cannot place on crashed vehicles
+		// - Cannot place on carrying vehicles
 		case VehicleMission::MissionType::GotoBuilding:
 		case VehicleMission::MissionType::FollowVehicle:
 		case VehicleMission::MissionType::RecoverVehicle:
 		case VehicleMission::MissionType::AttackVehicle:
 		case VehicleMission::MissionType::AttackBuilding:
-		case VehicleMission::MissionType::Snooze:
 		case VehicleMission::MissionType::TakeOff:
 		case VehicleMission::MissionType::Patrol:
 		case VehicleMission::MissionType::GotoPortal:
 		case VehicleMission::MissionType::InfiltrateSubvert:
 		case VehicleMission::MissionType::OfferService:
 		case VehicleMission::MissionType::Teleport:
-			if (crashed || carriedVehicle)
-			{
-				delete mission;
-				return false;
-			}
-			break;
-		case VehicleMission::MissionType::RestartNextMission:
-		case VehicleMission::MissionType::GotoLocation:
-		case VehicleMission::MissionType::Land:
-			if (crashed)
+			if (crashed || sliding || falling || carriedVehicle)
 			{
 				delete mission;
 				return false;
 			}
 			break;
 	}
-	if (missions.empty() || !toBack)
+	if (!toBack && !canPlaceInFront && !missions.empty() &&
+	    (missions.front()->type == VehicleMission::MissionType::Land ||
+	     missions.front()->type == VehicleMission::MissionType::TakeOff))
+	{
+		missions.emplace(++missions.begin(), mission);
+	}
+	else if (!toBack || canPlaceInFront || missions.empty())
 	{
 		missions.emplace_front(mission);
 		missions.front()->start(state, *this);
@@ -2676,9 +2773,13 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 
 bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 {
+	bool forceClear = false;
 	switch (mission->type)
 	{
 		case VehicleMission::MissionType::Crash:
+			forceClear = true;
+			break;
+		case VehicleMission::MissionType::Snooze:
 		case VehicleMission::MissionType::SelfDestruct:
 			break;
 		case VehicleMission::MissionType::GotoLocation:
@@ -2688,7 +2789,6 @@ bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 		case VehicleMission::MissionType::AttackVehicle:
 		case VehicleMission::MissionType::AttackBuilding:
 		case VehicleMission::MissionType::RestartNextMission:
-		case VehicleMission::MissionType::Snooze:
 		case VehicleMission::MissionType::TakeOff:
 		case VehicleMission::MissionType::Land:
 		case VehicleMission::MissionType::Patrol:
@@ -2696,16 +2796,38 @@ bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 		case VehicleMission::MissionType::InfiltrateSubvert:
 		case VehicleMission::MissionType::OfferService:
 		case VehicleMission::MissionType::Teleport:
-			if (crashed)
+			if (crashed || sliding || falling || carriedVehicle)
 			{
 				delete mission;
 				return false;
 			}
 			break;
 	}
-	missions.clear();
-	addMission(state, mission);
+	clearMissions(state, forceClear);
+	addMission(state, mission, true);
 	return true;
+}
+
+bool Vehicle::clearMissions(GameState &state, bool forced)
+{
+	if (forced)
+	{
+		missions.clear();
+		return true;
+	}
+	for (auto it = missions.begin(); it != missions.end();)
+	{
+		if ((*it)->type == VehicleMission::MissionType::Land ||
+		    (*it)->type == VehicleMission::MissionType::TakeOff)
+		{
+			it++;
+		}
+		else
+		{
+			it = missions.erase(it);
+		}
+	}
+	return missions.empty();
 }
 
 bool Vehicle::popFinishedMissions(GameState &state)

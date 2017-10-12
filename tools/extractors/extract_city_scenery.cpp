@@ -197,6 +197,8 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 			tile->walk_mode = SceneryTileType::WalkMode::Onto;
 		}
 
+		tile->commonProperty = i < 134 || i > 936;
+
 		if (entry.damagedtile_idx)
 		{
 			tile->damagedTile = {&state, format("%s%s%u", SceneryTileType::getPrefix(), tilePrefix,

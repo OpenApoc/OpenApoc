@@ -773,7 +773,7 @@ void Scenery::setPosition(const Vec3<float> &pos)
 bool Scenery::handleCollision(GameState &state, Collision &c)
 {
 	// Adjust relationships
-	if (building && c.projectile->firerVehicle)
+	if (!type->commonProperty && building && c.projectile->firerVehicle)
 	{
 		auto attackerOrg = c.projectile->firerVehicle->owner;
 		auto ourOrg = building->owner;
@@ -996,6 +996,10 @@ void Scenery::die(GameState &state, bool forced)
 		}
 		this->tileObject->removeFromMap();
 		this->tileObject.reset();
+		if (building)
+		{
+			building->buildingParts.erase(initialPosition);
+		}
 	}
 }
 
@@ -1029,6 +1033,10 @@ void Scenery::collapse(GameState &state)
 	}
 	ceaseBeingSupported();
 	ceaseSupportProvision();
+	if (building)
+	{
+		building->buildingParts.erase(initialPosition);
+	}
 }
 
 void Scenery::update(GameState &state, unsigned int ticks)
@@ -1220,6 +1228,10 @@ void Scenery::repair(GameState &state)
 		this->overlayDoodad =
 		    mksp<Doodad>(this->getPosition(), type->imageOffset, false, 1, type->overlaySprite);
 		map.addObjectToMap(this->overlayDoodad);
+	}
+	if (building && !type->commonProperty)
+	{
+		building->buildingParts.insert(initialPosition);
 	}
 	map.clearPathCaches();
 }

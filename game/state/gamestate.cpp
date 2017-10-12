@@ -117,7 +117,9 @@ void GameState::initState()
 	// FIXME: reseed rng when game starts
 
 	if (current_battle)
+	{
 		current_battle->initBattle(*this);
+	}
 
 	for (auto &c : this->cities)
 	{
@@ -131,6 +133,11 @@ void GameState::initState()
 				if (building->bounds.within(pos2d))
 				{
 					s->building = {this, building};
+					if (s->isAlive() && !s->type->commonProperty)
+					{
+						s->building->buildingParts.insert(s->initialPosition);
+					}
+					break;
 				}
 			}
 		}

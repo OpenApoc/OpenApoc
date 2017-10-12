@@ -1712,10 +1712,10 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 
 					if (patrolHome)
 					{
-						std::uniform_int_distribution<int> xPos(v.homeBuilding->bounds.p0.x - 2,
-						                                        v.homeBuilding->bounds.p1.x + 2);
-						std::uniform_int_distribution<int> yPos(v.homeBuilding->bounds.p0.y - 2,
-						                                        v.homeBuilding->bounds.p1.y + 2);
+						std::uniform_int_distribution<int> xPos(v.homeBuilding->bounds.p0.x - 5,
+						                                        v.homeBuilding->bounds.p1.x + 5);
+						std::uniform_int_distribution<int> yPos(v.homeBuilding->bounds.p0.y - 5,
+						                                        v.homeBuilding->bounds.p1.y + 5);
 						setPathTo(state, v, {xPos(state.rng), yPos(state.rng), v.altitude},
 						          getDefaultIterationCount(v));
 					}
@@ -1739,10 +1739,10 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			{
 				if (this->currentPlannedPath.empty())
 				{
-					std::uniform_int_distribution<int> xPos(targetBuilding->bounds.p0.x - 2,
-					                                        targetBuilding->bounds.p1.x + 2);
-					std::uniform_int_distribution<int> yPos(targetBuilding->bounds.p0.y - 2,
-					                                        targetBuilding->bounds.p1.y + 2);
+					std::uniform_int_distribution<int> xPos(targetBuilding->bounds.p0.x - 5,
+					                                        targetBuilding->bounds.p1.x + 5);
+					std::uniform_int_distribution<int> yPos(targetBuilding->bounds.p0.y - 5,
+					                                        targetBuilding->bounds.p1.y + 5);
 					setPathTo(state, v, {xPos(state.rng), yPos(state.rng), v.altitude},
 					          getDefaultIterationCount(v));
 				}
@@ -1847,7 +1847,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			{
 				return;
 			}
-
+			// Actually go there
 			if (v.type->isGround())
 			{
 				/* Am I already in a car depot? If so land */
@@ -1985,7 +1985,9 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				return;
 			}
 			// Target not crashed or dead or already rescued
-			if (!targetVehicle || !targetVehicle->crashed || targetVehicle->carriedByVehicle)
+			if (!targetVehicle ||
+			    (!targetVehicle->crashed && !targetVehicle->sliding && !targetVehicle->falling) ||
+			    targetVehicle->carriedByVehicle)
 			{
 				cancelled = true;
 				return;
@@ -2048,7 +2050,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 								                        state, v, targetVehicle->homeBuilding));
 								v.carriedVehicle = target;
 								target->carriedByVehicle = thisRef;
-								target->missions.clear();
+								target->clearMissions(state, true);
 								if (target->smokeDoodad)
 								{
 									target->smokeDoodad->remove(state);

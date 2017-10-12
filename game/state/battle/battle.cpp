@@ -3143,6 +3143,10 @@ void Battle::exitBattle(GameState &state)
 				state.eventFromBattle = GameEventType::MissionCompletedBuildingAlien;
 				StateRef<Building>(&state, state.current_battle->mission_location_id)
 				    ->collapse(state);
+				for (auto v : returningVehicles)
+				{
+					v->addMission(state, VehicleMission::snooze(state, *v, 3 * TICKS_PER_SECOND));
+				}
 			}
 			break;
 		}
@@ -3170,6 +3174,16 @@ void Battle::exitBattle(GameState &state)
 		case Battle::MissionType::RaidHumans:
 		{
 			state.eventFromBattle = GameEventType::MissionCompletedBuildingRaid;
+			if (state.current_battle->playerWon &&
+			    config().getBool("OpenApoc.NewFeature.CollapseRaidedBuilding"))
+			{
+				StateRef<Building>(&state, state.current_battle->mission_location_id)
+				    ->collapse(state);
+				for (auto v : returningVehicles)
+				{
+					v->addMission(state, VehicleMission::snooze(state, *v, 3 * TICKS_PER_SECOND));
+				}
+			}
 			break;
 		}
 		case Battle::MissionType::UfoRecovery:

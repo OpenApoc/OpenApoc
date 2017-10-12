@@ -659,7 +659,7 @@ void CityView::orderAttack(StateRef<Vehicle> vehicle, bool forced)
 		{
 			if (v && v->owner == this->state->getPlayer() && v != vehicle)
 			{
-				if (forced || !vehicle->crashed)
+				if (forced || (!vehicle->crashed && !vehicle->falling && !vehicle->sliding))
 				{
 					if (vehicle->owner == state->getPlayer() &&
 					    !config().getBool("OpenApoc.NewFeature.AllowAttackingOwnedVehicles"))
@@ -984,7 +984,7 @@ CityView::CityView(sp<GameState> state)
 		    {
 			    if (v && v->owner == this->state->getPlayer())
 			    {
-				    setSelectionState(CitySelectionState::GotoLocation);
+				    setSelectionState(CitySelectionState::AttackBuilding);
 				    break;
 			    }
 		    }
@@ -2008,7 +2008,14 @@ bool CityView::handleMouseDown(Event *e)
 
 					if (modifierLAlt && modifierLCtrl && modifierLShift)
 					{
-						scenery->die(*state);
+						if (building && buttonPressed == Event::MouseButton::Right)
+						{
+							building->collapse(*state);
+						}
+						else
+						{
+							scenery->die(*state);
+						}
 						return true;
 					}
 					break;

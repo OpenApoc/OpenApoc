@@ -81,6 +81,7 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 	Vec3<int> crewQuarters;
 	std::vector<Vec3<int>> carEntranceLocations;
 	std::vector<Vec3<int>> landingPadLocations;
+	std::set<Vec3<int>> buildingParts;
 };
 
 }; // namespace OpenApoc

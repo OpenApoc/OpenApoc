@@ -69,6 +69,8 @@ class SceneryTileType : public StateObject
 	// Max value 16
 	int overlayHeight = 0;
 	bool basement = false;
+	// Does not receive attacks and is not considered hostile action if receives stray shots
+	bool commonProperty = false;
 
 	// instead of road_level_change; should be enough for now
 	bool isHill = false;

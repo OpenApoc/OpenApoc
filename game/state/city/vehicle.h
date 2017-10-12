@@ -303,6 +303,7 @@ class Vehicle : public StateObject,
 	bool addMission(GameState &state, VehicleMission *mission, bool toBack = false);
 	// Replaces all missions with provided mission, returns true if successful
 	bool setMission(GameState &state, VehicleMission *mission);
+	bool clearMissions(GameState &state, bool forced = false);
 
 	// Pops all finished missions, returns true if popped
 	bool popFinishedMissions(GameState &state);
