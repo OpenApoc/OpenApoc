@@ -17,6 +17,8 @@ static const unsigned int TICKS_PER_DETECTION_ATTEMPT[5] = {
     70 * TICKS_PER_MINUTE, 80 * TICKS_PER_MINUTE, 85 * TICKS_PER_MINUTE, 95 * TICKS_PER_MINUTE,
     110 * TICKS_PER_MINUTE};
 static const unsigned int TICKS_DETECTION_TIMEOUT = 6 * TICKS_PER_HOUR;
+// How frequently building attack events are emitted
+static const unsigned int TICKS_ATTACK_EVENT_TIMEOUT = TICKS_PER_HOUR;
 
 class BuildingDef;
 class Agent;
@@ -59,6 +61,7 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 	std::set<StateRef<Agent>> currentAgents;
 	std::list<Cargo> cargo;
 
+	uint64_t timeOfLastAttackEvent = 0;
 	unsigned ticksDetectionTimeOut = 0;
 	unsigned ticksDetectionAttemptAccumulated = 0;
 	bool detected = false;
@@ -69,6 +72,8 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 	void detect(GameState &state, bool forced = false);
 	void alienGrowth(GameState &state);
 
+	void underAttack(GameState &state, StateRef<Organisation> attacker);
+
 	void collapse(GameState &state);
 
 	// Following members are not serialized, but rather are set in City::initMap method
@@ -76,6 +81,7 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 	Vec3<int> crewQuarters;
 	std::vector<Vec3<int>> carEntranceLocations;
 	std::vector<Vec3<int>> landingPadLocations;
+	std::set<Vec3<int>> buildingParts;
 };
 
 }; // namespace OpenApoc

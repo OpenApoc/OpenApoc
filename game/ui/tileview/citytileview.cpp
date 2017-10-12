@@ -71,7 +71,7 @@ void CityTileView::eventOccurred(Event *e)
 			case SDLK_F3:
 			{
 				DEBUG_SHOW_WALK_TYPE++;
-				DEBUG_SHOW_WALK_TYPE = DEBUG_SHOW_WALK_TYPE % 5;
+				DEBUG_SHOW_WALK_TYPE = DEBUG_SHOW_WALK_TYPE % 6;
 				if (DEBUG_SHOW_WALK_TYPE)
 				{
 					DEBUG_SHOW_SLOPES = false;
@@ -246,8 +246,11 @@ void CityTileView::render()
 					if (m->type == VehicleMission::MissionType::AttackVehicle ||
 					    m->type == VehicleMission::MissionType::RecoverVehicle)
 					{
-						vehiclesToDrawBrackets.insert(m->targetVehicle);
-						vehiclesBracketsIndex[m->targetVehicle] = 2;
+						if (m->targetVehicle)
+						{
+							vehiclesToDrawBrackets.insert(m->targetVehicle);
+							vehiclesBracketsIndex[m->targetVehicle] = 2;
+						}
 					}
 				}
 			}
@@ -309,14 +312,26 @@ void CityTileView::render()
 										             ->getOwner();
 										if (DEBUG_SHOW_WALK_TYPE)
 										{
-											if (DEBUG_SHOW_WALK_TYPE == 4)
+											switch (DEBUG_SHOW_WALK_TYPE)
 											{
-												visible = s->willCollapse() || s->falling;
-											}
-											else
-											{
-												visible = (int)s->type->walk_mode ==
-												          DEBUG_SHOW_WALK_TYPE - 1;
+												case 5:
+													visible = s->type->basement;
+													break;
+												case 4:
+													visible = s->willCollapse() || s->falling;
+													break;
+												case 3:
+												case 2:
+												case 1:
+												case 0:
+													visible = (int)s->type->walk_mode ==
+													          DEBUG_SHOW_WALK_TYPE - 1;
+													break;
+												default:
+													LogError("Unhandled DEBUG_SHOW_WALK_TYPE %d",
+													         DEBUG_SHOW_WALK_TYPE);
+													DEBUG_SHOW_WALK_TYPE = 0;
+													break;
 											}
 										}
 										if (DEBUG_SHOW_SLOPES)
@@ -423,8 +438,9 @@ void CityTileView::render()
 			// Params are: friendly, hostile, selected (0 = not, 1 = small, 2 = large)
 			std::list<std::tuple<sp<Vehicle>, bool, bool, int>> vehiclesToDraw;
 			std::set<sp<Vehicle>> vehiclesUnderAttack;
+			std::set<sp<Building>> buildingsSelected;
 			// Lines to draw between unit and destination, bool is wether target x is drawn
-			std::list<std::tuple<Vec3<float>, Vec3<float>, bool>> targetLocationsToDraw;
+			std::list<std::tuple<Vec3<float>, Vec3<float>, bool, bool>> targetLocationsToDraw;
 
 			for (int z = 0; z < maxZDraw; z++)
 			{
@@ -505,7 +521,7 @@ void CityTileView::render()
 					if (m->type == AgentMission::MissionType::GotoBuilding)
 					{
 						targetLocationsToDraw.emplace_back(m->targetBuilding->crewQuarters,
-						                                   a.second->position, true);
+						                                   a.second->position, true, false);
 						break;
 					}
 				}
@@ -537,35 +553,44 @@ void CityTileView::render()
 				// Destinations
 				for (auto &m : v.second->missions)
 				{
-					for (auto &m : v.second->missions)
+					switch (m->type)
 					{
-						if (m->type == VehicleMission::MissionType::AttackVehicle ||
-						    m->type == VehicleMission::MissionType::FollowVehicle)
+						case VehicleMission::MissionType::AttackVehicle:
+						{
+							vehiclesUnderAttack.insert(m->targetVehicle);
+							targetLocationsToDraw.emplace_back(m->targetVehicle->position,
+							                                   v.second->position, false, true);
+							break;
+						}
+						case VehicleMission::MissionType::FollowVehicle:
 						{
 							targetLocationsToDraw.emplace_back(m->targetVehicle->position,
-							                                   v.second->position, false);
-							vehiclesUnderAttack.insert(m->targetVehicle);
+							                                   v.second->position, false, false);
 							break;
 						}
-						if ((m->type == VehicleMission::MissionType::AttackBuilding ||
-						     m->type == VehicleMission::MissionType::Crash ||
-						     m->type == VehicleMission::MissionType::GotoBuilding) &&
-						    !m->currentPlannedPath.empty())
+						case VehicleMission::MissionType::AttackBuilding:
+						case VehicleMission::MissionType::GotoBuilding:
+							buildingsSelected.insert(m->targetBuilding);
+						// Intentional fall-through
+						case VehicleMission::MissionType::Crash:
 						{
-							targetLocationsToDraw.emplace_back(
-							    (Vec3<float>)m->currentPlannedPath.back() +
-							        Vec3<float>{0.5f, 0.5f, 0.0f},
-							    v.second->position, true);
+							if (!m->currentPlannedPath.empty())
+							{
+								targetLocationsToDraw.emplace_back(
+								    (Vec3<float>)m->currentPlannedPath.back() +
+								        Vec3<float>{0.5f, 0.5f, 0.0f},
+								    v.second->position, true, false);
+							}
 							break;
 						}
-						if ((m->type == VehicleMission::MissionType::GotoLocation ||
-						     m->type == VehicleMission::MissionType::InfiltrateSubvert ||
-						     m->type == VehicleMission::MissionType::Patrol ||
-						     m->type == VehicleMission::MissionType::GotoPortal))
+						case VehicleMission::MissionType::GotoLocation:
+						case VehicleMission::MissionType::InfiltrateSubvert:
+						case VehicleMission::MissionType::Patrol:
+						case VehicleMission::MissionType::GotoPortal:
 						{
 							targetLocationsToDraw.emplace_back((Vec3<float>)m->targetLocation +
 							                                       Vec3<float>{0.5f, 0.5f, 0.0f},
-							                                   v.second->position, true);
+							                                   v.second->position, true, false);
 							break;
 						}
 					}
@@ -583,7 +608,7 @@ void CityTileView::render()
 				// Draw line from unit to target tile
 				r.drawLine(tileToOffsetScreenCoords(std::get<0>(obj)),
 				           tileToOffsetScreenCoords(std::get<1>(obj)),
-				           targetDrawn ? lineColorFriend : lineColorEnemy);
+				           std::get<3>(obj) ? lineColorEnemy : lineColorFriend);
 				// Draw location image at target tile
 				if (targetDrawn && selectionFrameTicksAccumulated / SELECTION_FRAME_ANIMATION_DELAY)
 				{
@@ -655,7 +680,27 @@ void CityTileView::render()
 					}
 				}
 			}
-			renderStrategyOverlay(r);
+
+			// Alien debug display
+			if (DEBUG_SHOW_ALIEN_CREW)
+			{
+				for (auto &b : state.current_city->buildings)
+				{
+					Vec2<float> pos = tileToOffsetScreenCoords(
+					    Vec3<int>{b.second->bounds.p0.x, b.second->bounds.p0.y, 2});
+					for (auto &a : b.second->current_crew)
+					{
+						for (int i = 0; i < a.second; i++)
+						{
+							auto icon = a.first->portraits.at(*a.first->possible_genders.begin())
+							                .at(0)
+							                .icon;
+							r.draw(icon, pos);
+							pos.x += icon->size.x / 2;
+						}
+					}
+				}
+			}
 
 			// Building selection circles
 			for (auto &b : state.current_city->buildings)
@@ -723,26 +768,23 @@ void CityTileView::render()
 				}
 			}
 
-			// Alien debug display
-			if (DEBUG_SHOW_ALIEN_CREW)
+			// Building selection brackets
+			for (auto &b : buildingsSelected)
 			{
-				for (auto &b : state.current_city->buildings)
+				std::vector<Vec3<int>> points = {
+				    {b->bounds.p0.x, b->bounds.p0.y, 0}, {b->bounds.p0.x, b->bounds.p1.y, 0},
+				    {b->bounds.p1.x, b->bounds.p1.y, 0}, {b->bounds.p1.x, b->bounds.p0.y, 0},
+				    {b->bounds.p0.x, b->bounds.p0.y, 0},
+				};
+				static const auto lineColorBuilding = Colour(150, 210, 240, 255);
+				for (int i = 0; i < points.size() - 1; i++)
 				{
-					Vec2<float> pos = tileToOffsetScreenCoords(
-					    Vec3<int>{b.second->bounds.p0.x, b.second->bounds.p0.y, 2});
-					for (auto &a : b.second->current_crew)
-					{
-						for (int i = 0; i < a.second; i++)
-						{
-							auto icon = a.first->portraits.at(*a.first->possible_genders.begin())
-							                .at(0)
-							                .icon;
-							r.draw(icon, pos);
-							pos.x += icon->size.x / 2;
-						}
-					}
+					r.drawLine(tileToOffsetScreenCoords(points[i]),
+					           tileToOffsetScreenCoords(points[i + 1]), lineColorBuilding);
 				}
 			}
+
+			renderStrategyOverlay(r);
 		}
 		break;
 	}

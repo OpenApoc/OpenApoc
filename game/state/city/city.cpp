@@ -209,13 +209,13 @@ void City::update(GameState &state, unsigned int ticks)
 				case TileObject::Type::Vehicle:
 				{
 					auto vehicle = std::static_pointer_cast<TileObjectVehicle>(c.obj)->getVehicle();
-					displayDoodad = vehicle->handleCollision(state, c, playSound);
+					displayDoodad = !vehicle->handleCollision(state, c, playSound);
 					break;
 				}
 				case TileObject::Type::Scenery:
 				{
 					auto sceneryTile = std::static_pointer_cast<TileObjectScenery>(c.obj);
-					displayDoodad = sceneryTile->getOwner()->handleCollision(state, c);
+					displayDoodad = !sceneryTile->getOwner()->handleCollision(state, c);
 					playSound = displayDoodad;
 					break;
 				}
@@ -308,7 +308,7 @@ void City::updateInfiltration(GameState &state)
 
 void City::initialSceneryLinkUp()
 {
-	LogWarning("Begun scenery parts link up!");
+	LogWarning("Begun scenery link up!");
 	auto &mapref = *map;
 
 	for (auto &s : this->scenery)
@@ -369,7 +369,7 @@ void City::initialSceneryLinkUp()
 		}
 	}
 
-	mapref.updateAllBattlescapeInfo();
+	mapref.updateAllCityInfo();
 	LogWarning("Link up finished!");
 }
 

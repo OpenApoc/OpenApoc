@@ -193,7 +193,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	void updateBeforeBattle();
 	void upateAfterBattle();
 
-	void updateEndOfFiveSeconds();
+	void updateEndOfSecond();
 	void updateEndOfFiveMinutes();
 	void updateEndOfHour();
 	void updateEndOfDay();

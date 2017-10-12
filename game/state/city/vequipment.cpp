@@ -72,7 +72,6 @@ void VEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Veh
 
 	auto fromScaled = vehicleMuzzle * VELOCITY_SCALE_CITY;
 	auto toScaled = targetPosition * VELOCITY_SCALE_CITY;
-	// FIXME: Account for target's cloak!
 	City::accuracyAlgorithmCity(state, fromScaled, toScaled, type->accuracy + owner->getAccuracy(),
 	                            targetVehicle && targetVehicle->hasCloak());
 
@@ -85,7 +84,8 @@ void VEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Veh
 	{
 		auto projectile = mksp<Projectile>(
 		    type->guided ? Projectile::Type::Missile : Projectile::Type::Beam, owner, targetVehicle,
-		    vehicleMuzzle, velocity, type->turn_rate, type->ttl * TICKS_MULTIPLIER, type->damage,
+		    targetPosition, vehicleMuzzle, velocity, type->turn_rate, type->ttl * TICKS_MULTIPLIER,
+		    type->damage,
 		    /*delay*/ 0, type->tail_size, type->projectile_sprites, type->impact_sfx,
 		    type->explosion_graphic,
 		    type->guided ? state.city_common_image_list->projectileVoxelMap : nullptr);

@@ -3,6 +3,7 @@
 #include "forms/graphic.h"
 #include "forms/label.h"
 #include "forms/ui.h"
+#include "framework/configfile.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
@@ -208,6 +209,10 @@ void BuildingScreen::eventOccurred(Event *e)
 						         tr("You have not found any hostile forces in this building."),
 						         MessageBox::ButtonOptions::Ok)});
 						return;
+					}
+					if (config().getBool("OpenApoc.Mod.RaidHostileAction"))
+					{
+						building->owner->adjustRelationTo(*state, state->getPlayer(), -200.0f);
 					}
 					bool inBuilding = true;
 					bool raid = true;

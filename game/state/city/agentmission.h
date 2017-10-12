@@ -67,7 +67,10 @@ class AgentMission
 	bool advanceAlongPath(GameState &state, Agent &a, Vec3<float> &destPos);
 
 	// Methods to create new missions
-	static AgentMission *gotoBuilding(GameState &state, Agent &a, StateRef<Building> target,
+
+	// With no building goes home, allowTaxi auto set to true for non-soldiers
+	static AgentMission *gotoBuilding(GameState &state, Agent &a,
+	                                  StateRef<Building> target = nullptr,
 	                                  bool allowTeleporter = false, bool allowTaxi = false);
 	static AgentMission *awaitPickup(GameState &state, Agent &a, StateRef<Building> target);
 	static AgentMission *snooze(GameState &state, Agent &a, unsigned int ticks);

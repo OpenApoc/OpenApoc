@@ -63,8 +63,10 @@ class GameBuildingEvent : public GameEvent
 {
   public:
 	StateRef<Building> building;
+	StateRef<Organisation> actor;
 
-	GameBuildingEvent(GameEventType type, StateRef<Building> building);
+	GameBuildingEvent(GameEventType type, StateRef<Building> building,
+	                  StateRef<Organisation> actor = nullptr);
 	~GameBuildingEvent() override = default;
 	UString message() override;
 };

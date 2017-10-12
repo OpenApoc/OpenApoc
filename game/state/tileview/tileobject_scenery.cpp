@@ -142,7 +142,7 @@ void TileObjectScenery::addToDrawnTiles(Tile *tile)
 		// Map parts are drawn in the topmost tile their head pops into
 		// Otherwise, they can only be drawn in it if it's their owner tile
 		if (maxCoords.z * 1000 + maxCoords.x + maxCoords.y < z * 1000 + x + y &&
-		    sc->currentPosition.z + (float)sc->type->height / 15.1f >= (float)z)
+		    sc->currentPosition.z + (float)sc->type->height / 16.1f >= (float)z)
 		{
 			tile = intersectingTile;
 			maxCoords = {x, y, z};

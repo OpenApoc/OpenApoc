@@ -4,6 +4,7 @@
 #include "game/state/base/base.h"
 #include "game/state/city/agentmission.h"
 #include "game/state/city/city.h"
+#include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gameevent.h"
@@ -819,6 +820,43 @@ void Building::alienGrowth(GameState &state)
 	detected = detected && hasAliens();
 }
 
-void Building::collapse(GameState &state) { LogWarning("Collpase the whole building!"); }
+void Building::underAttack(GameState &state, StateRef<Organisation> attacker)
+{
+	if (owner->isRelatedTo(attacker) == Organisation::Relation::Hostile)
+	{
+		std::list<StateRef<Vehicle>> toLaunch;
+		for (auto v : currentVehicles)
+		{
+			toLaunch.push_back(v);
+		}
+		for (auto v : toLaunch)
+		{
+			v->setMission(state, VehicleMission::patrol(state, *v, true, 5));
+		}
+		if (timeOfLastAttackEvent + TICKS_ATTACK_EVENT_TIMEOUT < state.gameTime.getTicks())
+		{
+			timeOfLastAttackEvent = state.gameTime.getTicks();
+			fw().pushEvent(new GameBuildingEvent(GameEventType::BuildingAttacked,
+			                                     {&state, shared_from_this()}, attacker));
+		}
+	}
+}
+
+void Building::collapse(GameState &state)
+{
+	std::list<sp<Scenery>> sceneryToCollapse;
+	for (auto &p : buildingParts)
+	{
+		auto tile = city->map->getTile(p);
+		if (tile->presentScenery)
+		{
+			sceneryToCollapse.push_back(tile->presentScenery);
+		}
+	}
+	for (auto &s : sceneryToCollapse)
+	{
+		s->collapse(state);
+	}
+}
 
 } // namespace OpenApoc

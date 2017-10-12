@@ -210,7 +210,7 @@ AgentMission *AgentMission::gotoBuilding(GameState &, Agent &a, StateRef<Buildin
 {
 	auto *mission = new AgentMission();
 	mission->type = MissionType::GotoBuilding;
-	mission->targetBuilding = target;
+	mission->targetBuilding = target ? target : a.homeBuilding;
 	mission->allowTeleporter = allowTeleporter && a.type->role == AgentType::Role::Soldier;
 	mission->allowTaxi = allowTaxi || a.type->role != AgentType::Role::Soldier;
 	return mission;
@@ -291,25 +291,6 @@ void AgentMission::update(GameState &state, Agent &a, unsigned int ticks, bool f
 	switch (this->type)
 	{
 		case MissionType::GotoBuilding:
-		{
-			if (finished)
-			{
-				return;
-			}
-			if (this->currentPlannedPath.empty())
-			{
-				if ((Vec3<int>)a.position == targetBuilding->crewQuarters)
-				{
-					a.enterBuilding(state, targetBuilding);
-				}
-				else
-				{
-					LogWarning("Try order a taxi pickup first!");
-					setPathTo(state, a, targetBuilding);
-				}
-			}
-			return;
-		}
 		case MissionType::RestartNextMission:
 			return;
 		case MissionType::AwaitPickup:
@@ -398,6 +379,11 @@ void AgentMission::start(GameState &state, Agent &a)
 				a.addMission(state, AgentMission::awaitPickup(state, a, targetBuilding));
 				return;
 			}
+			// Need leave building?
+			if (a.currentBuilding)
+			{
+				a.leaveBuilding(state, a.position);
+			}
 			// Need to path there?
 			if (currentPlannedPath.empty())
 			{
@@ -482,11 +468,13 @@ bool AgentMission::advanceAlongPath(GameState &state, Agent &a, Vec3<float> &des
 
 	if (currentPlannedPath.empty())
 	{
+		a.addMission(state, restartNextMission(state, a));
 		return false;
 	}
 	currentPlannedPath.pop_front();
 	if (currentPlannedPath.empty())
 	{
+		a.addMission(state, restartNextMission(state, a));
 		return false;
 	}
 	auto pos = currentPlannedPath.front();
@@ -501,8 +489,7 @@ bool AgentMission::advanceAlongPath(GameState &state, Agent &a, Vec3<float> &des
 	{
 		// Next tile became impassable, pick a new path
 		currentPlannedPath.clear();
-		a.missions.emplace_front(restartNextMission(state, a));
-		a.missions.front()->start(state, a);
+		a.addMission(state, restartNextMission(state, a));
 		return false;
 	}
 

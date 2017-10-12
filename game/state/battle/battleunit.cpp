@@ -2966,11 +2966,9 @@ void BattleUnit::updateMovementBrainsucker(GameState &state, unsigned int &moveT
                                            bool &wasUsingLift)
 {
 	std::ignore = wasUsingLift;
-	Vec3<float> nextGoal;
 	if (!missions.empty() && missions.front()->type == BattleUnitMission::Type::Brainsuck &&
-	    getNextDestination(state, nextGoal))
+	    getNextDestination(state, goalPosition))
 	{
-		goalPosition = nextGoal;
 		// Just increment ticks passed to play animation
 		movement_ticks_passed += moveTicksRemaining / BASE_MOVETICKS_CONSUMPTION_RATE;
 		moveTicksRemaining = 0;
@@ -4718,8 +4716,43 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 	dropDown(state);
 }
 
-void BattleUnit::fallUnconscious(GameState &state)
+void BattleUnit::fallUnconscious(GameState &state, StateRef<BattleUnit> attacker)
 {
+	// Adjust relationships
+	if (attacker)
+	{
+		if (config().getBool("OpenApoc.Mod.StunHostileAction"))
+		{
+			auto attackerOrg = attacker->agent->owner;
+			auto ourOrg = agent->owner;
+
+			// If we're hostile to attacker - lose 3 points
+			if (ourOrg->isRelatedTo(attackerOrg) == Organisation::Relation::Hostile)
+			{
+				ourOrg->adjustRelationTo(state, attackerOrg, -3.0f);
+			}
+			// If we're not hostile to attacker - lose 20 points
+			else
+			{
+				ourOrg->adjustRelationTo(state, attackerOrg, -20.0f);
+			}
+			// Our allies lose 3 points, enemies gain 1.5 points
+			for (auto &org : state.organisations)
+			{
+				if (org.first != attackerOrg.id && org.first != state.getCivilian().id)
+				{
+					if (org.second->isRelatedTo(ourOrg) == Organisation::Relation::Hostile)
+					{
+						org.second->adjustRelationTo(state, attackerOrg, 1.5f);
+					}
+					else if (org.second->isRelatedTo(ourOrg) == Organisation::Relation::Allied)
+					{
+						org.second->adjustRelationTo(state, attackerOrg, -3.0f);
+					}
+				}
+			}
+		}
+	}
 	sendAgentEvent(state, GameEventType::AgentUnconscious, true);
 	dropDown(state);
 }
@@ -5309,7 +5342,6 @@ bool BattleUnit::getNewGoal(GameState &state)
 
 	bool popped = false;
 	bool acquired = false;
-	Vec3<float> nextGoal;
 	popped = popFinishedMissions(state);
 	if (retreated)
 	{
@@ -5318,7 +5350,7 @@ bool BattleUnit::getNewGoal(GameState &state)
 	do
 	{
 		// Try to get new destination
-		acquired = getNextDestination(state, nextGoal);
+		acquired = getNextDestination(state, goalPosition);
 		// Pop finished missions if present
 		popped = popFinishedMissions(state);
 		if (retreated)
@@ -5328,7 +5360,6 @@ bool BattleUnit::getNewGoal(GameState &state)
 	} while (popped && !acquired);
 	if (acquired)
 	{
-		goalPosition = nextGoal;
 		atGoal = false;
 		startMoving(state);
 	}

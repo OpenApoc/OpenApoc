@@ -32,8 +32,7 @@ namespace
 {
 // Add {0.5,0.5,0.5} to make it route to the center of the tile
 static const Vec3<float> offsetFlying{0.5f, 0.5f, 0.5f};
-static const Vec3<float> offsetLandInto{0.5f, 0.5f, 0.05f};
-static const Vec3<float> offsetLandOnto{0.5f, 0.5f, 0.95f};
+static const Vec3<float> offsetLandInto{0.5f, 0.5f, 0.01f};
 static const Vec3<float> offsetLaunch{0.5f, 0.5f, -1.0f};
 }
 
@@ -383,7 +382,7 @@ VehicleMission *VehicleMission::gotoPortal(GameState &, Vehicle &, Vec3<int> tar
 	return mission;
 }
 
-VehicleMission *VehicleMission::gotoBuilding(GameState &, Vehicle &, StateRef<Building> target,
+VehicleMission *VehicleMission::gotoBuilding(GameState &, Vehicle &v, StateRef<Building> target,
                                              bool allowTeleporter)
 {
 	// TODO
@@ -402,7 +401,7 @@ VehicleMission *VehicleMission::gotoBuilding(GameState &, Vehicle &, StateRef<Bu
 	//  queue(Land)
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::GotoBuilding;
-	mission->targetBuilding = target;
+	mission->targetBuilding = target ? target : v.homeBuilding;
 	mission->allowTeleporter = allowTeleporter;
 	return mission;
 }
@@ -423,6 +422,15 @@ VehicleMission *VehicleMission::attackVehicle(GameState &, Vehicle &, StateRef<V
 	mission->type = MissionType::AttackVehicle;
 	mission->targetVehicle = target;
 	mission->attackCrashed = target->crashed;
+	return mission;
+}
+
+VehicleMission *VehicleMission::attackBuilding(GameState &state, Vehicle &v,
+                                               StateRef<Building> target)
+{
+	auto *mission = new VehicleMission();
+	mission->type = MissionType::AttackBuilding;
+	mission->targetBuilding = target;
 	return mission;
 }
 
@@ -489,11 +497,12 @@ VehicleMission *VehicleMission::crashLand(GameState &, Vehicle &)
 	return mission;
 }
 
-VehicleMission *VehicleMission::patrol(GameState &, Vehicle &, unsigned int counter)
+VehicleMission *VehicleMission::patrol(GameState &, Vehicle &, bool home, unsigned int counter)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::Patrol;
 	mission->missionCounter = counter;
+	mission->patrolHome = home;
 	return mission;
 }
 
@@ -943,23 +952,11 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 		case MissionType::GotoLocation: // Fall-through
 		case MissionType::Crash:
 		case MissionType::Land:
+		case MissionType::Patrol:
+		case MissionType::AttackBuilding:
 		{
 			return advanceAlongPath(state, v, destPos, destFacing);
 		}
-		case MissionType::Patrol:
-			if (!advanceAlongPath(state, v, destPos, destFacing))
-			{
-				if (missionCounter == 0)
-				{
-					return false;
-				}
-
-				missionCounter--;
-				std::uniform_int_distribution<int> xyPos(25, 115);
-				setPathTo(state, v, {xyPos(state.rng), xyPos(state.rng), v.altitude},
-				          getDefaultIterationCount(v));
-			}
-			return false;
 		case MissionType::AttackVehicle:
 		case MissionType::FollowVehicle:
 		{
@@ -1164,6 +1161,10 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 		// Pick attack target
 		case MissionType::Patrol:
 		{
+			if (finished)
+			{
+				return;
+			}
 			float range = v.getFiringRange();
 			if (v.tileObject && range > 0)
 			{
@@ -1171,6 +1172,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 				if (enemy)
 				{
 					StateRef<Vehicle> vehicleRef(&state, enemy->getVehicle());
+					currentPlannedPath.clear();
 					v.addMission(state, VehicleMission::attackVehicle(state, v, vehicleRef));
 				}
 			}
@@ -1237,6 +1239,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 		case MissionType::RestartNextMission:
 		case MissionType::TakeOff:
 		case MissionType::RecoverVehicle:
+		case MissionType::AttackBuilding:
 			return;
 		case MissionType::SelfDestruct:
 			if (finished)
@@ -1350,6 +1353,9 @@ bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 		case MissionType::RestartNextMission:
 		case MissionType::Teleport:
 			return true;
+		// For now there's no known way to finish AttackBuilding
+		case MissionType::AttackBuilding:
+			return false;
 		default:
 			LogWarning("TODO: Implement isFinishedInternal");
 			return false;
@@ -1445,35 +1451,34 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				// Looking for free exit
 				for (auto &exitLocation : b->carEntranceLocations)
 				{
-					auto entTile = map.getTile(exitLocation);
-					if (!entTile)
+					auto exitTile = map.getTile(exitLocation);
+					if (!exitTile)
 					{
 						LogError("Invalid entrance location %s - outside map?", exitLocation.x);
 						continue;
 					}
-					auto scenery = entTile->presentScenery;
+					auto scenery = exitTile->presentScenery;
 					if (!scenery)
 					{
 						LogInfo("Tried exit %s - destroyed", exitLocation);
 						continue;
 					}
-					bool padIsBusy = false;
-					for (auto &obj : entTile->ownedObjects)
+					bool exitIsBusy = false;
+					for (auto &obj : exitTile->ownedObjects)
 					{
 						if (obj->getType() == TileObject::Type::Vehicle)
 						{
-							padIsBusy = true;
+							exitIsBusy = true;
 							break;
 						}
 					}
-					if (padIsBusy)
+					if (exitIsBusy)
 					{
 						continue;
 					}
 					LogInfo("Launching vehicle from building \"%s\" at exit %s", b.id,
 					        exitLocation);
-					Vec3<float> leaveLocation = exitLocation;
-					leaveLocation += offsetLandInto;
+					Vec3<float> leaveLocation = exitTile->getRestingPosition();
 					float facing = 0.0f;
 					if (scenery->type->connection[0])
 					{
@@ -1508,6 +1513,11 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				for (auto &padLocation : b->landingPadLocations)
 				{
 					auto padTile = map.getTile(padLocation);
+					// Pad destroyed
+					if (!padTile->presentScenery || !padTile->presentScenery->type->isLandingPad)
+					{
+						continue;
+					}
 					auto abovePadLocation = padLocation;
 					abovePadLocation.z += 1;
 					auto tileAbovePad = map.getTile(abovePadLocation);
@@ -1548,21 +1558,6 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			v.addMission(state, snooze(state, v, TICKS_PER_SECOND / 2));
 			return;
 		}
-		case MissionType::SelfDestruct:
-			if (v.smokeDoodad)
-			{
-				LogError("Restarting self destruct?");
-			}
-			else
-			{
-				v.smokeDoodad = v.city->placeDoodad({&state, "DOODAD_13_SMOKE_FUME"},
-				                                    v.position + Vec3<float>{0.0f, 0.0f, 0.25f});
-			}
-			return;
-		case MissionType::RestartNextMission:
-		case MissionType::Snooze:
-			// No setup
-			return;
 		case MissionType::Land:
 		{
 			auto b = this->targetBuilding;
@@ -1695,9 +1690,67 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			return;
 		}
+		case MissionType::Patrol:
+		{
+			if (isFinishedInternal(state, v))
+			{
+				return;
+			}
+			if (takeOffCheck(state, v))
+			{
+				return;
+			}
+			else
+			{
+				if (this->currentPlannedPath.empty())
+				{
+					if (missionCounter == 0)
+					{
+						return;
+					}
+					missionCounter--;
+
+					if (patrolHome)
+					{
+						std::uniform_int_distribution<int> xPos(v.homeBuilding->bounds.p0.x - 5,
+						                                        v.homeBuilding->bounds.p1.x + 5);
+						std::uniform_int_distribution<int> yPos(v.homeBuilding->bounds.p0.y - 5,
+						                                        v.homeBuilding->bounds.p1.y + 5);
+						setPathTo(state, v, {xPos(state.rng), yPos(state.rng), v.altitude},
+						          getDefaultIterationCount(v));
+					}
+					else
+					{
+						std::uniform_int_distribution<int> xyPos(25, 115);
+						setPathTo(state, v, {xyPos(state.rng), xyPos(state.rng), v.altitude},
+						          getDefaultIterationCount(v));
+					}
+				}
+			}
+			return;
+		}
+		case MissionType::AttackBuilding:
+		{
+			if (takeOffCheck(state, v))
+			{
+				return;
+			}
+			else
+			{
+				if (this->currentPlannedPath.empty())
+				{
+					std::uniform_int_distribution<int> xPos(targetBuilding->bounds.p0.x - 5,
+					                                        targetBuilding->bounds.p1.x + 5);
+					std::uniform_int_distribution<int> yPos(targetBuilding->bounds.p0.y - 5,
+					                                        targetBuilding->bounds.p1.y + 5);
+					setPathTo(state, v, {xPos(state.rng), yPos(state.rng), v.altitude},
+					          getDefaultIterationCount(v));
+				}
+			}
+			return;
+		}
 		case MissionType::Crash:
 		{
-			// Ground can't crash (yet)
 			if (v.type->type != VehicleType::Type::UFO)
 			{
 				LogError("Only UFOs can crash, how did we end up starting this?");
@@ -1732,11 +1785,6 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			this->targetLocation = tile;
 			setPathTo(state, v, tile, getDefaultIterationCount(v));
-			return;
-		}
-		case MissionType::Patrol:
-		{
-			takeOffCheck(state, v);
 			return;
 		}
 		case MissionType::FollowVehicle:
@@ -1799,7 +1847,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			{
 				return;
 			}
-
+			// Actually go there
 			if (v.type->isGround())
 			{
 				/* Am I already in a car depot? If so land */
@@ -1854,6 +1902,12 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				LogInfo("Vehicle mission %s: at position %s", name, position);
 				for (auto &padLocation : b->landingPadLocations)
 				{
+					auto padTile = b->city->map->getTile(padLocation);
+					// Pad destroyed
+					if (!padTile->presentScenery || !padTile->presentScenery->type->isLandingPad)
+					{
+						continue;
+					}
 					auto abovePadLocation = padLocation;
 					abovePadLocation.z += 1;
 					if (abovePadLocation == position)
@@ -1869,7 +1923,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				* +
 				* distance to goal)*/
 				Vec3<int> shortestPathPad = {0, 0, 0};
-				float shortestPathCost = std::numeric_limits<float>::max();
+				float shortestPathCost = FLT_MAX;
 
 				for (auto &dest : b->landingPadLocations)
 				{
@@ -1878,6 +1932,12 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					// Don't pay attention to stuff that blocks us, as things will likely move
 					// anyway...
 
+					auto padTile = b->city->map->getTile(dest);
+					// Pad destroyed
+					if (!padTile->presentScenery || !padTile->presentScenery->type->isLandingPad)
+					{
+						continue;
+					}
 					// We actually want the tile above the pad itself
 					auto aboveDest = dest;
 					aboveDest.z += 1;
@@ -1894,10 +1954,25 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						shortestPathPad = aboveDest;
 					}
 				}
-
-				LogInfo("Vehicle mission %s: Pathing to pad at %s", name, shortestPathPad);
-				v.addMission(state, VehicleMission::gotoLocation(state, v, shortestPathPad,
-				                                                 allowTeleporter, false, 100));
+				if (shortestPathCost != FLT_MAX)
+				{
+					LogInfo("Vehicle mission %s: Pathing to pad at %s", name, shortestPathPad);
+					v.addMission(state, VehicleMission::gotoLocation(state, v, shortestPathPad,
+					                                                 allowTeleporter, false, 100));
+				}
+				else
+				{
+					LogInfo("Vehicle mission %s: No pads, pathing to random location near building",
+					        name);
+					std::uniform_int_distribution<int> xPos(targetBuilding->bounds.p0.x - 2,
+					                                        targetBuilding->bounds.p1.x + 2);
+					std::uniform_int_distribution<int> yPos(targetBuilding->bounds.p0.y - 2,
+					                                        targetBuilding->bounds.p1.y + 2);
+					v.addMission(state,
+					             VehicleMission::gotoLocation(
+					                 state, v, {xPos(state.rng), yPos(state.rng), v.altitude},
+					                 allowTeleporter, true));
+				}
 				return;
 			}
 		}
@@ -1910,7 +1985,9 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				return;
 			}
 			// Target not crashed or dead or already rescued
-			if (!targetVehicle || !targetVehicle->crashed || targetVehicle->carriedByVehicle)
+			if (!targetVehicle ||
+			    (!targetVehicle->crashed && !targetVehicle->sliding && !targetVehicle->falling) ||
+			    targetVehicle->carriedByVehicle)
 			{
 				cancelled = true;
 				return;
@@ -1973,7 +2050,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 								                        state, v, targetVehicle->homeBuilding));
 								v.carriedVehicle = target;
 								target->carriedByVehicle = thisRef;
-								target->missions.clear();
+								target->clearMissions(state, true);
 								if (target->smokeDoodad)
 								{
 									target->smokeDoodad->remove(state);
@@ -2048,8 +2125,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						missionCounter++;
 						if (v.homeBuilding)
 						{
-							v.addMission(state,
-							             VehicleMission::gotoBuilding(state, v, v.homeBuilding));
+							v.addMission(state, VehicleMission::gotoBuilding(state, v));
 							if (v.owner != state.getPlayer())
 							{
 								v.addMission(state,
@@ -2216,8 +2292,23 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					return;
 			}
 		}
+		case MissionType::SelfDestruct:
+			if (v.smokeDoodad)
+			{
+				LogError("Restarting self destruct?");
+			}
+			else
+			{
+				v.smokeDoodad = v.city->placeDoodad({&state, "DOODAD_13_SMOKE_FUME"},
+				                                    v.position + Vec3<float>{0.0f, 0.0f, 0.25f});
+			}
+			return;
+		case MissionType::RestartNextMission:
+		case MissionType::Snooze:
+			// No setup
+			return;
 		default:
-			LogWarning("TODO: Implement start");
+			LogError("TODO: Implement start %s", getName());
 			return;
 	}
 }
@@ -2296,13 +2387,28 @@ bool VehicleMission::advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> 
 	// Land/TakeOff mission does not check for collision or path skips
 	if (type == MissionType::Land)
 	{
-		destPos = Vec3<float>{pos.x, pos.y, pos.z} + offsetLandInto;
+		if (v.type->isGround())
+		{
+			destPos = v.city->map->getTile(pos)->getRestingPosition();
+		}
+		else
+		{
+			destPos = pos;
+			destPos += offsetLandInto;
+		}
 		return true;
 	}
 	if (type == MissionType::TakeOff)
 	{
-		destPos =
-		    Vec3<float>{pos.x, pos.y, pos.z} + (v.type->isGround() ? offsetLandInto : offsetFlying);
+		if (v.type->isGround())
+		{
+			destPos = v.city->map->getTile(pos)->getRestingPosition();
+		}
+		else
+		{
+			destPos = pos;
+			destPos += offsetFlying;
+		}
 		return true;
 	}
 
@@ -2372,56 +2478,24 @@ bool VehicleMission::advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> 
 		it = ++currentPlannedPath.begin();
 	}
 
-	destPos = Vec3<float>{pos.x, pos.y, pos.z};
-
-	Vec3<float> offset = offsetFlying;
 	auto sceneryTo = tTo->presentScenery;
-	switch (v.type->type)
+	if (v.type->isGround())
 	{
-		case VehicleType::Type::Road:
-		{
-			if (!sceneryTo)
-			{
-				LogError("Ground vehicle going into no scenery at %s?", pos);
-				return true;
-			}
-			if (!sceneryTo->type->isHill)
-			{
-				offset = offsetLandInto;
-			}
-			break;
-		}
-		case VehicleType::Type::ATV:
-		{
-			if (!sceneryTo)
-			{
-				LogError("Ground vehicle going into no scenery at %s?", pos);
-				return true;
-			}
-			if (!sceneryTo->type->isHill)
-			{
-				// Expecting to not meet a none here!
-				if (sceneryTo->type->getATVMode() == SceneryTileType::WalkMode::Into)
-				{
-					offset = offsetLandInto;
-				}
-				else
-				{
-					offset = {0.5f, 0.5f, (float)sceneryTo->type->height / 15.0f - 0.01f};
-				}
-			}
-			break;
-		}
-		case VehicleType::Type::Flying:
-		case VehicleType::Type::UFO:
-			// If there's a scenery there then we must be rescuing, go to the top
-			if (sceneryTo)
-			{
-				offset = offsetLandOnto;
-			}
-			break;
+		destPos = tTo->getRestingPosition();
 	}
-	destPos += offset;
+	else
+	{
+		// If there's a scenery there then we must be rescuing, go to the top
+		if (sceneryTo)
+		{
+			destPos = tTo->getRestingPosition(false, true);
+		}
+		else
+		{
+			destPos = pos;
+			destPos += offsetFlying;
+		}
+	}
 
 	return true;
 }
@@ -2617,8 +2691,9 @@ bool GroundVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, f
 		{
 			return false;
 		}
-		// If moving to an "onto" tile must have clear above
-		if (sceneryTo->type->getATVMode() == SceneryTileType::WalkMode::Onto)
+		// If moving to an "onto" tile must have clear above (unless road)
+		if (sceneryTo->type->getATVMode() == SceneryTileType::WalkMode::Onto &&
+		    sceneryTo->type->tile_type != SceneryTileType::TileType::Road)
 		{
 			auto checkedPos = (Vec3<int>)sceneryTo->currentPosition + Vec3<int>(0, 0, 1);
 			if (map.tileIsValid(checkedPos))

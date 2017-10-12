@@ -2600,9 +2600,7 @@ void Battle::finishBattle(GameState &state)
 		// Send home if not on vehicle
 		if (!u.second->agent->currentVehicle && !state.current_battle->skirmish)
 		{
-			u.second->agent->setMission(
-			    state, AgentMission::gotoBuilding(state, *u.second->agent,
-			                                      u.second->agent->homeBuilding, false, false));
+			u.second->agent->setMission(state, AgentMission::gotoBuilding(state, *u.second->agent));
 		}
 	}
 
@@ -2989,13 +2987,71 @@ void Battle::exitBattle(GameState &state)
 		}
 	}
 
-	// Check cargo limits
+	// List of bio-containment leftover loot
+	std::map<StateRef<AEquipmentType>, int> leftoverBioLoot;
+	// List of cargo bay leftover loot
+	std::map<StateRef<AEquipmentType>, int> leftoverCargoLoot;
+
+	// Check cargo limits (this can move loot into leftover loot)
 	if (config().getBool("OpenApoc.NewFeature.EnforceCargoLimits"))
 	{
 		LogWarning("Implement feature: Enforce containment limits");
+
+		// FIXME: Implement enforce cargo limits
+		// Basically here we should open a window where we offer to leave behind
+		// loot that won't fit combined cargo capacity and alien capacity of player craft
+		// That loot is moved to leftover loot
 	}
 
-	// Load cargo into vehicles
+	// If player has no vehicles all loot goes to leftover loot
+	if (playerVehicles.empty())
+	{
+		for (auto &e : state.current_battle->cargoLoot)
+		{
+			leftoverCargoLoot[e.first] = e.second;
+		}
+		state.current_battle->cargoLoot.clear();
+		for (auto &e : state.current_battle->bioLoot)
+		{
+			leftoverBioLoot[e.first] = e.second;
+		}
+		state.current_battle->bioLoot.clear();
+	}
+
+	// Bio loot remaining?
+	if (!leftoverBioLoot.empty())
+	{
+		// Bio loot is wasted if can't be loaded on player craft
+	}
+
+	// Cargo loot remaining?
+	if (leftoverCargoLoot.empty())
+	{
+		if (config().getBool("OpenApoc.NewFeature.AllowBuildingLootDeposit"))
+		{
+			if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
+			{
+				// Still cant't do anything if we're recovering UFO
+			}
+			else
+			{
+				// Deposit loot into building, call for pickup
+				StateRef<Building> location = {&state, state.current_battle->mission_location_id};
+				auto homeBuilding =
+				    playerVehicles.empty() ? nullptr : playerVehicles.front()->homeBuilding;
+				if (!homeBuilding)
+				{
+					homeBuilding = state.player_bases.begin()->second->building;
+				}
+				for (auto &e : leftoverCargoLoot)
+				{
+					location->cargo.emplace_back(state, e.first, e.second, nullptr, homeBuilding);
+				}
+			}
+		}
+	}
+
+	// Load cargo/bio into vehicles
 	if (!playerVehicles.empty())
 	{
 		// Go through every loot position
@@ -3066,46 +3122,13 @@ void Battle::exitBattle(GameState &state)
 		}
 	}
 
-	// Bio loot remaining?
-	if (!state.current_battle->bioLoot.empty())
-	{
-		// Bio loot is wasted if can't be loaded on player craft
-	}
-
-	// Cargo loot remaining?
-	if (!state.current_battle->cargoLoot.empty())
-	{
-		if (config().getBool("OpenApoc.NewFeature.AllowBuildingLootDeposit"))
-		{
-			if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
-			{
-				// Still cant't do anything if we're recovering UFO
-			}
-			else
-			{
-				// Deposit loot into building, call for pickup
-				StateRef<Building> location = {&state, state.current_battle->mission_location_id};
-				auto homeBuilding =
-				    playerVehicles.empty() ? nullptr : playerVehicles.front()->homeBuilding;
-				if (!homeBuilding)
-				{
-					homeBuilding = state.player_bases.begin()->second->building;
-				}
-				for (auto &e : state.current_battle->cargoLoot)
-				{
-					location->cargo.emplace_back(state, e.first, e.second, nullptr, homeBuilding);
-				}
-			}
-		}
-	}
-
 	// Give player vehicle a null cargo just so it comes back to base once
 	for (auto v : returningVehicles)
 	{
 		v->cargo.emplace_front(
 		    state, StateRef<AEquipmentType>(&state, state.agent_equipment.begin()->first), 0,
 		    nullptr, v->homeBuilding);
-		v->setMission(state, VehicleMission::gotoBuilding(state, *v, v->homeBuilding));
+		v->setMission(state, VehicleMission::gotoBuilding(state, *v));
 		v->addMission(state, VehicleMission::offerService(state, *v), true);
 	}
 
@@ -3120,6 +3143,10 @@ void Battle::exitBattle(GameState &state)
 				state.eventFromBattle = GameEventType::MissionCompletedBuildingAlien;
 				StateRef<Building>(&state, state.current_battle->mission_location_id)
 				    ->collapse(state);
+				for (auto v : returningVehicles)
+				{
+					v->addMission(state, VehicleMission::snooze(state, *v, 3 * TICKS_PER_SECOND));
+				}
 			}
 			break;
 		}
@@ -3147,6 +3174,16 @@ void Battle::exitBattle(GameState &state)
 		case Battle::MissionType::RaidHumans:
 		{
 			state.eventFromBattle = GameEventType::MissionCompletedBuildingRaid;
+			if (state.current_battle->playerWon &&
+			    config().getBool("OpenApoc.NewFeature.CollapseRaidedBuilding"))
+			{
+				StateRef<Building>(&state, state.current_battle->mission_location_id)
+				    ->collapse(state);
+				for (auto v : returningVehicles)
+				{
+					v->addMission(state, VehicleMission::snooze(state, *v, 3 * TICKS_PER_SECOND));
+				}
+			}
 			break;
 		}
 		case Battle::MissionType::UfoRecovery:
