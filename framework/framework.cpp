@@ -234,6 +234,9 @@ ConfigOptionBool optionVanillaCityControls("OpenApoc.NewFeature", "OpenApocCityC
                                            "Improved city control scheme", true);
 ConfigOptionBool optionCollapseRaidedBuilding("OpenApoc.NewFeature", "CollapseRaidedBuilding",
                                               "Successful raid collapses building", true);
+ConfigOptionBool
+    optionScrambleOnUnintentionalHit("OpenApoc.NewFeature", "ScrambleOnUnintentionalHit",
+                                     "Any hit on hostile building provokes retaliation", false);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);

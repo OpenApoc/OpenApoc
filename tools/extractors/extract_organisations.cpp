@@ -257,11 +257,11 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 				// Transtellar
 				case 3:
 					missions.emplace_back(
-					    0, 30 * s, 90 * s, 1, 1,
+					    50 * s, 2 * m, 6 * m, 1, 1,
 					    std::set<StateRef<VehicleType>>{{&state, "VEHICLETYPE_SPACE_LINER"}},
 					    Organisation::MissionPattern::Target::DepartToSpace);
 					missions.emplace_back(
-					    0, 30 * s, 90 * s, 1, 1,
+					    22 * s, 2 * m, 6 * m, 1, 1,
 					    std::set<StateRef<VehicleType>>{{&state, "VEHICLETYPE_SPACE_LINER"}},
 					    Organisation::MissionPattern::Target::ArriveFromSpace);
 					missions.emplace_back(

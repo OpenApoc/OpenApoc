@@ -21,7 +21,8 @@ VEquipment::VEquipment()
 {
 }
 
-void VEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Vehicle> targetVehicle)
+void VEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Vehicle> targetVehicle,
+                      bool manual)
 {
 	static const std::map<VEquipment::WeaponState, UString> WeaponStateMap = {
 	    {WeaponState::Ready, "ready"},
@@ -88,7 +89,7 @@ void VEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Veh
 		    type->damage,
 		    /*delay*/ 0, type->tail_size, type->projectile_sprites, type->impact_sfx,
 		    type->explosion_graphic,
-		    type->guided ? state.city_common_image_list->projectileVoxelMap : nullptr);
+		    type->guided ? state.city_common_image_list->projectileVoxelMap : nullptr, manual);
 		vehicleTile->map.addObjectToMap(projectile);
 		state.current_city->projectiles.insert(projectile);
 	}

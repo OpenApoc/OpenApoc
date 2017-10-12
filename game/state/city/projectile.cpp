@@ -22,13 +22,14 @@ Projectile::Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> tar
                        Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity,
                        int turnRate, unsigned int lifetime, int damage, unsigned int delay,
                        unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
-                       sp<Sample> impactSfx, StateRef<DoodadType> doodadType, sp<VoxelMap> voxelMap)
+                       sp<Sample> impactSfx, StateRef<DoodadType> doodadType, sp<VoxelMap> voxelMap,
+                       bool manualFire)
     : type(type), position(position), velocity(velocity), turnRate(turnRate), age(0),
       lifetime(lifetime), damage(damage), delay_ticks_remaining(delay), firerVehicle(firer),
       firerPosition(firer->position), trackedVehicle(target), targetPosition(targetPosition),
       previousPosition(position), spritePositions({position}), tail_length(tail_length),
       projectile_sprites(projectile_sprites), sprite_distance(1.0f / TILE_Y_CITY),
-      voxelMap(voxelMap), impactSfx(impactSfx), doodadType(doodadType),
+      voxelMap(voxelMap), manualFire(manualFire), impactSfx(impactSfx), doodadType(doodadType),
       velocityScale(VELOCITY_SCALE_CITY)
 {
 	// enough ticks to pass 1 tile diagonally and some more since vehicles can move quite quickly
@@ -43,14 +44,15 @@ Projectile::Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUni
                        int depletionRate, unsigned int tail_length,
                        std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
                        StateRef<DoodadType> doodadType, StateRef<DamageType> damageType,
-                       sp<VoxelMap> voxelMap)
+                       sp<VoxelMap> voxelMap, bool manualFire)
     : type(type), position(position), velocity(velocity), turnRate(turnRate), age(0),
       lifetime(lifetime), damage(damage), delay_ticks_remaining(delay),
       depletionRate(depletionRate), firerUnit(firer), firerPosition(firer->position),
       trackedUnit(target), targetPosition(targetPosition), previousPosition(position),
       spritePositions({position}), tail_length(tail_length), projectile_sprites(projectile_sprites),
-      sprite_distance(1.0f / TILE_Y_BATTLE), voxelMap(voxelMap), impactSfx(impactSfx),
-      doodadType(doodadType), damageType(damageType), velocityScale(VELOCITY_SCALE_BATTLE)
+      sprite_distance(1.0f / TILE_Y_BATTLE), voxelMap(voxelMap), manualFire(manualFire),
+      impactSfx(impactSfx), doodadType(doodadType), damageType(damageType),
+      velocityScale(VELOCITY_SCALE_BATTLE)
 {
 	// enough ticks to pass 1 tile diagonally
 	ownerInvulnerableTicks =

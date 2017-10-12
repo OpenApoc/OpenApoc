@@ -53,13 +53,15 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	           Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity, int turnRate,
 	           unsigned int lifetime, int damage, unsigned int delay, unsigned int tail_length,
 	           std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
-	           StateRef<DoodadType> doodadType, sp<VoxelMap> voxelMap = nullptr);
+	           StateRef<DoodadType> doodadType, sp<VoxelMap> voxelMap = nullptr,
+	           bool manualFire = false);
 	Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target,
 	           Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity, int turnRate,
 	           unsigned int lifetime, int damage, unsigned int delay, int depletionRate,
 	           unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
 	           sp<Sample> impactSfx, StateRef<DoodadType> doodadType,
-	           StateRef<DamageType> damageType, sp<VoxelMap> voxelMap = nullptr);
+	           StateRef<DamageType> damageType, sp<VoxelMap> voxelMap = nullptr,
+	           bool manualFire = false);
 	Projectile();
 	virtual void update(GameState &state, unsigned int ticks);
 	void die(GameState &state, bool displayDoodad = true, bool playSound = true);
@@ -97,6 +99,7 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	std::list<sp<Image>> projectile_sprites;
 	float sprite_distance = 0.0f;
 	sp<VoxelMap> voxelMap;
+	bool manualFire = false;
 
 	sp<Sample> impactSfx;
 	StateRef<DoodadType> doodadType;

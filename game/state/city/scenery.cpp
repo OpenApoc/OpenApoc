@@ -780,9 +780,11 @@ bool Scenery::handleCollision(GameState &state, Collision &c)
 		// Lose 5 points
 		ourOrg->adjustRelationTo(state, attackerOrg, -5.0f);
 		// If intentional lose additional 15 points
-		if (!c.projectile->firerVehicle->missions.empty() &&
-		    c.projectile->firerVehicle->missions.front()->type ==
-		        VehicleMission::MissionType::AttackBuilding)
+		bool intentional =
+		    c.projectile->manualFire || (!c.projectile->firerVehicle->missions.empty() &&
+		                                 c.projectile->firerVehicle->missions.front()->type ==
+		                                     VehicleMission::MissionType::AttackBuilding);
+		if (intentional)
 		{
 			ourOrg->adjustRelationTo(state, attackerOrg, -25.0f);
 		}
@@ -801,7 +803,10 @@ bool Scenery::handleCollision(GameState &state, Collision &c)
 				}
 			}
 		}
-		building->underAttack(state, attackerOrg);
+		if (intentional || config().getBool("OpenApoc.NewFeature.ScrambleOnUnintentionalHit"))
+		{
+			building->underAttack(state, attackerOrg);
+		}
 	}
 
 	return applyDamage(state, c.projectile->damage);

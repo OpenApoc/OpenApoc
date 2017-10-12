@@ -2656,7 +2656,7 @@ void Vehicle::attackTarget(GameState &state, Vec3<float> target)
 		cloakTicksAccumulated = 0;
 
 		// Fire
-		eq->fire(state, target);
+		eq->fire(state, target, nullptr, true);
 		return;
 	}
 

@@ -874,6 +874,7 @@
 		<member>tail_length</member>
 		<member>projectile_sprites</member>
 		<member>sprite_distance</member>
+		<member>manualFire</member>
 		<member>voxelMap</member>
 		<member>impactSfx</member>
 		<member>doodadType</member>

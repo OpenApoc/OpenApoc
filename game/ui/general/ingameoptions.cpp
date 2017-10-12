@@ -98,6 +98,8 @@ std::list<std::pair<UString, UString>> openApocList = {
     {"OpenApoc.NewFeature.CrashingGroundVehicles", "Unsupported ground vehicles crash"},
     {"OpenApoc.NewFeature.OpenApocCityControls", "Improved city control scheme"},
     {"OpenApoc.NewFeature.CollapseRaidedBuilding", "Successful raid collapses building"},
+    {"OpenApoc.NewFeature.ScrambleOnUnintentionalHit",
+     "Any hit on hostile building provokes retaliation"},
     {"OpenApoc.Mod.StunHostileAction", "(M) Stunning hurts relationships"},
     {"OpenApoc.Mod.RaidHostileAction", "(M) Initiating raid hurts relationships"},
     {"OpenApoc.Mod.CrashingVehicles", "(M) Vehicles crash on low HP"},
