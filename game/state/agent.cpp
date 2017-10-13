@@ -1022,6 +1022,10 @@ void Agent::die(GameState &state, bool silent)
 	{
 		for (auto &fac : homeBuilding->base->facilities)
 		{
+			if (!fac->lab)
+			{
+				continue;
+			}
 			auto it = std::find(fac->lab->assigned_agents.begin(), fac->lab->assigned_agents.end(),
 			                    thisRef);
 			if (it != fac->lab->assigned_agents.end())

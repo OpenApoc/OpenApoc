@@ -24,6 +24,7 @@ class CityTileView : public TileView
 	sp<Image> selectionImageHostileLarge;
 
 	int selectionFrameTicksAccumulated = 0;
+	int portalImageTicksAccumulated = 0;
 
   public:
 	CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,

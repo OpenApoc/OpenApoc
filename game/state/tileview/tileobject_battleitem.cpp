@@ -34,7 +34,10 @@ void TileObjectBattleItem::draw(Renderer &r, TileTransform &, Vec2<float> screen
 			if (item->falling || !visible)
 				break;
 			sprite = item->strategySprite;
-			transformedScreenPos -= sprite->size / (unsigned)2;
+			if (sprite)
+			{
+				transformedScreenPos -= sprite->size / (unsigned)2;
+			}
 			break;
 		}
 		default:

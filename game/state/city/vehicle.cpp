@@ -2766,7 +2766,7 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 		case VehicleMission::MissionType::RestartNextMission:
 			canPlaceInFront = true;
 			break;
-		// - Cannot place in front but
+		// - Cannot place in front
 		// - Can place on crashed vehicles
 		// - Can place on carrying vehicles
 		case VehicleMission::MissionType::Crash:
@@ -2810,7 +2810,7 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 	{
 		missions.emplace(++missions.begin(), mission);
 	}
-	else if (!toBack || canPlaceInFront || missions.empty())
+	else if (!toBack || missions.empty())
 	{
 		missions.emplace_front(mission);
 		missions.front()->start(state, *this);

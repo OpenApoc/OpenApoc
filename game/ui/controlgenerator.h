@@ -69,11 +69,11 @@ class ControlGenerator
 	                   UnitSelectionState forcedSelectionState = UnitSelectionState::NA,
 	                   bool forceFade = false);
 	static sp<Control> createLargeAgentControl(GameState &state, const AgentInfo &info,
-	                                           bool addSkill = false);
+	                                           bool addSkill = false, bool labMode = false);
 	static sp<Control>
 	createLargeAgentControl(GameState &state, sp<Agent> a, bool addSkill = false,
 	                        UnitSelectionState forcedSelectionState = UnitSelectionState::NA,
-	                        bool forceFade = false);
+	                        bool forceFade = false, bool labMode = false);
 
 	static int getFontHeight(GameState &state);
 };

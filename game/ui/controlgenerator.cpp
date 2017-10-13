@@ -350,13 +350,14 @@ sp<Control> ControlGenerator::createAgentControl(GameState &state, const AgentIn
 }
 
 sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, const AgentInfo &info,
-                                                      bool addSkill)
+                                                      bool addSkill, bool labMode)
 {
 	if (!singleton.initialised)
 	{
 		singleton.init(state);
 	}
-	Vec2<int> size = {130, singleton.labelFont->getFontHeight() * (addSkill ? 3 : 2)};
+	auto size = labMode ? Vec2<int>{159, 31}
+	                    : Vec2<int>{130, singleton.labelFont->getFontHeight() * (addSkill ? 3 : 2)};
 
 	auto baseControl = mksp<Control>();
 	baseControl->setData(info.agent);
@@ -365,13 +366,13 @@ sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, const Ag
 
 	auto frameGraphic = baseControl->createChild<Graphic>();
 	frameGraphic->AutoSize = true;
-	frameGraphic->Location = {0, 0};
+	frameGraphic->Location = {4, 4};
 
 	fillAgentControl(state, frameGraphic, info);
 
 	auto nameLabel = baseControl->createChild<Label>(info.agent->name, singleton.labelFont);
 	nameLabel->Location = {40, 0};
-	nameLabel->Size = {100, singleton.labelFont->getFontHeight() * 2};
+	nameLabel->Size = {labMode ? 72 : 100, labMode ? 31 : singleton.labelFont->getFontHeight() * 2};
 
 	if (addSkill)
 	{
@@ -391,8 +392,16 @@ sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, const Ag
 
 		auto skillLabel =
 		    baseControl->createChild<Label>(format(tr("Skill %s"), skill), singleton.labelFont);
-		skillLabel->Size = {100, singleton.labelFont->getFontHeight()};
-		skillLabel->Location = {40, singleton.labelFont->getFontHeight() * 2};
+		if (labMode)
+		{
+			skillLabel->Size = {45, 40};
+			skillLabel->Location = {115, 0};
+		}
+		else
+		{
+			skillLabel->Size = {100, singleton.labelFont->getFontHeight()};
+			skillLabel->Location = {40, singleton.labelFont->getFontHeight() * 2};
+		}
 	}
 
 	return baseControl;
@@ -400,10 +409,10 @@ sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, const Ag
 
 sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, sp<Agent> a, bool addSkill,
                                                       UnitSelectionState forcedSelectionState,
-                                                      bool forceFade)
+                                                      bool forceFade, bool labMode)
 {
 	auto info = createAgentInfo(state, a, forcedSelectionState, forceFade);
-	return createLargeAgentControl(state, info, addSkill);
+	return createLargeAgentControl(state, info, addSkill, labMode);
 }
 
 int ControlGenerator::getFontHeight(GameState &state)

@@ -525,8 +525,15 @@ void GameState::startGame()
 
 			// Finally stay in bounds
 			entry.second = clamp(entry.second, -100.0f, 100.0f);
+
+			// Set player reverse relationships
+			if (entry.first == getPlayer())
+			{
+				getPlayer()->current_relations[{this, pair.first}] = entry.second;
+			}
 		}
 	}
+
 	// Setup buildings
 	for (auto &pair : this->cities)
 	{

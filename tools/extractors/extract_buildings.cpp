@@ -70,7 +70,8 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 			b->accessTopic = {&state, format("RESEARCH_UNLOCK_ALIEN_BUILDING_%d", i)};
 			if (i < 9)
 			{
-				b->researchUnlock.emplace_back(&state, format("RESEARCH_UNLOCK_ALIEN_BUILDING_%d", i + 1));
+				b->researchUnlock.emplace_back(&state,
+				                               format("RESEARCH_UNLOCK_ALIEN_BUILDING_%d", i + 1));
 			}
 			else
 			{

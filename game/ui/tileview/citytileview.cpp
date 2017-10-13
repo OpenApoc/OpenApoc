@@ -217,6 +217,9 @@ void CityTileView::render()
 	{
 		selectionFrameTicksAccumulated++;
 		selectionFrameTicksAccumulated %= 2 * SELECTION_FRAME_ANIMATION_DELAY;
+		portalImageTicksAccumulated++;
+		portalImageTicksAccumulated %=
+		    state.city_common_image_list->portalStrategic.size() * PORTAL_FRAME_ANIMATION_DELAY;
 	}
 
 	// screenOffset.x/screenOffset.y is the 'amount added to the tile coords' - so we want
@@ -690,9 +693,12 @@ void CityTileView::render()
 			// Draw portals
 			for (auto &p : state.current_city->portals)
 			{
-				r.draw(state.city_common_image_list->portalStrategic,
+				auto portalImage =
+				    state.city_common_image_list->portalStrategic[portalImageTicksAccumulated /
+				                                                  PORTAL_FRAME_ANIMATION_DELAY];
+				r.draw(portalImage,
 				       tileToOffsetScreenCoords(p->position) -
-				           (Vec2<float>)state.city_common_image_list->portalStrategic->size / 2.0f);
+				           (Vec2<float>)portalImage->size / 2.0f);
 			}
 
 			// Alien debug display

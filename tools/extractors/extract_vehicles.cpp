@@ -151,7 +151,8 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 			vehicle->researchUnlock.emplace_back(&state,
 			                                     "RESEARCH_UNLOCK_ALIEN_CRAFT_ENERGY_SOURCE");
 			vehicle->researchUnlock.emplace_back(&state, "RESEARCH_UNLOCK_ALIEN_CRAFT_PROPULSION");
-			vehicle->researchUnlock.emplace_back(&state, format("RESEARCH_UNLOCK_UFO_TYPE_%d", i + 1));
+			vehicle->researchUnlock.emplace_back(&state,
+			                                     format("RESEARCH_UNLOCK_UFO_TYPE_%d", i + 1));
 		}
 
 		if (v.movement_type == 0)

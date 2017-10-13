@@ -37,8 +37,10 @@ void ResearchScreen::changeBase(sp<Base> newBase)
 {
 	BaseStage::changeBase(newBase);
 
-	// FIXME: Should only reset if selected_lab doesn't belong to current base
-	this->selected_lab = nullptr;
+	// first lab in case we have no selected lab
+	sp<Facility> firstLab;
+	// wether selected lab is in new list
+	bool labInList = false;
 	this->labs.clear();
 	for (auto &facility : this->state->current_base->facilities)
 	{
@@ -48,12 +50,25 @@ void ResearchScreen::changeBase(sp<Base> newBase)
 		     facility->type->capacityType == FacilityType::Capacity::Workshop))
 		{
 			this->labs.push_back(facility);
+			if (!firstLab)
+			{
+				firstLab = facility;
+			}
 			if (!this->selected_lab)
 			{
 				this->selected_lab = facility;
 				this->viewFacility = this->selected_lab;
 			}
+			if (selected_lab == facility)
+			{
+				labInList = true;
+			}
 		}
+	}
+	if (!labInList && firstLab)
+	{
+		this->selected_lab = firstLab;
+		this->viewFacility = firstLab;
 	}
 
 	auto labList = form->findControlTyped<ListBox>("LIST_LABS");
@@ -64,6 +79,10 @@ void ResearchScreen::changeBase(sp<Base> newBase)
 		graphic->AutoSize = true;
 		graphic->setData(facility);
 		labList->addItem(graphic);
+		if (facility == selected_lab)
+		{
+			labList->setSelected(graphic);
+		}
 	}
 
 	setCurrentLabInfo();
@@ -299,15 +318,15 @@ void ResearchScreen::setCurrentLabInfo()
 			if (!assigned_to_current_lab)
 				continue;
 		}
-		auto agentControl = ControlGenerator::createLargeAgentControl(*state, agent.second, true);
-
 		if (assigned_to_current_lab)
 		{
-			assignedAgentList->addItem(agentControl);
+			assignedAgentList->addItem(ControlGenerator::createLargeAgentControl(
+			    *state, agent.second, true, UnitSelectionState::NA, false, true));
 		}
 		else
 		{
-			unassignedAgentList->addItem(agentControl);
+			unassignedAgentList->addItem(ControlGenerator::createLargeAgentControl(
+			    *state, agent.second, true, UnitSelectionState::NA, false, false));
 		}
 	}
 	assignedAgentList->ItemSize = agentEntryHeight;

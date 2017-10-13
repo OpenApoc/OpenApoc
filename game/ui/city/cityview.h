@@ -56,8 +56,12 @@ class CityView : public CityTileView
 
 	sp<GameState> state;
 
-	std::map<sp<Vehicle>, std::pair<VehicleTileInfo, sp<Control>>> vehicleListControls;
-	std::map<sp<Agent>, std::pair<AgentInfo, sp<Control>>> agentListControls;
+	std::vector<VehicleTileInfo> ownedVehicleInfoList;
+	std::vector<AgentInfo> ownedSoldierInfoList;
+	std::vector<AgentInfo> ownedBioInfoList;
+	std::vector<AgentInfo> ownedEngineerInfoList;
+	std::vector<AgentInfo> ownedPhysicsInfoList;
+	std::vector<VehicleTileInfo> hostileVehicleInfoList;
 
 	bool followVehicle;
 
