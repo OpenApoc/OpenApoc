@@ -30,6 +30,7 @@ class SceneryTileType;
 class Organisation;
 class BaseLayout;
 class Agent;
+class ResearchTopic;
 class TileMap;
 
 class RoadSegment
@@ -71,6 +72,9 @@ class City : public StateObject
 	std::set<sp<Projectile>> projectiles;
 
 	up<TileMap> map;
+
+	// Unlocks when visiting this
+	std::list<StateRef<ResearchTopic>> researchUnlock;
 
 	// Pathfinding
 

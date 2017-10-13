@@ -294,8 +294,7 @@ void InGameOptions::eventOccurred(Event *e)
 				}
 
 				{
-					topic->started = true;
-					topic->man_hours_progress = topic->man_hours;
+					topic->forceComplete();
 					LogWarning("Topic \"%s\" marked as complete", r.first);
 				}
 			}

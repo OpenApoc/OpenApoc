@@ -1,4 +1,5 @@
 #include "game/state/tileview/tileobject_scenery.h"
+#include "framework/image.h"
 #include "framework/renderer.h"
 #include "game/state/city/scenery.h"
 #include "game/state/rules/scenery_tile_type.h"
@@ -39,7 +40,7 @@ void TileObjectScenery::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 			sprite = type->strategySprite;
 			// All strategy sprites so far are 8x8 so offset by 4 to draw from the center
 			// FIXME: Not true for large sprites (2x2 UFOs?)
-			transformedScreenPos -= Vec2<float>{4, 4};
+			transformedScreenPos -= sprite->size / (unsigned)2;
 			break;
 		default:
 			LogError("Unsupported view mode");

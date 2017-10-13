@@ -1315,6 +1315,56 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 	if (carriedVehicle)
 	{
 		carriedVehicle->enterBuilding(state, b);
+		std::list<sp<VEquipment>> scrappedEquipment;
+		for (auto &e : carriedVehicle->equipment)
+		{
+			if (randBoundsExclusive(state.rng, 0, 100) >= FV_CHANCE_TO_RECOVER_EQUIPMENT)
+			{
+				scrappedEquipment.push_back(e);
+			}
+		}
+		for (auto &e : scrappedEquipment)
+		{
+			carriedVehicle->removeEquipment(e);
+			// FIXME: Sell using economy
+			carriedVehicle->owner->balance += 1000 * FV_SCRAPPED_COST_PERCENT / 100;
+			LogWarning("Sell scrap using economy");
+		}
+		if (randBoundsExclusive(state.rng, 0, 100) > FV_CHANCE_TO_RECOVER_VEHICLE)
+		{
+			while (!carriedVehicle->currentAgents.empty())
+			{
+				auto agent = *carriedVehicle->currentAgents.begin();
+				agent->enterBuilding(state, b);
+			}
+			if (b->base)
+			{
+				// Base, de-equip
+				for (auto &e : carriedVehicle->equipment)
+				{
+					// FIXME: When coding manufacture and other places I had to write X = X + 1
+					// because otherwise it would not add the first item!
+					// Ensure it works here with ++ and change everywhere else
+					// where it does X = X + 1 for base inventory
+					b->base->inventoryVehicleEquipment[e->type.id]++;
+				}
+			}
+			else
+			{
+				// No base, sell
+				for (auto &e : carriedVehicle->equipment)
+				{
+					// FIXME: Sell using economy
+					carriedVehicle->owner->balance += 1000;
+				}
+			}
+			// FIXME: Unload ammo and fuel
+			carriedVehicle->die(state, true);
+			// FIXME: Sell using economy
+			carriedVehicle->owner->balance += 10000 * FV_SCRAPPED_COST_PERCENT / 100;
+			LogWarning("Sell scrap using economy");
+			LogWarning("Event that vehicle scrapped?");
+		}
 		carriedVehicle.clear();
 	}
 	if (tileObject)

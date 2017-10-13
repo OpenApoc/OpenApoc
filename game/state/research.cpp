@@ -23,17 +23,21 @@ bool ResearchTopic::isComplete() const
 	       (this->man_hours_progress >= this->man_hours);
 }
 
+void ResearchTopic::forceComplete()
+{
+	man_hours_progress = man_hours;
+	started = true;
+}
+
 bool ResearchDependency::satisfied() const
 {
-	if (this->topics.empty() && this->type != Type::Unused)
+	if (this->topics.empty())
 	{
-		// No dependencies == always satisfied (unless marked as Unused)
+		// No dependencies == always satisfied
 		return true;
 	}
 	switch (this->type)
 	{
-		case Type::Unused:
-			return false;
 		case Type::Any:
 		{
 			for (auto &r : this->topics)

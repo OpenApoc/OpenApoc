@@ -18,6 +18,7 @@ class RulesLoader;
 class Image;
 class VoxelMap;
 class BattleMap;
+class ResearchTopic;
 class AgentType;
 class UfopaediaEntry;
 
@@ -144,6 +145,8 @@ class VehicleType : public StateObject
 	std::list<std::pair<Vec2<int>, StateRef<VEquipmentType>>> initial_equipment_list;
 
 	StateRef<UfopaediaEntry> ufopaedia_entry;
+	// Unlocks when successful at recovering this
+	std::list<StateRef<ResearchTopic>> researchUnlock;
 
 	bool provideFreightAgent = false;
 	bool provideFreightCargo = false;

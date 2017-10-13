@@ -11,6 +11,7 @@
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/citycommonimagelist.h"
+#include "game/state/city/doodad.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
@@ -630,7 +631,8 @@ void CityTileView::render()
 					continue;
 				}
 				r.draw(state.city_common_image_list->agentStrategic,
-				       tileToOffsetScreenCoords(a.second->position) - Vec2<float>{4, 4});
+				       tileToOffsetScreenCoords(a.second->position) -
+				           (Vec2<float>)state.city_common_image_list->agentStrategic->size / 2.0f);
 				// Draw unit selection brackets
 				if (selectionFrameTicksAccumulated / SELECTION_FRAME_ANIMATION_DELAY)
 				{
@@ -684,6 +686,13 @@ void CityTileView::render()
 						}
 					}
 				}
+			}
+			// Draw portals
+			for (auto &p : state.current_city->portals)
+			{
+				r.draw(state.city_common_image_list->portalStrategic,
+				       tileToOffsetScreenCoords(p->position) -
+				           (Vec2<float>)state.city_common_image_list->portalStrategic->size / 2.0f);
 			}
 
 			// Alien debug display

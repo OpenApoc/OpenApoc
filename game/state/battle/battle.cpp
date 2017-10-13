@@ -3141,6 +3141,7 @@ void Battle::exitBattle(GameState &state)
 
 	// Event and result
 	// FIXME: IS there a better way to pass events? They get cleared if we just pushEvent() them!
+	bool victory = false;
 	switch (state.current_battle->mission_type)
 	{
 		case Battle::MissionType::RaidAliens:
@@ -3148,8 +3149,14 @@ void Battle::exitBattle(GameState &state)
 			if (state.current_battle->playerWon)
 			{
 				state.eventFromBattle = GameEventType::MissionCompletedBuildingAlien;
-				StateRef<Building>(&state, state.current_battle->mission_location_id)
-				    ->collapse(state);
+				auto building =
+				    StateRef<Building>(&state, state.current_battle->mission_location_id);
+				for (auto &u : building->researchUnlock)
+				{
+					u->forceComplete();
+				}
+				victory = building->victory;
+				building->collapse(state);
 				for (auto v : returningVehicles)
 				{
 					v->addMission(state, VehicleMission::snooze(state, *v, 3 * TICKS_PER_SECOND));
@@ -3181,14 +3188,23 @@ void Battle::exitBattle(GameState &state)
 		case Battle::MissionType::RaidHumans:
 		{
 			state.eventFromBattle = GameEventType::MissionCompletedBuildingRaid;
-			if (state.current_battle->playerWon &&
-			    config().getBool("OpenApoc.NewFeature.CollapseRaidedBuilding"))
+			if (state.current_battle->playerWon)
 			{
-				StateRef<Building>(&state, state.current_battle->mission_location_id)
-				    ->collapse(state);
-				for (auto v : returningVehicles)
+				auto building =
+				    StateRef<Building>(&state, state.current_battle->mission_location_id);
+				for (auto &u : building->researchUnlock)
 				{
-					v->addMission(state, VehicleMission::snooze(state, *v, 3 * TICKS_PER_SECOND));
+					u->forceComplete();
+				}
+				victory = building->victory;
+				if (config().getBool("OpenApoc.NewFeature.CollapseRaidedBuilding"))
+				{
+					building->collapse(state);
+					for (auto v : returningVehicles)
+					{
+						v->addMission(state,
+						              VehicleMission::snooze(state, *v, 3 * TICKS_PER_SECOND));
+					}
 				}
 			}
 			break;
@@ -3196,9 +3212,19 @@ void Battle::exitBattle(GameState &state)
 		case Battle::MissionType::UfoRecovery:
 		{
 			state.eventFromBattle = GameEventType::MissionCompletedVehicle;
-			StateRef<Vehicle>(&state, state.current_battle->mission_location_id)->die(state, true);
+			auto vehicle = StateRef<Vehicle>(&state, state.current_battle->mission_location_id);
+			for (auto &u : vehicle->type->researchUnlock)
+			{
+				u->forceComplete();
+			}
+			vehicle->die(state, true);
 			break;
 		}
+	}
+
+	if (victory)
+	{
+		LogError("You won, but we have no screen for that yet LOL!");
 	}
 
 	state.current_battle = nullptr;

@@ -169,6 +169,7 @@ void ResearchSelect::begin()
 			description->setText("");
 			pic->setImage(nullptr);
 		}
+		this->redrawResearchList();
 	});
 
 	auto ok_button = form->findControlTyped<GraphicButton>("BUTTON_OK");
@@ -206,7 +207,7 @@ void ResearchSelect::populateResearchList()
 		{
 			continue;
 		}
-		if (!t->dependencies.satisfied(state->current_base) && t->started == false)
+		if ((!t->dependencies.satisfied(state->current_base) && t->started == false) || t->hidden)
 		{
 			continue;
 		}
@@ -219,8 +220,8 @@ void ResearchSelect::populateResearchList()
 		control->Size = {544, 20};
 
 		auto topic_name = control->createChild<Label>((t->name), ui().getFont("smalfont"));
-		topic_name->Size = {200, 20};
-		topic_name->Location = {6, 0};
+		topic_name->Size = {200, 18};
+		topic_name->Location = {6, 2};
 
 		if (this->lab->type == ResearchTopic::Type::Engineering ||
 		    ((this->lab->type == ResearchTopic::Type::BioChem ||
@@ -234,8 +235,8 @@ void ResearchSelect::populateResearchList()
 				progress_text = tr("Complete");
 			auto progress_label =
 			    control->createChild<Label>(progress_text, ui().getFont("smalfont"));
-			progress_label->Size = {100, 20};
-			progress_label->Location = {234, 0};
+			progress_label->Size = {100, 18};
+			progress_label->Location = {234, 2};
 		}
 		else
 		{
@@ -244,7 +245,7 @@ void ResearchSelect::populateResearchList()
 
 			auto progressBar = control->createChild<Graphic>();
 			progressBar->Size = {101, 6};
-			progressBar->Location = {234, 4};
+			progressBar->Location = {234, 6};
 
 			auto progressImage = mksp<RGBImage>(progressBar->Size);
 			int redWidth = progressBar->Size.x * projectProgress;
@@ -293,8 +294,8 @@ void ResearchSelect::populateResearchList()
 
 		auto skill_total_label =
 		    control->createChild<Label>(format("%d", skill_total), ui().getFont("smalfont"));
-		skill_total_label->Size = {50, 20};
-		skill_total_label->Location = {328, 0};
+		skill_total_label->Size = {50, 18};
+		skill_total_label->Location = {328, 2};
 		skill_total_label->TextHAlign = HorizontalAlignment::Right;
 
 		UString labSize;
@@ -312,8 +313,8 @@ void ResearchSelect::populateResearchList()
 		}
 
 		auto lab_size_label = control->createChild<Label>(labSize, ui().getFont("smalfont"));
-		lab_size_label->Size = {100, 20};
-		lab_size_label->Location = {439, 0};
+		lab_size_label->Size = {100, 18};
+		lab_size_label->Location = {439, 2};
 
 		control->setData(t);
 

@@ -2255,6 +2255,10 @@ bool CityView::handleGameStateEvent(Event *e)
 				fw().pushEvent(new GameVehicleEvent(GameEventType::UfoRecoveryUnmanned,
 				                                    gameRecoveryEvent->vehicle,
 				                                    gameRecoveryEvent->actor));
+				for (auto &u : gameRecoveryEvent->vehicle->type->researchUnlock)
+				{
+					u->forceComplete();
+				}
 			}
 			break;
 		}

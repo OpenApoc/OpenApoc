@@ -240,6 +240,15 @@ void GameState::applyMods()
 	}
 }
 
+void GameState::setCurrentCity(StateRef<City> city)
+{
+	current_city = city;
+	for (auto &u : current_city->researchUnlock)
+	{
+		u->forceComplete();
+	}
+}
+
 void GameState::validate()
 {
 	LogWarning("Validating GameState");
@@ -578,7 +587,7 @@ void GameState::fillPlayerStartingProperty()
 	// Create the intial starting base
 	// Randomly shuffle buildings until we find one with a base layout
 	sp<City> humanCity = this->cities["CITYMAP_HUMAN"];
-	this->current_city = {this, humanCity};
+	setCurrentCity({this, humanCity});
 
 	std::vector<sp<Building>> buildingsWithBases;
 	for (auto &b : humanCity->buildings)

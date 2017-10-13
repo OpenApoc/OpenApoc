@@ -1,4 +1,5 @@
 #include "game/state/tileview/tileobject_battlemappart.h"
+#include "framework/image.h"
 #include "framework/renderer.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/tileview/tile.h"
@@ -37,7 +38,7 @@ void TileObjectBattleMapPart::draw(Renderer &r, TileTransform &transform,
 			sprite = type->strategySprite;
 			// All strategy sprites so far are 8x8 so offset by 4 to draw from the center
 			// FIXME: Not true for large sprites (2x2 UFOs?)
-			transformedScreenPos -= Vec2<float>{4, 4};
+			transformedScreenPos -= sprite->size / (unsigned)2;
 			break;
 		default:
 			LogError("Unsupported view mode");

@@ -144,6 +144,16 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		    format("%s%s", UfopaediaEntry::getPrefix(), canon_string(data.vehicle_names->get(i)));
 		vehicle->ufopaedia_entry = {&state, ped};
 
+		if (i < 10)
+		{
+			vehicle->researchUnlock.emplace_back(&state,
+			                                     "RESEARCH_UNLOCK_ALIEN_CRAFT_CONTROL_SYSTEMS");
+			vehicle->researchUnlock.emplace_back(&state,
+			                                     "RESEARCH_UNLOCK_ALIEN_CRAFT_ENERGY_SOURCE");
+			vehicle->researchUnlock.emplace_back(&state, "RESEARCH_UNLOCK_ALIEN_CRAFT_PROPULSION");
+			vehicle->researchUnlock.emplace_back(&state, format("RESEARCH_UNLOCK_UFO_TYPE_%d", i + 1));
+		}
+
 		if (v.movement_type == 0)
 		{
 			vehicle->type = VehicleType::Type::Road;

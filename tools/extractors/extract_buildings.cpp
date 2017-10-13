@@ -67,6 +67,16 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 			LogInfo("Alien bld %d %s func %d %s", entry.name_idx, b->name, entry.function_idx,
 			        b->function.id);
 
+			b->accessTopic = {&state, format("RESEARCH_UNLOCK_ALIEN_BUILDING_%d", i)};
+			if (i < 9)
+			{
+				b->researchUnlock.emplace_back(&state, format("RESEARCH_UNLOCK_ALIEN_BUILDING_%d", i + 1));
+			}
+			else
+			{
+				b->victory = true;
+			}
+
 			// Load crew
 			auto crew = ufo2p.crew_alien_building->get(entry.function_idx);
 			UFO2P::fillCrew(state, crew, b->preset_crew);

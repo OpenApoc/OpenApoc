@@ -34,6 +34,10 @@ void InitialGameStateExtractor::extractSharedCityResources(GameState &state) con
 	    fw().data->loadImage(format("PCKSTRAT:xcom3/ufodata/stratmap.pck:xcom3/ufodata/"
 	                                "stratmap.tab:%d",
 	                                571));
+	state.city_common_image_list->agentStrategic =
+	    fw().data->loadImage(format("PCKSTRAT:xcom3/ufodata/stratmap.pck:xcom3/ufodata/"
+	                                "stratmap.tab:%d",
+	                                586));
 
 	state.city_common_image_list->projectileVoxelMap =
 	    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});

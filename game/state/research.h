@@ -86,6 +86,8 @@ class ResearchTopic : public StateObject
 	sp<Image> picture;
 	bool started = false;
 	bool isComplete() const;
+	bool hidden = false;
+	void forceComplete();
 
 	// Manufacture only
 	int cost = 0;
@@ -101,7 +103,6 @@ class ResearchDependency
 	{
 		Any,
 		All,
-		Unused
 	};
 	Type type = Type::Any;
 

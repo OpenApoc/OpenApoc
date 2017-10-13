@@ -16,5 +16,6 @@ class CityCommonImageList
 	sp<VoxelMap> projectileVoxelMap;
 	sp<Image> agentIsometric;
 	sp<Image> agentStrategic;
+	sp<Image> portalStrategic;
 };
 }

@@ -1113,8 +1113,8 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			case UNIT_TYPE_ANTHROPOD:
 				liveIdx = 0;
 				deadIdx = 14;
-				liveSpace = 2;
-				deadSpace = 2;
+				liveSpace = 1;
+				deadSpace = 1;
 				break;
 			case UNIT_TYPE_BRAINSUCKER:
 				liveIdx = 1;
@@ -1131,14 +1131,14 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			case UNIT_TYPE_MEGASPAWN:
 				liveIdx = 3;
 				deadIdx = 17;
-				liveSpace = 5;
-				deadSpace = 5;
+				liveSpace = 12;
+				deadSpace = 12;
 				break;
 			case UNIT_TYPE_MULTIWORM_EGG:
 				liveIdx = 4;
 				deadIdx = 18;
-				liveSpace = 1;
-				deadSpace = 1;
+				liveSpace = 2;
+				deadSpace = 2;
 				break;
 			case UNIT_TYPE_HYPERWORM:
 				liveIdx = 5;
@@ -1149,21 +1149,21 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			case UNIT_TYPE_MULTIWORM:
 				liveIdx = 6;
 				deadIdx = 20;
-				liveSpace = 4;
-				deadSpace = 4;
+				liveSpace = 5;
+				deadSpace = 5;
 				break;
 			// OVerspawn 7 / ?
 			case UNIT_TYPE_POPPER:
 				liveIdx = 8;
 				deadIdx = 21;
-				liveSpace = 2;
-				deadSpace = 2;
+				liveSpace = 1;
+				deadSpace = 1;
 				break;
 			case UNIT_TYPE_PSIMORPH:
 				liveIdx = 9;
 				deadIdx = 22;
 				liveSpace = 5;
-				deadSpace = 5;
+				deadSpace = 12;
 				break;
 			case UNIT_TYPE_QUEENSPAWN:
 				liveIdx = 10;
@@ -1174,14 +1174,14 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			case UNIT_TYPE_SKELETOID:
 				liveIdx = 11;
 				deadIdx = 24;
-				liveSpace = 2;
-				deadSpace = 2;
+				liveSpace = 1;
+				deadSpace = 1;
 				break;
 			case UNIT_TYPE_SPITTER:
 				liveIdx = 12;
 				deadIdx = 25;
-				liveSpace = 2;
-				deadSpace = 2;
+				liveSpace = 1;
+				deadSpace = 1;
 				break;
 			case UNIT_TYPE_MICRONOID:
 				liveIdx = 13;
