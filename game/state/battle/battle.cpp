@@ -2632,6 +2632,11 @@ void Battle::finishBattle(GameState &state)
 					    state.current_battle->cargoLoot[u->agent->type->liveSpeciesItem] + 1;
 				}
 			}
+			else
+			{
+				// Maybe alien has only a dead option?
+				deadAliens.push_back(u);
+			}
 		}
 		// Dead alien loot
 		for (auto &u : deadAliens)
@@ -2722,6 +2727,8 @@ void Battle::finishBattle(GameState &state)
 	// Regardless of what happened, retreated aliens go to a nearby building
 	if (!retreatedAliens.empty())
 	{
+		// FIXME: Should find 15 closest buildings that are intact and within 15 tiles
+		// (center to center) and pick one of them
 		LogWarning("Properly find building to house retreated aliens");
 		Vec2<int> battleLocation;
 		StateRef<City> city;
@@ -2909,7 +2916,7 @@ void Battle::exitBattle(GameState &state)
 		// Erase vehicle
 		if (state.current_battle->player_craft)
 		{
-			state.current_battle->player_craft->die(state, nullptr, true);
+			state.current_battle->player_craft->die(state, true);
 		}
 
 		// Restore relationships
@@ -3189,8 +3196,7 @@ void Battle::exitBattle(GameState &state)
 		case Battle::MissionType::UfoRecovery:
 		{
 			state.eventFromBattle = GameEventType::MissionCompletedVehicle;
-			StateRef<Vehicle>(&state, state.current_battle->mission_location_id)
-			    ->die(state, nullptr, true);
+			StateRef<Vehicle>(&state, state.current_battle->mission_location_id)->die(state, true);
 			break;
 		}
 	}

@@ -107,7 +107,7 @@ void BaseBuyScreen::eventOccurred(Event *e)
 						}
 						else
 						{
-							v.second->die(*state, nullptr, true);
+							v.second->die(*state, true);
 						}
 					}
 					else if (v.second->currentBuilding == base->building &&

@@ -130,6 +130,10 @@ void City::initMap(GameState &state)
 			                          (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2};
 		}
 		LogInfo("Crew Quarters: %s", b.second->crewQuarters);
+		if (b.second->function.id == "BUILDINGFUNCTION_SPACE_PORT")
+		{
+			spaceports.emplace_back(&state, b.first);
+		}
 	}
 	for (auto &p : this->projectiles)
 	{
@@ -142,6 +146,27 @@ void City::initMap(GameState &state)
 	for (auto &p : this->portals)
 	{
 		this->map->addObjectToMap(p);
+	}
+}
+
+int City::getSegmentID(const Vec3<int> &position) const
+{
+	return tileToRoadSegmentMap.at(position.z * map->size.x * map->size.y +
+	                               position.y * map->size.x + position.x);
+}
+
+const RoadSegment &City::getSegment(const Vec3<int> &position) const
+{
+	return roadSegments.at(tileToRoadSegmentMap.at(position.z * map->size.x * map->size.y +
+	                                               position.y * map->size.x + position.x));
+}
+
+void City::notifyRoadChange(const Vec3<int> &position, bool intact)
+{
+	auto segId = getSegmentID(position);
+	if (segId != -1)
+	{
+		roadSegments.at(segId).notifyRoadChange(position, intact);
 	}
 }
 
@@ -515,6 +540,48 @@ void City::accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition, Vec
 	auto diff = (diffVertical + diffHorizontal) * Vec3<float>{1.0f, 1.0f, 0.33f};
 
 	target += diff;
+}
+
+void RoadSegment::notifyRoadChange(const Vec3<int> &position, bool intact)
+{
+	for (int i = 0; i < tilePosition.size(); i++)
+	{
+		if (tilePosition.at(i) == position)
+		{
+			tileIntact.at(i) = intact;
+			break;
+		}
+	}
+	intact = true;
+	for (int i = 0; i < tileIntact.size(); i++)
+	{
+		if (!tileIntact[i])
+		{
+			intact = false;
+			break;
+		}
+	}
+}
+
+void RoadSegment::finalizeStats()
+{
+	length = (int)tilePosition.size();
+	intact = true;
+	tileIntact.resize(length, true);
+	if (empty())
+	{
+		return;
+	}
+	middle = tilePosition.at(length / 2);
+}
+
+bool RoadSegment::empty() const { return tilePosition.empty(); }
+
+RoadSegment::RoadSegment(Vec3<int> tile) { tilePosition.emplace_back(tile); }
+
+RoadSegment::RoadSegment(Vec3<int> tile, int connection) : RoadSegment(tile)
+{
+	connections.emplace_back(connection);
 }
 
 } // namespace OpenApoc

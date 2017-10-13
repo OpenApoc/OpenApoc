@@ -68,18 +68,23 @@ void CityTileView::eventOccurred(Event *e)
 	{
 		switch (e->keyboard().KeyCode)
 		{
+			case SDLK_F2:
+			{
+				DEBUG_SHOW_ROAD_PATHFINDING = !DEBUG_SHOW_ROAD_PATHFINDING;
+				return;
+			}
 			case SDLK_F3:
 			{
-				DEBUG_SHOW_WALK_TYPE++;
-				DEBUG_SHOW_WALK_TYPE = DEBUG_SHOW_WALK_TYPE % 6;
-				if (DEBUG_SHOW_WALK_TYPE)
+				DEBUG_SHOW_MISC_TYPE++;
+				DEBUG_SHOW_MISC_TYPE = DEBUG_SHOW_MISC_TYPE % 6;
+				if (DEBUG_SHOW_MISC_TYPE)
 				{
 					DEBUG_SHOW_SLOPES = false;
 					DEBUG_SHOW_ALIEN_CREW = false;
 					DEBUG_SHOW_TUBE = false;
 					DEBUG_SHOW_ROADS = false;
 				}
-				LogWarning("Debug walk type display set to %s", DEBUG_SHOW_WALK_TYPE);
+				LogWarning("Debug walk type display set to %s", DEBUG_SHOW_MISC_TYPE);
 				return;
 			}
 			case SDLK_F5:
@@ -310,9 +315,9 @@ void CityTileView::render()
 									{
 										auto s = std::static_pointer_cast<TileObjectScenery>(obj)
 										             ->getOwner();
-										if (DEBUG_SHOW_WALK_TYPE)
+										if (DEBUG_SHOW_MISC_TYPE)
 										{
-											switch (DEBUG_SHOW_WALK_TYPE)
+											switch (DEBUG_SHOW_MISC_TYPE)
 											{
 												case 5:
 													visible = s->type->basement;
@@ -325,12 +330,12 @@ void CityTileView::render()
 												case 1:
 												case 0:
 													visible = (int)s->type->walk_mode ==
-													          DEBUG_SHOW_WALK_TYPE - 1;
+													          DEBUG_SHOW_MISC_TYPE - 1;
 													break;
 												default:
 													LogError("Unhandled DEBUG_SHOW_WALK_TYPE %d",
-													         DEBUG_SHOW_WALK_TYPE);
-													DEBUG_SHOW_WALK_TYPE = 0;
+													         DEBUG_SHOW_MISC_TYPE);
+													DEBUG_SHOW_MISC_TYPE = 0;
 													break;
 											}
 										}

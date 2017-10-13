@@ -4,9 +4,11 @@
 #include "game/state/battle/battleunit.h"
 #include "game/state/battle/battleunitmission.h"
 #include "game/state/city/city.h"
+#include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/scenery_tile_type.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject_battleunit.h"
 #include "game/state/tileview/tileobject_vehicle.h"
@@ -244,14 +246,15 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 					nextPosition.y += y;
 					nextPosition.z += z;
 					if (!tileIsValid(nextPosition))
-						continue;
-
-					Tile *tile = this->getTile(nextPosition);
-					if (visitedTiles[tile->position.z * strideZ + tile->position.y * strideY +
-					                 tile->position.x])
 					{
 						continue;
 					}
+					if (visitedTiles[nextPosition.z * strideZ + nextPosition.y * strideY +
+					                 nextPosition.x])
+					{
+						continue;
+					}
+					Tile *tile = this->getTile(nextPosition);
 					float thisCost = 0.0f;
 					bool unused = false;
 					bool jumped = false;
@@ -1252,5 +1255,335 @@ void City::groupMove(GameState &state, std::list<StateRef<Vehicle>> &selectedVeh
 			break;
 		}
 	}
+}
+
+void City::fillRoadSegmentMap(GameState &state)
+{
+	LogWarning("Begun filling road segment map");
+	// Expecting this to be done on clean intact map
+	tileToRoadSegmentMap.clear();
+	roadSegments.clear();
+	auto &m = *map;
+	auto helper = GroundVehicleTileHelper{m, VehicleType::Type::Road, false};
+
+	// -2 means not processed, -1 means no road, otherwise segment index
+	tileToRoadSegmentMap.resize(m.size.x * m.size.y * m.size.z, -2);
+
+	// [First Loop]
+	// Try every tile on the map as new segment
+	// - on first pass only try terminals
+	// - on second pass only try crossings
+	// - on third pass try anything
+	Vec3<int> tileToTryNext;
+	int nextSegmentToProcess = 0;
+	int currentPass = 0;
+	while (currentPass++ < 3)
+	{
+		for (tileToTryNext.x = 0; tileToTryNext.x < m.size.x; tileToTryNext.x++)
+		{
+			for (tileToTryNext.y = 0; tileToTryNext.y < m.size.y; tileToTryNext.y++)
+			{
+				for (tileToTryNext.z = 0; tileToTryNext.z < m.size.z; tileToTryNext.z++)
+				{
+					// Already processed
+					if (tileToRoadSegmentMap[tileToTryNext.z * map->size.x * map->size.y +
+					                         tileToTryNext.y * map->size.x + tileToTryNext.x] != -2)
+					{
+						continue;
+					}
+					// Get dataz
+					auto tile = m.getTile(tileToTryNext);
+					auto scenery = tile->presentScenery ? tile->presentScenery->type : nullptr;
+					// Not a road
+					if (!scenery || scenery->tile_type != SceneryTileType::TileType::Road)
+					{
+						tileToRoadSegmentMap[tileToTryNext.z * map->size.x * map->size.y +
+						                     tileToTryNext.y * map->size.x + tileToTryNext.x] = -1;
+						continue;
+					}
+					// Not fit for this pass
+					switch (currentPass)
+					{
+						// First pass only terminals
+						case 1:
+							if (scenery->road_type != SceneryTileType::RoadType::Terminal)
+							{
+								continue;
+							}
+							break;
+						// Second pass only junctions
+						case 2:
+							if (scenery->road_type != SceneryTileType::RoadType::Junction)
+							{
+								continue;
+							}
+							LogWarning("Pass 2: Tile %s disconnected from some exits network",
+							           tileToTryNext);
+							break;
+						// Anything goes, coming up OOOs!
+						case 3:
+							LogWarning("Pass 3: Tile %s disconnected from main network!",
+							           tileToTryNext);
+							break;
+					}
+					// Checks out, add and process it next
+					tileToRoadSegmentMap[tileToTryNext.z * map->size.x * map->size.y +
+					                     tileToTryNext.y * map->size.x + tileToTryNext.x] =
+					    nextSegmentToProcess;
+					roadSegments.emplace_back(tileToTryNext);
+
+					// [Second Loop]
+					// Process new segments
+					while (nextSegmentToProcess < roadSegments.size())
+					{
+						if (roadSegments[nextSegmentToProcess].empty())
+						{
+							LogWarning("Skipping empty segment %d", nextSegmentToProcess);
+							nextSegmentToProcess++;
+							continue;
+						}
+						auto initialConnections =
+						    roadSegments[nextSegmentToProcess].connections.size();
+						LogInfo("Segment %d Connections %d First %d", nextSegmentToProcess,
+						        initialConnections,
+						        initialConnections == 0
+						            ? -1
+						            : roadSegments[nextSegmentToProcess].connections.front());
+						// Until we reach an intersection or become one
+						do
+						{
+							// Try to connect to every adjacent tile
+							auto currentPosition =
+							    roadSegments[nextSegmentToProcess].tilePosition.back();
+							auto thisTile = m.getTile(currentPosition);
+							bool existing = false;
+							std::list<int> newSegment;
+							for (int z = -1; z <= 1; z++)
+							{
+								for (int y = -1; y <= 1; y++)
+								{
+									for (int x = -1; x <= 1; x++)
+									{
+										if (x == 0 && y == 0 && z == 0)
+										{
+											continue;
+										}
+										auto nextPosition = currentPosition;
+										nextPosition.x += x;
+										nextPosition.y += y;
+										nextPosition.z += z;
+										if (!m.tileIsValid(nextPosition))
+										{
+											continue;
+										}
+										// Skip if already a part of segment
+										if (std::find(roadSegments[nextSegmentToProcess]
+										                  .tilePosition.begin(),
+										              roadSegments[nextSegmentToProcess]
+										                  .tilePosition.end(),
+										              nextPosition) !=
+										    roadSegments[nextSegmentToProcess].tilePosition.end())
+										{
+											continue;
+										}
+										// Skip if already connected to it
+										int idx =
+										    tileToRoadSegmentMap[nextPosition.z * map->size.x *
+										                             map->size.y +
+										                         nextPosition.y * map->size.x +
+										                         nextPosition.x];
+										if (std::find(roadSegments[nextSegmentToProcess]
+										                  .connections.begin(),
+										              roadSegments[nextSegmentToProcess]
+										                  .connections.end(),
+										              idx) !=
+										    roadSegments[nextSegmentToProcess].connections.end())
+										{
+											continue;
+										}
+										auto nextTile = m.getTile(nextPosition);
+										float thisCost = 0.0f;
+										bool unused = false;
+										bool jumped = false;
+										if (!helper.canEnterTile(thisTile, nextTile))
+										{
+											continue;
+										}
+										// New connection
+										if (idx == -2)
+										{
+											// New segment, connected to us
+											// First try to find an empty one
+											for (idx = nextSegmentToProcess + 1;
+											     idx < roadSegments.size(); idx++)
+											{
+												if (roadSegments[idx].empty())
+												{
+													roadSegments[idx].tilePosition.emplace_back(
+													    nextPosition);
+													roadSegments[idx].connections.push_back(
+													    nextSegmentToProcess);
+													break;
+												}
+											}
+											tileToRoadSegmentMap[nextPosition.z * map->size.x *
+											                         map->size.y +
+											                     nextPosition.y * map->size.x +
+											                     nextPosition.x] = idx;
+											// If have not found an empty one then emplace a new one
+											if (idx == (int)roadSegments.size())
+											{
+												roadSegments.emplace_back(nextPosition,
+												                          nextSegmentToProcess);
+											}
+											newSegment.push_back(idx);
+										}
+										else
+										{
+											// Some sanity
+											if (idx == -1)
+											{
+												LogError("Linking from %s to %s: Non road, wtf?",
+												         currentPosition, nextPosition);
+												break;
+											}
+											if (roadSegments[idx].tilePosition.size() > 1)
+											{
+												LogWarning("Linking from %s to %s: Existing road "
+												           "segment, wtf?",
+												           currentPosition, nextPosition);
+												// break;
+											}
+											// Existing segment, link to us
+											existing = true;
+											roadSegments[idx].connections.emplace_back(
+											    nextSegmentToProcess);
+										}
+										// Link us to it
+										roadSegments[nextSegmentToProcess].connections.emplace_back(
+										    idx);
+									}
+								}
+							} // For every adjacent tile
+
+							// If more than two connections then this is a junction, must detach
+							// tail and break
+							// If no new connections or less than two we have reached a road end
+							// (terminus) and must detach it and break
+							if (roadSegments[nextSegmentToProcess].connections.size() != 2 ||
+							    roadSegments[nextSegmentToProcess].connections.size() ==
+							        initialConnections)
+							{
+								// Only if we're not single tile ourselves
+								if (roadSegments[nextSegmentToProcess].tilePosition.size() > 1)
+								{
+									// Take our last tile
+									auto lastTilePosition =
+									    roadSegments[nextSegmentToProcess].tilePosition.back();
+									// Remove it
+									roadSegments[nextSegmentToProcess].tilePosition.pop_back();
+									// Make a new segment out of it
+									// First try to find an empty one
+									int idx;
+									for (idx = nextSegmentToProcess + 1; idx < roadSegments.size();
+									     idx++)
+									{
+										if (roadSegments[idx].empty())
+										{
+											roadSegments[idx].tilePosition.emplace_back(
+											    lastTilePosition);
+											roadSegments[idx].connections.push_back(
+											    nextSegmentToProcess);
+											break;
+										}
+									}
+									tileToRoadSegmentMap[lastTilePosition.z * map->size.x *
+									                         map->size.y +
+									                     lastTilePosition.y * map->size.x +
+									                     lastTilePosition.x] = idx;
+									// If have not found an empty one then emplace a new one
+									if (idx == (int)roadSegments.size())
+									{
+										roadSegments.emplace_back(lastTilePosition,
+										                          nextSegmentToProcess);
+									}
+									// Change all new links to us to this new tile
+									for (auto j : newSegment)
+									{
+										if (roadSegments[j].empty())
+										{
+											continue;
+										}
+										for (int k = 0; k < roadSegments[j].connections.size(); k++)
+										{
+											if (roadSegments[j].connections[k] ==
+											    nextSegmentToProcess)
+											{
+												roadSegments[j].connections[k] = idx;
+											}
+										}
+									}
+									// Transfer all links acquired this time
+									for (int i = initialConnections;
+									     i < roadSegments[nextSegmentToProcess].connections.size();
+									     i++)
+									{
+										roadSegments[idx].connections.push_back(
+										    roadSegments[nextSegmentToProcess].connections[i]);
+									}
+									// Lose all connection we transferred
+									roadSegments[nextSegmentToProcess].connections.resize(
+									    initialConnections);
+									// Link us to it
+									roadSegments[nextSegmentToProcess].connections.emplace_back(
+									    idx);
+								}
+								break;
+							}
+							// Otherwise this is part of a road
+							// If linked to existing tile this road ends here
+							else if (existing)
+							{
+								break;
+							}
+							// Otherwise consume last connection and continue
+							else
+							{
+								// Find our last connection
+								int lastConnection =
+								    roadSegments[nextSegmentToProcess].connections.back();
+								auto lastConnectionPosition =
+								    roadSegments[lastConnection].tilePosition.front();
+								// Erase our last connection
+								roadSegments[nextSegmentToProcess].connections.pop_back();
+								// Erase that segment
+								roadSegments[lastConnection].tilePosition.clear();
+								roadSegments[lastConnection].connections.clear();
+								// Mark last connection position as belonging to us
+								tileToRoadSegmentMap[lastConnectionPosition.z * map->size.x *
+								                         map->size.y +
+								                     lastConnectionPosition.y * map->size.x +
+								                     lastConnectionPosition.x] =
+								    nextSegmentToProcess;
+								// Add last connection position to our tiles
+								roadSegments[nextSegmentToProcess].tilePosition.emplace_back(
+								    lastConnectionPosition);
+								// We will now re-try this segment again and continue building road
+								// until we finally reach an intersection or a terminus
+								continue;
+							}
+						} while (true); // End of loop for this segment
+						nextSegmentToProcess++;
+					} // End of second loop
+				}
+			}
+		} // End of loop for current pass
+	}     // End of first loop
+
+	for (int i = 0; i < roadSegments.size(); i++)
+	{
+		roadSegments[i].finalizeStats();
+	}
+	LogWarning("Finished filling road segment map");
 }
 }

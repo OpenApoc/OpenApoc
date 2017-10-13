@@ -222,7 +222,7 @@ void Organisation::updateMissions(GameState &state)
 	{
 		if (m.next < state.gameTime.getTicks())
 		{
-			m.execute(state, {&state, id});
+			m.execute(state, state.current_city, {&state, id});
 		}
 	}
 	// Find rescue-capable craft
@@ -472,29 +472,49 @@ void Organisation::updateVehicleAgentPark(GameState &state)
 				countVehicles++;
 			}
 		}
+		bool spaceLiner = false;
+		for (auto &m : missions[{&state, "CITYMAP_HUMAN"}])
+		{
+			if (m.pattern.target == MissionPattern::Target::ArriveFromSpace ||
+			    m.pattern.target == MissionPattern::Target::DepartToSpace)
+			{
+				if (m.pattern.allowedTypes.find(entry.first) != m.pattern.allowedTypes.end())
+				{
+					spaceLiner = true;
+					break;
+				}
+			}
+		}
 		while (countVehicles < entry.second)
 		{
 			// FIXME: Check if org has funds before buying vehicle
 
-			std::list<sp<Building>> buildingsRandomizer;
+			std::list<StateRef<Building>> buildingsRandomizer;
 
-			for (auto &b : state.cities["CITYMAP_HUMAN"]->buildings)
+			if (spaceLiner)
 			{
-				if (b.second->owner.id != id)
+				buildingsRandomizer = state.cities["CITYMAP_HUMAN"]->spaceports;
+			}
+			else
+			{
+				for (auto &b : state.cities["CITYMAP_HUMAN"]->buildings)
 				{
-					continue;
-				}
-				// Aim for at least 8 vehicles per building
-				for (auto i = 0; i <= std::max(0, 8 - (int)b.second->currentVehicles.size()); i++)
-				{
-					buildingsRandomizer.push_back(b.second);
+					if (b.second->owner.id != id)
+					{
+						continue;
+					}
+					// Aim for at least 8 vehicles per building
+					for (auto i = 0; i <= std::max(0, 8 - (int)b.second->currentVehicles.size());
+					     i++)
+					{
+						buildingsRandomizer.emplace_back(&state, b.first);
+					}
 				}
 			}
 
-			sp<Building> building = listRandomiser(state.rng, buildingsRandomizer);
+			StateRef<Building> building = listRandomiser(state.rng, buildingsRandomizer);
 
-			auto v =
-			    building->city->placeVehicle(state, entry.first, {&state, id}, {&state, building});
+			auto v = building->city->placeVehicle(state, entry.first, {&state, id}, building);
 			v->homeBuilding = {&state, building};
 
 			countVehicles++;
@@ -599,7 +619,8 @@ Organisation::MissionPattern::MissionPattern(uint64_t minIntervalRepeat, uint64_
 {
 }
 
-void Organisation::Mission::execute(GameState &state, StateRef<Organisation> owner)
+void Organisation::Mission::execute(GameState &state, StateRef<City> city,
+                                    StateRef<Organisation> owner)
 {
 	next = state.gameTime.getTicks() +
 	       randBoundsInclusive(state.rng, pattern.minIntervalRepeat, pattern.maxIntervalRepeat);
@@ -608,12 +629,23 @@ void Organisation::Mission::execute(GameState &state, StateRef<Organisation> own
 	// Special case
 	if (pattern.target == Organisation::MissionPattern::Target::ArriveFromSpace)
 	{
-		LogWarning("Implement space liner arrival");
+		auto linerType = setRandomiser(state.rng, pattern.allowedTypes);
+		auto liner = city->placeVehicle(state, linerType, owner,
+		                                VehicleMission::getRandomMapEdgeCoordinates(state, city));
+
+		if (city->spaceports.empty())
+		{
+			LogError("No spaceports in city!?");
+			return;
+		}
+		auto building = listRandomiser(state.rng, city->spaceports);
+		liner->homeBuilding = building;
+		liner->setMission(state, VehicleMission::gotoBuilding(state, *liner));
 		return;
 	}
 	// Compile list of matching buildings with vehicles
 	std::map<sp<Building>, std::list<StateRef<Vehicle>>> availableVehicles;
-	for (auto &b : state.current_city->buildings)
+	for (auto &b : city->buildings)
 	{
 		if (b.second->owner != owner)
 		{
@@ -665,13 +697,15 @@ void Organisation::Mission::execute(GameState &state, StateRef<Organisation> own
 	// Special case
 	if (pattern.target == Organisation::MissionPattern::Target::DepartToSpace)
 	{
-		LogWarning("Implement space liner departure");
+		auto v = availableVehicles[sourceBuilding].front();
+		availableVehicles[sourceBuilding].pop_front();
+		v->setMission(state, VehicleMission::departToSpace(state, *v));
 		return;
 	}
 
 	// Pick destination building
 	buildingsRandomizer.clear();
-	for (auto &b : state.current_city->buildings)
+	for (auto &b : city->buildings)
 	{
 		if (b.second == sourceBuilding)
 		{

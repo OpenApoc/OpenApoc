@@ -71,6 +71,7 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 	void updateCargo(GameState &state);
 	void detect(GameState &state, bool forced = false);
 	void alienGrowth(GameState &state);
+	void alienMovement(GameState &state);
 
 	void underAttack(GameState &state, StateRef<Organisation> attacker);
 

@@ -150,6 +150,7 @@ void GameState::initState()
 		{
 			if (c.first == "CITYMAP_HUMAN")
 			{
+				city->fillRoadSegmentMap(*this);
 				city->initialSceneryLinkUp();
 			}
 		}
@@ -395,11 +396,57 @@ void GameState::validateScenery()
 	{
 		for (auto &sc : c.second->tile_types)
 		{
-			if (sc.second->getATVMode() == SceneryTileType::WalkMode::Onto &&
-			    sc.second->height == 0)
+			auto thisSc = StateRef<SceneryTileType>{this, sc.first};
+			std::set<StateRef<SceneryTileType>> seenTypes;
+			while (thisSc->damagedTile)
 			{
-				/*LogError("City %s Scenery %s has no height and WalkMode::Onto? Missing voxelmap?",
-				         c.first, sc.first);*/
+				seenTypes.insert(thisSc);
+				bool roadAlive = false;
+				bool roadDead = false;
+				bool newRoad = false;
+				if (thisSc->tile_type != SceneryTileType::TileType::Road &&
+				    thisSc->damagedTile->tile_type == SceneryTileType::TileType::Road)
+				{
+					newRoad = true;
+				}
+				else
+				{
+					for (int i = 0; i < 4; i++)
+					{
+						if (thisSc->connection[i] &&
+						    thisSc->connection[i] == thisSc->damagedTile->connection[i])
+						{
+							roadAlive = true;
+						}
+						if (thisSc->connection[i] &&
+						    thisSc->connection[i] != thisSc->damagedTile->connection[i])
+						{
+							roadDead = true;
+						}
+						if (!thisSc->connection[i] &&
+						    thisSc->connection[i] != thisSc->damagedTile->connection[i])
+						{
+							newRoad = true;
+						}
+					}
+				}
+				if (newRoad || (roadAlive && roadDead))
+				{
+					LogError("ROAD MUTATION: In %s when damaged from %s to %s roads go [%d%d%d%d] "
+					         "to [%d%d%d%d]",
+					         sc.first, thisSc.id, thisSc->damagedTile.id,
+					         (int)thisSc->connection[0], (int)thisSc->connection[1],
+					         (int)thisSc->connection[2], (int)thisSc->connection[3],
+					         (int)thisSc->damagedTile->connection[0],
+					         (int)thisSc->damagedTile->connection[1],
+					         (int)thisSc->damagedTile->connection[2],
+					         (int)thisSc->damagedTile->connection[3]);
+				}
+				if (seenTypes.find(thisSc->damagedTile) != seenTypes.end())
+				{
+					break;
+				}
+				thisSc = thisSc->damagedTile;
 			}
 		}
 	}

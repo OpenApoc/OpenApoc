@@ -11,6 +11,7 @@
 #include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/event.h"
+#include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "framework/keycodes.h"
@@ -1103,6 +1104,13 @@ CityView::CityView(sp<GameState> state)
 	agentForm->findControl("BUTTON_GOTO_BASE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { orderGoToBase(); });
 
+	auto font = ui().getFont("smallset");
+	for (int i = 0; i <= state->current_city->roadSegments.size(); i++)
+	{
+		debugLabelsOK.push_back(font->getString(format("%d", i)));
+		debugLabelsDead.push_back(font->getString(format("-%d-", i)));
+	}
+
 #ifdef DEBUG_START_PAUSE
 	setUpdateSpeed(CityUpdateSpeed::Pause);
 #endif
@@ -1213,6 +1221,52 @@ void CityView::render()
 				}
 			}
 		}
+		if (DEBUG_SHOW_ROAD_PATHFINDING)
+		{
+			static const auto lineColorFriend = Colour(0, 0, 0, 255);
+			static const auto lineColorEnemy = Colour(255, 0, 0, 255);
+
+			for (int i = 0; i < state->current_city->roadSegments.size(); i++)
+			{
+				auto &s = state->current_city->roadSegments[i];
+				if (s.empty())
+				{
+					continue;
+				}
+				// Connections
+				auto color = (s.connections.size() > 2 && s.tilePosition.size() > 1)
+				                 ? lineColorEnemy
+				                 : lineColorFriend;
+				int count = 0;
+				for (auto &c : s.connections)
+				{
+					Vec3<float> thisPos =
+					    s.connections.front() == c ? s.tilePosition.front() : s.tilePosition.back();
+					thisPos += Vec3<float>{0.5f, 0.5f, 0.0f};
+					auto &s2 = state->current_city->roadSegments[c];
+					Vec3<float> tarPos = s2.connections.front() == i ? s2.tilePosition.front()
+					                                                 : s2.tilePosition.back();
+					tarPos += Vec3<float>{0.5f, 0.5f, 0.0f};
+					fw().renderer->drawLine(
+					    this->tileToOffsetScreenCoords(thisPos),
+					    this->tileToOffsetScreenCoords(thisPos * 0.6f + tarPos * 0.4f), color);
+					if (s.connections.size() > 2 && s.tilePosition.size() > 1)
+					{
+						auto &img = debugLabelsOK[count++];
+						fw().renderer->draw(img,
+						                    this->tileToOffsetScreenCoords(thisPos) +
+						                        Vec2<float>{count * 8, -10});
+					}
+				}
+				// Tiles
+				for (auto j = 0; j < s.tilePosition.size(); j++)
+				{
+					auto &img = s.tileIntact[j] ? debugLabelsOK[i] : debugLabelsDead[i];
+					fw().renderer->draw(img, this->tileToOffsetScreenCoords(s.tilePosition[j]));
+				}
+			}
+		}
+
 		activeTab->render();
 		baseForm->render();
 		overlayTab->render();
@@ -1688,7 +1742,7 @@ bool CityView::handleKeyDown(Event *e)
 				}
 				return true;
 			}
-			case SDLK_c:
+			case SDLK_x:
 			{
 				LogWarning("Crashing!");
 				for (auto &v : state->vehicles)
@@ -1830,7 +1884,7 @@ bool CityView::handleKeyDown(Event *e)
 				baseForm->findControl("BUTTON_ZOOM_EVENT")->click();
 				return true;
 			case SDLK_c:
-				baseForm->findControl("BUTTON_FOLLOW_AGENT")->click();
+				baseForm->findControl("BUTTON_FOLLOW_VEHICLE")->click();
 				return true;
 			case SDLK_0:
 				setUpdateSpeed(CityUpdateSpeed::Pause);
@@ -2209,7 +2263,7 @@ bool CityView::handleGameStateEvent(Event *e)
 			auto gameRecoveryEvent = dynamic_cast<GameVehicleEvent *>(e);
 			LogWarning("Load unmanned ufo loot on craft!");
 			// Remove ufo
-			gameRecoveryEvent->vehicle->die(*state, nullptr, true);
+			gameRecoveryEvent->vehicle->die(*state, true);
 			// Return to base
 			gameRecoveryEvent->actor->setMission(
 			    *state, VehicleMission::gotoBuilding(*state, *gameRecoveryEvent->actor));

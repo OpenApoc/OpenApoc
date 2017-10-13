@@ -6,6 +6,7 @@
 #include "forms/radiobutton.h"
 #include "forms/ui.h"
 #include "framework/apocresources/cursor.h"
+#include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/font.h"
@@ -237,7 +238,8 @@ void VEquipScreen::eventOccurred(Event *e)
 			// FIXME: what happens if we don't have the stores to return?
 
 			// Immediate action: put to the base
-			if (modifierLShift || modifierRShift)
+			if ((modifierLShift || modifierRShift) &&
+			    config().getBool("OpenApoc.NewFeature.AdvancedInventoryControls"))
 			{
 				this->draggedEquipment = nullptr;
 			}
@@ -254,7 +256,8 @@ void VEquipScreen::eventOccurred(Event *e)
 				this->draggedEquipmentOffset = pair.first.p0 - mousePos;
 
 				// Immediate action: try put on vehicle
-				if (modifierLShift || modifierRShift)
+				if ((modifierLShift || modifierRShift) &&
+				    config().getBool("OpenApoc.NewFeature.AdvancedInventoryControls"))
 				{
 					if (this->selected->addEquipment(*state, this->draggedEquipment))
 					{

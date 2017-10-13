@@ -89,7 +89,7 @@ void Base::die(GameState &state, bool collapse)
 	}
 	for (auto v : building->currentVehicles)
 	{
-		v->die(state, nullptr, true);
+		v->die(state, true);
 	}
 	building->base.clear();
 	building->owner = state.getGovernment();

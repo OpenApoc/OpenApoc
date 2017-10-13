@@ -84,7 +84,7 @@ class Organisation : public StateObject
 		uint64_t next = 0;
 		MissionPattern pattern;
 
-		void execute(GameState &state, StateRef<Organisation> owner);
+		void execute(GameState &state, StateRef<City> city, StateRef<Organisation> owner);
 
 		Mission() = default;
 		Mission(uint64_t next, uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat,

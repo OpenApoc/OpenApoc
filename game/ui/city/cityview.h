@@ -87,6 +87,9 @@ class CityView : public CityTileView
 	bool drawCity = true;
 	sp<Surface> surface;
 
+	std::vector<sp<Image>> debugLabelsOK;
+	std::vector<sp<Image>> debugLabelsDead;
+
 	// Click handlers
 
 	bool handleClickedBuilding(StateRef<Building> building, bool rightClick,

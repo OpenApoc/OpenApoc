@@ -643,7 +643,8 @@ void AEquipScreen::handleItemPickup(Vec2<int> mousePos)
 		updateAgentControl(currentAgent);
 
 		// Immediate action: put at the ground
-		if (modifierLShift || modifierLShift)
+		if ((modifierLShift || modifierRShift) &&
+		    config().getBool("OpenApoc.NewFeature.AdvancedInventoryControls"))
 		{
 			handleItemPlacement(false);
 		}
@@ -658,7 +659,8 @@ void AEquipScreen::handleItemPickup(Vec2<int> mousePos)
 			refreshInventoryItems();
 
 			// Immediate action: try put in the agent
-			if (modifierLShift || modifierLShift)
+			if ((modifierLShift || modifierRShift) &&
+			    config().getBool("OpenApoc.NewFeature.AdvancedInventoryControls"))
 			{
 				handleItemPlacement(true);
 			}
@@ -1522,7 +1524,7 @@ void AEquipScreen::addItemToInventoryAgent(sp<AEquipment> item)
 
 bool AEquipScreen::tryPickUpItem(sp<Agent> agent, Vec2<int> slotPos, bool alternative, bool forced)
 {
-	alternative = alternative && config().getBool("OpenApoc.NewFeature.AllowUnloadingClips");
+	alternative = alternative && config().getBool("OpenApoc.NewFeature.AdvancedInventoryControls");
 	auto equipment = std::dynamic_pointer_cast<AEquipment>(agent->getEquipmentAt(slotPos));
 	if (!equipment)
 	{

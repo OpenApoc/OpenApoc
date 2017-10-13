@@ -205,6 +205,7 @@ class AgentType : public StateObject
 	// Apply this infiltration when alien grows
 	int growthInfiltration = 0;
 	int detectionWeight = 0;
+	int movementPercent = 0;
 
 	StateRef<DamageType> spreadHazardDamageType;
 	int spreadHazardMinPower = 0;

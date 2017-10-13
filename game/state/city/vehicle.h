@@ -229,7 +229,7 @@ class Vehicle : public StateObject,
 	// Also offloads arrived cargo or passengers
 	StateRef<Building> getServiceDestination(GameState &state);
 
-	void die(GameState &state, StateRef<Vehicle> attacker = nullptr, bool silent = false);
+	void die(GameState &state, bool silent = false, StateRef<Vehicle> attacker = nullptr);
 	void crash(GameState &state, StateRef<Vehicle> attacker);
 	void startFalling(GameState &state, StateRef<Vehicle> attacker = nullptr);
 	void adjustRelationshipOnDowned(GameState &state, StateRef<Vehicle> attacker);

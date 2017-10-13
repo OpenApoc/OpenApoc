@@ -79,7 +79,7 @@ std::list<std::pair<UString, UString>> openApocList = {
     {"OpenApoc.NewFeature.AdditionalUnitIcons", "Display additional unit icons (fatal, psi)"},
     {"OpenApoc.NewFeature.AllowForceFiringParallel", "Allow force-firing parallel to the ground"},
     {"OpenApoc.NewFeature.RequireLOSToMaintainPsi", "(N) Require LOS to maintain psi attack"},
-    {"OpenApoc.NewFeature.AllowUnloadingClips", "Allow manually unloading clips from weapons"},
+    {"OpenApoc.NewFeature.AdvancedInventoryControls", "Allow unloading clips and quick equip"},
     {"OpenApoc.NewFeature.EnableAgentTemplates", "Enable agent equipment templates"},
     {"OpenApoc.NewFeature.FerryChecksRelationshipWhenBuying",
      "Relationship check for purchase delivery"},

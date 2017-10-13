@@ -32,6 +32,23 @@ class BaseLayout;
 class Agent;
 class TileMap;
 
+class RoadSegment
+{
+  public:
+	std::vector<int> connections;
+	std::vector<Vec3<int>> tilePosition;
+	bool intact = false;
+	std::vector<bool> tileIntact;
+	Vec3<int> middle = {0, 0, 0};
+	int length = 0;
+	void notifyRoadChange(const Vec3<int> &position, bool intact);
+	void finalizeStats();
+	bool empty() const;
+	RoadSegment() = default;
+	RoadSegment(Vec3<int> tile);
+	RoadSegment(Vec3<int> tile, int connection);
+};
+
 class City : public StateObject
 {
 	STATE_OBJECT(City)
@@ -54,6 +71,15 @@ class City : public StateObject
 	std::set<sp<Projectile>> projectiles;
 
 	up<TileMap> map;
+
+	// Pathfinding
+
+	std::vector<int> tileToRoadSegmentMap;
+	std::vector<RoadSegment> roadSegments;
+	int getSegmentID(const Vec3<int> &position) const;
+	const RoadSegment &getSegment(const Vec3<int> &position) const;
+	void notifyRoadChange(const Vec3<int> &position, bool intact);
+	void fillRoadSegmentMap(GameState &state);
 
 	// CityView and CityTileView settings, saved here so that we can return to them
 
@@ -89,6 +115,10 @@ class City : public StateObject
 
 	static void accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition,
 	                                  Vec3<float> &target, int accuracy, bool cloaked);
+
+	// Following members are not serialized, but rather are set in initCity method
+
+	std::list<StateRef<Building>> spaceports;
 };
 
 }; // namespace OpenApoc

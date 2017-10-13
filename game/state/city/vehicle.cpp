@@ -222,7 +222,8 @@ class FlyingVehicleMover : public VehicleMover
 
 		// Step 03: Find projectiles to dodge
 		// FIXME: Read vehicle engagement rules, instead for now chance to dodge is flat 80%
-		if (randBoundsExclusive(state.rng, 0, 100) < 80)
+		// and passives don't dodge at all
+		if (vehicle.type->aggressiveness > 0 && randBoundsExclusive(state.rng, 0, 100) < 80)
 		{
 			for (auto &p : state.current_city->projectiles)
 			{
@@ -920,7 +921,7 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 		// Fell outside map
 		if (!map.tileIsValid(newPosition))
 		{
-			vehicle.die(state, nullptr);
+			vehicle.die(state, false, nullptr);
 			return;
 		}
 
@@ -1206,7 +1207,7 @@ void VehicleMover::updateSliding(GameState &state, unsigned int ticks)
 		// Fell outside map
 		if (!map.tileIsValid(newPosition))
 		{
-			vehicle.die(state, nullptr);
+			vehicle.die(state, false, nullptr);
 			return;
 		}
 
@@ -1596,7 +1597,7 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 	return destination;
 }
 
-void Vehicle::die(GameState &state, StateRef<Vehicle> attacker, bool silent)
+void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 {
 	health = 0;
 	if (!silent)
@@ -2105,7 +2106,7 @@ bool Vehicle::applyDamage(GameState &state, int damage, float armour, bool &soun
 			this->health -= damage;
 			if (this->health <= 0)
 			{
-				die(state, attacker);
+				die(state, false, attacker);
 				soundHandled = true;
 				return true;
 			}
@@ -2206,7 +2207,7 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 		}
 		if (otherVehicle->crashed || otherVehicle->falling || otherVehicle->sliding)
 		{
-			// Can't fire at crashed vehicles
+			// Can't auto-fire at crashed vehicles
 			continue;
 		}
 		if (otherVehicle->city != this->city)

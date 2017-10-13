@@ -127,6 +127,7 @@
 		<member>growthOptions</member>
 		<member>growthInfiltration</member>
 		<member>detectionWeight</member>
+		<member>movementPercent</member>
 		<member>spreadHazardDamageType</member>
 		<member>spreadHazardMinPower</member>
 		<member>spreadHazardMaxPower</member>
@@ -848,10 +849,21 @@
 		<member type="Section">doodads</member>
 		<member type="Section">portals</member>
 		<member type="Section">projectiles</member>
+		<member>tileToRoadSegmentMap</member>
+		<member>roadSegments</member>
 		<member>cityViewScreenCenter</member>
 		<member>cityViewPageIndex</member>
 		<member>cityViewSelectedVehicles</member>
 		<member>cityViewSelectedAgents</member>
+	</object>
+	<object>
+		<name>RoadSegment</name>
+		<member>connections</member>
+		<member>tilePosition</member>
+		<member>intact</member>
+		<member>tileIntact</member>
+		<member>middle</member>
+		<member>length</member>
 	</object>
 	<object>
 		<name>Projectile</name>
@@ -1393,6 +1405,7 @@
 		<value>OfferService</value>
 		<value>Teleport</value>
 		<value>SelfDestruct</value>
+		<value>DepartToSpace</value>
 	</enum>
 	<enum>
 		<name>AgentMission::MissionType</name>

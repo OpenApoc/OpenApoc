@@ -939,6 +939,11 @@ void Scenery::die(GameState &state, bool forced)
 	}
 	if (!forced && type->damagedTile)
 	{
+		if (type->tile_type == SceneryTileType::TileType::Road &&
+		    type->damagedTile->tile_type != SceneryTileType::TileType::Road)
+		{
+			city->notifyRoadChange(initialPosition, false);
+		}
 		this->damaged = true;
 		if (this->overlayDoodad)
 		{
@@ -994,6 +999,7 @@ void Scenery::die(GameState &state, bool forced)
 	// Destroy if destroyed
 	else if (destroyed)
 	{
+		city->notifyRoadChange(initialPosition, false);
 		if (this->overlayDoodad)
 		{
 			this->overlayDoodad->remove(state);
@@ -1042,6 +1048,7 @@ void Scenery::collapse(GameState &state)
 	{
 		building->buildingParts.erase(initialPosition);
 	}
+	city->notifyRoadChange(initialPosition, false);
 }
 
 void Scenery::update(GameState &state, unsigned int ticks)

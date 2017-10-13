@@ -34,10 +34,11 @@ class CityTileView : public TileView
 	void render() override;
 
 	bool DEBUG_SHOW_VEHICLE_PATH = false;
+	bool DEBUG_SHOW_ROAD_PATHFINDING = false;
 	bool DEBUG_SHOW_ALIEN_CREW = false;
 	bool DEBUG_SHOW_ROADS = false;
 	bool DEBUG_SHOW_TUBE = false;
-	int DEBUG_SHOW_WALK_TYPE = 0;
+	int DEBUG_SHOW_MISC_TYPE = 0;
 	bool DEBUG_SHOW_SLOPES = false;
 	bool DEBUG_ONLY_TYPE = false;
 	int DEBUG_DIRECTION = -1;

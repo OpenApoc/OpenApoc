@@ -771,6 +771,8 @@ void Building::detect(GameState &state, bool forced)
 
 void Building::alienGrowth(GameState &state)
 {
+	// Aliens try to move
+	alienMovement(state);
 	// Calculate changes to building's crew
 	std::map<StateRef<AgentType>, int> change_crew;
 	for (auto &pair : current_crew)
@@ -818,6 +820,20 @@ void Building::alienGrowth(GameState &state)
 	}
 	// Disable detection if no aliens are there
 	detected = detected && hasAliens();
+}
+
+void Building::alienMovement(GameState &state)
+{
+	// Run once when crew landed and once every hour after grow
+	// Pick 15 intact buildings within range of 15 tiles (counting from center to center) 
+	// Pick one random of them
+	// For every alien calculate move percent as:
+	//   alien's move chance + random 0..30
+	// Calculate amount of moving aliens
+	// Chance to move is:
+	//   15 + 3 * amount + 20 (if owner is friendly+ to aliens)
+	// If success then everybody moves according to percentage
+	LogWarning("Implement alien movement");
 }
 
 void Building::underAttack(GameState &state, StateRef<Organisation> attacker)
