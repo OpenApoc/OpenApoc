@@ -825,7 +825,7 @@ void Building::alienGrowth(GameState &state)
 void Building::alienMovement(GameState &state)
 {
 	// Run once when crew landed and once every hour after grow
-	// Pick 15 intact buildings within range of 15 tiles (counting from center to center) 
+	// Pick 15 intact buildings within range of 15 tiles (counting from center to center)
 	// Pick one random of them
 	// For every alien calculate move percent as:
 	//   alien's move chance + random 0..30
