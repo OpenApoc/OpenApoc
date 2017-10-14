@@ -1,7 +1,7 @@
 #include "framework/configfile.h"
 #include "framework/logger.h"
-#include "game/state/tileview/collision.h"
-#include "game/state/tileview/tile.h"
+#include "game/state/tilemap/collision.h"
+#include "game/state/tilemap/tilemap.h"
 #include "library/voxel.h"
 #include <array>
 #include <utility>

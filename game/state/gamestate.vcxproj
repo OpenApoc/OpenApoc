@@ -54,7 +54,7 @@
     <ClCompile Include="rules\city\baselayout.cpp" />
     <ClCompile Include="city\building.cpp" />
     <ClCompile Include="city\city.cpp" />
-    <ClCompile Include="rules\agent_type.cpp" />
+    <ClCompile Include="rules\agenttype.cpp" />
     <ClCompile Include="shared\doodad.cpp" />
     <ClCompile Include="shared\projectile.cpp" />
     <ClCompile Include="city\scenery.cpp" />

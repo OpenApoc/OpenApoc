@@ -204,9 +204,6 @@
     <ClCompile Include="tilemap\tilemap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="rules\agent_type.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="rules\supportedmappart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -244,6 +241,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="rules\city\ufogrowth.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\agenttype.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
