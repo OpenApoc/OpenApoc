@@ -1,6 +1,6 @@
-#include "game/state/shared/aequipment.h"
-#include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
+#include "game/state/gamestate.h"
+#include "game/state/shared/aequipment.h"
 #include <climits>
 
 namespace OpenApoc

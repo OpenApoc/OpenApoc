@@ -1,6 +1,6 @@
 #include "game/state/rules/city/ufopaedia.h"
-#include "game/state/gamestate.h"
 #include "game/state/city/research.h"
+#include "game/state/gamestate.h"
 
 namespace OpenApoc
 {

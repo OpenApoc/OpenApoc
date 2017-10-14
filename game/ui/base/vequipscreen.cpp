@@ -19,7 +19,7 @@
 #include "game/state/city/vequipment.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/city/vehicle_type.h"
-#include "game/ui/equipscreen.h"
+#include "game/ui/components/equipscreen.h"
 #include "library/strings_format.h"
 #include <cmath>
 

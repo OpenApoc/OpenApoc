@@ -10,11 +10,11 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "game/state/gamestate.h"
-#include "game/state/shared/organisation.h"
 #include "game/state/rules/city/facility_type.h"
+#include "game/state/rules/city/ufopaedia.h"
 #include "game/state/rules/city/vehicle_type.h"
 #include "game/state/rules/city/vequipment_type.h"
-#include "game/state/rules/city/ufopaedia.h"
+#include "game/state/shared/organisation.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
 

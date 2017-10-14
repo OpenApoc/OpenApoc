@@ -1,6 +1,6 @@
 #define _USE_MATH_DEFINES
 
-#include "game/ui/equipscreen.h"
+#include "game/ui/components/equipscreen.h"
 #include "framework/framework.h"
 #include "framework/renderer.h"
 #include <cmath>

@@ -1,9 +1,9 @@
 #pragma once
 
 #include "framework/image.h"
-#include "game/state/shared/equipment.h"
 #include "game/state/gametime.h"
 #include "game/state/rules/aequipment_type.h"
+#include "game/state/shared/equipment.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -68,7 +68,7 @@ enum class MovementState
 
 class AgentStats
 {
-public:
+  public:
 	AgentStats() = default;
 	int health = 0;
 	int accuracy = 0;
@@ -113,7 +113,7 @@ public:
 
 class AgentPortrait
 {
-public:
+  public:
 	sp<Image> photo;
 	sp<Image> icon;
 };
@@ -121,14 +121,14 @@ public:
 class AgentEquipmentLayout : public StateObject
 {
 	STATE_OBJECT(AgentEquipmentLayout)
-public:
+  public:
 	std::list<EquipmentLayoutSlot> slots;
 };
 
 class AgentType : public StateObject
 {
 	STATE_OBJECT(AgentType)
-public:
+  public:
 	enum class Role
 	{
 		Soldier,
@@ -238,7 +238,7 @@ public:
 class AgentBodyType : public StateObject
 {
 	STATE_OBJECT(AgentBodyType)
-public:
+  public:
 	// This, among others, determines wether unit has built-in hover capability, can can be
 	// overriden by use of certain armor
 	std::set<BodyState> allowed_body_states;
@@ -268,7 +268,5 @@ public:
 
 	BodyState getFirstAllowedState();
 };
-
-
 
 } // namespace OpenApoc

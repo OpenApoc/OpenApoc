@@ -1,8 +1,8 @@
 #ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
 #endif
-#include "game/state/gamestate.h"
 #include "game/state/rules/city/vehicle_type.h"
+#include "game/state/gamestate.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include <glm/glm.hpp>

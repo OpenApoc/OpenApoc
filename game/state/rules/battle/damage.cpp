@@ -1,5 +1,5 @@
-#include "game/state/gamestate.h"
 #include "game/state/rules/battle/damage.h"
+#include "game/state/gamestate.h"
 #include "game/state/rules/doodad_type.h"
 
 namespace OpenApoc

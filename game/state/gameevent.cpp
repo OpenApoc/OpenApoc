@@ -1,12 +1,12 @@
 #include "game/state/gameevent.h"
 #include "city/vehicle.h"
 #include "framework/logger.h"
-#include "game/state/shared/agent.h"
-#include "game/state/city/base.h"
 #include "game/state/battle/battle.h"
+#include "game/state/city/base.h"
 #include "game/state/city/building.h"
-#include "game/state/shared/organisation.h"
 #include "game/state/rules/city/vehicle_type.h"
+#include "game/state/shared/agent.h"
+#include "game/state/shared/organisation.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc

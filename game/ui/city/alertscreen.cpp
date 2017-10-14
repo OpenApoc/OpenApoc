@@ -11,9 +11,9 @@
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gamestate.h"
 #include "game/state/shared/organisation.h"
-#include "game/ui/agentassignment.h"
-#include "game/ui/base/aequipscreen.h"
 #include "game/ui/base/vequipscreen.h"
+#include "game/ui/components/agentassignment.h"
+#include "game/ui/general/aequipscreen.h"
 #include "game/ui/general/messagebox.h"
 #include "library/strings_format.h"
 

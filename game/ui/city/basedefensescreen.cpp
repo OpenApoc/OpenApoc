@@ -5,11 +5,11 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
-#include "game/state/city/base.h"
 #include "game/state/battle/battle.h"
+#include "game/state/city/base.h"
 #include "game/state/gamestate.h"
-#include "game/ui/base/aequipscreen.h"
 #include "game/ui/battle/battlebriefing.h"
+#include "game/ui/general/aequipscreen.h"
 
 namespace OpenApoc
 {

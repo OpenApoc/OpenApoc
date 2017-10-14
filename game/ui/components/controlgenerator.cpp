@@ -1,4 +1,4 @@
-#include "game/ui/controlgenerator.h"
+#include "game/ui/components/controlgenerator.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
 #include "forms/ui.h"
@@ -7,13 +7,13 @@
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
-#include "game/state/shared/agent.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
+#include "game/state/shared/agent.h"
 
 namespace OpenApoc
 {

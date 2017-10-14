@@ -1,6 +1,6 @@
 #define _USE_MATH_DEFINES
 
-#include "game/ui/agentassignment.h"
+#include "game/ui/components/agentassignment.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
@@ -11,11 +11,11 @@
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/renderer.h"
-#include "game/state/shared/agent.h"
 #include "game/state/city/building.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
-#include "game/ui/controlgenerator.h"
+#include "game/state/shared/agent.h"
+#include "game/ui/components/controlgenerator.h"
 #include <cmath>
 
 namespace OpenApoc

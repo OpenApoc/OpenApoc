@@ -1,5 +1,4 @@
 #include "game/state/tilemap/tile.h"
-#include "game/state/tilemap/tilemap.h"
 #include "framework/image.h"
 #include "framework/trace.h"
 #include "game/state/battle/battledoor.h"
@@ -7,13 +6,14 @@
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battleunit.h"
-#include "game/state/rules/battle/battleunitimagepack.h"
-#include "game/state/shared/doodad.h"
-#include "game/state/shared/projectile.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
+#include "game/state/rules/battle/battleunitimagepack.h"
 #include "game/state/rules/city/scenery_tile_type.h"
+#include "game/state/shared/doodad.h"
+#include "game/state/shared/projectile.h"
 #include "game/state/tilemap/collision.h"
+#include "game/state/tilemap/tilemap.h"
 #include "game/state/tilemap/tileobject_battlehazard.h"
 #include "game/state/tilemap/tileobject_battleitem.h"
 #include "game/state/tilemap/tileobject_battlemappart.h"
@@ -32,7 +32,7 @@ namespace OpenApoc
 {
 
 Tile::Tile(TileMap &map, Vec3<int> position, int layerCount)
-	: map(map), position(position), drawnObjects(layerCount)
+    : map(map), position(position), drawnObjects(layerCount)
 {
 }
 

@@ -1,4 +1,4 @@
-#include "game/ui/general/selectforces.h"
+#include "game/ui/skirmish/selectforces.h"
 #include "forms/checkbox.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
@@ -8,9 +8,9 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
-#include "game/state/shared/agent.h"
 #include "game/state/gamestate.h"
-#include "game/ui/general/skirmish.h"
+#include "game/state/shared/agent.h"
+#include "game/ui/skirmish/skirmish.h"
 namespace OpenApoc
 {
 

@@ -58,7 +58,7 @@ set (GAMESTATE_SOURCE_FILES
 	rules/city/ufo_incursion.cpp
 	rules/city/ufopaedia.cpp
 	rules/city/vammo_type.cpp
-	rules/city/vehicle_type_type.cpp
+	rules/city/vehicle_type.cpp
 	rules/city/vequipment_type.cpp
 	
 	rules/aequipment_type.cpp
@@ -148,7 +148,7 @@ set (GAMESTATE_HEADER_FILES
 	rules/city/ufo_incursion.h
 	rules/city/ufopaedia.h
 	rules/city/vammo_type.h
-	rules/city/vehicle_type_type.h
+	rules/city/vehicle_type.h
 	rules/city/vequipment_type.h
 	
 	rules/aequipment_type.h

@@ -19,7 +19,7 @@
 #include "game/ui/general/mainmenu.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/savemenu.h"
-#include "game/ui/general/skirmish.h"
+#include "game/ui/skirmish/skirmish.h"
 #include <list>
 
 namespace OpenApoc

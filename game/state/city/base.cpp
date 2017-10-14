@@ -1,14 +1,14 @@
 #include "game/state/city/base.h"
 #include "framework/framework.h"
-#include "game/state/city/facility.h"
-#include "game/state/rules/city/baselayout.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/city/facility.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
-#include "game/state/shared/organisation.h"
+#include "game/state/rules/city/baselayout.h"
 #include "game/state/rules/city/facility_type.h"
+#include "game/state/shared/organisation.h"
 #include "library/strings_format.h"
 #include <random>
 

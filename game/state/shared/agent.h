@@ -1,10 +1,10 @@
 #pragma once
 
 #include "framework/image.h"
-#include "game/state/rules/agent_type.h"
-#include "game/state/shared/equipment.h"
 #include "game/state/gametime.h"
 #include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/agent_type.h"
+#include "game/state/shared/equipment.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -13,7 +13,7 @@
 #include <map>
 #include <set>
 
-// How many in-game ticks are required to travel one in-game unit 
+// How many in-game ticks are required to travel one in-game unit
 #define TICKS_PER_UNIT_TRAVELLED_AGENT 8
 
 namespace OpenApoc
@@ -36,7 +36,6 @@ class AgentMission;
 class VoxelMap;
 class City;
 enum class AIType;
-
 
 enum class Rank
 {

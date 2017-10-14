@@ -1,5 +1,5 @@
-#include "game/state/gamestate.h"
 #include "game/state/rules/city/vammo_type.h"
+#include "game/state/gamestate.h"
 
 namespace OpenApoc
 {

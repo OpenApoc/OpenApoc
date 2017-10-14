@@ -1,8 +1,8 @@
 #include "game/state/rules/battle/battleunitanimationpack.h"
 #include "framework/framework.h"
 #include "framework/renderer.h"
-#include "game/state/rules/battle/battleunitimagepack.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/battle/battleunitimagepack.h"
 
 namespace OpenApoc
 {

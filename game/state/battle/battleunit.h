@@ -2,11 +2,11 @@
 #ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
 #endif
-#include "game/state/rules/agent_type.h"
 #include "game/state/battle/ai/unitai.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunitmission.h"
 #include "game/state/gametime.h"
+#include "game/state/rules/agent_type.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"

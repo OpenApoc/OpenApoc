@@ -12,11 +12,11 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "game/state/city/base.h"
-#include "game/state/city/facility.h"
 #include "game/state/city/building.h"
+#include "game/state/city/facility.h"
 #include "game/state/gamestate.h"
 #include "game/ui/base/researchselect.h"
-#include "game/ui/controlgenerator.h"
+#include "game/ui/components/controlgenerator.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc

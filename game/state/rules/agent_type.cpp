@@ -1,20 +1,20 @@
 #include "game/state/rules/agent_type.h"
 #include "framework/framework.h"
-#include "game/state/shared/aequipment.h"
-#include "game/state/city/base.h"
-#include "game/state/city/facility.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/city/agentmission.h"
+#include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/city/facility.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
-#include "game/state/shared/organisation.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/city/scenery_tile_type.h"
+#include "game/state/shared/aequipment.h"
+#include "game/state/shared/organisation.h"
 #include "game/state/tilemap/tileobject_scenery.h"
 #include "library/strings_format.h"
 #include <glm/glm.hpp>
@@ -113,7 +113,7 @@ const UString &AgentEquipmentLayout::getTypeName()
 }
 
 const UString &AgentEquipmentLayout::getId(const GameState &state,
-	const sp<AgentEquipmentLayout> ptr)
+                                           const sp<AgentEquipmentLayout> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &a : state.agent_equipment_layouts)
@@ -125,28 +125,27 @@ const UString &AgentEquipmentLayout::getId(const GameState &state,
 	return emptyString;
 }
 
-
 AgentType::AgentType() : aiType(AIType::None) {}
 
 EquipmentSlotType AgentType::getArmorSlotType(BodyPart bodyPart)
 {
 	switch (bodyPart)
 	{
-	case BodyPart::Body:
-		return EquipmentSlotType::ArmorBody;
-		break;
-	case BodyPart::Legs:
-		return EquipmentSlotType::ArmorLegs;
-		break;
-	case BodyPart::Helmet:
-		return EquipmentSlotType::ArmorHelmet;
-		break;
-	case BodyPart::LeftArm:
-		return EquipmentSlotType::ArmorLeftHand;
-		break;
-	case BodyPart::RightArm:
-		return EquipmentSlotType::ArmorRightHand;
-		break;
+		case BodyPart::Body:
+			return EquipmentSlotType::ArmorBody;
+			break;
+		case BodyPart::Legs:
+			return EquipmentSlotType::ArmorLegs;
+			break;
+		case BodyPart::Helmet:
+			return EquipmentSlotType::ArmorHelmet;
+			break;
+		case BodyPart::LeftArm:
+			return EquipmentSlotType::ArmorLeftHand;
+			break;
+		case BodyPart::RightArm:
+			return EquipmentSlotType::ArmorRightHand;
+			break;
 	}
 	LogError("Unknown body part?");
 	return EquipmentSlotType::General;

@@ -7,9 +7,9 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "game/state/battle/battle.h"
-#include "game/state/rules/battle/battlecommonimagelist.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/battle/battlecommonimagelist.h"
 #include "game/ui/city/cityview.h"
 #include <cmath>
 

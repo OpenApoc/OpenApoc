@@ -3,10 +3,10 @@
 #include "framework/logger.h"
 #include "game/state/gametime.h"
 #include "game/state/stateobject.h"
+#include "game/state/tilemap/tile.h"
 #include "game/state/tilemap/tileobject.h"
 #include "library/colour.h"
 #include "library/rect.h"
-#include "game/state/tilemap/tile.h"
 #include "library/sp.h"
 #include <map>
 #include <set>
@@ -18,7 +18,7 @@
 namespace OpenApoc
 {
 
-static const Colour COLOUR_BLACK = { 0, 0, 0, 255 };
+static const Colour COLOUR_BLACK = {0, 0, 0, 255};
 
 // FIXME: Alexey Andronov: Does anyone know why we divide by 4 here?
 static const unsigned TICK_SCALE = TICKS_PER_SECOND / 4;
@@ -50,7 +50,7 @@ class Organisation;
 
 class TileTransform
 {
-public:
+  public:
 	virtual Vec2<float> tileToScreenCoords(Vec3<float> coords) const = 0;
 	virtual Vec3<float> screenToTileCoords(Vec2<float> screenPos, float z) const = 0;
 };
@@ -73,11 +73,11 @@ enum class MapDirection
 
 class TileMap
 {
-private:
+  private:
 	std::vector<Tile> tiles;
 	std::vector<std::set<TileObject::Type>> layerMap;
 
-public:
+  public:
 	const Tile *getTile(int x, int y, int z) const
 	{
 
@@ -103,12 +103,12 @@ public:
 	Tile *getTile(Vec3<float> pos)
 	{
 		return this->getTile(static_cast<int>(pos.x), static_cast<int>(pos.y),
-			static_cast<int>(pos.z));
+		                     static_cast<int>(pos.z));
 	}
 	const Tile *getTile(Vec3<float> pos) const
 	{
 		return this->getTile(static_cast<int>(pos.x), static_cast<int>(pos.y),
-			static_cast<int>(pos.z));
+		                     static_cast<int>(pos.z));
 	}
 	Vec3<int> size;
 	Vec3<int> voxelMapSize;
@@ -116,38 +116,38 @@ public:
 	bool ceaseUpdates = false;
 
 	TileMap(Vec3<int> size, Vec3<float> velocityScale, Vec3<int> voxelMapSize,
-		std::vector<std::set<TileObject::Type>> layerMap);
+	        std::vector<std::set<TileObject::Type>> layerMap);
 	~TileMap();
 
 	// Path to target area (bounds are exclusive)
 	std::list<Vec3<int>> findShortestPath(Vec3<int> origin, Vec3<int> destinationStart,
-		Vec3<int> destinationEnd, int iterationLimit,
-		const CanEnterTileHelper &canEnterTile,
-		bool approachOnly = false, bool ignoreStaticUnits = false,
-		bool ignoreMovingUnits = true,
-		bool ignoreAllUnits = false, float *cost = nullptr,
-		float maxCost = 0.0f);
+	                                      Vec3<int> destinationEnd, int iterationLimit,
+	                                      const CanEnterTileHelper &canEnterTile,
+	                                      bool approachOnly = false, bool ignoreStaticUnits = false,
+	                                      bool ignoreMovingUnits = true,
+	                                      bool ignoreAllUnits = false, float *cost = nullptr,
+	                                      float maxCost = 0.0f);
 	// Path to target position
 	std::list<Vec3<int>>
-		findShortestPath(Vec3<int> origin, Vec3<int> destination, unsigned int iterationLimit,
-			const CanEnterTileHelper &canEnterTile, bool approachOnly = false,
-			bool ignoreStaticUnits = false, bool ignoreMovingUnits = true,
-			bool ignoreAllUnits = false, float *cost = nullptr, float maxCost = 0.0f)
+	findShortestPath(Vec3<int> origin, Vec3<int> destination, unsigned int iterationLimit,
+	                 const CanEnterTileHelper &canEnterTile, bool approachOnly = false,
+	                 bool ignoreStaticUnits = false, bool ignoreMovingUnits = true,
+	                 bool ignoreAllUnits = false, float *cost = nullptr, float maxCost = 0.0f)
 	{
 		return findShortestPath(origin, destination, destination + Vec3<int>{1, 1, 1},
-			iterationLimit, canEnterTile, approachOnly, ignoreStaticUnits,
-			ignoreMovingUnits, ignoreAllUnits, cost, maxCost);
+		                        iterationLimit, canEnterTile, approachOnly, ignoreStaticUnits,
+		                        ignoreMovingUnits, ignoreAllUnits, cost, maxCost);
 	}
 
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd,
-		const std::set<TileObject::Type> validTypes = {},
-		sp<TileObject> ignoredObject = nullptr, bool useLOS = false,
-		bool check_full_path = false, unsigned maxRange = 0,
-		bool recordPassedTiles = false,
-		StateRef<Organisation> ignoreOwnedProjectiles = nullptr) const;
+	                        const std::set<TileObject::Type> validTypes = {},
+	                        sp<TileObject> ignoredObject = nullptr, bool useLOS = false,
+	                        bool check_full_path = false, unsigned maxRange = 0,
+	                        bool recordPassedTiles = false,
+	                        StateRef<Organisation> ignoreOwnedProjectiles = nullptr) const;
 
 	bool checkThrowTrajectory(const sp<TileObject> thrower, Vec3<float> start, Vec3<int> end,
-		Vec3<float> targetVectorXY, float velocityXY, float velocityZ) const;
+	                          Vec3<float> targetVectorXY, float velocityXY, float velocityZ) const;
 
 	void addObjectToMap(sp<Projectile>);
 	void addObjectToMap(sp<Vehicle>);
@@ -164,7 +164,7 @@ public:
 	bool tileIsValid(Vec3<int> tile) const;
 
 	sp<Image> dumpVoxelView(const Rect<int> viewRect, const TileTransform &transform, float maxZ,
-		bool fast = false, bool los = false) const;
+	                        bool fast = false, bool los = false) const;
 
 	void updateAllBattlescapeInfo();
 	void updateAllCityInfo();

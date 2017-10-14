@@ -6,12 +6,12 @@
 #include "game/state/battle/battleitem.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battleunit.h"
-#include "game/state/rules/battle/battleunitimagepack.h"
-#include "game/state/shared/doodad.h"
-#include "game/state/shared/projectile.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
+#include "game/state/rules/battle/battleunitimagepack.h"
 #include "game/state/rules/city/scenery_tile_type.h"
+#include "game/state/shared/doodad.h"
+#include "game/state/shared/projectile.h"
 #include "game/state/tilemap/collision.h"
 #include "game/state/tilemap/tileobject_battlehazard.h"
 #include "game/state/tilemap/tileobject_battleitem.h"
@@ -31,8 +31,8 @@ namespace OpenApoc
 {
 
 TileMap::TileMap(Vec3<int> size, Vec3<float> velocityScale, Vec3<int> voxelMapSize,
-	std::vector<std::set<TileObject::Type>> layerMap)
-	: layerMap(layerMap), size(size), voxelMapSize(voxelMapSize), velocityScale(velocityScale)
+                 std::vector<std::set<TileObject::Type>> layerMap)
+    : layerMap(layerMap), size(size), voxelMapSize(voxelMapSize), velocityScale(velocityScale)
 {
 	tiles.reserve(size.x * size.y * size.z);
 	for (int z = 0; z < size.z; z++)
@@ -222,13 +222,13 @@ bool TileMap::tileIsValid(int x, int y, int z) const
 bool TileMap::tileIsValid(Vec3<int> tile) const
 {
 	if (tile.z < 0 || tile.z >= this->size.z || tile.y < 0 || tile.y >= this->size.y ||
-		tile.x < 0 || tile.x >= this->size.x)
+	    tile.x < 0 || tile.x >= this->size.x)
 		return false;
 	return true;
 }
 
 sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &transform,
-	float maxZ, bool fast, bool los) const
+                                 float maxZ, bool fast, bool los) const
 {
 	auto img = mksp<RGBImage>(viewRect.size());
 	std::map<sp<TileObject>, Colour> objectColours;
@@ -239,7 +239,7 @@ sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &
 	RGBImageLock lock(img);
 	int h = viewRect.p1.y - viewRect.p0.y;
 	int w = viewRect.p1.x - viewRect.p0.x;
-	Vec2<float> offset = { viewRect.p0.x, viewRect.p0.y };
+	Vec2<float> offset = {viewRect.p0.x, viewRect.p0.y};
 
 	LogWarning("ViewRect %s", viewRect);
 
@@ -251,25 +251,25 @@ sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &
 	{
 		for (int x = 0; x < w; x += inc)
 		{
-			auto topPos = transform.screenToTileCoords(Vec2<float>{x, y} +offset, maxZ - 0.01f);
-			auto bottomPos = transform.screenToTileCoords(Vec2<float>{x, y} +offset, 0.0f);
+			auto topPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, maxZ - 0.01f);
+			auto bottomPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, 0.0f);
 
 			auto collision = this->findCollision(topPos, bottomPos, {}, nullptr, los, true);
 			if (collision)
 			{
 				if (objectColours.find(collision.obj) == objectColours.end())
 				{
-					Colour c = { static_cast<uint8_t>(colourDist(colourRNG)),
-						static_cast<uint8_t>(colourDist(colourRNG)),
-						static_cast<uint8_t>(colourDist(colourRNG)), 255 };
+					Colour c = {static_cast<uint8_t>(colourDist(colourRNG)),
+					            static_cast<uint8_t>(colourDist(colourRNG)),
+					            static_cast<uint8_t>(colourDist(colourRNG)), 255};
 					objectColours[collision.obj] = c;
 				}
-				lock.set({ x, y }, objectColours[collision.obj]);
+				lock.set({x, y}, objectColours[collision.obj]);
 				if (fast)
 				{
-					lock.set({ x + 1, y }, objectColours[collision.obj]);
-					lock.set({ x, y + 1 }, objectColours[collision.obj]);
-					lock.set({ x + 1, y + 1 }, objectColours[collision.obj]);
+					lock.set({x + 1, y}, objectColours[collision.obj]);
+					lock.set({x, y + 1}, objectColours[collision.obj]);
+					lock.set({x + 1, y + 1}, objectColours[collision.obj]);
 				}
 			}
 		}

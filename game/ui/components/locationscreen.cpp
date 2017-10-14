@@ -1,4 +1,4 @@
-#include "game/ui/city/locationscreen.h"
+#include "game/ui/components/locationscreen.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
@@ -7,14 +7,14 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
-#include "game/state/shared/agent.h"
 #include "game/state/city/building.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
+#include "game/state/shared/agent.h"
 #include "game/state/shared/organisation.h"
-#include "game/ui/agentassignment.h"
-#include "game/ui/base/aequipscreen.h"
 #include "game/ui/base/vequipscreen.h"
+#include "game/ui/components/agentassignment.h"
+#include "game/ui/general/aequipscreen.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc

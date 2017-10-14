@@ -1,7 +1,7 @@
 #include "game/state/rules/battle/battlemapsector.h"
 #include "framework/framework.h"
-#include "game/state/rules/battle/battlemap.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/battle/battlemap.h"
 
 namespace OpenApoc
 {

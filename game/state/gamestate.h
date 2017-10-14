@@ -1,9 +1,9 @@
 #pragma once
 
-#include "game/state/shared/agent.h"
+#include "game/state/city/research.h"
 #include "game/state/gameevent_types.h"
 #include "game/state/gametime.h"
-#include "game/state/city/research.h"
+#include "game/state/shared/agent.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
