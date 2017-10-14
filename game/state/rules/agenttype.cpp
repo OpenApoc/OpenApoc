@@ -1,3 +1,4 @@
+#include "game/state/rules/agenttype.h"
 #include "framework/framework.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battleunit.h"
@@ -11,7 +12,6 @@
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipmenttype.h"
-#include "game/state/rules/agenttype.h"
 #include "game/state/rules/city/scenerytiletype.h"
 #include "game/state/shared/aequipment.h"
 #include "game/state/shared/organisation.h"
