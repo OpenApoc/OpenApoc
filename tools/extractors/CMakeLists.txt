@@ -23,6 +23,7 @@ set (DATAEXTRACTOR_SOURCE_FILES
 	extract_organisations.cpp
 	extract_vehicle_equipment.cpp
 	extract_city_map.cpp
+	extract_economy.cpp
 	extract_buildings.cpp
 	extract_vehicles.cpp
 	extract_city_scenery.cpp
@@ -55,6 +56,7 @@ set (DATAEXTRACTOR_HEADER_FILES
 	common/audio.h
 	common/baselayout.h
 	common/doodads.h
+	common/economy.h
 	common/facilities.h
 	common/organisations.h
 	common/ufopaedia.h

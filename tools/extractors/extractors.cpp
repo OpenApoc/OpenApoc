@@ -2,8 +2,8 @@
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/scenery_tile_type.h"
-#include "game/state/tileview/tile.h"
+#include "game/state/rules/city/scenerytiletype.h"
+#include "game/state/tilemap/tilemap.h"
 
 namespace OpenApoc
 { // clang-format off
@@ -329,11 +329,14 @@ void InitialGameStateExtractor::extractCommon(GameState &state) const
 	this->extractAgentEquipment(state);
 	this->extractDoodads(state);
 	this->extractBuildingFunctions(state);
+	this->extractEconomy(state);
 
 	// The alien map doesn't change
 	UString alienMapId = City::getPrefix() + "ALIEN";
 	state.cities[alienMapId] = std::make_shared<City>();
 	state.cities[alienMapId]->id = alienMapId;
+	state.cities[alienMapId]->researchUnlock.emplace_back(&state,
+	                                                      "RESEARCH_UNLOCK_ALIEN_DIMENSION");
 	this->extractBuildings(state, "albuild", state.cities[alienMapId], true);
 	this->extractCityMap(state, "alienmap", "ALIENMAP_", state.cities[alienMapId]);
 	this->extractCityScenery(state, "ALIENMAP_", "alienmap", "alien", "stratmap", "loftemps",
@@ -360,6 +363,8 @@ void InitialGameStateExtractor::extract(GameState &state, Difficulty difficulty)
 
 	state.cities[humanMapId] = std::make_shared<City>();
 	state.cities[humanMapId]->id = humanMapId;
+	state.cities[humanMapId]->researchUnlock.emplace_back(&state,
+	                                                      "RESEARCH_UNLOCK_DIMENSION_GATES");
 
 	this->extractBuildings(state, humanMapNames[difficulty], state.cities[humanMapId]);
 

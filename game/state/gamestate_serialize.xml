@@ -34,6 +34,7 @@
 		<member type="Section">city_common_sample_list</member>
 		<member type="Section">battle_common_image_list</member>
 		<member type="Section">battle_common_sample_list</member>
+		<member type="Section">economy</member>
 		<member>player</member>
 		<member>aliens</member>
 		<member>civilian</member>
@@ -127,6 +128,7 @@
 		<member>growthOptions</member>
 		<member>growthInfiltration</member>
 		<member>detectionWeight</member>
+		<member>movementPercent</member>
 		<member>spreadHazardDamageType</member>
 		<member>spreadHazardMinPower</member>
 		<member>spreadHazardMaxPower</member>
@@ -278,6 +280,7 @@
 		<member>cost</member>
 		<member>item_type</member>
 		<member>itemId</member>
+		<member>hidden</member>
 		<member>picture</member>
 	</object>
 	<object>
@@ -631,6 +634,7 @@
 		<member>projectileVoxelMap</member>
 		<member>agentIsometric</member>
 		<member>agentStrategic</member>
+		<member>portalStrategic</member>
 	</object>
 	<object>
 		<name>BattleCommonSampleList</name>
@@ -848,10 +852,24 @@
 		<member type="Section">doodads</member>
 		<member type="Section">portals</member>
 		<member type="Section">projectiles</member>
+		<member>tileToRoadSegmentMap</member>
+		<member>roadSegments</member>
+		<member>researchUnlock</member>
 		<member>cityViewScreenCenter</member>
 		<member>cityViewPageIndex</member>
 		<member>cityViewSelectedVehicles</member>
 		<member>cityViewSelectedAgents</member>
+		<member>cityViewSelectedOrganisation</member>
+		<member>cityViewOrgButtonIndex</member>
+	</object>
+	<object>
+		<name>RoadSegment</name>
+		<member>connections</member>
+		<member>tilePosition</member>
+		<member>intact</member>
+		<member>tileIntact</member>
+		<member>middle</member>
+		<member>length</member>
 	</object>
 	<object>
 		<name>Projectile</name>
@@ -874,6 +892,7 @@
 		<member>tail_length</member>
 		<member>projectile_sprites</member>
 		<member>sprite_distance</member>
+		<member>manualFire</member>
 		<member>voxelMap</member>
 		<member>impactSfx</member>
 		<member>doodadType</member>
@@ -938,6 +957,9 @@
 		<member>ticksDetectionAttemptAccumulated</member>
 		<member>detected</member>
 		<member>timeOfLastAttackEvent</member>
+		<member>researchUnlock</member>
+		<member>accessTopic</member>
+		<member>victory</member>
 	</object>
 	<object>
 		<name>UFOIncursion</name>
@@ -1055,6 +1077,7 @@
 		<member>bioStorage</member>
 		<member>bioRemains</member>
 		<member>launcher</member>
+		<member>artifact</member>
 		<member>body_sprite</member>
 		<member>damage_modifier</member>
 		<member>body_part</member>
@@ -1192,6 +1215,7 @@
 		<member>guard_types_human</member>
 		<member>guard_types_alien</member>
 		<member>loot</member>
+		<member>icon</member>
 		<member>current_relations</member>
 		<member>ufopaedia_entry</member>
 		<member>missions</member>
@@ -1241,6 +1265,7 @@
 		<member>provideFreightCargo</member>
 		<member>provideFreightBio</member>
 		<member>canRescueCrashed</member>
+		<member>researchUnlock</member>
 	</object>
 	<object>
 		<name>UfopaediaEntry</name>
@@ -1392,6 +1417,7 @@
 		<value>OfferService</value>
 		<value>Teleport</value>
 		<value>SelfDestruct</value>
+		<value>DepartToSpace</value>
 	</enum>
 	<enum>
 		<name>AgentMission::MissionType</name>
@@ -1600,7 +1626,6 @@
 		<name>ResearchDependency::Type</name>
 		<value>Any</value>
 		<value>All</value>
-		<value>Unused</value>
 	</enum>
 	<enum>
 		<name>UfopaediaEntry::Data</name>
@@ -1863,5 +1888,15 @@
 		<member>updateTicksAccumulated</member>
 		<member>lastPosition</member>
 		<member>holder</member>
+	</object>
+	<object>
+		<name>EconomyInfo</name>
+		<member>weekAvailable</member>
+		<member>basePrice</member>
+		<member>minStock</member>
+		<member>maxStock</member>
+		<member>currentPrice</member>
+		<member>currentStock</member>
+		<member>lastStock</member>
 	</object>
 </openapoc_gamestate>

@@ -1,6 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <vehicle_ammo>
   <entry>
+    <key>VEQUIPMENTAMMOTYPE_FUSION_POWERFUEL</key>
+    <value>
+      <id>VEQUIPMENTAMMOTYPE_FUSION_POWERFUEL</id>
+      <name>Fusion Powerfuel</name>
+      <ammo_id>0</ammo_id>
+      <manufacturer>ORG_SUPERDYNAMICS</manufacturer>
+      <weight>0</weight>
+      <store_space>1</store_space>
+    </value>
+  </entry>
+  <entry>
+    <key>VEQUIPMENTAMMOTYPE_ELERIUM_115</key>
+    <value>
+      <id>VEQUIPMENTAMMOTYPE_ELERIUM_115</id>
+      <name>Elerium-115</name>
+      <ammo_id>1</ammo_id>
+      <manufacturer>ORG_SOLMINE</manufacturer>
+      <weight>0</weight>
+      <store_space>1</store_space>
+    </value>
+  </entry>
+  <entry>
+    <key>VEQUIPMENTAMMOTYPE_ZORIUM</key>
+    <value>
+      <id>VEQUIPMENTAMMOTYPE_ZORIUM</id>
+      <name>Zorium</name>
+      <ammo_id>2</ammo_id>
+      <manufacturer>ORG_SOLMINE</manufacturer>
+      <weight>0</weight>
+      <store_space>1</store_space>
+    </value>
+  </entry>
+  <entry>
+    <key>VEQUIPMENTAMMOTYPE_MULTI_CANNON_ROUND</key>
+    <value>
+      <id>VEQUIPMENTAMMOTYPE_MULTI_CANNON_ROUND</id>
+      <name>Multi-Cannon Round</name>
+      <ammo_id>3</ammo_id>
+      <manufacturer>ORG_MEGAPOL</manufacturer>
+      <weight>0</weight>
+      <store_space>1</store_space>
+    </value>
+  </entry>
+  <entry>
+    <key>VEQUIPMENTAMMOTYPE_JANITOR_MISSILE</key>
+    <value>
+      <id>VEQUIPMENTAMMOTYPE_JANITOR_MISSILE</id>
+      <name>Janitor Missile</name>
+      <ammo_id>4</ammo_id>
+      <manufacturer>ORG_MEGAPOL</manufacturer>
+      <weight>0</weight>
+      <store_space>1</store_space>
+    </value>
+  </entry>
+  <entry>
+    <key>VEQUIPMENTAMMOTYPE_JUSTICE_MISSILE</key>
+    <value>
+      <id>VEQUIPMENTAMMOTYPE_JUSTICE_MISSILE</id>
+      <name>Justice Missile</name>
+      <ammo_id>5</ammo_id>
+      <manufacturer>ORG_MEGAPOL</manufacturer>
+      <weight>0</weight>
+      <store_space>1</store_space>
+    </value>
+  </entry><entry>
+    <key>VEQUIPMENTAMMOTYPE_PROPHET_MISSILE</key>
+    <value>
+      <id>VEQUIPMENTAMMOTYPE_PROPHET_MISSILE</id>
+      <name>Prophet Missile</name>
+      <ammo_id>6</ammo_id>
+      <manufacturer>ORG_MARSEC</manufacturer>
+      <weight>0</weight>
+      <store_space>1</store_space>
+    </value>
+  </entry><entry>
+    <key>VEQUIPMENTAMMOTYPE_RETRIBUTION_MISSILE</key>
+    <value>
+      <id>VEQUIPMENTAMMOTYPE_RETRIBUTION_MISSILE</id>
+      <name>Retribution Missile</name>
+      <ammo_id>7</ammo_id>
+      <manufacturer>ORG_MARSEC</manufacturer>
+      <weight>0</weight>
+      <store_space>1</store_space>
+    </value>
+  </entry>  
+  <entry>
     <key>VEQUIPMENTAMMOTYPE_DISRUPTOR_BOMB</key>
     <value>
       <id>VEQUIPMENTAMMOTYPE_DISRUPTOR_BOMB</id>
@@ -29,6 +115,47 @@
       <name>Disruptor Multi-Bomb</name>
       <ammo_id>10</ammo_id>
       <manufacturer>ORG_X-COM</manufacturer>
+      <weight>0</weight>
+      <store_space>1</store_space>
+    </value>
+  </entry>
+  <entry>
+    <key>VEQUIPMENTAMMOTYPE_REPEATER_40MM_CANNON_ROUND</key>
+    <value>
+      <id>VEQUIPMENTAMMOTYPE_REPEATER_40MM_CANNON_ROUND</id>
+      <name>Repeater 40mm Cannon Round</name>
+      <ammo_id>11</ammo_id>
+      <manufacturer>ORG_MEGAPOL</manufacturer>
+      <weight>0</weight>
+      <store_space>1</store_space>
+    </value>
+  </entry><entry>
+    <key>VEQUIPMENTAMMOTYPE_AIRGUARD_52MM_CANNON_ROUND</key>
+    <value>
+      <id>VEQUIPMENTAMMOTYPE_AIRGUARD_52MM_CANNON_ROUND</id>
+      <name>Airguard 52mm Cannon Round</name>
+      <ammo_id>12</ammo_id>
+      <manufacturer>ORG_MARSEC</manufacturer>
+      <weight>0</weight>
+      <store_space>1</store_space>
+    </value>
+  </entry><entry>
+    <key>VEQUIPMENTAMMOTYPE_GROUND_LAUNCHED_MISSILE</key>
+    <value>
+      <id>VEQUIPMENTAMMOTYPE_GROUND_LAUNCHED_MISSILE</id>
+      <name>Ground Launched Missile</name>
+      <ammo_id>13</ammo_id>
+      <manufacturer>ORG_MARSEC</manufacturer>
+      <weight>0</weight>
+      <store_space>1</store_space>
+    </value>
+  </entry><entry>
+    <key>VEQUIPMENTAMMOTYPE_AIR_DEFENSE_MISSILE</key>
+    <value>
+      <id>VEQUIPMENTAMMOTYPE_AIR_DEFENSE_MISSILE</id>
+      <name>Air Defense Missile</name>
+      <ammo_id>14</ammo_id>
+      <manufacturer>ORG_MARSEC</manufacturer>
       <weight>0</weight>
       <store_space>1</store_space>
     </value>

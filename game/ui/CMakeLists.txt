@@ -10,33 +10,39 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package (Threads REQUIRED)
 
 set (GAMEUI_SOURCE_FILES
+	base/basescreen.cpp
+	base/basestage.cpp
+	base/buysellscreen.cpp
+	base/researchscreen.cpp
+	base/researchselect.cpp
+	base/vequipscreen.cpp
+	
 	battle/battlebriefing.cpp
 	battle/battledebriefing.cpp
 	battle/battleprestart.cpp
 	battle/battleturnbasedconfirmbox.cpp
 	battle/battleview.cpp
-	base/basegraphics.cpp
-	base/basescreen.cpp
-	base/basestage.cpp
-	base/researchscreen.cpp
-	base/researchselect.cpp
-	base/vequipscreen.cpp
-	base/aequipscreen.cpp
+	
 	city/basebuyscreen.cpp
 	city/baseselectscreen.cpp
 	city/buildingscreen.cpp
-	city/locationscreen.cpp
 	city/alertscreen.cpp
 	city/infiltrationscreen.cpp
 	city/basedefensescreen.cpp
 	city/scorescreen.cpp
 	city/cityview.cpp
+	
+	components/agentassignment.cpp
+	components/basegraphics.cpp
+	components/controlgenerator.cpp
+	components/equipscreen.cpp
+	components/locationscreen.cpp
+	
 	debugtools/debugmenu.cpp
 	debugtools/formpreview.cpp
 	debugtools/imagepreview.cpp
-	general/skirmish.cpp
-	general/selectforces.cpp
-	general/mapselector.cpp
+	
+	general/aequipscreen.cpp
 	general/difficultymenu.cpp
 	general/ingameoptions.cpp
 	general/loadingscreen.cpp
@@ -47,44 +53,55 @@ set (GAMEUI_SOURCE_FILES
 	general/videoscreen.cpp
 	general/messagelogscreen.cpp
 	general/notificationscreen.cpp
+	
+	skirmish/skirmish.cpp
+	skirmish/selectforces.cpp
+	skirmish/mapselector.cpp
+	
 	tileview/battletileview.cpp
 	tileview/citytileview.cpp
 	tileview/tileview.cpp
+	
 	ufopaedia/ufopaediacategoryview.cpp
 	ufopaedia/ufopaediaview.cpp
-	agentassignment.cpp
-	equipscreen.cpp
-	controlgenerator.cpp
+	
 	boot.cpp)
 source_group(gamestate\\sources FILES ${GAMEUI_SOURCE_FILES})
 set (GAMEUI_HEADER_FILES
+	
+	base/basescreen.h
+	base/basestage.h
+	base/buysellscreen.h
+	base/researchscreen.h
+	base/researchselect.h
+	base/vequipscreen.h
+	
 	battle/battlebriefing.h
 	battle/battledebriefing.h
 	battle/battleprestart.h
 	battle/battleturnbasedconfirmbox.h
 	battle/battleview.h
-	base/basegraphics.h
-	base/basescreen.h
-	base/basestage.h
-	base/researchscreen.h
-	base/researchselect.h
-	base/vequipscreen.h
-	base/aequipscreen.h
+	
 	city/basebuyscreen.h
 	city/baseselectscreen.h
 	city/buildingscreen.h
-	city/locationscreen.h
 	city/alertscreen.h
 	city/infiltrationscreen.h
 	city/basedefensescreen.h
 	city/scorescreen.h
 	city/cityview.h
+	
+	components/agentassignment.h
+	components/basegraphics.h
+	components/controlgenerator.h
+	components/equipscreen.h
+	components/locationscreen.h
+	
 	debugtools/debugmenu.h
 	debugtools/formpreview.h
 	debugtools/imagepreview.h
-	general/skirmish.h
-	general/selectforces.h
-	general/mapselector.h
+	
+	general/aequipscreen.h
 	general/difficultymenu.h
 	general/ingameoptions.h
 	general/loadingscreen.h
@@ -95,14 +112,18 @@ set (GAMEUI_HEADER_FILES
 	general/videoscreen.h
 	general/messagelogscreen.h
 	general/notificationscreen.h
+	
+	skirmish/skirmish.h
+	skirmish/selectforces.h
+	skirmish/mapselector.h
+	
 	tileview/battletileview.h
 	tileview/citytileview.h
 	tileview/tileview.h
+	
 	ufopaedia/ufopaediacategoryview.h
 	ufopaedia/ufopaediaview.h
-	agentassignment.h
-	equipscreen.h
-	controlgenerator.h
+	
 	boot.h)
 source_group(gamestate\\headers FILES ${GAMEUI_HEADER_FILES})
 

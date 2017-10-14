@@ -11,11 +11,11 @@
 #include "game/state/city/building.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
-#include "game/state/organisation.h"
-#include "game/ui/agentassignment.h"
-#include "game/ui/base/aequipscreen.h"
+#include "game/state/shared/organisation.h"
 #include "game/ui/base/vequipscreen.h"
 #include "game/ui/battle/battlebriefing.h"
+#include "game/ui/components/agentassignment.h"
+#include "game/ui/general/aequipscreen.h"
 #include "game/ui/general/messagebox.h"
 #include "library/strings_format.h"
 
@@ -101,6 +101,17 @@ void BuildingScreen::eventOccurred(Event *e)
 		if (e->forms().RaisedBy->Name == "BUTTON_EXTERMINATE" ||
 		    e->forms().RaisedBy->Name == "BUTTON_RAID")
 		{
+			if (building->accessTopic && !building->accessTopic->isComplete())
+			{
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<MessageBox>(tr("No Entrance"),
+				                      tr("Our Agents are unable to find an entrance to this "
+				                         "building. Our Scientists "
+				                         "back at HQ must complete their research."),
+				                      MessageBox::ButtonOptions::Ok)});
+				return;
+			}
 			// FIXME: Implement selecting agents that will do the mission
 			LogWarning("Implement selecting agents that will do the mission");
 			std::list<StateRef<Agent>> agents;
@@ -131,7 +142,8 @@ void BuildingScreen::eventOccurred(Event *e)
 			}
 			else
 			{
-				if (e->forms().RaisedBy->Name == "BUTTON_EXTERMINATE")
+				if (e->forms().RaisedBy->Name == "BUTTON_EXTERMINATE" &&
+				    building->owner != state->getAliens())
 				{
 					bool foundAlien = false;
 					for (auto &e : building->current_crew)

@@ -194,8 +194,8 @@ ConfigOptionBool optionAllowManualCargoFerry("OpenApoc.NewFeature", "AllowManual
                                              true);
 ConfigOptionBool optionAllowSoldierTaxiUse("OpenApoc.NewFeature", "AllowSoldierTaxiUse",
                                            "Allow soldiers to call taxi", true);
-ConfigOptionBool optionAllowUnloadingClips("OpenApoc.NewFeature", "AllowUnloadingClips",
-                                           "Allow manually unloading clips from weapons", true);
+ConfigOptionBool optionAllowUnloadingClips("OpenApoc.NewFeature", "AdvancedInventoryControls",
+                                           "Allow unloading clips and quick equip", true);
 ConfigOptionBool optionPayloadExplosion("OpenApoc.NewFeature", "PayloadExplosion",
                                         "Ammunition explodes when blown up", true);
 ConfigOptionBool optionDisplayUnitPaths("OpenApoc.NewFeature", "DisplayUnitPaths",
@@ -234,6 +234,9 @@ ConfigOptionBool optionVanillaCityControls("OpenApoc.NewFeature", "OpenApocCityC
                                            "Improved city control scheme", true);
 ConfigOptionBool optionCollapseRaidedBuilding("OpenApoc.NewFeature", "CollapseRaidedBuilding",
                                               "Successful raid collapses building", true);
+ConfigOptionBool
+    optionScrambleOnUnintentionalHit("OpenApoc.NewFeature", "ScrambleOnUnintentionalHit",
+                                     "Any hit on hostile building provokes retaliation", false);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);

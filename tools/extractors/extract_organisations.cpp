@@ -1,6 +1,7 @@
+#include "framework/data.h"
 #include "framework/framework.h"
 #include "game/state/gamestate.h"
-#include "game/state/ufopaedia.h"
+#include "game/state/rules/city/ufopaedia.h"
 #include "library/strings_format.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
@@ -43,7 +44,7 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 		o->tech_level = odata.starting_tech_level + 1;
 		o->average_guards = odata.average_guards;
 
-		// "Civilian" organisation has no loot entry
+		// "Civilian" organisation has no loot entry and icon
 		if (i == ORG_CIVILIAN)
 		{
 			for (int k = 0; k < 3; k++)
@@ -69,6 +70,10 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 		}
 		else
 		{
+			o->icon = fw().data->loadImage(format("PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/"
+			                                      "vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
+			                                      91 + i));
+
 			auto ldata = data.organisation_raid_loot_data->get(i);
 
 			for (int k = 0; k < 3; k++)
@@ -114,6 +119,13 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 
 			o->current_relations[o2] = (float)rdata.relationships[j];
 		}
+
+		// FIXME: Assign hirable agents to orgs
+		// o->hirableTypes
+		// o->minHireePool
+		// o->maxHireePool
+
+		// Park
 
 		if (i != ORG_CIVILIAN && i != ORG_XCOM && i != ORG_ALIENS)
 		{
@@ -257,11 +269,11 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 				// Transtellar
 				case 3:
 					missions.emplace_back(
-					    0, 30 * s, 90 * s, 1, 1,
+					    50 * s, 2 * m, 6 * m, 1, 1,
 					    std::set<StateRef<VehicleType>>{{&state, "VEHICLETYPE_SPACE_LINER"}},
 					    Organisation::MissionPattern::Target::DepartToSpace);
 					missions.emplace_back(
-					    0, 30 * s, 90 * s, 1, 1,
+					    22 * s, 2 * m, 6 * m, 1, 1,
 					    std::set<StateRef<VehicleType>>{{&state, "VEHICLETYPE_SPACE_LINER"}},
 					    Organisation::MissionPattern::Target::ArriveFromSpace);
 					missions.emplace_back(

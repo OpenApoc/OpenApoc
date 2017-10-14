@@ -6,18 +6,18 @@
 #include "game/state/city/agentmission.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
-#include "game/state/city/citycommonsamplelist.h"
-#include "game/state/city/doodad.h"
-#include "game/state/city/projectile.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/scenery_tile_type.h"
-#include "game/state/tileview/collision.h"
-#include "game/state/tileview/tile.h"
-#include "game/state/tileview/tileobject_doodad.h"
-#include "game/state/tileview/tileobject_scenery.h"
-#include "game/state/tileview/tileobject_vehicle.h"
+#include "game/state/rules/city/citycommonsamplelist.h"
+#include "game/state/rules/city/scenerytiletype.h"
+#include "game/state/shared/doodad.h"
+#include "game/state/shared/projectile.h"
+#include "game/state/tilemap/collision.h"
+#include "game/state/tilemap/tilemap.h"
+#include "game/state/tilemap/tileobject_doodad.h"
+#include "game/state/tilemap/tileobject_scenery.h"
+#include "game/state/tilemap/tileobject_vehicle.h"
 
 namespace OpenApoc
 {
@@ -62,6 +62,9 @@ sp<std::set<SupportedMapPart *>> Scenery::getSupportedParts()
 
 void Scenery::clearSupportedParts() { supportedParts.clear(); }
 
+// FIXME:
+// Implement linking using shooting lines for generals
+// This will improve how complex buildings collapse
 bool Scenery::findSupport()
 {
 	auto pos = tileObject->getOwningTile()->position;
@@ -780,9 +783,11 @@ bool Scenery::handleCollision(GameState &state, Collision &c)
 		// Lose 5 points
 		ourOrg->adjustRelationTo(state, attackerOrg, -5.0f);
 		// If intentional lose additional 15 points
-		if (!c.projectile->firerVehicle->missions.empty() &&
-		    c.projectile->firerVehicle->missions.front()->type ==
-		        VehicleMission::MissionType::AttackBuilding)
+		bool intentional =
+		    c.projectile->manualFire || (!c.projectile->firerVehicle->missions.empty() &&
+		                                 c.projectile->firerVehicle->missions.front()->type ==
+		                                     VehicleMission::MissionType::AttackBuilding);
+		if (intentional)
 		{
 			ourOrg->adjustRelationTo(state, attackerOrg, -25.0f);
 		}
@@ -801,7 +806,10 @@ bool Scenery::handleCollision(GameState &state, Collision &c)
 				}
 			}
 		}
-		building->underAttack(state, attackerOrg);
+		if (intentional || config().getBool("OpenApoc.NewFeature.ScrambleOnUnintentionalHit"))
+		{
+			building->underAttack(state, attackerOrg);
+		}
 	}
 
 	return applyDamage(state, c.projectile->damage);
@@ -934,6 +942,11 @@ void Scenery::die(GameState &state, bool forced)
 	}
 	if (!forced && type->damagedTile)
 	{
+		if (type->tile_type == SceneryTileType::TileType::Road &&
+		    type->damagedTile->tile_type != SceneryTileType::TileType::Road)
+		{
+			city->notifyRoadChange(initialPosition, false);
+		}
 		this->damaged = true;
 		if (this->overlayDoodad)
 		{
@@ -989,6 +1002,7 @@ void Scenery::die(GameState &state, bool forced)
 	// Destroy if destroyed
 	else if (destroyed)
 	{
+		city->notifyRoadChange(initialPosition, false);
 		if (this->overlayDoodad)
 		{
 			this->overlayDoodad->remove(state);
@@ -998,7 +1012,7 @@ void Scenery::die(GameState &state, bool forced)
 		this->tileObject.reset();
 		if (building)
 		{
-			building->buildingParts.erase(initialPosition);
+			building->buildingPartChange(initialPosition, false);
 		}
 	}
 }
@@ -1035,8 +1049,9 @@ void Scenery::collapse(GameState &state)
 	ceaseSupportProvision();
 	if (building)
 	{
-		building->buildingParts.erase(initialPosition);
+		building->buildingPartChange(initialPosition, false);
 	}
+	city->notifyRoadChange(initialPosition, false);
 }
 
 void Scenery::update(GameState &state, unsigned int ticks)
@@ -1231,7 +1246,7 @@ void Scenery::repair(GameState &state)
 	}
 	if (building && !type->commonProperty)
 	{
-		building->buildingParts.insert(initialPosition);
+		building->buildingPartChange(initialPosition, true);
 	}
 	map.clearPathCaches();
 }

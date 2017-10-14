@@ -6,20 +6,21 @@
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
 #include "framework/trace.h"
-#include "game/state/agent.h"
 #include "game/state/city/agentmission.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
-#include "game/state/city/citycommonimagelist.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gamestate.h"
-#include "game/state/organisation.h"
-#include "game/state/rules/scenery_tile_type.h"
-#include "game/state/rules/vehicle_type.h"
-#include "game/state/tileview/tileobject_scenery.h"
-#include "game/state/tileview/tileobject_vehicle.h"
+#include "game/state/rules/city/citycommonimagelist.h"
+#include "game/state/rules/city/scenerytiletype.h"
+#include "game/state/rules/city/vehicletype.h"
+#include "game/state/shared/agent.h"
+#include "game/state/shared/doodad.h"
+#include "game/state/shared/organisation.h"
+#include "game/state/tilemap/tileobject_scenery.h"
+#include "game/state/tilemap/tileobject_vehicle.h"
 
 namespace OpenApoc
 {
@@ -36,18 +37,24 @@ CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratT
 	cargoImage = fw().data->loadImage("city/building-circle-yellow.png");
 
 	selectionBrackets.resize(3);
-	selectionBrackets[0].push_back(fw().data->loadImage("city/vehicle-brackets-f0.png"));
-	selectionBrackets[0].push_back(fw().data->loadImage("city/vehicle-brackets-f1.png"));
-	selectionBrackets[0].push_back(fw().data->loadImage("city/vehicle-brackets-f2.png"));
-	selectionBrackets[0].push_back(fw().data->loadImage("city/vehicle-brackets-f3.png"));
-	selectionBrackets[1].push_back(fw().data->loadImage("city/vehicle-brackets-s0.png"));
-	selectionBrackets[1].push_back(fw().data->loadImage("city/vehicle-brackets-s1.png"));
-	selectionBrackets[1].push_back(fw().data->loadImage("city/vehicle-brackets-s2.png"));
-	selectionBrackets[1].push_back(fw().data->loadImage("city/vehicle-brackets-s3.png"));
-	selectionBrackets[2].push_back(fw().data->loadImage("city/vehicle-brackets-h0.png"));
-	selectionBrackets[2].push_back(fw().data->loadImage("city/vehicle-brackets-h1.png"));
-	selectionBrackets[2].push_back(fw().data->loadImage("city/vehicle-brackets-h2.png"));
-	selectionBrackets[2].push_back(fw().data->loadImage("city/vehicle-brackets-h3.png"));
+	for (int i = 72; i < 76; i++)
+	{
+		selectionBrackets[0].push_back(fw().data->loadImage(format(
+		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
+		    i)));
+	}
+	for (int i = 76; i < 80; i++)
+	{
+		selectionBrackets[2].push_back(fw().data->loadImage(format(
+		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
+		    i)));
+	}
+	for (int i = 80; i < 84; i++)
+	{
+		selectionBrackets[1].push_back(fw().data->loadImage(format(
+		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
+		    i)));
+	}
 
 	selectionImageFriendlySmall = fw().data->loadImage("battle/map-selection-small.png");
 	selectionImageFriendlyLarge = fw().data->loadImage("battle/map-selection-large.png");
@@ -56,7 +63,6 @@ CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratT
 
 	targetTacticalThisLevel = fw().data->loadImage("city/target.png");
 
-	// FIXME: Load from save last screen location?
 	setScreenCenterTile(screenCenterTile);
 };
 
@@ -68,18 +74,23 @@ void CityTileView::eventOccurred(Event *e)
 	{
 		switch (e->keyboard().KeyCode)
 		{
+			case SDLK_F2:
+			{
+				DEBUG_SHOW_ROAD_PATHFINDING = !DEBUG_SHOW_ROAD_PATHFINDING;
+				return;
+			}
 			case SDLK_F3:
 			{
-				DEBUG_SHOW_WALK_TYPE++;
-				DEBUG_SHOW_WALK_TYPE = DEBUG_SHOW_WALK_TYPE % 6;
-				if (DEBUG_SHOW_WALK_TYPE)
+				DEBUG_SHOW_MISC_TYPE++;
+				DEBUG_SHOW_MISC_TYPE = DEBUG_SHOW_MISC_TYPE % 6;
+				if (DEBUG_SHOW_MISC_TYPE)
 				{
 					DEBUG_SHOW_SLOPES = false;
 					DEBUG_SHOW_ALIEN_CREW = false;
 					DEBUG_SHOW_TUBE = false;
 					DEBUG_SHOW_ROADS = false;
 				}
-				LogWarning("Debug walk type display set to %s", DEBUG_SHOW_WALK_TYPE);
+				LogWarning("Debug walk type display set to %s", DEBUG_SHOW_MISC_TYPE);
 				return;
 			}
 			case SDLK_F5:
@@ -211,6 +222,9 @@ void CityTileView::render()
 	{
 		selectionFrameTicksAccumulated++;
 		selectionFrameTicksAccumulated %= 2 * SELECTION_FRAME_ANIMATION_DELAY;
+		portalImageTicksAccumulated++;
+		portalImageTicksAccumulated %=
+		    state.city_common_image_list->portalStrategic.size() * PORTAL_FRAME_ANIMATION_DELAY;
 	}
 
 	// screenOffset.x/screenOffset.y is the 'amount added to the tile coords' - so we want
@@ -310,9 +324,9 @@ void CityTileView::render()
 									{
 										auto s = std::static_pointer_cast<TileObjectScenery>(obj)
 										             ->getOwner();
-										if (DEBUG_SHOW_WALK_TYPE)
+										if (DEBUG_SHOW_MISC_TYPE)
 										{
-											switch (DEBUG_SHOW_WALK_TYPE)
+											switch (DEBUG_SHOW_MISC_TYPE)
 											{
 												case 5:
 													visible = s->type->basement;
@@ -325,12 +339,12 @@ void CityTileView::render()
 												case 1:
 												case 0:
 													visible = (int)s->type->walk_mode ==
-													          DEBUG_SHOW_WALK_TYPE - 1;
+													          DEBUG_SHOW_MISC_TYPE - 1;
 													break;
 												default:
 													LogError("Unhandled DEBUG_SHOW_WALK_TYPE %d",
-													         DEBUG_SHOW_WALK_TYPE);
-													DEBUG_SHOW_WALK_TYPE = 0;
+													         DEBUG_SHOW_MISC_TYPE);
+													DEBUG_SHOW_MISC_TYPE = 0;
 													break;
 											}
 										}
@@ -427,8 +441,8 @@ void CityTileView::render()
 
 				int idx = vehiclesBracketsIndex[obj];
 				r.draw(selectionBrackets[idx][0], {pLeft.x - 2.0f, pTop.y - 2.0f});
-				r.draw(selectionBrackets[idx][1], {pLeft.x - 2.0f, pBottom.y - 2.0f});
-				r.draw(selectionBrackets[idx][2], {pRight.x - 2.0f, pTop.y - 2.0f});
+				r.draw(selectionBrackets[idx][1], {pRight.x - 2.0f, pTop.y - 2.0f});
+				r.draw(selectionBrackets[idx][2], {pLeft.x - 2.0f, pBottom.y - 2.0f});
 				r.draw(selectionBrackets[idx][3], {pRight.x - 2.0f, pBottom.y - 2.0f});
 			}
 		}
@@ -625,7 +639,8 @@ void CityTileView::render()
 					continue;
 				}
 				r.draw(state.city_common_image_list->agentStrategic,
-				       tileToOffsetScreenCoords(a.second->position) - Vec2<float>{4, 4});
+				       tileToOffsetScreenCoords(a.second->position) -
+				           (Vec2<float>)state.city_common_image_list->agentStrategic->size / 2.0f);
 				// Draw unit selection brackets
 				if (selectionFrameTicksAccumulated / SELECTION_FRAME_ANIMATION_DELAY)
 				{
@@ -679,6 +694,16 @@ void CityTileView::render()
 						}
 					}
 				}
+			}
+			// Draw portals
+			for (auto &p : state.current_city->portals)
+			{
+				auto portalImage =
+				    state.city_common_image_list->portalStrategic[portalImageTicksAccumulated /
+				                                                  PORTAL_FRAME_ANIMATION_DELAY];
+				r.draw(portalImage,
+				       tileToOffsetScreenCoords(p->position) -
+				           (Vec2<float>)portalImage->size / 2.0f);
 			}
 
 			// Alien debug display

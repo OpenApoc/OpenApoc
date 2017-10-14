@@ -1890,7 +1890,7 @@
       <background>xcom3/ufopaedi/l-title.pcx</background>
       <entries>
         <entry>
-          <key>PAEDIAENTRY_ALIENS</key>
+          <key>PAEDIAENTRY_ALIEN</key>
           <value>
             <title>Alien</title>
             <description>The Alien scare first began on 7th March, 2084 when a strange Dimension Gate appeared in the skies above Mega-Primus. During the following days strange UFOs came and went, but they did not appear to attack anything or abduct anyone. It was only when strange reports of Alien monsters lurking in the recesses of city buildings filtered through to the senatorial security committee that the plan to enlist X-COM was proposed.</description>

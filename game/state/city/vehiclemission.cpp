@@ -5,23 +5,23 @@
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "framework/sound.h"
-#include "game/state/base/base.h"
+#include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
-#include "game/state/city/citycommonsamplelist.h"
-#include "game/state/city/doodad.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
-#include "game/state/organisation.h"
-#include "game/state/rules/scenery_tile_type.h"
-#include "game/state/rules/vehicle_type.h"
-#include "game/state/tileview/tile.h"
-#include "game/state/tileview/tileobject_doodad.h"
-#include "game/state/tileview/tileobject_scenery.h"
-#include "game/state/tileview/tileobject_shadow.h"
-#include "game/state/tileview/tileobject_vehicle.h"
+#include "game/state/rules/city/citycommonsamplelist.h"
+#include "game/state/rules/city/scenerytiletype.h"
+#include "game/state/rules/city/vehicletype.h"
+#include "game/state/shared/doodad.h"
+#include "game/state/shared/organisation.h"
+#include "game/state/tilemap/tilemap.h"
+#include "game/state/tilemap/tileobject_doodad.h"
+#include "game/state/tilemap/tileobject_scenery.h"
+#include "game/state/tilemap/tileobject_shadow.h"
+#include "game/state/tilemap/tileobject_vehicle.h"
 #include "library/strings_format.h"
 #include <glm/glm.hpp>
 
@@ -379,6 +379,15 @@ VehicleMission *VehicleMission::gotoPortal(GameState &, Vehicle &, Vec3<int> tar
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::GotoPortal;
 	mission->targetLocation = target;
+	return mission;
+}
+
+VehicleMission *VehicleMission::departToSpace(GameState &state, Vehicle &v)
+{
+	auto *mission = new VehicleMission();
+	mission->type = MissionType::DepartToSpace;
+	mission->pickNearest = true;
+	mission->targetLocation = getRandomMapEdgeCoordinates(state, v.city);
 	return mission;
 }
 
@@ -1141,6 +1150,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 		case MissionType::SelfDestruct:
 		case MissionType::RestartNextMission:
 		case MissionType::GotoPortal:
+		case MissionType::DepartToSpace:
 		case MissionType::OfferService:
 		case MissionType::InfiltrateSubvert:
 		{
@@ -1181,11 +1191,6 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 		// Port out or path to portal
 		case MissionType::GotoPortal:
 		{
-			auto vTile = v.tileObject;
-			if (!vTile)
-			{
-				return;
-			}
 			if (finished)
 			{
 				// Port out
@@ -1205,10 +1210,18 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 					}
 				}
 			}
-			else if (this->currentPlannedPath.empty())
+			return;
+		}
+		// Port out or path to space
+		case MissionType::DepartToSpace:
+		{
+			if (finished)
 			{
-				// Forever path to portal, eventually it will work
-				setPathTo(state, v, targetLocation, getDefaultIterationCount(v));
+				v.die(state, true);
+			}
+			if (takeOffCheck(state, v))
+			{
+				return;
 			}
 			return;
 		}
@@ -1283,9 +1296,11 @@ bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 	}
 	switch (this->type)
 	{
-		case MissionType::GotoPortal:
 		case MissionType::GotoLocation:
 		case MissionType::Crash:
+		// Note that GotoPortal/DepartToSpace never has planned path but still checks for target loc
+		case MissionType::DepartToSpace:
+		case MissionType::GotoPortal:
 		{
 			auto vTile = v.tileObject;
 			if (vTile && this->currentPlannedPath.empty() &&
@@ -1307,7 +1322,8 @@ bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 				LogInfo("Vehicle attack mission: Target not on the map");
 				return true;
 			}
-			if (!attackCrashed && t->crashed)
+			// Still attack falling vehicles but not sliding or crashed
+			if (!attackCrashed && (t->crashed || t->sliding))
 			{
 				return true;
 			}
@@ -1638,11 +1654,26 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					missionCounter++;
 					return;
 				}
+				case 2:
+				{
+					LogError("Starting a complete Land mission?");
+					return;
+				}
+				default:
+				{
+					LogError("Unhandled missionCounter in %s", getName());
+					return;
+				}
 			}
 		}
+		case MissionType::DepartToSpace:
+			if (v.type->isGround())
+			{
+				LogError("Ground vehcile on depart to space mission!? WTF!?");
+			}
+		// Intentional fall-through
 		case MissionType::GotoPortal:
 		{
-			// Ground can't go to portal
 			if (v.type->isGround())
 			{
 				cancelled = true;
@@ -1650,8 +1681,9 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			if (!isFinished(state, v))
 			{
-				LogInfo("Vehicle mission %s: Pathing to portal at %s", getName(), targetLocation);
-				v.addMission(state, VehicleMission::gotoLocation(state, v, targetLocation));
+				LogInfo("Vehicle mission %s: Pathing to %s", getName(), targetLocation);
+				v.addMission(state, VehicleMission::gotoLocation(state, v, targetLocation,
+				                                                 allowTeleporter, pickNearest));
 			}
 			return;
 		}
@@ -2059,7 +2091,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 							}
 							else
 							{
-								targetVehicle->die(state, nullptr);
+								targetVehicle->die(state, true);
 							}
 							return;
 						}
@@ -2135,14 +2167,20 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						else
 						{
 							// Was a temporal ferry, vanish now
-							v.die(state, nullptr, true);
+							v.die(state, true);
 						}
 					}
 					return;
 				}
-				default:
-					// Mission complete, nothing to do
+				case 2:
+				{
 					return;
+				}
+				default:
+				{
+					LogError("Unhandled missionCounter in %s", getName());
+					return;
+				}
 			}
 		}
 		case MissionType::InfiltrateSubvert:
@@ -2244,13 +2282,18 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					// FIXME: Handle subversion
 					if (subvert)
 					{
-						LogError("Implement subversion graphics!");
+						auto doodad = v.city->placeDoodad(
+						    StateRef<DoodadType>{&state, "DOODAD_11_SUBVERSION_BIG"},
+						    v.tileObject->getPosition() - Vec3<float>{0, 0, 0.5f});
+						v.addMission(state, VehicleMission::snooze(state, v, doodad->lifetime));
 					}
-					auto doodad = v.city->placeDoodad(
-					    StateRef<DoodadType>{&state, "DOODAD_14_INFILTRATION_BIG"},
-					    v.tileObject->getPosition() - Vec3<float>{0, 0, 0.5f});
-
-					v.addMission(state, VehicleMission::snooze(state, v, doodad->lifetime));
+					else
+					{
+						auto doodad = v.city->placeDoodad(
+						    StateRef<DoodadType>{&state, "DOODAD_14_INFILTRATION_BIG"},
+						    v.tileObject->getPosition() - Vec3<float>{0, 0, 0.5f});
+						v.addMission(state, VehicleMission::snooze(state, v, doodad->lifetime));
+					}
 					missionCounter++;
 					return;
 				}
@@ -2278,6 +2321,10 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 							fw().pushEvent(new GameDefenseEvent(GameEventType::DefendTheBase,
 							                                    targetBuilding->base, v.owner));
 						}
+						else
+						{
+							targetBuilding->alienMovement(state);
+						}
 					}
 					// Retreat
 					v.addMission(state, VehicleMission::gotoPortal(state, v), true);
@@ -2285,14 +2332,22 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					missionCounter++;
 					return;
 				}
-				default:
+				case 2:
+				{
 					// Should never reach this, as we're gone through portal by the end of this
 					// mision
 					LogError("Starting a completed Infiltration mission?");
 					return;
+				}
+				default:
+				{
+					LogError("Unhandled missionCounter in %s", getName());
+					return;
+				}
 			}
 		}
 		case MissionType::SelfDestruct:
+		{
 			if (v.smokeDoodad)
 			{
 				LogError("Restarting self destruct?");
@@ -2303,6 +2358,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				                                    v.position + Vec3<float>{0.0f, 0.0f, 0.25f});
 			}
 			return;
+		}
 		case MissionType::RestartNextMission:
 		case MissionType::Snooze:
 			// No setup
@@ -2512,12 +2568,41 @@ int VehicleMission::getDefaultIterationCount(Vehicle &v)
 	return (v.type->type == VehicleType::Type::Road) ? 100 : 50;
 }
 
+Vec3<float> VehicleMission::getRandomMapEdgeCoordinates(GameState &state, StateRef<City> city)
+{
+	if (randBool(state.rng))
+	{
+		std::uniform_int_distribution<int> xPos(0, city->map->size.x - 1);
+		if (randBool(state.rng))
+		{
+			return {xPos(state.rng), 0, city->map->size.z - 1};
+		}
+		else
+		{
+			return {xPos(state.rng), city->map->size.y - 1, city->map->size.z - 1};
+		}
+	}
+	else
+	{
+		std::uniform_int_distribution<int> yPos(0, city->map->size.y - 1);
+		if (randBool(state.rng))
+		{
+			return {0, yPos(state.rng), city->map->size.z - 1};
+		}
+		else
+		{
+			return {city->map->size.x - 1, yPos(state.rng), city->map->size.z - 1};
+		}
+	}
+}
+
 UString VehicleMission::getName()
 {
 	static const std::map<VehicleMission::MissionType, UString> TypeMap = {
 	    {MissionType::GotoLocation, "GotoLocation"},
 	    {MissionType::GotoBuilding, "GotoBuilding"},
-	    {MissionType::GotoPortal, "GotoBuilding"},
+	    {MissionType::GotoPortal, "GotoPortal"},
+	    {MissionType::DepartToSpace, "DepartToSpace"},
 	    {MissionType::FollowVehicle, "FollowVehicle"},
 	    {MissionType::RecoverVehicle, "RecoverVehicle"},
 	    {MissionType::AttackVehicle, "AttackVehicle"},
@@ -2576,6 +2661,9 @@ UString VehicleMission::getName()
 			name += format(" %s", this->targetLocation);
 			break;
 		case MissionType::GotoPortal:
+			name += format(" %s", this->targetLocation);
+			break;
+		case MissionType::DepartToSpace:
 			name += format(" %s", this->targetLocation);
 			break;
 		case MissionType::Teleport:

@@ -341,7 +341,7 @@ class Spritesheet
 		}
 		// Required a new page
 		LogInfo("Creating spritesheet page %d", (int)pages.size());
-		auto page = mksp<SpritesheetPage>(pages.size(), page_size, node_count);
+		auto page = mksp<SpritesheetPage>((int)pages.size(), page_size, node_count);
 		auto ret = page->addEntry(entry);
 		if (!ret)
 		{

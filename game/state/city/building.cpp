@@ -1,15 +1,15 @@
 #include "game/state/city/building.h"
 #include "framework/configfile.h"
 #include "framework/framework.h"
-#include "game/state/base/base.h"
 #include "game/state/city/agentmission.h"
+#include "game/state/city/base.h"
 #include "game/state/city/city.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
-#include "game/state/organisation.h"
+#include "game/state/shared/organisation.h"
 
 // Uncomment to make cargo system output warnings
 //#define DEBUG_VERBOSE_CARGO_SYSTEM
@@ -771,6 +771,8 @@ void Building::detect(GameState &state, bool forced)
 
 void Building::alienGrowth(GameState &state)
 {
+	// Aliens try to move
+	alienMovement(state);
 	// Calculate changes to building's crew
 	std::map<StateRef<AgentType>, int> change_crew;
 	for (auto &pair : current_crew)
@@ -820,6 +822,20 @@ void Building::alienGrowth(GameState &state)
 	detected = detected && hasAliens();
 }
 
+void Building::alienMovement(GameState &state)
+{
+	// Run once when crew landed and once every hour after grow
+	// Pick 15 intact buildings within range of 15 tiles (counting from center to center)
+	// Pick one random of them
+	// For every alien calculate move percent as:
+	//   alien's move chance + random 0..30
+	// Calculate amount of moving aliens
+	// Chance to move is:
+	//   15 + 3 * amount + 20 (if owner is friendly+ to aliens)
+	// If success then everybody moves according to percentage
+	LogWarning("Implement alien movement");
+}
+
 void Building::underAttack(GameState &state, StateRef<Organisation> attacker)
 {
 	if (owner->isRelatedTo(attacker) == Organisation::Relation::Hostile)
@@ -856,6 +872,20 @@ void Building::collapse(GameState &state)
 	for (auto &s : sceneryToCollapse)
 	{
 		s->collapse(state);
+	}
+}
+
+void Building::buildingPartChange(Vec3<int> part, bool intact)
+{
+	// FIXME: Implement base / building dying when enough is destroyed
+	// Implement agents dying when building dies
+	if (intact)
+	{
+		buildingParts.insert(part);
+	}
+	else
+	{
+		buildingParts.erase(part);
 	}
 }
 

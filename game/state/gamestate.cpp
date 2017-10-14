@@ -4,40 +4,40 @@
 #include "framework/framework.h"
 #include "framework/sound.h"
 #include "framework/trace.h"
-#include "game/state/aequipment.h"
-#include "game/state/base/base.h"
-#include "game/state/base/facility.h"
 #include "game/state/battle/battle.h"
-#include "game/state/battle/battlecommonsamplelist.h"
-#include "game/state/battle/battlemap.h"
-#include "game/state/battle/battlemappart_type.h"
-#include "game/state/battle/battleunitanimationpack.h"
-#include "game/state/battle/battleunitimagepack.h"
-#include "game/state/city/baselayout.h"
+#include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
-#include "game/state/city/citycommonimagelist.h"
-#include "game/state/city/citycommonsamplelist.h"
-#include "game/state/city/doodad.h"
-#include "game/state/city/projectile.h"
+#include "game/state/city/facility.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gameevent.h"
 #include "game/state/gametime.h"
 #include "game/state/message.h"
-#include "game/state/organisation.h"
-#include "game/state/rules/aequipment_type.h"
-#include "game/state/rules/damage.h"
-#include "game/state/rules/doodad_type.h"
-#include "game/state/rules/scenery_tile_type.h"
-#include "game/state/rules/ufo_growth.h"
-#include "game/state/rules/ufo_incursion.h"
-#include "game/state/rules/vammo_type.h"
-#include "game/state/rules/vehicle_type.h"
-#include "game/state/tileview/tile.h"
-#include "game/state/tileview/tileobject_vehicle.h"
-#include "game/state/ufopaedia.h"
+#include "game/state/rules/aequipmenttype.h"
+#include "game/state/rules/battle/battlecommonsamplelist.h"
+#include "game/state/rules/battle/battlemap.h"
+#include "game/state/rules/battle/battlemapparttype.h"
+#include "game/state/rules/battle/battleunitanimationpack.h"
+#include "game/state/rules/battle/battleunitimagepack.h"
+#include "game/state/rules/battle/damage.h"
+#include "game/state/rules/city/baselayout.h"
+#include "game/state/rules/city/citycommonimagelist.h"
+#include "game/state/rules/city/citycommonsamplelist.h"
+#include "game/state/rules/city/scenerytiletype.h"
+#include "game/state/rules/city/ufogrowth.h"
+#include "game/state/rules/city/ufoincursion.h"
+#include "game/state/rules/city/ufopaedia.h"
+#include "game/state/rules/city/vammotype.h"
+#include "game/state/rules/city/vehicletype.h"
+#include "game/state/rules/doodadtype.h"
+#include "game/state/shared/aequipment.h"
+#include "game/state/shared/doodad.h"
+#include "game/state/shared/organisation.h"
+#include "game/state/shared/projectile.h"
+#include "game/state/tilemap/tilemap.h"
+#include "game/state/tilemap/tileobject_vehicle.h"
 #include "library/strings_format.h"
 #include <random>
 
@@ -150,6 +150,7 @@ void GameState::initState()
 		{
 			if (c.first == "CITYMAP_HUMAN")
 			{
+				city->fillRoadSegmentMap(*this);
 				city->initialSceneryLinkUp();
 			}
 		}
@@ -236,6 +237,15 @@ void GameState::applyMods()
 		{
 			e.second->crash_health = crashVehicles ? e.second->health / 7 : 0;
 		}
+	}
+}
+
+void GameState::setCurrentCity(StateRef<City> city)
+{
+	current_city = city;
+	for (auto &u : current_city->researchUnlock)
+	{
+		u->forceComplete();
 	}
 }
 
@@ -395,11 +405,57 @@ void GameState::validateScenery()
 	{
 		for (auto &sc : c.second->tile_types)
 		{
-			if (sc.second->getATVMode() == SceneryTileType::WalkMode::Onto &&
-			    sc.second->height == 0)
+			auto thisSc = StateRef<SceneryTileType>{this, sc.first};
+			std::set<StateRef<SceneryTileType>> seenTypes;
+			while (thisSc->damagedTile)
 			{
-				/*LogError("City %s Scenery %s has no height and WalkMode::Onto? Missing voxelmap?",
-				         c.first, sc.first);*/
+				seenTypes.insert(thisSc);
+				bool roadAlive = false;
+				bool roadDead = false;
+				bool newRoad = false;
+				if (thisSc->tile_type != SceneryTileType::TileType::Road &&
+				    thisSc->damagedTile->tile_type == SceneryTileType::TileType::Road)
+				{
+					newRoad = true;
+				}
+				else
+				{
+					for (int i = 0; i < 4; i++)
+					{
+						if (thisSc->connection[i] &&
+						    thisSc->connection[i] == thisSc->damagedTile->connection[i])
+						{
+							roadAlive = true;
+						}
+						if (thisSc->connection[i] &&
+						    thisSc->connection[i] != thisSc->damagedTile->connection[i])
+						{
+							roadDead = true;
+						}
+						if (!thisSc->connection[i] &&
+						    thisSc->connection[i] != thisSc->damagedTile->connection[i])
+						{
+							newRoad = true;
+						}
+					}
+				}
+				if (newRoad || (roadAlive && roadDead))
+				{
+					LogError("ROAD MUTATION: In %s when damaged from %s to %s roads go [%d%d%d%d] "
+					         "to [%d%d%d%d]",
+					         sc.first, thisSc.id, thisSc->damagedTile.id,
+					         (int)thisSc->connection[0], (int)thisSc->connection[1],
+					         (int)thisSc->connection[2], (int)thisSc->connection[3],
+					         (int)thisSc->damagedTile->connection[0],
+					         (int)thisSc->damagedTile->connection[1],
+					         (int)thisSc->damagedTile->connection[2],
+					         (int)thisSc->damagedTile->connection[3]);
+				}
+				if (seenTypes.find(thisSc->damagedTile) != seenTypes.end())
+				{
+					break;
+				}
+				thisSc = thisSc->damagedTile;
 			}
 		}
 	}
@@ -469,8 +525,15 @@ void GameState::startGame()
 
 			// Finally stay in bounds
 			entry.second = clamp(entry.second, -100.0f, 100.0f);
+
+			// Set player reverse relationships
+			if (entry.first == getPlayer())
+			{
+				getPlayer()->current_relations[{this, pair.first}] = entry.second;
+			}
 		}
 	}
+
 	// Setup buildings
 	for (auto &pair : this->cities)
 	{
@@ -521,6 +584,8 @@ void GameState::startGame()
 
 	gameTime = GameTime::midday();
 
+	updateEconomy();
+
 	newGame = true;
 	firstDetection = true;
 }
@@ -531,7 +596,7 @@ void GameState::fillPlayerStartingProperty()
 	// Create the intial starting base
 	// Randomly shuffle buildings until we find one with a base layout
 	sp<City> humanCity = this->cities["CITYMAP_HUMAN"];
-	this->current_city = {this, humanCity};
+	setCurrentCity({this, humanCity});
 
 	std::vector<sp<Building>> buildingsWithBases;
 	for (auto &b : humanCity->buildings)
@@ -633,6 +698,61 @@ void GameState::fillPlayerStartingProperty()
 				}
 				it++;
 			}
+		}
+	}
+}
+
+void OpenApoc::GameState::updateEconomy()
+{
+	std::list<UString> newItems;
+
+	for (auto &v : vehicle_types)
+	{
+		if (economy.find(v.first) != economy.end())
+		{
+			if (economy[v.first].update(*this, v.second->manufacturer == getPlayer()))
+			{
+				newItems.push_back(v.second->name);
+			}
+		}
+	}
+	for (auto &ve : vehicle_equipment)
+	{
+		if (economy.find(ve.first) != economy.end())
+		{
+			if (economy[ve.first].update(*this, ve.second->manufacturer == getPlayer()))
+			{
+				newItems.push_back(ve.second->name);
+			}
+		}
+	}
+	for (auto &va : vehicle_ammo)
+	{
+		if (economy.find(va.first) != economy.end())
+		{
+			if (economy[va.first].update(*this, va.second->manufacturer == getPlayer()))
+			{
+				newItems.push_back(va.second->name);
+			}
+		}
+	}
+	for (auto &ae : agent_equipment)
+	{
+		if (economy.find(ae.first) != economy.end())
+		{
+			if (economy[ae.first].update(*this, ae.second->manufacturer == getPlayer()))
+			{
+				newItems.push_back(ae.second->name);
+			}
+		}
+	}
+
+	if (!newItems.empty())
+	{
+		LogWarning("Notify that new items are here!");
+		for (auto &s : newItems)
+		{
+			LogWarning("%s", s);
 		}
 	}
 }
@@ -926,6 +1046,7 @@ void GameState::updateEndOfWeek()
 			}
 		}
 	}
+	updateEconomy();
 }
 
 void GameState::updateTurbo()

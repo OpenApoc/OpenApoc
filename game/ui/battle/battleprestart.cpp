@@ -10,13 +10,13 @@
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
-#include "game/state/aequipment.h"
-#include "game/state/agent.h"
-#include "game/state/battle/battlecommonimagelist.h"
 #include "game/state/gamestate.h"
-#include "game/ui/base/aequipscreen.h"
+#include "game/state/rules/battle/battlecommonimagelist.h"
+#include "game/state/shared/aequipment.h"
+#include "game/state/shared/agent.h"
 #include "game/ui/battle/battleview.h"
-#include "game/ui/controlgenerator.h"
+#include "game/ui/components/controlgenerator.h"
+#include "game/ui/general/aequipscreen.h"
 #include "game/ui/general/loadingscreen.h"
 #include <cmath>
 

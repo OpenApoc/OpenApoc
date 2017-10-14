@@ -11,12 +11,12 @@
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
-#include "game/state/base/base.h"
-#include "game/state/base/facility.h"
+#include "game/state/city/base.h"
 #include "game/state/city/building.h"
+#include "game/state/city/facility.h"
 #include "game/state/gamestate.h"
 #include "game/ui/base/researchselect.h"
-#include "game/ui/controlgenerator.h"
+#include "game/ui/components/controlgenerator.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc
@@ -37,8 +37,10 @@ void ResearchScreen::changeBase(sp<Base> newBase)
 {
 	BaseStage::changeBase(newBase);
 
-	// FIXME: Should only reset if selected_lab doesn't belong to current base
-	this->selected_lab = nullptr;
+	// first lab in case we have no selected lab
+	sp<Facility> firstLab;
+	// wether selected lab is in new list
+	bool labInList = false;
 	this->labs.clear();
 	for (auto &facility : this->state->current_base->facilities)
 	{
@@ -48,12 +50,25 @@ void ResearchScreen::changeBase(sp<Base> newBase)
 		     facility->type->capacityType == FacilityType::Capacity::Workshop))
 		{
 			this->labs.push_back(facility);
+			if (!firstLab)
+			{
+				firstLab = facility;
+			}
 			if (!this->selected_lab)
 			{
 				this->selected_lab = facility;
 				this->viewFacility = this->selected_lab;
 			}
+			if (selected_lab == facility)
+			{
+				labInList = true;
+			}
 		}
+	}
+	if (!labInList && firstLab)
+	{
+		this->selected_lab = firstLab;
+		this->viewFacility = firstLab;
 	}
 
 	auto labList = form->findControlTyped<ListBox>("LIST_LABS");
@@ -64,6 +79,10 @@ void ResearchScreen::changeBase(sp<Base> newBase)
 		graphic->AutoSize = true;
 		graphic->setData(facility);
 		labList->addItem(graphic);
+		if (facility == selected_lab)
+		{
+			labList->setSelected(graphic);
+		}
 	}
 
 	setCurrentLabInfo();
@@ -299,15 +318,15 @@ void ResearchScreen::setCurrentLabInfo()
 			if (!assigned_to_current_lab)
 				continue;
 		}
-		auto agentControl = ControlGenerator::createLargeAgentControl(*state, agent.second, true);
-
 		if (assigned_to_current_lab)
 		{
-			assignedAgentList->addItem(agentControl);
+			assignedAgentList->addItem(ControlGenerator::createLargeAgentControl(
+			    *state, agent.second, true, UnitSelectionState::NA, false, true));
 		}
 		else
 		{
-			unassignedAgentList->addItem(agentControl);
+			unassignedAgentList->addItem(ControlGenerator::createLargeAgentControl(
+			    *state, agent.second, true, UnitSelectionState::NA, false, false));
 		}
 	}
 	assignedAgentList->ItemSize = agentEntryHeight;
@@ -376,6 +395,8 @@ void ResearchScreen::updateProgressInfo()
 		auto completionPercent = form->findControlTyped<Label>("TEXT_PROJECT_COMPLETION");
 		completionPercent->setText("");
 	}
+	auto manufacture_bg = form->findControlTyped<Graphic>("MANUFACTURE_BG");
+
 	auto manufacturing_scrollbar = form->findControlTyped<ScrollBar>("MANUFACTURE_QUANTITY_SLIDER");
 	auto manufacturing_scroll_left =
 	    form->findControlTyped<GraphicButton>("MANUFACTURE_QUANTITY_DOWN");
@@ -386,6 +407,7 @@ void ResearchScreen::updateProgressInfo()
 	if (this->selected_lab->lab->current_project &&
 	    this->selected_lab->lab->current_project->type == ResearchTopic::Type::Engineering)
 	{
+		manufacture_bg->setVisible(true);
 		manufacturing_ntomake->setVisible(true);
 		manufacturing_quantity->setVisible(true);
 		manufacturing_scrollbar->setVisible(true);
@@ -396,6 +418,7 @@ void ResearchScreen::updateProgressInfo()
 	}
 	else
 	{
+		manufacture_bg->setVisible(false);
 		manufacturing_ntomake->setVisible(false);
 		manufacturing_quantity->setVisible(false);
 		manufacturing_scrollbar->setVisible(false);

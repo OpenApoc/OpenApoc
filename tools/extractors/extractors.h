@@ -1,7 +1,7 @@
 #pragma once
 
-#include "game/state/battle/battlemappart_type.h"
-#include "game/state/battle/battleunitanimationpack.h"
+#include "game/state/rules/battle/battlemapparttype.h"
+#include "game/state/rules/battle/battleunitanimationpack.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
@@ -99,6 +99,7 @@ class InitialGameStateExtractor
 	void extractResearch(GameState &state) const;
 	void extractAgentEquipment(GameState &state) const;
 	void extractDoodads(GameState &state) const;
+	void extractEconomy(GameState &state) const;
 
 	void extractBattlescapeMap(GameState &state, const std::vector<OpenApoc::UString> &paths) const;
 	void extractBattlescapeMapFromPath(GameState &state, const UString dirName,

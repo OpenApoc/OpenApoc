@@ -1,13 +1,13 @@
 #include "framework/data.h"
 #include "framework/framework.h"
-#include "game/state/agent.h"
-#include "game/state/battle/battlecommonimagelist.h"
-#include "game/state/battle/battlecommonsamplelist.h"
-#include "game/state/city/citycommonimagelist.h"
-#include "game/state/city/citycommonsamplelist.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/aequipment_type.h"
-#include "game/state/rules/damage.h"
+#include "game/state/rules/aequipmenttype.h"
+#include "game/state/rules/battle/battlecommonimagelist.h"
+#include "game/state/rules/battle/battlecommonsamplelist.h"
+#include "game/state/rules/battle/damage.h"
+#include "game/state/rules/city/citycommonimagelist.h"
+#include "game/state/rules/city/citycommonsamplelist.h"
+#include "game/state/shared/agent.h"
 #include "library/strings_format.h"
 #include "library/voxel.h"
 #include "tools/extractors/common/tacp.h"
@@ -34,7 +34,13 @@ void InitialGameStateExtractor::extractSharedCityResources(GameState &state) con
 	    fw().data->loadImage(format("PCKSTRAT:xcom3/ufodata/stratmap.pck:xcom3/ufodata/"
 	                                "stratmap.tab:%d",
 	                                571));
-
+	for (int i = 586; i <= 589; i++)
+	{
+		state.city_common_image_list->portalStrategic.push_back(
+		    fw().data->loadImage(format("PCKSTRAT:xcom3/ufodata/stratmap.pck:xcom3/ufodata/"
+		                                "stratmap.tab:%d",
+		                                i)));
+	}
 	state.city_common_image_list->projectileVoxelMap =
 	    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
 	for (int i = 6; i < 10; i++)

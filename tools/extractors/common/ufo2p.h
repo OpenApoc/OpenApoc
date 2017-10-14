@@ -1,10 +1,10 @@
 #pragma once
 
-#include "game/state/organisation.h"
-#include "game/state/rules/facility_type.h"
-#include "game/state/rules/vammo_type.h"
-#include "game/state/rules/vehicle_type.h"
-#include "game/state/rules/vequipment_type.h"
+#include "game/state/rules/city/facilitytype.h"
+#include "game/state/rules/city/vammotype.h"
+#include "game/state/rules/city/vehicletype.h"
+#include "game/state/rules/city/vequipmenttype.h"
+#include "game/state/shared/organisation.h"
 #include "tools/extractors/common/aequipment.h"
 #include "tools/extractors/common/agent.h"
 #include "tools/extractors/common/audio.h"
@@ -14,6 +14,7 @@
 #include "tools/extractors/common/canonstring.h"
 #include "tools/extractors/common/crew.h"
 #include "tools/extractors/common/datachunk.h"
+#include "tools/extractors/common/economy.h"
 #include "tools/extractors/common/facilities.h"
 #include "tools/extractors/common/organisations.h"
 #include "tools/extractors/common/research.h"
@@ -76,6 +77,10 @@ class UFO2P
 
 	std::unique_ptr<StrTab> facility_names;
 	std::unique_ptr<DataChunk<FacilityData>> facility_data;
+
+	std::unique_ptr<DataChunk<EconomyData>> economy_data1;
+	std::unique_ptr<DataChunk<EconomyData>> economy_data2;
+	std::unique_ptr<DataChunk<EconomyData>> economy_data3;
 
 	std::unique_ptr<DataChunk<SceneryMinimapColour>> scenery_minimap_colour;
 

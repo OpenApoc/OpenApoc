@@ -19,7 +19,7 @@
 #include "game/ui/general/mainmenu.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/savemenu.h"
-#include "game/ui/general/skirmish.h"
+#include "game/ui/skirmish/skirmish.h"
 #include <list>
 
 namespace OpenApoc
@@ -79,7 +79,7 @@ std::list<std::pair<UString, UString>> openApocList = {
     {"OpenApoc.NewFeature.AdditionalUnitIcons", "Display additional unit icons (fatal, psi)"},
     {"OpenApoc.NewFeature.AllowForceFiringParallel", "Allow force-firing parallel to the ground"},
     {"OpenApoc.NewFeature.RequireLOSToMaintainPsi", "(N) Require LOS to maintain psi attack"},
-    {"OpenApoc.NewFeature.AllowUnloadingClips", "Allow manually unloading clips from weapons"},
+    {"OpenApoc.NewFeature.AdvancedInventoryControls", "Allow unloading clips and quick equip"},
     {"OpenApoc.NewFeature.EnableAgentTemplates", "Enable agent equipment templates"},
     {"OpenApoc.NewFeature.FerryChecksRelationshipWhenBuying",
      "Relationship check for purchase delivery"},
@@ -98,6 +98,8 @@ std::list<std::pair<UString, UString>> openApocList = {
     {"OpenApoc.NewFeature.CrashingGroundVehicles", "Unsupported ground vehicles crash"},
     {"OpenApoc.NewFeature.OpenApocCityControls", "Improved city control scheme"},
     {"OpenApoc.NewFeature.CollapseRaidedBuilding", "Successful raid collapses building"},
+    {"OpenApoc.NewFeature.ScrambleOnUnintentionalHit",
+     "Any hit on hostile building provokes retaliation"},
     {"OpenApoc.Mod.StunHostileAction", "(M) Stunning hurts relationships"},
     {"OpenApoc.Mod.RaidHostileAction", "(M) Initiating raid hurts relationships"},
     {"OpenApoc.Mod.CrashingVehicles", "(M) Vehicles crash on low HP"},
@@ -292,8 +294,7 @@ void InGameOptions::eventOccurred(Event *e)
 				}
 
 				{
-					topic->started = true;
-					topic->man_hours_progress = topic->man_hours;
+					topic->forceComplete();
 					LogWarning("Topic \"%s\" marked as complete", r.first);
 				}
 			}

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game/state/battle/battlemappart_type.h"
+#include "game/state/rules/battle/battlemapparttype.h"
 #include "game/state/rules/supportedmappart.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"

@@ -1,13 +1,13 @@
 #include "game/state/battle/ai/unitaivanilla.h"
-#include "game/state/aequipment.h"
 #include "game/state/battle/ai/aidecision.h"
 #include "game/state/battle/ai/unitaihelper.h"
 #include "game/state/battle/battleunit.h"
-#include "game/state/battle/battleunitanimationpack.h"
 #include "game/state/gamestate.h"
 #include "game/state/gametime.h"
-#include "game/state/rules/damage.h"
-#include "game/state/tileview/tileobject_battleunit.h"
+#include "game/state/rules/battle/battleunitanimationpack.h"
+#include "game/state/rules/battle/damage.h"
+#include "game/state/shared/aequipment.h"
+#include "game/state/tilemap/tileobject_battleunit.h"
 
 namespace OpenApoc
 {

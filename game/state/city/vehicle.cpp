@@ -6,29 +6,29 @@
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "framework/sound.h"
-#include "game/state/base/base.h"
 #include "game/state/city/agentmission.h"
+#include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
-#include "game/state/city/citycommonsamplelist.h"
-#include "game/state/city/doodad.h"
-#include "game/state/city/projectile.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/city/vequipment.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
-#include "game/state/organisation.h"
-#include "game/state/rules/aequipment_type.h"
-#include "game/state/rules/scenery_tile_type.h"
-#include "game/state/rules/vammo_type.h"
-#include "game/state/rules/vehicle_type.h"
-#include "game/state/rules/vequipment_type.h"
-#include "game/state/tileview/collision.h"
-#include "game/state/tileview/tile.h"
-#include "game/state/tileview/tileobject_projectile.h"
-#include "game/state/tileview/tileobject_shadow.h"
-#include "game/state/tileview/tileobject_vehicle.h"
+#include "game/state/rules/aequipmenttype.h"
+#include "game/state/rules/city/citycommonsamplelist.h"
+#include "game/state/rules/city/scenerytiletype.h"
+#include "game/state/rules/city/vammotype.h"
+#include "game/state/rules/city/vehicletype.h"
+#include "game/state/rules/city/vequipmenttype.h"
+#include "game/state/shared/doodad.h"
+#include "game/state/shared/organisation.h"
+#include "game/state/shared/projectile.h"
+#include "game/state/tilemap/collision.h"
+#include "game/state/tilemap/tilemap.h"
+#include "game/state/tilemap/tileobject_projectile.h"
+#include "game/state/tilemap/tileobject_shadow.h"
+#include "game/state/tilemap/tileobject_vehicle.h"
 #include "library/sp.h"
 #include <glm/glm.hpp>
 #include <glm/gtx/vector_angle.hpp>
@@ -222,7 +222,8 @@ class FlyingVehicleMover : public VehicleMover
 
 		// Step 03: Find projectiles to dodge
 		// FIXME: Read vehicle engagement rules, instead for now chance to dodge is flat 80%
-		if (randBoundsExclusive(state.rng, 0, 100) < 80)
+		// and passives don't dodge at all
+		if (vehicle.type->aggressiveness > 0 && randBoundsExclusive(state.rng, 0, 100) < 80)
 		{
 			for (auto &p : state.current_city->projectiles)
 			{
@@ -423,8 +424,11 @@ class FlyingVehicleMover : public VehicleMover
 		}
 		if (vehicle.crashed)
 		{
-			updateCrashed(state, ticks);
-			return;
+			if (vehicle.type->type != VehicleType::Type::UFO)
+			{
+				updateCrashed(state, ticks);
+				return;
+			}
 		}
 		auto ticksToTurn = ticks;
 		auto ticksToMove = ticks;
@@ -920,7 +924,7 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 		// Fell outside map
 		if (!map.tileIsValid(newPosition))
 		{
-			vehicle.die(state, nullptr);
+			vehicle.die(state, false, nullptr);
 			return;
 		}
 
@@ -1127,20 +1131,13 @@ void VehicleMover::updateCrashed(GameState &state, unsigned int ticks)
 	auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
 	if (!presentScenery)
 	{
-		if (vehicle.type->type == VehicleType::Type::UFO)
+		vehicle.crashed = false;
+		if (vehicle.smokeDoodad)
 		{
-			vehicle.die(state);
+			vehicle.smokeDoodad->remove(state);
+			vehicle.smokeDoodad.reset();
 		}
-		else
-		{
-			vehicle.crashed = false;
-			if (vehicle.smokeDoodad)
-			{
-				vehicle.smokeDoodad->remove(state);
-				vehicle.smokeDoodad.reset();
-			}
-			vehicle.startFalling(state);
-		}
+		vehicle.startFalling(state);
 	}
 }
 
@@ -1206,7 +1203,7 @@ void VehicleMover::updateSliding(GameState &state, unsigned int ticks)
 		// Fell outside map
 		if (!map.tileIsValid(newPosition))
 		{
-			vehicle.die(state, nullptr);
+			vehicle.die(state, false, nullptr);
 			return;
 		}
 
@@ -1314,6 +1311,56 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 	if (carriedVehicle)
 	{
 		carriedVehicle->enterBuilding(state, b);
+		std::list<sp<VEquipment>> scrappedEquipment;
+		for (auto &e : carriedVehicle->equipment)
+		{
+			if (randBoundsExclusive(state.rng, 0, 100) >= FV_CHANCE_TO_RECOVER_EQUIPMENT)
+			{
+				scrappedEquipment.push_back(e);
+			}
+		}
+		for (auto &e : scrappedEquipment)
+		{
+			carriedVehicle->removeEquipment(e);
+			// FIXME: Sell using economy
+			carriedVehicle->owner->balance += 1000 * FV_SCRAPPED_COST_PERCENT / 100;
+			LogWarning("Sell scrap using economy");
+		}
+		if (randBoundsExclusive(state.rng, 0, 100) > FV_CHANCE_TO_RECOVER_VEHICLE)
+		{
+			while (!carriedVehicle->currentAgents.empty())
+			{
+				auto agent = *carriedVehicle->currentAgents.begin();
+				agent->enterBuilding(state, b);
+			}
+			if (b->base)
+			{
+				// Base, de-equip
+				for (auto &e : carriedVehicle->equipment)
+				{
+					// FIXME: When coding manufacture and other places I had to write X = X + 1
+					// because otherwise it would not add the first item!
+					// Ensure it works here with ++ and change everywhere else
+					// where it does X = X + 1 for base inventory
+					b->base->inventoryVehicleEquipment[e->type.id]++;
+				}
+			}
+			else
+			{
+				// No base, sell
+				for (auto &e : carriedVehicle->equipment)
+				{
+					// FIXME: Sell using economy
+					carriedVehicle->owner->balance += 1000;
+				}
+			}
+			// FIXME: Unload ammo and fuel
+			carriedVehicle->die(state, true);
+			// FIXME: Sell using economy
+			carriedVehicle->owner->balance += 10000 * FV_SCRAPPED_COST_PERCENT / 100;
+			LogWarning("Sell scrap using economy");
+			LogWarning("Event that vehicle scrapped?");
+		}
 		carriedVehicle.clear();
 	}
 	if (tileObject)
@@ -1596,7 +1643,7 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 	return destination;
 }
 
-void Vehicle::die(GameState &state, StateRef<Vehicle> attacker, bool silent)
+void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 {
 	health = 0;
 	if (!silent)
@@ -1690,14 +1737,30 @@ void Vehicle::crash(GameState &state, StateRef<Vehicle> attacker)
 	switch (type->type)
 	{
 		case VehicleType::Type::UFO:
+		{
 			setMission(state, VehicleMission::crashLand(state, *this));
 			addMission(state, VehicleMission::selfDestruct(state, *this), true);
 			break;
+		}
 		case VehicleType::Type::Flying:
 		case VehicleType::Type::ATV:
 		case VehicleType::Type::Road:
-			setMission(state, VehicleMission::selfDestruct(state, *this));
+		{
+			bool found = false;
+			for (auto &m : missions)
+			{
+				if (m->type == VehicleMission::MissionType::SelfDestruct)
+				{
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				setMission(state, VehicleMission::selfDestruct(state, *this));
+			}
 			break;
+		}
 	}
 }
 
@@ -2026,6 +2089,12 @@ void Vehicle::updateSprite(GameState &state)
 		case VehicleType::Banking::Descending:
 		case VehicleType::Banking::Flat:
 			direction = getDirectionSmall(facing);
+			// UFOs don't care about banking and direction being correct
+			// Otherwise ensure direction is valid
+			if (type->type == VehicleType::Type::UFO)
+			{
+				break;
+			}
 			// If still invalid we must cancel banking (can happen for grounds)
 			if (type->directional_sprites.at(banking).find(direction) !=
 			    type->directional_sprites.at(banking).end())
@@ -2105,7 +2174,7 @@ bool Vehicle::applyDamage(GameState &state, int damage, float armour, bool &soun
 			this->health -= damage;
 			if (this->health <= 0)
 			{
-				die(state, attacker);
+				die(state, false, attacker);
 				soundHandled = true;
 				return true;
 			}
@@ -2206,7 +2275,7 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 		}
 		if (otherVehicle->crashed || otherVehicle->falling || otherVehicle->sliding)
 		{
-			// Can't fire at crashed vehicles
+			// Can't auto-fire at crashed vehicles
 			continue;
 		}
 		if (otherVehicle->city != this->city)
@@ -2656,7 +2725,7 @@ void Vehicle::attackTarget(GameState &state, Vec3<float> target)
 		cloakTicksAccumulated = 0;
 
 		// Fire
-		eq->fire(state, target);
+		eq->fire(state, target, nullptr, true);
 		return;
 	}
 
@@ -2715,7 +2784,7 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 		case VehicleMission::MissionType::RestartNextMission:
 			canPlaceInFront = true;
 			break;
-		// - Cannot place in front but
+		// - Cannot place in front
 		// - Can place on crashed vehicles
 		// - Can place on carrying vehicles
 		case VehicleMission::MissionType::Crash:
@@ -2759,7 +2828,7 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 	{
 		missions.emplace(++missions.begin(), mission);
 	}
-	else if (!toBack || canPlaceInFront || missions.empty())
+	else if (!toBack || missions.empty())
 	{
 		missions.emplace_front(mission);
 		missions.front()->start(state, *this);
@@ -2859,8 +2928,10 @@ bool Vehicle::getNewGoal(GameState &state)
 	bool acquired = false;
 	// Pop finished missions if present
 	popped = popFinishedMissions(state);
+	int debug_deadlock_preventor = 1000;
 	do
 	{
+		debug_deadlock_preventor--;
 		// Try to get new destination
 		if (!missions.empty())
 		{
@@ -2868,7 +2939,19 @@ bool Vehicle::getNewGoal(GameState &state)
 		}
 		// Pop finished missions if present
 		popped = popFinishedMissions(state);
-	} while (popped && !acquired);
+	} while (popped && !acquired && debug_deadlock_preventor > 0);
+	if (debug_deadlock_preventor >= 0)
+	{
+		LogWarning("Vehicle %s at %s", name, position);
+		for (auto &m : missions)
+		{
+			LogWarning("Mission %s", m->getName());
+		}
+		LogError("Vehicle %s deadlocked, please send log to developers. Vehicle will self-destruct "
+		         "now...",
+		         name);
+		die(state);
+	}
 	return acquired;
 }
 

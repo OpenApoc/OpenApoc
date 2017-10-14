@@ -6,14 +6,14 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
-#include "game/state/city/baselayout.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/scenery.h"
 #include "game/state/gamestate.h"
-#include "game/state/tileview/collision.h"
-#include "game/state/tileview/tile.h"
-#include "game/state/tileview/tileobject_scenery.h"
+#include "game/state/rules/city/baselayout.h"
+#include "game/state/tilemap/collision.h"
+#include "game/state/tilemap/tilemap.h"
+#include "game/state/tilemap/tileobject_scenery.h"
 #include "game/ui/city/basebuyscreen.h"
 
 namespace OpenApoc

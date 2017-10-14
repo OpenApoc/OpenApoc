@@ -3,13 +3,13 @@
 #include "framework/logger.h"
 #include "framework/sound.h"
 #include "game/state/city/city.h"
-#include "game/state/city/citycommonimagelist.h"
-#include "game/state/city/projectile.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/vequipment_type.h"
-#include "game/state/tileview/tile.h"
-#include "game/state/tileview/tileobject_vehicle.h"
+#include "game/state/rules/city/citycommonimagelist.h"
+#include "game/state/rules/city/vequipmenttype.h"
+#include "game/state/shared/projectile.h"
+#include "game/state/tilemap/tilemap.h"
+#include "game/state/tilemap/tileobject_vehicle.h"
 #include "library/sp.h"
 #include <glm/glm.hpp>
 
@@ -21,7 +21,8 @@ VEquipment::VEquipment()
 {
 }
 
-void VEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Vehicle> targetVehicle)
+void VEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Vehicle> targetVehicle,
+                      bool manual)
 {
 	static const std::map<VEquipment::WeaponState, UString> WeaponStateMap = {
 	    {WeaponState::Ready, "ready"},
@@ -88,7 +89,7 @@ void VEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Veh
 		    type->damage,
 		    /*delay*/ 0, type->tail_size, type->projectile_sprites, type->impact_sfx,
 		    type->explosion_graphic,
-		    type->guided ? state.city_common_image_list->projectileVoxelMap : nullptr);
+		    type->guided ? state.city_common_image_list->projectileVoxelMap : nullptr, manual);
 		vehicleTile->map.addObjectToMap(projectile);
 		state.current_city->projectiles.insert(projectile);
 	}

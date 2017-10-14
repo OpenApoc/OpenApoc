@@ -1,9 +1,9 @@
 #pragma once
 
-#include "game/state/rules/vehicle_type.h"
+#include "game/state/rules/city/vehicletype.h"
 #include "game/state/stateobject.h"
 
-#include "game/state/tileview/tile.h"
+#include "game/state/tilemap/tilemap.h"
 #include "library/strings.h"
 #include "library/vec.h"
 #include <list>
@@ -20,6 +20,7 @@ class Tile;
 class TileMap;
 class Building;
 class UString;
+class City;
 
 class FlyingVehicleTileHelper : public CanEnterTileHelper
 {
@@ -113,7 +114,6 @@ class VehicleMission
 	static bool adjustTargetToClosestFlying(GameState &state, Vehicle &v, Vec3<int> &target,
 	                                        bool ignoreVehicles, bool pickNearest,
 	                                        bool &pickedNearest);
-
 	bool takeOffCheck(GameState &state, Vehicle &v);
 	bool teleportCheck(GameState &state, Vehicle &v);
 
@@ -130,6 +130,7 @@ class VehicleMission
 	bool advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> &destPos, float &destFacing);
 	bool isTakingOff(Vehicle &v);
 	int getDefaultIterationCount(Vehicle &v);
+	static Vec3<float> getRandomMapEdgeCoordinates(GameState &state, StateRef<City> city);
 
 	// Methods to create new missions
 
@@ -138,6 +139,7 @@ class VehicleMission
 	                                    int reRouteAttempts = 20);
 	static VehicleMission *gotoPortal(GameState &state, Vehicle &v);
 	static VehicleMission *gotoPortal(GameState &state, Vehicle &v, Vec3<int> target);
+	static VehicleMission *departToSpace(GameState &state, Vehicle &v);
 	// With now building goes home
 	static VehicleMission *gotoBuilding(GameState &state, Vehicle &v,
 	                                    StateRef<Building> target = nullptr,
@@ -178,7 +180,8 @@ class VehicleMission
 		InfiltrateSubvert,
 		OfferService,
 		Teleport,
-		SelfDestruct
+		SelfDestruct,
+		DepartToSpace
 	};
 
 	MissionType type = MissionType::GotoLocation;

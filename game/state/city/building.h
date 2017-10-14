@@ -31,6 +31,7 @@ class BaseLayout;
 class City;
 class Cargo;
 class UfopaediaEntry;
+class ResearchTopic;
 
 class BuildingFunction : public StateObject
 {
@@ -65,16 +66,25 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 	unsigned ticksDetectionTimeOut = 0;
 	unsigned ticksDetectionAttemptAccumulated = 0;
 	bool detected = false;
+	// Unlocks when successful at raiding this
+	std::list<StateRef<ResearchTopic>> researchUnlock;
+	// Access to building
+	StateRef<ResearchTopic> accessTopic;
+	// Victory when successful at raiding this
+	bool victory = false;
 
 	bool hasAliens() const;
 	void updateDetection(GameState &state, unsigned int ticks);
 	void updateCargo(GameState &state);
 	void detect(GameState &state, bool forced = false);
 	void alienGrowth(GameState &state);
+	void alienMovement(GameState &state);
 
 	void underAttack(GameState &state, StateRef<Organisation> attacker);
 
 	void collapse(GameState &state);
+
+	void buildingPartChange(Vec3<int> part, bool intact);
 
 	// Following members are not serialized, but rather are set in City::initMap method
 

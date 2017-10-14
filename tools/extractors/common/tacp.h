@@ -1,7 +1,7 @@
 #pragma once
 
-#include "game/state/rules/aequipment_type.h"
-#include "game/state/rules/damage.h"
+#include "game/state/rules/aequipmenttype.h"
+#include "game/state/rules/battle/damage.h"
 #include "tools/extractors/common/aequipment.h"
 #include "tools/extractors/common/bulletsprite.h"
 #include "tools/extractors/common/canonstring.h"

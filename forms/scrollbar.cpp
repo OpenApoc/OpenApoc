@@ -129,6 +129,15 @@ void ScrollBar::onRender()
 			fw().renderer->drawFilledRect(newpos, newsize, GripperColour);
 			break;
 		case ScrollBarRenderStyle::Menu:
+			switch (BarOrientation)
+			{
+				case Orientation::Vertical:
+					newpos.x = (Size.x - grippersize) / 2;
+					break;
+				case Orientation::Horizontal:
+					newpos.y = (Size.y - grippersize) / 2;
+					break;
+			}
 			fw().renderer->draw(gripperbutton, newpos);
 			break;
 	}

@@ -9,18 +9,18 @@
         <size width="640" height="128"/>
         <image>RAW:xcom3/ufodata/isobord2.dat:640:128:xcom3/ufodata/pal_01.dat</image>
       </graphic>
-      <!-- We currently create an scrollbar if none is specified, but we don't really want a scrollbar here, so we create one and mark it invisible -->
-      <scroll id="OWNED_VEHICLE_LIST_SCROLL" visible="N">
+      
+	  <scroll id="OWNED_VEHICLE_LIST_SCROLL" visible="N">
         <position x="105" y="66"/>
         <size width="431" height="16"/>
       </scroll>
-      <graphicbutton id="AGENT_SCROLL_LEFT" scrollprev="OWNED_VEHICLE_LIST_SCROLL">
+      <graphicbutton id="VEHICLE_SCROLL_LEFT" scrollprev="OWNED_VEHICLE_LIST_SCROLL">
         <position x="88" y="45"/>
         <size width="17" height="23"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:15:xcom3/ufodata/pal_01.dat</imagechecked>
       </graphicbutton>
-      <graphicbutton id="AGENT_SCROLL_RIGHT" scrollnext="OWNED_VEHICLE_LIST_SCROLL">
+      <graphicbutton id="VEHICLE_SCROLL_LEFT" scrollnext="OWNED_VEHICLE_LIST_SCROLL">
         <position x="536" y="45"/>
         <size width="18" height="22"/>
         <image/>
@@ -32,6 +32,7 @@
 		<item size="0" spacing="0"/>
         <orientation>horizontal</orientation>
       </listbox>
+	  
       <radiobutton id="BUTTON_ATTACK_MODE_AGGRESSIVE" groupid="ATTACK_MODE">
         <position x="245" y="72"/>
         <size width="13" height="13"/>
@@ -80,7 +81,8 @@
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
-      <graphicbutton id="BUTTON_GOTO_BUILDING">
+      
+	  <graphicbutton id="BUTTON_GOTO_BUILDING">
         <size width="27" height="46"/>
         <position x="299" y="75"/>
         <image/>

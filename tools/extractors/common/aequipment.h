@@ -55,6 +55,7 @@ static_assert(sizeof(struct DamageModifierData) == 36, "Invalid damage_modifier_
 #define DAMAGE_MODIFIER_DATA_OFFSET_START 3151452
 #define DAMAGE_MODIFIER_DATA_OFFSET_END 3152280
 
+#pragma pack(push, 1)
 struct AgentEquipmentData
 {
 	uint16_t score;
@@ -68,9 +69,10 @@ struct AgentEquipmentData
 	uint8_t store_space;
 	uint8_t armor;
 	uint8_t unknown01;
-	uint8_t unknown02;
 	uint16_t unused01;
+	uint8_t artifact;
 };
+#pragma pack(pop)
 static_assert(sizeof(struct AgentEquipmentData) == 18, "Invalid agent_equipment_data size");
 #define AGENT_EQUIPMENT_DATA_OFFSET_START 3154678
 #define AGENT_EQUIPMENT_DATA_OFFSET_END 3156244

@@ -1,5 +1,5 @@
 #include "framework/framework.h"
-#include "game/state/city/baselayout.h"
+#include "game/state/rules/city/baselayout.h"
 #include "library/strings_format.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"

@@ -3,9 +3,9 @@
 #endif
 #include "framework/data.h"
 #include "framework/framework.h"
-#include "game/state/battle/battlemap.h"
 #include "game/state/gamestate.h"
-#include "game/state/ufopaedia.h"
+#include "game/state/rules/battle/battlemap.h"
+#include "game/state/rules/city/ufopaedia.h"
 #include "library/strings_format.h"
 #include "library/voxel.h"
 #include "tools/extractors/common/ufo2p.h"
@@ -143,6 +143,17 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		auto ped =
 		    format("%s%s", UfopaediaEntry::getPrefix(), canon_string(data.vehicle_names->get(i)));
 		vehicle->ufopaedia_entry = {&state, ped};
+
+		if (i < 10)
+		{
+			vehicle->researchUnlock.emplace_back(&state,
+			                                     "RESEARCH_UNLOCK_ALIEN_CRAFT_CONTROL_SYSTEMS");
+			vehicle->researchUnlock.emplace_back(&state,
+			                                     "RESEARCH_UNLOCK_ALIEN_CRAFT_ENERGY_SOURCE");
+			vehicle->researchUnlock.emplace_back(&state, "RESEARCH_UNLOCK_ALIEN_CRAFT_PROPULSION");
+			vehicle->researchUnlock.emplace_back(&state,
+			                                     format("RESEARCH_UNLOCK_UFO_TYPE_%d", i + 1));
+		}
 
 		if (v.movement_type == 0)
 		{
@@ -381,7 +392,8 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 			    format("PCK:xcom3/ufodata/bigveh.pck:xcom3/ufodata/bigveh.tab:%d", (int)it->second);
 			vehicle->equip_icon_big = fw().data->loadImage(str);
 
-			str = format("PCK:xcom3/ufodata/smalveh.pck:xcom3/ufodata/smalveh.tab:%d",
+			str = format("PCK:xcom3/ufodata/smalveh.pck:xcom3/ufodata/smalveh.tab:%d:xcom3/ufodata/"
+			             "researc2.pcx",
 			             (int)it->second);
 			vehicle->equip_icon_small = fw().data->loadImage(str);
 		}

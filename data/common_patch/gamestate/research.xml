@@ -1,7 +1,184 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <research>
   <topics>
-    <!-- Research Topics Begin -->
+    <!-- Research Unlocks Begin -->
+	<entry>
+      <key>RESEARCH_UNLOCK_CELLS</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_DIMENSION_GATES</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_UFO_TYPE_1</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_UFO_TYPE_2</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_UFO_TYPE_3</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_UFO_TYPE_4</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_UFO_TYPE_5</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_UFO_TYPE_6</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_UFO_TYPE_7</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_UFO_TYPE_8</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_UFO_TYPE_9</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_UFO_TYPE_10</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_ALIEN_CRAFT_CONTROL_SYSTEMS</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_ALIEN_CRAFT_ENERGY_SOURCE</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_ALIEN_CRAFT_PROPULSION</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_ALIEN_BUILDING_1</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_ALIEN_BUILDING_2</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_ALIEN_BUILDING_3</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_ALIEN_BUILDING_4</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_ALIEN_BUILDING_5</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_ALIEN_BUILDING_6</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_ALIEN_BUILDING_7</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_ALIEN_BUILDING_8</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_ALIEN_BUILDING_9</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+	<entry>
+      <key>RESEARCH_UNLOCK_ALIEN_DIMENSION</key>
+      <value>
+		<man_hours>1</man_hours>
+        <hidden>true</hidden>
+      </value>
+    </entry>
+    <!-- Research Unlocks End -->
+	<!-- Research Topics Begin -->
     <!-- Quantum Physics Topics Begin -->
     <!-- Quantum Physics Alien Dimension Topics Begin -->
     <entry>
@@ -9,6 +186,7 @@
       <value>
         <order>10100</order>
         <ufopaedia_entry>PAEDIAENTRY_DIMENSION_GATES</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_DIMENSION_GATES</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -16,6 +194,7 @@
       <value>
         <order>10110</order>
         <ufopaedia_entry>PAEDIAENTRY_THE_ALIEN_DIMENSION</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_ALIEN_DIMENSION</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -24,15 +203,7 @@
       <value>
         <order>10120</order>
         <ufopaedia_entry>PAEDIAENTRY_ONE_WAY_TO_WIN</ufopaedia_entry>
-        <dependencies>
-          <research>
-            <entry>
-              <type>Unused</type>
-              <topics/>
-            </entry>
-          </research>
-          <items/>
-        </dependencies>
+		<hidden>true</hidden>
       </value>
     </entry>
     <!-- Quantum Physics Alien Dimension Topics End -->
@@ -344,15 +515,7 @@
       <value>
         <order>60160</order>
         <ufopaedia_entry>PAEDIAENTRY_DIMENSION_DESTABILISER</ufopaedia_entry>
-        <dependencies>
-          <research>
-            <entry>
-              <type>Unused</type>
-              <topics/>
-            </entry>
-          </research>
-          <items/>
-        </dependencies>
+       <hidden>true</hidden>
       </value>
     </entry>
     <!-- Quantum Physics Vehicle Weapons & Ammo Topics End -->
@@ -427,15 +590,7 @@
       <value>
         <order>70150</order>
         <ufopaedia_entry/>
-        <dependencies>
-          <research>
-            <entry>
-              <type>Unused</type>
-              <topics/>
-            </entry>
-          </research>
-          <items/>
-        </dependencies>
+        <hidden>true</hidden>
       </value>
     </entry>
     <!-- Quantum Physics Vehicle Equipment Topics End -->
@@ -445,6 +600,7 @@
       <value>
         <order>80100</order>
         <ufopaedia_entry>PAEDIAENTRY_ALIEN_CRAFT_PROPULSION</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_ALIEN_CRAFT_PROPULSION</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -452,6 +608,7 @@
       <value>
         <order>80110</order>
         <ufopaedia_entry>PAEDIAENTRY_ALIEN_CRAFT_CONTROL_SYSTEMS</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_ALIEN_CRAFT_CONTROL_SYSTEMS</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -459,6 +616,7 @@
       <value>
         <order>80120</order>
         <ufopaedia_entry>PAEDIAENTRY_ALIEN_CRAFT_ENERGY_SOURCE</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_ALIEN_CRAFT_ENERGY_SOURCE</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <!-- Quantum Physics Alien Craft System Topics End -->
@@ -468,6 +626,7 @@
       <value>
         <order>90100</order>
         <ufopaedia_entry>PAEDIAENTRY_ALIEN_PROBE</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_UFO_TYPE_1</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -475,6 +634,7 @@
       <value>
         <order>90110</order>
         <ufopaedia_entry>PAEDIAENTRY_ALIEN_SCOUT</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_UFO_TYPE_2</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -482,6 +642,7 @@
       <value>
         <order>90120</order>
         <ufopaedia_entry>PAEDIAENTRY_ALIEN_TRANSPORTER</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_UFO_TYPE_3</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -489,6 +650,7 @@
       <value>
         <order>90130</order>
         <ufopaedia_entry>PAEDIAENTRY_ALIEN_FAST_ATTACK_SHIP</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_UFO_TYPE_4</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -496,6 +658,7 @@
       <value>
         <order>90140</order>
         <ufopaedia_entry>PAEDIAENTRY_ALIEN_DESTROYER</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_UFO_TYPE_5</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -503,6 +666,7 @@
       <value>
         <order>90150</order>
         <ufopaedia_entry>PAEDIAENTRY_ALIEN_ASSAULT_SHIP</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_UFO_TYPE_6</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -510,6 +674,7 @@
       <value>
         <order>90160</order>
         <ufopaedia_entry>PAEDIAENTRY_ALIEN_BOMBER</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_UFO_TYPE_7</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -517,6 +682,7 @@
       <value>
         <order>90170</order>
         <ufopaedia_entry>PAEDIAENTRY_ALIEN_ESCORT</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_UFO_TYPE_8</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -524,6 +690,7 @@
       <value>
         <order>90180</order>
         <ufopaedia_entry>PAEDIAENTRY_ALIEN_BATTLESHIP</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_UFO_TYPE_9</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -531,6 +698,7 @@
       <value>
         <order>90190</order>
         <ufopaedia_entry>PAEDIAENTRY_ALIEN_MOTHERSHIP</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_UFO_TYPE_10</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <!-- Quantum Physics Alien Craft Topics Begin -->
@@ -1185,15 +1353,7 @@
         <order>40110</order>
 		<picture>PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:42:xcom3/ufodata/base.pcx</picture>
         <ufopaedia_entry>PAEDIAENTRY_ADVANCED_ALIEN_CONTAINMENT</ufopaedia_entry>
-        <dependencies>
-          <research>
-            <entry>
-              <type>Unused</type>
-              <topics/>
-            </entry>
-          </research>
-          <items/>
-        </dependencies>
+       <hidden>true</hidden>
       </value>
     </entry>
     <!-- Bio-Chemistry Facility Topics End -->
@@ -1257,6 +1417,7 @@
       <value>
         <order>70100</order>
         <ufopaedia_entry>PAEDIAENTRY_SLEEPING_CHAMBER</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_THE_ALIEN_DIMENSION</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -1264,6 +1425,7 @@
       <value>
         <order>70120</order>
         <ufopaedia_entry>PAEDIAENTRY_FOOD_CHAMBER</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_ALIEN_BUILDING_1</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -1271,6 +1433,7 @@
       <value>
         <order>70130</order>
         <ufopaedia_entry>PAEDIAENTRY_ALIEN_FARM</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_ALIEN_BUILDING_2</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -1278,6 +1441,7 @@
       <value>
         <order>70140</order>
         <ufopaedia_entry>PAEDIAENTRY_MAINTENANCE_FACTORY</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_ALIEN_BUILDING_3</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -1285,6 +1449,7 @@
       <value>
         <order>70150</order>
         <ufopaedia_entry>PAEDIAENTRY_INCUBATOR_CHAMBER</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_ALIEN_BUILDING_4</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -1292,6 +1457,7 @@
       <value>
         <order>70160</order>
         <ufopaedia_entry>PAEDIAENTRY_CONTROL_CHAMBER</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_ALIEN_BUILDING_5</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -1299,6 +1465,7 @@
       <value>
         <order>70170</order>
         <ufopaedia_entry>PAEDIAENTRY_SPAWNING_CHAMBER</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_ALIEN_BUILDING_6</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -1306,6 +1473,7 @@
       <value>
         <order>70180</order>
         <ufopaedia_entry>PAEDIAENTRY_ORGANIC_FACTORY</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_ALIEN_BUILDING_7</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -1313,6 +1481,7 @@
       <value>
         <order>70190</order>
         <ufopaedia_entry>PAEDIAENTRY_MEGAPOD_CHAMBER</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_ALIEN_BUILDING_8</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <entry>
@@ -1320,6 +1489,7 @@
       <value>
         <order>70200</order>
         <ufopaedia_entry>PAEDIAENTRY_DIMENSION_GATE_GENERATOR</ufopaedia_entry>
+		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_UNLOCK_ALIEN_BUILDING_9</entry></topics></entry></research></dependencies>
       </value>
     </entry>
     <!-- Bio-Chemistry Alien Building Topics End -->

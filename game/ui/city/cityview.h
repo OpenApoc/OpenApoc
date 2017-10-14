@@ -23,6 +23,7 @@ class VehicleTileInfo;
 class Agent;
 class UfopaediaEntry;
 class AgentInfo;
+class OrganisationInfo;
 
 enum class CityUpdateSpeed
 {
@@ -56,8 +57,13 @@ class CityView : public CityTileView
 
 	sp<GameState> state;
 
-	std::map<sp<Vehicle>, std::pair<VehicleTileInfo, sp<Control>>> vehicleListControls;
-	std::map<sp<Agent>, std::pair<AgentInfo, sp<Control>>> agentListControls;
+	std::vector<VehicleTileInfo> ownedVehicleInfoList;
+	std::vector<AgentInfo> ownedSoldierInfoList;
+	std::vector<AgentInfo> ownedBioInfoList;
+	std::vector<AgentInfo> ownedEngineerInfoList;
+	std::vector<AgentInfo> ownedPhysicsInfoList;
+	std::vector<VehicleTileInfo> hostileVehicleInfoList;
+	std::vector<OrganisationInfo> organisationInfoList;
 
 	bool followVehicle;
 
@@ -87,6 +93,9 @@ class CityView : public CityTileView
 	bool drawCity = true;
 	sp<Surface> surface;
 
+	std::vector<sp<Image>> debugLabelsOK;
+	std::vector<sp<Image>> debugLabelsDead;
+
 	// Click handlers
 
 	bool handleClickedBuilding(StateRef<Building> building, bool rightClick,
@@ -96,6 +105,8 @@ class CityView : public CityTileView
 	bool handleClickedAgent(StateRef<Agent> agent, bool rightClick, CitySelectionState selState);
 	bool handleClickedProjectile(sp<Projectile> projectile, bool rightClick,
 	                             CitySelectionState selState);
+	bool handleClickedOrganisation(StateRef<Organisation> organisation, bool rightClick,
+	                               CitySelectionState selState);
 
 	void tryOpenUfopaediaEntry(StateRef<UfopaediaEntry> ufopaediaEntry);
 

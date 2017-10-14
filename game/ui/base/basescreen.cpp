@@ -12,15 +12,16 @@
 #include "framework/image.h"
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
-#include "game/state/base/base.h"
-#include "game/state/base/facility.h"
+#include "game/state/city/base.h"
 #include "game/state/city/building.h"
+#include "game/state/city/facility.h"
 #include "game/state/gamestate.h"
-#include "game/state/ufopaedia.h"
-#include "game/ui/base/aequipscreen.h"
-#include "game/ui/base/basegraphics.h"
+#include "game/state/rules/city/ufopaedia.h"
+#include "game/ui/base/buysellscreen.h"
 #include "game/ui/base/researchscreen.h"
 #include "game/ui/base/vequipscreen.h"
+#include "game/ui/components/basegraphics.h"
+#include "game/ui/general/aequipscreen.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/ufopaedia/ufopaediacategoryview.h"
 #include "library/strings_format.h"
@@ -89,6 +90,10 @@ void BaseScreen::begin()
 	form->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [](Event *) { fw().stageQueueCommand({StageCmd::Command::POP}); });
+	form->findControlTyped<GraphicButton>("BUTTON_BASE_BUYSELL")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BuySellScreen>(state)});
+		});
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_EQUIPAGENT")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    // FIXME: If you don't have any vehicles this button should do nothing

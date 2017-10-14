@@ -3,44 +3,44 @@
 #include "framework/framework.h"
 #include "framework/sound.h"
 #include "framework/trace.h"
-#include "game/state/aequipment.h"
-#include "game/state/base/base.h"
 #include "game/state/battle/ai/aitype.h"
-#include "game/state/battle/battlecommonimagelist.h"
-#include "game/state/battle/battlecommonsamplelist.h"
 #include "game/state/battle/battledoor.h"
 #include "game/state/battle/battleexplosion.h"
 #include "game/state/battle/battlehazard.h"
 #include "game/state/battle/battleitem.h"
-#include "game/state/battle/battlemap.h"
 #include "game/state/battle/battlemappart.h"
-#include "game/state/battle/battlemappart_type.h"
 #include "game/state/battle/battlescanner.h"
 #include "game/state/battle/battleunit.h"
-#include "game/state/battle/battleunitanimationpack.h"
-#include "game/state/battle/battleunitimagepack.h"
 #include "game/state/city/agentmission.h"
+#include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
-#include "game/state/city/doodad.h"
-#include "game/state/city/projectile.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/message.h"
-#include "game/state/rules/aequipment_type.h"
-#include "game/state/rules/damage.h"
-#include "game/state/rules/doodad_type.h"
-#include "game/state/tileview/collision.h"
-#include "game/state/tileview/tile.h"
-#include "game/state/tileview/tileobject_battlehazard.h"
-#include "game/state/tileview/tileobject_battleitem.h"
-#include "game/state/tileview/tileobject_battlemappart.h"
-#include "game/state/tileview/tileobject_battleunit.h"
-#include "game/state/tileview/tileobject_doodad.h"
-#include "game/state/tileview/tileobject_projectile.h"
-#include "game/state/tileview/tileobject_shadow.h"
+#include "game/state/rules/aequipmenttype.h"
+#include "game/state/rules/battle/battlecommonimagelist.h"
+#include "game/state/rules/battle/battlecommonsamplelist.h"
+#include "game/state/rules/battle/battlemap.h"
+#include "game/state/rules/battle/battlemapparttype.h"
+#include "game/state/rules/battle/battleunitanimationpack.h"
+#include "game/state/rules/battle/battleunitimagepack.h"
+#include "game/state/rules/battle/damage.h"
+#include "game/state/rules/doodadtype.h"
+#include "game/state/shared/aequipment.h"
+#include "game/state/shared/doodad.h"
+#include "game/state/shared/projectile.h"
+#include "game/state/tilemap/collision.h"
+#include "game/state/tilemap/tilemap.h"
+#include "game/state/tilemap/tileobject_battlehazard.h"
+#include "game/state/tilemap/tileobject_battleitem.h"
+#include "game/state/tilemap/tileobject_battlemappart.h"
+#include "game/state/tilemap/tileobject_battleunit.h"
+#include "game/state/tilemap/tileobject_doodad.h"
+#include "game/state/tilemap/tileobject_projectile.h"
+#include "game/state/tilemap/tileobject_shadow.h"
 #include "library/strings_format.h"
 #include "library/xorshift.h"
 #include <algorithm>
@@ -2574,7 +2574,8 @@ void Battle::finishBattle(GameState &state)
 		std::list<sp<AEquipment>> itemsToStrip;
 		for (auto &e : u.second->agent->equipment)
 		{
-			if (u.second->isDead() || e->type->bioStorage || !e->canBeUsed(state, player))
+			if (u.second->isDead() || e->type->bioStorage || !e->type->canBeUsed(state, player) ||
+			    (e->payloadType && !e->payloadType->canBeUsed(state, player)))
 			{
 				itemsToStrip.push_back(e);
 			}
@@ -2631,6 +2632,11 @@ void Battle::finishBattle(GameState &state)
 					state.current_battle->cargoLoot[u->agent->type->liveSpeciesItem] =
 					    state.current_battle->cargoLoot[u->agent->type->liveSpeciesItem] + 1;
 				}
+			}
+			else
+			{
+				// Maybe alien has only a dead option?
+				deadAliens.push_back(u);
 			}
 		}
 		// Dead alien loot
@@ -2722,6 +2728,8 @@ void Battle::finishBattle(GameState &state)
 	// Regardless of what happened, retreated aliens go to a nearby building
 	if (!retreatedAliens.empty())
 	{
+		// FIXME: Should find 15 closest buildings that are intact and within 15 tiles
+		// (center to center) and pick one of them
 		LogWarning("Properly find building to house retreated aliens");
 		Vec2<int> battleLocation;
 		StateRef<City> city;
@@ -2909,7 +2917,7 @@ void Battle::exitBattle(GameState &state)
 		// Erase vehicle
 		if (state.current_battle->player_craft)
 		{
-			state.current_battle->player_craft->die(state, nullptr, true);
+			state.current_battle->player_craft->die(state, true);
 		}
 
 		// Restore relationships
@@ -3134,6 +3142,7 @@ void Battle::exitBattle(GameState &state)
 
 	// Event and result
 	// FIXME: IS there a better way to pass events? They get cleared if we just pushEvent() them!
+	bool victory = false;
 	switch (state.current_battle->mission_type)
 	{
 		case Battle::MissionType::RaidAliens:
@@ -3141,8 +3150,14 @@ void Battle::exitBattle(GameState &state)
 			if (state.current_battle->playerWon)
 			{
 				state.eventFromBattle = GameEventType::MissionCompletedBuildingAlien;
-				StateRef<Building>(&state, state.current_battle->mission_location_id)
-				    ->collapse(state);
+				auto building =
+				    StateRef<Building>(&state, state.current_battle->mission_location_id);
+				for (auto &u : building->researchUnlock)
+				{
+					u->forceComplete();
+				}
+				victory = building->victory;
+				building->collapse(state);
 				for (auto v : returningVehicles)
 				{
 					v->addMission(state, VehicleMission::snooze(state, *v, 3 * TICKS_PER_SECOND));
@@ -3174,14 +3189,23 @@ void Battle::exitBattle(GameState &state)
 		case Battle::MissionType::RaidHumans:
 		{
 			state.eventFromBattle = GameEventType::MissionCompletedBuildingRaid;
-			if (state.current_battle->playerWon &&
-			    config().getBool("OpenApoc.NewFeature.CollapseRaidedBuilding"))
+			if (state.current_battle->playerWon)
 			{
-				StateRef<Building>(&state, state.current_battle->mission_location_id)
-				    ->collapse(state);
-				for (auto v : returningVehicles)
+				auto building =
+				    StateRef<Building>(&state, state.current_battle->mission_location_id);
+				for (auto &u : building->researchUnlock)
 				{
-					v->addMission(state, VehicleMission::snooze(state, *v, 3 * TICKS_PER_SECOND));
+					u->forceComplete();
+				}
+				victory = building->victory;
+				if (config().getBool("OpenApoc.NewFeature.CollapseRaidedBuilding"))
+				{
+					building->collapse(state);
+					for (auto v : returningVehicles)
+					{
+						v->addMission(state,
+						              VehicleMission::snooze(state, *v, 3 * TICKS_PER_SECOND));
+					}
 				}
 			}
 			break;
@@ -3189,10 +3213,19 @@ void Battle::exitBattle(GameState &state)
 		case Battle::MissionType::UfoRecovery:
 		{
 			state.eventFromBattle = GameEventType::MissionCompletedVehicle;
-			StateRef<Vehicle>(&state, state.current_battle->mission_location_id)
-			    ->die(state, nullptr, true);
+			auto vehicle = StateRef<Vehicle>(&state, state.current_battle->mission_location_id);
+			for (auto &u : vehicle->type->researchUnlock)
+			{
+				u->forceComplete();
+			}
+			vehicle->die(state, true);
 			break;
 		}
+	}
+
+	if (victory)
+	{
+		LogError("You won, but we have no screen for that yet LOL!");
 	}
 
 	state.current_battle = nullptr;

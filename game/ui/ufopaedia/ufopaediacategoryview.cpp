@@ -10,11 +10,12 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "game/state/gamestate.h"
-#include "game/state/organisation.h"
-#include "game/state/rules/facility_type.h"
-#include "game/state/rules/vehicle_type.h"
-#include "game/state/rules/vequipment_type.h"
-#include "game/state/ufopaedia.h"
+#include "game/state/rules/city/facilitytype.h"
+#include "game/state/rules/city/ufopaedia.h"
+#include "game/state/rules/city/vammotype.h"
+#include "game/state/rules/city/vehicletype.h"
+#include "game/state/rules/city/vequipmenttype.h"
+#include "game/state/shared/organisation.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
 
@@ -430,7 +431,7 @@ void UfopaediaCategoryView::setFormStats()
 							if (ref->max_ammo > 0)
 							{
 								statsLabels[row]->setText(tr("Ammo type"));
-								statsValues[row++]->setText(tr(ref->ammo_type));
+								statsValues[row++]->setText(tr(ref->ammo_type->name));
 								statsLabels[row]->setText(tr("Ammo capacity"));
 								statsValues[row++]->setText(Strings::fromInteger(ref->max_ammo));
 							}

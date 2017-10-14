@@ -6,17 +6,17 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
-#include "game/state/agent.h"
-#include "game/state/base/base.h"
 #include "game/state/city/agentmission.h"
+#include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gamestate.h"
-#include "game/state/organisation.h"
-#include "game/ui/base/basegraphics.h"
+#include "game/state/shared/agent.h"
+#include "game/state/shared/organisation.h"
 #include "game/ui/city/cityview.h"
+#include "game/ui/components/basegraphics.h"
 #include "game/ui/general/messagebox.h"
 #include "library/strings_format.h"
 
@@ -107,7 +107,7 @@ void BaseBuyScreen::eventOccurred(Event *e)
 						}
 						else
 						{
-							v.second->die(*state, nullptr, true);
+							v.second->die(*state, true);
 						}
 					}
 					else if (v.second->currentBuilding == base->building &&

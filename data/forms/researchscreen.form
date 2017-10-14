@@ -98,6 +98,11 @@
         <size width="150" height="2"/>
         <image/>
       </graphic>
+	   <graphic id="MANUFACTURE_BG">
+        <position x="247" y="241"/>
+        <size width="224" height="18"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
+      </graphic>
       <scroll id="MANUFACTURE_QUANTITY_SLIDER">
         <position x="262" y="243"/>
         <size width="145" height="15"/>
@@ -106,19 +111,17 @@
       <graphicbutton id="MANUFACTURE_QUANTITY_DOWN" scrollprev="MANUFACTURE_QUANTITY_SLIDER">
         <position x="247" y="241"/>
         <size width="16" height="20"/>
-        <image>BUTTON_SLIDER_LEFT</image>
         <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton id="MANUFACTURE_QUANTITY_UP" scrollnext="MANUFACTURE_QUANTITY_SLIDER">
         <position x="408" y="241"/>
         <size width="17" height="20"/>
-        <image>BUTTON_SLIDER_RIGHT</image>
         <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
       </graphicbutton>
       <label id="TEXT_QUANTITY" text="">
-        <position x="438" y="243"/>
+        <position x="438" y="242"/>
         <size width="28" height="14"/>
-        <alignment horizontal="right" vertical="centre"/>
+        <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="TEXT_NUMBER_TO_MAKE" text="Number to make">
@@ -142,8 +145,8 @@
         <selcolour r="255" g="0" b="0" a="255"/>
       </listbox>
       <listbox id="LIST_ASSIGNED">
-        <position x="232" y="270"/>
-        <size height="180" width="354"/>
+        <position x="248" y="285"/>
+        <size height="160" width="320"/>
         <orientation list="vertical" scroll="horizontal"/>
         <hovercolour r="255" g="255" b="255" a="255"/>
       </listbox>
@@ -164,8 +167,8 @@
         <imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
       </graphicbutton>
       <listbox id="LIST_UNASSIGNED" scrollbarid="LIST_UNASSIGNED_SCROLL">
-        <position x="11" y="172"/>
-        <size height="293" width="148"/>
+        <position x="20" y="183"/>
+        <size height="256" width="128"/>
         <orientation>vertical</orientation>
         <hovercolour r="255" g="255" b="255" a="255"/>
       </listbox>

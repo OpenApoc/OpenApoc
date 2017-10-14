@@ -1,7 +1,7 @@
 #pragma once
 
 #include "framework/stage.h"
-#include "game/ui/base/basegraphics.h"
+#include "game/ui/components/basegraphics.h"
 #include "library/sp.h"
 #include <vector>
 

@@ -25,6 +25,7 @@
     <ClCompile Include="extractors\extractors.cpp" />
     <ClCompile Include="extractors\extract_agent_equipment.cpp" />
     <ClCompile Include="extractors\extract_agent_types.cpp" />
+    <ClCompile Include="extractors\extract_economy.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_pack_chrysalis.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_pack_civ.cpp" />
     <ClCompile Include="extractors\extract_unit_animation_pack_egg.cpp" />
@@ -70,6 +71,7 @@
     <ClInclude Include="extractors\common\crew.h" />
     <ClInclude Include="extractors\common\datachunk.h" />
     <ClInclude Include="extractors\common\doodads.h" />
+    <ClInclude Include="extractors\common\economy.h" />
     <ClInclude Include="extractors\common\facilities.h" />
     <ClInclude Include="extractors\common\organisations.h" />
     <ClInclude Include="extractors\common\research.h" />

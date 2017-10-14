@@ -3,22 +3,22 @@
 #include "framework/sound.h"
 #include "framework/trace.h"
 #include "game/state/city/building.h"
-#include "game/state/city/citycommonimagelist.h"
-#include "game/state/city/doodad.h"
-#include "game/state/city/projectile.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/city/vequipment.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/doodad_type.h"
-#include "game/state/rules/scenery_tile_type.h"
-#include "game/state/rules/vequipment_type.h"
-#include "game/state/tileview/collision.h"
-#include "game/state/tileview/tile.h"
-#include "game/state/tileview/tileobject_projectile.h"
-#include "game/state/tileview/tileobject_scenery.h"
-#include "game/state/tileview/tileobject_vehicle.h"
+#include "game/state/rules/city/citycommonimagelist.h"
+#include "game/state/rules/city/scenerytiletype.h"
+#include "game/state/rules/city/vequipmenttype.h"
+#include "game/state/rules/doodadtype.h"
+#include "game/state/shared/doodad.h"
+#include "game/state/shared/projectile.h"
+#include "game/state/tilemap/collision.h"
+#include "game/state/tilemap/tilemap.h"
+#include "game/state/tilemap/tileobject_projectile.h"
+#include "game/state/tilemap/tileobject_scenery.h"
+#include "game/state/tilemap/tileobject_vehicle.h"
 #include <functional>
 #include <future>
 #include <glm/glm.hpp>
@@ -130,6 +130,11 @@ void City::initMap(GameState &state)
 			                          (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2};
 		}
 		LogInfo("Crew Quarters: %s", b.second->crewQuarters);
+		if (b.second->function.id == "BUILDINGFUNCTION_SPACE_PORT")
+		{
+			spaceports.emplace_back(&state, b.first);
+		}
+		b.second->owner->buildings.emplace_back(&state, b.first);
 	}
 	for (auto &p : this->projectiles)
 	{
@@ -142,6 +147,27 @@ void City::initMap(GameState &state)
 	for (auto &p : this->portals)
 	{
 		this->map->addObjectToMap(p);
+	}
+}
+
+int City::getSegmentID(const Vec3<int> &position) const
+{
+	return tileToRoadSegmentMap.at(position.z * map->size.x * map->size.y +
+	                               position.y * map->size.x + position.x);
+}
+
+const RoadSegment &City::getSegment(const Vec3<int> &position) const
+{
+	return roadSegments.at(tileToRoadSegmentMap.at(position.z * map->size.x * map->size.y +
+	                                               position.y * map->size.x + position.x));
+}
+
+void City::notifyRoadChange(const Vec3<int> &position, bool intact)
+{
+	auto segId = getSegmentID(position);
+	if (segId != -1)
+	{
+		roadSegments.at(segId).notifyRoadChange(position, intact);
 	}
 }
 
@@ -515,6 +541,48 @@ void City::accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition, Vec
 	auto diff = (diffVertical + diffHorizontal) * Vec3<float>{1.0f, 1.0f, 0.33f};
 
 	target += diff;
+}
+
+void RoadSegment::notifyRoadChange(const Vec3<int> &position, bool intact)
+{
+	for (int i = 0; i < tilePosition.size(); i++)
+	{
+		if (tilePosition.at(i) == position)
+		{
+			tileIntact.at(i) = intact;
+			break;
+		}
+	}
+	intact = true;
+	for (int i = 0; i < tileIntact.size(); i++)
+	{
+		if (!tileIntact[i])
+		{
+			intact = false;
+			break;
+		}
+	}
+}
+
+void RoadSegment::finalizeStats()
+{
+	length = (int)tilePosition.size();
+	intact = true;
+	tileIntact.resize(length, true);
+	if (empty())
+	{
+		return;
+	}
+	middle = tilePosition.at(length / 2);
+}
+
+bool RoadSegment::empty() const { return tilePosition.empty(); }
+
+RoadSegment::RoadSegment(Vec3<int> tile) { tilePosition.emplace_back(tile); }
+
+RoadSegment::RoadSegment(Vec3<int> tile, int connection) : RoadSegment(tile)
+{
+	connections.emplace_back(connection);
 }
 
 } // namespace OpenApoc

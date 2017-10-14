@@ -2,7 +2,7 @@
 
 #include "framework/logger.h"
 #include "framework/stage.h"
-#include "game/state/tileview/tile.h"
+#include "game/state/tilemap/tilemap.h"
 #include "library/colour.h"
 #include "library/sp.h"
 #include "library/vec.h"
@@ -23,6 +23,7 @@ class TileView : public Stage, public TileTransform
 	// Formula: FPS / DESIRED_ANIMATIONS_PER_SECOND
 
 	static const int SELECTION_FRAME_ANIMATION_DELAY = 60 / 5;
+	static const int PORTAL_FRAME_ANIMATION_DELAY = 60 / 20;
 	// How many pixels from edge trigger scroll
 	static const int MOUSE_SCROLL_MARGIN = 1;
 

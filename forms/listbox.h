@@ -73,6 +73,21 @@ class ListBox : public Control
 		}
 		return nullptr;
 	}
+
+	template <typename T> sp<Control> removeByData(const sp<T> data)
+	{
+		this->setDirty();
+		sp<Control> Item;
+		for (auto i = Controls.begin(); i != Controls.end(); i++)
+		{
+			if ((*i)->getData<T>() == data)
+			{
+				Item = *i;
+				break;
+			}
+		}
+		return removeItem(Item);
+	}
 };
 
 }; // namespace OpenApoc

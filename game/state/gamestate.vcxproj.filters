@@ -15,46 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="agent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="gamestate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gamestate_serialize.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="organisation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="research.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ufopaedia.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="base\base.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="base\facility.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="city\baselayout.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="city\building.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="city\city.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="city\doodad.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="city\projectile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="city\scenery.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="city\vehicle.cpp">
@@ -66,45 +36,6 @@
     <ClCompile Include="city\vequipment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="rules\doodad_type.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="rules\facility_type.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="rules\scenery_tile_type.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="rules\vehicle_type_rules.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tileview\tile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tileview\tileobject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tileview\tileobject_doodad.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tileview\tileobject_projectile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tileview\tileobject_scenery.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tileview\tileobject_shadow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tileview\tileobject_vehicle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="rules\ufo_incursion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="rules\ufo_growth.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="savemanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -114,19 +45,10 @@
     <ClCompile Include="gameevent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="rules\aequipment_rules.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="rules\vammo_rules.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="battle\battle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="message.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="battle\battlemappart_type.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="battle\battlemappart.cpp">
@@ -135,40 +57,10 @@
     <ClCompile Include="gamestate_serialize_generated.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="rules\damage_rules.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="aequipment.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="battle\battlemap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="battle\battlemapsector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="battle\battleunitimagepack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="battle\battleunit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tileview\tileobject_battlemappart.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tileview\collision.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="battle\battleitem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tileview\tileobject_battleitem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="battle\battleunitanimationpack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tileview\tileobject_battleunit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="battle\battleforces.cpp">
@@ -180,25 +72,37 @@
     <ClCompile Include="battle\battledoor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tileview\pathfinding.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="rules\vequipment_rules.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="battle\battlehazard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="battle\battleexplosion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tileview\tileobject_battlehazard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="battle\battlemaptileset.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="battle\battlescanner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shared\doodad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shared\projectile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shared\aequipment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shared\agent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="city\scenery.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="city\research.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="city\agentmission.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="shared\organisation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="battle\ai\aidecision.cpp">
@@ -213,13 +117,16 @@
     <ClCompile Include="battle\ai\unitai.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="battle\ai\unitaihelper.cpp">
+    <ClCompile Include="battle\ai\unitaibehavior.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="battle\ai\unitaidefault.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="battle\ai\unitaibehavior.cpp">
+    <ClCompile Include="battle\ai\unitaihardcore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battle\ai\unitaihelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="battle\ai\unitailowmorale.cpp">
@@ -228,54 +135,129 @@
     <ClCompile Include="battle\ai\unitaivanilla.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="battle\ai\unitaihardcore.cpp">
+    <ClCompile Include="city\base.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="city\agentmission.cpp">
+    <ClCompile Include="city\facility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\battle\battlemap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\battle\battlemapsector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\battle\battlemaptileset.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\battle\battleunitanimationpack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\battle\battleunitimagepack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\battle\damage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\city\ufopaedia.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tilemap\collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tilemap\pathfinding.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tilemap\tile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tilemap\tileobject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tilemap\tileobject_battlehazard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tilemap\tileobject_battleitem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tilemap\tileobject_battlemappart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tilemap\tileobject_battleunit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tilemap\tileobject_doodad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tilemap\tileobject_projectile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tilemap\tileobject_scenery.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tilemap\tileobject_shadow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tilemap\tileobject_vehicle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tilemap\tilemap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="rules\supportedmappart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="rules\city\baselayout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="city\economyinfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\doodadtype.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\aequipmenttype.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\battle\battlemapparttype.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\city\facilitytype.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\city\scenerytiletype.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\city\vequipmenttype.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\city\vehicletype.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\city\vammotype.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\city\ufoincursion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\city\ufogrowth.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\agenttype.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="agent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="gamestate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="organisation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="research.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="stateobject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ufopaedia.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="base\base.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="base\facility.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="city\baselayout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="city\building.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="city\city.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="city\doodad.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="city\projectile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="city\scenery.h">
@@ -290,55 +272,10 @@
     <ClInclude Include="city\vequipment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rules\doodad_type.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="rules\facility_type.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="rules\scenery_tile_type.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="rules\vehicle_type.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tileview\tile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tileview\tileobject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tileview\tileobject_doodad.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tileview\tileobject_projectile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tileview\tileobject_scenery.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tileview\tileobject_shadow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tileview\tileobject_vehicle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="rules\vequipment_type.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="rules\ufo_growth.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="rules\ufo_incursion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="savemanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gametime.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gameevent_types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gameevent.h">
@@ -347,19 +284,10 @@
     <ClInclude Include="gametime_facet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rules\aequipment_type.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="rules\vammo_type.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="battle\battle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="message.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="battle\battlemappart_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="battle\battlemappart.h">
@@ -368,43 +296,10 @@
     <ClInclude Include="gamestate_serialize_generated.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rules\damage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="aequipment.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="battle\battlemap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="battle\battlemapsector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="battle\battlemaptileset.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="battle\battleunitimagepack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="battle\battleunit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tileview\tileobject_battlemappart.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tileview\collision.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="battle\battleitem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tileview\tileobject_battleitem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="battle\battleunitanimationpack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tileview\tileobject_battleunit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="battle\battleforces.h">
@@ -413,13 +308,7 @@
     <ClInclude Include="battle\battleunitmission.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battle\battlecommonsamplelist.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="battle\battledoor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="battle\battlecommonimagelist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="battle\battleexplosion.h">
@@ -428,16 +317,40 @@
     <ClInclude Include="battle\battlehazard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tileview\tileobject_battlehazard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="gamestate_serialize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="battle\battlescanner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="shared\doodad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shared\projectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shared\aequipment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shared\agent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shared\equipment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="city\research.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="city\agentmission.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shared\organisation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="battle\ai\aidecision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\ai\aitype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="battle\ai\tacticalai.h">
@@ -449,13 +362,16 @@
     <ClInclude Include="battle\ai\unitai.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battle\ai\unitaihelper.h">
+    <ClInclude Include="battle\ai\unitaibehavior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="battle\ai\unitaidefault.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battle\ai\unitaibehavior.h">
+    <ClInclude Include="battle\ai\unitaihardcore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\ai\unitaihelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="battle\ai\unitailowmorale.h">
@@ -464,25 +380,127 @@
     <ClInclude Include="battle\ai\unitaivanilla.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battle\ai\unitaihardcore.h">
+    <ClInclude Include="city\base.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battle\ai\aitype.h">
+    <ClInclude Include="city\facility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="equipment.h">
+    <ClInclude Include="rules\battle\battlecommonimagelist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="city\citycommonimagelist.h">
+    <ClInclude Include="rules\battle\battlecommonsamplelist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="city\citycommonsamplelist.h">
+    <ClInclude Include="rules\battle\battlemap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="city\agentmission.h">
+    <ClInclude Include="rules\battle\battlemapsector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\battle\battlemaptileset.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\battle\battleunitanimationpack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\battle\battleunitimagepack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\city\citycommonimagelist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\city\citycommonsamplelist.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\city\ufopaedia.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tilemap\collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tilemap\tile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tilemap\tileobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tilemap\tileobject_battlehazard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tilemap\tileobject_battleitem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tilemap\tileobject_battlemappart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tilemap\tileobject_battleunit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tilemap\tileobject_doodad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tilemap\tileobject_projectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tilemap\tileobject_scenery.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tilemap\tileobject_shadow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tilemap\tileobject_vehicle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tilemap\tilemap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\battle\damage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="rules\supportedmappart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\city\baselayout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="city\economyinfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\doodadtype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\agenttype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\aequipmenttype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\battle\battlemapparttype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\city\facilitytype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\city\scenerytiletype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\city\vequipmenttype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\city\vehicletype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\city\vammotype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\city\ufoincursion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\city\ufogrowth.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameeventtypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

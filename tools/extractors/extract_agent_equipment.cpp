@@ -1,11 +1,11 @@
 #include "framework/data.h"
 #include "framework/framework.h"
-#include "game/state/agent.h"
-#include "game/state/battle/battlecommonimagelist.h"
-#include "game/state/battle/battleunitimagepack.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/aequipment_type.h"
-#include "game/state/rules/damage.h"
+#include "game/state/rules/aequipmenttype.h"
+#include "game/state/rules/battle/battlecommonimagelist.h"
+#include "game/state/rules/battle/battleunitimagepack.h"
+#include "game/state/rules/battle/damage.h"
+#include "game/state/shared/agent.h"
 #include "library/strings_format.h"
 #include "tools/extractors/common/doodads.h"
 #include "tools/extractors/common/tacp.h"
@@ -481,6 +481,8 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 		{
 			e->launcher = true;
 		}
+
+		e->artifact = edata.artifact != 0;
 
 		unsigned payload_idx = std::numeric_limits<unsigned>::max();
 		switch (edata.type)

@@ -30,7 +30,25 @@ class SceneryTileType;
 class Organisation;
 class BaseLayout;
 class Agent;
+class ResearchTopic;
 class TileMap;
+
+class RoadSegment
+{
+  public:
+	std::vector<int> connections;
+	std::vector<Vec3<int>> tilePosition;
+	bool intact = false;
+	std::vector<bool> tileIntact;
+	Vec3<int> middle = {0, 0, 0};
+	int length = 0;
+	void notifyRoadChange(const Vec3<int> &position, bool intact);
+	void finalizeStats();
+	bool empty() const;
+	RoadSegment() = default;
+	RoadSegment(Vec3<int> tile);
+	RoadSegment(Vec3<int> tile, int connection);
+};
 
 class City : public StateObject
 {
@@ -55,12 +73,26 @@ class City : public StateObject
 
 	up<TileMap> map;
 
+	// Unlocks when visiting this
+	std::list<StateRef<ResearchTopic>> researchUnlock;
+
+	// Pathfinding
+
+	std::vector<int> tileToRoadSegmentMap;
+	std::vector<RoadSegment> roadSegments;
+	int getSegmentID(const Vec3<int> &position) const;
+	const RoadSegment &getSegment(const Vec3<int> &position) const;
+	void notifyRoadChange(const Vec3<int> &position, bool intact);
+	void fillRoadSegmentMap(GameState &state);
+
 	// CityView and CityTileView settings, saved here so that we can return to them
 
 	Vec3<float> cityViewScreenCenter = {0.0f, 0.0f, 0.0f};
 	int cityViewPageIndex = 0;
 	std::list<StateRef<Vehicle>> cityViewSelectedVehicles;
 	std::list<StateRef<Agent>> cityViewSelectedAgents;
+	StateRef<Organisation> cityViewSelectedOrganisation;
+	int cityViewOrgButtonIndex = 0;
 
 	void handleProjectileHit(GameState &state, sp<Projectile> projectile, bool displayDoodad,
 	                         bool playSound);
@@ -89,6 +121,10 @@ class City : public StateObject
 
 	static void accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition,
 	                                  Vec3<float> &target, int accuracy, bool cloaked);
+
+	// Following members are not serialized, but rather are set in initCity method
+
+	std::list<StateRef<Building>> spaceports;
 };
 
 }; // namespace OpenApoc

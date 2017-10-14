@@ -1,8 +1,8 @@
 #pragma once
 
-#include "game/state/equipment.h"
 #include "game/state/gametime.h"
-#include "game/state/rules/vehicle_type.h"
+#include "game/state/rules/city/vehicletype.h"
+#include "game/state/shared/equipment.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -44,6 +44,12 @@ static const float FV_PLOW_CHANCE_HIGH_SPEED_MULTIPLIER = 1.5f;
 static const float FV_PLOW_CHANCE_CONSTITUTION_MULTIPLIER = 2.0f;
 // How much 1 of X is the damage evasion chance (i.e. 8 means 1/8th or 12.5%)
 static const int FV_COLLISION_DAMAGE_ONE_IN_CHANCE_TO_EVADE = 8;
+// How much X in 100 is the chance for recovered vehicle to arrive intact (othrewise scrapped)
+static const int FV_CHANCE_TO_RECOVER_VEHICLE = 66;
+// How much X in 100 is chance to recover every equipment part (otherwise scrapped)
+static const int FV_CHANCE_TO_RECOVER_EQUIPMENT = 90;
+// How much percent is "scrapped" sold for
+static const int FV_SCRAPPED_COST_PERCENT = 25;
 
 class Image;
 class TileObjectVehicle;
@@ -54,6 +60,7 @@ class Organisation;
 class VehicleMission;
 class Building;
 class GameState;
+class ResearchTopic;
 class TileObjectProjectile;
 class VEquipment;
 class VEquipmentType;
@@ -229,7 +236,7 @@ class Vehicle : public StateObject,
 	// Also offloads arrived cargo or passengers
 	StateRef<Building> getServiceDestination(GameState &state);
 
-	void die(GameState &state, StateRef<Vehicle> attacker = nullptr, bool silent = false);
+	void die(GameState &state, bool silent = false, StateRef<Vehicle> attacker = nullptr);
 	void crash(GameState &state, StateRef<Vehicle> attacker);
 	void startFalling(GameState &state, StateRef<Vehicle> attacker = nullptr);
 	void adjustRelationshipOnDowned(GameState &state, StateRef<Vehicle> attacker);

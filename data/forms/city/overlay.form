@@ -11,7 +11,7 @@
       </graphic>
 	  <label id="TEXT">
         <position x="25" y="23"/>
-        <size width="440" height="12"/>
+        <size width="440" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>

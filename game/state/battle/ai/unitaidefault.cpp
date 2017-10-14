@@ -1,11 +1,11 @@
 #include "game/state/battle/ai/unitaidefault.h"
-#include "game/state/aequipment.h"
 #include "game/state/battle/ai/aidecision.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/damage.h"
-#include "game/state/tileview/tileobject_battleunit.h"
+#include "game/state/rules/battle/damage.h"
+#include "game/state/shared/aequipment.h"
+#include "game/state/tilemap/tileobject_battleunit.h"
 #include <glm/glm.hpp>
 
 namespace OpenApoc

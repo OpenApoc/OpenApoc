@@ -90,8 +90,10 @@
     <value>
       <capacityType>Aliens</capacityType>
       <dependency>
-        <type>Unused</type>
-        <topics/>
+        <type>Any</type>
+        <topics>
+          <entry>RESEARCH_UNLOCK_CELLS</entry>
+        </topics>
       </dependency>
       <ufopaedia_entry/>
     </value>

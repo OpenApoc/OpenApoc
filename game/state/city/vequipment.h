@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game/state/equipment.h"
+#include "game/state/shared/equipment.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -60,7 +60,7 @@ class VEquipment : public Equipment
 	// actually used.
 	int reload(int ammoAvailable);
 	void fire(GameState &state, Vec3<float> targetPosition,
-	          StateRef<Vehicle> targetVehicle = nullptr);
+	          StateRef<Vehicle> targetVehicle = nullptr, bool manual = false);
 
 	sp<Image> getEquipmentArmorImage() const override;
 	sp<Image> getEquipmentImage() const override;

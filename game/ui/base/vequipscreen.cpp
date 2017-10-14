@@ -6,19 +6,20 @@
 #include "forms/radiobutton.h"
 #include "forms/ui.h"
 #include "framework/apocresources/cursor.h"
+#include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
-#include "game/state/base/base.h"
+#include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vequipment.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/vehicle_type.h"
-#include "game/ui/equipscreen.h"
+#include "game/state/rules/city/vehicletype.h"
+#include "game/ui/components/equipscreen.h"
 #include "library/strings_format.h"
 #include <cmath>
 
@@ -237,7 +238,8 @@ void VEquipScreen::eventOccurred(Event *e)
 			// FIXME: what happens if we don't have the stores to return?
 
 			// Immediate action: put to the base
-			if (modifierLShift || modifierRShift)
+			if ((modifierLShift || modifierRShift) &&
+			    config().getBool("OpenApoc.NewFeature.AdvancedInventoryControls"))
 			{
 				this->draggedEquipment = nullptr;
 			}
@@ -254,7 +256,8 @@ void VEquipScreen::eventOccurred(Event *e)
 				this->draggedEquipmentOffset = pair.first.p0 - mousePos;
 
 				// Immediate action: try put on vehicle
-				if (modifierLShift || modifierRShift)
+				if ((modifierLShift || modifierRShift) &&
+				    config().getBool("OpenApoc.NewFeature.AdvancedInventoryControls"))
 				{
 					if (this->selected->addEquipment(*state, this->draggedEquipment))
 					{

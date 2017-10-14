@@ -255,6 +255,7 @@ void ListBox::replaceItem(sp<Control> Item)
 {
 	auto newData = Item->getData<void>();
 	this->setDirty();
+	bool found = false;
 	for (size_t i = 0; i < Controls.size(); i++)
 	{
 		auto oldItem = Controls[i];
@@ -271,8 +272,13 @@ void ListBox::replaceItem(sp<Control> Item)
 			{
 				this->hovered = Item;
 			}
-			return;
+			found = true;
+			break;
 		}
+	}
+	if (!found)
+	{
+		addItem(Item);
 	}
 }
 
@@ -441,4 +447,5 @@ void ListBox::setSelected(sp<Control> c)
 	this->selected = c;
 	this->setDirty();
 }
+
 }; // namespace OpenApoc
