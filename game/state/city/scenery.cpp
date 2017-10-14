@@ -10,7 +10,7 @@
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/city/citycommonsamplelist.h"
-#include "game/state/rules/city/scenery_tile_type.h"
+#include "game/state/rules/city/scenerytiletype.h"
 #include "game/state/shared/doodad.h"
 #include "game/state/shared/projectile.h"
 #include "game/state/tilemap/collision.h"
@@ -62,6 +62,9 @@ sp<std::set<SupportedMapPart *>> Scenery::getSupportedParts()
 
 void Scenery::clearSupportedParts() { supportedParts.clear(); }
 
+// FIXME:
+// Implement linking using shooting lines for generals
+// This will improve how complex buildings collapse
 bool Scenery::findSupport()
 {
 	auto pos = tileObject->getOwningTile()->position;
@@ -1009,7 +1012,7 @@ void Scenery::die(GameState &state, bool forced)
 		this->tileObject.reset();
 		if (building)
 		{
-			building->buildingParts.erase(initialPosition);
+			building->buildingPartChange(initialPosition, false);
 		}
 	}
 }
@@ -1046,7 +1049,7 @@ void Scenery::collapse(GameState &state)
 	ceaseSupportProvision();
 	if (building)
 	{
-		building->buildingParts.erase(initialPosition);
+		building->buildingPartChange(initialPosition, false);
 	}
 	city->notifyRoadChange(initialPosition, false);
 }
@@ -1243,7 +1246,7 @@ void Scenery::repair(GameState &state)
 	}
 	if (building && !type->commonProperty)
 	{
-		building->buildingParts.insert(initialPosition);
+		building->buildingPartChange(initialPosition, true);
 	}
 	map.clearPathCaches();
 }

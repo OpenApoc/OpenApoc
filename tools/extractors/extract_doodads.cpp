@@ -1,7 +1,7 @@
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/doodad_type.h"
+#include "game/state/rules/doodadtype.h"
 #include "game/state/shared/agent.h"
 #include "library/strings_format.h"
 #include "tools/extractors/common/doodads.h"

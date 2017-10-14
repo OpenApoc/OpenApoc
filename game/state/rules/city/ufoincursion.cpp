@@ -1,4 +1,4 @@
-#include "game/state/rules/city/ufo_incursion.h"
+#include "game/state/rules/city/ufoincursion.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc

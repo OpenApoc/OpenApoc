@@ -875,4 +875,18 @@ void Building::collapse(GameState &state)
 	}
 }
 
+void Building::buildingPartChange(Vec3<int> part, bool intact)
+{
+	// FIXME: Implement base / building dying when enough is destroyed
+	// Implement agents dying when building dies
+	if (intact)
+	{
+		buildingParts.insert(part);
+	}
+	else
+	{
+		buildingParts.erase(part);
+	}
+}
+
 } // namespace OpenApoc

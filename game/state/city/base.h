@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game/state/rules/city/facility_type.h"
+#include "game/state/rules/city/facilitytype.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"

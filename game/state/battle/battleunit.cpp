@@ -13,7 +13,7 @@
 #include "game/state/rules/battle/battlecommonsamplelist.h"
 #include "game/state/rules/battle/battleunitanimationpack.h"
 #include "game/state/rules/battle/damage.h"
-#include "game/state/rules/city/facility_type.h"
+#include "game/state/rules/city/facilitytype.h"
 #include "game/state/shared/aequipment.h"
 #include "game/state/shared/projectile.h"
 #include "game/state/tilemap/collision.h"

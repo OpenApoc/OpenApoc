@@ -5,7 +5,7 @@
       <position x="centre" y="centre"/>
       <size width="640" height="480"/>
       <graphic>
-        <image>xcom3/ufodata/buy&sell.pcx</image>
+        <image>xcom3/ufodata/buy&amp;sell.pcx</image>
         <position x="0" y="0"/>
         <size width="640" height="480"/>
       </graphic>
@@ -81,11 +81,10 @@
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>
-	  
-      
+	        
       <scroll id="LIST_SCROLL">
-        <position x="164" y="192"/>
-        <size width="15" height="244"/>
+        <position x="572" y="202"/>
+        <size width="20" height="244"/>
       </scroll>
       <graphicbutton id="LIST_SCROLL_UP" scrollprev="LIST_SCROLL">
         <position x="569" y="178"/>
@@ -101,9 +100,10 @@
       </graphicbutton>
       <listbox id="LIST" scrollbarid="LIST_SCROLL">
         <position x="209" y="181"/>
-        <size height="357" width="284"/>
+        <size width="357" height="284"/>
         <orientation>vertical</orientation>
-        <hovercolour r="255" g="255" b="255" a="255"/>
+		<item size = "44" spacing = "0"/>
+        <hovercolour r="0" g="0" b="0" a="0"/>
       </listbox>
    
        <graphic>
@@ -124,32 +124,31 @@
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:51:xcom3/ufodata/base.pcx</imagedepressed>
       </graphic>
-	
-	  
-       <graphicbutton id="BUTTON_VEHICLES">
+		  
+      <radiobutton id="BUTTON_VEHICLES" groupid = "TYPE">
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>
-        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:37:xcom3/ufodata/base.pcx</imagedepressed>
-      </graphicbutton>
-      <graphicbutton id="BUTTON_AGENTS">
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:37:xcom3/ufodata/base.pcx</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_AGENTS" groupid = "TYPE">
         <position x="602" y="80"/>
         <size width="35" height="34"/>
         <image/>
-        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:38:xcom3/ufodata/base.pcx</imagedepressed>
-      </graphicbutton>
-      <graphicbutton id="BUTTON_FLYING">
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:38:xcom3/ufodata/base.pcx</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_FLYING" groupid = "TYPE">
         <position x="602" y="120"/>
         <size width="35" height="34"/>
         <image/>
-        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:39:xcom3/ufodata/base.pcx</imagedepressed>
-      </graphicbutton>
-      <graphicbutton id="BUTTON_GROUND">
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:39:xcom3/ufodata/base.pcx</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_GROUND" groupid = "TYPE">
         <position x="602" y="160"/>
         <size width="35" height="34"/>
         <image/>
-        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:40:xcom3/ufodata/base.pcx</imagedepressed>
-      </graphicbutton>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:40:xcom3/ufodata/base.pcx</imagechecked>
+	  </radiobutton>
 	 
       <graphicbutton id="BUTTON_OK">
         <position x="602" y="443"/>

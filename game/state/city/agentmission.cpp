@@ -8,7 +8,7 @@
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/battle/battlecommonsamplelist.h"
-#include "game/state/rules/city/scenery_tile_type.h"
+#include "game/state/rules/city/scenerytiletype.h"
 #include "game/state/shared/agent.h"
 #include "game/state/shared/doodad.h"
 #include "game/state/shared/organisation.h"
@@ -398,8 +398,27 @@ void AgentMission::start(GameState &state, Agent &a)
 					}
 					else
 					{
-						LogError("Implement agent acting when in the field and unable to path to "
-						         "building");
+						// FIXME: mplement agent pathing to closest building when in the field and
+						// unable to path
+						LogWarning("Implement agent pathing to closest building when in the field "
+						           "and unable to path to "
+						           "building");
+						// For now just get into closest building
+						fw().pushEvent(new GameAgentEvent(GameEventType::AgentUnableToReach,
+						                                  {&state, a.shared_from_this()}, true));
+						float closestDistance = FLT_MAX;
+						StateRef<Building> closestBuilding;
+						for (auto &b : a.city->buildings)
+						{
+							auto distance =
+							    glm::length(a.position - (Vec3<float>)b.second->crewQuarters);
+							if (distance < closestDistance)
+							{
+								distance = closestDistance;
+								closestBuilding = {&state, b.first};
+							}
+						}
+						a.enterBuilding(state, closestBuilding);
 					}
 				}
 			}

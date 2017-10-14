@@ -9,7 +9,7 @@
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/rules/battle/battleunitimagepack.h"
-#include "game/state/rules/city/scenery_tile_type.h"
+#include "game/state/rules/city/scenerytiletype.h"
 #include "game/state/shared/doodad.h"
 #include "game/state/shared/projectile.h"
 #include "game/state/tilemap/collision.h"

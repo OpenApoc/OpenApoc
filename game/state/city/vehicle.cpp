@@ -15,12 +15,12 @@
 #include "game/state/city/vequipment.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/aequipmenttype.h"
 #include "game/state/rules/city/citycommonsamplelist.h"
-#include "game/state/rules/city/scenery_tile_type.h"
-#include "game/state/rules/city/vammo_type.h"
-#include "game/state/rules/city/vehicle_type.h"
-#include "game/state/rules/city/vequipment_type.h"
+#include "game/state/rules/city/scenerytiletype.h"
+#include "game/state/rules/city/vammotype.h"
+#include "game/state/rules/city/vehicletype.h"
+#include "game/state/rules/city/vequipmenttype.h"
 #include "game/state/shared/doodad.h"
 #include "game/state/shared/organisation.h"
 #include "game/state/shared/projectile.h"
@@ -2928,8 +2928,10 @@ bool Vehicle::getNewGoal(GameState &state)
 	bool acquired = false;
 	// Pop finished missions if present
 	popped = popFinishedMissions(state);
+	int debug_deadlock_preventor = 1000;
 	do
 	{
+		debug_deadlock_preventor--;
 		// Try to get new destination
 		if (!missions.empty())
 		{
@@ -2937,7 +2939,19 @@ bool Vehicle::getNewGoal(GameState &state)
 		}
 		// Pop finished missions if present
 		popped = popFinishedMissions(state);
-	} while (popped && !acquired);
+	} while (popped && !acquired && debug_deadlock_preventor > 0);
+	if (debug_deadlock_preventor >= 0)
+	{
+		LogWarning("Vehicle %s at %s", name, position);
+		for (auto &m : missions)
+		{
+			LogWarning("Mission %s", m->getName());
+		}
+		LogError("Vehicle %s deadlocked, please send log to developers. Vehicle will self-destruct "
+		         "now...",
+		         name);
+		die(state);
+	}
 	return acquired;
 }
 

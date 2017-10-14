@@ -4,7 +4,7 @@
 #include "game/state/battle/battlehazard.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/battle/battlemappart_type.h"
+#include "game/state/rules/battle/battlemapparttype.h"
 #include "game/state/rules/battle/damage.h"
 #include "game/state/shared/projectile.h"
 #include "game/state/tilemap/collision.h"

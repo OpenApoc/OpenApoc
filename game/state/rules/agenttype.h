@@ -2,7 +2,7 @@
 
 #include "framework/image.h"
 #include "game/state/gametime.h"
-#include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/aequipmenttype.h"
 #include "game/state/shared/equipment.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"

@@ -95,6 +95,12 @@ sp<VoxelMap> TileObjectProjectile::getVoxelMap(Vec3<int> mapIndex, bool los) con
 	{
 		return nullptr;
 	}
+	// FIXME: Implement when we multi-select with 1 click in city
+	// Don't block LOS until we know what's under
+	if (los)
+	{
+		return nullptr;
+	}
 	return getProjectile()->voxelMap;
 }
 

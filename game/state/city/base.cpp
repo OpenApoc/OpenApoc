@@ -7,7 +7,7 @@
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/city/baselayout.h"
-#include "game/state/rules/city/facility_type.h"
+#include "game/state/rules/city/facilitytype.h"
 #include "game/state/shared/organisation.h"
 #include "library/strings_format.h"
 #include <random>

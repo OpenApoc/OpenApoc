@@ -5,7 +5,7 @@
 #include "game/state/battle/battleunit.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/aequipmenttype.h"
 #include "game/state/rules/battle/battlecommonsamplelist.h"
 #include "game/state/shared/aequipment.h"
 #include "game/state/tilemap/tileobject_battleitem.h"

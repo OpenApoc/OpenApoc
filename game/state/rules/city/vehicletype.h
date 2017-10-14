@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game/state/rules/city/vequipment_type.h"
+#include "game/state/rules/city/vequipmenttype.h"
 #include "game/state/shared/equipment.h"
 #include "game/state/stateobject.h"
 #include "library/rect.h"

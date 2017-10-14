@@ -1,6 +1,8 @@
 #include "game/ui/components/controlgenerator.h"
 #include "forms/graphic.h"
+#include "forms/graphicbutton.h"
 #include "forms/label.h"
+#include "forms/scrollbar.h"
 #include "forms/ui.h"
 #include "framework/configfile.h"
 #include "framework/data.h"
@@ -14,10 +16,10 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vequipment.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/aequipment_type.h"
-#include "game/state/rules/city/vammo_type.h"
-#include "game/state/rules/city/vehicle_type.h"
-#include "game/state/rules/city/vequipment_type.h"
+#include "game/state/rules/aequipmenttype.h"
+#include "game/state/rules/city/vammotype.h"
+#include "game/state/rules/city/vehicletype.h"
+#include "game/state/rules/city/vequipmenttype.h"
 #include "game/state/shared/agent.h"
 
 namespace OpenApoc
@@ -106,6 +108,13 @@ void ControlGenerator::init(GameState &state)
 	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 75));
 	alienContainedKill = fw().data->loadImage(format(
 	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 76));
+
+	scrollLeft = fw().data->loadImage(format(
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 53));
+	scrollRight = fw().data->loadImage(format(
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 54));
+
+	transactionShade = fw().data->loadImage("city/transaction-shade.png");
 
 	initialised = true;
 }
@@ -494,7 +503,10 @@ sp<Control> ControlGenerator::createPurchaseControl(GameState &state,
 			return nullptr;
 		}
 		auto &economy = state.economy[agentEquipmentType.id];
-		if (stock == 0 && economy.currentStock == 0 && agentEquipmentType->artifact)
+		int week = state.gameTime.getWeek();
+		if (stock == 0 && economy.currentStock == 0 &&
+		    (agentEquipmentType->artifact || economy.weekAvailable == 0 ||
+		     economy.weekAvailable > week))
 		{
 			return nullptr;
 		}
@@ -539,8 +551,10 @@ sp<Control> ControlGenerator::createPurchaseControl(GameState &state,
 		return nullptr;
 	}
 	auto &economy = state.economy[vehicleEquipmentType.id];
+	int week = state.gameTime.getWeek();
 	if (stock == 0 && economy.currentStock == 0 &&
-	    vehicleEquipmentType->manufacturer == state.getPlayer())
+	    (vehicleEquipmentType->manufacturer == state.getPlayer() || economy.weekAvailable == 0 ||
+	     economy.weekAvailable > week))
 	{
 		return nullptr;
 	}
@@ -571,8 +585,10 @@ sp<Control> ControlGenerator::createPurchaseControl(GameState &state,
 		return nullptr;
 	}
 	auto &economy = state.economy[vehicleAmmoType.id];
+	int week = state.gameTime.getWeek();
 	if (stock == 0 && economy.currentStock == 0 &&
-	    vehicleAmmoType->manufacturer == state.getPlayer())
+	    (vehicleAmmoType->manufacturer == state.getPlayer() || economy.weekAvailable == 0 ||
+	     economy.weekAvailable > week))
 	{
 		return nullptr;
 	}
@@ -603,7 +619,10 @@ sp<Control> ControlGenerator::createPurchaseControl(GameState &state,
 		return nullptr;
 	}
 	auto &economy = state.economy[vehicleType.id];
-	if (stock == 0 && economy.currentStock == 0 && vehicleType->manufacturer == state.getPlayer())
+	int week = state.gameTime.getWeek();
+	if (stock == 0 && economy.currentStock == 0 &&
+	    (vehicleType->manufacturer == state.getPlayer() || economy.weekAvailable == 0 ||
+	     economy.weekAvailable > week))
 	{
 		return nullptr;
 	}
@@ -751,7 +770,122 @@ sp<Control> ControlGenerator::createTransactionControl(GameState &state, bool is
                                                        UString manufacturer, int price, int stock1,
                                                        int stock2)
 {
-	return sp<Control>();
+	if (!singleton.initialised)
+	{
+		singleton.init(state);
+	}
+
+	auto size = Vec2<int>{173 + 178 - 2, 44};
+
+	auto baseControl = mksp<Control>();
+	// baseControl->setData(info.agent);
+	baseControl->Name = "TRANSACTION_CONTROL_XYZ";
+	baseControl->Size = size;
+
+	auto bgLeft = baseControl->createChild<Graphic>(singleton.purchaseControlParts[0]);
+	bgLeft->AutoSize = true;
+	bgLeft->Location = {0, 0};
+	auto bgRight = baseControl->createChild<Graphic>(singleton.purchaseControlParts[1]);
+	bgRight->AutoSize = true;
+	bgRight->Location = {173 - 1, 0};
+
+	if (isAmmo)
+	{
+		auto arrow = baseControl->createChild<Graphic>(singleton.purchaseArrow);
+		arrow->AutoSize = true;
+		arrow->Location = {4, 0};
+	}
+
+	auto iconL = baseControl->createChild<Graphic>(iconLeft);
+	iconL->Name = baseControl->Name + "_ICON_LEFT";
+	iconL->Size = {22, 20};
+	iconL->ImageHAlign = HorizontalAlignment::Centre;
+	iconL->ImageVAlign = VerticalAlignment::Centre;
+	iconL->Location = {58, 22};
+	auto iconR = baseControl->createChild<Graphic>(iconRight);
+	iconR->Name = baseControl->Name + "_ICON_RIGHT";
+	iconR->Size = {22, 20};
+	iconR->ImageHAlign = HorizontalAlignment::Centre;
+	iconR->ImageVAlign = VerticalAlignment::Centre;
+	iconR->Location = {270, 22};
+
+	if (name.length() > 0)
+	{
+		auto label = baseControl->createChild<Label>(name, singleton.labelFont);
+		label->Location = {isAmmo ? 32 : 11, 1};
+		label->Size = {256, 16};
+		label->TextHAlign = HorizontalAlignment::Left;
+		label->TextVAlign = VerticalAlignment::Centre;
+	}
+	if (manufacturer.length() > 0)
+	{
+		auto label = baseControl->createChild<Label>(manufacturer, singleton.labelFont);
+		label->Location = {34, 1};
+		label->Size = {256, 16};
+		label->TextHAlign = HorizontalAlignment::Right;
+		label->TextVAlign = VerticalAlignment::Centre;
+	}
+	if (price != 0)
+	{
+		auto label = baseControl->createChild<Label>(format("$%d", price), singleton.labelFont);
+		label->Location = {290, 1};
+		label->Size = {47, 16};
+		label->TextHAlign = HorizontalAlignment::Right;
+		label->TextVAlign = VerticalAlignment::Centre;
+	}
+
+	auto stockLeft = baseControl->createChild<Label>(format("%d", stock2), singleton.labelFont);
+	stockLeft->Name = baseControl->Name + "_STOCK_LEFT";
+	stockLeft->Location = {11, 24};
+	stockLeft->Size = {32, 14};
+	stockLeft->TextHAlign = HorizontalAlignment::Right;
+	stockLeft->TextVAlign = VerticalAlignment::Centre;
+	auto stockRight = baseControl->createChild<Label>(format("%d", stock1), singleton.labelFont);
+	stockRight->Name = baseControl->Name + "_STOCK_RIGHT";
+	stockRight->Location = {303, 24};
+	stockRight->Size = {32, 14};
+	stockRight->TextHAlign = HorizontalAlignment::Right;
+	stockRight->TextVAlign = VerticalAlignment::Centre;
+
+	auto changeLeft = baseControl->createChild<Label>("", singleton.labelFont);
+	changeLeft->Name = baseControl->Name + "_CHANGE_LEFT";
+	changeLeft->Location = {50, 24};
+	changeLeft->Size = {32, 14};
+	changeLeft->TextHAlign = HorizontalAlignment::Right;
+	changeLeft->TextVAlign = VerticalAlignment::Centre;
+	auto changeRight = baseControl->createChild<Label>("", singleton.labelFont);
+	changeRight->Name = baseControl->Name + "_CHANGE_RIGHT";
+	changeRight->Location = {264, 24};
+	changeRight->Size = {30, 14};
+	changeRight->TextHAlign = HorizontalAlignment::Right;
+	changeRight->TextVAlign = VerticalAlignment::Centre;
+
+	auto scroll = baseControl->createChild<ScrollBar>();
+	scroll->Name = baseControl->Name + "_SCROLL";
+	scroll->Location = {102, 24};
+	scroll->Size = {147, 19};
+	scroll->Minimum = 0;
+	scroll->Maximum = stock1 + stock2;
+	scroll->setValue(stock1);
+
+	auto buttonScrollLeft = baseControl->createChild<GraphicButton>(nullptr, singleton.scrollLeft);
+	buttonScrollLeft->Size = singleton.scrollLeft->size;
+	buttonScrollLeft->Location = {87, 22};
+	buttonScrollLeft->ScrollBarPrev = scroll;
+	auto buttonScrollRight =
+	    baseControl->createChild<GraphicButton>(nullptr, singleton.scrollRight);
+	buttonScrollRight->Size = singleton.scrollRight->size;
+	buttonScrollRight->Location = {247, 22};
+	buttonScrollRight->ScrollBarNext = scroll;
+
+	if (stock1 == 0 && stock2 == 0)
+	{
+		auto shade = baseControl->createChild<Graphic>(singleton.transactionShade);
+		shade->AutoSize = true;
+		shade->Location = {0, 0};
+	}
+
+	return baseControl;
 }
 
 int ControlGenerator::getFontHeight(GameState &state)

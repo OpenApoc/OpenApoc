@@ -120,6 +120,13 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 			o->current_relations[o2] = (float)rdata.relationships[j];
 		}
 
+		// FIXME: Assign hirable agents to orgs
+		// o->hirableTypes
+		// o->minHireePool
+		// o->maxHireePool
+
+		// Park
+
 		if (i != ORG_CIVILIAN && i != ORG_XCOM && i != ORG_ALIENS)
 		{
 			auto vdata = data.vehicle_park->get(i);

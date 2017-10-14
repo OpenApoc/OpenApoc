@@ -1,4 +1,4 @@
-#include "game/state/rules/doodad_type.h"
+#include "game/state/rules/doodadtype.h"
 #include "game/state/gamestate.h"
 #include "library/strings.h"
 

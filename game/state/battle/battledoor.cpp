@@ -6,7 +6,7 @@
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/battle/battlemappart_type.h"
+#include "game/state/rules/battle/battlemapparttype.h"
 #include "game/state/tilemap/tilemap.h"
 #include "game/state/tilemap/tileobject_battlemappart.h"
 #include "game/state/tilemap/tileobject_battleunit.h"

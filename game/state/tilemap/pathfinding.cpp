@@ -8,7 +8,7 @@
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/battle/battlemap.h"
-#include "game/state/rules/city/scenery_tile_type.h"
+#include "game/state/rules/city/scenerytiletype.h"
 #include "game/state/tilemap/tilemap.h"
 #include "game/state/tilemap/tileobject_battleunit.h"
 #include "game/state/tilemap/tileobject_vehicle.h"

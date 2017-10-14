@@ -68,6 +68,9 @@ class ControlGenerator
 	sp<Image> purchaseArrow;
 	sp<Image> alienContainedDetain;
 	sp<Image> alienContainedKill;
+	sp<Image> scrollLeft;
+	sp<Image> scrollRight;
+	sp<Image> transactionShade;
 
   public:
 	static VehicleTileInfo createVehicleInfo(GameState &state, sp<Vehicle> v);

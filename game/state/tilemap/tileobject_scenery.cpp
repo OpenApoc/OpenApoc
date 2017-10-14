@@ -2,7 +2,7 @@
 #include "framework/image.h"
 #include "framework/renderer.h"
 #include "game/state/city/scenery.h"
-#include "game/state/rules/city/scenery_tile_type.h"
+#include "game/state/rules/city/scenerytiletype.h"
 #include "game/state/tilemap/tilemap.h"
 
 namespace OpenApoc

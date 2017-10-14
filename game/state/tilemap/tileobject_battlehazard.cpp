@@ -2,7 +2,7 @@
 #include "framework/renderer.h"
 #include "game/state/battle/battlehazard.h"
 #include "game/state/rules/battle/damage.h"
-#include "game/state/rules/doodad_type.h"
+#include "game/state/rules/doodadtype.h"
 #include "game/state/tilemap/tilemap.h"
 #include "library/line.h"
 

@@ -1,7 +1,7 @@
 #include "game/state/tilemap/tileobject_battleitem.h"
 #include "framework/renderer.h"
 #include "game/state/battle/battleitem.h"
-#include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/aequipmenttype.h"
 #include "game/state/shared/aequipment.h"
 #include "game/state/tilemap/tilemap.h"
 #include "library/line.h"

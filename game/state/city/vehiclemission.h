@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game/state/rules/city/vehicle_type.h"
+#include "game/state/rules/city/vehicletype.h"
 #include "game/state/stateobject.h"
 
 #include "game/state/tilemap/tilemap.h"

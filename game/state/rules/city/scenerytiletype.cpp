@@ -1,4 +1,4 @@
-#include "game/state/rules/city/scenery_tile_type.h"
+#include "game/state/rules/city/scenerytiletype.h"
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"
 

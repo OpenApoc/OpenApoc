@@ -1,7 +1,7 @@
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/aequipmenttype.h"
 #include "game/state/rules/battle/battlecommonimagelist.h"
 #include "game/state/rules/battle/battleunitimagepack.h"
 #include "game/state/rules/battle/damage.h"

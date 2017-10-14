@@ -1,4 +1,4 @@
-#include "game/state/rules/city/ufo_growth.h"
+#include "game/state/rules/city/ufogrowth.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc

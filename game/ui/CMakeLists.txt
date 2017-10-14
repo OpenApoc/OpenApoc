@@ -12,6 +12,7 @@ find_package (Threads REQUIRED)
 set (GAMEUI_SOURCE_FILES
 	base/basescreen.cpp
 	base/basestage.cpp
+	base/buysellscreen.cpp
 	base/researchscreen.cpp
 	base/researchselect.cpp
 	base/vequipscreen.cpp
@@ -70,6 +71,7 @@ set (GAMEUI_HEADER_FILES
 	
 	base/basescreen.h
 	base/basestage.h
+	base/buysellscreen.h
 	base/researchscreen.h
 	base/researchselect.h
 	base/vequipscreen.h

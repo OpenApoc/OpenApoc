@@ -1,9 +1,9 @@
 #pragma once
 
-#include "game/state/rules/city/facility_type.h"
-#include "game/state/rules/city/vammo_type.h"
-#include "game/state/rules/city/vehicle_type.h"
-#include "game/state/rules/city/vequipment_type.h"
+#include "game/state/rules/city/facilitytype.h"
+#include "game/state/rules/city/vammotype.h"
+#include "game/state/rules/city/vehicletype.h"
+#include "game/state/rules/city/vequipmenttype.h"
 #include "game/state/shared/organisation.h"
 #include "tools/extractors/common/aequipment.h"
 #include "tools/extractors/common/agent.h"

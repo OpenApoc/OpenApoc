@@ -8,7 +8,7 @@
 #include "game/state/battle/battlescanner.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/aequipmenttype.h"
 #include "game/state/rules/battle/battlecommonsamplelist.h"
 #include "game/state/rules/battle/damage.h"
 #include "game/state/shared/agent.h"

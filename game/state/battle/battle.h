@@ -4,7 +4,7 @@
 #include "game/state/battle/ai/tacticalai.h"
 #include "game/state/battle/battleforces.h"
 #include "game/state/gametime.h"
-#include "game/state/rules/agent_type.h"
+#include "game/state/rules/agenttype.h"
 #include "game/state/rules/battle/battlemapsector.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"

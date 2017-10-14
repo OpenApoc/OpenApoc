@@ -3,7 +3,7 @@
 #include "game/state/battle/battle.h"
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/doodad_type.h"
+#include "game/state/rules/doodadtype.h"
 #include "game/state/tilemap/tilemap.h"
 #include "game/state/tilemap/tileobject_doodad.h"
 #include "library/vector_remove.h"

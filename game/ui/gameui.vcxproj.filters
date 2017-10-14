@@ -169,6 +169,9 @@
     <ClCompile Include="skirmish\skirmish.cpp">
       <Filter>skirmish</Filter>
     </ClCompile>
+    <ClCompile Include="base\buysellscreen.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\basescreen.h">
@@ -306,6 +309,9 @@
     </ClInclude>
     <ClInclude Include="skirmish\skirmish.h">
       <Filter>skirmish</Filter>
+    </ClInclude>
+    <ClInclude Include="base\buysellscreen.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

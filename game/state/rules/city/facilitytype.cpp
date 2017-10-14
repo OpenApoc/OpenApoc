@@ -1,4 +1,4 @@
-#include "game/state/rules/city/facility_type.h"
+#include "game/state/rules/city/facilitytype.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc

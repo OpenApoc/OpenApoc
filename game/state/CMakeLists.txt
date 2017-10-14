@@ -46,25 +46,25 @@ set (GAMESTATE_SOURCE_FILES
 	
 	rules/battle/battlemap.cpp
 	rules/battle/battlemapsector.cpp
-	rules/battle/battlemappart_type.cpp
+	rules/battle/battlemapparttype.cpp
 	rules/battle/battleunitanimationpack.cpp
 	rules/battle/battleunitimagepack.cpp
 	rules/battle/battlemaptileset.cpp
 	rules/battle/damage.cpp
 	
 	rules/city/baselayout.cpp
-	rules/city/facility_type.cpp
-	rules/city/scenery_tile_type.cpp
-	rules/city/ufo_growth.cpp
-	rules/city/ufo_incursion.cpp
+	rules/city/facilitytype.cpp
+	rules/city/scenerytiletype.cpp
+	rules/city/ufogrowth.cpp
+	rules/city/ufoincursion.cpp
 	rules/city/ufopaedia.cpp
-	rules/city/vammo_type.cpp
-	rules/city/vehicle_type.cpp
-	rules/city/vequipment_type.cpp
+	rules/city/vammotype.cpp
+	rules/city/vehicletype.cpp
+	rules/city/vequipmenttype.cpp
 	
-	rules/aequipment_type.cpp
-	rules/agent_type.cpp
-	rules/doodad_type.cpp
+	rules/aequipmenttype.cpp
+	rules/agenttype.cpp
+	rules/doodadtype.cpp
 	rules/supportedmappart.cpp
 	
 	shared/aequipment.cpp
@@ -135,7 +135,7 @@ set (GAMESTATE_HEADER_FILES
 	rules/battle/battlecommonsamplelist.h
 	rules/battle/battlemap.h
 	rules/battle/battlemapsector.h
-	rules/battle/battlemappart_type.h
+	rules/battle/battlemapparttype.h
 	rules/battle/battleunitanimationpack.h
 	rules/battle/battleunitimagepack.h
 	rules/battle/battlemaptileset.h
@@ -144,18 +144,18 @@ set (GAMESTATE_HEADER_FILES
 	rules/city/baselayout.h
 	rules/city/citycommonimagelist.h
 	rules/city/citycommonsamplelist.h
-	rules/city/facility_type.h
-	rules/city/scenery_tile_type.h
-	rules/city/ufo_growth.h
-	rules/city/ufo_incursion.h
+	rules/city/facilitytype.h
+	rules/city/scenerytiletype.h
+	rules/city/ufogrowth.h
+	rules/city/ufoincursion.h
 	rules/city/ufopaedia.h
-	rules/city/vammo_type.h
-	rules/city/vehicle_type.h
-	rules/city/vequipment_type.h
+	rules/city/vammotype.h
+	rules/city/vehicletype.h
+	rules/city/vequipmenttype.h
 	
-	rules/aequipment_type.h
-	rules/agent_type.h
-	rules/doodad_type.h
+	rules/aequipmenttype.h
+	rules/agenttype.h
+	rules/doodadtype.h
 	rules/supportedmappart.h
 	
 	shared/aequipment.h
@@ -166,7 +166,7 @@ set (GAMESTATE_HEADER_FILES
 	shared/projectile.h
 	
 	gameevent.h
-	gameevent_types.h
+	gameeventtypes.h
 	gamestate.h
 	gamestate_serialize.h
 	gamestate_serialize_generated.h
@@ -177,7 +177,6 @@ set (GAMESTATE_HEADER_FILES
 	stateobject.h
 	
 	tilemap/collision.h
-	tilemap/pathfinding.h
 	tilemap/tile.h
 	tilemap/tilemap.h
 	tilemap/tileobject.h

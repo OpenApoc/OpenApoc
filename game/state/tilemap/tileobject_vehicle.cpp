@@ -5,7 +5,7 @@
 #include "framework/renderer.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
-#include "game/state/rules/city/vehicle_type.h"
+#include "game/state/rules/city/vehicletype.h"
 #include "game/state/tilemap/tilemap.h"
 #include "library/voxel.h"
 #include <glm/glm.hpp>

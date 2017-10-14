@@ -126,6 +126,9 @@
     <ClCompile Include="extractors\extract_unit_animation_pack_q.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="extractors\extract_economy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="extractors\extractors.h">
@@ -195,6 +198,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="extractors\common\crew.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="extractors\common\economy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,7 +5,7 @@
 #include "framework/renderer.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/rules/battle/battleunitanimationpack.h"
-#include "game/state/rules/doodad_type.h"
+#include "game/state/rules/doodadtype.h"
 #include "game/state/tilemap/tilemap.h"
 #include "library/voxel.h"
 #include <algorithm>

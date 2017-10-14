@@ -1,7 +1,7 @@
 #pragma once
 
 #include "game/state/gametime.h"
-#include "game/state/rules/city/vehicle_type.h"
+#include "game/state/rules/city/vehicletype.h"
 #include "game/state/shared/equipment.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"

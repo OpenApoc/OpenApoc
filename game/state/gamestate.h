@@ -2,7 +2,7 @@
 
 #include "game/state/city/economyinfo.h"
 #include "game/state/city/research.h"
-#include "game/state/gameevent_types.h"
+#include "game/state/gameeventtypes.h"
 #include "game/state/gametime.h"
 #include "game/state/shared/agent.h"
 #include "game/state/stateobject.h"
