@@ -1,6 +1,7 @@
 #pragma once
 #include "library/sp.h"
 #include "library/vec.h"
+#include "game/state/stateobject.h"
 #include <vector>
 
 namespace OpenApoc
@@ -15,6 +16,12 @@ class Image;
 class BitmapFont;
 class Control;
 class Graphic;
+class AEquipmentType;
+class VehicleType;
+class VEquipmentType;
+class VAmmoType;
+class EconomyInfo;
+
 enum class Rank;
 
 enum class CityUnitState
@@ -53,6 +60,10 @@ class ControlGenerator
 	std::vector<sp<Image>> citySelect;
 	std::vector<sp<Image>> vehiclePassengerCountIcons;
 	std::vector<sp<Image>> icons;
+	std::vector<sp<Image>> purchaseControlParts;
+	sp<Image> purchaseBoxIcon;
+	sp<Image> purchaseXComIcon;
+	sp<Image> purchaseArrow;
 
   public:
 	static VehicleTileInfo createVehicleInfo(GameState &state, sp<Vehicle> v);
@@ -74,6 +85,17 @@ class ControlGenerator
 	createLargeAgentControl(GameState &state, sp<Agent> a, bool addSkill = false,
 	                        UnitSelectionState forcedSelectionState = UnitSelectionState::NA,
 	                        bool forceFade = false, bool labMode = false);
+
+	static sp<Control>
+		createPurchaseControl(GameState &state, StateRef<AEquipmentType> agentEquipmentType, int stock);
+	static sp<Control>
+		createPurchaseControl(GameState &state, StateRef<VEquipmentType> vehicleEquipmentType, int stock);
+	static sp<Control>
+		createPurchaseControl(GameState &state, StateRef<VAmmoType> vehicleAmmoType, int stock);
+	static sp<Control>
+		createPurchaseControl(GameState &state, StateRef<VehicleType> vehicleType, int stock);
+	static sp<Control>
+		createPurchaseControl(GameState &state, const EconomyInfo &economy, bool isAmmo, int stock);
 
 	static int getFontHeight(GameState &state);
 };

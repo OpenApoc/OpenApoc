@@ -56,6 +56,7 @@
     <ClCompile Include="extractors\extract_vehicles.cpp" />
     <ClCompile Include="extractors\extract_vehicle_equipment.cpp" />
     <ClCompile Include="extractors\main.cpp" />
+    <ClCompile Include="extract_economy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="extractors\common\aequipment.h" />
@@ -70,6 +71,7 @@
     <ClInclude Include="extractors\common\crew.h" />
     <ClInclude Include="extractors\common\datachunk.h" />
     <ClInclude Include="extractors\common\doodads.h" />
+    <ClInclude Include="extractors\common\economy.h" />
     <ClInclude Include="extractors\common\facilities.h" />
     <ClInclude Include="extractors\common\organisations.h" />
     <ClInclude Include="extractors\common\research.h" />

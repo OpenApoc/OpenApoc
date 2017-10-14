@@ -34,6 +34,7 @@
 		<member type="Section">city_common_sample_list</member>
 		<member type="Section">battle_common_image_list</member>
 		<member type="Section">battle_common_sample_list</member>
+		<member type="Section">economy</member>
 		<member>player</member>
 		<member>aliens</member>
 		<member>civilian</member>
@@ -1074,6 +1075,7 @@
 		<member>bioStorage</member>
 		<member>bioRemains</member>
 		<member>launcher</member>
+		<member>artifact</member>
 		<member>body_sprite</member>
 		<member>damage_modifier</member>
 		<member>body_part</member>
@@ -1883,5 +1885,15 @@
 		<member>updateTicksAccumulated</member>
 		<member>lastPosition</member>
 		<member>holder</member>
+	</object>
+	<object>
+		<name>EconomyInfo</name>
+		<member>weekAvailable</member>
+		<member>basePrice</member>
+		<member>minStock</member>
+		<member>maxStock</member>
+		<member>currentPrice</member>
+		<member>currentStock</member>
+		<member>lastStock</member>
 	</object>
 </openapoc_gamestate>

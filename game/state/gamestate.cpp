@@ -584,6 +584,8 @@ void GameState::startGame()
 
 	gameTime = GameTime::midday();
 
+	updateEconomy();
+
 	newGame = true;
 	firstDetection = true;
 }
@@ -696,6 +698,61 @@ void GameState::fillPlayerStartingProperty()
 				}
 				it++;
 			}
+		}
+	}
+}
+
+void OpenApoc::GameState::updateEconomy()
+{
+	std::list<UString> newItems;
+
+	for (auto &v : vehicle_types)
+	{
+		if (economy.find(v.first) != economy.end())
+		{
+			if (economy[v.first].update(*this, v.second->manufacturer == getPlayer()))
+			{
+				newItems.push_back(v.second->name);
+			}
+		}
+	}
+	for (auto &ve : vehicle_equipment)
+	{
+		if (economy.find(ve.first) != economy.end())
+		{
+			if (economy[ve.first].update(*this, ve.second->manufacturer == getPlayer()))
+			{
+				newItems.push_back(ve.second->name);
+			}
+		}
+	}
+	for (auto &va : vehicle_ammo)
+	{
+		if (economy.find(va.first) != economy.end())
+		{
+			if (economy[va.first].update(*this, va.second->manufacturer == getPlayer()))
+			{
+				newItems.push_back(va.second->name);
+			}
+		}
+	}
+	for (auto &ae : agent_equipment)
+	{
+		if (economy.find(ae.first) != economy.end())
+		{
+			if (economy[ae.first].update(*this, ae.second->manufacturer == getPlayer()))
+			{
+				newItems.push_back(ae.second->name);
+			}
+		}
+	}
+
+	if (!newItems.empty())
+	{
+		LogWarning("Notify that new items are here!");
+		for (auto &s : newItems)
+		{
+			LogWarning("%s", s);
 		}
 	}
 }
@@ -989,6 +1046,7 @@ void GameState::updateEndOfWeek()
 			}
 		}
 	}
+	updateEconomy();
 }
 
 void GameState::updateTurbo()

@@ -10,8 +10,12 @@
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/city/building.h"
+#include "game/state/rules/city/vammo_type.h"
 #include "game/state/city/city.h"
 #include "game/state/city/vehicle.h"
+#include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/city/vehicle_type.h"
+#include "game/state/rules/city/vequipment_type.h"
 #include "game/state/gamestate.h"
 #include "game/state/shared/agent.h"
 
@@ -82,6 +86,23 @@ void ControlGenerator::init(GameState &state)
 		    i)));
 	}
 	labelFont = ui().getFont("smalfont");
+
+	purchaseControlParts.push_back(fw().data->loadImage(format(
+		"PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx",
+		45)));
+	purchaseControlParts.push_back(fw().data->loadImage(format(
+		"PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx",
+		46)));
+
+	purchaseBoxIcon = fw().data->loadImage(format(
+		"PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx",
+		47));
+	purchaseXComIcon = fw().data->loadImage(format(
+		"PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx",
+		48));
+	purchaseArrow = fw().data->loadImage(format(
+		"PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx",
+		52));
 
 	initialised = true;
 }
@@ -413,6 +434,68 @@ sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, sp<Agent
 {
 	auto info = createAgentInfo(state, a, forcedSelectionState, forceFade);
 	return createLargeAgentControl(state, info, addSkill, labMode);
+}
+
+sp<Control> ControlGenerator::createPurchaseControl(GameState &state, StateRef<AEquipmentType> agentEquipmentType, int stock)
+{
+	if (state.economy.find(agentEquipmentType.id) == state.economy.end())
+	{
+		return nullptr;
+	}
+	auto &economy = state.economy[agentEquipmentType.id];
+	if (stock == 0 && economy.currentStock == 0 && agentEquipmentType->artifact)
+	{
+		return nullptr;
+	}
+	return createPurchaseControl(state, economy, agentEquipmentType->type == AEquipmentType::Type::Ammo, stock);
+}
+
+sp<Control> ControlGenerator::createPurchaseControl(GameState &state, StateRef<VEquipmentType> vehicleEquipmentType, int stock)
+{
+	if (state.economy.find(vehicleEquipmentType.id) == state.economy.end())
+	{
+		return nullptr;
+	}
+	auto &economy = state.economy[vehicleEquipmentType.id];
+	if (stock == 0 && economy.currentStock == 0 && vehicleEquipmentType->manufacturer == state.getPlayer())
+	{
+		return nullptr;
+	}
+	return createPurchaseControl(state, economy, false, stock);
+}
+
+sp<Control> ControlGenerator::createPurchaseControl(GameState &state, StateRef<VAmmoType> vehicleAmmoType, int stock)
+{
+	if (state.economy.find(vehicleAmmoType.id) == state.economy.end())
+	{
+		return nullptr;
+	}
+	auto &economy = state.economy[vehicleAmmoType.id];
+	if (stock == 0 && economy.currentStock == 0 && vehicleAmmoType->manufacturer == state.getPlayer())
+	{
+		return nullptr;
+	}
+	return createPurchaseControl(state, economy, true, stock);
+}
+
+sp<Control> ControlGenerator::createPurchaseControl(GameState &state, StateRef<VehicleType> vehicleType, int stock)
+{
+	if (state.economy.find(vehicleType.id) == state.economy.end())
+	{
+		return nullptr;
+	}
+	auto &economy = state.economy[vehicleType.id];
+	if (stock == 0 && economy.currentStock == 0 && vehicleType->manufacturer == state.getPlayer())
+	{
+		return nullptr;
+	}
+	return createPurchaseControl(state, economy, false, stock);
+}
+
+sp<Control> ControlGenerator::createPurchaseControl(GameState & state, const EconomyInfo &economy, bool isAmmo, int stock)
+{
+
+	return sp<Control>();
 }
 
 int ControlGenerator::getFontHeight(GameState &state)

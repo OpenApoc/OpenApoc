@@ -15,7 +15,6 @@ set (GAMEUI_SOURCE_FILES
 	base/researchscreen.cpp
 	base/researchselect.cpp
 	base/vequipscreen.cpp
-	base/aequipscreen.cpp
 	
 	battle/battlebriefing.cpp
 	battle/battledebriefing.cpp
@@ -42,6 +41,7 @@ set (GAMEUI_SOURCE_FILES
 	debugtools/formpreview.cpp
 	debugtools/imagepreview.cpp
 	
+	general/aequipscreen.cpp
 	general/difficultymenu.cpp
 	general/ingameoptions.cpp
 	general/loadingscreen.cpp
@@ -73,7 +73,6 @@ set (GAMEUI_HEADER_FILES
 	base/researchscreen.h
 	base/researchselect.h
 	base/vequipscreen.h
-	base/aequipscreen.h
 	
 	battle/battlebriefing.h
 	battle/battledebriefing.h
@@ -100,6 +99,7 @@ set (GAMEUI_HEADER_FILES
 	debugtools/formpreview.h
 	debugtools/imagepreview.h
 	
+	general/aequipscreen.h
 	general/difficultymenu.h
 	general/ingameoptions.h
 	general/loadingscreen.h

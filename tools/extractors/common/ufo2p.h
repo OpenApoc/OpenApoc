@@ -13,6 +13,7 @@
 #include "tools/extractors/common/bulletsprite.h"
 #include "tools/extractors/common/canonstring.h"
 #include "tools/extractors/common/crew.h"
+#include "tools/extractors/common/economy.h"
 #include "tools/extractors/common/datachunk.h"
 #include "tools/extractors/common/facilities.h"
 #include "tools/extractors/common/organisations.h"
@@ -76,6 +77,10 @@ class UFO2P
 
 	std::unique_ptr<StrTab> facility_names;
 	std::unique_ptr<DataChunk<FacilityData>> facility_data;
+
+	std::unique_ptr<DataChunk<EconomyData>> economy_data1;
+	std::unique_ptr<DataChunk<EconomyData>> economy_data2;
+	std::unique_ptr<DataChunk<EconomyData>> economy_data3;
 
 	std::unique_ptr<DataChunk<SceneryMinimapColour>> scenery_minimap_colour;
 

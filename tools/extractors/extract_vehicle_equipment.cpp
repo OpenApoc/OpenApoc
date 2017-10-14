@@ -55,7 +55,8 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 		// FIXME: max_ammo 0xffff is used for 'no ammo' (IE automatically-recharging stuff)
 
 		e->max_ammo = edata.max_ammo;
-		e->ammo_type = format("%d", (int)edata.ammo_type);
+		// This is wrong!?
+		//e->ammo_type = format("%d", (int)edata.ammo_type);
 		// Force all sprites into the correct palette by using A_RANDOM_VEHICLES_BACKGROUND pcx
 		//(I assume the parts of the palette used for this are the same on all?)
 		e->equipscreen_sprite = fw().data->loadImage(format(

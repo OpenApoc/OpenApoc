@@ -482,6 +482,8 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 			e->launcher = true;
 		}
 
+		e->artifact = edata.artifact != 0;
+
 		unsigned payload_idx = std::numeric_limits<unsigned>::max();
 		switch (edata.type)
 		{

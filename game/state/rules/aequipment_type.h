@@ -95,6 +95,9 @@ class AEquipmentType : public StateObject
 	// properly
 	bool launcher = false;
 
+	// Alien artifact flag (does not show in economy unless you own it)
+	bool artifact = false;
+
 	// Armor only
 	sp<Image> body_sprite;
 	StateRef<DamageModifier> damage_modifier;

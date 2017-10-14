@@ -4,6 +4,7 @@
 #include "game/state/gameevent_types.h"
 #include "game/state/gametime.h"
 #include "game/state/shared/agent.h"
+#include "game/state/city/economyinfo.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -102,6 +103,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	std::map<UString, int> initial_base_agent_equipment;
 	std::map<int, std::list<std::pair<StateRef<AgentType>, Vec2<int>>>> initial_aliens;
 
+	std::map<UString, EconomyInfo> economy;
+
 	StateRef<Organisation> player;
 	StateRef<Organisation> aliens;
 	StateRef<Organisation> government;
@@ -176,6 +179,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	void fillOrgStartingProperty();
 	// Fills out initial player property
 	void fillPlayerStartingProperty();
+
+	void updateEconomy();
 
 	// Returns true if we can go at max speed (IE push all update loops to 5 minute intervals -
 	// causes insta-completion of all routes etc.

@@ -243,6 +243,9 @@
     <ClCompile Include="rules\city\baselayout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="city\economyinfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gamestate.h">
@@ -495,6 +498,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="rules\city\baselayout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="city\economyinfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

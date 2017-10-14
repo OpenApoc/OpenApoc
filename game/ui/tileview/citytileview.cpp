@@ -37,18 +37,25 @@ CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratT
 	cargoImage = fw().data->loadImage("city/building-circle-yellow.png");
 
 	selectionBrackets.resize(3);
-	selectionBrackets[0].push_back(fw().data->loadImage("city/vehicle-brackets-f0.png"));
-	selectionBrackets[0].push_back(fw().data->loadImage("city/vehicle-brackets-f1.png"));
-	selectionBrackets[0].push_back(fw().data->loadImage("city/vehicle-brackets-f2.png"));
-	selectionBrackets[0].push_back(fw().data->loadImage("city/vehicle-brackets-f3.png"));
-	selectionBrackets[1].push_back(fw().data->loadImage("city/vehicle-brackets-s0.png"));
-	selectionBrackets[1].push_back(fw().data->loadImage("city/vehicle-brackets-s1.png"));
-	selectionBrackets[1].push_back(fw().data->loadImage("city/vehicle-brackets-s2.png"));
-	selectionBrackets[1].push_back(fw().data->loadImage("city/vehicle-brackets-s3.png"));
-	selectionBrackets[2].push_back(fw().data->loadImage("city/vehicle-brackets-h0.png"));
-	selectionBrackets[2].push_back(fw().data->loadImage("city/vehicle-brackets-h1.png"));
-	selectionBrackets[2].push_back(fw().data->loadImage("city/vehicle-brackets-h2.png"));
-	selectionBrackets[2].push_back(fw().data->loadImage("city/vehicle-brackets-h3.png"));
+	for (int i = 72; i < 76;i++)
+	{
+		selectionBrackets[0].push_back(fw().data->loadImage(format(
+			"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
+			i)));
+	}
+	for (int i = 76; i < 80;i++)
+	{
+		selectionBrackets[2].push_back(fw().data->loadImage(format(
+			"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
+			i)));
+	}
+	for (int i = 80; i < 84;i++)
+	{
+		selectionBrackets[1].push_back(fw().data->loadImage(format(
+			"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
+			i)));
+	}
+
 
 	selectionImageFriendlySmall = fw().data->loadImage("battle/map-selection-small.png");
 	selectionImageFriendlyLarge = fw().data->loadImage("battle/map-selection-large.png");
@@ -436,8 +443,8 @@ void CityTileView::render()
 
 				int idx = vehiclesBracketsIndex[obj];
 				r.draw(selectionBrackets[idx][0], {pLeft.x - 2.0f, pTop.y - 2.0f});
-				r.draw(selectionBrackets[idx][1], {pLeft.x - 2.0f, pBottom.y - 2.0f});
-				r.draw(selectionBrackets[idx][2], {pRight.x - 2.0f, pTop.y - 2.0f});
+				r.draw(selectionBrackets[idx][1], {pRight.x - 2.0f, pTop.y - 2.0f});
+				r.draw(selectionBrackets[idx][2], {pLeft.x - 2.0f, pBottom.y - 2.0f });
 				r.draw(selectionBrackets[idx][3], {pRight.x - 2.0f, pBottom.y - 2.0f});
 			}
 		}

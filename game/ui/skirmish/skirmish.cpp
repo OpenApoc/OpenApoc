@@ -19,7 +19,7 @@
 #include "game/state/rules/city/vehicle_type.h"
 #include "game/ui/battle/battlebriefing.h"
 #include "game/ui/general/aequipscreen.h"
-#include "game/ui/general/mapselector.h"
+#include "game/ui/skirmish/mapselector.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/skirmish/selectforces.h"
 namespace OpenApoc

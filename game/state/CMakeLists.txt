@@ -36,6 +36,7 @@ set (GAMESTATE_SOURCE_FILES
 	city/base.cpp
 	city/building.cpp
 	city/city.cpp
+	city/economyinfo.cpp
 	city/facility.cpp
 	city/research.cpp
 	city/scenery.cpp
@@ -122,6 +123,7 @@ set (GAMESTATE_HEADER_FILES
 	city/base.h
 	city/building.h
 	city/city.h
+	city/economyinfo.h
 	city/facility.h
 	city/research.h
 	city/scenery.h

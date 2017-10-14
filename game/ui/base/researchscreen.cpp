@@ -395,6 +395,8 @@ void ResearchScreen::updateProgressInfo()
 		auto completionPercent = form->findControlTyped<Label>("TEXT_PROJECT_COMPLETION");
 		completionPercent->setText("");
 	}
+	auto manufacture_bg = form->findControlTyped<Graphic>("MANUFACTURE_BG");
+		
 	auto manufacturing_scrollbar = form->findControlTyped<ScrollBar>("MANUFACTURE_QUANTITY_SLIDER");
 	auto manufacturing_scroll_left =
 	    form->findControlTyped<GraphicButton>("MANUFACTURE_QUANTITY_DOWN");
@@ -405,6 +407,7 @@ void ResearchScreen::updateProgressInfo()
 	if (this->selected_lab->lab->current_project &&
 	    this->selected_lab->lab->current_project->type == ResearchTopic::Type::Engineering)
 	{
+		manufacture_bg->setVisible(true);
 		manufacturing_ntomake->setVisible(true);
 		manufacturing_quantity->setVisible(true);
 		manufacturing_scrollbar->setVisible(true);
@@ -415,6 +418,7 @@ void ResearchScreen::updateProgressInfo()
 	}
 	else
 	{
+		manufacture_bg->setVisible(false);
 		manufacturing_ntomake->setVisible(false);
 		manufacturing_quantity->setVisible(false);
 		manufacturing_scrollbar->setVisible(false);

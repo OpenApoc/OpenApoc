@@ -24,6 +24,7 @@
 #include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/city/economyinfo.h"
 #include "game/state/city/facility.h"
 #include "game/state/city/research.h"
 #include "game/state/city/scenery.h"

@@ -424,8 +424,11 @@ class FlyingVehicleMover : public VehicleMover
 		}
 		if (vehicle.crashed)
 		{
-			updateCrashed(state, ticks);
-			return;
+			if (vehicle.type->type != VehicleType::Type::UFO)
+			{
+				updateCrashed(state, ticks);
+				return;
+			}
 		}
 		auto ticksToTurn = ticks;
 		auto ticksToMove = ticks;
@@ -1128,20 +1131,13 @@ void VehicleMover::updateCrashed(GameState &state, unsigned int ticks)
 	auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
 	if (!presentScenery)
 	{
-		if (vehicle.type->type == VehicleType::Type::UFO)
+		vehicle.crashed = false;
+		if (vehicle.smokeDoodad)
 		{
-			vehicle.die(state);
+			vehicle.smokeDoodad->remove(state);
+			vehicle.smokeDoodad.reset();
 		}
-		else
-		{
-			vehicle.crashed = false;
-			if (vehicle.smokeDoodad)
-			{
-				vehicle.smokeDoodad->remove(state);
-				vehicle.smokeDoodad.reset();
-			}
-			vehicle.startFalling(state);
-		}
+		vehicle.startFalling(state);
 	}
 }
 
@@ -1741,14 +1737,30 @@ void Vehicle::crash(GameState &state, StateRef<Vehicle> attacker)
 	switch (type->type)
 	{
 		case VehicleType::Type::UFO:
+		{
 			setMission(state, VehicleMission::crashLand(state, *this));
 			addMission(state, VehicleMission::selfDestruct(state, *this), true);
 			break;
+		}
 		case VehicleType::Type::Flying:
 		case VehicleType::Type::ATV:
 		case VehicleType::Type::Road:
-			setMission(state, VehicleMission::selfDestruct(state, *this));
+		{
+			bool found = false;
+			for (auto &m : missions)
+			{
+				if (m->type == VehicleMission::MissionType::SelfDestruct)
+				{
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				setMission(state, VehicleMission::selfDestruct(state, *this));
+			}
 			break;
+		}
 	}
 }
 
@@ -2077,6 +2089,12 @@ void Vehicle::updateSprite(GameState &state)
 		case VehicleType::Banking::Descending:
 		case VehicleType::Banking::Flat:
 			direction = getDirectionSmall(facing);
+			// UFOs don't care about banking and direction being correct
+			// Otherwise ensure direction is valid
+			if (type->type == VehicleType::Type::UFO)
+			{
+				break;
+			}
 			// If still invalid we must cancel banking (can happen for grounds)
 			if (type->directional_sprites.at(banking).find(direction) !=
 			    type->directional_sprites.at(banking).end())

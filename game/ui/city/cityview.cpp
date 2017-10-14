@@ -2198,18 +2198,17 @@ bool CityView::handleKeyDown(Event *e)
 				pos.z = 9;
 				auto ufo = state->current_city->placeVehicle(
 				    *state, {state.get(), "VEHICLETYPE_ALIEN_PROBE"}, state->getAliens(), pos);
-				ufo->health = 2;
-				ufo->applyDamage(*state, 1, 0, nothing);
+				ufo->crash(*state, nullptr);
 				pos.z++;
 				ufo = state->current_city->placeVehicle(
 				    *state, {state.get(), "VEHICLETYPE_ALIEN_BATTLESHIP"}, state->getAliens(), pos);
-				ufo->health = 2;
+				ufo->crash(*state, nullptr);
 				ufo->applyDamage(*state, 1, 0, nothing);
 				pos.z++;
 				ufo = state->current_city->placeVehicle(
 				    *state, {state.get(), "VEHICLETYPE_ALIEN_TRANSPORTER"}, state->getAliens(),
 				    pos);
-				ufo->health = 2;
+				ufo->crash(*state, nullptr);
 				ufo->applyDamage(*state, 1, 0, nothing);
 
 				return true;
