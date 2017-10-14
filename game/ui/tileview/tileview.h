@@ -2,7 +2,7 @@
 
 #include "framework/logger.h"
 #include "framework/stage.h"
-#include "game/state/tileview/tile.h"
+#include "game/state/tilemap/tilemap.h"
 #include "library/colour.h"
 #include "library/sp.h"
 #include "library/vec.h"

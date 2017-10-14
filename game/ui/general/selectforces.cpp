@@ -8,7 +8,7 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
-#include "game/state/agent.h"
+#include "game/state/shared/agent.h"
 #include "game/state/gamestate.h"
 #include "game/ui/general/skirmish.h"
 namespace OpenApoc

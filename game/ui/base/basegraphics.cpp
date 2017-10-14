@@ -4,13 +4,13 @@
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/renderer.h"
-#include "game/state/base/base.h"
-#include "game/state/base/facility.h"
+#include "game/state/city/base.h"
+#include "game/state/city/facility.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/scenery_tile_type.h"
-#include "game/state/tileview/tile.h"
+#include "game/state/rules/city/scenery_tile_type.h"
+#include "game/state/tilemap/tilemap.h"
 #include "library/strings_format.h"
 #include <unordered_map>
 

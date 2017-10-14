@@ -5,7 +5,7 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
-#include "game/state/base/base.h"
+#include "game/state/city/base.h"
 #include "game/state/battle/battle.h"
 #include "game/state/gamestate.h"
 #include "game/ui/base/aequipscreen.h"

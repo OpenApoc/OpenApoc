@@ -1,9 +1,9 @@
 #pragma once
 
-#include "game/state/rules/vehicle_type.h"
+#include "game/state/rules/city/vehicle_type.h"
 #include "game/state/stateobject.h"
 
-#include "game/state/tileview/tile.h"
+#include "game/state/tilemap/tilemap.h"
 #include "library/strings.h"
 #include "library/vec.h"
 #include <list>

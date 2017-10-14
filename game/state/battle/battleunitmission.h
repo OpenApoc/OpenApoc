@@ -1,7 +1,7 @@
 #pragma once
 
-#include "game/state/agent.h"
-#include "game/state/tileview/tile.h"
+#include "game/state/shared/agent.h"
+#include "game/state/tilemap/tilemap.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"

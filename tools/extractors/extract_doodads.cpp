@@ -1,6 +1,6 @@
 #include "framework/data.h"
 #include "framework/framework.h"
-#include "game/state/agent.h"
+#include "game/state/shared/agent.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/doodad_type.h"
 #include "library/strings_format.h"

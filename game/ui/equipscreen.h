@@ -1,7 +1,7 @@
 #pragma once
 
 #include "forms/control.h"
-#include "game/state/equipment.h"
+#include "game/state/shared/equipment.h"
 #include <array>
 #include <set>
 

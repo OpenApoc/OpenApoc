@@ -11,7 +11,7 @@
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/renderer.h"
-#include "game/state/agent.h"
+#include "game/state/shared/agent.h"
 #include "game/state/city/building.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"

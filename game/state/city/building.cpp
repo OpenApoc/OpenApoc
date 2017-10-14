@@ -1,7 +1,7 @@
 #include "game/state/city/building.h"
 #include "framework/configfile.h"
 #include "framework/framework.h"
-#include "game/state/base/base.h"
+#include "game/state/city/base.h"
 #include "game/state/city/agentmission.h"
 #include "game/state/city/city.h"
 #include "game/state/city/scenery.h"
@@ -9,7 +9,7 @@
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
-#include "game/state/organisation.h"
+#include "game/state/shared/organisation.h"
 
 // Uncomment to make cargo system output warnings
 //#define DEBUG_VERBOSE_CARGO_SYSTEM

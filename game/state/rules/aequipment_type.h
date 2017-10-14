@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game/state/research.h"
+#include "game/state/city/research.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"

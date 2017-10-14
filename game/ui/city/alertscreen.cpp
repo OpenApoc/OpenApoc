@@ -10,7 +10,7 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gamestate.h"
-#include "game/state/organisation.h"
+#include "game/state/shared/organisation.h"
 #include "game/ui/agentassignment.h"
 #include "game/ui/base/aequipscreen.h"
 #include "game/ui/base/vequipscreen.h"

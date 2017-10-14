@@ -10,20 +10,6 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package (Threads REQUIRED)
 
 set (GAMESTATE_SOURCE_FILES
-	aequipment.cpp
-	agent.cpp
-	gameevent.cpp
-	gamestate.cpp
-	gamestate_serialize.cpp
-	gamestate_serialize_generated.cpp
-	gametime.cpp
-	message.cpp
-	organisation.cpp
-	research.cpp
-	savemanager.cpp
-	ufopaedia.cpp
-	base/base.cpp
-	base/facility.cpp
 	battle/ai/aidecision.cpp
 	battle/ai/tacticalai.cpp
 	battle/ai/tacticalaivanilla.cpp
@@ -34,77 +20,83 @@ set (GAMESTATE_SOURCE_FILES
 	battle/ai/unitaihelper.cpp
 	battle/ai/unitailowmorale.cpp
 	battle/ai/unitaivanilla.cpp
+	
 	battle/battle.cpp
 	battle/battledoor.cpp
 	battle/battleexplosion.cpp
 	battle/battleforces.cpp
 	battle/battlehazard.cpp
 	battle/battleitem.cpp
-	battle/battlemap.cpp
 	battle/battlemappart.cpp
-	battle/battlemappart_type.cpp
-	battle/battlemapsector.cpp
 	battle/battlescanner.cpp
 	battle/battleunit.cpp
-	battle/battleunitanimationpack.cpp
-	battle/battleunitimagepack.cpp
 	battle/battleunitmission.cpp
-	battle/battlemaptileset.cpp
+	
 	city/agentmission.cpp
-	city/baselayout.cpp
+	city/base.cpp
 	city/building.cpp
 	city/city.cpp
-	city/doodad.cpp
-	city/projectile.cpp
+	city/facility.cpp
+	city/research.cpp
 	city/scenery.cpp
 	city/vehicle.cpp
 	city/vehiclemission.cpp
 	city/vequipment.cpp
-	rules/aequipment_rules.cpp
-	rules/damage_rules.cpp
+	
+	rules/battle/battlemap.cpp
+	rules/battle/battlemapsector.cpp
+	rules/battle/battlemappart_type.cpp
+	rules/battle/battleunitanimationpack.cpp
+	rules/battle/battleunitimagepack.cpp
+	rules/battle/battlemaptileset.cpp
+	rules/battle/damage.cpp
+	
+	rules/city/baselayout.cpp
+	rules/city/facility_type.cpp
+	rules/city/scenery_tile_type.cpp
+	rules/city/ufo_growth.cpp
+	rules/city/ufo_incursion.cpp
+	rules/city/ufopaedia.cpp
+	rules/city/vammo_type.cpp
+	rules/city/vehicle_type_type.cpp
+	rules/city/vequipment_type.cpp
+	
+	rules/aequipment_type.cpp
+	rules/agent_type.cpp
 	rules/doodad_type.cpp
-	rules/facility_type.cpp
-	rules/scenery_tile_type.cpp
 	rules/supportedmappart.cpp
-	rules/ufo_growth.cpp
-	rules/ufo_incursion.cpp
-	rules/vammo_rules.cpp
-	rules/vehicle_type_rules.cpp
-	rules/vequipment_rules.cpp
-	tileview/collision.cpp
-	tileview/pathfinding.cpp
-	tileview/tile.cpp
-	tileview/tileobject.cpp
-	tileview/tileobject_battlehazard.cpp
-	tileview/tileobject_battlemappart.cpp
-	tileview/tileobject_battleitem.cpp
-	tileview/tileobject_battleunit.cpp
-	tileview/tileobject_doodad.cpp
-	tileview/tileobject_projectile.cpp
-	tileview/tileobject_scenery.cpp
-	tileview/tileobject_shadow.cpp
-	tileview/tileobject_vehicle.cpp)
+	
+	shared/aequipment.cpp
+	shared/agent.cpp
+	shared/doodad.cpp
+	shared/organisation.cpp
+	shared/projectile.cpp
+	
+	gameevent.cpp
+	gamestate.cpp
+	gamestate_serialize.cpp
+	gamestate_serialize_generated.cpp
+	gametime.cpp
+	message.cpp
+	savemanager.cpp
+	
+	tilemap/collision.cpp
+	tilemap/pathfinding.cpp
+	tilemap/tile.cpp
+	tilemap/tilemap.cpp
+	tilemap/tileobject.cpp
+	tilemap/tileobject_battlehazard.cpp
+	tilemap/tileobject_battlemappart.cpp
+	tilemap/tileobject_battleitem.cpp
+	tilemap/tileobject_battleunit.cpp
+	tilemap/tileobject_doodad.cpp
+	tilemap/tileobject_projectile.cpp
+	tilemap/tileobject_scenery.cpp
+	tilemap/tileobject_shadow.cpp
+	tilemap/tileobject_vehicle.cpp)
 source_group(gamestate\\sources FILES ${GAMESTATE_SOURCE_FILES})
 set (GAMESTATE_HEADER_FILES
-	aequipment.h
-	agent.h
-	equipment.h
-	gameevent.h
-	gameevent_types.h
-	gamestate.h
-	gamestate_serialize_generated.h
-	gametime.h
-	gametime_facet.h
-	message.h
-	organisation.h
-	research.h
-	savemanager.h
-	stateobject.h
-	ufopaedia.h
-	base/base.h
-	base/facility.h
 	battle/ai/aidecision.h
-	battle/ai/aitype.h
 	battle/ai/tacticalai.h
 	battle/ai/tacticalaivanilla.h
 	battle/ai/unitai.h
@@ -114,59 +106,88 @@ set (GAMESTATE_HEADER_FILES
 	battle/ai/unitaihelper.h
 	battle/ai/unitailowmorale.h
 	battle/ai/unitaivanilla.h
+	
 	battle/battle.h
-	battle/battlecommonimagelist.h
-	battle/battlecommonsamplelist.h
 	battle/battledoor.h
 	battle/battleexplosion.h
 	battle/battleforces.h
 	battle/battlehazard.h
 	battle/battleitem.h
-	battle/battlemap.h
 	battle/battlemappart.h
-	battle/battlemappart_type.h
-	battle/battlemapsector.h
-	battle/battlemaptileset.h
 	battle/battlescanner.h
 	battle/battleunit.h
-	battle/battleunitanimationpack.h
-	battle/battleunitimagepack.h
 	battle/battleunitmission.h
+	
 	city/agentmission.h
-	city/baselayout.h
+	city/base.h
 	city/building.h
 	city/city.h
-	city/citycommonimagelist.h
-	city/citycommonsamplelist.h
-	city/doodad.h
-	city/projectile.h
+	city/facility.h
+	city/research.h
 	city/scenery.h
 	city/vehicle.h
 	city/vehiclemission.h
 	city/vequipment.h
+	
+	rules/battle/battlecommonimagelist.h
+	rules/battle/battlecommonsamplelist.h
+	rules/battle/battlemap.h
+	rules/battle/battlemapsector.h
+	rules/battle/battlemappart_type.h
+	rules/battle/battleunitanimationpack.h
+	rules/battle/battleunitimagepack.h
+	rules/battle/battlemaptileset.h
+	rules/battle/damage.h
+	
+	rules/city/baselayout.h
+	rules/city/citycommonimagelist.h
+	rules/city/citycommonsamplelist.h
+	rules/city/facility_type.h
+	rules/city/scenery_tile_type.h
+	rules/city/ufo_growth.h
+	rules/city/ufo_incursion.h
+	rules/city/ufopaedia.h
+	rules/city/vammo_type.h
+	rules/city/vehicle_type_type.h
+	rules/city/vequipment_type.h
+	
 	rules/aequipment_type.h
-	rules/damage.h
+	rules/agent_type.h
 	rules/doodad_type.h
-	rules/facility_type.h
-	rules/scenery_tile_type.h
 	rules/supportedmappart.h
-	rules/ufo_growth.h
-	rules/ufo_incursion.h
-	rules/vammo_type.h
-	rules/vehicle_type.h
-	rules/vequipment_type.h
-	tileview/collision.h
-	tileview/tile.h
-	tileview/tileobject.h
-	tileview/tileobject_battlehazard.h
-	tileview/tileobject_battlemappart.h
-	tileview/tileobject_battleitem.h
-	tileview/tileobject_battleunit.h
-	tileview/tileobject_doodad.h
-	tileview/tileobject_projectile.h
-	tileview/tileobject_scenery.h
-	tileview/tileobject_shadow.h
-	tileview/tileobject_vehicle.h)
+	
+	shared/aequipment.h
+	shared/agent.h
+	shared/doodad.h
+	shared/equipment.h
+	shared/organisation.h
+	shared/projectile.h
+	
+	gameevent.h
+	gameevent_types.h
+	gamestate.h
+	gamestate_serialize.h
+	gamestate_serialize_generated.h
+	gametime.h
+	gametime_facet.h
+	message.h
+	savemanager.h
+	stateobject.h
+	
+	tilemap/collision.h
+	tilemap/pathfinding.h
+	tilemap/tile.h
+	tilemap/tilemap.h
+	tilemap/tileobject.h
+	tilemap/tileobject_battlehazard.h
+	tilemap/tileobject_battlemappart.h
+	tilemap/tileobject_battleitem.h
+	tilemap/tileobject_battleunit.h
+	tilemap/tileobject_doodad.h
+	tilemap/tileobject_projectile.h
+	tilemap/tileobject_scenery.h
+	tilemap/tileobject_shadow.h
+	tilemap/tileobject_vehicle.h)
 source_group(gamestate\\headers FILES ${GAMESTATE_HEADER_FILES})
 
 list(APPEND ALL_SOURCE_FILES ${GAMESTATE_SOURCE_FILES})

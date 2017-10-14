@@ -7,7 +7,7 @@
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
-#include "game/state/agent.h"
+#include "game/state/shared/agent.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/city/building.h"

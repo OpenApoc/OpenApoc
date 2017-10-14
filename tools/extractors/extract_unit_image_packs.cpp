@@ -1,7 +1,7 @@
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/palette.h"
-#include "game/state/battle/battleunitimagepack.h"
+#include "game/state/rules/battle/battleunitimagepack.h"
 #include "game/state/gamestate.h"
 #include "library/strings_format.h"
 #include "tools/extractors/extractors.h"

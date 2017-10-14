@@ -1,5 +1,5 @@
 #include "game/state/battle/ai/aidecision.h"
-#include "game/state/aequipment.h"
+#include "game/state/shared/aequipment.h"
 #include "game/state/battle/battleunit.h"
 #include "library/strings_format.h"
 
