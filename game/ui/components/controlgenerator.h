@@ -1,7 +1,7 @@
 #pragma once
+#include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
-#include "game/state/stateobject.h"
 #include <vector>
 
 namespace OpenApoc
@@ -21,6 +21,8 @@ class VehicleType;
 class VEquipmentType;
 class VAmmoType;
 class EconomyInfo;
+class OrganisationInfo;
+class Organisation;
 
 enum class Rank;
 
@@ -64,11 +66,14 @@ class ControlGenerator
 	sp<Image> purchaseBoxIcon;
 	sp<Image> purchaseXComIcon;
 	sp<Image> purchaseArrow;
+	sp<Image> alienContainedDetain;
+	sp<Image> alienContainedKill;
 
   public:
 	static VehicleTileInfo createVehicleInfo(GameState &state, sp<Vehicle> v);
 	static sp<Control> createVehicleControl(GameState &state, const VehicleTileInfo &info);
 	static sp<Control> createVehicleControl(GameState &state, sp<Vehicle> v);
+
 	static AgentInfo
 	createAgentInfo(GameState &state, sp<Agent> a,
 	                UnitSelectionState forcedSelectionState = UnitSelectionState::NA,
@@ -86,16 +91,49 @@ class ControlGenerator
 	                        UnitSelectionState forcedSelectionState = UnitSelectionState::NA,
 	                        bool forceFade = false, bool labMode = false);
 
+	static OrganisationInfo createOrganisationInfo(GameState &state, sp<Organisation> org);
+	static sp<Control> createOrganisationControl(GameState &state, const OrganisationInfo &info);
+	static sp<Control> createOrganisationControl(GameState &state, sp<Organisation> org);
+
+	// Buying/selling agent equipment and ammo
+	// Also used for sacking alien containment
 	static sp<Control>
-		createPurchaseControl(GameState &state, StateRef<AEquipmentType> agentEquipmentType, int stock);
-	static sp<Control>
-		createPurchaseControl(GameState &state, StateRef<VEquipmentType> vehicleEquipmentType, int stock);
-	static sp<Control>
-		createPurchaseControl(GameState &state, StateRef<VAmmoType> vehicleAmmoType, int stock);
-	static sp<Control>
-		createPurchaseControl(GameState &state, StateRef<VehicleType> vehicleType, int stock);
-	static sp<Control>
-		createPurchaseControl(GameState &state, const EconomyInfo &economy, bool isAmmo, int stock);
+	createPurchaseControl(GameState &state, StateRef<AEquipmentType> agentEquipmentType, int stock);
+	// Buying/selling vehicle equipment
+	static sp<Control> createPurchaseControl(GameState &state,
+	                                         StateRef<VEquipmentType> vehicleEquipmentType,
+	                                         int stock);
+	// Buying/selling vehicle ammo and fuel
+	static sp<Control> createPurchaseControl(GameState &state, StateRef<VAmmoType> vehicleAmmoType,
+	                                         int stock);
+	// Buying vehicles
+	static sp<Control> createPurchaseControl(GameState &state, StateRef<VehicleType> vehicleType,
+	                                         int stock);
+	// Selling vehicles
+	static sp<Control> createPurchaseControl(GameState &state, StateRef<Vehicle> vehicle,
+	                                         int stock);
+
+	// Transferring agent equipment and ammo
+	// Also used for transfer of alien bodies
+	static sp<Control> createTransferControl(GameState &state,
+	                                         StateRef<AEquipmentType> agentEquipmentType,
+	                                         int stock1, int stock2);
+	// Transferring vehicle equipment
+	static sp<Control> createTransferControl(GameState &state,
+	                                         StateRef<VEquipmentType> vehicleEquipmentType,
+	                                         int stock, int stock2);
+	// Transferring vehicle ammo
+	static sp<Control> createTransferControl(GameState &state, StateRef<VAmmoType> vehicleAmmoType,
+	                                         int stock, int stock2);
+	// Transferring vehicles
+	static sp<Control> createTransferControl(GameState &state, StateRef<Vehicle> vehicleType,
+	                                         int stock, int stock2);
+
+	// Creates the control
+	static sp<Control> createTransactionControl(GameState &state, bool isAmmo, sp<Image> iconLeft,
+	                                            sp<Image> iconRight, bool transfer, UString name,
+	                                            UString manufacturer, int price, int stock1,
+	                                            int stock2);
 
 	static int getFontHeight(GameState &state);
 };
@@ -137,5 +175,14 @@ class AgentInfo
 
 	bool operator==(const AgentInfo &other) const;
 	bool operator!=(const AgentInfo &other) const;
+};
+
+class OrganisationInfo
+{
+  public:
+	sp<Organisation> organisation;
+	bool selected;
+	bool operator==(const OrganisationInfo &other) const;
+	bool operator!=(const OrganisationInfo &other) const;
 };
 }

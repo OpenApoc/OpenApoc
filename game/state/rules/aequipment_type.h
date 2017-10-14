@@ -165,6 +165,8 @@ class AEquipmentType : public StateObject
 	int explosion_depletion_rate = 0;
 
 	std::map<StateRef<AgentType>, int> spawnList;
+
+	bool canBeUsed(GameState &state, StateRef<Organisation> user) const;
 };
 
 class EquipmentSet : public StateObject

@@ -880,7 +880,7 @@ void AEquipScreen::selectAgent(sp<Agent> agent, bool inverse, bool additive)
 
 void AEquipScreen::displayItem(sp<AEquipment> item)
 {
-	bool researched = item->type->research_dependency.satisfied();
+	bool researched = item->type->canBeUsed(*state, state->getPlayer());
 	if (researched)
 	{
 		switch (item->type->type)

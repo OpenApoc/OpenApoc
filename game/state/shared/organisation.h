@@ -28,6 +28,7 @@ class VAmmoType;
 class GameState;
 class VehicleType;
 class UfopaediaEntry;
+class Image;
 
 class Organisation : public StateObject
 {
@@ -42,11 +43,11 @@ class Organisation : public StateObject
 	};
 	enum class Relation
 	{
-		Allied,
-		Friendly,
-		Neutral,
-		Unfriendly,
-		Hostile
+		Allied = 0,
+		Friendly = 1,
+		Neutral = 2,
+		Unfriendly = 3,
+		Hostile = 4
 	};
 	enum class LootPriority
 	{
@@ -103,6 +104,8 @@ class Organisation : public StateObject
 	bool takenOver = false;
 	unsigned int ticksTakeOverAttemptAccumulated = 0;
 
+	sp<Image> icon;
+
 	int tech_level = 1;
 	int average_guards = 1;
 	// What guard types can spawn, supports duplicates to provide variable probability
@@ -151,6 +154,11 @@ class Organisation : public StateObject
 	float getRelationTo(const StateRef<Organisation> &other) const;
 	void adjustRelationTo(GameState &state, StateRef<Organisation> other, float value);
 	std::map<StateRef<Organisation>, float> current_relations;
+
+	// Following members are not serialized, but rather are set in initCity method
+
+	std::vector<StateRef<Building>> buildings;
+	int lastClickedBuilding;
 };
 
 }; // namespace OpenApoc

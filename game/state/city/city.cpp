@@ -134,6 +134,7 @@ void City::initMap(GameState &state)
 		{
 			spaceports.emplace_back(&state, b.first);
 		}
+		b.second->owner->buildings.emplace_back(&state, b.first);
 	}
 	for (auto &p : this->projectiles)
 	{

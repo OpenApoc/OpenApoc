@@ -124,11 +124,11 @@ StateRef<Building> Organisation::getPurchaseBuilding(GameState &state,
                                                      const StateRef<Building> &buyer) const
 {
 	std::list<StateRef<Building>> purchaseBuildings;
-	for (auto &b : buyer->city->buildings)
+	for (auto &b : buildings)
 	{
-		if (b.second->owner.id == id && b.first != buyer.id)
+		if (b->city == buyer->city && b != buyer)
 		{
-			purchaseBuildings.emplace_back(&state, b.first);
+			purchaseBuildings.push_back(b);
 		}
 	}
 	if (purchaseBuildings.empty())
@@ -375,23 +375,15 @@ void Organisation::updateInfiltration(GameState &state)
 
 	// Calculate infiltration modifier
 	int infiltrationModifier = 0;
-	for (auto &c : state.cities)
+	for (auto &b : buildings)
 	{
-		for (auto &b : c.second->buildings)
+		int infiltrationBuilding = 0;
+		for (auto alien : b->current_crew)
 		{
-			if (b.second->owner != org)
-			{
-				continue;
-			}
-
-			int infiltrationBuilding = 0;
-			for (auto alien : b.second->current_crew)
-			{
-				infiltrationBuilding += alien.second * alien.first->infiltrationSpeed;
-			}
-			infiltrationBuilding *= b.second->function->infiltrationSpeed * org->infiltrationSpeed;
-			infiltrationModifier += infiltrationBuilding;
+			infiltrationBuilding += alien.second * alien.first->infiltrationSpeed;
 		}
+		infiltrationBuilding *= b->function->infiltrationSpeed * org->infiltrationSpeed;
+		infiltrationModifier += infiltrationBuilding;
 	}
 	infiltrationModifier /= divizor;
 	infiltrationModifier -= state.difficulty;
@@ -416,9 +408,9 @@ void Organisation::updateVehicleAgentPark(GameState &state)
 {
 	// Check that org owns a building
 	bool found = false;
-	for (auto &b : state.cities["CITYMAP_HUMAN"]->buildings)
+	for (auto &b : buildings)
 	{
-		if (b.second->owner.id != id)
+		if (b->city.id != "CITYMAP_HUMAN")
 		{
 			continue;
 		}
@@ -497,17 +489,16 @@ void Organisation::updateVehicleAgentPark(GameState &state)
 			}
 			else
 			{
-				for (auto &b : state.cities["CITYMAP_HUMAN"]->buildings)
+				for (auto &b : buildings)
 				{
-					if (b.second->owner.id != id)
+					if (b->city.id != "CITYMAP_HUMAN")
 					{
 						continue;
 					}
 					// Aim for at least 8 vehicles per building
-					for (auto i = 0; i <= std::max(0, 8 - (int)b.second->currentVehicles.size());
-					     i++)
+					for (auto i = 0; i <= std::max(0, 8 - (int)b->currentVehicles.size()); i++)
 					{
-						buildingsRandomizer.emplace_back(&state, b.first);
+						buildingsRandomizer.emplace_back(b);
 					}
 				}
 			}
@@ -645,19 +636,19 @@ void Organisation::Mission::execute(GameState &state, StateRef<City> city,
 	}
 	// Compile list of matching buildings with vehicles
 	std::map<sp<Building>, std::list<StateRef<Vehicle>>> availableVehicles;
-	for (auto &b : city->buildings)
+	for (auto &b : owner->buildings)
 	{
-		if (b.second->owner != owner)
+		if (b->city != city)
 		{
 			continue;
 		}
 
-		for (auto &v : b.second->currentVehicles)
+		for (auto &v : b->currentVehicles)
 		{
 			if (v->owner == owner &&
 			    pattern.allowedTypes.find(v->type) != pattern.allowedTypes.end())
 			{
-				availableVehicles[b.second].push_back(v);
+				availableVehicles[b].push_back(v);
 			}
 		}
 	}

@@ -392,7 +392,8 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 			    format("PCK:xcom3/ufodata/bigveh.pck:xcom3/ufodata/bigveh.tab:%d", (int)it->second);
 			vehicle->equip_icon_big = fw().data->loadImage(str);
 
-			str = format("PCK:xcom3/ufodata/smalveh.pck:xcom3/ufodata/smalveh.tab:%d:xcom3/ufodata/researc2.pcx",
+			str = format("PCK:xcom3/ufodata/smalveh.pck:xcom3/ufodata/smalveh.tab:%d:xcom3/ufodata/"
+			             "researc2.pcx",
 			             (int)it->second);
 			vehicle->equip_icon_small = fw().data->loadImage(str);
 		}

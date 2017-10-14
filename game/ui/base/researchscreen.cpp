@@ -396,7 +396,7 @@ void ResearchScreen::updateProgressInfo()
 		completionPercent->setText("");
 	}
 	auto manufacture_bg = form->findControlTyped<Graphic>("MANUFACTURE_BG");
-		
+
 	auto manufacturing_scrollbar = form->findControlTyped<ScrollBar>("MANUFACTURE_QUANTITY_SLIDER");
 	auto manufacturing_scroll_left =
 	    form->findControlTyped<GraphicButton>("MANUFACTURE_QUANTITY_DOWN");

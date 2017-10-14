@@ -17,6 +17,7 @@ class Image;
 class Sample;
 class DoodadType;
 class Organisation;
+class VAmmoType;
 
 class VEquipmentType : public StateObject
 {
@@ -39,7 +40,7 @@ class VEquipmentType : public StateObject
 	UString name;
 	int weight;
 	int max_ammo;
-	UString ammo_type;
+	StateRef<VAmmoType> ammo_type;
 	sp<Image> equipscreen_sprite;
 	Vec2<int> equipscreen_size;
 	StateRef<Organisation> manufacturer;

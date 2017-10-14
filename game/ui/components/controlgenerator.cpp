@@ -10,13 +10,14 @@
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/city/building.h"
-#include "game/state/rules/city/vammo_type.h"
 #include "game/state/city/city.h"
 #include "game/state/city/vehicle.h"
+#include "game/state/city/vequipment.h"
+#include "game/state/gamestate.h"
 #include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/city/vammo_type.h"
 #include "game/state/rules/city/vehicle_type.h"
 #include "game/state/rules/city/vequipment_type.h"
-#include "game/state/gamestate.h"
 #include "game/state/shared/agent.h"
 
 namespace OpenApoc
@@ -88,21 +89,23 @@ void ControlGenerator::init(GameState &state)
 	labelFont = ui().getFont("smalfont");
 
 	purchaseControlParts.push_back(fw().data->loadImage(format(
-		"PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx",
-		45)));
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx",
+	    45)));
 	purchaseControlParts.push_back(fw().data->loadImage(format(
-		"PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx",
-		46)));
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx",
+	    46)));
 
 	purchaseBoxIcon = fw().data->loadImage(format(
-		"PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx",
-		47));
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 47));
 	purchaseXComIcon = fw().data->loadImage(format(
-		"PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx",
-		48));
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 48));
 	purchaseArrow = fw().data->loadImage(format(
-		"PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx",
-		52));
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 52));
+
+	alienContainedDetain = fw().data->loadImage(format(
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 75));
+	alienContainedKill = fw().data->loadImage(format(
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 76));
 
 	initialised = true;
 }
@@ -436,50 +439,165 @@ sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, sp<Agent
 	return createLargeAgentControl(state, info, addSkill, labMode);
 }
 
-sp<Control> ControlGenerator::createPurchaseControl(GameState &state, StateRef<AEquipmentType> agentEquipmentType, int stock)
+OrganisationInfo ControlGenerator::createOrganisationInfo(GameState &state, sp<Organisation> org)
 {
-	if (state.economy.find(agentEquipmentType.id) == state.economy.end())
-	{
-		return nullptr;
-	}
-	auto &economy = state.economy[agentEquipmentType.id];
-	if (stock == 0 && economy.currentStock == 0 && agentEquipmentType->artifact)
-	{
-		return nullptr;
-	}
-	return createPurchaseControl(state, economy, agentEquipmentType->type == AEquipmentType::Type::Ammo, stock);
+	auto i = OrganisationInfo();
+	i.organisation = org;
+	i.selected = state.current_city->cityViewSelectedOrganisation == org;
+	return i;
 }
 
-sp<Control> ControlGenerator::createPurchaseControl(GameState &state, StateRef<VEquipmentType> vehicleEquipmentType, int stock)
+sp<Control> ControlGenerator::createOrganisationControl(GameState &state,
+                                                        const OrganisationInfo &info)
 {
+	if (!singleton.initialised)
+	{
+		singleton.init(state);
+	}
+
+	auto frame = singleton.citySelect[info.selected ? 2 : 0];
+	auto baseControl = mksp<Graphic>(frame);
+	baseControl->Size = frame->size;
+	// FIXME: There's an extra 1 pixel here that's annoying
+	baseControl->Size.x -= 1;
+	baseControl->Name = "ORG_FRAME_" + info.organisation->name;
+	baseControl->setData(info.organisation);
+
+	auto vehicleIcon = baseControl->createChild<Graphic>(info.organisation->icon);
+	vehicleIcon->AutoSize = true;
+	vehicleIcon->Location = {1, 1};
+	vehicleIcon->Name = "ORG_ICON_" + info.organisation->name;
+
+	return baseControl;
+}
+
+sp<Control> ControlGenerator::createOrganisationControl(GameState &state, sp<Organisation> org)
+{
+	auto i = createOrganisationInfo(state, org);
+	return createOrganisationControl(state, i);
+}
+
+sp<Control> ControlGenerator::createPurchaseControl(GameState &state,
+                                                    StateRef<AEquipmentType> agentEquipmentType,
+                                                    int stock)
+{
+	if (!singleton.initialised)
+	{
+		singleton.init(state);
+	}
+	int currentStock = 0;
+	int currentPrice = 0;
+	if (!agentEquipmentType->bioStorage)
+	{
+		if (state.economy.find(agentEquipmentType.id) == state.economy.end())
+		{
+			return nullptr;
+		}
+		auto &economy = state.economy[agentEquipmentType.id];
+		if (stock == 0 && economy.currentStock == 0 && agentEquipmentType->artifact)
+		{
+			return nullptr;
+		}
+		currentStock = economy.currentStock;
+		currentPrice = economy.currentPrice;
+	}
+	else
+	{
+		if (stock == 0)
+		{
+			return nullptr;
+		}
+	}
+	bool isAmmo = agentEquipmentType->type == AEquipmentType::Type::Ammo;
+	auto iconLeft =
+	    agentEquipmentType->bioStorage ? singleton.alienContainedDetain : singleton.purchaseBoxIcon;
+	auto iconRight =
+	    agentEquipmentType->bioStorage ? singleton.alienContainedKill : singleton.purchaseXComIcon;
+	bool transfer = false;
+	auto name = agentEquipmentType->name;
+	auto manufacturer =
+	    agentEquipmentType->bioStorage ? "" : agentEquipmentType->manufacturer->name;
+	auto price = currentPrice;
+	auto stock1 = stock;
+	auto stock2 = currentStock;
+	auto control = createTransactionControl(state, isAmmo, iconLeft, iconRight, transfer, name,
+	                                        manufacturer, price, stock1, stock2);
+	return control;
+}
+
+sp<Control> ControlGenerator::createPurchaseControl(GameState &state,
+                                                    StateRef<VEquipmentType> vehicleEquipmentType,
+                                                    int stock)
+{
+	if (!singleton.initialised)
+	{
+		singleton.init(state);
+	}
+
 	if (state.economy.find(vehicleEquipmentType.id) == state.economy.end())
 	{
 		return nullptr;
 	}
 	auto &economy = state.economy[vehicleEquipmentType.id];
-	if (stock == 0 && economy.currentStock == 0 && vehicleEquipmentType->manufacturer == state.getPlayer())
+	if (stock == 0 && economy.currentStock == 0 &&
+	    vehicleEquipmentType->manufacturer == state.getPlayer())
 	{
 		return nullptr;
 	}
-	return createPurchaseControl(state, economy, false, stock);
+	bool isAmmo = false;
+	auto iconLeft = singleton.purchaseBoxIcon;
+	auto iconRight = singleton.purchaseXComIcon;
+	bool transfer = false;
+	auto name = vehicleEquipmentType->name;
+	auto manufacturer = vehicleEquipmentType->manufacturer->name;
+	auto price = economy.currentPrice;
+	auto stock1 = stock;
+	auto stock2 = economy.currentStock;
+	auto control = createTransactionControl(state, isAmmo, iconLeft, iconRight, transfer, name,
+	                                        manufacturer, price, stock1, stock2);
+	return control;
 }
 
-sp<Control> ControlGenerator::createPurchaseControl(GameState &state, StateRef<VAmmoType> vehicleAmmoType, int stock)
+sp<Control> ControlGenerator::createPurchaseControl(GameState &state,
+                                                    StateRef<VAmmoType> vehicleAmmoType, int stock)
 {
+	if (!singleton.initialised)
+	{
+		singleton.init(state);
+	}
+
 	if (state.economy.find(vehicleAmmoType.id) == state.economy.end())
 	{
 		return nullptr;
 	}
 	auto &economy = state.economy[vehicleAmmoType.id];
-	if (stock == 0 && economy.currentStock == 0 && vehicleAmmoType->manufacturer == state.getPlayer())
+	if (stock == 0 && economy.currentStock == 0 &&
+	    vehicleAmmoType->manufacturer == state.getPlayer())
 	{
 		return nullptr;
 	}
-	return createPurchaseControl(state, economy, true, stock);
+	bool isAmmo = true;
+	auto iconLeft = singleton.purchaseBoxIcon;
+	auto iconRight = singleton.purchaseXComIcon;
+	bool transfer = false;
+	auto name = vehicleAmmoType->name;
+	auto manufacturer = vehicleAmmoType->manufacturer->name;
+	auto price = economy.currentPrice;
+	auto stock1 = stock;
+	auto stock2 = economy.currentStock;
+	auto control = createTransactionControl(state, isAmmo, iconLeft, iconRight, transfer, name,
+	                                        manufacturer, price, stock1, stock2);
+	return control;
 }
 
-sp<Control> ControlGenerator::createPurchaseControl(GameState &state, StateRef<VehicleType> vehicleType, int stock)
+sp<Control> ControlGenerator::createPurchaseControl(GameState &state,
+                                                    StateRef<VehicleType> vehicleType, int stock)
 {
+	if (!singleton.initialised)
+	{
+		singleton.init(state);
+	}
+
 	if (state.economy.find(vehicleType.id) == state.economy.end())
 	{
 		return nullptr;
@@ -489,12 +607,150 @@ sp<Control> ControlGenerator::createPurchaseControl(GameState &state, StateRef<V
 	{
 		return nullptr;
 	}
-	return createPurchaseControl(state, economy, false, stock);
+	bool isAmmo = false;
+	auto iconLeft = singleton.purchaseBoxIcon;
+	auto iconRight = singleton.purchaseXComIcon;
+	bool transfer = false;
+	auto name = vehicleType->name;
+	auto manufacturer = vehicleType->manufacturer->name;
+	auto price = economy.currentPrice;
+	auto stock1 = stock;
+	auto stock2 = economy.currentStock;
+	auto control = createTransactionControl(state, isAmmo, iconLeft, iconRight, transfer, name,
+	                                        manufacturer, price, stock1, stock2);
+	return control;
 }
 
-sp<Control> ControlGenerator::createPurchaseControl(GameState & state, const EconomyInfo &economy, bool isAmmo, int stock)
+sp<Control> ControlGenerator::createPurchaseControl(GameState &state, StateRef<Vehicle> vehicle,
+                                                    int stock)
 {
+	if (!singleton.initialised)
+	{
+		singleton.init(state);
+	}
 
+	if (state.economy.find(vehicle->type.id) == state.economy.end())
+	{
+		return nullptr;
+	}
+	auto &economy = state.economy[vehicle->type.id];
+	bool isAmmo = false;
+	auto iconLeft = singleton.purchaseBoxIcon;
+	auto iconRight = singleton.purchaseXComIcon;
+	bool transfer = false;
+	auto name = vehicle->name;
+	auto manufacturer = vehicle->type->manufacturer->name;
+	auto price = economy.currentPrice;
+	for (auto &e : vehicle->equipment)
+	{
+		if (state.economy.find(e->type.id) != state.economy.end())
+		{
+			price += state.economy[e->type.id].currentPrice;
+			// FIXME: ADD PRICE OF AMMO
+		}
+	}
+	auto stock1 = stock;
+	auto stock2 = 0;
+	auto control = createTransactionControl(state, isAmmo, iconLeft, iconRight, transfer, name,
+	                                        manufacturer, price, stock1, stock2);
+	return control;
+}
+
+sp<Control> ControlGenerator::createTransferControl(GameState &state,
+                                                    StateRef<AEquipmentType> agentEquipmentType,
+                                                    int stock1, int stock2)
+{
+	if (!singleton.initialised)
+	{
+		singleton.init(state);
+	}
+	if (stock1 == 0 && stock2 == 0 &&
+	    (agentEquipmentType->bioStorage || agentEquipmentType->artifact))
+	{
+		return nullptr;
+	}
+	bool isAmmo = agentEquipmentType->type == AEquipmentType::Type::Ammo;
+	auto icon = agentEquipmentType->bioStorage ? singleton.alienContainedDetain
+	                                           : singleton.purchaseXComIcon;
+	bool transfer = true;
+	auto name = agentEquipmentType->name;
+	auto manufacturer = "";
+	auto price = 0;
+	auto control = createTransactionControl(state, isAmmo, icon, icon, transfer, name, manufacturer,
+	                                        price, stock1, stock2);
+	return control;
+}
+
+sp<Control> ControlGenerator::createTransferControl(GameState &state,
+                                                    StateRef<VEquipmentType> vehicleEquipmentType,
+                                                    int stock1, int stock2)
+{
+	if (!singleton.initialised)
+	{
+		singleton.init(state);
+	}
+	if (stock1 == 0 && stock2 == 0 && vehicleEquipmentType->manufacturer == state.getPlayer())
+	{
+		return nullptr;
+	}
+	bool isAmmo = false;
+	auto icon = singleton.purchaseXComIcon;
+	bool transfer = true;
+	auto name = vehicleEquipmentType->name;
+	auto manufacturer = "";
+	auto price = 0;
+	auto control = createTransactionControl(state, isAmmo, icon, icon, transfer, name, manufacturer,
+	                                        price, stock1, stock2);
+	return control;
+}
+
+sp<Control> ControlGenerator::createTransferControl(GameState &state,
+                                                    StateRef<VAmmoType> vehicleAmmoType, int stock1,
+                                                    int stock2)
+{
+	if (!singleton.initialised)
+	{
+		singleton.init(state);
+	}
+	if (stock1 == 0 && stock2 == 0 && vehicleAmmoType->manufacturer == state.getPlayer())
+	{
+		return nullptr;
+	}
+	bool isAmmo = true;
+	auto icon = singleton.purchaseXComIcon;
+	bool transfer = true;
+	auto name = vehicleAmmoType->name;
+	auto manufacturer = "";
+	auto price = 0;
+	auto control = createTransactionControl(state, isAmmo, icon, icon, transfer, name, manufacturer,
+	                                        price, stock1, stock2);
+	return control;
+}
+
+sp<Control> ControlGenerator::createTransferControl(GameState &state, StateRef<Vehicle> vehicle,
+                                                    int stock1, int stock2)
+{
+	if (!singleton.initialised)
+	{
+		singleton.init(state);
+	}
+	bool isAmmo = false;
+	auto icon = singleton.purchaseXComIcon;
+	bool transfer = true;
+	auto name = vehicle->name;
+	auto manufacturer = "";
+	auto price = 0;
+	auto control = createTransactionControl(state, isAmmo, icon, icon, transfer, name, manufacturer,
+	                                        price, stock1, stock2);
+	return control;
+}
+
+sp<Control> ControlGenerator::createTransactionControl(GameState &state, bool isAmmo,
+                                                       sp<Image> iconLeft, sp<Image> iconRight,
+                                                       bool transfer, UString name,
+                                                       UString manufacturer, int price, int stock1,
+                                                       int stock2)
+{
 	return sp<Control>();
 }
 
@@ -630,4 +886,9 @@ bool AgentInfo::operator==(const AgentInfo &other) const
 }
 
 bool AgentInfo::operator!=(const AgentInfo &other) const { return !(*this == other); }
+bool OrganisationInfo::operator==(const OrganisationInfo &other) const
+{
+	return (this->organisation == other.organisation && this->selected == other.selected);
+}
+bool OrganisationInfo::operator!=(const OrganisationInfo &other) const { return !(*this == other); }
 }

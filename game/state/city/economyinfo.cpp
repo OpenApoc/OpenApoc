@@ -20,7 +20,7 @@ bool EconomyInfo::update(GameState &state, bool xcom)
 		int soldThisWeek = std::max(0, currentStock - lastStock);
 		lastStock = currentStock;
 		int rnd = randBoundsExclusive(state.rng, 0, 100);
-		if (rnd <30)
+		if (rnd < 30)
 		{
 			currentStock = lastStock * 80 / 100;
 		}
@@ -56,7 +56,8 @@ bool EconomyInfo::update(GameState &state, bool xcom)
 		// Stock update
 		lastStock = currentStock;
 		int averageStock = (minStock + maxStock) / 2;
-		currentStock = clamp(randBoundsInclusive(state.rng, 0, averageStock + lastStock), minStock, maxStock);
+		currentStock =
+		    clamp(randBoundsInclusive(state.rng, 0, averageStock + lastStock), minStock, maxStock);
 		// Price update
 		if (currentPrice == 0)
 		{
@@ -77,5 +78,4 @@ bool EconomyInfo::update(GameState &state, bool xcom)
 	}
 	return week != 1 && week == weekAvailable;
 }
-
 }

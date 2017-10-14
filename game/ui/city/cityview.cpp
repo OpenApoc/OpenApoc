@@ -6,6 +6,7 @@
 #include "forms/label.h"
 #include "forms/listbox.h"
 #include "forms/radiobutton.h"
+#include "forms/scrollbar.h"
 #include "forms/ticker.h"
 #include "forms/ui.h"
 #include "framework/configfile.h"
@@ -359,6 +360,33 @@ bool CityView::handleClickedProjectile(sp<Projectile> projectile, bool rightClic
 	return false;
 }
 
+bool CityView::handleClickedOrganisation(StateRef<Organisation> organisation, bool rightClick,
+                                         CitySelectionState selState)
+{
+	if (rightClick)
+	{
+		tryOpenUfopaediaEntry(organisation->ufopaedia_entry);
+		return true;
+	}
+	else
+	{
+		if (state->current_city->cityViewSelectedOrganisation == organisation)
+		{
+			if (++organisation->lastClickedBuilding >= organisation->buildings.size())
+			{
+				organisation->lastClickedBuilding = 0;
+			}
+			this->setScreenCenterTile(
+			    organisation->buildings[organisation->lastClickedBuilding]->crewQuarters);
+		}
+		else
+		{
+			state->current_city->cityViewSelectedOrganisation = organisation;
+		}
+	}
+	return true;
+}
+
 void CityView::tryOpenUfopaediaEntry(StateRef<UfopaediaEntry> ufopaediaEntry)
 {
 	if (ufopaediaEntry && ufopaediaEntry->dependency.satisfied())
@@ -525,6 +553,14 @@ void CityView::orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additiv
 			if (!additive)
 			{
 				this->setScreenCenterTile(vehicle->position);
+				if (vehicle->owner == state->getPlayer())
+				{
+					activeTab = uiTabs[1];
+				}
+				else
+				{
+					activeTab = uiTabs[6];
+				}
 			}
 		}
 	}
@@ -1097,6 +1133,17 @@ CityView::CityView(sp<GameState> state)
 		                                ? this->state->current_city->cityViewSelectedAgents.front()
 		                                : nullptr)});
 		});
+
+	agentForm->findControl("BUTTON_GOTO_BUILDING")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    if (!this->state->current_city->cityViewSelectedAgents.empty())
+		    {
+			    setSelectionState(CitySelectionState::GotoBuilding);
+		    }
+		});
+	agentForm->findControl("BUTTON_GOTO_BASE")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { orderGoToBase(); });
+
 	this->uiTabs[3]
 	    ->findControl("BUTTON_RESEARCH")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
@@ -1229,15 +1276,47 @@ CityView::CityView(sp<GameState> state)
 		    fw().stageQueueCommand(
 		        {StageCmd::Command::PUSH, mksp<ResearchScreen>(this->state, lab)});
 		});
-	agentForm->findControl("BUTTON_GOTO_BUILDING")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    if (!this->state->current_city->cityViewSelectedAgents.empty())
-		    {
-			    setSelectionState(CitySelectionState::GotoBuilding);
-		    }
+
+	this->uiTabs[7]
+	    ->findControl("BUTTON_SHOW_ALL")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    this->state->current_city->cityViewOrgButtonIndex = 0;
+		    uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST")->scroller->setValue(0);
 		});
-	agentForm->findControl("BUTTON_GOTO_BASE")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { orderGoToBase(); });
+	this->uiTabs[7]
+	    ->findControl("BUTTON_SHOW_ALLIED")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    this->state->current_city->cityViewOrgButtonIndex = 1;
+		    uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST")->scroller->setValue(0);
+		});
+	this->uiTabs[7]
+	    ->findControl("BUTTON_SHOW_FRIENDLY")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    this->state->current_city->cityViewOrgButtonIndex = 2;
+		    uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST")->scroller->setValue(0);
+		});
+	this->uiTabs[7]
+	    ->findControl("BUTTON_SHOW_NEUTRAL")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    this->state->current_city->cityViewOrgButtonIndex = 3;
+		    uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST")->scroller->setValue(0);
+		});
+	this->uiTabs[7]
+	    ->findControl("BUTTON_SHOW_UNFRIENDLY")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    this->state->current_city->cityViewOrgButtonIndex = 4;
+		    uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST")->scroller->setValue(0);
+		});
+	this->uiTabs[7]
+	    ->findControl("BUTTON_SHOW_HOSTILE")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
+		    this->state->current_city->cityViewOrgButtonIndex = 5;
+		    uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST")->scroller->setValue(0);
+		});
+	this->uiTabs[7]
+	    ->findControl("BUTTON_BRIBE")
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this](Event *) { LogWarning("Implement bribery screen"); });
 
 	auto font = ui().getFont("smallset");
 	for (int i = 0; i <= state->current_city->roadSegments.size(); i++)
@@ -1655,6 +1734,7 @@ void CityView::update()
 		{
 			ownedVehicleList->removeByData<Vehicle>(v);
 		}
+		ownedVehicleInfoList.resize(currentVehicleIndex + 1);
 	}
 
 	// Update soldier agent controls
@@ -1735,6 +1815,7 @@ void CityView::update()
 		{
 			ownedAgentList->removeByData<Agent>(a);
 		}
+		ownedSoldierInfoList.resize(currentAgentIndex + 1);
 	}
 
 	// Update bio agent controls
@@ -1805,6 +1886,7 @@ void CityView::update()
 		{
 			ownedAgentList->removeByData<Agent>(a);
 		}
+		ownedBioInfoList.resize(currentAgentIndex + 1);
 	}
 
 	// Update engi agent controls
@@ -1875,6 +1957,7 @@ void CityView::update()
 		{
 			ownedAgentList->removeByData<Agent>(a);
 		}
+		ownedEngineerInfoList.resize(currentAgentIndex + 1);
 	}
 
 	// Update phys agent controls
@@ -1945,15 +2028,16 @@ void CityView::update()
 		{
 			ownedAgentList->removeByData<Agent>(a);
 		}
+		ownedPhysicsInfoList.resize(currentAgentIndex + 1);
 	}
 
 	// Update owned vehicle controls
 	if (activeTab == uiTabs[6])
 	{
-		auto hostileVehicleList = uiTabs[6]->findControlTyped<ListBox>("OWNED_VEHICLE_LIST");
+		auto hostileVehicleList = uiTabs[6]->findControlTyped<ListBox>("HOSTILE_VEHICLE_LIST");
 		if (!hostileVehicleList)
 		{
-			LogError("Failed to find \"OWNED_VEHICLE_LIST\" control on city tab \"%s\"",
+			LogError("Failed to find \"HOSTILE_VEHICLE_LIST\" control on city tab \"%s\"",
 			         TAB_FORM_NAMES[6]);
 		}
 
@@ -1967,12 +2051,19 @@ void CityView::update()
 		{
 			auto vehicle = v.second;
 			if (!v.second->tileObject || v.second->city != state->current_city ||
-			    state->getPlayer()->isRelatedTo(vehicle->owner) !=
-			        Organisation::Relation::Hostile ||
 			    v.second->isDead())
 			{
 				continue;
 			}
+			if (state->getPlayer()->isRelatedTo(vehicle->owner) != Organisation::Relation::Hostile)
+			{
+				if (state->current_city->cityViewSelectedVehicles.empty() ||
+				    state->current_city->cityViewSelectedVehicles.front() != v.second)
+				{
+					continue;
+				}
+			}
+
 			currentVehicleIndex++;
 			auto info = ControlGenerator::createVehicleInfo(*state, vehicle);
 			vehiclesMIA.erase(info.vehicle);
@@ -2029,6 +2120,104 @@ void CityView::update()
 		{
 			hostileVehicleList->removeByData<Vehicle>(v);
 		}
+		hostileVehicleInfoList.resize(currentVehicleIndex + 1);
+	}
+
+	// Update org
+	if (activeTab == uiTabs[7])
+	{
+		auto orgList = uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST");
+		if (!orgList)
+		{
+			LogError("Failed to find \"ORGANISATION_LIST\" control on city tab \"%s\"",
+			         TAB_FORM_NAMES[7]);
+		}
+
+		int currentOrgIndex = -1;
+		std::set<sp<Organisation>> orgsMIA;
+		for (auto &i : organisationInfoList)
+		{
+			orgsMIA.insert(i.organisation);
+		}
+		for (auto &o : state->organisations)
+		{
+			auto org = o.second;
+			if (state->getCivilian() == org || state->getAliens() == org ||
+			    state->getPlayer() == org)
+			{
+				continue;
+			}
+			auto rel =
+			    state->current_city->cityViewOrgButtonIndex == 0
+			        ? (Organisation::Relation)0
+			        : (Organisation::Relation)(state->current_city->cityViewOrgButtonIndex - 1);
+			if (state->current_city->cityViewOrgButtonIndex != 0 &&
+			    state->getPlayer()->isRelatedTo({state.get(), o.first}) != rel)
+			{
+				continue;
+			}
+			currentOrgIndex++;
+			auto info = ControlGenerator::createOrganisationInfo(*state, org);
+			orgsMIA.erase(info.organisation);
+			bool redo = currentOrgIndex >= organisationInfoList.size() ||
+			            organisationInfoList[currentOrgIndex] != info;
+			if (redo)
+			{
+				auto control = ControlGenerator::createOrganisationControl(*state, info);
+				control->addCallback(FormEventType::MouseDown, [this, org](FormsEvent *e) {
+					// if (!this->vanillaControls)
+					//{
+					//	if (Event::isPressed(e->forms().MouseInfo.Button,
+					//		Event::MouseButton::Right))
+					//	{
+					//		// [Alt/Ctrl] + [Shift] opens equipment
+					//		if ((modifierLShift || modifierRShift) &&
+					//			(modifierLAlt || modifierRAlt || modifierLCtrl ||
+					//				modifierRCtrl))
+					//		{
+					//			// Equipscreen for owner vehicles
+					//			auto equipScreen = mksp<VEquipScreen>(this->state);
+					//			equipScreen->setSelectedVehicle(vehicle);
+					//			fw().stageQueueCommand({ StageCmd::Command::PUSH, equipScreen });
+					//			return;
+					//		}
+					//		// [Shift] opens location
+					//		if (modifierLShift || modifierRShift)
+					//		{
+					//			// Location screen
+					//			fw().stageQueueCommand(
+					//			{ StageCmd::Command::PUSH,
+					//				mksp<LocationScreen>(this->state, vehicle) });
+					//			return;
+					//		}
+					//	}
+					//}
+					handleClickedOrganisation(
+					    StateRef<Organisation>{state.get(), org->id},
+					    Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
+					    CitySelectionState::Normal);
+				});
+				if (currentOrgIndex >= organisationInfoList.size())
+				{
+					organisationInfoList.push_back(info);
+				}
+				else
+				{
+					organisationInfoList[currentOrgIndex] = info;
+				}
+				orgList->replaceItem(control);
+			}
+		}
+		for (auto &o : orgsMIA)
+		{
+			orgList->removeByData<Organisation>(o);
+		}
+		organisationInfoList.resize(currentOrgIndex + 1);
+	}
+	else
+	{
+		// Clear org selection on exit
+		state->current_city->cityViewSelectedOrganisation.clear();
 	}
 
 	activeTab->update();

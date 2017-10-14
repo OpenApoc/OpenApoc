@@ -91,6 +91,8 @@ class City : public StateObject
 	int cityViewPageIndex = 0;
 	std::list<StateRef<Vehicle>> cityViewSelectedVehicles;
 	std::list<StateRef<Agent>> cityViewSelectedAgents;
+	StateRef<Organisation> cityViewSelectedOrganisation;
+	int cityViewOrgButtonIndex = 0;
 
 	void handleProjectileHit(GameState &state, sp<Projectile> projectile, bool displayDoodad,
 	                         bool playSound);

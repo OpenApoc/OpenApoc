@@ -1,3 +1,4 @@
+#include "framework/data.h"
 #include "framework/framework.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/city/ufopaedia.h"
@@ -43,7 +44,7 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 		o->tech_level = odata.starting_tech_level + 1;
 		o->average_guards = odata.average_guards;
 
-		// "Civilian" organisation has no loot entry
+		// "Civilian" organisation has no loot entry and icon
 		if (i == ORG_CIVILIAN)
 		{
 			for (int k = 0; k < 3; k++)
@@ -69,6 +70,10 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 		}
 		else
 		{
+			o->icon = fw().data->loadImage(format("PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/"
+			                                      "vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
+			                                      91 + i));
+
 			auto ldata = data.organisation_raid_loot_data->get(i);
 
 			for (int k = 0; k < 3; k++)

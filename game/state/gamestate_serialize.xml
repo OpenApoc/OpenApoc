@@ -859,6 +859,8 @@
 		<member>cityViewPageIndex</member>
 		<member>cityViewSelectedVehicles</member>
 		<member>cityViewSelectedAgents</member>
+		<member>cityViewSelectedOrganisation</member>
+		<member>cityViewOrgButtonIndex</member>
 	</object>
 	<object>
 		<name>RoadSegment</name>
@@ -1213,6 +1215,7 @@
 		<member>guard_types_human</member>
 		<member>guard_types_alien</member>
 		<member>loot</member>
+		<member>icon</member>
 		<member>current_relations</member>
 		<member>ufopaedia_entry</member>
 		<member>missions</member>

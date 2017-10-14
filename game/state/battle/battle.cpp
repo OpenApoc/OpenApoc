@@ -2574,7 +2574,8 @@ void Battle::finishBattle(GameState &state)
 		std::list<sp<AEquipment>> itemsToStrip;
 		for (auto &e : u.second->agent->equipment)
 		{
-			if (u.second->isDead() || e->type->bioStorage || !e->canBeUsed(state, player))
+			if (u.second->isDead() || e->type->bioStorage || !e->type->canBeUsed(state, player) ||
+			    (e->payloadType && !e->payloadType->canBeUsed(state, player)))
 			{
 				itemsToStrip.push_back(e);
 			}

@@ -81,7 +81,8 @@
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
-      <graphicbutton id="BUTTON_GOTO_BUILDING">
+      
+	  <graphicbutton id="BUTTON_GOTO_BUILDING">
         <size width="27" height="46"/>
         <position x="299" y="75"/>
         <image/>

@@ -23,6 +23,7 @@ class VehicleTileInfo;
 class Agent;
 class UfopaediaEntry;
 class AgentInfo;
+class OrganisationInfo;
 
 enum class CityUpdateSpeed
 {
@@ -62,6 +63,7 @@ class CityView : public CityTileView
 	std::vector<AgentInfo> ownedEngineerInfoList;
 	std::vector<AgentInfo> ownedPhysicsInfoList;
 	std::vector<VehicleTileInfo> hostileVehicleInfoList;
+	std::vector<OrganisationInfo> organisationInfoList;
 
 	bool followVehicle;
 
@@ -103,6 +105,8 @@ class CityView : public CityTileView
 	bool handleClickedAgent(StateRef<Agent> agent, bool rightClick, CitySelectionState selState);
 	bool handleClickedProjectile(sp<Projectile> projectile, bool rightClick,
 	                             CitySelectionState selState);
+	bool handleClickedOrganisation(StateRef<Organisation> organisation, bool rightClick,
+	                               CitySelectionState selState);
 
 	void tryOpenUfopaediaEntry(StateRef<UfopaediaEntry> ufopaediaEntry);
 
