@@ -6,12 +6,12 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "framework/sound.h"
-#include "game/ui/city/cityview.h"
 #include "game/ui/debugtools/debugmenu.h"
 #include "game/ui/general/difficultymenu.h"
 #include "game/ui/general/loadingscreen.h"
 #include "game/ui/general/optionsmenu.h"
 #include "game/ui/general/savemenu.h"
+#include "game/ui/tileview/cityview.h"
 #include "version.h"
 
 namespace OpenApoc

@@ -9,10 +9,10 @@
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
 #include "game/state/gamestate.h"
-#include "game/ui/battle/battleview.h"
-#include "game/ui/city/cityview.h"
 #include "game/ui/general/loadingscreen.h"
 #include "game/ui/general/messagebox.h"
+#include "game/ui/tileview/battleview.h"
+#include "game/ui/tileview/cityview.h"
 #include "library/sp.h"
 #include <iomanip>
 #include <sstream>

@@ -104,8 +104,8 @@
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
       </graphic>
       <scroll id="MANUFACTURE_QUANTITY_SLIDER">
-        <position x="262" y="243"/>
-        <size width="145" height="15"/>
+        <position x="261" y="243"/>
+        <size width="148" height="16"/>
         <range min="1" max="50"/>
       </scroll>
       <graphicbutton id="MANUFACTURE_QUANTITY_DOWN" scrollprev="MANUFACTURE_QUANTITY_SLIDER">

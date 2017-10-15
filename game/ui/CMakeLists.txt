@@ -21,7 +21,6 @@ set (GAMEUI_SOURCE_FILES
 	battle/battledebriefing.cpp
 	battle/battleprestart.cpp
 	battle/battleturnbasedconfirmbox.cpp
-	battle/battleview.cpp
 	
 	city/basebuyscreen.cpp
 	city/baseselectscreen.cpp
@@ -30,7 +29,6 @@ set (GAMEUI_SOURCE_FILES
 	city/infiltrationscreen.cpp
 	city/basedefensescreen.cpp
 	city/scorescreen.cpp
-	city/cityview.cpp
 	
 	components/agentassignment.cpp
 	components/basegraphics.cpp
@@ -59,7 +57,9 @@ set (GAMEUI_SOURCE_FILES
 	skirmish/mapselector.cpp
 	
 	tileview/battletileview.cpp
+	tileview/battleview.cpp
 	tileview/citytileview.cpp
+	tileview/cityview.cpp
 	tileview/tileview.cpp
 	
 	ufopaedia/ufopaediacategoryview.cpp
@@ -80,7 +80,6 @@ set (GAMEUI_HEADER_FILES
 	battle/battledebriefing.h
 	battle/battleprestart.h
 	battle/battleturnbasedconfirmbox.h
-	battle/battleview.h
 	
 	city/basebuyscreen.h
 	city/baseselectscreen.h
@@ -89,7 +88,6 @@ set (GAMEUI_HEADER_FILES
 	city/infiltrationscreen.h
 	city/basedefensescreen.h
 	city/scorescreen.h
-	city/cityview.h
 	
 	components/agentassignment.h
 	components/basegraphics.h
@@ -118,7 +116,9 @@ set (GAMEUI_HEADER_FILES
 	skirmish/mapselector.h
 	
 	tileview/battletileview.h
+	tileview/battleview.h
 	tileview/citytileview.h
+	tileview/cityview.h
 	tileview/tileview.h
 	
 	ufopaedia/ufopaediacategoryview.h

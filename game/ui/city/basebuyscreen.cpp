@@ -15,9 +15,9 @@
 #include "game/state/gamestate.h"
 #include "game/state/shared/agent.h"
 #include "game/state/shared/organisation.h"
-#include "game/ui/city/cityview.h"
 #include "game/ui/components/basegraphics.h"
 #include "game/ui/general/messagebox.h"
+#include "game/ui/tileview/cityview.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc

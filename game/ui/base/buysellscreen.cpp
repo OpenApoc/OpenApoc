@@ -76,10 +76,10 @@ void BuySellScreen::changeBase(sp<Base> newBase)
 	    form->findControlTyped<RadioButton>("BUTTON_GROUND")->isChecked())
 	{
 		bool flying = form->findControlTyped<RadioButton>("BUTTON_FLYING")->isChecked();
-		static const std::list<EquipmentSlotType> types = {EquipmentSlotType::VehicleWeapon,
-		                                                   EquipmentSlotType::VehicleGeneral,
-		                                                   EquipmentSlotType::VehicleEngine};
-		for (auto &t : types)
+		static const std::list<EquipmentSlotType> vehTypes = {EquipmentSlotType::VehicleWeapon,
+		                                                      EquipmentSlotType::VehicleGeneral,
+		                                                      EquipmentSlotType::VehicleEngine};
+		for (auto &t : vehTypes)
 		{
 			StateRef<VAmmoType> ammoType;
 			for (auto &ve : state->vehicle_equipment)
@@ -143,33 +143,57 @@ void BuySellScreen::changeBase(sp<Base> newBase)
 	}
 	if (form->findControlTyped<RadioButton>("BUTTON_AGENTS")->isChecked())
 	{
-		for (auto &ae : state->agent_equipment)
+		static const std::list<AEquipmentType::Type> agTypes = {
+		    AEquipmentType::Type::Grenade, AEquipmentType::Type::Weapon,
+		    // Ammo means everything else
+		    AEquipmentType::Type::Ammo, AEquipmentType::Type::Armor, AEquipmentType::Type::Loot,
+		};
+
+		for (auto &t : agTypes)
 		{
-			if (ae.second->type == AEquipmentType::Type::Ammo)
+			for (auto &ae : state->agent_equipment)
 			{
-				continue;
-			}
-			if (state->economy.find(ae.first) != state->economy.end())
-			{
-				auto control = ControlGenerator::createPurchaseControl(
-				    *state, StateRef<AEquipmentType>{state.get(), ae.first},
-				    state->current_base->inventoryAgentEquipment[ae.first]);
-				if (control)
+				if (ae.second->type == AEquipmentType::Type::Ammo)
 				{
-					list->addItem(control);
+					continue;
 				}
-			}
-			for (auto &ammo : ae.second->ammo_types)
-			{
-				if (state->economy.find(ammo.id) != state->economy.end())
+				if (t == AEquipmentType::Type::Ammo)
 				{
-					int divisor = ammo->type == AEquipmentType::Type::Ammo ? ammo->max_ammo : 1;
-					auto controlAmmo = ControlGenerator::createPurchaseControl(
-					    *state, ammo,
-					    state->current_base->inventoryAgentEquipment[ammo.id] / divisor);
-					if (controlAmmo)
+					if (std::find(agTypes.begin(), agTypes.end(), ae.second->type) != agTypes.end())
 					{
-						list->addItem(controlAmmo);
+						continue;
+					}
+				}
+				else
+				{
+					if (ae.second->type != t)
+					{
+						continue;
+					}
+				}
+
+				if (state->economy.find(ae.first) != state->economy.end())
+				{
+					auto control = ControlGenerator::createPurchaseControl(
+					    *state, StateRef<AEquipmentType>{state.get(), ae.first},
+					    state->current_base->inventoryAgentEquipment[ae.first]);
+					if (control)
+					{
+						list->addItem(control);
+					}
+				}
+				for (auto &ammo : ae.second->ammo_types)
+				{
+					if (state->economy.find(ammo.id) != state->economy.end())
+					{
+						int divisor = ammo->type == AEquipmentType::Type::Ammo ? ammo->max_ammo : 1;
+						auto controlAmmo = ControlGenerator::createPurchaseControl(
+						    *state, ammo,
+						    state->current_base->inventoryAgentEquipment[ammo.id] / divisor);
+						if (controlAmmo)
+						{
+							list->addItem(controlAmmo);
+						}
 					}
 				}
 			}

@@ -58,7 +58,7 @@
 		<image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:82:xcom3/tacdata/tactical.pal</image>
       </graphic>
       <scroll id="DELAY_SLIDER">
-        <position x="263" y="78"/>
+        <position x="263" y="75"/>
         <size width="114" height="15"/>
         <range min="0" max="5"/>
         <gripperimage>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:84:xcom3/tacdata/tactical.pal</gripperimage>
@@ -82,7 +82,7 @@
 		<image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:82:xcom3/tacdata/tactical.pal</image>
       </graphic>
 	  <scroll id="RANGE_SLIDER">
-        <position x="263" y="106"/>
+        <position x="263" y="103"/>
         <size width="114" height="15"/>
         <range min="0" max="6"/>
         <gripperimage>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:84:xcom3/tacdata/tactical.pal</gripperimage>

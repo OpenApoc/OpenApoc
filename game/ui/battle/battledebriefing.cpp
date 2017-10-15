@@ -10,7 +10,7 @@
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/battle/battlecommonimagelist.h"
-#include "game/ui/city/cityview.h"
+#include "game/ui/tileview/cityview.h"
 #include <cmath>
 
 namespace OpenApoc

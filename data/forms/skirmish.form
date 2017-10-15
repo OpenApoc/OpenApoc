@@ -356,7 +356,7 @@
       </label>
 	  
       <graphicbutton id="BUTTON_OK">
-        <position x="604" y="445"/>
+        <position x="602" y="443"/>
         <size width="50" height="48"/>
         <imagedepressed>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:5:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>

@@ -25,8 +25,8 @@
     </label>
 	  
 	<scroll id="AGENT_SELECT_SCROLL">
-        <position x="509" y="27"/>
-        <size width="13" height="320"/>
+        <position x="503" y="27"/>
+        <size width="26" height="320"/>
     </scroll>
     <listbox id="AGENT_SELECT_BOX" scrollbarid="AGENT_SELECT_SCROLL">
         <position x="16" y="32"/>

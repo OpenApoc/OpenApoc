@@ -28,8 +28,8 @@
         <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
       </graphicbutton>
       <scroll id="LIST_SCROLL">
-        <position x="572" y="71"/>
-        <size width="15" height="259"/>
+        <position x="567" y="71"/>
+        <size width="26" height="259"/>
       </scroll>
       <graphicbutton id="LIST_SCROLL_UP" scrollprev="LIST_SCROLL">
         <position x="569" y="47"/>

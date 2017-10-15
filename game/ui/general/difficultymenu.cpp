@@ -6,8 +6,8 @@
 #include "framework/keycodes.h"
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"
-#include "game/ui/city/cityview.h"
 #include "game/ui/general/loadingscreen.h"
+#include "game/ui/tileview/cityview.h"
 
 namespace OpenApoc
 {

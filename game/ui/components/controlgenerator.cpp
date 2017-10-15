@@ -775,7 +775,7 @@ sp<Control> ControlGenerator::createTransactionControl(GameState &state, bool is
 		singleton.init(state);
 	}
 
-	auto size = Vec2<int>{173 + 178 - 2, 44};
+	auto size = Vec2<int>{173 + 178 - 2, 47};
 
 	auto baseControl = mksp<Control>();
 	// baseControl->setData(info.agent);
@@ -784,16 +784,16 @@ sp<Control> ControlGenerator::createTransactionControl(GameState &state, bool is
 
 	auto bgLeft = baseControl->createChild<Graphic>(singleton.purchaseControlParts[0]);
 	bgLeft->AutoSize = true;
-	bgLeft->Location = {0, 0};
+	bgLeft->Location = {0, 2};
 	auto bgRight = baseControl->createChild<Graphic>(singleton.purchaseControlParts[1]);
 	bgRight->AutoSize = true;
-	bgRight->Location = {173 - 1, 0};
+	bgRight->Location = {173 - 1, 2};
 
 	if (isAmmo)
 	{
 		auto arrow = baseControl->createChild<Graphic>(singleton.purchaseArrow);
 		arrow->AutoSize = true;
-		arrow->Location = {4, 0};
+		arrow->Location = {4, 2};
 	}
 
 	auto iconL = baseControl->createChild<Graphic>(iconLeft);
@@ -801,18 +801,18 @@ sp<Control> ControlGenerator::createTransactionControl(GameState &state, bool is
 	iconL->Size = {22, 20};
 	iconL->ImageHAlign = HorizontalAlignment::Centre;
 	iconL->ImageVAlign = VerticalAlignment::Centre;
-	iconL->Location = {58, 22};
+	iconL->Location = {58, 24};
 	auto iconR = baseControl->createChild<Graphic>(iconRight);
 	iconR->Name = baseControl->Name + "_ICON_RIGHT";
 	iconR->Size = {22, 20};
 	iconR->ImageHAlign = HorizontalAlignment::Centre;
 	iconR->ImageVAlign = VerticalAlignment::Centre;
-	iconR->Location = {270, 22};
+	iconR->Location = {270, 24};
 
 	if (name.length() > 0)
 	{
 		auto label = baseControl->createChild<Label>(name, singleton.labelFont);
-		label->Location = {isAmmo ? 32 : 11, 1};
+		label->Location = {isAmmo ? 32 : 11, 3};
 		label->Size = {256, 16};
 		label->TextHAlign = HorizontalAlignment::Left;
 		label->TextVAlign = VerticalAlignment::Centre;
@@ -820,7 +820,7 @@ sp<Control> ControlGenerator::createTransactionControl(GameState &state, bool is
 	if (manufacturer.length() > 0)
 	{
 		auto label = baseControl->createChild<Label>(manufacturer, singleton.labelFont);
-		label->Location = {34, 1};
+		label->Location = {34, 3};
 		label->Size = {256, 16};
 		label->TextHAlign = HorizontalAlignment::Right;
 		label->TextVAlign = VerticalAlignment::Centre;
@@ -828,7 +828,7 @@ sp<Control> ControlGenerator::createTransactionControl(GameState &state, bool is
 	if (price != 0)
 	{
 		auto label = baseControl->createChild<Label>(format("$%d", price), singleton.labelFont);
-		label->Location = {290, 1};
+		label->Location = {290, 3};
 		label->Size = {47, 16};
 		label->TextHAlign = HorizontalAlignment::Right;
 		label->TextVAlign = VerticalAlignment::Centre;
@@ -836,26 +836,26 @@ sp<Control> ControlGenerator::createTransactionControl(GameState &state, bool is
 
 	auto stockLeft = baseControl->createChild<Label>(format("%d", stock2), singleton.labelFont);
 	stockLeft->Name = baseControl->Name + "_STOCK_LEFT";
-	stockLeft->Location = {11, 24};
+	stockLeft->Location = {11, 26};
 	stockLeft->Size = {32, 14};
 	stockLeft->TextHAlign = HorizontalAlignment::Right;
 	stockLeft->TextVAlign = VerticalAlignment::Centre;
 	auto stockRight = baseControl->createChild<Label>(format("%d", stock1), singleton.labelFont);
 	stockRight->Name = baseControl->Name + "_STOCK_RIGHT";
-	stockRight->Location = {303, 24};
+	stockRight->Location = {303, 26};
 	stockRight->Size = {32, 14};
 	stockRight->TextHAlign = HorizontalAlignment::Right;
 	stockRight->TextVAlign = VerticalAlignment::Centre;
 
 	auto changeLeft = baseControl->createChild<Label>("", singleton.labelFont);
 	changeLeft->Name = baseControl->Name + "_CHANGE_LEFT";
-	changeLeft->Location = {50, 24};
+	changeLeft->Location = {50, 26};
 	changeLeft->Size = {32, 14};
 	changeLeft->TextHAlign = HorizontalAlignment::Right;
 	changeLeft->TextVAlign = VerticalAlignment::Centre;
 	auto changeRight = baseControl->createChild<Label>("", singleton.labelFont);
 	changeRight->Name = baseControl->Name + "_CHANGE_RIGHT";
-	changeRight->Location = {264, 24};
+	changeRight->Location = {264, 26};
 	changeRight->Size = {30, 14};
 	changeRight->TextHAlign = HorizontalAlignment::Right;
 	changeRight->TextVAlign = VerticalAlignment::Centre;
@@ -863,19 +863,19 @@ sp<Control> ControlGenerator::createTransactionControl(GameState &state, bool is
 	auto scroll = baseControl->createChild<ScrollBar>();
 	scroll->Name = baseControl->Name + "_SCROLL";
 	scroll->Location = {102, 24};
-	scroll->Size = {147, 19};
+	scroll->Size = {147, 20};
 	scroll->Minimum = 0;
 	scroll->Maximum = stock1 + stock2;
 	scroll->setValue(stock1);
 
 	auto buttonScrollLeft = baseControl->createChild<GraphicButton>(nullptr, singleton.scrollLeft);
 	buttonScrollLeft->Size = singleton.scrollLeft->size;
-	buttonScrollLeft->Location = {87, 22};
+	buttonScrollLeft->Location = {87, 24};
 	buttonScrollLeft->ScrollBarPrev = scroll;
 	auto buttonScrollRight =
 	    baseControl->createChild<GraphicButton>(nullptr, singleton.scrollRight);
 	buttonScrollRight->Size = singleton.scrollRight->size;
-	buttonScrollRight->Location = {247, 22};
+	buttonScrollRight->Location = {247, 24};
 	buttonScrollRight->ScrollBarNext = scroll;
 
 	if (stock1 == 0 && stock2 == 0)
