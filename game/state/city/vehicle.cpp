@@ -2940,7 +2940,7 @@ bool Vehicle::getNewGoal(GameState &state)
 		// Pop finished missions if present
 		popped = popFinishedMissions(state);
 	} while (popped && !acquired && debug_deadlock_preventor > 0);
-	if (debug_deadlock_preventor >= 0)
+	if (debug_deadlock_preventor <= 0)
 	{
 		LogWarning("Vehicle %s at %s", name, position);
 		for (auto &m : missions)
@@ -2951,6 +2951,7 @@ bool Vehicle::getNewGoal(GameState &state)
 		         "now...",
 		         name);
 		die(state);
+		return false;
 	}
 	return acquired;
 }

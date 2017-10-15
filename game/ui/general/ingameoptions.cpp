@@ -15,11 +15,11 @@
 #include "game/state/battle/battle.h"
 #include "game/state/gamestate.h"
 #include "game/ui/battle/battledebriefing.h"
-#include "game/ui/city/cityview.h"
 #include "game/ui/general/mainmenu.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/savemenu.h"
 #include "game/ui/skirmish/skirmish.h"
+#include "game/ui/tileview/cityview.h"
 #include <list>
 
 namespace OpenApoc

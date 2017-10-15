@@ -3,7 +3,7 @@
 #include "framework/framework.h"
 #include "framework/trace.h"
 #include "game/ui/boot.h"
-#include "game/ui/city/cityview.h"
+#include "game/ui/tileview/cityview.h"
 #include "version.h"
 #include <SDL_main.h>
 

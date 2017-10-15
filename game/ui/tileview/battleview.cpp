@@ -1,4 +1,4 @@
-#include "game/ui/battle/battleview.h"
+#include "game/ui/tileview/battleview.h"
 #include "forms/checkbox.h"
 #include "forms/form.h"
 #include "forms/graphic.h"

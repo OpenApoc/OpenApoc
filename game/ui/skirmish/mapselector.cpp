@@ -16,9 +16,9 @@
 #include "game/state/rules/battle/battlemap.h"
 #include "game/state/rules/city/vehicletype.h"
 #include "game/ui/battle/battlebriefing.h"
-#include "game/ui/battle/battleview.h"
-#include "game/ui/city/cityview.h"
 #include "game/ui/skirmish/skirmish.h"
+#include "game/ui/tileview/battleview.h"
+#include "game/ui/tileview/cityview.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc

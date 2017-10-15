@@ -97,9 +97,6 @@
     <ClCompile Include="city\buildingscreen.cpp">
       <Filter>city</Filter>
     </ClCompile>
-    <ClCompile Include="city\cityview.cpp">
-      <Filter>city</Filter>
-    </ClCompile>
     <ClCompile Include="city\infiltrationscreen.cpp">
       <Filter>city</Filter>
     </ClCompile>
@@ -151,9 +148,6 @@
     <ClCompile Include="battle\battleturnbasedconfirmbox.cpp">
       <Filter>battle</Filter>
     </ClCompile>
-    <ClCompile Include="battle\battleview.cpp">
-      <Filter>battle</Filter>
-    </ClCompile>
     <ClCompile Include="battle\battlebriefing.cpp">
       <Filter>battle</Filter>
     </ClCompile>
@@ -171,6 +165,12 @@
     </ClCompile>
     <ClCompile Include="base\buysellscreen.cpp">
       <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="tileview\battleview.cpp">
+      <Filter>tileview</Filter>
+    </ClCompile>
+    <ClCompile Include="tileview\cityview.cpp">
+      <Filter>tileview</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -241,9 +241,6 @@
     <ClInclude Include="city\buildingscreen.h">
       <Filter>city</Filter>
     </ClInclude>
-    <ClInclude Include="city\cityview.h">
-      <Filter>city</Filter>
-    </ClInclude>
     <ClInclude Include="city\infiltrationscreen.h">
       <Filter>city</Filter>
     </ClInclude>
@@ -295,9 +292,6 @@
     <ClInclude Include="battle\battleturnbasedconfirmbox.h">
       <Filter>battle</Filter>
     </ClInclude>
-    <ClInclude Include="battle\battleview.h">
-      <Filter>battle</Filter>
-    </ClInclude>
     <ClInclude Include="general\aequipscreen.h">
       <Filter>general</Filter>
     </ClInclude>
@@ -312,6 +306,12 @@
     </ClInclude>
     <ClInclude Include="base\buysellscreen.h">
       <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="tileview\battleview.h">
+      <Filter>tileview</Filter>
+    </ClInclude>
+    <ClInclude Include="tileview\cityview.h">
+      <Filter>tileview</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

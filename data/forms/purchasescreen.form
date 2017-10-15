@@ -83,8 +83,8 @@
       </label>
 	        
       <scroll id="LIST_SCROLL">
-        <position x="572" y="202"/>
-        <size width="20" height="244"/>
+        <position x="567" y="202"/>
+        <size width="26" height="244"/>
       </scroll>
       <graphicbutton id="LIST_SCROLL_UP" scrollprev="LIST_SCROLL">
         <position x="569" y="178"/>
@@ -99,30 +99,22 @@
         <imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
       </graphicbutton>
       <listbox id="LIST" scrollbarid="LIST_SCROLL">
-        <position x="209" y="181"/>
+        <position x="211" y="181"/>
         <size width="357" height="284"/>
         <orientation>vertical</orientation>
-		<item size = "44" spacing = "0"/>
+		<item size = "47" spacing = "0"/>
         <hovercolour r="0" g="0" b="0" a="0"/>
       </listbox>
    
        <graphic>
         <position x="209" y="181"/>
         <size width="10" height="9"/>
-        <image/>
-        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:49:xcom3/ufodata/base.pcx</imagedepressed>
-      </graphic>
-	  <graphic>
-        <position x="555" y="181"/>
-        <size width="11" height="10"/>
-        <image/>
-        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:50:xcom3/ufodata/base.pcx</imagedepressed>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:49:xcom3/ufodata/base.pcx</image>
       </graphic>
 	  <graphic>
         <position x="209" y="455"/>
-        <size width="10" height="9"/>
-        <image/>
-        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:51:xcom3/ufodata/base.pcx</imagedepressed>
+        <size width="11" height="10"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:50:xcom3/ufodata/base.pcx</image>
       </graphic>
 		  
       <radiobutton id="BUTTON_VEHICLES" groupid = "TYPE">

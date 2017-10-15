@@ -109,6 +109,7 @@ void BaseSelectScreen::update()
 {
 	menuform->update();
 	counter = (counter + 1) % COUNTER_MAX;
+	CityTileView::update();
 }
 
 void BaseSelectScreen::render()

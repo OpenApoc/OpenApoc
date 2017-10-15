@@ -191,8 +191,8 @@
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:10:xcom3/ufodata/base.pcx</imagechecked>
       </radiobutton>
       <scroll id="VEHICLE_SELECT_SCROLL">
-        <position x="571" y="81"/>
-        <size width="16" height="242"/>
+        <position x="566" y="81"/>
+        <size width="26" height="242"/>
       </scroll>
       <listbox id="VEHICLE_SELECT_BOX" scrollbarid="VEHICLE_SELECT_SCROLL">
         <position x="463" y="65"/>

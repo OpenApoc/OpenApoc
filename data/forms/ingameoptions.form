@@ -111,8 +111,8 @@
         </label>
 		
 	    <scroll id="NOTIFICATIONS_SCROLL">
-          <position x="551" y="101"/>
-          <size width="16" height="277"/>
+          <position x="549" y="101"/>
+          <size width="22" height="277"/>
         </scroll>
         <listbox id="NOTIFICATIONS_LIST" scrollbarid="NOTIFICATIONS_SCROLL">
           <position x="311" y="76"/>
@@ -122,13 +122,13 @@
           <selcolour r="255" g="255" b="255" a="0"/>
         </listbox>
         <graphicbutton id="NOTIFICATIONS_SCROLL_UP" scrollprev="NOTIFICATIONS_SCROLL">
-          <position x="551" y="76"/>
+          <position x="549" y="76"/>
           <size width="22" height="21"/>
           <image/>
           <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
         </graphicbutton>
         <graphicbutton id="NOTIFICATIONS_SCROLL_UP" scrollnext="NOTIFICATIONS_SCROLL">
-          <position x="551" y="384"/>
+          <position x="549" y="384"/>
           <size width="22" height="21"/>
           <image/>
           <imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>

@@ -141,8 +141,8 @@
         <font>smalfont</font>
       </label>
       <scroll id="LISTBOX_SCROLL">
-        <position x="30" y="452"/>
-        <size width="536" height="15"/>
+        <position x="30" y="447"/>
+        <size width="536" height="26"/>
       </scroll>
       <listbox id="LISTBOX_FACILITIES" scrollbarid="LISTBOX_SCROLL">
         <position x="17" y="380"/>
