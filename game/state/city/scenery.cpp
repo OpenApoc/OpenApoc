@@ -1012,7 +1012,7 @@ void Scenery::die(GameState &state, bool forced)
 		this->tileObject.reset();
 		if (building)
 		{
-			building->buildingPartChange(initialPosition, false);
+			building->buildingPartChange(state, initialPosition, false);
 		}
 	}
 }
@@ -1049,7 +1049,7 @@ void Scenery::collapse(GameState &state)
 	ceaseSupportProvision();
 	if (building)
 	{
-		building->buildingPartChange(initialPosition, false);
+		building->buildingPartChange(state, initialPosition, false);
 	}
 	city->notifyRoadChange(initialPosition, false);
 }
@@ -1246,7 +1246,7 @@ void Scenery::repair(GameState &state)
 	}
 	if (building && !type->commonProperty)
 	{
-		building->buildingPartChange(initialPosition, true);
+		building->buildingPartChange(state, initialPosition, true);
 	}
 	map.clearPathCaches();
 }

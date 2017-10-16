@@ -521,10 +521,10 @@ sp<Control> ControlGenerator::createPurchaseControl(GameState &state,
 		}
 	}
 	bool isAmmo = agentEquipmentType->type == AEquipmentType::Type::Ammo;
-	auto iconLeft =
-	    agentEquipmentType->bioStorage ? singleton.alienContainedDetain : singleton.purchaseBoxIcon;
+	auto iconLeft = agentEquipmentType->bioStorage ? singleton.alienContainedDetain
+	                                               : singleton.purchaseXComIcon;
 	auto iconRight =
-	    agentEquipmentType->bioStorage ? singleton.alienContainedKill : singleton.purchaseXComIcon;
+	    agentEquipmentType->bioStorage ? singleton.alienContainedKill : singleton.purchaseBoxIcon;
 	bool transfer = false;
 	auto name = agentEquipmentType->name;
 	auto manufacturer =
@@ -559,8 +559,8 @@ sp<Control> ControlGenerator::createPurchaseControl(GameState &state,
 		return nullptr;
 	}
 	bool isAmmo = false;
-	auto iconLeft = singleton.purchaseBoxIcon;
-	auto iconRight = singleton.purchaseXComIcon;
+	auto iconLeft = singleton.purchaseXComIcon;
+	auto iconRight = singleton.purchaseBoxIcon;
 	bool transfer = false;
 	auto name = vehicleEquipmentType->name;
 	auto manufacturer = vehicleEquipmentType->manufacturer->name;
@@ -593,8 +593,8 @@ sp<Control> ControlGenerator::createPurchaseControl(GameState &state,
 		return nullptr;
 	}
 	bool isAmmo = true;
-	auto iconLeft = singleton.purchaseBoxIcon;
-	auto iconRight = singleton.purchaseXComIcon;
+	auto iconLeft = singleton.purchaseXComIcon;
+	auto iconRight = singleton.purchaseBoxIcon;
 	bool transfer = false;
 	auto name = vehicleAmmoType->name;
 	auto manufacturer = vehicleAmmoType->manufacturer->name;
@@ -627,8 +627,8 @@ sp<Control> ControlGenerator::createPurchaseControl(GameState &state,
 		return nullptr;
 	}
 	bool isAmmo = false;
-	auto iconLeft = singleton.purchaseBoxIcon;
-	auto iconRight = singleton.purchaseXComIcon;
+	auto iconLeft = singleton.purchaseXComIcon;
+	auto iconRight = singleton.purchaseBoxIcon;
 	bool transfer = false;
 	auto name = vehicleType->name;
 	auto manufacturer = vehicleType->manufacturer->name;
@@ -654,8 +654,8 @@ sp<Control> ControlGenerator::createPurchaseControl(GameState &state, StateRef<V
 	}
 	auto &economy = state.economy[vehicle->type.id];
 	bool isAmmo = false;
-	auto iconLeft = singleton.purchaseBoxIcon;
-	auto iconRight = singleton.purchaseXComIcon;
+	auto iconLeft = singleton.purchaseXComIcon;
+	auto iconRight = singleton.purchaseBoxIcon;
 	bool transfer = false;
 	auto name = vehicle->name;
 	auto manufacturer = vehicle->type->manufacturer->name;
@@ -834,13 +834,13 @@ sp<Control> ControlGenerator::createTransactionControl(GameState &state, bool is
 		label->TextVAlign = VerticalAlignment::Centre;
 	}
 
-	auto stockLeft = baseControl->createChild<Label>(format("%d", stock2), singleton.labelFont);
+	auto stockLeft = baseControl->createChild<Label>(format("%d", stock1), singleton.labelFont);
 	stockLeft->Name = baseControl->Name + "_STOCK_LEFT";
 	stockLeft->Location = {11, 26};
 	stockLeft->Size = {32, 14};
 	stockLeft->TextHAlign = HorizontalAlignment::Right;
 	stockLeft->TextVAlign = VerticalAlignment::Centre;
-	auto stockRight = baseControl->createChild<Label>(format("%d", stock1), singleton.labelFont);
+	auto stockRight = baseControl->createChild<Label>(format("%d", stock2), singleton.labelFont);
 	stockRight->Name = baseControl->Name + "_STOCK_RIGHT";
 	stockRight->Location = {303, 26};
 	stockRight->Size = {32, 14};
@@ -866,7 +866,7 @@ sp<Control> ControlGenerator::createTransactionControl(GameState &state, bool is
 	scroll->Size = {147, 20};
 	scroll->Minimum = 0;
 	scroll->Maximum = stock1 + stock2;
-	scroll->setValue(stock1);
+	scroll->setValue(stock2);
 
 	auto buttonScrollLeft = baseControl->createChild<GraphicButton>(nullptr, singleton.scrollLeft);
 	buttonScrollLeft->Size = singleton.scrollLeft->size;

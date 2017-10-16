@@ -14,7 +14,7 @@ ScrollBar::ScrollBar(sp<Image> gripperImage)
     : Control(), capture(false), grippersize(1), segmentsize(1), gripperbutton(gripperImage),
       buttonerror(fw().data->loadSample("RAWSOUND:xcom3/rawsound/extra/textbeep.raw:22050")),
       Value(0), BarOrientation(Orientation::Vertical), RenderStyle(ScrollBarRenderStyle::Menu),
-      GripperColour(220, 192, 192), Minimum(0), Maximum(10), LargeChange(2)
+      GripperColour(220, 192, 192), Minimum(0), Maximum(10), LargeChange(1)
 {
 	if (!gripperbutton)
 		gripperbutton = fw().data->loadImage(

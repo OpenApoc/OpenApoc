@@ -84,7 +84,7 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 
 	void collapse(GameState &state);
 
-	void buildingPartChange(Vec3<int> part, bool intact);
+	void buildingPartChange(GameState &state, Vec3<int> part, bool intact);
 
 	// Following members are not serialized, but rather are set in City::initMap method
 

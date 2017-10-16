@@ -163,14 +163,14 @@
     <ClCompile Include="skirmish\skirmish.cpp">
       <Filter>skirmish</Filter>
     </ClCompile>
-    <ClCompile Include="base\buysellscreen.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="tileview\battleview.cpp">
       <Filter>tileview</Filter>
     </ClCompile>
     <ClCompile Include="tileview\cityview.cpp">
       <Filter>tileview</Filter>
+    </ClCompile>
+    <ClCompile Include="base\transactionscreen.cpp">
+      <Filter>base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -304,14 +304,14 @@
     <ClInclude Include="skirmish\skirmish.h">
       <Filter>skirmish</Filter>
     </ClInclude>
-    <ClInclude Include="base\buysellscreen.h">
-      <Filter>base</Filter>
-    </ClInclude>
     <ClInclude Include="tileview\battleview.h">
       <Filter>tileview</Filter>
     </ClInclude>
     <ClInclude Include="tileview\cityview.h">
       <Filter>tileview</Filter>
+    </ClInclude>
+    <ClInclude Include="base\transactionscreen.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -875,9 +875,9 @@ void Building::collapse(GameState &state)
 	}
 }
 
-void Building::buildingPartChange(Vec3<int> part, bool intact)
+void Building::buildingPartChange(GameState &state, Vec3<int> part, bool intact)
 {
-	// FIXME: Implement base / building dying when enough is destroyed
+	// FIXME: Implement proper base / building dying when enough is destroyed
 	// Implement agents dying when building dies
 	if (intact)
 	{
@@ -885,7 +885,27 @@ void Building::buildingPartChange(Vec3<int> part, bool intact)
 	}
 	else
 	{
+		// Skin36 had some code figured out about this
+		// which counted score of parts and when it was below certain value
+		// building was considered dead
 		buildingParts.erase(part);
+		if (buildingParts.find(crewQuarters) == buildingParts.end())
+		{
+			while (!currentAgents.empty())
+			{
+				// For some reason need to assign first before calling die()
+				auto agent = *currentAgents.begin();
+				// Dying will remove agent from current agents list
+				agent->die(state, true);
+			}
+		}
+		if (buildingParts.empty())
+		{
+			if (base)
+			{
+				base->die(state, true);
+			}
+		}
 	}
 }
 

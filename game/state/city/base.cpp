@@ -98,7 +98,12 @@ void Base::die(GameState &state, bool collapse)
 
 	state.player_bases.erase(Base::getId(state, shared_from_this()));
 	state.current_base.clear();
-	if (!state.player_bases.empty())
+	if (state.player_bases.empty())
+	{
+		LogError("Player lost, but we have no screen for that yet!");
+		return;
+	}
+	else
 	{
 		state.current_base = {&state, state.player_bases.begin()->first};
 	}

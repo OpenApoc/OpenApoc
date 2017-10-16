@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc>
-  <form id="FORM_PURCHASESCREEN">
+  <form id="FORM_TRANSACTIONSCREEN">
     <style minwidth="640" minheight="480">
       <position x="centre" y="centre"/>
       <size width="640" height="480"/>
-      <graphic>
-        <image>xcom3/ufodata/buy&amp;sell.pcx</image>
+      <graphic id = "BG">
         <position x="0" y="0"/>
         <size width="640" height="480"/>
       </graphic>
-      <label text="BUY AND SELL">
+      <label id= "TITLE">
         <position x="20" y="0"/>
         <size width="600" height="36"/>
         <alignment horizontal="centre" vertical="centre"/>
@@ -141,6 +140,38 @@
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:40:xcom3/ufodata/base.pcx</imagechecked>
 	  </radiobutton>
+	  
+	  <radiobutton id="BUTTON_SOLDIERS" groupid = "TYPE">
+        <position x="602" y="40"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:33:xcom3/ufodata/base.pcx</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_BIOSCIS" groupid = "TYPE">
+        <position x="602" y="80"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:34:xcom3/ufodata/base.pcx</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_PHYSCIS" groupid = "TYPE">
+        <position x="601" y="120"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:35:xcom3/ufodata/base.pcx</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_ENGINRS" groupid = "TYPE">
+        <position x="602" y="160"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:36:xcom3/ufodata/base.pcx</imagechecked>
+	  </radiobutton>
+	    <radiobutton id="BUTTON_ALIENS" groupid = "TYPE">
+        <position x="602" y="360"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:41:xcom3/ufodata/base.pcx</imagechecked>
+	  </radiobutton>
+	  
 	 
       <graphicbutton id="BUTTON_OK">
         <position x="602" y="443"/>
