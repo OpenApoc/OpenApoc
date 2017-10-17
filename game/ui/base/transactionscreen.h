@@ -117,6 +117,7 @@ class TransactionScreen : public BaseStage
 		bool isBio = false;
 		UString manufacturer;
 		bool manufacturerHostile = false;
+		bool manufacturerUnavailable = false;
 
 		// Own Methods
 
@@ -149,7 +150,8 @@ class TransactionScreen : public BaseStage
 
 		static sp<TransactionControl> createControl(UString id, Type type, UString name,
 		                                            UString manufacturer, bool isAmmo, bool isBio,
-		                                            bool manufacturerHostile, int price,
+		                                            bool manufacturerHostile,
+		                                            bool manufacturerUnavailable, int price,
 		                                            int storeSpace, std::vector<int> &initialStock,
 		                                            int indexLeft, int indexRight);
 
@@ -215,6 +217,11 @@ class TransactionScreen : public BaseStage
 	void updateBaseHighlight();
 	void fillBaseBar(bool left, int percent);
 	void displayItem(sp<TransactionControl> control);
+
+	void attemptCloseScreen();
+	void closeScreen(bool confirmed = false, bool forced = false);
+	// Execute orders given in the screen
+	void executeOrders();
 
 	// Stage control
 	void begin() override;

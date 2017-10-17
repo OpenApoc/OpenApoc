@@ -221,9 +221,26 @@ class FlyingVehicleMover : public VehicleMover
 		}
 
 		// Step 03: Find projectiles to dodge
-		// FIXME: Read vehicle engagement rules, instead for now chance to dodge is flat 80%
+		// FIXME: Read vehicle engagement rules, instead for now chance to dodge is
+		// flat 100% / 80% / 50% / 10% depending on behavior
 		// and passives don't dodge at all
-		if (vehicle.type->aggressiveness > 0 && randBoundsExclusive(state.rng, 0, 100) < 80)
+		int dodge = 0;
+		switch (vehicle.attackMode)
+		{
+			case Vehicle::AttackMode::Aggressive:
+				dodge = 10;
+				break;
+			case Vehicle::AttackMode::Standard:
+				dodge = 50;
+				break;
+			case Vehicle::AttackMode::Defensive:
+				dodge = 80;
+				break;
+			case Vehicle::AttackMode::Evasive:
+				dodge = 100;
+				break;
+		}
+		if (vehicle.type->aggressiveness > 0 && randBoundsExclusive(state.rng, 0, 100) < dodge)
 		{
 			for (auto &p : state.current_city->projectiles)
 			{
@@ -1322,9 +1339,23 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 		for (auto &e : scrappedEquipment)
 		{
 			carriedVehicle->removeEquipment(e);
-			// FIXME: Sell using economy
-			carriedVehicle->owner->balance += 1000 * FV_SCRAPPED_COST_PERCENT / 100;
-			LogWarning("Sell scrap using economy");
+			int price = 0;
+			if (state.economy.find(e->type.id) != state.economy.end())
+			{
+				auto &economy = state.economy[e->type.id];
+				price = economy.currentPrice;
+			}
+			carriedVehicle->owner->balance += price * FV_SCRAPPED_COST_PERCENT / 100;
+			if (e->ammo > 0)
+			{
+				price = 0;
+				if (state.economy.find(e->type->ammo_type.id) != state.economy.end())
+				{
+					auto &economy = state.economy[e->type->ammo_type.id];
+					price = economy.currentPrice;
+				}
+				carriedVehicle->owner->balance += e->ammo * price * FV_SCRAPPED_COST_PERCENT / 100;
+			}
 		}
 		if (randBoundsExclusive(state.rng, 0, 100) > FV_CHANCE_TO_RECOVER_VEHICLE)
 		{
@@ -1343,6 +1374,10 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 					// Ensure it works here with ++ and change everywhere else
 					// where it does X = X + 1 for base inventory
 					b->base->inventoryVehicleEquipment[e->type.id]++;
+					if (e->ammo > 0)
+					{
+						b->base->inventoryVehicleAmmo[e->type->ammo_type.id] += e->ammo;
+					}
 				}
 			}
 			else
@@ -1350,16 +1385,41 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 				// No base, sell
 				for (auto &e : carriedVehicle->equipment)
 				{
-					// FIXME: Sell using economy
-					carriedVehicle->owner->balance += 1000;
+					int price = 0;
+					if (state.economy.find(e->type.id) != state.economy.end())
+					{
+						auto &economy = state.economy[e->type.id];
+						price = economy.currentPrice;
+					}
+					carriedVehicle->owner->balance += price * FV_SCRAPPED_COST_PERCENT / 100;
+					if (e->ammo > 0)
+					{
+						price = 0;
+						if (state.economy.find(e->type->ammo_type.id) != state.economy.end())
+						{
+							auto &economy = state.economy[e->type->ammo_type.id];
+							price = economy.currentPrice;
+						}
+						carriedVehicle->owner->balance +=
+						    e->ammo * price * FV_SCRAPPED_COST_PERCENT / 100;
+					}
 				}
 			}
-			// FIXME: Unload ammo and fuel
+			int price = 0;
+			if (state.economy.find(carriedVehicle->type.id) != state.economy.end())
+			{
+				auto &economy = state.economy[carriedVehicle->type.id];
+				price = economy.currentPrice;
+			}
+			carriedVehicle->owner->balance += price * FV_SCRAPPED_COST_PERCENT / 100;
 			carriedVehicle->die(state, true);
-			// FIXME: Sell using economy
-			carriedVehicle->owner->balance += 10000 * FV_SCRAPPED_COST_PERCENT / 100;
-			LogWarning("Sell scrap using economy");
-			LogWarning("Event that vehicle scrapped?");
+
+			fw().pushEvent(new GameSomethingDiedEvent(GameEventType::VehicleRecovered,
+			                                          carriedVehicle->name, "", position));
+		}
+		else
+		{
+			fw().pushEvent(new GameVehicleEvent(GameEventType::VehicleRecovered, carriedVehicle));
 		}
 		carriedVehicle.clear();
 	}
@@ -2460,8 +2520,8 @@ void Vehicle::fireWeaponsManual(GameState &state, Vec2<int> arc)
 
 void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile)
 {
-	static const std::set<TileObject::Type> scenerySet = {TileObject::Type::Scenery,
-	                                                      TileObject::Type::Vehicle};
+	static const std::set<TileObject::Type> sceneryVehicleSet = {TileObject::Type::Scenery,
+	                                                             TileObject::Type::Vehicle};
 
 	auto firePosition = getMuzzleLocation();
 	auto target = enemyTile->getVoxelCentrePosition();
@@ -2520,8 +2580,9 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile)
 		for (int i = 0; i < 2; i++)
 		{
 			hitSomethingBad = false;
+			// Checking los as otherwise we're colliding with ground when firing at bogus voxelmaps
 			auto hitObject = tileObject->map.findCollision(firePosition, targetPosAdjusted,
-			                                               scenerySet, tileObject);
+			                                               sceneryVehicleSet, tileObject, true);
 			if (hitObject)
 			{
 				if (hitObject.obj->getType() == TileObject::Type::Vehicle)
@@ -2530,7 +2591,6 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile)
 					if (owner->isRelatedTo(vehicle->getVehicle()->owner) !=
 					    Organisation::Relation::Hostile)
 					{
-						LogWarning("Hit vehicle");
 						hitSomethingBad = true;
 					}
 				}
@@ -2569,8 +2629,8 @@ void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile)
 
 bool Vehicle::attackTarget(GameState &state, sp<TileObjectProjectile> projectileTile)
 {
-	static const std::set<TileObject::Type> scenerySet = {TileObject::Type::Scenery,
-	                                                      TileObject::Type::Vehicle};
+	static const std::set<TileObject::Type> sceneryVehicleSet = {TileObject::Type::Scenery,
+	                                                             TileObject::Type::Vehicle};
 
 	auto firePosition = getMuzzleLocation();
 	auto target = projectileTile->getVoxelCentrePosition();
@@ -2635,7 +2695,7 @@ bool Vehicle::attackTarget(GameState &state, sp<TileObjectProjectile> projectile
 		{
 			hitSomethingBad = false;
 			auto hitObject = tileObject->map.findCollision(firePosition, targetPosAdjusted,
-			                                               scenerySet, tileObject);
+			                                               sceneryVehicleSet, tileObject);
 			if (hitObject)
 			{
 				if (hitObject.obj->getType() == TileObject::Type::Vehicle)
@@ -3333,7 +3393,6 @@ sp<VEquipment> Vehicle::addEquipment(GameState &state, Vec2<int> pos,
 			auto weapon = mksp<VEquipment>();
 			weapon->type = equipmentType;
 			weapon->owner = thisRef;
-			weapon->ammo = equipmentType->max_ammo;
 			this->equipment.emplace_back(weapon);
 			weapon->equippedPosition = slotOrigin;
 			LogInfo("Equipped \"%s\" with weapon \"%s\"", this->name, equipmentType->name);
@@ -3396,7 +3455,8 @@ void Vehicle::equipDefaultEquipment(GameState &state)
 		auto &pos = pair.first;
 		auto &etype = pair.second;
 
-		this->addEquipment(state, pos, etype);
+		auto eq = this->addEquipment(state, pos, etype);
+		eq->ammo = eq->type->max_ammo;
 	}
 }
 
@@ -3463,27 +3523,24 @@ std::list<std::pair<Vec2<int>, sp<Equipment>>> Vehicle::getEquipment() const
 	return equipmentList;
 }
 
-// FIXME: Implement economy
-Cargo::Cargo(GameState &state, StateRef<AEquipmentType> equipment, int count,
+Cargo::Cargo(GameState &state, StateRef<AEquipmentType> equipment, int count, int price,
              StateRef<Organisation> originalOwner, StateRef<Building> destination)
     : Cargo(state, equipment->bioStorage ? Type::Bio : Type::Agent, equipment.id, count,
             equipment->type == AEquipmentType::Type::Ammo ? equipment->max_ammo : 1,
-            equipment->store_space, 1, originalOwner, destination)
+            equipment->store_space, price, originalOwner, destination)
 {
 }
 
-// FIXME: Implement economy
-Cargo::Cargo(GameState &state, StateRef<VEquipmentType> equipment, int count,
+Cargo::Cargo(GameState &state, StateRef<VEquipmentType> equipment, int count, int price,
              StateRef<Organisation> originalOwner, StateRef<Building> destination)
-    : Cargo(state, Type::VehicleEquipment, equipment.id, count, 1, equipment->store_space, 1,
+    : Cargo(state, Type::VehicleEquipment, equipment.id, count, 1, equipment->store_space, price,
             originalOwner, destination)
 {
 }
 
-// FIXME: Implement economy
-Cargo::Cargo(GameState &state, StateRef<VAmmoType> equipment, int count,
+Cargo::Cargo(GameState &state, StateRef<VAmmoType> equipment, int count, int price,
              StateRef<Organisation> originalOwner, StateRef<Building> destination)
-    : Cargo(state, Type::VehicleAmmo, equipment.id, count, 1, equipment->store_space, 1,
+    : Cargo(state, Type::VehicleAmmo, equipment.id, count, 1, equipment->store_space, price,
             originalOwner, destination)
 {
 }
@@ -3524,18 +3581,20 @@ void Cargo::refund(GameState &state, StateRef<Building> currentBuilding)
 {
 	if (cost > 0)
 	{
-		destination->owner->balance += cost * count;
+		destination->owner->balance += cost * count / divisor;
 		if (!originalOwner)
 		{
 			LogError("Bought cargo from nobody!? WTF?");
 			return;
 		}
-		originalOwner->balance -= cost * count;
+		originalOwner->balance -= cost * count / divisor;
 		if (destination->owner == state.getPlayer())
 		{
 			fw().pushEvent(
 			    new GameBaseEvent(GameEventType::CargoExpired, destination->base, originalOwner));
 		}
+		// FIXME: Return expired cargo to economy
+		LogWarning("Return expired cargo to economy");
 	}
 	else if (currentBuilding && originalOwner == destination->owner)
 	{
@@ -3597,7 +3656,7 @@ void Cargo::arrive(GameState &state, bool &cargoArrived, bool &bioArrived, bool 
 			}
 			else
 			{
-				cargoArrived = true;
+				transferArrived = true;
 			}
 		}
 		// Loot
@@ -3618,8 +3677,10 @@ void Cargo::arrive(GameState &state, bool &cargoArrived, bool &bioArrived, bool 
 
 void Cargo::seize(GameState &state, StateRef<Organisation> org)
 {
-	int worth = cost * count;
-	LogWarning("Implement cargo seize message and adjust relationship accordingly to worth: %d",
+	int worth = cost * count / divisor;
+	// FIXME: Return expired cargo to economy
+	LogWarning("Implement cargo seize message, return to economy, and adjust relationship "
+	           "accordingly to worth: %d",
 	           worth);
 	clear();
 }

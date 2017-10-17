@@ -24,6 +24,9 @@
 		<member>initial_agents</member>
 		<member>initial_facilities</member>
 		<member>initial_agent_equipment</member>
+		<member>initial_vehicles</member>
+		<member>initial_vehicle_equipment</member>
+		<member>initial_vehicle_ammo</member>
 		<member>initial_base_agent_equipment</member>
 		<member>initial_aliens</member>
 		<member>current_city</member>
@@ -55,6 +58,7 @@
 		<member>score</member>
 		<member>difficulty</member>
 		<member>firstDetection</member>
+		<member>nextInvasion</member>
 	</object>
 	<object external="true">
 		<name>BattleMapTileset</name>

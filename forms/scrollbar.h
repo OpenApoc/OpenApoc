@@ -38,6 +38,9 @@ class ScrollBar : public Control
 	int Minimum;
 	int Maximum;
 	int LargeChange;
+	int LargePercent;
+
+	void updateLargeChangeValue();
 
 	ScrollBar(sp<Image> gripperImage = nullptr);
 	~ScrollBar() override;

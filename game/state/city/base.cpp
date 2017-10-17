@@ -449,7 +449,7 @@ int Base::getCapacityTotal(FacilityType::Capacity type) const
 	int total = 0;
 	for (auto f = facilities.begin(); f != facilities.end(); ++f)
 	{
-		if ((*f)->type->capacityType == type)
+		if ((*f)->type->capacityType == type && (*f)->buildTime == 0)
 		{
 			total += (*f)->type->capacityAmount;
 		}

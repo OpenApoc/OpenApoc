@@ -16,17 +16,20 @@ class MessageBox : public Stage
 	sp<Form> form;
 	std::function<void()> callbackYes;
 	std::function<void()> callbackNo;
+	std::function<void()> callbackCancel;
 
   public:
 	enum class ButtonOptions
 	{
 		Ok,
-		YesNo
+		YesNo,
+		YesNoCancel
 	};
 
 	MessageBox(const UString &title, const UString &text, ButtonOptions buttons,
 	           std::function<void()> callbackYes = std::function<void()>(),
-	           std::function<void()> callbackNo = std::function<void()>());
+	           std::function<void()> callbackNo = std::function<void()>(),
+	           std::function<void()> callbackCancel = std::function<void()>());
 	~MessageBox() override;
 	// Stage control
 	void begin() override;

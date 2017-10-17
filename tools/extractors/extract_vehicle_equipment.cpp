@@ -1,6 +1,7 @@
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/city/vammotype.h"
 #include "game/state/rules/city/vequipmenttype.h"
 #include "library/strings_format.h"
 #include "tools/extractors/common/doodads.h"
@@ -13,6 +14,22 @@ namespace OpenApoc
 void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 {
 	auto &data = this->ufo2p;
+
+	// Initial stuff
+	state.initial_vehicle_equipment.emplace_back(
+	    StateRef<VEquipmentType>{&state, "VEQUIPMENTTYPE_BOLTER_4000_LASER_GUN"}, 2);
+	state.initial_vehicle_equipment.emplace_back(
+	    StateRef<VEquipmentType>{&state, "VEQUIPMENTTYPE_LANCER_7000_LASER_GUN"}, 2);
+	state.initial_vehicle_ammo.emplace_back(
+	    StateRef<VAmmoType>{&state, "VEQUIPMENTAMMOTYPE_AIRGUARD_52MM_CANNON_ROUND"}, 500);
+	state.initial_vehicle_ammo.emplace_back(
+	    StateRef<VAmmoType>{&state, "VEQUIPMENTAMMOTYPE_GROUND_LAUNCHED_MISSILE"}, 50);
+	state.initial_vehicle_ammo.emplace_back(
+	    StateRef<VAmmoType>{&state, "VEQUIPMENTAMMOTYPE_JANITOR_MISSILE"}, 150);
+	state.initial_vehicle_ammo.emplace_back(
+	    StateRef<VAmmoType>{&state, "VEQUIPMENTAMMOTYPE_ELERIUM_115"}, 500);
+	state.initial_vehicle_ammo.emplace_back(
+	    StateRef<VAmmoType>{&state, "VEQUIPMENTAMMOTYPE_FUSION_POWERFUEL"}, 1000);
 
 	// FIXME: Track these as some things (the weapon icon?) seem to be ordered by when they're
 	// defined

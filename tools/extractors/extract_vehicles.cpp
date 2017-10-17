@@ -123,6 +123,15 @@ static void extract_equipment_layout(GameState &state, sp<VehicleType> vehicle, 
 
 void InitialGameStateExtractor::extractVehicles(GameState &state) const
 {
+	// Initial stuff
+	state.initial_vehicles.emplace_back(
+	    StateRef<VehicleType>{&state, "VEHICLETYPE_VALKYRIE_INTERCEPTOR"}, 1);
+	state.initial_vehicles.emplace_back(StateRef<VehicleType>{&state, "VEHICLETYPE_STORMDOG"}, 1);
+	state.initial_vehicles.emplace_back(
+	    StateRef<VehicleType>{&state, "VEHICLETYPE_PHOENIX_HOVERCAR"}, 2);
+	state.initial_vehicles.emplace_back(StateRef<VehicleType>{&state, "VEHICLETYPE_WOLFHOUND_APC"},
+	                                    1);
+
 	auto &data = this->ufo2p;
 	LogInfo("Number of vehicle strings: %zu", data.vehicle_names->readStrings.size());
 

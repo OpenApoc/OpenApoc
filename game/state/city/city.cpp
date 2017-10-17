@@ -80,8 +80,10 @@ void City::initMap(GameState &state)
 	for (auto &s : this->scenery)
 	{
 		s->city = {&state, id};
-		// FIXME: Should we really add all scenery to the map? What if it's destroyed?
-		this->map->addObjectToMap(s);
+		if (!s->destroyed)
+		{
+			this->map->addObjectToMap(s);
+		}
 		if (!s->building)
 		{
 			continue;
@@ -297,30 +299,46 @@ void City::dailyLoop(GameState &state)
 
 void City::generatePortals(GameState &state)
 {
-	static const int iterLimit = 1000;
-	for (auto &p : portals)
+	if (portals.empty())
 	{
-		p->remove(state);
-	}
-	this->portals.clear();
+		// FIXME: Implement proper portals
+		// According to skin36, portals must have empty 4x4x4 around them
+		// and spawn within 100x100 around city center
 
-	std::uniform_int_distribution<int> xyPos(10, 130);
-	std::uniform_int_distribution<int> zPos(2, 8);
-	for (int p = 0; p < 3; p++)
-	{
-		for (int i = 0; i < iterLimit; i++)
+		// FIXME: Implement portals in alien city staying where they are
+		// and starting where they should
+
+		static const int iterLimit = 1000;
+		for (auto &p : portals)
 		{
-			Vec3<float> pos(xyPos(state.rng), xyPos(state.rng), zPos(state.rng));
+			p->remove(state);
+		}
+		this->portals.clear();
 
-			if (map->tileIsValid(pos) && map->getTile(pos)->ownedObjects.empty())
+		std::uniform_int_distribution<int> xyPos(20, 120);
+		std::uniform_int_distribution<int> zPos(2, 8);
+		for (int p = 0; p < 3; p++)
+		{
+			for (int i = 0; i < iterLimit; i++)
 			{
-				auto doodad =
-				    mksp<Doodad>(pos, StateRef<DoodadType>{&state, "DOODAD_6_DIMENSION_GATE"});
-				map->addObjectToMap(doodad);
-				this->portals.push_back(doodad);
-				break;
+				Vec3<float> pos(xyPos(state.rng), xyPos(state.rng), zPos(state.rng));
+
+				if (map->tileIsValid(pos) && map->getTile(pos)->ownedObjects.empty())
+				{
+					auto doodad =
+					    mksp<Doodad>(pos, StateRef<DoodadType>{&state, "DOODAD_6_DIMENSION_GATE"});
+					map->addObjectToMap(doodad);
+					this->portals.push_back(doodad);
+					break;
+				}
 			}
 		}
+	}
+	else
+	{
+		// FIXME: Implement moving portals
+		// According to skin36, portal is moved by +-(2*week + 15) on each coordinate
+		// and must stay within -5..105 which means within 15 from map border in our coords
 	}
 }
 

@@ -390,6 +390,11 @@ void Control::configureChildrenFromXml(pugi::xml_node *parent)
 			{
 				gb->ScrollBarNext = this->findControlTyped<ScrollBar>(scrollNext);
 			}
+			bool scrollLarge = node.attribute("scrolllarge").as_bool();
+			if (scrollLarge)
+			{
+				gb->scrollLarge = true;
+			}
 		}
 		else if (nodename == "checkbox")
 		{
@@ -428,6 +433,11 @@ void Control::configureChildrenFromXml(pugi::xml_node *parent)
 		{
 			auto sb = this->createChild<ScrollBar>();
 			sb->configureFromXml(&node);
+			UString yAttr = node.attribute("largepercent").as_string();
+			if (Strings::isInteger(yAttr))
+			{
+				sb->LargePercent = node.attribute("largepercent").as_int();
+			}
 		}
 
 		else if (nodename == "listbox")

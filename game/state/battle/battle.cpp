@@ -3053,7 +3053,13 @@ void Battle::exitBattle(GameState &state)
 				}
 				for (auto &e : leftoverCargoLoot)
 				{
-					location->cargo.emplace_back(state, e.first, e.second, nullptr, homeBuilding);
+					int price = 0;
+					if (state.economy.find(e.first.id) != state.economy.end())
+					{
+						price = state.economy[e.first.id].currentPrice;
+					}
+					location->cargo.emplace_back(state, e.first, e.second, price, nullptr,
+					                             homeBuilding);
 				}
 			}
 		}
@@ -3082,7 +3088,13 @@ void Battle::exitBattle(GameState &state)
 				if (maxAmount > 0)
 				{
 					e.second -= maxAmount;
-					v->cargo.emplace_back(state, e.first, maxAmount, nullptr, v->homeBuilding);
+					int price = 0;
+					if (state.economy.find(e.first.id) != state.economy.end())
+					{
+						price = state.economy[e.first.id].currentPrice;
+					}
+					v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
+					                      v->homeBuilding);
 					returningVehicles.insert(v);
 				}
 			}
@@ -3115,7 +3127,13 @@ void Battle::exitBattle(GameState &state)
 				if (maxAmount > 0)
 				{
 					e.second -= maxAmount;
-					v->cargo.emplace_back(state, e.first, maxAmount, nullptr, v->homeBuilding);
+					int price = 0;
+					if (state.economy.find(e.first.id) != state.economy.end())
+					{
+						price = state.economy[e.first.id].currentPrice;
+					}
+					v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
+					                      v->homeBuilding);
 					returningVehicles.insert(v);
 				}
 			}
@@ -3134,7 +3152,7 @@ void Battle::exitBattle(GameState &state)
 	for (auto v : returningVehicles)
 	{
 		v->cargo.emplace_front(
-		    state, StateRef<AEquipmentType>(&state, state.agent_equipment.begin()->first), 0,
+		    state, StateRef<AEquipmentType>(&state, state.agent_equipment.begin()->first), 0, 0,
 		    nullptr, v->homeBuilding);
 		v->setMission(state, VehicleMission::gotoBuilding(state, *v));
 		v->addMission(state, VehicleMission::offerService(state, *v), true);
