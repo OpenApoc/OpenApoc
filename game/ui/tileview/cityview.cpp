@@ -2416,21 +2416,8 @@ bool CityView::handleKeyDown(Event *e)
 			}
 			case SDLK_p:
 			{
-				LogWarning("Spawning some bought stuff");
+				LogWarning("Spawning hired agents");
 				StateRef<Organisation> marsec = {state.get(), "ORG_MARSEC"};
-				marsec->purchase(*state, state->current_base->building,
-				                 StateRef<VehicleType>{state.get(), "VEHICLETYPE_HAWK_AIR_WARRIOR"},
-				                 1);
-				marsec->purchase(
-				    *state, state->current_base->building,
-				    StateRef<AEquipmentType>{state.get(), "AEQUIPMENTTYPE_MARSEC_BODY_UNIT"}, 1);
-				marsec->purchase(
-				    *state, state->current_base->building,
-				    StateRef<VEquipmentType>{state.get(), "VEQUIPMENTTYPE_LANCER_7000_LASER_GUN"},
-				    1);
-				marsec->purchase(
-				    *state, state->current_base->building,
-				    StateRef<VAmmoType>{state.get(), "VEQUIPMENTAMMOTYPE_DISRUPTOR_BOMB"}, 1);
 				for (auto &b : state->cities["CITYMAP_HUMAN"]->buildings)
 				{
 					if (b.second->owner == marsec)
@@ -2707,7 +2694,11 @@ bool CityView::handleMouseDown(Event *e)
 					}
 					if (modifierLAlt && modifierLCtrl && modifierLShift)
 					{
-						if (!vehicle->falling && !vehicle->crashed)
+						if (buttonPressed == Event::MouseButton::Right)
+						{
+							vehicle->die(*state);
+						}
+						else if (!vehicle->falling && !vehicle->crashed)
 						{
 							vehicle->health = vehicle->type->crash_health > 0
 							                      ? vehicle->type->crash_health

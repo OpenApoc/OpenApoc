@@ -37,6 +37,7 @@ class Organisation : public StateObject
 	enum class PurchaseResult
 	{
 		OK,
+		TranportHostile,
 		NoTransportAvailable,
 		OrgHostile,
 		OrgHasNoBuildings,
@@ -145,8 +146,8 @@ class Organisation : public StateObject
 	              StateRef<VAmmoType> vehicleAmmo, int count);
 	void purchase(GameState &state, const StateRef<Building> &buyer,
 	              StateRef<AEquipmentType> agentEquipment, int count);
-	void purchase(GameState &state, const StateRef<Building> &buyer, StateRef<VehicleType> vehicle,
-	              int count);
+	void purchase(GameState &state, const StateRef<Building> &buyer,
+	              StateRef<VehicleType> vehicleType, int count);
 
 	Relation isRelatedTo(const StateRef<Organisation> &other) const;
 	bool isPositiveTo(const StateRef<Organisation> &other) const;

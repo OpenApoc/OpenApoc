@@ -54,12 +54,12 @@ void GraphicButton::eventOccured(Event *e)
 
 		if (ScrollBarPrev != nullptr)
 		{
-			ScrollBarPrev->scrollPrev();
+			ScrollBarPrev->scrollPrev(!scrollLarge);
 		}
 
 		if (ScrollBarNext != nullptr)
 		{
-			ScrollBarNext->scrollNext();
+			ScrollBarNext->scrollNext(!scrollLarge);
 		}
 	}
 }
@@ -164,6 +164,7 @@ sp<Control> GraphicButton::copyTo(sp<Control> CopyParent)
 		copy->ScrollBarNext =
 		    std::dynamic_pointer_cast<ScrollBar>(ScrollBarNext->lastCopiedTo.lock());
 	}
+	copy->scrollLarge = scrollLarge;
 	copyControlData(copy);
 	return copy;
 }

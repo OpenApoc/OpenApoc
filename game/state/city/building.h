@@ -83,8 +83,8 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 	void underAttack(GameState &state, StateRef<Organisation> attacker);
 
 	void collapse(GameState &state);
-
-	void buildingPartChange(Vec3<int> part, bool intact);
+	void buildingPartChange(GameState &state, Vec3<int> part, bool intact);
+	bool isAlive(GameState &state) const;
 
 	// Following members are not serialized, but rather are set in City::initMap method
 

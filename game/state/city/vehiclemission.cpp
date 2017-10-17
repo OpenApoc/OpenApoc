@@ -17,6 +17,7 @@
 #include "game/state/rules/city/vehicletype.h"
 #include "game/state/shared/doodad.h"
 #include "game/state/shared/organisation.h"
+#include "game/state/tilemap/collision.h"
 #include "game/state/tilemap/tilemap.h"
 #include "game/state/tilemap/tileobject_doodad.h"
 #include "game/state/tilemap/tileobject_scenery.h"
@@ -110,7 +111,7 @@ bool FlyingVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, f
 	// Allow pathing into tiles with crashes
 	bool foundCrash = false;
 	bool foundScenery = false;
-	for (auto &obj : to->ownedObjects)
+	for (auto &obj : to->intersectingObjects)
 	{
 		if (obj->getType() == TileObject::Type::Vehicle)
 		{
@@ -126,7 +127,10 @@ bool FlyingVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, f
 				foundCrash = true;
 			}
 		}
-		else if (!foundScenery && obj->getType() == TileObject::Type::Scenery)
+	}
+	for (auto &obj : to->ownedObjects)
+	{
+		if (!foundScenery && obj->getType() == TileObject::Type::Scenery)
 		{
 			auto sceneryTile = std::static_pointer_cast<TileObjectScenery>(obj);
 			if (sceneryTile->scenery.lock()->type->isLandingPad)
@@ -951,6 +955,8 @@ bool VehicleMission::teleportCheck(GameState &state, Vehicle &v)
 bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float> &destPos,
                                         float &destFacing)
 {
+	static const std::set<TileObject::Type> scenerySet = {TileObject::Type::Scenery};
+
 	if (cancelled)
 	{
 		return false;
@@ -1067,7 +1073,10 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 						}
 					}
 
-					if (vTile->getDistanceTo(targetTile) < distancePreference)
+					bool haveLOS = !vTile->map.findCollision(v.position, targetVehicle->position,
+					                                         scenerySet, nullptr, true);
+
+					if (haveLOS && vTile->getDistanceTo(targetTile) < distancePreference)
 					{
 						// target is in range, we're done with pathing and start maneuvering
 						if (!currentPlannedPath.empty())
@@ -1322,8 +1331,7 @@ bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 				LogInfo("Vehicle attack mission: Target not on the map");
 				return true;
 			}
-			// Still attack falling vehicles but not sliding or crashed
-			if (!attackCrashed && (t->crashed || t->sliding))
+			if (!attackCrashed && (t->crashed || t->sliding || t->falling))
 			{
 				return true;
 			}
@@ -1499,22 +1507,22 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					if (scenery->type->connection[0])
 					{
 						facing = 0.0f;
-						leaveLocation += Vec3<float>{0.0f, 0.5f, 0.0f};
+						leaveLocation += Vec3<float>{0.0f, 0.49f, 0.0f};
 					}
 					else if (scenery->type->connection[1])
 					{
 						facing = (float)M_PI_2;
-						leaveLocation += Vec3<float>{0.5f, 0.0f, 0.0f};
+						leaveLocation += Vec3<float>{-0.49f, 0.0f, 0.0f};
 					}
 					else if (scenery->type->connection[2])
 					{
 						facing = (float)M_PI;
-						leaveLocation += Vec3<float>{0.0f, -0.5f, 0.0f};
+						leaveLocation += Vec3<float>{0.0f, -0.49f, 0.0f};
 					}
 					else if (scenery->type->connection[3])
 					{
 						facing = (float)M_PI + (float)M_PI_2;
-						leaveLocation += Vec3<float>{-0.5f, 0.0f, 0.0f};
+						leaveLocation += Vec3<float>{0.49f, 0.0f, 0.0f};
 					}
 					v.leaveBuilding(state, leaveLocation, facing);
 					LogInfo("Launching vehicle from building \"%s\" at pad %s", b.id,
@@ -2327,7 +2335,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						}
 					}
 					// Retreat
-					v.addMission(state, VehicleMission::gotoPortal(state, v), true);
+					v.addMission(state, VehicleMission::gotoPortal(state, v));
 					v.addMission(state, VehicleMission::snooze(state, v, TICKS_PER_SECOND));
 					missionCounter++;
 					return;

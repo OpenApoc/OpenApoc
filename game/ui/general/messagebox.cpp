@@ -14,8 +14,9 @@ namespace OpenApoc
 {
 
 MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions buttons,
-                       std::function<void()> callbackYes, std::function<void()> callbackNo)
-    : Stage(), callbackYes(callbackYes), callbackNo(callbackNo)
+                       std::function<void()> callbackYes, std::function<void()> callbackNo,
+                       std::function<void()> callbackCancel)
+    : Stage(), callbackYes(callbackYes), callbackNo(callbackNo), callbackCancel(callbackCancel)
 {
 	form = mksp<Form>();
 	form->Size = {248, 100};
@@ -23,6 +24,7 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 
 	const int MARGIN = 8;
 	const Vec2<int> BUTTON_SIZE = {100, 28};
+	const Vec2<int> BUTTON_SIZE_2 = {70, 28};
 
 	auto lTitle = form->createChild<Label>(title.toUpper(), ui().getFont("smalfont"));
 	lTitle->Size.x = form->Size.x - MARGIN * 2;
@@ -37,34 +39,65 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 	lText->Location.y += lTitle->Size.y + MARGIN * 2;
 	lText->TextHAlign = HorizontalAlignment::Centre;
 
-	if (buttons == ButtonOptions::Ok)
+	switch (buttons)
 	{
-		auto bOk = form->createChild<TextButton>(tr("OK"), ui().getFont("smallset"));
-		bOk->Name = "BUTTON_OK";
-		bOk->Size = BUTTON_SIZE;
-		bOk->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
-		bOk->Location.x = (form->Size.x - bOk->Size.x) / 2;
-		bOk->Location.y = lText->Location.y + lText->Size.y + MARGIN;
+		case ButtonOptions::Ok:
+		{
+			auto bOk = form->createChild<TextButton>(tr("OK"), ui().getFont("smallset"));
+			bOk->Name = "BUTTON_OK";
+			bOk->Size = BUTTON_SIZE;
+			bOk->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
+			bOk->Location.x = (form->Size.x - bOk->Size.x) / 2;
+			bOk->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
-		form->Size.y = bOk->Location.y + bOk->Size.y + MARGIN;
-	}
-	else if (buttons == ButtonOptions::YesNo)
-	{
-		auto bYes = form->createChild<TextButton>(tr("Yes"), ui().getFont("smallset"));
-		bYes->Name = "BUTTON_YES";
-		bYes->Size = BUTTON_SIZE;
-		bYes->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
-		bYes->Location.x = MARGIN;
-		bYes->Location.y = lText->Location.y + lText->Size.y + MARGIN;
+			form->Size.y = bOk->Location.y + bOk->Size.y + MARGIN;
+			break;
+		}
+		case ButtonOptions::YesNo:
+		{
+			auto bYes = form->createChild<TextButton>(tr("Yes"), ui().getFont("smallset"));
+			bYes->Name = "BUTTON_YES";
+			bYes->Size = BUTTON_SIZE;
+			bYes->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
+			bYes->Location.x = MARGIN;
+			bYes->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
-		auto bNo = form->createChild<TextButton>(tr("No"), ui().getFont("smallset"));
-		bNo->Name = "BUTTON_NO";
-		bNo->Size = BUTTON_SIZE;
-		bNo->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
-		bNo->Location.x = form->Size.x - bNo->Size.x - MARGIN;
-		bNo->Location.y = lText->Location.y + lText->Size.y + MARGIN;
+			auto bNo = form->createChild<TextButton>(tr("No"), ui().getFont("smallset"));
+			bNo->Name = "BUTTON_NO";
+			bNo->Size = BUTTON_SIZE;
+			bNo->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
+			bNo->Location.x = form->Size.x - bNo->Size.x - MARGIN;
+			bNo->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
-		form->Size.y = bYes->Location.y + bYes->Size.y + MARGIN;
+			form->Size.y = bYes->Location.y + bYes->Size.y + MARGIN;
+			break;
+		}
+		case ButtonOptions::YesNoCancel:
+		{
+			auto bYes = form->createChild<TextButton>(tr("Yes"), ui().getFont("smallset"));
+			bYes->Name = "BUTTON_YES";
+			bYes->Size = BUTTON_SIZE_2;
+			bYes->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
+			bYes->Location.x = MARGIN;
+			bYes->Location.y = lText->Location.y + lText->Size.y + MARGIN;
+
+			auto bNo = form->createChild<TextButton>(tr("No"), ui().getFont("smallset"));
+			bNo->Name = "BUTTON_NO2";
+			bNo->Size = BUTTON_SIZE_2;
+			bNo->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
+			bNo->Location.x = form->Size.x / 2 - bNo->Size.x / 2;
+			bNo->Location.y = lText->Location.y + lText->Size.y + MARGIN;
+
+			auto bCan = form->createChild<TextButton>(tr("Cancel"), ui().getFont("smallset"));
+			bCan->Name = "BUTTON_CANCEL";
+			bCan->Size = BUTTON_SIZE_2;
+			bCan->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
+			bCan->Location.x = form->Size.x - bCan->Size.x - MARGIN;
+			bCan->Location.y = lText->Location.y + lText->Size.y + MARGIN;
+
+			form->Size.y = bYes->Location.y + bYes->Size.y + MARGIN;
+			break;
+		}
 	}
 
 	form->align(HorizontalAlignment::Centre, VerticalAlignment::Centre);
@@ -110,6 +143,22 @@ void MessageBox::eventOccurred(Event *e)
 			}
 			return;
 		}
+		if (e->keyboard().KeyCode == SDLK_SPACE)
+		{
+			if (form->findControl("BUTTON_NO2"))
+			{
+				form->findControl("BUTTON_NO2")->click();
+			}
+			if (form->findControl("BUTTON_OK"))
+			{
+				form->findControl("BUTTON_OK")->click();
+			}
+			if (form->findControl("BUTTON_YES"))
+			{
+				form->findControl("BUTTON_YES")->click();
+			}
+			return;
+		}
 	}
 	if (e->type() == EVENT_FORM_INTERACTION)
 	{
@@ -123,12 +172,19 @@ void MessageBox::eventOccurred(Event *e)
 					callbackYes();
 				return;
 			}
-			else if (e->forms().RaisedBy->Name == "BUTTON_CANCEL" ||
+			else if (e->forms().RaisedBy->Name == "BUTTON_NO2" ||
 			         e->forms().RaisedBy->Name == "BUTTON_NO")
 			{
 				fw().stageQueueCommand({StageCmd::Command::POP});
 				if (callbackNo)
 					callbackNo();
+				return;
+			}
+			else if (e->forms().RaisedBy->Name == "BUTTON_CANCEL")
+			{
+				fw().stageQueueCommand({StageCmd::Command::POP});
+				if (callbackCancel)
+					callbackCancel();
 				return;
 			}
 		}

@@ -16,6 +16,7 @@ class ResearchTopic;
 class Form;
 class Lab;
 class Control;
+class Image;
 
 class ResearchSelect : public Stage
 {
@@ -25,6 +26,8 @@ class ResearchSelect : public Stage
 
 	sp<GameState> state;
 	sp<ResearchTopic> current_topic;
+
+	sp<Image> progressImage;
 
 	std::map<sp<ResearchTopic>, sp<Control>> control_map;
 

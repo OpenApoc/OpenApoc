@@ -1916,9 +1916,14 @@ void AEquipScreen::closeScreen()
 				// Then create cargo (ferry to vehicle's home base)
 				for (auto &e : entry.second)
 				{
+					int price = 0;
+					if (state->economy.find(e->type.id) != state->economy.end())
+					{
+						price = state->economy[e->type.id].currentPrice;
+					}
 					entry.first->cargo.emplace_back(
 					    *state, e->type, e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1,
-					    nullptr, entry.first->homeBuilding);
+					    price, nullptr, entry.first->homeBuilding);
 				}
 			}
 		}
@@ -1943,9 +1948,14 @@ void AEquipScreen::closeScreen()
 				// Then create cargo (ferry to current base)
 				for (auto &e : entry.second)
 				{
+					int price = 0;
+					if (state->economy.find(e->type.id) != state->economy.end())
+					{
+						price = state->economy[e->type.id].currentPrice;
+					}
 					entry.first->cargo.emplace_back(
 					    *state, e->type, e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1,
-					    nullptr, state->current_base->building);
+					    price, nullptr, state->current_base->building);
 				}
 			}
 		}
@@ -1999,10 +2009,15 @@ void AEquipScreen::closeScreen()
 					// Create cargo
 					for (auto &e : entry.second)
 					{
+						int price = 0;
+						if (state->economy.find(e->type.id) != state->economy.end())
+						{
+							price = state->economy[e->type.id].currentPrice;
+						}
 						buildingToDropTo->cargo.emplace_back(
 						    *state, e->type,
-						    e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1, nullptr,
-						    dropperAgent->homeBuilding);
+						    e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1, price,
+						    nullptr, dropperAgent->homeBuilding);
 					}
 				}
 			}

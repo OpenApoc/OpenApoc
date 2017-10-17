@@ -789,7 +789,7 @@ bool Scenery::handleCollision(GameState &state, Collision &c)
 		                                     VehicleMission::MissionType::AttackBuilding);
 		if (intentional)
 		{
-			ourOrg->adjustRelationTo(state, attackerOrg, -25.0f);
+			ourOrg->adjustRelationTo(state, attackerOrg, -10.0f);
 		}
 		// Our allies lose 2.5 points, enemies gain 1 point
 		for (auto &org : state.organisations)
@@ -1012,7 +1012,7 @@ void Scenery::die(GameState &state, bool forced)
 		this->tileObject.reset();
 		if (building)
 		{
-			building->buildingPartChange(initialPosition, false);
+			building->buildingPartChange(state, initialPosition, false);
 		}
 	}
 }
@@ -1049,7 +1049,7 @@ void Scenery::collapse(GameState &state)
 	ceaseSupportProvision();
 	if (building)
 	{
-		building->buildingPartChange(initialPosition, false);
+		building->buildingPartChange(state, initialPosition, false);
 	}
 	city->notifyRoadChange(initialPosition, false);
 }
@@ -1246,7 +1246,7 @@ void Scenery::repair(GameState &state)
 	}
 	if (building && !type->commonProperty)
 	{
-		building->buildingPartChange(initialPosition, true);
+		building->buildingPartChange(state, initialPosition, true);
 	}
 	map.clearPathCaches();
 }

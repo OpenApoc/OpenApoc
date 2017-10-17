@@ -100,6 +100,7 @@ std::list<std::pair<UString, UString>> openApocList = {
     {"OpenApoc.NewFeature.CollapseRaidedBuilding", "Successful raid collapses building"},
     {"OpenApoc.NewFeature.ScrambleOnUnintentionalHit",
      "Any hit on hostile building provokes retaliation"},
+    {"OpenApoc.NewFeature.MarketOnRight", "Put market stock on the right side"},
     {"OpenApoc.Mod.StunHostileAction", "(M) Stunning hurts relationships"},
     {"OpenApoc.Mod.RaidHostileAction", "(M) Initiating raid hurts relationships"},
     {"OpenApoc.Mod.CrashingVehicles", "(M) Vehicles crash on low HP"},

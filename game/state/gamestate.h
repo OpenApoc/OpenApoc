@@ -90,6 +90,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	int score = 0;
 	int difficulty = 0;
 	bool firstDetection = false;
+	uint64_t nextInvasion = 0;
 
 	StateRefMap<AgentType> agent_types;
 	StateRefMap<AgentBodyType> agent_body_types;
@@ -100,6 +101,9 @@ class GameState : public std::enable_shared_from_this<GameState>
 	std::map<AgentType::Role, unsigned> initial_agents;
 	std::map<UString, unsigned> initial_facilities;
 	std::list<std::list<StateRef<AEquipmentType>>> initial_agent_equipment;
+	std::list<std::pair<StateRef<VehicleType>, int>> initial_vehicles;
+	std::list<std::pair<StateRef<VEquipmentType>, int>> initial_vehicle_equipment;
+	std::list<std::pair<StateRef<VAmmoType>, int>> initial_vehicle_ammo;
 	std::map<UString, int> initial_base_agent_equipment;
 	std::map<int, std::list<std::pair<StateRef<AgentType>, Vec2<int>>>> initial_aliens;
 
@@ -175,12 +179,15 @@ class GameState : public std::enable_shared_from_this<GameState>
 	void validate();
 	void validateResearch();
 	void validateScenery();
+	void validateAgentEquipment();
 
 	void fillOrgStartingProperty();
 	// Fills out initial player property
 	void fillPlayerStartingProperty();
 
 	void updateEconomy();
+
+	void invasion();
 
 	// Returns true if we can go at max speed (IE push all update loops to 5 minute intervals -
 	// causes insta-completion of all routes etc.
@@ -195,6 +202,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// canTurbo() must be re-tested after each call to see if we should drop down to normal speed
 	// (e.g. enemy appeared, other user action required)
 	void updateTurbo();
+	// this moves non-aggressive vehicles around for some more ticks so that when time is paused
+	// after turbo city appears more alive
 	void updateAfterTurbo();
 
 	void updateBeforeBattle();

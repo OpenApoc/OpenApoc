@@ -14,7 +14,7 @@ ScrollBar::ScrollBar(sp<Image> gripperImage)
     : Control(), capture(false), grippersize(1), segmentsize(1), gripperbutton(gripperImage),
       buttonerror(fw().data->loadSample("RAWSOUND:xcom3/rawsound/extra/textbeep.raw:22050")),
       Value(0), BarOrientation(Orientation::Vertical), RenderStyle(ScrollBarRenderStyle::Menu),
-      GripperColour(220, 192, 192), Minimum(0), Maximum(10), LargeChange(2)
+      GripperColour(220, 192, 192), Minimum(0), Maximum(10), LargeChange(2), LargePercent(10)
 {
 	if (!gripperbutton)
 		gripperbutton = fw().data->loadImage(
@@ -38,17 +38,17 @@ bool ScrollBar::setValue(int newValue)
 	return true;
 }
 
-void ScrollBar::scrollPrev()
+void ScrollBar::scrollPrev(bool small)
 {
-	if (!setValue(Value - LargeChange))
+	if (!setValue(Value - (small ? 1 : LargeChange)))
 	{
 		fw().soundBackend->playSample(buttonerror);
 	}
 }
 
-void ScrollBar::scrollNext()
+void ScrollBar::scrollNext(bool small)
 {
-	if (!setValue(Value + LargeChange))
+	if (!setValue(Value + (small ? 1 : LargeChange)))
 	{
 		fw().soundBackend->playSample(buttonerror);
 	}
@@ -141,6 +141,14 @@ void ScrollBar::onRender()
 			fw().renderer->draw(gripperbutton, newpos);
 			break;
 	}
+
+	updateLargeChangeValue();
+}
+
+void ScrollBar::updateLargeChangeValue()
+{
+	LargeChange =
+	    static_cast<int>(std::max((Maximum - Minimum + 2) * (float)LargePercent / 100.0f, 2.0f));
 }
 
 void ScrollBar::update()
@@ -192,6 +200,7 @@ sp<Control> ScrollBar::copyTo(sp<Control> CopyParent)
 	copy->Minimum = this->Minimum;
 	copy->GripperColour = this->GripperColour;
 	copy->LargeChange = this->LargeChange;
+	copy->LargePercent = this->LargePercent;
 	copy->RenderStyle = this->RenderStyle;
 	copyControlData(copy);
 	return copy;

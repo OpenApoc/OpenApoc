@@ -25,6 +25,7 @@ class GraphicButton : public Control
 
   public:
 	sp<ScrollBar> ScrollBarPrev, ScrollBarNext;
+	bool scrollLarge = false;
 
 	GraphicButton(sp<Image> image = nullptr, sp<Image> imageDepressed = nullptr,
 	              sp<Image> imageHover = nullptr);

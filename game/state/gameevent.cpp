@@ -88,6 +88,8 @@ UString GameVehicleEvent::message()
 			return format("%s %s", tr("UFO crash landed:"), vehicle->name);
 		case GameEventType::UfoRecoveryUnmanned:
 			return format("%s %s", tr("Unmanned UFO recovered:"), vehicle->name);
+		case GameEventType::VehicleRecovered:
+			return format("%s %s", tr("Vehicle successfully recovered:"), vehicle->name);
 		case GameEventType::UfoRecoveryBegin:
 			return "";
 		case GameEventType::VehicleLightDamage:
@@ -368,6 +370,10 @@ GameSomethingDiedEvent::GameSomethingDiedEvent(GameEventType type, UString name,
 			{
 				messageInner = format("%s %s", tr("Vehicle destroyed:"), name);
 			}
+			break;
+		case GameEventType::VehicleRecovered:
+			messageInner =
+			    format("%s %s", tr("Scrapped vehicle recovered in irreparable condition:"), name);
 			break;
 	}
 }

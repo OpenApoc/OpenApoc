@@ -91,7 +91,7 @@ Organisation::canPurchaseFrom(GameState &state, const StateRef<Building> &buyer,
 			}
 			if (ferryCompanies.empty())
 			{
-				return PurchaseResult::NoTransportAvailable;
+				return PurchaseResult::TranportHostile;
 			}
 		}
 		// Step 03.03: Check if ferry provider has free ferries
@@ -126,7 +126,7 @@ StateRef<Building> Organisation::getPurchaseBuilding(GameState &state,
 	std::list<StateRef<Building>> purchaseBuildings;
 	for (auto &b : buildings)
 	{
-		if (b->city == buyer->city && b != buyer)
+		if (b->city == buyer->city && b != buyer && b->isAlive(state))
 		{
 			purchaseBuildings.push_back(b);
 		}
@@ -155,58 +155,140 @@ StateRef<Building> Organisation::getPurchaseBuilding(GameState &state,
 void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
                             StateRef<VEquipmentType> vehicleEquipment, int count)
 {
+	int price = 0;
+	if (state.economy.find(vehicleEquipment.id) == state.economy.end())
+	{
+		LogError("Economy not found for %s: How are we buying it then!?", vehicleEquipment.id);
+	}
+	else
+	{
+		auto &economy = state.economy[vehicleEquipment.id];
+		price = economy.currentPrice;
+		if (buyer->owner == state.getPlayer())
+		{
+			economy.currentStock -= count;
+			if (economy.currentStock < 0)
+			{
+				LogInfo("Economy went into negative stock for %s: Was it because we used economy "
+				        "to transfer?",
+				        vehicleEquipment.id);
+			}
+		}
+	}
+
 	// Expecting to be able to purchase
-	auto building = getPurchaseBuilding(state, buyer);
-	building->cargo.emplace_back(state, vehicleEquipment, count, StateRef<Organisation>{&state, id},
-	                             buyer);
+	auto building = buyer->owner->id == id ? buyer : getPurchaseBuilding(state, buyer);
+	building->cargo.emplace_back(state, vehicleEquipment, count, price,
+	                             StateRef<Organisation>{&state, id}, buyer);
 	LogWarning("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count,
 	           vehicleEquipment.id, building.id, buyer.id);
-	// FIXME: Economy
 	auto owner = buyer->owner;
-	owner->balance -= count * 1;
+	owner->balance -= count * price;
 }
 
 void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
                             StateRef<VAmmoType> vehicleAmmo, int count)
 {
+	int price = 0;
+	if (state.economy.find(vehicleAmmo.id) == state.economy.end())
+	{
+		LogError("Economy not found for %s: How are we buying it then!?", vehicleAmmo.id);
+	}
+	else
+	{
+		auto &economy = state.economy[vehicleAmmo.id];
+		price = economy.currentPrice;
+		if (buyer->owner == state.getPlayer())
+		{
+			economy.currentStock -= count;
+			if (economy.currentStock < 0)
+			{
+				LogInfo("Economy went into negative stock for %s: Was it because we used economy "
+				        "to transfer?",
+				        vehicleAmmo.id);
+			}
+		}
+	}
+
 	// Expecting to be able to purchase
-	auto building = getPurchaseBuilding(state, buyer);
-	building->cargo.emplace_back(state, vehicleAmmo, count, StateRef<Organisation>{&state, id},
-	                             buyer);
+	auto building = buyer->owner->id == id ? buyer : getPurchaseBuilding(state, buyer);
+	building->cargo.emplace_back(state, vehicleAmmo, count, price,
+	                             StateRef<Organisation>{&state, id}, buyer);
 	LogWarning("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count, vehicleAmmo.id,
 	           building.id, buyer.id);
-	// FIXME: Economy
 	auto owner = buyer->owner;
-	owner->balance -= count * 1;
+	owner->balance -= count * price;
 }
 
 void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
                             StateRef<AEquipmentType> agentEquipment, int count)
 {
+	int price = 0;
+	if (state.economy.find(agentEquipment.id) == state.economy.end())
+	{
+		LogError("Economy not found for %s: How are we buying it then!?", agentEquipment.id);
+	}
+	else
+	{
+		auto &economy = state.economy[agentEquipment.id];
+		price = economy.currentPrice;
+		if (buyer->owner == state.getPlayer())
+		{
+			economy.currentStock -= count;
+			if (economy.currentStock < 0)
+			{
+				LogInfo("Economy went into negative stock for %s: Was it because we used economy "
+				        "to transfer?",
+				        agentEquipment.id);
+			}
+		}
+	}
+
 	// Expecting to be able to purchase
-	auto building = getPurchaseBuilding(state, buyer);
-	building->cargo.emplace_back(state, agentEquipment, count, StateRef<Organisation>{&state, id},
-	                             buyer);
+	auto building = buyer->owner->id == id ? buyer : getPurchaseBuilding(state, buyer);
+	building->cargo.emplace_back(
+	    state, agentEquipment,
+	    count * (agentEquipment->type == AEquipmentType::Type::Ammo ? agentEquipment->max_ammo : 1),
+	    price, StateRef<Organisation>{&state, id}, buyer);
 	LogWarning("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count, agentEquipment.id,
 	           building.id, buyer.id);
-	// FIXME: Economy
 	auto owner = buyer->owner;
-	owner->balance -= count * 1;
+	owner->balance -= count * price;
 }
 
 void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
-                            StateRef<VehicleType> vehicle, int count)
+                            StateRef<VehicleType> vehicleType, int count)
 {
+	int price = 0;
+	if (state.economy.find(vehicleType.id) == state.economy.end())
+	{
+		LogError("Economy not found for %s: How are we buying it then!?", vehicleType.id);
+	}
+	else
+	{
+		auto &economy = state.economy[vehicleType.id];
+		price = economy.currentPrice;
+		if (buyer->owner == state.getPlayer())
+		{
+			economy.currentStock -= count;
+			if (economy.currentStock < 0)
+			{
+				LogError("Economy went into negative stock for %s: How the hell?", vehicleType.id);
+			}
+		}
+	}
 	// Expecting to be able to purchase
-	auto building = getPurchaseBuilding(state, buyer);
-	LogWarning("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count, vehicle.id,
+	auto building = buyer->owner->id == id ? buyer : getPurchaseBuilding(state, buyer);
+	for (int i = 0; i < count; i++)
+	{
+		auto v = building->city->placeVehicle(state, vehicleType, buyer->owner, building);
+		v->homeBuilding = buyer;
+		v->setMission(state, VehicleMission::gotoBuilding(state, *v));
+	}
+	LogWarning("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count, vehicleType.id,
 	           building.id, buyer.id);
-	auto v = building->city->placeVehicle(state, vehicle, buyer->owner, building);
-	v->homeBuilding = buyer;
-	v->setMission(state, VehicleMission::gotoBuilding(state, *v));
-	// FIXME: Economy
 	auto owner = buyer->owner;
-	owner->balance -= count * 1;
+	owner->balance -= count * price;
 }
 
 void Organisation::updateMissions(GameState &state)

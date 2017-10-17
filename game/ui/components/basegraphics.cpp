@@ -172,6 +172,10 @@ sp<RGBImage> BaseGraphics::drawMiniBase(sp<Base> base, FacilityHighlight highlig
 	    fw().data->loadImage("RAW:xcom3/ufodata/minibase.dat:4:4:18:xcom3/ufodata/base.pcx");
 	for (auto &facility : base->facilities)
 	{
+		// FIXME: When we implement displaying capacity make sure to round up
+		// So that once it reaches over-capacity it immediatley shows 101%
+		// Also allow modification by inheriting form
+		// For example for base transfer form which will modify store space without commiting it
 		bool highlighted = false;
 		switch (highlight)
 		{

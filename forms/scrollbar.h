@@ -38,6 +38,9 @@ class ScrollBar : public Control
 	int Minimum;
 	int Maximum;
 	int LargeChange;
+	int LargePercent;
+
+	void updateLargeChangeValue();
 
 	ScrollBar(sp<Image> gripperImage = nullptr);
 	~ScrollBar() override;
@@ -47,8 +50,8 @@ class ScrollBar : public Control
 	void unloadResources() override;
 	virtual int getValue() const { return Value; }
 	virtual bool setValue(int newValue);
-	virtual void scrollPrev();
-	virtual void scrollNext();
+	virtual void scrollPrev(bool small = false);
+	virtual void scrollNext(bool small = false);
 
 	sp<Control> copyTo(sp<Control> CopyParent) override;
 	void configureSelfFromXml(pugi::xml_node *node) override;

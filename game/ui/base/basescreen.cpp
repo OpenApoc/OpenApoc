@@ -17,8 +17,8 @@
 #include "game/state/city/facility.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/city/ufopaedia.h"
-#include "game/ui/base/buysellscreen.h"
 #include "game/ui/base/researchscreen.h"
+#include "game/ui/base/transactionscreen.h"
 #include "game/ui/base/vequipscreen.h"
 #include "game/ui/components/basegraphics.h"
 #include "game/ui/general/aequipscreen.h"
@@ -92,7 +92,33 @@ void BaseScreen::begin()
 	                  [](Event *) { fw().stageQueueCommand({StageCmd::Command::POP}); });
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_BUYSELL")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BuySellScreen>(state)});
+		    fw().stageQueueCommand(
+		        {StageCmd::Command::PUSH,
+		         mksp<TransactionScreen>(state, TransactionScreen::Mode::BuySell)});
+		});
+	form->findControlTyped<GraphicButton>("BUTTON_BASE_TRANSFER")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    if (this->state->player_bases.size() <= 1)
+		    {
+			    fw().stageQueueCommand(
+			        {StageCmd::Command::PUSH,
+			         mksp<MessageBox>(
+			             tr("Transfer"),
+			             tr("At least two bases are required before transfers become possible."),
+			             MessageBox::ButtonOptions::Ok)});
+		    }
+		    else
+		    {
+			    fw().stageQueueCommand(
+			        {StageCmd::Command::PUSH,
+			         mksp<TransactionScreen>(state, TransactionScreen::Mode::Transfer)});
+		    }
+		});
+	form->findControlTyped<GraphicButton>("BUTTON_BASE_ALIEN_CONTAINMENT")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    fw().stageQueueCommand(
+		        {StageCmd::Command::PUSH,
+		         mksp<TransactionScreen>(state, TransactionScreen::Mode::AlienContainment)});
 		});
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_EQUIPAGENT")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
@@ -314,7 +340,8 @@ void BaseScreen::eventOccurred(Event *e)
 			{
 				if (selection != NO_SELECTION)
 				{
-					Base::BuildError error = state->current_base->canDestroyFacility(selection);
+					Base::BuildError error =
+					    state->current_base->canDestroyFacility(*state, selection);
 					switch (error)
 					{
 						case Base::BuildError::NoError:
@@ -371,7 +398,8 @@ void BaseScreen::eventOccurred(Event *e)
 			statsLabels[0]->setText(tr("Capacity"));
 			statsValues[0]->setText(format("%d", selFacility->type->capacityAmount));
 			statsLabels[1]->setText(tr("Usage"));
-			statsValues[1]->setText(format("%d%%", state->current_base->getUsage(selFacility)));
+			statsValues[1]->setText(
+			    format("%d%%", state->current_base->getUsage(*state, selFacility)));
 		}
 	}
 	else if (selection != NO_SELECTION)

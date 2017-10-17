@@ -232,7 +232,8 @@ void ResearchScreen::render()
 	{
 		this->selected_lab = labList->getSelectedData<Facility>();
 		this->viewFacility = this->selected_lab;
-		this->current_topic = this->selected_lab->lab->current_project;
+		this->current_topic =
+		    this->selected_lab ? this->selected_lab->lab->current_project : nullptr;
 		this->setCurrentLabInfo();
 		this->refreshView();
 	}
@@ -254,6 +255,7 @@ void ResearchScreen::setCurrentLabInfo()
 		form->findControlTyped<Label>("TEXT_LAB_TYPE")->setText("");
 		auto totalSkillLabel = form->findControlTyped<Label>("TEXT_TOTAL_SKILL");
 		totalSkillLabel->setText(format(tr("Total Skill: %d"), 0));
+		updateProgressInfo();
 		return;
 	}
 	this->assigned_agent_count = 0;
@@ -341,7 +343,7 @@ void ResearchScreen::setCurrentLabInfo()
 
 void ResearchScreen::updateProgressInfo()
 {
-	if (this->selected_lab->lab->current_project)
+	if (this->selected_lab && this->selected_lab->lab->current_project)
 	{
 		auto &topic = this->selected_lab->lab->current_project;
 		auto progressBar = form->findControlTyped<Graphic>("GRAPHIC_PROGRESS_BAR");
@@ -404,7 +406,7 @@ void ResearchScreen::updateProgressInfo()
 	    form->findControlTyped<GraphicButton>("MANUFACTURE_QUANTITY_UP");
 	auto manufacturing_quantity = form->findControlTyped<Label>("TEXT_QUANTITY");
 	auto manufacturing_ntomake = form->findControlTyped<Label>("TEXT_NUMBER_TO_MAKE");
-	if (this->selected_lab->lab->current_project &&
+	if (this->selected_lab && this->selected_lab->lab->current_project &&
 	    this->selected_lab->lab->current_project->type == ResearchTopic::Type::Engineering)
 	{
 		manufacture_bg->setVisible(true);

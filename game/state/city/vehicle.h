@@ -106,11 +106,11 @@ class Cargo
 	bool suppressEvents = false;
 
 	Cargo() = default;
-	Cargo(GameState &state, StateRef<AEquipmentType> equipment, int count,
+	Cargo(GameState &state, StateRef<AEquipmentType> equipment, int count, int price,
 	      StateRef<Organisation> originalOwner, StateRef<Building> destination);
-	Cargo(GameState &state, StateRef<VEquipmentType> equipment, int count,
+	Cargo(GameState &state, StateRef<VEquipmentType> equipment, int count, int price,
 	      StateRef<Organisation> originalOwner, StateRef<Building> destination);
-	Cargo(GameState &state, StateRef<VAmmoType> equipment, int count,
+	Cargo(GameState &state, StateRef<VAmmoType> equipment, int count, int price,
 	      StateRef<Organisation> originalOwner, StateRef<Building> destination);
 	Cargo(GameState &state, Type type, UString id, int count, int divisor, int space, int cost,
 	      StateRef<Organisation> originalOwner, StateRef<Building> destination);

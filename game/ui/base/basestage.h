@@ -27,6 +27,13 @@ class BaseStage : public Stage
 	BaseGraphics::FacilityHighlight viewHighlight;
 	sp<Facility> viewFacility;
 
+	// Can be introduced during transaction screen manipulation
+	int cargoDelta = 0;
+	// Can be introduced during transaction screen manipulation
+	int bioDelta = 0;
+	// Can be introduced during transaction screen manipulation
+	int lqDelta = 0;
+
 	sp<GameState> state;
 	virtual void changeBase(sp<Base> newBase = nullptr);
 	void refreshView();

@@ -11,7 +11,7 @@ General UI Hotkeys:
 - [Enter] Go forward, "Confirm" option, first option
   For example, "OK" option in screens, "Confirm" or "Yes" option in dialogues, real time in breifing
 - [Space] Skip, second (non-cancel) option
-  For example, equip button in squad assignment, checkbox to pause when event happens again, turn based in briefing
+  For example, "No" in "Yes/No/Cancel" dialogue, equip button in squad assignment, checkbox to pause when event happens again, turn based in briefing
   
 General Hotkeys:
 - [Middle Click] Move camera to location

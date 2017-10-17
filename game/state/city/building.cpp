@@ -12,7 +12,7 @@
 #include "game/state/shared/organisation.h"
 
 // Uncomment to make cargo system output warnings
-//#define DEBUG_VERBOSE_CARGO_SYSTEM
+#define DEBUG_VERBOSE_CARGO_SYSTEM
 
 namespace OpenApoc
 {
@@ -119,6 +119,7 @@ void Building::updateDetection(GameState &state, unsigned int ticks)
 void Building::updateCargo(GameState &state)
 {
 	StateRef<Building> thisRef = {&state, getId(state, shared_from_this())};
+
 	// Step 01: Consume cargo with destination = this or zero count
 	for (auto it = cargo.begin(); it != cargo.end();)
 	{
@@ -135,6 +136,7 @@ void Building::updateCargo(GameState &state)
 			it++;
 		}
 	}
+
 	// Step 02: Check expiry dates and expire cargo
 	for (auto &c : cargo)
 	{
@@ -143,6 +145,7 @@ void Building::updateCargo(GameState &state)
 			fw().pushEvent(new GameBuildingEvent(GameEventType::CargoExpiresSoon, thisRef));
 		}
 	}
+
 	// Step 03.01: If we spawn ferries just spawn them at this point
 	if (!config().getBool("OpenApoc.NewFeature.CallExistingFerry"))
 	{
@@ -305,6 +308,7 @@ void Building::updateCargo(GameState &state)
 		} while (spawnedFerry);
 		return;
 	}
+
 	// Step 03.02: Compile list of carrying capacity required
 	std::map<StateRef<Building>, std::map<StateRef<Organisation>, std::vector<int>>> spaceNeeded;
 	std::set<StateRef<Building>> inboundFerries;
@@ -355,6 +359,7 @@ void Building::updateCargo(GameState &state)
 		spaceNeeded[a->missions.front()->targetBuilding][a->owner].resize(3);
 		spaceNeeded[a->missions.front()->targetBuilding][a->owner][2]++;
 	}
+
 	// Step 04: Find if carrying capacity is satisfied by incoming ferries
 	if (!spaceNeeded.empty())
 	{
@@ -443,7 +448,7 @@ void Building::updateCargo(GameState &state)
 					}
 					if (reserved)
 					{
-						inboundFerries.insert(thisRef);
+						inboundFerries.insert(bld.first);
 						break;
 					}
 				}
@@ -481,6 +486,7 @@ void Building::updateCargo(GameState &state)
 			spaceNeeded.erase(b);
 		}
 	}
+
 	// Step 05: Order new ferries for remaining capacity
 	if (!spaceNeeded.empty())
 	{
@@ -576,11 +582,11 @@ void Building::updateCargo(GameState &state)
 						    "Ordered ferry %s name %s in %s type %s owned by %s bound for %s",
 						    DEBUG_CARGO && DEBUG_PASS ? "CA" : (DEBUG_CARGO ? "C" : "A"), v.first,
 						    !v.second->currentBuilding ? "" : v.second->currentBuilding.id,
-						    v.second->type.id, v.second->owner.id, thisRef.id);
+						    v.second->type.id, v.second->owner.id, bld.first.id);
 #endif
 						v.second->setMission(
 						    state, VehicleMission::offerService(state, *v.second, thisRef));
-						inboundFerries.insert(thisRef);
+						inboundFerries.insert(bld.first);
 						break;
 					}
 				}
@@ -618,6 +624,7 @@ void Building::updateCargo(GameState &state)
 			spaceNeeded.erase(b);
 		}
 	}
+
 	// Step 06: Try to load cargo on owner's vehicles if:
 	// - Allowed by game option
 	// - Cargo is expriring
@@ -650,8 +657,13 @@ void Building::updateCargo(GameState &state)
 				}
 			}
 		}
-		// Step 07: Try to load agents on owner's vehicles if:
-		// - Agents are not to be serviced by incoming ferries
+	}
+
+	// Step 07: Try to load agents on owner's vehicles if:
+	// - Allowed by game option
+	// - Agents are not to be serviced by incoming ferries
+	if (config().getBool("OpenApoc.NewFeature.AllowManualCargoFerry"))
+	{
 		for (auto &bld : spaceNeeded)
 		{
 			for (auto &e : bld.second)
@@ -678,6 +690,7 @@ void Building::updateCargo(GameState &state)
 			}
 		}
 	}
+
 	// Step 08: Clear empty cargo
 	for (auto it = cargo.begin(); it != cargo.end();)
 	{
@@ -875,9 +888,9 @@ void Building::collapse(GameState &state)
 	}
 }
 
-void Building::buildingPartChange(Vec3<int> part, bool intact)
+void Building::buildingPartChange(GameState &state, Vec3<int> part, bool intact)
 {
-	// FIXME: Implement base / building dying when enough is destroyed
+	// FIXME: Implement proper base / building dying when enough is destroyed
 	// Implement agents dying when building dies
 	if (intact)
 	{
@@ -885,8 +898,30 @@ void Building::buildingPartChange(Vec3<int> part, bool intact)
 	}
 	else
 	{
+		// Skin36 had some code figured out about this
+		// which counted score of parts and when it was below certain value
+		// building was considered dead
 		buildingParts.erase(part);
+		if (buildingParts.find(crewQuarters) == buildingParts.end())
+		{
+			while (!currentAgents.empty())
+			{
+				// For some reason need to assign first before calling die()
+				auto agent = *currentAgents.begin();
+				// Dying will remove agent from current agents list
+				agent->die(state, true);
+			}
+		}
+		if (!isAlive(state))
+		{
+			if (base)
+			{
+				base->die(state, true);
+			}
+		}
 	}
 }
+
+bool Building::isAlive(GameState &state) const { return !buildingParts.empty(); }
 
 } // namespace OpenApoc
