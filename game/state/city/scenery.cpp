@@ -789,7 +789,7 @@ bool Scenery::handleCollision(GameState &state, Collision &c)
 		                                     VehicleMission::MissionType::AttackBuilding);
 		if (intentional)
 		{
-			ourOrg->adjustRelationTo(state, attackerOrg, -25.0f);
+			ourOrg->adjustRelationTo(state, attackerOrg, -10.0f);
 		}
 		// Our allies lose 2.5 points, enemies gain 1 point
 		for (auto &org : state.organisations)
