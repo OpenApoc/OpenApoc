@@ -237,6 +237,8 @@ ConfigOptionBool optionCollapseRaidedBuilding("OpenApoc.NewFeature", "CollapseRa
 ConfigOptionBool
     optionScrambleOnUnintentionalHit("OpenApoc.NewFeature", "ScrambleOnUnintentionalHit",
                                      "Any hit on hostile building provokes retaliation", false);
+ConfigOptionBool optionMarketRight("OpenApoc.NewFeature", "MarketOnRight",
+                                   "Put market stock on the right side", true);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);

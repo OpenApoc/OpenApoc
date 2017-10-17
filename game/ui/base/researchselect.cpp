@@ -5,6 +5,7 @@
 #include "forms/label.h"
 #include "forms/listbox.h"
 #include "forms/ui.h"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
@@ -25,6 +26,8 @@ namespace OpenApoc
 ResearchSelect::ResearchSelect(sp<GameState> state, sp<Lab> lab)
     : Stage(), form(ui().getForm("researchselect")), lab(lab), state(state)
 {
+	progressImage = fw().data->loadImage(format(
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 63));
 }
 
 ResearchSelect::~ResearchSelect() = default;
@@ -243,6 +246,9 @@ void ResearchSelect::populateResearchList()
 			float projectProgress =
 			    clamp((float)t->man_hours_progress / (float)t->man_hours, 0.0f, 1.0f);
 
+			auto progressBg = control->createChild<Graphic>(progressImage);
+			progressBg->Size = {102, 6};
+			progressBg->Location = {234, 6};
 			auto progressBar = control->createChild<Graphic>();
 			progressBar->Size = {101, 6};
 			progressBar->Location = {234, 6};
@@ -250,8 +256,6 @@ void ResearchSelect::populateResearchList()
 			auto progressImage = mksp<RGBImage>(progressBar->Size);
 			int redWidth = progressBar->Size.x * projectProgress;
 			{
-				// FIXME: For some reason, there's no border here like in the research sceen, so we
-				// have to make one manually, probably there's a better way
 				RGBImageLock l(progressImage);
 				for (int y = 0; y < 2; y++)
 				{
@@ -259,19 +263,7 @@ void ResearchSelect::populateResearchList()
 					{
 						if (x < redWidth)
 							l.set({x, y}, {255, 0, 0, 255});
-						else
-							l.set({x, y}, {77, 77, 77, 255});
 					}
-				}
-				l.set({0, 2}, {77, 77, 77, 255});
-				l.set({progressBar->Size.x - 1, 2}, {77, 77, 77, 255});
-				l.set({0, 3}, {130, 130, 130, 255});
-				l.set({progressBar->Size.x - 1, 3}, {130, 130, 130, 255});
-				l.set({0, 4}, {140, 140, 140, 255});
-				l.set({progressBar->Size.x - 1, 4}, {140, 140, 140, 255});
-				for (int x = 0; x < progressBar->Size.x; x++)
-				{
-					l.set({x, 5}, {205, 205, 205, 255});
 				}
 			}
 			progressBar->setImage(progressImage);

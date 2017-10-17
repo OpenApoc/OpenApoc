@@ -102,8 +102,6 @@ void ListBox::onRender()
 			scroller->Maximum = std::max(controlOffset.x - this->Size.x, scroller->Minimum);
 			break;
 	}
-	scroller->LargeChange =
-	    static_cast<int>(std::max((scroller->Maximum - scroller->Minimum + 2) / 10.0f, 4.0f));
 }
 
 void ListBox::postRender()
@@ -319,6 +317,7 @@ sp<Control> ListBox::removeItem(int Index)
 	{
 		this->selected = nullptr;
 	}
+	c->setParent(nullptr);
 	return c;
 }
 

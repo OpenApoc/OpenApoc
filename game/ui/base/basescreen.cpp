@@ -98,9 +98,21 @@ void BaseScreen::begin()
 		});
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_TRANSFER")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    fw().stageQueueCommand(
-		        {StageCmd::Command::PUSH,
-		         mksp<TransactionScreen>(state, TransactionScreen::Mode::Transfer)});
+		    if (this->state->player_bases.size() <= 1)
+		    {
+			    fw().stageQueueCommand(
+			        {StageCmd::Command::PUSH,
+			         mksp<MessageBox>(
+			             tr("Transfer"),
+			             tr("At least two bases are required before transfers become possible."),
+			             MessageBox::ButtonOptions::Ok)});
+		    }
+		    else
+		    {
+			    fw().stageQueueCommand(
+			        {StageCmd::Command::PUSH,
+			         mksp<TransactionScreen>(state, TransactionScreen::Mode::Transfer)});
+		    }
 		});
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_ALIEN_CONTAINMENT")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
@@ -328,7 +340,8 @@ void BaseScreen::eventOccurred(Event *e)
 			{
 				if (selection != NO_SELECTION)
 				{
-					Base::BuildError error = state->current_base->canDestroyFacility(selection);
+					Base::BuildError error =
+					    state->current_base->canDestroyFacility(*state, selection);
 					switch (error)
 					{
 						case Base::BuildError::NoError:
@@ -385,7 +398,8 @@ void BaseScreen::eventOccurred(Event *e)
 			statsLabels[0]->setText(tr("Capacity"));
 			statsValues[0]->setText(format("%d", selFacility->type->capacityAmount));
 			statsLabels[1]->setText(tr("Usage"));
-			statsValues[1]->setText(format("%d%%", state->current_base->getUsage(selFacility)));
+			statsValues[1]->setText(
+			    format("%d%%", state->current_base->getUsage(*state, selFacility)));
 		}
 	}
 	else if (selection != NO_SELECTION)

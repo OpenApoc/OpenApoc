@@ -54,12 +54,12 @@ void GraphicButton::eventOccured(Event *e)
 
 		if (ScrollBarPrev != nullptr)
 		{
-			ScrollBarPrev->scrollPrev();
+			ScrollBarPrev->scrollPrev(true);
 		}
 
 		if (ScrollBarNext != nullptr)
 		{
-			ScrollBarNext->scrollNext();
+			ScrollBarNext->scrollNext(true);
 		}
 	}
 }

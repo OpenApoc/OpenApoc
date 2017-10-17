@@ -52,11 +52,12 @@ class Base : public StateObject, public std::enable_shared_from_this<Base>
 	                            bool free = false) const;
 	void buildFacility(GameState &state, StateRef<FacilityType> type, Vec2<int> pos,
 	                   bool free = false);
-	BuildError canDestroyFacility(Vec2<int> pos) const;
+	BuildError canDestroyFacility(GameState &state, Vec2<int> pos) const;
 	void destroyFacility(GameState &state, Vec2<int> pos);
-	int getCapacityUsed(FacilityType::Capacity type) const;
+	int getCapacityUsed(GameState &state, FacilityType::Capacity type) const;
 	int getCapacityTotal(FacilityType::Capacity type) const;
-	int getUsage(sp<Facility> facility) const;
+	int getUsage(GameState &state, sp<Facility> facility, int delta = 0) const;
+	int getUsage(GameState &state, FacilityType::Capacity type, int delta = 0) const;
 };
 
 }; // namespace OpenApoc

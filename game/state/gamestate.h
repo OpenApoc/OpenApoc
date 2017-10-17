@@ -175,6 +175,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	void validate();
 	void validateResearch();
 	void validateScenery();
+	void validateAgentEquipment();
 
 	void fillOrgStartingProperty();
 	// Fills out initial player property

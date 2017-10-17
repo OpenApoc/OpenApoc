@@ -6,8 +6,11 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/aequipmenttype.h"
 #include "game/state/rules/city/baselayout.h"
 #include "game/state/rules/city/facilitytype.h"
+#include "game/state/rules/city/vammotype.h"
+#include "game/state/rules/city/vequipmenttype.h"
 #include "game/state/shared/organisation.h"
 #include "library/strings_format.h"
 #include <random>
@@ -314,7 +317,7 @@ void Base::buildFacility(GameState &state, StateRef<FacilityType> type, Vec2<int
 	}
 }
 
-Base::BuildError Base::canDestroyFacility(Vec2<int> pos) const
+Base::BuildError Base::canDestroyFacility(GameState &state, Vec2<int> pos) const
 {
 	auto facility = getFacility(pos);
 	if (facility == nullptr)
@@ -335,7 +338,7 @@ Base::BuildError Base::canDestroyFacility(Vec2<int> pos) const
 		case FacilityType::Capacity::Quarters:
 		case FacilityType::Capacity::Stores:
 		case FacilityType::Capacity::Aliens:
-			if (getCapacityUsed(facility->type->capacityType) >
+			if (getCapacityUsed(state, facility->type->capacityType) >
 			    getCapacityTotal(facility->type->capacityType) - facility->type->capacityAmount)
 			{
 				return BuildError::Occupied;
@@ -360,7 +363,7 @@ Base::BuildError Base::canDestroyFacility(Vec2<int> pos) const
 
 void Base::destroyFacility(GameState &state, Vec2<int> pos)
 {
-	if (canDestroyFacility(pos) == BuildError::NoError)
+	if (canDestroyFacility(state, pos) == BuildError::NoError)
 	{
 		auto facility = getFacility(pos);
 		for (auto f = facilities.begin(); f != facilities.end(); ++f)
@@ -385,23 +388,59 @@ void Base::destroyFacility(GameState &state, Vec2<int> pos)
 	}
 }
 
-int Base::getCapacityUsed(FacilityType::Capacity type) const
+int Base::getCapacityUsed(GameState &state, FacilityType::Capacity type) const
 {
 	int total = 0;
-	for (auto f = facilities.begin(); f != facilities.end(); ++f)
+	switch (type)
 	{
-		if ((*f)->type->capacityType == type)
-		{
-			if ((*f)->lab)
+		case FacilityType::Capacity::Chemistry:
+		case FacilityType::Capacity::Physics:
+		case FacilityType::Capacity::Workshop:
+			for (auto f = facilities.begin(); f != facilities.end(); ++f)
 			{
-				total += (int)(*f)->lab->assigned_agents.size();
+				if ((*f)->type->capacityType == type && (*f)->lab)
+				{
+					total += (int)(*f)->lab->assigned_agents.size();
+				}
 			}
-			else
+			break;
+		case FacilityType::Capacity::Quarters:
+			for (auto &a : state.agents)
 			{
-				// TODO: Calculate usage of other facilities
+				if (a.second->homeBuilding == building)
+				{
+					total++;
+				}
 			}
-		}
+			break;
+		case FacilityType::Capacity::Stores:
+			for (auto &e : inventoryAgentEquipment)
+			{
+				StateRef<AEquipmentType> ae = {&state, e.first};
+				total += ae->type == AEquipmentType::Type::Ammo
+				             ? ae->store_space * ((e.second + ae->max_ammo - 1) / ae->max_ammo)
+				             : ae->store_space * e.second;
+			}
+			for (auto &e : inventoryVehicleEquipment)
+			{
+				StateRef<VEquipmentType> ve = {&state, e.first};
+				total += ve->store_space * e.second;
+			}
+			for (auto &e : inventoryVehicleAmmo)
+			{
+				StateRef<VAmmoType> va = {&state, e.first};
+				total += va->store_space * e.second;
+			}
+			break;
+		case FacilityType::Capacity::Aliens:
+			for (auto &e : inventoryBioEquipment)
+			{
+				StateRef<AEquipmentType> ae = {&state, e.first};
+				total += ae->store_space * e.second;
+			}
+			break;
 	}
+
 	return total;
 }
 
@@ -418,23 +457,38 @@ int Base::getCapacityTotal(FacilityType::Capacity type) const
 	return total;
 }
 
-int Base::getUsage(sp<Facility> facility) const
+int Base::getUsage(GameState &state, sp<Facility> facility, int delta) const
 {
-	float usage = 0.0f;
 	if (facility->lab)
 	{
+		float usage = 0.0f;
+		if (delta != 0)
+		{
+			LogError("Delta is only supposed to be used with stores, alien containment and LQ!");
+		}
 		if (facility->lab->current_project)
 		{
 			usage = (float)facility->lab->assigned_agents.size();
 			usage /= facility->type->capacityAmount;
 		}
+		return static_cast<int>(ceilf(usage * 100.0f));
 	}
 	else
 	{
-		usage = (float)getCapacityUsed(facility->type->capacityType);
-		usage /= getCapacityTotal(facility->type->capacityType);
+		return getUsage(state, facility->type->capacityType, delta);
 	}
-	return static_cast<int>(usage * 100);
+}
+
+int Base::getUsage(GameState &state, FacilityType::Capacity type, int delta) const
+{
+	if (getCapacityTotal(type) == 0)
+	{
+		return getCapacityUsed(state, type) + delta > 0 ? 999 : 0;
+	}
+	float usage = 0.0f;
+	usage = (float)getCapacityUsed(state, type) + (float)delta;
+	usage /= getCapacityTotal(type);
+	return std::min(999, static_cast<int>(ceilf(usage * 100.0f)));
 }
 
 sp<Base> Base::get(const GameState &state, const UString &id)

@@ -461,6 +461,28 @@ void GameState::validateScenery()
 	}
 }
 
+void GameState::validateAgentEquipment()
+{
+	for (auto &ae : agent_equipment)
+	{
+		if (ae.second->type == AEquipmentType::Type::Ammo)
+		{
+			if (ae.second->max_ammo == 0)
+			{
+				LogError(
+				    "%s ZERO MAX AMMO: equipment of type ammo must always have non-zero max ammo",
+				    ae.first);
+			}
+			if (ae.second->max_ammo != 1 && ae.second->bioStorage)
+			{
+				LogError("%s BIO AMMO CLIP: equipment stored in alien containment must never have "
+				         "max ammo other than 1",
+				         ae.first);
+			}
+		}
+	}
+}
+
 void GameState::fillOrgStartingProperty()
 {
 	auto buildingIt = this->cities["CITYMAP_HUMAN"]->buildings.begin();
@@ -636,7 +658,7 @@ void GameState::fillPlayerStartingProperty()
 	for (auto &pair : this->vehicle_equipment)
 	{
 		auto &equipmentID = pair.first;
-		base->inventoryVehicleEquipment[equipmentID] = 10;
+		base->inventoryVehicleEquipment[equipmentID] = 2;
 	}
 	// Give base starting agent equipment
 	for (auto &pair : this->initial_base_agent_equipment)

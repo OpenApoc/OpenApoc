@@ -63,14 +63,6 @@ class ControlGenerator
 	std::vector<sp<Image>> vehiclePassengerCountIcons;
 	std::vector<sp<Image>> icons;
 	std::vector<sp<Image>> purchaseControlParts;
-	sp<Image> purchaseBoxIcon;
-	sp<Image> purchaseXComIcon;
-	sp<Image> purchaseArrow;
-	sp<Image> alienContainedDetain;
-	sp<Image> alienContainedKill;
-	sp<Image> scrollLeft;
-	sp<Image> scrollRight;
-	sp<Image> transactionShade;
 
   public:
 	static VehicleTileInfo createVehicleInfo(GameState &state, sp<Vehicle> v);
@@ -97,46 +89,6 @@ class ControlGenerator
 	static OrganisationInfo createOrganisationInfo(GameState &state, sp<Organisation> org);
 	static sp<Control> createOrganisationControl(GameState &state, const OrganisationInfo &info);
 	static sp<Control> createOrganisationControl(GameState &state, sp<Organisation> org);
-
-	// Buying/selling agent equipment and ammo
-	// Also used for sacking alien containment
-	static sp<Control>
-	createPurchaseControl(GameState &state, StateRef<AEquipmentType> agentEquipmentType, int stock);
-	// Buying/selling vehicle equipment
-	static sp<Control> createPurchaseControl(GameState &state,
-	                                         StateRef<VEquipmentType> vehicleEquipmentType,
-	                                         int stock);
-	// Buying/selling vehicle ammo and fuel
-	static sp<Control> createPurchaseControl(GameState &state, StateRef<VAmmoType> vehicleAmmoType,
-	                                         int stock);
-	// Buying vehicles
-	static sp<Control> createPurchaseControl(GameState &state, StateRef<VehicleType> vehicleType,
-	                                         int stock);
-	// Selling vehicles
-	static sp<Control> createPurchaseControl(GameState &state, StateRef<Vehicle> vehicle,
-	                                         int stock);
-
-	// Transferring agent equipment and ammo
-	// Also used for transfer of alien bodies
-	static sp<Control> createTransferControl(GameState &state,
-	                                         StateRef<AEquipmentType> agentEquipmentType,
-	                                         int stock1, int stock2);
-	// Transferring vehicle equipment
-	static sp<Control> createTransferControl(GameState &state,
-	                                         StateRef<VEquipmentType> vehicleEquipmentType,
-	                                         int stock, int stock2);
-	// Transferring vehicle ammo
-	static sp<Control> createTransferControl(GameState &state, StateRef<VAmmoType> vehicleAmmoType,
-	                                         int stock, int stock2);
-	// Transferring vehicles
-	static sp<Control> createTransferControl(GameState &state, StateRef<Vehicle> vehicleType,
-	                                         int stock, int stock2);
-
-	// Creates the control
-	static sp<Control> createTransactionControl(GameState &state, bool isAmmo, sp<Image> iconLeft,
-	                                            sp<Image> iconRight, bool transfer, UString name,
-	                                            UString manufacturer, int price, int stock1,
-	                                            int stock2);
 
 	static int getFontHeight(GameState &state);
 };

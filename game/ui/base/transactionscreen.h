@@ -8,6 +8,10 @@
 #include <list>
 #include <vector>
 
+// Don't update highlight right away so that we don't slow too much
+// Instead do it after user doesn't act for half a second
+#define HIGHLIGHT_UPDATE_DELAY 30
+
 namespace OpenApoc
 {
 
@@ -19,6 +23,12 @@ class ScrollBar;
 class Label;
 class Image;
 class Graphic;
+class BitmapFont;
+class VehicleType;
+class Vehicle;
+class VEquipmentType;
+class VAmmoType;
+class AEquipmentType;
 
 class TransactionScreen : public BaseStage
 {
@@ -28,6 +38,18 @@ class TransactionScreen : public BaseStage
 		AlienContainment,
 		BuySell,
 		Transfer
+	};
+	enum class Type
+	{
+		Soldier,
+		Bio,
+		Physist,
+		Engineer,
+		Vehicle,
+		AgentEquipment,
+		FlyingEquipment,
+		GroundEquipment,
+		Aliens
 	};
 	class TransactionControl : public Control
 	{
@@ -44,16 +66,24 @@ class TransactionScreen : public BaseStage
 
 	  private:
 		// Resources
-		sp<Image> bgLeft;
-		sp<Image> bgRight;
-		sp<Image> purchaseBoxIcon;
-		sp<Image> purchaseXComIcon;
-		sp<Image> purchaseArrow;
-		sp<Image> alienContainedDetain;
-		sp<Image> alienContainedKill;
-		sp<Image> scrollLeft;
-		sp<Image> scrollRight;
-		sp<Image> transactionShade;
+		static sp<Image> bgLeft;
+		static sp<Image> bgRight;
+		static sp<Image> purchaseBoxIcon;
+		static sp<Image> purchaseXComIcon;
+		static sp<Image> purchaseArrow;
+		static sp<Image> alienContainedDetain;
+		static sp<Image> alienContainedKill;
+		static sp<Image> scrollLeft;
+		static sp<Image> scrollRight;
+		static sp<Image> transactionShade;
+		static sp<BitmapFont> labelFont;
+		static bool resourcesInitialised;
+		static void initResources();
+
+	  protected:
+		// Link
+		std::list<sp<TransactionControl>> linked;
+		bool suspendUpdates = false;
 
 		// Subcontrols
 		sp<ScrollBar> scrollBar;
@@ -62,9 +92,9 @@ class TransactionScreen : public BaseStage
 		sp<Label> stockLeft;
 		sp<Label> stockRight;
 
-	  public:
-		// Data
+		void setScrollbarValues();
 
+	  public:
 		// Item id
 		UString itemId;
 		// Item type
@@ -85,32 +115,49 @@ class TransactionScreen : public BaseStage
 		int indexRight = 0;
 		bool isAmmo = false;
 		bool isBio = false;
+		UString manufacturer;
+		bool manufacturerHostile = false;
 
 		// Own Methods
 
-		void setIndex(int indexLeft, int indexRight);
+		void setIndexLeft(int index);
+		void setIndexRight(int index);
 		void updateValues();
+		void link(sp<TransactionControl> control);
+		const std::list<sp<TransactionControl>> &getLinked() const;
 
-		/*
 		// Transferring/Buying/selling agent equipment and ammo
 		// Transferring/Sacking alien containment
-		TransactionControl(GameState &state, StateRef<AEquipmentType> agentEquipmentType, bool
-		transfer);
+		static sp<TransactionControl> createControl(GameState &state,
+		                                            StateRef<AEquipmentType> agentEquipmentType,
+		                                            int indexLeft, int indexRight);
 		// Transferring/Buying/selling vehicle equipment
-		TransactionControl(GameState &state, StateRef<VEquipmentType> vehicleEquipmentType, bool
-		transfer);
+		static sp<TransactionControl> createControl(GameState &state,
+		                                            StateRef<VEquipmentType> vehicleEquipmentType,
+		                                            int indexLeft, int indexRight);
 		// Transferring/Buying/selling vehicle ammo and fuel
-		TransactionControl(GameState &state, StateRef<VAmmoType> vehicleAmmoType, bool transfer);
+		static sp<TransactionControl> createControl(GameState &state,
+		                                            StateRef<VAmmoType> vehicleAmmoType,
+		                                            int indexLeft, int indexRight);
 		// Buying vehicles
-		TransactionControl(GameState &state, StateRef<VehicleType> vehicleType);
+		static sp<TransactionControl> createControl(GameState &state,
+		                                            StateRef<VehicleType> vehicleType,
+		                                            int indexLeft, int indexRight);
 		// Transferring/Selling vehicles
-		TransactionControl(GameState &state, StateRef<Vehicle> vehicle, bool transfer);
-		*/
-		TransactionControl(UString id, Type type, UString name, UString manufacturer, bool isAmmo,
-		                   bool isBio, int price, int storeSpace, std::vector<int> initialStock);
+		static sp<TransactionControl> createControl(GameState &state, StateRef<Vehicle> vehicle,
+		                                            int indexLeft, int indexRight);
 
-		int getStoreDelta(int index) const;
-		int getPriceDelta(int index) const;
+		static sp<TransactionControl> createControl(UString id, Type type, UString name,
+		                                            UString manufacturer, bool isAmmo, bool isBio,
+		                                            bool manufacturerHostile, int price,
+		                                            int storeSpace, std::vector<int> &initialStock,
+		                                            int indexLeft, int indexRight);
+
+		void setupCallbacks();
+
+		int getCargoDelta(int index) const;
+		int getBioDelta(int index) const;
+		int getPriceDelta() const;
 
 		// Control Methods
 
@@ -128,12 +175,46 @@ class TransactionScreen : public BaseStage
 
   private:
 	void changeBase(sp<Base> newBase) override;
+	void changeSecondBase(sp<Base> newBase);
+
+	int framesUntilHighlightUpdate = 0;
+
+	sp<Label> textViewSecondBase;
+	sp<GraphicButton> currentSecondView;
 
   public:
 	TransactionScreen(sp<GameState> state, Mode mode);
 	~TransactionScreen() override;
 
 	Mode mode;
+	Type type;
+	std::map<Type, std::list<sp<TransactionControl>>> transactionControls;
+	StateRef<Base> second_base;
+
+	int lq2Delta = 0;
+	int cargo2Delta = 0;
+	int bio2Delta = 0;
+
+	// Methods
+
+	std::function<void(FormsEvent *e)> onScrollChange;
+	std::function<void(FormsEvent *e)> onHover;
+
+	void setDisplayType(Type type);
+
+	int getLeftIndex();
+	int getRightIndex();
+	int getIndex(bool left);
+
+	void populateControlsVehicle();
+	void populateControlsAgentEquipment();
+	void populateControlsVehicleEquipment();
+	void populateControlsAlien();
+
+	void updateFormValues(bool queueHighlightUpdate = true);
+	void updateBaseHighlight();
+	void fillBaseBar(bool left, int percent);
+	void displayItem(sp<TransactionControl> control);
 
 	// Stage control
 	void begin() override;
