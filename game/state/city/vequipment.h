@@ -47,6 +47,7 @@ class VEquipment : public Equipment
 	StateRef<Vehicle> owner;
 	int ammo;
 	int reloadTime;
+	bool disabled = false;
 
 	// All equipment methods
 	// General equipment methods

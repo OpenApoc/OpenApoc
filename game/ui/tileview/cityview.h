@@ -24,6 +24,7 @@ class Agent;
 class UfopaediaEntry;
 class AgentInfo;
 class OrganisationInfo;
+class VEquipmentType;
 
 enum class CityUpdateSpeed
 {
@@ -64,6 +65,9 @@ class CityView : public CityTileView
 	std::vector<AgentInfo> ownedPhysicsInfoList;
 	std::vector<VehicleTileInfo> hostileVehicleInfoList;
 	std::vector<OrganisationInfo> organisationInfoList;
+	std::vector<StateRef<VEquipmentType>> weaponType;
+	std::vector<bool> weaponDisabled;
+	std::vector<int> weaponAmmo;
 
 	bool followVehicle;
 
@@ -121,6 +125,7 @@ class CityView : public CityTileView
 	void orderAttack(StateRef<Vehicle> vehicle, bool forced);
 	void orderFollow(StateRef<Vehicle> vehicle);
 	void orderAttack(StateRef<Building> building);
+	void orderDisableWeapon(int index, bool disable);
 
   public:
 	CityView(sp<GameState> state);

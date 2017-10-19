@@ -173,7 +173,7 @@ bool VEquipment::canFire() const
 		LogError("canFire() called on non-Weapon");
 		return false;
 	}
-	return this->weaponState == WeaponState::Ready;
+	return !disabled && this->weaponState == WeaponState::Ready;
 }
 
 sp<Image> VEquipment::getEquipmentArmorImage() const

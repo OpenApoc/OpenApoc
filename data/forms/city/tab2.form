@@ -32,6 +32,57 @@
 		<item size="0" spacing="0"/>
         <orientation>horizontal</orientation>
       </listbox>
+ 
+	  <graphic id="VEHICLE_WEAPON_1">
+        <position x="97" y="80"/>
+        <size width="32" height="32"/>
+        <image/>
+      </graphic>
+	  <checkbox id="VEHICLE_WEAPON_1_DISABLED">
+        <position x="97" y="80"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:89:xcom3/ufodata/pal_01.dat</imagechecked>
+      </checkbox>
+	  <graphic id="VEHICLE_WEAPON_1_AMMO">
+        <position x="132" y="80"/>
+        <size width="6" height="32"/>
+        <image/>
+      </graphic>
+	  
+	  <graphic id="VEHICLE_WEAPON_2">
+        <position x="141" y="80"/>
+        <size width="32" height="32"/>
+        <image/>
+      </graphic>
+	  <checkbox id="VEHICLE_WEAPON_2_DISABLED">
+        <position x="141" y="80"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:89:xcom3/ufodata/pal_01.dat</imagechecked>
+      </checkbox>
+	  <graphic id="VEHICLE_WEAPON_2_AMMO">
+        <position x="176" y="80"/>
+        <size width="6" height="32"/>
+        <image/>
+      </graphic>
+	  
+	  <graphic id="VEHICLE_WEAPON_3">
+        <position x="185" y="80"/>
+        <size width="32" height="32"/>
+        <image/>
+      </graphic>
+	  <checkbox id="VEHICLE_WEAPON_3_DISABLED">
+        <position x="185" y="80"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:89:xcom3/ufodata/pal_01.dat</imagechecked>
+      </checkbox>
+	   <graphic id="VEHICLE_WEAPON_3_AMMO">
+        <position x="220" y="80"/>
+        <size width="6" height="32"/>
+        <image/>
+      </graphic>
 	  
       <radiobutton id="BUTTON_ATTACK_MODE_AGGRESSIVE" groupid="ATTACK_MODE">
         <position x="245" y="72"/>

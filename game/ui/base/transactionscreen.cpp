@@ -818,14 +818,12 @@ void TransactionScreen::fillBaseBar(bool left, int percent)
 	auto progressImage = mksp<RGBImage>(facilityBar->Size);
 	int redHeight = progressImage->size.y * std::min(100, percent) / 100;
 	{
-		// FIXME: For some reason, there's no border here like in the research sceen, so we
-		// have to make one manually, probably there's a better way
 		RGBImageLock l(progressImage);
 		for (int x = 0; x < 2; x++)
 		{
 			for (int y = 1; y <= progressImage->size.y; y++)
 			{
-				if (y < redHeight)
+				if (y <= redHeight)
 				{
 					l.set({x, progressImage->size.y - y}, {255, 0, 0, 255});
 				}
