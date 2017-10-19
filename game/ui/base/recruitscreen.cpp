@@ -22,7 +22,7 @@
 #include "game/state/rules/aequipmenttype.h"
 #include "game/state/shared/aequipment.h"
 #include "game/state/shared/organisation.h"
-#include "game/ui/base/RecruitScreen.h"
+#include "game/ui/base/recruitscreen.h"
 #include "game/ui/components/controlgenerator.h"
 #include "game/ui/general/messagebox.h"
 #include "library/strings_format.h"
