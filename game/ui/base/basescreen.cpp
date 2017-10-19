@@ -17,6 +17,7 @@
 #include "game/state/city/facility.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/city/ufopaedia.h"
+#include "game/ui/base/recruitscreen.h"
 #include "game/ui/base/researchscreen.h"
 #include "game/ui/base/transactionscreen.h"
 #include "game/ui/base/vequipscreen.h"
@@ -95,6 +96,10 @@ void BaseScreen::begin()
 		    fw().stageQueueCommand(
 		        {StageCmd::Command::PUSH,
 		         mksp<TransactionScreen>(state, TransactionScreen::Mode::BuySell)});
+		});
+	form->findControlTyped<GraphicButton>("BUTTON_BASE_HIREFIRESTAFF")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<RecruitScreen>(state)});
 		});
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_TRANSFER")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {

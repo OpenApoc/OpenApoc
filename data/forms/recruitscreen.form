@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc>
-  <form id="FORM_TRANSACTIONSCREEN">
+  <form id="FORM_RECRUITSCREEN">
     <style minwidth="640" minheight="480">
       <position x="centre" y="centre"/>
       <size width="640" height="480"/>
-      <graphic id = "BG">
+      <graphic>
+        <image>xcom3/ufodata/recruit.pcx</image>
         <position x="0" y="0"/>
         <size width="640" height="480"/>
       </graphic>
-      <label id= "TITLE">
+     
+	 <label text="HIRE AND FIRE">
         <position x="20" y="0"/>
         <size width="600" height="36"/>
         <alignment horizontal="centre" vertical="centre"/>
@@ -20,6 +22,7 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>
+	  
 	  <graphic id = "DELTA_UNDERPANTS">
         <position x="47" y="7"/>
         <size width="15" height="15"/>
@@ -30,12 +33,14 @@
         <size width="15" height="15"/>
 		<image>city/dollar-icon.png</image>
       </graphic>
-	  <label id="TEXT_FUNDS_DELTA">
+	   <label id="TEXT_FUNDS_DELTA">
         <position x="65" y="11"/>
         <size width="60" height="10"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>
+	 
+	 
       <graphicbutton id="BUTTON_BASE_1">
         <position x="24" y="53"/>
         <size width="32" height="32"/>
@@ -97,76 +102,6 @@
         <font>smalfont</font>
       </label>
 	  
-	 <graphicbutton id="BUTTON_SECOND_BASE_1">
-        <position x="431" y="53"/>
-        <size width="32" height="32"/>
-        <image/>
-        <imagedepressed/>
-      </graphicbutton>
-      <graphicbutton id="BUTTON_SECOND_BASE_2">
-        <position x="467" y="53"/>
-        <size width="32" height="32"/>
-        <image/>
-        <imagedepressed/>
-      </graphicbutton>
-      <graphicbutton id="BUTTON_SECOND_BASE_3">
-        <position x="503" y="53"/>
-        <size width="32" height="32"/>
-        <image/>
-        <imagedepressed/>
-      </graphicbutton>
-      <graphicbutton id="BUTTON_SECOND_BASE_4">
-        <position x="539" y="53"/>
-        <size width="32" height="32"/>
-        <image/>
-        <imagedepressed/>
-      </graphicbutton>
-      <graphicbutton id="BUTTON_SECOND_BASE_5">
-        <position x="431" y="89"/>
-        <size width="32" height="32"/>
-        <image/>
-        <imagedepressed/>
-      </graphicbutton>
-      <graphicbutton id="BUTTON_SECOND_BASE_6">
-        <position x="467" y="89"/>
-        <size width="32" height="32"/>
-        <image/>
-        <imagedepressed/>
-      </graphicbutton>
-      <graphicbutton id="BUTTON_SECOND_BASE_7">
-        <position x="503" y="89"/>
-        <size width="32" height="32"/>
-        <image/>
-        <imagedepressed/>
-      </graphicbutton>
-      <graphicbutton id="BUTTON_SECOND_BASE_8">
-        <position x="539" y="89"/>
-        <size width="32" height="32"/>
-        <image/>
-        <imagedepressed/>
-      </graphicbutton>
-      <label id="TEXT_BUTTON_SECOND_BASE">
-        <position x="422" y="124"/>
-        <size width="157" height="15"/>
-        <alignment horizontal="centre" vertical="centre"/>
-        <font>smalfont</font>
-      </label>
-	    <label id="TEXT_BUTTON_SECOND_BASE_STATIC" visible="N">
-        <position x="422" y="124"/>
-        <size width="157" height="15"/>
-        <alignment horizontal="centre" vertical="centre"/>
-        <font>smalfont</font>
-      </label>
-	  
-	  <graphic id="FACILITY_FIRST_PIC">
-        <position x="179" y="79"/>
-        <size width="32" height="32"/>
-      </graphic>
-	  <graphic id="FACILITY_FIRST_BAR">
-        <position x="214" y="60"/>
-        <size width="7" height="50"/>
-		<image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:62:xcom3/ufodata/research.pcx</image>
-      </graphic>
 	  <graphic id="FACILITY_FIRST_FILL">
         <position x="219" y="60"/>
         <size width="2" height="50"/>
@@ -177,88 +112,89 @@
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
-	  
-	  <graphic id="FACILITY_SECOND_PIC">
-        <position x="391" y="79"/>
-        <size width="32" height="32"/>
+      
+	  <graphic id="MAGIC_ARROW" visible="N">
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:42:xcom3/ufodata/research.pcx</image>
+        <position x="406" y="250"/>
+        <size width="52" height="33"/>
       </graphic>
-	  <graphic id="FACILITY_SECOND_BAR">
-        <position x="382" y="60"/>
-        <size width="7" height="50"/>
-		<image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:62:xcom3/ufodata/research.pcx</image>
-      </graphic>
-	  <graphic id="FACILITY_SECOND_FILL">
-        <position x="387" y="60"/>
-        <size width="2" height="50"/>
-      </graphic>
-	  <label id="FACILITY_SECOND_TEXT">
-        <position x="379" y="121"/>
-        <size width="40" height="15"/>
-        <alignment horizontal="left" vertical="centre"/>
+ 
+	  <label id="AGENTS_CAPTION_LEFT">
+        <position x="257" y="59"/>
+        <size width="124" height="16"/>
+        <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>
-	        
-      <scroll id="LIST_SCROLL">
-        <position x="567" y="202"/>
-        <size width="26" height="244"/>
+	  <label text = "Civilian">
+        <position x="458" y="59"/>
+        <size width="124" height="16"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+ 
+	  <scroll id="LIST1_SCROLL">
+		<position x="381" y="72"/>
+        <size width="26" height="374"/>
       </scroll>
-      <graphicbutton id="LIST_SCROLL_UP" scrollprev="LIST_SCROLL">
-        <position x="569" y="178"/>
+      <graphicbutton id="LIST1_SCROLL_UP" scrollprev="LIST1_SCROLL">
+        <position x="383" y="48"/>
         <size width="22" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <graphicbutton id="LIST_SCROLL_DOWN" scrollnext="LIST_SCROLL">
+      <graphicbutton id="LIST1_SCROLL_DOWN" scrollnext="LIST1_SCROLL">
+        <position x="383" y="449"/>
+        <size width="22" height="21"/>
+        <image/>
+        <imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <listbox id="LIST1" scrollbarid="LIST1_SCROLL">
+        <position x="259" y="76"/>
+        <size width="121" height="389"/>
+        <orientation>vertical</orientation>
+		<item size = "47" spacing = "0"/>
+        <hovercolour r="0" g="0" b="0" a="0"/>
+      </listbox>
+ 
+	  <scroll id="LIST2_SCROLL">
+        <position x="567" y="72"/>
+        <size width="26" height="374"/>
+      </scroll>
+      <graphicbutton id="LIST2_SCROLL_UP" scrollprev="LIST2_SCROLL">
+        <position x="569" y="48"/>
+        <size width="22" height="21"/>
+        <image/>
+        <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="LIST2_SCROLL_DOWN" scrollnext="LIST2_SCROLL">
         <position x="569" y="449"/>
         <size width="22" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <listbox id="LIST" scrollbarid="LIST_SCROLL">
-        <position x="211" y="181"/>
-        <size width="357" height="284"/>
+      <listbox id="LIST2" scrollbarid="LIST2_SCROLL">
+        <position x="460" y="76"/>
+        <size width="105" height="389"/>
         <orientation>vertical</orientation>
 		<item size = "47" spacing = "0"/>
         <hovercolour r="0" g="0" b="0" a="0"/>
       </listbox>
-   
-       <graphic>
-        <position x="209" y="181"/>
-        <size width="10" height="9"/>
-        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:49:xcom3/ufodata/base.pcx</image>
-      </graphic>
-	  <graphic>
-        <position x="209" y="455"/>
+ 
+ 
+ 
+	 <graphic>
+        <position x="256" y="455"/>
         <size width="11" height="10"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:50:xcom3/ufodata/base.pcx</image>
       </graphic>
-		  
-      <radiobutton id="BUTTON_VEHICLES" groupid = "TYPE">
-        <position x="602" y="40"/>
-        <size width="35" height="34"/>
-        <image/>
-        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:37:xcom3/ufodata/base.pcx</imagechecked>
-      </radiobutton>
-      <radiobutton id="BUTTON_AGENTS" groupid = "TYPE">
-        <position x="602" y="80"/>
-        <size width="35" height="34"/>
-        <image/>
-        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:38:xcom3/ufodata/base.pcx</imagechecked>
-      </radiobutton>
-      <radiobutton id="BUTTON_FLYING" groupid = "TYPE">
-        <position x="602" y="120"/>
-        <size width="35" height="34"/>
-        <image/>
-        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:39:xcom3/ufodata/base.pcx</imagechecked>
-      </radiobutton>
-      <radiobutton id="BUTTON_GROUND" groupid = "TYPE">
-        <position x="602" y="160"/>
-        <size width="35" height="34"/>
-        <image/>
-        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:40:xcom3/ufodata/base.pcx</imagechecked>
-	  </radiobutton>
-	  
-	  <radiobutton id="BUTTON_SOLDIERS" groupid = "TYPE">
+	 <graphic>
+        <position x="458" y="455"/>
+        <size width="11" height="10"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:50:xcom3/ufodata/base.pcx</image>
+      </graphic>
+ 
+ 
+      <radiobutton id="BUTTON_SOLDIERS" groupid = "TYPE">
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>
@@ -282,14 +218,7 @@
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:36:xcom3/ufodata/base.pcx</imagechecked>
 	  </radiobutton>
-	  <radiobutton id="BUTTON_ALIENS" groupid = "TYPE">
-        <position x="602" y="360"/>
-        <size width="35" height="34"/>
-        <image/>
-        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:41:xcom3/ufodata/base.pcx</imagechecked>
-	  </radiobutton>
 	  
-	 
       <graphicbutton id="BUTTON_OK">
         <position x="602" y="443"/>
         <size width="35" height="34"/>

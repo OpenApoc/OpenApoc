@@ -10,15 +10,10 @@ Support me:
 ---
 
 General:
-- options
-
+- 
 City:
-- ferrying
-- hiring and buying framework
-- researching requires and consumes items
-- skirmish completely virtual
+- 
 
 Battle:
-- provide loot and bio stuff
-
+- 
 Bugfixes:

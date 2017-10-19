@@ -120,10 +120,20 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 			o->current_relations[o2] = (float)rdata.relationships[j];
 		}
 
-		// FIXME: Assign hirable agents to orgs
-		// o->hirableTypes
-		// o->minHireePool
-		// o->maxHireePool
+		// Done in copmmon xml patch
+		/*if (i == ORG_CIVILIAN)
+		{
+		    o->hirableAgentTypes[{&state, "AGENTTYPE_X-COM_QUANTUM_PHYSICIST"}] = {0,2};
+		    o->hirableAgentTypes[{&state, "AGENTTYPE_X-COM_BIOCHEMIST"}] = { 0,2 };
+		    o->hirableAgentTypes[{&state, "AGENTTYPE_X-COM_MECHANIC"}] = { 0,1 };
+		}*/
+
+		// Since we have 33% of agents going every day
+		// And about 15 max agent pool spotted in vanilla
+		// We should have average of 5 agents coming in every day
+		// That would be average of 3 soldiers 1 android 1 hybrid and 5 each non-combat
+		// That would be 4x 0-1 soldiers from some orgs and 0-2 from gravball, 0-2 from mutant/self,
+		// and 10x 0-1 from orgs for bio,phys and engi (or more if there's less suitable orgs)
 
 		// Park
 

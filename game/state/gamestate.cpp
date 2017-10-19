@@ -490,9 +490,10 @@ void GameState::fillOrgStartingProperty()
 	for (auto &o : this->organisations)
 	{
 		o.second->updateVehicleAgentPark(*this);
+		o.second->updateHirableAgents(*this);
 		for (auto &m : o.second->missions[{this, "CITYMAP_HUMAN"}])
 		{
-			m.next += TICKS_PER_HOUR * 12 + randBoundsInclusive(rng, (uint64_t)0,
+			m.next += gameTime.getTicks() + randBoundsInclusive(rng, (uint64_t)0,
 			                                                    m.pattern.maxIntervalRepeat -
 			                                                        m.pattern.minIntervalRepeat) -
 			          m.pattern.minIntervalRepeat / 2;

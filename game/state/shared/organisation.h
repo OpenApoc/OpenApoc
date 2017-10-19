@@ -17,6 +17,9 @@ namespace OpenApoc
 // of how many orgs there are
 static const unsigned TICKS_PER_TAKEOVER_ATTEMPT = TICKS_PER_MINUTE * 125;
 
+// Chance that hirable agent is gone by the end of the day
+static const int CHANGE_HIREE_GONE = 33;
+
 class Vehicle;
 class VehicleType;
 class Building;
@@ -121,9 +124,8 @@ class Organisation : public StateObject
 	std::map<StateRef<City>, std::list<Mission>> missions;
 	std::map<StateRef<VehicleType>, int> vehiclePark;
 	bool providesTransportationServices = false;
-	int minHireePool = 0;
-	int maxHireePool = 0;
-	std::set<StateRef<AgentType>> hirableTypes;
+	// Hirable agent types, min and max growth per day
+	std::map<StateRef<AgentType>, std::pair<int, int>> hirableAgentTypes;
 
 	Organisation() = default;
 

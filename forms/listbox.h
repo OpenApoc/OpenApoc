@@ -45,6 +45,8 @@ class ListBox : public Control
 	void unloadResources() override;
 
 	void setSelected(sp<Control> c);
+	sp<Control> getSelectedItem();
+	sp<Control> getHoveredItem();
 
 	void clear();
 	void addItem(sp<Control> Item);

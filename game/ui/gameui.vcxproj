@@ -41,6 +41,7 @@
   <ItemGroup>
     <ClCompile Include="base\basescreen.cpp" />
     <ClCompile Include="base\basestage.cpp" />
+    <ClCompile Include="base\recruitscreen.cpp" />
     <ClCompile Include="base\transactionscreen.cpp" />
     <ClCompile Include="base\researchscreen.cpp" />
     <ClCompile Include="base\researchselect.cpp" />
@@ -90,6 +91,7 @@
   <ItemGroup>
     <ClInclude Include="base\basescreen.h" />
     <ClInclude Include="base\basestage.h" />
+    <ClInclude Include="base\recruitscreen.h" />
     <ClInclude Include="base\transactionscreen.h" />
     <ClInclude Include="base\researchscreen.h" />
     <ClInclude Include="base\researchselect.h" />
