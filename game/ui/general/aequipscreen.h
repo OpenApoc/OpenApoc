@@ -121,11 +121,13 @@ class AEquipScreen : public Stage
 
 	// Try pick up item from agent's slot
 	// if alternative and forced is set then only do alternative or none at all
-	bool tryPickUpItem(sp<Agent> agent, Vec2<int> slotPos, bool alternative, bool forced = false);
-	bool tryPickUpItem(Vec2<int> inventoryPos);
+	bool tryPickUpItem(sp<Agent> agent, Vec2<int> slotPos, bool alternative,
+	                   bool *alienArtifact = nullptr, bool forced = false);
+	bool tryPickUpItem(Vec2<int> inventoryPos, bool *alienArtifact = false);
 	bool tryPickUpItem(sp<AEquipmentType> item);
 	void pickUpItem(sp<AEquipment> item);
-	bool tryPlaceItem(sp<Agent> agent, Vec2<int> slotPos, bool *insufficientTU = nullptr);
+	bool tryPlaceItem(sp<Agent> agent, Vec2<int> slotPos, bool *insufficientTU = nullptr,
+	                  bool *alienArtifact = nullptr);
 	bool tryPlaceItem(sp<Agent> agent, bool toAgent, bool *insufficientTU = nullptr);
 
 	void processTemplate(int idx, bool remember);

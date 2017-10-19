@@ -2477,8 +2477,16 @@ void BattleView::orderUse(bool right, bool automatic)
 	auto item = unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
 	                                                  : EquipmentSlotType::LeftHand);
 
-	if (!item || !item->canBeUsed(*state))
+	if (!item)
 	{
+		return;
+	}
+	if (!item->canBeUsed(*state))
+	{
+		auto message_box = mksp<MessageBox>(
+		    tr("Alien Artifact"), tr("You must research Alien technology before you can use it."),
+		    MessageBox::ButtonOptions::Ok);
+		fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 		return;
 	}
 

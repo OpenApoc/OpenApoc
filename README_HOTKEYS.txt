@@ -46,7 +46,7 @@ Cityscape Mouse:
 - [Left Click]
   - Issues orders
   - Base screen for building that contains a base
-  - Base buy screen for non-owned building that house a base
+  - Building screen for buildings
 - [Right Click]
   - Building screen for buildings
 

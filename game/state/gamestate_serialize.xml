@@ -1225,9 +1225,7 @@
 		<member>missions</member>
 		<member>vehiclePark</member>
 		<member>providesTransportationServices</member>
-		<member>minHireePool</member>
-		<member>maxHireePool</member>
-		<member>hirableTypes</member>
+		<member>hirableAgentTypes</member>
 	</object>
 	<object>
 		<name>VehicleType</name>

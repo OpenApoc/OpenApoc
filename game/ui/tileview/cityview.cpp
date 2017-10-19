@@ -190,7 +190,7 @@ bool CityView::handleClickedBuilding(StateRef<Building> building, bool rightClic
 			}
 			else
 			{
-				// Base / buy screen
+				// Base / location screen
 				if (building->base)
 				{
 					// Base screen
@@ -201,11 +201,11 @@ bool CityView::handleClickedBuilding(StateRef<Building> building, bool rightClic
 					fw().stageQueueCommand(
 					    {StageCmd::Command::PUSH, mksp<BaseScreen>(this->state)});
 				}
-				else if (building->base_layout && building->owner == state->getGovernment())
+				else
 				{
-					// Base buy screen
+					// Location (building) screen
 					fw().stageQueueCommand(
-					    {StageCmd::Command::PUSH, mksp<BaseBuyScreen>(state, building)});
+					    {StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, building)});
 				}
 			}
 			return true;

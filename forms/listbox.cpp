@@ -284,15 +284,6 @@ void ListBox::replaceItem(sp<Control> Item)
 sp<Control> ListBox::removeItem(sp<Control> Item)
 {
 	this->setDirty();
-	for (auto i = Controls.begin(); i != Controls.end(); i++)
-	{
-		if (*i == Item)
-		{
-			Controls.erase(i);
-			resolveLocation();
-			return Item;
-		}
-	}
 	if (Item == this->selected)
 	{
 		this->selected = nullptr;
@@ -300,6 +291,16 @@ sp<Control> ListBox::removeItem(sp<Control> Item)
 	if (Item == this->hovered)
 	{
 		this->hovered = nullptr;
+	}
+	for (auto i = Controls.begin(); i != Controls.end(); i++)
+	{
+		if (*i == Item)
+		{
+			Controls.erase(i);
+			resolveLocation();
+			Item->setParent(nullptr);
+			return Item;
+		}
 	}
 	return nullptr;
 }
@@ -447,5 +448,9 @@ void ListBox::setSelected(sp<Control> c)
 	this->selected = c;
 	this->setDirty();
 }
+
+sp<Control> ListBox::getSelectedItem() { return selected; }
+
+sp<Control> ListBox::getHoveredItem() { return hovered; }
 
 }; // namespace OpenApoc

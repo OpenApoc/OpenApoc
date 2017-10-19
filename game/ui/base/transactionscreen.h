@@ -184,12 +184,13 @@ class TransactionScreen : public BaseStage
 	sp<Label> textViewSecondBase;
 	sp<GraphicButton> currentSecondView;
 
-  public:
-	TransactionScreen(sp<GameState> state, Mode mode);
-	~TransactionScreen() override;
+	sp<Label> textViewBaseStatic;
+	sp<Label> textViewSecondBaseStatic;
 
 	Mode mode;
 	Type type;
+	// Wether player must conform to limits even on bases which did not change
+	bool forceLimits = false;
 	std::map<Type, std::list<sp<TransactionControl>>> transactionControls;
 	StateRef<Base> second_base;
 
@@ -222,6 +223,10 @@ class TransactionScreen : public BaseStage
 	void closeScreen(bool confirmed = false, bool forced = false);
 	// Execute orders given in the screen
 	void executeOrders();
+
+  public:
+	TransactionScreen(sp<GameState> state, Mode mode, bool forceLimits = false);
+	~TransactionScreen() override;
 
 	// Stage control
 	void begin() override;

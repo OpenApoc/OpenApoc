@@ -393,47 +393,55 @@ void Organisation::updateMissions(GameState &state)
 
 void Organisation::updateHirableAgents(GameState &state)
 {
-	if (hirableTypes.empty())
+	if (hirableAgentTypes.empty())
 	{
 		return;
 	}
 	StateRef<Building> hireeLocation;
-	for (auto &c : state.cities)
+	if (state.getCivilian().id == id)
 	{
-		for (auto &b : c.second->buildings)
-		{
-			if (b.second->owner.id != id)
-			{
-				continue;
-			}
-			hireeLocation = {&state, b.first};
-			break;
-		}
+		hireeLocation = {&state,
+		                 mapRandomizer(state.rng, state.cities["CITYMAP_HUMAN"]->buildings).first};
 	}
-	if (!hireeLocation)
+	else
 	{
-		return;
+		if (buildings.empty())
+		{
+			return;
+		}
+		hireeLocation = vectorRandomizer(state.rng, buildings);
 	}
 	std::set<sp<Agent>> agentsToRemove;
 	for (auto &a : state.agents)
 	{
-		if (a.second->owner.id == id && hirableTypes.find(a.second->type) != hirableTypes.end())
+		if (a.second->owner.id == id &&
+		    hirableAgentTypes.find(a.second->type) != hirableAgentTypes.end())
 		{
-			agentsToRemove.insert(a.second);
+			if (randBoundsExclusive(state.rng, 0, 100) < CHANGE_HIREE_GONE)
+			{
+				agentsToRemove.insert(a.second);
+			}
 		}
 	}
 	for (auto &a : agentsToRemove)
 	{
 		a->die(state, true);
 	}
-	int newAgents = randBoundsInclusive(state.rng, minHireePool, maxHireePool);
-	for (int i = 0; i < newAgents; i++)
+	for (auto &entry : hirableAgentTypes)
 	{
-		auto a = state.agent_generator.createAgent(state, {&state, id},
-		                                           setRandomiser(state.rng, hirableTypes));
-		a->homeBuilding = hireeLocation;
-		a->city = hireeLocation->city;
-		a->enterBuilding(state, hireeLocation);
+		int newAgents = randBoundsInclusive(state.rng, entry.second.first, entry.second.second);
+		for (int i = 0; i < newAgents; i++)
+		{
+			auto a = state.agent_generator.createAgent(state, {&state, id}, entry.first);
+			// Strip them of default equipment
+			while (!a->equipment.empty())
+			{
+				a->removeEquipment(state, a->equipment.front());
+			}
+			a->homeBuilding = hireeLocation;
+			a->city = hireeLocation->city;
+			a->enterBuilding(state, hireeLocation);
+		}
 	}
 }
 

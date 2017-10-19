@@ -167,7 +167,7 @@ void ResearchScreen::eventOccurred(Event *e)
 
 	if (e->type() == EVENT_MOUSE_MOVE)
 	{
-		arrow->setVisible((e->mouse().X > form->Location.x + arrow->Location.x));
+		arrow->setVisible(!(e->mouse().X > form->Location.x + arrow->Location.x));
 	}
 
 	if (e->type() == EVENT_FORM_INTERACTION)

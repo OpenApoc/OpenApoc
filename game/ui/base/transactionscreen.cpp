@@ -45,8 +45,9 @@ sp<Image> TransactionScreen::TransactionControl::transactionShade;
 sp<BitmapFont> TransactionScreen::TransactionControl::labelFont;
 bool TransactionScreen::TransactionControl::resourcesInitialised = false;
 
-TransactionScreen::TransactionScreen(sp<GameState> state, TransactionScreen::Mode mode)
-    : BaseStage(state), mode(mode)
+TransactionScreen::TransactionScreen(sp<GameState> state, TransactionScreen::Mode mode,
+                                     bool forceLimits)
+    : BaseStage(state), mode(mode), forceLimits(forceLimits)
 {
 	// Load resources
 	form = ui().getForm("transactionscreen");
@@ -64,6 +65,8 @@ TransactionScreen::TransactionScreen(sp<GameState> state, TransactionScreen::Mod
 	};
 
 	// Assign main form contents
+	textViewBaseStatic = form->findControlTyped<Label>("TEXT_BUTTON_BASE_STATIC");
+	textViewSecondBaseStatic = form->findControlTyped<Label>("TEXT_BUTTON_SECOND_BASE_STATIC");
 	switch (mode)
 	{
 		case Mode::AlienContainment:
@@ -148,6 +151,7 @@ TransactionScreen::TransactionScreen(sp<GameState> state, TransactionScreen::Mod
 				if (b.first != state->current_base.id)
 				{
 					second_base = {state.get(), b.first};
+					textViewSecondBaseStatic->setText(second_base->name);
 					break;
 				}
 			}
@@ -192,6 +196,7 @@ TransactionScreen::~TransactionScreen() = default;
 void TransactionScreen::changeBase(sp<Base> newBase)
 {
 	BaseStage::changeBase(newBase);
+	textViewBaseStatic->setText(state->current_base->name);
 
 	// Set index for all controls
 	int index = getLeftIndex();
@@ -204,13 +209,13 @@ void TransactionScreen::changeBase(sp<Base> newBase)
 	}
 	// Apply display type and base highlight
 	setDisplayType(type);
-	// Update all values
-	updateFormValues(false);
 }
 
 void TransactionScreen::changeSecondBase(sp<Base> newBase)
 {
 	second_base = newBase->building->base;
+	textViewSecondBaseStatic->setText(second_base->name);
+
 	// Set index for all controls
 	int index = getRightIndex();
 	for (auto &l : transactionControls)
@@ -1498,7 +1503,7 @@ void TransactionScreen::closeScreen(bool confirmed, bool forced)
 		bool crewOverLimit = false; //  only if mode == Mode::Transfer
 		for (auto &b : state->player_bases)
 		{
-			if (vecChanged[bindex])
+			if (vecChanged[bindex] || forceLimits)
 			{
 				if (b.second->getUsage(*state, FacilityType::Capacity::Stores,
 				                       vecCargoDelta[bindex]) > 100)
@@ -1535,7 +1540,14 @@ void TransactionScreen::closeScreen(bool confirmed, bool forced)
 				title = tr("Storage space exceeded");
 				if (mode == Mode::BuySell)
 				{
-					message = tr("Order limited by the available storage space at this base.");
+					if (forceLimits)
+					{
+						message = tr("Storage space exceeded. Sell off more items!");
+					}
+					else
+					{
+						message = tr("Order limited by the available storage space at this base.");
+					}
 				}
 				else
 				{
@@ -1852,12 +1864,15 @@ void TransactionScreen::begin()
 			view->addCallback(FormEventType::MouseEnter, [this](FormsEvent *e) {
 				auto base = e->forms().RaisedBy->getData<Base>();
 				this->textViewSecondBase->setText(base->name);
+				this->textViewSecondBase->setVisible(true);
 			});
-			view->addCallback(FormEventType::MouseLeave,
-			                  [this](FormsEvent *) { this->textViewSecondBase->setText(""); });
+			view->addCallback(FormEventType::MouseLeave, [this](FormsEvent *) {
+				this->textViewSecondBase->setText("");
+				this->textViewSecondBase->setVisible(false);
+			});
 		}
 		textViewSecondBase = form->findControlTyped<Label>("TEXT_BUTTON_SECOND_BASE");
-		textViewSecondBase->setVisible(true);
+		textViewSecondBase->setVisible(false);
 	}
 	else
 	{
@@ -1923,8 +1938,13 @@ void TransactionScreen::update()
 void TransactionScreen::render()
 {
 	fw().stageGetPrevious(this->shared_from_this())->render();
+
+	textViewBaseStatic->setVisible(!textViewBase || !textViewBase->isVisible());
+	textViewSecondBaseStatic->setVisible(!textViewSecondBase || !textViewSecondBase->isVisible());
+
 	form->render();
 	BaseStage::render();
+
 	// Highlight selected base
 	if (currentSecondView != nullptr)
 	{
