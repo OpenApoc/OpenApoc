@@ -168,6 +168,9 @@ class Vehicle : public StateObject,
 		Low = 3
 	};
 	Altitude altitude;
+	// Adjusts position by altitude preference
+	Vec3<int> getPreferredPosition(Vec3<int> position) const;
+	Vec3<int> getPreferredPosition(int x, int y, int z = 0) const;
 
 	void equipDefaultEquipment(GameState &state);
 
@@ -260,9 +263,12 @@ class Vehicle : public StateObject,
 	bool fireWeaponsPointDefense(GameState &state, Vec2<int> arc = {8, 8});
 	void fireWeaponsNormal(GameState &state, Vec2<int> arc = {8, 8});
 	void fireWeaponsManual(GameState &state, Vec2<int> arc = {8, 8});
-	void attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile);
+	bool attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile);
 	bool attackTarget(GameState &state, sp<TileObjectProjectile> enemyTile);
-	void attackTarget(GameState &state, Vec3<float> target);
+	bool attackTarget(GameState &state, Vec3<float> target);
+	sp<VEquipment> getFirstFiringWeapon(GameState &state, Vec3<float> &target,
+	                                    Vec3<float> targetVelocity = {0.0f, 0.0f, 0.0f},
+	                                    sp<TileObjectVehicle> enemyTile = nullptr, bool pd = false);
 	float getFiringRange() const;
 
 	Vec3<float> getMuzzleLocation() const;

@@ -28,6 +28,7 @@
 #include "game/state/rules/city/scenerytiletype.h"
 #include "game/state/rules/city/ufogrowth.h"
 #include "game/state/rules/city/ufoincursion.h"
+#include "game/state/rules/city/ufomissionpreference.h"
 #include "game/state/rules/city/ufopaedia.h"
 #include "game/state/rules/city/vammotype.h"
 #include "game/state/rules/city/vehicletype.h"
@@ -796,41 +797,106 @@ void GameState::updateEconomy()
 
 void GameState::invasion()
 {
-	auto invadedCity = cities["CITYMAP_HUMAN"];
-
+	auto invadedCity = StateRef<City>{this, "CITYMAP_HUMAN"};
 	if (current_city != invadedCity)
 	{
 		nextInvasion += TICKS_PER_MINUTE;
 		return;
 	}
+	nextInvasion = gameTime.getTicks() + 24 * TICKS_PER_HOUR +
+	               randBoundsInclusive(rng, 0, (int)(72 * TICKS_PER_HOUR));
 
 	invadedCity->generatePortals(*this);
 
-	// SPAWN ALIENS
-	// FIXME: Implement arrive from portal mission
-	// so that they spawn in sequence and not at once
-	// FIXME: Implement alien missions
-	for (int i = 0; i < 5; i++)
-	{
-		StateRef<City> city = {this, "CITYMAP_HUMAN"};
+	auto invadingCity = StateRef<City>{this, "CITYMAP_ALIEN"};
+	auto invadingOrg = StateRef<Organisation>{this, "ORG_ALIEN"};
 
-		auto portal = city->portals.begin();
-		std::uniform_int_distribution<int> portal_rng(0, city->portals.size() - 1);
+	// Set a list of possible participants
+	std::map<UString, int> vehicleLimits;
+	for (auto &v : vehicles)
+	{
+		if (v.second->owner == invadingOrg && v.second->city == invadingCity)
+		{
+			vehicleLimits[v.second->type.id]++;
+		}
+	}
+	// Select a random mission type
+	int week = this->gameTime.getWeek();
+	auto preference =
+	    this->ufo_mission_preference.find(format("%s%d", UFOMissionPreference::getPrefix(), week));
+	if (preference == this->ufo_mission_preference.end())
+	{
+		preference = this->ufo_mission_preference.find(
+		    format("%s%s", UFOMissionPreference::getPrefix(), "DEFAULT"));
+	}
+	auto missionType = listRandomiser(rng, preference->second->missionList);
+	// Compile list of missions rated by priority
+	std::map<int, sp<UFOIncursion>> incursions;
+	for (auto &e : ufo_incursions)
+	{
+		if (e.second->primaryMission == missionType)
+		{
+			incursions[e.second->priority] = e.second;
+		}
+	}
+	// Find first incursion by type that fits
+	sp<UFOIncursion> currentIncursion;
+	for (auto &inc : incursions)
+	{
+		auto limits = vehicleLimits;
+		for (auto &v : inc.second->primaryList)
+		{
+			limits[v.first] -= v.second;
+		}
+		for (auto &v : inc.second->attackList)
+		{
+			limits[v.first] -= v.second;
+		}
+		for (auto &v : inc.second->escortList)
+		{
+			limits[v.first] -= v.second;
+		}
+		bool enoughVehicles = true;
+		for (auto &v : limits)
+		{
+			if (v.second < 0)
+			{
+				enoughVehicles = false;
+				break;
+			}
+		}
+		if (enoughVehicles)
+		{
+			currentIncursion = inc.second;
+			break;
+		}
+	}
+	if (!currentIncursion)
+	{
+		return;
+	}
+
+	LogWarning("Implement properly moving ufos from dimension and spawning with intervals!");
+
+	for (auto &v : currentIncursion->primaryList)
+	{
+		auto portal = invadedCity->portals.begin();
+		std::uniform_int_distribution<int> portal_rng(0, invadedCity->portals.size() - 1);
 		std::advance(portal, portal_rng(this->rng));
 
-		auto bld_iter = city->buildings.begin();
-		std::uniform_int_distribution<int> bld_rng(0, city->buildings.size() - 1);
+		auto bld_iter = invadedCity->buildings.begin();
+		std::uniform_int_distribution<int> bld_rng(0, invadedCity->buildings.size() - 1);
 		std::advance(bld_iter, bld_rng(this->rng));
 		StateRef<Building> bld = {this, (*bld_iter).second};
 
-		auto vehicleType = this->vehicle_types.find("VEHICLETYPE_ALIEN_PROBE");
-		if (vehicleType != this->vehicle_types.end())
+		auto vehicleType = this->vehicle_types.find(v.first);
+		for (int i = 0; i < v.second; i++)
 		{
 			auto &type = (*vehicleType).second;
 
-			auto v = city->placeVehicle(*this, {this, (*vehicleType).first}, type->manufacturer,
-			                            (*portal)->getPosition());
-			v->city = city;
+			auto v = invadedCity->placeVehicle(*this, {this, (*vehicleType).first},
+			                                   type->manufacturer, (*portal)->getPosition());
+			v->city = invadedCity;
 			v->missions.emplace_back(VehicleMission::infiltrateOrSubvertBuilding(*this, *v, bld));
 			v->missions.front()->start(*this, *v);
 			fw().soundBackend->playSample(city_common_sample_list->dimensionShiftOut, v->position);
@@ -838,9 +904,58 @@ void GameState::invasion()
 			fw().pushEvent(new GameVehicleEvent(GameEventType::UfoSpotted, {this, v}));
 		}
 	}
+	for (auto &v : currentIncursion->escortList)
+	{
+		auto portal = invadedCity->portals.begin();
+		std::uniform_int_distribution<int> portal_rng(0, invadedCity->portals.size() - 1);
+		std::advance(portal, portal_rng(this->rng));
 
-	nextInvasion = gameTime.getTicks() + 24 * TICKS_PER_HOUR +
-	               randBoundsInclusive(rng, 0, (int)(72 * TICKS_PER_HOUR));
+		auto bld_iter = invadedCity->buildings.begin();
+		std::uniform_int_distribution<int> bld_rng(0, invadedCity->buildings.size() - 1);
+		std::advance(bld_iter, bld_rng(this->rng));
+		StateRef<Building> bld = {this, (*bld_iter).second};
+
+		auto vehicleType = this->vehicle_types.find(v.first);
+		for (int i = 0; i < v.second; i++)
+		{
+			auto &type = (*vehicleType).second;
+
+			auto v = invadedCity->placeVehicle(*this, {this, (*vehicleType).first},
+			                                   type->manufacturer, (*portal)->getPosition());
+			v->city = invadedCity;
+			v->missions.emplace_back(VehicleMission::infiltrateOrSubvertBuilding(*this, *v, bld));
+			v->missions.front()->start(*this, *v);
+			fw().soundBackend->playSample(city_common_sample_list->dimensionShiftOut, v->position);
+
+			fw().pushEvent(new GameVehicleEvent(GameEventType::UfoSpotted, {this, v}));
+		}
+	}
+	for (auto &v : currentIncursion->attackList)
+	{
+		auto portal = invadedCity->portals.begin();
+		std::uniform_int_distribution<int> portal_rng(0, invadedCity->portals.size() - 1);
+		std::advance(portal, portal_rng(this->rng));
+
+		auto bld_iter = invadedCity->buildings.begin();
+		std::uniform_int_distribution<int> bld_rng(0, invadedCity->buildings.size() - 1);
+		std::advance(bld_iter, bld_rng(this->rng));
+		StateRef<Building> bld = {this, (*bld_iter).second};
+
+		auto vehicleType = this->vehicle_types.find(v.first);
+		for (int i = 0; i < v.second; i++)
+		{
+			auto &type = (*vehicleType).second;
+
+			auto v = invadedCity->placeVehicle(*this, {this, (*vehicleType).first},
+			                                   type->manufacturer, (*portal)->getPosition());
+			v->city = invadedCity;
+			v->missions.emplace_back(VehicleMission::infiltrateOrSubvertBuilding(*this, *v, bld));
+			v->missions.front()->start(*this, *v);
+			fw().soundBackend->playSample(city_common_sample_list->dimensionShiftOut, v->position);
+
+			fw().pushEvent(new GameVehicleEvent(GameEventType::UfoSpotted, {this, v}));
+		}
+	}
 }
 
 bool GameState::canTurbo() const
@@ -1084,6 +1199,7 @@ void GameState::updateEndOfWeek()
 	{
 		growth = this->ufo_growth_lists.find(format("%s%s", UFOGrowth::getPrefix(), "DEFAULT"));
 	}
+	auto limit = this->ufo_growth_lists.find(format("%s%s", UFOGrowth::getPrefix(), "LIMIT"));
 
 	if (growth != this->ufo_growth_lists.end())
 	{
@@ -1091,12 +1207,29 @@ void GameState::updateEndOfWeek()
 		StateRef<Organisation> alienOrg = {this, "ORG_ALIEN"};
 		std::uniform_int_distribution<int> xyPos(20, 120);
 
+		// Set a list of limits for vehicle types
+		std::map<UString, int> vehicleLimits;
+		// Increase value by limit
+		for (auto &v : limit->second->vehicleTypeList)
+		{
+			vehicleLimits[v.first] += v.second;
+		}
+		// Subtract existing vehicles
+		for (auto &v : vehicles)
+		{
+			if (v.second->owner == alienOrg && v.second->city == city)
+			{
+				vehicleLimits[v.second->type.id]--;
+			}
+		}
+
 		for (auto &vehicleEntry : growth->second->vehicleTypeList)
 		{
 			auto vehicleType = this->vehicle_types.find(vehicleEntry.first);
 			if (vehicleType != this->vehicle_types.end())
 			{
-				for (int i = 0; i < vehicleEntry.second; i++)
+				int toAdd = std::min(vehicleEntry.second, vehicleLimits[vehicleEntry.first]);
+				for (int i = 0; i < toAdd; i++)
 				{
 					auto &type = (*vehicleType).second;
 

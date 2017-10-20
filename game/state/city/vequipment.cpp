@@ -21,8 +21,8 @@ VEquipment::VEquipment()
 {
 }
 
-void VEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Vehicle> targetVehicle,
-                      bool manual)
+bool VEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> homingPosition,
+                      StateRef<Vehicle> targetVehicle, bool manual)
 {
 	static const std::map<VEquipment::WeaponState, UString> WeaponStateMap = {
 	    {WeaponState::Ready, "ready"},
@@ -31,15 +31,21 @@ void VEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Veh
 	    {WeaponState::OutOfAmmo, "outofammo"},
 	};
 
+	auto muzzle = owner->getMuzzleLocation();
+	if (!state.current_city->map->tileIsValid(muzzle))
+	{
+		return false;
+	}
 	if (this->type->type != EquipmentSlotType::VehicleWeapon)
 	{
 		LogError("fire() called on non-Weapon");
-		return;
+		return false;
 	}
 	auto vehicleTile = owner->tileObject;
 	if (!vehicleTile)
 	{
 		LogError("Called on vehicle with no tile object?");
+		return false;
 	}
 	if (this->weaponState != WeaponState::Ready)
 	{
@@ -48,17 +54,19 @@ void VEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Veh
 		if (it != WeaponStateMap.end())
 			stateName = it->second;
 		LogWarning("Trying to fire weapon in state %s", stateName);
-		return;
+		return false;
 	}
 	if (this->ammo <= 0 && this->type->max_ammo != 0)
 	{
 		LogWarning("Trying to fire weapon with no ammo");
-		return;
+		return false;
 	}
 	this->reloadTime = type->fire_delay * VEQUIPMENT_RELOAD_TIME_MULTIPLIER * TICKS_MULTIPLIER;
 	this->weaponState = WeaponState::Reloading;
 	if (this->type->max_ammo != 0)
+	{
 		this->ammo--;
+	}
 
 	if (type->fire_sfx)
 	{
@@ -74,25 +82,30 @@ void VEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Veh
 	auto fromScaled = vehicleMuzzle * VELOCITY_SCALE_CITY;
 	auto toScaled = targetPosition * VELOCITY_SCALE_CITY;
 	City::accuracyAlgorithmCity(state, fromScaled, toScaled, type->accuracy + owner->getAccuracy(),
-	                            targetVehicle && targetVehicle->hasCloak());
+	                            targetVehicle && targetVehicle->isCloaked());
 
 	Vec3<float> velocity = toScaled - fromScaled;
 	velocity = glm::normalize(velocity);
 	// I believe this is the correct formula
 	velocity *= type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 
-	if (state.current_city->map->tileIsValid(vehicleMuzzle))
-	{
-		auto projectile = mksp<Projectile>(
-		    type->guided ? Projectile::Type::Missile : Projectile::Type::Beam, owner, targetVehicle,
-		    targetPosition, vehicleMuzzle, velocity, type->turn_rate, type->ttl * TICKS_MULTIPLIER,
-		    type->damage,
-		    /*delay*/ 0, type->tail_size, type->projectile_sprites, type->impact_sfx,
-		    type->explosion_graphic,
-		    type->guided ? state.city_common_image_list->projectileVoxelMap : nullptr, manual);
-		vehicleTile->map.addObjectToMap(projectile);
-		state.current_city->projectiles.insert(projectile);
-	}
+	auto projectile = mksp<Projectile>(
+	    type->guided ? Projectile::Type::Missile : Projectile::Type::Beam, owner, targetVehicle,
+	    homingPosition, muzzle, velocity, type->turn_rate, type->ttl * TICKS_MULTIPLIER,
+	    type->damage,
+	    /*delay*/ 0, type->tail_size, type->projectile_sprites, type->impact_sfx,
+	    type->explosion_graphic,
+	    type->guided ? state.city_common_image_list->projectileVoxelMap : nullptr, manual);
+	owner->tileObject->map.addObjectToMap(projectile);
+	owner->city->projectiles.insert(projectile);
+
+	return true;
+}
+
+bool VEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Vehicle> targetVehicle,
+                      bool manual)
+{
+	return fire(state, targetPosition, targetPosition, targetVehicle, manual);
 }
 
 void VEquipment::update(int ticks)

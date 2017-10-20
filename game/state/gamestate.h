@@ -44,6 +44,7 @@ class BattleMapPartType;
 class EventMessage;
 class DamageType;
 class BuildingFunction;
+class UFOMissionPreference;
 
 static const int MAX_MESSAGES = 50;
 static const unsigned ORIGINAL_TICKS = 36;
@@ -60,6 +61,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<VAmmoType> vehicle_ammo;
 	StateRefMap<BaseLayout> base_layouts;
 	StateRefMap<UFOGrowth> ufo_growth_lists;
+	StateRefMap<UFOMissionPreference> ufo_mission_preference;
 	StateRefMap<UFOIncursion> ufo_incursions;
 	StateRefMap<Base> player_bases;
 	StateRefMap<City> cities;

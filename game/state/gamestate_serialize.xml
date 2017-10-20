@@ -10,6 +10,7 @@
 		<member type="Section">vehicle_ammo</member>
 		<member type="SectionMap">cities</member>
 		<member type="Section">ufo_growth_lists</member>
+		<member type="Section">ufo_mission_preference</member>
 		<member type="Section">ufo_incursions</member>
 		<member type="Section">base_layouts</member>
 		<member type="Section">player_bases</member>
@@ -977,6 +978,11 @@
 		<name>UFOGrowth</name>
 		<member>week</member>
 		<member>vehicleTypeList</member>
+	</object>
+	<object>
+		<name>UFOMissionPreference</name>
+		<member>week</member>
+		<member>missionList</member>
 	</object>
 	<object>
 		<name>BaseLayout</name>

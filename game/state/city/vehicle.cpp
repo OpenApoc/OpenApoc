@@ -2005,14 +2005,14 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 					{
 						// FIXME: Are vertical firing arcs actually working in vanilla? I think
 						// not..
-						arc = {equipment->type->firing_arc_1, 8};
+						arc = {equipment->type->firing_arc_1, equipment->type->firing_arc_2};
 					}
 					has_active_pd = equipment->type->point_defence;
 					if (has_active_pd && arcPD.x < equipment->type->firing_arc_1)
 					{
 						// FIXME: Are vertical firing arcs actually working in vanilla? I think
 						// not..
-						arcPD = {equipment->type->firing_arc_1, 8};
+						arcPD = {equipment->type->firing_arc_1, equipment->type->firing_arc_2};
 					}
 				}
 			}
@@ -2446,6 +2446,8 @@ bool Vehicle::fireWeaponsPointDefense(GameState &state, Vec2<int> arc)
 void Vehicle::fireWeaponsNormal(GameState &state, Vec2<int> arc)
 {
 	auto firingRange = getFiringRange();
+
+	// Attack buildings
 	if (!missions.empty() && missions.front()->type == VehicleMission::MissionType::AttackBuilding)
 	{
 		auto target = missions.front()->targetBuilding;
@@ -2492,7 +2494,7 @@ void Vehicle::fireWeaponsNormal(GameState &state, Vec2<int> arc)
 		}
 	}
 
-	// Find something to shoot at!
+	// Attack vehicles
 	sp<TileObjectVehicle> enemy;
 	if (!missions.empty() && missions.front()->type == VehicleMission::MissionType::AttackVehicle &&
 	    tileObject->getDistanceTo(missions.front()->targetVehicle->tileObject) <= firingRange)
@@ -2518,237 +2520,90 @@ void Vehicle::fireWeaponsManual(GameState &state, Vec2<int> arc)
 	attackTarget(state, manualFirePosition);
 }
 
-void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile)
+bool Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile)
 {
-	static const std::set<TileObject::Type> sceneryVehicleSet = {TileObject::Type::Scenery,
-	                                                             TileObject::Type::Vehicle};
-
-	auto firePosition = getMuzzleLocation();
 	auto target = enemyTile->getVoxelCentrePosition();
-	auto distanceTiles = glm::length(position - target);
+	auto targetVelocity = enemyTile->getVehicle()->velocity;
+	auto eq = getFirstFiringWeapon(state, target, targetVelocity, enemyTile);
 
-	auto distanceVoxels = this->tileObject->getDistanceTo(enemyTile);
-
-	for (auto &eq : this->equipment)
+	if (eq)
 	{
-		// Not a weapon
-		if (eq->type->type != EquipmentSlotType::VehicleWeapon)
-		{
-			continue;
-		}
-		// Out of ammo or on cooldown
-		if (eq->canFire() == false)
-		{
-			continue;
-		}
-		// Out of range
-		if (distanceVoxels > eq->getRange())
-		{
-			continue;
-		}
-		// Check firing arc
-		if (eq->type->firing_arc_1 < 8 || eq->type->firing_arc_2 < 8)
-		{
-			Vec2<int> arc = {eq->type->firing_arc_1, 8};
-			auto facing = type->directionToVector(direction);
-			auto vecToTarget = enemyTile->getPosition() - position;
-			float angleXY = glm::angle(glm::normalize(Vec2<float>{facing.x, facing.y}),
-			                           glm::normalize(Vec2<float>{vecToTarget.x, vecToTarget.y}));
-			float vecToTargetXY =
-			    sqrtf(vecToTarget.x * vecToTarget.x + vecToTarget.y * vecToTarget.y);
-			float angleZ = glm::angle(Vec2<float>{1.0f, 0.0f},
-			                          glm::normalize(Vec2<float>{vecToTargetXY, vecToTarget.z}));
-			if (angleXY > (float)arc.x * (float)M_PI / 8.0f ||
-			    angleZ > (float)arc.y * (float)M_PI / 8.0f)
-			{
-				continue;
-			}
-		}
-
-		// Lead the target
-		auto targetPosAdjusted = target;
-		auto projectileVelocity = eq->type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
-		auto targetVelocity = enemyTile->getVehicle()->velocity;
-		float timeToImpact = distanceVoxels * (float)TICK_SCALE / projectileVelocity;
-		targetPosAdjusted +=
-		    Collision::getLeadingOffset(target - firePosition, projectileVelocity * timeToImpact,
-		                                targetVelocity * timeToImpact);
-
-		// Check if have sight to target
-		// Two attempts, at second attempt try to fire at target itself
-		bool hitSomethingBad = false;
-		for (int i = 0; i < 2; i++)
-		{
-			hitSomethingBad = false;
-			// Checking los as otherwise we're colliding with ground when firing at bogus voxelmaps
-			auto hitObject = tileObject->map.findCollision(firePosition, targetPosAdjusted,
-			                                               sceneryVehicleSet, tileObject, true);
-			if (hitObject)
-			{
-				if (hitObject.obj->getType() == TileObject::Type::Vehicle)
-				{
-					auto vehicle = std::static_pointer_cast<TileObjectVehicle>(hitObject.obj);
-					if (owner->isRelatedTo(vehicle->getVehicle()->owner) !=
-					    Organisation::Relation::Hostile)
-					{
-						hitSomethingBad = true;
-					}
-				}
-				else if (hitObject.obj->getType() == TileObject::Type::Scenery)
-				{
-					hitSomethingBad = true;
-				}
-			}
-			if (hitSomethingBad)
-			{
-				// Can't fire at where it will be so at least fire at where it's now
-				targetPosAdjusted = target;
-			}
-			else
-			{
-				break;
-			}
-		}
-		if (hitSomethingBad)
-		{
-			continue;
-		}
-
 		// Cancel cloak
 		cloakTicksAccumulated = 0;
 
-		// Let enemy dodge us
+		// Let the enemy dodge us
 		auto enemyVehicle = enemyTile->getVehicle();
 		enemyVehicle->ticksAutoActionAvailable = 0;
 
 		// Fire
-		eq->fire(state, targetPosAdjusted, {&state, enemyVehicle});
-	}
-	return;
-}
-
-bool Vehicle::attackTarget(GameState &state, sp<TileObjectProjectile> projectileTile)
-{
-	static const std::set<TileObject::Type> sceneryVehicleSet = {TileObject::Type::Scenery,
-	                                                             TileObject::Type::Vehicle};
-
-	auto firePosition = getMuzzleLocation();
-	auto target = projectileTile->getVoxelCentrePosition();
-	auto distanceTiles = glm::length(position - target);
-
-	auto distanceVoxels = this->tileObject->getDistanceTo(projectileTile->getPosition());
-
-	for (auto &eq : this->equipment)
-	{
-		// Not a weapon
-		if (eq->type->type != EquipmentSlotType::VehicleWeapon)
-		{
-			continue;
-		}
-		// Not a PD weapon
-		if (!eq->type->point_defence)
-		{
-			continue;
-		}
-		// Out of ammo or on cooldown
-		if (eq->canFire() == false)
-		{
-			continue;
-		}
-		// Out of range
-		if (distanceVoxels > eq->getRange())
-		{
-			continue;
-		}
-		// Check firing arc
-		if (eq->type->firing_arc_1 < 8 || eq->type->firing_arc_2 < 8)
-		{
-			Vec2<int> arc = {eq->type->firing_arc_1, 8};
-			auto facing = type->directionToVector(direction);
-			auto vecToTarget = projectileTile->getPosition() - position;
-			float angleXY = glm::angle(glm::normalize(Vec2<float>{facing.x, facing.y}),
-			                           glm::normalize(Vec2<float>{vecToTarget.x, vecToTarget.y}));
-			float vecToTargetXY =
-			    sqrtf(vecToTarget.x * vecToTarget.x + vecToTarget.y * vecToTarget.y);
-			float angleZ = glm::angle(Vec2<float>{1.0f, 0.0f},
-			                          glm::normalize(Vec2<float>{vecToTargetXY, vecToTarget.z}));
-			if (angleXY > (float)arc.x * (float)M_PI / 8.0f ||
-			    angleZ > (float)arc.y * (float)M_PI / 8.0f)
-			{
-				continue;
-			}
-		}
-
-		// Lead the target
-		auto targetPosAdjusted = target;
-		auto projectileVelocity = eq->type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
-		auto targetVelocity = projectileTile->getProjectile()->velocity;
-		float timeToImpact = distanceVoxels * (float)TICK_SCALE / projectileVelocity;
-		targetPosAdjusted +=
-		    Collision::getLeadingOffset(target - firePosition, projectileVelocity * timeToImpact,
-		                                targetVelocity * timeToImpact);
-
-		// Check if have sight to target
-		// Two attempts, at second attempt try to fire at target itself
-		bool hitSomethingBad = false;
-		for (int i = 0; i < 2; i++)
-		{
-			hitSomethingBad = false;
-			auto hitObject = tileObject->map.findCollision(firePosition, targetPosAdjusted,
-			                                               sceneryVehicleSet, tileObject);
-			if (hitObject)
-			{
-				if (hitObject.obj->getType() == TileObject::Type::Vehicle)
-				{
-					auto vehicle = std::static_pointer_cast<TileObjectVehicle>(hitObject.obj);
-					if (owner->isRelatedTo(vehicle->getVehicle()->owner) !=
-					    Organisation::Relation::Hostile)
-					{
-						hitSomethingBad = true;
-					}
-				}
-				else if (hitObject.obj->getType() == TileObject::Type::Scenery)
-				{
-					hitSomethingBad = true;
-				}
-			}
-			if (hitSomethingBad)
-			{
-				// Can't fire at where it will be so at least fire at where it's now
-				targetPosAdjusted = target;
-			}
-			else
-			{
-				break;
-			}
-		}
-		if (hitSomethingBad)
-		{
-			continue;
-		}
-
-		// Cancel cloak
-		cloakTicksAccumulated = 0;
-
-		// Fire
-		eq->fire(state, targetPosAdjusted);
+		eq->fire(state, target, {&state, enemyVehicle});
 		return true;
 	}
 
 	return false;
 }
 
-void Vehicle::attackTarget(GameState &state, Vec3<float> target)
+bool Vehicle::attackTarget(GameState &state, sp<TileObjectProjectile> projectileTile)
 {
+	auto target = projectileTile->getPosition();
+	auto initialTarget = target;
+	auto targetVelocity = projectileTile->getProjectile()->velocity;
+	auto eq = getFirstFiringWeapon(state, target, targetVelocity, nullptr, true);
+
+	if (eq)
+	{
+		// Cancel cloak
+		cloakTicksAccumulated = 0;
+
+		// Fire
+		eq->fire(state, target, initialTarget);
+		return true;
+	}
+
+	return false;
+}
+
+bool Vehicle::attackTarget(GameState &state, Vec3<float> target)
+{
+	auto initialTarget = target;
+	auto eq = getFirstFiringWeapon(state, target);
+
+	if (eq)
+	{
+		// Cancel cloak
+		cloakTicksAccumulated = 0;
+
+		// Fire
+		eq->fire(state, target, initialTarget, nullptr, true);
+		return true;
+	}
+
+	return false;
+}
+
+sp<VEquipment> Vehicle::getFirstFiringWeapon(GameState &state, Vec3<float> &target,
+                                             Vec3<float> targetVelocity,
+                                             sp<TileObjectVehicle> enemyTile, bool pd)
+{
+	static const std::set<TileObject::Type> sceneryVehicleSet = {TileObject::Type::Scenery,
+	                                                             TileObject::Type::Vehicle};
+
+	sp<VEquipment> firingWeapon;
+
 	auto firePosition = getMuzzleLocation();
 	auto distanceTiles = glm::length(position - target);
-
 	auto distanceVoxels = this->tileObject->getDistanceTo(target);
+	bool outsideArc = false;
 
 	for (auto &eq : this->equipment)
 	{
 		// Not a weapon
 		if (eq->type->type != EquipmentSlotType::VehicleWeapon)
+		{
+			continue;
+		}
+		// Not a PD weapon (if need to be)
+		if (pd && !eq->type->point_defence)
 		{
 			continue;
 		}
@@ -2765,31 +2620,106 @@ void Vehicle::attackTarget(GameState &state, Vec3<float> target)
 		// Check firing arc
 		if (eq->type->firing_arc_1 < 8 || eq->type->firing_arc_2 < 8)
 		{
-			Vec2<int> arc = {eq->type->firing_arc_1, 8};
+			Vec2<int> arc = {eq->type->firing_arc_1, eq->type->firing_arc_2};
 			auto facing = type->directionToVector(direction);
 			auto vecToTarget = target - position;
 			float angleXY = glm::angle(glm::normalize(Vec2<float>{facing.x, facing.y}),
 			                           glm::normalize(Vec2<float>{vecToTarget.x, vecToTarget.y}));
 			float vecToTargetXY =
 			    sqrtf(vecToTarget.x * vecToTarget.x + vecToTarget.y * vecToTarget.y);
-			float angleZ = glm::angle(Vec2<float>{1.0f, 0.0f},
-			                          glm::normalize(Vec2<float>{vecToTargetXY, vecToTarget.z}));
+			float angleZ = glm::angle(
+			    Vec2<float>{1.0f,
+			                banking == VehicleType::Banking::Ascending
+			                    ? 0.5f
+			                    : (banking == VehicleType::Banking::Descending ? -0.5f : 0.0f)},
+			    glm::normalize(Vec2<float>{vecToTargetXY, vecToTarget.z}));
 			if (angleXY > (float)arc.x * (float)M_PI / 8.0f ||
 			    angleZ > (float)arc.y * (float)M_PI / 8.0f)
 			{
-				continue;
+				if (eq->type->guided)
+				{
+					outsideArc = true;
+				}
+				else
+				{
+					continue;
+				}
 			}
 		}
-
-		// Cancel cloak
-		cloakTicksAccumulated = 0;
-
-		// Fire
-		eq->fire(state, target, nullptr, true);
-		return;
+		firingWeapon = eq;
+		break;
 	}
 
-	return;
+	if (!firingWeapon)
+	{
+		return nullptr;
+	}
+
+	int attepmpt = 1;
+	auto originalTarget = target;
+	if (targetVelocity.x != 0.0f || targetVelocity.y != 0.0f || targetVelocity.z != 0.0f)
+	{
+		attepmpt = 0;
+		// Lead the target
+		auto projectileVelocity = firingWeapon->type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
+		float timeToImpact = distanceVoxels * (float)TICK_SCALE / projectileVelocity;
+		target +=
+		    Collision::getLeadingOffset(target - firePosition, projectileVelocity * timeToImpact,
+		                                targetVelocity * timeToImpact);
+	}
+	// Check if have sight to target
+	// Two attempts, at second attempt try to fire at target itself
+	bool hitSomethingBad = false;
+	for (int i = attepmpt; i < 2; i++)
+	{
+		hitSomethingBad = false;
+		// Checking los as otherwise we're colliding with ground when firing at bogus voxelmaps like
+		// bikes
+		auto hitObject = tileObject->map.findCollision(firePosition, target, sceneryVehicleSet,
+		                                               tileObject, true);
+		if (hitObject)
+		{
+			if (hitObject.obj->getType() == TileObject::Type::Vehicle)
+			{
+				auto vehicle = std::static_pointer_cast<TileObjectVehicle>(hitObject.obj);
+				if (owner->isRelatedTo(vehicle->getVehicle()->owner) !=
+				        Organisation::Relation::Hostile &&
+				    vehicle != enemyTile)
+				{
+					hitSomethingBad = true;
+				}
+			}
+			else if (hitObject.obj->getType() == TileObject::Type::Scenery)
+			{
+				hitSomethingBad = true;
+			}
+		}
+		if (hitSomethingBad)
+		{
+			// Can't fire at where it will be so at least fire at where it's now
+			target = originalTarget;
+		}
+		else
+		{
+			break;
+		}
+	}
+	if (hitSomethingBad)
+	{
+		return nullptr;
+	}
+
+	// Fire guided weapons that are outside their firing arc in front of us
+	if (outsideArc)
+	{
+		auto facing = type->directionToVector(direction);
+		facing.z += banking == VehicleType::Banking::Ascending
+		                ? 0.5f
+		                : (banking == VehicleType::Banking::Descending ? -0.5f : 0.0f);
+		target = position + facing * 5.0f;
+	}
+
+	return firingWeapon;
 }
 
 float Vehicle::getFiringRange() const
@@ -3445,6 +3375,20 @@ void Vehicle::removeEquipment(sp<VEquipment> object)
 	{
 		this->shield = this->getMaxShield();
 	}
+}
+
+Vec3<int> Vehicle::getPreferredPosition(Vec3<int> position) const
+{
+	if (!type->isGround())
+	{
+		position.z = (int)altitude;
+	}
+	return position;
+}
+
+Vec3<int> Vehicle::getPreferredPosition(int x, int y, int z) const
+{
+	return {x, y, type->isGround() ? z : (int)altitude};
 }
 
 void Vehicle::equipDefaultEquipment(GameState &state)

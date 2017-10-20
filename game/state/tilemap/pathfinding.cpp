@@ -1187,12 +1187,7 @@ void City::groupMove(GameState &state, std::list<StateRef<Vehicle>> &selectedVeh
 		auto v = selectedVehicles.front();
 		if (v->owner == state.getPlayer())
 		{
-			// Use vehicle altitude preference to select target height, clamp by
-			// map size
-			int altitude = v->type->isGround() ? targetLocation.z
-			                                   : glm::min((int)v->altitude, map->size.z - 1);
-
-			Vec3<int> targetPos{targetLocation.x, targetLocation.y, altitude};
+			auto targetPos = v->getPreferredPosition(targetLocation);
 			// FIXME: Don't clear missions if not replacing current mission
 			v->setMission(state, VehicleMission::gotoLocation(state, *v, targetPos, useTeleporter));
 		}
@@ -1243,11 +1238,7 @@ void City::groupMove(GameState &state, std::list<StateRef<Vehicle>> &selectedVeh
 			}
 			itOffset++;
 
-			// Use vehicle altitude preference to select target height, clamp by
-			// map size
-			int altitude = glm::min((int)(*it)->altitude, map->size.z - 1);
-
-			Vec3<int> targetPos{targetLocationOffsetted.x, targetLocationOffsetted.y, altitude};
+			auto targetPos = (*it)->getPreferredPosition(targetLocationOffsetted);
 			// FIXME: Don't clear missions if not replacing current mission
 			(*it)->setMission(state,
 			                  VehicleMission::gotoLocation(state, **it, targetPos, useTeleporter));
