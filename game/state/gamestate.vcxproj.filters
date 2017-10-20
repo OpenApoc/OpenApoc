@@ -246,6 +246,9 @@
     <ClCompile Include="rules\agenttype.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="rules\city\ufomissionpreference.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="gamestate.h">
@@ -501,6 +504,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gameeventtypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\city\ufomissionpreference.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -776,7 +776,7 @@ bool VehicleMission::adjustTargetToClosestFlying(GameState &state, Vehicle &v, V
 		bool foundScenery = false;
 		bool foundCrash = false;
 
-		for (auto &obj : to->ownedObjects)
+		for (auto &obj : to->intersectingObjects)
 		{
 			if (obj->getType() == TileObject::Type::Vehicle)
 			{
@@ -784,9 +784,13 @@ bool VehicleMission::adjustTargetToClosestFlying(GameState &state, Vehicle &v, V
 				if (vehicle->getVehicle()->crashed)
 				{
 					foundCrash = true;
+					break;
 				}
 			}
-			else if (obj->getType() == TileObject::Type::Scenery)
+		}
+		for (auto &obj : to->ownedObjects)
+		{
+			if (obj->getType() == TileObject::Type::Scenery)
 			{
 				auto sceneryTile = std::static_pointer_cast<TileObjectScenery>(obj);
 				if (sceneryTile->scenery.lock()->type->isLandingPad)
@@ -794,6 +798,7 @@ bool VehicleMission::adjustTargetToClosestFlying(GameState &state, Vehicle &v, V
 					continue;
 				}
 				foundScenery = true;
+				break;
 			}
 		}
 		if (foundCrash || !foundScenery)
@@ -815,7 +820,7 @@ bool VehicleMission::adjustTargetToClosestFlying(GameState &state, Vehicle &v, V
 	bool containsVehicle = false;
 	if (!ignoreVehicles)
 	{
-		for (auto &obj : to->ownedObjects)
+		for (auto &obj : to->intersectingObjects)
 		{
 			if (obj->getType() == TileObject::Type::Vehicle)
 			{
@@ -835,17 +840,14 @@ bool VehicleMission::adjustTargetToClosestFlying(GameState &state, Vehicle &v, V
 		int maxDiff = 2;
 		// Calculate bounds
 		int midX = target.x;
-		int dX = midX + maxDiff + 1 > map.size.x ? map.size.x - maxDiff - 1
-		                                         : (midX - maxDiff < 0 ? maxDiff - midX : 0);
-		midX += dX;
+		midX = midX + maxDiff + 1 > map.size.x ? map.size.x - maxDiff - 1
+		                                       : (midX - maxDiff < 0 ? maxDiff : midX);
 		int midY = target.y;
-		int dY = midY + maxDiff + 1 > map.size.x ? map.size.x - maxDiff - 1
-		                                         : (midY - maxDiff < 0 ? maxDiff - midY : 0);
-		midY += dY;
+		midY = midY + maxDiff + 1 > map.size.y ? map.size.y - maxDiff - 1
+		                                       : (midY - maxDiff < 0 ? maxDiff : midY);
 		int midZ = (int)v.altitude;
-		int dZ = midZ + maxDiff + 1 > map.size.x ? map.size.x - maxDiff - 1
-		                                         : (midZ - maxDiff < 0 ? maxDiff - midZ : 0);
-		midZ += dZ;
+		midZ = midZ + maxDiff + 1 > map.size.z ? map.size.z - maxDiff - 1
+		                                       : (midZ - maxDiff < 0 ? maxDiff : midZ);
 
 		if (pickNearest)
 		{
@@ -955,7 +957,8 @@ bool VehicleMission::teleportCheck(GameState &state, Vehicle &v)
 bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float> &destPos,
                                         float &destFacing)
 {
-	static const std::set<TileObject::Type> scenerySet = {TileObject::Type::Scenery};
+	static const std::set<TileObject::Type> sceneryVehicleSet = {TileObject::Type::Scenery,
+	                                                             TileObject::Type::Vehicle};
 
 	if (cancelled)
 	{
@@ -1073,8 +1076,27 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 						}
 					}
 
-					bool haveLOS = !vTile->map.findCollision(v.position, targetVehicle->position,
-					                                         scenerySet, nullptr, true);
+					// Have LOS if first thing we hit is target vehicle or not scenery
+					bool haveLOS = true;
+					auto hitObject =
+					    vTile->map.findCollision(v.position, targetTile->getVoxelCentrePosition(),
+					                             sceneryVehicleSet, vTile, true);
+					if (hitObject)
+					{
+						if (hitObject.obj->getType() == TileObject::Type::Vehicle)
+						{
+							auto vehicle =
+							    std::static_pointer_cast<TileObjectVehicle>(hitObject.obj);
+							if (vehicle != targetTile)
+							{
+								haveLOS = false;
+							}
+						}
+						else if (hitObject.obj->getType() == TileObject::Type::Scenery)
+						{
+							haveLOS = false;
+						}
+					}
 
 					if (haveLOS && vTile->getDistanceTo(targetTile) < distancePreference)
 					{
@@ -1117,12 +1139,14 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 						}
 						return false;
 					}
-					else if (targetTile->getOwningTile()->position != this->targetLocation ||
+					else if (v.getPreferredPosition(targetTile->getOwningTile()->position) !=
+					             this->targetLocation ||
 					         currentPlannedPath.empty())
 					{
 						// adjust the path if target moved
 						currentPlannedPath.clear();
-						this->targetLocation = targetTile->getOwningTile()->position;
+						targetLocation =
+						    v.getPreferredPosition(targetTile->getOwningTile()->position);
 						setPathTo(state, v, this->targetLocation, getDefaultIterationCount(v),
 						          false);
 					}
@@ -1756,13 +1780,15 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						                                        v.homeBuilding->bounds.p1.x + 5);
 						std::uniform_int_distribution<int> yPos(v.homeBuilding->bounds.p0.y - 5,
 						                                        v.homeBuilding->bounds.p1.y + 5);
-						setPathTo(state, v, {xPos(state.rng), yPos(state.rng), v.altitude},
+						setPathTo(state, v,
+						          v.getPreferredPosition(xPos(state.rng), yPos(state.rng)),
 						          getDefaultIterationCount(v));
 					}
 					else
 					{
 						std::uniform_int_distribution<int> xyPos(25, 115);
-						setPathTo(state, v, {xyPos(state.rng), xyPos(state.rng), v.altitude},
+						setPathTo(state, v,
+						          v.getPreferredPosition(xyPos(state.rng), xyPos(state.rng)),
 						          getDefaultIterationCount(v));
 					}
 				}
@@ -1783,7 +1809,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					                                        targetBuilding->bounds.p1.x + 5);
 					std::uniform_int_distribution<int> yPos(targetBuilding->bounds.p0.y - 5,
 					                                        targetBuilding->bounds.p1.y + 5);
-					setPathTo(state, v, {xPos(state.rng), yPos(state.rng), v.altitude},
+					setPathTo(state, v, v.getPreferredPosition(xPos(state.rng), yPos(state.rng)),
 					          getDefaultIterationCount(v));
 				}
 			}
@@ -2010,7 +2036,8 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					                                        targetBuilding->bounds.p1.y + 2);
 					v.addMission(state,
 					             VehicleMission::gotoLocation(
-					                 state, v, {xPos(state.rng), yPos(state.rng), v.altitude},
+					                 state, v,
+					                 v.getPreferredPosition(xPos(state.rng), yPos(state.rng)),
 					                 allowTeleporter, true));
 				}
 				return;
@@ -2580,26 +2607,26 @@ Vec3<float> VehicleMission::getRandomMapEdgeCoordinates(GameState &state, StateR
 {
 	if (randBool(state.rng))
 	{
-		std::uniform_int_distribution<int> xPos(0, city->map->size.x - 1);
+		std::uniform_int_distribution<int> xPos(0, city->size.x - 1);
 		if (randBool(state.rng))
 		{
-			return {xPos(state.rng), 0, city->map->size.z - 1};
+			return {xPos(state.rng), 0, city->size.z - 1};
 		}
 		else
 		{
-			return {xPos(state.rng), city->map->size.y - 1, city->map->size.z - 1};
+			return {xPos(state.rng), city->size.y - 1, city->size.z - 1};
 		}
 	}
 	else
 	{
-		std::uniform_int_distribution<int> yPos(0, city->map->size.y - 1);
+		std::uniform_int_distribution<int> yPos(0, city->size.y - 1);
 		if (randBool(state.rng))
 		{
-			return {0, yPos(state.rng), city->map->size.z - 1};
+			return {0, yPos(state.rng), city->size.z - 1};
 		}
 		else
 		{
-			return {city->map->size.x - 1, yPos(state.rng), city->map->size.z - 1};
+			return {city->size.x - 1, yPos(state.rng), city->size.z - 1};
 		}
 	}
 }

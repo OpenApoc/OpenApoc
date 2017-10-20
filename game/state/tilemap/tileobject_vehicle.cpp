@@ -188,16 +188,15 @@ Vec3<float> TileObjectVehicle::getVoxelCentrePosition() const
 	// Simple version:
 	auto objPos = this->getCenter();
 	auto v = getVehicle();
-	if (v->crashed)
+	// Fire at crashed's top or ground's centre
+	if (v->crashed || v->type->isGround())
 	{
-		// Fire at crashed's top
-		return Vec3<float>(objPos.x, objPos.y,
-		                   objPos.z - getVoxelOffset().z + (float)v->type->height / 1.0f / 16.0f);
+		return Vec3<float>(objPos.x, objPos.y, objPos.z + (float)v->type->height / 2.0f / 16.0f);
 	}
+	// Fire at flyer's centre
 	else
 	{
-		return Vec3<float>(objPos.x, objPos.y,
-		                   objPos.z - getVoxelOffset().z + (float)v->type->height / 2.0f / 16.0f);
+		return Vec3<float>(objPos.x, objPos.y, objPos.z);
 	}
 }
 

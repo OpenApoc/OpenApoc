@@ -30,6 +30,7 @@
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
+#include "game/state/city/vequipment.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/message.h"
@@ -41,6 +42,7 @@
 #include "game/state/rules/city/ufopaedia.h"
 #include "game/state/rules/city/vammotype.h"
 #include "game/state/rules/city/vehicletype.h"
+#include "game/state/rules/city/vequipmenttype.h"
 #include "game/state/shared/agent.h"
 #include "game/state/shared/organisation.h"
 #include "game/state/shared/projectile.h"
@@ -772,6 +774,42 @@ void CityView::orderAttack(StateRef<Building> building)
 	}
 }
 
+void CityView::orderDisableWeapon(int index, bool disable)
+{
+	weaponDisabled[index] = disable;
+
+	std::vector<sp<VEquipment>> currentWeapons;
+	if (!state->current_city->cityViewSelectedVehicles.empty())
+	{
+		auto vehicle = state->current_city->cityViewSelectedVehicles.front();
+		if (vehicle->owner != state->getPlayer())
+		{
+			if (state->current_city->cityViewSelectedVehicles.size() > 1)
+			{
+				vehicle = *++state->current_city->cityViewSelectedVehicles.begin();
+			}
+			else
+			{
+				vehicle = nullptr;
+			}
+		}
+		if (vehicle)
+		{
+			for (auto &e : vehicle->equipment)
+			{
+				if (e->type->type == EquipmentSlotType::VehicleWeapon)
+				{
+					currentWeapons.push_back(e);
+				}
+			}
+		}
+	}
+	if (currentWeapons.size() > index)
+	{
+		currentWeapons[index]->disabled = disable;
+	}
+}
+
 CityView::CityView(sp<GameState> state)
     : CityTileView(*state->current_city->map, Vec3<int>{TILE_X_CITY, TILE_Y_CITY, TILE_Z_CITY},
                    Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric,
@@ -783,6 +821,10 @@ CityView::CityView(sp<GameState> state)
       twilight_palette(fw().data->loadPalette("xcom3/ufodata/pal_02.dat")),
       night_palette(fw().data->loadPalette("xcom3/ufodata/pal_03.dat"))
 {
+	weaponType.resize(3);
+	weaponDisabled.resize(3, false);
+	weaponAmmo.resize(3, -1);
+
 	std::vector<sp<Palette>> newPal;
 	newPal.resize(3);
 	for (int j = 0; j <= 15; j++)
@@ -961,6 +1003,24 @@ CityView::CityView(sp<GameState> state)
 		        {StageCmd::Command::PUSH, mksp<BaseSelectScreen>(this->state, this->centerPos)});
 		});
 	auto vehicleForm = this->uiTabs[1];
+	vehicleForm->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_1_DISABLED"))
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](FormsEvent *e) { orderDisableWeapon(0, true); });
+	vehicleForm->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_1_DISABLED"))
+	    ->addCallback(FormEventType::CheckBoxDeSelected,
+	                  [this](FormsEvent *e) { orderDisableWeapon(0, false); });
+	vehicleForm->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_2_DISABLED"))
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](FormsEvent *e) { orderDisableWeapon(1, true); });
+	vehicleForm->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_2_DISABLED"))
+	    ->addCallback(FormEventType::CheckBoxDeSelected,
+	                  [this](FormsEvent *e) { orderDisableWeapon(1, false); });
+	vehicleForm->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_3_DISABLED"))
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](FormsEvent *e) { orderDisableWeapon(2, true); });
+	vehicleForm->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_3_DISABLED"))
+	    ->addCallback(FormEventType::CheckBoxDeSelected,
+	                  [this](FormsEvent *e) { orderDisableWeapon(2, false); });
 	vehicleForm->findControl("BUTTON_EQUIP_VEHICLE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    auto equipScreen = mksp<VEquipScreen>(this->state);
@@ -1735,6 +1795,106 @@ void CityView::update()
 			ownedVehicleList->removeByData<Vehicle>(v);
 		}
 		ownedVehicleInfoList.resize(currentVehicleIndex + 1);
+
+		// Update weapon controls
+		std::vector<sp<VEquipment>> currentWeapons;
+		if (!state->current_city->cityViewSelectedVehicles.empty())
+		{
+			auto vehicle = state->current_city->cityViewSelectedVehicles.front();
+			if (vehicle->owner != state->getPlayer())
+			{
+				if (state->current_city->cityViewSelectedVehicles.size() > 1)
+				{
+					vehicle = *++state->current_city->cityViewSelectedVehicles.begin();
+				}
+				else
+				{
+					vehicle = nullptr;
+				}
+			}
+			if (vehicle)
+			{
+				for (auto &e : vehicle->equipment)
+				{
+					if (e->type->type == EquipmentSlotType::VehicleWeapon)
+					{
+						currentWeapons.push_back(e);
+					}
+				}
+			}
+		}
+		for (int i = 0; i < 3; i++)
+		{
+			auto currentWeaponType = currentWeapons.size() > i ? currentWeapons[i]->type : nullptr;
+			int currentAmmo =
+			    currentWeaponType
+			        ? (currentWeaponType->max_ammo > 0
+			               ? currentWeapons[i]->ammo * 32 / currentWeaponType->max_ammo
+			               : 32)
+			        : 0;
+			bool currentDisabled = currentWeaponType && currentWeapons[i]->disabled;
+
+			if (currentWeaponType != weaponType[i])
+			{
+				weaponType[i] = currentWeaponType;
+				if (weaponType[i])
+				{
+					uiTabs[1]
+					    ->findControlTyped<Graphic>(format("VEHICLE_WEAPON_%d", i + 1))
+					    ->setImage(weaponType[i]->icon);
+					uiTabs[1]
+					    ->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_%d_DISABLED", i + 1))
+					    ->setVisible(true);
+				}
+				else
+				{
+					uiTabs[1]
+					    ->findControlTyped<Graphic>(format("VEHICLE_WEAPON_%d", i + 1))
+					    ->setImage(nullptr);
+					uiTabs[1]
+					    ->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_%d_DISABLED", i + 1))
+					    ->setVisible(false);
+				}
+			}
+			if (currentAmmo != weaponAmmo[i])
+			{
+				weaponAmmo[i] = currentAmmo;
+
+				auto size = Vec2<int>{6, 32};
+				auto bar = mksp<RGBImage>(size);
+
+				int redHeight = currentAmmo;
+				{
+					static const Colour redColor = {215, 0, 0, 255};
+					static const Colour orangeColor = {146, 89, 0, 255};
+					RGBImageLock l(bar);
+					for (int x = 0; x < size.x; x++)
+					{
+						for (int y = 1; y <= size.y; y++)
+						{
+							if (y <= redHeight)
+							{
+								l.set({x, size.y - y}, redColor);
+							}
+							else
+							{
+								l.set({x, size.y - y}, orangeColor);
+							}
+						}
+					}
+				}
+				uiTabs[1]
+				    ->findControlTyped<Graphic>(format("VEHICLE_WEAPON_%d_AMMO", i + 1))
+				    ->setImage(bar);
+			}
+			if (currentDisabled != weaponDisabled[i])
+			{
+				weaponDisabled[i] = currentDisabled;
+				uiTabs[1]
+				    ->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_%d_DISABLED", i + 1))
+				    ->setChecked(currentDisabled);
+			}
+		}
 	}
 
 	// Update soldier agent controls

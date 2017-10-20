@@ -3011,14 +3011,33 @@ void Battle::exitBattle(GameState &state)
 		// That loot is moved to leftover loot
 	}
 
-	// If player has no vehicles all loot goes to leftover loot
-	if (playerVehicles.empty())
+	// If player has vehicle with cargo capacity all cargo goes to leftover loot
+	// If player has vehicle with bio capacity then all bio loot goes to leftover loot
+	// This is regardless of "enforce limits" which only makes us enforce it
+	// on vehicles that have capacity in the first place
+	bool bioCarrierPresent = false;
+	bool cargoCarrierPresent = false;
+	for (auto &v : playerVehicles)
+	{
+		if (v->getMaxCargo() > 0)
+		{
+			cargoCarrierPresent = true;
+		}
+		if (v->getMaxBio() > 0)
+		{
+			bioCarrierPresent = true;
+		}
+	}
+	if (!cargoCarrierPresent)
 	{
 		for (auto &e : state.current_battle->cargoLoot)
 		{
 			leftoverCargoLoot[e.first] = e.second;
 		}
 		state.current_battle->cargoLoot.clear();
+	}
+	if (!bioCarrierPresent)
+	{
 		for (auto &e : state.current_battle->bioLoot)
 		{
 			leftoverBioLoot[e.first] = e.second;
@@ -3075,6 +3094,10 @@ void Battle::exitBattle(GameState &state)
 		{
 			for (auto &v : playerVehicles)
 			{
+				if (v->getMaxCargo() == 0)
+				{
+					continue;
+				}
 				if (e.second == 0)
 				{
 					continue;
@@ -3114,6 +3137,10 @@ void Battle::exitBattle(GameState &state)
 		{
 			for (auto &v : playerVehicles)
 			{
+				if (v->getMaxBio() == 0)
+				{
+					continue;
+				}
 				if (e.second == 0)
 				{
 					continue;
