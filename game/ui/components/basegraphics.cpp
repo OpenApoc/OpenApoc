@@ -235,8 +235,8 @@ sp<RGBImage> BaseGraphics::drawMinimap(sp<GameState> state, sp<Building> selecte
 	{
 		auto &pos = pair.first;
 		auto &tile = pair.second;
-		if (pos.x < offset.x || pos.x > city->map->size.x - offset.x || pos.y < offset.y ||
-		    pos.y > city->map->size.y - offset.y)
+		if (pos.x < offset.x || pos.x > city->size.x - offset.x || pos.y < offset.y ||
+		    pos.y > city->size.y - offset.y)
 			continue;
 
 		Vec2<int> pos2d = {pos.x - offset.x, pos.y - offset.y};

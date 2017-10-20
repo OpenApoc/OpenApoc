@@ -1311,7 +1311,10 @@ void Vehicle::leaveBuilding(GameState &state, Vec3<float> initialPosition, float
 	this->goalPosition = initialPosition;
 	this->facing = initialFacing;
 	this->goalFacing = initialFacing;
-	city->map->addObjectToMap(shared_from_this());
+	if (city->map)
+	{
+		city->map->addObjectToMap(shared_from_this());
+	}
 }
 
 void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)

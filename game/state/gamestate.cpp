@@ -608,7 +608,7 @@ void GameState::startGame()
 
 	gameTime = GameTime::midday();
 
-	updateEconomy();
+	updateEndOfWeek();
 
 	newGame = true;
 	firstDetection = true;
@@ -897,6 +897,7 @@ void GameState::invasion()
 			auto v = invadedCity->placeVehicle(*this, {this, (*vehicleType).first},
 			                                   type->manufacturer, (*portal)->getPosition());
 			v->city = invadedCity;
+			v->shield = v->getMaxShield();
 			v->missions.emplace_back(VehicleMission::infiltrateOrSubvertBuilding(*this, *v, bld));
 			v->missions.front()->start(*this, *v);
 			fw().soundBackend->playSample(city_common_sample_list->dimensionShiftOut, v->position);
@@ -923,6 +924,7 @@ void GameState::invasion()
 			auto v = invadedCity->placeVehicle(*this, {this, (*vehicleType).first},
 			                                   type->manufacturer, (*portal)->getPosition());
 			v->city = invadedCity;
+			v->shield = v->getMaxShield();
 			v->missions.emplace_back(VehicleMission::infiltrateOrSubvertBuilding(*this, *v, bld));
 			v->missions.front()->start(*this, *v);
 			fw().soundBackend->playSample(city_common_sample_list->dimensionShiftOut, v->position);
@@ -949,6 +951,7 @@ void GameState::invasion()
 			auto v = invadedCity->placeVehicle(*this, {this, (*vehicleType).first},
 			                                   type->manufacturer, (*portal)->getPosition());
 			v->city = invadedCity;
+			v->shield = v->getMaxShield();
 			v->missions.emplace_back(VehicleMission::infiltrateOrSubvertBuilding(*this, *v, bld));
 			v->missions.front()->start(*this, *v);
 			fw().soundBackend->playSample(city_common_sample_list->dimensionShiftOut, v->position);
@@ -1234,7 +1237,7 @@ void GameState::updateEndOfWeek()
 					auto &type = (*vehicleType).second;
 
 					auto v = city->placeVehicle(*this, {this, (*vehicleType).first}, alienOrg,
-					                            {xyPos(rng), xyPos(rng), city->map->size.z - 1});
+					                            {xyPos(rng), xyPos(rng), city->size.z - 1});
 				}
 			}
 		}

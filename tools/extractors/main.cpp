@@ -18,7 +18,8 @@ static void extractDifficulty(const InitialGameStateExtractor &e, UString output
 {
 	GameState s;
 	e.extract(s, difficulty);
-	s.loadGame("data/common_patch");
+	// Alexey Andronov: This is problematic, as it duplicates stuff, so why were we doing it again!?
+	// s.loadGame("data/common_patch");
 	if (!patchPath.empty())
 	{
 		s.loadGame(patchPath);
