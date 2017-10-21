@@ -19,6 +19,7 @@
 #include "game/state/city/vequipment.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/city/vehicletype.h"
+#include "game/state/tilemap/tilemap.h"
 #include "game/ui/components/equipscreen.h"
 #include "library/strings_format.h"
 #include <cmath>
@@ -388,7 +389,8 @@ void VEquipScreen::render()
 				statsValues[statsCount]->setText(format("%d", weaponType.damage));
 				statsCount++;
 				statsLabels[statsCount]->setText(tr("Range"));
-				statsValues[statsCount]->setText(format("%dm", weaponType.range / 2));
+				statsValues[statsCount]->setText(
+				    format("%d", weaponType.range / (int)VELOCITY_SCALE_CITY.x));
 				statsCount++;
 				statsLabels[statsCount]->setText(tr("Accuracy"));
 				statsValues[statsCount]->setText(format("%d%%", weaponType.accuracy));

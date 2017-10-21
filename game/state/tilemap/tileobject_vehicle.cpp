@@ -34,7 +34,7 @@ void TileObjectVehicle::drawStatic(Renderer &r, sp<Vehicle> vehicle, TileTransfo
 {
 	static const Colour COLOUR_TRANSPARENT = {255, 255, 255, 95};
 
-	static const Colour COLOUR_STUNNED = {192, 192, 255, 255};
+	static const Colour COLOUR_STUNNED = {128, 128, 255, 255};
 
 	static const int offset_arrow = 5;
 	static const int offset_large = 1;

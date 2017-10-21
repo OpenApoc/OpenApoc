@@ -282,8 +282,7 @@ void AEquipment::startFiring(WeaponAimingMode fireMode, bool instant)
 	}
 	else
 	{
-		weapon_fire_ticks_remaining =
-		    getPayloadType()->fire_delay * TICKS_MULTIPLIER / (int)fireMode;
+		weapon_fire_ticks_remaining = getPayloadType()->fire_delay / (int)fireMode;
 	}
 	readyToFire = false;
 	aimingMode = fireMode;
@@ -840,8 +839,9 @@ bool AEquipment::canFire(GameState &state, Vec3<float> to) const
 {
 	if (!canFire(state))
 		return false;
-	float distanceToTarget = glm::length(ownerAgent->unit->getMuzzleLocation() - to);
-	if (getPayloadType()->getRange() < distanceToTarget)
+	float distanceToTarget =
+	    glm::length((ownerAgent->unit->getMuzzleLocation() - to) * VELOCITY_SCALE_BATTLE);
+	if (getPayloadType()->range < distanceToTarget)
 		return false;
 	if (!type->launcher)
 	{

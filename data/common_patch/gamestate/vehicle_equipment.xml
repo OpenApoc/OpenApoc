@@ -147,7 +147,7 @@
 <ttl>2400</ttl>
 <firing_arc_1>8</firing_arc_1>
 <firing_arc_2>8</firing_arc_2>
-<fire_sfx>RAWSOUND:xcom3/rawsound/extra/msbpread.raw:22050</fire_sfx>
+<fire_sfx>RAWSOUND:xcom3/rawsound/extra/mbspread.raw:22050</fire_sfx>
 <impact_sfx>RAWSOUND:xcom3/rawsound/strategc/explosns/explosn2.raw:22050</impact_sfx>
 <explosion_graphic>DOODAD_7_JANITOR</explosion_graphic>
 </value></entry>

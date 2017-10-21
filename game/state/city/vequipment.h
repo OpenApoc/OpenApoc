@@ -7,12 +7,6 @@
 #include "library/vec.h"
 #include <map>
 
-// Alexey Andronov (Istrebitel):
-// It has been observed that vehicle weapons reload too quickly when compared to vanilla
-// Introducing a multiplier of 2 to their reload time seems to bring them to
-// comparable times. However, this may be wrong.
-#define VEQUIPMENT_RELOAD_TIME_MULTIPLIER 2
-
 namespace OpenApoc
 {
 

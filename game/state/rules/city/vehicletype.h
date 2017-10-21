@@ -77,8 +77,8 @@ class VehicleType : public StateObject
 		LargeCircle = 2
 	};
 
-	static VehicleType::Direction VehicleType::getDirectionLarge(float facing);
-	static VehicleType::Direction VehicleType::getDirectionSmall(float facing);
+	static VehicleType::Direction getDirectionLarge(float facing);
+	static VehicleType::Direction getDirectionSmall(float facing);
 
 	// This is explictly mutable it can be used through a const ref
 	// FIXME: Should this go somewhere else in the state? If the rules are meant to be immutable

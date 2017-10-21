@@ -20,7 +20,7 @@ namespace OpenApoc
 
 Projectile::Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> target,
                        Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity,
-                       int turnRate, unsigned int lifetime, int damage, unsigned int delay,
+                       int turnRate, float lifetime, int damage, unsigned int delay,
                        int depletionRate, unsigned int tail_length,
                        std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
                        StateRef<DoodadType> doodadType, sp<VoxelMap> voxelMap, int stunTicks,
@@ -43,7 +43,7 @@ Projectile::Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> tar
 }
 Projectile::Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target,
                        Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity,
-                       int turnRate, unsigned int lifetime, int damage, unsigned int delay,
+                       int turnRate, float lifetime, int damage, unsigned int delay,
                        int depletionRate, unsigned int tail_length,
                        std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
                        StateRef<DoodadType> doodadType, StateRef<DamageType> damageType,
@@ -98,7 +98,6 @@ void Projectile::update(GameState &state, unsigned int ticks)
 	{
 		ownerInvulnerableTicks = 0;
 	}
-	this->age += ticks;
 	this->previousPosition = this->position;
 
 	// Tracking
@@ -135,6 +134,9 @@ void Projectile::update(GameState &state, unsigned int ticks)
 	// Apply velocity
 	auto newPosition = this->position +
 	                   ((static_cast<float>(ticks) / TICK_SCALE) * this->velocity) / velocityScale;
+
+	// Increase travelled distance
+	this->age += glm::length(((float)ticks / TICK_SCALE) * this->velocity);
 
 	// Remove projectile if it's ran out of life or fell off the end of the world
 	auto mapSize = this->tileObject->map.size;

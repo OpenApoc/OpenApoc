@@ -8,6 +8,12 @@
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
 
+// Alexey Andronov (Istrebitel):
+// It has been observed that vehicle weapons reload too quickly when compared to vanilla
+// Introducing a multiplier of 2 to their reload time seems to bring them to
+// comparable times. However, this may be wrong.
+#define VEQUIPMENT_RELOAD_TIME_MULTIPLIER 2
+
 namespace OpenApoc
 {
 
@@ -101,12 +107,13 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 				e->speed = wData.speed;
 				e->damage = wData.damage;
 				e->accuracy = 100 - wData.accuracy;
-				e->fire_delay = wData.fire_delay;
+				e->fire_delay =
+				    wData.fire_delay * VEQUIPMENT_RELOAD_TIME_MULTIPLIER * TICKS_MULTIPLIER;
 				e->tail_size = wData.tail_size;
 				e->guided = wData.guided != 0 ? true : false;
 				e->turn_rate = wData.turn_rate;
 				e->range = wData.range;
-				e->ttl = wData.ttl * TICKS_MULTIPLIER;
+				e->ttl = wData.ttl;
 				e->firing_arc_1 = wData.firing_arc_1;
 				e->firing_arc_2 = wData.firing_arc_2;
 				e->point_defence = wData.point_defence != 0 ? true : false;

@@ -61,7 +61,7 @@ bool VEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> 
 		LogWarning("Trying to fire weapon with no ammo");
 		return false;
 	}
-	this->reloadTime = type->fire_delay * VEQUIPMENT_RELOAD_TIME_MULTIPLIER * TICKS_MULTIPLIER;
+	this->reloadTime = type->fire_delay;
 	this->weaponState = WeaponState::Reloading;
 	if (this->type->max_ammo != 0)
 	{

@@ -203,7 +203,10 @@ void City::handleProjectileHit(GameState &state, sp<Projectile> projectile, bool
 		    projectile->manualFire);
 		map->addObjectToMap(newProj);
 		projectiles.insert(newProj);
-		fireSounds.insert(p->fire_sfx);
+		if (p->fire_sfx)
+		{
+			fireSounds.insert(p->fire_sfx);
+		}
 	}
 	for (auto &s : fireSounds)
 	{

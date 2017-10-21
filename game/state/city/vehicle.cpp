@@ -164,7 +164,7 @@ class FlyingVehicleMover : public VehicleMover
 				// FIXME: Do not dodge projectiles that are too low damage vs us?
 				// Is this also in rules of engagement?
 				// Do not dodge our own projectiles we just fired
-				if (p->lifetime < 36 && p->firerVehicle == vehicle.shared_from_this())
+				if (p->age < 32.0f && p->firerVehicle == vehicle.shared_from_this())
 				{
 					continue;
 				}
@@ -172,8 +172,11 @@ class FlyingVehicleMover : public VehicleMover
 				// Vehicle position relative to projectile
 				auto point = vehicle.position - p->position;
 				// Final projectile position before expiry (or 1 second passes)
-				auto line = p->velocity * (float)std::min(TICKS_PER_SECOND, p->lifetime - p->age) /
-				            (float)TICK_SCALE / p->velocityScale;
+				auto line =
+				    glm::normalize(p->velocity) *
+				    std::min(glm::length(p->velocity) * (float)TICKS_PER_SECOND / (float)TICK_SCALE,
+				             p->lifetime - p->age) /
+				    p->velocityScale;
 				if (glm::length(line) == 0.0f)
 				{
 					continue;
@@ -2334,7 +2337,7 @@ bool Vehicle::handleCollision(GameState &state, Collision &c, bool &soundHandled
 	{
 		stunTicksRemaining += projectile->stunTicks;
 		auto vehicleDir = glm::round(type->directionToVector(direction));
-		auto projectileDir = glm::normalize(projectile->getVelocity());
+		auto projectileDir = glm::normalize(projectile->velocity);
 		auto dir = vehicleDir + projectileDir;
 		dir = glm::round(dir);
 
