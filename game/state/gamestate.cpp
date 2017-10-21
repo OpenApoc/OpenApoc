@@ -12,6 +12,7 @@
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
+#include "game/state/city/vequipment.h"
 #include "game/state/gameevent.h"
 #include "game/state/gametime.h"
 #include "game/state/message.h"
@@ -813,11 +814,13 @@ void GameState::invasion()
 
 	// Set a list of possible participants
 	std::map<UString, int> vehicleLimits;
+	std::map<UString, std::list<sp<Vehicle>>> invaders;
 	for (auto &v : vehicles)
 	{
 		if (v.second->owner == invadingOrg && v.second->city == invadingCity)
 		{
 			vehicleLimits[v.second->type.id]++;
+			invaders[v.second->type.id].push_back(v.second);
 		}
 	}
 	// Select a random mission type
@@ -876,87 +879,78 @@ void GameState::invasion()
 		return;
 	}
 
-	LogWarning("Implement properly moving ufos from dimension and spawning with intervals!");
-
+	std::set<StateRef<Vehicle>> escorted;
 	for (auto &v : currentIncursion->primaryList)
 	{
-		auto portal = invadedCity->portals.begin();
-		std::uniform_int_distribution<int> portal_rng(0, invadedCity->portals.size() - 1);
-		std::advance(portal, portal_rng(this->rng));
-
-		auto bld_iter = invadedCity->buildings.begin();
-		std::uniform_int_distribution<int> bld_rng(0, invadedCity->buildings.size() - 1);
-		std::advance(bld_iter, bld_rng(this->rng));
-		StateRef<Building> bld = {this, (*bld_iter).second};
-
-		auto vehicleType = this->vehicle_types.find(v.first);
 		for (int i = 0; i < v.second; i++)
 		{
-			auto &type = (*vehicleType).second;
+			auto invader = invaders[v.first].front();
+			invaders[v.first].pop_front();
 
-			auto v = invadedCity->placeVehicle(*this, {this, (*vehicleType).first},
-			                                   type->manufacturer, (*portal)->getPosition());
-			v->city = invadedCity;
-			v->shield = v->getMaxShield();
-			v->missions.emplace_back(VehicleMission::infiltrateOrSubvertBuilding(*this, *v, bld));
-			v->missions.front()->start(*this, *v);
-			fw().soundBackend->playSample(city_common_sample_list->dimensionShiftOut, v->position);
-
-			fw().pushEvent(new GameVehicleEvent(GameEventType::UfoSpotted, {this, v}));
+			invader->enterDimensionGate(*this);
+			invader->equipDefaultEquipment(*this);
+			invader->city = invadedCity;
+			invader->setMission(*this, VehicleMission::arriveFromDimensionGate(*this, *invader));
+			switch (missionType)
+			{
+				case UFOIncursion::PrimaryMission::Attack:
+					invader->addMission(*this, VehicleMission::attackBuilding(*this, *invader),
+					                    true);
+					break;
+				case UFOIncursion::PrimaryMission::Infiltration:
+					invader->addMission(
+					    *this, VehicleMission::infiltrateOrSubvertBuilding(*this, *invader, false),
+					    true);
+					break;
+				case UFOIncursion::PrimaryMission::Subversion:
+					invader->addMission(
+					    *this, VehicleMission::infiltrateOrSubvertBuilding(*this, *invader, true),
+					    true);
+					break;
+				case UFOIncursion::PrimaryMission::Overspawn:
+					LogWarning("Implement Overspawn, just attacking for now");
+					// FIXME: Implement Overspawn, just attacking for now
+					invader->addMission(*this, VehicleMission::attackBuilding(*this, *invader),
+					                    true);
+					break;
+			}
+			escorted.emplace(this, invader);
 		}
 	}
 	for (auto &v : currentIncursion->escortList)
 	{
-		auto portal = invadedCity->portals.begin();
-		std::uniform_int_distribution<int> portal_rng(0, invadedCity->portals.size() - 1);
-		std::advance(portal, portal_rng(this->rng));
-
-		auto bld_iter = invadedCity->buildings.begin();
-		std::uniform_int_distribution<int> bld_rng(0, invadedCity->buildings.size() - 1);
-		std::advance(bld_iter, bld_rng(this->rng));
-		StateRef<Building> bld = {this, (*bld_iter).second};
-
-		auto vehicleType = this->vehicle_types.find(v.first);
 		for (int i = 0; i < v.second; i++)
 		{
-			auto &type = (*vehicleType).second;
+			auto invader = invaders[v.first].front();
+			invaders[v.first].pop_front();
 
-			auto v = invadedCity->placeVehicle(*this, {this, (*vehicleType).first},
-			                                   type->manufacturer, (*portal)->getPosition());
-			v->city = invadedCity;
-			v->shield = v->getMaxShield();
-			v->missions.emplace_back(VehicleMission::infiltrateOrSubvertBuilding(*this, *v, bld));
-			v->missions.front()->start(*this, *v);
-			fw().soundBackend->playSample(city_common_sample_list->dimensionShiftOut, v->position);
-
-			fw().pushEvent(new GameVehicleEvent(GameEventType::UfoSpotted, {this, v}));
+			invader->enterDimensionGate(*this);
+			invader->city = invadedCity;
+			invader->setMission(*this, VehicleMission::arriveFromDimensionGate(*this, *invader));
+			// This creates a copy of escorted list in randomised order
+			auto escortedCopy = escorted;
+			std::list<StateRef<Vehicle>> escortedRandomized;
+			while (!escortedCopy.empty())
+			{
+				auto item = setRandomiser(rng, escortedCopy);
+				escortedCopy.erase(item);
+				escortedRandomized.push_back(item);
+			}
+			invader->addMission(
+			    *this, VehicleMission::followVehicle(*this, *invader, escortedRandomized), true);
 		}
 	}
 	for (auto &v : currentIncursion->attackList)
 	{
-		auto portal = invadedCity->portals.begin();
-		std::uniform_int_distribution<int> portal_rng(0, invadedCity->portals.size() - 1);
-		std::advance(portal, portal_rng(this->rng));
-
-		auto bld_iter = invadedCity->buildings.begin();
-		std::uniform_int_distribution<int> bld_rng(0, invadedCity->buildings.size() - 1);
-		std::advance(bld_iter, bld_rng(this->rng));
-		StateRef<Building> bld = {this, (*bld_iter).second};
-
-		auto vehicleType = this->vehicle_types.find(v.first);
 		for (int i = 0; i < v.second; i++)
 		{
-			auto &type = (*vehicleType).second;
+			auto invader = invaders[v.first].front();
+			invaders[v.first].pop_front();
 
-			auto v = invadedCity->placeVehicle(*this, {this, (*vehicleType).first},
-			                                   type->manufacturer, (*portal)->getPosition());
-			v->city = invadedCity;
-			v->shield = v->getMaxShield();
-			v->missions.emplace_back(VehicleMission::infiltrateOrSubvertBuilding(*this, *v, bld));
-			v->missions.front()->start(*this, *v);
-			fw().soundBackend->playSample(city_common_sample_list->dimensionShiftOut, v->position);
-
-			fw().pushEvent(new GameVehicleEvent(GameEventType::UfoSpotted, {this, v}));
+			invader->enterDimensionGate(*this);
+			invader->city = invadedCity;
+			invader->setMission(*this, VehicleMission::arriveFromDimensionGate(*this, *invader));
+			invader->addMission(*this, VehicleMission::attackBuilding(*this, *invader), true);
 		}
 	}
 }
@@ -1076,6 +1070,37 @@ void GameState::updateEndOfSecond()
 	for (auto &b : current_city->buildings)
 	{
 		b.second->updateCargo(*this);
+		if (!b.second->base || b.second->owner != getPlayer())
+		{
+			continue;
+		}
+		auto base = b.second->base;
+		for (auto v : b.second->currentVehicles)
+		{
+			for (auto &e : v->equipment)
+			{
+				if (e->type->type != EquipmentSlotType::VehicleWeapon || e->type->max_ammo == 0)
+				{
+					continue;
+				}
+				int ammoAvailable = std::numeric_limits<int>::max();
+				if (base)
+				{
+					ammoAvailable = base->inventoryVehicleAmmo[e->type->ammo_type.id];
+				}
+				auto ammoSpent = e->reload(ammoAvailable);
+				if (ammoSpent > 0)
+				{
+					// FIXME: Implement message vehicle rearmed / reloaded /refueled whatever
+					LogWarning(
+					    "Implement message vehicle rearmed / reloaded / refueled / whatever");
+				}
+				if (base)
+				{
+					base->inventoryVehicleAmmo[e->type->ammo_type.id] -= ammoSpent;
+				}
+			}
+		}
 	}
 	Trace::end("GameState::updateEachSecond::buildings");
 	Trace::start("GameState::updateEachSecond::vehicles");
@@ -1373,6 +1398,12 @@ uint64_t getNextObjectID(GameState &state, const UString &objectPrefix)
 {
 	std::lock_guard<std::mutex> l(state.objectIdCountLock);
 	return state.objectIdCount[objectPrefix]++;
+}
+
+int GameScore::getTotal()
+{
+	return tacticalMissions + researchCompleted + alienIncidents + craftShotDownUFO +
+	       craftShotDownXCom + incursions + cityDamage;
 }
 
 }; // namespace OpenApoc

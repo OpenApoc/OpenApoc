@@ -2,6 +2,7 @@
 #include "framework/framework.h"
 #include "framework/sound.h"
 #include "framework/trace.h"
+#include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
@@ -181,11 +182,36 @@ void City::handleProjectileHit(GameState &state, sp<Projectile> projectile, bool
 		placeDoodad(projectile->doodadType, projectile->position);
 	}
 
-	if (playSound && projectile->impactSfx)
+	if (playSound && projectile->impactSfx && projectile->splitIntoTypesCity.empty())
 	{
 		fw().soundBackend->playSample(projectile->impactSfx, projectile->position);
 	}
 
+	std::set<sp<Sample>> fireSounds;
+	for (auto &p : projectile->splitIntoTypesCity)
+	{
+		auto direction = (float)randBoundsInclusive(state.rng, 0, 628) / 100.0f;
+		auto velocity = glm::normalize(
+		    VehicleType::directionToVector(VehicleType::getDirectionLarge(direction)));
+		velocity *= p->speed * PROJECTILE_VELOCITY_MULTIPLIER;
+		auto newProj = mksp<Projectile>(
+		    p->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
+		    projectile->firerVehicle, projectile->trackedVehicle, projectile->targetPosition,
+		    projectile->position, velocity, p->turn_rate, p->ttl, p->damage, 0, 0, p->tail_size,
+		    p->projectile_sprites, p->impact_sfx, p->explosion_graphic,
+		    state.city_common_image_list->projectileVoxelMap, p->stunTicks, p->splitIntoTypes,
+		    projectile->manualFire);
+		map->addObjectToMap(newProj);
+		projectiles.insert(newProj);
+		if (p->fire_sfx)
+		{
+			fireSounds.insert(p->fire_sfx);
+		}
+	}
+	for (auto &s : fireSounds)
+	{
+		fw().soundBackend->playSample(s, projectile->position);
+	}
 	projectiles.erase(projectile);
 }
 
@@ -200,22 +226,6 @@ void City::update(GameState &state, unsigned int ticks)
 	// Need to use a 'safe' iterator method (IE keep the next it before calling ->update)
 	// as update() calls can erase it's object from the lists
 
-	Trace::start("City::update::buildings->currentVehicles");
-	for (auto it = this->buildings.begin(); it != this->buildings.end();)
-	{
-		auto b = it->second;
-		it++;
-		for (auto v : b->currentVehicles)
-		{
-			for (auto &e : v->equipment)
-			{
-				if (e->type->type != EquipmentSlotType::VehicleWeapon)
-					continue;
-				e->reload(std::numeric_limits<int>::max());
-			}
-		}
-	}
-	Trace::end("City::update::buildings->currentVehicles");
 	Trace::start("City::update::projectiles->update");
 	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
 	{
@@ -326,7 +336,9 @@ void City::generatePortals(GameState &state)
 				if (map->tileIsValid(pos) && map->getTile(pos)->ownedObjects.empty())
 				{
 					auto doodad =
-					    mksp<Doodad>(pos, StateRef<DoodadType>{&state, "DOODAD_6_DIMENSION_GATE"});
+					    mksp<Doodad>(pos + Vec3<float>{0.5f, 0.5f, 0.5f},
+					                 StateRef<DoodadType>{&state, "DOODAD_6_DIMENSION_GATE"});
+					doodad->voxelMap = state.city_common_image_list->portalVoxelMap;
 					map->addObjectToMap(doodad);
 					this->portals.push_back(doodad);
 					break;

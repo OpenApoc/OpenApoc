@@ -51,6 +51,21 @@ void InitialGameStateExtractor::extractSharedCityResources(GameState &state) con
 		                                     "ufodata/loftemps.tab:%d",
 		                                     112)));
 	}
+	state.city_common_image_list->portalVoxelMap =
+	    std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
+	for (int i = 0; i < 16; i++)
+	{
+		int index = 109;
+		if (i < 4 || i >= 12)
+		{
+			index = 110;
+		}
+		state.city_common_image_list->portalVoxelMap->setSlice(
+		    i,
+		    fw().data->loadVoxelSlice(format("LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+		                                     "ufodata/loftemps.tab:%d",
+		                                     index)));
+	}
 }
 
 void InitialGameStateExtractor::extractSharedBattleResources(GameState &state) const

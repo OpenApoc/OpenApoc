@@ -135,8 +135,7 @@ UnitAIVanilla::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment>
 		                       reThinkDelay);
 	}
 
-	float time = (float)payload->fire_delay * (float)TICKS_MULTIPLIER / (float)u.fire_aiming_mode /
-	             (float)TICKS_PER_SECOND;
+	float time = (float)payload->fire_delay / (float)u.fire_aiming_mode / (float)TICKS_PER_SECOND;
 	float cth = std::max(1.0f,
 	                     100.f -
 	                         (float)(100 -

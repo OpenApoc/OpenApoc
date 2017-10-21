@@ -51,25 +51,22 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	// FIXME: Width is currently just used for drawing - TODO What is "collision" size of beams?
 	Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> target,
 	           Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity, int turnRate,
-	           unsigned int lifetime, int damage, unsigned int delay, unsigned int tail_length,
-	           std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
-	           StateRef<DoodadType> doodadType, sp<VoxelMap> voxelMap = nullptr,
-	           bool manualFire = false);
-	Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target,
-	           Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity, int turnRate,
-	           unsigned int lifetime, int damage, unsigned int delay, int depletionRate,
+	           float lifetime, int damage, unsigned int delay, int depletionRate,
 	           unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
 	           sp<Sample> impactSfx, StateRef<DoodadType> doodadType,
-	           StateRef<DamageType> damageType, sp<VoxelMap> voxelMap = nullptr,
-	           bool manualFire = false);
+	           sp<VoxelMap> voxelMap = nullptr, int stunTicks = 0,
+	           std::list<StateRef<VEquipmentType>> splitIntoTypes = {}, bool manualFire = false);
+	Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target,
+	           Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity, int turnRate,
+	           float lifetime, int damage, unsigned int delay, int depletionRate,
+	           unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
+	           sp<Sample> impactSfx, StateRef<DoodadType> doodadType,
+	           StateRef<DamageType> damageType, sp<VoxelMap> voxelMap = nullptr, int stunTicks = 0,
+	           std::list<StateRef<AEquipmentType>> splitIntoTypes = {}, bool manualFire = false);
 	Projectile();
 	virtual void update(GameState &state, unsigned int ticks);
 	void die(GameState &state, bool displayDoodad = true, bool playSound = true);
 
-	Vec3<float> getVelocity() const { return this->velocity; }
-	unsigned int getLifetime() const { return this->lifetime; }
-	unsigned int getAge() const { return this->age; }
-	int getDamage() const { return this->damage; }
 	Vec3<float> getPosition() const { return this->position; }
 
 	Collision checkProjectileCollision(TileMap &map);
@@ -82,8 +79,8 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	Vec3<float> position;
 	Vec3<float> velocity;
 	int turnRate = 0;
-	unsigned int age = 0;
-	unsigned int lifetime = 0;
+	float age = 0.0f;
+	float lifetime = 0.0f;
 	int damage = 0;
 	unsigned int delay_ticks_remaining = 0;
 	int depletionRate = 0;
@@ -98,7 +95,8 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	unsigned int tail_length = 0;
 	std::list<sp<Image>> projectile_sprites;
 	float sprite_distance = 0.0f;
-	sp<VoxelMap> voxelMap;
+	sp<VoxelMap> voxelMapLof;
+	sp<VoxelMap> voxelMapLos;
 	bool manualFire = false;
 
 	sp<Sample> impactSfx;
@@ -108,6 +106,10 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	unsigned int ownerInvulnerableTicks = 0;
 
 	Vec3<float> velocityScale;
+
+	int stunTicks = 0;
+	std::list<StateRef<VEquipmentType>> splitIntoTypesCity;
+	std::list<StateRef<AEquipmentType>> splitIntoTypesBattle;
 
 	friend class TileObjectProjectile;
 

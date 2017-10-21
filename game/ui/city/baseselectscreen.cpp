@@ -19,14 +19,11 @@
 namespace OpenApoc
 {
 
-static const Colour PLAYER_BASE_OWNED{188, 212, 88};
-static const Colour PLAYER_BASE_AVAILABLE{160, 236, 252};
-
 BaseSelectScreen::BaseSelectScreen(sp<GameState> state, Vec3<float> centerPos)
     : CityTileView(*state->current_city->map, Vec3<int>{TILE_X_CITY, TILE_Y_CITY, TILE_Z_CITY},
                    Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Strategy,
                    state->current_city->cityViewScreenCenter, *state),
-      menuform(ui().getForm("city/baseselect")), state(state), counter(0)
+      menuform(ui().getForm("city/baseselect")), state(state)
 {
 	this->centerPos = centerPos;
 	this->menuform->findControl("BUTTON_OK")->addCallback(FormEventType::ButtonClick, [](Event *) {
@@ -108,17 +105,19 @@ void BaseSelectScreen::eventOccurred(Event *e)
 void BaseSelectScreen::update()
 {
 	menuform->update();
-	counter = (counter + 1) % COUNTER_MAX;
 	CityTileView::update();
 }
 
 void BaseSelectScreen::render()
 {
 	CityTileView::render();
+
+	// Draw bases
+	static const Colour PLAYER_BASE_AVAILABLE{160, 236, 252};
 	for (auto &b : state->current_city->buildings)
 	{
 		auto building = b.second;
-		if (building->base_layout)
+		if (building->base_layout && building->owner != state->getPlayer())
 		{
 			Vec3<float> posA = {building->bounds.p0.x, building->bounds.p0.y, 0};
 			Vec2<float> screenPosA = this->tileToOffsetScreenCoords(posA);
@@ -132,16 +131,8 @@ void BaseSelectScreen::render()
 				screenPosB += Vec2<float>{2.0f, 2.0f};
 			}
 
-			Colour borderColour;
-			if (building->owner == state->getPlayer())
-			{
-				borderColour = PLAYER_BASE_OWNED;
-			}
-			else if (building->owner == state->getGovernment())
-			{
-				borderColour = PLAYER_BASE_AVAILABLE;
-			}
-			fw().renderer->drawRect(screenPosA, screenPosB - screenPosA, borderColour, 2.0f);
+			fw().renderer->drawRect(screenPosA, screenPosB - screenPosA, PLAYER_BASE_AVAILABLE,
+			                        2.0f);
 		}
 	}
 	menuform->render();

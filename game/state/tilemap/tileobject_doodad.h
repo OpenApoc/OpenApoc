@@ -22,6 +22,11 @@ class TileObjectDoodad : public TileObject
 	Vec3<float> getPosition() const override;
 	float getZOrder() const override;
 
+	bool hasVoxelMap(bool los) const override;
+	sp<VoxelMap> getVoxelMap(Vec3<int> mapIndex, bool los) const override;
+	Vec3<float> getVoxelOffset() const override { return {0.5f, 0.5f, 0.5f}; };
+	Vec3<float> getVoxelCentrePosition() const override;
+
   private:
 	friend class TileMap;
 	TileObjectDoodad(TileMap &map, sp<Doodad> doodad);

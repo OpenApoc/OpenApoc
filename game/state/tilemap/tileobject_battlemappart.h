@@ -21,7 +21,7 @@ class TileObjectBattleMapPart : public TileObject
 
 	sp<BattleMapPart> getOwner() const;
 
-	bool hasVoxelMap() const override { return true; }
+	bool hasVoxelMap(bool los) const override { return true; }
 	sp<VoxelMap> getVoxelMap(Vec3<int> mapIndex, bool los) const override;
 	Vec3<float> getPosition() const override;
 	float getZOrder() const override;

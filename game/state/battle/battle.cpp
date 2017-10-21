@@ -2177,9 +2177,29 @@ void Battle::handleProjectileHit(GameState &state, sp<Projectile> projectile, bo
 	{
 		this->placeDoodad(projectile->doodadType, projectile->position);
 	}
-	if (playSound && projectile->impactSfx)
+	if (playSound && projectile->impactSfx && projectile->splitIntoTypesBattle.empty())
 	{
 		fw().soundBackend->playSample(projectile->impactSfx, projectile->position);
+	}
+	std::set<sp<Sample>> fireSounds;
+	for (auto &p : projectile->splitIntoTypesBattle)
+	{
+		auto direction = (float)randBoundsInclusive(state.rng, 0, 628) / 100.0f;
+		auto velocity = glm::normalize(
+		    VehicleType::directionToVector(VehicleType::getDirectionLarge(direction)));
+		velocity *= p->speed * PROJECTILE_VELOCITY_MULTIPLIER;
+		auto newProj = mksp<Projectile>(
+		    p->guided ? Projectile::Type::Missile : Projectile::Type::Beam, projectile->firerUnit,
+		    projectile->trackedUnit, projectile->targetPosition, projectile->position, velocity,
+		    p->turn_rate, p->ttl, p->damage, 0, 0, p->tail_size, p->projectile_sprites,
+		    p->impact_sfx, p->explosion_graphic, p->damage_type);
+		map->addObjectToMap(newProj);
+		projectiles.insert(newProj);
+		fireSounds.insert(p->fire_sfx);
+	}
+	for (auto &s : fireSounds)
+	{
+		fw().soundBackend->playSample(s, projectile->position);
 	}
 	projectiles.erase(projectile);
 }
@@ -2928,6 +2948,9 @@ void Battle::exitBattle(GameState &state)
 			state.getPlayer()->current_relations[e.first] = e.second;
 		}
 
+		// Restore score
+		state.totalScore.tacticalMissions = state.current_battle->scoreBeforeSkirmish;
+
 		// That's it for fake battle, return
 		state.current_battle = nullptr;
 		return;
@@ -2945,7 +2968,8 @@ void Battle::exitBattle(GameState &state)
 	}
 
 	// Apply score to player score
-	LogWarning("Apply score to player score");
+	state.totalScore.tacticalMissions += state.current_battle->score.getTotal();
+	state.weekScore.tacticalMissions += state.current_battle->score.getTotal();
 
 	// LOOT!
 
@@ -2995,10 +3019,24 @@ void Battle::exitBattle(GameState &state)
 		}
 	}
 
+	// List of vehicle loot
+	std::map<StateRef<VEquipmentType>, int> vehicleLoot;
+
+	if (state.current_battle->mission_type == MissionType::UfoRecovery)
+	{
+		auto vehicle = StateRef<Vehicle>(&state, state.current_battle->mission_location_id);
+		for (auto &e : vehicle->loot)
+		{
+			vehicleLoot[e]++;
+		}
+	}
+
 	// List of bio-containment leftover loot
 	std::map<StateRef<AEquipmentType>, int> leftoverBioLoot;
 	// List of cargo bay leftover loot
 	std::map<StateRef<AEquipmentType>, int> leftoverCargoLoot;
+	// List of vehicle leftover loot
+	std::map<StateRef<VEquipmentType>, int> leftoverVehicleLoot;
 
 	// Check cargo limits (this can move loot into leftover loot)
 	if (config().getBool("OpenApoc.NewFeature.EnforceCargoLimits"))
@@ -3033,6 +3071,10 @@ void Battle::exitBattle(GameState &state)
 		for (auto &e : state.current_battle->cargoLoot)
 		{
 			leftoverCargoLoot[e.first] = e.second;
+		}
+		for (auto &e : vehicleLoot)
+		{
+			leftoverVehicleLoot[e.first] = e.second;
 		}
 		state.current_battle->cargoLoot.clear();
 	}
@@ -3073,10 +3115,12 @@ void Battle::exitBattle(GameState &state)
 				for (auto &e : leftoverCargoLoot)
 				{
 					int price = 0;
-					if (state.economy.find(e.first.id) != state.economy.end())
-					{
-						price = state.economy[e.first.id].currentPrice;
-					}
+					location->cargo.emplace_back(state, e.first, e.second, price, nullptr,
+					                             homeBuilding);
+				}
+				for (auto &e : leftoverVehicleLoot)
+				{
+					int price = 0;
 					location->cargo.emplace_back(state, e.first, e.second, price, nullptr,
 					                             homeBuilding);
 				}
@@ -3087,6 +3131,65 @@ void Battle::exitBattle(GameState &state)
 	// Load cargo/bio into vehicles
 	if (!playerVehicles.empty())
 	{
+		// Go through every vehicle loot position
+		// Try to load into every vehicle until amount remaining is zero
+		std::list<StateRef<VEquipmentType>> vehicleLootToRemove;
+		for (auto &e : vehicleLoot)
+		{
+			for (auto &v : playerVehicles)
+			{
+				if (v->getMaxCargo() == 0)
+				{
+					continue;
+				}
+				if (e.second == 0)
+				{
+					continue;
+				}
+				int maxAmount =
+				    config().getBool("OpenApoc.NewFeature.EnforceCargoLimits")
+				        ? std::min(e.second,
+				                   (v->getMaxCargo() - v->getCargo()) / e.first->store_space)
+				        : e.second;
+				if (maxAmount > 0)
+				{
+					e.second -= maxAmount;
+					int price = 0;
+					v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
+					                      v->homeBuilding);
+					returningVehicles.insert(v);
+				}
+			}
+			if (e.second == 0)
+			{
+				vehicleLootToRemove.push_back(e.first);
+			}
+		}
+		// Remove stored loot
+		for (auto &e : vehicleLootToRemove)
+		{
+			vehicleLoot.erase(e);
+		}
+		// Put remainder on first vehicle
+		for (auto &e : vehicleLoot)
+		{
+			for (auto &v : playerVehicles)
+			{
+				if (v->getMaxCargo() == 0)
+				{
+					continue;
+				}
+				int maxAmount = e.second;
+				if (maxAmount > 0)
+				{
+					e.second -= maxAmount;
+					int price = 0;
+					v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
+					                      v->homeBuilding);
+					returningVehicles.insert(v);
+				}
+			}
+		}
 		// Go through every loot position
 		// Try to load into every vehicle until amount remaining is zero
 		std::list<StateRef<AEquipmentType>> cargoLootToRemove;
@@ -3112,10 +3215,6 @@ void Battle::exitBattle(GameState &state)
 				{
 					e.second -= maxAmount;
 					int price = 0;
-					if (state.economy.find(e.first.id) != state.economy.end())
-					{
-						price = state.economy[e.first.id].currentPrice;
-					}
 					v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
 					                      v->homeBuilding);
 					returningVehicles.insert(v);
@@ -3126,9 +3225,30 @@ void Battle::exitBattle(GameState &state)
 				cargoLootToRemove.push_back(e.first);
 			}
 		}
+		// Remove stored loot
 		for (auto &e : cargoLootToRemove)
 		{
 			state.current_battle->cargoLoot.erase(e);
+		}
+		// Put remainder on first vehicle
+		for (auto &e : state.current_battle->cargoLoot)
+		{
+			for (auto &v : playerVehicles)
+			{
+				if (v->getMaxCargo() == 0)
+				{
+					continue;
+				}
+				int maxAmount = e.second;
+				if (maxAmount > 0)
+				{
+					e.second -= maxAmount;
+					int price = 0;
+					v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
+					                      v->homeBuilding);
+					returningVehicles.insert(v);
+				}
+			}
 		}
 		// Go through every bio loot position
 		// Try to load into every vehicle until amount remaining is zero
@@ -3155,10 +3275,6 @@ void Battle::exitBattle(GameState &state)
 				{
 					e.second -= maxAmount;
 					int price = 0;
-					if (state.economy.find(e.first.id) != state.economy.end())
-					{
-						price = state.economy[e.first.id].currentPrice;
-					}
 					v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
 					                      v->homeBuilding);
 					returningVehicles.insert(v);
@@ -3169,9 +3285,30 @@ void Battle::exitBattle(GameState &state)
 				bioLootToRemove.push_back(e.first);
 			}
 		}
+		// Remove stored loot
 		for (auto &e : bioLootToRemove)
 		{
 			state.current_battle->bioLoot.erase(e);
+		}
+		// Put remainder on first vehicle
+		for (auto &e : state.current_battle->bioLoot)
+		{
+			for (auto &v : playerVehicles)
+			{
+				if (v->getMaxCargo() == 0)
+				{
+					continue;
+				}
+				int maxAmount = e.second;
+				if (maxAmount > 0)
+				{
+					e.second -= maxAmount;
+					int price = 0;
+					v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
+					                      v->homeBuilding);
+					returningVehicles.insert(v);
+				}
+			}
 		}
 	}
 

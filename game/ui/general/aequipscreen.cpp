@@ -944,9 +944,12 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 					formItemWeapon->findControlTyped<Label>("VALUE_ACCURACY")
 					    ->setText(format("%d", item->getPayloadType()->accuracy));
 					formItemWeapon->findControlTyped<Label>("VALUE_FIRE_RATE")
-					    ->setText(format("%d", item->getPayloadType()->fire_delay));
+					    ->setText(format("%.2f",
+					                     (float)TICKS_PER_SECOND /
+					                         (float)item->getPayloadType()->fire_delay));
 					formItemWeapon->findControlTyped<Label>("VALUE_RANGE")
-					    ->setText(format("%d", item->getPayloadType()->range));
+					    ->setText(format(
+					        "%d", item->getPayloadType()->range / (int)VELOCITY_SCALE_BATTLE.x));
 				}
 				else
 				{
@@ -988,7 +991,10 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 						formItemWeapon->findControlTyped<Label>("VALUE_ACCURACY")
 						    ->setText(format("%d", item->type->ammo_types.front()->accuracy));
 						formItemWeapon->findControlTyped<Label>("VALUE_FIRE_RATE")
-						    ->setText(format("%d", item->type->ammo_types.front()->fire_delay));
+						    ->setText(
+						        format("%.2f",
+						               (float)TICKS_PER_SECOND /
+						                   (float)item->type->ammo_types.front()->fire_delay));
 						formItemWeapon->findControlTyped<Label>("VALUE_RANGE")
 						    ->setText(format("%d", item->type->ammo_types.front()->range));
 					}
@@ -1029,7 +1035,8 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 				formItemWeapon->findControlTyped<Label>("VALUE_ACCURACY")
 				    ->setText(format("%d", item->type->accuracy));
 				formItemWeapon->findControlTyped<Label>("VALUE_FIRE_RATE")
-				    ->setText(format("%d", item->type->fire_delay));
+				    ->setText(
+				        format("%.2f", (float)TICKS_PER_SECOND / (float)item->type->fire_delay));
 				formItemWeapon->findControlTyped<Label>("VALUE_RANGE")
 				    ->setText(format("%d", item->type->range));
 
@@ -1967,10 +1974,6 @@ void AEquipScreen::closeScreen()
 				for (auto &e : entry.second)
 				{
 					int price = 0;
-					if (state->economy.find(e->type.id) != state->economy.end())
-					{
-						price = state->economy[e->type.id].currentPrice;
-					}
 					entry.first->cargo.emplace_back(
 					    *state, e->type, e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1,
 					    price, nullptr, entry.first->homeBuilding);
@@ -1999,10 +2002,6 @@ void AEquipScreen::closeScreen()
 				for (auto &e : entry.second)
 				{
 					int price = 0;
-					if (state->economy.find(e->type.id) != state->economy.end())
-					{
-						price = state->economy[e->type.id].currentPrice;
-					}
 					entry.first->cargo.emplace_back(
 					    *state, e->type, e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1,
 					    price, nullptr, state->current_base->building);
@@ -2060,10 +2059,6 @@ void AEquipScreen::closeScreen()
 					for (auto &e : entry.second)
 					{
 						int price = 0;
-						if (state->economy.find(e->type.id) != state->economy.end())
-						{
-							price = state->economy[e->type.id].currentPrice;
-						}
 						buildingToDropTo->cargo.emplace_back(
 						    *state, e->type,
 						    e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1, price,

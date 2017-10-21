@@ -141,11 +141,6 @@ class BattleView : public BattleTileView
 
 	bool followAgent = false;
 
-	bool colorForward = true;
-	int colorCurrent = 0;
-	sp<Palette> palette;
-	std::vector<sp<Palette>> modPalette;
-
 	bool endTurnRequested = false;
 	sp<BattleUnit> unitPendingConfirmation;
 	std::set<sp<BattleUnit>> unitsSkipped;
