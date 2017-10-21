@@ -198,6 +198,7 @@ class Vehicle : public StateObject,
 	int health = 0;
 	int shield = 0;
 	unsigned int shieldRecharge = 0;
+	int stunTicksRemaining = 0;
 	bool crashed = false;
 	bool falling = false;
 	bool sliding = false;

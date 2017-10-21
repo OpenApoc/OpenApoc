@@ -16,7 +16,6 @@
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "framework/keycodes.h"
-#include "framework/palette.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
 #include "framework/trace.h"
@@ -851,49 +850,11 @@ CityView::CityView(sp<GameState> state)
                    state->current_city->cityViewScreenCenter, *state),
       baseForm(ui().getForm("city/city")), overlayTab(ui().getForm("city/overlay")),
       updateSpeed(CityUpdateSpeed::Speed1), lastSpeed(CityUpdateSpeed::Pause), state(state),
-      followVehicle(false), selectionState(CitySelectionState::Normal),
-      day_palette(fw().data->loadPalette("xcom3/ufodata/pal_01.dat")),
-      twilight_palette(fw().data->loadPalette("xcom3/ufodata/pal_02.dat")),
-      night_palette(fw().data->loadPalette("xcom3/ufodata/pal_03.dat"))
+      followVehicle(false), selectionState(CitySelectionState::Normal)
 {
 	weaponType.resize(3);
 	weaponDisabled.resize(3, false);
 	weaponAmmo.resize(3, -1);
-
-	std::vector<sp<Palette>> newPal;
-	newPal.resize(3);
-	for (int j = 0; j <= 15; j++)
-	{
-		colorCurrent = j;
-		newPal[0] = mksp<Palette>();
-		newPal[1] = mksp<Palette>();
-		newPal[2] = mksp<Palette>();
-
-		for (int i = 0; i < 255 - 4; i++)
-		{
-			newPal[0]->setColour(i, day_palette->getColour(i));
-			newPal[1]->setColour(i, twilight_palette->getColour(i));
-			newPal[2]->setColour(i, night_palette->getColour(i));
-		}
-		for (int i = 0; i < 3; i++)
-		{
-			// Yellow color, for owned indicators, pulsates from (3/8r 3/8g 0b) to (8/8r 8/8g 0b)
-			newPal[i]->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8,
-			                                     (colorCurrent * 16 * 5 + 255 * 3) / 8, 0));
-			// Red color, for enemy indicators, pulsates from (3/8r 0g 0b) to (8/8r 0g 0b)
-			newPal[i]->setColour(255 - 2, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
-			// Pink color, for neutral indicators, pulsates from (3/8r 0g 3/8b) to (8/8r 0g 8/8b)
-			newPal[i]->setColour(255 - 1, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0,
-			                                     (colorCurrent * 16 * 5 + 255 * 3) / 8));
-			// Blue color, for misc. indicators, pulsates from (0r 3/8g 3/8b) to (0r 8/8g 8/8b)
-			newPal[i]->setColour(255 - 0, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
-			                                     (colorCurrent * 16 * 5 + 255 * 3) / 8));
-		}
-
-		mod_day_palette.push_back(newPal[0]);
-		mod_twilight_palette.push_back(newPal[1]);
-		mod_night_palette.push_back(newPal[2]);
-	}
 
 	overlayTab->setVisible(false);
 	overlayTab->findControlTyped<GraphicButton>("BUTTON_CLOSE")
@@ -1678,81 +1639,6 @@ void CityView::update()
 	// Update time display
 	auto clockControl = baseForm->findControlTyped<Label>("CLOCK");
 	clockControl->setText(state->gameTime.getLongTimeString());
-
-	// Pulsate palette colors
-	colorCurrent += (colorForward ? 1 : -1);
-	if (colorCurrent <= 0 || colorCurrent >= 15)
-	{
-		colorCurrent = clamp(colorCurrent, 0, 15);
-		colorForward = !colorForward;
-	}
-
-	// The palette fades from pal_03 at 3am to pal_02 at 6am then pal_01 at 9am
-	// The reverse for 3pm, 6pm & 9pm
-
-	auto hour = state->gameTime.getHours();
-	sp<Palette> interpolated_palette;
-	if (hour < 3 || hour >= 21)
-	{
-		interpolated_palette = this->mod_night_palette[colorCurrent];
-	}
-	else if (hour >= 9 && hour < 15)
-	{
-		interpolated_palette = this->mod_day_palette[colorCurrent];
-	}
-	else
-	{
-		sp<Palette> palette1;
-		sp<Palette> palette2;
-		float factor = 0;
-
-		float hours_float = hour + (float)state->gameTime.getMinutes() / 60.0f;
-
-		if (hour >= 3 && hour < 6)
-		{
-			palette1 = this->mod_night_palette[colorCurrent];
-			palette2 = this->mod_twilight_palette[colorCurrent];
-			factor = clamp((hours_float - 3.0f) / 3.0f, 0.0f, 1.0f);
-		}
-		else if (hour >= 6 && hour < 9)
-		{
-			palette1 = this->mod_twilight_palette[colorCurrent];
-			palette2 = this->mod_day_palette[colorCurrent];
-			factor = clamp((hours_float - 6.0f) / 3.0f, 0.0f, 1.0f);
-		}
-		else if (hour >= 15 && hour < 18)
-		{
-			palette1 = this->mod_day_palette[colorCurrent];
-			palette2 = this->mod_twilight_palette[colorCurrent];
-			factor = clamp((hours_float - 15.0f) / 3.0f, 0.0f, 1.0f);
-		}
-		else if (hour >= 18 && hour < 21)
-		{
-			palette1 = this->mod_twilight_palette[colorCurrent];
-			palette2 = this->mod_night_palette[colorCurrent];
-			factor = clamp((hours_float - 18.0f) / 3.0f, 0.0f, 1.0f);
-		}
-		else
-		{
-			LogError("Unhandled hoursClamped %d", hour);
-		}
-
-		interpolated_palette = mksp<Palette>();
-		for (int i = 0; i < 256; i++)
-		{
-			auto &colour1 = palette1->getColour(i);
-			auto &colour2 = palette2->getColour(i);
-			Colour interpolated_colour;
-
-			interpolated_colour.r = (int)mix((float)colour1.r, (float)colour2.r, factor);
-			interpolated_colour.g = (int)mix((float)colour1.g, (float)colour2.g, factor);
-			interpolated_colour.b = (int)mix((float)colour1.b, (float)colour2.b, factor);
-			interpolated_colour.a = (int)mix((float)colour1.a, (float)colour2.a, factor);
-			interpolated_palette->setColour(i, interpolated_colour);
-		}
-	}
-
-	this->pal = interpolated_palette;
 
 	// Update owned vehicle controls
 	if (activeTab == uiTabs[1])
@@ -2602,6 +2488,24 @@ bool CityView::handleKeyDown(Event *e)
 
 				return true;
 			}
+			case SDLK_a:
+			{
+				LogWarning("All you ever want...");
+
+				for (auto &e : state->vehicle_equipment)
+				{
+					if (e.second->store_space > 0)
+					{
+						state->current_base->inventoryVehicleEquipment[e.first]++;
+					}
+				}
+				for (auto &e : state->vehicle_ammo)
+				{
+					state->current_base->inventoryVehicleAmmo[e.first] += 10;
+				}
+
+				return true;
+			}
 			case SDLK_b:
 			{
 				LogWarning("Spawning base defense mission");
@@ -2715,6 +2619,9 @@ bool CityView::handleKeyUp(Event *e)
 
 bool CityView::handleMouseDown(Event *e)
 {
+	static const std::set<TileObject::Type> sceneryPortalVehicleSet = {
+	    TileObject::Type::Scenery, TileObject::Type::Doodad, TileObject::Type::Vehicle};
+	static const std::set<TileObject::Type> projectileSet = {TileObject::Type::Projectile};
 	static const std::set<TileObject::Type> vehicleSet = {TileObject::Type::Vehicle};
 
 	if (Event::isPressed(e->mouse().Button, Event::MouseButton::Middle) ||
@@ -2755,16 +2662,17 @@ bool CityView::handleMouseDown(Event *e)
 		    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 12.99f);
 		auto clickBottom =
 		    this->screenToTileCoords(Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
-		auto collision =
-		    state->current_city->map->findCollision(clickTop, clickBottom, {}, nullptr, true);
+		auto collision = state->current_city->map->findCollision(
+		    clickTop, clickBottom, sceneryPortalVehicleSet, nullptr, true);
+
+		auto position = collision.position;
+		bool portal = false;
+		sp<Scenery> scenery;
+		StateRef<Building> building;
+		sp<Vehicle> vehicle;
+		sp<Projectile> projectile;
 		if (collision)
 		{
-			auto position = collision.position;
-			bool portal = false;
-			sp<Scenery> scenery;
-			StateRef<Building> building;
-			sp<Vehicle> vehicle;
-			sp<Projectile> projectile;
 			switch (collision.obj->getType())
 			{
 				case TileObject::Type::Doodad:
@@ -2891,14 +2799,6 @@ bool CityView::handleMouseDown(Event *e)
 					}
 					break;
 				}
-				case TileObject::Type::Projectile:
-				{
-					projectile = std::dynamic_pointer_cast<TileObjectProjectile>(collision.obj)
-					                 ->getProjectile();
-					LogInfo("CLICKED PROJECTILE %s at %s", projectile->damage,
-					        projectile->position);
-					break;
-				}
 				default:
 				{
 					LogError("Clicked on some object we didn't care to process?");
@@ -2926,20 +2826,36 @@ bool CityView::handleMouseDown(Event *e)
 					}
 				}
 			}
+		}
 
-			// Try to handle clicks on objects
+		auto projCollision = state->current_city->map->findCollision(clickTop, clickBottom,
+		                                                             projectileSet, nullptr, true);
+		if (projCollision)
+		{
+			projectile =
+			    std::dynamic_pointer_cast<TileObjectProjectile>(projCollision.obj)->getProjectile();
+			LogInfo("CLICKED PROJECTILE %s at %s", projectile->damage, projectile->position);
 
-			// Click on building
-			if (building &&
-			    handleClickedBuilding(building, buttonPressed == Event::MouseButton::Right,
-			                          selectionState))
+			if (!vehicle && !scenery && !portal)
 			{
-				return true;
+				position = projectile->position;
 			}
+		}
+
+		// Try to handle clicks on objects
+		if (vehicle || scenery || portal || projectile)
+		{
 			// Click on projectile
 			if (projectile &&
 			    handleClickedProjectile(projectile, buttonPressed == Event::MouseButton::Right,
 			                            selectionState))
+			{
+				return true;
+			}
+			// Click on building
+			if (building &&
+			    handleClickedBuilding(building, buttonPressed == Event::MouseButton::Right,
+			                          selectionState))
 			{
 				return true;
 			}

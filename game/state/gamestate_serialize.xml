@@ -355,6 +355,7 @@
 		<member>health</member>
 		<member>shield</member>
 		<member>shieldRecharge</member>
+		<member>stunTicksRemaining</member>
 		<member>falling</member>
 		<member>crashed</member>
 		<member>sliding</member>
@@ -899,6 +900,9 @@
 		<member>trackedUnit</member>
 		<member>targetPosition</member>
 		<member>previousPosition</member>
+		<member>stunTicks</member>
+		<member>splitIntoTypesCity</member>
+		<member>splitIntoTypesBattle</member>
 		<member>spritePositions</member>
 		<member>tail_length</member>
 		<member>projectile_sprites</member>
@@ -1155,6 +1159,8 @@
 		<member>impact_sfx</member>
 		<member>explosion_graphic</member>
 		<member>icon</member>
+		<member>stunTicks</member>
+		<member>splitIntoTypes</member>
 		<member>power</member>
 		<member>top_speed</member>
 		<member>accuracy_modifier</member>

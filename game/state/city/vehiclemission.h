@@ -8,6 +8,7 @@
 #include "library/vec.h"
 #include <list>
 #include <map>
+#include <math.h>
 
 namespace OpenApoc
 {

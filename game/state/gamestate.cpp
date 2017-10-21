@@ -12,6 +12,7 @@
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
+#include "game/state/city/vequipment.h"
 #include "game/state/gameevent.h"
 #include "game/state/gametime.h"
 #include "game/state/message.h"
@@ -1069,6 +1070,37 @@ void GameState::updateEndOfSecond()
 	for (auto &b : current_city->buildings)
 	{
 		b.second->updateCargo(*this);
+		if (!b.second->base || b.second->owner != getPlayer())
+		{
+			continue;
+		}
+		auto base = b.second->base;
+		for (auto v : b.second->currentVehicles)
+		{
+			for (auto &e : v->equipment)
+			{
+				if (e->type->type != EquipmentSlotType::VehicleWeapon || e->type->max_ammo == 0)
+				{
+					continue;
+				}
+				int ammoAvailable = std::numeric_limits<int>::max();
+				if (base)
+				{
+					ammoAvailable = base->inventoryVehicleAmmo[e->type->ammo_type.id];
+				}
+				auto ammoSpent = e->reload(ammoAvailable);
+				if (ammoSpent > 0)
+				{
+					// FIXME: Implement message vehicle rearmed / reloaded /refueled whatever
+					LogWarning(
+					    "Implement message vehicle rearmed / reloaded / refueled / whatever");
+				}
+				if (base)
+				{
+					base->inventoryVehicleAmmo[e->type->ammo_type.id] -= ammoSpent;
+				}
+			}
+		}
 	}
 	Trace::end("GameState::updateEachSecond::buildings");
 	Trace::start("GameState::updateEachSecond::vehicles");

@@ -106,4 +106,90 @@ float VehicleType::getVoxelMapFacing(float facing) const
 	return closestAngle;
 }
 
+namespace
+{
+static const float M_2xPI = 2.0f * M_PI;
+}
+
+VehicleType::Direction VehicleType::getDirectionLarge(float facing)
+{
+	static std::map<float, VehicleType::Direction> DirectionMap = {
+	    {0.0f * (float)M_PI, VehicleType::Direction::N},
+	    {0.125f * (float)M_PI, VehicleType::Direction::NNE},
+	    {0.25f * (float)M_PI, VehicleType::Direction::NE},
+	    {0.375f * (float)M_PI, VehicleType::Direction::NEE},
+	    {0.5f * (float)M_PI, VehicleType::Direction::E},
+	    {0.625f * (float)M_PI, VehicleType::Direction::SEE},
+	    {0.75f * (float)M_PI, VehicleType::Direction::SE},
+	    {0.875f * (float)M_PI, VehicleType::Direction::SSE},
+	    {1.0f * (float)M_PI, VehicleType::Direction::S},
+	    {1.125f * (float)M_PI, VehicleType::Direction::SSW},
+	    {1.25f * (float)M_PI, VehicleType::Direction::SW},
+	    {1.375f * (float)M_PI, VehicleType::Direction::SWW},
+	    {1.5f * (float)M_PI, VehicleType::Direction::W},
+	    {1.625f * (float)M_PI, VehicleType::Direction::NWW},
+	    {1.75f * (float)M_PI, VehicleType::Direction::NW},
+	    {1.875f * (float)M_PI, VehicleType::Direction::NNW},
+	};
+
+	float closestDiff = FLT_MAX;
+	VehicleType::Direction closestDir = VehicleType::Direction::N;
+	for (auto &p : DirectionMap)
+	{
+		float d1 = p.first - facing;
+		if (d1 < 0.0f)
+		{
+			d1 += M_2xPI;
+		}
+		float d2 = facing - p.first;
+		if (d2 < 0.0f)
+		{
+			d2 += M_2xPI;
+		}
+		float diff = std::min(d1, d2);
+		if (diff < closestDiff)
+		{
+			closestDiff = diff;
+			closestDir = p.second;
+		}
+	}
+	return closestDir;
+}
+
+VehicleType::Direction VehicleType::getDirectionSmall(float facing)
+{
+	static std::map<float, VehicleType::Direction> DirectionMap = {
+	    {0.0f * (float)M_PI, VehicleType::Direction::N},
+	    {0.25f * (float)M_PI, VehicleType::Direction::NE},
+	    {0.5f * (float)M_PI, VehicleType::Direction::E},
+	    {0.75f * (float)M_PI, VehicleType::Direction::SE},
+	    {1.0f * (float)M_PI, VehicleType::Direction::S},
+	    {1.25f * (float)M_PI, VehicleType::Direction::SW},
+	    {1.5f * (float)M_PI, VehicleType::Direction::W},
+	    {1.75f * (float)M_PI, VehicleType::Direction::NW},
+	};
+
+	float closestDiff = FLT_MAX;
+	VehicleType::Direction closestDir = VehicleType::Direction::N;
+	for (auto &p : DirectionMap)
+	{
+		float d1 = p.first - facing;
+		if (d1 < 0.0f)
+		{
+			d1 += M_2xPI;
+		}
+		float d2 = facing - p.first;
+		if (d2 < 0.0f)
+		{
+			d2 += M_2xPI;
+		}
+		float diff = std::min(d1, d2);
+		if (diff < closestDiff)
+		{
+			closestDiff = diff;
+			closestDir = p.second;
+		}
+	}
+	return closestDir;
+}
 }; // namespace OpenApoc

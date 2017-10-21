@@ -73,6 +73,10 @@ class VEquipmentType : public StateObject
 	StateRef<DoodadType> explosion_graphic;
 	sp<Image> icon;
 
+	// Special weapons
+	int stunTicks = 0;
+	std::list<StateRef<VEquipmentType>> splitIntoTypes;
+
 	// Engine stuff
 	int power;
 	int top_speed;

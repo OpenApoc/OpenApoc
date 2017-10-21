@@ -154,7 +154,7 @@ class AEquipmentType : public StateObject
 	// Ingame displayed value is this divided by 16 rounded down. Range in tiles
 	int range = 0;
 	float getRange() { return (float)range / 16.0f; };
-	// Projectile's Time To Live, in ticks
+	// Projectile's Time To Live, in vanilla ticks (36/sec) (multiply by 4 for OpenApoc ticks)
 	int ttl = 0;
 	StateRef<DoodadType> explosion_graphic;
 	StateRef<DoodadType> shield_graphic;

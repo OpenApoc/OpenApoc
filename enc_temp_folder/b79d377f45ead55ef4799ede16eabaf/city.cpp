@@ -182,32 +182,19 @@ void City::handleProjectileHit(GameState &state, sp<Projectile> projectile, bool
 		placeDoodad(projectile->doodadType, projectile->position);
 	}
 
-	if (playSound && projectile->impactSfx && projectile->splitIntoTypesCity.empty())
+	if (playSound && projectile->impactSfx)
 	{
 		fw().soundBackend->playSample(projectile->impactSfx, projectile->position);
 	}
 
-	std::set<sp<Sample>> fireSounds;
 	for (auto &p : projectile->splitIntoTypesCity)
 	{
 		auto direction = (float)randBoundsInclusive(state.rng, 0, 628) / 100.0f;
-		auto velocity = glm::normalize(
-		    VehicleType::directionToVector(VehicleType::getDirectionLarge(direction)));
+		auto velocity = glm::normalize(VehicleType::directionToVector(VehicleType::getDirectionLarge(direction)));
 		velocity *= p->speed * PROJECTILE_VELOCITY_MULTIPLIER;
-		auto newProj = mksp<Projectile>(
-		    p->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
-		    projectile->firerVehicle, projectile->trackedVehicle, projectile->targetPosition,
-		    projectile->position, velocity, p->turn_rate, p->ttl, p->damage, 0, 0, p->tail_size,
-		    p->projectile_sprites, p->impact_sfx, p->explosion_graphic,
-		    state.city_common_image_list->projectileVoxelMap, p->stunTicks, p->splitIntoTypes,
-		    projectile->manualFire);
+		auto newProj = mksp<Projectile>(p->guided ? Projectile::Type::Missile : Projectile::Type::Beam, projectile->firerVehicle, projectile->trackedVehicle, projectile->targetPosition, projectile->position, velocity, p->turn_rate, p->ttl, p->damage, 0,0, p->tail_size, p->projectile_sprites, p->impact_sfx, p->explosion_graphic, state.city_common_image_list->projectileVoxelMap, p->stunTicks, p->splitIntoTypes, projectile->manualFire);
 		map->addObjectToMap(newProj);
 		projectiles.insert(newProj);
-		fireSounds.insert(p->fire_sfx);
-	}
-	for (auto &s : fireSounds)
-	{
-		fw().soundBackend->playSample(s, projectile->position);
 	}
 	projectiles.erase(projectile);
 }

@@ -106,7 +106,7 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 				e->guided = wData.guided != 0 ? true : false;
 				e->turn_rate = wData.turn_rate;
 				e->range = wData.range;
-				e->ttl = wData.ttl;
+				e->ttl = wData.ttl * TICKS_MULTIPLIER;
 				e->firing_arc_1 = wData.firing_arc_1;
 				e->firing_arc_2 = wData.firing_arc_2;
 				e->point_defence = wData.point_defence != 0 ? true : false;
@@ -275,6 +275,15 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 					}
 					e->projectile_sprites.push_back(fw().data->loadImage(sprite_path));
 				}
+				if (wData.split_idx != -1)
+				{
+					for (int j = 0; j < 4; j++)
+					{
+						e->splitIntoTypes.push_back(StateRef<VEquipmentType>{
+						    &state, "VEQUIPMENTTYPE_DISRUPTOR_MULTI-BOMB_FRAGMENT"});
+					}
+				}
+
 				weapon_count++;
 				break;
 			}

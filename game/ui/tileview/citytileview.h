@@ -26,6 +26,21 @@ class CityTileView : public TileView
 	int selectionFrameTicksAccumulated = 0;
 	int portalImageTicksAccumulated = 0;
 
+	sp<Palette> day_palette;
+	sp<Palette> twilight_palette;
+	sp<Palette> night_palette;
+
+	bool colorForward = true;
+	int colorCurrent = 0;
+
+	std::vector<sp<Palette>> mod_day_palette;
+	std::vector<sp<Palette>> mod_twilight_palette;
+	std::vector<sp<Palette>> mod_night_palette;
+
+  protected:
+	static const int COUNTER_MAX = 50;
+	int counter = 0;
+
   public:
 	CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
 	             TileViewMode initialMode, Vec3<float> screenCenterTile, GameState &gameState);
@@ -33,6 +48,7 @@ class CityTileView : public TileView
 
 	void eventOccurred(Event *e) override;
 	void render() override;
+	void update() override;
 
 	bool DEBUG_SHOW_VEHICLE_PATH = false;
 	bool DEBUG_SHOW_ROAD_PATHFINDING = false;

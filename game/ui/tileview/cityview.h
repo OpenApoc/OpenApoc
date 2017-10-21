@@ -83,17 +83,6 @@ class CityView : public CityTileView
 
 	bool vanillaControls = false;
 
-	sp<Palette> day_palette;
-	sp<Palette> twilight_palette;
-	sp<Palette> night_palette;
-
-	bool colorForward = true;
-	int colorCurrent = 0;
-
-	std::vector<sp<Palette>> mod_day_palette;
-	std::vector<sp<Palette>> mod_twilight_palette;
-	std::vector<sp<Palette>> mod_night_palette;
-
 	bool drawCity = true;
 	sp<Surface> surface;
 

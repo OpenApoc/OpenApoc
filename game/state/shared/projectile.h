@@ -51,17 +51,18 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	// FIXME: Width is currently just used for drawing - TODO What is "collision" size of beams?
 	Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> target,
 	           Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity, int turnRate,
-	           unsigned int lifetime, int damage, unsigned int delay, unsigned int tail_length,
-	           std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
-	           StateRef<DoodadType> doodadType, sp<VoxelMap> voxelMap = nullptr,
-	           bool manualFire = false);
+	           unsigned int lifetime, int damage, unsigned int delay, int depletionRate,
+	           unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
+	           sp<Sample> impactSfx, StateRef<DoodadType> doodadType,
+	           sp<VoxelMap> voxelMap = nullptr, int stunTicks = 0,
+	           std::list<StateRef<VEquipmentType>> splitIntoTypes = {}, bool manualFire = false);
 	Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target,
 	           Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity, int turnRate,
 	           unsigned int lifetime, int damage, unsigned int delay, int depletionRate,
 	           unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
 	           sp<Sample> impactSfx, StateRef<DoodadType> doodadType,
-	           StateRef<DamageType> damageType, sp<VoxelMap> voxelMap = nullptr,
-	           bool manualFire = false);
+	           StateRef<DamageType> damageType, sp<VoxelMap> voxelMap = nullptr, int stunTicks = 0,
+	           std::list<StateRef<AEquipmentType>> splitIntoTypes = {}, bool manualFire = false);
 	Projectile();
 	virtual void update(GameState &state, unsigned int ticks);
 	void die(GameState &state, bool displayDoodad = true, bool playSound = true);
@@ -109,6 +110,10 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	unsigned int ownerInvulnerableTicks = 0;
 
 	Vec3<float> velocityScale;
+
+	int stunTicks = 0;
+	std::list<StateRef<VEquipmentType>> splitIntoTypesCity;
+	std::list<StateRef<AEquipmentType>> splitIntoTypesBattle;
 
 	friend class TileObjectProjectile;
 

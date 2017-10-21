@@ -233,9 +233,11 @@ void VEquipScreen::eventOccurred(Event *e)
 			// Return the equipment to the inventory
 			this->selected->removeEquipment(equipment);
 			base->inventoryVehicleEquipment[equipment->type.id]++;
+			if (equipment->ammo > 0)
+			{
+				base->inventoryVehicleAmmo[equipment->type->ammo_type.id] += equipment->ammo;
+			}
 			this->paperDoll->updateEquipment();
-			// FIXME: Return ammo to inventory
-			// FIXME: what happens if we don't have the stores to return?
 
 			// Immediate action: put to the base
 			if ((modifierLShift || modifierRShift) &&
@@ -259,16 +261,19 @@ void VEquipScreen::eventOccurred(Event *e)
 				if ((modifierLShift || modifierRShift) &&
 				    config().getBool("OpenApoc.NewFeature.AdvancedInventoryControls"))
 				{
-					if (this->selected->addEquipment(*state, this->draggedEquipment))
+					auto e = this->selected->addEquipment(*state, this->draggedEquipment);
+					if (e)
 					{
 						base->inventoryVehicleEquipment[draggedEquipment->id]--;
+						if (draggedEquipment->max_ammo > 0)
+						{
+							int ammoAvailable = base->inventoryVehicleAmmo[e->type->ammo_type.id];
+							auto ammoSpent = e->reload(ammoAvailable);
+							base->inventoryVehicleAmmo[e->type->ammo_type.id] -= ammoSpent;
+						}
 						this->paperDoll->updateEquipment();
-						// FIXME: Add ammo to equipment
 					}
-					else
-					{
-						this->draggedEquipment = nullptr;
-					}
+					this->draggedEquipment = nullptr;
 				}
 				return;
 			}
@@ -294,7 +299,14 @@ void VEquipScreen::eventOccurred(Event *e)
 					         this->draggedEquipment->id);
 				}
 				base->inventoryVehicleEquipment[draggedEquipment->id]--;
-				this->selected->addEquipment(*state, equipmentGridPos, this->draggedEquipment);
+				auto e =
+				    this->selected->addEquipment(*state, equipmentGridPos, this->draggedEquipment);
+				if (draggedEquipment->max_ammo > 0)
+				{
+					int ammoAvailable = base->inventoryVehicleAmmo[e->type->ammo_type.id];
+					auto ammoSpent = e->reload(ammoAvailable);
+					base->inventoryVehicleAmmo[e->type->ammo_type.id] -= ammoSpent;
+				}
 				this->paperDoll->updateEquipment();
 				// FIXME: Add ammo to equipment
 			}

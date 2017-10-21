@@ -42,88 +42,6 @@ namespace OpenApoc
 namespace
 {
 static const float M_2xPI = 2.0f * M_PI;
-
-VehicleType::Direction getDirectionLarge(float facing)
-{
-	static std::map<float, VehicleType::Direction> DirectionMap = {
-	    {0.0f * (float)M_PI, VehicleType::Direction::N},
-	    {0.125f * (float)M_PI, VehicleType::Direction::NNE},
-	    {0.25f * (float)M_PI, VehicleType::Direction::NE},
-	    {0.375f * (float)M_PI, VehicleType::Direction::NEE},
-	    {0.5f * (float)M_PI, VehicleType::Direction::E},
-	    {0.625f * (float)M_PI, VehicleType::Direction::SEE},
-	    {0.75f * (float)M_PI, VehicleType::Direction::SE},
-	    {0.875f * (float)M_PI, VehicleType::Direction::SSE},
-	    {1.0f * (float)M_PI, VehicleType::Direction::S},
-	    {1.125f * (float)M_PI, VehicleType::Direction::SSW},
-	    {1.25f * (float)M_PI, VehicleType::Direction::SW},
-	    {1.375f * (float)M_PI, VehicleType::Direction::SWW},
-	    {1.5f * (float)M_PI, VehicleType::Direction::W},
-	    {1.625f * (float)M_PI, VehicleType::Direction::NWW},
-	    {1.75f * (float)M_PI, VehicleType::Direction::NW},
-	    {1.875f * (float)M_PI, VehicleType::Direction::NNW},
-	};
-
-	float closestDiff = FLT_MAX;
-	VehicleType::Direction closestDir = VehicleType::Direction::N;
-	for (auto &p : DirectionMap)
-	{
-		float d1 = p.first - facing;
-		if (d1 < 0.0f)
-		{
-			d1 += M_2xPI;
-		}
-		float d2 = facing - p.first;
-		if (d2 < 0.0f)
-		{
-			d2 += M_2xPI;
-		}
-		float diff = std::min(d1, d2);
-		if (diff < closestDiff)
-		{
-			closestDiff = diff;
-			closestDir = p.second;
-		}
-	}
-	return closestDir;
-}
-
-VehicleType::Direction getDirectionSmall(float facing)
-{
-	static std::map<float, VehicleType::Direction> DirectionMap = {
-	    {0.0f * (float)M_PI, VehicleType::Direction::N},
-	    {0.25f * (float)M_PI, VehicleType::Direction::NE},
-	    {0.5f * (float)M_PI, VehicleType::Direction::E},
-	    {0.75f * (float)M_PI, VehicleType::Direction::SE},
-	    {1.0f * (float)M_PI, VehicleType::Direction::S},
-	    {1.25f * (float)M_PI, VehicleType::Direction::SW},
-	    {1.5f * (float)M_PI, VehicleType::Direction::W},
-	    {1.75f * (float)M_PI, VehicleType::Direction::NW},
-	};
-
-	float closestDiff = FLT_MAX;
-	VehicleType::Direction closestDir = VehicleType::Direction::N;
-	for (auto &p : DirectionMap)
-	{
-		float d1 = p.first - facing;
-		if (d1 < 0.0f)
-		{
-			d1 += M_2xPI;
-		}
-		float d2 = facing - p.first;
-		if (d2 < 0.0f)
-		{
-			d2 += M_2xPI;
-		}
-		float diff = std::min(d1, d2);
-		if (diff < closestDiff)
-		{
-			closestDiff = diff;
-			closestDir = p.second;
-		}
-	}
-	return closestDir;
-}
 }
 
 const UString &Vehicle::getPrefix()
@@ -1451,6 +1369,10 @@ void Vehicle::processRecoveredVehicle(GameState &state)
 	for (auto &e : scrappedEquipment)
 	{
 		removeEquipment(e);
+		if (e->ammo > 0)
+		{
+			currentBuilding->base->inventoryVehicleAmmo[e->type->ammo_type.id] += e->ammo;
+		}
 		int price = 0;
 		if (state.economy.find(e->type.id) != state.economy.end())
 		{
@@ -2033,6 +1955,17 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 {
 	bool turbo = ticks > TICKS_PER_SECOND;
 
+	if (stunTicksRemaining >= ticks)
+	{
+		stunTicksRemaining -= ticks;
+		return;
+	}
+	else if (stunTicksRemaining > 0)
+	{
+		ticks -= stunTicksRemaining;
+		stunTicksRemaining = 0;
+	}
+
 	if (cloakTicksAccumulated < CLOAK_TICKS_REQUIRED_VEHICLE)
 	{
 		cloakTicksAccumulated += ticks;
@@ -2253,7 +2186,7 @@ void Vehicle::updateSprite(GameState &state)
 	{
 		case VehicleType::Banking::Right:
 		case VehicleType::Banking::Left:
-			direction = getDirectionLarge(facing);
+			direction = VehicleType::getDirectionLarge(facing);
 			// UFOs don't care about banking and direction being correct
 			// Otherwise ensure direction is valid
 			if (type->type == VehicleType::Type::UFO)
@@ -2269,7 +2202,7 @@ void Vehicle::updateSprite(GameState &state)
 		case VehicleType::Banking::Ascending:
 		case VehicleType::Banking::Descending:
 		case VehicleType::Banking::Flat:
-			direction = getDirectionSmall(facing);
+			direction = VehicleType::getDirectionSmall(facing);
 			// UFOs don't care about banking and direction being correct
 			// Otherwise ensure direction is valid
 			if (type->type == VehicleType::Type::UFO)
@@ -2303,7 +2236,7 @@ void Vehicle::updateSprite(GameState &state)
 			case VehicleType::Direction::NWW:
 			case VehicleType::Direction::NNW:
 				// If direction is from large set then try small set
-				shadowDirection = getDirectionSmall(facing);
+				shadowDirection = VehicleType::getDirectionSmall(facing);
 				if (type->directional_shadow_sprites.find(shadowDirection) !=
 				    type->directional_shadow_sprites.end())
 				{
@@ -2399,6 +2332,7 @@ bool Vehicle::handleCollision(GameState &state, Collision &c, bool &soundHandled
 	auto projectile = c.projectile.get();
 	if (projectile)
 	{
+		stunTicksRemaining += projectile->stunTicks;
 		auto vehicleDir = glm::round(type->directionToVector(direction));
 		auto projectileDir = glm::normalize(projectile->getVelocity());
 		auto dir = vehicleDir + projectileDir;

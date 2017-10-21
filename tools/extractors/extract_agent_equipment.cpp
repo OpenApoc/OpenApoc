@@ -750,7 +750,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 			e->fire_delay = pdata.fire_delay;
 			e->guided = pdata.guided != 0 ? true : false;
 			e->turn_rate = pdata.turn_rate;
-			e->ttl = pdata.ttl;
+			e->ttl = pdata.ttl * TICKS_MULTIPLIER;
 			e->range = pdata.range;
 			UString doodad_id = "";
 			switch (pdata.explosion_graphic)

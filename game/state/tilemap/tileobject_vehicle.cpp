@@ -34,6 +34,8 @@ void TileObjectVehicle::drawStatic(Renderer &r, sp<Vehicle> vehicle, TileTransfo
 {
 	static const Colour COLOUR_TRANSPARENT = {255, 255, 255, 95};
 
+	static const Colour COLOUR_STUNNED = {192, 192, 255, 255};
+
 	static const int offset_arrow = 5;
 	static const int offset_large = 1;
 
@@ -83,6 +85,11 @@ void TileObjectVehicle::drawStatic(Renderer &r, sp<Vehicle> vehicle, TileTransfo
 			{
 				r.drawTinted(closestImage, screenPosition - vehicle->type->image_offset,
 				             COLOUR_TRANSPARENT);
+			}
+			else if (vehicle->stunTicksRemaining > 0)
+			{
+				r.drawTinted(closestImage, screenPosition - vehicle->type->image_offset,
+				             COLOUR_STUNNED);
 			}
 			else
 			{

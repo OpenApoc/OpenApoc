@@ -4,9 +4,11 @@
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "framework/keycodes.h"
+#include "framework/palette.h"
 #include "framework/renderer.h"
 #include "framework/trace.h"
 #include "game/state/city/agentmission.h"
+#include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/scenery.h"
@@ -27,8 +29,46 @@ namespace OpenApoc
 CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
                            TileViewMode initialMode, Vec3<float> screenCenterTile,
                            GameState &gameState)
-    : TileView(map, isoTileSize, stratTileSize, initialMode), state(gameState)
+    : TileView(map, isoTileSize, stratTileSize, initialMode), state(gameState),
+      day_palette(fw().data->loadPalette("xcom3/ufodata/pal_01.dat")),
+      twilight_palette(fw().data->loadPalette("xcom3/ufodata/pal_02.dat")),
+      night_palette(fw().data->loadPalette("xcom3/ufodata/pal_03.dat"))
 {
+	std::vector<sp<Palette>> newPal;
+	newPal.resize(3);
+	for (int j = 0; j <= 15; j++)
+	{
+		colorCurrent = j;
+		newPal[0] = mksp<Palette>();
+		newPal[1] = mksp<Palette>();
+		newPal[2] = mksp<Palette>();
+
+		for (int i = 0; i < 255 - 4; i++)
+		{
+			newPal[0]->setColour(i, day_palette->getColour(i));
+			newPal[1]->setColour(i, twilight_palette->getColour(i));
+			newPal[2]->setColour(i, night_palette->getColour(i));
+		}
+		for (int i = 0; i < 3; i++)
+		{
+			// Yellow color, for owned indicators, pulsates from (3/8r 3/8g 0b) to (8/8r 8/8g 0b)
+			newPal[i]->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8,
+			                                     (colorCurrent * 16 * 5 + 255 * 3) / 8, 0));
+			// Red color, for enemy indicators, pulsates from (3/8r 0g 0b) to (8/8r 0g 0b)
+			newPal[i]->setColour(255 - 2, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
+			// Pink color, for neutral indicators, pulsates from (3/8r 0g 3/8b) to (8/8r 0g 8/8b)
+			newPal[i]->setColour(255 - 1, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0,
+			                                     (colorCurrent * 16 * 5 + 255 * 3) / 8));
+			// Blue color, for misc. indicators, pulsates from (0r 3/8g 3/8b) to (0r 8/8g 8/8b)
+			newPal[i]->setColour(255 - 0, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
+			                                     (colorCurrent * 16 * 5 + 255 * 3) / 8));
+		}
+
+		mod_day_palette.push_back(newPal[0]);
+		mod_twilight_palette.push_back(newPal[1]);
+		mod_night_palette.push_back(newPal[2]);
+	}
+
 	selectedTileImageBack = fw().data->loadImage("city/selected-citytile-back.png");
 	selectedTileImageFront = fw().data->loadImage("city/selected-citytile-front.png");
 	selectedTileImageOffset = {32, 16};
@@ -529,6 +569,73 @@ void CityTileView::render()
 				}
 			}
 
+			// Bases
+			static const Colour PLAYER_BASE_OWNED{188, 212, 88};
+			for (auto &b : state.player_bases)
+			{
+				auto building = b.second->building;
+
+				Vec3<float> posA = {building->bounds.p0.x, building->bounds.p0.y, 0};
+				Vec2<float> screenPosA = this->tileToOffsetScreenCoords(posA);
+				Vec3<float> posB = {building->bounds.p1.x, building->bounds.p1.y, 0};
+				Vec2<float> screenPosB = this->tileToOffsetScreenCoords(posB);
+
+				// Apply offset to borders every half-second
+				if (counter >= COUNTER_MAX / 2)
+				{
+					screenPosA -= Vec2<float>{2.0f, 2.0f};
+					screenPosB += Vec2<float>{2.0f, 2.0f};
+				}
+				fw().renderer->drawRect(screenPosA, screenPosB - screenPosA, PLAYER_BASE_OWNED,
+				                        1.0f);
+			}
+
+			// Owned buildings
+			if (state.current_city->cityViewSelectedOrganisation)
+			{
+				static const Colour HOSTILE{223, 0, 0};
+				static const Colour NEUTRAL{223, 0, 223};
+				static const Colour FRIENDLY{223, 223, 0};
+
+				Colour color;
+				switch (state.getPlayer()->isRelatedTo(
+				    state.current_city->cityViewSelectedOrganisation))
+				{
+					case Organisation::Relation::Hostile:
+						color = HOSTILE;
+						break;
+					case Organisation::Relation::Unfriendly:
+					case Organisation::Relation::Neutral:
+						color = NEUTRAL;
+						break;
+					case Organisation::Relation::Friendly:
+					case Organisation::Relation::Allied:
+						color = FRIENDLY;
+						break;
+				}
+
+				for (auto &b : state.current_city->buildings)
+				{
+					if (b.second->owner != state.current_city->cityViewSelectedOrganisation)
+					{
+						continue;
+					}
+					Vec3<float> posA = {b.second->bounds.p0.x, b.second->bounds.p0.y, 0};
+					Vec2<float> screenPosA = this->tileToOffsetScreenCoords(posA);
+					Vec3<float> posB = {b.second->bounds.p1.x, b.second->bounds.p1.y, 0};
+					Vec2<float> screenPosB = this->tileToOffsetScreenCoords(posB);
+
+					// Apply offset to borders every half-second
+					if (counter >= COUNTER_MAX / 2)
+					{
+						screenPosA -= Vec2<float>{2.0f, 2.0f};
+						screenPosB += Vec2<float>{2.0f, 2.0f};
+					}
+
+					fw().renderer->drawRect(screenPosA, screenPosB - screenPosA, color, 2.0f);
+				}
+			}
+
 			// Compile list of agent destinations
 			for (auto &a : state.agents)
 			{
@@ -805,18 +912,21 @@ void CityTileView::render()
 			}
 
 			// Building selection brackets
-			for (auto &b : buildingsSelected)
+			if (selectionFrameTicksAccumulated / SELECTION_FRAME_ANIMATION_DELAY)
 			{
-				std::vector<Vec3<int>> points = {
-				    {b->bounds.p0.x, b->bounds.p0.y, 0}, {b->bounds.p0.x, b->bounds.p1.y, 0},
-				    {b->bounds.p1.x, b->bounds.p1.y, 0}, {b->bounds.p1.x, b->bounds.p0.y, 0},
-				    {b->bounds.p0.x, b->bounds.p0.y, 0},
-				};
-				static const auto lineColorBuilding = Colour(150, 210, 240, 255);
-				for (int i = 0; i < points.size() - 1; i++)
+				for (auto &b : buildingsSelected)
 				{
-					r.drawLine(tileToOffsetScreenCoords(points[i]),
-					           tileToOffsetScreenCoords(points[i + 1]), lineColorBuilding);
+					std::vector<Vec3<int>> points = {
+					    {b->bounds.p0.x, b->bounds.p0.y, 0}, {b->bounds.p0.x, b->bounds.p1.y, 0},
+					    {b->bounds.p1.x, b->bounds.p1.y, 0}, {b->bounds.p1.x, b->bounds.p0.y, 0},
+					    {b->bounds.p0.x, b->bounds.p0.y, 0},
+					};
+					static const auto lineColorBuilding = Colour(150, 210, 240, 255);
+					for (int i = 0; i < points.size() - 1; i++)
+					{
+						r.drawLine(tileToOffsetScreenCoords(points[i]),
+						           tileToOffsetScreenCoords(points[i + 1]), lineColorBuilding);
+					}
 				}
 			}
 
@@ -824,5 +934,85 @@ void CityTileView::render()
 		}
 		break;
 	}
+}
+void CityTileView::update()
+{
+	TileView::update();
+	counter = (counter + 1) % COUNTER_MAX;
+
+	// Pulsate palette colors
+	colorCurrent += (colorForward ? 1 : -1);
+	if (colorCurrent <= 0 || colorCurrent >= 15)
+	{
+		colorCurrent = clamp(colorCurrent, 0, 15);
+		colorForward = !colorForward;
+	}
+
+	// The palette fades from pal_03 at 3am to pal_02 at 6am then pal_01 at 9am
+	// The reverse for 3pm, 6pm & 9pm
+
+	auto hour = state.gameTime.getHours();
+	sp<Palette> interpolated_palette;
+	if (hour < 3 || hour >= 21)
+	{
+		interpolated_palette = this->mod_night_palette[colorCurrent];
+	}
+	else if (hour >= 9 && hour < 15)
+	{
+		interpolated_palette = this->mod_day_palette[colorCurrent];
+	}
+	else
+	{
+		sp<Palette> palette1;
+		sp<Palette> palette2;
+		float factor = 0;
+
+		float hours_float = hour + (float)state.gameTime.getMinutes() / 60.0f;
+
+		if (hour >= 3 && hour < 6)
+		{
+			palette1 = this->mod_night_palette[colorCurrent];
+			palette2 = this->mod_twilight_palette[colorCurrent];
+			factor = clamp((hours_float - 3.0f) / 3.0f, 0.0f, 1.0f);
+		}
+		else if (hour >= 6 && hour < 9)
+		{
+			palette1 = this->mod_twilight_palette[colorCurrent];
+			palette2 = this->mod_day_palette[colorCurrent];
+			factor = clamp((hours_float - 6.0f) / 3.0f, 0.0f, 1.0f);
+		}
+		else if (hour >= 15 && hour < 18)
+		{
+			palette1 = this->mod_day_palette[colorCurrent];
+			palette2 = this->mod_twilight_palette[colorCurrent];
+			factor = clamp((hours_float - 15.0f) / 3.0f, 0.0f, 1.0f);
+		}
+		else if (hour >= 18 && hour < 21)
+		{
+			palette1 = this->mod_twilight_palette[colorCurrent];
+			palette2 = this->mod_night_palette[colorCurrent];
+			factor = clamp((hours_float - 18.0f) / 3.0f, 0.0f, 1.0f);
+		}
+		else
+		{
+			LogError("Unhandled hoursClamped %d", hour);
+		}
+
+		interpolated_palette = mksp<Palette>();
+		for (int i = 0; i < 256; i++)
+		{
+			auto &colour1 = palette1->getColour(i);
+			auto &colour2 = palette2->getColour(i);
+			Colour interpolated_colour;
+
+			interpolated_colour.r = (int)mix((float)colour1.r, (float)colour2.r, factor);
+			interpolated_colour.g = (int)mix((float)colour1.g, (float)colour2.g, factor);
+			interpolated_colour.b = (int)mix((float)colour1.b, (float)colour2.b, factor);
+			interpolated_colour.a = (int)mix((float)colour1.a, (float)colour2.a, factor);
+			interpolated_palette->setColour(i, interpolated_colour);
+		}
+	}
+
+	this->pal = interpolated_palette;
 }
 }

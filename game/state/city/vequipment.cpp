@@ -89,12 +89,12 @@ bool VEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> 
 	// I believe this is the correct formula
 	velocity *= type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 
-	auto projectile =
-	    mksp<Projectile>(type->guided ? Projectile::Type::Missile : Projectile::Type::Beam, owner,
-	                     targetVehicle, homingPosition, muzzle, velocity, type->turn_rate,
-	                     type->ttl * TICKS_MULTIPLIER, type->damage,
-	                     /*delay*/ 0, type->tail_size, type->projectile_sprites, type->impact_sfx,
-	                     type->explosion_graphic, state.city_common_image_list->projectileVoxelMap);
+	auto projectile = mksp<Projectile>(
+	    type->guided ? Projectile::Type::Missile : Projectile::Type::Beam, owner, targetVehicle,
+	    homingPosition, muzzle, velocity, type->turn_rate, type->ttl, type->damage, /*delay*/ 0,
+	    /*depletion rate*/ 0, type->tail_size, type->projectile_sprites, type->impact_sfx,
+	    type->explosion_graphic, state.city_common_image_list->projectileVoxelMap, type->stunTicks,
+	    type->splitIntoTypes, manual);
 	owner->tileObject->map.addObjectToMap(projectile);
 	owner->city->projectiles.insert(projectile);
 

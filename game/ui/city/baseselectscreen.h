@@ -13,12 +13,8 @@ class GameState;
 class BaseSelectScreen : public CityTileView
 {
   private:
-	static const int COUNTER_MAX = 90;
-
 	sp<Form> menuform;
-
 	sp<GameState> state;
-	int counter;
 
   public:
 	BaseSelectScreen(sp<GameState> state, Vec3<float> centerPos);

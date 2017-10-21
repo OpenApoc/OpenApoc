@@ -84,6 +84,11 @@ class BattleTileView : public TileView
 	int focusAnimationTicksAccumulated = 0;
 	int selectionFrameTicksAccumulated = 0;
 
+	bool colorForward = true;
+	int colorCurrent = 0;
+	sp<Palette> palette;
+	std::vector<sp<Palette>> modPalette;
+
   public:
 	BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
 	               TileViewMode initialMode, Vec3<float> screenCenterTile, GameState &gameState);
@@ -138,5 +143,6 @@ class BattleTileView : public TileView
 
 	void eventOccurred(Event *e) override;
 	void render() override;
+	void update() override;
 };
 }
