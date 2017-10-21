@@ -2,6 +2,7 @@
 #define _USE_MATH_DEFINES
 #endif
 #include "game/state/city/vehiclemission.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "framework/sound.h"
@@ -419,8 +420,8 @@ VehicleMission *VehicleMission::gotoBuilding(GameState &, Vehicle &v, StateRef<B
 	return mission;
 }
 
-VehicleMission *VehicleMission::infiltrateOrSubvertBuilding(GameState &, Vehicle &,
-                                                            StateRef<Building> target, bool subvert)
+VehicleMission *VehicleMission::infiltrateOrSubvertBuilding(GameState &, Vehicle &, bool subvert,
+                                                            StateRef<Building> target)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::InfiltrateSubvert;
@@ -452,6 +453,20 @@ VehicleMission *VehicleMission::followVehicle(GameState &, Vehicle &, StateRef<V
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::FollowVehicle;
 	mission->targetVehicle = target;
+	return mission;
+}
+
+VehicleMission *VehicleMission::followVehicle(GameState &, Vehicle &,
+                                              std::list<StateRef<Vehicle>> &targets)
+{
+	auto *mission = new VehicleMission();
+	mission->type = MissionType::FollowVehicle;
+	if (!targets.empty())
+	{
+		mission->targetVehicle = targets.front();
+		mission->targets = targets;
+		mission->targets.pop_front();
+	}
 	return mission;
 }
 
@@ -493,6 +508,36 @@ VehicleMission *VehicleMission::selfDestruct(GameState &state, Vehicle &v)
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::SelfDestruct;
 	mission->timeToSnooze = SELF_DESTRUCT_TIMER;
+	return mission;
+}
+
+VehicleMission *VehicleMission::arriveFromDimensionGate(GameState &state, Vehicle &v, int ticks)
+{
+	auto *mission = new VehicleMission();
+	mission->type = MissionType::ArriveFromDimensionGate;
+	if (ticks >= 0)
+	{
+		mission->timeToSnooze = (unsigned)ticks;
+	}
+	else
+	{
+		// find max delay arrival and increment
+		int lastTicks = -DIMENSION_GATE_DELAY;
+		for (auto &v2 : state.vehicles)
+		{
+			if (v2.second->city == v.city && v2.second->owner == v.owner)
+			{
+				for (auto &m : v2.second->missions)
+				{
+					if (m->type == MissionType::ArriveFromDimensionGate)
+					{
+						lastTicks = std::max(lastTicks, (int)m->timeToSnooze);
+					}
+				}
+			}
+		}
+		mission->timeToSnooze = lastTicks + DIMENSION_GATE_DELAY;
+	}
 	return mission;
 }
 
@@ -975,8 +1020,22 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 		{
 			return advanceAlongPath(state, v, destPos, destFacing);
 		}
-		case MissionType::AttackVehicle:
 		case MissionType::FollowVehicle:
+		{
+			auto vTile = v.tileObject;
+			auto targetTile = this->targetVehicle->tileObject;
+
+			if (vTile && targetTile)
+			{
+				setFollowPath(state, v);
+				if (!currentPlannedPath.empty())
+				{
+					return advanceAlongPath(state, v, destPos, destFacing);
+				}
+			}
+			return false;
+		}
+		case MissionType::AttackVehicle:
 		{
 			auto vTile = v.tileObject;
 			auto targetTile = this->targetVehicle->tileObject;
@@ -1013,7 +1072,8 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 						{
 							currentPlannedPath.clear();
 						}
-						// Face target and fire
+
+						// Face target to fire
 						Vec2<float> targetFacingVector = {targetVehicle->position.x - v.position.x,
 						                                  targetVehicle->position.y - v.position.y};
 						if (targetFacingVector.x != 0 || targetFacingVector.y != 0)
@@ -1033,17 +1093,10 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 							}
 						}
 					}
-					else if (targetTile->getOwningTile()->position != this->targetLocation ||
-					         currentPlannedPath.empty())
+					else
 					{
-						// adjust the path if target moved
-						currentPlannedPath.clear();
-						this->targetLocation = targetTile->getOwningTile()->position;
-						setPathTo(state, v, this->targetLocation, getDefaultIterationCount(v),
-						          false);
+						setFollowPath(state, v);
 					}
-
-					// continue
 					if (!currentPlannedPath.empty())
 					{
 						return advanceAlongPath(state, v, destPos, destFacing);
@@ -1139,19 +1192,10 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 						}
 						return false;
 					}
-					else if (v.getPreferredPosition(targetTile->getOwningTile()->position) !=
-					             this->targetLocation ||
-					         currentPlannedPath.empty())
+					else
 					{
-						// adjust the path if target moved
-						currentPlannedPath.clear();
-						targetLocation =
-						    v.getPreferredPosition(targetTile->getOwningTile()->position);
-						setPathTo(state, v, this->targetLocation, getDefaultIterationCount(v),
-						          false);
+						setFollowPath(state, v);
 					}
-
-					// continue
 					if (!currentPlannedPath.empty())
 					{
 						currentPlannedPath.pop_front();
@@ -1181,6 +1225,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 		}
 		case MissionType::Snooze:
 		case MissionType::SelfDestruct:
+		case MissionType::ArriveFromDimensionGate:
 		case MissionType::RestartNextMission:
 		case MissionType::GotoPortal:
 		case MissionType::DepartToSpace:
@@ -1224,24 +1269,53 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 		// Port out or path to portal
 		case MissionType::GotoPortal:
 		{
+			if (cancelled)
+			{
+				return;
+			}
 			if (finished)
 			{
-				// Port out
-				for (auto &city : state.cities)
+				// Cannot port out?
+				if (!v.hasDimensionShifter())
 				{
-					if (city.second != v.city.getSp())
+					if (config().getBool("OpenApoc.NewFeature.CrashingDimensionGate"))
 					{
-						fw().soundBackend->playSample(
-						    state.city_common_sample_list->dimensionShiftIn, v.position);
-						v.shadowObject->removeFromMap();
-						v.tileObject->removeFromMap();
-						v.shadowObject.reset();
-						v.tileObject.reset();
-						v.city = {&state, city.second};
-						// FIXME: add GotoBase mission
-						return;
+						v.velocity = v.type->directionToVector(v.direction) * v.getSpeed();
+						v.crash(state, nullptr);
+					}
+					else
+					{
+						takePositionNearPortal(state, v);
 					}
 				}
+				else // Port out
+				{
+					for (auto &city : state.cities)
+					{
+						if (city.second != v.city.getSp())
+						{
+							v.enterDimensionGate(state);
+							v.city = {&state, city.second};
+							if (v.owner == state.getPlayer())
+							{
+								v.addMission(
+								    state, VehicleMission::arriveFromDimensionGate(state, v), true);
+							}
+							else
+							{
+								v.equipDefaultEquipment(state);
+								v.leaveDimensionGate(state);
+								std::uniform_int_distribution<int> xyPos(20, 120);
+								v.setPosition(
+								    {xyPos(state.rng), xyPos(state.rng), v.city->size.z - 1});
+							}
+							break;
+						}
+					}
+				}
+				// Cancelling as otherwise we can be in another dimension when we update
+				cancelled = true;
+				return;
 			}
 			return;
 		}
@@ -1251,11 +1325,9 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 			if (finished)
 			{
 				v.die(state, true);
-			}
-			if (takeOffCheck(state, v))
-			{
 				return;
 			}
+			takeOffCheck(state, v);
 			return;
 		}
 		// Move to the ground spot
@@ -1293,15 +1365,18 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 				v.die(state);
 				return;
 			}
-		// Intentional fall-through
-		case MissionType::Snooze:
-		{
-			if (ticks >= this->timeToSnooze)
-				this->timeToSnooze = 0;
-			else
-				this->timeToSnooze -= ticks;
+			updateTimer(ticks);
 			return;
-		}
+		case MissionType::ArriveFromDimensionGate:
+			if (missionCounter == 0 && timeToSnooze == 0)
+			{
+				v.addMission(state, restartNextMission(state, v));
+			}
+			updateTimer(ticks);
+			return;
+		case MissionType::Snooze:
+			updateTimer(ticks);
+			return;
 		default:
 			LogWarning("TODO: Implement update");
 			return;
@@ -1321,7 +1396,7 @@ bool VehicleMission::isFinished(GameState &state, Vehicle &v, bool callUpdateIfF
 	return false;
 }
 
-bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
+bool VehicleMission::isFinishedInternal(GameState &state, Vehicle &v)
 {
 	if (cancelled)
 	{
@@ -1338,7 +1413,9 @@ bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 			auto vTile = v.tileObject;
 			if (vTile && this->currentPlannedPath.empty() &&
 			    (pickedNearest || vTile->getOwningTile()->position == this->targetLocation))
+			{
 				return true;
+			}
 			return false;
 		}
 		case MissionType::AttackVehicle:
@@ -1363,23 +1440,20 @@ bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 		}
 		case MissionType::FollowVehicle:
 		{
-			auto t = this->targetVehicle;
-			if (!t)
+			// Target was destroyed / lost tileobject
+			while (!targets.empty() &&
+			       (!targetVehicle || !targetVehicle->tileObject || targetVehicle->crashed ||
+			        this->targetVehicle->health == 0 || targetVehicle->city != v.city))
 			{
-				// Target was destroyed
-				return true;
+				targetVehicle = targets.front();
+				targets.pop_front();
 			}
-			auto targetTile = t->tileObject;
-			if (!targetTile)
-			{
-				// Target not on the map anymore
-				return true;
-			}
-			if (t->crashed)
+			if (!targetVehicle || !targetVehicle->tileObject || targetVehicle->crashed ||
+			    this->targetVehicle->health == 0 || targetVehicle->city != v.city)
 			{
 				return true;
 			}
-			return this->targetVehicle->health == 0;
+			return false;
 		}
 		case MissionType::TakeOff:
 			return v.tileObject && this->currentPlannedPath.empty();
@@ -1389,6 +1463,8 @@ bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 			return missionCounter > 1;
 		case MissionType::OfferService:
 			return missionCounter > 1;
+		case MissionType::ArriveFromDimensionGate:
+			return missionCounter > 0;
 		case MissionType::RecoverVehicle:
 			return missionCounter > 0;
 		case MissionType::Patrol:
@@ -1401,9 +1477,8 @@ bool VehicleMission::isFinishedInternal(GameState &, Vehicle &v)
 		case MissionType::RestartNextMission:
 		case MissionType::Teleport:
 			return true;
-		// For now there's no known way to finish AttackBuilding
 		case MissionType::AttackBuilding:
-			return false;
+			return targetBuilding && !targetBuilding->isAlive(state);
 		default:
 			LogWarning("TODO: Implement isFinishedInternal");
 			return false;
@@ -1711,6 +1786,10 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				cancelled = true;
 				return;
 			}
+			if (isFinishedInternal(state, v))
+			{
+				return;
+			}
 			if (!isFinished(state, v))
 			{
 				LogInfo("Vehicle mission %s: Pathing to %s", getName(), targetLocation);
@@ -1797,6 +1876,14 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		}
 		case MissionType::AttackBuilding:
 		{
+			if (!targetBuilding)
+			{
+				if (!acquireTargetBuilding(state, v))
+				{
+					cancelled = true;
+					return;
+				}
+			}
 			if (takeOffCheck(state, v))
 			{
 				return;
@@ -1858,20 +1945,15 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		{
 			auto name = this->getName();
 			LogInfo("Vehicle mission %s checking state", name);
-			auto t = this->targetVehicle;
-			if (!t)
+			if (isFinished(state, v))
 			{
+				LogInfo("Vehicle mission %s became finished", name);
 				return;
 			}
+			auto t = this->targetVehicle;
 			if (v.shared_from_this() == t.getSp())
 			{
 				LogError("Vehicle mission %s: Targeting itself", name);
-				return;
-			}
-			auto targetTile = t->tileObject;
-			if (!targetTile)
-			{
-				LogInfo("Vehicle mission %s: Target not on the map", name);
 				return;
 			}
 			auto vehicleTile = v.tileObject;
@@ -1879,8 +1961,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			{
 				return;
 			}
-			this->targetLocation = targetTile->getOwningTile()->position;
-			this->setPathTo(state, v, this->targetLocation, getDefaultIterationCount(v), false);
+			setFollowPath(state, v);
 			return;
 		}
 		case MissionType::GotoBuilding:
@@ -2220,6 +2301,14 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		}
 		case MissionType::InfiltrateSubvert:
 		{
+			if (!targetBuilding)
+			{
+				if (!acquireTargetBuilding(state, v))
+				{
+					cancelled = true;
+					return;
+				}
+			}
 			// Ground can't infiltrate
 			if (v.type->isGround())
 			{
@@ -2304,9 +2393,8 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						}
 						else
 						{
-							LogError("Mission %s: Can't find a spot to infiltrate from", name);
-							v.addMission(state, VehicleMission::gotoPortal(state, v), true);
-							missionCounter = 2;
+							cancelled = true;
+							return;
 						}
 					}
 
@@ -2338,8 +2426,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					// Deposit aliens or subvert
 					if (subvert)
 					{
-						// FIXME: Proper micronoid rain, for now a flat 33% chance of success
-						if (randBoundsExclusive(state.rng, 0, 100) < 33)
+						if (randBoundsExclusive(state.rng, 0, 100) < state.micronoidRainChance)
 						{
 							targetBuilding->owner->infiltrationValue = 200;
 						}
@@ -2362,16 +2449,41 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						}
 					}
 					// Retreat
-					v.addMission(state, VehicleMission::gotoPortal(state, v));
 					v.addMission(state, VehicleMission::snooze(state, v, TICKS_PER_SECOND));
 					missionCounter++;
 					return;
 				}
 				case 2:
 				{
-					// Should never reach this, as we're gone through portal by the end of this
-					// mision
-					LogError("Starting a completed Infiltration mission?");
+					return;
+				}
+				default:
+				{
+					LogError("Unhandled missionCounter in %s", getName());
+					return;
+				}
+			}
+		}
+		case MissionType::ArriveFromDimensionGate:
+		{
+			switch (missionCounter)
+			{
+				// When timer finished spawn from gate
+				case 0:
+				{
+					if (timeToSnooze > 0)
+					{
+						return;
+					}
+
+					v.leaveDimensionGate(state);
+					takePositionNearPortal(state, v);
+					missionCounter++;
+					return;
+				}
+				// Mission finished
+				case 1:
+				{
 					return;
 				}
 				default:
@@ -2456,6 +2568,103 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 	else
 	{
 		LogError("Mission %s: Take off before pathfinding!", this->getName());
+	}
+}
+
+void VehicleMission::setFollowPath(GameState &state, Vehicle &v)
+{
+	auto targetTile = targetVehicle->tileObject;
+
+	if (type == MissionType::FollowVehicle)
+	{
+		if (v.type->isGround())
+		{
+			// If we're not aiming for target's location
+			// or we're not at planned location and with empty path
+			if (targetTile->getOwningTile()->position != this->targetLocation ||
+			    (v.tileObject->getOwningTile()->position != targetLocation &&
+			     currentPlannedPath.empty()))
+			{
+				// adjust the path if target moved or planned path didn't bring us to target
+				currentPlannedPath.clear();
+				this->targetLocation = targetTile->getOwningTile()->position;
+				setPathTo(state, v, this->targetLocation, getDefaultIterationCount(v), false);
+			}
+		}
+		else // isFlying
+		{
+			bool needRePath = false;
+			// Do something if our target location is outside of range of target
+			// Or we're not at planned location and with empty path
+			if (glm::length((Vec3<float>)(targetTile->getOwningTile()->position -
+			                              this->targetLocation)) > FOLLOW_RANGE ||
+			    (v.tileObject->getOwningTile()->position != targetLocation &&
+			     currentPlannedPath.empty()))
+			{
+				needRePath = true;
+			}
+			// Maneuver if path is empty and enemies nearby
+			else if (currentPlannedPath.empty())
+			{
+				float range = v.getFiringRange();
+				if (range > 0.0f)
+				{
+					auto enemy = v.findClosestEnemy(state, v.tileObject);
+					if (enemy && enemy->getDistanceTo(v.position) < range)
+					{
+						needRePath = true;
+					}
+				}
+			}
+			// Pick a random point around target
+			if (needRePath)
+			{
+				currentPlannedPath.clear();
+				targetLocation = targetTile->getOwningTile()->position;
+				targetLocation.x +=
+				    randBoundsInclusive(state.rng, -FOLLOW_BOUNDS_XY, FOLLOW_BOUNDS_XY);
+				targetLocation.y +=
+				    randBoundsInclusive(state.rng, -FOLLOW_BOUNDS_XY, FOLLOW_BOUNDS_XY);
+				targetLocation.z +=
+				    randBoundsInclusive(state.rng, -FOLLOW_BOUNDS_Z, FOLLOW_BOUNDS_Z);
+				targetLocation.x = clamp(targetLocation.x, 0, v.city->size.x - 1);
+				targetLocation.y = clamp(targetLocation.y, 0, v.city->size.y - 1);
+				targetLocation.z = clamp(targetLocation.z, 0, v.city->size.z - 1);
+				setPathTo(state, v, targetLocation, getDefaultIterationCount(v), true);
+			}
+		}
+	}
+	else // Attack vehicle
+	{
+		if (v.type->isGround())
+		{
+			// If we're not aiming for target's location
+			// or we're not at planned location and with empty path
+			if (targetTile->getOwningTile()->position != this->targetLocation ||
+			    (v.tileObject->getOwningTile()->position != targetLocation &&
+			     currentPlannedPath.empty()))
+			{
+				// adjust the path if target moved or planned path didn't bring us to target
+				currentPlannedPath.clear();
+				this->targetLocation = targetTile->getOwningTile()->position;
+				setPathTo(state, v, this->targetLocation, getDefaultIterationCount(v), false);
+			}
+		}
+		else // isFlying
+		{
+			// If we're not aiming for target's location (adjusted by our preference)
+			// or we're not at planned location and with empty path
+			if (v.getPreferredPosition(targetTile->getOwningTile()->position) !=
+			        this->targetLocation ||
+			    (v.tileObject->getOwningTile()->position != targetLocation &&
+			     currentPlannedPath.empty()))
+			{
+				// adjust the path if target moved or planned path didn't bring us to target
+				currentPlannedPath.clear();
+				targetLocation = v.getPreferredPosition(targetTile->getOwningTile()->position);
+				setPathTo(state, v, this->targetLocation, getDefaultIterationCount(v), false);
+			}
+		}
 	}
 }
 
@@ -2631,6 +2840,46 @@ Vec3<float> VehicleMission::getRandomMapEdgeCoordinates(GameState &state, StateR
 	}
 }
 
+bool VehicleMission::acquireTargetBuilding(GameState &state, Vehicle &v)
+{
+	std::list<StateRef<Building>> availableBuildings;
+	for (auto &b : v.city->buildings)
+	{
+		if (!b.second->isAlive(state))
+		{
+			continue;
+		}
+		if (std::abs(b.second->bounds.p0.x / 2 + b.second->bounds.p1.x / 2 - v.position.x) +
+		        std::abs(b.second->bounds.p0.y / 2 + b.second->bounds.p1.y / 2 - v.position.y) <=
+		    TARGET_BUILDING_DISTANCE_LIMIT)
+		{
+			availableBuildings.emplace_back(&state, b.first);
+		}
+	}
+	if (!availableBuildings.empty())
+	{
+		targetBuilding = listRandomiser(state.rng, availableBuildings);
+	}
+
+	return (bool)targetBuilding;
+}
+
+void VehicleMission::updateTimer(unsigned ticks)
+{
+	if (ticks >= this->timeToSnooze)
+		this->timeToSnooze = 0;
+	else
+		this->timeToSnooze -= ticks;
+}
+
+void VehicleMission::takePositionNearPortal(GameState &state, Vehicle &v)
+{
+	std::uniform_int_distribution<int> xPos((int)v.position.x - 2, (int)v.position.x + 2);
+	std::uniform_int_distribution<int> yPos((int)v.position.y - 2, (int)v.position.y + 2);
+	v.addMission(state, VehicleMission::gotoLocation(
+	                        state, v, v.getPreferredPosition(xPos(state.rng), yPos(state.rng))));
+}
+
 UString VehicleMission::getName()
 {
 	static const std::map<VehicleMission::MissionType, UString> TypeMap = {
@@ -2642,11 +2891,12 @@ UString VehicleMission::getName()
 	    {MissionType::RecoverVehicle, "RecoverVehicle"},
 	    {MissionType::AttackVehicle, "AttackVehicle"},
 	    {MissionType::AttackBuilding, "AttackBuilding"},
-	    {MissionType::Snooze, "Snooze"},
-	    {MissionType::SelfDestruct, "Self Destruct"},
-	    {MissionType::TakeOff, "TakeOff"},
-	    {MissionType::Land, "Land"},
-	    {MissionType::Crash, "Crash"},
+	    {MissionType::Snooze, "Snooze for"},
+	    {MissionType::SelfDestruct, "SelfDestruct in"},
+	    {MissionType::ArriveFromDimensionGate, "ArriveFromDimensionGate in"},
+	    {MissionType::TakeOff, "TakeOff from"},
+	    {MissionType::Land, "Land into"},
+	    {MissionType::Crash, "Crash landing"},
 	    {MissionType::Patrol, "Patrol"},
 	    {MissionType::InfiltrateSubvert, "Infiltrate/Subvert"},
 	    {MissionType::RestartNextMission, "RestartNextMission"},
@@ -2660,52 +2910,31 @@ UString VehicleMission::getName()
 	switch (this->type)
 	{
 		case MissionType::GotoLocation:
+		case MissionType::Patrol:
+		case MissionType::GotoPortal:
+		case MissionType::DepartToSpace:
+		case MissionType::Crash:
+		case MissionType::Teleport:
 			name += format(" %s", this->targetLocation);
-			break;
-		case MissionType::GotoBuilding:
-			name += " " + this->targetBuilding.id;
 			break;
 		case MissionType::FollowVehicle:
-			name += " " + this->targetVehicle.id;
-			break;
 		case MissionType::RecoverVehicle:
-			name += " " + this->targetVehicle.id;
+		case MissionType::AttackVehicle:
+			name += format(" %s", this->targetVehicle.id);
 			break;
+		case MissionType::GotoBuilding:
 		case MissionType::AttackBuilding:
+		case MissionType::TakeOff:
+		case MissionType::Land:
 			name += " " + this->targetBuilding.id;
 			break;
+		case MissionType::ArriveFromDimensionGate:
 		case MissionType::SelfDestruct:
-			name += format(" after %u ticks", this->timeToSnooze);
-			break;
 		case MissionType::Snooze:
-			name += format(" for %u ticks", this->timeToSnooze);
-			break;
-		case MissionType::TakeOff:
-			name += " from " + this->targetBuilding.id;
-			break;
-		case MissionType::Land:
-			name += " in " + this->targetBuilding.id;
-			break;
-		case MissionType::Crash:
-			name += format(" landing on %s", this->targetLocation);
-			break;
-		case MissionType::AttackVehicle:
-			name += format(" target \"%s\"", this->targetVehicle.id);
-			break;
-		case MissionType::Patrol:
-			name += format(" %s", this->targetLocation);
-			break;
-		case MissionType::GotoPortal:
-			name += format(" %s", this->targetLocation);
-			break;
-		case MissionType::DepartToSpace:
-			name += format(" %s", this->targetLocation);
-			break;
-		case MissionType::Teleport:
-			name += format(" random around %s", this->targetLocation);
+			name += format(" %u ticks", this->timeToSnooze);
 			break;
 		case MissionType::InfiltrateSubvert:
-			name += " " + this->targetBuilding.id + " " + (subvert ? "subvert" : "infiltrate");
+			name += " " + this->targetBuilding.id + " " + (subvert ? "[Subvert]" : "[Infiltrate]");
 			break;
 		case MissionType::RestartNextMission:
 			break;

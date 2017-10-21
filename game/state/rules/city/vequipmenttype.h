@@ -86,6 +86,10 @@ class VEquipmentType : public StateObject
 	int shielding;
 	bool cloaking;
 	bool teleporting;
+	bool dimensionShifting = false;
+
+	// Score requirement
+	int scoreRequirement = 0;
 };
 
 } // namespace OpenApoc

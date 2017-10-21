@@ -1967,10 +1967,6 @@ void AEquipScreen::closeScreen()
 				for (auto &e : entry.second)
 				{
 					int price = 0;
-					if (state->economy.find(e->type.id) != state->economy.end())
-					{
-						price = state->economy[e->type.id].currentPrice;
-					}
 					entry.first->cargo.emplace_back(
 					    *state, e->type, e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1,
 					    price, nullptr, entry.first->homeBuilding);
@@ -1999,10 +1995,6 @@ void AEquipScreen::closeScreen()
 				for (auto &e : entry.second)
 				{
 					int price = 0;
-					if (state->economy.find(e->type.id) != state->economy.end())
-					{
-						price = state->economy[e->type.id].currentPrice;
-					}
 					entry.first->cargo.emplace_back(
 					    *state, e->type, e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1,
 					    price, nullptr, state->current_base->building);
@@ -2060,10 +2052,6 @@ void AEquipScreen::closeScreen()
 					for (auto &e : entry.second)
 					{
 						int price = 0;
-						if (state->economy.find(e->type.id) != state->economy.end())
-						{
-							price = state->economy[e->type.id].currentPrice;
-						}
 						buildingToDropTo->cargo.emplace_back(
 						    *state, e->type,
 						    e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1, price,

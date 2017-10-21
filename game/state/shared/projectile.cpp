@@ -29,8 +29,8 @@ Projectile::Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> tar
       firerPosition(firer->position), trackedVehicle(target), targetPosition(targetPosition),
       previousPosition(position), spritePositions({position}), tail_length(tail_length),
       projectile_sprites(projectile_sprites), sprite_distance(1.0f / TILE_Y_CITY),
-      voxelMap(voxelMap), manualFire(manualFire), impactSfx(impactSfx), doodadType(doodadType),
-      velocityScale(VELOCITY_SCALE_CITY)
+      voxelMapLos(voxelMap), voxelMapLof(turnRate > 0 ? voxelMap : nullptr), manualFire(manualFire),
+      impactSfx(impactSfx), doodadType(doodadType), velocityScale(VELOCITY_SCALE_CITY)
 {
 	// enough ticks to pass 1 tile diagonally and some more since vehicles can move quite quickly
 	ownerInvulnerableTicks =
@@ -50,9 +50,9 @@ Projectile::Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUni
       depletionRate(depletionRate), firerUnit(firer), firerPosition(firer->position),
       trackedUnit(target), targetPosition(targetPosition), previousPosition(position),
       spritePositions({position}), tail_length(tail_length), projectile_sprites(projectile_sprites),
-      sprite_distance(1.0f / TILE_Y_BATTLE), voxelMap(voxelMap), manualFire(manualFire),
-      impactSfx(impactSfx), doodadType(doodadType), damageType(damageType),
-      velocityScale(VELOCITY_SCALE_BATTLE)
+      sprite_distance(1.0f / TILE_Y_BATTLE), voxelMapLos(voxelMap),
+      voxelMapLof(turnRate > 0 ? voxelMap : nullptr), manualFire(manualFire), impactSfx(impactSfx),
+      doodadType(doodadType), damageType(damageType), velocityScale(VELOCITY_SCALE_BATTLE)
 {
 	// enough ticks to pass 1 tile diagonally
 	ownerInvulnerableTicks =

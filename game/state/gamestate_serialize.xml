@@ -33,6 +33,9 @@
 		<member>current_city</member>
 		<member>current_base</member>
 		<member>agentEquipmentTemplates</member>
+		<member>totalScore</member>
+		<member>weekScore</member>
+		<member>micronoidRainChance</member>
 		<member>objectIdCount</member>
 		<member type="Section">city_common_image_list</member>
 		<member type="Section">city_common_sample_list</member>
@@ -56,7 +59,6 @@
 		<member type="Section">equipment_sets_by_level</member>
 		<member type="Section">building_functions</member>
 		<member>messages</member>
-		<member>score</member>
 		<member>difficulty</member>
 		<member>firstDetection</member>
 		<member>nextInvasion</member>
@@ -341,6 +343,7 @@
 		<member>position</member>
 		<member>goalPosition</member>
 		<member>goalWaypoints</member>
+		<member>loot</member>
 		<member>velocity</member>
 		<member>facing</member>
 		<member>goalFacing</member>
@@ -385,6 +388,7 @@
 		<member>pickedNearest</member>
 		<member>targetBuilding</member>
 		<member>targetVehicle</member>
+		<member>targets</member>
 		<member>timeToSnooze</member>
 		<member>missionCounter</member>
 		<member>currentPlannedPath</member>
@@ -559,6 +563,7 @@
 		<member>interruptUnits</member>
 		<member>skirmish</member>
 		<member>relationshipsBeforeSkirmish</member>
+		<member>scoreBeforeSkirmish</member>
 		<member>reinforcementsInterval</member>
 		<member>ticksUntilNextReinforcement</member>
 		<member>battleViewZLevel</member>
@@ -637,6 +642,7 @@
 		<name>CityCommonImageList</name>
 		<member>strategyImages</member>
 		<member>projectileVoxelMap</member>
+		<member>portalVoxelMap</member>
 		<member>agentIsometric</member>
 		<member>agentStrategic</member>
 		<member>portalStrategic</member>
@@ -898,7 +904,8 @@
 		<member>projectile_sprites</member>
 		<member>sprite_distance</member>
 		<member>manualFire</member>
-		<member>voxelMap</member>
+		<member>voxelMapLof</member>
+		<member>voxelMapLos</member>
 		<member>impactSfx</member>
 		<member>doodadType</member>
 		<member>damageType</member>
@@ -914,6 +921,7 @@
 		<member>lifetime</member>
 		<member>sprite</member>
 		<member>type</member>
+		<member>voxelMap</member>
 	</object>
 	<object>
 		<name>DoodadType</name>
@@ -1157,6 +1165,8 @@
 		<member>shielding</member>
 		<member>cloaking</member>
 		<member>teleporting</member>
+		<member>dimensionShifting</member>
+		<member>scoreRequirement</member>
 	</object>
 	<object>
 		<name>DoodadFrame</name>
@@ -1273,6 +1283,7 @@
 		<member>provideFreightCargo</member>
 		<member>provideFreightBio</member>
 		<member>canRescueCrashed</member>
+		<member>canEnterDimensionGate</member>
 		<member>researchUnlock</member>
 	</object>
 	<object>
@@ -1906,5 +1917,15 @@
 		<member>currentPrice</member>
 		<member>currentStock</member>
 		<member>lastStock</member>
+	</object>
+	<object>
+		<name>GameScore</name>
+		<member>tacticalMissions</member>
+		<member>researchCompleted</member>
+		<member>alienIncidents</member>
+		<member>craftShotDownUFO</member>
+		<member>craftShotDownXCom</member>
+		<member>incursions</member>
+		<member>cityDamage</member>
 	</object>
 </openapoc_gamestate>

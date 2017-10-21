@@ -11,6 +11,7 @@ class TileMap;
 class DoodadType;
 class Image;
 class GameState;
+class VoxelMap;
 
 /* A doodad is a visual only effect (IE doesn't change the game state) for
  * animated sprited, like hit animations/explosions etc. The do not move(?) */
@@ -40,6 +41,7 @@ class Doodad : public std::enable_shared_from_this<Doodad>
 	bool temporary = false;
 	int age = 0;
 	int lifetime = 0;
+	sp<VoxelMap> voxelMap;
 	// A doodad is either a single image sprite
 	sp<Image> sprite;
 	// Or a DoodadType containing an animation

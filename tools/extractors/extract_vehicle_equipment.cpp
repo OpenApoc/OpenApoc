@@ -288,8 +288,9 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 				e->alien_space = gData.alien_space;
 				e->missile_jamming = gData.missile_jamming;
 				e->shielding = gData.shielding;
-				e->cloaking = gData.cloaking != 0 ? true : false;
-				e->teleporting = gData.teleporting != 0 ? true : false;
+				e->cloaking = gData.cloaking != 0;
+				e->teleporting = gData.teleporting != 0;
+				e->dimensionShifting = gData.dimension_shifting != 0;
 				general_count++;
 				break;
 			}

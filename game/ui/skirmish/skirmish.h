@@ -32,11 +32,12 @@ class Skirmish : public Stage
 
 	void battleInBuilding(bool hotseat, StateRef<Base> playerBase, StateRef<Building> building,
 	                      bool raid, bool customAliens, std::map<StateRef<AgentType>, int> aliens,
-	                      bool customGuards, int guards, bool customCivilians, int civilians);
+	                      bool customGuards, int guards, bool customCivilians, int civilians,
+	                      int score);
 	void battleInBase(bool hotseat, StateRef<Base> base, bool customAliens,
-	                  std::map<StateRef<AgentType>, int> aliens);
+	                  std::map<StateRef<AgentType>, int> aliens, int score);
 	void battleInVehicle(bool hotseat, StateRef<Base> playerBase, StateRef<VehicleType>,
-	                     bool customAliens, std::map<StateRef<AgentType>, int> aliens);
+	                     bool customAliens, std::map<StateRef<AgentType>, int> aliens, int score);
 
   public:
 	Skirmish(sp<GameState> state);

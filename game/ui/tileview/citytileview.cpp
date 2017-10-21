@@ -36,7 +36,7 @@ CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratT
 	alertImage = fw().data->loadImage("city/building-circle-red.png");
 	cargoImage = fw().data->loadImage("city/building-circle-yellow.png");
 
-	selectionBrackets.resize(3);
+	selectionBrackets.resize(4);
 	for (int i = 72; i < 76; i++)
 	{
 		selectionBrackets[0].push_back(fw().data->loadImage(format(
@@ -54,6 +54,10 @@ CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratT
 		selectionBrackets[1].push_back(fw().data->loadImage(format(
 		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
 		    i)));
+	}
+	for (int i = 1; i <= 4; i++)
+	{
+		selectionBrackets[3].push_back(fw().data->loadImage(format("city/city-bracket-%d.png", i)));
 	}
 
 	selectionImageFriendlySmall = fw().data->loadImage("battle/map-selection-small.png");
@@ -264,6 +268,14 @@ void CityTileView::render()
 						{
 							vehiclesToDrawBrackets.insert(m->targetVehicle);
 							vehiclesBracketsIndex[m->targetVehicle] = 2;
+						}
+					}
+					else if (m->type == VehicleMission::MissionType::FollowVehicle)
+					{
+						if (m->targetVehicle)
+						{
+							vehiclesToDrawBrackets.insert(m->targetVehicle);
+							vehiclesBracketsIndex[m->targetVehicle] = 3;
 						}
 					}
 				}
@@ -657,6 +669,16 @@ void CityTileView::render()
 					}
 				}
 			}
+			// Draw portals
+			for (auto &p : state.current_city->portals)
+			{
+				auto portalImage =
+				    state.city_common_image_list->portalStrategic[portalImageTicksAccumulated /
+				                                                  PORTAL_FRAME_ANIMATION_DELAY];
+				r.draw(portalImage,
+				       tileToOffsetScreenCoords(p->position) -
+				           (Vec2<float>)portalImage->size / 2.0f);
+			}
 			// Draw vehicle icons
 			for (auto &obj : vehiclesToDraw)
 			{
@@ -695,17 +717,6 @@ void CityTileView::render()
 					}
 				}
 			}
-			// Draw portals
-			for (auto &p : state.current_city->portals)
-			{
-				auto portalImage =
-				    state.city_common_image_list->portalStrategic[portalImageTicksAccumulated /
-				                                                  PORTAL_FRAME_ANIMATION_DELAY];
-				r.draw(portalImage,
-				       tileToOffsetScreenCoords(p->position) -
-				           (Vec2<float>)portalImage->size / 2.0f);
-			}
-
 			// Alien debug display
 			if (DEBUG_SHOW_ALIEN_CREW)
 			{

@@ -326,7 +326,9 @@ void City::generatePortals(GameState &state)
 				if (map->tileIsValid(pos) && map->getTile(pos)->ownedObjects.empty())
 				{
 					auto doodad =
-					    mksp<Doodad>(pos, StateRef<DoodadType>{&state, "DOODAD_6_DIMENSION_GATE"});
+					    mksp<Doodad>(pos + Vec3<float>{0.5f, 0.5f, 0.5f},
+					                 StateRef<DoodadType>{&state, "DOODAD_6_DIMENSION_GATE"});
+					doodad->voxelMap = state.city_common_image_list->portalVoxelMap;
 					map->addObjectToMap(doodad);
 					this->portals.push_back(doodad);
 					break;

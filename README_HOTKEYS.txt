@@ -73,6 +73,7 @@ Cityscape Debug:
 - [Ctrl] + [Alt] + [Shift] + [Left Click] destroys scenery
 - [Ctrl] + [Alt] + [Shift] + [Right Click] collapses building
 - [R] repairs all buildings
+- [B] spawn UFO on base assault mission
 - [U] spawns three crashed UFOs
 - [X] crashes every vehcile on map
 - [F2] show road pathfinding map
@@ -93,7 +94,13 @@ Cityscape Debug:
   - For tubes, switch between showing only tiles with defined tube passability, or to also include tiles belonging to buildings
   - For roads, switch between showing only tiles marked as "road", or to also include tiles marked with road direction
   - For hills, switch between showing only tiles marked as "road", or to also include tiles marked with hill direction
- 
+
+Base screens Debug:
+- [F10] 
+  - On base view: finish all facilities
+  - On research screen: complete project at next update
+
+  
 Vehicle Equipment:
 - [Shift] makes item auto-equip into first available slot, or auto-remove to base stores
  

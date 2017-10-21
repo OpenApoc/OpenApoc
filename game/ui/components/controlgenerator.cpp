@@ -128,7 +128,8 @@ VehicleTileInfo ControlGenerator::createVehicleInfo(GameState &state, sp<Vehicle
 	t.healthProportion = currentHealth / maxHealth;
 	// Clamp passengers to 13 as anything beyond that gets the same icon
 	t.passengers = std::min(13, v->getPassengers());
-	t.faded = v->city != state.current_city;
+	// Faded if in other dimension or if haven't left dimension gate yet
+	t.faded = v->city != state.current_city || (!v->tileObject && !v->currentBuilding);
 
 	auto b = v->currentBuilding;
 	if (b)
@@ -577,7 +578,8 @@ bool VehicleTileInfo::operator==(const VehicleTileInfo &other) const
 {
 	return (this->vehicle == other.vehicle && this->selected == other.selected &&
 	        this->healthProportion == other.healthProportion && this->shield == other.shield &&
-	        this->passengers == other.passengers && this->state == other.state);
+	        this->passengers == other.passengers && this->state == other.state &&
+	        this->faded == other.faded);
 }
 
 bool VehicleTileInfo::operator!=(const VehicleTileInfo &other) const { return !(*this == other); }

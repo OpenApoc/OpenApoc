@@ -239,6 +239,8 @@ ConfigOptionBool
                                      "Any hit on hostile building provokes retaliation", false);
 ConfigOptionBool optionMarketRight("OpenApoc.NewFeature", "MarketOnRight",
                                    "Put market stock on the right side", true);
+ConfigOptionBool optionDGCrashingVehicles("OpenApoc.NewFeature", "CrashingDimensionGate",
+                                          "Uncapable vehicles crash when entering gates", true);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);

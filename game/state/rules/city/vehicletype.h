@@ -152,6 +152,7 @@ class VehicleType : public StateObject
 	bool provideFreightCargo = false;
 	bool provideFreightBio = false;
 	bool canRescueCrashed = false;
+	bool canEnterDimensionGate = false;
 
 	~VehicleType() override = default;
 	VehicleType() = default;

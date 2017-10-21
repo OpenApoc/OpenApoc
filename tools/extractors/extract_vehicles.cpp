@@ -208,6 +208,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 			if (v.animation_type == 0)
 			{
 				vehicle->type = VehicleType::Type::UFO;
+				vehicle->canEnterDimensionGate = true;
 				if (v.size_x == 1 && v.size_y == 1)
 				{
 					vehicle->mapIconType = VehicleType::MapIconType::SmallCircle;
@@ -301,6 +302,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 				};
 
 				vehicle->mapIconType = VehicleType::MapIconType::Arrow;
+				vehicle->canEnterDimensionGate = vehicle->manufacturer.id == "ORG_X-COM";
 
 				int image_offset = 0;
 				for (auto &bank : bankings)

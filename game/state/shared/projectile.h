@@ -98,7 +98,8 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	unsigned int tail_length = 0;
 	std::list<sp<Image>> projectile_sprites;
 	float sprite_distance = 0.0f;
-	sp<VoxelMap> voxelMap;
+	sp<VoxelMap> voxelMapLof;
+	sp<VoxelMap> voxelMapLos;
 	bool manualFire = false;
 
 	sp<Sample> impactSfx;
