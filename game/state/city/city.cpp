@@ -153,13 +153,13 @@ void City::initMap(GameState &state)
 	}
 }
 
-int City::getSegmentID(const Vec3<int> &position) const
+int City::getRoadSegmentID(const Vec3<int> &position) const
 {
 	return tileToRoadSegmentMap.at(position.z * map->size.x * map->size.y +
 	                               position.y * map->size.x + position.x);
 }
 
-const RoadSegment &City::getSegment(const Vec3<int> &position) const
+const RoadSegment &City::getRoadSegment(const Vec3<int> &position) const
 {
 	return roadSegments.at(tileToRoadSegmentMap.at(position.z * map->size.x * map->size.y +
 	                                               position.y * map->size.x + position.x));
@@ -167,7 +167,7 @@ const RoadSegment &City::getSegment(const Vec3<int> &position) const
 
 void City::notifyRoadChange(const Vec3<int> &position, bool intact)
 {
-	auto segId = getSegmentID(position);
+	auto segId = getRoadSegmentID(position);
 	if (segId != -1)
 	{
 		roadSegments.at(segId).notifyRoadChange(position, intact);
@@ -607,6 +607,37 @@ void RoadSegment::finalizeStats()
 }
 
 bool RoadSegment::empty() const { return tilePosition.empty(); }
+
+const Vec3<int> &RoadSegment::getFirst() const { return tilePosition[0]; }
+
+const Vec3<int> &RoadSegment::getLast() const { return tilePosition[length - 1]; }
+
+const Vec3<int> &RoadSegment::getByConnectID(int id) const
+{
+	return id == 0 ? getFirst() : getLast();
+}
+
+bool RoadSegment::getIntactFirst() const { return tileIntact[0]; }
+
+bool RoadSegment::getIntactLast() const { return tileIntact[length - 1]; }
+
+bool RoadSegment::getIntactByConnectID(int id) const
+{
+	return id == 0 ? getIntactFirst() : getIntactLast();
+}
+
+bool RoadSegment::getIntactByTile(const Vec3<int> &position) const
+{
+	for (int i = 0; i < tilePosition.size(); i++)
+	{
+		if (tilePosition[i] == position)
+		{
+			return tileIntact[i];
+		}
+	}
+	LogError("Invalid position supplied to getIntactByTile");
+	return false;
+}
 
 RoadSegment::RoadSegment(Vec3<int> tile) { tilePosition.emplace_back(tile); }
 

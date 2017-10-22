@@ -84,6 +84,36 @@ class LosNode
 	float distanceToGoal;
 };
 
+class RoadSegmentNode
+{
+  public:
+	RoadSegmentNode(float costToGetHere, float distanceToGoal, RoadSegmentNode *parentNode,
+	                int segment)
+	    : costToGetHere(costToGetHere), parentNode(parentNode), segment(segment),
+	      distanceToGoal(distanceToGoal)
+	{
+	}
+
+	std::list<int> getPathToNode()
+	{
+		std::list<int> path;
+		path.push_back(segment);
+		RoadSegmentNode *t = parentNode;
+		while (t)
+		{
+			path.push_front(t->segment);
+			t = t->parentNode;
+		}
+
+		return path;
+	}
+
+	float costToGetHere;
+	RoadSegmentNode *parentNode;
+	int segment;
+	float distanceToGoal;
+};
+
 Vec3<int> rotate(Vec3<int> vec, int rotation)
 {
 	switch (rotation)
@@ -347,12 +377,12 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	{
 		if (maxCost > 0.0f)
 		{
-			LogInfo("Could not find path within maxPath, returning closest path %s",
+			LogInfo("Could not find path within maxPath, returning closest path ending at %s",
 			        closestNodeSoFar->thisTile->position.x);
 		}
 		else
 		{
-			LogInfo("Surprisingly, no nodes to expand! Closest path %s",
+			LogInfo("Surprisingly, no nodes to expand! Closest path ends at %s",
 			        closestNodeSoFar->thisTile->position);
 		}
 	}
@@ -762,7 +792,7 @@ std::list<int> Battle::findLosBlockPath(int origin, int destination, BattleUnitT
 		int i = nodeToExpand->block;
 		for (int j = 0; j < lbCount; j++)
 		{
-			if (j == i || linkCost[type][i + j * lbCount] == -1)
+			if (j == i || linkCost[type][i + j * lbCount] == -1 || visitedBlocks[j])
 			{
 				continue;
 			}
@@ -789,12 +819,13 @@ std::list<int> Battle::findLosBlockPath(int origin, int destination, BattleUnitT
 	if (iterationCount > iterationLimit)
 	{
 		LogWarning("No route from lb %d to %d found after %d iterations, returning "
-		           "closest path %d",
+		           "closest path ending in %d",
 		           origin, destination, iterationCount, closestNodeSoFar->block);
 	}
 	else if (closestNodeSoFar->distanceToGoal > 0)
 	{
-		LogInfo("Surprisingly, no nodes to expand! Closest path %d", closestNodeSoFar->block);
+		LogInfo("Surprisingly, no nodes to expand! Closest path ends in %d",
+		        closestNodeSoFar->block);
 	}
 
 	auto result = closestNodeSoFar->getPathToNode();
@@ -1080,6 +1111,381 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 	}
 	log += format("\nSuccessfully pathed everybody to target");
 	LogWarning("%s", log);
+}
+
+std::list<Vec3<int>> City::findShortestPath(Vec3<int> origin, Vec3<int> destination,
+                                            const GroundVehicleTileHelper &canEnterTile,
+                                            bool approachOnly, bool, bool, bool)
+{
+	int originID = getRoadSegmentID(origin);
+	int destinationID = getRoadSegmentID(destination);
+	auto &originSeg = roadSegments[originID];
+
+	//
+	// Quick checks before we begin
+	//
+
+	// Origin not intact?
+	if (!originSeg.getIntactByTile(origin))
+	{
+		return {origin};
+	}
+
+	// Same segment quick path
+	if (originID == destinationID)
+	{
+		auto path = originSeg.findPath(origin, destination);
+		if (path.back() == destination)
+		{
+			return path;
+		}
+	}
+
+	//
+	// Part 1: Pathfinding on RoadSegments
+	//
+
+	int iterationLimit = 9001;
+	int rsCount = roadSegments.size();
+	std::vector<bool> visitetSegmentsC1 = std::vector<bool>(rsCount, false);
+	std::vector<bool> visitetSegmentsC2 = std::vector<bool>(rsCount, false);
+	std::list<RoadSegmentNode *> nodesToDelete;
+	std::list<RoadSegmentNode *> fringe;
+	int iterationCount = 0;
+
+	LogInfo("Trying to route from rs %d to rs %d", originID, destinationID);
+
+	auto startNode = new RoadSegmentNode(
+	    0.0f, GroundVehicleTileHelper::getDistanceStatic(origin, destination), nullptr, originID);
+	nodesToDelete.push_back(startNode);
+	auto closestNodeSoFar = startNode;
+	// If starting in a road segment then try both connections for start nodes
+	if (originSeg.length > 1)
+	{
+		auto pathToFront = originSeg.findPath(origin, originSeg.getFirst());
+		if (!pathToFront.empty() && pathToFront.back() == originSeg.getFirst())
+		{
+			visitetSegmentsC1[originID] = true;
+			auto secondNode = new RoadSegmentNode(
+			    pathToFront.size() - 1,
+			    GroundVehicleTileHelper::getDistanceStatic(originSeg.getFirst(), destination),
+			    startNode, originSeg.connections[0]);
+			nodesToDelete.push_back(secondNode);
+			fringe.emplace_back(secondNode);
+		}
+		auto pathToBack = originSeg.findPath(origin, originSeg.getLast());
+		if (!pathToBack.empty() && pathToBack.back() == originSeg.getLast())
+		{
+			visitetSegmentsC2[originID] = true;
+			auto secondNode = new RoadSegmentNode(
+			    pathToBack.size() - 1,
+			    GroundVehicleTileHelper::getDistanceStatic(originSeg.getLast(), destination),
+			    startNode, originSeg.connections[1]);
+			nodesToDelete.push_back(secondNode);
+			fringe.emplace_back(secondNode);
+		}
+	}
+	// Else if starting on intersection just try this node
+	else
+	{
+		fringe.emplace_back(startNode);
+	}
+
+	while (iterationCount++ < iterationLimit)
+	{
+		auto first = fringe.begin();
+		if (first == fringe.end())
+		{
+			LogInfo("No more road segments to expand after %d iterations", iterationCount);
+			break;
+		}
+		auto nodeToExpand = *first;
+		fringe.erase(first);
+
+		int thisID = nodeToExpand->segment;
+
+		// Skip if we've already expanded this
+		if (visitetSegmentsC1[thisID] && visitetSegmentsC2[thisID])
+		{
+			iterationCount--;
+			continue;
+		}
+
+		// Step 01: Mark as visited
+
+		auto &thisSeg = roadSegments[thisID];
+		// For roads remember where we came from
+		int fromConnect = -1;
+		if (thisSeg.length > 1)
+		{
+			// Find out where we came from (assuming we have a proper segment map)
+			fromConnect = thisSeg.connections[0] == nodeToExpand->parentNode->segment ? 0 : 1;
+		}
+		// If intersection or intact road - mark both exits
+		if (thisSeg.length == 1 || thisSeg.intact)
+		{
+			visitetSegmentsC1[thisID] = true;
+			visitetSegmentsC2[thisID] = true;
+		}
+		else // road not intact - mark one exit that we came from
+		{
+			if (fromConnect == 0)
+			{
+				visitetSegmentsC1[thisID] = true;
+			}
+			else
+			{
+				visitetSegmentsC2[thisID] = true;
+			}
+		}
+
+		// Step 02: Return goal / store closest
+
+		// If at goal segment
+		if (thisID == destinationID)
+		{
+			// If segment intact or intersection - return
+			if (thisSeg.length == 1 || thisSeg.intact)
+			{
+				nodeToExpand->distanceToGoal = 0.0f;
+				closestNodeSoFar = nodeToExpand;
+				break;
+			}
+			// If a broken road - see if we can path
+			else
+			{
+				auto from = thisSeg.getByConnectID(fromConnect);
+				auto path = thisSeg.findPath(from, destination);
+				// Expecting path to have at least our position as it can only be empty
+				// if the entrance tile is not intact, but in that case we wouldn't be here
+				if (path.back() == destination)
+				{
+					nodeToExpand->distanceToGoal = 0.0f;
+					closestNodeSoFar = nodeToExpand;
+					break;
+				}
+				// Can't path - adjust distances
+				else
+				{
+					nodeToExpand->costToGetHere += path.size();
+					nodeToExpand->distanceToGoal =
+					    GroundVehicleTileHelper::getDistanceStatic(path.back(), destination);
+				}
+			}
+		}
+		// If at goal but broken or not at goal
+		if (nodeToExpand->distanceToGoal < closestNodeSoFar->distanceToGoal)
+		{
+			closestNodeSoFar = nodeToExpand;
+		}
+
+		// Step 03: Try our connections
+
+		// If broken road we can't go any further (broken intersections aren't even considered)
+		if (!thisSeg.intact)
+		{
+			continue;
+		}
+
+		// Which is the exit tile position for this segment
+		// - Number zero for nonroads
+		// - The opposite from entrance for roads
+		int toConnect = thisSeg.length == 1 || fromConnect == 1 ? 0 : 1;
+		auto toTile = thisSeg.getByConnectID(toConnect);
+		auto length = thisSeg.length;
+
+		// Now try every connection
+		for (auto &c : thisSeg.connections)
+		{
+			// If visited then continue (if we came from here then we also have visited)
+			if (visitetSegmentsC1[c] && visitetSegmentsC2[c])
+			{
+				continue;
+			}
+
+			// Check if segment can be entered
+			// For non-roads check tile number 0
+			// For roads check based on where we came from
+			auto nextSeg = roadSegments[c];
+			int intoConnect = nextSeg.length == 1 || nextSeg.connections[0] == thisID ? 0 : 1;
+			// Entrance not intact
+			if (!nextSeg.getIntactByConnectID(intoConnect))
+			{
+				continue;
+			}
+
+			// Can be entered and didn't visit - add
+			auto newNode = new RoadSegmentNode(
+			    nodeToExpand->costToGetHere + length,
+			    GroundVehicleTileHelper::getDistanceStatic(toTile, destination), nodeToExpand, c);
+			nodesToDelete.push_back(newNode);
+
+			// Put node at appropriate place in the list
+			auto it = fringe.begin();
+			while (it != fringe.end() &&
+			       ((*it)->costToGetHere + (*it)->distanceToGoal) <
+			           (newNode->costToGetHere + newNode->distanceToGoal))
+				it++;
+			fringe.emplace(it, newNode);
+		}
+	}
+
+	if (iterationCount > iterationLimit)
+	{
+		LogWarning("No route from lb %d to %d found after %d iterations, returning "
+		           "closest path ending at %d",
+		           origin, destination, iterationCount, closestNodeSoFar->segment);
+	}
+	else if (closestNodeSoFar->distanceToGoal > 0)
+	{
+		LogInfo("Surprisingly, no nodes to expand! Closest path ends at %d",
+		        closestNodeSoFar->segment);
+	}
+
+	auto segmentPath = closestNodeSoFar->getPathToNode();
+	for (auto &p : nodesToDelete)
+		delete p;
+
+	//
+	// Part 2: Pathfinding using RoadSegment path
+	//
+
+	std::list<Vec3<int>> result;
+
+	// Expecting non-zero path here as we at least have our own node
+	// we don't need it though
+	segmentPath.pop_front();
+
+	// Step 01: Path to exit of origin segment
+
+	// If road then path to road end
+	if (originSeg.length > 1 && !segmentPath.empty())
+	{
+		int toConnect = originSeg.connections[0] == segmentPath.front() ? 0 : 1;
+		auto pathToExit = originSeg.findPath(origin, originSeg.getByConnectID(toConnect));
+		for (auto &p : pathToExit)
+		{
+			result.push_back(p);
+		}
+	}
+	else
+	{
+		// If we're intersection just add origin
+		// If we're a non-connected road we will path to closest to destination point
+		// When we reach step 3, so just add origin for now
+		result.push_back(origin);
+	}
+
+	// Step 02: Path through segments
+
+	int thisID = originID;
+	for (auto &segID : segmentPath)
+	{
+		auto &nextSeg = roadSegments[segID];
+		int intoConnect = nextSeg.length == 1 || nextSeg.connections[0] == thisID ? 0 : 1;
+		// If not last and not broken then path through
+		if (segID != destinationID && nextSeg.intact)
+		{
+			auto pathThrough = nextSeg.findPathThrough(intoConnect);
+			for (auto &p : pathThrough)
+			{
+				result.push_back(p);
+			}
+		}
+		// If last or broken we need to add entrance point and we will exit the cycle now
+		// Expecting broken to be the last one as otherwise we have no point visiting it!
+		else
+		{
+			result.push_back(nextSeg.getByConnectID(intoConnect));
+		}
+		thisID = segID;
+	}
+
+	// Step 03: Path within segment to destination
+
+	auto &destSeg = roadSegments[thisID];
+	// 1) Reached destination? Path to destination, and we don't care if it's broken,
+	// as the result will be the closest path even if it is broken
+	// 2) Didn't reach destination? Path to closest point, this is the closest we get to it
+	auto pathToDestination = thisID == destinationID
+	                             ? destSeg.findPath(result.back(), destination)
+	                             : destSeg.findClosestPath(result.back(), destination);
+
+	// Expecting to have at least our pos at the start, as our pos must be intact
+	pathToDestination.pop_front();
+	for (auto &p : pathToDestination)
+	{
+		result.push_back(p);
+	}
+
+	return result;
+}
+
+std::list<Vec3<int>> RoadSegment::findPath(Vec3<int> origin, Vec3<int> destination) const
+{
+	// Expecting to contain both points
+	int originIndex = -1;
+	int destinationIndex = -1;
+	for (int i = 0; i < tilePosition.size(); i++)
+	{
+		if (tilePosition.at(i) == origin)
+		{
+			originIndex = i;
+		}
+		if (tilePosition.at(i) == destination)
+		{
+			destinationIndex = i;
+		}
+	}
+	std::list<Vec3<int>> path;
+	int diff = destinationIndex > originIndex ? 1 : -1;
+	for (int i = originIndex; i != destinationIndex + diff; i += diff)
+	{
+		if (!tileIntact.at(i))
+		{
+			return path;
+		}
+		path.push_back(tilePosition.at(i));
+	}
+
+	return path;
+}
+
+std::list<Vec3<int>> RoadSegment::findClosestPath(Vec3<int> origin, Vec3<int> destination) const
+{
+	int closestDistance = INT_MAX;
+	auto closestPoint = origin;
+
+	for (auto &p : tilePosition)
+	{
+		int distance = GroundVehicleTileHelper::getDistanceStatic(p, destination);
+		if (distance < closestDistance)
+		{
+			closestDistance = distance;
+			closestPoint = p;
+		}
+	}
+
+	return findPath(origin, closestPoint);
+}
+
+std::list<Vec3<int>> RoadSegment::findPathThrough(int id) const
+{
+	// Expecting to be intact as we have checked before
+	// Path through intersection is just that point
+	if (length == 1)
+	{
+		return {tilePosition[0]};
+	}
+	// Path through road
+	if (id == 0)
+	{
+		return findPath(getFirst(), getLast());
+	}
+	else
+	{
+		return findPath(getLast(), getFirst());
+	}
 }
 
 void City::groupMove(GameState &state, std::list<StateRef<Vehicle>> &selectedVehicles,

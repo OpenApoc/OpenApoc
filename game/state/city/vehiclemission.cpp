@@ -2551,13 +2551,25 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 		}
 
 		std::list<Vec3<int>> path;
-		path = v.type->isGround()
-		           ? v.city->map->findShortestPath(vehicleTile->getOwningTile()->position, target,
-		                                           maxIterations,
-		                                           GroundVehicleTileHelper{*v.city->map, v})
-		           : v.city->map->findShortestPath(vehicleTile->getOwningTile()->position, target,
-		                                           maxIterations,
-		                                           FlyingVehicleTileHelper{*v.city->map, v});
+		switch (v.type->type)
+		{
+			case VehicleType::Type::Road:
+				path = v.city->findShortestPath(vehicleTile->getOwningTile()->position, target,
+				                                GroundVehicleTileHelper{*v.city->map, v});
+				break;
+			case VehicleType::Type::ATV:
+				path = v.city->map->findShortestPath(vehicleTile->getOwningTile()->position, target,
+				                                     maxIterations,
+				                                     GroundVehicleTileHelper{*v.city->map, v});
+				break;
+			case VehicleType::Type::Flying:
+			case VehicleType::Type::UFO:
+				path = v.city->map->findShortestPath(vehicleTile->getOwningTile()->position, target,
+				                                     maxIterations,
+				                                     FlyingVehicleTileHelper{*v.city->map, v});
+				break;
+		}
+
 		// Always start with the current position
 		this->currentPlannedPath.push_back(vehicleTile->getOwningTile()->position);
 		for (auto &p : path)
@@ -3215,11 +3227,22 @@ bool GroundVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, f
 
 float GroundVehicleTileHelper::getDistance(Vec3<float> from, Vec3<float> to) const
 {
-	return std::abs(from.x - to.x) + std::abs(from.y - to.y) + std::abs(from.z - to.z);
+	return getDistanceStatic(from, to);
 }
 
 float GroundVehicleTileHelper::getDistance(Vec3<float> from, Vec3<float> toStart,
                                            Vec3<float> toEnd) const
+{
+	return getDistanceStatic(from, toStart, toEnd);
+}
+
+float GroundVehicleTileHelper::getDistanceStatic(Vec3<float> from, Vec3<float> to)
+{
+	return std::abs(from.x - to.x) + std::abs(from.y - to.y);
+}
+
+float GroundVehicleTileHelper::getDistanceStatic(Vec3<float> from, Vec3<float> toStart,
+                                                 Vec3<float> toEnd)
 {
 	auto diffStart = toStart - from;
 	auto diffEnd = toEnd - from - Vec3<float>{1.0f, 1.0f, 1.0f};
@@ -3227,9 +3250,7 @@ float GroundVehicleTileHelper::getDistance(Vec3<float> from, Vec3<float> toStart
 	                                                                       std::abs(diffEnd.x));
 	auto yDiff = from.y >= toStart.y && from.y < toEnd.y ? 0.0f : std::min(std::abs(diffStart.y),
 	                                                                       std::abs(diffEnd.y));
-	auto zDiff = from.z >= toStart.z && from.z < toEnd.z ? 0.0f : std::min(std::abs(diffStart.z),
-	                                                                       std::abs(diffEnd.z));
-	return xDiff + yDiff + zDiff;
+	return xDiff + yDiff;
 }
 
 int GroundVehicleTileHelper::convertDirection(Vec3<int> dir) const
