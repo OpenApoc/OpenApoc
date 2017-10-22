@@ -50,6 +50,7 @@
 #include "game/state/rules/city/scenerytiletype.h"
 #include "game/state/rules/city/ufogrowth.h"
 #include "game/state/rules/city/ufoincursion.h"
+#include "game/state/rules/city/ufomissionpreference.h"
 #include "game/state/rules/city/ufopaedia.h"
 #include "game/state/rules/city/vammotype.h"
 #include "game/state/rules/city/vehicletype.h"

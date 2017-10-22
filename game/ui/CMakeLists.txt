@@ -13,6 +13,7 @@ set (GAMEUI_SOURCE_FILES
 	base/basescreen.cpp
 	base/basestage.cpp
 	base/transactionscreen.cpp
+	base/recruitscreen.cpp
 	base/researchscreen.cpp
 	base/researchselect.cpp
 	base/vequipscreen.cpp
@@ -71,6 +72,7 @@ set (GAMEUI_HEADER_FILES
 	
 	base/basescreen.h
 	base/basestage.h
+	base/recruitscreen.h
 	base/transactionscreen.h
 	base/researchscreen.h
 	base/researchselect.h

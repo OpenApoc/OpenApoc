@@ -77,6 +77,9 @@ class VehicleType : public StateObject
 		LargeCircle = 2
 	};
 
+	static VehicleType::Direction getDirectionLarge(float facing);
+	static VehicleType::Direction getDirectionSmall(float facing);
+
 	// This is explictly mutable it can be used through a const ref
 	// FIXME: Should this go somewhere else in the state? If the rules are meant to be immutable
 	// this may be lost after serialisation?
@@ -152,6 +155,7 @@ class VehicleType : public StateObject
 	bool provideFreightCargo = false;
 	bool provideFreightBio = false;
 	bool canRescueCrashed = false;
+	bool canEnterDimensionGate = false;
 
 	~VehicleType() override = default;
 	VehicleType() = default;

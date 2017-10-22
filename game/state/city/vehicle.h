@@ -168,6 +168,9 @@ class Vehicle : public StateObject,
 		Low = 3
 	};
 	Altitude altitude;
+	// Adjusts position by altitude preference
+	Vec3<int> getPreferredPosition(Vec3<int> position) const;
+	Vec3<int> getPreferredPosition(int x, int y, int z = 0) const;
 
 	void equipDefaultEquipment(GameState &state);
 
@@ -176,6 +179,7 @@ class Vehicle : public StateObject,
 	UString name;
 	std::list<up<VehicleMission>> missions;
 	std::list<sp<VEquipment>> equipment;
+	std::list<StateRef<VEquipmentType>> loot;
 	StateRef<City> city;
 	Vec3<float> position;
 	Vec3<float> goalPosition;
@@ -194,6 +198,7 @@ class Vehicle : public StateObject,
 	int health = 0;
 	int shield = 0;
 	unsigned int shieldRecharge = 0;
+	int stunTicksRemaining = 0;
 	bool crashed = false;
 	bool falling = false;
 	bool sliding = false;
@@ -220,11 +225,18 @@ class Vehicle : public StateObject,
 	sp<TileObjectShadow> shadowObject;
 
 	/* leave the building and put vehicle into the city */
+	void leaveDimensionGate(GameState &state);
+	/* 'enter' the vehicle into a building*/
+	void enterDimensionGate(GameState &state);
+	/* leave the building and put vehicle into the city */
 	void leaveBuilding(GameState &state, Vec3<float> initialPosition, float initialFacing = 0.0f);
 	/* 'enter' the vehicle into a building*/
 	void enterBuilding(GameState &state, StateRef<Building> b);
 	/* Sets up the 'mover' after state serialize in */
 	void setupMover();
+
+	void processRecoveredVehicle(GameState &state);
+	void dropCarriedVehicle(GameState &state);
 
 	// Provide cargo or passenger service. Loads cargo or passengers or bio.
 	// If otherOrg true - provides service to other orgs but only if type provides freight
@@ -260,9 +272,13 @@ class Vehicle : public StateObject,
 	bool fireWeaponsPointDefense(GameState &state, Vec2<int> arc = {8, 8});
 	void fireWeaponsNormal(GameState &state, Vec2<int> arc = {8, 8});
 	void fireWeaponsManual(GameState &state, Vec2<int> arc = {8, 8});
-	void attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile);
+	bool attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile);
 	bool attackTarget(GameState &state, sp<TileObjectProjectile> enemyTile);
-	void attackTarget(GameState &state, Vec3<float> target);
+	bool attackTarget(GameState &state, Vec3<float> target);
+	sp<VEquipment> getFirstFiringWeapon(GameState &state, Vec3<float> &target,
+	                                    bool checkLOF = false,
+	                                    Vec3<float> targetVelocity = {0.0f, 0.0f, 0.0f},
+	                                    sp<TileObjectVehicle> enemyTile = nullptr, bool pd = false);
 	float getFiringRange() const;
 
 	Vec3<float> getMuzzleLocation() const;
@@ -284,6 +300,7 @@ class Vehicle : public StateObject,
 	bool hasCloak() const;
 	bool canTeleport() const;
 	bool hasTeleporter() const;
+	bool hasDimensionShifter() const;
 
 	// This is the 'sum' of all armors?
 	int getArmor() const;

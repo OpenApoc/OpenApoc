@@ -747,7 +747,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 			e->speed = pdata.speed;
 			e->damage = pdata.damage;
 			e->accuracy = 100 - pdata.accuracy;
-			e->fire_delay = pdata.fire_delay;
+			e->fire_delay = pdata.fire_delay * TICKS_MULTIPLIER;
 			e->guided = pdata.guided != 0 ? true : false;
 			e->turn_rate = pdata.turn_rate;
 			e->ttl = pdata.ttl;

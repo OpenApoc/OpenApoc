@@ -34,6 +34,8 @@ void TileObjectVehicle::drawStatic(Renderer &r, sp<Vehicle> vehicle, TileTransfo
 {
 	static const Colour COLOUR_TRANSPARENT = {255, 255, 255, 95};
 
+	static const Colour COLOUR_STUNNED = {128, 128, 255, 255};
+
 	static const int offset_arrow = 5;
 	static const int offset_large = 1;
 
@@ -83,6 +85,11 @@ void TileObjectVehicle::drawStatic(Renderer &r, sp<Vehicle> vehicle, TileTransfo
 			{
 				r.drawTinted(closestImage, screenPosition - vehicle->type->image_offset,
 				             COLOUR_TRANSPARENT);
+			}
+			else if (vehicle->stunTicksRemaining > 0)
+			{
+				r.drawTinted(closestImage, screenPosition - vehicle->type->image_offset,
+				             COLOUR_STUNNED);
 			}
 			else
 			{
@@ -188,16 +195,15 @@ Vec3<float> TileObjectVehicle::getVoxelCentrePosition() const
 	// Simple version:
 	auto objPos = this->getCenter();
 	auto v = getVehicle();
-	if (v->crashed)
+	// Fire at crashed's top or ground's centre
+	if (v->crashed || v->type->isGround())
 	{
-		// Fire at crashed's top
-		return Vec3<float>(objPos.x, objPos.y,
-		                   objPos.z - getVoxelOffset().z + (float)v->type->height / 1.0f / 16.0f);
+		return Vec3<float>(objPos.x, objPos.y, objPos.z + (float)v->type->height / 2.0f / 16.0f);
 	}
+	// Fire at flyer's centre
 	else
 	{
-		return Vec3<float>(objPos.x, objPos.y,
-		                   objPos.z - getVoxelOffset().z + (float)v->type->height / 2.0f / 16.0f);
+		return Vec3<float>(objPos.x, objPos.y, objPos.z);
 	}
 }
 

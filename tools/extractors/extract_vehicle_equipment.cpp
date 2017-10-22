@@ -8,6 +8,12 @@
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
 
+// Alexey Andronov (Istrebitel):
+// It has been observed that vehicle weapons reload too quickly when compared to vanilla
+// Introducing a multiplier of 2 to their reload time seems to bring them to
+// comparable times. However, this may be wrong.
+#define VEQUIPMENT_RELOAD_TIME_MULTIPLIER 2
+
 namespace OpenApoc
 {
 
@@ -101,7 +107,8 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 				e->speed = wData.speed;
 				e->damage = wData.damage;
 				e->accuracy = 100 - wData.accuracy;
-				e->fire_delay = wData.fire_delay;
+				e->fire_delay =
+				    wData.fire_delay * VEQUIPMENT_RELOAD_TIME_MULTIPLIER * TICKS_MULTIPLIER;
 				e->tail_size = wData.tail_size;
 				e->guided = wData.guided != 0 ? true : false;
 				e->turn_rate = wData.turn_rate;
@@ -275,6 +282,15 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 					}
 					e->projectile_sprites.push_back(fw().data->loadImage(sprite_path));
 				}
+				if (wData.split_idx != -1)
+				{
+					for (int j = 0; j < 4; j++)
+					{
+						e->splitIntoTypes.push_back(StateRef<VEquipmentType>{
+						    &state, "VEQUIPMENTTYPE_DISRUPTOR_MULTI-BOMB_FRAGMENT"});
+					}
+				}
+
 				weapon_count++;
 				break;
 			}
@@ -288,8 +304,9 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 				e->alien_space = gData.alien_space;
 				e->missile_jamming = gData.missile_jamming;
 				e->shielding = gData.shielding;
-				e->cloaking = gData.cloaking != 0 ? true : false;
-				e->teleporting = gData.teleporting != 0 ? true : false;
+				e->cloaking = gData.cloaking != 0;
+				e->teleporting = gData.teleporting != 0;
+				e->dimensionShifting = gData.dimension_shifting != 0;
 				general_count++;
 				break;
 			}

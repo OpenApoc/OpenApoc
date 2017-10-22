@@ -87,7 +87,11 @@ void TileObjectProjectile::addToDrawnTiles(Tile *)
 
 sp<Projectile> TileObjectProjectile::getProjectile() const { return projectile.lock(); }
 
-bool TileObjectProjectile::hasVoxelMap() const { return projectile.lock()->voxelMap != nullptr; }
+bool TileObjectProjectile::hasVoxelMap(bool los) const
+{
+	return los ? (projectile.lock()->voxelMapLos != nullptr)
+	           : (projectile.lock()->voxelMapLof != nullptr);
+}
 
 sp<VoxelMap> TileObjectProjectile::getVoxelMap(Vec3<int> mapIndex, bool los) const
 {
@@ -95,13 +99,7 @@ sp<VoxelMap> TileObjectProjectile::getVoxelMap(Vec3<int> mapIndex, bool los) con
 	{
 		return nullptr;
 	}
-	// FIXME: Implement when we multi-select with 1 click in city
-	// Don't block LOS until we know what's under
-	if (los)
-	{
-		return nullptr;
-	}
-	return getProjectile()->voxelMap;
+	return los ? getProjectile()->voxelMapLos : getProjectile()->voxelMapLof;
 }
 
 Vec3<float> TileObjectProjectile::getVoxelCentrePosition() const { return getPosition(); }

@@ -20,17 +20,20 @@ namespace OpenApoc
 
 Projectile::Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> target,
                        Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity,
-                       int turnRate, unsigned int lifetime, int damage, unsigned int delay,
-                       unsigned int tail_length, std::list<sp<Image>> projectile_sprites,
-                       sp<Sample> impactSfx, StateRef<DoodadType> doodadType, sp<VoxelMap> voxelMap,
-                       bool manualFire)
+                       int turnRate, float lifetime, int damage, unsigned int delay,
+                       int depletionRate, unsigned int tail_length,
+                       std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
+                       StateRef<DoodadType> doodadType, sp<VoxelMap> voxelMap, int stunTicks,
+                       std::list<StateRef<VEquipmentType>> splitIntoTypes, bool manualFire)
     : type(type), position(position), velocity(velocity), turnRate(turnRate), age(0),
-      lifetime(lifetime), damage(damage), delay_ticks_remaining(delay), firerVehicle(firer),
-      firerPosition(firer->position), trackedVehicle(target), targetPosition(targetPosition),
-      previousPosition(position), spritePositions({position}), tail_length(tail_length),
-      projectile_sprites(projectile_sprites), sprite_distance(1.0f / TILE_Y_CITY),
-      voxelMap(voxelMap), manualFire(manualFire), impactSfx(impactSfx), doodadType(doodadType),
-      velocityScale(VELOCITY_SCALE_CITY)
+      lifetime(lifetime), damage(damage), delay_ticks_remaining(delay),
+      depletionRate(depletionRate), firerVehicle(firer), firerPosition(firer->position),
+      trackedVehicle(target), targetPosition(targetPosition), previousPosition(position),
+      spritePositions({position}), tail_length(tail_length), projectile_sprites(projectile_sprites),
+      sprite_distance(1.0f / TILE_Y_CITY), voxelMapLos(voxelMap),
+      voxelMapLof(turnRate > 0 ? voxelMap : nullptr), manualFire(manualFire), impactSfx(impactSfx),
+      doodadType(doodadType), velocityScale(VELOCITY_SCALE_CITY), stunTicks(stunTicks),
+      splitIntoTypesCity(splitIntoTypes)
 {
 	// enough ticks to pass 1 tile diagonally and some more since vehicles can move quite quickly
 	ownerInvulnerableTicks =
@@ -40,19 +43,21 @@ Projectile::Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> tar
 }
 Projectile::Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUnit> target,
                        Vec3<float> targetPosition, Vec3<float> position, Vec3<float> velocity,
-                       int turnRate, unsigned int lifetime, int damage, unsigned int delay,
+                       int turnRate, float lifetime, int damage, unsigned int delay,
                        int depletionRate, unsigned int tail_length,
                        std::list<sp<Image>> projectile_sprites, sp<Sample> impactSfx,
                        StateRef<DoodadType> doodadType, StateRef<DamageType> damageType,
-                       sp<VoxelMap> voxelMap, bool manualFire)
+                       sp<VoxelMap> voxelMap, int stunTicks,
+                       std::list<StateRef<AEquipmentType>> splitIntoTypes, bool manualFire)
     : type(type), position(position), velocity(velocity), turnRate(turnRate), age(0),
       lifetime(lifetime), damage(damage), delay_ticks_remaining(delay),
       depletionRate(depletionRate), firerUnit(firer), firerPosition(firer->position),
       trackedUnit(target), targetPosition(targetPosition), previousPosition(position),
       spritePositions({position}), tail_length(tail_length), projectile_sprites(projectile_sprites),
-      sprite_distance(1.0f / TILE_Y_BATTLE), voxelMap(voxelMap), manualFire(manualFire),
-      impactSfx(impactSfx), doodadType(doodadType), damageType(damageType),
-      velocityScale(VELOCITY_SCALE_BATTLE)
+      sprite_distance(1.0f / TILE_Y_BATTLE), voxelMapLos(voxelMap),
+      voxelMapLof(turnRate > 0 ? voxelMap : nullptr), manualFire(manualFire), impactSfx(impactSfx),
+      doodadType(doodadType), damageType(damageType), velocityScale(VELOCITY_SCALE_BATTLE),
+      stunTicks(stunTicks), splitIntoTypesBattle(splitIntoTypes)
 {
 	// enough ticks to pass 1 tile diagonally
 	ownerInvulnerableTicks =
@@ -93,7 +98,6 @@ void Projectile::update(GameState &state, unsigned int ticks)
 	{
 		ownerInvulnerableTicks = 0;
 	}
-	this->age += ticks;
 	this->previousPosition = this->position;
 
 	// Tracking
@@ -130,6 +134,9 @@ void Projectile::update(GameState &state, unsigned int ticks)
 	// Apply velocity
 	auto newPosition = this->position +
 	                   ((static_cast<float>(ticks) / TICK_SCALE) * this->velocity) / velocityScale;
+
+	// Increase travelled distance
+	this->age += glm::length(((float)ticks / TICK_SCALE) * this->velocity);
 
 	// Remove projectile if it's ran out of life or fell off the end of the world
 	auto mapSize = this->tileObject->map.size;

@@ -8,12 +8,19 @@
 #include "library/vec.h"
 #include <list>
 #include <map>
+#include <math.h>
 
 namespace OpenApoc
 {
 
 static const int TELEPORTER_SPREAD = 10;
 static const int SELF_DESTRUCT_TIMER = 12 * TICKS_PER_HOUR;
+static const int DIMENSION_GATE_DELAY = TICKS_PER_SECOND / 2;
+static const int FOLLOW_BOUNDS_XY = 4;
+static const int FOLLOW_BOUNDS_Z = 1;
+static const int TARGET_BUILDING_DISTANCE_LIMIT = 30;
+static const float FOLLOW_RANGE =
+    sqrtf(2 * FOLLOW_BOUNDS_XY * FOLLOW_BOUNDS_XY + FOLLOW_BOUNDS_Z * FOLLOW_BOUNDS_Z);
 
 class Vehicle;
 class Tile;
@@ -127,10 +134,14 @@ class VehicleMission
 	void start(GameState &state, Vehicle &v);
 	void setPathTo(GameState &state, Vehicle &v, Vec3<int> target, int maxIterations,
 	               bool checkValidity = true, bool giveUpIfInvalid = false);
+	void setFollowPath(GameState &state, Vehicle &v);
 	bool advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> &destPos, float &destFacing);
 	bool isTakingOff(Vehicle &v);
 	int getDefaultIterationCount(Vehicle &v);
 	static Vec3<float> getRandomMapEdgeCoordinates(GameState &state, StateRef<City> city);
+	bool acquireTargetBuilding(GameState &state, Vehicle &v);
+	void updateTimer(unsigned ticks);
+	void takePositionNearPortal(GameState &state, Vehicle &v);
 
 	// Methods to create new missions
 
@@ -145,16 +156,20 @@ class VehicleMission
 	                                    StateRef<Building> target = nullptr,
 	                                    bool allowTeleporter = false);
 	static VehicleMission *infiltrateOrSubvertBuilding(GameState &state, Vehicle &v,
-	                                                   StateRef<Building> target,
-	                                                   bool subvert = false);
+	                                                   bool subvert = false,
+	                                                   StateRef<Building> target = nullptr);
 	static VehicleMission *attackVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
-	static VehicleMission *attackBuilding(GameState &state, Vehicle &v, StateRef<Building> target);
+	static VehicleMission *attackBuilding(GameState &state, Vehicle &v,
+	                                      StateRef<Building> target = nullptr);
 	static VehicleMission *followVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
+	static VehicleMission *followVehicle(GameState &state, Vehicle &v,
+	                                     std::list<StateRef<Vehicle>> &targets);
 	static VehicleMission *recoverVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *offerService(GameState &state, Vehicle &v,
 	                                    StateRef<Building> target = nullptr);
 	static VehicleMission *snooze(GameState &state, Vehicle &v, unsigned int ticks);
 	static VehicleMission *selfDestruct(GameState &state, Vehicle &v);
+	static VehicleMission *arriveFromDimensionGate(GameState &state, Vehicle &v, int ticks = -1);
 	static VehicleMission *restartNextMission(GameState &state, Vehicle &v);
 	static VehicleMission *crashLand(GameState &state, Vehicle &v);
 	static VehicleMission *patrol(GameState &state, Vehicle &v, bool home = false,
@@ -181,7 +196,8 @@ class VehicleMission
 		OfferService,
 		Teleport,
 		SelfDestruct,
-		DepartToSpace
+		DepartToSpace,
+		ArriveFromDimensionGate
 	};
 
 	MissionType type = MissionType::GotoLocation;
@@ -202,6 +218,8 @@ class VehicleMission
 	StateRef<Building> targetBuilding;
 	// FollowVehicle AttackVehicle
 	StateRef<Vehicle> targetVehicle;
+	// FollowVehicle
+	std::list<StateRef<Vehicle>> targets;
 	// Snooze, SelfDestruct
 	unsigned int timeToSnooze = 0;
 	// RecoverVehicle, InfiltrateSubvert, Patrol: waypoints

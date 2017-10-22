@@ -16,7 +16,6 @@
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
-#include "framework/palette.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
 #include "framework/trace.h"
@@ -82,38 +81,8 @@ BattleView::BattleView(sp<GameState> gameState)
                      Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric,
                      gameState->current_battle->battleViewScreenCenter, *gameState),
       baseForm(ui().getForm("battle/battle")), state(gameState), battle(*state->current_battle),
-      followAgent(false), palette(fw().data->loadPalette("xcom3/tacdata/tactical.pal")),
-      selectionState(BattleSelectionState::Normal)
+      followAgent(false), selectionState(BattleSelectionState::Normal)
 {
-	pal = palette;
-
-	for (int j = 0; j <= 15; j++)
-	{
-		colorCurrent = j;
-		auto newPal = mksp<Palette>();
-
-		for (int i = 0; i < 255 - 4; i++)
-		{
-			newPal->setColour(i, palette->getColour(i));
-		}
-		// Lift color, pulsates from (0r 3/8g 5/8b) to (0r 8/8g 4/8b)
-		newPal->setColour(255 - 4, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
-		                                  (colorCurrent * 16 * -1 + 255 * 5) / 8));
-		// Yellow color, for owned indicators, pulsates from (3/8r 3/8g 0b) to (8/8r 8/8g 0b)
-		newPal->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8,
-		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8, 0));
-		// Red color, for enemy indicators, pulsates from (3/8r 0g 0b) to (8/8r 0g 0b)
-		newPal->setColour(255 - 2, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
-		// Pink color, for neutral indicators, pulsates from (3/8r 0g 3/8b) to (8/8r 0g 8/8b)
-		newPal->setColour(255 - 1, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0,
-		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8));
-		// Blue color, for misc. indicators, pulsates from (0r 3/8g 3/8b) to (0r 8/8g 8/8b)
-		newPal->setColour(255 - 0, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
-		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8));
-
-		modPalette.push_back(newPal);
-	}
-
 	motionScannerDirectionIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
 	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
@@ -1370,15 +1339,6 @@ void BattleView::update()
 	// Parent update
 	BattleTileView::update();
 
-	// Pulsate palette colors
-	colorCurrent += (colorForward ? 1 : -1);
-	if (colorCurrent <= 0 || colorCurrent >= 15)
-	{
-		colorCurrent = clamp(colorCurrent, 0, 15);
-		colorForward = !colorForward;
-	}
-	pal = modPalette[colorCurrent];
-
 	// Update turn based stuff
 	if (!realTime)
 	{
@@ -2366,9 +2326,9 @@ void BattleView::debugShot(Vec3<float> velocity)
 	    blaster->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
 	    StateRef<BattleUnit>(state.get(), state->current_battle->units.begin()->first),
 	    StateRef<BattleUnit>(), position + velocity, position, velocity, blaster->turn_rate,
-	    blaster->ttl * TICKS_MULTIPLIER, blaster->damage, blaster->projectile_delay,
-	    blaster->explosion_depletion_rate, blaster->tail_size, blaster->projectile_sprites,
-	    blaster->impact_sfx, blaster->explosion_graphic, blaster->damage_type);
+	    blaster->ttl, blaster->damage, blaster->projectile_delay, blaster->explosion_depletion_rate,
+	    blaster->tail_size, blaster->projectile_sprites, blaster->impact_sfx,
+	    blaster->explosion_graphic, blaster->damage_type);
 	state->current_battle->map->addObjectToMap(p);
 	state->current_battle->projectiles.insert(p);
 }
@@ -2477,8 +2437,16 @@ void BattleView::orderUse(bool right, bool automatic)
 	auto item = unit->agent->getFirstItemInSlot(right ? EquipmentSlotType::RightHand
 	                                                  : EquipmentSlotType::LeftHand);
 
-	if (!item || !item->canBeUsed(*state))
+	if (!item)
 	{
+		return;
+	}
+	if (!item->canBeUsed(*state))
+	{
+		auto message_box = mksp<MessageBox>(
+		    tr("Alien Artifact"), tr("You must research Alien technology before you can use it."),
+		    MessageBox::ButtonOptions::Ok);
+		fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 		return;
 	}
 

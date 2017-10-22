@@ -44,10 +44,25 @@ class BattleMapPartType;
 class EventMessage;
 class DamageType;
 class BuildingFunction;
+class UFOMissionPreference;
 
 static const int MAX_MESSAGES = 50;
 static const unsigned ORIGINAL_TICKS = 36;
 static const bool UPDATE_EVERY_TICK = false;
+
+class GameScore
+{
+  public:
+	int tacticalMissions = 0;
+	int researchCompleted = 0;
+	int alienIncidents = 0;
+	int craftShotDownUFO = 0;
+	int craftShotDownXCom = 0;
+	int incursions = 0;
+	int cityDamage = 0;
+	int getTotal();
+	//	UString getText();
+};
 
 class GameState : public std::enable_shared_from_this<GameState>
 {
@@ -60,6 +75,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<VAmmoType> vehicle_ammo;
 	StateRefMap<BaseLayout> base_layouts;
 	StateRefMap<UFOGrowth> ufo_growth_lists;
+	StateRefMap<UFOMissionPreference> ufo_mission_preference;
 	StateRefMap<UFOIncursion> ufo_incursions;
 	StateRefMap<Base> player_bases;
 	StateRefMap<City> cities;
@@ -87,7 +103,6 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	std::list<EventMessage> messages;
 
-	int score = 0;
 	int difficulty = 0;
 	bool firstDetection = false;
 	uint64_t nextInvasion = 0;
@@ -118,6 +133,10 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRef<Base> current_base;
 
 	std::vector<EquipmentTemplate> agentEquipmentTemplates;
+
+	GameScore totalScore = {};
+	GameScore weekScore = {};
+	int micronoidRainChance = 0;
 
 	// Used to move events from battle to city and remember time
 

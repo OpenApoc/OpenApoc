@@ -164,10 +164,40 @@ void ResearchScreen::eventOccurred(Event *e)
 			return;
 		}
 	}
+	// DEBUG
+	if (e->type() == EVENT_KEY_DOWN)
+	{
+		switch (e->keyboard().KeyCode)
+		{
+			case SDLK_F10:
+			{
+				if (current_topic)
+				{
+					switch (this->selected_lab->lab->current_project->type)
+					{
+						case ResearchTopic::Type::BioChem:
+						case ResearchTopic::Type::Physics:
+							current_topic->man_hours_progress = current_topic->man_hours - 1;
+							break;
+						case ResearchTopic::Type::Engineering:
+							selected_lab->lab->manufacture_man_hours_invested =
+							    current_topic->man_hours *
+							    this->selected_lab->lab->manufacture_goal;
+							break;
+						default:
+							LogError("Unknown lab type");
+							break;
+					}
+					updateProgressInfo();
+				}
+				return;
+			}
+		}
+	}
 
 	if (e->type() == EVENT_MOUSE_MOVE)
 	{
-		arrow->setVisible((e->mouse().X > form->Location.x + arrow->Location.x));
+		arrow->setVisible(!(e->mouse().X > form->Location.x + arrow->Location.x));
 	}
 
 	if (e->type() == EVENT_FORM_INTERACTION)

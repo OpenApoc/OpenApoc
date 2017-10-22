@@ -1818,7 +1818,7 @@ bool BattleUnit::handleCollision(GameState &state, Collision &c)
 	if (projectile)
 	{
 		auto partHit =
-		    determineBodyPartHit(projectile->damageType, c.position, projectile->getVelocity());
+		    determineBodyPartHit(projectile->damageType, c.position, projectile->velocity);
 		// If hit in helmet with brainsucker attached -> hit brainsucker instead
 		if (brainSucker && partHit == BodyPart::Helmet)
 		{
@@ -1830,7 +1830,7 @@ bool BattleUnit::handleCollision(GameState &state, Collision &c)
 			state.current_battle->giveInterruptChanceToUnit(
 			    state, {&state, id}, {&state, id},
 			    projectile->firerUnit->agent->getReactionValue());
-			notifyHit(position - glm::normalize(projectile->getVelocity()) * 1.41f);
+			notifyHit(position - glm::normalize(projectile->velocity) * 1.41f);
 			if (projectile->firerUnit)
 			{
 				projectile->firerUnit->experiencePoints.accuracy++;

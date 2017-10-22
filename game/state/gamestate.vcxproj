@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="city\economyinfo.cpp" />
+    <ClCompile Include="rules\city\ufomissionpreference.cpp" />
     <ClCompile Include="shared\agent.cpp" />
     <ClCompile Include="city\base.cpp" />
     <ClCompile Include="city\facility.cpp" />
@@ -99,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="city\economyinfo.h" />
+    <ClInclude Include="rules\city\ufomissionpreference.h" />
     <ClInclude Include="shared\agent.h" />
     <ClInclude Include="city\base.h" />
     <ClInclude Include="city\facility.h" />

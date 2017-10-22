@@ -19,6 +19,7 @@
 #include "game/state/city/vequipment.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/city/vehicletype.h"
+#include "game/state/tilemap/tilemap.h"
 #include "game/ui/components/equipscreen.h"
 #include "library/strings_format.h"
 #include <cmath>
@@ -233,9 +234,11 @@ void VEquipScreen::eventOccurred(Event *e)
 			// Return the equipment to the inventory
 			this->selected->removeEquipment(equipment);
 			base->inventoryVehicleEquipment[equipment->type.id]++;
+			if (equipment->ammo > 0)
+			{
+				base->inventoryVehicleAmmo[equipment->type->ammo_type.id] += equipment->ammo;
+			}
 			this->paperDoll->updateEquipment();
-			// FIXME: Return ammo to inventory
-			// FIXME: what happens if we don't have the stores to return?
 
 			// Immediate action: put to the base
 			if ((modifierLShift || modifierRShift) &&
@@ -259,16 +262,19 @@ void VEquipScreen::eventOccurred(Event *e)
 				if ((modifierLShift || modifierRShift) &&
 				    config().getBool("OpenApoc.NewFeature.AdvancedInventoryControls"))
 				{
-					if (this->selected->addEquipment(*state, this->draggedEquipment))
+					auto e = this->selected->addEquipment(*state, this->draggedEquipment);
+					if (e)
 					{
 						base->inventoryVehicleEquipment[draggedEquipment->id]--;
+						if (draggedEquipment->max_ammo > 0)
+						{
+							int ammoAvailable = base->inventoryVehicleAmmo[e->type->ammo_type.id];
+							auto ammoSpent = e->reload(ammoAvailable);
+							base->inventoryVehicleAmmo[e->type->ammo_type.id] -= ammoSpent;
+						}
 						this->paperDoll->updateEquipment();
-						// FIXME: Add ammo to equipment
 					}
-					else
-					{
-						this->draggedEquipment = nullptr;
-					}
+					this->draggedEquipment = nullptr;
 				}
 				return;
 			}
@@ -294,7 +300,14 @@ void VEquipScreen::eventOccurred(Event *e)
 					         this->draggedEquipment->id);
 				}
 				base->inventoryVehicleEquipment[draggedEquipment->id]--;
-				this->selected->addEquipment(*state, equipmentGridPos, this->draggedEquipment);
+				auto e =
+				    this->selected->addEquipment(*state, equipmentGridPos, this->draggedEquipment);
+				if (draggedEquipment->max_ammo > 0)
+				{
+					int ammoAvailable = base->inventoryVehicleAmmo[e->type->ammo_type.id];
+					auto ammoSpent = e->reload(ammoAvailable);
+					base->inventoryVehicleAmmo[e->type->ammo_type.id] -= ammoSpent;
+				}
 				this->paperDoll->updateEquipment();
 				// FIXME: Add ammo to equipment
 			}
@@ -376,7 +389,8 @@ void VEquipScreen::render()
 				statsValues[statsCount]->setText(format("%d", weaponType.damage));
 				statsCount++;
 				statsLabels[statsCount]->setText(tr("Range"));
-				statsValues[statsCount]->setText(format("%dm", weaponType.range / 2));
+				statsValues[statsCount]->setText(
+				    format("%d", weaponType.range / (int)VELOCITY_SCALE_CITY.x));
 				statsCount++;
 				statsLabels[statsCount]->setText(tr("Accuracy"));
 				statsValues[statsCount]->setText(format("%d%%", weaponType.accuracy));

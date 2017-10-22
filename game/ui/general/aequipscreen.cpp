@@ -635,7 +635,8 @@ void AEquipScreen::handleItemPickup(Vec2<int> mousePos)
 
 	// Check if we're over any equipment in the paper doll
 	auto slotPos = paperDoll->getSlotPositionFromScreenPosition(mousePos);
-	if (tryPickUpItem(currentAgent, slotPos, modifierLCtrl || modifierRCtrl))
+	bool alienArtifact = false;
+	if (tryPickUpItem(currentAgent, slotPos, modifierLCtrl || modifierRCtrl, &alienArtifact))
 	{
 		draggedEquipmentOffset = paperDoll->getScreenPositionFromSlotPosition(slotPos) - mousePos;
 		paperDoll->updateEquipment();
@@ -649,12 +650,19 @@ void AEquipScreen::handleItemPickup(Vec2<int> mousePos)
 			handleItemPlacement(false);
 		}
 	}
+	else if (alienArtifact)
+	{
+		auto message_box = mksp<MessageBox>(
+		    tr("Alien Artifact"), tr("You must research Alien technology before you can use it."),
+		    MessageBox::ButtonOptions::Ok);
+		fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+	}
 	else // no doll equipment under cursor
 	{
 		// Check if we're over any equipment in the list at the bottom
 		auto posWithinInventory = mousePos;
 		posWithinInventory.x += inventoryPage * inventoryControl->Size.x;
-		if (tryPickUpItem(posWithinInventory))
+		if (tryPickUpItem(posWithinInventory, &alienArtifact))
 		{
 			refreshInventoryItems();
 
@@ -664,6 +672,14 @@ void AEquipScreen::handleItemPickup(Vec2<int> mousePos)
 			{
 				handleItemPlacement(true);
 			}
+		}
+		else if (alienArtifact)
+		{
+			auto message_box =
+			    mksp<MessageBox>(tr("Alien Artifact"),
+			                     tr("You must research Alien technology before you can use it."),
+			                     MessageBox::ButtonOptions::Ok);
+			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 		}
 	}
 }
@@ -687,7 +703,8 @@ void AEquipScreen::handleItemPlacement(Vec2<int> mousePos)
 	auto draggedAlternative = draggedEquipmentAlternativePickup;
 
 	bool insufficientTU = false;
-	if (tryPlaceItem(currentAgent, equipmentGridPos, &insufficientTU))
+	bool alienArtifact = false;
+	if (tryPlaceItem(currentAgent, equipmentGridPos, &insufficientTU, &alienArtifact))
 	{
 		displayAgent(currentAgent);
 		updateAgentControl(currentAgent);
@@ -702,6 +719,13 @@ void AEquipScreen::handleItemPlacement(Vec2<int> mousePos)
 		auto message_box = mksp<MessageBox>(
 		    tr("NOT ENOUGH TU'S"),
 		    format("%s %d", tr("TU cost per item picked up:"), currentAgent->unit->getPickupCost()),
+		    MessageBox::ButtonOptions::Ok);
+		fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+	}
+	else if (alienArtifact)
+	{
+		auto message_box = mksp<MessageBox>(
+		    tr("Alien Artifact"), tr("You must research Alien technology before you can use it."),
 		    MessageBox::ButtonOptions::Ok);
 		fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 	}
@@ -920,9 +944,12 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 					formItemWeapon->findControlTyped<Label>("VALUE_ACCURACY")
 					    ->setText(format("%d", item->getPayloadType()->accuracy));
 					formItemWeapon->findControlTyped<Label>("VALUE_FIRE_RATE")
-					    ->setText(format("%d", item->getPayloadType()->fire_delay));
+					    ->setText(format("%.2f",
+					                     (float)TICKS_PER_SECOND /
+					                         (float)item->getPayloadType()->fire_delay));
 					formItemWeapon->findControlTyped<Label>("VALUE_RANGE")
-					    ->setText(format("%d", item->getPayloadType()->range));
+					    ->setText(format(
+					        "%d", item->getPayloadType()->range / (int)VELOCITY_SCALE_BATTLE.x));
 				}
 				else
 				{
@@ -964,7 +991,10 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 						formItemWeapon->findControlTyped<Label>("VALUE_ACCURACY")
 						    ->setText(format("%d", item->type->ammo_types.front()->accuracy));
 						formItemWeapon->findControlTyped<Label>("VALUE_FIRE_RATE")
-						    ->setText(format("%d", item->type->ammo_types.front()->fire_delay));
+						    ->setText(
+						        format("%.2f",
+						               (float)TICKS_PER_SECOND /
+						                   (float)item->type->ammo_types.front()->fire_delay));
 						formItemWeapon->findControlTyped<Label>("VALUE_RANGE")
 						    ->setText(format("%d", item->type->ammo_types.front()->range));
 					}
@@ -1005,7 +1035,8 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 				formItemWeapon->findControlTyped<Label>("VALUE_ACCURACY")
 				    ->setText(format("%d", item->type->accuracy));
 				formItemWeapon->findControlTyped<Label>("VALUE_FIRE_RATE")
-				    ->setText(format("%d", item->type->fire_delay));
+				    ->setText(
+				        format("%.2f", (float)TICKS_PER_SECOND / (float)item->type->fire_delay));
 				formItemWeapon->findControlTyped<Label>("VALUE_RANGE")
 				    ->setText(format("%d", item->type->range));
 
@@ -1522,12 +1553,21 @@ void AEquipScreen::addItemToInventoryAgent(sp<AEquipment> item)
 	agentItems[currentAgent->position].push_back(item);
 }
 
-bool AEquipScreen::tryPickUpItem(sp<Agent> agent, Vec2<int> slotPos, bool alternative, bool forced)
+bool AEquipScreen::tryPickUpItem(sp<Agent> agent, Vec2<int> slotPos, bool alternative,
+                                 bool *alienArtifact, bool forced)
 {
 	alternative = alternative && config().getBool("OpenApoc.NewFeature.AdvancedInventoryControls");
 	auto equipment = std::dynamic_pointer_cast<AEquipment>(agent->getEquipmentAt(slotPos));
 	if (!equipment)
 	{
+		return false;
+	}
+	if (!equipment->canBeUsed(*state) && (alternative || getMode() != Mode::Battle))
+	{
+		if (alienArtifact)
+		{
+			*alienArtifact = true;
+		}
 		return false;
 	}
 	draggedEquipmentOffset = {0, 0};
@@ -1561,13 +1601,23 @@ bool AEquipScreen::tryPickUpItem(sp<Agent> agent, Vec2<int> slotPos, bool altern
 	return true;
 }
 
-bool AEquipScreen::tryPickUpItem(Vec2<int> inventoryPos)
+bool AEquipScreen::tryPickUpItem(Vec2<int> inventoryPos, bool *alienArtifact)
 {
 	for (auto &tuple : inventoryItems)
 	{
 		auto rect = std::get<0>(tuple);
 		if (rect.within(inventoryPos))
 		{
+			if (!std::get<2>(tuple)->type->canBeUsed(*state, state->getPlayer()) &&
+			    getMode() != Mode::Battle)
+			{
+				if (alienArtifact)
+				{
+					*alienArtifact = true;
+				}
+				return false;
+			}
+
 			pickUpItem(std::get<2>(tuple));
 			draggedEquipmentOffset = rect.p0 - inventoryPos;
 			return true;
@@ -1599,7 +1649,8 @@ void AEquipScreen::pickUpItem(sp<AEquipment> item)
 	removeItemFromInventory(draggedEquipment);
 }
 
-bool AEquipScreen::tryPlaceItem(sp<Agent> agent, Vec2<int> slotPos, bool *insufficientTU)
+bool AEquipScreen::tryPlaceItem(sp<Agent> agent, Vec2<int> slotPos, bool *insufficientTU,
+                                bool *alienArtifact)
 {
 	bool canAdd = agent->canAddEquipment(slotPos, draggedEquipment->type);
 	sp<AEquipment> equipmentUnderCursor = nullptr;
@@ -1614,11 +1665,17 @@ bool AEquipScreen::tryPlaceItem(sp<Agent> agent, Vec2<int> slotPos, bool *insuff
 		              equipmentUnderCursor->type->ammo_types.end(),
 		              draggedEquipment->type) != equipmentUnderCursor->type->ammo_types.end())
 		{
-			canAdd = true;
-		}
-		else
-		{
-			equipmentUnderCursor = nullptr;
+			if (equipmentUnderCursor->canBeUsed(*state))
+			{
+				canAdd = true;
+			}
+			else
+			{
+				if (alienArtifact)
+				{
+					*alienArtifact = true;
+				}
+			}
 		}
 	}
 	if (canAdd && agent->unit && agent->unit->tileObject &&
@@ -1917,10 +1974,6 @@ void AEquipScreen::closeScreen()
 				for (auto &e : entry.second)
 				{
 					int price = 0;
-					if (state->economy.find(e->type.id) != state->economy.end())
-					{
-						price = state->economy[e->type.id].currentPrice;
-					}
 					entry.first->cargo.emplace_back(
 					    *state, e->type, e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1,
 					    price, nullptr, entry.first->homeBuilding);
@@ -1949,10 +2002,6 @@ void AEquipScreen::closeScreen()
 				for (auto &e : entry.second)
 				{
 					int price = 0;
-					if (state->economy.find(e->type.id) != state->economy.end())
-					{
-						price = state->economy[e->type.id].currentPrice;
-					}
 					entry.first->cargo.emplace_back(
 					    *state, e->type, e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1,
 					    price, nullptr, state->current_base->building);
@@ -2010,10 +2059,6 @@ void AEquipScreen::closeScreen()
 					for (auto &e : entry.second)
 					{
 						int price = 0;
-						if (state->economy.find(e->type.id) != state->economy.end())
-						{
-							price = state->economy[e->type.id].currentPrice;
-						}
 						buildingToDropTo->cargo.emplace_back(
 						    *state, e->type,
 						    e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1, price,

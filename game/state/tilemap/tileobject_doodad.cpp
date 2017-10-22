@@ -42,7 +42,8 @@ void TileObjectDoodad::draw(Renderer &r, TileTransform &transform, Vec2<float> s
 TileObjectDoodad::~TileObjectDoodad() = default;
 
 TileObjectDoodad::TileObjectDoodad(TileMap &map, sp<Doodad> doodad)
-    : TileObject(map, Type::Doodad, Vec3<float>{0, 0, 0}), doodad(doodad)
+    : TileObject(map, Type::Doodad, doodad->voxelMap ? Vec3<float>{1, 1, 1} : Vec3<float>{0, 0, 0}),
+      doodad(doodad)
 {
 }
 
@@ -65,4 +66,24 @@ float TileObjectDoodad::getZOrder() const
 	// The formula to calculate "3.5f" is: (tile_x + tile_y + tile_z) / tile_z /2
 	return getCenter().z + 3.5f + (float)getType() / 1000.0f;
 }
+
+bool TileObjectDoodad::hasVoxelMap(bool los) const { return doodad.lock()->voxelMap != nullptr; }
+
+sp<VoxelMap> TileObjectDoodad::getVoxelMap(Vec3<int> mapIndex, bool los) const
+{
+	if (mapIndex.x > 0 || mapIndex.y > 0 || mapIndex.z > 0)
+	{
+		return nullptr;
+	}
+	// FIXME: Implement when we multi-select with 1 click in city
+	// Don't block LOS until we know what's under
+	if (los)
+	{
+		return doodad.lock()->voxelMap;
+	}
+	return nullptr;
+}
+
+Vec3<float> TileObjectDoodad::getVoxelCentrePosition() const { return getPosition(); }
+
 } // namespace OpenApoc

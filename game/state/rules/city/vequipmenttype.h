@@ -54,8 +54,6 @@ class VEquipmentType : public StateObject
 	int damage;
 	int accuracy;
 	// Fire delay, in ticks, to fire a shot
-	// For some reason, it is halved in the vanilla data files.
-	// Therefore, to get vanilla ticks, it must be multiplied by 2, and to get OpenApoc ticks, by 8
 	int fire_delay;
 	int tail_size;
 	bool guided;
@@ -63,8 +61,10 @@ class VEquipmentType : public StateObject
 	// Based on the fact that retribution (tr = 10) turns 90 degrees (PI/2) per second
 	// One point of turn rate is equal to PI/20 turned per second
 	int turn_rate;
+	// Divide by 32 to get range in tiles
 	int range;
-	int ttl;
+	// Projectile's ttl, in voxels travelled
+	float ttl = 0.0f;
 	int firing_arc_1;
 	int firing_arc_2;
 	bool point_defence;
@@ -72,6 +72,10 @@ class VEquipmentType : public StateObject
 	sp<Sample> impact_sfx;
 	StateRef<DoodadType> explosion_graphic;
 	sp<Image> icon;
+
+	// Special weapons
+	int stunTicks = 0;
+	std::list<StateRef<VEquipmentType>> splitIntoTypes;
 
 	// Engine stuff
 	int power;
@@ -86,6 +90,10 @@ class VEquipmentType : public StateObject
 	int shielding;
 	bool cloaking;
 	bool teleporting;
+	bool dimensionShifting = false;
+
+	// Score requirement
+	int scoreRequirement = 0;
 };
 
 } // namespace OpenApoc

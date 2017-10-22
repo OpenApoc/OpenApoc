@@ -122,7 +122,7 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 
 		for (auto &obj : t->intersectingObjects)
 		{
-			if ((!obj->hasVoxelMap()) ||
+			if ((!obj->hasVoxelMap(useLOS)) ||
 			    (typeChecking && validTypes.find(obj->type) == validTypes.end()) ||
 			    (obj == ignoredObject))
 			{

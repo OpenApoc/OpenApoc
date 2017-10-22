@@ -56,6 +56,7 @@ set (GAMESTATE_SOURCE_FILES
 	rules/city/facilitytype.cpp
 	rules/city/scenerytiletype.cpp
 	rules/city/ufogrowth.cpp
+	rules/city/ufomissionpreference.cpp
 	rules/city/ufoincursion.cpp
 	rules/city/ufopaedia.cpp
 	rules/city/vammotype.cpp
@@ -147,6 +148,7 @@ set (GAMESTATE_HEADER_FILES
 	rules/city/facilitytype.h
 	rules/city/scenerytiletype.h
 	rules/city/ufogrowth.h
+	rules/city/ufomissionpreference.h
 	rules/city/ufoincursion.h
 	rules/city/ufopaedia.h
 	rules/city/vammotype.h

@@ -937,6 +937,8 @@ void Scenery::die(GameState &state, bool forced)
 		}
 		this->tileObject->removeFromMap();
 		this->tileObject.reset();
+		state.totalScore.cityDamage -= type->value;
+		state.weekScore.cityDamage -= type->value;
 		this->destroyed = true;
 		return;
 	}
@@ -1014,6 +1016,8 @@ void Scenery::die(GameState &state, bool forced)
 		{
 			building->buildingPartChange(state, initialPosition, false);
 		}
+		state.totalScore.cityDamage -= type->value;
+		state.weekScore.cityDamage -= type->value;
 	}
 }
 

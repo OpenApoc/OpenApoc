@@ -10,6 +10,7 @@
 		<member type="Section">vehicle_ammo</member>
 		<member type="SectionMap">cities</member>
 		<member type="Section">ufo_growth_lists</member>
+		<member type="Section">ufo_mission_preference</member>
 		<member type="Section">ufo_incursions</member>
 		<member type="Section">base_layouts</member>
 		<member type="Section">player_bases</member>
@@ -32,6 +33,9 @@
 		<member>current_city</member>
 		<member>current_base</member>
 		<member>agentEquipmentTemplates</member>
+		<member>totalScore</member>
+		<member>weekScore</member>
+		<member>micronoidRainChance</member>
 		<member>objectIdCount</member>
 		<member type="Section">city_common_image_list</member>
 		<member type="Section">city_common_sample_list</member>
@@ -55,7 +59,6 @@
 		<member type="Section">equipment_sets_by_level</member>
 		<member type="Section">building_functions</member>
 		<member>messages</member>
-		<member>score</member>
 		<member>difficulty</member>
 		<member>firstDetection</member>
 		<member>nextInvasion</member>
@@ -340,6 +343,7 @@
 		<member>position</member>
 		<member>goalPosition</member>
 		<member>goalWaypoints</member>
+		<member>loot</member>
 		<member>velocity</member>
 		<member>facing</member>
 		<member>goalFacing</member>
@@ -351,6 +355,7 @@
 		<member>health</member>
 		<member>shield</member>
 		<member>shieldRecharge</member>
+		<member>stunTicksRemaining</member>
 		<member>falling</member>
 		<member>crashed</member>
 		<member>sliding</member>
@@ -384,6 +389,7 @@
 		<member>pickedNearest</member>
 		<member>targetBuilding</member>
 		<member>targetVehicle</member>
+		<member>targets</member>
 		<member>timeToSnooze</member>
 		<member>missionCounter</member>
 		<member>currentPlannedPath</member>
@@ -558,6 +564,7 @@
 		<member>interruptUnits</member>
 		<member>skirmish</member>
 		<member>relationshipsBeforeSkirmish</member>
+		<member>scoreBeforeSkirmish</member>
 		<member>reinforcementsInterval</member>
 		<member>ticksUntilNextReinforcement</member>
 		<member>battleViewZLevel</member>
@@ -636,6 +643,7 @@
 		<name>CityCommonImageList</name>
 		<member>strategyImages</member>
 		<member>projectileVoxelMap</member>
+		<member>portalVoxelMap</member>
 		<member>agentIsometric</member>
 		<member>agentStrategic</member>
 		<member>portalStrategic</member>
@@ -892,12 +900,16 @@
 		<member>trackedUnit</member>
 		<member>targetPosition</member>
 		<member>previousPosition</member>
+		<member>stunTicks</member>
+		<member>splitIntoTypesCity</member>
+		<member>splitIntoTypesBattle</member>
 		<member>spritePositions</member>
 		<member>tail_length</member>
 		<member>projectile_sprites</member>
 		<member>sprite_distance</member>
 		<member>manualFire</member>
-		<member>voxelMap</member>
+		<member>voxelMapLof</member>
+		<member>voxelMapLos</member>
 		<member>impactSfx</member>
 		<member>doodadType</member>
 		<member>damageType</member>
@@ -913,6 +925,7 @@
 		<member>lifetime</member>
 		<member>sprite</member>
 		<member>type</member>
+		<member>voxelMap</member>
 	</object>
 	<object>
 		<name>DoodadType</name>
@@ -977,6 +990,11 @@
 		<name>UFOGrowth</name>
 		<member>week</member>
 		<member>vehicleTypeList</member>
+	</object>
+	<object>
+		<name>UFOMissionPreference</name>
+		<member>week</member>
+		<member>missionList</member>
 	</object>
 	<object>
 		<name>BaseLayout</name>
@@ -1141,6 +1159,8 @@
 		<member>impact_sfx</member>
 		<member>explosion_graphic</member>
 		<member>icon</member>
+		<member>stunTicks</member>
+		<member>splitIntoTypes</member>
 		<member>power</member>
 		<member>top_speed</member>
 		<member>accuracy_modifier</member>
@@ -1151,6 +1171,8 @@
 		<member>shielding</member>
 		<member>cloaking</member>
 		<member>teleporting</member>
+		<member>dimensionShifting</member>
+		<member>scoreRequirement</member>
 	</object>
 	<object>
 		<name>DoodadFrame</name>
@@ -1225,9 +1247,7 @@
 		<member>missions</member>
 		<member>vehiclePark</member>
 		<member>providesTransportationServices</member>
-		<member>minHireePool</member>
-		<member>maxHireePool</member>
-		<member>hirableTypes</member>
+		<member>hirableAgentTypes</member>
 	</object>
 	<object>
 		<name>VehicleType</name>
@@ -1269,6 +1289,7 @@
 		<member>provideFreightCargo</member>
 		<member>provideFreightBio</member>
 		<member>canRescueCrashed</member>
+		<member>canEnterDimensionGate</member>
 		<member>researchUnlock</member>
 	</object>
 	<object>
@@ -1902,5 +1923,15 @@
 		<member>currentPrice</member>
 		<member>currentStock</member>
 		<member>lastStock</member>
+	</object>
+	<object>
+		<name>GameScore</name>
+		<member>tacticalMissions</member>
+		<member>researchCompleted</member>
+		<member>alienIncidents</member>
+		<member>craftShotDownUFO</member>
+		<member>craftShotDownXCom</member>
+		<member>incursions</member>
+		<member>cityDamage</member>
 	</object>
 </openapoc_gamestate>

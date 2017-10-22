@@ -90,8 +90,14 @@
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>
+	  <label id="TEXT_BUTTON_BASE_STATIC" visible="N">
+        <position x="15" y="124"/>
+        <size width="157" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
 	  
-	   <graphicbutton id="BUTTON_SECOND_BASE_1">
+	 <graphicbutton id="BUTTON_SECOND_BASE_1">
         <position x="431" y="53"/>
         <size width="32" height="32"/>
         <image/>
@@ -140,6 +146,12 @@
         <imagedepressed/>
       </graphicbutton>
       <label id="TEXT_BUTTON_SECOND_BASE">
+        <position x="422" y="124"/>
+        <size width="157" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+	    <label id="TEXT_BUTTON_SECOND_BASE_STATIC" visible="N">
         <position x="422" y="124"/>
         <size width="157" height="15"/>
         <alignment horizontal="centre" vertical="centre"/>
@@ -270,7 +282,7 @@
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:36:xcom3/ufodata/base.pcx</imagechecked>
 	  </radiobutton>
-	    <radiobutton id="BUTTON_ALIENS" groupid = "TYPE">
+	  <radiobutton id="BUTTON_ALIENS" groupid = "TYPE">
         <position x="602" y="360"/>
         <size width="35" height="34"/>
         <image/>

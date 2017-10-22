@@ -8,6 +8,7 @@
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
+#include "framework/palette.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
 #include "framework/trace.h"
@@ -96,8 +97,39 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
                                TileViewMode initialMode, Vec3<float> screenCenterTile,
                                GameState &gameState)
     : TileView(map, isoTileSize, stratTileSize, initialMode),
-      hiddenForm(ui().getForm("battle/hidden")), state(gameState), battle(*gameState.current_battle)
+      hiddenForm(ui().getForm("battle/hidden")), state(gameState),
+      battle(*gameState.current_battle),
+      palette(fw().data->loadPalette("xcom3/tacdata/tactical.pal"))
 {
+	pal = palette;
+
+	for (int j = 0; j <= 15; j++)
+	{
+		colorCurrent = j;
+		auto newPal = mksp<Palette>();
+
+		for (int i = 0; i < 255 - 4; i++)
+		{
+			newPal->setColour(i, palette->getColour(i));
+		}
+		// Lift color, pulsates from (0r 3/8g 5/8b) to (0r 8/8g 4/8b)
+		newPal->setColour(255 - 4, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
+		                                  (colorCurrent * 16 * -1 + 255 * 5) / 8));
+		// Yellow color, for owned indicators, pulsates from (3/8r 3/8g 0b) to (8/8r 8/8g 0b)
+		newPal->setColour(255 - 3, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8,
+		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8, 0));
+		// Red color, for enemy indicators, pulsates from (3/8r 0g 0b) to (8/8r 0g 0b)
+		newPal->setColour(255 - 2, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0, 0));
+		// Pink color, for neutral indicators, pulsates from (3/8r 0g 3/8b) to (8/8r 0g 8/8b)
+		newPal->setColour(255 - 1, Colour((colorCurrent * 16 * 5 + 255 * 3) / 8, 0,
+		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8));
+		// Blue color, for misc. indicators, pulsates from (0r 3/8g 3/8b) to (0r 8/8g 8/8b)
+		newPal->setColour(255 - 0, Colour(0, (colorCurrent * 16 * 5 + 255 * 3) / 8,
+		                                  (colorCurrent * 16 * 5 + 255 * 3) / 8));
+
+		modPalette.push_back(newPal);
+	}
+
 	layerDrawingMode = LayerDrawingMode::UpToCurrentLevel;
 	targetTacticalThisLevel =
 
@@ -1534,6 +1566,20 @@ void BattleTileView::render()
 		                      state.battle_common_sample_list->burn->format.channels;
 		fw().soundBackend->playSample(state.battle_common_sample_list->burn, closestFirePosition);
 	}
+}
+
+void BattleTileView::update()
+{
+	TileView::update();
+
+	// Pulsate palette colors
+	colorCurrent += (colorForward ? 1 : -1);
+	if (colorCurrent <= 0 || colorCurrent >= 15)
+	{
+		colorCurrent = clamp(colorCurrent, 0, 15);
+		colorForward = !colorForward;
+	}
+	pal = modPalette[colorCurrent];
 }
 
 void BattleTileView::resetAttackCost()

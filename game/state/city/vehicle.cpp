@@ -42,88 +42,6 @@ namespace OpenApoc
 namespace
 {
 static const float M_2xPI = 2.0f * M_PI;
-
-VehicleType::Direction getDirectionLarge(float facing)
-{
-	static std::map<float, VehicleType::Direction> DirectionMap = {
-	    {0.0f * (float)M_PI, VehicleType::Direction::N},
-	    {0.125f * (float)M_PI, VehicleType::Direction::NNE},
-	    {0.25f * (float)M_PI, VehicleType::Direction::NE},
-	    {0.375f * (float)M_PI, VehicleType::Direction::NEE},
-	    {0.5f * (float)M_PI, VehicleType::Direction::E},
-	    {0.625f * (float)M_PI, VehicleType::Direction::SEE},
-	    {0.75f * (float)M_PI, VehicleType::Direction::SE},
-	    {0.875f * (float)M_PI, VehicleType::Direction::SSE},
-	    {1.0f * (float)M_PI, VehicleType::Direction::S},
-	    {1.125f * (float)M_PI, VehicleType::Direction::SSW},
-	    {1.25f * (float)M_PI, VehicleType::Direction::SW},
-	    {1.375f * (float)M_PI, VehicleType::Direction::SWW},
-	    {1.5f * (float)M_PI, VehicleType::Direction::W},
-	    {1.625f * (float)M_PI, VehicleType::Direction::NWW},
-	    {1.75f * (float)M_PI, VehicleType::Direction::NW},
-	    {1.875f * (float)M_PI, VehicleType::Direction::NNW},
-	};
-
-	float closestDiff = FLT_MAX;
-	VehicleType::Direction closestDir = VehicleType::Direction::N;
-	for (auto &p : DirectionMap)
-	{
-		float d1 = p.first - facing;
-		if (d1 < 0.0f)
-		{
-			d1 += M_2xPI;
-		}
-		float d2 = facing - p.first;
-		if (d2 < 0.0f)
-		{
-			d2 += M_2xPI;
-		}
-		float diff = std::min(d1, d2);
-		if (diff < closestDiff)
-		{
-			closestDiff = diff;
-			closestDir = p.second;
-		}
-	}
-	return closestDir;
-}
-
-VehicleType::Direction getDirectionSmall(float facing)
-{
-	static std::map<float, VehicleType::Direction> DirectionMap = {
-	    {0.0f * (float)M_PI, VehicleType::Direction::N},
-	    {0.25f * (float)M_PI, VehicleType::Direction::NE},
-	    {0.5f * (float)M_PI, VehicleType::Direction::E},
-	    {0.75f * (float)M_PI, VehicleType::Direction::SE},
-	    {1.0f * (float)M_PI, VehicleType::Direction::S},
-	    {1.25f * (float)M_PI, VehicleType::Direction::SW},
-	    {1.5f * (float)M_PI, VehicleType::Direction::W},
-	    {1.75f * (float)M_PI, VehicleType::Direction::NW},
-	};
-
-	float closestDiff = FLT_MAX;
-	VehicleType::Direction closestDir = VehicleType::Direction::N;
-	for (auto &p : DirectionMap)
-	{
-		float d1 = p.first - facing;
-		if (d1 < 0.0f)
-		{
-			d1 += M_2xPI;
-		}
-		float d2 = facing - p.first;
-		if (d2 < 0.0f)
-		{
-			d2 += M_2xPI;
-		}
-		float diff = std::min(d1, d2);
-		if (diff < closestDiff)
-		{
-			closestDiff = diff;
-			closestDir = p.second;
-		}
-	}
-	return closestDir;
-}
 }
 
 const UString &Vehicle::getPrefix()
@@ -185,10 +103,7 @@ class FlyingVehicleMover : public VehicleMover
 		// Step 01: Drop carried vehicle if we ever are w/o mission
 		if (vehicle.missions.empty() && vehicle.carriedVehicle)
 		{
-			vehicle.carriedVehicle->crashed = false;
-			vehicle.carriedVehicle->startFalling(state);
-			vehicle.carriedVehicle->carriedByVehicle.clear();
-			vehicle.carriedVehicle.clear();
+			vehicle.dropCarriedVehicle(state);
 		}
 
 		// Step 02: Try to move to preferred altitude if no mission
@@ -249,7 +164,7 @@ class FlyingVehicleMover : public VehicleMover
 				// FIXME: Do not dodge projectiles that are too low damage vs us?
 				// Is this also in rules of engagement?
 				// Do not dodge our own projectiles we just fired
-				if (p->lifetime < 36 && p->firerVehicle == vehicle.shared_from_this())
+				if (p->age < 32.0f && p->firerVehicle == vehicle.shared_from_this())
 				{
 					continue;
 				}
@@ -257,8 +172,11 @@ class FlyingVehicleMover : public VehicleMover
 				// Vehicle position relative to projectile
 				auto point = vehicle.position - p->position;
 				// Final projectile position before expiry (or 1 second passes)
-				auto line = p->velocity * (float)std::min(TICKS_PER_SECOND, p->lifetime - p->age) /
-				            (float)TICK_SCALE / p->velocityScale;
+				auto line =
+				    glm::normalize(p->velocity) *
+				    std::min(glm::length(p->velocity) * (float)TICKS_PER_SECOND / (float)TICK_SCALE,
+				             p->lifetime - p->age) /
+				    p->velocityScale;
 				if (glm::length(line) == 0.0f)
 				{
 					continue;
@@ -1293,6 +1211,80 @@ Vehicle::Vehicle()
 
 Vehicle::~Vehicle() = default;
 
+void Vehicle::leaveDimensionGate(GameState &state)
+{
+	LogWarning("Check if portal empty");
+	// FIXME: Check if portal empty
+	auto portal = city->portals.begin();
+	std::uniform_int_distribution<int> portal_rng(0, city->portals.size() - 1);
+	std::advance(portal, portal_rng(state.rng));
+	auto initialPosition = (*portal)->getPosition();
+	auto initialFacing = 0.0f;
+
+	LogInfo("Leaving dimension gate %s", this->name);
+	if (this->tileObject)
+	{
+		LogError("Trying to launch already-launched vehicle");
+		return;
+	}
+	if (this->currentBuilding)
+	{
+		LogError("Vehicle leaving dimension gate from a building?");
+		return;
+	}
+	this->position = initialPosition;
+	this->goalPosition = initialPosition;
+	this->facing = initialFacing;
+	this->goalFacing = initialFacing;
+	if (city->map)
+	{
+		city->map->addObjectToMap(shared_from_this());
+	}
+	if (state.current_city == city)
+	{
+		fw().soundBackend->playSample(state.city_common_sample_list->dimensionShiftOut, position);
+		if (owner == state.getAliens())
+		{
+			fw().pushEvent(
+			    new GameVehicleEvent(GameEventType::UfoSpotted, {&state, shared_from_this()}));
+		}
+	}
+}
+
+void Vehicle::enterDimensionGate(GameState &state)
+{
+	carriedByVehicle.clear();
+	crashed = false;
+	if (this->currentBuilding)
+	{
+		LogError("Vehicle entering dimension gate from a building?");
+		return;
+	}
+	if (carriedVehicle)
+	{
+		dropCarriedVehicle(state);
+	}
+	if (tileObject)
+	{
+		this->tileObject->removeFromMap();
+		this->tileObject.reset();
+	}
+	if (shadowObject)
+	{
+		this->shadowObject->removeFromMap();
+		this->shadowObject = nullptr;
+	}
+	if (state.current_city == city)
+	{
+		fw().soundBackend->playSample(state.city_common_sample_list->dimensionShiftIn, position);
+	}
+	this->position = {-9001, -9001, -9001};
+	this->facing = 0.0f;
+	this->goalFacing = 0.0f;
+	this->ticksToTurn = 0;
+	this->angularVelocity = 0.0f;
+}
+
 void Vehicle::leaveBuilding(GameState &state, Vec3<float> initialPosition, float initialFacing)
 {
 	LogInfo("Launching %s", this->name);
@@ -1311,7 +1303,10 @@ void Vehicle::leaveBuilding(GameState &state, Vec3<float> initialPosition, float
 	this->goalPosition = initialPosition;
 	this->facing = initialFacing;
 	this->goalFacing = initialFacing;
-	city->map->addObjectToMap(shared_from_this());
+	if (city->map)
+	{
+		city->map->addObjectToMap(shared_from_this());
+	}
 }
 
 void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
@@ -1328,99 +1323,7 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 	if (carriedVehicle)
 	{
 		carriedVehicle->enterBuilding(state, b);
-		std::list<sp<VEquipment>> scrappedEquipment;
-		for (auto &e : carriedVehicle->equipment)
-		{
-			if (randBoundsExclusive(state.rng, 0, 100) >= FV_CHANCE_TO_RECOVER_EQUIPMENT)
-			{
-				scrappedEquipment.push_back(e);
-			}
-		}
-		for (auto &e : scrappedEquipment)
-		{
-			carriedVehicle->removeEquipment(e);
-			int price = 0;
-			if (state.economy.find(e->type.id) != state.economy.end())
-			{
-				auto &economy = state.economy[e->type.id];
-				price = economy.currentPrice;
-			}
-			carriedVehicle->owner->balance += price * FV_SCRAPPED_COST_PERCENT / 100;
-			if (e->ammo > 0)
-			{
-				price = 0;
-				if (state.economy.find(e->type->ammo_type.id) != state.economy.end())
-				{
-					auto &economy = state.economy[e->type->ammo_type.id];
-					price = economy.currentPrice;
-				}
-				carriedVehicle->owner->balance += e->ammo * price * FV_SCRAPPED_COST_PERCENT / 100;
-			}
-		}
-		if (randBoundsExclusive(state.rng, 0, 100) > FV_CHANCE_TO_RECOVER_VEHICLE)
-		{
-			while (!carriedVehicle->currentAgents.empty())
-			{
-				auto agent = *carriedVehicle->currentAgents.begin();
-				agent->enterBuilding(state, b);
-			}
-			if (b->base)
-			{
-				// Base, de-equip
-				for (auto &e : carriedVehicle->equipment)
-				{
-					// FIXME: When coding manufacture and other places I had to write X = X + 1
-					// because otherwise it would not add the first item!
-					// Ensure it works here with ++ and change everywhere else
-					// where it does X = X + 1 for base inventory
-					b->base->inventoryVehicleEquipment[e->type.id]++;
-					if (e->ammo > 0)
-					{
-						b->base->inventoryVehicleAmmo[e->type->ammo_type.id] += e->ammo;
-					}
-				}
-			}
-			else
-			{
-				// No base, sell
-				for (auto &e : carriedVehicle->equipment)
-				{
-					int price = 0;
-					if (state.economy.find(e->type.id) != state.economy.end())
-					{
-						auto &economy = state.economy[e->type.id];
-						price = economy.currentPrice;
-					}
-					carriedVehicle->owner->balance += price * FV_SCRAPPED_COST_PERCENT / 100;
-					if (e->ammo > 0)
-					{
-						price = 0;
-						if (state.economy.find(e->type->ammo_type.id) != state.economy.end())
-						{
-							auto &economy = state.economy[e->type->ammo_type.id];
-							price = economy.currentPrice;
-						}
-						carriedVehicle->owner->balance +=
-						    e->ammo * price * FV_SCRAPPED_COST_PERCENT / 100;
-					}
-				}
-			}
-			int price = 0;
-			if (state.economy.find(carriedVehicle->type.id) != state.economy.end())
-			{
-				auto &economy = state.economy[carriedVehicle->type.id];
-				price = economy.currentPrice;
-			}
-			carriedVehicle->owner->balance += price * FV_SCRAPPED_COST_PERCENT / 100;
-			carriedVehicle->die(state, true);
-
-			fw().pushEvent(new GameSomethingDiedEvent(GameEventType::VehicleRecovered,
-			                                          carriedVehicle->name, "", position));
-		}
-		else
-		{
-			fw().pushEvent(new GameVehicleEvent(GameEventType::VehicleRecovered, carriedVehicle));
-		}
+		carriedVehicle->processRecoveredVehicle(state);
 		carriedVehicle.clear();
 	}
 	if (tileObject)
@@ -1454,6 +1357,120 @@ void Vehicle::setupMover()
 	}
 	animationDelay = 0;
 	animationFrame = type->animation_sprites.begin();
+}
+
+void Vehicle::processRecoveredVehicle(GameState &state)
+{
+	std::list<sp<VEquipment>> scrappedEquipment;
+	for (auto &e : equipment)
+	{
+		if (randBoundsExclusive(state.rng, 0, 100) >= FV_CHANCE_TO_RECOVER_EQUIPMENT)
+		{
+			scrappedEquipment.push_back(e);
+		}
+	}
+	for (auto &e : scrappedEquipment)
+	{
+		removeEquipment(e);
+		if (e->ammo > 0)
+		{
+			currentBuilding->base->inventoryVehicleAmmo[e->type->ammo_type.id] += e->ammo;
+		}
+		int price = 0;
+		if (state.economy.find(e->type.id) != state.economy.end())
+		{
+			auto &economy = state.economy[e->type.id];
+			price = economy.currentPrice;
+		}
+		owner->balance += price * FV_SCRAPPED_COST_PERCENT / 100;
+		if (e->ammo > 0)
+		{
+			price = 0;
+			if (state.economy.find(e->type->ammo_type.id) != state.economy.end())
+			{
+				auto &economy = state.economy[e->type->ammo_type.id];
+				price = economy.currentPrice;
+			}
+			owner->balance += e->ammo * price * FV_SCRAPPED_COST_PERCENT / 100;
+		}
+	}
+	if (randBoundsExclusive(state.rng, 0, 100) > FV_CHANCE_TO_RECOVER_VEHICLE)
+	{
+		while (!currentAgents.empty())
+		{
+			auto agent = *currentAgents.begin();
+			agent->enterBuilding(state, currentBuilding);
+		}
+		if (currentBuilding->base)
+		{
+			// Base, de-equip
+			for (auto &e : equipment)
+			{
+				// FIXME: When coding manufacture and other places I had to write X = X + 1
+				// because otherwise it would not add the first item!
+				// Ensure it works here with ++ and change everywhere else
+				// where it does X = X + 1 for base inventory
+				currentBuilding->base->inventoryVehicleEquipment[e->type.id]++;
+				if (e->ammo > 0)
+				{
+					currentBuilding->base->inventoryVehicleAmmo[e->type->ammo_type.id] += e->ammo;
+				}
+			}
+		}
+		else
+		{
+			// No base, sell
+			for (auto &e : equipment)
+			{
+				int price = 0;
+				if (state.economy.find(e->type.id) != state.economy.end())
+				{
+					auto &economy = state.economy[e->type.id];
+					price = economy.currentPrice;
+				}
+				owner->balance += price * FV_SCRAPPED_COST_PERCENT / 100;
+				if (e->ammo > 0)
+				{
+					price = 0;
+					if (state.economy.find(e->type->ammo_type.id) != state.economy.end())
+					{
+						auto &economy = state.economy[e->type->ammo_type.id];
+						price = economy.currentPrice;
+					}
+					owner->balance += e->ammo * price * FV_SCRAPPED_COST_PERCENT / 100;
+				}
+			}
+		}
+		int price = 0;
+		if (state.economy.find(type.id) != state.economy.end())
+		{
+			auto &economy = state.economy[type.id];
+			price = economy.currentPrice;
+		}
+		owner->balance += price * FV_SCRAPPED_COST_PERCENT / 100;
+		if (owner == state.getPlayer())
+		{
+			fw().pushEvent(
+			    new GameSomethingDiedEvent(GameEventType::VehicleRecovered, name, "", position));
+		}
+		die(state, true);
+	}
+	else
+	{
+		if (owner == state.getPlayer())
+		{
+			fw().pushEvent(new GameVehicleEvent(GameEventType::VehicleRecovered,
+			                                    {&state, shared_from_this()}));
+		}
+	}
+}
+
+void Vehicle::dropCarriedVehicle(GameState &state)
+{
+	carriedVehicle->crashed = false;
+	carriedVehicle->startFalling(state);
+	carriedVehicle->carriedByVehicle.clear();
+	carriedVehicle.clear();
 }
 
 void Vehicle::provideService(GameState &state, bool otherOrg)
@@ -1737,6 +1754,17 @@ void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 			{
 				m->targetVehicle.clear();
 			}
+			for (auto it = m->targets.begin(); it != m->targets.end();)
+			{
+				if ((*it).id == id)
+				{
+					it = m->targets.erase(it);
+				}
+				else
+				{
+					it++;
+				}
+			}
 		}
 	}
 	if (tileObject)
@@ -1786,10 +1814,7 @@ void Vehicle::crash(GameState &state, StateRef<Vehicle> attacker)
 	// Drop carried vehicle
 	if (carriedVehicle)
 	{
-		carriedVehicle->crashed = false;
-		carriedVehicle->startFalling(state);
-		carriedVehicle->carriedByVehicle.clear();
-		carriedVehicle.clear();
+		dropCarriedVehicle(state);
 	}
 	// Actually crash
 	crashed = true;
@@ -1834,10 +1859,7 @@ void Vehicle::startFalling(GameState &state, StateRef<Vehicle> attacker)
 	// Drop carried vehicle
 	if (carriedVehicle)
 	{
-		carriedVehicle->crashed = false;
-		carriedVehicle->startFalling(state);
-		carriedVehicle->carriedByVehicle.clear();
-		carriedVehicle.clear();
+		dropCarriedVehicle(state);
 	}
 	// Actually start falling
 	falling = true;
@@ -1861,6 +1883,18 @@ void Vehicle::startFalling(GameState &state, StateRef<Vehicle> attacker)
 
 void Vehicle::adjustRelationshipOnDowned(GameState &state, StateRef<Vehicle> attacker)
 {
+	// Give score if downing alien craft
+	if (attacker->owner == state.getPlayer() && owner == state.getAliens())
+	{
+		state.totalScore.craftShotDownUFO += type->score;
+		state.weekScore.craftShotDownUFO += type->score;
+	}
+	// Subtract score if x-com craft
+	else if (owner == state.getPlayer())
+	{
+		state.totalScore.craftShotDownXCom -= type->score;
+		state.weekScore.craftShotDownXCom -= type->score;
+	}
 	// If we're hostile to attacker - lose 5 points
 	if (owner->isRelatedTo(attacker->owner) == Organisation::Relation::Hostile)
 	{
@@ -1923,6 +1957,17 @@ Vec3<float> Vehicle::getMuzzleLocation() const
 void Vehicle::update(GameState &state, unsigned int ticks)
 {
 	bool turbo = ticks > TICKS_PER_SECOND;
+
+	if (stunTicksRemaining >= ticks)
+	{
+		stunTicksRemaining -= ticks;
+		return;
+	}
+	else if (stunTicksRemaining > 0)
+	{
+		ticks -= stunTicksRemaining;
+		stunTicksRemaining = 0;
+	}
 
 	if (cloakTicksAccumulated < CLOAK_TICKS_REQUIRED_VEHICLE)
 	{
@@ -2005,14 +2050,14 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 					{
 						// FIXME: Are vertical firing arcs actually working in vanilla? I think
 						// not..
-						arc = {equipment->type->firing_arc_1, 8};
+						arc = {equipment->type->firing_arc_1, equipment->type->firing_arc_2};
 					}
 					has_active_pd = equipment->type->point_defence;
 					if (has_active_pd && arcPD.x < equipment->type->firing_arc_1)
 					{
 						// FIXME: Are vertical firing arcs actually working in vanilla? I think
 						// not..
-						arcPD = {equipment->type->firing_arc_1, 8};
+						arcPD = {equipment->type->firing_arc_1, equipment->type->firing_arc_2};
 					}
 				}
 			}
@@ -2041,9 +2086,21 @@ void Vehicle::updateEachSecond(GameState &state)
 	updateCargo(state);
 	if (missions.empty() && !currentBuilding && owner != state.getPlayer())
 	{
-		setMission(state,
-		           owner == state.getAliens() ? VehicleMission::patrol(state, *this)
-		                                      : VehicleMission::gotoBuilding(state, *this));
+		if (owner == state.getAliens())
+		{
+			if (city.id == "CITYMAP_HUMAN")
+			{
+				setMission(state, VehicleMission::gotoPortal(state, *this));
+			}
+			else // Alien city
+			{
+				setMission(state, VehicleMission::patrol(state, *this));
+			}
+		}
+		else
+		{
+			setMission(state, VehicleMission::gotoBuilding(state, *this));
+		}
 	}
 }
 
@@ -2132,7 +2189,7 @@ void Vehicle::updateSprite(GameState &state)
 	{
 		case VehicleType::Banking::Right:
 		case VehicleType::Banking::Left:
-			direction = getDirectionLarge(facing);
+			direction = VehicleType::getDirectionLarge(facing);
 			// UFOs don't care about banking and direction being correct
 			// Otherwise ensure direction is valid
 			if (type->type == VehicleType::Type::UFO)
@@ -2148,7 +2205,7 @@ void Vehicle::updateSprite(GameState &state)
 		case VehicleType::Banking::Ascending:
 		case VehicleType::Banking::Descending:
 		case VehicleType::Banking::Flat:
-			direction = getDirectionSmall(facing);
+			direction = VehicleType::getDirectionSmall(facing);
 			// UFOs don't care about banking and direction being correct
 			// Otherwise ensure direction is valid
 			if (type->type == VehicleType::Type::UFO)
@@ -2182,7 +2239,7 @@ void Vehicle::updateSprite(GameState &state)
 			case VehicleType::Direction::NWW:
 			case VehicleType::Direction::NNW:
 				// If direction is from large set then try small set
-				shadowDirection = getDirectionSmall(facing);
+				shadowDirection = VehicleType::getDirectionSmall(facing);
 				if (type->directional_shadow_sprites.find(shadowDirection) !=
 				    type->directional_shadow_sprites.end())
 				{
@@ -2278,8 +2335,9 @@ bool Vehicle::handleCollision(GameState &state, Collision &c, bool &soundHandled
 	auto projectile = c.projectile.get();
 	if (projectile)
 	{
+		stunTicksRemaining += projectile->stunTicks;
 		auto vehicleDir = glm::round(type->directionToVector(direction));
-		auto projectileDir = glm::normalize(projectile->getVelocity());
+		auto projectileDir = glm::normalize(projectile->velocity);
 		auto dir = vehicleDir + projectileDir;
 		dir = glm::round(dir);
 
@@ -2338,6 +2396,11 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 			// Can't auto-fire at crashed vehicles
 			continue;
 		}
+		if (otherVehicle->type->aggressiveness == 0)
+		{
+			// No auto-acquiring of non-aggressive vehicles
+			continue;
+		}
 		if (otherVehicle->city != this->city)
 		{
 			/* Can't fire on things a world away */
@@ -2355,7 +2418,7 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 			continue;
 		}
 		// Check firing arc
-		if (arc.x < 8 || arc.y < 8)
+		if (type->type != VehicleType::Type::UFO && (arc.x < 8 || arc.y < 8))
 		{
 			auto facing = type->directionToVector(direction);
 			auto vecToTarget = otherVehicleTile->getPosition() - position;
@@ -2392,7 +2455,7 @@ sp<TileObjectProjectile> Vehicle::findClosestHostileMissile(GameState &state,
 	for (auto &projectile : state.current_city->projectiles)
 	{
 		// Can't shoot down projectiles w/o voxelMap
-		if (!projectile->voxelMap)
+		if (!projectile->voxelMapLof)
 		{
 			continue;
 		}
@@ -2405,7 +2468,7 @@ sp<TileObjectProjectile> Vehicle::findClosestHostileMissile(GameState &state,
 		}
 #endif // ! DEBUG_ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE
 		// Check firing arc
-		if (arc.x < 8 || arc.y < 8)
+		if (type->type != VehicleType::Type::UFO && (arc.x < 8 || arc.y < 8))
 		{
 			auto facing = type->directionToVector(direction);
 			auto vecToTarget = projectile->getPosition() - position;
@@ -2446,6 +2509,8 @@ bool Vehicle::fireWeaponsPointDefense(GameState &state, Vec2<int> arc)
 void Vehicle::fireWeaponsNormal(GameState &state, Vec2<int> arc)
 {
 	auto firingRange = getFiringRange();
+
+	// Attack buildings
 	if (!missions.empty() && missions.front()->type == VehicleMission::MissionType::AttackBuilding)
 	{
 		auto target = missions.front()->targetBuilding;
@@ -2492,7 +2557,7 @@ void Vehicle::fireWeaponsNormal(GameState &state, Vec2<int> arc)
 		}
 	}
 
-	// Find something to shoot at!
+	// Attack vehicles
 	sp<TileObjectVehicle> enemy;
 	if (!missions.empty() && missions.front()->type == VehicleMission::MissionType::AttackVehicle &&
 	    tileObject->getDistanceTo(missions.front()->targetVehicle->tileObject) <= firingRange)
@@ -2518,237 +2583,92 @@ void Vehicle::fireWeaponsManual(GameState &state, Vec2<int> arc)
 	attackTarget(state, manualFirePosition);
 }
 
-void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile)
+bool Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile)
 {
-	static const std::set<TileObject::Type> sceneryVehicleSet = {TileObject::Type::Scenery,
-	                                                             TileObject::Type::Vehicle};
-
-	auto firePosition = getMuzzleLocation();
 	auto target = enemyTile->getVoxelCentrePosition();
-	auto distanceTiles = glm::length(position - target);
+	auto targetVelocity = enemyTile->getVehicle()->velocity;
+	bool checkLOF = true;
+	auto eq = getFirstFiringWeapon(state, target, checkLOF, targetVelocity, enemyTile);
 
-	auto distanceVoxels = this->tileObject->getDistanceTo(enemyTile);
-
-	for (auto &eq : this->equipment)
+	if (eq)
 	{
-		// Not a weapon
-		if (eq->type->type != EquipmentSlotType::VehicleWeapon)
-		{
-			continue;
-		}
-		// Out of ammo or on cooldown
-		if (eq->canFire() == false)
-		{
-			continue;
-		}
-		// Out of range
-		if (distanceVoxels > eq->getRange())
-		{
-			continue;
-		}
-		// Check firing arc
-		if (eq->type->firing_arc_1 < 8 || eq->type->firing_arc_2 < 8)
-		{
-			Vec2<int> arc = {eq->type->firing_arc_1, 8};
-			auto facing = type->directionToVector(direction);
-			auto vecToTarget = enemyTile->getPosition() - position;
-			float angleXY = glm::angle(glm::normalize(Vec2<float>{facing.x, facing.y}),
-			                           glm::normalize(Vec2<float>{vecToTarget.x, vecToTarget.y}));
-			float vecToTargetXY =
-			    sqrtf(vecToTarget.x * vecToTarget.x + vecToTarget.y * vecToTarget.y);
-			float angleZ = glm::angle(Vec2<float>{1.0f, 0.0f},
-			                          glm::normalize(Vec2<float>{vecToTargetXY, vecToTarget.z}));
-			if (angleXY > (float)arc.x * (float)M_PI / 8.0f ||
-			    angleZ > (float)arc.y * (float)M_PI / 8.0f)
-			{
-				continue;
-			}
-		}
-
-		// Lead the target
-		auto targetPosAdjusted = target;
-		auto projectileVelocity = eq->type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
-		auto targetVelocity = enemyTile->getVehicle()->velocity;
-		float timeToImpact = distanceVoxels * (float)TICK_SCALE / projectileVelocity;
-		targetPosAdjusted +=
-		    Collision::getLeadingOffset(target - firePosition, projectileVelocity * timeToImpact,
-		                                targetVelocity * timeToImpact);
-
-		// Check if have sight to target
-		// Two attempts, at second attempt try to fire at target itself
-		bool hitSomethingBad = false;
-		for (int i = 0; i < 2; i++)
-		{
-			hitSomethingBad = false;
-			// Checking los as otherwise we're colliding with ground when firing at bogus voxelmaps
-			auto hitObject = tileObject->map.findCollision(firePosition, targetPosAdjusted,
-			                                               sceneryVehicleSet, tileObject, true);
-			if (hitObject)
-			{
-				if (hitObject.obj->getType() == TileObject::Type::Vehicle)
-				{
-					auto vehicle = std::static_pointer_cast<TileObjectVehicle>(hitObject.obj);
-					if (owner->isRelatedTo(vehicle->getVehicle()->owner) !=
-					    Organisation::Relation::Hostile)
-					{
-						hitSomethingBad = true;
-					}
-				}
-				else if (hitObject.obj->getType() == TileObject::Type::Scenery)
-				{
-					hitSomethingBad = true;
-				}
-			}
-			if (hitSomethingBad)
-			{
-				// Can't fire at where it will be so at least fire at where it's now
-				targetPosAdjusted = target;
-			}
-			else
-			{
-				break;
-			}
-		}
-		if (hitSomethingBad)
-		{
-			continue;
-		}
-
 		// Cancel cloak
 		cloakTicksAccumulated = 0;
 
-		// Let enemy dodge us
+		// Let the enemy dodge us
 		auto enemyVehicle = enemyTile->getVehicle();
 		enemyVehicle->ticksAutoActionAvailable = 0;
 
 		// Fire
-		eq->fire(state, targetPosAdjusted, {&state, enemyVehicle});
-	}
-	return;
-}
-
-bool Vehicle::attackTarget(GameState &state, sp<TileObjectProjectile> projectileTile)
-{
-	static const std::set<TileObject::Type> sceneryVehicleSet = {TileObject::Type::Scenery,
-	                                                             TileObject::Type::Vehicle};
-
-	auto firePosition = getMuzzleLocation();
-	auto target = projectileTile->getVoxelCentrePosition();
-	auto distanceTiles = glm::length(position - target);
-
-	auto distanceVoxels = this->tileObject->getDistanceTo(projectileTile->getPosition());
-
-	for (auto &eq : this->equipment)
-	{
-		// Not a weapon
-		if (eq->type->type != EquipmentSlotType::VehicleWeapon)
-		{
-			continue;
-		}
-		// Not a PD weapon
-		if (!eq->type->point_defence)
-		{
-			continue;
-		}
-		// Out of ammo or on cooldown
-		if (eq->canFire() == false)
-		{
-			continue;
-		}
-		// Out of range
-		if (distanceVoxels > eq->getRange())
-		{
-			continue;
-		}
-		// Check firing arc
-		if (eq->type->firing_arc_1 < 8 || eq->type->firing_arc_2 < 8)
-		{
-			Vec2<int> arc = {eq->type->firing_arc_1, 8};
-			auto facing = type->directionToVector(direction);
-			auto vecToTarget = projectileTile->getPosition() - position;
-			float angleXY = glm::angle(glm::normalize(Vec2<float>{facing.x, facing.y}),
-			                           glm::normalize(Vec2<float>{vecToTarget.x, vecToTarget.y}));
-			float vecToTargetXY =
-			    sqrtf(vecToTarget.x * vecToTarget.x + vecToTarget.y * vecToTarget.y);
-			float angleZ = glm::angle(Vec2<float>{1.0f, 0.0f},
-			                          glm::normalize(Vec2<float>{vecToTargetXY, vecToTarget.z}));
-			if (angleXY > (float)arc.x * (float)M_PI / 8.0f ||
-			    angleZ > (float)arc.y * (float)M_PI / 8.0f)
-			{
-				continue;
-			}
-		}
-
-		// Lead the target
-		auto targetPosAdjusted = target;
-		auto projectileVelocity = eq->type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
-		auto targetVelocity = projectileTile->getProjectile()->velocity;
-		float timeToImpact = distanceVoxels * (float)TICK_SCALE / projectileVelocity;
-		targetPosAdjusted +=
-		    Collision::getLeadingOffset(target - firePosition, projectileVelocity * timeToImpact,
-		                                targetVelocity * timeToImpact);
-
-		// Check if have sight to target
-		// Two attempts, at second attempt try to fire at target itself
-		bool hitSomethingBad = false;
-		for (int i = 0; i < 2; i++)
-		{
-			hitSomethingBad = false;
-			auto hitObject = tileObject->map.findCollision(firePosition, targetPosAdjusted,
-			                                               sceneryVehicleSet, tileObject);
-			if (hitObject)
-			{
-				if (hitObject.obj->getType() == TileObject::Type::Vehicle)
-				{
-					auto vehicle = std::static_pointer_cast<TileObjectVehicle>(hitObject.obj);
-					if (owner->isRelatedTo(vehicle->getVehicle()->owner) !=
-					    Organisation::Relation::Hostile)
-					{
-						hitSomethingBad = true;
-					}
-				}
-				else if (hitObject.obj->getType() == TileObject::Type::Scenery)
-				{
-					hitSomethingBad = true;
-				}
-			}
-			if (hitSomethingBad)
-			{
-				// Can't fire at where it will be so at least fire at where it's now
-				targetPosAdjusted = target;
-			}
-			else
-			{
-				break;
-			}
-		}
-		if (hitSomethingBad)
-		{
-			continue;
-		}
-
-		// Cancel cloak
-		cloakTicksAccumulated = 0;
-
-		// Fire
-		eq->fire(state, targetPosAdjusted);
+		eq->fire(state, target, {&state, enemyVehicle});
 		return true;
 	}
 
 	return false;
 }
 
-void Vehicle::attackTarget(GameState &state, Vec3<float> target)
+bool Vehicle::attackTarget(GameState &state, sp<TileObjectProjectile> projectileTile)
 {
+	auto target = projectileTile->getPosition();
+	auto initialTarget = target;
+	auto targetVelocity = projectileTile->getProjectile()->velocity;
+	bool checkLOF = true;
+	auto eq = getFirstFiringWeapon(state, target, checkLOF, targetVelocity, nullptr, true);
+
+	if (eq)
+	{
+		// Cancel cloak
+		cloakTicksAccumulated = 0;
+
+		// Fire
+		eq->fire(state, target, initialTarget);
+		return true;
+	}
+
+	return false;
+}
+
+bool Vehicle::attackTarget(GameState &state, Vec3<float> target)
+{
+	auto initialTarget = target;
+	auto eq = getFirstFiringWeapon(state, target);
+
+	if (eq)
+	{
+		// Cancel cloak
+		cloakTicksAccumulated = 0;
+
+		// Fire
+		eq->fire(state, target, initialTarget, nullptr, true);
+		return true;
+	}
+
+	return false;
+}
+
+sp<VEquipment> Vehicle::getFirstFiringWeapon(GameState &state, Vec3<float> &target, bool checkLOF,
+                                             Vec3<float> targetVelocity,
+                                             sp<TileObjectVehicle> enemyTile, bool pd)
+{
+	static const std::set<TileObject::Type> sceneryVehicleSet = {TileObject::Type::Scenery,
+	                                                             TileObject::Type::Vehicle};
+
+	sp<VEquipment> firingWeapon;
+
 	auto firePosition = getMuzzleLocation();
 	auto distanceTiles = glm::length(position - target);
-
 	auto distanceVoxels = this->tileObject->getDistanceTo(target);
+	bool outsideArc = false;
 
 	for (auto &eq : this->equipment)
 	{
 		// Not a weapon
 		if (eq->type->type != EquipmentSlotType::VehicleWeapon)
+		{
+			continue;
+		}
+		// Not a PD weapon (if need to be)
+		if (pd && !eq->type->point_defence)
 		{
 			continue;
 		}
@@ -2763,33 +2683,113 @@ void Vehicle::attackTarget(GameState &state, Vec3<float> target)
 			continue;
 		}
 		// Check firing arc
-		if (eq->type->firing_arc_1 < 8 || eq->type->firing_arc_2 < 8)
+		if (type->type != VehicleType::Type::UFO &&
+		    (eq->type->firing_arc_1 < 8 || eq->type->firing_arc_2 < 8))
 		{
-			Vec2<int> arc = {eq->type->firing_arc_1, 8};
+			Vec2<int> arc = {eq->type->firing_arc_1, eq->type->firing_arc_2};
 			auto facing = type->directionToVector(direction);
 			auto vecToTarget = target - position;
 			float angleXY = glm::angle(glm::normalize(Vec2<float>{facing.x, facing.y}),
 			                           glm::normalize(Vec2<float>{vecToTarget.x, vecToTarget.y}));
 			float vecToTargetXY =
 			    sqrtf(vecToTarget.x * vecToTarget.x + vecToTarget.y * vecToTarget.y);
-			float angleZ = glm::angle(Vec2<float>{1.0f, 0.0f},
-			                          glm::normalize(Vec2<float>{vecToTargetXY, vecToTarget.z}));
+			float angleZ = glm::angle(
+			    Vec2<float>{1.0f,
+			                banking == VehicleType::Banking::Ascending
+			                    ? 0.5f
+			                    : (banking == VehicleType::Banking::Descending ? -0.5f : 0.0f)},
+			    glm::normalize(Vec2<float>{vecToTargetXY, vecToTarget.z}));
 			if (angleXY > (float)arc.x * (float)M_PI / 8.0f ||
 			    angleZ > (float)arc.y * (float)M_PI / 8.0f)
 			{
-				continue;
+				if (eq->type->guided)
+				{
+					outsideArc = true;
+				}
+				else
+				{
+					continue;
+				}
 			}
 		}
-
-		// Cancel cloak
-		cloakTicksAccumulated = 0;
-
-		// Fire
-		eq->fire(state, target, nullptr, true);
-		return;
+		firingWeapon = eq;
+		break;
 	}
 
-	return;
+	if (!firingWeapon)
+	{
+		return nullptr;
+	}
+
+	int attepmpt = 1;
+	auto originalTarget = target;
+	if (!checkLOF)
+	{
+		attepmpt = 2;
+	}
+	else if (targetVelocity.x != 0.0f || targetVelocity.y != 0.0f || targetVelocity.z != 0.0f)
+	{
+		attepmpt = 0;
+		// Lead the target
+		auto projectileVelocity = firingWeapon->type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
+		float timeToImpact = distanceVoxels * (float)TICK_SCALE / projectileVelocity;
+		target +=
+		    Collision::getLeadingOffset(target - firePosition, projectileVelocity * timeToImpact,
+		                                targetVelocity * timeToImpact);
+	}
+	// Check if have sight to target
+	// Two attempts, at second attempt try to fire at target itself
+	bool hitSomethingBad = false;
+	for (int i = attepmpt; i < 2; i++)
+	{
+		hitSomethingBad = false;
+		// Checking los as otherwise we're colliding with ground when firing at bogus voxelmaps like
+		// bikes
+		auto hitObject = tileObject->map.findCollision(firePosition, target, sceneryVehicleSet,
+		                                               tileObject, true);
+		if (hitObject)
+		{
+			if (hitObject.obj->getType() == TileObject::Type::Vehicle)
+			{
+				auto vehicle = std::static_pointer_cast<TileObjectVehicle>(hitObject.obj);
+				if (owner->isRelatedTo(vehicle->getVehicle()->owner) !=
+				        Organisation::Relation::Hostile &&
+				    vehicle != enemyTile)
+				{
+					hitSomethingBad = true;
+				}
+			}
+			else if (hitObject.obj->getType() == TileObject::Type::Scenery)
+			{
+				hitSomethingBad = true;
+			}
+		}
+		if (hitSomethingBad)
+		{
+			// Can't fire at where it will be so at least fire at where it's now
+			target = originalTarget;
+		}
+		else
+		{
+			break;
+		}
+	}
+	if (hitSomethingBad)
+	{
+		return nullptr;
+	}
+
+	// Fire guided weapons that are outside their firing arc in front of us
+	if (outsideArc)
+	{
+		auto facing = type->directionToVector(direction);
+		facing.z += banking == VehicleType::Banking::Ascending
+		                ? 0.5f
+		                : (banking == VehicleType::Banking::Descending ? -0.5f : 0.0f);
+		target = position + facing * 5.0f;
+	}
+
+	return firingWeapon;
 }
 
 float Vehicle::getFiringRange() const
@@ -2964,6 +2964,10 @@ bool Vehicle::popFinishedMissions(GameState &state)
 	bool popped = false;
 	while (missions.size() > 0 && missions.front()->isFinished(state, *this))
 	{
+		if (isDead())
+		{
+			return false;
+		}
 		LogWarning("Vehicle %s mission \"%s\" finished", name, missions.front()->getName());
 		missions.pop_front();
 		popped = true;
@@ -3110,6 +3114,24 @@ bool Vehicle::hasTeleporter() const
 		}
 	}
 
+	return false;
+}
+
+bool Vehicle::hasDimensionShifter() const
+{
+	if (type->canEnterDimensionGate)
+	{
+		return true;
+	}
+	for (auto &e : this->equipment)
+	{
+		if (e->type->type != EquipmentSlotType::VehicleGeneral)
+			continue;
+		if (e->type->dimensionShifting)
+		{
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -3447,17 +3469,41 @@ void Vehicle::removeEquipment(sp<VEquipment> object)
 	}
 }
 
+Vec3<int> Vehicle::getPreferredPosition(Vec3<int> position) const
+{
+	if (!type->isGround())
+	{
+		position.z = (int)altitude;
+	}
+	return position;
+}
+
+Vec3<int> Vehicle::getPreferredPosition(int x, int y, int z) const
+{
+	return {x, y, type->isGround() ? z : (int)altitude};
+}
+
 void Vehicle::equipDefaultEquipment(GameState &state)
 {
+	equipment.clear();
+	loot.clear();
 	LogInfo("Equipping \"%s\" with default equipment", this->type->name);
+	auto alien = owner == state.getAliens();
 	for (auto &pair : this->type->initial_equipment_list)
 	{
 		auto &pos = pair.first;
 		auto &etype = pair.second;
 
+		if (alien && state.totalScore.craftShotDownUFO < etype->scoreRequirement)
+		{
+			continue;
+		}
+		loot.push_back(etype);
 		auto eq = this->addEquipment(state, pos, etype);
 		eq->ammo = eq->type->max_ammo;
 	}
+	shield = getMaxShield();
+	health = getMaxHealth();
 }
 
 void Vehicle::nextFrame(int ticks)
@@ -3677,6 +3723,10 @@ void Cargo::arrive(GameState &state, bool &cargoArrived, bool &bioArrived, bool 
 
 void Cargo::seize(GameState &state, StateRef<Organisation> org)
 {
+	if (cost == 0)
+	{
+		// Get cost from economy if no cost
+	}
 	int worth = cost * count / divisor;
 	// FIXME: Return expired cargo to economy
 	LogWarning("Implement cargo seize message, return to economy, and adjust relationship "

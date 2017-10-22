@@ -241,6 +241,27 @@ template <typename T, typename Generator> T setRandomiser(Generator &g, const st
 	return *it;
 }
 
+template <typename T1, typename T2, typename Generator>
+std::pair<T1, T2> mapRandomizer(Generator &g, const std::map<T1, T2> &map)
+{
+	// we can't do index lookups in a set, so we just have to iterate N times
+	if (map.size() == 1)
+		return *map.begin();
+	else if (map.empty())
+	{
+		throw std::runtime_error("Trying to randomize within empty map");
+	}
+	auto count = randBoundsExclusive(g, (unsigned)0, (unsigned)map.size());
+
+	auto it = map.begin();
+	while (count)
+	{
+		it++;
+		count--;
+	}
+	return *it;
+}
+
 template <typename T, typename Generator>
 T vectorRandomizer(Generator &g, const std::vector<T> &vector)
 {

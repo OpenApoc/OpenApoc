@@ -7,12 +7,6 @@
 #include "library/vec.h"
 #include <map>
 
-// Alexey Andronov (Istrebitel):
-// It has been observed that vehicle weapons reload too quickly when compared to vanilla
-// Introducing a multiplier of 2 to their reload time seems to bring them to
-// comparable times. However, this may be wrong.
-#define VEQUIPMENT_RELOAD_TIME_MULTIPLIER 2
-
 namespace OpenApoc
 {
 
@@ -47,6 +41,7 @@ class VEquipment : public Equipment
 	StateRef<Vehicle> owner;
 	int ammo;
 	int reloadTime;
+	bool disabled = false;
 
 	// All equipment methods
 	// General equipment methods
@@ -59,7 +54,9 @@ class VEquipment : public Equipment
 	// Reload uses up to 'ammoAvailable' to reload the weapon. It returns the amount
 	// actually used.
 	int reload(int ammoAvailable);
-	void fire(GameState &state, Vec3<float> targetPosition,
+	bool fire(GameState &state, Vec3<float> targetPosition, Vec3<float> homingPosition,
+	          StateRef<Vehicle> targetVehicle = nullptr, bool manual = false);
+	bool fire(GameState &state, Vec3<float> targetPosition,
 	          StateRef<Vehicle> targetVehicle = nullptr, bool manual = false);
 
 	sp<Image> getEquipmentArmorImage() const override;

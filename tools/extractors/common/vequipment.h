@@ -52,7 +52,7 @@ struct VehicleWeaponData
 	uint16_t firing_arc_1; // Firing arc left/right
 	uint16_t firing_arc_2; // Firing arc up/down
 	uint16_t point_defence;
-	uint16_t unknown2;
+	int16_t split_idx; // won't parse the number itself, just find where it is
 	uint16_t fire_sfx;
 	uint16_t idem;              //  APOC'd says this is duplicated fire_sfx
 	uint16_t explosion_graphic; // FIXME: Find ptang lookup? (how many frames etc.)

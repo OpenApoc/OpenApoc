@@ -172,6 +172,9 @@
     <ClCompile Include="base\transactionscreen.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="base\recruitscreen.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\basescreen.h">
@@ -311,6 +314,9 @@
       <Filter>tileview</Filter>
     </ClInclude>
     <ClInclude Include="base\transactionscreen.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="base\recruitscreen.h">
       <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
