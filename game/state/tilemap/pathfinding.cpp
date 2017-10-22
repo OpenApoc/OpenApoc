@@ -1166,23 +1166,41 @@ std::list<Vec3<int>> City::findShortestPath(Vec3<int> origin, Vec3<int> destinat
 		if (!pathToFront.empty() && pathToFront.back() == originSeg.getFirst())
 		{
 			visitetSegmentsC1[originID] = true;
-			auto secondNode = new RoadSegmentNode(
-			    pathToFront.size() - 1,
-			    GroundVehicleTileHelper::getDistanceStatic(originSeg.getFirst(), destination),
-			    startNode, originSeg.connections[0]);
-			nodesToDelete.push_back(secondNode);
-			fringe.emplace_back(secondNode);
+			// Check if segment can be entered
+			// For non-roads check tile number 0
+			// For roads check based on where we came from
+			auto nextSeg = roadSegments[originSeg.connections[0]];
+			int intoConnect = nextSeg.length == 1 || nextSeg.connections[0] == originID ? 0 : 1;
+			// Entrance intact
+			if (nextSeg.getIntactByConnectID(intoConnect))
+			{
+				auto secondNode = new RoadSegmentNode(
+					pathToFront.size() - 1,
+					GroundVehicleTileHelper::getDistanceStatic(originSeg.getFirst(), destination),
+					startNode, originSeg.connections[0]);
+				nodesToDelete.push_back(secondNode);
+				fringe.emplace_back(secondNode);
+			}
 		}
 		auto pathToBack = originSeg.findPath(origin, originSeg.getLast());
 		if (!pathToBack.empty() && pathToBack.back() == originSeg.getLast())
 		{
 			visitetSegmentsC2[originID] = true;
-			auto secondNode = new RoadSegmentNode(
-			    pathToBack.size() - 1,
-			    GroundVehicleTileHelper::getDistanceStatic(originSeg.getLast(), destination),
-			    startNode, originSeg.connections[1]);
-			nodesToDelete.push_back(secondNode);
-			fringe.emplace_back(secondNode);
+			// Check if segment can be entered
+			// For non-roads check tile number 0
+			// For roads check based on where we came from
+			auto nextSeg = roadSegments[originSeg.connections[1]];
+			int intoConnect = nextSeg.length == 1 || nextSeg.connections[0] == originID ? 0 : 1;
+			// Entrance intact
+			if (nextSeg.getIntactByConnectID(intoConnect))
+			{
+				auto secondNode = new RoadSegmentNode(
+					pathToBack.size() - 1,
+					GroundVehicleTileHelper::getDistanceStatic(originSeg.getLast(), destination),
+					startNode, originSeg.connections[1]);
+				nodesToDelete.push_back(secondNode);
+				fringe.emplace_back(secondNode);
+			}
 		}
 	}
 	// Else if starting on intersection just try this node
@@ -1211,7 +1229,7 @@ std::list<Vec3<int>> City::findShortestPath(Vec3<int> origin, Vec3<int> destinat
 			continue;
 		}
 
-		// Step 01: Mark as visited
+		// Step 01: Mark as visited (continue if visited broken road from this entrance)
 
 		auto &thisSeg = roadSegments[thisID];
 		// For roads remember where we came from
@@ -1227,14 +1245,24 @@ std::list<Vec3<int>> City::findShortestPath(Vec3<int> origin, Vec3<int> destinat
 			visitetSegmentsC1[thisID] = true;
 			visitetSegmentsC2[thisID] = true;
 		}
-		else // road not intact - mark one exit that we came from
+		else // road not intact - mark one exit that we came from or continue if marked
 		{
 			if (fromConnect == 0)
 			{
+				if (visitetSegmentsC1[thisID])
+				{
+					iterationCount--;
+					continue;
+				}
 				visitetSegmentsC1[thisID] = true;
 			}
 			else
 			{
+				if (visitetSegmentsC2[thisID])
+				{
+					iterationCount--;
+					continue;
+				}
 				visitetSegmentsC2[thisID] = true;
 			}
 		}
@@ -1833,7 +1861,6 @@ void City::fillRoadSegmentMap(GameState &state)
 												roadSegments.emplace_back(nextPosition,
 												                          nextSegmentToProcess);
 											}
-											newSegment.push_back(idx);
 										}
 										else
 										{
@@ -1856,6 +1883,7 @@ void City::fillRoadSegmentMap(GameState &state)
 											roadSegments[idx].connections.emplace_back(
 											    nextSegmentToProcess);
 										}
+										newSegment.push_back(idx);
 										// Link us to it
 										roadSegments[nextSegmentToProcess].connections.emplace_back(
 										    idx);
