@@ -89,8 +89,10 @@ class GroundVehicleTileHelper : public CanEnterTileHelper
 	                  bool) const override;
 
 	float getDistance(Vec3<float> from, Vec3<float> to) const override;
-
 	float getDistance(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd) const override;
+
+	static float getDistanceStatic(Vec3<float> from, Vec3<float> to);
+	static float getDistanceStatic(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd);
 
 	// Convert vector direction into index for tube array
 	int convertDirection(Vec3<int> dir) const;

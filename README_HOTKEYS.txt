@@ -34,10 +34,14 @@ Cityscape Vanilla Controls Note
 - No mouse controls introduced by OpenApoc will function
 
 Cityscape Mouse:
-* [Ctrl] when giving order that includes moving, forces Agents to move on foot (never call a taxi), as well as allows Vehicles and Agents manual use of teleporter
+* [Ctrl] 
+  - when giving move orders to Agents, forces Agents to move on foot (never call a taxi), and allows use of personal teleporter
+  - when giving move orders to Vehicles, allows manual use of teleporter
+  - when giving attack orders forces Vehicles to attack their target (instead of recovering UFOs or escorting owned vehicles)
+  - note that in vanilla, attacking owned vehicles was impossible, as such, a feature toggle is required for it to work (on by default)
 * [Alt] Opens ufopaedia
 * [Alt/Shift] + [Click] orders vehicles directly, Alt+Shift targets buildings and Shift targets vehicles or locations, while left click is aggressive and right is non-aggressive
-- [Alt] + [Left Click] Opens ufopaedia screen for the object (vehicle type, building function or who fired the missile)
+- [Alt] + [Left Click] Opens ufopaedia screen for the object (vehicle type, building function or even who fired the projectile!)
 - [Alt] + [Right Click] Opens ufopaedia screen for object's owner (be that vehicle or building)
 - [Alt] + [Shift] + [Left Click] Order Attack Building
 - [Alt] + [Shift] + [Right Click] Order Goto Building
@@ -72,6 +76,7 @@ Cityscape Debug:
 - Debug hotkeys are always active
 - [Ctrl] + [Alt] + [Shift] + [Left Click] destroys scenery
 - [Ctrl] + [Alt] + [Shift] + [Right Click] collapses building
+- [A] gives every vehicle weapon and ammo to current base
 - [R] repairs all buildings
 - [B] spawn UFO on base assault mission
 - [U] spawns three crashed UFOs
@@ -79,7 +84,7 @@ Cityscape Debug:
 - [F2] show road pathfinding map
 - [F3] highlight walkmode, collapsing tiles, basement tiles
 - [F4] show aliens in buildings on strategy map
-- [F5] show vehicle paths
+- [F5] show vehicle paths (blue flying, yellow ground)
 - [F6] dump voxelmap for line of sight to tileviewvoxels.png
 - [F7] dump voxelmap for line of sight to tileviewvoxels.png (fast way, calculate 1/4 of points)
 - [F8] dump voxelmap for line of fire to tileviewvoxels.png
@@ -98,7 +103,7 @@ Cityscape Debug:
 Base screens Debug:
 - [F10] 
   - On base view: finish all facilities
-  - On research screen: complete project at next update
+  - On research screen: mark project as requiring just 100 more points(basically complete project at next update if you have at least 2 people assigned)
 
   
 Vehicle Equipment:
