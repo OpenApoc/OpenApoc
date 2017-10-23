@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_TRANSACTIONSCREEN_ITEM_AGENT_ARMOR">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="640" height="480"/>
+      <label id="ITEM_NAME" text="ITEM NAME GOES HERE">
+        <position x="10" y="269"/>
+        <size width="172" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphic id="SELECTED_IMAGE">
+        <position x="36" y="184"/>
+        <size width="84" height="84"/>
+        <image>placeholder.png</image>
+		<alignment horizontal="centre" vertical="centre"/>
+        <imageposition>fit</imageposition>
+      </graphic>
+
+      <label id="LABEL_1_L" text="LABEL_1">
+        <position x="34" y="288"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_2_L" text="LABEL_2">
+        <position x="34" y="304"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_3_L" text="LABEL_3">
+        <position x="34" y="320"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_4_L" text="LABEL_4">
+        <position x="34" y="336"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_5_L" text="LABEL_5">
+        <position x="34" y="352"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_6_L" text="LABEL_6">
+        <position x="34" y="368"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_7_L" text="LABEL_7">
+        <position x="34" y="384"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_8_L" text="LABEL_8">
+        <position x="34" y="400"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_9_L" text="LABEL_10">
+        <position x="34" y="416"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_10_L" text="LABEL_8">
+        <position x="34" y="432"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="LABEL_1_C" text="LABEL_1">
+        <position x="34" y="288"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_2_C" text="LABEL_2">
+        <position x="34" y="304"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_3_C" text="LABEL_3">
+        <position x="34" y="320"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_4_C" text="LABEL_4">
+        <position x="34" y="336"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_5_C" text="LABEL_5">
+        <position x="34" y="352"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_6_C" text="LABEL_6">
+        <position x="34" y="368"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_7_C" text="LABEL_7">
+        <position x="34" y="384"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_8_C" text="LABEL_8">
+        <position x="34" y="400"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_9_C" text="LABEL_10">
+        <position x="34" y="416"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_10_C" text="LABEL_8">
+        <position x="34" y="432"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="LABEL_1_R" text="LABEL_1">
+        <position x="34" y="288"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_2_R" text="LABEL_2">
+        <position x="34" y="304"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_3_R" text="LABEL_3">
+        <position x="34" y="320"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_4_R" text="LABEL_4">
+        <position x="34" y="336"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_5_R" text="LABEL_5">
+        <position x="34" y="352"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_6_R" text="LABEL_6">
+        <position x="34" y="368"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_7_R" text="LABEL_7">
+        <position x="34" y="384"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_8_R" text="LABEL_8">
+        <position x="34" y="400"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_9_R" text="LABEL_10">
+        <position x="34" y="416"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_10_R" text="LABEL_8">
+        <position x="34" y="432"/>
+        <size width="125" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+    </style>
+  </form>
+</openapoc>
