@@ -96,10 +96,10 @@ void ListBox::onRender()
 	switch (ScrollOrientation)
 	{
 		case Orientation::Vertical:
-			scroller->Maximum = std::max(controlOffset.y - this->Size.y, scroller->Minimum);
+			scroller->setMaximum(std::max(controlOffset.y - this->Size.y, scroller->getMinimum()));
 			break;
 		case Orientation::Horizontal:
-			scroller->Maximum = std::max(controlOffset.x - this->Size.x, scroller->Minimum);
+			scroller->setMaximum(std::max(controlOffset.x - this->Size.x, scroller->getMinimum()));
 			break;
 	}
 	scroller->updateLargeChangeValue();

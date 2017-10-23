@@ -99,7 +99,6 @@ ConfigOptionBool autoExecuteOption("Options.Misc", "AutoExecute",
 ConfigOptionBool toolTipsOption("Options.Misc", "ToolTips",
                                 "Show tool tips when hovering over controls", true);
 
-;
 ConfigOptionBool optionPauseOnUfoSpotted("Notifications.City", "UfoSpotted", "UFO spotted", true);
 ConfigOptionBool optionPauseOnVehicleLightDamage("Notifications.City", "VehicleLightDamage",
                                                  "Vehicle lightly damaged", true);
@@ -241,6 +240,10 @@ ConfigOptionBool optionMarketRight("OpenApoc.NewFeature", "MarketOnRight",
                                    "Put market stock on the right side", true);
 ConfigOptionBool optionDGCrashingVehicles("OpenApoc.NewFeature", "CrashingDimensionGate",
                                           "Uncapable vehicles crash when entering gates", true);
+ConfigOptionBool optionFuelCrashingVehicles("OpenApoc.NewFeature", "CrashingOutOfFuel",
+                                            "Vehicles crash when out of fuel", true);
+ConfigOptionBool optionSkipTurbo("OpenApoc.NewFeature", "SkipTurboMovement",
+                                 "Skip turbo movement calculations", false);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);

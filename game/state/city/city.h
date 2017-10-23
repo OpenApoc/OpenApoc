@@ -46,7 +46,7 @@ class RoadSegment
 
 	// Methods
 
-	void notifyRoadChange(const Vec3<int> &position, bool intact);
+	void notifyRoadChange(const Vec3<int> &position, bool newIntact);
 	void finalizeStats();
 	bool empty() const;
 

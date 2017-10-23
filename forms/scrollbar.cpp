@@ -31,10 +31,37 @@ bool ScrollBar::setValue(int newValue)
 	newValue = std::max(newValue, Minimum);
 	newValue = std::min(newValue, Maximum);
 	if (newValue == Value)
+	{
 		return false;
+	}
 
 	Value = newValue;
 	this->pushFormEvent(FormEventType::ScrollBarChange, nullptr);
+	setDirty();
+	return true;
+}
+
+bool ScrollBar::setMinimum(int newMininum)
+{
+	if (Minimum == newMininum)
+	{
+		return false;
+	}
+	Minimum = newMininum;
+	setValue(Value);
+	setDirty();
+	return true;
+}
+
+bool ScrollBar::setMaximum(int newMaximum)
+{
+	if (Maximum == newMaximum)
+	{
+		return false;
+	}
+	Maximum = newMaximum;
+	setValue(Value);
+	setDirty();
 	return true;
 }
 

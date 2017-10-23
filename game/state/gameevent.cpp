@@ -90,6 +90,8 @@ UString GameVehicleEvent::message()
 			return format("%s %s", tr("Unmanned UFO recovered:"), vehicle->name);
 		case GameEventType::VehicleRecovered:
 			return format("%s %s", tr("Vehicle successfully recovered:"), vehicle->name);
+		case GameEventType::VehicleNoFuel:
+			return format("%s %s", tr("Vehicle out of fuel:"), vehicle->name);
 		case GameEventType::UfoRecoveryBegin:
 			return "";
 		case GameEventType::VehicleLightDamage:
@@ -228,21 +230,31 @@ UString GameBaseEvent::message()
 		case GameEventType::CargoExpired:
 			if (actor)
 			{
-				return tr("Cargo expired:") + " " + base->name;
-			}
-			else if (actor == base->building->owner)
-			{
-				return tr("Cargo expired:") + " " + base->name + " " + tr("Returned to base");
+				if (actor == base->building->owner)
+				{
+					return tr("Cargo expired:") + " " + base->name + " " + tr("Returned to base");
+				}
+				else
+				{
+					return tr("Cargo expired:") + " " + base->name + " " +
+					       tr("Refunded by supplier: ") + actor->name;
+				}
 			}
 			else
 			{
-				return tr("Cargo expired:") + " " + base->name + " " +
-				       tr("Refunded by supplier: ") + actor->name;
+				return tr("Cargo expired:") + " " + base->name;
 			}
+		case GameEventType::CargoSeized:
+		{
+			return tr("Cargo seized:") + " " + base->name + " " + tr("By hostile organisation: ") +
+			       actor->name;
+		}
 		case GameEventType::CargoArrived:
 			if (actor)
+			{
 				return tr("Cargo arrived:") + " " + base->name + " " + tr("Supplier: ") +
 				       actor->name;
+			}
 			else
 			{
 				return tr("Cargo arrived:") + " " + base->name;
@@ -374,6 +386,9 @@ GameSomethingDiedEvent::GameSomethingDiedEvent(GameEventType type, UString name,
 		case GameEventType::VehicleRecovered:
 			messageInner =
 			    format("%s %s", tr("Scrapped vehicle recovered in irreparable condition:"), name);
+			break;
+		case GameEventType::VehicleNoFuel:
+			messageInner = format("%s %s", tr("Vehicle out of fuel:"), name);
 			break;
 	}
 }

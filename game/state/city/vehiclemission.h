@@ -57,8 +57,10 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 	float adjustCost(Vec3<int> nextPosition, int z) const override;
 
 	float getDistance(Vec3<float> from, Vec3<float> to) const override;
-
 	float getDistance(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd) const override;
+
+	static float getDistanceStatic(Vec3<float> from, Vec3<float> to);
+	static float getDistanceStatic(Vec3<float> from, Vec3<float> toStart, Vec3<float> toEnd);
 
 	bool canLandOnTile(Tile *to) const;
 
@@ -130,14 +132,16 @@ class VehicleMission
 	VehicleMission() = default;
 
 	// Methods used in pathfinding etc.
-	bool getNextDestination(GameState &state, Vehicle &v, Vec3<float> &destPos, float &destFacing);
+	bool getNextDestination(GameState &state, Vehicle &v, Vec3<float> &destPos, float &destFacing,
+	                        int &turboTiles);
 	void update(GameState &state, Vehicle &v, unsigned int ticks, bool finished = false);
 	bool isFinished(GameState &state, Vehicle &v, bool callUpdateIfFinished = true);
 	void start(GameState &state, Vehicle &v);
 	void setPathTo(GameState &state, Vehicle &v, Vec3<int> target, int maxIterations,
 	               bool checkValidity = true, bool giveUpIfInvalid = false);
 	void setFollowPath(GameState &state, Vehicle &v);
-	bool advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> &destPos, float &destFacing);
+	bool advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> &destPos, float &destFacing,
+	                      int &turboTiles);
 	bool isTakingOff(Vehicle &v);
 	int getDefaultIterationCount(Vehicle &v);
 	static Vec3<float> getRandomMapEdgeCoordinates(GameState &state, StateRef<City> city);
@@ -149,7 +153,7 @@ class VehicleMission
 
 	static VehicleMission *gotoLocation(GameState &state, Vehicle &v, Vec3<int> target,
 	                                    bool allowTeleporter = false, bool pickNearest = false,
-	                                    int reRouteAttempts = 20);
+	                                    int attemptsToGiveUpAfter = 20);
 	static VehicleMission *gotoPortal(GameState &state, Vehicle &v);
 	static VehicleMission *gotoPortal(GameState &state, Vehicle &v, Vec3<int> target);
 	static VehicleMission *departToSpace(GameState &state, Vehicle &v);

@@ -1403,6 +1403,7 @@ void CityView::begin()
 void CityView::resume()
 {
 	vanillaControls = !config().getBool("OpenApoc.NewFeature.OpenApocCityControls");
+	state->skipTurboCalculations = config().getBool("OpenApoc.NewFeature.SkipTurboMovement");
 	CityTileView::resume();
 	modifierLAlt = false;
 	modifierLCtrl = false;
