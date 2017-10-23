@@ -368,6 +368,7 @@ class Vehicle : public StateObject,
   private:
 	Vec3<float> manualFirePosition = {0.0f, 0.0f, 0.0f};
 	bool manualFire = false;
+	std::list<sp<VEquipmentType>> getEquipmentTypes() const;
 };
 
 }; // namespace OpenApoc

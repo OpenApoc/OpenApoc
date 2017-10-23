@@ -181,6 +181,10 @@ class TransactionScreen : public BaseStage
 
 	int framesUntilHighlightUpdate = 0;
 
+	sp<Form> formItemActive;
+	sp<Form> formItemAgent;
+	sp<Form> formItemVehicle;
+
 	sp<Label> textViewSecondBase;
 	sp<GraphicButton> currentSecondView;
 
