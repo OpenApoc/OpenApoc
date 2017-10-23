@@ -102,6 +102,8 @@ std::list<std::pair<UString, UString>> openApocList = {
      "Any hit on hostile building provokes retaliation"},
     {"OpenApoc.NewFeature.MarketOnRight", "Put market stock on the right side"},
     {"OpenApoc.NewFeature.CrashingDimensionGate", "Uncapable vehicles crash when entering gates"},
+    {"OpenApoc.NewFeature.SkipTurboMovement", "Skip turbo movement calculations"},
+    {"OpenApoc.NewFeature.CrashingOutOfFuel", "Vehicles crash when out of fuel"},
 
     {"OpenApoc.Mod.StunHostileAction", "(M) Stunning hurts relationships"},
     {"OpenApoc.Mod.RaidHostileAction", "(M) Initiating raid hurts relationships"},
@@ -339,7 +341,7 @@ void InGameOptions::eventOccurred(Event *e)
 				return;
 			}
 			float gain =
-			    static_cast<float>(slider->getValue()) / static_cast<float>(slider->Maximum);
+			    static_cast<float>(slider->getValue()) / static_cast<float>(slider->getMaximum());
 			fw().soundBackend->setGain(SoundBackend::Gain::Global, gain);
 		}
 		else if (e->forms().RaisedBy->Name == "MUSIC_GAIN_SLIDER")
@@ -351,7 +353,7 @@ void InGameOptions::eventOccurred(Event *e)
 				return;
 			}
 			float gain =
-			    static_cast<float>(slider->getValue()) / static_cast<float>(slider->Maximum);
+			    static_cast<float>(slider->getValue()) / static_cast<float>(slider->getMaximum());
 			fw().soundBackend->setGain(SoundBackend::Gain::Music, gain);
 		}
 		else if (e->forms().RaisedBy->Name == "SAMPLE_GAIN_SLIDER")
@@ -363,7 +365,7 @@ void InGameOptions::eventOccurred(Event *e)
 				return;
 			}
 			float gain =
-			    static_cast<float>(slider->getValue()) / static_cast<float>(slider->Maximum);
+			    static_cast<float>(slider->getValue()) / static_cast<float>(slider->getMaximum());
 			fw().soundBackend->setGain(SoundBackend::Gain::Sample, gain);
 		}
 	}
