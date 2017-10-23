@@ -371,6 +371,13 @@ class FlyingVehicleMover : public VehicleMover
 		unsigned lastTicksToTurn = 0;
 		unsigned lastTicksToMove = 0;
 
+		// This is amount of ticks (on average) per 1 tile travelled
+		// a units travels 4 speed per second in tiles, where 4 is ticks_per_sec/tick_scale
+		// so this = ticks_per_sec / (speed * ticks_per_sec / tick_scale / city_scale )
+		// which simplifies to 1 / (speed / tick_scale / city_scale)
+		// or to tick_scale * city_scale / speed
+		int ticksPerTile = TICK_SCALE * VELOCITY_SCALE_CITY.x / vehicle.getSpeed();
+
 		// Flag wether we need to update banking and direction
 		bool updateSprite = false;
 		// Move until we become idle or run out of ticks
@@ -450,14 +457,39 @@ class FlyingVehicleMover : public VehicleMover
 				vehicle.popFinishedMissions(state);
 				// Vehicle is considered idle if at goal even if there's more missions to do
 				updateIdle(state);
+				int turboTiles = state.skipTurboCalculations ? ticksToMove / ticksPerTile : 0;
+				int turboTilesBefore = turboTiles;
 				// Get new goal from mission
-				if (!vehicle.getNewGoal(state))
+				if (!vehicle.getNewGoal(state, turboTiles))
 				{
 					if (!vehicle.tileObject)
 					{
 						return;
 					}
 					break;
+				}
+				// Turbo movement
+				int turboTilesMoved = turboTilesBefore - turboTiles;
+				if (turboTilesMoved > 0)
+				{
+					// Figure out facing
+					Vec3<float> vectorToGoal = vehicle.goalPosition - vehicle.position;
+					Vec2<float> targetFacingVector = {vectorToGoal.x, vectorToGoal.y};
+					// New facing as well?
+					if (targetFacingVector.x != 0.0f || targetFacingVector.y != 0.0f)
+					{
+						targetFacingVector = glm::normalize(targetFacingVector);
+						float a1 = acosf(-targetFacingVector.y);
+						float a2 = asinf(targetFacingVector.x);
+						vehicle.goalFacing = a2 >= 0 ? a1 : M_2xPI - a1;
+					}
+					// Move and turn instantly
+					vehicle.position = vehicle.goalPosition;
+					vehicle.facing = vehicle.goalFacing;
+					vehicle.ticksToTurn = 0;
+					vehicle.angularVelocity = 0.0f;
+					updateSprite = true;
+					ticksToMove -= ticksPerTile * turboTilesMoved;
 				}
 				float speed = vehicle.getSpeed();
 				// New position goal acquired, set velocity and angles
@@ -591,6 +623,12 @@ class GroundVehicleMover : public VehicleMover
 		}
 
 		auto ticksToMove = ticks;
+		// This is amount of ticks (on average) per 1 tile travelled
+		// a units travels 4 speed per second in tiles, where 4 is ticks_per_sec/tick_scale
+		// so this = ticks_per_sec / (speed * ticks_per_sec / tick_scale / city_scale )
+		// which simplifies to 1 / (speed / tick_scale / city_scale)
+		// or to tick_scale * city_scale / speed
+		int ticksPerTile = TICK_SCALE * VELOCITY_SCALE_CITY.x / vehicle.getSpeed();
 
 		unsigned lastTicksToTurn = 0;
 		unsigned lastTicksToMove = 0;
@@ -668,14 +706,25 @@ class GroundVehicleMover : public VehicleMover
 					vehicle.popFinishedMissions(state);
 					// Vehicle is considered idle if at goal even if there's more missions to do
 					updateIdle(state);
+					int turboTiles = state.skipTurboCalculations ? ticksToMove / ticksPerTile : 0;
+					int turboTilesBefore = turboTiles;
 					// Get new goal from mission
-					if (!vehicle.getNewGoal(state))
+					if (!vehicle.getNewGoal(state, turboTiles))
 					{
 						if (!vehicle.tileObject)
 						{
 							return;
 						}
 						break;
+					}
+					// Turbo movement
+					int turboTilesMoved = turboTilesBefore - turboTiles;
+					if (turboTilesMoved > 0)
+					{
+						vehicle.position = vehicle.goalPosition;
+						vehicle.facing = vehicle.goalFacing;
+						updateSprite = true;
+						ticksToMove -= ticksPerTile * turboTilesMoved;
 					}
 				}
 				float speed = vehicle.getSpeed();
@@ -1336,13 +1385,25 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 		this->shadowObject->removeFromMap();
 		this->shadowObject = nullptr;
 	}
-	this->position =
-	    type->isGround() ? b->carEntranceLocations.front() : b->landingPadLocations.front();
+	this->position = type->isGround() ? b->carEntranceLocation : *b->landingPadLocations.begin();
 	this->position += Vec3<float>{0.5f, 0.5f, 0.5f};
 	this->facing = 0.0f;
 	this->goalFacing = 0.0f;
 	this->ticksToTurn = 0;
 	this->angularVelocity = 0.0f;
+	// If spent some time outside then spend a unit of fuel
+	if (fuelSpentTicks > 0 && currentBuilding == homeBuilding)
+	{
+		fuelSpentTicks = 0;
+		auto engine = getEngine();
+		if (engine && engine->type->max_ammo > 0)
+		{
+			if (engine->ammo > 0)
+			{
+				engine->ammo--;
+			}
+		}
+	}
 }
 
 void Vehicle::setupMover()
@@ -1406,15 +1467,7 @@ void Vehicle::processRecoveredVehicle(GameState &state)
 			// Base, de-equip
 			for (auto &e : equipment)
 			{
-				// FIXME: When coding manufacture and other places I had to write X = X + 1
-				// because otherwise it would not add the first item!
-				// Ensure it works here with ++ and change everywhere else
-				// where it does X = X + 1 for base inventory
-				currentBuilding->base->inventoryVehicleEquipment[e->type.id]++;
-				if (e->ammo > 0)
-				{
-					currentBuilding->base->inventoryVehicleAmmo[e->type->ammo_type.id] += e->ammo;
-				}
+				e->unequipToBase(state, currentBuilding->base);
 			}
 		}
 		else
@@ -2083,7 +2136,61 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 
 void Vehicle::updateEachSecond(GameState &state)
 {
+	// Consume fuel if out in city
+	if (tileObject && !crashed && !falling && !sliding)
+	{
+		fuelSpentTicks += FUEL_TICKS_PER_SECOND;
+		if (fuelSpentTicks > FUEL_TICKS_PER_UNIT)
+		{
+			fuelSpentTicks -= FUEL_TICKS_PER_UNIT;
+			sp<VEquipment> engine = getEngine();
+			if (engine && engine->type->max_ammo > 0)
+			{
+				if (engine->ammo > 0)
+				{
+					engine->ammo--;
+				}
+				// Low fuel
+				if (engine->ammo == 2)
+				{
+					fw().pushEvent(new GameVehicleEvent(GameEventType::VehicleLowFuel,
+					                                    {&state, shared_from_this()}));
+				}
+				// Out of fuel, drop
+				if (engine->ammo == 0)
+				{
+					if (config().getBool("OpenApoc.NewFeature.CrashingOutOfFuel"))
+					{
+						if (owner == state.getPlayer())
+						{
+							fw().pushEvent(new GameVehicleEvent(GameEventType::VehicleNoFuel,
+							                                    {&state, shared_from_this()}));
+						}
+						if (type->isGround())
+						{
+							crash(state, nullptr);
+						}
+						else
+						{
+							startFalling(state);
+						}
+					}
+					else
+					{
+						if (owner == state.getPlayer())
+						{
+							fw().pushEvent(new GameSomethingDiedEvent(GameEventType::VehicleNoFuel,
+							                                          name, "", position));
+						}
+						die(state, true);
+					}
+				}
+			}
+		}
+	}
+	// Update cargo
 	updateCargo(state);
+	// Automated missions
 	if (missions.empty() && !currentBuilding && owner != state.getPlayer())
 	{
 		if (owner == state.getAliens())
@@ -2250,6 +2357,39 @@ void Vehicle::updateSprite(GameState &state)
 				shadowDirection = VehicleType::Direction::N;
 				break;
 		}
+	}
+}
+
+sp<VEquipment> Vehicle::getEngine() const
+{
+	for (auto &e : equipment)
+	{
+		if (e->type->type == EquipmentSlotType::VehicleEngine)
+		{
+			return e;
+		}
+	}
+	return nullptr;
+}
+
+bool Vehicle::hasEngine() const
+{
+	bool hasSlot = false;
+	for (auto &s : type->equipment_layout_slots)
+	{
+		if (s.type == EquipmentSlotType::VehicleEngine)
+		{
+			hasSlot = true;
+			break;
+		}
+	}
+	if (hasSlot)
+	{
+		return (bool)getEngine();
+	}
+	else
+	{
+		return true;
 	}
 }
 
@@ -2819,7 +2959,6 @@ void Vehicle::setPosition(const Vec3<float> &pos)
 	{
 		this->tileObject->setPosition(pos);
 	}
-
 	if (this->shadowObject)
 	{
 		this->shadowObject->setPosition(pos);
@@ -2834,6 +2973,16 @@ void Vehicle::setManualFirePosition(const Vec3<float> &pos)
 
 bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 {
+	if (!hasEngine())
+	{
+		if (owner == state.getPlayer())
+		{
+			fw().pushEvent(
+			    new GameVehicleEvent(GameEventType::VehicleNoEngine, {&state, shared_from_this()}));
+		}
+		delete mission;
+		return false;
+	}
 	bool canPlaceInFront = false;
 	switch (mission->type)
 	{
@@ -2902,6 +3051,17 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 
 bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 {
+	if (!hasEngine())
+	{
+		if (owner == state.getPlayer())
+		{
+			fw().pushEvent(
+			    new GameVehicleEvent(GameEventType::VehicleNoEngine, {&state, shared_from_this()}));
+		}
+		delete mission;
+		return false;
+	}
+
 	bool forceClear = false;
 	switch (mission->type)
 	{
@@ -2986,7 +3146,7 @@ bool Vehicle::popFinishedMissions(GameState &state)
 	return popped;
 }
 
-bool Vehicle::getNewGoal(GameState &state)
+bool Vehicle::getNewGoal(GameState &state, int &turboTiles)
 {
 	bool popped = false;
 	bool acquired = false;
@@ -2999,7 +3159,8 @@ bool Vehicle::getNewGoal(GameState &state)
 		// Try to get new destination
 		if (!missions.empty())
 		{
-			acquired = missions.front()->getNextDestination(state, *this, goalPosition, goalFacing);
+			acquired = missions.front()->getNextDestination(state, *this, goalPosition, goalFacing,
+			                                                turboTiles);
 		}
 		// Pop finished missions if present
 		popped = popFinishedMissions(state);
@@ -3556,8 +3717,24 @@ void Cargo::refund(GameState &state, StateRef<Building> currentBuilding)
 			fw().pushEvent(
 			    new GameBaseEvent(GameEventType::CargoExpired, destination->base, originalOwner));
 		}
-		// FIXME: Return expired cargo to economy
-		LogWarning("Return expired cargo to economy");
+		switch (type)
+		{
+			case Type::Bio:
+				if (state.economy.find(id) != state.economy.end())
+				{
+					LogError("Economy found for bio item!?", id);
+				}
+				break;
+			case Type::Agent:
+			case Type::VehicleAmmo:
+			case Type::VehicleEquipment:
+				if (state.economy.find(id) != state.economy.end())
+				{
+					auto &economy = state.economy[id];
+					economy.currentStock += count / divisor;
+				}
+				break;
+		}
 	}
 	else if (currentBuilding && originalOwner == destination->owner)
 	{
@@ -3640,15 +3817,36 @@ void Cargo::arrive(GameState &state, bool &cargoArrived, bool &bioArrived, bool 
 
 void Cargo::seize(GameState &state, StateRef<Organisation> org)
 {
-	if (cost == 0)
+	switch (type)
 	{
-		// Get cost from economy if no cost
+		case Type::Bio:
+			if (state.economy.find(id) != state.economy.end())
+			{
+				LogError("Economy found for bio item!?", id);
+			}
+			break;
+		case Type::Agent:
+		case Type::VehicleAmmo:
+		case Type::VehicleEquipment:
+			if (state.economy.find(id) != state.economy.end())
+			{
+				auto &economy = state.economy[id];
+				if (cost == 0)
+				{
+					cost = economy.currentPrice;
+				}
+				economy.currentStock += count / divisor;
+			}
+			break;
 	}
 	int worth = cost * count / divisor;
-	// FIXME: Return expired cargo to economy
-	LogWarning("Implement cargo seize message, return to economy, and adjust relationship "
-	           "accordingly to worth: %d",
-	           worth);
+	// FIXME: Adjust relationship accordingly to seized cargo's worth
+	LogWarning("Adjust relationship accordingly to worth: %d", worth);
+	if (destination->owner == state.getPlayer())
+	{
+		fw().pushEvent(
+		    new GameBaseEvent(GameEventType::CargoSeized, destination->base, originalOwner));
+	}
 	clear();
 }
 

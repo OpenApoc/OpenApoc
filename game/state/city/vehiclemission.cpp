@@ -103,8 +103,10 @@ bool FlyingVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, f
 		return false;
 	}
 
-	// Don't allow moving underground!
-	if (fromPos.z == 0 && toPos.z == 0)
+	// We cannot move into underground tile unless we're checking if it's passable (no "from")
+	// We only enter that if we want to land into building
+	// and in that case passability is ignored anyways
+	if (from && toPos.z == 0)
 	{
 		return false;
 	}
@@ -181,11 +183,22 @@ float FlyingVehicleTileHelper::adjustCost(Vec3<int> nextPosition, int z) const
 
 float FlyingVehicleTileHelper::getDistance(Vec3<float> from, Vec3<float> to) const
 {
-	return glm::length(to - from);
+	return getDistanceStatic(from, to);
 }
 
 float FlyingVehicleTileHelper::getDistance(Vec3<float> from, Vec3<float> toStart,
                                            Vec3<float> toEnd) const
+{
+	return getDistanceStatic(from, toStart, toEnd);
+}
+
+float FlyingVehicleTileHelper::getDistanceStatic(Vec3<float> from, Vec3<float> to)
+{
+	return glm::length(to - from);
+}
+
+float FlyingVehicleTileHelper::getDistanceStatic(Vec3<float> from, Vec3<float> toStart,
+                                                 Vec3<float> toEnd)
 {
 	auto diffStart = toStart - from;
 	auto diffEnd = toEnd - from - Vec3<float>{1.0f, 1.0f, 1.0f};
@@ -320,7 +333,7 @@ Vec3<float> FlyingVehicleTileHelper::findSidestep(GameState &state, sp<TileObjec
 
 VehicleMission *VehicleMission::gotoLocation(GameState &state, Vehicle &v, Vec3<int> target,
                                              bool allowTeleporter, bool pickNearest,
-                                             int reRouteAttempts)
+                                             int attemptsToGiveUpAfter)
 {
 	// TODO
 	// Pseudocode:
@@ -330,7 +343,7 @@ VehicleMission *VehicleMission::gotoLocation(GameState &state, Vehicle &v, Vec3<
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::GotoLocation;
 	mission->pickNearest = pickNearest;
-	mission->reRouteAttempts = reRouteAttempts + 1;
+	mission->reRouteAttempts = attemptsToGiveUpAfter;
 	mission->allowTeleporter = allowTeleporter;
 	// Ground vehicles want to go to a closer road
 	if (v.type->type == VehicleType::Type::Road)
@@ -515,29 +528,26 @@ VehicleMission *VehicleMission::arriveFromDimensionGate(GameState &state, Vehicl
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::ArriveFromDimensionGate;
-	if (ticks >= 0)
+	// find max delay arrival and increment
+	int lastTicks = -DIMENSION_GATE_DELAY;
+	for (auto &v2 : state.vehicles)
 	{
-		mission->timeToSnooze = (unsigned)ticks;
-	}
-	else
-	{
-		// find max delay arrival and increment
-		int lastTicks = -DIMENSION_GATE_DELAY;
-		for (auto &v2 : state.vehicles)
+		if (v2.second->city == v.city && v2.second->owner == v.owner)
 		{
-			if (v2.second->city == v.city && v2.second->owner == v.owner)
+			for (auto &m : v2.second->missions)
 			{
-				for (auto &m : v2.second->missions)
+				if (m->type == MissionType::ArriveFromDimensionGate)
 				{
-					if (m->type == MissionType::ArriveFromDimensionGate)
-					{
-						lastTicks = std::max(lastTicks, (int)m->timeToSnooze);
-					}
+					lastTicks = std::max(lastTicks, (int)m->timeToSnooze);
 				}
 			}
 		}
-		mission->timeToSnooze = lastTicks + DIMENSION_GATE_DELAY;
 	}
+	if (lastTicks == -DIMENSION_GATE_DELAY)
+	{
+		lastTicks += ticks;
+	}
+	mission->timeToSnooze = lastTicks + DIMENSION_GATE_DELAY;
 	return mission;
 }
 
@@ -1000,7 +1010,7 @@ bool VehicleMission::teleportCheck(GameState &state, Vehicle &v)
 }
 
 bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float> &destPos,
-                                        float &destFacing)
+                                        float &destFacing, int &turboTiles)
 {
 	static const std::set<TileObject::Type> sceneryVehicleSet = {TileObject::Type::Scenery,
 	                                                             TileObject::Type::Vehicle};
@@ -1018,7 +1028,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 		case MissionType::Patrol:
 		case MissionType::AttackBuilding:
 		{
-			return advanceAlongPath(state, v, destPos, destFacing);
+			return advanceAlongPath(state, v, destPos, destFacing, turboTiles);
 		}
 		case MissionType::FollowVehicle:
 		{
@@ -1030,7 +1040,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 				setFollowPath(state, v);
 				if (!currentPlannedPath.empty())
 				{
-					return advanceAlongPath(state, v, destPos, destFacing);
+					return advanceAlongPath(state, v, destPos, destFacing, turboTiles);
 				}
 			}
 			return false;
@@ -1099,7 +1109,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 					}
 					if (!currentPlannedPath.empty())
 					{
-						return advanceAlongPath(state, v, destPos, destFacing);
+						return advanceAlongPath(state, v, destPos, destFacing, turboTiles);
 					}
 				}
 				else
@@ -1257,7 +1267,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 			if (v.tileObject && range > 0)
 			{
 				auto enemy = v.findClosestEnemy(state, v.tileObject);
-				if (enemy)
+				if (enemy && v.tileObject->getDistanceTo(enemy) < range)
 				{
 					StateRef<Vehicle> vehicleRef(&state, enemy->getVehicle());
 					currentPlannedPath.clear();
@@ -1298,8 +1308,21 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 							v.city = {&state, city.second};
 							if (v.owner == state.getPlayer())
 							{
+								// Delay for returning / going in
+								int delay = 0;
+								if (city.first == "CITYMAP_HUMAN")
+								{
+									delay = randBoundsInclusive(state.rng, TICKS_PER_HOUR,
+									                            2 * TICKS_PER_HOUR);
+								}
+								else
+								{
+									delay = randBoundsInclusive(state.rng, TICKS_PER_SECOND,
+									                            2 * TICKS_PER_SECOND);
+								}
 								v.addMission(
-								    state, VehicleMission::arriveFromDimensionGate(state, v), true);
+								    state, VehicleMission::arriveFromDimensionGate(state, v, delay),
+								    true);
 							}
 							else
 							{
@@ -1572,8 +1595,9 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			if (v.type->isGround())
 			{
 				// Looking for free exit
-				for (auto &exitLocation : b->carEntranceLocations)
+				do // just so we could use continue to exit
 				{
+					auto exitLocation = b->carEntranceLocation;
 					auto exitTile = map.getTile(exitLocation);
 					if (!exitTile)
 					{
@@ -1628,7 +1652,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					        leaveLocation);
 					this->currentPlannedPath = {exitLocation, exitLocation};
 					return;
-				}
+				} while (false);
 			}
 			else
 			{
@@ -1703,10 +1727,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					if (v.type->isGround())
 					{
 						auto vehiclePosition = vehicleTile->getOwningTile()->position;
-						if (std::find(targetBuilding->carEntranceLocations.begin(),
-						              targetBuilding->carEntranceLocations.end(),
-						              vehiclePosition) ==
-						    targetBuilding->carEntranceLocations.end())
+						if (vehiclePosition != targetBuilding->carEntranceLocation)
 						{
 							LogError("Vehicle at %s not inside vehicle entrance for building %s",
 							         vehiclePosition, b.id);
@@ -1816,19 +1837,12 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			{
 				if (this->currentPlannedPath.empty())
 				{
-					if (reRouteAttempts > 0)
-					{
-						reRouteAttempts--;
-						int iterationCount = getDefaultIterationCount(v);
-						iterationCount *=
-						    glm::length((Vec3<float>)targetLocation - v.position) < 33 ? 3 : 1;
-						setPathTo(state, v, targetLocation, iterationCount, true);
-					}
-					else
-					{
-						// Finall attempt, give up if fails
-						setPathTo(state, v, targetLocation, 500, true, true);
-					}
+					int iterationCount = getDefaultIterationCount(v);
+					iterationCount *=
+					    glm::length((Vec3<float>)targetLocation - v.position) < 33 ? 3 : 1;
+					iterationCount *=
+					    glm::length((Vec3<float>)targetLocation - v.position) < 11 ? 3 : 1;
+					setPathTo(state, v, targetLocation, iterationCount, true, reRouteAttempts == 0);
 				}
 			}
 			return;
@@ -1933,7 +1947,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				        "at %s",
 				        getName(), randomNearbyPos);
 				v.addMission(
-				    state, VehicleMission::gotoLocation(state, v, randomNearbyPos, false, true, 0));
+				    state, VehicleMission::gotoLocation(state, v, randomNearbyPos, false, true, 1));
 				return;
 			}
 			this->targetLocation = tile;
@@ -1966,6 +1980,10 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		}
 		case MissionType::GotoBuilding:
 		{
+			if (isFinishedInternal(state, v))
+			{
+				return;
+			}
 			auto name = this->getName();
 			LogInfo("Vehicle mission %s checking state", name);
 			auto b = this->targetBuilding;
@@ -1989,57 +2007,35 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					return;
 				}
 			}
-			auto vehicleTile = v.tileObject;
+			// Leave building
 			if (takeOffCheck(state, v))
 			{
 				return;
 			}
 			// Actually go there
+			auto vehicleTile = v.tileObject;
 			if (v.type->isGround())
 			{
 				/* Am I already in a car depot? If so land */
 				auto position = vehicleTile->getOwningTile()->position;
-				if (std::find(targetBuilding->carEntranceLocations.begin(),
-				              targetBuilding->carEntranceLocations.end(),
-				              position) != targetBuilding->carEntranceLocations.end())
+				if (position == targetBuilding->carEntranceLocation)
 				{
 					LogInfo("Mission %s: Entering depot on entrance %s", name, position);
 					v.addMission(state, VehicleMission::land(v, b));
 					return;
 				}
-				/* I must be in the city and not in a depot - try to find the shortest path to a
-				* depot
-				* (if no successfull paths then choose the incomplete path with the lowest (cost
-				* +
-				* distance to goal)*/
-				Vec3<int> shortestPathEntrance = {0, 0, 0};
-				float shortestPathCost = std::numeric_limits<float>::max();
-
-				for (auto &dest : b->carEntranceLocations)
-				{
-					// Simply find the nearest landing pad to the current location and route to
-					// that
-					// Don't pay attention to stuff that blocks us, as things will likely move
-					// anyway...
-
-					if (position == dest)
-						continue;
-					Vec3<float> currentPosition = position;
-					Vec3<float> landingPadPosition = dest;
-
-					float distance = glm::length(currentPosition - landingPadPosition);
-
-					if (distance < shortestPathCost)
-					{
-						shortestPathCost = distance;
-						shortestPathEntrance = dest;
-					}
-				}
 
 				LogInfo("Vehicle mission %s: Pathing to entrance at %s", name,
-				        shortestPathEntrance);
-				v.addMission(state, VehicleMission::gotoLocation(state, v, shortestPathEntrance,
-				                                                 allowTeleporter, false, 10));
+				        b->carEntranceLocation);
+				v.addMission(state, VehicleMission::gotoLocation(state, v, b->carEntranceLocation,
+				                                                 allowTeleporter, false, 1));
+				// If we can't path to building then cancel
+				auto &gotoMission = v.missions.front();
+				if (gotoMission->cancelled || gotoMission->currentPlannedPath.empty() ||
+				    gotoMission->currentPlannedPath.back() == position)
+				{
+					cancelled = true;
+				}
 				return;
 			}
 			else
@@ -2064,48 +2060,79 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						return;
 					}
 				}
-				/* I must be in the air and not above a pad - try to find the shortest path to a
-				* pad
-				* (if no successfull paths then choose the incomplete path with the lowest (cost
-				* +
-				* distance to goal)*/
+				// I must be in the air and not above a pad - try to find the closest pad
 				Vec3<int> shortestPathPad = {0, 0, 0};
 				float shortestPathCost = FLT_MAX;
 
-				for (auto &dest : b->landingPadLocations)
+				for (int attempt = 1; attempt <= 2; attempt++)
 				{
-					// Simply find the nearest landing pad to the current location and route to
-					// that
-					// Don't pay attention to stuff that blocks us, as things will likely move
-					// anyway...
-
-					auto padTile = b->city->map->getTile(dest);
-					// Pad destroyed
-					if (!padTile->presentScenery || !padTile->presentScenery->type->isLandingPad)
+					// At first attempt: path to unoccupied pad
+					// At second attempt: path to any pad
+					for (auto &dest : b->landingPadLocations)
 					{
-						continue;
+						auto padTile = b->city->map->getTile(dest);
+						// Pad destroyed?
+						if (!padTile->presentScenery ||
+						    !padTile->presentScenery->type->isLandingPad)
+						{
+							continue;
+						}
+						// Pad occupied? (only on first attempt)
+						if (attempt == 1)
+						{
+							bool occupied = false;
+							for (auto &o : padTile->intersectingObjects)
+							{
+								if (o->getType() == TileObject::Type::Vehicle)
+								{
+									auto vehicle = std::static_pointer_cast<TileObjectVehicle>(o)
+									                   ->getVehicle();
+									if (!vehicle->crashed)
+									{
+										occupied = true;
+										break;
+									}
+								}
+							}
+							if (occupied)
+							{
+								continue;
+							}
+						}
+
+						// We actually want the tile above the pad itself
+						auto aboveDest = dest;
+						aboveDest.z += 1;
+						if (position == aboveDest)
+							continue;
+						Vec3<float> currentPosition = position;
+						Vec3<float> landingPadPosition = aboveDest;
+
+						float distance = glm::length(currentPosition - landingPadPosition);
+
+						if (distance < shortestPathCost)
+						{
+							shortestPathCost = distance;
+							shortestPathPad = aboveDest;
+						}
 					}
-					// We actually want the tile above the pad itself
-					auto aboveDest = dest;
-					aboveDest.z += 1;
-					if (position == aboveDest)
-						continue;
-					Vec3<float> currentPosition = position;
-					Vec3<float> landingPadPosition = aboveDest;
-
-					float distance = glm::length(currentPosition - landingPadPosition);
-
-					if (distance < shortestPathCost)
+					if (shortestPathCost != FLT_MAX)
 					{
-						shortestPathCost = distance;
-						shortestPathPad = aboveDest;
+						break;
 					}
 				}
 				if (shortestPathCost != FLT_MAX)
 				{
 					LogInfo("Vehicle mission %s: Pathing to pad at %s", name, shortestPathPad);
 					v.addMission(state, VehicleMission::gotoLocation(state, v, shortestPathPad,
-					                                                 allowTeleporter, false, 100));
+					                                                 allowTeleporter, false, 1));
+					// If we can't path to building's pad then snooze
+					auto &gotoMission = v.missions.front();
+					if (gotoMission->cancelled || gotoMission->currentPlannedPath.empty() ||
+					    gotoMission->currentPlannedPath.back() == position)
+					{
+						v.addMission(state, VehicleMission::snooze(state, v, TICKS_PER_SECOND));
+					}
 				}
 				else
 				{
@@ -2119,7 +2146,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					             VehicleMission::gotoLocation(
 					                 state, v,
 					                 v.getPreferredPosition(xPos(state.rng), yPos(state.rng)),
-					                 allowTeleporter, true));
+					                 allowTeleporter, true, 1));
 				}
 				return;
 			}
@@ -2475,9 +2502,15 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					{
 						return;
 					}
-
 					v.leaveDimensionGate(state);
-					takePositionNearPortal(state, v);
+					if (v.city.id == "CITYMAP_HUMAN" && v.owner == state.getPlayer())
+					{
+						v.addMission(state, VehicleMission::gotoBuilding(state, v));
+					}
+					else
+					{
+						takePositionNearPortal(state, v);
+					}
 					missionCounter++;
 					return;
 				}
@@ -2519,6 +2552,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, int maxIterations,
                                bool checkValidity, bool giveUpIfInvalid)
 {
+	currentPlannedPath.clear();
 	auto vehicleTile = v.tileObject;
 	if (vehicleTile)
 	{
@@ -2551,13 +2585,51 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 		}
 
 		std::list<Vec3<int>> path;
-		path = v.type->isGround()
-		           ? v.city->map->findShortestPath(vehicleTile->getOwningTile()->position, target,
-		                                           maxIterations,
-		                                           GroundVehicleTileHelper{*v.city->map, v})
-		           : v.city->map->findShortestPath(vehicleTile->getOwningTile()->position, target,
-		                                           maxIterations,
-		                                           FlyingVehicleTileHelper{*v.city->map, v});
+		float distance = 0.0f;
+		auto position = vehicleTile->getOwningTile()->position;
+		switch (v.type->type)
+		{
+			case VehicleType::Type::Road:
+				path = v.city->findShortestPath(position, target,
+				                                GroundVehicleTileHelper{*v.city->map, v});
+				distance = GroundVehicleTileHelper::getDistanceStatic(position, target);
+				break;
+			case VehicleType::Type::ATV:
+				path = v.city->map->findShortestPath(position, target, maxIterations,
+				                                     GroundVehicleTileHelper{*v.city->map, v});
+				distance = GroundVehicleTileHelper::getDistanceStatic(position, target);
+				break;
+			case VehicleType::Type::Flying:
+			case VehicleType::Type::UFO:
+				path = v.city->map->findShortestPath(position, target, maxIterations,
+				                                     FlyingVehicleTileHelper{*v.city->map, v});
+				distance = FlyingVehicleTileHelper::getDistanceStatic(position, target);
+				break;
+		}
+
+		// Did not reach destination
+		if (path.empty() || path.back() != target)
+		{
+			// If target was close enough to reach
+			if (maxIterations > (int)distance)
+			{
+				// If told to give up - cancel mission
+				if (giveUpIfInvalid)
+				{
+					cancelled = true;
+					return;
+				}
+				// If not told to give up - subtract attempt
+				else
+				{
+					if (reRouteAttempts > 0)
+					{
+						reRouteAttempts--;
+					}
+				}
+			}
+		}
+
 		// Always start with the current position
 		this->currentPlannedPath.push_back(vehicleTile->getOwningTile()->position);
 		for (auto &p : path)
@@ -2586,7 +2658,6 @@ void VehicleMission::setFollowPath(GameState &state, Vehicle &v)
 			     currentPlannedPath.empty()))
 			{
 				// adjust the path if target moved or planned path didn't bring us to target
-				currentPlannedPath.clear();
 				this->targetLocation = targetTile->getOwningTile()->position;
 				setPathTo(state, v, this->targetLocation, getDefaultIterationCount(v), false);
 			}
@@ -2619,7 +2690,6 @@ void VehicleMission::setFollowPath(GameState &state, Vehicle &v)
 			// Pick a random point around target
 			if (needRePath)
 			{
-				currentPlannedPath.clear();
 				targetLocation = targetTile->getOwningTile()->position;
 				targetLocation.x +=
 				    randBoundsInclusive(state.rng, -FOLLOW_BOUNDS_XY, FOLLOW_BOUNDS_XY);
@@ -2645,7 +2715,6 @@ void VehicleMission::setFollowPath(GameState &state, Vehicle &v)
 			     currentPlannedPath.empty()))
 			{
 				// adjust the path if target moved or planned path didn't bring us to target
-				currentPlannedPath.clear();
 				this->targetLocation = targetTile->getOwningTile()->position;
 				setPathTo(state, v, this->targetLocation, getDefaultIterationCount(v), false);
 			}
@@ -2660,7 +2729,6 @@ void VehicleMission::setFollowPath(GameState &state, Vehicle &v)
 			     currentPlannedPath.empty()))
 			{
 				// adjust the path if target moved or planned path didn't bring us to target
-				currentPlannedPath.clear();
 				targetLocation = v.getPreferredPosition(targetTile->getOwningTile()->position);
 				setPathTo(state, v, this->targetLocation, getDefaultIterationCount(v), false);
 			}
@@ -2669,7 +2737,7 @@ void VehicleMission::setFollowPath(GameState &state, Vehicle &v)
 }
 
 bool VehicleMission::advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> &destPos,
-                                      float &destFacing)
+                                      float &destFacing, int &turboTiles)
 {
 	if (currentPlannedPath.empty())
 	{
@@ -2738,44 +2806,72 @@ bool VehicleMission::advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> 
 	}
 
 	// See if we can make a shortcut
-	// When ordering move to vehidle already on the move, we can have a situation
-	// where going directly to 2nd step in the path is faster than going to the first
-	// In this case, we should skip unnesecary steps
-	auto it = ++currentPlannedPath.begin();
-	// Start with position after next
-	// If next position has a node and we can go directly to that node
-	// Then update current position and iterator
-	while (it != currentPlannedPath.end())
 	{
-		bool canSkip = tFrom->position == *it;
-		if (!canSkip)
+		// When ordering move to vehidle already on the move, we can have a situation
+		// where going directly to 2nd step in the path is faster than going to the first
+		// In this case, we should skip unnesecary steps
+		auto it = ++currentPlannedPath.begin();
+		// Start with position after next
+		// If next position has a node and we can go directly to that node
+		// Then update current position and iterator
+		while (it != currentPlannedPath.end())
 		{
-			bool cantSkip = std::abs(tFrom->position.x - it->x) > 1 ||
-			                std::abs(tFrom->position.y - it->y) > 1 ||
-			                std::abs(tFrom->position.z - it->z) > 1;
-			if (v.type->isGround())
+			bool canSkip = tFrom->position == *it;
+			if (!canSkip)
 			{
-				cantSkip = cantSkip ||
-				           !GroundVehicleTileHelper{tFrom->map, v}.canEnterTile(
-				               tFrom, tFrom->map.getTile(*it));
+				bool cantSkip = std::abs(tFrom->position.x - it->x) > 1 ||
+				                std::abs(tFrom->position.y - it->y) > 1 ||
+				                std::abs(tFrom->position.z - it->z) > 1;
+				if (v.type->isGround())
+				{
+					cantSkip = cantSkip ||
+					           !GroundVehicleTileHelper{tFrom->map, v}.canEnterTile(
+					               tFrom, tFrom->map.getTile(*it));
+				}
+				else
+				{
+					cantSkip = cantSkip ||
+					           !FlyingVehicleTileHelper{tFrom->map, v}.canEnterTile(
+					               tFrom, tFrom->map.getTile(*it));
+				}
+				canSkip = canSkip || !cantSkip;
 			}
-			else
+			if (!canSkip)
 			{
-				cantSkip = cantSkip ||
-				           !FlyingVehicleTileHelper{tFrom->map, v}.canEnterTile(
-				               tFrom, tFrom->map.getTile(*it));
+				break;
 			}
-			canSkip = canSkip || !cantSkip;
+
+			currentPlannedPath.pop_front();
+			pos = currentPlannedPath.front();
+			tTo = tFrom->map.getTile(pos);
+			it = ++currentPlannedPath.begin();
 		}
-		if (!canSkip)
+	}
+
+	// Advance tiles in turbo mode
+	while (turboTiles > 0 && currentPlannedPath.size() > 1)
+	{
+		auto it = ++currentPlannedPath.begin();
+		if (v.type->isGround())
 		{
-			break;
+			if (!GroundVehicleTileHelper{tFrom->map, v}.canEnterTile(tTo, tTo->map.getTile(*it)))
+			{
+				break;
+			}
+		}
+		else
+		{
+			if (!FlyingVehicleTileHelper{tFrom->map, v}.canEnterTile(tTo, tTo->map.getTile(*it)))
+			{
+				break;
+			}
 		}
 
 		currentPlannedPath.pop_front();
 		pos = currentPlannedPath.front();
+		tFrom = tTo;
 		tTo = tFrom->map.getTile(pos);
-		it = ++currentPlannedPath.begin();
+		turboTiles--;
 	}
 
 	auto sceneryTo = tTo->presentScenery;
@@ -3215,11 +3311,22 @@ bool GroundVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, f
 
 float GroundVehicleTileHelper::getDistance(Vec3<float> from, Vec3<float> to) const
 {
-	return std::abs(from.x - to.x) + std::abs(from.y - to.y) + std::abs(from.z - to.z);
+	return getDistanceStatic(from, to);
 }
 
 float GroundVehicleTileHelper::getDistance(Vec3<float> from, Vec3<float> toStart,
                                            Vec3<float> toEnd) const
+{
+	return getDistanceStatic(from, toStart, toEnd);
+}
+
+float GroundVehicleTileHelper::getDistanceStatic(Vec3<float> from, Vec3<float> to)
+{
+	return std::abs(from.x - to.x) + std::abs(from.y - to.y);
+}
+
+float GroundVehicleTileHelper::getDistanceStatic(Vec3<float> from, Vec3<float> toStart,
+                                                 Vec3<float> toEnd)
 {
 	auto diffStart = toStart - from;
 	auto diffEnd = toEnd - from - Vec3<float>{1.0f, 1.0f, 1.0f};
@@ -3227,9 +3334,7 @@ float GroundVehicleTileHelper::getDistance(Vec3<float> from, Vec3<float> toStart
 	                                                                       std::abs(diffEnd.x));
 	auto yDiff = from.y >= toStart.y && from.y < toEnd.y ? 0.0f : std::min(std::abs(diffStart.y),
 	                                                                       std::abs(diffEnd.y));
-	auto zDiff = from.z >= toStart.z && from.z < toEnd.z ? 0.0f : std::min(std::abs(diffStart.z),
-	                                                                       std::abs(diffEnd.z));
-	return xDiff + yDiff + zDiff;
+	return xDiff + yDiff;
 }
 
 int GroundVehicleTileHelper::convertDirection(Vec3<int> dir) const

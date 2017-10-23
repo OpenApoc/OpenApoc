@@ -26,6 +26,9 @@ class ScrollBar : public Control
   protected:
 	void onRender() override;
 
+	int Minimum;
+	int Maximum;
+
   public:
 	enum class ScrollBarRenderStyle
 	{
@@ -35,8 +38,6 @@ class ScrollBar : public Control
 
 	ScrollBarRenderStyle RenderStyle;
 	Colour GripperColour;
-	int Minimum;
-	int Maximum;
 	int LargeChange;
 	int LargePercent;
 
@@ -49,7 +50,11 @@ class ScrollBar : public Control
 	void update() override;
 	void unloadResources() override;
 	virtual int getValue() const { return Value; }
+	virtual int getMinimum() const { return Minimum; }
+	virtual int getMaximum() const { return Maximum; }
 	virtual bool setValue(int newValue);
+	virtual bool setMinimum(int newMininum);
+	virtual bool setMaximum(int newMaximum);
 	virtual void scrollPrev(bool small = false);
 	virtual void scrollNext(bool small = false);
 

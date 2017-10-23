@@ -1276,6 +1276,7 @@ void TransactionScreen::executeOrders()
 	}
 
 	// Step 02: Gather data about differences in stocks
+	// Map is base id to number bought/sold
 	std::map<StateRef<AEquipmentType>, std::map<int, int>> aeMap;
 	std::map<StateRef<AEquipmentType>, std::map<int, int>> bioMap;
 	std::map<StateRef<VEquipmentType>, std::map<int, int>> veMap;
@@ -1339,48 +1340,37 @@ void TransactionScreen::executeOrders()
 	// Step 03: Act according to mode
 	auto player = state->getPlayer();
 
-	// Step 03.01: If buy&sell then remove everything negative, order everything positive, adjust
-	// balance
+	// Step 03.01: If buy&sell then:
+	// - remove everything negative, order everything positive, adjust balance
+	bool needTransfer = false;
 	if (mode == Mode::BuySell)
 	{
+		// Step 03.01.01: Buy stuff
 		for (auto &e : aeMap)
 		{
 			for (auto &ae : e.second)
 			{
-				if (ae.second == 0)
+				if (ae.first == 8)
 				{
 					continue;
 				}
-				int count = ae.second *
-				            (e.first->type == AEquipmentType::Type::Ammo ? e.first->max_ammo : 1);
-				if (ae.second < 0)
-				{
-					if (count > bases[ae.first]->inventoryAgentEquipment[e.first.id])
-					{
-						bases[ae.first]->inventoryAgentEquipment[e.first.id] = 0;
-					}
-					else
-					{
-						bases[ae.first]->inventoryAgentEquipment[e.first.id] -= count;
-					}
-					int price = 0;
-					if (state->economy.find(e.first.id) == state->economy.end())
-					{
-						LogError("Economy not found for %s: How are we buying it then!?",
-						         e.first.id);
-					}
-					else
-					{
-						auto &economy = state->economy[e.first.id];
-						price = economy.currentPrice;
-						economy.currentStock -= ae.second;
-					}
-					player->balance -= ae.second * price;
-				}
 				if (ae.second > 0)
 				{
+					int count =
+					    ae.second *
+					    (e.first->type == AEquipmentType::Type::Ammo ? e.first->max_ammo : 1);
+
 					auto org = e.first->manufacturer;
-					org->purchase(*state, bases[ae.first]->building, e.first, ae.second);
+					if (org->isRelatedTo(player) != Organisation::Relation::Hostile)
+					{
+						org->purchase(*state, bases[ae.first]->building, e.first, ae.second);
+						ae.second = 0;
+					}
+					else
+					{
+						e.second[8] += ae.second;
+						needTransfer = true;
+					}
 				}
 			}
 		}
@@ -1388,9 +1378,131 @@ void TransactionScreen::executeOrders()
 		{
 			for (auto &ae : e.second)
 			{
-				if (ae.second == 0)
+				if (ae.second > 0)
+				{
+					LogError("Alien %s: How are we buying it!?", e.first.id);
+				}
+			}
+		}
+		for (auto &e : veMap)
+		{
+			for (auto &ve : e.second)
+			{
+				if (ve.first == 8)
 				{
 					continue;
+				}
+				if (ve.second > 0)
+				{
+					auto org = e.first->manufacturer;
+					if (org->isRelatedTo(player) != Organisation::Relation::Hostile)
+					{
+						org->purchase(*state, bases[ve.first]->building, e.first, ve.second);
+						ve.second = 0;
+					}
+					else
+					{
+						e.second[8] += ve.second;
+						needTransfer = true;
+					}
+				}
+			}
+		}
+		for (auto &e : vaMap)
+		{
+			for (auto &va : e.second)
+			{
+				if (va.first == 8)
+				{
+					continue;
+				}
+				if (va.second > 0)
+				{
+					auto org = e.first->manufacturer;
+					org->purchase(*state, bases[va.first]->building, e.first, va.second);
+					if (org->isRelatedTo(player) != Organisation::Relation::Hostile)
+					{
+						org->purchase(*state, bases[va.first]->building, e.first, va.second);
+						va.second = 0;
+					}
+					else
+					{
+						e.second[8] += va.second;
+						needTransfer = true;
+					}
+				}
+			}
+		}
+		for (auto &e : vtMap)
+		{
+			for (auto &vt : e.second)
+			{
+				if (vt.second > 0)
+				{
+					auto org = e.first->manufacturer;
+					org->purchase(*state, bases[vt.first]->building, e.first, vt.second);
+					if (org->isRelatedTo(player) != Organisation::Relation::Hostile)
+					{
+						org->purchase(*state, bases[vt.first]->building, e.first, vt.second);
+						vt.second = 0;
+					}
+					else
+					{
+						LogError("VehicleType %s: How the hell is being bought from a hostile org?",
+						         e.first.id);
+					}
+				}
+			}
+		}
+		// Step 03.01.02:  Sell stuff
+		for (auto &e : aeMap)
+		{
+			for (auto &ae : e.second)
+			{
+				int aeSecond = ae.second;
+				if (ae.second < 0 && e.second[8] > 0)
+				{
+					int reserve = std::min(e.second[8], -ae.second);
+					e.second[8] -= reserve;
+					aeSecond += reserve;
+				}
+				if (aeSecond < 0)
+				{
+					int count =
+					    aeSecond *
+					    (e.first->type == AEquipmentType::Type::Ammo ? e.first->max_ammo : 1);
+
+					if (-count > bases[ae.first]->inventoryAgentEquipment[e.first.id])
+					{
+						bases[ae.first]->inventoryAgentEquipment[e.first.id] = 0;
+					}
+					else
+					{
+						bases[ae.first]->inventoryAgentEquipment[e.first.id] += count;
+					}
+					int price = 0;
+					if (state->economy.find(e.first.id) == state->economy.end())
+					{
+						LogError("Economy not found for %s: How are we selling it then!?",
+						         e.first.id);
+					}
+					else
+					{
+						auto &economy = state->economy[e.first.id];
+						price = economy.currentPrice;
+						economy.currentStock -= aeSecond;
+					}
+					player->balance -= aeSecond * price;
+				}
+			}
+		}
+		for (auto &e : bioMap)
+		{
+			for (auto &ae : e.second)
+			{
+				if (ae.second < 0 && e.second[8] > 0)
+				{
+					LogError("Alien %s: How the hell is it in reserve?", e.first.id);
 				}
 				if (ae.second < 0)
 				{
@@ -1408,13 +1520,8 @@ void TransactionScreen::executeOrders()
 						price = economy.currentPrice;
 						economy.currentStock -= ae.second;
 					}
-					bases[ae.first]->inventoryAgentEquipment[e.first.id] -= ae.second;
+					bases[ae.first]->inventoryAgentEquipment[e.first.id] += ae.second;
 					player->balance -= ae.second * price;
-				}
-				if (ae.second > 0)
-				{
-					auto org = e.first->manufacturer;
-					org->purchase(*state, bases[ae.first]->building, e.first, ae.second);
 				}
 			}
 		}
@@ -1422,31 +1529,29 @@ void TransactionScreen::executeOrders()
 		{
 			for (auto &ve : e.second)
 			{
-				if (ve.second == 0)
+				int veSecond = ve.second;
+				if (ve.second < 0 && e.second[8] > 0)
 				{
-					continue;
+					int reserve = std::min(e.second[8], -ve.second);
+					e.second[8] -= reserve;
+					veSecond += reserve;
 				}
-				if (ve.second < 0)
+				if (veSecond < 0)
 				{
 					int price = 0;
 					if (state->economy.find(e.first.id) == state->economy.end())
 					{
-						LogError("Economy not found for %s: How are we buying it then!?",
+						LogError("Economy not found for %s: How are we selling it then!?",
 						         e.first.id);
 					}
 					else
 					{
 						auto &economy = state->economy[e.first.id];
 						price = economy.currentPrice;
-						economy.currentStock -= ve.second;
+						economy.currentStock -= veSecond;
 					}
-					bases[ve.first]->inventoryVehicleEquipment[e.first.id] -= ve.second;
-					player->balance -= ve.second * price;
-				}
-				if (ve.second > 0)
-				{
-					auto org = e.first->manufacturer;
-					org->purchase(*state, bases[ve.first]->building, e.first, ve.second);
+					bases[ve.first]->inventoryVehicleEquipment[e.first.id] += veSecond;
+					player->balance -= veSecond * price;
 				}
 			}
 		}
@@ -1454,11 +1559,14 @@ void TransactionScreen::executeOrders()
 		{
 			for (auto &va : e.second)
 			{
-				if (va.second == 0)
+				int vaSecond = va.second;
+				if (va.second < 0 && e.second[8] > 0)
 				{
-					continue;
+					int reserve = std::min(e.second[8], -va.second);
+					e.second[8] -= reserve;
+					vaSecond += reserve;
 				}
-				if (va.second < 0)
+				if (vaSecond < 0)
 				{
 					int price = 0;
 					if (state->economy.find(e.first.id) == state->economy.end())
@@ -1470,15 +1578,10 @@ void TransactionScreen::executeOrders()
 					{
 						auto &economy = state->economy[e.first.id];
 						price = economy.currentPrice;
-						economy.currentStock -= va.second;
+						economy.currentStock -= vaSecond;
 					}
-					bases[va.first]->inventoryVehicleAmmo[e.first.id] -= va.second;
-					player->balance -= va.second * price;
-				}
-				if (va.second > 0)
-				{
-					auto org = e.first->manufacturer;
-					org->purchase(*state, bases[va.first]->building, e.first, va.second);
+					bases[va.first]->inventoryVehicleAmmo[e.first.id] += vaSecond;
+					player->balance -= vaSecond * price;
 				}
 			}
 		}
@@ -1486,21 +1589,18 @@ void TransactionScreen::executeOrders()
 		{
 			for (auto &vt : e.second)
 			{
-				if (vt.second == 0)
+				if (vt.second < 0 && e.second[8] > 0)
 				{
-					continue;
+					LogError("VehicleType %s: How the hell is it in reserve?", e.first.id);
 				}
 				if (vt.second < 0)
 				{
 					LogError("How did we manage to sell a vehicle type!?");
 				}
-				if (vt.second > 0)
-				{
-					auto org = e.first->manufacturer;
-					org->purchase(*state, bases[vt.first]->building, e.first, vt.second);
-				}
 			}
 		}
+
+		// Step 03.01.03: Sell vehicles
 		for (auto &v : soldVehicles)
 		{
 			// Expecting sold vehicle to be parked
@@ -1518,11 +1618,10 @@ void TransactionScreen::executeOrders()
 			v.first->die(*state, true);
 			player->balance += v.second;
 		}
-		return;
 	}
 
 	// Step 03.02: If transfer then move stuff from negative to positive
-	if (mode == Mode::Transfer)
+	if (mode == Mode::Transfer || needTransfer)
 	{
 		// Agent items
 		for (auto &e : aeMap)
@@ -1531,10 +1630,6 @@ void TransactionScreen::executeOrders()
 			std::list<std::pair<int, int>> destination;
 			for (auto &ae : e.second)
 			{
-				if (ae.second == 0)
-				{
-					continue;
-				}
 				if (ae.second < 0)
 				{
 					source.emplace_back(ae.first, -ae.second);
@@ -1584,10 +1679,6 @@ void TransactionScreen::executeOrders()
 			std::list<std::pair<int, int>> destination;
 			for (auto &be : e.second)
 			{
-				if (be.second == 0)
-				{
-					continue;
-				}
 				if (be.second < 0)
 				{
 					source.emplace_back(be.first, be.second);
@@ -1631,10 +1722,6 @@ void TransactionScreen::executeOrders()
 			std::list<std::pair<int, int>> destination;
 			for (auto &ve : e.second)
 			{
-				if (ve.second == 0)
-				{
-					continue;
-				}
 				if (ve.second < 0)
 				{
 					source.emplace_back(ve.first, ve.second);
@@ -1678,10 +1765,6 @@ void TransactionScreen::executeOrders()
 			std::list<std::pair<int, int>> destination;
 			for (auto &va : e.second)
 			{
-				if (va.second == 0)
-				{
-					continue;
-				}
 				if (va.second < 0)
 				{
 					source.emplace_back(va.first, va.second);
@@ -1904,6 +1987,7 @@ void TransactionScreen::closeScreen(bool confirmed, bool forced)
 	// Step 03: Check transportation
 
 	// Step 03.01: Check transportation for purchases
+	bool purchaseTransferFound = false;
 	if (mode == Mode::BuySell)
 	{
 		bool noFerry = false;
@@ -1918,6 +2002,43 @@ void TransactionScreen::closeScreen(bool confirmed, bool forced)
 				if (linkedControls.find(c) != linkedControls.end())
 				{
 					continue;
+				}
+				// See if we transfer-bought from an org that's hostile
+				if (!purchaseTransferFound)
+				{
+					for (int i = 0; i < 7; i++)
+					{
+						if (c->initialStock[8] < c->currentStock[8])
+						{
+							StateRef<Organisation> owner;
+							switch (c->itemType)
+							{
+								case TransactionControl::Type::AgentEquipmentBio:
+								case TransactionControl::Type::AgentEquipmentCargo:
+									owner = StateRef<AEquipmentType> { state.get(), c->itemId }
+									->manufacturer;
+									break;
+								case TransactionControl::Type::VehicleEquipment:
+									owner = StateRef<VEquipmentType> { state.get(), c->itemId }
+									->manufacturer;
+									break;
+								case TransactionControl::Type::VehicleAmmo:
+									owner = StateRef<VAmmoType> { state.get(), c->itemId }
+									->manufacturer;
+									break;
+								case TransactionControl::Type::VehicleType:
+								case TransactionControl::Type::Vehicle:
+									// Vehicles need no transportation
+									break;
+							}
+							if (owner &&
+							    owner->isRelatedTo(state->getPlayer()) ==
+							        Organisation::Relation::Hostile)
+							{
+								purchaseTransferFound = true;
+							}
+						}
+					}
 				}
 				if (c->initialStock[8] > c->currentStock[8])
 				{
@@ -2027,7 +2148,8 @@ void TransactionScreen::closeScreen(bool confirmed, bool forced)
 	}
 
 	// Step 03.02: Check transportation for transfers
-	if (mode == Mode::Transfer)
+	// or for purchase-transfers
+	if (mode == Mode::Transfer || purchaseTransferFound)
 	{
 		bool transportationHostile = false;
 		bool transportationBusy = false;
@@ -2308,14 +2430,14 @@ void TransactionScreen::TransactionControl::setScrollbarValues()
 {
 	if (indexLeft == indexRight)
 	{
-		scrollBar->Minimum = 0;
-		scrollBar->Maximum = 0;
+		scrollBar->setMinimum(0);
+		scrollBar->setMaximum(0);
 		scrollBar->setValue(0);
 	}
 	else
 	{
-		scrollBar->Minimum = 0;
-		scrollBar->Maximum = currentStock[indexLeft] + currentStock[indexRight];
+		scrollBar->setMinimum(0);
+		scrollBar->setMaximum(currentStock[indexLeft] + currentStock[indexRight]);
 		scrollBar->setValue(currentStock[indexRight]);
 	}
 	updateValues();
@@ -2335,13 +2457,13 @@ void TransactionScreen::TransactionControl::setIndexRight(int index)
 
 void TransactionScreen::TransactionControl::updateValues()
 {
-	if (scrollBar->Maximum != 0)
+	if (scrollBar->getMaximum() != 0)
 	{
 		if (manufacturerHostile || manufacturerUnavailable)
 		{
 			if (indexLeft == 8)
 			{
-				if (scrollBar->getValue() > scrollBar->Maximum - initialStock[indexLeft])
+				if (scrollBar->getValue() > scrollBar->getMaximum() - initialStock[indexLeft])
 				{
 					scrollBar->setValue(initialStock[indexLeft]);
 					auto message_box = mksp<MessageBox>(
@@ -2372,7 +2494,7 @@ void TransactionScreen::TransactionControl::updateValues()
 		}
 
 		int newRight = scrollBar->getValue();
-		int newLeft = scrollBar->Maximum - scrollBar->getValue();
+		int newLeft = scrollBar->getMaximum() - scrollBar->getValue();
 		if (newRight != currentStock[indexRight] || newLeft != currentStock[indexLeft])
 		{
 			currentStock[indexRight] = newRight;
@@ -2839,8 +2961,8 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	control->scrollBar = control->createChild<ScrollBar>();
 	control->scrollBar->Location = {102, 24};
 	control->scrollBar->Size = {147, 20};
-	control->scrollBar->Minimum = 0;
-	control->scrollBar->Maximum = 0;
+	control->scrollBar->setMinimum(0);
+	control->scrollBar->setMaximum(0);
 	// ScrollBar buttons
 	auto buttonScrollLeft = control->createChild<GraphicButton>(nullptr, scrollLeft);
 	buttonScrollLeft->Size = scrollLeft->size;

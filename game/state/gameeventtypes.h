@@ -15,6 +15,7 @@ enum class GameEventType
 	VehicleEscaping,
 	VehicleNoAmmo,
 	VehicleLowFuel,
+	VehicleNoFuel,
 	VehicleRepaired,
 	VehicleRearmed,
 	VehicleRefuelled,
@@ -35,6 +36,7 @@ enum class GameEventType
 	TransferArrived,
 	RecoveryArrived,
 	CargoExpired,
+	CargoSeized,
 	MissionCompletedBase,
 
 	// Something died events

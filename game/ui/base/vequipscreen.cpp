@@ -233,11 +233,7 @@ void VEquipScreen::eventOccurred(Event *e)
 
 			// Return the equipment to the inventory
 			this->selected->removeEquipment(equipment);
-			base->inventoryVehicleEquipment[equipment->type.id]++;
-			if (equipment->ammo > 0)
-			{
-				base->inventoryVehicleAmmo[equipment->type->ammo_type.id] += equipment->ammo;
-			}
+			equipment->unequipToBase(*state, base);
 			this->paperDoll->updateEquipment();
 
 			// Immediate action: put to the base
@@ -265,13 +261,7 @@ void VEquipScreen::eventOccurred(Event *e)
 					auto e = this->selected->addEquipment(*state, this->draggedEquipment);
 					if (e)
 					{
-						base->inventoryVehicleEquipment[draggedEquipment->id]--;
-						if (draggedEquipment->max_ammo > 0)
-						{
-							int ammoAvailable = base->inventoryVehicleAmmo[e->type->ammo_type.id];
-							auto ammoSpent = e->reload(ammoAvailable);
-							base->inventoryVehicleAmmo[e->type->ammo_type.id] -= ammoSpent;
-						}
+						e->equipFromBase(*state, base);
 						this->paperDoll->updateEquipment();
 					}
 					this->draggedEquipment = nullptr;
@@ -299,15 +289,9 @@ void VEquipScreen::eventOccurred(Event *e)
 					LogError("Trying to equip item \"%s\" with zero inventory",
 					         this->draggedEquipment->id);
 				}
-				base->inventoryVehicleEquipment[draggedEquipment->id]--;
 				auto e =
 				    this->selected->addEquipment(*state, equipmentGridPos, this->draggedEquipment);
-				if (draggedEquipment->max_ammo > 0)
-				{
-					int ammoAvailable = base->inventoryVehicleAmmo[e->type->ammo_type.id];
-					auto ammoSpent = e->reload(ammoAvailable);
-					base->inventoryVehicleAmmo[e->type->ammo_type.id] -= ammoSpent;
-				}
+				e->equipFromBase(*state, base);
 				this->paperDoll->updateEquipment();
 				// FIXME: Add ammo to equipment
 			}

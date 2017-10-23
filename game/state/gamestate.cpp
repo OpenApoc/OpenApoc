@@ -150,7 +150,7 @@ void GameState::initState()
 		city->initMap(*this);
 		if (newGame)
 		{
-			if (c.first == "CITYMAP_HUMAN")
+			// if (c.first == "CITYMAP_HUMAN")
 			{
 				city->fillRoadSegmentMap(*this);
 				city->initialSceneryLinkUp();
@@ -208,6 +208,8 @@ void GameState::initState()
 	applyMods();
 	// Validate
 	validate();
+
+	skipTurboCalculations = config().getBool("OpenApoc.NewFeature.SkipTurboMovement");
 }
 
 void GameState::applyMods()
@@ -1083,21 +1085,11 @@ void GameState::updateEndOfSecond()
 				{
 					continue;
 				}
-				int ammoAvailable = std::numeric_limits<int>::max();
-				if (base)
-				{
-					ammoAvailable = base->inventoryVehicleAmmo[e->type->ammo_type.id];
-				}
-				auto ammoSpent = e->reload(ammoAvailable);
-				if (ammoSpent > 0)
+				if (e->reload(*this, base))
 				{
 					// FIXME: Implement message vehicle rearmed / reloaded /refueled whatever
 					LogWarning(
 					    "Implement message vehicle rearmed / reloaded / refueled / whatever");
-				}
-				if (base)
-				{
-					base->inventoryVehicleAmmo[e->type->ammo_type.id] -= ammoSpent;
 				}
 			}
 		}

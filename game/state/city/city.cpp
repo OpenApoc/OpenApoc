@@ -74,10 +74,6 @@ void City::initMap(GameState &state)
 	}
 	this->map.reset(new TileMap(this->size, VELOCITY_SCALE_CITY,
 	                            {VOXEL_X_CITY, VOXEL_Y_CITY, VOXEL_Z_CITY}, layerMap));
-	for (auto &b : this->buildings)
-	{
-		b.second->crewQuarters = {-1, -1, -1};
-	}
 	for (auto &s : this->scenery)
 	{
 		s->city = {&state, id};
@@ -91,13 +87,17 @@ void City::initMap(GameState &state)
 		}
 		if (s->type->isLandingPad)
 		{
-			s->building->landingPadLocations.push_back(s->initialPosition);
+			s->building->landingPadLocations.insert(s->initialPosition);
 		}
 		if ((s->type->connection[0] || s->type->connection[1] || s->type->connection[2] ||
 		     s->type->connection[3]) &&
 		    s->type->road_type == SceneryTileType::RoadType::Terminal)
 		{
-			s->building->carEntranceLocations.push_back(s->initialPosition);
+			if (s->building->carEntranceLocation.x != -1)
+			{
+				LogWarning("Building has multiple car entrances? %s", s->building->name);
+			}
+			s->building->carEntranceLocation = s->initialPosition;
 			// crew quarters is the closest to camera spot with vehicle access
 			if (s->initialPosition.z > s->building->crewQuarters.z ||
 			    (s->initialPosition.z == s->building->crewQuarters.z &&
@@ -122,10 +122,7 @@ void City::initMap(GameState &state)
 		{
 			LogInfo("Pad: %s", loc);
 		}
-		for (auto &loc : b.second->carEntranceLocations)
-		{
-			LogInfo("Car: %s", loc);
-		}
+		LogInfo("Car: %s", b.second->carEntranceLocation);
 		if (b.second->crewQuarters == Vec3<int>{-1, -1, -1})
 		{
 			LogWarning("Building %s has no car exit?", b.first);
@@ -153,13 +150,13 @@ void City::initMap(GameState &state)
 	}
 }
 
-int City::getSegmentID(const Vec3<int> &position) const
+int City::getRoadSegmentID(const Vec3<int> &position) const
 {
 	return tileToRoadSegmentMap.at(position.z * map->size.x * map->size.y +
 	                               position.y * map->size.x + position.x);
 }
 
-const RoadSegment &City::getSegment(const Vec3<int> &position) const
+const RoadSegment &City::getRoadSegment(const Vec3<int> &position) const
 {
 	return roadSegments.at(tileToRoadSegmentMap.at(position.z * map->size.x * map->size.y +
 	                                               position.y * map->size.x + position.x));
@@ -167,7 +164,7 @@ const RoadSegment &City::getSegment(const Vec3<int> &position) const
 
 void City::notifyRoadChange(const Vec3<int> &position, bool intact)
 {
-	auto segId = getSegmentID(position);
+	auto segId = getRoadSegmentID(position);
 	if (segId != -1)
 	{
 		roadSegments.at(segId).notifyRoadChange(position, intact);
@@ -573,13 +570,13 @@ void City::accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition, Vec
 	target += diff;
 }
 
-void RoadSegment::notifyRoadChange(const Vec3<int> &position, bool intact)
+void RoadSegment::notifyRoadChange(const Vec3<int> &position, bool newIntact)
 {
 	for (int i = 0; i < tilePosition.size(); i++)
 	{
 		if (tilePosition.at(i) == position)
 		{
-			tileIntact.at(i) = intact;
+			tileIntact.at(i) = newIntact;
 			break;
 		}
 	}
@@ -607,6 +604,37 @@ void RoadSegment::finalizeStats()
 }
 
 bool RoadSegment::empty() const { return tilePosition.empty(); }
+
+const Vec3<int> &RoadSegment::getFirst() const { return tilePosition[0]; }
+
+const Vec3<int> &RoadSegment::getLast() const { return tilePosition[length - 1]; }
+
+const Vec3<int> &RoadSegment::getByConnectID(int id) const
+{
+	return id == 0 ? getFirst() : getLast();
+}
+
+bool RoadSegment::getIntactFirst() const { return tileIntact[0]; }
+
+bool RoadSegment::getIntactLast() const { return tileIntact[length - 1]; }
+
+bool RoadSegment::getIntactByConnectID(int id) const
+{
+	return id == 0 ? getIntactFirst() : getIntactLast();
+}
+
+bool RoadSegment::getIntactByTile(const Vec3<int> &position) const
+{
+	for (int i = 0; i < tilePosition.size(); i++)
+	{
+		if (tilePosition[i] == position)
+		{
+			return tileIntact[i];
+		}
+	}
+	LogError("Invalid position supplied to getIntactByTile");
+	return false;
+}
 
 RoadSegment::RoadSegment(Vec3<int> tile) { tilePosition.emplace_back(tile); }
 

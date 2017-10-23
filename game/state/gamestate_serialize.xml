@@ -359,6 +359,7 @@
 		<member>falling</member>
 		<member>crashed</member>
 		<member>sliding</member>
+		<member>fuelSpentTicks</member>
 		<member>cloakTicksAccumulated</member>
 		<member>teleportTicksAccumulated</member>
 		<member>ticksAutoActionAvailable</member>

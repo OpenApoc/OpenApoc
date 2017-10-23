@@ -120,7 +120,7 @@ void Building::updateCargo(GameState &state)
 {
 	StateRef<Building> thisRef = {&state, getId(state, shared_from_this())};
 
-	// Step 01: Consume cargo with destination = this or zero count
+	// Step 01: Consume cargo with destination = this or zero count or hostile destination
 	for (auto it = cargo.begin(); it != cargo.end();)
 	{
 		if (it->count != 0 && it->destination == thisRef)
@@ -129,6 +129,11 @@ void Building::updateCargo(GameState &state)
 		}
 		if (it->count == 0)
 		{
+			it = cargo.erase(it);
+		}
+		else if (owner->isRelatedTo(it->destination->owner) == Organisation::Relation::Hostile)
+		{
+			it->seize(state, owner);
 			it = cargo.erase(it);
 		}
 		else
