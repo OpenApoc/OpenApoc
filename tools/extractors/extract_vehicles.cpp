@@ -354,7 +354,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		vehicle->armour[VehicleType::ArmourDirection::Front] = v.armour_front;
 
 		vehicle->passengers = v.passenger_capacity;
-		vehicle->aggressiveness = v.aggressiveness;
+		vehicle->aggressiveness = v.manufacturer == 0 ? 1000 : v.aggressiveness;
 		vehicle->score = v.score;
 
 		vehicle->provideFreightAgent = AgentFreight.find(id) != AgentFreight.end();

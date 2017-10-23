@@ -528,29 +528,26 @@ VehicleMission *VehicleMission::arriveFromDimensionGate(GameState &state, Vehicl
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::ArriveFromDimensionGate;
-	if (ticks >= 0)
+	// find max delay arrival and increment
+	int lastTicks = -DIMENSION_GATE_DELAY;
+	for (auto &v2 : state.vehicles)
 	{
-		mission->timeToSnooze = (unsigned)ticks;
-	}
-	else
-	{
-		// find max delay arrival and increment
-		int lastTicks = -DIMENSION_GATE_DELAY;
-		for (auto &v2 : state.vehicles)
+		if (v2.second->city == v.city && v2.second->owner == v.owner)
 		{
-			if (v2.second->city == v.city && v2.second->owner == v.owner)
+			for (auto &m : v2.second->missions)
 			{
-				for (auto &m : v2.second->missions)
+				if (m->type == MissionType::ArriveFromDimensionGate)
 				{
-					if (m->type == MissionType::ArriveFromDimensionGate)
-					{
-						lastTicks = std::max(lastTicks, (int)m->timeToSnooze);
-					}
+					lastTicks = std::max(lastTicks, (int)m->timeToSnooze);
 				}
 			}
 		}
-		mission->timeToSnooze = lastTicks + DIMENSION_GATE_DELAY;
 	}
+	if (lastTicks == -DIMENSION_GATE_DELAY)
+	{
+		lastTicks += ticks;
+	}
+	mission->timeToSnooze = lastTicks + DIMENSION_GATE_DELAY;
 	return mission;
 }
 
@@ -1270,7 +1267,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 			if (v.tileObject && range > 0)
 			{
 				auto enemy = v.findClosestEnemy(state, v.tileObject);
-				if (enemy)
+				if (enemy && v.tileObject->getDistanceTo(enemy) < range)
 				{
 					StateRef<Vehicle> vehicleRef(&state, enemy->getVehicle());
 					currentPlannedPath.clear();
@@ -1311,8 +1308,21 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 							v.city = {&state, city.second};
 							if (v.owner == state.getPlayer())
 							{
+								// Delay for returning / going in
+								int delay = 0;
+								if (city.first == "CITYMAP_HUMAN")
+								{
+									delay = randBoundsInclusive(state.rng, TICKS_PER_HOUR,
+									                            2 * TICKS_PER_HOUR);
+								}
+								else
+								{
+									delay = randBoundsInclusive(state.rng, TICKS_PER_SECOND,
+									                            2 * TICKS_PER_SECOND);
+								}
 								v.addMission(
-								    state, VehicleMission::arriveFromDimensionGate(state, v), true);
+								    state, VehicleMission::arriveFromDimensionGate(state, v, delay),
+								    true);
 							}
 							else
 							{
@@ -2492,9 +2502,15 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					{
 						return;
 					}
-
 					v.leaveDimensionGate(state);
-					takePositionNearPortal(state, v);
+					if (v.city.id == "CITYMAP_HUMAN" && v.owner == state.getPlayer())
+					{
+						v.addMission(state, VehicleMission::gotoBuilding(state, v));
+					}
+					else
+					{
+						takePositionNearPortal(state, v);
+					}
 					missionCounter++;
 					return;
 				}

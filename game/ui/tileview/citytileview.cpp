@@ -952,6 +952,11 @@ void CityTileView::update()
 	// The reverse for 3pm, 6pm & 9pm
 
 	auto hour = state.gameTime.getHours();
+	// Always noon in alien dimension
+	if (state.current_city.id == "CITYMAP_ALIEN")
+	{
+		hour = 12;
+	}
 	sp<Palette> interpolated_palette;
 	if (hour < 3 || hour >= 21)
 	{

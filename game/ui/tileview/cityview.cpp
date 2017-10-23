@@ -1574,10 +1574,8 @@ void CityView::render()
 
 void CityView::update()
 {
-	this->drawCity = true;
-	CityTileView::update();
-
 	unsigned int ticks = 0;
+	int day = state->gameTime.getDay();
 	bool turbo = false;
 	switch (this->updateSpeed)
 	{
@@ -1634,6 +1632,50 @@ void CityView::update()
 			ticks -= ticksPerUpdate;
 		}
 	}
+
+	// Switch dimensions
+	bool switchDimension = false;
+	// Switch dimension if new day in city and vehicles in alien dimension
+	if (day != state->gameTime.getDay())
+	{
+		for (auto &v : state->vehicles)
+		{
+			if (state->current_city != v.second->city && v.second->owner == state->getPlayer())
+			{
+				switchDimension = true;
+				break;
+			}
+		}
+	}
+	// Switch dimension if no owned vehicle in alien dimension
+	if (state->current_city.id == "CITYMAP_ALIEN")
+	{
+		switchDimension = true;
+		for (auto &v : state->vehicles)
+		{
+			if (state->current_city == v.second->city && v.second->owner == state->getPlayer())
+			{
+				switchDimension = false;
+				break;
+			}
+		}
+	}
+	if (switchDimension)
+	{
+		setUpdateSpeed(CityUpdateSpeed::Speed1);
+		for (auto &newCity : state->cities)
+		{
+			if (state->current_city != newCity.second)
+			{
+				state->current_city = {state.get(), newCity.first};
+				fw().stageQueueCommand({StageCmd::Command::REPLACEALL, mksp<CityView>(state)});
+				return;
+			}
+		}
+	}
+
+	this->drawCity = true;
+	CityTileView::update();
 
 	updateSelectedUnits();
 
@@ -2461,7 +2503,14 @@ bool CityView::handleKeyDown(Event *e)
 					v.second->health = v.second->type->crash_health > 0
 					                       ? v.second->type->crash_health
 					                       : v.second->getMaxHealth() / 4;
-					v.second->startFalling(*state);
+					if (v.second->type->type == VehicleType::Type::UFO)
+					{
+						v.second->crash(*state, nullptr);
+					}
+					else
+					{
+						v.second->startFalling(*state);
+					}
 				}
 				return true;
 			}
