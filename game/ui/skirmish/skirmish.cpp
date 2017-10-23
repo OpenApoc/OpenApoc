@@ -289,8 +289,8 @@ void Skirmish::goToBattle(bool customAliens, std::map<StateRef<AgentType>, int> 
 	playerBuilding->owner = state.getPlayer();
 	playerBuilding->base = playerBase;
 	playerBuilding->city = city;
-	playerBuilding->carEntranceLocations.emplace_back(0, 0, 0);
-	playerBuilding->landingPadLocations.emplace_back(0, 0, 0);
+	playerBuilding->carEntranceLocation = {0, 0, 0};
+	playerBuilding->landingPadLocations.emplace(0, 0, 0);
 
 	playerBase->building = playerBuilding;
 	playerBase->corridors = sourceBase->corridors;

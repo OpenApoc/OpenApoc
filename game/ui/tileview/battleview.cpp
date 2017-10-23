@@ -1253,6 +1253,7 @@ void BattleView::begin()
 
 void BattleView::resume()
 {
+	state->skipTurboCalculations = config().getBool("OpenApoc.NewFeature.SkipTurboMovement");
 	BattleTileView::resume();
 	modifierLAlt = false;
 	modifierLCtrl = false;

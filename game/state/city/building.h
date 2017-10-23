@@ -88,9 +88,9 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 
 	// Following members are not serialized, but rather are set in City::initMap method
 
-	Vec3<int> crewQuarters;
-	std::vector<Vec3<int>> carEntranceLocations;
-	std::vector<Vec3<int>> landingPadLocations;
+	Vec3<int> crewQuarters = {-1, -1, -1};
+	Vec3<int> carEntranceLocation = {-1, -1, -1};
+	std::set<Vec3<int>> landingPadLocations;
 	std::set<Vec3<int>> buildingParts;
 };
 

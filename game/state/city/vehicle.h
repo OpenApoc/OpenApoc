@@ -50,6 +50,10 @@ static const int FV_CHANCE_TO_RECOVER_VEHICLE = 66;
 static const int FV_CHANCE_TO_RECOVER_EQUIPMENT = 90;
 // How much percent is "scrapped" sold for
 static const int FV_SCRAPPED_COST_PERCENT = 25;
+// How much ticks is accumulated per second of engine usage
+static const int FUEL_TICKS_PER_SECOND = 144;
+// How much ticks is required to spend one unit of fuel
+static const int FUEL_TICKS_PER_UNIT = 40000;
 
 class Image;
 class TileObjectVehicle;
@@ -202,6 +206,7 @@ class Vehicle : public StateObject,
 	bool crashed = false;
 	bool falling = false;
 	bool sliding = false;
+	int fuelSpentTicks = 0;
 	// Cloak, increases each turn, set to 0 when firing or no cloaking device on vehicle
 	// Vehicle is cloaked when this is >= CLOAK_TICKS_REQUIRED_VEHICLE
 	unsigned int cloakTicksAccumulated = 0;
@@ -332,12 +337,16 @@ class Vehicle : public StateObject,
 	// Pops all finished missions, returns true if popped
 	bool popFinishedMissions(GameState &state);
 	// Get new goal for vehicle position or facing
-	bool getNewGoal(GameState &state);
+	bool getNewGoal(GameState &state, int &turboTiles);
 
 	void update(GameState &state, unsigned int ticks);
 	void updateEachSecond(GameState &state);
 	void updateCargo(GameState &state);
 	void updateSprite(GameState &state);
+
+	sp<VEquipment> getEngine() const;
+	// Returns true if vehicle does not require an engine
+	bool hasEngine() const;
 
 	sp<Equipment> getEquipmentAt(const Vec2<int> &position) const override;
 	const std::list<EquipmentLayoutSlot> &getSlots() const override;

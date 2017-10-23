@@ -2,6 +2,7 @@
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "framework/sound.h"
+#include "game/state/city/base.h"
 #include "game/state/city/city.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
@@ -138,15 +139,41 @@ void VEquipment::update(int ticks)
 
 int VEquipment::reload(int ammoAvailable)
 {
-	if (this->type->type != EquipmentSlotType::VehicleWeapon)
-	{
-		LogError("reload() called on non-Weapon");
-		return 0;
-	}
 	int ammoRequired = this->type->max_ammo - this->ammo;
 	int reloadAmount = std::min(ammoRequired, ammoAvailable);
 	this->ammo += reloadAmount;
 	return reloadAmount;
+}
+
+bool VEquipment::reload(GameState &state, StateRef<Base> base)
+{
+	if (base)
+	{
+		int ammoAvailable = base->inventoryVehicleAmmo[type->ammo_type.id];
+		auto ammoSpent = reload(ammoAvailable);
+		base->inventoryVehicleAmmo[type->ammo_type.id] -= ammoSpent;
+		return ammoSpent > 0;
+	}
+	else
+	{
+		auto ammoSpent = reload(type->max_ammo);
+		return ammoSpent > 0;
+	}
+}
+
+void VEquipment::equipFromBase(GameState &state, StateRef<Base> base)
+{
+	base->inventoryVehicleEquipment[type->id]--;
+	reload(state, base);
+}
+
+void VEquipment::unequipToBase(GameState &state, StateRef<Base> base)
+{
+	base->inventoryVehicleEquipment[type.id]++;
+	if (ammo > 0)
+	{
+		base->inventoryVehicleAmmo[type->ammo_type.id] += ammo;
+	}
 }
 
 float VEquipment::getRange() const
