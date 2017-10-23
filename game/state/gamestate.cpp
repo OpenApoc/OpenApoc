@@ -150,7 +150,7 @@ void GameState::initState()
 		city->initMap(*this);
 		if (newGame)
 		{
-			if (c.first == "CITYMAP_HUMAN")
+			// if (c.first == "CITYMAP_HUMAN")
 			{
 				city->fillRoadSegmentMap(*this);
 				city->initialSceneryLinkUp();
