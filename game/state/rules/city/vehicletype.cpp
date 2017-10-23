@@ -192,4 +192,6 @@ VehicleType::Direction VehicleType::getDirectionSmall(float facing)
 	}
 	return closestDir;
 }
+
+
 }; // namespace OpenApoc

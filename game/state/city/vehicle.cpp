@@ -3022,39 +3022,30 @@ bool Vehicle::getNewGoal(GameState &state)
 
 float Vehicle::getSpeed() const
 {
-	// FIXME: This is somehow modulated by weight?
-	float speed = this->type->top_speed;
-
-	for (auto &e : this->equipment)
-	{
-		if (e->type->type != EquipmentSlotType::VehicleEngine)
-			continue;
-		speed += e->type->top_speed;
-	}
-
-	return speed;
+	auto et = getEquipmentTypes();
+	return this->type->getSpeed(et.begin(), et.end());
 }
 
-int Vehicle::getMaxConstitution() const { return this->getMaxHealth() + this->getMaxShield(); }
+int Vehicle::getMaxConstitution() const
+{
+	auto et = getEquipmentTypes();
+	return this->type->getMaxConstitution(et.begin(), et.end());
+}
 
 int Vehicle::getConstitution() const { return this->getHealth() + this->getShield(); }
 
-int Vehicle::getMaxHealth() const { return this->type->health; }
+int Vehicle::getMaxHealth() const
+{
+	auto et = getEquipmentTypes();
+	return this->type->getMaxHealth(et.begin(), et.end());
+}
 
 int Vehicle::getHealth() const { return this->health; }
 
 int Vehicle::getMaxShield() const
 {
-	int maxShield = 0;
-
-	for (auto &e : this->equipment)
-	{
-		if (e->type->type != EquipmentSlotType::VehicleGeneral)
-			continue;
-		maxShield += e->type->shielding;
-	}
-
-	return maxShield;
+	auto et = getEquipmentTypes();
+	return this->type->getMaxShield(et.begin(), et.end());
 }
 
 int Vehicle::getShieldRechargeRate() const
@@ -3135,131 +3126,66 @@ bool Vehicle::hasDimensionShifter() const
 	return false;
 }
 
+std::list<sp<VEquipmentType>> Vehicle::getEquipmentTypes() const
+{
+	std::list<sp<VEquipmentType>> et;
+	for (auto &eq : equipment)
+	{
+		et.push_back(eq->type);
+	}
+	return et;
+}
+
 int Vehicle::getShield() const { return this->shield; }
 
 int Vehicle::getArmor() const
 {
-	int armor = 0;
-	// FIXME: Check this the sum of all directions
-	for (auto &armorDirection : this->type->armour)
-	{
-		armor += armorDirection.second;
-	}
-	return armor;
+	auto et = getEquipmentTypes();
+	return this->type->getArmor(et.begin(), et.end());
 }
 
 int Vehicle::getAccuracy() const
 {
-	int accuracy = 0;
-	std::priority_queue<int> accModifiers;
-
-	for (auto &e : this->equipment)
-	{
-		if (e->type->type != EquipmentSlotType::VehicleGeneral || e->type->accuracy_modifier <= 0)
-			continue;
-		// accuracy percentages are inverted in the data (e.g. 10% module gives 90)
-		accModifiers.push(100 - e->type->accuracy_modifier);
-	}
-
-	double moduleEfficiency = 1.0;
-	while (!accModifiers.empty())
-	{
-		accuracy += accModifiers.top() * moduleEfficiency;
-		moduleEfficiency /= 2;
-		accModifiers.pop();
-	}
-	return accuracy;
+	auto et = getEquipmentTypes();
+	return this->type->getAccuracy(et.begin(), et.end());
 }
 
 // FIXME: Check int/float speed conversions
-int Vehicle::getTopSpeed() const { return (int)this->getSpeed(); }
+int Vehicle::getTopSpeed() const {
+	auto et = getEquipmentTypes();
+	return this->type->getTopSpeed(et.begin(), et.end());
+}
 
 int Vehicle::getAcceleration() const
 {
-	// FIXME: This is somehow related to enginer 'power' and weight
-	int weight = this->getWeight();
-	int acceleration = this->type->acceleration;
-	int power = 0;
-	for (auto &e : this->equipment)
-	{
-		if (e->type->type != EquipmentSlotType::VehicleEngine)
-			continue;
-		power += e->type->power;
-	}
-	if (weight == 0)
-	{
-		LogError("Vehicle %s has zero weight", this->name);
-		return 0;
-	}
-	acceleration += std::max(1, power / weight);
-
-	if (power == 0 && acceleration == 0)
-	{
-		// No engine shows a '0' acceleration in the stats ui
-		return 0;
-	}
-	return acceleration;
+	auto et = getEquipmentTypes();
+	return this->type->getAcceleration(et.begin(), et.end());
 }
 
 int Vehicle::getWeight() const
 {
-	int weight = this->type->weight;
-	for (auto &e : this->equipment)
-	{
-		weight += e->type->weight;
-	}
-	if (weight == 0)
-	{
-		LogError("Vehicle with no weight");
-	}
-	return weight;
+	auto et = getEquipmentTypes();
+	return this->type->getWeight(et.begin(), et.end());
 }
 
 int Vehicle::getFuel() const
 {
-	// Zero fuel is normal on some vehicles (IE ufos/'dimension-capable' xcom)
-	int fuel = 0;
-
-	for (auto &e : this->equipment)
-	{
-		if (e->type->type != EquipmentSlotType::VehicleEngine)
-			continue;
-		fuel += e->type->max_ammo;
-	}
-
-	return fuel;
+	auto et = getEquipmentTypes();
+	return this->type->getFuel(et.begin(), et.end());
 }
 
 int Vehicle::getMaxPassengers() const
 {
-	int passengers = this->type->passengers;
-
-	for (auto &e : this->equipment)
-	{
-		if (e->type->type != EquipmentSlotType::VehicleGeneral)
-		{
-			continue;
-		}
-		passengers += e->type->passengers;
-	}
-	return passengers;
+	auto et = getEquipmentTypes();
+	return this->type->getMaxPassengers(et.begin(), et.end());
 }
 
 int Vehicle::getPassengers() const { return (int)currentAgents.size(); }
 
 int Vehicle::getMaxCargo() const
 {
-	int cargoMax = 0;
-
-	for (auto &e : this->equipment)
-	{
-		if (e->type->type != EquipmentSlotType::VehicleGeneral)
-		{
-			continue;
-		}
-		cargoMax += e->type->cargo_space;
-	}
-	return cargoMax;
+	auto et = getEquipmentTypes();
+	return this->type->getMaxCargo(et.begin(), et.end());
 }
 
 int Vehicle::getCargo() const
@@ -3278,17 +3204,8 @@ int Vehicle::getCargo() const
 
 int Vehicle::getMaxBio() const
 {
-	int cargoMax = 0;
-
-	for (auto &e : this->equipment)
-	{
-		if (e->type->type != EquipmentSlotType::VehicleGeneral)
-		{
-			continue;
-		}
-		cargoMax += e->type->alien_space;
-	}
-	return cargoMax;
+	auto et = getEquipmentTypes();
+	return this->type->getMaxCargo(et.begin(), et.end());
 }
 
 int Vehicle::getBio() const
