@@ -3,10 +3,12 @@
 #include "framework/framework.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/city/scenerytiletype.h"
 #include "library/strings.h"
 
 // Uncomment to turn off org missions
@@ -710,16 +712,42 @@ void Organisation::Mission::execute(GameState &state, StateRef<City> city,
 	// Special case
 	if (pattern.target == Organisation::MissionPattern::Target::ArriveFromSpace)
 	{
-		auto linerType = setRandomiser(state.rng, pattern.allowedTypes);
-		auto liner = city->placeVehicle(state, linerType, owner,
-		                                VehicleMission::getRandomMapEdgeCoordinates(state, city));
-
 		if (city->spaceports.empty())
 		{
 			LogError("No spaceports in city!?");
 			return;
 		}
-		auto building = listRandomiser(state.rng, city->spaceports);
+		// Make list of functional spaceports
+		std::list<StateRef<Building>> spaceports;
+		for (auto &b : city->spaceports)
+		{
+			if (b->isAlive(state))
+			{
+				bool intactPad = false;
+				for (auto &p : b->landingPadLocations)
+				{
+					auto scenery = city->map->getTile(p)->presentScenery;
+					if (scenery && scenery->type->isLandingPad)
+					{
+						intactPad = true;
+						break;
+					}
+				}
+				if (intactPad)
+				{
+					spaceports.push_back(b);
+				}
+			}
+		}
+		if (spaceports.empty())
+		{
+			return;
+		}
+		auto linerType = setRandomiser(state.rng, pattern.allowedTypes);
+		auto liner = city->placeVehicle(state, linerType, owner,
+		                                VehicleMission::getRandomMapEdgeCoordinates(state, city));
+
+		auto building = listRandomiser(state.rng, spaceports);
 		liner->homeBuilding = building;
 		liner->setMission(state, VehicleMission::gotoBuilding(state, *liner));
 		return;
