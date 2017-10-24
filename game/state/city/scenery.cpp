@@ -780,17 +780,20 @@ bool Scenery::handleCollision(GameState &state, Collision &c)
 	{
 		auto attackerOrg = c.projectile->firerVehicle->owner;
 		auto ourOrg = building->owner;
-		// Lose 5 points
-		ourOrg->adjustRelationTo(state, attackerOrg, -5.0f);
-		// If intentional lose additional 15 points
+
+		// 3x modifier for intentional attack
+		float modifier = 1.0f;
 		bool intentional =
 		    c.projectile->manualFire || (!c.projectile->firerVehicle->missions.empty() &&
 		                                 c.projectile->firerVehicle->missions.front()->type ==
 		                                     VehicleMission::MissionType::AttackBuilding);
 		if (intentional)
 		{
-			ourOrg->adjustRelationTo(state, attackerOrg, -10.0f);
+			modifier = 3.0f;
 		}
+
+		// Lose 5 points
+		ourOrg->adjustRelationTo(state, attackerOrg, -5.0f * modifier);
 		// Our allies lose 2.5 points, enemies gain 1 point
 		for (auto &org : state.organisations)
 		{
@@ -802,7 +805,7 @@ bool Scenery::handleCollision(GameState &state, Collision &c)
 				}
 				else if (org.second->isRelatedTo(ourOrg) == Organisation::Relation::Allied)
 				{
-					org.second->adjustRelationTo(state, attackerOrg, -2.5f);
+					org.second->adjustRelationTo(state, attackerOrg, -2.5f * modifier);
 				}
 			}
 		}
