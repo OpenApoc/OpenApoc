@@ -18,7 +18,7 @@
 #include "game/state/tilemap/tileobject_doodad.h"
 #include "game/state/tilemap/tileobject_scenery.h"
 #include "game/state/tilemap/tileobject_vehicle.h"
-#include <limits>
+#include <limits.h>
 
 namespace OpenApoc
 {
@@ -651,15 +651,14 @@ bool Scenery::findSupport(bool allowClinging)
 							//    (if tube connection is up/down we already checked it before
 							//    arrival)
 							if (mp->destroyed || mp->falling ||
-							    (!increment.second.x ||
-							     (increment.second.x &&
-							      !mp->type->connection[vecToIntBack.at(increment.first)])) &&
-							        (!increment.second.y ||
-							         (increment.second.y &&
-							          (int)mp->currentPosition.z ==
-							              (int)lastMp->currentPosition.z &&
-							          !mp->type->tube[vecToIntBack.at(increment.first)] &&
-							          mp->type->tile_type != SceneryTileType::TileType::General)))
+							    ((!increment.second.x ||
+							      (increment.second.x &&
+							       !mp->type->connection[vecToIntBack.at(increment.first)])) &&
+							     (!increment.second.y ||
+							      (increment.second.y &&
+							       (int)mp->currentPosition.z == (int)lastMp->currentPosition.z &&
+							       !mp->type->tube[vecToIntBack.at(increment.first)] &&
+							       mp->type->tile_type != SceneryTileType::TileType::General))))
 							{
 								mp = nullptr;
 							}
@@ -825,16 +824,15 @@ bool Scenery::findSupport(bool allowClinging)
 								// here
 								// because it didn't fit
 								if (mp->destroyed || mp->falling ||
-								    (!increment.second.x ||
-								     (increment.second.x &&
-								      !mp->type->connection[vecToIntBack.at(increment.first)])) &&
-								        (!increment.second.y ||
-								         (increment.second.y &&
-								          (int)mp->currentPosition.z ==
-								              (int)lastMp->currentPosition.z &&
-								          !mp->type->tube[vecToIntBack.at(increment.first)] &&
-								          mp->type->tile_type !=
-								              SceneryTileType::TileType::General)))
+								    ((!increment.second.x ||
+								      (increment.second.x &&
+								       !mp->type->connection[vecToIntBack.at(increment.first)])) &&
+								     (!increment.second.y ||
+								      (increment.second.y &&
+								       (int)mp->currentPosition.z ==
+								           (int)lastMp->currentPosition.z &&
+								       !mp->type->tube[vecToIntBack.at(increment.first)] &&
+								       mp->type->tile_type != SceneryTileType::TileType::General))))
 								{
 									mp = nullptr;
 								}
@@ -1559,6 +1557,7 @@ void Scenery::updateFalling(GameState &state, unsigned int ticks)
 									}
 									// No collision now
 									continue;
+								case SceneryTileType::WalkMode::Onto:
 								case SceneryTileType::WalkMode::Into:
 									// No collision now
 									continue;
