@@ -1,9 +1,9 @@
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/palette.h"
-#include "game/state/agent.h"
 #include "game/state/battle/battleunitanimationpack.h"
 #include "game/state/gamestate.h"
+#include "game/state/shared/agent.h"
 #include "tools/extractors/common/animation.h"
 #include "tools/extractors/extractors.h"
 
