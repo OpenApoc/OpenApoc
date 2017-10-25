@@ -18,6 +18,7 @@
 #include "game/state/tilemap/tileobject_doodad.h"
 #include "game/state/tilemap/tileobject_scenery.h"
 #include "game/state/tilemap/tileobject_vehicle.h"
+#include <limits>
 
 namespace OpenApoc
 {

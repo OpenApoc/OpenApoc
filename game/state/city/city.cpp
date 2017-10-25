@@ -303,7 +303,11 @@ void City::hourlyLoop(GameState &state)
 
 void City::dailyLoop(GameState &state)
 {
-	repairScenery(state);
+	// Alien city is never repaired
+	if (state.cities["CITYMAP_ALIEN"] != shared_from_this())
+	{
+		repairScenery(state);
+	}
 	generatePortals(state);
 }
 
