@@ -30,6 +30,7 @@
 #include "game/ui/components/controlgenerator.h"
 #include "game/ui/general/messagebox.h"
 #include "library/strings_format.h"
+#include <array>
 
 namespace OpenApoc
 {
@@ -932,8 +933,9 @@ void TransactionScreen::displayItem(sp<TransactionControl> control)
 						    format("%.2f",
 						           (float)TICKS_PER_SECOND /
 						               (float)agentEquipment->ammo_types.front()->fire_delay));
-						labels['R'][3]->setText(
-						    format("%d", agentEquipment->ammo_types.front()->range));
+						labels['R'][3]->setText(format("%d",
+						                               agentEquipment->ammo_types.front()->range /
+						                                   (int)VELOCITY_SCALE_BATTLE.x));
 					}
 				}
 			}
@@ -1155,11 +1157,6 @@ void TransactionScreen::displayItem(sp<TransactionControl> control)
 			formItemVehicle->findControlTyped<Label>("ITEM_NAME")->setText("");
 			formItemVehicle->findControlTyped<Graphic>("SELECTED_IMAGE")->setImage(sp<Image>());
 		}
-	}
-	else if (control->itemType == TransactionControl::Type::VehicleAmmo)
-	{
-		// FIXME: what to do?
-		auto vehicleAmmo = state->vehicle_ammo[control->itemId];
 	}
 }
 
