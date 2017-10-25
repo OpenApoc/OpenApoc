@@ -1,6 +1,7 @@
 #pragma once
 
 #include "forms/control.h"
+#include "framework/logger.h"
 #include "game/state/stateobject.h"
 #include "game/ui/base/basestage.h"
 #include "library/sp.h"
@@ -180,6 +181,10 @@ class TransactionScreen : public BaseStage
 	void changeSecondBase(sp<Base> newBase);
 
 	int framesUntilHighlightUpdate = 0;
+
+	sp<Form> formItemActive;
+	sp<Form> formItemAgent;
+	sp<Form> formItemVehicle;
 
 	sp<Label> textViewSecondBase;
 	sp<GraphicButton> currentSecondView;

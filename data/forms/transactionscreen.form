@@ -96,7 +96,7 @@
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>
-	  
+
 	 <graphicbutton id="BUTTON_SECOND_BASE_1">
         <position x="431" y="53"/>
         <size width="32" height="32"/>
@@ -157,7 +157,7 @@
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>
-	  
+
 	  <graphic id="FACILITY_FIRST_PIC">
         <position x="179" y="79"/>
         <size width="32" height="32"/>
@@ -177,7 +177,7 @@
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
-	  
+
 	  <graphic id="FACILITY_SECOND_PIC">
         <position x="391" y="79"/>
         <size width="32" height="32"/>
@@ -197,7 +197,7 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>
-	        
+
       <scroll id="LIST_SCROLL">
         <position x="567" y="202"/>
         <size width="26" height="244"/>
@@ -221,7 +221,7 @@
 		<item size = "47" spacing = "0"/>
         <hovercolour r="0" g="0" b="0" a="0"/>
       </listbox>
-   
+
        <graphic>
         <position x="209" y="181"/>
         <size width="10" height="9"/>
@@ -232,7 +232,7 @@
         <size width="11" height="10"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:50:xcom3/ufodata/base.pcx</image>
       </graphic>
-		  
+
       <radiobutton id="BUTTON_VEHICLES" groupid = "TYPE">
         <position x="602" y="40"/>
         <size width="35" height="34"/>
@@ -257,7 +257,7 @@
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:40:xcom3/ufodata/base.pcx</imagechecked>
 	  </radiobutton>
-	  
+
 	  <radiobutton id="BUTTON_SOLDIERS" groupid = "TYPE">
         <position x="602" y="40"/>
         <size width="35" height="34"/>
@@ -288,8 +288,8 @@
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:41:xcom3/ufodata/base.pcx</imagechecked>
 	  </radiobutton>
-	  
-	 
+
+
       <graphicbutton id="BUTTON_OK">
         <position x="602" y="443"/>
         <size width="35" height="34"/>
