@@ -12,7 +12,7 @@
 #include "library/strings.h"
 
 // Uncomment to turn off org missions
-//#define DEBUG_TURN_OFF_ORG_MISSIONS
+#define DEBUG_TURN_OFF_ORG_MISSIONS
 
 namespace OpenApoc
 {

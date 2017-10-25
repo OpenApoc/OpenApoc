@@ -1064,8 +1064,7 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 					return;
 				}
 				// Move to resting position in the tile
-				Vec3<float> newGoal = (Vec3<int>)newPosition;
-				newGoal.z = tile->getRestingPosition(false, true).z;
+				Vec3<float> newGoal = tile->getRestingPosition(false, true);
 				vehicle.goalWaypoints.push_back(newGoal);
 				newPosition.z = newGoal.z;
 				// Translate Z velocity into XY velocity
@@ -2153,8 +2152,11 @@ void Vehicle::updateEachSecond(GameState &state)
 				// Low fuel
 				if (engine->ammo == 2)
 				{
-					fw().pushEvent(new GameVehicleEvent(GameEventType::VehicleLowFuel,
-					                                    {&state, shared_from_this()}));
+					if (owner == state.getPlayer())
+					{
+						fw().pushEvent(new GameVehicleEvent(GameEventType::VehicleLowFuel,
+						                                    {&state, shared_from_this()}));
+					}
 				}
 				// Out of fuel, drop
 				if (engine->ammo == 0)

@@ -59,6 +59,8 @@ class CityTileView : public TileView
 	bool DEBUG_SHOW_SLOPES = false;
 	bool DEBUG_ONLY_TYPE = false;
 	int DEBUG_DIRECTION = -1;
+	int DEBUG_LAYER = -1;
+	bool DEBUG_SHOW_ALIEN = false;
 
   private:
 	GameState &state;

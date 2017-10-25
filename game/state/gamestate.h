@@ -205,6 +205,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	void fillPlayerStartingProperty();
 
 	void updateEconomy();
+	void updateUFOGrowth();
 
 	void invasion();
 

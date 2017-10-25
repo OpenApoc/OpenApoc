@@ -33,7 +33,8 @@ void InitialGameStateExtractor::extractFacilities(GameState &state) const
 		facilityType->buildCost = f.cost;
 		facilityType->buildTime = f.build_time;
 		facilityType->weeklyCost = f.maintainance_cost;
-		facilityType->capacityAmount = f.capacity;
+		// 12 constitution points repair for vehicles
+		facilityType->capacityAmount = f.capacity == 1 ? 12 : f.capacity;
 		facilityType->size = f.size;
 		facilityType->sector = i - 2 + 16 + 15;
 		facilityType->sprite = fw().data->loadImage(

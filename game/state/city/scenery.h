@@ -48,6 +48,7 @@ class Scenery : public SupportedMapPart, public std::enable_shared_from_this<Sce
 	bool falling;
 	float fallingSpeed = 0.0f;
 	bool destroyed;
+	int supportHardness = 0;
 
 	bool handleCollision(GameState &state, Collision &c);
 	// Returns true if sound and doodad were handled by it
@@ -67,6 +68,9 @@ class Scenery : public SupportedMapPart, public std::enable_shared_from_this<Sce
 	void repair(GameState &state);
 
 	bool isAlive() const;
+
+	// Attaches to at least something nearby
+	bool attachToSomething();
 
 	// Following members are not serialized, but rather are set in City::initMap method
 
@@ -100,7 +104,7 @@ class Scenery : public SupportedMapPart, public std::enable_shared_from_this<Sce
 	void clearSupportedParts() override;
 
 	// Find map parts that support this one and set "hard supported" flag where appropriate
-	bool findSupport() override;
+	bool findSupport(bool allowClinging = true) override;
 
 	// Supported map part code
   protected:

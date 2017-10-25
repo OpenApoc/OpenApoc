@@ -4,6 +4,9 @@
 #include "game/state/tilemap/tileobject_battlemappart.h"
 #include "game/state/tilemap/tileobject_scenery.h"
 
+// Uncomment to have verbose map part link up output
+//#define MAP_PART_LINK_DEBUG_OUTPUT
+
 namespace OpenApoc
 {
 
@@ -52,14 +55,23 @@ void SupportedMapPart::attemptReLinkSupports(sp<std::set<SupportedMapPart *>> cu
 		listChanged = false;
 		for (auto &curSetPart : *lastSet)
 		{
-			// Step 1 : Temporary mark every map part supported by this part as collapsing
+			// Step 1: Maybe this part was rescued by other part linking through it in this
+			// iteration
+			//		   In this case, don't break it, otherwise we get into loop
+			if (curSetPart->getTicksUntilCollapse() == 0)
+			{
+				listChanged = true;
+				continue;
+			}
+
+			// Step 2: Temporary mark every map part supported by this part as collapsing
 			auto supportedByThisMp = curSetPart->getSupportedParts();
 			for (auto &supportedPart : *supportedByThisMp)
 			{
 				supportedPart->queueCollapse(curSetPart->getTicksUntilCollapse());
 			}
 
-			// Step 2.1: Try to find support without using map parts that were supported by this
+			// Step 3: Try to find support without using map parts that were supported by this
 			// (this prevents map parts supporting each other in a loop)
 			// (it has to find another support that is not supported by it)
 			if (curSetPart->findSupport())
@@ -124,7 +136,7 @@ void SupportedMapPart::attemptReLinkSupports(sp<std::set<SupportedMapPart *>> cu
 					}
 				}
 #endif
-				// Step 2.3: Success [If support is found]
+				// Step 4: Success [If support is found]
 				// Resume support for every part supported by this
 				for (auto &supportedPart : *supportedByThisMp)
 				{
@@ -142,7 +154,7 @@ void SupportedMapPart::attemptReLinkSupports(sp<std::set<SupportedMapPart *>> cu
 				log += format("\n Processing %s at %s: FAIL, remains in next iteration",
 				              curSetPart->getId(), pos);
 #endif
-				// Step 2.3: Failure [If no support is found]
+				// Step 4: Failure [If no support is found]
 				// Finalise collapsed state of all parts supported by this
 				// (was temporary since Step 1, now properly collapsing with all ties cut)
 				for (auto &supportedPart : *supportedByThisMp)

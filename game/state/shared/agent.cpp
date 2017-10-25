@@ -957,6 +957,34 @@ void Agent::updateEachSecond(GameState &state)
 
 void Agent::updateDaily(GameState &state) { recentlyFought = false; }
 
+void Agent::updateHourly(GameState &state)
+{
+	if (currentBuilding != homeBuilding)
+	{
+		return;
+	}
+	// Heal and train
+	if (currentBuilding->base)
+	{
+		// Heal
+		if (modified_stats.health < current_stats.health && !recentlyFought)
+		{
+			int usage = currentBuilding->base->getUsage(state, FacilityType::Capacity::Medical);
+			if (usage < 999)
+			{
+				usage = std::max(100, usage);
+				// As per Roger Wong's guide, healing is 0.8 points an hour
+				healingProgress += 80.0f / (float)usage;
+				if (healingProgress > 1.0f)
+				{
+					healingProgress -= 1.0f;
+					modified_stats.health++;
+				}
+			}
+		}
+	}
+}
+
 void Agent::updateMovement(GameState &state, unsigned ticks)
 {
 	auto ticksToMove = ticks;

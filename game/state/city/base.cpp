@@ -393,6 +393,33 @@ int Base::getCapacityUsed(GameState &state, FacilityType::Capacity type) const
 	int total = 0;
 	switch (type)
 	{
+		case FacilityType::Capacity::Repair:
+			for (auto &v : building->currentVehicles)
+			{
+				if (v->homeBuilding == v->currentBuilding && v->getMaxHealth() > v->getHealth())
+				{
+					total += v->getMaxHealth() - v->getHealth();
+				}
+			}
+			// Show percentage of repair bay used if it can repair in one hour, or 100% if can't
+			if (total > 0)
+			{
+				int max = getCapacityTotal(type);
+				return std::min(total, max);
+			}
+			break;
+		case FacilityType::Capacity::Medical:
+			for (auto &a : state.agents)
+			{
+				if (a.second->homeBuilding == building && a.second->currentBuilding == building)
+				{
+					if (a.second->modified_stats.health < a.second->current_stats.health)
+					{
+						total++;
+					}
+				}
+			}
+			break;
 		case FacilityType::Capacity::Chemistry:
 		case FacilityType::Capacity::Physics:
 		case FacilityType::Capacity::Workshop:

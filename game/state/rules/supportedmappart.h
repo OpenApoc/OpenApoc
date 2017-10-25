@@ -6,9 +6,6 @@
 #include "library/vec.h"
 #include <set>
 
-// Uncomment to have verbose map part link up output
-//#define MAP_PART_LINK_DEBUG_OUTPUT
-
 namespace OpenApoc
 {
 
@@ -37,7 +34,7 @@ class SupportedMapPart
 	virtual unsigned int getTicksUntilCollapse() const = 0;
 
 	// Find map parts that support this one and set "hard supported" flag where appropriate
-	virtual bool findSupport() = 0;
+	virtual bool findSupport(bool allowClinging = true) = 0;
 
   protected:
 	// Cease using support

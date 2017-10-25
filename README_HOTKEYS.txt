@@ -77,6 +77,7 @@ Cityscape Debug:
 - [Ctrl] + [Alt] + [Shift] + [Left Click] destroys scenery
 - [Ctrl] + [Alt] + [Shift] + [Right Click] collapses building
 - [A] gives every vehicle weapon and ammo to current base
+- [W] warp to alien dimension and back
 - [R] repairs all buildings
 - [B] spawn UFO on base assault mission
 - [U] spawns three crashed UFOs

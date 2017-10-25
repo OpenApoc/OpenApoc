@@ -295,12 +295,15 @@ void City::update(GameState &state, unsigned int ticks)
 	Trace::end("City::update::doodads->update");
 }
 
-void City::hourlyLoop(GameState &state) { updateInfiltration(state); }
+void City::hourlyLoop(GameState &state)
+{
+	repairVehicles(state);
+	updateInfiltration(state);
+}
 
 void City::dailyLoop(GameState &state)
 {
-	// FIXME: Repair buildings, update stocks
-
+	repairScenery(state);
 	generatePortals(state);
 }
 
@@ -359,6 +362,174 @@ void City::updateInfiltration(GameState &state)
 	}
 }
 
+void City::repairScenery(GameState &state)
+{
+	// Step 01: Repair damaged scenery one by one
+	std::list<sp<Scenery>> sceneryToUndamage;
+	for (auto &s : scenery)
+	{
+		if (s->damaged && s->isAlive())
+		{
+			sceneryToUndamage.push_back(s);
+		}
+	}
+	for (auto &s : sceneryToUndamage)
+	{
+		auto initialType = initial_tiles[s->initialPosition];
+		auto owner = s->building && !initialType->commonProperty ? s->building->owner
+		                                                         : state.getGovernment();
+		if (owner->balance > initialType->value)
+		{
+			owner->balance -= initialType->value;
+			s->damaged = false;
+			s->type = initialType;
+		}
+	}
+	// Step 02: Repair destroyed scenery
+	std::set<sp<Scenery>> sceneryToRepair;
+	for (auto &s : scenery)
+	{
+		if (!s->isAlive())
+		{
+			sceneryToRepair.insert(s);
+		}
+	}
+	// Pick one scenery, add all scenery that must be repaired together, try to repair them
+	while (!sceneryToRepair.empty())
+	{
+		std::set<sp<Scenery>> repairedTogether;
+		std::set<Vec3<int>> addedPositions;
+		auto nextScenery = *sceneryToRepair.begin();
+		repairedTogether.insert(nextScenery);
+		sceneryToRepair.erase(nextScenery);
+		// Keep adding until we added everything
+		bool addedMore = false;
+		do
+		{
+			addedMore = false;
+			for (auto &s : repairedTogether)
+			{
+				// Check if all supportedBy scenery is intact or added
+				for (auto &p : s->supportedBy)
+				{
+					// If no scenery or dead
+					auto support = map->getTile(p)->presentScenery;
+					if (!support || !support->isAlive())
+					{
+						// If we haven't added it already
+						if (addedPositions.find(p) == addedPositions.end())
+						{
+							// Need to find it by its initial position
+							for (auto &deadScenery : scenery)
+							{
+								if (deadScenery->initialPosition == p)
+								{
+									repairedTogether.insert(deadScenery);
+									break;
+								}
+							}
+						}
+					}
+				} // for every supportedBy position
+			}     // for every repairedTogether scenery
+		} while (addedMore);
+		// Try to repair all or none
+		std::map<StateRef<Organisation>, int> repairCost;
+		for (auto &deadScenery : repairedTogether)
+		{
+			auto initialType = initial_tiles[deadScenery->initialPosition];
+			auto owner = deadScenery->building && !initialType->commonProperty
+			                 ? deadScenery->building->owner
+			                 : state.getGovernment();
+			repairCost[owner] += initialType->value;
+		}
+		bool canAfford = true;
+		for (auto &entry : repairCost)
+		{
+			if (entry.first->balance < entry.second)
+			{
+				canAfford = false;
+				break;
+			}
+		}
+		if (canAfford)
+		{
+			// pay
+			for (auto &entry : repairCost)
+			{
+				auto org = entry.first;
+				org->balance -= entry.second;
+			}
+			// repair
+			for (auto &deadScenery : repairedTogether)
+			{
+				// remove from scenery to repair
+				if (sceneryToRepair.find(deadScenery) != sceneryToRepair.end())
+				{
+					sceneryToRepair.erase(deadScenery);
+				}
+				// repair actually
+				deadScenery->repair(state);
+			}
+		}
+	}
+}
+
+void City::repairVehicles(GameState &state)
+{
+	for (auto &b : buildings)
+	{
+		// Players get repaired according to facilities
+		if (b.second->base)
+		{
+			int repairPoints = b.second->base->getCapacityTotal(FacilityType::Capacity::Repair);
+			std::list<StateRef<Vehicle>> vehiclesToRepair;
+			for (auto &v : b.second->currentVehicles)
+			{
+				if (v->homeBuilding == v->currentBuilding && v->getHealth() < v->getMaxHealth())
+				{
+					vehiclesToRepair.push_back(v);
+				}
+			}
+			if (!vehiclesToRepair.empty())
+			{
+				int repairPerVehicle = std::max(1, repairPoints / (int)vehiclesToRepair.size());
+				// Twice since we can have a situiaton like 1 repair bay and 7 vehicles,
+				// in this case we repair them for 1 and we have 5 points remaining
+				// which we assign again
+				for (int i = 0; i < 2; i++)
+				{
+					for (auto &v : vehiclesToRepair)
+					{
+						if (repairPoints == 0)
+						{
+							break;
+						}
+						int repair = std::min(std::min(repairPoints, repairPerVehicle),
+						                      v->getMaxHealth() - v->getHealth());
+						auto veh = v;
+						veh->health += repair;
+						repairPoints -= repair;
+					}
+				}
+			}
+		}
+		// Corps get repaired by 12 flat
+		else
+		{
+			for (auto &v : b.second->currentVehicles)
+			{
+				if (v->homeBuilding == v->currentBuilding)
+				{
+					int repair = std::min(12, v->getMaxHealth() - v->getHealth());
+					auto veh = v;
+					veh->health += repair;
+				}
+			}
+		}
+	}
+}
+
 void City::initialSceneryLinkUp()
 {
 	LogWarning("Begun scenery link up!");
@@ -384,7 +555,7 @@ void City::initialSceneryLinkUp()
 	}
 	LogWarning("Begun scenery link up cycle!");
 	bool foundSupport;
-	// Establish support based on existing supported map parts
+	// First support without clinging to establish proper links
 	do
 	{
 		foundSupport = false;
@@ -394,7 +565,24 @@ void City::initialSceneryLinkUp()
 			{
 				continue;
 			}
-			if (s->findSupport())
+			if (s->findSupport(false))
+			{
+				s->cancelCollapse();
+				foundSupport = true;
+			}
+		}
+	} while (foundSupport);
+	// Then cling remaining items
+	do
+	{
+		foundSupport = false;
+		for (auto &s : this->scenery)
+		{
+			if (!s->willCollapse())
+			{
+				continue;
+			}
+			if (s->findSupport(true))
 			{
 				s->cancelCollapse();
 				foundSupport = true;
@@ -402,15 +590,33 @@ void City::initialSceneryLinkUp()
 		}
 	} while (foundSupport);
 
-	//// Report unlinked parts
-	// for (auto &mp : this->scenery)
-	//{
-	//	if (mp->willCollapse())
-	//	{
-	//		auto pos = mp->tileObject->getOwningTile()->position;
-	//		LogWarning("SC %s at %s is UNLINKED", mp->type.id, pos);
-	//	}
-	//}
+	// Report unlinked parts
+	for (auto &mp : this->scenery)
+	{
+		if (mp->willCollapse())
+		{
+			auto pos = mp->tileObject->getOwningTile()->position;
+			LogWarning("SC %s at %s is UNLINKED", mp->type.id, pos);
+		}
+	}
+
+	LogWarning("Attempting link up of unlinked parts");
+	do
+	{
+		foundSupport = false;
+		for (auto &s : this->scenery)
+		{
+			if (!s->willCollapse())
+			{
+				continue;
+			}
+			if (s->attachToSomething())
+			{
+				s->cancelCollapse();
+				foundSupport = true;
+			}
+		}
+	} while (foundSupport);
 
 	// Report unlinked parts
 	for (auto &mp : this->scenery)

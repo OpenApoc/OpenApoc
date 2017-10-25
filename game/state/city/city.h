@@ -126,6 +126,8 @@ class City : public StateObject
 
 	void generatePortals(GameState &state);
 	void updateInfiltration(GameState &state);
+	void repairVehicles(GameState &state);
+	void repairScenery(GameState &state);
 
 	void initialSceneryLinkUp();
 

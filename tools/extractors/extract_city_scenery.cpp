@@ -70,6 +70,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 {
 	auto &data = this->ufo2p;
 	auto minimap_palette = fw().data->loadPalette(SCENERY_MINIMAP_PALETTE);
+	bool alien = datFile == "alienmap";
 	auto inFile = fw().data->fs.open("xcom3/ufodata/" + datFile + ".dat");
 	if (!inFile)
 	{
@@ -121,10 +122,6 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 			case TILE_TYPE_ROAD:
 				tile->tile_type = SceneryTileType::TileType::Road;
 				tile->height = 0;
-				if (tile->walk_mode == SceneryTileType::WalkMode::None)
-				{
-					tile->walk_mode = SceneryTileType::WalkMode::Into;
-				}
 				break;
 			case TILE_TYPE_PEOPLE_TUBE_JUNCTION:
 				tile->tile_type = SceneryTileType::TileType::PeopleTubeJunction;
@@ -171,6 +168,39 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 			tile->tube[i] = entry.people_tube_connections[i];
 		}
 
+		if (alien && (i >= 50 && i <= 58 || i == 61))
+		{
+			if (i == 58 || i == 61)
+			{
+				tile->tile_type = SceneryTileType::TileType::PeopleTubeJunction;
+				tile->tube[5] = true;
+			}
+			else
+			{
+				tile->tile_type = SceneryTileType::TileType::PeopleTube;
+			}
+			std::set<int> north = {52, 53, 54, 57, 61};
+			std::set<int> east = {50, 51, 56, 57, 58};
+			std::set<int> south = {53, 54, 55, 56, 61};
+			std::set<int> west = {50, 51, 52, 55, 58};
+			if (north.find(i) != north.end())
+			{
+				tile->tube[0] = true;
+			}
+			if (east.find(i) != east.end())
+			{
+				tile->tube[1] = true;
+			}
+			if (south.find(i) != south.end())
+			{
+				tile->tube[2] = true;
+			}
+			if (west.find(i) != west.end())
+			{
+				tile->tube[3] = true;
+			}
+		}
+
 		tile->constitution = entry.constitution;
 		tile->strength = entry.strength;
 		tile->mass = entry.mass;
@@ -196,12 +226,21 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		{
 			tile->walk_mode = SceneryTileType::WalkMode::Onto;
 		}
-
+		// Common city property
 		if (i < 134 || i == 230 || i == 777 || (i >= 169 && i <= 194) || i > 936)
 		{
 			tile->commonProperty = true;
 		}
-
+		// Incorrect walkmodes
+		if (i >= 890 && i <= 908)
+		{
+			tile->walk_mode = SceneryTileType::WalkMode::None;
+		}
+		// Roads with overhead stuff
+		if (i == 18 || i == 19 || i == 37 || i == 38)
+		{
+			tile->walk_mode = SceneryTileType::WalkMode::None;
+		}
 		if (entry.damagedtile_idx)
 		{
 			tile->damagedTile = {&state, format("%s%s%u", SceneryTileType::getPrefix(), tilePrefix,

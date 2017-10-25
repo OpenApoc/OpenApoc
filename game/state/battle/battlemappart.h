@@ -106,7 +106,7 @@ class BattleMapPart : public SupportedMapPart, public std::enable_shared_from_th
 	void clearSupportedParts() override;
 
 	// Find map parts that support this one and set "hard supported" flag where appropriate
-	bool findSupport() override;
+	bool findSupport(bool allowClinging = true) override;
 
 	// Supported map part code
   protected:

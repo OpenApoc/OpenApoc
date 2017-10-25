@@ -233,6 +233,7 @@
 		<member>recentlyHired</member>
 		<member>recentryTransferred</member>
 		<member>recentlyFought</member>
+		<member>healingProgress</member>
 		<member>owner</member>
 		<member>city</member>
 		<member>homeBuilding</member>
@@ -947,6 +948,7 @@
 		<member>falling</member>
 		<member>fallingSpeed</member>
 		<member>destroyed</member>
+		<member>supportHardness</member>
 	</object>
 	<object>
 		<name>BuildingFunction</name>
