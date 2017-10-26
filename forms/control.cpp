@@ -1,6 +1,7 @@
 #include "forms/control.h"
 #include "dependencies/pugixml/src/pugixml.hpp"
 #include "forms/forms.h"
+#include "forms/ui.h"
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/font.h"
@@ -439,7 +440,6 @@ void Control::configureChildrenFromXml(pugi::xml_node *parent)
 				sb->LargePercent = node.attribute("largepercent").as_int();
 			}
 		}
-
 		else if (nodename == "listbox")
 		{
 			sp<ScrollBar> sb = nullptr;
@@ -452,17 +452,24 @@ void Control::configureChildrenFromXml(pugi::xml_node *parent)
 			auto lb = this->createChild<ListBox>(sb);
 			lb->configureFromXml(&node);
 		}
-
 		else if (nodename == "textedit")
 		{
 			auto te = this->createChild<TextEdit>();
 			te->configureFromXml(&node);
 		}
-
 		else if (nodename == "ticker")
 		{
 			auto tk = this->createChild<Ticker>();
 			tk->configureFromXml(&node);
+		}
+		else if (nodename == "subform")
+		{
+			auto f = ui().getForm(node.attribute("src").as_string());
+			if (f)
+			{
+				f->setParent(shared_from_this());
+				f->configureSelfFromXml(&node);
+			}
 		}
 	}
 }
@@ -848,12 +855,11 @@ void Control::copyControlData(sp<Control> CopyOf)
 	CopyOf->showBounds = this->showBounds;
 	CopyOf->Visible = this->Visible;
 
-	for (auto c = Controls.begin(); c != Controls.end(); c++)
+	for (auto &c : Controls)
 	{
-		auto ctrl = *c;
-		if (ctrl->canCopy)
+		if (c->canCopy)
 		{
-			ctrl->copyTo(CopyOf);
+			c->copyTo(CopyOf);
 		}
 	}
 }

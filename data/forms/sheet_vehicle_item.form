@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc>
   <form id="FORM_TRANSACTIONSCREEN_ITEM_VEHICLE">
-    <style minwidth="640" minheight="480">
+    <style minwidth="160" minheight="280">
       <position x="centre" y="centre"/>
-      <size width="640" height="480"/>
+      <size width="160" height="280"/>
       <label id="ITEM_NAME" text="ITEM NAME GOES HERE">
-        <position x="10" y="269"/>
-        <size width="172" height="15"/>
+        <position x="0" y="86"/>
+        <size width="160" height="15"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <graphic id="SELECTED_IMAGE">
-        <position x="36" y="184"/>
+        <position x="26" y="0"/>
         <size width="84" height="84"/>
         <image>placeholder.png</image>
 		<alignment horizontal="centre" vertical="centre"/>
@@ -19,122 +19,122 @@
       </graphic>
 
       <label id="LABEL_1" text="LABEL_1">
-        <position x="10" y="288"/>
+        <position x="0" y="106"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="LABEL_2" text="LABEL_2">
-        <position x="10" y="304"/>
+        <position x="0" y="122"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="LABEL_3" text="LABEL_3">
-        <position x="10" y="320"/>
+        <position x="0" y="138"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="LABEL_4" text="LABEL_4">
-        <position x="10" y="336"/>
+        <position x="0" y="154"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="LABEL_5" text="LABEL_5">
-        <position x="10" y="352"/>
+        <position x="0" y="170"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="LABEL_6" text="LABEL_6">
-        <position x="10" y="368"/>
+        <position x="0" y="186"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="LABEL_7" text="LABEL_7">
-        <position x="10" y="384"/>
+        <position x="0" y="202"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="LABEL_8" text="LABEL_8">
-        <position x="10" y="400"/>
+        <position x="0" y="218"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="LABEL_9" text="LABEL_9">
-        <position x="10" y="416"/>
+        <position x="0" y="234"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
 	  <label id="LABEL_10" text="LABEL_10">
-        <position x="10" y="432"/>
+        <position x="0" y="250"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
 
       <label id="VALUE_1" text="VALUE_1">
-        <position x="86" y="288"/>
+        <position x="76" y="106"/>
         <size width="64" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="VALUE_2" text="VALUE_2">
-        <position x="86" y="304"/>
+        <position x="76" y="122"/>
         <size width="64" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="VALUE_3" text="VALUE_3">
-        <position x="86" y="320"/>
+        <position x="76" y="138"/>
         <size width="64" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="VALUE_4" text="VALUE_4">
-        <position x="86" y="336"/>
+        <position x="76" y="154"/>
         <size width="64" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="VALUE_5" text="VALUE_5">
-        <position x="86" y="352"/>
+        <position x="76" y="170"/>
         <size width="64" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="VALUE_6" text="VALUE_6">
-        <position x="86" y="368"/>
+        <position x="76" y="186"/>
         <size width="64" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="VALUE_7" text="VALUE_7">
-        <position x="86" y="384"/>
+        <position x="76" y="202"/>
         <size width="64" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="VALUE_8" text="VALUE_8">
-        <position x="86" y="400"/>
+        <position x="76" y="218"/>
         <size width="64" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="VALUE_9" text="VALUE_9">
-        <position x="86" y="416"/>
+        <position x="76" y="234"/>
         <size width="64" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="VALUE_10" text="VALUE_10">
-        <position x="86" y="432"/>
+        <position x="76" y="250"/>
         <size width="64" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
