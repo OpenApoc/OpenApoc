@@ -109,6 +109,13 @@
         <imageposition>tile</imageposition>
         <image/>
       </graphic>
+
+      <subform id="AGENT_STATS_VIEW" src="sheet_agent_stats">
+        <position x="17" y="62"/>
+      </subform>
+      <subform id="AGENT_ITEM_VIEW" src="sheet_agent_item">
+        <position x="17" y="62"/>
+      </subform>
     </style>
   </form>
 </openapoc>

@@ -846,14 +846,9 @@ void TransactionScreen::displayItem(sp<TransactionControl> control)
 	if (control->itemType == TransactionControl::Type::AgentEquipmentBio ||
 	    control->itemType == TransactionControl::Type::AgentEquipmentCargo)
 	{
-		// The labels/values in the stats column are used for lots of different things, so keep them
-		// around clear them and keep them around in a vector so we don't have 5 copies of the same
-		// "reset unused entries" code around
-		std::map<char, std::vector<sp<Label>>> labels;
 		for (int i = 0; i < 10; i++)
 		{
-			std::array<char, 3> alignmentChars = {'L', 'C', 'R'};
-			for (char alignment : alignmentChars)
+			for (char alignment : std::array<char, 3>{'L', 'C', 'R'})
 			{
 				auto labelName = format("LABEL_%d_%c", i + 1, alignment);
 				auto label = formItemAgent->findControlTyped<Label>(labelName);
@@ -861,8 +856,10 @@ void TransactionScreen::displayItem(sp<TransactionControl> control)
 				{
 					LogError("Failed to find UI control matching \"%s\"", labelName);
 				}
-				label->setText("");
-				labels[alignment].push_back(label);
+				else
+				{
+					label->setText("");
+				}
 			}
 		}
 		formItemAgent->setVisible(true);
@@ -872,55 +869,61 @@ void TransactionScreen::displayItem(sp<TransactionControl> control)
 		formItemAgent->findControlTyped<Label>("ITEM_NAME")->setText(agentEquipment->name);
 		formItemAgent->findControlTyped<Graphic>("SELECTED_IMAGE")
 		    ->setImage(agentEquipment->equipscreen_sprite);
+		formItemAgent->findControlTyped<Label>("LABEL_1_L")->setText(tr("Weight"));
+		formItemAgent->findControlTyped<Label>("LABEL_1_R")
+		    ->setText(format("%d", agentEquipment->weight));
 
 		switch (agentEquipment->type)
 		{
 			case AEquipmentType::Type::Grenade:
 			{
-				labels['L'][0]->setText(tr("Weight"));
-				labels['R'][0]->setText(format("%d", agentEquipment->weight));
-				labels['C'][1]->setText(agentEquipment->damage_type->name);
-				labels['L'][2]->setText(tr("Power"));
-				labels['R'][2]->setText(format("%d", agentEquipment->damage));
+				formItemAgent->findControlTyped<Label>("LABEL_2_C")
+				    ->setText(agentEquipment->damage_type->name);
+				formItemAgent->findControlTyped<Label>("LABEL_3_L")->setText(tr("Power"));
+				formItemAgent->findControlTyped<Label>("LABEL_3_R")
+				    ->setText(format("%d", agentEquipment->damage));
+				break;
 			}
-			break;
 			case AEquipmentType::Type::Ammo:
 			case AEquipmentType::Type::Weapon:
 			{
-				labels['L'][0]->setText(tr("Weight"));
-				labels['R'][0]->setText(format("%d", agentEquipment->weight));
-				labels['L'][1]->setText(tr("Accuracy"));
-				labels['L'][2]->setText(tr("Fire rate"));
-				labels['L'][3]->setText(tr("Range"));
-
-				if (agentEquipment->damage_type)
+				formItemAgent->findControlTyped<Label>("LABEL_2_L")->setText(tr("Accuracy"));
+				formItemAgent->findControlTyped<Label>("LABEL_3_L")->setText(tr("Fire rate"));
+				formItemAgent->findControlTyped<Label>("LABEL_4_L")->setText(tr("Range"));
+				int accuracy = 0;
+				float fireRate = 0.0f;
+				int range = 0;
+				if (agentEquipment->ammo_types.size() == 0)
 				{
-					labels['R'][1]->setText(format("%d", agentEquipment->accuracy));
-					labels['R'][2]->setText(format(
-					    "%.2f", (float)TICKS_PER_SECOND / (float)agentEquipment->fire_delay));
-					labels['R'][3]->setText(
-					    format("%d", agentEquipment->range / (int)VELOCITY_SCALE_BATTLE.x));
+					// ammo type or payload weapon
+					accuracy = agentEquipment->accuracy;
+					fireRate = agentEquipment->getRateOfFire();
+					range = agentEquipment->getRangeInTiles();
 
-					labels['C'][5]->setText(tr("Ammo Type:"));
-					labels['C'][6]->setText(agentEquipment->damage_type->name);
-					labels['L'][7]->setText(tr("Power"));
-					labels['R'][7]->setText(format("%d", agentEquipment->damage));
-					labels['L'][8]->setText(tr("Rounds"));
-					labels['R'][8]->setText(format("%d", agentEquipment->max_ammo));
+					formItemAgent->findControlTyped<Label>("LABEL_6_C")->setText(tr("Ammo Type:"));
+					formItemAgent->findControlTyped<Label>("LABEL_7_C")
+					    ->setText(agentEquipment->damage_type->name);
+					formItemAgent->findControlTyped<Label>("LABEL_8_L")->setText(tr("Power"));
+					formItemAgent->findControlTyped<Label>("LABEL_8_R")
+					    ->setText(format("%d", agentEquipment->damage));
+					formItemAgent->findControlTyped<Label>("LABEL_9_L")->setText(tr("Rounds"));
+					formItemAgent->findControlTyped<Label>("LABEL_9_R")
+					    ->setText(format("%d", agentEquipment->max_ammo));
 					if (agentEquipment->recharge > 0)
 					{
-						labels['C'][9]->setText(tr("(Recharges)"));
+						formItemAgent->findControlTyped<Label>("LABEL_10_C")
+						    ->setText(tr("(Recharges)"));
 					}
 				}
 				else
 				{
-					labels['C'][5]->setText(tr("Ammo types:"));
+					formItemAgent->findControlTyped<Label>("LABEL_5_C")->setText(tr("Ammo types:"));
 					int ammoNum = 1;
 					for (auto &ammo : agentEquipment->ammo_types)
 					{
-						labels['C'][5 + ammoNum]->setText(ammo->name);
-						ammoNum++;
-						if (ammoNum > 4)
+						formItemAgent->findControlTyped<Label>(format("LABEL_%d_C", 5 + ammoNum))
+						    ->setText(ammo->name);
+						if (++ammoNum > 4)
 						{
 							break;
 						}
@@ -931,33 +934,28 @@ void TransactionScreen::displayItem(sp<TransactionControl> control)
 					}
 					else
 					{
-						labels['R'][1]->setText(
-						    format("%d", agentEquipment->ammo_types.front()->accuracy));
-						labels['R'][2]->setText(
-						    format("%.2f",
-						           (float)TICKS_PER_SECOND /
-						               (float)agentEquipment->ammo_types.front()->fire_delay));
-						labels['R'][3]->setText(format("%d",
-						                               agentEquipment->ammo_types.front()->range /
-						                                   (int)VELOCITY_SCALE_BATTLE.x));
+						accuracy = agentEquipment->ammo_types.front()->accuracy;
+						fireRate = agentEquipment->ammo_types.front()->getRateOfFire();
+						range = agentEquipment->ammo_types.front()->getRangeInTiles();
 					}
 				}
+				formItemAgent->findControlTyped<Label>("LABEL_2_R")
+				    ->setText(format("%d", accuracy));
+				formItemAgent->findControlTyped<Label>("LABEL_3_R")
+				    ->setText(format("%.2f", fireRate));
+				formItemAgent->findControlTyped<Label>("LABEL_4_R")->setText(format("%d", range));
+				break;
 			}
-			break;
 			case AEquipmentType::Type::Armor:
 			{
-				labels['L'][0]->setText(tr("Weight"));
-				labels['R'][0]->setText(format("%d", agentEquipment->weight));
-				labels['L'][1]->setText(tr("Protection"));
-				labels['R'][1]->setText(format("%d", agentEquipment->armor));
+				formItemAgent->findControlTyped<Label>("LABEL_2_L")->setText(tr("Protection"));
+				formItemAgent->findControlTyped<Label>("LABEL_2_R")
+				    ->setText(format("%d", agentEquipment->armor));
+				break;
 			}
-			break;
 			default:
 			{
-				labels['L'][0]->setText(tr("Weight"));
-				labels['R'][0]->setText(format("%d", agentEquipment->weight));
 			}
-			break;
 		}
 	}
 	else if (control->itemType == TransactionControl::Type::VehicleEquipment ||
