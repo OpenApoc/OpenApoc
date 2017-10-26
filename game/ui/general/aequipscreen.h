@@ -45,12 +45,8 @@ class AEquipScreen : public Stage
 	sp<Agent> firstAgent;
 
 	sp<Form> formMain;
-	sp<Form> formActive;
 	sp<Form> formAgentStats;
-	sp<Form> formItemWeapon;
-	sp<Form> formItemArmor;
-	sp<Form> formItemGrenade;
-	sp<Form> formItemOther;
+	sp<Form> formAgentItem;
 
 	sp<Palette> pal;
 	sp<GameState> state;

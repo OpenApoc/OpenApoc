@@ -295,7 +295,6 @@
 		<position x="17" y="183"/>
       </subform>
 
-
       <graphicbutton id="BUTTON_OK">
         <position x="602" y="443"/>
         <size width="35" height="34"/>
