@@ -532,7 +532,9 @@
       </armor>
       <damage_modifier>DAMAGEMODIFIER_HUMAN</damage_modifier>
       <inventory>true</inventory>
-      <can_improve>true</can_improve>
+      <improvementPercentagePhysical>100</improvementPercentagePhysical>
+	  <improvementPercentagePsi>100</improvementPercentagePsi>
+	  <canTrain>true</canTrain>
       <playable>true</playable>
       <allowsDirectControl>true</allowsDirectControl>
       <aiType>Group</aiType>
@@ -773,7 +775,9 @@
       </armor>
       <damage_modifier>DAMAGEMODIFIER_MUTANT</damage_modifier>
       <inventory>true</inventory>
-      <can_improve>true</can_improve>
+      <improvementPercentagePhysical>100</improvementPercentagePhysical>
+	  <improvementPercentagePsi>100</improvementPercentagePsi>
+	  <canTrain>true</canTrain>
       <playable>true</playable>
       <allowsDirectControl>true</allowsDirectControl>
       <aiType>Group</aiType>
@@ -966,7 +970,9 @@
       </armor>
       <damage_modifier>DAMAGEMODIFIER_ANDROID</damage_modifier>
       <inventory>true</inventory>
-      <can_improve>true</can_improve>
+      <improvementPercentagePhysical>10</improvementPercentagePhysical>
+	  <improvementPercentagePsi>0</improvementPercentagePsi>
+	  <canTrain>false</canTrain>
       <playable>true</playable>
       <allowsDirectControl>true</allowsDirectControl>
       <aiType>Group</aiType>

@@ -91,6 +91,14 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 		}
 	}
 
+	// Alien portals
+	if (fileName == "alienmap")
+	{
+		city->initial_portals.emplace_back(92, 45, 9);
+		city->initial_portals.emplace_back(94, 43, 9);
+		city->initial_portals.emplace_back(95, 46, 9);
+	}
+
 	// Fixing buggy city
 	if (fileName == "citymap1")
 	{

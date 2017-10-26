@@ -175,7 +175,7 @@ class VehicleMission
 	                                    StateRef<Building> target = nullptr);
 	static VehicleMission *snooze(GameState &state, Vehicle &v, unsigned int ticks);
 	static VehicleMission *selfDestruct(GameState &state, Vehicle &v);
-	static VehicleMission *arriveFromDimensionGate(GameState &state, Vehicle &v, int ticks = -1);
+	static VehicleMission *arriveFromDimensionGate(GameState &state, Vehicle &v, int ticks = 0);
 	static VehicleMission *restartNextMission(GameState &state, Vehicle &v);
 	static VehicleMission *crashLand(GameState &state, Vehicle &v);
 	static VehicleMission *patrol(GameState &state, Vehicle &v, bool home = false,

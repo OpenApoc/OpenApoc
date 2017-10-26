@@ -1432,7 +1432,7 @@ void Vehicle::processRecoveredVehicle(GameState &state)
 	for (auto &e : scrappedEquipment)
 	{
 		removeEquipment(e);
-		if (e->ammo > 0)
+		if (e->ammo > 0 && e->type->ammo_type)
 		{
 			currentBuilding->base->inventoryVehicleAmmo[e->type->ammo_type.id] += e->ammo;
 		}

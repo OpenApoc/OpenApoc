@@ -1159,52 +1159,58 @@ void Scenery::setPosition(const Vec3<float> &pos)
 	this->tileObject->setPosition(pos);
 }
 
+void Scenery::updateRelationWithAttacker(GameState &state, StateRef<Organisation> attackerOrg,
+                                         bool killed)
+{
+	if (!attackerOrg)
+	{
+		return;
+	}
+	auto ourOrg = building->owner;
+
+	// Killing scenery is 4x as influential
+	float multiplier = killed ? 4.0f : 1.0f;
+	// Lose 5 points
+	ourOrg->adjustRelationTo(state, attackerOrg, -5.0f * multiplier);
+	// Our allies lose 2.5 points, enemies gain 1 point
+	for (auto &org : state.organisations)
+	{
+		if (org.first != attackerOrg.id && org.first != state.getCivilian().id)
+		{
+			if (org.second->isRelatedTo(ourOrg) == Organisation::Relation::Hostile)
+			{
+				org.second->adjustRelationTo(state, attackerOrg, 1.0f * multiplier);
+			}
+			else if (org.second->isRelatedTo(ourOrg) == Organisation::Relation::Allied)
+			{
+				org.second->adjustRelationTo(state, attackerOrg, -2.5f * multiplier);
+			}
+		}
+	}
+}
+
 bool Scenery::handleCollision(GameState &state, Collision &c)
 {
+	StateRef<Organisation> attackerOrg;
 	// Adjust relationships
 	if (!type->commonProperty && building && c.projectile->firerVehicle)
 	{
-		auto attackerOrg = c.projectile->firerVehicle->owner;
-		auto ourOrg = building->owner;
-
-		// 3x modifier for intentional attack
-		float modifier = 1.0f;
+		attackerOrg = c.projectile->firerVehicle->owner;
+		updateRelationWithAttacker(state, attackerOrg, false);
 		bool intentional =
 		    c.projectile->manualFire || (!c.projectile->firerVehicle->missions.empty() &&
 		                                 c.projectile->firerVehicle->missions.front()->type ==
 		                                     VehicleMission::MissionType::AttackBuilding);
-		if (intentional)
-		{
-			modifier = 3.0f;
-		}
-
-		// Lose 5 points
-		ourOrg->adjustRelationTo(state, attackerOrg, -5.0f * modifier);
-		// Our allies lose 2.5 points, enemies gain 1 point
-		for (auto &org : state.organisations)
-		{
-			if (org.first != attackerOrg.id && org.first != state.getCivilian().id)
-			{
-				if (org.second->isRelatedTo(ourOrg) == Organisation::Relation::Hostile)
-				{
-					org.second->adjustRelationTo(state, attackerOrg, 1.0f);
-				}
-				else if (org.second->isRelatedTo(ourOrg) == Organisation::Relation::Allied)
-				{
-					org.second->adjustRelationTo(state, attackerOrg, -2.5f * modifier);
-				}
-			}
-		}
 		if (intentional || config().getBool("OpenApoc.NewFeature.ScrambleOnUnintentionalHit"))
 		{
 			building->underAttack(state, attackerOrg);
 		}
 	}
 
-	return applyDamage(state, c.projectile->damage);
+	return applyDamage(state, c.projectile->damage, attackerOrg);
 }
 
-bool Scenery::applyDamage(GameState &state, int power)
+bool Scenery::applyDamage(GameState &state, int power, StateRef<Organisation> attackerOrg)
 {
 	if (!this->tileObject)
 	{
@@ -1243,7 +1249,8 @@ bool Scenery::applyDamage(GameState &state, int power)
 		return false;
 	}
 
-	die(state);
+	updateRelationWithAttacker(state, attackerOrg, true);
+	die(state, false);
 	return false;
 }
 

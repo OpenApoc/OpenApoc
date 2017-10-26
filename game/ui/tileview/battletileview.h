@@ -41,7 +41,6 @@ class BattleTileView : public TileView
 
   protected:
 	sp<Form> hiddenForm;
-	bool debugHotkeyMode = false;
 
   private:
 	LayerDrawingMode layerDrawingMode;

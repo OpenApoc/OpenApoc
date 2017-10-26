@@ -65,7 +65,8 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	           std::list<StateRef<AEquipmentType>> splitIntoTypes = {}, bool manualFire = false);
 	Projectile();
 	virtual void update(GameState &state, unsigned int ticks);
-	void die(GameState &state, bool displayDoodad = true, bool playSound = true);
+	void die(GameState &state, bool displayDoodad = true, bool playSound = true,
+	         bool expired = false);
 
 	Vec3<float> getPosition() const { return this->position; }
 

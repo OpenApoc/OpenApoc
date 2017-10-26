@@ -58,18 +58,18 @@
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:9:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
-      <graphicbutton id="BUTTON_AGENT_PHYSICAL">
+      <checkbox id="BUTTON_AGENT_PHYSICAL">
         <size width="27" height="46"/>
         <position x="482" y="75"/>
         <image/>
-        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:48:xcom3/ufodata/pal_01.dat</imagedepressed>
-      </graphicbutton>
-      <graphicbutton id="BUTTON_AGENT_PSI">
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:48:xcom3/ufodata/pal_01.dat</imagechecked>
+      </checkbox>
+      <checkbox id="BUTTON_AGENT_PSI">
         <size width="27" height="46"/>
         <position x="517" y="75"/>
         <image/>
-        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:49:xcom3/ufodata/pal_01.dat</imagedepressed>
-      </graphicbutton>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:49:xcom3/ufodata/pal_01.dat</imagechecked>
+      </checkbox>
     </style>
   </form>
 </openapoc>

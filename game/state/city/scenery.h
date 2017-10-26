@@ -22,6 +22,7 @@ class GameState;
 class TileMap;
 class Doodad;
 class City;
+class Organisation;
 
 class Scenery : public SupportedMapPart, public std::enable_shared_from_this<Scenery>
 {
@@ -50,9 +51,13 @@ class Scenery : public SupportedMapPart, public std::enable_shared_from_this<Sce
 	bool destroyed;
 	int supportHardness = 0;
 
+	// Update relation with attacker which killed or hit us
+	void updateRelationWithAttacker(GameState &state, StateRef<Organisation> attackerOrg,
+	                                bool killed);
+
 	bool handleCollision(GameState &state, Collision &c);
 	// Returns true if sound and doodad were handled by it
-	bool applyDamage(GameState &state, int power);
+	bool applyDamage(GameState &state, int power, StateRef<Organisation> attackerOrg = nullptr);
 	// Handles scenery ceasing to exist (fatal damage or fell on something)
 	// Forced to destroy regardless of damaged types
 	void die(GameState &state, bool forced = false);
