@@ -6,21 +6,21 @@
 #include <string>
 
 #if defined(_WIN32)
+
 // FIXME: GLESWRAP_APIENTRY is needed on windows?
 #define GLESWRAP_APIENTRY __stdcall
-#else
-#define GLESWRAP_APIENTRY
-#endif
-
-#ifndef __ANDROID__
 #ifdef _WIN64
 typedef signed long long int ssize_t;
 #else
 typedef signed long int ssize_t;
 #endif
+
 #else
-// Looks like ssize_t is defined in Android's types.h
+
+#define GLESWRAP_APIENTRY
+// for ssize_t
 #include <sys/types.h>
+
 #endif
 
 #define IN_GLES_WRAP_H

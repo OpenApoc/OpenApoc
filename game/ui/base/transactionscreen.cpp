@@ -50,12 +50,15 @@ bool TransactionScreen::TransactionControl::resourcesInitialised = false;
 
 TransactionScreen::TransactionScreen(sp<GameState> state, TransactionScreen::Mode mode,
                                      bool forceLimits)
-    : BaseStage(state), mode(mode), forceLimits(forceLimits),
-      formItemAgent(ui().getForm("transactionscreen_item_agent")),
-      formItemVehicle(ui().getForm("transactionscreen_item_vehicle"))
+    : BaseStage(state), mode(mode), forceLimits(forceLimits)
 {
 	// Load resources
 	form = ui().getForm("transactionscreen");
+	formItemAgent = form->findControlTyped<Form>("AGENT_ITEM_VIEW");
+	formItemAgent->setVisible(false);
+
+	formItemVehicle = form->findControlTyped<Form>("VEHICLE_ITEM_VIEW");
+	formItemVehicle->setVisible(false);
 
 	// Assign event handlers
 	onScrollChange = [this](FormsEvent *) { this->updateFormValues(); };
@@ -862,7 +865,8 @@ void TransactionScreen::displayItem(sp<TransactionControl> control)
 				labels[alignment].push_back(label);
 			}
 		}
-		formItemActive = formItemAgent;
+		formItemAgent->setVisible(true);
+		formItemVehicle->setVisible(false);
 		auto agentEquipment = state->agent_equipment[control->itemId];
 
 		formItemAgent->findControlTyped<Label>("ITEM_NAME")->setText(agentEquipment->name);
@@ -986,7 +990,8 @@ void TransactionScreen::displayItem(sp<TransactionControl> control)
 			value->setText("");
 			statsValues.push_back(value);
 		}
-		formItemActive = formItemVehicle;
+		formItemVehicle->setVisible(true);
+		formItemAgent->setVisible(false);
 
 		if (control->itemType == TransactionControl::Type::VehicleType ||
 		    control->itemType == TransactionControl::Type::Vehicle)
@@ -2386,10 +2391,6 @@ void TransactionScreen::render()
 
 	form->render();
 	BaseStage::render();
-	if (formItemActive)
-	{
-		formItemActive->render();
-	}
 
 	// Highlight selected base
 	if (currentSecondView != nullptr)
