@@ -18,6 +18,7 @@
 #include "game/state/tilemap/tileobject_doodad.h"
 #include "game/state/tilemap/tileobject_scenery.h"
 #include "game/state/tilemap/tileobject_vehicle.h"
+#include <limits.h>
 
 namespace OpenApoc
 {
@@ -62,12 +63,57 @@ sp<std::set<SupportedMapPart *>> Scenery::getSupportedParts()
 
 void Scenery::clearSupportedParts() { supportedParts.clear(); }
 
-// FIXME:
-// Implement linking using shooting lines for generals
-// This will improve how complex buildings collapse
-bool Scenery::findSupport()
+bool Scenery::attachToSomething()
 {
 	auto pos = tileObject->getOwningTile()->position;
+	supportHardness = -10;
+	auto &map = tileObject->map;
+	auto tileType = tileObject->getType();
+	auto thisPtr = shared_from_this();
+
+	int startX = pos.x - 1;
+	int endX = pos.x + 1;
+	int startY = pos.y - 1;
+	int endY = pos.y + 1;
+	int startZ = pos.z - 1;
+	int endZ = pos.z;
+	for (int x = startX; x <= endX; x++)
+	{
+		for (int y = startY; y <= endY; y++)
+		{
+			for (int z = startZ; z <= endZ; z++)
+			{
+				if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y || z < 0 ||
+				    z >= map.size.z)
+				{
+					continue;
+				}
+				auto tile = map.getTile(x, y, z);
+				for (auto &o : tile->ownedObjects)
+				{
+					if (o->getType() == TileObject::Type::Scenery)
+					{
+						auto mp = std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
+
+						if (mp == thisPtr || !mp->isAlive())
+						{
+							continue;
+						}
+						mp->supportedParts.insert(currentPosition);
+						supportedBy.emplace_back(mp->currentPosition);
+						return true;
+					}
+				}
+			} // For every x and y and z
+		}
+	}
+	return false;
+}
+
+bool Scenery::findSupport(bool allowClinging)
+{
+	auto pos = tileObject->getOwningTile()->position;
+	supportHardness = 1;
 	if (pos.z <= 1)
 	{
 		return true;
@@ -100,14 +146,21 @@ bool Scenery::findSupport()
 	// Scenery gets (hard) support in the following way:
 	//
 	// - The only way to hard-support is by having non-road/tube below
-	//   (in this case tube must have a downward connection)
+	//   - Only tubes can be supported on tubes this way
+	//     (in this case tube looking for support must have a downward connection)
+	//	 - Only WalkMode::None Road can give support this way
+	//   - Only non-WalkMode::Into General can give support this way
 	// - The exception is that tube can be supported by tube below if connected
 	//
 	// (following conditions provide "soft" support)
 	//
-	// - General/Wall/Junk can cling to one adjacent "hard" supported General/Wall/Junk
-	// - General/Wall/Junk can cling to two adjacent "soft" supported General/Wall/Junk
-	// - People tube can cling onto adjacent "hard" General, adhering to its direction
+	// - If allowClinging is true
+	//   - General/Wall/Junk can cling to one adjacent "hard" supported General/Wall
+	//   - General/Wall/Junk can cling to two adjacent "soft" supported General/Wall/Junk
+	//   - General can gling to one General above it
+	//   - General can gling to two Generals adjacent, one above one below on same side (xy)
+	//	 - Wall can cling to two adjacent Walls below it
+	//   - People tube can cling onto adjacent "hard" General, adhering to its direction
 	//
 	// Finally, can be supported if it has established support lines
 	// on both sides that connect to an object providing support (any kind)
@@ -117,6 +170,7 @@ bool Scenery::findSupport()
 	//
 
 	// Step 01: Check for existing support conditions
+	auto lastSupportedBy = supportedBy;
 	if (!supportedBy.empty())
 	{
 		std::set<sp<Scenery>> supports;
@@ -162,7 +216,6 @@ bool Scenery::findSupport()
 	}
 
 	// Step 02: Check below
-	if (true)
 	{
 		// Expecting to always have space below in city
 		auto tile = map.getTile(currentPosition.x, currentPosition.y, currentPosition.z - 1);
@@ -176,12 +229,12 @@ bool Scenery::findSupport()
 				{
 					continue;
 				}
-				// Only support tube if has connection below
+				// Tube can only get support if it has connection directed below
 				if (type->tile_type == SceneryTileType::TileType::PeopleTube && !type->tube[5])
 				{
 					continue;
 				}
-				// Only tubes with connection can be supported by tubes
+				// Tubes can only give support to tubes
 				if (mp->type->tile_type == SceneryTileType::TileType::PeopleTube)
 				{
 					// If ain't tube or no connection down from us or no connection up from below
@@ -191,6 +244,18 @@ bool Scenery::findSupport()
 						continue;
 					}
 				}
+				// Roads can only give support if they have WalkMode::None
+				if (mp->type->tile_type == SceneryTileType::TileType::Road &&
+				    mp->type->walk_mode != SceneryTileType::WalkMode::None)
+				{
+					continue;
+				}
+				// General can only give support if they have WalkMode::Into
+				if (mp->type->tile_type == SceneryTileType::TileType::General &&
+				    mp->type->walk_mode == SceneryTileType::WalkMode::Into)
+				{
+					continue;
+				}
 				mp->supportedParts.insert(currentPosition);
 				supportedBy.emplace_back(mp->currentPosition);
 				return true;
@@ -198,26 +263,26 @@ bool Scenery::findSupport()
 		}
 	}
 
+	// At this point our support will be soft
+
 	// Step 03.01: Check adjacents (for General/Wall !INTO)
-	if (type->tile_type == SceneryTileType::TileType::General ||
-	    type->tile_type == SceneryTileType::TileType::CityWall ||
-	    type->tile_type == SceneryTileType::TileType::PeopleTubeJunction)
+	if (allowClinging)
 	{
-		std::set<sp<Scenery>> supports;
-		int startX = pos.x - 1;
-		int endX = pos.x + 1;
-		int startY = pos.y - 1;
-		int endY = pos.y + 1;
-		int startZ = pos.z - 1;
-		int endZ = pos.z + 1;
-		for (int x = startX; x <= endX; x++)
+		if (type->tile_type == SceneryTileType::TileType::General ||
+		    type->tile_type == SceneryTileType::TileType::CityWall ||
+		    type->tile_type == SceneryTileType::TileType::PeopleTubeJunction)
 		{
-			for (int y = startY; y <= endY; y++)
+			std::set<sp<Scenery>> supports;
+			int startX = pos.x - 1;
+			int endX = pos.x + 1;
+			int startY = pos.y - 1;
+			int endY = pos.y + 1;
+			int z = pos.z;
+			for (int x = startX; x <= endX; x++)
 			{
-				for (int z = startZ; z <= endZ; z++)
+				for (int y = startY; y <= endY; y++)
 				{
-					if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y || z < 0 ||
-					    z >= map.size.z)
+					if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y)
 					{
 						continue;
 					}
@@ -237,15 +302,13 @@ bool Scenery::findSupport()
 							{
 								continue;
 							}
-							// Must not be a tube, junk or road
+							// Must not be a tube or road
 							if (mp->type->tile_type == SceneryTileType::TileType::Road ||
-							    mp->type->tile_type == SceneryTileType::TileType::PeopleTube ||
-							    mp->type->tile_type ==
-							        SceneryTileType::TileType::PeopleTubeJunction)
+							    mp->type->tile_type == SceneryTileType::TileType::PeopleTube)
 							{
 								continue;
 							}
-							// Must be a matching(Wall for Wall, General for General/Junk)
+							// Must be a matching(Wall for Wall, General/Junk for General/Junk)
 							if (mp->type->tile_type == SceneryTileType::TileType::CityWall &&
 							    type->tile_type != SceneryTileType::TileType::CityWall)
 							{
@@ -253,26 +316,19 @@ bool Scenery::findSupport()
 							}
 							// Remember in case there's two of them soft supported
 							supports.insert(mp);
-							// Cannot get supported by single at other level
-							if (z != pos.z)
+							// Cannot be supported by single adjacent people's tube junk
+							if (mp->type->tile_type ==
+							    SceneryTileType::TileType::PeopleTubeJunction)
 							{
 								continue;
 							}
-							// Cannot be soft-supported
-							if (mp->supportedBy.size() > 1)
+							// Cannot be supported by single adjacent non-hard
+							if (mp->supportHardness <= 0)
 							{
 								continue;
-							}
-							// Must be supported by below or by being the earth
-							if (!mp->supportedBy.empty())
-							{
-								auto dir = mp->supportedBy.front() - tile->position;
-								if (dir.x != 0 || dir.y != 0 || dir.z != -1)
-								{
-									continue;
-								}
 							}
 							// Is supported!
+							supportHardness = mp->supportHardness - 1;
 							mp->supportedParts.insert(currentPosition);
 							supportedBy.emplace_back(mp->currentPosition);
 							return true;
@@ -280,49 +336,62 @@ bool Scenery::findSupport()
 					}
 				}
 			}
-		}
-		// Found two or more soft supports
-		if (supports.size() > 1)
-		{
-			for (auto &mp : supports)
+			// Found two or more soft supports:
+			// - Cling to the best two of them
+			// - Our hardness is one less than weakest of them
+			if (supports.size() > 1)
 			{
-				mp->supportedParts.insert(currentPosition);
-				supportedBy.emplace_back(mp->currentPosition);
+				std::set<sp<Scenery>> bestSupports;
+				int hadrness;
+				for (hadrness = 1; hadrness > INT_MIN; hadrness--)
+				{
+					std::set<sp<Scenery>> newSupports;
+					for (auto &mp : supports)
+					{
+						if (mp->supportHardness == hadrness)
+						{
+							bestSupports.insert(mp);
+							newSupports.insert(mp);
+							if (bestSupports.size() > 1)
+							{
+								break;
+							}
+						}
+					}
+					if (bestSupports.size() > 1)
+					{
+						break;
+					}
+					for (auto &mp : newSupports)
+					{
+						supports.erase(mp);
+					}
+				}
+
+				supportHardness = hadrness - 1;
+				for (auto &mp : bestSupports)
+				{
+					mp->supportedParts.insert(currentPosition);
+					supportedBy.emplace_back(mp->currentPosition);
+				}
+				return true;
 			}
-			return true;
 		}
-	}
-	// Step 03.02: Check adjacents (for Tube)
-	if (type->tile_type == SceneryTileType::TileType::PeopleTube)
-	{
-		std::set<sp<Scenery>> supports;
-		int startX = pos.x - 1;
-		int endX = pos.x + 1;
-		int startY = pos.y - 1;
-		int endY = pos.y + 1;
-		for (int x = startX; x <= endX; x++)
+		// Step 03.02: Check above (for General)
+		if (type->tile_type == SceneryTileType::TileType::General)
 		{
-			for (int y = startY; y <= endY; y++)
+			// Only check one tile here
+			do // Provides a "continue/break" exit as in similar loops around
 			{
-				if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y)
-				{
-					continue;
-				}
+				int x = pos.x;
+				int y = pos.y;
+				int z = pos.z + 1;
 				// Cannot support diagonally on xy
-				if (x != pos.x && y != pos.y)
+				if (z >= map.size.z)
 				{
 					continue;
 				}
-				if (x == pos.x && y == pos.y)
-				{
-					continue;
-				}
-				// Cannot support if no connection
-				if (!type->tube[vecToIntForward.at({x - pos.x, y - pos.y})])
-				{
-					continue;
-				}
-				auto tile = map.getTile(x, y, pos.z);
+				auto tile = map.getTile(x, y, z);
 				for (auto &o : tile->ownedObjects)
 				{
 					if (o->getType() == TileObject::Type::Scenery)
@@ -333,24 +402,204 @@ bool Scenery::findSupport()
 						{
 							continue;
 						}
-						// Must be a General
+						// Must be a general
 						if (mp->type->tile_type != SceneryTileType::TileType::General)
 						{
 							continue;
 						}
 						// Is supported!
+						supportHardness = mp->supportHardness - 1;
 						mp->supportedParts.insert(currentPosition);
 						supportedBy.emplace_back(mp->currentPosition);
 						return true;
+					}
+				}
+			} while (false);
+		}
+		// Step 03.03: Check adjacent above and below (for General)
+		if (type->tile_type == SceneryTileType::TileType::General)
+		{
+			int startX = pos.x - 1;
+			int endX = pos.x + 1;
+			int startY = pos.y - 1;
+			int endY = pos.y + 1;
+			int startZ = pos.z - 1;
+			int endZ = pos.z + 1;
+			std::list<int> listZ = {startZ, endZ};
+			for (int x = startX; x <= endX; x++)
+			{
+				for (int y = startY; y <= endY; y++)
+				{
+					// Cannot support diagonally on xy
+					if (x != pos.x && y != pos.y)
+					{
+						continue;
+					}
+					// Find two supports
+					std::set<sp<Scenery>> supports;
+					for (auto &z : listZ)
+					{
+						if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y || z < 0 ||
+						    z >= map.size.z)
+						{
+							continue;
+						}
+						auto tile = map.getTile(x, y, z);
+						for (auto &o : tile->ownedObjects)
+						{
+							if (o->getType() == TileObject::Type::Scenery)
+							{
+								auto mp =
+								    std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
+
+								if (mp == thisPtr || !mp->isAlive())
+								{
+									continue;
+								}
+								// Must be a general
+								if (mp->type->tile_type != SceneryTileType::TileType::General)
+								{
+									continue;
+								}
+								supports.insert(mp);
+							}
+						}
+					}
+					// Found two supports:
+					if (supports.size() == 2)
+					{
+						for (auto &mp : supports)
+						{
+							supportHardness = std::min(supportHardness, mp->supportHardness);
+							mp->supportedParts.insert(currentPosition);
+							supportedBy.emplace_back(mp->currentPosition);
+						}
+						return true;
+					}
+				} // For every x and y
+			}
+		}
+		// Step 03.04: Check adjacent below (for Wall)
+		if (type->tile_type == SceneryTileType::TileType::CityWall)
+		{
+			int startX = pos.x - 1;
+			int endX = pos.x + 1;
+			int startY = pos.y - 1;
+			int endY = pos.y + 1;
+			int z = pos.z - 1;
+			// Find two supports
+			std::set<sp<Scenery>> supports;
+			for (int x = startX; x <= endX; x++)
+			{
+				for (int y = startY; y <= endY; y++)
+				{
+					// Cannot support diagonally on xy
+					if (x != pos.x && y != pos.y)
+					{
+						continue;
+					}
+					if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y)
+					{
+						continue;
+					}
+					auto tile = map.getTile(x, y, z);
+					for (auto &o : tile->ownedObjects)
+					{
+						if (o->getType() == TileObject::Type::Scenery)
+						{
+							auto mp = std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
+
+							if (mp == thisPtr || !mp->isAlive())
+							{
+								continue;
+							}
+							if (mp->type->tile_type != SceneryTileType::TileType::CityWall)
+							{
+								continue;
+							}
+							supports.insert(mp);
+						}
+					}
+				} // For every x and y
+			}
+			// Found two supports:
+			if (supports.size() >= 2)
+			{
+				for (auto &mp : supports)
+				{
+					supportHardness = std::min(supportHardness, mp->supportHardness);
+					mp->supportedParts.insert(currentPosition);
+					supportedBy.emplace_back(mp->currentPosition);
+				}
+				return true;
+			}
+		}
+		// Step 03.05: Check adjacents (for Tube)
+		if (type->tile_type == SceneryTileType::TileType::PeopleTube)
+		{
+			std::set<sp<Scenery>> supports;
+			int startX = pos.x - 1;
+			int endX = pos.x + 1;
+			int startY = pos.y - 1;
+			int endY = pos.y + 1;
+			for (int x = startX; x <= endX; x++)
+			{
+				for (int y = startY; y <= endY; y++)
+				{
+					if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y)
+					{
+						continue;
+					}
+					// Cannot support diagonally on xy
+					if (x != pos.x && y != pos.y)
+					{
+						continue;
+					}
+					if (x == pos.x && y == pos.y)
+					{
+						continue;
+					}
+					// Cannot support if no connection
+					if (!type->tube[vecToIntForward.at({x - pos.x, y - pos.y})])
+					{
+						continue;
+					}
+					auto tile = map.getTile(x, y, pos.z);
+					for (auto &o : tile->ownedObjects)
+					{
+						if (o->getType() == TileObject::Type::Scenery)
+						{
+							auto mp = std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
+
+							if (mp == thisPtr || !mp->isAlive())
+							{
+								continue;
+							}
+							// Must be a General
+							if (mp->type->tile_type != SceneryTileType::TileType::General)
+							{
+								continue;
+							}
+							// Is supported!
+							supportHardness = mp->supportHardness - 1;
+							mp->supportedParts.insert(currentPosition);
+							supportedBy.emplace_back(mp->currentPosition);
+							return true;
+						}
 					}
 				}
 			}
 		}
 	}
 
-	// Step 04: Shoot "support lines" and try to find something
-	// With roads and tubes we can actually shoot in any directions, not just on X or Y
+	// At this point if we get support we will be supported by hard support, so it's hardness of 0
+	supportHardness = 0;
 
+	// Step 04: Shoot "support lines" and try to find something
+
+	// Step 04.01: With roads and tubes we can actually shoot in any directions, not just on X or Y
+	//			   and we can connect to any support.
+	//			   We can also re-try support when our support is lost
 	if (type->tile_type == SceneryTileType::TileType::Road ||
 	    type->tile_type == SceneryTileType::TileType::PeopleTube)
 	{
@@ -402,15 +651,14 @@ bool Scenery::findSupport()
 							//    (if tube connection is up/down we already checked it before
 							//    arrival)
 							if (mp->destroyed || mp->falling ||
-							    (!increment.second.x ||
-							     (increment.second.x &&
-							      !mp->type->connection[vecToIntBack.at(increment.first)])) &&
-							        (!increment.second.y ||
-							         (increment.second.y &&
-							          (int)mp->currentPosition.z ==
-							              (int)lastMp->currentPosition.z &&
-							          !mp->type->tube[vecToIntBack.at(increment.first)] &&
-							          mp->type->tile_type != SceneryTileType::TileType::General)))
+							    ((!increment.second.x ||
+							      (increment.second.x &&
+							       !mp->type->connection[vecToIntBack.at(increment.first)])) &&
+							     (!increment.second.y ||
+							      (increment.second.y &&
+							       (int)mp->currentPosition.z == (int)lastMp->currentPosition.z &&
+							       !mp->type->tube[vecToIntBack.at(increment.first)] &&
+							       mp->type->tile_type != SceneryTileType::TileType::General))))
 							{
 								mp = nullptr;
 							}
@@ -418,7 +666,6 @@ bool Scenery::findSupport()
 					}
 					// Could not find map part of this type or it cannot provide support
 					// We ignore those that have positive "ticksUntilFalling" as those can be saved
-					// yet
 					if (!mp)
 					{
 						// If we're a road - try to go one down, look for a hill facing towards us
@@ -514,6 +761,7 @@ bool Scenery::findSupport()
 					if (!mp->willCollapse())
 					{
 						// success
+						supportHardness = std::min(supportHardness, mp->supportHardness);
 						found = true;
 						break;
 					}
@@ -526,6 +774,7 @@ bool Scenery::findSupport()
 							// failure, trying to link through unsupported non-road/tube
 							break;
 						}
+						// Can only link through unsupported roads or tubes that
 					}
 					// continue
 					x += increment.first.x;
@@ -575,16 +824,15 @@ bool Scenery::findSupport()
 								// here
 								// because it didn't fit
 								if (mp->destroyed || mp->falling ||
-								    (!increment.second.x ||
-								     (increment.second.x &&
-								      !mp->type->connection[vecToIntBack.at(increment.first)])) &&
-								        (!increment.second.y ||
-								         (increment.second.y &&
-								          (int)mp->currentPosition.z ==
-								              (int)lastMp->currentPosition.z &&
-								          !mp->type->tube[vecToIntBack.at(increment.first)] &&
-								          mp->type->tile_type !=
-								              SceneryTileType::TileType::General)))
+								    ((!increment.second.x ||
+								      (increment.second.x &&
+								       !mp->type->connection[vecToIntBack.at(increment.first)])) &&
+								     (!increment.second.y ||
+								      (increment.second.y &&
+								       (int)mp->currentPosition.z ==
+								           (int)lastMp->currentPosition.z &&
+								       !mp->type->tube[vecToIntBack.at(increment.first)] &&
+								       mp->type->tile_type != SceneryTileType::TileType::General))))
 								{
 									mp = nullptr;
 								}
@@ -670,7 +918,10 @@ bool Scenery::findSupport()
 								}
 							}
 						}
+						// We are supported by this part
 						mp->supportedParts.insert(lastMp->currentPosition);
+						// If lastMP's supportedBy was not full, we must make it also supported by
+						// us
 						if (!lastMPSupportedByFilled)
 						{
 							lastMp->supportedBy.emplace_back(mp->currentPosition);
@@ -682,9 +933,12 @@ bool Scenery::findSupport()
 							break;
 						}
 						// If it's a midpart then it's also supported by us
+						// Cancel midpart's collapse
 						mp->cancelCollapse();
+						// Last part supports this part
 						lastMp->supportedParts.insert(mp->currentPosition);
-						if (mp->supportedBy.empty())
+						// If this part's support is not yet full then it's supported by us
+						if (mp->supportedBy.size() < 2)
 						{
 							lastMPSupportedByFilled = false;
 							mp->supportedBy.emplace_back(lastMp->currentPosition);
@@ -713,12 +967,144 @@ bool Scenery::findSupport()
 		}     // if more than 2 ways to connect to
 	}         // If road or tube
 
+	// Step 04.02: With generals, we can shoot in x or in y, but connect only to hard support
+	//			   We also do not re-try support when lost
+	if (type->tile_type == SceneryTileType::TileType::General)
+	{
+		std::list<std::list<Vec2<int>>> incrementsList;
+		incrementsList.push_back({Vec2<int>{1, 0}, Vec2<int>{-1, 0}});
+		incrementsList.push_back({Vec2<int>{0, 1}, Vec2<int>{0, -1}});
+
+		for (auto &list : incrementsList)
+		{
+			bool found;
+			for (auto &increment : list)
+			{
+				found = false;
+				int x = pos.x + increment.x;
+				int y = pos.y + increment.y;
+				int z = pos.z;
+				auto lastMp = thisPtr;
+				do
+				{
+					if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y)
+					{
+						found = true;
+						break;
+					}
+					sp<Scenery> mp = nullptr;
+					auto tile = map.getTile(x, y, z);
+
+					for (auto &o : tile->ownedObjects)
+					{
+						if (o->getType() == TileObject::Type::Scenery)
+						{
+							mp = std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
+							// No good if destroyed or falling
+							// No good if not general
+							if (mp->destroyed || mp->falling ||
+							    mp->type->tile_type != SceneryTileType::TileType::General)
+							{
+								mp = nullptr;
+							}
+						}
+					}
+					// We ignore those that have positive "ticksUntilFalling" as those can be saved
+					if (!mp)
+					{
+						break;
+					}
+					lastMp = mp;
+					// Found map part that won't collapse and is hard supported
+					if (!mp->willCollapse() && mp->supportHardness > 0)
+					{
+						// success
+						found = true;
+						break;
+					}
+					// continue
+					x += increment.x;
+					y += increment.y;
+				} while (true);
+				if (!found)
+				{
+					break;
+				}
+			}
+			if (!found)
+			{
+				continue;
+			}
+			// If found at least two ways ways - cling to neighbours
+			// (and mark them as having support so they can cling to us)
+			for (auto &increment : list)
+			{
+				int x = pos.x + increment.x;
+				int y = pos.y + increment.y;
+				int z = pos.z;
+				auto lastMp = thisPtr;
+				bool lastMPSupportedByFilled = false;
+				do
+				{
+					if (x < 0 || x >= map.size.x || y < 0 || y >= map.size.y)
+					{
+						break;
+					}
+					sp<Scenery> mp = nullptr;
+					auto tile = map.getTile(x, y, z);
+					for (auto &o : tile->ownedObjects)
+					{
+						if (o->getType() == TileObject::Type::Scenery)
+						{
+							mp = std::static_pointer_cast<TileObjectScenery>(o)->getOwner();
+						}
+					}
+					if (!mp)
+					{
+						LogError("Map part disappeared? %d %d %d", x, y, z);
+						return false;
+					}
+					mp->supportedParts.insert(lastMp->currentPosition);
+					if (!lastMPSupportedByFilled)
+					{
+						lastMp->supportedBy.emplace_back(mp->currentPosition);
+					}
+					// Found map part that won't collapse
+					if (!mp->willCollapse() && mp->supportHardness > 0)
+					{
+						// stop where we stopped originally
+						break;
+					}
+					// If it's a midpart then it's also supported by us
+					mp->cancelCollapse();
+					lastMp->supportedParts.insert(mp->currentPosition);
+					if (mp->supportedBy.size() < 2)
+					{
+						lastMPSupportedByFilled = false;
+						mp->supportedBy.emplace_back(lastMp->currentPosition);
+					}
+					else
+					{
+						lastMPSupportedByFilled = true;
+					}
+					lastMp = mp;
+					// continue
+					x += increment.x;
+					y += increment.y;
+				} while (true);
+			} // for every connected way
+			return true;
+		} // for every list of increments (vertical and horizontal)
+	}     // If general
+
+	// If we didn't succeed, don't clear supportedBy!
+	// supportedBy = lastSupportedBy;
+
 	return false;
 }
 
 void Scenery::ceaseBeingSupported()
 {
-
 	auto pos = tileObject->getOwningTile()->position;
 	auto &map = tileObject->map;
 
@@ -759,7 +1145,7 @@ UString Scenery::getId() const { return type.id; }
 
 int Scenery::getType() const { return (int)0; }
 
-UString Scenery::getSupportString() const { return "NORMAL"; }
+UString Scenery::getSupportString() const { return format("%d", supportHardness); }
 
 void Scenery::setPosition(const Vec3<float> &pos)
 {
@@ -1035,11 +1421,11 @@ void Scenery::collapse(GameState &state)
 	if (this->initialPosition.z <= 1)
 	{
 		this->damaged = true;
-		LogWarning("Scenery at %s can't fall as below 2", currentPosition);
+		LogWarning("Scenery at %s  type %s can't fall as below 2", currentPosition, type.id);
 	}
 	else
 	{
-		LogWarning("Scenery at %s now falling", currentPosition);
+		LogWarning("Scenery at %s type %s now falling", currentPosition, type.id);
 		falling = true;
 		// state.current_battle->queueVisionRefresh(position);
 		// state.current_battle->queuePathfindingRefresh(position);
@@ -1171,6 +1557,7 @@ void Scenery::updateFalling(GameState &state, unsigned int ticks)
 									}
 									// No collision now
 									continue;
+								case SceneryTileType::WalkMode::Onto:
 								case SceneryTileType::WalkMode::Into:
 									// No collision now
 									continue;
@@ -1232,24 +1619,31 @@ bool Scenery::canRepair() const
 
 void Scenery::repair(GameState &state)
 {
-	auto &map = *this->city->map;
+	auto &map = *city->map;
 	if (this->isAlive())
+	{
 		LogError("Trying to fix something that isn't broken");
-	this->damaged = false;
-	this->falling = false;
-	if (this->tileObject)
-		this->tileObject->removeFromMap();
-	this->tileObject = nullptr;
-
-	if (this->overlayDoodad)
-		this->overlayDoodad->remove(state);
-	this->overlayDoodad = nullptr;
+	}
+	damaged = false;
+	falling = false;
+	if (tileObject)
+	{
+		tileObject->removeFromMap();
+	}
+	tileObject = nullptr;
+	if (overlayDoodad)
+	{
+		overlayDoodad->remove(state);
+	}
+	overlayDoodad = nullptr;
+	type = city->initial_tiles[initialPosition];
+	currentPosition = initialPosition;
 	map.addObjectToMap(shared_from_this());
 	if (type->overlaySprite)
 	{
-		this->overlayDoodad =
-		    mksp<Doodad>(this->getPosition(), type->imageOffset, false, 1, type->overlaySprite);
-		map.addObjectToMap(this->overlayDoodad);
+		overlayDoodad =
+		    mksp<Doodad>(getPosition(), type->imageOffset, false, 1, type->overlaySprite);
+		map.addObjectToMap(overlayDoodad);
 	}
 	if (building && !type->commonProperty)
 	{

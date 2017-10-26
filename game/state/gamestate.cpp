@@ -798,6 +798,56 @@ void GameState::updateEconomy()
 	}
 }
 
+void OpenApoc::GameState::updateUFOGrowth()
+{
+	int week = this->gameTime.getWeek();
+	auto growth = this->ufo_growth_lists.find(format("%s%d", UFOGrowth::getPrefix(), week));
+	if (growth == this->ufo_growth_lists.end())
+	{
+		growth = this->ufo_growth_lists.find(format("%s%s", UFOGrowth::getPrefix(), "DEFAULT"));
+	}
+	auto limit = this->ufo_growth_lists.find(format("%s%s", UFOGrowth::getPrefix(), "LIMIT"));
+
+	if (growth != this->ufo_growth_lists.end())
+	{
+		StateRef<City> city = {this, "CITYMAP_ALIEN"};
+		StateRef<Organisation> alienOrg = {this, "ORG_ALIEN"};
+		std::uniform_int_distribution<int> xyPos(20, 120);
+
+		// Set a list of limits for vehicle types
+		std::map<UString, int> vehicleLimits;
+		// Increase value by limit
+		for (auto &v : limit->second->vehicleTypeList)
+		{
+			vehicleLimits[v.first] += v.second;
+		}
+		// Subtract existing vehicles
+		for (auto &v : vehicles)
+		{
+			if (v.second->owner == alienOrg && v.second->city == city)
+			{
+				vehicleLimits[v.second->type.id]--;
+			}
+		}
+
+		for (auto &vehicleEntry : growth->second->vehicleTypeList)
+		{
+			auto vehicleType = this->vehicle_types.find(vehicleEntry.first);
+			if (vehicleType != this->vehicle_types.end())
+			{
+				int toAdd = std::min(vehicleEntry.second, vehicleLimits[vehicleEntry.first]);
+				for (int i = 0; i < toAdd; i++)
+				{
+					auto &type = (*vehicleType).second;
+
+					auto v = city->placeVehicle(*this, {this, (*vehicleType).first}, alienOrg,
+					                            {xyPos(rng), xyPos(rng), city->size.z - 1});
+				}
+			}
+		}
+	}
+}
+
 void GameState::invasion()
 {
 	auto invadedCity = StateRef<City>{this, "CITYMAP_HUMAN"};
@@ -1153,6 +1203,12 @@ void GameState::updateEndOfFiveMinutes()
 
 void GameState::updateEndOfHour()
 {
+	Trace::start("GameState::updateEndOfHour::agents");
+	for (auto &a : this->agents)
+	{
+		a.second->updateHourly(*this);
+	}
+	Trace::end("GameState::updateEndOfHour::agents");
 	Trace::start("GameState::updateEndOfHour::labs");
 	for (auto &lab : this->research.labs)
 	{
@@ -1175,6 +1231,7 @@ void GameState::updateEndOfHour()
 
 void GameState::updateEndOfDay()
 {
+	Trace::start("GameState::updateEndOfDay::bases");
 	for (auto &b : this->player_bases)
 	{
 		for (auto &f : b.second->facilities)
@@ -1190,6 +1247,7 @@ void GameState::updateEndOfDay()
 			}
 		}
 	}
+	Trace::end("GameState::updateEndOfDay::bases");
 	Trace::start("GameState::updateEndOfDay::organisations");
 	for (auto &o : this->organisations)
 	{
@@ -1213,52 +1271,20 @@ void GameState::updateEndOfDay()
 
 void GameState::updateEndOfWeek()
 {
-	int week = this->gameTime.getWeek();
-	auto growth = this->ufo_growth_lists.find(format("%s%d", UFOGrowth::getPrefix(), week));
-	if (growth == this->ufo_growth_lists.end())
+	LogWarning("Implement economy for orgs, for now just give em cash");
+	for (auto &o : organisations)
 	{
-		growth = this->ufo_growth_lists.find(format("%s%s", UFOGrowth::getPrefix(), "DEFAULT"));
-	}
-	auto limit = this->ufo_growth_lists.find(format("%s%s", UFOGrowth::getPrefix(), "LIMIT"));
-
-	if (growth != this->ufo_growth_lists.end())
-	{
-		StateRef<City> city = {this, "CITYMAP_ALIEN"};
-		StateRef<Organisation> alienOrg = {this, "ORG_ALIEN"};
-		std::uniform_int_distribution<int> xyPos(20, 120);
-
-		// Set a list of limits for vehicle types
-		std::map<UString, int> vehicleLimits;
-		// Increase value by limit
-		for (auto &v : limit->second->vehicleTypeList)
+		if (o.first == player.id)
 		{
-			vehicleLimits[v.first] += v.second;
+			continue;
 		}
-		// Subtract existing vehicles
-		for (auto &v : vehicles)
+		if (o.second->balance < 100000)
 		{
-			if (v.second->owner == alienOrg && v.second->city == city)
-			{
-				vehicleLimits[v.second->type.id]--;
-			}
-		}
-
-		for (auto &vehicleEntry : growth->second->vehicleTypeList)
-		{
-			auto vehicleType = this->vehicle_types.find(vehicleEntry.first);
-			if (vehicleType != this->vehicle_types.end())
-			{
-				int toAdd = std::min(vehicleEntry.second, vehicleLimits[vehicleEntry.first]);
-				for (int i = 0; i < toAdd; i++)
-				{
-					auto &type = (*vehicleType).second;
-
-					auto v = city->placeVehicle(*this, {this, (*vehicleType).first}, alienOrg,
-					                            {xyPos(rng), xyPos(rng), city->size.z - 1});
-				}
-			}
+			o.second->balance = 100000;
 		}
 	}
+
+	updateUFOGrowth();
 	updateEconomy();
 }
 

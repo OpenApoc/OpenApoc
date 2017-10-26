@@ -332,8 +332,9 @@ bool BattleMapPart::attachToSomething(bool checkType, bool checkHard)
 	return false;
 }
 
-bool BattleMapPart::findSupport()
+bool BattleMapPart::findSupport(bool allowClinging)
 {
+	std::ignore = allowClinging;
 	// Initial setup and quick checks
 	providesHardSupport = true;
 	if (type->floating)

@@ -1660,6 +1660,10 @@ void CityView::update()
 			}
 		}
 	}
+	if (DEBUG_SHOW_ALIEN)
+	{
+		switchDimension = state->current_city.id != "CITYMAP_ALIEN";
+	}
 	if (switchDimension)
 	{
 		setUpdateSpeed(CityUpdateSpeed::Speed1);
@@ -1668,7 +1672,9 @@ void CityView::update()
 			if (state->current_city != newCity.second)
 			{
 				state->current_city = {state.get(), newCity.first};
-				fw().stageQueueCommand({StageCmd::Command::REPLACEALL, mksp<CityView>(state)});
+				auto cityView = mksp<CityView>(state);
+				cityView->DEBUG_SHOW_ALIEN = DEBUG_SHOW_ALIEN;
+				fw().stageQueueCommand({StageCmd::Command::REPLACEALL, cityView});
 				return;
 			}
 		}
@@ -2476,7 +2482,7 @@ bool CityView::handleKeyDown(Event *e)
 				std::set<sp<Scenery>> stuffToRepair;
 				for (auto &s : state->current_city->scenery)
 				{
-					if (s->canRepair())
+					if (s->damaged || !s->isAlive())
 					{
 						stuffToRepair.insert(s);
 					}
@@ -2496,7 +2502,7 @@ bool CityView::handleKeyDown(Event *e)
 				for (auto &v : state->vehicles)
 				{
 					if (v.second->currentBuilding || v.second->city != state->current_city ||
-					    v.second->crashed || v.second->falling)
+					    v.second->crashed || v.second->falling || !v.second->tileObject)
 					{
 						continue;
 					}

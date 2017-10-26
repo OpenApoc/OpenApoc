@@ -84,6 +84,7 @@ class Agent : public StateObject,
 	bool recentlyHired = false;
 	bool recentryTransferred = false;
 	bool recentlyFought = false;
+	float healingProgress = 0.0f;
 
 	void hire(GameState &state, StateRef<Building> newHome);
 	void transfer(GameState &state, StateRef<Building> newHome);
@@ -174,6 +175,7 @@ class Agent : public StateObject,
 	void update(GameState &state, unsigned ticks);
 	void updateEachSecond(GameState &state);
 	void updateDaily(GameState &state);
+	void updateHourly(GameState &state);
 	void updateMovement(GameState &state, unsigned ticks);
 
 	void trainPhysical(GameState &state, unsigned ticks);

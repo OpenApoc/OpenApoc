@@ -118,11 +118,36 @@ void CityTileView::eventOccurred(Event *e)
 	{
 		switch (e->keyboard().KeyCode)
 		{
+			case SDLK_w:
+			{
+				DEBUG_SHOW_ALIEN = !DEBUG_SHOW_ALIEN;
+				return;
+			}
 			case SDLK_F2:
 			{
 				DEBUG_SHOW_ROAD_PATHFINDING = !DEBUG_SHOW_ROAD_PATHFINDING;
 				return;
 			}
+			case SDLK_PAGEUP:
+				if (DEBUG_LAYER == -1 || DEBUG_LAYER >= map.size.z)
+				{
+					DEBUG_LAYER = 0;
+				}
+				else
+				{
+					DEBUG_LAYER++;
+				}
+				return;
+			case SDLK_PAGEDOWN:
+				if (DEBUG_LAYER <= 0)
+				{
+					DEBUG_LAYER = 0;
+				}
+				else
+				{
+					DEBUG_LAYER--;
+				}
+				return;
 			case SDLK_F3:
 			{
 				DEBUG_SHOW_MISC_TYPE++;
@@ -399,6 +424,10 @@ void CityTileView::render()
 													DEBUG_SHOW_MISC_TYPE = 0;
 													break;
 											}
+										}
+										if (DEBUG_LAYER >= 0)
+										{
+											visible = s->initialPosition.z == DEBUG_LAYER;
 										}
 										if (DEBUG_SHOW_SLOPES)
 										{

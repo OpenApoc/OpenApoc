@@ -95,6 +95,7 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 	if (fileName == "citymap1")
 	{
 		city->initial_tiles[Vec3<int>{50, 109, 4}] = {&state, "CITYTILE_CITYMAP_83"};
+		city->initial_tiles.erase(Vec3<int>{70, 90, 3});
 	}
 	if (fileName == "citymap2")
 	{
