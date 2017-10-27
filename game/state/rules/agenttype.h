@@ -183,7 +183,12 @@ class AgentType : public StateObject
 
 	EquipmentLayoutSlot *getFirstSlot(EquipmentSlotType type);
 
-	bool can_improve = false;
+	// Percentage improvement rate
+	int improvementPercentagePhysical = 0;
+	// Percentage improvement rate
+	int improvementPercentagePsi = 0;
+	// Can be assigned to training
+	bool canTrain = false;
 	// Can this be generated for the player
 	bool playable = false;
 	// Can this be controlled by a player (if false, even when control is gained, AI will act)

@@ -4024,66 +4024,81 @@ int BattleUnit::rollForPrimaryStat(GameState &state, int experience)
 // except psi which assumes it's same 3x limit that is applied when using psi gym
 void BattleUnit::processExperience(GameState &state)
 {
-	if (!agent->type->can_improve)
-	{
-		return;
-	}
 	int secondaryXP = experiencePoints.accuracy + experiencePoints.bravery +
 	                  experiencePoints.psi_attack + experiencePoints.psi_energy +
 	                  experiencePoints.reactions;
 	if (agent->current_stats.accuracy < 100)
 	{
-		agent->current_stats.accuracy += rollForPrimaryStat(state, experiencePoints.accuracy);
+		agent->current_stats.accuracy += rollForPrimaryStat(
+		    state, experiencePoints.accuracy * agent->type->improvementPercentagePhysical / 100);
 	}
 	if (agent->current_stats.psi_attack < 100 &&
 	    agent->current_stats.psi_attack < agent->initial_stats.psi_attack * 3)
 	{
-		agent->current_stats.psi_attack += rollForPrimaryStat(state, experiencePoints.psi_attack);
+		agent->current_stats.psi_attack += rollForPrimaryStat(
+		    state, experiencePoints.psi_attack * agent->type->improvementPercentagePsi / 100);
 	}
 	if (agent->current_stats.psi_energy < 100 &&
 	    agent->current_stats.psi_energy < agent->initial_stats.psi_energy * 3)
 	{
-		agent->current_stats.psi_energy += rollForPrimaryStat(state, experiencePoints.psi_energy);
+		agent->current_stats.psi_energy += rollForPrimaryStat(
+		    state, experiencePoints.psi_energy * agent->type->improvementPercentagePsi / 100);
 	}
 	if (agent->current_stats.reactions < 100)
 	{
 		if (state.current_battle->mode == Battle::Mode::TurnBased)
 		{
-			agent->current_stats.reactions += rollForPrimaryStat(state, experiencePoints.reactions);
+			agent->current_stats.reactions += rollForPrimaryStat(
+			    state,
+			    experiencePoints.reactions * agent->type->improvementPercentagePhysical / 100);
 		}
 		else
 		{
-			agent->current_stats.reactions += rollForPrimaryStat(state, std::min(3, secondaryXP));
+			agent->current_stats.reactions += rollForPrimaryStat(
+			    state, std::min(3, secondaryXP * agent->type->improvementPercentagePhysical / 100));
 		}
 	}
 	if (agent->current_stats.bravery < 100)
 	{
 		agent->current_stats.bravery +=
-		    10 * randBoundsExclusive(state.rng, 0, 99) < experiencePoints.bravery * 9;
+		    10 * randBoundsExclusive(state.rng, 0, 99) <
+		    experiencePoints.bravery * 9 * agent->type->improvementPercentagePhysical / 100;
 	}
-	if (secondaryXP > 0)
+	// Units with slower improvement rates need to gain more xp to have a chance to iprove
+	// >= 100% improvement rate need just 1 xp
+	// 50% improvement rate needs 2 xp
+	// 10% improvement rate needs 10 xp
+	// ---
+	// Percentile increase also affected (units with 100% improvement gain 10% of their missing
+	// stat, units with 50% gain 5% etc)
+	if (agent->type->improvementPercentagePhysical > 0 &&
+	    secondaryXP > 100 / agent->type->improvementPercentagePhysical)
 	{
 		if (agent->current_stats.health < 100)
 		{
-			int healthBoost =
-			    randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.health) / 10;
+			int healthBoost = randBoundsInclusive(state.rng, 0, 2) +
+			                  (100 - agent->current_stats.health) / 10 *
+			                      agent->type->improvementPercentagePhysical / 100;
 			agent->current_stats.health += healthBoost;
 			agent->modified_stats.health += healthBoost;
 		}
 		if (agent->current_stats.speed < 100)
 		{
-			agent->current_stats.speed +=
-			    randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.speed) / 10;
+			agent->current_stats.speed += randBoundsInclusive(state.rng, 0, 2) +
+			                              (100 - agent->current_stats.speed) / 10 *
+			                                  agent->type->improvementPercentagePhysical / 100;
 		}
 		if (agent->current_stats.stamina < 2000)
 		{
 			agent->current_stats.stamina += randBoundsInclusive(state.rng, 0, 2) * 20 +
-			                                (2000 - agent->current_stats.stamina) / 10;
+			                                (2000 - agent->current_stats.stamina) / 10 *
+			                                    agent->type->improvementPercentagePhysical / 100;
 		}
 		if (agent->current_stats.strength < 100)
 		{
-			agent->current_stats.strength +=
-			    randBoundsInclusive(state.rng, 0, 2) + (100 - agent->current_stats.strength) / 10;
+			agent->current_stats.strength += randBoundsInclusive(state.rng, 0, 2) +
+			                                 (100 - agent->current_stats.strength) / 10 *
+			                                     agent->type->improvementPercentagePhysical / 100;
 		}
 	}
 	agent->updateModifiedStats();

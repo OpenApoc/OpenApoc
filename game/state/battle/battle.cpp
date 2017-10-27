@@ -2164,7 +2164,7 @@ void Battle::spawnReinforcements(GameState &state)
 }
 
 void Battle::handleProjectileHit(GameState &state, sp<Projectile> projectile, bool displayDoodad,
-                                 bool playSound)
+                                 bool playSound, bool expired)
 {
 	if (projectile->damageType->explosive)
 	{
@@ -2177,29 +2177,33 @@ void Battle::handleProjectileHit(GameState &state, sp<Projectile> projectile, bo
 	{
 		this->placeDoodad(projectile->doodadType, projectile->position);
 	}
-	if (playSound && projectile->impactSfx && projectile->splitIntoTypesBattle.empty())
+	if (playSound && projectile->impactSfx &&
+	    (!expired || projectile->splitIntoTypesBattle.empty()))
 	{
 		fw().soundBackend->playSample(projectile->impactSfx, projectile->position);
 	}
-	std::set<sp<Sample>> fireSounds;
-	for (auto &p : projectile->splitIntoTypesBattle)
+	if (expired)
 	{
-		auto direction = (float)randBoundsInclusive(state.rng, 0, 628) / 100.0f;
-		auto velocity = glm::normalize(
-		    VehicleType::directionToVector(VehicleType::getDirectionLarge(direction)));
-		velocity *= p->speed * PROJECTILE_VELOCITY_MULTIPLIER;
-		auto newProj = mksp<Projectile>(
-		    p->guided ? Projectile::Type::Missile : Projectile::Type::Beam, projectile->firerUnit,
-		    projectile->trackedUnit, projectile->targetPosition, projectile->position, velocity,
-		    p->turn_rate, p->ttl, p->damage, 0, 0, p->tail_size, p->projectile_sprites,
-		    p->impact_sfx, p->explosion_graphic, p->damage_type);
-		map->addObjectToMap(newProj);
-		projectiles.insert(newProj);
-		fireSounds.insert(p->fire_sfx);
-	}
-	for (auto &s : fireSounds)
-	{
-		fw().soundBackend->playSample(s, projectile->position);
+		std::set<sp<Sample>> fireSounds;
+		for (auto &p : projectile->splitIntoTypesBattle)
+		{
+			auto direction = (float)randBoundsInclusive(state.rng, 0, 628) / 100.0f;
+			auto velocity = glm::normalize(
+			    VehicleType::directionToVector(VehicleType::getDirectionLarge(direction)));
+			velocity *= p->speed * PROJECTILE_VELOCITY_MULTIPLIER;
+			auto newProj = mksp<Projectile>(
+			    p->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
+			    projectile->firerUnit, projectile->trackedUnit, projectile->targetPosition,
+			    projectile->position, velocity, p->turn_rate, p->ttl, p->damage, 0, 0, p->tail_size,
+			    p->projectile_sprites, p->impact_sfx, p->explosion_graphic, p->damage_type);
+			map->addObjectToMap(newProj);
+			projectiles.insert(newProj);
+			fireSounds.insert(p->fire_sfx);
+		}
+		for (auto &s : fireSounds)
+		{
+			fw().soundBackend->playSample(s, projectile->position);
+		}
 	}
 	projectiles.erase(projectile);
 }

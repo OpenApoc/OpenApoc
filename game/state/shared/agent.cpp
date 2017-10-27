@@ -350,6 +350,14 @@ bool Agent::hasTeleporter() const
 	return false;
 }
 
+void Agent::assignTraining(TrainingAssignment assignment)
+{
+	if (type->role == AgentType::Role::Soldier && type->canTrain)
+	{
+		trainingAssignment = assignment;
+	}
+}
+
 void Agent::hire(GameState &state, StateRef<Building> newHome)
 {
 	owner = newHome->owner;
@@ -959,7 +967,9 @@ void Agent::updateDaily(GameState &state) { recentlyFought = false; }
 
 void Agent::updateHourly(GameState &state)
 {
-	if (currentBuilding != homeBuilding)
+	// If not in home building or not in vehicle stationed in home building)
+	if (currentBuilding != homeBuilding &&
+	    (!currentVehicle || currentVehicle->currentBuilding != homeBuilding))
 	{
 		return;
 	}
@@ -979,6 +989,28 @@ void Agent::updateHourly(GameState &state)
 				{
 					healingProgress -= 1.0f;
 					modified_stats.health++;
+				}
+			}
+		}
+		// Train
+		if (trainingAssignment != TrainingAssignment::None)
+		{
+			int usage =
+			    currentBuilding->base->getUsage(state,
+			                                    trainingAssignment == TrainingAssignment::Physical
+			                                        ? FacilityType::Capacity::Training
+			                                        : FacilityType::Capacity::Psi);
+			if (usage < 999)
+			{
+				usage = std::max(100, usage);
+				// As per Roger Wong's guide
+				if (trainingAssignment == TrainingAssignment::Physical)
+				{
+					trainPhysical(state, TICKS_PER_HOUR * 100 / usage);
+				}
+				else
+				{
+					trainPsi(state, TICKS_PER_HOUR * 100 / usage);
 				}
 			}
 		}
@@ -1041,10 +1073,6 @@ void Agent::updateMovement(GameState &state, unsigned ticks)
 
 void Agent::trainPhysical(GameState &state, unsigned ticks)
 {
-	if (!type->can_improve)
-	{
-		return;
-	}
 	trainingPhysicalTicksAccumulated += ticks;
 	while (trainingPhysicalTicksAccumulated >= TICKS_PER_PHYSICAL_TRAINING)
 	{
@@ -1082,10 +1110,6 @@ void Agent::trainPhysical(GameState &state, unsigned ticks)
 
 void Agent::trainPsi(GameState &state, unsigned ticks)
 {
-	if (!type->can_improve)
-	{
-		return;
-	}
 	trainingPsiTicksAccumulated += ticks;
 	while (trainingPsiTicksAccumulated >= TICKS_PER_PSI_TRAINING)
 	{

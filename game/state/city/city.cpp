@@ -172,42 +172,44 @@ void City::notifyRoadChange(const Vec3<int> &position, bool intact)
 }
 
 void City::handleProjectileHit(GameState &state, sp<Projectile> projectile, bool displayDoodad,
-                               bool playSound)
+                               bool playSound, bool expired)
 {
 	if (displayDoodad && projectile->doodadType)
 	{
 		placeDoodad(projectile->doodadType, projectile->position);
 	}
 
-	if (playSound && projectile->impactSfx && projectile->splitIntoTypesCity.empty())
+	if (playSound && projectile->impactSfx && (!expired || projectile->splitIntoTypesCity.empty()))
 	{
 		fw().soundBackend->playSample(projectile->impactSfx, projectile->position);
 	}
-
-	std::set<sp<Sample>> fireSounds;
-	for (auto &p : projectile->splitIntoTypesCity)
+	if (expired)
 	{
-		auto direction = (float)randBoundsInclusive(state.rng, 0, 628) / 100.0f;
-		auto velocity = glm::normalize(
-		    VehicleType::directionToVector(VehicleType::getDirectionLarge(direction)));
-		velocity *= p->speed * PROJECTILE_VELOCITY_MULTIPLIER;
-		auto newProj = mksp<Projectile>(
-		    p->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
-		    projectile->firerVehicle, projectile->trackedVehicle, projectile->targetPosition,
-		    projectile->position, velocity, p->turn_rate, p->ttl, p->damage, 0, 0, p->tail_size,
-		    p->projectile_sprites, p->impact_sfx, p->explosion_graphic,
-		    state.city_common_image_list->projectileVoxelMap, p->stunTicks, p->splitIntoTypes,
-		    projectile->manualFire);
-		map->addObjectToMap(newProj);
-		projectiles.insert(newProj);
-		if (p->fire_sfx)
+		std::set<sp<Sample>> fireSounds;
+		for (auto &p : projectile->splitIntoTypesCity)
 		{
-			fireSounds.insert(p->fire_sfx);
+			auto direction = (float)randBoundsInclusive(state.rng, 0, 628) / 100.0f;
+			auto velocity = glm::normalize(
+			    VehicleType::directionToVector(VehicleType::getDirectionLarge(direction)));
+			velocity *= p->speed * PROJECTILE_VELOCITY_MULTIPLIER;
+			auto newProj = mksp<Projectile>(
+			    p->guided ? Projectile::Type::Missile : Projectile::Type::Beam,
+			    projectile->firerVehicle, projectile->trackedVehicle, projectile->targetPosition,
+			    projectile->position, velocity, p->turn_rate, p->ttl, p->damage, 0, 0, p->tail_size,
+			    p->projectile_sprites, p->impact_sfx, p->explosion_graphic,
+			    state.city_common_image_list->projectileVoxelMap, p->stunTicks, p->splitIntoTypes,
+			    projectile->manualFire);
+			map->addObjectToMap(newProj);
+			projectiles.insert(newProj);
+			if (p->fire_sfx)
+			{
+				fireSounds.insert(p->fire_sfx);
+			}
 		}
-	}
-	for (auto &s : fireSounds)
-	{
-		fw().soundBackend->playSample(s, projectile->position);
+		for (auto &s : fireSounds)
+		{
+			fw().soundBackend->playSample(s, projectile->position);
+		}
 	}
 	projectiles.erase(projectile);
 }
@@ -315,37 +317,53 @@ void City::generatePortals(GameState &state)
 {
 	if (portals.empty())
 	{
-		// FIXME: Implement proper portals
-		// According to skin36, portals must have empty 4x4x4 around them
-		// and spawn within 100x100 around city center
-
-		// FIXME: Implement portals in alien city staying where they are
-		// and starting where they should
-
-		static const int iterLimit = 1000;
-		for (auto &p : portals)
+		if (!initial_portals.empty())
 		{
-			p->remove(state);
-		}
-		this->portals.clear();
-
-		std::uniform_int_distribution<int> xyPos(20, 120);
-		std::uniform_int_distribution<int> zPos(2, 8);
-		for (int p = 0; p < 3; p++)
-		{
-			for (int i = 0; i < iterLimit; i++)
+			for (auto &p : initial_portals)
 			{
-				Vec3<float> pos(xyPos(state.rng), xyPos(state.rng), zPos(state.rng));
+				auto doodad = mksp<Doodad>((Vec3<float>)p + Vec3<float>{0.5f, 0.5f, 0.5f},
+				                           StateRef<DoodadType>{&state, "DOODAD_6_DIMENSION_GATE"});
+				doodad->voxelMap = state.city_common_image_list->portalVoxelMap;
+				map->addObjectToMap(doodad);
+				this->portals.push_back(doodad);
+			}
+			auto pos = listRandomiser(state.rng, initial_portals);
+			cityViewScreenCenter = pos;
+		}
+		else
+		{
+			// FIXME: Implement proper portals
+			// According to skin36, portals must have empty 4x4x4 around them
+			// and spawn within 100x100 around city center
 
-				if (map->tileIsValid(pos) && map->getTile(pos)->ownedObjects.empty())
+			// FIXME: Implement portals in alien city staying where they are
+			// and starting where they should
+
+			static const int iterLimit = 1000;
+			for (auto &p : portals)
+			{
+				p->remove(state);
+			}
+			this->portals.clear();
+
+			std::uniform_int_distribution<int> xyPos(20, 120);
+			std::uniform_int_distribution<int> zPos(2, 8);
+			for (int p = 0; p < 3; p++)
+			{
+				for (int i = 0; i < iterLimit; i++)
 				{
-					auto doodad =
-					    mksp<Doodad>(pos + Vec3<float>{0.5f, 0.5f, 0.5f},
-					                 StateRef<DoodadType>{&state, "DOODAD_6_DIMENSION_GATE"});
-					doodad->voxelMap = state.city_common_image_list->portalVoxelMap;
-					map->addObjectToMap(doodad);
-					this->portals.push_back(doodad);
-					break;
+					Vec3<float> pos(xyPos(state.rng), xyPos(state.rng), zPos(state.rng));
+
+					if (map->tileIsValid(pos) && map->getTile(pos)->ownedObjects.empty())
+					{
+						auto doodad =
+						    mksp<Doodad>(pos + Vec3<float>{0.5f, 0.5f, 0.5f},
+						                 StateRef<DoodadType>{&state, "DOODAD_6_DIMENSION_GATE"});
+						doodad->voxelMap = state.city_common_image_list->portalVoxelMap;
+						map->addObjectToMap(doodad);
+						this->portals.push_back(doodad);
+						break;
+					}
 				}
 			}
 		}

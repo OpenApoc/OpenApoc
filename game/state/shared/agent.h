@@ -48,6 +48,13 @@ enum class Rank
 	Commander = 6
 };
 
+enum class TrainingAssignment
+{
+	None,
+	Physical,
+	Psi
+};
+
 class Agent : public StateObject,
               public std::enable_shared_from_this<Agent>,
               public EquippableObject
@@ -80,11 +87,14 @@ class Agent : public StateObject,
 	// Training
 	unsigned trainingPhysicalTicksAccumulated = 0;
 	unsigned trainingPsiTicksAccumulated = 0;
+	TrainingAssignment trainingAssignment = TrainingAssignment::None;
 
 	bool recentlyHired = false;
 	bool recentryTransferred = false;
 	bool recentlyFought = false;
 	float healingProgress = 0.0f;
+
+	void assignTraining(TrainingAssignment assignment);
 
 	void hire(GameState &state, StateRef<Building> newHome);
 	void transfer(GameState &state, StateRef<Building> newHome);

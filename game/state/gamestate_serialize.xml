@@ -125,7 +125,9 @@
 		<member>built_in_weapon_left</member>
 		<member>built_in_weapon_right</member>
 		<member>equipment_layout</member>
-		<member>can_improve</member>
+		<member>improvementPercentagePhysical</member>
+		<member>improvementPercentagePsi</member>
+		<member>canTrain</member>
 		<member>playable</member>
 		<member>allowsDirectControl</member>
 		<member>aiType</member>
@@ -230,6 +232,7 @@
 		<member>rank</member>
 		<member>trainingPhysicalTicksAccumulated</member>
 		<member>trainingPsiTicksAccumulated</member>
+		<member>trainingAssignment</member>
 		<member>recentlyHired</member>
 		<member>recentryTransferred</member>
 		<member>recentlyFought</member>
@@ -866,6 +869,7 @@
 		<member type="Section">doodads</member>
 		<member type="Section">portals</member>
 		<member type="Section">projectiles</member>
+		<member>initial_portals</member>
 		<member>tileToRoadSegmentMap</member>
 		<member>roadSegments</member>
 		<member>researchUnlock</member>
@@ -1821,6 +1825,12 @@
 		<value>Captain</value>
 		<value>Colonel</value>
 		<value>Commander</value>
+	</enum>
+	<enum>
+		<name>TrainingAssignment</name>
+		<value>None</value>
+		<value>Physical</value>
+		<value>Psi</value>
 	</enum>
 	<enum>
 		<name>MoraleState</name>

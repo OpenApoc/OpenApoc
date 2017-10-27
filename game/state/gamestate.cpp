@@ -694,6 +694,12 @@ void GameState::fillPlayerStartingProperty()
 		while (count > 0)
 		{
 			auto agent = this->agent_generator.createAgent(*this, this->getPlayer(), type);
+			if (agent->type->canTrain)
+			{
+				agent->trainingAssignment = agent->initial_stats.psi_energy > 30
+				                                ? TrainingAssignment::Psi
+				                                : TrainingAssignment::Physical;
+			}
 			agent->homeBuilding = base->building;
 			agent->city = agent->homeBuilding->city;
 			agent->enterBuilding(*this, agent->homeBuilding);
@@ -741,6 +747,12 @@ void GameState::fillPlayerStartingProperty()
 			}
 		}
 	}
+
+	// Start player centered on base
+	auto bldBounds = bld->bounds;
+
+	Vec2<int> buildingCenter = (bldBounds.p0 + bldBounds.p1) / 2;
+	bld->city->cityViewScreenCenter = {buildingCenter.x, buildingCenter.y, 1.0f};
 }
 
 void GameState::updateEconomy()
@@ -1388,7 +1400,7 @@ void GameState::logEvent(GameEvent *ev)
 	}
 	else if (GameBuildingEvent *gve = dynamic_cast<GameBuildingEvent *>(ev))
 	{
-		location = {gve->building->bounds.p0.x, gve->building->bounds.p0.y, 0};
+		location = {gve->building->bounds.p0.x, gve->building->bounds.p0.y, 1};
 	}
 	else if (GameAgentEvent *gae = dynamic_cast<GameAgentEvent *>(ev))
 	{
@@ -1405,7 +1417,7 @@ void GameState::logEvent(GameEvent *ev)
 	{
 		location =
 		    Vec3<int>(gbe->base->building->bounds.p0.x + gbe->base->building->bounds.p1.x,
-		              gbe->base->building->bounds.p0.y + gbe->base->building->bounds.p1.y, 0) /
+		              gbe->base->building->bounds.p0.y + gbe->base->building->bounds.p1.y, 1) /
 		    2;
 	}
 	// TODO: Other event types

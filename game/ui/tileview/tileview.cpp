@@ -38,6 +38,10 @@ void TileView::eventOccurred(Event *e)
 	{
 		switch (e->keyboard().KeyCode)
 		{
+			case SDLK_F1:
+				debugHotkeyMode = !debugHotkeyMode;
+				LogWarning("DEBUG MODE %s", debugHotkeyMode);
+				break;
 			case SDLK_UP:
 				scrollUpKB = true;
 				break;

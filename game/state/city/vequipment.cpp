@@ -7,6 +7,7 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/city/citycommonimagelist.h"
+#include "game/state/rules/city/vammotype.h"
 #include "game/state/rules/city/vequipmenttype.h"
 #include "game/state/shared/projectile.h"
 #include "game/state/tilemap/tilemap.h"
@@ -149,6 +150,14 @@ bool VEquipment::reload(GameState &state, StateRef<Base> base)
 {
 	if (base)
 	{
+		if (type->max_ammo == 0)
+		{
+			return false;
+		}
+		if (!type->ammo_type)
+		{
+			return reload(type->max_ammo) > 0;
+		}
 		int ammoAvailable = base->inventoryVehicleAmmo[type->ammo_type.id];
 		auto ammoSpent = reload(ammoAvailable);
 		base->inventoryVehicleAmmo[type->ammo_type.id] -= ammoSpent;
@@ -170,7 +179,7 @@ void VEquipment::equipFromBase(GameState &state, StateRef<Base> base)
 void VEquipment::unequipToBase(GameState &state, StateRef<Base> base)
 {
 	base->inventoryVehicleEquipment[type.id]++;
-	if (ammo > 0)
+	if (ammo > 0 && type->ammo_type)
 	{
 		base->inventoryVehicleAmmo[type->ammo_type.id] += ammo;
 	}

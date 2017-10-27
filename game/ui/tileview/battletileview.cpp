@@ -351,17 +351,6 @@ void BattleTileView::eventOccurred(Event *e)
 {
 	if (e->type() == EVENT_KEY_DOWN)
 	{
-		switch (e->keyboard().KeyCode)
-		{
-			case SDLK_F1:
-			{
-				debugHotkeyMode = !debugHotkeyMode;
-				LogWarning("DEBUG MODE %s", debugHotkeyMode);
-				return;
-			}
-			default:
-				break;
-		}
 		if (debugHotkeyMode)
 		{
 			switch (e->keyboard().KeyCode)

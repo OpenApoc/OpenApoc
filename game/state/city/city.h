@@ -87,6 +87,7 @@ class City : public StateObject, public std::enable_shared_from_this<City>
 
 	StateRefMap<SceneryTileType> tile_types;
 	std::map<Vec3<int>, StateRef<SceneryTileType>> initial_tiles;
+	std::list<Vec3<int>> initial_portals;
 	StateRefMap<Building> buildings;
 	std::vector<sp<Scenery>> scenery;
 	std::list<sp<Doodad>> doodads;
@@ -118,7 +119,7 @@ class City : public StateObject, public std::enable_shared_from_this<City>
 	int cityViewOrgButtonIndex = 0;
 
 	void handleProjectileHit(GameState &state, sp<Projectile> projectile, bool displayDoodad,
-	                         bool playSound);
+	                         bool playSound, bool expired);
 
 	void update(GameState &state, unsigned int ticks);
 	void hourlyLoop(GameState &state);

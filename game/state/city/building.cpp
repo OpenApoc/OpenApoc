@@ -842,16 +842,80 @@ void Building::alienGrowth(GameState &state)
 
 void Building::alienMovement(GameState &state)
 {
+	if (!hasAliens())
+	{
+		return;
+	}
 	// Run once when crew landed and once every hour after grow
 	// Pick 15 intact buildings within range of 15 tiles (counting from center to center)
+	std::list<StateRef<Building>> neighbours;
+	for (auto &b : city->buildings)
+	{
+		auto distVec = bounds.p0 + bounds.p1 - b.second->bounds.p0 - b.second->bounds.p1;
+		distVec /= 2;
+		int distance = std::abs(distVec.x) + std::abs(distVec.y);
+		if (distance > 0 && distance <= 15)
+		{
+			neighbours.emplace_back(&state, b.first);
+		}
+		if (neighbours.size() >= 15)
+		{
+			break;
+		}
+	}
+	if (neighbours.empty())
+	{
+		return;
+	}
 	// Pick one random of them
+	auto bld = listRandomiser(state.rng, neighbours);
 	// For every alien calculate move percent as:
 	//   alien's move chance + random 0..30
 	// Calculate amount of moving aliens
+	std::map<StateRef<AgentType>, int> moveAmounts;
+	int totalMoveAmount = 0;
+	for (auto &e : current_crew)
+	{
+		if (e.second == 0)
+		{
+			continue;
+		}
+		int movePercent =
+		    std::min(100, e.first->movementPercent + randBoundsInclusive(state.rng, 0, 30));
+		int moveAmount = e.second * movePercent / 100;
+		if (moveAmount > 0)
+		{
+			moveAmounts[e.first] = moveAmount;
+			totalMoveAmount += moveAmount;
+		}
+	}
 	// Chance to move is:
 	//   15 + 3 * amount + 20 (if owner is friendly+ to aliens)
-	// If success then everybody moves according to percentage
-	LogWarning("Implement alien movement");
+	int friendlyBonus = 0;
+	switch (bld->owner->isRelatedTo(state.getAliens()))
+	{
+		case Organisation::Relation::Friendly:
+		case Organisation::Relation::Allied:
+			friendlyBonus = 20;
+			break;
+		default:
+			friendlyBonus = 0;
+			break;
+	}
+	bool moving = randBoundsInclusive(state.rng, 0, 100) < 15 + 3 * totalMoveAmount + friendlyBonus;
+	if (!moving)
+	{
+		return;
+	}
+	for (auto &e : moveAmounts)
+	{
+		current_crew[e.first] -= e.second;
+		bld->current_crew[e.first] += e.second;
+	}
+	if (bld->base)
+	{
+		fw().pushEvent(new GameDefenseEvent(GameEventType::DefendTheBase, base, state.getAliens()));
+	}
 }
 
 void Building::underAttack(GameState &state, StateRef<Organisation> attacker)
