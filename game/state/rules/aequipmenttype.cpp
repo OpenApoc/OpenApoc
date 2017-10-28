@@ -126,7 +126,12 @@ bool AEquipmentType::canBeUsed(GameState &state, StateRef<Organisation> owner) c
 	return true;
 }
 
-float AEquipmentType::getRateOfFire() const { return (float)TICKS_PER_SECOND / (float)fire_delay; }
+float AEquipmentType::getRoundsPerSecond() const
+{
+	return (float)TICKS_PER_SECOND / (float)fire_delay;
+}
 
 int AEquipmentType::getRangeInTiles() const { return range / (int)VELOCITY_SCALE_BATTLE.x; }
+
+int AEquipmentType::getRangeInMetres() const { return range / 16; }
 }

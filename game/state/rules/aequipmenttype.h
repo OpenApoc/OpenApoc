@@ -20,6 +20,7 @@ class Organisation;
 class DamageType;
 class DamageModifier;
 class AgentType;
+class UfopaediaEntry;
 enum class BodyPart;
 
 enum class TriggerType
@@ -146,8 +147,7 @@ class AEquipmentType : public StateObject
 	* Since playable alpha 0.1 this is already in OpenApoc ticks
 	*/
 	int fire_delay = 0;
-	/* returns shots per second */
-	float getRateOfFire() const;
+	float getRoundsPerSecond() const;
 
 	// This is used for aliens with firing animations that have pre-fire frames
 	// Like spitter that first throws his tube forward and only then emits a shot
@@ -161,6 +161,7 @@ class AEquipmentType : public StateObject
 	int range = 0;
 	/* returns tiles */
 	int getRangeInTiles() const;
+	int getRangeInMetres() const;
 
 	// Projectile's Time To Live, in voxels travelled
 	float ttl = 0.0f;

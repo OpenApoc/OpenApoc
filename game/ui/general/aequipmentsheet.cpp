@@ -108,7 +108,8 @@ void AEquipmentSheet::displayAmmo(sp<AEquipment> item, sp<AEquipmentType> itemTy
 	form->findControlTyped<Label>("LABEL_2_R")->setText(format("%d", itemType->accuracy));
 
 	form->findControlTyped<Label>("LABEL_3_L")->setText(tr("Fire rate"));
-	form->findControlTyped<Label>("LABEL_3_R")->setText(format("%.2f", itemType->getRateOfFire()));
+	form->findControlTyped<Label>("LABEL_3_R")
+	    ->setText(format("%.2f", itemType->getRoundsPerSecond()));
 
 	form->findControlTyped<Label>("LABEL_4_L")->setText(tr("Range"));
 	form->findControlTyped<Label>("LABEL_4_R")->setText(format("%d", itemType->getRangeInTiles()));
@@ -142,7 +143,8 @@ void AEquipmentSheet::displayWeapon(sp<AEquipment> item, sp<AEquipmentType> item
 	form->findControlTyped<Label>("LABEL_2_R")->setText(format("%d", ammoType->accuracy));
 
 	form->findControlTyped<Label>("LABEL_3_L")->setText(tr("Fire rate"));
-	form->findControlTyped<Label>("LABEL_3_R")->setText(format("%.2f", ammoType->getRateOfFire()));
+	form->findControlTyped<Label>("LABEL_3_R")
+	    ->setText(format("%.2f", ammoType->getRoundsPerSecond()));
 
 	form->findControlTyped<Label>("LABEL_4_L")->setText(tr("Range"));
 	form->findControlTyped<Label>("LABEL_4_R")->setText(format("%d", ammoType->getRangeInTiles()));
