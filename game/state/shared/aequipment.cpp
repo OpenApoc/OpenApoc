@@ -258,7 +258,7 @@ int AEquipment::getWeight() const
 
 int AEquipment::getFireCost(WeaponAimingMode fireMode)
 {
-	return getPayloadType()->fire_delay / (int)fireMode;
+	return getPayloadType()->fire_delay / TICKS_MULTIPLIER / (int)fireMode;
 }
 
 int AEquipment::getFireCost(WeaponAimingMode fireMode, int maxTU)
