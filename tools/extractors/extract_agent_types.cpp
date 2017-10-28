@@ -1100,7 +1100,6 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 		a->equipment_layout = {
 		    &state, format("%s%s", AgentEquipmentLayout::getPrefix(), canon_string(name))};
 
-		a->can_improve = false;
 		a->score = data.score;
 
 		// Bodies

@@ -694,10 +694,25 @@ void CityView::orderSelect(StateRef<Agent> agent, bool inverse, bool additive)
 	}
 	agent = state->current_city->cityViewSelectedAgents.front();
 	auto agentForm = this->uiTabs[2];
-
-	// Set form stuff for agent
-	// FIXME: Implement agent select controls for psi and phys train
-	LogWarning("FIX Implement agent select controls for psi and phys train");
+	LogWarning("FIX: Proper multiselect handle for agent controls");
+	if (agent->type->role == AgentType::Role::Soldier)
+	{
+		switch (agent->trainingAssignment)
+		{
+			case TrainingAssignment::None:
+				agentForm->findControlTyped<CheckBox>("BUTTON_AGENT_PHYSICAL")->setChecked(false);
+				agentForm->findControlTyped<CheckBox>("BUTTON_AGENT_PSI")->setChecked(false);
+				break;
+			case TrainingAssignment::Physical:
+				agentForm->findControlTyped<CheckBox>("BUTTON_AGENT_PHYSICAL")->setChecked(true);
+				agentForm->findControlTyped<CheckBox>("BUTTON_AGENT_PSI")->setChecked(false);
+				break;
+			case TrainingAssignment::Psi:
+				agentForm->findControlTyped<CheckBox>("BUTTON_AGENT_PHYSICAL")->setChecked(false);
+				agentForm->findControlTyped<CheckBox>("BUTTON_AGENT_PSI")->setChecked(true);
+				break;
+		}
+	}
 }
 
 void CityView::orderFire(Vec3<float> position)
@@ -876,19 +891,6 @@ CityView::CityView(sp<GameState> state)
 
 	// Refresh base views
 	resume();
-
-	if (state->newGame)
-	{
-		auto bld = state->current_base->building;
-		if (!bld)
-		{
-			LogError("Base with invalid bld");
-		}
-		auto bldBounds = bld->bounds;
-
-		Vec2<int> buildingCenter = (bldBounds.p0 + bldBounds.p1) / 2;
-		this->setScreenCenterTile(buildingCenter);
-	}
 
 	this->baseForm->findControl("BUTTON_TAB_1")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
@@ -1199,7 +1201,118 @@ CityView::CityView(sp<GameState> state)
 		});
 	agentForm->findControl("BUTTON_GOTO_BASE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { orderGoToBase(); });
-
+	agentForm->findControl("BUTTON_AGENT_PHYSICAL")
+	    ->addCallback(FormEventType::MouseClick, [this](FormsEvent *e) {
+		    auto checkBox = std::static_pointer_cast<CheckBox>(e->forms().RaisedBy);
+		    bool checked = !checkBox->isChecked();
+		    if (checked)
+		    {
+			    this->uiTabs[2]->findControlTyped<CheckBox>("BUTTON_AGENT_PSI")->setChecked(false);
+		    }
+		    for (auto &a : this->state->current_city->cityViewSelectedAgents)
+		    {
+			    if (checked)
+			    {
+				    a->assignTraining(TrainingAssignment::Physical);
+			    }
+			    else if (a->trainingAssignment == TrainingAssignment::Physical)
+			    {
+				    a->assignTraining(TrainingAssignment::None);
+			    }
+		    }
+		    // Uncheck button if need to
+		    if (checked)
+		    {
+			    checked = false;
+			    for (auto &a : this->state->current_city->cityViewSelectedAgents)
+			    {
+				    if (a->trainingAssignment != TrainingAssignment::None)
+				    {
+					    checked = true;
+					    break;
+				    }
+			    }
+			    if (!checked)
+			    {
+				    checkBox->setChecked(!checkBox->isChecked());
+			    }
+		    }
+		    // Check other button if need to
+		    else
+		    {
+			    for (auto &a : this->state->current_city->cityViewSelectedAgents)
+			    {
+				    if (a->trainingAssignment == TrainingAssignment::Psi)
+				    {
+					    checked = true;
+					    break;
+				    }
+			    }
+			    if (checked)
+			    {
+				    this->uiTabs[2]
+				        ->findControlTyped<CheckBox>("BUTTON_AGENT_PSI")
+				        ->setChecked(true);
+			    }
+		    }
+		});
+	agentForm->findControl("BUTTON_AGENT_PSI")
+	    ->addCallback(FormEventType::MouseClick, [this](FormsEvent *e) {
+		    auto checkBox = std::static_pointer_cast<CheckBox>(e->forms().RaisedBy);
+		    bool checked = !checkBox->isChecked();
+		    if (checked)
+		    {
+			    this->uiTabs[2]
+			        ->findControlTyped<CheckBox>("BUTTON_AGENT_PHYSICAL")
+			        ->setChecked(false);
+		    }
+		    for (auto &a : this->state->current_city->cityViewSelectedAgents)
+		    {
+			    if (checked)
+			    {
+				    a->assignTraining(TrainingAssignment::Psi);
+			    }
+			    else if (a->trainingAssignment == TrainingAssignment::Psi)
+			    {
+				    a->assignTraining(TrainingAssignment::None);
+			    }
+		    }
+		    // Uncheck button if need to
+		    if (checked)
+		    {
+			    checked = false;
+			    for (auto &a : this->state->current_city->cityViewSelectedAgents)
+			    {
+				    if (a->trainingAssignment != TrainingAssignment::None)
+				    {
+					    checked = true;
+					    break;
+				    }
+			    }
+			    if (!checked)
+			    {
+				    checkBox->setChecked(!checkBox->isChecked());
+			    }
+		    }
+		    // Check other button if need to
+		    else
+		    {
+			    for (auto &a : this->state->current_city->cityViewSelectedAgents)
+			    {
+				    if (a->trainingAssignment == TrainingAssignment::Physical)
+				    {
+					    checked = true;
+					    break;
+				    }
+			    }
+			    if (checked)
+			    {
+				    this->uiTabs[2]
+				        ->findControlTyped<CheckBox>("BUTTON_AGENT_PHYSICAL")
+				        ->setChecked(true);
+			    }
+		    }
+		});
 	this->uiTabs[3]
 	    ->findControl("BUTTON_RESEARCH")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
@@ -2471,108 +2584,114 @@ bool CityView::handleKeyDown(Event *e)
 			modifierLCtrl = true;
 			return true;
 	}
-	// Cheat codes
+
 	if (e->type() == EVENT_KEY_DOWN)
 	{
-		switch (e->keyboard().KeyCode)
+		// Cheat codes
+		if (debugHotkeyMode)
 		{
-			case SDLK_r:
+			switch (e->keyboard().KeyCode)
 			{
-				LogInfo("Repairing...");
-				std::set<sp<Scenery>> stuffToRepair;
-				for (auto &s : state->current_city->scenery)
+				case SDLK_r:
 				{
-					if (s->damaged || !s->isAlive())
+					LogInfo("Repairing...");
+					std::set<sp<Scenery>> stuffToRepair;
+					for (auto &s : state->current_city->scenery)
 					{
-						stuffToRepair.insert(s);
+						if (s->damaged || !s->isAlive())
+						{
+							stuffToRepair.insert(s);
+						}
 					}
-				}
-				LogInfo("Repairing %u tiles out of %u", static_cast<unsigned>(stuffToRepair.size()),
-				        static_cast<unsigned>(state->current_city->scenery.size()));
+					LogInfo("Repairing %u tiles out of %u",
+					        static_cast<unsigned>(stuffToRepair.size()),
+					        static_cast<unsigned>(state->current_city->scenery.size()));
 
-				for (auto &s : stuffToRepair)
+					for (auto &s : stuffToRepair)
+					{
+						s->repair(*state);
+					}
+					return true;
+				}
+				case SDLK_x:
 				{
-					s->repair(*state);
+					LogWarning("Crashing!");
+					for (auto &v : state->vehicles)
+					{
+						if (v.second->currentBuilding || v.second->city != state->current_city ||
+						    v.second->crashed || v.second->falling || !v.second->tileObject)
+						{
+							continue;
+						}
+						v.second->health = v.second->type->crash_health > 0
+						                       ? v.second->type->crash_health
+						                       : v.second->getMaxHealth() / 4;
+						if (v.second->type->type == VehicleType::Type::UFO)
+						{
+							v.second->crash(*state, nullptr);
+						}
+						else
+						{
+							v.second->startFalling(*state);
+						}
+					}
+					return true;
 				}
-				return true;
-			}
-			case SDLK_x:
-			{
-				LogWarning("Crashing!");
-				for (auto &v : state->vehicles)
+				case SDLK_u:
 				{
-					if (v.second->currentBuilding || v.second->city != state->current_city ||
-					    v.second->crashed || v.second->falling || !v.second->tileObject)
-					{
-						continue;
-					}
-					v.second->health = v.second->type->crash_health > 0
-					                       ? v.second->type->crash_health
-					                       : v.second->getMaxHealth() / 4;
-					if (v.second->type->type == VehicleType::Type::UFO)
-					{
-						v.second->crash(*state, nullptr);
-					}
-					else
-					{
-						v.second->startFalling(*state);
-					}
+					LogWarning("Spawning crashed UFOs...");
+
+					bool nothing = false;
+					auto pos = centerPos;
+					pos.z = 9;
+					auto ufo = state->current_city->placeVehicle(
+					    *state, {state.get(), "VEHICLETYPE_ALIEN_PROBE"}, state->getAliens(), pos);
+					ufo->crash(*state, nullptr);
+					pos.z++;
+					ufo = state->current_city->placeVehicle(
+					    *state, {state.get(), "VEHICLETYPE_ALIEN_BATTLESHIP"}, state->getAliens(),
+					    pos);
+					ufo->crash(*state, nullptr);
+					ufo->applyDamage(*state, 1, 0, nothing);
+					pos.z++;
+					ufo = state->current_city->placeVehicle(
+					    *state, {state.get(), "VEHICLETYPE_ALIEN_TRANSPORTER"}, state->getAliens(),
+					    pos);
+					ufo->crash(*state, nullptr);
+					ufo->applyDamage(*state, 1, 0, nothing);
+
+					return true;
 				}
-				return true;
-			}
-			case SDLK_u:
-			{
-				LogWarning("Spawning crashed UFOs...");
-
-				bool nothing = false;
-				auto pos = centerPos;
-				pos.z = 9;
-				auto ufo = state->current_city->placeVehicle(
-				    *state, {state.get(), "VEHICLETYPE_ALIEN_PROBE"}, state->getAliens(), pos);
-				ufo->crash(*state, nullptr);
-				pos.z++;
-				ufo = state->current_city->placeVehicle(
-				    *state, {state.get(), "VEHICLETYPE_ALIEN_BATTLESHIP"}, state->getAliens(), pos);
-				ufo->crash(*state, nullptr);
-				ufo->applyDamage(*state, 1, 0, nothing);
-				pos.z++;
-				ufo = state->current_city->placeVehicle(
-				    *state, {state.get(), "VEHICLETYPE_ALIEN_TRANSPORTER"}, state->getAliens(),
-				    pos);
-				ufo->crash(*state, nullptr);
-				ufo->applyDamage(*state, 1, 0, nothing);
-
-				return true;
-			}
-			case SDLK_a:
-			{
-				LogWarning("All you ever want...");
-
-				for (auto &e : state->vehicle_equipment)
+				case SDLK_a:
 				{
-					if (e.second->store_space > 0)
-					{
-						state->current_base->inventoryVehicleEquipment[e.first]++;
-					}
-				}
-				for (auto &e : state->vehicle_ammo)
-				{
-					state->current_base->inventoryVehicleAmmo[e.first] += 10;
-				}
+					LogWarning("All you ever want...");
 
-				return true;
-			}
-			case SDLK_b:
-			{
-				LogWarning("Spawning base defense mission");
-				Vec3<float> pos = {state->current_base->building->bounds.p0.x - 1,
-				                   state->current_base->building->bounds.p0.y - 1, 10};
-				auto v = state->cities["CITYMAP_HUMAN"]->placeVehicle(
-				    *state, StateRef<VehicleType>{state.get(), "VEHICLETYPE_ALIEN_TRANSPORTER"},
-				    state->getAliens(), pos);
-				v->setMission(*state, VehicleMission::infiltrateOrSubvertBuilding(
-				                          *state, *v, false, state->current_base->building));
-				return true;
+					for (auto &e : state->vehicle_equipment)
+					{
+						if (e.second->store_space > 0)
+						{
+							state->current_base->inventoryVehicleEquipment[e.first]++;
+						}
+					}
+					for (auto &e : state->vehicle_ammo)
+					{
+						state->current_base->inventoryVehicleAmmo[e.first] += 10;
+					}
+
+					return true;
+				}
+				case SDLK_b:
+				{
+					LogWarning("Spawning base defense mission");
+					Vec3<float> pos = {state->current_base->building->bounds.p0.x - 1,
+					                   state->current_base->building->bounds.p0.y - 1, 10};
+					auto v = state->cities["CITYMAP_HUMAN"]->placeVehicle(
+					    *state, StateRef<VehicleType>{state.get(), "VEHICLETYPE_ALIEN_TRANSPORTER"},
+					    state->getAliens(), pos);
+					v->setMission(*state, VehicleMission::infiltrateOrSubvertBuilding(
+					                          *state, *v, false, state->current_base->building));
+					return true;
+				}
 			}
 		}
 	}

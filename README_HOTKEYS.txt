@@ -73,15 +73,16 @@ Cityscape Keyboard:
 - [N] Manual control (if using vanilla scheme then [M] is the manual control key and there is no way to open message log, as per vanilla)
 
 Cityscape Debug:
-- Debug hotkeys are always active
+- [F1] Debug hotkeys are toggled on/off
 - [Ctrl] + [Alt] + [Shift] + [Left Click] destroys scenery
 - [Ctrl] + [Alt] + [Shift] + [Right Click] collapses building
 - [A] gives every vehicle weapon and ammo to current base
 - [W] warp to alien dimension and back
-- [R] repairs all buildings
+- [R] repairs all scenery
 - [B] spawn UFO on base assault mission
 - [U] spawns three crashed UFOs
 - [X] crashes every vehcile on map
+- [PgUp] / [PgDown] displays only one layer of map, with other layers being transparent
 - [F2] show road pathfinding map
 - [F3] highlight walkmode, collapsing tiles, basement tiles
 - [F4] show aliens in buildings on strategy map

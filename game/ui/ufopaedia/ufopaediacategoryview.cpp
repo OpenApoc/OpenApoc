@@ -429,7 +429,7 @@ void UfopaediaCategoryView::setFormStats()
 							statsLabels[row]->setText(tr("Fire Rate"));
 							statsValues[row++]->setText(format(
 							    "%.2f r/s", (float)TICKS_PER_SECOND / (float)ref->fire_delay));
-							if (ref->max_ammo > 0)
+							if (ref->max_ammo > 0 && ref->ammo_type)
 							{
 								statsLabels[row]->setText(tr("Ammo type"));
 								statsValues[row++]->setText(tr(ref->ammo_type->name));

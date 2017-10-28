@@ -394,11 +394,12 @@ int Base::getCapacityUsed(GameState &state, FacilityType::Capacity type) const
 	switch (type)
 	{
 		case FacilityType::Capacity::Repair:
-			for (auto &v : building->currentVehicles)
+			for (auto &v : state.vehicles)
 			{
-				if (v->homeBuilding == v->currentBuilding && v->getMaxHealth() > v->getHealth())
+				if (v.second->homeBuilding == building &&
+				    v.second->getMaxHealth() > v.second->getHealth())
 				{
-					total += v->getMaxHealth() - v->getHealth();
+					total += v.second->getMaxHealth() - v.second->getHealth();
 				}
 			}
 			// Show percentage of repair bay used if it can repair in one hour, or 100% if can't
@@ -411,12 +412,32 @@ int Base::getCapacityUsed(GameState &state, FacilityType::Capacity type) const
 		case FacilityType::Capacity::Medical:
 			for (auto &a : state.agents)
 			{
-				if (a.second->homeBuilding == building && a.second->currentBuilding == building)
+				if (a.second->homeBuilding == building)
 				{
 					if (a.second->modified_stats.health < a.second->current_stats.health)
 					{
 						total++;
 					}
+				}
+			}
+			break;
+		case FacilityType::Capacity::Training:
+			for (auto &a : state.agents)
+			{
+				if (a.second->homeBuilding == building &&
+				    a.second->trainingAssignment == TrainingAssignment::Physical)
+				{
+					total++;
+				}
+			}
+			break;
+		case FacilityType::Capacity::Psi:
+			for (auto &a : state.agents)
+			{
+				if (a.second->homeBuilding == building &&
+				    a.second->trainingAssignment == TrainingAssignment::Psi)
+				{
+					total++;
 				}
 			}
 			break;

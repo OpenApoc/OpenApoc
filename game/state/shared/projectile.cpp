@@ -144,7 +144,7 @@ void Projectile::update(GameState &state, unsigned int ticks)
 	    newPosition.y >= mapSize.y || newPosition.z < 0 || newPosition.z >= mapSize.z ||
 	    this->age >= this->lifetime)
 	{
-		die(state);
+		die(state, true, true, true);
 		return;
 	}
 
@@ -165,16 +165,18 @@ void Projectile::update(GameState &state, unsigned int ticks)
 	}
 }
 
-void Projectile::die(GameState &state, bool displayDoodad, bool playSound)
+void Projectile::die(GameState &state, bool displayDoodad, bool playSound, bool expired)
 {
 	auto this_shared = shared_from_this();
 	if (firerVehicle)
 	{
-		state.current_city->handleProjectileHit(state, this_shared, displayDoodad, playSound);
+		state.current_city->handleProjectileHit(state, this_shared, displayDoodad, playSound,
+		                                        expired);
 	}
 	else // firerUnit or stray battle projectile
 	{
-		state.current_battle->handleProjectileHit(state, this_shared, displayDoodad, playSound);
+		state.current_battle->handleProjectileHit(state, this_shared, displayDoodad, playSound,
+		                                          expired);
 	}
 	this->tileObject->removeFromMap();
 	this->tileObject.reset();

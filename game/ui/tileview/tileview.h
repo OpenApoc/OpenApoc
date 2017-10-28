@@ -52,6 +52,8 @@ class TileView : public Stage, public TileTransform
 
 	Vec3<int> selectedTilePosition;
 
+	bool debugHotkeyMode = false;
+
   public:
 	int maxZDraw;
 	Vec3<float> centerPos;

@@ -339,7 +339,7 @@ void InitialGameStateExtractor::extractCommon(GameState &state) const
 	                                                      "RESEARCH_UNLOCK_ALIEN_DIMENSION");
 	this->extractBuildings(state, "albuild", state.cities[alienMapId], true);
 	this->extractCityMap(state, "alienmap", "ALIENMAP_", state.cities[alienMapId]);
-	this->extractCityScenery(state, "ALIENMAP_", "alienmap", "alien", "stratmap", "loftemps",
+	this->extractCityScenery(state, "ALIENMAP_", "alienmap", "alien", "alien_s", "loftemps",
 	                         "cityovr", state.cities[alienMapId]);
 
 	this->extractBattlescapeMap(state, battleMapPaths);

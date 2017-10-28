@@ -116,164 +116,176 @@ void CityTileView::eventOccurred(Event *e)
 {
 	if (e->type() == EVENT_KEY_DOWN)
 	{
-		switch (e->keyboard().KeyCode)
+		if (debugHotkeyMode)
 		{
-			case SDLK_w:
+			switch (e->keyboard().KeyCode)
 			{
-				DEBUG_SHOW_ALIEN = !DEBUG_SHOW_ALIEN;
-				return;
-			}
-			case SDLK_F2:
-			{
-				DEBUG_SHOW_ROAD_PATHFINDING = !DEBUG_SHOW_ROAD_PATHFINDING;
-				return;
-			}
-			case SDLK_PAGEUP:
-				if (DEBUG_LAYER == -1 || DEBUG_LAYER >= map.size.z)
+				case SDLK_w:
 				{
-					DEBUG_LAYER = 0;
+					DEBUG_SHOW_ALIEN = !DEBUG_SHOW_ALIEN;
+					return;
 				}
-				else
+				case SDLK_F2:
 				{
-					DEBUG_LAYER++;
+					DEBUG_SHOW_ROAD_PATHFINDING = !DEBUG_SHOW_ROAD_PATHFINDING;
+					return;
 				}
-				return;
-			case SDLK_PAGEDOWN:
-				if (DEBUG_LAYER <= 0)
+				case SDLK_PAGEUP:
+					if (DEBUG_LAYER == -1 || DEBUG_LAYER >= map.size.z)
+					{
+						DEBUG_LAYER = 0;
+					}
+					else
+					{
+						DEBUG_LAYER++;
+					}
+					return;
+				case SDLK_PAGEDOWN:
+					if (DEBUG_LAYER <= 0)
+					{
+						DEBUG_LAYER = 0;
+					}
+					else
+					{
+						DEBUG_LAYER--;
+					}
+					return;
+				case SDLK_F3:
 				{
-					DEBUG_LAYER = 0;
+					DEBUG_SHOW_MISC_TYPE++;
+					DEBUG_SHOW_MISC_TYPE = DEBUG_SHOW_MISC_TYPE % 6;
+					if (DEBUG_SHOW_MISC_TYPE)
+					{
+						DEBUG_SHOW_SLOPES = false;
+						DEBUG_SHOW_TUBE = false;
+						DEBUG_SHOW_ROADS = false;
+						DEBUG_SHOW_ALIEN_CREW = false;
+						DEBUG_LAYER = -1;
+					}
+					LogWarning("Debug walk type display set to %s", DEBUG_SHOW_MISC_TYPE);
+					return;
 				}
-				else
+				case SDLK_F5:
 				{
-					DEBUG_LAYER--;
+					DEBUG_SHOW_VEHICLE_PATH = !DEBUG_SHOW_VEHICLE_PATH;
+					return;
 				}
-				return;
-			case SDLK_F3:
-			{
-				DEBUG_SHOW_MISC_TYPE++;
-				DEBUG_SHOW_MISC_TYPE = DEBUG_SHOW_MISC_TYPE % 6;
-				if (DEBUG_SHOW_MISC_TYPE)
+				case SDLK_F4:
 				{
-					DEBUG_SHOW_SLOPES = false;
-					DEBUG_SHOW_ALIEN_CREW = false;
-					DEBUG_SHOW_TUBE = false;
-					DEBUG_SHOW_ROADS = false;
+					DEBUG_SHOW_ALIEN_CREW = !DEBUG_SHOW_ALIEN_CREW;
+					if (DEBUG_SHOW_ALIEN_CREW)
+					{
+						DEBUG_SHOW_ROADS = false;
+						DEBUG_SHOW_SLOPES = false;
+						DEBUG_SHOW_TUBE = false;
+						DEBUG_SHOW_MISC_TYPE = 0;
+						DEBUG_LAYER = -1;
+					}
+					LogWarning("Debug Alien display set to %s", DEBUG_SHOW_ALIEN_CREW);
+					return;
 				}
-				LogWarning("Debug walk type display set to %s", DEBUG_SHOW_MISC_TYPE);
-				return;
-			}
-			case SDLK_F5:
-			{
-				DEBUG_SHOW_VEHICLE_PATH = !DEBUG_SHOW_VEHICLE_PATH;
-				return;
-			}
-			case SDLK_F4:
-			{
-				DEBUG_SHOW_ALIEN_CREW = !DEBUG_SHOW_ALIEN_CREW;
-				if (DEBUG_SHOW_ALIEN_CREW)
+				case SDLK_F12:
 				{
-					DEBUG_SHOW_ROADS = false;
-					DEBUG_SHOW_SLOPES = false;
-					DEBUG_SHOW_TUBE = false;
+					DEBUG_SHOW_SLOPES = !DEBUG_SHOW_SLOPES;
+					if (DEBUG_SHOW_SLOPES)
+					{
+						DEBUG_SHOW_ALIEN_CREW = false;
+						DEBUG_SHOW_TUBE = false;
+						DEBUG_SHOW_ROADS = false;
+						DEBUG_SHOW_MISC_TYPE = 0;
+						DEBUG_LAYER = -1;
+					}
+					LogWarning("Debug slopes display set to %s", DEBUG_SHOW_SLOPES);
+					return;
 				}
-				LogWarning("Debug Alien display set to %s", DEBUG_SHOW_ALIEN_CREW);
-				return;
-			}
-			case SDLK_F12:
-			{
-				DEBUG_SHOW_SLOPES = !DEBUG_SHOW_SLOPES;
-				if (DEBUG_SHOW_SLOPES)
+				case SDLK_F11:
 				{
-					DEBUG_SHOW_ALIEN_CREW = false;
-					DEBUG_SHOW_TUBE = false;
-					DEBUG_SHOW_ROADS = false;
+					DEBUG_SHOW_ROADS = !DEBUG_SHOW_ROADS;
+					if (DEBUG_SHOW_ROADS)
+					{
+						DEBUG_SHOW_ALIEN_CREW = false;
+						DEBUG_SHOW_TUBE = false;
+						DEBUG_SHOW_SLOPES = false;
+						DEBUG_SHOW_MISC_TYPE = 0;
+						DEBUG_LAYER = -1;
+					}
+					LogWarning("Debug roads display set to %s", DEBUG_SHOW_ROADS);
+					return;
 				}
-				LogWarning("Debug slopes display set to %s", DEBUG_SHOW_SLOPES);
-				return;
-			}
-			case SDLK_F11:
-			{
-				DEBUG_SHOW_ROADS = !DEBUG_SHOW_ROADS;
-				if (DEBUG_SHOW_ROADS)
+				case SDLK_F10:
 				{
-					DEBUG_SHOW_ALIEN_CREW = false;
-					DEBUG_SHOW_TUBE = false;
-					DEBUG_SHOW_SLOPES = false;
+					DEBUG_SHOW_TUBE = !DEBUG_SHOW_TUBE;
+					if (DEBUG_SHOW_TUBE)
+					{
+						DEBUG_SHOW_ROADS = false;
+						DEBUG_SHOW_SLOPES = false;
+						DEBUG_SHOW_ALIEN_CREW = false;
+						DEBUG_SHOW_MISC_TYPE = 0;
+						DEBUG_LAYER = -1;
+					}
+					LogWarning("Debug tube display set to %s", DEBUG_SHOW_TUBE);
+					return;
 				}
-				LogWarning("Debug roads display set to %s", DEBUG_SHOW_ROADS);
-				return;
-			}
-			case SDLK_F10:
-			{
-				DEBUG_SHOW_TUBE = !DEBUG_SHOW_TUBE;
-				if (DEBUG_SHOW_TUBE)
+				case SDLK_KP_0:
+					DEBUG_DIRECTION = -1;
+					return;
+				case SDLK_KP_5:
+					DEBUG_ONLY_TYPE = !DEBUG_ONLY_TYPE;
+					return;
+				case SDLK_KP_9:
+					DEBUG_DIRECTION = 0;
+					return;
+				case SDLK_KP_3:
+					DEBUG_DIRECTION = 1;
+					return;
+				case SDLK_KP_1:
+					DEBUG_DIRECTION = 2;
+					return;
+				case SDLK_KP_7:
+					DEBUG_DIRECTION = 3;
+					return;
+				case SDLK_KP_8:
+					DEBUG_DIRECTION = 4;
+					return;
+				case SDLK_KP_2:
+					DEBUG_DIRECTION = 5;
+					return;
+				case SDLK_F6:
 				{
-					DEBUG_SHOW_ROADS = false;
-					DEBUG_SHOW_SLOPES = false;
-					DEBUG_SHOW_ALIEN_CREW = false;
+					LogWarning("Writing voxel view LOF to tileviewvoxels.png");
+					auto imageOffset = -this->getScreenOffset();
+					auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
+					    {imageOffset, imageOffset + dpySize}, *this, 12.99f));
+					fw().data->writeImage("tileviewvoxels.png", img);
+					return;
 				}
-				LogWarning("Debug tube display set to %s", DEBUG_SHOW_TUBE);
-				return;
-			}
-			case SDLK_KP_0:
-				DEBUG_DIRECTION = -1;
-				return;
-			case SDLK_KP_5:
-				DEBUG_ONLY_TYPE = !DEBUG_ONLY_TYPE;
-				return;
-			case SDLK_KP_9:
-				DEBUG_DIRECTION = 0;
-				return;
-			case SDLK_KP_3:
-				DEBUG_DIRECTION = 1;
-				return;
-			case SDLK_KP_1:
-				DEBUG_DIRECTION = 2;
-				return;
-			case SDLK_KP_7:
-				DEBUG_DIRECTION = 3;
-				return;
-			case SDLK_KP_8:
-				DEBUG_DIRECTION = 4;
-				return;
-			case SDLK_KP_2:
-				DEBUG_DIRECTION = 5;
-				return;
-			case SDLK_F6:
-			{
-				LogWarning("Writing voxel view LOF to tileviewvoxels.png");
-				auto imageOffset = -this->getScreenOffset();
-				auto img = std::dynamic_pointer_cast<RGBImage>(
-				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this, 12.99f));
-				fw().data->writeImage("tileviewvoxels.png", img);
-				return;
-			}
-			case SDLK_F7:
-			{
-				LogWarning("Writing voxel view LOF (fast) to tileviewvoxels.png");
-				auto imageOffset = -this->getScreenOffset();
-				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-				    {imageOffset, imageOffset + dpySize}, *this, 12.99f, true));
-				fw().data->writeImage("tileviewvoxels.png", img);
-				return;
-			}
-			case SDLK_F8:
-			{
-				LogWarning("Writing voxel view LOS to tileviewvoxels.png");
-				auto imageOffset = -this->getScreenOffset();
-				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-				    {imageOffset, imageOffset + dpySize}, *this, 12.99f, false, true));
-				fw().data->writeImage("tileviewvoxels.png", img);
-				return;
-			}
-			case SDLK_F9:
-			{
-				LogWarning("Writing voxel view LOS (fast) to tileviewvoxels.png");
-				auto imageOffset = -this->getScreenOffset();
-				auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
-				    {imageOffset, imageOffset + dpySize}, *this, 11.0f, true, true));
-				fw().data->writeImage("tileviewvoxels.png", img);
-				return;
+				case SDLK_F7:
+				{
+					LogWarning("Writing voxel view LOF (fast) to tileviewvoxels.png");
+					auto imageOffset = -this->getScreenOffset();
+					auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
+					    {imageOffset, imageOffset + dpySize}, *this, 12.99f, true));
+					fw().data->writeImage("tileviewvoxels.png", img);
+					return;
+				}
+				case SDLK_F8:
+				{
+					LogWarning("Writing voxel view LOS to tileviewvoxels.png");
+					auto imageOffset = -this->getScreenOffset();
+					auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
+					    {imageOffset, imageOffset + dpySize}, *this, 12.99f, false, true));
+					fw().data->writeImage("tileviewvoxels.png", img);
+					return;
+				}
+				case SDLK_F9:
+				{
+					LogWarning("Writing voxel view LOS (fast) to tileviewvoxels.png");
+					auto imageOffset = -this->getScreenOffset();
+					auto img = std::dynamic_pointer_cast<RGBImage>(this->map.dumpVoxelView(
+					    {imageOffset, imageOffset + dpySize}, *this, 11.0f, true, true));
+					fw().data->writeImage("tileviewvoxels.png", img);
+					return;
+				}
 			}
 		}
 	}
@@ -603,6 +615,10 @@ void CityTileView::render()
 			for (auto &b : state.player_bases)
 			{
 				auto building = b.second->building;
+				if (building->city != state.current_city)
+				{
+					continue;
+				}
 
 				Vec3<float> posA = {building->bounds.p0.x, building->bounds.p0.y, 0};
 				Vec2<float> screenPosA = this->tileToOffsetScreenCoords(posA);
