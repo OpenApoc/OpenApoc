@@ -25,6 +25,7 @@ class VEquipScreen : public Stage
 {
   private:
 	sp<Form> form;
+	sp<Form> formVehicleItem;
 	sp<Vehicle> selected;
 	EquipmentSlotType selectionType;
 	sp<Palette> pal;

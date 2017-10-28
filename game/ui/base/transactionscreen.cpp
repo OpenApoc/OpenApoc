@@ -28,7 +28,9 @@
 #include "game/state/rules/city/vequipmenttype.h"
 #include "game/state/shared/organisation.h"
 #include "game/ui/components/controlgenerator.h"
+#include "game/ui/general/aequipmentsheet.h"
 #include "game/ui/general/messagebox.h"
+#include "game/ui/general/vehiclesheet.h"
 #include "library/strings_format.h"
 #include <array>
 
@@ -846,319 +848,31 @@ void TransactionScreen::displayItem(sp<TransactionControl> control)
 	if (control->itemType == TransactionControl::Type::AgentEquipmentBio ||
 	    control->itemType == TransactionControl::Type::AgentEquipmentCargo)
 	{
-		for (int i = 0; i < 10; i++)
-		{
-			for (char alignment : std::array<char, 3>{'L', 'C', 'R'})
-			{
-				auto labelName = format("LABEL_%d_%c", i + 1, alignment);
-				auto label = formItemAgent->findControlTyped<Label>(labelName);
-				if (!label)
-				{
-					LogError("Failed to find UI control matching \"%s\"", labelName);
-				}
-				else
-				{
-					label->setText("");
-				}
-			}
-		}
 		formItemAgent->setVisible(true);
 		formItemVehicle->setVisible(false);
-		auto agentEquipment = state->agent_equipment[control->itemId];
 
-		formItemAgent->findControlTyped<Label>("ITEM_NAME")->setText(agentEquipment->name);
-		formItemAgent->findControlTyped<Graphic>("SELECTED_IMAGE")
-		    ->setImage(agentEquipment->equipscreen_sprite);
-		formItemAgent->findControlTyped<Label>("LABEL_1_L")->setText(tr("Weight"));
-		formItemAgent->findControlTyped<Label>("LABEL_1_R")
-		    ->setText(format("%d", agentEquipment->weight));
-
-		switch (agentEquipment->type)
-		{
-			case AEquipmentType::Type::Grenade:
-			{
-				formItemAgent->findControlTyped<Label>("LABEL_2_C")
-				    ->setText(agentEquipment->damage_type->name);
-				formItemAgent->findControlTyped<Label>("LABEL_3_L")->setText(tr("Power"));
-				formItemAgent->findControlTyped<Label>("LABEL_3_R")
-				    ->setText(format("%d", agentEquipment->damage));
-				break;
-			}
-			case AEquipmentType::Type::Ammo:
-			case AEquipmentType::Type::Weapon:
-			{
-				formItemAgent->findControlTyped<Label>("LABEL_2_L")->setText(tr("Accuracy"));
-				formItemAgent->findControlTyped<Label>("LABEL_3_L")->setText(tr("Fire rate"));
-				formItemAgent->findControlTyped<Label>("LABEL_4_L")->setText(tr("Range"));
-				int accuracy = 0;
-				float fireRate = 0.0f;
-				int range = 0;
-				if (agentEquipment->ammo_types.size() == 0)
-				{
-					// ammo type or payload weapon
-					accuracy = agentEquipment->accuracy;
-					fireRate = agentEquipment->getRateOfFire();
-					range = agentEquipment->getRangeInTiles();
-
-					formItemAgent->findControlTyped<Label>("LABEL_6_C")->setText(tr("Ammo Type:"));
-					formItemAgent->findControlTyped<Label>("LABEL_7_C")
-					    ->setText(agentEquipment->damage_type->name);
-					formItemAgent->findControlTyped<Label>("LABEL_8_L")->setText(tr("Power"));
-					formItemAgent->findControlTyped<Label>("LABEL_8_R")
-					    ->setText(format("%d", agentEquipment->damage));
-					formItemAgent->findControlTyped<Label>("LABEL_9_L")->setText(tr("Rounds"));
-					formItemAgent->findControlTyped<Label>("LABEL_9_R")
-					    ->setText(format("%d", agentEquipment->max_ammo));
-					if (agentEquipment->recharge > 0)
-					{
-						formItemAgent->findControlTyped<Label>("LABEL_10_C")
-						    ->setText(tr("(Recharges)"));
-					}
-				}
-				else
-				{
-					formItemAgent->findControlTyped<Label>("LABEL_5_C")->setText(tr("Ammo types:"));
-					int ammoNum = 1;
-					for (auto &ammo : agentEquipment->ammo_types)
-					{
-						formItemAgent->findControlTyped<Label>(format("LABEL_%d_C", 5 + ammoNum))
-						    ->setText(ammo->name);
-						if (++ammoNum > 4)
-						{
-							break;
-						}
-					}
-					if (agentEquipment->ammo_types.empty())
-					{
-						LogError("No ammo types exist for a weapon?");
-					}
-					else
-					{
-						accuracy = agentEquipment->ammo_types.front()->accuracy;
-						fireRate = agentEquipment->ammo_types.front()->getRateOfFire();
-						range = agentEquipment->ammo_types.front()->getRangeInTiles();
-					}
-				}
-				formItemAgent->findControlTyped<Label>("LABEL_2_R")
-				    ->setText(format("%d", accuracy));
-				formItemAgent->findControlTyped<Label>("LABEL_3_R")
-				    ->setText(format("%.2f", fireRate));
-				formItemAgent->findControlTyped<Label>("LABEL_4_R")->setText(format("%d", range));
-				break;
-			}
-			case AEquipmentType::Type::Armor:
-			{
-				formItemAgent->findControlTyped<Label>("LABEL_2_L")->setText(tr("Protection"));
-				formItemAgent->findControlTyped<Label>("LABEL_2_R")
-				    ->setText(format("%d", agentEquipment->armor));
-				break;
-			}
-			default:
-			{
-			}
-		}
+		AEquipmentSheet(formItemAgent).display(state->agent_equipment[control->itemId]);
 	}
-	else if (control->itemType == TransactionControl::Type::VehicleEquipment ||
-	         control->itemType == TransactionControl::Type::VehicleType ||
-	         control->itemType == TransactionControl::Type::Vehicle ||
-	         control->itemType == TransactionControl::Type::VehicleAmmo)
+	else
 	{
-		// The labels/values in the stats column are used for lots of different things, so keep them
-		// around clear them and keep them around in a vector so we don't have 5 copies of the same
-		// "reset unused entries" code around
-		std::vector<sp<Label>> statsLabels;
-		std::vector<sp<Label>> statsValues;
-		for (int i = 0; i < 10; i++)
-		{
-			auto labelName = format("LABEL_%d", i + 1);
-			auto label = formItemVehicle->findControlTyped<Label>(labelName);
-			if (!label)
-			{
-				LogError("Failed to find UI control matching \"%s\"", labelName);
-			}
-			label->setText("");
-			statsLabels.push_back(label);
-
-			auto valueName = format("VALUE_%d", i + 1);
-			auto value = formItemVehicle->findControlTyped<Label>(valueName);
-			if (!value)
-			{
-				LogError("Failed to find UI control matching \"%s\"", valueName);
-			}
-			value->setText("");
-			statsValues.push_back(value);
-		}
 		formItemVehicle->setVisible(true);
 		formItemAgent->setVisible(false);
 
-		if (control->itemType == TransactionControl::Type::VehicleType ||
-		    control->itemType == TransactionControl::Type::Vehicle)
-		{
-			statsLabels[0]->setText(tr("Constitution"));
-			statsLabels[1]->setText(tr("Armor"));
-			statsLabels[2]->setText(tr("Accuracy"));
-			statsLabels[3]->setText(tr("Top Speed"));
-			statsLabels[4]->setText(tr("Acceleration"));
-			statsLabels[5]->setText(tr("Weight"));
-			statsLabels[6]->setText(tr("Fuel"));
-			statsLabels[7]->setText(tr("Passengers"));
-		}
 		if (control->itemType == TransactionControl::Type::VehicleType)
 		{
-			auto vehicleType = state->vehicle_types[control->itemId];
-			formItemVehicle->findControlTyped<Label>("ITEM_NAME")->setText(vehicleType->name);
-			formItemVehicle->findControlTyped<Graphic>("SELECTED_IMAGE")
-			    ->setImage(vehicleType->equip_icon_small);
-
-			std::list<sp<VEquipmentType>> defaultEquipment;
-			for (auto &e : vehicleType->initial_equipment_list)
-			{
-				defaultEquipment.push_back(e.second.getSp());
-			}
-			auto it1 = defaultEquipment.begin();
-			auto it2 = defaultEquipment.end();
-			statsValues[0]->setText(format("%d", vehicleType->getMaxConstitution(it1, it2)));
-			statsValues[1]->setText(format("%d", vehicleType->getArmor(it1, it2)));
-			statsValues[2]->setText(format("%d%%", vehicleType->getAccuracy(it1, it2)));
-			statsValues[3]->setText(format("%d", vehicleType->getTopSpeed(it1, it2)));
-			statsValues[4]->setText(format("%d", vehicleType->getAcceleration(it1, it2)));
-			statsValues[5]->setText(format("%d", vehicleType->getWeight(it1, it2)));
-			statsValues[6]->setText(format("%dk", vehicleType->getFuel(it1, it2)));
-			statsValues[7]->setText(format("%d/%d", 0, vehicleType->getMaxPassengers(it1, it2)));
+			VehicleSheet(formItemVehicle).display(state->vehicle_types[control->itemId]);
 		}
 		else if (control->itemType == TransactionControl::Type::Vehicle)
 		{
-			auto vehicle = state->vehicles[control->itemId];
-
-			formItemVehicle->findControlTyped<Label>("ITEM_NAME")->setText(vehicle->name);
-			formItemVehicle->findControlTyped<Graphic>("SELECTED_IMAGE")
-			    ->setImage(vehicle->type->equip_icon_small);
-			if (vehicle->getConstitution() == vehicle->getMaxConstitution())
-			{
-				statsValues[0]->setText(format("%d", vehicle->getConstitution()));
-			}
-			else
-			{
-				statsValues[0]->setText(
-				    format("%d/%d", vehicle->getConstitution(), vehicle->getMaxConstitution()));
-			}
-			statsValues[1]->setText(format("%d", vehicle->getArmor()));
-			statsValues[2]->setText(format("%d%%", vehicle->getAccuracy()));
-			statsValues[3]->setText(format("%d", vehicle->getTopSpeed()));
-			statsValues[4]->setText(format("%d", vehicle->getAcceleration()));
-			statsValues[5]->setText(format("%d", vehicle->getWeight()));
-			statsValues[6]->setText(format("%dk", vehicle->getFuel()));
-			statsValues[7]->setText(
-			    format("%d/%d", vehicle->getPassengers(), vehicle->getMaxPassengers()));
+			VehicleSheet(formItemVehicle).display(state->vehicles[control->itemId]);
 		}
 		else if (control->itemType == TransactionControl::Type::VehicleEquipment)
 		{
-			auto vehicleEquipment = state->vehicle_equipment[control->itemId];
-
-			formItemVehicle->findControlTyped<Label>("ITEM_NAME")->setText(vehicleEquipment->name);
-			formItemVehicle->findControlTyped<Graphic>("SELECTED_IMAGE")
-			    ->setImage(vehicleEquipment->equipscreen_sprite);
-
-			statsLabels[0]->setText(tr("Weight"));
-			statsValues[0]->setText(format("%d", vehicleEquipment->weight));
-
-			int statsCount = 1;
-			// Draw equipment stats
-			switch (vehicleEquipment->type)
-			{
-				case EquipmentSlotType::VehicleEngine:
-				{
-					statsLabels[statsCount]->setText(tr("Top Speed"));
-					statsValues[statsCount]->setText(format("%d", vehicleEquipment->top_speed));
-					statsCount++;
-					statsLabels[statsCount]->setText(tr("Power"));
-					statsValues[statsCount]->setText(format("%d", vehicleEquipment->power));
-					break;
-				}
-				case EquipmentSlotType::VehicleWeapon:
-				{
-					statsLabels[statsCount]->setText(tr("Damage"));
-					statsValues[statsCount]->setText(format("%d", vehicleEquipment->damage));
-					statsCount++;
-					statsLabels[statsCount]->setText(tr("Range"));
-					statsValues[statsCount]->setText(
-					    format("%d", vehicleEquipment->range / (int)VELOCITY_SCALE_CITY.x));
-					statsCount++;
-					statsLabels[statsCount]->setText(tr("Accuracy"));
-					statsValues[statsCount]->setText(format("%d%%", vehicleEquipment->accuracy));
-					statsCount++;
-
-					// Only show rounds if non-zero (IE not infinite ammo)
-					if (vehicleEquipment->max_ammo)
-					{
-						statsLabels[statsCount]->setText(tr("Rounds"));
-						statsValues[statsCount]->setText(format("%d", vehicleEquipment->max_ammo));
-						statsCount++;
-					}
-					break;
-				}
-				case EquipmentSlotType::VehicleGeneral:
-				{
-					if (vehicleEquipment->accuracy_modifier)
-					{
-						statsLabels[statsCount]->setText(tr("Accuracy"));
-						statsValues[statsCount]->setText(
-						    format("%d%%", 100 - vehicleEquipment->accuracy_modifier));
-						statsCount++;
-					}
-					if (vehicleEquipment->cargo_space)
-					{
-						statsLabels[statsCount]->setText(tr("Cargo"));
-						statsValues[statsCount]->setText(
-						    format("%d", vehicleEquipment->cargo_space));
-						statsCount++;
-					}
-					if (vehicleEquipment->passengers)
-					{
-						statsLabels[statsCount]->setText(tr("Passengers"));
-						statsValues[statsCount]->setText(
-						    format("%d", vehicleEquipment->passengers));
-						statsCount++;
-					}
-					if (vehicleEquipment->alien_space)
-					{
-						statsLabels[statsCount]->setText(tr("Aliens Held"));
-						statsValues[statsCount]->setText(
-						    format("%d", vehicleEquipment->alien_space));
-						statsCount++;
-					}
-					if (vehicleEquipment->missile_jamming)
-					{
-						statsLabels[statsCount]->setText(tr("Jamming"));
-						statsValues[statsCount]->setText(
-						    format("%d", vehicleEquipment->missile_jamming));
-						statsCount++;
-					}
-					if (vehicleEquipment->shielding)
-					{
-						statsLabels[statsCount]->setText(tr("Shielding"));
-						statsValues[statsCount]->setText(format("%d", vehicleEquipment->shielding));
-						statsCount++;
-					}
-					if (vehicleEquipment->cloaking)
-					{
-						statsLabels[statsCount]->setText(tr("Cloaks Craft"));
-						statsCount++;
-					}
-					if (vehicleEquipment->teleporting)
-					{
-						statsLabels[statsCount]->setText(tr("Teleports"));
-						statsCount++;
-					}
-
-					break;
-				}
-			}
+			VehicleSheet(formItemVehicle).display(state->vehicle_equipment[control->itemId]);
 		}
 		else // vehicle ammo & fuel don't display anything
 		{
-			formItemVehicle->findControlTyped<Label>("ITEM_NAME")->setText("");
-			formItemVehicle->findControlTyped<Graphic>("SELECTED_IMAGE")->setImage(sp<Image>());
+			formItemVehicle->setVisible(false);
 		}
 	}
 }

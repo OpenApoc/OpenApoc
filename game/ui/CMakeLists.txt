@@ -42,6 +42,7 @@ set (GAMEUI_SOURCE_FILES
 	debugtools/imagepreview.cpp
 	
 	general/aequipscreen.cpp
+	general/aequipmentsheet.cpp
 	general/difficultymenu.cpp
 	general/ingameoptions.cpp
 	general/loadingscreen.cpp
@@ -52,6 +53,7 @@ set (GAMEUI_SOURCE_FILES
 	general/videoscreen.cpp
 	general/messagelogscreen.cpp
 	general/notificationscreen.cpp
+	general/vehiclesheet.cpp
 	
 	skirmish/skirmish.cpp
 	skirmish/selectforces.cpp
@@ -102,6 +104,7 @@ set (GAMEUI_HEADER_FILES
 	debugtools/imagepreview.h
 	
 	general/aequipscreen.h
+	general/aequipmentsheet.h
 	general/difficultymenu.h
 	general/ingameoptions.h
 	general/loadingscreen.h
@@ -112,6 +115,7 @@ set (GAMEUI_HEADER_FILES
 	general/videoscreen.h
 	general/messagelogscreen.h
 	general/notificationscreen.h
+	general/vehiclesheet.h
 	
 	skirmish/skirmish.h
 	skirmish/selectforces.h
