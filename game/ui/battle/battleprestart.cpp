@@ -214,7 +214,7 @@ void BattlePreStart::eventOccurred(Event *e)
 		else
 		{
 			int newSquad = -1;
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 6; i++)
 			{
 				if (mousePos.x >= TOP_LEFT.x - ROW_HEADER && mousePos.x < TOP_LEFT.x + ROW_WIDTH &&
 				    mousePos.y >= TOP_LEFT.y + i * SHIFT_Y &&
