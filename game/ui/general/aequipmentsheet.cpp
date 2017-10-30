@@ -68,22 +68,24 @@ void AEquipmentSheet::displayImplementation(sp<AEquipment> item, sp<AEquipmentTy
 			displayAmmo(item, itemType);
 			break;
 		case AEquipmentType::Type::Weapon:
-			if (itemType->ammo_types.empty())
+			if (itemType->ammo_types.empty()) // weapon with built-in ammo like stun grapple
 			{
 				displayAmmo(item, itemType);
 			}
+			else if (item && item->getPayloadType()) // weapon with equipped ammo
+			{
+				displayAmmo(item, item->getPayloadType());
+			}
+			else if (itemType->ammo_types.size() ==
+			         1) // weapon without ammo but a single ammo type like lawpistol
+			{
+				displayAmmo(item, itemType->ammo_types.front());
+			}
 			else
 			{
-				if (item)
-				{
-					// item with equipped ammo -> display ammo stats
-					displayAmmo(item, item->getPayloadType());
-				}
-				else
-				{
-					// no concrete item available -> display stats from itemtype & list ammo
-					displayWeapon(item, itemType);
-				}
+				displayWeapon(
+				    item,
+				    itemType); // weapon without ammo but multiple ammo types like the autocannon
 			}
 			break;
 		case AEquipmentType::Type::Armor:

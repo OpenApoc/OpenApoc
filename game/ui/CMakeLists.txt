@@ -43,6 +43,7 @@ set (GAMEUI_SOURCE_FILES
 	
 	general/aequipscreen.cpp
 	general/aequipmentsheet.cpp
+	general/agentsheet.cpp
 	general/difficultymenu.cpp
 	general/ingameoptions.cpp
 	general/loadingscreen.cpp
@@ -105,6 +106,7 @@ set (GAMEUI_HEADER_FILES
 	
 	general/aequipscreen.h
 	general/aequipmentsheet.h
+	general/agentsheet.h
 	general/difficultymenu.h
 	general/ingameoptions.h
 	general/loadingscreen.h

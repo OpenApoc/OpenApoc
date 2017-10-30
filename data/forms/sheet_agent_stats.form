@@ -23,61 +23,61 @@
         <imageposition>fit</imageposition>
       </graphic>
 
-      <label id="LABEL_HEALTH" text="Health">
+      <label id="LABEL_1" text="Health">
         <position x="0" y="105"/>
         <size width="71" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
-      <label id="LABEL_ACCURACY" text="Accuracy">
+      <label id="LABEL_2" text="Accuracy">
         <position x="0" y="121"/>
         <size width="71" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
-      <label id="LABEL_REACTIONS" text="Reactions">
+      <label id="LABEL_3" text="Reactions">
         <position x="0" y="137"/>
         <size width="71" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
-      <label id="LABEL_SPEED" text="Speed">
+      <label id="LABEL_4" text="Speed">
         <position x="0" y="153"/>
         <size width="71" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
-      <label id="LABEL_STAMINA" text="Stamina">
+      <label id="LABEL_5" text="Stamina">
         <position x="0" y="169"/>
         <size width="71" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
-      <label id="LABEL_BRAVERY" text="Bravery">
+      <label id="LABEL_6" text="Bravery">
         <position x="0" y="185"/>
         <size width="71" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
-      <label id="LABEL_STRENGTH" text="Strength">
+      <label id="LABEL_7" text="Strength">
         <position x="0" y="201"/>
         <size width="71" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
-      <label id="LABEL_PSI-ENERGY" text="Psi-energy">
+      <label id="LABEL_8" text="Psi-energy">
         <position x="0" y="217"/>
         <size width="71" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
-      <label id="LABEL_PSI-ATTACK" text="Psi-attack">
+      <label id="LABEL_9" text="Psi-attack">
         <position x="0" y="233"/>
         <size width="71" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
-      <label id="LABEL_PSI-DEFENCE" text="Psi-defence">
+      <label id="LABEL_10" text="Psi-defence">
         <position x="0" y="249"/>
         <size width="71" height="15"/>
         <alignment horizontal="right" vertical="centre"/>

@@ -140,9 +140,6 @@ class AEquipScreen : public Stage
 	AEquipScreen(sp<GameState> state, sp<Agent> firstAgent = nullptr);
 	~AEquipScreen() override;
 
-	static void outputAgent(sp<Agent> agent, sp<Form> formAgentStats, std::vector<sp<Image>> &ranks,
-	                        bool turnBased);
-
 	void begin() override;
 	void pause() override;
 	void resume() override;

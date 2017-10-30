@@ -28,75 +28,12 @@
 #include "game/ui/components/controlgenerator.h"
 #include "game/ui/components/equipscreen.h"
 #include "game/ui/general/aequipmentsheet.h"
+#include "game/ui/general/agentsheet.h"
 #include "game/ui/general/messagebox.h"
 
 namespace OpenApoc
 {
 
-static sp<Image> createStatsBar(int initialValue, int currentValue, int modifiedValue, int maxValue,
-                                Colour &initialColour, Colour &currentColour, Vec2<int> imageSize)
-{
-	// Some agent types (e.g. Android's Psi-attack) have zero values. Break out here to avoid
-	// dividing by zero.
-	if (initialValue == 0 && currentValue == 0 && modifiedValue == 0 && maxValue == 0)
-	{
-		return mksp<RGBImage>(imageSize);
-	}
-	LogAssert(initialValue >= 0);
-	LogAssert(currentValue >= 0);
-	LogAssert(currentValue >= initialValue);
-	LogAssert(modifiedValue >= 0);
-	LogAssert(maxValue > 0);
-	// Need at least 3 y pixels for the 'hollow' bar
-	LogAssert(imageSize.x > 0 && imageSize.y > 2);
-
-	int initialPixels = (float)imageSize.x * ((float)initialValue / (float)maxValue);
-	int currentPixels = (float)imageSize.x * ((float)currentValue / (float)maxValue);
-	int modifiedPixels = (float)imageSize.x * ((float)modifiedValue / (float)maxValue);
-	initialPixels = clamp(initialPixels, 0, imageSize.x - 1);
-	currentPixels = clamp(currentPixels, 0, imageSize.x - 1);
-	modifiedPixels = clamp(modifiedPixels, 0, imageSize.x - 1);
-
-	sp<RGBImage> img = mksp<RGBImage>(imageSize);
-
-	int x = 0;
-
-	RGBImageLock l(img);
-
-	for (; x < currentPixels; x++)
-	{
-		if (x <= initialPixels)
-		{
-			// Draw a 'hollow' line if we're > modifiedPixels (and not the end)
-			if (x > modifiedPixels && x < currentPixels - 1)
-			{
-				l.set({x, 0}, initialColour);
-				l.set({x, imageSize.y - 1}, initialColour);
-			}
-			else
-			{
-				for (int y = 0; y < imageSize.y; y++)
-					l.set({x, y}, initialColour);
-			}
-		}
-		else
-		{
-			// Draw a 'hollow' line if we're > modifiedPixels (and not the end)
-			if (x > modifiedPixels && x < currentPixels - 1)
-			{
-				l.set({x, 0}, initialColour);
-				l.set({x, imageSize.y - 1}, currentColour);
-			}
-			else
-			{
-				for (int y = 0; y < imageSize.y; y++)
-					l.set({x, y}, currentColour);
-			}
-		}
-	}
-
-	return img;
-}
 const Vec2<int> AEquipScreen::EQUIP_GRID_SLOT_SIZE{16, 16};
 const Vec2<int> AEquipScreen::EQUIP_GRID_SLOTS{16, 16};
 
@@ -159,103 +96,6 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 }
 
 AEquipScreen::~AEquipScreen() = default;
-
-void AEquipScreen::outputAgent(sp<Agent> agent, sp<Form> formAgentStats,
-                               std::vector<sp<Image>> &ranks, bool turnBased)
-{
-	formAgentStats->findControlTyped<Label>("AGENT_NAME")->setText(agent->name);
-	formAgentStats->findControlTyped<Graphic>("SELECTED_PORTRAIT")
-	    ->setImage(agent->getPortrait().photo);
-	if (agent->type->displayRank)
-	{
-		formAgentStats->findControlTyped<Graphic>("SELECTED_RANK")->setVisible(true);
-		formAgentStats->findControlTyped<Graphic>("SELECTED_RANK")
-		    ->setImage(ranks[(int)agent->rank]);
-	}
-	else
-	{
-		formAgentStats->findControlTyped<Graphic>("SELECTED_RANK")->setVisible(false);
-	}
-	// FIXME: Make stats colours part of GameState
-	// FIXME: 'initial' colours taken from screenshot, 'current' guessed
-	Colour healthInitialColour{156, 4, 4};
-	Colour healthCurrentColour{220, 68, 68};
-	formAgentStats->findControlTyped<Graphic>("VALUE_1")->setImage(createStatsBar(
-	    agent->initial_stats.health, agent->current_stats.health, agent->modified_stats.health, 100,
-	    healthInitialColour, healthCurrentColour, {100, 4}));
-	Colour accuracyInitialColour{252, 176, 0};
-	Colour accuracyCurrentColour{255, 240, 64};
-	formAgentStats->findControlTyped<Graphic>("VALUE_2")->setImage(
-	    createStatsBar(agent->initial_stats.accuracy, agent->current_stats.accuracy,
-	                   agent->modified_stats.accuracy, 100, accuracyInitialColour,
-	                   accuracyCurrentColour, {100, 4}));
-	Colour reactionsInitialColour{252, 176, 0};
-	Colour reactionsCurrentColour{255, 240, 64};
-	formAgentStats->findControlTyped<Graphic>("VALUE_3")->setImage(
-	    createStatsBar(agent->initial_stats.reactions, agent->current_stats.reactions,
-	                   agent->modified_stats.reactions, 100, reactionsInitialColour,
-	                   reactionsCurrentColour, {100, 4}));
-
-	if (turnBased)
-	{
-		formAgentStats->findControlTyped<Label>("LABEL_SPEED")->setText(tr("Time Units"));
-		Colour speedInitialColour{12, 156, 56};
-		Colour speedCurrentColour{76, 220, 120};
-		formAgentStats->findControlTyped<Graphic>("VALUE_4")->setImage(
-		    createStatsBar(agent->initial_stats.time_units, agent->current_stats.time_units,
-		                   agent->modified_stats.time_units, 100, speedInitialColour,
-		                   speedCurrentColour, {100, 4}));
-	}
-	else
-	{
-		formAgentStats->findControlTyped<Label>("LABEL_SPEED")->setText(tr("Speed"));
-		Colour speedInitialColour{12, 156, 56};
-		Colour speedCurrentColour{76, 220, 120};
-		formAgentStats->findControlTyped<Graphic>("VALUE_4")->setImage(
-		    createStatsBar(agent->initial_stats.getDisplaySpeedValue(),
-		                   agent->current_stats.getDisplaySpeedValue(),
-		                   agent->modified_stats.getDisplaySpeedValue(), 100, speedInitialColour,
-		                   speedCurrentColour, {100, 4}));
-	}
-
-	Colour staminaInitialColour{12, 156, 56};
-	Colour staminaCurrentColour{76, 220, 120};
-	formAgentStats->findControlTyped<Graphic>("VALUE_5")->setImage(
-	    createStatsBar(agent->initial_stats.getDisplayStaminaValue(),
-	                   agent->current_stats.getDisplayStaminaValue(),
-	                   agent->modified_stats.getDisplayStaminaValue(), 100, staminaInitialColour,
-	                   staminaCurrentColour, {100, 4}));
-	Colour braveryInitialColour{0, 128, 164};
-	Colour braveryCurrentColour{100, 192, 228};
-	formAgentStats->findControlTyped<Graphic>("VALUE_6")->setImage(createStatsBar(
-	    agent->initial_stats.bravery, agent->current_stats.bravery, agent->modified_stats.bravery,
-	    100, braveryInitialColour, braveryCurrentColour, {100, 4}));
-	Colour strengthInitialColour{140, 136, 136};
-	Colour strengthCurrentColour{204, 200, 200};
-	formAgentStats->findControlTyped<Graphic>("VALUE_7")->setImage(
-	    createStatsBar(agent->initial_stats.strength, agent->current_stats.strength,
-	                   agent->modified_stats.strength, 100, strengthInitialColour,
-	                   strengthCurrentColour, {100, 4}));
-	Colour psi_energyInitialColour{192, 56, 144};
-	Colour psi_energyCurrentColour{255, 120, 208};
-	formAgentStats->findControlTyped<Graphic>("VALUE_8")->setImage(
-	    createStatsBar(agent->initial_stats.psi_energy, agent->current_stats.psi_energy,
-	                   agent->modified_stats.psi_energy, 100, psi_energyInitialColour,
-	                   psi_energyCurrentColour, {100, 4}));
-	Colour psi_attackInitialColour{192, 56, 144};
-	Colour psi_attackCurrentColour{255, 120, 208};
-	formAgentStats->findControlTyped<Graphic>("VALUE_9")->setImage(
-	    createStatsBar(agent->initial_stats.psi_attack, agent->current_stats.psi_attack,
-	                   agent->modified_stats.psi_attack, 100, psi_attackInitialColour,
-	                   psi_attackCurrentColour, {100, 4}));
-	Colour psi_defenceInitialColour{192, 56, 144};
-	Colour psi_defenceCurrentColour{255, 120, 208};
-	formAgentStats->findControlTyped<Graphic>("VALUE_10")
-	    ->setImage(createStatsBar(agent->initial_stats.psi_defence,
-	                              agent->current_stats.psi_defence,
-	                              agent->modified_stats.psi_defence, 100, psi_defenceInitialColour,
-	                              psi_defenceCurrentColour, {100, 4}));
-}
 
 void AEquipScreen::begin()
 {
@@ -2033,8 +1873,9 @@ void AEquipScreen::displayAgent(sp<Agent> agent)
 {
 	formMain->findControlTyped<Graphic>("BACKGROUND")->setImage(agent->type->inventoryBackground);
 
-	outputAgent(agent, formAgentStats, bigUnitRanks,
-	            state->current_battle && state->current_battle->mode == Battle::Mode::TurnBased);
+	AgentSheet(formAgentStats)
+	    .display(agent, bigUnitRanks,
+	             state->current_battle && state->current_battle->mode == Battle::Mode::TurnBased);
 
 	formAgentStats->setVisible(true);
 	formAgentItem->setVisible(false);

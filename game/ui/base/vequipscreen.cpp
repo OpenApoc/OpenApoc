@@ -55,6 +55,7 @@ VEquipScreen::VEquipScreen(sp<GameState> state)
 		if (vehicle->owner != state->getPlayer())
 			continue;
 		this->setSelectedVehicle(vehicle);
+		VehicleSheet(formVehicleItem).display(vehicle);
 		break;
 	}
 	if (!this->selected)
