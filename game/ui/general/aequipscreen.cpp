@@ -107,7 +107,7 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
       formItemGrenade(ui().getForm("aequipscreen_item_grenade")),
       formItemOther(ui().getForm("aequipscreen_item_other")),
       pal(fw().data->loadPalette("xcom3/ufodata/agenteqp.pcx")), state(state),
-      labelFont(ui().getFont("smalfont"))
+      labelFont(ui().getFont("smalfont")), bigUnitRanks(getBigUnitRanks())
 {
 	this->state = state;
 
@@ -117,14 +117,6 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 	    paperDollPlaceholder->Location, paperDollPlaceholder->Size, EQUIP_GRID_SLOT_SIZE);
 
 	inventoryControl = formMain->findControlTyped<Graphic>("INVENTORY");
-
-	for (int i = 12; i <= 18; i++)
-	{
-		bigUnitRanks.push_back(
-		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-		                                i)));
-	}
 
 	// Agent list functionality
 	auto agentList = formMain->findControlTyped<ListBox>("AGENT_SELECT_BOX");
@@ -162,6 +154,13 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 
 AEquipScreen::~AEquipScreen() = default;
 
+/**
+ * Fills the form of agent's statistics. Such as health, strength, psi-abilities etc.
+ * @agent - an agent whose stats will be displayed
+ * @formAgentStats - a form of stats
+ * @ranks - vector of ranks images
+ * @turnBased - true if used turn-based battle mode, false otherwise
+ */
 void AEquipScreen::outputAgent(sp<Agent> agent, sp<Form> formAgentStats,
                                std::vector<sp<Image>> &ranks, bool turnBased)
 {
@@ -257,6 +256,24 @@ void AEquipScreen::outputAgent(sp<Agent> agent, sp<Form> formAgentStats,
 	                              agent->current_stats.psi_defence,
 	                              agent->modified_stats.psi_defence, 100, psi_defenceInitialColour,
 	                              psi_defenceCurrentColour, {100, 4}));
+}
+
+/**
+ * Loads and returns big pictures of ranks.
+ */
+std::vector<sp<Image>> AEquipScreen::getBigUnitRanks()
+{
+	std::vector<sp<Image>> bigUnitRanks;
+
+	for (int i = 12; i <= 18; i++)
+	{
+		bigUnitRanks.push_back(
+			fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
+				"tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+				i)));
+	}
+
+	return bigUnitRanks;
 }
 
 void AEquipScreen::begin()

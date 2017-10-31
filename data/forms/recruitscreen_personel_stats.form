@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_RECRUITSCREEN_AGENT_STATS">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="640" height="480"/>
+      <label id="AGENT_NAME" text="AGENT NAME GOES HERE">
+        <position x="10" y="272"/>
+        <size width="172" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphic id="SELECTED_PORTRAIT">
+        <position x="21" y="193"/>
+        <size width="65" height="64"/>
+        <image>placeholder.png</image>
+        <imageposition>fit</imageposition>
+      </graphic>
+      <!--graphic id="SELECTED_RANK">
+        <position x="132" y="227"/>
+        <size width="33" height="32"/>
+        <image>placeholder.png</image>
+        <imageposition>fit</imageposition>
+      </graphic-->
+      <label id="LABEL_SKILL" text="Skill">
+        <position x="5" y="300"/>
+        <size width="95" height="15"/>
+        <alignment horizontal="right"/>
+        <font>smalfont</font>
+      </label>
+      <label id="VALUE_SKILL" text="">
+        <position x="104" y="300"/>
+        <size width="26" height="15"/>
+        <alignment horizontal="left"/>
+        <font>smalfont</font>
+      </label>
+    </style>
+  </form>
+</openapoc>

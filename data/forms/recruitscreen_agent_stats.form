@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_RECRUITSCREEN_AGENT_STATS">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="640" height="480"/>
+      <label id="AGENT_NAME" text="AGENT NAME GOES HERE">
+        <position x="10" y="272"/>
+        <size width="172" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphic id="SELECTED_PORTRAIT">
+        <position x="21" y="193"/>
+        <size width="65" height="64"/>
+        <image>placeholder.png</image>
+        <imageposition>fit</imageposition>
+      </graphic>
+      <graphic id="SELECTED_RANK">
+        <position x="132" y="227"/>
+        <size width="33" height="32"/>
+        <image>placeholder.png</image>
+        <imageposition>fit</imageposition>
+      </graphic>
+      <label id="LABEL_HEALTH" text="Health">
+        <position x="5" y="291"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_ACCURACY" text="Accuracy">
+        <position x="5" y="307"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_REACTIONS" text="Reactions">
+        <position x="5" y="323"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_SPEED" text="Speed">
+        <position x="5" y="339"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_STAMINA" text="Stamina">
+        <position x="5" y="355"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_BRAVERY" text="Bravery">
+        <position x="5" y="371"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_STRENGTH" text="Strength">
+        <position x="5" y="387"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_PSI-ENERGY" text="Psi-energy">
+        <position x="5" y="403"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_PSI-ATTACK" text="Psi-attack">
+        <position x="5" y="419"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_PSI-DEFENCE" text="Psi-defence">
+        <position x="5" y="435"/>
+        <size width="76" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphic id="VALUE_1">
+        <position x="82" y="297"/>
+        <size width="100" height="4"/>
+      </graphic>
+      <graphic id="VALUE_2">
+        <position x="82" y="313"/>
+        <size width="100" height="4"/>
+      </graphic>
+      <graphic id="VALUE_3">
+        <position x="82" y="329"/>
+        <size width="100" height="4"/>
+      </graphic>
+      <graphic id="VALUE_4">
+        <position x="82" y="345"/>
+        <size width="100" height="4"/>
+      </graphic>
+      <graphic id="VALUE_5">
+        <position x="82" y="361"/>
+        <size width="100" height="4"/>
+      </graphic>
+      <graphic id="VALUE_6">
+        <position x="82" y="377"/>
+        <size width="100" height="4"/>
+      </graphic>
+      <graphic id="VALUE_7">
+        <position x="82" y="393"/>
+        <size width="100" height="4"/>
+      </graphic>
+      <graphic id="VALUE_8">
+        <position x="82" y="409"/>
+        <size width="100" height="4"/>
+      </graphic>
+      <graphic id="VALUE_9">
+        <position x="82" y="425"/>
+        <size width="100" height="4"/>
+      </graphic>
+      <graphic id="VALUE_10">
+        <position x="82" y="441"/>
+        <size width="100" height="4"/>
+      </graphic>
+    </style>
+  </form>
+</openapoc>
