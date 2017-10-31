@@ -2,7 +2,6 @@
 #include "forms/form.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
-#include "forms/listbox.h"
 #include "forms/radiobutton.h"
 #include "forms/ui.h"
 #include "framework/apocresources/cursor.h"
@@ -49,12 +48,19 @@ VEquipScreen::VEquipScreen(sp<GameState> state)
 	this->paperDoll = form->createChild<EquipmentPaperDoll>(
 	    paperDollPlaceholder->Location, paperDollPlaceholder->Size, EQUIP_GRID_SLOT_SIZE);
 
+	// when hovering the paperdoll, display the selected vehicle stats
+	paperDoll->addCallback(FormEventType::MouseEnter, [this](FormsEvent *e) {
+		highlightedVehicle = selected;
+		VehicleSheet(formVehicleItem).display(selected);
+	});
+
 	for (auto &v : state->vehicles)
 	{
 		auto vehicle = v.second;
 		if (vehicle->owner != state->getPlayer())
 			continue;
 		this->setSelectedVehicle(vehicle);
+		highlightedVehicle = vehicle;
 		VehicleSheet(formVehicleItem).display(vehicle);
 		break;
 	}
@@ -73,20 +79,31 @@ void VEquipScreen::begin()
 {
 	form->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 
-	auto list = form->findControlTyped<ListBox>("VEHICLE_SELECT_BOX");
+	vehicleSelectBox = form->findControlTyped<ListBox>("VEHICLE_SELECT_BOX");
+
 	for (auto &v : state->vehicles)
 	{
 		auto vehicle = v.second;
 		if (vehicle->owner != state->getPlayer())
 			continue;
 		auto graphic = mksp<Graphic>(vehicle->type->equip_icon_big);
+
+		// when entering a selectbox item, display that vehicle's stats
+		graphic->addCallback(FormEventType::MouseEnter, [this, vehicle](FormsEvent *e) {
+			highlightedVehicle = vehicle;
+			VehicleSheet(formVehicleItem).display(vehicle);
+		});
+		vehicleSelectBox->addCallback(FormEventType::MouseLeave, [this](FormsEvent *e) {
+			highlightedVehicle = selected;
+			VehicleSheet(formVehicleItem).display(selected);
+		});
 		graphic->AutoSize = true;
-		list->addItem(graphic);
+		vehicleSelectBox->addItem(graphic);
 		this->vehicleSelectionControls[graphic] = vehicle;
 
 		if (vehicle == this->selected)
 		{
-			list->setSelected(graphic);
+			vehicleSelectBox->setSelected(graphic);
 		}
 	}
 }
@@ -194,7 +211,6 @@ void VEquipScreen::eventOccurred(Event *e)
 	if (e->type() == EVENT_MOUSE_MOVE && !this->draggedEquipment)
 	{
 		// Wipe any previously-highlighted stuff
-		this->highlightedVehicle = nullptr;
 		this->highlightedEquipment = "";
 
 		Vec2<int> mousePos{e->mouse().X, e->mouse().Y};
@@ -206,6 +222,8 @@ void VEquipScreen::eventOccurred(Event *e)
 		if (equipment)
 		{
 			this->highlightedEquipment = equipment->type;
+			VehicleSheet(formVehicleItem).display(highlightedEquipment);
+			return;
 		}
 
 		// Check if we're over any equipment in the list at the bottom
@@ -217,20 +235,11 @@ void VEquipScreen::eventOccurred(Event *e)
 				this->drawHighlightBox = true;
 				this->highlightBoxColour = {255, 255, 255, 255};
 				this->highlightBox = pair.first;
+				VehicleSheet(formVehicleItem).display(highlightedEquipment);
 				return;
 			}
 		}
-
-		if (highlightedEquipment)
-		{
-			VehicleSheet(formVehicleItem).display(highlightedEquipment);
-		}
-		else
-		{
-			VehicleSheet(formVehicleItem).display(selected);
-		}
-		// Check if we're over any vehicles in the side bar
-		// TODO: Show vehicle tooltip when hovering over it
+		VehicleSheet(formVehicleItem).display(highlightedVehicle);
 	}
 	// Find the base this vehicle is landed in
 	StateRef<Base> base = selected->currentBuilding ? selected->currentBuilding->base : nullptr;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "forms/listbox.h"
 #include "framework/stage.h"
 #include "game/state/rules/city/vequipmenttype.h"
 #include "game/state/stateobject.h"
@@ -26,6 +27,9 @@ class VEquipScreen : public Stage
   private:
 	sp<Form> form;
 	sp<Form> formVehicleItem;
+
+	sp<ListBox> vehicleSelectBox;
+
 	sp<Vehicle> selected;
 	EquipmentSlotType selectionType;
 	sp<Palette> pal;

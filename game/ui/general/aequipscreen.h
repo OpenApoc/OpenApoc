@@ -136,6 +136,8 @@ class AEquipScreen : public Stage
 	StateRef<Vehicle> getAgentVehicle(sp<Agent> agent);
 	StateRef<Base> getAgentBase(sp<Agent> agent);
 
+	bool isTurnBased() const;
+
   public:
 	AEquipScreen(sp<GameState> state, sp<Agent> firstAgent = nullptr);
 	~AEquipScreen() override;

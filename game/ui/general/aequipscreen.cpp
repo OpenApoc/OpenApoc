@@ -1873,9 +1873,7 @@ void AEquipScreen::displayAgent(sp<Agent> agent)
 {
 	formMain->findControlTyped<Graphic>("BACKGROUND")->setImage(agent->type->inventoryBackground);
 
-	AgentSheet(formAgentStats)
-	    .display(agent, bigUnitRanks,
-	             state->current_battle && state->current_battle->mode == Battle::Mode::TurnBased);
+	AgentSheet(formAgentStats).display(agent, bigUnitRanks, isTurnBased());
 
 	formAgentStats->setVisible(true);
 	formAgentItem->setVisible(false);
@@ -1925,28 +1923,12 @@ void AEquipScreen::updateAgents()
 	{
 		for (auto &agent : state->agents)
 		{
-			if (!checkAgent(agent.second, owner))
+			sp<Agent> agentSp = agent.second;
+			if (!checkAgent(agentSp, owner))
 			{
 				continue;
 			}
-
-			UnitSelectionState selstate = UnitSelectionState::Unselected;
-			if (!selectedAgents.empty())
-			{
-				auto pos = std::find(selectedAgents.begin(), selectedAgents.end(), agent.second);
-				if (pos == selectedAgents.begin())
-				{
-					selstate = UnitSelectionState::FirstSelected;
-				}
-				else if (pos != selectedAgents.end())
-				{
-					selstate = UnitSelectionState::Selected;
-				}
-			}
-
-			auto agentControl = ControlGenerator::createLargeAgentControl(
-			    *state, agent.second, false, selstate, !isInVicinity(agent.second));
-			agentList->addItem(agentControl);
+			updateAgentControl(agentSp);
 		}
 	}
 	agentList->ItemSize = labelFont->getFontHeight() * 2;
@@ -1969,8 +1951,19 @@ void AEquipScreen::updateAgentControl(sp<Agent> agent)
 	}
 
 	auto agentList = formMain->findControlTyped<ListBox>("AGENT_SELECT_BOX");
-	agentList->replaceItem(ControlGenerator::createLargeAgentControl(*state, agent, false, selstate,
-	                                                                 !isInVicinity(agent)));
+	auto control = ControlGenerator::createLargeAgentControl(*state, agent, false, selstate,
+	                                                         !isInVicinity(agent));
+	control->addCallback(FormEventType::MouseEnter, [this, agent](FormsEvent *e) {
+		AgentSheet(formAgentStats).display(agent, bigUnitRanks, isTurnBased());
+		formAgentStats->setVisible(true);
+		formAgentItem->setVisible(false);
+	});
+	control->addCallback(FormEventType::MouseLeave, [this](FormsEvent *e) {
+		AgentSheet(formAgentStats).display(selectedAgents.front(), bigUnitRanks, isTurnBased());
+		formAgentStats->setVisible(true);
+		formAgentItem->setVisible(false);
+	});
+	agentList->replaceItem(control);
 }
 
 void AEquipScreen::updateFirstAgent()
@@ -2001,6 +1994,11 @@ void AEquipScreen::clampInventoryPage()
 			inventoryPage = maxPageSeen;
 		}
 	}
+}
+
+bool AEquipScreen::isTurnBased() const
+{
+	return state->current_battle && state->current_battle->mode == Battle::Mode::TurnBased;
 }
 
 } // namespace OpenApoc
