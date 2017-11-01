@@ -153,7 +153,7 @@
         <size width="121" height="389"/>
         <orientation>vertical</orientation>
 		<item size = "32" spacing = "0"/>
-        <hovercolour r="120" g="120" b="120" a="255"/>
+        <hovercolour r="255" g="255" b="255" a="255"/>
       </listbox>
  
 	  <scroll id="LIST2_SCROLL">
@@ -177,7 +177,7 @@
         <size width="105" height="389"/>
         <orientation>vertical</orientation>
 		<item size = "32" spacing = "0"/>
-        <hovercolour r="120" g="120" b="120" a="255"/>
+        <hovercolour r="255" g="255" b="255" a="255"/>
       </listbox>
  
  

@@ -38,8 +38,6 @@ class AEquipmentType;
 
 class RecruitScreen : public BaseStage
 {
-  public:
-
   private:
 	void changeBase(sp<Base> newBase) override;
 	sp<Form> formAgentStats;
@@ -52,6 +50,8 @@ class RecruitScreen : public BaseStage
 
 	// Fills the agentList.
 	void populateAgentList();
+	// Event for displaying agent stats.
+	std::function<void(FormsEvent *e)> onHover;
 
   public:
 	RecruitScreen(sp<GameState> state);
@@ -59,8 +59,6 @@ class RecruitScreen : public BaseStage
 
 	// Fills the form of personel's statistics. Such as skill.
 	static void outputPersonel(sp<Agent> agent, sp<Form> formPersonelStats);
-
-	std::function<void(FormsEvent *e)> onHover;
 
 	void setDisplayType(const AgentType::Role role);
 

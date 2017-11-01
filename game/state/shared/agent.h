@@ -108,6 +108,8 @@ class Agent : public StateObject,
 	int getReactionValue() const;
 	int getTULimit(int reactionValue) const;
 	UString getRankName() const;
+	// Get relevant skill.
+	int getSkill() const;
 
 	StateRef<Organisation> owner;
 

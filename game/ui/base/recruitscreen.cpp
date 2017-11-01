@@ -43,13 +43,12 @@ static const std::map<AgentType::Role, int> fireCost = {
     {AgentType::Role::BioChemist, FIRE_COST_BIO},
     {AgentType::Role::Physicist, FIRE_COST_PHYSIC},
     {AgentType::Role::Engineer, FIRE_COST_ENGI}};
-
 }
 
-RecruitScreen::RecruitScreen(sp<GameState> state) : BaseStage(state),
-		formAgentStats(ui().getForm("recruitscreen_agent_stats")),
-		formPersonelStats(ui().getForm("recruitscreen_personel_stats")),
-		bigUnitRanks(AEquipScreen::getBigUnitRanks())
+RecruitScreen::RecruitScreen(sp<GameState> state)
+	: BaseStage(state), formAgentStats(ui().getForm("recruitscreen_agent_stats")),
+	  formPersonelStats(ui().getForm("recruitscreen_personel_stats")),
+	  bigUnitRanks(AEquipScreen::getBigUnitRanks())
 {
 	// Load resources
 	form = ui().getForm("recruitscreen");
@@ -163,19 +162,16 @@ void RecruitScreen::populateAgentList()
 			if (a.second->currentBuilding == a.second->homeBuilding)
 			{
 				agentLists[bases[a.second->homeBuilding->base.id]].push_back(
-					ControlGenerator::createLargeAgentControl(
-						*state, a.second));
+					ControlGenerator::createLargeAgentControl(*state, a.second));
 			}
 		}
 		else if (a.second->owner->hirableAgentTypes.find(a.second->type) !=
-			a.second->owner->hirableAgentTypes.end())
+			 a.second->owner->hirableAgentTypes.end())
 		{
-			agentLists[8].push_back(ControlGenerator::createLargeAgentControl(
-				*state, a.second));
+			agentLists[8].push_back(ControlGenerator::createLargeAgentControl(*state, a.second));
 		}
 	}
 }
-
 
 void RecruitScreen::changeBase(sp<Base> newBase)
 {
@@ -406,24 +402,8 @@ void RecruitScreen::displayAgentStats(sp<Agent> agent)
 void RecruitScreen::outputPersonel(sp<Agent> agent, sp<Form> formPersonelStats)
 {
 	formPersonelStats->findControlTyped<Label>("AGENT_NAME")->setText(agent->name);
-	formPersonelStats->findControlTyped<Graphic>("SELECTED_PORTRAIT")
-		->setImage(agent->getPortrait().photo);
-
-	int skill = 0;
-	switch (agent->type->role)
-	{
-		case AgentType::Role::Physicist:
-			skill = agent->current_stats.physics_skill;
-			break;
-		case AgentType::Role::BioChemist:
-			skill = agent->current_stats.biochem_skill;
-			break;
-		case AgentType::Role::Engineer:
-			skill = agent->current_stats.engineering_skill;
-			break;
-	}
-
-	formPersonelStats->findControlTyped<Label>("VALUE_SKILL")->setText(format(tr("%s"), skill));
+	formPersonelStats->findControlTyped<Graphic>("SELECTED_PORTRAIT")->setImage(agent->getPortrait().photo);
+	formPersonelStats->findControlTyped<Label>("VALUE_SKILL")->setText(format(tr("%s"), agent->getSkill()));
 }
 
 void RecruitScreen::attemptCloseScreen()

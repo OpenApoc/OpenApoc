@@ -384,22 +384,8 @@ sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, const Ag
 
 	if (addSkill)
 	{
-		int skill = 0;
-		if (info.agent->type->role == AgentType::Role::Physicist)
-		{
-			skill = info.agent->current_stats.physics_skill;
-		}
-		else if (info.agent->type->role == AgentType::Role::BioChemist)
-		{
-			skill = info.agent->current_stats.biochem_skill;
-		}
-		else if (info.agent->type->role == AgentType::Role::Engineer)
-		{
-			skill = info.agent->current_stats.engineering_skill;
-		}
-
 		auto skillLabel =
-		    baseControl->createChild<Label>(format(tr("Skill %s"), skill), singleton.labelFont);
+			baseControl->createChild<Label>(format(tr("Skill %s"), info.agent->getSkill()), singleton.labelFont);
 		if (labMode)
 		{
 			skillLabel->Size = {45, 40};

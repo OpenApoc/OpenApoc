@@ -16,12 +16,6 @@
         <image>placeholder.png</image>
         <imageposition>fit</imageposition>
       </graphic>
-      <!--graphic id="SELECTED_RANK">
-        <position x="132" y="227"/>
-        <size width="33" height="32"/>
-        <image>placeholder.png</image>
-        <imageposition>fit</imageposition>
-      </graphic-->
       <label id="LABEL_SKILL" text="Skill">
         <position x="5" y="300"/>
         <size width="95" height="15"/>
