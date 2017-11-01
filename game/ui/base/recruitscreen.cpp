@@ -43,24 +43,17 @@ static const std::map<AgentType::Role, int> fireCost = {
     {AgentType::Role::BioChemist, FIRE_COST_BIO},
     {AgentType::Role::Physicist, FIRE_COST_PHYSIC},
     {AgentType::Role::Engineer, FIRE_COST_ENGI}};
-}
+} // namespace
 
 RecruitScreen::RecruitScreen(sp<GameState> state)
-	: BaseStage(state), formAgentStats(ui().getForm("recruitscreen_agent_stats")),
-	  formPersonelStats(ui().getForm("recruitscreen_personel_stats")),
-	  bigUnitRanks(AEquipScreen::getBigUnitRanks())
+    : BaseStage(state), formAgentStats(ui().getForm("recruitscreen_agent_stats")),
+      formPersonelStats(ui().getForm("recruitscreen_personel_stats")),
+      bigUnitRanks(AEquipScreen::getBigUnitRanks())
 {
 	// Load resources
 	form = ui().getForm("recruitscreen");
 	formAgentStats->setVisible(false);
 	formPersonelStats->setVisible(false);
-
-	// Assign event handlers
-	onHover = [this](FormsEvent *e) {
-		auto agentControl = e->forms().RaisedBy;
-		auto agent = agentControl->getData<Agent>();
-		this->displayAgentStats(agent);
-	};
 
 	arrow = form->findControlTyped<Graphic>("MAGIC_ARROW");
 	textViewBaseStatic = form->findControlTyped<Label>("TEXT_BUTTON_BASE_STATIC");
@@ -68,6 +61,17 @@ RecruitScreen::RecruitScreen(sp<GameState> state)
 	type = AgentType::Role::Soldier;
 	viewHighlight = BaseGraphics::FacilityHighlight::Quarters;
 
+	// Assign event handlers
+	onHover = [this](FormsEvent *e) {
+		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
+		auto agent = list->getHoveredData<Agent>();
+		displayAgentStats(agent);
+	};
+
+	form->findControlTyped<ListBox>("LIST1")->addCallback(FormEventType::ListBoxChangeHover,
+	                                                      onHover);
+	form->findControlTyped<ListBox>("LIST2")->addCallback(FormEventType::ListBoxChangeHover,
+	                                                      onHover);
 	form->findControlTyped<ScrollBar>("LIST1_SCROLL")->LargeChange = 32;
 	form->findControlTyped<ScrollBar>("LIST2_SCROLL")->LargeChange = 32;
 	form->findControlTyped<GraphicButton>("LIST1_SCROLL_UP")->scrollLarge = true;
@@ -127,9 +131,6 @@ RecruitScreen::RecruitScreen(sp<GameState> state)
 
 				updateFormValues();
 			});
-
-			// MouseEnter - display agent stats
-			control->addCallback(FormEventType::MouseEnter, onHover);
 		}
 	}
 }
@@ -162,11 +163,11 @@ void RecruitScreen::populateAgentList()
 			if (a.second->currentBuilding == a.second->homeBuilding)
 			{
 				agentLists[bases[a.second->homeBuilding->base.id]].push_back(
-					ControlGenerator::createLargeAgentControl(*state, a.second));
+				    ControlGenerator::createLargeAgentControl(*state, a.second));
 			}
 		}
 		else if (a.second->owner->hirableAgentTypes.find(a.second->type) !=
-			 a.second->owner->hirableAgentTypes.end())
+		         a.second->owner->hirableAgentTypes.end())
 		{
 			agentLists[8].push_back(ControlGenerator::createLargeAgentControl(*state, a.second));
 		}
@@ -376,7 +377,6 @@ void RecruitScreen::displayAgentStats(sp<Agent> agent)
 {
 	if (!agent)
 	{
-		LogError("No agent in selected data");
 		return;
 	}
 
@@ -402,8 +402,10 @@ void RecruitScreen::displayAgentStats(sp<Agent> agent)
 void RecruitScreen::outputPersonel(sp<Agent> agent, sp<Form> formPersonelStats)
 {
 	formPersonelStats->findControlTyped<Label>("AGENT_NAME")->setText(agent->name);
-	formPersonelStats->findControlTyped<Graphic>("SELECTED_PORTRAIT")->setImage(agent->getPortrait().photo);
-	formPersonelStats->findControlTyped<Label>("VALUE_SKILL")->setText(format(tr("%s"), agent->getSkill()));
+	formPersonelStats->findControlTyped<Graphic>("SELECTED_PORTRAIT")
+	    ->setImage(agent->getPortrait().photo);
+	formPersonelStats->findControlTyped<Label>("VALUE_SKILL")
+	    ->setText(format(tr("%s"), agent->getSkill()));
 }
 
 void RecruitScreen::attemptCloseScreen()

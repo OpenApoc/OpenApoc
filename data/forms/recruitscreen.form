@@ -152,7 +152,7 @@
         <position x="259" y="76"/>
         <size width="121" height="389"/>
         <orientation>vertical</orientation>
-		<item size = "32" spacing = "0"/>
+		<item size = "30" spacing = "2"/>
         <hovercolour r="255" g="255" b="255" a="255"/>
       </listbox>
  
@@ -176,7 +176,7 @@
         <position x="460" y="76"/>
         <size width="105" height="389"/>
         <orientation>vertical</orientation>
-		<item size = "32" spacing = "0"/>
+		<item size = "30" spacing = "2"/>
         <hovercolour r="255" g="255" b="255" a="255"/>
       </listbox>
  
