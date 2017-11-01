@@ -284,6 +284,28 @@ UString Agent::getRankName() const
 	return "";
 }
 
+/**
+ * Get relevant skill.
+ */
+int Agent::getSkill() const
+{
+	int skill = 0;
+	switch (type->role)
+	{
+		case AgentType::Role::Physicist:
+			skill = current_stats.physics_skill;
+			break;
+		case AgentType::Role::BioChemist:
+			skill = current_stats.biochem_skill;
+			break;
+		case AgentType::Role::Engineer:
+			skill = current_stats.engineering_skill;
+			break;
+	}
+
+	return skill;
+}
+
 void Agent::leaveBuilding(GameState &state, Vec3<float> initialPosition)
 {
 	if (currentBuilding)

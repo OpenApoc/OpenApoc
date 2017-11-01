@@ -144,8 +144,11 @@ class AEquipScreen : public Stage
 	AEquipScreen(sp<GameState> state, sp<Agent> firstAgent = nullptr);
 	~AEquipScreen() override;
 
+	// Fills the form of agent's statistics. Such as health, strength, psi-abilities etc.
 	static void outputAgent(sp<Agent> agent, sp<Form> formAgentStats, std::vector<sp<Image>> &ranks,
 	                        bool turnBased);
+	// Loads and returns big pictures of ranks.
+	static std::vector<sp<Image>> getBigUnitRanks();
 
 	void begin() override;
 	void pause() override;

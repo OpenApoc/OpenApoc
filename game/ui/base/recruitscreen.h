@@ -1,6 +1,7 @@
 #pragma once
 
 #include "forms/control.h"
+#include "game/state/rules/agenttype.h"
 #include "game/state/stateobject.h"
 #include "game/ui/base/basestage.h"
 #include "library/sp.h"
@@ -37,39 +38,36 @@ class AEquipmentType;
 
 class RecruitScreen : public BaseStage
 {
-  public:
-	enum class Type
-	{
-		Soldier,
-		Bio,
-		Physist,
-		Engineer
-	};
-
   private:
 	void changeBase(sp<Base> newBase) override;
+	sp<Form> formAgentStats;
+	sp<Form> formPersonelStats;
 	sp<Graphic> arrow;
 	sp<Label> textViewBaseStatic;
+	std::vector<sp<Image>> bigUnitRanks;
+	AgentType::Role type;
+	std::vector<std::list<sp<Control>>> agentLists;
+
+	// Fills the agentList.
+	void populateAgentList();
+	// Event for displaying agent stats.
+	std::function<void(FormsEvent *e)> onHover;
 
   public:
 	RecruitScreen(sp<GameState> state);
 	~RecruitScreen() override;
 
-	Type type;
-	std::vector<std::list<sp<Control>>> agentLists;
+	// Fills the form of personel's statistics. Such as skill.
+	static void outputPersonel(sp<Agent> agent, sp<Form> formPersonelStats);
 
-	// Methods
-
-	std::function<void(FormsEvent *e)> onHover;
-
-	void setDisplayType(Type type);
+	void setDisplayType(const AgentType::Role role);
 
 	int getLeftIndex();
 
 	void updateFormValues();
 	void updateBaseHighlight();
 	void fillBaseBar(int percent);
-	void displayAgent(sp<Agent> agent);
+	void displayAgentStats(sp<Agent> agent);
 
 	void attemptCloseScreen();
 	void closeScreen(bool confirmed = false);
