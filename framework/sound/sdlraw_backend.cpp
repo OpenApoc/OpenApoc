@@ -77,6 +77,7 @@ static bool ConvertAudio(AudioFormat input_format, SDL_AudioSpec &output_spec, i
 		}
 		cvt.buf = (Uint8 *)samples.data();
 		SDL_ConvertAudio(&cvt);
+		samples.resize(cvt.len_cvt);
 		return true;
 	}
 }
@@ -302,9 +303,14 @@ class SDLRawBackend : public SoundBackend
 		    &wantFormat, &output_spec,
 		    SDL_AUDIO_ALLOW_ANY_CHANGE); // hopefully we'll get a sane output format
 		SDL_PauseAudioDevice(devID, 0);  // Run at once?
-		LogInfo("Audio output format: Channels %d, format %d, freq %d, samples %d",
-		        (int)output_spec.channels, (int)output_spec.format, (int)output_spec.freq,
-		        (int)output_spec.samples);
+
+		LogWarning("Audio output format: Channels %d, format: %s %s %s %dbit, freq %d, samples %d",
+		           (int)output_spec.channels,
+		           SDL_AUDIO_ISSIGNED(output_spec.format) ? "signed" : "unsigned",
+		           SDL_AUDIO_ISFLOAT(output_spec.format) ? "float" : "int",
+		           SDL_AUDIO_ISBIGENDIAN(output_spec.format) ? "BE" : "LE",
+		           SDL_AUDIO_BITSIZE(output_spec.format), (int)output_spec.freq,
+		           (int)output_spec.samples);
 	}
 	void playSample(sp<Sample> sample, float gain) override
 	{
