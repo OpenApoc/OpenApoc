@@ -22,13 +22,19 @@
 namespace OpenApoc
 {
 
-ResearchScreen::ResearchScreen(sp<GameState> state, sp<Facility> selected_lab)
-    : BaseStage(state), selectedLab(selected_lab)
+ResearchScreen::ResearchScreen(sp<GameState> state, sp<Facility> selected_lab) : BaseStage(state)
 {
 	form = ui().getForm("researchscreen");
-	viewHighlight = BaseGraphics::FacilityHighlight::Labs;
-	viewFacility = selected_lab;
 	arrow = form->findControlTyped<Graphic>("MAGIC_ARROW");
+	viewHighlight = BaseGraphics::FacilityHighlight::Labs;
+	if (selected_lab)
+	{
+		state->current_base->selectedLab = viewFacility = selected_lab;
+	}
+	else
+	{
+		viewFacility = state->current_base->selectedLab.lock();
+	}
 
 	auto uiListSmallLabs = form->findControlTyped<ListBox>("LIST_SMALL_LABS");
 	auto uiListLargeLabs = form->findControlTyped<ListBox>("LIST_LARGE_LABS");
@@ -37,13 +43,13 @@ ResearchScreen::ResearchScreen(sp<GameState> state, sp<Facility> selected_lab)
 
 	uiListSmallLabs->addCallback(FormEventType::ListBoxChangeSelected, [this](FormsEvent *e) {
 		form->findControlTyped<ListBox>("LIST_LARGE_LABS")->setSelected(nullptr);
-		viewFacility = selectedLab =
+		viewFacility =
 		    std::static_pointer_cast<ListBox>(e->forms().RaisedBy)->getSelectedData<Facility>();
 		setCurrentLabInfo();
 	});
 	uiListLargeLabs->addCallback(FormEventType::ListBoxChangeSelected, [this](FormsEvent *e) {
 		form->findControlTyped<ListBox>("LIST_SMALL_LABS")->setSelected(nullptr);
-		viewFacility = selectedLab =
+		viewFacility =
 		    std::static_pointer_cast<ListBox>(e->forms().RaisedBy)->getSelectedData<Facility>();
 		setCurrentLabInfo();
 	});
@@ -76,18 +82,18 @@ void ResearchScreen::changeBase(sp<Base> newBase)
 		}
 	}
 
-	// find selected lab (TODO: each base should have their own selected lab in the GameState)
-	if (!smallLabs.empty())
+	// find selected lab
+	viewFacility = state->current_base->selectedLab.lock();
+	if (!viewFacility)
 	{
-		viewFacility = selectedLab = smallLabs.front();
-	}
-	else if (!largeLabs.empty())
-	{
-		viewFacility = selectedLab = largeLabs.front();
-	}
-	else
-	{
-		viewFacility = selectedLab = nullptr;
+		if (!smallLabs.empty())
+		{
+			viewFacility = smallLabs.front();
+		}
+		else if (!largeLabs.empty())
+		{
+			viewFacility = largeLabs.front();
+		}
 	}
 
 	// populate ui lists
@@ -101,10 +107,15 @@ void ResearchScreen::begin()
 {
 	BaseStage::begin();
 
+	if (viewFacility)
+	{
+		state->current_base->selectedLab = viewFacility;
+	}
+
 	auto unassignedAgentList = form->findControlTyped<ListBox>("LIST_UNASSIGNED");
 	unassignedAgentList->addCallback(FormEventType::ListBoxChangeSelected, [this](FormsEvent *e) {
 		LogWarning("unassigned agent selected");
-		if (this->assigned_agent_count >= this->selectedLab->type->capacityAmount)
+		if (this->assigned_agent_count >= this->viewFacility->type->capacityAmount)
 		{
 			LogWarning("no free space in lab");
 			return;
@@ -122,7 +133,7 @@ void ResearchScreen::begin()
 			return;
 		}
 		agent->assigned_to_lab = true;
-		this->selectedLab->lab->assigned_agents.push_back({state.get(), agent});
+		this->viewFacility->lab->assigned_agents.push_back({state.get(), agent});
 		this->setCurrentLabInfo();
 	});
 	auto removeFn = [this](FormsEvent *e) {
@@ -140,7 +151,7 @@ void ResearchScreen::begin()
 			return;
 		}
 		agent->assigned_to_lab = false;
-		this->selectedLab->lab->assigned_agents.remove({state.get(), agent});
+		this->viewFacility->lab->assigned_agents.remove({state.get(), agent});
 		this->setCurrentLabInfo();
 	};
 	auto assignedAgentList = form->findControlTyped<ListBox>("LIST_ASSIGNED");
@@ -182,15 +193,16 @@ void ResearchScreen::eventOccurred(Event *e)
 			{
 				if (current_topic)
 				{
-					switch (this->selectedLab->lab->current_project->type)
+					switch (this->viewFacility->lab->current_project->type)
 					{
 						case ResearchTopic::Type::BioChem:
 						case ResearchTopic::Type::Physics:
 							current_topic->man_hours_progress = current_topic->man_hours - 1;
 							break;
 						case ResearchTopic::Type::Engineering:
-							selectedLab->lab->manufacture_man_hours_invested =
-							    current_topic->man_hours * this->selectedLab->lab->manufacture_goal;
+							viewFacility->lab->manufacture_man_hours_invested =
+							    current_topic->man_hours *
+							    this->viewFacility->lab->manufacture_goal;
 							break;
 						default:
 							LogError("Unknown lab type");
@@ -219,22 +231,23 @@ void ResearchScreen::eventOccurred(Event *e)
 			}
 			else if (e->forms().RaisedBy->Name == "BUTTON_RESEARCH_NEWPROJECT")
 			{
-				if (!this->selectedLab)
+				if (!this->viewFacility)
 				{
 					// No lab selected, ignore this click
 					return;
 				}
-				fw().stageQueueCommand({StageCmd::Command::PUSH,
-				                        mksp<ResearchSelect>(this->state, this->selectedLab->lab)});
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<ResearchSelect>(this->state, this->viewFacility->lab)});
 				return;
 			}
 			else if (e->forms().RaisedBy->Name == "BUTTON_RESEARCH_CANCELPROJECT")
 			{
-				if (!this->selectedLab)
+				if (!this->viewFacility)
 				{
 					return;
 				}
-				Lab::setResearch(this->selectedLab->lab, {state.get(), ""}, state);
+				Lab::setResearch(this->viewFacility->lab, {state.get(), ""}, state);
 				form->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 			}
 		}
@@ -242,16 +255,16 @@ void ResearchScreen::eventOccurred(Event *e)
 		{
 			if (e->forms().RaisedBy->Name == "MANUFACTURE_QUANTITY_SLIDER")
 			{
-				if (this->selectedLab &&
-				    this->selectedLab->lab->type == ResearchTopic::Type::Engineering &&
-				    this->selectedLab->lab->current_project)
+				if (this->viewFacility &&
+				    this->viewFacility->lab->type == ResearchTopic::Type::Engineering &&
+				    this->viewFacility->lab->current_project)
 				{
 					auto manufacturing_scrollbar =
 					    form->findControlTyped<ScrollBar>("MANUFACTURE_QUANTITY_SLIDER");
 					auto manufacturing_quantity = form->findControlTyped<Label>("TEXT_QUANTITY");
 					auto quantity = manufacturing_scrollbar->getValue();
 
-					Lab::setQuantity(this->selectedLab->lab, quantity);
+					Lab::setQuantity(this->viewFacility->lab, quantity);
 					this->updateProgressInfo();
 				}
 			}
@@ -263,7 +276,7 @@ void ResearchScreen::update() { form->update(); }
 
 void ResearchScreen::render()
 {
-	current_topic = selectedLab ? selectedLab->lab->current_project : nullptr;
+	current_topic = viewFacility ? viewFacility->lab->current_project : nullptr;
 
 	refreshView();
 	fw().stageGetPrevious(this->shared_from_this())->render();
@@ -293,7 +306,7 @@ void ResearchScreen::populateUILabList(const UString &listName, std::list<sp<Fac
 		label->setText(format("%d", facility->lab->assigned_agents.size()));
 
 		uiListLabs->addItem(item);
-		if (facility == selectedLab)
+		if (facility == viewFacility)
 		{
 			selectedItem = item;
 		}
@@ -303,7 +316,7 @@ void ResearchScreen::populateUILabList(const UString &listName, std::list<sp<Fac
 
 void ResearchScreen::setCurrentLabInfo()
 {
-	if (!this->selectedLab)
+	if (!this->viewFacility)
 	{
 		auto unassignedAgentList = form->findControlTyped<ListBox>("LIST_UNASSIGNED");
 		unassignedAgentList->clear();
@@ -315,8 +328,9 @@ void ResearchScreen::setCurrentLabInfo()
 		updateProgressInfo();
 		return;
 	}
+	this->state->current_base->selectedLab = viewFacility;
 	this->assigned_agent_count = 0;
-	auto labType = this->selectedLab->type->capacityType;
+	auto labType = this->viewFacility->type->capacityType;
 	UString labTypeName = "UNKNOWN";
 	AgentType::Role listedAgentType = AgentType::Role::BioChemist;
 
@@ -359,16 +373,16 @@ void ResearchScreen::setCurrentLabInfo()
 
 		if (agent.second->assigned_to_lab)
 		{
-			for (auto &assigned_agent : this->selectedLab->lab->assigned_agents)
+			for (auto &assigned_agent : this->viewFacility->lab->assigned_agents)
 			{
 				if (assigned_agent.getSp() == agent.second)
 				{
 					this->assigned_agent_count++;
-					if (this->assigned_agent_count > this->selectedLab->type->capacityAmount)
+					if (this->assigned_agent_count > this->viewFacility->type->capacityAmount)
 					{
 						LogError("Selected lab has %d assigned agents, but has a capacity of %d",
 						         this->assigned_agent_count,
-						         this->selectedLab->type->capacityAmount);
+						         this->viewFacility->type->capacityAmount);
 					}
 					assigned_to_current_lab = true;
 					break;
@@ -393,7 +407,7 @@ void ResearchScreen::setCurrentLabInfo()
 
 	auto totalSkillLabel = form->findControlTyped<Label>("TEXT_TOTAL_SKILL");
 	totalSkillLabel->setText(
-	    format(tr("Total Skill: %d"), this->selectedLab->lab->getTotalSkill()));
+	    format(tr("Total Skill: %d"), this->viewFacility->lab->getTotalSkill()));
 
 	// update quantity for selected lab
 	auto uiListLabs = form->findControlTyped<ListBox>("LIST_SMALL_LABS");
@@ -406,7 +420,7 @@ void ResearchScreen::setCurrentLabInfo()
 	if (selectedItem)
 	{
 		auto label = std::static_pointer_cast<Label>(selectedItem->Controls[0]);
-		label->setText(format("%d", selectedLab->lab->assigned_agents.size()));
+		label->setText(format("%d", this->viewFacility->lab->assigned_agents.size()));
 	}
 
 	updateProgressInfo();
@@ -414,13 +428,13 @@ void ResearchScreen::setCurrentLabInfo()
 
 void ResearchScreen::updateProgressInfo()
 {
-	if (this->selectedLab && this->selectedLab->lab->current_project)
+	if (this->viewFacility && this->viewFacility->lab->current_project)
 	{
-		auto &topic = this->selectedLab->lab->current_project;
+		auto &topic = this->viewFacility->lab->current_project;
 		auto progressBar = form->findControlTyped<Graphic>("GRAPHIC_PROGRESS_BAR");
 		auto progressImage = mksp<RGBImage>(progressBar->Size);
 		float projectProgress = 0.0f;
-		switch (this->selectedLab->lab->current_project->type)
+		switch (this->viewFacility->lab->current_project->type)
 		{
 			case ResearchTopic::Type::BioChem:
 			case ResearchTopic::Type::Physics:
@@ -429,9 +443,9 @@ void ResearchScreen::updateProgressInfo()
 				break;
 			case ResearchTopic::Type::Engineering:
 				projectProgress =
-				    clamp((float)(this->selectedLab->lab->manufacture_man_hours_invested +
-				                  topic->man_hours * this->selectedLab->lab->manufacture_done) /
-				              (float)(topic->man_hours * this->selectedLab->lab->manufacture_goal),
+				    clamp((float)(this->viewFacility->lab->manufacture_man_hours_invested +
+				                  topic->man_hours * this->viewFacility->lab->manufacture_done) /
+				              (float)(topic->man_hours * this->viewFacility->lab->manufacture_goal),
 				          0.0f, 1.0f);
 				break;
 			default:
@@ -477,8 +491,8 @@ void ResearchScreen::updateProgressInfo()
 	    form->findControlTyped<GraphicButton>("MANUFACTURE_QUANTITY_UP");
 	auto manufacturing_quantity = form->findControlTyped<Label>("TEXT_QUANTITY");
 	auto manufacturing_ntomake = form->findControlTyped<Label>("TEXT_NUMBER_TO_MAKE");
-	if (this->selectedLab && this->selectedLab->lab->current_project &&
-	    this->selectedLab->lab->current_project->type == ResearchTopic::Type::Engineering)
+	if (this->viewFacility && this->viewFacility->lab->current_project &&
+	    this->viewFacility->lab->current_project->type == ResearchTopic::Type::Engineering)
 	{
 		manufacture_bg->setVisible(true);
 		manufacturing_ntomake->setVisible(true);
@@ -486,8 +500,8 @@ void ResearchScreen::updateProgressInfo()
 		manufacturing_scrollbar->setVisible(true);
 		manufacturing_scroll_left->setVisible(true);
 		manufacturing_scroll_right->setVisible(true);
-		manufacturing_scrollbar->setValue(this->selectedLab->lab->getQuantity());
-		manufacturing_quantity->setText(format(tr("%d"), this->selectedLab->lab->getQuantity()));
+		manufacturing_scrollbar->setValue(this->viewFacility->lab->getQuantity());
+		manufacturing_quantity->setText(format(tr("%d"), this->viewFacility->lab->getQuantity()));
 	}
 	else
 	{

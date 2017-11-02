@@ -22,7 +22,6 @@ class Graphic;
 class ResearchScreen : public BaseStage
 {
   private:
-	sp<Facility> selectedLab;
 	StateRef<ResearchTopic> current_topic;
 	std::list<sp<Facility>> smallLabs;
 	std::list<sp<Facility>> largeLabs;
