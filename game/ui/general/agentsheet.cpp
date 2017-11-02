@@ -147,7 +147,9 @@ sp<Image> AgentSheet::createStatsBar(int initialValue, int currentValue, int mod
 		for (int y = 0; y < imageSize.y; y++)
 		{
 			const Colour &col = x <= initialPixels ? colours.first : colours.second;
-			if (y == 0 || y == imageSize.y - 1 || x < modifiedPixels || x == currentPixels - 1)
+			// draw pixel at the top/bottom border of the bar or if filling the bar or if at the
+			// right border
+			if (y == 0 || y == imageSize.y - 1 || x <= modifiedPixels || x == currentPixels - 1)
 			{
 				l.set({x, y}, col);
 			}
