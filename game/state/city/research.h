@@ -116,6 +116,7 @@ class Lab : public StateObject
 	STATE_OBJECT(Lab)
   public:
 	Lab() = default;
+	~Lab() override;
 	ResearchTopic::LabSize size = ResearchTopic::LabSize::Small;
 	ResearchTopic::Type type = ResearchTopic::Type::BioChem;
 	StateRef<ResearchTopic> current_project;

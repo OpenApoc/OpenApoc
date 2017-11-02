@@ -236,6 +236,14 @@ void ResearchState::resortTopicList()
 	});
 }
 
+Lab::~Lab()
+{
+	for (auto &agent : assigned_agents)
+	{
+		agent->assigned_to_lab = false;
+	}
+}
+
 void Lab::setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic, sp<GameState> state)
 {
 	if (topic)

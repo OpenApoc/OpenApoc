@@ -168,6 +168,7 @@ void ResearchScreen::pause() {}
 void ResearchScreen::resume()
 {
 	form->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
+	updateProgressInfo();
 }
 
 void ResearchScreen::finish() {}
@@ -249,6 +250,8 @@ void ResearchScreen::eventOccurred(Event *e)
 				}
 				Lab::setResearch(this->viewFacility->lab, {state.get(), ""}, state);
 				form->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
+				this->updateProgressInfo();
+				return;
 			}
 		}
 		if (e->forms().EventFlag == FormEventType::ScrollBarChange)
@@ -409,7 +412,7 @@ void ResearchScreen::setCurrentLabInfo()
 	totalSkillLabel->setText(
 	    format(tr("Total Skill: %d"), this->viewFacility->lab->getTotalSkill()));
 
-	// update quantity for selected lab
+	// update scientists quantity for selected lab
 	auto uiListLabs = form->findControlTyped<ListBox>("LIST_SMALL_LABS");
 	auto selectedItem = uiListLabs->getSelectedItem();
 	if (!selectedItem)
