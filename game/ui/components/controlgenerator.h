@@ -15,6 +15,7 @@ class AgentInfo;
 class Image;
 class BitmapFont;
 class Control;
+class Facility;
 class Graphic;
 class AEquipmentType;
 class VehicleType;
@@ -85,6 +86,8 @@ class ControlGenerator
 	createLargeAgentControl(GameState &state, sp<Agent> a, bool addSkill = false,
 	                        UnitSelectionState forcedSelectionState = UnitSelectionState::NA,
 	                        bool forceFade = false, bool labMode = false);
+	// Create lab icon control with quantity label.
+	static sp<Control> createLabControl(sp<GameState> state, sp<Facility> facility);
 
 	static OrganisationInfo createOrganisationInfo(GameState &state, sp<Organisation> org);
 	static sp<Control> createOrganisationControl(GameState &state, const OrganisationInfo &info);

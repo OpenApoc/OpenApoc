@@ -136,9 +136,25 @@
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>
-      <listbox id="LIST_LABS">
-        <position x="277" y="58"/>
-        <size height="100" width="264"/>
+      <scroll id="LIST_SMALL_LABS_SCROLL">
+        <position x="278" y="58"/>
+        <size height="16" width="262"/>
+      </scroll>
+      <scroll id="LIST_LARGE_LABS_SCROLL">
+        <position x="272" y="98"/>
+        <size height="16" width="274"/>
+      </scroll>
+      <listbox id="LIST_SMALL_LABS" scrollbarid="LIST_SMALL_LABS_SCROLL">
+        <position x="278" y="58"/>
+        <size height="35" width="262"/>
+        <item size="0" spacing="6"/>
+        <orientation>horizontal</orientation>
+        <hovercolour r="255" g="255" b="255" a="255"/>
+        <selcolour r="255" g="0" b="0" a="255"/>
+      </listbox>
+      <listbox id="LIST_LARGE_LABS" scrollbarid="LIST_LARGE_LABS_SCROLL">
+        <position x="272" y="98"/>
+        <size height="70" width="274"/>
         <item size="0" spacing="6"/>
         <orientation>horizontal</orientation>
         <hovercolour r="255" g="255" b="255" a="255"/>
