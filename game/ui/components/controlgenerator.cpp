@@ -13,10 +13,12 @@
 #include "game/state/battle/battleunit.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/city/facility.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vequipment.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipmenttype.h"
+#include "game/state/rules/city/facilitytype.h"
 #include "game/state/rules/city/vammotype.h"
 #include "game/state/rules/city/vehicletype.h"
 #include "game/state/rules/city/vequipmenttype.h"
@@ -421,6 +423,32 @@ sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, sp<Agent
 {
 	auto info = createAgentInfo(state, a, forcedSelectionState, forceFade);
 	return createLargeAgentControl(state, info, addSkill, labMode);
+}
+
+/**
+ * Create lab icon control with quantity label.
+ * @state - the game state
+ * @facility - lab facility
+ * @return - lab icon control
+ */
+sp<Control> ControlGenerator::createLabControl(sp<GameState> state, sp<Facility> facility)
+{
+	if (!singleton.initialised)
+	{
+		singleton.init(*state);
+	}
+
+	auto graphic = mksp<Graphic>(facility->type->sprite);
+	graphic->AutoSize = true;
+
+	auto spriteSize = facility->type->sprite->size;
+	auto label = graphic->createChild<Label>();
+	label->setFont(singleton.labelFont);
+	label->Size = {20, label->getFont()->getFontHeight()};
+	label->Location = {(spriteSize[0] - label->Size[0]) / 2, (spriteSize[1] - label->Size[1]) / 2};
+	label->TextHAlign = HorizontalAlignment::Centre;
+
+	return graphic;
 }
 
 OrganisationInfo ControlGenerator::createOrganisationInfo(GameState &state, sp<Organisation> org)

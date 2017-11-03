@@ -440,7 +440,7 @@ void ListBox::setSelected(sp<Control> c)
 			break;
 		}
 	}
-	if (!found)
+	if (c && !found)
 	{
 		LogError(
 		    "Trying set ListBox selected control to something that isn't a member of the list");

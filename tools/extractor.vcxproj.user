@@ -20,4 +20,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerCommandArguments>--Framework.CD="$(SolutionDir)\data\cd.iso" --Framework.Data="$(SolutionDir)\data" --Trace.enable=1</LocalDebuggerCommandArguments>
   </PropertyGroup>
+  <PropertyGroup>
+    <ShowAllFiles>true</ShowAllFiles>
+  </PropertyGroup>
 </Project>

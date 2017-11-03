@@ -22,6 +22,8 @@ class Base : public StateObject, public std::enable_shared_from_this<Base>
   public:
 	std::vector<std::vector<bool>> corridors;
 	std::vector<sp<Facility>> facilities;
+	// Each base has its own selected lab
+	std::weak_ptr<Facility> selectedLab;
 	// For ammunition, this is actually the count of bullets, not clips
 	std::map<UString, unsigned> inventoryBioEquipment;
 	std::map<UString, unsigned> inventoryAgentEquipment;
