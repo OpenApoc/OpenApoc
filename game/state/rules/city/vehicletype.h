@@ -203,7 +203,7 @@ class VehicleType : public StateObject
 		}
 		return weight;
 	}
-	template <class IterT> int getFuel(IterT first, IterT last) const
+	template <class IterT> int getMaxFuel(IterT first, IterT last) const
 	{
 		static_assert(std::is_same<typename std::iterator_traits<IterT>::value_type,
 		                           sp<VEquipmentType>>::value,

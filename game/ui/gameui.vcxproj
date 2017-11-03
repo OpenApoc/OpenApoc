@@ -67,6 +67,8 @@
     <ClCompile Include="debugtools\formpreview.cpp" />
     <ClCompile Include="debugtools\imagepreview.cpp" />
     <ClCompile Include="general\aequipscreen.cpp" />
+    <ClCompile Include="general\aequipmentsheet.cpp" />
+    <ClCompile Include="general\agentsheet.cpp" />
     <ClCompile Include="general\difficultymenu.cpp" />
     <ClCompile Include="general\ingameoptions.cpp" />
     <ClCompile Include="general\loadingscreen.cpp" />
@@ -76,6 +78,7 @@
     <ClCompile Include="general\notificationscreen.cpp" />
     <ClCompile Include="general\optionsmenu.cpp" />
     <ClCompile Include="general\savemenu.cpp" />
+    <ClCompile Include="general\vehiclesheet.cpp" />
     <ClCompile Include="general\videoscreen.cpp" />
     <ClCompile Include="skirmish\mapselector.cpp" />
     <ClCompile Include="skirmish\selectforces.cpp" />
@@ -117,6 +120,8 @@
     <ClInclude Include="debugtools\formpreview.h" />
     <ClInclude Include="debugtools\imagepreview.h" />
     <ClInclude Include="general\aequipscreen.h" />
+    <ClInclude Include="general\aequipmentsheet.h" />
+    <ClInclude Include="general\agentsheet.h" />
     <ClInclude Include="general\difficultymenu.h" />
     <ClInclude Include="general\ingameoptions.h" />
     <ClInclude Include="general\loadingscreen.h" />
@@ -126,6 +131,7 @@
     <ClInclude Include="general\notificationscreen.h" />
     <ClInclude Include="general\optionsmenu.h" />
     <ClInclude Include="general\savemenu.h" />
+    <ClInclude Include="general\vehiclesheet.h" />
     <ClInclude Include="general\videoscreen.h" />
     <ClInclude Include="skirmish\mapselector.h" />
     <ClInclude Include="skirmish\selectforces.h" />

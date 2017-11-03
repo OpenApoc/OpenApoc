@@ -16,6 +16,7 @@
 #include "game/state/shared/agent.h"
 #include "game/ui/components/controlgenerator.h"
 #include "game/ui/general/aequipscreen.h"
+#include "game/ui/general/agentsheet.h"
 #include "game/ui/general/loadingscreen.h"
 #include "game/ui/tileview/battleview.h"
 #include <cmath>
@@ -33,25 +34,14 @@ std::shared_future<void> enterBattle(sp<GameState> state)
 
 void BattlePreStart::displayAgent(sp<Agent> agent)
 {
-	bool visible = agent ? true : false;
-	menuform->findControlTyped<Label>("LABEL_HEALTH")->setVisible(visible);
-	menuform->findControlTyped<Label>("LABEL_ACCURACY")->setVisible(visible);
-	menuform->findControlTyped<Label>("LABEL_REACTIONS")->setVisible(visible);
-	menuform->findControlTyped<Label>("LABEL_SPEED")->setVisible(visible);
-	menuform->findControlTyped<Label>("LABEL_STAMINA")->setVisible(visible);
-	menuform->findControlTyped<Label>("LABEL_BRAVERY")->setVisible(visible);
-	menuform->findControlTyped<Label>("LABEL_STRENGTH")->setVisible(visible);
-	menuform->findControlTyped<Label>("LABEL_PSI-ENERGY")->setVisible(visible);
-	menuform->findControlTyped<Label>("LABEL_PSI-ATTACK")->setVisible(visible);
-	menuform->findControlTyped<Label>("LABEL_PSI-DEFENCE")->setVisible(visible);
-
-	if (!visible)
+	if (!agent)
 	{
 		return;
 	}
 
-	AEquipScreen::outputAgent(agent, menuform, bigUnitRanks,
-	                          state->current_battle->mode == Battle::Mode::TurnBased);
+	AgentSheet(formAgentStats)
+	    .display(agent, bigUnitRanks, state->current_battle->mode == Battle::Mode::TurnBased);
+	formAgentStats->setVisible(true);
 
 	auto rHand = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
 	auto lHand = agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
@@ -69,6 +59,8 @@ BattlePreStart::BattlePreStart(sp<GameState> state)
 
 		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<AEquipScreen>(state)});
 		});
+	formAgentStats = menuform->findControlTyped<Form>("AGENT_STATS_VIEW");
+	formAgentStats->setVisible(false);
 	menuform->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick, [this, state](Event *) {
 
@@ -214,7 +206,7 @@ void BattlePreStart::eventOccurred(Event *e)
 		else
 		{
 			int newSquad = -1;
-			for (int i = 0; i < 5; i++)
+			for (int i = 0; i < 6; i++)
 			{
 				if (mousePos.x >= TOP_LEFT.x - ROW_HEADER && mousePos.x < TOP_LEFT.x + ROW_WIDTH &&
 				    mousePos.y >= TOP_LEFT.y + i * SHIFT_Y &&

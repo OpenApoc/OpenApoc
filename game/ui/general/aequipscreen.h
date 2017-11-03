@@ -45,12 +45,8 @@ class AEquipScreen : public Stage
 	sp<Agent> firstAgent;
 
 	sp<Form> formMain;
-	sp<Form> formActive;
 	sp<Form> formAgentStats;
-	sp<Form> formItemWeapon;
-	sp<Form> formItemArmor;
-	sp<Form> formItemGrenade;
-	sp<Form> formItemOther;
+	sp<Form> formAgentItem;
 
 	sp<Palette> pal;
 	sp<GameState> state;
@@ -140,12 +136,11 @@ class AEquipScreen : public Stage
 	StateRef<Vehicle> getAgentVehicle(sp<Agent> agent);
 	StateRef<Base> getAgentBase(sp<Agent> agent);
 
+	bool isTurnBased() const;
+
   public:
 	AEquipScreen(sp<GameState> state, sp<Agent> firstAgent = nullptr);
 	~AEquipScreen() override;
-
-	static void outputAgent(sp<Agent> agent, sp<Form> formAgentStats, std::vector<sp<Image>> &ranks,
-	                        bool turnBased);
 
 	void begin() override;
 	void pause() override;

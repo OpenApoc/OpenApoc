@@ -3332,10 +3332,23 @@ int Vehicle::getWeight() const
 	return this->type->getWeight(et.begin(), et.end());
 }
 
-int Vehicle::getFuel() const
+int Vehicle::getMaxFuel() const
 {
 	auto et = getEquipmentTypes();
-	return this->type->getFuel(et.begin(), et.end());
+	return this->type->getMaxFuel(et.begin(), et.end());
+}
+
+int Vehicle::getFuel() const
+{
+	int fuel = 0;
+	for (auto eq : equipment)
+	{
+		if (eq->type->type == EquipmentSlotType::VehicleEngine)
+		{
+			fuel += eq->ammo;
+		}
+	}
+	return fuel;
 }
 
 int Vehicle::getMaxPassengers() const

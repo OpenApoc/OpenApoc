@@ -57,6 +57,8 @@ class RecruitScreen : public BaseStage
 
 	Type type;
 	std::vector<std::list<sp<Control>>> agentLists;
+	std::vector<sp<Image>> bigUnitRanks;
+	sp<Form> agentStatsForm;
 
 	// Methods
 

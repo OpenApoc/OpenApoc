@@ -10,6 +10,7 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/battle/damage.h"
 #include "game/state/rules/city/facilitytype.h"
 #include "game/state/rules/city/ufopaedia.h"
 #include "game/state/rules/city/vammotype.h"
@@ -352,8 +353,8 @@ void UfopaediaCategoryView::setFormStats()
 							orgValues[3]->setText(format("%d%%", ref->infiltrationValue / 2));
 						}
 					}
+					break;
 				}
-				break;
 				case UfopaediaEntry::Data::Vehicle:
 				{
 					StateRef<VehicleType> ref = {state.get(), data_id};
@@ -401,8 +402,8 @@ void UfopaediaCategoryView::setFormStats()
 					statsValues[row++]->setText(Strings::fromInteger(engineSpace));
 					statsLabels[row]->setText(tr("Equipment space"));
 					statsValues[row++]->setText(Strings::fromInteger(generalSpace));
+					break;
 				}
-				break;
 				case UfopaediaEntry::Data::VehicleEquipment:
 				{
 					StateRef<VEquipmentType> ref = {state.get(), data_id};
@@ -480,13 +481,67 @@ void UfopaediaCategoryView::setFormStats()
 							}
 							break;
 					}
+					break;
 				}
-				break;
 				case UfopaediaEntry::Data::Equipment:
 				{
-					// FIXME: Not implemented yet
+					StateRef<AEquipmentType> ref = {state.get(), data_id};
+					statsLabels[row]->setText(tr("Weight"));
+					statsValues[row++]->setText(Strings::fromInteger(ref->weight));
+					statsLabels[row]->setText(tr("Size"));
+					statsValues[row++]->setText(
+					    format("%dx%d", ref->equipscreen_size.x, ref->equipscreen_size.y));
+					if (ref->type == AEquipmentType::Type::Ammo ||
+					    ref->type == AEquipmentType::Type::Weapon && ref->ammo_types.empty())
+					{
+						statsLabels[row]->setText(tr("Power"));
+						statsValues[row++]->setText(Strings::fromInteger(ref->damage));
+						statsLabels[row]->setText(tr("Damage Type"));
+						statsValues[row++]->setText(ref->damage_type->name);
+						statsLabels[row]->setText("Range");
+						statsValues[row++]->setText(format("%dm", ref->getRangeInMetres()));
+						statsLabels[row]->setText("Fire Rate");
+						statsValues[row++]->setText(format("%.2f r/s", ref->getRoundsPerSecond()));
+					}
+					else if (ref->type == AEquipmentType::Type::Grenade)
+					{
+						statsLabels[row]->setText(tr("Power"));
+						statsValues[row++]->setText(Strings::fromInteger(ref->damage));
+						statsLabels[row]->setText(tr("Damage Type"));
+						statsValues[row++]->setText(ref->damage_type->name);
+					}
+					else if (ref->type == AEquipmentType::Type::Weapon &&
+					         ref->ammo_types.size() == 1)
+					{
+						auto ammoType = ref->ammo_types.front();
+						statsLabels[row]->setText(tr("Power"));
+						statsValues[row++]->setText(Strings::fromInteger(ammoType->damage));
+						statsLabels[row]->setText(tr("Damage Type"));
+						statsValues[row++]->setText(ammoType->damage_type->name);
+						statsLabels[row]->setText(tr("Range"));
+						statsValues[row++]->setText(format("%dm", ammoType->getRangeInMetres()));
+						statsLabels[row]->setText(tr("Fire Rate"));
+						statsValues[row++]->setText(
+						    format("%.2f r/s", ammoType->getRoundsPerSecond()));
+					}
+					else if (ref->type == AEquipmentType::Type::Weapon &&
+					         ref->ammo_types.size() > 1)
+					{
+						statsLabels[row]->setText(tr("Power"));
+						statsValues[row++]->setText(tr("Depends on clip"));
+						statsLabels[row]->setText(tr("Damage Type"));
+						statsValues[row++]->setText(tr("Depends on clip"));
+						statsLabels[row]->setText(tr("Range"));
+						statsValues[row++]->setText(tr("Depends on clip"));
+						statsLabels[row]->setText(tr("Fire Rate"));
+						statsValues[row++]->setText(tr("Depends on clip"));
+					}
+					else if (ref->type == AEquipmentType::Type::Armor)
+					{
+						// FIXME: Not implemented
+					}
+					break;
 				}
-				break;
 				case UfopaediaEntry::Data::Facility:
 				{
 					StateRef<FacilityType> ref = {state.get(), data_id};
@@ -501,13 +556,14 @@ void UfopaediaCategoryView::setFormStats()
 						statsLabels[row]->setText(tr("Capacity"));
 						statsValues[row++]->setText(Strings::fromInteger(ref->capacityAmount));
 					}
+					break;
 				}
-				break;
 				case UfopaediaEntry::Data::Building:
 				{
+					LogError("Building not implemented yet");
 					// FIXME: Not implemented yet
+					break;
 				}
-				break;
 				default:
 					break;
 			}

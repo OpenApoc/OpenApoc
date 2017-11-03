@@ -109,9 +109,6 @@
     <ClCompile Include="city\basebuyscreen.cpp">
       <Filter>city</Filter>
     </ClCompile>
-    <ClCompile Include="general\loadingscreen.cpp">
-      <Filter>general</Filter>
-    </ClCompile>
     <ClCompile Include="general\mainmenu.cpp">
       <Filter>general</Filter>
     </ClCompile>

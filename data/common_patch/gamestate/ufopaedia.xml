@@ -1241,6 +1241,7 @@
             <description>A grenade which releases the X-COM developed anti-Alien gas. It does not harm humans or terrain but will be lethal for any Alien remaining within its dense gas cloud.</description>
             <background>xcom3/ufopaedi/w27.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_ALIEN_GAS_GRENADE</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1256,6 +1257,7 @@
             <description>Armor piercing ammunition for the Auto Cannon.</description>
             <background>xcom3/ufopaedi/w13.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_AUTO_CANNON_AP_CLIP</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1266,6 +1268,7 @@
             <description>High Explosive ammunition for the Auto Cannon.</description>
             <background>xcom3/ufopaedi/w14.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_AUTO_CANNON_HE_CLIP</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1276,6 +1279,7 @@
             <description>Incendiary ammunition for the Auto Cannon.</description>
             <background>xcom3/ufopaedi/w15.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_AUTO_CANNON_IN_CLIP</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1286,6 +1290,7 @@
             <description>The Boomeroid is a devastating and terrifying weapon. It is actually a semi-intelligent device that hurls itself towards any moving organic target and then explodes when it reaches a pre-set range.The Boomeroid has to be primed for explosion proximity as well as time delay.</description>
             <background>xcom3/ufopaedi/w43.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_BOOMEROID</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1301,6 +1306,7 @@
             <description>This weapon is an organic launcher for Brainsucker Pods. If the pod lands within the vicinity of a human target it will burst open and the Brainsucker will attack the victim. It is not a useful weapon for us to replicate, even if it were possible.</description>
             <background>xcom3/ufopaedi/w45.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1316,6 +1322,7 @@
             <description>This is an immensely devastating version of the standard Disruptor Gun. Again it is based on the same inter-dimensional technology that seems to power the Dimension Gates. It is possible that these weapons are actually drawing power from some remote source connected by an inter-dimensional field. This amazing technology seems to be incongruous with the Aliens' organic weaponry and may originate from some other Alien intelligence.</description>
             <background>xcom3/ufopaedi/w42.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_DEVASTATOR_CANNON</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1331,6 +1338,7 @@
             <description>An X-COM developed Disruptor Beam weapon based on Alien technology. It is a faster firing and more effective weapon than the Devastator Cannon.</description>
             <background>xcom3/ufopaedi/w37.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_DIMENSION_DESTABILISER</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1346,6 +1354,7 @@
             <description>The missile explodes with devastating power. It seems to use an inter-dimensional flux to suck in anti-matter from an alternate dimension. This instantly generates an atomic reaction which destroys the missile and most of its surrounding matter. It should not be used in situations where buildings and civilians need to be protected.</description>
             <background>xcom3/ufopaedi/w48.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_DIMENSION_MISSILE</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1361,6 +1370,7 @@
             <description>This launcher propels devastating Dimension Missiles which contain an immensely powerful explosive system. The missile is guided to its target and is very accurate at long ranges. The technology is reproducible and quite distinct from the organic weaponry that is used by most Aliens.</description>
             <background>xcom3/ufopaedi/w47.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_DIMENSION_MISSILE_LAUNCHER</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1376,6 +1386,7 @@
             <description>The Disruptor Gun is a remarkable piece of technology. It propels a beam of sub-atomic particles at immense speeds and quantity. The chamber which generates the energy is an inter-dimensional device which materializes energy from an alternative dimension. The power source, once initiated, is self-perpetuating and no ammunition or energy pods are required to sustain the fire power. Our replicators can reproduce this technology fairly accurately.</description>
             <background>xcom3/ufopaedi/w41.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_DISRUPTOR_GUN</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1401,6 +1412,7 @@
             <description>This weapon is essentially an organism that is genetically engineered to launch a living missile which flies directly towards its chosen target. The missile then erupts and a foul smelling sticky goo smothers the unfortunate victim. The substance is a combination of enzymes and acids that can erode metallic or organic compounds. Unfortunately this weapon is not very effective against Aliens and we cannot replicate it.</description>
             <background>xcom3/ufopaedi/w46.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_ENTROPY_LAUNCHER</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1416,6 +1428,7 @@
             <description>The pod is a genetically engineered missile that flies directly towards a target. It is fired from the Entropy Launcher.</description>
             <background>xcom3/ufopaedi/w58.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_ENTROPY_POD</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1431,6 +1444,7 @@
             <description>This conventional missile contains a highly effective gas which targets Alien life forms. The gas is harmless against humans and structures making it ideal for forcing Aliens to flee from cover.</description>
             <background>xcom3/ufopaedi/w19.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_HEAVY_LAUNCHER_AG_MISSILE</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1446,6 +1460,7 @@
             <description>High explosive ammunition for the Heavy Launcher.</description>
             <background>xcom3/ufopaedi/w20.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_HEAVY_LAUNCHER_HE_MISSILE</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1456,6 +1471,7 @@
             <description>Incendiary ammunition for the Heavy Launcher.</description>
             <background>xcom3/ufopaedi/w21.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_HEAVY_LAUNCHER_IN_MISSILE</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1466,6 +1482,7 @@
             <description>A grenade which disperses an incendiary agent, creating fires within a large radius. The incendiary grenade was originally created by Diablo and is popular with many of the city's criminal gangs.</description>
             <background>xcom3/ufopaedi/w59.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_INCENDIARY_GRENADE</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1476,6 +1493,7 @@
             <description>An expensive, Elerium powered armor system. This armour offers less protection than the Megapol armour on average but will not slow down the wearer so much. The expensive torso section also has an integrated levitation unit which will allow the wearer to fly or hover in the air. This is an extremely useful ability, but an airborne Agent will suffer an accuracy penalty while using weapons or throwing grenades.</description>
             <background>xcom3/ufopaedi/armour2.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MARSEC_BODY_UNIT</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1486,6 +1504,7 @@
             <description>A guided missile launcher that can fire explosive or incendiary missiles. It is an extremely devastating device and should be used with extreme caution. It is unwieldy because of its bulk and Agents with heavy launchers should at least be equipped with a supplementary weapon such as the Megapol Lawpistol.</description>
             <background>xcom3/ufopaedi/w18.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MARSEC_HEAVY_LAUNCHER</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1496,6 +1515,7 @@
             <description>A high explosive system for breaking through barriers or impassable terrain. Extra care must be taken when throwing this device. Its increased size means that it can't be thrown the same distance as a conventional grenade.</description>
             <background>xcom3/ufopaedi/w05.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MARSEC_HIGH_EXPLOSIVE</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1506,6 +1526,7 @@
             <description>Ammunition for the M4000 Machine Gun.</description>
             <background>xcom3/ufopaedi/w09.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MARSEC_M4000_GUN_CLIP</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1516,6 +1537,7 @@
             <description>A military automatic firing projectile weapon. It is good at close range using automatic fire, but not accurate enough to be effective at longer ranges.</description>
             <background>xcom3/ufopaedi/w08.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MARSEC_M4000_MACHINE_GUN</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1526,6 +1548,7 @@
             <description>A sophisticated single handed missile launcher. Although the guided missiles are small they are quite destructive.</description>
             <background>xcom3/ufopaedi/w22.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MARSEC_MINILAUNCHER</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1536,6 +1559,7 @@
             <description>A powerful explosive that will detonate when a sizable moving object moves within its detection field. The range of the proximity field can be programmed.</description>
             <background>xcom3/ufopaedi/w04.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MARSEC_PROXIMITY_MINE</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1546,6 +1570,7 @@
             <description>A compact but highly sophisticated life support kit. Wounds and bleeding can be healed quickly by injecting Nanobots into the bloodstream. When the device is activated the operator must select a part of the body affected by critical wounds. The device will cure these wounds quickly, but only if the Agent remains inactive while it is in operation.</description>
             <background>xcom3/ufopaedi/w55.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MEDI-KIT</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1556,6 +1581,7 @@
             <description>The Megapol AP Grenade is a standard anti-personnel grenade with a timer mechanism. It can also be activated on impact making it highly useful in time-critical combat situations.</description>
             <background>xcom3/ufopaedi/w01.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1566,6 +1592,7 @@
             <description>The Megapol Auto Cannon is a bulky but versatile weapon. It can fire armor piercing rounds, high explosive shells or incendiary shells. It is best used at medium range with explosive or incendiary ammunition, or at close range with armor piercing rounds.</description>
             <background>xcom3/ufopaedi/w12.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MEGAPOL_AUTO_CANNON</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1576,6 +1603,7 @@
             <description>This is a standard issue armour which provides very effective protection but inhibits the wearer's speed. The leg, torso, arms and helmet are all separate components and can be mixed with other armour types. Under no circumstances should an Agent be sent into combat without full armour cover.</description>
             <background>xcom3/ufopaedi/armour1.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MEGAPOL_BODY_ARMOR</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1586,6 +1614,7 @@
             <description>Ammunition for the Laser Sniper Gun.</description>
             <background>xcom3/ufopaedi/w11.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MEGAPOL_LASER_POD</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1596,6 +1625,7 @@
             <description>A laser gun with a laser sight designed for accurate long range shooting. This weapon is a good complement for the Marsec M4000 Machine Gun and should be used by Agents with good accuracy ratings.</description>
             <background>xcom3/ufopaedi/w10.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MEGAPOL_LASER_SNIPER_GUN</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1606,6 +1636,7 @@
             <description>A standard issue hand gun which is good at short range and quite powerful. Its usefulness should not be underestimated because it allows an Agent to use other equipment, such as a grenade, with the spare hand.</description>
             <background>xcom3/ufopaedi/w06.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1616,6 +1647,7 @@
             <description>Ammunition for the Lawpistol.</description>
             <background>xcom3/ufopaedi/w07.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL_CLIP</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1626,6 +1658,7 @@
             <description>An expensive but effective single-handed plasma weapon. Its small size and power make it a versatile weapon. It can be used effectively at long or short range and leaves one hand free to use other equipment or grenades.</description>
             <background>xcom3/ufopaedi/w16.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MEGAPOL_PLASMA_GUN</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1636,6 +1669,7 @@
             <description>Ammunition for the Plasma Gun.</description>
             <background>xcom3/ufopaedi/w17.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MEGAPOL_PLASMA_POD</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1646,6 +1680,7 @@
             <description>This explosive device generates an instant smoke cloud that inhibits visibility. This can be used in combat situations for surprise attacks or to provide cover for retreating Agents.</description>
             <background>xcom3/ufopaedi/w03.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MEGAPOL_SMOKE_GRENADE</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1656,6 +1691,7 @@
             <description>The Stun Grapple is a powerful police weapon used for stunning and capturing prisoners. It is effective against Aliens but can only be activated at a very short range. Larger Aliens may need weakening before they can be stunned.</description>
             <background>xcom3/ufopaedi/w26.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MEGAPOL_STUN_GRAPPLE</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1666,6 +1702,7 @@
             <description>The Stun Grenade can be used to stun targets within a small area for a brief time. Larger Aliens may need weakening before they can be stunned.</description>
             <background>xcom3/ufopaedi/w02.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MEGAPOL_STUN_GRENADE</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1676,6 +1713,7 @@
             <description>A Psionic projection device for psionically trained Agents. This device must be used in order to initiate Psionic attacks in combat situations. The target needs to be within clear line of sight of the operator before an attack can begin. The Agent has a choice of four different attacks of increasing difficulty. Psionic Probe reveals information about the target, Psionic Panic reduces morale, Psionic Stun will render the target unconscious and psionic control will allow complete control of the target.</description>
             <background>xcom3/ufopaedi/w39.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MIND_BENDER</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1686,6 +1724,7 @@
             <description>Developed by X-COM to target Alien life forms. When the warhead explodes it releases a cloud of gas deadly to Aliens but harmless to humans.</description>
             <background>xcom3/ufopaedi/w23.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MINILAUNCHER_AG_MISSILE</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1701,6 +1740,7 @@
             <description>Explosive ammunition for the MiniLauncher.</description>
             <background>xcom3/ufopaedi/w24.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MINILAUNCHER_HE_MISSILE</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1711,6 +1751,7 @@
             <description>Incendiary ammunition for the MiniLauncher.</description>
             <background>xcom3/ufopaedi/w25.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MINILAUNCHER_IN_MISSILE</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1721,6 +1762,7 @@
             <description>When this unit is activated the display shows anything moving relative to its position. The sensors can penetrate any kind of terrain.</description>
             <background>xcom3/ufopaedi/w56.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_MOTION_SCANNER</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1731,6 +1773,7 @@
             <description>The Personal Cloaking Field generates a warping effect that bends various wave forms. Effectively this means that the user is considerably less visible to radar, infra-red and visual sighting. The field is disabled temporarily if the user initiates combat.</description>
             <background>xcom3/ufopaedi/w52.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_PERSONAL_CLOAKING_FIELD</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1746,6 +1789,7 @@
             <description>The Personal Disruptor Shield generates an energy field which warps the space around the user. This causes beams or projectiles to be deflected and dissipated. Any hit causes the shield's energy to drain and if it reaches a critically low level it will malfunction. It is a highly sophisticated device that we can reproduce only with great effort.</description>
             <background>xcom3/ufopaedi/w50.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_PERSONAL_DISRUPTOR_SHIELD</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1761,6 +1805,7 @@
             <description>This extraordinary device uses inter-dimensional capability to transport the user over short distances via a dimensional flux. The energy level depletes according to the distance jumped, but it recovers over time.</description>
             <background>xcom3/ufopaedi/w51.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_PERSONAL_TELEPORTER</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1776,6 +1821,7 @@
             <description>A close combat weapon that uses an Elerium Plasma Generator to enhance the blade. It is a very powerful device but can only be used against adjacent targets.</description>
             <background>xcom3/ufopaedi/w44.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_POWER_SWORD</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1786,6 +1832,7 @@
             <description>The Psiclone implant is manufactured and distributed by criminal gangs. It allows the user to experience any mental state or images just by imagining them. Its widespread popularity and detrimental effect on the health of young citizens led the Senate to ban the use or distribution of the device. The price of Psiclone implants has subsequently soared and this has resulted in open warfare between the criminal gangs and Megapol.</description>
             <background>xcom3/ufopaedi/w53.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_PSICLONE</data_id>
             <required_research/>
           </value>
         </entry>
@@ -1796,6 +1843,7 @@
             <description>An X-COM weapon designed to shoot high powered projectiles containing anti-Alien toxic fluids. It is designed to cause minimal harm to other targets and is not very good at penetrating armor.</description>
             <background>xcom3/ufopaedi/w33.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_TOXIGUN</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1811,6 +1859,7 @@
             <description>Ammunition for Toxigun. It contains a lethal fast acting poison designed to target Alien life forms. It is not so effective against the more advanced bipedal Alien types.</description>
             <background>xcom3/ufopaedi/w34.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_TOXIGUN_A-CLIP</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1826,6 +1875,7 @@
             <description>Ammunition for Toxigun. It contains a lethal fast acting poison designed to target Alien lifeforms. It effectively renders the earlier A-type toxin obsolete because it is more powerful and more effective against the higher Alien life forms.</description>
             <background>xcom3/ufopaedi/w35.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_TOXIGUN_B-CLIP</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1841,6 +1891,7 @@
             <description>Ammunition for Toxigun. A fast acting poison which targets all Alien life forms with equally devastating effects. This toxin effectively supersedes the A or B types.</description>
             <background>xcom3/ufopaedi/w36.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_TOXIGUN_C-CLIP</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1856,6 +1907,7 @@
             <description>This explosive device uses a tiny dimensional flux generator which allows anti-matter to seep through a tiny dimensional warp. The resultant explosion is very powerful.</description>
             <background>xcom3/ufopaedi/w49.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_VORTEX_MINE</data_id>
             <dependency>
               <type>Any</type>
               <topics>
@@ -1871,6 +1923,7 @@
             <description>A lightweight armour developed by X-COM using Alien disruption field technology. This offers superb protection and excellent mobility.</description>
             <background>xcom3/ufopaedi/armour3.pcx</background>
             <data_type>Equipment</data_type>
+            <data_id>AEQUIPMENTTYPE_X-COM_BODY_SHIELD</data_id>
             <dependency>
               <type>Any</type>
               <topics>

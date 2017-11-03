@@ -24,6 +24,7 @@
 #include "game/state/shared/aequipment.h"
 #include "game/state/shared/organisation.h"
 #include "game/ui/components/controlgenerator.h"
+#include "game/ui/general/agentsheet.h"
 #include "game/ui/general/messagebox.h"
 #include "library/strings_format.h"
 
@@ -65,6 +66,8 @@ RecruitScreen::RecruitScreen(sp<GameState> state) : BaseStage(state)
 {
 	// Load resources
 	form = ui().getForm("recruitscreen");
+	agentStatsForm = form->findControlTyped<Form>("AGENT_STATS_VIEW");
+	agentStatsForm->setVisible(false);
 
 	// Assign event handlers
 	onHover = [this](FormsEvent *e) {
@@ -115,16 +118,19 @@ RecruitScreen::RecruitScreen(sp<GameState> state) : BaseStage(state)
 			// Need to be able to strip agent
 			if (a.second->currentBuilding == a.second->homeBuilding)
 			{
-				agentLists[bases[a.second->homeBuilding->base.id]].push_back(
-				    ControlGenerator::createLargeAgentControl(
-				        *state, a.second, a.second->type->role != AgentType::Role::Soldier));
+				auto control = ControlGenerator::createLargeAgentControl(
+				    *state, a.second, a.second->type->role != AgentType::Role::Soldier);
+				agentLists[bases[a.second->homeBuilding->base.id]].push_back(control);
+				control->addCallback(FormEventType::MouseMove, onHover);
 			}
 		}
 		else if (a.second->owner->hirableAgentTypes.find(a.second->type) !=
 		         a.second->owner->hirableAgentTypes.end())
 		{
-			agentLists[8].push_back(ControlGenerator::createLargeAgentControl(
-			    *state, a.second, a.second->type->role != AgentType::Role::Soldier));
+			auto control = ControlGenerator::createLargeAgentControl(
+			    *state, a.second, a.second->type->role != AgentType::Role::Soldier);
+			agentLists[8].push_back(control);
+			control->addCallback(FormEventType::MouseMove, onHover);
 		}
 	}
 
@@ -162,6 +168,13 @@ RecruitScreen::RecruitScreen(sp<GameState> state) : BaseStage(state)
 				updateFormValues();
 			});
 		}
+	}
+	for (int i = 12; i <= 18; i++)
+	{
+		bigUnitRanks.push_back(
+		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
+		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+		                                i)));
 	}
 }
 
@@ -362,7 +375,8 @@ void RecruitScreen::fillBaseBar(int percent)
 
 void RecruitScreen::displayAgent(sp<Agent> agent)
 {
-	LogWarning("Implement displaying %s", agent->name);
+	AgentSheet(agentStatsForm).display(agent, bigUnitRanks, false);
+	agentStatsForm->setVisible(true);
 }
 
 void RecruitScreen::attemptCloseScreen()

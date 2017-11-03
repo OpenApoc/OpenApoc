@@ -313,6 +313,7 @@ class Vehicle : public StateObject,
 	int getTopSpeed() const;
 	int getAcceleration() const;
 	int getWeight() const;
+	int getMaxFuel() const;
 	int getFuel() const;
 	int getMaxPassengers() const;
 	int getPassengers() const;
