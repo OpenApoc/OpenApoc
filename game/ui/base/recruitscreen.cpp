@@ -43,43 +43,40 @@ static const std::map<AgentType::Role, int> fireCost = {
     {AgentType::Role::BioChemist, FIRE_COST_BIO},
     {AgentType::Role::Physicist, FIRE_COST_PHYSIC},
     {AgentType::Role::Engineer, FIRE_COST_ENGI}};
-
-AgentType::Role getRole(RecruitScreen::Type type)
-{
-	switch (type)
-	{
-		case RecruitScreen::Type::Soldier:
-			return AgentType::Role::Soldier;
-		case RecruitScreen::Type::Bio:
-			return AgentType::Role::BioChemist;
-		case RecruitScreen::Type::Physist:
-			return AgentType::Role::Physicist;
-		case RecruitScreen::Type::Engineer:
-			return AgentType::Role::Engineer;
-	}
-	LogError("Unhandled type in recruitscreen!?");
-	return (AgentType::Role)0;
-}
 }
 
-RecruitScreen::RecruitScreen(sp<GameState> state) : BaseStage(state)
+RecruitScreen::RecruitScreen(sp<GameState> state)
+    : BaseStage(state), bigUnitRanks(getBigUnitRanks())
 {
 	// Load resources
 	form = ui().getForm("recruitscreen");
-	agentStatsForm = form->findControlTyped<Form>("AGENT_STATS_VIEW");
-	agentStatsForm->setVisible(false);
+	formAgentStats = form->findControlTyped<Form>("AGENT_STATS_VIEW");
+	formPersonelStats = form->findControlTyped<Form>("PERSONEL_STATS_VIEW");
+	formAgentStats->setVisible(false);
+	formPersonelStats->setVisible(false);
 
 	// Assign event handlers
 	onHover = [this](FormsEvent *e) {
-		auto agentControl = e->forms().RaisedBy;
-		auto agent = agentControl->getData<Agent>();
-		this->displayAgent(agent);
+		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
+		auto agent = list->getHoveredData<Agent>();
+		displayAgentStats(agent);
 	};
+
+	form->findControlTyped<ListBox>("LIST1")->addCallback(FormEventType::ListBoxChangeHover,
+	                                                      onHover);
+	form->findControlTyped<ListBox>("LIST2")->addCallback(FormEventType::ListBoxChangeHover,
+	                                                      onHover);
+	form->findControlTyped<ScrollBar>("LIST1_SCROLL")->LargeChange = 32;
+	form->findControlTyped<ScrollBar>("LIST2_SCROLL")->LargeChange = 32;
+	form->findControlTyped<GraphicButton>("LIST1_SCROLL_UP")->scrollLarge = true;
+	form->findControlTyped<GraphicButton>("LIST1_SCROLL_DOWN")->scrollLarge = true;
+	form->findControlTyped<GraphicButton>("LIST2_SCROLL_UP")->scrollLarge = true;
+	form->findControlTyped<GraphicButton>("LIST2_SCROLL_DOWN")->scrollLarge = true;
 
 	arrow = form->findControlTyped<Graphic>("MAGIC_ARROW");
 	textViewBaseStatic = form->findControlTyped<Label>("TEXT_BUTTON_BASE_STATIC");
 	form->findControlTyped<RadioButton>("BUTTON_SOLDIERS")->setChecked(true);
-	type = Type::Soldier;
+	type = AgentType::Role::Soldier;
 	viewHighlight = BaseGraphics::FacilityHighlight::Quarters;
 
 	// Adding callbacks after checking the button because we don't need to
@@ -87,57 +84,24 @@ RecruitScreen::RecruitScreen(sp<GameState> state) : BaseStage(state)
 
 	form->findControlTyped<RadioButton>("BUTTON_SOLDIERS")
 	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->setDisplayType(Type::Soldier); });
+	                  [this](Event *) { this->setDisplayType(AgentType::Role::Soldier); });
 	form->findControlTyped<RadioButton>("BUTTON_BIOSCIS")
 	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->setDisplayType(Type::Bio); });
+	                  [this](Event *) { this->setDisplayType(AgentType::Role::BioChemist); });
 	form->findControlTyped<RadioButton>("BUTTON_PHYSCIS")
 	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->setDisplayType(Type::Physist); });
+	                  [this](Event *) { this->setDisplayType(AgentType::Role::Physicist); });
 	form->findControlTyped<RadioButton>("BUTTON_ENGINRS")
 	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->setDisplayType(Type::Engineer); });
+	                  [this](Event *) { this->setDisplayType(AgentType::Role::Engineer); });
 
-	agentLists.resize(9);
-
-	std::map<UString, int> bases;
-	int index = 0;
-	for (auto &b : state->player_bases)
-	{
-		bases[b.first] = index;
-		index++;
-	}
-
-	auto player = state->getPlayer();
-
-	// Populate list of agents
-	for (auto &a : state->agents)
-	{
-		if (a.second->owner == player)
-		{
-			// Need to be able to strip agent
-			if (a.second->currentBuilding == a.second->homeBuilding)
-			{
-				auto control = ControlGenerator::createLargeAgentControl(
-				    *state, a.second, a.second->type->role != AgentType::Role::Soldier);
-				agentLists[bases[a.second->homeBuilding->base.id]].push_back(control);
-				control->addCallback(FormEventType::MouseMove, onHover);
-			}
-		}
-		else if (a.second->owner->hirableAgentTypes.find(a.second->type) !=
-		         a.second->owner->hirableAgentTypes.end())
-		{
-			auto control = ControlGenerator::createLargeAgentControl(
-			    *state, a.second, a.second->type->role != AgentType::Role::Soldier);
-			agentLists[8].push_back(control);
-			control->addCallback(FormEventType::MouseMove, onHover);
-		}
-	}
+	populateAgentList();
 
 	for (auto &list : agentLists)
 	{
 		for (auto &control : list)
 		{
+			// MouseClick - move an agent to opposite list
 			control->addCallback(FormEventType::MouseClick, [this](FormsEvent *e) {
 				int leftIndex = getLeftIndex();
 				int rightIndex = 8;
@@ -169,35 +133,67 @@ RecruitScreen::RecruitScreen(sp<GameState> state) : BaseStage(state)
 			});
 		}
 	}
-	for (int i = 12; i <= 18; i++)
-	{
-		bigUnitRanks.push_back(
-		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-		                                i)));
-	}
 }
 
 RecruitScreen::~RecruitScreen() = default;
+
+/**
+ * Populate the agentList.
+ */
+void RecruitScreen::populateAgentList()
+{
+	agentLists.resize(9);
+
+	std::map<UString, int> bases;
+	int index = 0;
+	for (auto &b : state->player_bases)
+	{
+		bases[b.first] = index;
+		index++;
+	}
+
+	auto player = state->getPlayer();
+
+	// Populate list of agents
+	for (auto &a : state->agents)
+	{
+		if (a.second->owner == player)
+		{
+			// Need to be able to strip agent
+			if (a.second->currentBuilding == a.second->homeBuilding)
+			{
+				agentLists[bases[a.second->homeBuilding->base.id]].push_back(
+				    ControlGenerator::createLargeAgentControl(*state, a.second));
+			}
+		}
+		else if (a.second->owner->hirableAgentTypes.find(a.second->type) !=
+		         a.second->owner->hirableAgentTypes.end())
+		{
+			agentLists[8].push_back(ControlGenerator::createLargeAgentControl(*state, a.second));
+		}
+	}
+}
 
 void RecruitScreen::changeBase(sp<Base> newBase)
 {
 	BaseStage::changeBase(newBase);
 	textViewBaseStatic->setText(state->current_base->name);
 
-	// Set index for all controls
-	int index = getLeftIndex();
-
-	// TODO
+	formAgentStats->setVisible(false);
+	formPersonelStats->setVisible(false);
 
 	// Apply display type and base highlight
 	setDisplayType(type);
 }
 
-void RecruitScreen::setDisplayType(Type type)
+void RecruitScreen::setDisplayType(const AgentType::Role role)
 {
-	this->type = type;
-	auto role = getRole(type);
+	if (this->type != role)
+	{
+		formAgentStats->setVisible(false);
+		formPersonelStats->setVisible(false);
+		this->type = role;
+	}
 
 	form->findControlTyped<ScrollBar>("LIST1_SCROLL")->setValue(0);
 	form->findControlTyped<ScrollBar>("LIST2_SCROLL")->setValue(0);
@@ -228,16 +224,16 @@ void RecruitScreen::setDisplayType(Type type)
 	auto label = form->findControlTyped<Label>("AGENTS_CAPTION_LEFT");
 	switch (type)
 	{
-		case Type::Soldier:
+		case AgentType::Role::Soldier:
 			label->setText(tr("X-COM Agents"));
 			break;
-		case Type::Bio:
+		case AgentType::Role::BioChemist:
 			label->setText(tr("Biochemists"));
 			break;
-		case Type::Physist:
+		case AgentType::Role::Physicist:
 			label->setText(tr("Quantum Physicists"));
 			break;
-		case Type::Engineer:
+		case AgentType::Role::Engineer:
 			label->setText(tr("Engineers"));
 			break;
 	}
@@ -373,10 +369,63 @@ void RecruitScreen::fillBaseBar(int percent)
 	facilityBar->setImage(progressImage);
 }
 
-void RecruitScreen::displayAgent(sp<Agent> agent)
+/**
+ * Display stats of an agent
+ * @agent - the agent
+ */
+void RecruitScreen::displayAgentStats(sp<Agent> agent)
 {
-	AgentSheet(agentStatsForm).display(agent, bigUnitRanks, false);
-	agentStatsForm->setVisible(true);
+	if (!agent)
+	{
+		return;
+	}
+
+	switch (agent->type->role)
+	{
+		case AgentType::Role::Soldier:
+			AgentSheet(formAgentStats).display(agent, bigUnitRanks, false);
+			formAgentStats->setVisible(true);
+			formPersonelStats->setVisible(false);
+			break;
+		default:
+			personelSheet(agent, formPersonelStats);
+			formAgentStats->setVisible(false);
+			formPersonelStats->setVisible(true);
+	}
+}
+
+/**
+ * Fills the form of personel's statistics. Such as skill and that's all.
+ * @agent - an agent whose stats will be displayed
+ * @formPersonelStats - a form of stats
+ */
+void RecruitScreen::personelSheet(sp<Agent> agent, sp<Form> formPersonelStats)
+{
+	{
+		formPersonelStats->findControlTyped<Label>("AGENT_NAME")->setText(agent->name);
+		formPersonelStats->findControlTyped<Graphic>("SELECTED_PORTRAIT")
+		    ->setImage(agent->getPortrait().photo);
+		formPersonelStats->findControlTyped<Label>("VALUE_SKILL")
+		    ->setText(format(tr("%d"), agent->getSkill()));
+	}
+}
+
+/**
+ * Loads and returns big pictures of ranks.
+ */
+std::vector<sp<Image>> RecruitScreen::getBigUnitRanks()
+{
+	std::vector<sp<Image>> bigUnitRanks;
+
+	for (int i = 12; i <= 18; i++)
+	{
+		bigUnitRanks.push_back(
+		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
+		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+		                                i)));
+	}
+
+	return bigUnitRanks;
 }
 
 void RecruitScreen::attemptCloseScreen()

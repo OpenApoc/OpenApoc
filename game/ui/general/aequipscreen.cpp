@@ -25,6 +25,7 @@
 #include "game/state/shared/aequipment.h"
 #include "game/state/shared/agent.h"
 #include "game/state/tilemap/tileobject_battleunit.h"
+#include "game/ui/base/recruitscreen.h"
 #include "game/ui/components/controlgenerator.h"
 #include "game/ui/components/equipscreen.h"
 #include "game/ui/general/aequipmentsheet.h"
@@ -40,7 +41,7 @@ const Vec2<int> AEquipScreen::EQUIP_GRID_SLOTS{16, 16};
 AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
     : Stage(), firstAgent(firstAgent), formMain(ui().getForm("aequipscreen")),
       pal(fw().data->loadPalette("xcom3/ufodata/agenteqp.pcx")), state(state),
-      labelFont(ui().getFont("smalfont"))
+      labelFont(ui().getFont("smalfont")), bigUnitRanks(RecruitScreen::getBigUnitRanks())
 {
 	this->state = state;
 	formAgentStats = formMain->findControlTyped<Form>("AGENT_STATS_VIEW");
