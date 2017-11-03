@@ -237,6 +237,10 @@ void ScrollBar::configureSelfFromXml(pugi::xml_node *node)
 {
 	Control::configureSelfFromXml(node);
 
+	if (auto largeChange = node->attribute("largechange"))
+	{
+		this->LargeChange = largeChange.as_int();
+	}
 	auto gripperImageNode = node->child("gripperimage");
 	if (gripperImageNode)
 	{

@@ -66,12 +66,6 @@ RecruitScreen::RecruitScreen(sp<GameState> state)
 	                                                      onHover);
 	form->findControlTyped<ListBox>("LIST2")->addCallback(FormEventType::ListBoxChangeHover,
 	                                                      onHover);
-	form->findControlTyped<ScrollBar>("LIST1_SCROLL")->LargeChange = 32;
-	form->findControlTyped<ScrollBar>("LIST2_SCROLL")->LargeChange = 32;
-	form->findControlTyped<GraphicButton>("LIST1_SCROLL_UP")->scrollLarge = true;
-	form->findControlTyped<GraphicButton>("LIST1_SCROLL_DOWN")->scrollLarge = true;
-	form->findControlTyped<GraphicButton>("LIST2_SCROLL_UP")->scrollLarge = true;
-	form->findControlTyped<GraphicButton>("LIST2_SCROLL_DOWN")->scrollLarge = true;
 
 	arrow = form->findControlTyped<Graphic>("MAGIC_ARROW");
 	textViewBaseStatic = form->findControlTyped<Label>("TEXT_BUTTON_BASE_STATIC");
@@ -401,13 +395,11 @@ void RecruitScreen::displayAgentStats(sp<Agent> agent)
  */
 void RecruitScreen::personelSheet(sp<Agent> agent, sp<Form> formPersonelStats)
 {
-	{
-		formPersonelStats->findControlTyped<Label>("AGENT_NAME")->setText(agent->name);
-		formPersonelStats->findControlTyped<Graphic>("SELECTED_PORTRAIT")
-		    ->setImage(agent->getPortrait().photo);
-		formPersonelStats->findControlTyped<Label>("VALUE_SKILL")
-		    ->setText(format(tr("%d"), agent->getSkill()));
-	}
+	formPersonelStats->findControlTyped<Label>("AGENT_NAME")->setText(agent->name);
+	formPersonelStats->findControlTyped<Graphic>("SELECTED_PORTRAIT")
+	    ->setImage(agent->getPortrait().photo);
+	formPersonelStats->findControlTyped<Label>("VALUE_SKILL")
+	    ->setText(format(tr("%d"), agent->getSkill()));
 }
 
 /**

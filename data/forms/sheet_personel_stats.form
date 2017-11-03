@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_AEQUIPSCREEN_PERSONEL_STATS">
+    <style minwidth="160" minheight="280">
+      <position x="centre" y="centre"/>
+      <size width="160" height="280"/>
+      <label id="AGENT_NAME" text="AGENT NAME GOES HERE">
+        <position x="0" y="86"/>
+        <size width="160" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphic id="SELECTED_PORTRAIT">
+        <position x="11" y="7"/>
+        <size width="65" height="64"/>
+        <image>placeholder.png</image>
+        <imageposition>fit</imageposition>
+      </graphic>
+
+      <label id="LABEL_SKILL" text="Skill">
+        <position x="8" y="112"/>
+        <size width="71" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="VALUE_SKILL" text="">
+        <position x="88" y="112"/>
+        <size width="30" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+    </style>
+  </form>
+</openapoc>

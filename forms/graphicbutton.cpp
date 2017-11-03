@@ -172,6 +172,11 @@ sp<Control> GraphicButton::copyTo(sp<Control> CopyParent)
 void GraphicButton::configureSelfFromXml(pugi::xml_node *node)
 {
 	Control::configureSelfFromXml(node);
+
+	if (auto scrollLarge = node->attribute("scrolllarge"))
+	{
+		this->scrollLarge = scrollLarge.as_bool();
+	}
 	auto imageNode = node->child("image");
 	if (imageNode)
 	{
