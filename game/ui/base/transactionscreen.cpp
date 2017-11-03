@@ -1142,7 +1142,6 @@ void TransactionScreen::executeOrders()
 				if (va.second > 0)
 				{
 					auto org = e.first->manufacturer;
-					org->purchase(*state, bases[va.first]->building, e.first, va.second);
 					if (org->isRelatedTo(player) != Organisation::Relation::Hostile)
 					{
 						org->purchase(*state, bases[va.first]->building, e.first, va.second);
@@ -1163,7 +1162,6 @@ void TransactionScreen::executeOrders()
 				if (vt.second > 0)
 				{
 					auto org = e.first->manufacturer;
-					org->purchase(*state, bases[vt.first]->building, e.first, vt.second);
 					if (org->isRelatedTo(player) != Organisation::Relation::Hostile)
 					{
 						org->purchase(*state, bases[vt.first]->building, e.first, vt.second);
