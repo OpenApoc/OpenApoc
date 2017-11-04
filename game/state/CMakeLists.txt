@@ -202,23 +202,42 @@ add_library(OpenApoc_GameState STATIC ${GAMESTATE_SOURCE_FILES}
 target_link_libraries(OpenApoc_GameState PUBLIC OpenApoc_Library)
 target_link_libraries(OpenApoc_GameState PUBLIC OpenApoc_Framework)
 
-# This needs to be public as gamestate_serialize_generated.h needs to be in
-# the path
-target_include_directories(OpenApoc_GameState PUBLIC ${CMAKE_BINARY_DIR})
-
 set_property(TARGET OpenApoc_GameState PROPERTY CXX_STANDARD 11)
 
-add_custom_command(OUTPUT
-		gamestate_serialize_generated.h
-		gamestate_serialize_generated.cpp
-		COMMAND
-		${CMAKE_BINARY_DIR}/bin/OpenApoc_GamestateSerializeGen
-		-x ${CMAKE_SOURCE_DIR}/game/state/gamestate_serialize.xml
-		-h gamestate_serialize_generated.h
-		-o gamestate_serialize_generated.cpp
-		DEPENDS
-		${CMAKE_BINARY_DIR}/bin/OpenApoc_GamestateSerializeGen
-		${CMAKE_SOURCE_DIR}/game/state/gamestate_serialize.xml)
+# FIXME: Not just Android, but rather every time we're cross-compiling?
+if (ANDROID)
+    message("Copying generated files from ${HOST_BUILD_DIR}/game/state/gamestate_serialize_generated.* to ${CMAKE_CURRENT_BINARY_DIR}")
+    execute_process(COMMAND ${CMAKE_COMMAND} -E copy
+            ${HOST_BUILD_DIR}/game/state/gamestate_serialize_generated.cpp
+            ${CMAKE_CURRENT_BINARY_DIR}
+            )
+    execute_process(COMMAND ${CMAKE_COMMAND} -E copy
+            ${HOST_BUILD_DIR}/game/state/gamestate_serialize_generated.h
+            ${CMAKE_CURRENT_BINARY_DIR}
+            )
+    # We now need to back up two levels (because gamestate_serialize assumes specific
+    # generated state position)
+    get_filename_component(OPENAPOC_GAMESTATE_PARENT ${CMAKE_CURRENT_BINARY_DIR} DIRECTORY)
+    get_filename_component(OPENAPOC_GAMESTATE_PARENT ${OPENAPOC_GAMESTATE_PARENT} DIRECTORY)
+    target_include_directories(OpenApoc_GameState PUBLIC ${OPENAPOC_GAMESTATE_PARENT})
+else()
+    # This needs to be public as gamestate_serialize_generated.h needs to be in
+    # the path
+    target_include_directories(OpenApoc_GameState PUBLIC ${CMAKE_BINARY_DIR})
+
+    add_custom_command(OUTPUT
+    		gamestate_serialize_generated.h
+    		gamestate_serialize_generated.cpp
+    		COMMAND
+    		${CMAKE_BINARY_DIR}/bin/OpenApoc_GamestateSerializeGen
+    		-x ${CMAKE_SOURCE_DIR}/game/state/gamestate_serialize.xml
+    		-h gamestate_serialize_generated.h
+    		-o gamestate_serialize_generated.cpp
+    		DEPENDS
+    		${CMAKE_BINARY_DIR}/bin/OpenApoc_GamestateSerializeGen
+    		${CMAKE_SOURCE_DIR}/game/state/gamestate_serialize.xml)
+
+endif()
 
 set_target_properties(OpenApoc_GameState PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
 	"gamestate_pch.h")

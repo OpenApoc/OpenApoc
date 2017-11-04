@@ -147,9 +147,12 @@ source_group(framework\\sound\\headers FILES
 list(APPEND ALL_HEADER_FILES ${SOUND_HEADER_FILES})
 
 set (RENDERER_SOURCE_FILES
-	render/gl20/ogl_2_0_renderer.cpp
 	render/gles30_v2/ogles_3_0_renderer_v2.cpp
 	render/gles30_v2/gleswrap_gles3.cpp)
+
+if (NOT ANDROID)
+    set (RENDERER_SOURCE_FILES ${RENDERER_SOURCE_FILES} render/gl20/ogl_2_0_renderer.cpp)
+endif()
 
 source_group(framework\\renderer\\sources FILES
 	${RENDERER_SOURCE_FILES})
@@ -191,8 +194,13 @@ add_library(OpenApoc_Framework STATIC
 
 set_property(TARGET OpenApoc_Framework PROPERTY CXX_STANDARD 11)
 
+set(OPENAPOC_RENDERER_LIST "GLES_3_0")
+if (NOT ANDROID)
+    set(OPENAPOC_RENDERER_LIST "${OPENAPOC_RENDERER_LIST}:GL_2_0")
+endif()
+
 target_compile_definitions(OpenApoc_Framework PUBLIC
-		"-DRENDERERS=\"GLES_3_0:GL_2_0\"")
+		"-DRENDERERS=\"${OPENAPOC_RENDERER_LIST}\"")
 
 if(APPLE)
 	target_compile_definitions(OpenApoc_Framework PRIVATE
@@ -203,7 +211,13 @@ if(APPLE)
 	# Disable libunwind use on Apple
 	SET(BACKTRACE_ON_ERROR OFF CACHE BOOL "Print backtrace on logging an error (Requires libunwind on linux, no extra dependencies on windows)" FORCE)
 else()
-	target_compile_definitions(OpenApoc_Framework PRIVATE "-DGLESWRAP_PLATFORM_GLX")
+    if(ANDROID)
+	find_library(EGL_Android EGL)
+	target_link_libraries(OpenApoc_Framework PRIVATE ${EGL_Android})
+        target_compile_definitions(OpenApoc_Framework PRIVATE "-DGLESWRAP_PLATFORM_EGL")
+    else()
+	    target_compile_definitions(OpenApoc_Framework PRIVATE "-DGLESWRAP_PLATFORM_GLX")
+	endif()
 endif()
 
 # We use boost::locale for utf conversions and boost::filesystem for
@@ -229,41 +243,49 @@ else()
 	set(BOOST_PACKAGES ${BOOST_PACKAGES} filesystem)
 	target_compile_definitions(OpenApoc_Framework PUBLIC "-DUSE_BOOST_FILESYSTEM")
 endif()
+if (ANDROID)
+    set(Boost_LIBRARIES Boost_filesystem Boost_system Boost_program_options Boost_locale)
+    target_link_libraries(OpenApoc_Framework PUBLIC ${Boost_LIBRARIES})
+else()
+    find_package(Boost REQUIRED COMPONENTS ${BOOST_PACKAGES})
+    target_link_libraries(OpenApoc_Framework PUBLIC ${Boost_LIBRARIES})
+    target_include_directories(OpenApoc_Framework PUBLIC ${Boost_INCLUDE_DIRS})
 
-find_package(Boost REQUIRED COMPONENTS ${BOOST_PACKAGES})
-target_link_libraries(OpenApoc_Framework PUBLIC ${Boost_LIBRARIES})
-target_include_directories(OpenApoc_Framework PUBLIC ${Boost_INCLUDE_DIRS})
-
-find_package(Threads)
-target_link_libraries(OpenApoc_Framework PUBLIC ${CMAKE_THREAD_LIBS_INIT})
+    find_package(Threads)
+    target_link_libraries(OpenApoc_Framework PUBLIC ${CMAKE_THREAD_LIBS_INIT})
+endif()
 
 target_include_directories(OpenApoc_Framework PUBLIC ${GLM_INCLIDE_DIR})
 
 find_package(PkgConfig)
 
 #Require SDL2 for input/graphics/sound/pretty much everything
-pkg_check_modules(PC_SDL2 REQUIRED sdl2>=2.0)
-if (NOT PC_SDL2_FOUND)
-		message(FATAL_ERROR "sdl2 not found")
+if (ANDROID)
+    target_link_libraries(OpenApoc_Framework PUBLIC SDL2-static)
+else()
+    pkg_check_modules(PC_SDL2 REQUIRED sdl2>=2.0)
+    if (NOT PC_SDL2_FOUND)
+    		message(FATAL_ERROR "sdl2 not found")
+    endif()
+    foreach (SDL2_LIB ${PC_SDL2_LIBRARIES})
+    		message("Searching for ${SDL2_LIB} in ${PC_SDL2_LIBRARY_DIRS}")
+    		find_library(SDL2_LIBRARY_PATH-${SDL2_LIB} ${SDL2_LIB} HINTS ${PC_SDL2_LIBRARY_DIRS})
+    		if (NOT SDL2_LIBRARY_PATH-${SDL2_LIB})
+    				message(FATAL_ERROR "sdl2 library ${SDL2_LIB} not found in ${PC_SDL2_LIBRARY_DIRS}")
+		    endif()
+		    message("Found ${SDL2_LIB} at ${SDL2_LIBRARY_PATH-${SDL2_LIB}}")
+	    	target_link_libraries(OpenApoc_Framework PUBLIC ${SDL2_LIB})
+    endforeach()
+    target_include_directories(OpenApoc_Framework PUBLIC ${PC_SDL2_INCLUDE_DIRS})
 endif()
-foreach (SDL2_LIB ${PC_SDL2_LIBRARIES})
-		message("Searching for ${SDL2_LIB} in ${PC_SDL2_LIBRARY_DIRS}")
-		find_library(SDL2_LIBRARY_PATH-${SDL2_LIB} ${SDL2_LIB} HINTS ${PC_SDL2_LIBRARY_DIRS})
-		if (NOT SDL2_LIBRARY_PATH-${SDL2_LIB})
-				message(FATAL_ERROR "sdl2 library ${SDL2_LIB} not found in ${PC_SDL2_LIBRARY_DIRS}")
-		endif()
-		message("Found ${SDL2_LIB} at ${SDL2_LIBRARY_PATH-${SDL2_LIB}}")
-		target_link_libraries(OpenApoc_Framework PUBLIC ${SDL2_LIB})
-endforeach()
-target_include_directories(OpenApoc_Framework PUBLIC ${PC_SDL2_INCLUDE_DIRS})
-
 # Dialog is handled by SDL2
 if(DIALOG_ON_ERROR)
 		target_compile_definitions(OpenApoc_Framework PUBLIC -DERROR_DIALOG)
 endif()
 
 # Backtrace required libunwind
-if(BACKTRACE_ON_ERROR)
+# ...but is not available on android
+if(BACKTRACE_ON_ERROR AND NOT ANDROID)
 	pkg_check_modules(PC_UNWIND libunwind)
 	if (NOT PC_UNWIND_FOUND)
 		#Ubuntu 12.04 libunwind doesn't have a pkgconfig - try 'current' paths anyway
@@ -299,8 +321,8 @@ target_link_libraries(OpenApoc_Framework PUBLIC ${CMAKE_DL_LIBS})
 target_link_libraries(OpenApoc_Framework PUBLIC physfs-static)
 
 target_include_directories(OpenApoc_Framework PRIVATE
-		${CMAKE_SOURCE_DIR}/dependencies/physfs/src)
-target_include_directories(OpenApoc_Framework PUBLIC ${CMAKE_SOURCE_DIR})
+		${PROJECT_SOURCE_DIR}/../dependencies/physfs/src)
+target_include_directories(OpenApoc_Framework PUBLIC ${PROJECT_SOURCE_DIR})
 
 
 set_target_properties(OpenApoc_Framework PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT

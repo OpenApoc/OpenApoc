@@ -13,14 +13,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#ifdef ANDROID
-#define be16toh(x) htobe16(x)
-#define be32toh(x) htobe32(x)
-#define be64toh(x) htobe64(x)
-#define le16toh(x) htole16(x)
-#define le32toh(x) htole32(x)
-#define le64toh(x) htole64(x)
-#elif defined(_DEFAULT_SOURCE) || defined(_BSD_SOURCE)
+#if defined(_DEFAULT_SOURCE) || defined(_BSD_SOURCE)
 #include <endian.h>
 #else
 /* We assume all other platforms are little endian for now */
