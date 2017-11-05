@@ -26,6 +26,8 @@ void Ticker::eventOccured(Event *e) { Control::eventOccured(e); }
 
 void Ticker::onRender()
 {
+	Control::onRender();
+
 	int xpos;
 	int ypos;
 	if (!animating)

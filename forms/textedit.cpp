@@ -160,6 +160,8 @@ void TextEdit::eventOccured(Event *e)
 
 void TextEdit::onRender()
 {
+	Control::onRender();
+
 	int xpos = align(TextHAlign, Size.x, font->getFontWidth(text));
 	int ypos = align(TextVAlign, Size.y, font->getFontHeight());
 

@@ -66,6 +66,8 @@ void GraphicButton::eventOccured(Event *e)
 
 void GraphicButton::onRender()
 {
+	Control::onRender();
+
 	sp<Image> useimage;
 
 	if (image)

@@ -22,6 +22,8 @@ void Graphic::eventOccured(Event *e) { Control::eventOccured(e); }
 
 void Graphic::onRender()
 {
+	Control::onRender();
+
 	if (!image)
 	{
 		return;

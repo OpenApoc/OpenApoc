@@ -27,6 +27,8 @@ void Label::eventOccured(Event *e) { Control::eventOccured(e); }
 
 void Label::onRender()
 {
+	Control::onRender();
+
 	int xpos;
 	int ypos;
 	std::list<UString> lines = font->wordWrapText(text, Size.x);

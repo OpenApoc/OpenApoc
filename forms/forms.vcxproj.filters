@@ -15,6 +15,7 @@
     <ClCompile Include="textedit.cpp" />
     <ClCompile Include="ticker.cpp" />
     <ClCompile Include="tristatebox.cpp" />
+    <ClCompile Include="multilistbox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="checkbox.h" />
@@ -33,6 +34,7 @@
     <ClInclude Include="ticker.h" />
     <ClInclude Include="tristatebox.h" />
     <ClInclude Include="ui.h" />
+    <ClInclude Include="multilistbox.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
