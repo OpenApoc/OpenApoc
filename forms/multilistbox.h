@@ -1,28 +1,37 @@
 #pragma once
-#include "listbox.h"
+#include "forms/control.h"
+#include "forms/forms_enums.h"
+#include "library/colour.h"
+#include "library/sp.h"
+
+#include <set>
 
 namespace OpenApoc
 {
 
+class ScrollBar;
+class Image;
+
 class MultilistBox : public Control
 {
-public:
+  public:
 	MultilistBox();
 	MultilistBox(sp<ScrollBar> ExternalScrollBar);
 	~MultilistBox() override;
 
-private:
+  private:
 	sp<Control> hovered;
-	std::vector<sp<Control>> selected;
-	Vec2<int> scrollOffset = { 0, 0 };
-	
-protected:
+	sp<Control> selected;
+	std::set<sp<Control>> selectedSet;
+	Vec2<int> scrollOffset = {0, 0};
+	bool selection;
+
+  protected:
 	void preRender() override;
 	void onRender() override;
 	void postRender() override;
 
-public:
-	//
+  public:
 	sp<ScrollBar> scroller;
 	int ItemSize, ItemSpacing;
 	Orientation ListOrientation, ScrollOrientation;
@@ -31,15 +40,15 @@ public:
 	sp<Image> HoverImage;
 	// Image to use instead of frame for selection
 	sp<Image> SelectedImage;
-	bool AlwaysEmitSelectionEvents;
-
 
 	void eventOccured(Event *e) override;
 	void update() override;
 	void unloadResources() override;
 
-	void setSelected(sp<Control> c);
-	std::vector<sp<Control>> getSelectedItems();
+	// Set selection status for Item.
+	void setSelected(sp<Control> Item, bool select);
+	// Get controls that have been selected.
+	std::vector<sp<Control>> getSelectedItems() const;
 	sp<Control> getHoveredItem();
 
 	void clear();
@@ -61,14 +70,14 @@ public:
 		return nullptr;
 	}
 
-	template <typename T> sp<T> getSelectedData() const
-	{
-		if (selected != nullptr)
-		{
-			return selected->getData<T>();
-		}
-		return nullptr;
-	}
+	// template <typename T> sp<T> getSelectedData() const
+	//{
+	//	if (selected != nullptr)
+	//	{
+	//		return selected->getData<T>();
+	//	}
+	//	return nullptr;
+	//}
 
 	template <typename T> sp<Control> removeByData(const sp<T> data)
 	{
@@ -85,6 +94,4 @@ public:
 		return removeItem(Item);
 	}
 };
-
 }
-

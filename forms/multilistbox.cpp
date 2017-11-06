@@ -1,4 +1,4 @@
-#include "multilistbox.h"
+#include "forms/multilistbox.h"
 #include "dependencies/pugixml/src/pugixml.hpp"
 #include "forms/scrollbar.h"
 #include "framework/event.h"
@@ -11,10 +11,9 @@ namespace OpenApoc
 MultilistBox::MultilistBox() : MultilistBox(nullptr) {}
 
 MultilistBox::MultilistBox(sp<ScrollBar> ExternalScrollBar)
-	: Control(), scroller(ExternalScrollBar),
-	ItemSize(0), ItemSpacing(0), ListOrientation(Orientation::Vertical),
-	ScrollOrientation(ListOrientation), HoverColour(0, 0, 0, 0), SelectedColour(0, 0, 0, 0),
-	AlwaysEmitSelectionEvents(true)
+    : Control(), scroller(ExternalScrollBar), ItemSize(0), ItemSpacing(0),
+      ListOrientation(Orientation::Vertical), ScrollOrientation(ListOrientation),
+      HoverColour(0, 0, 0, 0), SelectedColour(0, 0, 0, 0)
 {
 }
 
@@ -32,7 +31,7 @@ void MultilistBox::preRender()
 		if (isVisible())
 		{
 			bool removeLastSpacing = false;
-			for (auto c : Controls)
+			for (auto &c : Controls)
 			{
 				if (c->isVisible())
 				{
@@ -41,20 +40,23 @@ void MultilistBox::preRender()
 					removeLastSpacing = true;
 				}
 			}
+			sizeX = std::max(sizeX, SelectionSize.x);
 			sizeY -= removeLastSpacing ? ItemSpacing : 0;
 		}
-		
+
 		Size.x = sizeX;
 		Size.y = sizeY;
 
 		// Adjusting the parent size
 		if (auto parent = owningControl.lock())
 		{
-			if (parent->SelectionSize.x == 0) parent->SelectionSize.x = parent->Size.x;
-			if (parent->SelectionSize.y == 0) parent->SelectionSize.y = parent->Size.y;
+			if (parent->SelectionSize.x == 0)
+				parent->SelectionSize.x = parent->Size.x;
+			if (parent->SelectionSize.y == 0)
+				parent->SelectionSize.y = parent->Size.y;
 
 			parent->Size.x = std::max(parent->SelectionSize.x, Location.x + sizeX);
-			parent->Size.y = std::max(parent->SelectionSize.x, Location.y + sizeY);
+			parent->Size.y = std::max(parent->SelectionSize.y, Location.y + sizeY);
 		}
 	}
 }
@@ -114,17 +116,17 @@ void MultilistBox::onRender()
 		}
 	}
 
-	//resolveLocation();
-
 	if (scroller)
 	{
 		switch (ScrollOrientation)
 		{
 			case Orientation::Vertical:
-				scroller->setMaximum(std::max(controlOffset.y - this->Size.y, scroller->getMinimum()));
+				scroller->setMaximum(
+				    std::max(controlOffset.y - this->Size.y, scroller->getMinimum()));
 				break;
 			case Orientation::Horizontal:
-				scroller->setMaximum(std::max(controlOffset.x - this->Size.x, scroller->getMinimum()));
+				scroller->setMaximum(
+				    std::max(controlOffset.x - this->Size.x, scroller->getMinimum()));
 				break;
 		}
 		scroller->updateLargeChangeValue();
@@ -151,17 +153,17 @@ void MultilistBox::postRender()
 					fw().renderer->drawRect(ctrl->Location, ctrl->SelectionSize, HoverColour);
 				}
 			}
-			//if (ctrl == selected)
-			//{
-			//	if (SelectedImage)
-			//	{
-			//		fw().renderer->draw(SelectedImage, ctrl->Location);
-			//	}
-			//	else
-			//	{
-			//		fw().renderer->drawRect(ctrl->Location, ctrl->Size, SelectedColour);
-			//	}
-			//}
+			if (selectedSet.find(ctrl) != selectedSet.end())
+			{
+				if (SelectedImage)
+				{
+					fw().renderer->draw(SelectedImage, ctrl->Location);
+				}
+				else
+				{
+					fw().renderer->drawRect(ctrl->Location, ctrl->SelectionSize, SelectedColour);
+				}
+			}
 		}
 	}
 }
@@ -178,45 +180,64 @@ void MultilistBox::eventOccured(Event *e)
 		sp<Control> ctrl = e->forms().RaisedBy;
 		sp<Control> child = ctrl->getAncestor(shared_from_this());
 
-		if (e->forms().EventFlag == FormEventType::MouseMove)
+		switch (e->forms().EventFlag)
 		{
-			// FIXME: Scrolling amount should match wheel amount
-			// Should wheel orientation match as well? Who has horizontal scrolls??
-			if ((ctrl == shared_from_this() || child != nullptr) && scroller)
-			{
-				int wheelDelta =
-					e->forms().MouseInfo.WheelVertical + e->forms().MouseInfo.WheelHorizontal;
-				if (wheelDelta > 0)
+			case FormEventType::MouseMove:
+				// FIXME: Scrolling amount should match wheel amount
+				// Should wheel orientation match as well? Who has horizontal scrolls??
+				if (scroller && (ctrl == shared_from_this() || child != nullptr))
 				{
-					scroller->scrollPrev();
+					int wheelDelta =
+					    e->forms().MouseInfo.WheelVertical + e->forms().MouseInfo.WheelHorizontal;
+					if (wheelDelta > 0)
+					{
+						scroller->scrollPrev();
+					}
+					else if (wheelDelta < 0)
+					{
+						scroller->scrollNext();
+					}
 				}
-				else if (wheelDelta < 0)
+
+				// check hover
+				if (ctrl == shared_from_this() || ctrl == scroller ||
+				    !isPointInsideControlBounds(e, child))
 				{
-					scroller->scrollNext();
+					child = nullptr;
 				}
-			}
-			const Vec2<int>& Size = (child->SelectionSize.x == 0 || child->SelectionSize.y == 0) ? child->Size : child->SelectionSize;
-			if (ctrl == shared_from_this() || ctrl == scroller || !isPointInsideControlBounds(e, child))
-			{
-				child = nullptr;
-			}
-			if (hovered != child)
-			{
-				hovered = child;
-				this->pushFormEvent(FormEventType::ListBoxChangeHover, e);
-			}
-		}
-		else if (e->forms().EventFlag == FormEventType::MouseDown)
-		{
-			if (ctrl == shared_from_this() || ctrl == scroller)
-			{
-				child = nullptr;
-			}
-			//if ((AlwaysEmitSelectionEvents || selected != child) && child != nullptr)
-			//{
-			//	selected = child;
-			//	this->pushFormEvent(FormEventType::ListBoxChangeSelected, e);
-			//}
+				if (hovered != child)
+				{
+					hovered = child;
+					this->pushFormEvent(FormEventType::ListBoxChangeHover, e);
+				}
+				break;
+
+			case FormEventType::MouseDown:
+				// don't want to use the MouseClick event because drag&drop will be bugged
+				if (ctrl == child && isPointInsideControlBounds(e, child) && ctrl != scroller)
+				{
+					selected = child;
+					selection = selectedSet.find(child) == selectedSet.end();
+					if (selection)
+					{
+						selectedSet.insert(child);
+						this->pushFormEvent(FormEventType::ListBoxChangeSelected, e);
+					}
+				}
+				break;
+
+			case FormEventType::MouseUp:
+				if (ctrl == child && isPointInsideControlBounds(e, child) && ctrl != scroller)
+				{
+					// unselect only if it hasnt been selected during this click
+					if (!selection && selected == child &&
+					    selectedSet.find(child) != selectedSet.end())
+					{
+						selectedSet.erase(child);
+						this->pushFormEvent(FormEventType::ListBoxChangeSelected, e);
+					}
+				}
+				break;
 		}
 	}
 }
@@ -250,30 +271,28 @@ void MultilistBox::unloadResources() {}
 
 void MultilistBox::clear()
 {
+	this->setDirty();
+
 	for (auto &c : Controls)
 	{
 		c->setParent(nullptr);
 	}
 	Controls.clear();
-	this->selected.clear();
-	this->hovered = nullptr;
-
-	//resolveLocation();
-	this->setDirty();
+	selectedSet.clear();
+	hovered = nullptr;
 }
 
 void MultilistBox::addItem(sp<Control> Item)
 {
-	Item->setParent(shared_from_this());
-	//resolveLocation();
 	this->setDirty();
+	Item->setParent(shared_from_this());
 }
 
 void MultilistBox::replaceItem(sp<Control> Item)
 {
-	auto newData = Item->getData<void>();
 	this->setDirty();
-	bool found = false;
+	auto newData = Item->getData<void>();
+
 	for (size_t i = 0; i < Controls.size(); i++)
 	{
 		auto oldItem = Controls[i];
@@ -281,42 +300,37 @@ void MultilistBox::replaceItem(sp<Control> Item)
 		{
 			Controls.erase(Controls.begin() + i);
 			Item->setParent(shared_from_this(), i);
-//			resolveLocation();
-			//if (oldItem == this->selected)
-			//{
-			//	this->selected = Item;
-			//}
-			if (oldItem == this->hovered)
+			if (selectedSet.find(oldItem) != selectedSet.end())
 			{
-				this->hovered = Item;
+				selectedSet.erase(oldItem);
+				selectedSet.insert(Item);
 			}
-			found = true;
-			break;
+			if (oldItem == hovered)
+			{
+				hovered = Item;
+			}
+
+			return;
 		}
 	}
-	if (!found)
-	{
-		addItem(Item);
-	}
+
+	addItem(Item);
 }
 
 sp<Control> MultilistBox::removeItem(sp<Control> Item)
 {
 	this->setDirty();
-	//if (Item == this->selected)
-	//{
-	//	this->selected = nullptr;
-	//}
-	if (Item == this->hovered)
+
+	selectedSet.erase(Item);
+	if (Item == hovered)
 	{
-		this->hovered = nullptr;
+		hovered = nullptr;
 	}
 	for (auto i = Controls.begin(); i != Controls.end(); i++)
 	{
 		if (*i == Item)
 		{
 			Controls.erase(i);
-			resolveLocation();
 			Item->setParent(nullptr);
 			return Item;
 		}
@@ -327,17 +341,14 @@ sp<Control> MultilistBox::removeItem(sp<Control> Item)
 sp<Control> MultilistBox::removeItem(int Index)
 {
 	this->setDirty();
+
 	auto c = Controls.at(Index);
 	Controls.erase(Controls.begin() + Index);
-//	resolveLocation();
-	//if (c == this->selected)
-	//{
-	//	this->selected = nullptr;
-	//}
-	//if (c == this->hovered)
-	//{
-	//	this->selected = nullptr;
-	//}
+	selectedSet.erase(c);
+	if (c == hovered)
+	{
+		hovered = nullptr;
+	}
 	c->setParent(nullptr);
 	return c;
 }
@@ -347,7 +358,8 @@ sp<Control> MultilistBox::operator[](int Index) { return Controls.at(Index); }
 sp<Control> MultilistBox::copyTo(sp<Control> CopyParent)
 {
 	sp<MultilistBox> copy;
-	sp<ScrollBar> scrollCopy = std::dynamic_pointer_cast<ScrollBar>(scroller->lastCopiedTo.lock());
+	sp<ScrollBar> scrollCopy =
+	    scroller ? std::dynamic_pointer_cast<ScrollBar>(scroller->lastCopiedTo.lock()) : nullptr;
 
 	if (CopyParent)
 	{
@@ -430,7 +442,7 @@ void MultilistBox::configureSelfFromXml(pugi::xml_node *node)
 		uint8_t g = hoverColourNode.attribute("g").as_uint(0);
 		uint8_t b = hoverColourNode.attribute("b").as_uint(0);
 		uint8_t a = hoverColourNode.attribute("a").as_uint(255);
-		HoverColour = { r, g, b, a };
+		HoverColour = {r, g, b, a};
 	}
 	auto selColourNode = node->child("selcolour");
 	if (selColourNode)
@@ -439,17 +451,20 @@ void MultilistBox::configureSelfFromXml(pugi::xml_node *node)
 		uint8_t g = selColourNode.attribute("g").as_uint(0);
 		uint8_t b = selColourNode.attribute("b").as_uint(0);
 		uint8_t a = selColourNode.attribute("a").as_uint(255);
-		SelectedColour = { r, g, b, a };
+		SelectedColour = {r, g, b, a};
 	}
 }
 
-void MultilistBox::setSelected(sp<Control> c)
+/**
+ * Set selection status for Item.
+ */
+void MultilistBox::setSelected(sp<Control> Item, bool select)
 {
 	// A sanity check to make sure the selected control actually belongs to this list
 	bool found = false;
-	for (auto child : this->Controls)
+	for (auto &child : Controls)
 	{
-		if (child == c)
+		if (child == Item)
 		{
 			found = true;
 			break;
@@ -457,16 +472,42 @@ void MultilistBox::setSelected(sp<Control> c)
 	}
 	if (!found)
 	{
-		LogError(
-			"Trying set MultilistBox selected control to something that isn't a member of the list");
+		LogError("Trying set MultilistBox selected control to something that isn't a member of the "
+		         "list");
 	}
-	this->selected.push_back(c);
+
+	if (select)
+	{
+		selectedSet.insert(Item);
+	}
+	else
+	{
+		selectedSet.erase(Item);
+	}
+
 	this->setDirty();
 }
 
-std::vector<sp<Control>> MultilistBox::getSelectedItems() { return selected; }
+/**
+ * Get controls that have been selected.
+ * @return - controls that have been selected
+ */
+std::vector<sp<Control>> MultilistBox::getSelectedItems() const
+{
+	std::vector<sp<Control>> selected;
+	if (!selectedSet.empty())
+	{
+		for (auto &c : Controls)
+		{
+			if (selectedSet.find(c) != selectedSet.end())
+			{
+				selected.push_back(c);
+			}
+		}
+	}
+
+	return selected;
+}
 
 sp<Control> MultilistBox::getHoveredItem() { return hovered; }
-
-
 }

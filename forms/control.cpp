@@ -17,8 +17,9 @@ namespace OpenApoc
 
 Control::Control(bool takesFocus)
     : mouseInside(false), mouseDepressed(false), resolvedLocation(0, 0), Visible(true),
-      Name("Control"), Location(0, 0), Size(0, 0), SelectionSize(0, 0), BackgroundColour(0, 0, 0, 0),
-      takesFocus(takesFocus), showBounds(false), Enabled(true), canCopy(true)
+      Name("Control"), Location(0, 0), Size(0, 0), SelectionSize(0, 0),
+      BackgroundColour(0, 0, 0, 0), takesFocus(takesFocus), showBounds(false), Enabled(true),
+      canCopy(true)
 {
 }
 
@@ -68,10 +69,11 @@ void Control::resolveLocation()
 
 bool Control::isPointInsideControlBounds(int x, int y) const
 {
-	const Vec2<int>& Size = (SelectionSize.x == 0 || SelectionSize.y == 0) ? this->Size : SelectionSize;
+	const Vec2<int> &Size =
+	    (SelectionSize.x == 0 || SelectionSize.y == 0) ? this->Size : SelectionSize;
 
-	return x >= resolvedLocation.x && x < resolvedLocation.x + Size.x &&
-		   y >= resolvedLocation.y && y < resolvedLocation.y + Size.y;
+	return x >= resolvedLocation.x && x < resolvedLocation.x + Size.x && y >= resolvedLocation.y &&
+	       y < resolvedLocation.y + Size.y;
 }
 
 bool Control::isPointInsideControlBounds(Event *e, sp<Control> c) const
@@ -81,12 +83,13 @@ bool Control::isPointInsideControlBounds(Event *e, sp<Control> c) const
 		return false;
 	}
 
-	const Vec2<int>& Size = (c->SelectionSize.x == 0 || c->SelectionSize.y == 0) ? c->Size : c->SelectionSize;
+	const Vec2<int> &Size =
+	    (c->SelectionSize.x == 0 || c->SelectionSize.y == 0) ? c->Size : c->SelectionSize;
 	int eventX = e->forms().MouseInfo.X + e->forms().RaisedBy->resolvedLocation.x;
 	int eventY = e->forms().MouseInfo.Y + e->forms().RaisedBy->resolvedLocation.y;
 
 	return eventX >= c->resolvedLocation.x && eventX < c->resolvedLocation.x + Size.x &&
-		   eventY >= c->resolvedLocation.y && eventY < c->resolvedLocation.y + Size.y;
+	       eventY >= c->resolvedLocation.y && eventY < c->resolvedLocation.y + Size.y;
 }
 
 void Control::eventOccured(Event *e)
@@ -320,10 +323,7 @@ void Control::preRender()
 	// Any operations other than graphical.
 }
 
-void Control::onRender()
-{
-	fw().renderer->clear(BackgroundColour);
-}
+void Control::onRender() { fw().renderer->clear(BackgroundColour); }
 
 void Control::postRender()
 {
@@ -870,6 +870,7 @@ void Control::copyControlData(sp<Control> CopyOf)
 	CopyOf->Name = this->Name;
 	CopyOf->Location = this->Location;
 	CopyOf->Size = this->Size;
+	CopyOf->SelectionSize = this->SelectionSize;
 	CopyOf->BackgroundColour = this->BackgroundColour;
 	CopyOf->takesFocus = this->takesFocus;
 	CopyOf->showBounds = this->showBounds;

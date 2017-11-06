@@ -219,6 +219,22 @@ sp<Control> ControlGenerator::createVehicleControl(GameState &state, sp<Vehicle>
 	return createVehicleControl(state, info);
 }
 
+sp<Control> ControlGenerator::createVehicleLargeControl(GameState &state, sp<Vehicle> v)
+{
+	const int controlLength = 140, controlHeight = 30, iconLenght = 40;
+
+	auto info = createVehicleInfo(state, v);
+
+	sp<Control> control = createVehicleControl(state, info);
+	control->Size = {controlLength, controlHeight};
+
+	auto nameLabel = control->createChild<Label>(info.vehicle->name, singleton.labelFont);
+	nameLabel->Size = {controlLength - iconLenght, singleton.labelFont->getFontHeight()};
+	nameLabel->Location = {iconLenght, (control->Size.y - nameLabel->Size.y) / 2};
+
+	return control;
+}
+
 AgentInfo ControlGenerator::createAgentInfo(GameState &state, sp<Agent> a,
                                             UnitSelectionState forcedSelectionState, bool forceFade)
 {

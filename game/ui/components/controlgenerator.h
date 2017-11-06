@@ -69,6 +69,8 @@ class ControlGenerator
 	static VehicleTileInfo createVehicleInfo(GameState &state, sp<Vehicle> v);
 	static sp<Control> createVehicleControl(GameState &state, const VehicleTileInfo &info);
 	static sp<Control> createVehicleControl(GameState &state, sp<Vehicle> v);
+	// Vehicle control with name
+	static sp<Control> createVehicleLargeControl(GameState &state, sp<Vehicle> v);
 
 	static AgentInfo
 	createAgentInfo(GameState &state, sp<Agent> a,

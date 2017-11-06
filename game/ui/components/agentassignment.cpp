@@ -31,49 +31,8 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 	Location = location;
 	Size = size;
 
-	//auto agentList = findControlTyped<MultilistBox>("AGENT_SELECT_BOX");
-	//agentList->addCallback(FormEventType::ListBoxChangeSelected, [this](FormsEvent *e) {
-	//	auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
-	//	auto agent = list->getSelectedData<Agent>();
-	//	if (!agent)
-	//	{
-	//		LogError("No agent in selected data");
-	//		return;
-	//	}
-	//	this->currentAgent = agent;
-	//	if (currentVehicle)
-	//	{
-	//		if (currentAgent->currentVehicle != currentVehicle &&
-	//		    (currentAgent->currentBuilding == currentVehicle->currentBuilding ||
-	//		     currentAgent->currentVehicle->currentBuilding ==
-	//		         currentVehicle->currentBuilding) &&
-	//		    currentVehicle->getMaxPassengers() > currentVehicle->getPassengers())
-	//		{
-	//			auto oldVehicle = currentAgent->currentVehicle;
-	//			currentAgent->enterVehicle(*this->state, {this->state.get(), currentVehicle});
-	//			updateControl(currentAgent);
-	//			updateControl(currentVehicle);
-	//			if (oldVehicle)
-	//			{
-	//				updateControl(oldVehicle);
-	//			}
-	//		}
-	//	}
-	//	else if (currentAgent->currentVehicle && currentAgent->currentVehicle->currentBuilding)
-	//	{
-	//		auto oldVehicle = currentAgent->currentVehicle;
-	//		currentAgent->enterBuilding(*this->state,
-	//		                            currentAgent->currentVehicle->currentBuilding);
-	//		updateControl(currentAgent);
-	//		updateControl(oldVehicle);
-	//	}
-	//});
-	auto vehicleList = findControlTyped<ListBox>("VEHICLE_SELECT_BOX");
-	vehicleList->addCallback(FormEventType::ListBoxChangeSelected, [this](FormsEvent *e) {
-		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
-		auto vehicle = list->getSelectedData<Vehicle>();
-		this->currentVehicle = vehicle;
-	});
+	draggedList = findControlTyped<MultilistBox>("DRAGGED_AGENT_BOX");
+	draggedList->setVisible(false);
 }
 
 void AgentAssignment::setLocation(sp<Agent> agent)
@@ -196,93 +155,213 @@ void AgentAssignment::updateLocation()
 		}
 	}
 
-	auto baseList = findControlTyped<MultilistBox>("AGENT_SELECT_BOX");
-	//baseList->SelectionSize = { 10, 10 };
-	baseList->clear();
-	//agentList->AlwaysEmitSelectionEvents = true;
+	// TODO: change icon; check the SelectionSize; refactor createLargeAgentControl; prepare
+	// structure in the init()
+	this->vehicleList.clear();
+	this->agentGroupList.clear();
+
+	// Left list
+	auto baseLeftList = findControlTyped<MultilistBox>("AGENT_SELECT_BOX");
+	baseLeftList->clear();
+
 	auto owner = state->getPlayer();
 	auto ownerControl1 = ControlGenerator::createOrganisationControl(*state, owner);
-	ownerControl1->SelectionSize = { 80, 24 }; //ownerControl1->Size;
-	//ownerControl1->Size = { 150, 250 };
-	auto ownerControl2 = ControlGenerator::createOrganisationControl(*state, owner);
-	ownerControl2->SelectionSize = { 80, 24 }; //ownerControl2->Size;
-	//ownerControl2->Size = { 150, 210 };
+	ownerControl1->SelectionSize = {140, ownerControl1->Size.y};
+	baseLeftList->addItem(ownerControl1);
 
-	baseList->addItem(ownerControl1);
-	baseList->addItem(ownerControl2);
+	auto agentLeftList = ownerControl1->createChild<MultilistBox>();
+	agentLeftList->Name = "AGENT_LEFT_LIST_0";
+	agentLeftList->Location.x = 20;
+	agentLeftList->Location.y = ownerControl1->Size.y;
+	agentLeftList->HoverColour = baseLeftList->HoverColour;
+	agentLeftList->SelectedColour = baseLeftList->SelectedColour;
 
-	auto agentList = ownerControl1->createChild<MultilistBox>();
-	agentList->Name = "agentList";
-	agentList->Location = { 20, ownerControl1->Size.y };
-	agentList->HoverColour = Colour(200, 255, 255, 255);
-	agentList->addCallback(FormEventType::ListBoxChangeHover, [](FormsEvent *e) {});
-	//agentList->SelectionSize = { 100, 30 };
+	this->agentGroupList.push_back(agentLeftList);
 
 	for (auto &agent : agents)
 	{
-		auto agentControl = ControlGenerator::createLargeAgentControl(*state, agent);
-		agentControl->SelectionSize = { 120, 32 };
-		//agentControl->Size = {agentList->Size.x, ControlGenerator::getFontHeight(*state) * 2};
-		agentList->addItem(agentControl);
-		//if (agent == currentAgent)
-		//{
-		//	agentList->setSelected(agentControl);
-		//}
-	}
-	auto vehicleList2 = ownerControl2->createChild<MultilistBox>();
-	vehicleList2->Name = "vehicleList2";
-	vehicleList2->Location = { 20, ownerControl2->Size.y };
-	vehicleList2->HoverColour = Colour(255, 200, 255, 255);
-	//vehicleList2->SelectionSize = { 102, 30 };
-	for (auto &vehicle : vehicles)
-	{
-		auto vehicleControl = ControlGenerator::createVehicleControl(*state, vehicle);
-		vehicleControl->SelectionSize = { 122, 30 };
-		//vehicleControl->Size = { vehicleList->Size.x, ControlGenerator::getFontHeight(*state) * 2 };
-		vehicleList2->addItem(vehicleControl);
-		//if (vehicle == currentVehicle)
-		//{
-		//	vehicleList2->setSelected(vehicleControl);
-		//}
-	}
-
-
-
-	auto vehicleList = findControlTyped<ListBox>("VEHICLE_SELECT_BOX");
-	vehicleList->clear();
-	if (building)
-	{
-		auto blank = mksp<Graphic>();
-		blank->Size = {vehicleList->Size.x, ControlGenerator::getFontHeight(*state) * 2};
-		vehicleList->addItem(blank);
-	}
-	for (auto &vehicle : vehicles)
-	{
-		auto vehicleControl = ControlGenerator::createVehicleControl(*state, vehicle);
-		vehicleControl->Size = {vehicleList->Size.x, ControlGenerator::getFontHeight(*state) * 2};
-		vehicleList->addItem(vehicleControl);
-		if (vehicle == currentVehicle)
+		if (agent->currentVehicle)
 		{
-			vehicleList->setSelected(vehicleControl);
+			continue;
+		}
+		auto agentControl = ControlGenerator::createLargeAgentControl(*state, agent);
+		agentControl->Size = {140, 30};
+		agentControl->SelectionSize = {140, 30};
+		agentLeftList->addItem(agentControl);
+	}
+
+	// Right list
+	auto baseRightList = findControlTyped<MultilistBox>("VEHICLE_SELECT_BOX");
+	baseRightList->clear();
+
+	// TODO: change icon; check the SelectionSize
+	// auto owner = state->getPlayer();
+	auto ownerControl2 = ControlGenerator::createOrganisationControl(*state, owner);
+	ownerControl2->SelectionSize = {140, ownerControl2->Size.y};
+	baseRightList->addItem(ownerControl2);
+
+	auto vehicleRightList = ownerControl2->createChild<MultilistBox>();
+	vehicleRightList->Name = "VEHICLE_RIGHT_LIST_0";
+	vehicleRightList->Location.x = 20;
+	vehicleRightList->Location.y = ownerControl2->Size.y;
+	vehicleRightList->HoverColour = baseRightList->HoverColour;
+	vehicleRightList->SelectedColour = baseRightList->SelectedColour;
+
+	int i = 0;
+	for (auto &vehicle : vehicles)
+	{
+		auto vehicleControl = ControlGenerator::createVehicleLargeControl(*state, vehicle);
+		vehicleRightList->addItem(vehicleControl);
+
+		this->vehicleList.push_back(vehicleControl);
+
+		// add an agent list to each vehicle
+		auto agentRightList = vehicleControl->createChild<MultilistBox>();
+		agentRightList->Name = format("AGENT_RIGHT_LIST_%d", i++);
+		agentRightList->Location.x = 20;
+		agentRightList->Location.y = vehicleControl->Size.y;
+		agentRightList->HoverColour = baseRightList->HoverColour;
+		agentRightList->SelectedColour = baseRightList->SelectedColour;
+
+		this->agentGroupList.push_back(agentRightList);
+
+		for (auto &agent : agents)
+		{
+			if (agent->currentVehicle == vehicle)
+			{
+				auto agentControl = ControlGenerator::createLargeAgentControl(*state, agent);
+				agentControl->Size = {140, 30};
+				agentControl->SelectionSize = {140, 30};
+				agentRightList->addItem(agentControl);
+			}
 		}
 	}
 }
 
 void AgentAssignment::updateControl(sp<Agent> agent)
 {
-	auto agentList = findControlTyped<MultilistBox>("AGENT_SELECT_BOX");
-	auto agentControl = ControlGenerator::createAgentControl(*state, agent);
-	agentControl->Size = {agentList->Size.x, ControlGenerator::getFontHeight(*state) * 2};
-	agentList->replaceItem(agentControl);
+	// auto agentList = findControlTyped<MultilistBox>("AGENT_SELECT_BOX");
+	// auto agentControl = ControlGenerator::createAgentControl(*state, agent);
+	// agentControl->Size = {agentList->Size.x, ControlGenerator::getFontHeight(*state) * 2};
+	// agentList->replaceItem(agentControl);
 }
 
 void AgentAssignment::updateControl(sp<Vehicle> vehicle)
 {
-	auto vehicleList = findControlTyped<ListBox>("VEHICLE_SELECT_BOX");
+	// auto vehicleList = findControlTyped<MultilistBox>("VEHICLE_SELECT_BOX");
+	// auto vehicleControl = ControlGenerator::createVehicleLargeControl(*state, vehicle);
+	// vehicleControl->Size = {vehicleList->Size.x, ControlGenerator::getFontHeight(*state) * 2};
+	// vehicleList->replaceItem(vehicleControl);
+}
 
-	auto vehicleControl = ControlGenerator::createVehicleControl(*state, vehicle);
-	vehicleControl->Size = {vehicleList->Size.x, ControlGenerator::getFontHeight(*state) * 2};
-	vehicleList->replaceItem(vehicleControl);
+void AgentAssignment::eventOccured(Event *e)
+{
+	Form::eventOccured(e);
+
+	switch (e->type())
+	{
+		case EVENT_FORM_INTERACTION:
+			switch (e->forms().EventFlag)
+			{
+				case FormEventType::MouseDown: // TODO: move to callback
+					for (auto list : agentGroupList)
+					{
+						if (e->forms().RaisedBy == list)
+						{
+							sourceRaisedBy = list;
+
+							auto draggedAgents(list->getSelectedItems());
+							isDragged = !draggedAgents.empty();
+
+							if (isDragged)
+							{
+								positionX = e->mouse().X;
+								positionY = e->mouse().Y;
+								draggedList->setVisible(false);
+								draggedList->clear();
+								for (auto &a : draggedAgents)
+								{
+									a->copyTo(draggedList)
+									    ->setData(a->getData<Agent>()); // TODO: copy only once
+								}
+							}
+							break;
+						}
+					}
+					break;
+
+				case FormEventType::MouseUp: // TODO: may be move to callback
+					if (isDragged)
+					{
+						if (e->forms().RaisedBy == sourceRaisedBy ||
+						    e->forms().RaisedBy->Name == "FORM_AGENT_ASSIGNMENT")
+						{
+							// miss click
+							isDragged = false;
+							draggedList->setVisible(false);
+							break;
+						}
+
+						bool doUpdate = false;
+						for (auto vehicle : vehicleList)
+						{
+							if (e->forms().RaisedBy == vehicle)
+							{
+								for (auto agent : draggedList->Controls)
+								{
+									LogWarning(format("\n-- agent name:%s vehicle name:%s",
+									                  agent->getData<Agent>()->name,
+									                  vehicle->getData<Vehicle>()->name));
+									agent->getData<Agent>()->enterVehicle(
+									    *state, {state.get(), vehicle->getData<Vehicle>()});
+									// TODO: add agents to vehicle's agent list here and remove from
+									// sourceRaisedBy
+								}
+								doUpdate = true;
+								break;
+							}
+						}
+
+						if (e->forms().RaisedBy == agentGroupList.front())
+						{
+							for (auto agent : draggedList->Controls)
+							{
+								agent->getData<Agent>()->enterBuilding(
+								    *state,
+								    {state.get(),
+								     vehicleList.front()->getData<Vehicle>()->currentBuilding});
+								// TODO: add agents to building's list here and remove from
+								// sourceRaisedBy
+							}
+							doUpdate = true;
+						}
+
+						if (doUpdate)
+						{
+							isDragged = false;
+							draggedList->setVisible(false);
+							updateLocation(); // TODO: remove
+						}
+					}
+					break;
+			}
+			break;
+
+		case EVENT_MOUSE_MOVE:
+			// if dragged - change location of dragged list
+			if (isDragged)
+			{
+				int distance = (positionX - e->mouse().X) * (positionX - e->mouse().X) +
+				               (positionX - e->mouse().Y) * (positionX - e->mouse().Y);
+				if (distance > 200)
+				{
+					draggedList->Location.x = e->mouse().X - this->resolvedLocation.x;
+					draggedList->Location.y = e->mouse().Y - this->resolvedLocation.y;
+					draggedList->setVisible(true); // TODO: set true only once (& copy too)
+				}
+			}
+			break;
+	}
 }
 
 void AgentAssignment::update() { Form::update(); }

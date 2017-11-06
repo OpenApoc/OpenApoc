@@ -53,7 +53,7 @@ class Control : public std::enable_shared_from_this<Control>
 
 	void resolveLocation();
 	bool isPointInsideControlBounds(int x, int y) const;
-	bool isPointInsideControlBounds(Event * e, sp<Control> c) const;
+	bool isPointInsideControlBounds(Event *e, sp<Control> c) const;
 
 	// Loads control and all subcontrols from xml
 	void configureFromXml(pugi::xml_node *node);
@@ -71,7 +71,7 @@ class Control : public std::enable_shared_from_this<Control>
 
 	bool Visible;
 
-public:
+  public:
 	UString Name;
 	// Relative location.
 	Vec2<int> Location;
