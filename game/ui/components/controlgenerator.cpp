@@ -234,14 +234,14 @@ sp<Control> ControlGenerator::createVehicleControl(GameState &state, sp<Vehicle>
 
 sp<Control> ControlGenerator::createVehicleAssignmentControl(GameState &state, sp<Vehicle> vehicle)
 {
-	const int controlLength = 200, controlHeight = 30, iconLenght = 40;
+	const int controlLength = 200, controlHeight = 24, iconLenght = 40;
 
 	auto control = mksp<Control>();
 	control->Size = control->SelectionSize = {controlLength, controlHeight};
 	control->setData(vehicle);
 
 	auto icon = createVehicleIcon(state, vehicle);
-	icon->Location = {4, 3};
+	icon->Size = {iconLenght, controlHeight};
 	icon->setParent(control);
 
 	auto nameLabel = control->createChild<Label>(vehicle->name, singleton.labelFont);
@@ -282,7 +282,7 @@ sp<Control> ControlGenerator::createBuildingAssignmentControl(GameState &state,
 
 sp<Control> ControlGenerator::createAgentAssignmentControl(GameState &state, sp<Agent> agent)
 {
-	const int controlLength = 200, controlHeight = 30, iconLenght = 40;
+	const int controlLength = 200, controlHeight = 24, iconLenght = 40;
 
 	if (!singleton.initialised)
 	{
@@ -295,7 +295,7 @@ sp<Control> ControlGenerator::createAgentAssignmentControl(GameState &state, sp<
 	control->Name = "AGENT_PORTRAIT";
 
 	auto icon = createAgentIcon(state, agent, UnitSelectionState::Unselected, false);
-	icon->Location = {4, 3};
+	icon->Size = {iconLenght, controlHeight};
 	icon->setParent(control);
 
 	auto nameLabel = control->createChild<Label>(agent->name, singleton.labelFont);

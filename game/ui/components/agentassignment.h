@@ -24,6 +24,9 @@ class AgentAssignment : public Form
 	sp<Building> building;
 	sp<GameState> state;
 
+	Colour HoverColour, SelectedColour;
+	Vec2<int> renderOffset{32, 0};
+
 	// List of dragged agents.
 	sp<MultilistBox> draggedList;
 	// The agents MultilistBox which selected agents was taken from.
@@ -37,11 +40,15 @@ class AgentAssignment : public Form
 	// Update the agent's icon
 	std::function<void(sp<Control>)> funcAgentUpdate;
 	// Select/deselect individual agent
-	std::function<void(sp<Control>, bool)> funcHandleAgentSelection;
+	std::function<bool(Event *, sp<Control>, bool)> funcHandleAgentSelection;
 	// Select/deselect agents inside vehicle
-	std::function<void(sp<Control>, bool)> funcHandleVehicleSelection;
+	std::function<bool(Event *, sp<Control>, bool)> funcHandleVehicleSelection;
 	// Select/deselect agents inside building
-	std::function<void(sp<Control>, bool)> funcHandleBuildingSelection;
+	std::function<bool(Event *, sp<Control>, bool)> funcHandleBuildingSelection;
+	// Selection render
+	std::function<void(sp<Control>)> funcSelectionItemRender;
+	// Hover render
+	std::function<void(sp<Control>)> funcHoverItemRender;
 
 	void addAgentsToList(sp<MultilistBox> list, const int listOffset);
 

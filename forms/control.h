@@ -56,7 +56,6 @@ class Control : public std::enable_shared_from_this<Control>
 
 	void resolveLocation();
 	bool isPointInsideControlBounds(int x, int y) const;
-	bool isPointInsideControlBounds(Event *e, sp<Control> c) const;
 
 	// Loads control and all subcontrols from xml
 	void configureFromXml(pugi::xml_node *node);
@@ -152,6 +151,7 @@ class Control : public std::enable_shared_from_this<Control>
 	void setData(sp<void> Data) { data = Data; }
 
 	bool eventIsWithin(const Event *e) const;
+	bool isPointInsideControlBounds(Event *e, sp<Control> c) const;
 
 	template <typename T, typename... Args> sp<T> createChild(Args &&... args)
 	{

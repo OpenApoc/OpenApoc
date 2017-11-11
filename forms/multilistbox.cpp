@@ -17,6 +17,7 @@ MultilistBox::MultilistBox(sp<ScrollBar> ExternalScrollBar)
 {
 	// default strategies
 	isVisibleItem = [](sp<Control> c) { return c->isVisible(); };
+	funcHandleSelection = [](Event *, sp<Control>, bool select) { return select; };
 	funcHoverItemRender = [this](sp<Control> c) {
 		fw().renderer->drawRect(c->Location, c->SelectionSize, this->HoverColour);
 	};
@@ -214,15 +215,10 @@ void MultilistBox::eventOccured(Event *e)
 				{
 					selectedItem = child;
 					selectionAction = selectedSet.find(child) == selectedSet.end();
-					if (selectionAction)
+					if (selectionAction && funcHandleSelection(e, child, true))
 					{
 						selectedSet.insert(child);
 						this->pushFormEvent(FormEventType::ListBoxChangeSelected, e);
-
-						if (funcHandleSelection)
-						{
-							funcHandleSelection(child, true);
-						}
 					}
 				}
 				break;
@@ -232,15 +228,11 @@ void MultilistBox::eventOccured(Event *e)
 				{
 					// unselect only if it hasnt been selected during this click
 					if (!selectionAction && selectedItem == child &&
-					    selectedSet.find(child) != selectedSet.end())
+					    selectedSet.find(child) != selectedSet.end() &&
+					    !funcHandleSelection(e, child, false))
 					{
 						selectedSet.erase(child);
 						this->pushFormEvent(FormEventType::ListBoxChangeSelected, e);
-
-						if (funcHandleSelection)
-						{
-							funcHandleSelection(child, false);
-						}
 					}
 				}
 				break;
@@ -482,18 +474,13 @@ void MultilistBox::setSelected(sp<Control> Item, bool select)
 		         "list");
 	}
 
-	if (select)
+	if (funcHandleSelection(nullptr, Item, select))
 	{
 		this->selectedSet.insert(Item);
 	}
 	else
 	{
 		this->selectedSet.erase(Item);
-	}
-
-	if (funcHandleSelection)
-	{
-		funcHandleSelection(Item, select);
 	}
 
 	this->setDirty();
@@ -506,11 +493,9 @@ void MultilistBox::selectAll()
 {
 	for (auto &c : Controls)
 	{
-		selectedSet.insert(c);
-
-		if (funcHandleSelection && c->isVisible())
+		if (c->isVisible() && funcHandleSelection(nullptr, c, true))
 		{
-			funcHandleSelection(c, true);
+			selectedSet.insert(c);
 		}
 	}
 
@@ -526,7 +511,7 @@ void MultilistBox::clearSelection()
 	{
 		for (auto &c : selectedSet)
 		{
-			funcHandleSelection(c, false);
+			funcHandleSelection(nullptr, c, false);
 		}
 	}
 
@@ -561,7 +546,7 @@ void MultilistBox::setFuncIsVisibleItem(std::function<bool(sp<Control>)> func)
 	setDirty();
 }
 
-void MultilistBox::setFuncHandleSelection(std::function<void(sp<Control>, bool)> func)
+void MultilistBox::setFuncHandleSelection(std::function<bool(Event *, sp<Control>, bool)> func)
 {
 	funcHandleSelection = func;
 	// not dirty

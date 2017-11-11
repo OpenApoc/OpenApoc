@@ -19,7 +19,9 @@
 #include "game/state/shared/agent.h"
 #include "game/state/shared/organisation.h"
 #include "game/state/stateobject.h"
+#include "game/ui/base/vequipscreen.h"
 #include "game/ui/components/controlgenerator.h"
+#include "game/ui/general/aequipscreen.h"
 #include <cmath>
 
 namespace OpenApoc
@@ -48,7 +50,6 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 			if (icon && *icon->getData<int>() != std::min(13, vehicle->getPassengers()))
 			{
 				auto newIcon = ControlGenerator::createVehicleIcon(*state, vehicle);
-				newIcon->Location = {4, 3};
 				c->replaceChildByName(newIcon);
 			}
 		}
@@ -68,42 +69,67 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 			{
 				auto newIcon = ControlGenerator::createAgentIcon(
 				    *state, agent, UnitSelectionState::Unselected, false);
-				newIcon->Location = {4, 3};
 				c->replaceChildByName(newIcon);
 			}
 		}
 	};
 
 	// select/deselect individual agent
-	funcHandleAgentSelection = [this](sp<Control> c, bool select) {
-		if (select)
+	funcHandleAgentSelection = [this](Event *e, sp<Control> c, bool select) {
+		if (!e)
+			return select;
+
+		auto agent = c->getData<Agent>();
+		auto icon = c->findControl(ControlGenerator::AGENT_ICON_NAME);
+		if (agent && icon && c->isPointInsideControlBounds(e, icon))
 		{
-			if (auto agent = c->getData<Agent>())
-			{
-				currentAgent = agent;
-			}
+			this->currentAgent = agent;
+			this->isDragged = false;
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH, mksp<AEquipScreen>(this->state, agent)});
+
+			return !select;
 		}
+
+		return select;
 	};
 
 	// select/deselect agents inside vehicle
-	funcHandleVehicleSelection = [this](sp<Control> c, bool select) {
+	funcHandleVehicleSelection = [this](Event *e, sp<Control> c, bool select) {
+		if (!e)
+			return select;
+
+		auto vehicle = c->getData<Vehicle>();
+		auto icon = c->findControl(ControlGenerator::VEHICLE_ICON_NAME);
+		if (vehicle && icon && c->isPointInsideControlBounds(e, icon))
+		{
+			this->currentVehicle = vehicle;
+			this->isDragged = false;
+
+			auto equipScreen = mksp<VEquipScreen>(this->state);
+			equipScreen->setSelectedVehicle(vehicle);
+			fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
+
+			return !select;
+		}
+
 		auto agentList = c->findControlTyped<MultilistBox>(AGENT_LIST_NAME);
 		if (select)
 		{
 			agentList->selectAll();
-			if (auto vehicle = c->getData<Vehicle>())
-			{
-				currentVehicle = vehicle;
-			}
+			this->currentVehicle = vehicle;
 		}
 		else
 		{
 			agentList->clearSelection();
 		}
+
+		return select;
 	};
 
 	// select/deselect agents inside building
-	funcHandleBuildingSelection = [](sp<Control> c, bool select) {
+	// TODO: remove
+	funcHandleBuildingSelection = [](Event *, sp<Control> c, bool select) {
 		auto agentList = c->findControlTyped<MultilistBox>(AGENT_LIST_NAME);
 		if (select)
 		{
@@ -113,6 +139,19 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 		{
 			agentList->clearSelection();
 		}
+		return select;
+	};
+
+	// Selection render
+	funcSelectionItemRender = [this](sp<Control> c) {
+		fw().renderer->drawRect(c->Location + renderOffset, c->SelectionSize - renderOffset,
+		                        SelectedColour);
+	};
+
+	// Hover render
+	funcHoverItemRender = [this](sp<Control> c) {
+		fw().renderer->drawRect(c->Location + renderOffset, c->SelectionSize - renderOffset,
+		                        HoverColour);
 	};
 }
 
@@ -249,8 +288,11 @@ void AgentAssignment::updateLocation()
 	// Create tree.
 	// create left-side list
 	auto baseLeftList = findControlTyped<MultilistBox>(LEFT_LIST_NAME);
-	baseLeftList->setFuncHandleSelection(funcHandleBuildingSelection);
 	baseLeftList->clear();
+
+	SelectedColour = baseLeftList->SelectedColour;
+	HoverColour = baseLeftList->HoverColour;
+	baseLeftList->HoverColour = baseLeftList->SelectedColour = {0, 0, 0, 0};
 
 	const int offset = 20;
 	for (auto b : buildings)
@@ -282,9 +324,8 @@ void AgentAssignment::updateLocation()
 		auto agentLeftList = buildingControl->createChild<MultilistBox>();
 		agentLeftList->Name = AGENT_LIST_NAME;
 		agentLeftList->Location.x = offset;
-		agentLeftList->Location.y = buildingControl->SelectionSize.y;
-		agentLeftList->HoverColour = baseLeftList->HoverColour;
-		agentLeftList->SelectedColour = baseLeftList->SelectedColour;
+		agentLeftList->Location.y = buildingControl->SelectionSize.y + baseLeftList->ItemSpacing;
+		agentLeftList->ItemSpacing = baseLeftList->ItemSpacing;
 		// set visibility filter
 		agentLeftList->setFuncIsVisibleItem([](sp<Control> c) {
 			auto agent = c->getData<Agent>();
@@ -296,6 +337,10 @@ void AgentAssignment::updateLocation()
 		});
 		// set selection behaviour
 		agentLeftList->setFuncHandleSelection(funcHandleAgentSelection);
+		// set selection render
+		agentLeftList->setFuncSelectionItemRender(funcSelectionItemRender);
+		// set hover render
+		agentLeftList->setFuncHoverItemRender(funcHoverItemRender);
 		// MouseDown - ready for drag
 		agentLeftList->addCallback(FormEventType::MouseDown, [agentLeftList, this](FormsEvent *e) {
 			if (e->forms().RaisedBy == agentLeftList)
@@ -328,6 +373,7 @@ void AgentAssignment::updateLocation()
 
 	// create right-side list
 	auto baseRightList = findControlTyped<MultilistBox>(RIGHT_LIST_NAME);
+	baseRightList->HoverColour = baseRightList->SelectedColour = {0, 0, 0, 0};
 	baseRightList->clear();
 
 	if (!this->building && this->vehicle)
@@ -336,7 +382,7 @@ void AgentAssignment::updateLocation()
 	}
 	else if (!this->building && !this->vehicle && this->agent)
 	{
-		addAgentsToList(baseRightList, 0);
+		addAgentsToList(baseLeftList, 0);
 	}
 	else // building || (!this->building && !this->vehicle && !this->agent)
 	{
@@ -358,9 +404,6 @@ void AgentAssignment::addAgentsToList(sp<MultilistBox> list, const int listOffse
 
 void AgentAssignment::addVehiclesToList(sp<MultilistBox> list, const int listOffset)
 {
-	// set selection behaviour
-	list->setFuncHandleSelection(funcHandleVehicleSelection);
-
 	const int offset = 20;
 	for (auto v : vehicles)
 	{
@@ -390,9 +433,8 @@ void AgentAssignment::addVehiclesToList(sp<MultilistBox> list, const int listOff
 		auto agentRightList = vehicleControl->createChild<MultilistBox>();
 		agentRightList->Name = AGENT_LIST_NAME;
 		agentRightList->Location.x = offset;
-		agentRightList->Location.y = vehicleControl->SelectionSize.y;
-		agentRightList->HoverColour = list->HoverColour;
-		agentRightList->SelectedColour = list->SelectedColour;
+		agentRightList->Location.y = vehicleControl->SelectionSize.y + list->ItemSpacing;
+		agentRightList->ItemSpacing = list->ItemSpacing;
 		// set visibility filter
 		agentRightList->setFuncIsVisibleItem([](sp<Control> c) {
 			auto agent = c->getData<Agent>();
@@ -402,6 +444,10 @@ void AgentAssignment::addVehiclesToList(sp<MultilistBox> list, const int listOff
 		});
 		// set selection behaviour
 		agentRightList->setFuncHandleSelection(funcHandleAgentSelection);
+		// set selection render
+		agentRightList->setFuncSelectionItemRender(funcSelectionItemRender);
+		// set hover render
+		agentRightList->setFuncHoverItemRender(funcHoverItemRender);
 		// MouseDown - ready for drag
 		agentRightList->addCallback(FormEventType::MouseDown,
 		                            [agentRightList, this](FormsEvent *e) {
@@ -429,9 +475,8 @@ void AgentAssignment::addBuildingsToList(sp<MultilistBox> list, const int listOf
 		auto vehicleRightList = buildingControl->createChild<MultilistBox>();
 		vehicleRightList->Name = VEHICLE_LIST_NAME;
 		vehicleRightList->Location.x = offset;
-		vehicleRightList->Location.y = buildingControl->SelectionSize.y;
-		vehicleRightList->HoverColour = list->HoverColour;
-		vehicleRightList->SelectedColour = list->SelectedColour;
+		vehicleRightList->Location.y = buildingControl->SelectionSize.y + list->ItemSpacing;
+		vehicleRightList->ItemSpacing = list->ItemSpacing;
 		// set visibility filter
 		vehicleRightList->setFuncIsVisibleItem([](sp<Control> c) {
 			auto vehicle = c->getData<Vehicle>();
@@ -440,11 +485,15 @@ void AgentAssignment::addBuildingsToList(sp<MultilistBox> list, const int listOf
 			c->setVisible(visible);
 			return visible;
 		});
+		// set selection behaviour
+		vehicleRightList->setFuncHandleSelection(funcHandleVehicleSelection);
+		// set selection render
+		vehicleRightList->setFuncSelectionItemRender(funcSelectionItemRender);
+		// set hover render
+		vehicleRightList->setFuncHoverItemRender(funcHoverItemRender);
 
 		addVehiclesToList(vehicleRightList, offset + listOffset);
 	}
-
-	list->HoverColour = list->SelectedColour = {0, 0, 0, 0};
 }
 
 /**
