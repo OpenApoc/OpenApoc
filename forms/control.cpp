@@ -19,7 +19,7 @@ Control::Control(bool takesFocus)
     : mouseInside(false), mouseDepressed(false), resolvedLocation(0, 0), Visible(true),
       Name("Control"), Location(0, 0), Size(0, 0), SelectionSize(0, 0),
       BackgroundColour(0, 0, 0, 0), takesFocus(takesFocus), showBounds(false), Enabled(true),
-      canCopy(true)
+      canCopy(true), funcUpdate(nullptr)
 {
 }
 
@@ -343,6 +343,11 @@ void Control::postRender()
 
 void Control::update()
 {
+	if (funcUpdate)
+	{
+		funcUpdate(shared_from_this());
+	}
+
 	for (auto ctrlidx = Controls.begin(); ctrlidx != Controls.end(); ctrlidx++)
 	{
 		auto c = *ctrlidx;
@@ -689,6 +694,22 @@ sp<Control> Control::findControl(UString ID) const
 			return childControl;
 	}
 	return nullptr;
+}
+
+bool Control::replaceChildByName(sp<Control> ctrl)
+{
+	for (auto it = Controls.begin(); it != Controls.end(); ++it)
+	{
+		if ((*it)->Name == ctrl->Name)
+		{
+			Controls.erase(it);
+			ctrl->setParent(shared_from_this());
+			setDirty();
+			return true;
+		}
+	}
+
+	return false;
 }
 
 sp<Control> Control::getParent() const { return owningControl.lock(); }
@@ -1044,7 +1065,5 @@ void Control::setVisible(bool value)
 		this->setDirty();
 	}
 }
-
-bool Control::isVisible() const { return this->Visible; }
 
 }; // namespace OpenApoc

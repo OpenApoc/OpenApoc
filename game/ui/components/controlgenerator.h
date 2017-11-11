@@ -9,6 +9,7 @@ namespace OpenApoc
 
 class Vehicle;
 class Agent;
+class Building;
 class GameState;
 class VehicleTileInfo;
 class AgentInfo;
@@ -66,16 +67,32 @@ class ControlGenerator
 	std::vector<sp<Image>> purchaseControlParts;
 
   public:
+	static const UString VEHICLE_ICON_NAME;
+	static const UString AGENT_ICON_NAME;
+
+	// Icon of vehicle
+	static sp<Control> createVehicleIcon(GameState &state, sp<Vehicle> vehicle);
+
 	static VehicleTileInfo createVehicleInfo(GameState &state, sp<Vehicle> v);
 	static sp<Control> createVehicleControl(GameState &state, const VehicleTileInfo &info);
 	static sp<Control> createVehicleControl(GameState &state, sp<Vehicle> v);
 	// Vehicle control with name
-	static sp<Control> createVehicleLargeControl(GameState &state, sp<Vehicle> v);
+	static sp<Control> createVehicleAssignmentControl(GameState &state, sp<Vehicle> vehicle);
+	// Building control for assignment
+	static sp<Control> createBuildingAssignmentControl(GameState &state, sp<Building> building);
+	// Agent control for assignment state
+	static sp<Control> createAgentAssignmentControl(GameState &state, sp<Agent> agent);
+	// Icon of agent
+	static sp<Control>
+	createAgentIcon(GameState &state, sp<Agent> agent,
+	                UnitSelectionState forcedSelectionState = UnitSelectionState::NA,
+	                bool forceFade = false);
 
 	static AgentInfo
 	createAgentInfo(GameState &state, sp<Agent> a,
 	                UnitSelectionState forcedSelectionState = UnitSelectionState::NA,
 	                bool forceFade = false);
+	static CityUnitState getCityUnitState(sp<Agent> agent);
 	static void fillAgentControl(GameState &state, sp<Graphic> baseControl, const AgentInfo &info);
 	static sp<Control> createAgentControl(GameState &state, const AgentInfo &info);
 	static sp<Control>

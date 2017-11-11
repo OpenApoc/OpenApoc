@@ -35,6 +35,9 @@ class Control : public std::enable_shared_from_this<Control>
 
 	// Configures children of element after it was configured, see ConfigureFromXML
 	void configureChildrenFromXml(pugi::xml_node *parent);
+	// The function will be called during update of the control.
+	// arg - this control
+	std::function<void(sp<Control>)> funcUpdate;
 
 	bool dirty = true;
 
@@ -66,7 +69,6 @@ class Control : public std::enable_shared_from_this<Control>
 
 	void triggerEventCallbacks(FormsEvent *e);
 
-	void setDirty();
 	bool isDirty() const { return dirty; }
 
 	bool Visible;
@@ -102,9 +104,11 @@ class Control : public std::enable_shared_from_this<Control>
 
 	sp<Control> operator[](int Index) const;
 	sp<Control> findControl(UString ID) const;
+	bool replaceChildByName(sp<Control> ctrl);
 
+	void setDirty();
 	void setVisible(bool value);
-	bool isVisible() const;
+	bool isVisible() const { return Visible; };
 
 	template <typename T> sp<T> findControlTyped(const UString &name) const
 	{
@@ -160,6 +164,8 @@ class Control : public std::enable_shared_from_this<Control>
 
 	// Simulate mouse click on control
 	virtual bool click();
+	// Setter for funcUpdate
+	void setFuncUpdate(std::function<void(sp<Control>)> func) { funcUpdate = func; }
 };
 
 }; // namespace OpenApoc

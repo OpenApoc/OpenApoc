@@ -20,11 +20,29 @@ class MultilistBox : public Control
 	~MultilistBox() override;
 
   private:
-	sp<Control> hovered;
-	sp<Control> selected;
+	// Hovered Item.
+	sp<Control> hoveredItem;
+	// Selected Item during selection action.
+	sp<Control> selectedItem;
+	// The set of selected Controls.
 	std::set<sp<Control>> selectedSet;
 	Vec2<int> scrollOffset = {0, 0};
-	bool selection;
+	// Execution of selection action.
+	bool selectionAction;
+	// Strategy func which implements the decision about visibility/invisibility of certain Item.
+	// arg - child control
+	// TODO: move to the Control class
+	std::function<bool(sp<Control>)> isVisibleItem;
+	// Additional operations during the selection action.
+	// arg1 - child control
+	// arg2 - selection (true) or deselection (false) operation
+	std::function<void(sp<Control>, bool)> funcHandleSelection;
+	// Render the "hover" effect.
+	// arg - child control
+	std::function<void(sp<Control>)> funcHoverItemRender;
+	// Render the "selection" effect.
+	// arg - child control
+	std::function<void(sp<Control>)> funcSelectionItemRender;
 
   protected:
 	void preRender() override;
@@ -36,10 +54,6 @@ class MultilistBox : public Control
 	int ItemSize, ItemSpacing;
 	Orientation ListOrientation, ScrollOrientation;
 	Colour HoverColour, SelectedColour;
-	// Image to use instead of frame for hover
-	sp<Image> HoverImage;
-	// Image to use instead of frame for selection
-	sp<Image> SelectedImage;
 
 	void eventOccured(Event *e) override;
 	void update() override;
@@ -47,9 +61,24 @@ class MultilistBox : public Control
 
 	// Set selection status for Item.
 	void setSelected(sp<Control> Item, bool select);
-	// Get controls that have been selected.
+	// Select all items.
+	void selectAll();
+	// Deselect all selected items.
+	void clearSelection();
+	// Get vector of controls (whith preservation of order) that have been selected.
 	std::vector<sp<Control>> getSelectedItems() const;
-	sp<Control> getHoveredItem();
+	// Get set of controls that have been selected.
+	std::set<sp<Control>> &getSelectedSet() { return selectedSet; }
+	// Get hovered control.
+	sp<Control> getHoveredItem() const { return hoveredItem; }
+	// Setter for the isVisibleItem function.
+	void setFuncIsVisibleItem(std::function<bool(sp<Control>)> func);
+	// Setter for the funcHandleSelection function.
+	void setFuncHandleSelection(std::function<void(sp<Control>, bool)> func);
+	// Setter for the funcHoverItemRender function.
+	void setFuncHoverItemRender(std::function<void(sp<Control>)> func);
+	// Setter for the funcSelectionItemRender function.
+	void setFuncSelectionItemRender(std::function<void(sp<Control>)> func);
 
 	void clear();
 	void addItem(sp<Control> Item);
@@ -63,21 +92,12 @@ class MultilistBox : public Control
 
 	template <typename T> sp<T> getHoveredData() const
 	{
-		if (hovered != nullptr)
+		if (hoveredItem != nullptr)
 		{
-			return hovered->getData<T>();
+			return hoveredItem->getData<T>();
 		}
 		return nullptr;
 	}
-
-	// template <typename T> sp<T> getSelectedData() const
-	//{
-	//	if (selected != nullptr)
-	//	{
-	//		return selected->getData<T>();
-	//	}
-	//	return nullptr;
-	//}
 
 	template <typename T> sp<Control> removeByData(const sp<T> data)
 	{

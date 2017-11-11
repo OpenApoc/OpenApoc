@@ -1,6 +1,7 @@
 #pragma once
 
 #include "forms/form.h"
+#include "game/state/stateobject.h"
 #include <array>
 #include <set>
 
@@ -25,20 +26,38 @@ class AgentAssignment : public Form
 
 	// List of dragged agents.
 	sp<MultilistBox> draggedList;
-	// Cache of vehile's controls.
-	std::vector<sp<Control>> vehicleList;
-	// Cache of agent's lists.
-	std::vector<sp<MultilistBox>> agentGroupList;
 	// The agents MultilistBox which selected agents was taken from.
 	sp<MultilistBox> sourceRaisedBy;
-	// For handle the mouse's drag&drop sensibility.
-	int positionX = 0, positionY = 0;
+	// Handle the mouse's drag&drop sensibility.
+	int positionX = 0, positionY = 0, insensibility = 5 * 5;
 	// State of dragged action.
 	bool isDragged = false;
+	// Update the vehicle's icon
+	std::function<void(sp<Control>)> funcVehicleUpdate;
+	// Update the agent's icon
+	std::function<void(sp<Control>)> funcAgentUpdate;
+	// Select/deselect individual agent
+	std::function<void(sp<Control>, bool)> funcHandleAgentSelection;
+	// Select/deselect agents inside vehicle
+	std::function<void(sp<Control>, bool)> funcHandleVehicleSelection;
+	// Select/deselect agents inside building
+	std::function<void(sp<Control>, bool)> funcHandleBuildingSelection;
+
+	void addAgentsToList(sp<MultilistBox> list, const int listOffset);
+
+	void addVehiclesToList(sp<MultilistBox> list, const int listOffset);
+
+	void addBuildingsToList(sp<MultilistBox> list, const int listOffset);
 
   public:
+	static const UString LEFT_LIST_NAME;
+	static const UString RIGHT_LIST_NAME;
+	static const UString AGENT_LIST_NAME;
+	static const UString VEHICLE_LIST_NAME;
+
 	std::list<sp<Agent>> agents;
 	std::list<sp<Vehicle>> vehicles;
+	std::list<sp<Building>> buildings;
 
 	sp<Agent> currentAgent;
 	sp<Vehicle> currentVehicle;
@@ -47,14 +66,17 @@ class AgentAssignment : public Form
 
 	void init(sp<Form> form, Vec2<int> location, Vec2<int> size);
 
+	// Call when selected agent.
 	void setLocation(sp<Agent> agent);
+	// Call when selected vehicle.
 	void setLocation(sp<Vehicle> vehicle);
+	// Call when selected building.
 	void setLocation(sp<Building> building);
+	// Call when the alien incident happens.
 	void setLocation();
 	void updateLocation();
-
-	void updateControl(sp<Agent> agent);
-	void updateControl(sp<Vehicle> vehicle);
+	// Get selected agents with preservation of order.
+	std::list<StateRef<Agent>> getSelectedAgents() const;
 
 	void eventOccured(Event *e) override;
 	void update() override;
