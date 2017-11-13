@@ -1335,6 +1335,7 @@ void Scenery::die(GameState &state, bool forced)
 		this->tileObject.reset();
 		state.totalScore.cityDamage -= type->value;
 		state.weekScore.cityDamage -= type->value;
+		state.current_city->map->setViewSurfaceDirty(currentPosition.z);
 		this->destroyed = true;
 		return;
 	}
@@ -1414,6 +1415,7 @@ void Scenery::die(GameState &state, bool forced)
 		}
 		state.totalScore.cityDamage -= type->value;
 		state.weekScore.cityDamage -= type->value;
+		state.current_city->map->setViewSurfaceDirty(currentPosition.z);
 	}
 }
 
@@ -1486,6 +1488,7 @@ void Scenery::updateFalling(GameState &state, unsigned int ticks)
 {
 	auto fallTicksRemaining = ticks;
 	auto newPosition = currentPosition;
+	state.current_city->map->setViewSurfaceDirty(currentPosition.z);
 	while (fallTicksRemaining-- > 0)
 	{
 		fallingSpeed += FALLING_ACCELERATION_MAP_PART;
@@ -1657,6 +1660,7 @@ void Scenery::repair(GameState &state)
 		building->buildingPartChange(state, initialPosition, true);
 	}
 	map.clearPathCaches();
+	map.setViewSurfaceDirty(currentPosition.z);
 }
 
 bool Scenery::isAlive() const

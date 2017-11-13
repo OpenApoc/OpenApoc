@@ -7,9 +7,6 @@
 #include "library/sp.h"
 #include "library/vec.h"
 
-#define STRAT_TILE_X 8
-#define STRAT_TILE_Y 8
-
 namespace OpenApoc
 {
 
