@@ -32,7 +32,8 @@ namespace OpenApoc
 
 TileMap::TileMap(Vec3<int> size, Vec3<float> velocityScale, Vec3<int> voxelMapSize,
                  std::vector<std::set<TileObject::Type>> layerMap)
-    : layerMap(layerMap), size(size), voxelMapSize(voxelMapSize), velocityScale(velocityScale)
+    : layerMap(layerMap), strategyViewCache(std::vector<sp<Surface>>(size.z)), size(size),
+      voxelMapSize(voxelMapSize), velocityScale(velocityScale)
 {
 	tiles.reserve(size.x * size.y * size.z);
 	for (int z = 0; z < size.z; z++)
@@ -58,6 +59,12 @@ TileMap::TileMap(Vec3<int> size, Vec3<float> velocityScale, Vec3<int> voxelMapSi
 			}
 			seenTypes.insert(type);
 		}
+	}
+
+	for (int z = 0; z < size.z; z++)
+	{
+		// Set a fake surface. Real surface will be on demand.
+		strategyViewCache[z] = mksp<Surface>(Vec2<unsigned int>{1, 1});
 	}
 }
 
@@ -297,5 +304,38 @@ void TileMap::updateAllCityInfo()
 }
 
 void TileMap::clearPathCaches() { agentPathCache.clear(); }
+
+sp<Surface> TileMap::getViewSurface(size_t i) const
+{
+	return strategyViewCache.size() > i ? strategyViewCache[i] : nullptr;
+}
+
+void TileMap::setViewSurface(size_t i, sp<Surface> surface)
+{
+	if (strategyViewCache.size() > i)
+		strategyViewCache[i] = surface;
+}
+
+void TileMap::setViewSurfaceDirty(size_t i, bool dirty)
+{
+	if (strategyViewCache.size() > i)
+	{
+		if (dirty)
+		{
+			// +1 level just in case (it need sometimes)
+			for (size_t z = i; z < std::min(i + 2, strategyViewCache.size()); z++)
+				strategyViewCache[z]->dirty = dirty;
+		}
+		else
+		{
+			strategyViewCache[i]->dirty = dirty;
+		}
+	}
+}
+
+bool TileMap::isViewSurfaceDirty(size_t i) const
+{
+	return strategyViewCache.size() > i && strategyViewCache[i]->dirty;
+}
 
 }; // namespace OpenApoc

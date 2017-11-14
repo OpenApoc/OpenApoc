@@ -47,6 +47,7 @@ class BattleHazard;
 class TileObjectBattleHazard;
 class Sample;
 class Organisation;
+class Surface;
 
 class TileTransform
 {
@@ -76,6 +77,8 @@ class TileMap
   private:
 	std::vector<Tile> tiles;
 	std::vector<std::set<TileObject::Type>> layerMap;
+	// Cache for the strategy view mode.
+	std::vector<sp<Surface>> strategyViewCache;
 
   public:
 	const Tile *getTile(int x, int y, int z) const
@@ -171,5 +174,11 @@ class TileMap
 
 	std::map<Vec3<int>, std::list<Vec3<int>>> agentPathCache;
 	void clearPathCaches();
+
+	// Operations with the strategy view cache.
+	sp<Surface> getViewSurface(size_t i) const;
+	void setViewSurface(size_t i, sp<Surface> surface);
+	void setViewSurfaceDirty(size_t i, bool dirty = true);
+	bool isViewSurfaceDirty(size_t i) const;
 };
 }; // namespace OpenApoc
