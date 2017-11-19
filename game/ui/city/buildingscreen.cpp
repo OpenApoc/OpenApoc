@@ -254,6 +254,7 @@ void BuildingScreen::update() { menuform->update(); }
 void BuildingScreen::render()
 {
 	fw().stageGetPrevious(this->shared_from_this())->render();
+	menuform->preRender();
 	menuform->render();
 }
 

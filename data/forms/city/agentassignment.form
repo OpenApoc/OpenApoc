@@ -35,19 +35,19 @@
     </graphicbutton>
     <multilistbox id="AGENT_SELECT_BOX" scrollbarid="AGENT_SELECT_SCROLL">
         <position x="16" y="32"/>
-        <size width="228" height="328"/>
+        <size width="506" height="328"/>
         <item size="0" spacing="2"/>
         <hovercolour r="255" g="255" b="255" a="255"/>
         <selcolour r="128" g="180" b="255" a="255"/>
     </multilistbox>
 
-	<multilistbox id="VEHICLE_SELECT_BOX"> <!--scrollbarid="AGENT_SELECT_SCROLL"-->
+	<!--multilistbox id="VEHICLE_SELECT_BOX">
         <position x="271" y="32"/>
         <size width="228" height="328"/>
         <item size="0" spacing="2"/>
         <hovercolour r="255" g="255" b="255" a="255"/>
         <selcolour r="128" g="180" b="255" a="255"/>
-    </multilistbox>
+    </multilistbox-->
 
     <multilistbox id="DRAGGED_AGENT_BOX">
         <item size="0" spacing="2"/>

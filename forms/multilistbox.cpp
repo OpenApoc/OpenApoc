@@ -17,58 +17,58 @@ MultilistBox::MultilistBox(sp<ScrollBar> ExternalScrollBar)
 {
 	// default strategies
 	isVisibleItem = [](sp<Control> c) { return c->isVisible(); };
+
 	funcHandleSelection = [](Event *, sp<Control>, bool select) { return select; };
+
 	funcHoverItemRender = [this](sp<Control> c) {
 		fw().renderer->drawRect(c->Location, c->SelectionSize, this->HoverColour);
 	};
+
 	funcSelectionItemRender = [this](sp<Control> c) {
 		fw().renderer->drawRect(c->Location, c->SelectionSize, this->SelectedColour);
 	};
+
+	setFuncPreRender([this](sp<Control> c) {
+		if (isDirty() && !scroller)
+		{
+			// MultilistBox without scroller should be rendered fully
+			int sizeX = 0, sizeY = 0;
+
+			if (isVisible())
+			{
+				bool removeLastSpacing = false;
+				for (auto &c : Controls)
+				{
+					if (isVisibleItem(c))
+					{
+						sizeX = std::max(sizeX, c->Size.x);
+						sizeY += c->Size.y + ItemSpacing;
+						removeLastSpacing = true;
+					}
+				}
+				sizeX = std::max(sizeX, SelectionSize.x);
+				sizeY -= removeLastSpacing ? ItemSpacing : 0;
+			}
+
+			Size.x = sizeX;
+			Size.y = sizeY;
+
+			// Adjusting the parent size
+			if (auto parent = owningControl.lock())
+			{
+				if (parent->SelectionSize.x == 0)
+					parent->SelectionSize.x = parent->Size.x;
+				if (parent->SelectionSize.y == 0)
+					parent->SelectionSize.y = parent->Size.y;
+
+				parent->Size.x = std::max(parent->SelectionSize.x, Location.x + sizeX);
+				parent->Size.y = std::max(parent->SelectionSize.y, Location.y + sizeY);
+			}
+		}
+	});
 }
 
 MultilistBox::~MultilistBox() = default;
-
-void MultilistBox::preRender()
-{
-	Control::preRender();
-
-	if (isDirty() && !scroller)
-	{
-		// MultilistBox without scroller should be rendered fully
-		int sizeX = 0, sizeY = 0;
-
-		if (isVisible())
-		{
-			bool removeLastSpacing = false;
-			for (auto &c : Controls)
-			{
-				if (isVisibleItem(c))
-				{
-					sizeX = std::max(sizeX, c->Size.x);
-					sizeY += c->Size.y + ItemSpacing;
-					removeLastSpacing = true;
-				}
-			}
-			sizeX = std::max(sizeX, SelectionSize.x);
-			sizeY -= removeLastSpacing ? ItemSpacing : 0;
-		}
-
-		Size.x = sizeX;
-		Size.y = sizeY;
-
-		// Adjusting the parent size
-		if (auto parent = owningControl.lock())
-		{
-			if (parent->SelectionSize.x == 0)
-				parent->SelectionSize.x = parent->Size.x;
-			if (parent->SelectionSize.y == 0)
-				parent->SelectionSize.y = parent->Size.y;
-
-			parent->Size.x = std::max(parent->SelectionSize.x, Location.x + sizeX);
-			parent->Size.y = std::max(parent->SelectionSize.y, Location.y + sizeY);
-		}
-	}
-}
 
 void MultilistBox::onRender()
 {

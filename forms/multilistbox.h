@@ -46,7 +46,6 @@ class MultilistBox : public Control
 	std::function<void(sp<Control>)> funcSelectionItemRender;
 
   protected:
-	void preRender() override;
 	void onRender() override;
 	void postRender() override;
 

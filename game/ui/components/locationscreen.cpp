@@ -126,6 +126,7 @@ void LocationScreen::update() { menuform->update(); }
 void LocationScreen::render()
 {
 	fw().stageGetPrevious(this->shared_from_this())->render();
+	menuform->preRender();
 	menuform->render();
 }
 

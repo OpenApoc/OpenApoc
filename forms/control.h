@@ -35,9 +35,9 @@ class Control : public std::enable_shared_from_this<Control>
 
 	// Configures children of element after it was configured, see ConfigureFromXML
 	void configureChildrenFromXml(pugi::xml_node *parent);
-	// The function will be called during update of the control.
+	// The function will be called during pre-rendering of the control.
 	// arg - this control
-	std::function<void(sp<Control>)> funcUpdate;
+	std::function<void(sp<Control>)> funcPreRender;
 
 	bool dirty = true;
 
@@ -48,7 +48,6 @@ class Control : public std::enable_shared_from_this<Control>
 	bool mouseDepressed;
 	Vec2<int> resolvedLocation;
 
-	virtual void preRender();
 	virtual void postRender();
 	virtual void onRender();
 
@@ -97,6 +96,8 @@ class Control : public std::enable_shared_from_this<Control>
 	virtual ~Control();
 
 	virtual void eventOccured(Event *e);
+	// Used if controls require computations before rendering.
+	void preRender();
 	void render();
 	virtual void update();
 	virtual void unloadResources();
@@ -164,8 +165,8 @@ class Control : public std::enable_shared_from_this<Control>
 
 	// Simulate mouse click on control
 	virtual bool click();
-	// Setter for funcUpdate
-	void setFuncUpdate(std::function<void(sp<Control>)> func) { funcUpdate = func; }
+	// Setter for funcPreRender
+	void setFuncPreRender(std::function<void(sp<Control>)> func) { funcPreRender = func; }
 };
 
 }; // namespace OpenApoc

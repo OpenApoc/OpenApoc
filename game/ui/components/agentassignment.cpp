@@ -26,8 +26,7 @@
 
 namespace OpenApoc
 {
-const UString AgentAssignment::LEFT_LIST_NAME("AGENT_SELECT_BOX");
-const UString AgentAssignment::RIGHT_LIST_NAME("VEHICLE_SELECT_BOX");
+const UString AgentAssignment::AGENT_SELECT_BOX("AGENT_SELECT_BOX");
 const UString AgentAssignment::AGENT_LIST_NAME("AGENT_LIST");
 const UString AgentAssignment::VEHICLE_LIST_NAME("VEHICLE_LIST");
 
@@ -103,7 +102,7 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 		auto icon = c->findControl(ControlGenerator::VEHICLE_ICON_NAME);
 		if (vehicle && icon && c->isPointInsideControlBounds(e, icon))
 		{
-			this->currentVehicle = vehicle;
+			// this->currentVehicle = vehicle;
 			this->isDragged = false;
 
 			auto equipScreen = mksp<VEquipScreen>(this->state);
@@ -124,21 +123,6 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 			agentList->clearSelection();
 		}
 
-		return select;
-	};
-
-	// select/deselect agents inside building
-	// TODO: remove
-	funcHandleBuildingSelection = [](Event *, sp<Control> c, bool select) {
-		auto agentList = c->findControlTyped<MultilistBox>(AGENT_LIST_NAME);
-		if (select)
-		{
-			agentList->selectAll();
-		}
-		else
-		{
-			agentList->clearSelection();
-		}
 		return select;
 	};
 
@@ -262,7 +246,7 @@ void AgentAssignment::updateLocation()
 		for (auto &b : state->current_city->buildings)
 		{
 			bool foundBuilding = false;
-			for (auto a : agents)
+			for (auto &a : agents)
 			{
 				if (a->currentBuilding == b.second)
 				{
@@ -274,7 +258,7 @@ void AgentAssignment::updateLocation()
 			if (foundBuilding)
 				continue;
 
-			for (auto v : vehicles)
+			for (auto &v : vehicles)
 			{
 				if (v->currentBuilding == b.second)
 				{
@@ -285,47 +269,92 @@ void AgentAssignment::updateLocation()
 		}
 	}
 
-	// Create tree.
-	// create left-side list
-	auto baseLeftList = findControlTyped<MultilistBox>(LEFT_LIST_NAME);
-	baseLeftList->clear();
+	/* Create tree.
+	AGENT_SELECT_BOX
+	DoubleListControl#1
+	    |               |
+	    LEFT_LIST       RIGHT_LIST
+	    Building#1      Building#1
+	        |               |
+	        AGENT_LIST      VEHICLE_LIST
+	        Agent#1         Vehicle#1
+	        Agent#2             |
+	        Agent#3             AGENT_LIST
+	        Agent#4             Agent#5
+	                            Agent#6
+	                        Vehicle#2
+	                            |
+	                            AGENT_LIST
+	DoubleListControl#2
+	    |               |
+	    LEFT_LIST       RIGHT_LIST
+	    Building#2      Building#2
+	        |               |
+	        AGENT_LIST      VEHICLE_LIST
+	        Agent#7         Vehicle#3
+	        Agent#8             |
+	                            AGENT_LIST
+	*/
 
-	SelectedColour = baseLeftList->SelectedColour;
-	HoverColour = baseLeftList->HoverColour;
-	baseLeftList->HoverColour = baseLeftList->SelectedColour = {0, 0, 0, 0};
+	// create general list
+	auto agentSelectBox = findControlTyped<MultilistBox>(AGENT_SELECT_BOX);
+	agentSelectBox->clear();
+
+	SelectedColour = agentSelectBox->SelectedColour;
+	HoverColour = agentSelectBox->HoverColour;
+	agentSelectBox->HoverColour = agentSelectBox->SelectedColour = {0, 0, 0, 0};
 
 	const int offset = 20;
-	for (auto b : buildings)
+	for (auto &b : buildings)
 	{
-		auto buildingControl = ControlGenerator::createBuildingAssignmentControl(*state, b);
+		auto doubleListControl = ControlGenerator::createDoubleListControl(agentSelectBox->Size.x);
+		agentSelectBox->addItem(doubleListControl);
+
+		auto leftList =
+		    doubleListControl->findControlTyped<MultilistBox>(ControlGenerator::LEFT_LIST_NAME);
+		auto rightList =
+		    doubleListControl->findControlTyped<MultilistBox>(ControlGenerator::RIGHT_LIST_NAME);
+		leftList->ItemSpacing = rightList->ItemSpacing = agentSelectBox->ItemSpacing;
+
+		// create left list
+		auto buildingLeftControl = ControlGenerator::createBuildingAssignmentControl(*state, b);
 		// MouseUp - drop dragged list
-		buildingControl->addCallback(
-		    FormEventType::MouseUp, [buildingControl, this](FormsEvent *e) {
+		buildingLeftControl->addCallback(
+		    FormEventType::MouseUp, [buildingLeftControl, this](FormsEvent *e) {
 			    if (!isDragged || e->forms().RaisedBy == sourceRaisedBy)
 				    return;
 
 			    isDragged = false;
 			    draggedList->setVisible(false);
 
-			    for (auto agent : draggedList->Controls)
+			    auto building = buildingLeftControl->getData<Building>();
+			    bool success = false;
+			    for (auto &agentControl : draggedList->Controls)
 			    {
-				    agent->getData<Agent>()->enterBuilding(
-				        *state,
-				        {state.get(),
-				         agent->getData<Agent>()->currentVehicle
-				             ? agent->getData<Agent>()->currentVehicle->currentBuilding
-				             : agent->getData<Agent>()->currentBuilding});
+				    auto agent = agentControl->getData<Agent>();
+				    auto currentBuilding = agent->currentVehicle
+				                               ? agent->currentVehicle->currentBuilding
+				                               : agent->currentBuilding;
+				    success = building == (sp<Building>)currentBuilding;
+				    if (!success)
+					    break;
+				    agent->enterBuilding(*state, currentBuilding);
 			    }
 
-			    sourceRaisedBy->clearSelection();
+			    if (success)
+			    {
+				    buildingLeftControl->findControl(AGENT_LIST_NAME)->setDirty();
+				    sourceRaisedBy->clearSelection();
+			    }
 			});
-		baseLeftList->addItem(buildingControl);
+		leftList->addItem(buildingLeftControl);
 
-		auto agentLeftList = buildingControl->createChild<MultilistBox>();
+		auto agentLeftList = buildingLeftControl->createChild<MultilistBox>();
 		agentLeftList->Name = AGENT_LIST_NAME;
 		agentLeftList->Location.x = offset;
-		agentLeftList->Location.y = buildingControl->SelectionSize.y + baseLeftList->ItemSpacing;
-		agentLeftList->ItemSpacing = baseLeftList->ItemSpacing;
+		agentLeftList->Location.y =
+		    buildingLeftControl->SelectionSize.y + agentSelectBox->ItemSpacing;
+		agentLeftList->ItemSpacing = agentSelectBox->ItemSpacing;
 		// set visibility filter
 		agentLeftList->setFuncIsVisibleItem([](sp<Control> c) {
 			auto agent = c->getData<Agent>();
@@ -357,45 +386,62 @@ void AgentAssignment::updateLocation()
 			isDragged = false;
 			draggedList->setVisible(false);
 
-			for (auto agent : draggedList->Controls)
+			auto building = agentLeftList->getParent()->getData<Building>();
+			bool success = false;
+			for (auto &agentControl : draggedList->Controls)
 			{
-				agent->getData<Agent>()->enterBuilding(
-				    *state,
-				    {state.get(), agent->getData<Agent>()->currentVehicle->currentBuilding});
+				auto agent = agentControl->getData<Agent>();
+				auto currentBuilding = agent->currentVehicle
+				                           ? agent->currentVehicle->currentBuilding
+				                           : agent->currentBuilding;
+				success = building == (sp<Building>)currentBuilding;
+				if (!success)
+					break;
+				agent->enterBuilding(*state, currentBuilding);
 			}
 
-			agentLeftList->setDirty();
-			sourceRaisedBy->clearSelection();
+			if (success)
+			{
+				agentLeftList->setDirty();
+				sourceRaisedBy->clearSelection();
+			}
 		});
 
 		addAgentsToList(agentLeftList, offset);
-	}
 
-	// create right-side list
-	auto baseRightList = findControlTyped<MultilistBox>(RIGHT_LIST_NAME);
-	baseRightList->HoverColour = baseRightList->SelectedColour = {0, 0, 0, 0};
-	baseRightList->clear();
+		// create right list
+		addBuildingToRightList(b, rightList, 0);
+	}
 
 	if (!this->building && this->vehicle)
 	{
-		addVehiclesToList(baseRightList, 0);
+		// single vehicle - add to the right list
+		auto doubleListControl = ControlGenerator::createDoubleListControl(agentSelectBox->Size.x);
+		agentSelectBox->addItem(doubleListControl);
+
+		auto rightList =
+		    doubleListControl->findControlTyped<MultilistBox>(ControlGenerator::RIGHT_LIST_NAME);
+		rightList->ItemSpacing = agentSelectBox->ItemSpacing;
+		addVehiclesToList(rightList, 0);
 	}
 	else if (!this->building && !this->vehicle && this->agent)
 	{
-		addAgentsToList(baseLeftList, 0);
-	}
-	else // building || (!this->building && !this->vehicle && !this->agent)
-	{
-		addBuildingsToList(baseRightList, 0);
+		// single agent - add to the left list
+		auto doubleListControl = ControlGenerator::createDoubleListControl(agentSelectBox->Size.x);
+		agentSelectBox->addItem(doubleListControl);
+
+		auto leftList =
+		    doubleListControl->findControlTyped<MultilistBox>(ControlGenerator::LEFT_LIST_NAME);
+		addAgentsToList(leftList, 0);
 	}
 }
 
 void AgentAssignment::addAgentsToList(sp<MultilistBox> list, const int listOffset)
 {
-	for (auto a : agents)
+	for (auto &a : agents)
 	{
 		auto agentControl = ControlGenerator::createAgentAssignmentControl(*state, a);
-		agentControl->setFuncUpdate(funcAgentUpdate);
+		agentControl->setFuncPreRender(funcAgentUpdate);
 		agentControl->Size.x -= listOffset;
 		agentControl->SelectionSize.x -= listOffset;
 		list->addItem(agentControl);
@@ -405,10 +451,10 @@ void AgentAssignment::addAgentsToList(sp<MultilistBox> list, const int listOffse
 void AgentAssignment::addVehiclesToList(sp<MultilistBox> list, const int listOffset)
 {
 	const int offset = 20;
-	for (auto v : vehicles)
+	for (auto &v : vehicles)
 	{
 		auto vehicleControl = ControlGenerator::createVehicleAssignmentControl(*state, v);
-		vehicleControl->setFuncUpdate(funcVehicleUpdate);
+		vehicleControl->setFuncPreRender(funcVehicleUpdate);
 		vehicleControl->Size.x -= listOffset;
 		vehicleControl->SelectionSize.x -= listOffset;
 		// MouseUp - drop dragged list
@@ -419,14 +465,26 @@ void AgentAssignment::addVehiclesToList(sp<MultilistBox> list, const int listOff
 			isDragged = false;
 			draggedList->setVisible(false);
 
-			for (auto agent : draggedList->Controls)
+			auto vehicle = vehicleControl->getData<Vehicle>();
+			bool success = false;
+			for (auto &agentControl : draggedList->Controls)
 			{
-				agent->getData<Agent>()->enterVehicle(
-				    *state, {state.get(), vehicleControl->getData<Vehicle>()});
+				auto agent = agentControl->getData<Agent>();
+				auto currentBuilding = agent->currentVehicle
+				                           ? agent->currentVehicle->currentBuilding
+				                           : agent->currentBuilding;
+				success =
+				    vehicle->currentBuilding == currentBuilding && agent->currentVehicle != vehicle;
+				if (!success)
+					break;
+				agent->enterVehicle(*state, {state.get(), vehicle});
 			}
 
-			vehicleControl->findControl(AGENT_LIST_NAME)->setDirty();
-			sourceRaisedBy->clearSelection();
+			if (success)
+			{
+				vehicleControl->findControl(AGENT_LIST_NAME)->setDirty();
+				sourceRaisedBy->clearSelection();
+			}
 		});
 		list->addItem(vehicleControl);
 
@@ -462,38 +520,36 @@ void AgentAssignment::addVehiclesToList(sp<MultilistBox> list, const int listOff
 	}
 }
 
-void AgentAssignment::addBuildingsToList(sp<MultilistBox> list, const int listOffset)
+void AgentAssignment::addBuildingToRightList(sp<Building> building, sp<MultilistBox> list,
+                                             const int listOffset)
 {
 	const int offset = 20;
-	for (auto b : buildings)
-	{
-		auto buildingControl = ControlGenerator::createBuildingAssignmentControl(*state, b);
-		buildingControl->Size.x -= listOffset;
-		buildingControl->SelectionSize.x -= listOffset;
-		list->addItem(buildingControl);
 
-		auto vehicleRightList = buildingControl->createChild<MultilistBox>();
-		vehicleRightList->Name = VEHICLE_LIST_NAME;
-		vehicleRightList->Location.x = offset;
-		vehicleRightList->Location.y = buildingControl->SelectionSize.y + list->ItemSpacing;
-		vehicleRightList->ItemSpacing = list->ItemSpacing;
-		// set visibility filter
-		vehicleRightList->setFuncIsVisibleItem([](sp<Control> c) {
-			auto vehicle = c->getData<Vehicle>();
-			bool visible =
-			    vehicle->currentBuilding == c->getParent()->getParent()->getData<Building>();
-			c->setVisible(visible);
-			return visible;
-		});
-		// set selection behaviour
-		vehicleRightList->setFuncHandleSelection(funcHandleVehicleSelection);
-		// set selection render
-		vehicleRightList->setFuncSelectionItemRender(funcSelectionItemRender);
-		// set hover render
-		vehicleRightList->setFuncHoverItemRender(funcHoverItemRender);
+	auto buildingControl = ControlGenerator::createBuildingAssignmentControl(*state, building);
+	buildingControl->Size.x -= listOffset;
+	buildingControl->SelectionSize.x -= listOffset;
+	list->addItem(buildingControl);
 
-		addVehiclesToList(vehicleRightList, offset + listOffset);
-	}
+	auto vehicleRightList = buildingControl->createChild<MultilistBox>();
+	vehicleRightList->Name = VEHICLE_LIST_NAME;
+	vehicleRightList->Location.x = offset;
+	vehicleRightList->Location.y = buildingControl->SelectionSize.y + list->ItemSpacing;
+	vehicleRightList->ItemSpacing = list->ItemSpacing;
+	// set visibility filter
+	vehicleRightList->setFuncIsVisibleItem([](sp<Control> c) {
+		auto vehicle = c->getData<Vehicle>();
+		bool visible = vehicle->currentBuilding == c->getParent()->getParent()->getData<Building>();
+		c->setVisible(visible);
+		return visible;
+	});
+	// set selection behaviour
+	vehicleRightList->setFuncHandleSelection(funcHandleVehicleSelection);
+	// set selection render
+	vehicleRightList->setFuncSelectionItemRender(funcSelectionItemRender);
+	// set hover render
+	vehicleRightList->setFuncHoverItemRender(funcHoverItemRender);
+
+	addVehiclesToList(vehicleRightList, offset + listOffset);
 }
 
 /**
@@ -503,10 +559,13 @@ std::list<StateRef<Agent>> AgentAssignment::getSelectedAgents() const
 {
 	std::set<sp<Agent>> agentControlSet;
 
-	auto baseLeftList = findControlTyped<MultilistBox>(LEFT_LIST_NAME);
-	for (auto &baseControl : baseLeftList->Controls)
+	auto agentSelectBox = findControlTyped<MultilistBox>(AGENT_SELECT_BOX);
+
+	for (auto &doubleListControl : agentSelectBox->Controls)
 	{
-		if (auto leftList = baseControl->findControlTyped<MultilistBox>(AGENT_LIST_NAME))
+		// left side
+		if (auto leftList =
+		        doubleListControl->findControlTyped<MultilistBox>(ControlGenerator::LEFT_LIST_NAME))
 		{
 			for (auto &sel : leftList->getSelectedSet())
 			{
@@ -516,12 +575,10 @@ std::list<StateRef<Agent>> AgentAssignment::getSelectedAgents() const
 				}
 			}
 		}
-	}
 
-	auto baseRightList = findControlTyped<MultilistBox>(RIGHT_LIST_NAME);
-	for (auto &baseControl : baseRightList->Controls)
-	{
-		if (auto rightList = baseControl->findControlTyped<MultilistBox>(VEHICLE_LIST_NAME))
+		// right side
+		if (auto rightList = doubleListControl->findControlTyped<MultilistBox>(
+		        ControlGenerator::RIGHT_LIST_NAME))
 		{
 			for (auto &vehicleControl : rightList->Controls)
 			{
@@ -550,6 +607,46 @@ std::list<StateRef<Agent>> AgentAssignment::getSelectedAgents() const
 	}
 
 	return agents;
+}
+
+/**
+ * Get selected vehicles with preservation of order.
+ */
+std::list<StateRef<Vehicle>> AgentAssignment::getSelectedVehicles() const
+{
+	std::set<sp<Vehicle>> vehicleControlSet;
+
+	auto agentSelectBox = findControlTyped<MultilistBox>(AGENT_SELECT_BOX);
+
+	for (auto &doubleListControl : agentSelectBox->Controls)
+	{
+		// only right side used
+		if (auto rightList = doubleListControl->findControlTyped<MultilistBox>(
+		        ControlGenerator::RIGHT_LIST_NAME))
+		{
+			if (auto vehicletList = rightList->findControlTyped<MultilistBox>(VEHICLE_LIST_NAME))
+			{
+				for (auto &sel : vehicletList->getSelectedSet())
+				{
+					if (auto v = sel->getData<Vehicle>())
+					{
+						vehicleControlSet.insert(v);
+					}
+				}
+			}
+		}
+	}
+
+	std::list<StateRef<Vehicle>> vehicles;
+	for (auto &v : state->vehicles)
+	{
+		if (vehicleControlSet.find(v.second) != vehicleControlSet.end())
+		{
+			vehicles.emplace_back(state.get(), v.second);
+		}
+	}
+
+	return vehicles;
 }
 
 void AgentAssignment::eventOccured(Event *e)

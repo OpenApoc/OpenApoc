@@ -69,6 +69,8 @@ class ControlGenerator
   public:
 	static const UString VEHICLE_ICON_NAME;
 	static const UString AGENT_ICON_NAME;
+	static const UString LEFT_LIST_NAME;
+	static const UString RIGHT_LIST_NAME;
 
 	// Icon of vehicle
 	static sp<Control> createVehicleIcon(GameState &state, sp<Vehicle> vehicle);
@@ -107,6 +109,8 @@ class ControlGenerator
 	                        bool forceFade = false, bool labMode = false);
 	// Create lab icon control with quantity label.
 	static sp<Control> createLabControl(sp<GameState> state, sp<Facility> facility);
+	// Control containing two MultilistBox for assignment state
+	static sp<Control> createDoubleListControl(const int controlLength);
 
 	static OrganisationInfo createOrganisationInfo(GameState &state, sp<Organisation> org);
 	static sp<Control> createOrganisationControl(GameState &state, const OrganisationInfo &info);

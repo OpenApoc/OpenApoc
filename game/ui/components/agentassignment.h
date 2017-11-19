@@ -43,8 +43,6 @@ class AgentAssignment : public Form
 	std::function<bool(Event *, sp<Control>, bool)> funcHandleAgentSelection;
 	// Select/deselect agents inside vehicle
 	std::function<bool(Event *, sp<Control>, bool)> funcHandleVehicleSelection;
-	// Select/deselect agents inside building
-	std::function<bool(Event *, sp<Control>, bool)> funcHandleBuildingSelection;
 	// Selection render
 	std::function<void(sp<Control>)> funcSelectionItemRender;
 	// Hover render
@@ -54,11 +52,10 @@ class AgentAssignment : public Form
 
 	void addVehiclesToList(sp<MultilistBox> list, const int listOffset);
 
-	void addBuildingsToList(sp<MultilistBox> list, const int listOffset);
+	void addBuildingToRightList(sp<Building> building, sp<MultilistBox> list, const int listOffset);
 
   public:
-	static const UString LEFT_LIST_NAME;
-	static const UString RIGHT_LIST_NAME;
+	static const UString AGENT_SELECT_BOX;
 	static const UString AGENT_LIST_NAME;
 	static const UString VEHICLE_LIST_NAME;
 
@@ -84,6 +81,8 @@ class AgentAssignment : public Form
 	void updateLocation();
 	// Get selected agents with preservation of order.
 	std::list<StateRef<Agent>> getSelectedAgents() const;
+	// Get selected vehicles with preservation of order.
+	std::list<StateRef<Vehicle>> getSelectedVehicles() const;
 
 	void eventOccured(Event *e) override;
 	void update() override;
