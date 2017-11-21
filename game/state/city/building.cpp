@@ -914,7 +914,8 @@ void Building::alienMovement(GameState &state)
 	}
 	if (bld->base)
 	{
-		fw().pushEvent(new GameDefenseEvent(GameEventType::DefendTheBase, base, state.getAliens()));
+		fw().pushEvent(
+		    new GameDefenseEvent(GameEventType::DefendTheBase, bld->base, state.getAliens()));
 	}
 }
 
