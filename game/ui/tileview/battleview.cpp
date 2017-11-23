@@ -3406,7 +3406,7 @@ bool BattleView::handleMouseDown(Event *e)
 		Vec2<float> screenOffset = {getScreenOffset().x, getScreenOffset().y};
 		auto clickTile =
 		    screenToTileCoords(Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
-		setScreenCenterTile({clickTile.x, clickTile.y});
+		setScreenCenterTile(Vec2<float>{clickTile.x, clickTile.y});
 		return true;
 	}
 	// CHEAT - move unit to mouse
