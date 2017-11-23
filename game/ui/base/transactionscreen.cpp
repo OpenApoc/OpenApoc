@@ -2736,6 +2736,8 @@ int TransactionScreen::TransactionControl::getPriceDelta() const
 
 void TransactionScreen::TransactionControl::onRender()
 {
+	Control::onRender();
+
 	static Vec2<int> bgLeftPos = {0, 2};
 	static Vec2<int> bgRightPos = {172, 2};
 	static Vec2<int> ammoPos = {4, 2};

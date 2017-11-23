@@ -17,8 +17,9 @@ namespace OpenApoc
 
 Control::Control(bool takesFocus)
     : mouseInside(false), mouseDepressed(false), resolvedLocation(0, 0), Visible(true),
-      Name("Control"), Location(0, 0), Size(0, 0), BackgroundColour(0, 0, 0, 0),
-      takesFocus(takesFocus), showBounds(false), Enabled(true), canCopy(true)
+      Name("Control"), Location(0, 0), Size(0, 0), SelectionSize(0, 0),
+      BackgroundColour(0, 0, 0, 0), takesFocus(takesFocus), showBounds(false), Enabled(true),
+      canCopy(true), funcPreRender(nullptr)
 {
 }
 
@@ -66,24 +67,29 @@ void Control::resolveLocation()
 	}
 }
 
-bool Control::isPointInsideControlBounds(int x, int y)
+bool Control::isPointInsideControlBounds(int x, int y) const
 {
-	bool result = true;
+	const Vec2<int> &Size =
+	    (SelectionSize.x == 0 || SelectionSize.y == 0) ? this->Size : SelectionSize;
 
-	if (x >= resolvedLocation.x && x < resolvedLocation.x + Size.x && y >= resolvedLocation.y &&
-	    y < resolvedLocation.y + Size.y)
+	return x >= resolvedLocation.x && x < resolvedLocation.x + Size.x && y >= resolvedLocation.y &&
+	       y < resolvedLocation.y + Size.y;
+}
+
+bool Control::isPointInsideControlBounds(Event *e, sp<Control> c) const
+{
+	if (!e || !c)
 	{
-		auto recursiveparent = this->getParent();
-		if (recursiveparent != nullptr)
-		{
-			result = recursiveparent->isPointInsideControlBounds(x, y);
-		}
+		return false;
 	}
-	else
-	{
-		result = false;
-	}
-	return result;
+
+	const Vec2<int> &Size =
+	    (c->SelectionSize.x == 0 || c->SelectionSize.y == 0) ? c->Size : c->SelectionSize;
+	int eventX = e->forms().MouseInfo.X + e->forms().RaisedBy->resolvedLocation.x;
+	int eventY = e->forms().MouseInfo.Y + e->forms().RaisedBy->resolvedLocation.y;
+
+	return eventX >= c->resolvedLocation.x && eventX < c->resolvedLocation.x + Size.x &&
+	       eventY >= c->resolvedLocation.y && eventY < c->resolvedLocation.y + Size.y;
 }
 
 void Control::eventOccured(Event *e)
@@ -269,6 +275,7 @@ void Control::eventOccured(Event *e)
 void Control::render()
 {
 	TRACE_FN_ARGS1("Name", this->Name);
+
 	if (!Visible || Size.x == 0 || Size.y == 0)
 	{
 		return;
@@ -289,7 +296,6 @@ void Control::render()
 		}
 
 		RendererSurfaceBinding b(*fw().renderer, controlArea);
-		preRender();
 		onRender();
 		postRender();
 		if (this->palette)
@@ -310,12 +316,28 @@ void Control::render()
 	}
 }
 
-void Control::preRender() { fw().renderer->clear(BackgroundColour); }
-
-void Control::onRender()
+/**
+ * Used if controls require computations before rendering.
+ * Any operations other than graphical.
+ */
+void Control::preRender()
 {
-	// Nothing specifically for the base control
+	for (auto ctrlidx = Controls.begin(); ctrlidx != Controls.end(); ctrlidx++)
+	{
+		auto c = *ctrlidx;
+		if (c->Visible)
+		{
+			c->preRender();
+		}
+	}
+
+	if (funcPreRender)
+	{
+		funcPreRender(shared_from_this());
+	}
 }
+
+void Control::onRender() { fw().renderer->clear(BackgroundColour); }
 
 void Control::postRender()
 {
@@ -450,6 +472,18 @@ void Control::configureChildrenFromXml(pugi::xml_node *parent)
 				sb = this->findControlTyped<ScrollBar>(scrollBarID);
 			}
 			auto lb = this->createChild<ListBox>(sb);
+			lb->configureFromXml(&node);
+		}
+		else if (nodename == "multilistbox")
+		{
+			sp<ScrollBar> sb = nullptr;
+			UString scrollBarID = node.attribute("scrollbarid").as_string();
+
+			if (!scrollBarID.empty())
+			{
+				sb = this->findControlTyped<ScrollBar>(scrollBarID);
+			}
+			auto lb = this->createChild<MultilistBox>(sb);
 			lb->configureFromXml(&node);
 		}
 		else if (nodename == "textedit")
@@ -671,6 +705,22 @@ sp<Control> Control::findControl(UString ID) const
 	return nullptr;
 }
 
+bool Control::replaceChildByName(sp<Control> ctrl)
+{
+	for (int i = 0; i < Controls.size(); i++)
+	{
+		if (Controls[i]->Name == ctrl->Name)
+		{
+			Controls[i] = ctrl;
+			ctrl->owningControl = shared_from_this();
+			setDirty();
+			return true;
+		}
+	}
+
+	return false;
+}
+
 sp<Control> Control::getParent() const { return owningControl.lock(); }
 
 sp<Control> Control::getRootControl()
@@ -850,6 +900,7 @@ void Control::copyControlData(sp<Control> CopyOf)
 	CopyOf->Name = this->Name;
 	CopyOf->Location = this->Location;
 	CopyOf->Size = this->Size;
+	CopyOf->SelectionSize = this->SelectionSize;
 	CopyOf->BackgroundColour = this->BackgroundColour;
 	CopyOf->takesFocus = this->takesFocus;
 	CopyOf->showBounds = this->showBounds;
@@ -1023,7 +1074,5 @@ void Control::setVisible(bool value)
 		this->setDirty();
 	}
 }
-
-bool Control::isVisible() const { return this->Visible; }
 
 }; // namespace OpenApoc

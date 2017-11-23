@@ -132,6 +132,8 @@ void ScrollBar::eventOccured(Event *e)
 
 void ScrollBar::onRender()
 {
+	Control::onRender();
+
 	// LoadResources();
 	if (Minimum == Maximum)
 		return;

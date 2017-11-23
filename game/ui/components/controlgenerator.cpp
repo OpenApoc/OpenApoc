@@ -2,6 +2,7 @@
 #include "forms/graphic.h"
 #include "forms/graphicbutton.h"
 #include "forms/label.h"
+#include "forms/multilistbox.h"
 #include "forms/scrollbar.h"
 #include "forms/ui.h"
 #include "framework/configfile.h"
@@ -11,6 +12,7 @@
 #include "framework/logger.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunit.h"
+#include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/facility.h"
@@ -27,6 +29,11 @@
 namespace OpenApoc
 {
 ControlGenerator ControlGenerator::singleton;
+
+const UString ControlGenerator::VEHICLE_ICON_NAME("ICON_V");
+const UString ControlGenerator::AGENT_ICON_NAME("ICON_A");
+const UString ControlGenerator::LEFT_LIST_NAME("LEFT");
+const UString ControlGenerator::RIGHT_LIST_NAME("RIGHT");
 
 void ControlGenerator::init(GameState &state)
 {
@@ -93,6 +100,16 @@ void ControlGenerator::init(GameState &state)
 	labelFont = ui().getFont("smalfont");
 
 	initialised = true;
+}
+
+sp<Control> ControlGenerator::createVehicleIcon(GameState &state, sp<Vehicle> vehicle)
+{
+	auto info = createVehicleInfo(state, vehicle);
+	auto icon = createVehicleControl(state, info);
+	icon->Name = VEHICLE_ICON_NAME;
+	icon->setData(mksp<int>(info.passengers));
+
+	return icon;
 }
 
 VehicleTileInfo ControlGenerator::createVehicleInfo(GameState &state, sp<Vehicle> v)
@@ -168,7 +185,14 @@ sp<Control> ControlGenerator::createVehicleControl(GameState &state, const Vehic
 	baseControl->setData(info.vehicle);
 
 	auto vehicleIcon = baseControl->createChild<Graphic>(info.vehicle->type->icon);
-	vehicleIcon->AutoSize = true;
+	if (vehicleIcon->getImage())
+	{
+		vehicleIcon->Size = vehicleIcon->getImage()->size;
+	}
+	else
+	{
+		vehicleIcon->AutoSize = true;
+	}
 	vehicleIcon->Location = {1, 1};
 	vehicleIcon->Name = "OWNED_VEHICLE_ICON_" + info.vehicle->name;
 
@@ -191,21 +215,42 @@ sp<Control> ControlGenerator::createVehicleControl(GameState &state, const Vehic
 	sp<Graphic> stateGraphic;
 
 	stateGraphic = baseControl->createChild<Graphic>(singleton.icons[(int)info.state]);
-	stateGraphic->AutoSize = true;
+	if (stateGraphic->getImage())
+	{
+		stateGraphic->Size = stateGraphic->getImage()->size;
+	}
+	else
+	{
+		stateGraphic->AutoSize = true;
+	}
 	stateGraphic->Location = {0, 0};
 	stateGraphic->Name = "OWNED_VEHICLE_STATE_" + info.vehicle->name;
 
 	if (info.faded)
 	{
 		auto fadeIcon = baseControl->createChild<Graphic>(singleton.iconShade);
-		fadeIcon->AutoSize = true;
+		if (fadeIcon->getImage())
+		{
+			fadeIcon->Size = fadeIcon->getImage()->size;
+		}
+		else
+		{
+			fadeIcon->AutoSize = true;
+		}
 		fadeIcon->Location = {1, 1};
 	}
 	if (info.passengers)
 	{
 		auto passengerGraphic = vehicleIcon->createChild<Graphic>(
 		    singleton.vehiclePassengerCountIcons[info.passengers]);
-		passengerGraphic->AutoSize = true;
+		if (passengerGraphic->getImage())
+		{
+			passengerGraphic->Size = passengerGraphic->getImage()->size;
+		}
+		else
+		{
+			passengerGraphic->AutoSize = true;
+		}
 		passengerGraphic->Location = {0, 0};
 		passengerGraphic->Name = "OWNED_VEHICLE_PASSENGERS_" + info.vehicle->name;
 	}
@@ -217,6 +262,102 @@ sp<Control> ControlGenerator::createVehicleControl(GameState &state, sp<Vehicle>
 {
 	auto info = createVehicleInfo(state, v);
 	return createVehicleControl(state, info);
+}
+
+sp<Control> ControlGenerator::createVehicleAssignmentControl(GameState &state, sp<Vehicle> vehicle)
+{
+	const int controlLength = 200, controlHeight = 24, iconLenght = 36;
+
+	auto control = mksp<Control>();
+	control->Size = control->SelectionSize = {controlLength, controlHeight};
+	control->setData(vehicle);
+
+	auto icon = createVehicleIcon(state, vehicle);
+	icon->Size = {iconLenght, controlHeight};
+	icon->setParent(control);
+
+	auto nameLabel = control->createChild<Label>(vehicle->name, singleton.labelFont);
+	nameLabel->Size = {controlLength - iconLenght, singleton.labelFont->getFontHeight()};
+	nameLabel->Location = {iconLenght, (control->Size.y - nameLabel->Size.y) / 2};
+
+	return control;
+}
+
+sp<Control> ControlGenerator::createBuildingAssignmentControl(GameState &state,
+                                                              sp<Building> building)
+{
+	const int controlLength = 200, controlHeight = 24, iconLenght = 36;
+
+	if (!singleton.initialised)
+	{
+		singleton.init(state);
+	}
+
+	auto frame = singleton.citySelect[0];
+	auto control = mksp<Graphic>(frame);
+	control->Size = control->SelectionSize = {controlLength, controlHeight};
+	control->Name = "ORG_FRAME";
+	control->setData(building);
+
+	auto buildingIcon =
+	    control->createChild<Graphic>(building->owner->icon); // TODO: set vanilla building icon
+	buildingIcon->AutoSize = true;
+	buildingIcon->Location = {1, 1};
+	buildingIcon->Name = "ORG_ICON";
+
+	UString name(building->name);
+	for (auto b : state.player_bases)
+	{
+		if (b.second->building == building)
+		{
+			name = b.second->name;
+			break;
+		}
+	}
+	auto nameLabel = control->createChild<Label>(name, singleton.labelFont);
+	nameLabel->Size = {controlLength - iconLenght, singleton.labelFont->getFontHeight()};
+	nameLabel->Location = {iconLenght, (control->Size.y - nameLabel->Size.y) / 2};
+
+	return control;
+}
+
+sp<Control> ControlGenerator::createAgentAssignmentControl(GameState &state, sp<Agent> agent)
+{
+	const int controlLength = 200, controlHeight = 24, iconLenght = 36;
+
+	if (!singleton.initialised)
+	{
+		singleton.init(state);
+	}
+
+	auto control = mksp<Control>();
+	control->setData(agent);
+	control->Size = control->SelectionSize = {controlLength, controlHeight};
+	control->Name = "AGENT_PORTRAIT";
+
+	auto icon = createAgentIcon(state, agent, UnitSelectionState::Unselected, false);
+	icon->Size = {iconLenght, controlHeight};
+	icon->setParent(control);
+
+	auto nameLabel = control->createChild<Label>(agent->name, singleton.labelFont);
+	nameLabel->Size = {controlLength - iconLenght, singleton.labelFont->getFontHeight()};
+	nameLabel->Location = {iconLenght, (control->Size.y - nameLabel->Size.y) / 2};
+
+	return control;
+}
+
+sp<Control> ControlGenerator::createAgentIcon(GameState &state, sp<Agent> agent,
+                                              UnitSelectionState forcedSelectionState,
+                                              bool forceFade)
+{
+	auto info = createAgentInfo(state, agent, forcedSelectionState, forceFade);
+	auto icon = mksp<Graphic>();
+	icon->AutoSize = true;
+	icon->Name = AGENT_ICON_NAME;
+	fillAgentControl(state, icon, info);
+	icon->setData(mksp<CityUnitState>(info.state));
+
+	return icon;
 }
 
 AgentInfo ControlGenerator::createAgentInfo(GameState &state, sp<Agent> a,
@@ -322,32 +463,37 @@ AgentInfo ControlGenerator::createAgentInfo(GameState &state, sp<Agent> a,
 	{
 		// City state icon
 		i.useState = true;
-		auto b = a->currentBuilding;
-		if (b)
-		{
-			if (b == a->homeBuilding)
-			{
-				i.state = CityUnitState::InBase;
-			}
-			else
-			{
-				i.state = CityUnitState::InBuilding;
-			}
-		}
-		else
-		{
-			if (a->currentVehicle)
-			{
-				i.state = CityUnitState::InVehicle;
-			}
-			else
-			{
-				i.state = CityUnitState::InMotion;
-			}
-		}
+		i.state = getCityUnitState(a);
 	}
 
 	return i;
+}
+
+CityUnitState ControlGenerator::getCityUnitState(sp<Agent> agent)
+{
+	auto building = agent->currentBuilding;
+	if (building)
+	{
+		if (building == agent->homeBuilding)
+		{
+			return CityUnitState::InBase;
+		}
+		else
+		{
+			return CityUnitState::InBuilding;
+		}
+	}
+	else
+	{
+		if (agent->currentVehicle)
+		{
+			return CityUnitState::InVehicle;
+		}
+		else
+		{
+			return CityUnitState::InMotion;
+		}
+	}
 }
 
 sp<Control> ControlGenerator::createAgentControl(GameState &state, const AgentInfo &info)
@@ -435,6 +581,35 @@ sp<Control> ControlGenerator::createLabControl(sp<GameState> state, sp<Facility>
 	label->TextHAlign = HorizontalAlignment::Centre;
 
 	return graphic;
+}
+
+/**
+ * Control containing two MultilistBox for assignment state.
+ * @controlLength - length of the control
+ */
+sp<Control> ControlGenerator::createDoubleListControl(const int controlLength)
+{
+	auto rubberItem = mksp<Control>();
+	rubberItem->Size = Vec2<int>{controlLength, 1};
+	rubberItem->setFuncPreRender([](sp<Control> control) {
+		int sizeY = 1;
+		for (auto &c : control->Controls)
+		{
+			if (!c->isVisible())
+				continue;
+			sizeY = std::max(sizeY, c->Location.y + c->Size.y);
+		}
+		control->Size.y = sizeY;
+	});
+
+	auto leftList = rubberItem->createChild<MultilistBox>();
+	leftList->Name = LEFT_LIST_NAME;
+
+	auto rightList = rubberItem->createChild<MultilistBox>();
+	rightList->Location = Vec2<int>{controlLength / 2, 0};
+	rightList->Name = RIGHT_LIST_NAME;
+
+	return rubberItem;
 }
 
 OrganisationInfo ControlGenerator::createOrganisationInfo(GameState &state, sp<Organisation> org)

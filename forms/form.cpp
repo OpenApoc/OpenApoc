@@ -33,7 +33,7 @@ void Form::readFormStyle(pugi::xml_node *node)
 
 void Form::eventOccured(Event *e) { Control::eventOccured(e); }
 
-void Form::onRender() {}
+void Form::onRender() { Control::onRender(); }
 
 void Form::update()
 {

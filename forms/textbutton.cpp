@@ -45,6 +45,8 @@ void TextButton::eventOccured(Event *e)
 
 void TextButton::onRender()
 {
+	Control::onRender();
+
 	if (label->getParent() == nullptr)
 	{
 		label->setParent(shared_from_this());

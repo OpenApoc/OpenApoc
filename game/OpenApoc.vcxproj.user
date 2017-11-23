@@ -21,6 +21,6 @@
     <LocalDebuggerCommandArguments>--Game.SkipIntro=true</LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup>
-    <ShowAllFiles>true</ShowAllFiles>
+    <ShowAllFiles>false</ShowAllFiles>
   </PropertyGroup>
 </Project>

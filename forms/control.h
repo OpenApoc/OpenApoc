@@ -35,6 +35,9 @@ class Control : public std::enable_shared_from_this<Control>
 
 	// Configures children of element after it was configured, see ConfigureFromXML
 	void configureChildrenFromXml(pugi::xml_node *parent);
+	// The function will be called during pre-rendering of the control.
+	// arg - this control
+	std::function<void(sp<Control>)> funcPreRender;
 
 	bool dirty = true;
 
@@ -45,14 +48,13 @@ class Control : public std::enable_shared_from_this<Control>
 	bool mouseDepressed;
 	Vec2<int> resolvedLocation;
 
-	virtual void preRender();
 	virtual void postRender();
 	virtual void onRender();
 
 	virtual bool isFocused() const;
 
 	void resolveLocation();
-	bool isPointInsideControlBounds(int x, int y);
+	bool isPointInsideControlBounds(int x, int y) const;
 
 	// Loads control and all subcontrols from xml
 	void configureFromXml(pugi::xml_node *node);
@@ -65,14 +67,18 @@ class Control : public std::enable_shared_from_this<Control>
 
 	void triggerEventCallbacks(FormsEvent *e);
 
-	void setDirty();
+	bool isDirty() const { return dirty; }
 
 	bool Visible;
 
   public:
 	UString Name;
+	// Relative location.
 	Vec2<int> Location;
+	// Size of the control.
 	Vec2<int> Size;
+	// Which area size will be selected.
+	Vec2<int> SelectionSize;
 	Colour BackgroundColour;
 	bool takesFocus;
 	bool showBounds;
@@ -90,15 +96,19 @@ class Control : public std::enable_shared_from_this<Control>
 	virtual ~Control();
 
 	virtual void eventOccured(Event *e);
+	// Used if controls require computations before rendering.
+	void preRender();
 	void render();
 	virtual void update();
 	virtual void unloadResources();
 
 	sp<Control> operator[](int Index) const;
 	sp<Control> findControl(UString ID) const;
+	bool replaceChildByName(sp<Control> ctrl);
 
+	void setDirty();
 	void setVisible(bool value);
-	bool isVisible() const;
+	bool isVisible() const { return Visible; };
 
 	template <typename T> sp<T> findControlTyped(const UString &name) const
 	{
@@ -142,6 +152,7 @@ class Control : public std::enable_shared_from_this<Control>
 	void setData(sp<void> Data) { data = Data; }
 
 	bool eventIsWithin(const Event *e) const;
+	bool isPointInsideControlBounds(Event *e, sp<Control> c) const;
 
 	template <typename T, typename... Args> sp<T> createChild(Args &&... args)
 	{
@@ -154,6 +165,8 @@ class Control : public std::enable_shared_from_this<Control>
 
 	// Simulate mouse click on control
 	virtual bool click();
+	// Setter for funcPreRender
+	void setFuncPreRender(std::function<void(sp<Control>)> func) { funcPreRender = func; }
 };
 
 }; // namespace OpenApoc

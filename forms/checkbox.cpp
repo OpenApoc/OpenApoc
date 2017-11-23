@@ -56,6 +56,8 @@ void CheckBox::eventOccured(Event *e)
 
 void CheckBox::onRender()
 {
+	Control::onRender();
+
 	sp<Image> useimage;
 
 	useimage = (Checked ? imagechecked : imageunchecked);

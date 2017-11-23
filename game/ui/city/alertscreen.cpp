@@ -121,6 +121,7 @@ void AlertScreen::update() { menuform->update(); }
 void AlertScreen::render()
 {
 	fw().stageGetPrevious(this->shared_from_this())->render();
+	menuform->preRender();
 	menuform->render();
 }
 
