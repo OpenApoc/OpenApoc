@@ -132,17 +132,17 @@
         <font>smalfont</font>
       </label>
  
-	  <scroll id="LIST1_SCROLL">
+	  <scroll id="LIST1_SCROLL" largechange="32">
 		<position x="381" y="72"/>
         <size width="26" height="374"/>
       </scroll>
-      <graphicbutton id="LIST1_SCROLL_UP" scrollprev="LIST1_SCROLL">
+      <graphicbutton id="LIST1_SCROLL_UP" scrollprev="LIST1_SCROLL" scrolllarge="true">
         <position x="383" y="48"/>
         <size width="22" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <graphicbutton id="LIST1_SCROLL_DOWN" scrollnext="LIST1_SCROLL">
+      <graphicbutton id="LIST1_SCROLL_DOWN" scrollnext="LIST1_SCROLL" scrolllarge="true">
         <position x="383" y="449"/>
         <size width="22" height="21"/>
         <image/>
@@ -152,21 +152,21 @@
         <position x="259" y="76"/>
         <size width="121" height="389"/>
         <orientation>vertical</orientation>
-		<item size = "47" spacing = "0"/>
-        <hovercolour r="0" g="0" b="0" a="0"/>
+		<item size = "30" spacing = "2"/>
+        <hovercolour r="255" g="255" b="255" a="255"/>
       </listbox>
  
-	  <scroll id="LIST2_SCROLL">
+	  <scroll id="LIST2_SCROLL" largechange="32">
         <position x="567" y="72"/>
         <size width="26" height="374"/>
       </scroll>
-      <graphicbutton id="LIST2_SCROLL_UP" scrollprev="LIST2_SCROLL">
+      <graphicbutton id="LIST2_SCROLL_UP" scrollprev="LIST2_SCROLL" scrolllarge="true">
         <position x="569" y="48"/>
         <size width="22" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <graphicbutton id="LIST2_SCROLL_DOWN" scrollnext="LIST2_SCROLL">
+      <graphicbutton id="LIST2_SCROLL_DOWN" scrollnext="LIST2_SCROLL" scrolllarge="true">
         <position x="569" y="449"/>
         <size width="22" height="21"/>
         <image/>
@@ -176,8 +176,8 @@
         <position x="460" y="76"/>
         <size width="105" height="389"/>
         <orientation>vertical</orientation>
-		<item size = "47" spacing = "0"/>
-        <hovercolour r="0" g="0" b="0" a="0"/>
+		<item size = "30" spacing = "2"/>
+        <hovercolour r="255" g="255" b="255" a="255"/>
       </listbox>
  
  
@@ -194,6 +194,9 @@
       </graphic>
 
       <subform id="AGENT_STATS_VIEW" src="sheet_agent_stats">
+        <position x="17" y="187"/>
+      </subform>
+      <subform id="PERSONEL_STATS_VIEW" src="sheet_personel_stats">
         <position x="17" y="187"/>
       </subform>
  
