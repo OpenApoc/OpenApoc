@@ -116,8 +116,6 @@ StateRef<Organisation> GameState::getCivilian() { return this->civilian; }
 
 void GameState::initState()
 {
-	// FIXME: reseed rng when game starts
-
 	if (current_battle)
 	{
 		current_battle->initBattle(*this);
@@ -507,6 +505,11 @@ void GameState::fillOrgStartingProperty()
 
 void GameState::startGame()
 {
+	// Seed the RNG
+	std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+	    std::chrono::system_clock::now().time_since_epoch());
+	rng = Xorshift128Plus<uint32_t>(ms.count());
+
 	agentEquipmentTemplates.resize(10);
 
 	// Setup orgs
