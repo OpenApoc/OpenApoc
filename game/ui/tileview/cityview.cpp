@@ -2518,7 +2518,10 @@ void CityView::eventOccurred(Event *e)
 	this->drawCity = true;
 	activeTab->eventOccured(e);
 	baseForm->eventOccured(e);
-	overlayTab->eventOccured(e);
+	if (overlayTab->isVisible())
+	{
+		overlayTab->eventOccured(e);
+	}
 	// Exclude mouse down events that are over the form
 	if (activeTab->eventIsWithin(e) || baseForm->eventIsWithin(e) || overlayTab->eventIsWithin(e))
 	{
