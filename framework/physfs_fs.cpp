@@ -51,7 +51,8 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 		file = PHYSFS_openRead(path.cStr());
 		if (!file)
 		{
-			LogError("Failed to open file \"%s\" : \"%s\"", path, PHYSFS_getLastError());
+			LogError("Failed to open file \"%s\" : \"%s\"", path,
+			         PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 			return;
 		}
 		systemPath = PHYSFS_getRealDir(path.cStr());
@@ -228,7 +229,8 @@ FileSystem::FileSystem(std::vector<UString> paths)
 	{
 		if (!PHYSFS_mount(p.cStr(), "/", 0))
 		{
-			LogInfo("Failed to add resource dir \"%s\", error: %s", p, PHYSFS_getLastError());
+			LogInfo("Failed to add resource dir \"%s\", error: %s", p,
+			        PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 			continue;
 		}
 		else
