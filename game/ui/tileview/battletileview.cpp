@@ -21,6 +21,7 @@
 #include "game/state/rules/battle/battlecommonimagelist.h"
 #include "game/state/rules/battle/battlecommonsamplelist.h"
 #include "game/state/shared/organisation.h"
+#include "game/state/shared/projectile.h"
 #include "game/state/tilemap/tileobject_battlehazard.h"
 #include "game/state/tilemap/tileobject_battleitem.h"
 #include "game/state/tilemap/tileobject_battlemappart.h"
@@ -1239,16 +1240,23 @@ void BattleTileView::render()
 			std::list<std::tuple<Vec3<int>, Vec3<int>, bool>> targetLocationsToDraw;
 			// Params are: visible, level
 			std::list<std::tuple<sp<TileObject>, bool, int>> itemsToDraw;
+			Vec3<float> zeroPos{0, 0, 0};
 
-			// Gather units below current level
-			for (int z = 0; z < zFrom; z++)
+			// Gather units, items, hazards
+			// TODO: use lists instead
+			for (int z = 0; z < maxZDraw; z++)
 			{
+				// currentZLevel is an upper exclusive boundary, that's why we need to sub 1 here
+				int currentLevel = z - (battle.battleViewZLevel - 1);
+
 				for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
 				{
 					for (int y = minY; y < maxY; y++)
 					{
 						for (int x = minX; x < maxX; x++)
 						{
+							bool visible = battle.getVisible(battle.currentPlayer, x, y, z);
+
 							auto tile = map.getTile(x, y, z);
 							auto object_count = tile->drawnObjects[layer].size();
 
@@ -1303,88 +1311,6 @@ void BattleTileView::render()
 										        (battle.battleViewZLevel - 1),
 										    friendly, hostile,
 										    selected ? (u->isLarge() ? 2 : 1) : 0);
-
-										break;
-									}
-									default:
-										break;
-								}
-							}
-						}
-					}
-				}
-			}
-
-			// Draw everything but units and items
-			// Gather units and items on current level
-			for (int z = zFrom; z < zTo; z++)
-			{
-				// currentZLevel is an upper exclusive boundary, that's why we need to sub 1 here
-				int currentLevel = z - (battle.battleViewZLevel - 1);
-
-				for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
-				{
-					for (int y = minY; y < maxY; y++)
-					{
-						for (int x = minX; x < maxX; x++)
-						{
-							auto tile = map.getTile(x, y, z);
-							bool visible = battle.getVisible(battle.currentPlayer, x, y, z);
-							auto object_count = tile->drawnObjects[layer].size();
-
-							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
-							{
-								auto &obj = tile->drawnObjects[layer][obj_id];
-								bool objectVisible = visible;
-								switch (obj->getType())
-								{
-									case TileObject::Type::Unit:
-									{
-										auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
-										             ->getUnit();
-										objectVisible =
-										    !u->isConscious() || u->owner == battle.currentPlayer ||
-										    battle.visibleUnits.at(battle.currentPlayer)
-										            .find({&state, u->id}) !=
-										        battle.visibleUnits.at(battle.currentPlayer).end();
-										bool friendly = u->owner == battle.currentPlayer;
-										bool hostile =
-										    battle.currentPlayer->isRelatedTo(u->owner) ==
-										    Organisation::Relation::Hostile;
-										bool selected = false;
-
-										if (friendly)
-										{
-											if (std::find(battle.battleViewSelectedUnits.begin(),
-											              battle.battleViewSelectedUnits.end(),
-											              u) !=
-											    battle.battleViewSelectedUnits.end())
-											{
-												selected = true;
-											}
-											for (auto &m : u->missions)
-											{
-												if ((m->type ==
-												     BattleUnitMission::Type::ReachGoal) ||
-												    (m->type ==
-												         BattleUnitMission::Type::GotoLocation &&
-												     !m->currentPlannedPath.empty()))
-												{
-													targetLocationsToDraw.emplace_back(
-													    m->targetLocation, (Vec3<int>)u->position,
-													    (obj->getOwningTile()->position.z -
-													     (battle.battleViewZLevel - 1)) == 0);
-													break;
-												}
-											}
-										}
-										unitsToDraw.emplace_back(
-										    obj, revealWholeMap || objectVisible,
-										    obj->getOwningTile()->position.z -
-										        (battle.battleViewZLevel - 1),
-										    friendly, hostile,
-										    selected ? (u->isLarge() ? 2 : 1) : 0);
-
 										continue;
 									}
 									case TileObject::Type::Item:
@@ -1418,87 +1344,99 @@ void BattleTileView::render()
 												}
 											}
 										}
+										continue;
 									}
 									default:
 										break;
 								}
-								Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
-								obj->draw(r, *this, pos, this->viewMode,
-								          revealWholeMap || objectVisible, currentLevel);
 							}
 						}
 					}
 				}
 			}
 
-			// Gather units above current level
-			for (int z = zTo; z < maxZDraw; z++)
+			// Draw everything but units and items
+			// Gather units and items on current level
+			for (int z = zFrom; z < zTo; z++)
 			{
-				for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
+			lets_try_again:
+
+				// currentZLevel is an upper exclusive boundary, that's why we need to sub 1 here
+				int currentLevel = z - (battle.battleViewZLevel - 1);
+				bool itsFakeSurface = map.getViewSurface(z)->size.x < STRAT_TILE_X;
+				if (map.isViewSurfaceDirty(z))
 				{
-					for (int y = minY; y < maxY; y++)
+					// draw an image to the cache
+					RendererSurfaceBinding b(r, map.getViewSurface(z));
+					r.clear();
+
+					for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
 					{
-						for (int x = minX; x < maxX; x++)
+						for (int y = 0; y < map.size.y; y++)
 						{
-							auto tile = map.getTile(x, y, z);
-							auto object_count = tile->drawnObjects[layer].size();
-
-							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+							for (int x = 0; x < map.size.x; x++)
 							{
-								auto &obj = tile->drawnObjects[layer][obj_id];
-								switch (obj->getType())
-								{
-									case TileObject::Type::Unit:
-									{
-										auto u = std::static_pointer_cast<TileObjectBattleUnit>(obj)
-										             ->getUnit();
-										bool objectVisible =
-										    !u->isConscious() || u->owner == battle.currentPlayer ||
-										    battle.visibleUnits.at(battle.currentPlayer)
-										            .find({&state, u->id}) !=
-										        battle.visibleUnits.at(battle.currentPlayer).end();
-										bool friendly = u->owner == battle.currentPlayer;
-										bool hostile =
-										    battle.currentPlayer->isRelatedTo(u->owner) ==
-										    Organisation::Relation::Hostile;
-										bool selected = false;
+								bool visible = battle.getVisible(battle.currentPlayer, x, y, z);
 
-										if (friendly)
+								auto tile = map.getTile(x, y, z);
+								auto object_count = tile->drawnObjects[layer].size();
+
+								for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+								{
+									auto &obj = tile->drawnObjects[layer][obj_id];
+									switch (obj->getType())
+									{
+										case TileObject::Type::Feature:
+										case TileObject::Type::Ground:
+										case TileObject::Type::LeftWall:
+										case TileObject::Type::RightWall:
 										{
-											if (std::find(battle.battleViewSelectedUnits.begin(),
-											              battle.battleViewSelectedUnits.end(),
-											              u) !=
-											    battle.battleViewSelectedUnits.end())
+											if (itsFakeSurface)
 											{
-												selected = true;
+												// looks like we need a real surface
+												map.setViewSurface(z,
+												                   mksp<Surface>(Vec2<unsigned int>{
+												                       map.size.x * STRAT_TILE_X,
+												                       map.size.y * STRAT_TILE_Y}));
+												goto lets_try_again;
 											}
-											for (auto &m : u->missions)
-											{
-												if ((m->type ==
-												     BattleUnitMission::Type::ReachGoal) ||
-												    (m->type ==
-												         BattleUnitMission::Type::GotoLocation &&
-												     !m->currentPlannedPath.empty()))
-												{
-													targetLocationsToDraw.emplace_back(
-													    m->targetLocation, (Vec3<int>)u->position,
-													    (obj->getOwningTile()->position.z -
-													     (battle.battleViewZLevel - 1)) == 0);
-													break;
-												}
-											}
+											Vec2<float> pos = tileToScreenCoords(obj->getCenter(),
+											                                     this->viewMode);
+											obj->draw(r, *this, pos, this->viewMode,
+											          revealWholeMap || visible, currentLevel);
+											break;
 										}
-										unitsToDraw.emplace_back(
-										    obj, revealWholeMap || objectVisible,
-										    obj->getOwningTile()->position.z -
-										        (battle.battleViewZLevel - 1),
-										    friendly, hostile,
-										    selected ? (u->isLarge() ? 2 : 1) : 0);
-										break;
+										default:
+											break;
 									}
-									default:
-										break;
 								}
+							}
+						}
+					}
+					map.setViewSurfaceDirty(z, false);
+				}
+				// get the image from the cache
+				r.draw(map.getViewSurface(z), tileToOffsetScreenCoords(zeroPos));
+
+				// draw projectiles to the current level
+				auto &projectiles = battle.projectiles;
+				for (auto &p : projectiles)
+				{
+					const auto &pos = p->getPosition();
+					if (static_cast<int>(pos.z) == z &&
+					    battle.getVisible(battle.currentPlayer, pos.x, pos.y, pos.z))
+					{
+						auto tile = map.getTile(pos);
+						unsigned int layer = map.getLayer(TileObject::Type::Projectile);
+						auto object_count = tile->drawnObjects[layer].size();
+						for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+						{
+							auto &obj = tile->drawnObjects[layer][obj_id];
+							if (obj->getType() == TileObject::Type::Projectile)
+							{
+								Vec2<float> pos =
+								    tileToOffsetScreenCoords(obj->getCenter(), this->viewMode);
+								obj->draw(r, *this, pos, this->viewMode, true, 0, false, false);
 							}
 						}
 					}

@@ -562,43 +562,39 @@ void CityTileView::render()
 					RendererSurfaceBinding b(r, map.getViewSurface(z));
 					r.clear();
 
-					for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
+					unsigned int layer = map.getLayer(TileObject::Type::Scenery);
+					for (int y = 0; y < map.size.y; y++)
 					{
-						for (int y = 0; y < map.size.y; y++)
+						for (int x = 0; x < map.size.x; x++)
 						{
-							for (int x = 0; x < map.size.x; x++)
+							auto tile = map.getTile(x, y, z);
+							auto object_count = tile->drawnObjects[layer].size();
+							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 							{
-								auto tile = map.getTile(x, y, z);
-								auto object_count = tile->drawnObjects[layer].size();
-								for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+								auto &obj = tile->drawnObjects[layer][obj_id];
+								if (obj->getType() == TileObject::Type::Scenery)
 								{
-									auto &obj = tile->drawnObjects[layer][obj_id];
-									if (obj->getType() != TileObject::Type::Vehicle &&
-									    obj->getType() != TileObject::Type::Projectile)
+									if (itsFakeSurface)
 									{
-										if (itsFakeSurface)
-										{
-											// looks like we need a real surface
-											map.setViewSurface(z, mksp<Surface>(Vec2<unsigned int>{
-											                          map.size.x * STRAT_TILE_X,
-											                          map.size.y * STRAT_TILE_Y}));
-											goto lets_try_again;
-										}
-										Vec2<float> pos =
-										    tileToScreenCoords(obj->getCenter(), this->viewMode);
-										obj->draw(r, *this, pos, this->viewMode, true, 0, false,
-										          false);
+										// looks like we need a real surface
+										map.setViewSurface(z, mksp<Surface>(Vec2<unsigned int>{
+										                          map.size.x * STRAT_TILE_X,
+										                          map.size.y * STRAT_TILE_Y}));
+										goto lets_try_again;
 									}
+									Vec2<float> pos =
+									    tileToScreenCoords(obj->getCenter(), this->viewMode);
+									obj->draw(r, *this, pos, this->viewMode, true, 0, false, false);
 								}
 							}
 						}
 					}
 					map.setViewSurfaceDirty(z, false);
 				}
-				// get the image from cache
+				// get the image from the cache
 				r.draw(map.getViewSurface(z), tileToOffsetScreenCoords(zeroPos));
 
-				// draw projectiles to current level
+				// draw projectiles to the current level
 				auto &projectiles = state.current_city->projectiles;
 				for (auto &p : projectiles)
 				{
@@ -606,18 +602,16 @@ void CityTileView::render()
 					if (static_cast<int>(pos.z) == z)
 					{
 						auto tile = map.getTile(pos);
-						for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
+						unsigned int layer = map.getLayer(TileObject::Type::Projectile);
+						auto object_count = tile->drawnObjects[layer].size();
+						for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 						{
-							auto object_count = tile->drawnObjects[layer].size();
-							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+							auto &obj = tile->drawnObjects[layer][obj_id];
+							if (obj->getType() == TileObject::Type::Projectile)
 							{
-								auto &obj = tile->drawnObjects[layer][obj_id];
-								if (obj->getType() == TileObject::Type::Projectile)
-								{
-									Vec2<float> pos =
-									    tileToOffsetScreenCoords(obj->getCenter(), this->viewMode);
-									obj->draw(r, *this, pos, this->viewMode, true, 0, false, false);
-								}
+								Vec2<float> pos =
+								    tileToOffsetScreenCoords(obj->getCenter(), this->viewMode);
+								obj->draw(r, *this, pos, this->viewMode, true, 0, false, false);
 							}
 						}
 					}
