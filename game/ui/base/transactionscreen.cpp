@@ -2706,12 +2706,6 @@ void TransactionScreen::TransactionControl::setupCallbacks()
 		}
 	};
 	scrollBar->addCallback(FormEventType::ScrollBarChange, onScrollChange);
-	// Pass through MouseMove to main control
-	std::function<void(FormsEvent * e)> onMouseMove = [this](FormsEvent *e) {
-		e->forms().RaisedBy = shared_from_this();
-		this->triggerEventCallbacks(e);
-	};
-	scrollBar->addCallback(FormEventType::MouseMove, onMouseMove);
 }
 
 int TransactionScreen::TransactionControl::getCargoDelta(int index) const
