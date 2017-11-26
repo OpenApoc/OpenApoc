@@ -381,6 +381,11 @@ void Base::destroyFacility(GameState &state, Vec2<int> pos)
 					facility->lab = "";
 					state.research.labs.erase(id);
 				}
+				if (facility->type->buildTime > 0)
+				{
+					building->owner->balance +=
+					    facility->type->buildCost * facility->buildTime / facility->type->buildTime;
+				}
 				facilities.erase(f);
 				break;
 			}
