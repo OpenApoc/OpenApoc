@@ -92,6 +92,25 @@ GameState::~GameState()
 	{
 		org.second->current_relations.clear();
 	}
+	for (auto &city : this->cities)
+	{
+		for (auto &building : city.second->buildings)
+		{
+			auto &bld = building.second;
+			bld->city.clear();
+			bld->function.clear();
+			bld->owner.clear();
+			bld->base_layout.clear();
+			bld->base.clear();
+			bld->battle_map.clear();
+			bld->preset_crew.clear();
+			bld->current_crew.clear();
+			bld->currentVehicles.clear();
+			bld->currentAgents.clear();
+			bld->researchUnlock.clear();
+			bld->accessTopic.clear();
+		}
+	}
 }
 
 // Just a handy shortcut since it's shown on every single screen
