@@ -19,6 +19,15 @@ matrix:
             - g++-5
       env:
         - MATRIX_ENV="PASS=build CXX='g++-5' CC='gcc-5' BUILD_TYPE=RelWithDebInfo"
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env:
+        - MATRIX_ENV="PASS=build CXX='g++-5' CC='gcc-5' BUILD_TYPE=sanitize"
 #    - os: linux
 #      addons:
 #        apt:
