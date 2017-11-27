@@ -1008,19 +1008,31 @@ class CueArchiver
 		return current;
 	}
 
-	void enumerateFiles(const char *dirname, PHYSFS_EnumFilesCallback cb, const char *origdir,
-	                    void *callbackdata)
+	PHYSFS_EnumerateCallbackResult enumerateFiles(const char *dirname, PHYSFS_EnumerateCallback cb,
+	                                              const char *origdir, void *callbackdata)
 	{
 		const FSEntry *current = getFsEntry(dirname);
 		if (!current)
-			return;
+			return PHYSFS_ENUM_ERROR;
 		if (current->type == FSEntry::FS_DIRECTORY)
 		{
 			for (auto entry = current->children.begin(); entry != current->children.end(); entry++)
 			{
-				cb(callbackdata, origdir, entry->first.cStr());
+				auto ret = cb(callbackdata, origdir, entry->first.cStr());
+				switch (ret)
+				{
+					case PHYSFS_ENUM_ERROR:
+						PHYSFS_setErrorCode(PHYSFS_ERR_APP_CALLBACK);
+						return PHYSFS_ENUM_ERROR;
+					case PHYSFS_ENUM_STOP:
+						return PHYSFS_ENUM_STOP;
+					default:
+						// Continue enumeration
+						break;
+				}
 			}
 		}
+		return PHYSFS_ENUM_OK;
 	}
 
 	PHYSFS_Io *openRead(const char *fnm)
@@ -1063,7 +1075,7 @@ class CueArchiver
 	}
 
   public:
-	static void *cueOpenArchive(PHYSFS_Io *, const char *filename, int forWriting)
+	static void *cueOpenArchive(PHYSFS_Io *, const char *filename, int forWriting, int *claimed)
 	{
 		LogWarning("Opening \"%s\"", filename);
 		// FIXME: Here we assume the filename actually points to the actual .cue file,
@@ -1087,6 +1099,10 @@ class CueArchiver
 			LogError("Could not parse file \"%s\"", filename);
 			return nullptr;
 		}
+
+		// We know it's a valid CUE file, so claim it
+		*claimed = 1;
+
 		fs::path cueFilePath(filename);
 
 		fs::path dataFilePath(cueFilePath.parent_path()); // parser.getDataFileName());
@@ -1126,11 +1142,12 @@ class CueArchiver
 		                       parser.getTrackMode());
 	}
 
-	static void cueEnumerateFiles(void *opaque, const char *dirname, PHYSFS_EnumFilesCallback cb,
-	                              const char *origdir, void *callbackdata)
+	static PHYSFS_EnumerateCallbackResult cueEnumerateFiles(void *opaque, const char *dirname,
+	                                                        PHYSFS_EnumerateCallback cb,
+	                                                        const char *origdir, void *callbackdata)
 	{
 		CueArchiver *archiver = (CueArchiver *)opaque;
-		archiver->enumerateFiles(dirname, cb, origdir, callbackdata);
+		return archiver->enumerateFiles(dirname, cb, origdir, callbackdata);
 	}
 
 	static PHYSFS_Io *cueOpenRead(void *opaque, const char *fnm)

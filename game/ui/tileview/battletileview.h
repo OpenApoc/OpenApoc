@@ -135,6 +135,14 @@ class BattleTileView : public TileView
 
 	void setScreenCenterTile(Vec2<float> center) override;
 	void setScreenCenterTile(Vec3<float> center) override;
+	void setScreenCenterTile(Vec2<int> center) override
+	{
+		this->setScreenCenterTile(Vec2<float>{center.x, center.y});
+	}
+	void setScreenCenterTile(Vec3<int> center) override
+	{
+		this->setScreenCenterTile(Vec3<float>{center.x, center.y, center.z});
+	}
 
 	void setLayerDrawingMode(LayerDrawingMode mode);
 

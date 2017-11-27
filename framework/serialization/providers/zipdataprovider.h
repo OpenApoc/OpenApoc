@@ -3,8 +3,7 @@
 #include "framework/serialization/providers/serializationdataprovider.h"
 #include "library/strings.h"
 
-#define MINIZ_HEADER_FILE_ONLY
-#include "dependencies/miniz/miniz.c"
+#include "dependencies/miniz/miniz_zip.h"
 #include <map>
 
 namespace OpenApoc
