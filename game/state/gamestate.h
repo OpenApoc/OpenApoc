@@ -116,7 +116,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	std::map<AgentType::Role, unsigned> initial_agents;
 	std::map<UString, unsigned> initial_facilities;
 	std::list<std::list<StateRef<AEquipmentType>>> initial_agent_equipment;
-	std::list<std::pair<StateRef<VehicleType>, int>> initial_vehicles;
+	std::list<std::pair<StateRef<VehicleType>, std::list<StateRef<VEquipmentType>>>>
+	    initial_vehicles;
 	std::list<std::pair<StateRef<VEquipmentType>, int>> initial_vehicle_equipment;
 	std::list<std::pair<StateRef<VAmmoType>, int>> initial_vehicle_ammo;
 	std::map<UString, int> initial_base_agent_equipment;

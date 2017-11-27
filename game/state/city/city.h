@@ -133,6 +133,10 @@ class City : public StateObject, public std::enable_shared_from_this<City>
 	void initialSceneryLinkUp();
 
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
+	sp<Vehicle> createVehicle(GameState &state, StateRef<VehicleType> type,
+	                          StateRef<Organisation> owner);
+	sp<Vehicle> createVehicle(GameState &state, StateRef<VehicleType> type,
+	                          StateRef<Organisation> owner, StateRef<Building> building);
 	sp<Vehicle> placeVehicle(GameState &state, StateRef<VehicleType> type,
 	                         StateRef<Organisation> owner);
 	sp<Vehicle> placeVehicle(GameState &state, StateRef<VehicleType> type,

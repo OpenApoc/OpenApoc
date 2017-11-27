@@ -663,10 +663,11 @@ void GameState::fillPlayerStartingProperty()
 	}*/
 	for (auto &pair : this->initial_vehicles)
 	{
-		for (int i = 0; i < pair.second; i++)
+		auto v = current_city->createVehicle(*this, pair.first, this->getPlayer(), {this, bld});
+		v->homeBuilding = v->currentBuilding;
+		for (auto &eq : pair.second)
 		{
-			auto v = current_city->placeVehicle(*this, pair.first, this->getPlayer(), {this, bld});
-			v->homeBuilding = v->currentBuilding;
+			v->addEquipment(*this, eq);
 		}
 	}
 	// Give the player initial vehicle equipment
