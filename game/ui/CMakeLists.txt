@@ -1,8 +1,6 @@
 # project name, and type
 PROJECT(OpenApoc_GameUI CXX C)
 
-include(cotire)
-
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
@@ -150,10 +148,3 @@ target_link_libraries(OpenApoc_GameUI PUBLIC OpenApoc_Forms)
 target_include_directories(OpenApoc_GameUI PRIVATE ${CMAKE_BINARY_DIR})
 
 set_property(TARGET OpenApoc_GameUI PROPERTY CXX_STANDARD 11)
-
-set_target_properties(OpenApoc_GameUI PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
-	"gameui_pch.h")
-
-if(ENABLE_COTIRE)
-	cotire(OpenApoc_GameUI)
-endif()
