@@ -297,7 +297,6 @@ void CityTileView::render()
 	TRACE_FN;
 	Renderer &r = *fw().renderer;
 	r.clear();
-	r.setPalette(this->pal);
 
 	// Rotate Icons
 	{
@@ -325,6 +324,8 @@ void CityTileView::render()
 	{
 		case TileViewMode::Isometric:
 		{
+			r.setPalette(this->pal);
+
 			// List of vehicles that require drawing of brackets
 			std::set<sp<Vehicle>> vehiclesToDrawBrackets;
 			std::map<sp<Vehicle>, int> vehiclesBracketsIndex;
@@ -542,6 +543,8 @@ void CityTileView::render()
 		break;
 		case TileViewMode::Strategy:
 		{
+			r.setPalette(mod_day_palette[colorCurrent]);
+
 			// Params are: friendly, hostile, selected (0 = not, 1 = small, 2 = large)
 			std::list<std::tuple<sp<Vehicle>, bool, bool, int>> vehiclesToDraw;
 			std::set<sp<Vehicle>> vehiclesUnderAttack;
@@ -980,6 +983,7 @@ void CityTileView::render()
 		break;
 	}
 }
+
 void CityTileView::update()
 {
 	TileView::update();
