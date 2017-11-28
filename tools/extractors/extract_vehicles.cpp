@@ -125,12 +125,33 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 {
 	// Initial stuff
 	state.initial_vehicles.emplace_back(
-	    StateRef<VehicleType>{&state, "VEHICLETYPE_VALKYRIE_INTERCEPTOR"}, 1);
-	state.initial_vehicles.emplace_back(StateRef<VehicleType>{&state, "VEHICLETYPE_STORMDOG"}, 1);
+	    StateRef<VehicleType>{&state, "VEHICLETYPE_VALKYRIE_INTERCEPTOR"},
+	    std::list<StateRef<VEquipmentType>>{
+	        StateRef<VEquipmentType>{&state, "VEQUIPMENTTYPE_LANCER_7000_LASER_GUN"},
+	        StateRef<VEquipmentType>{&state, "VEQUIPMENTTYPE_JANITOR_MISSILE_ARRAY"},
+	        StateRef<VEquipmentType>{&state, "VEQUIPMENTTYPE_PASSENGER_MODULE"},
+	        StateRef<VEquipmentType>{&state, "VEQUIPMENTTYPE_CARGO_MODULE"},
+	        StateRef<VEquipmentType>{&state, "VEQUIPMENTTYPE_SD_TURBO"}});
 	state.initial_vehicles.emplace_back(
-	    StateRef<VehicleType>{&state, "VEHICLETYPE_PHOENIX_HOVERCAR"}, 2);
-	state.initial_vehicles.emplace_back(StateRef<VehicleType>{&state, "VEHICLETYPE_WOLFHOUND_APC"},
-	                                    1);
+	    StateRef<VehicleType>{&state, "VEHICLETYPE_STORMDOG"},
+	    std::list<StateRef<VEquipmentType>>{
+	        StateRef<VEquipmentType>{&state, "VEQUIPMENTTYPE_AIRGUARD_ANTI-AIR_CANNON"},
+	        StateRef<VEquipmentType>{&state, "VEQUIPMENTTYPE_METRO_ROADGRAV"}});
+	for (int i = 0; i < 2; ++i)
+	{
+		state.initial_vehicles.emplace_back(
+		    StateRef<VehicleType>{&state, "VEHICLETYPE_PHOENIX_HOVERCAR"},
+		    std::list<StateRef<VEquipmentType>>{
+		        StateRef<VEquipmentType>{&state, "VEQUIPMENTTYPE_BOLTER_4000_LASER_GUN"},
+		        StateRef<VEquipmentType>{&state, "VEQUIPMENTTYPE_JANITOR_MISSILE_ARRAY"},
+		        StateRef<VEquipmentType>{&state, "VEQUIPMENTTYPE_SD_SPORTS"}});
+	}
+	state.initial_vehicles.emplace_back(
+	    StateRef<VehicleType>{&state, "VEHICLETYPE_WOLFHOUND_APC"},
+	    std::list<StateRef<VEquipmentType>>{
+	        StateRef<VEquipmentType>{&state, "VEQUIPMENTTYPE_CARGO_MODULE"},
+	        StateRef<VEquipmentType>{&state, "VEQUIPMENTTYPE_GLM_ARRAY"},
+	        StateRef<VEquipmentType>{&state, "VEQUIPMENTTYPE_METRO_POWERGRAV"}});
 
 	auto &data = this->ufo2p;
 	LogInfo("Number of vehicle strings: %zu", data.vehicle_names->readStrings.size());
