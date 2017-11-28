@@ -1,5 +1,5 @@
 # OpenApocalypse [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Are%20you%20fan%20X-Com%20Apocalypse?%20OpenApoc%20its%20clone%20of%20this%20great%20game%20-%20contribute!%20https://github.com/OpenApoc/OpenApoc&hashtags=games,openapoc,xcom)
-> OpenApoc is an open-source clone of the original [X-COM: Apocalypse](http://www.ufopaedia.org/index.php/Apocalypse), licensed under the MIT and written in C++ / SDL2. It was originally founded by PmProg in July 2014, and has since grown in to [community](http://www.ufopaedia.org/index.php/Credits_(OpenApoc)). 
+> OpenApoc is an open-source re-implementation of the original [X-COM: Apocalypse](http://www.ufopaedia.org/index.php/Apocalypse), that requires the original files to run, licensed under the MIT and written in C++ / SDL2. It was originally founded by PmProg in July 2014, and has since grown in to [community](http://www.ufopaedia.org/index.php/Credits_(OpenApoc)). 
 <br>
 <p align="center">
 <a href="https://travis-ci.org/OpenApoc/OpenApoc">
@@ -186,6 +186,9 @@ make -j4
   - you need have all files in ISO file including MUSIC etc
   - if it's in .iso format, rename it to "cd.iso"
   - if it's not, copy all the contents into a folder and rename the folder to "cd.iso"
+  - we also support the .cue / .bin files (which are used, for example, in the gog.com version)
+  - you rename the .cue file "cd.iso", put it in the data/ folder, then put the .bin file in the same folder 
+(without changing it's name - so for example the gog.com file remails "XCOM.BIN")
 * Download OpenApoc: [![Windows Build Status](https://img.shields.io/appveyor/ci/OpenApoc/openapoc.svg?label=WindowsAppveyor)](https://ci.appveyor.com/project/openapoc/openapoc/)
   - If you see a green latest build then you can get it, if it's not then go to HISTORY at the top and click another build that's green
   - Click Platform x64 (or Win32 if you need 32bit binaries)
