@@ -29,8 +29,8 @@ endif()
 
 message("Using CD at \"${CD_PATH}\"")
 
-set(CMAKE_C_FLAGS_SANITIZE "-O1 -g1 -fsanitize=address")
-set(CMAKE_CXX_FLAGS_SANITIZE "-O1 -g1 -fsanitize=address")
+set(CMAKE_C_FLAGS_SANITIZE "-O1 -g -fsanitize=address")
+set(CMAKE_CXX_FLAGS_SANITIZE "-O1 -g -fsanitize=address")
 
 set(CMAKE_C_FLAGS_QUICK "-O1 -g0")
 set(CMAKE_CXX_FLAGS_QUICK "-O1 -g0")
