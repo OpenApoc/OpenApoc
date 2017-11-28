@@ -53,8 +53,10 @@ City::~City()
 		if (s->tileObject)
 			s->tileObject->removeFromMap();
 		s->tileObject = nullptr;
+		s->overlayDoodad = nullptr;
 		s->city.clear();
 		s->building.clear();
+		s->clearSupportedParts();
 	}
 	for (auto &b : this->buildings)
 	{
@@ -62,6 +64,11 @@ City::~City()
 		b.second->currentAgents.clear();
 		b.second->city.clear();
 		b.second->base.clear();
+	}
+	for (auto &t : this->tile_types)
+	{
+		// Some damaged tile links can loop, causing a leak if they're not broken
+		t.second->damagedTile.clear();
 	}
 }
 
