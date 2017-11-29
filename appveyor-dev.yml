@@ -24,8 +24,8 @@ build:
 after_build:
 - git describe --tags > build-id
 - set /p OPENAPOC_VERSION= < build-id
-- set OPENAPOC_FILENAME=OpenApoc-%PLATFORM%-%OPENAPOC_VERSION%.zip
-- set OPENAPOC_DEBUG_FILENAME=OpenApoc-debug-%PLATFORM%-%OPENAPOC_VERSION%.zip
+- set OPENAPOC_FILENAME=OpenApoc-%PLATFORM%-%OPENAPOC_VERSION%.7z
+- set OPENAPOC_DEBUG_FILENAME=OpenApoc-debug-%PLATFORM%-%OPENAPOC_VERSION%.7z
 - mkdir OpenApoc-%OPENAPOC_VERSION%
 - echo %APPVEYOR_REPO_COMMIT% > OpenApoc-%OPENAPOC_VERSION%\git-commit
 - echo %OPENAPOC_VERSION% > OpenApoc-%OPENAPOC_VERSION%\build-id
