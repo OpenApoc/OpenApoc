@@ -10,7 +10,7 @@ configuration:
 #  - Debug
 platform:
   - x64
-  - Win32
+#  - Win32
 #clone_depth: 10
 before_build:
 - git submodule init
