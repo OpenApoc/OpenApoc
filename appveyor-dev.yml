@@ -37,8 +37,8 @@ after_build:
 - copy portable.txt OpenApoc-%OPENAPOC_VERSION%\
 - copy README.md OpenApoc-%OPENAPOC_VERSION%\
 - copy README_HOTKEYS.txt OpenApoc-%OPENAPOC_VERSION%\
-- 7z a %OPENAPOC_FILENAME% OpenApoc-%OPENAPOC_VERSION%
+- 7z a %OPENAPOC_FILENAME% OpenApoc-%OPENAPOC_VERSION% -mx=9 -myx=7
 - copy bin\%PLATFORM%\%CONFIGURATION%\OpenApoc.pdb OpenApoc-%OPENAPOC_VERSION%\
-- 7z a %OPENAPOC_DEBUG_FILENAME% OpenApoc-%OPENAPOC_VERSION%\*.pdb
+- 7z a %OPENAPOC_DEBUG_FILENAME% OpenApoc-%OPENAPOC_VERSION%\*.pdb -mx=9 -myx=7
 - appveyor PushArtifact %OPENAPOC_FILENAME%
 - appveyor PushArtifact %OPENAPOC_DEBUG_FILENAME%
