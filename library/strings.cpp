@@ -6,8 +6,6 @@
 // symbols as part of the module that uses it
 #define BOOST_ALL_NO_LIB
 #include <boost/algorithm/string/predicate.hpp>
-#include <boost/locale/conversion.hpp>
-#include <boost/locale/encoding_utf.hpp>
 #include <boost/locale/message.hpp>
 
 #ifdef DUMP_TRANSLATION_STRINGS
@@ -186,7 +184,9 @@ UString::UString(UString &&other) { this->u8Str = std::move(other.u8Str); }
 
 UString::UString(UniChar uc) : u8Str()
 {
-	u8Str = boost::locale::conv::utf_to_utf<char>(&uc, &uc + 1);
+	char buf[4];
+	auto bytes = unichar_to_utf8(uc, buf);
+	u8Str = {buf, bytes};
 }
 
 const std::string &UString::str() const { return this->u8Str; }
