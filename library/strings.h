@@ -18,16 +18,11 @@ class UString
   public:
 	// ASSUMPTIONS:
 	// All std::string/char are utf8
-	// wchar_t/std::wstring are platform-dependant unicode types
 	// All lengths/offsets are in unicode code-points (not bytes/anything)
 	UString(const std::string &str);
 	UString(std::string &&str);
-	UString(const std::wstring &wstr);
-	UString(char c);
-	UString(wchar_t wc);
 	UString(UniChar uc);
 	UString(const char *cstr);
-	UString(const wchar_t *wcstr);
 	UString(UString &&other);
 	UString();
 	~UString();
@@ -36,7 +31,6 @@ class UString
 	UString &operator=(const UString &other);
 
 	const std::string &str() const;
-	std::wstring wstr() const;
 
 	const char *cStr() const;
 	size_t cStrLength() const;
@@ -55,10 +49,7 @@ class UString
 	UString &operator+=(const UString &ustr);
 	// UString& operator+=(const std::string& str);
 	// UString& operator+=(const char* cstr);
-	// UString& operator+=(const std::wstring& wstr);
-	// UString& operator+=(const wchar_t* wcstr);
 	// UString& operator+=(const char& c);
-	// UString& operator+=(const wchar_t& wc);
 	// UString& operator+=(const UniChar& uc);
 
 	void remove(size_t offset, size_t count);
