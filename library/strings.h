@@ -35,7 +35,9 @@ class UString
 	const char *cStr() const;
 	size_t cStrLength() const;
 
+	/* Only changes case of ASCII-range characters */
 	UString toUpper() const;
+	/* Only changes case of ASCII-range characters */
 	UString toLower() const;
 	std::vector<UString> split(const UString &delims) const;
 	std::list<UString> splitlist(const UString &delims) const;

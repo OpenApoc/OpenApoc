@@ -1,5 +1,6 @@
 #include "library/strings.h"
 #include "library/strings_format.h"
+#include <cctype>
 #include <tuple> // used for std::ignore
 // Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
 // symbols as part of the module that uses it
@@ -203,9 +204,33 @@ UString UString::substr(size_t offset, size_t length) const
 	return this->u8Str.substr(offset, length);
 }
 
-UString UString::toUpper() const { return boost::locale::to_upper(this->u8Str); }
+UString UString::toUpper() const
+{
+	/* Only change the case on ascii range characters (codepoint <=0x7f)
+	 * As we know the top bit is set for any bytes outside this range no matter the postion in the
+	 * utf8 stream, we can cheat a bit here */
+	UString upper_string = *this;
+	for (size_t i = 0; i < upper_string.cStrLength(); i++)
+	{
+		if ((upper_string.u8Str[i] & 0b10000000) == 0)
+			upper_string.u8Str[i] = toupper(upper_string.u8Str[i]);
+	}
+	return upper_string;
+}
 
-UString UString::toLower() const { return boost::locale::to_lower(this->u8Str); }
+UString UString::toLower() const
+{
+	/* Only change the case on ascii range characters (codepoint <=0x7f)
+	 * As we know the top bit is set for any bytes outside this range no matter the postion in the
+	 * utf8 stream, we can cheat a bit here */
+	UString lower_string = *this;
+	for (size_t i = 0; i < lower_string.cStrLength(); i++)
+	{
+		if ((lower_string.u8Str[i] & 0b10000000) == 0)
+			lower_string.u8Str[i] = tolower(lower_string.u8Str[i]);
+	}
+	return lower_string;
+}
 
 UString &UString::operator=(const UString &other) = default;
 
