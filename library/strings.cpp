@@ -19,6 +19,108 @@
 namespace OpenApoc
 {
 
+static constexpr UniChar REPLACEMENT_CHARACTER = 0xfffd;
+
+static UniChar utf8_to_unichar(const char *str, size_t &num_bytes_read)
+{
+	/* This will pick up null bytes */
+	if ((str[0] & 0b10000000) == 0)
+	{
+		num_bytes_read = 1;
+		return static_cast<UniChar>(str[0]);
+	}
+	if ((str[0] & 0b11100000) == 0b11000000)
+	{
+		num_bytes_read = 2;
+		if ((str[1] & 0b11000000) != 0b10000000)
+		{
+			return REPLACEMENT_CHARACTER;
+		}
+		UniChar c = 0;
+		c = str[0] & 0b00011111;
+		c <<= 6;
+		c |= str[1] & 0b00111111;
+		return c;
+	}
+	if ((str[0] & 0b11110000) == 0b11100000)
+	{
+		num_bytes_read = 3;
+		if ((str[1] & 0b11000000) != 0b10000000 || (str[2] & 0b11000000) != 0b10000000)
+		{
+			return REPLACEMENT_CHARACTER;
+		}
+		UniChar c = 0;
+		c = str[0] & 0b00001111;
+		c <<= 6;
+		c |= str[1] & 0b00111111;
+		c <<= 6;
+		c |= str[2] & 0b00111111;
+		return c;
+	}
+	if ((str[0] & 0b11111000) == 0b11110000)
+	{
+		num_bytes_read = 4;
+		if ((str[1] & 0b11000000) != 0b10000000 || (str[2] & 0b11000000) != 0b10000000 ||
+		    (str[3] & 0b11000000) != 0b10000000)
+		{
+			return REPLACEMENT_CHARACTER;
+		}
+		UniChar c = 0;
+		c = str[0] & 0b00000111;
+		c <<= 6;
+		c |= str[1] & 0b00111111;
+		c <<= 6;
+		c |= str[2] & 0b00111111;
+		c <<= 6;
+		c |= str[3] & 0b00111111;
+		return c;
+	}
+	/* Invalid character start - return a replacement character and skip 1 char */
+	num_bytes_read = 1;
+	return REPLACEMENT_CHARACTER;
+}
+
+/* Returns the number of bytes used */
+static size_t unichar_to_utf8(const UniChar uc, char str[4])
+{
+	if (uc < 0x7F)
+	{
+		str[0] = static_cast<char>(uc);
+		return 1;
+	}
+	if (uc < 0x7FF)
+	{
+		UniChar c = uc;
+		str[1] = 0b10000000 | (0b00111111 & c);
+		c >>= 6;
+		str[0] = 0b11000000 | (0b00011111 & c);
+		return 2;
+	}
+	if (uc < 0xFFFF)
+	{
+		UniChar c = uc;
+		str[2] = 0b10000000 | (0b00111111 & c);
+		c >>= 6;
+		str[1] = 0b10000000 | (0b00111111 & c);
+		c >>= 6;
+		str[0] = 0b11100000 | (0b00001111 & c);
+		return 3;
+	}
+	if (uc < 0x10FFFF)
+	{
+		UniChar c = uc;
+		str[3] = 0b10000000 | (0b00111111 & c);
+		c >>= 6;
+		str[2] = 0b10000000 | (0b00111111 & c);
+		c >>= 6;
+		str[1] = 0b10000000 | (0b00111111 & c);
+		c >>= 6;
+		str[0] = 0b11110000 | (0b00000111 & c);
+		return 4;
+	}
+	return unichar_to_utf8(REPLACEMENT_CHARACTER, str);
+}
+
 #ifdef DUMP_TRANSLATION_STRINGS
 
 static std::map<UString, std::set<UString>> trStrings;
@@ -115,16 +217,43 @@ UString &UString::operator+=(const UString &other)
 
 size_t UString::length() const
 {
-	auto pointString = boost::locale::conv::utf_to_utf<UniChar>(this->u8Str);
-	return pointString.length();
+	size_t len = 0;
+	for (const auto &c : *this)
+		len++;
+	return len;
 }
 
 void UString::insert(size_t offset, const UString &other)
 {
-	this->u8Str.insert(offset, other.u8Str);
+	auto it = this->begin();
+	while (offset && it != this->end())
+	{
+		++it;
+		offset--;
+	}
+	if (offset)
+	{
+		throw std::out_of_range("UString::insert() offset longer than string");
+	}
+	this->u8Str.insert(it.offset, other.u8Str);
 }
 
-void UString::remove(size_t offset, size_t count) { this->u8Str.erase(offset, count); }
+void UString::remove(size_t offset, size_t count)
+{
+	auto it = this->begin();
+	while (offset && it != this->end())
+	{
+		++it;
+		offset--;
+	}
+	while (count && it != this->end())
+	{
+		size_t num_bytes;
+		utf8_to_unichar(it.s.cStr() + it.offset, num_bytes);
+		this->u8Str.erase(it.offset, num_bytes);
+		count--;
+	}
+}
 
 bool UString::operator!=(const UString &other) const { return this->u8Str != other.u8Str; }
 
@@ -181,12 +310,17 @@ UString::ConstIterator UString::begin() const { return UString::ConstIterator(*t
 
 UString::ConstIterator UString::end() const
 {
-	return UString::ConstIterator(*this, this->length());
+	return UString::ConstIterator(*this, this->u8Str.length());
 }
 
 UString::ConstIterator UString::ConstIterator::operator++()
 {
-	this->offset++;
+	const char *ptr = s.cStr();
+	ptr += this->offset;
+	size_t num_bytes = 0;
+	utf8_to_unichar(ptr, num_bytes);
+
+	this->offset += num_bytes;
 	return *this;
 }
 
@@ -197,8 +331,8 @@ bool UString::ConstIterator::operator!=(const UString::ConstIterator &other) con
 
 UniChar UString::ConstIterator::operator*() const
 {
-	auto pointString = boost::locale::conv::utf_to_utf<int>(this->s.str());
-	return pointString[this->offset];
+	size_t num_bytes_unused;
+	return utf8_to_unichar(this->s.cStr() + this->offset, num_bytes_unused);
 }
 
 int Strings::toInteger(const UString &s)
