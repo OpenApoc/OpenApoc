@@ -1,8 +1,6 @@
 # project name, and type
 PROJECT(OpenApoc_SerializationTool CXX C)
 
-include(cotire)
-
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
@@ -32,7 +30,3 @@ target_link_libraries(OpenApoc_SerializationTool OpenApoc_Framework)
 target_link_libraries(OpenApoc_SerializationTool OpenApoc_GameState)
 
 set_property(TARGET OpenApoc_SerializationTool PROPERTY CXX_STANDARD 11)
-
-if(ENABLE_COTIRE)
-cotire(OpenApoc_SerializationTool)
-endif()

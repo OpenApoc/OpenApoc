@@ -1,8 +1,6 @@
 # project name, and type
 PROJECT(OpenApoc_Forms CXX C)
 
-include (cotire)
-
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package (Threads REQUIRED)
 
@@ -61,9 +59,3 @@ target_include_directories(OpenApoc_Forms PUBLIC ${CMAKE_SOURCE_DIR})
 
 set_property(TARGET OpenApoc_Forms PROPERTY CXX_STANDARD 11)
 
-set_target_properties(OpenApoc_Forms PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
-	"forms_pch.h")
-
-if(ENABLE_COTIRE)
-	cotire(OpenApoc_Forms)
-endif()

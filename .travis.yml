@@ -18,7 +18,7 @@ matrix:
           packages:
             - g++-5
       env:
-        - MATRIX_ENV="PASS=build CXX='ccache g++-5' CC='ccache gcc-5' BUILD_TYPE=RelWithDebInfo"
+        - MATRIX_ENV="PASS=build CXX='g++-5' CC='gcc-5' BUILD_TYPE=RelWithDebInfo"
     - os: linux
       addons:
         apt:
@@ -27,7 +27,7 @@ matrix:
           packages:
             - clang-4.0
       env:
-        - MATRIX_ENV="PASS=build CXX='ccache clang++-4.0' CC='ccache clang-4.0' BUILD_TYPE=RelWithDebInfo"
+        - MATRIX_ENV="PASS=build CXX='clang++-4.0' CC='clang-4.0' BUILD_TYPE=sanitize"
     - os: linux
       addons:
         apt:
@@ -53,7 +53,7 @@ before_install:
 
 before_script:
   - export CFLAGS="-Wall -Wextra" CXXFLAGS="-Wall -Wextra"
-  - if [ "$PASS" = "build" ]; then $(which time) cmake . -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCLANG_TIDY=clang-tidy-4.0 -DCLANG_FORMAT=clang-format-4.0 -DENABLE_TESTS=ON -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}" -DENABLE_COTIRE=OFF; fi
+  - if [ "$PASS" = "build" ]; then $(which time) cmake . -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCLANG_TIDY=clang-tidy-4.0 -DCLANG_FORMAT=clang-format-4.0 -DENABLE_TESTS=ON -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}"; fi
 
 
 script:

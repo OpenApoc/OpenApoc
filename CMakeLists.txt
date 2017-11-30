@@ -8,26 +8,17 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
+include(ccache)
+
 # check compiler
 INCLUDE(CheckCXXCompilerFlag)
 INCLUDE(CheckCCompilerFlag)
 
-set(allow_cotire ON)
-
 # Sanitize doesn't seem to work with pch on gcc
 string(TOLOWER "${CMAKE_BUILD_TYPE}" lower_build_type)
 
-if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
-	if ("${lower_build_type}" STREQUAL "sanitize")
-		MESSAGE("Disabling COTIRE on sanitize build")
-		set(allow_cotire OFF)
-	endif()
-endif()
-
 option(LTO "Build using link-time-optimisations" OFF)
 option(ENABLE_TESTS "Build some unit tests" ON)
-option(ENABLE_COTIRE "Enable Compile TIme Reducer (AKA use PCH)"
-		${allow_cotire})
 
 set(CD_PATH ${CMAKE_SOURCE_DIR}/data/cd.iso CACHE STRING "Path to cd.iso (used
 by test and extractor")
@@ -38,8 +29,8 @@ endif()
 
 message("Using CD at \"${CD_PATH}\"")
 
-set(CMAKE_C_FLAGS_SANITIZE "-O1 -g1 -fsanitize=address")
-set(CMAKE_CXX_FLAGS_SANITIZE "-O1 -g1 -fsanitize=address")
+set(CMAKE_C_FLAGS_SANITIZE "-O1 -g -fsanitize=address")
+set(CMAKE_CXX_FLAGS_SANITIZE "-O1 -g -fsanitize=address")
 
 set(CMAKE_C_FLAGS_QUICK "-O1 -g0")
 set(CMAKE_CXX_FLAGS_QUICK "-O1 -g0")
@@ -49,6 +40,18 @@ CHECK_CXX_COMPILER_FLAG("-flto"
 	COMPILER_SUPPORTS_LTO)
 CHECK_CXX_COMPILER_FLAG("-flto=4"
 	COMPILER_SUPPORTS_LTO4)
+
+CHECK_CXX_COMPILER_FLAG("-fvisibility=hidden"
+	CXX_COMPILER_SUPPORTS_HIDDEN_VISIBILITY)
+CHECK_C_COMPILER_FLAG("-fvisibility=hidden"
+	C_COMPILER_SUPPORTS_HIDDEN_VISIBILITY)
+
+if (CXX_COMPILER_SUPPORTS_HIDDEN_VISIBILITY)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
+endif()
+if (C_COMPILER_SUPPORTS_HIDDEN_VISIBILITY)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden")
+endif()
 
 if (LTO)
 	if(CMAKE_CXX_COMPILER_ID STREQUAL GNU)

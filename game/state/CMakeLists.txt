@@ -1,8 +1,6 @@
 # project name, and type
 PROJECT(OpenApoc_GameState CXX C)
 
-include(cotire)
-
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
@@ -219,10 +217,3 @@ add_custom_command(OUTPUT
 		DEPENDS
 		${CMAKE_BINARY_DIR}/bin/OpenApoc_GamestateSerializeGen
 		${CMAKE_SOURCE_DIR}/game/state/gamestate_serialize.xml)
-
-set_target_properties(OpenApoc_GameState PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
-	"gamestate_pch.h")
-
-if(ENABLE_COTIRE)
-	cotire(OpenApoc_GameState)
-endif()
