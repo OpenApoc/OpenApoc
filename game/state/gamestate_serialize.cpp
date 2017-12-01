@@ -27,63 +27,63 @@
 namespace OpenApoc
 {
 
-void serializeIn(const GameState *, const sp<SerializationNode> &node, UString &str)
+void serializeIn(const GameState *, SerializationNode *node, UString &str)
 {
 	if (!node)
 		return;
 	str = node->getValue();
 }
 
-void serializeIn(const GameState *, const sp<SerializationNode> &node, unsigned int &val)
+void serializeIn(const GameState *, SerializationNode *node, unsigned int &val)
 {
 	if (!node)
 		return;
 	val = node->getValueUInt();
 }
 
-void serializeIn(const GameState *, const sp<SerializationNode> &node, unsigned char &val)
+void serializeIn(const GameState *, SerializationNode *node, unsigned char &val)
 {
 	if (!node)
 		return;
 	val = node->getValueUChar();
 }
 
-void serializeIn(const GameState *, const sp<SerializationNode> &node, float &val)
+void serializeIn(const GameState *, SerializationNode *node, float &val)
 {
 	if (!node)
 		return;
 	val = node->getValueFloat();
 }
 
-void serializeIn(const GameState *, const sp<SerializationNode> &node, int &val)
+void serializeIn(const GameState *, SerializationNode *node, int &val)
 {
 	if (!node)
 		return;
 	val = node->getValueInt();
 }
 
-void serializeIn(const GameState *, const sp<SerializationNode> &node, uint64_t &val)
+void serializeIn(const GameState *, SerializationNode *node, uint64_t &val)
 {
 	if (!node)
 		return;
 	val = node->getValueUInt64();
 }
 
-void serializeIn(const GameState *, const sp<SerializationNode> &node, bool &val)
+void serializeIn(const GameState *, SerializationNode *node, bool &val)
 {
 	if (!node)
 		return;
 	val = node->getValueBool();
 }
 
-void serializeIn(const GameState *, const sp<SerializationNode> &node, sp<LazyImage> &ptr)
+void serializeIn(const GameState *, SerializationNode *node, sp<LazyImage> &ptr)
 {
 	if (!node)
 		return;
 	ptr = std::static_pointer_cast<LazyImage>(fw().data->loadImage(node->getValue(), true));
 }
 
-void serializeIn(const GameState *, const sp<SerializationNode> &node, sp<Image> &ptr)
+void serializeIn(const GameState *, SerializationNode *node, sp<Image> &ptr)
 {
 	if (!node)
 		return;
@@ -91,28 +91,28 @@ void serializeIn(const GameState *, const sp<SerializationNode> &node, sp<Image>
 }
 
 // std::vector<bool> is special
-void serializeIn(const GameState *, const sp<SerializationNode> &node, std::vector<bool> &vector)
+void serializeIn(const GameState *, SerializationNode *node, std::vector<bool> &vector)
 {
 	if (!node)
 		return;
 	vector = node->getValueBoolVector();
 }
 
-void serializeIn(const GameState *, const sp<SerializationNode> &node, sp<VoxelSlice> &ptr)
+void serializeIn(const GameState *, SerializationNode *node, sp<VoxelSlice> &ptr)
 {
 	if (!node)
 		return;
 	ptr = fw().data->loadVoxelSlice(node->getValue());
 }
 
-void serializeIn(const GameState *, const sp<SerializationNode> &node, sp<Sample> &ptr)
+void serializeIn(const GameState *, SerializationNode *node, sp<Sample> &ptr)
 {
 	if (!node)
 		return;
 	ptr = fw().data->loadSample(node->getValue());
 }
 
-void serializeIn(const GameState *state, const sp<SerializationNode> &node, VoxelMap &map)
+void serializeIn(const GameState *state, SerializationNode *node, VoxelMap &map)
 {
 	if (!node)
 		return;
@@ -120,7 +120,7 @@ void serializeIn(const GameState *state, const sp<SerializationNode> &node, Voxe
 	serializeIn(state, node->getNode("slices"), map.slices);
 }
 
-void serializeIn(const GameState *state, const sp<SerializationNode> &node, Colour &c)
+void serializeIn(const GameState *state, SerializationNode *node, Colour &c)
 {
 	if (!node)
 		return;
@@ -130,8 +130,7 @@ void serializeIn(const GameState *state, const sp<SerializationNode> &node, Colo
 	serializeIn(state, node->getNode("a"), c.a);
 }
 
-void serializeIn(const GameState *state, const sp<SerializationNode> &node,
-                 Xorshift128Plus<uint32_t> &t)
+void serializeIn(const GameState *state, SerializationNode *node, Xorshift128Plus<uint32_t> &t)
 {
 	if (!node)
 		return;
@@ -142,44 +141,39 @@ void serializeIn(const GameState *state, const sp<SerializationNode> &node,
 	t.setState(s);
 }
 
-void serializeOut(const sp<SerializationNode> &node, const UString &string, const UString &)
+void serializeOut(SerializationNode *node, const UString &string, const UString &)
 {
 	node->setValue(string);
 }
 
-void serializeOut(const sp<SerializationNode> &node, const unsigned int &val, const unsigned int &)
+void serializeOut(SerializationNode *node, const unsigned int &val, const unsigned int &)
 {
 	node->setValueUInt(val);
 }
 
-void serializeOut(const sp<SerializationNode> &node, const unsigned char &val,
-                  const unsigned char &)
+void serializeOut(SerializationNode *node, const unsigned char &val, const unsigned char &)
 {
 	node->setValueUChar(val);
 }
 
-void serializeOut(const sp<SerializationNode> &node, const float &val, const float &)
+void serializeOut(SerializationNode *node, const float &val, const float &)
 {
 	node->setValueFloat(val);
 }
 
-void serializeOut(const sp<SerializationNode> &node, const int &val, const int &)
-{
-	node->setValueInt(val);
-}
+void serializeOut(SerializationNode *node, const int &val, const int &) { node->setValueInt(val); }
 
-void serializeOut(const sp<SerializationNode> &node, const uint64_t &val, const uint64_t &)
+void serializeOut(SerializationNode *node, const uint64_t &val, const uint64_t &)
 {
 	node->setValueUInt64(val);
 }
 
-void serializeOut(const sp<SerializationNode> &node, const bool &val, const bool &)
+void serializeOut(SerializationNode *node, const bool &val, const bool &)
 {
 	node->setValueBool(val);
 }
 
-void serializeOut(const sp<SerializationNode> &node, const sp<LazyImage> &ptr,
-                  const sp<LazyImage> &)
+void serializeOut(SerializationNode *node, const sp<LazyImage> &ptr, const sp<LazyImage> &)
 {
 	if (ptr != nullptr)
 	{
@@ -187,7 +181,7 @@ void serializeOut(const sp<SerializationNode> &node, const sp<LazyImage> &ptr,
 	}
 }
 
-void serializeOut(const sp<SerializationNode> &node, const sp<Image> &ptr, const sp<Image> &)
+void serializeOut(SerializationNode *node, const sp<Image> &ptr, const sp<Image> &)
 {
 	if (ptr != nullptr)
 	{
@@ -195,8 +189,7 @@ void serializeOut(const sp<SerializationNode> &node, const sp<Image> &ptr, const
 	}
 }
 
-void serializeOut(const sp<SerializationNode> &node, const sp<VoxelSlice> &ptr,
-                  const sp<VoxelSlice> &)
+void serializeOut(SerializationNode *node, const sp<VoxelSlice> &ptr, const sp<VoxelSlice> &)
 {
 	if (ptr)
 	{
@@ -204,7 +197,7 @@ void serializeOut(const sp<SerializationNode> &node, const sp<VoxelSlice> &ptr,
 	}
 }
 
-void serializeOut(const sp<SerializationNode> &node, const sp<Sample> &ptr, const sp<Sample> &)
+void serializeOut(SerializationNode *node, const sp<Sample> &ptr, const sp<Sample> &)
 {
 	if (ptr)
 	{
@@ -212,19 +205,19 @@ void serializeOut(const sp<SerializationNode> &node, const sp<Sample> &ptr, cons
 	}
 }
 
-void serializeOut(const sp<SerializationNode> &node, const std::vector<bool> &vector,
+void serializeOut(SerializationNode *node, const std::vector<bool> &vector,
                   const std::vector<bool> &)
 {
 	node->setValueBoolVector(vector);
 }
 
-void serializeOut(const sp<SerializationNode> &node, const VoxelMap &map, const VoxelMap &ref)
+void serializeOut(SerializationNode *node, const VoxelMap &map, const VoxelMap &ref)
 {
 	serializeOut(node->addNode("size"), map.size, ref.size);
 	serializeOut(node->addNode("slices"), map.slices, ref.slices);
 }
 
-void serializeOut(const sp<SerializationNode> &node, const Colour &c, const Colour &ref)
+void serializeOut(SerializationNode *node, const Colour &c, const Colour &ref)
 {
 	serializeOut(node->addNode("r"), c.r, ref.r);
 	serializeOut(node->addNode("g"), c.g, ref.g);
@@ -232,7 +225,7 @@ void serializeOut(const sp<SerializationNode> &node, const Colour &c, const Colo
 	serializeOut(node->addNode("a"), c.a, ref.a);
 }
 
-void serializeOut(const sp<SerializationNode> &node, const Xorshift128Plus<uint32_t> &t,
+void serializeOut(SerializationNode *node, const Xorshift128Plus<uint32_t> &t,
                   const Xorshift128Plus<uint32_t> &ref)
 {
 	if (!node)
@@ -246,7 +239,7 @@ void serializeOut(const sp<SerializationNode> &node, const Xorshift128Plus<uint3
 	serializeOut(node->addNode("s1"), s[1], sr[1]);
 }
 
-void serializeIn(const GameState *state, sp<SerializationNode> node, sp<UnitAI> &ai)
+void serializeIn(const GameState *state, SerializationNode *node, sp<UnitAI> &ai)
 {
 	if (!node)
 		return;
@@ -293,7 +286,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, sp<UnitAI> 
 	}
 }
 
-void serializeIn(const GameState *state, sp<SerializationNode> node, sp<TacticalAI> &ai)
+void serializeIn(const GameState *state, SerializationNode *node, sp<TacticalAI> &ai)
 {
 	if (!node)
 		return;
@@ -312,7 +305,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, sp<Tactical
 	}
 }
 
-void serializeOut(sp<SerializationNode> node, const sp<UnitAI> &ptr, const sp<UnitAI> &ref)
+void serializeOut(SerializationNode *node, const sp<UnitAI> &ptr, const sp<UnitAI> &ref)
 {
 	if (ptr)
 	{
@@ -401,7 +394,7 @@ bool operator==(const UnitAI &a, const UnitAI &b)
 }
 bool operator!=(const UnitAI &a, const UnitAI &b) { return !(a == b); }
 
-void serializeOut(sp<SerializationNode> node, const sp<TacticalAI> &ptr, const sp<TacticalAI> &ref)
+void serializeOut(SerializationNode *node, const sp<TacticalAI> &ptr, const sp<TacticalAI> &ref)
 {
 	if (ptr)
 	{
@@ -442,7 +435,7 @@ bool GameState::saveGame(const UString &path, bool pack, bool pretty)
 {
 	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
-	if (serialize(archive))
+	if (serialize(archive.get()))
 	{
 		archive->write(path, pack, pretty);
 		return true;
@@ -461,10 +454,10 @@ bool GameState::loadGame(const UString &path)
 		return false;
 	}
 
-	return deserialize(archive);
+	return deserialize(archive.get());
 }
 
-bool GameState::serialize(sp<SerializationArchive> archive) const
+bool GameState::serialize(SerializationArchive *archive) const
 {
 	try
 	{
@@ -475,13 +468,13 @@ bool GameState::serialize(sp<SerializationArchive> archive) const
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
+		LogError("Serialization failed: \"%s\"", e.what());
 		return false;
 	}
 	return true;
 }
 
-bool GameState::deserialize(const sp<SerializationArchive> archive)
+bool GameState::deserialize(SerializationArchive *archive)
 {
 	try
 	{
@@ -489,13 +482,13 @@ bool GameState::deserialize(const sp<SerializationArchive> archive)
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
+		LogError("Serialization failed: \"%s\"", e.what());
 		return false;
 	}
 	return true;
 }
 
-static bool serialize(const BattleMapTileset &tileSet, sp<SerializationArchive> archive)
+static bool serialize(const BattleMapTileset &tileSet, SerializationArchive *archive)
 {
 	try
 	{
@@ -504,14 +497,14 @@ static bool serialize(const BattleMapTileset &tileSet, sp<SerializationArchive> 
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
+		LogError("Serialization failed: \"%s\"", e.what());
 		return false;
 	}
 	return true;
 }
 
 static bool deserialize(BattleMapTileset &tileSet, const GameState &state,
-                        const sp<SerializationArchive> archive)
+                        SerializationArchive *archive)
 {
 	try
 	{
@@ -519,7 +512,7 @@ static bool deserialize(BattleMapTileset &tileSet, const GameState &state,
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
+		LogError("Serialization failed: \"%s\"", e.what());
 		return false;
 	}
 	return true;
@@ -529,7 +522,7 @@ bool BattleMapTileset::saveTileset(const UString &path, bool pack, bool pretty)
 {
 	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
-	if (serialize(*this, archive))
+	if (serialize(*this, archive.get()))
 	{
 		archive->write(path, pack, pretty);
 		return true;
@@ -548,10 +541,10 @@ bool BattleMapTileset::loadTileset(GameState &state, const UString &path)
 		return false;
 	}
 
-	return deserialize(*this, state, archive);
+	return deserialize(*this, state, archive.get());
 }
 
-static bool serialize(const BattleUnitImagePack &imagePack, sp<SerializationArchive> archive)
+static bool serialize(const BattleUnitImagePack &imagePack, SerializationArchive *archive)
 {
 	try
 	{
@@ -560,14 +553,14 @@ static bool serialize(const BattleUnitImagePack &imagePack, sp<SerializationArch
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
+		LogError("Serialization failed: \"%s\"", e.what());
 		return false;
 	}
 	return true;
 }
 
 static bool deserialize(BattleUnitImagePack &imagePack, const GameState &state,
-                        const sp<SerializationArchive> archive)
+                        SerializationArchive *archive)
 {
 	try
 	{
@@ -575,7 +568,7 @@ static bool deserialize(BattleUnitImagePack &imagePack, const GameState &state,
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
+		LogError("Serialization failed: \"%s\"", e.what());
 		return false;
 	}
 	return true;
@@ -585,7 +578,7 @@ bool BattleUnitImagePack::saveImagePack(const UString &path, bool pack, bool pre
 {
 	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
-	if (serialize(*this, archive))
+	if (serialize(*this, archive.get()))
 	{
 		archive->write(path, pack, pretty);
 		return true;
@@ -604,11 +597,10 @@ bool BattleUnitImagePack::loadImagePack(GameState &state, const UString &path)
 		return false;
 	}
 
-	return deserialize(*this, state, archive);
+	return deserialize(*this, state, archive.get());
 }
 
-static bool serialize(const BattleUnitAnimationPack &animationPack,
-                      sp<SerializationArchive> archive)
+static bool serialize(const BattleUnitAnimationPack &animationPack, SerializationArchive *archive)
 {
 	try
 	{
@@ -617,14 +609,14 @@ static bool serialize(const BattleUnitAnimationPack &animationPack,
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
+		LogError("Serialization failed: \"%s\"", e.what());
 		return false;
 	}
 	return true;
 }
 
 static bool deserialize(BattleUnitAnimationPack &animationPack, const GameState &state,
-                        const sp<SerializationArchive> archive)
+                        SerializationArchive *archive)
 {
 	try
 	{
@@ -632,7 +624,7 @@ static bool deserialize(BattleUnitAnimationPack &animationPack, const GameState 
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
+		LogError("Serialization failed: \"%s\"", e.what());
 		return false;
 	}
 	return true;
@@ -642,7 +634,7 @@ bool BattleUnitAnimationPack::saveAnimationPack(const UString &path, bool pack, 
 {
 	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
-	if (serialize(*this, archive))
+	if (serialize(*this, archive.get()))
 	{
 		archive->write(path, pack, pretty);
 		return true;
@@ -661,10 +653,10 @@ bool BattleUnitAnimationPack::loadAnimationPack(GameState &state, const UString 
 		return false;
 	}
 
-	return deserialize(*this, state, archive);
+	return deserialize(*this, state, archive.get());
 }
 
-static bool serialize(const BattleMapSectorTiles &mapSector, sp<SerializationArchive> archive)
+static bool serialize(const BattleMapSectorTiles &mapSector, SerializationArchive *archive)
 {
 	try
 	{
@@ -673,14 +665,14 @@ static bool serialize(const BattleMapSectorTiles &mapSector, sp<SerializationArc
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
+		LogError("Serialization failed: \"%s\"", e.what());
 		return false;
 	}
 	return true;
 }
 
 static bool deserialize(BattleMapSectorTiles &mapSector, const GameState &state,
-                        const sp<SerializationArchive> archive)
+                        SerializationArchive *archive)
 {
 	try
 	{
@@ -688,7 +680,7 @@ static bool deserialize(BattleMapSectorTiles &mapSector, const GameState &state,
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath());
+		LogError("Serialization failed: \"%s\"", e.what());
 		return false;
 	}
 	return true;
@@ -698,7 +690,7 @@ bool BattleMapSectorTiles::saveSector(const UString &path, bool pack, bool prett
 {
 	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
-	if (serialize(*this, archive))
+	if (serialize(*this, archive.get()))
 	{
 		archive->write(path, pack, pretty);
 		return true;
@@ -717,7 +709,7 @@ bool BattleMapSectorTiles::loadSector(GameState &state, const UString &path)
 		return false;
 	}
 
-	return deserialize(*this, state, archive);
+	return deserialize(*this, state, archive.get());
 }
 
 } // namespace OpenApoc

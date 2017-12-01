@@ -178,10 +178,10 @@ class GameState : public std::enable_shared_from_this<GameState>
 	bool saveGame(const UString &path, bool pack = true, bool pretty = false);
 
 	// serializes gamestate to archive
-	bool serialize(sp<SerializationArchive> archive) const;
+	bool serialize(SerializationArchive *archive) const;
 
 	// deserializes gamestate from archive
-	bool deserialize(const sp<SerializationArchive> archive);
+	bool deserialize(SerializationArchive *archive);
 
 	// Called on a newly started Game to setup initial state that isn't serialized in (random
 	// vehicle positions etc.) - it is not called

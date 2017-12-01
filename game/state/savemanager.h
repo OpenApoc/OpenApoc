@@ -37,9 +37,9 @@ class SaveMetadata
 	SaveMetadata(const SaveMetadata &metdata, time_t creationDate, const sp<GameState> gameState);
 
 	/* Deserialize given manifest document	*/
-	bool deserializeManifest(const sp<SerializationArchive> archive, const UString &saveFileName);
+	bool deserializeManifest(SerializationArchive *archive, const UString &saveFileName);
 
-	bool serializeManifest(const sp<SerializationArchive> archive) const;
+	bool serializeManifest(SerializationArchive *archive) const;
 
 	/* Creation date of save file (unix epoch)	*/
 	time_t getCreationDate() const;
