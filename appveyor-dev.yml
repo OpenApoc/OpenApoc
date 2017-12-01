@@ -10,7 +10,7 @@ configuration:
 #  - Debug
 platform:
   - x64
-  - Win32
+#  - Win32
 #clone_depth: 10
 before_build:
 - git submodule init
@@ -24,21 +24,21 @@ build:
 after_build:
 - git describe --tags > build-id
 - set /p OPENAPOC_VERSION= < build-id
-- set OPENAPOC_FILENAME=OpenApoc-%PLATFORM%-%OPENAPOC_VERSION%.zip
-- set OPENAPOC_DEBUG_FILENAME=OpenApoc-debug-%PLATFORM%-%OPENAPOC_VERSION%.zip
+- set OPENAPOC_FILENAME=OpenApoc-%PLATFORM%-%OPENAPOC_VERSION%.7z
+- set OPENAPOC_DEBUG_FILENAME=OpenApoc-debug-%PLATFORM%-%OPENAPOC_VERSION%.7z
 - mkdir OpenApoc-%OPENAPOC_VERSION%
 - echo %APPVEYOR_REPO_COMMIT% > OpenApoc-%OPENAPOC_VERSION%\git-commit
 - echo %OPENAPOC_VERSION% > OpenApoc-%OPENAPOC_VERSION%\build-id
 - copy bin\%PLATFORM%\%CONFIGURATION%\*.dll OpenApoc-%OPENAPOC_VERSION%\
-- copy bin\%PLATFORM%\%CONFIGURATION%\*.exe OpenApoc-%OPENAPOC_VERSION%\
+- copy bin\%PLATFORM%\%CONFIGURATION%\OpenApoc.exe OpenApoc-%OPENAPOC_VERSION%\
 - del data\cd.iso
 - del data\cd.iso.xz
 - xcopy /E data OpenApoc-%OPENAPOC_VERSION%\data\
 - copy portable.txt OpenApoc-%OPENAPOC_VERSION%\
 - copy README.md OpenApoc-%OPENAPOC_VERSION%\
 - copy README_HOTKEYS.txt OpenApoc-%OPENAPOC_VERSION%\
-- 7z a %OPENAPOC_FILENAME% OpenApoc-%OPENAPOC_VERSION%
-- copy bin\%PLATFORM%\%CONFIGURATION%\*.pdb OpenApoc-%OPENAPOC_VERSION%\
-- 7z a %OPENAPOC_DEBUG_FILENAME% OpenApoc-%OPENAPOC_VERSION%\*.pdb
+- 7z a %OPENAPOC_FILENAME% OpenApoc-%OPENAPOC_VERSION% -mx=9 -myx=7
+- copy bin\%PLATFORM%\%CONFIGURATION%\OpenApoc.pdb OpenApoc-%OPENAPOC_VERSION%\
+- 7z a %OPENAPOC_DEBUG_FILENAME% OpenApoc-%OPENAPOC_VERSION%\*.pdb -mx=9 -myx=7
 - appveyor PushArtifact %OPENAPOC_FILENAME%
 - appveyor PushArtifact %OPENAPOC_DEBUG_FILENAME%
