@@ -18,5 +18,14 @@
     <ClCompile Include="miniz\miniz.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="miniz\miniz_zip.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="miniz\miniz_tinfl.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="miniz\miniz_tdef.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

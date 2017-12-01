@@ -2,8 +2,6 @@
 
 #include "dependencies/tinyformat/tinyformat.h"
 #include <algorithm>
-#include <boost/algorithm/string/predicate.hpp>
-#include <boost/locale.hpp>
 #include <cstdint>
 #include <fstream>
 #include <glm/glm.hpp>

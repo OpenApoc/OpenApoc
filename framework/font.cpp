@@ -4,11 +4,6 @@
 #include "framework/image.h"
 #include "library/sp.h"
 
-// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
-// symbols as part of the module that uses it
-#define BOOST_ALL_NO_LIB
-#include <boost/locale.hpp>
-
 namespace OpenApoc
 {
 
@@ -26,12 +21,8 @@ sp<PaletteImage> BitmapFont::getString(const UString &Text)
 
 	img = mksp<PaletteImage>(Vec2<int>{width, height});
 
-	auto u8Str = Text.str();
-	auto pointString = boost::locale::conv::utf_to_utf<UniChar>(u8Str);
-
-	for (size_t i = 0; i < pointString.length(); i++)
+	for (const auto &c : Text)
 	{
-		UniChar c = pointString[i];
 		auto glyph = this->getGlyph(c);
 		PaletteImage::blit(glyph, img, {0, 0}, {pos, 0});
 		pos += glyph->size.x;
@@ -45,12 +36,10 @@ sp<PaletteImage> BitmapFont::getString(const UString &Text)
 int BitmapFont::getFontWidth(const UString &Text)
 {
 	int textlen = 0;
-	auto u8Str = Text.str();
-	auto pointString = boost::locale::conv::utf_to_utf<UniChar>(u8Str);
 
-	for (size_t i = 0; i < Text.length(); i++)
+	for (const auto &c : Text)
 	{
-		auto glyph = this->getGlyph(pointString[i]);
+		auto glyph = this->getGlyph(c);
 		textlen += glyph->size.x;
 	}
 	return textlen;
