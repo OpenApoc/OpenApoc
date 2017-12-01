@@ -203,7 +203,8 @@ class ConfigFileImpl
 			std::string str = configPathString.str();
 			fs::path configPath(str);
 			auto dir = configPath.parent_path();
-			fs::create_directories(dir);
+			if (!dir.empty())
+				fs::create_directories(dir);
 			std::ofstream outFile(configPath.string());
 			if (!outFile)
 			{
