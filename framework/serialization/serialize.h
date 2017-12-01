@@ -7,27 +7,24 @@
 
 namespace OpenApoc
 {
-class SerializationNode : public std::enable_shared_from_this<SerializationNode>
+class SerializationNode
 {
   public:
-	sp<SerializationNode> virtual addNode(const UString &name, const UString &value = "") = 0;
-	sp<SerializationNode> virtual addSection(const UString &name) = 0;
+	virtual SerializationNode *addNode(const UString &name, const UString &value = "") = 0;
+	virtual SerializationNode *addSection(const UString &name) = 0;
 
 	// Opt versions may return nullptr (they're 'optional'), Req gets throw an exception if
 	// missing
-	sp<SerializationNode> virtual getNodeReq(const UString &name);
-	sp<SerializationNode> virtual getNodeOpt(const UString &name) = 0;
-	sp<SerializationNode> virtual getNextSiblingReq(const UString &name);
-	sp<SerializationNode> virtual getNextSiblingOpt(const UString &name) = 0;
-	sp<SerializationNode> virtual getSectionReq(const UString &name);
-	sp<SerializationNode> virtual getSectionOpt(const UString &name) = 0;
+	virtual SerializationNode *getNodeReq(const UString &name);
+	virtual SerializationNode *getNodeOpt(const UString &name) = 0;
+	virtual SerializationNode *getNextSiblingReq(const UString &name);
+	virtual SerializationNode *getNextSiblingOpt(const UString &name) = 0;
+	virtual SerializationNode *getSectionReq(const UString &name);
+	virtual SerializationNode *getSectionOpt(const UString &name) = 0;
 
-	sp<SerializationNode> getNode(const UString &name) { return this->getNodeOpt(name); }
-	sp<SerializationNode> getNextSibling(const UString &name)
-	{
-		return this->getNextSiblingOpt(name);
-	}
-	sp<SerializationNode> getSection(const UString &name) { return this->getSectionOpt(name); }
+	SerializationNode *getNode(const UString &name) { return this->getNodeOpt(name); }
+	SerializationNode *getNextSibling(const UString &name) { return this->getNextSiblingOpt(name); }
+	SerializationNode *getSection(const UString &name) { return this->getSectionOpt(name); }
 
 	virtual UString getName() = 0;
 	virtual void setName(const UString &str) = 0;
@@ -68,21 +65,20 @@ class SerializationNode : public std::enable_shared_from_this<SerializationNode>
 class SerializationArchive
 {
   public:
-	static sp<SerializationArchive> createArchive();
-	static sp<SerializationArchive> readArchive(const UString &path);
+	static up<SerializationArchive> createArchive();
+	static up<SerializationArchive> readArchive(const UString &path);
 
-	sp<SerializationNode> virtual newRoot(const UString &prefix, const UString &name) = 0;
-	sp<SerializationNode> virtual getRoot(const UString &prefix, const UString &name) = 0;
-	bool virtual write(const UString &path, bool pack = true, bool pretty = false) = 0;
+	virtual SerializationNode *newRoot(const UString &prefix, const UString &name) = 0;
+	virtual SerializationNode *getRoot(const UString &prefix, const UString &name) = 0;
+	virtual bool write(const UString &path, bool pack = true, bool pretty = false) = 0;
 	virtual ~SerializationArchive() = default;
 };
 
 class SerializationException : public std::runtime_error
 {
   public:
-	sp<SerializationNode> node;
-	SerializationException(const UString &description, sp<SerializationNode> node)
-	    : std::runtime_error(description.cStr()), node(node)
+	SerializationException(const UString &description, SerializationNode *node)
+	    : std::runtime_error(UString(description + " " + node->getFullPath()).cStr())
 	{
 	}
 };

@@ -89,7 +89,7 @@ std::shared_future<void> SaveManager::loadSpecialSave(const SaveType type,
 	return loadGame(createSavePath(saveName), state);
 }
 
-bool writeArchiveWithBackup(const sp<SerializationArchive> archive, const UString &path, bool pack)
+bool writeArchiveWithBackup(SerializationArchive *archive, const UString &path, bool pack)
 {
 	fs::path savePath = path.str();
 	fs::path tempPath;
@@ -231,9 +231,9 @@ bool SaveManager::saveGame(const SaveMetadata &metadata, const sp<GameState> gam
 	const UString path = metadata.getFile();
 	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
-	if (gameState->serialize(archive) && metadata.serializeManifest(archive))
+	if (gameState->serialize(archive.get()) && metadata.serializeManifest(archive.get()))
 	{
-		return writeArchiveWithBackup(archive, path, pack);
+		return writeArchiveWithBackup(archive.get(), path, pack);
 	}
 
 	return false;
@@ -290,7 +290,7 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 			if (auto archive = SerializationArchive::readArchive(savePath))
 			{
 				SaveMetadata metadata;
-				if (metadata.deserializeManifest(archive, savePath))
+				if (metadata.deserializeManifest(archive.get(), savePath))
 				{
 					saveList.push_back(metadata);
 				}
@@ -334,8 +334,7 @@ bool SaveManager::deleteGame(const sp<SaveMetadata> &slot) const
 	}
 }
 
-bool SaveMetadata::deserializeManifest(const sp<SerializationArchive> archive,
-                                       const UString &saveFileName)
+bool SaveMetadata::deserializeManifest(SerializationArchive *archive, const UString &saveFileName)
 {
 	auto root = archive->getRoot("", saveManifestName);
 	if (!root)
@@ -385,7 +384,7 @@ bool SaveMetadata::deserializeManifest(const sp<SerializationArchive> archive,
 	return true;
 }
 
-bool SaveMetadata::serializeManifest(const sp<SerializationArchive> archive) const
+bool SaveMetadata::serializeManifest(SerializationArchive *archive) const
 {
 	auto root = archive->newRoot("", saveManifestName);
 	if (!root)

@@ -226,10 +226,10 @@ void writeHeader(std::ofstream &out, const StateDefinition &state)
 	{
 		if (object.external == false)
 			continue;
-		out << "void serializeIn(const GameState *, sp<SerializationNode> node, " << object.name
+		out << "void serializeIn(const GameState *, SerializationNode* node, " << object.name
 		    << " &obj);\n";
-		out << "void serializeOut(sp<SerializationNode> node, const " << object.name
-		    << " &obj, const " << object.name << " &ref);\n";
+		out << "void serializeOut(SerializationNode* node, const " << object.name << " &obj, const "
+		    << object.name << " &ref);\n";
 		out << "bool operator==(const " << object.name << " &a, const " << object.name << " &b);\n";
 		out << "bool operator!=(const " << object.name << " &a, const " << object.name
 		    << " &b);\n\n";
@@ -239,9 +239,9 @@ void writeHeader(std::ofstream &out, const StateDefinition &state)
 	{
 		if (e.external == false)
 			continue;
-		out << "void serializeIn(const GameState *, sp<SerializationNode> node, " << e.name
+		out << "void serializeIn(const GameState *, SerializationNode* node, " << e.name
 		    << " &val);\n";
-		out << "void serializeOut(sp<SerializationNode> node, const " << e.name << " &val, const "
+		out << "void serializeOut(SerializationNode* node, const " << e.name << " &val, const "
 		    << e.name << " &ref);\n";
 	}
 
@@ -261,9 +261,9 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 	{
 		if (object.external == true)
 			continue;
-		out << "inline void serializeIn(const GameState *, sp<SerializationNode> node, "
-		    << object.name << " &obj);\n";
-		out << "inline void serializeOut(sp<SerializationNode> node, const " << object.name
+		out << "inline void serializeIn(const GameState *, SerializationNode* node, " << object.name
+		    << " &obj);\n";
+		out << "inline void serializeOut(SerializationNode* node, const " << object.name
 		    << " &obj, const " << object.name << " &ref);\n";
 		out << "inline bool operator==(const " << object.name << " &a, const " << object.name
 		    << " &b);\n";
@@ -275,17 +275,17 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 	{
 		if (e.external == true)
 			continue;
-		out << "inline void serializeIn(const GameState *, sp<SerializationNode> node, " << e.name
+		out << "inline void serializeIn(const GameState *, SerializationNode* node, " << e.name
 		    << " &val);\n";
-		out << "inline void serializeOut(sp<SerializationNode> node, const " << e.name
+		out << "inline void serializeOut(SerializationNode* node, const " << e.name
 		    << " &val, const " << e.name << " &ref);\n";
 	}
 	for (auto &object : state.objects)
 	{
 		if (object.external == false)
 			out << "inline\n";
-		out << "void serializeIn(const GameState *state, sp<SerializationNode> node, "
-		    << object.name << " &obj)\n{\n";
+		out << "void serializeIn(const GameState *state, SerializationNode* node, " << object.name
+		    << " &obj)\n{\n";
 
 		out << "\tif (!node) return;\n";
 
@@ -316,8 +316,8 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 
 		if (object.external == false)
 			out << "inline\n";
-		out << "void serializeOut(sp<SerializationNode> node, const " << object.name
-		    << " &obj, const " << object.name << " &ref)\n{\n";
+		out << "void serializeOut(SerializationNode* node, const " << object.name << " &obj, const "
+		    << object.name << " &ref)\n{\n";
 
 		for (auto &member : object.members)
 		{
@@ -375,7 +375,7 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 	{
 		if (e.external == false)
 			out << "inline\n";
-		out << "void serializeIn(const GameState *state, sp<SerializationNode> node, " << e.name
+		out << "void serializeIn(const GameState *state, SerializationNode* node, " << e.name
 		    << " &val)\n{\n"
 		    << "\tstatic const std::map<" << e.name << ", UString> valueMap = {\n";
 		for (auto &value : e.values)
@@ -389,7 +389,7 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 
 		if (e.external == false)
 			out << "inline\n";
-		out << "void serializeOut(sp<SerializationNode> node, const " << e.name << " &val, const "
+		out << "void serializeOut(SerializationNode* node, const " << e.name << " &val, const "
 		    << e.name << " &ref)\n{\n"
 		    << "\tstatic const std::map<" << e.name << ", UString> valueMap = {\n";
 		for (auto &value : e.values)
