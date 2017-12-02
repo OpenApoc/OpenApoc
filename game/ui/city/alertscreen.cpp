@@ -6,6 +6,7 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
+#include "game/state/city/agentmission.h"
 #include "game/state/city/building.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
@@ -67,28 +68,37 @@ void AlertScreen::eventOccurred(Event *e)
 	{
 		if (e->forms().RaisedBy->Name == "BUTTON_EXTERMINATE")
 		{
-			// FIXME: Implement selecting agents that will do the mission
-			if (agentAssignment->currentVehicle)
+			// send a vehicles fleet
+			std::list<StateRef<Vehicle>> selectedVehicles(agentAssignment->getSelectedVehicles());
+			if (!selectedVehicles.empty())
 			{
-				StateRef<Vehicle> vehicle = {
-				    state.get(), Vehicle::getId(*state, agentAssignment->currentVehicle)};
-				// FIXME: Implement sending vehicle to exterminate
-				LogWarning("Implement sending vehicle %s to exterminate", vehicle.id);
-				agentAssignment->currentVehicle->setMission(
-				    *state, VehicleMission::gotoBuilding(*state, *agentAssignment->currentVehicle,
-				                                         {state.get(), building}));
+				for (auto &vehicle : selectedVehicles)
+				{
+					vehicle->setMission(*state, VehicleMission::gotoBuilding(
+					                                *state, *vehicle, {state.get(), building}));
+				}
 				fw().stageQueueCommand({StageCmd::Command::POP});
+				return;
 			}
-			else
+
+			// send an angents group on foot
+			std::list<StateRef<Agent>> selectedAgents(agentAssignment->getSelectedAgents());
+			if (!selectedAgents.empty())
 			{
-				// FIXME: Implement sending agents to exterminate
-				fw().stageQueueCommand(
-				    {StageCmd::Command::PUSH,
-				     mksp<MessageBox>(tr("No Agents Selected"),
-				                      tr("You need to select the agents you want to become active "
-				                         "within the building."),
-				                      MessageBox::ButtonOptions::Ok)});
+				for (auto &agent : selectedAgents)
+				{
+					agent->setMission(*state, AgentMission::gotoBuilding(*state, *agent,
+					                                                     {state.get(), building}));
+				}
+				fw().stageQueueCommand({StageCmd::Command::POP});
+				return;
 			}
+
+			fw().stageQueueCommand({StageCmd::Command::PUSH,
+			                        mksp<MessageBox>(tr("No Agents Selected"),
+			                                         tr("You need to select the agents you want to "
+			                                            "become active within the building."),
+			                                         MessageBox::ButtonOptions::Ok)});
 			return;
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_EQUIPAGENT")
