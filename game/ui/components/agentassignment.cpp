@@ -79,10 +79,13 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 			return select;
 
 		auto agent = c->getData<Agent>();
+		if (agent)
+		{
+			this->currentAgent = agent;
+		}
 		auto icon = c->findControl(ControlGenerator::AGENT_ICON_NAME);
 		if (agent && icon && c->isPointInsideControlBounds(e, icon))
 		{
-			this->currentAgent = agent;
 			this->isDragged = false;
 			fw().stageQueueCommand(
 			    {StageCmd::Command::PUSH, mksp<AEquipScreen>(this->state, agent)});
@@ -267,6 +270,15 @@ void AgentAssignment::updateLocation()
 				}
 			}
 		}
+	}
+
+	if (!vehicles.empty())
+	{
+		currentVehicle = vehicles.front();
+	}
+	if (!agents.empty())
+	{
+		currentAgent = agents.front();
 	}
 
 	/* Create tree.
