@@ -1853,7 +1853,7 @@ void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 		fw().pushEvent(new GameSomethingDiedEvent(GameEventType::VehicleDestroyed, name,
 		                                          attacker ? attacker->name : "", position));
 	}
-	state.vehiclesDeathNote.insert(*(state.vehicles.find(id)));
+	state.vehiclesDeathNote.insert(id);
 }
 
 void Vehicle::crash(GameState &state, StateRef<Vehicle> attacker)

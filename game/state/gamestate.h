@@ -80,7 +80,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<Base> player_bases;
 	StateRefMap<City> cities;
 	StateRefMap<Vehicle> vehicles;
-	StateRefMap<Vehicle> vehiclesDeathNote;
+	std::set<UString> vehiclesDeathNote;
 	StateRefMap<UfopaediaCategory> ufopaedia;
 	ResearchState research;
 	StateRefMap<BattleMap> battle_maps;

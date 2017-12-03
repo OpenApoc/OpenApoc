@@ -1107,9 +1107,9 @@ void GameState::update(unsigned int ticks)
 		}
 		if (!vehiclesDeathNote.empty())
 		{
-			for (auto &v : this->vehiclesDeathNote)
+			for (auto &name : this->vehiclesDeathNote)
 			{
-				vehicles.erase(v.first);
+				vehicles.erase(name);
 			}
 			vehiclesDeathNote.clear();
 		}
