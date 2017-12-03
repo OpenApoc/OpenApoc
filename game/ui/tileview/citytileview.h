@@ -30,12 +30,15 @@ class CityTileView : public TileView
 	sp<Palette> twilight_palette;
 	sp<Palette> night_palette;
 
-	bool colorForward = true;
+	int colorForward = 1;
 	int colorCurrent = 0;
 
 	std::vector<sp<Palette>> mod_day_palette;
 	std::vector<sp<Palette>> mod_twilight_palette;
 	std::vector<sp<Palette>> mod_night_palette;
+	std::vector<sp<Palette>> mod_interpolated_palette;
+	// Ingame minute when interpolated palette was calculated
+	std::vector<int> interpolated_palette_minute;
 
   protected:
 	static const int COUNTER_MAX = 50;
