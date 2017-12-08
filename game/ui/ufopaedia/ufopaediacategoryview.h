@@ -31,6 +31,12 @@ class UfopaediaCategoryView : public Stage
 	void setFormData();
 	void setFormStats();
 
+	// Steps forward and backward.
+	void setNextTopic();
+	void setPreviousTopic();
+	void setNextSection();
+	void setPreviousSection();
+
   public:
 	UfopaediaCategoryView(sp<GameState> state, sp<UfopaediaCategory> cat,
 	                      sp<UfopaediaEntry> entry = nullptr);
