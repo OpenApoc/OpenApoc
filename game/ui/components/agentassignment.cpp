@@ -105,7 +105,6 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 		auto icon = c->findControl(ControlGenerator::VEHICLE_ICON_NAME);
 		if (vehicle && icon && c->isPointInsideControlBounds(e, icon))
 		{
-			// this->currentVehicle = vehicle;
 			this->isDragged = false;
 
 			auto equipScreen = mksp<VEquipScreen>(this->state);
@@ -579,11 +578,14 @@ std::list<StateRef<Agent>> AgentAssignment::getSelectedAgents() const
 		if (auto leftList =
 		        doubleListControl->findControlTyped<MultilistBox>(ControlGenerator::LEFT_LIST_NAME))
 		{
-			for (auto &sel : leftList->getSelectedSet())
+			if (auto agentList = leftList->findControlTyped<MultilistBox>(AGENT_LIST_NAME))
 			{
-				if (auto a = sel->getData<Agent>())
+				for (auto &sel : agentList->getSelectedSet())
 				{
-					agentControlSet.insert(a);
+					if (auto a = sel->getData<Agent>())
+					{
+						agentControlSet.insert(a);
+					}
 				}
 			}
 		}
@@ -592,16 +594,19 @@ std::list<StateRef<Agent>> AgentAssignment::getSelectedAgents() const
 		if (auto rightList = doubleListControl->findControlTyped<MultilistBox>(
 		        ControlGenerator::RIGHT_LIST_NAME))
 		{
-			for (auto &vehicleControl : rightList->Controls)
+			if (auto vehicleList = rightList->findControlTyped<MultilistBox>(VEHICLE_LIST_NAME))
 			{
-				if (auto agentList =
-				        vehicleControl->findControlTyped<MultilistBox>(AGENT_LIST_NAME))
+				for (auto &vehicleControl : vehicleList->Controls)
 				{
-					for (auto &sel : agentList->getSelectedSet())
+					if (auto agentList =
+					        vehicleControl->findControlTyped<MultilistBox>(AGENT_LIST_NAME))
 					{
-						if (auto a = sel->getData<Agent>())
+						for (auto &sel : agentList->getSelectedSet())
 						{
-							agentControlSet.insert(a);
+							if (auto a = sel->getData<Agent>())
+							{
+								agentControlSet.insert(a);
+							}
 						}
 					}
 				}
@@ -636,9 +641,9 @@ std::list<StateRef<Vehicle>> AgentAssignment::getSelectedVehicles() const
 		if (auto rightList = doubleListControl->findControlTyped<MultilistBox>(
 		        ControlGenerator::RIGHT_LIST_NAME))
 		{
-			if (auto vehicletList = rightList->findControlTyped<MultilistBox>(VEHICLE_LIST_NAME))
+			if (auto vehicleList = rightList->findControlTyped<MultilistBox>(VEHICLE_LIST_NAME))
 			{
-				for (auto &sel : vehicletList->getSelectedSet())
+				for (auto &sel : vehicleList->getSelectedSet())
 				{
 					if (auto v = sel->getData<Vehicle>())
 					{
