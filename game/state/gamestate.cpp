@@ -1106,6 +1106,14 @@ void GameState::update(unsigned int ticks)
 				v.second->update(*this, ticks);
 			}
 		}
+		if (!vehiclesDeathNote.empty())
+		{
+			for (auto &name : this->vehiclesDeathNote)
+			{
+				vehicles.erase(name);
+			}
+			vehiclesDeathNote.clear();
+		}
 		Trace::end("GameState::update::vehicles");
 
 		Trace::start("GameState::update::agents");
