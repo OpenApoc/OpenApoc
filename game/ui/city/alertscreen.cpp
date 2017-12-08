@@ -93,19 +93,22 @@ void AlertScreen::eventOccurred(Event *e)
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_EQUIPAGENT")
 		{
-			fw().stageQueueCommand(
-			    {StageCmd::Command::PUSH,
-			     mksp<AEquipScreen>(this->state, agentAssignment->currentAgent)});
+			if (agentAssignment->currentAgent)
+			{
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<AEquipScreen>(this->state, agentAssignment->currentAgent)});
+			}
 			return;
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_EQUIPVEHICLE")
 		{
-			auto equipScreen = mksp<VEquipScreen>(this->state);
 			if (agentAssignment->currentVehicle)
 			{
+				auto equipScreen = mksp<VEquipScreen>(this->state);
 				equipScreen->setSelectedVehicle(agentAssignment->currentVehicle);
+				fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
 			}
-			fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
 			return;
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
