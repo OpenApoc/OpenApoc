@@ -2632,8 +2632,10 @@ void Battle::finishBattle(GameState &state)
 	// If player won and didn't retreat, player secures the area
 	// - give him loot
 	// - give him alien remains
+	StateRef<Building> location = { &state, state.current_battle->mission_location_id };
 	if (state.current_battle->playerWon && !state.current_battle->winnerHasRetreated)
 	{
+		location->detected = false;
 		bool playerHasBioStorage = state.current_battle->player_craft &&
 		                           state.current_battle->player_craft->getMaxBio() > 0;
 		// Live alien loot
@@ -2714,7 +2716,6 @@ void Battle::finishBattle(GameState &state)
 		// If alien building - all aliens vanish
 		else
 		{
-			StateRef<Building> location = {&state, state.current_battle->mission_location_id};
 			if (location->owner != aliens)
 			{
 				for (auto &a : liveAliens)
