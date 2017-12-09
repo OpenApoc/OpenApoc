@@ -851,7 +851,9 @@ void TransactionScreen::displayItem(sp<TransactionControl> control)
 		formItemAgent->setVisible(true);
 		formItemVehicle->setVisible(false);
 
-		AEquipmentSheet(formItemAgent).display(state->agent_equipment[control->itemId]);
+		auto equipment = state->agent_equipment[control->itemId];
+		AEquipmentSheet(formItemAgent)
+		    .display(equipment, equipment->research_dependency.satisfied());
 	}
 	else
 	{
@@ -2313,7 +2315,8 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 		}
 	}
 	bool isAmmo = agentEquipmentType->type == AEquipmentType::Type::Ammo;
-	auto name = agentEquipmentType->name;
+	bool unknownArtifact = !agentEquipmentType->research_dependency.satisfied();
+	auto name = unknownArtifact ? tr("Alien Artifact") : agentEquipmentType->name;
 	auto manufacturer =
 	    agentEquipmentType->bioStorage ? "" : agentEquipmentType->manufacturer->name;
 	auto canBuy = agentEquipmentType->manufacturer->canPurchaseFrom(
@@ -2321,15 +2324,15 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	bool manufacturerHostile = canBuy == Organisation::PurchaseResult::OrgHostile;
 	bool manufacturerUnavailable = canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
 	// If we create a non-purchase control we never become one so clear the values
-	if (indexLeft != 8 && indexRight != 8)
+	if (unknownArtifact || (indexLeft != 8 && indexRight != 8))
 	{
 		manufacturer = "";
 		price = 0;
 	}
-	return createControl(
-	    agentEquipmentType.id, isBio ? Type::AgentEquipmentBio : Type::AgentEquipmentCargo,
-	    agentEquipmentType->name, manufacturer, isAmmo, isBio, manufacturerHostile,
-	    manufacturerUnavailable, price, storeSpace, initialStock, indexLeft, indexRight);
+	return createControl(agentEquipmentType.id,
+	                     isBio ? Type::AgentEquipmentBio : Type::AgentEquipmentCargo, name,
+	                     manufacturer, isAmmo, isBio, manufacturerHostile, manufacturerUnavailable,
+	                     price, storeSpace, initialStock, indexLeft, indexRight);
 }
 
 sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl::createControl(
