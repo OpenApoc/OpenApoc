@@ -2632,7 +2632,7 @@ void Battle::finishBattle(GameState &state)
 	// If player won and didn't retreat, player secures the area
 	// - give him loot
 	// - give him alien remains
-	StateRef<Building> location = { &state, state.current_battle->mission_location_id };
+	StateRef<Building> location = {&state, state.current_battle->mission_location_id};
 	if (state.current_battle->playerWon && !state.current_battle->winnerHasRetreated)
 	{
 		location->detected = false;
