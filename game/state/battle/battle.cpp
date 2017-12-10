@@ -2629,6 +2629,13 @@ void Battle::finishBattle(GameState &state)
 		}
 	}
 
+	// If mission == Alien extermination, remove the red alien spotted circle
+	if (state.current_battle->mission_type == Battle::MissionType::AlienExtermination)
+	{
+		StateRef<Building> location = {&state, state.current_battle->mission_location_id};
+		location->detected = false;
+	}
+
 	// If player won and didn't retreat, player secures the area
 	// - give him loot
 	// - give him alien remains
