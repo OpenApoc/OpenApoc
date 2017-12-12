@@ -640,23 +640,26 @@ Organisation::Relation Organisation::isRelatedTo(const StateRef<Organisation> &o
 {
 	float x = this->getRelationTo(other);
 	// FIXME: Make the thresholds read from serialized GameState?
-	if (x <= -50)
+	if (x < -50)
 	{
 		return Relation::Hostile;
 	}
-	else if (x <= -25)
+	else if (x < -25)
 	{
 		return Relation::Unfriendly;
 	}
-	else if (x >= 25)
+	else if (x < 25)
+	{
+		return Relation::Neutral;
+	}
+	else if (x < 75)
 	{
 		return Relation::Friendly;
 	}
-	else if (x >= 75)
+	else
 	{
 		return Relation::Allied;
 	}
-	return Relation::Neutral;
 }
 
 bool Organisation::isPositiveTo(const StateRef<Organisation> &other) const
@@ -669,6 +672,86 @@ bool Organisation::isNegativeTo(const StateRef<Organisation> &other) const
 {
 	float x = this->getRelationTo(other);
 	return x < 0;
+}
+
+/**
+ * Calculate the cost of a bribe
+ * @param other - other organisation
+ * @return - minimum sum of the bribe
+ */
+int Organisation::costOfBribeBy(const StateRef<Organisation> &other) const
+{
+	float improvement;
+	float x = this->getRelationTo(other);
+	if (x < -50) // Hostile
+	{
+		improvement = -50.0f - x;
+	}
+	else if (x < -25) // Unfriendly
+	{
+		improvement = -25.0f - x;
+	}
+	else if (x < 25) // Neutral
+	{
+		improvement = 25.0f - x;
+	}
+	else if (x < 75) // Friendly
+	{
+		improvement = 75.0f - x;
+	}
+	else // Allied (relationship cannot be improved)
+	{
+		return 0;
+	}
+
+	// The best approximation is 2030 * improvement + 19573
+	// but vanilla X-Com:
+	// 1. fond of numbers with 7 (27000, 37000 etc up to 127000)
+	// 2. often, for unknown reason, reduces the sum
+	// TODO: implement a more relevant formula
+	return 2000 * std::max((int)improvement, 1) + 25000;
+}
+
+/**
+ * The organisation is bribed by other org
+ * @param state - GameState
+ * @param other - other organisation
+ * @param bribe - sum of the bribe
+ * @return - true/false if success/fail
+ */
+bool Organisation::bribedBy(GameState &state, StateRef<Organisation> other, int bribe)
+{
+	if (bribe <= 0 || other->balance < bribe || bribe < costOfBribeBy(other))
+	{
+		return false;
+	}
+
+	float improvement;
+	float x = this->getRelationTo(other);
+	if (x < -50) // Hostile
+	{
+		improvement = -50.0f - x;
+	}
+	else if (x < -25) // Unfriendly
+	{
+		improvement = -25.0f - x;
+	}
+	else if (x < 25) // Neutral
+	{
+		improvement = 25.0f - x;
+	}
+	else if (x < 75) // Friendly
+	{
+		improvement = 75.0f - x;
+	}
+	else // Allied (relationship cannot be improved)
+	{
+		return false;
+	}
+
+	other->balance -= bribe;
+	adjustRelationTo(state, other, improvement);
+	return true;
 }
 
 sp<Organisation> Organisation::get(const GameState &state, const UString &id)

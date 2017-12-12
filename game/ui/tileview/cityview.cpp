@@ -57,6 +57,7 @@
 #include "game/ui/city/basebuyscreen.h"
 #include "game/ui/city/basedefensescreen.h"
 #include "game/ui/city/baseselectscreen.h"
+#include "game/ui/city/bribescreen.h"
 #include "game/ui/city/buildingscreen.h"
 #include "game/ui/city/infiltrationscreen.h"
 #include "game/ui/city/scorescreen.h"
@@ -1484,8 +1485,12 @@ CityView::CityView(sp<GameState> state)
 		});
 	this->uiTabs[7]
 	    ->findControl("BUTTON_BRIBE")
-	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *) { LogWarning("Implement bribery screen"); });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    if (this->state->current_city->cityViewSelectedOrganisation)
+		    {
+			    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BribeScreen>(this->state)});
+		    }
+		});
 
 	auto font = ui().getFont("smallset");
 	for (int i = 0; i <= state->current_city->roadSegments.size(); i++)

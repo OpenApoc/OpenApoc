@@ -176,6 +176,9 @@
     <ClCompile Include="general\agentsheet.cpp" />
     <ClCompile Include="general\loadingscreen.cpp" />
     <ClCompile Include="general\vehiclesheet.cpp" />
+    <ClCompile Include="city\bribescreen.cpp">
+      <Filter>city</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\basescreen.h">
@@ -323,5 +326,8 @@
     <ClInclude Include="general\aequipmentsheet.h" />
     <ClInclude Include="general\agentsheet.h" />
     <ClInclude Include="general\vehiclesheet.h" />
+    <ClInclude Include="city\bribescreen.h">
+      <Filter>city</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
