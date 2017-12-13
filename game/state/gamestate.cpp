@@ -1070,6 +1070,22 @@ bool GameState::canTurbo() const
 	return true;
 }
 
+/**
+ * Immediately remove all dead objects.
+ */
+void OpenApoc::GameState::cleanUpDeathNote()
+{
+	// Any additional death notes should processed here.
+	if (!vehiclesDeathNote.empty())
+	{
+		for (auto &name : this->vehiclesDeathNote)
+		{
+			vehicles.erase(name);
+		}
+		vehiclesDeathNote.clear();
+	}
+}
+
 void GameState::update(unsigned int ticks)
 {
 	if (this->current_battle)
@@ -1106,14 +1122,7 @@ void GameState::update(unsigned int ticks)
 				v.second->update(*this, ticks);
 			}
 		}
-		if (!vehiclesDeathNote.empty())
-		{
-			for (auto &name : this->vehiclesDeathNote)
-			{
-				vehicles.erase(name);
-			}
-			vehiclesDeathNote.clear();
-		}
+		cleanUpDeathNote();
 		Trace::end("GameState::update::vehicles");
 
 		Trace::start("GameState::update::agents");

@@ -1340,6 +1340,7 @@ void TransactionScreen::executeOrders()
 			player->balance += v.second;
 		}
 	}
+	state->cleanUpDeathNote();
 
 	// Step 03.02: If transfer then move stuff from negative to positive
 	if (mode == Mode::Transfer || needTransfer)
