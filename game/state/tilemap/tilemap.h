@@ -23,6 +23,9 @@ static const Colour COLOUR_BLACK = {0, 0, 0, 255};
 // FIXME: Alexey Andronov: Does anyone know why we divide by 4 here?
 static const unsigned TICK_SCALE = TICKS_PER_SECOND / 4;
 
+// Each srategy view layer divided into several horizontal areas.
+constexpr size_t STRATEGY_VIEW_BELTS = 4;
+
 class Image;
 class TileMap;
 class Collision;
@@ -78,7 +81,7 @@ class TileMap
 	std::vector<Tile> tiles;
 	std::vector<std::set<TileObject::Type>> layerMap;
 	// Cache for the strategy view mode.
-	std::vector<sp<Surface>> strategyViewCache;
+	std::vector<std::vector<sp<Surface>>> strategyViewCache;
 
   public:
 	const Tile *getTile(int x, int y, int z) const
@@ -176,9 +179,21 @@ class TileMap
 	void clearPathCaches();
 
 	// Operations with the strategy view cache.
-	sp<Surface> getViewSurface(size_t i) const;
-	void setViewSurface(size_t i, sp<Surface> surface);
-	void setViewSurfaceDirty(size_t i, bool dirty = true);
-	bool isViewSurfaceDirty(size_t i) const;
+	sp<Surface> getViewSurface(size_t z, size_t belt) const;
+	void setViewSurface(size_t z, size_t belt, sp<Surface> surface);
+	bool isViewSurfaceDirty(size_t z, size_t belt) const;
+	void setViewSurfaceDirty(size_t z, size_t belt, bool dirty = true);
+	void setViewSurfaceDirty(Vec3<float> pos, bool dirty = true)
+	{
+		setViewSurfaceDirty((size_t)pos.z, (size_t)pos.y * STRATEGY_VIEW_BELTS / size.y, dirty);
+	};
+	void setViewSurfaceDirty(Vec3<int> pos, bool dirty = true)
+	{
+		setViewSurfaceDirty((size_t)pos.z, pos.y * STRATEGY_VIEW_BELTS / size.y, dirty);
+	};
+	void setViewSurfaceDirty(int x, int y, int z, bool dirty = true)
+	{
+		setViewSurfaceDirty((size_t)z, y * STRATEGY_VIEW_BELTS / size.y, dirty);
+	};
 };
 }; // namespace OpenApoc

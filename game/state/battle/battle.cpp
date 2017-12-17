@@ -1871,7 +1871,7 @@ void Battle::setVisible(StateRef<Organisation> org, int x, int y, int z, bool va
 	int block = z * size.x * size.y + y * size.x + x;
 	if (visibleTiles.at(org).at(block) != val)
 	{
-		map->setViewSurfaceDirty(z);
+		map->setViewSurfaceDirty(x, y, z);
 		visibleTiles[org][block] = val;
 	}
 }

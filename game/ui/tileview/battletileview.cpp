@@ -1355,68 +1355,83 @@ void BattleTileView::render()
 				}
 			}
 
+			// Offset of the cache areas
+			std::vector<Vec2<float>> beltOffset;
+			for (size_t belt = 0; belt < STRATEGY_VIEW_BELTS; belt++)
+			{
+				beltOffset.emplace_back(0, belt * map.size.y / STRATEGY_VIEW_BELTS);
+			}
+
 			// Draw everything but units and items
 			// Gather units and items on current level
 			for (int z = zFrom; z < zTo; z++)
 			{
-			lets_try_again:
-
 				// currentZLevel is an upper exclusive boundary, that's why we need to sub 1 here
 				int currentLevel = z - (battle.battleViewZLevel - 1);
-				bool itsFakeSurface = map.getViewSurface(z)->size.x < STRAT_TILE_X;
-				if (map.isViewSurfaceDirty(z))
+				for (size_t belt = 0; belt < STRATEGY_VIEW_BELTS; belt++)
 				{
-					// draw an image to the cache
-					RendererSurfaceBinding b(r, map.getViewSurface(z));
-					r.clear();
+				lets_try_again:
 
-					for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
+					if (map.isViewSurfaceDirty(z, belt))
 					{
-						for (int y = 0; y < map.size.y; y++)
+						// draw an image to the cache
+						RendererSurfaceBinding b(r, map.getViewSurface(z, belt));
+						r.clear();
+
+						bool itsFakeSurface = map.getViewSurface(z, belt)->size.x < STRAT_TILE_X;
+						for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
 						{
-							for (int x = 0; x < map.size.x; x++)
+							int yMin = belt * map.size.y / STRATEGY_VIEW_BELTS;
+							int yMax = (belt + 1) * map.size.y / STRATEGY_VIEW_BELTS;
+							for (int y = yMin; y < yMax; y++)
 							{
-								bool visible = battle.getVisible(battle.currentPlayer, x, y, z);
-
-								auto tile = map.getTile(x, y, z);
-								auto object_count = tile->drawnObjects[layer].size();
-
-								for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+								for (int x = 0; x < map.size.x; x++)
 								{
-									auto &obj = tile->drawnObjects[layer][obj_id];
-									switch (obj->getType())
+									bool visible = battle.getVisible(battle.currentPlayer, x, y, z);
+
+									auto tile = map.getTile(x, y, z);
+									auto object_count = tile->drawnObjects[layer].size();
+
+									for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 									{
-										case TileObject::Type::Feature:
-										case TileObject::Type::Ground:
-										case TileObject::Type::LeftWall:
-										case TileObject::Type::RightWall:
+										auto &obj = tile->drawnObjects[layer][obj_id];
+										switch (obj->getType())
 										{
-											if (itsFakeSurface)
+											case TileObject::Type::Feature:
+											case TileObject::Type::Ground:
+											case TileObject::Type::LeftWall:
+											case TileObject::Type::RightWall:
 											{
-												// looks like we need a real surface
-												map.setViewSurface(z,
-												                   mksp<Surface>(Vec2<unsigned int>{
-												                       map.size.x * STRAT_TILE_X,
-												                       map.size.y * STRAT_TILE_Y}));
-												goto lets_try_again;
+												if (itsFakeSurface)
+												{
+													// looks like we need a real surface
+													map.setViewSurface(
+													    z, belt, mksp<Surface>(Vec2<unsigned int>{
+													                 map.size.x * STRAT_TILE_X,
+													                 map.size.y * STRAT_TILE_Y}));
+													goto lets_try_again;
+												}
+												Vec2<float> pos =
+												    tileToScreenCoords(obj->getCenter(),
+												                       this->viewMode) -
+												    beltOffset[belt];
+												obj->draw(r, *this, pos, this->viewMode,
+												          revealWholeMap || visible, currentLevel);
+												break;
 											}
-											Vec2<float> pos = tileToScreenCoords(obj->getCenter(),
-											                                     this->viewMode);
-											obj->draw(r, *this, pos, this->viewMode,
-											          revealWholeMap || visible, currentLevel);
-											break;
+											default:
+												break;
 										}
-										default:
-											break;
 									}
 								}
 							}
 						}
+						map.setViewSurfaceDirty((size_t)z, belt, false);
 					}
-					map.setViewSurfaceDirty(z, false);
+					// get the image from the cache
+					r.draw(map.getViewSurface(z, belt),
+					       tileToOffsetScreenCoords(zeroPos) + beltOffset[belt]);
 				}
-				// get the image from the cache
-				r.draw(map.getViewSurface(z), tileToOffsetScreenCoords(zeroPos));
 
 				// draw projectiles to the current level
 				auto &projectiles = battle.projectiles;

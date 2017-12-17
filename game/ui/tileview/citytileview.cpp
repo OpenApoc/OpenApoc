@@ -556,48 +556,65 @@ void CityTileView::render()
 			std::list<std::tuple<Vec3<float>, Vec3<float>, bool, bool>> targetLocationsToDraw;
 			Vec3<float> zeroPos{0, 0, 0};
 
+			// Offset of the cache areas
+			std::vector<Vec2<float>> beltOffset;
+			for (size_t belt = 0; belt < STRATEGY_VIEW_BELTS; belt++)
+			{
+				beltOffset.emplace_back(0, belt * map.size.y / STRATEGY_VIEW_BELTS);
+			}
+
 			for (int z = 0; z < maxZDraw; z++)
 			{
-			lets_try_again:
-
-				bool itsFakeSurface = map.getViewSurface(z)->size.x < STRAT_TILE_X;
-				if (map.isViewSurfaceDirty(z))
+				for (size_t belt = 0; belt < STRATEGY_VIEW_BELTS; belt++)
 				{
-					// draw an image to the cache
-					RendererSurfaceBinding b(r, map.getViewSurface(z));
-					r.clear();
+				lets_try_again:
 
-					unsigned int layer = map.getLayer(TileObject::Type::Scenery);
-					for (int y = 0; y < map.size.y; y++)
+					if (map.isViewSurfaceDirty(z, belt))
 					{
-						for (int x = 0; x < map.size.x; x++)
+						// draw an image to the cache
+						RendererSurfaceBinding b(r, map.getViewSurface(z, belt));
+						r.clear();
+
+						bool itsFakeSurface = map.getViewSurface(z, belt)->size.x < STRAT_TILE_X;
+						unsigned layer = map.getLayer(TileObject::Type::Scenery);
+
+						int yMin = belt * map.size.y / STRATEGY_VIEW_BELTS;
+						int yMax = (belt + 1) * map.size.y / STRATEGY_VIEW_BELTS;
+						for (int y = yMin; y < yMax; y++)
 						{
-							auto tile = map.getTile(x, y, z);
-							auto object_count = tile->drawnObjects[layer].size();
-							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+							for (int x = 0; x < map.size.x; x++)
 							{
-								auto &obj = tile->drawnObjects[layer][obj_id];
-								if (obj->getType() == TileObject::Type::Scenery)
+								auto tile = map.getTile(x, y, z);
+								auto object_count = tile->drawnObjects[layer].size();
+								for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 								{
-									if (itsFakeSurface)
+									auto &obj = tile->drawnObjects[layer][obj_id];
+									if (obj->getType() == TileObject::Type::Scenery)
 									{
-										// looks like we need a real surface
-										map.setViewSurface(z, mksp<Surface>(Vec2<unsigned int>{
-										                          map.size.x * STRAT_TILE_X,
-										                          map.size.y * STRAT_TILE_Y}));
-										goto lets_try_again;
+										if (itsFakeSurface)
+										{
+											// looks like we need a real surface
+											map.setViewSurface(z, belt,
+											                   mksp<Surface>(Vec2<unsigned>{
+											                       map.size.x * STRAT_TILE_X,
+											                       map.size.y * STRAT_TILE_Y}));
+											goto lets_try_again;
+										}
+										Vec2<float> pos =
+										    tileToScreenCoords(obj->getCenter(), this->viewMode) -
+										    beltOffset[belt];
+										obj->draw(r, *this, pos, this->viewMode, true, 0, false,
+										          false);
 									}
-									Vec2<float> pos =
-									    tileToScreenCoords(obj->getCenter(), this->viewMode);
-									obj->draw(r, *this, pos, this->viewMode, true, 0, false, false);
 								}
 							}
 						}
+						map.setViewSurfaceDirty((size_t)z, belt, false);
 					}
-					map.setViewSurfaceDirty(z, false);
+					// get the image from the cache
+					r.draw(map.getViewSurface(z, belt),
+					       tileToOffsetScreenCoords(zeroPos) + beltOffset[belt]);
 				}
-				// get the image from the cache
-				r.draw(map.getViewSurface(z), tileToOffsetScreenCoords(zeroPos));
 
 				// draw projectiles to the current level
 				auto &projectiles = state.current_city->projectiles;

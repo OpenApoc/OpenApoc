@@ -74,7 +74,7 @@ void TileObjectBattleMapPart::setPosition(Vec3<float> newPosition)
 {
 	if (static_cast<int>(newPosition.z) != static_cast<int>(getPosition().z))
 	{
-		map.setViewSurfaceDirty(newPosition.z);
+		map.setViewSurfaceDirty(newPosition);
 	}
 	TileObject::setPosition(newPosition);
 
@@ -92,7 +92,7 @@ void TileObjectBattleMapPart::removeFromMap()
 
 	if (requireRecalc)
 	{
-		map.setViewSurfaceDirty(prevOwningTile->position.z);
+		map.setViewSurfaceDirty(prevOwningTile->position);
 		prevOwningTile->updateBattlescapeParameters();
 		prevDrawOnTile->updateBattlescapeUIDrawOrder();
 	}
@@ -170,6 +170,6 @@ void TileObjectBattleMapPart::addToDrawnTiles(Tile *tile)
 		}
 	}
 	TileObject::addToDrawnTiles(tile);
-	map.setViewSurfaceDirty(tile->position.z);
+	map.setViewSurfaceDirty(tile->position);
 }
 }
