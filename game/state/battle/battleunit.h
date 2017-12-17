@@ -765,7 +765,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Updates unit's movement
 	// Return true if retreated or destroyed and we must halt immediately
 	void updateMovement(GameState &state, unsigned int &moveTicksRemaining, bool &wasUsingLift);
-	// Updates unit's אפסרען trainsition and acquires new target אפסרען
+	// Updates unit's trainsition and acquires new target
 	void updateTurning(GameState &state, unsigned int &turnTicksRemaining,
 	                   unsigned int const handsTicksRemaining);
 	// Updates unit's displayed item (which one will draw in unit's hands on screen)
@@ -795,7 +795,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	sp<TileObjectShadow> shadowObject;
 
 	/*
-	- curr. mind state (controlled/berserk/…)
+	- curr. mind state (controlled/berserk/)
 	- ref. to psi attacker (who is controlling it/...)
 	*/
   private:

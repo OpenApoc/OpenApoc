@@ -55,6 +55,8 @@ void TriStateBox::eventOccured(Event *e)
 
 void TriStateBox::onRender()
 {
+	Control::onRender();
+
 	sp<Image> useimage;
 
 	switch (State)

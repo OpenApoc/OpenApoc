@@ -8,6 +8,7 @@
 #include "forms/graphicbutton.h"
 #include "forms/label.h"
 #include "forms/listbox.h"
+#include "forms/multilistbox.h"
 #include "forms/radiobutton.h"
 #include "forms/scrollbar.h"
 #include "forms/textbutton.h"

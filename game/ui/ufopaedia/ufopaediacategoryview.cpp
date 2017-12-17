@@ -129,10 +129,25 @@ void UfopaediaCategoryView::eventOccurred(Event *e)
 
 	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->keyboard().KeyCode == SDLK_ESCAPE)
+		switch (e->keyboard().KeyCode)
 		{
-			fw().stageQueueCommand({StageCmd::Command::POP});
-			return;
+			case SDLK_ESCAPE:
+				fw().stageQueueCommand({StageCmd::Command::POP});
+				return;
+			case SDLK_UP:
+				setNextSection();
+				return;
+			case SDLK_DOWN:
+				setPreviousSection();
+				return;
+			case SDLK_RIGHT:
+				setNextTopic();
+				return;
+			case SDLK_LEFT:
+				setPreviousTopic();
+				return;
+			default:
+				break;
 		}
 	}
 
@@ -143,91 +158,23 @@ void UfopaediaCategoryView::eventOccurred(Event *e)
 			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
-		if (e->forms().RaisedBy->Name == "BUTTON_NEXT_TOPIC")
+		else if (e->forms().RaisedBy->Name == "BUTTON_NEXT_TOPIC")
 		{
-			do
-			{
-				if (this->position_iterator == this->category->entries.end())
-				{
-					this->position_iterator = this->category->entries.begin();
-				}
-				else
-				{
-					this->position_iterator++;
-				}
-				// Loop until we find the end (which shows the category intro screen)
-				// or a visible entry
-			} while (this->position_iterator != this->category->entries.end() &&
-			         !this->position_iterator->second->isVisible());
-			this->setFormData();
-			return;
+			setNextTopic();
 		}
-		if (e->forms().RaisedBy->Name == "BUTTON_PREVIOUS_TOPIC")
+		else if (e->forms().RaisedBy->Name == "BUTTON_PREVIOUS_TOPIC")
 		{
-			do
-			{
-				if (this->position_iterator == this->category->entries.begin())
-				{
-					this->position_iterator = this->category->entries.end();
-				}
-				else
-				{
-					this->position_iterator--;
-				}
-				// Loop until we find the end (which shows the category intro screen)
-				// or a visible entry
-			} while (this->position_iterator != this->category->entries.end() &&
-			         !this->position_iterator->second->isVisible());
-			this->setFormData();
-			return;
+			setPreviousTopic();
 		}
-		if (e->forms().RaisedBy->Name == "BUTTON_NEXT_SECTION")
+		else if (e->forms().RaisedBy->Name == "BUTTON_NEXT_SECTION")
 		{
-			auto it = state->ufopaedia.begin();
-			// First find myself
-			while (it->second != this->category)
-			{
-				it++;
-				if (it == state->ufopaedia.end())
-				{
-					LogError("Failed to find current category \"%s\"", this->category->title);
-				}
-			}
-			// Increment it once to get the next
-			it++;
-			// Loop around to the beginning
-			if (it == state->ufopaedia.end())
-			{
-				it = state->ufopaedia.begin();
-			}
-			fw().stageQueueCommand(
-			    {StageCmd::Command::REPLACE, mksp<UfopaediaCategoryView>(state, it->second)});
-			return;
+			setNextSection();
 		}
-		if (e->forms().RaisedBy->Name == "BUTTON_PREVIOUS_SECTION")
+		else if (e->forms().RaisedBy->Name == "BUTTON_PREVIOUS_SECTION")
 		{
-			auto it = state->ufopaedia.begin();
-			// First find myself
-			while (it->second != this->category)
-			{
-				it++;
-				if (it == state->ufopaedia.end())
-				{
-					LogError("Failed to find current category \"%s\"", this->category->title);
-				}
-			}
-			// Loop around to the beginning
-			if (it == state->ufopaedia.begin())
-			{
-				it = state->ufopaedia.end();
-			}
-			// Decrement it once to get the previous
-			it--;
-			fw().stageQueueCommand(
-			    {StageCmd::Command::REPLACE, mksp<UfopaediaCategoryView>(state, it->second)});
-			return;
+			setPreviousSection();
 		}
-		if (e->forms().RaisedBy->Name == "ENTRY_SHORTCUT")
+		else if (e->forms().RaisedBy->Name == "ENTRY_SHORTCUT")
 		{
 			auto entry = e->forms().RaisedBy->getData<UfopaediaEntry>();
 			if (!entry)
@@ -247,7 +194,7 @@ void UfopaediaCategoryView::eventOccurred(Event *e)
 			this->position_iterator = it;
 			this->setFormData();
 		}
-		if (e->forms().RaisedBy->Name == "BUTTON_INFORMATION")
+		else if (e->forms().RaisedBy->Name == "BUTTON_INFORMATION")
 		{
 			menuform->findControl("INFORMATION_PANEL")
 			    ->setVisible(!menuform->findControl("INFORMATION_PANEL")->isVisible());
@@ -580,6 +527,94 @@ void UfopaediaCategoryView::setFormStats()
 	{
 		menuform->findControlTyped<Label>("TEXT_INFO")->Location.y = baseY;
 	}
+}
+
+void UfopaediaCategoryView::setNextTopic()
+{
+	do
+	{
+		if (this->position_iterator == this->category->entries.end())
+		{
+			this->position_iterator = this->category->entries.begin();
+		}
+		else
+		{
+			this->position_iterator++;
+		}
+		// Loop until we find the end (which shows the category intro screen)
+		// or a visible entry
+	} while (this->position_iterator != this->category->entries.end() &&
+	         !this->position_iterator->second->isVisible());
+	this->setFormData();
+	return;
+}
+
+void UfopaediaCategoryView::setPreviousTopic()
+{
+	do
+	{
+		if (this->position_iterator == this->category->entries.begin())
+		{
+			this->position_iterator = this->category->entries.end();
+		}
+		else
+		{
+			this->position_iterator--;
+		}
+		// Loop until we find the end (which shows the category intro screen)
+		// or a visible entry
+	} while (this->position_iterator != this->category->entries.end() &&
+	         !this->position_iterator->second->isVisible());
+	this->setFormData();
+	return;
+}
+
+void UfopaediaCategoryView::setNextSection()
+{
+	auto it = state->ufopaedia.begin();
+	// First find myself
+	while (it->second != this->category)
+	{
+		it++;
+		if (it == state->ufopaedia.end())
+		{
+			LogError("Failed to find current category \"%s\"", this->category->title);
+		}
+	}
+	// Increment it once to get the next
+	it++;
+	// Loop around to the beginning
+	if (it == state->ufopaedia.end())
+	{
+		it = state->ufopaedia.begin();
+	}
+	fw().stageQueueCommand(
+	    {StageCmd::Command::REPLACE, mksp<UfopaediaCategoryView>(state, it->second)});
+	return;
+}
+
+void UfopaediaCategoryView::setPreviousSection()
+{
+	auto it = state->ufopaedia.begin();
+	// First find myself
+	while (it->second != this->category)
+	{
+		it++;
+		if (it == state->ufopaedia.end())
+		{
+			LogError("Failed to find current category \"%s\"", this->category->title);
+		}
+	}
+	// Loop around to the beginning
+	if (it == state->ufopaedia.begin())
+	{
+		it = state->ufopaedia.end();
+	}
+	// Decrement it once to get the previous
+	it--;
+	fw().stageQueueCommand(
+	    {StageCmd::Command::REPLACE, mksp<UfopaediaCategoryView>(state, it->second)});
+	return;
 }
 
 bool UfopaediaCategoryView::isTransition() { return false; }

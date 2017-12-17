@@ -3,13 +3,6 @@
   <form id="FORM_AGENT_ASSIGNMENT">
     <style minwidth="529" minheight="373">
       <size width="529" height="373"/>
-	
-	<label text="This form is a temporary stub____________">
-        <position x="0" y="0"/>
-        <size width="529" height="373"/>
-        <alignment horizontal="right" vertical="bottom"/>
-        <font>smalfont</font>
-    </label>
 
 	<label text="Unassigned Agents">
         <position x="45" y="3"/>
@@ -23,18 +16,11 @@
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
     </label>
-	  
+
 	<scroll id="AGENT_SELECT_SCROLL">
         <position x="503" y="27"/>
         <size width="26" height="320"/>
     </scroll>
-    <listbox id="AGENT_SELECT_BOX" scrollbarid="AGENT_SELECT_SCROLL">
-        <position x="16" y="32"/>
-        <size width="228" height="328"/>
-        <item size="0" spacing="0"/>
-        <hovercolour r="255" g="255" b="255" a="255"/>
-        <selcolour r="0" g="255" b="0" a="255"/>
-    </listbox>
     <graphicbutton id="AGENT_SCROLL_UP" scrollprev="AGENT_SELECT_SCROLL">
         <position x="505" y="3"/>
         <size width="22" height="21"/>
@@ -47,14 +33,17 @@
         <image/>
         <imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
     </graphicbutton>
-	  
-	<listbox id="VEHICLE_SELECT_BOX" >
-        <position x="291" y="32"/>
-        <size width="203" height="328"/>
-        <item size="0" spacing="0"/>
+    <multilistbox id="AGENT_SELECT_BOX" scrollbarid="AGENT_SELECT_SCROLL">
+        <position x="16" y="25"/>
+        <size width="506" height="340"/>
+        <item size="0" spacing="2"/>
         <hovercolour r="255" g="255" b="255" a="255"/>
-        <selcolour r="0" g="255" b="0" a="255"/>
-    </listbox>
+        <selcolour r="128" g="180" b="255" a="255"/>
+    </multilistbox>
+
+    <multilistbox id="DRAGGED_AGENT_BOX">
+        <item size="0" spacing="2"/>
+    </multilistbox>
     </style>
   </form>
 </openapoc>

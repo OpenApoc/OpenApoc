@@ -53,8 +53,10 @@ City::~City()
 		if (s->tileObject)
 			s->tileObject->removeFromMap();
 		s->tileObject = nullptr;
+		s->overlayDoodad = nullptr;
 		s->city.clear();
 		s->building.clear();
+		s->clearSupportedParts();
 	}
 	for (auto &b : this->buildings)
 	{
@@ -62,6 +64,11 @@ City::~City()
 		b.second->currentAgents.clear();
 		b.second->city.clear();
 		b.second->base.clear();
+	}
+	for (auto &t : this->tile_types)
+	{
+		// Some damaged tile links can loop, causing a leak if they're not broken
+		t.second->damagedTile.clear();
 	}
 }
 
@@ -662,8 +669,8 @@ sp<Doodad> City::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 	return doodad;
 }
 
-sp<Vehicle> City::placeVehicle(GameState &state, StateRef<VehicleType> type,
-                               StateRef<Organisation> owner)
+sp<Vehicle> City::createVehicle(GameState &state, StateRef<VehicleType> type,
+                                StateRef<Organisation> owner)
 {
 	auto v = mksp<Vehicle>();
 	v->type = type;
@@ -680,8 +687,28 @@ sp<Vehicle> City::placeVehicle(GameState &state, StateRef<VehicleType> type,
 	UString vID = Vehicle::generateObjectID(state);
 	state.vehicles[vID] = v;
 
-	v->equipDefaultEquipment(state);
+	return v;
+}
+sp<Vehicle> City::createVehicle(GameState &state, StateRef<VehicleType> type,
+                                StateRef<Organisation> owner, StateRef<Building> building)
+{
+	if (building->city.id != id)
+	{
+		LogError("Adding vehicle to a building in a different city?");
+		return nullptr;
+	}
+	auto v = createVehicle(state, type, owner);
 
+	v->enterBuilding(state, building);
+
+	return v;
+}
+
+sp<Vehicle> City::placeVehicle(GameState &state, StateRef<VehicleType> type,
+                               StateRef<Organisation> owner)
+{
+	auto v = createVehicle(state, type, owner);
+	v->equipDefaultEquipment(state);
 	return v;
 }
 

@@ -230,7 +230,7 @@ class VehicleType : public StateObject
 		int passengers = this->passengers;
 		while (first != last)
 		{
-			if ((*first)->type == EquipmentSlotType::VehicleEngine)
+			if ((*first)->type == EquipmentSlotType::VehicleGeneral)
 			{
 				passengers += (*first)->passengers;
 			}

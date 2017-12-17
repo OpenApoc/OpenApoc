@@ -112,25 +112,14 @@ void BuildingScreen::eventOccurred(Event *e)
 				                      MessageBox::ButtonOptions::Ok)});
 				return;
 			}
-			// FIXME: Implement selecting agents that will do the mission
-			LogWarning("Implement selecting agents that will do the mission");
-			std::list<StateRef<Agent>> agents;
+
+			std::list<StateRef<Agent>> agents(agentAssignment->getSelectedAgents());
 			StateRef<Vehicle> vehicle;
 			if (agentAssignment->currentVehicle)
 			{
 				vehicle = {state.get(), Vehicle::getId(*state, agentAssignment->currentVehicle)};
-				for (auto &a : agentAssignment->currentVehicle->currentAgents)
-				{
-					agents.push_back(a);
-				}
 			}
-			else
-			{
-				for (auto &a : agentAssignment->agents)
-				{
-					agents.emplace_back(state.get(), a);
-				}
-			}
+
 			if (agents.empty())
 			{
 				fw().stageQueueCommand(
@@ -242,19 +231,22 @@ void BuildingScreen::eventOccurred(Event *e)
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_EQUIPAGENT")
 		{
-			fw().stageQueueCommand(
-			    {StageCmd::Command::PUSH,
-			     mksp<AEquipScreen>(this->state, agentAssignment->currentAgent)});
+			if (agentAssignment->currentAgent)
+			{
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<AEquipScreen>(this->state, agentAssignment->currentAgent)});
+			}
 			return;
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_EQUIPVEHICLE")
 		{
-			auto equipScreen = mksp<VEquipScreen>(this->state);
 			if (agentAssignment->currentVehicle)
 			{
+				auto equipScreen = mksp<VEquipScreen>(this->state);
 				equipScreen->setSelectedVehicle(agentAssignment->currentVehicle);
+				fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
 			}
-			fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
 			return;
 		}
 	}
@@ -265,6 +257,7 @@ void BuildingScreen::update() { menuform->update(); }
 void BuildingScreen::render()
 {
 	fw().stageGetPrevious(this->shared_from_this())->render();
+	menuform->preRender();
 	menuform->render();
 }
 

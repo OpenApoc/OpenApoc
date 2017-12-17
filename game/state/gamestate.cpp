@@ -92,6 +92,25 @@ GameState::~GameState()
 	{
 		org.second->current_relations.clear();
 	}
+	for (auto &city : this->cities)
+	{
+		for (auto &building : city.second->buildings)
+		{
+			auto &bld = building.second;
+			bld->city.clear();
+			bld->function.clear();
+			bld->owner.clear();
+			bld->base_layout.clear();
+			bld->base.clear();
+			bld->battle_map.clear();
+			bld->preset_crew.clear();
+			bld->current_crew.clear();
+			bld->currentVehicles.clear();
+			bld->currentAgents.clear();
+			bld->researchUnlock.clear();
+			bld->accessTopic.clear();
+		}
+	}
 }
 
 // Just a handy shortcut since it's shown on every single screen
@@ -663,10 +682,11 @@ void GameState::fillPlayerStartingProperty()
 	}*/
 	for (auto &pair : this->initial_vehicles)
 	{
-		for (int i = 0; i < pair.second; i++)
+		auto v = current_city->createVehicle(*this, pair.first, this->getPlayer(), {this, bld});
+		v->homeBuilding = v->currentBuilding;
+		for (auto &eq : pair.second)
 		{
-			auto v = current_city->placeVehicle(*this, pair.first, this->getPlayer(), {this, bld});
-			v->homeBuilding = v->currentBuilding;
+			v->addEquipment(*this, eq);
 		}
 	}
 	// Give the player initial vehicle equipment
@@ -1085,6 +1105,14 @@ void GameState::update(unsigned int ticks)
 			{
 				v.second->update(*this, ticks);
 			}
+		}
+		if (!vehiclesDeathNote.empty())
+		{
+			for (auto &name : this->vehiclesDeathNote)
+			{
+				vehicles.erase(name);
+			}
+			vehiclesDeathNote.clear();
 		}
 		Trace::end("GameState::update::vehicles");
 

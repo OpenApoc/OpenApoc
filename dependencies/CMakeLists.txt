@@ -32,7 +32,10 @@ target_include_directories(OpenApoc_LibSmacker PRIVATE
 target_compile_definitions(OpenApoc_LibSmacker PUBLIC PTHREADS_AVAILABLE)
 
 set (MINIZ_SOURCE_FILES
-	miniz/miniz.c)
+	miniz/miniz.c
+	miniz/miniz_zip.c
+	miniz/miniz_tdef.c
+	miniz/miniz_tinfl.c)
 source_group(miniz\\sources FILES ${MINIZ_SOURCE_FILES})
 
 list(APPEND ALL_SOURCE_FILES ${MINIZ_SOURCE_FILES})
@@ -40,6 +43,9 @@ list(APPEND ALL_SOURCE_FILES ${MINIZ_SOURCE_FILES})
 add_library(OpenApoc_Miniz STATIC ${MINIZ_SOURCE_FILES})
 
 target_compile_definitions(OpenApoc_Miniz PUBLIC MINIZ_NO_TIME)
+# We probably don't support any platforms without the 64-bit offset file
+# ioctls
+target_compile_definitions(OpenApoc_Miniz PUBLIC _LARGEFILE64_SOURCE=1)
 
 target_include_directories(OpenApoc_Miniz PUBLIC ${CMAKE_SOURCE_DIR})
 target_include_directories(OpenApoc_Miniz PRIVATE
@@ -100,6 +106,8 @@ set(PHYSFS_ARCHIVE_QPAK OFF CACHE BOOL "")
 set(PHYSFS_ARCHIVE_SLB OFF CACHE BOOL "")
 set(PHYSFS_ARCHIVE_WAD OFF CACHE BOOL "")
 set(PHYSFS_ARCHIVE_ISO9660 ON CACHE BOOL "")
+set(PHYSFS_ARCHIVE_ISO9660_LOWERCASE ON CACHE BOOL "")
+set(PHYSFS_ARCHIVE_ISO9660_OPENAPOC_WORKAROUND ON CACHE BOOL "")
 set(PHYSFS_ARCHIVE_ZIP ON CACHE BOOL "")
 
 set(PHYSFS_BUILD_SHARED OFF CACHE BOOL "")

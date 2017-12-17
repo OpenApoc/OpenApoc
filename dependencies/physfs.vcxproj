@@ -84,7 +84,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;PHYSFS_SUPPORTS_ISO9660;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;PHYSFS_SUPPORTS_ISO9660;PHYSFS_ISO9660_LOWERCASE=1;PHYSFS_ISO9660_OPENAPOC_WORKAROUND=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BrowseInformation>true</BrowseInformation>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
@@ -103,7 +103,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;PHYSFS_SUPPORTS_ISO9660;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;PHYSFS_SUPPORTS_ISO9660;PHYSFS_ISO9660_LOWERCASE=1;PHYSFS_ISO9660_OPENAPOC_WORKAROUND=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
@@ -119,7 +119,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;PHYSFS_SUPPORTS_ISO9660;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;PHYSFS_SUPPORTS_ISO9660;PHYSFS_ISO9660_LOWERCASE=1;PHYSFS_ISO9660_OPENAPOC_WORKAROUND=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -136,8 +136,9 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;PHYSFS_SUPPORTS_ISO9660;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;PHYSFS_SUPPORTS_ISO9660;PHYSFS_ISO9660_LOWERCASE=1;PHYSFS_ISO9660_OPENAPOC_WORKAROUND=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/bigobj /utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -149,30 +150,34 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="physfs\src\archiver_dir.c" />
-    <ClCompile Include="physfs\src\archiver_grp.c" />
-    <ClCompile Include="physfs\src\archiver_hog.c" />
-    <ClCompile Include="physfs\src\archiver_iso9660.c" />
-    <ClCompile Include="physfs\src\archiver_lzma.c" />
-    <ClCompile Include="physfs\src\archiver_mvl.c" />
-    <ClCompile Include="physfs\src\archiver_qpak.c" />
-    <ClCompile Include="physfs\src\archiver_slb.c" />
-    <ClCompile Include="physfs\src\archiver_unpacked.c" />
-    <ClCompile Include="physfs\src\archiver_wad.c" />
-    <ClCompile Include="physfs\src\archiver_zip.c" />
-    <ClCompile Include="physfs\src\physfs.c" />
+    <ClCompile Include="physfs\src\physfs_archiver_dir.c" />
+    <ClCompile Include="physfs\src\physfs_archiver_7z.c" />
+    <ClCompile Include="physfs\src\physfs_archiver_grp.c" />
+    <ClCompile Include="physfs\src\physfs_archiver_hog.c" />
+    <ClCompile Include="physfs\src\physfs_archiver_iso9660.c" />
+    <ClCompile Include="physfs\src\physfs_archiver_mvl.c" />
+    <ClCompile Include="physfs\src\physfs_archiver_qpak.c" />
+    <ClCompile Include="physfs\src\physfs_archiver_slb.c" />
+    <ClCompile Include="physfs\src\physfs_archiver_unpacked.c" />
+    <ClCompile Include="physfs\src\physfs_archiver_vdf.c" />
+    <ClCompile Include="physfs\src\physfs_archiver_wad.c" />
+    <ClCompile Include="physfs\src\physfs_archiver_zip.c" />
     <ClCompile Include="physfs\src\physfs_byteorder.c" />
+    <ClCompile Include="physfs\src\physfs.c" />
+    <ClCompile Include="physfs\src\physfs_platform_haiku.cpp" />
+    <ClCompile Include="physfs\src\physfs_platform_winrt.cpp" />
+    <ClCompile Include="physfs\src\physfs_platform_os2.c" />
+    <ClCompile Include="physfs\src\physfs_platform_posix.c" />
+    <ClCompile Include="physfs\src\physfs_platform_qnx.c" />
+    <ClCompile Include="physfs\src\physfs_platform_unix.c" />
+    <ClCompile Include="physfs\src\physfs_platform_windows.c" />
     <ClCompile Include="physfs\src\physfs_unicode.c" />
-    <ClCompile Include="physfs\src\platform_beos.cpp" />
-    <ClCompile Include="physfs\src\platform_macosx.c" />
-    <ClCompile Include="physfs\src\platform_posix.c" />
-    <ClCompile Include="physfs\src\platform_unix.c" />
-    <ClCompile Include="physfs\src\platform_windows.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="physfs\src\physfs.h" />
     <ClInclude Include="physfs\src\physfs_casefolding.h" />
     <ClInclude Include="physfs\src\physfs_internal.h" />
+    <ClInclude Include="physfs\src\physfs_lzmasdk.h" />
     <ClInclude Include="physfs\src\physfs_miniz.h" />
     <ClInclude Include="physfs\src\physfs_platforms.h" />
   </ItemGroup>

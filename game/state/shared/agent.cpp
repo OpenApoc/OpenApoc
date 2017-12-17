@@ -284,6 +284,28 @@ UString Agent::getRankName() const
 	return "";
 }
 
+/**
+ * Get relevant skill.
+ */
+int Agent::getSkill() const
+{
+	int skill = 0;
+	switch (type->role)
+	{
+		case AgentType::Role::Physicist:
+			skill = current_stats.physics_skill;
+			break;
+		case AgentType::Role::BioChemist:
+			skill = current_stats.biochem_skill;
+			break;
+		case AgentType::Role::Engineer:
+			skill = current_stats.engineering_skill;
+			break;
+	}
+
+	return skill;
+}
+
 void Agent::leaveBuilding(GameState &state, Vec3<float> initialPosition)
 {
 	if (currentBuilding)
@@ -967,51 +989,56 @@ void Agent::updateDaily(GameState &state) { recentlyFought = false; }
 
 void Agent::updateHourly(GameState &state)
 {
-	// If not in home building or not in vehicle stationed in home building)
-	if (currentBuilding != homeBuilding &&
-	    (!currentVehicle || currentVehicle->currentBuilding != homeBuilding))
+	StateRef<Base> base;
+	if (currentBuilding == homeBuilding)
 	{
+		// agent is in home building
+		base = currentBuilding->base;
+	}
+	else if (currentVehicle && currentVehicle->currentBuilding == homeBuilding)
+	{
+		// agent is in a vehicle stationed in home building
+		base = currentVehicle->currentBuilding->base;
+	}
+	else
+	{
+		// not in a base
 		return;
 	}
-	// Heal and train
-	if (currentBuilding->base)
+	// Heal
+	if (modified_stats.health < current_stats.health && !recentlyFought)
 	{
-		// Heal
-		if (modified_stats.health < current_stats.health && !recentlyFought)
+		int usage = base->getUsage(state, FacilityType::Capacity::Medical);
+		if (usage < 999)
 		{
-			int usage = currentBuilding->base->getUsage(state, FacilityType::Capacity::Medical);
-			if (usage < 999)
+			usage = std::max(100, usage);
+			// As per Roger Wong's guide, healing is 0.8 points an hour
+			healingProgress += 80.0f / (float)usage;
+			if (healingProgress > 1.0f)
 			{
-				usage = std::max(100, usage);
-				// As per Roger Wong's guide, healing is 0.8 points an hour
-				healingProgress += 80.0f / (float)usage;
-				if (healingProgress > 1.0f)
-				{
-					healingProgress -= 1.0f;
-					modified_stats.health++;
-				}
+				healingProgress -= 1.0f;
+				modified_stats.health++;
 			}
 		}
-		// Train
-		if (trainingAssignment != TrainingAssignment::None)
+	}
+	// Train
+	if (trainingAssignment != TrainingAssignment::None)
+	{
+		int usage = base->getUsage(state,
+		                           trainingAssignment == TrainingAssignment::Physical
+		                               ? FacilityType::Capacity::Training
+		                               : FacilityType::Capacity::Psi);
+		if (usage < 999)
 		{
-			int usage =
-			    currentBuilding->base->getUsage(state,
-			                                    trainingAssignment == TrainingAssignment::Physical
-			                                        ? FacilityType::Capacity::Training
-			                                        : FacilityType::Capacity::Psi);
-			if (usage < 999)
+			usage = std::max(100, usage);
+			// As per Roger Wong's guide
+			if (trainingAssignment == TrainingAssignment::Physical)
 			{
-				usage = std::max(100, usage);
-				// As per Roger Wong's guide
-				if (trainingAssignment == TrainingAssignment::Physical)
-				{
-					trainPhysical(state, TICKS_PER_HOUR * 100 / usage);
-				}
-				else
-				{
-					trainPsi(state, TICKS_PER_HOUR * 100 / usage);
-				}
+				trainPhysical(state, TICKS_PER_HOUR * 100 / usage);
+			}
+			else
+			{
+				trainPsi(state, TICKS_PER_HOUR * 100 / usage);
 			}
 		}
 	}

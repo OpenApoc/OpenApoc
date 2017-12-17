@@ -106,16 +106,22 @@ void LocationScreen::eventOccurred(Event *e)
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_EQUIPAGENT")
 		{
-			fw().stageQueueCommand(
-			    {StageCmd::Command::PUSH,
-			     mksp<AEquipScreen>(this->state, agentAssignment->currentAgent)});
+			if (agentAssignment->currentAgent)
+			{
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<AEquipScreen>(this->state, agentAssignment->currentAgent)});
+			}
 			return;
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_EQUIPVEHICLE")
 		{
-			auto equipScreen = mksp<VEquipScreen>(this->state);
-			equipScreen->setSelectedVehicle(agentAssignment->currentVehicle);
-			fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
+			if (agentAssignment->currentVehicle)
+			{
+				auto equipScreen = mksp<VEquipScreen>(this->state);
+				equipScreen->setSelectedVehicle(agentAssignment->currentVehicle);
+				fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
+			}
 			return;
 		}
 	}
@@ -126,6 +132,7 @@ void LocationScreen::update() { menuform->update(); }
 void LocationScreen::render()
 {
 	fw().stageGetPrevious(this->shared_from_this())->render();
+	menuform->preRender();
 	menuform->render();
 }
 

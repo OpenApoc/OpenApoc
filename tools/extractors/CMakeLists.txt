@@ -1,8 +1,6 @@
 # project name, and type
 PROJECT(OpenApoc_DataExtractor CXX C)
 
-include(cotire)
-
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
@@ -89,13 +87,6 @@ target_link_libraries(OpenApoc_DataExtractor OpenApoc_Framework)
 target_link_libraries(OpenApoc_DataExtractor OpenApoc_GameState)
 
 set_property(TARGET OpenApoc_DataExtractor PROPERTY CXX_STANDARD 11)
-
-set_target_properties(OpenApoc_DataExtractor PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT
-"extractors_pch.h")
-
-if(ENABLE_COTIRE)
-cotire(OpenApoc_DataExtractor)
-endif()
 
 option(EXTRACT_DATA "Run the DataExtractor during build" ON)
 

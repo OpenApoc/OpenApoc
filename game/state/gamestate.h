@@ -80,6 +80,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<Base> player_bases;
 	StateRefMap<City> cities;
 	StateRefMap<Vehicle> vehicles;
+	std::set<UString> vehiclesDeathNote;
 	StateRefMap<UfopaediaCategory> ufopaedia;
 	ResearchState research;
 	StateRefMap<BattleMap> battle_maps;
@@ -116,7 +117,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	std::map<AgentType::Role, unsigned> initial_agents;
 	std::map<UString, unsigned> initial_facilities;
 	std::list<std::list<StateRef<AEquipmentType>>> initial_agent_equipment;
-	std::list<std::pair<StateRef<VehicleType>, int>> initial_vehicles;
+	std::list<std::pair<StateRef<VehicleType>, std::list<StateRef<VEquipmentType>>>>
+	    initial_vehicles;
 	std::list<std::pair<StateRef<VEquipmentType>, int>> initial_vehicle_equipment;
 	std::list<std::pair<StateRef<VAmmoType>, int>> initial_vehicle_ammo;
 	std::map<UString, int> initial_base_agent_equipment;
@@ -177,10 +179,10 @@ class GameState : public std::enable_shared_from_this<GameState>
 	bool saveGame(const UString &path, bool pack = true, bool pretty = false);
 
 	// serializes gamestate to archive
-	bool serialize(sp<SerializationArchive> archive) const;
+	bool serialize(SerializationArchive *archive) const;
 
 	// deserializes gamestate from archive
-	bool deserialize(const sp<SerializationArchive> archive);
+	bool deserialize(SerializationArchive *archive);
 
 	// Called on a newly started Game to setup initial state that isn't serialized in (random
 	// vehicle positions etc.) - it is not called

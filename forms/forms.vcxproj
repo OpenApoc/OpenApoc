@@ -26,6 +26,7 @@
     <ClCompile Include="graphicbutton.cpp" />
     <ClCompile Include="label.cpp" />
     <ClCompile Include="listbox.cpp" />
+    <ClCompile Include="multilistbox.cpp" />
     <ClCompile Include="radiobutton.cpp" />
     <ClCompile Include="scrollbar.cpp" />
     <ClCompile Include="textbutton.cpp" />
@@ -44,6 +45,7 @@
     <ClInclude Include="graphicbutton.h" />
     <ClInclude Include="label.h" />
     <ClInclude Include="listbox.h" />
+    <ClInclude Include="multilistbox.h" />
     <ClInclude Include="radiobutton.h" />
     <ClInclude Include="scrollbar.h" />
     <ClInclude Include="textbutton.h" />
@@ -187,6 +189,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/bigobj /utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

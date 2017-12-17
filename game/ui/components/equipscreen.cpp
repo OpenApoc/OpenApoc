@@ -99,6 +99,8 @@ static const EquipmentLayoutSlot *getSlotAtPosition(Vec2<int> pos,
 
 void EquipmentPaperDoll::onRender()
 {
+	Control::onRender();
+
 	if (!object)
 	{
 		return;

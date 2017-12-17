@@ -132,6 +132,8 @@ void ScrollBar::eventOccured(Event *e)
 
 void ScrollBar::onRender()
 {
+	Control::onRender();
+
 	// LoadResources();
 	if (Minimum == Maximum)
 		return;
@@ -237,6 +239,10 @@ void ScrollBar::configureSelfFromXml(pugi::xml_node *node)
 {
 	Control::configureSelfFromXml(node);
 
+	if (auto largeChange = node->attribute("largechange"))
+	{
+		this->LargeChange = largeChange.as_int();
+	}
 	auto gripperImageNode = node->child("gripperimage");
 	if (gripperImageNode)
 	{
