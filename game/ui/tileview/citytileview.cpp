@@ -560,7 +560,7 @@ void CityTileView::render()
 			std::vector<Vec2<float>> beltOffset;
 			for (size_t belt = 0; belt < STRATEGY_VIEW_BELTS; belt++)
 			{
-				beltOffset.emplace_back(0, belt * map.size.y / STRATEGY_VIEW_BELTS);
+				beltOffset.emplace_back(0.0f, belt * map.size.y / STRATEGY_VIEW_BELTS);
 			}
 
 			for (int z = 0; z < maxZDraw; z++)
@@ -569,13 +569,13 @@ void CityTileView::render()
 				{
 				lets_try_again:
 
+					bool itsFakeSurface = map.getViewSurface(z, belt)->size.x < STRAT_TILE_X;
 					if (map.isViewSurfaceDirty(z, belt))
 					{
 						// draw an image to the cache
 						RendererSurfaceBinding b(r, map.getViewSurface(z, belt));
 						r.clear();
 
-						bool itsFakeSurface = map.getViewSurface(z, belt)->size.x < STRAT_TILE_X;
 						unsigned layer = map.getLayer(TileObject::Type::Scenery);
 
 						int yMin = belt * map.size.y / STRATEGY_VIEW_BELTS;
@@ -611,9 +611,12 @@ void CityTileView::render()
 						}
 						map.setViewSurfaceDirty((size_t)z, belt, false);
 					}
-					// get the image from the cache
-					r.draw(map.getViewSurface(z, belt),
-					       tileToOffsetScreenCoords(zeroPos) + beltOffset[belt]);
+					if (!itsFakeSurface)
+					{
+						// get the image from the cache
+						r.draw(map.getViewSurface(z, belt),
+						       tileToOffsetScreenCoords(zeroPos) + beltOffset[belt]);
+					}
 				}
 
 				// draw projectiles to the current level

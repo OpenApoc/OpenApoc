@@ -1359,7 +1359,7 @@ void BattleTileView::render()
 			std::vector<Vec2<float>> beltOffset;
 			for (size_t belt = 0; belt < STRATEGY_VIEW_BELTS; belt++)
 			{
-				beltOffset.emplace_back(0, belt * map.size.y / STRATEGY_VIEW_BELTS);
+				beltOffset.emplace_back(0.0f, belt * map.size.y / STRATEGY_VIEW_BELTS);
 			}
 
 			// Draw everything but units and items
@@ -1372,13 +1372,13 @@ void BattleTileView::render()
 				{
 				lets_try_again:
 
+					bool itsFakeSurface = map.getViewSurface(z, belt)->size.x < STRAT_TILE_X;
 					if (map.isViewSurfaceDirty(z, belt))
 					{
 						// draw an image to the cache
 						RendererSurfaceBinding b(r, map.getViewSurface(z, belt));
 						r.clear();
 
-						bool itsFakeSurface = map.getViewSurface(z, belt)->size.x < STRAT_TILE_X;
 						for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
 						{
 							int yMin = belt * map.size.y / STRATEGY_VIEW_BELTS;
@@ -1428,9 +1428,12 @@ void BattleTileView::render()
 						}
 						map.setViewSurfaceDirty((size_t)z, belt, false);
 					}
-					// get the image from the cache
-					r.draw(map.getViewSurface(z, belt),
-					       tileToOffsetScreenCoords(zeroPos) + beltOffset[belt]);
+					if (!itsFakeSurface)
+					{
+						// get the image from the cache
+						r.draw(map.getViewSurface(z, belt),
+						       tileToOffsetScreenCoords(zeroPos) + beltOffset[belt]);
+					}
 				}
 
 				// draw projectiles to the current level
