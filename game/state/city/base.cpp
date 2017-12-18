@@ -534,14 +534,15 @@ int Base::getUsage(GameState &state, sp<Facility> facility, int delta) const
 
 int Base::getUsage(GameState &state, FacilityType::Capacity type, int delta) const
 {
-	if (getCapacityTotal(type) == 0)
+	int used = getCapacityUsed(state, type) + delta;
+	int total = getCapacityTotal(type);
+	if (total == 0)
 	{
-		return getCapacityUsed(state, type) + delta > 0 ? 999 : 0;
+		return used > 0 ? 999 : 0;
 	}
-	float usage = 0.0f;
-	usage = (float)getCapacityUsed(state, type) + (float)delta;
-	usage /= getCapacityTotal(type);
-	return std::min(999, static_cast<int>(ceilf(usage * 100.0f)));
+
+	// + total / 2  due to rounding
+	return std::min(999, (100 * used + total / 2) / total);
 }
 
 sp<Base> Base::get(const GameState &state, const UString &id)

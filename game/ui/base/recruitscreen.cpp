@@ -113,6 +113,15 @@ RecruitScreen::RecruitScreen(sp<GameState> state)
 					    agentLists[leftIndex].begin(), agentLists[leftIndex].end(), agentControl));
 					agentLists[rightIndex].push_back(agentControl);
 				}
+				else if (this->state->current_base->getUsage(
+				             *(this->state), FacilityType::Capacity::Quarters, lqDelta + 1) > 100)
+				{
+					fw().stageQueueCommand(
+					    {StageCmd::Command::PUSH,
+					     mksp<MessageBox>(tr("Accomodation exceeded"),
+					                      tr("Transfer limited by available accommodation."),
+					                      MessageBox::ButtonOptions::Ok)});
+				}
 				else
 				{
 					listRight->removeItem(agentControl);
@@ -575,7 +584,7 @@ void RecruitScreen::closeScreen(bool confirmed)
 				moneyDelta -= hireCost.at(agent->type->role);
 			}
 			// Moved away from his base to this base
-			if (bases[agent->homeBuilding->base.id] != i)
+			else if (bases[agent->homeBuilding->base.id] != i)
 			{
 				vecLqDelta[bases[agent->homeBuilding->base.id]]--;
 				vecLqDelta[i]++;
