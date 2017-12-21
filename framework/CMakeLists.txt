@@ -251,7 +251,7 @@ foreach (SDL2_LIB ${PC_SDL2_LIBRARIES})
 				message(FATAL_ERROR "sdl2 library ${SDL2_LIB} not found in ${PC_SDL2_LIBRARY_DIRS}")
 		endif()
 		message("Found ${SDL2_LIB} at ${SDL2_LIBRARY_PATH-${SDL2_LIB}}")
-		target_link_libraries(OpenApoc_Framework PUBLIC ${SDL2_LIB})
+		target_link_libraries(OpenApoc_Framework PUBLIC ${SDL2_LIBRARY_PATH-${SDL2_LIB}})
 endforeach()
 target_include_directories(OpenApoc_Framework PUBLIC ${PC_SDL2_INCLUDE_DIRS})
 
