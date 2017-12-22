@@ -101,6 +101,15 @@ void BuildingScreen::eventOccurred(Event *e)
 		if (e->forms().RaisedBy->Name == "BUTTON_EXTERMINATE" ||
 		    e->forms().RaisedBy->Name == "BUTTON_RAID")
 		{
+			if (!building->isAlive(*state))
+			{
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<MessageBox>(tr("No Entrance"), tr("Cannot raid as building destroyed"),
+				                      MessageBox::ButtonOptions::Ok)});
+				return;
+			}
+
 			if (building->accessTopic && !building->accessTopic->isComplete())
 			{
 				fw().stageQueueCommand(
