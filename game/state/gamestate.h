@@ -218,6 +218,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// - there are any projectiles on the current map
 	bool canTurbo() const;
 
+	// Immediately remove all dead objects.
+	void cleanUpDeathNote();
 	// Update progress
 	void update(unsigned int ticks);
 	// updateTurbo progresses 5 minutes at a time - can only be called if canTurbo() returns true.
