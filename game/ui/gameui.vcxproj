@@ -55,6 +55,7 @@
     <ClCompile Include="city\basebuyscreen.cpp" />
     <ClCompile Include="city\basedefensescreen.cpp" />
     <ClCompile Include="city\baseselectscreen.cpp" />
+    <ClCompile Include="city\bribescreen.cpp" />
     <ClCompile Include="city\buildingscreen.cpp" />
     <ClCompile Include="city\infiltrationscreen.cpp" />
     <ClCompile Include="city\scorescreen.cpp" />
@@ -108,6 +109,7 @@
     <ClInclude Include="city\basebuyscreen.h" />
     <ClInclude Include="city\basedefensescreen.h" />
     <ClInclude Include="city\baseselectscreen.h" />
+    <ClInclude Include="city\bribescreen.h" />
     <ClInclude Include="city\buildingscreen.h" />
     <ClInclude Include="city\infiltrationscreen.h" />
     <ClInclude Include="city\scorescreen.h" />

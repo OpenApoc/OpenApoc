@@ -154,6 +154,10 @@ class Organisation : public StateObject
 	Relation isRelatedTo(const StateRef<Organisation> &other) const;
 	bool isPositiveTo(const StateRef<Organisation> &other) const;
 	bool isNegativeTo(const StateRef<Organisation> &other) const;
+	// Calculate the cost of a bribe.
+	int costOfBribeBy(const StateRef<Organisation> &other) const;
+	// The organisation is bribed by other org.
+	bool bribedBy(GameState &state, StateRef<Organisation> other, int bribe);
 	float getRelationTo(const StateRef<Organisation> &other) const;
 	void adjustRelationTo(GameState &state, StateRef<Organisation> other, float value);
 	std::map<StateRef<Organisation>, float> current_relations;
