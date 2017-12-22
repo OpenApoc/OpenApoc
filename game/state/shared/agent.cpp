@@ -337,6 +337,10 @@ void Agent::enterBuilding(GameState &state, StateRef<Building> b)
 
 void Agent::enterVehicle(GameState &state, StateRef<Vehicle> v)
 {
+	if (v->getPassengers() >= v->getMaxPassengers())
+	{
+		return;
+	}
 	if (currentBuilding)
 	{
 		currentBuilding->currentAgents.erase({&state, shared_from_this()});
@@ -349,10 +353,6 @@ void Agent::enterVehicle(GameState &state, StateRef<Vehicle> v)
 	}
 	currentVehicle = v;
 	currentVehicle->currentAgents.insert({&state, shared_from_this()});
-	if (currentVehicle->getMaxPassengers() < currentVehicle->getPassengers())
-	{
-		LogWarning("WHAT THE HELL!? Vehicle over passenger limit??");
-	}
 }
 
 bool Agent::canTeleport() const
