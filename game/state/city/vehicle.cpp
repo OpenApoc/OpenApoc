@@ -3382,7 +3382,7 @@ int Vehicle::getCargo() const
 int Vehicle::getMaxBio() const
 {
 	auto et = getEquipmentTypes();
-	return this->type->getMaxCargo(et.begin(), et.end());
+	return this->type->getMaxBio(et.begin(), et.end());
 }
 
 int Vehicle::getBio() const
