@@ -10,7 +10,10 @@ find_package (Threads REQUIRED)
 set (GAMEUI_SOURCE_FILES
 	base/basescreen.cpp
 	base/basestage.cpp
+	base/transactionbuyandsell.cpp
+	base/transactioncontainment.cpp
 	base/transactionscreen.cpp
+	base/transactiontransfer.cpp
 	base/recruitscreen.cpp
 	base/researchscreen.cpp
 	base/researchselect.cpp
@@ -75,7 +78,10 @@ set (GAMEUI_HEADER_FILES
 	base/basescreen.h
 	base/basestage.h
 	base/recruitscreen.h
+	base/transactionbuyandsell.h
+	base/transactioncontainment.h
 	base/transactionscreen.h
+	base/transactiontransfer.h
 	base/researchscreen.h
 	base/researchselect.h
 	base/vequipscreen.h

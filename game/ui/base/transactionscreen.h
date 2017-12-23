@@ -34,12 +34,6 @@ class AEquipmentType;
 class TransactionScreen : public BaseStage
 {
   public:
-	enum class Mode
-	{
-		AlienContainment,
-		BuySell,
-		Transfer
-	};
 	enum class Type
 	{
 		Soldier,
@@ -176,9 +170,8 @@ class TransactionScreen : public BaseStage
 		void unloadResources() override;
 	};
 
-  private:
+  protected:
 	void changeBase(sp<Base> newBase) override;
-	void changeSecondBase(sp<Base> newBase);
 
 	int framesUntilHighlightUpdate = 0;
 
@@ -186,50 +179,53 @@ class TransactionScreen : public BaseStage
 	sp<Form> formItemVehicle;
 
 	sp<Label> textViewSecondBase;
-	sp<GraphicButton> currentSecondView;
-
 	sp<Label> textViewBaseStatic;
-	sp<Label> textViewSecondBaseStatic;
 
-	Mode mode;
 	Type type;
 	// Wether player must conform to limits even on bases which did not change
-	bool forceLimits = false;
+	bool forceLimits;
 	std::map<Type, std::list<sp<TransactionControl>>> transactionControls;
-	StateRef<Base> second_base;
 
 	int lq2Delta = 0;
 	int cargo2Delta = 0;
 	int bio2Delta = 0;
+	int moneyDelta = 0;
+
+	UString confirmClosure;
 
 	// Methods
 
 	std::function<void(FormsEvent *e)> onScrollChange;
 	std::function<void(FormsEvent *e)> onHover;
-
+	//
 	void setDisplayType(Type type);
 
-	int getLeftIndex();
-	int getRightIndex();
-	int getIndex(bool left);
+	virtual int getLeftIndex();
+	virtual int getRightIndex();
 
 	void populateControlsVehicle();
 	void populateControlsAgentEquipment();
 	void populateControlsVehicleEquipment();
 	void populateControlsAlien();
 
-	void updateFormValues(bool queueHighlightUpdate = true);
-	void updateBaseHighlight();
+	virtual void updateFormValues(bool queueHighlightUpdate = true);
+	virtual void updateBaseHighlight();
 	void fillBaseBar(bool left, int percent);
 	void displayItem(sp<TransactionControl> control);
 
+	//
+	bool isClosable() const;
+	//
 	void attemptCloseScreen();
-	void closeScreen(bool confirmed = false, bool forced = false);
+	//
+	virtual void closeScreen(bool forced = false) = 0;
 	// Execute orders given in the screen
-	void executeOrders();
+	virtual void executeOrders() = 0;
+	//
+	virtual void initViewSecondBase();
 
   public:
-	TransactionScreen(sp<GameState> state, Mode mode, bool forceLimits = false);
+	TransactionScreen(sp<GameState> state, bool forceLimits = false);
 	~TransactionScreen() override;
 
 	// Stage control
