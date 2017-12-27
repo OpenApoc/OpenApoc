@@ -5,9 +5,7 @@
 namespace OpenApoc
 {
 
-class GameState;
-
-class TransactionBuyAndSell : public TransactionScreen
+class BuyAndSellScreen : public TransactionScreen
 {
   private:
 	//
@@ -16,12 +14,13 @@ class TransactionBuyAndSell : public TransactionScreen
 	//
 	void updateFormValues(bool queueHighlightUpdate = true);
 	//
-	virtual void closeScreen(bool forced = false) override;
+	void closeScreen() override;
 	// Execute orders given in the screen
-	virtual void executeOrders() override;
+	void executeOrders() override;
 
   public:
-	TransactionBuyAndSell(sp<GameState> state, bool forceLimits = false);
-	~TransactionBuyAndSell() = default;
+	BuyAndSellScreen(sp<GameState> state, bool forceLimits = false);
+	~BuyAndSellScreen() override = default;
 };
+
 }

@@ -109,8 +109,6 @@ TransactionScreen::TransactionScreen(sp<GameState> state, bool forceLimits)
 	                  [this](Event *) { this->setDisplayType(Type::GroundEquipment); });
 }
 
-TransactionScreen::~TransactionScreen() = default;
-
 void TransactionScreen::changeBase(sp<Base> newBase)
 {
 	BaseStage::changeBase(newBase);
@@ -496,17 +494,31 @@ void TransactionScreen::populateControlsAlien()
 			continue;
 		}
 		// Add alien
-		if (state->economy.find(ae.first) != state->economy.end())
+		for (auto &b : state->player_bases)
 		{
-			auto control = TransactionControl::createControl(
-			    *state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);
-			if (control)
+			if (b.second->inventoryBioEquipment[ae.first] > 0)
 			{
-				control->addCallback(FormEventType::ScrollBarChange, onScrollChange);
-				control->addCallback(FormEventType::MouseMove, onHover);
-				transactionControls[type].push_back(control);
+				auto control = TransactionControl::createControl(
+					*state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);
+				if (control)
+				{
+					control->addCallback(FormEventType::ScrollBarChange, onScrollChange);
+					control->addCallback(FormEventType::MouseMove, onHover);
+					transactionControls[type].push_back(control);
+				}
 			}
 		}
+		//if (state->economy.find(ae.first) != state->economy.end())
+		//{
+		//	auto control = TransactionControl::createControl(
+		//	    *state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);
+		//	if (control)
+		//	{
+		//		control->addCallback(FormEventType::ScrollBarChange, onScrollChange);
+		//		control->addCallback(FormEventType::MouseMove, onHover);
+		//		transactionControls[type].push_back(control);
+		//	}
+		//}
 	}
 }
 
@@ -711,10 +723,17 @@ void TransactionScreen::attemptCloseScreen()
 		    {StageCmd::Command::PUSH,
 		     mksp<MessageBox>(confirmClosure, "", MessageBox::ButtonOptions::YesNoCancel,
 		                      [this] { closeScreen(); },
-		                      [] { // On clicking "No" Just exit without doing anything
-			                      fw().stageQueueCommand({StageCmd::Command::POP});
-			                  })});
+							  [] { fw().stageQueueCommand({StageCmd::Command::POP}); }
+			                  )});
 	}
+}
+
+void TransactionScreen::forcedCloseScreen()
+{
+	// Forced means we already asked player to confirm some secondary thing
+	// (like there being no free ferries right now)
+	executeOrders();
+	fw().stageQueueCommand({ StageCmd::Command::POP });
 }
 
 void TransactionScreen::initViewSecondBase()
@@ -724,6 +743,10 @@ void TransactionScreen::initViewSecondBase()
 		auto viewName = format("BUTTON_SECOND_BASE_%d", i);
 		form->findControlTyped<GraphicButton>(viewName)->setVisible(false);
 	}
+	form->findControlTyped<Graphic>("FACILITY_SECOND_PIC")->setVisible(false);
+	form->findControlTyped<Graphic>("FACILITY_SECOND_BAR")->setVisible(false);
+	form->findControlTyped<Graphic>("FACILITY_SECOND_FILL")->setVisible(false);
+	form->findControlTyped<Label>("FACILITY_SECOND_TEXT")->setVisible(false);
 	form->findControlTyped<Label>("TEXT_BUTTON_SECOND_BASE")->setVisible(false);
 }
 
@@ -834,8 +857,8 @@ void TransactionScreen::TransactionControl::setScrollbarValues()
 	else
 	{
 		scrollBar->setMinimum(0);
-		scrollBar->setMaximum(currentStock[indexLeft] + currentStock[indexRight]);
-		scrollBar->setValue(currentStock[indexRight]);
+		scrollBar->setMaximum(tradeState.tradeCapacity());
+		scrollBar->setValue(tradeState.getBalance());
 	}
 	updateValues();
 }
@@ -843,12 +866,14 @@ void TransactionScreen::TransactionControl::setScrollbarValues()
 void TransactionScreen::TransactionControl::setIndexLeft(int index)
 {
 	indexLeft = index;
+	tradeState.setIndexes(indexLeft, indexRight);
 	setScrollbarValues();
 }
 
 void TransactionScreen::TransactionControl::setIndexRight(int index)
 {
 	indexRight = index;
+	tradeState.setIndexes(indexLeft, indexRight);
 	setScrollbarValues();
 }
 
@@ -858,35 +883,29 @@ void TransactionScreen::TransactionControl::updateValues()
 	{
 		if (manufacturerHostile || manufacturerUnavailable)
 		{
-			if (indexLeft == 8)
+			int defaultRightStock = tradeState.getRightStock();
+			bool showWarning = false;
+			if (indexLeft == 8 && scrollBar->getValue() > defaultRightStock)
 			{
-				if (scrollBar->getValue() > scrollBar->getMaximum() - initialStock[indexLeft])
-				{
-					scrollBar->setValue(initialStock[indexLeft]);
-					auto message_box = mksp<MessageBox>(
-					    manufacturer,
-					    manufacturerHostile ? tr("Order canceled by the hostile manufacturer.")
-					                        : tr("Manufacturer has no intact buildings in this "
-					                             "city to deliver goods from."),
-					    MessageBox::ButtonOptions::Ok);
-					fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
-					return;
-				}
+				tradeState.cancelOrder();
+				scrollBar->setValue(tradeState.getBalance());
+				showWarning = true;
 			}
-			if (indexRight == 8)
+			else if (indexRight == 8 && scrollBar->getValue() < defaultRightStock)
 			{
-				if (scrollBar->getValue() < initialStock[indexRight])
-				{
-					scrollBar->setValue(initialStock[indexRight]);
-					auto message_box = mksp<MessageBox>(
-					    manufacturer,
-					    manufacturerHostile ? tr("Order canceled by the hostile manufacturer.")
-					                        : tr("Manufacturer has no intact buildings in this "
-					                             "city to deliver goods from."),
-					    MessageBox::ButtonOptions::Ok);
-					fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
-					return;
-				}
+				tradeState.cancelOrder();
+				scrollBar->setValue(tradeState.getBalance());
+				showWarning = true;
+			}
+			if (showWarning)
+			{
+				auto message_box = mksp<MessageBox>(
+					manufacturer,
+					manufacturerHostile ? tr("Order canceled by the hostile manufacturer.")
+					: tr("Manufacturer has no intact buildings in this city to deliver goods from."),
+					MessageBox::ButtonOptions::Ok);
+				fw().stageQueueCommand({ StageCmd::Command::PUSH, message_box });
+				return;
 			}
 		}
 
@@ -911,10 +930,14 @@ void TransactionScreen::TransactionControl::updateValues()
 			}
 		}
 	}
-	stockLeft->setText(format("%d", currentStock[indexLeft]));
-	stockRight->setText(format("%d", currentStock[indexRight]));
-	int curDeltaLeft = currentStock[indexLeft] - initialStock[indexLeft];
-	int curDeltaRight = currentStock[indexRight] - initialStock[indexRight];
+	
+	int curDeltaRight = tradeState.setBalance(scrollBar->getValue());
+	int curDeltaLeft = -curDeltaRight;
+
+	stockLeft->setText(format("%d", tradeState.getLeftStock(true)));
+	stockRight->setText(format("%d", tradeState.getRightStock(true)));
+	//int curDeltaLeft = currentStock[indexLeft] - initialStock[indexLeft];
+	//int curDeltaRight = currentStock[indexRight] - initialStock[indexRight];
 	deltaLeft->setText(format("%s%d", curDeltaLeft > 0 ? "+" : "", curDeltaLeft));
 	deltaRight->setText(format("%s%d", curDeltaRight > 0 ? "+" : "", curDeltaRight));
 	deltaLeft->setVisible(indexLeft != 8 && curDeltaLeft != 0);
@@ -994,22 +1017,15 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	}
 	bool isAmmo = agentEquipmentType->type == AEquipmentType::Type::Ammo;
 	auto name = agentEquipmentType->name;
-	auto manufacturer =
-	    agentEquipmentType->bioStorage ? "" : agentEquipmentType->manufacturer->name;
-	auto canBuy = agentEquipmentType->manufacturer->canPurchaseFrom(
-	    state, state.current_base->building, false);
+	auto manufacturer = isBio ? "" : agentEquipmentType->manufacturer->name;
+	auto canBuy = isBio ? Organisation::PurchaseResult::OK : agentEquipmentType->manufacturer->canPurchaseFrom(state, state.current_base->building, false);
 	bool manufacturerHostile = canBuy == Organisation::PurchaseResult::OrgHostile;
 	bool manufacturerUnavailable = canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
-	// If we create a non-purchase control we never become one so clear the values
-	if (indexLeft != 8 && indexRight != 8)
-	{
-		manufacturer = "";
-		price = 0;
-	}
+
 	return createControl(
 	    agentEquipmentType.id, isBio ? Type::AgentEquipmentBio : Type::AgentEquipmentCargo,
 	    agentEquipmentType->name, manufacturer, isAmmo, isBio, manufacturerHostile,
-	    manufacturerUnavailable, price, storeSpace, initialStock, indexLeft, indexRight);
+	    manufacturerUnavailable, price, storeSpace, initialStock, indexLeft, indexRight, false); // TODO: fix artifact
 }
 
 sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl::createControl(
@@ -1059,16 +1075,11 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	    state, state.current_base->building, false);
 	bool manufacturerHostile = canBuy == Organisation::PurchaseResult::OrgHostile;
 	bool manufacturerUnavailable = canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
-	// If we create a non-purchase control we never become one so clear the values
-	if (indexLeft != 8 && indexRight != 8)
-	{
-		manufacturer = "";
-		price = 0;
-	}
+
 	return createControl(vehicleEquipmentType.id, Type::VehicleEquipment,
 	                     vehicleEquipmentType->name, manufacturer, isAmmo, isBio,
 	                     manufacturerHostile, manufacturerUnavailable, price, storeSpace,
-	                     initialStock, indexLeft, indexRight);
+	                     initialStock, indexLeft, indexRight, false); // TODO: fix artifact
 }
 
 sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl::createControl(
@@ -1118,15 +1129,10 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	    vehicleAmmoType->manufacturer->canPurchaseFrom(state, state.current_base->building, false);
 	bool manufacturerHostile = canBuy == Organisation::PurchaseResult::OrgHostile;
 	bool manufacturerUnavailable = canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
-	// If we create a non-purchase control we never become one so clear the values
-	if (indexLeft != 8 && indexRight != 8)
-	{
-		manufacturer = "";
-		price = 0;
-	}
+
 	return createControl(vehicleAmmoType.id, Type::VehicleAmmo, vehicleAmmoType->name, manufacturer,
 	                     isAmmo, isBio, manufacturerHostile, manufacturerUnavailable, price,
-	                     storeSpace, initialStock, indexLeft, indexRight);
+	                     storeSpace, initialStock, indexLeft, indexRight, false); // TODO: fix artifact
 }
 
 sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl::createControl(
@@ -1171,15 +1177,10 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	    vehicleType->manufacturer->canPurchaseFrom(state, state.current_base->building, true);
 	bool manufacturerHostile = canBuy == Organisation::PurchaseResult::OrgHostile;
 	bool manufacturerUnavailable = canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
-	// If we create a non-purchase control we never become one so clear the values
-	if (indexLeft != 8 && indexRight != 8)
-	{
-		manufacturer = "";
-		price = 0;
-	}
+
 	return createControl(vehicleType.id, Type::VehicleType, vehicleType->name, manufacturer, isAmmo,
 	                     isBio, manufacturerHostile, manufacturerUnavailable, price, storeSpace,
-	                     initialStock, indexLeft, indexRight);
+	                     initialStock, indexLeft, indexRight, false);
 }
 
 sp<TransactionScreen::TransactionControl>
@@ -1257,42 +1258,48 @@ TransactionScreen::TransactionControl::createControl(GameState &state, StateRef<
 	auto manufacturer = vehicle->type->manufacturer->name;
 	bool manufacturerHostile = false;
 	bool manufacturerUnavailable = false;
-	// If we create a non-purchase control we never become one so clear the values
-	if (indexLeft != 8 && indexRight != 8)
-	{
-		manufacturer = "";
-		price = 0;
-	}
+
 	return createControl(vehicle.id, Type::Vehicle, vehicle->name, manufacturer, isAmmo, isBio,
 	                     manufacturerHostile, manufacturerUnavailable, price, storeSpace,
-	                     initialStock, indexLeft, indexRight);
+	                     initialStock, indexLeft, indexRight, false);
 }
 
 sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl::createControl(
-    UString id, Type type, UString name, UString manufacturer, bool isAmmo, bool isBio,
+    const UString &id, Type type, const UString &name, const UString &manufacturer, bool isAmmo, bool isBio,
     bool manufacturerHostile, bool manufacturerUnavailable, int price, int storeSpace,
-    std::vector<int> &initialStock, int indexLeft, int indexRight)
+    std::vector<int> &initialStock, int indexLeft, int indexRight, bool unknownArtifact)
 {
 	auto control = mksp<TransactionControl>();
 	control->itemId = id;
 	control->itemType = type;
-	control->price = price;
 	control->storeSpace = storeSpace;
 	control->initialStock = initialStock;
 	control->currentStock = initialStock;
 	control->indexLeft = indexLeft;
 	control->indexRight = indexRight;
+	control->tradeState.setInitialStock(std::forward<std::vector<int>>(initialStock));
+	control->tradeState.setIndexes(indexLeft, indexRight);
 	control->isAmmo = isAmmo;
 	control->isBio = isBio;
-	control->manufacturer = manufacturer;
 	control->manufacturerHostile = manufacturerHostile;
 	control->manufacturerUnavailable = manufacturerUnavailable;
+	control->unknownArtifact = unknownArtifact;
+	// If we create a non-purchase control we never become one so clear the values
+	if (unknownArtifact || (indexLeft != 8 && indexRight != 8))
+	{
+		control->manufacturer = "";
+		control->price = 0;
+	}
+	else
+	{
+		control->manufacturer = manufacturer;
+		control->price = price;
+	}
 
 	// Setup vars
 	control->Size = Vec2<int>{173 + 178 - 2, 47};
 
 	// Setup resources
-
 	if (!resourcesInitialised)
 	{
 		initResources();
@@ -1301,9 +1308,10 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	// Add controls
 
 	// Name
-	if (name.length() > 0)
+	const UString &labelName = unknownArtifact ? tr("Alien Artifact") : name;
+	if (labelName.length() > 0)
 	{
-		auto label = control->createChild<Label>(name, labelFont);
+		auto label = control->createChild<Label>(labelName, labelFont);
 		label->Location = {isAmmo ? 32 : 11, 3};
 		label->Size = {256, 16};
 		label->TextHAlign = HorizontalAlignment::Left;
@@ -1316,7 +1324,7 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	{
 		auto label =
 		    control->createChild<Label>(format("%s%s%s", manufacturerHostile ? "*" : "",
-		                                       manufacturerUnavailable ? "X" : "", manufacturer),
+		                                       manufacturerUnavailable ? "X" : "", manufacturer), // TODO: fix XX-COM
 		                                labelFont);
 		label->Location = {34, 3};
 		label->Size = {256, 16};
@@ -1488,6 +1496,107 @@ void TransactionScreen::TransactionControl::unloadResources()
 	transactionShade.reset();
 
 	Control::unloadResources();
+}
+
+/**
+ * Get the sum of shipment orders from the base (economy).
+ * @param from - 0-7 for bases, 8 for economy
+ * @param exclude - 0-7 for bases, 8 for economy, -1 don't exclude (by default)
+ * @return - sum of shipment orders
+ */
+int TransactionScreen::Trade::shipmentsFrom(const int from, const int exclude) const
+{
+	int total = 0;
+	if (shipments.find(from) != shipments.end())
+	{
+		for (auto &s : shipments.at(from))
+		{
+			if (s.first != exclude && s.second > 0)
+			{
+				total += s.second;
+			}
+		}
+	}
+	return total;
+}
+
+/**
+ * Get shipment order.
+ * @param from - 0-7 for bases, 8 for economy
+ * @param to - 0-7 for bases, 8 for economy
+ * @return - the shipment order
+ */
+int TransactionScreen::Trade::getOrder(const int from, const int to) const
+{
+	if (shipments.find(from) != shipments.end())
+	{
+		auto &order = shipments.at(from);
+		if (order.find(to) != order.end())
+		{
+			return order.at(to);
+		}
+	}
+	return 0;
+}
+
+/**
+ * Cancel shipment order.
+ * @param from - 0-7 for bases, 8 for economy
+ * @param to - 0-7 for bases, 8 for economy
+ */
+void TransactionScreen::Trade::cancelOrder(const int from, const int to)
+{
+	if (shipments.find(from) != shipments.end())
+	{
+		shipments.at(from).erase(to);
+		if (shipments.at(from).empty()) shipments.erase(from);
+	}
+	if (shipments.find(to) != shipments.end())
+	{
+		shipments.at(to).erase(from);
+		if (shipments.at(to).empty()) shipments.erase(to);
+	}
+}
+
+/**
+ * Get current left stock.
+ * @param currentStock - true for current, false for default (by default)
+ * @return - left stock
+ */
+int TransactionScreen::Trade::getLeftStock(bool currentStock) const
+{
+	return initialStock[leftIdx] - shipmentsFrom(leftIdx, rightIdx) - (currentStock ? getLROrder() : 0);
+}
+
+/**
+* Get current right stock.
+* @param currentStock - true for current, false for default (by default)
+* @return - right stock
+*/
+int TransactionScreen::Trade::getRightStock(bool currentStock) const
+{
+	return initialStock[rightIdx] - shipmentsFrom(rightIdx, leftIdx) + (currentStock ? getLROrder() : 0);
+}
+
+/**
+ * ScrollBar support. Set current value.
+ * @param balance - scrollBar->getValue()
+ */
+int TransactionScreen::Trade::setBalance(const int balance)
+{
+	//int sideL = initialStock[leftIdx] - shipmentsFrom(leftIdx, rightIdx);
+	//int sideR = initialStock[rightIdx] - shipmentsFrom(rightIdx, leftIdx);
+	int orderLR = balance - getRightStock();
+	if (orderLR == 0)
+	{
+		cancelOrder();
+	}
+	else
+	{
+		shipments[leftIdx][rightIdx] = orderLR;
+		shipments[rightIdx][leftIdx] = -orderLR;
+	}
+	return orderLR;
 }
 
 }; // namespace OpenApoc

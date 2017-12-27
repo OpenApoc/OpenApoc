@@ -1,4 +1,4 @@
-#include "game/ui/base/transactionbuyandsell.h"
+#include "game/ui/base/buyandsellscreen.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
 #include "forms/graphicbutton.h"
@@ -28,7 +28,7 @@
 namespace OpenApoc
 {
 
-TransactionBuyAndSell::TransactionBuyAndSell(sp<GameState> state, bool forceLimits)
+BuyAndSellScreen::BuyAndSellScreen(sp<GameState> state, bool forceLimits)
     : TransactionScreen(state, forceLimits)
 {
 	form->findControlTyped<Label>("TITLE")->setText(tr("BUY AND SELL"));
@@ -59,21 +59,21 @@ TransactionBuyAndSell::TransactionBuyAndSell(sp<GameState> state, bool forceLimi
 	type = Type::Vehicle;
 }
 
-int TransactionBuyAndSell::getLeftIndex()
+int BuyAndSellScreen::getLeftIndex()
 {
 	return config().getBool("OpenApoc.NewFeature.MarketOnRight")
 	           ? TransactionScreen::getLeftIndex()
 	           : TransactionScreen::getRightIndex();
 }
 
-int TransactionBuyAndSell::getRightIndex()
+int BuyAndSellScreen::getRightIndex()
 {
 	return config().getBool("OpenApoc.NewFeature.MarketOnRight")
 	           ? TransactionScreen::getRightIndex()
 	           : TransactionScreen::getLeftIndex();
 }
 
-void TransactionBuyAndSell::updateFormValues(bool queueHighlightUpdate)
+void BuyAndSellScreen::updateFormValues(bool queueHighlightUpdate)
 {
 	TransactionScreen::updateFormValues(queueHighlightUpdate);
 
@@ -84,17 +84,8 @@ void TransactionBuyAndSell::updateFormValues(bool queueHighlightUpdate)
 	    ->setText(format("%s%s", moneyDelta > 0 ? "+" : "", Strings::fromInteger(moneyDelta)));
 }
 
-void TransactionBuyAndSell::closeScreen(bool forced)
+void BuyAndSellScreen::closeScreen()
 {
-	// Forced means we already asked player to confirm some secondary thing
-	// (like there being no free ferries right now)
-	if (forced)
-	{
-		executeOrders();
-		fw().stageQueueCommand({StageCmd::Command::POP});
-		return;
-	}
-
 	// Step 01: Check funds
 	//	if (mode == Mode::BuySell)
 	{
@@ -382,7 +373,7 @@ void TransactionBuyAndSell::closeScreen(bool forced)
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
-				                      [this] { this->closeScreen(true); })});
+				                      [this] { this->forcedCloseScreen(); })});
 				return;
 			}
 			// Otherwise if transportation is only busy give option
@@ -395,7 +386,7 @@ void TransactionBuyAndSell::closeScreen(bool forced)
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
-				                      [this] { this->closeScreen(true); })});
+				                      [this] { this->forcedCloseScreen(); })});
 				return;
 			}
 			// Otherwise deny
@@ -497,7 +488,7 @@ void TransactionBuyAndSell::closeScreen(bool forced)
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
-				                      [this] { this->closeScreen(true); })});
+				                      [this] { this->forcedCloseScreen(); })});
 				return;
 			}
 			// Otherwise if transportation is only busy give option
@@ -510,7 +501,7 @@ void TransactionBuyAndSell::closeScreen(bool forced)
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
-				                      [this] { this->closeScreen(true); })});
+				                      [this] { this->forcedCloseScreen(); })});
 				return;
 			}
 			// Otherwise deny
@@ -532,7 +523,7 @@ void TransactionBuyAndSell::closeScreen(bool forced)
 	return;
 }
 
-void TransactionBuyAndSell::executeOrders()
+void BuyAndSellScreen::executeOrders()
 {
 	std::vector<StateRef<Base>> bases;
 	for (auto &b : state->player_bases)

@@ -8,15 +8,15 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package (Threads REQUIRED)
 
 set (GAMEUI_SOURCE_FILES
+	base/aliencontainmentscreen.cpp
 	base/basescreen.cpp
 	base/basestage.cpp
-	base/transactionbuyandsell.cpp
-	base/transactioncontainment.cpp
-	base/transactionscreen.cpp
-	base/transactiontransfer.cpp
+	base/buyandsellscreen.cpp
 	base/recruitscreen.cpp
 	base/researchscreen.cpp
 	base/researchselect.cpp
+	base/transactionscreen.cpp
+	base/transferscreen.cpp
 	base/vequipscreen.cpp
 	
 	battle/battlebriefing.cpp
@@ -75,15 +75,15 @@ set (GAMEUI_SOURCE_FILES
 source_group(gamestate\\sources FILES ${GAMEUI_SOURCE_FILES})
 set (GAMEUI_HEADER_FILES
 	
+	base/aliencontainmentscreen.h
 	base/basescreen.h
 	base/basestage.h
+	base/buyandsellscreen.h
 	base/recruitscreen.h
-	base/transactionbuyandsell.h
-	base/transactioncontainment.h
-	base/transactionscreen.h
-	base/transactiontransfer.h
 	base/researchscreen.h
 	base/researchselect.h
+	base/transactionscreen.h
+	base/transferscreen.h
 	base/vequipscreen.h
 	
 	battle/battlebriefing.h

@@ -179,13 +179,13 @@
     <ClCompile Include="city\bribescreen.cpp">
       <Filter>city</Filter>
     </ClCompile>
-    <ClCompile Include="base\transactionbuyandsell.cpp">
+    <ClCompile Include="base\buyandsellscreen.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="base\transactioncontainment.cpp">
+    <ClCompile Include="base\aliencontainmentscreen.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="base\transactiontransfer.cpp">
+    <ClCompile Include="base\transferscreen.cpp">
       <Filter>base</Filter>
     </ClCompile>
   </ItemGroup>
@@ -338,13 +338,13 @@
     <ClInclude Include="city\bribescreen.h">
       <Filter>city</Filter>
     </ClInclude>
-    <ClInclude Include="base\transactionbuyandsell.h">
+    <ClInclude Include="base\buyandsellscreen.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="base\transactioncontainment.h">
+    <ClInclude Include="base\aliencontainmentscreen.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="base\transactiontransfer.h">
+    <ClInclude Include="base\transferscreen.h">
       <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>

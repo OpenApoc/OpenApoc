@@ -46,6 +46,50 @@ class TransactionScreen : public BaseStage
 		GroundEquipment,
 		Aliens
 	};
+	class Trade
+	{
+	private:
+		// Initial stock.
+		// 0-7 for bases, 8 for economy
+		std::vector<int> initialStock;
+		// Shipment records.
+		// map<from, map<to, quantity>>
+		// from, to - 0-7 for bases, 8 for economy
+		std::map<int, std::map<int, int>> shipments;
+		// Current indexes.
+		// 0-7 for bases, 8 for economy, -1 for exception ;)
+		int leftIdx = -1, rightIdx = -1;
+
+	public:
+		// Setter for initial stock. The vector will be moved.
+		void setInitialStock(std::vector<int> &&stock) { initialStock = std::move(stock); }
+		// Setter for the left side and right side indexes.
+		void setIndexes(int leftIdx, int rightIdx)
+		{
+			this->leftIdx = leftIdx;
+			this->rightIdx = rightIdx;
+		}
+		// Get the sum of shipment orders from the base (economy).
+		// from, to - 0-7 for bases, 8 for economy
+		int shipmentsFrom(const int from, const int exclude = -1) const;
+		// Get shipment order.
+		int getOrder(const int from, const int to) const;
+		// Get shipment order from the left side to the right side.
+		int getLROrder() const { return getOrder(leftIdx, rightIdx); }
+		// Cancel shipment order.
+		void cancelOrder(const int from, const int to);
+		void cancelOrder() { cancelOrder(leftIdx, rightIdx); }
+		// Get current left stock.
+		int getLeftStock(bool currentStock = false) const;
+		// Get current right stock.
+		int getRightStock(bool currentStock = false) const;
+		// ScrollBar support. Get max value.
+		int tradeCapacity() const { return getLeftStock() + getRightStock(); }
+		// ScrollBar support. Get current value.
+		int getBalance() const { return getRightStock(true); }
+		// ScrollBar support. Set current value.
+		int setBalance(const int balance);
+	};
 	class TransactionControl : public Control
 	{
 	  public:
@@ -99,13 +143,11 @@ class TransactionScreen : public BaseStage
 		// Item store size
 		int storeSpace;
 		// Initial stock
-		// 0-7 for bases
-		// 8 for economy
-		std::vector<int> initialStock;
+		// 0-7 for bases, 8 for economy
+		std::vector<int> initialStock; // TODO: remove
 		// Current stock
-		// 0-7 for bases
-		// 8 for economy
-		std::vector<int> currentStock;
+		// 0-7 for bases, 8 for economy
+		std::vector<int> currentStock; // TODO: remove
 		int indexLeft = 0;
 		int indexRight = 0;
 		bool isAmmo = false;
@@ -113,6 +155,9 @@ class TransactionScreen : public BaseStage
 		UString manufacturer;
 		bool manufacturerHostile = false;
 		bool manufacturerUnavailable = false;
+		bool unknownArtifact = false;
+		// Trade state
+		Trade tradeState;
 
 		// Own Methods
 
@@ -143,12 +188,12 @@ class TransactionScreen : public BaseStage
 		static sp<TransactionControl> createControl(GameState &state, StateRef<Vehicle> vehicle,
 		                                            int indexLeft, int indexRight);
 
-		static sp<TransactionControl> createControl(UString id, Type type, UString name,
-		                                            UString manufacturer, bool isAmmo, bool isBio,
+		static sp<TransactionControl> createControl(const UString &id, Type type, const UString &name,
+		                                            const UString &manufacturer, bool isAmmo, bool isBio,
 		                                            bool manufacturerHostile,
 		                                            bool manufacturerUnavailable, int price,
 		                                            int storeSpace, std::vector<int> &initialStock,
-		                                            int indexLeft, int indexRight);
+		                                            int indexLeft, int indexRight, bool unknownArtifact);
 
 		void setupCallbacks();
 
@@ -178,7 +223,6 @@ class TransactionScreen : public BaseStage
 	sp<Form> formItemAgent;
 	sp<Form> formItemVehicle;
 
-	sp<Label> textViewSecondBase;
 	sp<Label> textViewBaseStatic;
 
 	Type type;
@@ -190,7 +234,7 @@ class TransactionScreen : public BaseStage
 	int cargo2Delta = 0;
 	int bio2Delta = 0;
 	int moneyDelta = 0;
-
+	//
 	UString confirmClosure;
 
 	// Methods
@@ -199,7 +243,7 @@ class TransactionScreen : public BaseStage
 	std::function<void(FormsEvent *e)> onHover;
 	//
 	void setDisplayType(Type type);
-
+	//
 	virtual int getLeftIndex();
 	virtual int getRightIndex();
 
@@ -213,20 +257,21 @@ class TransactionScreen : public BaseStage
 	void fillBaseBar(bool left, int percent);
 	void displayItem(sp<TransactionControl> control);
 
-	//
+	// Is it possible to close the screen without consequences?
 	bool isClosable() const;
-	//
+	// Attempt to close and ask user if necessary.
 	void attemptCloseScreen();
-	//
-	virtual void closeScreen(bool forced = false) = 0;
-	// Execute orders given in the screen
+	// Close the screen without asking.
+	void forcedCloseScreen();
+	// Checking of conditions and limitations before the execution of orders.
+	virtual void closeScreen() = 0;
+	// Execute orders given in the screen.
 	virtual void executeOrders() = 0;
-	//
+	// Initialisation the mini view for  the second base.
 	virtual void initViewSecondBase();
 
   public:
 	TransactionScreen(sp<GameState> state, bool forceLimits = false);
-	~TransactionScreen() override;
 
 	// Stage control
 	void begin() override;

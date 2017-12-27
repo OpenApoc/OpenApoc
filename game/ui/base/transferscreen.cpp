@@ -1,4 +1,4 @@
-#include "game/ui/base/transactiontransfer.h"
+#include "game/ui/base/transferscreen.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
 #include "forms/graphicbutton.h"
@@ -28,7 +28,7 @@
 namespace OpenApoc
 {
 
-TransactionTransfer::TransactionTransfer(sp<GameState> state, bool forceLimits)
+TransferScreen::TransferScreen(sp<GameState> state, bool forceLimits)
     : TransactionScreen(state, forceLimits)
 {
 	form->findControlTyped<Label>("TITLE")->setText(tr("TRANSFER"));
@@ -72,7 +72,7 @@ TransactionTransfer::TransactionTransfer(sp<GameState> state, bool forceLimits)
 	}
 }
 
-void TransactionTransfer::changeSecondBase(sp<Base> newBase)
+void TransferScreen::changeSecondBase(sp<Base> newBase)
 {
 	second_base = newBase->building->base;
 	textViewSecondBaseStatic->setText(second_base->name);
@@ -90,7 +90,7 @@ void TransactionTransfer::changeSecondBase(sp<Base> newBase)
 	setDisplayType(type);
 }
 
-int TransactionTransfer::getRightIndex()
+int TransferScreen::getRightIndex()
 {
 	int index = 0;
 	for (auto &b : state->player_bases)
@@ -104,7 +104,7 @@ int TransactionTransfer::getRightIndex()
 	return 8;
 }
 
-void TransactionTransfer::updateBaseHighlight()
+void TransferScreen::updateBaseHighlight()
 {
 	// Update first base
 	TransactionScreen::updateBaseHighlight();
@@ -162,17 +162,8 @@ void TransactionTransfer::updateBaseHighlight()
 	}
 }
 
-void TransactionTransfer::closeScreen(bool forced)
+void TransferScreen::closeScreen()
 {
-	// Forced means we already asked player to confirm some secondary thing
-	// (like there being no free ferries right now)
-	if (forced)
-	{
-		executeOrders();
-		fw().stageQueueCommand({StageCmd::Command::POP});
-		return;
-	}
-
 	// Step 02: Check accomodation of different sorts
 	{
 		// FIXME: CHECK LQ SPACE
@@ -363,7 +354,7 @@ void TransactionTransfer::closeScreen(bool forced)
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
-				                      [this] { this->closeScreen(true); })});
+				                      [this] { this->forcedCloseScreen(); })});
 				return;
 			}
 			// Otherwise if transportation is only busy give option
@@ -376,7 +367,7 @@ void TransactionTransfer::closeScreen(bool forced)
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
-				                      [this] { this->closeScreen(true); })});
+				                      [this] { this->forcedCloseScreen(); })});
 				return;
 			}
 			// Otherwise deny
@@ -398,7 +389,7 @@ void TransactionTransfer::closeScreen(bool forced)
 	return;
 }
 
-void TransactionTransfer::executeOrders()
+void TransferScreen::executeOrders()
 {
 	std::vector<StateRef<Base>> bases;
 	for (auto &b : state->player_bases)
@@ -691,7 +682,7 @@ void TransactionTransfer::executeOrders()
 	}
 }
 
-void TransactionTransfer::initViewSecondBase()
+void TransferScreen::initViewSecondBase()
 {
 	int b = 0;
 	for (auto &pair : state->player_bases)
@@ -731,7 +722,7 @@ void TransactionTransfer::initViewSecondBase()
 	textViewSecondBase->setVisible(false);
 }
 
-void TransactionTransfer::render()
+void TransferScreen::render()
 {
 	TransactionScreen::render();
 

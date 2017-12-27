@@ -5,14 +5,13 @@
 namespace OpenApoc
 {
 
-class Base;
-class GameState;
-
-class TransactionTransfer : public TransactionScreen
+class TransferScreen : public TransactionScreen
 {
   private:
 	StateRef<Base> second_base;
 	sp<GraphicButton> currentSecondView;
+
+	sp<Label> textViewSecondBase;
 	sp<Label> textViewSecondBaseStatic;
 
 	//
@@ -22,17 +21,18 @@ class TransactionTransfer : public TransactionScreen
 	//
 	void updateBaseHighlight() override;
 	//
-	virtual void closeScreen(bool forced = false) override;
+	void closeScreen() override;
 	// Execute orders given in the screen
-	virtual void executeOrders() override;
+	void executeOrders() override;
 	//
 	void initViewSecondBase() override;
 
   public:
-	TransactionTransfer(sp<GameState> state, bool forceLimits = false);
-	~TransactionTransfer() = default;
+	TransferScreen(sp<GameState> state, bool forceLimits = false);
+	~TransferScreen() override = default;
 
 	// Stage control
 	void render() override;
 };
+
 }

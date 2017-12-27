@@ -17,11 +17,11 @@
 #include "game/state/city/facility.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/city/ufopaedia.h"
+#include "game/ui/base/aliencontainmentscreen.h"
+#include "game/ui/base/buyandsellscreen.h"
 #include "game/ui/base/recruitscreen.h"
 #include "game/ui/base/researchscreen.h"
-#include "game/ui/base/transactionbuyandsell.h"
-#include "game/ui/base/transactioncontainment.h"
-#include "game/ui/base/transactiontransfer.h"
+#include "game/ui/base/transferscreen.h"
 #include "game/ui/base/vequipscreen.h"
 #include "game/ui/components/basegraphics.h"
 #include "game/ui/general/aequipscreen.h"
@@ -95,7 +95,7 @@ void BaseScreen::begin()
 	                  [](Event *) { fw().stageQueueCommand({StageCmd::Command::POP}); });
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_BUYSELL")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<TransactionBuyAndSell>(state)});
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BuyAndSellScreen>(state)});
 		});
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_HIREFIRESTAFF")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
@@ -114,12 +114,12 @@ void BaseScreen::begin()
 		    }
 		    else
 		    {
-			    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<TransactionTransfer>(state)});
+			    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<TransferScreen>(state)});
 		    }
 		});
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_ALIEN_CONTAINMENT")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<TransactionContainment>(state)});
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<AlienContainmentScreen>(state)});
 		});
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_EQUIPAGENT")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
