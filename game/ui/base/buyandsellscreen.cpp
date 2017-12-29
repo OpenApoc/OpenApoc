@@ -55,7 +55,7 @@ BuyAndSellScreen::BuyAndSellScreen(sp<GameState> state, bool forceLimits)
 
 	form->findControlTyped<RadioButton>("BUTTON_VEHICLES")->setChecked(true);
 
-	confirmClosure = tr("Confirm Sales/Purchases");
+	confirmClosureText = tr("Confirm Sales/Purchases");
 	type = Type::Vehicle;
 }
 

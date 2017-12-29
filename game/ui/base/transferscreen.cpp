@@ -55,7 +55,7 @@ TransferScreen::TransferScreen(sp<GameState> state, bool forceLimits)
 
 	form->findControlTyped<RadioButton>("BUTTON_SOLDIERS")->setChecked(true);
 
-	confirmClosure = tr("Confirm Transfers");
+	confirmClosureText = tr("Confirm Transfers");
 	type = Type::Soldier;
 
 	textViewSecondBaseStatic = form->findControlTyped<Label>("TEXT_BUTTON_SECOND_BASE_STATIC");

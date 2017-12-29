@@ -34,5 +34,4 @@ class TransferScreen : public TransactionScreen
 	// Stage control
 	void render() override;
 };
-
 }

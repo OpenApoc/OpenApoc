@@ -51,14 +51,12 @@ AlienContainmentScreen::AlienContainmentScreen(sp<GameState> state, bool forceLi
 
 	form->findControlTyped<RadioButton>("BUTTON_ALIENS")->setChecked(true);
 
-	confirmClosure = tr("Confirm Alien Containment Orders");
+	confirmClosureText = tr("Confirm Alien Containment Orders");
 	type = Type::Aliens;
 }
 
 void AlienContainmentScreen::closeScreen()
 {
-	constexpr int MAX_BASES = 8;
-
 	// Step 02: Check accomodation of different sorts
 	{
 		std::array<int, MAX_BASES> vecBioDelta;
@@ -76,9 +74,10 @@ void AlienContainmentScreen::closeScreen()
 			}
 			for (int i = 0; i < MAX_BASES; i++)
 			{
-				vecBioDelta[i] += c->getBioDelta(i);
-				if (c->initialStock[i] != c->currentStock[i])
+				int bioDelta = c->getBioDelta(i);
+				if (bioDelta != 0)
 				{
+					vecBioDelta[i] += bioDelta;
 					vecChanged[i] = true;
 				}
 			}
@@ -91,17 +90,14 @@ void AlienContainmentScreen::closeScreen()
 		// Check every base, find first bad one
 		int bindex = 0;
 		StateRef<Base> bad_base;
-		bool alienOverLimit = false;
 		for (auto &b : state->player_bases)
 		{
-			if (vecChanged[bindex] || forceLimits)
+			if ((vecChanged[bindex] || forceLimits) &&
+			    b.second->getUsage(*state, FacilityType::Capacity::Aliens, vecBioDelta[bindex]) >
+			        100)
 			{
-				if (b.second->getUsage(*state, FacilityType::Capacity::Aliens, vecBioDelta[bindex]) > 100)
-				{
-					bad_base = b.second->building->base;
-					alienOverLimit = true;
-					break;
-				}
+				bad_base = b.second->building->base;
+				break;
 			}
 			bindex++;
 		}
@@ -112,7 +108,10 @@ void AlienContainmentScreen::closeScreen()
 			UString title(tr("Alien Containment space exceeded"));
 			UString message(tr("Alien Containment space exceeded. Destroy more Aliens!"));
 
-			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<MessageBox>(title, message, MessageBox::ButtonOptions::Ok)});
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH,
+			     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::Ok)});
+
 			if (bad_base != state->current_base)
 			{
 				for (auto &view : miniViews)
@@ -137,19 +136,21 @@ void AlienContainmentScreen::closeScreen()
 
 void AlienContainmentScreen::executeOrders()
 {
+	int rightIdx = getRightIndex();
+
 	// AlienContainment: Simply apply
 	for (auto &c : transactionControls[Type::Aliens])
 	{
 		int bindex = 0;
 		for (auto &b : state->player_bases)
 		{
-			if (c->initialStock[bindex] != c->currentStock[bindex])
+			if (c->tradeState.shipmentsFrom(bindex) > 0)
 			{
-				b.second->inventoryBioEquipment[c->itemId] = c->currentStock[bindex];
+				b.second->inventoryBioEquipment[c->itemId] =
+				    c->tradeState.getStock(bindex, rightIdx, true);
 			}
 			bindex++;
 		}
 	}
 }
-
 }

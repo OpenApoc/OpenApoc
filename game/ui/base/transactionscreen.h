@@ -31,6 +31,9 @@ class VEquipmentType;
 class VAmmoType;
 class AEquipmentType;
 
+constexpr int MAX_BASES = 8;
+constexpr int ECONOMY_IDX = 8;
+
 class TransactionScreen : public BaseStage
 {
   public:
@@ -48,7 +51,7 @@ class TransactionScreen : public BaseStage
 	};
 	class Trade
 	{
-	private:
+	  private:
 		// Initial stock.
 		// 0-7 for bases, 8 for economy
 		std::vector<int> initialStock;
@@ -60,7 +63,7 @@ class TransactionScreen : public BaseStage
 		// 0-7 for bases, 8 for economy, -1 for exception ;)
 		int leftIdx = -1, rightIdx = -1;
 
-	public:
+	  public:
 		// Setter for initial stock. The vector will be moved.
 		void setInitialStock(std::vector<int> &&stock) { initialStock = std::move(stock); }
 		// Setter for the left side and right side indexes.
@@ -72,19 +75,26 @@ class TransactionScreen : public BaseStage
 		// Get the sum of shipment orders from the base (economy).
 		// from, to - 0-7 for bases, 8 for economy
 		int shipmentsFrom(const int from, const int exclude = -1) const;
+		// Get total shipment orders from(+) and to(-) the base (economy).
+		// baseIdx - 0-7 for bases, 8 for economy
+		int shipmentsTotal(const int baseIdx) const;
 		// Get shipment order.
 		int getOrder(const int from, const int to) const;
-		// Get shipment order from the left side to the right side.
-		int getLROrder() const { return getOrder(leftIdx, rightIdx); }
 		// Cancel shipment order.
 		void cancelOrder(const int from, const int to);
 		void cancelOrder() { cancelOrder(leftIdx, rightIdx); }
+		// Get current stock.
+		int getStock(const int baseIdx, const int oppositeIdx, bool currentStock = false) const;
 		// Get current left stock.
-		int getLeftStock(bool currentStock = false) const;
+		int getLeftStock(bool currentStock = false) const
+		{
+			return getStock(leftIdx, rightIdx, currentStock);
+		}
 		// Get current right stock.
-		int getRightStock(bool currentStock = false) const;
-		// ScrollBar support. Get max value.
-		int tradeCapacity() const { return getLeftStock() + getRightStock(); }
+		int getRightStock(bool currentStock = false) const
+		{
+			return getStock(rightIdx, leftIdx, currentStock);
+		}
 		// ScrollBar support. Get current value.
 		int getBalance() const { return getRightStock(true); }
 		// ScrollBar support. Set current value.
@@ -188,12 +198,12 @@ class TransactionScreen : public BaseStage
 		static sp<TransactionControl> createControl(GameState &state, StateRef<Vehicle> vehicle,
 		                                            int indexLeft, int indexRight);
 
-		static sp<TransactionControl> createControl(const UString &id, Type type, const UString &name,
-		                                            const UString &manufacturer, bool isAmmo, bool isBio,
-		                                            bool manufacturerHostile,
-		                                            bool manufacturerUnavailable, int price,
-		                                            int storeSpace, std::vector<int> &initialStock,
-		                                            int indexLeft, int indexRight, bool unknownArtifact);
+		static sp<TransactionControl>
+		createControl(const UString &id, Type type, const UString &name,
+		              const UString &manufacturer, bool isAmmo, bool isBio,
+		              bool manufacturerHostile, bool manufacturerUnavailable, int price,
+		              int storeSpace, std::vector<int> &initialStock, int indexLeft, int indexRight,
+		              bool unknownArtifact);
 
 		void setupCallbacks();
 
@@ -234,17 +244,18 @@ class TransactionScreen : public BaseStage
 	int cargo2Delta = 0;
 	int bio2Delta = 0;
 	int moneyDelta = 0;
-	//
-	UString confirmClosure;
+	// The text of message box which ask about confirmation to close the screen.
+	UString confirmClosureText;
 
 	// Methods
 
 	std::function<void(FormsEvent *e)> onScrollChange;
 	std::function<void(FormsEvent *e)> onHover;
-	//
+	// What equipment should be shown.
 	void setDisplayType(Type type);
-	//
+	// Get the left side index.
 	virtual int getLeftIndex();
+	// Get the right side index.
 	virtual int getRightIndex();
 
 	void populateControlsVehicle();
@@ -263,11 +274,11 @@ class TransactionScreen : public BaseStage
 	void attemptCloseScreen();
 	// Close the screen without asking.
 	void forcedCloseScreen();
-	// Checking of conditions and limitations before the execution of orders.
+	// Checking conditions and limitations before the execution of orders.
 	virtual void closeScreen() = 0;
 	// Execute orders given in the screen.
 	virtual void executeOrders() = 0;
-	// Initialisation the mini view for  the second base.
+	// Initialisation the mini view for the second base.
 	virtual void initViewSecondBase();
 
   public:
