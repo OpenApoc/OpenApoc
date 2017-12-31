@@ -19,6 +19,7 @@ namespace OpenApoc
 class Base;
 class GameState;
 class Agent;
+class Organisation;
 class Control;
 class ScrollBar;
 class Label;
@@ -66,12 +67,10 @@ class TransactionScreen : public BaseStage
 	  public:
 		// Setter for initial stock. The vector will be moved.
 		void setInitialStock(std::vector<int> &&stock) { initialStock = std::move(stock); }
-		// Setter for the left side and right side indexes.
-		void setIndexes(int leftIdx, int rightIdx)
-		{
-			this->leftIdx = leftIdx;
-			this->rightIdx = rightIdx;
-		}
+		// Setter for the left side index.
+		void setLeftIndex(int leftIdx) { this->leftIdx = leftIdx; }
+		// Setter for the right side index.
+		void setRightIndex(int rightIdx) { this->rightIdx = rightIdx; }
 		// Get the sum of shipment orders from the base (economy).
 		// from, to - 0-7 for bases, 8 for economy
 		int shipmentsFrom(const int from, const int exclude = -1) const;
@@ -80,6 +79,7 @@ class TransactionScreen : public BaseStage
 		int shipmentsTotal(const int baseIdx) const;
 		// Get shipment order.
 		int getOrder(const int from, const int to) const;
+		int getLROrder() const { return getOrder(leftIdx, rightIdx); }
 		// Cancel shipment order.
 		void cancelOrder(const int from, const int to);
 		void cancelOrder() { cancelOrder(leftIdx, rightIdx); }
@@ -131,8 +131,8 @@ class TransactionScreen : public BaseStage
 
 	  protected:
 		// Link
-		std::list<sp<TransactionControl>> linked;
-		bool suspendUpdates = false;
+		std::list<sp<TransactionControl>> linked; // TODO: remove
+		bool suspendUpdates = false;              // TODO: remove
 
 		// Subcontrols
 		sp<ScrollBar> scrollBar;
@@ -158,14 +158,15 @@ class TransactionScreen : public BaseStage
 		// Current stock
 		// 0-7 for bases, 8 for economy
 		std::vector<int> currentStock; // TODO: remove
-		int indexLeft = 0;
-		int indexRight = 0;
+		int indexLeft = 0;             // TODO: remove?
+		int indexRight = 0;            // TODO: remove?
 		bool isAmmo = false;
 		bool isBio = false;
-		UString manufacturer;
 		bool manufacturerHostile = false;
 		bool manufacturerUnavailable = false;
 		bool unknownArtifact = false;
+		StateRef<Organisation> manufacturer;
+		UString manufacturerName;
 		// Trade state
 		Trade tradeState;
 
@@ -174,8 +175,8 @@ class TransactionScreen : public BaseStage
 		void setIndexLeft(int index);
 		void setIndexRight(int index);
 		void updateValues();
-		void link(sp<TransactionControl> control);
-		const std::list<sp<TransactionControl>> &getLinked() const;
+		void link(sp<TransactionControl> control);                  // TODO: remove
+		const std::list<sp<TransactionControl>> &getLinked() const; // TODO: remove
 
 		// Transferring/Buying/selling agent equipment and ammo
 		// Transferring/Sacking alien containment
@@ -200,7 +201,7 @@ class TransactionScreen : public BaseStage
 
 		static sp<TransactionControl>
 		createControl(const UString &id, Type type, const UString &name,
-		              const UString &manufacturer, bool isAmmo, bool isBio,
+		              StateRef<Organisation> manufacturer, bool isAmmo, bool isBio,
 		              bool manufacturerHostile, bool manufacturerUnavailable, int price,
 		              int storeSpace, std::vector<int> &initialStock, int indexLeft, int indexRight,
 		              bool unknownArtifact);
@@ -263,6 +264,7 @@ class TransactionScreen : public BaseStage
 	void populateControlsVehicleEquipment();
 	void populateControlsAlien();
 
+	// Update statistics on TransactionControls.
 	virtual void updateFormValues(bool queueHighlightUpdate = true);
 	virtual void updateBaseHighlight();
 	void fillBaseBar(bool left, int percent);

@@ -75,38 +75,6 @@ TransactionScreen::TransactionScreen(sp<GameState> state, bool forceLimits)
 
 	// Assign main form contents
 	textViewBaseStatic = form->findControlTyped<Label>("TEXT_BUTTON_BASE_STATIC");
-
-	// Adding callbacks after checking the button because we don't need to
-	// have the callback be called since changeBase() will update display anyways
-
-	form->findControlTyped<RadioButton>("BUTTON_SOLDIERS")
-	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->setDisplayType(Type::Soldier); });
-	form->findControlTyped<RadioButton>("BUTTON_BIOSCIS")
-	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->setDisplayType(Type::Bio); });
-	form->findControlTyped<RadioButton>("BUTTON_PHYSCIS")
-	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->setDisplayType(Type::Physist); });
-	form->findControlTyped<RadioButton>("BUTTON_ENGINRS")
-	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->setDisplayType(Type::Engineer); });
-	form->findControlTyped<RadioButton>("BUTTON_ALIENS")
-	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->setDisplayType(Type::Aliens); });
-
-	form->findControlTyped<RadioButton>("BUTTON_VEHICLES")
-	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->setDisplayType(Type::Vehicle); });
-	form->findControlTyped<RadioButton>("BUTTON_AGENTS")
-	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->setDisplayType(Type::AgentEquipment); });
-	form->findControlTyped<RadioButton>("BUTTON_FLYING")
-	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->setDisplayType(Type::FlyingEquipment); });
-	form->findControlTyped<RadioButton>("BUTTON_GROUND")
-	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->setDisplayType(Type::GroundEquipment); });
 }
 
 void TransactionScreen::changeBase(sp<Base> newBase)
@@ -508,17 +476,6 @@ void TransactionScreen::populateControlsAlien()
 				}
 			}
 		}
-		// if (state->economy.find(ae.first) != state->economy.end())
-		//{
-		//	auto control = TransactionControl::createControl(
-		//	    *state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);
-		//	if (control)
-		//	{
-		//		control->addCallback(FormEventType::ScrollBarChange, onScrollChange);
-		//		control->addCallback(FormEventType::MouseMove, onHover);
-		//		transactionControls[type].push_back(control);
-		//	}
-		//}
 	}
 }
 
@@ -758,10 +715,7 @@ void TransactionScreen::begin()
 
 void TransactionScreen::pause() {}
 
-void TransactionScreen::resume()
-{
-	form->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
-}
+void TransactionScreen::resume() {}
 
 void TransactionScreen::finish() {}
 
@@ -865,14 +819,14 @@ void TransactionScreen::TransactionControl::setScrollbarValues()
 void TransactionScreen::TransactionControl::setIndexLeft(int index)
 {
 	indexLeft = index;
-	tradeState.setIndexes(indexLeft, indexRight);
+	tradeState.setLeftIndex(index);
 	setScrollbarValues();
 }
 
 void TransactionScreen::TransactionControl::setIndexRight(int index)
 {
 	indexRight = index;
-	tradeState.setIndexes(indexLeft, indexRight);
+	tradeState.setRightIndex(index);
 	setScrollbarValues();
 }
 
@@ -883,23 +837,14 @@ void TransactionScreen::TransactionControl::updateValues()
 		if (manufacturerHostile || manufacturerUnavailable)
 		{
 			int defaultRightStock = tradeState.getRightStock();
-			bool showWarning = false;
-			if (indexLeft == ECONOMY_IDX && scrollBar->getValue() > defaultRightStock)
+			if ((indexLeft == ECONOMY_IDX && scrollBar->getValue() > defaultRightStock) ||
+			    (indexRight == ECONOMY_IDX && scrollBar->getValue() < defaultRightStock))
 			{
 				tradeState.cancelOrder();
 				scrollBar->setValue(tradeState.getBalance());
-				showWarning = true;
-			}
-			else if (indexRight == ECONOMY_IDX && scrollBar->getValue() < defaultRightStock)
-			{
-				tradeState.cancelOrder();
-				scrollBar->setValue(tradeState.getBalance());
-				showWarning = true;
-			}
-			if (showWarning)
-			{
+
 				auto message_box = mksp<MessageBox>(
-				    manufacturer,
+				    manufacturerName,
 				    manufacturerHostile ? tr("Order canceled by the hostile manufacturer.")
 				                        : tr("Manufacturer has no intact buildings in this city to "
 				                             "deliver goods from."),
@@ -909,21 +854,25 @@ void TransactionScreen::TransactionControl::updateValues()
 			}
 		}
 
-		tradeState.setBalance(scrollBar->getValue());
-		for (auto &c : linked)
+		// TODO: remove linked
+		if (tradeState.getBalance() != scrollBar->getValue())
 		{
-			c->suspendUpdates = true;
-			c->scrollBar->setValue(scrollBar->getValue());
-			c->updateValues();
-			c->suspendUpdates = false;
-		}
-		if (!suspendUpdates)
-		{
-			this->pushFormEvent(FormEventType::ScrollBarChange, nullptr);
+			tradeState.setBalance(scrollBar->getValue());
+			for (auto &c : linked)
+			{
+				c->suspendUpdates = true;
+				c->scrollBar->setValue(scrollBar->getValue());
+				c->updateValues();
+				c->suspendUpdates = false;
+			}
+			if (!suspendUpdates)
+			{
+				this->pushFormEvent(FormEventType::ScrollBarChange, nullptr);
+			}
 		}
 	}
 
-	int curDeltaRight = tradeState.getBalance();
+	int curDeltaRight = tradeState.getLROrder();
 	int curDeltaLeft = -curDeltaRight;
 
 	stockLeft->setText(format("%d", tradeState.getLeftStock(true)));
@@ -1007,12 +956,13 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	}
 	bool isAmmo = agentEquipmentType->type == AEquipmentType::Type::Ammo;
 	auto name = agentEquipmentType->name;
-	auto manufacturer = isBio ? "" : agentEquipmentType->manufacturer->name;
+	auto manufacturer = agentEquipmentType->manufacturer;
 	auto canBuy = isBio ? Organisation::PurchaseResult::OK
 	                    : agentEquipmentType->manufacturer->canPurchaseFrom(
 	                          state, state.current_base->building, false);
 	bool manufacturerHostile = canBuy == Organisation::PurchaseResult::OrgHostile;
-	bool manufacturerUnavailable = canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
+	bool manufacturerUnavailable = manufacturer != state.getPlayer() &&
+	                               canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
 
 	return createControl(agentEquipmentType.id,
 	                     isBio ? Type::AgentEquipmentBio : Type::AgentEquipmentCargo,
@@ -1062,12 +1012,13 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 
 	bool isAmmo = false;
 	auto name = vehicleEquipmentType->name;
-	auto manufacturer = vehicleEquipmentType->manufacturer->name;
+	auto manufacturer = vehicleEquipmentType->manufacturer;
 	// Expecting all bases to be in one city
 	auto canBuy = vehicleEquipmentType->manufacturer->canPurchaseFrom(
 	    state, state.current_base->building, false);
 	bool manufacturerHostile = canBuy == Organisation::PurchaseResult::OrgHostile;
-	bool manufacturerUnavailable = canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
+	bool manufacturerUnavailable = manufacturer != state.getPlayer() &&
+	                               canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
 
 	return createControl(vehicleEquipmentType.id, Type::VehicleEquipment,
 	                     vehicleEquipmentType->name, manufacturer, isAmmo, isBio,
@@ -1116,12 +1067,13 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 
 	bool isAmmo = true;
 	auto name = vehicleAmmoType->name;
-	auto manufacturer = vehicleAmmoType->manufacturer->name;
+	auto manufacturer = vehicleAmmoType->manufacturer;
 	// Expecting all bases to be in one city
 	auto canBuy =
 	    vehicleAmmoType->manufacturer->canPurchaseFrom(state, state.current_base->building, false);
 	bool manufacturerHostile = canBuy == Organisation::PurchaseResult::OrgHostile;
-	bool manufacturerUnavailable = canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
+	bool manufacturerUnavailable = manufacturer != state.getPlayer() &&
+	                               canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
 
 	return createControl(vehicleAmmoType.id, Type::VehicleAmmo, vehicleAmmoType->name, manufacturer,
 	                     isAmmo, isBio, manufacturerHostile, manufacturerUnavailable, price,
@@ -1165,12 +1117,13 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 
 	bool isAmmo = false;
 	auto name = vehicleType->name;
-	auto manufacturer = vehicleType->manufacturer->name;
+	auto manufacturer = vehicleType->manufacturer;
 	// Expecting all bases to be in one city
 	auto canBuy =
 	    vehicleType->manufacturer->canPurchaseFrom(state, state.current_base->building, true);
 	bool manufacturerHostile = canBuy == Organisation::PurchaseResult::OrgHostile;
-	bool manufacturerUnavailable = canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
+	bool manufacturerUnavailable = manufacturer != state.getPlayer() &&
+	                               canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
 
 	return createControl(vehicleType.id, Type::VehicleType, vehicleType->name, manufacturer, isAmmo,
 	                     isBio, manufacturerHostile, manufacturerUnavailable, price, storeSpace,
@@ -1249,7 +1202,7 @@ TransactionScreen::TransactionControl::createControl(GameState &state, StateRef<
 
 	bool isAmmo = false;
 	auto name = vehicle->name;
-	auto manufacturer = vehicle->type->manufacturer->name;
+	auto manufacturer = vehicle->type->manufacturer;
 	bool manufacturerHostile = false;
 	bool manufacturerUnavailable = false;
 
@@ -1259,9 +1212,10 @@ TransactionScreen::TransactionControl::createControl(GameState &state, StateRef<
 }
 
 sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl::createControl(
-    const UString &id, Type type, const UString &name, const UString &manufacturer, bool isAmmo,
-    bool isBio, bool manufacturerHostile, bool manufacturerUnavailable, int price, int storeSpace,
-    std::vector<int> &initialStock, int indexLeft, int indexRight, bool unknownArtifact)
+    const UString &id, Type type, const UString &name, StateRef<Organisation> manufacturer,
+    bool isAmmo, bool isBio, bool manufacturerHostile, bool manufacturerUnavailable, int price,
+    int storeSpace, std::vector<int> &initialStock, int indexLeft, int indexRight,
+    bool unknownArtifact)
 {
 	auto control = mksp<TransactionControl>();
 	control->itemId = id;
@@ -1272,21 +1226,23 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	control->indexLeft = indexLeft;
 	control->indexRight = indexRight;
 	control->tradeState.setInitialStock(std::forward<std::vector<int>>(initialStock));
-	control->tradeState.setIndexes(indexLeft, indexRight);
+	control->tradeState.setLeftIndex(indexLeft);
+	control->tradeState.setRightIndex(indexRight);
 	control->isAmmo = isAmmo;
 	control->isBio = isBio;
 	control->manufacturerHostile = manufacturerHostile;
 	control->manufacturerUnavailable = manufacturerUnavailable;
 	control->unknownArtifact = unknownArtifact;
+	control->manufacturer = manufacturer;
 	// If we create a non-purchase control we never become one so clear the values
-	if (unknownArtifact || (indexLeft != ECONOMY_IDX && indexRight != ECONOMY_IDX))
+	if (isBio || unknownArtifact || (indexLeft != ECONOMY_IDX && indexRight != ECONOMY_IDX))
 	{
-		control->manufacturer = "";
+		control->manufacturerName = "";
 		control->price = 0;
 	}
 	else
 	{
-		control->manufacturer = manufacturer;
+		control->manufacturerName = manufacturer->name;
 		control->price = price;
 	}
 
@@ -1314,11 +1270,11 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	// Manufacturer
 	// FIXME: When we have color instead of asterisk color hostile manufacturer's name in red or
 	// something?
-	if (manufacturer.length() > 0)
+	if (control->manufacturerName.length() > 0)
 	{
 		auto label = control->createChild<Label>(format("%s%s%s", manufacturerHostile ? "*" : "",
 		                                                manufacturerUnavailable ? "X" : "",
-		                                                manufacturer), // TODO: fix XX-COM
+		                                                control->manufacturerName),
 		                                         labelFont);
 		label->Location = {34, 3};
 		label->Size = {256, 16};
@@ -1392,12 +1348,12 @@ void TransactionScreen::TransactionControl::setupCallbacks()
 
 int TransactionScreen::TransactionControl::getCargoDelta(int index) const
 {
-	return isBio ? 0 : (currentStock[index] - initialStock[index]) * storeSpace;
+	return isBio ? 0 : -tradeState.shipmentsTotal(index) * storeSpace;
 }
 
 int TransactionScreen::TransactionControl::getBioDelta(int index) const
 {
-	return !isBio ? 0 : -tradeState.shipmentsTotal(index) * storeSpace;
+	return isBio ? -tradeState.shipmentsTotal(index) * storeSpace : 0;
 }
 
 int TransactionScreen::TransactionControl::getPriceDelta() const
@@ -1405,7 +1361,7 @@ int TransactionScreen::TransactionControl::getPriceDelta() const
 	int delta = 0;
 	for (int i = 0; i < MAX_BASES; i++)
 	{
-		delta -= (currentStock[i] - initialStock[i]) * price;
+		delta += tradeState.shipmentsTotal(i) * price;
 	}
 	return delta;
 }
@@ -1466,7 +1422,8 @@ void TransactionScreen::TransactionControl::postRender()
 
 	// Draw shade if inactive
 	static Vec2<int> shadePos = {0, 0};
-	if (indexLeft == indexRight || (currentStock[indexLeft] == 0 && currentStock[indexRight] == 0))
+	if (indexLeft == indexRight ||
+	    (tradeState.getLeftStock() == 0 && tradeState.getRightStock() == 0))
 	{
 		fw().renderer->draw(transactionShade, shadePos);
 	}

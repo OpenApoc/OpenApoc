@@ -49,10 +49,10 @@ AlienContainmentScreen::AlienContainmentScreen(sp<GameState> state, bool forceLi
 	form->findControlTyped<RadioButton>("BUTTON_FLYING")->setVisible(false);
 	form->findControlTyped<RadioButton>("BUTTON_GROUND")->setVisible(false);
 
-	form->findControlTyped<RadioButton>("BUTTON_ALIENS")->setChecked(true);
-
 	confirmClosureText = tr("Confirm Alien Containment Orders");
+
 	type = Type::Aliens;
+	form->findControlTyped<RadioButton>("BUTTON_ALIENS")->setChecked(true);
 }
 
 void AlienContainmentScreen::closeScreen()

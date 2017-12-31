@@ -8,14 +8,15 @@ namespace OpenApoc
 class BuyAndSellScreen : public TransactionScreen
 {
   private:
-	//
+	// Get the left side index.
 	int getLeftIndex() override;
+	// Get the right side index.
 	int getRightIndex() override;
-	//
-	void updateFormValues(bool queueHighlightUpdate = true);
-	//
+	// Update statistics on TransactionControls.
+	void updateFormValues(bool queueHighlightUpdate = true) override;
+	// Checking conditions and limitations before the execution of orders.
 	void closeScreen() override;
-	// Execute orders given in the screen
+	// Execute orders given in the screen.
 	void executeOrders() override;
 
   public:

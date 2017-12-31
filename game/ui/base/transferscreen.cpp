@@ -53,12 +53,39 @@ TransferScreen::TransferScreen(sp<GameState> state, bool forceLimits)
 	form->findControlTyped<RadioButton>("BUTTON_GROUND")->setVisible(true);
 	form->findControlTyped<RadioButton>("BUTTON_GROUND")->Location.y = 320;
 
-	form->findControlTyped<RadioButton>("BUTTON_SOLDIERS")->setChecked(true);
-
-	confirmClosureText = tr("Confirm Transfers");
-	type = Type::Soldier;
-
 	textViewSecondBaseStatic = form->findControlTyped<Label>("TEXT_BUTTON_SECOND_BASE_STATIC");
+
+	// Adding callbacks after checking the button because we don't need to
+	// have the callback be called since changeBase() will update display anyways
+
+	form->findControlTyped<RadioButton>("BUTTON_SOLDIERS")
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *) { this->setDisplayType(Type::Soldier); });
+	form->findControlTyped<RadioButton>("BUTTON_BIOSCIS")
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *) { this->setDisplayType(Type::Bio); });
+	form->findControlTyped<RadioButton>("BUTTON_PHYSCIS")
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *) { this->setDisplayType(Type::Physist); });
+	form->findControlTyped<RadioButton>("BUTTON_ENGINRS")
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *) { this->setDisplayType(Type::Engineer); });
+	form->findControlTyped<RadioButton>("BUTTON_ALIENS")
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *) { this->setDisplayType(Type::Aliens); });
+
+	form->findControlTyped<RadioButton>("BUTTON_VEHICLES")
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *) { this->setDisplayType(Type::Vehicle); });
+	form->findControlTyped<RadioButton>("BUTTON_AGENTS")
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *) { this->setDisplayType(Type::AgentEquipment); });
+	form->findControlTyped<RadioButton>("BUTTON_FLYING")
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *) { this->setDisplayType(Type::FlyingEquipment); });
+	form->findControlTyped<RadioButton>("BUTTON_GROUND")
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *) { this->setDisplayType(Type::GroundEquipment); });
 
 	// Find first base that isn't current
 	for (auto &b : state->player_bases)
@@ -70,6 +97,11 @@ TransferScreen::TransferScreen(sp<GameState> state, bool forceLimits)
 			break;
 		}
 	}
+
+	confirmClosureText = tr("Confirm Transfers");
+
+	type = Type::Soldier;
+	form->findControlTyped<RadioButton>("BUTTON_SOLDIERS")->setChecked(true);
 }
 
 void TransferScreen::changeSecondBase(sp<Base> newBase)

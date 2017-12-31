@@ -24,6 +24,7 @@
 #include "game/state/shared/organisation.h"
 #include "game/ui/base/basestage.h"
 #include "game/ui/general/messagebox.h"
+#include <array>
 
 namespace OpenApoc
 {
@@ -53,10 +54,26 @@ BuyAndSellScreen::BuyAndSellScreen(sp<GameState> state, bool forceLimits)
 	form->findControlTyped<RadioButton>("BUTTON_GROUND")->setVisible(true);
 	form->findControlTyped<RadioButton>("BUTTON_GROUND")->Location.y = 160;
 
-	form->findControlTyped<RadioButton>("BUTTON_VEHICLES")->setChecked(true);
+	// Adding callbacks after checking the button because we don't need to
+	// have the callback be called since changeBase() will update display anyways
+
+	form->findControlTyped<RadioButton>("BUTTON_VEHICLES")
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *) { this->setDisplayType(Type::Vehicle); });
+	form->findControlTyped<RadioButton>("BUTTON_AGENTS")
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *) { this->setDisplayType(Type::AgentEquipment); });
+	form->findControlTyped<RadioButton>("BUTTON_FLYING")
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *) { this->setDisplayType(Type::FlyingEquipment); });
+	form->findControlTyped<RadioButton>("BUTTON_GROUND")
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *) { this->setDisplayType(Type::GroundEquipment); });
 
 	confirmClosureText = tr("Confirm Sales/Purchases");
+
 	type = Type::Vehicle;
+	form->findControlTyped<RadioButton>("BUTTON_VEHICLES")->setChecked(true);
 }
 
 int BuyAndSellScreen::getLeftIndex()
@@ -86,29 +103,11 @@ void BuyAndSellScreen::updateFormValues(bool queueHighlightUpdate)
 
 void BuyAndSellScreen::closeScreen()
 {
-	// Step 01: Check funds
-	//	if (mode == Mode::BuySell)
-	{
-		int moneyDelta = 0;
+	auto player = state->getPlayer();
 
-		std::set<sp<TransactionControl>> linkedControls;
-		for (auto &l : transactionControls)
-		{
-			for (auto &c : l.second)
-			{
-				if (linkedControls.find(c) != linkedControls.end())
-				{
-					continue;
-				}
-				moneyDelta += c->getPriceDelta();
-				for (auto &l : c->getLinked())
-				{
-					linkedControls.insert(l);
-				}
-			}
-		}
-		int balance = state->getPlayer()->balance + moneyDelta;
-		if (balance < 0)
+	// Step 01: Check funds
+	{
+		if (player->balance + moneyDelta < 0)
 		{
 			fw().stageQueueCommand({StageCmd::Command::PUSH,
 			                        mksp<MessageBox>(tr("Funds exceeded"),
@@ -120,13 +119,10 @@ void BuyAndSellScreen::closeScreen()
 
 	// Step 02: Check accomodation of different sorts
 	{
-		// FIXME: CHECK LQ SPACE
-		std::vector<int> vecCargoDelta;
-		std::vector<int> vecBioDelta;
-		std::vector<bool> vecChanged;
-		vecCargoDelta.resize(8);
-		vecBioDelta.resize(8);
-		vecChanged.resize(8);
+		std::array<int, MAX_BASES> vecCargoDelta;
+		std::array<bool, MAX_BASES> vecChanged;
+		vecCargoDelta.fill(0);
+		vecChanged.fill(false);
 
 		// Find all delta and mark all that have any changes
 		std::set<sp<TransactionControl>> linkedControls;
@@ -138,12 +134,12 @@ void BuyAndSellScreen::closeScreen()
 				{
 					continue;
 				}
-				for (int i = 0; i < 8; i++)
+				for (int i = 0; i < MAX_BASES; i++)
 				{
-					vecCargoDelta[i] += c->getCargoDelta(i);
-					vecBioDelta[i] += c->getBioDelta(i);
-					if (c->initialStock[i] != c->currentStock[i])
+					int cargoDelta = c->getCargoDelta(i);
+					if (cargoDelta != 0)
 					{
+						vecCargoDelta[i] += cargoDelta;
 						vecChanged[i] = true;
 					}
 				}
@@ -157,20 +153,14 @@ void BuyAndSellScreen::closeScreen()
 		// Check every base, find first bad one
 		int bindex = 0;
 		StateRef<Base> bad_base;
-		bool cargoOverLimit = false;
-		bool alienOverLimit = false;
-		bool crewOverLimit = false; //  only if mode == Mode::Transfer
 		for (auto &b : state->player_bases)
 		{
-			if (vecChanged[bindex] || forceLimits)
+			if ((vecChanged[bindex] || forceLimits) &&
+			    b.second->getUsage(*state, FacilityType::Capacity::Stores, vecCargoDelta[bindex]) >
+			        100)
 			{
-				if (b.second->getUsage(*state, FacilityType::Capacity::Stores,
-				                       vecCargoDelta[bindex]) > 100)
-				{
-					bad_base = b.second->building->base;
-					cargoOverLimit = true;
-					break;
-				}
+				bad_base = b.second->building->base;
+				break;
 			}
 			bindex++;
 		}
@@ -178,51 +168,15 @@ void BuyAndSellScreen::closeScreen()
 		// Found bad base
 		if (bad_base)
 		{
-			UString title;
-			UString message;
-			if (crewOverLimit)
-			{
-				title = tr("Accomodation exceeded");
-				message = tr("Transfer limited by available accommodation.");
-				type = Type::Soldier;
-			}
-			else if (cargoOverLimit)
-			{
-				title = tr("Storage space exceeded");
-				//				if (mode == Mode::BuySell)
-				{
-					if (forceLimits)
-					{
-						message = tr("Storage space exceeded. Sell off more items!");
-					}
-					else
-					{
-						message = tr("Order limited by the available storage space at this base.");
-					}
-				}
-				// else
-				//{
-				//	message = tr("Transfer limited by available storage space.");
-				//}
-				type = Type::AgentEquipment;
-			}
-			// else if (alienOverLimit)
-			//{
-			//	title = tr("Alien Containment space exceeded");
-			//	if (mode == Mode::AlienContainment)
-			//	{
-			//		message = tr("Alien Containment space exceeded. Destroy more Aliens!");
-			//	}
-			//	else
-			//	{
-			//		message = tr("Transfer limited by available Alien Containment space.");
-			//	}
-			//	type = Type::Aliens;
-			//}
+			UString title(tr("Storage space exceeded"));
+			UString message(forceLimits
+			                    ? tr("Storage space exceeded. Sell off more items!")
+			                    : tr("Order limited by the available storage space at this base."));
+
 			fw().stageQueueCommand(
 			    {StageCmd::Command::PUSH,
 			     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::Ok)});
-			//			if (bad_base != state->current_base && bad_base != second_base)
+
 			if (bad_base != state->current_base)
 			{
 				for (auto &view : miniViews)
@@ -243,7 +197,6 @@ void BuyAndSellScreen::closeScreen()
 
 	// Step 03.01: Check transportation for purchases
 	bool purchaseTransferFound = false;
-	//	if (mode == Mode::BuySell)
 	{
 		bool noFerry = false;
 
@@ -258,63 +211,15 @@ void BuyAndSellScreen::closeScreen()
 				{
 					continue;
 				}
-				// See if we transfer-bought from an org that's hostile
-				if (!purchaseTransferFound)
-				{
-					for (int i = 0; i < 7; i++)
-					{
-						if (c->initialStock[8] < c->currentStock[8])
-						{
-							StateRef<Organisation> owner;
-							switch (c->itemType)
-							{
-								case TransactionControl::Type::AgentEquipmentBio:
-								case TransactionControl::Type::AgentEquipmentCargo:
-									owner = StateRef<AEquipmentType> { state.get(), c->itemId }
-									->manufacturer;
-									break;
-								case TransactionControl::Type::VehicleEquipment:
-									owner = StateRef<VEquipmentType> { state.get(), c->itemId }
-									->manufacturer;
-									break;
-								case TransactionControl::Type::VehicleAmmo:
-									owner = StateRef<VAmmoType> { state.get(), c->itemId }
-									->manufacturer;
-									break;
-								case TransactionControl::Type::VehicleType:
-								case TransactionControl::Type::Vehicle:
-									// Vehicles need no transportation
-									break;
-							}
-							if (owner &&
-							    owner->isRelatedTo(state->getPlayer()) ==
-							        Organisation::Relation::Hostile)
-							{
-								purchaseTransferFound = true;
-							}
-						}
-					}
-				}
-				if (c->initialStock[8] > c->currentStock[8])
+				// See if we transfer-bought from an org that is not hostile
+				if (c->tradeState.shipmentsFrom(ECONOMY_IDX) > 0)
 				{
 					switch (c->itemType)
 					{
-						case TransactionControl::Type::AgentEquipmentBio:
 						case TransactionControl::Type::AgentEquipmentCargo:
-							orgsBuyFrom.insert(
-							    StateRef<AEquipmentType> { state.get(), c->itemId }->manufacturer);
-							break;
 						case TransactionControl::Type::VehicleEquipment:
-							orgsBuyFrom.insert(
-							    StateRef<VEquipmentType> { state.get(), c->itemId }->manufacturer);
-							break;
 						case TransactionControl::Type::VehicleAmmo:
-							orgsBuyFrom.insert(
-							    StateRef<VAmmoType> { state.get(), c->itemId }->manufacturer);
-							break;
-						case TransactionControl::Type::VehicleType:
-						case TransactionControl::Type::Vehicle:
-							// Vehicles need no transportation
+							orgsBuyFrom.insert(c->manufacturer);
 							break;
 					}
 				}
@@ -324,14 +229,15 @@ void BuyAndSellScreen::closeScreen()
 				}
 			}
 		}
+		purchaseTransferFound = !orgsBuyFrom.empty();
+
 		// Check orgs
 		std::list<StateRef<Organisation>> badOrgs;
 		bool transportationHostile = false;
 		bool transportationBusy = false;
-		Organisation::PurchaseResult canBuy;
 		for (auto &o : orgsBuyFrom)
 		{
-			if (o == state->getPlayer())
+			if (o == player)
 			{
 				continue;
 			}
@@ -402,36 +308,28 @@ void BuyAndSellScreen::closeScreen()
 		}
 	}
 
-	// Step 03.02: Check transportation for transfers
-	// or for purchase-transfers
-	//	if (mode == Mode::Transfer || purchaseTransferFound)
+	// Step 03.02: Check transportation for purchase-transfers
 	if (purchaseTransferFound)
 	{
 		bool transportationHostile = false;
 		bool transportationBusy = false;
-		std::list<StateRef<Organisation>> badOrgs;
 
 		// Find out who provides transportation services
+		std::list<StateRef<Organisation>> badOrgs;
 		std::list<StateRef<Organisation>> ferryCompanies;
 		for (auto &o : state->organisations)
 		{
 			if (o.second->providesTransportationServices)
 			{
-				ferryCompanies.emplace_back(state.get(), o.first);
-			}
-		}
-		// Check if a ferry provider exists that likes us
-		// Clear those that don't
-		for (auto it = ferryCompanies.begin(); it != ferryCompanies.end();)
-		{
-			if ((*it)->isRelatedTo(state->getPlayer()) == Organisation::Relation::Hostile)
-			{
-				badOrgs.push_back(*it);
-				it = ferryCompanies.erase(it);
-			}
-			else
-			{
-				it++;
+				StateRef<Organisation> org{state.get(), o.first};
+				if (org->isRelatedTo(player) == Organisation::Relation::Hostile)
+				{
+					badOrgs.push_back(org);
+				}
+				else
+				{
+					ferryCompanies.push_back(org);
+				}
 			}
 		}
 		if (ferryCompanies.empty())
@@ -441,6 +339,7 @@ void BuyAndSellScreen::closeScreen()
 		else
 		{
 			// Check if ferry provider has free ferries
+			// TODO: rewrite
 			if (config().getBool("OpenApoc.NewFeature.CallExistingFerry"))
 			{
 				bool ferryFound = false;
@@ -525,22 +424,7 @@ void BuyAndSellScreen::closeScreen()
 
 void BuyAndSellScreen::executeOrders()
 {
-	std::vector<StateRef<Base>> bases;
-	for (auto &b : state->player_bases)
-	{
-		bases.push_back(b.second->building->base);
-	}
-	bases.resize(8);
-
-	// Step 02: Gather data about differences in stocks
-	// Map is base id to number bought/sold
-	std::map<StateRef<AEquipmentType>, std::map<int, int>> aeMap;
-	std::map<StateRef<AEquipmentType>, std::map<int, int>> bioMap;
-	std::map<StateRef<VEquipmentType>, std::map<int, int>> veMap;
-	std::map<StateRef<VAmmoType>, std::map<int, int>> vaMap;
-	std::map<StateRef<VehicleType>, std::map<int, int>> vtMap;
-	std::list<std::pair<StateRef<Vehicle>, int>> soldVehicles;
-
+	auto player = state->getPlayer();
 	std::set<sp<TransactionControl>> linkedControls;
 	for (auto &l : transactionControls)
 	{
@@ -550,42 +434,132 @@ void BuyAndSellScreen::executeOrders()
 			{
 				continue;
 			}
-			bool vehicleSold = c->itemType == TransactionControl::Type::Vehicle;
-			for (int i = 0; i < 8; i++)
+			if (c->itemType != TransactionControl::Type::Vehicle &&
+			    state->economy.find(c->itemId) == state->economy.end())
 			{
-				switch (c->itemType)
-				{
-					case TransactionControl::Type::Vehicle:
-						if (c->currentStock[i] != 0)
-						{
-							vehicleSold = false;
-						}
-						break;
-					case TransactionControl::Type::AgentEquipmentBio:
-						bioMap[{state.get(), c->itemId}][i] =
-						    c->currentStock[i] - c->initialStock[i];
-						break;
-					case TransactionControl::Type::AgentEquipmentCargo:
-						aeMap[{state.get(), c->itemId}][i] =
-						    c->currentStock[i] - c->initialStock[i];
-						break;
-					case TransactionControl::Type::VehicleAmmo:
-						vaMap[{state.get(), c->itemId}][i] =
-						    c->currentStock[i] - c->initialStock[i];
-						break;
-					case TransactionControl::Type::VehicleEquipment:
-						veMap[{state.get(), c->itemId}][i] =
-						    c->currentStock[i] - c->initialStock[i];
-						break;
-					case TransactionControl::Type::VehicleType:
-						vtMap[{state.get(), c->itemId}][i] =
-						    c->currentStock[i] - c->initialStock[i];
-						break;
-				}
+				LogError("Economy not found for %s: How are we selling it then!?", c->itemId);
+				continue;
 			}
-			if (vehicleSold)
+
+			int index = 0;
+			auto &economy = state->economy[c->itemId];
+			for (auto &b : state->player_bases)
 			{
-				soldVehicles.emplace_back(StateRef<Vehicle>{state.get(), c->itemId}, c->price);
+				int order = c->tradeState.shipmentsTotal(index++);
+
+				// Sell
+				if (order > 0)
+				{
+					switch (c->itemType)
+					{
+						case TransactionControl::Type::Vehicle:
+						{
+							StateRef<Vehicle> vehicle{state.get(), c->itemId};
+							// Expecting sold vehicle to be parked
+							// Offload agents
+							while (!vehicle->currentAgents.empty())
+							{
+								auto agent = *vehicle->currentAgents.begin();
+								agent->enterBuilding(*state, vehicle->currentBuilding);
+							}
+							// Offload cargo
+							for (auto &c : vehicle->cargo)
+							{
+								vehicle->currentBuilding->cargo.push_back(c);
+							}
+							vehicle->die(*state, true);
+							player->balance += c->price;
+						}
+						case TransactionControl::Type::AgentEquipmentBio:
+						{
+							// kill aliens
+							b.second->inventoryAgentEquipment[c->itemId] -= order;
+							break;
+						}
+						case TransactionControl::Type::AgentEquipmentCargo:
+						{
+							economy.currentStock += order;
+							player->balance += order * economy.currentPrice;
+
+							StateRef<AEquipmentType> equipment{state.get(), c->itemId};
+							b.second->inventoryAgentEquipment[c->itemId] -=
+							    order * (equipment->type == AEquipmentType::Type::Ammo
+							                 ? equipment->max_ammo
+							                 : 1);
+							break;
+						}
+						case TransactionControl::Type::VehicleAmmo:
+						{
+							economy.currentStock += order;
+							player->balance += order * economy.currentPrice;
+							b.second->inventoryAgentEquipment[c->itemId] -= order;
+							break;
+						}
+						case TransactionControl::Type::VehicleEquipment:
+						{
+							economy.currentStock += order;
+							player->balance += order * economy.currentPrice;
+							b.second->inventoryAgentEquipment[c->itemId] -= order;
+							break;
+						}
+						case TransactionControl::Type::VehicleType:
+						{
+							LogError("How did we manage to sell a vehicle type %s!?", c->itemId);
+							break;
+						}
+					}
+				}
+
+				// Buy
+				else if (order < 0)
+				{
+					auto org = c->manufacturer;
+					if (org->isRelatedTo(player) == Organisation::Relation::Hostile)
+					{
+						LogError("How the hell is being bought from a hostile org %s?",
+						         c->manufacturerName);
+						continue;
+					}
+
+					switch (c->itemType)
+					{
+						case TransactionControl::Type::Vehicle:
+						{
+							LogError("It should be impossible to buy a particular vehicle %s.",
+							         c->itemId);
+							break;
+						}
+						case TransactionControl::Type::AgentEquipmentBio:
+						{
+							LogError("Alien %s: How are we buying it!?", c->itemId);
+							break;
+						}
+						case TransactionControl::Type::AgentEquipmentCargo:
+						{
+							StateRef<AEquipmentType> equipment{state.get(), c->itemId};
+							org->purchase(*state, b.second->building, equipment, -order);
+							break;
+						}
+						case TransactionControl::Type::VehicleAmmo:
+						{
+							StateRef<VAmmoType> ammo{state.get(), c->itemId};
+							org->purchase(*state, b.second->building, ammo, -order);
+							break;
+						}
+						case TransactionControl::Type::VehicleEquipment:
+						{
+							StateRef<VEquipmentType> equipment{state.get(), c->itemId};
+							org->purchase(*state, b.second->building, equipment, -order);
+							break;
+						}
+						case TransactionControl::Type::VehicleType:
+						{
+							StateRef<VehicleType> vehicle{state.get(), c->itemId};
+							org->purchase(*state, b.second->building, vehicle, -order);
+							break;
+						}
+					}
+				}
 			}
 			for (auto &l : c->getLinked())
 			{
@@ -593,473 +567,7 @@ void BuyAndSellScreen::executeOrders()
 			}
 		}
 	}
-
-	// Step 03: Act according to mode
-	auto player = state->getPlayer();
-
-	// Step 03.01: If buy&sell then:
-	// - remove everything negative, order everything positive, adjust balance
-	bool needTransfer = false;
-	//	if (mode == Mode::BuySell)
-	{
-		// Step 03.01.01: Buy stuff
-		for (auto &e : aeMap)
-		{
-			for (auto &ae : e.second)
-			{
-				if (ae.first == 8)
-				{
-					continue;
-				}
-				if (ae.second > 0)
-				{
-					int count =
-					    ae.second *
-					    (e.first->type == AEquipmentType::Type::Ammo ? e.first->max_ammo : 1);
-
-					auto org = e.first->manufacturer;
-					if (org->isRelatedTo(player) != Organisation::Relation::Hostile)
-					{
-						org->purchase(*state, bases[ae.first]->building, e.first, ae.second);
-						ae.second = 0;
-					}
-					else
-					{
-						e.second[8] += ae.second;
-						needTransfer = true;
-					}
-				}
-			}
-		}
-		for (auto &e : bioMap)
-		{
-			for (auto &ae : e.second)
-			{
-				if (ae.second > 0)
-				{
-					LogError("Alien %s: How are we buying it!?", e.first.id);
-				}
-			}
-		}
-		for (auto &e : veMap)
-		{
-			for (auto &ve : e.second)
-			{
-				if (ve.first == 8)
-				{
-					continue;
-				}
-				if (ve.second > 0)
-				{
-					auto org = e.first->manufacturer;
-					if (org->isRelatedTo(player) != Organisation::Relation::Hostile)
-					{
-						org->purchase(*state, bases[ve.first]->building, e.first, ve.second);
-						ve.second = 0;
-					}
-					else
-					{
-						e.second[8] += ve.second;
-						needTransfer = true;
-					}
-				}
-			}
-		}
-		for (auto &e : vaMap)
-		{
-			for (auto &va : e.second)
-			{
-				if (va.first == 8)
-				{
-					continue;
-				}
-				if (va.second > 0)
-				{
-					auto org = e.first->manufacturer;
-					if (org->isRelatedTo(player) != Organisation::Relation::Hostile)
-					{
-						org->purchase(*state, bases[va.first]->building, e.first, va.second);
-						va.second = 0;
-					}
-					else
-					{
-						e.second[8] += va.second;
-						needTransfer = true;
-					}
-				}
-			}
-		}
-		for (auto &e : vtMap)
-		{
-			for (auto &vt : e.second)
-			{
-				if (vt.second > 0)
-				{
-					auto org = e.first->manufacturer;
-					if (org->isRelatedTo(player) != Organisation::Relation::Hostile)
-					{
-						org->purchase(*state, bases[vt.first]->building, e.first, vt.second);
-						vt.second = 0;
-					}
-					else
-					{
-						LogError("VehicleType %s: How the hell is being bought from a hostile org?",
-						         e.first.id);
-					}
-				}
-			}
-		}
-		// Step 03.01.02:  Sell stuff
-		for (auto &e : aeMap)
-		{
-			for (auto &ae : e.second)
-			{
-				int aeSecond = ae.second;
-				if (ae.second < 0 && e.second[8] > 0)
-				{
-					int reserve = std::min(e.second[8], -ae.second);
-					e.second[8] -= reserve;
-					aeSecond += reserve;
-				}
-				if (aeSecond < 0)
-				{
-					int count =
-					    aeSecond *
-					    (e.first->type == AEquipmentType::Type::Ammo ? e.first->max_ammo : 1);
-
-					if (-count > bases[ae.first]->inventoryAgentEquipment[e.first.id])
-					{
-						bases[ae.first]->inventoryAgentEquipment[e.first.id] = 0;
-					}
-					else
-					{
-						bases[ae.first]->inventoryAgentEquipment[e.first.id] += count;
-					}
-					int price = 0;
-					if (state->economy.find(e.first.id) == state->economy.end())
-					{
-						LogError("Economy not found for %s: How are we selling it then!?",
-						         e.first.id);
-					}
-					else
-					{
-						auto &economy = state->economy[e.first.id];
-						price = economy.currentPrice;
-						economy.currentStock -= aeSecond;
-					}
-					player->balance -= aeSecond * price;
-				}
-			}
-		}
-		for (auto &e : bioMap)
-		{
-			for (auto &ae : e.second)
-			{
-				if (ae.second < 0 && e.second[8] > 0)
-				{
-					LogError("Alien %s: How the hell is it in reserve?", e.first.id);
-				}
-				if (ae.second < 0)
-				{
-					int price = 0;
-					if (state->economy.find(e.first.id) == state->economy.end())
-					{
-						// That's how it should be for alien containment
-						// LogError("Economy not found for %s: How are we buying it then!?",
-						// e.first.id);
-					}
-					else
-					{
-						LogError("Economy found for alien containment item %s? WTF?", e.first.id);
-						auto &economy = state->economy[e.first.id];
-						price = economy.currentPrice;
-						economy.currentStock -= ae.second;
-					}
-					bases[ae.first]->inventoryAgentEquipment[e.first.id] += ae.second;
-					player->balance -= ae.second * price;
-				}
-			}
-		}
-		for (auto &e : veMap)
-		{
-			for (auto &ve : e.second)
-			{
-				int veSecond = ve.second;
-				if (ve.second < 0 && e.second[8] > 0)
-				{
-					int reserve = std::min(e.second[8], -ve.second);
-					e.second[8] -= reserve;
-					veSecond += reserve;
-				}
-				if (veSecond < 0)
-				{
-					int price = 0;
-					if (state->economy.find(e.first.id) == state->economy.end())
-					{
-						LogError("Economy not found for %s: How are we selling it then!?",
-						         e.first.id);
-					}
-					else
-					{
-						auto &economy = state->economy[e.first.id];
-						price = economy.currentPrice;
-						economy.currentStock -= veSecond;
-					}
-					bases[ve.first]->inventoryVehicleEquipment[e.first.id] += veSecond;
-					player->balance -= veSecond * price;
-				}
-			}
-		}
-		for (auto &e : vaMap)
-		{
-			for (auto &va : e.second)
-			{
-				int vaSecond = va.second;
-				if (va.second < 0 && e.second[8] > 0)
-				{
-					int reserve = std::min(e.second[8], -va.second);
-					e.second[8] -= reserve;
-					vaSecond += reserve;
-				}
-				if (vaSecond < 0)
-				{
-					int price = 0;
-					if (state->economy.find(e.first.id) == state->economy.end())
-					{
-						LogError("Economy not found for %s: How are we buying it then!?",
-						         e.first.id);
-					}
-					else
-					{
-						auto &economy = state->economy[e.first.id];
-						price = economy.currentPrice;
-						economy.currentStock -= vaSecond;
-					}
-					bases[va.first]->inventoryVehicleAmmo[e.first.id] += vaSecond;
-					player->balance -= vaSecond * price;
-				}
-			}
-		}
-		for (auto &e : vtMap)
-		{
-			for (auto &vt : e.second)
-			{
-				if (vt.second < 0 && e.second[8] > 0)
-				{
-					LogError("VehicleType %s: How the hell is it in reserve?", e.first.id);
-				}
-				if (vt.second < 0)
-				{
-					LogError("How did we manage to sell a vehicle type!?");
-				}
-			}
-		}
-
-		// Step 03.01.03: Sell vehicles
-		for (auto &v : soldVehicles)
-		{
-			// Expecting sold vehicle to be parked
-			// Offload agents
-			while (!v.first->currentAgents.empty())
-			{
-				auto agent = *v.first->currentAgents.begin();
-				agent->enterBuilding(*state, v.first->currentBuilding);
-			}
-			// Offload cargo
-			for (auto &c : v.first->cargo)
-			{
-				v.first->currentBuilding->cargo.push_back(c);
-			}
-			v.first->die(*state, true);
-			player->balance += v.second;
-		}
-	}
+	// Rest in peace, vehicles
 	state->cleanUpDeathNote();
-
-	// Step 03.02: If transfer then move stuff from negative to positive
-	//	if (mode == Mode::Transfer || needTransfer)
-	if (needTransfer)
-	{
-		// Agent items
-		for (auto &e : aeMap)
-		{
-			std::list<std::pair<int, int>> source;
-			std::list<std::pair<int, int>> destination;
-			for (auto &ae : e.second)
-			{
-				if (ae.second < 0)
-				{
-					source.emplace_back(ae.first, -ae.second);
-				}
-				if (ae.second > 0)
-				{
-					destination.emplace_back(ae.first, ae.second);
-				}
-			}
-			for (auto &d : destination)
-			{
-				int remaining = d.second;
-				for (auto &s : source)
-				{
-					if (s.second == 0)
-					{
-						continue;
-					}
-					int count = std::min(remaining, s.second);
-					s.second -= count;
-					remaining -= count;
-					int realCount =
-					    (e.first->type == AEquipmentType::Type::Ammo ? e.first->max_ammo : 1) *
-					    count;
-					// We may be transferring last bullets in a clip here so adjust accordingly
-					realCount = std::min(realCount,
-					                     (int)bases[s.first]->inventoryAgentEquipment[e.first.id]);
-					bases[s.first]->building->cargo.emplace_back(*state, e.first, count, 0, player,
-					                                             bases[d.first]->building);
-					bases[s.first]->inventoryAgentEquipment[e.first.id] -= realCount;
-					if (remaining == 0)
-					{
-						break;
-					}
-				}
-				if (remaining != 0)
-				{
-					LogError("General screw up in transactions, have remaining demand of %d for %s",
-					         remaining, e.first.id);
-				}
-			}
-		}
-		// Bio items (Aliens)
-		for (auto &e : bioMap)
-		{
-			std::list<std::pair<int, int>> source;
-			std::list<std::pair<int, int>> destination;
-			for (auto &be : e.second)
-			{
-				if (be.second < 0)
-				{
-					source.emplace_back(be.first, be.second);
-				}
-				if (be.second > 0)
-				{
-					destination.emplace_back(be.first, be.second);
-				}
-			}
-			for (auto &d : destination)
-			{
-				int remaining = d.second;
-				for (auto &s : source)
-				{
-					if (s.second == 0)
-					{
-						continue;
-					}
-					int count = std::min(remaining, s.second);
-					s.second -= count;
-					remaining -= count;
-					bases[s.first]->building->cargo.emplace_back(*state, e.first, count, 0, player,
-					                                             bases[d.first]->building);
-					bases[s.first]->inventoryBioEquipment[e.first.id] -= count;
-					if (remaining == 0)
-					{
-						break;
-					}
-				}
-				if (remaining != 0)
-				{
-					LogError("General screw up in transactions, have remaining demand of %d for %s",
-					         remaining, e.first.id);
-				}
-			}
-		}
-		// Transfer Vehicle Equipment
-		for (auto &e : veMap)
-		{
-			std::list<std::pair<int, int>> source;
-			std::list<std::pair<int, int>> destination;
-			for (auto &ve : e.second)
-			{
-				if (ve.second < 0)
-				{
-					source.emplace_back(ve.first, ve.second);
-				}
-				if (ve.second > 0)
-				{
-					destination.emplace_back(ve.first, ve.second);
-				}
-			}
-			for (auto &d : destination)
-			{
-				int remaining = d.second;
-				for (auto &s : source)
-				{
-					if (s.second == 0)
-					{
-						continue;
-					}
-					int count = std::min(remaining, s.second);
-					s.second -= count;
-					remaining -= count;
-					bases[s.first]->building->cargo.emplace_back(*state, e.first, count, 0, player,
-					                                             bases[d.first]->building);
-					bases[s.first]->inventoryVehicleEquipment[e.first.id] -= count;
-					if (remaining == 0)
-					{
-						break;
-					}
-				}
-				if (remaining != 0)
-				{
-					LogError("General screw up in transactions, have remaining demand of %d for %s",
-					         remaining, e.first.id);
-				}
-			}
-		}
-		// Transfer Vehicle Ammo
-		for (auto &e : vaMap)
-		{
-			std::list<std::pair<int, int>> source;
-			std::list<std::pair<int, int>> destination;
-			for (auto &va : e.second)
-			{
-				if (va.second < 0)
-				{
-					source.emplace_back(va.first, va.second);
-				}
-				if (va.second > 0)
-				{
-					destination.emplace_back(va.first, va.second);
-				}
-			}
-			for (auto &d : destination)
-			{
-				int remaining = d.second;
-				for (auto &s : source)
-				{
-					if (s.second == 0)
-					{
-						continue;
-					}
-					int count = std::min(remaining, s.second);
-					s.second -= count;
-					remaining -= count;
-					bases[s.first]->building->cargo.emplace_back(*state, e.first, count, 0, player,
-					                                             bases[d.first]->building);
-					bases[s.first]->inventoryVehicleAmmo[e.first.id] -= count;
-					if (remaining == 0)
-					{
-						break;
-					}
-				}
-				if (remaining != 0)
-				{
-					LogError("General screw up in transactions, have remaining demand of %d for %s",
-					         remaining, e.first.id);
-				}
-			}
-		}
-		// Vehicles and Agents already processed above
-		return;
-	}
 }
 }
