@@ -1841,6 +1841,11 @@ void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 		// Dying will remove agent from current agents list
 		agent->die(state, true);
 	}
+	// Remove from building
+	if (currentBuilding)
+	{
+		currentBuilding->currentVehicles.erase({&state, shared_from_this()});
+	}
 
 	// Adjust relationships
 	if (attacker && !crashed)
