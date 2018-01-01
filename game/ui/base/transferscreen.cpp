@@ -142,6 +142,19 @@ int TransferScreen::getRightIndex()
 
 void TransferScreen::updateBaseHighlight()
 {
+	if (viewHighlightPrevious != viewHighlight)
+	{
+		int i = 0;
+		for (auto &b : state->player_bases)
+		{
+			auto viewName = format("BUTTON_SECOND_BASE_%d", ++i);
+			auto view = form->findControlTyped<GraphicButton>(viewName);
+			auto viewImage = drawMiniBase(b.second, viewHighlight, viewFacility);
+			view->setImage(viewImage);
+			view->setDepressedImage(viewImage);
+		}
+	}
+
 	// Update first base
 	TransactionScreen::updateBaseHighlight();
 

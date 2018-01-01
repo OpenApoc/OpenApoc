@@ -58,15 +58,13 @@ TransactionScreen::TransactionScreen(sp<GameState> state, bool forceLimits)
 	// Load resources
 	form = ui().getForm("transactionscreen");
 	formItemAgent = form->findControlTyped<Form>("AGENT_ITEM_VIEW");
-	formItemAgent->setVisible(false);
-
 	formItemVehicle = form->findControlTyped<Form>("VEHICLE_ITEM_VIEW");
-	formItemVehicle->setVisible(false);
-
 	formAgentStats = form->findControlTyped<Form>("AGENT_STATS_VIEW");
-	formAgentStats->setVisible(false);
-
 	formPersonelStats = form->findControlTyped<Form>("PERSONEL_STATS_VIEW");
+
+	formItemAgent->setVisible(false);
+	formItemVehicle->setVisible(false);
+	formAgentStats->setVisible(false);
 	formPersonelStats->setVisible(false);
 
 	// Assign event handlers
@@ -561,12 +559,26 @@ void TransactionScreen::updateFormValues(bool queueHighlightUpdate)
 
 	if (queueHighlightUpdate)
 	{
-		framesUntilHighlightUpdate = 30;
+		framesUntilHighlightUpdate = HIGHLIGHT_UPDATE_DELAY;
 	}
 }
 
 void TransactionScreen::updateBaseHighlight()
 {
+	if (viewHighlightPrevious != viewHighlight)
+	{
+		int i = 0;
+		for (auto &b : state->player_bases)
+		{
+			auto viewName = format("BUTTON_BASE_%d", ++i);
+			auto view = form->findControlTyped<GraphicButton>(viewName);
+			auto viewImage = drawMiniBase(b.second, viewHighlight, viewFacility);
+			view->setImage(viewImage);
+			view->setDepressedImage(viewImage);
+		}
+		viewHighlightPrevious = viewHighlight;
+	}
+
 	switch (viewHighlight)
 	{
 		case BaseGraphics::FacilityHighlight::Quarters:
@@ -648,6 +660,11 @@ void TransactionScreen::fillBaseBar(bool left, int percent)
 
 void TransactionScreen::displayItem(sp<TransactionControl> control)
 {
+	formItemAgent->setVisible(false);
+	formItemVehicle->setVisible(false);
+	formAgentStats->setVisible(false);
+	formPersonelStats->setVisible(false);
+
 	switch (control->itemType)
 	{
 		case TransactionControl::Type::AgentEquipmentBio:
@@ -655,9 +672,6 @@ void TransactionScreen::displayItem(sp<TransactionControl> control)
 		{
 			AEquipmentSheet(formItemAgent).display(state->agent_equipment[control->itemId]);
 			formItemAgent->setVisible(true);
-			formItemVehicle->setVisible(false);
-			formAgentStats->setVisible(false);
-			formPersonelStats->setVisible(false);
 			break;
 		}
 		case TransactionControl::Type::BioChemist:
@@ -665,46 +679,35 @@ void TransactionScreen::displayItem(sp<TransactionControl> control)
 		case TransactionControl::Type::Physicist:
 		{
 			RecruitScreen::personelSheet(state->agents[control->itemId], formPersonelStats);
-			formItemAgent->setVisible(false);
-			formItemVehicle->setVisible(false);
-			formAgentStats->setVisible(false);
 			formPersonelStats->setVisible(true);
 			break;
 		}
 		case TransactionControl::Type::Soldier:
 		{
 			AgentSheet(formAgentStats).display(state->agents[control->itemId], bigUnitRanks, false);
-			formItemAgent->setVisible(false);
-			formItemVehicle->setVisible(false);
 			formAgentStats->setVisible(true);
-			formPersonelStats->setVisible(false);
+			break;
+		}
+		case TransactionControl::Type::VehicleType:
+		{
+			VehicleSheet(formItemVehicle).display(state->vehicle_types[control->itemId]);
+			formItemVehicle->setVisible(true);
+			break;
+		}
+		case TransactionControl::Type::Vehicle:
+		{
+			VehicleSheet(formItemVehicle).display(state->vehicles[control->itemId]);
+			formItemVehicle->setVisible(true);
+			break;
+		}
+		case TransactionControl::Type::VehicleEquipment:
+		{
+			VehicleSheet(formItemVehicle).display(state->vehicle_equipment[control->itemId]);
+			formItemVehicle->setVisible(true);
 			break;
 		}
 		default:
-		{
-			formItemVehicle->setVisible(true);
-			formItemAgent->setVisible(false);
-			formAgentStats->setVisible(false);
-			formPersonelStats->setVisible(false);
-
-			if (control->itemType == TransactionControl::Type::VehicleType)
-			{
-				VehicleSheet(formItemVehicle).display(state->vehicle_types[control->itemId]);
-			}
-			else if (control->itemType == TransactionControl::Type::Vehicle)
-			{
-				VehicleSheet(formItemVehicle).display(state->vehicles[control->itemId]);
-			}
-			else if (control->itemType == TransactionControl::Type::VehicleEquipment)
-			{
-				VehicleSheet(formItemVehicle).display(state->vehicle_equipment[control->itemId]);
-			}
-			else // vehicle ammo & fuel don't display anything
-			{
-				formItemVehicle->setVisible(false);
-			}
 			break;
-		}
 	}
 }
 

@@ -10,10 +10,6 @@
 #include <list>
 #include <vector>
 
-// Don't update highlight right away so that we don't slow too much
-// Instead do it after user doesn't act for half a second
-#define HIGHLIGHT_UPDATE_DELAY 30
-
 namespace OpenApoc
 {
 
@@ -34,7 +30,11 @@ class VAmmoType;
 class AEquipmentType;
 
 constexpr int MAX_BASES = 8;
+// Index of economy in a stock data vector
 constexpr int ECONOMY_IDX = 8;
+// Don't update highlight right away so that we don't slow too much
+// Instead do it after user doesn't act for half a second
+constexpr int HIGHLIGHT_UPDATE_DELAY = 30;
 
 class TransactionScreen : public BaseStage
 {
@@ -236,6 +236,8 @@ class TransactionScreen : public BaseStage
 	void changeBase(sp<Base> newBase) override;
 
 	int framesUntilHighlightUpdate = 0;
+	// Keeps previous highlight. That allows not to redraw the mini-view buttons by every click.
+	BaseGraphics::FacilityHighlight viewHighlightPrevious = BaseGraphics::FacilityHighlight::None;
 
 	sp<Form> formItemAgent;
 	sp<Form> formItemVehicle;
