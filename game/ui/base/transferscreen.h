@@ -14,17 +14,17 @@ class TransferScreen : public TransactionScreen
 	sp<Label> textViewSecondBase;
 	sp<Label> textViewSecondBaseStatic;
 
-	//
+	// Change the base on the right side.
 	void changeSecondBase(sp<Base> newBase);
-	//
+	// Get the right side index.
 	int getRightIndex() override;
-	//
+	// Update highlight of facilities on the mini-view.
 	void updateBaseHighlight() override;
-	//
+	// Checking conditions and limitations before the execution of orders.
 	void closeScreen() override;
-	// Execute orders given in the screen
+	// Execute orders given in the screen.
 	void executeOrders() override;
-	//
+	// Init mini-view of the second base.
 	void initViewSecondBase() override;
 
   public:

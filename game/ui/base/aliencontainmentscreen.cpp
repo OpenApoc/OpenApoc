@@ -72,14 +72,16 @@ void AlienContainmentScreen::closeScreen()
 			{
 				continue;
 			}
-			for (int i = 0; i < MAX_BASES; i++)
+			int i = 0;
+			for (auto &b : state->player_bases)
 			{
 				int bioDelta = c->getBioDelta(i);
-				if (bioDelta != 0)
+				if (bioDelta)
 				{
 					vecBioDelta[i] += bioDelta;
 					vecChanged[i] = true;
 				}
+				i++;
 			}
 			for (auto &l : c->getLinked())
 			{
@@ -88,18 +90,17 @@ void AlienContainmentScreen::closeScreen()
 		}
 
 		// Check every base, find first bad one
-		int bindex = 0;
+		int i = 0;
 		StateRef<Base> bad_base;
 		for (auto &b : state->player_bases)
 		{
-			if ((vecChanged[bindex] || forceLimits) &&
-			    b.second->getUsage(*state, FacilityType::Capacity::Aliens, vecBioDelta[bindex]) >
-			        100)
+			if ((vecChanged[i] || forceLimits) &&
+			    b.second->getUsage(*state, FacilityType::Capacity::Aliens, vecBioDelta[i]) > 100)
 			{
 				bad_base = b.second->building->base;
 				break;
 			}
-			bindex++;
+			i++;
 		}
 
 		// Found bad base
@@ -141,15 +142,15 @@ void AlienContainmentScreen::executeOrders()
 	// AlienContainment: Simply apply
 	for (auto &c : transactionControls[Type::Aliens])
 	{
-		int bindex = 0;
+		int i = 0;
 		for (auto &b : state->player_bases)
 		{
-			if (c->tradeState.shipmentsFrom(bindex) > 0)
+			if (c->tradeState.shipmentsFrom(i) > 0)
 			{
 				b.second->inventoryBioEquipment[c->itemId] =
-				    c->tradeState.getStock(bindex, rightIdx, true);
+				    c->tradeState.getStock(i, rightIdx, true);
 			}
-			bindex++;
+			i++;
 		}
 	}
 }

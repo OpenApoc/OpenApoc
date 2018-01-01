@@ -27,8 +27,10 @@
 #include "game/state/rules/city/vehicletype.h"
 #include "game/state/rules/city/vequipmenttype.h"
 #include "game/state/shared/organisation.h"
+#include "game/ui/base/recruitscreen.h"
 #include "game/ui/components/controlgenerator.h"
 #include "game/ui/general/aequipmentsheet.h"
+#include "game/ui/general/agentsheet.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/vehiclesheet.h"
 #include "library/strings_format.h"
@@ -51,7 +53,7 @@ sp<BitmapFont> TransactionScreen::TransactionControl::labelFont;
 bool TransactionScreen::TransactionControl::resourcesInitialised = false;
 
 TransactionScreen::TransactionScreen(sp<GameState> state, bool forceLimits)
-    : BaseStage(state), forceLimits(forceLimits)
+    : BaseStage(state), forceLimits(forceLimits), bigUnitRanks(RecruitScreen::getBigUnitRanks())
 {
 	// Load resources
 	form = ui().getForm("transactionscreen");
@@ -60,6 +62,12 @@ TransactionScreen::TransactionScreen(sp<GameState> state, bool forceLimits)
 
 	formItemVehicle = form->findControlTyped<Form>("VEHICLE_ITEM_VIEW");
 	formItemVehicle->setVisible(false);
+
+	formAgentStats = form->findControlTyped<Form>("AGENT_STATS_VIEW");
+	formAgentStats->setVisible(false);
+
+	formPersonelStats = form->findControlTyped<Form>("PERSONEL_STATS_VIEW");
+	formPersonelStats->setVisible(false);
 
 	// Assign event handlers
 	onScrollChange = [this](FormsEvent *) { this->updateFormValues(); };
@@ -99,6 +107,11 @@ void TransactionScreen::setDisplayType(Type type)
 {
 	this->type = type;
 
+	formItemAgent->setVisible(false);
+	formItemVehicle->setVisible(false);
+	formAgentStats->setVisible(false);
+	formPersonelStats->setVisible(false);
+
 	form->findControlTyped<ScrollBar>("LIST_SCROLL")->setValue(0);
 	auto list = form->findControlTyped<ListBox>("LIST");
 	list->clear();
@@ -110,10 +123,16 @@ void TransactionScreen::setDisplayType(Type type)
 		switch (type)
 		{
 			case Type::Soldier:
-			case Type::Bio:
-			case Type::Physist:
+				populateControlsPeople(AgentType::Role::Soldier);
+				break;
+			case Type::BioChemist:
+				populateControlsPeople(AgentType::Role::BioChemist);
+				break;
+			case Type::Physicist:
+				populateControlsPeople(AgentType::Role::Physicist);
+				break;
 			case Type::Engineer:
-				LogWarning("Implement agent exchange controls");
+				populateControlsPeople(AgentType::Role::Engineer);
 				break;
 			case Type::Vehicle:
 				populateControlsVehicle();
@@ -134,8 +153,8 @@ void TransactionScreen::setDisplayType(Type type)
 	switch (type)
 	{
 		case Type::Soldier:
-		case Type::Bio:
-		case Type::Physist:
+		case Type::BioChemist:
+		case Type::Physicist:
 		case Type::Engineer:
 			viewHighlight = BaseGraphics::FacilityHighlight::Quarters;
 			break;
@@ -179,10 +198,32 @@ int TransactionScreen::getLeftIndex()
 
 int TransactionScreen::getRightIndex() { return ECONOMY_IDX; }
 
+void TransactionScreen::populateControlsPeople(AgentType::Role role)
+{
+	int leftIndex = getLeftIndex();
+	int rightIndex = getRightIndex();
+
+	for (auto &a : state->agents)
+	{
+		if (a.second->owner == state->getPlayer() && a.second->type->role == role)
+		{
+			auto control = TransactionControl::createControl(
+			    *state, StateRef<Agent>{state.get(), a.first}, leftIndex, rightIndex);
+			if (control)
+			{
+				control->addCallback(FormEventType::ScrollBarChange, onScrollChange);
+				control->addCallback(FormEventType::MouseMove, onHover);
+				transactionControls[type].push_back(control);
+			}
+		}
+	}
+}
+
 void TransactionScreen::populateControlsVehicle()
 {
 	int leftIndex = getLeftIndex();
 	int rightIndex = getRightIndex();
+
 	for (auto &v : state->vehicle_types)
 	{
 		if (state->economy.find(v.first) != state->economy.end())
@@ -484,7 +525,7 @@ void TransactionScreen::updateFormValues(bool queueHighlightUpdate)
 	int leftIndex = getLeftIndex();
 	int rightIndex = getRightIndex();
 
-	// FIXME: UPDATE LQ DELTA
+	// Crew
 	lqDelta = 0;
 	lq2Delta = 0;
 
@@ -504,6 +545,8 @@ void TransactionScreen::updateFormValues(bool queueHighlightUpdate)
 			{
 				continue;
 			}
+			lqDelta += c->getCrewDelta(leftIndex);
+			lq2Delta += c->getCrewDelta(rightIndex);
 			cargoDelta += c->getCargoDelta(leftIndex);
 			bioDelta += c->getBioDelta(leftIndex);
 			cargo2Delta += c->getCargoDelta(rightIndex);
@@ -605,34 +648,62 @@ void TransactionScreen::fillBaseBar(bool left, int percent)
 
 void TransactionScreen::displayItem(sp<TransactionControl> control)
 {
-	if (control->itemType == TransactionControl::Type::AgentEquipmentBio ||
-	    control->itemType == TransactionControl::Type::AgentEquipmentCargo)
+	switch (control->itemType)
 	{
-		formItemAgent->setVisible(true);
-		formItemVehicle->setVisible(false);
-
-		AEquipmentSheet(formItemAgent).display(state->agent_equipment[control->itemId]);
-	}
-	else
-	{
-		formItemVehicle->setVisible(true);
-		formItemAgent->setVisible(false);
-
-		if (control->itemType == TransactionControl::Type::VehicleType)
+		case TransactionControl::Type::AgentEquipmentBio:
+		case TransactionControl::Type::AgentEquipmentCargo:
 		{
-			VehicleSheet(formItemVehicle).display(state->vehicle_types[control->itemId]);
-		}
-		else if (control->itemType == TransactionControl::Type::Vehicle)
-		{
-			VehicleSheet(formItemVehicle).display(state->vehicles[control->itemId]);
-		}
-		else if (control->itemType == TransactionControl::Type::VehicleEquipment)
-		{
-			VehicleSheet(formItemVehicle).display(state->vehicle_equipment[control->itemId]);
-		}
-		else // vehicle ammo & fuel don't display anything
-		{
+			AEquipmentSheet(formItemAgent).display(state->agent_equipment[control->itemId]);
+			formItemAgent->setVisible(true);
 			formItemVehicle->setVisible(false);
+			formAgentStats->setVisible(false);
+			formPersonelStats->setVisible(false);
+			break;
+		}
+		case TransactionControl::Type::BioChemist:
+		case TransactionControl::Type::Engineer:
+		case TransactionControl::Type::Physicist:
+		{
+			RecruitScreen::personelSheet(state->agents[control->itemId], formPersonelStats);
+			formItemAgent->setVisible(false);
+			formItemVehicle->setVisible(false);
+			formAgentStats->setVisible(false);
+			formPersonelStats->setVisible(true);
+			break;
+		}
+		case TransactionControl::Type::Soldier:
+		{
+			AgentSheet(formAgentStats).display(state->agents[control->itemId], bigUnitRanks, false);
+			formItemAgent->setVisible(false);
+			formItemVehicle->setVisible(false);
+			formAgentStats->setVisible(true);
+			formPersonelStats->setVisible(false);
+			break;
+		}
+		default:
+		{
+			formItemVehicle->setVisible(true);
+			formItemAgent->setVisible(false);
+			formAgentStats->setVisible(false);
+			formPersonelStats->setVisible(false);
+
+			if (control->itemType == TransactionControl::Type::VehicleType)
+			{
+				VehicleSheet(formItemVehicle).display(state->vehicle_types[control->itemId]);
+			}
+			else if (control->itemType == TransactionControl::Type::Vehicle)
+			{
+				VehicleSheet(formItemVehicle).display(state->vehicles[control->itemId]);
+			}
+			else if (control->itemType == TransactionControl::Type::VehicleEquipment)
+			{
+				VehicleSheet(formItemVehicle).display(state->vehicle_equipment[control->itemId]);
+			}
+			else // vehicle ammo & fuel don't display anything
+			{
+				formItemVehicle->setVisible(false);
+			}
+			break;
 		}
 	}
 }
@@ -801,7 +872,7 @@ void TransactionScreen::TransactionControl::initResources()
 
 void TransactionScreen::TransactionControl::setScrollbarValues()
 {
-	if (indexLeft == indexRight)
+	if (tradeState.getLeftIndex() == tradeState.getRightIndex())
 	{
 		scrollBar->setMinimum(0);
 		scrollBar->setMaximum(0);
@@ -818,14 +889,12 @@ void TransactionScreen::TransactionControl::setScrollbarValues()
 
 void TransactionScreen::TransactionControl::setIndexLeft(int index)
 {
-	indexLeft = index;
 	tradeState.setLeftIndex(index);
 	setScrollbarValues();
 }
 
 void TransactionScreen::TransactionControl::setIndexRight(int index)
 {
-	indexRight = index;
 	tradeState.setRightIndex(index);
 	setScrollbarValues();
 }
@@ -837,8 +906,10 @@ void TransactionScreen::TransactionControl::updateValues()
 		if (manufacturerHostile || manufacturerUnavailable)
 		{
 			int defaultRightStock = tradeState.getRightStock();
-			if ((indexLeft == ECONOMY_IDX && scrollBar->getValue() > defaultRightStock) ||
-			    (indexRight == ECONOMY_IDX && scrollBar->getValue() < defaultRightStock))
+			if ((tradeState.getLeftIndex() == ECONOMY_IDX &&
+			     scrollBar->getValue() > defaultRightStock) ||
+			    (tradeState.getRightIndex() == ECONOMY_IDX &&
+			     scrollBar->getValue() < defaultRightStock))
 			{
 				tradeState.cancelOrder();
 				scrollBar->setValue(tradeState.getBalance());
@@ -879,8 +950,8 @@ void TransactionScreen::TransactionControl::updateValues()
 	stockRight->setText(format("%d", tradeState.getRightStock(true)));
 	deltaLeft->setText(format("%s%d", curDeltaLeft > 0 ? "+" : "", curDeltaLeft));
 	deltaRight->setText(format("%s%d", curDeltaRight > 0 ? "+" : "", curDeltaRight));
-	deltaLeft->setVisible(indexLeft != ECONOMY_IDX && curDeltaLeft != 0);
-	deltaRight->setVisible(indexRight != ECONOMY_IDX && curDeltaRight != 0);
+	deltaLeft->setVisible(tradeState.getLeftIndex() != ECONOMY_IDX && curDeltaLeft != 0);
+	deltaRight->setVisible(tradeState.getRightIndex() != ECONOMY_IDX && curDeltaRight != 0);
 	setDirty();
 }
 
@@ -899,6 +970,69 @@ const std::list<sp<TransactionScreen::TransactionControl>> &
 TransactionScreen::TransactionControl::getLinked() const
 {
 	return linked;
+}
+
+sp<TransactionScreen::TransactionControl>
+TransactionScreen::TransactionControl::createControl(GameState &state, StateRef<Agent> agent,
+                                                     int indexLeft, int indexRight)
+{
+	// The agent or agent's vehicle should be on a base
+	auto currentBuilding =
+	    agent->currentVehicle ? agent->currentVehicle->currentBuilding : agent->currentBuilding;
+	if (!currentBuilding || !currentBuilding->base)
+	{
+		return nullptr;
+	}
+
+	std::vector<int> initialStock;
+	// Fill out stock
+	{
+		initialStock.resize(9);
+		// Stock of agents always zero on all bases except where it belongs
+		int baseIndex = 0;
+		for (auto &b : state.player_bases)
+		{
+			if (b.first == agent->homeBuilding->base.id)
+			{
+				initialStock[baseIndex] = 1;
+				break;
+			}
+			baseIndex++;
+		}
+	}
+
+	Type type;
+	switch (agent->type->role)
+	{
+		case AgentType::Role::BioChemist:
+			type = Type::BioChemist;
+			break;
+		case AgentType::Role::Engineer:
+			type = Type::Engineer;
+			break;
+		case AgentType::Role::Physicist:
+			type = Type::Physicist;
+			break;
+		case AgentType::Role::Soldier:
+			type = Type::Soldier;
+			break;
+		default:
+			LogError("Unknown type of agent %s.", agent.id);
+	}
+
+	int price = 0;
+	int storeSpace = 0;
+	bool isAmmo = false;
+	bool isBio = false;
+	bool isPerson = true;
+	bool unknownArtifact = false;
+	auto manufacturer = agent->owner;
+	bool manufacturerHostile = false;
+	bool manufacturerUnavailable = false;
+
+	return createControl(agent.id, type, agent->name, manufacturer, isAmmo, isBio, isPerson,
+	                     unknownArtifact, manufacturerHostile, manufacturerUnavailable, price,
+	                     storeSpace, initialStock, indexLeft, indexRight);
 }
 
 sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl::createControl(
@@ -954,9 +1088,11 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 			return nullptr;
 		}
 	}
-	bool isAmmo = agentEquipmentType->type == AEquipmentType::Type::Ammo;
-	auto name = agentEquipmentType->name;
+
 	auto manufacturer = agentEquipmentType->manufacturer;
+	bool isAmmo = agentEquipmentType->type == AEquipmentType::Type::Ammo;
+	bool isPerson = false;
+	bool unknownArtifact = false; // TODO: fix artifact
 	auto canBuy = isBio ? Organisation::PurchaseResult::OK
 	                    : agentEquipmentType->manufacturer->canPurchaseFrom(
 	                          state, state.current_base->building, false);
@@ -966,15 +1102,14 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 
 	return createControl(agentEquipmentType.id,
 	                     isBio ? Type::AgentEquipmentBio : Type::AgentEquipmentCargo,
-	                     agentEquipmentType->name, manufacturer, isAmmo, isBio, manufacturerHostile,
-	                     manufacturerUnavailable, price, storeSpace, initialStock, indexLeft,
-	                     indexRight, false); // TODO: fix artifact
+	                     agentEquipmentType->name, manufacturer, isAmmo, isBio, isPerson,
+	                     unknownArtifact, manufacturerHostile, manufacturerUnavailable, price,
+	                     storeSpace, initialStock, indexLeft, indexRight);
 }
 
 sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl::createControl(
     GameState &state, StateRef<VEquipmentType> vehicleEquipmentType, int indexLeft, int indexRight)
 {
-	bool isBio = false;
 	int price = 0;
 	int storeSpace = vehicleEquipmentType->store_space;
 	std::vector<int> initialStock;
@@ -1010,9 +1145,11 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 		}
 	}
 
-	bool isAmmo = false;
-	auto name = vehicleEquipmentType->name;
 	auto manufacturer = vehicleEquipmentType->manufacturer;
+	bool isAmmo = false;
+	bool isBio = false;
+	bool isPerson = false;
+	bool unknownArtifact = false; // TODO: fix artifact
 	// Expecting all bases to be in one city
 	auto canBuy = vehicleEquipmentType->manufacturer->canPurchaseFrom(
 	    state, state.current_base->building, false);
@@ -1021,15 +1158,14 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	                               canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
 
 	return createControl(vehicleEquipmentType.id, Type::VehicleEquipment,
-	                     vehicleEquipmentType->name, manufacturer, isAmmo, isBio,
-	                     manufacturerHostile, manufacturerUnavailable, price, storeSpace,
-	                     initialStock, indexLeft, indexRight, false); // TODO: fix artifact
+	                     vehicleEquipmentType->name, manufacturer, isAmmo, isBio, isPerson,
+	                     unknownArtifact, manufacturerHostile, manufacturerUnavailable, price,
+	                     storeSpace, initialStock, indexLeft, indexRight);
 }
 
 sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl::createControl(
     GameState &state, StateRef<VAmmoType> vehicleAmmoType, int indexLeft, int indexRight)
 {
-	bool isBio = false;
 	int price = 0;
 	int storeSpace = vehicleAmmoType->store_space;
 	std::vector<int> initialStock;
@@ -1065,9 +1201,11 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 		}
 	}
 
-	bool isAmmo = true;
-	auto name = vehicleAmmoType->name;
 	auto manufacturer = vehicleAmmoType->manufacturer;
+	bool isAmmo = true;
+	bool isBio = false;
+	bool isPerson = false;
+	bool unknownArtifact = false; // TODO: fix artifact
 	// Expecting all bases to be in one city
 	auto canBuy =
 	    vehicleAmmoType->manufacturer->canPurchaseFrom(state, state.current_base->building, false);
@@ -1076,9 +1214,9 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	                               canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
 
 	return createControl(vehicleAmmoType.id, Type::VehicleAmmo, vehicleAmmoType->name, manufacturer,
-	                     isAmmo, isBio, manufacturerHostile, manufacturerUnavailable, price,
-	                     storeSpace, initialStock, indexLeft, indexRight,
-	                     false); // TODO: fix artifact
+	                     isAmmo, isBio, isPerson, unknownArtifact, manufacturerHostile,
+	                     manufacturerUnavailable, price, storeSpace, initialStock, indexLeft,
+	                     indexRight);
 }
 
 sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl::createControl(
@@ -1089,7 +1227,6 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	{
 		return nullptr;
 	}
-	bool isBio = false;
 	int price = 0;
 	int storeSpace = 0;
 	std::vector<int> initialStock;
@@ -1115,9 +1252,11 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 		}
 	}
 
-	bool isAmmo = false;
-	auto name = vehicleType->name;
 	auto manufacturer = vehicleType->manufacturer;
+	bool isAmmo = false;
+	bool isBio = false;
+	bool isPerson = false;
+	bool unknownArtifact = false;
 	// Expecting all bases to be in one city
 	auto canBuy =
 	    vehicleType->manufacturer->canPurchaseFrom(state, state.current_base->building, true);
@@ -1126,20 +1265,20 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	                               canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
 
 	return createControl(vehicleType.id, Type::VehicleType, vehicleType->name, manufacturer, isAmmo,
-	                     isBio, manufacturerHostile, manufacturerUnavailable, price, storeSpace,
-	                     initialStock, indexLeft, indexRight, false);
+	                     isBio, isPerson, unknownArtifact, manufacturerHostile,
+	                     manufacturerUnavailable, price, storeSpace, initialStock, indexLeft,
+	                     indexRight);
 }
 
 sp<TransactionScreen::TransactionControl>
 TransactionScreen::TransactionControl::createControl(GameState &state, StateRef<Vehicle> vehicle,
                                                      int indexLeft, int indexRight)
 {
-	// Only parked vehicles can be sold
-	if (!vehicle->currentBuilding)
+	// Only parked on base vehicles can be sold
+	if (!vehicle->currentBuilding || !vehicle->currentBuilding->base)
 	{
 		return nullptr;
 	}
-	bool isBio = false;
 	int price = 0;
 	int storeSpace = 0;
 	std::vector<int> initialStock;
@@ -1200,40 +1339,39 @@ TransactionScreen::TransactionControl::createControl(GameState &state, StateRef<
 	}
 	LogWarning("Vehicle type %s final price %d", vehicle->type.id, price);
 
-	bool isAmmo = false;
-	auto name = vehicle->name;
 	auto manufacturer = vehicle->type->manufacturer;
+	bool isAmmo = false;
+	bool isBio = false;
+	bool isPerson = false;
+	bool unknownArtifact = false;
 	bool manufacturerHostile = false;
 	bool manufacturerUnavailable = false;
 
 	return createControl(vehicle.id, Type::Vehicle, vehicle->name, manufacturer, isAmmo, isBio,
-	                     manufacturerHostile, manufacturerUnavailable, price, storeSpace,
-	                     initialStock, indexLeft, indexRight, false);
+	                     isPerson, unknownArtifact, manufacturerHostile, manufacturerUnavailable,
+	                     price, storeSpace, initialStock, indexLeft, indexRight);
 }
 
 sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl::createControl(
     const UString &id, Type type, const UString &name, StateRef<Organisation> manufacturer,
-    bool isAmmo, bool isBio, bool manufacturerHostile, bool manufacturerUnavailable, int price,
-    int storeSpace, std::vector<int> &initialStock, int indexLeft, int indexRight,
-    bool unknownArtifact)
+    bool isAmmo, bool isBio, bool isPerson, bool unknownArtifact, bool manufacturerHostile,
+    bool manufacturerUnavailable, int price, int storeSpace, std::vector<int> &initialStock,
+    int indexLeft, int indexRight)
 {
 	auto control = mksp<TransactionControl>();
 	control->itemId = id;
 	control->itemType = type;
+	control->manufacturer = manufacturer;
+	control->isAmmo = isAmmo;
+	control->isBio = isBio;
+	control->isPerson = isPerson;
+	control->unknownArtifact = unknownArtifact;
+	control->manufacturerHostile = manufacturerHostile;
+	control->manufacturerUnavailable = manufacturerUnavailable;
 	control->storeSpace = storeSpace;
-	control->initialStock = initialStock;
-	control->currentStock = initialStock;
-	control->indexLeft = indexLeft;
-	control->indexRight = indexRight;
 	control->tradeState.setInitialStock(std::forward<std::vector<int>>(initialStock));
 	control->tradeState.setLeftIndex(indexLeft);
 	control->tradeState.setRightIndex(indexRight);
-	control->isAmmo = isAmmo;
-	control->isBio = isBio;
-	control->manufacturerHostile = manufacturerHostile;
-	control->manufacturerUnavailable = manufacturerUnavailable;
-	control->unknownArtifact = unknownArtifact;
-	control->manufacturer = manufacturer;
 	// If we create a non-purchase control we never become one so clear the values
 	if (isBio || unknownArtifact || (indexLeft != ECONOMY_IDX && indexRight != ECONOMY_IDX))
 	{
@@ -1346,9 +1484,14 @@ void TransactionScreen::TransactionControl::setupCallbacks()
 	scrollBar->addCallback(FormEventType::ScrollBarChange, onScrollChange);
 }
 
+int TransactionScreen::TransactionControl::getCrewDelta(int index) const
+{
+	return isPerson ? -tradeState.shipmentsTotal(index) : 0;
+}
+
 int TransactionScreen::TransactionControl::getCargoDelta(int index) const
 {
-	return isBio ? 0 : -tradeState.shipmentsTotal(index) * storeSpace;
+	return !isBio && !isPerson ? -tradeState.shipmentsTotal(index) * storeSpace : 0;
 }
 
 int TransactionScreen::TransactionControl::getBioDelta(int index) const
@@ -1391,11 +1534,12 @@ void TransactionScreen::TransactionControl::onRender()
 		sp<Image> icon;
 		if (isBio)
 		{
-			icon = indexLeft == ECONOMY_IDX ? alienContainedKill : alienContainedDetain;
+			icon = tradeState.getLeftIndex() == ECONOMY_IDX ? alienContainedKill
+			                                                : alienContainedDetain;
 		}
 		else
 		{
-			icon = indexLeft == ECONOMY_IDX ? purchaseBoxIcon : purchaseXComIcon;
+			icon = tradeState.getLeftIndex() == ECONOMY_IDX ? purchaseBoxIcon : purchaseXComIcon;
 		}
 		auto iconPos = iconLeftPos + (iconSize - (Vec2<int>)icon->size) / 2;
 		fw().renderer->draw(icon, iconPos);
@@ -1405,11 +1549,12 @@ void TransactionScreen::TransactionControl::onRender()
 		sp<Image> icon;
 		if (isBio)
 		{
-			icon = indexRight == ECONOMY_IDX ? alienContainedKill : alienContainedDetain;
+			icon = tradeState.getRightIndex() == ECONOMY_IDX ? alienContainedKill
+			                                                 : alienContainedDetain;
 		}
 		else
 		{
-			icon = indexRight == ECONOMY_IDX ? purchaseBoxIcon : purchaseXComIcon;
+			icon = tradeState.getRightIndex() == ECONOMY_IDX ? purchaseBoxIcon : purchaseXComIcon;
 		}
 		auto iconPos = iconRightPos + (iconSize - (Vec2<int>)icon->size) / 2;
 		fw().renderer->draw(icon, iconPos);
@@ -1422,7 +1567,7 @@ void TransactionScreen::TransactionControl::postRender()
 
 	// Draw shade if inactive
 	static Vec2<int> shadePos = {0, 0};
-	if (indexLeft == indexRight ||
+	if (tradeState.getLeftIndex() == tradeState.getRightIndex() ||
 	    (tradeState.getLeftStock() == 0 && tradeState.getRightStock() == 0))
 	{
 		fw().renderer->draw(transactionShade, shadePos);

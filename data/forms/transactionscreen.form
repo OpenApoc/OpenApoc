@@ -288,11 +288,18 @@
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:41:xcom3/ufodata/base.pcx</imagechecked>
 	  </radiobutton>
+	  
       <subform id="AGENT_ITEM_VIEW" src="sheet_agent_item">
 		<position x="17" y="183"/>
       </subform>
       <subform id="VEHICLE_ITEM_VIEW" src="sheet_vehicle_item">
 		<position x="17" y="183"/>
+      </subform>
+      <subform id="AGENT_STATS_VIEW" src="sheet_agent_stats">
+        <position x="17" y="183"/>
+      </subform>
+      <subform id="PERSONEL_STATS_VIEW" src="sheet_personel_stats">
+        <position x="17" y="183"/>
       </subform>
 
       <graphicbutton id="BUTTON_OK">

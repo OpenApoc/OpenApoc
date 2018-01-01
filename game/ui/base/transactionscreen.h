@@ -2,6 +2,7 @@
 
 #include "forms/control.h"
 #include "framework/logger.h"
+#include "game/state/rules/agenttype.h"
 #include "game/state/stateobject.h"
 #include "game/ui/base/basestage.h"
 #include "library/sp.h"
@@ -41,8 +42,8 @@ class TransactionScreen : public BaseStage
 	enum class Type
 	{
 		Soldier,
-		Bio,
-		Physist,
+		BioChemist,
+		Physicist,
 		Engineer,
 		Vehicle,
 		AgentEquipment,
@@ -69,8 +70,12 @@ class TransactionScreen : public BaseStage
 		void setInitialStock(std::vector<int> &&stock) { initialStock = std::move(stock); }
 		// Setter for the left side index.
 		void setLeftIndex(int leftIdx) { this->leftIdx = leftIdx; }
+		// Getter for the left side index.
+		int getLeftIndex() const { return leftIdx; }
 		// Setter for the right side index.
 		void setRightIndex(int rightIdx) { this->rightIdx = rightIdx; }
+		// Getter for the right side index.
+		int getRightIndex() const { return rightIdx; }
 		// Get the sum of shipment orders from the base (economy).
 		// from, to - 0-7 for bases, 8 for economy
 		int shipmentsFrom(const int from, const int exclude = -1) const;
@@ -105,6 +110,10 @@ class TransactionScreen : public BaseStage
 	  public:
 		enum class Type
 		{
+			Soldier,
+			BioChemist,
+			Physicist,
+			Engineer,
 			VehicleType,
 			Vehicle,
 			AgentEquipmentBio,
@@ -152,16 +161,9 @@ class TransactionScreen : public BaseStage
 		int price;
 		// Item store size
 		int storeSpace;
-		// Initial stock
-		// 0-7 for bases, 8 for economy
-		std::vector<int> initialStock; // TODO: remove
-		// Current stock
-		// 0-7 for bases, 8 for economy
-		std::vector<int> currentStock; // TODO: remove
-		int indexLeft = 0;             // TODO: remove?
-		int indexRight = 0;            // TODO: remove?
 		bool isAmmo = false;
 		bool isBio = false;
+		bool isPerson = false;
 		bool manufacturerHostile = false;
 		bool manufacturerUnavailable = false;
 		bool unknownArtifact = false;
@@ -179,6 +181,9 @@ class TransactionScreen : public BaseStage
 		const std::list<sp<TransactionControl>> &getLinked() const; // TODO: remove
 
 		// Transferring/Buying/selling agent equipment and ammo
+		// Transferring agents
+		static sp<TransactionControl> createControl(GameState &state, StateRef<Agent> agent,
+		                                            int indexLeft, int indexRight);
 		// Transferring/Sacking alien containment
 		static sp<TransactionControl> createControl(GameState &state,
 		                                            StateRef<AEquipmentType> agentEquipmentType,
@@ -201,13 +206,14 @@ class TransactionScreen : public BaseStage
 
 		static sp<TransactionControl>
 		createControl(const UString &id, Type type, const UString &name,
-		              StateRef<Organisation> manufacturer, bool isAmmo, bool isBio,
-		              bool manufacturerHostile, bool manufacturerUnavailable, int price,
-		              int storeSpace, std::vector<int> &initialStock, int indexLeft, int indexRight,
-		              bool unknownArtifact);
+		              StateRef<Organisation> manufacturer, bool isAmmo, bool isBio, bool isPerson,
+		              bool unknownArtifact, bool manufacturerHostile, bool manufacturerUnavailable,
+		              int price, int storeSpace, std::vector<int> &initialStock, int indexLeft,
+		              int indexRigh);
 
 		void setupCallbacks();
 
+		int getCrewDelta(int index) const;
 		int getCargoDelta(int index) const;
 		int getBioDelta(int index) const;
 		int getPriceDelta() const;
@@ -233,8 +239,12 @@ class TransactionScreen : public BaseStage
 
 	sp<Form> formItemAgent;
 	sp<Form> formItemVehicle;
+	sp<Form> formAgentStats;
+	sp<Form> formPersonelStats;
 
 	sp<Label> textViewBaseStatic;
+
+	std::vector<sp<Image>> bigUnitRanks; // TODO: move to transferscreen
 
 	Type type;
 	// Wether player must conform to limits even on bases which did not change
@@ -259,6 +269,7 @@ class TransactionScreen : public BaseStage
 	// Get the right side index.
 	virtual int getRightIndex();
 
+	void populateControlsPeople(AgentType::Role role);
 	void populateControlsVehicle();
 	void populateControlsAgentEquipment();
 	void populateControlsVehicleEquipment();
@@ -266,6 +277,7 @@ class TransactionScreen : public BaseStage
 
 	// Update statistics on TransactionControls.
 	virtual void updateFormValues(bool queueHighlightUpdate = true);
+	// Update highlight of facilities on the mini-view.
 	virtual void updateBaseHighlight();
 	void fillBaseBar(bool left, int percent);
 	void displayItem(sp<TransactionControl> control);

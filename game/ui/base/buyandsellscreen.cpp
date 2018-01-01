@@ -118,6 +118,7 @@ void BuyAndSellScreen::closeScreen()
 	}
 
 	// Step 02: Check accomodation of different sorts
+	std::set<sp<TransactionControl>> linkedControls;
 	{
 		std::array<int, MAX_BASES> vecCargoDelta;
 		std::array<bool, MAX_BASES> vecChanged;
@@ -125,7 +126,6 @@ void BuyAndSellScreen::closeScreen()
 		vecChanged.fill(false);
 
 		// Find all delta and mark all that have any changes
-		std::set<sp<TransactionControl>> linkedControls;
 		for (auto &l : transactionControls)
 		{
 			for (auto &c : l.second)
@@ -134,14 +134,16 @@ void BuyAndSellScreen::closeScreen()
 				{
 					continue;
 				}
-				for (int i = 0; i < MAX_BASES; i++)
+				int i = 0;
+				for (auto &b : state->player_bases)
 				{
 					int cargoDelta = c->getCargoDelta(i);
-					if (cargoDelta != 0)
+					if (cargoDelta)
 					{
 						vecCargoDelta[i] += cargoDelta;
 						vecChanged[i] = true;
 					}
+					i++;
 				}
 				for (auto &l : c->getLinked())
 				{
@@ -151,18 +153,17 @@ void BuyAndSellScreen::closeScreen()
 		}
 
 		// Check every base, find first bad one
-		int bindex = 0;
+		int i = 0;
 		StateRef<Base> bad_base;
 		for (auto &b : state->player_bases)
 		{
-			if ((vecChanged[bindex] || forceLimits) &&
-			    b.second->getUsage(*state, FacilityType::Capacity::Stores, vecCargoDelta[bindex]) >
-			        100)
+			if ((vecChanged[i] || forceLimits) &&
+			    b.second->getUsage(*state, FacilityType::Capacity::Stores, vecCargoDelta[i]) > 100)
 			{
 				bad_base = b.second->building->base;
 				break;
 			}
-			bindex++;
+			i++;
 		}
 
 		// Found bad base
@@ -196,13 +197,13 @@ void BuyAndSellScreen::closeScreen()
 	// Step 03: Check transportation
 
 	// Step 03.01: Check transportation for purchases
+	linkedControls.clear();
 	bool purchaseTransferFound = false;
 	{
 		bool noFerry = false;
 
 		// Find all orgs that we buy from
 		std::set<StateRef<Organisation>> orgsBuyFrom;
-		std::set<sp<TransactionControl>> linkedControls;
 		for (auto &l : transactionControls)
 		{
 			for (auto &c : l.second)
@@ -311,9 +312,6 @@ void BuyAndSellScreen::closeScreen()
 	// Step 03.02: Check transportation for purchase-transfers
 	if (purchaseTransferFound)
 	{
-		bool transportationHostile = false;
-		bool transportationBusy = false;
-
 		// Find out who provides transportation services
 		std::list<StateRef<Organisation>> badOrgs;
 		std::list<StateRef<Organisation>> ferryCompanies;
@@ -322,7 +320,7 @@ void BuyAndSellScreen::closeScreen()
 			if (o.second->providesTransportationServices)
 			{
 				StateRef<Organisation> org{state.get(), o.first};
-				if (org->isRelatedTo(player) == Organisation::Relation::Hostile)
+				if (o.second->isRelatedTo(player) == Organisation::Relation::Hostile)
 				{
 					badOrgs.push_back(org);
 				}
@@ -332,11 +330,10 @@ void BuyAndSellScreen::closeScreen()
 				}
 			}
 		}
-		if (ferryCompanies.empty())
-		{
-			transportationHostile = true;
-		}
-		else
+
+		bool transportationBusy = false;
+		bool transportationHostile = ferryCompanies.empty();
+		if (!transportationHostile)
 		{
 			// Check if ferry provider has free ferries
 			// TODO: rewrite
@@ -441,11 +438,11 @@ void BuyAndSellScreen::executeOrders()
 				continue;
 			}
 
-			int index = 0;
+			int i = 0;
 			auto &economy = state->economy[c->itemId];
 			for (auto &b : state->player_bases)
 			{
-				int order = c->tradeState.shipmentsTotal(index++);
+				int order = c->tradeState.shipmentsTotal(i++);
 
 				// Sell
 				if (order > 0)

@@ -15,6 +15,7 @@
 #include "framework/keycodes.h"
 #include "framework/logger.h"
 #include "framework/renderer.h"
+#include "game/state/city/agentmission.h"
 #include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/vehicle.h"
@@ -24,6 +25,7 @@
 #include "game/state/shared/organisation.h"
 #include "game/ui/base/basestage.h"
 #include "game/ui/general/messagebox.h"
+#include <array>
 
 namespace OpenApoc
 {
@@ -54,6 +56,7 @@ TransferScreen::TransferScreen(sp<GameState> state, bool forceLimits)
 	form->findControlTyped<RadioButton>("BUTTON_GROUND")->Location.y = 320;
 
 	textViewSecondBaseStatic = form->findControlTyped<Label>("TEXT_BUTTON_SECOND_BASE_STATIC");
+	textViewSecondBaseStatic->setVisible(true);
 
 	// Adding callbacks after checking the button because we don't need to
 	// have the callback be called since changeBase() will update display anyways
@@ -63,10 +66,10 @@ TransferScreen::TransferScreen(sp<GameState> state, bool forceLimits)
 	                  [this](Event *) { this->setDisplayType(Type::Soldier); });
 	form->findControlTyped<RadioButton>("BUTTON_BIOSCIS")
 	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->setDisplayType(Type::Bio); });
+	                  [this](Event *) { this->setDisplayType(Type::BioChemist); });
 	form->findControlTyped<RadioButton>("BUTTON_PHYSCIS")
 	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *) { this->setDisplayType(Type::Physist); });
+	                  [this](Event *) { this->setDisplayType(Type::Physicist); });
 	form->findControlTyped<RadioButton>("BUTTON_ENGINRS")
 	    ->addCallback(FormEventType::CheckBoxSelected,
 	                  [this](Event *) { this->setDisplayType(Type::Engineer); });
@@ -133,7 +136,8 @@ int TransferScreen::getRightIndex()
 		}
 		index++;
 	}
-	return 8;
+	LogError("The right side base wasn't found.");
+	return -1; // should not be reached
 }
 
 void TransferScreen::updateBaseHighlight()
@@ -196,15 +200,18 @@ void TransferScreen::updateBaseHighlight()
 
 void TransferScreen::closeScreen()
 {
+	auto player = state->getPlayer();
+
 	// Step 02: Check accomodation of different sorts
 	{
-		// FIXME: CHECK LQ SPACE
-		std::vector<int> vecCargoDelta;
-		std::vector<int> vecBioDelta;
-		std::vector<bool> vecChanged;
-		vecCargoDelta.resize(8);
-		vecBioDelta.resize(8);
-		vecChanged.resize(8);
+		std::array<int, MAX_BASES> vecCrewDelta;
+		std::array<int, MAX_BASES> vecCargoDelta;
+		std::array<int, MAX_BASES> vecBioDelta;
+		std::array<bool, MAX_BASES> vecChanged;
+		vecCrewDelta.fill(0);
+		vecCargoDelta.fill(0);
+		vecBioDelta.fill(0);
+		vecChanged.fill(false);
 
 		// Find all delta and mark all that have any changes
 		std::set<sp<TransactionControl>> linkedControls;
@@ -216,14 +223,20 @@ void TransferScreen::closeScreen()
 				{
 					continue;
 				}
-				for (int i = 0; i < 8; i++)
+				int i = 0;
+				for (auto &b : state->player_bases)
 				{
-					vecCargoDelta[i] += c->getCargoDelta(i);
-					vecBioDelta[i] += c->getBioDelta(i);
-					if (c->initialStock[i] != c->currentStock[i])
+					int crewDelta = c->getCrewDelta(i);
+					int cargoDelta = c->getCargoDelta(i);
+					int bioDelta = c->getBioDelta(i);
+					if (cargoDelta || bioDelta || crewDelta)
 					{
+						vecCrewDelta[i] += crewDelta;
+						vecCargoDelta[i] += cargoDelta;
+						vecBioDelta[i] += bioDelta;
 						vecChanged[i] = true;
 					}
+					i++;
 				}
 				for (auto &l : c->getLinked())
 				{
@@ -233,24 +246,28 @@ void TransferScreen::closeScreen()
 		}
 
 		// Check every base, find first bad one
-		int bindex = 0;
+		int i = 0;
 		StateRef<Base> bad_base;
 		bool cargoOverLimit = false;
 		bool alienOverLimit = false;
-		bool crewOverLimit = false; //  only if mode == Mode::Transfer
+		bool crewOverLimit = false;
 		for (auto &b : state->player_bases)
 		{
-			if (vecChanged[bindex] || forceLimits)
+			if (vecChanged[i] || forceLimits)
 			{
-				if (b.second->getUsage(*state, FacilityType::Capacity::Stores,
-				                       vecCargoDelta[bindex]) > 100)
+				crewOverLimit = b.second->getUsage(*state, FacilityType::Capacity::Quarters,
+				                                   vecCrewDelta[i]) > 100;
+				cargoOverLimit = b.second->getUsage(*state, FacilityType::Capacity::Stores,
+				                                    vecCargoDelta[i]) > 100;
+				alienOverLimit = b.second->getUsage(*state, FacilityType::Capacity::Aliens,
+				                                    vecBioDelta[i]) > 100;
+				if (crewOverLimit || cargoOverLimit || alienOverLimit)
 				{
 					bad_base = b.second->building->base;
-					cargoOverLimit = true;
 					break;
 				}
 			}
-			bindex++;
+			i++;
 		}
 
 		// Found bad base
@@ -267,22 +284,19 @@ void TransferScreen::closeScreen()
 			else if (cargoOverLimit)
 			{
 				title = tr("Storage space exceeded");
-				{
-					message = tr("Transfer limited by available storage space.");
-				}
+				message = tr("Transfer limited by available storage space.");
 				type = Type::AgentEquipment;
 			}
 			else if (alienOverLimit)
 			{
 				title = tr("Alien Containment space exceeded");
-				{
-					message = tr("Transfer limited by available Alien Containment space.");
-				}
+				message = tr("Transfer limited by available Alien Containment space.");
 				type = Type::Aliens;
 			}
 			fw().stageQueueCommand(
 			    {StageCmd::Command::PUSH,
 			     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::Ok)});
+
 			if (bad_base != state->current_base && bad_base != second_base)
 			{
 				for (auto &view : miniViews)
@@ -302,43 +316,32 @@ void TransferScreen::closeScreen()
 	// Step 03: Check transportation
 
 	// Step 03.02: Check transportation for transfers
-	// or for purchase-transfers
-	//	if (mode == Mode::Transfer || purchaseTransferFound)
 	{
-		bool transportationHostile = false;
-		bool transportationBusy = false;
-		std::list<StateRef<Organisation>> badOrgs;
-
 		// Find out who provides transportation services
+		std::list<StateRef<Organisation>> badOrgs;
 		std::list<StateRef<Organisation>> ferryCompanies;
 		for (auto &o : state->organisations)
 		{
 			if (o.second->providesTransportationServices)
 			{
-				ferryCompanies.emplace_back(state.get(), o.first);
+				StateRef<Organisation> org{state.get(), o.first};
+				if (o.second->isRelatedTo(player) == Organisation::Relation::Hostile)
+				{
+					badOrgs.push_back(org);
+				}
+				else
+				{
+					ferryCompanies.push_back(org);
+				}
 			}
 		}
-		// Check if a ferry provider exists that likes us
-		// Clear those that don't
-		for (auto it = ferryCompanies.begin(); it != ferryCompanies.end();)
-		{
-			if ((*it)->isRelatedTo(state->getPlayer()) == Organisation::Relation::Hostile)
-			{
-				badOrgs.push_back(*it);
-				it = ferryCompanies.erase(it);
-			}
-			else
-			{
-				it++;
-			}
-		}
-		if (ferryCompanies.empty())
-		{
-			transportationHostile = true;
-		}
-		else
+
+		bool transportationBusy = false;
+		bool transportationHostile = ferryCompanies.empty();
+		if (!transportationHostile)
 		{
 			// Check if ferry provider has free ferries
+			// TODO: rewrite
 			if (config().getBool("OpenApoc.NewFeature.CallExistingFerry"))
 			{
 				bool ferryFound = false;
@@ -423,100 +426,74 @@ void TransferScreen::closeScreen()
 
 void TransferScreen::executeOrders()
 {
-	std::vector<StateRef<Base>> bases;
-	for (auto &b : state->player_bases)
-	{
-		bases.push_back(b.second->building->base);
-	}
-	bases.resize(8);
+	auto player = state->getPlayer();
 
 	// Step 01: Re-direct all vehicles and agents if transferring
-	//	if (mode == Mode::Transfer)
-	{
-		// FIXME: IMPLEMENT AGENTS
-		for (auto &c : transactionControls[Type::Vehicle])
-		{
-			StateRef<Base> newBase;
-			for (int i = 0; i < 8; i++)
-			{
-				if (c->currentStock[i] == 1)
-				{
-					newBase = bases[i];
-					break;
-				}
-			}
-			if (!newBase)
-			{
-				LogError("WTF? VEHICLE VANISHED IN TRANSACTION!?");
-				break;
-			}
-			auto vehicle = StateRef<Vehicle>{state.get(), c->itemId};
-			if (vehicle->homeBuilding != newBase->building)
-			{
-				auto wasInBase = vehicle->currentBuilding == vehicle->homeBuilding;
-				vehicle->homeBuilding = newBase->building;
-				if (wasInBase)
-				{
-					vehicle->setMission(*state, VehicleMission::gotoBuilding(*state, *vehicle));
-				}
-			}
-		}
-	}
-
-	// Step 02: Gather data about differences in stocks
-	// Map is base id to number bought/sold
-	std::map<StateRef<AEquipmentType>, std::map<int, int>> aeMap;
-	std::map<StateRef<AEquipmentType>, std::map<int, int>> bioMap;
-	std::map<StateRef<VEquipmentType>, std::map<int, int>> veMap;
-	std::map<StateRef<VAmmoType>, std::map<int, int>> vaMap;
-	std::map<StateRef<VehicleType>, std::map<int, int>> vtMap;
-	std::list<std::pair<StateRef<Vehicle>, int>> soldVehicles;
-
 	std::set<sp<TransactionControl>> linkedControls;
-	for (auto &l : transactionControls)
+	for (auto t : std::set<Type>{Type::BioChemist, Type::Engineer, Type::Physicist, Type::Soldier,
+	                             Type::Vehicle})
 	{
-		for (auto &c : l.second)
+		for (auto &c : transactionControls[t])
 		{
 			if (linkedControls.find(c) != linkedControls.end())
 			{
 				continue;
 			}
-			bool vehicleSold = c->itemType == TransactionControl::Type::Vehicle;
-			for (int i = 0; i < 8; i++)
+
+			StateRef<Base> newBase;
+			int i = 0;
+			for (auto &b : state->player_bases)
+			{
+				if (c->tradeState.shipmentsTotal(i++) == -1)
+				{
+					newBase = b.second->building->base;
+					break;
+				}
+			}
+			if (newBase)
 			{
 				switch (c->itemType)
 				{
-					case TransactionControl::Type::Vehicle:
-						if (c->currentStock[i] != 0)
+					case TransactionControl::Type::BioChemist:
+					case TransactionControl::Type::Engineer:
+					case TransactionControl::Type::Physicist:
+					case TransactionControl::Type::Soldier:
+					{
+						StateRef<Agent> agent{state.get(), c->itemId};
+						if (agent->homeBuilding != newBase->building)
 						{
-							vehicleSold = false;
+							agent->homeBuilding = newBase->building;
+							if (agent->currentBuilding != agent->homeBuilding ||
+							    (agent->currentVehicle &&
+							     agent->currentVehicle->currentBuilding != agent->homeBuilding))
+							{
+								if (agent->currentVehicle)
+								{
+									agent->enterBuilding(*state,
+									                     agent->currentVehicle->currentBuilding);
+								}
+								agent->setMission(*state,
+								                  AgentMission::gotoBuilding(*state, *agent));
+							}
 						}
 						break;
-					case TransactionControl::Type::AgentEquipmentBio:
-						bioMap[{state.get(), c->itemId}][i] =
-						    c->currentStock[i] - c->initialStock[i];
+					}
+					case TransactionControl::Type::Vehicle:
+					{
+						StateRef<Vehicle> vehicle{state.get(), c->itemId};
+						if (vehicle->homeBuilding != newBase->building)
+						{
+							bool wasInBase = vehicle->currentBuilding == vehicle->homeBuilding;
+							vehicle->homeBuilding = newBase->building;
+							if (wasInBase)
+							{
+								vehicle->setMission(*state,
+								                    VehicleMission::gotoBuilding(*state, *vehicle));
+							}
+						}
 						break;
-					case TransactionControl::Type::AgentEquipmentCargo:
-						aeMap[{state.get(), c->itemId}][i] =
-						    c->currentStock[i] - c->initialStock[i];
-						break;
-					case TransactionControl::Type::VehicleAmmo:
-						vaMap[{state.get(), c->itemId}][i] =
-						    c->currentStock[i] - c->initialStock[i];
-						break;
-					case TransactionControl::Type::VehicleEquipment:
-						veMap[{state.get(), c->itemId}][i] =
-						    c->currentStock[i] - c->initialStock[i];
-						break;
-					case TransactionControl::Type::VehicleType:
-						vtMap[{state.get(), c->itemId}][i] =
-						    c->currentStock[i] - c->initialStock[i];
-						break;
+					}
 				}
-			}
-			if (vehicleSold)
-			{
-				soldVehicles.emplace_back(StateRef<Vehicle>{state.get(), c->itemId}, c->price);
 			}
 			for (auto &l : c->getLinked())
 			{
@@ -525,210 +502,103 @@ void TransferScreen::executeOrders()
 		}
 	}
 
-	// Step 03: Act according to mode
-	auto player = state->getPlayer();
-
-	// Step 03.02: If transfer then move stuff from negative to positive
-	//	if (mode == Mode::Transfer || needTransfer)
+	// Step 03.02: Move stuff
+	linkedControls.clear();
+	for (auto t : std::set<Type>{Type::AgentEquipment, Type::Aliens, Type::FlyingEquipment,
+	                             Type::GroundEquipment})
 	{
-		// Agent items
-		for (auto &e : aeMap)
+		for (auto &c : transactionControls[t])
 		{
-			std::list<std::pair<int, int>> source;
-			std::list<std::pair<int, int>> destination;
-			for (auto &ae : e.second)
+			if (linkedControls.find(c) != linkedControls.end())
 			{
-				if (ae.second < 0)
-				{
-					source.emplace_back(ae.first, -ae.second);
-				}
-				if (ae.second > 0)
-				{
-					destination.emplace_back(ae.first, ae.second);
-				}
+				continue;
 			}
-			for (auto &d : destination)
+
+			int i = 0;
+			for (auto &b : state->player_bases)
 			{
-				int remaining = d.second;
-				for (auto &s : source)
+				int src = i++;
+				if (!c->tradeState.shipmentsFrom(src))
 				{
-					if (s.second == 0)
+					continue;
+				}
+
+				int i2 = 0;
+				for (auto &b2 : state->player_bases)
+				{
+					int dest = i2++;
+					int order = c->tradeState.getOrder(src, dest);
+					if (src == dest || order <= 0)
 					{
 						continue;
 					}
-					int count = std::min(remaining, s.second);
-					s.second -= count;
-					remaining -= count;
-					int realCount =
-					    (e.first->type == AEquipmentType::Type::Ammo ? e.first->max_ammo : 1) *
-					    count;
-					// We may be transferring last bullets in a clip here so adjust accordingly
-					realCount = std::min(realCount,
-					                     (int)bases[s.first]->inventoryAgentEquipment[e.first.id]);
-					bases[s.first]->building->cargo.emplace_back(*state, e.first, count, 0, player,
-					                                             bases[d.first]->building);
-					bases[s.first]->inventoryAgentEquipment[e.first.id] -= realCount;
-					if (remaining == 0)
+
+					switch (c->itemType)
 					{
-						break;
+						case TransactionControl::Type::AgentEquipmentBio:
+						{
+							StateRef<AEquipmentType> bio{state.get(), c->itemId};
+							b.second->building->cargo.emplace_back(*state, bio, order, 0, player,
+							                                       b2.second->building);
+							b.second->inventoryBioEquipment[c->itemId] -= order;
+							break;
+						}
+						case TransactionControl::Type::AgentEquipmentCargo:
+						{
+							StateRef<AEquipmentType> equipment{state.get(), c->itemId};
+							int quantity = order * (equipment->type == AEquipmentType::Type::Ammo
+							                            ? equipment->max_ammo
+							                            : 1);
+							// We may be transferring last bullets in a clip here so adjust
+							// accordingly
+							quantity = std::min(quantity,
+							                    (int)b.second->inventoryAgentEquipment[c->itemId]);
+							b.second->building->cargo.emplace_back(*state, equipment, quantity, 0,
+							                                       player, b2.second->building);
+							b.second->inventoryAgentEquipment[c->itemId] -= quantity;
+							break;
+						}
+						case TransactionControl::Type::VehicleAmmo:
+						{
+							StateRef<VAmmoType> ammo{state.get(), c->itemId};
+							b.second->building->cargo.emplace_back(*state, ammo, order, 0, player,
+							                                       b2.second->building);
+							b.second->inventoryVehicleAmmo[c->itemId] -= order;
+							break;
+						}
+						case TransactionControl::Type::VehicleEquipment:
+						{
+							StateRef<VEquipmentType> equipment{state.get(), c->itemId};
+							b.second->building->cargo.emplace_back(*state, equipment, order, 0,
+							                                       player, b2.second->building);
+							b.second->inventoryVehicleEquipment[c->itemId] -= order;
+							break;
+						}
 					}
 				}
-				if (remaining != 0)
-				{
-					LogError("General screw up in transactions, have remaining demand of %d for %s",
-					         remaining, e.first.id);
-				}
+			}
+			for (auto &l : c->getLinked())
+			{
+				linkedControls.insert(l);
 			}
 		}
-		// Bio items (Aliens)
-		for (auto &e : bioMap)
-		{
-			std::list<std::pair<int, int>> source;
-			std::list<std::pair<int, int>> destination;
-			for (auto &be : e.second)
-			{
-				if (be.second < 0)
-				{
-					source.emplace_back(be.first, be.second);
-				}
-				if (be.second > 0)
-				{
-					destination.emplace_back(be.first, be.second);
-				}
-			}
-			for (auto &d : destination)
-			{
-				int remaining = d.second;
-				for (auto &s : source)
-				{
-					if (s.second == 0)
-					{
-						continue;
-					}
-					int count = std::min(remaining, s.second);
-					s.second -= count;
-					remaining -= count;
-					bases[s.first]->building->cargo.emplace_back(*state, e.first, count, 0, player,
-					                                             bases[d.first]->building);
-					bases[s.first]->inventoryBioEquipment[e.first.id] -= count;
-					if (remaining == 0)
-					{
-						break;
-					}
-				}
-				if (remaining != 0)
-				{
-					LogError("General screw up in transactions, have remaining demand of %d for %s",
-					         remaining, e.first.id);
-				}
-			}
-		}
-		// Transfer Vehicle Equipment
-		for (auto &e : veMap)
-		{
-			std::list<std::pair<int, int>> source;
-			std::list<std::pair<int, int>> destination;
-			for (auto &ve : e.second)
-			{
-				if (ve.second < 0)
-				{
-					source.emplace_back(ve.first, ve.second);
-				}
-				if (ve.second > 0)
-				{
-					destination.emplace_back(ve.first, ve.second);
-				}
-			}
-			for (auto &d : destination)
-			{
-				int remaining = d.second;
-				for (auto &s : source)
-				{
-					if (s.second == 0)
-					{
-						continue;
-					}
-					int count = std::min(remaining, s.second);
-					s.second -= count;
-					remaining -= count;
-					bases[s.first]->building->cargo.emplace_back(*state, e.first, count, 0, player,
-					                                             bases[d.first]->building);
-					bases[s.first]->inventoryVehicleEquipment[e.first.id] -= count;
-					if (remaining == 0)
-					{
-						break;
-					}
-				}
-				if (remaining != 0)
-				{
-					LogError("General screw up in transactions, have remaining demand of %d for %s",
-					         remaining, e.first.id);
-				}
-			}
-		}
-		// Transfer Vehicle Ammo
-		for (auto &e : vaMap)
-		{
-			std::list<std::pair<int, int>> source;
-			std::list<std::pair<int, int>> destination;
-			for (auto &va : e.second)
-			{
-				if (va.second < 0)
-				{
-					source.emplace_back(va.first, va.second);
-				}
-				if (va.second > 0)
-				{
-					destination.emplace_back(va.first, va.second);
-				}
-			}
-			for (auto &d : destination)
-			{
-				int remaining = d.second;
-				for (auto &s : source)
-				{
-					if (s.second == 0)
-					{
-						continue;
-					}
-					int count = std::min(remaining, s.second);
-					s.second -= count;
-					remaining -= count;
-					bases[s.first]->building->cargo.emplace_back(*state, e.first, count, 0, player,
-					                                             bases[d.first]->building);
-					bases[s.first]->inventoryVehicleAmmo[e.first.id] -= count;
-					if (remaining == 0)
-					{
-						break;
-					}
-				}
-				if (remaining != 0)
-				{
-					LogError("General screw up in transactions, have remaining demand of %d for %s",
-					         remaining, e.first.id);
-				}
-			}
-		}
-		// Vehicles and Agents already processed above
-		return;
 	}
 }
 
 void TransferScreen::initViewSecondBase()
 {
-	int b = 0;
-	for (auto &pair : state->player_bases)
+	int i = 0;
+	for (auto &b : state->player_bases)
 	{
-		auto &viewBase = pair.second;
-		auto viewName = format("BUTTON_SECOND_BASE_%d", ++b);
+		auto viewName = format("BUTTON_SECOND_BASE_%d", ++i);
 		auto view = form->findControlTyped<GraphicButton>(viewName);
 		view->setVisible(true);
-		if (second_base == viewBase)
+		if (second_base == b.second)
 		{
 			currentSecondView = view;
 		}
-		view->setData(viewBase);
-		auto viewImage = drawMiniBase(viewBase, viewHighlight, viewFacility);
+		view->setData(b.second);
+		auto viewImage = drawMiniBase(b.second, viewHighlight, viewFacility);
 		view->setImage(viewImage);
 		view->setDepressedImage(viewImage);
 		wp<GraphicButton> weakView(view);
@@ -744,10 +614,12 @@ void TransferScreen::initViewSecondBase()
 			auto base = e->forms().RaisedBy->getData<Base>();
 			this->textViewSecondBase->setText(base->name);
 			this->textViewSecondBase->setVisible(true);
+			this->textViewSecondBaseStatic->setVisible(false);
 		});
 		view->addCallback(FormEventType::MouseLeave, [this](FormsEvent *) {
 			// this->textViewSecondBase->setText("");
 			this->textViewSecondBase->setVisible(false);
+			this->textViewSecondBaseStatic->setVisible(true);
 		});
 	}
 	textViewSecondBase = form->findControlTyped<Label>("TEXT_BUTTON_SECOND_BASE");
@@ -758,18 +630,13 @@ void TransferScreen::render()
 {
 	TransactionScreen::render();
 
-	textViewSecondBaseStatic->setVisible(!textViewSecondBase || !textViewSecondBase->isVisible());
-
-	// Highlight selected base
-	if (currentSecondView != nullptr)
+	// Highlight second selected base
+	auto viewBase = currentSecondView->getData<Base>();
+	if (second_base == viewBase)
 	{
-		auto viewBase = currentSecondView->getData<Base>();
-		if (second_base == viewBase)
-		{
-			Vec2<int> pos = form->Location + currentSecondView->Location - 2;
-			Vec2<int> size = currentSecondView->Size + 4;
-			fw().renderer->drawRect(pos, size, COLOUR_RED);
-		}
+		Vec2<int> pos = form->Location + currentSecondView->Location - 2;
+		Vec2<int> size = currentSecondView->Size + 4;
+		fw().renderer->drawRect(pos, size, COLOUR_RED);
 	}
 }
 }
