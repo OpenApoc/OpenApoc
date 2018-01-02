@@ -563,4 +563,5 @@ void BuyAndSellScreen::executeOrders()
 	// Rest in peace, vehicles
 	state->cleanUpDeathNote();
 }
-}
+
+}; // namespace OpenApoc

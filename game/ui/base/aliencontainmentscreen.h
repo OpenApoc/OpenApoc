@@ -15,4 +15,5 @@ class AlienContainmentScreen : public TransactionScreen
 	AlienContainmentScreen(sp<GameState> state, bool forceLimits = false);
 	~AlienContainmentScreen() override = default;
 };
-}
+
+}; // namespace OpenApoc

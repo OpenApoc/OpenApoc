@@ -23,4 +23,5 @@ class BuyAndSellScreen : public TransactionScreen
 	BuyAndSellScreen(sp<GameState> state, bool forceLimits = false);
 	~BuyAndSellScreen() override = default;
 };
-}
+
+}; // namespace OpenApoc

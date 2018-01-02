@@ -22,9 +22,7 @@
 #include "game/state/rules/city/vehicletype.h"
 #include "game/state/rules/city/vequipmenttype.h"
 #include "game/state/shared/organisation.h"
-#include "game/ui/base/recruitscreen.h"
 #include "game/ui/general/aequipmentsheet.h"
-#include "game/ui/general/agentsheet.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/vehiclesheet.h"
 
@@ -32,19 +30,19 @@ namespace OpenApoc
 {
 
 TransactionScreen::TransactionScreen(sp<GameState> state, bool forceLimits)
-    : BaseStage(state), forceLimits(forceLimits), bigUnitRanks(RecruitScreen::getBigUnitRanks())
+    : BaseStage(state), forceLimits(forceLimits)
 {
 	// Load resources
 	form = ui().getForm("transactionscreen");
 	formItemAgent = form->findControlTyped<Form>("AGENT_ITEM_VIEW");
 	formItemVehicle = form->findControlTyped<Form>("VEHICLE_ITEM_VIEW");
 	formAgentStats = form->findControlTyped<Form>("AGENT_STATS_VIEW");
-	formPersonelStats = form->findControlTyped<Form>("PERSONEL_STATS_VIEW");
+	formPersonnelStats = form->findControlTyped<Form>("PERSONNEL_STATS_VIEW");
 
 	formItemAgent->setVisible(false);
 	formItemVehicle->setVisible(false);
 	formAgentStats->setVisible(false);
-	formPersonelStats->setVisible(false);
+	formPersonnelStats->setVisible(false);
 
 	// Assign event handlers
 	onScrollChange = [this](FormsEvent *) { this->updateFormValues(); };
@@ -87,7 +85,7 @@ void TransactionScreen::setDisplayType(Type type)
 	formItemAgent->setVisible(false);
 	formItemVehicle->setVisible(false);
 	formAgentStats->setVisible(false);
-	formPersonelStats->setVisible(false);
+	formPersonnelStats->setVisible(false);
 
 	form->findControlTyped<ScrollBar>("LIST_SCROLL")->setValue(0);
 	auto list = form->findControlTyped<ListBox>("LIST");
@@ -156,7 +154,6 @@ void TransactionScreen::setDisplayType(Type type)
 	}
 	// Update display for bases
 	updateFormValues(false);
-	updateBaseHighlight();
 }
 
 int TransactionScreen::getLeftIndex()
@@ -540,6 +537,10 @@ void TransactionScreen::updateFormValues(bool queueHighlightUpdate)
 	{
 		framesUntilHighlightUpdate = HIGHLIGHT_UPDATE_DELAY;
 	}
+	else
+	{
+		updateBaseHighlight();
+	}
 }
 
 void TransactionScreen::updateBaseHighlight()
@@ -642,7 +643,7 @@ void TransactionScreen::displayItem(sp<TransactionControl> control)
 	formItemAgent->setVisible(false);
 	formItemVehicle->setVisible(false);
 	formAgentStats->setVisible(false);
-	formPersonelStats->setVisible(false);
+	formPersonnelStats->setVisible(false);
 
 	switch (control->itemType)
 	{
@@ -651,20 +652,6 @@ void TransactionScreen::displayItem(sp<TransactionControl> control)
 		{
 			AEquipmentSheet(formItemAgent).display(state->agent_equipment[control->itemId]);
 			formItemAgent->setVisible(true);
-			break;
-		}
-		case TransactionControl::Type::BioChemist:
-		case TransactionControl::Type::Engineer:
-		case TransactionControl::Type::Physicist:
-		{
-			RecruitScreen::personelSheet(state->agents[control->itemId], formPersonelStats);
-			formPersonelStats->setVisible(true);
-			break;
-		}
-		case TransactionControl::Type::Soldier:
-		{
-			AgentSheet(formAgentStats).display(state->agents[control->itemId], bigUnitRanks, false);
-			formAgentStats->setVisible(true);
 			break;
 		}
 		case TransactionControl::Type::VehicleType:
@@ -702,9 +689,10 @@ bool TransactionScreen::isClosable() const
 				continue;
 			}
 
-			for (int i = 0; i < MAX_BASES; i++)
+			int i = 0;
+			for (auto &b : state->player_bases)
 			{
-				if (c->tradeState.shipmentsTotal(i) != 0)
+				if (c->tradeState.shipmentsTotal(i++))
 				{
 					return false;
 				}

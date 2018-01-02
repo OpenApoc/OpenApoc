@@ -14,12 +14,15 @@ class TransferScreen : public TransactionScreen
 	sp<Label> textViewSecondBase;
 	sp<Label> textViewSecondBaseStatic;
 
+	std::vector<sp<Image>> bigUnitRanks;
+
 	// Change the base on the right side.
 	void changeSecondBase(sp<Base> newBase);
 	// Get the right side index.
 	int getRightIndex() override;
 	// Update highlight of facilities on the mini-view.
 	void updateBaseHighlight() override;
+	void displayItem(sp<TransactionControl> control) override;
 	// Checking conditions and limitations before the execution of orders.
 	void closeScreen() override;
 	// Execute orders given in the screen.
@@ -34,4 +37,5 @@ class TransferScreen : public TransactionScreen
 	// Stage control
 	void render() override;
 };
-}
+
+}; // namespace OpenApoc

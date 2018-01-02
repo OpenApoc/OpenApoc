@@ -21,6 +21,8 @@
 #include "game/state/gamestate.h"
 #include "game/state/rules/city/vammotype.h"
 #include "game/state/shared/organisation.h"
+#include "game/ui/base/recruitscreen.h"
+#include "game/ui/general/agentsheet.h"
 #include "game/ui/general/messagebox.h"
 #include <array>
 
@@ -28,7 +30,7 @@ namespace OpenApoc
 {
 
 TransferScreen::TransferScreen(sp<GameState> state, bool forceLimits)
-    : TransactionScreen(state, forceLimits)
+    : TransactionScreen(state, forceLimits), bigUnitRanks(RecruitScreen::getBigUnitRanks())
 {
 	form->findControlTyped<Label>("TITLE")->setText(tr("TRANSFER"));
 	form->findControlTyped<Graphic>("BG")->setImage(
@@ -208,11 +210,36 @@ void TransferScreen::updateBaseHighlight()
 	}
 }
 
+void TransferScreen::displayItem(sp<TransactionControl> control)
+{
+	TransactionScreen::displayItem(control);
+
+	switch (control->itemType)
+	{
+		case TransactionControl::Type::BioChemist:
+		case TransactionControl::Type::Engineer:
+		case TransactionControl::Type::Physicist:
+		{
+			RecruitScreen::personnelSheet(state->agents[control->itemId], formPersonnelStats);
+			formPersonnelStats->setVisible(true);
+			break;
+		}
+		case TransactionControl::Type::Soldier:
+		{
+			AgentSheet(formAgentStats).display(state->agents[control->itemId], bigUnitRanks, false);
+			formAgentStats->setVisible(true);
+			break;
+		}
+		default:
+			break;
+	}
+}
+
 void TransferScreen::closeScreen()
 {
 	auto player = state->getPlayer();
 
-	// Step 02: Check accomodation of different sorts
+	// Step 01: Check accomodation of different sorts
 	{
 		std::array<int, MAX_BASES> vecCrewDelta;
 		std::array<int, MAX_BASES> vecCargoDelta;
@@ -323,9 +350,7 @@ void TransferScreen::closeScreen()
 		}
 	}
 
-	// Step 03: Check transportation
-
-	// Step 03.02: Check transportation for transfers
+	// Step 02: Check transportation
 	{
 		// Find out who provides transportation services
 		std::list<StateRef<Organisation>> badOrgs;
@@ -428,7 +453,7 @@ void TransferScreen::closeScreen()
 		}
 	}
 
-	// Step 04: If we reached this then go!
+	// Step 03: If we reached this then go!
 	executeOrders();
 	fw().stageQueueCommand({StageCmd::Command::POP});
 	return;
@@ -649,4 +674,5 @@ void TransferScreen::render()
 		fw().renderer->drawRect(pos, size, COLOUR_RED);
 	}
 }
-}
+
+}; // namespace OpenApoc

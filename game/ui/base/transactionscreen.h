@@ -54,6 +54,7 @@ class TransactionScreen : public BaseStage
   protected:
 	void changeBase(sp<Base> newBase) override;
 
+	// The counter of the highlight update countdown.
 	int framesUntilHighlightUpdate = 0;
 	// Keeps previous highlight. That allows not to redraw the mini-view buttons by every click.
 	BaseGraphics::FacilityHighlight viewHighlightPrevious = BaseGraphics::FacilityHighlight::None;
@@ -61,11 +62,9 @@ class TransactionScreen : public BaseStage
 	sp<Form> formItemAgent;
 	sp<Form> formItemVehicle;
 	sp<Form> formAgentStats;
-	sp<Form> formPersonelStats;
+	sp<Form> formPersonnelStats;
 
 	sp<Label> textViewBaseStatic;
-
-	std::vector<sp<Image>> bigUnitRanks; // TODO: move to transferscreen
 
 	Type type;
 	// Wether player must conform to limits even on bases which did not change
@@ -101,7 +100,7 @@ class TransactionScreen : public BaseStage
 	// Update highlight of facilities on the mini-view.
 	virtual void updateBaseHighlight();
 	void fillBaseBar(bool left, int percent);
-	void displayItem(sp<TransactionControl> control);
+	virtual void displayItem(sp<TransactionControl> control);
 
 	// Is it possible to close the screen without consequences?
 	bool isClosable() const;

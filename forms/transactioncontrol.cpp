@@ -885,8 +885,6 @@ int TransactionControl::Trade::getStock(const int baseIdx, const int oppositeIdx
  */
 int TransactionControl::Trade::setBalance(const int balance)
 {
-	// int sideL = initialStock[leftIdx] - shipmentsFrom(leftIdx, rightIdx);
-	// int sideR = initialStock[rightIdx] - shipmentsFrom(rightIdx, leftIdx);
 	int orderLR = balance - getRightStock();
 	if (orderLR == 0)
 	{

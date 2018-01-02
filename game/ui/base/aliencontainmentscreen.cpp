@@ -51,7 +51,7 @@ AlienContainmentScreen::AlienContainmentScreen(sp<GameState> state, bool forceLi
 
 void AlienContainmentScreen::closeScreen()
 {
-	// Step 02: Check accomodation of different sorts
+	// Step 01: Check accomodation of different sorts
 	{
 		std::array<int, MAX_BASES> vecBioDelta;
 		std::array<bool, MAX_BASES> vecChanged;
@@ -123,7 +123,7 @@ void AlienContainmentScreen::closeScreen()
 		}
 	}
 
-	// Step 04: If we reached this then go!
+	// Step 02: If we reached this then go!
 	executeOrders();
 	fw().stageQueueCommand({StageCmd::Command::POP});
 	return;
@@ -148,4 +148,5 @@ void AlienContainmentScreen::executeOrders()
 		}
 	}
 }
-}
+
+}; // namespace OpenApoc

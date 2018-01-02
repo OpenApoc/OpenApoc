@@ -67,7 +67,7 @@ class TransactionControl : public Control
 		// Getter for the right side index.
 		int getRightIndex() const { return rightIdx; }
 		// Get the sum of shipment orders from the base (economy).
-		// from, to - 0-7 for bases, 8 for economy
+		// from - 0-7 for bases, 8 for economy
 		int shipmentsFrom(const int from, const int exclude = -1) const;
 		// Get total shipment orders from(+) and to(-) the base (economy).
 		// baseIdx - 0-7 for bases, 8 for economy
