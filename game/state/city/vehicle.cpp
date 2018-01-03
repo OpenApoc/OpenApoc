@@ -1432,26 +1432,16 @@ void Vehicle::processRecoveredVehicle(GameState &state)
 	for (auto &e : scrappedEquipment)
 	{
 		removeEquipment(e);
-		if (e->ammo > 0 && e->type->ammo_type)
-		{
-			currentBuilding->base->inventoryVehicleAmmo[e->type->ammo_type.id] += e->ammo;
-		}
-		int price = 0;
 		if (state.economy.find(e->type.id) != state.economy.end())
 		{
 			auto &economy = state.economy[e->type.id];
-			price = economy.currentPrice;
+			owner->balance += economy.currentPrice * FV_SCRAPPED_COST_PERCENT / 100;
 		}
-		owner->balance += price * FV_SCRAPPED_COST_PERCENT / 100;
-		if (e->ammo > 0)
+		if (e->ammo > 0 && e->type->ammo_type &&
+		    state.economy.find(e->type->ammo_type.id) != state.economy.end())
 		{
-			price = 0;
-			if (state.economy.find(e->type->ammo_type.id) != state.economy.end())
-			{
-				auto &economy = state.economy[e->type->ammo_type.id];
-				price = economy.currentPrice;
-			}
-			owner->balance += e->ammo * price * FV_SCRAPPED_COST_PERCENT / 100;
+			auto &economy = state.economy[e->type->ammo_type.id];
+			owner->balance += e->ammo * economy.currentPrice * FV_SCRAPPED_COST_PERCENT / 100;
 		}
 	}
 	if (randBoundsExclusive(state.rng, 0, 100) > FV_CHANCE_TO_RECOVER_VEHICLE)
