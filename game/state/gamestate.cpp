@@ -83,8 +83,11 @@ GameState::~GameState()
 		for (auto &f : b.second->facilities)
 		{
 			if (f->lab)
-				f->lab->current_project = "";
-			f->lab = "";
+			{
+				f->lab->assigned_agents.clear();
+				f->lab->current_project.clear();
+				f->lab.clear();
+			}
 		}
 		b.second->building.clear();
 	}
