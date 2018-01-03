@@ -2173,6 +2173,12 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				cancelled = true;
 				return;
 			}
+			// Only X-Com can storm UFO
+			if (targetVehicle->owner == state.getAliens() && v.owner != state.getPlayer())
+			{
+				cancelled = true;
+				return;
+			}
 			// Find soldier
 			bool needSoldiersButNotFound =
 			    v.owner == state.getPlayer() ||
