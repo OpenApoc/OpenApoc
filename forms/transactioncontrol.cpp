@@ -10,6 +10,7 @@
 #include "framework/renderer.h"
 #include "game/state/city/base.h"
 #include "game/state/city/building.h"
+#include "game/state/city/research.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vequipment.h"
 #include "game/state/gamestate.h"
@@ -210,13 +211,13 @@ sp<TransactionControl> TransactionControl::createControl(GameState &state, State
 	bool isAmmo = false;
 	bool isBio = false;
 	bool isPerson = true;
-	bool unknownArtifact = false;
+	bool researched = true;
 	auto manufacturer = agent->owner;
 	bool manufacturerHostile = false;
 	bool manufacturerUnavailable = false;
 
 	return createControl(agent.id, type, agent->name, manufacturer, isAmmo, isBio, isPerson,
-	                     unknownArtifact, manufacturerHostile, manufacturerUnavailable, price,
+	                     researched, manufacturerHostile, manufacturerUnavailable, price,
 	                     storeSpace, initialStock, indexLeft, indexRight);
 }
 
@@ -227,6 +228,8 @@ TransactionControl::createControl(GameState &state, StateRef<AEquipmentType> age
 	bool isBio = agentEquipmentType->bioStorage;
 	int price = 0;
 	int storeSpace = agentEquipmentType->store_space;
+	bool researched = isBio ? true : state.research.isComplete(agentEquipmentType);
+
 	std::vector<int> initialStock;
 	bool hasStock = false;
 	// Fill out stock
@@ -259,26 +262,22 @@ TransactionControl::createControl(GameState &state, StateRef<AEquipmentType> age
 			int week = state.gameTime.getWeek();
 			initialStock[ECONOMY_IDX] = economy.currentStock;
 			price = economy.currentPrice;
-			economyUnavailable = economy.weekAvailable == 0 || economy.weekAvailable > week ||
-			                     agentEquipmentType->artifact;
+			economyUnavailable =
+			    economy.weekAvailable == 0 || economy.weekAvailable > week || !researched;
 		}
 		if (!hasStock && economyUnavailable)
 		{
 			return nullptr;
 		}
 	}
-	else
+	else if (!hasStock)
 	{
-		if (!hasStock)
-		{
-			return nullptr;
-		}
+		return nullptr;
 	}
 
 	auto manufacturer = agentEquipmentType->manufacturer;
 	bool isAmmo = agentEquipmentType->type == AEquipmentType::Type::Ammo;
 	bool isPerson = false;
-	bool unknownArtifact = false; // TODO: fix artifact
 	auto canBuy = isBio ? Organisation::PurchaseResult::OK
 	                    : agentEquipmentType->manufacturer->canPurchaseFrom(
 	                          state, state.current_base->building, false);
@@ -289,7 +288,7 @@ TransactionControl::createControl(GameState &state, StateRef<AEquipmentType> age
 	return createControl(agentEquipmentType.id,
 	                     isBio ? Type::AgentEquipmentBio : Type::AgentEquipmentCargo,
 	                     agentEquipmentType->name, manufacturer, isAmmo, isBio, isPerson,
-	                     unknownArtifact, manufacturerHostile, manufacturerUnavailable, price,
+	                     researched, manufacturerHostile, manufacturerUnavailable, price,
 	                     storeSpace, initialStock, indexLeft, indexRight);
 }
 
@@ -299,6 +298,8 @@ TransactionControl::createControl(GameState &state, StateRef<VEquipmentType> veh
 {
 	int price = 0;
 	int storeSpace = vehicleEquipmentType->store_space;
+	bool researched = state.research.isComplete(vehicleEquipmentType);
+
 	std::vector<int> initialStock;
 	bool hasStock = false;
 	// Fill out stock
@@ -324,7 +325,8 @@ TransactionControl::createControl(GameState &state, StateRef<VEquipmentType> veh
 			int week = state.gameTime.getWeek();
 			initialStock[ECONOMY_IDX] = economy.currentStock;
 			price = economy.currentPrice;
-			economyUnavailable = economy.weekAvailable == 0 || economy.weekAvailable > week;
+			economyUnavailable =
+			    economy.weekAvailable == 0 || economy.weekAvailable > week || !researched;
 		}
 		if (!hasStock && economyUnavailable)
 		{
@@ -336,7 +338,6 @@ TransactionControl::createControl(GameState &state, StateRef<VEquipmentType> veh
 	bool isAmmo = false;
 	bool isBio = false;
 	bool isPerson = false;
-	bool unknownArtifact = false; // TODO: fix artifact
 	// Expecting all bases to be in one city
 	auto canBuy = vehicleEquipmentType->manufacturer->canPurchaseFrom(
 	    state, state.current_base->building, false);
@@ -346,7 +347,7 @@ TransactionControl::createControl(GameState &state, StateRef<VEquipmentType> veh
 
 	return createControl(vehicleEquipmentType.id, Type::VehicleEquipment,
 	                     vehicleEquipmentType->name, manufacturer, isAmmo, isBio, isPerson,
-	                     unknownArtifact, manufacturerHostile, manufacturerUnavailable, price,
+	                     researched, manufacturerHostile, manufacturerUnavailable, price,
 	                     storeSpace, initialStock, indexLeft, indexRight);
 }
 
@@ -393,7 +394,7 @@ sp<TransactionControl> TransactionControl::createControl(GameState &state,
 	bool isAmmo = true;
 	bool isBio = false;
 	bool isPerson = false;
-	bool unknownArtifact = false; // TODO: fix artifact
+	bool researched = true;
 	// Expecting all bases to be in one city
 	auto canBuy =
 	    vehicleAmmoType->manufacturer->canPurchaseFrom(state, state.current_base->building, false);
@@ -402,7 +403,7 @@ sp<TransactionControl> TransactionControl::createControl(GameState &state,
 	                               canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
 
 	return createControl(vehicleAmmoType.id, Type::VehicleAmmo, vehicleAmmoType->name, manufacturer,
-	                     isAmmo, isBio, isPerson, unknownArtifact, manufacturerHostile,
+	                     isAmmo, isBio, isPerson, researched, manufacturerHostile,
 	                     manufacturerUnavailable, price, storeSpace, initialStock, indexLeft,
 	                     indexRight);
 }
@@ -445,7 +446,7 @@ sp<TransactionControl> TransactionControl::createControl(GameState &state,
 	bool isAmmo = false;
 	bool isBio = false;
 	bool isPerson = false;
-	bool unknownArtifact = false;
+	bool researched = true;
 	// Expecting all bases to be in one city
 	auto canBuy =
 	    vehicleType->manufacturer->canPurchaseFrom(state, state.current_base->building, true);
@@ -454,9 +455,8 @@ sp<TransactionControl> TransactionControl::createControl(GameState &state,
 	                               canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
 
 	return createControl(vehicleType.id, Type::VehicleType, vehicleType->name, manufacturer, isAmmo,
-	                     isBio, isPerson, unknownArtifact, manufacturerHostile,
-	                     manufacturerUnavailable, price, storeSpace, initialStock, indexLeft,
-	                     indexRight);
+	                     isBio, isPerson, researched, manufacturerHostile, manufacturerUnavailable,
+	                     price, storeSpace, initialStock, indexLeft, indexRight);
 }
 
 sp<TransactionControl> TransactionControl::createControl(GameState &state,
@@ -532,19 +532,19 @@ sp<TransactionControl> TransactionControl::createControl(GameState &state,
 	bool isAmmo = false;
 	bool isBio = false;
 	bool isPerson = false;
-	bool unknownArtifact = false;
+	bool researched = true;
 	bool manufacturerHostile = false;
 	bool manufacturerUnavailable = false;
 
 	return createControl(vehicle.id, Type::Vehicle, vehicle->name, manufacturer, isAmmo, isBio,
-	                     isPerson, unknownArtifact, manufacturerHostile, manufacturerUnavailable,
-	                     price, storeSpace, initialStock, indexLeft, indexRight);
+	                     isPerson, researched, manufacturerHostile, manufacturerUnavailable, price,
+	                     storeSpace, initialStock, indexLeft, indexRight);
 }
 
 sp<TransactionControl>
 TransactionControl::createControl(const UString &id, Type type, const UString &name,
                                   StateRef<Organisation> manufacturer, bool isAmmo, bool isBio,
-                                  bool isPerson, bool unknownArtifact, bool manufacturerHostile,
+                                  bool isPerson, bool researched, bool manufacturerHostile,
                                   bool manufacturerUnavailable, int price, int storeSpace,
                                   std::vector<int> &initialStock, int indexLeft, int indexRight)
 {
@@ -555,7 +555,7 @@ TransactionControl::createControl(const UString &id, Type type, const UString &n
 	control->isAmmo = isAmmo;
 	control->isBio = isBio;
 	control->isPerson = isPerson;
-	control->unknownArtifact = unknownArtifact;
+	control->researched = researched;
 	control->manufacturerHostile = manufacturerHostile;
 	control->manufacturerUnavailable = manufacturerUnavailable;
 	control->storeSpace = storeSpace;
@@ -563,7 +563,7 @@ TransactionControl::createControl(const UString &id, Type type, const UString &n
 	control->tradeState.setLeftIndex(indexLeft);
 	control->tradeState.setRightIndex(indexRight);
 	// If we create a non-purchase control we never become one so clear the values
-	if (isBio || unknownArtifact || (indexLeft != ECONOMY_IDX && indexRight != ECONOMY_IDX))
+	if (isBio || !researched || (indexLeft != ECONOMY_IDX && indexRight != ECONOMY_IDX))
 	{
 		control->manufacturerName = "";
 		control->price = 0;
@@ -586,7 +586,7 @@ TransactionControl::createControl(const UString &id, Type type, const UString &n
 	// Add controls
 
 	// Name
-	const UString &labelName = unknownArtifact ? tr("Alien Artifact") : name;
+	const UString &labelName = researched ? tr(name) : tr("Alien Artifact");
 	if (labelName.length() > 0)
 	{
 		auto label = control->createChild<Label>(labelName, labelFont);
@@ -602,7 +602,7 @@ TransactionControl::createControl(const UString &id, Type type, const UString &n
 	{
 		auto label = control->createChild<Label>(format("%s%s%s", manufacturerHostile ? "*" : "",
 		                                                manufacturerUnavailable ? "X" : "",
-		                                                control->manufacturerName),
+		                                                tr(control->manufacturerName)),
 		                                         labelFont);
 		label->Location = {34, 3};
 		label->Size = {256, 16};
@@ -610,9 +610,9 @@ TransactionControl::createControl(const UString &id, Type type, const UString &n
 		label->TextVAlign = VerticalAlignment::Centre;
 	}
 	// Price
-	if (price != 0)
+	if (price != 0 && (indexLeft == ECONOMY_IDX || indexRight == ECONOMY_IDX))
 	{
-		auto label = control->createChild<Label>(format("$%d", price), labelFont);
+		auto label = control->createChild<Label>(format("$%d", control->price), labelFont);
 		label->Location = {290, 3};
 		label->Size = {47, 16};
 		label->TextHAlign = HorizontalAlignment::Right;

@@ -650,7 +650,8 @@ void TransactionScreen::displayItem(sp<TransactionControl> control)
 		case TransactionControl::Type::AgentEquipmentBio:
 		case TransactionControl::Type::AgentEquipmentCargo:
 		{
-			AEquipmentSheet(formItemAgent).display(state->agent_equipment[control->itemId]);
+			AEquipmentSheet(formItemAgent)
+			    .display(state->agent_equipment[control->itemId], control->researched);
 			formItemAgent->setVisible(true);
 			break;
 		}
@@ -668,7 +669,8 @@ void TransactionScreen::displayItem(sp<TransactionControl> control)
 		}
 		case TransactionControl::Type::VehicleEquipment:
 		{
-			VehicleSheet(formItemVehicle).display(state->vehicle_equipment[control->itemId]);
+			VehicleSheet(formItemVehicle)
+			    .display(state->vehicle_equipment[control->itemId], control->researched);
 			formItemVehicle->setVisible(true);
 			break;
 		}

@@ -140,7 +140,7 @@ class TransactionControl : public Control
 	bool isPerson = false;
 	bool manufacturerHostile = false;
 	bool manufacturerUnavailable = false;
-	bool unknownArtifact = false;
+	bool researched = false;
 	StateRef<Organisation> manufacturer;
 	UString manufacturerName;
 	// Trade state
@@ -179,7 +179,7 @@ class TransactionControl : public Control
 
 	static sp<TransactionControl> createControl(const UString &id, Type type, const UString &name,
 	                                            StateRef<Organisation> manufacturer, bool isAmmo,
-	                                            bool isBio, bool isPerson, bool unknownArtifact,
+	                                            bool isBio, bool isPerson, bool researched,
 	                                            bool manufacturerHostile,
 	                                            bool manufacturerUnavailable, int price,
 	                                            int storeSpace, std::vector<int> &initialStock,
