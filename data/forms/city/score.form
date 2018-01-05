@@ -9,9 +9,10 @@
         <position x="0" y="0"/>
         <size width="640" height="480"/>
       </graphic>
-      <label text="SCORE">
-        <position x="113" y="0"/>
-        <size width="420" height="32"/>
+
+      <label id="TITLE">
+        <position x="20" y="0"/>
+        <size width="600" height="36"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>bigfont</font>
       </label>
@@ -33,12 +34,34 @@
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
-      <graphicbutton id="BUTTON_QUIT">
+
+      <radiobutton id="BUTTON_SCORE" groupid="MODE">
+        <position x="602" y="40"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:67:xcom3/ufodata/base.pcx</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_FINANCE" groupid="MODE">
+        <position x="602" y="80"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:66:xcom3/ufodata/base.pcx</imagechecked>
+      </radiobutton>
+      
+	  <graphicbutton id="BUTTON_OK">
         <position x="602" y="443"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
       </graphicbutton>
+
+	  <subform id="SCORE_VIEW" src="city/sheet_score">
+		<position x="77" y="140"/>
+      </subform>
+      <subform id="FINANCE_VIEW" src="city/sheet_finance">
+		<position x="77" y="140"/>
+      </subform>
+
     </style>
   </form>
 </openapoc>
