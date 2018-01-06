@@ -9,6 +9,8 @@
 namespace OpenApoc
 {
 
+constexpr int ALIEN_INCIDENT_SCORE = -30;
+
 class Form;
 class GameState;
 class GraphicButton;
