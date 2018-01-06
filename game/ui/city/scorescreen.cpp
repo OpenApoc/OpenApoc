@@ -19,6 +19,25 @@ namespace OpenApoc
 ScoreScreen::ScoreScreen(sp<GameState> state)
     : Stage(), menuform(ui().getForm("city/score")), state(state)
 {
+	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
+	menuform->findControlTyped<Label>("TEXT_DATE")->setText(state->gameTime.getLongDateString());
+	menuform->findControlTyped<Label>("TEXT_WEEK")->setText(state->gameTime.getWeekString());
+	formScore = menuform->findControlTyped<Form>("SCORE_VIEW");
+	formFinance = menuform->findControlTyped<Form>("FINANCE_VIEW");
+	title = menuform->findControlTyped<Label>("TITLE");
+
+	auto buttonScore = menuform->findControlTyped<RadioButton>("BUTTON_SCORE");
+	buttonScore->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { setScoreMode(); });
+
+	auto buttonFinance = menuform->findControlTyped<RadioButton>("BUTTON_FINANCE");
+	buttonFinance->addCallback(FormEventType::CheckBoxSelected,
+	                           [this](Event *) { setFinanceMode(); });
+
+	auto buttonOK = menuform->findControlTyped<GraphicButton>("BUTTON_OK");
+	buttonOK->addCallback(FormEventType::ButtonClick,
+	                      [](Event *) { fw().stageQueueCommand({StageCmd::Command::POP}); });
+
+	buttonScore->setChecked(true);
 }
 
 ScoreScreen::~ScoreScreen() = default;
@@ -149,28 +168,7 @@ void ScoreScreen::setFinanceMode()
 	formFinance->setVisible(true);
 }
 
-void ScoreScreen::begin()
-{
-	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
-	menuform->findControlTyped<Label>("TEXT_DATE")->setText(state->gameTime.getLongDateString());
-	menuform->findControlTyped<Label>("TEXT_WEEK")->setText(state->gameTime.getWeekString());
-	formScore = menuform->findControlTyped<Form>("SCORE_VIEW");
-	formFinance = menuform->findControlTyped<Form>("FINANCE_VIEW");
-	title = menuform->findControlTyped<Label>("TITLE");
-
-	auto buttonScore = menuform->findControlTyped<RadioButton>("BUTTON_SCORE");
-	buttonScore->addCallback(FormEventType::CheckBoxSelected, [this](Event *) { setScoreMode(); });
-
-	auto buttonFinance = menuform->findControlTyped<RadioButton>("BUTTON_FINANCE");
-	buttonFinance->addCallback(FormEventType::CheckBoxSelected,
-	                           [this](Event *) { setFinanceMode(); });
-
-	auto buttonOK = menuform->findControlTyped<GraphicButton>("BUTTON_OK");
-	buttonOK->addCallback(FormEventType::ButtonClick,
-	                      [](Event *) { fw().stageQueueCommand({StageCmd::Command::POP}); });
-
-	buttonScore->setChecked(true);
-}
+void ScoreScreen::begin() {}
 
 void ScoreScreen::pause() {}
 
