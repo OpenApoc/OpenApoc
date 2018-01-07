@@ -62,6 +62,11 @@ GameState::~GameState()
 	for (auto &v : this->vehicles)
 	{
 		auto vehicle = v.second;
+		if (vehicle->crashed && vehicle->smokeDoodad)
+		{
+			vehicle->smokeDoodad->remove(*this);
+			vehicle->smokeDoodad.reset();
+		}
 		if (vehicle->tileObject)
 		{
 			vehicle->tileObject->removeFromMap();
@@ -198,7 +203,7 @@ void GameState::initState()
 	{
 		v.second->strategyImages = city_common_image_list->strategyImages;
 		v.second->setupMover();
-		if (v.second->crashed)
+		if (v.second->crashed && !v.second->smokeDoodad)
 		{
 			v.second->smokeDoodad =
 			    v.second->city->placeDoodad({this, "DOODAD_13_SMOKE_FUME"}, v.second->position);
