@@ -359,6 +359,10 @@ class FlyingVehicleMover : public VehicleMover
 		}
 		if (vehicle.crashed)
 		{
+			if (vehicle.smokeDoodad)
+			{
+				vehicle.smokeDoodad->update(state, ticks);
+			}
 			if (vehicle.type->type != VehicleType::Type::UFO)
 			{
 				updateCrashed(state, ticks);
@@ -618,6 +622,10 @@ class GroundVehicleMover : public VehicleMover
 		}
 		if (vehicle.crashed)
 		{
+			if (vehicle.smokeDoodad)
+			{
+				vehicle.smokeDoodad->update(state, ticks);
+			}
 			updateCrashed(state, ticks);
 			return;
 		}
@@ -1114,12 +1122,7 @@ void VehicleMover::updateCrashed(GameState &state, unsigned int ticks)
 	auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
 	if (!presentScenery)
 	{
-		vehicle.crashed = false;
-		if (vehicle.smokeDoodad)
-		{
-			vehicle.smokeDoodad->remove(state);
-			vehicle.smokeDoodad.reset();
-		}
+		vehicle.setCrashed(state, false);
 		vehicle.startFalling(state);
 	}
 }
@@ -1286,7 +1289,7 @@ void Vehicle::leaveDimensionGate(GameState &state)
 	this->goalFacing = initialFacing;
 	if (city->map)
 	{
-		city->map->addObjectToMap(shared_from_this());
+		city->map->addObjectToMap(state, shared_from_this());
 	}
 	if (state.current_city == city)
 	{
@@ -1312,16 +1315,7 @@ void Vehicle::enterDimensionGate(GameState &state)
 	{
 		dropCarriedVehicle(state);
 	}
-	if (tileObject)
-	{
-		this->tileObject->removeFromMap();
-		this->tileObject.reset();
-	}
-	if (shadowObject)
-	{
-		this->shadowObject->removeFromMap();
-		this->shadowObject = nullptr;
-	}
+	removeFromMap(state);
 	if (state.current_city == city)
 	{
 		fw().soundBackend->playSample(state.city_common_sample_list->dimensionShiftIn, position);
@@ -1353,7 +1347,7 @@ void Vehicle::leaveBuilding(GameState &state, Vec3<float> initialPosition, float
 	this->goalFacing = initialFacing;
 	if (city->map)
 	{
-		city->map->addObjectToMap(shared_from_this());
+		city->map->addObjectToMap(state, shared_from_this());
 	}
 }
 
@@ -1374,16 +1368,9 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 		carriedVehicle->processRecoveredVehicle(state);
 		carriedVehicle.clear();
 	}
-	if (tileObject)
-	{
-		this->tileObject->removeFromMap();
-		this->tileObject.reset();
-	}
-	if (shadowObject)
-	{
-		this->shadowObject->removeFromMap();
-		this->shadowObject = nullptr;
-	}
+
+	removeFromMap(state);
+
 	this->position = type->isGround() ? b->carEntranceLocation : *b->landingPadLocations.begin();
 	this->position += Vec3<float>{0.5f, 0.5f, 0.5f};
 	this->facing = 0.0f;
@@ -1417,6 +1404,48 @@ void Vehicle::setupMover()
 	}
 	animationDelay = 0;
 	animationFrame = type->animation_sprites.begin();
+}
+
+/**
+ * Remove all tile objects that belongs to vehicle.
+ */
+void Vehicle::removeFromMap(GameState &state)
+{
+	if (smokeDoodad)
+	{
+		smokeDoodad->remove(state);
+		smokeDoodad = nullptr;
+	}
+	if (shadowObject)
+	{
+		shadowObject->removeFromMap();
+		shadowObject = nullptr;
+	}
+	if (tileObject)
+	{
+		tileObject->removeFromMap();
+		tileObject = nullptr;
+	}
+}
+
+/**
+ * Set the vehicle crashed (or not).
+ */
+void Vehicle::setCrashed(GameState &state, bool crashed)
+{
+	if (smokeDoodad)
+	{
+		smokeDoodad->remove(state);
+		smokeDoodad = nullptr;
+	}
+	if (crashed)
+	{
+		sp<Doodad> smoke = mksp<Doodad>(position + SMOKE_DOODAD_SHIFT,
+		                                StateRef<DoodadType>{&state, "DOODAD_13_SMOKE_FUME"});
+		city->map->addObjectToMap(smoke);
+		smokeDoodad = smoke;
+	}
+	this->crashed = crashed;
 }
 
 void Vehicle::processRecoveredVehicle(GameState &state)
@@ -1809,21 +1838,8 @@ void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 			}
 		}
 	}
-	if (tileObject)
-	{
-		this->tileObject->removeFromMap();
-		this->tileObject.reset();
-	}
-	if (shadowObject)
-	{
-		this->shadowObject->removeFromMap();
-		this->shadowObject.reset();
-	}
-	if (smokeDoodad)
-	{
-		smokeDoodad->remove(state);
-		smokeDoodad.reset();
-	}
+	removeFromMap(state);
+
 	while (!currentAgents.empty())
 	{
 		// For some reason need to assign first before calling die()
@@ -2959,6 +2975,10 @@ void Vehicle::setPosition(const Vec3<float> &pos)
 	if (this->shadowObject)
 	{
 		this->shadowObject->setPosition(pos);
+	}
+	if (this->smokeDoodad)
+	{
+		this->smokeDoodad->setPosition(pos + SMOKE_DOODAD_SHIFT);
 	}
 }
 

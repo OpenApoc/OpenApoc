@@ -2539,8 +2539,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			else
 			{
-				v.smokeDoodad = v.city->placeDoodad({&state, "DOODAD_13_SMOKE_FUME"},
-				                                    v.position + Vec3<float>{0.0f, 0.0f, 0.25f});
+				v.setCrashed(state);
 			}
 			return;
 		}
