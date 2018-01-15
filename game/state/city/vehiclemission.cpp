@@ -36,6 +36,21 @@ namespace
 static const Vec3<float> offsetFlying{0.5f, 0.5f, 0.5f};
 static const Vec3<float> offsetLandInto{0.5f, 0.5f, 0.01f};
 static const Vec3<float> offsetLaunch{0.5f, 0.5f, -1.0f};
+
+// Self-destruct timer for UFOs.
+// division /5 because need to round to 5 mins
+// TODO: find a way how to extract from the game data
+static const std::map<UString, std::pair<unsigned, unsigned>> selfDestructTimer = {
+    {"VEHICLETYPE_ALIEN_PROBE", {10 / 5 * TICKS_PER_MINUTE, 90 / 5 * TICKS_PER_MINUTE}},
+    {"VEHICLETYPE_ALIEN_SCOUT", {10 / 5 * TICKS_PER_MINUTE, 90 / 5 * TICKS_PER_MINUTE}},
+    {"VEHICLETYPE_ALIEN_TRANSPORTER", {15 / 5 * TICKS_PER_MINUTE, 120 / 5 * TICKS_PER_MINUTE}},
+    {"VEHICLETYPE_ALIEN_FAST_ATTACK_SHIP", {15 / 5 * TICKS_PER_MINUTE, 120 / 5 * TICKS_PER_MINUTE}},
+    {"VEHICLETYPE_ALIEN_DESTROYER", {15 / 5 * TICKS_PER_MINUTE, 120 / 5 * TICKS_PER_MINUTE}},
+    {"VEHICLETYPE_ALIEN_ASSAULT_SHIP", {15 / 5 * TICKS_PER_MINUTE, 180 / 5 * TICKS_PER_MINUTE}},
+    {"VEHICLETYPE_ALIEN_BOMBER", {10 / 5 * TICKS_PER_MINUTE, 120 / 5 * TICKS_PER_MINUTE}},
+    {"VEHICLETYPE_ALIEN_ESCORT", {15 / 5 * TICKS_PER_MINUTE, 120 / 5 * TICKS_PER_MINUTE}},
+    {"VEHICLETYPE_ALIEN_BATTLESHIP", {60 / 5 * TICKS_PER_MINUTE, 240 / 5 * TICKS_PER_MINUTE}},
+    {"VEHICLETYPE_ALIEN_MOTHERSHIP", {60 / 5 * TICKS_PER_MINUTE, 240 / 5 * TICKS_PER_MINUTE}}};
 }
 
 FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, Vehicle &v)
@@ -518,9 +533,16 @@ VehicleMission *VehicleMission::snooze(GameState &, Vehicle &, unsigned int snoo
 
 VehicleMission *VehicleMission::selfDestruct(GameState &state, Vehicle &v)
 {
+	unsigned timer = TICKS_PER_HOUR;
+	auto timerUFO = selfDestructTimer.find(v.type.id);
+	if (timerUFO != selfDestructTimer.cend())
+	{
+		timer = 5 * std::uniform_int_distribution<unsigned>(timerUFO->second.first,
+		                                                    timerUFO->second.second)(state.rng);
+	}
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::SelfDestruct;
-	mission->timeToSnooze = SELF_DESTRUCT_TIMER;
+	mission->timeToSnooze = timer;
 	return mission;
 }
 

@@ -14,7 +14,6 @@ namespace OpenApoc
 {
 
 static const int TELEPORTER_SPREAD = 10;
-static const int SELF_DESTRUCT_TIMER = 12 * TICKS_PER_HOUR;
 static const int DIMENSION_GATE_DELAY = TICKS_PER_SECOND / 2;
 static const int FOLLOW_BOUNDS_XY = 4;
 static const int FOLLOW_BOUNDS_Z = 1;
