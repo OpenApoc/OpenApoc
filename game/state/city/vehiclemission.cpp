@@ -1591,7 +1591,9 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				LogError("Building disappeared");
 				return;
 			}
+
 			auto &map = *b->city->map;
+			unsigned snoozeTicks = TICKS_PER_SECOND / 2;
 			if (v.type->isGround())
 			{
 				// Looking for free exit
@@ -1602,12 +1604,14 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					if (!exitTile)
 					{
 						LogError("Invalid entrance location %s - outside map?", exitLocation.x);
+						snoozeTicks = TICKS_PER_HOUR / 2;
 						continue;
 					}
 					auto scenery = exitTile->presentScenery;
 					if (!scenery)
 					{
 						LogInfo("Tried exit %s - destroyed", exitLocation);
+						snoozeTicks = TICKS_PER_HOUR / 2;
 						continue;
 					}
 					bool exitIsBusy = false;
@@ -1615,6 +1619,13 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					{
 						if (obj->getType() == TileObject::Type::Vehicle)
 						{
+							auto v = std::static_pointer_cast<TileObjectVehicle>(obj)->getVehicle();
+							if (v->crashed)
+							{
+								// If the doors are blocked by crashed vehicle then need more time
+								// to solve the problem.
+								snoozeTicks = TICKS_PER_HOUR / 2;
+							}
 							exitIsBusy = true;
 							break;
 						}
@@ -1702,7 +1713,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				}
 			}
 			LogInfo("No free exit in building \"%s\" free - waiting", b.id);
-			v.addMission(state, snooze(state, v, TICKS_PER_SECOND / 2));
+			v.addMission(state, snooze(state, v, snoozeTicks));
 			return;
 		}
 		case MissionType::Land:
