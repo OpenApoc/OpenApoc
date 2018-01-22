@@ -20,6 +20,7 @@
 	<score>10</score>
 	<two_handed>true</two_handed>
 	<max_ammo>100</max_ammo>
+	<burst>10</burst>
 	<recharge>100</recharge>
 	<rechargeTB>100</rechargeTB>
 	<speed>26</speed>
@@ -27,8 +28,8 @@
 	  <entry>bulletsprites/battle/34.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/23.png</entry><entry>bulletsprites/battle/50.png</entry>
 	</projectile_sprites>
 	<damage>9001</damage>
-	<accuracy>75</accuracy>
-	<fire_delay>10</fire_delay>
+	<accuracy>25</accuracy>
+	<fire_delay>30</fire_delay>
 	<tail_size>35</tail_size>
 	<range>1000</range>
 	<ttl>3000</ttl>

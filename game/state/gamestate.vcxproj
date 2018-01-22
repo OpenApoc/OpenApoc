@@ -198,7 +198,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="gamestate_serialize.xml" />
+    <Xml Include="gamestate_serialize.xml">
+      <SubType>Designer</SubType>
+    </Xml>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{55DA5DD0-C503-426E-8322-E8E2D0E1A71B}</ProjectGuid>

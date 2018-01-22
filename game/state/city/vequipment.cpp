@@ -34,6 +34,8 @@ bool VEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> 
 	};
 
 	auto muzzle = owner->getMuzzleLocation();
+	char number_of_shots;
+
 	if (!state.current_city->map->tileIsValid(muzzle))
 	{
 		return false;
@@ -65,9 +67,18 @@ bool VEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> 
 	}
 	this->reloadTime = type->fire_delay;
 	this->weaponState = WeaponState::Reloading;
+
+	number_of_shots = this->type->burst;
+	if (number_of_shots == 0) {
+		number_of_shots = 1;
+	}
+
 	if (this->type->max_ammo != 0)
 	{
-		this->ammo--;
+		if (this->ammo < number_of_shots) {
+			number_of_shots = this->ammo;
+		}
+		this->ammo-= number_of_shots;
 	}
 
 	if (type->fire_sfx)
@@ -83,22 +94,27 @@ bool VEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> 
 
 	auto fromScaled = vehicleMuzzle * VELOCITY_SCALE_CITY;
 	auto toScaled = targetPosition * VELOCITY_SCALE_CITY;
-	City::accuracyAlgorithmCity(state, fromScaled, toScaled, type->accuracy + owner->getAccuracy(),
-	                            targetVehicle && targetVehicle->isCloaked());
 
-	Vec3<float> velocity = toScaled - fromScaled;
-	velocity = glm::normalize(velocity);
-	// I believe this is the correct formula
-	velocity *= type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
+	for (number_of_shots; number_of_shots > 0; number_of_shots--)
+	{
 
-	auto projectile = mksp<Projectile>(
-	    type->guided ? Projectile::Type::Missile : Projectile::Type::Beam, owner, targetVehicle,
-	    homingPosition, muzzle, velocity, type->turn_rate, type->ttl, type->damage, /*delay*/ 0,
-	    /*depletion rate*/ 0, type->tail_size, type->projectile_sprites, type->impact_sfx,
-	    type->explosion_graphic, state.city_common_image_list->projectileVoxelMap, type->stunTicks,
-	    type->splitIntoTypes, manual);
-	owner->tileObject->map.addObjectToMap(projectile);
-	owner->city->projectiles.insert(projectile);
+		City::accuracyAlgorithmCity(state, fromScaled, toScaled, type->accuracy + owner->getAccuracy(),
+			targetVehicle && targetVehicle->isCloaked());
+
+		Vec3<float> velocity = toScaled - fromScaled;
+		velocity = glm::normalize(velocity);
+		// I believe this is the correct formula
+		velocity *= type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
+
+		auto projectile = mksp<Projectile>(
+			type->guided ? Projectile::Type::Missile : Projectile::Type::Beam, owner, targetVehicle,
+			homingPosition, muzzle, velocity, type->turn_rate, type->ttl, type->damage, /*delay*/ 0,
+			/*depletion rate*/ 0, type->tail_size, type->projectile_sprites, type->impact_sfx,
+			type->explosion_graphic, state.city_common_image_list->projectileVoxelMap, type->stunTicks,
+			type->splitIntoTypes, manual);
+		owner->tileObject->map.addObjectToMap(projectile);
+		owner->city->projectiles.insert(projectile);
+	}
 
 	return true;
 }
