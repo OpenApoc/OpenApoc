@@ -1454,7 +1454,7 @@ void Vehicle::processRecoveredVehicle(GameState &state)
 			owner->balance += e->ammo * price * FV_SCRAPPED_COST_PERCENT / 100;
 		}
 	}
-	if (randBoundsExclusive(state.rng, 0, 100) > FV_CHANCE_TO_RECOVER_VEHICLE)
+	if (!evacuation && randBoundsExclusive(state.rng, 0, 100) > FV_CHANCE_TO_RECOVER_VEHICLE)
 	{
 		while (!currentAgents.empty())
 		{
@@ -1509,6 +1509,8 @@ void Vehicle::processRecoveredVehicle(GameState &state)
 	}
 	else
 	{
+		evacuation = false;
+		crashed = false;
 		if (owner == state.getPlayer())
 		{
 			fw().pushEvent(new GameVehicleEvent(GameEventType::VehicleRecovered,
@@ -1906,6 +1908,12 @@ void Vehicle::crash(GameState &state, StateRef<Vehicle> attacker)
 	}
 }
 
+void Vehicle::RequestEvacuation(GameState &state)
+{
+	evacuation = true;
+	crashed = true;
+}
+
 void Vehicle::startFalling(GameState &state, StateRef<Vehicle> attacker)
 {
 	// Dislike attacker
@@ -2143,17 +2151,29 @@ void Vehicle::updateEachSecond(GameState &state)
 	// Consume fuel if out in city
 	if (tileObject && !crashed && !falling && !sliding)
 	{
-		fuelSpentTicks += FUEL_TICKS_PER_SECOND;
+		sp<VEquipment> engine = getEngine();
+
+		if (type->isGround()) {
+			if (position != goalPosition) {
+				fuelSpentTicks += FUEL_TICKS_PER_SECOND;
+			}
+		}
+		else
+		{
+			fuelSpentTicks += FUEL_TICKS_PER_SECOND;
+		}
+
 		if (fuelSpentTicks > FUEL_TICKS_PER_UNIT)
 		{
 			fuelSpentTicks -= FUEL_TICKS_PER_UNIT;
-			sp<VEquipment> engine = getEngine();
+		// here must be engine
 			if (engine && engine->type->max_ammo > 0)
 			{
 				if (engine->ammo > 0)
 				{
 					engine->ammo--;
 				}
+
 				// Low fuel
 				if (engine->ammo == 2)
 				{
@@ -2175,7 +2195,7 @@ void Vehicle::updateEachSecond(GameState &state)
 						}
 						if (type->isGround())
 						{
-							crash(state, nullptr);
+							RequestEvacuation(state);
 						}
 						else
 						{

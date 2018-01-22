@@ -204,6 +204,7 @@ class Vehicle : public StateObject,
 	unsigned int shieldRecharge = 0;
 	int stunTicksRemaining = 0;
 	bool crashed = false;
+	bool evacuation = false;
 	bool falling = false;
 	bool sliding = false;
 	int fuelSpentTicks = 0;
@@ -255,6 +256,8 @@ class Vehicle : public StateObject,
 
 	void die(GameState &state, bool silent = false, StateRef<Vehicle> attacker = nullptr);
 	void crash(GameState &state, StateRef<Vehicle> attacker);
+	void RequestEvacuation(GameState &state);
+
 	void startFalling(GameState &state, StateRef<Vehicle> attacker = nullptr);
 	void adjustRelationshipOnDowned(GameState &state, StateRef<Vehicle> attacker);
 	bool isDead() const;
