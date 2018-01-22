@@ -14,6 +14,7 @@ class UString
 {
   private:
 	std::string u8Str;
+	mutable size_t hashCode = 0;
 
   public:
 	// ASSUMPTIONS:
@@ -83,6 +84,11 @@ class UString
 	ConstIterator end() const;
 
 	static UniChar u8Char(char c);
+
+	struct Hash
+	{
+		size_t operator()(const UString &str) const noexcept;
+	};
 };
 
 UString operator+(const UString &lhs, const UString &rhs);

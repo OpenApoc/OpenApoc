@@ -10,11 +10,13 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package (Threads REQUIRED)
 
 set (LIBRARY_SOURCE_FILES
+	observer.cpp
 	strings.cpp
 	voxel.cpp)
 source_group(library\\sources FILES ${LIBRARY_SOURCE_FILES})
 set (LIBRARY_HEADER_FILES
 	colour.h
+	observer.h
 	rect.h
 	sp.h
 	strings.h
