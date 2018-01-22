@@ -1,6 +1,7 @@
 #include "game/ui/general/vehiclesheet.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
+#include "forms/textedit.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/battle/damage.h"
 #include "game/state/tilemap/tilemap.h"
@@ -57,7 +58,8 @@ void VehicleSheet::clear()
 
 void VehicleSheet::displayImplementation(sp<Vehicle> vehicle, sp<VehicleType> vehicleType)
 {
-	form->findControlTyped<Label>("ITEM_NAME")
+	form->findControlTyped<Label>("ITEM_NAME")->setText("");
+	form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")
 	    ->setText(vehicle ? vehicle->name : vehicleType->name);
 	form->findControlTyped<Graphic>("SELECTED_IMAGE")->setImage(vehicleType->equip_icon_small);
 
@@ -111,6 +113,7 @@ void VehicleSheet::displayImplementation(sp<Vehicle> vehicle, sp<VehicleType> ve
 
 void VehicleSheet::displayEquipImplementation(sp<VEquipment> item, sp<VEquipmentType> type)
 {
+	form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")->setText("");
 	form->findControlTyped<Label>("ITEM_NAME")->setText(item ? item->type->name : type->name);
 	form->findControlTyped<Graphic>("SELECTED_IMAGE")->setImage(type->equipscreen_sprite);
 
