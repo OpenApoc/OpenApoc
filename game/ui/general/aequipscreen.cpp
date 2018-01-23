@@ -3,9 +3,9 @@
 #include "forms/graphic.h"
 #include "forms/label.h"
 #include "forms/listbox.h"
-#include "forms/textedit.h"
 #include "forms/radiobutton.h"
 #include "forms/scrollbar.h"
+#include "forms/textedit.h"
 #include "forms/ui.h"
 #include "framework/apocresources/cursor.h"
 #include "framework/configfile.h"
@@ -82,23 +82,25 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 		            modifierLCtrl || modifierRCtrl);
 	});
 
-	//Agent name edit
+	// Agent name edit
 	formAgentStats->findControlTyped<TextEdit>("AGENT_NAME")
-		->addCallback(FormEventType::TextEditFinish, [this](FormsEvent *e) {
-		auto currentAgent = selectedAgents.empty() ? nullptr : selectedAgents.front();
-		if (currentAgent)
-		{
-			currentAgent->name = std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)->getText();
-		}
-	});
+	    ->addCallback(FormEventType::TextEditFinish, [this](FormsEvent *e) {
+		    auto currentAgent = selectedAgents.empty() ? nullptr : selectedAgents.front();
+		    if (currentAgent)
+		    {
+			    currentAgent->name =
+			        std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)->getText();
+		    }
+		});
 	formAgentStats->findControlTyped<TextEdit>("AGENT_NAME")
-		->addCallback(FormEventType::TextEditCancel, [this](FormsEvent *e) {
-		auto currentAgent = selectedAgents.empty() ? nullptr : selectedAgents.front();
-		if (currentAgent)
-		{
-			std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)->setText(currentAgent->name);
-		}
-	});
+	    ->addCallback(FormEventType::TextEditCancel, [this](FormsEvent *e) {
+		    auto currentAgent = selectedAgents.empty() ? nullptr : selectedAgents.front();
+		    if (currentAgent)
+		    {
+			    std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)
+			        ->setText(currentAgent->name);
+		    }
+		});
 
 	woundImage = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
 	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
