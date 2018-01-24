@@ -33,6 +33,7 @@ class Framework
 	void audioShutdown();
 
 	static Framework *instance;
+	double deltatime;
 
 	up<ApocCursor> cursor;
 
@@ -68,6 +69,7 @@ class Framework
 	void displaySetTitle(UString NewTitle);
 	void displaySetIcon();
 	bool displayHasWindow() const;
+	double GetDeltaTime(); // time between frames in milliseconds
 
 	bool isSlowMode();
 	void setSlowMode(bool SlowEnabled);
