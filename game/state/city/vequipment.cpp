@@ -34,7 +34,7 @@ bool VEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> 
 	};
 
 	auto muzzle = owner->getMuzzleLocation();
-	char number_of_shots;
+	int number_of_shots;
 
 	if (!state.current_city->map->tileIsValid(muzzle))
 	{

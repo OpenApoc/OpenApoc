@@ -362,6 +362,7 @@
 		<member>stunTicksRemaining</member>
 		<member>falling</member>
 		<member>crashed</member>
+    <member>evacuation</member>
 		<member>sliding</member>
 		<member>fuelSpentTicks</member>
 		<member>cloakTicksAccumulated</member>

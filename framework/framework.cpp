@@ -523,13 +523,16 @@ Framework *Framework::tryGetInstance() { return instance; }
 
 void Framework::run(sp<Stage> initialStage)
 {
-	size_t frameCount = frameLimit.get();
+	size_t		frameCount = frameLimit.get();
+	size_t		frame = 0;
+	uint64_t	currenttime, lasttime, frequency;
+
 	if (!createWindow)
 	{
 		LogError("Trying to run framework without window");
 		return;
 	}
-	size_t frame = 0;
+	
 	TRACE_FN;
 	LogInfo("Program loop started");
 
@@ -537,8 +540,16 @@ void Framework::run(sp<Stage> initialStage)
 
 	this->renderer->setPalette(this->data->loadPalette("xcom3/ufodata/pal_06.dat"));
 
+	frequency = SDL_GetPerformanceFrequency();
+	lasttime = SDL_GetPerformanceCounter();
+
 	while (!p->quitProgram)
 	{
+		// Calculate time between frames in milliseconds (precisely)
+		currenttime = SDL_GetPerformanceCounter();
+		deltatime = ((double)(currenttime - lasttime) * 1000.0) / frequency;
+		lasttime = currenttime;
+
 		frame++;
 		TraceObj obj{"Frame", {{"frame", Strings::fromInteger(frame)}}};
 
@@ -616,6 +627,10 @@ void Framework::run(sp<Stage> initialStage)
 			p->quitProgram = true;
 		}
 	}
+}
+
+double Framework::GetDeltaTime() {
+	return deltatime;
 }
 
 void Framework::processEvents()

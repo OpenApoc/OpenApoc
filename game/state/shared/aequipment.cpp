@@ -702,7 +702,7 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 	auto unit = ownerAgent->unit;
 	auto payload = getPayloadType();
 	Vec3<float> originalTarget = targetPosition;
-	char number_of_shots;
+	int number_of_shots;
 
 	if (payload->fire_sfx)
 	{

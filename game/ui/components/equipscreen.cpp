@@ -3,7 +3,6 @@
 #include "game/ui/components/equipscreen.h"
 #include "framework/framework.h"
 #include "framework/renderer.h"
-#include <SDL.h>
 #include <cmath>
 
 namespace OpenApoc
@@ -61,17 +60,11 @@ void EquipmentPaperDoll::setNonHighlightColour(const Colour &colour)
 
 void EquipmentPaperDoll::update()
 {
-	static unsigned long lasttime = 0;
-	unsigned long currenttime, deltatime;
 
 	// Only draw highlight if one of the colours isn't 100% transparent
 	if (slotHighlightColours[0].a != 0 || slotHighlightColours[1].a != 0)
 	{
-		currenttime = SDL_GetTicks();
-		deltatime = currenttime - lasttime;
-		lasttime = currenttime;
-	
-		this->slotHighlightCounter += (slotHighlightIncrement * deltatime);
+		this->slotHighlightCounter += (slotHighlightIncrement * fw().GetDeltaTime());
 
 		while (this->slotHighlightCounter > 2.0f * M_PI)
 		{
