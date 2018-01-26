@@ -694,7 +694,6 @@ void CityView::orderSelect(StateRef<Agent> agent, bool inverse, bool additive)
 	{
 		return;
 	}
-	
 	agent = state->current_city->cityViewSelectedAgents.front();
 	LogWarning("FIX: Proper multiselect handle for agent controls");
 	if (agent->type->role == AgentType::Role::Soldier)
@@ -706,7 +705,7 @@ void CityView::orderSelect(StateRef<Agent> agent, bool inverse, bool additive)
 				agentForm->findControlTyped<CheckBox>("BUTTON_AGENT_PSI")->setChecked(false);
 				break;
 			case TrainingAssignment::Physical:
-			{	
+			{
 				agentForm->findControlTyped<CheckBox>("BUTTON_AGENT_PHYSICAL")->setChecked(true);
 				agentForm->findControlTyped<CheckBox>("BUTTON_AGENT_PSI")->setChecked(false);
 				break;
@@ -2023,7 +2022,8 @@ void CityView::update()
 				{
 					base = agent->currentBuilding->base;
 				}
-				else if (agent->currentVehicle && agent->currentVehicle->currentBuilding == agent->homeBuilding)
+				else if (agent->currentVehicle &&
+				         agent->currentVehicle->currentBuilding == agent->homeBuilding)
 				{
 					base = agent->currentVehicle->currentBuilding->base;
 				}
@@ -2032,25 +2032,37 @@ void CityView::update()
 					if (!agent->recentlyHired)
 					{
 						if (agent->currentBuilding)
-							agentAssignment->setText(tr("At") + UString(" ") + tr(agent->currentBuilding->name));
+							agentAssignment->setText(tr("At") + UString(" ") +
+							                         tr(agent->currentBuilding->name));
 						else if (agent->currentVehicle && agent->currentVehicle->currentBuilding)
-							agentAssignment->setText(tr("At") + UString(" ") + tr(agent->currentVehicle->currentBuilding->name));
-						else if (!agent->missions.empty() && agent->missions.front()->targetBuilding)
+							agentAssignment->setText(
+							    tr("At") + UString(" ") +
+							    tr(agent->currentVehicle->currentBuilding->name));
+						else if (!agent->missions.empty() &&
+						         agent->missions.front()->targetBuilding)
 						{
 							if (agent->missions.front()->targetBuilding == agent->homeBuilding)
 								agentAssignment->setText(tr("Returning to base"));
 							else
-								agentAssignment->setText(tr("Traveling to:") + UString(" ") + tr(agent->missions.front()->targetBuilding->name));
+								agentAssignment->setText(
+								    tr("Traveling to:") + UString(" ") +
+								    tr(agent->missions.front()->targetBuilding->name));
 						}
-						else if (agent->currentVehicle && !agent->currentVehicle->missions.empty() && agent->currentVehicle->missions.front()->targetBuilding)
+						else if (agent->currentVehicle &&
+						         !agent->currentVehicle->missions.empty() &&
+						         agent->currentVehicle->missions.front()->targetBuilding)
 						{
-							if (agent->currentVehicle->missions.front()->targetBuilding == agent->homeBuilding)
+							if (agent->currentVehicle->missions.front()->targetBuilding ==
+							    agent->homeBuilding)
 								agentAssignment->setText(tr("Returning to base"));
 							else
-								agentAssignment->setText(tr("Traveling to:") + UString(" ") + tr(agent->currentVehicle->missions.front()->targetBuilding->name));
+								agentAssignment->setText(tr("Traveling to:") + UString(" ") +
+								                         tr(agent->currentVehicle->missions.front()
+								                                ->targetBuilding->name));
 						}
 						else
-							agentAssignment->setText(tr("Traveling to:") + UString(" ") + tr("map point"));
+							agentAssignment->setText(tr("Traveling to:") + UString(" ") +
+							                         tr("map point"));
 					}
 					else
 						agentAssignment->setText(tr("Reporting to base"));
@@ -2064,7 +2076,8 @@ void CityView::update()
 
 			if (agent->type->role == AgentType::Role::Soldier && base == agent->homeBuilding->base)
 			{
-				if (agent->missions.empty() && agent->modified_stats.health < agent->current_stats.health)
+				if (agent->missions.empty() &&
+				    agent->modified_stats.health < agent->current_stats.health)
 					agentAssignment->setText(tr("Wounded"));
 				else
 					switch (agent->trainingAssignment)
@@ -2074,7 +2087,7 @@ void CityView::update()
 								agentAssignment->setText(tr("Not assigned to training"));
 							else
 								agentAssignment->setText(tr("(Android training not possible)"));
-						break;
+							break;
 						case TrainingAssignment::Physical:
 						{
 							UString efficiency = tr("Combat training (efficiency=");
@@ -2082,7 +2095,7 @@ void CityView::update()
 							usage = (100.0f / std::max(100, usage)) * 100;
 							efficiency += format("%d%%", usage) + UString(")");
 							agentAssignment->setText(efficiency);
-						break;
+							break;
 						}
 						case TrainingAssignment::Psi:
 						{
@@ -2091,11 +2104,10 @@ void CityView::update()
 							usage = (100.0f / std::max(100, usage)) * 100;
 							efficiency += format("%d%%", usage) + UString(")");
 							agentAssignment->setText(efficiency);
-						break;
+							break;
 						}
 					}
 			}
-
 		}
 
 		int currentAgentIndex = -1;
@@ -2196,7 +2208,7 @@ void CityView::update()
 				agentName->setText(agent->name);
 				if (agent->assigned_to_lab)
 				{
-					auto thisRef = StateRef<Agent>{ state.get(), agent };
+					auto thisRef = StateRef<Agent>{state.get(), agent};
 					for (auto &fac : agent->homeBuilding->base->facilities)
 					{
 						if (!fac->lab)
@@ -2204,13 +2216,16 @@ void CityView::update()
 							continue;
 						}
 						auto it = std::find(fac->lab->assigned_agents.begin(),
-							fac->lab->assigned_agents.end(), thisRef);
+						                    fac->lab->assigned_agents.end(), thisRef);
 						if (it != fac->lab->assigned_agents.end())
 						{
 							if (fac->lab->current_project)
 							{
 								UString pr = tr(fac->lab->current_project->name);
-								int progress = (static_cast<float>(fac->lab->current_project->man_hours_progress) / fac->lab->current_project->man_hours) * 100;
+								int progress = (static_cast<float>(
+								                    fac->lab->current_project->man_hours_progress) /
+								                fac->lab->current_project->man_hours) *
+								               100;
 								agentAssignment->setText(pr + format(" (%d%%)", progress));
 							}
 							else
@@ -2322,7 +2337,7 @@ void CityView::update()
 				agentName->setText(agent->name);
 				if (agent->assigned_to_lab)
 				{
-					auto thisRef = StateRef<Agent>{ state.get(), agent };
+					auto thisRef = StateRef<Agent>{state.get(), agent};
 					for (auto &fac : agent->homeBuilding->base->facilities)
 					{
 						if (!fac->lab)
@@ -2330,14 +2345,19 @@ void CityView::update()
 							continue;
 						}
 						auto it = std::find(fac->lab->assigned_agents.begin(),
-							fac->lab->assigned_agents.end(), thisRef);
+						                    fac->lab->assigned_agents.end(), thisRef);
 						if (it != fac->lab->assigned_agents.end())
 						{
 							if (fac->lab->current_project)
 							{
 								UString pr = tr(fac->lab->current_project->name);
-								int progress = (static_cast<float>(fac->lab->manufacture_man_hours_invested + fac->lab->current_project->man_hours * fac->lab->manufacture_done)
-													/ (fac->lab->current_project->man_hours * fac->lab->manufacture_goal)) * 100;
+								int progress =
+								    (static_cast<float>(fac->lab->manufacture_man_hours_invested +
+								                        fac->lab->current_project->man_hours *
+								                            fac->lab->manufacture_done) /
+								     (fac->lab->current_project->man_hours *
+								      fac->lab->manufacture_goal)) *
+								    100;
 								agentAssignment->setText(pr + format(" (%d%%)", progress));
 							}
 							else
@@ -2449,7 +2469,7 @@ void CityView::update()
 				agentName->setText(agent->name);
 				if (agent->assigned_to_lab)
 				{
-					auto thisRef = StateRef<Agent>{ state.get(), agent };
+					auto thisRef = StateRef<Agent>{state.get(), agent};
 					for (auto &fac : agent->homeBuilding->base->facilities)
 					{
 						if (!fac->lab)
@@ -2457,13 +2477,16 @@ void CityView::update()
 							continue;
 						}
 						auto it = std::find(fac->lab->assigned_agents.begin(),
-							fac->lab->assigned_agents.end(), thisRef);
+						                    fac->lab->assigned_agents.end(), thisRef);
 						if (it != fac->lab->assigned_agents.end())
 						{
 							if (fac->lab->current_project)
 							{
 								UString pr = tr(fac->lab->current_project->name);
-								int progress = (static_cast<float>(fac->lab->current_project->man_hours_progress) / fac->lab->current_project->man_hours) * 100;
+								int progress = (static_cast<float>(
+								                    fac->lab->current_project->man_hours_progress) /
+								                fac->lab->current_project->man_hours) *
+								               100;
 								agentAssignment->setText(pr + format(" (%d%%)", progress));
 							}
 							else
@@ -2569,10 +2592,12 @@ void CityView::update()
 			}
 			else
 			{
-				uiTabs[6]->findControlTyped<Label>("TEXT_VEHICLE_NAME")
-					->setText(selectedVehicle->name);
-				uiTabs[6]->findControlTyped<Label>("TEXT_VEHICLE_OWNER")
-					->setText(selectedVehicle->owner->name);
+				uiTabs[6]
+				    ->findControlTyped<Label>("TEXT_VEHICLE_NAME")
+				    ->setText(selectedVehicle->name);
+				uiTabs[6]
+				    ->findControlTyped<Label>("TEXT_VEHICLE_OWNER")
+				    ->setText(selectedVehicle->owner->name);
 			}
 		}
 		else
@@ -2679,30 +2704,28 @@ void CityView::update()
 		auto selectedOrg = state->current_city->cityViewSelectedOrganisation;
 		if (selectedOrg)
 		{
-			uiTabs[7]->findControlTyped<Label>("TEXT_ORG_NAME")
-				->setText(tr(selectedOrg->name));
+			uiTabs[7]->findControlTyped<Label>("TEXT_ORG_NAME")->setText(tr(selectedOrg->name));
 			UString relation = "";
 			switch (selectedOrg->isRelatedTo(state->getPlayer()))
 			{
-			case Organisation::Relation::Allied:
-				relation += tr(": allied with:");
-				break;
-			case Organisation::Relation::Friendly:
-				relation += tr(": friendly with:");
-				break;
-			case Organisation::Relation::Neutral:
-				relation += tr(": neutral towards:");
-				break;
-			case Organisation::Relation::Unfriendly:
-				relation += tr(": unfriendly towards:");
-				break;
-			case Organisation::Relation::Hostile:
-				relation += tr(": hostile towards:");
-				break;
+				case Organisation::Relation::Allied:
+					relation += tr(": allied with:");
+					break;
+				case Organisation::Relation::Friendly:
+					relation += tr(": friendly with:");
+					break;
+				case Organisation::Relation::Neutral:
+					relation += tr(": neutral towards:");
+					break;
+				case Organisation::Relation::Unfriendly:
+					relation += tr(": unfriendly towards:");
+					break;
+				case Organisation::Relation::Hostile:
+					relation += tr(": hostile towards:");
+					break;
 			}
 			relation += UString(" ") + tr(state->getPlayer()->name);
-			uiTabs[7]->findControlTyped<Label>("TEXT_ORG_RELATION")
-				->setText(relation);
+			uiTabs[7]->findControlTyped<Label>("TEXT_ORG_RELATION")->setText(relation);
 		}
 
 		int currentOrgIndex = -1;
