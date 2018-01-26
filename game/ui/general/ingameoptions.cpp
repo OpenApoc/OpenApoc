@@ -110,8 +110,8 @@ std::list<std::pair<UString, UString>> openApocList = {
     {"OpenApoc.Mod.CrashingVehicles", "(M) Vehicles crash on low HP"},
     {"OpenApoc.Mod.InvulnerableRoads", "(M) Invulnerable roads"},
     {"OpenApoc.Mod.ATVTank", "(M) Griffon becomes All-Terrain"},
-	{"OpenApoc.Mod.ATVAPC", "(M) Wolfhoud APC becomes All-Terrain" },
-	{"OpenApoc.Mod.BSKLauncherSound", "(M) Original Brainsucker Launcher SFX"},
+    {"OpenApoc.Mod.ATVAPC", "(M) Wolfhoud APC becomes All-Terrain"},
+    {"OpenApoc.Mod.BSKLauncherSound", "(M) Original Brainsucker Launcher SFX"},
 
 };
 

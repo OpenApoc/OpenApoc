@@ -27,7 +27,7 @@ BattleExplosion::BattleExplosion(Vec3<int> position, StateRef<DamageType> damage
                                  StateRef<Organisation> ownerOrg, StateRef<BattleUnit> ownerUnit)
     : position(position), power(power), ticksUntilExpansion(TICKS_MULTIPLIER * 2),
       locationsToExpand({{{position, {power, power}}}, {}, {}}), damageInTheEnd(damageInTheEnd),
-      locationsVisited({position}), damageType(damageType), depletionRate(depletionRate),
+      locationsVisited({position}), damageType(damageType), depletionRate(power / depletionRate),
       ownerUnit(ownerUnit), ownerOrganisation(ownerOrg)
 {
 }
@@ -248,7 +248,7 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 	    };
 
 	if (to.x < 0 || to.x >= map.size.x || to.y < 0 || to.y >= map.size.y || to.z < 0 ||
-	    to.z >= map.size.z || nextPower < 2 * depletionRate ||
+	    to.z >= map.size.z || nextPower < depletionRate ||
 	    locationsVisited.find(to) != locationsVisited.end())
 	{
 		return;
@@ -282,7 +282,7 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 	}
 	// FIXME: Actually read this option
 	int distance = (1 + (dir.x != 0 ? 1 : 0) + (dir.y != 0 ? 1 : 0) + (dir.z != 0 ? 2 : 0));
-	nextPower -= depletionRate * distance / 2;
+	nextPower -= depletionRate * distance;
 
 	// If we reach the tile, and our type has no range dissipation, just apply power
 	int thisPower = nextPower - depletionThis;

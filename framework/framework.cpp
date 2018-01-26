@@ -253,11 +253,14 @@ ConfigOptionBool optionBSKLauncherSound("OpenApoc.Mod", "BSKLauncherSound",
                                         "(MOD) Original Brainsucker Launcher SFX", true);
 ConfigOptionBool optionInvulnerableRoads("OpenApoc.Mod", "InvulnerableRoads",
                                          "(MOD) Invulnerable roads", false);
-ConfigOptionBool optionATVTank("OpenApoc.Mod", "ATVTank", "(MOD) Griffon becomes All-Terrain", true);
+ConfigOptionBool optionATVTank("OpenApoc.Mod", "ATVTank", "(MOD) Griffon becomes All-Terrain",
+                               true);
 
-ConfigOptionBool optionATVAPC("OpenApoc.Mod", "ATVAPC", "(MOD) Wolfhound APC becomes All-Terrain", true);
+ConfigOptionBool optionATVAPC("OpenApoc.Mod", "ATVAPC", "(MOD) Wolfhound APC becomes All-Terrain",
+                              true);
 
-ConfigOptionBool optionCrashingVehicles("OpenApoc.Mod", "CrashingVehicles", "Vehicles crash on low HP", false);
+ConfigOptionBool optionCrashingVehicles("OpenApoc.Mod", "CrashingVehicles",
+                                        "Vehicles crash on low HP", false);
 
 } // anonymous namespace
 
@@ -523,16 +526,16 @@ Framework *Framework::tryGetInstance() { return instance; }
 
 void Framework::run(sp<Stage> initialStage)
 {
-	size_t		frameCount = frameLimit.get();
-	size_t		frame = 0;
-	uint64_t	currenttime, lasttime, frequency;
+	size_t frameCount = frameLimit.get();
+	size_t frame = 0;
+	uint64_t currenttime, lasttime, frequency;
 
 	if (!createWindow)
 	{
 		LogError("Trying to run framework without window");
 		return;
 	}
-	
+
 	TRACE_FN;
 	LogInfo("Program loop started");
 
@@ -629,9 +632,7 @@ void Framework::run(sp<Stage> initialStage)
 	}
 }
 
-double Framework::GetDeltaTime() {
-	return deltatime;
-}
+double Framework::GetDeltaTime() { return deltatime; }
 
 void Framework::processEvents()
 {

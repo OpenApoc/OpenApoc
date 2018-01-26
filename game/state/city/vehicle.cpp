@@ -2159,8 +2159,10 @@ void Vehicle::updateEachSecond(GameState &state)
 	{
 		sp<VEquipment> engine = getEngine();
 
-		if (type->isGround()) {
-			if (position != goalPosition) {
+		if (type->isGround())
+		{
+			if (position != goalPosition)
+			{
 				fuelSpentTicks += FUEL_TICKS_PER_SECOND;
 			}
 		}
@@ -2172,7 +2174,7 @@ void Vehicle::updateEachSecond(GameState &state)
 		if (fuelSpentTicks > FUEL_TICKS_PER_UNIT)
 		{
 			fuelSpentTicks -= FUEL_TICKS_PER_UNIT;
-		// here must be engine
+			// here must be engine
 			if (engine && engine->type->max_ammo > 0)
 			{
 				if (engine->ammo > 0)
