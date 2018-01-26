@@ -32,7 +32,19 @@
    		<item size="0" spacing="0"/>
         <orientation>horizontal</orientation>
       </listbox>
-	  <graphicbutton id="BUTTON_RESEARCH">
+      <label id="TEXT_AGENT_NAME">
+        <position x="100" y="80"/>
+        <size width="275" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_AGENT_ASSIGNMENT">
+        <position x="100" y="98"/>
+        <size width="275" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphicbutton id="BUTTON_RESEARCH">
         <size width="27" height="46"/>
         <position x="408" y="75"/>
         <image/>

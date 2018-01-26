@@ -32,6 +32,18 @@
 		<item size="0" spacing="0"/>
         <orientation>horizontal</orientation>
       </listbox>
+      <label id="TEXT_VEHICLE_NAME">
+        <position x="100" y="80"/>
+        <size width="275" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_VEHICLE_OWNER">
+        <position x="100" y="98"/>
+        <size width="275" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
     </style>
   </form>
 </openapoc>
