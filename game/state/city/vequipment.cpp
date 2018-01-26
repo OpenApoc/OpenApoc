@@ -69,16 +69,18 @@ bool VEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> 
 	this->weaponState = WeaponState::Reloading;
 
 	number_of_shots = this->type->burst;
-	if (number_of_shots == 0) {
+	if (number_of_shots == 0)
+	{
 		number_of_shots = 1;
 	}
 
 	if (this->type->max_ammo != 0)
 	{
-		if (this->ammo < number_of_shots) {
+		if (this->ammo < number_of_shots)
+		{
 			number_of_shots = this->ammo;
 		}
-		this->ammo-= number_of_shots;
+		this->ammo -= number_of_shots;
 	}
 
 	if (type->fire_sfx)
@@ -98,8 +100,9 @@ bool VEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> 
 	for (number_of_shots; number_of_shots > 0; number_of_shots--)
 	{
 
-		City::accuracyAlgorithmCity(state, fromScaled, toScaled, type->accuracy + owner->getAccuracy(),
-			targetVehicle && targetVehicle->isCloaked());
+		City::accuracyAlgorithmCity(state, fromScaled, toScaled,
+		                            type->accuracy + owner->getAccuracy(),
+		                            targetVehicle && targetVehicle->isCloaked());
 
 		Vec3<float> velocity = toScaled - fromScaled;
 		velocity = glm::normalize(velocity);
@@ -107,11 +110,11 @@ bool VEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> 
 		velocity *= type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 
 		auto projectile = mksp<Projectile>(
-			type->guided ? Projectile::Type::Missile : Projectile::Type::Beam, owner, targetVehicle,
-			homingPosition, muzzle, velocity, type->turn_rate, type->ttl, type->damage, /*delay*/ 0,
-			/*depletion rate*/ 0, type->tail_size, type->projectile_sprites, type->impact_sfx,
-			type->explosion_graphic, state.city_common_image_list->projectileVoxelMap, type->stunTicks,
-			type->splitIntoTypes, manual);
+		    type->guided ? Projectile::Type::Missile : Projectile::Type::Beam, owner, targetVehicle,
+		    homingPosition, muzzle, velocity, type->turn_rate, type->ttl, type->damage, /*delay*/ 0,
+		    /*depletion rate*/ 0, type->tail_size, type->projectile_sprites, type->impact_sfx,
+		    type->explosion_graphic, state.city_common_image_list->projectileVoxelMap,
+		    type->stunTicks, type->splitIntoTypes, manual);
 		owner->tileObject->map.addObjectToMap(projectile);
 		owner->city->projectiles.insert(projectile);
 	}
