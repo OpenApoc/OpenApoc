@@ -114,7 +114,7 @@ void AEquipmentSheet::displayAmmo(sp<AEquipment> item, sp<AEquipmentType> itemTy
 	    ->setText(format("%.2f", itemType->getRoundsPerSecond()));
 
 	form->findControlTyped<Label>("LABEL_4_L")->setText(tr("Range"));
-	form->findControlTyped<Label>("LABEL_4_R")->setText(format("%d", itemType->getRangeInTiles()));
+	form->findControlTyped<Label>("LABEL_4_R")->setText(format("%d", itemType->getRangeInMetres()));
 
 	form->findControlTyped<Label>("LABEL_6_C")->setText(tr("Ammo Type:"));
 	form->findControlTyped<Label>("LABEL_7_C")->setText(itemType->damage_type->name);
@@ -149,7 +149,7 @@ void AEquipmentSheet::displayWeapon(sp<AEquipment> item, sp<AEquipmentType> item
 	    ->setText(format("%.2f", ammoType->getRoundsPerSecond()));
 
 	form->findControlTyped<Label>("LABEL_4_L")->setText(tr("Range"));
-	form->findControlTyped<Label>("LABEL_4_R")->setText(format("%d", ammoType->getRangeInTiles()));
+	form->findControlTyped<Label>("LABEL_4_R")->setText(format("%d", ammoType->getRangeInMetres()));
 
 	form->findControlTyped<Label>("LABEL_5_C")->setText(tr("Ammo types:"));
 	int ammoNum = 1;

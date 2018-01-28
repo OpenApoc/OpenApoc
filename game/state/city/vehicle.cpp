@@ -534,7 +534,7 @@ class FlyingVehicleMover : public VehicleMover
 						vehicle.angularVelocity = speed * TURNING_MULT;
 						// Nudge vehicle in the other direction to make animation look even
 						// (otherwise, first frame is 1/2 of other frames)
-						vehicle.facing -= 0.06f * (float)M_PI;
+						vehicle.facing -= 0.06f * (float)M_PI * (float)ticks;
 						if (vehicle.facing < 0.0f)
 						{
 							vehicle.facing += M_2xPI;
@@ -545,7 +545,7 @@ class FlyingVehicleMover : public VehicleMover
 						vehicle.angularVelocity = -speed * TURNING_MULT;
 						// Nudge vehicle in the other direction to make animation look even
 						// (otherwise, first frame is 1/2 of other frames)
-						vehicle.facing += 0.06f * (float)M_PI;
+						vehicle.facing += 0.06f * (float)M_PI * (float)ticks;
 						if (vehicle.facing >= M_2xPI)
 						{
 							vehicle.facing -= M_2xPI;
@@ -2028,6 +2028,7 @@ Vec3<float> Vehicle::getMuzzleLocation() const
 void Vehicle::update(GameState &state, unsigned int ticks)
 {
 	bool turbo = ticks > TICKS_PER_SECOND;
+	bool IsIdle;
 
 	if (stunTicksRemaining >= ticks)
 	{
@@ -2056,10 +2057,13 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	{
 		teleportTicksAccumulated = 0;
 	}
-	if (!this->missions.empty())
+
+	IsIdle = this->missions.empty();
+	if (!IsIdle)
 	{
 		this->missions.front()->update(state, *this, ticks);
 	}
+
 	popFinishedMissions(state);
 
 	int maxShield = this->getMaxShield();
@@ -2143,8 +2147,68 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 				// Try firing point defense weapons
 				else if (!has_active_pd || !fireWeaponsPointDefense(state, arcPD))
 				{
-					// Fire normal weapons
-					fireWeaponsNormal(state, arc);
+					// Fire at building (if ordered to)
+					if (!fireAtBuilding(state, arc))
+					{
+						// If we don't fire at buildings then try to fire at enemy (if ordered to)
+						auto firingRange = getFiringRange();
+						sp<TileObjectVehicle> enemy;
+						if (!missions.empty() &&
+						    missions.front()->type == VehicleMission::MissionType::AttackVehicle &&
+						    tileObject->getDistanceTo(
+						        missions.front()->targetVehicle->tileObject) <= firingRange)
+						{
+							enemy = missions.front()->targetVehicle->tileObject;
+							if (enemy)
+							{
+								attackTarget(state, enemy);
+							}
+						}
+						else
+						{
+							// No orders. Must think ourselves. Find what we can fire at.
+							enemy = findClosestEnemy(state, tileObject, arc);
+							if (enemy)
+							{
+								// Try to attack. Attack won't happen if enemy is out of range.
+								attackTarget(state, enemy);
+							}
+							if (IsIdle)
+							{
+								// If not moving anywhere then search for closest target around.
+								enemy = findClosestEnemy(state, tileObject, {8, 8});
+								if (enemy)
+								{
+									// Determine target position.
+									Vec3<float> enemypos = enemy->getPosition();
+									auto facing_direction = type->directionToVector(direction);
+									Vec2<float> facing2d = {facing_direction.x, facing_direction.y};
+									Vec2<float> target2d = {enemypos.x - position.x,
+															enemypos.y - position.y};
+									facing2d = glm::normalize(facing2d);
+									target2d = glm::normalize(target2d);
+									float angleXY = glm::angle(facing2d, target2d);
+									// Check if target is in our firing arc.
+									if (angleXY > (float)arc.x * (float)M_PI / 8.0f)
+									{
+										// Turn towards closest target (firing will start
+										// automatically).
+										// It is pseudoscalar product. It is needed to determine
+										// direction: right or left.
+										if (facing2d.x * target2d.y - facing2d.y * target2d.x > 0)
+										{
+											this->facing += 0.06f * (float)M_PI * (float)ticks;
+										}
+										else
+										{
+											this->facing -= 0.06f * (float)M_PI * (float)ticks;
+										}
+										this->updateSprite(state);
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 		}
@@ -2681,7 +2745,8 @@ bool Vehicle::fireWeaponsPointDefense(GameState &state, Vec2<int> arc)
 	return false;
 }
 
-void Vehicle::fireWeaponsNormal(GameState &state, Vec2<int> arc)
+bool Vehicle::fireAtBuilding(GameState &state,
+                             Vec2<int> arc) // TODO: this function must return target only, not fire
 {
 	auto firingRange = getFiringRange();
 
@@ -2726,31 +2791,12 @@ void Vehicle::fireWeaponsNormal(GameState &state, Vec2<int> arc)
 				if (tileObject->getDistanceTo(closestPart) <= firingRange)
 				{
 					attackTarget(state, closestPart);
-					return;
 				}
 			}
 		}
+		return true;
 	}
-
-	// Attack vehicles
-	sp<TileObjectVehicle> enemy;
-	if (!missions.empty() && missions.front()->type == VehicleMission::MissionType::AttackVehicle &&
-	    tileObject->getDistanceTo(missions.front()->targetVehicle->tileObject) <= firingRange)
-	{
-		enemy = missions.front()->targetVehicle->tileObject;
-	}
-	else
-	{
-		if (type->aggressiveness > 0)
-		{
-			enemy = findClosestEnemy(state, tileObject, arc);
-		}
-	}
-
-	if (enemy)
-	{
-		attackTarget(state, enemy);
-	}
+	return false;
 }
 
 void Vehicle::fireWeaponsManual(GameState &state, Vec2<int> arc)
