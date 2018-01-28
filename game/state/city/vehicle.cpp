@@ -2178,7 +2178,7 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 									auto facing_direction = type->directionToVector(direction);
 									Vec2<float> facing2d = {facing_direction.x, facing_direction.y};
 									Vec2<float> target2d = {enemypos.x - position.x,
-															enemypos.y - position.y};
+									                        enemypos.y - position.y};
 									facing2d = glm::normalize(facing2d);
 									target2d = glm::normalize(target2d);
 									float angleXY = glm::angle(facing2d, target2d);
