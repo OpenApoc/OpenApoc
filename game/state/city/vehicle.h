@@ -15,6 +15,8 @@
 
 namespace OpenApoc
 {
+// Smoke slightly over vehicle.
+static const Vec3<float> SMOKE_DOODAD_SHIFT{0.0f, 0.0f, 0.25f};
 
 static const unsigned CLOAK_TICKS_REQUIRED_VEHICLE = TICKS_PER_SECOND * 3 / 2;
 static const unsigned TELEPORT_TICKS_REQUIRED_VEHICLE = TICKS_PER_SECOND * 30;
@@ -239,6 +241,10 @@ class Vehicle : public StateObject,
 	void enterBuilding(GameState &state, StateRef<Building> b);
 	/* Sets up the 'mover' after state serialize in */
 	void setupMover();
+	// Remove all tile objects that belongs to vehicle.
+	void removeFromMap(GameState &state);
+	// Set the vehicle crashed (or not).
+	void setCrashed(GameState &state, bool crashed = true);
 
 	void processRecoveredVehicle(GameState &state);
 	void dropCarriedVehicle(GameState &state);

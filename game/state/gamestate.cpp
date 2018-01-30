@@ -62,11 +62,7 @@ GameState::~GameState()
 	for (auto &v : this->vehicles)
 	{
 		auto vehicle = v.second;
-		if (vehicle->tileObject)
-		{
-			vehicle->tileObject->removeFromMap();
-		}
-		vehicle->tileObject = nullptr;
+		vehicle->removeFromMap(*this);
 		// Detatch some back-pointers otherwise we get circular sp<> depedencies and leak
 		// FIXME: This is not a 'good' way of doing this, maybe add a destroyVehicle() function? Or
 		// make StateRefWeak<> or something?
@@ -181,8 +177,10 @@ void GameState::initState()
 			auto vehicle = v.second;
 			if (vehicle->city == city && !vehicle->currentBuilding)
 			{
-				city->map->addObjectToMap(vehicle);
+				city->map->addObjectToMap(*this, vehicle);
 			}
+			vehicle->strategyImages = city_common_image_list->strategyImages;
+			vehicle->setupMover();
 		}
 		for (auto &p : c.second->projectiles)
 		{
@@ -192,16 +190,6 @@ void GameState::initState()
 		if (city->portals.empty())
 		{
 			city->generatePortals(*this);
-		}
-	}
-	for (auto &v : this->vehicles)
-	{
-		v.second->strategyImages = city_common_image_list->strategyImages;
-		v.second->setupMover();
-		if (v.second->crashed)
-		{
-			v.second->smokeDoodad =
-			    v.second->city->placeDoodad({this, "DOODAD_13_SMOKE_FUME"}, v.second->position);
 		}
 	}
 	// Fill links for weapon's ammo

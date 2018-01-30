@@ -2173,19 +2173,25 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				cancelled = true;
 				return;
 			}
+			// Only X-Com can storm UFO
+			if (targetVehicle->owner == state.getAliens() && v.owner != state.getPlayer())
+			{
+				cancelled = true;
+				return;
+			}
 			// Find soldier
-			bool foundSoldier =
+			bool needSoldiersButNotFound =
 			    v.owner == state.getPlayer() ||
-			    state.getPlayer()->isRelatedTo(v.owner) != Organisation::Relation::Hostile;
+			    v.owner->isRelatedTo(targetVehicle->owner) == Organisation::Relation::Hostile;
 			for (auto &a : v.currentAgents)
 			{
 				if (a->type->role == AgentType::Role::Soldier)
 				{
-					foundSoldier = true;
+					needSoldiersButNotFound = false;
 					break;
 				}
 			}
-			if (!foundSoldier)
+			if (needSoldiersButNotFound)
 			{
 				cancelled = true;
 				return;
@@ -2196,8 +2202,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				case 0:
 				{
 					// Vehicle has crashed successfully and we're on top of it
-					if (targetVehicle->velocity.x == 0.0f && targetVehicle->velocity.y == 0.0f &&
-					    targetVehicle->velocity.z == 0.0f &&
+					if (targetVehicle->crashed &&
 					    (Vec3<int>)v.position == (Vec3<int>)targetVehicle->position)
 					{
 						missionCounter++;
@@ -2534,8 +2539,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			else
 			{
-				v.smokeDoodad = v.city->placeDoodad({&state, "DOODAD_13_SMOKE_FUME"},
-				                                    v.position + Vec3<float>{0.0f, 0.0f, 0.25f});
+				v.setCrashed(state);
 			}
 			return;
 		}

@@ -148,7 +148,7 @@ class TileMap
 	                          Vec3<float> targetVectorXY, float velocityXY, float velocityZ) const;
 
 	void addObjectToMap(sp<Projectile>);
-	void addObjectToMap(sp<Vehicle>);
+	void addObjectToMap(GameState &state, sp<Vehicle>);
 	void addObjectToMap(sp<Scenery>);
 	void addObjectToMap(sp<Doodad>);
 	void addObjectToMap(sp<BattleMapPart>);
