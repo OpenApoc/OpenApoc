@@ -3255,6 +3255,7 @@ bool CityView::handleGameStateEvent(Event *e)
 					LogError("No UFOPaedia category found for entry %s", ufopaedia_entry->title);
 				}
 			}
+			setUpdateSpeed(CityUpdateSpeed::Pause);
 			auto message_box = mksp<MessageBox>(
 			    tr("RESEARCH COMPLETE"),
 			    format("%s\n%s\n%s", tr("Research project completed:"), ev->topic->name,
@@ -3276,7 +3277,6 @@ bool CityView::handleGameStateEvent(Event *e)
 			    [this, game_state, lab_facility]() {
 				    fw().stageQueueCommand(
 				        {StageCmd::Command::PUSH, mksp<ResearchScreen>(game_state, lab_facility)});
-				    setUpdateSpeed(CityUpdateSpeed::Speed1);
 				});
 			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 		}
@@ -3326,6 +3326,7 @@ bool CityView::handleGameStateEvent(Event *e)
 					item_name = game_state->vehicle_types[ev->topic->itemId]->name;
 					break;
 			}
+			setUpdateSpeed(CityUpdateSpeed::Pause);
 			auto message_box = mksp<MessageBox>(
 			    tr("MANUFACTURE COMPLETED"),
 			    format("%s\n%s\n%s %d\n%d", lab_base->name, tr(item_name), tr("Quantity:"),
@@ -3335,7 +3336,6 @@ bool CityView::handleGameStateEvent(Event *e)
 			    [this, game_state, lab_facility]() {
 				    fw().stageQueueCommand(
 				        {StageCmd::Command::PUSH, mksp<ResearchScreen>(game_state, lab_facility)});
-				    setUpdateSpeed(CityUpdateSpeed::Speed1);
 				});
 			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 		}
@@ -3385,6 +3385,7 @@ bool CityView::handleGameStateEvent(Event *e)
 					item_name = game_state->vehicles[ev->topic->itemId]->name;
 					break;
 			}
+			setUpdateSpeed(CityUpdateSpeed::Pause);
 			auto message_box =
 			    mksp<MessageBox>(tr("MANUFACTURING HALTED"),
 			                     format("%s\n%s\n%s %d/%d\n%d", lab_base->name, tr(item_name),
@@ -3402,6 +3403,7 @@ bool CityView::handleGameStateEvent(Event *e)
 				LogError("Invalid facility event");
 				return true;
 			}
+			setUpdateSpeed(CityUpdateSpeed::Pause);
 			auto message_box =
 			    mksp<MessageBox>(tr("FACILITY COMPLETED"),
 			                     format("%s\n%s", ev->base->name, tr(ev->facility->type->name)),
