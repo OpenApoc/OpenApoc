@@ -1300,6 +1300,14 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 				}
 				else // Port out
 				{
+					// Update score for UFO incursion
+					if (v.owner == state.getAliens() && v.city.id == "CITYMAP_HUMAN")
+					{
+						int incursionScore = -v.type->score / 4;
+						state.weekScore.incursions += incursionScore;
+						state.totalScore.incursions += incursionScore;
+					}
+
 					for (auto &city : state.cities)
 					{
 						if (city.second != v.city.getSp())
