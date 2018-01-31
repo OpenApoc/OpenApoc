@@ -215,7 +215,8 @@ void MultilistBox::eventOccured(Event *e)
 				{
 					selectedItem = child;
 					selectionAction = selectedSet.find(child) == selectedSet.end();
-					if (selectionAction && funcHandleSelection(e, child, true))
+					bool sel = funcHandleSelection(e, child, true);
+					if (selectionAction && sel)
 					{
 						selectedSet.insert(child);
 						this->pushFormEvent(FormEventType::ListBoxChangeSelected, e);
@@ -226,10 +227,10 @@ void MultilistBox::eventOccured(Event *e)
 			case FormEventType::MouseUp:
 				if (ctrl == child && isPointInsideControlBounds(e, child) && ctrl != scroller)
 				{
+					bool sel = funcHandleSelection(e, child, false);
 					// unselect only if it hasnt been selected during this click
 					if (!selectionAction && selectedItem == child &&
-					    selectedSet.find(child) != selectedSet.end() &&
-					    !funcHandleSelection(e, child, false))
+					    selectedSet.find(child) != selectedSet.end() && !sel)
 					{
 						selectedSet.erase(child);
 						this->pushFormEvent(FormEventType::ListBoxChangeSelected, e);

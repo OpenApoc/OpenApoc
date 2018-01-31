@@ -84,8 +84,8 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 			this->currentAgent = agent;
 		}
 		auto icon = c->findControl(ControlGenerator::AGENT_ICON_NAME);
-		if (agent && icon && c->isPointInsideControlBounds(e, icon) &&
-		    Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right))
+		if (agent && icon && c->isPointInsideControlBounds(e, icon) && !select &&
+		    !this->isMouseMoved)
 		{
 			this->isDragged = false;
 			fw().stageQueueCommand(
@@ -104,8 +104,8 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 
 		auto vehicle = c->getData<Vehicle>();
 		auto icon = c->findControl(ControlGenerator::VEHICLE_ICON_NAME);
-		if (vehicle && icon && c->isPointInsideControlBounds(e, icon) &&
-		    Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right))
+		if (vehicle && icon && c->isPointInsideControlBounds(e, icon) && !select &&
+		    !this->isMouseMoved)
 		{
 			this->isDragged = false;
 
@@ -338,6 +338,7 @@ void AgentAssignment::updateLocation()
 				    return;
 
 			    isDragged = false;
+			    isMouseMoved = false;
 			    draggedList->setVisible(false);
 
 			    auto building = buildingLeftControl->getData<Building>();
@@ -397,6 +398,7 @@ void AgentAssignment::updateLocation()
 				return;
 
 			isDragged = false;
+			isMouseMoved = false;
 			draggedList->setVisible(false);
 
 			auto building = agentLeftList->getParent()->getData<Building>();
@@ -476,6 +478,7 @@ void AgentAssignment::addVehiclesToList(sp<MultilistBox> list, const int listOff
 				return;
 
 			isDragged = false;
+			isMouseMoved = false;
 			draggedList->setVisible(false);
 
 			auto vehicle = vehicleControl->getData<Vehicle>();
@@ -682,6 +685,7 @@ void AgentAssignment::eventOccured(Event *e)
 				{
 					// miss click
 					isDragged = false;
+					isMouseMoved = false;
 					draggedList->setVisible(false);
 				}
 			}
@@ -696,6 +700,7 @@ void AgentAssignment::eventOccured(Event *e)
 			// if dragged - change location of dragged list
 			if (isDragged)
 			{
+				isMouseMoved = true;
 				int distance = (positionX - e->mouse().X) * (positionX - e->mouse().X) +
 				               (positionY - e->mouse().Y) * (positionY - e->mouse().Y);
 				if (distance > insensibility)
