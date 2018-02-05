@@ -2702,7 +2702,9 @@ void CityView::update()
 		}
 
 		auto selectedOrg = state->current_city->cityViewSelectedOrganisation;
-		if (selectedOrg)
+		if (selectedOrg && (state->current_city->cityViewOrgButtonIndex == 0 ||
+		                    static_cast<int>(selectedOrg->isRelatedTo(state->getPlayer())) ==
+		                        state->current_city->cityViewOrgButtonIndex - 1))
 		{
 			uiTabs[7]->findControlTyped<Label>("TEXT_ORG_NAME")->setText(tr(selectedOrg->name));
 			UString relation = "";
@@ -2726,6 +2728,11 @@ void CityView::update()
 			}
 			relation += UString(" ") + tr(state->getPlayer()->name);
 			uiTabs[7]->findControlTyped<Label>("TEXT_ORG_RELATION")->setText(relation);
+		}
+		else
+		{
+			uiTabs[7]->findControlTyped<Label>("TEXT_ORG_NAME")->setText("");
+			uiTabs[7]->findControlTyped<Label>("TEXT_ORG_RELATION")->setText("");
 		}
 
 		int currentOrgIndex = -1;
@@ -2821,7 +2828,7 @@ void CityView::update()
 
 	// If we have 'follow vehicle' enabled we clobber any other movement that may have occurred in
 	// this frame
-	if (this->followVehicle)
+	if (this->followVehicle && this->updateSpeed != CityUpdateSpeed::Pause)
 	{
 		if (!state->current_city->cityViewSelectedVehicles.empty())
 		{
