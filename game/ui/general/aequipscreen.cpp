@@ -275,7 +275,8 @@ void AEquipScreen::eventOccurred(Event *e)
 	auto currentAgent = selectedAgents.front();
 
 	// Templates:
-	if (config().getBool("OpenApoc.NewFeature.EnableAgentTemplates"))
+	if (config().getBool("OpenApoc.NewFeature.EnableAgentTemplates") &&
+	    !formAgentStats->findControlTyped<TextEdit>("AGENT_NAME")->isFocused())
 	{
 		switch (e->keyboard().KeyCode)
 		{
