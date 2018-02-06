@@ -5,6 +5,7 @@
 #include "forms/listbox.h"
 #include "forms/radiobutton.h"
 #include "forms/scrollbar.h"
+#include "forms/textedit.h"
 #include "forms/ui.h"
 #include "framework/apocresources/cursor.h"
 #include "framework/configfile.h"
@@ -80,6 +81,26 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 		selectAgent(agent, Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
 		            modifierLCtrl || modifierRCtrl);
 	});
+
+	// Agent name edit
+	formAgentStats->findControlTyped<TextEdit>("AGENT_NAME")
+	    ->addCallback(FormEventType::TextEditFinish, [this](FormsEvent *e) {
+		    auto currentAgent = selectedAgents.empty() ? nullptr : selectedAgents.front();
+		    if (currentAgent)
+		    {
+			    currentAgent->name =
+			        std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)->getText();
+		    }
+		});
+	formAgentStats->findControlTyped<TextEdit>("AGENT_NAME")
+	    ->addCallback(FormEventType::TextEditCancel, [this](FormsEvent *e) {
+		    auto currentAgent = selectedAgents.empty() ? nullptr : selectedAgents.front();
+		    if (currentAgent)
+		    {
+			    std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)
+			        ->setText(currentAgent->name);
+		    }
+		});
 
 	woundImage = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
 	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
@@ -233,6 +254,8 @@ void AEquipScreen::eventOccurred(Event *e)
 	// Form keyboard controls
 	if (e->type() == EVENT_KEY_DOWN)
 	{
+		if (formAgentStats->findControlTyped<TextEdit>("AGENT_NAME")->isFocused())
+			return;
 		switch (e->keyboard().KeyCode)
 		{
 			case SDLK_ESCAPE:
@@ -252,7 +275,8 @@ void AEquipScreen::eventOccurred(Event *e)
 	auto currentAgent = selectedAgents.front();
 
 	// Templates:
-	if (config().getBool("OpenApoc.NewFeature.EnableAgentTemplates"))
+	if (config().getBool("OpenApoc.NewFeature.EnableAgentTemplates") &&
+	    !formAgentStats->findControlTyped<TextEdit>("AGENT_NAME")->isFocused())
 	{
 		switch (e->keyboard().KeyCode)
 		{

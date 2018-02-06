@@ -136,10 +136,16 @@ void BaseScreen::begin()
 		    // FIXME: If you don't have any facilities this button should do nothing
 		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<ResearchScreen>(state)});
 		});
+	// Base name edit
 	form->findControlTyped<TextEdit>("TEXT_BASE_NAME")
 	    ->addCallback(FormEventType::TextEditFinish, [this](FormsEvent *e) {
 		    this->state->current_base->name =
 		        std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)->getText();
+		});
+	form->findControlTyped<TextEdit>("TEXT_BASE_NAME")
+	    ->addCallback(FormEventType::TextEditCancel, [this](FormsEvent *e) {
+		    std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)
+		        ->setText(this->state->current_base->name);
 		});
 }
 
@@ -155,9 +161,16 @@ void BaseScreen::eventOccurred(Event *e)
 
 	if (e->type() == EVENT_KEY_DOWN)
 	{
+		if (form->findControlTyped<TextEdit>("TEXT_BASE_NAME")->isFocused())
+			return;
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			fw().stageQueueCommand({StageCmd::Command::POP});
+			return;
+		}
+		if (e->keyboard().KeyCode == SDLK_RETURN)
+		{
+			form->findControl("BUTTON_OK")->click();
 			return;
 		}
 		if (e->keyboard().KeyCode == SDLK_F10)

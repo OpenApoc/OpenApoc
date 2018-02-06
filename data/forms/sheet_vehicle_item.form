@@ -4,6 +4,12 @@
     <style minwidth="160" minheight="280">
       <position x="centre" y="centre"/>
       <size width="160" height="280"/>
+      <textedit id="TEXT_VEHICLE_NAME" text="VEHICLE NAME GOES HERE">
+        <position x="0" y="86"/>
+        <size width="160" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </textedit>
       <label id="ITEM_NAME" text="ITEM NAME GOES HERE">
         <position x="0" y="86"/>
         <size width="160" height="15"/>

@@ -3,6 +3,7 @@
 #include "forms/graphic.h"
 #include "forms/label.h"
 #include "forms/radiobutton.h"
+#include "forms/textedit.h"
 #include "forms/ui.h"
 #include "framework/apocresources/cursor.h"
 #include "framework/configfile.h"
@@ -69,6 +70,24 @@ VEquipScreen::VEquipScreen(sp<GameState> state)
 		LogError("No vehicles found - the original apoc didn't open the equip screen in this case");
 	}
 
+	// Vehicle name edit
+	form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")
+	    ->addCallback(FormEventType::TextEditFinish, [this](FormsEvent *e) {
+		    if (this->selected)
+		    {
+			    this->selected->name =
+			        std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)->getText();
+		    }
+		});
+	form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")
+	    ->addCallback(FormEventType::TextEditCancel, [this](FormsEvent *e) {
+		    if (this->selected)
+		    {
+			    std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)
+			        ->setText(this->selected->name);
+		    }
+		});
+
 	this->paperDoll->setNonHighlightColour(EQUIP_GRID_COLOUR);
 	this->setHighlightedSlotType(EquipmentSlotType::VehicleWeapon);
 }
@@ -104,6 +123,8 @@ void VEquipScreen::begin()
 		if (vehicle == this->selected)
 		{
 			vehicleSelectBox->setSelected(graphic);
+			highlightedVehicle = vehicle;
+			VehicleSheet(formVehicleItem).display(vehicle);
 		}
 	}
 }
@@ -148,9 +169,16 @@ void VEquipScreen::eventOccurred(Event *e)
 
 	if (e->type() == EVENT_KEY_DOWN)
 	{
+		if (form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")->isFocused())
+			return;
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			fw().stageQueueCommand({StageCmd::Command::POP});
+			return;
+		}
+		if (e->keyboard().KeyCode == SDLK_RETURN)
+		{
+			form->findControl("BUTTON_OK")->click();
 			return;
 		}
 	}
