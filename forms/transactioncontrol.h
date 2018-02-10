@@ -111,6 +111,7 @@ class TransactionControl : public Control
 	static sp<BitmapFont> labelFont;
 	static bool resourcesInitialised;
 	static void initResources();
+	static sp<GameState> state;
 
   protected:
 	// Link
@@ -156,25 +157,25 @@ class TransactionControl : public Control
 
 	// Transferring/Buying/selling agent equipment and ammo
 	// Transferring agents
-	static sp<TransactionControl> createControl(GameState &state, StateRef<Agent> agent,
+	static sp<TransactionControl> createControl(sp<GameState> in_state, StateRef<Agent> agent,
 	                                            int indexLeft, int indexRight);
 	// Transferring/Sacking alien containment
-	static sp<TransactionControl> createControl(GameState &state,
+	static sp<TransactionControl> createControl(sp<GameState> in_state,
 	                                            StateRef<AEquipmentType> agentEquipmentType,
 	                                            int indexLeft, int indexRight);
 	// Transferring/Buying/selling vehicle equipment
-	static sp<TransactionControl> createControl(GameState &state,
+	static sp<TransactionControl> createControl(sp<GameState> in_state,
 	                                            StateRef<VEquipmentType> vehicleEquipmentType,
 	                                            int indexLeft, int indexRight);
 	// Transferring/Buying/selling vehicle ammo and fuel
-	static sp<TransactionControl> createControl(GameState &state,
+	static sp<TransactionControl> createControl(sp<GameState> in_state,
 	                                            StateRef<VAmmoType> vehicleAmmoType, int indexLeft,
 	                                            int indexRight);
 	// Buying vehicles
-	static sp<TransactionControl> createControl(GameState &state, StateRef<VehicleType> vehicleType,
+	static sp<TransactionControl> createControl(sp<GameState> in_state, StateRef<VehicleType> vehicleType,
 	                                            int indexLeft, int indexRight);
 	// Transferring/Selling vehicles
-	static sp<TransactionControl> createControl(GameState &state, StateRef<Vehicle> vehicle,
+	static sp<TransactionControl> createControl(sp<GameState> in_state, StateRef<Vehicle> vehicle,
 	                                            int indexLeft, int indexRight);
 
 	static sp<TransactionControl> createControl(const UString &id, Type type, const UString &name,
@@ -201,7 +202,7 @@ class TransactionControl : public Control
   public:
 	//~TransactionControl() override;
 
-	// void eventOccured(Event *e) override;
+	void eventOccured(Event *e) override;
 	// void update() override;
 	void unloadResources() override;
 };

@@ -22,6 +22,7 @@
 #include "game/state/tilemap/tilemap.h"
 #include "game/ui/components/equipscreen.h"
 #include "game/ui/general/vehiclesheet.h"
+#include "game/ui/ufopaedia/ufopaediacategoryview.h"
 #include "library/strings_format.h"
 #include <cmath>
 
@@ -117,6 +118,7 @@ void VEquipScreen::begin()
 			VehicleSheet(formVehicleItem).display(selected);
 		});
 		graphic->AutoSize = true;
+		graphic->update();
 		vehicleSelectBox->addItem(graphic);
 		this->vehicleSelectionControls[graphic] = vehicle;
 
@@ -182,176 +184,252 @@ void VEquipScreen::eventOccurred(Event *e)
 			return;
 		}
 	}
-	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::MouseDown)
+
+	if (e->type() == EVENT_FORM_INTERACTION)
 	{
-		auto it = this->vehicleSelectionControls.find(e->forms().RaisedBy);
-		if (it != this->vehicleSelectionControls.end())
+		switch (e->forms().EventFlag)
 		{
-			this->setSelectedVehicle(it->second);
-			if (highlightedEquipment)
+
+			case FormEventType::ButtonClick:
 			{
-				VehicleSheet(formVehicleItem).display(highlightedEquipment);
-			}
-			else
-			{
-				VehicleSheet(formVehicleItem).display(selected);
-			}
-			return;
-		}
-	}
-	else if (e->type() == EVENT_FORM_INTERACTION &&
-	         e->forms().EventFlag == FormEventType::ButtonClick)
-	{
-
-		if (e->forms().RaisedBy->Name == "BUTTON_OK")
-		{
-			fw().stageQueueCommand({StageCmd::Command::POP});
-			return;
-		}
-	}
-	else if (e->type() == EVENT_FORM_INTERACTION &&
-	         e->forms().EventFlag == FormEventType::CheckBoxChange)
-	{
-		if (form->findControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->isChecked())
-		{
-			this->setHighlightedSlotType(EquipmentSlotType::VehicleWeapon);
-			return;
-		}
-		else if (form->findControlTyped<RadioButton>("BUTTON_SHOW_ENGINES")->isChecked())
-		{
-			this->setHighlightedSlotType(EquipmentSlotType::VehicleEngine);
-			return;
-		}
-		else if (form->findControlTyped<RadioButton>("BUTTON_SHOW_GENERAL")->isChecked())
-		{
-			this->setHighlightedSlotType(EquipmentSlotType::VehicleGeneral);
-			return;
-		}
-	}
-
-	// Reset the highlight box even if we're dragging
-	if (e->type() == EVENT_MOUSE_MOVE)
-	{
-		this->drawHighlightBox = false;
-	}
-
-	// Check if we've moused over equipment/vehicle so we can show the stats.
-	if (e->type() == EVENT_MOUSE_MOVE && !this->draggedEquipment)
-	{
-		// Wipe any previously-highlighted stuff
-		this->highlightedEquipment = "";
-
-		Vec2<int> mousePos{e->mouse().X, e->mouse().Y};
-
-		// Check if we're over any equipment in the paper doll
-		auto mouseSlotPos = this->paperDoll->getSlotPositionFromScreenPosition(mousePos);
-		auto equipment =
-		    std::dynamic_pointer_cast<VEquipment>(this->selected->getEquipmentAt(mouseSlotPos));
-		if (equipment)
-		{
-			this->highlightedEquipment = equipment->type;
-			VehicleSheet(formVehicleItem).display(highlightedEquipment);
-			return;
-		}
-
-		// Check if we're over any equipment in the list at the bottom
-		for (auto &pair : this->inventoryItems)
-		{
-			if (pair.first.within(mousePos))
-			{
-				this->highlightedEquipment = pair.second;
-				this->drawHighlightBox = true;
-				this->highlightBoxColour = {255, 255, 255, 255};
-				this->highlightBox = pair.first;
-				VehicleSheet(formVehicleItem).display(highlightedEquipment);
-				return;
-			}
-		}
-		VehicleSheet(formVehicleItem).display(highlightedVehicle);
-	}
-	// Find the base this vehicle is landed in
-	StateRef<Base> base = selected->currentBuilding ? selected->currentBuilding->base : nullptr;
-
-	// Only allow removing equipment if we're in a base, otherwise it'll disappear
-	if (e->type() == EVENT_MOUSE_DOWN && base)
-	{
-		Vec2<int> mousePos{e->mouse().X, e->mouse().Y};
-
-		// Check if we're over any equipment in the paper doll
-		auto mouseSlotPos = this->paperDoll->getSlotPositionFromScreenPosition(mousePos);
-		auto equipment =
-		    std::dynamic_pointer_cast<VEquipment>(this->selected->getEquipmentAt(mouseSlotPos));
-		if (equipment)
-		{
-			// FIXME: base->addBackToInventory(item); vehicle->unequip(item);
-			this->draggedEquipment = equipment->type;
-			this->draggedEquipmentOffset = {0, 0};
-
-			// Return the equipment to the inventory
-			this->selected->removeEquipment(equipment);
-			equipment->unequipToBase(*state, base);
-			this->paperDoll->updateEquipment();
-
-			// Immediate action: put to the base
-			if ((modifierLShift || modifierRShift) &&
-			    config().getBool("OpenApoc.NewFeature.AdvancedInventoryControls"))
-			{
-				this->draggedEquipment = nullptr;
-			}
-			return;
-		}
-
-		// Check if we're over any equipment in the list at the bottom
-		for (auto &pair : this->inventoryItems)
-		{
-			if (pair.first.within(mousePos))
-			{
-				// Dragging an object doesn't (Yet) remove it from the inventory
-				this->draggedEquipment = pair.second;
-				this->draggedEquipmentOffset = pair.first.p0 - mousePos;
-
-				// Immediate action: try put on vehicle
-				if ((modifierLShift || modifierRShift) &&
-				    config().getBool("OpenApoc.NewFeature.AdvancedInventoryControls"))
+				if (e->forms().RaisedBy->Name == "BUTTON_OK")
 				{
-					auto e = this->selected->addEquipment(*state, this->draggedEquipment);
-					if (e)
+					fw().stageQueueCommand({StageCmd::Command::POP});
+					return;
+				}
+				break;
+			}
+
+			case FormEventType::CheckBoxChange:
+			{
+				if (form->findControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->isChecked())
+				{
+					this->setHighlightedSlotType(EquipmentSlotType::VehicleWeapon);
+					return;
+				}
+				else if (form->findControlTyped<RadioButton>("BUTTON_SHOW_ENGINES")->isChecked())
+				{
+					this->setHighlightedSlotType(EquipmentSlotType::VehicleEngine);
+					return;
+				}
+				else if (form->findControlTyped<RadioButton>("BUTTON_SHOW_GENERAL")->isChecked())
+				{
+					this->setHighlightedSlotType(EquipmentSlotType::VehicleGeneral);
+					return;
+				}
+				break;
+			}
+
+			case FormEventType::MouseDown:
+			{
+				if (Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right))
+				{
+					Vec2<int> mousePos{e->forms().MouseInfo.X + e->forms().RaisedBy->Location.x,
+					                   e->forms().MouseInfo.Y + e->forms().RaisedBy->Location.y};
+
+					if (e->forms().RaisedBy->Name == "INVENTORY")
 					{
+						// Display ufopaedia article for items in inventory
+						for (auto &pair : this->inventoryItems)
+						{
+							if (pair.first.within(mousePos))
+							{
+								UfopaediaCategoryView::OpenUfopaediaArticle(state,
+								                                            pair.second->name);
+								return;
+							}
+						}
+					}
+					else if (e->forms().RaisedBy->Name == "PAPER_DOLL")
+					{
+						// Display ufopaedia article for equipped items
+						auto mouseSlotPos =
+						    this->paperDoll->getSlotPositionFromScreenPosition(mousePos);
+						auto equipment = std::dynamic_pointer_cast<VEquipment>(
+						    this->selected->getEquipmentAt(mouseSlotPos));
+						if (equipment)
+						{
+							UfopaediaCategoryView::OpenUfopaediaArticle(state,
+							                                            equipment->type->name);
+							return;
+						}
+					}
+					else
+					{
+						// Display ufopaedia article for selected vehicle
+						auto it = this->vehicleSelectionControls.find(e->forms().RaisedBy);
+						if (it != this->vehicleSelectionControls.end())
+						{
+							if (Event::isPressed(e->forms().MouseInfo.Button,
+							                     Event::MouseButton::Right))
+							{
+								UfopaediaCategoryView::OpenUfopaediaArticle(state,
+								                                            it->second->type->name);
+								return;
+							}
+						}
+					}
+				}
+				else
+				{
+					// Select vehicle
+					auto it = this->vehicleSelectionControls.find(e->forms().RaisedBy);
+					if (it != this->vehicleSelectionControls.end())
+					{
+						this->setSelectedVehicle(it->second);
+						if (highlightedEquipment)
+						{
+							VehicleSheet(formVehicleItem).display(highlightedEquipment);
+						}
+						else
+						{
+							VehicleSheet(formVehicleItem).display(selected);
+						}
+						return;
+					}
+
+					if (e->forms().RaisedBy->Name == "INVENTORY" ||
+					    e->forms().RaisedBy->Name == "PAPER_DOLL")
+					{
+						// Find the base this vehicle is landed in
+						StateRef<Base> base =
+						    selected->currentBuilding ? selected->currentBuilding->base : nullptr;
+						// Only allow removing equipment if we're in a base, otherwise it'll
+						// disappear
+						if (base)
+						{
+							Vec2<int> mousePos{
+							    e->forms().MouseInfo.X + e->forms().RaisedBy->Location.x,
+							    e->forms().MouseInfo.Y + e->forms().RaisedBy->Location.y};
+
+							// Check if we're over any equipment in the paper doll
+							auto mouseSlotPos =
+							    this->paperDoll->getSlotPositionFromScreenPosition(mousePos);
+							auto equipment = std::dynamic_pointer_cast<VEquipment>(
+							    this->selected->getEquipmentAt(mouseSlotPos));
+							if (equipment)
+							{
+								// FIXME: base->addBackToInventory(item); vehicle->unequip(item);
+								this->draggedEquipment = equipment->type;
+								this->draggedEquipmentOffset = {0, 0};
+								// Return the equipment to the inventory
+								this->selected->removeEquipment(equipment);
+								equipment->unequipToBase(*state, base);
+								this->paperDoll->updateEquipment();
+								// Immediate action: put to the base
+								if ((modifierLShift || modifierRShift) &&
+								    config().getBool(
+								        "OpenApoc.NewFeature.AdvancedInventoryControls"))
+								{
+									this->draggedEquipment = nullptr;
+								}
+								return;
+							}
+
+							// Check if we're over any equipment in the list at the bottom
+							for (auto &pair : this->inventoryItems)
+							{
+								if (pair.first.within(mousePos))
+								{
+									// Dragging an object doesn't (Yet) remove it from the inventory
+									this->draggedEquipment = pair.second;
+									this->draggedEquipmentOffset = pair.first.p0 - mousePos;
+
+									// Immediate action: try put on vehicle
+									if ((modifierLShift || modifierRShift) &&
+									    config().getBool(
+									        "OpenApoc.NewFeature.AdvancedInventoryControls"))
+									{
+										auto e = this->selected->addEquipment(
+										    *state, this->draggedEquipment);
+										if (e)
+										{
+											e->equipFromBase(*state, base);
+											this->paperDoll->updateEquipment();
+										}
+										this->draggedEquipment = nullptr;
+									}
+									return;
+								}
+							}
+						}
+					}
+				}
+				break;
+			}
+
+			case FormEventType::MouseUp:
+			{
+				if (this->draggedEquipment)
+				{
+					StateRef<Base> base =
+					    selected->currentBuilding ? selected->currentBuilding->base : nullptr;
+					// Are we over the grid? If so try to place it on the vehicle.
+					auto paperDollControl = form->findControlTyped<Graphic>("PAPER_DOLL");
+					Vec2<int> equipOffset = paperDollControl->Location + form->Location;
+
+					Vec2<int> equipmentPos =
+					    fw().getCursor().getPosition() + this->draggedEquipmentOffset;
+					// If this is within the grid try to snap it
+					Vec2<int> equipmentGridPos = equipmentPos - equipOffset;
+					equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
+					if (this->selected->canAddEquipment(equipmentGridPos, this->draggedEquipment))
+					{
+						if (base->inventoryVehicleEquipment[draggedEquipment->id] <= 0)
+						{
+							LogError("Trying to equip item \"%s\" with zero inventory",
+							         this->draggedEquipment->id);
+						}
+						auto e = this->selected->addEquipment(*state, equipmentGridPos,
+						                                      this->draggedEquipment);
 						e->equipFromBase(*state, base);
 						this->paperDoll->updateEquipment();
+						// FIXME: Add ammo to equipment
 					}
-					this->draggedEquipment = nullptr;
+					this->draggedEquipment = "";
 				}
-				return;
 			}
-		}
-	}
-	if (e->type() == EVENT_MOUSE_UP)
-	{
-		if (this->draggedEquipment)
-		{
-			// Are we over the grid? If so try to place it on the vehicle.
-			auto paperDollControl = form->findControlTyped<Graphic>("PAPER_DOLL");
-			Vec2<int> equipOffset = paperDollControl->Location + form->Location;
 
-			Vec2<int> equipmentPos = fw().getCursor().getPosition() + this->draggedEquipmentOffset;
-			// If this is within the grid try to snap it
-			Vec2<int> equipmentGridPos = equipmentPos - equipOffset;
-			equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
-			if (this->selected->canAddEquipment(equipmentGridPos, this->draggedEquipment))
+			case FormEventType::MouseMove:
 			{
-				if (base->inventoryVehicleEquipment[draggedEquipment->id] <= 0)
+				this->drawHighlightBox = false;
+				// Check if we've moused over equipment/vehicle so we can show the stats.
+				if (!this->draggedEquipment)
 				{
-					LogError("Trying to equip item \"%s\" with zero inventory",
-					         this->draggedEquipment->id);
+					// Wipe any previously-highlighted stuff
+					this->highlightedEquipment = "";
+
+					Vec2<int> mousePos{e->forms().MouseInfo.X + e->forms().RaisedBy->Location.x,
+					                   e->forms().MouseInfo.Y + e->forms().RaisedBy->Location.y};
+
+					// Check if we're over any equipment in the paper doll
+					auto mouseSlotPos =
+					    this->paperDoll->getSlotPositionFromScreenPosition(mousePos);
+					auto equipment = std::dynamic_pointer_cast<VEquipment>(
+					    this->selected->getEquipmentAt(mouseSlotPos));
+					if (equipment)
+					{
+						this->highlightedEquipment = equipment->type;
+						VehicleSheet(formVehicleItem).display(highlightedEquipment);
+						return;
+					}
+
+					// Check if we're over any equipment in the list at the bottom
+					for (auto &pair : this->inventoryItems)
+					{
+						if (pair.first.within(mousePos))
+						{
+							this->highlightedEquipment = pair.second;
+							this->drawHighlightBox = true;
+							this->highlightBoxColour = {255, 255, 255, 255};
+							this->highlightBox = pair.first;
+							VehicleSheet(formVehicleItem).display(highlightedEquipment);
+							return;
+						}
+					}
+					VehicleSheet(formVehicleItem).display(highlightedVehicle);
 				}
-				auto e =
-				    this->selected->addEquipment(*state, equipmentGridPos, this->draggedEquipment);
-				e->equipFromBase(*state, base);
-				this->paperDoll->updateEquipment();
-				// FIXME: Add ammo to equipment
 			}
-			this->draggedEquipment = "";
 		}
 	}
 }
@@ -360,7 +438,7 @@ void VEquipScreen::update() { form->update(); }
 
 void VEquipScreen::render()
 {
-	this->inventoryItems.clear();
+	inventoryItems.clear();
 
 	fw().stageGetPrevious(this->shared_from_this())->render();
 
@@ -436,7 +514,7 @@ void VEquipScreen::render()
 
 			Vec2<int> countLabelPosition = inventoryPosition;
 			countLabelPosition.y += INVENTORY_COUNT_Y_GAP + equipmentImage->size.y;
-			// FIXME: Center in X?
+			countLabelPosition.x += (equipmentImage->size.x - countImage->size.x) / 2;
 			fw().renderer->draw(countImage, countLabelPosition);
 
 			Vec2<int> inventoryEndPosition = inventoryPosition;

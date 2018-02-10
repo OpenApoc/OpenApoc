@@ -38,6 +38,8 @@ class MultilistBox : public Control
 	// arg2 - selection (true) or deselection (false) operation
 	// return - item should be selected (true/false)
 	std::function<bool(Event *, sp<Control>, bool)> funcHandleSelection;
+	std::function<void(Event *, sp<Control>, bool)> funcHandleCrewSelection;
+	std::function<void(Event *, sp<Control>)> funcHandleMouseUpSelection;
 	// Render the "hover" effect.
 	// arg - child control
 	std::function<void(sp<Control>)> funcHoverItemRender;
@@ -74,7 +76,9 @@ class MultilistBox : public Control
 	// Setter for the isVisibleItem function.
 	void setFuncIsVisibleItem(std::function<bool(sp<Control>)> func);
 	// Setter for the funcHandleSelection function.
-	void setFuncHandleSelection(std::function<bool(Event *, sp<Control>, bool)> func);
+	void setFuncHandleSelection(std::function<bool(Event *, sp<Control>, bool)> func,
+	                            std::function<void(Event *, sp<Control>)> mouseupfunc,
+	                            std::function<void(Event *, sp<Control>, bool)> crewfunc = nullptr);
 	// Setter for the funcHoverItemRender function.
 	void setFuncHoverItemRender(std::function<void(sp<Control>)> func);
 	// Setter for the funcSelectionItemRender function.

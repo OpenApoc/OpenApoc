@@ -203,7 +203,7 @@ void TransactionScreen::populateControlsVehicle()
 		if (state->economy.find(v.first) != state->economy.end())
 		{
 			auto control = TransactionControl::createControl(
-			    *state, StateRef<VehicleType>{state.get(), v.first}, leftIndex, rightIndex);
+			    state, StateRef<VehicleType>{state.get(), v.first}, leftIndex, rightIndex);
 			if (control)
 			{
 				control->addCallback(FormEventType::ScrollBarChange, onScrollChange);
@@ -217,7 +217,7 @@ void TransactionScreen::populateControlsVehicle()
 		if (v.second->owner == state->getPlayer())
 		{
 			auto control = TransactionControl::createControl(
-			    *state, StateRef<Vehicle>{state.get(), v.first}, leftIndex, rightIndex);
+			    state, StateRef<Vehicle>{state.get(), v.first}, leftIndex, rightIndex);
 			if (control)
 			{
 				control->addCallback(FormEventType::ScrollBarChange, onScrollChange);
@@ -267,7 +267,7 @@ void TransactionScreen::populateControlsAgentEquipment()
 			if (state->economy.find(ae.first) != state->economy.end())
 			{
 				auto control = TransactionControl::createControl(
-				    *state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);
+				    state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);
 				if (control)
 				{
 					control->addCallback(FormEventType::ScrollBarChange, onScrollChange);
@@ -281,7 +281,7 @@ void TransactionScreen::populateControlsAgentEquipment()
 				if (state->economy.find(ammo.id) != state->economy.end())
 				{
 					auto controlAmmo =
-					    TransactionControl::createControl(*state, ammo, leftIndex, rightIndex);
+					    TransactionControl::createControl(state, ammo, leftIndex, rightIndex);
 					if (controlAmmo)
 					{
 						controlAmmo->addCallback(FormEventType::ScrollBarChange, onScrollChange);
@@ -338,7 +338,7 @@ void TransactionScreen::populateControlsVehicleEquipment()
 				{
 					if (state->economy.find(ammoType.id) != state->economy.end())
 					{
-						auto controlAmmo = TransactionControl::createControl(*state, ammoType,
+						auto controlAmmo = TransactionControl::createControl(state, ammoType,
 						                                                     leftIndex, rightIndex);
 						if (controlAmmo)
 						{
@@ -380,7 +380,7 @@ void TransactionScreen::populateControlsVehicleEquipment()
 				}
 
 				auto control = TransactionControl::createControl(
-				    *state, StateRef<VEquipmentType>{state.get(), ve.first}, leftIndex, rightIndex);
+				    state, StateRef<VEquipmentType>{state.get(), ve.first}, leftIndex, rightIndex);
 				if (control)
 				{
 					control->addCallback(FormEventType::ScrollBarChange, onScrollChange);
@@ -426,7 +426,7 @@ void TransactionScreen::populateControlsVehicleEquipment()
 			if (state->economy.find(ammoType.id) != state->economy.end())
 			{
 				auto controlAmmo =
-				    TransactionControl::createControl(*state, ammoType, leftIndex, rightIndex);
+				    TransactionControl::createControl(state, ammoType, leftIndex, rightIndex);
 				if (controlAmmo)
 				{
 					controlAmmo->addCallback(FormEventType::ScrollBarChange, onScrollChange);
@@ -479,7 +479,13 @@ void TransactionScreen::populateControlsAlien()
 		// Add alien
 		for (auto &b : state->player_bases)
 		{
+<<<<<<< HEAD
 			if (b.second->inventoryBioEquipment[ae.first] > 0)
+=======
+			auto control = TransactionControl::createControl(
+			    state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);
+			if (control)
+>>>>>>> Some finished work.
 			{
 				auto control = TransactionControl::createControl(
 				    *state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);

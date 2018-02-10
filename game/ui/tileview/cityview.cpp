@@ -411,13 +411,16 @@ void CityView::tryOpenUfopaediaEntry(StateRef<UfopaediaEntry> ufopaediaEntry)
 			if (ufopaedia_category)
 				break;
 		}
-		if (!ufopaedia_category)
+		if (ufopaedia_category)
+		{
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH,
+			     mksp<UfopaediaCategoryView>(state, ufopaedia_category, ufopaediaEntry)});
+		}
+		else
 		{
 			LogError("No UFOPaedia category found for entry %s", ufopaediaEntry->title);
 		}
-		fw().stageQueueCommand(
-		    {StageCmd::Command::PUSH,
-		     mksp<UfopaediaCategoryView>(state, ufopaedia_category, ufopaediaEntry)});
 	}
 }
 

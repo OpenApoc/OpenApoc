@@ -38,28 +38,38 @@ void GraphicButton::eventOccured(Event *e)
 {
 	Control::eventOccured(e);
 
-	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
-	    e->forms().EventFlag == FormEventType::MouseDown)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this())
 	{
-		if (buttonclick)
+		switch (e->forms().EventFlag)
 		{
-			fw().soundBackend->playSample(buttonclick);
-		}
-	}
-
-	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
-	    e->forms().EventFlag == FormEventType::MouseClick)
-	{
-		this->pushFormEvent(FormEventType::ButtonClick, e);
-
-		if (ScrollBarPrev != nullptr)
-		{
-			ScrollBarPrev->scrollPrev(!scrollLarge);
-		}
-
-		if (ScrollBarNext != nullptr)
-		{
-			ScrollBarNext->scrollNext(!scrollLarge);
+			case FormEventType::MouseClick:
+				this->pushFormEvent(FormEventType::ButtonClick, e);
+				break;
+			case FormEventType::MouseDown:
+				if (buttonclick)
+				{
+					fw().soundBackend->playSample(buttonclick);
+				}
+				if (ScrollBarPrev != nullptr)
+				{
+					ScrollBarPrev->SetScrolling(-1); // scroll backward
+				}
+				if (ScrollBarNext != nullptr)
+				{
+					ScrollBarNext->SetScrolling(1); // scroll forward
+				}
+				break;
+			case FormEventType::MouseLeave:
+			case FormEventType::MouseUp:
+				if (ScrollBarPrev != nullptr)
+				{
+					ScrollBarPrev->SetScrolling(0); // stop scrolling
+				}
+				if (ScrollBarNext != nullptr)
+				{
+					ScrollBarNext->SetScrolling(0); // stop scrolling
+				}
+				break;
 		}
 	}
 }

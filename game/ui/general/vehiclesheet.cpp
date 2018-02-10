@@ -67,9 +67,8 @@ void VehicleSheet::displayImplementation(sp<Vehicle> vehicle, sp<VehicleType> ve
 {
 	form->findControlTyped<Label>("ITEM_NAME")->setText("");
 	form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")
-	    ->setText(vehicle ? vehicle->name : vehicleType->name);
+	    ->setText(vehicle ? tr(vehicle->name) : tr(vehicleType->name));
 	form->findControlTyped<Graphic>("SELECTED_IMAGE")->setImage(vehicleType->equip_icon_small);
-
 	form->findControlTyped<Label>("LABEL_1_L")->setText(tr("Constitution"));
 	form->findControlTyped<Label>("LABEL_2_L")->setText(tr("Armor"));
 	form->findControlTyped<Label>("LABEL_3_L")->setText(tr("Accuracy"));
@@ -121,7 +120,7 @@ void VehicleSheet::displayImplementation(sp<Vehicle> vehicle, sp<VehicleType> ve
 void VehicleSheet::displayEquipImplementation(sp<VEquipment> item, sp<VEquipmentType> type)
 {
 	form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")->setText("");
-	form->findControlTyped<Label>("ITEM_NAME")->setText(item ? item->type->name : type->name);
+	form->findControlTyped<Label>("ITEM_NAME")->setText(item ? tr(item->type->name) : tr(type->name));
 	form->findControlTyped<Graphic>("SELECTED_IMAGE")->setImage(type->equipscreen_sprite);
 
 	form->findControlTyped<Label>("LABEL_1_L")->setText(tr("Weight"));
