@@ -619,4 +619,35 @@ void UfopaediaCategoryView::setPreviousSection()
 
 bool UfopaediaCategoryView::isTransition() { return false; }
 
+void UfopaediaCategoryView::OpenUfopaediaArticle(sp<GameState> st, UString paedianame)
+{
+	sp<UfopaediaEntry> ufopaedia_entry;
+	sp<UfopaediaCategory> ufopaedia_category;
+
+	for (auto &cat : st->ufopaedia)
+	{
+		for (auto &entry : cat.second->entries)
+		{
+			if (paedianame == entry.second.get()->title)
+			{
+				ufopaedia_category = cat.second;
+				ufopaedia_entry = entry.second;
+				break;
+			}
+		}
+		if (ufopaedia_category)
+			break;
+	}
+	if (ufopaedia_category)
+	{
+		fw().stageQueueCommand(
+		    {StageCmd::Command::PUSH,
+		     mksp<UfopaediaCategoryView>(st, ufopaedia_category, ufopaedia_entry)});
+	}
+	else
+	{
+		LogError("No UFOPaedia entry found for name %s", paedianame);
+	}
+}
+
 }; // namespace OpenApoc

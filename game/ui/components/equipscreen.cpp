@@ -113,8 +113,8 @@ void EquipmentPaperDoll::onRender()
 	{
 		for (auto &slot : slotList)
 		{
-			Vec2<int> p00 = (slot.bounds.p0 * slotSizePixels);
-			Vec2<int> p11 = (slot.bounds.p1 * slotSizePixels);
+			Vec2<int> p00 = (slot.bounds.p0 * slotSizePixels) - Vec2<int>{1, 1};
+			Vec2<int> p11 = (slot.bounds.p1 * slotSizePixels) - Vec2<int>{1, 1};
 			Vec2<int> p01 = {p00.x, p11.y};
 			Vec2<int> p10 = {p11.x, p00.y};
 

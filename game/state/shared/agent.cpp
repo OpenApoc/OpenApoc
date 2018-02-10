@@ -93,7 +93,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 
 		auto firstName = listRandomiser(state.rng, firstNameList->second);
 		auto secondName = listRandomiser(state.rng, this->second_names);
-		agent->name = format("%s %s", firstName, secondName);
+		agent->name = format("%s %s", tr(firstName), tr(secondName));
 	}
 	else
 	{

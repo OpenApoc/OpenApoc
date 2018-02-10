@@ -80,6 +80,7 @@ class TransactionScreen : public BaseStage
 		static sp<BitmapFont> labelFont;
 		static bool resourcesInitialised;
 		static void initResources();
+		sp<GameState> Gstate;
 
 	  protected:
 		// Link
@@ -130,28 +131,28 @@ class TransactionScreen : public BaseStage
 
 		// Transferring/Buying/selling agent equipment and ammo
 		// Transferring/Sacking alien containment
-		static sp<TransactionControl> createControl(GameState &state,
+		static sp<TransactionControl> createControl(sp<GameState> state,
 		                                            StateRef<AEquipmentType> agentEquipmentType,
 		                                            int indexLeft, int indexRight);
 		// Transferring/Buying/selling vehicle equipment
-		static sp<TransactionControl> createControl(GameState &state,
+		static sp<TransactionControl> createControl(sp<GameState> state,
 		                                            StateRef<VEquipmentType> vehicleEquipmentType,
 		                                            int indexLeft, int indexRight);
 		// Transferring/Buying/selling vehicle ammo and fuel
-		static sp<TransactionControl> createControl(GameState &state,
+		static sp<TransactionControl> createControl(sp<GameState> state,
 		                                            StateRef<VAmmoType> vehicleAmmoType,
 		                                            int indexLeft, int indexRight);
 		// Buying vehicles
-		static sp<TransactionControl> createControl(GameState &state,
+		static sp<TransactionControl> createControl(sp<GameState> state,
 		                                            StateRef<VehicleType> vehicleType,
 		                                            int indexLeft, int indexRight);
 		// Transferring/Selling vehicles
-		static sp<TransactionControl> createControl(GameState &state, StateRef<Vehicle> vehicle,
+		static sp<TransactionControl> createControl(sp<GameState> state, StateRef<Vehicle> vehicle,
 		                                            int indexLeft, int indexRight);
 
-		static sp<TransactionControl> createControl(UString id, Type type, UString name,
-		                                            UString manufacturer, bool isAmmo, bool isBio,
-		                                            bool manufacturerHostile,
+		static sp<TransactionControl> createControl(sp<GameState> state, UString id, Type type,
+		                                            UString name, UString manufacturer, bool isAmmo,
+		                                            bool isBio, bool manufacturerHostile,
 		                                            bool manufacturerUnavailable, int price,
 		                                            int storeSpace, std::vector<int> &initialStock,
 		                                            int indexLeft, int indexRight);
@@ -170,8 +171,7 @@ class TransactionScreen : public BaseStage
 
 	  public:
 		//~TransactionControl() override;
-
-		// void eventOccured(Event *e) override;
+		void eventOccured(Event *e) override;
 		// void update() override;
 		void unloadResources() override;
 	};

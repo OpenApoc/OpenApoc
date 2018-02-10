@@ -239,49 +239,25 @@ void BaseScreen::eventOccurred(Event *e)
 			}
 			else if (Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right))
 			{
-				sp<UString> clickedFacilityName;
+				if (e->forms().RaisedBy->Name == "GRAPHIC_BASE_VIEW")
+				{
+					if (selFacility)
+						UfopaediaCategoryView::OpenUfopaediaArticle(state, selFacility->type->name);
+				}
 				if (e->forms().RaisedBy->Name == "LISTBOX_FACILITIES")
 				{
 					auto list = std::dynamic_pointer_cast<ListBox>(e->forms().RaisedBy);
-					clickedFacilityName = list->getHoveredData<UString>();
-				}
-				else if (e->forms().RaisedBy->Name == "GRAPHIC_BASE_VIEW")
-				{
-					if (selFacility)
-						clickedFacilityName = mksp<UString>(selFacility->type.id);
-				}
-
-				StateRef<FacilityType> clickedFacility;
-				if (clickedFacilityName)
-					clickedFacility = StateRef<FacilityType>{state.get(), *clickedFacilityName};
-				if (!clickedFacility)
-					return;
-
-				auto ufopaedia_entry = clickedFacility->ufopaedia_entry;
-				sp<UfopaediaCategory> ufopaedia_category;
-				if (ufopaedia_entry)
-				{
-					for (auto &cat : this->state->ufopaedia)
+					if (list)
 					{
-						for (auto &entry : cat.second->entries)
+						sp<UString> clickedFacilityName = list->getHoveredData<UString>();
+						if (clickedFacilityName)
 						{
-							if (ufopaedia_entry == entry.second)
-							{
-								ufopaedia_category = cat.second;
-								break;
-							}
+							StateRef<FacilityType> fMap =
+							    StateRef<FacilityType>{state.get(), *clickedFacilityName};
+							if (fMap)
+								UfopaediaCategoryView::OpenUfopaediaArticle(state, fMap->name);
 						}
-						if (ufopaedia_category)
-							break;
 					}
-					if (!ufopaedia_category)
-					{
-						LogError("No UFOPaedia category found for entry %s",
-						         ufopaedia_entry->title);
-					}
-					fw().stageQueueCommand(
-					    {StageCmd::Command::PUSH,
-					     mksp<UfopaediaCategoryView>(state, ufopaedia_category, ufopaedia_entry)});
 				}
 			}
 		}

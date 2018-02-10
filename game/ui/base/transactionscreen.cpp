@@ -31,6 +31,7 @@
 #include "game/ui/general/aequipmentsheet.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/vehiclesheet.h"
+#include "game/ui/ufopaedia/ufopaediacategoryview.h"
 #include "library/strings_format.h"
 #include <array>
 
@@ -358,7 +359,7 @@ void TransactionScreen::populateControlsVehicle()
 		if (state->economy.find(v.first) != state->economy.end())
 		{
 			auto control = TransactionControl::createControl(
-			    *state, StateRef<VehicleType>{state.get(), v.first}, leftIndex, rightIndex);
+			    state, StateRef<VehicleType>{state.get(), v.first}, leftIndex, rightIndex);
 			if (control)
 			{
 				control->addCallback(FormEventType::ScrollBarChange, onScrollChange);
@@ -372,7 +373,7 @@ void TransactionScreen::populateControlsVehicle()
 		if (v.second->owner == state->getPlayer())
 		{
 			auto control = TransactionControl::createControl(
-			    *state, StateRef<Vehicle>{state.get(), v.first}, leftIndex, rightIndex);
+			    state, StateRef<Vehicle>{state.get(), v.first}, leftIndex, rightIndex);
 			if (control)
 			{
 				control->addCallback(FormEventType::ScrollBarChange, onScrollChange);
@@ -422,7 +423,7 @@ void TransactionScreen::populateControlsAgentEquipment()
 			if (state->economy.find(ae.first) != state->economy.end())
 			{
 				auto control = TransactionControl::createControl(
-				    *state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);
+				    state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);
 				if (control)
 				{
 					control->addCallback(FormEventType::ScrollBarChange, onScrollChange);
@@ -436,7 +437,7 @@ void TransactionScreen::populateControlsAgentEquipment()
 				if (state->economy.find(ammo.id) != state->economy.end())
 				{
 					auto controlAmmo =
-					    TransactionControl::createControl(*state, ammo, leftIndex, rightIndex);
+					    TransactionControl::createControl(state, ammo, leftIndex, rightIndex);
 					if (controlAmmo)
 					{
 						controlAmmo->addCallback(FormEventType::ScrollBarChange, onScrollChange);
@@ -493,7 +494,7 @@ void TransactionScreen::populateControlsVehicleEquipment()
 				{
 					if (state->economy.find(ammoType.id) != state->economy.end())
 					{
-						auto controlAmmo = TransactionControl::createControl(*state, ammoType,
+						auto controlAmmo = TransactionControl::createControl(state, ammoType,
 						                                                     leftIndex, rightIndex);
 						if (controlAmmo)
 						{
@@ -535,7 +536,7 @@ void TransactionScreen::populateControlsVehicleEquipment()
 				}
 
 				auto control = TransactionControl::createControl(
-				    *state, StateRef<VEquipmentType>{state.get(), ve.first}, leftIndex, rightIndex);
+				    state, StateRef<VEquipmentType>{state.get(), ve.first}, leftIndex, rightIndex);
 				if (control)
 				{
 					control->addCallback(FormEventType::ScrollBarChange, onScrollChange);
@@ -581,7 +582,7 @@ void TransactionScreen::populateControlsVehicleEquipment()
 			if (state->economy.find(ammoType.id) != state->economy.end())
 			{
 				auto controlAmmo =
-				    TransactionControl::createControl(*state, ammoType, leftIndex, rightIndex);
+				    TransactionControl::createControl(state, ammoType, leftIndex, rightIndex);
 				if (controlAmmo)
 				{
 					controlAmmo->addCallback(FormEventType::ScrollBarChange, onScrollChange);
@@ -635,7 +636,7 @@ void TransactionScreen::populateControlsAlien()
 		if (state->economy.find(ae.first) != state->economy.end())
 		{
 			auto control = TransactionControl::createControl(
-			    *state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);
+			    state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);
 			if (control)
 			{
 				control->addCallback(FormEventType::ScrollBarChange, onScrollChange);
@@ -2261,18 +2262,19 @@ TransactionScreen::TransactionControl::getLinked() const
 }
 
 sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl::createControl(
-    GameState &state, StateRef<AEquipmentType> agentEquipmentType, int indexLeft, int indexRight)
+    sp<GameState> state, StateRef<AEquipmentType> agentEquipmentType, int indexLeft, int indexRight)
 {
 	bool isBio = agentEquipmentType->bioStorage;
 	int price = 0;
 	int storeSpace = agentEquipmentType->store_space;
 	std::vector<int> initialStock;
 	bool hasStock = false;
+
 	// Fill out stock
 	{
 		initialStock.resize(9);
 		int baseIndex = 0;
-		for (auto &b : state.player_bases)
+		for (auto &b : state->player_bases)
 		{
 			int divisor = (agentEquipmentType->type == AEquipmentType::Type::Ammo && !isBio)
 			                  ? agentEquipmentType->max_ammo
@@ -2292,10 +2294,10 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	if (!agentEquipmentType->bioStorage)
 	{
 		bool economyUnavailable = true;
-		if (state.economy.find(agentEquipmentType.id) != state.economy.end())
+		if (state->economy.find(agentEquipmentType.id) != state->economy.end())
 		{
-			auto &economy = state.economy[agentEquipmentType.id];
-			int week = state.gameTime.getWeek();
+			auto &economy = state->economy[agentEquipmentType.id];
+			int week = state->gameTime.getWeek();
 			initialStock[8] = economy.currentStock;
 			price = economy.currentPrice;
 			economyUnavailable = economy.weekAvailable == 0 || economy.weekAvailable > week ||
@@ -2318,7 +2320,7 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	auto manufacturer =
 	    agentEquipmentType->bioStorage ? "" : agentEquipmentType->manufacturer->name;
 	auto canBuy = agentEquipmentType->manufacturer->canPurchaseFrom(
-	    state, state.current_base->building, false);
+	    *state, state->current_base->building, false);
 	bool manufacturerHostile = canBuy == Organisation::PurchaseResult::OrgHostile;
 	bool manufacturerUnavailable = canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
 	// If we create a non-purchase control we never become one so clear the values
@@ -2328,24 +2330,27 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 		price = 0;
 	}
 	return createControl(
-	    agentEquipmentType.id, isBio ? Type::AgentEquipmentBio : Type::AgentEquipmentCargo,
+	    state, agentEquipmentType.id, isBio ? Type::AgentEquipmentBio : Type::AgentEquipmentCargo,
 	    agentEquipmentType->name, manufacturer, isAmmo, isBio, manufacturerHostile,
 	    manufacturerUnavailable, price, storeSpace, initialStock, indexLeft, indexRight);
 }
 
-sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl::createControl(
-    GameState &state, StateRef<VEquipmentType> vehicleEquipmentType, int indexLeft, int indexRight)
+sp<TransactionScreen::TransactionControl>
+TransactionScreen::TransactionControl::createControl(sp<GameState> state,
+                                                     StateRef<VEquipmentType> vehicleEquipmentType,
+                                                     int indexLeft, int indexRight)
 {
 	bool isBio = false;
 	int price = 0;
 	int storeSpace = vehicleEquipmentType->store_space;
 	std::vector<int> initialStock;
 	bool hasStock = false;
+
 	// Fill out stock
 	{
 		initialStock.resize(9);
 		int baseIndex = 0;
-		for (auto &b : state.player_bases)
+		for (auto &b : state->player_bases)
 		{
 			initialStock[baseIndex] = b.second->inventoryVehicleEquipment[vehicleEquipmentType.id];
 			if (initialStock[baseIndex] > 0)
@@ -2358,10 +2363,10 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	// Fill out economy data
 	{
 		bool economyUnavailable = true;
-		if (state.economy.find(vehicleEquipmentType.id) != state.economy.end())
+		if (state->economy.find(vehicleEquipmentType.id) != state->economy.end())
 		{
-			auto &economy = state.economy[vehicleEquipmentType.id];
-			int week = state.gameTime.getWeek();
+			auto &economy = state->economy[vehicleEquipmentType.id];
+			int week = state->gameTime.getWeek();
 			initialStock[8] = economy.currentStock;
 			price = economy.currentPrice;
 			economyUnavailable = economy.weekAvailable == 0 || economy.weekAvailable > week;
@@ -2377,7 +2382,7 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	auto manufacturer = vehicleEquipmentType->manufacturer->name;
 	// Expecting all bases to be in one city
 	auto canBuy = vehicleEquipmentType->manufacturer->canPurchaseFrom(
-	    state, state.current_base->building, false);
+	    *state, state->current_base->building, false);
 	bool manufacturerHostile = canBuy == Organisation::PurchaseResult::OrgHostile;
 	bool manufacturerUnavailable = canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
 	// If we create a non-purchase control we never become one so clear the values
@@ -2386,25 +2391,26 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 		manufacturer = "";
 		price = 0;
 	}
-	return createControl(vehicleEquipmentType.id, Type::VehicleEquipment,
+	return createControl(state, vehicleEquipmentType.id, Type::VehicleEquipment,
 	                     vehicleEquipmentType->name, manufacturer, isAmmo, isBio,
 	                     manufacturerHostile, manufacturerUnavailable, price, storeSpace,
 	                     initialStock, indexLeft, indexRight);
 }
 
 sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl::createControl(
-    GameState &state, StateRef<VAmmoType> vehicleAmmoType, int indexLeft, int indexRight)
+    sp<GameState> state, StateRef<VAmmoType> vehicleAmmoType, int indexLeft, int indexRight)
 {
 	bool isBio = false;
 	int price = 0;
 	int storeSpace = vehicleAmmoType->store_space;
 	std::vector<int> initialStock;
 	bool hasStock = false;
+
 	// Fill out stock
 	{
 		initialStock.resize(9);
 		int baseIndex = 0;
-		for (auto &b : state.player_bases)
+		for (auto &b : state->player_bases)
 		{
 			initialStock[baseIndex] = b.second->inventoryVehicleAmmo[vehicleAmmoType.id];
 			if (initialStock[baseIndex] > 0)
@@ -2417,10 +2423,10 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	// Fill out economy data
 	{
 		bool economyUnavailable = true;
-		if (state.economy.find(vehicleAmmoType.id) != state.economy.end())
+		if (state->economy.find(vehicleAmmoType.id) != state->economy.end())
 		{
-			auto &economy = state.economy[vehicleAmmoType.id];
-			int week = state.gameTime.getWeek();
+			auto &economy = state->economy[vehicleAmmoType.id];
+			int week = state->gameTime.getWeek();
 			initialStock[8] = economy.currentStock;
 			price = economy.currentPrice;
 			economyUnavailable = economy.weekAvailable == 0 || economy.weekAvailable > week;
@@ -2435,8 +2441,8 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	auto name = vehicleAmmoType->name;
 	auto manufacturer = vehicleAmmoType->manufacturer->name;
 	// Expecting all bases to be in one city
-	auto canBuy =
-	    vehicleAmmoType->manufacturer->canPurchaseFrom(state, state.current_base->building, false);
+	auto canBuy = vehicleAmmoType->manufacturer->canPurchaseFrom(
+	    *state, state->current_base->building, false);
 	bool manufacturerHostile = canBuy == Organisation::PurchaseResult::OrgHostile;
 	bool manufacturerUnavailable = canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
 	// If we create a non-purchase control we never become one so clear the values
@@ -2445,13 +2451,13 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 		manufacturer = "";
 		price = 0;
 	}
-	return createControl(vehicleAmmoType.id, Type::VehicleAmmo, vehicleAmmoType->name, manufacturer,
-	                     isAmmo, isBio, manufacturerHostile, manufacturerUnavailable, price,
-	                     storeSpace, initialStock, indexLeft, indexRight);
+	return createControl(state, vehicleAmmoType.id, Type::VehicleAmmo, vehicleAmmoType->name,
+	                     manufacturer, isAmmo, isBio, manufacturerHostile, manufacturerUnavailable,
+	                     price, storeSpace, initialStock, indexLeft, indexRight);
 }
 
 sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl::createControl(
-    GameState &state, StateRef<VehicleType> vehicleType, int indexLeft, int indexRight)
+    sp<GameState> state, StateRef<VehicleType> vehicleType, int indexLeft, int indexRight)
 {
 	// No sense in transfer
 	if (indexLeft != 8 && indexRight != 8)
@@ -2462,6 +2468,7 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	int price = 0;
 	int storeSpace = 0;
 	std::vector<int> initialStock;
+
 	// Fill out stock
 	{
 		initialStock.resize(9);
@@ -2470,10 +2477,10 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	// Fill out economy data
 	{
 		bool economyUnavailable = true;
-		if (state.economy.find(vehicleType.id) != state.economy.end())
+		if (state->economy.find(vehicleType.id) != state->economy.end())
 		{
-			auto &economy = state.economy[vehicleType.id];
-			int week = state.gameTime.getWeek();
+			auto &economy = state->economy[vehicleType.id];
+			int week = state->gameTime.getWeek();
 			initialStock[8] = economy.currentStock;
 			price = economy.currentPrice;
 			economyUnavailable = economy.weekAvailable == 0 || economy.weekAvailable > week;
@@ -2489,7 +2496,7 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	auto manufacturer = vehicleType->manufacturer->name;
 	// Expecting all bases to be in one city
 	auto canBuy =
-	    vehicleType->manufacturer->canPurchaseFrom(state, state.current_base->building, true);
+	    vehicleType->manufacturer->canPurchaseFrom(*state, state->current_base->building, true);
 	bool manufacturerHostile = canBuy == Organisation::PurchaseResult::OrgHostile;
 	bool manufacturerUnavailable = canBuy == Organisation::PurchaseResult::OrgHasNoBuildings;
 	// If we create a non-purchase control we never become one so clear the values
@@ -2498,13 +2505,13 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 		manufacturer = "";
 		price = 0;
 	}
-	return createControl(vehicleType.id, Type::VehicleType, vehicleType->name, manufacturer, isAmmo,
-	                     isBio, manufacturerHostile, manufacturerUnavailable, price, storeSpace,
-	                     initialStock, indexLeft, indexRight);
+	return createControl(state, vehicleType.id, Type::VehicleType, vehicleType->name, manufacturer,
+	                     isAmmo, isBio, manufacturerHostile, manufacturerUnavailable, price,
+	                     storeSpace, initialStock, indexLeft, indexRight);
 }
 
 sp<TransactionScreen::TransactionControl>
-TransactionScreen::TransactionControl::createControl(GameState &state, StateRef<Vehicle> vehicle,
+TransactionScreen::TransactionControl::createControl(sp<GameState> state, StateRef<Vehicle> vehicle,
                                                      int indexLeft, int indexRight)
 {
 	// Only parked vehicles can be sold
@@ -2515,13 +2522,14 @@ TransactionScreen::TransactionControl::createControl(GameState &state, StateRef<
 	bool isBio = false;
 	int price = 0;
 	int storeSpace = 0;
+
 	std::vector<int> initialStock;
 	// Fill out stock
 	{
 		initialStock.resize(9);
 		// Stock of vehicle types always zero on all bases except where it belongs
 		int baseIndex = 0;
-		for (auto &b : state.player_bases)
+		for (auto &b : state->player_bases)
 		{
 			if (b.first == vehicle->homeBuilding->base.id)
 			{
@@ -2534,10 +2542,10 @@ TransactionScreen::TransactionControl::createControl(GameState &state, StateRef<
 	// Fill out economy data
 	{
 		bool economyUnavailable = true;
-		if (state.economy.find(vehicle->type.id) != state.economy.end())
+		if (state->economy.find(vehicle->type.id) != state->economy.end())
 		{
-			auto &economy = state.economy[vehicle->type.id];
-			int week = state.gameTime.getWeek();
+			auto &economy = state->economy[vehicle->type.id];
+			int week = state->gameTime.getWeek();
 			price = economy.currentPrice;
 			economyUnavailable = economy.weekAvailable == 0 || economy.weekAvailable > week;
 		}
@@ -2550,12 +2558,12 @@ TransactionScreen::TransactionControl::createControl(GameState &state, StateRef<
 	// Add price of ammo and equipment
 	for (auto &e : vehicle->equipment)
 	{
-		if (state.economy.find(e->type.id) != state.economy.end())
+		if (state->economy.find(e->type.id) != state->economy.end())
 		{
-			price += state.economy[e->type.id].currentPrice;
-			if (e->ammo > 0 && state.economy.find(e->type->ammo_type.id) != state.economy.end())
+			price += state->economy[e->type.id].currentPrice;
+			if (e->ammo > 0 && state->economy.find(e->type->ammo_type.id) != state->economy.end())
 			{
-				price += e->ammo * state.economy[e->type->ammo_type.id].currentPrice;
+				price += e->ammo * state->economy[e->type->ammo_type.id].currentPrice;
 			}
 			LogWarning("Vehicle type %s price increased to %d after counting %s", vehicle->type.id,
 			           price, e->type.id);
@@ -2564,9 +2572,9 @@ TransactionScreen::TransactionControl::createControl(GameState &state, StateRef<
 	// Subtract price of default equipment
 	for (auto &e : vehicle->type->initial_equipment_list)
 	{
-		if (state.economy.find(e.second.id) != state.economy.end())
+		if (state->economy.find(e.second.id) != state->economy.end())
 		{
-			price -= state.economy[e.second.id].currentPrice;
+			price -= state->economy[e.second.id].currentPrice;
 			LogWarning("Vehicle type %s price decreased to %d after counting %s", vehicle->type.id,
 			           price, e.second.id);
 		}
@@ -2584,14 +2592,14 @@ TransactionScreen::TransactionControl::createControl(GameState &state, StateRef<
 		manufacturer = "";
 		price = 0;
 	}
-	return createControl(vehicle.id, Type::Vehicle, vehicle->name, manufacturer, isAmmo, isBio,
-	                     manufacturerHostile, manufacturerUnavailable, price, storeSpace,
+	return createControl(state, vehicle.id, Type::Vehicle, vehicle->name, manufacturer, isAmmo,
+	                     isBio, manufacturerHostile, manufacturerUnavailable, price, storeSpace,
 	                     initialStock, indexLeft, indexRight);
 }
 
 sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl::createControl(
-    UString id, Type type, UString name, UString manufacturer, bool isAmmo, bool isBio,
-    bool manufacturerHostile, bool manufacturerUnavailable, int price, int storeSpace,
+    sp<GameState> state, UString id, Type type, UString name, UString manufacturer, bool isAmmo,
+    bool isBio, bool manufacturerHostile, bool manufacturerUnavailable, int price, int storeSpace,
     std::vector<int> &initialStock, int indexLeft, int indexRight)
 {
 	auto control = mksp<TransactionControl>();
@@ -2624,7 +2632,7 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	// Name
 	if (name.length() > 0)
 	{
-		auto label = control->createChild<Label>(name, labelFont);
+		auto label = control->createChild<Label>(tr(name), labelFont);
 		label->Location = {isAmmo ? 32 : 11, 3};
 		label->Size = {256, 16};
 		label->TextHAlign = HorizontalAlignment::Left;
@@ -2692,6 +2700,7 @@ sp<TransactionScreen::TransactionControl> TransactionScreen::TransactionControl:
 	buttonScrollRight->ScrollBarNext = control->scrollBar;
 	// Callback
 	control->setupCallbacks();
+	control->Gstate = state;
 	// Finally set the values
 	control->setScrollbarValues();
 
@@ -2809,6 +2818,66 @@ void TransactionScreen::TransactionControl::unloadResources()
 	transactionShade.reset();
 
 	Control::unloadResources();
+}
+
+void TransactionScreen::TransactionControl::eventOccured(Event *e)
+{
+	Control::eventOccured(e);
+
+	if (e->type() == EVENT_FORM_INTERACTION)
+	{
+		if (e->forms().RaisedBy->Name == "FORM_TRANSACTIONSCREEN" &&
+		    e->forms().EventFlag == FormEventType::MouseDown && mouseInside)
+		{
+			if (Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right))
+			{
+				StateRef<AEquipmentType> aeMap;
+				StateRef<AEquipmentType> bioMap;
+				StateRef<VEquipmentType> veMap;
+				StateRef<VehicleType> vtMap;
+				StateRef<Vehicle> vMap;
+				UString paedianame;
+
+				switch (itemType)
+				{
+					case TransactionControl::Type::Vehicle:
+						vMap = StateRef<Vehicle>{Gstate.get(), itemId};
+						if (!vMap)
+							return;
+						paedianame = vMap->type->name;
+						break;
+					case TransactionControl::Type::AgentEquipmentBio:
+						bioMap = StateRef<AEquipmentType>{Gstate.get(), itemId};
+						if (!bioMap)
+							return;
+						paedianame = bioMap->name;
+						break;
+					case TransactionControl::Type::AgentEquipmentCargo:
+						aeMap = StateRef<AEquipmentType>{Gstate.get(), itemId};
+						if (!aeMap)
+							return;
+						paedianame = aeMap->name;
+						break;
+					case TransactionControl::Type::VehicleEquipment:
+						veMap = StateRef<VEquipmentType>{Gstate.get(), itemId};
+						if (!veMap)
+							return;
+						paedianame = veMap->name;
+						break;
+					case TransactionControl::Type::VehicleType:
+						vtMap = StateRef<VehicleType>{Gstate.get(), itemId};
+						if (!vtMap)
+							return;
+						paedianame = vtMap->name;
+						break;
+					default:
+						return;
+				}
+
+				UfopaediaCategoryView::OpenUfopaediaArticle(Gstate, paedianame);
+			}
+		}
+	}
 }
 
 }; // namespace OpenApoc

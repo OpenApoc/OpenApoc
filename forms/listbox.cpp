@@ -106,12 +106,12 @@ void ListBox::onRender()
 			scroller->setMaximum(std::max(controlOffset.x - this->Size.x, scroller->getMinimum()));
 			break;
 	}
-	scroller->updateLargeChangeValue();
 }
 
 void ListBox::postRender()
 {
 	Control::postRender();
+
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
 		auto ctrl = *c;
@@ -205,7 +205,6 @@ void ListBox::update()
 	}
 	if (scroller)
 	{
-		scroller->update();
 		Vec2<int> newScrollOffset = this->scrollOffset;
 		switch (ScrollOrientation)
 		{
