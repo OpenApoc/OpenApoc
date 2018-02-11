@@ -34,7 +34,6 @@ enum class FormEventType
 	ScrollBarChange,
 	TextChanged,
 	TextEditFinish,
-	TextEditCancel,
 	ListBoxChangeHover,
 	ListBoxChangeSelected
 };

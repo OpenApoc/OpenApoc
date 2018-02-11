@@ -114,11 +114,6 @@ void TextEdit::eventOccured(Event *e)
 						SelectionStart = text.length();
 						e->Handled = true;
 						break;
-					case SDLK_ESCAPE:
-						editing = false;
-						fw().textStopInput();
-						raiseEvent(FormEventType::TextEditCancel);
-						break;
 					case SDLK_RETURN:
 						editing = false;
 						fw().textStopInput();

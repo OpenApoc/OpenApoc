@@ -15,8 +15,6 @@
 
 namespace OpenApoc
 {
-// Smoke slightly over vehicle.
-static const Vec3<float> SMOKE_DOODAD_SHIFT{0.0f, 0.0f, 0.25f};
 
 static const unsigned CLOAK_TICKS_REQUIRED_VEHICLE = TICKS_PER_SECOND * 3 / 2;
 static const unsigned TELEPORT_TICKS_REQUIRED_VEHICLE = TICKS_PER_SECOND * 30;
@@ -47,7 +45,7 @@ static const float FV_PLOW_CHANCE_CONSTITUTION_MULTIPLIER = 2.0f;
 // How much 1 of X is the damage evasion chance (i.e. 8 means 1/8th or 12.5%)
 static const int FV_COLLISION_DAMAGE_ONE_IN_CHANCE_TO_EVADE = 8;
 // How much X in 100 is the chance for recovered vehicle to arrive intact (othrewise scrapped)
-static const int FV_CHANCE_TO_RECOVER_VEHICLE = 100;
+static const int FV_CHANCE_TO_RECOVER_VEHICLE = 66;
 // How much X in 100 is chance to recover every equipment part (otherwise scrapped)
 static const int FV_CHANCE_TO_RECOVER_EQUIPMENT = 90;
 // How much percent is "scrapped" sold for
@@ -242,10 +240,6 @@ class Vehicle : public StateObject,
 	void enterBuilding(GameState &state, StateRef<Building> b);
 	/* Sets up the 'mover' after state serialize in */
 	void setupMover();
-	// Remove all tile objects that belongs to vehicle.
-	void removeFromMap(GameState &state);
-	// Set the vehicle crashed (or not).
-	void setCrashed(GameState &state, bool crashed = true);
 
 	void processRecoveredVehicle(GameState &state);
 	void dropCarriedVehicle(GameState &state);

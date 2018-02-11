@@ -20,7 +20,7 @@ class VehicleSheet
 	void display(sp<Vehicle> vehicle);
 	void display(sp<VehicleType> vehicleType);
 	void display(sp<VEquipment> item);
-	void display(sp<VEquipmentType> itemType, bool researched = true);
+	void display(sp<VEquipmentType> itemType);
 	void clear();
 
   private:
@@ -30,7 +30,6 @@ class VehicleSheet
 	void displayEngine(sp<VEquipment> item, sp<VEquipmentType> type);
 	void displayWeapon(sp<VEquipment> item, sp<VEquipmentType> type);
 	void displayGeneral(sp<VEquipment> item, sp<VEquipmentType> type);
-	void displayAlien(sp<VEquipmentType> type);
 
 	sp<Form> form;
 };

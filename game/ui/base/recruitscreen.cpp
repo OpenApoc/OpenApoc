@@ -51,9 +51,9 @@ RecruitScreen::RecruitScreen(sp<GameState> state)
 	// Load resources
 	form = ui().getForm("recruitscreen");
 	formAgentStats = form->findControlTyped<Form>("AGENT_STATS_VIEW");
-	formPersonnelStats = form->findControlTyped<Form>("PERSONNEL_STATS_VIEW");
+	formPersonelStats = form->findControlTyped<Form>("PERSONEL_STATS_VIEW");
 	formAgentStats->setVisible(false);
-	formPersonnelStats->setVisible(false);
+	formPersonelStats->setVisible(false);
 
 	// Assign event handlers
 	onHover = [this](FormsEvent *e) {
@@ -183,7 +183,7 @@ void RecruitScreen::changeBase(sp<Base> newBase)
 	textViewBaseStatic->setText(state->current_base->name);
 
 	formAgentStats->setVisible(false);
-	formPersonnelStats->setVisible(false);
+	formPersonelStats->setVisible(false);
 
 	// Apply display type and base highlight
 	setDisplayType(type);
@@ -194,7 +194,7 @@ void RecruitScreen::setDisplayType(const AgentType::Role role)
 	if (this->type != role)
 	{
 		formAgentStats->setVisible(false);
-		formPersonnelStats->setVisible(false);
+		formPersonelStats->setVisible(false);
 		this->type = role;
 	}
 
@@ -388,26 +388,26 @@ void RecruitScreen::displayAgentStats(sp<Agent> agent)
 		case AgentType::Role::Soldier:
 			AgentSheet(formAgentStats).display(agent, bigUnitRanks, false);
 			formAgentStats->setVisible(true);
-			formPersonnelStats->setVisible(false);
+			formPersonelStats->setVisible(false);
 			break;
 		default:
-			personnelSheet(agent, formPersonnelStats);
+			personelSheet(agent, formPersonelStats);
 			formAgentStats->setVisible(false);
-			formPersonnelStats->setVisible(true);
+			formPersonelStats->setVisible(true);
 	}
 }
 
 /**
  * Fills the form of personel's statistics. Such as skill and that's all.
  * @agent - an agent whose stats will be displayed
- * @formPersonnelStats - a form of stats
+ * @formPersonelStats - a form of stats
  */
-void RecruitScreen::personnelSheet(sp<Agent> agent, sp<Form> formPersonnelStats)
+void RecruitScreen::personelSheet(sp<Agent> agent, sp<Form> formPersonelStats)
 {
-	formPersonnelStats->findControlTyped<Label>("AGENT_NAME")->setText(agent->name);
-	formPersonnelStats->findControlTyped<Graphic>("SELECTED_PORTRAIT")
+	formPersonelStats->findControlTyped<Label>("AGENT_NAME")->setText(agent->name);
+	formPersonelStats->findControlTyped<Graphic>("SELECTED_PORTRAIT")
 	    ->setImage(agent->getPortrait().photo);
-	formPersonnelStats->findControlTyped<Label>("VALUE_SKILL")
+	formPersonelStats->findControlTyped<Label>("VALUE_SKILL")
 	    ->setText(format(tr("%d"), agent->getSkill()));
 }
 
