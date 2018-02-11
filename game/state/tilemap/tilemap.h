@@ -18,8 +18,6 @@
 namespace OpenApoc
 {
 
-static const Colour COLOUR_BLACK = {0, 0, 0, 255};
-
 // FIXME: Alexey Andronov: Does anyone know why we divide by 4 here?
 static const unsigned TICK_SCALE = TICKS_PER_SECOND / 4;
 
@@ -150,7 +148,7 @@ class TileMap
 	                          Vec3<float> targetVectorXY, float velocityXY, float velocityZ) const;
 
 	void addObjectToMap(sp<Projectile>);
-	void addObjectToMap(sp<Vehicle>);
+	void addObjectToMap(GameState &state, sp<Vehicle>);
 	void addObjectToMap(sp<Scenery>);
 	void addObjectToMap(sp<Doodad>);
 	void addObjectToMap(sp<BattleMapPart>);

@@ -1,6 +1,7 @@
 #include "game/ui/general/vehiclesheet.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
+#include "forms/textedit.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/battle/damage.h"
 #include "game/state/tilemap/tilemap.h"
@@ -29,10 +30,17 @@ void VehicleSheet::display(sp<VEquipment> item)
 	displayEquipImplementation(item, item->type);
 }
 
-void VehicleSheet::display(sp<VEquipmentType> itemType)
+void VehicleSheet::display(sp<VEquipmentType> itemType, bool researched)
 {
 	clear();
-	displayEquipImplementation(nullptr, itemType);
+	if (researched)
+	{
+		displayEquipImplementation(nullptr, itemType);
+	}
+	else
+	{
+		displayAlien(itemType);
+	}
 }
 
 void VehicleSheet::clear()
@@ -57,7 +65,9 @@ void VehicleSheet::clear()
 
 void VehicleSheet::displayImplementation(sp<Vehicle> vehicle, sp<VehicleType> vehicleType)
 {
-	form->findControlTyped<Label>("ITEM_NAME")
+
+	form->findControlTyped<Label>("ITEM_NAME")->setText("");
+	form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")
 	    ->setText(vehicle ? tr(vehicle->name) : tr(vehicleType->name));
 	form->findControlTyped<Graphic>("SELECTED_IMAGE")->setImage(vehicleType->equip_icon_small);
 
@@ -111,8 +121,9 @@ void VehicleSheet::displayImplementation(sp<Vehicle> vehicle, sp<VehicleType> ve
 
 void VehicleSheet::displayEquipImplementation(sp<VEquipment> item, sp<VEquipmentType> type)
 {
-	form->findControlTyped<Label>("ITEM_NAME")
-	    ->setText(item ? tr(item->type->name) : tr(type->name));
+
+	form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")->setText("");
+	form->findControlTyped<Label>("ITEM_NAME")->setText(item ? tr(item->type->name) : tr(type->name));
 	form->findControlTyped<Graphic>("SELECTED_IMAGE")->setImage(type->equipscreen_sprite);
 
 	form->findControlTyped<Label>("LABEL_1_L")->setText(tr("Weight"));
@@ -216,6 +227,14 @@ void VehicleSheet::displayGeneral(sp<VEquipment> item, sp<VEquipmentType> type)
 		form->findControlTyped<Label>(format("LABEL_%d_L", statsCount))->setText(tr("Teleports"));
 		statsCount++;
 	}
+}
+
+void VehicleSheet::displayAlien(sp<VEquipmentType> type)
+{
+	form->findControlTyped<Label>("ITEM_NAME")->setText(tr("Alien Artifact"));
+	form->findControlTyped<Graphic>("SELECTED_IMAGE")->setImage(type->equipscreen_sprite);
+	form->findControlTyped<Label>("LABEL_1_L")->setText(tr("Weight"));
+	form->findControlTyped<Label>("LABEL_1_R")->setText(format("%d", type->weight));
 }
 
 }; // namespace OpenApoc

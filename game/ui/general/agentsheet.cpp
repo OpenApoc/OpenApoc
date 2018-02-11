@@ -1,6 +1,7 @@
 #include "game/ui/general/agentsheet.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
+#include "forms/textedit.h"
 #include "framework/event.h"
 #include "framework/font.h"
 #include "framework/framework.h"
@@ -30,7 +31,7 @@ AgentSheet::AgentSheet(sp<Form> dstForm) : form(dstForm) {}
 void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool turnBased)
 {
 	clear();
-	form->findControlTyped<Label>("AGENT_NAME")->setText(item->name);
+	form->findControlTyped<TextEdit>("AGENT_NAME")->setText(item->name);
 	form->findControlTyped<Graphic>("SELECTED_PORTRAIT")->setImage(item->getPortrait().photo);
 
 	form->findControlTyped<Graphic>("SELECTED_RANK")

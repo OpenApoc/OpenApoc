@@ -32,8 +32,20 @@
 		<item size="0" spacing="0"/>
         <orientation>horizontal</orientation>
       </listbox>
-	  
-	  <radiobutton id="BUTTON_SHOW_ALL" groupid="ORG_SELECT">
+      <label id="TEXT_ORG_NAME">
+        <position x="100" y="80"/>
+        <size width="275" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_ORG_RELATION">
+        <position x="100" y="98"/>
+        <size width="275" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <radiobutton id="BUTTON_SHOW_ALL" groupid="ORG_SELECT">
         <size width="27" height="46"/>
         <position x="297" y="75"/>
         <image/>

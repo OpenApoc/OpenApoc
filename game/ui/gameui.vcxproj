@@ -42,9 +42,12 @@
     <ClCompile Include="base\basescreen.cpp" />
     <ClCompile Include="base\basestage.cpp" />
     <ClCompile Include="base\recruitscreen.cpp" />
+    <ClCompile Include="base\buyandsellscreen.cpp" />
+    <ClCompile Include="base\aliencontainmentscreen.cpp" />
     <ClCompile Include="base\transactionscreen.cpp" />
     <ClCompile Include="base\researchscreen.cpp" />
     <ClCompile Include="base\researchselect.cpp" />
+    <ClCompile Include="base\transferscreen.cpp" />
     <ClCompile Include="base\vequipscreen.cpp" />
     <ClCompile Include="battle\battlebriefing.cpp" />
     <ClCompile Include="battle\battledebriefing.cpp" />
@@ -96,9 +99,12 @@
     <ClInclude Include="base\basescreen.h" />
     <ClInclude Include="base\basestage.h" />
     <ClInclude Include="base\recruitscreen.h" />
+    <ClInclude Include="base\buyandsellscreen.h" />
+    <ClInclude Include="base\aliencontainmentscreen.h" />
     <ClInclude Include="base\transactionscreen.h" />
     <ClInclude Include="base\researchscreen.h" />
     <ClInclude Include="base\researchselect.h" />
+    <ClInclude Include="base\transferscreen.h" />
     <ClInclude Include="base\vequipscreen.h" />
     <ClInclude Include="battle\battlebriefing.h" />
     <ClInclude Include="battle\battledebriefing.h" />

@@ -132,7 +132,7 @@
         <font>smalfont</font>
       </label>
  
-	  <scroll id="LIST1_SCROLL" largechange="32">
+	  <scroll id="LIST1_SCROLL">
 		<position x="381" y="72"/>
         <size width="26" height="374"/>
       </scroll>
@@ -156,7 +156,7 @@
         <hovercolour r="255" g="255" b="255" a="255"/>
       </listbox>
  
-	  <scroll id="LIST2_SCROLL" largechange="32">
+	  <scroll id="LIST2_SCROLL">
         <position x="567" y="72"/>
         <size width="26" height="374"/>
       </scroll>
@@ -196,7 +196,7 @@
       <subform id="AGENT_STATS_VIEW" src="sheet_agent_stats">
         <position x="17" y="187"/>
       </subform>
-      <subform id="PERSONEL_STATS_VIEW" src="sheet_personel_stats">
+      <subform id="PERSONNEL_STATS_VIEW" src="sheet_personnel_stats">
         <position x="17" y="187"/>
       </subform>
  

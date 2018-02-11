@@ -29,4 +29,7 @@ struct ColourArgB8888Le
 	uint8_t a;
 };
 
+static const Colour COLOUR_BLACK{0, 0, 0};
+static const Colour COLOUR_RED{255, 0, 0};
+
 }; // namespace OpenApoc

@@ -4,12 +4,12 @@
     <style minwidth="160" minheight="280">
       <position x="centre" y="centre"/>
       <size width="160" height="280"/>
-      <label id="AGENT_NAME" text="AGENT NAME GOES HERE">
+      <textedit id="AGENT_NAME" text="AGENT NAME GOES HERE">
         <position x="0" y="86"/>
         <size width="160" height="15"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
-      </label>
+      </textedit>
       <graphic id="SELECTED_PORTRAIT">
         <position x="11" y="7"/>
         <size width="65" height="64"/>
