@@ -35,6 +35,7 @@ class AgentAssignment : public Form
 	int positionX = 0, positionY = 0, insensibility = 5 * 5;
 	// State of dragged action.
 	bool isDragged = false;
+	bool isDragFinished = false;
 	// Update the vehicle's icon
 	std::function<void(sp<Control>)> funcVehicleUpdate;
 	// Update the agent's icon
@@ -43,6 +44,9 @@ class AgentAssignment : public Form
 	std::function<bool(Event *, sp<Control>, bool)> funcHandleAgentSelection;
 	// Select/deselect agents inside vehicle
 	std::function<bool(Event *, sp<Control>, bool)> funcHandleVehicleSelection;
+	std::function<void(Event *, sp<Control>, bool)> funcHandleVehicleCrewSelection;
+	std::function<void(Event *, sp<Control>)> funcHandleAgentMouseUpSelection;
+	std::function<void(Event *, sp<Control>)> funcHandleVehicleMouseUpSelection;
 	// Selection render
 	std::function<void(sp<Control>)> funcSelectionItemRender;
 	// Hover render

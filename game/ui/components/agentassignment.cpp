@@ -76,8 +76,7 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 	// select/deselect individual agent
 	funcHandleAgentSelection = [this](Event *e, sp<Control> c, bool select) {
 		if (!e)
-			return select;
-
+			return true;
 		auto agent = c->getData<Agent>();
 		if (agent)
 		{
@@ -86,34 +85,27 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 		auto icon = c->findControl(ControlGenerator::AGENT_ICON_NAME);
 		if (agent && icon && c->isPointInsideControlBounds(e, icon))
 		{
-			this->isDragged = false;
-			fw().stageQueueCommand(
-			    {StageCmd::Command::PUSH, mksp<AEquipScreen>(this->state, agent)});
-
-			return !select;
+			return false;
 		}
-
-		return select;
+		return true;
 	};
 
 	// select/deselect agents inside vehicle
 	funcHandleVehicleSelection = [this](Event *e, sp<Control> c, bool select) {
 		if (!e)
-			return select;
-
+			return true;
 		auto vehicle = c->getData<Vehicle>();
 		auto icon = c->findControl(ControlGenerator::VEHICLE_ICON_NAME);
 		if (vehicle && icon && c->isPointInsideControlBounds(e, icon))
 		{
-			this->isDragged = false;
-
-			auto equipScreen = mksp<VEquipScreen>(this->state);
-			equipScreen->setSelectedVehicle(vehicle);
-			fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
-
-			return !select;
+			return false;
 		}
+		return true;
+	};
 
+	funcHandleVehicleCrewSelection = [this](Event *e, sp<Control> c, bool select) {
+		if (!e)
+			return;
 		auto agentList = c->findControlTyped<MultilistBox>(AGENT_LIST_NAME);
 		if (select)
 		{
@@ -124,8 +116,27 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 		{
 			agentList->clearSelection();
 		}
+	};
 
-		return select;
+	funcHandleAgentMouseUpSelection = [this](Event *e, sp<Control> c) {
+		auto agent = c->getData<Agent>();
+		auto icon = c->findControl(ControlGenerator::AGENT_ICON_NAME);
+		if (agent && icon && c->isPointInsideControlBounds(e, icon) && !this->isDragFinished)
+		{
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH, mksp<AEquipScreen>(this->state, agent)});
+		}
+	};
+
+	funcHandleVehicleMouseUpSelection = [this](Event *e, sp<Control> c) {
+		auto vehicle = c->getData<Vehicle>();
+		auto icon = c->findControl(ControlGenerator::VEHICLE_ICON_NAME);
+		if (vehicle && icon && c->isPointInsideControlBounds(e, icon) && !this->isDragFinished)
+		{
+			auto equipScreen = mksp<VEquipScreen>(this->state);
+			equipScreen->setSelectedVehicle(vehicle);
+			fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
+		}
 	};
 
 	// Selection render
@@ -335,6 +346,7 @@ void AgentAssignment::updateLocation()
 			    if (!isDragged || e->forms().RaisedBy == sourceRaisedBy)
 				    return;
 
+			    isDragFinished = true;
 			    isDragged = false;
 			    draggedList->setVisible(false);
 
@@ -376,7 +388,8 @@ void AgentAssignment::updateLocation()
 			return visible;
 		});
 		// set selection behaviour
-		agentLeftList->setFuncHandleSelection(funcHandleAgentSelection);
+		agentLeftList->setFuncHandleSelection(funcHandleAgentSelection,
+		                                      funcHandleAgentMouseUpSelection);
 		// set selection render
 		agentLeftList->setFuncSelectionItemRender(funcSelectionItemRender);
 		// set hover render
@@ -385,8 +398,21 @@ void AgentAssignment::updateLocation()
 		agentLeftList->addCallback(FormEventType::MouseDown, [agentLeftList, this](FormsEvent *e) {
 			if (e->forms().RaisedBy == agentLeftList)
 			{
-				this->sourceRaisedBy = agentLeftList;
-				this->isDragged = true;
+				// we should start dragging only if clicking on icon
+				sp<Control> ctrl = e->forms().RaisedBy;
+				for (auto &c : ctrl->Controls)
+				{
+					auto icon = c->findControl(ControlGenerator::AGENT_ICON_NAME);
+					if (icon)
+					{
+						if (c->isPointInsideControlBounds(e, icon))
+						{
+							sourceRaisedBy = agentLeftList;
+							isDragged = true;
+							break;
+						}
+					}
+				}
 			}
 		});
 		// MouseUp - drop dragged list
@@ -394,6 +420,7 @@ void AgentAssignment::updateLocation()
 			if (!isDragged || e->forms().RaisedBy == sourceRaisedBy)
 				return;
 
+			isDragFinished = true;
 			isDragged = false;
 			draggedList->setVisible(false);
 
@@ -473,6 +500,7 @@ void AgentAssignment::addVehiclesToList(sp<MultilistBox> list, const int listOff
 			if (!isDragged || e->forms().RaisedBy == sourceRaisedBy)
 				return;
 
+			isDragFinished = true;
 			isDragged = false;
 			draggedList->setVisible(false);
 
@@ -512,21 +540,34 @@ void AgentAssignment::addVehiclesToList(sp<MultilistBox> list, const int listOff
 			return visible;
 		});
 		// set selection behaviour
-		agentRightList->setFuncHandleSelection(funcHandleAgentSelection);
+		agentRightList->setFuncHandleSelection(funcHandleAgentSelection,
+		                                       funcHandleAgentMouseUpSelection);
 		// set selection render
 		agentRightList->setFuncSelectionItemRender(funcSelectionItemRender);
 		// set hover render
 		agentRightList->setFuncHoverItemRender(funcHoverItemRender);
 		// MouseDown - ready for drag
-		agentRightList->addCallback(FormEventType::MouseDown,
-		                            [agentRightList, this](FormsEvent *e) {
-			                            if (e->forms().RaisedBy == agentRightList)
-			                            {
-				                            this->sourceRaisedBy = agentRightList;
-				                            this->isDragged = true;
-			                            }
-			                        });
-
+		agentRightList->addCallback(
+		    FormEventType::MouseDown, [agentRightList, this](FormsEvent *e) {
+			    if (e->forms().RaisedBy == agentRightList)
+			    {
+				    // we should start dragging only if clicking on icon
+				    sp<Control> ctrl = e->forms().RaisedBy;
+				    for (auto &c : ctrl->Controls)
+				    {
+					    auto icon = c->findControl(ControlGenerator::AGENT_ICON_NAME);
+					    if (icon)
+					    {
+						    if (c->isPointInsideControlBounds(e, icon))
+						    {
+							    sourceRaisedBy = agentRightList;
+							    isDragged = true;
+							    break;
+						    }
+					    }
+				    }
+			    }
+			});
 		addAgentsToList(agentRightList, offset + listOffset);
 	}
 }
@@ -554,7 +595,9 @@ void AgentAssignment::addBuildingToRightList(sp<Building> building, sp<Multilist
 		return visible;
 	});
 	// set selection behaviour
-	vehicleRightList->setFuncHandleSelection(funcHandleVehicleSelection);
+	vehicleRightList->setFuncHandleSelection(funcHandleVehicleSelection,
+	                                         funcHandleVehicleMouseUpSelection,
+	                                         funcHandleVehicleCrewSelection);
 	// set selection render
 	vehicleRightList->setFuncSelectionItemRender(funcSelectionItemRender);
 	// set hover render
@@ -673,15 +716,21 @@ void AgentAssignment::eventOccured(Event *e)
 	switch (e->type())
 	{
 		case EVENT_FORM_INTERACTION:
-			if (e->forms().EventFlag == FormEventType::MouseUp)
+			switch (e->forms().EventFlag)
 			{
-				if (isDragged && (e->forms().RaisedBy == sourceRaisedBy ||
-				                  e->forms().RaisedBy->Name == "FORM_AGENT_ASSIGNMENT"))
-				{
-					// miss click
-					isDragged = false;
-					draggedList->setVisible(false);
-				}
+				case FormEventType::MouseUp:
+					if (isDragged && (e->forms().RaisedBy == sourceRaisedBy ||
+					                  e->forms().RaisedBy->Name == "FORM_AGENT_ASSIGNMENT"))
+					{
+						// miss click
+						isDragFinished = true;
+						isDragged = false;
+						draggedList->setVisible(false);
+					}
+					break;
+				case FormEventType::MouseDown:
+					isDragFinished = false;
+					break;
 			}
 			break;
 

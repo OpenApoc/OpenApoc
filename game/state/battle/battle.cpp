@@ -2005,8 +2005,28 @@ void Battle::checkMissionEnd(GameState &state, bool retreated, bool forceReCheck
 		{
 			if (u.second->owner == p && u.second->isConscious())
 			{
-				orgsAlive.insert(p);
-				break;
+				bool normalUnit = false;
+				for (auto &mst : u.second->agent->type->bodyType->allowed_movement_states)
+				{
+					switch (mst)
+					{
+						case OpenApoc::MovementState::Normal:
+						case OpenApoc::MovementState::Running:
+						case OpenApoc::MovementState::Strafing:
+						case OpenApoc::MovementState::Reverse:
+						case OpenApoc::MovementState::Brainsuck:
+							normalUnit = true;
+							break;
+					}
+					if (normalUnit)
+						break;
+				}
+
+				if (normalUnit)
+				{
+					orgsAlive.insert(p);
+					break;
+				}
 			}
 		}
 	}

@@ -51,5 +51,7 @@ class UfopaediaCategoryView : public Stage
 	void update() override;
 	void render() override;
 	bool isTransition() override;
+
+	static void OpenUfopaediaArticle(sp<GameState> st, UString paedianame);
 };
 }; // namespace OpenApoc

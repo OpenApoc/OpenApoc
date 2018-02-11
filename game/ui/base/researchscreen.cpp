@@ -357,7 +357,7 @@ void ResearchScreen::setCurrentLabInfo()
 		LogError("Unexpected CapacityType in lab");
 	}
 
-	form->findControlTyped<Label>("TEXT_LAB_TYPE")->setText(labTypeName);
+	form->findControlTyped<Label>("TEXT_LAB_TYPE")->setText(tr(labTypeName));
 
 	auto agentEntryHeight = ControlGenerator::getFontHeight(*state) * 3;
 

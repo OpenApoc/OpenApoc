@@ -356,12 +356,12 @@ void Organisation::updateMissions(GameState &state)
 				}
 			}
 		}
-		// Rescue allies but not aliens
+		// Rescue allies
 		for (auto &v : state.vehicles)
 		{
 			if (v.second->city == rescueTransport->city && v.second->crashed &&
-			    v.second->owner != state.getAliens() && !v.second->carriedByVehicle &&
-			    v.second->owner.id != id && isRelatedTo(v.second->owner) == Relation::Allied)
+			    !v.second->carriedByVehicle && v.second->owner.id != id &&
+			    isRelatedTo(v.second->owner) == Relation::Allied)
 			{
 				bool foundRescuer = false;
 				for (auto &r : state.vehicles)

@@ -21,7 +21,6 @@ set (FORMS_SOURCE_FILES
 	textbutton.cpp
 	textedit.cpp
 	ticker.cpp
-	transactioncontrol.cpp
 	tristatebox.cpp
 	ui.cpp)
 source_group(forms\\sources FILES ${LIBRARY_SOURCE_FILES})
@@ -42,7 +41,6 @@ set (FORMS_HEADER_FILES
 	textbutton.h
 	textedit.h
 	ticker.h
-	transactioncontrol.h
 	tristatebox.h
 	ui.h)
 

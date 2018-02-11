@@ -14,7 +14,7 @@ EquipmentPaperDoll::EquipmentPaperDoll(Vec2<int> position, Vec2<int> size, Vec2<
 	this->Location = position;
 	this->Size = size;
 
-	this->slotHighlightIncrement = M_PI / 15.0f;
+	this->slotHighlightIncrement = M_PI / 500.0f;
 }
 
 Vec2<int>
@@ -60,10 +60,12 @@ void EquipmentPaperDoll::setNonHighlightColour(const Colour &colour)
 
 void EquipmentPaperDoll::update()
 {
+
 	// Only draw highlight if one of the colours isn't 100% transparent
 	if (slotHighlightColours[0].a != 0 || slotHighlightColours[1].a != 0)
 	{
-		this->slotHighlightCounter += slotHighlightIncrement;
+		this->slotHighlightCounter += (slotHighlightIncrement * fw().GetDeltaTime());
+
 		while (this->slotHighlightCounter > 2.0f * M_PI)
 		{
 			this->slotHighlightCounter -= 2.0f * M_PI;
@@ -111,8 +113,8 @@ void EquipmentPaperDoll::onRender()
 	{
 		for (auto &slot : slotList)
 		{
-			Vec2<int> p00 = (slot.bounds.p0 * slotSizePixels);
-			Vec2<int> p11 = (slot.bounds.p1 * slotSizePixels);
+			Vec2<int> p00 = (slot.bounds.p0 * slotSizePixels) - Vec2<int>{1, 1};
+			Vec2<int> p11 = (slot.bounds.p1 * slotSizePixels) - Vec2<int>{1, 1};
 			Vec2<int> p01 = {p00.x, p11.y};
 			Vec2<int> p10 = {p11.x, p00.y};
 

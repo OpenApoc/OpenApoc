@@ -62,7 +62,11 @@ GameState::~GameState()
 	for (auto &v : this->vehicles)
 	{
 		auto vehicle = v.second;
-		vehicle->removeFromMap(*this);
+		if (vehicle->tileObject)
+		{
+			vehicle->tileObject->removeFromMap();
+		}
+		vehicle->tileObject = nullptr;
 		// Detatch some back-pointers otherwise we get circular sp<> depedencies and leak
 		// FIXME: This is not a 'good' way of doing this, maybe add a destroyVehicle() function? Or
 		// make StateRefWeak<> or something?
@@ -79,11 +83,8 @@ GameState::~GameState()
 		for (auto &f : b.second->facilities)
 		{
 			if (f->lab)
-			{
-				f->lab->assigned_agents.clear();
-				f->lab->current_project.clear();
-				f->lab.clear();
-			}
+				f->lab->current_project = "";
+			f->lab = "";
 		}
 		b.second->building.clear();
 	}
@@ -180,10 +181,8 @@ void GameState::initState()
 			auto vehicle = v.second;
 			if (vehicle->city == city && !vehicle->currentBuilding)
 			{
-				city->map->addObjectToMap(*this, vehicle);
+				city->map->addObjectToMap(vehicle);
 			}
-			vehicle->strategyImages = city_common_image_list->strategyImages;
-			vehicle->setupMover();
 		}
 		for (auto &p : c.second->projectiles)
 		{
@@ -193,6 +192,16 @@ void GameState::initState()
 		if (city->portals.empty())
 		{
 			city->generatePortals(*this);
+		}
+	}
+	for (auto &v : this->vehicles)
+	{
+		v.second->strategyImages = city_common_image_list->strategyImages;
+		v.second->setupMover();
+		if (v.second->crashed)
+		{
+			v.second->smokeDoodad =
+			    v.second->city->placeDoodad({this, "DOODAD_13_SMOKE_FUME"}, v.second->position);
 		}
 	}
 	// Fill links for weapon's ammo
@@ -231,6 +240,15 @@ void GameState::applyMods()
 	else
 	{
 		vehicle_types["VEHICLETYPE_GRIFFON_AFV"]->type = VehicleType::Type::Road;
+	}
+
+	if (config().getBool("OpenApoc.Mod.ATVAPC"))
+	{
+		vehicle_types["VEHICLETYPE_WOLFHOUND_APC"]->type = VehicleType::Type::ATV;
+	}
+	else
+	{
+		vehicle_types["VEHICLETYPE_WOLFHOUND_APC"]->type = VehicleType::Type::Road;
 	}
 
 	if (config().getBool("OpenApoc.Mod.BSKLauncherSound"))
@@ -671,20 +689,24 @@ void GameState::fillPlayerStartingProperty()
 	    auto v = current_city->placeVehicle(*this, {this, type}, this->getPlayer(), {this, bld});
 	    v->homeBuilding = v->currentBuilding;
 	}*/
+
 	for (auto &pair : this->initial_vehicles)
 	{
 		auto v = current_city->createVehicle(*this, pair.first, this->getPlayer(), {this, bld});
 		v->homeBuilding = v->currentBuilding;
 		for (auto &eq : pair.second)
 		{
-			v->addEquipment(*this, eq);
+			auto device = v->addEquipment(*this, eq);
+			device->ammo = eq->max_ammo;
 		}
 	}
+
 	// Give the player initial vehicle equipment
 	for (auto &pair : this->initial_vehicle_equipment)
 	{
 		base->inventoryVehicleEquipment[pair.first.id] = pair.second;
 	}
+
 	// Give the player initial vehicle ammo
 	for (auto &pair : this->initial_vehicle_ammo)
 	{

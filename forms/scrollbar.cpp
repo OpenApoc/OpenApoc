@@ -19,6 +19,7 @@ ScrollBar::ScrollBar(sp<Image> gripperImage)
 	if (!gripperbutton)
 		gripperbutton = fw().data->loadImage(
 		    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:4:ui/menuopt.pal");
+	IsScrolling = 0;
 	// loadResources();
 }
 
@@ -26,15 +27,14 @@ ScrollBar::~ScrollBar() = default;
 
 void ScrollBar::loadResources() {}
 
-bool ScrollBar::setValue(int newValue)
+bool ScrollBar::setValue(double newValue)
 {
-	newValue = std::max(newValue, Minimum);
-	newValue = std::min(newValue, Maximum);
+	if (newValue < Minimum)
+		newValue = Minimum;
+	else if (newValue > Maximum)
+		newValue = Maximum;
 	if (newValue == Value)
-	{
 		return false;
-	}
-
 	Value = newValue;
 	this->pushFormEvent(FormEventType::ScrollBarChange, nullptr);
 	setDirty();
@@ -65,17 +65,17 @@ bool ScrollBar::setMaximum(int newMaximum)
 	return true;
 }
 
-void ScrollBar::scrollPrev(bool small)
+void ScrollBar::scrollPrev()
 {
-	if (!setValue(Value - (small ? 1 : LargeChange)))
+	if (!setValue(Value - LargeChange))
 	{
 		fw().soundBackend->playSample(buttonerror);
 	}
 }
 
-void ScrollBar::scrollNext(bool small)
+void ScrollBar::scrollNext()
 {
-	if (!setValue(Value + (small ? 1 : LargeChange)))
+	if (!setValue(Value + LargeChange))
 	{
 		fw().soundBackend->playSample(buttonerror);
 	}
@@ -99,20 +99,28 @@ void ScrollBar::eventOccured(Event *e)
 		}
 	}
 
-	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
-	    e->forms().EventFlag == FormEventType::MouseDown)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this())
 	{
-		if (mousePosition >= (segmentsize * (Value - Minimum)) + grippersize)
+		switch (e->forms().EventFlag)
 		{
-			scrollNext();
-		}
-		else if (mousePosition <= segmentsize * (Value - Minimum))
-		{
-			scrollPrev();
-		}
-		else
-		{
-			capture = true;
+			case FormEventType::MouseDown:
+				if (mousePosition >= (segmentsize * (Value - Minimum)) + grippersize)
+				{
+					SetScrolling(4); // quad speed forward
+				}
+				else if (mousePosition <= segmentsize * (Value - Minimum))
+				{
+					SetScrolling(-4); // quad speed backward
+				}
+				else
+				{
+					capture = true;
+				}
+				break;
+			case FormEventType::MouseLeave:
+			case FormEventType::MouseUp:
+				SetScrolling(0); // stop scrolling
+				break;
 		}
 	}
 
@@ -138,8 +146,11 @@ void ScrollBar::onRender()
 	if (Minimum == Maximum)
 		return;
 
-	int pos = static_cast<int>(segmentsize * (Value - Minimum));
+	UpdateScrollbarParameters();
+
+	int pos = static_cast<int>(segmentsize * ((int)Value - Minimum));
 	Vec2<float> newpos, newsize;
+
 	switch (BarOrientation)
 	{
 		case Orientation::Vertical:
@@ -170,44 +181,39 @@ void ScrollBar::onRender()
 			fw().renderer->draw(gripperbutton, newpos);
 			break;
 	}
-
-	updateLargeChangeValue();
-}
-
-void ScrollBar::updateLargeChangeValue()
-{
-	LargeChange =
-	    static_cast<int>(std::max((Maximum - Minimum + 2) * (float)LargePercent / 100.0f, 2.0f));
 }
 
 void ScrollBar::update()
 {
 	Control::update();
+	double multiplier;
 
-	int size;
-	if (Size.x < Size.y)
+	switch (BarOrientation)
 	{
-		BarOrientation = Orientation::Vertical;
-		size = Size.y;
+		case Orientation::Vertical:
+			multiplier = 0.25;
+			LargeChange = 20;
+			break;
+		case Orientation::Horizontal:
+			multiplier = 0.012;
+			LargeChange = 1;
+			break;
+	}
+
+	if (pause < 500.0)
+	{ // pause half of a second before full speed scroll
+		pause += fw().GetDeltaTime();
 	}
 	else
 	{
-		BarOrientation = Orientation::Horizontal;
-		size = Size.x;
-	}
-
-	int segments = (Maximum - Minimum) + 1;
-	segmentsize = size / static_cast<float>(segments);
-	grippersize = segmentsize;
-	if (grippersize < 16.0f)
-	{
-		grippersize = 16.0f;
-		segmentsize = (size - grippersize) / static_cast<float>(segments - 1);
-	}
-	if (RenderStyle == ScrollBarRenderStyle::Menu)
-	{
-		grippersize = gripperbutton->size.x;
-		segmentsize = (size - grippersize) / static_cast<float>(segments - 1);
+		if (IsScrolling != 0)
+		{
+			if (!setValue(Value + fw().GetDeltaTime() * IsScrolling * multiplier))
+			{
+				fw().soundBackend->playSample(buttonerror);
+				IsScrolling = 0;
+			}
+		}
 	}
 }
 
@@ -231,6 +237,8 @@ sp<Control> ScrollBar::copyTo(sp<Control> CopyParent)
 	copy->LargeChange = this->LargeChange;
 	copy->LargePercent = this->LargePercent;
 	copy->RenderStyle = this->RenderStyle;
+	copy->IsScrolling = 0;
+	copy->pause = 0.0;
 	copyControlData(copy);
 	return copy;
 }
@@ -271,4 +279,49 @@ void ScrollBar::configureSelfFromXml(pugi::xml_node *node)
 		}
 	}
 }
+
+void ScrollBar::SetScrolling(int dir)
+{
+	IsScrolling = dir;
+	if (dir < 0)
+	{
+		scrollPrev();
+	}
+	else if (dir > 0)
+	{
+		scrollNext();
+	}
+	pause = 0.0;
+}
+
+void ScrollBar::UpdateScrollbarParameters()
+{
+	int size;
+	int segments = (Maximum - Minimum) + 1;
+
+	if (Size.x < Size.y)
+	{
+		BarOrientation = Orientation::Vertical;
+		size = Size.y;
+	}
+	else
+	{
+		BarOrientation = Orientation::Horizontal;
+		size = Size.x;
+	}
+
+	segmentsize = size / static_cast<float>(segments);
+	grippersize = segmentsize;
+	if (grippersize < 16.0f)
+	{
+		grippersize = 16.0f;
+		segmentsize = (size - grippersize) / static_cast<float>(segments - 1);
+	}
+	if (RenderStyle == ScrollBarRenderStyle::Menu)
+	{
+		grippersize = gripperbutton->size.x;
+		segmentsize = (size - grippersize) / static_cast<float>(segments - 1);
+	}
+}
+
 }; // namespace OpenApoc

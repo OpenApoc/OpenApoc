@@ -50,7 +50,7 @@ void AEquipmentSheet::displayImplementation(sp<AEquipment> item, sp<AEquipmentTy
 		return;
 	}
 
-	form->findControlTyped<Label>("ITEM_NAME")->setText(itemType->name);
+	form->findControlTyped<Label>("ITEM_NAME")->setText(tr(itemType->name));
 	form->findControlTyped<Graphic>("SELECTED_IMAGE")
 	    ->setImage(item ? item->getEquipmentImage() : itemType->equipscreen_sprite);
 
@@ -98,7 +98,7 @@ void AEquipmentSheet::displayImplementation(sp<AEquipment> item, sp<AEquipmentTy
 
 void AEquipmentSheet::displayGrenade(sp<AEquipment> item, sp<AEquipmentType> itemType)
 {
-	form->findControlTyped<Label>("LABEL_2_C")->setText(itemType->damage_type->name);
+	form->findControlTyped<Label>("LABEL_2_C")->setText(tr(itemType->damage_type->name));
 
 	form->findControlTyped<Label>("LABEL_3_L")->setText(tr("Power"));
 	form->findControlTyped<Label>("LABEL_3_R")->setText(format("%d", itemType->damage));
@@ -114,10 +114,10 @@ void AEquipmentSheet::displayAmmo(sp<AEquipment> item, sp<AEquipmentType> itemTy
 	    ->setText(format("%.2f", itemType->getRoundsPerSecond()));
 
 	form->findControlTyped<Label>("LABEL_4_L")->setText(tr("Range"));
-	form->findControlTyped<Label>("LABEL_4_R")->setText(format("%d", itemType->getRangeInTiles()));
+	form->findControlTyped<Label>("LABEL_4_R")->setText(format("%d", itemType->getRangeInMetres()));
 
 	form->findControlTyped<Label>("LABEL_6_C")->setText(tr("Ammo Type:"));
-	form->findControlTyped<Label>("LABEL_7_C")->setText(itemType->damage_type->name);
+	form->findControlTyped<Label>("LABEL_7_C")->setText(tr(itemType->damage_type->name));
 
 	form->findControlTyped<Label>("LABEL_8_L")->setText(tr("Power"));
 	form->findControlTyped<Label>("LABEL_8_R")->setText(format("%d", itemType->damage));
@@ -149,13 +149,13 @@ void AEquipmentSheet::displayWeapon(sp<AEquipment> item, sp<AEquipmentType> item
 	    ->setText(format("%.2f", ammoType->getRoundsPerSecond()));
 
 	form->findControlTyped<Label>("LABEL_4_L")->setText(tr("Range"));
-	form->findControlTyped<Label>("LABEL_4_R")->setText(format("%d", ammoType->getRangeInTiles()));
+	form->findControlTyped<Label>("LABEL_4_R")->setText(format("%d", ammoType->getRangeInMetres()));
 
 	form->findControlTyped<Label>("LABEL_5_C")->setText(tr("Ammo types:"));
 	int ammoNum = 1;
 	for (auto &ammo : itemType->ammo_types)
 	{
-		form->findControlTyped<Label>(format("LABEL_%d_C", 5 + ammoNum))->setText(ammo->name);
+		form->findControlTyped<Label>(format("LABEL_%d_C", 5 + ammoNum))->setText(tr(ammo->name));
 		if (++ammoNum >= 4)
 		{
 			break;

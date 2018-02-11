@@ -19,9 +19,12 @@ class ScrollBar : public Control
 	sp<Image> gripperbutton;
 	sp<Sample> buttonerror;
 
-	int Value;
+	double Value;
+	int IsScrolling;
+	double pause;
 	Orientation BarOrientation;
 	void loadResources();
+	void UpdateScrollbarParameters();
 
   protected:
 	void onRender() override;
@@ -38,10 +41,8 @@ class ScrollBar : public Control
 
 	ScrollBarRenderStyle RenderStyle;
 	Colour GripperColour;
-	int LargeChange;
+	double LargeChange;
 	int LargePercent;
-
-	void updateLargeChangeValue();
 
 	ScrollBar(sp<Image> gripperImage = nullptr);
 	~ScrollBar() override;
@@ -49,14 +50,19 @@ class ScrollBar : public Control
 	void eventOccured(Event *e) override;
 	void update() override;
 	void unloadResources() override;
-	virtual int getValue() const { return Value; }
+	void SetScrolling(int dir);
+	virtual int getValue() const
+	{
+		return (int)Value;
+		;
+	}
 	virtual int getMinimum() const { return Minimum; }
 	virtual int getMaximum() const { return Maximum; }
-	virtual bool setValue(int newValue);
+	virtual bool setValue(double newValue);
 	virtual bool setMinimum(int newMininum);
 	virtual bool setMaximum(int newMaximum);
-	virtual void scrollPrev(bool small = false);
-	virtual void scrollNext(bool small = false);
+	virtual void scrollPrev();
+	virtual void scrollNext();
 
 	sp<Control> copyTo(sp<Control> CopyParent) override;
 	void configureSelfFromXml(pugi::xml_node *node) override;

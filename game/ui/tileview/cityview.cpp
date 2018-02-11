@@ -411,13 +411,16 @@ void CityView::tryOpenUfopaediaEntry(StateRef<UfopaediaEntry> ufopaediaEntry)
 			if (ufopaedia_category)
 				break;
 		}
-		if (!ufopaedia_category)
+		if (ufopaedia_category)
+		{
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH,
+			     mksp<UfopaediaCategoryView>(state, ufopaedia_category, ufopaediaEntry)});
+		}
+		else
 		{
 			LogError("No UFOPaedia category found for entry %s", ufopaediaEntry->title);
 		}
-		fw().stageQueueCommand(
-		    {StageCmd::Command::PUSH,
-		     mksp<UfopaediaCategoryView>(state, ufopaedia_category, ufopaediaEntry)});
 	}
 }
 
@@ -689,12 +692,12 @@ void CityView::orderSelect(StateRef<Agent> agent, bool inverse, bool additive)
 		}
 	}
 
-	auto agentForm = this->uiTabs[2];
 	if (state->current_city->cityViewSelectedAgents.empty())
 	{
 		return;
 	}
 	agent = state->current_city->cityViewSelectedAgents.front();
+	auto agentForm = this->uiTabs[2];
 	LogWarning("FIX: Proper multiselect handle for agent controls");
 	if (agent->type->role == AgentType::Role::Soldier)
 	{
@@ -705,17 +708,13 @@ void CityView::orderSelect(StateRef<Agent> agent, bool inverse, bool additive)
 				agentForm->findControlTyped<CheckBox>("BUTTON_AGENT_PSI")->setChecked(false);
 				break;
 			case TrainingAssignment::Physical:
-			{
 				agentForm->findControlTyped<CheckBox>("BUTTON_AGENT_PHYSICAL")->setChecked(true);
 				agentForm->findControlTyped<CheckBox>("BUTTON_AGENT_PSI")->setChecked(false);
 				break;
-			}
 			case TrainingAssignment::Psi:
-			{
 				agentForm->findControlTyped<CheckBox>("BUTTON_AGENT_PHYSICAL")->setChecked(false);
 				agentForm->findControlTyped<CheckBox>("BUTTON_AGENT_PSI")->setChecked(true);
 				break;
-			}
 		}
 	}
 }
@@ -2001,115 +2000,6 @@ void CityView::update()
 			LogError("Failed to find \"OWNED_AGENT_LIST\" control on city tab \"%s\"",
 			         TAB_FORM_NAMES[2]);
 		}
-
-		auto agentForm = uiTabs[2];
-		sp<Label> agentName = agentForm->findControlTyped<Label>("TEXT_AGENT_NAME");
-		sp<Label> agentAssignment = agentForm->findControlTyped<Label>("TEXT_AGENT_ASSIGNMENT");
-		if (state->current_city->cityViewSelectedAgents.empty())
-		{
-			agentName->setText("");
-			agentAssignment->setText("");
-		}
-		else
-		{
-			StateRef<Agent> agent = state->current_city->cityViewSelectedAgents.front();
-			StateRef<Base> base;
-			if (agent->type->role == AgentType::Role::Soldier)
-			{
-				auto agentRName = tr(agent->getRankName()) + UString(" ") + agent->name;
-				agentName->setText(agentRName);
-				if (agent->currentBuilding == agent->homeBuilding)
-				{
-					base = agent->currentBuilding->base;
-				}
-				else if (agent->currentVehicle &&
-				         agent->currentVehicle->currentBuilding == agent->homeBuilding)
-				{
-					base = agent->currentVehicle->currentBuilding->base;
-				}
-				else
-				{
-					if (!agent->recentlyHired)
-					{
-						if (agent->currentBuilding)
-							agentAssignment->setText(tr("At") + UString(" ") +
-							                         tr(agent->currentBuilding->name));
-						else if (agent->currentVehicle && agent->currentVehicle->currentBuilding)
-							agentAssignment->setText(
-							    tr("At") + UString(" ") +
-							    tr(agent->currentVehicle->currentBuilding->name));
-						else if (!agent->missions.empty() &&
-						         agent->missions.front()->targetBuilding)
-						{
-							if (agent->missions.front()->targetBuilding == agent->homeBuilding)
-								agentAssignment->setText(tr("Returning to base"));
-							else
-								agentAssignment->setText(
-								    tr("Traveling to:") + UString(" ") +
-								    tr(agent->missions.front()->targetBuilding->name));
-						}
-						else if (agent->currentVehicle &&
-						         !agent->currentVehicle->missions.empty() &&
-						         agent->currentVehicle->missions.front()->targetBuilding)
-						{
-							if (agent->currentVehicle->missions.front()->targetBuilding ==
-							    agent->homeBuilding)
-								agentAssignment->setText(tr("Returning to base"));
-							else
-								agentAssignment->setText(tr("Traveling to:") + UString(" ") +
-								                         tr(agent->currentVehicle->missions.front()
-								                                ->targetBuilding->name));
-						}
-						else
-							agentAssignment->setText(tr("Traveling to:") + UString(" ") +
-							                         tr("map point"));
-					}
-					else
-						agentAssignment->setText(tr("Reporting to base"));
-				}
-			}
-			else
-			{
-				agentName->setText("");
-				agentAssignment->setText("");
-			}
-
-			if (agent->type->role == AgentType::Role::Soldier && base == agent->homeBuilding->base)
-			{
-				if (agent->missions.empty() &&
-				    agent->modified_stats.health < agent->current_stats.health)
-					agentAssignment->setText(tr("Wounded"));
-				else
-					switch (agent->trainingAssignment)
-					{
-						case TrainingAssignment::None:
-							if (agent->type->canTrain)
-								agentAssignment->setText(tr("Not assigned to training"));
-							else
-								agentAssignment->setText(tr("(Android training not possible)"));
-							break;
-						case TrainingAssignment::Physical:
-						{
-							UString efficiency = tr("Combat training (efficiency=");
-							int usage = base->getUsage(*state, FacilityType::Capacity::Training);
-							usage = (100.0f / std::max(100, usage)) * 100;
-							efficiency += format("%d%%", usage) + UString(")");
-							agentAssignment->setText(efficiency);
-							break;
-						}
-						case TrainingAssignment::Psi:
-						{
-							UString efficiency = tr("Psionic training (efficiency=");
-							int usage = base->getUsage(*state, FacilityType::Capacity::Psi);
-							usage = (100.0f / std::max(100, usage)) * 100;
-							efficiency += format("%d%%", usage) + UString(")");
-							agentAssignment->setText(efficiency);
-							break;
-						}
-					}
-			}
-		}
-
 		int currentAgentIndex = -1;
 		std::set<sp<Agent>> agentsMIA;
 		for (auto &i : ownedSoldierInfoList)
@@ -2191,64 +2081,6 @@ void CityView::update()
 			LogError("Failed to find \"OWNED_AGENT_LIST\" control on city tab \"%s\"",
 			         TAB_FORM_NAMES[3]);
 		}
-
-		auto agentForm = uiTabs[3];
-		sp<Label> agentName = agentForm->findControlTyped<Label>("TEXT_AGENT_NAME");
-		sp<Label> agentAssignment = agentForm->findControlTyped<Label>("TEXT_AGENT_ASSIGNMENT");
-		if (state->current_city->cityViewSelectedAgents.empty())
-		{
-			agentName->setText("");
-			agentAssignment->setText("");
-		}
-		else
-		{
-			StateRef<Agent> agent = state->current_city->cityViewSelectedAgents.front();
-			if (agent->type->role == AgentType::Role::BioChemist)
-			{
-				agentName->setText(agent->name);
-				if (agent->assigned_to_lab)
-				{
-					auto thisRef = StateRef<Agent>{state.get(), agent};
-					for (auto &fac : agent->homeBuilding->base->facilities)
-					{
-						if (!fac->lab)
-						{
-							continue;
-						}
-						auto it = std::find(fac->lab->assigned_agents.begin(),
-						                    fac->lab->assigned_agents.end(), thisRef);
-						if (it != fac->lab->assigned_agents.end())
-						{
-							if (fac->lab->current_project)
-							{
-								UString pr = tr(fac->lab->current_project->name);
-								int progress = (static_cast<float>(
-								                    fac->lab->current_project->man_hours_progress) /
-								                fac->lab->current_project->man_hours) *
-								               100;
-								agentAssignment->setText(pr + format(" (%d%%)", progress));
-							}
-							else
-								agentAssignment->setText(tr("No project assigned"));
-							break;
-						}
-					}
-				}
-				else
-				{
-					if (!agent->recentlyHired)
-						agentAssignment->setText(tr("Not assigned to lab"));
-					else
-						agentAssignment->setText(tr("Reporting to base"));
-				}
-			}
-			else
-			{
-				agentName->setText("");
-				agentAssignment->setText("");
-			}
-		}
-
 		int currentAgentIndex = -1;
 		std::set<sp<Agent>> agentsMIA;
 		for (auto &i : ownedBioInfoList)
@@ -2320,67 +2152,6 @@ void CityView::update()
 			LogError("Failed to find \"OWNED_AGENT_LIST\" control on city tab \"%s\"",
 			         TAB_FORM_NAMES[4]);
 		}
-
-		auto agentForm = uiTabs[4];
-		sp<Label> agentName = agentForm->findControlTyped<Label>("TEXT_AGENT_NAME");
-		sp<Label> agentAssignment = agentForm->findControlTyped<Label>("TEXT_AGENT_ASSIGNMENT");
-		if (state->current_city->cityViewSelectedAgents.empty())
-		{
-			agentName->setText("");
-			agentAssignment->setText("");
-		}
-		else
-		{
-			StateRef<Agent> agent = state->current_city->cityViewSelectedAgents.front();
-			if (agent->type->role == AgentType::Role::Engineer)
-			{
-				agentName->setText(agent->name);
-				if (agent->assigned_to_lab)
-				{
-					auto thisRef = StateRef<Agent>{state.get(), agent};
-					for (auto &fac : agent->homeBuilding->base->facilities)
-					{
-						if (!fac->lab)
-						{
-							continue;
-						}
-						auto it = std::find(fac->lab->assigned_agents.begin(),
-						                    fac->lab->assigned_agents.end(), thisRef);
-						if (it != fac->lab->assigned_agents.end())
-						{
-							if (fac->lab->current_project)
-							{
-								UString pr = tr(fac->lab->current_project->name);
-								int progress =
-								    (static_cast<float>(fac->lab->manufacture_man_hours_invested +
-								                        fac->lab->current_project->man_hours *
-								                            fac->lab->manufacture_done) /
-								     (fac->lab->current_project->man_hours *
-								      fac->lab->manufacture_goal)) *
-								    100;
-								agentAssignment->setText(pr + format(" (%d%%)", progress));
-							}
-							else
-								agentAssignment->setText(tr("No project assigned"));
-							break;
-						}
-					}
-				}
-				else
-				{
-					if (!agent->recentlyHired)
-						agentAssignment->setText(tr("Not assigned to workshop"));
-					else
-						agentAssignment->setText(tr("Reporting to base"));
-				}
-			}
-			else
-			{
-				agentName->setText("");
-				agentAssignment->setText("");
-			}
-		}
-
 		int currentAgentIndex = -1;
 		std::set<sp<Agent>> agentsMIA;
 		for (auto &i : ownedEngineerInfoList)
@@ -2452,64 +2223,6 @@ void CityView::update()
 			LogError("Failed to find \"OWNED_AGENT_LIST\" control on city tab \"%s\"",
 			         TAB_FORM_NAMES[5]);
 		}
-
-		auto agentForm = uiTabs[5];
-		sp<Label> agentName = agentForm->findControlTyped<Label>("TEXT_AGENT_NAME");
-		sp<Label> agentAssignment = agentForm->findControlTyped<Label>("TEXT_AGENT_ASSIGNMENT");
-		if (state->current_city->cityViewSelectedAgents.empty())
-		{
-			agentName->setText("");
-			agentAssignment->setText("");
-		}
-		else
-		{
-			StateRef<Agent> agent = state->current_city->cityViewSelectedAgents.front();
-			if (agent->type->role == AgentType::Role::Physicist)
-			{
-				agentName->setText(agent->name);
-				if (agent->assigned_to_lab)
-				{
-					auto thisRef = StateRef<Agent>{state.get(), agent};
-					for (auto &fac : agent->homeBuilding->base->facilities)
-					{
-						if (!fac->lab)
-						{
-							continue;
-						}
-						auto it = std::find(fac->lab->assigned_agents.begin(),
-						                    fac->lab->assigned_agents.end(), thisRef);
-						if (it != fac->lab->assigned_agents.end())
-						{
-							if (fac->lab->current_project)
-							{
-								UString pr = tr(fac->lab->current_project->name);
-								int progress = (static_cast<float>(
-								                    fac->lab->current_project->man_hours_progress) /
-								                fac->lab->current_project->man_hours) *
-								               100;
-								agentAssignment->setText(pr + format(" (%d%%)", progress));
-							}
-							else
-								agentAssignment->setText(tr("No project assigned"));
-							break;
-						}
-					}
-				}
-				else
-				{
-					if (!agent->recentlyHired)
-						agentAssignment->setText(tr("Not assigned to lab"));
-					else
-						agentAssignment->setText(tr("Reporting to base"));
-				}
-			}
-			else
-			{
-				agentName->setText("");
-				agentAssignment->setText("");
-			}
-		}
-
 		int currentAgentIndex = -1;
 		std::set<sp<Agent>> agentsMIA;
 		for (auto &i : ownedPhysicsInfoList)
@@ -2582,30 +2295,6 @@ void CityView::update()
 			         TAB_FORM_NAMES[6]);
 		}
 
-		if (!state->current_city->cityViewSelectedVehicles.empty())
-		{
-			auto selectedVehicle = state->current_city->cityViewSelectedVehicles.front();
-			if (selectedVehicle->owner == state->getPlayer())
-			{
-				uiTabs[6]->findControlTyped<Label>("TEXT_VEHICLE_NAME")->setText("");
-				uiTabs[6]->findControlTyped<Label>("TEXT_VEHICLE_OWNER")->setText("");
-			}
-			else
-			{
-				uiTabs[6]
-				    ->findControlTyped<Label>("TEXT_VEHICLE_NAME")
-				    ->setText(selectedVehicle->name);
-				uiTabs[6]
-				    ->findControlTyped<Label>("TEXT_VEHICLE_OWNER")
-				    ->setText(selectedVehicle->owner->name);
-			}
-		}
-		else
-		{
-			uiTabs[6]->findControlTyped<Label>("TEXT_VEHICLE_NAME")->setText("");
-			uiTabs[6]->findControlTyped<Label>("TEXT_VEHICLE_OWNER")->setText("");
-		}
-
 		int currentVehicleIndex = -1;
 		std::set<sp<Vehicle>> vehiclesMIA;
 		for (auto &i : hostileVehicleInfoList)
@@ -2620,7 +2309,6 @@ void CityView::update()
 			{
 				continue;
 			}
-
 			// Show selected non-player vehicle in list of hostile vehicles
 			if (state->getPlayer()->isRelatedTo(vehicle->owner) != Organisation::Relation::Hostile)
 			{
@@ -2699,40 +2387,6 @@ void CityView::update()
 		{
 			LogError("Failed to find \"ORGANISATION_LIST\" control on city tab \"%s\"",
 			         TAB_FORM_NAMES[7]);
-		}
-
-		auto selectedOrg = state->current_city->cityViewSelectedOrganisation;
-		if (selectedOrg && (state->current_city->cityViewOrgButtonIndex == 0 ||
-		                    static_cast<int>(selectedOrg->isRelatedTo(state->getPlayer())) ==
-		                        state->current_city->cityViewOrgButtonIndex - 1))
-		{
-			uiTabs[7]->findControlTyped<Label>("TEXT_ORG_NAME")->setText(tr(selectedOrg->name));
-			UString relation = "";
-			switch (selectedOrg->isRelatedTo(state->getPlayer()))
-			{
-				case Organisation::Relation::Allied:
-					relation += tr(": allied with:");
-					break;
-				case Organisation::Relation::Friendly:
-					relation += tr(": friendly with:");
-					break;
-				case Organisation::Relation::Neutral:
-					relation += tr(": neutral towards:");
-					break;
-				case Organisation::Relation::Unfriendly:
-					relation += tr(": unfriendly towards:");
-					break;
-				case Organisation::Relation::Hostile:
-					relation += tr(": hostile towards:");
-					break;
-			}
-			relation += UString(" ") + tr(state->getPlayer()->name);
-			uiTabs[7]->findControlTyped<Label>("TEXT_ORG_RELATION")->setText(relation);
-		}
-		else
-		{
-			uiTabs[7]->findControlTyped<Label>("TEXT_ORG_NAME")->setText("");
-			uiTabs[7]->findControlTyped<Label>("TEXT_ORG_RELATION")->setText("");
 		}
 
 		int currentOrgIndex = -1;
@@ -2828,7 +2482,7 @@ void CityView::update()
 
 	// If we have 'follow vehicle' enabled we clobber any other movement that may have occurred in
 	// this frame
-	if (this->followVehicle && this->updateSpeed != CityUpdateSpeed::Pause)
+	if (this->followVehicle)
 	{
 		if (!state->current_city->cityViewSelectedVehicles.empty())
 		{
@@ -3543,8 +3197,6 @@ bool CityView::handleGameStateEvent(Event *e)
 			{
 				LogError("Invalid spotted event");
 			}
-			state->totalScore.alienIncidents += ALIEN_INCIDENT_SCORE;
-			state->weekScore.alienIncidents += ALIEN_INCIDENT_SCORE;
 			fw().soundBackend->playSample(
 			    listRandomiser(state->rng, state->city_common_sample_list->alertSounds));
 			zoomLastEvent();
@@ -3604,7 +3256,6 @@ bool CityView::handleGameStateEvent(Event *e)
 					LogError("No UFOPaedia category found for entry %s", ufopaedia_entry->title);
 				}
 			}
-			setUpdateSpeed(CityUpdateSpeed::Pause);
 			auto message_box = mksp<MessageBox>(
 			    tr("RESEARCH COMPLETE"),
 			    format("%s\n%s\n%s", tr("Research project completed:"), ev->topic->name,
@@ -3626,6 +3277,7 @@ bool CityView::handleGameStateEvent(Event *e)
 			    [this, game_state, lab_facility]() {
 				    fw().stageQueueCommand(
 				        {StageCmd::Command::PUSH, mksp<ResearchScreen>(game_state, lab_facility)});
+				    setUpdateSpeed(CityUpdateSpeed::Speed1);
 				});
 			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 		}
@@ -3675,7 +3327,6 @@ bool CityView::handleGameStateEvent(Event *e)
 					item_name = game_state->vehicle_types[ev->topic->itemId]->name;
 					break;
 			}
-			setUpdateSpeed(CityUpdateSpeed::Pause);
 			auto message_box = mksp<MessageBox>(
 			    tr("MANUFACTURE COMPLETED"),
 			    format("%s\n%s\n%s %d\n%d", lab_base->name, tr(item_name), tr("Quantity:"),
@@ -3685,6 +3336,7 @@ bool CityView::handleGameStateEvent(Event *e)
 			    [this, game_state, lab_facility]() {
 				    fw().stageQueueCommand(
 				        {StageCmd::Command::PUSH, mksp<ResearchScreen>(game_state, lab_facility)});
+				    setUpdateSpeed(CityUpdateSpeed::Speed1);
 				});
 			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 		}
@@ -3734,7 +3386,6 @@ bool CityView::handleGameStateEvent(Event *e)
 					item_name = game_state->vehicles[ev->topic->itemId]->name;
 					break;
 			}
-			setUpdateSpeed(CityUpdateSpeed::Pause);
 			auto message_box =
 			    mksp<MessageBox>(tr("MANUFACTURING HALTED"),
 			                     format("%s\n%s\n%s %d/%d\n%d", lab_base->name, tr(item_name),
@@ -3752,7 +3403,6 @@ bool CityView::handleGameStateEvent(Event *e)
 				LogError("Invalid facility event");
 				return true;
 			}
-			setUpdateSpeed(CityUpdateSpeed::Pause);
 			auto message_box =
 			    mksp<MessageBox>(tr("FACILITY COMPLETED"),
 			                     format("%s\n%s", ev->base->name, tr(ev->facility->type->name)),
