@@ -159,16 +159,6 @@ class ResearchState
 	void updateTopicList();
 	void resortTopicList();
 	StateRefMap<Lab> labs;
-
-	// Is the research of the item finished?
-	template <class T> bool isComplete(StateRef<T> item) const
-	{
-		size_t prefLen = item->getPrefix().length();
-		UString researchId(ResearchTopic::getPrefix() + item->id.substr(prefLen));
-
-		auto it = topics.find(researchId);
-		return it == topics.end() ? true : it->second->isComplete();
-	}
 };
 
 } // namespace OpenApoc

@@ -359,10 +359,6 @@ class FlyingVehicleMover : public VehicleMover
 		}
 		if (vehicle.crashed)
 		{
-			if (vehicle.smokeDoodad)
-			{
-				vehicle.smokeDoodad->update(state, ticks);
-			}
 			if (vehicle.type->type != VehicleType::Type::UFO)
 			{
 				updateCrashed(state, ticks);
@@ -622,10 +618,6 @@ class GroundVehicleMover : public VehicleMover
 		}
 		if (vehicle.crashed)
 		{
-			if (vehicle.smokeDoodad)
-			{
-				vehicle.smokeDoodad->update(state, ticks);
-			}
 			updateCrashed(state, ticks);
 			return;
 		}
@@ -1122,7 +1114,12 @@ void VehicleMover::updateCrashed(GameState &state, unsigned int ticks)
 	auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
 	if (!presentScenery)
 	{
-		vehicle.setCrashed(state, false);
+		vehicle.crashed = false;
+		if (vehicle.smokeDoodad)
+		{
+			vehicle.smokeDoodad->remove(state);
+			vehicle.smokeDoodad.reset();
+		}
 		vehicle.startFalling(state);
 	}
 }
@@ -1289,7 +1286,7 @@ void Vehicle::leaveDimensionGate(GameState &state)
 	this->goalFacing = initialFacing;
 	if (city->map)
 	{
-		city->map->addObjectToMap(state, shared_from_this());
+		city->map->addObjectToMap(shared_from_this());
 	}
 	if (state.current_city == city)
 	{
@@ -1315,7 +1312,16 @@ void Vehicle::enterDimensionGate(GameState &state)
 	{
 		dropCarriedVehicle(state);
 	}
-	removeFromMap(state);
+	if (tileObject)
+	{
+		this->tileObject->removeFromMap();
+		this->tileObject.reset();
+	}
+	if (shadowObject)
+	{
+		this->shadowObject->removeFromMap();
+		this->shadowObject = nullptr;
+	}
 	if (state.current_city == city)
 	{
 		fw().soundBackend->playSample(state.city_common_sample_list->dimensionShiftIn, position);
@@ -1347,7 +1353,7 @@ void Vehicle::leaveBuilding(GameState &state, Vec3<float> initialPosition, float
 	this->goalFacing = initialFacing;
 	if (city->map)
 	{
-		city->map->addObjectToMap(state, shared_from_this());
+		city->map->addObjectToMap(shared_from_this());
 	}
 }
 
@@ -1368,9 +1374,16 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 		carriedVehicle->processRecoveredVehicle(state);
 		carriedVehicle.clear();
 	}
-
-	removeFromMap(state);
-
+	if (tileObject)
+	{
+		this->tileObject->removeFromMap();
+		this->tileObject.reset();
+	}
+	if (shadowObject)
+	{
+		this->shadowObject->removeFromMap();
+		this->shadowObject = nullptr;
+	}
 	this->position = type->isGround() ? b->carEntranceLocation : *b->landingPadLocations.begin();
 	this->position += Vec3<float>{0.5f, 0.5f, 0.5f};
 	this->facing = 0.0f;
@@ -1406,48 +1419,6 @@ void Vehicle::setupMover()
 	animationFrame = type->animation_sprites.begin();
 }
 
-/**
- * Remove all tile objects that belongs to vehicle.
- */
-void Vehicle::removeFromMap(GameState &state)
-{
-	if (smokeDoodad)
-	{
-		smokeDoodad->remove(state);
-		smokeDoodad = nullptr;
-	}
-	if (shadowObject)
-	{
-		shadowObject->removeFromMap();
-		shadowObject = nullptr;
-	}
-	if (tileObject)
-	{
-		tileObject->removeFromMap();
-		tileObject = nullptr;
-	}
-}
-
-/**
- * Set the vehicle crashed (or not).
- */
-void Vehicle::setCrashed(GameState &state, bool crashed)
-{
-	if (smokeDoodad)
-	{
-		smokeDoodad->remove(state);
-		smokeDoodad = nullptr;
-	}
-	if (crashed)
-	{
-		sp<Doodad> smoke = mksp<Doodad>(position + SMOKE_DOODAD_SHIFT,
-		                                StateRef<DoodadType>{&state, "DOODAD_13_SMOKE_FUME"});
-		city->map->addObjectToMap(smoke);
-		smokeDoodad = smoke;
-	}
-	this->crashed = crashed;
-}
-
 void Vehicle::processRecoveredVehicle(GameState &state)
 {
 	std::list<sp<VEquipment>> scrappedEquipment;
@@ -1461,16 +1432,26 @@ void Vehicle::processRecoveredVehicle(GameState &state)
 	for (auto &e : scrappedEquipment)
 	{
 		removeEquipment(e);
+		if (e->ammo > 0 && e->type->ammo_type)
+		{
+			currentBuilding->base->inventoryVehicleAmmo[e->type->ammo_type.id] += e->ammo;
+		}
+		int price = 0;
 		if (state.economy.find(e->type.id) != state.economy.end())
 		{
 			auto &economy = state.economy[e->type.id];
-			owner->balance += economy.currentPrice * FV_SCRAPPED_COST_PERCENT / 100;
+			price = economy.currentPrice;
 		}
-		if (e->ammo > 0 && e->type->ammo_type &&
-		    state.economy.find(e->type->ammo_type.id) != state.economy.end())
+		owner->balance += price * FV_SCRAPPED_COST_PERCENT / 100;
+		if (e->ammo > 0)
 		{
-			auto &economy = state.economy[e->type->ammo_type.id];
-			owner->balance += e->ammo * economy.currentPrice * FV_SCRAPPED_COST_PERCENT / 100;
+			price = 0;
+			if (state.economy.find(e->type->ammo_type.id) != state.economy.end())
+			{
+				auto &economy = state.economy[e->type->ammo_type.id];
+				price = economy.currentPrice;
+			}
+			owner->balance += e->ammo * price * FV_SCRAPPED_COST_PERCENT / 100;
 		}
 	}
 	if (!evacuation && randBoundsExclusive(state.rng, 0, 100) > FV_CHANCE_TO_RECOVER_VEHICLE)
@@ -1840,8 +1821,21 @@ void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 			}
 		}
 	}
-	removeFromMap(state);
-
+	if (tileObject)
+	{
+		this->tileObject->removeFromMap();
+		this->tileObject.reset();
+	}
+	if (shadowObject)
+	{
+		this->shadowObject->removeFromMap();
+		this->shadowObject.reset();
+	}
+	if (smokeDoodad)
+	{
+		smokeDoodad->remove(state);
+		smokeDoodad.reset();
+	}
 	while (!currentAgents.empty())
 	{
 		// For some reason need to assign first before calling die()
@@ -3043,10 +3037,6 @@ void Vehicle::setPosition(const Vec3<float> &pos)
 	if (this->shadowObject)
 	{
 		this->shadowObject->setPosition(pos);
-	}
-	if (this->smokeDoodad)
-	{
-		this->smokeDoodad->setPosition(pos + SMOKE_DOODAD_SHIFT);
 	}
 }
 

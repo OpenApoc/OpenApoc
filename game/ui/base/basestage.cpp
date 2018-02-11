@@ -94,7 +94,7 @@ void BaseStage::render()
 		{
 			Vec2<int> pos = form->Location + currentView->Location - 2;
 			Vec2<int> size = currentView->Size + 4;
-			fw().renderer->drawRect(pos, size, COLOUR_RED);
+			fw().renderer->drawRect(pos, size, Colour{255, 0, 0});
 		}
 	}
 }

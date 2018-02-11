@@ -179,15 +179,6 @@
     <ClCompile Include="city\bribescreen.cpp">
       <Filter>city</Filter>
     </ClCompile>
-    <ClCompile Include="base\buyandsellscreen.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="base\aliencontainmentscreen.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="base\transferscreen.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\basescreen.h">
@@ -337,15 +328,6 @@
     <ClInclude Include="general\vehiclesheet.h" />
     <ClInclude Include="city\bribescreen.h">
       <Filter>city</Filter>
-    </ClInclude>
-    <ClInclude Include="base\buyandsellscreen.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="base\aliencontainmentscreen.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="base\transferscreen.h">
-      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

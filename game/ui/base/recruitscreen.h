@@ -47,7 +47,7 @@ class RecruitScreen : public BaseStage
 	std::vector<sp<Image>> bigUnitRanks;
 
 	sp<Form> formAgentStats;
-	sp<Form> formPersonnelStats;
+	sp<Form> formPersonelStats;
 
 	AgentType::Role type;
 	// Event for displaying agent stats.
@@ -60,7 +60,7 @@ class RecruitScreen : public BaseStage
 	~RecruitScreen() override;
 
 	// Fills the form of personel's statistics. Such as skill.
-	static void personnelSheet(sp<Agent> agent, sp<Form> formPersonnelStats);
+	static void personelSheet(sp<Agent> agent, sp<Form> formPersonelStats);
 	// Loads and returns big pictures of ranks.
 	static std::vector<sp<Image>> getBigUnitRanks();
 
