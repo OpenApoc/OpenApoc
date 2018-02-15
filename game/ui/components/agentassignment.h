@@ -23,6 +23,7 @@ class AgentAssignment : public Form
 	sp<Vehicle> vehicle;
 	sp<Building> building;
 	sp<GameState> state;
+	sp<Control> PotentiallySelectedAgent = nullptr;
 
 	Colour HoverColour, SelectedColour;
 	Vec2<int> renderOffset{32, 0};

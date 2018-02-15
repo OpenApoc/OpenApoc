@@ -214,7 +214,7 @@ void MultilistBox::eventOccured(Event *e)
 				{
 					selectedItem = child;
 					selectionAction = selectedSet.find(child) == selectedSet.end();
-					bool sel = funcHandleSelection(e, child, true);
+					bool sel = funcHandleSelection(e, child, selectionAction);
 					if (selectionAction && sel)
 					{
 						selectedSet.insert(child);

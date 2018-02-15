@@ -83,11 +83,19 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 			this->currentAgent = agent;
 		}
 		auto icon = c->findControl(ControlGenerator::AGENT_ICON_NAME);
-		if (agent && icon && c->isPointInsideControlBounds(e, icon))
+		if (agent)
 		{
-			return false;
+			if (icon && c->isPointInsideControlBounds(e, icon))
+			{
+				// We don't want to select when clicking on icon,
+				// but we must remember this guy because player can probably drag him.
+				// And if he drags then we add him to selection quickly.
+				PotentiallySelectedAgent = c;
+				return false;
+			}
+			return true;
 		}
-		return true;
+		return false;
 	};
 
 	// select/deselect agents inside vehicle
@@ -96,11 +104,15 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 			return true;
 		auto vehicle = c->getData<Vehicle>();
 		auto icon = c->findControl(ControlGenerator::VEHICLE_ICON_NAME);
-		if (vehicle && icon && c->isPointInsideControlBounds(e, icon))
+		if (vehicle)
 		{
-			return false;
+			if (icon && c->isPointInsideControlBounds(e, icon))
+			{
+				return false;
+			}
+			return true;
 		}
-		return true;
+		return false;
 	};
 
 	funcHandleVehicleCrewSelection = [this](Event *e, sp<Control> c, bool select) {
@@ -119,6 +131,7 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 	};
 
 	funcHandleAgentMouseUpSelection = [this](Event *e, sp<Control> c) {
+		PotentiallySelectedAgent = nullptr;
 		auto agent = c->getData<Agent>();
 		auto icon = c->findControl(ControlGenerator::AGENT_ICON_NAME);
 		if (agent && icon && c->isPointInsideControlBounds(e, icon) && !this->isDragFinished)
@@ -747,6 +760,14 @@ void AgentAssignment::eventOccured(Event *e)
 				               (positionY - e->mouse().Y) * (positionY - e->mouse().Y);
 				if (distance > insensibility)
 				{
+					if (PotentiallySelectedAgent != nullptr)
+					{
+						// add potentially selected agent to selection
+						auto parent = PotentiallySelectedAgent->getParent();
+						auto agentList = std::dynamic_pointer_cast<MultilistBox>(parent);
+						agentList->setSelected(PotentiallySelectedAgent, true);
+						PotentiallySelectedAgent = nullptr;
+					}
 					draggedList->Location.x = e->mouse().X - this->resolvedLocation.x;
 					draggedList->Location.y = e->mouse().Y - this->resolvedLocation.y;
 					if (!draggedList->isVisible())
