@@ -16,6 +16,7 @@
     <ClCompile Include="ticker.cpp" />
     <ClCompile Include="tristatebox.cpp" />
     <ClCompile Include="multilistbox.cpp" />
+    <ClCompile Include="transactioncontrol.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="checkbox.h" />
@@ -35,6 +36,7 @@
     <ClInclude Include="tristatebox.h" />
     <ClInclude Include="ui.h" />
     <ClInclude Include="multilistbox.h" />
+    <ClInclude Include="transactioncontrol.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
