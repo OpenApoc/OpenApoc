@@ -41,17 +41,15 @@
 <p align="center"><img src="https://i.imgur.com/XxudxVj.jpg" align="center" /></p>
 
 ## Table of Contents
-- [Key Features](#key_features)
-- [What's left for finish?](#whats_left)
+- [Key Features](#key-features)
+- [What's left for finish?](#whats-left)
 - [Building](#building)
   - [Building on Windows](#building_on_windows)
   - [Building on Linux](#building_on_linux)
 - [How to setup OpenApoc](#how_to_setup_openapoc)
-- [FAQ](#faq)
-- [Support](#support)
-- [Contact us](#Contact_us)
+- [Contact us](#contact-us)
 
-## Key_Features
+## Key Features
 
 * Unlimited modding capabilities, which was not possible in the original
 * Port the game to any platform you like (windows, linux, android etc)
@@ -64,7 +62,7 @@
   - High FPS, smooth sound during the game without bugs from original
   - No limitations which were in vanilla
 
-## Whats_left?
+## What's left?
 23.11.17
 * Basically, to have a truly playable game, we now need only:
   - Aliens moving from building to building
@@ -120,7 +118,7 @@ The following libraries are also used, but are shipped as submodules in the repo
 * [pugixml](http://http://pugixml.org/) - XML library used for reading/writing the game data files.
 * [tinyformat](https://github.com/c42f/tinyformat) - A c++ typesafe string formatting library.
 
-### Building_on_Windows
+### Building on Windows
 
 * Checkout OpenApoc from GitHub.
 * If you are using the GitHub client for Windows, the submodules should already be setup at first checkout. If not using the github client, or if the submodules have been updated, run the following commands in the 'git shell' from the root of the OpenApoc repository. This should reset the submodule checkouts to the latest versions (NOTE: This will overwrite any changes to code in the dependencies/ directory).
@@ -136,7 +134,7 @@ git submodule update -f
 * Build (Release/Debug x86/x64 should all work).
 * When running from the Visual Studio UI, the working directory is set to the root of the project, so the data folder should already be in the right place. If you want to run outside of Visual Studio, you need to copy the whole 'data' folder (including the cd.iso file) into the folder openapoc.exe resides in.
 
-### Building_on_Linux
+### Building on Linux
 
 (Tested on Ubuntu 16.04)
 
@@ -200,10 +198,6 @@ make -j4
 * Put cd.iso (image or folder) into data folder inside OpenApoc folder
 * Run and enjoy!
   - If you find bug report it [here](https://github.com/openapoc/openapoc/issues) (upload also openapoc_log.txt from game folder)
-
-## Faq
-
-## Support
 
 ## Contact us
 
