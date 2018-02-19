@@ -1,4 +1,5 @@
 # OpenApocalypse [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Are%20you%20fan%20X-Com%20Apocalypse?%20OpenApoc%20its%20clone%20of%20this%20great%20game%20-%20contribute!%20https://github.com/OpenApoc/OpenApoc&hashtags=games,openapoc,xcom)
+
 > OpenApoc is an open-source re-implementation of the original [X-COM: Apocalypse](http://www.ufopaedia.org/index.php/Apocalypse), that requires the original files to run, licensed under the MIT and written in C++ / SDL2. It was originally founded by PmProg in July 2014, and has since grown in to [community](http://www.ufopaedia.org/index.php/Credits_(OpenApoc)). 
 <br>
 <p align="center">
@@ -48,7 +49,7 @@
 - [How to setup OpenApoc](#how_to_setup_openapoc)
 - [FAQ](#faq)
 - [Support](#support)
-- [Contact us](#contact_us)
+- [Contact us](#Contact_us)
 
 ## Key_Features
 
@@ -180,7 +181,8 @@ make -j4
 ```sh
 ./build/bin/OpenApoc
 ```
-## How_to_setup_OpenApoc
+
+## How to setup OpenApoc
 
 * This assumes that you have the file 'cd.iso' - a copy of the original X-Com Apocalypse CD (This can be acquired from [Steam](http://store.steampowered.com/app/7660/) - this is _required_ to run)
   - you need have all files in ISO file including MUSIC etc
@@ -203,7 +205,7 @@ make -j4
 
 ## Support
 
-## Contact_us
+## Contact us
 
 If you're interested, please visit our [website](http://openapoc.org).<br>
 We also have [forums](http://openapoc.org/forums/) - please pop by and introduce yourself!<br>
