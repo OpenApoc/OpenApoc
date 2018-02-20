@@ -1,6 +1,6 @@
 # OpenApocalypse [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Are%20you%20a%20fan%20of%20X-Com%20Apocalypse?%20OpenApoc%20is%20a%20clone%20of%20this%20great%20game%20-%20contribute!%20https://github.com/OpenApoc/OpenApoc&hashtags=games,openapoc,xcom)
 
-> OpenApoc is an open-source re-implementation of the original [X-COM: Apocalypse](http://www.ufopaedia.org/index.php/Apocalypse), that requires the original files to run, licensed under the MIT and written in C++ / SDL2. It was originally founded by PmProg in July 2014, and has since grown in to [community](http://www.ufopaedia.org/index.php/Credits_(OpenApoc)).
+> OpenApoc is an open-source re-implementation of the original [X-COM: Apocalypse](http://www.ufopaedia.org/index.php/Apocalypse), that requires the original files to run, licensed under the MIT and written in C++ / SDL2. It was originally founded by PmProg in July 2014, and has since grown in [community](http://www.ufopaedia.org/index.php/Credits_(OpenApoc)).
 <br>
 <p align="center">
 <a href="https://travis-ci.org/OpenApoc/OpenApoc">
