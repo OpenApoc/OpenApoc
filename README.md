@@ -1,6 +1,6 @@
 # OpenApocalypse [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Are%20you%20a%20fan%20of%20X-Com%20Apocalypse?%20OpenApoc%20is%20a%20clone%20of%20this%20great%20game%20-%20contribute!%20https://github.com/OpenApoc/OpenApoc&hashtags=games,openapoc,xcom)
 
-> OpenApoc is an open-source re-implementation of the original [X-COM: Apocalypse](http://www.ufopaedia.org/index.php/Apocalypse), that requires the original files to run, licensed under the MIT and written in C++ / SDL2. It was originally founded by PmProg in July 2014, and has since grown in [community](https://www.ufopaedia.org/index.php/Credits_(OpenApoc)).
+> OpenApoc is an open-source re-implementation of the original [X-COM: Apocalypse](https://www.ufopaedia.org/index.php/Apocalypse), that requires the original files to run, licensed under the MIT and written in C++ / SDL2. It was originally founded by PmProg in July 2014, and has since grown in [community](https://www.ufopaedia.org/index.php/Credits_(OpenApoc)).
 <br>
 <p align="center">
 <a href="https://travis-ci.org/OpenApoc/OpenApoc">
@@ -107,18 +107,18 @@ That will be a game which has all of its main mechanics implemented. We still ha
 
 OpenApocalypse is built leveraging a number of libraries - to provide needed functionality (and save us the time of implementing it ourselves badly)
 
-* [SDL2](http://www.libsdl.org)
+* [SDL2](https://www.libsdl.org)
 * [Boost](http://boost.org) - specifially the 'locale' library, used for localisation, 'program-options' for settings management, and 'filesystem'.
-* [Libunwind](http://www.nongnu.org/libunwind/download.html) - debug backtracing on linux - not needed on windows.
+* [Libunwind](https://nongnu.org/libunwind/download.html) - debug backtracing on linux - not needed on windows.
 
 The following libraries are also used, but are shipped as submodules in the repository and directly included in the build, so you don't need to install these dependencies to build or use openapoc.
 
-* [GLM](http://glm.g-truc.net) - Math library.
+* [GLM](https://glm.g-truc.net) - Math library.
 * [libsmacker](http://libsmacker.sourceforge.net/) - Decoder for .smk video files.
 * [lodepng](http://lodev.org/lodepng/) - Reading/writing PNG image files.
 * [miniz](https://github.com/richgel999/miniz) - Zlib-comptible compression library.
 * [physfs](https://icculus.org/physfs/) - Library for reading data from .iso files or directory trees (Note: We use a patched version, available on [GitHub](https://github.com/JonnyH/physfs-hg-import/tree/fix-iso) - required to read the .iso files we use).
-* [pugixml](http://http://pugixml.org/) - XML library used for reading/writing the game data files.
+* [pugixml](https://pugixml.org) - XML library used for reading/writing the game data files.
 * [tinyformat](https://github.com/c42f/tinyformat) - A c++ typesafe string formatting library.
 
 ### Building on Windows
