@@ -114,8 +114,8 @@ OpenApocalypse is built leveraging a number of libraries - to provide needed fun
 The following libraries are also used, but are shipped as submodules in the repository and directly included in the build, so you don't need to install these dependencies to build or use openapoc.
 
 * [GLM](https://glm.g-truc.net) - Math library.
-* [libsmacker](http://libsmacker.sourceforge.net/) - Decoder for .smk video files.
-* [lodepng](http://lodev.org/lodepng/) - Reading/writing PNG image files.
+* [libsmacker](https://sourceforge.net/projects/libsmacker/) - Decoder for .smk video files.
+* [lodepng](https://github.com/lvandeve/lodepng) - Reading/writing PNG image files.
 * [miniz](https://github.com/richgel999/miniz) - Zlib-comptible compression library.
 * [physfs](https://icculus.org/physfs/) - Library for reading data from .iso files or directory trees (Note: We use a patched version, available on [GitHub](https://github.com/JonnyH/physfs-hg-import/tree/fix-iso) - required to read the .iso files we use).
 * [pugixml](https://pugixml.org) - XML library used for reading/writing the game data files.
