@@ -7,7 +7,11 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-find_package(Boost REQUIRED COMPONENTS date_time)
+if (WIN32)
+	find_package(Boost REQUIRED COMPONENTS date_time)
+else()
+	find_package(Boost REQUIRED)
+endif()
 
 set (GAMESTATE_SOURCE_FILES
 	battle/ai/aidecision.cpp

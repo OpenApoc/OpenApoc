@@ -97,6 +97,10 @@ add_subdirectory(game/ui)
 add_subdirectory(tools)
 add_subdirectory(dependencies)
 
+if (WIN32)
+	set(sources ${sources} "apocicon.rc")
+endif()
+
 ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} game/main.cpp ${sources}
 		${FRAMEWORK_SOURCES})
 
