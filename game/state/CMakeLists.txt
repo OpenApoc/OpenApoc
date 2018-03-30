@@ -5,7 +5,9 @@ PROJECT(OpenApoc_GameState CXX C)
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package (Threads REQUIRED)
+find_package(Threads REQUIRED)
+
+find_package(Boost REQUIRED COMPONENTS date_time)
 
 set (GAMESTATE_SOURCE_FILES
 	battle/ai/aidecision.cpp
@@ -191,6 +193,10 @@ set (GAMESTATE_HEADER_FILES
 	tilemap/tileobject_vehicle.h)
 source_group(gamestate\\headers FILES ${GAMESTATE_HEADER_FILES})
 
+if (MSVC)
+	set_source_files_properties(gamestate_serialize_generated.cpp PROPERTIES COMPILE_FLAGS /bigobj)
+endif()
+
 list(APPEND ALL_SOURCE_FILES ${GAMESTATE_SOURCE_FILES})
 list(APPEND ALL_HEADER_FILES ${GAMESTATE_HEADER_FILES})
 
@@ -199,6 +205,9 @@ add_library(OpenApoc_GameState STATIC ${GAMESTATE_SOURCE_FILES}
 
 target_link_libraries(OpenApoc_GameState PUBLIC OpenApoc_Library)
 target_link_libraries(OpenApoc_GameState PUBLIC OpenApoc_Framework)
+
+target_link_libraries(OpenApoc_GameState PUBLIC ${Boost_LIBRARIES}
+		Threads::Threads)
 
 # This needs to be public as gamestate_serialize_generated.h needs to be in
 # the path

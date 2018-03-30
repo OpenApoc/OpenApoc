@@ -102,7 +102,8 @@ function (add_extractor TARGET_LIST EXTRACTOR_NAME)
 		--Framework.Data=${CMAKE_SOURCE_DIR}/data
 		--Extractor.extract=${EXTRACTOR_NAME}
 		DEPENDS OpenApoc_DataExtractor
-		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+		VERBATIM)
 	set(${TARGET_LIST} ${${TARGET_LIST}} ${EXTRACTOR_OUTPUT} PARENT_SCOPE) 
 endfunction(add_extractor)
 

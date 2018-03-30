@@ -69,6 +69,13 @@ if (LTO)
 	endif()
 endif(LTO)
 
+# MSVC has default flags that CMake doesn't set
+if (MSVC)
+	add_definitions(-DUNICODE -D_UNICODE)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /permissive-")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /permissive-")
+endif()
+
 # Clang whines about unused arguments, which is annoying (for example) when
 # using ccache and the clang exe never sees a non-preprocessed file, yet still
 # gets passed the -I include arguments

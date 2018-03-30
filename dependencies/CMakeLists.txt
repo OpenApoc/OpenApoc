@@ -29,7 +29,9 @@ target_include_directories(OpenApoc_LibSmacker PUBLIC ${CMAKE_SOURCE_DIR})
 target_include_directories(OpenApoc_LibSmacker PRIVATE
 		${CMAKE_SOURCE_DIR}/dependencies/libsmacker)
 
-target_compile_definitions(OpenApoc_LibSmacker PUBLIC PTHREADS_AVAILABLE)
+if(NOT WIN32)
+	target_compile_definitions(OpenApoc_LibSmacker PUBLIC PTHREADS_AVAILABLE)
+endif()
 
 set (MINIZ_SOURCE_FILES
 	miniz/miniz.c
@@ -51,7 +53,9 @@ target_include_directories(OpenApoc_Miniz PUBLIC ${CMAKE_SOURCE_DIR})
 target_include_directories(OpenApoc_Miniz PRIVATE
 		${CMAKE_SOURCE_DIR}/dependencies/miniz)
 
-target_compile_definitions(OpenApoc_Miniz PUBLIC PTHREADS_AVAILABLE)
+if(NOT WIN32)
+	target_compile_definitions(OpenApoc_Miniz PUBLIC PTHREADS_AVAILABLE)
+endif()
 
 set (LIBPUGIXML_SOURCE_FILES
 		pugixml/src/pugixml.cpp)
@@ -70,7 +74,9 @@ list(APPEND ALL_HEADER_FILES ${LIBPUGIXML_HEADER_FILES})
 add_library(OpenApoc_LibPugixml STATIC ${LIBPUGIXML_SOURCE_FILES}
 		${LIBPUGIXML_HEADER_FILES})
 
-target_compile_definitions(OpenApoc_LibPugixml PUBLIC PTHREADS_AVAILABLE)
+if(NOT WIN32)
+	target_compile_definitions(OpenApoc_LibPugixml PUBLIC PTHREADS_AVAILABLE)
+endif()
 
 set_property(TARGET OpenApoc_LibPugixml PROPERTY CXX_STANDARD 11)
 set_property(TARGET OpenApoc_LibPugixml PROPERTY CXX_STANDARD_REQUIRED ON)
@@ -91,7 +97,9 @@ list(APPEND ALL_HEADER_FILES ${LIBLODEPNG_HEADER_FILES})
 add_library(OpenApoc_LibLodepng STATIC ${LIBLODEPNG_SOURCE_FILES}
 		${LIBLODEPNG_HEADER_FILES})
 
-target_compile_definitions(OpenApoc_LibLodepng PUBLIC PTHREADS_AVAILABLE)
+if(NOT WIN32)
+	target_compile_definitions(OpenApoc_LibLodepng PUBLIC PTHREADS_AVAILABLE)
+endif()
 
 set_property(TARGET OpenApoc_LibLodepng PROPERTY CXX_STANDARD 11)
 set_property(TARGET OpenApoc_LibLodepng PROPERTY CXX_STANDARD_REQUIRED ON)
