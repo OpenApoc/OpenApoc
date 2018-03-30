@@ -113,9 +113,9 @@ int main(int argc, char **argv)
 			return EXIT_FAILURE;
 	}
 
-	UString example = "€UPpa91£B\"#ð𐍈";
-	UString lower_example = "€uppa91£b\"#ð𐍈";
-	UString upper_example = "€UPPA91£B\"#ð𐍈";
+	UString example = u8"€UPpa91£B\"#ð𐍈";
+	UString lower_example = u8"€uppa91£b\"#ð𐍈";
+	UString upper_example = u8"€UPPA91£B\"#ð𐍈";
 
 	auto lower = example.toLower();
 	auto upper = example.toUpper();
@@ -130,11 +130,11 @@ int main(int argc, char **argv)
 		return EXIT_FAILURE;
 	}
 
-	UString removed_example1 = "€UPpa91£\"#ð𐍈";
-	UString removed_example2 = "€UPpa91£B\"#ð";
-	UString removed_example3 = "UPpa91£B\"#ð𐍈";
-	UString removed_example4 = "€UPpa91£𐍈";
-	UString empty = "";
+	UString removed_example1 = u8"€UPpa91£\"#ð𐍈";
+	UString removed_example2 = u8"€UPpa91£B\"#ð";
+	UString removed_example3 = u8"UPpa91£B\"#ð𐍈";
+	UString removed_example4 = u8"€UPpa91£𐍈";
+	UString empty = u8"";
 
 	if (!test_remove(example, removed_example1, 8, 1))
 		return EXIT_FAILURE;
@@ -154,7 +154,7 @@ int main(int argc, char **argv)
 	bool exception_caught = false;
 	try
 	{
-		test_insert(empty, empty, 50, "Lol");
+		test_insert(empty, empty, 50, u8"Lol");
 	}
 	catch (const std::out_of_range &ex)
 	{
@@ -166,12 +166,12 @@ int main(int argc, char **argv)
 		return EXIT_FAILURE;
 	}
 
-	UString insert_example1 = "Ayy€UPpa91£B\"#ð𐍈";
-	UString insert_example2 = "€UPpaÞ91£B\"#ð𐍈";
-	UString insert_example3 = "€UPpa91£B\"#ð𐍈€UPpa91£B\"#ð𐍈";
+	UString insert_example1 = u8"Ayy€UPpa91£B\"#ð𐍈";
+	UString insert_example2 = u8"€UPpaÞ91£B\"#ð𐍈";
+	UString insert_example3 = u8"€UPpa91£B\"#ð𐍈€UPpa91£B\"#ð𐍈";
 
-	test_insert(example, insert_example1, 0, "Ayy");
-	test_insert(example, insert_example2, 5, "Þ");
+	test_insert(example, insert_example1, 0, u8"Ayy");
+	test_insert(example, insert_example2, 5, u8"Þ");
 	test_insert(example, insert_example3, 13, example);
 
 	return EXIT_SUCCESS;
