@@ -1105,7 +1105,7 @@ void Framework::displaySetTitle(UString NewTitle)
 	}
 }
 
-void Framework::displaySetIcon()
+void Framework::displaySetIcon(sp<RGBImage> image)
 {
 	if (!p->window)
 	{
@@ -1120,9 +1120,12 @@ void Framework::displaySetIcon()
 	HWND hwnd = info.info.win.window;
 	SetClassLongPtr(hwnd, GCLP_HICON, (LONG_PTR)icon);
 #else
-// TODO: Figure out how this works
-// NOTE: this should be a call to SDL_SetWindowIcon(p->window, icon);
-// where icon should be a SDL_Surface* with our desired icon.
+	RGBImageLock reader(image, ImageLockUse::Read);
+	// TODO: Should set the pixels instead of using a void*
+	SDL_Surface *surface = SDL_CreateRGBSurfaceFrom(reader.getData(), image->size.x, image->size.y,
+	                                                32, 0, 0xF000, 0x0F00, 0x00F0, 0x000F);
+	SDL_SetWindowIcon(p->window, surface);
+	SDL_FreeSurface(surface);
 #endif
 }
 

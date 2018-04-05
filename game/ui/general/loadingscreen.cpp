@@ -40,7 +40,7 @@ void LoadingScreen::begin()
 	{
 		backgroundimage = fw().data->loadImage("ui/logo.png");
 	}
-	fw().displaySetIcon();
+	fw().displaySetIcon(std::dynamic_pointer_cast<RGBImage>(backgroundimage));
 	loadingimageangle = 0;
 	if (asyncLoading.get() == false)
 	{

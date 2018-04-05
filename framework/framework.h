@@ -20,6 +20,7 @@ class SoundBackend;
 class JukeBox;
 class StageCmd;
 class Stage;
+class RGBImage;
 
 #define FRAMES_PER_SECOND 100
 
@@ -66,7 +67,7 @@ class Framework
 	int displayGetHeight();
 	Vec2<int> displayGetSize();
 	void displaySetTitle(UString NewTitle);
-	void displaySetIcon();
+	void displaySetIcon(sp<RGBImage> icon);
 	bool displayHasWindow() const;
 
 	bool isSlowMode();

@@ -19,10 +19,10 @@ std::shared_ptr<SomeInternalConcurrencyType>, but it resolves to our OpenApoc op
 */
 
 static OpenApoc::ConfigOptionString outputPath("", "output", "Path to write output archive to");
-static OpenApoc::ConfigOptionBool packOutput("", "pack", "Pack output into a zip instead of a directory",
-                                   true);
-static OpenApoc::ConfigOptionBool prettyOutput("", "pretty", "Output more human-readable files (e.g. indent)",
-                                     true);
+static OpenApoc::ConfigOptionBool packOutput("", "pack",
+                                             "Pack output into a zip instead of a directory", true);
+static OpenApoc::ConfigOptionBool
+    prettyOutput("", "pretty", "Output more human-readable files (e.g. indent)", true);
 static OpenApoc::ConfigOptionString
     deltaGamestate("", "delta", "Only output the differences from specified parent gamestate");
 
