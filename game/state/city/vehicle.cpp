@@ -359,10 +359,6 @@ class FlyingVehicleMover : public VehicleMover
 		}
 		if (vehicle.crashed)
 		{
-			if (vehicle.smokeDoodad)
-			{
-				vehicle.smokeDoodad->update(state, ticks);
-			}
 			if (vehicle.type->type != VehicleType::Type::UFO)
 			{
 				updateCrashed(state, ticks);
@@ -534,7 +530,7 @@ class FlyingVehicleMover : public VehicleMover
 						vehicle.angularVelocity = speed * TURNING_MULT;
 						// Nudge vehicle in the other direction to make animation look even
 						// (otherwise, first frame is 1/2 of other frames)
-						vehicle.facing -= 0.06f * (float)M_PI;
+						vehicle.facing -= 0.06f * (float)M_PI * (float)ticks;
 						if (vehicle.facing < 0.0f)
 						{
 							vehicle.facing += M_2xPI;
@@ -545,7 +541,7 @@ class FlyingVehicleMover : public VehicleMover
 						vehicle.angularVelocity = -speed * TURNING_MULT;
 						// Nudge vehicle in the other direction to make animation look even
 						// (otherwise, first frame is 1/2 of other frames)
-						vehicle.facing += 0.06f * (float)M_PI;
+						vehicle.facing += 0.06f * (float)M_PI * (float)ticks;
 						if (vehicle.facing >= M_2xPI)
 						{
 							vehicle.facing -= M_2xPI;
@@ -622,10 +618,6 @@ class GroundVehicleMover : public VehicleMover
 		}
 		if (vehicle.crashed)
 		{
-			if (vehicle.smokeDoodad)
-			{
-				vehicle.smokeDoodad->update(state, ticks);
-			}
 			updateCrashed(state, ticks);
 			return;
 		}
@@ -1122,7 +1114,12 @@ void VehicleMover::updateCrashed(GameState &state, unsigned int ticks)
 	auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
 	if (!presentScenery)
 	{
-		vehicle.setCrashed(state, false);
+		vehicle.crashed = false;
+		if (vehicle.smokeDoodad)
+		{
+			vehicle.smokeDoodad->remove(state);
+			vehicle.smokeDoodad.reset();
+		}
 		vehicle.startFalling(state);
 	}
 }
@@ -1289,7 +1286,7 @@ void Vehicle::leaveDimensionGate(GameState &state)
 	this->goalFacing = initialFacing;
 	if (city->map)
 	{
-		city->map->addObjectToMap(state, shared_from_this());
+		city->map->addObjectToMap(shared_from_this());
 	}
 	if (state.current_city == city)
 	{
@@ -1315,7 +1312,16 @@ void Vehicle::enterDimensionGate(GameState &state)
 	{
 		dropCarriedVehicle(state);
 	}
-	removeFromMap(state);
+	if (tileObject)
+	{
+		this->tileObject->removeFromMap();
+		this->tileObject.reset();
+	}
+	if (shadowObject)
+	{
+		this->shadowObject->removeFromMap();
+		this->shadowObject = nullptr;
+	}
 	if (state.current_city == city)
 	{
 		fw().soundBackend->playSample(state.city_common_sample_list->dimensionShiftIn, position);
@@ -1347,7 +1353,7 @@ void Vehicle::leaveBuilding(GameState &state, Vec3<float> initialPosition, float
 	this->goalFacing = initialFacing;
 	if (city->map)
 	{
-		city->map->addObjectToMap(state, shared_from_this());
+		city->map->addObjectToMap(shared_from_this());
 	}
 }
 
@@ -1368,9 +1374,16 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 		carriedVehicle->processRecoveredVehicle(state);
 		carriedVehicle.clear();
 	}
-
-	removeFromMap(state);
-
+	if (tileObject)
+	{
+		this->tileObject->removeFromMap();
+		this->tileObject.reset();
+	}
+	if (shadowObject)
+	{
+		this->shadowObject->removeFromMap();
+		this->shadowObject = nullptr;
+	}
 	this->position = type->isGround() ? b->carEntranceLocation : *b->landingPadLocations.begin();
 	this->position += Vec3<float>{0.5f, 0.5f, 0.5f};
 	this->facing = 0.0f;
@@ -1406,48 +1419,6 @@ void Vehicle::setupMover()
 	animationFrame = type->animation_sprites.begin();
 }
 
-/**
- * Remove all tile objects that belongs to vehicle.
- */
-void Vehicle::removeFromMap(GameState &state)
-{
-	if (smokeDoodad)
-	{
-		smokeDoodad->remove(state);
-		smokeDoodad = nullptr;
-	}
-	if (shadowObject)
-	{
-		shadowObject->removeFromMap();
-		shadowObject = nullptr;
-	}
-	if (tileObject)
-	{
-		tileObject->removeFromMap();
-		tileObject = nullptr;
-	}
-}
-
-/**
- * Set the vehicle crashed (or not).
- */
-void Vehicle::setCrashed(GameState &state, bool crashed)
-{
-	if (smokeDoodad)
-	{
-		smokeDoodad->remove(state);
-		smokeDoodad = nullptr;
-	}
-	if (crashed)
-	{
-		sp<Doodad> smoke = mksp<Doodad>(position + SMOKE_DOODAD_SHIFT,
-		                                StateRef<DoodadType>{&state, "DOODAD_13_SMOKE_FUME"});
-		city->map->addObjectToMap(smoke);
-		smokeDoodad = smoke;
-	}
-	this->crashed = crashed;
-}
-
 void Vehicle::processRecoveredVehicle(GameState &state)
 {
 	std::list<sp<VEquipment>> scrappedEquipment;
@@ -1461,19 +1432,29 @@ void Vehicle::processRecoveredVehicle(GameState &state)
 	for (auto &e : scrappedEquipment)
 	{
 		removeEquipment(e);
+		if (e->ammo > 0 && e->type->ammo_type)
+		{
+			currentBuilding->base->inventoryVehicleAmmo[e->type->ammo_type.id] += e->ammo;
+		}
+		int price = 0;
 		if (state.economy.find(e->type.id) != state.economy.end())
 		{
 			auto &economy = state.economy[e->type.id];
-			owner->balance += economy.currentPrice * FV_SCRAPPED_COST_PERCENT / 100;
+			price = economy.currentPrice;
 		}
-		if (e->ammo > 0 && e->type->ammo_type &&
-		    state.economy.find(e->type->ammo_type.id) != state.economy.end())
+		owner->balance += price * FV_SCRAPPED_COST_PERCENT / 100;
+		if (e->ammo > 0)
 		{
-			auto &economy = state.economy[e->type->ammo_type.id];
-			owner->balance += e->ammo * economy.currentPrice * FV_SCRAPPED_COST_PERCENT / 100;
+			price = 0;
+			if (state.economy.find(e->type->ammo_type.id) != state.economy.end())
+			{
+				auto &economy = state.economy[e->type->ammo_type.id];
+				price = economy.currentPrice;
+			}
+			owner->balance += e->ammo * price * FV_SCRAPPED_COST_PERCENT / 100;
 		}
 	}
-	if (randBoundsExclusive(state.rng, 0, 100) > FV_CHANCE_TO_RECOVER_VEHICLE)
+	if (!evacuation && randBoundsExclusive(state.rng, 0, 100) > FV_CHANCE_TO_RECOVER_VEHICLE)
 	{
 		while (!currentAgents.empty())
 		{
@@ -1528,6 +1509,8 @@ void Vehicle::processRecoveredVehicle(GameState &state)
 	}
 	else
 	{
+		evacuation = false;
+		crashed = false;
 		if (owner == state.getPlayer())
 		{
 			fw().pushEvent(new GameVehicleEvent(GameEventType::VehicleRecovered,
@@ -1838,8 +1821,21 @@ void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 			}
 		}
 	}
-	removeFromMap(state);
-
+	if (tileObject)
+	{
+		this->tileObject->removeFromMap();
+		this->tileObject.reset();
+	}
+	if (shadowObject)
+	{
+		this->shadowObject->removeFromMap();
+		this->shadowObject.reset();
+	}
+	if (smokeDoodad)
+	{
+		smokeDoodad->remove(state);
+		smokeDoodad.reset();
+	}
 	while (!currentAgents.empty())
 	{
 		// For some reason need to assign first before calling die()
@@ -1910,6 +1906,12 @@ void Vehicle::crash(GameState &state, StateRef<Vehicle> attacker)
 			break;
 		}
 	}
+}
+
+void Vehicle::RequestEvacuation(GameState &state)
+{
+	evacuation = true;
+	crashed = true;
 }
 
 void Vehicle::startFalling(GameState &state, StateRef<Vehicle> attacker)
@@ -2020,6 +2022,7 @@ Vec3<float> Vehicle::getMuzzleLocation() const
 void Vehicle::update(GameState &state, unsigned int ticks)
 {
 	bool turbo = ticks > TICKS_PER_SECOND;
+	bool IsIdle;
 
 	if (stunTicksRemaining >= ticks)
 	{
@@ -2048,10 +2051,13 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	{
 		teleportTicksAccumulated = 0;
 	}
-	if (!this->missions.empty())
+
+	IsIdle = this->missions.empty();
+	if (!IsIdle)
 	{
 		this->missions.front()->update(state, *this, ticks);
 	}
+
 	popFinishedMissions(state);
 
 	int maxShield = this->getMaxShield();
@@ -2135,8 +2141,68 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 				// Try firing point defense weapons
 				else if (!has_active_pd || !fireWeaponsPointDefense(state, arcPD))
 				{
-					// Fire normal weapons
-					fireWeaponsNormal(state, arc);
+					// Fire at building (if ordered to)
+					if (!fireAtBuilding(state, arc))
+					{
+						// If we don't fire at buildings then try to fire at enemy (if ordered to)
+						auto firingRange = getFiringRange();
+						sp<TileObjectVehicle> enemy;
+						if (!missions.empty() &&
+						    missions.front()->type == VehicleMission::MissionType::AttackVehicle &&
+						    tileObject->getDistanceTo(
+						        missions.front()->targetVehicle->tileObject) <= firingRange)
+						{
+							enemy = missions.front()->targetVehicle->tileObject;
+							if (enemy)
+							{
+								attackTarget(state, enemy);
+							}
+						}
+						else
+						{
+							// No orders. Must think ourselves. Find what we can fire at.
+							enemy = findClosestEnemy(state, tileObject, arc);
+							if (enemy)
+							{
+								// Try to attack. Attack won't happen if enemy is out of range.
+								attackTarget(state, enemy);
+							}
+							if (IsIdle)
+							{
+								// If not moving anywhere then search for closest target around.
+								enemy = findClosestEnemy(state, tileObject, {8, 8});
+								if (enemy)
+								{
+									// Determine target position.
+									Vec3<float> enemypos = enemy->getPosition();
+									auto facing_direction = type->directionToVector(direction);
+									Vec2<float> facing2d = {facing_direction.x, facing_direction.y};
+									Vec2<float> target2d = {enemypos.x - position.x,
+									                        enemypos.y - position.y};
+									facing2d = glm::normalize(facing2d);
+									target2d = glm::normalize(target2d);
+									float angleXY = glm::angle(facing2d, target2d);
+									// Check if target is in our firing arc.
+									if (angleXY > (float)arc.x * (float)M_PI / 8.0f)
+									{
+										// Turn towards closest target (firing will start
+										// automatically).
+										// It is pseudoscalar product. It is needed to determine
+										// direction: right or left.
+										if (facing2d.x * target2d.y - facing2d.y * target2d.x > 0)
+										{
+											this->facing += 0.06f * (float)M_PI * (float)ticks;
+										}
+										else
+										{
+											this->facing -= 0.06f * (float)M_PI * (float)ticks;
+										}
+										this->updateSprite(state);
+									}
+								}
+							}
+						}
+					}
 				}
 			}
 		}
@@ -2149,17 +2215,31 @@ void Vehicle::updateEachSecond(GameState &state)
 	// Consume fuel if out in city
 	if (tileObject && !crashed && !falling && !sliding)
 	{
-		fuelSpentTicks += FUEL_TICKS_PER_SECOND;
+		sp<VEquipment> engine = getEngine();
+
+		if (type->isGround())
+		{
+			if (position != goalPosition)
+			{
+				fuelSpentTicks += FUEL_TICKS_PER_SECOND;
+			}
+		}
+		else
+		{
+			fuelSpentTicks += FUEL_TICKS_PER_SECOND;
+		}
+
 		if (fuelSpentTicks > FUEL_TICKS_PER_UNIT)
 		{
 			fuelSpentTicks -= FUEL_TICKS_PER_UNIT;
-			sp<VEquipment> engine = getEngine();
+			// here must be engine
 			if (engine && engine->type->max_ammo > 0)
 			{
 				if (engine->ammo > 0)
 				{
 					engine->ammo--;
 				}
+
 				// Low fuel
 				if (engine->ammo == 2)
 				{
@@ -2181,7 +2261,7 @@ void Vehicle::updateEachSecond(GameState &state)
 						}
 						if (type->isGround())
 						{
-							crash(state, nullptr);
+							RequestEvacuation(state);
 						}
 						else
 						{
@@ -2659,7 +2739,8 @@ bool Vehicle::fireWeaponsPointDefense(GameState &state, Vec2<int> arc)
 	return false;
 }
 
-void Vehicle::fireWeaponsNormal(GameState &state, Vec2<int> arc)
+bool Vehicle::fireAtBuilding(GameState &state,
+                             Vec2<int> arc) // TODO: this function must return target only, not fire
 {
 	auto firingRange = getFiringRange();
 
@@ -2704,31 +2785,12 @@ void Vehicle::fireWeaponsNormal(GameState &state, Vec2<int> arc)
 				if (tileObject->getDistanceTo(closestPart) <= firingRange)
 				{
 					attackTarget(state, closestPart);
-					return;
 				}
 			}
 		}
+		return true;
 	}
-
-	// Attack vehicles
-	sp<TileObjectVehicle> enemy;
-	if (!missions.empty() && missions.front()->type == VehicleMission::MissionType::AttackVehicle &&
-	    tileObject->getDistanceTo(missions.front()->targetVehicle->tileObject) <= firingRange)
-	{
-		enemy = missions.front()->targetVehicle->tileObject;
-	}
-	else
-	{
-		if (type->aggressiveness > 0)
-		{
-			enemy = findClosestEnemy(state, tileObject, arc);
-		}
-	}
-
-	if (enemy)
-	{
-		attackTarget(state, enemy);
-	}
+	return false;
 }
 
 void Vehicle::fireWeaponsManual(GameState &state, Vec2<int> arc)
@@ -2975,10 +3037,6 @@ void Vehicle::setPosition(const Vec3<float> &pos)
 	if (this->shadowObject)
 	{
 		this->shadowObject->setPosition(pos);
-	}
-	if (this->smokeDoodad)
-	{
-		this->smokeDoodad->setPosition(pos + SMOKE_DOODAD_SHIFT);
 	}
 }
 

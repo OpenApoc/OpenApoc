@@ -202,13 +202,13 @@
         <position x="567" y="202"/>
         <size width="26" height="244"/>
       </scroll>
-      <graphicbutton id="LIST_SCROLL_UP" scrollprev="LIST_SCROLL" scrolllarge="true">
+      <graphicbutton id="LIST_SCROLL_UP" scrollprev="LIST_SCROLL">
         <position x="569" y="178"/>
         <size width="22" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <graphicbutton id="LIST_SCROLL_DOWN" scrollnext="LIST_SCROLL" scrolllarge="true">
+      <graphicbutton id="LIST_SCROLL_DOWN" scrollnext="LIST_SCROLL">
         <position x="569" y="449"/>
         <size width="22" height="21"/>
         <image/>
@@ -288,18 +288,11 @@
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:41:xcom3/ufodata/base.pcx</imagechecked>
 	  </radiobutton>
-	  
       <subform id="AGENT_ITEM_VIEW" src="sheet_agent_item">
 		<position x="17" y="183"/>
       </subform>
       <subform id="VEHICLE_ITEM_VIEW" src="sheet_vehicle_item">
 		<position x="17" y="183"/>
-      </subform>
-      <subform id="AGENT_STATS_VIEW" src="sheet_agent_stats">
-        <position x="17" y="183"/>
-      </subform>
-      <subform id="PERSONNEL_STATS_VIEW" src="sheet_personnel_stats">
-        <position x="17" y="183"/>
       </subform>
 
       <graphicbutton id="BUTTON_OK">

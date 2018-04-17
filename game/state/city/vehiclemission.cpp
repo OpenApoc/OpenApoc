@@ -36,21 +36,6 @@ namespace
 static const Vec3<float> offsetFlying{0.5f, 0.5f, 0.5f};
 static const Vec3<float> offsetLandInto{0.5f, 0.5f, 0.01f};
 static const Vec3<float> offsetLaunch{0.5f, 0.5f, -1.0f};
-
-// Self-destruct timer for UFOs.
-// division /5 because need to round to 5 mins
-// TODO: find a way how to extract from the game data
-static const std::map<UString, std::pair<unsigned, unsigned>> selfDestructTimer = {
-    {"VEHICLETYPE_ALIEN_PROBE", {10 / 5 * TICKS_PER_MINUTE, 90 / 5 * TICKS_PER_MINUTE}},
-    {"VEHICLETYPE_ALIEN_SCOUT", {10 / 5 * TICKS_PER_MINUTE, 90 / 5 * TICKS_PER_MINUTE}},
-    {"VEHICLETYPE_ALIEN_TRANSPORTER", {15 / 5 * TICKS_PER_MINUTE, 120 / 5 * TICKS_PER_MINUTE}},
-    {"VEHICLETYPE_ALIEN_FAST_ATTACK_SHIP", {15 / 5 * TICKS_PER_MINUTE, 120 / 5 * TICKS_PER_MINUTE}},
-    {"VEHICLETYPE_ALIEN_DESTROYER", {15 / 5 * TICKS_PER_MINUTE, 120 / 5 * TICKS_PER_MINUTE}},
-    {"VEHICLETYPE_ALIEN_ASSAULT_SHIP", {15 / 5 * TICKS_PER_MINUTE, 180 / 5 * TICKS_PER_MINUTE}},
-    {"VEHICLETYPE_ALIEN_BOMBER", {10 / 5 * TICKS_PER_MINUTE, 120 / 5 * TICKS_PER_MINUTE}},
-    {"VEHICLETYPE_ALIEN_ESCORT", {15 / 5 * TICKS_PER_MINUTE, 120 / 5 * TICKS_PER_MINUTE}},
-    {"VEHICLETYPE_ALIEN_BATTLESHIP", {60 / 5 * TICKS_PER_MINUTE, 240 / 5 * TICKS_PER_MINUTE}},
-    {"VEHICLETYPE_ALIEN_MOTHERSHIP", {60 / 5 * TICKS_PER_MINUTE, 240 / 5 * TICKS_PER_MINUTE}}};
 }
 
 FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, Vehicle &v)
@@ -533,16 +518,9 @@ VehicleMission *VehicleMission::snooze(GameState &, Vehicle &, unsigned int snoo
 
 VehicleMission *VehicleMission::selfDestruct(GameState &state, Vehicle &v)
 {
-	unsigned timer = TICKS_PER_HOUR;
-	auto timerUFO = selfDestructTimer.find(v.type.id);
-	if (timerUFO != selfDestructTimer.cend())
-	{
-		timer = 5 * std::uniform_int_distribution<unsigned>(timerUFO->second.first,
-		                                                    timerUFO->second.second)(state.rng);
-	}
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::SelfDestruct;
-	mission->timeToSnooze = timer;
+	mission->timeToSnooze = SELF_DESTRUCT_TIMER;
 	return mission;
 }
 
@@ -1322,14 +1300,6 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 				}
 				else // Port out
 				{
-					// Update score for UFO incursion
-					if (v.owner == state.getAliens() && v.city.id == "CITYMAP_HUMAN")
-					{
-						int incursionScore = -v.type->score / 4;
-						state.weekScore.incursions += incursionScore;
-						state.totalScore.incursions += incursionScore;
-					}
-
 					for (auto &city : state.cities)
 					{
 						if (city.second != v.city.getSp())
@@ -1621,9 +1591,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				LogError("Building disappeared");
 				return;
 			}
-
 			auto &map = *b->city->map;
-			unsigned snoozeTicks = TICKS_PER_SECOND / 2;
 			if (v.type->isGround())
 			{
 				// Looking for free exit
@@ -1634,14 +1602,12 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					if (!exitTile)
 					{
 						LogError("Invalid entrance location %s - outside map?", exitLocation.x);
-						snoozeTicks = TICKS_PER_HOUR / 2;
 						continue;
 					}
 					auto scenery = exitTile->presentScenery;
 					if (!scenery)
 					{
 						LogInfo("Tried exit %s - destroyed", exitLocation);
-						snoozeTicks = TICKS_PER_HOUR / 2;
 						continue;
 					}
 					bool exitIsBusy = false;
@@ -1649,13 +1615,6 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					{
 						if (obj->getType() == TileObject::Type::Vehicle)
 						{
-							auto v = std::static_pointer_cast<TileObjectVehicle>(obj)->getVehicle();
-							if (v->crashed)
-							{
-								// If the doors are blocked by crashed vehicle then need more time
-								// to solve the problem.
-								snoozeTicks = TICKS_PER_HOUR / 2;
-							}
 							exitIsBusy = true;
 							break;
 						}
@@ -1743,7 +1702,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				}
 			}
 			LogInfo("No free exit in building \"%s\" free - waiting", b.id);
-			v.addMission(state, snooze(state, v, snoozeTicks));
+			v.addMission(state, snooze(state, v, TICKS_PER_SECOND / 2));
 			return;
 		}
 		case MissionType::Land:
@@ -2214,25 +2173,19 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				cancelled = true;
 				return;
 			}
-			// Only X-Com can storm UFO
-			if (targetVehicle->owner == state.getAliens() && v.owner != state.getPlayer())
-			{
-				cancelled = true;
-				return;
-			}
 			// Find soldier
-			bool needSoldiersButNotFound =
+			bool foundSoldier =
 			    v.owner == state.getPlayer() ||
-			    v.owner->isRelatedTo(targetVehicle->owner) == Organisation::Relation::Hostile;
+			    state.getPlayer()->isRelatedTo(v.owner) != Organisation::Relation::Hostile;
 			for (auto &a : v.currentAgents)
 			{
 				if (a->type->role == AgentType::Role::Soldier)
 				{
-					needSoldiersButNotFound = false;
+					foundSoldier = true;
 					break;
 				}
 			}
-			if (needSoldiersButNotFound)
+			if (!foundSoldier)
 			{
 				cancelled = true;
 				return;
@@ -2243,7 +2196,8 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				case 0:
 				{
 					// Vehicle has crashed successfully and we're on top of it
-					if (targetVehicle->crashed &&
+					if (targetVehicle->velocity.x == 0.0f && targetVehicle->velocity.y == 0.0f &&
+					    targetVehicle->velocity.z == 0.0f &&
 					    (Vec3<int>)v.position == (Vec3<int>)targetVehicle->position)
 					{
 						missionCounter++;
@@ -2580,7 +2534,8 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			else
 			{
-				v.setCrashed(state);
+				v.smokeDoodad = v.city->placeDoodad({&state, "DOODAD_13_SMOKE_FUME"},
+				                                    v.position + Vec3<float>{0.0f, 0.0f, 0.25f});
 			}
 			return;
 		}

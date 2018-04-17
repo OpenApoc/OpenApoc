@@ -138,7 +138,6 @@ void MultilistBox::onRender()
 				    std::max(controlOffset.x - this->Size.x, scroller->getMinimum()));
 				break;
 		}
-		scroller->updateLargeChangeValue();
 	}
 }
 
@@ -215,10 +214,20 @@ void MultilistBox::eventOccured(Event *e)
 				{
 					selectedItem = child;
 					selectionAction = selectedSet.find(child) == selectedSet.end();
-					if (selectionAction && funcHandleSelection(e, child, true))
+					bool sel = funcHandleSelection(e, child, selectionAction);
+					if (selectionAction && sel)
 					{
 						selectedSet.insert(child);
 						this->pushFormEvent(FormEventType::ListBoxChangeSelected, e);
+						if (funcHandleCrewSelection)
+							funcHandleCrewSelection(e, child, true);
+					}
+					if (!selectionAction && sel)
+					{
+						selectedSet.erase(child);
+						this->pushFormEvent(FormEventType::ListBoxChangeSelected, e);
+						if (funcHandleCrewSelection)
+							funcHandleCrewSelection(e, child, false);
 					}
 				}
 				break;
@@ -226,14 +235,8 @@ void MultilistBox::eventOccured(Event *e)
 			case FormEventType::MouseUp:
 				if (ctrl == child && isPointInsideControlBounds(e, child) && ctrl != scroller)
 				{
-					// unselect only if it hasnt been selected during this click
-					if (!selectionAction && selectedItem == child &&
-					    selectedSet.find(child) != selectedSet.end() &&
-					    !funcHandleSelection(e, child, false))
-					{
-						selectedSet.erase(child);
-						this->pushFormEvent(FormEventType::ListBoxChangeSelected, e);
-					}
+					if (funcHandleMouseUpSelection)
+						funcHandleMouseUpSelection(e, child);
 				}
 				break;
 		}
@@ -476,13 +479,15 @@ void MultilistBox::setSelected(sp<Control> Item, bool select)
 
 	if (funcHandleSelection(nullptr, Item, select))
 	{
-		this->selectedSet.insert(Item);
+		if (select)
+		{
+			this->selectedSet.insert(Item);
+		}
+		else
+		{
+			this->selectedSet.erase(Item);
+		}
 	}
-	else
-	{
-		this->selectedSet.erase(Item);
-	}
-
 	this->setDirty();
 }
 
@@ -546,9 +551,13 @@ void MultilistBox::setFuncIsVisibleItem(std::function<bool(sp<Control>)> func)
 	setDirty();
 }
 
-void MultilistBox::setFuncHandleSelection(std::function<bool(Event *, sp<Control>, bool)> func)
+void MultilistBox::setFuncHandleSelection(std::function<bool(Event *, sp<Control>, bool)> func,
+                                          std::function<void(Event *, sp<Control>)> mouseupfunc,
+                                          std::function<void(Event *, sp<Control>, bool)> crewfunc)
 {
 	funcHandleSelection = func;
+	funcHandleMouseUpSelection = mouseupfunc;
+	funcHandleCrewSelection = crewfunc;
 	// not dirty
 }
 

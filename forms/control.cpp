@@ -1008,7 +1008,6 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 		case FormEventType::TriStateBoxState1Selected:
 		case FormEventType::TriStateBoxState2Selected:
 		case FormEventType::TriStateBoxState3Selected:
-		case FormEventType::TextEditCancel:
 		case FormEventType::TextEditFinish:
 		{
 			event = new FormsEvent();

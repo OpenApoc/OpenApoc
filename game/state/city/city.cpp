@@ -674,7 +674,7 @@ sp<Vehicle> City::createVehicle(GameState &state, StateRef<VehicleType> type,
 {
 	auto v = mksp<Vehicle>();
 	v->type = type;
-	v->name = format("%s %d", type->name, ++type->numCreated);
+	v->name = format("%s %d", tr(type->name), ++type->numCreated);
 	v->city = {&state, id};
 	v->owner = owner;
 	v->health = type->health;
