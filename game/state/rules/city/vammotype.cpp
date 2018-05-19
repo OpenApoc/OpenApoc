@@ -6,7 +6,7 @@ namespace OpenApoc
 
 const UString &VAmmoType::getPrefix()
 {
-	static UString prefix = "VAMMOTYPE_";
+	static UString prefix = "VEQUIPMENTAMMOTYPE_";
 	return prefix;
 }
 
