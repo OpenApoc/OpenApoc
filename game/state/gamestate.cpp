@@ -1171,15 +1171,26 @@ void GameState::updateEndOfSecond()
 		{
 			for (auto &e : v->equipment)
 			{
-				if (e->type->type != EquipmentSlotType::VehicleWeapon || e->type->max_ammo == 0)
+				// We only can reload VehicleWeapon and VehicleEngine(?)
+				if (e->type->type != EquipmentSlotType::VehicleWeapon && e->type->type != EquipmentSlotType::VehicleEngine) //  e->type->max_ammo == 0
 				{
 					continue;
 				}
-				if (e->reload(*this, base))
-				{
-					// FIXME: Implement message vehicle rearmed / reloaded /refueled whatever
-					LogWarning(
-					    "Implement message vehicle rearmed / reloaded / refueled / whatever");
+				// Only show events for vehicles owned by current player
+				if (v->owner->name == getPlayer()->name) {
+					if (e->reload(*this, base)) {
+						switch (e->type->type) {
+						case EquipmentSlotType::VehicleEngine:
+							fw().pushEvent(new GameVehicleEvent(GameEventType::VehicleRefuelled, v));
+							break;
+						case EquipmentSlotType::VehicleWeapon:
+							fw().pushEvent(new GameVehicleEvent(GameEventType::VehicleRearmed, v));
+							break;
+						default:
+							LogInfo("Implement the remaining messages for vehicle rearmed / reloaded / refueled / whatever");
+							break;
+						}
+					}
 				}
 			}
 		}
