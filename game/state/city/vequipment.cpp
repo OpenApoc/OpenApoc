@@ -139,7 +139,7 @@ void VEquipment::update(int ticks)
 	}
 }
 
-void VEquipment::noAmmoToReload(GameState &state, VEquipment *equipment) const
+void VEquipment::noAmmoToReload(const GameState &state, const VEquipment *equipment) const
 {
 	switch (equipment->type->type)
 	{
