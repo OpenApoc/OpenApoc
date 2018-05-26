@@ -192,7 +192,6 @@ bool VEquipment::reload(GameState &state, StateRef<Base> base)
 		}
 		else
 		{
-			LogWarning("Vehicle refueled/rearmed");
 			return ammoSpent > 0;
 		}
 	}
