@@ -882,9 +882,12 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 		auto newPosition = vehicle.position;
 
 		// Random doodads 2% chance if low health
-		if (vehicle.getMaxHealth() / vehicle.getHealth() >= 3 &&
+		auto vehicleHealth = vehicle.getHealth();
+		// Check that vehicle health is not zero or we try to divide by zero
+		if (vehicleHealth != 0 && vehicle.getMaxHealth() / vehicle.getHealth() >= 3 &&
 		    randBoundsExclusive(state.rng, 0, 100) < 2)
 		{
+			LogWarning("Doodads");
 			UString doodadId = randBool(state.rng) ? "DOODAD_1_AUTOCANNON" : "DOODAD_2_AIRGUARD";
 			auto doodadPos = vehicle.position;
 			doodadPos.x += (float)randBoundsInclusive(state.rng, -3, 3) / 10.0f;
@@ -903,13 +906,17 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 		// If we fell downwards see if we went from a tile with into scenery
 		if ((int)vehicle.position.z != (int)newPosition.z)
 		{
-			auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
-			if (presentScenery &&
-			    presentScenery->type->getATVMode() == SceneryTileType::WalkMode::Into)
+			if (vehicle.tileObject && vehicle.tileObject->getOwningTile() &&
+			    vehicle.tileObject->getOwningTile()->presentScenery)
 			{
-				// We went through "Into" scenery, force landing on it
-				newPosition = vehicle.position;
-				newPosition.z = floorf(vehicle.position.z);
+				auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
+				if (presentScenery &&
+				    presentScenery->type->getATVMode() == SceneryTileType::WalkMode::Into)
+				{
+					// We went through "Into" scenery, force landing on it
+					newPosition = vehicle.position;
+					newPosition.z = floorf(vehicle.position.z);
+				}
 			}
 		}
 
@@ -1119,11 +1126,15 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 void VehicleMover::updateCrashed(GameState &state, unsigned int ticks)
 {
 	// Tile underneath us is dead?
-	auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
-	if (!presentScenery)
+	if (vehicle.tileObject && vehicle.tileObject->getOwningTile() &&
+	    vehicle.tileObject->getOwningTile()->presentScenery)
 	{
-		vehicle.setCrashed(state, false);
-		vehicle.startFalling(state);
+		auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
+		if (!presentScenery)
+		{
+			vehicle.setCrashed(state, false);
+			vehicle.startFalling(state);
+		}
 	}
 }
 
@@ -1796,9 +1807,17 @@ void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 	health = 0;
 	if (!silent)
 	{
-		auto doodad = city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_3_EXPLOSION"},
-		                                this->tileObject->getCenter());
-		fw().soundBackend->playSample(state.city_common_sample_list->vehicleExplosion, position);
+		if (this->tileObject)
+		{
+			auto doodad = city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_3_EXPLOSION"},
+			                                this->tileObject->getCenter());
+			fw().soundBackend->playSample(state.city_common_sample_list->vehicleExplosion,
+			                              position);
+		}
+		else
+		{
+			LogWarning("Tileobject is nullpointer");
+		}
 	}
 	auto id = getId(state, shared_from_this());
 	if (carriedByVehicle)
@@ -3145,18 +3164,18 @@ bool Vehicle::popFinishedMissions(GameState &state)
 		{
 			return false;
 		}
-		LogWarning("Vehicle %s mission \"%s\" finished", name, missions.front()->getName());
+		LogInfo("Vehicle %s mission \"%s\" finished", name, missions.front()->getName());
 		missions.pop_front();
 		popped = true;
 		if (!missions.empty())
 		{
-			LogWarning("Vehicle %s mission \"%s\" starting", name, missions.front()->getName());
+			LogInfo("Vehicle %s mission \"%s\" starting", name, missions.front()->getName());
 			missions.front()->start(state, *this);
 			continue;
 		}
 		else
 		{
-			LogWarning("No next vehicle mission, going idle");
+			LogInfo("No next vehicle mission, going idle");
 			break;
 		}
 	}

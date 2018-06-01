@@ -178,8 +178,11 @@ void Projectile::die(GameState &state, bool displayDoodad, bool playSound, bool 
 		state.current_battle->handleProjectileHit(state, this_shared, displayDoodad, playSound,
 		                                          expired);
 	}
-	this->tileObject->removeFromMap();
-	this->tileObject.reset();
+	if (this->tileObject)
+	{
+		this->tileObject->removeFromMap();
+		this->tileObject.reset();
+	}
 }
 
 Collision Projectile::checkProjectileCollision(TileMap &map)
