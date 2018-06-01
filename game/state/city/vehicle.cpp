@@ -906,10 +906,13 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 		// If we fell downwards see if we went from a tile with into scenery
 		if ((int)vehicle.position.z != (int)newPosition.z)
 		{
-			if (vehicle.tileObject && vehicle.tileObject->getOwningTile() && vehicle.tileObject->getOwningTile()->presentScenery) {
+			if (vehicle.tileObject && vehicle.tileObject->getOwningTile() &&
+			    vehicle.tileObject->getOwningTile()->presentScenery)
+			{
 				auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
 				if (presentScenery &&
-					presentScenery->type->getATVMode() == SceneryTileType::WalkMode::Into) {
+				    presentScenery->type->getATVMode() == SceneryTileType::WalkMode::Into)
+				{
 					// We went through "Into" scenery, force landing on it
 					newPosition = vehicle.position;
 					newPosition.z = floorf(vehicle.position.z);
@@ -1804,15 +1807,17 @@ void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 	health = 0;
 	if (!silent)
 	{
-		if (this->tileObject) {
+		if (this->tileObject)
+		{
 			auto doodad = city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_3_EXPLOSION"},
-				this->tileObject->getCenter());
-			fw().soundBackend->playSample(state.city_common_sample_list->vehicleExplosion, position);
+			                                this->tileObject->getCenter());
+			fw().soundBackend->playSample(state.city_common_sample_list->vehicleExplosion,
+			                              position);
 		}
-		else {
+		else
+		{
 			LogWarning("Tileobject is nullpointer");
 		}
-
 	}
 	auto id = getId(state, shared_from_this());
 	if (carriedByVehicle)
