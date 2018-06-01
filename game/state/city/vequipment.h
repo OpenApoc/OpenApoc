@@ -52,6 +52,8 @@ class VEquipment : public Equipment
 	bool canFire() const;
 	void update(int ticks);
 	void setReloadTime(int ticks);
+	// This sends alerts when not enough ammo to reload weapon or engine
+	void noAmmoToReload(const GameState &state, const VEquipment *equipment) const;
 	// Reload uses up to 'ammoAvailable' to reload the weapon. It returns the amount
 	// actually used.
 	int reload(int ammoAvailable);

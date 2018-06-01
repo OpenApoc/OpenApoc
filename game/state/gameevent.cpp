@@ -124,9 +124,9 @@ UString GameVehicleEvent::message()
 				return tr("An illegal flyer has been detected.");
 			}
 		case GameEventType::NotEnoughAmmo:
-			return tr("Not enough ammo to rearm vehicle");
+			return format("%s %s", tr("Not enough ammo to rearm vehicle:"), vehicle->name);
 		case GameEventType::NotEnoughFuel:
-			return tr("Not enough fuel to refuel vehicle");
+			return format("%s %s", tr("Not enough fuel to refuel vehicle"), vehicle->name);
 		default:
 			LogError("Invalid vehicle event type");
 			break;

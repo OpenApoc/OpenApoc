@@ -485,14 +485,14 @@ void BuyAndSellScreen::executeOrders()
 						{
 							economy.currentStock += order;
 							player->balance += order * economy.currentPrice;
-							b.second->inventoryAgentEquipment[c->itemId] -= order;
+							b.second->inventoryVehicleAmmo[c->itemId] -= order;
 							break;
 						}
 						case TransactionControl::Type::VehicleEquipment:
 						{
 							economy.currentStock += order;
 							player->balance += order * economy.currentPrice;
-							b.second->inventoryAgentEquipment[c->itemId] -= order;
+							b.second->inventoryVehicleEquipment[c->itemId] -= order;
 							break;
 						}
 						case TransactionControl::Type::VehicleType:
