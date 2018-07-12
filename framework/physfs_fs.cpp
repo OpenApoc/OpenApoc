@@ -22,6 +22,8 @@
 #define le64toh(x) htole64(x)
 #elif defined(_DEFAULT_SOURCE) || defined(_BSD_SOURCE)
 #include <endian.h>
+#elif defined(__FreeBSD__)
+#include <sys/endian.h>
 #else
 /* We assume all other platforms are little endian for now */
 static inline uint16_t le16toh(uint16_t val) { return val; }
