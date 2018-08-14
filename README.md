@@ -139,12 +139,18 @@ git submodule update -f
 
 ### Building on Linux
 
-(Tested on Ubuntu 16.04)
+(Tested on Ubuntu 16.04 and Mageia 6)
 
-* Install the following packages:
+* On Ubuntu, install the following packages:
 
 ```sh
 sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-system-dev libboost-program-options-dev
+```
+
+* On Mageia, install the following packages as root:
+
+```sh
+urpmi "cmake(sdl2)" libstdc++-static-devel boost-devel boost unwind-devel task-c++-devel cmake git
 ```
 
 * Checkout OpenApoc from GitHub.
