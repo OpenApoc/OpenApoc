@@ -899,4 +899,10 @@ add_extractor(EXTRACTOR_TARGET_LIST "battle_map_sectors"
 	"data/maps/57ufo7_01"
 	"data/maps/58ufo8_01")
 
+option(EXTRACT_DATA "Run the data extractor as part of the default target" ON)
+
+if (${EXTRACT_DATA})
 add_custom_target(extract-data ALL DEPENDS ${EXTRACTOR_TARGET_LIST})
+else()
+add_custom_target(extract-data DEPENDS ${EXTRACTOR_TARGET_LIST})
+endif()
