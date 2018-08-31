@@ -12,8 +12,6 @@ foreach(TEST ${TEST_LIST})
 		target_compile_definitions(${TEST} PRIVATE -DUNIT_TEST)
 		add_test(NAME ${TEST} COMMAND ${EXECUTABLE_OUTPUT_PATH}/${TEST}
 				--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)
-		set_property(TARGET ${TEST} PROPERTY CXX_STANDARD 11)
-		set_property(TARGET ${TEST} PROPERTY CXX_STANDARD_REQUIRED ON)
 endforeach()
 
 # test_serialize requires args so needs to be slightly separate	
@@ -28,8 +26,6 @@ add_test(NAME ${TEST}_difficulty1 COMMAND ${EXECUTABLE_OUTPUT_PATH}/${TEST}
 		${CMAKE_SOURCE_DIR}/data/gamestate_common
 		--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)
 
-set_property(TARGET ${TEST} PROPERTY CXX_STANDARD 11)
-set_property(TARGET ${TEST} PROPERTY CXX_STANDARD_REQUIRED ON)
 
 # MSVC is bad at detecting utf8
 if (MSVC)

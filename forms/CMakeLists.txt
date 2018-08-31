@@ -59,5 +59,3 @@ target_link_libraries(OpenApoc_Forms PUBLIC OpenApoc_Framework
 
 target_include_directories(OpenApoc_Forms PUBLIC ${CMAKE_SOURCE_DIR})
 
-set_property(TARGET OpenApoc_Forms PROPERTY CXX_STANDARD 11)
-

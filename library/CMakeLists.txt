@@ -40,7 +40,6 @@ target_include_directories(OpenApoc_Library PUBLIC ${CMAKE_SOURCE_DIR})
 target_include_directories(OpenApoc_Library PUBLIC ${GLM_INCLUDE_DIR})
 target_include_directories(OpenApoc_Library PUBLIC ${Boost_INCLUDE_DIRS})
 
-set_property(TARGET OpenApoc_Library PROPERTY CXX_STANDARD 11)
 if(NOT WIN32)
 	target_compile_definitions(OpenApoc_Library PUBLIC PTHREADS_AVAILABLE)
 endif()

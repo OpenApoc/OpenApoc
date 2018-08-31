@@ -4,6 +4,8 @@ PROJECT(OpenApoc CXX C)
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
+set(CMAKE_CXX_STANDARD 17)
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
@@ -110,9 +112,6 @@ target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Framework)
 target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Forms)
 target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_GameState)
 target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_GameUI)
-
-set_property(TARGET OpenApoc PROPERTY CXX_STANDARD 11)
-set_property(TARGET OpenApoc PROPERTY CXX_STANDARD_REQUIRED ON)
 
 # check dependencies and include libraries
 

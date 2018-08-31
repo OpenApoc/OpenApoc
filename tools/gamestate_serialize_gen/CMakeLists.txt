@@ -29,5 +29,3 @@ target_link_libraries(OpenApoc_GamestateSerializeGen OpenApoc_LibPugixml
 target_include_directories(OpenApoc_GamestateSerializeGen PUBLIC ${Boost_INCLUDE_DIRS})
 target_include_directories(OpenApoc_GamestateSerializeGen PUBLIC ${CMAKE_SOURCE_DIR})
 
-set_property(TARGET OpenApoc_GamestateSerializeGen PROPERTY CXX_STANDARD 11)
-set_property(TARGET OpenApoc_GamestateSerializeGen PROPERTY CXX_STANDARD_REQUIRED ON)

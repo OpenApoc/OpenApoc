@@ -16,18 +16,9 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-5
+            - g++-7
       env:
-        - MATRIX_ENV="PASS=build CXX='g++-5' CC='gcc-5' BUILD_TYPE=RelWithDebInfo"
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - llvm-toolchain-trusty-4.0
-          packages:
-            - clang-4.0
-      env:
-        - MATRIX_ENV="PASS=build CXX='clang++-4.0' CC='clang-4.0' BUILD_TYPE=sanitize"
+        - MATRIX_ENV="PASS=build CXX='g++-7' CC='gcc-7' BUILD_TYPE=RelWithDebInfo"
     - os: linux
       addons:
         apt:
