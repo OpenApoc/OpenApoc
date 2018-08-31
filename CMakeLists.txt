@@ -19,11 +19,12 @@ string(TOLOWER "${CMAKE_BUILD_TYPE}" lower_build_type)
 
 option(LTO "Build using link-time-optimisations" OFF)
 option(ENABLE_TESTS "Build some unit tests" ON)
+option(EXTRACT_DATA "Run the data extractor as part of the default target" ON)
 
 set(CD_PATH ${CMAKE_SOURCE_DIR}/data/cd.iso CACHE STRING "Path to cd.iso (used
 by test and extractor")
 
-if (NOT EXISTS ${CD_PATH})
+if (${EXTRACT_DATA} AND NOT EXISTS ${CD_PATH})
 		message(FATAL_ERROR "CD_PATH \"${CD_PATH}\" points at non-existant file")
 endif()
 
