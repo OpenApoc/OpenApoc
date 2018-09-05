@@ -187,8 +187,6 @@ add_library(OpenApoc_Framework STATIC
 	${RENDERER_SOURCE_FILES} ${RENDERER_HEADER_FILES}
 	${FILESYSTEM_SOURCE_FILES} ${FILESYSTEM_HEADER_FILES})
 
-set_property(TARGET OpenApoc_Framework PROPERTY CXX_STANDARD 11)
-
 target_compile_definitions(OpenApoc_Framework PUBLIC
 		"-DRENDERERS=\"GLES_3_0:GL_2_0\"")
 

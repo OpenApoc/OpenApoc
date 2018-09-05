@@ -78,9 +78,6 @@ if(NOT WIN32)
 	target_compile_definitions(OpenApoc_LibPugixml PUBLIC PTHREADS_AVAILABLE)
 endif()
 
-set_property(TARGET OpenApoc_LibPugixml PROPERTY CXX_STANDARD 11)
-set_property(TARGET OpenApoc_LibPugixml PROPERTY CXX_STANDARD_REQUIRED ON)
-
 set (LIBLODEPNG_SOURCE_FILES
 		lodepng/lodepng.cpp)
 
@@ -100,9 +97,6 @@ add_library(OpenApoc_LibLodepng STATIC ${LIBLODEPNG_SOURCE_FILES}
 if(NOT WIN32)
 	target_compile_definitions(OpenApoc_LibLodepng PUBLIC PTHREADS_AVAILABLE)
 endif()
-
-set_property(TARGET OpenApoc_LibLodepng PROPERTY CXX_STANDARD 11)
-set_property(TARGET OpenApoc_LibLodepng PROPERTY CXX_STANDARD_REQUIRED ON)
 
 # Only enable the subset of physfs we actually use
 

@@ -28,5 +28,3 @@ set( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
 target_link_libraries(OpenApoc_SerializationTool OpenApoc_Library)
 target_link_libraries(OpenApoc_SerializationTool OpenApoc_Framework)
 target_link_libraries(OpenApoc_SerializationTool OpenApoc_GameState)
-
-set_property(TARGET OpenApoc_SerializationTool PROPERTY CXX_STANDARD 11)

@@ -15,6 +15,3 @@ set( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
 
 target_link_libraries(OpenApoc_DumpEverything OpenApoc_Library)
 target_link_libraries(OpenApoc_DumpEverything OpenApoc_Framework)
-
-set_property(TARGET OpenApoc_DumpEverything PROPERTY CXX_STANDARD 11)
-set_property(TARGET OpenApoc_DumpEverything PROPERTY CXX_STANDARD_REQUIRED ON)
