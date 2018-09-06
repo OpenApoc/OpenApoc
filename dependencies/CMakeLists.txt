@@ -47,7 +47,11 @@ add_library(OpenApoc_Miniz STATIC ${MINIZ_SOURCE_FILES})
 target_compile_definitions(OpenApoc_Miniz PUBLIC MINIZ_NO_TIME)
 # We probably don't support any platforms without the 64-bit offset file
 # ioctls
-target_compile_definitions(OpenApoc_Miniz PUBLIC _LARGEFILE64_SOURCE=1)
+# But macos fails to link with this enabled... so guess we can never read >4gb
+# files there?
+if (NOT APPLE)
+	target_compile_definitions(OpenApoc_Miniz PUBLIC _LARGEFILE64_SOURCE=1)
+endif()
 
 target_include_directories(OpenApoc_Miniz PUBLIC ${CMAKE_SOURCE_DIR})
 target_include_directories(OpenApoc_Miniz PRIVATE
