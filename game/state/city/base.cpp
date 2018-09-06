@@ -71,7 +71,7 @@ void Base::die(GameState &state, bool collapse)
 					// Re-route to another base
 					for (auto &b : state.player_bases)
 					{
-						if (b.second->building = building)
+						if (b.second->building == building)
 						{
 							continue;
 						}
