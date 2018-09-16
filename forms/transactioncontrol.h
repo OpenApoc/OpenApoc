@@ -183,7 +183,7 @@ class TransactionControl : public Control
 	                                            bool manufacturerHostile,
 	                                            bool manufacturerUnavailable, int price,
 	                                            int storeSpace, std::vector<int> &initialStock,
-	                                            int indexLeft, int indexRigh);
+	                                            int indexLeft, int indexRight);
 
 	void setupCallbacks();
 
