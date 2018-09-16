@@ -7,7 +7,6 @@
 
 #if defined(USE_BOOST_FILESYSTEM)
 
-#define BOOST_ALL_NO_LIB
 #include <boost/filesystem.hpp>
 namespace fs = boost::filesystem;
 
