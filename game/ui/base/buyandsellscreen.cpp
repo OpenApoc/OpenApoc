@@ -462,6 +462,7 @@ void BuyAndSellScreen::executeOrders()
 							}
 							vehicle->die(*state, true);
 							player->balance += c->price;
+							break;
 						}
 						case TransactionControl::Type::AgentEquipmentBio:
 						{
