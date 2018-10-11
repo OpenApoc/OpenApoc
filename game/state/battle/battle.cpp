@@ -3531,7 +3531,7 @@ void Battle::loadImagePacks(GameState &state)
 				if (imagePacks.find(packName) == imagePacks.end())
 					imagePacks.insert(packName);
 			}
-			if (!brainsuckerFound && ae->getPayloadType()->damage_type &&
+			if (!brainsuckerFound && ae->getPayloadType() && ae->getPayloadType()->damage_type &&
 			    ae->getPayloadType()->damage_type->effectType ==
 			        DamageType::EffectType::Brainsucker)
 			{
@@ -3647,7 +3647,7 @@ void Battle::loadAnimationPacks(GameState &state)
 		{
 			for (auto &e : u.second->agent->equipment)
 			{
-				if (e->getPayloadType()->damage_type &&
+				if (e->getPayloadType() && e->getPayloadType()->damage_type &&
 				    e->getPayloadType()->damage_type->effectType ==
 				        DamageType::EffectType::Brainsucker)
 				{
