@@ -1099,14 +1099,22 @@ void Battle::initialUnitSpawn(GameState &state)
 		}
 		// Stance
 		u->setBodyState(state, u->agent->type->bodyType->getFirstAllowedState());
-		if (u->current_body_state == BodyState::Kneeling ||
-		    u->current_body_state == BodyState::Prone)
+		if (config().getBool("OpenApoc.NewFeature.RunAndKneel"))
 		{
-			u->setMovementMode(MovementMode::Prone);
+			u->setKneelingMode(KneelingMode::Kneeling);
+			u->setMovementMode(MovementMode::Running);
 		}
 		else
 		{
-			u->setMovementMode(MovementMode::Walking);
+			if (u->current_body_state == BodyState::Kneeling ||
+			    u->current_body_state == BodyState::Prone)
+			{
+				u->setMovementMode(MovementMode::Prone);
+			}
+			else
+			{
+				u->setMovementMode(MovementMode::Walking);
+			}
 		}
 		// Miscellaneous
 		u->beginTurn(state);

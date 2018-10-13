@@ -244,6 +244,8 @@ ConfigOptionBool optionFuelCrashingVehicles("OpenApoc.NewFeature", "CrashingOutO
                                             "Vehicles crash when out of fuel", true);
 ConfigOptionBool optionSkipTurbo("OpenApoc.NewFeature", "SkipTurboMovement",
                                  "Skip turbo movement calculations", false);
+ConfigOptionBool optionRunAndKneel("OpenApoc.NewFeature", "RunAndKneel",
+                                   "All units run and kneel by default", false);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);
