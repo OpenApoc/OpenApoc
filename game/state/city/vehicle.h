@@ -281,7 +281,8 @@ class Vehicle : public StateObject,
 	                                                   sp<TileObjectVehicle> vehicleTile,
 	                                                   Vec2<int> arc = {8, 8});
 	bool fireWeaponsPointDefense(GameState &state, Vec2<int> arc = {8, 8});
-	void fireWeaponsNormal(GameState &state, Vec2<int> arc = {8, 8});
+	
+	bool fireAtBuilding(GameState &state, Vec2<int> arc = {8, 8});
 	void fireWeaponsManual(GameState &state, Vec2<int> arc = {8, 8});
 	bool attackTarget(GameState &state, sp<TileObjectVehicle> enemyTile);
 	bool attackTarget(GameState &state, sp<TileObjectProjectile> enemyTile);
