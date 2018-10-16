@@ -3389,6 +3389,8 @@ void Battle::exitBattle(GameState &state)
 		}
 		case Battle::MissionType::RaidHumans:
 		{
+			// TODO find out why sometimes mission location was not in state
+			state.missionLocationBattle = state.current_battle->mission_location_id;
 			state.eventFromBattle = GameEventType::MissionCompletedBuildingRaid;
 			if (state.current_battle->playerWon)
 			{
