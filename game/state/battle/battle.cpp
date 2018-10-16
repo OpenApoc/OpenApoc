@@ -1099,7 +1099,7 @@ void Battle::initialUnitSpawn(GameState &state)
 		}
 		// Stance
 		u->setBodyState(state, u->agent->type->bodyType->getFirstAllowedState());
-		if (config().getBool("OpenApoc.NewFeature.RunAndKneel"))
+		if (config().getBool("OpenApoc.NewFeature.RunAndKneel") && u->owner == state.getPlayer())
 		{
 			u->setKneelingMode(KneelingMode::Kneeling);
 			u->setMovementMode(MovementMode::Running);
@@ -2018,18 +2018,20 @@ void Battle::checkMissionEnd(GameState &state, bool retreated, bool forceReCheck
 				{
 					switch (mst)
 					{
-					case OpenApoc::MovementState::Normal: 
-					case OpenApoc::MovementState::Running: 
-					case OpenApoc::MovementState::Strafing: 
-					case OpenApoc::MovementState::Reverse: 
-					case OpenApoc::MovementState::Brainsuck: 
-						normalUnit = true;
-					break;
+						case OpenApoc::MovementState::Normal:
+						case OpenApoc::MovementState::Running:
+						case OpenApoc::MovementState::Strafing:
+						case OpenApoc::MovementState::Reverse:
+						case OpenApoc::MovementState::Brainsuck:
+							normalUnit = true;
+							break;
 					}
-					if (normalUnit) break;
+					if (normalUnit)
+						break;
 				}
-				
-				if (normalUnit) {
+
+				if (normalUnit)
+				{
 					orgsAlive.insert(p);
 					break;
 				}
