@@ -83,6 +83,28 @@ namespace OpenApoc
 namespace
 {
 
+std::shared_future<void> loadBattleBuilding(sp<GameState> state, sp<Building> building,
+                                            bool hotseat, bool raid,
+                                            std::list<StateRef<Agent>> playerAgents,
+                                            StateRef<Vehicle> playerVehicle)
+{
+	auto loadTask = fw().threadPoolEnqueue(
+	    [hotseat, building, state, raid, playerAgents, playerVehicle]() -> void {
+		    StateRef<Organisation> org = raid ? building->owner : state->getAliens();
+		    StateRef<Building> bld = {state.get(), building};
+
+		    const std::map<StateRef<AgentType>, int> *aliens = nullptr;
+		    const int *guards = nullptr;
+		    const int *civilians = nullptr;
+
+		    // Won't work if I don't copy it!? Whatever
+		    auto agents = playerAgents;
+		    Battle::beginBattle(*state, hotseat, org, agents, aliens, guards, civilians,
+		                        playerVehicle, bld);
+		});
+	return loadTask;
+}
+
 static const std::vector<UString> TAB_FORM_NAMES = {
     "city/tab1", "city/tab2", "city/tab3", "city/tab4",
     "city/tab5", "city/tab6", "city/tab7", "city/tab8",
@@ -1705,12 +1727,12 @@ void CityView::update()
 			ticks = 0;
 			break;
 		/* POSSIBLE FIXME: 'vanilla' apoc appears to implement Speed1 as 1/2 speed - that is
-		    * only
-		    * every other call calls the update loop, meaning that the later update tick counts are
-		    * halved as well.
-		    * This effectively means that all openapoc tick counts count for 1/2 the value of
-		    * vanilla
-		    * apoc ticks */
+		 * only
+		 * every other call calls the update loop, meaning that the later update tick counts are
+		 * halved as well.
+		 * This effectively means that all openapoc tick counts count for 1/2 the value of
+		 * vanilla
+		 * apoc ticks */
 		case CityUpdateSpeed::Speed1:
 			ticks = 1;
 			break;
@@ -2162,7 +2184,6 @@ void CityView::update()
 					    StateRef<Agent>{state.get(), Agent::getId(*state, agent)},
 					    Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
 					    CitySelectionState::Normal);
-
 				});
 				if (currentAgentIndex >= ownedSoldierInfoList.size())
 				{
@@ -2291,7 +2312,6 @@ void CityView::update()
 					    StateRef<Agent>{state.get(), Agent::getId(*state, agent)},
 					    Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
 					    CitySelectionState::Normal);
-
 				});
 				if (currentAgentIndex >= ownedBioInfoList.size())
 				{
@@ -2423,7 +2443,6 @@ void CityView::update()
 					    StateRef<Agent>{state.get(), Agent::getId(*state, agent)},
 					    Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
 					    CitySelectionState::Normal);
-
 				});
 				if (currentAgentIndex >= ownedEngineerInfoList.size())
 				{
@@ -2552,7 +2571,6 @@ void CityView::update()
 					    StateRef<Agent>{state.get(), Agent::getId(*state, agent)},
 					    Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
 					    CitySelectionState::Normal);
-
 				});
 				if (currentAgentIndex >= ownedPhysicsInfoList.size())
 				{
@@ -2865,6 +2883,24 @@ void CityView::initiateUfoMission(StateRef<Vehicle> ufo, StateRef<Vehicle> playe
 	fw().stageQueueCommand({StageCmd::Command::REPLACEALL,
 	                        mksp<BattleBriefing>(state, ufo->owner, ufo.id, isBuilding, isRaid,
 	                                             loadBattleVehicle(state, ufo, playerCraft))});
+}
+
+void CityView::initiateBuildingMission(sp<GameState> state, StateRef<Building> building,
+                                       StateRef<Vehicle> vehicle)
+{
+	std::list<StateRef<Agent>> agents;
+	for (auto agent : vehicle->currentAgents)
+	{
+		agents.push_back(agent);
+	}
+	bool inBuilding = true;
+	bool raid = false;
+	bool hotseat = false;
+	fw().stageQueueCommand(
+	    {StageCmd::Command::REPLACEALL,
+	     mksp<BattleBriefing>(
+	         state, building->owner, Building::getId(*state, building), inBuilding, raid,
+	         loadBattleBuilding(state, building, hotseat, raid, agents, vehicle))});
 }
 
 void CityView::eventOccurred(Event *e)
@@ -3555,19 +3591,27 @@ bool CityView::handleGameStateEvent(Event *e)
 		}
 		case GameEventType::CommenceInvestigation:
 		{
-			auto ev = dynamic_cast<GameBuildingEvent *>(e);
+			auto ev = dynamic_cast<GameVehicleEvent *>(e);
 			if (!ev)
 			{
-				LogError("Invalid spotted event");
+				LogError("Invalid investigation event");
 			}
+			auto game_state = this->state;
+			auto building = ev->vehicle->currentBuilding;
+			auto vehicle = ev->vehicle;
+
 			UString title = tr("Commence investigation");
 			UString message =
 			    tr("All selected units and crafts have arrived. Proceed with investigation? ");
 			fw().stageQueueCommand(
 			    {StageCmd::Command::PUSH,
-			     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo, [this] {
-				     // TODO start battle
-				 })});
+			     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
+			                      // "Yes" callback
+			                      [this, game_state, building, vehicle]() {
+				                      initiateBuildingMission(game_state, building, vehicle);
+				                  },
+			                      // "No" callback
+			                      [this]() { setUpdateSpeed(CityUpdateSpeed::Pause); })});
 			break;
 		}
 		case GameEventType::ResearchCompleted:

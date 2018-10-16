@@ -66,6 +66,7 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 	unsigned ticksDetectionTimeOut = 0;
 	unsigned ticksDetectionAttemptAccumulated = 0;
 	bool detected = false;
+	bool investigate = false;
 	// Unlocks when successful at raiding this
 	std::list<StateRef<ResearchTopic>> researchUnlock;
 	// Access to building

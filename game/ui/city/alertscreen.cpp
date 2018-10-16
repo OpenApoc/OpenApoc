@@ -74,10 +74,9 @@ void AlertScreen::eventOccurred(Event *e)
 			{
 				for (auto &vehicle : selectedVehicles)
 				{
-					bool const investigate = true;
-					vehicle->setMission(
-					    *state, VehicleMission::gotoBuilding(*state, *vehicle,
-					                                         {state.get(), building}, investigate));
+					building->investigate = true;
+					vehicle->setMission(*state, VehicleMission::gotoBuilding(
+					                                *state, *vehicle, {state.get(), building}));
 				}
 				fw().stageQueueCommand({StageCmd::Command::POP});
 				return;
@@ -89,7 +88,6 @@ void AlertScreen::eventOccurred(Event *e)
 			{
 				for (auto &agent : selectedAgents)
 				{
-					// TODO set investigate for agents
 					agent->setMission(*state, AgentMission::gotoBuilding(*state, *agent,
 					                                                     {state.get(), building}));
 				}

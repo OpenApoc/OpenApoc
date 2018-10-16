@@ -2018,18 +2018,20 @@ void Battle::checkMissionEnd(GameState &state, bool retreated, bool forceReCheck
 				{
 					switch (mst)
 					{
-					case OpenApoc::MovementState::Normal: 
-					case OpenApoc::MovementState::Running: 
-					case OpenApoc::MovementState::Strafing: 
-					case OpenApoc::MovementState::Reverse: 
-					case OpenApoc::MovementState::Brainsuck: 
-						normalUnit = true;
-					break;
+						case OpenApoc::MovementState::Normal:
+						case OpenApoc::MovementState::Running:
+						case OpenApoc::MovementState::Strafing:
+						case OpenApoc::MovementState::Reverse:
+						case OpenApoc::MovementState::Brainsuck:
+							normalUnit = true;
+							break;
 					}
-					if (normalUnit) break;
+					if (normalUnit)
+						break;
 				}
-				
-				if (normalUnit) {
+
+				if (normalUnit)
+				{
 					orgsAlive.insert(p);
 					break;
 				}

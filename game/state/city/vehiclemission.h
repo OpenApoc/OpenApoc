@@ -159,7 +159,7 @@ class VehicleMission
 	// With now building goes home
 	static VehicleMission *gotoBuilding(GameState &state, Vehicle &v,
 	                                    StateRef<Building> target = nullptr,
-	                                    bool allowTeleporter = false, bool investigate = false);
+	                                    bool allowTeleporter = false);
 	static VehicleMission *infiltrateOrSubvertBuilding(GameState &state, Vehicle &v,
 	                                                   bool subvert = false,
 	                                                   StateRef<Building> target = nullptr);
@@ -235,8 +235,6 @@ class VehicleMission
 	bool attackCrashed = false;
 
 	bool cancelled = false;
-	// Set investigate true when mission is set from alert screen
-	bool isInvestigateMission = false;
 
 	std::list<Vec3<int>> currentPlannedPath;
 };

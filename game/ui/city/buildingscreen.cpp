@@ -46,7 +46,7 @@ std::shared_future<void> loadBattleBuilding(sp<GameState> state, sp<Building> bu
 		});
 	return loadTask;
 }
-}
+} // namespace
 BuildingScreen::BuildingScreen(sp<GameState> state, sp<Building> building)
     : Stage(), menuform(ui().getForm("city/building")), state(state), building(building)
 {
