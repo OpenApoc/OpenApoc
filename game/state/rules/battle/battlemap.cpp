@@ -170,7 +170,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 	StateRef<BattleMap> map;
 
 	// Setup mission type and other participants
-	if (building->owner == state.getPlayer())
+	if (building->base != nullptr && building->owner == state.getPlayer())
 	{
 		// Base defense mission
 		map = {&state, "BATTLEMAP_37base"};
