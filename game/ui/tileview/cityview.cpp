@@ -3553,6 +3553,23 @@ bool CityView::handleGameStateEvent(Event *e)
 			    {StageCmd::Command::PUSH, mksp<AlertScreen>(state, ev->building)});
 			break;
 		}
+		case GameEventType::CommenceInvestigation:
+		{
+			auto ev = dynamic_cast<GameBuildingEvent *>(e);
+			if (!ev)
+			{
+				LogError("Invalid spotted event");
+			}
+			UString title = tr("Commence investigation");
+			UString message =
+			    tr("All selected units and crafts have arrived. Proceed with investigation? ");
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH,
+			     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo, [this] {
+				     // TODO start battle
+				 })});
+			break;
+		}
 		case GameEventType::ResearchCompleted:
 		{
 			auto ev = dynamic_cast<GameResearchEvent *>(e);

@@ -74,19 +74,22 @@ void AlertScreen::eventOccurred(Event *e)
 			{
 				for (auto &vehicle : selectedVehicles)
 				{
-					vehicle->setMission(*state, VehicleMission::gotoBuilding(
-					                                *state, *vehicle, {state.get(), building}));
+					bool const investigate = true;
+					vehicle->setMission(
+					    *state, VehicleMission::gotoBuilding(*state, *vehicle,
+					                                         {state.get(), building}, investigate));
 				}
 				fw().stageQueueCommand({StageCmd::Command::POP});
 				return;
 			}
 
-			// send an angents group on foot
+			// send an agents group on foot
 			std::list<StateRef<Agent>> selectedAgents(agentAssignment->getSelectedAgents());
 			if (!selectedAgents.empty())
 			{
 				for (auto &agent : selectedAgents)
 				{
+					// TODO set investigate for agents
 					agent->setMission(*state, AgentMission::gotoBuilding(*state, *agent,
 					                                                     {state.get(), building}));
 				}

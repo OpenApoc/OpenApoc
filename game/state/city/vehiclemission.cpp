@@ -24,6 +24,7 @@
 #include "game/state/tilemap/tileobject_scenery.h"
 #include "game/state/tilemap/tileobject_shadow.h"
 #include "game/state/tilemap/tileobject_vehicle.h"
+#include "game/ui/city/commenceInvestigation.h"
 #include "library/strings_format.h"
 #include <glm/glm.hpp>
 
@@ -51,7 +52,7 @@ static const std::map<UString, std::pair<unsigned, unsigned>> selfDestructTimer 
     {"VEHICLETYPE_ALIEN_ESCORT", {15 / 5 * TICKS_PER_MINUTE, 120 / 5 * TICKS_PER_MINUTE}},
     {"VEHICLETYPE_ALIEN_BATTLESHIP", {60 / 5 * TICKS_PER_MINUTE, 240 / 5 * TICKS_PER_MINUTE}},
     {"VEHICLETYPE_ALIEN_MOTHERSHIP", {60 / 5 * TICKS_PER_MINUTE, 240 / 5 * TICKS_PER_MINUTE}}};
-}
+} // namespace
 
 FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, Vehicle &v)
     : FlyingVehicleTileHelper(map, *v.type, v.crashed, (int)v.altitude)
@@ -217,12 +218,15 @@ float FlyingVehicleTileHelper::getDistanceStatic(Vec3<float> from, Vec3<float> t
 {
 	auto diffStart = toStart - from;
 	auto diffEnd = toEnd - from - Vec3<float>{1.0f, 1.0f, 1.0f};
-	auto xDiff = from.x >= toStart.x && from.x < toEnd.x ? 0.0f : std::min(std::abs(diffStart.x),
-	                                                                       std::abs(diffEnd.x));
-	auto yDiff = from.y >= toStart.y && from.y < toEnd.y ? 0.0f : std::min(std::abs(diffStart.y),
-	                                                                       std::abs(diffEnd.y));
-	auto zDiff = from.z >= toStart.z && from.z < toEnd.z ? 0.0f : std::min(std::abs(diffStart.z),
-	                                                                       std::abs(diffEnd.z));
+	auto xDiff = from.x >= toStart.x && from.x < toEnd.x
+	                 ? 0.0f
+	                 : std::min(std::abs(diffStart.x), std::abs(diffEnd.x));
+	auto yDiff = from.y >= toStart.y && from.y < toEnd.y
+	                 ? 0.0f
+	                 : std::min(std::abs(diffStart.y), std::abs(diffEnd.y));
+	auto zDiff = from.z >= toStart.z && from.z < toEnd.z
+	                 ? 0.0f
+	                 : std::min(std::abs(diffStart.z), std::abs(diffEnd.z));
 	return sqrtf(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
 }
 
@@ -425,7 +429,7 @@ VehicleMission *VehicleMission::departToSpace(GameState &state, Vehicle &v)
 }
 
 VehicleMission *VehicleMission::gotoBuilding(GameState &, Vehicle &v, StateRef<Building> target,
-                                             bool allowTeleporter)
+                                             bool allowTeleporter, bool investigate)
 {
 	// TODO
 	// Pseudocode:
@@ -445,6 +449,7 @@ VehicleMission *VehicleMission::gotoBuilding(GameState &, Vehicle &v, StateRef<B
 	mission->type = MissionType::GotoBuilding;
 	mission->targetBuilding = target ? target : v.homeBuilding;
 	mission->allowTeleporter = allowTeleporter;
+	isInvestigateMission = investigate;
 	return mission;
 }
 
@@ -1278,7 +1283,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 	finished = finished || isFinishedInternal(state, v);
 	switch (this->type)
 	{
-		// Pick attack target
+			// Pick attack target
 		case MissionType::Patrol:
 		{
 			if (finished)
@@ -1403,7 +1408,33 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 		case MissionType::GotoLocation:
 		case MissionType::Land:
 		case MissionType::InfiltrateSubvert:
+			return;
 		case MissionType::GotoBuilding:
+			if (finished)
+			{
+				if (v.currentBuilding == nullptr)
+				{
+					return;
+				}
+				if (isInvestigateMission && v.currentBuilding->detected)
+				{
+					isInvestigateMission = false;
+					LogWarning("Aliens");
+
+					StateRef<Vehicle> vehicleRef = {&state,
+					                                Vehicle::getId(state, v.shared_from_this())};
+					/*
+					fw().pushEvent(new GameVehicleEvent(
+					    GameEventType::CommenceInvestigation, vehicleRef
+					));
+					*/
+
+					fw().pushEvent(
+					    new GameBuildingEvent(GameEventType::CommenceInvestigation,
+					                          {&state, Building::getId(state, v.currentBuilding)}));
+				}
+			}
+			return;
 		case MissionType::OfferService:
 		case MissionType::AttackVehicle:
 		case MissionType::FollowVehicle:
@@ -1459,7 +1490,8 @@ bool VehicleMission::isFinishedInternal(GameState &state, Vehicle &v)
 	{
 		case MissionType::GotoLocation:
 		case MissionType::Crash:
-		// Note that GotoPortal/DepartToSpace never has planned path but still checks for target loc
+			// Note that GotoPortal/DepartToSpace never has planned path but still checks for target
+			// loc
 		case MissionType::DepartToSpace:
 		case MissionType::GotoPortal:
 		{
@@ -1840,7 +1872,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			{
 				LogError("Ground vehcile on depart to space mission!? WTF!?");
 			}
-		// Intentional fall-through
+			// Intentional fall-through
 		case MissionType::GotoPortal:
 		{
 			if (v.type->isGround())
@@ -2300,7 +2332,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		{
 			switch (missionCounter)
 			{
-				// Go to target building and pick up cargo
+					// Go to target building and pick up cargo
 				case 0:
 				{
 					if (!targetBuilding)
@@ -2390,7 +2422,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			switch (missionCounter)
 			{
-				// Goto location above building, when there, deposit aliens
+					// Goto location above building, when there, deposit aliens
 				case 0:
 				{
 					auto name = this->getName();
@@ -2541,7 +2573,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		{
 			switch (missionCounter)
 			{
-				// When timer finished spawn from gate
+					// When timer finished spawn from gate
 				case 0:
 				{
 					if (timeToSnooze > 0)
@@ -2869,15 +2901,13 @@ bool VehicleMission::advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> 
 				                std::abs(tFrom->position.z - it->z) > 1;
 				if (v.type->isGround())
 				{
-					cantSkip = cantSkip ||
-					           !GroundVehicleTileHelper{tFrom->map, v}.canEnterTile(
-					               tFrom, tFrom->map.getTile(*it));
+					cantSkip = cantSkip || !GroundVehicleTileHelper{tFrom->map, v}.canEnterTile(
+					                           tFrom, tFrom->map.getTile(*it));
 				}
 				else
 				{
-					cantSkip = cantSkip ||
-					           !FlyingVehicleTileHelper{tFrom->map, v}.canEnterTile(
-					               tFrom, tFrom->map.getTile(*it));
+					cantSkip = cantSkip || !FlyingVehicleTileHelper{tFrom->map, v}.canEnterTile(
+					                           tFrom, tFrom->map.getTile(*it));
 				}
 				canSkip = canSkip || !cantSkip;
 			}
@@ -3249,7 +3279,7 @@ bool GroundVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, f
 		{
 			switch (dir.z)
 			{
-				// Going up on Z means we must go to "into" tile or hill
+					// Going up on Z means we must go to "into" tile or hill
 				case 1:
 					if (sceneryTo->type->getATVMode() != SceneryTileType::WalkMode::Into &&
 					    !sceneryTo->type->isHill)
@@ -3257,14 +3287,14 @@ bool GroundVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, f
 						return false;
 					}
 					break;
-				// Going same Z means we must go to "onto" tile
+					// Going same Z means we must go to "onto" tile
 				case 0:
 					if (sceneryTo->type->getATVMode() != SceneryTileType::WalkMode::Onto)
 					{
 						return false;
 					}
 					break;
-				// Going down on Z is impossible
+					// Going down on Z is impossible
 				case -1:
 					return false;
 			}
@@ -3274,17 +3304,17 @@ bool GroundVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, f
 		{
 			switch (dir.z)
 			{
-				// Going up on Z is impossible
+					// Going up on Z is impossible
 				case 1:
 					return false;
-				// Going same Z means we must go from "onto" tile
+					// Going same Z means we must go from "onto" tile
 				case 0:
 					if (sceneryFrom->type->getATVMode() != SceneryTileType::WalkMode::Onto)
 					{
 						return false;
 					}
 					break;
-				// Going down on Z means we must go from "into" tile or another hill
+					// Going down on Z means we must go from "into" tile or another hill
 				case -1:
 					if (sceneryFrom->type->getATVMode() != SceneryTileType::WalkMode::Into &&
 					    !sceneryFrom->type->isHill)
@@ -3299,7 +3329,7 @@ bool GroundVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, f
 		{
 			switch (dir.z)
 			{
-				// Going up on Z means going from onto to into
+					// Going up on Z means going from onto to into
 				case 1:
 					if (sceneryFrom->type->getATVMode() != SceneryTileType::WalkMode::Onto ||
 					    sceneryTo->type->getATVMode() != SceneryTileType::WalkMode::Into)
@@ -3307,14 +3337,14 @@ bool GroundVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, f
 						return false;
 					}
 					break;
-				// Going same Z means we must go between same walk modes
+					// Going same Z means we must go between same walk modes
 				case 0:
 					if (sceneryFrom->type->getATVMode() != sceneryTo->type->getATVMode())
 					{
 						return false;
 					}
 					break;
-				// Going down on Z means we must go from into to onto
+					// Going down on Z means we must go from into to onto
 				case -1:
 					if (sceneryFrom->type->getATVMode() != SceneryTileType::WalkMode::Into ||
 					    sceneryTo->type->getATVMode() != SceneryTileType::WalkMode::Onto)
@@ -3329,17 +3359,17 @@ bool GroundVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, f
 		{
 			switch (dir.z)
 			{
-				// Going up on Z means using hillFrom's slope
+					// Going up on Z means using hillFrom's slope
 				case 1:
 					if (!sceneryFrom->type->hill[forward])
 					{
 						return false;
 					}
 					break;
-				// Going same Z is fine
+					// Going same Z is fine
 				case 0:
 					break;
-				// Going down on Z means using hillTo's slope
+					// Going down on Z means using hillTo's slope
 				case -1:
 					if (!sceneryTo->type->hill[backward])
 					{
@@ -3375,10 +3405,12 @@ float GroundVehicleTileHelper::getDistanceStatic(Vec3<float> from, Vec3<float> t
 {
 	auto diffStart = toStart - from;
 	auto diffEnd = toEnd - from - Vec3<float>{1.0f, 1.0f, 1.0f};
-	auto xDiff = from.x >= toStart.x && from.x < toEnd.x ? 0.0f : std::min(std::abs(diffStart.x),
-	                                                                       std::abs(diffEnd.x));
-	auto yDiff = from.y >= toStart.y && from.y < toEnd.y ? 0.0f : std::min(std::abs(diffStart.y),
-	                                                                       std::abs(diffEnd.y));
+	auto xDiff = from.x >= toStart.x && from.x < toEnd.x
+	                 ? 0.0f
+	                 : std::min(std::abs(diffStart.x), std::abs(diffEnd.x));
+	auto yDiff = from.y >= toStart.y && from.y < toEnd.y
+	                 ? 0.0f
+	                 : std::min(std::abs(diffStart.y), std::abs(diffEnd.y));
 	return xDiff + yDiff;
 }
 
@@ -3409,7 +3441,7 @@ bool GroundVehicleTileHelper::isMoveAllowedRoad(Scenery &scenery, int dir) const
 {
 	switch (scenery.type->tile_type)
 	{
-		// Can traverse road only according to flags
+			// Can traverse road only according to flags
 		case SceneryTileType::TileType::Road:
 			return scenery.type->connection[dir];
 		case SceneryTileType::TileType::PeopleTubeJunction:
@@ -3431,7 +3463,7 @@ bool GroundVehicleTileHelper::isMoveAllowedATV(Scenery &scenery, int dir) const
 	}
 	switch (scenery.type->getATVMode())
 	{
-		// Can traverse roads and walk in tiles
+			// Can traverse roads and walk in tiles
 		case SceneryTileType::WalkMode::Into:
 		case SceneryTileType::WalkMode::Onto:
 			return true;

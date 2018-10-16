@@ -1091,7 +1091,7 @@ void GameState::update(unsigned int ticks)
 		// Roll back to time before battle and stuff
 		if (gameTimeBeforeBattle.getTicks() != 0)
 		{
-			upateAfterBattle();
+			updateAfterBattle();
 		}
 
 		Trace::start("GameState::update::cities");
@@ -1390,7 +1390,7 @@ void GameState::updateBeforeBattle()
 	missionLocationBattle = current_battle->mission_location_id;
 }
 
-void GameState::upateAfterBattle()
+void GameState::updateAfterBattle()
 {
 	gameTime = GameTime(gameTimeBeforeBattle.getTicks());
 	gameTimeBeforeBattle = GameTime(0);

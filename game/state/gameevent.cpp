@@ -212,6 +212,8 @@ UString GameBuildingEvent::message()
 			              tr("Attacked by:"), actor->name);
 		case GameEventType::AlienSpotted:
 			return tr("Live Alien spotted.");
+		case GameEventType::CommenceInvestigation:
+			return tr("Commence investigation.");
 		case GameEventType::CargoExpiresSoon:
 			return format("%s %s", tr("Cargo expires soon:"), building->name);
 		default:
@@ -393,4 +395,4 @@ GameSomethingDiedEvent::GameSomethingDiedEvent(GameEventType type, UString name,
 	}
 }
 UString GameSomethingDiedEvent::message() { return messageInner; }
-}
+} // namespace OpenApoc
