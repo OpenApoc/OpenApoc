@@ -246,6 +246,7 @@ ConfigOptionBool optionSkipTurbo("OpenApoc.NewFeature", "SkipTurboMovement",
                                  "Skip turbo movement calculations", false);
 ConfigOptionBool optionRunAndKneel("OpenApoc.NewFeature", "RunAndKneel",
                                    "All units run and kneel by default", false);
+ConfigOptionBool optionSeedRng("OpenApoc.NewFeature", "SeedRng", "Seed RNG on game start", false);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);
