@@ -11,7 +11,12 @@
 // symbols as part of the module that uses it
 #define BOOST_ALL_NO_LIB
 #include <boost/program_options.hpp>
+#include <boost/version.hpp>
+#if BOOST_VERSION >= 106800
+#include <boost/uuid/detail/sha1.hpp>
+#else
 #include <boost/uuid/sha1.hpp>
+#endif
 
 namespace po = boost::program_options;
 
