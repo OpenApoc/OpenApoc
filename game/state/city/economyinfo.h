@@ -19,4 +19,4 @@ class EconomyInfo
 	// Returns if new item
 	bool update(GameState &state, bool xcom);
 };
-}
+} // namespace OpenApoc

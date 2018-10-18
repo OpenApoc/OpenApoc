@@ -152,4 +152,4 @@ class BattleTileView : public TileView
 	void render() override;
 	void update() override;
 };
-}
+} // namespace OpenApoc

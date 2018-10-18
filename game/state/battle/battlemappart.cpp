@@ -1282,4 +1282,4 @@ void BattleMapPart::queueCollapse(unsigned additionalDelay)
 }
 
 void BattleMapPart::cancelCollapse() { ticksUntilCollapse = 0; }
-}
+} // namespace OpenApoc

@@ -27,4 +27,4 @@ const UString &BattleMapPartType::getTypeName()
 	static UString name = "BattleMapPart";
 	return name;
 }
-}
+} // namespace OpenApoc

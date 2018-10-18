@@ -119,4 +119,4 @@ bool ZipDataProvider::finalizeSave()
 	}
 	return true;
 }
-}
+} // namespace OpenApoc

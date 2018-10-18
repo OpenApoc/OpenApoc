@@ -14,9 +14,8 @@ sp<AIMovement> UnitAIHelper::getFallbackMovement(GameState &state, BattleUnit &u
 	StateRef<BattleUnit> closestEnemy;
 	for (auto &unit : state.current_battle->visibleEnemies[u.owner])
 	{
-		if (!closestEnemy ||
-		    glm::length(unit->position - u.position) <
-		        glm::length(closestEnemy->position - u.position))
+		if (!closestEnemy || glm::length(unit->position - u.position) <
+		                         glm::length(closestEnemy->position - u.position))
 		{
 			closestEnemy = unit;
 		}
@@ -88,9 +87,8 @@ sp<AIMovement> UnitAIHelper::getRetreatMovement(GameState &state, BattleUnit &u,
 	StateRef<BattleUnit> closestEnemy;
 	for (auto &unit : state.current_battle->visibleEnemies[u.owner])
 	{
-		if (!closestEnemy ||
-		    glm::length(unit->position - u.position) <
-		        glm::length(closestEnemy->position - u.position))
+		if (!closestEnemy || glm::length(unit->position - u.position) <
+		                         glm::length(closestEnemy->position - u.position))
 		{
 			closestEnemy = unit;
 		}
@@ -268,4 +266,4 @@ sp<AIMovement> UnitAIHelper::getPursueMovement(GameState &state, BattleUnit &u, 
 
 	return result;
 }
-}
+} // namespace OpenApoc

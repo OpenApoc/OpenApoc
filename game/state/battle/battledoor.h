@@ -46,4 +46,4 @@ class BattleDoor : public StateObject, public std::enable_shared_from_this<Battl
 	// Used to play sound at
 	Vec3<float> position;
 };
-}
+} // namespace OpenApoc

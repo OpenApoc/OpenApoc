@@ -13,4 +13,4 @@ class UnitAIBehavior : public UnitAI
 	void reset(GameState &state, BattleUnit &u) override;
 	std::tuple<AIDecision, bool> think(GameState &state, BattleUnit &u, bool interrupt) override;
 };
-}
+} // namespace OpenApoc

@@ -832,9 +832,8 @@ void CityTileView::render()
 				auto portalImage =
 				    state.city_common_image_list->portalStrategic[portalImageTicksAccumulated /
 				                                                  PORTAL_FRAME_ANIMATION_DELAY];
-				r.draw(portalImage,
-				       tileToOffsetScreenCoords(p->position) -
-				           (Vec2<float>)portalImage->size / 2.0f);
+				r.draw(portalImage, tileToOffsetScreenCoords(p->position) -
+				                        (Vec2<float>)portalImage->size / 2.0f);
 			}
 			// Draw vehicle icons
 			for (auto &obj : vehiclesToDraw)
@@ -941,10 +940,9 @@ void CityTileView::render()
 					// Eventually scale to 1/2 the size, but start with some bonus time of full
 					// size,
 					// so that it doesn't become distorted immediately, that's why we add extra 0.05
-					float radius = std::min(initialRadius,
-					                        initialRadius * (float)nearestExpiry /
-					                                (float)TICKS_CARGO_TTL / 2.0f +
-					                            0.55f);
+					float radius = std::min(initialRadius, initialRadius * (float)nearestExpiry /
+					                                               (float)TICKS_CARGO_TTL / 2.0f +
+					                                           0.55f);
 					Vec2<float> pos = tileToOffsetScreenCoords(
 					    Vec3<int>{(b.second->bounds.p0.x + b.second->bounds.p1.x) / 2,
 					              (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2});
@@ -1080,4 +1078,4 @@ void CityTileView::update()
 		}
 	}
 }
-}
+} // namespace OpenApoc

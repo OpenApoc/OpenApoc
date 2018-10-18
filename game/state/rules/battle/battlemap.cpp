@@ -85,7 +85,7 @@ int getCorridorSectorID(sp<Base> base, Vec2<int> pos)
 		return TILE_CORRIDORS.at({north, south, west, east}) - 3 + 15;
 	}
 }
-}
+} // namespace
 
 BattleMap::BattleMap() {}
 
@@ -280,11 +280,11 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 				}
 
 				// Add building security if hostile to player
-				int numGuards =
-				    guards ? *guards : (building->owner->isRelatedTo(state.getPlayer()) ==
-				                                Organisation::Relation::Hostile
-				                            ? building->owner->getGuardCount(state)
-				                            : 0);
+				int numGuards = guards ? *guards
+				                       : (building->owner->isRelatedTo(state.getPlayer()) ==
+				                                  Organisation::Relation::Hostile
+				                              ? building->owner->getGuardCount(state)
+				                              : 0);
 				numGuards = std::min(numGuards, MAX_UNITS_PER_SIDE);
 				for (int i = 0; i < numGuards; i++)
 				{
@@ -457,19 +457,16 @@ bool placeSector(GameState &state, std::vector<sp<BattleMapSector>> &sec_map,
 						// Try moving back on x
 						can_move = true;
 						for (int y2 = y1;
-						     y2 < y1 +
-						              sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]
-						                  ->size.y;
+						     y2 < y1 + sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]
+						                   ->size.y;
 						     y2++)
 							for (int z2 = z1;
 							     z2 <
-							     z1 +
-							         sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]
-							             ->size.z;
+							     z1 + sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]
+							              ->size.z;
 							     z2++)
-								can_move = can_move &&
-								           !doesCellIntersectSomething(sec_map, map_size, x1 - dx1,
-								                                       y2, z2);
+								can_move = can_move && !doesCellIntersectSomething(
+								                           sec_map, map_size, x1 - dx1, y2, z2);
 						if (can_move)
 						{
 							sec_map[x1 - dx1 + y1 * map_size.x + z1 * map_size.x * map_size.y] =
@@ -482,19 +479,16 @@ bool placeSector(GameState &state, std::vector<sp<BattleMapSector>> &sec_map,
 						// Try moving back on y
 						can_move = true;
 						for (int x2 = x1;
-						     x2 < x1 +
-						              sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]
-						                  ->size.x;
+						     x2 < x1 + sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]
+						                   ->size.x;
 						     x2++)
 							for (int z2 = z1;
 							     z2 <
-							     z1 +
-							         sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]
-							             ->size.z;
+							     z1 + sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]
+							              ->size.z;
 							     z2++)
-								can_move = can_move &&
-								           !doesCellIntersectSomething(sec_map, map_size, x2,
-								                                       y1 - dy1, z2);
+								can_move = can_move && !doesCellIntersectSomething(
+								                           sec_map, map_size, x2, y1 - dy1, z2);
 						if (can_move)
 						{
 							sec_map[x1 + (y1 - dy1) * map_size.x + z1 * map_size.x * map_size.y] =
@@ -507,19 +501,16 @@ bool placeSector(GameState &state, std::vector<sp<BattleMapSector>> &sec_map,
 						// Try moving back on z
 						can_move = true;
 						for (int x2 = x1;
-						     x2 < x1 +
-						              sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]
-						                  ->size.x;
+						     x2 < x1 + sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]
+						                   ->size.x;
 						     x2++)
 							for (int y2 = z1;
 							     y2 <
-							     y1 +
-							         sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]
-							             ->size.y;
+							     y1 + sec_map[x1 + y1 * map_size.x + z1 * map_size.x * map_size.y]
+							              ->size.y;
 							     y2++)
-								can_move = can_move &&
-								           !doesCellIntersectSomething(sec_map, map_size, x2, y2,
-								                                       z1 - dz1);
+								can_move = can_move && !doesCellIntersectSomething(
+								                           sec_map, map_size, x2, y2, z1 - dz1);
 						if (can_move)
 						{
 							sec_map[x1 + y1 * map_size.x + (z1 - dz1) * map_size.x * map_size.y] =
@@ -577,7 +568,7 @@ bool placeSector(GameState &state, std::vector<sp<BattleMapSector>> &sec_map,
 	}
 	return false;
 }
-} // anonymous-namespace
+} // namespace
 
 bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int> &size,
                             GameState &state, GenerationSize genSize)
@@ -790,9 +781,8 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 			if (failed)
 				break;
 			for (int j = 0; j < secRefs[remaining_sectors[i]]->occurrence_min; j++)
-				failed = failed ||
-				         !placeSector(state, sec_map, size, secRefs[remaining_sectors[i]], true,
-				                      invert_x_packing, invert_y_packing);
+				failed = failed || !placeSector(state, sec_map, size, secRefs[remaining_sectors[i]],
+				                                true, invert_x_packing, invert_y_packing);
 			sec_num_placed[remaining_sectors[i]] = secRefs[remaining_sectors[i]]->occurrence_min;
 			if (sec_num_placed[remaining_sectors[i]] ==
 			    secRefs[remaining_sectors[i]]->occurrence_max)
@@ -1013,9 +1003,8 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 				{
 					LogInfo("Loading sector tiles \"%s\"", sec->sectorTilesName);
 					sec->tiles.reset(new BattleMapSectorTiles());
-					if (!sec->tiles->loadSector(state,
-					                            BattleMapSectorTiles::getMapSectorPath() + "/" +
-					                                sec->sectorTilesName))
+					if (!sec->tiles->loadSector(state, BattleMapSectorTiles::getMapSectorPath() +
+					                                       "/" + sec->sectorTilesName))
 					{
 						LogError("Failed to load sector tiles \"%s\"", sec->sectorTilesName);
 					}
@@ -1593,4 +1582,4 @@ void BattleMap::unloadTilesets(GameState &state)
 	state.battleMapTiles.clear();
 	LogInfo("Unloaded all tilesets.");
 }
-}
+} // namespace OpenApoc

@@ -69,4 +69,4 @@ int InitialGameStateExtractor::getItemImagePacksCount() const
 	}
 	return heldSpriteTabFile.size() / 4 / 8;
 }
-}
+} // namespace OpenApoc

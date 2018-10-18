@@ -49,4 +49,4 @@ class AIBlockTactical
 	uint64_t ticksLastThink = 0;
 	uint64_t ticksUntilReThink = 0;
 };
-}
+} // namespace OpenApoc

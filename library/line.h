@@ -140,4 +140,4 @@ LineSegmentIterator<T, conservative> LineSegment<T, conservative>::end()
 	return LineSegmentIterator<T, conservative>(this->endPoint + this->inc, *this);
 }
 
-} // nammespace OpenApoc
+} // namespace OpenApoc

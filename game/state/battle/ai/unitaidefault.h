@@ -23,4 +23,4 @@ class UnitAIDefault : public UnitAI
 	void notifyUnderFire(Vec3<int> position) override;
 	void notifyHit(Vec3<int> position) override;
 };
-}
+} // namespace OpenApoc

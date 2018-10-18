@@ -49,4 +49,4 @@ class ImageWriterFactory
 };
 
 ImageWriterFactory *getLodePNGImageWriterFactory();
-};
+}; // namespace OpenApoc

@@ -143,4 +143,4 @@ class AIDecision
 
 	UString getName();
 };
-}
+} // namespace OpenApoc

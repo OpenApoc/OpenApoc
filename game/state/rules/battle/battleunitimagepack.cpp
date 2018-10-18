@@ -51,4 +51,4 @@ const UString BattleUnitImagePack::getNameFromID(UString id)
 	LogError("Invalid BattleUnitImagePack ID %s", id);
 	return emptyString;
 }
-}
+} // namespace OpenApoc

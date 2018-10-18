@@ -204,4 +204,4 @@ void GameTime::addTicks(uint64_t ticks)
 }
 
 GameTime GameTime::midday() { return GameTime(TICKS_PER_HOUR * 12); }
-}
+} // namespace OpenApoc

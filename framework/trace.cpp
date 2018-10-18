@@ -168,7 +168,8 @@ void TraceManager::write()
 
 				outFile << "{"
 				        << "\"pid\":1,"
-				        << "\"tid\":\"" << eventList->tid << "\","
+				        << "\"tid\":\"" << eventList->tid
+				        << "\","
 				        // Time is in microseconds, not nanoseconds
 				        << "\"ts\":" << event.timeNS / 1000 << ","
 				        << "\"name\":\"" << event.name << "\",";

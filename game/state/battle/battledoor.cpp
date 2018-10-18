@@ -177,4 +177,4 @@ int BattleDoor::getAnimationFrame()
 }
 
 void BattleDoor::playDoorSound() { fw().soundBackend->playSample(doorSound, position); }
-}
+} // namespace OpenApoc

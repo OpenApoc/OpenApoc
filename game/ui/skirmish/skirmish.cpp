@@ -133,11 +133,11 @@ std::shared_future<void> loadBattleVehicle(bool hotseat, sp<VehicleType> vehicle
 			    state->current_battle->relationshipsBeforeSkirmish[{state, o.first}] =
 			        o.second->getRelationTo(state->getPlayer());
 		    }
-		});
+	    });
 
 	return loadTask;
 }
-}
+} // namespace
 
 Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmish")), state(*state)
 {
@@ -148,56 +148,55 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 		    menuform->findControlTyped<Label>("NUM_HUMANS")
 		        ->setText(format(
 		            "%d", menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")->getValue()));
-		});
+	    });
 	menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_HYBRIDS")
 		        ->setText(format(
 		            "%d", menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")->getValue()));
-		});
+	    });
 	menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_ANDROIDS")
 		        ->setText(format(
 		            "%d",
 		            menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")->getValue()));
-		});
+	    });
 	menuform->findControlTyped<ScrollBar>("DAYS_PHYSICAL_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("DAYS_PHYSICAL")
 		        ->setText(format(
 		            "%d",
 		            menuform->findControlTyped<ScrollBar>("DAYS_PHYSICAL_SLIDER")->getValue()));
-		});
+	    });
 	menuform->findControlTyped<ScrollBar>("DAYS_PSI_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("DAYS_PSI")
 		        ->setText(format(
 		            "%d", menuform->findControlTyped<ScrollBar>("DAYS_PSI_SLIDER")->getValue()));
-		});
+	    });
 	menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("PLAYER_TECH")
-		        ->setText(menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->getValue() ==
-		                          0
-		                      ? "NO"
-		                      : format("%d",
-		                               menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
+		        ->setText(
+		            menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->getValue() == 0
+		                ? "NO"
+		                : format("%d", menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
 		                                   ->getValue()));
-		});
+	    });
 	menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("ALIEN_SCORE")
 		        ->setText(format(
 		            "%dK",
 		            menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")->getValue()));
-		});
+	    });
 	menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("ORG_SCORE")
 		        ->setText(format(
 		            "%d", menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")->getValue()));
-		});
+	    });
 	menuform->findControlTyped<ScrollBar>("ARMOR_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    UString armor = "";
@@ -225,7 +224,7 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 				    break;
 		    }
 		    menuform->findControlTyped<Label>("ARMOR")->setText(armor);
-		});
+	    });
 
 	menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")->setValue(8);
 	menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")->setValue(2);
@@ -634,10 +633,10 @@ void Skirmish::battleInBase(bool hotseat, StateRef<Base> base, bool customAliens
 {
 	fw().stageQueueCommand(
 	    {StageCmd::Command::REPLACEALL,
-	     mksp<BattleBriefing>(state.shared_from_this(), state.getAliens(), base->building.id, true,
-	                          true, loadBattleBuilding(hotseat, base->building, &state, base, false,
-	                                                   customAliens, aliens, false, 0, false, 0,
-	                                                   score))});
+	     mksp<BattleBriefing>(
+	         state.shared_from_this(), state.getAliens(), base->building.id, true, true,
+	         loadBattleBuilding(hotseat, base->building, &state, base, false, customAliens, aliens,
+	                            false, 0, false, 0, score))});
 }
 
 void Skirmish::battleInVehicle(bool hotseat, StateRef<Base> playerBase,
@@ -731,4 +730,4 @@ void Skirmish::render()
 }
 
 bool Skirmish::isTransition() { return false; }
-}
+} // namespace OpenApoc

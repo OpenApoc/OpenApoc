@@ -22,4 +22,4 @@ class CityCommonSampleList
 	sp<Sample> dimensionShiftOut;
 	std::list<sp<Sample>> alertSounds;
 };
-}
+} // namespace OpenApoc

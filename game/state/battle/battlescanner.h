@@ -40,4 +40,4 @@ class BattleScanner : public StateObject
 	void update(GameState &state, unsigned int ticks);
 	void notifyMovement(Vec3<int> position);
 };
-}
+} // namespace OpenApoc

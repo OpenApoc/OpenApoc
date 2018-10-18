@@ -228,4 +228,4 @@ std::tuple<AIDecision, bool> UnitAILowMorale::think(GameState &state, BattleUnit
 	}
 	return std::make_tuple(AIDecision(), true);
 }
-}
+} // namespace OpenApoc

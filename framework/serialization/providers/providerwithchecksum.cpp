@@ -213,4 +213,4 @@ bool ProviderWithChecksum::finalizeSave()
 	inner->saveDocument("checksum.xml", manifest);
 	return inner->finalizeSave();
 }
-}
+} // namespace OpenApoc

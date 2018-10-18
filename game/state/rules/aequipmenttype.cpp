@@ -134,4 +134,4 @@ float AEquipmentType::getRoundsPerSecond() const
 int AEquipmentType::getRangeInTiles() const { return range / (int)VELOCITY_SCALE_BATTLE.x; }
 
 int AEquipmentType::getRangeInMetres() const { return range / 16; }
-}
+} // namespace OpenApoc

@@ -116,7 +116,7 @@ std::list<std::pair<UString, UString>> openApocList = {
 };
 
 std::vector<UString> listNames = {"Message Toggles", "OpenApoc Features"};
-}
+} // namespace
 
 InGameOptions::InGameOptions(sp<GameState> state)
     : Stage(), menuform(ui().getForm("ingameoptions")), state(state)
@@ -322,7 +322,7 @@ void InGameOptions::eventOccurred(Event *e)
 					                      Battle::finishBattle(*state);
 					                      fw().stageQueueCommand({StageCmd::Command::REPLACEALL,
 					                                              mksp<BattleDebriefing>(state)});
-					                  })});
+				                      })});
 			}
 			else
 			{

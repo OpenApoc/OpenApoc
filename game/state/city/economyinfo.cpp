@@ -71,4 +71,4 @@ bool EconomyInfo::update(GameState &state, bool xcom)
 	}
 	return week != 1 && week == weekAvailable;
 }
-}
+} // namespace OpenApoc

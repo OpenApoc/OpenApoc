@@ -10,4 +10,4 @@ class UnitAIHardcore : public UnitAI
   public:
 	UnitAIHardcore();
 };
-}
+} // namespace OpenApoc

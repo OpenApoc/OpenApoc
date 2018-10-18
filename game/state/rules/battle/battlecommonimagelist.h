@@ -17,4 +17,4 @@ class BattleCommonImageList
 	std::vector<sp<Image>> focusArrows;
 	StateRef<DoodadType> burningDoodad;
 };
-}
+} // namespace OpenApoc

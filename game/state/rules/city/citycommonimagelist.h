@@ -19,4 +19,4 @@ class CityCommonImageList
 	sp<Image> agentStrategic;
 	std::vector<sp<Image>> portalStrategic;
 };
-}
+} // namespace OpenApoc

@@ -230,4 +230,4 @@ class BattleUnitAnimationPack : public StateObject
 
 	static UString getAnimationPackPath();
 };
-}
+} // namespace OpenApoc

@@ -21,4 +21,4 @@ class SerializationDataProvider
 	SerializationDataProvider() = default;
 	virtual ~SerializationDataProvider() = default;
 };
-}
+} // namespace OpenApoc

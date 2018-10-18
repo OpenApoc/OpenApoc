@@ -856,7 +856,7 @@ float inline reduceAbsValue(float value, float by)
 	}
 	return value;
 }
-}
+} // namespace
 
 void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 {
@@ -2068,13 +2068,13 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	{
 		teleportTicksAccumulated = 0;
 	}
-	
+
 	IsIdle = this->missions.empty();
 	if (!IsIdle)
 	{
 		this->missions.front()->update(state, *this, ticks);
 	}
-	
+
 	popFinishedMissions(state);
 
 	int maxShield = this->getMaxShield();
@@ -2195,7 +2195,7 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 									auto facing_direction = type->directionToVector(direction);
 									Vec2<float> facing2d = {facing_direction.x, facing_direction.y};
 									Vec2<float> target2d = {enemypos.x - position.x,
-															enemypos.y - position.y};
+									                        enemypos.y - position.y};
 									facing2d = glm::normalize(facing2d);
 									target2d = glm::normalize(target2d);
 									float angleXY = glm::angle(facing2d, target2d);
@@ -2703,7 +2703,7 @@ sp<TileObjectProjectile> Vehicle::findClosestHostileMissile(GameState &state,
 			continue;
 		}
 #endif // ! DEBUG_ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE
-		// Check firing arc
+       // Check firing arc
 		if (type->type != VehicleType::Type::UFO && (arc.x < 8 || arc.y < 8))
 		{
 			auto facing = type->directionToVector(direction);
@@ -2793,7 +2793,7 @@ bool Vehicle::fireAtBuilding(GameState &state,
 		}
 		return true;
 	}
-return false;
+	return false;
 }
 
 void Vehicle::fireWeaponsManual(GameState &state, Vec2<int> arc)

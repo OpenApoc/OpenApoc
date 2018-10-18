@@ -22,7 +22,7 @@ static const std::tuple<AIDecision, bool> NULLTUPLE2 = std::make_tuple(AIDecisio
 static const std::tuple<AIDecision, float, unsigned> NULLTUPLE3 =
     std::make_tuple(AIDecision(), -FLT_MAX, 0);
 static const Vec3<int> NONE = {-1, -1, -1};
-}
+} // namespace
 
 /* AI LOGIC: attack()
 
@@ -136,12 +136,10 @@ UnitAIVanilla::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment>
 	}
 
 	float time = (float)payload->fire_delay / (float)u.fire_aiming_mode / (float)TICKS_PER_SECOND;
-	float cth = std::max(1.0f,
-	                     100.f -
-	                         (float)(100 -
-	                                 e->getAccuracy(u.target_body_state, u.current_movement_state,
-	                                                u.fire_aiming_mode)) *
-	                             distance / 40.0f);
+	float cth = std::max(
+	    1.0f, 100.f - (float)(100 - e->getAccuracy(u.target_body_state, u.current_movement_state,
+	                                               u.fire_aiming_mode)) *
+	                      distance / 40.0f);
 	float priority = cth * damage / time;
 
 	// Chance to advance is equal to chance to miss
@@ -1008,4 +1006,4 @@ void UnitAIVanilla::notifyEnemySpotted(Vec3<int> position)
 	enemySpotted = true;
 	lastSeenEnemyPosition = position;
 }
-}
+} // namespace OpenApoc

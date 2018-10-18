@@ -343,4 +343,4 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 
 	return p;
 }
-}
+} // namespace OpenApoc

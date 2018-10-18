@@ -30,4 +30,4 @@ class UnitAIHelper
 
 	static void ensureItemInSlot(GameState &state, sp<AEquipment> item, EquipmentSlotType slot);
 };
-}
+} // namespace OpenApoc

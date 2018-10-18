@@ -116,4 +116,4 @@ class DamageType : public StateObject
 
 	int dealDamage(int damage, StateRef<DamageModifier> modifier) const;
 };
-}
+} // namespace OpenApoc

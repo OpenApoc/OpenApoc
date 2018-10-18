@@ -45,4 +45,4 @@ void InitialGameStateExtractor::extractAnimationPackGun(sp<BattleUnitAnimationPa
 		}
 	}
 }
-}
+} // namespace OpenApoc

@@ -563,4 +563,4 @@ void MultilistBox::setFuncSelectionItemRender(std::function<void(sp<Control>)> f
 	funcSelectionItemRender = func;
 	setDirty();
 }
-}
+} // namespace OpenApoc

@@ -70,4 +70,4 @@ class RendererSurfaceBinding
 	~RendererSurfaceBinding();
 };
 
-}; // namespace openapoc
+}; // namespace OpenApoc

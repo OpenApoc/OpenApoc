@@ -130,4 +130,4 @@ class JukeBox
 	virtual void play(std::vector<UString> tracks, PlayMode mode = PlayMode::Loop) = 0;
 	virtual void stop() = 0;
 };
-};
+}; // namespace OpenApoc

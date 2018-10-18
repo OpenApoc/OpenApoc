@@ -129,23 +129,23 @@ class AEquipmentType : public StateObject
 	int accuracy = 0;
 
 	/* This is how many ticks it takes to fire a single shot.
-	*
-	* For fire rate displayed ingame (equipment screen), formula is 1000/FEDL
-	* For example:
-	* Ingame Toxigun has 125, in file it has 8, 125*8=1000.
-	* Ingame Minigun has 83, in file it has 12, 83*12=996. (rounding 1000/12 down makes it 83)
-	*
-	* For fire rate displayed ingame (ufopaedia screen), formula is 36/FEDL
-	* For example:
-	* Ingame Toxigun has 4.50r/s, in file it has 8, 36/8 = 4.5
-	* Ingame Minigun has 3.00r/s, in file it has 12, 36/12 = 3
-	*
-	* Fire rate expects game ticks to be 36 per second
-	* since we have 144 ticks per second, when using this multiply it by 4 to get actual amount
-	* of ticks required to fire
-	*
-	* Since playable alpha 0.1 this is already in OpenApoc ticks
-	*/
+	 *
+	 * For fire rate displayed ingame (equipment screen), formula is 1000/FEDL
+	 * For example:
+	 * Ingame Toxigun has 125, in file it has 8, 125*8=1000.
+	 * Ingame Minigun has 83, in file it has 12, 83*12=996. (rounding 1000/12 down makes it 83)
+	 *
+	 * For fire rate displayed ingame (ufopaedia screen), formula is 36/FEDL
+	 * For example:
+	 * Ingame Toxigun has 4.50r/s, in file it has 8, 36/8 = 4.5
+	 * Ingame Minigun has 3.00r/s, in file it has 12, 36/12 = 3
+	 *
+	 * Fire rate expects game ticks to be 36 per second
+	 * since we have 144 ticks per second, when using this multiply it by 4 to get actual amount
+	 * of ticks required to fire
+	 *
+	 * Since playable alpha 0.1 this is already in OpenApoc ticks
+	 */
 	int fire_delay = 0;
 	float getRoundsPerSecond() const;
 

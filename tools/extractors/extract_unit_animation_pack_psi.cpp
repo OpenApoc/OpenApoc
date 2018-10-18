@@ -89,4 +89,4 @@ void InitialGameStateExtractor::extractAnimationPackPsi(sp<BattleUnitAnimationPa
 	}
 	p->useFiringAnimationForPsi = true;
 }
-}
+} // namespace OpenApoc

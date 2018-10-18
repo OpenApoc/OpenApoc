@@ -80,4 +80,4 @@ void InitialGameStateExtractor::extractAnimationPackSpitter(
 		}
 	}
 }
-}
+} // namespace OpenApoc

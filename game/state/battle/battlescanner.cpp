@@ -118,4 +118,4 @@ void BattleScanner::notifyMovement(Vec3<int> position)
 	version++;
 	movementTicks[pos.y * MOTION_SCANNER_X + pos.x] = TICKS_SCANNER_REMAIN_LIT;
 }
-}
+} // namespace OpenApoc

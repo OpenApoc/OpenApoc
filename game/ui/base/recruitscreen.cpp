@@ -43,7 +43,7 @@ static const std::map<AgentType::Role, int> fireCost = {
     {AgentType::Role::BioChemist, FIRE_COST_BIO},
     {AgentType::Role::Physicist, FIRE_COST_PHYSIC},
     {AgentType::Role::Engineer, FIRE_COST_ENGI}};
-}
+} // namespace
 
 RecruitScreen::RecruitScreen(sp<GameState> state)
     : BaseStage(state), bigUnitRanks(getBigUnitRanks())

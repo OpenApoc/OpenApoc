@@ -831,4 +831,4 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Update both this unit's vision and other unit's vision of this unit
 	void refreshUnitVisibilityAndVision(GameState &state);
 };
-}
+} // namespace OpenApoc

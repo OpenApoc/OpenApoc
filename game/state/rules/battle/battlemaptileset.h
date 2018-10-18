@@ -23,4 +23,4 @@ class BattleMapTileset
 
 	static UString getTilesetPath();
 };
-}
+} // namespace OpenApoc

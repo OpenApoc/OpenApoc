@@ -122,4 +122,4 @@ int HazardType::getLifetime(GameState &state)
 {
 	return randBoundsInclusive(state.rng, 2 * minLifetime, 2 * maxLifetime);
 }
-}
+} // namespace OpenApoc

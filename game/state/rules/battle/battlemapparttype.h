@@ -135,4 +135,4 @@ class BattleMapPartType : public StateObject
 	// Destroyed ground replacement for level 0 grounds
 	StateRef<BattleMapPartType> destroyed_ground_tile;
 };
-}
+} // namespace OpenApoc

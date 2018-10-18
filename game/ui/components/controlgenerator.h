@@ -166,4 +166,4 @@ class OrganisationInfo
 	bool operator==(const OrganisationInfo &other) const;
 	bool operator!=(const OrganisationInfo &other) const;
 };
-}
+} // namespace OpenApoc

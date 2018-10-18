@@ -74,4 +74,4 @@ class GameTime
 
 	static GameTime midday();
 };
-}
+} // namespace OpenApoc

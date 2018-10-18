@@ -35,7 +35,7 @@ static const std::set<TileObject::Type> mapPartSet = {
     TileObject::Type::Ground, TileObject::Type::LeftWall, TileObject::Type::RightWall,
     TileObject::Type::Feature};
 static const std::set<TileObject::Type> unitSet = {TileObject::Type::Unit};
-}
+} // namespace
 
 namespace
 {
@@ -45,7 +45,7 @@ static const std::map<Vec2<int>, int> facing_dir_map = {{{0, -1}, 0}, {{1, -1}, 
 static const std::map<int, Vec2<int>> dir_facing_map = {{0, {0, -1}}, {1, {1, -1}}, {2, {1, 0}},
                                                         {3, {1, 1}},  {4, {0, 1}},  {5, {-1, 1}},
                                                         {6, {-1, 0}}, {7, {-1, -1}}};
-}
+} // namespace
 
 sp<BattleUnit> BattleUnit::get(const GameState &state, const UString &id)
 {
@@ -937,7 +937,8 @@ bool BattleUnit::hasLineToPosition(Vec3<float> targetPosition, bool useLOS) cons
 	// No map part blocks Line
 	return !cMap
 	       // No unit blocks Line
-	       && (!cUnit || owner->isRelatedTo(cUnit->owner) == Organisation::Relation::Hostile
+	       && (!cUnit ||
+	           owner->isRelatedTo(cUnit->owner) == Organisation::Relation::Hostile
 	           // If our head blocks brainsucker on it - no problem, hit will go versus brainsucker
 	           // anyway
 	           || cUnit->brainSucker);
@@ -2897,10 +2898,9 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 		{
 			if (flyingSpeedModifier != 100)
 			{
-				flyingSpeedModifier = std::min((unsigned)100,
-				                               flyingSpeedModifier +
-				                                   moveTicksRemaining / moveTicksConsumeRate /
-				                                       FLYING_ACCELERATION_DIVISOR);
+				flyingSpeedModifier = std::min(
+				    (unsigned)100, flyingSpeedModifier + moveTicksRemaining / moveTicksConsumeRate /
+				                                             FLYING_ACCELERATION_DIVISOR);
 			}
 			movementTicksAccumulated = moveTicksRemaining / moveTicksConsumeRate;
 			auto dir = glm::normalize(vectorToGoal);
@@ -2922,9 +2922,9 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 				movementTicksAccumulated = distanceToGoal;
 				if (flyingSpeedModifier != 100)
 				{
-					flyingSpeedModifier = std::min(
-					    (unsigned)100,
-					    flyingSpeedModifier + distanceToGoal / FLYING_ACCELERATION_DIVISOR);
+					flyingSpeedModifier =
+					    std::min((unsigned)100, flyingSpeedModifier +
+					                                distanceToGoal / FLYING_ACCELERATION_DIVISOR);
 				}
 				moveTicksRemaining -= distanceToGoal * moveTicksConsumeRate;
 				setPosition(state, goalPosition, true);
@@ -4048,9 +4048,9 @@ void BattleUnit::processExperience(GameState &state)
 	{
 		if (state.current_battle->mode == Battle::Mode::TurnBased)
 		{
-			agent->current_stats.reactions += rollForPrimaryStat(
-			    state,
-			    experiencePoints.reactions * agent->type->improvementPercentagePhysical / 100);
+			agent->current_stats.reactions +=
+			    rollForPrimaryStat(state, experiencePoints.reactions *
+			                                  agent->type->improvementPercentagePhysical / 100);
 		}
 		else
 		{
@@ -5822,4 +5822,4 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool t
 	}
 	return !mission->cancelled;
 }
-}
+} // namespace OpenApoc
