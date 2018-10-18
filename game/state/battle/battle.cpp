@@ -1099,7 +1099,7 @@ void Battle::initialUnitSpawn(GameState &state)
 		}
 		// Stance
 		u->setBodyState(state, u->agent->type->bodyType->getFirstAllowedState());
-		if (config().getBool("OpenApoc.NewFeature.RunAndKneel"))
+		if (config().getBool("OpenApoc.NewFeature.RunAndKneel") && u->owner == state.getPlayer())
 		{
 			u->setKneelingMode(KneelingMode::Kneeling);
 			u->setMovementMode(MovementMode::Running);
