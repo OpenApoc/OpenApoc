@@ -43,7 +43,7 @@ std::shared_future<void> loadBattleBuilding(sp<GameState> state, sp<Building> bu
 		    auto agents = playerAgents;
 		    Battle::beginBattle(*state, hotseat, org, agents, aliens, guards, civilians,
 		                        playerVehicle, bld);
-	    });
+		});
 	return loadTask;
 }
 } // namespace
@@ -201,11 +201,10 @@ void BuildingScreen::eventOccurred(Event *e)
 						bool hotseat = false;
 						fw().stageQueueCommand(
 						    {StageCmd::Command::REPLACEALL,
-						     mksp<BattleBriefing>(state, building->owner,
-						                          Building::getId(*state, building), inBuilding,
-						                          raid,
-						                          loadBattleBuilding(state, building, hotseat, raid,
-						                                             agents, vehicle))});
+						     mksp<BattleBriefing>(
+						         state, building->owner, Building::getId(*state, building),
+						         inBuilding, raid, loadBattleBuilding(state, building, hotseat,
+						                                              raid, agents, vehicle))});
 						return;
 					}
 				}

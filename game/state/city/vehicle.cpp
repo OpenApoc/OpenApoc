@@ -2703,7 +2703,7 @@ sp<TileObjectProjectile> Vehicle::findClosestHostileMissile(GameState &state,
 			continue;
 		}
 #endif // ! DEBUG_ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE
-       // Check firing arc
+		// Check firing arc
 		if (type->type != VehicleType::Type::UFO && (arc.x < 8 || arc.y < 8))
 		{
 			auto facing = type->directionToVector(direction);

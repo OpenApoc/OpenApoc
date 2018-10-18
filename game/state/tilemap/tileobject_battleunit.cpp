@@ -108,11 +108,11 @@ void TileObjectBattleUnit::draw(Renderer &r, TileTransform &transform, Vec2<floa
 			// 0 = friendly, 1 = enemy, 2 = neutral
 			int side_offset = friendly ? 0 : (hostile ? 1 : 2);
 			// Icon type, 0 = normal, 1 = prone, 2 = large
-			int icon_type = unit->isLarge() ? ICON_LARGE
-			                                : ((unit->current_body_state == BodyState::Prone ||
-			                                    unit->target_body_state == BodyState::Prone)
-			                                       ? ICON_PRONE
-			                                       : ICON_STANDART);
+			int icon_type =
+			    unit->isLarge() ? ICON_LARGE : ((unit->current_body_state == BodyState::Prone ||
+			                                     unit->target_body_state == BodyState::Prone)
+			                                        ? ICON_PRONE
+			                                        : ICON_STANDART);
 			// Unit facing, in game starts with north (0,-1) and goes clockwise, from 0 to 7
 			int facing_offset = offset_dir_map.at(unit->facing);
 			// Current level offset, 0 = current 1 = above 2 = below

@@ -241,7 +241,7 @@ void SaveMenu::loadWithWarning(sp<Control> parent)
 					     {
 						     return mksp<CityView>(state);
 					     }
-				     })});
+					 })});
 			});
 			sp<MessageBox> messageBox = mksp<MessageBox>(
 			    MessageBox("Load game", "Unsaved progress will be lost. Continue?",
@@ -272,7 +272,7 @@ void SaveMenu::tryToLoadGame(sp<Control> slotControl)
 				     {
 					     return mksp<CityView>(state);
 				     }
-			     })});
+				 })});
 		}
 	}
 }

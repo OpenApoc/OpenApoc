@@ -759,9 +759,8 @@ std::list<int> Battle::findLosBlockPath(int origin, int destination, BattleUnitT
 	}
 
 	auto startNode =
-	    new LosNode(0.0f,
-	                BattleUnitTileHelper::getDistanceStatic(blockCenterPos[type][origin],
-	                                                        blockCenterPos[type][destination]),
+	    new LosNode(0.0f, BattleUnitTileHelper::getDistanceStatic(
+	                          blockCenterPos[type][origin], blockCenterPos[type][destination]),
 	                nullptr, origin);
 	nodesToDelete.push_back(startNode);
 	fringe.emplace_back(startNode);
@@ -810,17 +809,17 @@ std::list<int> Battle::findLosBlockPath(int origin, int destination, BattleUnitT
 			float newNodeCost = nodeToExpand->costToGetHere;
 			newNodeCost += linkCost[type][i + j * lbCount];
 
-			auto newNode =
-			    new LosNode(newNodeCost,
-			                BattleUnitTileHelper::getDistanceStatic(
-			                    blockCenterPos[type][j], blockCenterPos[type][destination]),
-			                nodeToExpand, j);
+			auto newNode = new LosNode(
+			    newNodeCost, BattleUnitTileHelper::getDistanceStatic(
+			                     blockCenterPos[type][j], blockCenterPos[type][destination]),
+			    nodeToExpand, j);
 			nodesToDelete.push_back(newNode);
 
 			// Put node at appropriate place in the list
 			auto it = fringe.begin();
-			while (it != fringe.end() && ((*it)->costToGetHere + (*it)->distanceToGoal) <
-			                                 (newNode->costToGetHere + newNode->distanceToGoal))
+			while (it != fringe.end() &&
+			       ((*it)->costToGetHere + (*it)->distanceToGoal) <
+			           (newNode->costToGetHere + newNode->distanceToGoal))
 				it++;
 			fringe.emplace(it, newNode);
 		}
@@ -904,10 +903,7 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 	    {4, 0, 0},
 	};
 	static const std::map<Vec2<int>, int> rotationDiagonal = {
-	    {{1, -1}, 0},
-	    {{1, 1}, 1},
-	    {{-1, 1}, 2},
-	    {{-1, -1}, 3},
+	    {{1, -1}, 0}, {{1, 1}, 1}, {{-1, 1}, 2}, {{-1, -1}, 3},
 	};
 	static const std::list<Vec3<int>> targetOffsetsLinear = {
 	    // Two locations in the 1st back row
@@ -944,10 +940,7 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 	    {0, -4, 0},
 	};
 	static const std::map<Vec2<int>, int> rotationLinear = {
-	    {{0, -1}, 0},
-	    {{1, 0}, 1},
-	    {{0, 1}, 2},
-	    {{-1, 0}, 3},
+	    {{0, -1}, 0}, {{1, 0}, 1}, {{0, 1}, 2}, {{-1, 0}, 3},
 	};
 
 	if (selectedUnits.empty())
@@ -1077,7 +1070,7 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 		               a->agent->modified_stats.getActualSpeedValue() <
 		           h.getDistance((Vec3<int>)b->position, targetLocation) /
 		               b->agent->modified_stats.getActualSpeedValue();
-	    });
+		});
 
 	// Path every other unit to areas around target
 	log += format("\nTarget location is now %d, %d, %d. Leader is %s", targetLocation.x,
@@ -1109,9 +1102,9 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 			log += format("\nTrying location %d, %d, %d at offset %d, %d, %d",
 			              targetLocationOffsetted.x, targetLocationOffsetted.y,
 			              targetLocationOffsetted.z, offset.x, offset.y, offset.z);
-			float costLimit = 1.50f * 2.0f *
-			                  (float)(std::max(std::abs(offset.x), std::abs(offset.y)) +
-			                          std::abs(offset.x) + std::abs(offset.y));
+			float costLimit =
+			    1.50f * 2.0f * (float)(std::max(std::abs(offset.x), std::abs(offset.y)) +
+			                           std::abs(offset.x) + std::abs(offset.y));
 			auto path =
 			    map->findShortestPath(targetLocation, targetLocationOffsetted, costLimit / 2.0f, h,
 			                          false, true, true, false, nullptr, costLimit);
@@ -1366,8 +1359,9 @@ std::list<Vec3<int>> City::findShortestPath(Vec3<int> origin, Vec3<int> destinat
 
 			// Put node at appropriate place in the list
 			auto it = fringe.begin();
-			while (it != fringe.end() && ((*it)->costToGetHere + (*it)->distanceToGoal) <
-			                                 (newNode->costToGetHere + newNode->distanceToGoal))
+			while (it != fringe.end() &&
+			       ((*it)->costToGetHere + (*it)->distanceToGoal) <
+			           (newNode->costToGetHere + newNode->distanceToGoal))
 				it++;
 			fringe.emplace(it, newNode);
 		}
@@ -1592,10 +1586,7 @@ void City::groupMove(GameState &state, std::list<StateRef<Vehicle>> &selectedVeh
 	    {4, 0, 0},
 	};
 	static const std::map<Vec2<int>, int> rotationDiagonal = {
-	    {{1, -1}, 0},
-	    {{1, 1}, 1},
-	    {{-1, 1}, 2},
-	    {{-1, -1}, 3},
+	    {{1, -1}, 0}, {{1, 1}, 1}, {{-1, 1}, 2}, {{-1, -1}, 3},
 	};
 	static const std::list<Vec3<int>> targetOffsetsLinear = {
 	    {0, 0, 0},
@@ -1633,10 +1624,7 @@ void City::groupMove(GameState &state, std::list<StateRef<Vehicle>> &selectedVeh
 	    {0, -4, 0},
 	};
 	static const std::map<Vec2<int>, int> rotationLinear = {
-	    {{0, -1}, 0},
-	    {{1, 0}, 1},
-	    {{0, 1}, 2},
-	    {{-1, 0}, 3},
+	    {{0, -1}, 0}, {{1, 0}, 1}, {{0, 1}, 2}, {{-1, 0}, 3},
 	};
 
 	if (selectedVehicles.empty())

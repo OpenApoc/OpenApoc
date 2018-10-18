@@ -143,15 +143,12 @@ float AgentTileHelper::getDistance(Vec3<float> from, Vec3<float> toStart, Vec3<f
 {
 	auto diffStart = toStart - from;
 	auto diffEnd = toEnd - from - Vec3<float>{1.0f, 1.0f, 1.0f};
-	auto xDiff = from.x >= toStart.x && from.x < toEnd.x
-	                 ? 0.0f
-	                 : std::min(std::abs(diffStart.x), std::abs(diffEnd.x));
-	auto yDiff = from.y >= toStart.y && from.y < toEnd.y
-	                 ? 0.0f
-	                 : std::min(std::abs(diffStart.y), std::abs(diffEnd.y));
-	auto zDiff = from.z >= toStart.z && from.z < toEnd.z
-	                 ? 0.0f
-	                 : std::min(std::abs(diffStart.z), std::abs(diffEnd.z));
+	auto xDiff = from.x >= toStart.x && from.x < toEnd.x ? 0.0f : std::min(std::abs(diffStart.x),
+	                                                                       std::abs(diffEnd.x));
+	auto yDiff = from.y >= toStart.y && from.y < toEnd.y ? 0.0f : std::min(std::abs(diffStart.y),
+	                                                                       std::abs(diffEnd.y));
+	auto zDiff = from.z >= toStart.z && from.z < toEnd.z ? 0.0f : std::min(std::abs(diffStart.z),
+	                                                                       std::abs(diffEnd.z));
 	return xDiff + yDiff + zDiff;
 }
 

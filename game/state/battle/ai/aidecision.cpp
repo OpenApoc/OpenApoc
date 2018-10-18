@@ -62,9 +62,8 @@ bool AIAction::inProgressInternal(BattleUnit &u)
 			return !u.missions.empty() &&
 			       u.missions.front()->type == BattleUnitMission::Type::ThrowItem;
 		case AIAction::Type::AttackWeaponTile:
-			return u.isAttacking() &&
-			       (u.targetingMode == BattleUnit::TargetingMode::TileCenter ||
-			        u.targetingMode == BattleUnit::TargetingMode::TileGround) &&
+			return u.isAttacking() && (u.targetingMode == BattleUnit::TargetingMode::TileCenter ||
+			                           u.targetingMode == BattleUnit::TargetingMode::TileGround) &&
 			       u.targetTile == targetLocation;
 		case AIAction::Type::AttackWeaponUnit:
 			return u.isAttacking() && u.targetingMode == BattleUnit::TargetingMode::Unit &&

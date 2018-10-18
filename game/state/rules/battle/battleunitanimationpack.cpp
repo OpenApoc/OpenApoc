@@ -61,7 +61,8 @@ BattleUnitAnimationPack::AnimationEntry::Frame::InfoBlock::InfoBlock(int index, 
     : // We're used to subtracting offests from positions, but vanilla uses an offset that should be
       // added
       // therefore, we flip the sign here
-      index(index), offset(Vec2<float>{-offset_x, -offset_y})
+      index(index),
+      offset(Vec2<float>{-offset_x, -offset_y})
 {
 }
 

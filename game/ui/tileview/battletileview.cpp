@@ -1177,8 +1177,9 @@ void BattleTileView::render()
 					if (battle.mode == Battle::Mode::TurnBased)
 					{
 						auto &img = tuIndicators[u.second->agent->modified_stats.time_units];
-						r.draw(img, pos + offset + offsetTU -
-						                Vec2<float>{img->size.x / 2, img->size.y / 2});
+						r.draw(img,
+						       pos + offset + offsetTU -
+						           Vec2<float>{img->size.x / 2, img->size.y / 2});
 					}
 
 					for (auto &t : u.second->visibleEnemies)

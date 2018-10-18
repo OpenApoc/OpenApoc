@@ -511,8 +511,9 @@ sp<TileObjectBattleUnit> Tile::getUnitIfPresent(bool onlyConscious, bool mustOcc
 			auto unitTileObject = std::static_pointer_cast<TileObjectBattleUnit>(o);
 			auto unit = unitTileObject->getUnit();
 			if ((onlyConscious && !unit->isConscious()) || (exceptThis == unitTileObject) ||
-			    (mustOccupy && unitTileObject->occupiedTiles.find(position) ==
-			                       unitTileObject->occupiedTiles.end()) ||
+			    (mustOccupy &&
+			     unitTileObject->occupiedTiles.find(position) ==
+			         unitTileObject->occupiedTiles.end()) ||
 			    (mustBeStatic && !unit->isStatic()) || (onlyLarge && !unit->isLarge()))
 			{
 				continue;
@@ -563,8 +564,9 @@ std::list<sp<BattleUnit>> Tile::getUnits(bool onlyConscious, bool mustOccupy, bo
 			auto unitTileObject = std::static_pointer_cast<TileObjectBattleUnit>(o);
 			auto unit = unitTileObject->getUnit();
 			if ((onlyConscious && !unit->isConscious()) || (exceptThis == unitTileObject) ||
-			    (mustOccupy && unitTileObject->occupiedTiles.find(position) ==
-			                       unitTileObject->occupiedTiles.end()) ||
+			    (mustOccupy &&
+			     unitTileObject->occupiedTiles.find(position) ==
+			         unitTileObject->occupiedTiles.end()) ||
 			    (mustBeStatic && !unit->isStatic()) || (onlyLarge && !unit->isLarge()))
 			{
 				continue;

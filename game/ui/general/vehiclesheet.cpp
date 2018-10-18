@@ -103,8 +103,8 @@ void VehicleSheet::displayImplementation(sp<Vehicle> vehicle, sp<VehicleType> ve
 	    ->setText(
 	        format("%d", vehicle ? vehicle->getTopSpeed() : vehicleType->getTopSpeed(it1, it2)));
 	form->findControlTyped<Label>("LABEL_5_R")
-	    ->setText(format("%d", vehicle ? vehicle->getAcceleration()
-	                                   : vehicleType->getAcceleration(it1, it2)));
+	    ->setText(format(
+	        "%d", vehicle ? vehicle->getAcceleration() : vehicleType->getAcceleration(it1, it2)));
 	form->findControlTyped<Label>("LABEL_6_R")
 	    ->setText(format("%d", vehicle ? vehicle->getWeight() : vehicleType->getWeight(it1, it2)));
 	form->findControlTyped<Label>("LABEL_7_R")

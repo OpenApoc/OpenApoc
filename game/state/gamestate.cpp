@@ -507,11 +507,10 @@ void GameState::fillOrgStartingProperty()
 		o.second->updateHirableAgents(*this);
 		for (auto &m : o.second->missions[{this, "CITYMAP_HUMAN"}])
 		{
-			m.next +=
-			    gameTime.getTicks() +
-			    randBoundsInclusive(rng, (uint64_t)0,
-			                        m.pattern.maxIntervalRepeat - m.pattern.minIntervalRepeat) -
-			    m.pattern.minIntervalRepeat / 2;
+			m.next += gameTime.getTicks() + randBoundsInclusive(rng, (uint64_t)0,
+			                                                    m.pattern.maxIntervalRepeat -
+			                                                        m.pattern.minIntervalRepeat) -
+			          m.pattern.minIntervalRepeat / 2;
 		}
 	}
 }

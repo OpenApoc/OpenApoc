@@ -1042,8 +1042,7 @@ std::list<RawImage> rawFiles = {
 };
 
 std::list<UString> loftempFiles = {
-    "xcom3/ufodata/loftemps",
-    "xcom3/tacdata/loftemps",
+    "xcom3/ufodata/loftemps", "xcom3/tacdata/loftemps",
 };
 
 namespace fs = fs;

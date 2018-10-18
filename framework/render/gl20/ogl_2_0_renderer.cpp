@@ -353,10 +353,8 @@ class Quad
 	     const Vec2<float> &rotationCenter = {0.0f, 0.0f}, float rotationAngleRadians = 0.0f)
 	{
 		texcoords = {{
-		    Vec2<float>{texCoords.p0},
-		    Vec2<float>{texCoords.p1.x, texCoords.p0.y},
-		    Vec2<float>{texCoords.p0.x, texCoords.p1.y},
-		    Vec2<float>{texCoords.p1},
+		    Vec2<float>{texCoords.p0}, Vec2<float>{texCoords.p1.x, texCoords.p0.y},
+		    Vec2<float>{texCoords.p0.x, texCoords.p1.y}, Vec2<float>{texCoords.p1},
 		}};
 
 		if (rotationAngleRadians != 0.0f)
@@ -364,9 +362,7 @@ class Quad
 			auto rotMatrix = glm::rotate(rotationAngleRadians, Vec3<float>{0.0f, 0.0f, 1.0f});
 			Vec2<float> size = position.p1 - position.p0;
 			vertices = {{
-			    Vec2<float>{0.0f, 0.0f},
-			    Vec2<float>{size.x, 0.0f},
-			    Vec2<float>{0.0f, size.y},
+			    Vec2<float>{0.0f, 0.0f}, Vec2<float>{size.x, 0.0f}, Vec2<float>{0.0f, size.y},
 			    Vec2<float>{size},
 			}};
 			for (auto &p : vertices)
@@ -382,10 +378,8 @@ class Quad
 		else
 		{
 			vertices = {{
-			    Vec2<float>{position.p0},
-			    Vec2<float>{position.p1.x, position.p0.y},
-			    Vec2<float>{position.p0.x, position.p1.y},
-			    Vec2<float>{position.p1},
+			    Vec2<float>{position.p0}, Vec2<float>{position.p1.x, position.p0.y},
+			    Vec2<float>{position.p0.x, position.p1.y}, Vec2<float>{position.p1},
 			}};
 		}
 	}
@@ -891,9 +885,7 @@ class OGL20Renderer : public Renderer
 		this->drawFilledRect(C, sizeC, c);
 		this->drawFilledRect(D, sizeD, c);
 	}
-	void flush() override
-	{ /* Nothing to flush */
-	}
+	void flush() override { /* Nothing to flush */}
 	UString getName() override { return "OGL2.0 Renderer"; }
 	sp<Surface> getDefaultSurface() override { return this->defaultSurface; }
 
