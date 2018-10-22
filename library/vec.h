@@ -2,6 +2,8 @@
 
 /* GLM_GTX_transform is an experimental extension now, apparently */
 #define GLM_ENABLE_EXPERIMENTAL
+/* Force zero arg constructors to init to zeros */
+#define GLM_FORCE_CTOR_INIT
 
 #define GLM_FORCE_RADIANS
 #include <glm/vec2.hpp>
