@@ -75,4 +75,4 @@ void InitialGameStateExtractor::extractAnimationPackCiv(sp<BattleUnitAnimationPa
 		}
 	}
 }
-}
+} // namespace OpenApoc

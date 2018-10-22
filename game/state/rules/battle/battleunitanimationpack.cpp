@@ -455,4 +455,4 @@ void BattleUnitAnimationPack::drawUnit(
 		}
 	}
 }
-}
+} // namespace OpenApoc

@@ -74,4 +74,4 @@ class RawSampleLoaderFactory : public SampleLoaderFactory
 namespace OpenApoc
 {
 SampleLoaderFactory *getRAWSampleLoaderFactory() { return new RawSampleLoaderFactory(); }
-}
+} // namespace OpenApoc

@@ -133,4 +133,4 @@ void InitialGameStateExtractor::extractAnimationPackMega(sp<BattleUnitAnimationP
 	}
 	p->hasAlternativeFiringAnimations = true;
 }
-}
+} // namespace OpenApoc

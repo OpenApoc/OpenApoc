@@ -26,4 +26,4 @@ sp<VAmmoType> VAmmoType::get(const GameState &state, const UString &id)
 	}
 	return it->second;
 }
-}
+} // namespace OpenApoc

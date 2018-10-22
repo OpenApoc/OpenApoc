@@ -442,4 +442,4 @@ const UString &SaveMetadata::getFile() const { return file; }
 const UString &SaveMetadata::getDifficulty() const { return difficulty; }
 const SaveType &SaveMetadata::getType() const { return type; }
 uint64_t SaveMetadata::getGameTicks() const { return gameTicks; }
-}
+} // namespace OpenApoc

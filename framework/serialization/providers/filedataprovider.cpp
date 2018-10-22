@@ -44,4 +44,4 @@ bool FileDataProvider::saveDocument(const UString &path, const UString &contents
 	return !out.bad();
 }
 bool FileDataProvider::finalizeSave() { return true; }
-}
+} // namespace OpenApoc

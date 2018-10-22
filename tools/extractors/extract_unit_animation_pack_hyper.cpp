@@ -82,4 +82,4 @@ void InitialGameStateExtractor::extractAnimationPackHyper(
 		}
 	}
 }
-}
+} // namespace OpenApoc

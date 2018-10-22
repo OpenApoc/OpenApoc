@@ -79,4 +79,4 @@ void AIBlockTactical::beginTurnRoutine(GameState &state, StateRef<Organisation> 
 		aiList[org]->beginTurnRoutine(state, org);
 	}
 }
-}
+} // namespace OpenApoc

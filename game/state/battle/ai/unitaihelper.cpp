@@ -268,4 +268,4 @@ sp<AIMovement> UnitAIHelper::getPursueMovement(GameState &state, BattleUnit &u, 
 
 	return result;
 }
-}
+} // namespace OpenApoc

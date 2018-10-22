@@ -99,4 +99,4 @@ void InitialGameStateExtractor::extractAnimationPackBsk(sp<BattleUnitAnimationPa
 	                          BodyState::Throwing, BodyState::Standing}][{0, 1}] =
 	    getAnimationEntry(dataAD, dataUA, dataUF, 1, {0, 1});
 }
-}
+} // namespace OpenApoc

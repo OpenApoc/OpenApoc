@@ -85,7 +85,7 @@ int getCorridorSectorID(sp<Base> base, Vec2<int> pos)
 		return TILE_CORRIDORS.at({north, south, west, east}) - 3 + 15;
 	}
 }
-}
+} // namespace
 
 BattleMap::BattleMap() {}
 
@@ -577,7 +577,7 @@ bool placeSector(GameState &state, std::vector<sp<BattleMapSector>> &sec_map,
 	}
 	return false;
 }
-} // anonymous-namespace
+} // namespace
 
 bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int> &size,
                             GameState &state, GenerationSize genSize)
@@ -1593,4 +1593,4 @@ void BattleMap::unloadTilesets(GameState &state)
 	state.battleMapTiles.clear();
 	LogInfo("Unloaded all tilesets.");
 }
-}
+} // namespace OpenApoc

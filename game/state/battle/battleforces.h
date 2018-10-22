@@ -26,4 +26,4 @@ class BattleSquad
 	int getNumUnits();
 	BattleSquad();
 };
-}
+} // namespace OpenApoc

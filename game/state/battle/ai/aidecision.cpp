@@ -202,4 +202,4 @@ UString AIDecision::getName()
 }
 
 bool AIDecision::isEmpty() { return !action && !movement; }
-}
+} // namespace OpenApoc

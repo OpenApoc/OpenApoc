@@ -382,7 +382,6 @@ BattleView::BattleView(sp<GameState> gameState)
 				    setLayerDrawingMode(LayerDrawingMode::OnlyCurrentLevel);
 				    break;
 		    }
-
 		});
 
 	baseForm->findControl("BUTTON_CEASE_FIRE")

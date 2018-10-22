@@ -35,7 +35,7 @@ static const std::set<TileObject::Type> mapPartSet = {
     TileObject::Type::Ground, TileObject::Type::LeftWall, TileObject::Type::RightWall,
     TileObject::Type::Feature};
 static const std::set<TileObject::Type> unitSet = {TileObject::Type::Unit};
-}
+} // namespace
 
 namespace
 {
@@ -45,7 +45,7 @@ static const std::map<Vec2<int>, int> facing_dir_map = {{{0, -1}, 0}, {{1, -1}, 
 static const std::map<int, Vec2<int>> dir_facing_map = {{0, {0, -1}}, {1, {1, -1}}, {2, {1, 0}},
                                                         {3, {1, 1}},  {4, {0, 1}},  {5, {-1, 1}},
                                                         {6, {-1, 0}}, {7, {-1, -1}}};
-}
+} // namespace
 
 sp<BattleUnit> BattleUnit::get(const GameState &state, const UString &id)
 {
@@ -5822,4 +5822,4 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool t
 	}
 	return !mission->cancelled;
 }
-}
+} // namespace OpenApoc

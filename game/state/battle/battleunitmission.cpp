@@ -28,7 +28,7 @@ static const std::map<int, Vec2<int>> dir_facing_map = {{0, {0, -1}}, {1, {1, -1
 static const std::list<Vec3<float>> angles = {
     {0, -1, 0}, {1, -1, 0}, {1, 0, 0}, {1, 1, 0}, {0, 1, 0}, {-1, 1, 0}, {-1, 0, 0}, {-1, -1, 0},
 };
-}
+} // namespace
 
 BattleUnitTileHelper::BattleUnitTileHelper(TileMap &map, BattleUnitType type, bool allowJumping)
     : BattleUnitTileHelper(

@@ -27,4 +27,4 @@ class BattleCommonSampleList
 	sp<std::list<sp<Sample>>> psiSuccessSounds;
 	sp<std::list<sp<Sample>>> psiFailSounds;
 };
-}
+} // namespace OpenApoc

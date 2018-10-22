@@ -788,4 +788,4 @@ bool OrganisationInfo::operator==(const OrganisationInfo &other) const
 	return (this->organisation == other.organisation && this->selected == other.selected);
 }
 bool OrganisationInfo::operator!=(const OrganisationInfo &other) const { return !(*this == other); }
-}
+} // namespace OpenApoc

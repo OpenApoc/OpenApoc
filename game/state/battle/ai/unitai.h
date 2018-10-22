@@ -68,4 +68,4 @@ class AIBlockUnit
 	void notifyHit(Vec3<int> position);
 	void notifyEnemySpotted(Vec3<int> position);
 };
-}
+} // namespace OpenApoc

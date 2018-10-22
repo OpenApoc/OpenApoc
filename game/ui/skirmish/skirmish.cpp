@@ -137,7 +137,7 @@ std::shared_future<void> loadBattleVehicle(bool hotseat, sp<VehicleType> vehicle
 
 	return loadTask;
 }
-}
+} // namespace
 
 Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmish")), state(*state)
 {
@@ -731,4 +731,4 @@ void Skirmish::render()
 }
 
 bool Skirmish::isTransition() { return false; }
-}
+} // namespace OpenApoc

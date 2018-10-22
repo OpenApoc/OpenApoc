@@ -577,7 +577,7 @@ class CueIO
 		// we have to make the buffer seekable
 		char *bufWrite = (char *)buf;
 #if 0 // FIXME: This code won't work, actually.
-        // If the data is "cooked", just read it.
+      // If the data is "cooked", just read it.
         if (trackMode == CUE_TrackMode::MODE1_2048 ||
             trackMode == CUE_TrackMode::MODE2_2048)
         {
@@ -1236,4 +1236,4 @@ void parseCueFile(UString fileName)
 }
 
 PHYSFS_Archiver *getCueArchiver() { return CueArchiver::createArchiver(); }
-}
+} // namespace OpenApoc

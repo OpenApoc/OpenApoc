@@ -99,4 +99,4 @@ void InitialGameStateExtractor::extractAnimationPackChrysalis(sp<BattleUnitAnima
 {
 	extractAnimationPackChrysalisInternal(p, first);
 }
-}
+} // namespace OpenApoc

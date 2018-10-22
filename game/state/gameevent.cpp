@@ -393,4 +393,4 @@ GameSomethingDiedEvent::GameSomethingDiedEvent(GameEventType type, UString name,
 	}
 }
 UString GameSomethingDiedEvent::message() { return messageInner; }
-}
+} // namespace OpenApoc

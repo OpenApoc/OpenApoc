@@ -166,4 +166,4 @@ void TileObjectBattleMapPart::addToDrawnTiles(Tile *tile)
 	}
 	TileObject::addToDrawnTiles(tile);
 }
-}
+} // namespace OpenApoc

@@ -56,14 +56,12 @@ BattlePreStart::BattlePreStart(sp<GameState> state)
 
 	menuform->findControlTyped<GraphicButton>("BUTTON_EQUIP")
 	    ->addCallback(FormEventType::ButtonClick, [this, state](Event *) {
-
 		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<AEquipScreen>(state)});
 		});
 	formAgentStats = menuform->findControlTyped<Form>("AGENT_STATS_VIEW");
 	formAgentStats->setVisible(false);
 	menuform->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick, [this, state](Event *) {
-
 		    auto gameState = this->state;
 
 		    fw().stageQueueCommand(

@@ -20,7 +20,6 @@ std::shared_future<void> loadBattleBase(sp<GameState> state, StateRef<Base> base
                                         StateRef<Organisation> attacker)
 {
 	auto loadTask = fw().threadPoolEnqueue([base, state, attacker]() -> void {
-
 		std::list<StateRef<Agent>> agents;
 		StateRef<Vehicle> veh = {};
 
@@ -35,7 +34,7 @@ std::shared_future<void> loadBattleBase(sp<GameState> state, StateRef<Base> base
 
 	return loadTask;
 }
-}
+} // namespace
 
 BaseDefenseScreen::BaseDefenseScreen(sp<GameState> state, StateRef<Base> base,
                                      StateRef<Organisation> attacker)

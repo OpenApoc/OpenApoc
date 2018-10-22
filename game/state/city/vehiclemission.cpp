@@ -51,7 +51,7 @@ static const std::map<UString, std::pair<unsigned, unsigned>> selfDestructTimer 
     {"VEHICLETYPE_ALIEN_ESCORT", {15 / 5 * TICKS_PER_MINUTE, 120 / 5 * TICKS_PER_MINUTE}},
     {"VEHICLETYPE_ALIEN_BATTLESHIP", {60 / 5 * TICKS_PER_MINUTE, 240 / 5 * TICKS_PER_MINUTE}},
     {"VEHICLETYPE_ALIEN_MOTHERSHIP", {60 / 5 * TICKS_PER_MINUTE, 240 / 5 * TICKS_PER_MINUTE}}};
-}
+} // namespace
 
 FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, Vehicle &v)
     : FlyingVehicleTileHelper(map, *v.type, v.crashed, (int)v.altitude)

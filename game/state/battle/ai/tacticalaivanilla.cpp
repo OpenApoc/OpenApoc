@@ -206,4 +206,4 @@ TacticalAIVanilla::getPatrolMovement(GameState &state, BattleUnit &u)
 
 	return std::make_tuple(units, result);
 }
-}
+} // namespace OpenApoc

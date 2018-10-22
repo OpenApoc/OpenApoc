@@ -1705,12 +1705,12 @@ void CityView::update()
 			ticks = 0;
 			break;
 		/* POSSIBLE FIXME: 'vanilla' apoc appears to implement Speed1 as 1/2 speed - that is
-		    * only
-		    * every other call calls the update loop, meaning that the later update tick counts are
-		    * halved as well.
-		    * This effectively means that all openapoc tick counts count for 1/2 the value of
-		    * vanilla
-		    * apoc ticks */
+		 * only
+		 * every other call calls the update loop, meaning that the later update tick counts are
+		 * halved as well.
+		 * This effectively means that all openapoc tick counts count for 1/2 the value of
+		 * vanilla
+		 * apoc ticks */
 		case CityUpdateSpeed::Speed1:
 			ticks = 1;
 			break;
@@ -2162,7 +2162,6 @@ void CityView::update()
 					    StateRef<Agent>{state.get(), Agent::getId(*state, agent)},
 					    Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
 					    CitySelectionState::Normal);
-
 				});
 				if (currentAgentIndex >= ownedSoldierInfoList.size())
 				{
@@ -2291,7 +2290,6 @@ void CityView::update()
 					    StateRef<Agent>{state.get(), Agent::getId(*state, agent)},
 					    Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
 					    CitySelectionState::Normal);
-
 				});
 				if (currentAgentIndex >= ownedBioInfoList.size())
 				{
@@ -2423,7 +2421,6 @@ void CityView::update()
 					    StateRef<Agent>{state.get(), Agent::getId(*state, agent)},
 					    Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
 					    CitySelectionState::Normal);
-
 				});
 				if (currentAgentIndex >= ownedEngineerInfoList.size())
 				{
@@ -2552,7 +2549,6 @@ void CityView::update()
 					    StateRef<Agent>{state.get(), Agent::getId(*state, agent)},
 					    Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
 					    CitySelectionState::Normal);
-
 				});
 				if (currentAgentIndex >= ownedPhysicsInfoList.size())
 				{

@@ -51,4 +51,4 @@ class FacilityType : public StateObject
 
 	bool isVisible() const;
 };
-};
+}; // namespace OpenApoc

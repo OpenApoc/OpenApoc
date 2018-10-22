@@ -28,4 +28,4 @@ class BattleUnitImagePack : public StateObject
 
 	static UString getImagePackPath();
 };
-}
+} // namespace OpenApoc

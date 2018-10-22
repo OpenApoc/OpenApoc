@@ -8,7 +8,7 @@ namespace OpenApoc
 /*
  * Implements some static methods to display the stat sheet for an agent equipment item/itemtype
  * To be used in agent equipment and transaction screens (maybe ufopaedia as well?)
-*/
+ */
 class AgentSheet
 {
   public:

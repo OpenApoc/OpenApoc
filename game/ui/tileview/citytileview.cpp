@@ -1080,4 +1080,4 @@ void CityTileView::update()
 		}
 	}
 }
-}
+} // namespace OpenApoc

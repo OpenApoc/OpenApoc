@@ -164,4 +164,4 @@ class GameLocationEvent : public GameEvent
 	GameLocationEvent(GameEventType type, Vec3<int> location);
 	~GameLocationEvent() override = default;
 };
-}
+} // namespace OpenApoc

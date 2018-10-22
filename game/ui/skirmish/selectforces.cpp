@@ -384,4 +384,4 @@ void SelectForces::render()
 }
 
 bool SelectForces::isTransition() { return false; }
-}
+} // namespace OpenApoc

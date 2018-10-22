@@ -2027,4 +2027,4 @@ void City::fillRoadSegmentMap(GameState &state)
 	}
 	LogWarning("Finished filling road segment map");
 }
-}
+} // namespace OpenApoc

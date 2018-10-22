@@ -1621,7 +1621,7 @@ void BattleTileView::resetPathPreview()
 		pathPreview.clear();
 	}
 }
-}
+} // namespace OpenApoc
 
 // Alexey Andronov (Istrebitel)
 // A different algorithm is required in order to properly display big units.

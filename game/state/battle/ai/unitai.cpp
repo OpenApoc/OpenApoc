@@ -193,4 +193,4 @@ void AIBlockUnit::notifyEnemySpotted(Vec3<int> position)
 		ai->notifyEnemySpotted(position);
 	}
 }
-}
+} // namespace OpenApoc

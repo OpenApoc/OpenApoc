@@ -126,4 +126,4 @@ void InitialGameStateExtractor::extractAnimationPackEgg(sp<BattleUnitAnimationPa
 {
 	extractAnimationPackEggInternal(p, first);
 }
-}
+} // namespace OpenApoc

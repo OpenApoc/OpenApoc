@@ -234,4 +234,4 @@ void InitialGameStateExtractor::extractSharedBattleResources(GameState &state) c
 	state.battle_common_sample_list->throwSounds.push_back(
 	    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/throw2.raw:22050"));
 }
-}
+} // namespace OpenApoc

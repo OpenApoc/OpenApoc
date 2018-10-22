@@ -83,10 +83,10 @@ class ApocDateFacet : public date_facet<date_type, CharT, OutItrT>
 template <class date_type, class CharT, class OutItrT>
 const typename ApocDateFacet<date_type, CharT, OutItrT>::char_type
     ApocDateFacet<date_type, CharT, OutItrT>::long_day_format[3] = {'%', 'E'};
-}
+} // namespace date_time
 
 namespace gregorian
 {
 typedef boost::date_time::ApocDateFacet<date, char> apoc_date_facet;
 }
-}
+} // namespace boost

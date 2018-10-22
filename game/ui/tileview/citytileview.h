@@ -73,4 +73,4 @@ class CityTileView : public TileView
 	Colour alienDetectionColour;
 	float alienDetectionThickness;
 };
-}
+} // namespace OpenApoc

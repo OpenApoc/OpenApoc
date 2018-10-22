@@ -18,4 +18,4 @@ class FileDataProvider : public SerializationDataProvider
 	bool saveDocument(const UString &path, const UString &contents) override;
 	bool finalizeSave() override;
 };
-}
+} // namespace OpenApoc

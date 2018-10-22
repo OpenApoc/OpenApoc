@@ -123,4 +123,4 @@ class BattleMapPart : public SupportedMapPart, public std::enable_shared_from_th
 	int getType() const override;
 	UString getSupportString() const override;
 };
-}
+} // namespace OpenApoc

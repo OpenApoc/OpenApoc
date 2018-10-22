@@ -12,7 +12,7 @@ namespace OpenApoc
  * Implements some static methods to display the stat sheet for a vehicle, vehicle type, vehicle
  * equipment, vehicle equipment type
  * To be used in vehicle equipment and transaction screens (maybe ufopaedia as well?)
-*/
+ */
 class VehicleSheet
 {
   public:

@@ -80,4 +80,4 @@ class UnitAIVanilla : public UnitAI
 	std::tuple<AIDecision, float, unsigned> getBrainsuckerDecision(GameState &state, BattleUnit &u);
 	std::tuple<AIDecision, float, unsigned> getSuicideDecision(GameState &state, BattleUnit &u);
 };
-}
+} // namespace OpenApoc

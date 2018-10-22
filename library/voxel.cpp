@@ -167,4 +167,4 @@ bool VoxelSlice::isEmpty() const
 	return true;
 }
 
-} // namesapce OpenApoc
+} // namespace OpenApoc

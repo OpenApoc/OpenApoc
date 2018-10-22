@@ -114,4 +114,4 @@ class MultilistBox : public Control
 		return removeItem(Item);
 	}
 };
-}
+} // namespace OpenApoc

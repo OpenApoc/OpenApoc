@@ -22,7 +22,7 @@ static const std::tuple<AIDecision, bool> NULLTUPLE2 = std::make_tuple(AIDecisio
 static const std::tuple<AIDecision, float, unsigned> NULLTUPLE3 =
     std::make_tuple(AIDecision(), -FLT_MAX, 0);
 static const Vec3<int> NONE = {-1, -1, -1};
-}
+} // namespace
 
 /* AI LOGIC: attack()
 
@@ -1008,4 +1008,4 @@ void UnitAIVanilla::notifyEnemySpotted(Vec3<int> position)
 	enemySpotted = true;
 	lastSeenEnemyPosition = position;
 }
-}
+} // namespace OpenApoc

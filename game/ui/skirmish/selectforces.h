@@ -40,4 +40,4 @@ class SelectForces : public Stage
 	void render() override;
 	bool isTransition() override;
 };
-}
+} // namespace OpenApoc

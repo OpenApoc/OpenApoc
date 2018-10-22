@@ -14,4 +14,4 @@ class ResObject
 	bool operator!=(const ResObject &other) const { return !(*this == other); }
 };
 
-} // namespace OpenApoc;
+} // namespace OpenApoc

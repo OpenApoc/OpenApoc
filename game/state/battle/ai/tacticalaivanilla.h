@@ -17,4 +17,4 @@ class TacticalAIVanilla : public TacticalAI
 	std::tuple<std::list<StateRef<BattleUnit>>, sp<AIMovement>> getPatrolMovement(GameState &state,
 	                                                                              BattleUnit &u);
 };
-}
+} // namespace OpenApoc

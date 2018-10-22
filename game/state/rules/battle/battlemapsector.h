@@ -84,4 +84,4 @@ class BattleMapSectorTiles
 	// high level api for saving map sectors
 	bool saveSector(const UString &path, bool pack = true, bool pretty = false);
 };
-}
+} // namespace OpenApoc

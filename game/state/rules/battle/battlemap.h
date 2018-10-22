@@ -115,4 +115,4 @@ class BattleMap : public StateObject
 
 	friend class Battle;
 };
-}
+} // namespace OpenApoc

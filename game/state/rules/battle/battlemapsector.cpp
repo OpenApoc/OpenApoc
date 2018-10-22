@@ -41,4 +41,4 @@ sp<BattleMapSector::LineOfSightBlock> BattleMapSector::LineOfSightBlock::clone(V
 }
 
 UString BattleMapSectorTiles::getMapSectorPath() { return fw().getDataDir() + "/maps"; }
-}
+} // namespace OpenApoc

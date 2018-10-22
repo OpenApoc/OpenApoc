@@ -111,7 +111,6 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	 }},
     {"item_image_packs",
      [](const InitialGameStateExtractor &e) {
-
 	     int itemImagePacksCount = e.getItemImagePacksCount();
 	     for (int i = 0; i < itemImagePacksCount; i++)
 	     {
