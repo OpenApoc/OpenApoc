@@ -115,6 +115,9 @@ class TransactionScreen : public BaseStage
 	// Initialisation the mini view for the second base.
 	virtual void initViewSecondBase();
 
+	sp<TransactionControl> findControlById(Type type, const UString &itemId);
+	sp<TransactionControl> findControlById(const UString &itemId);
+
   public:
 	TransactionScreen(sp<GameState> state, bool forceLimits = false);
 

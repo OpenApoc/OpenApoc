@@ -77,9 +77,12 @@ void AlienContainmentScreen::closeScreen()
 				}
 				i++;
 			}
-			for (auto &l : c->getLinked())
+			if (c->getLinked())
 			{
-				linkedControls.insert(l);
+				for (auto &l : *c->getLinked())
+				{
+					linkedControls.insert(l.lock());
+				}
 			}
 		}
 

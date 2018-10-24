@@ -141,9 +141,12 @@ void BuyAndSellScreen::closeScreen()
 					}
 					i++;
 				}
-				for (auto &l : c->getLinked())
+				if (c->getLinked())
 				{
-					linkedControls.insert(l);
+					for (auto &l : *c->getLinked())
+					{
+						linkedControls.insert(l.lock());
+					}
 				}
 			}
 		}
@@ -220,9 +223,12 @@ void BuyAndSellScreen::closeScreen()
 							break;
 					}
 				}
-				for (auto &l : c->getLinked())
+				if (c->getLinked())
 				{
-					linkedControls.insert(l);
+					for (auto &l : *c->getLinked())
+					{
+						linkedControls.insert(l.lock());
+					}
 				}
 			}
 		}
@@ -555,9 +561,12 @@ void BuyAndSellScreen::executeOrders()
 					}
 				}
 			}
-			for (auto &l : c->getLinked())
+			if (c->getLinked())
 			{
-				linkedControls.insert(l);
+				for (auto &l : *c->getLinked())
+				{
+					linkedControls.insert(l.lock());
+				}
 			}
 		}
 	}
