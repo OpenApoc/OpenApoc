@@ -373,7 +373,9 @@ void UfopaediaCategoryView::setFormStats()
 							statsLabels[row]->setText(tr("Accuracy"));
 							statsValues[row++]->setText(format("%d%%", ref->accuracy));
 							statsLabels[row]->setText(tr("Range"));
-							statsValues[row++]->setText(format("%dm", ref->range));
+							// note: it seems the range value in apoc's game files is given in
+							// half-metres
+							statsValues[row++]->setText(format("%dm", ref->range / 2));
 							statsLabels[row]->setText(tr("Fire Rate"));
 							statsValues[row++]->setText(format(
 							    "%.2f r/s", (float)TICKS_PER_SECOND / (float)ref->fire_delay));
