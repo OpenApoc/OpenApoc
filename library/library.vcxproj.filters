@@ -45,9 +45,12 @@
     <ClInclude Include="strings_format.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-	<ClInclude Include="vector_remove.h">
-	  <Filter>Header Files</Filter>
-	</ClInclude>
+    <ClInclude Include="vector_remove.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="observer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="strings.cpp">
@@ -168,6 +171,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_thread.tss_null.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="observer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

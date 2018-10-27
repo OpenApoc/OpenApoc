@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="colour.h" />
     <ClInclude Include="line.h" />
+    <ClInclude Include="observer.h" />
     <ClInclude Include="rect.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="sp.h" />
@@ -32,6 +33,7 @@
     <ClInclude Include="vector_remove.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="observer.cpp" />
     <ClCompile Include="strings.cpp" />
     <ClCompile Include="voxel.cpp" />
   </ItemGroup>

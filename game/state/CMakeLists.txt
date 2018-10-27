@@ -84,6 +84,7 @@ set (GAMESTATE_SOURCE_FILES
 	gamestate_serialize_generated.cpp
 	gametime.cpp
 	message.cpp
+	observablelinkedmap.cpp
 	savemanager.cpp
 	
 	tilemap/collision.cpp
@@ -179,6 +180,8 @@ set (GAMESTATE_HEADER_FILES
 	gametime.h
 	gametime_facet.h
 	message.h
+	observablelinkedmap.h
+	observerlinkedmap.h
 	savemanager.h
 	stateobject.h
 	

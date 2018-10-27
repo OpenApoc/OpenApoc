@@ -282,6 +282,15 @@ void UString::remove(size_t offset, size_t count)
 
 bool UString::operator!=(const UString &other) const { return this->u8Str != other.u8Str; }
 
+size_t UString::Hash::operator()(const UString &str) const noexcept
+{
+	if (str.hashCode == 0)
+	{
+		str.hashCode = std::hash<std::string>{}(str.u8Str);
+	}
+	return str.hashCode;
+}
+
 UString operator+(const UString &lhs, const UString &rhs)
 {
 	UString s;

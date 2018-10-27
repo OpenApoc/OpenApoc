@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="city\economyinfo.cpp" />
+    <ClCompile Include="observablelinkedmap.cpp" />
     <ClCompile Include="rules\city\ufomissionpreference.cpp" />
     <ClCompile Include="shared\agent.cpp" />
     <ClCompile Include="city\base.cpp" />
@@ -100,6 +101,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="city\economyinfo.h" />
+    <ClInclude Include="observablelinkedmap.h" />
+    <ClInclude Include="observerlinkedmap.h" />
     <ClInclude Include="rules\city\ufomissionpreference.h" />
     <ClInclude Include="shared\agent.h" />
     <ClInclude Include="city\base.h" />
