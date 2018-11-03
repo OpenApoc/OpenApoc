@@ -79,7 +79,7 @@ void MultilistBox::onRender()
 		resolveLocation();
 	}
 
-	Vec2<int> controlOffset;
+	Vec2<int> controlOffset = {0, 0};
 
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{

@@ -46,7 +46,7 @@ void ListBox::onRender()
 {
 	Control::onRender();
 
-	Vec2<int> controlOffset;
+	Vec2<int> controlOffset = {0, 0};
 	if (scroller == nullptr)
 	{
 		configureInternalScrollBar();

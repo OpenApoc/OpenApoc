@@ -517,6 +517,15 @@ void GameState::fillOrgStartingProperty()
 
 void GameState::startGame()
 {
+	// seed rng with current timer if option is set
+	// leave the rng default constructed otherwise
+	if (config().getBool("OpenApoc.NewFeature.SeedRng"))
+	{
+		std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+		    std::chrono::system_clock::now().time_since_epoch());
+		rng = Xorshift128Plus<uint32_t>(ms.count());
+	}
+
 	agentEquipmentTemplates.resize(10);
 
 	// Setup orgs

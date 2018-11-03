@@ -1,0 +1,8863 @@
+# Translators:
+# Translators:
+# Translators:
+# Translators:
+# Slitchy Slitchington <slitchy2@gmail.com>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Apocalypse\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2018-10-22 09:34+0000\n"
+"Last-Translator: Slitchy Slitchington <slitchy2@gmail.com>\n"
+"Language-Team: Lithuanian (http://www.transifex.com/x-com-apocalypse/apocalypse/language/lt/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lt\n"
+"Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);\n"
+"X-Generator: Poedit 1.8.6\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Click left mouse button or press a key when done"
+msgstr "Paspauskite kairįjį pelės klavišą arba bet kurį mygtuką "
+
+msgid "Brown"
+msgstr "Brown"
+
+msgid "Bostock"
+msgstr "Bostock"
+
+msgid "Robinson"
+msgstr "Robinson"
+
+msgid "Watson"
+msgstr "Watson"
+
+msgid "Jonlan"
+msgstr "Jonlan"
+
+msgid "White"
+msgstr "White"
+
+msgid "Taylor"
+msgstr "Taylor"
+
+msgid "Frogley"
+msgstr "Frogley"
+
+msgid "Smith"
+msgstr "Smith"
+
+msgid "Pearce"
+msgstr "Pearce"
+
+msgid "Evans"
+msgstr "Evans"
+
+msgid "Reynolds"
+msgstr "Reynolds"
+
+msgid "Davies"
+msgstr "Davies"
+
+msgid "Bailey"
+msgstr "Bailey"
+
+msgid "Sharpe"
+msgstr "Sharpe"
+
+msgid "Wright"
+msgstr "Wright"
+
+msgid "Stewart"
+msgstr "Stewart"
+
+msgid "Hill"
+msgstr "Hill"
+
+msgid "Baker"
+msgstr "Baker"
+
+msgid "Parker"
+msgstr "Parker"
+
+msgid "Blake"
+msgstr "Blake"
+
+msgid "Bradley"
+msgstr "Bradley"
+
+msgid "Webb"
+msgstr "Webb"
+
+msgid "Kemp"
+msgstr "Kemp"
+
+msgid "Carr"
+msgstr "Carr"
+
+msgid "Queen"
+msgstr "Queen"
+
+msgid "Gallagher"
+msgstr "Gallagher"
+
+msgid "Miller"
+msgstr "Miller"
+
+msgid "Stoddard"
+msgstr "Stoddard"
+
+msgid "Thompson"
+msgstr "Thompson"
+
+msgid "Nash"
+msgstr "Nash"
+
+msgid "Johnson"
+msgstr "Johnson"
+
+msgid "Mitchell"
+msgstr "Mitchell"
+
+msgid "Hudson"
+msgstr "Hudson"
+
+msgid "McNeil"
+msgstr "NcNeil"
+
+msgid "Homburger"
+msgstr "Homburger"
+
+msgid "Crossett"
+msgstr "Crossett"
+
+msgid "Dodge"
+msgstr "Dodge"
+
+msgid "Bryant"
+msgstr "Bryant"
+
+msgid "Horton"
+msgstr "Horton"
+
+msgctxt "female"
+msgid "Shalimov"
+msgstr "Shalimov"
+
+msgctxt "male"
+msgid "Shalimov"
+msgstr "Shalimov"
+
+msgctxt "female"
+msgid "Petrov"
+msgstr "Petrova"
+
+msgctxt "male"
+msgid "Petrov"
+msgstr "Petrovas"
+
+msgctxt "female"
+msgid "Shadrin"
+msgstr "Shadrina"
+
+msgctxt "male"
+msgid "Shadrin"
+msgstr "Shadrinas"
+
+msgctxt "female"
+msgid "Ragulin"
+msgstr "Ragulina"
+
+msgctxt "male"
+msgid "Ragulin"
+msgstr "Ragulinas"
+
+msgctxt "female"
+msgid "Mikhailov"
+msgstr "Mikhailova"
+
+msgctxt "male"
+msgid "Mikhailov"
+msgstr "Mikhailovas"
+
+msgctxt "female"
+msgid "Belov"
+msgstr "Belova"
+
+msgctxt "male"
+msgid "Belov"
+msgstr "Belovas"
+
+msgid "Korkia"
+msgstr "Korkia"
+
+msgid "Torban"
+msgstr "Torban"
+
+msgctxt "female"
+msgid "Likhachev"
+msgstr "Likhacheva"
+
+msgctxt "male"
+msgid "Likhachev"
+msgstr "Likhachevas"
+
+msgctxt "female"
+msgid "Romanov"
+msgstr "Romanova"
+
+msgctxt "male"
+msgid "Romanov"
+msgstr "Romanovas"
+
+msgctxt "female"
+msgid "Scharov"
+msgstr "Scharova"
+
+msgctxt "male"
+msgid "Scharov"
+msgstr "Scharovas"
+
+msgctxt "female"
+msgid "Asimov"
+msgstr "Asimova"
+
+msgctxt "male"
+msgid "Asimov"
+msgstr "Asimovas"
+
+msgid "Samusenko"
+msgstr "Samusenko"
+
+msgctxt "female"
+msgid "Gorokhova"
+msgstr "Gorokhova"
+
+msgctxt "male"
+msgid "Gorokhova"
+msgstr "Gorokhovas"
+
+msgid "Yakubik"
+msgstr "Yakubik"
+
+msgctxt "female"
+msgid "Kolotov"
+msgstr "Kolotova"
+
+msgctxt "male"
+msgid "Kolotov"
+msgstr "Kolotovas"
+
+msgctxt "female"
+msgid "Chukarin"
+msgstr "Chukarina"
+
+msgctxt "male"
+msgid "Chukarin"
+msgstr "Chukarinas"
+
+msgctxt "female"
+msgid "Andianov"
+msgstr "Andianova"
+
+msgctxt "male"
+msgid "Andianov"
+msgstr "Andinavas"
+
+msgctxt "female"
+msgid "Voronin"
+msgstr "Voronina"
+
+msgctxt "male"
+msgid "Voronin"
+msgstr "Voroninas"
+
+msgctxt "female"
+msgid "Maleev"
+msgstr "Maleva"
+
+msgctxt "male"
+msgid "Maleev"
+msgstr "Malevas"
+
+msgid "Iwasaki"
+msgstr "Iwasaki"
+
+msgid "Shoji"
+msgstr "Shoji"
+
+msgid "Okabe"
+msgstr "Okabe"
+
+msgid "Yamashita"
+msgstr "Yamashita"
+
+msgid "Okamoto"
+msgstr "Okamoto"
+
+msgid "Yamazaki"
+msgstr "Yamazaki"
+
+msgid "Iwahara"
+msgstr "Iwahara"
+
+msgid "Kojima"
+msgstr "Kojima"
+
+msgid "Tanida"
+msgstr "Tanida"
+
+msgid "Akira"
+msgstr "Akira"
+
+msgid "Fujimoto"
+msgstr "Fujimoto"
+
+msgid "Matsumara"
+msgstr "Matsumara"
+
+msgid "Morita"
+msgstr "Morita"
+
+msgid "Sato"
+msgstr "Sato"
+
+msgid "Noguchi"
+msgstr "Noguchi"
+
+msgid "Shimaoka"
+msgstr "Shimaoka"
+
+msgid "Koyama"
+msgstr "Koyama"
+
+msgid "Ishii"
+msgstr "Ishii"
+
+msgid "Yamanaka"
+msgstr "Yamanaka"
+
+msgid "Tanikawa"
+msgstr "Tanikava"
+
+msgid "Steinbach"
+msgstr "Steinbach"
+
+msgid "Mederow"
+msgstr "Mederow"
+
+msgid "Meyer"
+msgstr "Meyer"
+
+msgid "Ulbricht"
+msgstr "Ulbricht"
+
+msgid "Berger"
+msgstr ""
+
+msgid "Faerber"
+msgstr ""
+
+msgid "Gunkel"
+msgstr ""
+
+msgid "Krause"
+msgstr ""
+
+msgid "Keller"
+msgstr ""
+
+msgid "Brehme"
+msgstr ""
+
+msgid "Vogel"
+msgstr ""
+
+msgid "Hafner"
+msgstr ""
+
+msgid "Schultz"
+msgstr ""
+
+msgid "Richter"
+msgstr ""
+
+msgid "Esser"
+msgstr ""
+
+msgid "Zander"
+msgstr ""
+
+msgid "Seidler"
+msgstr ""
+
+msgid "Unger"
+msgstr ""
+
+msgid "Geisler"
+msgstr ""
+
+msgid "Heinsch"
+msgstr ""
+
+msgid "Dujardin"
+msgstr ""
+
+msgid "Cuvelier"
+msgstr ""
+
+msgid "Gressier"
+msgstr ""
+
+msgid "Lecointe"
+msgstr ""
+
+msgid "Gautier"
+msgstr ""
+
+msgid "Bouissou"
+msgstr ""
+
+msgid "Marcelle"
+msgstr ""
+
+msgid "Bouton"
+msgstr ""
+
+msgid "Lefevre"
+msgstr ""
+
+msgid "Laroyenne"
+msgstr ""
+
+msgid "Dreyfus"
+msgstr ""
+
+msgid "Dagallier"
+msgstr ""
+
+msgid "Guerin"
+msgstr ""
+
+msgid "Pecheux"
+msgstr ""
+
+msgid "Buchard"
+msgstr ""
+
+msgid "Collignon"
+msgstr ""
+
+msgid "Revenu"
+msgstr ""
+
+msgid "Cantona"
+msgstr ""
+
+msgid "Gaudin"
+msgstr ""
+
+msgid "Luget"
+msgstr ""
+
+msgid "Ian"
+msgstr ""
+
+msgid "Thad"
+msgstr ""
+
+msgid "David"
+msgstr ""
+
+msgid "Scott"
+msgstr ""
+
+msgid "John"
+msgstr ""
+
+msgid "Paul"
+msgstr ""
+
+msgid "Arthur"
+msgstr ""
+
+msgid "Robert"
+msgstr ""
+
+msgid "Patrick"
+msgstr ""
+
+msgid "James"
+msgstr ""
+
+msgid "Damien"
+msgstr ""
+
+msgid "Frank"
+msgstr ""
+
+msgid "Neil"
+msgstr ""
+
+msgid "Brett"
+msgstr ""
+
+msgid "Adam"
+msgstr ""
+
+msgid "Maria"
+msgstr ""
+
+msgid "Helen"
+msgstr ""
+
+msgid "Sarah"
+msgstr ""
+
+msgid "Jane"
+msgstr ""
+
+msgid "Andrea"
+msgstr ""
+
+msgid "Clarence"
+msgstr ""
+
+msgid "Austin"
+msgstr ""
+
+msgid "Tom"
+msgstr ""
+
+msgid "Mark"
+msgstr ""
+
+msgid "Kevin"
+msgstr ""
+
+msgid "Carl"
+msgstr ""
+
+msgid "Samuel"
+msgstr ""
+
+msgid "Donald"
+msgstr ""
+
+msgid "Dwight"
+msgstr ""
+
+msgid "Ed"
+msgstr ""
+
+msgid "Virgil"
+msgstr ""
+
+msgid "Calvin"
+msgstr ""
+
+msgid "Spencer"
+msgstr ""
+
+msgid "Lester"
+msgstr ""
+
+msgid "Oscar"
+msgstr ""
+
+msgid "Barbara"
+msgstr ""
+
+msgid "Sigourney"
+msgstr ""
+
+msgid "Catherine"
+msgstr ""
+
+msgid "Evelyn"
+msgstr ""
+
+msgid "Patricia"
+msgstr ""
+
+msgid "Sergei"
+msgstr ""
+
+msgid "Boris"
+msgstr ""
+
+msgid "Vladimir"
+msgstr ""
+
+msgid "Victor"
+msgstr ""
+
+msgid "Gennadi"
+msgstr ""
+
+msgid "Mikhail"
+msgstr ""
+
+msgid "Anatoly"
+msgstr ""
+
+msgid "Leonid"
+msgstr ""
+
+msgid "Igor"
+msgstr ""
+
+msgid "Yuri"
+msgstr ""
+
+msgid "Andrei"
+msgstr ""
+
+msgid "Nikolai"
+msgstr ""
+
+msgid "Dmitriy"
+msgstr ""
+
+msgid "Grigoriy"
+msgstr ""
+
+msgid "Ivan"
+msgstr ""
+
+msgid "Lyudmila"
+msgstr ""
+
+msgid "Olga"
+msgstr ""
+
+msgid "Tatyana"
+msgstr ""
+
+msgid "Galina"
+msgstr ""
+
+msgid "Astra"
+msgstr ""
+
+msgid "Tatsuo"
+msgstr ""
+
+msgid "Toshio"
+msgstr ""
+
+msgid "Jungo"
+msgstr ""
+
+msgid "Yuzo"
+msgstr ""
+
+msgid "Kenji"
+msgstr ""
+
+msgid "Naohiro"
+msgstr ""
+
+msgid "Isao"
+msgstr ""
+
+msgid "Yasuaki"
+msgstr ""
+
+msgid "Yataka"
+msgstr ""
+
+msgid "Masanori"
+msgstr ""
+
+msgid "Shigeo"
+msgstr ""
+
+msgid "Masaharu"
+msgstr ""
+
+msgid "Shigeru"
+msgstr ""
+
+msgid "Akinori"
+msgstr ""
+
+msgid "Shuji"
+msgstr ""
+
+msgid "Mariko"
+msgstr ""
+
+msgid "Sumie"
+msgstr ""
+
+msgid "Sata"
+msgstr ""
+
+msgid "Yoko"
+msgstr ""
+
+msgid "Michiko"
+msgstr ""
+
+msgid "Hans"
+msgstr ""
+
+msgid "Otto"
+msgstr ""
+
+msgid "Manfred"
+msgstr ""
+
+msgid "Klaus"
+msgstr ""
+
+msgid "Dieter"
+msgstr ""
+
+msgid "Wolfgang"
+msgstr ""
+
+msgid "Matthias"
+msgstr ""
+
+msgid "Gunter"
+msgstr ""
+
+msgid "Werner"
+msgstr ""
+
+msgid "Gerhard"
+msgstr ""
+
+msgid "Siegfried"
+msgstr ""
+
+msgid "Rudi"
+msgstr ""
+
+msgid "Jurgen"
+msgstr ""
+
+msgid "Stefan"
+msgstr ""
+
+msgid "Franz"
+msgstr ""
+
+msgid "Uta"
+msgstr ""
+
+msgid "Gudrun"
+msgstr ""
+
+msgid "Christel"
+msgstr ""
+
+msgid "Karin"
+msgstr ""
+
+msgid "Helga"
+msgstr ""
+
+msgid "Henri"
+msgstr ""
+
+msgid "Jacques"
+msgstr ""
+
+msgid "Eric"
+msgstr ""
+
+msgid "Jean"
+msgstr ""
+
+msgid "Gaston"
+msgstr ""
+
+msgid "Gerard"
+msgstr ""
+
+msgid "Louis"
+msgstr ""
+
+msgid "Marcel"
+msgstr ""
+
+msgid "Leon"
+msgstr ""
+
+msgid "Pierre"
+msgstr ""
+
+msgid "Bernard"
+msgstr ""
+
+msgid "Marc"
+msgstr ""
+
+msgid "Claude"
+msgstr ""
+
+msgid "Armand"
+msgstr ""
+
+msgid "Emile"
+msgstr ""
+
+msgid "Micheline"
+msgstr ""
+
+msgid "Sylvie"
+msgstr ""
+
+msgid "Marielle"
+msgstr ""
+
+msgid "Danielle"
+msgstr ""
+
+msgid "Jacqueline"
+msgstr ""
+
+msgid "Click on building to set destination"
+msgstr ""
+
+msgid "Click on vehicle to attack"
+msgstr ""
+
+msgid "Click on map position to set destination"
+msgstr ""
+
+msgid "Click on Dimension Gate to set destination"
+msgstr ""
+
+msgid "Click on building to destroy"
+msgstr ""
+
+msgid "Click on vehicle to select target"
+msgstr ""
+
+msgid "Alien Probe"
+msgstr ""
+
+msgid "Alien Scout"
+msgstr ""
+
+msgid "Alien Transporter"
+msgstr ""
+
+msgid "Alien Fast Attack Ship"
+msgstr ""
+
+msgid "Alien Destroyer"
+msgstr ""
+
+msgid "Alien Assault Ship"
+msgstr ""
+
+msgid "Alien Bomber"
+msgstr ""
+
+msgid "Alien Escort"
+msgstr ""
+
+msgid "Alien Battleship"
+msgstr ""
+
+msgid "Alien Mothership"
+msgstr ""
+
+msgid "Police Hovercar"
+msgstr ""
+
+msgid "Airtaxi"
+msgstr ""
+
+msgid "Rescue Transport"
+msgstr ""
+
+msgid "Construction Vehicle"
+msgstr ""
+
+msgid "Airtrans"
+msgstr ""
+
+msgid "Space Liner"
+msgstr "Kosmoso laineris"
+
+msgid "Phoenix Hovercar"
+msgstr "fenikso skriejanti-mašina"
+
+msgid "Hoverbike"
+msgstr "Skriejantis motociklas "
+
+msgid "Valkyrie Interceptor"
+msgstr "Valkirijos naikintuvas"
+
+msgid "Hawk Air Warrior"
+msgstr "Erelio oro karys "
+
+msgid "Dimension Probe"
+msgstr "Dimensinis zondas"
+
+msgid "Biotrans"
+msgstr "Bio-transportas "
+
+msgid "Explorer"
+msgstr "Tyrinėtojas"
+
+msgid "Retaliator"
+msgstr "Represorius "
+
+msgid "Annihilator"
+msgstr "Naikintojas "
+
+msgid "Autotaxi"
+msgstr "Auto taksi"
+
+msgid "Autotrans"
+msgstr "Auto transportas"
+
+msgid "Police Car"
+msgstr "Policijos mašina"
+
+msgid "Civilian Car"
+msgstr "Civilių mašina"
+
+msgid "Stormdog"
+msgstr ""
+
+msgid "Wolfhound APC"
+msgstr ""
+
+msgid "Blazer Turbo Bike"
+msgstr "Bleizerio turbo motociklas"
+
+msgid "Griffon AFV"
+msgstr "Grifono AFV"
+
+msgid "Empty"
+msgstr "Tuščias"
+
+msgid "Megapol AP Grenade"
+msgstr ""
+
+msgid "Megapol Stun Grenade"
+msgstr ""
+
+msgid "Megapol Smoke Grenade"
+msgstr ""
+
+msgid "Marsec Proximity Mine"
+msgstr ""
+
+msgid "Marsec High Explosive"
+msgstr ""
+
+msgid "Megapol Lawpistol"
+msgstr "Megapolio teisingumo pistoletas"
+
+msgid "Megapol Lawpistol Clip"
+msgstr "Megapolio teisingumo pistoleto apkaba"
+
+msgid "Marsec M4000 Machine Gun"
+msgstr ""
+
+msgid "Marsec M4000 Gun Clip"
+msgstr ""
+
+msgid "Megapol Laser Sniper Gun"
+msgstr ""
+
+msgid "Megapol Laser Pod"
+msgstr ""
+
+msgid "Megapol Auto Cannon"
+msgstr ""
+
+msgid "Auto Cannon AP Clip"
+msgstr ""
+
+msgid "Auto Cannon HE Clip"
+msgstr ""
+
+msgid "Auto Cannon IN Clip"
+msgstr ""
+
+msgid "Megapol Plasma Gun"
+msgstr ""
+
+msgid "Megapol Plasma Pod"
+msgstr ""
+
+msgid "Marsec Heavy Launcher"
+msgstr ""
+
+msgid "Heavy Launcher AG Missile"
+msgstr ""
+
+msgid "Heavy Launcher HE Missile"
+msgstr ""
+
+msgid "Heavy Launcher IN Missile"
+msgstr ""
+
+msgid "Marsec MiniLauncher"
+msgstr ""
+
+msgid "MiniLauncher AG Missile"
+msgstr ""
+
+msgid "MiniLauncher HE Missile"
+msgstr ""
+
+msgid "MiniLauncher IN Missile"
+msgstr ""
+
+msgid "Megapol Stun Grapple"
+msgstr ""
+
+msgid "Alien Gas Grenade"
+msgstr ""
+
+msgid "Tracker Gun Clip"
+msgstr ""
+
+msgid "Tracker Gun"
+msgstr ""
+
+msgid "Multi-Tracker"
+msgstr ""
+
+msgid "PSI-Grenade"
+msgstr ""
+
+msgid "ForceWeb"
+msgstr ""
+
+msgid "Toxigun"
+msgstr ""
+
+msgid "Toxigun A-Clip"
+msgstr ""
+
+msgid "Toxigun B-Clip"
+msgstr ""
+
+msgid "Toxigun C-Clip"
+msgstr ""
+
+msgid "Dimension Destabiliser"
+msgstr ""
+
+msgid "Mind Shield"
+msgstr ""
+
+msgid "Mind Bender"
+msgstr ""
+
+msgid "Alien Detector"
+msgstr ""
+
+msgid "Disruptor Gun"
+msgstr ""
+
+msgid "Devastator Cannon"
+msgstr ""
+
+msgid "Boomeroid"
+msgstr ""
+
+msgid "Power Sword"
+msgstr ""
+
+msgid "Brainsucker Launcher"
+msgstr "Smegenų siurbiko patranka "
+
+msgid "Entropy Launcher"
+msgstr ""
+
+msgid "Dimension Missile Launcher"
+msgstr ""
+
+msgid "Dimension Missile"
+msgstr ""
+
+msgid "Vortex Mine"
+msgstr ""
+
+msgid "Personal Disruptor Shield"
+msgstr ""
+
+msgid "Personal Teleporter"
+msgstr ""
+
+msgid "Personal Cloaking Field"
+msgstr ""
+
+msgid "Dimension Force Field"
+msgstr ""
+
+msgid "Energy Pod"
+msgstr ""
+
+msgid "Medi-kit"
+msgstr ""
+
+msgid "Motion Scanner"
+msgstr ""
+
+msgid "Brainsucker Pod"
+msgstr "Smegenų siurbiko indas"
+
+msgid "Overspawn"
+msgstr ""
+
+msgid "Entropy Pod"
+msgstr ""
+
+msgid "Incendiary Grenade"
+msgstr ""
+
+msgid "Megapol Leg Armor"
+msgstr ""
+
+msgid "Megapol Body Armor"
+msgstr ""
+
+msgid "Megapol Right Arm Armor"
+msgstr ""
+
+msgid "Megapol Left Arm Armor"
+msgstr ""
+
+msgid "Megapol Helmet"
+msgstr ""
+
+msgid "Marsec Leg Units"
+msgstr ""
+
+msgid "Marsec Body Unit"
+msgstr ""
+
+msgid "Marsec Right Arm Unit"
+msgstr ""
+
+msgid "Marsec Left Arm Unit"
+msgstr ""
+
+msgid "Marsec Head Unit"
+msgstr ""
+
+msgid "X-COM Leg Shields"
+msgstr ""
+
+msgid "X-COM Body Shield"
+msgstr ""
+
+msgid "X-COM Right Arm Shield"
+msgstr ""
+
+msgid "X-COM Left Arm Shield"
+msgstr ""
+
+msgid "X-COM Head Shield"
+msgstr ""
+
+msgid "Psimorph's Mindbender"
+msgstr ""
+
+msgid "Megaspawn's Disruptor"
+msgstr ""
+
+msgid "Megaspawn's Launcher"
+msgstr ""
+
+msgid "Spitter's Vomit Funnel"
+msgstr ""
+
+msgid "Multiworm's Spit"
+msgstr ""
+
+msgid "Alien Egg's Vomit Tube"
+msgstr ""
+
+msgid "Hyperworm's Bite"
+msgstr ""
+
+msgid "Queenspawn's Tentacles"
+msgstr ""
+
+msgid "Popper's Bomb"
+msgstr ""
+
+msgid "Psiclone"
+msgstr ""
+
+msgid "Elerium"
+msgstr ""
+
+msgid "Alien Artifact"
+msgstr ""
+
+msgid "per unit"
+msgstr ""
+
+msgid "per clip"
+msgstr ""
+
+msgid "per gramme"
+msgstr ""
+
+msgid "Building"
+msgstr ""
+
+msgid "The Senate"
+msgstr ""
+
+msgid "Judgment Central"
+msgstr ""
+
+msgid "Enforcer Academy"
+msgstr ""
+
+msgid "Law Control Station"
+msgstr ""
+
+msgid "Megastation One"
+msgstr ""
+
+msgid "Megastation Two"
+msgstr ""
+
+msgid "Phoenix Sanatorium"
+msgstr ""
+
+msgid "Nightingale Tower"
+msgstr ""
+
+msgid "Iliad Institute"
+msgstr ""
+
+msgid "Bosch Institute"
+msgstr ""
+
+msgid "Marge Piercy Academy"
+msgstr ""
+
+msgid "Rescue One"
+msgstr ""
+
+msgid "Rescue Two"
+msgstr ""
+
+msgid "Rescue Three"
+msgstr ""
+
+msgid "Quadrax Tower"
+msgstr ""
+
+msgid "Gygax Memorial Building"
+msgstr ""
+
+msgid "Parallax Tower"
+msgstr ""
+
+msgid "Tsunami Building"
+msgstr ""
+
+msgid "Venus Spires"
+msgstr ""
+
+msgid "Raven Reaches"
+msgstr ""
+
+msgid "Mahler Building"
+msgstr ""
+
+msgid "The Gugarin Institute"
+msgstr ""
+
+msgid "Lincoln Tower"
+msgstr ""
+
+msgid "The Armageddon Centre"
+msgstr ""
+
+msgid "Cyborg Institute"
+msgstr ""
+
+msgid "Uhuru Tower"
+msgstr ""
+
+msgid "The Karpov Building"
+msgstr ""
+
+msgid "Nietzsche Institute"
+msgstr ""
+
+msgid "Foucault Tower"
+msgstr ""
+
+msgid "Edifice Tower"
+msgstr ""
+
+msgid "The Ozone Building"
+msgstr ""
+
+msgid "The New Empire Tower"
+msgstr ""
+
+msgid "Descartes Towers"
+msgstr ""
+
+msgid "Transtellar Spacelines"
+msgstr ""
+
+msgid "Galactic Central"
+msgstr ""
+
+msgid "Megavision One"
+msgstr ""
+
+msgid "Megavision Two"
+msgstr ""
+
+msgid "Megavision Three"
+msgstr ""
+
+msgid "Megatribe Warriors"
+msgstr ""
+
+msgid "Meteor Kings"
+msgstr ""
+
+msgid "Dog Star Wanderers"
+msgstr ""
+
+msgid "Garden of Delights"
+msgstr ""
+
+msgid "The Lineage Foundation"
+msgstr ""
+
+msgid "Aldous Huxley Emporium"
+msgstr ""
+
+msgid "Hypermart Zone"
+msgstr ""
+
+msgid "Acropolis Apartments"
+msgstr ""
+
+msgid "Atlantis Apartments"
+msgstr ""
+
+msgid "Babylon Apartments"
+msgstr ""
+
+msgid "Ptolemy Apartments"
+msgstr ""
+
+msgid "Habizone Apartments"
+msgstr ""
+
+msgid "Ecozone Apartments"
+msgstr ""
+
+msgid "Stellar Apartments"
+msgstr ""
+
+msgid "Lone Ranger Apartments"
+msgstr ""
+
+msgid "Eden Mansions"
+msgstr ""
+
+msgid "Utopia Mansions"
+msgstr ""
+
+msgid "Nirvana Mansions"
+msgstr ""
+
+msgid "Cyclops Mansions"
+msgstr ""
+
+msgid "Cultivator One"
+msgstr ""
+
+msgid "Cultivator Two"
+msgstr ""
+
+msgid "Cultivator Three"
+msgstr ""
+
+msgid "Cityclean One"
+msgstr ""
+
+msgid "Cityclean Two"
+msgstr ""
+
+msgid "Cityclean Three"
+msgstr ""
+
+msgid "Hydrozone One"
+msgstr ""
+
+msgid "Hydrozone Two"
+msgstr ""
+
+msgid "Hydrozone Three"
+msgstr ""
+
+msgid "Appliances One"
+msgstr ""
+
+msgid "Appliances Two"
+msgstr ""
+
+msgid "Appliances Three"
+msgstr ""
+
+msgid "Arms One"
+msgstr ""
+
+msgid "Arms Two"
+msgstr ""
+
+msgid "Arms Three"
+msgstr ""
+
+msgid "Robot One"
+msgstr ""
+
+msgid "Robot Two"
+msgstr ""
+
+msgid "Robot Three"
+msgstr ""
+
+msgid "Car One"
+msgstr ""
+
+msgid "Car Two"
+msgstr ""
+
+msgid "Car Three"
+msgstr ""
+
+msgid "Flyer One"
+msgstr ""
+
+msgid "Flyer Two"
+msgstr ""
+
+msgid "Flyer Three"
+msgstr ""
+
+msgid "Megaflyer One"
+msgstr ""
+
+msgid "Megaflyer Two"
+msgstr ""
+
+msgid "Megaflyer Three"
+msgstr ""
+
+msgid "Construction One"
+msgstr ""
+
+msgid "Construction Two"
+msgstr ""
+
+msgid "Construction Three"
+msgstr ""
+
+msgid "George Orwell Block"
+msgstr ""
+
+msgid "Thomas More Tower"
+msgstr ""
+
+msgid "Dickens Estate"
+msgstr ""
+
+msgid "Oliver Twist Block"
+msgstr ""
+
+msgid "Campesino Apartments"
+msgstr ""
+
+msgid "Grey Visitor Towers"
+msgstr ""
+
+msgid "Scrooge Mansions"
+msgstr ""
+
+msgid "Borstal Block"
+msgstr ""
+
+msgid "Heavenly Towers"
+msgstr ""
+
+msgid "Civic Project"
+msgstr ""
+
+msgid "Chronos Block"
+msgstr ""
+
+msgid "Necronomicon Mansions"
+msgstr ""
+
+msgid "Angel Heart Heights"
+msgstr ""
+
+msgid "Lovecraft Block"
+msgstr ""
+
+msgid "Bakunin Block"
+msgstr ""
+
+msgid "Saturn Block"
+msgstr ""
+
+msgid "Hades Block"
+msgstr ""
+
+msgid "Neptune Towers"
+msgstr ""
+
+msgid "Maze Towers"
+msgstr ""
+
+msgid "Grimoire Block"
+msgstr ""
+
+msgid "Durruti Block"
+msgstr ""
+
+msgid "Blue Doctor Project"
+msgstr ""
+
+msgid "Enlightenment Towers"
+msgstr ""
+
+msgid "Renaissance Block"
+msgstr ""
+
+msgid "Slum City"
+msgstr ""
+
+msgid "Warehouse One"
+msgstr ""
+
+msgid "Warehouse Two"
+msgstr ""
+
+msgid "Warehouse Three"
+msgstr ""
+
+msgid "Warehouse Four"
+msgstr ""
+
+msgid "Warehouse Five"
+msgstr ""
+
+msgid "Warehouse Six"
+msgstr ""
+
+msgid "Warehouse Seven"
+msgstr ""
+
+msgid "Warehouse Eight"
+msgstr ""
+
+msgid "Warehouse Nine"
+msgstr ""
+
+msgid "Warehouse Ten"
+msgstr ""
+
+msgid "Warehouse Eleven"
+msgstr ""
+
+msgid "Warehouse Twelve"
+msgstr ""
+
+msgid "Energen Building"
+msgstr ""
+
+msgid "Midas Building"
+msgstr ""
+
+msgid "Recyclotorium One"
+msgstr ""
+
+msgid "Recyclotorium Two"
+msgstr ""
+
+msgid "Recyclotorium Three"
+msgstr ""
+
+msgid "Temple of the Apocalypse"
+msgstr ""
+
+msgid "Temple of the Millenium"
+msgstr ""
+
+msgid "Temple of the Visitors"
+msgstr ""
+
+msgid "Temple of Humility"
+msgstr ""
+
+msgid "Temple of Doom"
+msgstr ""
+
+msgid "Temple of Sanity"
+msgstr ""
+
+msgid "Earth"
+msgstr ""
+
+msgid "Corridor"
+msgstr ""
+
+msgid "Access Lift"
+msgstr ""
+
+msgid "Living Quarters"
+msgstr ""
+
+msgid "Stores"
+msgstr ""
+
+msgid "Cells"
+msgstr ""
+
+msgid "Medical Bay"
+msgstr ""
+
+msgid "Training Area"
+msgstr ""
+
+msgid "Psi-gym"
+msgstr ""
+
+msgid "Security Station"
+msgstr ""
+
+msgid "Advanced Security Station"
+msgstr ""
+
+msgid "Vehicle Repair Bay"
+msgstr ""
+
+msgid "Biochemistry Lab"
+msgstr ""
+
+msgid "Advanced Biochemistry Lab"
+msgstr ""
+
+msgid "Quantum Physics Lab"
+msgstr ""
+
+msgid "Advanced Quantum Physics Lab"
+msgstr ""
+
+msgid "Alien Containment"
+msgstr ""
+
+msgid "Advanced Alien Containment"
+msgstr ""
+
+msgid "Workshop"
+msgstr ""
+
+msgid "Advanced Workshop"
+msgstr ""
+
+msgid "Empty section"
+msgstr ""
+
+msgid "Bolter 4000 Laser Gun"
+msgstr ""
+
+msgid "Lancer 7000 Laser Gun"
+msgstr ""
+
+msgid "Rendor Plasma Gun"
+msgstr ""
+
+msgid "Lineage Plasma Cannon"
+msgstr ""
+
+msgid "Plasma Multi-System"
+msgstr ""
+
+msgid "Light Disruptor Beam"
+msgstr ""
+
+msgid "Medium Disruptor Beam"
+msgstr ""
+
+msgid "Heavy Disruptor Beam"
+msgstr ""
+
+msgid "40mm Auto Cannon"
+msgstr ""
+
+msgid "Janitor Missile Array"
+msgstr ""
+
+msgid "Justice Missile Launcher"
+msgstr "Teisingumo raketos pabūklas"
+
+msgid "Prophet Missile Array"
+msgstr ""
+
+msgid "Retribution Missile Launcher"
+msgstr ""
+
+msgid "Disruptor Bomb Launcher"
+msgstr ""
+
+msgid "Stasis Bomb Launcher"
+msgstr ""
+
+msgid "Disruptor Multi-Bomb Launcher"
+msgstr ""
+
+msgid "Laser Defense Array"
+msgstr ""
+
+msgid "Plasma Defense Array"
+msgstr ""
+
+msgid "SD Standard"
+msgstr "SD standartinis "
+
+msgid "SD Deluxe"
+msgstr "SD liuksusinis"
+
+msgid "SD Sports"
+msgstr "SD sportas "
+
+msgid "SD Turbo"
+msgstr "SD turbo "
+
+msgid "SD Elite"
+msgstr "SD elitas "
+
+msgid "SD Special"
+msgstr "SD specialus"
+
+msgid "40mm Auto Cannon Turret"
+msgstr ""
+
+msgid "Airguard Anti-Air Cannon"
+msgstr ""
+
+msgid "GLM Array"
+msgstr ""
+
+msgid "Plasma Turret Cannon"
+msgstr ""
+
+msgid "GLM Air defense"
+msgstr ""
+
+msgid "Rumble Cannon"
+msgstr ""
+
+msgid "Metro Roadhog"
+msgstr ""
+
+msgid "Metro Roadgrav"
+msgstr ""
+
+msgid "Metro Turbograv"
+msgstr ""
+
+msgid "Metro Powergrav"
+msgstr ""
+
+msgid "Metro Multipower Plus"
+msgstr ""
+
+msgid "Light Weapons Control"
+msgstr ""
+
+msgid "Medium Weapons Control"
+msgstr ""
+
+msgid "Heavy Weapons Control"
+msgstr ""
+
+msgid "Advanced Control System"
+msgstr ""
+
+msgid "Cargo Module"
+msgstr ""
+
+msgid "Passenger Module"
+msgstr ""
+
+msgid "Bio-Transport Module"
+msgstr "Bio-transportavimo modulis "
+
+msgid "Missile Evasion Matrix"
+msgstr ""
+
+msgid "Small Disruption Shield"
+msgstr ""
+
+msgid "Large Disruption Shield"
+msgstr ""
+
+msgid "Cloaking Field"
+msgstr ""
+
+msgid "Teleporter"
+msgstr ""
+
+msgid "Dimension Shifter"
+msgstr ""
+
+msgid "Senate"
+msgstr ""
+
+msgid "Police Station"
+msgstr ""
+
+msgid "Hospital"
+msgstr "Ligoninė"
+
+msgid "School"
+msgstr ""
+
+msgid "Rescue Station"
+msgstr ""
+
+msgid "Offices"
+msgstr ""
+
+msgid "Corporate HQ"
+msgstr "Korporacinė bazė"
+
+msgid "Space Port"
+msgstr ""
+
+msgid "Sensodrome"
+msgstr "Sensodromas"
+
+msgid "Astrodome"
+msgstr ""
+
+msgid "Procreation Park"
+msgstr ""
+
+msgid "Shopping Mall"
+msgstr ""
+
+msgid "Car Park"
+msgstr ""
+
+msgid "Apartments"
+msgstr ""
+
+msgid "Luxury Apartments"
+msgstr ""
+
+msgid "Hotel"
+msgstr "Viešbutis "
+
+msgid "Atmosphere Processor"
+msgstr "Atmosferos procesorius "
+
+msgid "Hydro-Farm"
+msgstr "Hidro ferma "
+
+msgid "Sewage Works"
+msgstr ""
+
+msgid "Water Purifier"
+msgstr ""
+
+msgid "Appliances Factory"
+msgstr ""
+
+msgid "Arms Factory"
+msgstr ""
+
+msgid "Robot Factory"
+msgstr "Robotų gamykla "
+
+msgid "Car Factory"
+msgstr "Mašinų gamykla"
+
+msgid "Flyer Factory"
+msgstr ""
+
+msgid "Large Flyer Factory"
+msgstr ""
+
+msgid "Construction Factory"
+msgstr ""
+
+msgid "Slums"
+msgstr ""
+
+msgid "Ruins"
+msgstr ""
+
+msgid "Warehouse"
+msgstr ""
+
+msgid "Space Ship"
+msgstr ""
+
+msgid "Power Station"
+msgstr ""
+
+msgid "Recyclotorium"
+msgstr ""
+
+msgid "Outdoor Parks"
+msgstr ""
+
+msgid "People Tubes"
+msgstr ""
+
+msgid "Temple of Sirius"
+msgstr "Sirijaus bažnyčia "
+
+msgid "X-COM Base"
+msgstr "X-COMO bazė"
+
+msgid "UFOs"
+msgstr "UFOs"
+
+msgid "Incubator Chamber"
+msgstr ""
+
+msgid "Spawning Chamber"
+msgstr "Perėjimo kambarys"
+
+msgid "Food Chamber"
+msgstr "Maisto kambarys"
+
+msgid "Megapod Chamber"
+msgstr ""
+
+msgid "Sleeping Chamber"
+msgstr "Mėgo kambarys "
+
+msgid "Organic Factory"
+msgstr "Organinė gamykla"
+
+msgid "Alien Farm"
+msgstr "Ateivių ferma "
+
+msgid "Control Chamber"
+msgstr ""
+
+msgid "Maintenance Factory"
+msgstr ""
+
+msgid "Dimension Gate Generator"
+msgstr "Dimensinių vartų generatorius"
+
+msgid "Transporter"
+msgstr "Transporteris "
+
+msgid "Fast Attack ship"
+msgstr "Greito Atakavimo Laivas"
+
+msgid "Destroyer"
+msgstr "Naikintojas "
+
+msgid "Assault craft"
+msgstr "Puolimo laivas"
+
+msgid "Bomber"
+msgstr "bombonešis "
+
+msgid "Escort"
+msgstr ""
+
+msgid "Battleship"
+msgstr "Kovos laivas"
+
+msgid "Mothership"
+msgstr "Motininis laivas"
+
+msgid "Property"
+msgstr "Turtas "
+
+msgid "Financial services"
+msgstr ""
+
+msgid "Import/Export"
+msgstr ""
+
+msgid "Security services"
+msgstr ""
+
+msgid "Transport services"
+msgstr ""
+
+msgid "Administration"
+msgstr "Administracija "
+
+msgid "Genetics"
+msgstr "Genetika"
+
+msgid "Construction"
+msgstr "Statyba "
+
+msgid "Vehicle manufacture"
+msgstr ""
+
+msgid "Nanotechnology"
+msgstr "Nano technologija "
+
+msgid "Personal armaments"
+msgstr ""
+
+msgid "Security systems droids"
+msgstr ""
+
+msgid "Power cells"
+msgstr ""
+
+msgid "Furniture"
+msgstr "Baldai"
+
+msgid "X-COM"
+msgstr "X-comas "
+
+msgid "Alien"
+msgstr "Ateiviai "
+
+msgid "Government"
+msgstr "Valdžia "
+
+msgid "Megapol"
+msgstr "Megapolis"
+
+msgid "Cult of Sirius"
+msgstr "Sirijaus kulta "
+
+msgid "Marsec"
+msgstr "Merscas "
+
+msgid "Superdynamics"
+msgstr "Super dinamika "
+
+msgid "General Metro"
+msgstr "Įprastas metro"
+
+msgid "Cyberweb"
+msgstr "kiber tinklas"
+
+msgid "Transtellar"
+msgstr "Transtelleris "
+
+msgid "Solmine"
+msgstr "Sol-kasykla"
+
+msgid "Sensovision"
+msgstr "Sensovizija "
+
+msgid "Lifetree"
+msgstr "Gyvybės medis"
+
+msgid "Nutrivend"
+msgstr ""
+
+msgid "Evonet"
+msgstr "Evo-netas"
+
+msgid "Sanctuary Clinic"
+msgstr ""
+
+msgid "Nanotech"
+msgstr "Nano-techas"
+
+msgid "Energen"
+msgstr ""
+
+msgid "Synthemesh"
+msgstr ""
+
+msgid "Gravball League"
+msgstr ""
+
+msgid "Psyke"
+msgstr ""
+
+msgid "Diablo"
+msgstr ""
+
+msgid "Osiron"
+msgstr ""
+
+msgid "S.E.L.F."
+msgstr "S.A.V.A.S "
+
+msgid "Mutant Alliance"
+msgstr "Mutantų sajunga"
+
+msgid "Extropians"
+msgstr ""
+
+msgid "Technocrats"
+msgstr "Teknokratai"
+
+msgid "Civilian"
+msgstr "Civiliai "
+
+msgid "#X-COM"
+msgstr "#X-COMAS"
+
+msgid "#Alien"
+msgstr "#Ateiviai "
+
+msgid "#Government"
+msgstr "#Valdžia"
+
+msgid "#Police"
+msgstr "#Policija "
+
+msgid "#Corporation"
+msgstr "#Korporacija "
+
+msgid "#Psiclone gang"
+msgstr "#Psi-konlų gauja "
+
+msgid "#Cult"
+msgstr "#Kulta "
+
+msgid "#Cyborg"
+msgstr "#Kyborgas"
+
+msgid "#Hybrid"
+msgstr "#Hibridas "
+
+msgid "#Sectoid"
+msgstr "#Sektoidas "
+
+msgid "#Political"
+msgstr "#Politinė "
+
+msgid "The following people have been reported dead:"
+msgstr ""
+
+msgid "has been reported dead."
+msgstr "Buvo pranešti negyvu."
+
+msgid "Dank"
+msgstr ""
+
+msgid "Dingy"
+msgstr ""
+
+msgid "Reasonable"
+msgstr "Normaliai"
+
+msgid "OK"
+msgstr "Gerai"
+
+msgid "Nice"
+msgstr "Labai gerai"
+
+msgid "Good"
+msgstr "Puikiai"
+
+msgid "Pleasant"
+msgstr ""
+
+msgid "Pleasing"
+msgstr ""
+
+msgid "Expensive"
+msgstr "Brangus"
+
+msgid "Luxurious"
+msgstr ""
+
+msgid "Exclusive"
+msgstr ""
+
+msgid "At"
+msgstr ""
+
+msgid "Returning to base"
+msgstr "Grįžta į bazę"
+
+msgid "Observation Duty"
+msgstr "Žvalgos pareiga"
+
+msgid "Searching for"
+msgstr "Ieško "
+
+msgid "Tailing"
+msgstr ""
+
+msgid "Spying"
+msgstr "Šnipinėja "
+
+msgid "Reporting to base"
+msgstr "Prisistatė bazėje "
+
+msgid "Fusion Powerfuel"
+msgstr "sintezės energinis kuras"
+
+msgid "Elerium-115"
+msgstr "Eleris-115"
+
+msgid "Zorium"
+msgstr "Zoris"
+
+msgid "Multi-Cannon Round"
+msgstr ""
+
+msgid "Janitor Missile"
+msgstr "Valytojo raketa "
+
+msgid "Justice Missile"
+msgstr "Teisingumo raketa "
+
+msgid "Prophet Missile"
+msgstr "Pranašo raketa"
+
+msgid "Retribution Missile"
+msgstr "Bausmės raketa"
+
+msgid "Disruptor Bomb"
+msgstr "Strigdymo granata "
+
+msgid "Stasis Bomb"
+msgstr "Sąstingio bomba "
+
+msgid "Disruptor Multi-Bomb"
+msgstr ""
+
+msgid "Repeater 40mm Cannon Round"
+msgstr "Kartotinės 40mm patrankos raundai"
+
+msgid "Airguard 52mm Cannon Round"
+msgstr "Oro saugos 52mm patrankos raundai"
+
+msgid "Ground Launched Missile"
+msgstr "žemės paleista raketa"
+
+msgid "Air Defense Missile"
+msgstr "Oro apsaugos raketa"
+
+msgid "#Megapol Lawpistol Clip"
+msgstr "#Megapolio teisingumo pistoleto apkaba "
+
+msgid "#Marsec M4000 Gun Clip"
+msgstr "#Marseko m4000 ginklo apkaba "
+
+msgid "#Megapol Laser Pod"
+msgstr "#Megapolio lazerio indas "
+
+msgid "#Auto Cannon AP Clip"
+msgstr "# automatinės patrankos ŠP apkaba "
+
+msgid "#Auto Cannon HE Clip"
+msgstr "#Automatinės patrankos DS apkaba "
+
+msgid "#Auto Cannon I Clip"
+msgstr "Automatinės patrankos D apkaba"
+
+msgid "#Megapol Plasma Pod"
+msgstr "#Megapolio plazmos indas"
+
+msgid "#Heavy Launcher Alien Gas Missile"
+msgstr "#Sunkiosios patrankos ateivių dujų raketa"
+
+msgid "#Heavy Launcher Blaster MIssile"
+msgstr ""
+
+msgid "#Heavy Launcher Incendiary Missile"
+msgstr ""
+
+msgid "#MiniLauncher Alien Gas Missile"
+msgstr ""
+
+msgid "#MiniLauncher HE Missile"
+msgstr ""
+
+msgid "#MiniLauncher I Missile"
+msgstr ""
+
+msgid "#Toxigun A-Clip"
+msgstr "#Toksiginklo a-apkaba"
+
+msgid "#Toxigun B-Clip"
+msgstr "#Toksiginklo B-apkaba"
+
+msgid "#Toxigun C-Clip"
+msgstr "#Toksiginklo C-apkaba"
+
+msgid "#Brainsucker Pod"
+msgstr "#Smegenų siurbiko indas"
+
+msgid "#Entropy Pod"
+msgstr ""
+
+msgid "#Dimension Missile"
+msgstr "#Dimensinė raketa "
+
+msgid "#Tracker Gun Clip"
+msgstr ""
+
+msgid ""
+"#The applicants were given a variety of agility and speed tests; the "
+"combined result is shown."
+msgstr ""
+
+msgid "#Stamina was tested with an 'until you drop' style assault course."
+msgstr ""
+
+msgid ""
+"#Reaction times were carefully tested, using both electronic and traditional"
+" methods."
+msgstr ""
+
+msgid ""
+"#A selection of exercises were monitored to obtain the strength rating of "
+"the applicants."
+msgstr ""
+
+msgid "#This is an initial estimate of the applicants' psychic abilities."
+msgstr ""
+
+msgid ""
+"#The applicants were tested with a selection of traditional firearms to see "
+"how they would fare in a basic sniper situation."
+msgstr ""
+
+msgid ""
+"#The applicants were tested using advanced simulator technologies; a "
+"combined result is shown for on road/off road/flying vehicles."
+msgstr ""
+
+msgid ""
+"#Perception is the ability to spot small, but occasionally vital, details "
+"that others may miss; it was tested using an extensive observation test."
+msgstr ""
+
+msgid ""
+"#Biochemistry - the ability to perform research furthering understanding of "
+"the chemistry of living organisms. The values shown below were obtained from"
+" the governing body for Biochemistry."
+msgstr "#Biochemija-sugebėjimas atlikti tyrimus, tobulinant mūsu suprantimą apie gyvenančius organizmus. Skaičiai apačioje buvo gauti iš valdančio biochemijos kūno"
+
+msgid ""
+"#Quantum Physics - the ability to perform research leading to a greater "
+"understanding of the area of physics exploited by Alien technologies. The "
+"values shown below were obtained from the governing body for physics."
+msgstr ""
+
+msgid ""
+"#Engineering skills - repairing cars/flying vehicles, as well as the "
+"production of weapons or devices."
+msgstr ""
+
+msgid "#Weapons for vehicles"
+msgstr ""
+
+msgid "#Engines for vehicles"
+msgstr ""
+
+msgid "#Equipment for vehicles"
+msgstr ""
+
+msgid "#Prefab vehicles"
+msgstr ""
+
+msgid "#Armor for personnel"
+msgstr "#Šarvai personalui"
+
+msgid "#Equipment for personnel"
+msgstr ""
+
+msgid "Help Window"
+msgstr "Pagalbos langas"
+
+msgid "Cancel"
+msgstr "Atšaukti"
+
+msgid "Agent"
+msgstr "Agentas"
+
+msgid "Engineer"
+msgstr "inžinierius"
+
+msgid "Biochemist"
+msgstr "Biochemikas "
+
+msgid "Quantum Physicist"
+msgstr "Kvantinis Fizikas "
+
+msgid "Agility"
+msgstr ""
+
+msgid "Stamina"
+msgstr ""
+
+msgid "Reactions"
+msgstr "Reakcija"
+
+msgid "Strength"
+msgstr "Stiprumas"
+
+msgid "Psi"
+msgstr "Psi"
+
+msgid "Accuracy"
+msgstr "Taiklumas"
+
+msgid "Piloting"
+msgstr "Pilotavimas"
+
+msgid "Perception"
+msgstr ""
+
+msgid "Biochemistry"
+msgstr "Biochemija"
+
+msgid "Quantum Physics"
+msgstr "Kvantinė fizika"
+
+msgid "Engineering"
+msgstr "inžinerika "
+
+msgid "UFOpaedia tool bar: '<<<<'"
+msgstr ""
+
+msgid "UFOpaedia tool bar: '<<'"
+msgstr ""
+
+msgid "UFOpaedia tool bar: '>>'"
+msgstr ""
+
+msgid "UFOpaedia tool bar: '>>>>'"
+msgstr ""
+
+msgid "UFOpaedia tool bar: 'OK'"
+msgstr ""
+
+msgid "#There is no help available for this item."
+msgstr ""
+
+msgid "#Keeps the changes you have made and returns to the previous screen."
+msgstr ""
+
+msgid ""
+"#Cancels (forgets) any changes you have made on this screen and returns to "
+"the previous screen."
+msgstr ""
+
+msgid ""
+"#This displays a list of agents available for recruitment, or currently "
+"employed at the selected base."
+msgstr ""
+
+msgid ""
+"#This displays a list of engineers available for recruitment, or currently "
+"employed at the selected base."
+msgstr ""
+
+msgid ""
+"#This displays a list of Bio-Scientists available for recruitment, or "
+"currently employed at the selected base."
+msgstr ""
+
+msgid ""
+"#This displays a list of Quantum-Scientists available for recruitment, or "
+"currently employed at the selected base."
+msgstr ""
+
+msgid ""
+"#When the agility button is set the bar graphs show the relative agility of "
+"the listed agents."
+msgstr ""
+
+msgid ""
+"#When the stamina button is set the bar graphs show the relative stamina of "
+"the listed agents."
+msgstr ""
+
+msgid ""
+"#When the reactions button is set the bar graphs show the relative reaction "
+"ratings of the listed agents."
+msgstr ""
+
+msgid ""
+"#When the strength button is set the bar graphs show the relative strengths "
+"of the listed agents."
+msgstr ""
+
+msgid ""
+"#When the Psi button is set the bar graphs show the relative Psionic ability"
+" of the listed agents."
+msgstr ""
+
+msgid ""
+"#When the accuracy button is set the bar graphs show the relative ability to"
+" use ranged weapons for the listed agents."
+msgstr ""
+
+msgid ""
+"#When the piloting button is set the bar graphs show the relative "
+"driving/flying skills of the listed agents."
+msgstr ""
+
+msgid ""
+"#When this button is set, the graph shows the relative perception levels of "
+"the listed scientists."
+msgstr ""
+
+msgid ""
+"#When this button is set, the graph shows the Biochemistry competency level "
+"of the listed scientists."
+msgstr ""
+
+msgid ""
+"#When this button is set, the graph shows the Quantum mechanics competency "
+"levels of the listed scientists."
+msgstr ""
+
+msgid ""
+"#When this button is set, the graph shows the engineering skill level of the"
+" listed scientists."
+msgstr ""
+
+msgid "This button skips to the previous UFOpaedia section."
+msgstr ""
+
+msgid "This button skips to the previous UFOpaedia page."
+msgstr ""
+
+msgid "This button skips to the next UFOpaedia page."
+msgstr ""
+
+msgid "This button skips to the next UFOpaedia section."
+msgstr ""
+
+msgid ""
+"This button exits the UFOpaedia and returns you to what you where doing "
+"before."
+msgstr ""
+
+msgid "Error"
+msgstr ""
+
+msgid "No living space"
+msgstr ""
+
+msgid "Not enough money"
+msgstr "Neužtenka pinigų"
+
+msgid "Base already selected"
+msgstr ""
+
+msgid "No Transports available"
+msgstr "Nėra jokio galimo transporto"
+
+msgid "No Transport space available"
+msgstr ""
+
+msgid "No room"
+msgstr "Nėra vietos"
+
+msgid "Not enough parts"
+msgstr "Neužtenka detalių"
+
+msgid "Not enough space"
+msgstr "Neužtenka vietos"
+
+msgid "No Agents Selected"
+msgstr ""
+
+msgid "Out of money"
+msgstr "Nebėra pinigų"
+
+msgid "File not found"
+msgstr "Failas nerastas"
+
+msgid "Equipment in use"
+msgstr ""
+
+msgid "Cannot create scenario"
+msgstr ""
+
+msgid "Alien artifact"
+msgstr "Ateivių artefaktas "
+
+msgid "Map too small"
+msgstr "Žemėlapis per mažas"
+
+msgid "An unlisted error has occured."
+msgstr ""
+
+msgid ""
+"You will need to build more living space, or sack some agents before "
+"recruiting more staff."
+msgstr "Tau reikia pastatyti daugiau gyvenamųjų patalpų arba atleisti agentus prieš pasamdant daugiau."
+
+msgid "You cannot afford to employ any more staff."
+msgstr "Tau neužtenka pinigų kad pasamdytai daugiau darbuotojų "
+
+msgid ""
+"You must select two different bases to transfer to / from, you may not "
+"select the same base twice."
+msgstr ""
+
+msgid ""
+"There are no transport crafts available to deliver all of your new stock."
+msgstr ""
+
+msgid "There is not enough cargo space to deliver all of your new stock."
+msgstr ""
+
+msgid "You have no more room in this facility."
+msgstr "Tu nebeturi vietos šiai patalpai."
+
+msgid "You do not have enough parts to make this item."
+msgstr ""
+
+msgid ""
+"You do not have enough room to make any more of this item. Manufacture "
+"stopped."
+msgstr ""
+
+msgid "#You need to select the agents you want to put on observation duty."
+msgstr ""
+
+msgid ""
+"You need to select the agents you want to become active within the building."
+msgstr ""
+
+msgid "You need to select the agents you want to investigate this building."
+msgstr ""
+
+msgid "You do not have available funds to make the requested purchases."
+msgstr ""
+
+msgid "No scenario files could be found."
+msgstr ""
+
+msgid "You cannot afford to pay off this organization."
+msgstr ""
+
+msgid "Passenger module cannot be removed as it is currently in use."
+msgstr ""
+
+msgid ""
+"The scenario must have at least two organizations containing units to play."
+msgstr ""
+
+msgid "You must research Alien technology before you can use it."
+msgstr "Tu turi ištirti šia ateivių technologija kad galėtai ją panaudoti"
+
+msgid "This map may be to small to deploy all the units, continue anyway?"
+msgstr ""
+
+msgid ""
+"#First you select the base that you wish to recruit some staff to, this base"
+" must have some spare living space. You select a base by clicking on the "
+"desired mini-base icon (shown)."
+msgstr ""
+
+msgid ""
+"#The second thing to do is click on the button for the type of person you "
+"wish to recruit, here we have agents selected."
+msgstr ""
+
+msgid ""
+"#Depending on which type of person you selected a bar of skill buttons is "
+"shown, from which a number of relative bar graphs is be displayed. (see "
+"point 4)"
+msgstr ""
+
+msgid ""
+"#This is the list of people up for selection, there ability at the selected "
+"skill is shown as a bar, your current staff are shown as blue, and the "
+"applicants are shown in yellow. By clicking you can sack or hire "
+"respectively."
+msgstr ""
+
+msgid "#Don't forget to take there wages into account!!!"
+msgstr "#nepamiršk įsiminti jų algas"
+
+msgid ""
+"#Once you are happy with your selection, click OK, otherwise, click Cancel "
+"and everything will go back to normal."
+msgstr "Kai esi laimingas su savo pasirinkimu, paspausk ok, antraip, paspausk cancel ir viskas sugrįš į normą "
+
+msgid "Buying and Selling"
+msgstr "Pirkti ir parduoti"
+
+msgid "MONEY> $"
+msgstr ""
+
+msgid "Weapons"
+msgstr "Ginklai"
+
+msgid "Engines"
+msgstr "Varikliai"
+
+msgid "Equipment"
+msgstr "Įranga "
+
+msgid "Vehicles"
+msgstr "Transporto priemonės "
+
+msgid "Vehicle maintenance"
+msgstr "transporto priemonių taisymas"
+
+msgid "Armor"
+msgstr "Šarvai"
+
+msgid "Personnel"
+msgstr "Personalas"
+
+msgid "PRICE"
+msgstr "KAINA"
+
+msgid "STOCK"
+msgstr ""
+
+msgid "PRICE: $"
+msgstr "KAINA: $"
+
+msgid "STOCK:"
+msgstr ""
+
+msgid "Buy:"
+msgstr ""
+
+msgid "Sell:"
+msgstr ""
+
+msgid "AT>"
+msgstr ""
+
+msgid "PERSONNEL RECRUITMENT"
+msgstr ""
+
+msgid "Living space:"
+msgstr ""
+
+msgid "Total>"
+msgstr ""
+
+msgid "Remaining>"
+msgstr ""
+
+msgid "##Psi"
+msgstr ""
+
+msgid "Sack"
+msgstr ""
+
+msgid "Employ"
+msgstr ""
+
+msgid "NAME"
+msgstr ""
+
+msgid "TEST RESULT"
+msgstr ""
+
+msgid "MONTHLY SALARY"
+msgstr ""
+
+msgid "EMPLOY"
+msgstr ""
+
+msgid "No avoidance"
+msgstr ""
+
+msgid "Avoid"
+msgstr ""
+
+msgid "Do not attack"
+msgstr ""
+
+msgid "Attack"
+msgstr ""
+
+msgid "No pursuit"
+msgstr ""
+
+msgid "Pursue"
+msgstr ""
+
+msgid "No evasion"
+msgstr ""
+
+msgid "Evade Fire"
+msgstr ""
+
+msgid "Only respond to attacking units."
+msgstr ""
+
+msgid "Respond to all hostile units."
+msgstr ""
+
+msgid "Ignore hostile units."
+msgstr ""
+
+msgid "UnLocked."
+msgstr ""
+
+msgid "Locked."
+msgstr ""
+
+msgid "BUY AND SELL"
+msgstr ""
+
+msgid "Personal Equipment"
+msgstr ""
+
+msgid "Personal Armor"
+msgstr ""
+
+msgid "Vehicle Equipment"
+msgstr ""
+
+msgid "Airborne Vehicle Weapons"
+msgstr ""
+
+msgid "Airborne Vehicle Engines / Fuel"
+msgstr ""
+
+msgid "Road Vehicle Weapons"
+msgstr ""
+
+msgid "Road Vehicle Engines / Fuel"
+msgstr ""
+
+msgid "Funds exceeded"
+msgstr ""
+
+msgid "Order limited by your available funds."
+msgstr ""
+
+msgid "Storage space exceeded"
+msgstr ""
+
+msgid "Order limited by the available storage space at this base."
+msgstr ""
+
+msgid "Order canceled by the hostile manufacturer."
+msgstr ""
+
+msgid "Industrial Action"
+msgstr ""
+
+msgid ""
+"Industrial action by the Air Transport and General Workers Union has "
+"prevented immediate delivery of some of the items you ordered. To prevent a "
+"backlog of orders building up, the organization(s) concerned have canceled "
+"your order(s) and refunded your money. They apologize for the inconvenience "
+"caused."
+msgstr ""
+
+msgid "Vehicle Licensing Problem"
+msgstr ""
+
+msgid ""
+"An unprecedented workload at the Vehicle Licensing Center has prevented "
+"immediate registration of at least one vehicle ordered by you. To prevent a "
+"backlog of orders building up, the organization(s) concerned have canceled "
+"your order(s) and refunded your money. They apologize for the inconvenience "
+"caused."
+msgstr ""
+
+msgid "Cancel Buy and Sell"
+msgstr ""
+
+msgid "Are you sure?"
+msgstr ""
+
+msgid "Pay:"
+msgstr ""
+
+msgid "ALIEN TAKEOVER"
+msgstr ""
+
+msgid ""
+"Our intelligence sources have informed us that the Aliens have taken control"
+" of this organization. This means that they will actively assist the Aliens "
+"and oppose the work of X-COM. We will be forced to stop all trade relations "
+"with them and must be cautious when conducting operations within their "
+"buildings. Right and wrong no longer exists for these people, we must do all"
+" we can to protect the city from them. This must not be the end. We will "
+"fight on."
+msgstr ""
+
+msgid "ALIEN INFILTRATION"
+msgstr ""
+
+msgid "HIRE AND FIRE"
+msgstr ""
+
+msgid "FIRE"
+msgstr ""
+
+msgid "X-COM Agents"
+msgstr ""
+
+msgid "Biochemists"
+msgstr ""
+
+msgid "Engineers"
+msgstr ""
+
+msgid "Quantum Physicists"
+msgstr ""
+
+msgid "Accommodation exceeded"
+msgstr ""
+
+msgid "Hiring not possible due to lack of available accommodation."
+msgstr ""
+
+msgid "Hiring not possible due to lack of funds."
+msgstr ""
+
+msgid "Weekly Salary"
+msgstr ""
+
+msgid "Health"
+msgstr ""
+
+msgid "Speed"
+msgstr ""
+
+msgid "Bravery"
+msgstr ""
+
+msgid "Psi-energy"
+msgstr ""
+
+msgid "Psi-attack"
+msgstr ""
+
+msgid "Psi-defense"
+msgstr ""
+
+msgid "Biochemistry skill"
+msgstr ""
+
+msgid "Engineering skill"
+msgstr ""
+
+msgid "Quantum physics skill"
+msgstr ""
+
+msgid "Cancel Hire and Fire"
+msgstr ""
+
+msgid "Loading"
+msgstr ""
+
+msgid "Switching to Alien Dimension"
+msgstr ""
+
+msgid "Returning to city"
+msgstr ""
+
+msgid "Confirm Sales/Purchases"
+msgstr ""
+
+msgid "Confirm Orders"
+msgstr ""
+
+msgid "unit(s) hired"
+msgstr ""
+
+msgid "unit(s) fired."
+msgstr ""
+
+msgid "AGENT LOCATION"
+msgstr ""
+
+msgid "VEHICLE LOCATION"
+msgstr ""
+
+msgid "Unassigned Agents"
+msgstr ""
+
+msgid "Vehicle Assignments"
+msgstr ""
+
+msgid ""
+"X-COM is ALLIED with this organization. The relationship cannot be improved."
+msgstr ""
+
+msgid ""
+"This organization is under Alien control. The Alien race will not enter "
+"negotiations with X-COM."
+msgstr ""
+
+msgid ""
+"Whilst X-COM continue to oppose our Alien friends we will remain hostile. "
+"Negotiations are impossible."
+msgstr ""
+
+msgid "It will cost: $"
+msgstr ""
+
+msgid "to improve relations to:"
+msgstr ""
+
+msgid "ALLIED"
+msgstr ""
+
+msgid "FRIENDLY"
+msgstr ""
+
+msgid "NEUTRAL"
+msgstr "Neutralus"
+
+msgid "UNFRIENDLY"
+msgstr "Nedraugiškas"
+
+msgid "Pay organization"
+msgstr ""
+
+msgid "Show ten most infiltrated organizations not under Alien control."
+msgstr ""
+
+msgid "BASE ATTACK"
+msgstr ""
+
+msgid ""
+"Hostile forces have invaded your base. Equip your Agents before battle."
+msgstr ""
+
+msgid "Dimension Gates"
+msgstr ""
+
+msgid "The Alien Dimension"
+msgstr "Ateivių dimensija "
+
+msgid "One Way To Win"
+msgstr ""
+
+msgid "UFO spotted."
+msgstr "UFO užfiksuotas "
+
+msgid "Alien corpse found."
+msgstr ""
+
+msgid "Live Alien spotted."
+msgstr ""
+
+msgid "Not enough money to buy this building."
+msgstr ""
+
+msgid "Planning permission refused for this building."
+msgstr ""
+
+msgid "The owner does not wish to sell this building."
+msgstr ""
+
+msgid "There has been an explosion."
+msgstr ""
+
+msgid "Building under attack:"
+msgstr ""
+
+msgid "Attacked by:"
+msgstr ""
+
+msgid "destroyed by"
+msgstr ""
+
+msgid "Vehicle heavily damaged:"
+msgstr ""
+
+msgid "Vehicle moderately damaged:"
+msgstr ""
+
+msgid "Vehicle lightly damaged:"
+msgstr ""
+
+msgid ": Weapon out of ammo:"
+msgstr ""
+
+msgid "Organization attacked:"
+msgstr ""
+
+msgid "Organization raided:"
+msgstr ""
+
+msgid "Raided by:"
+msgstr ""
+
+msgid "Organization stormed:"
+msgstr ""
+
+msgid "Stormed by:"
+msgstr ""
+
+msgid "An illegal road vehicle has been detected."
+msgstr ""
+
+msgid "An illegal flyer has been detected."
+msgstr ""
+
+msgid "Treaty signed:"
+msgstr ""
+
+msgid "Staff resign at:"
+msgstr ""
+
+msgid "Resignations:"
+msgstr ""
+
+msgid "Welcome to X-COM Apocalypse"
+msgstr ""
+
+msgid "Alien attacks VIP."
+msgstr ""
+
+msgid "Crazed VIP attacks VIP."
+msgstr ""
+
+msgid "Dimension gate spotted."
+msgstr ""
+
+msgid "Vehicle low on fuel:"
+msgstr ""
+
+msgid "Vehicle out of fuel:"
+msgstr ""
+
+msgid "Acquisition of:"
+msgstr ""
+
+msgid "Acquired by:"
+msgstr ""
+
+msgid "Vehicle Repaired:"
+msgstr ""
+
+msgid "Vehicle returning to base as damaged:"
+msgstr ""
+
+msgid "Vehicle has no engine:"
+msgstr ""
+
+msgid "X-COM Base destroyed due to collapsing building."
+msgstr ""
+
+msgid "Unable to buy base as building destroyed."
+msgstr ""
+
+msgid "collapsing building"
+msgstr ""
+
+msgid "Vehicle destroyed:"
+msgstr ""
+
+msgid "UFO crash landed:"
+msgstr ""
+
+msgid "Unmanned UFO recovered:"
+msgstr ""
+
+msgid "New recruit arrived:"
+msgstr ""
+
+msgid ""
+"Our Agents are unable to find an entrance to this building. Our Scientists "
+"back at HQ must complete their research."
+msgstr ""
+
+msgid "X-COM base destroyed by hostile forces."
+msgstr ""
+
+msgid ""
+": Unable to reach destination due to damaged people tube network and / or "
+"poor diplomatic relations with Transtellar."
+msgstr ""
+
+msgid "Agent(s) rearmed:"
+msgstr ""
+
+msgid "Unit killed:"
+msgstr ""
+
+msgid "TRANSFER"
+msgstr ""
+
+msgid "Aliens"
+msgstr ""
+
+msgid "(Alive)"
+msgstr ""
+
+msgid "(Dead)"
+msgstr ""
+
+msgid "Transfer limited by available storage space."
+msgstr ""
+
+msgid "Transfer limited by available accommodation."
+msgstr ""
+
+msgid "Alien Containment space exceeded"
+msgstr ""
+
+msgid "Transfer limited by available Alien Containment space."
+msgstr ""
+
+msgid ""
+"Industrial action by the Air Transport and General Workers Union has "
+"prevented immediate execution of some of your transfer instructions. To "
+"prevent a backlog of work building up, Transtellar have canceled the "
+"affected transfers. They apologize for the inconvenience caused."
+msgstr ""
+
+msgid "Cancel Transfer"
+msgstr ""
+
+msgid "Confirm Transfers"
+msgstr ""
+
+msgid "This hostile organization refuses to carry out the requested transfer."
+msgstr ""
+
+msgid "January,"
+msgstr ""
+
+msgid "February,"
+msgstr ""
+
+msgid "March,"
+msgstr ""
+
+msgid "April,"
+msgstr ""
+
+msgid "May,"
+msgstr ""
+
+msgid "June,"
+msgstr ""
+
+msgid "July,"
+msgstr ""
+
+msgid "August,"
+msgstr ""
+
+msgid "September,"
+msgstr ""
+
+msgid "October,"
+msgstr ""
+
+msgid "November,"
+msgstr ""
+
+msgid "December,"
+msgstr ""
+
+msgid "Bio-Transport"
+msgstr ""
+
+msgid "Brainsucker Pods"
+msgstr "Smegenų siurbiko puodai "
+
+msgid "Brainsucker Autopsy"
+msgstr "Smegenų siurbiko skrodimas "
+
+msgid "Brainsucker"
+msgstr "Smegenų siurbikas "
+
+msgid "Multiworm Egg Autopsy"
+msgstr ""
+
+msgid "Multiworm Egg"
+msgstr ""
+
+msgid "Multiworm Autopsy"
+msgstr ""
+
+msgid "Multiworm"
+msgstr ""
+
+msgid "Hyperworm Autopsy"
+msgstr ""
+
+msgid "Hyperworm"
+msgstr ""
+
+msgid "Chrysalis Autopsy"
+msgstr ""
+
+msgid "Chrysalis"
+msgstr ""
+
+msgid "Anthropod Autopsy"
+msgstr ""
+
+msgid "Anthropod"
+msgstr ""
+
+msgid "Psimorph Autopsy"
+msgstr ""
+
+msgid "Psimorph"
+msgstr ""
+
+msgid "Spitter Autopsy"
+msgstr ""
+
+msgid "Spitter"
+msgstr ""
+
+msgid "Megaspawn Autopsy"
+msgstr ""
+
+msgid "Megaspawn"
+msgstr ""
+
+msgid "Popper Autopsy"
+msgstr ""
+
+msgid "Popper"
+msgstr ""
+
+msgid "Skeletoid Autopsy"
+msgstr ""
+
+msgid "Skeletoid"
+msgstr ""
+
+msgid "Micronoid Autopsy"
+msgstr ""
+
+msgid "Micronoid"
+msgstr ""
+
+msgid "Queenspawn Autopsy"
+msgstr ""
+
+msgid "Queenspawn"
+msgstr ""
+
+msgid "Overspawn Autopsy"
+msgstr ""
+
+msgid "The Alien Genetic Structure"
+msgstr ""
+
+msgid "The Alien Life Cycle"
+msgstr ""
+
+msgid "The Real Alien Threat"
+msgstr ""
+
+msgid "Biological Warfare"
+msgstr ""
+
+msgid "Toxin Type B"
+msgstr ""
+
+msgid "Toxin Type C"
+msgstr ""
+
+msgid "Alien Gas"
+msgstr ""
+
+msgid "Disruptor Armor"
+msgstr ""
+
+msgid "Disruptor Inversion Bomb"
+msgstr ""
+
+msgid "Stasis Field Bomb"
+msgstr ""
+
+msgid "X-COM Advanced Control System"
+msgstr ""
+
+msgid "Alien Propulsion System"
+msgstr ""
+
+msgid "Alien Control System"
+msgstr ""
+
+msgid "Alien Energy Source"
+msgstr ""
+
+msgid "UFO type 1"
+msgstr ""
+
+msgid "UFO type 2"
+msgstr ""
+
+msgid "UFO type 3"
+msgstr ""
+
+msgid "UFO type 4"
+msgstr ""
+
+msgid "UFO type 5"
+msgstr ""
+
+msgid "UFO type 6"
+msgstr ""
+
+msgid "UFO type 7"
+msgstr ""
+
+msgid "UFO type 8"
+msgstr ""
+
+msgid "UFO type 9"
+msgstr ""
+
+msgid "UFO type 10"
+msgstr ""
+
+msgid "Alien building"
+msgstr ""
+
+msgid "One way to win"
+msgstr ""
+
+msgid ""
+"The mysterious atmospheric phenomenon from which the UFOs are emerging "
+"requires urgent attention. We must find out where the Alien craft are coming"
+" from."
+msgstr ""
+
+msgid "We must analyze the data from our Alien Dimension probe."
+msgstr ""
+
+msgid ""
+"We need to build an automated device that can be sent through a Dimension "
+"gate. This will provide invaluable data which can prepare us for manned "
+"missions."
+msgstr ""
+
+msgid ""
+"The capture and study of live Alien specimens will help us understand the "
+"nature of the Alien threat. In order to do this we need an inter-dimensional"
+" transport vehicle that can contain and sustain Alien life forms."
+msgstr ""
+
+msgid ""
+"A craft capable of carrying our agents into the Alien Dimensions is "
+"required. The vast Alien structures must be explored and studied. This will "
+"help us understand their function and their weaknesses."
+msgstr ""
+
+msgid ""
+"In order to combat the increasing aggression and power of Alien craft we "
+"must build an inter-dimensional weapons platform."
+msgstr ""
+
+msgid ""
+"The Alien threat can only be stopped by destroying their ability to create "
+"Dimension gates. A full assault on the Alien Dimensions requires a craft of "
+"immense power."
+msgstr ""
+
+msgid "These pods contain a dormant Alien creature."
+msgstr ""
+
+msgid ""
+"This small Alien creature has been seen to attack humans by jumping on the "
+"head and gripping with all its limbs."
+msgstr ""
+
+msgid ""
+"A live Brainsucker is a valuable specimen - we must research it as soon as "
+"possible."
+msgstr "Gyvas smegenų siurbikas yra brangus egzempliorius - mes turime ištirti jį kuo įmanoma greičiau."
+
+msgid "This stationary Alien life form appears to be some form of Alien egg."
+msgstr ""
+
+msgid ""
+"A live Multiworm egg gives us an excellent opportunity to observe the Alien "
+"life cycle in progress."
+msgstr ""
+
+msgid ""
+"The Multiworm corpse decays rapidly, consumed by its own defense mechanisms."
+" If research is not undertaken soon then we will not be able to preserve the"
+" remains."
+msgstr ""
+
+msgid ""
+"A live Multiworm is a rare catch and must be studied immediately as it is a "
+"highly unstable life form."
+msgstr ""
+
+msgid ""
+"The Hyperworm corpse is extremely heavy for its size and appears to be a "
+"primitive creature."
+msgstr ""
+
+msgid "The Hyperworm is a small, highly active carnivore."
+msgstr ""
+
+msgid ""
+"The remains of an Alien Chrysalis produces pungent fumes as it decays "
+"rapidly."
+msgstr ""
+
+msgid ""
+"The study of a live Alien Chrysalis could represent a significant advance in"
+" our knowledge of the Alien life cycle."
+msgstr ""
+
+msgid ""
+"The Anthropod is the Alien creature that most resembles the human form."
+msgstr ""
+
+msgid "The Anthropod is a robust humanoid Alien soldier."
+msgstr ""
+
+msgid "The Psimorph creature is a large mass of tentacles."
+msgstr ""
+
+msgid ""
+"A living Psimorph is an extremely dangerous entity which must be kept "
+"unconscious, otherwise its Psionic ability would result in subversion of our"
+" personnel."
+msgstr ""
+
+msgid ""
+"This ungainly creature has a huge funnel for propelling a deadly liquid."
+msgstr ""
+
+msgid "The Spitter is humanoid in form but has a funnel shaped head."
+msgstr ""
+
+msgid "An extremely large warrior creature."
+msgstr ""
+
+msgid ""
+"Due to the size of the Megaspawn we need a lot of free space in the Alien "
+"Containment facility to hold it and an advanced Bio-lab to study it."
+msgstr ""
+
+msgid "A small bipedal Alien creature."
+msgstr ""
+
+msgid "An extremely dangerous Alien that must be kept sedated."
+msgstr ""
+
+msgid "A humanoid Alien with an exo-skeleton structure."
+msgstr ""
+
+msgid "An intelligent, airborne humanoid Alien warrior."
+msgstr ""
+
+msgid "An unusual jelly like Alien life form."
+msgstr ""
+
+msgid "A swarming amoebae-like Alien life form."
+msgstr ""
+
+msgid "This is a huge egg laying Alien creature."
+msgstr ""
+
+msgid ""
+"The enormous hulk of the Queenspawn requires great effort to transport and "
+"contain."
+msgstr ""
+
+msgid "The Overspawn is an extremely dangerous Alien terror weapon."
+msgstr ""
+
+msgid "A gigantic monster that has ravaged the city."
+msgstr ""
+
+msgid "Investigate the genetic relationships between Alien life forms."
+msgstr ""
+
+msgid "Research the primary stages of the Alien life cycle."
+msgstr ""
+
+msgid ""
+"Investigate the source of the Alien intelligence and their secret purpose."
+msgstr ""
+
+msgid ""
+"The aim is to develop a toxin that specifically targets the early stages of "
+"the Alien life cycle."
+msgstr ""
+
+msgid "A toxin needs to be developed to combat the higher Alien life forms."
+msgstr ""
+
+msgid ""
+"A powerful Biological warfare weapon designed to target the Micronoid "
+"parasites."
+msgstr ""
+
+msgid ""
+"There is a possibility that a multi-toxin can be suspended in gaseous form, "
+"which would increase the efficiency of our Biological weaponry."
+msgstr ""
+
+msgid "A security station using Alien disrupter technology."
+msgstr ""
+
+msgid "For researching advanced Alien organic technology."
+msgstr ""
+
+msgid "For researching advanced Alien technology."
+msgstr ""
+
+msgid "To secure and research large or dangerous Alien life forms."
+msgstr ""
+
+msgid "Needed for building new vehicle types."
+msgstr ""
+
+msgid "An Alien beam weapon."
+msgstr ""
+
+msgid "An intelligent Alien proximity mine"
+msgstr ""
+
+msgid "Fires Brainsucker pods."
+msgstr "Šaudo smegenų siurbikų indus"
+
+msgid "An Alien organic weapon."
+msgstr ""
+
+msgid "Ammunition for an Alien weapon."
+msgstr ""
+
+msgid "An Alien guided missile weapon."
+msgstr ""
+
+msgid "An Alien guided missile."
+msgstr ""
+
+msgid "A powerful Alien grenade."
+msgstr ""
+
+msgid "An Alien energy shield."
+msgstr ""
+
+msgid "An Alien teleportation device."
+msgstr ""
+
+msgid "An Alien device which limits detection."
+msgstr ""
+
+msgid ""
+"A device based on disruption field research which could be used to disable "
+"Alien disruption shields."
+msgstr ""
+
+msgid "Personal armor can be developed based on disrupter research"
+msgstr ""
+
+msgid "A beam weapon deployed on Alien craft."
+msgstr ""
+
+msgid "An Alien guided missile launched from Alien craft."
+msgstr ""
+
+msgid "An Alien missile with an immobilizing effect."
+msgstr ""
+
+msgid "A multiple warhead missile."
+msgstr ""
+
+msgid "A superior weapons control system."
+msgstr ""
+
+msgid "For transporting Alien life forms."
+msgstr ""
+
+msgid "Reduced detection of vehicles."
+msgstr ""
+
+msgid "Instantly transports a vehicle over short ranges."
+msgstr ""
+
+msgid "Transports a vehicle between Dimensions."
+msgstr ""
+
+msgid "Alien craft propulsion."
+msgstr ""
+
+msgid "Alien craft guidance System."
+msgstr ""
+
+msgid "Alien craft energy generator."
+msgstr ""
+
+msgid "Alien inter-dimensional craft"
+msgstr ""
+
+msgid "This research could reveal a weakness in the Alien defenses."
+msgstr ""
+
+msgid "We must discover a way to beat the Aliens once and for all"
+msgstr ""
+
+msgid "Disruptor Inversion Bomb launcher"
+msgstr ""
+
+msgid "Stasis Field Bomb launcher"
+msgstr ""
+
+msgid "Disruptor Multi-Bomb launcher"
+msgstr ""
+
+msgid "Toxin Type A"
+msgstr ""
+
+msgid "Heavy Launcher Alien Gas Missile"
+msgstr ""
+
+msgid "Mini Launcher Alien Gas Missile"
+msgstr ""
+
+msgid "Disruptor Armor (legs)"
+msgstr ""
+
+msgid "Disruptor Armor (torso)"
+msgstr ""
+
+msgid "Disruptor Armor (right arm)"
+msgstr ""
+
+msgid "Disruptor Armor (left arm)"
+msgstr ""
+
+msgid "Disruptor Armor (head)"
+msgstr ""
+
+msgid "The Senate considers X-COM to be a worthy ally."
+msgstr ""
+
+msgid "The Senate is content with our mutually beneficial relationship."
+msgstr ""
+
+msgid ""
+"The Senate is less favorable to the X-COM organization and thereis a danger "
+"that the relationship could deteriorate."
+msgstr ""
+
+msgid ""
+"The Senate is now openly hostile to X-COM and no further fundingwill be "
+"available."
+msgstr ""
+
+msgid "Alien Egg"
+msgstr ""
+
+msgid "Micronoid Aggregate"
+msgstr ""
+
+msgid "Rookie"
+msgstr ""
+
+msgid "Squaddie"
+msgstr ""
+
+msgid "Squad leader"
+msgstr ""
+
+msgid "Sergeant"
+msgstr ""
+
+msgid "Captain"
+msgstr ""
+
+msgid "Colonel"
+msgstr ""
+
+msgid "Commander"
+msgstr ""
+
+msgid "Ammo Clip"
+msgstr ""
+
+msgid "Structure Probe"
+msgstr ""
+
+msgid "Vortex Analyser"
+msgstr ""
+
+msgid "Multitracker"
+msgstr ""
+
+msgid "Medi-Kit"
+msgstr ""
+
+msgid "BLANK"
+msgstr ""
+
+msgid "1st"
+msgstr ""
+
+msgid "2nd"
+msgstr ""
+
+msgid "3rd"
+msgstr ""
+
+msgid "4th"
+msgstr ""
+
+msgid "5th"
+msgstr ""
+
+msgid "6th"
+msgstr ""
+
+msgid "7th"
+msgstr ""
+
+msgid "8th"
+msgstr ""
+
+msgid "9th"
+msgstr ""
+
+msgid "10th"
+msgstr ""
+
+msgid "11th"
+msgstr ""
+
+msgid "12th"
+msgstr ""
+
+msgid "13th"
+msgstr ""
+
+msgid "14th"
+msgstr ""
+
+msgid "15th"
+msgstr ""
+
+msgid "16th"
+msgstr ""
+
+msgid "17th"
+msgstr ""
+
+msgid "18th"
+msgstr ""
+
+msgid "19th"
+msgstr ""
+
+msgid "20th"
+msgstr ""
+
+msgid "21st"
+msgstr ""
+
+msgid "22nd"
+msgstr ""
+
+msgid "23rd"
+msgstr ""
+
+msgid "24th"
+msgstr ""
+
+msgid "25th"
+msgstr ""
+
+msgid "26th"
+msgstr ""
+
+msgid "27th"
+msgstr ""
+
+msgid "28th"
+msgstr ""
+
+msgid "29th"
+msgstr ""
+
+msgid "30th"
+msgstr ""
+
+msgid "31st"
+msgstr ""
+
+msgid "Monday"
+msgstr ""
+
+msgid "Tuesday"
+msgstr ""
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "Thursday"
+msgstr ""
+
+msgid "Friday"
+msgstr ""
+
+msgid "Saturday"
+msgstr ""
+
+msgid "Sunday"
+msgstr ""
+
+msgid "Click on building to buy"
+msgstr ""
+
+msgid "Money = $"
+msgstr ""
+
+msgid "This Building will cost $%d"
+msgstr ""
+
+msgid "Enter Name>"
+msgstr ""
+
+msgid "Cost to build"
+msgstr ""
+
+msgid "Days to build"
+msgstr ""
+
+msgid "Maintenance cost"
+msgstr ""
+
+msgid "Facility:"
+msgstr ""
+
+msgid "Number in base"
+msgstr ""
+
+msgid "Can't destroy: living quarters in use."
+msgstr ""
+
+msgid "= Accommodation in base"
+msgstr ""
+
+msgid "Number living on base"
+msgstr ""
+
+msgid "-> Fraction of accommodation in use"
+msgstr ""
+
+msgid "Can't destroy: storage in use."
+msgstr ""
+
+msgid "= Storage space in base"
+msgstr ""
+
+msgid "Storage space used"
+msgstr ""
+
+msgid "-> Fraction of storage space used"
+msgstr ""
+
+msgid "= Number of beds"
+msgstr ""
+
+msgid "Number of patients"
+msgstr ""
+
+msgid "-> Efficiency per patient"
+msgstr ""
+
+msgid "= Number of places"
+msgstr ""
+
+msgid "Number using the facilities"
+msgstr ""
+
+msgid "-> Efficiency per user"
+msgstr ""
+
+msgid "Bio-lab space in base"
+msgstr ""
+
+msgid "No project assigned"
+msgstr ""
+
+msgid "Not assigned to lab"
+msgstr ""
+
+msgid "Quantum lab space in base"
+msgstr ""
+
+msgid "Not assigned to workshop"
+msgstr ""
+
+msgid "-> Fraction of Quantum lab space assigned"
+msgstr ""
+
+msgid "Can't destroy: containment space in use."
+msgstr ""
+
+msgid "= Alien Containment space"
+msgstr ""
+
+msgid "Containment space used"
+msgstr ""
+
+msgid "-> Fraction of containment space used"
+msgstr ""
+
+msgid "Can't destroy: advanced containment space in use."
+msgstr ""
+
+msgid "= Advanced Alien Containment space"
+msgstr ""
+
+msgid "Advanced containment space used"
+msgstr ""
+
+msgid "-> Fraction of advanced containment space used"
+msgstr ""
+
+msgid "Workshop space in base"
+msgstr ""
+
+msgid "Workshop space assigned to projects"
+msgstr ""
+
+msgid "-> Fraction of Workshop space assigned"
+msgstr ""
+
+msgid "Destroy facility"
+msgstr ""
+
+msgid "ALIEN CONTAINMENT"
+msgstr ""
+
+msgid "Space required"
+msgstr ""
+
+msgid "Space in base"
+msgstr ""
+
+msgid "Advanced space required"
+msgstr ""
+
+msgid "Advanced space in base"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Size"
+msgstr ""
+
+msgid "Quantity in Alien Containment"
+msgstr ""
+
+msgid "To be Destroyed"
+msgstr ""
+
+msgid "Quantity in Advanced Alien Containment"
+msgstr ""
+
+msgid "Alive"
+msgstr ""
+
+msgid "Dead"
+msgstr ""
+
+msgid "Space Exceeded"
+msgstr ""
+
+msgid "Alien Containment space exceeded. Destroy more Aliens!"
+msgstr ""
+
+msgid "ALIEN STRUCTURE"
+msgstr ""
+
+msgid "Adjust Wage"
+msgstr ""
+
+msgid "No advice at this time."
+msgstr ""
+
+msgid "You have to reduce wages to become profitable."
+msgstr ""
+
+msgid "You should take on more staff if you wish to be productive."
+msgstr ""
+
+msgid "Increase wages to attract more staff."
+msgstr ""
+
+msgid "Cut wages to improve your profit margin."
+msgstr ""
+
+msgid "Economic Information"
+msgstr ""
+
+msgid "Current mean wage"
+msgstr ""
+
+msgid "Mean income per head:"
+msgstr ""
+
+msgid "Fixed costs at building:"
+msgstr ""
+
+msgid "Weekly revenue generated:"
+msgstr ""
+
+msgid "Current staff level:"
+msgstr ""
+
+msgid "Aliens in building"
+msgstr ""
+
+msgid "Dimension:"
+msgstr ""
+
+msgid "Charted Gates:"
+msgstr ""
+
+msgid "Uncharted Gates:"
+msgstr ""
+
+msgid "Total Gate count:"
+msgstr ""
+
+msgid "Buildings:"
+msgstr ""
+
+msgid "UFOs:"
+msgstr ""
+
+msgid "Weight:"
+msgstr ""
+
+msgid "Protection rating:"
+msgstr ""
+
+msgid "Reload time:"
+msgstr ""
+
+msgid "n/a"
+msgstr ""
+
+msgid "Blast radius:"
+msgstr ""
+
+msgid "Laser guided"
+msgstr ""
+
+msgid "Accuracy:"
+msgstr ""
+
+msgid "Power:"
+msgstr ""
+
+msgid "Recharge rate:"
+msgstr ""
+
+msgid "Location :"
+msgstr ""
+
+msgid "Base :"
+msgstr ""
+
+msgid "Traveling by people tube"
+msgstr ""
+
+msgid "Traveling by vehicle"
+msgstr ""
+
+msgid "WARNING!"
+msgstr ""
+
+msgid "Illegal vehicle"
+msgstr ""
+
+msgid "Enter defensive diplomatic negotiations with:"
+msgstr ""
+
+msgid "Diplomacy"
+msgstr ""
+
+msgid "Enter aggressive diplomatic negotiations with:"
+msgstr ""
+
+msgid "Against:"
+msgstr ""
+
+msgid ": allied with:"
+msgstr ""
+
+msgid ": formerly allied with:"
+msgstr ""
+
+msgid ": friendly with:"
+msgstr ""
+
+msgid ": formerly friemdly with:"
+msgstr ""
+
+msgid ": neutral towards:"
+msgstr ""
+
+msgid ": formerly neutral towards:"
+msgstr ""
+
+msgid ": unfriendly towards:"
+msgstr ""
+
+msgid ": formerly unfriendly towards:"
+msgstr ""
+
+msgid ": hostile towards:"
+msgstr ""
+
+msgid ": formerly hostile towards:"
+msgstr ""
+
+msgid ": Attitude unknown towards:"
+msgstr ""
+
+msgid "Available Funds $"
+msgstr ""
+
+msgid ": is currently owned by:"
+msgstr ""
+
+msgid "Function:"
+msgstr ""
+
+msgid "Current workforce:"
+msgstr ""
+
+msgid "Current wage:"
+msgstr ""
+
+msgid "Maximum workforce:"
+msgstr ""
+
+msgid "Fixed costs:"
+msgstr ""
+
+msgid "Current income:"
+msgstr ""
+
+msgid "Potential income:"
+msgstr ""
+
+msgid "Bidding"
+msgstr ""
+
+msgid "Would you like to take part in this auction?"
+msgstr ""
+
+msgid "Building up for auction:"
+msgstr ""
+
+msgid "Auctioned by:"
+msgstr ""
+
+msgid "Bidding begins at: $"
+msgstr ""
+
+msgid "Going..."
+msgstr ""
+
+msgid "Last chance to bid..."
+msgstr ""
+
+msgid "Gone!!"
+msgstr ""
+
+msgid ": sold to:"
+msgstr ""
+
+msgid "for: $"
+msgstr ""
+
+msgid "Sold!"
+msgstr ""
+
+msgid "No buyers"
+msgstr ""
+
+msgid "No buyers found for this building."
+msgstr ""
+
+msgid "General recruitment"
+msgstr ""
+
+msgid "Income per capita:"
+msgstr ""
+
+msgid "Mean wage in building:"
+msgstr ""
+
+msgid "Mean wage in city:"
+msgstr ""
+
+msgid "Number of applicants:"
+msgstr ""
+
+msgid "Cost per applicant:"
+msgstr ""
+
+msgid "Cost to recruit all applicants:"
+msgstr ""
+
+msgid "X-COM balance:"
+msgstr ""
+
+msgid "DIPLOMATIC RIFT"
+msgstr ""
+
+msgid "An alliance with X-COM has been requested by:"
+msgstr ""
+
+msgid "SCORE"
+msgstr ""
+
+msgid "CATEGORY"
+msgstr ""
+
+msgid "WEEK"
+msgstr ""
+
+msgid "TOTAL"
+msgstr ""
+
+msgid "Tactical Missions"
+msgstr ""
+
+msgid "Research Completed"
+msgstr ""
+
+msgid "Alien Incidents in City"
+msgstr ""
+
+msgid "UFOs Shot Down"
+msgstr ""
+
+msgid "X-COM Craft Shot Down"
+msgstr ""
+
+msgid "UFO Incursions"
+msgstr ""
+
+msgid "Damage to City"
+msgstr ""
+
+msgid "Alien Buildings Destroyed"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid ""
+"All selected units and craft have arrived at %s. Proceed with investigation?"
+" (%i units)"
+msgstr ""
+
+msgid "Commence Investigation"
+msgstr ""
+
+msgid "UFOPAEDIA"
+msgstr ""
+
+msgid "Constitution"
+msgstr ""
+
+msgid "Weight"
+msgstr ""
+
+msgid "Passengers"
+msgstr ""
+
+msgid "Weapons space"
+msgstr ""
+
+msgid "Weapons slots"
+msgstr ""
+
+msgid "Engine size"
+msgstr ""
+
+msgid "Equipment space"
+msgstr ""
+
+msgid "Construction cost"
+msgstr ""
+
+msgid "Weekly cost"
+msgstr ""
+
+msgid "Capacity"
+msgstr ""
+
+msgid "Power"
+msgstr ""
+
+msgid "Top Speed"
+msgstr ""
+
+msgid "Damage"
+msgstr ""
+
+msgid "Range"
+msgstr ""
+
+msgid "Fire Rate"
+msgstr ""
+
+msgid "r/s"
+msgstr ""
+
+msgid "Velocity"
+msgstr ""
+
+msgid "Ammo capacity"
+msgstr ""
+
+msgid "Cargo"
+msgstr ""
+
+msgid "Aliens Held"
+msgstr ""
+
+msgid "Jamming"
+msgstr ""
+
+msgid "Shielding"
+msgstr ""
+
+msgid "Cloaks Craft"
+msgstr ""
+
+msgid "Teleports"
+msgstr ""
+
+msgid "Dimension shifts"
+msgstr ""
+
+msgid "Balance"
+msgstr ""
+
+msgid "Buildings"
+msgstr ""
+
+msgid "Head:"
+msgstr ""
+
+msgid "Income"
+msgstr ""
+
+msgid "Job:"
+msgstr ""
+
+msgid "Unclassified"
+msgstr ""
+
+msgid "Rank:"
+msgstr ""
+
+msgid "Base:"
+msgstr ""
+
+msgid "Missions"
+msgstr ""
+
+msgid "Kills"
+msgstr ""
+
+msgid "Wage"
+msgstr ""
+
+msgid "Energy"
+msgstr ""
+
+msgid "Firing skill"
+msgstr ""
+
+msgid "Organization:"
+msgstr ""
+
+msgid "Apprentice"
+msgstr ""
+
+msgid "Worker"
+msgstr ""
+
+msgid "Admin"
+msgstr ""
+
+msgid "Security"
+msgstr ""
+
+msgid "Management"
+msgstr ""
+
+msgid "Director"
+msgstr ""
+
+msgid "President"
+msgstr ""
+
+msgid "Wage:"
+msgstr ""
+
+msgid "Residence:"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+msgid "Hang out:"
+msgstr ""
+
+msgid "Work Place:"
+msgstr ""
+
+msgid "Owned Buildings:"
+msgstr ""
+
+msgid "Select:"
+msgstr ""
+
+msgid "Select Vehicle/Person:"
+msgstr ""
+
+msgid "Car Number"
+msgstr ""
+
+msgid "Person Number"
+msgstr ""
+
+msgid "Range:"
+msgstr ""
+
+msgid "Rounds:"
+msgstr ""
+
+msgid "Wounded"
+msgstr ""
+
+msgid "Not assigned to training"
+msgstr ""
+
+msgid "Psionic training (efficiency="
+msgstr ""
+
+msgid "Combat training (efficiency="
+msgstr ""
+
+msgid "Traveling to:"
+msgstr ""
+
+msgid "map point"
+msgstr ""
+
+msgid "VIP spotted:"
+msgstr ""
+
+msgid "Spotted by Agent:"
+msgstr ""
+
+msgid "Do you wish to tail this VIP?"
+msgstr ""
+
+msgid "VIP spotted"
+msgstr ""
+
+msgid "Diplomatic relations for:"
+msgstr ""
+
+msgid "Espionage by Agent:"
+msgstr ""
+
+msgid "Do you wish to continue espionage?"
+msgstr ""
+
+msgid "Diplomatic relations determined"
+msgstr ""
+
+msgid "You do not have enough:"
+msgstr ""
+
+msgid "Money"
+msgstr ""
+
+msgid "Storage Space"
+msgstr ""
+
+msgid "No Project"
+msgstr ""
+
+msgid "Total Skill:"
+msgstr ""
+
+msgid "Which screen?"
+msgstr ""
+
+msgid "Which screen would you like to go to?"
+msgstr ""
+
+msgid "Number to make"
+msgstr ""
+
+msgid "Number made:"
+msgstr ""
+
+msgid "Biochemistry research at:"
+msgstr ""
+
+msgid "Quantum physics research at:"
+msgstr ""
+
+msgid "Engineering at:"
+msgstr ""
+
+msgid "Select project:"
+msgstr ""
+
+msgid "Select product to make:"
+msgstr ""
+
+msgid "Lots"
+msgstr ""
+
+msgid "Item required:"
+msgstr ""
+
+msgid "Amount required"
+msgstr ""
+
+msgid "Amount in stores"
+msgstr ""
+
+msgid "Cost"
+msgstr ""
+
+msgid "Research project completed:"
+msgstr ""
+
+msgid "Do you wish to view the UFOpaedia report?"
+msgstr ""
+
+msgid "Manufacture Completed"
+msgstr ""
+
+msgid "Do you wish to reassign the Workshop?"
+msgstr ""
+
+msgid "Response range (radius):"
+msgstr ""
+
+msgid "Preservation level:"
+msgstr ""
+
+msgid "Altitude:"
+msgstr ""
+
+msgid "Empty saved game slot"
+msgstr ""
+
+msgid "Base 1"
+msgstr ""
+
+msgid ": Insufficient ammunition/fuel in stores:"
+msgstr ""
+
+msgid "Fuel"
+msgstr ""
+
+msgid "Reload time"
+msgstr ""
+
+msgid "Ammo type"
+msgstr ""
+
+msgid "Travelling"
+msgstr ""
+
+msgid "Location:"
+msgstr ""
+
+msgid "Acceleration"
+msgstr ""
+
+msgid "Deceleration"
+msgstr ""
+
+msgid "Malfunctioning"
+msgstr ""
+
+msgid "Out of Ammo"
+msgstr ""
+
+msgid "Reloading"
+msgstr ""
+
+msgid "Ready to Fire"
+msgstr ""
+
+msgid "ALERT"
+msgstr ""
+
+msgid "At:"
+msgstr ""
+
+msgid "Select units to investigate:"
+msgstr ""
+
+msgid "Building owner:"
+msgstr ""
+
+msgid "Unit"
+msgstr ""
+
+msgid "Rank"
+msgstr ""
+
+msgid "Location"
+msgstr ""
+
+msgid "Destination"
+msgstr ""
+
+msgid "Not parked"
+msgstr ""
+
+msgid "Map point:"
+msgstr ""
+
+msgid "No Psi-gyms in base"
+msgstr ""
+
+msgid "No training facilities in base"
+msgstr ""
+
+msgid "No Hostile Forces Discovered"
+msgstr ""
+
+msgid "Cargo arrived:"
+msgstr ""
+
+msgid "Cancel Orders"
+msgstr ""
+
+msgid "Cancel Alien Containment management orders. Are you sure?"
+msgstr ""
+
+msgid "No Sale"
+msgstr ""
+
+msgid "RESEARCH AND MANUFACTURE"
+msgstr ""
+
+msgid "Select laboratory or workshop"
+msgstr ""
+
+msgid "SELECT BIOCHEMISTRY PROJECT"
+msgstr ""
+
+msgid "SELECT QUANTUM PHYSICS PROJECT"
+msgstr ""
+
+msgid "SELECT MANUFACTURING PROJECT"
+msgstr ""
+
+msgid "Project"
+msgstr ""
+
+msgid "Progress"
+msgstr ""
+
+msgid "Skill"
+msgstr ""
+
+msgid "Unit Cost"
+msgstr ""
+
+msgid "Skill Hours"
+msgstr ""
+
+msgid "Orders Required"
+msgstr ""
+
+msgid ""
+"Explicit Alien Containment orders are required, concerning the Aliens to be "
+"destroyed."
+msgstr ""
+
+msgid "Project complete"
+msgstr ""
+
+msgid "This project is already complete."
+msgstr ""
+
+msgid "Project in progress"
+msgstr ""
+
+msgid "This project is already in progress elsewhere."
+msgstr ""
+
+msgid "Project too large"
+msgstr ""
+
+msgid "This project requires an advanced lab or workshop."
+msgstr ""
+
+msgid "Supplier:"
+msgstr ""
+
+msgid "Transferred goods have arrived:"
+msgstr ""
+
+msgid "Items from tactical combat zone have arrived:"
+msgstr ""
+
+msgid "Building Regulations"
+msgstr ""
+
+msgid ""
+"Regulation 44(1)(e) of the health and safety at work (labs and workshops) "
+"act (2074) prohibits the construction of more than 6 small or more than 4 "
+"large labs or workshops in any one basement. Contractors therefore refuse to"
+" carry out the proposed illegal construction work."
+msgstr ""
+
+msgid ""
+"The proposed construction work is not possible with your available funds."
+msgstr ""
+
+msgid "Production costs exceed your available funds."
+msgstr ""
+
+msgid "There is insufficient space to store production output of this item."
+msgstr ""
+
+msgid "Manufacturing halted"
+msgstr ""
+
+msgid "Can't destroy: Biochemistry lab in use."
+msgstr ""
+
+msgid "Can't destroy: Quantum physics lab in use."
+msgstr ""
+
+msgid "Can't destroy: workshop in use."
+msgstr ""
+
+msgid "Facility in use"
+msgstr ""
+
+msgid "Cannot investigate as building destroyed"
+msgstr ""
+
+msgid "Cannot raid as building destroyed"
+msgstr ""
+
+msgid "Completion status:"
+msgstr ""
+
+msgid "Facility completed"
+msgstr ""
+
+msgid "Usage"
+msgstr ""
+
+msgid "Lab size needed"
+msgstr ""
+
+msgid "Small"
+msgstr ""
+
+msgid "Large"
+msgstr ""
+
+msgid "MESSAGE HISTORY"
+msgstr ""
+
+msgid "BASES"
+msgstr ""
+
+msgid "Confirm Alien Containment Orders"
+msgstr ""
+
+msgid "Alien specimens from tactical combat zone have arrived:"
+msgstr ""
+
+msgid "Transferred Alien specimens have arrived:"
+msgstr ""
+
+msgid "Alien specimens arrived:"
+msgstr ""
+
+msgid "No Alien Containment Facility"
+msgstr ""
+
+msgid "Quantity:"
+msgstr ""
+
+msgid "Planning Permission Denied"
+msgstr ""
+
+msgid ""
+"Planning permission is denied for this proposed extension to the base, on "
+"the grounds that the additional excavations required would seriously weaken "
+"the foundations of the building."
+msgstr ""
+
+msgid "Area Occupied By Existing Facility"
+msgstr ""
+
+msgid ""
+"Existing facilities in this area of the base must be destroyed before "
+"construction work can begin."
+msgstr ""
+
+msgid "Transfer"
+msgstr ""
+
+msgid "At least two bases are required before transfers become possible."
+msgstr ""
+
+msgid "Alien Containment is not in use at this base."
+msgstr ""
+
+msgid "Complete"
+msgstr ""
+
+msgid "OFFER CASH SETTLEMENT"
+msgstr ""
+
+msgid "UFO"
+msgstr ""
+
+msgid "No Entrance"
+msgstr ""
+
+msgid ""
+"You will lose any equipment left on the floor. Are you sure you wish to "
+"leave this agent?"
+msgstr ""
+
+msgid "BUY NEW BASE"
+msgstr ""
+
+msgid "Market Announcement"
+msgstr ""
+
+msgid ""
+"The following items have come on to the market and can now be purchased, "
+"subject to availability:"
+msgstr ""
+
+msgid "(Android training not possible)"
+msgstr ""
+
+msgid "Buy This Building"
+msgstr ""
+
+msgid "Equip vehicle"
+msgstr ""
+
+msgid "Equip agent"
+msgstr ""
+
+msgid "Hire & Fire"
+msgstr ""
+
+msgid "Return"
+msgstr ""
+
+msgid "Buy stuff"
+msgstr ""
+
+msgid "Research and manufacture"
+msgstr ""
+
+msgid "Destroy facility here"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "Exit"
+msgstr ""
+
+msgid "UFOpaedia"
+msgstr ""
+
+msgid "Base"
+msgstr ""
+
+msgid "Equip"
+msgstr ""
+
+msgid "Observe VIP's"
+msgstr ""
+
+msgid "Dimension Map"
+msgstr ""
+
+msgid "Save/Load game"
+msgstr ""
+
+msgid "Budget"
+msgstr ""
+
+msgid "Investigate Building"
+msgstr ""
+
+msgid "Raid Building"
+msgstr ""
+
+msgid "Spy on Organization"
+msgstr ""
+
+msgid "Show available equipment"
+msgstr ""
+
+msgid "Show available armor"
+msgstr ""
+
+msgid "Bid"
+msgstr ""
+
+msgid "No Bid"
+msgstr ""
+
+msgid "Index"
+msgstr ""
+
+msgid "Base Facilities"
+msgstr ""
+
+msgid "Organizations"
+msgstr ""
+
+msgid "VIP's"
+msgstr ""
+
+msgid "Alien Craft"
+msgstr ""
+
+msgid "Staff"
+msgstr ""
+
+msgid "Pause"
+msgstr ""
+
+msgid "Slow speed"
+msgstr ""
+
+msgid "Normal speed"
+msgstr ""
+
+msgid "Double speed"
+msgstr ""
+
+msgid "Quadruple speed"
+msgstr ""
+
+msgid "Ultra fast"
+msgstr ""
+
+msgid "Switch map view"
+msgstr ""
+
+msgid "Options"
+msgstr ""
+
+msgid "Dimension map"
+msgstr ""
+
+msgid "Bases tab"
+msgstr ""
+
+msgid "X-COM Vehicles tab"
+msgstr ""
+
+msgid "Agent tab"
+msgstr ""
+
+msgid "Biochemistry tab"
+msgstr ""
+
+msgid "Engineering tab"
+msgstr ""
+
+msgid "Quantum physics tab"
+msgstr ""
+
+msgid "Message history"
+msgstr ""
+
+msgid "Center on message"
+msgstr ""
+
+msgid "Switch camera mode"
+msgstr ""
+
+msgid "Bases"
+msgstr ""
+
+msgid "Buy new base"
+msgstr ""
+
+msgid "Buy/Sell"
+msgstr ""
+
+msgid "Hire/Fire staff"
+msgstr ""
+
+msgid "Go to building"
+msgstr ""
+
+msgid "Attack hostile unit"
+msgstr ""
+
+msgid "Go to map point"
+msgstr ""
+
+msgid "Go into Dimension Gate"
+msgstr ""
+
+msgid "Attack building"
+msgstr ""
+
+msgid "Return to base"
+msgstr ""
+
+msgid "Rules of engagement"
+msgstr ""
+
+msgid "Manual control"
+msgstr ""
+
+msgid "Psi-Training"
+msgstr ""
+
+msgid "Combat Training"
+msgstr ""
+
+msgid "Assign project"
+msgstr ""
+
+msgid "Stop project"
+msgstr ""
+
+msgid "Set all vehicles"
+msgstr ""
+
+msgid "Set all of same make"
+msgstr ""
+
+msgid "RETURN"
+msgstr ""
+
+msgid "Info"
+msgstr ""
+
+msgid "Sell vehicle"
+msgstr ""
+
+msgid "Comments"
+msgstr ""
+
+msgid "Ufopaedia"
+msgstr ""
+
+msgid "Scroll Up"
+msgstr ""
+
+msgid "Scroll Down"
+msgstr ""
+
+msgid "Low altitude"
+msgstr ""
+
+msgid "Medium altitude"
+msgstr ""
+
+msgid "High altitude"
+msgstr ""
+
+msgid "Highest altitude"
+msgstr ""
+
+msgid "Evasive"
+msgstr ""
+
+msgid "Defensive"
+msgstr ""
+
+msgid "Standard"
+msgstr ""
+
+msgid "Aggressive"
+msgstr ""
+
+msgid "Vehicle location / passengers"
+msgstr ""
+
+msgid "Unit location"
+msgstr ""
+
+msgid "Investigate building for Alien activity"
+msgstr ""
+
+msgid "Raid building"
+msgstr ""
+
+msgid "Send selected units to investigate incident"
+msgstr ""
+
+msgid "Ignore this incident"
+msgstr ""
+
+msgid "Continue"
+msgstr ""
+
+msgid "Center and pause game"
+msgstr ""
+
+msgid "Scroll Left"
+msgstr ""
+
+msgid "Scroll Right"
+msgstr ""
+
+msgid "Alien infiltration graph"
+msgstr ""
+
+msgid "Performance log"
+msgstr ""
+
+msgid "Save game"
+msgstr ""
+
+msgid "Load game"
+msgstr ""
+
+msgid "Delete game"
+msgstr ""
+
+msgid "Hostile vehicles tab"
+msgstr ""
+
+msgid "Select organization"
+msgstr ""
+
+msgid "Select units"
+msgstr ""
+
+msgid "Select equipment"
+msgstr ""
+
+msgid "Agent equipment"
+msgstr ""
+
+msgid "Airborne vehicle equipment/fuel"
+msgstr ""
+
+msgid "Road vehicle equipment/fuel"
+msgstr ""
+
+msgid "X-COM agents"
+msgstr ""
+
+msgid "Quantum physicists"
+msgstr ""
+
+msgid "Buy"
+msgstr ""
+
+msgid "Sell"
+msgstr ""
+
+msgid "Softer"
+msgstr ""
+
+msgid "Louder"
+msgstr ""
+
+msgid "Organizations tab"
+msgstr ""
+
+msgid "View all organizations"
+msgstr ""
+
+msgid "View allied organizations"
+msgstr ""
+
+msgid "View friendly organizations"
+msgstr ""
+
+msgid "View neutral organizations"
+msgstr ""
+
+msgid "View unfriendly organizations"
+msgstr ""
+
+msgid "View hostile organizations"
+msgstr ""
+
+msgid "Offer settlement"
+msgstr ""
+
+msgid "Contain"
+msgstr ""
+
+msgid "Destroy"
+msgstr ""
+
+msgid "Keep on board"
+msgstr ""
+
+msgid "Click on destination building for selected vehicle"
+msgstr ""
+
+msgid "Click on target vehicle for selected vehicle"
+msgstr ""
+
+msgid "Click on destination map point for selected vehicle"
+msgstr ""
+
+msgid "Click on destination Dimension Gate for selected vehicle"
+msgstr ""
+
+msgid "Click on building for selected vehicle to attack"
+msgstr ""
+
+msgid "-<Not implemented (selmode==7)>-"
+msgstr ""
+
+msgid "-<Not implemented (selmode==8)>-"
+msgstr ""
+
+msgid "Manual control of vehicle"
+msgstr ""
+
+msgid "Select target vehicle for selected vehicle to fire at"
+msgstr ""
+
+msgid "Click on destination building for selected vehicles"
+msgstr ""
+
+msgid "Click on target vehicle for selected vehicles"
+msgstr ""
+
+msgid "Click on destination map point for selected vehicles"
+msgstr ""
+
+msgid "Click on destination Dimension Gate for selected vehicles"
+msgstr ""
+
+msgid "Click on building for selected vehicles to attack"
+msgstr ""
+
+msgid "-<Not implemented (selmode==7)(plural)>-"
+msgstr ""
+
+msgid "-<Not implemented (selmode==8)(plural)>-"
+msgstr ""
+
+msgid "Manual control of vehicles"
+msgstr ""
+
+msgid "Select target vehicle for vehicles to fire at"
+msgstr ""
+
+msgid "Click on destination building for selected person"
+msgstr ""
+
+msgid "Click on destination building for selected people"
+msgstr ""
+
+msgid "WEEKLY FUNDING ASSESSMENT"
+msgstr ""
+
+msgid "Current income>"
+msgstr ""
+
+msgid "Funding adjustment>"
+msgstr ""
+
+msgid ""
+"The Senate has declared total hostility to X-COM and there will be no "
+"further funding. Furthermore, the Senate will take any steps necessary to "
+"destroy the X-COM organization if it refuses to cease operation."
+msgstr ""
+
+msgid ""
+"The Senate has an unfavorable attitude to X-COM and has reduced funding "
+"accordingly."
+msgstr ""
+
+msgid ""
+"The Senate has a favorable attitude to X-COM and has increased funding "
+"accordingly."
+msgstr ""
+
+msgid ""
+"The Senate considers the performance of X-COM to be so abysmal that it will "
+"cease funding from now on."
+msgstr ""
+
+msgid ""
+"The Senate is not pleased with the performance of X-COM and has reduced "
+"funding accordingly."
+msgstr ""
+
+msgid ""
+"The Senate is pleased with the performance of X-COM and has increased "
+"funding accordingly."
+msgstr ""
+
+msgid ""
+"Unfortunately the Senate has to limit X-COM funding due to the poor state of"
+" government finances."
+msgstr ""
+
+msgid "Income for next week>"
+msgstr ""
+
+msgid "Week"
+msgstr ""
+
+msgid "X-COM III Setup screen"
+msgstr ""
+
+msgid "Start Campaign Game"
+msgstr ""
+
+msgid "Load Saved Game"
+msgstr ""
+
+msgid "Scenario Generator"
+msgstr ""
+
+msgid "Quit"
+msgstr ""
+
+msgid "Warning"
+msgstr ""
+
+msgid "CONTINUE"
+msgstr ""
+
+msgid "QUIT"
+msgstr ""
+
+msgid "Scenario Loaded >"
+msgstr ""
+
+msgid "New scenario"
+msgstr ""
+
+msgid "Load Scenario Generator Set-up"
+msgstr ""
+
+msgid "Save Scenario Generator Set-up"
+msgstr ""
+
+msgid "Play scenario"
+msgstr ""
+
+msgid "Return to main menu"
+msgstr ""
+
+msgid "Select map type"
+msgstr ""
+
+msgid "Seed"
+msgstr ""
+
+msgid "Toggle map size"
+msgstr ""
+
+msgid "Medium"
+msgstr ""
+
+msgid "Deployment"
+msgstr ""
+
+msgid "Raid"
+msgstr ""
+
+msgid "Defend"
+msgstr ""
+
+msgid "Units"
+msgstr ""
+
+msgid "Select Units"
+msgstr ""
+
+msgid "Select Equipment"
+msgstr ""
+
+msgid "Enter filename to save as:"
+msgstr ""
+
+msgid "Select file to load:"
+msgstr ""
+
+msgid "Enter description of scenario:"
+msgstr ""
+
+msgid "Select tactical area:"
+msgstr ""
+
+msgid "X-COM Agent"
+msgstr ""
+
+msgid "X-COM Biochemist"
+msgstr ""
+
+msgid "X-COM Mechanic"
+msgstr ""
+
+msgid "X-COM Quantum Physicist"
+msgstr ""
+
+msgid "Gang leader"
+msgstr ""
+
+msgid "Corporate Boss"
+msgstr ""
+
+msgid "Cult Leader"
+msgstr ""
+
+msgid "Politician"
+msgstr ""
+
+msgid "Chief of Police"
+msgstr ""
+
+msgid "Corporate hood"
+msgstr ""
+
+msgid "Police"
+msgstr ""
+
+msgid "Gangster"
+msgstr ""
+
+msgid "Cultist"
+msgstr ""
+
+msgid "Building security"
+msgstr ""
+
+msgid "Android"
+msgstr ""
+
+msgid "Alien Grey"
+msgstr ""
+
+msgid "Upper Class Female"
+msgstr ""
+
+msgid "Upper Class Male"
+msgstr ""
+
+msgid "Civilian Female"
+msgstr ""
+
+msgid "Civilian Male"
+msgstr ""
+
+msgid "Lower Class Male"
+msgstr ""
+
+msgid "Lower Class Female"
+msgstr ""
+
+msgid "Multiworm egg"
+msgstr ""
+
+msgid "FINANCE"
+msgstr ""
+
+msgid "Initial funds>"
+msgstr ""
+
+msgid "EMPLOYEE TYPE"
+msgstr ""
+
+msgid "QUANTITY"
+msgstr ""
+
+msgid "WAGES"
+msgstr ""
+
+msgid "MAINTENANCE"
+msgstr ""
+
+msgid "TOTAL OVERHEADS>"
+msgstr ""
+
+msgid "Remaining funds>"
+msgstr ""
+
+msgid "Agents"
+msgstr ""
+
+msgid "Owner>"
+msgstr ""
+
+msgid "Function>"
+msgstr ""
+
+msgid "Building Name>"
+msgstr ""
+
+msgid "X-COM IS DEFEATED"
+msgstr ""
+
+msgid "THE ALIENS ARE DEFEATED"
+msgstr ""
+
+msgid "Final Score>"
+msgstr ""
+
+msgid ""
+"Due to bad debts the X-COM organization has been closed down. All operations"
+" have ceased, bases dismantled and personnel discharged. With no other hope "
+"for humanity the Aliens will inevitably conquer Earth."
+msgstr ""
+
+msgid ""
+"All X-COM bases have been destroyed. All research data is lost and all "
+"personnel have left. With no other hope for humanity the Aliens will "
+"inevitably conquer Earth."
+msgstr ""
+
+msgid ""
+"The Aliens have been defeated. With all Dimension Gates closed and their "
+"homeworld destroyed the Aliens cannot get through to our Dimension. We are "
+"victorious."
+msgstr ""
+
+msgid "Game Options"
+msgstr ""
+
+msgid "Save or load game"
+msgstr ""
+
+msgid "Current Score"
+msgstr ""
+
+msgid "Finance"
+msgstr ""
+
+msgid "SELECT DIFFICULTY"
+msgstr ""
+
+msgid "Novice"
+msgstr ""
+
+msgid "Easy"
+msgstr ""
+
+msgid "Hard"
+msgstr ""
+
+msgid "Superhuman"
+msgstr ""
+
+msgid "OPTIONS"
+msgstr ""
+
+msgid "Message toggles"
+msgstr ""
+
+msgid "Overheads"
+msgstr ""
+
+msgid "Auto-scroll"
+msgstr ""
+
+msgid "Master Volume"
+msgstr ""
+
+msgid "Sound Effects"
+msgstr ""
+
+msgid "Test Left"
+msgstr ""
+
+msgid "Test Right"
+msgstr ""
+
+msgid "Swap"
+msgstr ""
+
+msgid "Save or Load Game"
+msgstr ""
+
+msgid "Delete Saved Game"
+msgstr ""
+
+msgid "Saving game"
+msgstr ""
+
+msgid "Loading game"
+msgstr ""
+
+msgid "Deleting saved game"
+msgstr ""
+
+msgid "Overwrite Saved Game"
+msgstr ""
+
+msgid "Abandon and Restart Game"
+msgstr ""
+
+msgid "Restart Game"
+msgstr ""
+
+msgid "Save Game"
+msgstr ""
+
+msgid "Load Game"
+msgstr ""
+
+msgid "Delete Old Saved Game"
+msgstr ""
+
+msgid "Quit X-COM Apocalypse"
+msgstr ""
+
+msgid "Quit Game"
+msgstr ""
+
+msgid "SAVE GAME"
+msgstr ""
+
+msgid "LOAD GAME"
+msgstr ""
+
+msgid "DELETE OLD SAVED GAME"
+msgstr ""
+
+msgid "Tool tips"
+msgstr ""
+
+msgid "Action music"
+msgstr ""
+
+msgid "Message Toggles"
+msgstr ""
+
+msgid "UFO spotted"
+msgstr ""
+
+msgid "Vehicle lightly damaged"
+msgstr ""
+
+msgid "Vehicle moderately damage"
+msgstr ""
+
+msgid "Vehicle heavily damaged"
+msgstr ""
+
+msgid "Vehicle destroyed"
+msgstr ""
+
+msgid "Vehicle damaged and returning to base"
+msgstr ""
+
+msgid "Weapon out of ammo"
+msgstr ""
+
+msgid "Vehicle low on fuel"
+msgstr ""
+
+msgid "Cargo has arrived at base"
+msgstr ""
+
+msgid "Vehicle repaired"
+msgstr ""
+
+msgid "Vehicle rearmed"
+msgstr ""
+
+msgid "Not enough ammo to rearm vehicle"
+msgstr ""
+
+msgid "Vehicle refuelled"
+msgstr ""
+
+msgid "Not enough fuel to refuel vehicle"
+msgstr ""
+
+msgid "Unauthorized vehicle detected"
+msgstr ""
+
+msgid "Always pause to display this message?"
+msgstr ""
+
+msgid "Alien Craft Propulsion"
+msgstr ""
+
+msgid "Alien Craft Control Systems"
+msgstr ""
+
+msgid "Alien Craft Energy Source"
+msgstr ""
+
+msgid "Brainsucker Pod autopsy"
+msgstr "Smegenų siurbiko indo skrodimas "
+
+msgid "Multiworm Egg autopsy"
+msgstr ""
+
+msgid "Micronoid Aggregate Autopsy"
+msgstr ""
+
+msgid "Front armor"
+msgstr ""
+
+msgid "Back armor"
+msgstr ""
+
+msgid "Left armor"
+msgstr ""
+
+msgid "Right armor"
+msgstr ""
+
+msgid "Top armor"
+msgstr ""
+
+msgid "Bottom armor"
+msgstr ""
+
+msgid "Turn Rate"
+msgstr ""
+
+msgid "Alien Infiltration"
+msgstr ""
+
+msgid "Alien infiltration potential:"
+msgstr ""
+
+msgid "Very low"
+msgstr ""
+
+msgid "Low"
+msgstr ""
+
+msgid "Average"
+msgstr ""
+
+msgid "High"
+msgstr ""
+
+msgid "Very high"
+msgstr ""
+
+msgid "Depends on clip"
+msgstr ""
+
+msgid "Damage Type"
+msgstr ""
+
+msgid "Protection"
+msgstr ""
+
+msgid "Smoke"
+msgstr ""
+
+msgid "Anti-Alien Gas"
+msgstr ""
+
+msgid "Incendiary"
+msgstr ""
+
+msgid "Stun Gas"
+msgstr ""
+
+msgid "Explosive"
+msgstr ""
+
+msgid "Stun"
+msgstr ""
+
+msgid "Psionic Blast"
+msgstr ""
+
+msgid "Armor Piercing"
+msgstr ""
+
+msgid "Laser Beam"
+msgstr ""
+
+msgid "Plasma"
+msgstr ""
+
+msgid "Toxin A"
+msgstr ""
+
+msgid "Toxin B"
+msgstr ""
+
+msgid "Toxin C"
+msgstr ""
+
+msgid "Disruptor Beam"
+msgstr ""
+
+msgid "Entropy Enzyme"
+msgstr ""
+
+msgid "Falling Object"
+msgstr ""
+
+msgid "Morale"
+msgstr ""
+
+msgid "Ammo types:"
+msgstr ""
+
+msgid "Rounds"
+msgstr ""
+
+msgid "(Recharges)"
+msgstr ""
+
+msgid "Days service"
+msgstr ""
+
+msgid "Improvement"
+msgstr ""
+
+msgid "Toggle statistics/service record"
+msgstr ""
+
+msgid "Fire rate"
+msgstr ""
+
+msgid "Turn rate"
+msgstr ""
+
+msgid "Ammo Type:"
+msgstr ""
+
+msgid "EQUIP AGENT"
+msgstr ""
+
+msgid "EQUIP VEHICLE"
+msgstr ""
+
+msgid ""
+"You have not found any Aliens in this building. As a consequence of your "
+"unwelcome intrusion the owner of the building is less favorably disposed "
+"towards X-Com."
+msgstr ""
+
+msgid ""
+"You have not found any Aliens in this building. As a consequence of your "
+"unwelcome intrusion the owner of the building has now become unfriendly "
+"towards X-Com."
+msgstr ""
+
+msgid ""
+"You have not found any Aliens in this building. As a consequence of your "
+"unwelcome intrusion the owner of the building has now become hostile towards"
+" X-Com."
+msgstr ""
+
+msgid ""
+"We are unhappy with the recent activity of your organization and request "
+"compensation to restore normal diplomatic relations. If you do not comply "
+"your craft and Agents may be subject to hostile actions."
+msgstr ""
+
+msgid "Mission completed in Alien building."
+msgstr ""
+
+msgid "X-COM returning from mission at:"
+msgstr ""
+
+msgid "Base mission completed at:"
+msgstr ""
+
+msgid "X-COM returning from UFO mission."
+msgstr ""
+
+msgid "X-COM returning from raid at:"
+msgstr ""
+
+msgid "Launcher AG Missile"
+msgstr ""
+
+msgid "Launcher HE Missile"
+msgstr ""
+
+msgid "Launcher IN Missile"
+msgstr ""
+
+msgid "Psi-Grenade"
+msgstr ""
+
+msgid "Motion scanner"
+msgstr ""
+
+msgid "Psimorph's mindbender"
+msgstr ""
+
+msgid "Megaspawn's disruptor"
+msgstr "Mega-išperos ardytojas "
+
+msgid "Megaspawn's launcher"
+msgstr "Mega-išperos patranka "
+
+msgid "Spitter's vomit funnel"
+msgstr "Spjaudytojo vėmimo piltuvas"
+
+msgid "Multiworm's spit"
+msgstr "Multi kirmėlės seilės"
+
+msgid "Alien egg's vomit tube"
+msgstr "Ateivių kiaušinio vėmimo skylė "
+
+msgid "Hyperworm's bite"
+msgstr "Hyper kirmėlės įkandis"
+
+msgid "Queenspawn's tentacles"
+msgstr "Karalienės čiuptuvai"
+
+msgid "Popper's bomb"
+msgstr "Sprogiko bomba "
+
+msgid "Elerium Pod"
+msgstr "Elerio indas"
+
+msgid "Elerium pod"
+msgstr "Elerio indas"
+
+msgid "Plasma Beam"
+msgstr "Plazmos spindulys"
+
+msgid "Alien Toxin-A"
+msgstr "Ateivių toksinas-A"
+
+msgid "Alien Toxin-B"
+msgstr "Ateivių toksinas-B"
+
+msgid "Alien Toxin-C"
+msgstr "Ateivių toksinas-C"
+
+msgid "Hot Plasma"
+msgstr "Karšta plazma "
+
+msgid "Entropy"
+msgstr "Entropija "
+
+msgid "Tracker Dart"
+msgstr "Sekanti strėlytė "
+
+msgid "Destabilisation"
+msgstr "Destabilizacija"
+
+msgid "Spit"
+msgstr "Spjauti"
+
+msgid "Bite"
+msgstr "Įkasti"
+
+msgid "MarSec"
+msgstr "MarSecas"
+
+msgid "SuperDynamics"
+msgstr "Superdinamika"
+
+msgid "SolMine"
+msgstr "Sol-kasykla"
+
+msgid "NanoTech"
+msgstr "Nano-techas"
+
+msgid "All your units are unconscious or dead. You lose."
+msgstr "Visi tavo karei yra praradę sąmonę arba negyvi. Tu pralaimėjai."
+
+msgid "All hostile units are dead or unconscious. You win."
+msgstr "Visi priešiški kariai yra negyvi arba praradę sąmonę. Tu laimėjai."
+
+msgid "Unit has died:"
+msgstr "Karys mirė:"
+
+msgid "Hostile unit has died."
+msgstr "Priešiškas karys mirė."
+
+msgid "Unit has died."
+msgstr "Karys mirė."
+
+msgid "Unit critically wounded:"
+msgstr "Karys kritiškai sužeistas:"
+
+msgid "Unit has lost consciousness:"
+msgstr "Karys prarado sąmonę:"
+
+msgid "Unit has left combat zone:"
+msgstr "Karys paliko kovos zona:"
+
+msgid "Current score:"
+msgstr "Dabartinis įvertinimas:"
+
+msgid "Unit has frozen:"
+msgstr ""
+
+msgid "Unit has gone berserk:"
+msgstr ""
+
+msgid "Unit has panicked:"
+msgstr ""
+
+msgid "Unit has stopped panicking:"
+msgstr ""
+
+msgid "A player has left the game."
+msgstr ""
+
+msgid "The host has left the game."
+msgstr ""
+
+msgid "Turn:"
+msgstr "Eilė:"
+
+msgid "Side:"
+msgstr "Pusė:"
+
+msgid "Player:"
+msgstr "Žaidėjas:"
+
+msgid "Computer"
+msgstr "Kompiuteris:"
+
+msgid "No active units. End of turn."
+msgstr ""
+
+msgid "Hostile unit spotted:"
+msgstr ""
+
+msgid "Unit under attack:"
+msgstr "Kareivis puolamas:"
+
+msgid "Psionic attack on unit:"
+msgstr "Psioninė ataka ant kareivio:"
+
+msgid "Unit being Psi-drained:"
+msgstr "Karys yra psi-siurbiamas:"
+
+msgid "Unit under Psionic control:"
+msgstr ""
+
+msgid "Unit freed from Psionic control:"
+msgstr ""
+
+msgid "Unit injured:"
+msgstr ""
+
+msgid "Unit badly injured:"
+msgstr ""
+
+msgid "Unit under fire:"
+msgstr ""
+
+msgid "Building has been disabled"
+msgstr ""
+
+msgid "SQUAD ASSIGNMENT"
+msgstr ""
+
+msgid "Unit Healing:"
+msgstr ""
+
+msgid "All your units have fled the combat zone. You lose."
+msgstr "Visi tavo kariai pabėgo iš kovos zonos. Tu pralaimėjai."
+
+msgid "All hostile units have fled the combat zone. You win."
+msgstr "Visi priešai pabėgo iš kovos zona. Tu laimėjai."
+
+msgid "Unit Brainsucked:"
+msgstr "Žmogui išsiurbti smegenys:"
+
+msgid "All your units have fled the combat zone. You win."
+msgstr ""
+
+msgid "All hostile units have fled the combat zone. You lose."
+msgstr ""
+
+msgid ": Out of ammo"
+msgstr ""
+
+msgid "Psi-drain"
+msgstr ""
+
+msgid "Mind Control"
+msgstr ""
+
+msgid "Panic"
+msgstr ""
+
+msgid "Probe"
+msgstr "Zondas"
+
+msgid "Psi-lend"
+msgstr "psi-padėti"
+
+msgid "Psi-unpanic"
+msgstr "psi-atpanikuoti"
+
+msgid "Psi-unstun"
+msgstr "Psi-atkelti"
+
+msgid "MIND PROBE"
+msgstr "PROTO ZONDAS"
+
+msgid "Structure probe"
+msgstr "PASTATO ZONDAS"
+
+msgid "-recharges"
+msgstr ""
+
+msgid "Mind shield"
+msgstr "Proto skydas"
+
+msgid "Mind bender"
+msgstr "Proto lankstytojas"
+
+msgid "Alien detector"
+msgstr "Ateivių detektorius."
+
+msgid "Personal disruption shield"
+msgstr ""
+
+msgid "Personal teleporter"
+msgstr ""
+
+msgid "Personal Cloaking field"
+msgstr "Savas užsimaskavimo laukas"
+
+msgid "Dimension force field"
+msgstr "Dimensinis jėgos laukas"
+
+msgid "None"
+msgstr "Jokio"
+
+msgid "Delay = %i"
+msgstr ""
+
+msgid "Range = %2.1fm."
+msgstr ""
+
+msgid "Initializing"
+msgstr ""
+
+msgid "(debug) Validating Map"
+msgstr ""
+
+msgid "Deploying Units"
+msgstr ""
+
+msgid "Experience Processing"
+msgstr ""
+
+msgid "Initializing LOS"
+msgstr ""
+
+msgid "Anonymous"
+msgstr ""
+
+msgid "Enter Game Name"
+msgstr ""
+
+msgid "Enter Your Name"
+msgstr ""
+
+msgid "Pick Organization:"
+msgstr ""
+
+msgid "Master volume:"
+msgstr ""
+
+msgid "Sound FX volume:"
+msgstr ""
+
+msgid "Music volume:"
+msgstr ""
+
+msgid "Swap left/right :"
+msgstr ""
+
+msgid "Time Units"
+msgstr ""
+
+msgid "Too Far"
+msgstr ""
+
+msgid "Blocked"
+msgstr ""
+
+msgid "Game Turn:"
+msgstr ""
+
+msgid "Start Turn"
+msgstr ""
+
+msgid "Enter password:"
+msgstr ""
+
+msgid "Incorrect password!"
+msgstr ""
+
+msgid "Hot Seat Game"
+msgstr ""
+
+msgid "Enter number of players:"
+msgstr ""
+
+msgid "Player"
+msgstr ""
+
+msgid "Enter your name:"
+msgstr ""
+
+msgid "Confirm password:"
+msgstr ""
+
+msgid "Examine and reassign units by clicking on players' names"
+msgstr ""
+
+msgid "Execute remaining movement orders for this unit?"
+msgstr ""
+
+msgid "Hidden Movement"
+msgstr ""
+
+msgid "Activates now."
+msgstr ""
+
+msgid "Activates at end of turn."
+msgstr ""
+
+msgid "Turns before activation:"
+msgstr ""
+
+msgid ": TUs reserved for kneeling"
+msgstr ""
+
+msgid ": TUs reserved for aimed shot"
+msgstr ""
+
+msgid ": TUs reserved for snap shot"
+msgstr ""
+
+msgid ": TUs reserved for auto fire"
+msgstr ""
+
+msgid ": TUs reserved for kneeling and aimed shot"
+msgstr ""
+
+msgid ": TUs reserved for kneeling and snap shot"
+msgstr ""
+
+msgid ": TUs reserved for kneeling and auto fire"
+msgstr ""
+
+msgid "ABORT MISSION"
+msgstr ""
+
+msgid "Units Lost :"
+msgstr ""
+
+msgid "Very Poor"
+msgstr ""
+
+msgid "Poor"
+msgstr ""
+
+msgid "Very Good"
+msgstr ""
+
+msgid "Out of turn activity paused"
+msgstr ""
+
+msgid "Out of turn activity restarted"
+msgstr ""
+
+msgid "Not Enough TU's"
+msgstr ""
+
+msgid "TU cost per item picked up:"
+msgstr ""
+
+msgid "Auto-execute remaining orders"
+msgstr ""
+
+msgid "Not enough TU's - TU cost per throw:"
+msgstr ""
+
+msgid "Too far to throw"
+msgstr ""
+
+msgid "No arc of throw"
+msgstr ""
+
+msgid "No line of fire"
+msgstr ""
+
+msgid "Out of range"
+msgstr ""
+
+msgid "Not enough TU's - TU cost per wound:"
+msgstr ""
+
+msgid "Not enough TU's - TU cost to use:"
+msgstr ""
+
+msgid "Not enough TU's - TU cost to activate:"
+msgstr ""
+
+msgid "Not enough TU's - TU cost per attempt:"
+msgstr ""
+
+msgid "Up"
+msgstr ""
+
+msgid "Down"
+msgstr ""
+
+msgid "Toggle map level display mode"
+msgstr ""
+
+msgid "Toggle camera mode"
+msgstr ""
+
+msgid "Safe mode"
+msgstr ""
+
+msgid "Cautious mode"
+msgstr ""
+
+msgid "Aggressive mode"
+msgstr ""
+
+msgid "Crawl"
+msgstr ""
+
+msgid "Walk"
+msgstr ""
+
+msgid "Run"
+msgstr ""
+
+msgid "No shot"
+msgstr ""
+
+msgid "Aimed shot"
+msgstr ""
+
+msgid "Snap shot"
+msgstr ""
+
+msgid "Auto shot"
+msgstr ""
+
+msgid "Stand up"
+msgstr ""
+
+msgid "Kneel down"
+msgstr ""
+
+msgid "Throw object"
+msgstr ""
+
+msgid "Cannot throw"
+msgstr ""
+
+msgid "Drop object"
+msgstr ""
+
+msgid "Yes, prime grenade"
+msgstr ""
+
+msgid "No, cancel operation"
+msgstr ""
+
+msgid "Group formation"
+msgstr ""
+
+msgid "Exit Psionics"
+msgstr ""
+
+msgid "Psionically protect unit"
+msgstr ""
+
+msgid "Lend Psionic strength"
+msgstr ""
+
+msgid "Unstun unit"
+msgstr ""
+
+msgid "Unpanic unit"
+msgstr ""
+
+msgid "Probe unit"
+msgstr ""
+
+msgid "Control body"
+msgstr ""
+
+msgid "Stun unit"
+msgstr ""
+
+msgid "Panic unit"
+msgstr ""
+
+msgid "Squad icons"
+msgstr ""
+
+msgid "Level indicator"
+msgstr ""
+
+msgid "Create a hotseat game"
+msgstr ""
+
+msgid "Create a network game"
+msgstr ""
+
+msgid "Join a network game"
+msgstr ""
+
+msgid "Start game"
+msgstr ""
+
+msgid "Quit game"
+msgstr ""
+
+msgid "Return to game"
+msgstr ""
+
+msgid "Sound volumes"
+msgstr ""
+
+msgid "Return to options"
+msgstr ""
+
+msgid "Plays a random sound effect"
+msgstr ""
+
+msgid "Single file"
+msgstr ""
+
+msgid "Start turn"
+msgstr ""
+
+msgid "Return to start game screen"
+msgstr ""
+
+msgid "TU cost per shot:"
+msgstr ""
+
+msgid "TU cost:"
+msgstr ""
+
+msgid "Start real time game"
+msgstr ""
+
+msgid "Start turn-based game"
+msgstr ""
+
+msgid "Multiplayer game"
+msgstr ""
+
+msgid "End turn"
+msgstr ""
+
+msgid "Reserve TUs for auto shot"
+msgstr ""
+
+msgid "Reserve TUs for snap shot"
+msgstr ""
+
+msgid "Reserve TUs for aimed shot"
+msgstr ""
+
+msgid "Reserve TUs for kneel"
+msgstr ""
+
+msgid "TU cost to activate:"
+msgstr ""
+
+msgid "TU cost to use:"
+msgstr ""
+
+msgid "TU cost per wound:"
+msgstr ""
+
+msgid "Deployment Failed"
+msgstr ""
+
+msgid "Due to a lack of space some units were not placed on the map."
+msgstr ""
+
+msgid "Number of missing units:"
+msgstr ""
+
+msgid "No player controlled units"
+msgstr ""
+
+msgid ""
+"No player controlled units were placed on the map; the game will run in "
+"observation mode."
+msgstr ""
+
+msgid "TU cost per attempt:"
+msgstr ""
+
+msgid "Review briefing"
+msgstr ""
+
+msgid "Assign units to squad"
+msgstr ""
+
+msgid "The following units will be lost if left in combat zone:"
+msgstr ""
+
+msgid "Abort mission?"
+msgstr ""
+
+msgid "Hostile unit spotted"
+msgstr ""
+
+msgid "Unit has died"
+msgstr ""
+
+msgid "Hostile unit has died"
+msgstr ""
+
+msgid "Unknown Unit has died"
+msgstr ""
+
+msgid "Unit critically wounded"
+msgstr ""
+
+msgid "Unit badly injured"
+msgstr ""
+
+msgid "Unit injured"
+msgstr ""
+
+msgid "Unit under fire"
+msgstr ""
+
+msgid "Unit has lost consciousness"
+msgstr ""
+
+msgid "Unit has left combat zone"
+msgstr ""
+
+msgid "Unit has frozen"
+msgstr ""
+
+msgid "Unit has gone beserk"
+msgstr ""
+
+msgid "Unit has panicked"
+msgstr ""
+
+msgid "Unit has stopped panicking"
+msgstr ""
+
+msgid "Psionic attack on unit"
+msgstr ""
+
+msgid "Unit under Psionic control"
+msgstr ""
+
+msgid "Unit freed from Psionic control"
+msgstr ""
+
+msgid ""
+"Search the building for Alien life forms or other hostile forces. Engage the"
+" enemy, but where possible stun Aliens using a Stun Grapple, Stun Grenade, "
+"or Psionic power. Live Aliens are essential for our research. If all hostile"
+" units are eliminated or stunned then we can recover any equipment and Alien"
+" artifacts. A Bio-Transport module must be at the investigation site to "
+"enable the recovery of unconscious or dead Aliens. Be careful to avoid "
+"endangering any civilians and remember that the organization which owns the "
+"building will not be pleased if there is extensive damage to the structure."
+msgstr ""
+
+msgid ""
+"Eliminate the building security forces and recover any equipment or valuable"
+" items left in the combat area. Use explosive or incendiary munitions to "
+"damage the building and inflict economic penalties on the owning "
+"organization, but remember that this can destroy any potential bounty. A "
+"raid will create a state of hostility between the organization and X-COM and"
+" you should be aware of the consequences of such a serious course of action."
+msgstr ""
+
+msgid ""
+"The Aliens have located your base and have launched an attack. Defend the "
+"base from costly damage by eliminating all invading forces. You must also "
+"safeguard your Scientists and Engineers, either by defending them or exiting"
+" them from the combat zone. You can retreat from the base to cut your "
+"losses, but the base will be lost."
+msgstr ""
+
+msgid ""
+"The Aliens have located your base and have launched an attack. Defend the "
+"base from costly damage by eliminating all invading forces. If all hostile "
+"forces are eliminated X-COM will be saved. If you are defeated then X-COM "
+"will be wiped out, leaving the world open to Alien domination. The fate of "
+"humanity will be determined by this conflict. Good luck."
+msgstr ""
+
+msgid "NOT USED! - you should not see this message"
+msgstr ""
+
+msgid ""
+"The Incubator Chamber contains Alien Eggs. These Eggs are held at an exact "
+"temperature inside Incubators providing an environment for the Eggs to hatch"
+" at an optimum rate. Research reveals that a number of Incubators exist, "
+"they must all be destroyed."
+msgstr ""
+
+msgid ""
+"The Spawning Chamber appears to be a very special structure. Very few Aliens"
+" enter this structure although vast numbers of Aliens regularly leave the "
+"building. Our research indicates that this building is the lair for some "
+"kind of Alien queen. We believe this Alien to be the sole producer of Alien "
+"Eggs from which all Aliens hatch. Whilst the primary objective is the "
+"destruction of the Queen and all Alien Eggs, the live capture of the Alien "
+"Queen would be a vicious insult to the Aliens."
+msgstr ""
+
+msgid ""
+"The Food Chamber contains the Aliens' food source in the form of plants. "
+"These plants require organic heat and light sources to prevent them from "
+"decaying. The Mutant alliance also informs us that a number of Sectoids are "
+"held captive within the Food Chamber. Our old enemy has apparently become an"
+" Alien delicacy. Whilst the rescue of any Sectoids will guarantee an "
+"Alliance with the Mutants, the primary objective is to destroy the Alien "
+"heat and light sources as indicated here."
+msgstr ""
+
+msgid ""
+"The Megapods are the means by which the Aliens create new structures. The "
+"small Egg-like objects are eventually replanted and grow into massive "
+"organic structures. Our discoveries are shocking; this building is "
+"practically overflowing with Pods. Our Scientists fear that the Aliens are "
+"planning a massive expansion and who knows how we could stop them then. All "
+"Megapods must be destroyed thus preventing the Aliens building any new "
+"structures."
+msgstr ""
+
+msgid ""
+"The Alien Dimension contains many structures linked by an irregular snaking "
+"chain. The Sleeping Chamber lies at the start of the chain and allows the "
+"Aliens to rejuvenate nocturnally. The Aliens regularly connect themselves to"
+" sleeping units, which appears to be a necessary operation in order for them"
+" to stay alive. Explore the area with caution and destroy all sleeping units"
+" as pictured here. After disabling the building, all Agents must exit the as"
+" soon as possible."
+msgstr ""
+
+msgid ""
+"The Organic Factory provides a construction center for Alien UFOs. In their "
+"initial stage of development the UFOs resemble small mushroom-like objects. "
+"These objects increase in size until they reach the colossal sizes of the "
+"UFOs we have encountered. When fully grown the UFOs detach themselves from "
+"their stem and become fully functional Alien attack vessels. All embryonic "
+"UFOs must be destroyed."
+msgstr ""
+
+msgid ""
+"The destruction of the Food Chambers leads us to the Alien Farm. This "
+"contains a number of strange white blocks. Our Scientists believe that these"
+" curious objects influence the atmospheric conditions of the Alien "
+"Dimension, although it has been impossible to prove this. Whatever the "
+"purpose of these blocks, their destruction can only hinder the Alien cause. "
+"Research indicates that the blocks are located in multiple locations, "
+"although only this site has been photographed. Destroy all of the blocks to "
+"disable the building."
+msgstr ""
+
+msgid ""
+"The Control Chamber houses giant organic brains which control the operation "
+"of Alien entities within the Alien dimension. The destruction of these "
+"organic brains will make any remaining Aliens more desperate, as their "
+"ultimate defeat becomes an imminent reality."
+msgstr ""
+
+msgid ""
+"The Maintenance Factory appears to contain a number of sacred Alien "
+"structures. We believe that the Alien Dimension is fueled by the structures "
+"pictured here. These heart units must be destroyed in order to weaken the "
+"remaining structures. Our success here will indeed be a severe blow to the "
+"Aliens as exactly half of the Alien Dimension will lie in ruins."
+msgstr ""
+
+msgid ""
+"The destruction of the Dimension Gates is our ultimate goal. From evidence "
+"collected at previous Alien buildings, we have managed to composite this "
+"picture of our objectives. The Alien Generators must be destroyed, "
+"simultaneously disabling the protective laser web. Destroy all of the "
+"generators to disable the building. Upon disabling the building it is "
+"imperative that all Agents evacuate as a matter of urgency. Our forces must "
+"return to the Earth dimension before the final Dimension Gate closes "
+"forever.Victory is in our sights - Good Luck!"
+msgstr ""
+
+msgid ""
+"Raiding forces must eliminate all other forces, whether they are raiders or "
+"defenders. Raiders are deployed on the edge of the combat zone. All "
+"defending forces are allied with each other and must repel any raiders. "
+"Defenders are deployed in the center of the combat zone"
+msgstr ""
+
+msgid ""
+"You must attempt to capture the crashed UFO by eliminating the defending "
+"Alien forces. There is only one chance to succeed in this mission because "
+"failure will mean that the surviving Aliens will attempt to destroy their "
+"craft. They would rather die than allow us to recover their advanced "
+"technology. Your priority is to eliminate the enemy with maximum force."
+msgstr ""
+
+msgid ""
+"Hostile troops have located your base and have launched an attack. Defend "
+"the base from costly damage by eliminating all invading forces. You must "
+"also safeguard your Scientists and Engineers, either by defending them or "
+"exiting them from the combat zone. You can retreat from the base to cut your"
+" losses, but the base will be lost."
+msgstr ""
+
+msgid ""
+"Hostile troops have located your base and have launched an attack. Defend "
+"the base from costly damage. If all hostile forces are eliminated X-COM will"
+" be saved. If you are defeated then X-COM will be wiped out, leaving the "
+"world open to Alien domination. The fate of humanity will be determined by "
+"this conflict. Good luck."
+msgstr ""
+
+msgid "MISSION BRIEFING"
+msgstr ""
+
+msgid "TACTICAL SCENARIO"
+msgstr ""
+
+msgid "Multi-worm"
+msgstr ""
+
+msgid "Time units"
+msgstr ""
+
+msgid ""
+"Citizens of Mega-Primus use two types of vehicle. There are common road "
+"traveling vehicles that use a low cost anti-gravity system embedded in the "
+"road surface and airborne flyers which employ more sophisticated Elerium "
+"powered anti-gravity engines. The bold red military vehicles are available "
+"for X-COM to purchase."
+msgstr ""
+
+msgid ""
+"X-COM bases are constructed from a variety of component units designed to "
+"perform different functions. The construction of a new base requires a bare "
+"minimum of living quarters and storage facilities. Beyond these requirements"
+" a base is designed to accommodate research, training and vehicle repair "
+"facilities. Bases will also need to be defended against aggression using "
+"well equipped Agents and security stations."
+msgstr ""
+
+msgid ""
+"All military vehicles can be equipped with a variety of weapons, engines and"
+" special equipment. The engines and weapons are divided into road and "
+"airborne categories. Careful attention to improving vehicle equipment is an "
+"essential part of military strategy."
+msgstr ""
+
+msgid ""
+"X-COM Agents should be equipped in preparation for tactical missions. You "
+"can choose from a variety of guns, missile launchers, ammunition types, "
+"grenades and armor."
+msgstr ""
+
+msgid ""
+"The Organizations which operate in Mega-Primus consist of corporations, "
+"political groups, criminal gangs and the government. All of them are at risk"
+" from Alien infiltration but some are more vulnerable than others."
+msgstr ""
+
+msgid "!!!Blank - Unused (WAS VIP TITLE PAGE)"
+msgstr ""
+
+msgid ""
+"All results of Alien research are recorded here, including results of "
+"autopsies and analysis of living specimens."
+msgstr ""
+
+msgid ""
+"Each building in Mega-Primus is a vast labyrinth of corridors, atriums, "
+"rooms, halls and service ducts. If Aliens have infiltrated a building they "
+"will be found in just a small part of the complex, with plenty of places to "
+"escape from the combat zone. Buildings with lower populations or numerous "
+"service areas provide much better places for Aliens to hide and breed."
+msgstr ""
+
+msgid ""
+"All research into the origins of the Aliens and their home world is "
+"collected in this section."
+msgstr ""
+
+msgid ""
+"The structure of the vehicle suggests an organic construction process. The "
+"skin is composed of a strong and unusual compound that allows the craft to "
+"travel without harm through the Dimension Gates. This unmanned craft is "
+"equipped with an unusual type of beam weapon. Its limited capability "
+"suggests that it is purely designed to collect information and then return "
+"to the Alien Dimension."
+msgstr ""
+
+msgid "Alien Scout Ship"
+msgstr ""
+
+msgid ""
+"This vessel appears to be a surveillance craft. Its structure is very "
+"strange and there is no evidence of any crew or cargo. The craft's internals"
+" appear to have been intentionally destroyed by the Aliens from a remote "
+"location. The craft is armed with small beam weapon. The craft does not "
+"appear to be a great threat to the city, but can only be a precursor to more"
+" dangerous incursions."
+msgstr ""
+
+msgid ""
+"The primary mission of this craft is to deposit Alien life forms inside city"
+" buildings. This represents a serious challenge for our ground forces, but "
+"if they can be shot down before they unload their passengers, then the "
+"problem will be minimized. The craft is armed with the same beam weapon as "
+"the Scout Ships or Probes, but it is slower moving and an easier target to "
+"hit."
+msgstr ""
+
+msgid ""
+"This craft is well armored, highly maneuverable and armed with a powerful "
+"beam weapon. It is designed to protect other more vulnerable Alien ships. "
+"Avoid these craft if the threat to our vehicles is too great and concentrate"
+" on shooting down the Alien Transports."
+msgstr ""
+
+msgid ""
+"The Destroyer is heavily armored and its behavior is aggressive. It is armed"
+" with a powerful Alien Missile Launcher capable of immense destruction. It "
+"can also deposit Alien beings into the city."
+msgstr ""
+
+msgid ""
+"The Assault Ship effectively replaces the Alien Transport as a troop "
+"carrier. It can deposit large numbers of Aliens into city buildings and is "
+"armed with a powerful beam weapon. This craft is highly dangerous and must "
+"be stopped at all costs."
+msgstr ""
+
+msgid ""
+"The Alien Bomber is equipped with an unusual missile launcher that splits "
+"into multiple, independently targeted missiles. It also has a light beam "
+"weapon to deal with close air combat. There is a limited crew on board."
+msgstr ""
+
+msgid "Alien Escort Ship"
+msgstr ""
+
+msgid ""
+"This craft is fast and nimble. On its own it represents no threat, but is "
+"deadly when combined with other Alien combat ships. It is armed with a "
+"missile which generates a Stasis Field on impact. This field holds the "
+"target still for a small period of time so craft that rely on evasion for "
+"defense, become vulnerable."
+msgstr ""
+
+msgid ""
+"This immense craft is heavily armored, well armed and has a large crew. It "
+"is equipped with a Heavy Disruptor Beam and Disruptor Missiles. If the "
+"Aliens can produce just a handful of these devastating leviathans, the "
+"future of our world looks bleak."
+msgstr ""
+
+msgid ""
+"The Mothership is an extremely large, well equipped vessel. It is armed with"
+" a Heavy Disruptor Beam, Disruptor Multi-Bombs and Stasis Field Bombs. It "
+"represents a very serious threat to the city because its purpose seems to be"
+" mass destruction rather than infiltration. If the Aliens become desperate "
+"they will deploy this craft to raze the city to the ground. They must be "
+"stopped at all costs."
+msgstr ""
+
+msgid ""
+"Megapol's police Hovercars are the scourge of the slum dwelling criminal "
+"gangs. They are well armed and able to travel freely within and outside the "
+"city boundaries, scouring the ground or air for unlicensed criminal "
+"vehicles. They are no match for heavier military vehicles, but Megapol is "
+"able to manufacture many of these scout cars and can replace any losses. The"
+" vehicle's styling is required to conform to city aesthetic ordinances "
+"concerning pleasurable design of public vehicles."
+msgstr ""
+
+msgid ""
+"The wealthy citizen would not normally travel by people-tube or road, but "
+"instead hire the services of a fast and reliable Airtaxi. The styling is "
+"conspicuously based on the more humble road going version, but the ride is "
+"more refined. Expect the occasional Airtaxi you see to contain a VIP, or "
+"flamboyant Sensovision celebrity."
+msgstr ""
+
+msgid ""
+"The airborne rescue vehicle serves as an ambulance and fire engine. It is "
+"specially equipped to deal with rescue situations involving car accidents "
+"and other disasters. However dealing with the Alien invasion is well beyond "
+"the scope of the rescue service which normally has little to do given the "
+"strict safety regulations governing all aspects of city life."
+msgstr ""
+
+msgid ""
+"This multipurpose craft is used to build and repair any type of building "
+"within the city boundary. It will also repair roads, bridges and other "
+"structures. The aesthetic regulations also require construction vehicles to "
+"be equipped for landscape gardening and forestry work."
+msgstr ""
+
+msgid ""
+"Heavy transportation is mainly undertaken by these heavy duty air "
+"transports. Manufactured goods are transported entirely by air, given the "
+"unreliability and dangers of road transport in the deregulated areas, or "
+"slums. The Airtrans is a computer controlled craft, but must be manned by "
+"law according to the inter-personal contact ordinances."
+msgstr ""
+
+msgid ""
+"The huge Space Liners enable commerce with Mars, the Moon and the deep space"
+" mining colonies. Huge quantities of manufactured goods are transported "
+"outwards, the Space Liners then return laden with raw materials and small "
+"quantities of the precious Elerium."
+msgstr ""
+
+msgid ""
+"The Phoenix is manufactured by Marsec mainly for military purposes. This "
+"sleek but rugged vehicle is used for reconnaissance in dangerous "
+"environments such as the Mars colony. A variety of weapon and engine "
+"configurations can be used and a well equipped Phoenix is more than a match "
+"for a police Hovercar."
+msgstr ""
+
+msgid ""
+"The unusual Hoverbike with 'side car' is used for military purposes or for "
+"the personal pleasure of wayward youth who enjoy speed and altitude. Its "
+"good power to weight ratio means that this is the most maneuverable air "
+"vehicle but it can only carry light armaments. The Hoverbike can be a "
+"valuable means of transport for the Agent on investigative missions where "
+"speed of response is essential."
+msgstr ""
+
+msgid ""
+"The Valkyrie is the standard military vehicle manufactured by Marsec. Its "
+"sleek lines appear reminiscent of old rocket designs, but it is a fully "
+"capable anti-grav dependent craft with a variety of engine configurations. "
+"There is space for many types of armaments and equipment loads. It is "
+"capable of solar system travel and is feared by the criminal cartels when it"
+" is used to police the space lanes to Mars and beyond."
+msgstr ""
+
+msgid ""
+"The Hawk is essentially a heavy weapons platform capable of carrying a "
+"significant payload. It is the most powerful vehicle manufactured by Marsec "
+"and should be the first line of defense against any invasion force, wherever"
+" it comes from."
+msgstr ""
+
+msgid ""
+"This unmanned automated probe is designed to explore the Alien Dimension and"
+" has minimal armaments and defenses. The Probe will enable X-COM to test its"
+" new adaptation of the Aliens inter-dimensional technology. Exploration is a"
+" vital requirement for developing further knowledge of the Alien threat and "
+"the probe is just the first step."
+msgstr ""
+
+msgid ""
+"This inter-dimensional transport is designed for transporting Alien life "
+"forms or Alien technology captured during tactical missions in the Alien "
+"Dimension."
+msgstr ""
+
+msgid ""
+"The first manned inter-dimensional vehicle produced for the initial "
+"exploration of Alien structures. The craft only has a small equipment and "
+"armament load and must conduct its excursions with great care."
+msgstr ""
+
+msgid ""
+"The development of the Retaliator shifts the emphasis from exploration to "
+"attack. Our Engineers have at last produced a craft which can match the "
+"capabilities of many of the Alien ships."
+msgstr ""
+
+msgid ""
+"The ultimate expression of X-COM technology - a mean, fast and devastating "
+"craft which, if properly equipped, is more than a match for the biggest "
+"Alien attack ships. The Annihilator will help secure X-COM domination of the"
+" Alien Dimension."
+msgstr ""
+
+msgid ""
+"The road going Autotaxi is a more luxurious and relaxed form of public "
+"transport than the bustling People Tubes. Although a driver is not "
+"technically required regulations specify that a 'driver' is needed to "
+"fulfill the required inter-personal contact, which is necessary in a society"
+" dominated by automation."
+msgstr ""
+
+msgid ""
+"A computer controlled, fully automated goods vehicle. The road going "
+"Autotrans is a more economical version of the Airtrans, but the AI is still "
+"so advanced that they can anticipate demand for their services with uncanny "
+"accuracy and rarely need to be ordered in advance."
+msgstr ""
+
+msgid ""
+"The standard Megapol patrol vehicle is proudly styled in the current retro "
+"fashion, but is still capable of carrying several types of weapon system. "
+"The recent prevalence for criminals to engage in road combats has led to an "
+"increase in patrols and an upgrade in armament."
+msgstr ""
+
+msgid ""
+"The private car is a luxury which is only afforded by celebrities and "
+"gangsters. The road system in the city is an anti-grav ducting system that "
+"allows for fast and safe travel by low powered anti-grav vehicles. Although "
+"the car hovers over the road it is not capable of leaving it, except through"
+" exceptionally careless manual driving."
+msgstr ""
+
+msgid ""
+"A Marsec vehicle renowned for its handling and power. Once loaded with "
+"weapons systems it proves to be a useful military vehicle and an ideal "
+"transport for X-COM Agents."
+msgstr ""
+
+msgid ""
+"Military vehicles are rarely required within the boundaries of Mega-Primus, "
+"but if trouble erupts in the deregulated areas then the Wolfhound Armored "
+"Personnel Carrier is normally deployed into the conflict zone. Its armament "
+"load is small and is primarily used for secure transport."
+msgstr ""
+
+msgid ""
+"The road going anti-grav 'bike' is a plaything of rich speed freaks. It is "
+"extremely fast and maneuverable. Consequently it is ideal for the lone X-COM"
+" Agent."
+msgstr ""
+
+msgid ""
+"The meanest Marsec manufactured land based vehicle is an extremely heavily "
+"armored all-terrain vehicle with a choice of three different turret "
+"mountings. Projectile and Plasma Cannons can be fitted, or a missile "
+"launching unit for targeting airborne vehicles."
+msgstr ""
+
+msgid ""
+"The connection between the basement level and the outside world is provided "
+"by a set of heavy duty gravlifts."
+msgstr ""
+
+msgid ""
+"Accommodation and recreation for X-COM Agents. New living quarters will have"
+" to be built as more Agents, Scientists and Engineers are hired."
+msgstr ""
+
+msgid ""
+"All equipment and raw materials must be safely stored. Spare storage "
+"capacity should be maintained in order to allow for purchases and transfers "
+"from other bases."
+msgstr ""
+
+msgid "NOT USED"
+msgstr ""
+
+msgid ""
+"The highest quality medical care is available only from a dedicated medical "
+"unit. Any injuries would otherwise have to be dealt with by the city "
+"hospitals, where the safety of Agents cannot be guaranteed. Injured Agents "
+"are automatically healed when they reside at a base with a Medical Bay, but "
+"if the capacity of the Medical Bays are exceeded then healing will not take "
+"place at 100% efficiency."
+msgstr ""
+
+msgid ""
+"Training in physical skills is essential for X-COM Agents. Without a fully "
+"equipped training area, Agents residing at the base would waste a lot of "
+"time when they could be improving their weapons skills, reactions and "
+"stamina. Agents assigned to combat training will automatically use any "
+"training facilities at a base, but if the capacity of Training Areas is "
+"exceeded then training will not take place at 100% efficiency."
+msgstr ""
+
+msgid "Psi-Gym"
+msgstr ""
+
+msgid ""
+"Agents which are naturally talented in Psionic skills need to train hard to "
+"maintain and improve their power, attack and defense. The Psi-Gym is "
+"equipped with the latest Psionic technology and Psionic training is not "
+"possible without such a facility. Agents assigned to Psionic training will "
+"automatically use any Psi Gym at a base, but if the capacity of the gyms is "
+"exceeded then training will not take place at 100% efficiency."
+msgstr ""
+
+msgid ""
+"Should a base come under attack a Security Station will act as a defensive "
+"buffer which can assist Agents in defensive fire. Heavy Plasma Gun "
+"emplacements are directed down adjacent corridors. The Security Station is "
+"designed so that it will not obstruct the smooth functioning of the base."
+msgstr ""
+
+msgid ""
+"Security is a very important issue for a base when it contains vital "
+"personnel and technology. Advanced Security Stations provide the best "
+"protection for base facilities. Weapon emplacements are based on Alien "
+"Disruptor technology."
+msgstr ""
+
+msgid ""
+"Repair bays are required for repairing damaged craft. A single bay can only "
+"deal with one vehicle at a time, but if there is more than one damaged "
+"vehicle per repair bay, then all vehicles will still be repaired, but at "
+"less than 100% efficiency."
+msgstr ""
+
+msgid ""
+"Any research involving Alien creatures must be conducted in a Biochemistry "
+"Lab. These labs can accommodate up to five Biochemists working at one time "
+"and each lab can be assigned a specific research project."
+msgstr ""
+
+msgid ""
+"This larger and better equipped version of the Biochemistry Lab will enable "
+"the study of live Alien specimens. Psionic devices are available to assist "
+"in communication with intelligent Alien beings. The Advanced Biochemistry "
+"Lab allows up to ten Biochemists to work at any one time."
+msgstr ""
+
+msgid ""
+"These labs are specifically equipped for high energy particle experiments "
+"designed to analyze and replicate Alien technology. The lab can accommodate "
+"five Quantum Physicists and each lab can be assigned a specific research "
+"project."
+msgstr ""
+
+msgid ""
+"A larger, better equipped lab for researching the larger pieces of Alien "
+"technology. The lab can accommodate ten Quantum Physicists."
+msgstr ""
+
+msgid ""
+"Live Alien specimens require an enclosed, controlled environment. The Alien "
+"Containment system can generate different types of atmosphere at various "
+"pressures. The unit is also secure enough to prevent the escape of Aliens "
+"into the base. This facility can accommodate up to twenty human sized life "
+"forms."
+msgstr ""
+
+msgid "NOT USED IN GAME ANYMORE!"
+msgstr ""
+
+msgid ""
+"X-COM Engineers require the best facilities for the construction of new "
+"technology. The latest atomic replicators are installed which can accurately"
+" recreate most substances and micro-structures in the known universe. The "
+"facility can be used to create small pieces of equipment such as personal "
+"weaponry and armor. The workshop can accommodate five Engineers and each "
+"Workshop can be assigned to produce a specific item."
+msgstr ""
+
+msgid ""
+"Larger pieces of technology require more space and power to construct. The "
+"Advanced Workshop is designed for large construction projects such as new "
+"vehicles. The facility can accommodate up to ten Engineers."
+msgstr ""
+
+msgid ""
+"All research relating to the various types of Alien craft and their "
+"propulsion systems is collected here."
+msgstr ""
+
+msgid ""
+"Mid-powered Laser Beam gun commonly used in airborne police vehicles. The "
+"atomic power cells contained in these weapons allow for many thousands of "
+"shots before they expire."
+msgstr ""
+
+msgid ""
+"High energy Laser Beam weapon designed for military and police vehicles. "
+"Powerful atomic cells provide the energy source."
+msgstr ""
+
+msgid ""
+"A popular but expensive alternative to the Bolter laser gun. The rare "
+"Elerium fuel is used to power both the plasma chamber and the electro-"
+"magnetic accelerators that propel the ultra-heated plasma to near light "
+"speeds."
+msgstr ""
+
+msgid ""
+"The Marsec corporation has privileged access to Elerium supplies due to a "
+"strong security role in the Elerium mining colonies. The Lineage weapons "
+"technology represents the ultimate Elerium powered accelerators. They are "
+"expensive but devastating."
+msgstr ""
+
+msgid ""
+"The Plasma Multi-System is a series of connected plasma turrets designed to "
+"provide all round fire power. This weapon is ideally suited to installation "
+"in larger, less maneuverable craft."
+msgstr ""
+
+msgid ""
+"Alien weapons technology is based on a complex sub-atomic particle system. "
+"The Disruptor Beam is generated from an inter-dimensional power source. It "
+"propels sub-atomic particles which disintegrate molecules in their path. The"
+" weapon does not require ammunition since the energy chamber appears to be a"
+" self-perpetuating energy source."
+msgstr ""
+
+msgid ""
+"The Medium Disruptor Beam is a more powerful version of the Light Disruptor "
+"Beam. It uses the same sub-atomic, inter-dimensional technology but the "
+"energy chamber is larger. It is capable of penetrating the heaviest armor."
+msgstr ""
+
+msgid ""
+"The Heavy Dispruptor Beam is an immensely powerful weapon. Its only "
+"drawbacks are its size and difficulty of manufacture. The energy chamber is "
+"enormous, drawing energy from another dimension. It is possible that the "
+"weapon's original power source is actually located in some alternative "
+"dimension."
+msgstr ""
+
+msgid ""
+"The standard cannon for police and military vehicles; it fires a high "
+"velocity armor piercing shell."
+msgstr ""
+
+msgid ""
+"Primarily a short range anti-air missile system. It is effective against "
+"smaller air vehicles."
+msgstr ""
+
+msgid ""
+"A long range missile system with a powerful fusion warhead. Only useful "
+"against ground targets or slow moving vehicles."
+msgstr ""
+
+msgid ""
+"The Prophet system is more effective than the Janitor missiles against "
+"faster moving targets. Its guidance systems are much more accurate, but the "
+"array only has a limited missile capacity."
+msgstr ""
+
+msgid ""
+"This is an extremely powerful long range missile system, which should only "
+"be used with extreme caution. The destructive fusion warhead is designed to "
+"be used against distant ground targets."
+msgstr ""
+
+msgid ""
+"This Alien missile system is incredibly destructive. The explosive force "
+"exceeds the Retribution Missiles and its speed is greater. Fortunately the "
+"range is quite limited."
+msgstr ""
+
+msgid ""
+"This unusual Alien weapon causes an inter-dimensional flux field to surround"
+" the target when it is hit, rendering it immobile and inactive. The field "
+"only lasts a short while but during this time the target vehicle is "
+"extremely vulnerable."
+msgstr ""
+
+msgid ""
+"The multi-bomb has a short range but splits into fast, multiple "
+"independently targeted missiles. This makes it a deadly weapon against "
+"numerous small targets."
+msgstr ""
+
+msgid ""
+"This Megapol produced defense system uses a large number of accurate, short "
+"range laser guns to shoot down incoming missiles."
+msgstr ""
+
+msgid ""
+"The Marsec version of the defense array uses more powerful and accurate "
+"plasma beam weapons to defend against missile attacks."
+msgstr ""
+
+msgid ""
+"A compact anti-grav unit suitable for Hoverbikes and smaller vehicles only."
+msgstr ""
+
+msgid ""
+"A more high-powered version of the Superdynamics standard, but still small "
+"enough for a Hoverbike."
+msgstr ""
+
+msgid ""
+"Larger anti-grav units give more speed and acceleration for Hovercars and "
+"other small airborne vehicles."
+msgstr ""
+
+msgid ""
+"A large anti-grav unit designed for military vehicles or commercial "
+"transports."
+msgstr ""
+
+msgid ""
+"A high powered anti-grav unit generally restricted to military or police "
+"vehicles."
+msgstr ""
+
+msgid "The ultimate engine upgrade for large airborne vehicles."
+msgstr ""
+
+msgid ""
+"A discreet, but powerful computer targeting turret system. Designed for "
+"small road vehicles."
+msgstr ""
+
+msgid ""
+"A more powerful and accurate cannon system manufactured by Marsec and "
+"designed for small road vehicles."
+msgstr ""
+
+msgid ""
+"A compact ground launched missile system for small road vehicles. This will "
+"turn a humble road car into a serious threat to airborne vehicles."
+msgstr ""
+
+msgid ""
+"The Plasma Turret Cannon is a powerful weapon, but lacks the ability to "
+"track and hit fast airborne vehicles."
+msgstr ""
+
+msgid "GLM Air Defense"
+msgstr ""
+
+msgid ""
+"A missile launcher which transforms the heavy tank into an effective air "
+"defense unit."
+msgstr ""
+
+msgid ""
+"A powerful cannon which fires explosive shells over large distances. Its "
+"effectiveness is limited to static or slow moving targets."
+msgstr ""
+
+msgid "A low powered road engine for bikes and small vehicles."
+msgstr ""
+
+msgid "A standard road vehicle anti-grav unit."
+msgstr ""
+
+msgid "A high powered road vehicle engine for standard size road vehicles"
+msgstr ""
+
+msgid "A powerful road engine normally reserved for police or military use."
+msgstr ""
+
+msgid ""
+"The ultimate road vehicle engine, strictly for armored military vehicles."
+msgstr ""
+
+msgid ""
+"A complex AI unit manufactured by Cyberweb. It is designed to assist the "
+"aiming and intelligent targeting for all installed weapons systems."
+msgstr ""
+
+msgid ""
+"A more complex and capable version of the Light Weapons Control. Accuracy is"
+" improved over the smaller model."
+msgstr ""
+
+msgid ""
+"The largest and most complex weapons control system available from "
+"Cyberweb.An expensive unit that should only be used on heavily loaded "
+"weapons platforms."
+msgstr ""
+
+msgid ""
+"X-COM Scientists have devised a superior and more compact weapons control "
+"system designed specifically for X-COM vehicles. It assists targeting of the"
+" more agile UFOs."
+msgstr ""
+
+msgid ""
+"A standard module for transporting goods. X-COM Agents should have cargo "
+"capacity at a building after a tactical combat mission in order to retrieve "
+"equipment and Alien artifacts."
+msgstr ""
+
+msgid ""
+"Allows a vehicle to carry an extra four passengers in addition to the "
+"standard passenger capacity for the vehicle type."
+msgstr ""
+
+msgid ""
+"This X-COM produced unit is designed to contain Alien specimens, alive or "
+"dead. In order to retrieve Alien life forms, X-COM Agents must have Bio-"
+"Transport capability at a building after a tactical combat mission."
+msgstr ""
+
+msgid ""
+"The Cyberweb evasion system is designed to track hostile missiles and "
+"disrupt their guidance systems using various forms of radiation. It is not "
+"totally effective but a very useful complement for other defense systems."
+msgstr ""
+
+msgid ""
+"The Aliens have manufactured an energy shield that can protect an entire "
+"vehicle. It is far more effective than any armor system and can turn a small"
+" vehicle into a deadly weapons platform. The disruption field it generates "
+"can absorb any kind of beam or projectile, but it loses power for each hit. "
+"Power levels are gradually restored but the unit will cease functioning if "
+"the power level is reduced to zero."
+msgstr ""
+
+msgid ""
+"A larger and more powerful version of the Small Disruption Shield designed "
+"for larger Alien craft. Its absorption level is much greater, but will still"
+" malfunction if the power level is reduced to zero."
+msgstr ""
+
+msgid ""
+"The Cloaking Field is an Alien defense system that disrupts the detectors of"
+" missiles or weapon control systems. Effectively this means that the craft "
+"is almost invisible to radar, infra-red and visual sighting. It is very "
+"effective but the field must be disabled temporarily if the craft is using "
+"any of its own weapons systems."
+msgstr ""
+
+msgid ""
+"The Aliens have developed a very effective teleportation system that allows "
+"a craft to jump instantly over short distances. The unit is automatically "
+"activated when a vehicle is under fire and receiving damage. Its offensive "
+"use is limited because the destination cannot be controlled accurately."
+msgstr ""
+
+msgid "NOT USED!"
+msgstr ""
+
+msgid ""
+"The Extraterrestrial combat force known as X-COM was originally founded in "
+"1998 to defend the Earth from Alien invasion. After a period of "
+"obsolescence, X-COM was revived in 2040 to fight the second Alien war under "
+"the seas of the Earth. X-COM has now been enlisted to investigate recent "
+"Alien incursions. The city's senators have agreed to fund a covert "
+"initiative, with the assistance of local Megapol stations, who will pass on "
+"reports of possible Alien activity directly to the X-COM base commander. "
+"X-COM is under pressure to solve the Alien problem before new elections to "
+"the Senate. Senators and the corporate elite of Mega-Primus are nervous "
+"about the prospect of popular panic undermining the social fabric of the "
+"city."
+msgstr ""
+
+msgid ""
+"The Alien scare first began on 7th March, 2084 when a strange Dimension Gate"
+" appeared in the skies above Mega-Primus. During the following days strange "
+"UFOs came and went, but they did not appear to attack anything or abduct "
+"anyone. It was only when strange reports of Alien monsters lurking in the "
+"recesses of city buildings filtered through to the senatorial security "
+"committee that the plan to enlist X-COM was proposed."
+msgstr ""
+
+msgid ""
+"Mega-Primus is a city state ruled by thirteen elected senators. This "
+"Government is directly responsible for the legal system and the mass transit"
+" systems. All other city services, including the policing of the city, are "
+"contracted to various corporations. In practice the immense bureaucracy "
+"holds the most power. Senior civil servants are responsible for maintaining "
+"the city edicts and defining citizenship and its obligations. They cannot be"
+" removed from their jobs except through proven misconduct."
+msgstr ""
+
+msgid ""
+"Megapol not only runs the city police force and prison service, it also "
+"manufactures vehicles, weapons and munitions. It directly competes with the "
+"Marsec corporation for lucrative markets in the mining colonies and Mega-"
+"Primus. The major problems for Megapol are the criminal gangs that "
+"distribute Psiclone and the UFO incursions which are regarded as a threat to"
+" city security. Police vehicles bravely intercept UFOs as they materialize "
+"from the Dimension Gates, but they are woefully under equipped to deal with "
+"them."
+msgstr ""
+
+msgid ""
+"This bizarre cult has whipped up a religious frenzy following the appearance"
+" of the Dimension Gates. The cult has long believed in redemption of the "
+"human race by a superior Alien race. They believe the UFOs and Aliens to be "
+"harmless and are rapidly gaining credibility and recruits from the general "
+"population. This represents a considerable threat to X-COM because the "
+"cultists will do anything to assist the Aliens in their purpose, whatever "
+"that might be."
+msgstr ""
+
+msgid ""
+"The ominous and highly secretive Marsec corporation took over from X-COM as "
+"the leading provider of off-world security, as X-COM centered its activities"
+" around Mega-Primus. During the initial years of their operation Marsec was "
+"empowered to impose order on the rebellious Mars colony. Marsec (Mars "
+"Security) developed high technology weaponry and vehicles by recruiting top "
+"Scientists from Earth and using the equipment left by X-COM. With the "
+"establishment of the remote Elerium mining colonies, Marsec secured "
+"contracts for military equipment despite competition from Megapol."
+msgstr ""
+
+msgid ""
+"The refinement of Elerium powered anti-grav propulsion units has created a "
+"new industry for ecologically friendly power sources. Superdynamics has "
+"developed sophisticated plants for producing power units of all sizes as "
+"well as a variety of airborne anti-grav vehicles. The cost of manufacture is"
+" high and Elerium is also in short supply. This means that privately owned "
+"vehicles are rare, but Superdynamics developed and installed the anti-grav "
+"system for the People Tubes. These safe and efficient tube ways rapidly "
+"became the mass transit system for Mega-Primus in direct competition to the "
+"road network."
+msgstr ""
+
+msgid ""
+"The General Metro corporation designs and manufactures road vehicles. Since "
+"the corporation installed an efficient anti-grav system inside the road "
+"structure it became possible to produce low powered anti-grav road vehicles "
+"which were cheap and efficient, despite being limited to the road system. "
+"The vehicle designs were based on the exuberant styling of the 1950s "
+"according to the requirements of city planners. General Metro is a major "
+"competitor to Superdynamics, as both corporations provide transport systems."
+msgstr ""
+
+msgid ""
+"The Cyberweb corporation developed artificial life forms to provide a "
+"willing and obedient workforce for the future. However, popular protest "
+"against unemployment forced the Senate to pass laws against artificial life."
+" No more Androids could be built and they were banned from employment except"
+" the most menial and degrading jobs. Cyberweb had to change strategy and "
+"compete with the Nanotech corporation for medical and military contracts. "
+"The unfortunate Androids were either banished from the city or had to be "
+"bought and sold as household servants or pets. Androids are good for combat,"
+" although they possess no Psionic abilities, and the few that remain may "
+"well risk seeking employment by X-COM and join the battle against the "
+"Aliens."
+msgstr ""
+
+msgid ""
+"The Transtellar corporation owns the Space Port and many of the Space Liners"
+" that ship to the city. They also own many warehouses spread throughout the "
+"city which are used by many corporations involved in importing and "
+"exporting. The city goods transport service and the taxi service are owned "
+"and run by Transtellar. The corporation has been regarded suspiciously by "
+"Megapol which considers the corporation susceptible to Alien contamination."
+msgstr ""
+
+msgid ""
+"The discovery of Elerium sources in distant solar systems has produced a new"
+" gold rush. The Solmine corporation owns most of the mining operations and "
+"it imports Elerium directly to Mega-Primus. These mining operations sustain "
+"the economies of the numerous small colonies, but they are still governed "
+"from Earth. There have been demands for independence and some rebellions. "
+"Major corporations, fearing diminished profits and raised Elerium prices "
+"have suppressed these revolts with the aid of Solmine and Marsec."
+msgstr ""
+
+msgid ""
+"The entertainment industry entered a new phase with the advent of Psionic "
+"projectors. Actors connected to Psionic sensors can record their thoughts "
+"and experiences in any environment. The recorded patterns are edited into "
+"'Sensovision' experiences and replayed at 'Sensodromes' where many people "
+"can connect to Psionic receivers. The receiver allows people to see, hear, "
+"feel and smell what the actor experienced. Sensoviosion actors are wealthy "
+"celebrities and the Sensovision corporation is now selling the expensive "
+"receiver sets into peoples homes. The only competition comes from the "
+"addictive and illegal Psionic implant known as Psiclone, which is supplied "
+"by the criminal syndicates."
+msgstr ""
+
+msgid ""
+"The Lifetree corporation runs the city schools and universities. They have "
+"developed a controversial but highly effective Psionic tutoring system which"
+" imparts knowledge far more efficiently than reading or listening to "
+"lecturers. If the student resists the knowledge transfer then pain results. "
+"Lifetree have been accused of brainwashing since the introduction of the "
+"'moral education' program which is designed to turn the youth into model "
+"citizens. They are competing with Sensovision in the production of Psionic "
+"devices."
+msgstr ""
+
+msgid ""
+"Nutrivend has developed a highly efficient organic farming system that "
+"produces huge quantities of fruit, vegetables and livestock of all known "
+"varieties. The corporation also owns food processing plants and shops. The "
+"city regulations governing the additives in food are so strict that rival "
+"producers cannot compete economically, with the single exception of Evonet."
+msgstr ""
+
+msgid ""
+"Recycling is the business of Evonet. According to city regulations all waste"
+" has to be recycled, Evonet have turned this into a profitable enterprise "
+"through the construction of their recyclotoriums. These buildings process "
+"organic waste, including sewage, into foodstuffs for human and animal "
+"consumption. The corporation also owns the sewage works and the highly "
+"sophisticated water plants which purify water according to the high "
+"standards required by the city Senate."
+msgstr ""
+
+msgid ""
+"Longevity is the major obsession of medical research. Life can be prolonged "
+"by genetically reprogramming cell death mechanisms, but disease is still a "
+"major killer. Nano technology is employed to destroy cancer cells and solve "
+"all kinds of medical problems. Operations are no longer performed by humans "
+"- artificial intelligence's are employed instead. The Sanctuary Clinic "
+"controls hospitals, pharmaceutical plants and the procreation parks."
+msgstr ""
+
+msgid ""
+"The Nanotech corporation has specialized in developing microscopic robots "
+"which are used in the medical and pharmaceutical industries. The "
+"intelligence of these devices is limited, but they can be designed to "
+"perform a wide variety of tasks, such as killing bacteria or manufacturing "
+"chemicals. Nanotech also produce the highly effective Medi-Kits used in "
+"military combat which use Nanobots to perform battlefield surgery and tissue"
+" repair."
+msgstr ""
+
+msgid ""
+"Energen builds power stations which use fusion power cells to generate "
+"energy. This is an alternative but cheaper large scale power system than "
+"equivalent Elerium units. However, the corporation is wary of attempts by "
+"Solmine to create cheaper Elerium energy systems. This can only be achieved "
+"by lowering the price of Elerium which could happen if the rebellious mining"
+" colonies are totally subdued."
+msgstr ""
+
+msgid ""
+"Manufacturing is largely automated but the ideas for new products still come"
+" from human designers. Synthemesh employs many designers to keep generating "
+"the latest fashions which fuel consumer demand. The manufacturing plants "
+"produce mostly consumer durables, but the corporation also controls a fleet "
+"of construction vehicles which are used to build or repair the city "
+"infrastructure."
+msgstr ""
+
+msgid "GravBall League"
+msgstr ""
+
+msgid ""
+"GravBall is a fast paced aerial version of Soccer where the players use "
+"anti-grav backpacks to fly around an immense stadium. Due to the fast and "
+"violent nature of the game, players wear tough armor, injuries are still "
+"common though. Cybernetic implants are used to substitute for mangled limbs,"
+" but a GravBall player must be at least 50% original human flesh in order to"
+" qualify in the GravBall league. Due to the popularity of the sport the "
+"GravBall League, which owns all the stadiums in the city, has become a "
+"prosperous corporation. However, alternative recreations such as Sensovision"
+" or the illegal Psiclone are proving to be serious competition."
+msgstr ""
+
+msgid ""
+"Psyke is a criminal syndicate which is based in the slum areas. The "
+"organization is originally thought to have developed the Psiclone implant in"
+" 2081 with the aid of a renegade Marsec scientist. The design was quickly "
+"copied by the other syndicates creating an unprecedented level of gang "
+"warfare. The degradation of city life is frequently blamed on Psyke's "
+"activities, but they are no longer the biggest gang in the region."
+msgstr ""
+
+msgid ""
+"Diablo is a criminal syndicate with a particularly violent reputation. They "
+"have muscled in on the Psiclone trade and have consequently become bigger "
+"and more powerful than Psyke. Gang members are intensely loyal to their "
+"cause and hostile to any outsiders."
+msgstr ""
+
+msgid ""
+"The Osiron syndicate is the wealthiest criminal operation in the city area. "
+"Although they are based in the slum areas they are able to conduct "
+"apparently legitimate business in the city and there is no proven link "
+"between Osiron and violent crime. It is widely suspected that they employ "
+"the services of the other gangs where possible, only resorting to direct "
+"action if necessary."
+msgstr ""
+
+msgid "Sentient Engine Liberation Front"
+msgstr ""
+
+msgid ""
+"The city edict of 2076 effectively banished Androids from most areas of city"
+" life. They were forced into slum areas and treated as little more than "
+"vermin. They considered themselves to be artificial life forms of equal "
+"intellect to human beings and decided to fight back. SELF is an organization"
+" dedicated to fight for equality for all sentient life forms, whether flesh "
+"or machine. Their activity has been limited to pressure group politics, but "
+"there are demands within their ranks to resort to more direct, violent "
+"action."
+msgstr ""
+
+msgid ""
+"The first wave of Alien incursions resulted in many genetic experiments "
+"involving crossbreeding humans and the Alien species known as Sectoids. "
+"These hybrids have survived in human society, but they have been denied the "
+"right to procreate within the city. They also suffer discrimination in "
+"employment and education. Although they are genetically almost identical to "
+"humans, they retain some Alien facial characteristics and are renowned (and "
+"distrusted) for their Psionic abilities. Hybrids Psionic abilities may well "
+"prove useful to X-COM in the war against the Aliens. The Mutant Alliance is "
+"active in city politics and promotes the concerns of the hybrid community."
+msgstr ""
+
+msgid ""
+"The Extropians are one of the city's major political organizations that "
+"dominate the Senate. The Extropian philosophy is basically a faith in a "
+"bright technological future - a brave new world free of disease, pollution, "
+"old age and dull aesthetics. They pioneered the city regulations governing "
+"the future-retro styling of the architecture and vehicles. They have strong "
+"support from Solmine, Marsec and the larger corporations."
+msgstr ""
+
+msgid ""
+"Politically the Technocrat's philosophy is really no different to the "
+"Extropians, except they are a little less colorful and more skeptical of "
+"technological solutions to social problems. They believe in a structured and"
+" ordered society which rigidly adheres to laws and punishes corruption. They"
+" draw most support from the smaller corporations and the populations of the "
+"mining colonies."
+msgstr ""
+
+msgid ""
+"The pod has a hard and extremely tough skin, this peels back in the presence"
+" of human beings. A creature popularly referred to as a \"Brainsucker\" then"
+" emerges fully formed and active. Our conclusion is that these pods are a "
+"genetically engineered device designed to attack only human life forms."
+msgstr "Šis indas yra labai turi labai kieta odą, ši oda nusilupa kai yra šalia žmogus. Išlenda būtybė populiariai vadinama \"Smegenų siurbikas\" pilnai susiformavęs ir aktyvus. Mūsu išvada yra kad šiose induose yra genetiškai sukurtas prietaisas skirtas pulti tiktai žmones "
+
+msgid "Brainsucker Pod Autopsy"
+msgstr "Smegenų Indo Skrodimas "
+
+msgid "No autopsy available."
+msgstr ""
+
+msgid ""
+"The life span of a Brainsucker is very short, eight hours at most. It has no"
+" reproduction or feeding system. Instead it attacks human victims by "
+"grasping the head with its claws and inserting its proboscis into the "
+"victims throat. The Brainsucker dies immediately after a successful attack, "
+"but our tests reveal that the victim is subsequently transformed into an "
+"Alien controlled entity. We will not understand the mechanism which causes "
+"this until we have completed studies on the full Alien life cycle."
+msgstr ""
+
+msgid ""
+"This life form appears to have a simple structure with no distinguishable "
+"organs apart from an efficient heart and cardiovascular system. There "
+"appears to be no means of ingesting food or separate brain structure "
+"rendering it immune from Psionic influence. It seems that this creature has "
+"little purpose in life except that it is known to attack humans and seems to"
+" be designed to do only that. Its complex organic structure may be useful "
+"for developing toxins to counter any threat to our race."
+msgstr ""
+
+msgid ""
+"The gestation period for a Multiworm is approximately two days. During this "
+"time the egg will protect itself with a weapon that launches a fluid "
+"containing micro-organisms. These organisms consist of various types, some "
+"containing acids designed to erode metallic compounds and others containing "
+"unusual enzymes that rapidly break down organic matter. Fortunately the "
+"range of this weapon is limited. The Alien embryos are not sufficiently "
+"advanced to be susceptible to Psionic attacks."
+msgstr ""
+
+msgid ""
+"A large worm-like creature quickly develops inside the protective skin of "
+"the Alien egg. This worm appears to contain the embryos of a further four "
+"life forms. We cannot tell how the next stage in the life cycle develops "
+"from the autopsy results, but the tissues will be useful for our toxicology "
+"research."
+msgstr ""
+
+msgid ""
+"The Multiworm is clearly a crucial stage in the complex Alien life cycle. It"
+" is capable of attacking by propelling a fluid from pores along the side of "
+"the body containing a complex mix of micro-organisms that use enzymes and "
+"acids to break down the molecular structure of the target. Fortunately the "
+"range of the propellant is fairly short. The Multiworm is slow moving, but "
+"care should be taken in combat because it may release its offspring in the "
+"throes of death, creating an even greater threat."
+msgstr ""
+
+msgid ""
+"This creature is a rapacious carnivore whose feeding frenzy contributes to "
+"the rapid growth of younger lifeforms called \"Hyperworms\" which are reared"
+" inside its body. The gestation period for the Hyperworms is about three "
+"days and each Multiworm gives birth to four offspring. The birth process is "
+"lethal for the parent - the Hyperworms explode from the Multiworms body and "
+"consume it within a matter of seconds. The brain structure of the Multiworm "
+"is undeveloped and it is unlikely to be affected by Psionic attacks. The "
+"tissue analysis from the autopsy will provide an invaluable contribution to "
+"our biological warfare research."
+msgstr ""
+
+msgid "Hyperworms"
+msgstr ""
+
+msgid ""
+"Our studies show that the Hyperworms can consume large quantities of both "
+"organic and metallic matter. Its powerful jaws can also be used in close "
+"combat. It has a very high metabolic rate and can move at fast speeds with a"
+" snake-like action. It has a short life span and only lives for two to five "
+"days depending on how much food it can find. At the end of this feeding "
+"period it finds a safe place and suddenly inflates into a balloon like "
+"structure which is fixed firmly to its surrounding terrain. This structure "
+"appears to be some form of Chrysalis, inside which another life form begins "
+"to grow."
+msgstr ""
+
+msgid ""
+"The Hyperworms' function appears to be little more than feeding. It has "
+"powerful jaws and razor sharp teeth designed for ripping and slicing. Its "
+"belly appears to be small and the body contains some curious structures "
+"containing folds of tough skin. It appears to be quite vulnerable to fire "
+"and incendiary ammunition. There is no recognizable brain structure in the "
+"Hyperworm and it is well protected from Psionic influence."
+msgstr ""
+
+msgid ""
+"A Chrysalis is the most vulnerable stage of Alien development because it "
+"possesses no attack mechanisms. Its skin is tough, but vulnerable to fire "
+"and incendiary ammunition. A new Alien will grow inside the Chrysalis and "
+"emerge after a period of three days. It seems that a variety of Alien forms "
+"could develop at this stage, dependent on the genetic information carried by"
+" the Hyperworm. The physiology of these new forms contains many new cell "
+"structures. We have now gained a significant understanding of Alien "
+"genetics."
+msgstr ""
+
+msgid ""
+"The Chrysalis appears to be an important stage in the Alien life cycle. The "
+"cell structures we have discovered seem to suggest that the emerging Aliens "
+"have a different physiology to those previously encountered. This could "
+"indicate that there will be further stages to our biological research. The "
+"Chrysalis contains no advanced brain structure and will not respond to "
+"Psionic attacks."
+msgstr ""
+
+msgid ""
+"The Anthropod is capable of performing all the actions of an equivalent "
+"human soldier and can use weapons and equipment. It can feed voraciously, "
+"but strangely it does not seem to live very long in our environment, with a "
+"life span of only five days. There seems to be no further stage of "
+"development beyond this form."
+msgstr ""
+
+msgid ""
+"This creature was built for warfare, immensely strong and aggressive. "
+"Underneath the thick outer skin a significant digestive system is revealed. "
+"There is a well protected brain structure that seems to match human size in "
+"terms of its neuron count. The well formed brain is vulnerable to Psionic "
+"influence although it is not capable of Psionic attacks. This indicates an "
+"important weakness of this species. The tissues recovered from this specimen"
+" will contribute to our biological warfare research."
+msgstr ""
+
+msgid ""
+"The Psimorph is a rare and highly specialized Alien. Its Psionic powers and "
+"defense are formidable, it is likely to be used as an Alien commander in "
+"battle situations. Despite its ability to fly, its mobility is limited due "
+"to its bulk and lack of a skeletal structure. Unlike other Alien types it "
+"seems to survive quite well in our environment. It represents a serious "
+"threat to our Agents. Our best form of defense is with biological weapons "
+"and strong Psi-defense."
+msgstr ""
+
+msgid ""
+"The creature has internal devices that generate an anti-grav field allowing "
+"it to float through the air. Without this mechanism the Psimorph would "
+"collapse in a mass of jelly-like flesh and tentacles. It has a number of "
+"separate brain structures which are extremely well developed indicating "
+"potential leadership functions and Psionic capabilities. All of the major "
+"organs are duplicated about twelve times which would seem to be a defense "
+"mechanism allowing the creature to function despite sustaining massive "
+"damage."
+msgstr ""
+
+msgid ""
+"This unfortunate creature dedicates its short life to combat and protection "
+"of more vulnerable Alien forms. It has limited intelligence and attacks "
+"using its funnel head which projects a mix of deadly micro-organisms up to "
+"medium range. Despite its humanoid form it is incapable of using other "
+"weapons or equipment. It has no eyes, ears or nose but it can accurately "
+"detect the presence of nearby organic life forms. This ability is based on a"
+" specialized form of Psionic receptor and makes the creature very dangerous "
+"in combat situations."
+msgstr ""
+
+msgid ""
+"The alarming appearance of the Spitter reflects the fact that this "
+"creature's only purpose is to be used in combat. The funnel head propels a "
+"liquid containing micro-organisms which secrete acids and enzymes. The large"
+" stomach of the creature generates the deadly vomit and would suggest that "
+"it sucks up the remains of any victim with its funnel head. With no "
+"discernible brain structure this creature is immune from Psionic attacks."
+msgstr ""
+
+msgid ""
+"It is difficult to disable the Megaspawn's weapon systems because they are "
+"an intrinsic part of its structure. One weapon uses energy beams while the "
+"other fires a powerful organic missile, which is generated by specialized "
+"organs. Our tests also conclude that the Megaspawn is protected from Psionic"
+" attacks."
+msgstr ""
+
+msgid ""
+"The Megaspawn is essentially a huge organic weapons platform. It has two "
+"distinct weapons systems grown into its body. Although these must be added "
+"artificially, the nervous system is directly connected to them, suggesting "
+"that the creature is solely a genetically engineered combat unit."
+msgstr ""
+
+msgid ""
+"The Popper runs at high speed towards its victim and explodes when within a "
+"range of about fifteen feet. If the Popper is attacked with armor piercing, "
+"incendiary or explosive ammunition then the explosive effect is likely to be"
+" triggered. We recommend that other forms of weaponry be used against this "
+"creature in most combat situations."
+msgstr ""
+
+msgid ""
+"The Popper is little more than a walking bomb. Its simple brain structure "
+"means that Psionic attacks have a very low chance of success. Its body "
+"contains no obvious explosive device, although there are several chemicals "
+"mixed into the creatures stomach creating a highly unstable explosive "
+"compound."
+msgstr ""
+
+msgid ""
+"The Skeletoid is a highly effective Alien soldier with great intelligence "
+"and the ability to fly. Its agile body is capable of withstanding great "
+"damage and it can use a variety of weapons and equipment. The brain is "
+"susceptible to Psionic influence, but some form of resistance does seem to "
+"exist."
+msgstr ""
+
+msgid ""
+"This creature has a light body with a strong exoskeleton structure which is "
+"further covered in tough skin. Unusual spherical implants appear to provide "
+"flying capability. The mechanism is different to the Elerium powered gravity"
+" wave and we do not know how it works at this stage. The brain structure is "
+"well developed."
+msgstr ""
+
+msgid ""
+"The capture of a Micronoid Aggregate is an essential step in the advancement"
+" of our knowledge. This formless mass of micro-organisms is found inside the"
+" bloodstream of other Alien forms. Each microscopic organism is an "
+"independent and intelligent life form. They communicate with each other "
+"using Psionic projection, but they are unresponsive to human Psionics. It is"
+" unclear whether these creatures are parasites or an integral part of the "
+"Alien spawn."
+msgstr ""
+
+msgid ""
+"This is not one single creature but billions of micro-organisms. These "
+"organisms have been found in the cardiovascular systems of other Aliens, but"
+" until now we were unaware of their extraordinary capability to act "
+"independently. It is clear that our research must concentrate on these "
+"unusual life forms."
+msgstr ""
+
+msgid ""
+"The Alien queen is ultimately the production unit for all Alien life forms. "
+"Its mobility is severely limited when fully grown and it also requires "
+"exactly the right atmospheric conditions in order to breed properly and "
+"produce the Alien eggs. These conditions are only provided by the spawning "
+"chambers inside an Alien building, which also provide a food source by "
+"plugging directly into the Queenspawn's blood supply. This confirms that the"
+" Aliens cannot conquer our dimension without a steady supply of Alien "
+"reinforcements through the Dimension Gates, although their motive for such "
+"incursions is still unknown."
+msgstr ""
+
+msgid ""
+"The massive form of the Alien queen is designed to lay huge numbers of Alien"
+" eggs during its life time. The Queenspawn uses a complex asexual "
+"reproduction system to produce large numbers of Alien eggs in order to "
+"create new types of Alien creature. The importance of the Queenspawn for "
+"Alien population growth makes it an important strategic target."
+msgstr ""
+
+msgid ""
+"This enormous creature is deposited by an Alien Mothership. Its primary "
+"objective appears to be destruction of the city and annihilation of X-COM "
+"bases. The terror and panic that it causes amongst the population indicates "
+"a change in Alien strategy. It is possible that they have abandoned their "
+"attempts at infiltration and are now only concerned with revenge and "
+"retribution against X-COM."
+msgstr ""
+
+msgid ""
+"The Overspawn is a hybrid creature, derived from the Megaspawn genetic pool."
+" It is difficult to kill, but will eventually succumb to bombardment by "
+"Disruptor Beams and other powerful weapons. Fortunately it has no ranged "
+"combat capability."
+msgstr ""
+
+msgid "Incubator"
+msgstr ""
+
+msgid ""
+"The Incubator is a warm and humid collection of chambers in which Alien eggs"
+" are stored ready for hatching. They will be well protected by Alien "
+"warriors because of their vulnerability at this stage of the life cycle. You"
+" should also expect to meet many Multiworms preparing to give birth to the "
+"Hyperworm vermin which burst from the innards of their parents in their "
+"final death agony."
+msgstr ""
+
+msgid ""
+"This structure appears to be the source of all Alien eggs. Few Aliens enter "
+"the building but many are seen to leave. Our Scientists fear the existence "
+"of a frightful Alien Queen. Excercise extreme caution if you encounter such "
+"an Alien."
+msgstr ""
+
+msgid ""
+"The Alien food source appears to be plants. This building provides the "
+"perfect balance of light and heat for the Alien plants."
+msgstr ""
+
+msgid ""
+"The Alien city is a complex organic growth in which each building type "
+"functions as a highly specialized \"organ\". The Megapod Chamber is the "
+"reproduction organ of the Alien city which nutures numerous egg shaped "
+"structures. These Megapods are giant seeds which grow to a large size before"
+" being transported to a new location. The seeds then grow and develop into "
+"other Alien buildings. The Megapod Chamber is extremely well defended but "
+"once it is destroyed we will be close to victory."
+msgstr ""
+
+msgid ""
+"This building seems to function as a nocturnal rejuvenation center for the "
+"Aliens. We have identified the weak points that will allow us to destroy "
+"this building. You will receive a full briefing before you enter the combat "
+"zone. Once this task is accomplished we can gain information about the next "
+"Alien building through the exposed tubing that connects the Alien city."
+msgstr ""
+
+msgid ""
+"This building produces strange organic mushroooms which \"grow\" into Alien "
+"craft. All other Alien technology is produced here as well - weapons for "
+"craft and equipment for Alien warriors. The nature of this building makes it"
+" an essential target for our forces, even though it is very well defended."
+msgstr ""
+
+msgid ""
+"Our Scientists believe that this building influences the atmospheric "
+"conditions within the Alien world."
+msgstr ""
+
+msgid ""
+"The nerve center of the Alien city is concentrated in this building. The "
+"more intelligent Alien life forms are employed here to maintain and defend "
+"the building and its complex functions. Psimorphs will probably be found "
+"supervising operations and coordinating the defenders."
+msgstr ""
+
+msgid ""
+"The Maintenance Factory produces the nutrients and energy for all other "
+"buildings. This is done by pumping the nutrient liquid through the "
+"connecting tube that runs through the city, just like blood in a "
+"cardiovascular system. The destruction of this building will be a "
+"significant blow to the Aliens and allow us to destoy all remaining "
+"structures."
+msgstr ""
+
+msgid ""
+"Our final mission awaits our forces. This building sustains the three "
+"Dimension Gates which create a direct connection with our dimension. Soon "
+"after the building is destroyed the Dimension Gates will fade away and the "
+"link with the Alien world will be broken forever. The Aliens will be "
+"vanquished and victory will be ours."
+msgstr ""
+
+msgid ""
+"The Megapol AP Grenade is a standard anti-personnel grenade with a timer "
+"mechanism. It can also be activated on impact making it highly useful in "
+"time-critical combat situations."
+msgstr ""
+
+msgid ""
+"The Stun Grenade can be used to stun targets within a small area for a brief"
+" time. Larger Aliens may need weakening before they can be stunned."
+msgstr ""
+
+msgid ""
+"This explosive device generates an instant smoke cloud that inhibits "
+"visibility. This can be used in combat situations for surprise attacks or to"
+" provide cover for retreating Agents."
+msgstr ""
+
+msgid ""
+"A powerful explosive that will detonate when a sizable moving object moves "
+"within its detection field. The range of the proximity field can be "
+"programmed."
+msgstr ""
+
+msgid ""
+"A high explosive system for breaking through barriers or impassable terrain."
+" Extra care must be taken when throwing this device. Its increased size "
+"means that it can't be thrown the same distance as a conventional grenade."
+msgstr ""
+
+msgid ""
+"A standard issue hand gun which is good at short range and quite powerful. "
+"Its usefulness should not be underestimated because it allows an Agent to "
+"use other equipment, such as a grenade, with the spare hand."
+msgstr ""
+
+msgid "Ammunition for the Lawpistol."
+msgstr "Teisingumo pistoleto amunicija "
+
+msgid ""
+"A military automatic firing projectile weapon. It is good at close range "
+"using automatic fire, but not accurate enough to be effective at longer "
+"ranges."
+msgstr ""
+
+msgid "Ammunition for the M4000 Machine Gun."
+msgstr ""
+
+msgid ""
+"A laser gun with a laser sight designed for accurate long range shooting. "
+"This weapon is a good complement for the Marsec M4000 Machine Gun and should"
+" be used by Agents with good accuracy ratings."
+msgstr ""
+
+msgid "Ammunition for the Laser Sniper Gun."
+msgstr ""
+
+msgid ""
+"The Megapol Auto Cannon is a bulky but versatile weapon. It can fire armor "
+"piercing rounds, high explosive shells or incendiary shells. It is best used"
+" at medium range with explosive or incendiary ammunition, or at close range "
+"with armor piercing rounds."
+msgstr ""
+
+msgid "Armor piercing ammunition for the Auto Cannon."
+msgstr ""
+
+msgid "High Explosive ammunition for the Auto Cannon."
+msgstr ""
+
+msgid "Incendiary ammunition for the Auto Cannon."
+msgstr ""
+
+msgid ""
+"An expensive but effective single-handed plasma weapon. Its small size and "
+"power make it a versatile weapon. It can be used effectively at long or "
+"short range and leaves one hand free to use other equipment or grenades."
+msgstr ""
+
+msgid "Ammunition for the Plasma Gun."
+msgstr ""
+
+msgid ""
+"A guided missile launcher that can fire explosive or incendiary missiles. It"
+" is an extremely devastating device and should be used with extreme caution."
+" It is unwieldy because of its bulk and Agents with heavy launchers should "
+"at least be equipped with a supplementary weapon such as the Megapol "
+"Lawpistol."
+msgstr ""
+
+msgid ""
+"This conventional missile contains a highly effective gas which targets "
+"Alien life forms. The gas is harmless against humans and structures making "
+"it ideal for forcing Aliens to flee from cover."
+msgstr ""
+
+msgid "High explosive ammunition for the Heavy Launcher."
+msgstr ""
+
+msgid "Incendiary ammunition for the Heavy Launcher."
+msgstr ""
+
+msgid ""
+"A sophisticated single handed missile launcher. Although the guided missiles"
+" are small they are quite destructive."
+msgstr ""
+
+msgid ""
+"Developed by X-COM to target Alien life forms. When the warhead explodes it "
+"releases a cloud of gas deadly to Aliens but harmless to humans."
+msgstr ""
+
+msgid "Explosive ammunition for the MiniLauncher."
+msgstr ""
+
+msgid "Incendiary ammunition for the MiniLauncher."
+msgstr ""
+
+msgid ""
+"The Stun Grapple is a powerful police weapon used for stunning and capturing"
+" prisoners. It is effective against Aliens but can only be activated at a "
+"very short range. Larger Aliens may need weakening before they can be "
+"stunned."
+msgstr ""
+
+msgid ""
+"A grenade which releases the X-COM developed anti-Alien gas. It does not "
+"harm humans or terrain but will be lethal for any Alien remaining within its"
+" dense gas cloud."
+msgstr ""
+
+msgid ""
+"A device which causes a Psionic disruption blast. Any target with high "
+"Psionic capability is particularly vulnerable to Psi-grenades. The blast "
+"will drain Psi-energy and possibly render the target unconscious."
+msgstr ""
+
+msgid ""
+"An energy beam device which can render a target immobile for a short period "
+"of time. The target remains conscious but is unable to move or use "
+"equipment."
+msgstr ""
+
+msgid ""
+"An X-COM weapon designed to shoot high powered projectiles containing anti-"
+"Alien toxic fluids. It is designed to cause minimal harm to other targets "
+"and is not very good at penetrating armor."
+msgstr ""
+
+msgid ""
+"Ammunition for Toxigun. It contains a lethal fast acting poison designed to "
+"target Alien life forms. It is not so effective against the more advanced "
+"bipedal Alien types."
+msgstr ""
+
+msgid ""
+"Ammunition for Toxigun. It contains a lethal fast acting poison designed to "
+"target Alien lifeforms. It effectively renders the earlier A-type toxin "
+"obsolete because it is more powerful and more effective against the higher "
+"Alien life forms."
+msgstr ""
+
+msgid ""
+"Ammunition for Toxigun. A fast acting poison which targets all Alien life "
+"forms with equally devastating effects. This toxin effectively supersedes "
+"the A or B types."
+msgstr ""
+
+msgid "Dimension Destabilizer"
+msgstr ""
+
+msgid ""
+"An X-COM developed Disruptor Beam weapon based on Alien technology. It is a "
+"faster firing and more effective weapon than the Devastator Cannon."
+msgstr ""
+
+msgid ""
+"The Mind Shield is an expensive, clumsy device which protects the wearer "
+"from Psionic attacks."
+msgstr ""
+
+msgid ""
+"A Psionic projection device for psionically trained Agents. This device must"
+" be used in order to initiate Psionic attacks in combat situations. The "
+"target needs to be within clear line of sight of the operator before an "
+"attack can begin. The Agent has a choice of four different attacks of "
+"increasing difficulty. Psionic Probe reveals information about the target, "
+"Psionic Panic reduces morale, Psionic Stun will render the target "
+"unconscious and psionic control will allow complete control of the target."
+msgstr ""
+
+msgid ""
+"A close combat weapon that uses an Elerium Plasma Generator to enhance the "
+"blade. It is a very powerful device but can only be used against adjacent "
+"targets."
+msgstr ""
+
+msgid ""
+"A compact but highly sophisticated life support kit. Wounds and bleeding can"
+" be healed quickly by injecting Nanobots into the bloodstream. When the "
+"device is activated the operator must select a part of the body affected by "
+"critical wounds. The device will cure these wounds quickly, but only if the "
+"Agent remains inactive while it is in operation."
+msgstr ""
+
+msgid ""
+"When this unit is activated the display shows anything moving relative to "
+"its position. The sensors can penetrate any kind of terrain."
+msgstr ""
+
+msgid ""
+"A grenade which disperses an incendiary agent, creating fires within a large"
+" radius. The incendiary grenade was originally created by Diablo and is "
+"popular with many of the city's criminal gangs."
+msgstr ""
+
+msgid "Megapol Armor"
+msgstr ""
+
+msgid ""
+"This is a standard issue armor which provides very effective protection but "
+"inhibits the wearer's speed. The leg, torso, arms and helmet are all "
+"separate components and can be mixed with other armor types. Under no "
+"circumstances should an Agent be sent into combat without full armor cover."
+msgstr ""
+
+msgid "Marsec Armor"
+msgstr "Marsecko šarvai"
+
+msgid ""
+"An expensive, Elerium powered armor system. This armor offers less "
+"protection than the Megapol armor on average but will not slow down the "
+"wearer so much. The expensive torso section also has an integrated "
+"levitation unit which will allow the wearer to fly or hover in the air. This"
+" is an extremely useful ability, but an airborne Agent will suffer an "
+"accuracy penalty while using weapons or throwing grenades."
+msgstr ""
+
+msgid "X-COM Disruptor Armor"
+msgstr "X-COMO strykdymo šarvai"
+
+msgid ""
+"A lightweight armor developed by X-COM using Alien disruption field "
+"technology. This offers superb protection and excellent mobility."
+msgstr ""
+
+msgid ""
+"The Disruptor Gun is a remarkable piece of technology. It propels a beam of "
+"sub-atomic particles at immense speeds and quantity. The chamber which "
+"generates the energy is an inter-dimensional device which materializes "
+"energy from an alternative dimension. The power source, once initiated, is "
+"self-perpetuating and no ammunition or energy pods are required to sustain "
+"the fire power. Our replicators can reproduce this technology fairly "
+"accurately."
+msgstr ""
+
+msgid ""
+"This is an immensely devastating version of the standard Disruptor Gun. "
+"Again it is based on the same inter-dimensional technology that seems to "
+"power the Dimension Gates. It is possible that these weapons are actually "
+"drawing power from some remote source connected by an inter-dimensional "
+"field. This amazing technology seems to be incongruous with the Aliens' "
+"organic weaponry and may originate from some other Alien intelligence."
+msgstr ""
+
+msgid ""
+"The Boomeroid is a devastating and terrifying weapon. It is actually a semi-"
+"intelligent device that hurls itself towards any moving organic target and "
+"then explodes when it reaches a pre-set range.The Boomeroid has to be primed"
+" for explosion proximity as well as time delay."
+msgstr ""
+
+msgid ""
+"This weapon is an organic launcher for Brainsucker Pods. If the pod lands "
+"within the vicinity of a human target it will burst open and the Brainsucker"
+" will attack the victim. It is not a useful weapon for us to replicate, even"
+" if it were possible."
+msgstr ""
+
+msgid ""
+"This weapon is essentially an organism that is genetically engineered to "
+"launch a living missile which flies directly towards its chosen target. The "
+"missile then erupts and a foul smelling sticky goo smothers the unfortunate "
+"victim. The substance is a combination of enzymes and acids that can erode "
+"metallic or organic compounds. Unfortunately this weapon is not very "
+"effective against Aliens and we cannot replicate it."
+msgstr ""
+
+msgid ""
+"The pod is a genetically engineered missile that flies directly towards a "
+"target. It is fired from the Entropy Launcher."
+msgstr ""
+
+msgid ""
+"This launcher propels devastating Dimension Missiles which contain an "
+"immensely powerful explosive system. The missile is guided to its target and"
+" is very accurate at long ranges. The technology is reproducible and quite "
+"distinct from the organic weaponry that is used by most Aliens."
+msgstr ""
+
+msgid ""
+"The missile explodes with devastating power. It seems to use an inter-"
+"dimensional flux to suck in anti-matter from an alternate dimension. This "
+"instantly generates an atomic reaction which destroys the missile and most "
+"of its surrounding matter. It should not be used in situations where "
+"buildings and civilians need to be protected."
+msgstr ""
+
+msgid ""
+"This explosive device uses a tiny dimensional flux generator which allows "
+"anti-matter to seep through a tiny dimensional warp. The resultant explosion"
+" is very powerful."
+msgstr ""
+
+msgid ""
+"The Personal Disruptor Shield generates an energy field which warps the "
+"space around the user. This causes beams or projectiles to be deflected and "
+"dissipated. Any hit causes the shield's energy to drain and if it reaches a "
+"critically low level it will malfunction. It is a highly sophisticated "
+"device that we can reproduce only with great effort."
+msgstr ""
+
+msgid ""
+"This extraordinary device uses inter-dimensional capability to transport the"
+" user over short distances via a dimensional flux. The energy level depletes"
+" according to the distance jumped, but it recovers over time."
+msgstr ""
+
+msgid ""
+"The Personal Cloaking Field generates a warping effect that bends various "
+"wave forms. Effectively this means that the user is considerably less "
+"visible to radar, infra-red and visual sighting. The field is disabled "
+"temporarily if the user initiates combat."
+msgstr ""
+
+msgid "The Alien genetic structure"
+msgstr ""
+
+msgid ""
+"Our initial results show that the distinct Alien life forms are related "
+"genetically and form part of a complex life cycle."
+msgstr ""
+
+msgid "The Alien life cycle"
+msgstr ""
+
+msgid ""
+"It is clear that the Alien life cycle is an extremely rapid sequence of "
+"changes. The eggs always develop into Multiworms which then give birth to "
+"Hyperworms which form a Chrysalis. At this stage the genetic variation "
+"produces a variety of Alien types which develop inside the Chrysalis. The "
+"whole process from the egg hatching to emergence from the Chrysalis only "
+"seems to take about ten days, provided that there is an adequate supply of "
+"food. Fortunately these life forms do not survive very well in our world and"
+" it is unclear how an invasion could be successful."
+msgstr ""
+
+msgid ""
+"It is now clear to us that the Micronoid organisms are the source of the "
+"Alien intelligence and they are using the various Alien forms to initiate an"
+" assault on our dimension. The large Alien life forms cannot survive in our "
+"dimension - the Micronoids must transfer to a new host in order to conquer "
+"our world and the ideal host is our own race. Brainsuckers are used to "
+"introduce Micronoids into the human bloodstream which then gain control of "
+"the brain and have access to all the knowledge and abilities of the host. We"
+" now understand the physiology of the Micronoids sufficiently in order to "
+"develop a specific toxin that will kill the organisms in the bloodstream."
+msgstr ""
+
+msgid ""
+"The Dimension Gates appear to be the means by which the Alien craft travel "
+"from their home world. Our craft cannot travel through these gates without "
+"being annihilated by an anti-matter implosion. We must disable a UFO and "
+"recover its control systems, propulsion systems and power sources for "
+"research."
+msgstr ""
+
+msgid ""
+"The Alien Dimension consists of a bleak, hostile environment with an organic"
+" city. This city undoubtedly constructs Alien craft and nurtures the Alien "
+"brood. The structure of the buildings is immensely strong, but there appears"
+" to be weak point which will allow our Agents and vehicles to gain access to"
+" the building south of the dimension gates. If we can research this building"
+" further then we will have the necessary information to send in our squads "
+"to destroy it. We should then be able to gain access to the next building "
+"via the organic tubing that joins the Alien city together like a giant "
+"umbilical cord."
+msgstr ""
+
+msgid ""
+"The Senate building accommodates the civil service, law courts and the "
+"Senate chamber. It is a maze of lavish marble interiors and large corridors."
+" It is a building which should be protected from Alien infiltration at all "
+"costs."
+msgstr ""
+
+msgid ""
+"Mega-Primus has numerous police stations equipped with Hovercars, road "
+"vehicles and substantial armories. These stations are generally well "
+"defended against raiders or Alien infiltration."
+msgstr "Mega praimas turi kelia policijos stotis įrengtos su skrėjančiom-mašinom, kelio mašinom ir sandėlius. Šios stotys yra įprastai gerai apsaugotos prieš puolikus ir ateivių infiltracija."
+
+msgid ""
+"The large hospitals of Mega-Primus are important buildings with high revenue"
+" potential. The very best Nano technology is used for the benefit of those "
+"that can afford it. Life extension is the service in most demand, but there "
+"is also the possibility of limb replacements and strength enhancements which"
+" are popular with GravBall players."
+msgstr "Didelės Mega-praimo ligoninės yra svarbūs pastatai su dideliu pelno potencialu. Geriausia nano technologija yra naudojama tų naudai, kurie įpirka ją. Gyvenimo prailginimo paslauga yra didžiausia stoka, bet yra galimybė pakeisti galūnes ir stiprumo patobulinimas, kuris yra populiarus tarp Grav-kamolio žaidėjų."
+
+msgid ""
+"Education is a serious matter for citizens of Mega-Primus and the latest "
+"Psionic devices are used to fill students' minds with the correct "
+"understanding of any topic in the curriculum. The buildings themselves are "
+"reminiscent of the old style schools and contain little more than corridors "
+"and classrooms."
+msgstr "Edukacija yra rimtas daiktas Mega-praimo gyventojam ir naujausi psioniniai prėtaisai yra naudojami pripildyti mokinių protus su teisingu mastymu bet kokio dalyko. Pats pastatas yra priminantis senojo stiliaus mokykla ir turi mažai ką, tik koridorius ir klases."
+
+msgid ""
+"Rescue Stations are fully equipped to deal with any emergency, whether it is"
+" a fire or a road traffic accident. However, there are rarely any serious "
+"problems in the city and the stations only have a skeleton staff. They could"
+" be good hiding place for Aliens, but the relatively open internal structure"
+" of the buildings would not help them in a combat situation."
+msgstr ""
+
+msgid ""
+"Office buildings are designed to be attractive work environments. They are "
+"heavily populated and any Alien activity would soon be discovered. However, "
+"the ducting between floors and walls could be the ideal places for Aliens to"
+" hide and move around."
+msgstr ""
+
+msgid ""
+"Larger corporations may have a prestigious and expensive office building as "
+"a corporate head quarters. No expense would be spared on the interior "
+"decoration of these buildings. The equally lavish ventilation system may "
+"also be appreciated by Alien life forms."
+msgstr ""
+
+msgid ""
+"The enormous Space Port is a vital connection to the outside world. Many "
+"passengers pass through on vacation to Mars or other distant destinations. "
+"Large quantities of manufactured goods are exported to the mining colonies "
+"and raw materials are imported. The Space Port generates huge revenues, but "
+"it would also be lucrative for any raider or terrorist."
+msgstr ""
+
+msgid ""
+"The Astrodome contains huge stadiums and other facilities for various modern"
+" sports. GravBall is the most popular sport in the city, despite being "
+"dangerous. Five players in each team are equipped with anti-grav units and "
+"ball throwers. The six remaining team members are firmly routed on the "
+"ground and are used to protect the goal area or retrieve fallen balls. The "
+"maze of corridors and high stands makes the Astrodome a dangerous place for "
+"combat."
+msgstr ""
+
+msgid ""
+"Since giving birth is now a risky process all babies are now developed in "
+"artificial wombs. This has the added advantage of allowing the prospective "
+"parents to view the baby's progress by visiting special Procreation Parks. "
+"These buildings are designed to be attractive places to visit with open "
+"green spaces, bushes and trees."
+msgstr ""
+
+msgid ""
+"The vast shopping malls are popular places for citizens. Although most goods"
+" are purchased via the Internet, the shopping mall allows potential "
+"customers to try before they buy."
+msgstr ""
+
+msgid ""
+"Vast apartment blocks are standard accommodation in the city. They should be"
+" treated carefully in any combat situation because of the high density of "
+"civilians at all times of day. An Alien incident in an accommodation block "
+"should be dealt with promptly."
+msgstr ""
+
+msgid ""
+"The wealthy citizens of Mega-Primus reside in exclusive apartment buildings."
+" Alien infiltration can be particularly dangerous here, because the people "
+"which own and control most of the city could be exposed to danger."
+msgstr ""
+
+msgid ""
+"Open fields are unsustainable because of exposure to harmful radiation "
+"caused by the collapse of the ozone layer. The Hydro-Farms of Mega-Primus "
+"are efficient, clean and highly productive. Their controlled environments "
+"can produce any kind of vegetable or fruit, or rear any kind of animal. "
+"Unfortunately they are also quite good at nurturing the odd Alien which "
+"finds its way inside."
+msgstr ""
+
+msgid ""
+"The sewage works recycles everything possible from the organic waste "
+"produced by the city. The solid waste produces food and fertilizer for the "
+"Hydro-Farms. Water is then passed back to the water purifying stations. "
+"Since the building is largely automated, its dank, dark maze of pipes and "
+"walkways provide an ideal habitat for Alien creatures."
+msgstr ""
+
+msgid ""
+"City regulations stipulate the highest possible water quality. The tall "
+"water purifiers are largely automated buildings and are difficult areas for "
+"combat, they also provide good hiding places for Alien spawn. The tall "
+"structures are also vulnerable to collapse, so explosive munitions should be"
+" avoided."
+msgstr ""
+
+msgid ""
+"All types of consumer durables are produced here. The vast factory complex "
+"is highly automated and there are many robots on the production lines."
+msgstr ""
+
+msgid ""
+"An arms factory produces munitions and weaponry of all sizes from the "
+"smallest Lawpistol slug to the most destructive fusion bombs. Any combat "
+"within the factory would be extremely dangerous, so any X-COM Agents must "
+"proceed with extreme caution when investigating these buildings."
+msgstr "Ginklų gamykla gamina amunicija ir ginkluote visokių dydžių, nuo mažiausio teisingumo-pistoleto kulkos iki pačios galingiausios sintezės bombos. Bet kokia kova šioje gamykloje yra ekstremaliai pavojinga, tai bet koks X-COM agentas turi tęsti su ekstremaliu atsargumu kai tiria šiuos pastatus."
+
+msgid ""
+"Mega-Primus is highly automated and requires the services of many robots to "
+"perform routine tasks. They are all produced in Robot Factories, which are "
+"also largely automated using the latest Nano technological construction "
+"techniques."
+msgstr ""
+
+msgid ""
+"All kinds of small flying vehicles are produced here, such as Hovercars, "
+"Hoverbikes and transports. There are many Elerium supplies stored here which"
+" could be the target of hostile raiders."
+msgstr ""
+
+msgid ""
+"The cavernous interior of this factory is designed for construction of the "
+"largest vehicles such as the Valkyrie Interceptor, or the great Space "
+"Liners. There are large quantities of valuable construction materials, such "
+"as Elerium, stored in various parts of the building."
+msgstr ""
+
+msgid ""
+"All types of building materials and components are created here. The high "
+"walkways and open factory floors create a dangerous environment for any "
+"firearms combat."
+msgstr ""
+
+msgid ""
+"The slum dwellings located outside the city boundaries are the remnants of "
+"an old civilization. They are still heavily populated and used by gangsters "
+"and political groups as a base of support. They are dangerous places which "
+"are difficult to attack with ground forces. There is always the prospect of "
+"finding Psiclone or Elerium during a successful raid."
+msgstr ""
+
+msgid ""
+"The warehouse is used to store large quantities of merchandise for import or"
+" export. The cavernous interiors are easy to defend and raiders should be "
+"careful."
+msgstr ""
+
+msgid ""
+"The highly efficient Power Stations use cold fusion technology to generate "
+"energy for the city. They should be protected from Alien infiltration as far"
+" as possible. Any damage to them could result in serious power shortages."
+msgstr ""
+
+msgid ""
+"The Recyclotorium is capable of recycling all kinds of waste product, "
+"organic or mineral. The city is an ecologically self contained area. This "
+"would not be possible without these complex recycling stations."
+msgstr ""
+
+msgid ""
+"The People Tube network is the mass transit system for the whole city. The "
+"anti-gravity pathways suspend the traveler above the floor and safely "
+"propels them at speeds of about 25 miles an hour."
+msgstr ""
+
+msgid ""
+"The Cult Of Sirius builds temples to worship the superior Alien master race."
+" It is rumored that these temples contain altars where bizarre rituals take "
+"place."
+msgstr "Sirijaus kulta stato šventyklas kad garbintu aukštąją ateivių rasę. Spekuliuojama kad šiose šventyklose yra laikomi paminklai kur vyksta keisti ritualai."
+
+msgid ""
+"Sensodromes contain studios for all types of Sensovision broadcasting. The "
+"Psionic projectors on top of the building send signals to Sensovision arenas"
+" and into peoples homes."
+msgstr "Sensodrome yra laikomos visokių rušių studijos skirtos visų tipų sensovizijos transliavimui. Psioninis projektorius ant pastato viršaus siunčia signalus senso vizijos vietom ir į žmonių namus."
+
+msgid ""
+"The propulsion system of the Alien craft is built into the external fabric "
+"of the craft itself. It generates a dimensional field that warps the craft "
+"through space and allows the craft to pass undamaged through Dimension "
+"Gates."
+msgstr ""
+
+msgid ""
+"The control stations onboard the Alien craft direct the propulsion system "
+"and control its ability to transform matter into anti-matter."
+msgstr "Valdymo stotis ateivių laive nukreipia stūmimo sistemas ir valdo jo gebėjima paversti materija į anti-materija."
+
+msgid ""
+"The energy source for the Alien craft is generated in special dimension "
+"chambers which suck incredible amounts of energy from the Alien Dimension. "
+"These systems are highly unstable and should be treated with caution in "
+"combat situations."
+msgstr "Ateivių laivo energijos šaltinis yra generuotas specialiame dimensinime kambaryje kuris siurbia neįtikėtiną kiekį energijos iš ateivių dimensijos. Šios sistemos yra labai nestabilios ir turėtų būti rūpinamasi su atsargumu kovos situacijoje."
+
+msgid ""
+"The Psiclone implant is manufactured and distributed by criminal gangs. It "
+"allows the user to experience any mental state or images just by imagining "
+"them. Its widespread popularity and detrimental effect on the health of "
+"young citizens led the Senate to ban the use or distribution of the device. "
+"The price of Psiclone implants has subsequently soared and this has resulted"
+" in open warfare between the criminal gangs and Megapol."
+msgstr "Psi-klono implantacija yra gaminama ir parduodama įvairių nusikaltėlių gaujų. Jis leidžia vartotojui patirti betkokia psichiška stadija ar vaizdą tik įsivaizduojant juos. Juo paplitimas ir rimti efektai ant jaunimo sveikatos privertė  tarybai uždrausti naudojimą ir gaminimą šio prietaiso. Psi-klono kaina  vėliau pakilo į orą ir rezultatavo į atvirą karą tarp nusikaltėlių organizacijų ir megapolio."
+
+msgid ""
+"Since its introduction during the first Alien invasion, Elerium has proved "
+"to be an essential power source for interplanetary travel and military use. "
+"It is mined from distant planetary systems and transported back to Earth "
+"where its rarity ensures a high price. Tiny quantities contained in small "
+"pods fetch a high price. Corporations store pods in preference to gold "
+"because the stability of its value is guaranteed."
+msgstr "Nuo juo supažindinimu per pirmąją ateivių invazija, eleris pasirodė esantis reikalingas galios šaltinis planetiniame keliavime ir kariuomenės naudojimui. Jis yra iškastas iš tolimų planetinių sistemų ir atvežtas atgal į žemę kur jo retumas garantuoja didelę kainą. Mažas kiekis laikomas mažuose induose duoda gerą sumą. Korporacijos laiko šiuos indus panašiai kaip su auksu, nes dėl jo stabilumo jo kaina yra garantuota "
+
+msgid ""
+"The Car Factory produces many of the smaller vehicles that are part of "
+"everyday life in Mega-Primus."
+msgstr "Mašinų gamykla gamine daugybę mažų mašinų kurios yra kasdieninio Mega-praimo gyvenimo dalis."

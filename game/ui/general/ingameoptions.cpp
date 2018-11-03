@@ -104,7 +104,8 @@ std::list<std::pair<UString, UString>> openApocList = {
     {"OpenApoc.NewFeature.CrashingDimensionGate", "Uncapable vehicles crash when entering gates"},
     {"OpenApoc.NewFeature.SkipTurboMovement", "Skip turbo movement calculations"},
     {"OpenApoc.NewFeature.CrashingOutOfFuel", "Vehicles crash when out of fuel"},
-    {"OpenApoc.NewFeature.RunAndKneel", " All units run and kneel by default"},
+    {"OpenApoc.NewFeature.RunAndKneel", "All units run and kneel by default"},
+    {"OpenApoc.NewFeature.SeedRng", "Seed RNG on game start"},
 
     {"OpenApoc.Mod.StunHostileAction", "(M) Stunning hurts relationships"},
     {"OpenApoc.Mod.RaidHostileAction", "(M) Initiating raid hurts relationships"},
