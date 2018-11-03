@@ -155,8 +155,7 @@ void VehicleSheet::displayWeapon(sp<VEquipment> item, sp<VEquipmentType> type)
 	form->findControlTyped<Label>("LABEL_2_L")->setText(tr("Damage"));
 	form->findControlTyped<Label>("LABEL_2_R")->setText(format("%d", type->damage));
 	form->findControlTyped<Label>("LABEL_3_L")->setText(tr("Range"));
-	form->findControlTyped<Label>("LABEL_3_R")
-	    ->setText(format("%d", type->range / (int)VELOCITY_SCALE_CITY.x));
+	form->findControlTyped<Label>("LABEL_3_R")->setText(format("%d", type->range / 2));
 	form->findControlTyped<Label>("LABEL_4_L")->setText(tr("Accuracy"));
 	form->findControlTyped<Label>("LABEL_4_R")->setText(format("%d%%", type->accuracy));
 
