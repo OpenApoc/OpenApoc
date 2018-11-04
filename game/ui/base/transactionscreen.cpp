@@ -25,6 +25,7 @@
 #include "game/ui/general/aequipmentsheet.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/vehiclesheet.h"
+#include <array>
 
 namespace OpenApoc
 {
@@ -309,7 +310,6 @@ void TransactionScreen::populateControlsVehicleEquipment()
 	                                                      EquipmentSlotType::VehicleEngine};
 	int leftIndex = getLeftIndex();
 	int rightIndex = getRightIndex();
-	std::array<Type, 2> relatedControlTypes{Type::FlyingEquipment, Type::GroundEquipment};
 	for (auto &t : vehTypes)
 	{
 		for (auto ve_it = state->vehicle_equipment.begin(); ve_it != state->vehicle_equipment.end();
@@ -354,7 +354,7 @@ void TransactionScreen::populateControlsVehicleEquipment()
 			auto veNextIterator = std::next(ve_it, 1);
 			// skip this iteration if we're adding a control for the same ammo type in the
 			// next iteration
-			if (veNextIterator != state->vehicle_equipment.end() and
+			if (veNextIterator != state->vehicle_equipment.end() &&
 			    veNextIterator->second->ammo_type.id == ve.second->ammo_type.id)
 			{
 				continue;
