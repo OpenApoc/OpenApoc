@@ -94,6 +94,9 @@ class VEquipmentType : public StateObject
 
 	// Score requirement
 	int scoreRequirement = 0;
+
+	int getRangeInTiles() const;
+	int getRangeInMetres() const;
 };
 
 } // namespace OpenApoc
