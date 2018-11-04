@@ -114,7 +114,7 @@ class TransactionControl : public Control
 
   protected:
 	// Link
-	std::list<sp<TransactionControl>> linked;
+	sp<std::list<wp<TransactionControl>>> linked;
 	bool suspendUpdates = false;
 
 	// Subcontrols
@@ -151,8 +151,7 @@ class TransactionControl : public Control
 	void setIndexLeft(int index);
 	void setIndexRight(int index);
 	void updateValues();
-	void link(sp<TransactionControl> control);
-	const std::list<sp<TransactionControl>> &getLinked() const;
+	const decltype(linked) &getLinked() const;
 
 	// Transferring/Buying/selling agent equipment and ammo
 	// Transferring agents
@@ -184,6 +183,8 @@ class TransactionControl : public Control
 	                                            bool manufacturerUnavailable, int price,
 	                                            int storeSpace, std::vector<int> &initialStock,
 	                                            int indexLeft, int indexRight);
+
+	static void link(sp<TransactionControl> c1, sp<TransactionControl> c2);
 
 	void setupCallbacks();
 

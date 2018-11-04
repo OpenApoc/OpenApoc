@@ -120,16 +120,22 @@ void TransactionControl::updateValues()
 		if (tradeState.getBalance() != scrollBar->getValue())
 		{
 			tradeState.setBalance(scrollBar->getValue());
-			for (auto &c : linked)
+			if (linked)
 			{
-				c->suspendUpdates = true;
-				c->scrollBar->setValue(scrollBar->getValue());
-				c->updateValues();
-				c->suspendUpdates = false;
-			}
-			if (!suspendUpdates)
-			{
-				this->pushFormEvent(FormEventType::ScrollBarChange, nullptr);
+				for (auto &c : *linked)
+				{
+					if (auto c_sp = c.lock())
+					{
+						c_sp->suspendUpdates = true;
+						c_sp->scrollBar->setValue(scrollBar->getValue());
+						c_sp->updateValues();
+						c_sp->suspendUpdates = false;
+					}
+				}
+				if (!suspendUpdates)
+				{
+					this->pushFormEvent(FormEventType::ScrollBarChange, nullptr);
+				}
 			}
 		}
 	}
@@ -146,18 +152,32 @@ void TransactionControl::updateValues()
 	setDirty();
 }
 
-void TransactionControl::link(sp<TransactionControl> control)
+void TransactionControl::link(sp<TransactionControl> c1, sp<TransactionControl> c2)
 {
-	for (auto &c : linked)
+	if (not c2->linked)
 	{
-		c->linked.push_back(control);
-		control->linked.push_back(c);
+		if (not c1->linked)
+		{
+			c1->linked = mksp<std::list<wp<TransactionControl>>>();
+			c1->linked->emplace_back(c1);
+		}
+		c1->linked->emplace_back(c2);
+		c2->linked = c1->linked;
 	}
-	linked.push_back(control);
-	control->linked.push_back(std::static_pointer_cast<TransactionControl>(shared_from_this()));
+	if (not c1->linked and c2->linked)
+	{
+		c2->linked->emplace_back(c1);
+		c1->linked = c2->linked;
+	}
+	// we assume c1 is older than c2, so we update c2 to match c1
+	c2->scrollBar->setValue(c1->scrollBar->getValue());
+	c2->updateValues();
 }
 
-const std::list<sp<TransactionControl>> &TransactionControl::getLinked() const { return linked; }
+const sp<std::list<wp<TransactionControl>>> &TransactionControl::getLinked() const
+{
+	return linked;
+}
 
 sp<TransactionControl> TransactionControl::createControl(GameState &state, StateRef<Agent> agent,
                                                          int indexLeft, int indexRight)
