@@ -154,9 +154,9 @@ void TransactionControl::updateValues()
 
 void TransactionControl::link(sp<TransactionControl> c1, sp<TransactionControl> c2)
 {
-	if (not c2->linked)
+	if (!c2->linked)
 	{
-		if (not c1->linked)
+		if (!c1->linked)
 		{
 			c1->linked = mksp<std::list<wp<TransactionControl>>>();
 			c1->linked->emplace_back(c1);
@@ -164,7 +164,7 @@ void TransactionControl::link(sp<TransactionControl> c1, sp<TransactionControl> 
 		c1->linked->emplace_back(c2);
 		c2->linked = c1->linked;
 	}
-	if (not c1->linked and c2->linked)
+	if (!c1->linked && c2->linked)
 	{
 		c2->linked->emplace_back(c1);
 		c1->linked = c2->linked;
