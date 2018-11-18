@@ -1,5 +1,6 @@
 #include "game/state/rules/city/vequipmenttype.h"
 #include "game/state/gamestate.h"
+#include "game/state/tilemap/tilemap.h"
 
 namespace OpenApoc
 {
@@ -35,5 +36,9 @@ sp<VEquipmentType> VEquipmentType::get(const GameState &state, const UString &id
 	}
 	return it->second;
 }
+
+// note: the range value in vanilla game files is given in half-metres
+int VEquipmentType::getRangeInTiles() const { return range / 2 / (int)VELOCITY_SCALE_CITY.x; }
+int VEquipmentType::getRangeInMetres() const { return range / 2; }
 
 } // namespace OpenApoc

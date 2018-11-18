@@ -373,7 +373,7 @@ void UfopaediaCategoryView::setFormStats()
 							statsLabels[row]->setText(tr("Accuracy"));
 							statsValues[row++]->setText(format("%d%%", ref->accuracy));
 							statsLabels[row]->setText(tr("Range"));
-							statsValues[row++]->setText(format("%dm", ref->range));
+							statsValues[row++]->setText(format("%dm", ref->getRangeInMetres()));
 							statsLabels[row]->setText(tr("Fire Rate"));
 							statsValues[row++]->setText(format(
 							    "%.2f r/s", (float)TICKS_PER_SECOND / (float)ref->fire_delay));
