@@ -154,6 +154,11 @@ void TransactionControl::updateValues()
 
 void TransactionControl::link(sp<TransactionControl> c1, sp<TransactionControl> c2)
 {
+	if (c1->linked && c2->linked)
+	{
+		LogError("Cannot link two already linked transaction controls!");
+		return;
+	}
 	if (!c2->linked)
 	{
 		if (!c1->linked)
