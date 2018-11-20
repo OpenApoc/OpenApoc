@@ -126,7 +126,7 @@ void ScrollBar::eventOccured(Event *e)
 	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
 	    e->forms().EventFlag == FormEventType::MouseMove && capture)
 	{
-		this->setValue(static_cast<int>(mousePosition / segmentsize));
+		this->setValue(static_cast<int>(mousePosition / segmentsize) + Minimum);
 	}
 }
 
