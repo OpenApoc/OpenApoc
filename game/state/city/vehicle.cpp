@@ -2632,7 +2632,7 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 			// Can't auto-fire at crashed vehicles
 			continue;
 		}
-		if (otherVehicle->type->aggressiveness == 0)
+		if (otherVehicle->type->aggressiveness == 0 && this->owner == state.getPlayer())
 		{
 			// No auto-acquiring of non-aggressive vehicles
 			continue;
