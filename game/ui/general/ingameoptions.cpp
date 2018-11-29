@@ -110,7 +110,7 @@ std::list<std::pair<UString, UString>> openApocList = {
     {"OpenApoc.Mod", "CrashingVehicles"},
     {"OpenApoc.Mod", "InvulnerableRoads"},
     {"OpenApoc.Mod", "ATVTank"},
-	{"OpenApoc.Mod", "ATVAPC"},
+ 	{"OpenApoc.Mod", "ATVAPC"},
     {"OpenApoc.Mod", "BSKLauncherSound"},
 };
 
