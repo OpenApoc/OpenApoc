@@ -83,10 +83,13 @@ class UString
 	ConstIterator end() const;
 
 	static UniChar u8Char(char c);
+
+	friend std::istream &operator>>(std::istream &lhs, UString &rhs);
 };
 
 UString operator+(const UString &lhs, const UString &rhs);
 std::ostream &operator<<(std::ostream &lhs, const UString &rhs);
+std::istream &operator>>(std::istream &lhs, UString &rhs);
 
 class Strings
 {

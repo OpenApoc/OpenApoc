@@ -75,6 +75,7 @@
     <ClCompile Include="general\agentsheet.cpp" />
     <ClCompile Include="general\difficultymenu.cpp" />
     <ClCompile Include="general\ingameoptions.cpp" />
+    <ClCompile Include="general\cheatoptions.cpp" />
     <ClCompile Include="general\loadingscreen.cpp" />
     <ClCompile Include="general\mainmenu.cpp" />
     <ClCompile Include="general\messagebox.cpp" />
@@ -132,6 +133,7 @@
     <ClInclude Include="general\agentsheet.h" />
     <ClInclude Include="general\difficultymenu.h" />
     <ClInclude Include="general\ingameoptions.h" />
+    <ClInclude Include="general\cheatoptions.h" />
     <ClInclude Include="general\loadingscreen.h" />
     <ClInclude Include="general\mainmenu.h" />
     <ClInclude Include="general\messagebox.h" />

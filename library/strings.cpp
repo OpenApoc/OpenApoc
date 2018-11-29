@@ -296,6 +296,13 @@ std::ostream &operator<<(std::ostream &lhs, const UString &rhs)
 	return lhs;
 }
 
+// FIXME: This may not work with certain non-ascii characters
+std::istream &operator>>(std::istream &lhs, UString &rhs)
+{
+	lhs >> rhs.u8Str;
+	return lhs;
+}
+
 std::vector<UString> UString::split(const UString &delims) const
 {
 	// FIXME: Probably won't work if any of 'delims' is outside the ASCII range

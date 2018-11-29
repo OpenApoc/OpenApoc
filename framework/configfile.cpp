@@ -63,6 +63,10 @@ class ConfigFileImpl
 	{
 		this->modifiedOptions[key] = value ? "1" : "0";
 	}
+	void set(const UString key, const float value)
+	{
+		this->modifiedOptions[key] = Strings::fromFloat(value);
+	}
 
 	bool parseOptions(int argc, char *argv[])
 	{
@@ -302,6 +306,40 @@ class ConfigFileImpl
 		}
 		return vm[key.str()].as<bool>();
 	}
+	float getFloat(const UString key)
+	{
+		if (!this->parsed)
+		{
+			LogError("Not yet parsed options");
+			return 0.0f;
+		}
+		if (!this->get(key))
+		{
+			LogError("Option \"%s\" not set", key.cStr());
+			return 0.0f;
+		}
+		auto it = this->modifiedOptions.find(key);
+		if (it != this->modifiedOptions.end())
+		{
+			return Strings::toFloat(it->second);
+		}
+		return vm[key.str()].as<float>();
+	}
+
+	UString describe(const UString section, const UString name)
+	{
+		if (!this->parsed)
+		{
+			LogError("Not yet parsed options");
+			return "";
+		}
+		UString combinedOption;
+		if (section.empty())
+			combinedOption = name;
+		else
+			combinedOption = section + "." + name;
+		return optionSections[section].find(combinedOption.str(), true).description();
+	}
 
 	void addOption(const UString section, const UString longName, const UString shortName,
 	               const UString description)
@@ -377,6 +415,25 @@ class ConfigFileImpl
 		                                            po::value<bool>()->default_value(defaultValue),
 		                                            description.cStr());
 	}
+	void addOptionFloat(const UString section, const UString longName, const UString shortName,
+	                    const UString description, const float defaultValue)
+	{
+		if (this->parsed)
+		{
+			LogError("Adding option when already parsed");
+		}
+		this->createSection(section);
+		UString combinedOption;
+		if (section.empty())
+			combinedOption = longName;
+		else
+			combinedOption = section + "." + longName;
+		if (!shortName.empty())
+			combinedOption += "," + shortName;
+		this->optionSections[section].add_options()(combinedOption.cStr(),
+		                                            po::value<float>()->default_value(defaultValue),
+		                                            description.cStr());
+	}
 	void addPositionalArgument(const UString name, const UString description)
 	{
 		if (this->parsed)
@@ -407,13 +464,19 @@ bool ConfigFile::save() { return this->pimpl->save(); }
 UString ConfigFile::getString(const UString key) { return this->pimpl->getString(key); }
 
 int ConfigFile::getInt(const UString key) { return this->pimpl->getInt(key); }
-
 bool ConfigFile::getBool(const UString key) { return this->pimpl->getBool(key); }
+float ConfigFile::getFloat(const UString key) { return this->pimpl->getFloat(key); }
 bool ConfigFile::get(const UString key) { return this->pimpl->get(key); }
+
+UString ConfigFile::describe(const UString section, const UString name)
+{
+	return this->pimpl->describe(section, name);
+}
 
 void ConfigFile::set(const UString key, const UString value) { this->pimpl->set(key, value); }
 void ConfigFile::set(const UString key, const int value) { this->pimpl->set(key, value); }
 void ConfigFile::set(const UString key, const bool value) { this->pimpl->set(key, value); }
+void ConfigFile::set(const UString key, const float value) { this->pimpl->set(key, value); }
 
 void ConfigFile::addOptionString(const UString section, const UString longName,
                                  const UString shortName, const UString description,
@@ -433,7 +496,12 @@ void ConfigFile::addOptionBool(const UString section, const UString longName,
 {
 	this->pimpl->addOptionBool(section, longName, shortName, description, defaultValue);
 }
-
+void ConfigFile::addOptionFloat(const UString section, const UString longName,
+                                const UString shortName, const UString description,
+                                const float defaultValue)
+{
+	this->pimpl->addOptionFloat(section, longName, shortName, description, defaultValue);
+}
 void ConfigFile::addOption(const UString section, const UString longName, const UString shortName,
                            const UString description)
 {
@@ -500,4 +568,19 @@ bool ConfigOptionBool::get() const
 
 		return config().getBool(section + "." + name);
 }
+
+ConfigOptionFloat::ConfigOptionFloat(const UString section, const UString name,
+                                     const UString description, const float defaultValue)
+{
+	config().addOptionFloat(section, name, "", description, defaultValue);
+}
+
+bool ConfigOptionFloat::get() const
+{
+	if (section.empty())
+		return config().getFloat(name);
+	else
+		return config().getFloat(section + "." + name);
+}
+
 }; // namespace OpenApoc

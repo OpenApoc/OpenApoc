@@ -136,6 +136,9 @@
     <ClCompile Include="general\ingameoptions.cpp">
       <Filter>general</Filter>
     </ClCompile>
+    <ClCompile Include="general\cheatoptions.cpp">
+      <Filter>general</Filter>
+    </ClCompile>
     <ClCompile Include="battle\battledebriefing.cpp">
       <Filter>battle</Filter>
     </ClCompile>
@@ -267,6 +270,9 @@
       <Filter>city</Filter>
     </ClInclude>
     <ClInclude Include="general\ingameoptions.h">
+      <Filter>general</Filter>
+    </ClInclude>
+    <ClInclude Include="general\cheatoptions.h">
       <Filter>general</Filter>
     </ClInclude>
     <ClInclude Include="general\loadingscreen.h">

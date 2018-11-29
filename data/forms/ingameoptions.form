@@ -199,7 +199,7 @@
           <position x="18" y="379"/>
           <size width="259" height="28"/>
         </textbutton>
-		<textbutton text="Give all research" id="BUTTON_GIVE_ALL_RESEARCH">
+		<textbutton text="Cheats" id="BUTTON_CHEATS">
           <font>smalfont</font>
           <position x="18" y="407"/>
           <size width="259" height="28"/>

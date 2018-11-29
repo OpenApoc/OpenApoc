@@ -261,6 +261,20 @@ ConfigOptionBool optionATVTank("OpenApoc.Mod", "ATVTank", "(MOD) Griffon becomes
 ConfigOptionBool optionCrashingVehicles("OpenApoc.Mod", "CrashingVehicles",
                                         "Vehicles crash on low HP", false);
 
+ConfigOptionBool optionInfiniteAmmoCheat("OpenApoc.Cheat", "InfiniteAmmo",
+                                         "Infinite ammo for X-Com agents and vehicles", false);
+ConfigOptionFloat optionDamageInflictedMultiplierCheat("OpenApoc.Cheat",
+                                                       "DamageInflictedMultiplier",
+                                                       "Multiplier for damage inflicted by X-com",
+                                                       1.0);
+ConfigOptionFloat optionDamageReceivedMultiplierCheat("OpenApoc.Cheat", "DamageReceivedMultiplier",
+                                                      "Multiplier for damage received by X-com",
+                                                      1.0);
+ConfigOptionFloat optionHostilesMultiplierCheat("OpenApoc.Cheat", "HostilesMultiplier",
+                                                "Multiplier for number of hostiles", 1.0f);
+ConfigOptionFloat optionStatGrowthMultiplierCheat("OpenApoc.Cheat", "StatGrowthMultiplier",
+                                                  "Multiplier for agent stat growth", 1.0f);
+
 } // anonymous namespace
 
 namespace OpenApoc

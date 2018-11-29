@@ -24,11 +24,14 @@ class ConfigFile
 	int getInt(const UString key);
 	bool getBool(const UString key);
 	UString getString(const UString key);
+	float getFloat(const UString key);
 	bool get(const UString key); // returns true if the option was specified
+	UString describe(const UString section, const UString name);
 
 	void set(const UString key, const bool value);
 	void set(const UString key, const int value);
 	void set(const UString key, const UString value);
+	void set(const UString key, const float value);
 
 	void addOptionString(const UString section, const UString longName, const UString shortName,
 	                     const UString description, const UString defaultValue);
@@ -36,6 +39,8 @@ class ConfigFile
 	                  const UString description, const int defaultValue);
 	void addOptionBool(const UString section, const UString longName, const UString shortName,
 	                   const UString description, const bool defaultValue);
+	void addOptionFloat(const UString section, const UString longName, const UString shortName,
+	                    const UString description, const float defaultValue);
 	void addOption(const UString section, const UString longName, const UString shortName,
 	               const UString description);
 	void addPositionalArgument(const UString name, const UString description);
@@ -89,6 +94,20 @@ class ConfigOptionBool
   public:
 	ConfigOptionBool(const UString section, const UString name, const UString description,
 	                 const bool defaultValue = false);
+	bool get() const;
+};
+
+class ConfigOptionFloat
+{
+  private:
+	UString section;
+	UString name;
+	UString description;
+	float defaultValue;
+
+  public:
+	ConfigOptionFloat(const UString section, const UString name, const UString description,
+	                  const float defaultValue = 0.0f);
 	bool get() const;
 };
 static inline ConfigFile &config() { return ConfigFile::getInstance(); }
