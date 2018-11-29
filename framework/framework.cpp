@@ -256,11 +256,14 @@ ConfigOptionBool optionBSKLauncherSound("OpenApoc.Mod", "BSKLauncherSound",
                                         "(MOD) Original Brainsucker Launcher SFX", true);
 ConfigOptionBool optionInvulnerableRoads("OpenApoc.Mod", "InvulnerableRoads",
                                          "(MOD) Invulnerable roads", false);
-ConfigOptionBool optionATVTank("OpenApoc.Mod", "ATVTank", "(MOD) Griffon becomes All-Terrain", true);
+ConfigOptionBool optionATVTank("OpenApoc.Mod", "ATVTank", "(MOD) Griffon becomes All-Terrain",
+                               true);
 
-ConfigOptionBool optionATVAPC("OpenApoc.Mod", "ATVAPC", "(MOD) Wolfhound APC becomes All-Terrain", true);
+ConfigOptionBool optionATVAPC("OpenApoc.Mod", "ATVAPC", "(MOD) Wolfhound APC becomes All-Terrain",
+                              true);
 
-ConfigOptionBool optionCrashingVehicles("OpenApoc.Mod", "CrashingVehicles", "Vehicles crash on low HP", false);
+ConfigOptionBool optionCrashingVehicles("OpenApoc.Mod", "CrashingVehicles",
+                                        "Vehicles crash on low HP", false);
 
 ConfigOptionBool optionInfiniteAmmoCheat("OpenApoc.Cheat", "InfiniteAmmo",
                                          "Infinite ammo for X-Com agents and vehicles", false);
