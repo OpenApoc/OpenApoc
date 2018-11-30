@@ -21,17 +21,17 @@ class ConfigFile
 	// Returns true if the settings have been read
 	bool loaded() const;
 
-	int getInt(const UString key);
-	bool getBool(const UString key);
-	UString getString(const UString key);
-	float getFloat(const UString key);
-	bool get(const UString key); // returns true if the option was specified
-	UString describe(const UString section, const UString name);
+	int getInt(const UString &key);
+	bool getBool(const UString &key);
+	UString getString(const UString &key);
+	float getFloat(const UString &key);
+	bool get(const UString &key); // returns true if the option was specified
+	UString describe(const UString &section, const UString &name);
 
-	void set(const UString key, const bool value);
-	void set(const UString key, const int value);
-	void set(const UString key, const UString value);
-	void set(const UString key, const float value);
+	void set(const UString &key, const bool value);
+	void set(const UString &key, const int value);
+	void set(const UString &key, const UString value);
+	void set(const UString &key, const float value);
 
 	void addOptionString(const UString section, const UString longName, const UString shortName,
 	                     const UString description, const UString defaultValue);
