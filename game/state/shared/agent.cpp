@@ -1,4 +1,5 @@
 #include "game/state/shared/agent.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battleunit.h"
@@ -1032,13 +1033,14 @@ void Agent::updateHourly(GameState &state)
 		{
 			usage = std::max(100, usage);
 			// As per Roger Wong's guide
+			float mult = config().getFloat("OpenApoc.Cheat.StatGrowthMultiplier");
 			if (trainingAssignment == TrainingAssignment::Physical)
 			{
-				trainPhysical(state, TICKS_PER_HOUR * 100 / usage);
+				trainPhysical(state, TICKS_PER_HOUR * 100 / usage * mult);
 			}
 			else
 			{
-				trainPsi(state, TICKS_PER_HOUR * 100 / usage);
+				trainPsi(state, TICKS_PER_HOUR * 100 / usage * mult);
 			}
 		}
 	}
