@@ -313,6 +313,7 @@ class Vehicle : public StateObject,
 	bool canTeleport() const;
 	bool hasTeleporter() const;
 	bool hasDimensionShifter() const;
+	bool isIdle() const;
 
 	// This is the 'sum' of all armors?
 	int getArmor() const;

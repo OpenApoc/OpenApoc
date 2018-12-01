@@ -1275,8 +1275,11 @@ Vehicle::~Vehicle() = default;
 
 void Vehicle::leaveDimensionGate(GameState &state)
 {
-	LogWarning("Check if portal empty");
-	// FIXME: Check if portal empty
+	// No portals to leave from. return here
+	if (city->portals.empty())
+	{
+		return;
+	}
 	auto portal = city->portals.begin();
 	std::uniform_int_distribution<int> portal_rng(0, city->portals.size() - 1);
 	std::advance(portal, portal_rng(state.rng));
@@ -2232,7 +2235,11 @@ void Vehicle::updateEachSecond(GameState &state)
 	// Consume fuel if out in city
 	if (tileObject && !crashed && !falling && !sliding)
 	{
-		fuelSpentTicks += FUEL_TICKS_PER_SECOND;
+		// Only consume fuel if flying or moving (parked ground vehicles don't consume fuel)
+		if (!this->isIdle() || !this->type->isGround())
+		{
+			fuelSpentTicks += FUEL_TICKS_PER_SECOND;
+		}
 		if (fuelSpentTicks > FUEL_TICKS_PER_UNIT)
 		{
 			fuelSpentTicks -= FUEL_TICKS_PER_UNIT;
@@ -3367,6 +3374,11 @@ bool Vehicle::hasDimensionShifter() const
 		}
 	}
 	return false;
+}
+
+bool Vehicle::isIdle() const
+{
+	return this->goalWaypoints.empty();
 }
 
 std::list<sp<VEquipmentType>> Vehicle::getEquipmentTypes() const
