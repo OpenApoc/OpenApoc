@@ -1,4 +1,5 @@
 #include "game/state/rules/battle/battlemap.h"
+#include "framework/configfile.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battledoor.h"
 #include "game/state/battle/battleitem.h"
@@ -134,10 +135,12 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 	}
 	auto alienOrg = state.getAliens();
 
+	const float hostilesMultiplier = config().getFloat("OpenApoc.Cheat.HostilesMultiplier");
+
 	int countAliens = 0;
 	for (auto &a : *aliens)
 	{
-		for (int i = 0; i < a.second; i++)
+		for (int i = 0; i < std::round(a.second * hostilesMultiplier); i++)
 		{
 			player_agents.push_back(state.agent_generator.createAgent(state, alienOrg, a.first));
 			if (++countAliens >= MAX_UNITS_PER_SIDE)
@@ -169,6 +172,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 	std::map<StateRef<AgentType>, int> current_crew;
 	StateRef<BattleMap> map;
 
+	const float hostilesMultiplier = config().getFloat("OpenApoc.Cheat.HostilesMultiplier");
+
 	// Setup mission type and other participants
 	if (building->base != nullptr && building->owner == state.getPlayer())
 	{
@@ -187,6 +192,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 		{
 			// Enemy raid, spawn guards for them
 			int numGuards = guards ? *guards : opponent->getGuardCount(state);
+			numGuards = std::round(numGuards * hostilesMultiplier);
 			numGuards = std::min(numGuards, MAX_UNITS_PER_SIDE);
 			for (int i = 0; i < numGuards; i++)
 			{
@@ -285,6 +291,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 				                                Organisation::Relation::Hostile
 				                            ? building->owner->getGuardCount(state)
 				                            : 0);
+				numGuards = std::round(numGuards * hostilesMultiplier);
 				numGuards = std::min(numGuards, MAX_UNITS_PER_SIDE);
 				for (int i = 0; i < numGuards; i++)
 				{
@@ -322,6 +329,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 			// Add building security always
 			{
 				int numGuards = guards ? *guards : building->owner->getGuardCount(state);
+				numGuards = std::round(numGuards * hostilesMultiplier);
 				numGuards = std::min(numGuards, MAX_UNITS_PER_SIDE);
 				for (int i = 0; i < numGuards; i++)
 				{
@@ -344,7 +352,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 		auto alienOrg = state.getAliens();
 		for (auto &a : *aliens)
 		{
-			for (int i = 0; i < a.second; i++)
+			for (int i = 0; i < std::round(a.second * hostilesMultiplier); i++)
 			{
 				player_agents.push_back(
 				    state.agent_generator.createAgent(state, alienOrg, a.first));

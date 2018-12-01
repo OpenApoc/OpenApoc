@@ -1731,7 +1731,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	{
 		damage = (double)damage * config().getFloat("OpenApoc.Cheat.DamageReceivedMultiplier");
 	}
-	if (attacker->owner == state.getPlayer())
+	if (attacker && attacker->owner == state.getPlayer())
 	{
 		damage = (double)damage * config().getFloat("OpenApoc.Cheat.DamageInflictedMultiplier");
 	}

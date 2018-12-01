@@ -89,8 +89,8 @@
             <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
           </graphicbutton>
           <label id="TEXT_MODIFY_FUNDS" text="+99k">
-            <position x="186" y="2"/>
-            <size width="32" height="14"/>
+            <position x="184" y="2"/>
+            <size width="36" height="14"/>
             <alignment horizontal="centre" vertical="centre"/>
             <font>smalfont</font>
           </label>
@@ -125,8 +125,8 @@
             <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
           </graphicbutton>
           <label id="TEXT_DAMAGE_INFLICTED_MULT" text="123%">
-            <position x="186" y="2"/>
-            <size width="32" height="14"/>
+            <position x="184" y="2"/>
+            <size width="36" height="14"/>
             <alignment horizontal="centre" vertical="centre"/>
             <font>smalfont</font>
           </label>
@@ -161,15 +161,15 @@
             <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
           </graphicbutton>
           <label id="TEXT_DAMAGE_RECEIVED_MULT" text="123%">
-            <position x="186" y="2"/>
-            <size width="32" height="14"/>
+            <position x="184" y="2"/>
+            <size width="36" height="14"/>
             <alignment horizontal="centre" vertical="centre"/>
             <font>smalfont</font>
           </label>
         </graphic>
 
 
-        <label text="(N) Hostiles multiplier">
+        <label text="Hostiles multiplier">
           <position x="56" y="286"/>
           <font>smalfont</font>
           <size width="148" height="16"/>
@@ -198,8 +198,8 @@
             <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
           </graphicbutton>
           <label id="TEXT_HOSTILES_MULT" text="123%">
-            <position x="186" y="2"/>
-            <size width="32" height="14"/>
+            <position x="184" y="2"/>
+            <size width="36" height="14"/>
             <alignment horizontal="centre" vertical="centre"/>
             <font>smalfont</font>
           </label>
@@ -235,8 +235,8 @@
             <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
           </graphicbutton>
           <label id="TEXT_STAT_GROWTH_MULT" text="123%">
-            <position x="186" y="2"/>
-            <size width="32" height="14"/>
+            <position x="184" y="2"/>
+            <size width="36" height="14"/>
             <alignment horizontal="centre" vertical="centre"/>
             <font>smalfont</font>
           </label>
