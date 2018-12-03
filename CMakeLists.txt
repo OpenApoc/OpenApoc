@@ -70,6 +70,23 @@ if (LTO)
 	endif()
 endif(LTO)
 
+# Cmake doesn't seem to have a good way of saying "try the latest standard, but
+# allow fallbacks all the way back to c++11"
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
+CHECK_CXX_COMPILER_FLAG("-std=c++17" COMPILER_SUPPORTS_CXX17)
+
+if (COMPILER_SUPPORTS_CXX17)
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+elseif (COMPILER_SUPPORTS_CXX14)
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+elseif (COMPILER_SUPPORTS_CXX11)
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+else()
+		# Other compilers may use different option flags, or not support switching standard versions, so try anyway
+		message(WARNING "Couldn't find a c++ version this compiler supports, trying with default options")
+endif()
+
 # MSVC has default flags that CMake doesn't set
 if (MSVC)
 	add_definitions(-DUNICODE -D_UNICODE)
@@ -110,9 +127,6 @@ target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Framework)
 target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Forms)
 target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_GameState)
 target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_GameUI)
-
-set_property(TARGET OpenApoc PROPERTY CXX_STANDARD 11)
-set_property(TARGET OpenApoc PROPERTY CXX_STANDARD_REQUIRED ON)
 
 # check dependencies and include libraries
 
