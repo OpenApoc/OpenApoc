@@ -10,12 +10,12 @@
 #include <list>
 #include <physfs.h>
 #include <string>
+#include <variant>
 
 // Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
 // symbols as part of the module that uses it
 #define BOOST_ALL_NO_LIB
 #include <boost/program_options.hpp>
-#include <boost/variant.hpp>
 
 namespace po = boost::program_options;
 
@@ -30,21 +30,29 @@ ConfigFile &ConfigFile::getInstance()
 		configInstance = new ConfigFile();
 	return *configInstance;
 }
+
 namespace
 {
-template <typename T> boost::variant<T> any_to_variant(const boost::any &opt)
+
+template <typename Variant, size_t I = std::variant_size<Variant>::value - 1> struct any_to_variant
 {
-	return boost::any_cast<T>(opt);
-}
-template <typename T, typename S, typename... R>
-boost::variant<T, S, R...> any_to_variant(const boost::any &opt)
+	static Variant convert(const boost::any &opt)
+	{
+		if (opt.type() == typeid(std::variant_alternative_t<I, Variant>))
+			return boost::any_cast<std::variant_alternative_t<I, Variant>>(opt);
+		else
+			return any_to_variant<Variant, I - 1>::convert(opt);
+	}
+};
+template <typename Variant> struct any_to_variant<Variant, 0>
 {
-	if (opt.type() == typeid(T))
-		return boost::any_cast<T>(opt);
-	else
-		return any_to_variant<S, R...>(opt);
+	static Variant convert(const boost::any &opt)
+	{
+		return boost::any_cast<std::variant_alternative_t<0, Variant>>(opt);
+	}
+};
 }
-}
+
 class ConfigFileImpl
 {
   private:
@@ -55,8 +63,10 @@ class ConfigFileImpl
 	std::vector<UString> positionalArgNames;
 	UString programName;
 
-	std::map<UString, boost::variant<int, float, bool, UString>> modifiedOptions;
-	struct toStringVisitor
+	using ModifiedOptionT = std::variant<int, float, bool, UString>;
+	std::map<UString, ModifiedOptionT> modifiedOptions;
+
+	struct ToStringVisitor
 	{
 		using result_type = UString;
 		UString operator()(const int &operand) const { return Strings::fromInteger(operand); }
@@ -156,10 +166,8 @@ class ConfigFileImpl
 					for (auto &option : parsedConfig.options)
 					{
 						// FIXME: Options with multiple values would break this
-						// this casts the boost::any value in the vm to the appropiate variant value
 						this->modifiedOptions[option.string_key] =
-						    any_to_variant<int, float, bool, UString>(
-						        vm[option.string_key].value());
+						    any_to_variant<ModifiedOptionT>::convert(vm[option.string_key].value());
 					}
 				}
 				catch (po::error &err)
@@ -215,7 +223,7 @@ class ConfigFileImpl
 
 			UString optionName = splitString[splitString.size() - 1];
 			UString configFileLine =
-			    optionName + "=" + boost::apply_visitor(toStringVisitor(), optionPair.second);
+			    optionName + "=" + std::visit(ToStringVisitor(), optionPair.second);
 			configFileContents[sectionName].push_back(configFileLine);
 		}
 
@@ -281,7 +289,7 @@ class ConfigFileImpl
 		auto it = this->modifiedOptions.find(key);
 		if (it != this->modifiedOptions.end())
 		{
-			return boost::get<T>(it->second);
+			return std::get<T>(it->second);
 		}
 		return vm[key.str()].as<T>();
 	}
