@@ -330,6 +330,7 @@ class Vehicle : public StateObject,
 	int getMaxBio() const;
 	int getBio() const;
 	float getSpeed() const;
+	float getAngularSpeed() const;
 
 	void nextFrame(int ticks);
 

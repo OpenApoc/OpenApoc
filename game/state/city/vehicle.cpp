@@ -42,6 +42,28 @@ namespace OpenApoc
 namespace
 {
 static const float M_2xPI = 2.0f * M_PI;
+float xyToFacing(const Vec2<float> &xy)
+{
+	float a1 = acosf(-xy.y);
+	float a2 = asinf(xy.x);
+	return a2 >= 0 ? a1 : M_2xPI - a1;
+}
+Vec2<float> facingToXY(float facing) { return {sinf(facing), -cosf(facing)}; }
+// return the difference f1-f2 in the range [-pi;pi]
+// a negative return value means f1 is CCW from f2.
+float facingDistance(float f1, float f2)
+{
+	float result = f1 - f2;
+	while (result > M_PI)
+	{
+		result -= M_2xPI;
+	}
+	while (result <= -M_PI)
+	{
+		result += M_2xPI;
+	}
+	return result;
+}
 }
 
 const UString &Vehicle::getPrefix()
@@ -525,13 +547,9 @@ class FlyingVehicleMover : public VehicleMover
 					{
 						d2 += M_2xPI;
 					}
-					// FIXME: Proper turning speed
-					// This value was hand-made to look proper on annihilators
-					float TURNING_MULT =
-					    (float)M_PI / (float)TICK_SCALE / VELOCITY_SCALE_CITY.x / 1.5f;
 					if (d1 <= d2)
 					{
-						vehicle.angularVelocity = speed * TURNING_MULT;
+						vehicle.angularVelocity = vehicle.getAngularSpeed();
 						// Nudge vehicle in the other direction to make animation look even
 						// (otherwise, first frame is 1/2 of other frames)
 						vehicle.facing -= 0.06f * (float)M_PI * (float)ticks;
@@ -542,7 +560,7 @@ class FlyingVehicleMover : public VehicleMover
 					}
 					else
 					{
-						vehicle.angularVelocity = -speed * TURNING_MULT;
+						vehicle.angularVelocity = -vehicle.getAngularSpeed();
 						// Nudge vehicle in the other direction to make animation look even
 						// (otherwise, first frame is 1/2 of other frames)
 						vehicle.facing += 0.06f * (float)M_PI * (float)ticks;
@@ -2187,36 +2205,39 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 								// Try to attack. Attack won't happen if enemy is out of range.
 								attackTarget(state, enemy);
 							}
-							if (IsIdle)
+							// Search for closest target to face towards (if not already rotating
+							// for some reason)
+							if (IsIdle && this->angularVelocity == 0.0f)
 							{
 								// If not moving anywhere then search for closest target around.
 								enemy = findClosestEnemy(state, tileObject, {8, 8});
 								if (enemy)
 								{
 									// Determine target position.
-									Vec3<float> enemypos = enemy->getPosition();
-									auto facing_direction = type->directionToVector(direction);
-									Vec2<float> facing2d = {facing_direction.x, facing_direction.y};
-									Vec2<float> target2d = {enemypos.x - position.x,
-									                        enemypos.y - position.y};
-									facing2d = glm::normalize(facing2d);
-									target2d = glm::normalize(target2d);
-									float angleXY = glm::angle(facing2d, target2d);
+									const Vec3<float> enemypos = enemy->getPosition();
+									const Vec2<float> facing2d = facingToXY(this->facing);
+									const Vec2<float> target2d = glm::normalize(Vec2<float>{
+									    enemypos.x - position.x, enemypos.y - position.y});
+									const float angleXY = glm::angle(facing2d, target2d);
 									// Check if target is in our firing arc.
 									if (angleXY > (float)arc.x * (float)M_PI / 8.0f)
 									{
-										// Turn towards closest target (firing will start
-										// automatically).
-										// It is pseudoscalar product. It is needed to determine
-										// direction: right or left.
-										if (facing2d.x * target2d.y - facing2d.y * target2d.x > 0)
+										this->goalFacing = xyToFacing(target2d);
+										float d = facingDistance(this->goalFacing, this->facing);
+										// TODO: Should this nudge CCW/CW for animation purposes?
+										if (d > 0.0f)
 										{
-											this->facing += 0.06f * (float)M_PI * (float)ticks;
+											// Rotate CW towards target
+											this->angularVelocity =
+											    std::min(this->getAngularSpeed(), d);
 										}
 										else
 										{
-											this->facing -= 0.06f * (float)M_PI * (float)ticks;
+											// Rotate CCW towards target
+											this->angularVelocity =
+											    std::max(-this->getAngularSpeed(), d);
 										}
+										this->ticksToTurn = floorf(abs(d / this->angularVelocity));
 										this->updateSprite(state);
 									}
 								}
@@ -3275,6 +3296,13 @@ float Vehicle::getSpeed() const
 	auto et = getEquipmentTypes();
 	return this->type->getSpeed(et.begin(), et.end());
 }
+float Vehicle::getAngularSpeed() const
+{
+	// FIXME: Proper turning speed
+	// This value was hand-made to look proper on annihilators
+	constexpr float TURNING_MULT = (float)M_PI / (float)TICK_SCALE / VELOCITY_SCALE_CITY.x / 1.5f;
+	return getSpeed() * TURNING_MULT;
+}
 
 int Vehicle::getMaxConstitution() const
 {
@@ -3376,10 +3404,7 @@ bool Vehicle::hasDimensionShifter() const
 	return false;
 }
 
-bool Vehicle::isIdle() const
-{
-	return this->goalWaypoints.empty();
-}
+bool Vehicle::isIdle() const { return this->goalWaypoints.empty(); }
 
 std::list<sp<VEquipmentType>> Vehicle::getEquipmentTypes() const
 {
