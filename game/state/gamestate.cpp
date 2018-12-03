@@ -233,6 +233,15 @@ void GameState::applyMods()
 		vehicle_types["VEHICLETYPE_GRIFFON_AFV"]->type = VehicleType::Type::Road;
 	}
 
+	if (config().getBool("OpenApoc.Mod.ATVAPC"))
+	{
+		vehicle_types["VEHICLETYPE_WOLFHOUND_APC"]->type = VehicleType::Type::ATV;
+	}
+	else
+	{
+		vehicle_types["VEHICLETYPE_WOLFHOUND_APC"]->type = VehicleType::Type::Road;
+	}
+
 	if (config().getBool("OpenApoc.Mod.BSKLauncherSound"))
 	{
 		agent_equipment["AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER"]->fire_sfx =
