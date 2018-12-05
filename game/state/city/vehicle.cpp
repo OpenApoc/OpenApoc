@@ -3300,7 +3300,7 @@ float Vehicle::getAngularSpeed() const
 {
 	// FIXME: Proper turning speed
 	// This value was hand-made to look proper on annihilators
-	constexpr float TURNING_MULT = (float)M_PI / (float)TICK_SCALE / VELOCITY_SCALE_CITY.x / 1.5f;
+	constexpr float TURNING_MULT = (float)M_PI / (float)TICK_SCALE / VELOCITY_SCALE_CITY_X / 1.5f;
 	return getSpeed() * TURNING_MULT;
 }
 
