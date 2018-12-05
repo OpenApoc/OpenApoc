@@ -38,8 +38,8 @@ template <typename Variant, size_t I = std::variant_size<Variant>::value - 1> st
 {
 	static Variant convert(const boost::any &opt)
 	{
-		if (opt.type() == typeid(std::variant_alternative_t<I, Variant>))
-			return boost::any_cast<std::variant_alternative_t<I, Variant>>(opt);
+		if (opt.type() == typeid(typename std::variant_alternative<I, Variant>::type))
+			return boost::any_cast<typename std::variant_alternative<I, Variant>::type>(opt);
 		else
 			return any_to_variant<Variant, I - 1>::convert(opt);
 	}
@@ -48,7 +48,7 @@ template <typename Variant> struct any_to_variant<Variant, 0>
 {
 	static Variant convert(const boost::any &opt)
 	{
-		return boost::any_cast<std::variant_alternative_t<0, Variant>>(opt);
+		return boost::any_cast<typename std::variant_alternative<0, Variant>::type>(opt);
 	}
 };
 }
