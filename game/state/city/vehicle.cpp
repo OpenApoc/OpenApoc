@@ -505,9 +505,7 @@ class FlyingVehicleMover : public VehicleMover
 					if (targetFacingVector.x != 0.0f || targetFacingVector.y != 0.0f)
 					{
 						targetFacingVector = glm::normalize(targetFacingVector);
-						float a1 = acosf(-targetFacingVector.y);
-						float a2 = asinf(targetFacingVector.x);
-						vehicle.goalFacing = a2 >= 0 ? a1 : M_2xPI - a1;
+						vehicle.goalFacing = xyToFacing(targetFacingVector);
 					}
 					// Move and turn instantly
 					vehicle.position = vehicle.goalPosition;
@@ -529,51 +527,27 @@ class FlyingVehicleMover : public VehicleMover
 					if (targetFacingVector.x != 0.0f || targetFacingVector.y != 0.0f)
 					{
 						targetFacingVector = glm::normalize(targetFacingVector);
-						float a1 = acosf(-targetFacingVector.y);
-						float a2 = asinf(targetFacingVector.x);
-						vehicle.goalFacing = a2 >= 0 ? a1 : M_2xPI - a1;
+						vehicle.goalFacing = xyToFacing(targetFacingVector);
 					}
 				}
 				// If new position requires new facing or we acquired new facing only
 				if (vehicle.facing != vehicle.goalFacing)
 				{
-					float d1 = vehicle.goalFacing - vehicle.facing;
-					if (d1 < 0.0f)
+					float d = facingDistance(vehicle.goalFacing, vehicle.facing);
+					if (d > 0.0f)
 					{
-						d1 += M_2xPI;
-					}
-					float d2 = vehicle.facing - vehicle.goalFacing;
-					if (d2 < 0.0f)
-					{
-						d2 += M_2xPI;
-					}
-					if (d1 <= d2)
-					{
-						vehicle.angularVelocity = vehicle.getAngularSpeed();
-						// Nudge vehicle in the other direction to make animation look even
-						// (otherwise, first frame is 1/2 of other frames)
-						vehicle.facing -= 0.06f * (float)M_PI * (float)ticks;
-						if (vehicle.facing < 0.0f)
-						{
-							vehicle.facing += M_2xPI;
-						}
+						// Rotate CW towards goal
+						vehicle.angularVelocity = std::min(vehicle.getAngularSpeed(), d);
 					}
 					else
 					{
-						vehicle.angularVelocity = -vehicle.getAngularSpeed();
-						// Nudge vehicle in the other direction to make animation look even
-						// (otherwise, first frame is 1/2 of other frames)
-						vehicle.facing += 0.06f * (float)M_PI * (float)ticks;
-						if (vehicle.facing >= M_2xPI)
-						{
-							vehicle.facing -= M_2xPI;
-						}
+						// Rotate CCW towards goal
+						vehicle.angularVelocity = std::max(-vehicle.getAngularSpeed(), d);
 					}
 					// Establish ticks to turn
 					// (turn further than we need, again, for animation purposes)
-					float turnDist = std::min(d1, d2);
-					turnDist += 0.12f * (float)M_PI;
-					vehicle.ticksToTurn = floorf(std::abs(turnDist / vehicle.angularVelocity));
+					// d += 0.12f * (float)M_PI;
+					vehicle.ticksToTurn = floorf(d / vehicle.angularVelocity);
 
 					// FIXME: Introduce proper turning speed
 					// Here we just slow down velocity if we're moving too quickly
@@ -823,9 +797,7 @@ class GroundVehicleMover : public VehicleMover
 					if (targetFacingVector.x != 0.0f || targetFacingVector.y != 0.0f)
 					{
 						targetFacingVector = glm::normalize(targetFacingVector);
-						float a1 = acosf(-targetFacingVector.y);
-						float a2 = asinf(targetFacingVector.x);
-						vehicle.goalFacing = a2 >= 0 ? a1 : M_2xPI - a1;
+						vehicle.goalFacing = xyToFacing(targetFacingVector);
 					}
 				}
 				// If new position requires new facing or we acquired new facing only
@@ -2227,17 +2199,17 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 										// TODO: Should this nudge CCW/CW for animation purposes?
 										if (d > 0.0f)
 										{
-											// Rotate CW towards target
+											// Rotate CW towards goal
 											this->angularVelocity =
 											    std::min(this->getAngularSpeed(), d);
 										}
 										else
 										{
-											// Rotate CCW towards target
+											// Rotate CCW towards goal
 											this->angularVelocity =
 											    std::max(-this->getAngularSpeed(), d);
 										}
-										this->ticksToTurn = floorf(abs(d / this->angularVelocity));
+										this->ticksToTurn = floorf(d / this->angularVelocity);
 										this->updateSprite(state);
 									}
 								}
