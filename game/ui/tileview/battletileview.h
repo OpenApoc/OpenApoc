@@ -69,6 +69,7 @@ class BattleTileView : public TileView
 	std::vector<sp<Image>> targetLocationIcons;
 	Vec2<float> targetLocationOffset;
 	std::vector<sp<Image>> tuIndicators;
+	sp<Image> tuSeparator; // forward slash
 	// Must have same amount it items as in targetLocationIcons
 	std::vector<sp<Image>> waypointIcons;
 	std::vector<sp<Image>> waypointDarkIcons;

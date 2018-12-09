@@ -1854,7 +1854,26 @@ void BattleView::updateSelectionMode()
 	switch (selectionState)
 	{
 		case BattleSelectionState::Normal:
-		case BattleSelectionState::NormalAlt:
+		{
+			// Might have a hostile unit selected
+			// If so, don't reset the attack cost so that the TU cost can be displayed
+			if (!lastSelectedUnit)
+			{
+				resetAttackCost();
+			}
+			else
+			{
+				auto player = state->current_battle->currentPlayer;
+				auto unit = lastSelectedUnit->tileObject->map.getTile(selectedTilePosition)
+				                ->getUnitIfPresent(true, true, false, nullptr, false, true);
+				auto u = unit ? unit->getUnit() : nullptr;
+				if (!u || player->isRelatedTo(u->owner) != Organisation::Relation::Hostile)
+				{
+					resetAttackCost();
+				}
+			}
+			break;
+		}
 		case BattleSelectionState::NormalCtrl:
 		case BattleSelectionState::NormalCtrlAlt:
 		case BattleSelectionState::ThrowLeft:
@@ -1867,6 +1886,7 @@ void BattleView::updateSelectionMode()
 		case BattleSelectionState::TeleportRight:
 			resetAttackCost();
 			break;
+		case BattleSelectionState::NormalAlt:
 		case BattleSelectionState::FireAny:
 		case BattleSelectionState::FireLeft:
 		case BattleSelectionState::FireRight:
@@ -2259,6 +2279,8 @@ void BattleView::updateAttackCost()
 		case BattleSelectionState::FireRight:
 			status = WeaponStatus::FiringRightHand;
 			break;
+		case BattleSelectionState::Normal:
+		case BattleSelectionState::NormalAlt:
 		case BattleSelectionState::FireAny:
 			status = WeaponStatus::FiringBothHands;
 			break;
@@ -3924,6 +3946,17 @@ bool BattleView::handleGameStateEvent(Event *e)
 			    {StageCmd::Command::PUSH, mksp<AEquipScreen>(state, gameAgentEvent->agent)});
 			break;
 		}
+		case GameEventType::HostileDied:
+		case GameEventType::AgentDiedBattle:
+		case GameEventType::AgentUnconscious:
+			// FIXME: there is no event on BattleMapPart destruction, so we cannot detect this and
+			// update the path preview
+			// a battleunit has died, potentially unblocking/changing the previewed path
+			// but only update if there's a path stored
+			if (previewedPathCost != -1)
+			{
+				updatePathPreview();
+			}
 		default:
 			break;
 	}

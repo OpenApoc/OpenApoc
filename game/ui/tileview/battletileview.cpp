@@ -317,6 +317,7 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 	{
 		tuIndicators.push_back(font->getString(format("%d", i)));
 	}
+	tuSeparator = font->getString("/");
 	pathPreviewTooFar = font->getString(tr("Too Far"));
 	pathPreviewUnreachable = font->getString(tr("Blocked"));
 	attackCostOutOfRange = font->getString(tr("Out of range"));
@@ -847,12 +848,58 @@ void BattleTileView::render()
 							// When done with all objects, draw the front selection image
 							if (tile == selTileOnCurLevel && layer == 0)
 							{
-								static const Vec2<int> offset = {2, -53};
+								static const Vec2<int> offset{2, -53};
+								const Vec2<int> tileScreenCoords =
+								    tileToOffsetScreenCoords(selTilePosOnCurLevel);
 
 								r.draw(selectionImageFront,
-								       tileToOffsetScreenCoords(selTilePosOnCurLevel) -
-								           selectedTileImageOffset);
-								if (drawPathPreview)
+								       tileScreenCoords - selectedTileImageOffset);
+								// drawing attack cost takes precedence over path cost
+								if (drawAttackCost)
+								{
+									sp<Image> img;
+									switch (calculatedAttackCost)
+									{
+										case -4:
+											img = nullptr;
+											break;
+										case -3:
+											img = attackCostNoArc;
+											break;
+										case -2:
+											img = attackCostOutOfRange;
+											break;
+										default:
+										{
+											img = nullptr;         // don't draw using img
+											if (!lastSelectedUnit) // shouldn't happen
+												LogError("Displaying attack cost without selected "
+												         "unit?!");
+											auto imgCost = tuIndicators[calculatedAttackCost];
+											auto imgStock =
+											    tuIndicators[lastSelectedUnit->agent->modified_stats
+											                     .time_units];
+											Vec2<int> offset2{(imgCost->size.x + imgStock->size.x +
+											                   tuSeparator->size.x) /
+											                      2,
+											                  tuSeparator->size.y / 2};
+											r.draw(imgCost, tileScreenCoords + offset - offset2);
+											offset2.x -= imgCost->size.x;
+											r.draw(tuSeparator,
+											       tileScreenCoords + offset - offset2);
+											offset2.x -= tuSeparator->size.x;
+											r.draw(imgStock, tileScreenCoords + offset - offset2);
+											break;
+										}
+									}
+									if (img)
+									{
+										r.draw(img,
+										       tileScreenCoords + offset -
+										           Vec2<int>{img->size.x / 2, img->size.y / 2});
+									}
+								}
+								else if (drawPathPreview)
 								{
 									sp<Image> img;
 									switch (previewedPathCost)
@@ -870,34 +917,7 @@ void BattleTileView::render()
 									if (img)
 									{
 										r.draw(img,
-										       tileToOffsetScreenCoords(selTilePosOnCurLevel) +
-										           offset -
-										           Vec2<int>{img->size.x / 2, img->size.y / 2});
-									}
-								}
-								if (drawAttackCost)
-								{
-									sp<Image> img;
-									switch (calculatedAttackCost)
-									{
-										case -4:
-											img = nullptr;
-											break;
-										case -3:
-											img = attackCostNoArc;
-											break;
-										case -2:
-											img = attackCostOutOfRange;
-											break;
-										default:
-											img = tuIndicators[calculatedAttackCost];
-											break;
-									}
-									if (img)
-									{
-										r.draw(img,
-										       tileToOffsetScreenCoords(selTilePosOnCurLevel) +
-										           offset -
+										       tileScreenCoords + offset -
 										           Vec2<int>{img->size.x / 2, img->size.y / 2});
 									}
 								}
