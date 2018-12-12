@@ -10,6 +10,7 @@
 #include <list>
 #include <physfs.h>
 #include <string>
+#include <variant>
 
 // Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
 // symbols as part of the module that uses it
@@ -30,6 +31,28 @@ ConfigFile &ConfigFile::getInstance()
 	return *configInstance;
 }
 
+namespace
+{
+
+template <typename Variant, size_t I = std::variant_size<Variant>::value - 1> struct any_to_variant
+{
+	static Variant convert(const boost::any &opt)
+	{
+		if (opt.type() == typeid(typename std::variant_alternative<I, Variant>::type))
+			return boost::any_cast<typename std::variant_alternative<I, Variant>::type>(opt);
+		else
+			return any_to_variant<Variant, I - 1>::convert(opt);
+	}
+};
+template <typename Variant> struct any_to_variant<Variant, 0>
+{
+	static Variant convert(const boost::any &opt)
+	{
+		return boost::any_cast<typename std::variant_alternative<0, Variant>::type>(opt);
+	}
+};
+}
+
 class ConfigFileImpl
 {
   private:
@@ -40,7 +63,17 @@ class ConfigFileImpl
 	std::vector<UString> positionalArgNames;
 	UString programName;
 
-	std::map<UString, UString> modifiedOptions;
+	using ModifiedOptionT = std::variant<int, float, bool, UString>;
+	std::map<UString, ModifiedOptionT> modifiedOptions;
+
+	struct ToStringVisitor
+	{
+		using result_type = UString;
+		UString operator()(const int &operand) const { return Strings::fromInteger(operand); }
+		UString operator()(const float &operand) const { return Strings::fromFloat(operand); }
+		UString operator()(const bool &operand) const { return operand ? "1" : "0"; }
+		UString operator()(const UString &str) const { return str; }
+	};
 
   public:
 	ConfigFileImpl() : parsed(false), programName("program") {}
@@ -53,19 +86,9 @@ class ConfigFileImpl
 		optionSections.emplace(sectionName, sectionDescription.str());
 	}
 
-	void set(const UString key, const UString value) { this->modifiedOptions[key] = value; }
-	void set(const UString key, const int value)
+	template <typename T> void set(const UString &key, const T value)
 	{
-		this->modifiedOptions[key] = Strings::fromInteger(value);
-	}
-
-	void set(const UString key, const bool value)
-	{
-		this->modifiedOptions[key] = value ? "1" : "0";
-	}
-	void set(const UString key, const float value)
-	{
-		this->modifiedOptions[key] = Strings::fromFloat(value);
+		this->modifiedOptions[key] = value;
 	}
 
 	bool parseOptions(int argc, char *argv[])
@@ -104,9 +127,9 @@ class ConfigFileImpl
 		settingsPath += "settings.conf";
 		// Setup some config-related options
 		this->addOption("", "help", "h", "Show help text and exit");
-		this->addOptionString("Config", "File", "", "Path to config file", settingsPath);
-		this->addOptionBool("Config", "Read", "", "Read the config file at startup", true);
-		this->addOptionBool("Config", "Save", "", "Save the config file at exit", true);
+		this->addOptionTyped<UString>("Config", "File", "", "Path to config file", settingsPath);
+		this->addOptionTyped<bool>("Config", "Read", "", "Read the config file at startup", true);
+		this->addOptionTyped<bool>("Config", "Save", "", "Save the config file at exit", true);
 
 		po::options_description allOptions;
 		for (auto &optPair : this->optionSections)
@@ -127,12 +150,12 @@ class ConfigFileImpl
 		po::notify(vm);
 		this->parsed = true;
 
-		if (this->getBool("Config.Read"))
+		if (this->getTyped<bool>("Config.Read"))
 		{
 			// Keep a variable map of 'only' those settings stored in the config file so we can
 			// write them back to the config again at save()
 			po::variables_map configFileVM;
-			auto configPath = this->getString("Config.File");
+			auto configPath = this->getTyped<UString>("Config.File");
 			std::ifstream inConfig(configPath.str());
 			if (inConfig)
 			{
@@ -143,7 +166,8 @@ class ConfigFileImpl
 					for (auto &option : parsedConfig.options)
 					{
 						// FIXME: Options with multiple values would break this
-						this->modifiedOptions[option.string_key] = option.value[0];
+						this->modifiedOptions[option.string_key] =
+						    any_to_variant<ModifiedOptionT>::convert(vm[option.string_key].value());
 					}
 				}
 				catch (po::error &err)
@@ -171,7 +195,7 @@ class ConfigFileImpl
 		// Don't try to save if we've not successfully loaded anything
 		if (!this->parsed)
 			return false;
-		auto configPathString = this->getString("Config.File");
+		auto configPathString = this->getTyped<UString>("Config.File");
 
 		if (this->modifiedOptions.empty())
 		{
@@ -198,7 +222,8 @@ class ConfigFileImpl
 			}
 
 			UString optionName = splitString[splitString.size() - 1];
-			UString configFileLine = optionName + "=" + optionPair.second;
+			UString configFileLine =
+			    optionName + "=" + std::visit(ToStringVisitor(), optionPair.second);
 			configFileContents[sectionName].push_back(configFileLine);
 		}
 
@@ -249,81 +274,24 @@ class ConfigFileImpl
 		}
 		return vm.count(name.str());
 	}
-	UString getString(const UString key)
+	template <typename T> const T &getTyped(const UString &key)
 	{
 		if (!this->parsed)
 		{
 			LogError("Not yet parsed options");
-			return "";
+			throw std::exception();
 		}
 		if (!this->get(key))
 		{
 			LogError("Option \"%s\" not set", key.cStr());
-			return "";
+			throw std::exception();
 		}
 		auto it = this->modifiedOptions.find(key);
 		if (it != this->modifiedOptions.end())
 		{
-			return it->second;
+			return std::get<T>(it->second);
 		}
-		return vm[key.str()].as<std::string>();
-	}
-	int getInt(const UString key)
-	{
-		if (!this->parsed)
-		{
-			LogError("Not yet parsed options");
-			return 0;
-		}
-		if (!this->get(key))
-		{
-			LogError("Option \"%s\" not set", key.cStr());
-			return 0;
-		}
-		auto it = this->modifiedOptions.find(key);
-		if (it != this->modifiedOptions.end())
-		{
-			return Strings::toInteger(it->second);
-		}
-		return vm[key.str()].as<int>();
-	}
-	bool getBool(const UString key)
-	{
-		if (!this->parsed)
-		{
-			LogError("Not yet parsed options");
-			return false;
-		}
-		if (!this->get(key))
-		{
-			LogError("Option \"%s\" not set", key.cStr());
-			return false;
-		}
-		auto it = this->modifiedOptions.find(key);
-		if (it != this->modifiedOptions.end())
-		{
-			return it->second != "0";
-		}
-		return vm[key.str()].as<bool>();
-	}
-	float getFloat(const UString key)
-	{
-		if (!this->parsed)
-		{
-			LogError("Not yet parsed options");
-			return 0.0f;
-		}
-		if (!this->get(key))
-		{
-			LogError("Option \"%s\" not set", key.cStr());
-			return 0.0f;
-		}
-		auto it = this->modifiedOptions.find(key);
-		if (it != this->modifiedOptions.end())
-		{
-			return Strings::toFloat(it->second);
-		}
-		return vm[key.str()].as<float>();
+		return vm[key.str()].as<T>();
 	}
 
 	UString describe(const UString section, const UString name)
@@ -358,8 +326,9 @@ class ConfigFileImpl
 			combinedOption += "," + shortName;
 		this->optionSections[section].add_options()(combinedOption.cStr(), description.cStr());
 	}
-	void addOptionString(const UString section, const UString longName, const UString shortName,
-	                     const UString description, const UString defaultValue)
+	template <typename T>
+	void addOptionTyped(const UString section, const UString longName, const UString shortName,
+	                    const UString description, const T defaultValue)
 	{
 		if (this->parsed)
 		{
@@ -374,65 +343,7 @@ class ConfigFileImpl
 		if (!shortName.empty())
 			combinedOption += "," + shortName;
 		this->optionSections[section].add_options()(
-		    combinedOption.cStr(), po::value<std::string>()->default_value(defaultValue.str()),
-		    description.cStr());
-	}
-	void addOptionInt(const UString section, const UString longName, const UString shortName,
-	                  const UString description, const int defaultValue)
-	{
-		if (this->parsed)
-		{
-			LogError("Adding option when already parsed");
-		}
-		this->createSection(section);
-		UString combinedOption;
-		if (section.empty())
-			combinedOption = longName;
-		else
-			combinedOption = section + "." + longName;
-		if (!shortName.empty())
-			combinedOption += "," + shortName;
-		this->optionSections[section].add_options()(combinedOption.cStr(),
-		                                            po::value<int>()->default_value(defaultValue),
-		                                            description.cStr());
-	}
-	void addOptionBool(const UString section, const UString longName, const UString shortName,
-	                   const UString description, const bool defaultValue)
-	{
-		if (this->parsed)
-		{
-			LogError("Adding option when already parsed");
-		}
-		this->createSection(section);
-		UString combinedOption;
-		if (section.empty())
-			combinedOption = longName;
-		else
-			combinedOption = section + "." + longName;
-		if (!shortName.empty())
-			combinedOption += "," + shortName;
-		this->optionSections[section].add_options()(combinedOption.cStr(),
-		                                            po::value<bool>()->default_value(defaultValue),
-		                                            description.cStr());
-	}
-	void addOptionFloat(const UString section, const UString longName, const UString shortName,
-	                    const UString description, const float defaultValue)
-	{
-		if (this->parsed)
-		{
-			LogError("Adding option when already parsed");
-		}
-		this->createSection(section);
-		UString combinedOption;
-		if (section.empty())
-			combinedOption = longName;
-		else
-			combinedOption = section + "." + longName;
-		if (!shortName.empty())
-			combinedOption += "," + shortName;
-		this->optionSections[section].add_options()(combinedOption.cStr(),
-		                                            po::value<float>()->default_value(defaultValue),
-		                                            description.cStr());
+		    combinedOption.cStr(), po::value<T>()->default_value(defaultValue), description.cStr());
 	}
 	void addPositionalArgument(const UString name, const UString description)
 	{
@@ -442,7 +353,7 @@ class ConfigFileImpl
 		}
 		this->positionalArgNames.push_back(name);
 		this->posDesc.add(name.cStr(), 1);
-		this->addOptionString("", name, "", description, "");
+		this->addOptionTyped<UString>("", name, "", description, "");
 	}
 
 	void showHelp()
@@ -461,46 +372,45 @@ ConfigFile::~ConfigFile() = default;
 
 bool ConfigFile::save() { return this->pimpl->save(); }
 
-UString ConfigFile::getString(const UString key) { return this->pimpl->getString(key); }
+UString ConfigFile::getString(const UString &key) { return this->pimpl->getTyped<UString>(key); }
+int ConfigFile::getInt(const UString &key) { return this->pimpl->getTyped<int>(key); }
+bool ConfigFile::getBool(const UString &key) { return this->pimpl->getTyped<bool>(key); }
+float ConfigFile::getFloat(const UString &key) { return this->pimpl->getTyped<float>(key); }
+bool ConfigFile::get(const UString &key) { return this->pimpl->get(key); }
 
-int ConfigFile::getInt(const UString key) { return this->pimpl->getInt(key); }
-bool ConfigFile::getBool(const UString key) { return this->pimpl->getBool(key); }
-float ConfigFile::getFloat(const UString key) { return this->pimpl->getFloat(key); }
-bool ConfigFile::get(const UString key) { return this->pimpl->get(key); }
-
-UString ConfigFile::describe(const UString section, const UString name)
+UString ConfigFile::describe(const UString &section, const UString &name)
 {
 	return this->pimpl->describe(section, name);
 }
 
-void ConfigFile::set(const UString key, const UString value) { this->pimpl->set(key, value); }
-void ConfigFile::set(const UString key, const int value) { this->pimpl->set(key, value); }
-void ConfigFile::set(const UString key, const bool value) { this->pimpl->set(key, value); }
-void ConfigFile::set(const UString key, const float value) { this->pimpl->set(key, value); }
+void ConfigFile::set(const UString &key, const UString value) { this->pimpl->set(key, value); }
+void ConfigFile::set(const UString &key, const int value) { this->pimpl->set(key, value); }
+void ConfigFile::set(const UString &key, const bool value) { this->pimpl->set(key, value); }
+void ConfigFile::set(const UString &key, const float value) { this->pimpl->set(key, value); }
 
 void ConfigFile::addOptionString(const UString section, const UString longName,
                                  const UString shortName, const UString description,
                                  const UString defaultValue)
 {
-	this->pimpl->addOptionString(section, longName, shortName, description, defaultValue);
+	this->pimpl->addOptionTyped<UString>(section, longName, shortName, description, defaultValue);
 }
 void ConfigFile::addOptionInt(const UString section, const UString longName,
                               const UString shortName, const UString description,
                               const int defaultValue)
 {
-	this->pimpl->addOptionInt(section, longName, shortName, description, defaultValue);
+	this->pimpl->addOptionTyped<int>(section, longName, shortName, description, defaultValue);
 }
 void ConfigFile::addOptionBool(const UString section, const UString longName,
                                const UString shortName, const UString description,
                                const bool defaultValue)
 {
-	this->pimpl->addOptionBool(section, longName, shortName, description, defaultValue);
+	this->pimpl->addOptionTyped<bool>(section, longName, shortName, description, defaultValue);
 }
 void ConfigFile::addOptionFloat(const UString section, const UString longName,
                                 const UString shortName, const UString description,
                                 const float defaultValue)
 {
-	this->pimpl->addOptionFloat(section, longName, shortName, description, defaultValue);
+	this->pimpl->addOptionTyped<float>(section, longName, shortName, description, defaultValue);
 }
 void ConfigFile::addOption(const UString section, const UString longName, const UString shortName,
                            const UString description)
