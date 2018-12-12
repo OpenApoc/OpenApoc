@@ -2498,6 +2498,15 @@ bool Vehicle::applyDamage(GameState &state, int damage, float armour)
 bool Vehicle::applyDamage(GameState &state, int damage, float armour, bool &soundHandled,
                           StateRef<Vehicle> attacker)
 {
+	if (this->owner == state.getPlayer())
+	{
+		damage = (double)damage * config().getFloat("OpenApoc.Cheat.DamageReceivedMultiplier");
+	}
+	if (attacker && attacker->owner == state.getPlayer())
+	{
+		damage = (double)damage * config().getFloat("OpenApoc.Cheat.DamageInflictedMultiplier");
+	}
+
 	if (this->shield <= damage)
 	{
 		if (this->shield > 0)

@@ -54,7 +54,7 @@
           <size width="150" height="16"/>
           <image>BUTTON_CHECKBOX_FALSE</image>
           <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
-          <label text="(N) Infinite ammo">
+          <label text="Infinite ammo">
 			<position x="24" y="0"/>
 			<font>smalfont</font>
 			<size width="120" height="16"/>
@@ -89,14 +89,14 @@
             <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
           </graphicbutton>
           <label id="TEXT_MODIFY_FUNDS" text="+99k">
-            <position x="186" y="2"/>
-            <size width="32" height="14"/>
+            <position x="184" y="2"/>
+            <size width="36" height="14"/>
             <alignment horizontal="centre" vertical="centre"/>
             <font>smalfont</font>
           </label>
         </graphic>
 
-        <label text="(N) Damage Inflicted">
+        <label text="Damage Inflicted">
           <position x="56" y="166"/>
           <font>smalfont</font>
           <size width="148" height="16"/>
@@ -125,14 +125,14 @@
             <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
           </graphicbutton>
           <label id="TEXT_DAMAGE_INFLICTED_MULT" text="123%">
-            <position x="186" y="2"/>
-            <size width="32" height="14"/>
+            <position x="184" y="2"/>
+            <size width="36" height="14"/>
             <alignment horizontal="centre" vertical="centre"/>
             <font>smalfont</font>
           </label>
         </graphic>
 
-        <label text="(N) Damage Received">
+        <label text="Damage Received">
           <position x="56" y="226"/>
           <font>smalfont</font>
           <size width="148" height="16"/>
@@ -161,15 +161,15 @@
             <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
           </graphicbutton>
           <label id="TEXT_DAMAGE_RECEIVED_MULT" text="123%">
-            <position x="186" y="2"/>
-            <size width="32" height="14"/>
+            <position x="184" y="2"/>
+            <size width="36" height="14"/>
             <alignment horizontal="centre" vertical="centre"/>
             <font>smalfont</font>
           </label>
         </graphic>
 
 
-        <label text="(N) Hostiles multiplier">
+        <label text="Hostiles multiplier">
           <position x="56" y="286"/>
           <font>smalfont</font>
           <size width="148" height="16"/>
@@ -198,15 +198,15 @@
             <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
           </graphicbutton>
           <label id="TEXT_HOSTILES_MULT" text="123%">
-            <position x="186" y="2"/>
-            <size width="32" height="14"/>
+            <position x="184" y="2"/>
+            <size width="36" height="14"/>
             <alignment horizontal="centre" vertical="centre"/>
             <font>smalfont</font>
           </label>
         </graphic>
 
 
-        <label text="(N) Agent Stat Growth">
+        <label text="Agent Stat Growth">
           <position x="56" y="346"/>
           <font>smalfont</font>
           <size width="148" height="16"/>
@@ -220,7 +220,7 @@
           <scroll id="STAT_GROWTH_MULT">
             <position x="14" y="2"/>
             <size width="148" height="16"/>
-            <range min="0" max="50"/>
+            <range min="0" max="199"/>
           </scroll>
           <graphicbutton id="STAT_GROWTH_MULT_DOWN" scrollprev="STAT_GROWTH_MULT">
             <position x="0" y="0"/>
@@ -235,8 +235,8 @@
             <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
           </graphicbutton>
           <label id="TEXT_STAT_GROWTH_MULT" text="123%">
-            <position x="186" y="2"/>
-            <size width="32" height="14"/>
+            <position x="184" y="2"/>
+            <size width="36" height="14"/>
             <alignment horizontal="centre" vertical="centre"/>
             <font>smalfont</font>
           </label>

@@ -770,7 +770,11 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 	}
 
 	readyToFire = false;
-	ammo--;
+	if (!config().getBool("OpenApoc.Cheat.InfiniteAmmo") ||
+	    this->ownerAgent->owner != state.getPlayer())
+	{
+		ammo--;
+	}
 	if (ammo == 0 && payloadType)
 	{
 		payloadType.clear();
