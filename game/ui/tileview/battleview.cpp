@@ -1488,7 +1488,7 @@ void BattleView::update()
 	// Update preview calculations in TB mode
 	if (!realTime)
 	{
-		if (previewedPathCost == -1)
+		if (previewedPathCost == static_cast<int>(PreviewedPathCostSpecial::NONE))
 		{
 			pathPreviewTicksAccumulated++;
 			// Show path preview if hovering for over half a second
@@ -1497,7 +1497,7 @@ void BattleView::update()
 				updatePathPreview();
 			}
 		}
-		if (calculatedAttackCost == -1)
+		if (calculatedAttackCost == static_cast<int>(CalculatedAttackCostSpecial::NONE))
 		{
 			attackCostTicksAccumulated++;
 			if (attackCostTicksAccumulated > 5)
@@ -2196,7 +2196,7 @@ void BattleView::updatePathPreview()
 		                     lastSelectedUnit->agent->type->bodyType->maxHeight) ||
 		    unit)
 		{
-			previewedPathCost = -3;
+			previewedPathCost = static_cast<int>(PreviewedPathCostSpecial::UNREACHABLE);
 			return;
 		}
 		if (lastSelectedUnit->canFly() || to->getCanStand(lastSelectedUnit->isLarge()))
@@ -2242,7 +2242,7 @@ void BattleView::updatePathPreview()
 	// Otherwise, show amount of TUs remaining at arrival
 	if (pathPreview.back() != target)
 	{
-		previewedPathCost = -2;
+		previewedPathCost = static_cast<int>(PreviewedPathCostSpecial::TOO_FAR);
 	}
 	else
 	{
@@ -2252,7 +2252,7 @@ void BattleView::updatePathPreview()
 		{
 			// Sometimes it might happen that we barely miss goal after all calculations
 			// In this case, properly display "Too far" and subtract cost
-			previewedPathCost = -2;
+			previewedPathCost = static_cast<int>(PreviewedPathCostSpecial::TOO_FAR);
 			pathPreview.pop_back();
 		}
 	}
@@ -2308,11 +2308,13 @@ void BattleView::updateAttackCost()
 	                  : lastSelectedUnit->agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
 	if (!weapon)
 	{
-		calculatedAttackCost = -4;
+		calculatedAttackCost = static_cast<int>(CalculatedAttackCostSpecial::NO_WEAPON);
 	}
 	else if (!weapon->canFire(*state, target))
 	{
-		calculatedAttackCost = weapon->type->launcher ? -3 : -2;
+		calculatedAttackCost =
+		    static_cast<int>(weapon->type->launcher ? CalculatedAttackCostSpecial::NO_ARC
+		                                            : CalculatedAttackCostSpecial::OUT_OF_RANGE);
 	}
 	else
 	{
@@ -3953,7 +3955,7 @@ bool BattleView::handleGameStateEvent(Event *e)
 			// update the path preview
 			// a battleunit has died, potentially unblocking/changing the previewed path
 			// but only update if there's a path stored
-			if (previewedPathCost != -1)
+			if (previewedPathCost != static_cast<int>(PreviewedPathCostSpecial::NONE))
 			{
 				updatePathPreview();
 			}

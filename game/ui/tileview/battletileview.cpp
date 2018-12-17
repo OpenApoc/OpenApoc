@@ -572,7 +572,8 @@ void BattleTileView::render()
 					}
 				}
 			}
-			if (previewedPathCost != -1 && drawWaypoints && waypointLocations.empty())
+			if (previewedPathCost != static_cast<int>(PreviewedPathCostSpecial::NONE) &&
+			    drawWaypoints && waypointLocations.empty())
 			{
 				darkenWaypoints = true;
 				for (auto &w : pathPreview)
@@ -607,8 +608,10 @@ void BattleTileView::render()
 					// Yellow if this tile intersects with a unit
 					if (selectedTilePosition.z == z)
 					{
-						drawPathPreview = previewedPathCost != -1;
-						drawAttackCost = calculatedAttackCost != -1;
+						drawPathPreview =
+						    previewedPathCost != static_cast<int>(PreviewedPathCostSpecial::NONE);
+						drawAttackCost = calculatedAttackCost !=
+						                 static_cast<int>(CalculatedAttackCostSpecial::NONE);
 						auto u = selTileOnCurLevel->getUnitIfPresent(true);
 						auto unit = u ? u->getUnit() : nullptr;
 						if (unit &&
@@ -858,15 +861,16 @@ void BattleTileView::render()
 								if (drawAttackCost)
 								{
 									sp<Image> img;
-									switch (calculatedAttackCost)
+									switch (static_cast<CalculatedAttackCostSpecial>(
+									    calculatedAttackCost))
 									{
-										case -4:
+										case CalculatedAttackCostSpecial::NO_WEAPON:
 											img = nullptr;
 											break;
-										case -3:
+										case CalculatedAttackCostSpecial::NO_ARC:
 											img = attackCostNoArc;
 											break;
-										case -2:
+										case CalculatedAttackCostSpecial::OUT_OF_RANGE:
 											img = attackCostOutOfRange;
 											break;
 										default:
@@ -902,12 +906,13 @@ void BattleTileView::render()
 								else if (drawPathPreview)
 								{
 									sp<Image> img;
-									switch (previewedPathCost)
+									switch (
+									    static_cast<PreviewedPathCostSpecial>(previewedPathCost))
 									{
-										case -3:
+										case PreviewedPathCostSpecial::UNREACHABLE:
 											img = pathPreviewUnreachable;
 											break;
-										case -2:
+										case PreviewedPathCostSpecial::TOO_FAR:
 											img = pathPreviewTooFar;
 											break;
 										default:
@@ -1596,7 +1601,7 @@ void BattleTileView::resetAttackCost()
 	if (attackCostTicksAccumulated > 0)
 	{
 		attackCostTicksAccumulated = 0;
-		calculatedAttackCost = -1;
+		calculatedAttackCost = static_cast<int>(CalculatedAttackCostSpecial::NONE);
 	}
 }
 
@@ -1637,7 +1642,7 @@ void BattleTileView::resetPathPreview()
 	if (pathPreviewTicksAccumulated > 0)
 	{
 		pathPreviewTicksAccumulated = 0;
-		previewedPathCost = -1;
+		previewedPathCost = static_cast<int>(PreviewedPathCostSpecial::NONE);
 		pathPreview.clear();
 	}
 }
