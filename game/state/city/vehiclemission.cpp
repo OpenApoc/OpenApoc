@@ -1402,6 +1402,23 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 		}
 		case MissionType::GotoLocation:
 		case MissionType::Land:
+			if (!finished || v.currentBuilding == nullptr)
+			{
+				return;
+			}
+			// TODO wait for all crafts nad/or agents too arrive before asking player to commence
+			// investigation
+			if (v.owner == state.getPlayer() && v.currentBuilding->detected &&
+			    v.currentBuilding->investigate)
+			{
+				v.currentBuilding->investigate = false;
+
+				StateRef<Vehicle> vehicleRef = {&state,
+				                                Vehicle::getId(state, v.shared_from_this())};
+				fw().pushEvent(
+				    new GameVehicleEvent(GameEventType::CommenceInvestigation, vehicleRef));
+			}
+			return;
 		case MissionType::InfiltrateSubvert:
 		case MissionType::GotoBuilding:
 		case MissionType::OfferService:
@@ -1434,7 +1451,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 			LogWarning("TODO: Implement update");
 			return;
 	}
-}
+} // namespace OpenApoc
 
 bool VehicleMission::isFinished(GameState &state, Vehicle &v, bool callUpdateIfFinished)
 {
@@ -1459,7 +1476,8 @@ bool VehicleMission::isFinishedInternal(GameState &state, Vehicle &v)
 	{
 		case MissionType::GotoLocation:
 		case MissionType::Crash:
-		// Note that GotoPortal/DepartToSpace never has planned path but still checks for target loc
+		// Note that GotoPortal/DepartToSpace never has planned path but still checks for target
+		// loc
 		case MissionType::DepartToSpace:
 		case MissionType::GotoPortal:
 		{

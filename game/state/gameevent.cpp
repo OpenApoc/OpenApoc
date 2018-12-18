@@ -31,6 +31,7 @@ const std::map<GameEventType, UString> GameEvent::optionsMap = {
     {GameEventType::NotEnoughAmmo, "Notifications.City.NotEnoughAmmo"},
     {GameEventType::VehicleRefuelled, "Notifications.City.VehicleRefuelled"},
     {GameEventType::NotEnoughFuel, "Notifications.City.NotEnoughFuel"},
+    {GameEventType::CommenceInvestigation, "Notifications.City.CommenceInvestigation"},
     {GameEventType::UnauthorizedVehicle, "Notifications.City.UnauthorizedVehicle"},
 
     {GameEventType::HostileSpotted, "Notifications.Battle.HostileSpotted"},
@@ -127,6 +128,8 @@ UString GameVehicleEvent::message()
 			return format("%s %s", tr("Not enough ammo to rearm vehicle:"), vehicle->name);
 		case GameEventType::NotEnoughFuel:
 			return format("%s %s", tr("Not enough fuel to refuel vehicle"), vehicle->name);
+		case GameEventType::CommenceInvestigation:
+			return "";
 		default:
 			LogError("Invalid vehicle event type");
 			break;

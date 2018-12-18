@@ -74,6 +74,7 @@ void AlertScreen::eventOccurred(Event *e)
 			{
 				for (auto &vehicle : selectedVehicles)
 				{
+					building->investigate = true;
 					vehicle->setMission(*state, VehicleMission::gotoBuilding(
 					                                *state, *vehicle, {state.get(), building}));
 				}
@@ -81,7 +82,7 @@ void AlertScreen::eventOccurred(Event *e)
 				return;
 			}
 
-			// send an angents group on foot
+			// send an agents group on foot
 			std::list<StateRef<Agent>> selectedAgents(agentAssignment->getSelectedAgents());
 			if (!selectedAgents.empty())
 			{

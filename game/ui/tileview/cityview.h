@@ -123,6 +123,8 @@ class CityView : public CityTileView
 	~CityView() override;
 
 	void initiateUfoMission(StateRef<Vehicle> ufo, StateRef<Vehicle> playerCraft);
+	void initiateBuildingMission(sp<GameState> state, StateRef<Building> building,
+	                             StateRef<Vehicle> vehicle);
 
 	void begin() override;
 	void resume() override;
