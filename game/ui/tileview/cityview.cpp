@@ -2883,29 +2883,9 @@ void CityView::initiateUfoMission(StateRef<Vehicle> ufo, StateRef<Vehicle> playe
 	                                             loadBattleVehicle(state, ufo, playerCraft))});
 }
 
-void CityView::initiateBuildingMission(sp<GameState> state, StateRef<Building> building)
+void CityView::initiateBuildingMission(sp<GameState> state, StateRef<Building> building,
+                                       std::list<StateRef<Agent>> agents)
 {
-	std::list<StateRef<Agent>> agents;
-	for (auto vehicle : building->currentVehicles)
-	{
-		if (vehicle->owner == state->getPlayer())
-		{
-			for (auto agent : vehicle->currentAgents)
-			{
-				if (agent->owner == state->getPlayer())
-				{
-					agents.push_back(agent);
-				}
-			}
-		}
-	}
-	for (auto agent : building->currentAgents)
-	{
-		if (agent->owner == state->getPlayer())
-		{
-			agents.push_back(agent);
-		}
-	}
 	bool inBuilding = true;
 	bool raid = false;
 	bool hotseat = false;
@@ -3611,16 +3591,38 @@ bool CityView::handleGameStateEvent(Event *e)
 			}
 			auto game_state = this->state;
 			auto building = ev->building;
+			std::list<StateRef<Agent>> agents;
+			for (auto v : building->currentVehicles)
+			{
+				if (v->owner == state->getPlayer())
+				{
+					for (auto a : v->currentAgents)
+					{
+						if (a->owner == state->getPlayer())
+						{
+							agents.push_back(a);
+						}
+					}
+				}
+			}
+			for (auto a : building->currentAgents)
+			{
+				if (a->owner == state->getPlayer())
+				{
+					agents.push_back(a);
+				}
+			}
 
 			UString title = tr("Commence investigation");
-			UString message =
-			    tr("All selected units and crafts have arrived. Proceed with investigation?");
+			UString message = format(tr("All selected units and crafts have arrived at %0s. "
+			                            "Proceed with investigation? (%1d units)"),
+			                         building->name, agents.size());
 			fw().stageQueueCommand(
 			    {StageCmd::Command::PUSH,
 			     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
 			                      // "Yes" callback
-			                      [this, game_state, building]() {
-				                      initiateBuildingMission(game_state, building);
+			                      [this, game_state, building, agents]() {
+				                      initiateBuildingMission(game_state, building, agents);
 				                  },
 			                      // "No" callback
 			                      [this]() { setUpdateSpeed(CityUpdateSpeed::Pause); })});
