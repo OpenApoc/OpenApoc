@@ -42,8 +42,8 @@ std::shared_future<void> loadGame(const UString &path, sp<GameState> state)
 		}
 		state->startGame();
 		state->initState();
-		state->fillOrgStartingProperty();
 		state->fillPlayerStartingProperty();
+		state->fillOrgStartingProperty();
 		return;
 	});
 

@@ -134,8 +134,6 @@ StateRef<Organisation> GameState::getCivilian() { return this->civilian; }
 
 void GameState::initState()
 {
-	// FIXME: reseed rng when game starts
-
 	if (current_battle)
 	{
 		current_battle->initBattle(*this);
