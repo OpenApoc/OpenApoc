@@ -3105,6 +3105,7 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 		// - Cannot place on crashed vehicles
 		// - Cannot place on carrying vehicles
 		case VehicleMission::MissionType::GotoBuilding:
+		case VehicleMission::MissionType::InvestigateBuilding:
 		case VehicleMission::MissionType::FollowVehicle:
 		case VehicleMission::MissionType::RecoverVehicle:
 		case VehicleMission::MissionType::AttackVehicle:
@@ -3164,6 +3165,7 @@ bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 			break;
 		case VehicleMission::MissionType::GotoLocation:
 		case VehicleMission::MissionType::GotoBuilding:
+		case VehicleMission::MissionType::InvestigateBuilding:
 		case VehicleMission::MissionType::FollowVehicle:
 		case VehicleMission::MissionType::RecoverVehicle:
 		case VehicleMission::MissionType::AttackVehicle:
@@ -3204,6 +3206,15 @@ bool Vehicle::clearMissions(GameState &state, bool forced)
 		}
 		else
 		{
+			// if we're removing an InvestigateBuilding mission
+			// decrease the investigate count so the other investigating vehicles won't dangle
+			if ((*it)->type == VehicleMission::MissionType::InvestigateBuilding)
+			{
+				if (!(*it)->isFinished(state, *this))
+				{
+					(*it)->targetBuilding->decreaseInvestigateCount(state);
+				}
+			}
 			it = missions.erase(it);
 		}
 	}
