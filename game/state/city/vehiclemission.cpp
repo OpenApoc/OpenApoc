@@ -624,6 +624,16 @@ VehicleMission *VehicleMission::land(Vehicle &, StateRef<Building> b)
 	return mission;
 }
 
+VehicleMission *VehicleMission::investigateBuilding(GameState &, Vehicle &v,
+                                                    StateRef<Building> target, bool allowTeleporter)
+{
+	auto *mission = new VehicleMission();
+	mission->type = MissionType::InvestigateBuilding;
+	mission->targetBuilding = target;
+	mission->allowTeleporter = allowTeleporter;
+	return mission;
+}
+
 bool VehicleMission::adjustTargetToClosestRoad(Vehicle &v, Vec3<int> &target)
 {
 	auto &map = *v.city->map;
@@ -1244,6 +1254,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 			return false;
 		}
 		case MissionType::GotoBuilding:
+		case MissionType::InvestigateBuilding:
 		{
 			if (v.currentBuilding != this->targetBuilding)
 			{
@@ -1402,6 +1413,11 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 		}
 		case MissionType::GotoLocation:
 		case MissionType::Land:
+		{
+			return;
+		}
+		case MissionType::InvestigateBuilding:
+		{
 			if (!finished || v.currentBuilding == nullptr)
 			{
 				return;
@@ -1412,6 +1428,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 				v.currentBuilding->decreaseInvestigateCount(state);
 			}
 			return;
+		}
 		case MissionType::InfiltrateSubvert:
 		case MissionType::GotoBuilding:
 		case MissionType::OfferService:
@@ -1534,6 +1551,7 @@ bool VehicleMission::isFinishedInternal(GameState &state, Vehicle &v)
 		case MissionType::Patrol:
 			return this->missionCounter == 0 && this->currentPlannedPath.empty();
 		case MissionType::GotoBuilding:
+		case MissionType::InvestigateBuilding:
 			return this->targetBuilding == v.currentBuilding;
 		case MissionType::SelfDestruct:
 		case MissionType::Snooze:
@@ -2030,6 +2048,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			setFollowPath(state, v);
 			return;
 		}
+		case MissionType::InvestigateBuilding:
 		case MissionType::GotoBuilding:
 		{
 			if (isFinishedInternal(state, v))
@@ -3054,6 +3073,7 @@ UString VehicleMission::getName()
 	    {MissionType::RestartNextMission, "RestartNextMission"},
 	    {MissionType::OfferService, "OfferServices"},
 	    {MissionType::Teleport, "Teleport"},
+	    {MissionType::InvestigateBuilding, "InvestigateBuilding"},
 	};
 	UString name = "UNKNOWN";
 	const auto it = TypeMap.find(this->type);
@@ -3078,6 +3098,7 @@ UString VehicleMission::getName()
 		case MissionType::AttackBuilding:
 		case MissionType::TakeOff:
 		case MissionType::Land:
+		case MissionType::InvestigateBuilding:
 			name += " " + this->targetBuilding.id;
 			break;
 		case MissionType::ArriveFromDimensionGate:

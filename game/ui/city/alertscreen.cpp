@@ -79,7 +79,7 @@ void AlertScreen::eventOccurred(Event *e)
 				for (auto &vehicle : selectedVehicles)
 				{
 					++building->investigate;
-					vehicle->setMission(*state, VehicleMission::gotoBuilding(
+					vehicle->setMission(*state, VehicleMission::investigateBuilding(
 					                                *state, *vehicle, {state.get(), building}));
 				}
 			}
@@ -90,13 +90,12 @@ void AlertScreen::eventOccurred(Event *e)
 			{
 				for (auto &agent : selectedAgents)
 				{
-					if (agent->currentVehicle)
+					if (!agent->currentVehicle)
 					{
-						continue;
+						++building->investigate;
+						agent->setMission(*state, AgentMission::investigateBuilding(
+						                              *state, *agent, {state.get(), building}));
 					}
-					++building->investigate;
-					agent->setMission(*state, AgentMission::gotoBuilding(*state, *agent,
-					                                                     {state.get(), building}));
 				}
 			}
 			if (building->investigate)
