@@ -8,6 +8,7 @@
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/city/baselayout.h"
 #include "game/state/rules/city/scenerytiletype.h"
 #include "library/strings.h"
 
@@ -402,8 +403,17 @@ void Organisation::updateHirableAgents(GameState &state)
 	StateRef<Building> hireeLocation;
 	if (state.getCivilian().id == id)
 	{
-		hireeLocation = {&state,
-		                 mapRandomizer(state.rng, state.cities["CITYMAP_HUMAN"]->buildings).first};
+		std::vector<StateRef<Building>> buildingsWithoutBases;
+		for (auto &b : state.cities["CITYMAP_HUMAN"]->buildings)
+		{
+			if (!b.second->base_layout)
+				buildingsWithoutBases.emplace_back(&state, b.second);
+		}
+		if (buildingsWithoutBases.empty())
+		{
+			LogError("Cannot spawn new hirable agent - No building without base?");
+		}
+		hireeLocation = vectorRandomizer(state.rng, buildingsWithoutBases);
 	}
 	else
 	{
