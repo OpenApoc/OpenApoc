@@ -984,6 +984,7 @@
 		<member>researchUnlock</member>
 		<member>accessTopic</member>
 		<member>victory</member>
+		<member>investigate</member>
 	</object>
 	<object>
 		<name>UFOIncursion</name>
