@@ -291,6 +291,14 @@ void AgentMission::update(GameState &state, Agent &a, unsigned int ticks, bool f
 	switch (this->type)
 	{
 		case MissionType::GotoBuilding:
+		{
+			if (finished && this->targetBuilding && this->targetBuilding->detected &&
+			    this->targetBuilding->investigate && a.owner == state.getPlayer())
+			{
+				this->targetBuilding->decreaseInvestigateCount(state);
+			}
+			return;
+		}
 		case MissionType::RestartNextMission:
 			return;
 		case MissionType::AwaitPickup:

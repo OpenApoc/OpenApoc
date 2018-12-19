@@ -128,8 +128,6 @@ UString GameVehicleEvent::message()
 			return format("%s %s", tr("Not enough ammo to rearm vehicle:"), vehicle->name);
 		case GameEventType::NotEnoughFuel:
 			return format("%s %s", tr("Not enough fuel to refuel vehicle"), vehicle->name);
-		case GameEventType::CommenceInvestigation:
-			return "";
 		default:
 			LogError("Invalid vehicle event type");
 			break;
@@ -217,6 +215,8 @@ UString GameBuildingEvent::message()
 			return tr("Live Alien spotted.");
 		case GameEventType::CargoExpiresSoon:
 			return format("%s %s", tr("Cargo expires soon:"), building->name);
+		case GameEventType::CommenceInvestigation:
+			return "";
 		default:
 			LogError("Invalid building event type");
 			break;

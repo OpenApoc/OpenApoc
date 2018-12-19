@@ -68,29 +68,39 @@ void AlertScreen::eventOccurred(Event *e)
 	{
 		if (e->forms().RaisedBy->Name == "BUTTON_EXTERMINATE")
 		{
-			// send a vehicles fleet
+			// reset the investigate counter as it may be non-zero because of a previous
+			// investigation
+			building->investigate = 0;
+
+			// send a vehicle fleet
 			std::list<StateRef<Vehicle>> selectedVehicles(agentAssignment->getSelectedVehicles());
 			if (!selectedVehicles.empty())
 			{
 				for (auto &vehicle : selectedVehicles)
 				{
-					building->investigate = true;
+					++building->investigate;
 					vehicle->setMission(*state, VehicleMission::gotoBuilding(
 					                                *state, *vehicle, {state.get(), building}));
 				}
-				fw().stageQueueCommand({StageCmd::Command::POP});
-				return;
 			}
 
-			// send an agents group on foot
+			// send agents on foot
 			std::list<StateRef<Agent>> selectedAgents(agentAssignment->getSelectedAgents());
 			if (!selectedAgents.empty())
 			{
 				for (auto &agent : selectedAgents)
 				{
+					if (agent->currentVehicle)
+					{
+						continue;
+					}
+					++building->investigate;
 					agent->setMission(*state, AgentMission::gotoBuilding(*state, *agent,
 					                                                     {state.get(), building}));
 				}
+			}
+			if (building->investigate)
+			{
 				fw().stageQueueCommand({StageCmd::Command::POP});
 				return;
 			}

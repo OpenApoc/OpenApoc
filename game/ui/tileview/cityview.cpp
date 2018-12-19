@@ -89,7 +89,7 @@ std::shared_future<void> loadBattleBuilding(sp<GameState> state, sp<Building> bu
                                             StateRef<Vehicle> playerVehicle)
 {
 	auto loadTask = fw().threadPoolEnqueue(
-	    [hotseat, building, state, raid, playerAgents, playerVehicle]() -> void {
+	    [hotseat, building, state, raid, playerAgents, playerVehicle]() mutable -> void {
 		    StateRef<Organisation> org = raid ? building->owner : state->getAliens();
 		    StateRef<Building> bld = {state.get(), building};
 
@@ -97,9 +97,7 @@ std::shared_future<void> loadBattleBuilding(sp<GameState> state, sp<Building> bu
 		    const int *guards = nullptr;
 		    const int *civilians = nullptr;
 
-		    // Won't work if I don't copy it!? Whatever
-		    auto agents = playerAgents;
-		    Battle::beginBattle(*state, hotseat, org, agents, aliens, guards, civilians,
+		    Battle::beginBattle(*state, hotseat, org, playerAgents, aliens, guards, civilians,
 		                        playerVehicle, bld);
 		});
 	return loadTask;
@@ -2885,13 +2883,28 @@ void CityView::initiateUfoMission(StateRef<Vehicle> ufo, StateRef<Vehicle> playe
 	                                             loadBattleVehicle(state, ufo, playerCraft))});
 }
 
-void CityView::initiateBuildingMission(sp<GameState> state, StateRef<Building> building,
-                                       StateRef<Vehicle> vehicle)
+void CityView::initiateBuildingMission(sp<GameState> state, StateRef<Building> building)
 {
 	std::list<StateRef<Agent>> agents;
-	for (auto agent : vehicle->currentAgents)
+	for (auto vehicle : building->currentVehicles)
 	{
-		agents.push_back(agent);
+		if (vehicle->owner == state->getPlayer())
+		{
+			for (auto agent : vehicle->currentAgents)
+			{
+				if (agent->owner == state->getPlayer())
+				{
+					agents.push_back(agent);
+				}
+			}
+		}
+	}
+	for (auto agent : building->currentAgents)
+	{
+		if (agent->owner == state->getPlayer())
+		{
+			agents.push_back(agent);
+		}
 	}
 	bool inBuilding = true;
 	bool raid = false;
@@ -2900,7 +2913,7 @@ void CityView::initiateBuildingMission(sp<GameState> state, StateRef<Building> b
 	    {StageCmd::Command::REPLACEALL,
 	     mksp<BattleBriefing>(
 	         state, building->owner, Building::getId(*state, building), inBuilding, raid,
-	         loadBattleBuilding(state, building, hotseat, raid, agents, vehicle))});
+	         loadBattleBuilding(state, building, hotseat, raid, agents, nullptr))});
 }
 
 void CityView::eventOccurred(Event *e)
@@ -3591,24 +3604,23 @@ bool CityView::handleGameStateEvent(Event *e)
 		}
 		case GameEventType::CommenceInvestigation:
 		{
-			auto ev = dynamic_cast<GameVehicleEvent *>(e);
+			auto ev = dynamic_cast<GameBuildingEvent *>(e);
 			if (!ev)
 			{
 				LogError("Invalid investigation event");
 			}
 			auto game_state = this->state;
-			auto building = ev->vehicle->currentBuilding;
-			auto vehicle = ev->vehicle;
+			auto building = ev->building;
 
 			UString title = tr("Commence investigation");
 			UString message =
-			    tr("All selected units and crafts have arrived. Proceed with investigation? ");
+			    tr("All selected units and crafts have arrived. Proceed with investigation?");
 			fw().stageQueueCommand(
 			    {StageCmd::Command::PUSH,
 			     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
 			                      // "Yes" callback
-			                      [this, game_state, building, vehicle]() {
-				                      initiateBuildingMission(game_state, building, vehicle);
+			                      [this, game_state, building]() {
+				                      initiateBuildingMission(game_state, building);
 				                  },
 			                      // "No" callback
 			                      [this]() { setUpdateSpeed(CityUpdateSpeed::Pause); })});

@@ -1406,17 +1406,10 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 			{
 				return;
 			}
-			// TODO wait for all crafts nad/or agents too arrive before asking player to commence
-			// investigation
 			if (v.owner == state.getPlayer() && v.currentBuilding->detected &&
 			    v.currentBuilding->investigate)
 			{
-				v.currentBuilding->investigate = false;
-
-				StateRef<Vehicle> vehicleRef = {&state,
-				                                Vehicle::getId(state, v.shared_from_this())};
-				fw().pushEvent(
-				    new GameVehicleEvent(GameEventType::CommenceInvestigation, vehicleRef));
+				v.currentBuilding->decreaseInvestigateCount(state);
 			}
 			return;
 		case MissionType::InfiltrateSubvert:
