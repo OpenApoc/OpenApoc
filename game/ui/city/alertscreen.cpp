@@ -68,47 +68,41 @@ void AlertScreen::eventOccurred(Event *e)
 	{
 		if (e->forms().RaisedBy->Name == "BUTTON_EXTERMINATE")
 		{
+			if (agentAssignment->getSelectedAgents().empty())
+			{
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<MessageBox>(tr("No Agents Selected"),
+				                      tr("You need to select the agents you want to "
+				                         "become active within the building."),
+				                      MessageBox::ButtonOptions::Ok)});
+				return;
+			}
+
 			// reset the investigate counter as it may be non-zero because of a previous
 			// investigation
 			building->investigate = 0;
 
 			// send a vehicle fleet
-			std::list<StateRef<Vehicle>> selectedVehicles(agentAssignment->getSelectedVehicles());
-			if (!selectedVehicles.empty())
+			for (auto &vehicle : agentAssignment->getSelectedVehicles())
 			{
-				for (auto &vehicle : selectedVehicles)
-				{
-					++building->investigate;
-					vehicle->setMission(*state, VehicleMission::investigateBuilding(
-					                                *state, *vehicle, {state.get(), building}));
-				}
+				++building->investigate;
+				vehicle->setMission(*state, VehicleMission::investigateBuilding(
+				                                *state, *vehicle, {state.get(), building}));
 			}
 
 			// send agents on foot
-			std::list<StateRef<Agent>> selectedAgents(agentAssignment->getSelectedAgents());
-			if (!selectedAgents.empty())
+			for (auto &agent : agentAssignment->getSelectedAgents())
 			{
-				for (auto &agent : selectedAgents)
+				if (!agent->currentVehicle)
 				{
-					if (!agent->currentVehicle)
-					{
-						++building->investigate;
-						agent->setMission(*state, AgentMission::investigateBuilding(
-						                              *state, *agent, {state.get(), building}));
-					}
+					++building->investigate;
+					agent->setMission(*state, AgentMission::investigateBuilding(
+					                              *state, *agent, {state.get(), building}));
 				}
 			}
-			if (building->investigate)
-			{
-				fw().stageQueueCommand({StageCmd::Command::POP});
-				return;
-			}
 
-			fw().stageQueueCommand({StageCmd::Command::PUSH,
-			                        mksp<MessageBox>(tr("No Agents Selected"),
-			                                         tr("You need to select the agents you want to "
-			                                            "become active within the building."),
-			                                         MessageBox::ButtonOptions::Ok)});
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_EQUIPAGENT")
