@@ -859,7 +859,7 @@ bool Agent::setMission(GameState &state, AgentMission *mission)
 		{
 			if (!m->isFinished(state, *this))
 			{
-				m->targetBuilding->decreaseInvestigateCount(state);
+				m->targetBuilding->decreasePendingInvestigatorCount(state);
 			}
 		}
 	}

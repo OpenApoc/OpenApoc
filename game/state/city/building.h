@@ -66,7 +66,7 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 	unsigned ticksDetectionTimeOut = 0;
 	unsigned ticksDetectionAttemptAccumulated = 0;
 	bool detected = false;
-	int investigate = 0;
+	int pendingInvestigatorCount = 0;
 	// Unlocks when successful at raiding this
 	std::list<StateRef<ResearchTopic>> researchUnlock;
 	// Access to building
@@ -75,7 +75,7 @@ class Building : public StateObject, public std::enable_shared_from_this<Buildin
 	bool victory = false;
 
 	// may fire a 'commence investigation' event
-	void decreaseInvestigateCount(GameState &state);
+	void decreasePendingInvestigatorCount(GameState &state);
 	bool hasAliens() const;
 	void updateDetection(GameState &state, unsigned int ticks);
 	void updateCargo(GameState &state);

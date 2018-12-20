@@ -79,14 +79,14 @@ void AlertScreen::eventOccurred(Event *e)
 				return;
 			}
 
-			// reset the investigate counter as it may be non-zero because of a previous
+			// reset the investigator counter as it may be non-zero because of a previous
 			// investigation
-			building->investigate = 0;
+			building->pendingInvestigatorCount = 0;
 
 			// send a vehicle fleet
 			for (auto &vehicle : agentAssignment->getSelectedVehicles())
 			{
-				++building->investigate;
+				++building->pendingInvestigatorCount;
 				vehicle->setMission(*state, VehicleMission::investigateBuilding(
 				                                *state, *vehicle, {state.get(), building}));
 			}
@@ -96,7 +96,7 @@ void AlertScreen::eventOccurred(Event *e)
 			{
 				if (!agent->currentVehicle)
 				{
-					++building->investigate;
+					++building->pendingInvestigatorCount;
 					agent->setMission(*state, AgentMission::investigateBuilding(
 					                              *state, *agent, {state.get(), building}));
 				}

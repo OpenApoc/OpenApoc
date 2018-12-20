@@ -3591,6 +3591,14 @@ bool CityView::handleGameStateEvent(Event *e)
 			}
 			auto game_state = this->state;
 			auto building = ev->building;
+
+			// the player may have called an alien extermination before all units arrive
+			// in that case we don't want to prompt for investigation on arrival
+			if (!building->detected)
+			{
+				break;
+			}
+
 			std::list<StateRef<Agent>> agents;
 			for (auto v : building->currentVehicles)
 			{

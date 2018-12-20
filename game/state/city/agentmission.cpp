@@ -306,10 +306,9 @@ void AgentMission::update(GameState &state, Agent &a, unsigned int ticks, bool f
 			return;
 		case MissionType::InvestigateBuilding:
 		{
-			if (finished && this->targetBuilding && this->targetBuilding->detected &&
-			    this->targetBuilding->investigate && a.owner == state.getPlayer())
+			if (finished && this->targetBuilding->detected && a.owner == state.getPlayer())
 			{
-				this->targetBuilding->decreaseInvestigateCount(state);
+				this->targetBuilding->decreasePendingInvestigatorCount(state);
 			}
 			return;
 		}

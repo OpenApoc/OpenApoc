@@ -1418,14 +1418,9 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 		}
 		case MissionType::InvestigateBuilding:
 		{
-			if (!finished || v.currentBuilding == nullptr)
+			if (finished && v.owner == state.getPlayer() && v.currentBuilding->detected)
 			{
-				return;
-			}
-			if (v.owner == state.getPlayer() && v.currentBuilding->detected &&
-			    v.currentBuilding->investigate)
-			{
-				v.currentBuilding->decreaseInvestigateCount(state);
+				v.currentBuilding->decreasePendingInvestigatorCount(state);
 			}
 			return;
 		}

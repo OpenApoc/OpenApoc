@@ -3212,7 +3212,7 @@ bool Vehicle::clearMissions(GameState &state, bool forced)
 			{
 				if (!(*it)->isFinished(state, *this))
 				{
-					(*it)->targetBuilding->decreaseInvestigateCount(state);
+					(*it)->targetBuilding->decreasePendingInvestigatorCount(state);
 				}
 			}
 			it = missions.erase(it);
