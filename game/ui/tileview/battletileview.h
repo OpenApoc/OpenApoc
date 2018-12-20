@@ -69,6 +69,7 @@ class BattleTileView : public TileView
 	std::vector<sp<Image>> targetLocationIcons;
 	Vec2<float> targetLocationOffset;
 	std::vector<sp<Image>> tuIndicators;
+	sp<Image> tuSeparator; // forward slash
 	// Must have same amount it items as in targetLocationIcons
 	std::vector<sp<Image>> waypointIcons;
 	std::vector<sp<Image>> waypointDarkIcons;
@@ -107,22 +108,26 @@ class BattleTileView : public TileView
 	sp<Image> pathPreviewUnreachable;
 	std::list<Vec3<int>> pathPreview;
 	int pathPreviewTicksAccumulated = 0;
-	// -3 = unreachable
-	// -2 = too far
-	// -1 = no previewed path stored
-	// 0+ = path cost
-	int previewedPathCost = -1;
+	enum class PreviewedPathCostSpecial : int
+	{
+		UNREACHABLE = -3,
+		TOO_FAR = -2,
+		NONE = -1
+	};
+	int previewedPathCost = static_cast<int>(PreviewedPathCostSpecial::NONE);
 	void resetPathPreview();
 
 	sp<Image> attackCostOutOfRange;
 	sp<Image> attackCostNoArc;
 	int attackCostTicksAccumulated = 0;
-	// -4 = no weapon
-	// -3 = no arc
-	// -2 = out of range
-	// -1 = no attack cost stored
-	// 0+ = attack cost
-	int calculatedAttackCost = -1;
+	enum class CalculatedAttackCostSpecial : int
+	{
+		NO_WEAPON = -4,
+		NO_ARC = -3,
+		OUT_OF_RANGE = -2,
+		NONE = -1
+	};
+	int calculatedAttackCost = static_cast<int>(CalculatedAttackCostSpecial::NONE);
 	void resetAttackCost();
 	// updateAttackCost is in battleView as it requires data about selection mode
 
