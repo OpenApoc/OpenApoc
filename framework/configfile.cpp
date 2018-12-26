@@ -493,4 +493,12 @@ bool ConfigOptionFloat::get() const
 		return config().getFloat(section + "." + name);
 }
 
+void validate(boost::any &v, const std::vector<std::string> &values, UString *, int)
+{
+	if (values.size() == 1)
+		v = boost::any(UString(values[0]));
+	else
+		throw po::validation_error(po::validation_error::invalid_option_value);
+}
+
 }; // namespace OpenApoc
