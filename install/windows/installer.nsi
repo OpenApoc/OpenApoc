@@ -473,10 +473,10 @@ SectionEnd
 ;--------------------------------
 ;Version Information
 
-	VIProductVersion "${GAME_VERSION}.0.0"
+	VIProductVersion "${GAME_VERSION_NUMERIC}.0.0"
 	VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "${GAME_NAME} Installer"
-	VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductVersion" "${GAME_VERSION}.0.0"
+	VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductVersion" "${GAME_VERSION_NUMERIC}.0.0"
 	VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "${GAME_AUTHOR}"
 	VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "Copyright 2014-2019 ${GAME_AUTHOR}"
 	VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "${GAME_NAME} Installer"
-	VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${GAME_VERSION}.0.0"
+	VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${GAME_VERSION_NUMERIC}.0.0"
