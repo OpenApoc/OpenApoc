@@ -28,9 +28,21 @@
 ;--------------------------------
 ;General
 
+	;Get major and minor version numbers from the git tag
+	!searchparse /ignorecase /noerrors ${GAME_VERSION} `v` GAME_VERSION_MAJOR `.` GAME_VERSION_MINOR `-` GAME_VERSION_COMMIT `-`
+	!ifndef GAME_VERSION_MAJOR
+		!define GAME_VERSION_MAJOR 0
+	!endif
+	!ifndef GAME_VERSION_MINOR
+		!define GAME_VERSION_MINOR 0
+	!endif
+	!ifndef GAME_VERSION_COMMIT
+		!define GAME_VERSION_COMMIT 0
+	!endif
+
 	;Name and file
-	Name "${GAME_NAME} ${GAME_VERSION}"
-	OutFile "install-openapoc-${GAME_VERSION_GIT}.exe"
+	Name "${GAME_NAME} ${GAME_VERSION_MAJOR}.${GAME_VERSION_MINOR}.${GAME_VERSION_COMMIT}"
+	OutFile "install-openapoc-${GAME_VERSION}.exe"
 
 	;Default installation folder
 	InstallDir "$PROGRAMFILES\${GAME_NAME}"
@@ -187,7 +199,7 @@ Function XcomCDOnBrowse
 	Pop $0
 	
 	${If} $0 == $XBrowseApocalypse
-		nsDialogs::SelectFileDialog open $APOCALYPSE_CD "*.iso|*.cue"
+		nsDialogs::SelectFileDialog open $APOCALYPSE_CD "ISO images (*.iso)|*.iso|CUE images (*.cue)|*.cue|All Files|*.*"
 		Pop $1
 		${If} $1 == error
 			Return
@@ -224,13 +236,16 @@ Section "$(SETUP_GAME)" SecMain
 
 	File "..\..\bin\$%PLATFORM%\$%CONFIGURATION%\*.dll"
 	File "..\..\bin\$%PLATFORM%\$%CONFIGURATION%\*.exe"
-	File /r "..\..\data"
 
 	File "..\..\build-id"
-	File "..\..\OpenApoc-${GAME_VERSION_GIT}\git-commit"
+	File "..\..\OpenApoc-${GAME_VERSION}\git-commit"
 	File /oname=README.txt "..\..\README.md"
 	File "..\..\README_HOTKEYS.txt"
 	File /oname=LICENSE.txt "..\..\LICENSE"
+
+	SetOutPath "$INSTDIR\data"
+	File /r "..\..\data\"
+	SetOutPath "$INSTDIR"
 	
 	;Generate config
 	${If} $PortableMode == ${BST_CHECKED}
@@ -240,43 +255,31 @@ Section "$(SETUP_GAME)" SecMain
 
 		StrCmp $APOCALYPSE_CD "" skip_portable_cd 0
 		IfFileExists "$APOCALYPSE_CD" 0 skip_portable_cd
-		IfFileExists "$INSTDIR\OpenApoc_settings.conf" skip_existing_config 0
 
-		FileOpen $9 "OpenApoc_settings.conf" w
-		FileWrite $9 "[Framework]$\r$\n"
-		FileWrite $9 "CD = $APOCALYPSE_CD$\r$\n"
-		FileClose $9
+		WriteINIStr "$INSTDIR\OpenApoc_settings.conf" Framework CD "$APOCALYPSE_CD"
 		skip_portable_cd:
 
 	${Else}
 
 		CreateDirectory "$APPDATA\OpenApoc\OpenApoc\saves"
 
-		IfFileExists "$APPDATA\OpenApoc\OpenApoc\settings.conf" skip_existing_config 0
-
-		FileOpen $9 "$APPDATA\OpenApoc\OpenApoc\settings.conf" w
-		
 		StrCmp $APOCALYPSE_CD "" skip_installed_cd 0
 		IfFileExists "$APOCALYPSE_CD" 0 skip_installed_cd
-		
-		FileWrite $9 "[Framework]$\r$\n"
-		FileWrite $9 "CD = $APOCALYPSE_CD$\r$\n"
+
+		WriteINIStr "$APPDATA\OpenApoc\OpenApoc\settings.conf" Framework CD "$APOCALYPSE_CD"
 
 		skip_installed_cd:
-		FileWrite $9 "[Game.Save]$\r$\n"
-		FileWrite $9 "Directory = $APPDATA\OpenApoc\OpenApoc\saves$\r$\n"
-		FileClose $9
+		WriteINIStr "$APPDATA\OpenApoc\OpenApoc\settings.conf" Game.Save Directory "$APPDATA\OpenApoc\OpenApoc\saves"
 
 	${EndIf}
-	skip_existing_config:
 	
 	;Store installation folder
 	WriteRegStr HKLM "Software\${GAME_NAME}" "" $INSTDIR
 	
 	;Write the uninstall keys for Windows
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${GAME_NAME}" "DisplayName" "${GAME_NAME} ${GAME_VERSION}"
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${GAME_NAME}" "DisplayName" "${GAME_NAME} ${GAME_VERSION_MAJOR}.${GAME_VERSION_MINOR}.${GAME_VERSION_COMMIT}"
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${GAME_NAME}" "DisplayIcon" '"$INSTDIR\OpenApoc.exe",0'
-	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${GAME_NAME}" "DisplayVersion" "${GAME_VERSION}"
+	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${GAME_NAME}" "DisplayVersion" "${GAME_VERSION_MAJOR}.${GAME_VERSION_MINOR}.${GAME_VERSION_COMMIT}"
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${GAME_NAME}" "InstallLocation" "$INSTDIR"
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${GAME_NAME}" "Publisher" "${GAME_AUTHOR}"
 	WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${GAME_NAME}" "UninstallString" '"$INSTDIR\Uninstall.exe"'
@@ -432,8 +435,15 @@ FunctionEnd
 ;Uninstaller Sections
 
 Section /o "un.$(SETUP_UNUSER)" UnUser
-	RMDir /r "$APPDATA\OpenApoc\OpenApoc"
+	IfFileExists "$INSTDIR\portable.txt" 0 uninstall_user_nonportable
+	RMDir /r "$INSTDIR\saves"
+	Delete "$INSTDIR\OpenApoc_settings.conf"
+	Goto uninstall_user_success
+	uninstall_user_nonportable:
+	RMDir /r "$APPDATA\OpenApoc\OpenApoc\saves"
+	Delete "$APPDATA\OpenApoc\OpenApoc\settings.conf"
 	RMDir "$APPDATA\OpenApoc"
+	uninstall_user_success:
 SectionEnd
 
 Section "-un.Main"
@@ -473,10 +483,10 @@ SectionEnd
 ;--------------------------------
 ;Version Information
 
-	VIProductVersion "${GAME_VERSION_NUMERIC}.0.0"
+	VIProductVersion "${GAME_VERSION_MAJOR}.${GAME_VERSION_MINOR}.${GAME_VERSION_COMMIT}.0"
 	VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "${GAME_NAME} Installer"
-	VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductVersion" "${GAME_VERSION_NUMERIC}.0.0"
+	VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductVersion" "${GAME_VERSION_MAJOR}.${GAME_VERSION_MINOR}.${GAME_VERSION_COMMIT}.0"
 	VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "${GAME_AUTHOR}"
 	VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "Copyright 2014-2019 ${GAME_AUTHOR}"
 	VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "${GAME_NAME} Installer"
-	VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${GAME_VERSION_NUMERIC}.0.0"
+	VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "${GAME_VERSION_MAJOR}.${GAME_VERSION_MINOR}.${GAME_VERSION_COMMIT}.0"

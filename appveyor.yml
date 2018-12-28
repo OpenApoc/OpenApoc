@@ -24,9 +24,6 @@ build:
 after_build:
   - git describe --tags > build-id
   - set /p OPENAPOC_VERSION= < build-id
-  - git describe --tags --abbrev=0 > tag-name
-  - set /p OPENAPOC_VERSION_TAG= < tag-name
-  - set OPENAPOC_VERSION_NUMERIC=%OPENAPOC_VERSION_TAG:~1%
   - set OPENAPOC_FILENAME=OpenApoc-%PLATFORM%-%OPENAPOC_VERSION%.zip
   - set OPENAPOC_DEBUG_FILENAME=OpenApoc-debug-%PLATFORM%-%OPENAPOC_VERSION%.zip
   - mkdir OpenApoc-%OPENAPOC_VERSION%
@@ -46,6 +43,5 @@ after_build:
   - appveyor PushArtifact %OPENAPOC_FILENAME%
   - appveyor PushArtifact %OPENAPOC_DEBUG_FILENAME%
   - choco install nsis -pre
-  - '"C:\Program Files (x86)\NSIS\makensis.exe" /DGAME_VERSION_GIT=%OPENAPOC_VERSION% /DGAME_VERSION_NUMERIC=%OPENAPOC_VERSION_NUMERIC% /DGAME_VERSION=%OPENAPOC_VERSION_TAG% install\windows\installer.nsi'
+  - '"C:\Program Files (x86)\NSIS\makensis.exe" /DGAME_VERSION=%OPENAPOC_VERSION% install\windows\installer.nsi'
   - appveyor PushArtifact install\windows\install-openapoc-%OPENAPOC_VERSION%.exe
-
