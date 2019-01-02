@@ -992,6 +992,21 @@ void Building::buildingPartChange(GameState &state, Vec3<int> part, bool intact)
 	}
 }
 
+void Building::decreasePendingInvestigatorCount(GameState &state)
+{
+	--this->pendingInvestigatorCount;
+	if (this->pendingInvestigatorCount == 0)
+	{
+		fw().pushEvent(new GameBuildingEvent(GameEventType::CommenceInvestigation,
+		                                     {&state, shared_from_this()}));
+	}
+	else if (this->pendingInvestigatorCount < 0) // shouldn't happen
+	{
+		LogError("Building investigate count < 0?");
+		this->pendingInvestigatorCount = 0;
+	}
+}
+
 bool Building::isAlive(GameState &state) const { return !buildingParts.empty(); }
 
 } // namespace OpenApoc

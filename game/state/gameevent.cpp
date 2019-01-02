@@ -31,6 +31,7 @@ const std::map<GameEventType, UString> GameEvent::optionsMap = {
     {GameEventType::NotEnoughAmmo, "Notifications.City.NotEnoughAmmo"},
     {GameEventType::VehicleRefuelled, "Notifications.City.VehicleRefuelled"},
     {GameEventType::NotEnoughFuel, "Notifications.City.NotEnoughFuel"},
+    {GameEventType::CommenceInvestigation, "Notifications.City.CommenceInvestigation"},
     {GameEventType::UnauthorizedVehicle, "Notifications.City.UnauthorizedVehicle"},
 
     {GameEventType::HostileSpotted, "Notifications.Battle.HostileSpotted"},
@@ -214,6 +215,8 @@ UString GameBuildingEvent::message()
 			return tr("Live Alien spotted.");
 		case GameEventType::CargoExpiresSoon:
 			return format("%s %s", tr("Cargo expires soon:"), building->name);
+		case GameEventType::CommenceInvestigation:
+			return "";
 		default:
 			LogError("Invalid building event type");
 			break;

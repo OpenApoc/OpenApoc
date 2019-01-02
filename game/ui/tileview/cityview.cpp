@@ -83,6 +83,26 @@ namespace OpenApoc
 namespace
 {
 
+std::shared_future<void> loadBattleBuilding(sp<GameState> state, sp<Building> building,
+                                            bool hotseat, bool raid,
+                                            std::list<StateRef<Agent>> playerAgents,
+                                            StateRef<Vehicle> playerVehicle)
+{
+	auto loadTask = fw().threadPoolEnqueue(
+	    [hotseat, building, state, raid, playerAgents, playerVehicle]() mutable -> void {
+		    StateRef<Organisation> org = raid ? building->owner : state->getAliens();
+		    StateRef<Building> bld = {state.get(), building};
+
+		    const std::map<StateRef<AgentType>, int> *aliens = nullptr;
+		    const int *guards = nullptr;
+		    const int *civilians = nullptr;
+
+		    Battle::beginBattle(*state, hotseat, org, playerAgents, aliens, guards, civilians,
+		                        playerVehicle, bld);
+		});
+	return loadTask;
+}
+
 static const std::vector<UString> TAB_FORM_NAMES = {
     "city/tab1", "city/tab2", "city/tab3", "city/tab4",
     "city/tab5", "city/tab6", "city/tab7", "city/tab8",
@@ -2863,6 +2883,19 @@ void CityView::initiateUfoMission(StateRef<Vehicle> ufo, StateRef<Vehicle> playe
 	                                             loadBattleVehicle(state, ufo, playerCraft))});
 }
 
+void CityView::initiateBuildingMission(sp<GameState> state, StateRef<Building> building,
+                                       std::list<StateRef<Agent>> agents)
+{
+	bool inBuilding = true;
+	bool raid = false;
+	bool hotseat = false;
+	fw().stageQueueCommand(
+	    {StageCmd::Command::REPLACEALL,
+	     mksp<BattleBriefing>(
+	         state, building->owner, Building::getId(*state, building), inBuilding, raid,
+	         loadBattleBuilding(state, building, hotseat, raid, agents, nullptr))});
+}
+
 void CityView::eventOccurred(Event *e)
 {
 	this->drawCity = true;
@@ -3547,6 +3580,60 @@ bool CityView::handleGameStateEvent(Event *e)
 			setUpdateSpeed(CityUpdateSpeed::Speed1);
 			fw().stageQueueCommand(
 			    {StageCmd::Command::PUSH, mksp<AlertScreen>(state, ev->building)});
+			break;
+		}
+		case GameEventType::CommenceInvestigation:
+		{
+			auto ev = dynamic_cast<GameBuildingEvent *>(e);
+			if (!ev)
+			{
+				LogError("Invalid investigation event");
+			}
+			auto game_state = this->state;
+			auto building = ev->building;
+
+			// the player may have called an alien extermination before all units arrive
+			// in that case we don't want to prompt for investigation on arrival
+			if (!building->detected)
+			{
+				break;
+			}
+
+			std::list<StateRef<Agent>> agents;
+			for (auto v : building->currentVehicles)
+			{
+				if (v->owner == state->getPlayer())
+				{
+					for (auto a : v->currentAgents)
+					{
+						if (a->owner == state->getPlayer())
+						{
+							agents.push_back(a);
+						}
+					}
+				}
+			}
+			for (auto a : building->currentAgents)
+			{
+				if (a->owner == state->getPlayer())
+				{
+					agents.push_back(a);
+				}
+			}
+
+			UString title = tr("Commence investigation");
+			UString message = format(tr("All selected units and crafts have arrived at %0s. "
+			                            "Proceed with investigation? (%1d units)"),
+			                         building->name, agents.size());
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH,
+			     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
+			                      // "Yes" callback
+			                      [this, game_state, building, agents]() {
+				                      initiateBuildingMission(game_state, building, agents);
+				                  },
+			                      // "No" callback
+			                      [this]() { setUpdateSpeed(CityUpdateSpeed::Pause); })});
 			break;
 		}
 		case GameEventType::ResearchCompleted:

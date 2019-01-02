@@ -68,37 +68,41 @@ void AlertScreen::eventOccurred(Event *e)
 	{
 		if (e->forms().RaisedBy->Name == "BUTTON_EXTERMINATE")
 		{
-			// send a vehicles fleet
-			std::list<StateRef<Vehicle>> selectedVehicles(agentAssignment->getSelectedVehicles());
-			if (!selectedVehicles.empty())
+			if (agentAssignment->getSelectedAgents().empty())
 			{
-				for (auto &vehicle : selectedVehicles)
-				{
-					vehicle->setMission(*state, VehicleMission::gotoBuilding(
-					                                *state, *vehicle, {state.get(), building}));
-				}
-				fw().stageQueueCommand({StageCmd::Command::POP});
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<MessageBox>(tr("No Agents Selected"),
+				                      tr("You need to select the agents you want to "
+				                         "become active within the building."),
+				                      MessageBox::ButtonOptions::Ok)});
 				return;
 			}
 
-			// send an angents group on foot
-			std::list<StateRef<Agent>> selectedAgents(agentAssignment->getSelectedAgents());
-			if (!selectedAgents.empty())
+			// reset the investigator counter as it may be non-zero because of a previous
+			// investigation
+			building->pendingInvestigatorCount = 0;
+
+			// send a vehicle fleet
+			for (auto &vehicle : agentAssignment->getSelectedVehicles())
 			{
-				for (auto &agent : selectedAgents)
-				{
-					agent->setMission(*state, AgentMission::gotoBuilding(*state, *agent,
-					                                                     {state.get(), building}));
-				}
-				fw().stageQueueCommand({StageCmd::Command::POP});
-				return;
+				++building->pendingInvestigatorCount;
+				vehicle->setMission(*state, VehicleMission::investigateBuilding(
+				                                *state, *vehicle, {state.get(), building}));
 			}
 
-			fw().stageQueueCommand({StageCmd::Command::PUSH,
-			                        mksp<MessageBox>(tr("No Agents Selected"),
-			                                         tr("You need to select the agents you want to "
-			                                            "become active within the building."),
-			                                         MessageBox::ButtonOptions::Ok)});
+			// send agents on foot
+			for (auto &agent : agentAssignment->getSelectedAgents())
+			{
+				if (!agent->currentVehicle)
+				{
+					++building->pendingInvestigatorCount;
+					agent->setMission(*state, AgentMission::investigateBuilding(
+					                              *state, *agent, {state.get(), building}));
+				}
+			}
+
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_EQUIPAGENT")

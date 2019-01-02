@@ -851,6 +851,18 @@ bool Agent::addMission(GameState &state, AgentMission *mission, bool toBack)
 
 bool Agent::setMission(GameState &state, AgentMission *mission)
 {
+	for (auto &m : this->missions)
+	{
+		// if we're removing an InvestigateBuilding mission
+		// decrease the investigate count so the other investigating vehicles won't dangle
+		if (m->type == AgentMission::MissionType::InvestigateBuilding)
+		{
+			if (!m->isFinished(state, *this))
+			{
+				m->targetBuilding->decreasePendingInvestigatorCount(state);
+			}
+		}
+	}
 	missions.clear();
 	missions.emplace_front(mission);
 	missions.front()->start(state, *this);

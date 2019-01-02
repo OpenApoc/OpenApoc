@@ -180,6 +180,9 @@ class VehicleMission
 	static VehicleMission *patrol(GameState &state, Vehicle &v, bool home = false,
 	                              unsigned int counter = 10);
 	static VehicleMission *teleport(GameState &state, Vehicle &v, Vec3<int> target = {-1, -1, -1});
+	static VehicleMission *investigateBuilding(GameState &state, Vehicle &v,
+	                                           StateRef<Building> target,
+	                                           bool allowTeleporter = false);
 	UString getName();
 
 	enum class MissionType
@@ -202,7 +205,8 @@ class VehicleMission
 		Teleport,
 		SelfDestruct,
 		DepartToSpace,
-		ArriveFromDimensionGate
+		ArriveFromDimensionGate,
+		InvestigateBuilding,
 	};
 
 	MissionType type = MissionType::GotoLocation;
