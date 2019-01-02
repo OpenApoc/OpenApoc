@@ -572,8 +572,8 @@ void BattleTileView::render()
 					}
 				}
 			}
-			if (previewedPathCost != static_cast<int>(PreviewedPathCostSpecial::NONE) &&
-			    drawWaypoints && waypointLocations.empty())
+			if (previewedPathCost != PreviewedPathCostSpecial::NONE && drawWaypoints &&
+			    waypointLocations.empty())
 			{
 				darkenWaypoints = true;
 				for (auto &w : pathPreview)
@@ -608,10 +608,8 @@ void BattleTileView::render()
 					// Yellow if this tile intersects with a unit
 					if (selectedTilePosition.z == z)
 					{
-						drawPathPreview =
-						    previewedPathCost != static_cast<int>(PreviewedPathCostSpecial::NONE);
-						drawAttackCost = calculatedAttackCost !=
-						                 static_cast<int>(CalculatedAttackCostSpecial::NONE);
+						drawPathPreview = previewedPathCost != PreviewedPathCostSpecial::NONE;
+						drawAttackCost = calculatedAttackCost != CalculatedAttackCostSpecial::NONE;
 						auto u = selTileOnCurLevel->getUnitIfPresent(true);
 						auto unit = u ? u->getUnit() : nullptr;
 						if (unit &&

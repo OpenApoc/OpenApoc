@@ -15,6 +15,7 @@ set (LIBRARY_SOURCE_FILES
 source_group(library\\sources FILES ${LIBRARY_SOURCE_FILES})
 set (LIBRARY_HEADER_FILES
 	colour.h
+	enum_traits.h
 	rect.h
 	sp.h
 	strings.h

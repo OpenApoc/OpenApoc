@@ -1488,7 +1488,7 @@ void BattleView::update()
 	// Update preview calculations in TB mode
 	if (!realTime)
 	{
-		if (previewedPathCost == static_cast<int>(PreviewedPathCostSpecial::NONE))
+		if (previewedPathCost == PreviewedPathCostSpecial::NONE)
 		{
 			pathPreviewTicksAccumulated++;
 			// Show path preview if hovering for over half a second
@@ -1497,7 +1497,7 @@ void BattleView::update()
 				updatePathPreview();
 			}
 		}
-		if (calculatedAttackCost == static_cast<int>(CalculatedAttackCostSpecial::NONE))
+		if (calculatedAttackCost == CalculatedAttackCostSpecial::NONE)
 		{
 			attackCostTicksAccumulated++;
 			if (attackCostTicksAccumulated > 5)
@@ -3955,7 +3955,7 @@ bool BattleView::handleGameStateEvent(Event *e)
 			// update the path preview
 			// a battleunit has died, potentially unblocking/changing the previewed path
 			// but only update if there's a path stored
-			if (previewedPathCost != static_cast<int>(PreviewedPathCostSpecial::NONE))
+			if (previewedPathCost != PreviewedPathCostSpecial::NONE)
 			{
 				updatePathPreview();
 			}

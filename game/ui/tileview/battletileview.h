@@ -2,6 +2,7 @@
 
 #include "game/state/battle/battleunit.h"
 #include "game/ui/tileview/tileview.h"
+#include "library/enum_traits.h"
 #include "library/sp.h"
 #include "library/vec.h"
 #include <list>
@@ -157,4 +158,12 @@ class BattleTileView : public TileView
 	void render() override;
 	void update() override;
 };
+
+template <> struct is_partial_enum<BattleTileView::PreviewedPathCostSpecial> : std::true_type
+{
+};
+template <> struct is_partial_enum<BattleTileView::CalculatedAttackCostSpecial> : std::true_type
+{
+};
+
 } // namespace OpenApoc
