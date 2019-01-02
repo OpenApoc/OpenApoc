@@ -132,10 +132,10 @@ void TransactionControl::updateValues()
 						c_sp->suspendUpdates = false;
 					}
 				}
-				if (!suspendUpdates)
-				{
-					this->pushFormEvent(FormEventType::ScrollBarChange, nullptr);
-				}
+			}
+			if (!suspendUpdates)
+			{
+				this->pushFormEvent(FormEventType::ScrollBarChange, nullptr);
 			}
 		}
 	}

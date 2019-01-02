@@ -114,7 +114,6 @@ void BuyAndSellScreen::closeScreen()
 	}
 
 	// Step 02: Check accomodation of different sorts
-	std::set<sp<TransactionControl>> linkedControls;
 	{
 		std::array<int, MAX_BASES> vecCargoDelta;
 		std::array<bool, MAX_BASES> vecChanged;
@@ -126,26 +125,18 @@ void BuyAndSellScreen::closeScreen()
 		{
 			for (auto &c : l.second)
 			{
-				if (linkedControls.find(c) != linkedControls.end())
+				if (!c->getLinked() || c->getLinked()->front().lock() == c)
 				{
-					continue;
-				}
-				int i = 0;
-				for (auto &b : state->player_bases)
-				{
-					int cargoDelta = c->getCargoDelta(i);
-					if (cargoDelta)
+					int i = 0;
+					for (auto &b : state->player_bases)
 					{
-						vecCargoDelta[i] += cargoDelta;
-						vecChanged[i] = true;
-					}
-					i++;
-				}
-				if (c->getLinked())
-				{
-					for (auto &l : *c->getLinked())
-					{
-						linkedControls.insert(l.lock());
+						int cargoDelta = c->getCargoDelta(i);
+						if (cargoDelta)
+						{
+							vecCargoDelta[i] += cargoDelta;
+							vecChanged[i] = true;
+						}
+						i++;
 					}
 				}
 			}
@@ -196,7 +187,6 @@ void BuyAndSellScreen::closeScreen()
 	// Step 03: Check transportation
 
 	// Step 03.01: Check transportation for purchases
-	linkedControls.clear();
 	bool purchaseTransferFound = false;
 	{
 		bool noFerry = false;
@@ -207,27 +197,19 @@ void BuyAndSellScreen::closeScreen()
 		{
 			for (auto &c : l.second)
 			{
-				if (linkedControls.find(c) != linkedControls.end())
+				if (!c->getLinked() || c->getLinked()->front().lock() == c)
 				{
-					continue;
-				}
-				// See if we transfer-bought from an org that is not hostile
-				if (c->tradeState.shipmentsFrom(ECONOMY_IDX) > 0)
-				{
-					switch (c->itemType)
+					// See if we transfer-bought from an org that is not hostile
+					if (c->tradeState.shipmentsFrom(ECONOMY_IDX) > 0)
 					{
-						case TransactionControl::Type::AgentEquipmentCargo:
-						case TransactionControl::Type::VehicleEquipment:
-						case TransactionControl::Type::VehicleAmmo:
-							orgsBuyFrom.insert(c->manufacturer);
-							break;
-					}
-				}
-				if (c->getLinked())
-				{
-					for (auto &l : *c->getLinked())
-					{
-						linkedControls.insert(l.lock());
+						switch (c->itemType)
+						{
+							case TransactionControl::Type::AgentEquipmentCargo:
+							case TransactionControl::Type::VehicleEquipment:
+							case TransactionControl::Type::VehicleAmmo:
+								orgsBuyFrom.insert(c->manufacturer);
+								break;
+						}
 					}
 				}
 			}
@@ -424,148 +406,140 @@ void BuyAndSellScreen::closeScreen()
 void BuyAndSellScreen::executeOrders()
 {
 	auto player = state->getPlayer();
-	std::set<sp<TransactionControl>> linkedControls;
 	for (auto &l : transactionControls)
 	{
 		for (auto &c : l.second)
 		{
-			if (linkedControls.find(c) != linkedControls.end())
+			if (!c->getLinked() || c->getLinked()->front().lock() == c)
 			{
-				continue;
-			}
-			if (c->itemType != TransactionControl::Type::Vehicle &&
-			    state->economy.find(c->itemId) == state->economy.end())
-			{
-				LogError("Economy not found for %s: How are we selling it then!?", c->itemId);
-				continue;
-			}
-
-			int i = 0;
-			auto &economy = state->economy[c->itemId];
-			for (auto &b : state->player_bases)
-			{
-				int order = c->tradeState.shipmentsTotal(i++);
-
-				// Sell
-				if (order > 0)
+				if (c->itemType != TransactionControl::Type::Vehicle &&
+				    state->economy.find(c->itemId) == state->economy.end())
 				{
-					switch (c->itemType)
-					{
-						case TransactionControl::Type::Vehicle:
-						{
-							StateRef<Vehicle> vehicle{state.get(), c->itemId};
-							// Expecting sold vehicle to be parked
-							// Offload agents
-							while (!vehicle->currentAgents.empty())
-							{
-								auto agent = *vehicle->currentAgents.begin();
-								agent->enterBuilding(*state, vehicle->currentBuilding);
-							}
-							// Offload cargo
-							for (auto &c : vehicle->cargo)
-							{
-								vehicle->currentBuilding->cargo.push_back(c);
-							}
-							vehicle->die(*state, true);
-							player->balance += c->price;
-							break;
-						}
-						case TransactionControl::Type::AgentEquipmentBio:
-						{
-							// kill aliens
-							b.second->inventoryAgentEquipment[c->itemId] -= order;
-							break;
-						}
-						case TransactionControl::Type::AgentEquipmentCargo:
-						{
-							economy.currentStock += order;
-							player->balance += order * economy.currentPrice;
-
-							StateRef<AEquipmentType> equipment{state.get(), c->itemId};
-							b.second->inventoryAgentEquipment[c->itemId] -=
-							    order * (equipment->type == AEquipmentType::Type::Ammo
-							                 ? equipment->max_ammo
-							                 : 1);
-							break;
-						}
-						case TransactionControl::Type::VehicleAmmo:
-						{
-							economy.currentStock += order;
-							player->balance += order * economy.currentPrice;
-							b.second->inventoryVehicleAmmo[c->itemId] -= order;
-							break;
-						}
-						case TransactionControl::Type::VehicleEquipment:
-						{
-							economy.currentStock += order;
-							player->balance += order * economy.currentPrice;
-							b.second->inventoryVehicleEquipment[c->itemId] -= order;
-							break;
-						}
-						case TransactionControl::Type::VehicleType:
-						{
-							LogError("How did we manage to sell a vehicle type %s!?", c->itemId);
-							break;
-						}
-					}
+					LogError("Economy not found for %s: How are we selling it then!?", c->itemId);
+					continue;
 				}
 
-				// Buy
-				else if (order < 0)
+				int i = 0;
+				auto &economy = state->economy[c->itemId];
+				for (auto &b : state->player_bases)
 				{
-					auto org = c->manufacturer;
-					if (org->isRelatedTo(player) == Organisation::Relation::Hostile)
+					int order = c->tradeState.shipmentsTotal(i++);
+
+					// Sell
+					if (order > 0)
 					{
-						LogError("How the hell is being bought from a hostile org %s?",
-						         c->manufacturerName);
-						continue;
+						switch (c->itemType)
+						{
+							case TransactionControl::Type::Vehicle:
+							{
+								StateRef<Vehicle> vehicle{state.get(), c->itemId};
+								// Expecting sold vehicle to be parked
+								// Offload agents
+								while (!vehicle->currentAgents.empty())
+								{
+									auto agent = *vehicle->currentAgents.begin();
+									agent->enterBuilding(*state, vehicle->currentBuilding);
+								}
+								// Offload cargo
+								for (auto &c : vehicle->cargo)
+								{
+									vehicle->currentBuilding->cargo.push_back(c);
+								}
+								vehicle->die(*state, true);
+								player->balance += c->price;
+								break;
+							}
+							case TransactionControl::Type::AgentEquipmentBio:
+							{
+								// kill aliens
+								b.second->inventoryAgentEquipment[c->itemId] -= order;
+								break;
+							}
+							case TransactionControl::Type::AgentEquipmentCargo:
+							{
+								economy.currentStock += order;
+								player->balance += order * economy.currentPrice;
+
+								StateRef<AEquipmentType> equipment{state.get(), c->itemId};
+								b.second->inventoryAgentEquipment[c->itemId] -=
+								    order * (equipment->type == AEquipmentType::Type::Ammo
+								                 ? equipment->max_ammo
+								                 : 1);
+								break;
+							}
+							case TransactionControl::Type::VehicleAmmo:
+							{
+								economy.currentStock += order;
+								player->balance += order * economy.currentPrice;
+								b.second->inventoryVehicleAmmo[c->itemId] -= order;
+								break;
+							}
+							case TransactionControl::Type::VehicleEquipment:
+							{
+								economy.currentStock += order;
+								player->balance += order * economy.currentPrice;
+								b.second->inventoryVehicleEquipment[c->itemId] -= order;
+								break;
+							}
+							case TransactionControl::Type::VehicleType:
+							{
+								LogError("How did we manage to sell a vehicle type %s!?",
+								         c->itemId);
+								break;
+							}
+						}
 					}
 
-					switch (c->itemType)
+					// Buy
+					else if (order < 0)
 					{
-						case TransactionControl::Type::Vehicle:
+						auto org = c->manufacturer;
+						if (org->isRelatedTo(player) == Organisation::Relation::Hostile)
 						{
-							LogError("It should be impossible to buy a particular vehicle %s.",
-							         c->itemId);
-							break;
+							LogError("How the hell is being bought from a hostile org %s?",
+							         c->manufacturerName);
+							continue;
 						}
-						case TransactionControl::Type::AgentEquipmentBio:
+
+						switch (c->itemType)
 						{
-							LogError("Alien %s: How are we buying it!?", c->itemId);
-							break;
-						}
-						case TransactionControl::Type::AgentEquipmentCargo:
-						{
-							StateRef<AEquipmentType> equipment{state.get(), c->itemId};
-							org->purchase(*state, b.second->building, equipment, -order);
-							break;
-						}
-						case TransactionControl::Type::VehicleAmmo:
-						{
-							StateRef<VAmmoType> ammo{state.get(), c->itemId};
-							org->purchase(*state, b.second->building, ammo, -order);
-							break;
-						}
-						case TransactionControl::Type::VehicleEquipment:
-						{
-							StateRef<VEquipmentType> equipment{state.get(), c->itemId};
-							org->purchase(*state, b.second->building, equipment, -order);
-							break;
-						}
-						case TransactionControl::Type::VehicleType:
-						{
-							StateRef<VehicleType> vehicle{state.get(), c->itemId};
-							org->purchase(*state, b.second->building, vehicle, -order);
-							break;
+							case TransactionControl::Type::Vehicle:
+							{
+								LogError("It should be impossible to buy a particular vehicle %s.",
+								         c->itemId);
+								break;
+							}
+							case TransactionControl::Type::AgentEquipmentBio:
+							{
+								LogError("Alien %s: How are we buying it!?", c->itemId);
+								break;
+							}
+							case TransactionControl::Type::AgentEquipmentCargo:
+							{
+								StateRef<AEquipmentType> equipment{state.get(), c->itemId};
+								org->purchase(*state, b.second->building, equipment, -order);
+								break;
+							}
+							case TransactionControl::Type::VehicleAmmo:
+							{
+								StateRef<VAmmoType> ammo{state.get(), c->itemId};
+								org->purchase(*state, b.second->building, ammo, -order);
+								break;
+							}
+							case TransactionControl::Type::VehicleEquipment:
+							{
+								StateRef<VEquipmentType> equipment{state.get(), c->itemId};
+								org->purchase(*state, b.second->building, equipment, -order);
+								break;
+							}
+							case TransactionControl::Type::VehicleType:
+							{
+								StateRef<VehicleType> vehicle{state.get(), c->itemId};
+								org->purchase(*state, b.second->building, vehicle, -order);
+								break;
+							}
 						}
 					}
-				}
-			}
-			if (c->getLinked())
-			{
-				for (auto &l : *c->getLinked())
-				{
-					linkedControls.insert(l.lock());
 				}
 			}
 		}
