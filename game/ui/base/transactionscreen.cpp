@@ -420,28 +420,22 @@ void TransactionScreen::updateFormValues(bool queueHighlightUpdate)
 	bio2Delta = 0;
 	moneyDelta = 0;
 
-	std::set<sp<TransactionControl>> linkedControls;
 	for (auto &l : transactionControls)
 	{
 		for (auto &c : l.second)
 		{
-			if (linkedControls.find(c) != linkedControls.end())
+			// if this control is linked to others, only update calculations for one control of the
+			// linked group
+			// if this control is not linked, update calculations
+			if (!c->getLinked() || c->getLinked()->front().lock() == c)
 			{
-				continue;
-			}
-			lqDelta += c->getCrewDelta(leftIndex);
-			lq2Delta += c->getCrewDelta(rightIndex);
-			cargoDelta += c->getCargoDelta(leftIndex);
-			bioDelta += c->getBioDelta(leftIndex);
-			cargo2Delta += c->getCargoDelta(rightIndex);
-			bio2Delta += c->getBioDelta(rightIndex);
-			moneyDelta += c->getPriceDelta();
-			if (c->getLinked())
-			{
-				for (auto &l : *c->getLinked())
-				{
-					linkedControls.insert(l.lock());
-				}
+				lqDelta += c->getCrewDelta(leftIndex);
+				lq2Delta += c->getCrewDelta(rightIndex);
+				cargoDelta += c->getCargoDelta(leftIndex);
+				bioDelta += c->getBioDelta(leftIndex);
+				cargo2Delta += c->getCargoDelta(rightIndex);
+				bio2Delta += c->getBioDelta(rightIndex);
+				moneyDelta += c->getPriceDelta();
 			}
 		}
 	}
