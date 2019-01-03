@@ -237,8 +237,7 @@ void Building::updateCargo(GameState &state)
 					return;
 				}
 				// Spawn a random vehicle type and provide service
-				auto v =
-				    city->placeVehicle(state, listRandomiser(state.rng, ferries), ferryCompany);
+				auto v = city->placeVehicle(state, pickRandom(state.rng, ferries), ferryCompany);
 				v->enterBuilding(state, thisRef);
 				v->provideService(state, true);
 				spawnedFerry = true;
@@ -287,8 +286,7 @@ void Building::updateCargo(GameState &state)
 					return;
 				}
 				// Spawn a random vehicle type and provide service
-				auto v =
-				    city->placeVehicle(state, listRandomiser(state.rng, ferries), ferryCompany);
+				auto v = city->placeVehicle(state, pickRandom(state.rng, ferries), ferryCompany);
 				v->enterBuilding(state, thisRef);
 				v->provideService(state, true);
 				spawnedFerry = true;
@@ -868,7 +866,7 @@ void Building::alienMovement(GameState &state)
 		return;
 	}
 	// Pick one random of them
-	auto bld = listRandomiser(state.rng, neighbours);
+	auto bld = pickRandom(state.rng, neighbours);
 	// For every alien calculate move percent as:
 	//   alien's move chance + random 0..30
 	// Calculate amount of moving aliens

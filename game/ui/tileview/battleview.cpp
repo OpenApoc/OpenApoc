@@ -2110,7 +2110,7 @@ void BattleView::updateHiddenForm()
 	              state->current_battle->currentActiveOrganisation != state->getCivilian();
 	hiddenForm->findControlTyped<Label>("TEXT_PLAYER")->setText(player ? "Player" : "Computer");
 	hiddenForm->findControlTyped<Graphic>("HIDDEN_IMAGE")
-	    ->setImage(fw().data->loadImage(vectorRandomizer(state->rng, HIDDEN_BACKGROUNDS)));
+	    ->setImage(fw().data->loadImage(pickRandom(state->rng, HIDDEN_BACKGROUNDS)));
 	updateHiddenBar();
 }
 

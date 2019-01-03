@@ -996,7 +996,7 @@ bool VehicleMission::adjustTargetToClosestFlying(GameState &state, Vehicle &v, V
 			}
 			if (!sideStepLocations.empty())
 			{
-				auto newTarget = listRandomiser(state.rng, sideStepLocations);
+				auto newTarget = pickRandom(state.rng, sideStepLocations);
 				LogWarning("Target %d,%d,%d was unreachable, found new random target %d,%d,%d",
 				           target.x, target.y, target.z, newTarget.x, newTarget.y, newTarget.z);
 				target = newTarget;
@@ -3024,7 +3024,7 @@ bool VehicleMission::acquireTargetBuilding(GameState &state, Vehicle &v)
 	}
 	if (!availableBuildings.empty())
 	{
-		targetBuilding = listRandomiser(state.rng, availableBuildings);
+		targetBuilding = pickRandom(state.rng, availableBuildings);
 	}
 
 	return (bool)targetBuilding;
