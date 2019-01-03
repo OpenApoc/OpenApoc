@@ -253,7 +253,7 @@ std::tuple<AIDecision, bool> UnitAIDefault::think(GameState &state, BattleUnit &
 		}
 		if (!possiblePositions.empty())
 		{
-			auto newPos = listRandomiser(state.rng, possiblePositions);
+			auto newPos = pick_random(state.rng, possiblePositions);
 			movement = mksp<AIMovement>();
 			movement->type = AIMovement::Type::Patrol;
 			movement->targetLocation = newPos;

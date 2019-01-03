@@ -334,7 +334,7 @@ void City::generatePortals(GameState &state)
 				map->addObjectToMap(doodad);
 				this->portals.push_back(doodad);
 			}
-			auto pos = listRandomiser(state.rng, initial_portals);
+			auto pos = pick_random(state.rng, initial_portals);
 			cityViewScreenCenter = pos;
 		}
 		else

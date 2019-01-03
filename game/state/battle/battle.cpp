@@ -720,7 +720,7 @@ void Battle::initialUnitSpawn(GameState &state)
 		{
 			continue;
 		}
-		auto pos = listRandomiser(state.rng, spawnLocations[u.second->agent->type]);
+		auto pos = pick_random(state.rng, spawnLocations[u.second->agent->type]);
 		spawnLocations[u.second->agent->type].remove(pos);
 		auto tile = map->getTile(pos.x, pos.y, pos.z);
 		u.second->position = tile->getRestingPosition(u.second->isLarge());
@@ -885,7 +885,7 @@ void Battle::initialUnitSpawn(GameState &state)
 				{
 					if (l->size() == 0)
 						continue;
-					block = listRandomiser(state.rng, *l);
+					block = pick_random(state.rng, *l);
 					if (block)
 						break;
 				}
@@ -933,7 +933,7 @@ void Battle::initialUnitSpawn(GameState &state)
 				int numSpawned = 0;
 				if (!block->positions[needWalker].empty())
 				{
-					auto spawnPos = setRandomiser(state.rng, block->positions[needWalker]);
+					auto spawnPos = pick_random(state.rng, block->positions[needWalker]);
 					int z = spawnPos.z;
 					int offset = 0;
 					bool stopSpawning = false;
@@ -1095,7 +1095,7 @@ void Battle::initialUnitSpawn(GameState &state)
 		// Facing
 		if (!u->agent->isFacingAllowed(u->facing))
 		{
-			u->facing = setRandomizer(state.rng, *u->agent->getAllowedFacings());
+			u->facing = pick_random(state.rng, *u->agent->getAllowedFacings());
 		}
 		// Stance
 		u->setBodyState(state, u->agent->type->bodyType->getFirstAllowedState());
@@ -1156,7 +1156,7 @@ sp<BattleUnit> Battle::spawnUnit(GameState &state, StateRef<Organisation> owner,
 		else
 		{
 			facing =
-			    setRandomizer(state.rng, agentType->bodyType->allowed_facing.at(agent->appearance));
+			    pick_random(state.rng, agentType->bodyType->allowed_facing.at(agent->appearance));
 		}
 	}
 	unit->setFacing(state, facing);
@@ -1190,7 +1190,7 @@ sp<BattleExplosion> Battle::addExplosion(GameState &state, Vec3<int> position,
 	// Sound
 	if (!damageType->explosionSounds.empty())
 	{
-		fw().soundBackend->playSample(listRandomiser(state.rng, damageType->explosionSounds),
+		fw().soundBackend->playSample(pick_random(state.rng, damageType->explosionSounds),
 		                              position);
 	}
 
@@ -2178,9 +2178,9 @@ void Battle::spawnReinforcements(GameState &state)
 	// FIXME: Proper spawning algorightm for reinforcements, for now spawn 4 randoms
 	for (int i = 0; i < 4; i++)
 	{
-		auto pos = setRandomiser(state.rng, reinforcementLocations);
+		auto pos = pick_random(state.rng, reinforcementLocations);
 		reinforcementLocations.erase(pos);
-		auto type = listRandomiser(state.rng, locationOwner->guard_types_reinforcements);
+		auto type = pick_random(state.rng, locationOwner->guard_types_reinforcements);
 		auto u = state.current_battle->spawnUnit(state, locationOwner, type,
 		                                         {pos.x + 0.5f, pos.y + 0.5f, pos.z + 0.1f}, {0, 0},
 		                                         type->bodyType->getFirstAllowedState());

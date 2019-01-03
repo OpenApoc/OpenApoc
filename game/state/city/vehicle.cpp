@@ -341,7 +341,7 @@ class FlyingVehicleMover : public VehicleMover
 				}
 				if (!dodgeLocations.empty())
 				{
-					auto targetPos = listRandomiser(state.rng, dodgeLocations);
+					auto targetPos = pick_random(state.rng, dodgeLocations);
 
 					if (!vehicle.missions.empty())
 					{

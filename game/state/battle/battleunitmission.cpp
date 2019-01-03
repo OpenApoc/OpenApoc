@@ -1658,9 +1658,9 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 						         .empty())
 						{
 							fw().soundBackend->playSample(
-							    listRandomiser(state.rng,
-							                   targetUnit->agent->type->fatalWoundSfx.at(
-							                       targetUnit->agent->gender)),
+							    pick_random(state.rng,
+							                targetUnit->agent->type->fatalWoundSfx.at(
+							                    targetUnit->agent->gender)),
 							    targetUnit->position);
 						}
 						break;

@@ -66,7 +66,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	for (auto &t : state.agent_types)
 		if (t.second->role == role && t.second->playable)
 			types.insert(types.begin(), t.second);
-	auto type = listRandomiser(state.rng, types);
+	auto type = pick_random(state.rng, types);
 
 	return createAgent(state, org, {&state, AgentType::getId(state, type)});
 }
@@ -92,8 +92,8 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 			return nullptr;
 		}
 
-		auto firstName = listRandomiser(state.rng, firstNameList->second);
-		auto secondName = listRandomiser(state.rng, this->second_names);
+		auto firstName = pick_random(state.rng, firstNameList->second);
+		auto secondName = pick_random(state.rng, this->second_names);
 		agent->name = format("%s %s", firstName, secondName);
 	}
 	else

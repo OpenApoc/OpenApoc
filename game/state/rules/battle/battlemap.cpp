@@ -196,8 +196,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 			numGuards = std::min(numGuards, MAX_UNITS_PER_SIDE);
 			for (int i = 0; i < numGuards; i++)
 			{
-				otherParticipants.emplace_back(
-				    opponent, listRandomiser(state.rng, opponent->guard_types_human));
+				otherParticipants.emplace_back(opponent,
+				                               pick_random(state.rng, opponent->guard_types_human));
 			}
 		}
 
@@ -268,7 +268,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 				{
 					otherParticipants.emplace_back(
 					    state.getCivilian(),
-					    listRandomiser(state.rng, state.getCivilian()->guard_types_alien));
+					    pick_random(state.rng, state.getCivilian()->guard_types_alien));
 				}
 
 				missionType = Battle::MissionType::RaidAliens;
@@ -297,7 +297,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 				{
 					otherParticipants.emplace_back(
 					    building->owner,
-					    listRandomiser(state.rng, building->owner->guard_types_human));
+					    pick_random(state.rng, building->owner->guard_types_human));
 				}
 
 				// Civilains will not be actually added if there is no spawn points for them
@@ -308,7 +308,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 				{
 					otherParticipants.emplace_back(
 					    state.getCivilian(),
-					    listRandomiser(state.rng, state.getCivilian()->guard_types_human));
+					    pick_random(state.rng, state.getCivilian()->guard_types_human));
 				}
 
 				missionType = Battle::MissionType::AlienExtermination;
@@ -334,7 +334,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 				for (int i = 0; i < numGuards; i++)
 				{
 					otherParticipants.emplace_back(
-					    opponent, listRandomiser(state.rng, building->owner->guard_types_human));
+					    opponent, pick_random(state.rng, building->owner->guard_types_human));
 				}
 			}
 
@@ -577,7 +577,7 @@ bool placeSector(GameState &state, std::vector<sp<BattleMapSector>> &sec_map,
 		if (possible_locations.size() == 0)
 			continue;
 
-		auto location = vectorRandomizer(state.rng, possible_locations);
+		auto location = pick_random(state.rng, possible_locations);
 		sec_map[location.x + location.y * map_size.x + location.z * map_size.x * map_size.y] =
 		    sector;
 
@@ -1154,7 +1154,7 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 				{
 					if (target_organisation->loot[pair.second].size() == 0)
 						continue;
-					auto l = vectorRandomizer(state.rng, target_organisation->loot[pair.second]);
+					auto l = pick_random(state.rng, target_organisation->loot[pair.second]);
 					if (!l)
 						continue;
 					auto i = mksp<AEquipment>();

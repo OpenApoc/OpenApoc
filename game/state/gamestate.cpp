@@ -923,7 +923,7 @@ void GameState::invasion()
 		preference = this->ufo_mission_preference.find(
 		    format("%s%s", UFOMissionPreference::getPrefix(), "DEFAULT"));
 	}
-	auto missionType = listRandomiser(rng, preference->second->missionList);
+	auto missionType = pick_random(rng, preference->second->missionList);
 	// Compile list of missions rated by priority
 	std::map<int, sp<UFOIncursion>> incursions;
 	for (auto &e : ufo_incursions)
@@ -1023,7 +1023,7 @@ void GameState::invasion()
 			std::list<StateRef<Vehicle>> escortedRandomized;
 			while (!escortedCopy.empty())
 			{
-				auto item = setRandomiser(rng, escortedCopy);
+				auto item = pick_random(rng, escortedCopy);
 				escortedCopy.erase(item);
 				escortedRandomized.push_back(item);
 			}
