@@ -5,6 +5,7 @@
 #include "framework/serialization/serialize.h"
 #include "framework/trace.h"
 #include "game/state/gamestate.h"
+#include "version.h"
 #include <algorithm>
 #include <sstream>
 
@@ -402,6 +403,9 @@ bool SaveMetadata::serializeManifest(SerializationArchive *archive) const
 
 	auto gameTicksNode = root->addNode("game_ticks");
 	gameTicksNode->setValue(std::to_string(getGameTicks()));
+
+	auto versionNode = root->addNode("game_version");
+	versionNode->setValue(OPENAPOC_VERSION);
 
 	if (this->type != SaveType::Manual)
 	{

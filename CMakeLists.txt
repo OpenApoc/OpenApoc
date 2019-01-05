@@ -255,7 +255,7 @@ exported fixes file")
 
 find_package(Git)
 execute_process(COMMAND ${GIT_EXECUTABLE} -C ${CMAKE_SOURCE_DIR} describe
-		--tags --all --long --always
+		--tags --long --always
 		OUTPUT_VARIABLE OPENAPOC_VERSION_STRING_RAW
 		OUTPUT_STRIP_TRAILING_WHITESPACE)
 
