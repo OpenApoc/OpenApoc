@@ -1451,6 +1451,7 @@
 		<value>Teleport</value>
 		<value>SelfDestruct</value>
 		<value>DepartToSpace</value>
+		<value>InvestigateBuilding</value>
 	</enum>
 	<enum>
 		<name>AgentMission::MissionType</name>
