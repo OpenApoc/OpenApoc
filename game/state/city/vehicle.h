@@ -338,8 +338,10 @@ class Vehicle : public StateObject,
 
 	void setManualFirePosition(const Vec3<float> &pos);
 
-	// Adds mission to list of missions, returns true if successful
-	bool addMission(GameState &state, VehicleMission *mission, bool toBack = false);
+	// Adds mission to list of missions, returns iterator to mission if successful, missions.end()
+	// otherwise
+	typename decltype(missions)::iterator addMission(GameState &state, VehicleMission *mission,
+	                                                 bool toBack = false);
 	// Replaces all missions with provided mission, returns true if successful
 	bool setMission(GameState &state, VehicleMission *mission);
 	bool clearMissions(GameState &state, bool forced = false);

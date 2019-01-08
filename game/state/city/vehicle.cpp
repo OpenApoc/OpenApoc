@@ -3062,7 +3062,8 @@ void Vehicle::setManualFirePosition(const Vec3<float> &pos)
 	manualFire = true;
 }
 
-bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
+typename decltype(Vehicle::missions)::iterator
+Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 {
 	if (!hasEngine())
 	{
@@ -3072,7 +3073,7 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 			    new GameVehicleEvent(GameEventType::VehicleNoEngine, {&state, shared_from_this()}));
 		}
 		delete mission;
-		return false;
+		return missions.end();
 	}
 	bool canPlaceInFront = false;
 	switch (mission->type)
@@ -3098,7 +3099,7 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 			if (crashed || sliding || falling)
 			{
 				delete mission;
-				return false;
+				return missions.end();
 			}
 			break;
 		// - Cannot place in front
@@ -3119,7 +3120,7 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 			if (crashed || sliding || falling || carriedVehicle)
 			{
 				delete mission;
-				return false;
+				return missions.end();
 			}
 			break;
 	}
@@ -3127,18 +3128,19 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 	    (missions.front()->type == VehicleMission::MissionType::Land ||
 	     missions.front()->type == VehicleMission::MissionType::TakeOff))
 	{
-		missions.emplace(++missions.begin(), mission);
+		return missions.emplace(++missions.begin(), mission);
 	}
 	else if (!toBack || missions.empty())
 	{
 		missions.emplace_front(mission);
 		missions.front()->start(state, *this);
+		return missions.begin();
 	}
 	else
 	{
 		missions.emplace_back(mission);
+		return --missions.end();
 	}
-	return true;
 }
 
 bool Vehicle::setMission(GameState &state, VehicleMission *mission)
@@ -3186,7 +3188,13 @@ bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 			break;
 	}
 	clearMissions(state, forceClear);
-	addMission(state, mission, true);
+	auto it = this->addMission(state, mission, true);
+	if (it != missions.begin() && missions.size() > 0)
+	{
+		// A mission couldn't be cleared and the new mission was inserted behind it
+		// need to manually start the mission at the front
+		missions.front()->start(state, *this);
+	}
 	return true;
 }
 
