@@ -3200,15 +3200,11 @@ bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 
 bool Vehicle::clearMissions(GameState &state, bool forced)
 {
-	if (forced)
-	{
-		missions.clear();
-		return true;
-	}
 	for (auto it = missions.begin(); it != missions.end();)
 	{
-		if ((*it)->type == VehicleMission::MissionType::Land ||
-		    (*it)->type == VehicleMission::MissionType::TakeOff)
+		if (((*it)->type == VehicleMission::MissionType::Land ||
+		     (*it)->type == VehicleMission::MissionType::TakeOff) &&
+		    !forced)
 		{
 			it++;
 		}
