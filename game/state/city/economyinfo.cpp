@@ -35,7 +35,7 @@ bool EconomyInfo::update(GameState &state, bool xcom)
 		// Price update
 		if (soldThisWeek > 2 * maxStock)
 		{
-			currentPrice = currentPrice * randBoundsInclusive(state.rng, 85, 5);
+			currentPrice = currentPrice * randBoundsInclusive(state.rng, 50, 85);
 		}
 		else if (soldThisWeek > maxStock)
 		{
@@ -45,6 +45,7 @@ bool EconomyInfo::update(GameState &state, bool xcom)
 		{
 			currentPrice = currentPrice * randBoundsInclusive(state.rng, 95, 97);
 		}
+		currentPrice = std::lround(static_cast<double>(currentPrice) / 100.0);
 		currentPrice = clamp(currentPrice, basePrice / 2, basePrice);
 	}
 	// Produced by someone else
@@ -66,6 +67,7 @@ bool EconomyInfo::update(GameState &state, bool xcom)
 			{
 				currentPrice = currentPrice * randBoundsInclusive(state.rng, 100, 103);
 			}
+			currentPrice = std::lround(static_cast<double>(currentPrice) / 100.0);
 			currentPrice = clamp(currentPrice, basePrice / 2, basePrice * 2);
 		}
 	}
