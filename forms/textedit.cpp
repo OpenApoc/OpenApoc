@@ -42,18 +42,19 @@ void TextEdit::eventOccured(Event *e)
 			    e->forms().EventFlag == FormEventType::MouseClick ||
 			    e->forms().EventFlag == FormEventType::KeyDown)
 			{
-				editing = true;
-
-				fw().textStartInput();
-				// e->Handled = true;
-				// FIXME: Should we really fall through here?
+				if (!editing)
+				{
+					editing = true;
+					fw().textStartInput();
+					// e->Handled = true;
+					// FIXME: Should we really fall through here?
+				}
 			}
 		}
 		if (editing)
 		{
 			if (e->forms().RaisedBy == shared_from_this())
 			{
-
 				if (e->forms().EventFlag == FormEventType::LostFocus)
 				{
 					editing = false;
