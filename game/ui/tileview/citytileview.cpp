@@ -740,6 +740,8 @@ void CityTileView::render()
 					{
 						case VehicleMission::MissionType::AttackVehicle:
 						{
+							if (!m->targetVehicle)
+								break;
 							vehiclesUnderAttack.insert(m->targetVehicle);
 							targetLocationsToDraw.emplace_back(m->targetVehicle->position,
 							                                   v.second->position, false, true);
@@ -747,6 +749,8 @@ void CityTileView::render()
 						}
 						case VehicleMission::MissionType::FollowVehicle:
 						{
+							if (!m->targetVehicle)
+								break;
 							targetLocationsToDraw.emplace_back(m->targetVehicle->position,
 							                                   v.second->position, false, false);
 							break;
