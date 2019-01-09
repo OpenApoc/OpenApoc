@@ -35,7 +35,7 @@ bool EconomyInfo::update(GameState &state, bool xcom)
 		// Price update
 		if (soldThisWeek > 2 * maxStock)
 		{
-			currentPrice = currentPrice * randBoundsInclusive(state.rng, 50, 85);
+			currentPrice = currentPrice * randBoundsInclusive(state.rng, 85, 95);
 		}
 		else if (soldThisWeek > maxStock)
 		{
