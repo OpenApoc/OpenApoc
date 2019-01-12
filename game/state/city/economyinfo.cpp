@@ -33,20 +33,21 @@ bool EconomyInfo::update(GameState &state, bool xcom)
 			currentStock = lastStock * 66 / 100;
 		}
 		// Price update
+		std::uniform_real_distribution<double> dist(1.0, 1.0);
 		if (soldThisWeek > 2 * maxStock)
 		{
-			currentPrice = currentPrice * randBoundsInclusive(state.rng, 85, 95);
+			dist.param(decltype(dist)::param_type{0.85, 0.95});
 		}
 		else if (soldThisWeek > maxStock)
 		{
-			currentPrice = currentPrice * randBoundsInclusive(state.rng, 90, 95);
+			dist.param(decltype(dist)::param_type{0.9, 0.95});
 		}
 		else if (soldThisWeek > maxStock / 2)
 		{
-			currentPrice = currentPrice * randBoundsInclusive(state.rng, 95, 97);
+			dist.param(decltype(dist)::param_type{0.95, 0.97});
 		}
-		currentPrice = std::lround(static_cast<double>(currentPrice) / 100.0);
-		currentPrice = clamp(currentPrice, basePrice / 2, basePrice);
+		currentPrice = clamp(static_cast<int>(std::round(currentPrice * dist(state.rng))),
+		                     basePrice / 2, basePrice);
 	}
 	// Produced by someone else
 	else if (weekAvailable != 0)
@@ -57,18 +58,19 @@ bool EconomyInfo::update(GameState &state, bool xcom)
 		currentStock =
 		    clamp(randBoundsInclusive(state.rng, 0, averageStock + lastStock), minStock, maxStock);
 		// Price update
+		std::uniform_real_distribution<double> dist(1.0, 1.0);
 		if (week > 1)
 		{
 			if (currentStock > averageStock)
 			{
-				currentPrice = currentPrice * randBoundsInclusive(state.rng, 97, 100);
+				dist.param(decltype(dist)::param_type{0.97, 1.0});
 			}
 			if (currentStock < averageStock)
 			{
-				currentPrice = currentPrice * randBoundsInclusive(state.rng, 100, 103);
+				dist.param(decltype(dist)::param_type{1.0, 1.03});
 			}
-			currentPrice = std::lround(static_cast<double>(currentPrice) / 100.0);
-			currentPrice = clamp(currentPrice, basePrice / 2, basePrice * 2);
+			currentPrice = clamp(static_cast<int>(std::round(currentPrice * dist(state.rng))),
+			                     basePrice / 2, basePrice * 2);
 		}
 	}
 	return week != 1 && week == weekAvailable;
