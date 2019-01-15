@@ -376,8 +376,8 @@ void Tile::updateBattlescapeParameters()
 				continue;
 			}
 			height = std::max(height, (float)mp->type->height);
-			if ((mp->type->floor || o->getType() == TileObject::Type::Feature) &&
-			    !mp->type->gravlift)
+			if (mp->type->floor ||
+			    (o->getType() == TileObject::Type::Feature && !mp->type->gravlift))
 			{
 				if (!supportProviderForItems ||
 				    supportProviderForItems->type->height < mp->type->height)
