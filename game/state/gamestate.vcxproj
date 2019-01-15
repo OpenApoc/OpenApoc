@@ -248,25 +248,25 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\library\compat;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\library\compat;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\library\compat;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\library\compat;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>

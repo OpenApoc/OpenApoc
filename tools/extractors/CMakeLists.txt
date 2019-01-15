@@ -86,8 +86,6 @@ target_link_libraries(OpenApoc_DataExtractor OpenApoc_Library)
 target_link_libraries(OpenApoc_DataExtractor OpenApoc_Framework)
 target_link_libraries(OpenApoc_DataExtractor OpenApoc_GameState)
 
-set_property(TARGET OpenApoc_DataExtractor PROPERTY CXX_STANDARD 11)
-
 option(EXTRACT_DATA "Run the DataExtractor during build" ON)
 
 function (add_extractor TARGET_LIST EXTRACTOR_NAME)

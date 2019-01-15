@@ -16,6 +16,21 @@ class UString
 	std::string u8Str;
 
   public:
+	class ConstIterator : public std::iterator<std::forward_iterator_tag, UniChar>
+	{
+	  private:
+		const UString &s;
+		size_t offset;
+		friend class UString;
+		ConstIterator(const UString &s, size_t initial_offset) : s(s), offset(initial_offset) {}
+
+	  public:
+		// Just enough to struggle through a range-based for
+		bool operator!=(const ConstIterator &other) const;
+		ConstIterator operator++();
+		UniChar operator*() const;
+	};
+
 	// ASSUMPTIONS:
 	// All std::string/char are utf8
 	// All lengths/offsets are in unicode code-points (not bytes/anything)
@@ -24,6 +39,7 @@ class UString
 	UString(UniChar uc);
 	UString(const char *cstr);
 	UString(UString &&other);
+	UString(ConstIterator first, ConstIterator last);
 	UString();
 	~UString();
 
@@ -65,20 +81,6 @@ class UString
 	bool operator!=(const UString &other) const;
 	bool operator<(const UString &other) const;
 
-	class ConstIterator : public std::iterator<std::forward_iterator_tag, UniChar>
-	{
-	  private:
-		const UString &s;
-		size_t offset;
-		friend class UString;
-		ConstIterator(const UString &s, size_t initial_offset) : s(s), offset(initial_offset) {}
-
-	  public:
-		// Just enough to struggle through a range-based for
-		bool operator!=(const ConstIterator &other) const;
-		ConstIterator operator++();
-		UniChar operator*() const;
-	};
 	ConstIterator begin() const;
 	ConstIterator end() const;
 

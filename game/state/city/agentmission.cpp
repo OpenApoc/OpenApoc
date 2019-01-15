@@ -248,6 +248,17 @@ AgentMission *AgentMission::teleport(GameState &state, Agent &a, StateRef<Buildi
 	return mission;
 }
 
+AgentMission *AgentMission::investigateBuilding(GameState &, Agent &a, StateRef<Building> target,
+                                                bool allowTeleporter, bool allowTaxi)
+{
+	auto *mission = new AgentMission();
+	mission->type = MissionType::InvestigateBuilding;
+	mission->targetBuilding = target;
+	mission->allowTeleporter = allowTeleporter && a.type->role == AgentType::Role::Soldier;
+	mission->allowTaxi = allowTaxi || a.type->role != AgentType::Role::Soldier;
+	return mission;
+}
+
 bool AgentMission::teleportCheck(GameState &state, Agent &a)
 {
 	if (allowTeleporter && a.canTeleport())
@@ -269,6 +280,7 @@ bool AgentMission::getNextDestination(GameState &state, Agent &a, Vec3<float> &d
 	switch (this->type)
 	{
 		case MissionType::GotoBuilding:
+		case MissionType::InvestigateBuilding:
 		{
 			return advanceAlongPath(state, a, destPos);
 		}
@@ -291,6 +303,15 @@ void AgentMission::update(GameState &state, Agent &a, unsigned int ticks, bool f
 	switch (this->type)
 	{
 		case MissionType::GotoBuilding:
+			return;
+		case MissionType::InvestigateBuilding:
+		{
+			if (finished && this->targetBuilding->detected && a.owner == state.getPlayer())
+			{
+				this->targetBuilding->decreasePendingInvestigatorCount(state);
+			}
+			return;
+		}
 		case MissionType::RestartNextMission:
 			return;
 		case MissionType::AwaitPickup:
@@ -331,6 +352,7 @@ bool AgentMission::isFinishedInternal(GameState &, Agent &a)
 	{
 		case MissionType::GotoBuilding:
 		case MissionType::AwaitPickup:
+		case MissionType::InvestigateBuilding:
 			return this->targetBuilding == a.currentBuilding;
 		case MissionType::Snooze:
 			return this->timeToSnooze == 0;
@@ -348,6 +370,7 @@ void AgentMission::start(GameState &state, Agent &a)
 	switch (this->type)
 	{
 		case MissionType::GotoBuilding:
+		case MissionType::InvestigateBuilding:
 		{
 			// Already there?
 			if ((Vec3<int>)a.position == targetBuilding->crewQuarters)
@@ -544,6 +567,7 @@ UString AgentMission::getName()
 	    {MissionType::AwaitPickup, "AwaitPickup"},
 	    {MissionType::RestartNextMission, "RestartNextMission"},
 	    {MissionType::Teleport, "Teleport"},
+	    {MissionType::InvestigateBuilding, "InvestigateBuilding"},
 	};
 	UString name = "UNKNOWN";
 	const auto it = TypeMap.find(this->type);
@@ -552,6 +576,7 @@ UString AgentMission::getName()
 	switch (this->type)
 	{
 		case MissionType::GotoBuilding:
+		case MissionType::InvestigateBuilding:
 			name += " " + this->targetBuilding.id;
 			break;
 		case MissionType::Snooze:

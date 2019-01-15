@@ -189,6 +189,11 @@ UString::UString(UniChar uc) : u8Str()
 	u8Str = {buf, bytes};
 }
 
+UString::UString(UString::ConstIterator first, UString::ConstIterator last)
+    : UString(first.s.u8Str.substr(first.offset, last.offset - first.offset))
+{
+}
+
 const std::string &UString::str() const { return this->u8Str; }
 
 const char *UString::cStr() const { return this->u8Str.c_str(); }
@@ -201,7 +206,14 @@ bool UString::operator==(const UString &other) const { return (this->u8Str) == (
 
 UString UString::substr(size_t offset, size_t length) const
 {
-	return this->u8Str.substr(offset, length);
+	auto sub_start = std::next(this->begin(), offset);
+	auto sub_end = sub_start;
+	while (length != 0 && sub_end != this->end())
+	{
+		++sub_end;
+		--length;
+	}
+	return UString{sub_start, sub_end};
 }
 
 UString UString::toUpper() const

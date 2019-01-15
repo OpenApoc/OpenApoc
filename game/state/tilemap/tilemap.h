@@ -12,8 +12,17 @@
 #include <set>
 #include <vector>
 
-#define VELOCITY_SCALE_CITY (Vec3<float>{32, 32, 16})
-#define VELOCITY_SCALE_BATTLE (Vec3<float>{24, 24, 20})
+static constexpr float VELOCITY_SCALE_CITY_X = 32.0f;
+static constexpr float VELOCITY_SCALE_CITY_Y = 32.0f;
+static constexpr float VELOCITY_SCALE_CITY_Z = 16.0f;
+static const OpenApoc::Vec3<float> VELOCITY_SCALE_CITY{VELOCITY_SCALE_CITY_X, VELOCITY_SCALE_CITY_Y,
+                                                       VELOCITY_SCALE_CITY_Z};
+
+static constexpr float VELOCITY_SCALE_BATTLE_X = 24;
+static constexpr float VELOCITY_SCALE_BATTLE_Y = 24;
+static constexpr float VELOCITY_SCALE_BATTLE_Z = 20;
+static const OpenApoc::Vec3<float> VELOCITY_SCALE_BATTLE{
+    VELOCITY_SCALE_BATTLE_X, VELOCITY_SCALE_BATTLE_Y, VELOCITY_SCALE_BATTLE_Z};
 
 namespace OpenApoc
 {

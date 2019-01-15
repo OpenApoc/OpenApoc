@@ -135,8 +135,8 @@ int main(int argc, char **argv)
 
 	LogInfo("Testing started inited state");
 	state->initState();
-	state->fillOrgStartingProperty();
 	state->fillPlayerStartingProperty();
+	state->fillOrgStartingProperty();
 
 	if (!test_gamestate_serialization(state))
 	{

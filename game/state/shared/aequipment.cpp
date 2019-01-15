@@ -770,7 +770,11 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 	}
 
 	readyToFire = false;
-	ammo--;
+	if (!config().getBool("OpenApoc.Cheat.InfiniteAmmo") ||
+	    this->ownerAgent->owner != state.getPlayer())
+	{
+		ammo--;
+	}
 	if (ammo == 0 && payloadType)
 	{
 		payloadType.clear();
@@ -787,7 +791,7 @@ void AEquipment::throwItem(GameState &state, Vec3<int> targetPosition, float vel
 	if (state.battle_common_sample_list->throwSounds.size() > 0)
 	{
 		fw().soundBackend->playSample(
-		    listRandomiser(state.rng, state.battle_common_sample_list->throwSounds), position);
+		    pickRandom(state.rng, state.battle_common_sample_list->throwSounds), position);
 	}
 
 	// This will be modified by the accuracy algorithm

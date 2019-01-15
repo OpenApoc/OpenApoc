@@ -170,7 +170,7 @@ TacticalAIVanilla::getPatrolMovement(GameState &state, BattleUnit &u)
 
 	while (iterationCount++ < maxIterations)
 	{
-		auto lbID = vectorRandomizer(state.rng, state.current_battle->losBlockRandomizer);
+		auto lbID = pickRandom(state.rng, state.current_battle->losBlockRandomizer);
 
 		// Make sure every unit can go there
 		bool unavailable = false;

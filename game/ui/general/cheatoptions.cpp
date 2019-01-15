@@ -30,7 +30,7 @@ std::list<multiplierDescriptor> multiplierDescriptors{
     {"DAMAGE_INFLICTED_MULT", 0.0f, 5.0f, "OpenApoc.Cheat.DamageInflictedMultiplier"},
     {"DAMAGE_RECEIVED_MULT", 0.0f, 5.0f, "OpenApoc.Cheat.DamageReceivedMultiplier"},
     {"HOSTILES_MULT", 0.5f, 3.0f, "OpenApoc.Cheat.HostilesMultiplier"},
-    {"STAT_GROWTH_MULT", 0.0f, 10.0f, "OpenApoc.Cheat.StatGrowthMultiplier"}};
+    {"STAT_GROWTH_MULT", 0.0f, 99.5f, "OpenApoc.Cheat.StatGrowthMultiplier"}};
 }
 
 CheatOptions::CheatOptions(sp<GameState> state)

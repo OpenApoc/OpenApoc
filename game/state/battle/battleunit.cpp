@@ -1026,7 +1026,7 @@ bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, P
 	agent->modified_stats.psi_energy -= getPsiCost(status);
 	if (success)
 	{
-		fw().soundBackend->playSample(listRandomiser(state.rng, *psiSuccessSounds), position);
+		fw().soundBackend->playSample(pickRandom(state.rng, *psiSuccessSounds), position);
 		if (!realTime)
 		{
 			psiTarget->applyPsiAttack(state, *this, psiStatus, psiItem, false);
@@ -1039,7 +1039,7 @@ bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, P
 	}
 	else
 	{
-		fw().soundBackend->playSample(listRandomiser(state.rng, *psiFailSounds), position);
+		fw().soundBackend->playSample(pickRandom(state.rng, *psiFailSounds), position);
 		return false;
 	}
 }
@@ -1593,8 +1593,7 @@ void BattleUnit::applyDamageDirect(GameState &state, int damage, bool generateFa
 			    !agent->type->fatalWoundSfx.at(agent->gender).empty())
 			{
 				fw().soundBackend->playSample(
-				    listRandomiser(state.rng, agent->type->fatalWoundSfx.at(agent->gender)),
-				    position);
+				    pickRandom(state.rng, agent->type->fatalWoundSfx.at(agent->gender)), position);
 			}
 		}
 		// Emit sound wound
@@ -1604,7 +1603,7 @@ void BattleUnit::applyDamageDirect(GameState &state, int damage, bool generateFa
 			    !agent->type->damageSfx.at(agent->gender).empty())
 			{
 				fw().soundBackend->playSample(
-				    listRandomiser(state.rng, agent->type->damageSfx.at(agent->gender)), position);
+				    pickRandom(state.rng, agent->type->damageSfx.at(agent->gender)), position);
 			}
 		}
 	}
@@ -1617,7 +1616,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 {
 	if (damageType->doesImpactDamage())
 	{
-		fw().soundBackend->playSample(listRandomiser(state.rng, *genericHitSounds), position);
+		fw().soundBackend->playSample(pickRandom(state.rng, *genericHitSounds), position);
 	}
 
 	// Calculate damage
@@ -1634,7 +1633,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 			case DamageSource::Impact:
 			{
 				static const std::list<int> damageDistribution = {0, 5, 6, 7, 8, 9, 10};
-				damage = listRandomiser(state.rng, damageDistribution);
+				damage = pickRandom(state.rng, damageDistribution);
 				break;
 			}
 			case DamageSource::Hazard:
@@ -1726,6 +1725,15 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	// Smoke ignores armor value but does not ignore damage modifier
 	damage = damageType->dealDamage(damage, damageModifier) -
 	         (damageType->ignoresArmorValue() ? 0 : armorValue);
+
+	if (this->owner == state.getPlayer())
+	{
+		damage = (double)damage * config().getFloat("OpenApoc.Cheat.DamageReceivedMultiplier");
+	}
+	if (attacker && attacker->owner == state.getPlayer())
+	{
+		damage = (double)damage * config().getFloat("OpenApoc.Cheat.DamageInflictedMultiplier");
+	}
 
 	// No damage
 	if (damage <= 0)
@@ -2519,8 +2527,7 @@ void BattleUnit::updateCrying(GameState &state)
 			return;
 		}
 		// Actually cry
-		fw().soundBackend->playSample(listRandomiser(state.rng, agent->type->crySfx),
-		                              getPosition());
+		fw().soundBackend->playSample(pickRandom(state.rng, agent->type->crySfx), getPosition());
 	}
 }
 
@@ -3950,7 +3957,7 @@ void BattleUnit::applyEnzymeEffect(GameState &state)
 	// Damage random item
 	if (agent->type->inventory && !agent->equipment.empty())
 	{
-		auto item = listRandomiser(state.rng, agent->equipment);
+		auto item = pickRandom(state.rng, agent->equipment);
 		item->armor -= enzymeDebuffIntensity / 2;
 
 		// Item destroyed
@@ -4602,8 +4609,8 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 	if (agent->type->dieSfx.find(agent->gender) != agent->type->dieSfx.end() &&
 	    !agent->type->dieSfx.at(agent->gender).empty())
 	{
-		fw().soundBackend->playSample(
-		    listRandomiser(state.rng, agent->type->dieSfx.at(agent->gender)), position);
+		fw().soundBackend->playSample(pickRandom(state.rng, agent->type->dieSfx.at(agent->gender)),
+		                              position);
 	}
 	// Morale and score
 	auto player = state.getPlayer();

@@ -237,8 +237,7 @@ void Building::updateCargo(GameState &state)
 					return;
 				}
 				// Spawn a random vehicle type and provide service
-				auto v =
-				    city->placeVehicle(state, listRandomiser(state.rng, ferries), ferryCompany);
+				auto v = city->placeVehicle(state, pickRandom(state.rng, ferries), ferryCompany);
 				v->enterBuilding(state, thisRef);
 				v->provideService(state, true);
 				spawnedFerry = true;
@@ -287,8 +286,7 @@ void Building::updateCargo(GameState &state)
 					return;
 				}
 				// Spawn a random vehicle type and provide service
-				auto v =
-				    city->placeVehicle(state, listRandomiser(state.rng, ferries), ferryCompany);
+				auto v = city->placeVehicle(state, pickRandom(state.rng, ferries), ferryCompany);
 				v->enterBuilding(state, thisRef);
 				v->provideService(state, true);
 				spawnedFerry = true;
@@ -868,7 +866,7 @@ void Building::alienMovement(GameState &state)
 		return;
 	}
 	// Pick one random of them
-	auto bld = listRandomiser(state.rng, neighbours);
+	auto bld = pickRandom(state.rng, neighbours);
 	// For every alien calculate move percent as:
 	//   alien's move chance + random 0..30
 	// Calculate amount of moving aliens
@@ -989,6 +987,21 @@ void Building::buildingPartChange(GameState &state, Vec3<int> part, bool intact)
 				base->die(state, true);
 			}
 		}
+	}
+}
+
+void Building::decreasePendingInvestigatorCount(GameState &state)
+{
+	--this->pendingInvestigatorCount;
+	if (this->pendingInvestigatorCount == 0)
+	{
+		fw().pushEvent(new GameBuildingEvent(GameEventType::CommenceInvestigation,
+		                                     {&state, shared_from_this()}));
+	}
+	else if (this->pendingInvestigatorCount < 0) // shouldn't happen
+	{
+		LogError("Building investigate count < 0?");
+		this->pendingInvestigatorCount = 0;
 	}
 }
 

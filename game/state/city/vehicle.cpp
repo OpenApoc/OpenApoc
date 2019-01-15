@@ -42,6 +42,28 @@ namespace OpenApoc
 namespace
 {
 static const float M_2xPI = 2.0f * M_PI;
+float xyToFacing(const Vec2<float> &xy)
+{
+	float a1 = acosf(-xy.y);
+	float a2 = asinf(xy.x);
+	return a2 >= 0 ? a1 : M_2xPI - a1;
+}
+Vec2<float> facingToXY(float facing) { return {sinf(facing), -cosf(facing)}; }
+// return the difference f1-f2 in the range [-pi;pi]
+// a negative return value means f1 is CCW from f2.
+float facingDistance(float f1, float f2)
+{
+	float result = f1 - f2;
+	while (result > M_PI)
+	{
+		result -= M_2xPI;
+	}
+	while (result <= -M_PI)
+	{
+		result += M_2xPI;
+	}
+	return result;
+}
 }
 
 const UString &Vehicle::getPrefix()
@@ -319,7 +341,7 @@ class FlyingVehicleMover : public VehicleMover
 				}
 				if (!dodgeLocations.empty())
 				{
-					auto targetPos = listRandomiser(state.rng, dodgeLocations);
+					auto targetPos = pickRandom(state.rng, dodgeLocations);
 
 					if (!vehicle.missions.empty())
 					{
@@ -483,9 +505,7 @@ class FlyingVehicleMover : public VehicleMover
 					if (targetFacingVector.x != 0.0f || targetFacingVector.y != 0.0f)
 					{
 						targetFacingVector = glm::normalize(targetFacingVector);
-						float a1 = acosf(-targetFacingVector.y);
-						float a2 = asinf(targetFacingVector.x);
-						vehicle.goalFacing = a2 >= 0 ? a1 : M_2xPI - a1;
+						vehicle.goalFacing = xyToFacing(targetFacingVector);
 					}
 					// Move and turn instantly
 					vehicle.position = vehicle.goalPosition;
@@ -507,55 +527,27 @@ class FlyingVehicleMover : public VehicleMover
 					if (targetFacingVector.x != 0.0f || targetFacingVector.y != 0.0f)
 					{
 						targetFacingVector = glm::normalize(targetFacingVector);
-						float a1 = acosf(-targetFacingVector.y);
-						float a2 = asinf(targetFacingVector.x);
-						vehicle.goalFacing = a2 >= 0 ? a1 : M_2xPI - a1;
+						vehicle.goalFacing = xyToFacing(targetFacingVector);
 					}
 				}
 				// If new position requires new facing or we acquired new facing only
 				if (vehicle.facing != vehicle.goalFacing)
 				{
-					float d1 = vehicle.goalFacing - vehicle.facing;
-					if (d1 < 0.0f)
+					float d = facingDistance(vehicle.goalFacing, vehicle.facing);
+					if (d > 0.0f)
 					{
-						d1 += M_2xPI;
-					}
-					float d2 = vehicle.facing - vehicle.goalFacing;
-					if (d2 < 0.0f)
-					{
-						d2 += M_2xPI;
-					}
-					// FIXME: Proper turning speed
-					// This value was hand-made to look proper on annihilators
-					float TURNING_MULT =
-					    (float)M_PI / (float)TICK_SCALE / VELOCITY_SCALE_CITY.x / 1.5f;
-					if (d1 <= d2)
-					{
-						vehicle.angularVelocity = speed * TURNING_MULT;
-						// Nudge vehicle in the other direction to make animation look even
-						// (otherwise, first frame is 1/2 of other frames)
-						vehicle.facing -= 0.06f * (float)M_PI * (float)ticks;
-						if (vehicle.facing < 0.0f)
-						{
-							vehicle.facing += M_2xPI;
-						}
+						// Rotate CW towards goal
+						vehicle.angularVelocity = std::min(vehicle.getAngularSpeed(), d);
 					}
 					else
 					{
-						vehicle.angularVelocity = -speed * TURNING_MULT;
-						// Nudge vehicle in the other direction to make animation look even
-						// (otherwise, first frame is 1/2 of other frames)
-						vehicle.facing += 0.06f * (float)M_PI * (float)ticks;
-						if (vehicle.facing >= M_2xPI)
-						{
-							vehicle.facing -= M_2xPI;
-						}
+						// Rotate CCW towards goal
+						vehicle.angularVelocity = std::max(-vehicle.getAngularSpeed(), d);
 					}
 					// Establish ticks to turn
 					// (turn further than we need, again, for animation purposes)
-					float turnDist = std::min(d1, d2);
-					turnDist += 0.12f * (float)M_PI;
-					vehicle.ticksToTurn = floorf(std::abs(turnDist / vehicle.angularVelocity));
+					// d += 0.12f * (float)M_PI;
+					vehicle.ticksToTurn = floorf(d / vehicle.angularVelocity);
 
 					// FIXME: Introduce proper turning speed
 					// Here we just slow down velocity if we're moving too quickly
@@ -805,9 +797,7 @@ class GroundVehicleMover : public VehicleMover
 					if (targetFacingVector.x != 0.0f || targetFacingVector.y != 0.0f)
 					{
 						targetFacingVector = glm::normalize(targetFacingVector);
-						float a1 = acosf(-targetFacingVector.y);
-						float a2 = asinf(targetFacingVector.x);
-						vehicle.goalFacing = a2 >= 0 ? a1 : M_2xPI - a1;
+						vehicle.goalFacing = xyToFacing(targetFacingVector);
 					}
 				}
 				// If new position requires new facing or we acquired new facing only
@@ -1275,8 +1265,11 @@ Vehicle::~Vehicle() = default;
 
 void Vehicle::leaveDimensionGate(GameState &state)
 {
-	LogWarning("Check if portal empty");
-	// FIXME: Check if portal empty
+	// No portals to leave from. return here
+	if (city->portals.empty())
+	{
+		return;
+	}
 	auto portal = city->portals.begin();
 	std::uniform_int_distribution<int> portal_rng(0, city->portals.size() - 1);
 	std::advance(portal, portal_rng(state.rng));
@@ -2184,36 +2177,39 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 								// Try to attack. Attack won't happen if enemy is out of range.
 								attackTarget(state, enemy);
 							}
-							if (IsIdle)
+							// Search for closest target to face towards (if not already rotating
+							// for some reason)
+							if (IsIdle && this->angularVelocity == 0.0f)
 							{
 								// If not moving anywhere then search for closest target around.
 								enemy = findClosestEnemy(state, tileObject, {8, 8});
 								if (enemy)
 								{
 									// Determine target position.
-									Vec3<float> enemypos = enemy->getPosition();
-									auto facing_direction = type->directionToVector(direction);
-									Vec2<float> facing2d = {facing_direction.x, facing_direction.y};
-									Vec2<float> target2d = {enemypos.x - position.x,
-									                        enemypos.y - position.y};
-									facing2d = glm::normalize(facing2d);
-									target2d = glm::normalize(target2d);
-									float angleXY = glm::angle(facing2d, target2d);
+									const Vec3<float> enemypos = enemy->getPosition();
+									const Vec2<float> facing2d = facingToXY(this->facing);
+									const Vec2<float> target2d = glm::normalize(Vec2<float>{
+									    enemypos.x - position.x, enemypos.y - position.y});
+									const float angleXY = glm::angle(facing2d, target2d);
 									// Check if target is in our firing arc.
 									if (angleXY > (float)arc.x * (float)M_PI / 8.0f)
 									{
-										// Turn towards closest target (firing will start
-										// automatically).
-										// It is pseudoscalar product. It is needed to determine
-										// direction: right or left.
-										if (facing2d.x * target2d.y - facing2d.y * target2d.x > 0)
+										this->goalFacing = xyToFacing(target2d);
+										float d = facingDistance(this->goalFacing, this->facing);
+										// TODO: Should this nudge CCW/CW for animation purposes?
+										if (d > 0.0f)
 										{
-											this->facing += 0.06f * (float)M_PI * (float)ticks;
+											// Rotate CW towards goal
+											this->angularVelocity =
+											    std::min(this->getAngularSpeed(), d);
 										}
 										else
 										{
-											this->facing -= 0.06f * (float)M_PI * (float)ticks;
+											// Rotate CCW towards goal
+											this->angularVelocity =
+											    std::max(-this->getAngularSpeed(), d);
 										}
+										this->ticksToTurn = floorf(d / this->angularVelocity);
 										this->updateSprite(state);
 									}
 								}
@@ -2232,7 +2228,11 @@ void Vehicle::updateEachSecond(GameState &state)
 	// Consume fuel if out in city
 	if (tileObject && !crashed && !falling && !sliding)
 	{
-		fuelSpentTicks += FUEL_TICKS_PER_SECOND;
+		// Only consume fuel if flying or moving (parked ground vehicles don't consume fuel)
+		if (!this->isIdle() || !this->type->isGround())
+		{
+			fuelSpentTicks += FUEL_TICKS_PER_SECOND;
+		}
 		if (fuelSpentTicks > FUEL_TICKS_PER_UNIT)
 		{
 			fuelSpentTicks -= FUEL_TICKS_PER_UNIT;
@@ -2498,6 +2498,15 @@ bool Vehicle::applyDamage(GameState &state, int damage, float armour)
 bool Vehicle::applyDamage(GameState &state, int damage, float armour, bool &soundHandled,
                           StateRef<Vehicle> attacker)
 {
+	if (this->owner == state.getPlayer())
+	{
+		damage = (double)damage * config().getFloat("OpenApoc.Cheat.DamageReceivedMultiplier");
+	}
+	if (attacker && attacker->owner == state.getPlayer())
+	{
+		damage = (double)damage * config().getFloat("OpenApoc.Cheat.DamageInflictedMultiplier");
+	}
+
 	if (this->shield <= damage)
 	{
 		if (this->shield > 0)
@@ -3053,7 +3062,8 @@ void Vehicle::setManualFirePosition(const Vec3<float> &pos)
 	manualFire = true;
 }
 
-bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
+typename decltype(Vehicle::missions)::iterator
+Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 {
 	if (!hasEngine())
 	{
@@ -3063,7 +3073,7 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 			    new GameVehicleEvent(GameEventType::VehicleNoEngine, {&state, shared_from_this()}));
 		}
 		delete mission;
-		return false;
+		return missions.end();
 	}
 	bool canPlaceInFront = false;
 	switch (mission->type)
@@ -3089,13 +3099,14 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 			if (crashed || sliding || falling)
 			{
 				delete mission;
-				return false;
+				return missions.end();
 			}
 			break;
 		// - Cannot place in front
 		// - Cannot place on crashed vehicles
 		// - Cannot place on carrying vehicles
 		case VehicleMission::MissionType::GotoBuilding:
+		case VehicleMission::MissionType::InvestigateBuilding:
 		case VehicleMission::MissionType::FollowVehicle:
 		case VehicleMission::MissionType::RecoverVehicle:
 		case VehicleMission::MissionType::AttackVehicle:
@@ -3109,7 +3120,7 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 			if (crashed || sliding || falling || carriedVehicle)
 			{
 				delete mission;
-				return false;
+				return missions.end();
 			}
 			break;
 	}
@@ -3117,18 +3128,19 @@ bool Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 	    (missions.front()->type == VehicleMission::MissionType::Land ||
 	     missions.front()->type == VehicleMission::MissionType::TakeOff))
 	{
-		missions.emplace(++missions.begin(), mission);
+		return missions.emplace(++missions.begin(), mission);
 	}
 	else if (!toBack || missions.empty())
 	{
 		missions.emplace_front(mission);
 		missions.front()->start(state, *this);
+		return missions.begin();
 	}
 	else
 	{
 		missions.emplace_back(mission);
+		return --missions.end();
 	}
-	return true;
 }
 
 bool Vehicle::setMission(GameState &state, VehicleMission *mission)
@@ -3155,6 +3167,7 @@ bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 			break;
 		case VehicleMission::MissionType::GotoLocation:
 		case VehicleMission::MissionType::GotoBuilding:
+		case VehicleMission::MissionType::InvestigateBuilding:
 		case VehicleMission::MissionType::FollowVehicle:
 		case VehicleMission::MissionType::RecoverVehicle:
 		case VehicleMission::MissionType::AttackVehicle:
@@ -3175,26 +3188,37 @@ bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 			break;
 	}
 	clearMissions(state, forceClear);
-	addMission(state, mission, true);
+	auto it = this->addMission(state, mission, true);
+	if (it != missions.begin() && missions.size() > 0)
+	{
+		// A mission couldn't be cleared and the new mission was inserted behind it
+		// need to manually start the mission at the front
+		missions.front()->start(state, *this);
+	}
 	return true;
 }
 
 bool Vehicle::clearMissions(GameState &state, bool forced)
 {
-	if (forced)
-	{
-		missions.clear();
-		return true;
-	}
 	for (auto it = missions.begin(); it != missions.end();)
 	{
-		if ((*it)->type == VehicleMission::MissionType::Land ||
-		    (*it)->type == VehicleMission::MissionType::TakeOff)
+		if (((*it)->type == VehicleMission::MissionType::Land ||
+		     (*it)->type == VehicleMission::MissionType::TakeOff) &&
+		    !forced)
 		{
 			it++;
 		}
 		else
 		{
+			// if we're removing an InvestigateBuilding mission
+			// decrease the investigate count so the other investigating vehicles won't dangle
+			if ((*it)->type == VehicleMission::MissionType::InvestigateBuilding)
+			{
+				if (!(*it)->isFinished(state, *this))
+				{
+					(*it)->targetBuilding->decreasePendingInvestigatorCount(state);
+				}
+			}
 			it = missions.erase(it);
 		}
 	}
@@ -3267,6 +3291,13 @@ float Vehicle::getSpeed() const
 {
 	auto et = getEquipmentTypes();
 	return this->type->getSpeed(et.begin(), et.end());
+}
+float Vehicle::getAngularSpeed() const
+{
+	// FIXME: Proper turning speed
+	// This value was hand-made to look proper on annihilators
+	constexpr float TURNING_MULT = (float)M_PI / (float)TICK_SCALE / VELOCITY_SCALE_CITY_X / 1.5f;
+	return getSpeed() * TURNING_MULT;
 }
 
 int Vehicle::getMaxConstitution() const
@@ -3368,6 +3399,8 @@ bool Vehicle::hasDimensionShifter() const
 	}
 	return false;
 }
+
+bool Vehicle::isIdle() const { return this->goalWaypoints.empty(); }
 
 std::list<sp<VEquipmentType>> Vehicle::getEquipmentTypes() const
 {

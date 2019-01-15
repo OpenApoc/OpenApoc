@@ -99,25 +99,25 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\library\compat;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\library\compat;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\library\compat;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\library\compat;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>

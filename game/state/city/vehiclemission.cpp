@@ -624,6 +624,16 @@ VehicleMission *VehicleMission::land(Vehicle &, StateRef<Building> b)
 	return mission;
 }
 
+VehicleMission *VehicleMission::investigateBuilding(GameState &, Vehicle &v,
+                                                    StateRef<Building> target, bool allowTeleporter)
+{
+	auto *mission = new VehicleMission();
+	mission->type = MissionType::InvestigateBuilding;
+	mission->targetBuilding = target;
+	mission->allowTeleporter = allowTeleporter;
+	return mission;
+}
+
 bool VehicleMission::adjustTargetToClosestRoad(Vehicle &v, Vec3<int> &target)
 {
 	auto &map = *v.city->map;
@@ -986,7 +996,7 @@ bool VehicleMission::adjustTargetToClosestFlying(GameState &state, Vehicle &v, V
 			}
 			if (!sideStepLocations.empty())
 			{
-				auto newTarget = listRandomiser(state.rng, sideStepLocations);
+				auto newTarget = pickRandom(state.rng, sideStepLocations);
 				LogWarning("Target %d,%d,%d was unreachable, found new random target %d,%d,%d",
 				           target.x, target.y, target.z, newTarget.x, newTarget.y, newTarget.z);
 				target = newTarget;
@@ -1244,6 +1254,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 			return false;
 		}
 		case MissionType::GotoBuilding:
+		case MissionType::InvestigateBuilding:
 		{
 			if (v.currentBuilding != this->targetBuilding)
 			{
@@ -1402,6 +1413,17 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 		}
 		case MissionType::GotoLocation:
 		case MissionType::Land:
+		{
+			return;
+		}
+		case MissionType::InvestigateBuilding:
+		{
+			if (finished && v.owner == state.getPlayer() && v.currentBuilding->detected)
+			{
+				v.currentBuilding->decreasePendingInvestigatorCount(state);
+			}
+			return;
+		}
 		case MissionType::InfiltrateSubvert:
 		case MissionType::GotoBuilding:
 		case MissionType::OfferService:
@@ -1434,7 +1456,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 			LogWarning("TODO: Implement update");
 			return;
 	}
-}
+} // namespace OpenApoc
 
 bool VehicleMission::isFinished(GameState &state, Vehicle &v, bool callUpdateIfFinished)
 {
@@ -1459,7 +1481,8 @@ bool VehicleMission::isFinishedInternal(GameState &state, Vehicle &v)
 	{
 		case MissionType::GotoLocation:
 		case MissionType::Crash:
-		// Note that GotoPortal/DepartToSpace never has planned path but still checks for target loc
+		// Note that GotoPortal/DepartToSpace never has planned path but still checks for target
+		// loc
 		case MissionType::DepartToSpace:
 		case MissionType::GotoPortal:
 		{
@@ -1523,6 +1546,7 @@ bool VehicleMission::isFinishedInternal(GameState &state, Vehicle &v)
 		case MissionType::Patrol:
 			return this->missionCounter == 0 && this->currentPlannedPath.empty();
 		case MissionType::GotoBuilding:
+		case MissionType::InvestigateBuilding:
 			return this->targetBuilding == v.currentBuilding;
 		case MissionType::SelfDestruct:
 		case MissionType::Snooze:
@@ -2019,6 +2043,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			setFollowPath(state, v);
 			return;
 		}
+		case MissionType::InvestigateBuilding:
 		case MissionType::GotoBuilding:
 		{
 			if (isFinishedInternal(state, v))
@@ -2999,7 +3024,7 @@ bool VehicleMission::acquireTargetBuilding(GameState &state, Vehicle &v)
 	}
 	if (!availableBuildings.empty())
 	{
-		targetBuilding = listRandomiser(state.rng, availableBuildings);
+		targetBuilding = pickRandom(state.rng, availableBuildings);
 	}
 
 	return (bool)targetBuilding;
@@ -3043,6 +3068,7 @@ UString VehicleMission::getName()
 	    {MissionType::RestartNextMission, "RestartNextMission"},
 	    {MissionType::OfferService, "OfferServices"},
 	    {MissionType::Teleport, "Teleport"},
+	    {MissionType::InvestigateBuilding, "InvestigateBuilding"},
 	};
 	UString name = "UNKNOWN";
 	const auto it = TypeMap.find(this->type);
@@ -3067,6 +3093,7 @@ UString VehicleMission::getName()
 		case MissionType::AttackBuilding:
 		case MissionType::TakeOff:
 		case MissionType::Land:
+		case MissionType::InvestigateBuilding:
 			name += " " + this->targetBuilding.id;
 			break;
 		case MissionType::ArriveFromDimensionGate:

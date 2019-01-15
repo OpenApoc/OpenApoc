@@ -15,6 +15,7 @@ set (LIBRARY_SOURCE_FILES
 source_group(library\\sources FILES ${LIBRARY_SOURCE_FILES})
 set (LIBRARY_HEADER_FILES
 	colour.h
+	enum_traits.h
 	rect.h
 	sp.h
 	strings.h
@@ -39,8 +40,7 @@ target_link_libraries(OpenApoc_Library PUBLIC ${Boost_LIBRARIES}
 target_include_directories(OpenApoc_Library PUBLIC ${CMAKE_SOURCE_DIR})
 target_include_directories(OpenApoc_Library PUBLIC ${GLM_INCLUDE_DIR})
 target_include_directories(OpenApoc_Library PUBLIC ${Boost_INCLUDE_DIRS})
-
-set_property(TARGET OpenApoc_Library PROPERTY CXX_STANDARD 11)
+target_include_directories(OpenApoc_Library PUBLIC ${CMAKE_SOURCE_DIR}/library/compat)
 if(NOT WIN32)
 	target_compile_definitions(OpenApoc_Library PUBLIC PTHREADS_AVAILABLE)
 endif()

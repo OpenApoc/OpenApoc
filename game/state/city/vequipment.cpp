@@ -1,4 +1,5 @@
 #include "game/state/city/vequipment.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "framework/sound.h"
@@ -68,7 +69,11 @@ bool VEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> 
 	this->weaponState = WeaponState::Reloading;
 	if (this->type->max_ammo != 0)
 	{
-		this->ammo--;
+		if (!config().getBool("OpenApoc.Cheat.InfiniteAmmo") ||
+		    this->owner->owner != state.getPlayer())
+		{
+			this->ammo--;
+		}
 	}
 
 	if (type->fire_sfx)

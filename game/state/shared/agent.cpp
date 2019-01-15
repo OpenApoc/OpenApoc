@@ -1,4 +1,5 @@
 #include "game/state/shared/agent.h"
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battleunit.h"
@@ -65,7 +66,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	for (auto &t : state.agent_types)
 		if (t.second->role == role && t.second->playable)
 			types.insert(types.begin(), t.second);
-	auto type = listRandomiser(state.rng, types);
+	auto type = pickRandom(state.rng, types);
 
 	return createAgent(state, org, {&state, AgentType::getId(state, type)});
 }
@@ -91,8 +92,8 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 			return nullptr;
 		}
 
-		auto firstName = listRandomiser(state.rng, firstNameList->second);
-		auto secondName = listRandomiser(state.rng, this->second_names);
+		auto firstName = pickRandom(state.rng, firstNameList->second);
+		auto secondName = pickRandom(state.rng, this->second_names);
 		agent->name = format("%s %s", firstName, secondName);
 	}
 	else
@@ -850,6 +851,18 @@ bool Agent::addMission(GameState &state, AgentMission *mission, bool toBack)
 
 bool Agent::setMission(GameState &state, AgentMission *mission)
 {
+	for (auto &m : this->missions)
+	{
+		// if we're removing an InvestigateBuilding mission
+		// decrease the investigate count so the other investigating vehicles won't dangle
+		if (m->type == AgentMission::MissionType::InvestigateBuilding)
+		{
+			if (!m->isFinished(state, *this))
+			{
+				m->targetBuilding->decreasePendingInvestigatorCount(state);
+			}
+		}
+	}
 	missions.clear();
 	missions.emplace_front(mission);
 	missions.front()->start(state, *this);
@@ -1032,13 +1045,14 @@ void Agent::updateHourly(GameState &state)
 		{
 			usage = std::max(100, usage);
 			// As per Roger Wong's guide
+			float mult = config().getFloat("OpenApoc.Cheat.StatGrowthMultiplier");
 			if (trainingAssignment == TrainingAssignment::Physical)
 			{
-				trainPhysical(state, TICKS_PER_HOUR * 100 / usage);
+				trainPhysical(state, TICKS_PER_HOUR * 100 / usage * mult);
 			}
 			else
 			{
-				trainPsi(state, TICKS_PER_HOUR * 100 / usage);
+				trainPsi(state, TICKS_PER_HOUR * 100 / usage * mult);
 			}
 		}
 	}

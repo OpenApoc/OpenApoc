@@ -313,6 +313,7 @@ class Vehicle : public StateObject,
 	bool canTeleport() const;
 	bool hasTeleporter() const;
 	bool hasDimensionShifter() const;
+	bool isIdle() const;
 
 	// This is the 'sum' of all armors?
 	int getArmor() const;
@@ -329,6 +330,7 @@ class Vehicle : public StateObject,
 	int getMaxBio() const;
 	int getBio() const;
 	float getSpeed() const;
+	float getAngularSpeed() const;
 
 	void nextFrame(int ticks);
 
@@ -336,8 +338,10 @@ class Vehicle : public StateObject,
 
 	void setManualFirePosition(const Vec3<float> &pos);
 
-	// Adds mission to list of missions, returns true if successful
-	bool addMission(GameState &state, VehicleMission *mission, bool toBack = false);
+	// Adds mission to list of missions, returns iterator to mission if successful, missions.end()
+	// otherwise
+	typename decltype(missions)::iterator addMission(GameState &state, VehicleMission *mission,
+	                                                 bool toBack = false);
 	// Replaces all missions with provided mission, returns true if successful
 	bool setMission(GameState &state, VehicleMission *mission);
 	bool clearMissions(GameState &state, bool forced = false);

@@ -984,6 +984,7 @@
 		<member>researchUnlock</member>
 		<member>accessTopic</member>
 		<member>victory</member>
+		<member>pendingInvestigatorCount</member>
 	</object>
 	<object>
 		<name>UFOIncursion</name>
@@ -1450,6 +1451,7 @@
 		<value>Teleport</value>
 		<value>SelfDestruct</value>
 		<value>DepartToSpace</value>
+		<value>InvestigateBuilding</value>
 	</enum>
 	<enum>
 		<name>AgentMission::MissionType</name>

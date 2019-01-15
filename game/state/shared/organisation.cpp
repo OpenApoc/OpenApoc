@@ -8,6 +8,7 @@
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/city/baselayout.h"
 #include "game/state/rules/city/scenerytiletype.h"
 #include "library/strings.h"
 
@@ -150,7 +151,7 @@ StateRef<Building> Organisation::getPurchaseBuilding(GameState &state,
 				}
 			}
 		}
-		return listRandomiser(state.rng, purchaseBuildings);
+		return pickRandom(state.rng, purchaseBuildings);
 	}
 }
 
@@ -402,8 +403,17 @@ void Organisation::updateHirableAgents(GameState &state)
 	StateRef<Building> hireeLocation;
 	if (state.getCivilian().id == id)
 	{
-		hireeLocation = {&state,
-		                 mapRandomizer(state.rng, state.cities["CITYMAP_HUMAN"]->buildings).first};
+		std::vector<StateRef<Building>> buildingsWithoutBases;
+		for (auto &b : state.cities["CITYMAP_HUMAN"]->buildings)
+		{
+			if (!b.second->base_layout)
+				buildingsWithoutBases.emplace_back(&state, b.second);
+		}
+		if (buildingsWithoutBases.empty())
+		{
+			LogError("Cannot spawn new hirable agent - No building without base?");
+		}
+		hireeLocation = pickRandom(state.rng, buildingsWithoutBases);
 	}
 	else
 	{
@@ -411,7 +421,7 @@ void Organisation::updateHirableAgents(GameState &state)
 		{
 			return;
 		}
-		hireeLocation = vectorRandomizer(state.rng, buildings);
+		hireeLocation = pickRandom(state.rng, buildings);
 	}
 	std::set<sp<Agent>> agentsToRemove;
 	for (auto &a : state.agents)
@@ -533,7 +543,7 @@ void Organisation::updateVehicleAgentPark(GameState &state)
 	//		}
 	//		buildingsRandomizer.push_back(b.second);
 	//	}
-	//	sp<Building> building = listRandomiser(state.rng, buildingsRandomizer);
+	//	sp<Building> building = pickRandom(state.rng, buildingsRandomizer);
 	//	while (countAgents < agentPark)
 	//	{
 	//		auto agent = state.agent_generator.createAgent(state, {&state, id},
@@ -595,7 +605,7 @@ void Organisation::updateVehicleAgentPark(GameState &state)
 				}
 			}
 
-			StateRef<Building> building = listRandomiser(state.rng, buildingsRandomizer);
+			StateRef<Building> building = pickRandom(state.rng, buildingsRandomizer);
 
 			auto v = building->city->placeVehicle(state, entry.first, {&state, id}, building);
 			v->homeBuilding = {&state, building};
@@ -826,11 +836,11 @@ void Organisation::Mission::execute(GameState &state, StateRef<City> city,
 		{
 			return;
 		}
-		auto linerType = setRandomiser(state.rng, pattern.allowedTypes);
+		auto linerType = pickRandom(state.rng, pattern.allowedTypes);
 		auto liner = city->placeVehicle(state, linerType, owner,
 		                                VehicleMission::getRandomMapEdgeCoordinates(state, city));
 
-		auto building = listRandomiser(state.rng, spaceports);
+		auto building = pickRandom(state.rng, spaceports);
 		liner->homeBuilding = building;
 		liner->setMission(state, VehicleMission::gotoBuilding(state, *liner));
 		return;
@@ -884,7 +894,7 @@ void Organisation::Mission::execute(GameState &state, StateRef<City> city,
 			}
 		}
 	}
-	auto sourceBuilding = listRandomiser(state.rng, buildingsRandomizer);
+	auto sourceBuilding = pickRandom(state.rng, buildingsRandomizer);
 
 	// Special case
 	if (pattern.target == Organisation::MissionPattern::Target::DepartToSpace)
@@ -947,7 +957,7 @@ void Organisation::Mission::execute(GameState &state, StateRef<City> city,
 		return;
 	}
 
-	auto destBuilding = listRandomiser(state.rng, buildingsRandomizer);
+	auto destBuilding = pickRandom(state.rng, buildingsRandomizer);
 
 	// Do it
 	while (count-- > 0)
