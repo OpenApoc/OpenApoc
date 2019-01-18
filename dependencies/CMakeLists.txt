@@ -128,3 +128,7 @@ file (GLOB_RECURSE LUA_HEADER_FILES lua/*.h)
 add_library(OpenApoc_Lua STATIC ${LUA_SOURCE_FILES})
 list(APPEND ALL_SOURCE_FILES ${LUA_SOURCE_FILES})
 list(APPEND ALL_HEADER_FILES ${LUA_HEADER_FILES})
+
+target_include_directories(OpenApoc_Lua PUBLIC ${CMAKE_SOURCE_DIR})
+target_include_directories(OpenApoc_Lua PRIVATE
+		${CMAKE_SOURCE_DIR}/dependencies/lua)
