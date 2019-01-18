@@ -31,3 +31,4 @@ endif()
 
 # GameState serialization code generator isn't optional
 add_subdirectory(gamestate_serialize_gen)
+add_subdirectory(luagamestate_support_gen)

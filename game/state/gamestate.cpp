@@ -134,6 +134,12 @@ StateRef<Organisation> GameState::getCivilian() { return this->civilian; }
 
 void GameState::initState()
 {
+	// the LuaGameState has not been initialized if we're loading a saved game
+	if (!luaGameState)
+	{
+		luaGameState.init(*this);
+	}
+
 	if (current_battle)
 	{
 		current_battle->initBattle(*this);
@@ -520,18 +526,15 @@ void GameState::fillOrgStartingProperty()
 			          m.pattern.minIntervalRepeat / 2;
 		}
 	}
+
+	luaGameState.newGamePostInitHook();
 }
 
 void GameState::startGame()
 {
-	// seed rng with current timer if option is set
-	// leave the rng default constructed otherwise
-	if (config().getBool("OpenApoc.NewFeature.SeedRng"))
-	{
-		std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(
-		    std::chrono::system_clock::now().time_since_epoch());
-		rng = Xorshift128Plus<uint32_t>(ms.count());
-	}
+	luaGameState.init(*this);
+
+	luaGameState.newGameHook();
 
 	agentEquipmentTemplates.resize(10);
 
@@ -782,60 +785,7 @@ void GameState::fillPlayerStartingProperty()
 	bld->city->cityViewScreenCenter = {buildingCenter.x, buildingCenter.y, 1.0f};
 }
 
-void GameState::updateEconomy()
-{
-	std::list<UString> newItems;
-
-	for (auto &v : vehicle_types)
-	{
-		if (economy.find(v.first) != economy.end())
-		{
-			if (economy[v.first].update(*this, v.second->manufacturer == getPlayer()))
-			{
-				newItems.push_back(v.second->name);
-			}
-		}
-	}
-	for (auto &ve : vehicle_equipment)
-	{
-		if (economy.find(ve.first) != economy.end())
-		{
-			if (economy[ve.first].update(*this, ve.second->manufacturer == getPlayer()))
-			{
-				newItems.push_back(ve.second->name);
-			}
-		}
-	}
-	for (auto &va : vehicle_ammo)
-	{
-		if (economy.find(va.first) != economy.end())
-		{
-			if (economy[va.first].update(*this, va.second->manufacturer == getPlayer()))
-			{
-				newItems.push_back(va.second->name);
-			}
-		}
-	}
-	for (auto &ae : agent_equipment)
-	{
-		if (economy.find(ae.first) != economy.end())
-		{
-			if (economy[ae.first].update(*this, ae.second->manufacturer == getPlayer()))
-			{
-				newItems.push_back(ae.second->name);
-			}
-		}
-	}
-
-	if (!newItems.empty())
-	{
-		LogWarning("Notify that new items are here!");
-		for (auto &s : newItems)
-		{
-			LogWarning("%s", s);
-		}
-	}
-}
+void GameState::updateEconomy() { luaGameState.updateEconomyHook(); }
 
 void OpenApoc::GameState::updateUFOGrowth()
 {

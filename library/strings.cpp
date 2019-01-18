@@ -177,9 +177,7 @@ UString::UString(const char *cstr)
 		this->u8Str = cstr;
 	}
 }
-UString::UString(const char *cstr, size_t count) : u8Str(cstr, count)
-{
-}
+UString::UString(const char *cstr, size_t count) : u8Str(cstr, count) {}
 
 UString::UString(const UString &) = default;
 
