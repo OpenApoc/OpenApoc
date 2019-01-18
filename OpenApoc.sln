@@ -33,7 +33,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_rng", "tests\test_rng.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "miniz", "dependencies\miniz.vcxproj", "{44A12AC1-7E09-4AF7-BAC4-A264C2F814A7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gamestate_serialize_gen", "tools\gamestate_serialize_gen\gamestate_serialize_gen.vcxproj", "{31FBCCBD-BFD2-45FC-B9DF-3375684A3157}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gamestate_serialize_gen", "tools\code_generators\gamestate_serialize_gen\gamestate_serialize_gen.vcxproj", "{31FBCCBD-BFD2-45FC-B9DF-3375684A3157}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gamestate_serialize_gen", "tools\code_generators\luagamestate_support_gen\luagamestate_support_gen.vcxproj", "{31FBCCBD-BFD2-45FC-B9DF-3375684A3158}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_images", "tests\test_images.vcxproj", "{1CA306CD-C11A-4E14-AAAF-2DD282E10652}"
 EndProject
