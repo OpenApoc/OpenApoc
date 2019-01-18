@@ -38,6 +38,7 @@ class UString
 	UString(std::string &&str);
 	UString(UniChar uc);
 	UString(const char *cstr);
+	UString(const char *cstr, size_t count);
 	UString(UString &&other);
 	UString(ConstIterator first, ConstIterator last);
 	UString();
