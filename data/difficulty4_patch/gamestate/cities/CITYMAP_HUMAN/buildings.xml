@@ -27,6 +27,12 @@
   <entry>
     <key>BUILDING_WAREHOUSE_EIGHT</key>
     <value>
+      <base_layout>BASELAYOUT_14</base_layout>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_FIVE</key>
+    <value>
       <base_layout>BASELAYOUT_15</base_layout>
     </value>
   </entry>
