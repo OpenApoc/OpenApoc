@@ -4,6 +4,7 @@
 #include "game/state/city/research.h"
 #include "game/state/gameeventtypes.h"
 #include "game/state/gametime.h"
+#include "game/state/luagamestate.h"
 #include "game/state/shared/agent.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
@@ -244,6 +245,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// Following members are not serialized
 	bool newGame = false;
 	bool skipTurboCalculations = false;
+
+	LuaGameState luaGameState;
 };
 
 }; // namespace OpenApoc
