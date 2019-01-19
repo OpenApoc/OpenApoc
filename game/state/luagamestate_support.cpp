@@ -193,7 +193,6 @@ void pushToLua(lua_State *L, sp<Sample> &v) { lua_pushnil(L); }
 void pushToLua(lua_State *L, sp<VoxelMap> &v) { lua_pushnil(L); }
 void pushToLua(lua_State *L, Colour &v)
 {
-	Colour **udata = (Colour **)lua_newuserdata(L, sizeof(&v));
 	lua_createtable(L, 0, 4);
 	lua_pushinteger(L, v.r);
 	lua_setfield(L, -2, "r");
@@ -236,7 +235,18 @@ void pushToLua(lua_State *L, const sp<LazyImage> &v) { lua_pushnil(L); }
 void pushToLua(lua_State *L, const sp<VoxelSlice> &v) { lua_pushnil(L); }
 void pushToLua(lua_State *L, const sp<Sample> &v) { lua_pushnil(L); }
 void pushToLua(lua_State *L, const sp<VoxelMap> &v) { lua_pushnil(L); }
-void pushToLua(lua_State *L, const Colour &v) { pushToLua(L, v); }
+void pushToLua(lua_State *L, const Colour &v)
+{
+	lua_createtable(L, 0, 4);
+	lua_pushinteger(L, v.r);
+	lua_setfield(L, -2, "r");
+	lua_pushinteger(L, v.g);
+	lua_setfield(L, -2, "g");
+	lua_pushinteger(L, v.b);
+	lua_setfield(L, -2, "b");
+	lua_pushinteger(L, v.a);
+	lua_setfield(L, -2, "a");
+}
 void pushToLua(lua_State *L, const Xorshift128Plus<uint32_t> &v)
 {
 	const Xorshift128Plus<uint32_t> **udata =

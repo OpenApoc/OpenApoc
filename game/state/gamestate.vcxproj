@@ -202,6 +202,9 @@
     <ProjectReference Include="..\..\tools\code_generators\luagamestate_support_gen\luagamestate_support_gen.vcxproj">
       <Project>{31fbccbd-bfd2-45fc-b9df-3375684a3158}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\dependencies\lua.vcxproj">
+      <Project>{44a12ac1-7e09-4aF7-bac4-a264c2f814a8}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
