@@ -323,6 +323,11 @@ void Lab::setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic, sp<GameS
 
 unsigned Lab::getQuantity() const { return manufacture_goal - manufacture_done; }
 
+void Lab::removeAgent(StateRef<Lab> lab, StateRef<Agent> &agent)
+{
+	lab->assigned_agents.remove(agent);
+}
+
 void Lab::setQuantity(StateRef<Lab> lab, unsigned quantity)
 {
 	if (lab->type != ResearchTopic::Type::Engineering)
