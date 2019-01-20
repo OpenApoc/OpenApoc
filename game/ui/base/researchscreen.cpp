@@ -120,7 +120,7 @@ void ResearchScreen::begin()
 			LogWarning("no free space in lab");
 			return;
 		}
-		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
+		const auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
 		auto agent = list->getSelectedData<Agent>();
 		if (!agent)
 		{
@@ -136,9 +136,9 @@ void ResearchScreen::begin()
 		this->viewFacility->lab->assigned_agents.push_back({state.get(), agent});
 		this->setCurrentLabInfo();
 	});
-	auto removeFn = [this](FormsEvent *e) {
+	const auto removeFn = [this](FormsEvent *e) {
 		LogWarning("assigned agent selected");
-		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
+		const auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
 		auto agent = list->getSelectedData<Agent>();
 		if (!agent)
 		{
@@ -262,10 +262,10 @@ void ResearchScreen::eventOccurred(Event *e)
 				    this->viewFacility->lab->type == ResearchTopic::Type::Engineering &&
 				    this->viewFacility->lab->current_project)
 				{
-					auto manufacturing_scrollbar =
+					const auto manufacturing_scrollbar =
 					    form->findControlTyped<ScrollBar>("MANUFACTURE_QUANTITY_SLIDER");
 					auto manufacturing_quantity = form->findControlTyped<Label>("TEXT_QUANTITY");
-					auto quantity = manufacturing_scrollbar->getValue();
+					const auto quantity = manufacturing_scrollbar->getValue();
 
 					Lab::setQuantity(this->viewFacility->lab, quantity);
 					this->updateProgressInfo();
@@ -294,7 +294,8 @@ bool ResearchScreen::isTransition() { return false; }
  * @listName - listbox's name in the form
  * @listLabs - list of existing labs
  */
-void ResearchScreen::populateUILabList(const UString &listName, std::list<sp<Facility>> &listLabs)
+void ResearchScreen::populateUILabList(const UString &listName,
+                                       std::list<sp<Facility>> &listLabs) const
 {
 	auto uiListLabs = form->findControlTyped<ListBox>(listName);
 	uiListLabs->clear();
@@ -333,7 +334,7 @@ void ResearchScreen::setCurrentLabInfo()
 	}
 	this->state->current_base->selectedLab = viewFacility;
 	this->assigned_agent_count = 0;
-	auto labType = this->viewFacility->type->capacityType;
+	const auto labType = this->viewFacility->type->capacityType;
 	UString labTypeName = "UNKNOWN";
 	AgentType::Role listedAgentType = AgentType::Role::BioChemist;
 
@@ -359,7 +360,7 @@ void ResearchScreen::setCurrentLabInfo()
 
 	form->findControlTyped<Label>("TEXT_LAB_TYPE")->setText(labTypeName);
 
-	auto agentEntryHeight = ControlGenerator::getFontHeight(*state) * 3;
+	const auto agentEntryHeight = ControlGenerator::getFontHeight(*state) * 3;
 
 	auto unassignedAgentList = form->findControlTyped<ListBox>("LIST_UNASSIGNED");
 	unassignedAgentList->clear();
@@ -387,6 +388,7 @@ void ResearchScreen::setCurrentLabInfo()
 						         this->assigned_agent_count,
 						         this->viewFacility->type->capacityAmount);
 					}
+					agent.second->lab_assigned = this->viewFacility->lab;
 					assigned_to_current_lab = true;
 					break;
 				}
@@ -429,26 +431,29 @@ void ResearchScreen::setCurrentLabInfo()
 	updateProgressInfo();
 }
 
-void ResearchScreen::updateProgressInfo()
+void ResearchScreen::updateProgressInfo() const
 {
 	if (this->viewFacility && this->viewFacility->lab->current_project)
 	{
 		auto &topic = this->viewFacility->lab->current_project;
 		auto progressBar = form->findControlTyped<Graphic>("GRAPHIC_PROGRESS_BAR");
-		auto progressImage = mksp<RGBImage>(progressBar->Size);
+		const auto progressImage = mksp<RGBImage>(progressBar->Size);
 		float projectProgress = 0.0f;
 		switch (this->viewFacility->lab->current_project->type)
 		{
 			case ResearchTopic::Type::BioChem:
 			case ResearchTopic::Type::Physics:
-				projectProgress =
-				    clamp((float)topic->man_hours_progress / (float)topic->man_hours, 0.0f, 1.0f);
+				projectProgress = clamp(static_cast<float>(topic->man_hours_progress) /
+				                            static_cast<float>(topic->man_hours),
+				                        0.0f, 1.0f);
 				break;
 			case ResearchTopic::Type::Engineering:
 				projectProgress =
-				    clamp((float)(this->viewFacility->lab->manufacture_man_hours_invested +
-				                  topic->man_hours * this->viewFacility->lab->manufacture_done) /
-				              (float)(topic->man_hours * this->viewFacility->lab->manufacture_goal),
+				    clamp(static_cast<float>(
+				              this->viewFacility->lab->manufacture_man_hours_invested +
+				              topic->man_hours * this->viewFacility->lab->manufacture_done) /
+				              static_cast<float>(topic->man_hours *
+				                                 this->viewFacility->lab->manufacture_goal),
 				          0.0f, 1.0f);
 				break;
 			default:
@@ -458,7 +463,7 @@ void ResearchScreen::updateProgressInfo()
 		// This creates an image with the size of the PROGRESS_BAR control, then fills
 		// up a proportion of it with red pixels (starting from the left) corresponding
 		// to the progress of the project.
-		int redWidth = progressBar->Size.x * projectProgress;
+		const int redWidth = progressBar->Size.x * projectProgress;
 		{
 			RGBImageLock l(progressImage);
 			for (int y = 0; y < progressBar->Size.y; y++)
@@ -473,7 +478,7 @@ void ResearchScreen::updateProgressInfo()
 		auto topicTitle = form->findControlTyped<Label>("TEXT_CURRENT_PROJECT");
 		topicTitle->setText(tr(topic->name));
 		auto completionPercent = form->findControlTyped<Label>("TEXT_PROJECT_COMPLETION");
-		auto completionText = format(tr("%d%%"), (int)(projectProgress * 100.0f));
+		const auto completionText = format(tr("%d%%"), static_cast<int>(projectProgress * 100.0f));
 		completionPercent->setText(completionText);
 	}
 	else

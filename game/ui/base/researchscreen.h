@@ -27,9 +27,9 @@ class ResearchScreen : public BaseStage
 	std::list<sp<Facility>> largeLabs;
 
 	// Populating the UI lab list.
-	void populateUILabList(const UString &listName, std::list<sp<Facility>> &list);
+	void populateUILabList(const UString &listName, std::list<sp<Facility>> &list) const;
 	void setCurrentLabInfo();
-	void updateProgressInfo();
+	void updateProgressInfo() const;
 
 	int assigned_agent_count;
 
