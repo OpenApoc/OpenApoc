@@ -133,6 +133,7 @@ class Agent : public StateObject,
 	// Position agent is moving towards
 	Vec3<float> goalPosition;
 
+	StateRef<Lab> lab_assigned = nullptr;
 	bool assigned_to_lab = false;
 
 	StateRef<BattleUnit> unit;
