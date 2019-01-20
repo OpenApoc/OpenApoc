@@ -244,6 +244,7 @@
 		<member>currentVehicle</member>
 		<member>position</member>
 		<member>goalPosition</member>
+		<member>lab_assigned</member>
 		<member>assigned_to_lab</member>
 		<member>unit</member>
 		<member>isBrainsucker</member>
