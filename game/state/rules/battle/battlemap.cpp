@@ -1209,6 +1209,7 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 						b->spawnLocations[entry.first].push_back(pos + shift);
 						agents.emplace_back(
 						    state.agent_generator.createAgent(state, propertyOwner, entry.first));
+						agents.back()->destroyAfterBattle = true;
 					}
 				}
 				for (auto &entry : sec->spawnLocations)

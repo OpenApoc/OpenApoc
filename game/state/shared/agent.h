@@ -184,6 +184,9 @@ class Agent : public StateObject,
 	void die(GameState &state, bool silent = false);
 	bool isDead() const;
 
+	// for agents spawned specifically for the current battle, like turrets
+	bool destroyAfterBattle = false;
+
 	// Update agent in city
 	void update(GameState &state, unsigned ticks);
 	void updateEachSecond(GameState &state);

@@ -251,6 +251,7 @@
 		<member>missions</member>
 		<member>teleportTicksAccumulated</member>
 		<member>equipment</member>
+		<member>destroyAfterBattle</member>
 	</object>
 	<object>
 		<name>AgentPortrait</name>
