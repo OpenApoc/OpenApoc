@@ -197,7 +197,7 @@
 		<name>EquipmentTemplate</name>
 		<member>equipment</member>
 	</object>
-		<object>
+	<object>
 		<name>EquipmentTemplate::EquipmentTemplateEntry</name>
 		<member>pos</member>
 		<member>type</member>
@@ -214,7 +214,7 @@
 		<member>grenade</member>
 		<member>grenade_amount</member>
 	</object>
-		<object>
+	<object>
 		<name>EquipmentSet::EquipmentData</name>
 		<member>equipment</member>
 	</object>
@@ -244,6 +244,7 @@
 		<member>currentVehicle</member>
 		<member>position</member>
 		<member>goalPosition</member>
+		<member>lab_assigned</member>
 		<member>assigned_to_lab</member>
 		<member>unit</member>
 		<member>isBrainsucker</member>
@@ -1338,7 +1339,7 @@
 		<member>targetBodyState</member>
 	</object>
 	<object>
-	<name>BattleUnitAnimationPack::AltFireAnimationKey</name>
+		<name>BattleUnitAnimationPack::AltFireAnimationKey</name>
 		<member>itemWieldMode</member>
 		<member>handState</member>
 		<member>angle</member>
