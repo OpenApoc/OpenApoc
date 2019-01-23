@@ -887,6 +887,10 @@ void Building::alienMovement(GameState &state)
 			totalMoveAmount += moveAmount;
 		}
 	}
+	if (totalMoveAmount == 0)
+	{
+		return;
+	}
 	// Chance to move is:
 	//   15 + 3 * amount + 20 (if owner is friendly+ to aliens)
 	int friendlyBonus = 0;
