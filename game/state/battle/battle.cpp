@@ -2649,8 +2649,9 @@ void Battle::finishBattle(GameState &state)
 			}
 			loot.push_back(e);
 		}
-		// Send home if not on vehicle
-		if (!u.second->agent->currentVehicle && !state.current_battle->skirmish)
+		// Send home if not on vehicle. Note that some units may not have a home building
+		if (!u.second->agent->currentVehicle && !state.current_battle->skirmish &&
+		    u.second->agent->homeBuilding != nullptr)
 		{
 			u.second->agent->setMission(state, AgentMission::gotoBuilding(state, *u.second->agent));
 		}
@@ -2830,7 +2831,7 @@ void Battle::finishBattle(GameState &state)
 	std::list<sp<BattleUnit>> unitsToRemove;
 	for (auto &u : state.current_battle->units)
 	{
-		if (u.second->owner != player || u.second->isDead())
+		if (u.second->owner != player || u.second->isDead() || u.second->agent->destroyAfterBattle)
 		{
 			unitsToRemove.push_back(u.second);
 		}
