@@ -1830,7 +1830,7 @@
           <value>
             <title>Psiclone</title>
             <description>The Psiclone implant is manufactured and distributed by criminal gangs. It allows the user to experience any mental state or images just by imagining them. Its widespread popularity and detrimental effect on the health of young citizens led the Senate to ban the use or distribution of the device. The price of Psiclone implants has subsequently soared and this has resulted in open warfare between the criminal gangs and Megapol.</description>
-            <background>xcom3/ufopaedi/w53.pcx</background>
+            <background>xcom3/ufopaedi/pscln.pcx</background>
             <data_type>Equipment</data_type>
             <data_id>AEQUIPMENTTYPE_PSICLONE</data_id>
             <required_research/>

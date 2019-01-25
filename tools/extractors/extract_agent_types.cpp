@@ -1123,7 +1123,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				break;
 			case UNIT_TYPE_CHRYSALIS:
 				liveIdx = 2;
-				deadIdx = 17;
+				deadIdx = 16;
 				liveSpace = 2;
 				deadSpace = 2;
 				break;
