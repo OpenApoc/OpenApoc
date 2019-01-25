@@ -150,7 +150,7 @@
     <key>FACILITYTYPE_VEHICLE_REPAIR_BAY</key>
     <value>
       <capacityType>Repair</capacityType>
-      <capacityAmount>1</capacityAmount>
+      <capacityAmount>12</capacityAmount>
       <ufopaedia_entry>PAEDIAENTRY_VEHICLE_REPAIR_BAY</ufopaedia_entry>
     </value>
   </entry>
