@@ -1,5 +1,6 @@
 #include "game/state/luagamestate.h"
 #include "framework/configfile.h"
+#include "framework/luaframework.h"
 #include "game/state/gamestate.h"
 #include "game/state/luagamestate_support.h"
 #include "game/state/luagamestate_support_generated.h"
@@ -30,19 +31,6 @@ bool LuaGameState::pushHook(const char *hookName)
 		return false;
 	}
 }
-void LuaGameState::pushDebugTraceback()
-{
-	lua_getglobal(L, "debug");
-	lua_getfield(L, -1, "traceback");
-	lua_remove(L, -2); // remove debug table
-}
-void LuaGameState::handleLuaError()
-{
-	size_t count;
-	const char *buf = lua_tolstring(L, -1, &count);
-	LogWarning("Lua ERROR: %.*s", count, buf);
-	lua_pop(L, 1); // pop error object we just printed
-}
 
 void LuaGameState::init(GameState &game)
 {
@@ -55,8 +43,12 @@ void LuaGameState::init(GameState &game)
 	lua_setfield(L, -2, "hook");
 
 	// create enum table
-	pushLuaEnums(L);
+	pushLuaGamestateEnums(L);
 	lua_setfield(L, -2, "enum");
+
+	// create framework table
+	pushLuaFramework(L);
+	lua_setfield(L, -2, "Framework");
 
 	// add global GameState object
 	pushToLua(L, game);
@@ -69,7 +61,7 @@ void LuaGameState::init(GameState &game)
 	lua_pushlightuserdata(L, (void *)&game);
 	lua_setfield(L, LUA_REGISTRYINDEX, "OpenApoc.GameState");
 
-	pushDebugTraceback();
+	pushLuaDebugTraceback(L);
 	for (const UString &s : config().getString("OpenApoc.Mod.ScriptsList").split(";"))
 	{
 		if (s.empty())
@@ -78,7 +70,7 @@ void LuaGameState::init(GameState &game)
 		// this is only true if loadfile or pcall raised an error
 		if (luaL_loadfile(L, s.cStr()) || lua_pcall(L, 0, 0, -2))
 		{
-			handleLuaError();
+			handleLuaError(L);
 		}
 	}
 	lua_pop(L, 1); // pop debug.traceback function
@@ -90,36 +82,36 @@ LuaGameState::operator bool() const { return this->L != nullptr && this->initOk;
 
 void LuaGameState::updateEconomyHook()
 {
-	pushDebugTraceback();
+	pushLuaDebugTraceback(L);
 	if (pushHook("updateEconomy"))
 	{
 		if (lua_pcall(L, 0, 0, -2))
 		{
-			handleLuaError();
+			handleLuaError(L);
 		}
 	}
 	lua_pop(L, 1); // pop debug.traceback function
 }
 void LuaGameState::newGameHook()
 {
-	pushDebugTraceback();
+	pushLuaDebugTraceback(L);
 	if (pushHook("newGame"))
 	{
 		if (lua_pcall(L, 0, 0, -2))
 		{
-			handleLuaError();
+			handleLuaError(L);
 		}
 	}
 	lua_pop(L, 1);
 }
 void LuaGameState::newGamePostInitHook()
 {
-	pushDebugTraceback();
+	pushLuaDebugTraceback(L);
 	if (pushHook("newGamePostInit"))
 	{
 		if (lua_pcall(L, 0, 0, -2))
 		{
-			handleLuaError();
+			handleLuaError(L);
 		}
 	}
 	lua_pop(L, 1);

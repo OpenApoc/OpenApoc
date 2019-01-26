@@ -36,6 +36,7 @@
     <ClCompile Include="imageloader\lodepng_image.cpp" />
     <ClCompile Include="imageloader\pcx.cpp" />
     <ClCompile Include="logger.cpp" />
+    <ClCompile Include="luaframework.cpp" />
     <ClCompile Include="musicloader\music.cpp" />
     <ClCompile Include="palette.cpp" />
     <ClCompile Include="physfs_fs.cpp" />
@@ -76,6 +77,7 @@
     <ClInclude Include="image.h" />
     <ClInclude Include="imageloader_interface.h" />
     <ClInclude Include="logger.h" />
+    <ClInclude Include="luaframework.h" />
     <ClInclude Include="musicloader_interface.h" />
     <ClInclude Include="palette.h" />
     <ClInclude Include="renderer.h" />

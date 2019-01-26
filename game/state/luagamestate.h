@@ -1,9 +1,7 @@
 #pragma once
 
 extern "C" {
-#include "dependencies/lua/lauxlib.h"
 #include "dependencies/lua/lua.h"
-#include "dependencies/lua/lualib.h"
 }
 #include <string>
 
@@ -18,8 +16,6 @@ class LuaGameState
 	// pushes OpenApoc.hook[hookName] to the top of the stack and returns true if callable. leaves
 	// stack unchanged otherwise
 	bool pushHook(const char *hookName);
-	void pushDebugTraceback();
-	void handleLuaError();
 	bool initOk = false;
 
   public:

@@ -41,7 +41,8 @@ OA.hook.newGame = function()
 	if oldNewGameHook then oldNewGameHook() end
 
 	--seed the rng on game start
-	GS.rng:setState(os.time(), -os.time())
+	local seed = os.time()
+	GS.rng:setState(seed, -seed)
 end
 
 local oldNewGamePostInitHook = OpenApoc.hook.newGamePostInit
@@ -61,7 +62,6 @@ OA.hook.newGamePostInit = function()
 			table.insert(buildingsWithoutBases, stateRef)
 		end
 	end
-	print(#city.object.buildings)
 	--nowehere to spawn, return here
 	if #buildingsWithoutBases == 0 then
 		print("no buildings without bases!")

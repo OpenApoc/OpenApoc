@@ -16,6 +16,7 @@ set (FRAMEWORK_SOURCE_FILES
 	framework.cpp
 	image.cpp
 	logger.cpp
+	luaframework.cpp
 	palette.cpp
 	physfs_fs.cpp
 	renderer.cpp
@@ -43,6 +44,7 @@ set (FRAMEWORK_HEADER_FILES
 	imageloader_interface.h
 	keycodes.h
 	logger.h
+	luaframework.h
 	musicloader_interface.h
 	palette.h
 	renderer.h
