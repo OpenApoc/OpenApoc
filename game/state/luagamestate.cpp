@@ -80,41 +80,4 @@ void LuaGameState::init(GameState &game)
 
 LuaGameState::operator bool() const { return this->L != nullptr && this->initOk; }
 
-void LuaGameState::updateEconomyHook()
-{
-	pushLuaDebugTraceback(L);
-	if (pushHook("updateEconomy"))
-	{
-		if (lua_pcall(L, 0, 0, -2))
-		{
-			handleLuaError(L);
-		}
-	}
-	lua_pop(L, 1); // pop debug.traceback function
-}
-void LuaGameState::newGameHook()
-{
-	pushLuaDebugTraceback(L);
-	if (pushHook("newGame"))
-	{
-		if (lua_pcall(L, 0, 0, -2))
-		{
-			handleLuaError(L);
-		}
-	}
-	lua_pop(L, 1);
-}
-void LuaGameState::newGamePostInitHook()
-{
-	pushLuaDebugTraceback(L);
-	if (pushHook("newGamePostInit"))
-	{
-		if (lua_pcall(L, 0, 0, -2))
-		{
-			handleLuaError(L);
-		}
-	}
-	lua_pop(L, 1);
-}
-
 } // namespace OpenApoc

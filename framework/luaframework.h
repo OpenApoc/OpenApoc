@@ -378,6 +378,16 @@ template <typename C> int containerIndexMap(lua_State *L)
 	return 1;
 }
 
+// push multiple objects to lua
+void pushToLua(lua_State *L);
+
+template <typename Arg1, typename Arg2, typename... Args>
+void pushToLua(lua_State *L, Arg1 &&arg1, Arg2 &&arg2, Args... args)
+{
+	pushToLua(L, arg1);
+	pushToLua(L, arg2, args...);
+}
+
 // mapping between method name to a pointer-to-function
 template <typename T> lua_CFunction getLuaObjectConstMethods(const std::string &key)
 {
@@ -400,6 +410,7 @@ void pushLuaDebugTraceback(lua_State *L);
 // prints with lua prefix and pops the error object at the top of the stack
 void handleLuaError(lua_State *L, LogLevel level = LogLevel::Warning);
 
+// push a table with framework functions into the stack
 void pushLuaFramework(lua_State *L);
 
 } // namespace OpenApoc

@@ -184,6 +184,8 @@ lua_CFunction getLuaObjectConstMethods<Xorshift128Plus<uint32_t>>(const std::str
 	return nullptr;
 }
 
+void pushToLua(lua_State *L) {}
+
 void pushLuaDebugTraceback(lua_State *L)
 {
 	lua_getglobal(L, "debug");
