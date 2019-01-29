@@ -1,5 +1,6 @@
 
 #include "luaframework.h"
+#include "configfile.h"
 
 namespace OpenApoc
 {
@@ -97,8 +98,6 @@ void pushToLua(lua_State *L, Xorshift128Plus<uint32_t> &v)
 	lua_setfield(L, -2, "__index");
 	lua_pushcfunction(L, metamethodXorshift128PlusToString<uint32_t>);
 	lua_setfield(L, -2, "__tostring");
-	lua_pushstring(L, "asd");
-	lua_setfield(L, -2, "__newindex");
 	lua_setmetatable(L, -2);
 }
 
@@ -220,6 +219,58 @@ void pushLuaFramework(lua_State *L)
 		return 0;
 	});
 	lua_setfield(L, -2, "LogError");
+
+	// config table
+	lua_createtable(L, 0, 2);
+
+	lua_pushcfunction(L, [](lua_State *L) {
+		UString key;
+		getFromLua(L, 1, key);
+		lua_settop(L, 0);
+		pushToLua(L, config().getString(key));
+		return 1;
+	});
+	lua_setfield(L, -2, "getString");
+
+	lua_pushcfunction(L, [](lua_State *L) {
+		UString key;
+		getFromLua(L, 1, key);
+		lua_settop(L, 0);
+		pushToLua(L, config().getInt(key));
+		return 1;
+	});
+	lua_setfield(L, -2, "getInt");
+
+	lua_pushcfunction(L, [](lua_State *L) {
+		UString key;
+		getFromLua(L, 1, key);
+		lua_settop(L, 0);
+		pushToLua(L, config().getBool(key));
+		return 1;
+	});
+	lua_setfield(L, -2, "getBool");
+
+	lua_pushcfunction(L, [](lua_State *L) {
+		UString key;
+		getFromLua(L, 1, key);
+		lua_settop(L, 0);
+		pushToLua(L, config().getFloat(key));
+		return 1;
+	});
+	lua_setfield(L, -2, "getFloat");
+
+	lua_pushcfunction(L, [](lua_State *L) {
+		UString section;
+		UString key;
+		getFromLua(L, 1, section);
+		getFromLua(L, 2, key);
+		lua_settop(L, 0);
+		pushToLua(L, config().describe(section, key));
+		return 1;
+	});
+	lua_setfield(L, -2, "describe");
+
+	lua_setfield(L, -2, "Config");
 }
 
 } // namespace OpenApoc

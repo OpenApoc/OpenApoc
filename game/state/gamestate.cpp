@@ -527,13 +527,13 @@ void GameState::fillOrgStartingProperty()
 		}
 	}
 
-	luaGameState.callHook("newGamePostInit", 0);
+	luaGameState.callHook("newGamePostInit", 0, 0);
 }
 
 void GameState::startGame()
 {
 	luaGameState.init(*this);
-	luaGameState.callHook("newGame", 0);
+	luaGameState.callHook("newGame", 0, 0);
 
 	agentEquipmentTemplates.resize(10);
 
@@ -784,7 +784,7 @@ void GameState::fillPlayerStartingProperty()
 	bld->city->cityViewScreenCenter = {buildingCenter.x, buildingCenter.y, 1.0f};
 }
 
-void GameState::updateEconomy() { luaGameState.callHook("updateEconomy", 0); }
+void GameState::updateEconomy() { luaGameState.callHook("updateEconomy", 0, 0); }
 
 void OpenApoc::GameState::updateUFOGrowth()
 {

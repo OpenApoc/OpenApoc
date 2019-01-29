@@ -80,4 +80,27 @@ void LuaGameState::init(GameState &game)
 
 LuaGameState::operator bool() const { return this->L != nullptr && this->initOk; }
 
+int LuaGameState::callHook(const UString &hookName, int nresults, int nargs)
+{
+	pushLuaDebugTraceback(L);
+	if (pushHook(hookName.str().c_str()))
+	{
+		// rotate the stack so the arguments are at the top and the
+		// debug.traceback and hook functions are at the bottom
+		lua_rotate(L, -2 - nargs, 2);
+		// the traceback function is under the hook function and its arguments
+		const int msgh = -2 - nargs;
+		if (lua_pcall(L, nargs, nresults, msgh))
+		{
+			// handle error and remove the error object at the top of the stack
+			handleLuaError(L);
+			nresults = 0;
+		}
+	}
+	// remove traceback function from stack
+	lua_remove(L, -1 - nresults);
+	// return number of results in the stack
+	return nresults;
+}
+
 } // namespace OpenApoc

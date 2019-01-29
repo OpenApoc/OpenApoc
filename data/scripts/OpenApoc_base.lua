@@ -1,6 +1,8 @@
 -- let's not get too verbose here
 local OA = OpenApoc
 local GS = OpenApoc.GameState
+local FW = OpenApoc.Framework
+
 local function pickRandom(t)
 	return t[GS.rng:randBoundsInclusive(1, #t)]
 end
@@ -41,8 +43,10 @@ OA.hook.newGame = function()
 	if oldNewGameHook then oldNewGameHook() end
 
 	--seed the rng on game start
-	local seed = os.time()
-	GS.rng:setState(seed, -seed)
+	if FW.Config.getBool("OpenApoc.NewFeature.SeedRng") == true then
+		local seed = os.time()
+		GS.rng:setState(seed, -seed)
+	end
 end
 
 local oldNewGamePostInitHook = OpenApoc.hook.newGamePostInit
