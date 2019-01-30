@@ -784,58 +784,6 @@ void GameState::fillPlayerStartingProperty()
 	bld->city->cityViewScreenCenter = {buildingCenter.x, buildingCenter.y, 1.0f};
 }
 
-void GameState::updateEconomy() { luaGameState.callHook("updateEconomy", 0, 0); }
-
-void OpenApoc::GameState::updateUFOGrowth()
-{
-	int week = this->gameTime.getWeek();
-	auto growth = this->ufo_growth_lists.find(format("%s%d", UFOGrowth::getPrefix(), week));
-	if (growth == this->ufo_growth_lists.end())
-	{
-		growth = this->ufo_growth_lists.find(format("%s%s", UFOGrowth::getPrefix(), "DEFAULT"));
-	}
-	auto limit = this->ufo_growth_lists.find(format("%s%s", UFOGrowth::getPrefix(), "LIMIT"));
-
-	if (growth != this->ufo_growth_lists.end())
-	{
-		StateRef<City> city = {this, "CITYMAP_ALIEN"};
-		StateRef<Organisation> alienOrg = {this, "ORG_ALIEN"};
-		std::uniform_int_distribution<int> xyPos(20, 120);
-
-		// Set a list of limits for vehicle types
-		std::map<UString, int> vehicleLimits;
-		// Increase value by limit
-		for (auto &v : limit->second->vehicleTypeList)
-		{
-			vehicleLimits[v.first] += v.second;
-		}
-		// Subtract existing vehicles
-		for (auto &v : vehicles)
-		{
-			if (v.second->owner == alienOrg && v.second->city == city)
-			{
-				vehicleLimits[v.second->type.id]--;
-			}
-		}
-
-		for (auto &vehicleEntry : growth->second->vehicleTypeList)
-		{
-			auto vehicleType = this->vehicle_types.find(vehicleEntry.first);
-			if (vehicleType != this->vehicle_types.end())
-			{
-				int toAdd = std::min(vehicleEntry.second, vehicleLimits[vehicleEntry.first]);
-				for (int i = 0; i < toAdd; i++)
-				{
-					auto &type = (*vehicleType).second;
-
-					auto v = city->placeVehicle(*this, {this, (*vehicleType).first}, alienOrg,
-					                            {xyPos(rng), xyPos(rng), city->size.z - 1});
-				}
-			}
-		}
-	}
-}
-
 void GameState::invasion()
 {
 	auto invadedCity = StateRef<City>{this, "CITYMAP_HUMAN"};
@@ -1292,24 +1240,7 @@ void GameState::updateEndOfDay()
 	Trace::end("GameState::updateEndOfDay::cities");
 }
 
-void GameState::updateEndOfWeek()
-{
-	LogWarning("Implement economy for orgs, for now just give em cash");
-	for (auto &o : organisations)
-	{
-		if (o.first == player.id)
-		{
-			continue;
-		}
-		if (o.second->balance < 100000)
-		{
-			o.second->balance = 100000;
-		}
-	}
-
-	updateUFOGrowth();
-	updateEconomy();
-}
+void GameState::updateEndOfWeek() { luaGameState.callHook("updateEndOfWeek", 0, 0); }
 
 void GameState::updateTurbo()
 {

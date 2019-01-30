@@ -114,6 +114,7 @@ template <typename T> void pushToLua(lua_State *L, const StateRef<T> &v)
 
 template <> lua_CFunction getLuaObjectMethods<GameState>(const std::string &key);
 template <> lua_CFunction getLuaObjectMethods<Agent>(const std::string &key);
+template <> lua_CFunction getLuaObjectMethods<City>(const std::string &key);
 template <> lua_CFunction getLuaObjectConstMethods<AgentGenerator>(const std::string &key);
 template <> lua_CFunction getLuaObjectConstMethods<GameTime>(const std::string &key);
 

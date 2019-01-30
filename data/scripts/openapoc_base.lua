@@ -34,6 +34,7 @@ end
 --print("}")
 
 dofile("data/scripts/update_economy.lua")
+dofile("data/scripts/update_ufo_growth.lua")
 
 local oldNewGameHook = OpenApoc.hook.newGame
 OA.hook.newGame = function()
@@ -66,7 +67,7 @@ OA.hook.newGamePostInit = function()
 	end
 	--nowehere to spawn, return here
 	if #buildingsWithoutBases == 0 then
-		print("no buildings without bases!")
+		FW.LogWarning("no buildings without bases!")
 		return
 	end
 
@@ -109,10 +110,18 @@ OA.hook.newGamePostInit = function()
 end
 
 
-local oldUpdateEconomyHook = OpenApoc.hook.updateEconomy
-OpenApoc.hook.updateEconomy = function()
-	if oldUpdateEconomyHook then oldUpdateEconomyHook() end
+local oldUpdateEndOfWeekHook = OpenApoc.hook.updateEndOfWeek
+OpenApoc.hook.updateEndOfWeek = function()
+	if oldUpdateEndOfWeekHook then oldUpdateEndOfWeekHook() end
 
-	-- TODO: Update UFO growth
+	FW.LogWarning("Implement economy for orgs, for now just give em cash")
+	for org_id, org_object in pairs(GS.organisations) do
+		if org_id ~= GS.player.id then
+			if org_object.balance < 100000 then
+				org_object.balance = 100000
+			end
+		end
+	end
+	updateUfoGrowth()
 	updateEconomy()
 end

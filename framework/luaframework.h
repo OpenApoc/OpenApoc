@@ -29,7 +29,10 @@ namespace OpenApoc
 // trying to get a value from the stack into a const reference (invalid)
 template <typename T> void getFromLua(lua_State *L, int argNum, const T &v)
 {
-	luaL_error(L, "this member cannot be set directly");
+	int idx = argNum;
+	if (argNum < 0)
+		argNum = lua_gettop(L) + argNum + 1;
+	luaL_error(L, "this member (#%d) cannot be set directly", argNum);
 }
 void getFromLua(lua_State *L, int argNum, bool &v);
 template <typename Int>
@@ -42,6 +45,26 @@ void getFromLua(lua_State *L, int argNum, float &v);
 void getFromLua(lua_State *L, int argNum, double &v);
 void getFromLua(lua_State *L, int argNum, UString &v);
 void getFromLua(lua_State *L, int argNum, std::string &v);
+template <typename T> void getFromLua(lua_State *L, int argNum, Vec3<T> &v)
+{
+	luaL_checktype(L, argNum, LUA_TTABLE);
+	lua_getfield(L, argNum, "x");
+	lua_getfield(L, argNum, "y");
+	lua_getfield(L, argNum, "z");
+	getFromLua(L, -3, v.x);
+	getFromLua(L, -2, v.y);
+	getFromLua(L, -1, v.z);
+	lua_pop(L, 3);
+}
+template <typename T> void getFromLua(lua_State *L, int argNum, Vec2<T> &v)
+{
+	luaL_checktype(L, argNum, LUA_TTABLE);
+	lua_getfield(L, argNum, "x");
+	lua_getfield(L, argNum, "y");
+	getFromLua(L, -2, v.x);
+	getFromLua(L, -1, v.y);
+	lua_pop(L, 2);
+}
 
 // functions for pushing objects to the lua stack
 void pushToLua(lua_State *L, const UString &v);

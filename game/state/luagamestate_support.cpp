@@ -58,6 +58,52 @@ template <> lua_CFunction getLuaObjectMethods<Agent>(const std::string &key)
 	return getLuaObjectConstMethods<Agent>(key);
 }
 
+template <> lua_CFunction getLuaObjectMethods<City>(const std::string &key)
+{
+	if (key == "placeVehicle")
+		return [](lua_State *L) {
+			City **obj = (City **)lua_touserdata(L, 1);
+			StateRef<VehicleType> vehicleType;
+			getFromLua(L, 2, vehicleType);
+			StateRef<Organisation> owner;
+			getFromLua(L, 3, owner);
+			lua_settop(L, 0);
+			pushToLua(L, (*obj)->placeVehicle(*getGameStateFromLua(L), vehicleType, owner));
+			return 1;
+		};
+	else if (key == "placeVehicleInBuilding")
+		return [](lua_State *L) {
+			City **obj = (City **)lua_touserdata(L, 1);
+			StateRef<VehicleType> vehicleType;
+			getFromLua(L, 2, vehicleType);
+			StateRef<Organisation> owner;
+			getFromLua(L, 3, owner);
+			StateRef<Building> building;
+			getFromLua(L, 4, building);
+			lua_settop(L, 0);
+			pushToLua(L,
+			          (*obj)->placeVehicle(*getGameStateFromLua(L), vehicleType, owner, building));
+			return 1;
+		};
+	else if (key == "placeVehicleAtPosition")
+		return [](lua_State *L) {
+			City **obj = (City **)lua_touserdata(L, 1);
+			StateRef<VehicleType> vehicleType;
+			getFromLua(L, 2, vehicleType);
+			StateRef<Organisation> owner;
+			getFromLua(L, 3, owner);
+			Vec3<float> position;
+			getFromLua(L, 4, position);
+			float facing = static_cast<float>(luaL_optnumber(L, 5, 0.0));
+			lua_settop(L, 0);
+			pushToLua(L,
+			          (*obj)->placeVehicle(*getGameStateFromLua(L), vehicleType, owner, position,
+			                               facing));
+			return 1;
+		};
+	return getLuaObjectConstMethods<City>(key);
+}
+
 template <> lua_CFunction getLuaObjectConstMethods<AgentGenerator>(const std::string &key)
 {
 	if (key == "createAgent")

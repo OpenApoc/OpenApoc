@@ -207,9 +207,6 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// Fills out initial player property
 	void fillPlayerStartingProperty();
 
-	void updateEconomy();
-	void updateUFOGrowth();
-
 	void invasion();
 
 	// Returns true if we can go at max speed (IE push all update loops to 5 minute intervals -
