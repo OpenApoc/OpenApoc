@@ -7,11 +7,12 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 find_package(Boost REQUIRED COMPONENTS program_options)
 
 set (GAMESTATESERIALIZEGEN_SOURCE_FILES
-	main.cpp)
+	main.cpp ../serialization_xml.cpp)
 
 source_group(gamestateserailizegen\\sources FILES ${GAMESTATESERIALIZEGEN_SOURCE_FILES})
 
-set (GAMESTATESERIALIZEGEN_HEADER_FILES)
+set (GAMESTATESERIALIZEGEN_HEADER_FILES
+	../serialization_xml.h)
 
 source_group(gamestateserailizegen\\headers FILES ${GAMESTATESERIALIZEGEN_HEADER_FILES})
 
@@ -28,3 +29,4 @@ target_link_libraries(OpenApoc_GamestateSerializeGen OpenApoc_LibPugixml
 
 target_include_directories(OpenApoc_GamestateSerializeGen PUBLIC ${Boost_INCLUDE_DIRS})
 target_include_directories(OpenApoc_GamestateSerializeGen PUBLIC ${CMAKE_SOURCE_DIR})
+target_include_directories(OpenApoc_GamestateSerializeGen PUBLIC ..)

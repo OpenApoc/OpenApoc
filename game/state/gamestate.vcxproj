@@ -66,6 +66,9 @@
     <ClCompile Include="gamestate.cpp" />
     <ClCompile Include="gamestate_serialize.cpp" />
     <ClCompile Include="gamestate_serialize_generated.cpp" />
+    <ClCompile Include="luagamestate.cpp" />
+    <ClCompile Include="luagamestate_support.cpp" />
+    <ClCompile Include="luagamestate_support_generated.cpp" />
     <ClCompile Include="gametime.cpp" />
     <ClCompile Include="message.cpp" />
     <ClCompile Include="shared\organisation.cpp" />
@@ -153,6 +156,9 @@
     <ClInclude Include="gamestate.h" />
     <ClInclude Include="gamestate_serialize.h" />
     <ClInclude Include="gamestate_serialize_generated.h" />
+    <ClInclude Include="luagamestate.h" />
+    <ClInclude Include="luagamestate_support.h" />
+    <ClInclude Include="luagamestate_support_generated.h" />
     <ClInclude Include="gametime.h" />
     <ClInclude Include="gametime_facet.h" />
     <ClInclude Include="message.h" />
@@ -190,8 +196,14 @@
     <ProjectReference Include="..\..\framework\framework.vcxproj">
       <Project>{a61ce9b3-b257-4978-9e8b-cabb592ec2ce}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\tools\gamestate_serialize_gen\gamestate_serialize_gen.vcxproj">
+    <ProjectReference Include="..\..\tools\code_generators\gamestate_serialize_gen\gamestate_serialize_gen.vcxproj">
       <Project>{31fbccbd-bfd2-45fc-b9df-3375684a3157}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\tools\code_generators\luagamestate_support_gen\luagamestate_support_gen.vcxproj">
+      <Project>{31fbccbd-bfd2-45fc-b9df-3375684a3158}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\dependencies\lua.vcxproj">
+      <Project>{44a12ac1-7e09-4aF7-bac4-a264c2f814a8}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -271,6 +283,14 @@
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
+  <ItemDefinitionGroup>
+    <CustomBuildStep>
+      <Command>"$(SolutionDir)bin\$(Platform)\$(Configuration)\luagamestate_support_gen.exe" -x "$(SolutionDir)\game\state\gamestate_serialize.xml" -h "$(SolutionDir)\game\state\luagamestate_support_generated.h" -o "$(SolutionDir)\game\state\luagamestate_support_generated.cpp" &amp; "$(SolutionDir)bin\$(Platform)\$(Configuration)\gamestate_serialize_gen.exe" -x "$(SolutionDir)\game\state\gamestate_serialize.xml" -h "$(SolutionDir)\game\state\gamestate_serialize_generated.h" -o "$(SolutionDir)\game\state\gamestate_serialize_generated.cpp"</Command>
+      <Inputs>$(SolutionDir)\game\state\gamestate_serialize.xml;%(Inputs)</Inputs>
+      <Message>Generating lua interface and gamestate serialization code</Message>
+      <Outputs>$(SolutionDir)\game\state\luagamestate_support_generated.cpp;$(SolutionDir)\game\state\luagamestate_support_generated.h;$(SolutionDir)\game\state\gamestate_serialize_generated.cpp;$(SolutionDir)\game\state\gamestate_serialize_generated.h</Outputs>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
@@ -284,14 +304,6 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <CustomBuildStep>
-      <Command>"$(SolutionDir)bin\$(Platform)\$(Configuration)\gamestate_serialize_gen.exe" -x "$(SolutionDir)\game\state\gamestate_serialize.xml" -h "$(SolutionDir)\game\state\gamestate_serialize_generated.h" -o "$(SolutionDir)\game\state\gamestate_serialize_generated.cpp"</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Inputs>$(SolutionDir)\game\state\gamestate_serialize.xml;%(Inputs)</Inputs>
-      <Message>Generating gamestate serialization code</Message>
-      <Outputs>$(SolutionDir)\game\state\gamestate_serialize_generated.cpp;$(SolutionDir)\game\state\gamestate_serialize_generated.h</Outputs>
-    </CustomBuildStep>
     <Lib>
       <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
@@ -309,14 +321,6 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
-    <CustomBuildStep>
-      <Command>"$(SolutionDir)bin\$(Platform)\$(Configuration)\gamestate_serialize_gen.exe" -x "$(SolutionDir)\game\state\gamestate_serialize.xml" -h "$(SolutionDir)\game\state\gamestate_serialize_generated.h" -o "$(SolutionDir)\game\state\gamestate_serialize_generated.cpp"</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Inputs>$(SolutionDir)\game\state\gamestate_serialize.xml;%(Inputs)</Inputs>
-      <Message>Generating gamestate serialization code</Message>
-      <Outputs>$(SolutionDir)\game\state\gamestate_serialize_generated.cpp;$(SolutionDir)\game\state\gamestate_serialize_generated.h</Outputs>
-    </CustomBuildStep>
     <Lib>
       <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
@@ -336,14 +340,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
-    <CustomBuildStep>
-      <Command>"$(SolutionDir)bin\$(Platform)\$(Configuration)\gamestate_serialize_gen.exe" -x "$(SolutionDir)\game\state\gamestate_serialize.xml" -h "$(SolutionDir)\game\state\gamestate_serialize_generated.h" -o "$(SolutionDir)\game\state\gamestate_serialize_generated.cpp"</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Inputs>$(SolutionDir)\game\state\gamestate_serialize.xml;%(Inputs)</Inputs>
-      <Message>Generating gamestate serialization code</Message>
-      <Outputs>$(SolutionDir)\game\state\gamestate_serialize_generated.cpp;$(SolutionDir)\game\state\gamestate_serialize_generated.h</Outputs>
-    </CustomBuildStep>
     <Lib>
       <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>
@@ -363,14 +359,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
-    <CustomBuildStep>
-      <Command>"$(SolutionDir)bin\$(Platform)\$(Configuration)\gamestate_serialize_gen.exe" -x "$(SolutionDir)\game\state\gamestate_serialize.xml" -h "$(SolutionDir)\game\state\gamestate_serialize_generated.h" -o "$(SolutionDir)\game\state\gamestate_serialize_generated.cpp"</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Inputs>$(SolutionDir)\game\state\gamestate_serialize.xml;%(Inputs)</Inputs>
-      <Message>Generating gamestate serialization code</Message>
-      <Outputs>$(SolutionDir)\game\state\gamestate_serialize_generated.cpp;$(SolutionDir)\game\state\gamestate_serialize_generated.h</Outputs>
-    </CustomBuildStep>
     <Lib>
       <LinkTimeCodeGeneration>false</LinkTimeCodeGeneration>
     </Lib>

@@ -134,6 +134,12 @@ StateRef<Organisation> GameState::getCivilian() { return this->civilian; }
 
 void GameState::initState()
 {
+	// the LuaGameState has not been initialized if we're loading a saved game
+	if (!luaGameState)
+	{
+		luaGameState.init(*this);
+	}
+
 	if (current_battle)
 	{
 		current_battle->initBattle(*this);
@@ -220,46 +226,7 @@ void GameState::initState()
 	skipTurboCalculations = config().getBool("OpenApoc.NewFeature.SkipTurboMovement");
 }
 
-void GameState::applyMods()
-{
-	if (config().getBool("OpenApoc.Mod.ATVTank"))
-	{
-		vehicle_types["VEHICLETYPE_GRIFFON_AFV"]->type = VehicleType::Type::ATV;
-	}
-	else
-	{
-		vehicle_types["VEHICLETYPE_GRIFFON_AFV"]->type = VehicleType::Type::Road;
-	}
-
-	if (config().getBool("OpenApoc.Mod.ATVAPC"))
-	{
-		vehicle_types["VEHICLETYPE_WOLFHOUND_APC"]->type = VehicleType::Type::ATV;
-	}
-	else
-	{
-		vehicle_types["VEHICLETYPE_WOLFHOUND_APC"]->type = VehicleType::Type::Road;
-	}
-
-	if (config().getBool("OpenApoc.Mod.BSKLauncherSound"))
-	{
-		agent_equipment["AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER"]->fire_sfx =
-		    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/sucklaun.raw:22050");
-	}
-	else
-	{
-		agent_equipment["AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER"]->fire_sfx =
-		    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/powers.raw:22050");
-	}
-
-	bool crashVehicles = config().getBool("OpenApoc.Mod.CrashingVehicles");
-	for (auto &e : vehicle_types)
-	{
-		if (e.second->type != VehicleType::Type::UFO)
-		{
-			e.second->crash_health = crashVehicles ? e.second->health / 7 : 0;
-		}
-	}
-}
+void GameState::applyMods() { luaGameState.callHook("applyMods", 0, 0); }
 
 void GameState::setCurrentCity(StateRef<City> city)
 {
@@ -520,18 +487,14 @@ void GameState::fillOrgStartingProperty()
 			          m.pattern.minIntervalRepeat / 2;
 		}
 	}
+
+	luaGameState.callHook("newGamePostInit", 0, 0);
 }
 
 void GameState::startGame()
 {
-	// seed rng with current timer if option is set
-	// leave the rng default constructed otherwise
-	if (config().getBool("OpenApoc.NewFeature.SeedRng"))
-	{
-		std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(
-		    std::chrono::system_clock::now().time_since_epoch());
-		rng = Xorshift128Plus<uint32_t>(ms.count());
-	}
+	luaGameState.init(*this);
+	luaGameState.callHook("newGame", 0, 0);
 
 	agentEquipmentTemplates.resize(10);
 
@@ -780,111 +743,6 @@ void GameState::fillPlayerStartingProperty()
 
 	Vec2<int> buildingCenter = (bldBounds.p0 + bldBounds.p1) / 2;
 	bld->city->cityViewScreenCenter = {buildingCenter.x, buildingCenter.y, 1.0f};
-}
-
-void GameState::updateEconomy()
-{
-	std::list<UString> newItems;
-
-	for (auto &v : vehicle_types)
-	{
-		if (economy.find(v.first) != economy.end())
-		{
-			if (economy[v.first].update(*this, v.second->manufacturer == getPlayer()))
-			{
-				newItems.push_back(v.second->name);
-			}
-		}
-	}
-	for (auto &ve : vehicle_equipment)
-	{
-		if (economy.find(ve.first) != economy.end())
-		{
-			if (economy[ve.first].update(*this, ve.second->manufacturer == getPlayer()))
-			{
-				newItems.push_back(ve.second->name);
-			}
-		}
-	}
-	for (auto &va : vehicle_ammo)
-	{
-		if (economy.find(va.first) != economy.end())
-		{
-			if (economy[va.first].update(*this, va.second->manufacturer == getPlayer()))
-			{
-				newItems.push_back(va.second->name);
-			}
-		}
-	}
-	for (auto &ae : agent_equipment)
-	{
-		if (economy.find(ae.first) != economy.end())
-		{
-			if (economy[ae.first].update(*this, ae.second->manufacturer == getPlayer()))
-			{
-				newItems.push_back(ae.second->name);
-			}
-		}
-	}
-
-	if (!newItems.empty())
-	{
-		LogWarning("Notify that new items are here!");
-		for (auto &s : newItems)
-		{
-			LogWarning("%s", s);
-		}
-	}
-}
-
-void OpenApoc::GameState::updateUFOGrowth()
-{
-	int week = this->gameTime.getWeek();
-	auto growth = this->ufo_growth_lists.find(format("%s%d", UFOGrowth::getPrefix(), week));
-	if (growth == this->ufo_growth_lists.end())
-	{
-		growth = this->ufo_growth_lists.find(format("%s%s", UFOGrowth::getPrefix(), "DEFAULT"));
-	}
-	auto limit = this->ufo_growth_lists.find(format("%s%s", UFOGrowth::getPrefix(), "LIMIT"));
-
-	if (growth != this->ufo_growth_lists.end())
-	{
-		StateRef<City> city = {this, "CITYMAP_ALIEN"};
-		StateRef<Organisation> alienOrg = {this, "ORG_ALIEN"};
-		std::uniform_int_distribution<int> xyPos(20, 120);
-
-		// Set a list of limits for vehicle types
-		std::map<UString, int> vehicleLimits;
-		// Increase value by limit
-		for (auto &v : limit->second->vehicleTypeList)
-		{
-			vehicleLimits[v.first] += v.second;
-		}
-		// Subtract existing vehicles
-		for (auto &v : vehicles)
-		{
-			if (v.second->owner == alienOrg && v.second->city == city)
-			{
-				vehicleLimits[v.second->type.id]--;
-			}
-		}
-
-		for (auto &vehicleEntry : growth->second->vehicleTypeList)
-		{
-			auto vehicleType = this->vehicle_types.find(vehicleEntry.first);
-			if (vehicleType != this->vehicle_types.end())
-			{
-				int toAdd = std::min(vehicleEntry.second, vehicleLimits[vehicleEntry.first]);
-				for (int i = 0; i < toAdd; i++)
-				{
-					auto &type = (*vehicleType).second;
-
-					auto v = city->placeVehicle(*this, {this, (*vehicleType).first}, alienOrg,
-					                            {xyPos(rng), xyPos(rng), city->size.z - 1});
-				}
-			}
-		}
-	}
 }
 
 void GameState::invasion()
@@ -1343,24 +1201,7 @@ void GameState::updateEndOfDay()
 	Trace::end("GameState::updateEndOfDay::cities");
 }
 
-void GameState::updateEndOfWeek()
-{
-	LogWarning("Implement economy for orgs, for now just give em cash");
-	for (auto &o : organisations)
-	{
-		if (o.first == player.id)
-		{
-			continue;
-		}
-		if (o.second->balance < 100000)
-		{
-			o.second->balance = 100000;
-		}
-	}
-
-	updateUFOGrowth();
-	updateEconomy();
-}
+void GameState::updateEndOfWeek() { luaGameState.callHook("updateEndOfWeek", 0, 0); }
 
 void GameState::updateTurbo()
 {

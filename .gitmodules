@@ -20,3 +20,6 @@
 [submodule "dependencies/tinyformat"]
 	path = dependencies/tinyformat
 	url = https://github.com/c42f/tinyformat.git
+[submodule "dependencies/lua"]
+	path = dependencies/lua
+	url = https://github.com/lua/lua.git

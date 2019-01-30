@@ -265,6 +265,10 @@ ConfigOptionBool optionATVAPC("OpenApoc.Mod", "ATVAPC", "(MOD) Wolfhound APC bec
 ConfigOptionBool optionCrashingVehicles("OpenApoc.Mod", "CrashingVehicles",
                                         "Vehicles crash on low HP", false);
 
+ConfigOptionString optionScriptsList("OpenApoc.Mod", "ScriptsList",
+                                     "Semicolon-separated list of scripts to load",
+                                     "data/scripts/openapoc_base.lua;");
+
 ConfigOptionBool optionInfiniteAmmoCheat("OpenApoc.Cheat", "InfiniteAmmo",
                                          "Infinite ammo for X-Com agents and vehicles", false);
 ConfigOptionFloat optionDamageInflictedMultiplierCheat("OpenApoc.Cheat",

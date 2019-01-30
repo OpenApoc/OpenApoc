@@ -30,4 +30,4 @@ if (BUILD_SERIALIZATIONTOOL)
 endif()
 
 # GameState serialization code generator isn't optional
-add_subdirectory(gamestate_serialize_gen)
+add_subdirectory(code_generators)
