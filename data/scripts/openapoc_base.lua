@@ -2,6 +2,7 @@
 local OA = OpenApoc
 local GS = OpenApoc.GameState
 local FW = OpenApoc.Framework
+local CFG = OpenApoc.Framework.Config
 
 function pickRandom(t)
 	return t[GS.rng:randBoundsInclusive(1, #t)]
@@ -33,8 +34,8 @@ end
 --table.dump(OpenApoc, 1)
 --print("}")
 
-dofile("data/scripts/update_economy.lua")
-dofile("data/scripts/update_ufo_growth.lua")
+dofile('data/scripts/update_economy.lua')
+dofile('data/scripts/update_ufo_growth.lua')
 
 local oldNewGameHook = OpenApoc.hook.newGame
 OA.hook.newGame = function()
@@ -42,9 +43,30 @@ OA.hook.newGame = function()
 	if oldNewGameHook then oldNewGameHook() end
 
 	--seed the rng on game start
-	if FW.Config.getBool("OpenApoc.NewFeature.SeedRng") == true then
+	if CFG.getBool('OpenApoc.NewFeature.SeedRng') == true then
 		local seed = os.time()
 		GS.rng:setState(seed, -seed)
+	end
+end
+
+local oldApplyModsHook = OpenApoc.hook.applyMods
+OA.hook.applyMods = function()
+	if oldApplyModsHook then oldApplyModsHook() end
+
+	GS.vehicle_types['VEHICLETYPE_GRIFFON_AFV'].type = CFG.getBool('OpenApoc.Mod.ATVTank') and OA.enum.VehicleType.Type.ATV or OA.enum.VehicleType.Type.Road
+	GS.vehicle_types['VEHICLETYPE_WOLFHOUND_APC'].type = CFG.getBool('OpenApoc.Mod.ATVAPC') and OA.enum.VehicleType.Type.ATV or OA.enum.VehicleType.Type.Road
+
+	if CFG.getBool('OpenApoc.Mod.BSKLauncherSound') then
+		GS.agent_equipment['AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER'].fire_sfx = 'RAWSOUND:xcom3/rawsound/tactical/weapons/sucklaun.raw:22050'
+	else
+		GS.agent_equipment['AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER'].fire_sfx = 'RAWSOUND:xcom3/rawsound/tactical/weapons/powers.raw:22050'
+	end
+
+	local crashVehicles = CFG.getBool('OpenApoc.Mod.CrashingVehicles')
+	for vt_id, vt_object in pairs(GS.vehicle_types) do
+		if vt_object.type ~= OA.enum.VehicleType.Type.UFO then
+			vt_object.crash_health = crashVehicles and e.second.health//7 or 0
+		end
 	end
 end
 
@@ -67,7 +89,7 @@ OA.hook.newGamePostInit = function()
 	end
 	--nowehere to spawn, return here
 	if #buildingsWithoutBases == 0 then
-		FW.LogWarning("no buildings without bases!")
+		FW.LogWarning('no buildings without bases!')
 		return
 	end
 
@@ -114,7 +136,7 @@ local oldUpdateEndOfWeekHook = OpenApoc.hook.updateEndOfWeek
 OpenApoc.hook.updateEndOfWeek = function()
 	if oldUpdateEndOfWeekHook then oldUpdateEndOfWeekHook() end
 
-	FW.LogWarning("Implement economy for orgs, for now just give em cash")
+	FW.LogWarning('Implement economy for orgs, for now just give em cash')
 	for org_id, org_object in pairs(GS.organisations) do
 		if org_id ~= GS.player.id then
 			if org_object.balance < 100000 then

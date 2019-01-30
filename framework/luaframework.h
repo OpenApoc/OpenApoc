@@ -26,14 +26,6 @@ namespace OpenApoc
 
 // functions for getting objects from the lua stack
 
-// trying to get a value from the stack into a const reference (invalid)
-template <typename T> void getFromLua(lua_State *L, int argNum, const T &v)
-{
-	int idx = argNum;
-	if (argNum < 0)
-		argNum = lua_gettop(L) + argNum + 1;
-	luaL_error(L, "this member (#%d) cannot be set directly", argNum);
-}
 void getFromLua(lua_State *L, int argNum, bool &v);
 template <typename Int>
 typename std::enable_if<std::is_integral<Int>::value, void>::type getFromLua(lua_State *L,
@@ -64,6 +56,23 @@ template <typename T> void getFromLua(lua_State *L, int argNum, Vec2<T> &v)
 	getFromLua(L, -2, v.x);
 	getFromLua(L, -1, v.y);
 	lua_pop(L, 2);
+}
+void getFromLua(lua_State *L, int argNum, sp<Image> &v);
+void getFromLua(lua_State *L, int argNum, sp<Sample> &v);
+template <typename T>
+typename std::enable_if<std::is_enum<T>::value>::type getFromLua(lua_State *L, int argNum, T &v)
+{
+	typename std::underlying_type<T>::type integer;
+	getFromLua(L, argNum, integer);
+	v = static_cast<T>(integer);
+}
+// trying to get a value from the stack into a const reference (invalid)
+template <typename T> void getFromLua(lua_State *L, int argNum, const T &v)
+{
+	int idx = argNum;
+	if (argNum < 0)
+		argNum = lua_gettop(L) + argNum + 1;
+	luaL_error(L, "this member (#%d) cannot be set directly", argNum);
 }
 
 // functions for pushing objects to the lua stack

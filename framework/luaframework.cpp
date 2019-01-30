@@ -1,6 +1,7 @@
 
 #include "luaframework.h"
 #include "configfile.h"
+#include "framework.h"
 
 namespace OpenApoc
 {
@@ -31,6 +32,20 @@ void getFromLua(lua_State *L, int argNum, std::string &v)
 	size_t len;
 	const char *buf = luaL_checklstring(L, argNum, &len);
 	v = std::string(buf, len);
+}
+// note: constructing a new sp from the underlying object type is UB
+// so we get these resources from lua through a string
+void getFromLua(lua_State *L, int argNum, sp<Image> &v)
+{
+	UString path;
+	getFromLua(L, argNum, path);
+	v = fw().data->loadImage(path);
+}
+void getFromLua(lua_State *L, int argNum, sp<Sample> &v)
+{
+	UString path;
+	getFromLua(L, argNum, path);
+	v = fw().data->loadSample(path);
 }
 
 void pushToLua(lua_State *L, const UString &v) { lua_pushlstring(L, v.cStr(), v.cStrLength()); }

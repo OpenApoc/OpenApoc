@@ -226,46 +226,7 @@ void GameState::initState()
 	skipTurboCalculations = config().getBool("OpenApoc.NewFeature.SkipTurboMovement");
 }
 
-void GameState::applyMods()
-{
-	if (config().getBool("OpenApoc.Mod.ATVTank"))
-	{
-		vehicle_types["VEHICLETYPE_GRIFFON_AFV"]->type = VehicleType::Type::ATV;
-	}
-	else
-	{
-		vehicle_types["VEHICLETYPE_GRIFFON_AFV"]->type = VehicleType::Type::Road;
-	}
-
-	if (config().getBool("OpenApoc.Mod.ATVAPC"))
-	{
-		vehicle_types["VEHICLETYPE_WOLFHOUND_APC"]->type = VehicleType::Type::ATV;
-	}
-	else
-	{
-		vehicle_types["VEHICLETYPE_WOLFHOUND_APC"]->type = VehicleType::Type::Road;
-	}
-
-	if (config().getBool("OpenApoc.Mod.BSKLauncherSound"))
-	{
-		agent_equipment["AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER"]->fire_sfx =
-		    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/sucklaun.raw:22050");
-	}
-	else
-	{
-		agent_equipment["AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER"]->fire_sfx =
-		    fw().data->loadSample("RAWSOUND:xcom3/rawsound/tactical/weapons/powers.raw:22050");
-	}
-
-	bool crashVehicles = config().getBool("OpenApoc.Mod.CrashingVehicles");
-	for (auto &e : vehicle_types)
-	{
-		if (e.second->type != VehicleType::Type::UFO)
-		{
-			e.second->crash_health = crashVehicles ? e.second->health / 7 : 0;
-		}
-	}
-}
+void GameState::applyMods() { luaGameState.callHook("applyMods", 0, 0); }
 
 void GameState::setCurrentCity(StateRef<City> city)
 {
