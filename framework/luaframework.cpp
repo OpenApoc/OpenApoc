@@ -57,11 +57,22 @@ void pushToLua(lua_State *L, unsigned int v) { lua_pushinteger(L, v); }
 void pushToLua(lua_State *L, uint64_t v) { lua_pushinteger(L, v); }
 void pushToLua(lua_State *L, float v) { lua_pushnumber(L, v); }
 void pushToLua(lua_State *L, double v) { lua_pushnumber(L, v); }
-
-void pushToLua(lua_State *L, sp<Image> &v) { lua_pushnil(L); }
+void pushToLua(lua_State *L, sp<Image> &v)
+{
+	if (v)
+		pushToLua(L, v->path);
+	else
+		lua_pushnil(L);
+}
 void pushToLua(lua_State *L, sp<LazyImage> &v) { lua_pushnil(L); }
 void pushToLua(lua_State *L, sp<VoxelSlice> &v) { lua_pushnil(L); }
-void pushToLua(lua_State *L, sp<Sample> &v) { lua_pushnil(L); }
+void pushToLua(lua_State *L, sp<Sample> &v)
+{
+	if (v)
+		pushToLua(L, v->path);
+	else
+		lua_pushnil(L);
+}
 void pushToLua(lua_State *L, sp<VoxelMap> &v) { lua_pushnil(L); }
 void pushToLua(lua_State *L, Colour &v)
 {
