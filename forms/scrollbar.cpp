@@ -91,10 +91,14 @@ void ScrollBar::eventOccured(Event *e)
 		switch (BarOrientation)
 		{
 			case Orientation::Vertical:
-				mousePosition = e->forms().MouseInfo.Y;
+				// MouseInfo.X/Y is relative to the control that raised it
+				// make it relative to this control instead
+				mousePosition = e->forms().MouseInfo.Y +
+				                e->forms().RaisedBy->getLocationOnScreen().y - resolvedLocation.y;
 				break;
 			case Orientation::Horizontal:
-				mousePosition = e->forms().MouseInfo.X;
+				mousePosition = e->forms().MouseInfo.X +
+				                e->forms().RaisedBy->getLocationOnScreen().x - resolvedLocation.x;
 				break;
 		}
 	}
@@ -123,8 +127,8 @@ void ScrollBar::eventOccured(Event *e)
 		capture = false;
 	}
 
-	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
-	    e->forms().EventFlag == FormEventType::MouseMove && capture)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::MouseMove &&
+	    capture)
 	{
 		this->setValue(static_cast<int>(mousePosition / segmentsize) + Minimum);
 	}
