@@ -1,5 +1,6 @@
 #pragma once
 
+#include "strings.h"
 #include <cstdint>
 
 namespace OpenApoc
@@ -17,6 +18,10 @@ class Colour
 		        this->a == other.a);
 	}
 	bool operator!=(const Colour &other) const { return !(*this == other); }
+	// convert html4 color name to a color object (case-insensitive)
+	static Colour FromHtmlName(const UString &name);
+	// convert a hex triplet such as #ff00ff into a color object (case-insensitive)
+	static Colour FromHex(const UString &hexcode);
 };
 
 static_assert(sizeof(Colour) == 4, "Colour should be 4 bytes");
