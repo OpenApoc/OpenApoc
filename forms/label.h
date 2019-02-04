@@ -24,6 +24,7 @@ class Label : public Control
 	HorizontalAlignment TextHAlign;
 	VerticalAlignment TextVAlign;
 	bool WordWrap;
+	Colour Tint{255, 255, 255, 255};
 
 	Label(const UString &Text = "", sp<BitmapFont> font = nullptr);
 	~Label() override;
