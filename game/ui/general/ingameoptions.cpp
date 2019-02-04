@@ -157,12 +157,12 @@ void InGameOptions::loadList(int id)
 	{
 		auto checkBox = mksp<CheckBox>(fw().data->loadImage("BUTTON_CHECKBOX_TRUE"),
 		                               fw().data->loadImage("BUTTON_CHECKBOX_FALSE"));
-		checkBox->Size = {240, 16};
+		checkBox->Size = {240, listControl->ItemSize};
 		UString full_name = p.first + "." + p.second;
 		checkBox->setData(mksp<UString>(full_name));
 		checkBox->setChecked(config().getBool(full_name));
 		auto label = checkBox->createChild<Label>(tr(config().describe(p.first, p.second)), font);
-		label->Size = {216, 16};
+		label->Size = {216, listControl->ItemSize};
 		label->Location = {24, 0};
 		listControl->addItem(checkBox);
 	}

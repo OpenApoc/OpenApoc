@@ -117,7 +117,7 @@
         <listbox id="NOTIFICATIONS_LIST" scrollbarid="NOTIFICATIONS_SCROLL">
           <position x="311" y="76"/>
           <size width="240" height="330"/>
-          <item size="0" spacing="4"/>
+          <item size="16" spacing="4"/>
           <hovercolour r="255" g="255" b="255" a="0"/>
           <selcolour r="255" g="255" b="255" a="0"/>
         </listbox>
