@@ -621,14 +621,13 @@ TransactionControl::createControl(const UString &id, Type type, const UString &n
 		label->TextVAlign = VerticalAlignment::Centre;
 	}
 	// Manufacturer
-	// FIXME: When we have color instead of asterisk color hostile manufacturer's name in red or
-	// something?
 	if (control->manufacturerName.length() > 0)
 	{
-		auto label = control->createChild<Label>(format("%s%s%s", manufacturerHostile ? "*" : "",
-		                                                manufacturerUnavailable ? "X" : "",
-		                                                tr(control->manufacturerName)),
-		                                         labelFont);
+		auto label = control->createChild<Label>(tr(control->manufacturerName), labelFont);
+		if (manufacturerHostile || manufacturerUnavailable)
+		{
+			label->Tint = {255, 50, 25};
+		}
 		label->Location = {34, 3};
 		label->Size = {256, 16};
 		label->TextHAlign = HorizontalAlignment::Right;
