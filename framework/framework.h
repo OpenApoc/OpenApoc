@@ -14,6 +14,7 @@ class GameCore;
 class FrameworkPrivate;
 class ApocCursor;
 class Event;
+class Image;
 class Data;
 class Renderer;
 class SoundBackend;
@@ -83,6 +84,12 @@ class Framework
 
 	void textStartInput();
 	void textStopInput();
+
+	void toolTipStartTimer(up<Event> e);
+	void toolTipStopTimer();
+	void toolTipTimerCallback(unsigned int interval, void *data);
+	void showToolTip(sp<Image> image, const Vec2<int> &position);
+
 	UString textGetClipboard();
 
 	void threadPoolTaskEnqueue(std::function<void()> task);

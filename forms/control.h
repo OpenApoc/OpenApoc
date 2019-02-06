@@ -8,6 +8,7 @@
 #include <functional>
 #include <list>
 #include <map>
+#include <optional>
 
 namespace pugi
 {
@@ -17,6 +18,7 @@ class xml_node;
 namespace OpenApoc
 {
 
+class BitmapFont;
 class Form;
 class Event;
 class Surface;
@@ -83,6 +85,9 @@ class Control : public std::enable_shared_from_this<Control>
 	bool takesFocus;
 	bool showBounds;
 	bool Enabled;
+
+	UString ToolTipText;
+	sp<BitmapFont> ToolTipFont;
 
 	bool canCopy;
 	wp<Control> lastCopiedTo;

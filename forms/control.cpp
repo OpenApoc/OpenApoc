@@ -194,9 +194,7 @@ void Control::eventOccured(Event *e)
 					{
 						this->pushFormEvent(FormEventType::MouseEnter, &fakeMouseEvent);
 					}
-
 					this->pushFormEvent(FormEventType::MouseMove, &fakeMouseEvent);
-
 					e->Handled = true;
 				}
 				else
@@ -268,6 +266,60 @@ void Control::eventOccured(Event *e)
 			this->pushFormEvent(FormEventType::TextInput, e);
 
 			e->Handled = true;
+		}
+	}
+
+	if (e->type() == EVENT_FORM_INTERACTION)
+	{
+		if (e->forms().EventFlag == FormEventType::MouseMove)
+		{
+			if (e->forms().RaisedBy == shared_from_this())
+			{
+				if (!ToolTipText.empty())
+				{
+					up<FormsEvent> toolTipEvent = mkup<FormsEvent>();
+					;
+					toolTipEvent->forms().RaisedBy = shared_from_this();
+					toolTipEvent->forms().EventFlag = FormEventType::ToolTip;
+					toolTipEvent->forms().MouseInfo = e->forms().MouseInfo;
+					fw().toolTipStartTimer(std::move(toolTipEvent));
+				}
+				else
+				{
+					fw().toolTipStopTimer();
+				}
+			}
+		}
+		else if (e->forms().EventFlag == FormEventType::ToolTip)
+		{
+			if (e->forms().RaisedBy == shared_from_this())
+			{
+				Vec2<int> pos = {e->forms().MouseInfo.X, e->forms().MouseInfo.Y};
+				e->Handled = true;
+
+				sp<Image> textImage = ToolTipFont->getString(tr(ToolTipText));
+				sp<Surface> surface = mksp<Surface>(textImage->size + Vec2<unsigned int>{6, 6});
+
+				RendererSurfaceBinding b(*fw().renderer, surface);
+
+				fw().renderer->drawFilledRect({0, 0}, surface->size, {128, 128, 128});
+				fw().renderer->drawRect({0, 0}, surface->size, {0, 0, 0});
+				fw().renderer->drawRect({1, 1}, surface->size - Vec2<unsigned int>{2, 2},
+				                        {255, 255, 255});
+				fw().renderer->draw(textImage, {3, 3});
+
+				fw().showToolTip(surface,
+				                 pos + resolvedLocation -
+				                     Vec2<int>{surface->size.x / 2, surface->size.y});
+			}
+		}
+	}
+	else if (e->forms().EventFlag == FormEventType::MouseClick ||
+	         e->forms().EventFlag == FormEventType::MouseDown)
+	{
+		if (e->forms().RaisedBy == shared_from_this())
+		{
+			fw().toolTipStopTimer();
 		}
 	}
 }
@@ -647,6 +699,17 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 				}
 			}
 		}
+		else if (childName == "tooltip")
+		{
+			if (ToolTipFont = ui().getFont(child.attribute("font").as_string()))
+			{
+				ToolTipText = child.attribute("text").as_string();
+			}
+			else
+			{
+				LogWarning("Could not find font for tooltip of control \"%s\"", Name);
+			}
+		}
 	}
 
 	if (specialpositionx != "")
@@ -905,6 +968,8 @@ void Control::copyControlData(sp<Control> CopyOf)
 	CopyOf->takesFocus = this->takesFocus;
 	CopyOf->showBounds = this->showBounds;
 	CopyOf->Visible = this->Visible;
+	CopyOf->ToolTipText = this->ToolTipText;
+	CopyOf->ToolTipFont = this->ToolTipFont;
 
 	for (auto &c : Controls)
 	{
