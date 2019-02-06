@@ -157,19 +157,7 @@
 			<size width="90" height="16"/>
 		  </label>
 		</checkbox>
-       
-        <checkbox id="TOOL_TIPS">
-          <position x="310" y="450"/>
-          <size width="120" height="16"/>
-          <image>BUTTON_CHECKBOX_FALSE</image>
-          <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
-          <label text="Tool tips">
-			<position x="24" y="0"/>
-			<font>smalfont</font>
-			<size width="90" height="16"/>
-          </label>
-		</checkbox>
-       
+ 
 		<checkbox id="ACTION_MUSIC">
           <position x="440" y="430"/>
           <size width="120" height="16"/>
