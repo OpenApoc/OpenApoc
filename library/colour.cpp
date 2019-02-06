@@ -16,7 +16,7 @@ static const std::map<UString, Colour> html4Colours{
     {"white", {255, 255, 255}}, {"silver", {192, 192, 192}}, {"gray", {128, 128, 128}},
     {"black", {0, 0, 0}},       {"red", {255, 0, 0}},        {"maroon", {128, 0, 0}},
     {"yellow", {255, 255, 0}},  {"olive", {128, 128, 0}},    {"lime", {0, 255, 0}},
-    {"green", {0, 255, 0}},     {"aqua", {0, 255, 255}},     {"teal", {0, 128, 128}},
+    {"green", {0, 128, 0}},     {"aqua", {0, 255, 255}},     {"teal", {0, 128, 128}},
     {"blue", {0, 0, 255}},      {"navy", {0, 0, 128}},       {"fuchsia", {255, 0, 255}},
     {"purple", {128, 0, 128}},
 };
@@ -46,14 +46,14 @@ Colour Colour::FromHex(const UString &hexcode)
 		return {0, 0, 0};
 	}
 	// invalid characters
-	else if (std::any_of(++hexcode_lower.begin(), hexcode_lower.end(), isxdigit))
+	else if (!std::all_of(++hexcode_lower.begin(), hexcode_lower.end(), isxdigit))
 	{
 		LogWarning("Invalid characters found in hex triplet: %s", hexcode);
 		return {0, 0, 0};
 	}
 	std::array<int, 6> digits;
 	std::transform(++hexcode_lower.begin(), hexcode_lower.end(), digits.begin(),
-	               [](int cp) { return cp - '0'; });
+	               [](int cp) { return '0' <= cp && cp <= '9' ? cp - '0' : cp - 'a' + 10; });
 	if (hexcode_lower.length() == 4)
 	{
 		return {static_cast<uint8_t>(digits[0] * 0x11U), static_cast<uint8_t>(digits[1] * 0x11U),
@@ -67,7 +67,7 @@ Colour Colour::FromHex(const UString &hexcode)
 	}
 	else
 	{
-		LogWarning("Unexpected hex triplet length: %d", hexcode_lower.length());
+		LogWarning("Unexpected hex triplet length (%d) in %s", hexcode_lower.length(), hexcode);
 		return {0, 0, 0};
 	}
 }
