@@ -296,7 +296,7 @@ void Control::eventOccured(Event *e)
 				Vec2<int> pos = {e->forms().MouseInfo.X, e->forms().MouseInfo.Y};
 				e->Handled = true;
 
-				sp<Image> textImage = ToolTipFont->getString(tr(ToolTipText));
+				sp<Image> textImage = ToolTipFont->getString(ToolTipText);
 
 				unsigned totalBorder = ToolTipPadding;
 				for (const auto &b : ToolTipBorders)
@@ -713,6 +713,8 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 			if (ToolTipFont = ui().getFont(child.attribute("font").as_string()))
 			{
 				ToolTipText = child.attribute("text").as_string();
+				if (!ToolTipText.empty())
+					ToolTipText = tr(ToolTipText);
 			}
 			else
 			{
