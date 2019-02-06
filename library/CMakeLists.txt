@@ -10,6 +10,7 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package (Threads REQUIRED)
 
 set (LIBRARY_SOURCE_FILES
+	colour.cpp
 	strings.cpp
 	voxel.cpp)
 source_group(library\\sources FILES ${LIBRARY_SOURCE_FILES})

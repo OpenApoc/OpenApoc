@@ -33,6 +33,7 @@
     <ClInclude Include="vector_remove.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="colour.cpp" />
     <ClCompile Include="strings.cpp" />
     <ClCompile Include="voxel.cpp" />
   </ItemGroup>

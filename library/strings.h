@@ -27,6 +27,7 @@ class UString
 	  public:
 		// Just enough to struggle through a range-based for
 		bool operator!=(const ConstIterator &other) const;
+		bool operator==(const ConstIterator &other) const;
 		ConstIterator operator++();
 		UniChar operator*() const;
 	};

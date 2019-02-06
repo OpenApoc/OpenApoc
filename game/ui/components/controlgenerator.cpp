@@ -323,7 +323,7 @@ sp<Control> ControlGenerator::createBuildingAssignmentControl(GameState &state,
 
 sp<Control> ControlGenerator::createAgentAssignmentControl(GameState &state, sp<Agent> agent)
 {
-	const int controlLength = 200, controlHeight = 24, iconLenght = 36;
+	const int controlLength = 200, controlHeight = 24, iconLength = 36;
 
 	if (!singleton.initialised)
 	{
@@ -336,12 +336,12 @@ sp<Control> ControlGenerator::createAgentAssignmentControl(GameState &state, sp<
 	control->Name = "AGENT_PORTRAIT";
 
 	auto icon = createAgentIcon(state, agent, UnitSelectionState::Unselected, false);
-	icon->Size = {iconLenght, controlHeight};
+	icon->Size = {iconLength, controlHeight};
 	icon->setParent(control);
 
 	auto nameLabel = control->createChild<Label>(agent->name, singleton.labelFont);
-	nameLabel->Size = {controlLength - iconLenght, singleton.labelFont->getFontHeight()};
-	nameLabel->Location = {iconLenght, (control->Size.y - nameLabel->Size.y) / 2};
+	nameLabel->Size = {controlLength - iconLength, singleton.labelFont->getFontHeight()};
+	nameLabel->Location = {iconLength, (control->Size.y - nameLabel->Size.y) / 2};
 
 	return control;
 }
@@ -534,6 +534,8 @@ sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, const Ag
 	{
 		auto skillLabel = baseControl->createChild<Label>(
 		    format(tr("Skill %s"), info.agent->getSkill()), singleton.labelFont);
+		skillLabel->Tint = {192, 192, 192};
+
 		if (labMode)
 		{
 			skillLabel->Size = {45, 40};
@@ -542,7 +544,7 @@ sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, const Ag
 		else
 		{
 			skillLabel->Size = {100, singleton.labelFont->getFontHeight()};
-			skillLabel->Location = {40, singleton.labelFont->getFontHeight() * 2};
+			skillLabel->Location = {40, singleton.labelFont->getFontHeight()};
 		}
 	}
 

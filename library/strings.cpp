@@ -374,6 +374,11 @@ bool UString::ConstIterator::operator!=(const UString::ConstIterator &other) con
 	return (this->offset != other.offset || this->s != other.s);
 }
 
+bool UString::ConstIterator::operator==(const UString::ConstIterator &other) const
+{
+	return this->offset == other.offset && this->s == other.s;
+}
+
 UniChar UString::ConstIterator::operator*() const
 {
 	size_t num_bytes_unused;

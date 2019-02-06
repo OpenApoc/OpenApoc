@@ -40,7 +40,7 @@ void Label::onRender()
 		xpos = align(TextHAlign, Size.x, font->getFontWidth(lines.front()));
 
 		auto textImage = font->getString(lines.front());
-		fw().renderer->draw(textImage, Vec2<float>{xpos, ypos});
+		fw().renderer->drawTinted(textImage, Vec2<float>{xpos, ypos}, Tint);
 
 		lines.pop_front();
 		ypos += font->getFontHeight();
@@ -85,6 +85,7 @@ sp<Control> Label::copyTo(sp<Control> CopyParent)
 	{
 		copy = mksp<Label>(this->text, this->font);
 	}
+	copy->Tint = this->Tint;
 	copy->TextHAlign = this->TextHAlign;
 	copy->TextVAlign = this->TextVAlign;
 	copy->WordWrap = this->WordWrap;
@@ -96,6 +97,15 @@ void Label::configureSelfFromXml(pugi::xml_node *node)
 {
 	Control::configureSelfFromXml(node);
 	text = tr(node->attribute("text").as_string());
+
+	UString tintAttribute = node->attribute("tint").as_string();
+	if (!tintAttribute.empty())
+	{
+		if (*tintAttribute.begin() == '#')
+			Tint = Colour::FromHex(tintAttribute);
+		else
+			Tint = Colour::FromHtmlName(tintAttribute);
+	}
 
 	auto fontNode = node->child("font");
 	if (fontNode)

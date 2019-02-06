@@ -160,19 +160,21 @@ void RecruitScreen::populateAgentList()
 	// Populate list of agents
 	for (auto &a : state->agents)
 	{
+		bool addSkill = a.second->type->role != AgentType::Role::Soldier;
 		if (a.second->owner == player)
 		{
 			// Need to be able to strip agent
 			if (a.second->currentBuilding == a.second->homeBuilding)
 			{
 				agentLists[bases[a.second->homeBuilding->base.id]].push_back(
-				    ControlGenerator::createLargeAgentControl(*state, a.second));
+				    ControlGenerator::createLargeAgentControl(*state, a.second, addSkill));
 			}
 		}
 		else if (a.second->owner->hirableAgentTypes.find(a.second->type) !=
 		         a.second->owner->hirableAgentTypes.end())
 		{
-			agentLists[8].push_back(ControlGenerator::createLargeAgentControl(*state, a.second));
+			agentLists[8].push_back(
+			    ControlGenerator::createLargeAgentControl(*state, a.second, addSkill));
 		}
 	}
 }
