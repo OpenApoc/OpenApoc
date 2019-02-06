@@ -278,7 +278,6 @@ void Control::eventOccured(Event *e)
 				if (!ToolTipText.empty())
 				{
 					up<FormsEvent> toolTipEvent = mkup<FormsEvent>();
-					;
 					toolTipEvent->forms().RaisedBy = shared_from_this();
 					toolTipEvent->forms().EventFlag = FormEventType::ToolTip;
 					toolTipEvent->forms().MouseInfo = e->forms().MouseInfo;
@@ -298,15 +297,25 @@ void Control::eventOccured(Event *e)
 				e->Handled = true;
 
 				sp<Image> textImage = ToolTipFont->getString(tr(ToolTipText));
-				sp<Surface> surface = mksp<Surface>(textImage->size + Vec2<unsigned int>{6, 6});
+
+				unsigned totalBorder = ToolTipPadding;
+				for (const auto &b : ToolTipBorders)
+					totalBorder += b.first;
+
+				sp<Surface> surface = mksp<Surface>(
+				    textImage->size + Vec2<unsigned int>{totalBorder * 2, totalBorder * 2});
 
 				RendererSurfaceBinding b(*fw().renderer, surface);
 
-				fw().renderer->drawFilledRect({0, 0}, surface->size, {128, 128, 128});
-				fw().renderer->drawRect({0, 0}, surface->size, {0, 0, 0});
-				fw().renderer->drawRect({1, 1}, surface->size - Vec2<unsigned int>{2, 2},
-				                        {255, 255, 255});
-				fw().renderer->draw(textImage, {3, 3});
+				fw().renderer->drawFilledRect({0, 0}, surface->size, ToolTipBackground);
+				int i = 0;
+				for (const auto &b : ToolTipBorders)
+				{
+					fw().renderer->drawRect(
+					    {i, i}, surface->size - Vec2<unsigned int>{i * 2, i * 2}, b.second);
+					i += b.first;
+				}
+				fw().renderer->draw(textImage, {totalBorder, totalBorder});
 
 				fw().showToolTip(surface,
 				                 pos + resolvedLocation -
@@ -709,6 +718,28 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 			{
 				LogWarning("Could not find font for tooltip of control \"%s\"", Name);
 			}
+			UString backgroundString = child.attribute("background").as_string();
+			if (!backgroundString.empty())
+			{
+				if (*backgroundString.begin() == '#')
+					ToolTipBackground = Colour::FromHex(backgroundString);
+				else
+					ToolTipBackground = Colour::FromHtmlName(backgroundString);
+			}
+			for (auto child2 = child.first_child(); child2; child2 = child2.next_sibling())
+			{
+				UString child2Name = child2.name();
+				if (child2Name == "border")
+				{
+					UString borderColourStr = child2.attribute("colour").as_string();
+					Colour borderColour;
+					if (*borderColourStr.begin() == '#')
+						borderColour = Colour::FromHex(borderColourStr);
+					else
+						borderColour = Colour::FromHtmlName(borderColourStr);
+					ToolTipBorders.emplace_back(child2.attribute("width").as_uint(1), borderColour);
+				}
+			}
 		}
 	}
 
@@ -970,6 +1001,9 @@ void Control::copyControlData(sp<Control> CopyOf)
 	CopyOf->Visible = this->Visible;
 	CopyOf->ToolTipText = this->ToolTipText;
 	CopyOf->ToolTipFont = this->ToolTipFont;
+	CopyOf->ToolTipBackground = this->ToolTipBackground;
+	CopyOf->ToolTipBorders = this->ToolTipBorders;
+	CopyOf->ToolTipPadding = this->ToolTipPadding;
 
 	for (auto &c : Controls)
 	{
