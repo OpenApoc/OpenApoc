@@ -29,6 +29,7 @@ class UString
 		bool operator!=(const ConstIterator &other) const;
 		bool operator==(const ConstIterator &other) const;
 		ConstIterator operator++();
+		ConstIterator operator--();
 		UniChar operator*() const;
 	};
 
@@ -78,6 +79,10 @@ class UString
 	int compare(const UString &str) const;
 
 	bool endsWith(const UString &suffix) const;
+
+	UString trimLeft() const;
+	UString trimRight() const;
+	UString trim() const;
 
 	bool operator==(const UString &other) const;
 	bool operator!=(const UString &other) const;
