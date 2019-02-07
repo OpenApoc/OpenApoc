@@ -1453,6 +1453,7 @@
 		<value>Teleport</value>
 		<value>SelfDestruct</value>
 		<value>DepartToSpace</value>
+		<value>ArriveFromDimensionGate</value>
 		<value>InvestigateBuilding</value>
 	</enum>
 	<enum>
