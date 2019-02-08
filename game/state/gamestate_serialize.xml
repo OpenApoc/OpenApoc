@@ -49,6 +49,9 @@
 		<member>rng</member>
 		<member>gameTime</member>
 		<member>gameTimeBeforeBattle</member>
+		<member>missionLocationBattle</member>
+		<member>eventFromBattleText</member>
+		<member>eventFromBattle</member>
 		<member type="SectionMap">battle_maps</member>
 		<member type="Section">current_battle</member>
 		<member type="Section">hazard_types</member>
@@ -315,6 +318,86 @@
 		<member>background</member>
 		<member>entries</member>
 	</object>
+	<enum>
+		<name>GameEventType</name>
+		<value>UfoSpotted</value>
+		<value>UfoCrashed</value>
+		<value>UfoRecoveryUnmanned</value>
+		<value>VehicleLightDamage</value>
+		<value>VehicleModerateDamage</value>
+		<value>VehicleHeavyDamage</value>
+		<value>VehicleEscaping</value>
+		<value>VehicleNoAmmo</value>
+		<value>VehicleLowFuel</value>
+		<value>VehicleNoFuel</value>
+		<value>VehicleRepaired</value>
+		<value>VehicleRearmed</value>
+		<value>VehicleRefuelled</value>
+		<value>VehicleNoEngine</value>
+		<value>VehicleRecovered</value>
+		<value>UnauthorizedVehicle</value>
+		<value>NotEnoughAmmo</value>
+		<value>NotEnoughFuel</value>
+		<value>UfoRecoveryBegin</value>
+		<value>DefendTheBase</value>
+		<value>AgentRearmed</value>
+		<value>CargoArrived</value>
+		<value>TransferArrived</value>
+		<value>RecoveryArrived</value>
+		<value>CargoExpired</value>
+		<value>CargoSeized</value>
+		<value>MissionCompletedBase</value>
+		<value>BaseDestroyed</value>
+		<value>AgentDiedCity</value>
+		<value>VehicleDestroyed</value>
+		<value>AlienSpotted</value>
+		<value>CommenceInvestigation</value>
+		<value>BuildingAttacked</value>
+		<value>CargoExpiresSoon</value>
+		<value>MissionCompletedBuildingRaid</value>
+		<value>MissionCompletedBuildingNormal</value>
+		<value>AlienTakeover</value>
+		<value>OrganizationAttack</value>
+		<value>OrganizationRaid</value>
+		<value>OrganizationTreaty</value>
+		<value>OrganizationBribe</value>
+		<value>AgentArrived</value>
+		<value>AgentUnableToReach</value>
+		<value>HostileSpotted</value>
+		<value>AgentBrainsucked</value>
+		<value>AgentDiedBattle</value>
+		<value>HostileDied</value>
+		<value>UnknownDied</value>
+		<value>AgentCriticallyWounded</value>
+		<value>AgentBadlyInjured</value>
+		<value>AgentInjured</value>
+		<value>AgentUnderFire</value>
+		<value>AgentUnconscious</value>
+		<value>AgentLeftCombat</value>
+		<value>AgentFrozen</value>
+		<value>AgentBerserk</value>
+		<value>AgentPanicked</value>
+		<value>AgentPanicOver</value>
+		<value>AgentPsiAttacked</value>
+		<value>AgentPsiProbed</value>
+		<value>AgentPsiControlled</value>
+		<value>AgentPsiOver</value>
+		<value>NoLOF</value>
+		<value>NewTurn</value>
+		<value>ResearchCompleted</value>
+		<value>ManufactureCompleted</value>
+		<value>ManufactureHalted</value>
+		<value>FacilityCompleted</value>
+		<value>ZoomView</value>
+		<value>MarketUpdate</value>
+		<value>WeeklyReport</value>
+		<value>EnterAlienDimension</value>
+		<value>LeaveAlienDimension</value>
+		<value>MissionStarted</value>
+		<value>BuildingDisabled</value>
+		<value>MissionCompletedVehicle</value>
+		<value>MissionCompletedBuildingAlien</value>
+	</enum>
 	<enum>
 		<name>Cargo::Type</name>
 		<value>Agent</value>
