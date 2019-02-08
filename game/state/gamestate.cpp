@@ -1243,7 +1243,7 @@ void GameState::updateBeforeBattle()
 	// Save time to roll back to
 	gameTimeBeforeBattle = GameTime(gameTime.getTicks());
 	// Some useless event just to know if something was reported
-	eventFromBattle = static_cast<GameEventType>(-1);
+	eventFromBattle = GameEventType::None;
 }
 
 void GameState::updateAfterBattle()

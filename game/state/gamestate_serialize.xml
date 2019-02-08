@@ -397,6 +397,7 @@
 		<value>BuildingDisabled</value>
 		<value>MissionCompletedVehicle</value>
 		<value>MissionCompletedBuildingAlien</value>
+		<value>None</value>
 	</enum>
 	<enum>
 		<name>Cargo::Type</name>

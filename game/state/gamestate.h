@@ -146,7 +146,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	GameTime gameTimeBeforeBattle = GameTime(0);
 	UString missionLocationBattle;
 	UString eventFromBattleText;
-	GameEventType eventFromBattle;
+	GameEventType eventFromBattle = GameEventType::None;
 
 	// Used to generate unique names, an incrementing ID for each object type (keyed by StateObject
 	// prefix)

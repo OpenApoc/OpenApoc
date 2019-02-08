@@ -110,5 +110,6 @@ enum class GameEventType
 	MissionCompletedVehicle,
 	MissionCompletedBuildingAlien,
 
+	None
 };
 }
