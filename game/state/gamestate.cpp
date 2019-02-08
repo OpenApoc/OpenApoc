@@ -1243,8 +1243,7 @@ void GameState::updateBeforeBattle()
 	// Save time to roll back to
 	gameTimeBeforeBattle = GameTime(gameTime.getTicks());
 	// Some useless event just to know if something was reported
-	eventFromBattle = GameEventType::WeeklyReport;
-	missionLocationBattle = current_battle->mission_location_id;
+	eventFromBattle = static_cast<GameEventType>(-1);
 }
 
 void GameState::updateAfterBattle()
@@ -1287,6 +1286,8 @@ void GameState::updateAfterBattle()
 			fw().pushEvent(new GameEvent(eventFromBattle));
 			break;
 		}
+		default:
+			break;
 	}
 }
 
