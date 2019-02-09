@@ -270,15 +270,13 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 	std::vector<SaveMetadata> saveList;
 	try
 	{
-		fs::path currentPath = fs::current_path().string();
 		if (!fs::exists(saveDirectory) && !fs::create_directories(saveDirectory))
 		{
 			LogWarning("Save directory \"%s\" not found, and could not be created!", saveDirectory);
 			return saveList;
 		}
 
-		for (auto i = fs::directory_iterator(currentPath / saveDirectory);
-		     i != fs::directory_iterator(); ++i)
+		for (auto i = fs::directory_iterator(saveDirectory); i != fs::directory_iterator(); ++i)
 		{
 			if (i->path().extension().string() != saveFileExtension.str())
 			{
