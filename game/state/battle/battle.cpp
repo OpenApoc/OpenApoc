@@ -3389,6 +3389,7 @@ void Battle::exitBattle(GameState &state)
 		case Battle::MissionType::AlienExtermination:
 		{
 			state.eventFromBattle = GameEventType::MissionCompletedBuildingNormal;
+			state.missionLocationBattle = state.current_battle->mission_location_id;
 			break;
 		}
 		case Battle::MissionType::BaseDefense:
@@ -3396,12 +3397,14 @@ void Battle::exitBattle(GameState &state)
 			if (state.current_battle->playerWon)
 			{
 				state.eventFromBattle = GameEventType::MissionCompletedBase;
+				state.missionLocationBattle = state.current_battle->mission_location_id;
 			}
 			else
 			{
 				auto building =
 				    StateRef<Building>{&state, state.current_battle->mission_location_id};
 				state.eventFromBattle = GameEventType::BaseDestroyed;
+				state.missionLocationBattle = state.current_battle->mission_location_id;
 				state.eventFromBattleText = building->base->name;
 				building->base->die(state, false);
 			}
@@ -3410,6 +3413,7 @@ void Battle::exitBattle(GameState &state)
 		case Battle::MissionType::RaidHumans:
 		{
 			state.eventFromBattle = GameEventType::MissionCompletedBuildingRaid;
+			state.missionLocationBattle = state.current_battle->mission_location_id;
 			if (state.current_battle->playerWon)
 			{
 				auto building =
