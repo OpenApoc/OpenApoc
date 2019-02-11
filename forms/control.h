@@ -17,6 +17,7 @@ class xml_node;
 namespace OpenApoc
 {
 
+class BitmapFont;
 class Form;
 class Event;
 class Surface;
@@ -83,6 +84,13 @@ class Control : public std::enable_shared_from_this<Control>
 	bool takesFocus;
 	bool showBounds;
 	bool Enabled;
+
+	UString ToolTipText;
+	sp<BitmapFont> ToolTipFont;
+	// transparent background by default
+	Colour ToolTipBackground = {0, 0, 0, 0};
+	std::list<std::pair<unsigned int, Colour>> ToolTipBorders;
+	unsigned int ToolTipPadding = 0;
 
 	bool canCopy;
 	wp<Control> lastCopiedTo;

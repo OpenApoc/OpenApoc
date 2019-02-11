@@ -351,6 +351,39 @@ bool UString::endsWith(const UString &suffix) const
 	return boost::ends_with(str(), suffix.str());
 }
 
+UString UString::trimLeft() const
+{
+	auto first = begin();
+	auto last = end();
+	while (first != last && Strings::isWhiteSpace(*first))
+		++first;
+	return {first, last};
+}
+UString UString::trimRight() const
+{
+	auto first = begin();
+	auto last = end();
+	if (first == last)
+		return {};
+	--last;
+	while (first != last && Strings::isWhiteSpace(*last))
+		--last;
+	return {first, ++last};
+}
+UString UString::trim() const
+{
+	auto first = begin();
+	auto last = end();
+	while (first != last && Strings::isWhiteSpace(*first))
+		++first;
+	if (first == last)
+		return {};
+	--last;
+	while (first != last && Strings::isWhiteSpace(*last))
+		--last;
+	return {first, ++last};
+}
+
 UString::ConstIterator UString::begin() const { return UString::ConstIterator(*this, 0); }
 
 UString::ConstIterator UString::end() const
@@ -366,6 +399,19 @@ UString::ConstIterator UString::ConstIterator::operator++()
 	utf8_to_unichar(ptr, num_bytes);
 
 	this->offset += num_bytes;
+	return *this;
+}
+
+UString::ConstIterator UString::ConstIterator::operator--()
+{
+	const char *ptr = s.cStr();
+	ptr += --this->offset;
+	while (static_cast<unsigned char>(*ptr) >= 0b10000000 &&
+	       static_cast<unsigned char>(*ptr) < 0b11000000)
+	{
+		--this->offset;
+		--ptr;
+	}
 	return *this;
 }
 

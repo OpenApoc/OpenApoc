@@ -4,6 +4,7 @@
 #include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/event.h"
+#include "framework/font.h"
 #include "framework/image.h"
 #include "framework/renderer.h"
 #include "framework/renderer_interface.h"
@@ -96,8 +97,9 @@ ConfigOptionBool actionMusicOption("Options.Misc", "ActionMusic",
 ConfigOptionBool autoExecuteOption("Options.Misc", "AutoExecute",
                                    "Execute remaining orders when player presses end turn button",
                                    false);
-ConfigOptionBool toolTipsOption("Options.Misc", "ToolTips",
-                                "Show tool tips when hovering over controls", true);
+ConfigOptionInt toolTipDelay("Options.Misc", "ToolTipDelay",
+                             "Delay in milliseconds before showing tooltips (<= 0 to disable)",
+                             2000);
 
 ConfigOptionBool optionPauseOnUfoSpotted("Notifications.City", "UfoSpotted", "UFO spotted", true);
 ConfigOptionBool optionPauseOnVehicleLightDamage("Notifications.City", "VehicleLightDamage",
@@ -370,6 +372,11 @@ class FrameworkPrivate
 	sp<Surface> scaleSurface;
 	up<ThreadPool> threadPool;
 
+	int toolTipTimerId = 0;
+	up<Event> toolTipTimerEvent;
+	sp<Image> toolTipImage;
+	Vec2<int> toolTipPosition;
+
 	FrameworkPrivate()
 	    : quitProgram(false), window(nullptr), context(0), displaySize(0, 0), windowSize(0, 0)
 	{
@@ -418,7 +425,7 @@ Framework::Framework(const UString programName, bool createWindow)
 	SDL_SetHint(SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH, "1");
 #endif
 	// Initialize subsystems separately?
-	if (SDL_Init(SDL_INIT_EVENTS) < 0)
+	if (SDL_Init(SDL_INIT_EVENTS | SDL_INIT_TIMER) < 0)
 	{
 		LogError("Cannot init SDL2");
 		LogError("SDL error: %s", SDL_GetError());
@@ -619,6 +626,10 @@ void Framework::run(sp<Stage> initialStage)
 		{
 			TraceObj updateObj("Render");
 			p->ProgramStages.current()->render();
+			if (p->toolTipImage)
+			{
+				renderer->draw(p->toolTipImage, p->toolTipPosition);
+			}
 			this->cursor->render();
 			if (p->scaleSurface)
 			{
@@ -1216,6 +1227,49 @@ ApocCursor &Framework::getCursor() { return *this->cursor; }
 void Framework::textStartInput() { SDL_StartTextInput(); }
 
 void Framework::textStopInput() { SDL_StopTextInput(); }
+
+void Framework::toolTipStartTimer(up<Event> e)
+{
+	int delay = config().getInt("Options.Misc.ToolTipDelay");
+	if (delay <= 0)
+	{
+		return;
+	}
+	// remove any pending timers
+	toolTipStopTimer();
+	p->toolTipTimerEvent = std::move(e);
+	p->toolTipTimerId = SDL_AddTimer(delay,
+	                                 [](unsigned int interval, void *data) -> unsigned int {
+		                                 fw().toolTipTimerCallback(interval, data);
+		                                 // remove this sdl timer
+		                                 return 0;
+		                             },
+	                                 nullptr);
+}
+void Framework::toolTipStopTimer()
+{
+	if (p->toolTipTimerId)
+	{
+		SDL_RemoveTimer(p->toolTipTimerId);
+		p->toolTipTimerId = 0;
+	}
+	p->toolTipTimerEvent.reset();
+	p->toolTipImage.reset();
+}
+
+void Framework::toolTipTimerCallback(unsigned int interval, void *data)
+{
+	// the sdl timer will be removed, so we forget about
+	// clear the timerid and reset the event
+	pushEvent(std::move(p->toolTipTimerEvent));
+	p->toolTipTimerId = 0;
+}
+
+void Framework::showToolTip(sp<Image> image, const Vec2<int> &position)
+{
+	p->toolTipImage = image;
+	p->toolTipPosition = position;
+}
 
 UString Framework::textGetClipboard()
 {
