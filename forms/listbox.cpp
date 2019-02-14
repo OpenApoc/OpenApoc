@@ -205,24 +205,44 @@ void ListBox::update()
 	}
 	if (scroller)
 	{
-		size_t mainAxisSize = 0;
+		size_t scrollerLength = Controls.empty() ? 0 : ItemSpacing * (Controls.size() - 1);
+		// deduct the listbox size from the content size
+		// assume item sizes are variable if ItemSize is 0 (ie: need to calculate manually)
 		switch (ListOrientation)
 		{
 			case Orientation::Vertical:
-				mainAxisSize = Size.y;
+			{
+				if (ItemSize == 0)
+				{
+					for (const auto &i : Controls)
+						scrollerLength += i->Size.y;
+				}
+				else
+				{
+					scrollerLength += Controls.size() * ItemSize;
+				}
+				scrollerLength = scrollerLength > Size.y ? scrollerLength - Size.y : 0;
 				break;
+			}
 			case Orientation::Horizontal:
-				mainAxisSize = Size.x;
+			{
+				if (ItemSize == 0)
+				{
+					for (const auto &i : Controls)
+						scrollerLength += i->Size.x;
+				}
+				else
+				{
+					scrollerLength += Controls.size() * ItemSize;
+				}
+				scrollerLength = scrollerLength > Size.x ? scrollerLength - Size.x : 0;
 				break;
+			}
 			default:
 				LogWarning("Unknown ListBox::ListOrientation value: %d",
 				           static_cast<int>(ListOrientation));
-				return;
+				break;
 		}
-		size_t mainAxisContentSize =
-		    Controls.empty() ? 0 : ItemSize * Controls.size() + ItemSpacing * (Controls.size() - 1);
-		int scrollerLength =
-		    mainAxisContentSize > mainAxisSize ? mainAxisContentSize - mainAxisSize : 0;
 		scroller->setMaximum(scroller->getMinimum() + scrollerLength);
 		scroller->update();
 		Vec2<int> newScrollOffset = this->scrollOffset;
