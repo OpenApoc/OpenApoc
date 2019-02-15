@@ -3622,8 +3622,8 @@ bool CityView::handleGameStateEvent(Event *e)
 			}
 
 			UString title = tr("Commence investigation");
-			UString message = format(tr("All selected units and crafts have arrived at %0s. "
-			                            "Proceed with investigation? (%1d units)"),
+			UString message = format(tr("All selected units and crafts have arrived at %s. "
+			                            "Proceed with investigation? (%d units)"),
 			                         building->name, agents.size());
 			fw().stageQueueCommand(
 			    {StageCmd::Command::PUSH,
