@@ -91,7 +91,7 @@ void DebugMenu::bulkExportPcks()
 	PaletteNames.push_back("xcom3/ufodata/pal_99.dat");
 	// PaletteNames.push_back("xcom3/tacdata/default.pal");
 	// PaletteNames.push_back("xcom3/tacdata/equip.pal");
-	// PaletteNames.push_back("xcom3/tacdata/tactical.pal");
+	PaletteNames.push_back("xcom3/tacdata/tactical.pal");
 
 	// Load them up
 	for (auto i = PaletteNames.begin(); i != PaletteNames.end(); i++)
@@ -103,7 +103,7 @@ void DebugMenu::bulkExportPcks()
 	// All the PCKs
 	PckNames.push_back("xcom3/ufodata/agntico.pck");
 	PckNames.push_back("xcom3/ufodata/alien.pck");
-	PckNames.push_back("xcom3/ufodata/alien_s.pck");
+	// PckNames.push_back("xcom3/ufodata/alien_s.pck");
 	PckNames.push_back("xcom3/ufodata/armour.pck");
 	PckNames.push_back("xcom3/ufodata/base.pck");
 	PckNames.push_back("xcom3/ufodata/bigveh.pck");
