@@ -55,7 +55,7 @@ void iterateDepthFirstByNames(First first, Last last, std::ostream &out, std::st
 		previousName = std::move(currentName);
 	}
 	// set and pop whats left
-	for (auto itP = --previousName.end(); itP != --previousName.begin(); --itP)
+	for (auto itP = previousName.rbegin(); itP != previousName.rend(); ++itP)
 		out << "\tlua_setfield(L, -2, \"" << *itP << "\");\n";
 }
 
