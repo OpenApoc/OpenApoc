@@ -54,7 +54,7 @@ namespace
 #define RENDERERS "GLES_3_0:GL_2_0"
 #endif
 
-ConfigOptionString dataPathOption("Framework", "Data", "The path containing OpenApod data",
+ConfigOptionString dataPathOption("Framework", "Data", "The path containing OpenApoc data",
                                   "./data");
 ConfigOptionString cdPathOption("Framework", "CD", "The path to the XCom:Apocalypse CD",
                                 "./data/cd.iso");
