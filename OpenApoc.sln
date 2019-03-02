@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenApoc", "game\OpenApoc.vcxproj", "{284825AB-1430-40A4-8F08-5810C5559687}"
 EndProject
@@ -35,7 +35,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "miniz", "dependencies\miniz
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gamestate_serialize_gen", "tools\code_generators\gamestate_serialize_gen\gamestate_serialize_gen.vcxproj", "{31FBCCBD-BFD2-45FC-B9DF-3375684A3157}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gamestate_serialize_gen", "tools\code_generators\luagamestate_support_gen\luagamestate_support_gen.vcxproj", "{31FBCCBD-BFD2-45FC-B9DF-3375684A3158}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "luagamestate_support_gen", "tools\code_generators\luagamestate_support_gen\luagamestate_support_gen.vcxproj", "{31FBCCBD-BFD2-45FC-B9DF-3375684A3158}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_images", "tests\test_images.vcxproj", "{1CA306CD-C11A-4E14-AAAF-2DD282E10652}"
 EndProject
@@ -46,6 +46,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{3F55B450-53E6-4467-BC58-860D0E2059EA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_serialize", "tests\test_serialize.vcxproj", "{D7563548-254B-46EF-A911-999CEE6BCDD8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{27DFC6A6-AC91-4102-B049-5AA61DD92168}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua", "dependencies\lua.vcxproj", "{44A12AC1-7E09-4AF7-BAC4-A264C2F814A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -175,6 +179,14 @@ Global
 		{31FBCCBD-BFD2-45FC-B9DF-3375684A3157}.Release|Win32.Build.0 = Release|Win32
 		{31FBCCBD-BFD2-45FC-B9DF-3375684A3157}.Release|x64.ActiveCfg = Release|x64
 		{31FBCCBD-BFD2-45FC-B9DF-3375684A3157}.Release|x64.Build.0 = Release|x64
+		{31FBCCBD-BFD2-45FC-B9DF-3375684A3158}.Debug|Win32.ActiveCfg = Debug|Win32
+		{31FBCCBD-BFD2-45FC-B9DF-3375684A3158}.Debug|Win32.Build.0 = Debug|Win32
+		{31FBCCBD-BFD2-45FC-B9DF-3375684A3158}.Debug|x64.ActiveCfg = Debug|x64
+		{31FBCCBD-BFD2-45FC-B9DF-3375684A3158}.Debug|x64.Build.0 = Debug|x64
+		{31FBCCBD-BFD2-45FC-B9DF-3375684A3158}.Release|Win32.ActiveCfg = Release|Win32
+		{31FBCCBD-BFD2-45FC-B9DF-3375684A3158}.Release|Win32.Build.0 = Release|Win32
+		{31FBCCBD-BFD2-45FC-B9DF-3375684A3158}.Release|x64.ActiveCfg = Release|x64
+		{31FBCCBD-BFD2-45FC-B9DF-3375684A3158}.Release|x64.Build.0 = Release|x64
 		{1CA306CD-C11A-4E14-AAAF-2DD282E10652}.Debug|Win32.ActiveCfg = Debug|Win32
 		{1CA306CD-C11A-4E14-AAAF-2DD282E10652}.Debug|Win32.Build.0 = Debug|Win32
 		{1CA306CD-C11A-4E14-AAAF-2DD282E10652}.Debug|x64.ActiveCfg = Debug|x64
@@ -198,6 +210,14 @@ Global
 		{D7563548-254B-46EF-A911-999CEE6BCDD8}.Release|Win32.ActiveCfg = Release|Win32
 		{D7563548-254B-46EF-A911-999CEE6BCDD8}.Release|Win32.Build.0 = Release|Win32
 		{D7563548-254B-46EF-A911-999CEE6BCDD8}.Release|x64.ActiveCfg = Release|x64
+		{44A12AC1-7E09-4AF7-BAC4-A264C2F814A8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{44A12AC1-7E09-4AF7-BAC4-A264C2F814A8}.Debug|Win32.Build.0 = Debug|Win32
+		{44A12AC1-7E09-4AF7-BAC4-A264C2F814A8}.Debug|x64.ActiveCfg = Debug|x64
+		{44A12AC1-7E09-4AF7-BAC4-A264C2F814A8}.Debug|x64.Build.0 = Debug|x64
+		{44A12AC1-7E09-4AF7-BAC4-A264C2F814A8}.Release|Win32.ActiveCfg = Release|Win32
+		{44A12AC1-7E09-4AF7-BAC4-A264C2F814A8}.Release|Win32.Build.0 = Release|Win32
+		{44A12AC1-7E09-4AF7-BAC4-A264C2F814A8}.Release|x64.ActiveCfg = Release|x64
+		{44A12AC1-7E09-4AF7-BAC4-A264C2F814A8}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -217,7 +237,12 @@ Global
 		{657FEC45-218E-416F-B048-0BE062CF9368} = {8EAE9E1C-DF71-4144-88F4-5F4C8FD8968F}
 		{44A12AC1-7E09-4AF7-BAC4-A264C2F814A7} = {90A13965-1997-49A0-98A7-FD7484C0707D}
 		{31FBCCBD-BFD2-45FC-B9DF-3375684A3157} = {3F55B450-53E6-4467-BC58-860D0E2059EA}
+		{31FBCCBD-BFD2-45FC-B9DF-3375684A3158} = {3F55B450-53E6-4467-BC58-860D0E2059EA}
 		{1CA306CD-C11A-4E14-AAAF-2DD282E10652} = {8EAE9E1C-DF71-4144-88F4-5F4C8FD8968F}
 		{D7563548-254B-46EF-A911-999CEE6BCDD8} = {8EAE9E1C-DF71-4144-88F4-5F4C8FD8968F}
+		{44A12AC1-7E09-4AF7-BAC4-A264C2F814A8} = {90A13965-1997-49A0-98A7-FD7484C0707D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1DEB271E-C799-4CDD-9173-2105453DAEE2}
 	EndGlobalSection
 EndGlobal

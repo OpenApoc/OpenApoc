@@ -345,8 +345,7 @@ template <typename C> int generateIpairsIterator(lua_State *L)
 	lua_pushcfunction(L, advanceIpairsIterator<C>);
 	LuaIteratorState<C> *it =
 	    (LuaIteratorState<C> *)lua_newuserdata(L, sizeof(LuaIteratorState<C>));
-	it->first = (*v)->begin();
-	it->second = (*v)->end();
+	new (it) LuaIteratorState<C>((*v)->begin(), (*v)->end());
 	lua_pushinteger(L, 0);
 	return 2;
 }
@@ -371,8 +370,7 @@ template <typename C> int generatePairsIterator(lua_State *L)
 	lua_pushcfunction(L, advancePairsIterator<C>);
 	LuaIteratorState<C> *it =
 	    (LuaIteratorState<C> *)lua_newuserdata(L, sizeof(LuaIteratorState<C>));
-	it->first = (*v)->begin();
-	it->second = (*v)->end();
+	new (it) LuaIteratorState<C>((*v)->begin(), (*v)->end());
 	return 2;
 }
 

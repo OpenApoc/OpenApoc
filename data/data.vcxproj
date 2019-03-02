@@ -97,7 +97,7 @@
     <CustomBuildStep>
       <Message>Generating data</Message>
       <Outputs>difficulty1_patched</Outputs>
-      <Inputs>"$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe"</Inputs>
+      <Inputs>$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -113,7 +113,7 @@
     <CustomBuildStep>
       <Message>Generating data</Message>
       <Outputs>difficulty1_patched</Outputs>
-      <Inputs>"$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe"</Inputs>
+      <Inputs>$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -133,7 +133,7 @@
 "$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe" --Framework.CD="$(SolutionDir)\data\cd.iso" --Framework.Data="$(SolutionDir)\data"</Command>
       <Message>Generating data</Message>
       <Outputs>difficulty1_patched</Outputs>
-      <Inputs>"$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe"</Inputs>
+      <Inputs>$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -153,7 +153,7 @@
 "$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe" --Framework.CD="$(SolutionDir)\data\cd.iso" --Framework.Data="$(SolutionDir)\data"</Command>
       <Message>Generating data</Message>
       <Outputs>difficulty1_patched</Outputs>
-      <Inputs>"$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe"</Inputs>
+      <Inputs>$(SolutionDir)\bin\$(Platform)\$(Configuration)\extractor.exe</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
