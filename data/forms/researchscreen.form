@@ -98,7 +98,7 @@
         <size width="150" height="2"/>
         <image/>
       </graphic>
-	   <graphic id="MANUFACTURE_BG">
+      <graphic id="MANUFACTURE_BG">
         <position x="247" y="241"/>
         <size width="224" height="18"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
@@ -171,12 +171,14 @@
         <size width="15" height="254"/>
       </scroll>
       <graphicbutton id="LIST_UNASSIGNED_SCROLL_UP" scrollprev="LIST_UNASSIGNED_SCROLL">
+        <tooltip text="Scroll Up" font="smallset"/>
         <position x="161" y="168"/>
         <size width="22" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton id="LIST_UNASSIGNED_SCROLL_DOWN" scrollnext="LIST_UNASSIGNED_SCROLL">
+        <tooltip text="Scroll Down" font="smallset"/>
         <position x="161" y="449"/>
         <size width="22" height="21"/>
         <image/>
@@ -194,12 +196,14 @@
         <size width="43" height="31"/>
       </graphic>
       <graphicbutton id="BUTTON_RESEARCH_NEWPROJECT">
+        <tooltip text="Assign project" font="smallset"/>
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:58:xcom3/ufodata/research.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_RESEARCH_CANCELPROJECT">
+        <tooltip text="Stop project" font="smallset"/>
         <position x="602" y="80"/>
         <size width="35" height="34"/>
         <image/>

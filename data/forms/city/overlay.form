@@ -9,13 +9,13 @@
         <size width="480" height="60"/>
         <image>city/overlay.png</image>
       </graphic>
-	  <label id="TEXT">
+      <label id="TEXT">
         <position x="25" y="23"/>
         <size width="440" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  <graphicbutton id="BUTTON_CLOSE">
+      <graphicbutton id="BUTTON_CLOSE">
         <position x="440" y="16"/>
         <size width="29" height="25"/>
         <image>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:52:xcom3/ufodata/pal_01.dat</image>

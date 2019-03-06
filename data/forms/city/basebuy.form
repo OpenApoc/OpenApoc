@@ -39,6 +39,7 @@
         <font>smalfont</font>
       </label>
       <graphicbutton id="BUTTON_BUY_BASE">
+        <tooltip text="Buy This Building" font="smallset"/>
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>

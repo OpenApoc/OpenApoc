@@ -21,12 +21,14 @@
         <font>smalfont</font>
       </label>
       <graphicbutton id="BUTTON_RESUME">
+        <tooltip text="Continue" font="smallset"/>
         <position x="13" y="13"/>
         <size width="24" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:54:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_PAUSE">
+        <tooltip text="Center and pause game" font="smallset"/>
         <position x="605" y="13"/>
         <size width="24" height="25"/>
         <image/>

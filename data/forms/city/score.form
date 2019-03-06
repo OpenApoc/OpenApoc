@@ -36,30 +36,32 @@
       </label>
 
       <radiobutton id="BUTTON_SCORE" groupid="MODE">
+        <tooltip text="Performance log" font="smallset"/>
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:67:xcom3/ufodata/base.pcx</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_FINANCE" groupid="MODE">
+        <tooltip text="Finance" font="smallset"/>
         <position x="602" y="80"/>
         <size width="35" height="34"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:66:xcom3/ufodata/base.pcx</imagechecked>
       </radiobutton>
-      
-	  <graphicbutton id="BUTTON_OK">
+
+      <graphicbutton id="BUTTON_OK">
         <position x="602" y="443"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
       </graphicbutton>
 
-	  <subform id="SCORE_VIEW" src="city/sheet_score">
-		<position x="77" y="140"/>
+      <subform id="SCORE_VIEW" src="city/sheet_score">
+        <position x="77" y="140"/>
       </subform>
       <subform id="FINANCE_VIEW" src="city/sheet_finance">
-		<position x="77" y="140"/>
+        <position x="77" y="140"/>
       </subform>
 
     </style>

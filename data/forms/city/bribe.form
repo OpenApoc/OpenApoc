@@ -40,6 +40,7 @@
         <font>smalfont</font>
       </label>
       <graphicbutton id="BUTTON_BRIBE">
+        <tooltip text="Pay organization" font="smallset"/>
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:78:xcom3/ufodata/base.pcx</imagedepressed>

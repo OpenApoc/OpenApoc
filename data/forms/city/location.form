@@ -20,7 +20,7 @@
         <alignment horizontal="centre" vertical="centre"/>
         <font>bigfont</font>
       </label>
-	  <label text="Owner&gt;">
+      <label text="Owner&gt;">
         <position x="97" y="54"/>
         <size width="60" height="23"/>
         <alignment horizontal="left" vertical="centre"/>
@@ -32,26 +32,28 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>
-	  <graphic id="AGENT_ASSIGNMENT">
+      <graphic id="AGENT_ASSIGNMENT">
         <position x="37" y="96"/>
         <size width="529" height="373"/>
         <imageposition>tile</imageposition>
         <image/>
       </graphic>
-	  
-	  <graphicbutton id="BUTTON_EQUIPAGENT">
+
+      <graphicbutton id="BUTTON_EQUIPAGENT">
+        <tooltip text="Equip agent" font="smallset"/>
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:29:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_EQUIPVEHICLE">
+        <tooltip text="Equip vehicle" font="smallset"/>
         <position x="602" y="80"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:30:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
-	  
+
       <graphicbutton id="BUTTON_QUIT">
         <position x="602" y="443"/>
         <size width="40" height="40"/>

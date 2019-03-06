@@ -21,6 +21,13 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>
+      <graphicbutton id="BUTTON_TOPTEN">
+        <tooltip text="Show ten most infiltrated organizations not under Alien control." font="smallset"/>
+        <position x="602" y="40"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:79:xcom3/ufodata/base.pcx</imagechecked>
+      </graphicbutton>
       <graphicbutton id="BUTTON_QUIT">
         <position x="602" y="443"/>
         <size width="40" height="40"/>

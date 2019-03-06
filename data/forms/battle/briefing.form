@@ -29,12 +29,14 @@
         <font>smalfont</font>
       </label>
       <graphicbutton id="BUTTON_REAL_TIME">
+        <tooltip text="Start real time game" font="smallset"/>
         <position x="475" y="434"/>
         <size width="50" height="48"/>
         <image>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:42:xcom3/tacdata/tactical.pal</image>
         <imagedepressed>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:45:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_TURN_BASED">
+        <tooltip text="Start turn-based game" font="smallset"/>
         <position x="563" y="434"/>
         <size width="50" height="48"/>
         <image>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:43:xcom3/tacdata/tactical.pal</image>

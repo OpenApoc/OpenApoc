@@ -57,12 +57,14 @@
           <range min="0" max="20"/>
         </scroll>
         <graphicbutton id="GLOBAL_GAIN_DOWN" scrollprev="GLOBAL_GAIN_SLIDER">
+          <tooltip text="Softer" font="smallset"/>
           <position x="61" y="262"/>
           <size width="16" height="20"/>
           <image/>
           <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
         </graphicbutton>
         <graphicbutton id="GLOBAL_GAIN_UP" scrollnext="GLOBAL_GAIN_SLIDER">
+          <tooltip text="Louder" font="smallset"/>
           <position x="222" y="262"/>
           <size width="17" height="20"/>
           <image/>
@@ -74,12 +76,14 @@
           <range min="0" max="20"/>
         </scroll>
         <graphicbutton id="MUSIC_GAIN_DOWN" scrollprev="MUSIC_GAIN_SLIDER">
+          <tooltip text="Softer" font="smallset"/>
           <position x="61" y="290"/>
           <size width="16" height="20"/>
           <image/>
           <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
         </graphicbutton>
         <graphicbutton id="MUSIC_GAIN_UP" scrollnext="MUSIC_GAIN_SLIDER">
+          <tooltip text="Louder" font="smallset"/>
           <position x="222" y="290"/>
           <size width="17" height="20"/>
           <image/>
@@ -91,26 +95,28 @@
           <range min="0" max="20"/>
         </scroll>
         <graphicbutton id="SAMPLE_GAIN_DOWN" scrollprev="SAMPLE_GAIN_SLIDER">
+          <tooltip text="Softer" font="smallset"/>
           <position x="61" y="318"/>
           <size width="16" height="20"/>
           <image/>
           <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
         </graphicbutton>
         <graphicbutton id="SAMPLE_GAIN_UP" scrollnext="SAMPLE_GAIN_SLIDER">
+          <tooltip text="Louder" font="smallset"/>
           <position x="222" y="318"/>
           <size width="17" height="20"/>
           <image/>
           <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
         </graphicbutton>
-        
-		<label id="LIST_NAME">
+
+        <label id="LIST_NAME">
           <position x="305" y="50"/>
           <font>smalfont</font>
           <size width="270" height="16"/>
-		  <alignment horizontal="centre" vertical="centre"/>
+          <alignment horizontal="centre" vertical="centre"/>
         </label>
-		
-	    <scroll id="NOTIFICATIONS_SCROLL">
+
+        <scroll id="NOTIFICATIONS_SCROLL">
           <position x="549" y="101"/>
           <size width="22" height="277"/>
         </scroll>
@@ -122,72 +128,74 @@
           <selcolour r="255" g="255" b="255" a="0"/>
         </listbox>
         <graphicbutton id="NOTIFICATIONS_SCROLL_UP" scrollprev="NOTIFICATIONS_SCROLL">
+          <tooltip text="Scroll Up" font="smallset"/>
           <position x="549" y="76"/>
           <size width="22" height="21"/>
           <image/>
           <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
         </graphicbutton>
-        <graphicbutton id="NOTIFICATIONS_SCROLL_UP" scrollnext="NOTIFICATIONS_SCROLL">
+        <graphicbutton id="NOTIFICATIONS_SCROLL_DOWN" scrollnext="NOTIFICATIONS_SCROLL">
+          <tooltip text="Scroll Down" font="smallset"/>
           <position x="549" y="384"/>
           <size width="22" height="21"/>
           <image/>
           <imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
         </graphicbutton>
-		
-		<label text="Options">
+
+        <label text="Options">
           <position x="305" y="407"/>
           <font>smalfont</font>
           <size width="270" height="16"/>
-		  <alignment horizontal="centre" vertical="centre"/>
+          <alignment horizontal="centre" vertical="centre"/>
         </label>
-		<graphic>
+        <graphic>
           <image>city/menu-hr.png</image>
           <position x="309" y="425"/>
           <size width="252" height="1"/>
-		</graphic>
-		 
-		<checkbox id="AUTO_SCROLL">
+        </graphic>
+
+        <checkbox id="AUTO_SCROLL">
           <position x="310" y="430"/>
           <size width="120" height="16"/>
           <image>BUTTON_CHECKBOX_FALSE</image>
           <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
-		  <label text="Auto Scroll">
-			<position x="24" y="0"/>
-			<font>smalfont</font>
-			<size width="90" height="16"/>
-		  </label>
-		</checkbox>
- 
-		<checkbox id="ACTION_MUSIC">
+          <label text="Auto Scroll">
+            <position x="24" y="0"/>
+            <font>smalfont</font>
+            <size width="90" height="16"/>
+          </label>
+        </checkbox>
+
+        <checkbox id="ACTION_MUSIC">
           <position x="440" y="430"/>
           <size width="120" height="16"/>
           <image>BUTTON_CHECKBOX_FALSE</image>
           <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
-		  <label text="Action music">
-			<position x="24" y="0"/>
-			<font>smalfont</font>
-			<size width="90" height="16"/>
+          <label text="Action music">
+            <position x="24" y="0"/>
+            <font>smalfont</font>
+            <size width="90" height="16"/>
           </label>
         </checkbox>
-		
+
         <checkbox id="AUTO_EXECUTE_ORDERS">
           <position x="440" y="450"/>
           <size width="150" height="16"/>
           <image>BUTTON_CHECKBOX_FALSE</image>
           <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
           <label text="Exec. rem. orders">
-			<position x="24" y="0"/>
-			<font>smalfont</font>
-			<size width="120" height="16"/>
+            <position x="24" y="0"/>
+            <font>smalfont</font>
+            <size width="120" height="16"/>
           </label>
-		</checkbox>
-        
-		<textbutton text="More options" id="BUTTON_NEXT_LIST">
+        </checkbox>
+
+        <textbutton text="More options" id="BUTTON_NEXT_LIST">
           <font>smalfont</font>
           <position x="18" y="379"/>
           <size width="259" height="28"/>
         </textbutton>
-		<textbutton text="Cheats" id="BUTTON_CHEATS">
+        <textbutton text="Cheats" id="BUTTON_CHEATS">
           <font>smalfont</font>
           <position x="18" y="407"/>
           <size width="259" height="28"/>

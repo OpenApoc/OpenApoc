@@ -45,38 +45,42 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>
-	  <graphic id="AGENT_ASSIGNMENT">
+      <graphic id="AGENT_ASSIGNMENT">
         <position x="37" y="96"/>
         <size width="529" height="373"/>
         <imageposition>tile</imageposition>
         <image/>
       </graphic>
-	  
-	  <graphicbutton id="BUTTON_EXTERMINATE">
+
+      <graphicbutton id="BUTTON_EXTERMINATE">
+        <tooltip text="Investigate building for Alien activity" font="smallset"/>
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:13:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_RAID">
+        <tooltip text="Raid building" font="smallset"/>
         <position x="602" y="80"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:12:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
-	   <graphicbutton id="BUTTON_EQUIPAGENT">
+      <graphicbutton id="BUTTON_EQUIPAGENT">
+        <tooltip text="Equip agent" font="smallset"/>
         <position x="602" y="120"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:29:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_EQUIPVEHICLE">
+        <tooltip text="Equip vehicle" font="smallset"/>
         <position x="602" y="160"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:30:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
-	  
+
       <graphicbutton id="BUTTON_QUIT">
         <position x="602" y="443"/>
         <size width="40" height="40"/>

@@ -124,31 +124,31 @@
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  <label id="PROMOTION_1">
+      <label id="PROMOTION_1">
         <position x="98" y="314"/>
         <size width="280" height="24"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  <label id="PROMOTION_2">
+      <label id="PROMOTION_2">
         <position x="98" y="338"/>
         <size width="280" height="24"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  <label id="PROMOTION_3">
+      <label id="PROMOTION_3">
         <position x="98" y="362"/>
         <size width="280" height="24"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  <label id="PROMOTION_4">
+      <label id="PROMOTION_4">
         <position x="98" y="386"/>
         <size width="280" height="24"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	    <label id="PROMOTION_5">
+      <label id="PROMOTION_5">
         <position x="98" y="410"/>
         <size width="280" height="24"/>
         <alignment horizontal="left" vertical="top"/>

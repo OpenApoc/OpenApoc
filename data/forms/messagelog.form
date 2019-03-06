@@ -31,12 +31,14 @@
         <item size="21" spacing="4"/>
       </listbox>
       <graphicbutton id="LISTBOX_SCROLL_UP" scrollprev="LISTBOX_SCROLL">
+        <tooltip text="Scroll Up" font="smallset"/>
         <position x="555" y="58"/>
         <size width="22" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton id="LISTBOX_SCROLL_DOWN" scrollnext="LISTBOX_SCROLL">
+        <tooltip text="Scroll Down" font="smallset"/>
         <position x="555" y="441"/>
         <size width="22" height="21"/>
         <image/>

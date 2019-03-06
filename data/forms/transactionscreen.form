@@ -20,17 +20,17 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>
-	  <graphic id = "DELTA_UNDERPANTS">
+      <graphic id = "DELTA_UNDERPANTS">
         <position x="47" y="7"/>
         <size width="15" height="15"/>
-		<image>city/buy_sell_delta_funds_underlay.png</image>
+        <image>city/buy_sell_delta_funds_underlay.png</image>
       </graphic>
-	  <graphic id = "DOLLAR_ICON">
+      <graphic id = "DOLLAR_ICON">
         <position x="48" y="9"/>
         <size width="15" height="15"/>
-		<image>city/dollar-icon.png</image>
+        <image>city/dollar-icon.png</image>
       </graphic>
-	  <label id="TEXT_FUNDS_DELTA">
+      <label id="TEXT_FUNDS_DELTA">
         <position x="65" y="11"/>
         <size width="60" height="10"/>
         <alignment horizontal="left" vertical="centre"/>
@@ -90,14 +90,14 @@
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>
-	  <label id="TEXT_BUTTON_BASE_STATIC" visible="N">
+      <label id="TEXT_BUTTON_BASE_STATIC" visible="N">
         <position x="15" y="124"/>
         <size width="157" height="15"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>
 
-	 <graphicbutton id="BUTTON_SECOND_BASE_1">
+      <graphicbutton id="BUTTON_SECOND_BASE_1">
         <position x="431" y="53"/>
         <size width="32" height="32"/>
         <image/>
@@ -151,47 +151,47 @@
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>
-	    <label id="TEXT_BUTTON_SECOND_BASE_STATIC" visible="N">
+      <label id="TEXT_BUTTON_SECOND_BASE_STATIC" visible="N">
         <position x="422" y="124"/>
         <size width="157" height="15"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>
 
-	  <graphic id="FACILITY_FIRST_PIC">
+      <graphic id="FACILITY_FIRST_PIC">
         <position x="179" y="79"/>
         <size width="32" height="32"/>
       </graphic>
-	  <graphic id="FACILITY_FIRST_BAR">
+      <graphic id="FACILITY_FIRST_BAR">
         <position x="214" y="60"/>
         <size width="7" height="50"/>
-		<image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:62:xcom3/ufodata/research.pcx</image>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:62:xcom3/ufodata/research.pcx</image>
       </graphic>
-	  <graphic id="FACILITY_FIRST_FILL">
+      <graphic id="FACILITY_FIRST_FILL">
         <position x="219" y="60"/>
         <size width="2" height="50"/>
       </graphic>
-	  <label id="FACILITY_FIRST_TEXT">
+      <label id="FACILITY_FIRST_TEXT">
         <position x="179" y="121"/>
         <size width="40" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
 
-	  <graphic id="FACILITY_SECOND_PIC">
+      <graphic id="FACILITY_SECOND_PIC">
         <position x="391" y="79"/>
         <size width="32" height="32"/>
       </graphic>
-	  <graphic id="FACILITY_SECOND_BAR">
+      <graphic id="FACILITY_SECOND_BAR">
         <position x="382" y="60"/>
         <size width="7" height="50"/>
-		<image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:62:xcom3/ufodata/research.pcx</image>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:62:xcom3/ufodata/research.pcx</image>
       </graphic>
-	  <graphic id="FACILITY_SECOND_FILL">
+      <graphic id="FACILITY_SECOND_FILL">
         <position x="387" y="60"/>
         <size width="2" height="50"/>
       </graphic>
-	  <label id="FACILITY_SECOND_TEXT">
+      <label id="FACILITY_SECOND_TEXT">
         <position x="379" y="121"/>
         <size width="40" height="15"/>
         <alignment horizontal="left" vertical="centre"/>
@@ -203,12 +203,14 @@
         <size width="26" height="244"/>
       </scroll>
       <graphicbutton id="LIST_SCROLL_UP" scrollprev="LIST_SCROLL" scrolllarge="true">
+        <tooltip text="Scroll Up" font="smallset"/>
         <position x="569" y="178"/>
         <size width="22" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton id="LIST_SCROLL_DOWN" scrollnext="LIST_SCROLL" scrolllarge="true">
+        <tooltip text="Scroll Down" font="smallset"/>
         <position x="569" y="449"/>
         <size width="22" height="21"/>
         <image/>
@@ -218,82 +220,91 @@
         <position x="211" y="181"/>
         <size width="357" height="284"/>
         <orientation>vertical</orientation>
-		<item size = "47" spacing = "0"/>
+        <item size = "47" spacing = "0"/>
         <hovercolour r="0" g="0" b="0" a="0"/>
       </listbox>
 
-       <graphic>
+      <graphic>
         <position x="209" y="181"/>
         <size width="10" height="9"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:49:xcom3/ufodata/base.pcx</image>
       </graphic>
-	  <graphic>
+      <graphic>
         <position x="209" y="455"/>
         <size width="11" height="10"/>
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:50:xcom3/ufodata/base.pcx</image>
       </graphic>
 
       <radiobutton id="BUTTON_VEHICLES" groupid = "TYPE">
+        <tooltip text="Vehicles" font="smallset"/>
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:37:xcom3/ufodata/base.pcx</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_AGENTS" groupid = "TYPE">
+        <tooltip text="Agent equipment" font="smallset"/>
         <position x="602" y="80"/>
         <size width="35" height="34"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:38:xcom3/ufodata/base.pcx</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_FLYING" groupid = "TYPE">
+        <tooltip text="Airborne vehicle equipment/fuel" font="smallset"/>
         <position x="602" y="120"/>
         <size width="35" height="34"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:39:xcom3/ufodata/base.pcx</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_GROUND" groupid = "TYPE">
+        <tooltip text="Road vehicle equipment/fuel" font="smallset"/>
         <position x="602" y="160"/>
         <size width="35" height="34"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:40:xcom3/ufodata/base.pcx</imagechecked>
-	  </radiobutton>
+      </radiobutton>
 
-	  <radiobutton id="BUTTON_SOLDIERS" groupid = "TYPE">
+      <radiobutton id="BUTTON_SOLDIERS" groupid = "TYPE">
+        <tooltip text="X-COM Agents" font="smallset"/>
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:33:xcom3/ufodata/base.pcx</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_BIOSCIS" groupid = "TYPE">
+        <tooltip text="Biochemists" font="smallset"/>
         <position x="602" y="80"/>
         <size width="35" height="34"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:34:xcom3/ufodata/base.pcx</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_PHYSCIS" groupid = "TYPE">
+        <tooltip text="Quantum Physicists" font="smallset"/>
         <position x="601" y="120"/>
         <size width="35" height="34"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:35:xcom3/ufodata/base.pcx</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_ENGINRS" groupid = "TYPE">
+        <tooltip text="Engineers" font="smallset"/>
         <position x="602" y="160"/>
         <size width="35" height="34"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:36:xcom3/ufodata/base.pcx</imagechecked>
-	  </radiobutton>
-	  <radiobutton id="BUTTON_ALIENS" groupid = "TYPE">
+      </radiobutton>
+      <radiobutton id="BUTTON_ALIENS" groupid = "TYPE">
+        <tooltip text="Aliens" font="smallset"/>
         <position x="602" y="360"/>
         <size width="35" height="34"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:41:xcom3/ufodata/base.pcx</imagechecked>
-	  </radiobutton>
-	  
+      </radiobutton>
+
       <subform id="AGENT_ITEM_VIEW" src="sheet_agent_item">
-		<position x="17" y="183"/>
+        <position x="17" y="183"/>
       </subform>
       <subform id="VEHICLE_ITEM_VIEW" src="sheet_vehicle_item">
-		<position x="17" y="183"/>
+        <position x="17" y="183"/>
       </subform>
       <subform id="AGENT_STATS_VIEW" src="sheet_agent_stats">
         <position x="17" y="183"/>

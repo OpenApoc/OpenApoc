@@ -20,7 +20,7 @@
         <position x="26" y="0"/>
         <size width="84" height="84"/>
         <image>placeholder.png</image>
-		<alignment horizontal="centre" vertical="centre"/>
+        <alignment horizontal="centre" vertical="centre"/>
         <imageposition>fit</imageposition>
       </graphic>
 
@@ -78,7 +78,7 @@
         <alignment horizontal="right" vertical="centre"/>
         <font>smalfont</font>
       </label>
-	  <label id="LABEL_10_L" text="LABEL_10">
+      <label id="LABEL_10_L" text="LABEL_10">
         <position x="0" y="250"/>
         <size width="76" height="15"/>
         <alignment horizontal="right" vertical="centre"/>

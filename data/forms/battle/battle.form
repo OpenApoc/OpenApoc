@@ -17,49 +17,64 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
       <position x="centre" y="bottom"/>
       <size width="640" height="128"/>
       <graphicbutton id="BUTTON_LAYER_UP">
+        <tooltip text="Up" font="smallset"/>
         <position x="427" y="70"/>
         <size width="23" height="19"/>
         <image/>
         <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:134:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_LAYER_DOWN">
+        <tooltip text="Down" font="smallset"/>
         <position x="449" y="70"/>
         <size width="23" height="19"/>
         <image/>
         <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:135:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
       <checkbox id="BUTTON_FOLLOW_AGENT">
+        <tooltip text="Toggle camera mode" font="smallset"/>
         <position x="4" y="7"/>
         <size width="54" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:141:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
       <checkbox id="BUTTON_TOGGLE_STRATMAP">
+        <tooltip text="Switch map view" font="smallset"/>
         <position x="4" y="30"/>
         <size width="54" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:133:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
       <tristatebox id="BUTTON_LAYERING">
+        <tooltip text="Toggle map level display mode" font="smallset"/>
         <position x="4" y="53"/>
         <size width="54" height="21"/>
         <image/>
         <image2>battle/battlescape-icons-fixed-139.png</image2>
         <image3>battle/battlescape-icons-fixed-138.png</image3>
       </tristatebox>
+      <graphicbutton id="BUTTON_SHOW_BRIEFING">
+        <tooltip text="Review briefing" font="smallset"/>
+        <position x="4" y="76"/>
+        <size width="54" height="21"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:323:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_OPTIONS">
+        <tooltip text="Options" font="smallset"/>
         <position x="4" y="99"/>
         <size width="54" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:136:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_LOG">
+        <tooltip text="Message history" font="smallset"/>
         <position x="65" y="1"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:155:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_ZOOM_EVENT">
+        <tooltip text="Center on message" font="smallset"/>
         <position x="549" y="1"/>
         <size width="25" height="25"/>
         <image/>
@@ -72,114 +87,127 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <font>smalfont</font>
       </ticker>
       <!-- Soldier Buttons -->
-	  
-	  <graphic id="SQUAD_1">
-	    <alignment horizontal="centre" vertical="bottom"/>
+
+      <graphic id="SQUAD_1">
+        <tooltip text="Squad icons" font="smallset"/>
+        <alignment horizontal="centre" vertical="bottom"/>
         <position x="66" y="39"/>
         <size width="30" height="24"/>
       </graphic>
-	  <graphic id="SQUAD_2">
-	  <alignment horizontal="centre" vertical="bottom"/>
+      <graphic id="SQUAD_2">
+        <tooltip text="Squad icons" font="smallset"/>
+        <alignment horizontal="centre" vertical="bottom"/>
         <position x="98" y="39"/>
         <size width="30" height="24"/>
       </graphic>
-	  <graphic id="SQUAD_3">
-	  <alignment horizontal="centre" vertical="bottom"/>
+      <graphic id="SQUAD_3">
+        <tooltip text="Squad icons" font="smallset"/>
+        <alignment horizontal="centre" vertical="bottom"/>
         <position x="130" y="39"/>
         <size width="30" height="24"/>
       </graphic>
-	  <graphic id="SQUAD_4">
-	  <alignment horizontal="centre" vertical="bottom"/>
+      <graphic id="SQUAD_4">
+        <tooltip text="Squad icons" font="smallset"/>
+        <alignment horizontal="centre" vertical="bottom"/>
         <position x="162" y="39"/>
         <size width="30" height="24"/>
       </graphic>
-	  <graphic id="SQUAD_5">
-	  <alignment horizontal="centre" vertical="bottom"/>
+      <graphic id="SQUAD_5">
+        <tooltip text="Squad icons" font="smallset"/>
+        <alignment horizontal="centre" vertical="bottom"/>
         <position x="194" y="39"/>
         <size width="30" height="24"/>
       </graphic>
-	  <graphic id="SQUAD_6">
-	  <alignment horizontal="centre" vertical="bottom"/>
+      <graphic id="SQUAD_6">
+        <tooltip text="Squad icons" font="smallset"/>
+        <alignment horizontal="centre" vertical="bottom"/>
         <position x="226" y="39"/>
         <size width="30" height="24"/>
       </graphic>
-	  <graphic id="SQUAD_1_OVERLAY">
+      <graphic id="SQUAD_1_OVERLAY">
         <position x="65" y="38"/>
         <size width="30" height="24"/>
       </graphic>
-	  <graphic id="SQUAD_2_OVERLAY">
+      <graphic id="SQUAD_2_OVERLAY">
         <position x="97" y="38"/>
         <size width="30" height="24"/>
       </graphic>
-	  <graphic id="SQUAD_3_OVERLAY">
+      <graphic id="SQUAD_3_OVERLAY">
         <position x="129" y="38"/>
         <size width="30" height="24"/>
       </graphic>
-	  <graphic id="SQUAD_4_OVERLAY">
+      <graphic id="SQUAD_4_OVERLAY">
         <position x="161" y="38"/>
         <size width="30" height="24"/>
       </graphic>
-	  <graphic id="SQUAD_5_OVERLAY">
+      <graphic id="SQUAD_5_OVERLAY">
         <position x="193" y="38"/>
         <size width="30" height="24"/>
       </graphic>
-	  <graphic id="SQUAD_6_OVERLAY">
+      <graphic id="SQUAD_6_OVERLAY">
         <position x="225" y="38"/>
         <size width="30" height="24"/>
       </graphic>
-	  
-	  <graphic id="UNIT_1">
+
+      <graphic id="UNIT_1">
+        <tooltip text="" font="smallset"/>
         <position x="384" y="38"/>
         <size width="32" height="24"/>
       </graphic>
-	  <graphic id="UNIT_2">
+      <graphic id="UNIT_2">
+        <tooltip text="" font="smallset"/>
         <position x="416" y="38"/>
         <size width="32" height="24"/>
       </graphic>
-	  <graphic id="UNIT_3">
+      <graphic id="UNIT_3">
+        <tooltip text="" font="smallset"/>
         <position x="448" y="38"/>
         <size width="32" height="24"/>
       </graphic>
-	  <graphic id="UNIT_4">
+      <graphic id="UNIT_4">
+        <tooltip text="" font="smallset"/>
         <position x="480" y="38"/>
         <size width="32" height="24"/>
       </graphic>
-	  <graphic id="UNIT_5">
+      <graphic id="UNIT_5">
+        <tooltip text="" font="smallset"/>
         <position x="512" y="38"/>
         <size width="32" height="24"/>
       </graphic>
-	  <graphic id="UNIT_6">
+      <graphic id="UNIT_6">
+        <tooltip text="" font="smallset"/>
         <position x="544" y="38"/>
         <size width="32" height="24"/>
       </graphic>
-	  
-	  <graphic id="UNIT_1_HOSTILES">
+
+      <graphic id="UNIT_1_HOSTILES">
         <position x="385" y="28"/>
         <size width="30" height="10"/>
       </graphic>
-	  <graphic id="UNIT_2_HOSTILES">
+      <graphic id="UNIT_2_HOSTILES">
         <position x="417" y="28"/>
         <size width="30" height="10"/>
       </graphic>
-	  <graphic id="UNIT_3_HOSTILES">
+      <graphic id="UNIT_3_HOSTILES">
         <position x="449" y="28"/>
         <size width="30" height="10"/>
       </graphic>
-	  <graphic id="UNIT_4_HOSTILES">
+      <graphic id="UNIT_4_HOSTILES">
         <position x="481" y="28"/>
         <size width="30" height="10"/>
       </graphic>
-	  <graphic id="UNIT_5_HOSTILES">
+      <graphic id="UNIT_5_HOSTILES">
         <position x="513" y="28"/>
         <size width="30" height="10"/>
       </graphic>
-	  <graphic id="UNIT_6_HOSTILES">
+      <graphic id="UNIT_6_HOSTILES">
         <position x="545" y="28"/>
         <size width="30" height="10"/>
       </graphic>
-	  
+
       <!-- Fire -->
       <tristatebox id="BUTTON_CEASE_FIRE">
+        <tooltip text="No shot" font="smallset"/>
         <position x="72" y="100"/>
         <size width="29" height="25"/>
         <image/>
@@ -187,18 +215,21 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <image3>battle/battlescape-buttons-cease-3.png</image3>
       </tristatebox>
       <checkbox id="BUTTON_AIMED">
+        <tooltip text="Aimed shot" font="smallset"/>
         <position x="101" y="100"/>
         <size width="29" height="25"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:128:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
       <checkbox id="BUTTON_SNAP">
+        <tooltip text="Snap shot" font="smallset"/>
         <position x="130" y="100"/>
         <size width="29" height="25"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:130:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
       <checkbox id="BUTTON_AUTO">
+        <tooltip text="Auto shot" font="smallset"/>
         <position x="159" y="100"/>
         <size width="29" height="25"/>
         <image/>
@@ -206,6 +237,7 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
       </checkbox>
       <!-- Movement -->
       <tristatebox id="BUTTON_KNEEL">
+        <tooltip text="Kneel down" font="smallset"/>
         <position x="449" y="100"/>
         <size width="29" height="25"/>
         <image/>
@@ -213,18 +245,21 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <image3>battle/battlescape-buttons-kneel-3.png</image3>
       </tristatebox>
       <checkbox id="BUTTON_PRONE">
+        <tooltip text="Crawl" font="smallset"/>
         <position x="482" y="100"/>
         <size width="29" height="25"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:110:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
       <checkbox id="BUTTON_WALK">
+        <tooltip text="Walk" font="smallset"/>
         <position x="511" y="100"/>
         <size width="29" height="25"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:112:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
       <checkbox id="BUTTON_RUN">
+        <tooltip text="Run" font="smallset"/>
         <position x="540" y="100"/>
         <size width="29" height="25"/>
         <image/>
@@ -232,18 +267,21 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
       </checkbox>
       <!-- Behavior -->
       <checkbox id="BUTTON_EVASIVE">
+        <tooltip text="Safe mode" font="smallset"/>
         <position x="487" y="68"/>
         <size width="24" height="25"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:116:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
       <checkbox id="BUTTON_NORMAL">
+        <tooltip text="Cautious mode" font="smallset"/>
         <position x="511" y="68"/>
         <size width="24" height="25"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:118:xcom3/tacdata/tactical.pal</imagechecked>
       </checkbox>
       <checkbox id="BUTTON_AGGRESSIVE">
+        <tooltip text="Aggressive mode" font="smallset"/>
         <position x="535" y="68"/>
         <size width="24" height="25"/>
         <image/>
@@ -251,24 +289,28 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
       </checkbox>
       <!-- Time Controls (Disabled in Turn Based) -->
       <radiobutton id="BUTTON_SPEED0" groupid="SPEED">
+        <tooltip text="Pause" font="smallset"/>
         <position x="583" y="7"/>
         <size width="54" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:144:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_SPEED1" groupid="SPEED">
+        <tooltip text="Slow speed" font="smallset"/>
         <position x="583" y="53"/>
         <size width="54" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:146:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_SPEED2" groupid="SPEED">
+        <tooltip text="Normal speed" font="smallset"/>
         <position x="583" y="76"/>
         <size width="54" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:148:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_SPEED3" groupid="SPEED">
+        <tooltip text="Double speed" font="smallset"/>
         <position x="583" y="99"/>
         <size width="54" height="21"/>
         <image/>
@@ -278,38 +320,44 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
         <position x="580" y="34"/>
         <size width="59" height="12"/>
         <alignment horizontal="centre" vertical="centre"/>
+        <tooltip text="" font="smallset"/>
         <font>smalfont</font>
       </label>
       <!-- Turn Controls (Disabled in Real Time) -->
       <tristatebox id="BUTTON_RESERVE_AIMED">
+        <tooltip text="Reserve TUs for aimed shot" font="smallset"/>
         <position x="583" y="7"/>
         <size width="54" height="21"/>
         <image/>
         <image2>battle/battlescape-icons-fixed-305.png</image2>
-		<image3>battle/battlescape-buttons-res-aim.png</image3>
+        <image3>battle/battlescape-buttons-res-aim.png</image3>
       </tristatebox>
       <tristatebox id="BUTTON_RESERVE_SNAP">
+        <tooltip text="Reserve TUs for snap shot" font="smallset"/>
         <position x="583" y="30"/>
         <size width="54" height="21"/>
         <image/>
         <image2>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:304:xcom3/tacdata/tactical.pal</image2>
-		<image3>battle/battlescape-buttons-res-snap.png</image3>
+        <image3>battle/battlescape-buttons-res-snap.png</image3>
       </tristatebox>
       <tristatebox id="BUTTON_RESERVE_AUTO">
+        <tooltip text="Reserve TUs for auto shot" font="smallset"/>
         <position x="583" y="53"/>
         <size width="54" height="21"/>
         <image/>
         <image2>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:303:xcom3/tacdata/tactical.pal</image2>
-		<image3>battle/battlescape-buttons-res-auto.png</image3>
+        <image3>battle/battlescape-buttons-res-auto.png</image3>
       </tristatebox>
       <tristatebox id="BUTTON_RESERVE_KNEEL">
+        <tooltip text="Reserve TUs for kneel" font="smallset"/>
         <position x="583" y="76"/>
         <size width="54" height="21"/>
         <image/>
         <image2>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:306:xcom3/tacdata/tactical.pal</image2>
-		<image3>battle/battlescape-buttons-res-kneel.png</image3>
+        <image3>battle/battlescape-buttons-res-kneel.png</image3>
       </tristatebox>
-	  <graphicbutton id="BUTTON_ENDTURN">
+      <graphicbutton id="BUTTON_ENDTURN">
+        <tooltip text="End turn" font="smallset"/>
         <position x="583" y="99"/>
         <size width="54" height="21"/>
         <image/>
@@ -317,18 +365,21 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
       </graphicbutton>
       <!-- Squad Assign and Group move buttons -->
       <radiobutton id="BUTTON_MOVE_GROUP" groupid="GROUPMOVE">
+        <tooltip text="Group formation" font="smallset"/>
         <position x="80" y="68"/>
         <size width="37" height="25"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:122:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_MOVE_INDIVIDUALLY" groupid="GROUPMOVE">
+        <tooltip text="Single file" font="smallset"/>
         <position x="116" y="68"/>
         <size width="37" height="25"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:124:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
-	  <checkbox id="BUTTON_SQUAD_ASSIGN">
+      <checkbox id="BUTTON_SQUAD_ASSIGN">
+        <tooltip text="Assign units to squad" font="smallset"/>
         <position x="167" y="69"/>
         <size width="50" height="20"/>
         <image/>

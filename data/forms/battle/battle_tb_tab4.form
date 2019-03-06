@@ -10,56 +10,65 @@
         <size width="640" height="128"/>
         <image>RAW:xcom3/tacdata/tacbord9.dat:640:128:xcom3/tacdata/tactical.pal</image>
       </graphic>
-	   <!-- Layers -->
+      <!-- Layers -->
       <radiobutton id="BUTTON_LAYER_1" groupid="LAYER">
+        <tooltip text="Level indicator" font="smallset"/>
         <position x="314" y="113"/>
         <size width="13" height="8"/>
         <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:100:xcom3/tacdata/tactical.pal</image>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:33:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_2" groupid="LAYER">
+        <tooltip text="Level indicator" font="smallset"/>
         <position x="314" y="104"/>
         <size width="13" height="8"/>
         <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:101:xcom3/tacdata/tactical.pal</image>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:34:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_3" groupid="LAYER">
+        <tooltip text="Level indicator" font="smallset"/>
         <position x="314" y="95"/>
         <size width="13" height="8"/>
         <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:102:xcom3/tacdata/tactical.pal</image>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:35:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_4" groupid="LAYER">
+        <tooltip text="Level indicator" font="smallset"/>
         <position x="314" y="86"/>
         <size width="13" height="8"/>
         <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:103:xcom3/tacdata/tactical.pal</image>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:36:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_5" groupid="LAYER">
+        <tooltip text="Level indicator" font="smallset"/>
         <position x="314" y="77"/>
         <size width="13" height="8"/>
         <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:104:xcom3/tacdata/tactical.pal</image>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:37:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_6" groupid="LAYER">
+        <tooltip text="Level indicator" font="smallset"/>
         <position x="314" y="68"/>
         <size width="13" height="8"/>
         <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:105:xcom3/tacdata/tactical.pal</image>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:38:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_7" groupid="LAYER">
+        <tooltip text="Level indicator" font="smallset"/>
         <position x="314" y="59"/>
         <size width="13" height="8"/>
         <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:106:xcom3/tacdata/tactical.pal</image>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:39:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_8" groupid="LAYER">
+        <tooltip text="Level indicator" font="smallset"/>
         <position x="314" y="50"/>
         <size width="13" height="8"/>
         <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:107:xcom3/tacdata/tactical.pal</image>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:40:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_LAYER_9" groupid="LAYER">
+        <tooltip text="Level indicator" font="smallset"/>
         <position x="314" y="41"/>
         <size width="13" height="8"/>
         <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:108:xcom3/tacdata/tactical.pal</image>

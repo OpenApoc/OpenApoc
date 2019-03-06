@@ -21,6 +21,10 @@ Control::Control(bool takesFocus)
       BackgroundColour(0, 0, 0, 0), takesFocus(takesFocus), showBounds(false), Enabled(true),
       canCopy(true), funcPreRender(nullptr)
 {
+	// Tooltip defaults
+	ToolTipBackground = {128, 128, 128};
+	ToolTipBorders = {{1, {0, 0, 0}}, {1, {255, 255, 255}}};
+	ToolTipPadding = 1;
 }
 
 Control::~Control() { unloadResources(); }

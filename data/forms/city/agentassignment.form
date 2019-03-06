@@ -4,46 +4,48 @@
     <style minwidth="529" minheight="373">
       <size width="529" height="373"/>
 
-	<label text="Unassigned Agents">
+      <label text="Unassigned Agents">
         <position x="45" y="3"/>
         <size width="167" height="15"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
-    </label>
-	<label text="Vehicle Assignments">
+      </label>
+      <label text="Vehicle Assignments">
         <position x="299" y="3"/>
         <size width="167" height="15"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
-    </label>
+      </label>
 
-	<scroll id="AGENT_SELECT_SCROLL">
+      <scroll id="AGENT_SELECT_SCROLL">
         <position x="503" y="27"/>
         <size width="26" height="320"/>
-    </scroll>
-    <graphicbutton id="AGENT_SCROLL_UP" scrollprev="AGENT_SELECT_SCROLL">
+      </scroll>
+      <graphicbutton id="AGENT_SCROLL_UP" scrollprev="AGENT_SELECT_SCROLL">
+        <tooltip text="Scroll Up" font="smallset"/>
         <position x="505" y="3"/>
         <size width="22" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
-    </graphicbutton>
-    <graphicbutton id="AGENT_SCROLL_DOWN" scrollnext="AGENT_SELECT_SCROLL">
+      </graphicbutton>
+      <graphicbutton id="AGENT_SCROLL_DOWN" scrollnext="AGENT_SELECT_SCROLL">
+        <tooltip text="Scroll Down" font="smallset"/>
         <position x="505" y="350"/>
         <size width="22" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
-    </graphicbutton>
-    <multilistbox id="AGENT_SELECT_BOX" scrollbarid="AGENT_SELECT_SCROLL">
+      </graphicbutton>
+      <multilistbox id="AGENT_SELECT_BOX" scrollbarid="AGENT_SELECT_SCROLL">
         <position x="16" y="25"/>
         <size width="506" height="340"/>
         <item size="0" spacing="2"/>
         <hovercolour r="255" g="255" b="255" a="255"/>
         <selcolour r="128" g="180" b="255" a="255"/>
-    </multilistbox>
+      </multilistbox>
 
-    <multilistbox id="DRAGGED_AGENT_BOX">
+      <multilistbox id="DRAGGED_AGENT_BOX">
         <item size="0" spacing="2"/>
-    </multilistbox>
+      </multilistbox>
     </style>
   </form>
 </openapoc>

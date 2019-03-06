@@ -23,27 +23,27 @@
           <font>smalfont</font>
         </label>
 
-		<textbutton text="Give all research" id="BUTTON_GIVE_ALL_RESEARCH">
+        <textbutton text="Give all research" id="BUTTON_GIVE_ALL_RESEARCH">
           <font>smalfont</font>
           <position x="290" y="100"/>
           <size width="140" height="28"/>
         </textbutton>
-		<textbutton text="Utopia" id="BUTTON_ORGS_UTOPIA">
+        <textbutton text="Utopia" id="BUTTON_ORGS_UTOPIA">
           <font>smalfont</font>
           <position x="290" y="142"/>
           <size width="140" height="28"/>
         </textbutton>
-		<textbutton text="All orgs. friendly" id="BUTTON_ORGS_FRIENDLY">
+        <textbutton text="All orgs. friendly" id="BUTTON_ORGS_FRIENDLY">
           <font>smalfont</font>
           <position x="290" y="170"/>
           <size width="140" height="28"/>
         </textbutton>
-		<textbutton text="All orgs. hostile" id="BUTTON_ORGS_HOSTILE">
+        <textbutton text="All orgs. hostile" id="BUTTON_ORGS_HOSTILE">
           <font>smalfont</font>
           <position x="290" y="198"/>
           <size width="140" height="28"/>
         </textbutton>
-		<textbutton text="Chaos" id="BUTTON_ORGS_CHAOS">
+        <textbutton text="Chaos" id="BUTTON_ORGS_CHAOS">
           <font>smalfont</font>
           <position x="290" y="226"/>
           <size width="140" height="28"/>
@@ -55,18 +55,18 @@
           <image>BUTTON_CHECKBOX_FALSE</image>
           <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
           <label text="Infinite ammo">
-			<position x="24" y="0"/>
-			<font>smalfont</font>
-			<size width="120" height="16"/>
+            <position x="24" y="0"/>
+            <font>smalfont</font>
+            <size width="120" height="16"/>
           </label>
-		</checkbox>
+        </checkbox>
 
         <textbutton id="BUTTON_MODIFY_FUNDS" text="Modify funds">
           <font>smalfont</font>
           <position x="56" y="102"/>
           <size width="148" height="20"/>
         </textbutton>
-	    <graphic>
+        <graphic>
           <position x="42" y="122"/>
           <size width="224" height="18"/>
           <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
@@ -100,9 +100,9 @@
           <position x="56" y="166"/>
           <font>smalfont</font>
           <size width="148" height="16"/>
-		  <alignment horizontal="left" vertical="centre"/>
+          <alignment horizontal="left" vertical="centre"/>
         </label>
-	    <graphic>
+        <graphic>
           <position x="42" y="182"/>
           <size width="224" height="18"/>
           <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
@@ -136,9 +136,9 @@
           <position x="56" y="226"/>
           <font>smalfont</font>
           <size width="148" height="16"/>
-		  <alignment horizontal="left" vertical="centre"/>
+          <alignment horizontal="left" vertical="centre"/>
         </label>
-	    <graphic>
+        <graphic>
           <position x="42" y="242"/>
           <size width="224" height="18"/>
           <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
@@ -173,9 +173,9 @@
           <position x="56" y="286"/>
           <font>smalfont</font>
           <size width="148" height="16"/>
-		  <alignment horizontal="left" vertical="centre"/>
+          <alignment horizontal="left" vertical="centre"/>
         </label>
-	    <graphic>
+        <graphic>
           <position x="42" y="302"/>
           <size width="224" height="18"/>
           <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
@@ -210,9 +210,9 @@
           <position x="56" y="346"/>
           <font>smalfont</font>
           <size width="148" height="16"/>
-		  <alignment horizontal="left" vertical="centre"/>
+          <alignment horizontal="left" vertical="centre"/>
         </label>
-	    <graphic>
+        <graphic>
           <position x="42" y="362"/>
           <size width="224" height="18"/>
           <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
@@ -249,6 +249,6 @@
           <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
         </graphicbutton>
       </graphic>
-	</style>
+    </style>
   </form>
 </openapoc>

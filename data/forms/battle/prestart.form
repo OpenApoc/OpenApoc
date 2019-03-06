@@ -17,6 +17,7 @@
         <font>bigfont</font>
       </label>
       <graphicbutton id="BUTTON_EQUIP">
+        <tooltip text="Equip agent" font="smallset"/>
         <position x="604" y="42"/>
         <size width="50" height="48"/>
         <imagedepressed>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:41:xcom3/tacdata/tactical.pal</imagedepressed>
@@ -26,21 +27,21 @@
         <size width="50" height="48"/>
         <imagedepressed>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:5:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
-	  <!-- Agent Stats -->
+      <!-- Agent Stats -->
       <subform id="AGENT_STATS_VIEW" src="sheet_agent_stats">
         <position x="17" y="64"/>
       </subform>
 
-	  <!-- Items -->
-	  <graphic id="RIGHT_HAND">
+      <!-- Items -->
+      <graphic id="RIGHT_HAND">
         <position x="10" y="349"/>
         <size width="83" height="93"/>
-		<alignment horizontal="centre" vertical="centre"/>
+        <alignment horizontal="centre" vertical="centre"/>
       </graphic>
-	  <graphic id="LEFT_HAND">
+      <graphic id="LEFT_HAND">
         <position x="101" y="349"/>
         <size width="83" height="93"/>
-		<alignment horizontal="centre" vertical="centre"/>
+        <alignment horizontal="centre" vertical="centre"/>
       </graphic>
     </style>
   </form>

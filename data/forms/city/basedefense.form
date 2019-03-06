@@ -15,26 +15,27 @@
         <alignment horizontal="centre" vertical="centre"/>
         <font>bigfont</font>
       </label>
-        <graphicbutton id="BUTTON_EQUIPAGENT">
+      <graphicbutton id="BUTTON_EQUIPAGENT">
+        <tooltip text="Equip agent" font="smallset"/>
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:29:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
-   
-    <label id = "BASE_NAME">
+
+      <label id = "BASE_NAME">
         <position x="40" y="420"/>
         <size width="560" height="23"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>
-	<label text = "Hostile forces have invaded your base. Equip your Agents before battle.">
+      <label text = "Hostile forces have invaded your base. Equip your Agents before battle.">
         <position x="40" y="443"/>
         <size width="560" height="23"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>
-	  
+
       <graphicbutton id="BUTTON_QUIT">
         <position x="602" y="443"/>
         <size width="40" height="40"/>

@@ -9,18 +9,20 @@
         <size width="640" height="128"/>
         <image>RAW:xcom3/ufodata/isobord5.dat:640:128:xcom3/ufodata/pal_01.dat</image>
       </graphic>
-	  
-	  <scroll id="OWNED_AGENT_LIST_SCROLL" visible="N" largepercent = "20">
+
+      <scroll id="OWNED_AGENT_LIST_SCROLL" visible="N" largepercent = "20">
         <position x="105" y="66"/>
         <size width="431" height="16"/>
       </scroll>
       <graphicbutton id="AGENT_SCROLL_LEFT" scrollprev="OWNED_AGENT_LIST_SCROLL" scrolllarge="Y">
+        <tooltip text="Scroll Left" font="smallset"/>
         <position x="88" y="45"/>
         <size width="17" height="23"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:15:xcom3/ufodata/pal_01.dat</imagechecked>
       </graphicbutton>
       <graphicbutton id="AGENT_SCROLL_RIGHT" scrollnext="OWNED_AGENT_LIST_SCROLL" scrolllarge="Y">
+        <tooltip text="Scroll Right" font="smallset"/>
         <position x="536" y="45"/>
         <size width="18" height="22"/>
         <image/>
@@ -29,7 +31,7 @@
       <listbox id="OWNED_AGENT_LIST" scrollbarid="OWNED_AGENT_LIST_SCROLL">
         <position x="105" y="44"/>
         <size height="24" width="431"/>
-   		<item size="0" spacing="0"/>
+        <item size="0" spacing="0"/>
         <orientation>horizontal</orientation>
       </listbox>
       <label id="TEXT_AGENT_NAME">
@@ -45,6 +47,7 @@
         <font>smalfont</font>
       </label>
       <graphicbutton id="BUTTON_RESEARCH">
+        <tooltip text="Research and manufacture" font="smallset"/>
         <size width="27" height="46"/>
         <position x="408" y="75"/>
         <image/>

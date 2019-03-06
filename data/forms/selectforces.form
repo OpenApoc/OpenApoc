@@ -10,534 +10,534 @@
         <position x="2" y="2"/>
         <size width="640" height="480"/>
       </graphic>
-	   <label text="CUSTOMIZE FORCES">
+      <label text="CUSTOMIZE FORCES">
         <position x="20" y="0"/>
         <size width="600" height="40"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>bigfont</font>
       </label>
-	   <label id="TEXT_FUNDS">
+      <label id="TEXT_FUNDS">
         <position x="572" y="11"/>
         <size width="60" height="10"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
-		</label>
+      </label>
       <label id="LOCATION">
         <position x="36" y="80"/>
         <size width="500" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  <label text = "_____________________________________________________">
+      <label text = "_____________________________________________________">
         <position x="36" y="95"/>
         <size width="500" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
-		  </label>
-		  
-	  <label text = "ALIENS">
+      </label>
+
+      <label text = "ALIENS">
         <position x="36" y="115"/>
         <size width="100" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  <checkbox id="DEFAULT_ALIENS">
-          <position x="86" y="115"/>
-          <size width="19" height="16"/>
-          <image>BUTTON_CHECKBOX_FALSE</image>
-          <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
-        </checkbox>
-	  <label  text = "Default">
+      <checkbox id="DEFAULT_ALIENS">
+        <position x="86" y="115"/>
+        <size width="19" height="16"/>
+        <image>BUTTON_CHECKBOX_FALSE</image>
+        <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+      </checkbox>
+      <label  text = "Default">
         <position x="116" y="115"/>
         <size width="110" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  
-	  <label text = "Brainsucker">
+
+      <label text = "Brainsucker">
         <position x="36" y="135"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	   <scroll id="NUM_BSK_SLIDER">
-          <position x="61" y="155"/>
-          <size width="105" height="15"/>
-          <range min="0" max="36"/>
-        </scroll>
-        <graphicbutton scrollprev="NUM_BSK_SLIDER">
-          <position x="46" y="153"/>
-          <size width="16" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-        <graphicbutton scrollnext="NUM_BSK_SLIDER">
-          <position x="167" y="153"/>
-          <size width="17" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-		<label id = "NUM_BSK" text = "0">
+      <scroll id="NUM_BSK_SLIDER">
+        <position x="61" y="155"/>
+        <size width="105" height="15"/>
+        <range min="0" max="36"/>
+      </scroll>
+      <graphicbutton scrollprev="NUM_BSK_SLIDER">
+        <position x="46" y="153"/>
+        <size width="16" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton scrollnext="NUM_BSK_SLIDER">
+        <position x="167" y="153"/>
+        <size width="17" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <label id = "NUM_BSK" text = "0">
         <position x="184" y="153"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  
-	  <label text = "Chrysalis">
+
+      <label text = "Chrysalis">
         <position x="206" y="135"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  <scroll id="NUM_CHRYS_SLIDER">
-          <position x="231" y="155"/>
-          <size width="105" height="15"/>
-          <range min="0" max="36"/>
-        </scroll>
-        <graphicbutton scrollprev="NUM_CHRYS_SLIDER">
-          <position x="216" y="153"/>
-          <size width="16" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-        <graphicbutton scrollnext="NUM_CHRYS_SLIDER">
-          <position x="337" y="153"/>
-          <size width="17" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-		<label id = "NUM_CHRYS" text = "0">
+      <scroll id="NUM_CHRYS_SLIDER">
+        <position x="231" y="155"/>
+        <size width="105" height="15"/>
+        <range min="0" max="36"/>
+      </scroll>
+      <graphicbutton scrollprev="NUM_CHRYS_SLIDER">
+        <position x="216" y="153"/>
+        <size width="16" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton scrollnext="NUM_CHRYS_SLIDER">
+        <position x="337" y="153"/>
+        <size width="17" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <label id = "NUM_CHRYS" text = "0">
         <position x="354" y="153"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  
-	  <label text = "Multiworm Egg">
+
+      <label text = "Multiworm Egg">
         <position x="376" y="135"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-		<scroll id="NUM_EGG_SLIDER">
-          <position x="401" y="155"/>
-          <size width="105" height="15"/>
-          <range min="0" max="36"/>
-        </scroll>
-        <graphicbutton scrollprev="NUM_EGG_SLIDER">
-          <position x="386" y="153"/>
-          <size width="16" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-        <graphicbutton scrollnext="NUM_EGG_SLIDER">
-          <position x="507" y="153"/>
-          <size width="17" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-		<label id = "NUM_EGG" text = "0">
+      <scroll id="NUM_EGG_SLIDER">
+        <position x="401" y="155"/>
+        <size width="105" height="15"/>
+        <range min="0" max="36"/>
+      </scroll>
+      <graphicbutton scrollprev="NUM_EGG_SLIDER">
+        <position x="386" y="153"/>
+        <size width="16" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton scrollnext="NUM_EGG_SLIDER">
+        <position x="507" y="153"/>
+        <size width="17" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <label id = "NUM_EGG" text = "0">
         <position x="524" y="153"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  
-	  <label text = "Spitters">
+
+      <label text = "Spitters">
         <position x="36" y="185"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	   <scroll id="NUM_SPITTER_SLIDER">
-          <position x="61" y="205"/>
-          <size width="105" height="15"/>
-          <range min="0" max="36"/>
-        </scroll>
-        <graphicbutton scrollprev="NUM_SPITTER_SLIDER">
-          <position x="46" y="203"/>
-          <size width="16" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-        <graphicbutton scrollnext="NUM_SPITTER_SLIDER">
-          <position x="167" y="203"/>
-          <size width="17" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-		<label id = "NUM_SPITTER" text = "0">
+      <scroll id="NUM_SPITTER_SLIDER">
+        <position x="61" y="205"/>
+        <size width="105" height="15"/>
+        <range min="0" max="36"/>
+      </scroll>
+      <graphicbutton scrollprev="NUM_SPITTER_SLIDER">
+        <position x="46" y="203"/>
+        <size width="16" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton scrollnext="NUM_SPITTER_SLIDER">
+        <position x="167" y="203"/>
+        <size width="17" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <label id = "NUM_SPITTER" text = "0">
         <position x="184" y="203"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
-      </label>	
-		
-		 <label text = "Anthropod">
+      </label>
+
+      <label text = "Anthropod">
         <position x="206" y="185"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  <scroll id="NUM_ANTHROPOD_SLIDER">
-          <position x="231" y="205"/>
-          <size width="105" height="15"/>
-          <range min="0" max="36"/>
-        </scroll>
-        <graphicbutton scrollprev="NUM_ANTHROPOD_SLIDER">
-          <position x="216" y="203"/>
-          <size width="16" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-        <graphicbutton scrollnext="NUM_ANTHROPOD_SLIDER">
-          <position x="337" y="203"/>
-          <size width="17" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-		<label id = "NUM_ANTHROPOD" text = "0">
+      <scroll id="NUM_ANTHROPOD_SLIDER">
+        <position x="231" y="205"/>
+        <size width="105" height="15"/>
+        <range min="0" max="36"/>
+      </scroll>
+      <graphicbutton scrollprev="NUM_ANTHROPOD_SLIDER">
+        <position x="216" y="203"/>
+        <size width="16" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton scrollnext="NUM_ANTHROPOD_SLIDER">
+        <position x="337" y="203"/>
+        <size width="17" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <label id = "NUM_ANTHROPOD" text = "0">
         <position x="354" y="203"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  
-	  <label text = "Multiworm">
+
+      <label text = "Multiworm">
         <position x="376" y="185"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-		<scroll id="NUM_MULTIWORM_SLIDER">
-          <position x="401" y="205"/>
-          <size width="105" height="15"/>
-          <range min="0" max="36"/>
-        </scroll>
-        <graphicbutton scrollprev="NUM_MULTIWORM_SLIDER">
-          <position x="386" y="203"/>
-          <size width="16" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-        <graphicbutton scrollnext="NUM_MULTIWORM_SLIDER">
-          <position x="507" y="203"/>
-          <size width="17" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-		<label id = "NUM_MULTIWORM" text = "0">
+      <scroll id="NUM_MULTIWORM_SLIDER">
+        <position x="401" y="205"/>
+        <size width="105" height="15"/>
+        <range min="0" max="36"/>
+      </scroll>
+      <graphicbutton scrollprev="NUM_MULTIWORM_SLIDER">
+        <position x="386" y="203"/>
+        <size width="16" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton scrollnext="NUM_MULTIWORM_SLIDER">
+        <position x="507" y="203"/>
+        <size width="17" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <label id = "NUM_MULTIWORM" text = "0">
         <position x="524" y="203"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  
-	   <label text = "Popper">
+
+      <label text = "Popper">
         <position x="36" y="235"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	   <scroll id="NUM_POPPER_SLIDER">
-          <position x="61" y="255"/>
-          <size width="105" height="15"/>
-          <range min="0" max="36"/>
-        </scroll>
-        <graphicbutton scrollprev="NUM_POPPER_SLIDER">
-          <position x="46" y="253"/>
-          <size width="16" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-        <graphicbutton scrollnext="NUM_POPPER_SLIDER">
-          <position x="167" y="253"/>
-          <size width="17" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-		<label id = "NUM_POPPER" text = "0">
+      <scroll id="NUM_POPPER_SLIDER">
+        <position x="61" y="255"/>
+        <size width="105" height="15"/>
+        <range min="0" max="36"/>
+      </scroll>
+      <graphicbutton scrollprev="NUM_POPPER_SLIDER">
+        <position x="46" y="253"/>
+        <size width="16" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton scrollnext="NUM_POPPER_SLIDER">
+        <position x="167" y="253"/>
+        <size width="17" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <label id = "NUM_POPPER" text = "0">
         <position x="184" y="253"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  
-	  <label text = "Skeletoid">
+
+      <label text = "Skeletoid">
         <position x="206" y="235"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  <scroll id="NUM_SKEL_SLIDER">
-          <position x="231" y="255"/>
-          <size width="105" height="15"/>
-          <range min="0" max="36"/>
-        </scroll>
-        <graphicbutton scrollprev="NUM_SKEL_SLIDER">
-          <position x="216" y="253"/>
-          <size width="16" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-        <graphicbutton scrollnext="NUM_SKEL_SLIDER">
-          <position x="337" y="253"/>
-          <size width="17" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-		<label id = "NUM_SKEL" text = "0">
+      <scroll id="NUM_SKEL_SLIDER">
+        <position x="231" y="255"/>
+        <size width="105" height="15"/>
+        <range min="0" max="36"/>
+      </scroll>
+      <graphicbutton scrollprev="NUM_SKEL_SLIDER">
+        <position x="216" y="253"/>
+        <size width="16" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton scrollnext="NUM_SKEL_SLIDER">
+        <position x="337" y="253"/>
+        <size width="17" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <label id = "NUM_SKEL" text = "0">
         <position x="354" y="253"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  
-	  <label text = "Hyperworm">
+
+      <label text = "Hyperworm">
         <position x="376" y="235"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-		<scroll id="NUM_HYPERWORM_SLIDER">
-          <position x="401" y="255"/>
-          <size width="105" height="15"/>
-          <range min="0" max="36"/>
-        </scroll>
-        <graphicbutton scrollprev="NUM_HYPERWORM_SLIDER">
-          <position x="386" y="253"/>
-          <size width="16" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-        <graphicbutton scrollnext="NUM_HYPERWORM_SLIDER">
-          <position x="507" y="253"/>
-          <size width="17" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-		<label id = "NUM_HYPERWORM" text = "0">
+      <scroll id="NUM_HYPERWORM_SLIDER">
+        <position x="401" y="255"/>
+        <size width="105" height="15"/>
+        <range min="0" max="36"/>
+      </scroll>
+      <graphicbutton scrollprev="NUM_HYPERWORM_SLIDER">
+        <position x="386" y="253"/>
+        <size width="16" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton scrollnext="NUM_HYPERWORM_SLIDER">
+        <position x="507" y="253"/>
+        <size width="17" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <label id = "NUM_HYPERWORM" text = "0">
         <position x="524" y="253"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  
-	    <label text = "Megaspawn">
+
+      <label text = "Megaspawn">
         <position x="36" y="285"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	   <scroll id="NUM_MEGA_SLIDER">
-          <position x="61" y="305"/>
-          <size width="105" height="15"/>
-          <range min="0" max="36"/>
-        </scroll>
-        <graphicbutton scrollprev="NUM_MEGA_SLIDER">
-          <position x="46" y="303"/>
-          <size width="16" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-        <graphicbutton scrollnext="NUM_MEGA_SLIDER">
-          <position x="167" y="303"/>
-          <size width="17" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-		<label id = "NUM_MEGA" text = "0">
+      <scroll id="NUM_MEGA_SLIDER">
+        <position x="61" y="305"/>
+        <size width="105" height="15"/>
+        <range min="0" max="36"/>
+      </scroll>
+      <graphicbutton scrollprev="NUM_MEGA_SLIDER">
+        <position x="46" y="303"/>
+        <size width="16" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton scrollnext="NUM_MEGA_SLIDER">
+        <position x="167" y="303"/>
+        <size width="17" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <label id = "NUM_MEGA" text = "0">
         <position x="184" y="303"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  
-	  <label text = "Psimorph">
+
+      <label text = "Psimorph">
         <position x="206" y="285"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  <scroll id="NUM_PSI_SLIDER">
-          <position x="231" y="305"/>
-          <size width="105" height="15"/>
-          <range min="0" max="36"/>
-        </scroll>
-        <graphicbutton scrollprev="NUM_PSI_SLIDER">
-          <position x="216" y="303"/>
-          <size width="16" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-        <graphicbutton scrollnext="NUM_PSI_SLIDER">
-          <position x="337" y="303"/>
-          <size width="17" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-		<label id = "NUM_PSI" text = "0">
+      <scroll id="NUM_PSI_SLIDER">
+        <position x="231" y="305"/>
+        <size width="105" height="15"/>
+        <range min="0" max="36"/>
+      </scroll>
+      <graphicbutton scrollprev="NUM_PSI_SLIDER">
+        <position x="216" y="303"/>
+        <size width="16" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton scrollnext="NUM_PSI_SLIDER">
+        <position x="337" y="303"/>
+        <size width="17" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <label id = "NUM_PSI" text = "0">
         <position x="354" y="303"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  
-	  <label text = "Micronoid">
+
+      <label text = "Micronoid">
         <position x="376" y="285"/>
         <size width="170" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-		<scroll id="NUM_MICRO_SLIDER">
-          <position x="401" y="305"/>
-          <size width="105" height="15"/>
-          <range min="0" max="36"/>
-        </scroll>
-        <graphicbutton scrollprev="NUM_MICRO_SLIDER">
-          <position x="386" y="303"/>
-          <size width="16" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-        <graphicbutton scrollnext="NUM_MICRO_SLIDER">
-          <position x="507" y="303"/>
-          <size width="17" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-		<label id = "NUM_MICRO" text = "0">
+      <scroll id="NUM_MICRO_SLIDER">
+        <position x="401" y="305"/>
+        <size width="105" height="15"/>
+        <range min="0" max="36"/>
+      </scroll>
+      <graphicbutton scrollprev="NUM_MICRO_SLIDER">
+        <position x="386" y="303"/>
+        <size width="16" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton scrollnext="NUM_MICRO_SLIDER">
+        <position x="507" y="303"/>
+        <size width="17" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <label id = "NUM_MICRO" text = "0">
         <position x="524" y="303"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  
-	  
-	
-	<checkbox id="QUEENSPAWN">
-          <position x="46" y="350"/>
-          <size width="19" height="16"/>
-          <image>BUTTON_CHECKBOX_FALSE</image>
-          <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
-        </checkbox>
-	  <label  text = "Queenspawn">
+
+
+
+      <checkbox id="QUEENSPAWN">
+        <position x="46" y="350"/>
+        <size width="19" height="16"/>
+        <image>BUTTON_CHECKBOX_FALSE</image>
+        <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+      </checkbox>
+      <label  text = "Queenspawn">
         <position x="76" y="350"/>
         <size width="110" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  
-	    <label text = "_____________________________________________________">
+
+      <label text = "_____________________________________________________">
         <position x="36" y="365"/>
         <size width="500" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
-		  </label>
-	  
-   <label id="GUARDS_LABEL2" text = "Guards">
+      </label>
+
+      <label id="GUARDS_LABEL2" text = "Guards">
         <position x="61" y="385"/>
         <size width="170" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	   <scroll id="NUM_GUARD_SLIDER">
-          <position x="61" y="405"/>
-          <size width="105" height="15"/>
-          <range min="0" max="36"/>
-        </scroll>
-        <graphicbutton id="GUARDS_BUTTON1" scrollprev="NUM_GUARD_SLIDER">
-          <position x="46" y="403"/>
-          <size width="16" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-        <graphicbutton  id="GUARDS_BUTTON2" scrollnext="NUM_GUARD_SLIDER">
-          <position x="167" y="403"/>
-          <size width="17" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-		<label id = "NUM_GUARD" text = "0">
+      <scroll id="NUM_GUARD_SLIDER">
+        <position x="61" y="405"/>
+        <size width="105" height="15"/>
+        <range min="0" max="36"/>
+      </scroll>
+      <graphicbutton id="GUARDS_BUTTON1" scrollprev="NUM_GUARD_SLIDER">
+        <position x="46" y="403"/>
+        <size width="16" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="GUARDS_BUTTON2" scrollnext="NUM_GUARD_SLIDER">
+        <position x="167" y="403"/>
+        <size width="17" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <label id = "NUM_GUARD" text = "0">
         <position x="184" y="403"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  
-	<checkbox id="DEFAULT_GUARDS">
-          <position x="111" y="385"/>
-          <size width="19" height="16"/>
-          <image>BUTTON_CHECKBOX_FALSE</image>
-          <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
-        </checkbox>
-	  <label id="GUARDS_LABEL1"  text = "Default">
+
+      <checkbox id="DEFAULT_GUARDS">
+        <position x="111" y="385"/>
+        <size width="19" height="16"/>
+        <image>BUTTON_CHECKBOX_FALSE</image>
+        <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+      </checkbox>
+      <label id="GUARDS_LABEL1"  text = "Default">
         <position x="141" y="385"/>
         <size width="110" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  
-	  <label id="CIVILIANS_LABEL2"  text = "Civilians">
+
+      <label id="CIVILIANS_LABEL2"  text = "Civilians">
         <position x="231" y="385"/>
         <size width="170" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  <scroll id="NUM_CIVILIAN_SLIDER">
-          <position x="231" y="405"/>
-          <size width="105" height="15"/>
-          <range min="0" max="36"/>
-        </scroll>
-        <graphicbutton   id="CIVILIANS_BUTTON1" scrollprev="NUM_CIVILIAN_SLIDER">
-          <position x="216" y="403"/>
-          <size width="16" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-        <graphicbutton id="CIVILIANS_BUTTON2" scrollnext="NUM_CIVILIAN_SLIDER">
-          <position x="337" y="403"/>
-          <size width="17" height="20"/>
-            <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
-          <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-	  <label id = "NUM_CIVILIAN" text = "0">
+      <scroll id="NUM_CIVILIAN_SLIDER">
+        <position x="231" y="405"/>
+        <size width="105" height="15"/>
+        <range min="0" max="36"/>
+      </scroll>
+      <graphicbutton id="CIVILIANS_BUTTON1" scrollprev="NUM_CIVILIAN_SLIDER">
+        <position x="216" y="403"/>
+        <size width="16" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:55:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="CIVILIANS_BUTTON2" scrollnext="NUM_CIVILIAN_SLIDER">
+        <position x="337" y="403"/>
+        <size width="17" height="20"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:56:ui/menuopt.pal</image>
+        <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <label id = "NUM_CIVILIAN" text = "0">
         <position x="354" y="403"/>
         <size width="20" height="16"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  
-	  <checkbox id="DEFAULT_CIVILIANS">
-          <position x="281" y="385"/>
-          <size width="19" height="16"/>
-          <image>BUTTON_CHECKBOX_FALSE</image>
-          <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
-        </checkbox>
-	  <label id="CIVILIANS_LABEL1" text = "Default">
+
+      <checkbox id="DEFAULT_CIVILIANS">
+        <position x="281" y="385"/>
+        <size width="19" height="16"/>
+        <image>BUTTON_CHECKBOX_FALSE</image>
+        <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+      </checkbox>
+      <label id="CIVILIANS_LABEL1" text = "Default">
         <position x="311" y="385"/>
         <size width="110" height="16"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  
+
       <graphic id="SHROUD_ALIENS" visible="false">
-          <position x="35" y="130"/>
-          <size width="520" height="240"/>
-		  <imageposition>tile</imageposition>
-        </graphic>
-		<graphic id="SHROUD_GUARDS" visible="false">
-          <position x="40" y="398"/>
-          <size width="170" height="35"/>
-		  <imageposition>tile</imageposition>
-        </graphic>
-		<graphic id="SHROUD_CIVILIANS" visible="false">
-          <position x="210" y="398"/>
-          <size width="170" height="35"/>
-		  <imageposition>tile</imageposition>
-        </graphic>
-		
+        <position x="35" y="130"/>
+        <size width="520" height="240"/>
+        <imageposition>tile</imageposition>
+      </graphic>
+      <graphic id="SHROUD_GUARDS" visible="false">
+        <position x="40" y="398"/>
+        <size width="170" height="35"/>
+        <imageposition>tile</imageposition>
+      </graphic>
+      <graphic id="SHROUD_CIVILIANS" visible="false">
+        <position x="210" y="398"/>
+        <size width="170" height="35"/>
+        <imageposition>tile</imageposition>
+      </graphic>
+
       <graphicbutton id="BUTTON_OK">
         <position x="604" y="445"/>
         <size width="50" height="48"/>

@@ -45,18 +45,21 @@
         <imageposition>fit</imageposition>
       </graphic>
       <radiobutton id="BUTTON_SHOW_WEAPONS" groupid="TYPE">
+        <tooltip text="Weapons" font="smallset"/>
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:8:xcom3/ufodata/base.pcx</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_SHOW_ENGINES" groupid="TYPE">
+        <tooltip text="Engines" font="smallset"/>
         <position x="602" y="80"/>
         <size width="35" height="34"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:9:xcom3/ufodata/base.pcx</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_SHOW_GENERAL" groupid="TYPE">
+        <tooltip text="Equipment" font="smallset"/>
         <position x="602" y="120"/>
         <size width="35" height="34"/>
         <image/>
@@ -74,12 +77,14 @@
         <selcolour r="0" g="255" b="0" a="255"/>
       </listbox>
       <graphicbutton id="VEHICLE_SCROLL_UP" scrollprev="VEHICLE_SELECT_SCROLL">
+        <tooltip text="Scroll Up" font="smallset"/>
         <position x="568" y="56"/>
         <size width="22" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton id="VEHICLE_SCROLL_DOWN" scrollnext="VEHICLE_SELECT_SCROLL">
+        <tooltip text="Scroll Down" font="smallset"/>
         <position x="568" y="326"/>
         <size width="22" height="21"/>
         <image/>

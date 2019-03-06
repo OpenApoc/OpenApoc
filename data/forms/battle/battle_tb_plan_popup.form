@@ -10,19 +10,19 @@
         <size width="640" height="128"/>
         <image>RAW:xcom3/tacdata/tacbord8.dat:640:128:xcom3/tacdata/tactical.pal</image>
       </graphic>
-	  <label id="MESSAGE">
+      <label id="MESSAGE">
         <position x="48" y="5"/>
         <size width="544" height="40"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>
-	  <graphicbutton id="BUTTON_OK">
+      <graphicbutton id="BUTTON_OK">
         <position x="224" y="56"/>
         <size width="54" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:317:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
-	  <graphicbutton id="BUTTON_CANCEL">
+      <graphicbutton id="BUTTON_CANCEL">
         <position x="339" y="56"/>
         <size width="54" height="25"/>
         <image/>

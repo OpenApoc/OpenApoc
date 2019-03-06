@@ -16,42 +16,42 @@
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	   <label id="TEXT_TURN" text="1">
+      <label id="TEXT_TURN" text="1">
         <position x="145" y="25"/>
         <size width="200" height="17"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  <label text="Side:">
+      <label text="Side:">
         <position x="33" y="41"/>
         <size width="100" height="17"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	   <label id="TEXT_SIDE" text="Aliens">
+      <label id="TEXT_SIDE" text="Aliens">
         <position x="145" y="41"/>
         <size width="200" height="17"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  <label text="Player:">
+      <label text="Player:">
         <position x="33" y="57"/>
         <size width="100" height="17"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  <label id="TEXT_PLAYER" text="Computer">
+      <label id="TEXT_PLAYER" text="Computer">
         <position x="145" y="57"/>
         <size width="200" height="17"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  <graphic id="GRAPHIC_HIDDEN">
+      <graphic id="GRAPHIC_HIDDEN">
         <position x="159" y="391"/>
         <size width="321" height="33"/>
         <alignment horizontal="centre" vertical="centre"/>
       </graphic>
-	  <label text="Hidden Movement">
+      <label text="Hidden Movement">
         <position x="159" y="391"/>
         <size width="321" height="33"/>
         <alignment horizontal="centre" vertical="centre"/>

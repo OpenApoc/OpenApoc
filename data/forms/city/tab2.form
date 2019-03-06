@@ -9,18 +9,20 @@
         <size width="640" height="128"/>
         <image>RAW:xcom3/ufodata/isobord2.dat:640:128:xcom3/ufodata/pal_01.dat</image>
       </graphic>
-      
-	  <scroll id="OWNED_VEHICLE_LIST_SCROLL" visible="N" largepercent = "20">
+
+      <scroll id="OWNED_VEHICLE_LIST_SCROLL" visible="N" largepercent = "20">
         <position x="105" y="66"/>
         <size width="431" height="16"/>
       </scroll>
       <graphicbutton id="VEHICLE_SCROLL_LEFT" scrollprev="OWNED_VEHICLE_LIST_SCROLL" scrolllarge="Y">
+        <tooltip text="Scroll Left" font="smallset"/>
         <position x="88" y="45"/>
         <size width="17" height="23"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:15:xcom3/ufodata/pal_01.dat</imagechecked>
       </graphicbutton>
-      <graphicbutton id="VEHICLE_SCROLL_LEFT" scrollnext="OWNED_VEHICLE_LIST_SCROLL" scrolllarge="Y">
+      <graphicbutton id="VEHICLE_SCROLL_RIGHT" scrollnext="OWNED_VEHICLE_LIST_SCROLL" scrolllarge="Y">
+        <tooltip text="Scroll Right" font="smallset"/>
         <position x="536" y="45"/>
         <size width="18" height="22"/>
         <image/>
@@ -29,147 +31,165 @@
       <listbox id="OWNED_VEHICLE_LIST" scrollbarid="OWNED_VEHICLE_LIST_SCROLL">
         <position x="105" y="44"/>
         <size height="24" width="431"/>
-		<item size="0" spacing="0"/>
+        <item size="0" spacing="0"/>
         <orientation>horizontal</orientation>
       </listbox>
- 
-	  <graphic id="VEHICLE_WEAPON_1">
+
+      <graphic id="VEHICLE_WEAPON_1">
+        <tooltip text="" font="smallset"/>
         <position x="97" y="80"/>
         <size width="32" height="32"/>
         <image/>
       </graphic>
-	  <checkbox id="VEHICLE_WEAPON_1_DISABLED">
+      <checkbox id="VEHICLE_WEAPON_1_DISABLED">
         <position x="97" y="80"/>
         <size width="32" height="32"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:89:xcom3/ufodata/pal_01.dat</imagechecked>
       </checkbox>
-	  <graphic id="VEHICLE_WEAPON_1_AMMO">
+      <graphic id="VEHICLE_WEAPON_1_AMMO">
         <position x="132" y="80"/>
         <size width="6" height="32"/>
         <image/>
       </graphic>
-	  
-	  <graphic id="VEHICLE_WEAPON_2">
+
+      <graphic id="VEHICLE_WEAPON_2">
+        <tooltip text="" font="smallset"/>
         <position x="141" y="80"/>
         <size width="32" height="32"/>
         <image/>
       </graphic>
-	  <checkbox id="VEHICLE_WEAPON_2_DISABLED">
+      <checkbox id="VEHICLE_WEAPON_2_DISABLED">
         <position x="141" y="80"/>
         <size width="32" height="32"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:89:xcom3/ufodata/pal_01.dat</imagechecked>
       </checkbox>
-	  <graphic id="VEHICLE_WEAPON_2_AMMO">
+      <graphic id="VEHICLE_WEAPON_2_AMMO">
         <position x="176" y="80"/>
         <size width="6" height="32"/>
         <image/>
       </graphic>
-	  
-	  <graphic id="VEHICLE_WEAPON_3">
+
+      <graphic id="VEHICLE_WEAPON_3">
+        <tooltip text="" font="smallset"/>
         <position x="185" y="80"/>
         <size width="32" height="32"/>
         <image/>
       </graphic>
-	  <checkbox id="VEHICLE_WEAPON_3_DISABLED">
+      <checkbox id="VEHICLE_WEAPON_3_DISABLED">
         <position x="185" y="80"/>
         <size width="32" height="32"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:89:xcom3/ufodata/pal_01.dat</imagechecked>
       </checkbox>
-	   <graphic id="VEHICLE_WEAPON_3_AMMO">
+      <graphic id="VEHICLE_WEAPON_3_AMMO">
         <position x="220" y="80"/>
         <size width="6" height="32"/>
         <image/>
       </graphic>
-	  
+
       <radiobutton id="BUTTON_ATTACK_MODE_AGGRESSIVE" groupid="ATTACK_MODE">
+        <tooltip text="Aggressive" font="smallset"/>
         <position x="245" y="72"/>
         <size width="13" height="13"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_ATTACK_MODE_STANDARD" groupid="ATTACK_MODE">
+        <tooltip text="Standard" font="smallset"/>
         <position x="245" y="85"/>
         <size width="13" height="13"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_ATTACK_MODE_DEFENSIVE" groupid="ATTACK_MODE">
+        <tooltip text="Defensive" font="smallset"/>
         <position x="245" y="98"/>
         <size width="13" height="13"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_ATTACK_MODE_EVASIVE" groupid="ATTACK_MODE">
+        <tooltip text="Evasive" font="smallset"/>
         <position x="245" y="111"/>
         <size width="13" height="13"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_ALTITUDE_HIGHEST" groupid="ALTITUDE">
+        <tooltip text="Highest altitude" font="smallset"/>
         <position x="275" y="72"/>
         <size width="13" height="13"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_ALTITUDE_HIGH" groupid="ALTITUDE">
+        <tooltip text="High altitude" font="smallset"/>
         <position x="275" y="85"/>
         <size width="13" height="13"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_ALTITUDE_STANDARD" groupid="ALTITUDE">
+        <tooltip text="Medium altitude" font="smallset"/>
         <position x="275" y="98"/>
         <size width="13" height="13"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_ALTITUDE_LOW" groupid="ALTITUDE">
+        <tooltip text="Low altitude" font="smallset"/>
         <position x="275" y="111"/>
         <size width="13" height="13"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
-      
-	  <graphicbutton id="BUTTON_GOTO_BUILDING">
+
+      <graphicbutton id="BUTTON_GOTO_BUILDING">
+        <tooltip text="Go to building" font="smallset"/>
         <size width="27" height="46"/>
         <position x="299" y="75"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:0:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_GOTO_LOCATION">
+        <tooltip text="Go to map point" font="smallset"/>
         <size width="27" height="46"/>
         <position x="334" y="75"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:2:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_GOTO_BASE">
+        <tooltip text="Return to base" font="smallset"/>
         <size width="27" height="46"/>
         <position x="369" y="75"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:7:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_EQUIP_VEHICLE">
+        <tooltip text="Equip vehicle" font="smallset"/>
         <size width="27" height="46"/>
         <position x="408" y="75"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:18:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_VEHICLE_BUILDING">
+        <tooltip text="Vehicle location / passengers" font="smallset"/>
         <size width="27" height="46"/>
         <position x="443" y="75"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:8:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_VEHICLE_ATTACK">
+        <tooltip text="Attack hostile unit" font="smallset"/>
         <size width="27" height="46"/>
         <position x="482" y="75"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:1:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_VEHICLE_ATTACK_BUILDING">
+        <tooltip text="Attack building" font="smallset"/>
         <size width="27" height="46"/>
         <position x="517" y="75"/>
         <image/>

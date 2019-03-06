@@ -4,7 +4,7 @@
     <style minwidth="640" minheight="480">
       <position x="centre" y="centre"/>
       <size width="644" height="484"/>
-	  <backcolour r="128" g="80" b="80"/>
+      <backcolour r="128" g="80" b="80"/>
       <graphic>
         <image>xcom3/ufodata/alert.pcx</image>
         <position x="2" y="2"/>
@@ -40,32 +40,35 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>
-	  <graphic id="AGENT_ASSIGNMENT">
+      <graphic id="AGENT_ASSIGNMENT">
         <position x="39" y="98"/>
         <size width="529" height="373"/>
         <imageposition>tile</imageposition>
         <image/>
       </graphic>
-	  
-	   <graphicbutton id="BUTTON_EXTERMINATE">
+
+      <graphicbutton id="BUTTON_EXTERMINATE">
+        <tooltip text="Send selected units to investigate incident" font="smallset"/>
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:13:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
-	   <graphicbutton id="BUTTON_EQUIPAGENT">
+      <graphicbutton id="BUTTON_EQUIPAGENT">
+        <tooltip text="Equip agent" font="smallset"/>
         <position x="602" y="80"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:29:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_EQUIPVEHICLE">
+        <tooltip text="Equip vehicle" font="smallset"/>
         <position x="602" y="120"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:30:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
-	  
+
       <graphicbutton id="BUTTON_QUIT">
         <position x="602" y="443"/>
         <size width="40" height="40"/>

@@ -152,54 +152,63 @@
         <hovercolour r="255" g="255" b="255" a="255"/>
       </listbox>
       <graphicbutton id="LISTBOX_SCROLL_LEFT" scrollprev="LISTBOX_SCROLL">
+        <tooltip text="Scroll Left" font="smallset"/>
         <position x="6" y="449"/>
         <size width="25" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_LEFT_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton id="LISTBOX_SCROLL_RIGHT" scrollnext="LISTBOX_SCROLL">
+        <tooltip text="Scroll Right" font="smallset"/>
         <position x="566" y="449"/>
         <size width="25" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_RIGHT_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_HIREFIRESTAFF">
+        <tooltip text="Hire/Fire staff" font="smallset"/>
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:26:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_BUYSELL">
+        <tooltip text="Buy/Sell" font="smallset"/>
         <position x="602" y="80"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:27:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_TRANSFER">
+        <tooltip text="Transfer" font="smallset"/>
         <position x="602" y="120"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:28:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_EQUIPAGENT">
+        <tooltip text="Equip agent" font="smallset"/>
         <position x="602" y="160"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:29:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_EQUIPVEHICLE">
+        <tooltip text="Equip vehicle" font="smallset"/>
         <position x="602" y="200"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:30:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_RES_AND_MANUF">
+        <tooltip text="Research and manufacture" font="smallset"/>
         <position x="602" y="240"/>
         <size width="35" height="34"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:31:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_ALIEN_CONTAINMENT">
+        <tooltip text="Alien Containment" font="smallset"/>
         <position x="602" y="280"/>
         <size width="35" height="34"/>
         <image/>

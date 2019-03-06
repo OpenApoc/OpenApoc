@@ -6,132 +6,154 @@
       <position x="centre" y="bottom"/>
       <size width="640" height="128"/>
       <graphicbutton id="BUTTON_TAB_1">
+        <tooltip text="Bases tab" font="smallset"/>
         <position x="145" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_2">
+        <tooltip text="X-COM Vehicles tab" font="smallset"/>
         <position x="189" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_3">
+        <tooltip text="Agent tab" font="smallset"/>
         <position x="233" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_4">
+        <tooltip text="Biochemistry tab" font="smallset"/>
         <position x="277" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_5">
+        <tooltip text="Engineering tab" font="smallset"/>
         <position x="321" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_6">
+        <tooltip text="Quantum physics tab" font="smallset"/>
         <position x="365" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_7">
+        <tooltip text="Hostile vehicles tab" font="smallset"/>
         <position x="409" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_8">
+        <tooltip text="Organizations tab" font="smallset"/>
         <position x="453" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <checkbox id="BUTTON_FOLLOW_VEHICLE">
+        <tooltip text="Switch camera mode" font="smallset"/>
         <position x="4" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:19:xcom3/ufodata/pal_01.dat</imagechecked>
       </checkbox>
       <checkbox id="BUTTON_TOGGLE_STRATMAP">
+        <tooltip text="Switch map view" font="smallset"/>
         <position x="4" y="30"/>
         <size width="71" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:12:xcom3/ufodata/pal_01.dat</imagechecked>
       </checkbox>
       <graphicbutton id="BUTTON_SHOW_ALIEN_INFILTRATION">
+        <tooltip text="Alien infiltration graph" font="smallset"/>
         <position x="4" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:60:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_SCORE">
+        <tooltip text="Performance log" font="smallset"/>
         <position x="40" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:61:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_UFOPAEDIA">
+        <tooltip text="Ufopaedia" font="smallset"/>
         <position x="4" y="76"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:50:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_OPTIONS">
+        <tooltip text="Options" font="smallset"/>
         <position x="4" y="99"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:13:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_LOG">
+        <tooltip text="Message history" font="smallset"/>
         <position x="83" y="3"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:10:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_ZOOM_EVENT">
+        <tooltip text="Center on message" font="smallset"/>
         <position x="532" y="3"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:11:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <radiobutton id="BUTTON_SPEED0" groupid="SPEED">
+        <tooltip text="Pause" font="smallset"/>
         <position x="565" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:28:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_SPEED1" groupid="SPEED">
+        <tooltip text="Slow speed" font="smallset"/>
         <position x="565" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:29:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_SPEED2" groupid="SPEED">
+        <tooltip text="Normal speed" font="smallset"/>
         <position x="600" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:30:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_SPEED3" groupid="SPEED">
+        <tooltip text="Double speed" font="smallset"/>
         <position x="565" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:31:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_SPEED4" groupid="SPEED">
+        <tooltip text="Quadruple speed" font="smallset"/>
         <position x="600" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:32:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_SPEED5" groupid="SPEED">
+        <tooltip text="Ultra fast" font="smallset"/>
         <position x="565" y="100"/>
         <size width="71" height="21"/>
         <image/>

@@ -10,48 +10,56 @@
         <image>RAW:xcom3/ufodata/isobord1.dat:640:128:xcom3/ufodata/pal_01.dat</image>
       </graphic>
       <graphicbutton id="BUTTON_BASE_1">
+        <tooltip text="" font="smallset"/>
         <position x="90" y="52"/>
         <size width="32" height="32"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_2">
+        <tooltip text="" font="smallset"/>
         <position x="126" y="52"/>
         <size width="32" height="32"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_3">
+        <tooltip text="" font="smallset"/>
         <position x="162" y="52"/>
         <size width="32" height="32"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_4">
+        <tooltip text="" font="smallset"/>
         <position x="198" y="52"/>
         <size width="32" height="32"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_5">
+        <tooltip text="" font="smallset"/>
         <position x="234" y="52"/>
         <size width="32" height="32"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_6">
+        <tooltip text="" font="smallset"/>
         <position x="270" y="52"/>
         <size width="32" height="32"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_7">
+        <tooltip text="" font="smallset"/>
         <position x="306" y="52"/>
         <size width="32" height="32"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_8">
+        <tooltip text="" font="smallset"/>
         <position x="342" y="52"/>
         <size width="32" height="32"/>
         <image/>
@@ -74,6 +82,7 @@
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:40:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BUILD_BASE">
+        <tooltip text="Buy new base" font="smallset"/>
         <position x="443" y="75"/>
         <size width="27" height="46"/>
         <image/>

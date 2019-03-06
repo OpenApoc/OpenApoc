@@ -32,12 +32,14 @@
         <size width="26" height="259"/>
       </scroll>
       <graphicbutton id="LIST_SCROLL_UP" scrollprev="LIST_SCROLL">
+        <tooltip text="Scroll Up" font="smallset"/>
         <position x="569" y="47"/>
         <size width="22" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton id="LIST_SCROLL_DOWN" scrollnext="LIST_SCROLL">
+        <tooltip text="Scroll Down" font="smallset"/>
         <position x="569" y="334"/>
         <size width="22" height="21"/>
         <image/>
@@ -85,7 +87,7 @@
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
-	  <graphic id="GRAPHIC_SELECTED">
+      <graphic id="GRAPHIC_SELECTED">
         <position x="23" y="383"/>
         <size height="80" width="96"/>
         <font>smalfont</font>
