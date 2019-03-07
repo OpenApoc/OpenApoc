@@ -19,12 +19,11 @@ Control::Control(bool takesFocus)
     : mouseInside(false), mouseDepressed(false), resolvedLocation(0, 0), Visible(true),
       Name("Control"), Location(0, 0), Size(0, 0), SelectionSize(0, 0),
       BackgroundColour(0, 0, 0, 0), takesFocus(takesFocus), showBounds(false), Enabled(true),
-      canCopy(true), funcPreRender(nullptr)
+      canCopy(true), funcPreRender(nullptr),
+      // Tooltip defaults
+      ToolTipBackground{128, 128, 128}, ToolTipBorders{
+                                            {1, {0, 0, 0}}, {1, {255, 255, 255}}, {1, {0, 0, 0, 0}}}
 {
-	// Tooltip defaults
-	ToolTipBackground = {128, 128, 128};
-	ToolTipBorders = {{1, {0, 0, 0}}, {1, {255, 255, 255}}};
-	ToolTipPadding = 1;
 }
 
 Control::~Control() { unloadResources(); }
@@ -302,7 +301,7 @@ void Control::eventOccured(Event *e)
 
 				sp<Image> textImage = ToolTipFont->getString(ToolTipText);
 
-				unsigned totalBorder = ToolTipPadding;
+				unsigned totalBorder = 0;
 				for (const auto &b : ToolTipBorders)
 					totalBorder += b.first;
 
@@ -315,8 +314,9 @@ void Control::eventOccured(Event *e)
 				int i = 0;
 				for (const auto &b : ToolTipBorders)
 				{
-					fw().renderer->drawRect(
-					    {i, i}, surface->size - Vec2<unsigned int>{i * 2, i * 2}, b.second);
+					fw().renderer->drawRect({i, i},
+					                        surface->size - Vec2<unsigned int>{i * 2, i * 2},
+					                        b.second, b.first);
 					i += b.first;
 				}
 				fw().renderer->draw(textImage, {totalBorder, totalBorder});
@@ -732,6 +732,7 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 				else
 					ToolTipBackground = Colour::FromHtmlName(backgroundString);
 			}
+			size_t numDefaultBorders = ToolTipBorders.size();
 			for (auto child2 = child.first_child(); child2; child2 = child2.next_sibling())
 			{
 				UString child2Name = child2.name();
@@ -743,8 +744,16 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 						borderColour = Colour::FromHex(borderColourStr);
 					else
 						borderColour = Colour::FromHtmlName(borderColourStr);
+					borderColour.a = child2.attribute("alpha").as_uint(255);
 					ToolTipBorders.emplace_back(child2.attribute("width").as_uint(1), borderColour);
 				}
+			}
+			if (numDefaultBorders != ToolTipBorders.size())
+			{
+				// this means that the xml file has specified what border styles to use
+				// we have to remove the default borders so the new ones don't stack over them
+				ToolTipBorders.erase(ToolTipBorders.begin(),
+				                     ToolTipBorders.begin() + numDefaultBorders);
 			}
 		}
 	}
@@ -1009,7 +1018,6 @@ void Control::copyControlData(sp<Control> CopyOf)
 	CopyOf->ToolTipFont = this->ToolTipFont;
 	CopyOf->ToolTipBackground = this->ToolTipBackground;
 	CopyOf->ToolTipBorders = this->ToolTipBorders;
-	CopyOf->ToolTipPadding = this->ToolTipPadding;
 
 	for (auto &c : Controls)
 	{

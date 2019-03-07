@@ -88,9 +88,8 @@ class Control : public std::enable_shared_from_this<Control>
 	UString ToolTipText;
 	sp<BitmapFont> ToolTipFont;
 	// transparent background by default
-	Colour ToolTipBackground = {0, 0, 0, 0};
-	std::list<std::pair<unsigned int, Colour>> ToolTipBorders;
-	unsigned int ToolTipPadding = 0;
+	Colour ToolTipBackground;
+	std::vector<std::pair<unsigned int, Colour>> ToolTipBorders;
 
 	bool canCopy;
 	wp<Control> lastCopiedTo;
