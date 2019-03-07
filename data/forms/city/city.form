@@ -5,6 +5,32 @@
     <style minwidth="640" minheight="128">
       <position x="centre" y="bottom"/>
       <size width="640" height="128"/>
+
+      <subform id="SUBFORM_TAB_1" src="city/tab1">
+        <position x="0" y="0" />
+      </subform>
+      <subform id="SUBFORM_TAB_2" src="city/tab2">
+        <position x="0" y="0" />
+      </subform>
+      <subform id="SUBFORM_TAB_3" src="city/tab3">
+        <position x="0" y="0" />
+      </subform>
+      <subform id="SUBFORM_TAB_4" src="city/tab4">
+        <position x="0" y="0" />
+      </subform>
+      <subform id="SUBFORM_TAB_5" src="city/tab5">
+        <position x="0" y="0" />
+      </subform>
+      <subform id="SUBFORM_TAB_6" src="city/tab6">
+        <position x="0" y="0" />
+      </subform>
+      <subform id="SUBFORM_TAB_7" src="city/tab7">
+        <position x="0" y="0" />
+      </subform>
+      <subform id="SUBFORM_TAB_8" src="city/tab8">
+        <position x="0" y="0" />
+      </subform>
+
       <graphicbutton id="BUTTON_TAB_1">
         <tooltip text="Bases tab" font="smallset"/>
         <position x="145" y="22"/>
