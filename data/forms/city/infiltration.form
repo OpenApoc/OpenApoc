@@ -26,7 +26,7 @@
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>
-        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:79:xcom3/ufodata/base.pcx</imagechecked>
+        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:79:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_QUIT">
         <position x="602" y="443"/>
