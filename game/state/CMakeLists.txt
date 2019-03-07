@@ -218,6 +218,9 @@ target_link_libraries(OpenApoc_GameState PUBLIC OpenApoc_Framework)
 
 target_link_libraries(OpenApoc_GameState PUBLIC ${Boost_LIBRARIES}
 		Threads::Threads)
+if (WIN32)
+	target_link_libraries(OpenApoc_GameState PUBLIC bcrypt)
+endif()
 
 target_link_libraries(OpenApoc_GameState PUBLIC OpenApoc_Lua)
 
