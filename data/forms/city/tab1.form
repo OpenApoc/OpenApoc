@@ -72,9 +72,10 @@
         <font>smalfont</font>
       </label>
       <graphicbutton id="BUTTON_SHOW_BASE">
-        <tooltip text="Bases" font="smallset" background="#808080" padding="1">
+        <tooltip text="Bases" font="smallset" background="#808080">
           <border width="1" colour="#000000"/>
           <border width="1" colour="#FFFFFF"/>
+          <border width="1" colour="#000000" alpha="0"/>
         </tooltip>
         <position x="408" y="75"/>
         <size width="27" height="46"/>
