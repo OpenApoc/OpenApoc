@@ -8,7 +8,7 @@ option(BACKTRACE_ON_ERROR "Print backtrace on logging an error (Requires libunwi
 option(DIALOG_ON_ERROR "Pop up a dialog box showing errors" ON)
 
 
-set (FRAMEWORK_SOURCE_FILES 
+set (FRAMEWORK_SOURCE_FILES
 	configfile.cpp
 	data.cpp
 	event.cpp
