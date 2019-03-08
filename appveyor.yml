@@ -11,16 +11,27 @@ configuration:
 platform:
   - x64
   - Win32
+environment:
+  APPVEYOR_SAVE_CACHE_ON_ERROR: true
+init:
+  - if "%PLATFORM%"=="x64" (set VCPKG_DEFAULT_TRIPLET=x64-windows)
+  - if "%PLATFORM%"=="x64" (set VCVARS_ARCH=amd64)
+  - if "%PLATFORM%"=="Win32" (set VCPKG_DEFAULT_TRIPLET=x86-windows)
+  - if "%PLATFORM%"=="Win32" (set VCVARS_ARCH=amd64_x86)
 #clone_depth: 10
+cache: c:\tools\vcpkg\installed
 before_build:
-  - git submodule init
-  - git submodule update
-  - nuget restore OpenApoc.sln
+  - vcpkg install sdl2 boost-locale boost-system boost-program-options boost-filesystem boost-uuid boost-crc
+  - vcpkg upgrade --no-dry-run
+  - git submodule update --init --recursive
   - curl http://s2.jonnyh.net/pub/cd_minimal.iso.xz -o data\cd.iso.xz
   - 7z e data\cd.iso.xz -odata\
-build:
-  project: OpenApoc.sln
-  verbosity: normal
+  - choco install nsis -pre
+  - choco install ninja
+  - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" %VCVARS_ARCH%
+build_script:
+  - cmake -DMSVC_PDB=ON . -GNinja -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE="%CONFIGURATION%"
+  - cmake --build .
 after_build:
   - git describe --tags > build-id
   - set /p OPENAPOC_VERSION= < build-id
@@ -29,8 +40,8 @@ after_build:
   - mkdir OpenApoc-%OPENAPOC_VERSION%
   - echo %APPVEYOR_REPO_COMMIT% > OpenApoc-%OPENAPOC_VERSION%\git-commit
   - echo %OPENAPOC_VERSION% > OpenApoc-%OPENAPOC_VERSION%\build-id
-  - copy bin\%PLATFORM%\%CONFIGURATION%\*.dll OpenApoc-%OPENAPOC_VERSION%\
-  - copy bin\%PLATFORM%\%CONFIGURATION%\*.exe OpenApoc-%OPENAPOC_VERSION%\
+  - copy bin\*.dll OpenApoc-%OPENAPOC_VERSION%\
+  - copy bin\*.exe OpenApoc-%OPENAPOC_VERSION%\
   - del data\cd.iso
   - del data\cd.iso.xz
   - xcopy /E data OpenApoc-%OPENAPOC_VERSION%\data\
@@ -38,10 +49,9 @@ after_build:
   - copy README.md OpenApoc-%OPENAPOC_VERSION%\
   - copy README_HOTKEYS.txt OpenApoc-%OPENAPOC_VERSION%\
   - 7z a %OPENAPOC_FILENAME% OpenApoc-%OPENAPOC_VERSION%
-  - copy bin\%PLATFORM%\%CONFIGURATION%\*.pdb OpenApoc-%OPENAPOC_VERSION%\
+  - copy bin\*.pdb OpenApoc-%OPENAPOC_VERSION%\
   - 7z a %OPENAPOC_DEBUG_FILENAME% OpenApoc-%OPENAPOC_VERSION%\*.pdb
   - appveyor PushArtifact %OPENAPOC_FILENAME%
   - appveyor PushArtifact %OPENAPOC_DEBUG_FILENAME%
-  - choco install nsis -pre
   - '"C:\Program Files (x86)\NSIS\makensis.exe" /DGAME_VERSION=%OPENAPOC_VERSION% install\windows\installer.nsi'
   - appveyor PushArtifact install\windows\install-openapoc-%OPENAPOC_VERSION%.exe
