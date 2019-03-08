@@ -103,11 +103,6 @@ std::shared_future<void> loadBattleBuilding(sp<GameState> state, sp<Building> bu
 	return loadTask;
 }
 
-static const std::vector<UString> TAB_FORM_NAMES = {
-    "city/tab1", "city/tab2", "city/tab3", "city/tab4",
-    "city/tab5", "city/tab6", "city/tab7", "city/tab8",
-};
-
 std::shared_future<void> loadBattleVehicle(sp<GameState> state, StateRef<Vehicle> ufo,
                                            StateRef<Vehicle> playerVehicle)
 {
@@ -130,6 +125,9 @@ std::shared_future<void> loadBattleVehicle(sp<GameState> state, StateRef<Vehicle
 
 	return loadTask;
 }
+
+constexpr size_t NUM_TABS = 8;
+
 } // anonymous namespace
 
 bool CityView::handleClickedBuilding(StateRef<Building> building, bool rightClick,
@@ -599,11 +597,11 @@ void CityView::orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additiv
 				this->setScreenCenterTile(vehicle->position);
 				if (vehicle->owner == state->getPlayer())
 				{
-					activeTab = uiTabs[1];
+					setSelectedTab(1);
 				}
 				else
 				{
-					activeTab = uiTabs[6];
+					setSelectedTab(6);
 				}
 			}
 		}
@@ -884,6 +882,22 @@ void CityView::orderDisableWeapon(int index, bool disable)
 	}
 }
 
+void CityView::setSelectedTab(int tabIndex)
+{
+	if (tabIndex < 0 || tabIndex > uiTabs.size())
+	{
+		LogError("Trying to select invalid tab: %d", tabIndex);
+		return;
+	}
+	for (auto tab : uiTabs)
+	{
+		tab->setVisible(false);
+	}
+	uiTabs[tabIndex]->setVisible(true);
+	this->activeTab = uiTabs[tabIndex];
+	this->state->current_city->cityViewPageIndex = tabIndex;
+}
+
 CityView::CityView(sp<GameState> state)
     : CityTileView(*state->current_city->map, Vec3<int>{TILE_X_CITY, TILE_Y_CITY, TILE_Z_CITY},
                    Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric,
@@ -901,62 +915,23 @@ CityView::CityView(sp<GameState> state)
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *) { setSelectionState(CitySelectionState::Normal); });
 	baseForm->findControlTyped<RadioButton>("BUTTON_SPEED1")->setChecked(true);
-	for (auto &formName : TAB_FORM_NAMES)
+	for (size_t i = 0; i < NUM_TABS; ++i)
 	{
-		sp<Form> f(ui().getForm(formName));
-		if (!f)
-		{
-			LogError("Failed to load form \"%s\"", formName);
-			return;
-		}
+		sp<Form> f = baseForm->findControlTyped<Form>(format("SUBFORM_TAB_%d", i + 1));
 		f->takesFocus = false;
 		this->uiTabs.push_back(f);
 	}
-	this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
+	setSelectedTab(this->state->current_city->cityViewPageIndex);
 
 	// Refresh base views
 	resume();
 
-	this->baseForm->findControl("BUTTON_TAB_1")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->state->current_city->cityViewPageIndex = 0;
-		    this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
-		});
-	this->baseForm->findControl("BUTTON_TAB_2")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->state->current_city->cityViewPageIndex = 1;
-		    this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
-		});
-	this->baseForm->findControl("BUTTON_TAB_3")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->state->current_city->cityViewPageIndex = 2;
-		    this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
-		});
-	this->baseForm->findControl("BUTTON_TAB_4")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->state->current_city->cityViewPageIndex = 3;
-		    this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
-		});
-	this->baseForm->findControl("BUTTON_TAB_5")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->state->current_city->cityViewPageIndex = 4;
-		    this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
-		});
-	this->baseForm->findControl("BUTTON_TAB_6")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->state->current_city->cityViewPageIndex = 5;
-		    this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
-		});
-	this->baseForm->findControl("BUTTON_TAB_7")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->state->current_city->cityViewPageIndex = 6;
-		    this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
-		});
-	this->baseForm->findControl("BUTTON_TAB_8")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->state->current_city->cityViewPageIndex = 7;
-		    this->activeTab = this->uiTabs[this->state->current_city->cityViewPageIndex];
-		});
+	for (size_t i = 0; i < this->uiTabs.size(); ++i)
+	{
+		this->baseForm->findControl(format("BUTTON_TAB_%d", i + 1))
+		    ->addCallback(FormEventType::ButtonClick,
+		                  [this, i](Event *) { this->setSelectedTab(i); });
+	}
 	this->baseForm->findControl("BUTTON_FOLLOW_VEHICLE")
 	    ->addCallback(FormEventType::CheckBoxChange, [this](FormsEvent *e) {
 		    this->followVehicle =
@@ -1683,7 +1658,6 @@ void CityView::render()
 			}
 		}
 
-		activeTab->render();
 		baseForm->render();
 		overlayTab->render();
 		if (activeTab == uiTabs[0])
@@ -1835,11 +1809,6 @@ void CityView::update()
 	if (activeTab == uiTabs[1])
 	{
 		auto ownedVehicleList = uiTabs[1]->findControlTyped<ListBox>("OWNED_VEHICLE_LIST");
-		if (!ownedVehicleList)
-		{
-			LogError("Failed to find \"OWNED_VEHICLE_LIST\" control on city tab \"%s\"",
-			         TAB_FORM_NAMES[1]);
-		}
 
 		int currentVehicleIndex = -1;
 		std::set<sp<Vehicle>> vehiclesMIA;
@@ -2016,11 +1985,6 @@ void CityView::update()
 	if (activeTab == uiTabs[2])
 	{
 		auto ownedAgentList = uiTabs[2]->findControlTyped<ListBox>("OWNED_AGENT_LIST");
-		if (!ownedAgentList)
-		{
-			LogError("Failed to find \"OWNED_AGENT_LIST\" control on city tab \"%s\"",
-			         TAB_FORM_NAMES[2]);
-		}
 
 		auto agentForm = uiTabs[2];
 		sp<Label> agentName = agentForm->findControlTyped<Label>("TEXT_AGENT_NAME");
@@ -2205,11 +2169,6 @@ void CityView::update()
 	if (activeTab == uiTabs[3])
 	{
 		auto ownedAgentList = uiTabs[3]->findControlTyped<ListBox>("OWNED_AGENT_LIST");
-		if (!ownedAgentList)
-		{
-			LogError("Failed to find \"OWNED_AGENT_LIST\" control on city tab \"%s\"",
-			         TAB_FORM_NAMES[3]);
-		}
 
 		auto agentForm = uiTabs[3];
 		sp<Label> agentName = agentForm->findControlTyped<Label>("TEXT_AGENT_NAME");
@@ -2333,11 +2292,6 @@ void CityView::update()
 	if (activeTab == uiTabs[4])
 	{
 		auto ownedAgentList = uiTabs[4]->findControlTyped<ListBox>("OWNED_AGENT_LIST");
-		if (!ownedAgentList)
-		{
-			LogError("Failed to find \"OWNED_AGENT_LIST\" control on city tab \"%s\"",
-			         TAB_FORM_NAMES[4]);
-		}
 
 		auto agentForm = uiTabs[4];
 		sp<Label> agentName = agentForm->findControlTyped<Label>("TEXT_AGENT_NAME");
@@ -2464,11 +2418,6 @@ void CityView::update()
 	if (activeTab == uiTabs[5])
 	{
 		auto ownedAgentList = uiTabs[5]->findControlTyped<ListBox>("OWNED_AGENT_LIST");
-		if (!ownedAgentList)
-		{
-			LogError("Failed to find \"OWNED_AGENT_LIST\" control on city tab \"%s\"",
-			         TAB_FORM_NAMES[5]);
-		}
 
 		auto agentForm = uiTabs[5];
 		sp<Label> agentName = agentForm->findControlTyped<Label>("TEXT_AGENT_NAME");
@@ -2592,11 +2541,6 @@ void CityView::update()
 	if (activeTab == uiTabs[6])
 	{
 		auto hostileVehicleList = uiTabs[6]->findControlTyped<ListBox>("HOSTILE_VEHICLE_LIST");
-		if (!hostileVehicleList)
-		{
-			LogError("Failed to find \"HOSTILE_VEHICLE_LIST\" control on city tab \"%s\"",
-			         TAB_FORM_NAMES[6]);
-		}
 
 		if (!state->current_city->cityViewSelectedVehicles.empty())
 		{
@@ -2711,11 +2655,6 @@ void CityView::update()
 	if (activeTab == uiTabs[7])
 	{
 		auto orgList = uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST");
-		if (!orgList)
-		{
-			LogError("Failed to find \"ORGANISATION_LIST\" control on city tab \"%s\"",
-			         TAB_FORM_NAMES[7]);
-		}
 
 		auto selectedOrg = state->current_city->cityViewSelectedOrganisation;
 		if (selectedOrg && (state->current_city->cityViewOrgButtonIndex == 0 ||
@@ -2838,7 +2777,6 @@ void CityView::update()
 		state->current_city->cityViewSelectedOrganisation.clear();
 	}
 
-	activeTab->update();
 	baseForm->update();
 	overlayTab->update();
 
@@ -2899,12 +2837,12 @@ void CityView::initiateBuildingMission(sp<GameState> state, StateRef<Building> b
 void CityView::eventOccurred(Event *e)
 {
 	this->drawCity = true;
-	activeTab->eventOccured(e);
-	baseForm->eventOccured(e);
 	if (overlayTab->isVisible())
 	{
 		overlayTab->eventOccured(e);
 	}
+	baseForm->eventOccured(e);
+
 	// Exclude mouse down events that are over the form
 	if (activeTab->eventIsWithin(e) || baseForm->eventIsWithin(e) || overlayTab->eventIsWithin(e))
 	{

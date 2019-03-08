@@ -139,6 +139,7 @@ class CityView : public CityTileView
 	void setUpdateSpeed(CityUpdateSpeed updateSpeed);
 	void zoomLastEvent();
 	void setSelectionState(CitySelectionState selectionState);
+	void setSelectedTab(int tabIndex);
 };
 
 }; // namespace OpenApoc
