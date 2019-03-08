@@ -18,6 +18,7 @@ INCLUDE(CheckCCompilerFlag)
 string(TOLOWER "${CMAKE_BUILD_TYPE}" lower_build_type)
 
 option(LTO "Build using link-time-optimisations" OFF)
+option(MSVC_PDB "Always generate PDB files" OFF)
 option(ENABLE_TESTS "Build some unit tests" ON)
 option(EXTRACT_DATA "Run the data extractor as part of the default target" ON)
 
@@ -97,6 +98,10 @@ if (MSVC)
 	if (MSVC_VERSION GREATER_EQUAL 1910)
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /permissive-")
 		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /permissive-")
+	endif()
+	if (MSVC_PDB)
+		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Zi")
+		set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} /DEBUG /OPT:REF /OPT:ICF")
 	endif()
 endif()
 
