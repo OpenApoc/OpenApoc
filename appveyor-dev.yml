@@ -52,3 +52,5 @@ after_build:
   - 7z a %OPENAPOC_DEBUG_FILENAME% OpenApoc-%OPENAPOC_VERSION%\*.pdb -mx=9 -myx=7
   - appveyor PushArtifact %OPENAPOC_FILENAME%
   - appveyor PushArtifact %OPENAPOC_DEBUG_FILENAME%
+test_script:
+  - ctest -V -C %CONFIGURATION%
