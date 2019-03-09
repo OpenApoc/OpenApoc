@@ -94,7 +94,7 @@ endif()
 
 # MSVC has default flags that CMake doesn't set
 if (MSVC)
-	add_definitions(-DUNICODE -D_UNICODE -D_CRT_SECURE_NO_WARNINGS)
+	add_definitions(-DUNICODE -D_UNICODE)
 	if (MSVC_VERSION GREATER_EQUAL 1910)
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /permissive-")
 		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /permissive-")
