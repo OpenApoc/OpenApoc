@@ -1,0 +1,13 @@
+{
+  "version": "0.2.1",
+  "defaults": {},
+  "configurations": [
+    {
+      "type": "default",
+      "project": "CMakeLists.txt",
+      "projectTarget": "OpenApoc.exe (bin\\OpenApoc.exe)",
+      "name": "OpenApoc.exe (bin\\OpenApoc.exe)",
+      "currentDir": "${workspaceRoot}"
+    }
+  ]
+}
