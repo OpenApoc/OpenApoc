@@ -116,6 +116,7 @@ The following libraries are also used, but are shipped as submodules in the repo
 * [GLM](https://glm.g-truc.net) - Math library.
 * [libsmacker](https://sourceforge.net/projects/libsmacker/) - Decoder for .smk video files.
 * [lodepng](https://github.com/lvandeve/lodepng) - Reading/writing PNG image files.
+* [Lua](https://www.lua.org/) - Scripting language.
 * [miniz](https://github.com/richgel999/miniz) - Zlib-comptible compression library.
 * [physfs](https://icculus.org/physfs/) - Library for reading data from .iso files or directory trees (Note: We use a patched version, available on [GitHub](https://github.com/JonnyH/physfs-hg-import/tree/fix-iso) - required to read the .iso files we use).
 * [pugixml](https://pugixml.org) - XML library used for reading/writing the game data files.
@@ -127,14 +128,30 @@ The following libraries are also used, but are shipped as submodules in the repo
 * If you are using the GitHub client for Windows, the submodules should already be setup at first checkout. If not using the github client, or if the submodules have been updated, run the following commands in the 'git shell' from the root of the OpenApoc repository. This should reset the submodule checkouts to the latest versions (NOTE: This will overwrite any changes to code in the dependencies/ directory).
 
 ```cmd
-git submodule init
-git submodule update -f
+git submodule update --init --recursive
 ```
 
-* All the other dependencies (Boost, SDL2) are provided automatically by nuget packages, and Visual Studio should automatically download and install these at the first build.
+* All the other dependencies (Boost, SDL2) need to be supplied separately. Install [Vcpkg](https://github.com/Microsoft/vcpkg) and run the following command:
+
+```cmd
+vcpkg install sdl2 boost-locale boost-system boost-program-options boost-filesystem boost-uuid boost-crc
+```
+
 * Copy the original XCom:Apocalypse .iso file into the "data/" directory. This could also be a directory containing all the extracted files from the CD, and it should be named the same (IE the directory should be data/cd.iso/). This is used during the build to extract some data tables.
-* Open openapoc.sln in Visual Studio.
-* Build (Release/Debug x86/x64 should all work).
+* Open the Git directory in Visual Studio (if you don't have an Open Folder option, generate a project from CMake).
+* Visual Studio should automatically detect and configure CMake appropriately. To add your Vcpkg dependencies, edit your CMake Settings file and add:
+
+```json
+"variables": [
+    {
+        "name": "CMAKE_TOOLCHAIN_FILE",
+        "value": "<path to vcpkg>\\scripts\\buildsystems\\vcpkg.cmake"
+    }
+]
+```
+
+* If you get errors, clear your cache from the CMake menu and generate again.
+* Build (Release/Debug x86/x64 should all work). Release is recommended as Debug is very slow.
 * When running from the Visual Studio UI, the working directory is set to the root of the project, so the data folder should already be in the right place. If you want to run outside of Visual Studio, you need to copy the whole 'data' folder (including the cd.iso file) into the folder openapoc.exe resides in.
 
 ### Building on Linux
@@ -157,11 +174,10 @@ urpmi "cmake(sdl2)" libstdc++-static-devel boost-devel boost unwind-devel task-c
 * Fetch the dependencies from git with the following terminal command (run from the just-created OpenApoc folder).
 
 ```sh
-git submodule init
-git submodule update
+git submodule update --init --recursive
 ```
 
-* Copy the cd.iso file to the 'data' directory under the repository root (Note - despite dosbox having good linux support, the steam version of X-Com Apocalypse refuses to install in steam for linux - you may need to snatch the cd.iso file off a windows steam install).
+* Copy the cd.iso file to the 'data' directory under the repository root (Note - despite dosbox having good linux support, the steam version of X-Com Apocalypse will only install if Steam Play is enabled).
 
 ```sh
 cp /path/to/cd.iso data/
