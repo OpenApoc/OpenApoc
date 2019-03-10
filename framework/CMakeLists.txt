@@ -243,6 +243,11 @@ target_include_directories(OpenApoc_Framework PUBLIC ${GLM_INCLIDE_DIR})
 if(WIN32)
 	find_package(SDL2 CONFIG REQUIRED)
 	target_link_libraries(OpenApoc_Framework PRIVATE SDL2::SDL2 SDL2::SDL2main)
+	#Workaround vcpkg bug
+	set_target_properties(SDL2::SDL2 SDL2::SDL2main PROPERTIES
+		MAP_IMPORTED_CONFIG_MINSIZEREL Release
+		MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release
+	)
 else()
 	find_package(PkgConfig)
 	pkg_check_modules(PC_SDL2 REQUIRED sdl2>=2.0)

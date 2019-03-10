@@ -24,8 +24,8 @@ before_build:
   - vcpkg install sdl2 boost-locale boost-system boost-program-options boost-filesystem boost-uuid boost-crc
   - vcpkg upgrade --no-dry-run
   - git submodule update --init --recursive
-  - curl http://s2.jonnyh.net/pub/cd_minimal.iso.xz -o data\cd.iso.xz
-  - 7z e data\cd.iso.xz -odata\
+  - curl http://s2.jonnyh.net/pub/cd_minimal.iso.xz -o temp\cd.iso.xz
+  - 7z e temp\cd.iso.xz -odata\
   - choco install nsis -pre
   - choco install ninja
   - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" %VCVARS_ARCH%
@@ -43,10 +43,9 @@ after_build:
   - copy bin\*.dll OpenApoc-%OPENAPOC_VERSION%\
   - copy bin\*.exe OpenApoc-%OPENAPOC_VERSION%\
   - del data\cd.iso
-  - del data\cd.iso.xz
   - xcopy /E data OpenApoc-%OPENAPOC_VERSION%\data\
   - copy portable.txt OpenApoc-%OPENAPOC_VERSION%\
-  - copy README.md OpenApoc-%OPENAPOC_VERSION%\
+  - copy README.md OpenApoc-%OPENAPOC_VERSION%\README.txt
   - copy README_HOTKEYS.txt OpenApoc-%OPENAPOC_VERSION%\
   - 7z a %OPENAPOC_FILENAME% OpenApoc-%OPENAPOC_VERSION%
   - copy bin\*.pdb OpenApoc-%OPENAPOC_VERSION%\
@@ -55,5 +54,7 @@ after_build:
   - appveyor PushArtifact %OPENAPOC_DEBUG_FILENAME%
   - '"C:\Program Files (x86)\NSIS\makensis.exe" /DGAME_VERSION=%OPENAPOC_VERSION% install\windows\installer.nsi'
   - appveyor PushArtifact install\windows\install-openapoc-%OPENAPOC_VERSION%.exe
+before_test:
+  - 7z e temp\cd.iso.xz -odata\
 test_script:
   - ctest -V -C %CONFIGURATION%
