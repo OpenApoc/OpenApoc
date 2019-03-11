@@ -11,34 +11,55 @@ configuration:
 platform:
   - x64
 #  - Win32
+environment:
+  APPVEYOR_SAVE_CACHE_ON_ERROR: true
+init:
+  - if "%PLATFORM%"=="x64" (set VCPKG_DEFAULT_TRIPLET=x64-windows)
+  - if "%PLATFORM%"=="x64" (set VCVARS_ARCH=amd64)
+  - if "%PLATFORM%"=="Win32" (set VCPKG_DEFAULT_TRIPLET=x86-windows)
+  - if "%PLATFORM%"=="Win32" (set VCVARS_ARCH=amd64_x86)
 #clone_depth: 10
+cache: c:\tools\vcpkg\installed
 before_build:
-- git submodule init
-- git submodule update
-- nuget restore OpenApoc.sln
-- curl http://s2.jonnyh.net/pub/cd_minimal.iso.xz -o data\cd.iso.xz
-- 7z e data\cd.iso.xz -odata\
-build:
-  project: OpenApoc.sln
-  verbosity: normal
+  - vcpkg install sdl2 boost-locale boost-system boost-program-options boost-filesystem boost-uuid boost-crc
+  - vcpkg upgrade --no-dry-run
+  - git submodule update --init --recursive
+  - curl http://s2.jonnyh.net/pub/cd_minimal.iso.xz -o temp\cd.iso.xz
+  - 7z e temp\cd.iso.xz -odata\
+  - choco install ninja
+  - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" %VCVARS_ARCH%
+build_script:
+  - cmake -DMSVC_PDB=ON . -GNinja -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE="%CONFIGURATION%"
+  - cmake --build .
 after_build:
-- git describe --tags > build-id
-- set /p OPENAPOC_VERSION= < build-id
-- set OPENAPOC_FILENAME=OpenApoc-%PLATFORM%-%OPENAPOC_VERSION%.7z
-- set OPENAPOC_DEBUG_FILENAME=OpenApoc-debug-%PLATFORM%-%OPENAPOC_VERSION%.7z
-- mkdir OpenApoc-%OPENAPOC_VERSION%
-- echo %APPVEYOR_REPO_COMMIT% > OpenApoc-%OPENAPOC_VERSION%\git-commit
-- echo %OPENAPOC_VERSION% > OpenApoc-%OPENAPOC_VERSION%\build-id
-- copy bin\%PLATFORM%\%CONFIGURATION%\*.dll OpenApoc-%OPENAPOC_VERSION%\
-- copy bin\%PLATFORM%\%CONFIGURATION%\OpenApoc.exe OpenApoc-%OPENAPOC_VERSION%\
-- del data\cd.iso
-- del data\cd.iso.xz
-- xcopy /E data OpenApoc-%OPENAPOC_VERSION%\data\
-- copy portable.txt OpenApoc-%OPENAPOC_VERSION%\
-- copy README.md OpenApoc-%OPENAPOC_VERSION%\
-- copy README_HOTKEYS.txt OpenApoc-%OPENAPOC_VERSION%\
-- 7z a %OPENAPOC_FILENAME% OpenApoc-%OPENAPOC_VERSION% -mx=9 -myx=7
-- copy bin\%PLATFORM%\%CONFIGURATION%\OpenApoc.pdb OpenApoc-%OPENAPOC_VERSION%\
-- 7z a %OPENAPOC_DEBUG_FILENAME% OpenApoc-%OPENAPOC_VERSION%\*.pdb -mx=9 -myx=7
-- appveyor PushArtifact %OPENAPOC_FILENAME%
-- appveyor PushArtifact %OPENAPOC_DEBUG_FILENAME%
+  - git describe --tags > build-id
+  - set /p OPENAPOC_VERSION= < build-id
+  - set OPENAPOC_FILENAME=OpenApoc-%PLATFORM%-%OPENAPOC_VERSION%.7z
+  - set OPENAPOC_DEBUG_FILENAME=OpenApoc-debug-%PLATFORM%-%OPENAPOC_VERSION%.7z
+  - mkdir OpenApoc-%OPENAPOC_VERSION%
+  - echo %APPVEYOR_REPO_COMMIT% > OpenApoc-%OPENAPOC_VERSION%\git-commit
+  - echo %OPENAPOC_VERSION% > OpenApoc-%OPENAPOC_VERSION%\build-id
+  - copy bin\*.dll OpenApoc-%OPENAPOC_VERSION%\
+  - copy bin\OpenApoc.exe OpenApoc-%OPENAPOC_VERSION%\
+  - del data\cd.iso
+  - xcopy /E data OpenApoc-%OPENAPOC_VERSION%\data\
+  - copy portable.txt OpenApoc-%OPENAPOC_VERSION%\
+  - copy README.md OpenApoc-%OPENAPOC_VERSION%\README.txt
+  - copy README_HOTKEYS.txt OpenApoc-%OPENAPOC_VERSION%\
+  - 7z a %OPENAPOC_FILENAME% OpenApoc-%OPENAPOC_VERSION% -mx=9 -myx=7
+  - copy bin\OpenApoc.pdb OpenApoc-%OPENAPOC_VERSION%\
+  - 7z a %OPENAPOC_DEBUG_FILENAME% OpenApoc-%OPENAPOC_VERSION%\*.pdb -mx=9 -myx=7
+  - appveyor PushArtifact %OPENAPOC_FILENAME%
+  - appveyor PushArtifact %OPENAPOC_DEBUG_FILENAME%
+before_test:
+  - 7z e temp\cd.iso.xz -odata\
+test_script:
+  - ctest -T Test -V --no-compress-output -C %CONFIGURATION%
+on_finish:
+  - ps: |
+      $testFile = ".\Testing\$(Get-Content Testing\TAG -TotalCount 1)\Test.xml"
+      $XSLInputElement = New-Object System.Xml.Xsl.XslCompiledTransform
+      $XSLInputElement.Load((Resolve-Path .\tests\ctest-to-junit.xsl))
+      $XSLInputElement.Transform((Resolve-Path $testFile), (Join-Path (Resolve-Path .) "ctest-to-junit-results.xml"))
+      $wc = New-Object 'System.Net.WebClient'
+      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\ctest-to-junit-results.xml))

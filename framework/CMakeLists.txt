@@ -8,7 +8,7 @@ option(BACKTRACE_ON_ERROR "Print backtrace on logging an error (Requires libunwi
 option(DIALOG_ON_ERROR "Pop up a dialog box showing errors" ON)
 
 
-set (FRAMEWORK_SOURCE_FILES 
+set (FRAMEWORK_SOURCE_FILES
 	configfile.cpp
 	data.cpp
 	event.cpp
@@ -241,11 +241,13 @@ target_include_directories(OpenApoc_Framework PUBLIC ${GLM_INCLIDE_DIR})
 
 #Require SDL2 for input/graphics/sound/pretty much everything
 if(WIN32)
-	find_path(SDL2_INCLUDE_DIR NAME SDL.h PATH_SUFFIXES SDL2)
-	find_library(SDL2_LIBRARY NAMES SDL2d SDL2)
-	find_library(SDL2_MAIN NAMES SDL2maind SDL2main)
-	target_link_libraries(OpenApoc_Framework PUBLIC ${SDL2_LIBRARY} ${SDL2_MAIN})
-	target_include_directories(OpenApoc_Framework PUBLIC ${SDL2_INCLUDE_DIR})
+	find_package(SDL2 CONFIG REQUIRED)
+	target_link_libraries(OpenApoc_Framework PRIVATE SDL2::SDL2 SDL2::SDL2main)
+	#Workaround vcpkg bug
+	set_target_properties(SDL2::SDL2 SDL2::SDL2main PROPERTIES
+		MAP_IMPORTED_CONFIG_MINSIZEREL Release
+		MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release
+	)
 else()
 	find_package(PkgConfig)
 	pkg_check_modules(PC_SDL2 REQUIRED sdl2>=2.0)

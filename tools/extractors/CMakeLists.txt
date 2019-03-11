@@ -95,14 +95,14 @@ function (add_extractor TARGET_LIST EXTRACTOR_NAME)
 	add_custom_command(OUTPUT
 		${EXTRACTOR_OUTPUT}
 		COMMAND
-		${CMAKE_BINARY_DIR}/bin/OpenApoc_DataExtractor
+		$<TARGET_FILE:OpenApoc_DataExtractor>
 		--Framework.CD=${CD_PATH}
 		--Framework.Data=${CMAKE_SOURCE_DIR}/data
 		--Extractor.extract=${EXTRACTOR_NAME}
 		DEPENDS OpenApoc_DataExtractor
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 		VERBATIM)
-	set(${TARGET_LIST} ${${TARGET_LIST}} ${EXTRACTOR_OUTPUT} PARENT_SCOPE) 
+	set(${TARGET_LIST} ${${TARGET_LIST}} ${EXTRACTOR_OUTPUT} PARENT_SCOPE)
 endfunction(add_extractor)
 
 SET(EXTRACTOR_TARGET_LIST "")

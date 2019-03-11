@@ -234,8 +234,8 @@ Section "$(SETUP_GAME)" SecMain
 	
 	SetOutPath "$INSTDIR"
 
-	File "..\..\bin\$%PLATFORM%\$%CONFIGURATION%\*.dll"
-	File "..\..\bin\$%PLATFORM%\$%CONFIGURATION%\*.exe"
+	File "..\..\OpenApoc-${GAME_VERSION}\*.dll"
+	File "..\..\OpenApoc-${GAME_VERSION}\*.exe"
 
 	File "..\..\build-id"
 	File "..\..\OpenApoc-${GAME_VERSION}\git-commit"

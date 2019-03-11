@@ -54,6 +54,7 @@ Icon
 [Ii]pch/
 .vs/
 *.VC.*
+CMakeSettings.json
 #Dependencies build information
 [Dd]ependencies/x64/
 

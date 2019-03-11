@@ -18,6 +18,7 @@ INCLUDE(CheckCCompilerFlag)
 string(TOLOWER "${CMAKE_BUILD_TYPE}" lower_build_type)
 
 option(LTO "Build using link-time-optimisations" OFF)
+option(MSVC_PDB "Always generate PDB files" OFF)
 option(ENABLE_TESTS "Build some unit tests" ON)
 option(EXTRACT_DATA "Run the data extractor as part of the default target" ON)
 
@@ -37,11 +38,6 @@ set(CMAKE_C_FLAGS_QUICK "-O1 -g0")
 set(CMAKE_CXX_FLAGS_QUICK "-O1 -g0")
 
 
-CHECK_CXX_COMPILER_FLAG("-flto"
-	COMPILER_SUPPORTS_LTO)
-CHECK_CXX_COMPILER_FLAG("-flto=4"
-	COMPILER_SUPPORTS_LTO4)
-
 CHECK_CXX_COMPILER_FLAG("-fvisibility=hidden"
 	CXX_COMPILER_SUPPORTS_HIDDEN_VISIBILITY)
 CHECK_C_COMPILER_FLAG("-fvisibility=hidden"
@@ -55,11 +51,20 @@ if (C_COMPILER_SUPPORTS_HIDDEN_VISIBILITY)
 endif()
 
 if (LTO)
+	CHECK_CXX_COMPILER_FLAG("-flto"
+		COMPILER_SUPPORTS_LTO)
+	CHECK_CXX_COMPILER_FLAG("-flto=4"
+		COMPILER_SUPPORTS_LTO4)
+
 	if(CMAKE_CXX_COMPILER_ID STREQUAL GNU)
 		set(CMAKE_AR gcc-ar)
 		set(CMAKE_RANLIB gcc-ranlib)
 	endif()
-	if (COMPILER_SUPPORTS_LTO4)
+
+	if (MSVC)
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /GL")
+		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /LTGC")
+	elseif (COMPILER_SUPPORTS_LTO4)
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -flto=4")
 		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -flto=4")
 	elseif(COMPILER_SUPPORTS_LTO)
@@ -77,21 +82,27 @@ CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
 CHECK_CXX_COMPILER_FLAG("-std=c++17" COMPILER_SUPPORTS_CXX17)
 
 if (COMPILER_SUPPORTS_CXX17)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 elseif (COMPILER_SUPPORTS_CXX14)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 elseif (COMPILER_SUPPORTS_CXX11)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 else()
-		# Other compilers may use different option flags, or not support switching standard versions, so try anyway
-		message(WARNING "Couldn't find a c++ version this compiler supports, trying with default options")
+	# Other compilers may use different option flags, or not support switching standard versions, so try anyway
+	message(WARNING "Couldn't find a c++ version this compiler supports, trying with default options")
 endif()
 
 # MSVC has default flags that CMake doesn't set
 if (MSVC)
 	add_definitions(-DUNICODE -D_UNICODE)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /permissive-")
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /permissive-")
+	if (MSVC_VERSION GREATER_EQUAL 1910)
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /permissive-")
+		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /permissive-")
+	endif()
+	if (MSVC_PDB)
+		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Zi")
+		set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} /DEBUG /OPT:REF /OPT:ICF")
+	endif()
 endif()
 
 # Clang whines about unused arguments, which is annoying (for example) when
@@ -187,13 +198,6 @@ add_dependencies(format format-fonts)
 add_dependencies(format format-aliases)
 
 set(CLANG_FORMAT clang-format CACHE STRING "clang-format executable name in PATH")
-
-foreach(FORMAT_SOURCE ${FORMAT_SOURCES})
-	string(MAKE_C_IDENTIFIER ${FORMAT_SOURCE} FORMAT_SOURCE_STRIPPED)
-	add_custom_target(format-source-${FORMAT_SOURCE_STRIPPED} ${CLANG_FORMAT} -i ${FORMAT_SOURCE} DEPENDS ${FORMAT_SOURCE} .clang-format)
-	add_dependencies(format-sources
-			format-source-${FORMAT_SOURCE_STRIPPED})
-endforeach()
 
 file(GLOB_RECURSE XML_FILES ${CMAKE_SOURCE_DIR}/data/*.xml)
 
