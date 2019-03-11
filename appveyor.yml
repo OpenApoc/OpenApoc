@@ -57,4 +57,12 @@ after_build:
 before_test:
   - 7z e temp\cd.iso.xz -odata\
 test_script:
-  - ctest -V -C %CONFIGURATION%
+  - ctest -T Test -V --no-compress-output -C %CONFIGURATION%
+on_finish:
+  - ps: |
+      $testFile = ".\Testing\$(Get-Content Testing\TAG -TotalCount 1)\Test.xml"
+      $XSLInputElement = New-Object System.Xml.Xsl.XslCompiledTransform
+      $XSLInputElement.Load((Resolve-Path .\tests\ctest-to-junit.xsl))
+      $XSLInputElement.Transform((Resolve-Path $testFile), (Join-Path (Resolve-Path .) "ctest-to-junit-results.xml"))
+      $wc = New-Object 'System.Net.WebClient'
+      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\ctest-to-junit-results.xml))
