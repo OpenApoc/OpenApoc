@@ -60,6 +60,7 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 
 	int spacewidth = 0;
 	int height = 0;
+	int kerning = 0;
 	UString fontName;
 
 	std::map<UniChar, UString> charMap;
@@ -81,6 +82,12 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 	if (spacewidth <= 0)
 	{
 		LogError("apocfont \"%s\" with invalid \"spacewidth\" attribute", fontName);
+		return nullptr;
+	}
+	kerning = fontNode.attribute("kerning").as_int();
+	if (kerning <= 0)
+	{
+		LogError("apocfont \"%s\" with invalid \"kerning\" attribute", fontName);
 		return nullptr;
 	}
 
@@ -123,7 +130,7 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 		charMap[c] = glyphPath;
 	}
 
-	auto font = BitmapFont::loadFont(charMap, spacewidth, height, fontName,
+	auto font = BitmapFont::loadFont(charMap, spacewidth, height, kerning, fontName,
 	                                 fw().data->loadPalette(fontNode.attribute("palette").value()));
 	return font;
 }

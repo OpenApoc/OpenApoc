@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc>
-  <apocfont name="bigfont" path="fonts/bigfont_new.dat" height="24" width="14" spacewidth="6" palette="ui/ui_palette.png">
+  <apocfont name="bigfont" path="fonts/bigfont_new.dat" height="24" width="14" spacewidth="12" kerning="3" palette="ui/ui_palette.png">
     <glyph string="!" glyph="RAW:fonts/bigfont_new.dat:14:24:0"/>
     <glyph string="&quot;" glyph="RAW:fonts/bigfont_new.dat:14:24:1"/>
     <glyph string="#" glyph="RAW:fonts/bigfont_new.dat:14:24:2"/>

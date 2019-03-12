@@ -77,12 +77,14 @@ sp<PaletteImage> BitmapFont::getGlyph(UniChar codepoint)
 sp<Palette> BitmapFont::getPalette() const { return this->palette; }
 
 sp<BitmapFont> BitmapFont::loadFont(const std::map<UniChar, UString> &glyphMap, int spaceWidth,
-                                    int fontHeight, UString fontName, sp<Palette> defaultPalette)
+                                    int fontHeight, int kerning, UString fontName,
+                                    sp<Palette> defaultPalette)
 {
 	auto font = mksp<BitmapFont>();
 
 	font->spacewidth = spaceWidth;
 	font->fontheight = fontHeight;
+	font->kerning = kerning;
 	font->averagecharacterwidth = 0;
 	font->name = fontName;
 	font->palette = defaultPalette;
@@ -121,8 +123,8 @@ sp<BitmapFont> BitmapFont::loadFont(const std::map<UniChar, UString> &glyphMap, 
 				}
 			}
 		}
-		// Trim the glyph to the max non-transparent width + 2 px
-		auto trimmedGlyph = mksp<PaletteImage>(Vec2<int>{maxWidth + 2, fontHeight});
+		// Trim the glyph to the max non-transparent width
+		auto trimmedGlyph = mksp<PaletteImage>(Vec2<int>{maxWidth + kerning, fontHeight});
 		PaletteImage::blit(paletteImage, trimmedGlyph);
 
 		font->fontbitmaps[p.first] = trimmedGlyph;

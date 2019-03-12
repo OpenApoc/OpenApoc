@@ -16,6 +16,7 @@ class BitmapFont
 	int spacewidth;
 	int fontheight;
 	int averagecharacterwidth;
+	int kerning;
 	std::map<UniChar, sp<PaletteImage>> fontbitmaps;
 	UString name;
 	sp<Palette> palette;
@@ -34,7 +35,8 @@ class BitmapFont
 
 	/* Reads in set of "Character":"glyph description string" pairs */
 	static sp<BitmapFont> loadFont(const std::map<UniChar, UString> &charMap, int spaceWidth,
-	                               int fontHeight, UString fontName, sp<Palette> defaultPalette);
+	                               int fontHeight, int kerning, UString fontName,
+	                               sp<Palette> defaultPalette);
 };
 
 }; // namespace OpenApoc

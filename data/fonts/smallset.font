@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc>
-  <apocfont name="smallset" path="fonts/smallset_new.dat" height="14" width="9" spacewidth="3" palette="ui/ui_palette.png">
+  <apocfont name="smallset" path="fonts/smallset_new.dat" height="14" width="9" spacewidth="4" kerning="1" palette="ui/ui_palette.png">
     <glyph string="!" glyph="RAW:fonts/smallset_new.dat:9:14:0"/>
     <glyph string="&quot;" glyph="RAW:fonts/smallset_new.dat:9:14:1"/>
     <glyph string="#" glyph="RAW:fonts/smallset_new.dat:9:14:2"/>

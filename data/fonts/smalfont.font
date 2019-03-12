@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc>
-  <apocfont name="smalfont" path="fonts/smalfont_new.dat" height="15" width="14" spacewidth="3" palette="ui/ui_palette.png">
+  <apocfont name="smalfont" path="fonts/smalfont_new.dat" height="15" width="14" spacewidth="6" kerning="2" palette="ui/ui_palette.png">
     <glyph string="!" glyph="RAW:fonts/smalfont_new.dat:14:15:0"/>
     <glyph string="&quot;" glyph="RAW:fonts/smalfont_new.dat:14:15:1"/>
     <glyph string="#" glyph="RAW:fonts/smalfont_new.dat:14:15:2"/>
