@@ -99,7 +99,7 @@ ConfigOptionBool autoExecuteOption("Options.Misc", "AutoExecute",
                                    false);
 ConfigOptionInt toolTipDelay("Options.Misc", "ToolTipDelay",
                              "Delay in milliseconds before showing tooltips (<= 0 to disable)",
-                             2000);
+                             500);
 
 ConfigOptionBool optionPauseOnUfoSpotted("Notifications.City", "UfoSpotted", "UFO spotted", true);
 ConfigOptionBool optionPauseOnVehicleLightDamage("Notifications.City", "VehicleLightDamage",
