@@ -29,6 +29,7 @@
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:16:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <listbox id="HOSTILE_VEHICLE_LIST" scrollbarid="HOSTILE_VEHICLE_LIST_SCROLL">
+        <tooltip text="" font="smallset"/>
         <position x="105" y="44"/>
         <size height="24" width="431"/>
         <item size="0" spacing="0"/>

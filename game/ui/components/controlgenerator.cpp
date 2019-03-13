@@ -183,6 +183,7 @@ sp<Control> ControlGenerator::createVehicleControl(GameState &state, const Vehic
 	baseControl->Size.x -= 1;
 	baseControl->Name = "OWNED_VEHICLE_FRAME_" + info.vehicle->name;
 	baseControl->setData(info.vehicle);
+	baseControl->ToolTipText = info.vehicle->name;
 
 	auto vehicleIcon = baseControl->createChild<Graphic>(info.vehicle->type->icon);
 	if (vehicleIcon->getImage())
@@ -636,6 +637,7 @@ sp<Control> ControlGenerator::createOrganisationControl(GameState &state,
 	// FIXME: There's an extra 1 pixel here that's annoying
 	baseControl->Size.x -= 1;
 	baseControl->Name = "ORG_FRAME_" + info.organisation->name;
+	baseControl->ToolTipText = tr(info.organisation->name);
 	baseControl->setData(info.organisation);
 
 	auto vehicleIcon = baseControl->createChild<Graphic>(info.organisation->icon);
@@ -685,6 +687,7 @@ void ControlGenerator::fillAgentControl(GameState &state, sp<Graphic> baseContro
 	}
 	baseControl->setImage(singleton.battleSelect[(int)info.selected]);
 	baseControl->setData(info.agent);
+	baseControl->ToolTipText = info.agent->name;
 
 	auto unitIcon = baseControl->createChild<Graphic>(info.agent->getPortrait().icon);
 	unitIcon->AutoSize = true;

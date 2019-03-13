@@ -285,6 +285,7 @@ void Control::eventOccured(Event *e)
 					toolTipEvent->forms().EventFlag = FormEventType::ToolTip;
 					toolTipEvent->forms().MouseInfo = e->forms().MouseInfo;
 					fw().toolTipStartTimer(std::move(toolTipEvent));
+					e->Handled = true;
 				}
 				else
 				{
@@ -321,9 +322,8 @@ void Control::eventOccured(Event *e)
 				}
 				fw().renderer->draw(textImage, {totalBorder, totalBorder});
 
-				fw().showToolTip(surface,
-				                 pos + resolvedLocation -
-				                     Vec2<int>{surface->size.x / 2, surface->size.y});
+				fw().showToolTip(surface, pos + resolvedLocation -
+				                              Vec2<int>{surface->size.x / 2, surface->size.y});
 			}
 		}
 	}
