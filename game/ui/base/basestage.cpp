@@ -92,7 +92,7 @@ void BaseStage::render()
 		auto viewBase = currentView->getData<Base>();
 		if (state->current_base == viewBase)
 		{
-			Vec2<int> pos = form->Location + currentView->Location - 2;
+			Vec2<int> pos = currentView->getLocationOnScreen() - 2;
 			Vec2<int> size = currentView->Size + 4;
 			fw().renderer->drawRect(pos, size, COLOUR_RED);
 		}

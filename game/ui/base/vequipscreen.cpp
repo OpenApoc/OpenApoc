@@ -78,7 +78,7 @@ VEquipScreen::VEquipScreen(sp<GameState> state)
 			    this->selected->name =
 			        std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)->getText();
 		    }
-		});
+	    });
 	form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")
 	    ->addCallback(FormEventType::TextEditCancel, [this](FormsEvent *e) {
 		    if (this->selected)
@@ -86,7 +86,7 @@ VEquipScreen::VEquipScreen(sp<GameState> state)
 			    std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)
 			        ->setText(this->selected->name);
 		    }
-		});
+	    });
 
 	this->paperDoll->setNonHighlightColour(EQUIP_GRID_COLOUR);
 	this->setHighlightedSlotType(EquipmentSlotType::VehicleWeapon);
@@ -332,7 +332,7 @@ void VEquipScreen::eventOccurred(Event *e)
 		{
 			// Are we over the grid? If so try to place it on the vehicle.
 			auto paperDollControl = form->findControlTyped<Graphic>("PAPER_DOLL");
-			Vec2<int> equipOffset = paperDollControl->Location + form->Location;
+			Vec2<int> equipOffset = paperDollControl->getLocationOnScreen();
 
 			Vec2<int> equipmentPos = fw().getCursor().getPosition() + this->draggedEquipmentOffset;
 			// If this is within the grid try to snap it
@@ -400,7 +400,7 @@ void VEquipScreen::render()
 	if (base)
 	{
 		auto inventoryControl = form->findControlTyped<Graphic>("INVENTORY");
-		Vec2<int> inventoryPosition = inventoryControl->Location + form->Location;
+		Vec2<int> inventoryPosition = inventoryControl->getLocationOnScreen();
 		for (auto &invPair : base->inventoryVehicleEquipment)
 		{
 			// The gap between the bottom of the inventory image and the count label

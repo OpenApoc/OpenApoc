@@ -890,12 +890,6 @@ sp<Control> Control::getAncestor(sp<Control> Parent)
 	return ancestor;
 }
 
-Vec2<int> Control::getLocationOnScreen() const
-{
-	Vec2<int> r(resolvedLocation.x, resolvedLocation.y);
-	return r;
-}
-
 void Control::setRelativeWidth(float widthFactor)
 {
 	if (widthFactor == 0)

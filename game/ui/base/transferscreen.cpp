@@ -687,7 +687,7 @@ void TransferScreen::render()
 	auto viewBase = currentSecondView->getData<Base>();
 	if (second_base == viewBase)
 	{
-		Vec2<int> pos = form->Location + currentSecondView->Location - 2;
+		Vec2<int> pos = currentSecondView->getLocationOnScreen() - 2;
 		Vec2<int> size = currentSecondView->Size + 4;
 		fw().renderer->drawRect(pos, size, COLOUR_RED);
 	}

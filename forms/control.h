@@ -140,7 +140,7 @@ class Control : public std::enable_shared_from_this<Control>
 	void setParent(sp<Control> Parent, int position = -1);
 	sp<Control> getAncestor(sp<Control> Parent);
 
-	Vec2<int> getLocationOnScreen() const;
+	Vec2<int> getLocationOnScreen() const { return resolvedLocation; }
 
 	void setRelativeWidth(float widthPercent);
 	void setRelativeHeight(float widthPercent);

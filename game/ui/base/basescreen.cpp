@@ -447,7 +447,7 @@ bool BaseScreen::isTransition() { return false; }
 
 void BaseScreen::renderBase()
 {
-	const Vec2<int> BASE_POS = form->Location + baseView->Location;
+	const Vec2<int> BASE_POS = baseView->getLocationOnScreen();
 
 	BaseGraphics::renderBase(BASE_POS, state->current_base);
 

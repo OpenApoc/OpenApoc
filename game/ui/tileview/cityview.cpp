@@ -1668,7 +1668,7 @@ void CityView::render()
 				auto viewBase = view->getData<Base>();
 				if (state->current_base == viewBase)
 				{
-					Vec2<int> pos = uiTabs[0]->Location + view->Location - 1;
+					Vec2<int> pos = view->getLocationOnScreen() - 1;
 					Vec2<int> size = view->Size + 2;
 					fw().renderer->drawRect(pos, size, Colour{255, 0, 0});
 					break;
