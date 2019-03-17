@@ -142,8 +142,10 @@ target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_GameUI)
 # check dependencies and include libraries
 
 
-#All platforms that use CMake (Non-windows) have case sensitive filesystems
-ADD_DEFINITIONS(-DDATA_DIRECTORY="${CMAKE_INSTALL_PREFIX}/share/OpenApoc")
+#All Non-windows platforms have case sensitive filesystems
+if (NOT WIN32)
+	ADD_DEFINITIONS(-DDATA_DIRECTORY="${CMAKE_INSTALL_PREFIX}/share/OpenApoc")
+endif()
 
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
 
@@ -180,30 +182,30 @@ file(GLOB_RECURSE FORMAT_SOURCES
 		${CMAKE_SOURCE_DIR}/tests/*.h
 		)
 
-file(GLOB_RECURSE DEPENDENCY_SOURCES ${CMAKE_SOURCE_DIR}/dependencies/*.cpp
-		${CMAKE_SOURCE_DIR}/dependencies/*.c ${CMAKE_SOURCE_DIR}/dependencies/*.h)
-
-
 add_custom_target(format)
 add_custom_target(format-sources)
-add_custom_target(format-xml)
+add_dependencies(format format-sources)
 
+set(CLANG_FORMAT clang-format CACHE STRING "clang-format executable name in PATH")
+
+foreach(FORMAT_SOURCE ${FORMAT_SOURCES})
+	add_custom_command(TARGET format-sources COMMAND ${CLANG_FORMAT} -i ${FORMAT_SOURCE} DEPENDS ${FORMAT_SOURCE} .clang-format)
+endforeach()
+
+file(GLOB_RECURSE XML_FILES ${CMAKE_SOURCE_DIR}/data/*.xml)
+file(GLOB_RECURSE FONT_FILES ${CMAKE_SOURCE_DIR}/data/fonts/*.font)
+file(GLOB_RECURSE FORM_FILES ${CMAKE_SOURCE_DIR}/data/forms/*.form)
+file(GLOB_RECURSE ALIAS_FILES ${CMAKE_SOURCE_DIR}/data/aliases/*.alias)
+
+add_custom_target(format-xml)
 add_custom_target(format-forms)
 add_custom_target(format-fonts)
 add_custom_target(format-aliases)
 
-add_dependencies(format format-sources)
+add_dependencies(format format-xml)
 add_dependencies(format format-forms)
 add_dependencies(format format-fonts)
 add_dependencies(format format-aliases)
-
-set(CLANG_FORMAT clang-format CACHE STRING "clang-format executable name in PATH")
-
-file(GLOB_RECURSE XML_FILES ${CMAKE_SOURCE_DIR}/data/*.xml)
-
-file(GLOB_RECURSE FONT_FILES ${CMAKE_SOURCE_DIR}/data/fonts/*.font)
-file(GLOB_RECURSE FORM_FILES ${CMAKE_SOURCE_DIR}/data/forms/*.form)
-file(GLOB_RECURSE ALIAS_FILES ${CMAKE_SOURCE_DIR}/data/aliases/*.alias)
 
 execute_process(COMMAND which xmllint OUTPUT_VARIABLE WHICH_XMLLINT_OUTPUT ERROR_QUIET
 		OUTPUT_STRIP_TRAILING_WHITESPACE)
@@ -215,39 +217,28 @@ endif()
 
 if (XMLLINT_COMMAND)
 		foreach(XML_FILE ${XML_FILES})
-			string(MAKE_C_IDENTIFIER ${XML_FILE} XML_FILE_STRIPPED)
-			add_custom_target(format-xml-${XML_FILE_STRIPPED}
-					${XMLLINT_COMMAND} --format --encode UTF-8 ${XML_FILE}
-					--output ${XML_FILE}
-					DEPENDS ${XML_FILE})
-			add_dependencies(format-xml format-xml-${XML_FILE_STRIPPED})
+			add_custom_command(TARGET format-xml COMMAND
+				${XMLLINT_COMMAND} --format --encode UTF-8
+				${XML_FILE}	--output ${XML_FILE}
+				DEPENDS ${XML_FILE})
 		endforeach()
 		foreach(FONT_FILE ${FONT_FILES})
-				string(MAKE_C_IDENTIFIER ${FONT_FILE} FONT_FILE_STRIPPED)
-				add_custom_target(format-font-${FONT_FILE_STRIPPED}
-						${XMLLINT_COMMAND} --format --encode UTF-8
-						${FONT_FILE} --output ${FONT_FILE}
-						DEPENDS ${FONT_FILE})
-				add_dependencies(format-fonts
-						format-font-${FONT_FILE_STRIPPED})
+			add_custom_command(TARGET format-fonts COMMAND
+				${XMLLINT_COMMAND} --format --encode UTF-8
+				${FONT_FILE} --output ${FONT_FILE}
+				DEPENDS ${FONT_FILE})
 		endforeach()
 		foreach(FORM_FILE ${FORM_FILES})
-				string(MAKE_C_IDENTIFIER ${FORM_FILE} FORM_FILE_STRIPPED)
-				add_custom_target(format-form-${FORM_FILE_STRIPPED}
-						${XMLLINT_COMMAND} --format --encode UTF-8
-						${FORM_FILE} --output ${FORM_FILE}
-						DEPENDS ${FORM_FILE})
-				add_dependencies(format-forms
-						format-form-${FORM_FILE_STRIPPED})
+			add_custom_command(TARGET format-forms COMMAND
+				${XMLLINT_COMMAND} --format --encode UTF-8
+				${FORM_FILE} --output ${FORM_FILE}
+				DEPENDS ${FORM_FILE})
 		endforeach()
 		foreach(ALIAS_FILE ${ALIAS_FILES})
-			string(MAKE_C_IDENTIFIER ${ALIAS_FILE} ALIAS_FILE_STRIPPED)
-			add_custom_target(format-alias-${ALIAS_FILE_STRIPPED}
-					${XMLLINT_COMMAND} --format --encode UTF-8
-					${ALIAS_FILE} --output ${ALIAS_FILE}
-					DEPENDS ${ALIAS_FILE})
-			add_dependencies(format-aliases
-					format-alias-${ALIAS_FILE_STRIPPED})
+			add_custom_command(TARGET format-aliases COMMAND
+				${XMLLINT_COMMAND} --format --encode UTF-8
+				${ALIAS_FILE} --output ${ALIAS_FILE}
+				DEPENDS ${ALIAS_FILE})
 		endforeach()
 else()
 	message("xmllint not found, disabling format-xml target")
