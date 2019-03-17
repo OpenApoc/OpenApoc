@@ -51,46 +51,46 @@
         <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:316:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
       <radiobutton id="BUTTON_CONTROL" groupid="PSI">
-        <tooltip text="Control body" font="smallset"/>
         <position x="202" y="101"/>
         <size width="54" height="25"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:308:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <graphic id="OVERLAY_CONTROL">
+        <tooltip text="Control body" font="smallset"/>
         <position x="202" y="101"/>
         <size width="54" height="25"/>
       </graphic>
       <radiobutton id="BUTTON_PANIC" groupid="PSI">
-        <tooltip text="Panic unit" font="smallset"/>
         <position x="263" y="101"/>
         <size width="54" height="25"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:309:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <graphic id="OVERLAY_PANIC">
+        <tooltip text="Panic unit" font="smallset"/>
         <position x="263" y="101"/>
         <size width="54" height="25"/>
       </graphic>
       <radiobutton id="BUTTON_STUN" groupid="PSI">
-        <tooltip text="Stun unit" font="smallset"/>
         <position x="324" y="101"/>
         <size width="54" height="25"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:310:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <graphic id="OVERLAY_STUN">
+        <tooltip text="Stun unit" font="smallset"/>
         <position x="324" y="101"/>
         <size width="54" height="25"/>
       </graphic>
       <radiobutton id="BUTTON_PROBE" groupid="PSI">
-        <tooltip text="Probe unit" font="smallset"/>
         <position x="385" y="101"/>
         <size width="54" height="25"/>
         <image/>
         <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:311:xcom3/tacdata/tactical.pal</imagechecked>
       </radiobutton>
       <graphic id="OVERLAY_PROBE">
+        <tooltip text="Probe unit" font="smallset"/>
         <position x="385" y="101"/>
         <size width="54" height="25"/>
       </graphic>
