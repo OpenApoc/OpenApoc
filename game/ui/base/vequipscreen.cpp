@@ -78,7 +78,7 @@ VEquipScreen::VEquipScreen(sp<GameState> state)
 			    this->selected->name =
 			        std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)->getText();
 		    }
-	    });
+		});
 	form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")
 	    ->addCallback(FormEventType::TextEditCancel, [this](FormsEvent *e) {
 		    if (this->selected)
@@ -86,7 +86,7 @@ VEquipScreen::VEquipScreen(sp<GameState> state)
 			    std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)
 			        ->setText(this->selected->name);
 		    }
-	    });
+		});
 
 	this->paperDoll->setNonHighlightColour(EQUIP_GRID_COLOUR);
 	this->setHighlightedSlotType(EquipmentSlotType::VehicleWeapon);

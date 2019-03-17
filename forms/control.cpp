@@ -322,8 +322,9 @@ void Control::eventOccured(Event *e)
 				}
 				fw().renderer->draw(textImage, {totalBorder, totalBorder});
 
-				fw().showToolTip(surface, pos + resolvedLocation -
-				                              Vec2<int>{surface->size.x / 2, surface->size.y});
+				fw().showToolTip(surface,
+				                 pos + resolvedLocation -
+				                     Vec2<int>{surface->size.x / 2, surface->size.y});
 			}
 		}
 	}

@@ -16,12 +16,6 @@
           <alignment horizontal="centre" vertical="centre"/>
           <font>bigfont</font>
         </label>
-        <label text="Debug Mode">
-          <position x="410" y="bottom"/>
-          <size width="200" height="16"/>
-          <alignment horizontal="right" vertical="centre"/>
-          <font>smallset</font>
-        </label>
         <label text="Version" id="VERSION_LABEL">
           <position x="0" y="0"/>
           <size width="640" height="16"/>
