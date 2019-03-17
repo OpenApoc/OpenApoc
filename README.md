@@ -134,7 +134,7 @@ git submodule update --init --recursive
 * All the other dependencies (Boost, SDL2) need to be supplied separately. Install [Vcpkg](https://github.com/Microsoft/vcpkg) and run the following command:
 
 ```cmd
-vcpkg install sdl2 boost-locale boost-system boost-program-options boost-filesystem boost-uuid boost-crc
+vcpkg install sdl2 boost-locale boost-program-options boost-uuid boost-crc
 ```
 
 * Copy the original XCom:Apocalypse .iso file into the "data/" directory. This could also be a directory containing all the extracted files from the CD, and it should be named the same (IE the directory should be data/cd.iso/). This is used during the build to extract some data tables.
@@ -161,7 +161,7 @@ vcpkg install sdl2 boost-locale boost-system boost-program-options boost-filesys
 * On Ubuntu, install the following packages:
 
 ```sh
-sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-system-dev libboost-program-options-dev
+sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-program-options-dev
 ```
 
 * On Mageia, install the following packages as root:

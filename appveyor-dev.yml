@@ -21,7 +21,7 @@ init:
 #clone_depth: 10
 cache: c:\tools\vcpkg\installed
 before_build:
-  - vcpkg install sdl2 boost-locale boost-system boost-program-options boost-filesystem boost-uuid boost-crc
+  - vcpkg install sdl2 boost-locale boost-program-options boost-uuid boost-crc
   - vcpkg upgrade --no-dry-run
   - git submodule update --init --recursive
   - curl http://s2.jonnyh.net/pub/cd_minimal.iso.xz -o temp\cd.iso.xz
