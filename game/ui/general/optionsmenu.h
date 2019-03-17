@@ -7,11 +7,15 @@ namespace OpenApoc
 {
 
 class Form;
+class Control;
+class ConfigOption;
 
 class OptionsMenu : public Stage
 {
   private:
 	sp<Form> menuform;
+
+	sp<Control> createOptionRow(const ConfigOption &option);
 
   public:
 	OptionsMenu();

@@ -3,60 +3,47 @@
   <form id="FORM_OPTIONSMENU">
     <style minwidth="640" minheight="480">
       <position x="centre" y="centre"/>
-      <size width="644" height="484"/>
-      <backcolour r="80" g="80" b="80"/>
+      <size width="640" height="480"/>
       <graphic>
-        <imagex>TESTBACKGROUND</imagex>
         <image>xcom3/ufodata/message.pcx</image>
-        <position x="2" y="2"/>
+        <position x="0" y="0"/>
         <size width="640" height="480"/>
-        <scroll id="SCROLL_LISTPOSITION">
-          <position x="558" y="85"/>
-          <size width="16" height="350"/>
-        </scroll>
-        <listbox id="LISTBOX_OPTIONS" scrollbarid="SCROLL_LISTPOSITION">
-          <position x="23" y="68"/>
-          <size width="526" height="381"/>
-          <textbutton id="BUTTON_TEST_XCOMBASE" text="Tets XCom Base Screen">
-            <position x="right" y="bottom"/>
-            <size width="44" height="32"/>
-            <font>smalfont</font>
-          </textbutton>
-          <textbutton id="BUTTON_DEBUGGING" text="Debug Menu">
-            <position x="right" y="bottom"/>
-            <size width="44" height="32"/>
-            <font>smalfont</font>
-          </textbutton>
-        </listbox>
       </graphic>
-      <graphicbutton id="BUTTON_QUIT">
-        <position x="604" y="446"/>
-        <size width="35" height="34"/>
-        <image/>
-        <!-- FIXME: PAL_01 doesn't seem correct for all newbut.tab images? -->
-        <imagedepressed>pck:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:5:xcom3/ufodata/pal_01.dat</imagedepressed>
-      </graphicbutton>
-      <textedit id="TEXTEDIT_A">
-        <backcolour r="80" g="80" b="80" a="255"/>
-        <position x="0" y="bottom"/>
-        <size width="100" height="16"/>
-        <alignment horizontal="left" vertical="centre"/>
-        <font>smallset</font>
-      </textedit>
-      <textedit id="TEXTEDIT_B">
-        <backcolour r="80" g="80" b="80" a="255"/>
-        <position x="110" y="bottom"/>
-        <size width="100" height="16"/>
-        <alignment horizontal="left" vertical="centre"/>
-        <font>smallset</font>
-      </textedit>
-      <label id="LABEL_TESTXX" text="Vehicle Info">
-        <backcolour r="80" g="80" b="80" a="255"/>
-        <position x="right" y="top"/>
-        <size width="200" height="200"/>
-        <alignment horizontal="right" vertical="bottom"/>
-        <font>smalfont</font>
+      <label text="OPTIONS">
+        <position x="113" y="0"/>
+        <size width="420" height="32"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>bigfont</font>
       </label>
+      <scroll id="LISTBOX_SCROLL">
+        <position x="553" y="82"/>
+        <size width="26" height="356"/>
+      </scroll>
+      <listbox id="LISTBOX_OPTIONS" scrollbarid="LISTBOX_SCROLL">
+        <position x="28" y="74"/>
+        <size width="510" height="375"/>
+        <item size="21" spacing="4"/>
+      </listbox>
+      <graphicbutton id="LISTBOX_SCROLL_UP" scrollprev="LISTBOX_SCROLL">
+        <tooltip text="Scroll Up" font="smallset"/>
+        <position x="555" y="58"/>
+        <size width="22" height="21"/>
+        <image/>
+        <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="LISTBOX_SCROLL_DOWN" scrollnext="LISTBOX_SCROLL">
+        <tooltip text="Scroll Down" font="smallset"/>
+        <position x="555" y="441"/>
+        <size width="22" height="21"/>
+        <image/>
+        <imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_OK">
+        <position x="602" y="443"/>
+        <size width="40" height="40"/>
+        <image/>
+        <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
+      </graphicbutton>
     </style>
   </form>
 </openapoc>

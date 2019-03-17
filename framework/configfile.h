@@ -3,11 +3,14 @@
 #include "library/sp.h"
 #include "library/strings.h"
 #include <boost/any.hpp>
+#include <map>
+#include <vector>
 
 namespace OpenApoc
 {
 
 class ConfigFileImpl;
+class ConfigOption;
 
 class ConfigFile
 {
@@ -53,15 +56,28 @@ class ConfigFile
 	// invalid
 	void showHelp();
 
+	std::map<UString, std::vector<ConfigOption>> getOptions();
+
 	static ConfigFile &getInstance();
 };
 
-class ConfigOptionString
+class ConfigOption
 {
   private:
 	UString section;
 	UString name;
 	UString description;
+
+  public:
+	ConfigOption(const UString section, const UString name, const UString description);
+	UString getName() const { return name; }
+	UString getDescription() const { return description; }
+	UString getKey() const;
+};
+
+class ConfigOptionString : public ConfigOption
+{
+  private:
 	UString defaultValue;
 
   public:
@@ -70,12 +86,9 @@ class ConfigOptionString
 	UString get() const;
 };
 
-class ConfigOptionInt
+class ConfigOptionInt : public ConfigOption
 {
   private:
-	UString section;
-	UString name;
-	UString description;
 	int defaultValue;
 
   public:
@@ -84,12 +97,9 @@ class ConfigOptionInt
 	int get() const;
 };
 
-class ConfigOptionBool
+class ConfigOptionBool : public ConfigOption
 {
   private:
-	UString section;
-	UString name;
-	UString description;
 	bool defaultValue;
 
   public:
@@ -98,12 +108,9 @@ class ConfigOptionBool
 	bool get() const;
 };
 
-class ConfigOptionFloat
+class ConfigOptionFloat : public ConfigOption
 {
   private:
-	UString section;
-	UString name;
-	UString description;
 	float defaultValue;
 
   public:

@@ -365,6 +365,27 @@ class ConfigFileImpl
 		for (auto &optPair : this->optionSections)
 			std::cout << optPair.second << "\n";
 	}
+
+	std::map<UString, std::vector<ConfigOption>> getOptions()
+	{
+		std::map<UString, std::vector<ConfigOption>> options;
+		for (auto &optPair : this->optionSections)
+		{
+			std::vector<ConfigOption> vec;
+			for (auto &opt : optPair.second.options())
+			{
+				std::string short_name = opt->long_name();
+				size_t dot = short_name.find_last_of('.');
+				if (dot != std::string::npos)
+				{
+					short_name = short_name.substr(dot + 1);
+				}
+				vec.emplace_back(ConfigOption(optPair.first, short_name, opt->description()));
+			}
+			options[optPair.first] = vec;
+		}
+		return options;
+	}
 };
 
 ConfigFile::ConfigFile() { this->pimpl.reset(new ConfigFileImpl()); }
@@ -432,66 +453,59 @@ bool ConfigFile::loaded() const { return this->pimpl->loaded(); }
 
 void ConfigFile::showHelp() { this->pimpl->showHelp(); }
 
+std::map<UString, std::vector<ConfigOption>> ConfigFile::getOptions()
+{
+	return this->pimpl->getOptions();
+}
+
+ConfigOption::ConfigOption(const UString section, const UString name, const UString description)
+    : section(section), name(name), description(description)
+{
+}
+
+UString ConfigOption::getKey() const
+{
+	if (section.empty())
+		return name;
+	else
+		return section + "." + name;
+}
+
 ConfigOptionString::ConfigOptionString(const UString section, const UString name,
                                        const UString description, const UString defaultValue)
-    : section(section), name(name), description(description), defaultValue(defaultValue)
+    : ConfigOption(section, name, description), defaultValue(defaultValue)
 {
 	config().addOptionString(section, name, "", description, defaultValue);
 }
 
-UString ConfigOptionString::get() const
-{
-	if (section.empty())
-		return config().getString(name);
-	else
-		return config().getString(section + "." + name);
-}
+UString ConfigOptionString::get() const { return config().getString(getKey()); }
 
 ConfigOptionInt::ConfigOptionInt(const UString section, const UString name,
                                  const UString description, const int defaultValue)
-    : section(section), name(name), description(description), defaultValue(defaultValue)
+    : ConfigOption(section, name, description), defaultValue(defaultValue)
 {
 	config().addOptionInt(section, name, "", description, defaultValue);
 }
 
-int ConfigOptionInt::get() const
-{
-
-	if (section.empty())
-		return config().getInt(name);
-	else
-		return config().getInt(section + "." + name);
-}
+int ConfigOptionInt::get() const { return config().getInt(getKey()); }
 
 ConfigOptionBool::ConfigOptionBool(const UString section, const UString name,
                                    const UString description, const bool defaultValue)
-    : section(section), name(name), description(description), defaultValue(defaultValue)
+    : ConfigOption(section, name, description), defaultValue(defaultValue)
 {
 	config().addOptionBool(section, name, "", description, defaultValue);
 }
 
-bool ConfigOptionBool::get() const
-{
-	if (section.empty())
-		return config().getBool(name);
-	else
-
-		return config().getBool(section + "." + name);
-}
+bool ConfigOptionBool::get() const { return config().getBool(getKey()); }
 
 ConfigOptionFloat::ConfigOptionFloat(const UString section, const UString name,
                                      const UString description, const float defaultValue)
+    : ConfigOption(section, name, description), defaultValue(defaultValue)
 {
 	config().addOptionFloat(section, name, "", description, defaultValue);
 }
 
-bool ConfigOptionFloat::get() const
-{
-	if (section.empty())
-		return config().getFloat(name);
-	else
-		return config().getFloat(section + "." + name);
-}
+bool ConfigOptionFloat::get() const { return config().getFloat(getKey()); }
 
 void validate(boost::any &v, const std::vector<std::string> &values, UString *, int)
 {
