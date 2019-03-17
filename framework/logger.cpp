@@ -1,7 +1,6 @@
-#ifdef _WIN32 // Seems to be set even on win64?
+#ifdef _WIN32
 #define BACKTRACE_WINDOWS
 #define _CRT_SECURE_NO_WARNINGS
-#define ERROR_DIALOG
 #endif
 
 #include "framework/logger.h"

@@ -7,7 +7,6 @@
 #include <list>
 #include <vector>
 
-#define BOOST_ALL_NO_LIB
 #include <boost/program_options.hpp>
 #include <boost/version.hpp>
 #if BOOST_VERSION >= 106600

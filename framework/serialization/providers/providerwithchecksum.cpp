@@ -9,9 +9,6 @@
 
 #include "dependencies/pugixml/src/pugixml.hpp"
 
-// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
-// symbols as part of the module that uses it
-#define BOOST_ALL_NO_LIB
 #include <boost/crc.hpp>
 #include <boost/version.hpp>
 #if BOOST_VERSION >= 106600

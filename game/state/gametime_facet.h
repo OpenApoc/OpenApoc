@@ -1,8 +1,5 @@
 #pragma once
 
-// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
-// symbols as part of the module that uses it
-#define BOOST_ALL_NO_LIB
 #include <boost/date_time.hpp>
 #include <boost/date_time/date_facet.hpp>
 

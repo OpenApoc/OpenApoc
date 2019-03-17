@@ -2,9 +2,7 @@
 #include "library/strings_format.h"
 #include <cctype>
 #include <tuple> // used for std::ignore
-// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
-// symbols as part of the module that uses it
-#define BOOST_ALL_NO_LIB
+
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/locale/message.hpp>
 

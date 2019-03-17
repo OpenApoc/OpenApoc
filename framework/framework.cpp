@@ -31,9 +31,6 @@
 #include <physfs.h>
 
 // Boost locale for setting the system locale
-// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
-// symbols as part of the module that uses it
-#define BOOST_ALL_NO_LIB
 #include <boost/locale.hpp>
 
 using namespace OpenApoc;
