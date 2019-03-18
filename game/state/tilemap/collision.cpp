@@ -44,12 +44,14 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 	Vec3<int> lineSegmentEndVoxel = lineSegmentEnd * tileSizef;
 	LineSegment<int, true> line{lineSegmentStartVoxel, lineSegmentEndVoxel};
 
-	// "point" is thee corrdinate measured in voxel scale units, meaning,
+	// "point" is the coordinate measured in voxel scale units, meaning,
 	// voxel point coordinate within map
 	for (auto &point : line)
 	{
 		auto tile = point / tileSize;
-		if (tile.x < 0 || tile.x >= size.x || tile.y < 0 || tile.y >= size.y || tile.z < 0 ||
+		// We need to check if `point` is negative instead of `tile` because negative values
+		// will round towards zero
+		if (point.x < 0 || tile.x >= size.x || point.y < 0 || tile.y >= size.y || point.z < 0 ||
 		    tile.z >= size.z)
 		{
 			if (check_full_path)
