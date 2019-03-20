@@ -10,7 +10,6 @@
 #include "library/strings.h"
 #include "library/strings_format.h"
 #include "library/vec.h"
-#include "library/vector_remove.h"
 #include "library/voxel.h"
 #include "library/xorshift.h"
 #include <SDL.h>

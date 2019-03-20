@@ -6,7 +6,6 @@
 #include "game/state/rules/doodadtype.h"
 #include "game/state/tilemap/tilemap.h"
 #include "game/state/tilemap/tileobject_doodad.h"
-#include "library/vector_remove.h"
 #include <algorithm>
 
 namespace OpenApoc
