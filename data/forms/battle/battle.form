@@ -16,6 +16,29 @@ TACBORD9 = Turn-Based Interrupt - NOT USED HERE
     <style minwidth="640" minheight="128">
       <position x="centre" y="bottom"/>
       <size width="640" height="128"/>
+
+      <subform id="SUBFORM_RT_1" src="battle/battle_rt_tab1">
+        <position x="0" y="0" />
+      </subform>
+      <subform id="SUBFORM_RT_2" src="battle/battle_rt_tab2">
+        <position x="0" y="0" />
+      </subform>
+      <subform id="SUBFORM_RT_3" src="battle/battle_rt_tab3">
+        <position x="0" y="0" />
+      </subform>
+      <subform id="SUBFORM_TB_1" src="battle/battle_tb_tab1">
+        <position x="0" y="0" />
+      </subform>
+      <subform id="SUBFORM_TB_2" src="battle/battle_tb_tab2">
+        <position x="0" y="0" />
+      </subform>
+      <subform id="SUBFORM_TB_3" src="battle/battle_tb_tab3">
+        <position x="0" y="0" />
+      </subform>
+      <subform id="SUBFORM_TB_4" src="battle/battle_tb_tab4">
+        <position x="0" y="0" />
+      </subform>
+
       <graphicbutton id="BUTTON_LAYER_UP">
         <tooltip text="Up" font="smallset"/>
         <position x="427" y="70"/>

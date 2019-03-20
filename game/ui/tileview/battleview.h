@@ -248,6 +248,8 @@ class BattleView : public BattleTileView
 	void setUpdateSpeed(BattleUpdateSpeed updateSpeed);
 	void zoomAt(Vec3<int> location);
 	void zoomLastEvent();
+
+	void setSelectedTab(sp<Form> tabPtr);
 };
 
 }; // namespace OpenApoc

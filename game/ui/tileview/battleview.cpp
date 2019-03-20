@@ -57,12 +57,6 @@ namespace OpenApoc
 
 namespace
 {
-static const std::vector<UString> TAB_FORM_NAMES_RT = {
-    "battle/battle_rt_tab1", "battle/battle_rt_tab2", "battle/battle_rt_tab3",
-};
-static const std::vector<UString> TAB_FORM_NAMES_TB = {
-    "battle/battle_tb_tab1", "battle/battle_tb_tab2", "battle/battle_tb_tab3",
-    "battle/battle_tb_tab4"};
 static const std::vector<UString> HIDDEN_BACKGROUNDS = {
     "xcom3/tacdata/hidden1.pcx", "xcom3/tacdata/hidden2.pcx", "xcom3/tacdata/hidden3.pcx",
     "xcom3/tacdata/hidden4.pcx",
@@ -72,6 +66,9 @@ static const int TICKS_HIDE_DISPLAY = TICKS_PER_SECOND;
 static const int TICKS_END_MISSION = TICKS_PER_TURN;
 static const std::set<BodyPart> bodyParts{BodyPart::Body, BodyPart::Helmet, BodyPart::LeftArm,
                                           BodyPart::Legs, BodyPart::RightArm};
+
+static const int NUM_TABS_RT = 3;
+static const int NUM_TABS_TB = 4;
 
 } // anonymous namespace
 
@@ -159,25 +156,15 @@ BattleView::BattleView(sp<GameState> gameState)
 		squadNumber.push_back(font->getString(format("%d", i)));
 	}
 
-	for (auto &formName : TAB_FORM_NAMES_RT)
+	for (int i = 0; i < NUM_TABS_RT; ++i)
 	{
-		sp<Form> f(ui().getForm(formName));
-		if (!f)
-		{
-			LogError("Failed to load form \"%s\"", formName);
-			return;
-		}
+		sp<Form> f = baseForm->findControlTyped<Form>(format("SUBFORM_RT_%d", i + 1));
 		f->takesFocus = false;
 		uiTabsRT.push_back(f);
 	}
-	for (auto &formName : TAB_FORM_NAMES_TB)
+	for (int i = 0; i < NUM_TABS_TB; ++i)
 	{
-		sp<Form> f(ui().getForm(formName));
-		if (!f)
-		{
-			LogError("Failed to load form \"%s\"", formName);
-			return;
-		}
+		sp<Form> f = baseForm->findControlTyped<Form>(format("SUBFORM_TB_%d", i + 1));
 		f->takesFocus = false;
 		uiTabsTB.push_back(f);
 	}
@@ -194,7 +181,6 @@ BattleView::BattleView(sp<GameState> gameState)
 	switch (battle.mode)
 	{
 		case Battle::Mode::RealTime:
-			activeTab = uiTabsRT[0];
 			mainTab = uiTabsRT[0];
 			psiTab = uiTabsRT[1];
 			primingTab = uiTabsRT[2];
@@ -203,7 +189,6 @@ BattleView::BattleView(sp<GameState> gameState)
 			lastSpeed = BattleUpdateSpeed::Speed1;
 			break;
 		case Battle::Mode::TurnBased:
-			activeTab = uiTabsTB[0];
 			mainTab = uiTabsTB[0];
 			psiTab = uiTabsTB[1];
 			primingTab = uiTabsTB[2];
@@ -213,6 +198,7 @@ BattleView::BattleView(sp<GameState> gameState)
 			lastSpeed = BattleUpdateSpeed::Pause;
 			break;
 	}
+	setSelectedTab(mainTab);
 
 	medikitForms[false] = ui().getForm("battle/battle_medkit_left");
 	medikitForms[true] = ui().getForm("battle/battle_medkit_right");
@@ -934,7 +920,7 @@ BattleView::BattleView(sp<GameState> gameState)
 	std::function<void(FormsEvent * e)> dropLeftHand = [this](Event *) { orderDrop(false); };
 
 	std::function<void(FormsEvent * e)> cancelThrow = [this](Event *) {
-		this->activeTab = this->mainTab;
+		this->setSelectedTab(this->mainTab);
 	};
 
 	std::function<void(bool right)> throwItem = [this](bool right) {
@@ -1005,7 +991,7 @@ BattleView::BattleView(sp<GameState> gameState)
 				item->prime(false, delay * TICKS_PER_SECOND / 4, (range + 1) * 6);
 			}
 		}
-		this->activeTab = this->mainTab;
+		this->setSelectedTab(this->mainTab);
 	};
 
 	std::function<void(FormsEvent * e)> updateDelay = [this](Event *) { this->refreshDelayText(); };
@@ -1081,7 +1067,7 @@ BattleView::BattleView(sp<GameState> gameState)
 	};
 
 	std::function<void(FormsEvent * e)> cancelPsi = [this](Event *) {
-		this->activeTab = this->mainTab;
+		this->setSelectedTab(this->mainTab);
 		this->selectionState = BattleSelectionState::Normal;
 	};
 
@@ -1272,7 +1258,6 @@ void BattleView::render()
 		return;
 	}
 
-	activeTab->render();
 	baseForm->render();
 
 	int pauseIconOffsetX = 0;
@@ -1332,6 +1317,16 @@ void BattleView::setUpdateSpeed(BattleUpdateSpeed updateSpeed)
 	}
 }
 
+void BattleView::setSelectedTab(sp<Form> tabPtr)
+{
+	for (auto tab : uiTabsRT)
+		tab->setVisible(false);
+	for (auto tab : uiTabsTB)
+		tab->setVisible(false);
+	tabPtr->setVisible(true);
+	this->activeTab = tabPtr;
+}
+
 void BattleView::update()
 {
 	bool realTime = battle.mode == Battle::Mode::RealTime;
@@ -1369,14 +1364,14 @@ void BattleView::update()
 		                 battle.currentActiveOrganisation != battle.currentPlayer;
 		if (notMyTurn && activeTab != notMyTurnTab)
 		{
-			activeTab = notMyTurnTab;
+			setSelectedTab(notMyTurnTab);
 			lastSelectedUnits = battle.battleViewSelectedUnits;
 			battle.battleViewSelectedUnits.clear();
 			updateTBButtons();
 		}
 		else if (!notMyTurn && activeTab == notMyTurnTab)
 		{
-			activeTab = mainTab;
+			setSelectedTab(mainTab);
 			battle.battleViewSelectedUnits = lastSelectedUnits;
 			updateTBButtons();
 		}
@@ -1649,7 +1644,6 @@ void BattleView::update()
 			f->update();
 		}
 	}
-	activeTab->update();
 	baseForm->update();
 
 	// If we have 'follow agent' enabled we clobber any other movement in this frame
@@ -1740,15 +1734,7 @@ void BattleView::updateSelectedUnits()
 	{
 		resetPathPreview();
 		resetAttackCost();
-		switch (battle.mode)
-		{
-			case Battle::Mode::RealTime:
-				activeTab = uiTabsRT[0];
-				break;
-			case Battle::Mode::TurnBased:
-				activeTab = uiTabsTB[0];
-				break;
-		}
+		setSelectedTab(mainTab);
 	}
 	else
 	{
@@ -2501,7 +2487,7 @@ void BattleView::orderUse(bool right, bool automatic)
 				{
 					break;
 				}
-				activeTab = primingTab;
+				setSelectedTab(primingTab);
 				refreshDelayText();
 				refreshRangeText();
 				activeTab->findControlTyped<CheckBox>("HIDDEN_CHECK_RIGHT_HAND")->setChecked(right);
@@ -2526,7 +2512,7 @@ void BattleView::orderUse(bool right, bool automatic)
 		case AEquipmentType::Type::MindBender:
 			// Mind bender does not care for automatic mode
 			selectionState = BattleSelectionState::Normal;
-			activeTab = psiTab;
+			setSelectedTab(psiTab);
 			activeTab->findControlTyped<RadioButton>("BUTTON_CONTROL")->setChecked(false);
 			activeTab->findControlTyped<RadioButton>("BUTTON_PANIC")->setChecked(false);
 			activeTab->findControlTyped<RadioButton>("BUTTON_STUN")->setChecked(false);
@@ -2835,7 +2821,6 @@ void BattleView::orderHeal(BodyPart part)
 
 void BattleView::eventOccurred(Event *e)
 {
-	activeTab->eventOccured(e);
 	baseForm->eventOccured(e);
 	bool eventWithin = false;
 	for (auto &f : itemForms)
