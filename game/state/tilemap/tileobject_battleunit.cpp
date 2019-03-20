@@ -405,7 +405,8 @@ sp<VoxelMap> TileObjectBattleUnit::getVoxelMap(Vec3<int> mapIndex, bool) const
 {
 	auto u = this->getUnit();
 	auto size = u->agent->type->bodyType->size.at(u->current_body_state).at(u->facing);
-	if (mapIndex.x >= size.x || mapIndex.y >= size.y || mapIndex.z >= size.z)
+	if (mapIndex.x >= size.x || mapIndex.y >= size.y || mapIndex.z >= size.z || mapIndex.x < 0 ||
+	    mapIndex.y < 0 || mapIndex.z < 0)
 		return nullptr;
 
 	return u->agent->type->bodyType->voxelMaps.at(u->current_body_state)
