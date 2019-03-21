@@ -410,7 +410,7 @@ void RecruitScreen::personnelSheet(sp<Agent> agent, sp<Form> formPersonnelStats)
 	formPersonnelStats->findControlTyped<Graphic>("SELECTED_PORTRAIT")
 	    ->setImage(agent->getPortrait().photo);
 	formPersonnelStats->findControlTyped<Label>("VALUE_SKILL")
-	    ->setText(format(tr("%d"), agent->getSkill()));
+	    ->setText(format("%d", agent->getSkill()));
 }
 
 /**
