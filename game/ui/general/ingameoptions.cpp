@@ -114,7 +114,7 @@ std::list<std::pair<UString, UString>> openApocList = {
     {"OpenApoc.Mod", "BSKLauncherSound"},
 };
 
-std::vector<UString> listNames = {"Message Toggles", "OpenApoc Features"};
+std::vector<UString> listNames = {tr("Message Toggles"), tr("OpenApoc Features")};
 } // namespace
 
 InGameOptions::InGameOptions(sp<GameState> state)
@@ -198,8 +198,16 @@ void InGameOptions::begin()
 	menuform->findControlTyped<CheckBox>("AUTO_EXECUTE_ORDERS")
 	    ->setChecked(config().getBool("Options.Misc.AutoExecute"));
 
-	menuform->findControlTyped<TextButton>("BUTTON_BATTLE")
-	    ->setText(state->current_battle ? "Exit Battle" : "Skirmish Mode");
+	if (state->current_battle)
+	{
+		menuform->findControlTyped<TextButton>("BUTTON_EXIT_BATTLE")->setVisible(true);
+		menuform->findControlTyped<TextButton>("BUTTON_SKIRMISH")->setVisible(false);
+	}
+	else
+	{
+		menuform->findControlTyped<TextButton>("BUTTON_EXIT_BATTLE")->setVisible(false);
+		menuform->findControlTyped<TextButton>("BUTTON_SKIRMISH")->setVisible(true);
+	}
 
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 
@@ -289,27 +297,24 @@ void InGameOptions::eventOccurred(Event *e)
 			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<CheatOptions>(state)});
 			return;
 		}
-		if (e->forms().RaisedBy->Name == "BUTTON_BATTLE")
+		if (e->forms().RaisedBy->Name == "BUTTON_EXIT_BATTLE")
 		{
-			if (state->current_battle)
-			{
-				int unitsLost = state->current_battle->killStrandedUnits(
-				    *state, state->current_battle->currentPlayer, true);
-				fw().stageQueueCommand(
-				    {StageCmd::Command::PUSH,
-				     mksp<MessageBox>(tr("Abort Mission"),
-				                      format("%s %d", tr("Units Lost :"), unitsLost),
-				                      MessageBox::ButtonOptions::YesNo, [this] {
-					                      state->current_battle->abortMission(*state);
-					                      Battle::finishBattle(*state);
-					                      fw().stageQueueCommand({StageCmd::Command::REPLACEALL,
-					                                              mksp<BattleDebriefing>(state)});
-					                  })});
-			}
-			else
-			{
-				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<Skirmish>(state)});
-			}
+			int unitsLost = state->current_battle->killStrandedUnits(
+			    *state, state->current_battle->currentPlayer, true);
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH,
+			     mksp<MessageBox>(tr("Abort Mission"),
+			                      format("%s %d", tr("Units Lost :"), unitsLost),
+			                      MessageBox::ButtonOptions::YesNo, [this] {
+				                      state->current_battle->abortMission(*state);
+				                      Battle::finishBattle(*state);
+				                      fw().stageQueueCommand({StageCmd::Command::REPLACEALL,
+				                                              mksp<BattleDebriefing>(state)});
+				                  })});
+		}
+		else if (e->forms().RaisedBy->Name == "BUTTON_SKIRMISH")
+		{
+			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<Skirmish>(state)});
 		}
 	}
 	if (e->type() == EVENT_FORM_INTERACTION &&
