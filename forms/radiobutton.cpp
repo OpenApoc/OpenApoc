@@ -12,6 +12,7 @@ RadioButton::RadioButton(sp<RadioButtonGroup> Group, sp<Image> ImageChecked,
                          sp<Image> ImageUnchecked)
     : CheckBox(ImageChecked, ImageUnchecked), group(Group)
 {
+	isClickable = true;
 }
 
 RadioButton::~RadioButton() = default;

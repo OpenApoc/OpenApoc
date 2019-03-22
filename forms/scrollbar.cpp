@@ -16,6 +16,7 @@ ScrollBar::ScrollBar(sp<Image> gripperImage)
       Value(0), BarOrientation(Orientation::Vertical), RenderStyle(ScrollBarRenderStyle::Menu),
       GripperColour(220, 192, 192), Minimum(0), Maximum(10), LargeChange(2), LargePercent(10)
 {
+	isClickable = true;
 	if (!gripperbutton)
 		gripperbutton = fw().data->loadImage(
 		    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:4:ui/menuopt.pal");
