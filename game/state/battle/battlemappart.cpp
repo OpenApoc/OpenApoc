@@ -1147,8 +1147,14 @@ void BattleMapPart::updateFalling(GameState &state, unsigned int ticks)
 	if (newPosition.z < 0 || floorf(newPosition.z) != floorf(position.z))
 	{
 		sp<BattleMapPart> rubble;
-		for (auto &obj : tileObject->getOwningTile()->ownedObjects)
+		for (auto it = tileObject->getOwningTile()->ownedObjects.begin();
+		     it != tileObject->getOwningTile()->ownedObjects.end();)
 		{
+			// we may kill a unit by applying fall damage, this will trigger a stance change
+			// which will remove this object from the ownedObjects set (invalidating the current
+			// iterator)
+			// we work around this by incrementing the iterator before updating
+			auto obj = *it++;
 			switch (obj->getType())
 			{
 				// If there's a live ground or map mart of our type here - die
