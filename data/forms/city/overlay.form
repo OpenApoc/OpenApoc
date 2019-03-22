@@ -5,7 +5,7 @@
     <style minwidth="480" minheight="60">
       <position x="centre" y="bottom"/>
       <size width="480" height="60"/>
-      <graphic>
+      <graphic isclickable="true">
         <size width="480" height="60"/>
         <image>city/overlay.png</image>
       </graphic>
