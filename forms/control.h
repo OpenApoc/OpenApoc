@@ -71,6 +71,7 @@ class Control : public std::enable_shared_from_this<Control>
 	bool isDirty() const { return dirty; }
 
 	bool Visible;
+	bool isClickable;
 
   public:
 	UString Name;
