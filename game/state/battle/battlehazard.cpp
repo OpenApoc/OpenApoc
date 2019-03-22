@@ -37,8 +37,6 @@ BattleHazard::BattleHazard(GameState &state, StateRef<DamageType> damageType, bo
 void BattleHazard::die(GameState &state, bool violently)
 {
 	auto this_shared = shared_from_this();
-	state.current_battle->hazards.erase(this_shared);
-
 	tileObject->removeFromMap();
 	tileObject.reset();
 
@@ -53,6 +51,11 @@ void BattleHazard::die(GameState &state, bool violently)
 		state.current_battle->placeHazard(state, ownerOrganisation, ownerUnit, dtSmoke, position,
 		                                  dtSmoke->hazardType->getLifetime(state), power, 6);
 	}
+}
+void BattleHazard::dieAndRemove(GameState &state, bool violently)
+{
+	die(state, violently);
+	state.current_battle->hazards.erase(shared_from_this());
 }
 
 bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> &to, unsigned ttl,
@@ -215,7 +218,7 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 		{
 			if (replaceWeaker)
 			{
-				existingHazard->die(state, false);
+				existingHazard->dieAndRemove(state, false);
 			}
 			state.current_battle->placeHazard(
 			    state, ownerOrganisation, ownerUnit, spreadDamageType, {to.x, to.y, to.z},
@@ -426,7 +429,7 @@ void BattleHazard::applyEffect(GameState &state)
 	}
 }
 
-void BattleHazard::updateInner(GameState &state, unsigned int ticks)
+bool BattleHazard::updateInner(GameState &state, unsigned int ticks)
 {
 	nextUpdateTicksAccumulated += ticks;
 	while (nextUpdateTicksAccumulated >= TICKS_PER_HAZARD_UPDATE)
@@ -458,8 +461,8 @@ void BattleHazard::updateInner(GameState &state, unsigned int ticks)
 			}
 			if (age >= 130)
 			{
-				die(state);
-				return;
+				die(state, true);
+				return true;
 			}
 		}
 		else
@@ -476,14 +479,15 @@ void BattleHazard::updateInner(GameState &state, unsigned int ticks)
 			}
 			if (age >= lifetime)
 			{
-				die(state);
-				return;
+				die(state, true);
+				return true;
 			}
 		}
 	}
+	return false;
 }
 
-void BattleHazard::update(GameState &state, unsigned int ticks)
+bool BattleHazard::update(GameState &state, unsigned int ticks)
 {
 	bool realTime = state.current_battle->mode == Battle::Mode::RealTime;
 
@@ -509,11 +513,12 @@ void BattleHazard::update(GameState &state, unsigned int ticks)
 
 	if (realTime)
 	{
-		updateInner(state, ticks);
+		return updateInner(state, ticks);
 	}
+	return false;
 }
 
-void BattleHazard::updateTB(GameState &state) { updateInner(state, TICKS_PER_TURN); }
+bool BattleHazard::updateTB(GameState &state) { return updateInner(state, TICKS_PER_TURN); }
 
 void BattleHazard::updateTileVisionBlock(GameState &state)
 {

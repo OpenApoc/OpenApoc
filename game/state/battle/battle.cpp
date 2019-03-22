@@ -1326,7 +1326,7 @@ sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<Organisation> ow
 					LogWarning(
 					    "Ensure we are not putting out a fire that is attached to a feature!");
 				}
-				existingHazard->die(state, false);
+				existingHazard->dieAndRemove(state, false);
 			}
 		}
 		map->addObjectToMap(hazard);
@@ -1671,8 +1671,10 @@ void Battle::update(GameState &state, unsigned int ticks)
 	Trace::start("Battle::update::hazards->update");
 	for (auto it = this->hazards.begin(); it != this->hazards.end();)
 	{
-		auto d = *it++;
-		d->update(state, ticks);
+		if ((*it)->update(state, ticks))
+			it = hazards.erase(it);
+		else
+			++it;
 	}
 	Trace::end("Battle::update::hazards->update");
 	Trace::start("Battle::update::explosions->update");
@@ -1844,11 +1846,10 @@ void Battle::updateTBEnd(GameState &state)
 	Trace::start("Battle::updateTBEnd::hazards->update");
 	for (auto it = this->hazards.begin(); it != this->hazards.end();)
 	{
-		auto d = *it++;
-		if (d->ownerOrganisation == currentActiveOrganisation)
-		{
-			d->updateTB(state);
-		}
+		if ((*it)->ownerOrganisation == currentActiveOrganisation && (*it)->updateTB(state))
+			it = hazards.erase(it);
+		else
+			++it;
 	}
 	Trace::end("Battle::updateTBEnd::hazards->update");
 	Trace::start("Battle::updateTBEnd::items->update");

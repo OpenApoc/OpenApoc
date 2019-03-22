@@ -50,12 +50,14 @@ class BattleHazard : public std::enable_shared_from_this<BattleHazard>
 	            bool fireSmoke = false);
 	void grow(GameState &state);
 	void applyEffect(GameState &state);
-	void die(GameState &state, bool violently = true);
+	void die(GameState &state, bool violently);
+	void dieAndRemove(GameState &state, bool violently);
 	void updateTileVisionBlock(GameState &state);
 
-	void update(GameState &state, unsigned int ticks);
-	void updateInner(GameState &state, unsigned int ticks);
-	void updateTB(GameState &state);
+	// these return true if this hazard has died and needs to be deleted
+	bool update(GameState &state, unsigned int ticks);
+	bool updateInner(GameState &state, unsigned int ticks);
+	bool updateTB(GameState &state);
 
 	BattleHazard() = default;
 	BattleHazard(GameState &state, StateRef<DamageType> damageType, bool delayVisibility = true);
