@@ -2966,13 +2966,13 @@ void Battle::exitBattle(GameState &state)
 		}
 
 		// Erase base and building
-		StateRef<Base> fakeBase = {&state, "SKIRMISH_BASE"};
+		StateRef<Base> fakeBase = {&state, "BASE_SKIRMISH"};
 		auto city = fakeBase->building->city;
 		fakeBase->building->currentAgents.clear();
 		fakeBase->building->base.clear();
 		fakeBase->building.clear();
-		city->buildings.erase("SKIRMISH_BUILDING");
-		state.player_bases.erase("SKIRMISH_BASE");
+		city->buildings.erase("BUILDING_SKIRMISH");
+		state.player_bases.erase("BASE_SKIRMISH");
 
 		// Erase vehicle
 		if (state.current_battle->player_craft)

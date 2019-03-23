@@ -278,13 +278,13 @@ void Skirmish::goToBattle(bool customAliens, std::map<StateRef<AgentType>, int> 
 	auto city = sourceBase->building->city;
 
 	auto newBuilding = mksp<Building>();
-	city->buildings["SKIRMISH_BUILDING"] = newBuilding;
+	city->buildings["BUILDING_SKIRMISH"] = newBuilding;
 
 	auto newBase = mksp<Base>();
-	state.player_bases["SKIRMISH_BASE"] = newBase;
+	state.player_bases["BASE_SKIRMISH"] = newBase;
 
-	StateRef<Building> playerBuilding = {&state, "SKIRMISH_BUILDING"};
-	StateRef<Base> playerBase = {&state, "SKIRMISH_BASE"};
+	StateRef<Building> playerBuilding = {&state, "BUILDING_SKIRMISH"};
+	StateRef<Base> playerBase = {&state, "BASE_SKIRMISH"};
 
 	playerBuilding->owner = state.getPlayer();
 	playerBuilding->base = playerBase;
@@ -521,7 +521,7 @@ void Skirmish::goToBattle(bool customAliens, std::map<StateRef<AgentType>, int> 
 	sp<Agent> firstAgent;
 	for (auto &a : state.agents)
 	{
-		if (a.second->homeBuilding.id == "SKIRMISH_BUILDING")
+		if (a.second->homeBuilding.id == "BUILDING_SKIRMISH")
 		{
 			firstAgent = a.second;
 			break;
