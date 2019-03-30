@@ -193,6 +193,8 @@ void InGameOptions::begin()
 
 	menuform->findControlTyped<CheckBox>("AUTO_SCROLL")
 	    ->setChecked(config().getBool("Options.Misc.AutoScroll"));
+	menuform->findControlTyped<CheckBox>("TOOL_TIPS")
+	    ->setChecked(config().getInt("Options.Misc.ToolTipDelay") > 0);
 	menuform->findControlTyped<CheckBox>("ACTION_MUSIC")
 	    ->setChecked(config().getBool("Options.Misc.ActionMusic"));
 	menuform->findControlTyped<CheckBox>("AUTO_EXECUTE_ORDERS")
@@ -223,6 +225,8 @@ void InGameOptions::finish()
 
 	config().set("Options.Misc.AutoScroll",
 	             menuform->findControlTyped<CheckBox>("AUTO_SCROLL")->isChecked());
+	config().set("Options.Misc.ToolTipDelay",
+	             menuform->findControlTyped<CheckBox>("TOOL_TIPS")->isChecked() ? 500 : 0);
 	config().set("Options.Misc.ActionMusic",
 	             menuform->findControlTyped<CheckBox>("ACTION_MUSIC")->isChecked());
 	config().set("Options.Misc.AutoExecute",
