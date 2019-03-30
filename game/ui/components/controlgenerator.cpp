@@ -507,19 +507,21 @@ sp<Control> ControlGenerator::createAgentControl(GameState &state, const AgentIn
 }
 
 sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, const AgentInfo &info,
-                                                      bool addSkill, bool labMode)
+                                                      int width, UnitSkillState skill)
 {
 	if (!singleton.initialised)
 	{
 		singleton.init(state);
 	}
-	auto size = labMode ? Vec2<int>{159, 31}
-	                    : Vec2<int>{130, singleton.labelFont->getFontHeight() * (addSkill ? 3 : 2)};
 
 	auto baseControl = mksp<Control>();
 	baseControl->setData(info.agent);
 	baseControl->Name = "AGENT_PORTRAIT";
-	baseControl->Size = size;
+	baseControl->Size = {width, singleton.labelFont->getFontHeight() * 2};
+	if (skill == UnitSkillState::Horizontal)
+		baseControl->Size.x = 160;
+	else if (skill == UnitSkillState::Vertical)
+		baseControl->Size.y = singleton.labelFont->getFontHeight() * 3;
 
 	auto frameGraphic = baseControl->createChild<Graphic>();
 	frameGraphic->AutoSize = true;
@@ -529,35 +531,35 @@ sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, const Ag
 
 	auto nameLabel = baseControl->createChild<Label>(info.agent->name, singleton.labelFont);
 	nameLabel->Location = {40, 0};
-	nameLabel->Size = {labMode ? 72 : 100, labMode ? 31 : singleton.labelFont->getFontHeight() * 2};
+	nameLabel->Size = {baseControl->Size.x - 40, singleton.labelFont->getFontHeight() * 2};
 
-	if (addSkill)
+	if (skill != UnitSkillState::Hidden)
 	{
 		auto skillLabel = baseControl->createChild<Label>(
 		    format(tr("Skill %s"), info.agent->getSkill()), singleton.labelFont);
 		skillLabel->Tint = {192, 192, 192};
 
-		if (labMode)
+		skillLabel->Size = {nameLabel->Size.x, singleton.labelFont->getFontHeight()};
+		skillLabel->Location = {40, singleton.labelFont->getFontHeight() * 2};
+
+		if (skill == UnitSkillState::Horizontal)
 		{
-			skillLabel->Size = {45, 40};
-			skillLabel->Location = {115, 0};
-		}
-		else
-		{
-			skillLabel->Size = {100, singleton.labelFont->getFontHeight()};
-			skillLabel->Location = {40, singleton.labelFont->getFontHeight()};
+			skillLabel->Size.x = 45;
+			nameLabel->Size.x -= 50;
+			skillLabel->Location = {baseControl->Size.x - 45, 0};
 		}
 	}
 
 	return baseControl;
 }
 
-sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, sp<Agent> a, bool addSkill,
+sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, sp<Agent> a, int width,
+                                                      UnitSkillState skill,
                                                       UnitSelectionState forcedSelectionState,
-                                                      bool forceFade, bool labMode)
+                                                      bool forceFade)
 {
 	auto info = createAgentInfo(state, a, forcedSelectionState, forceFade);
-	return createLargeAgentControl(state, info, addSkill, labMode);
+	return createLargeAgentControl(state, info, width, skill);
 }
 
 /**

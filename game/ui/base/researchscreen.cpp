@@ -395,16 +395,15 @@ void ResearchScreen::setCurrentLabInfo()
 			if (!assigned_to_current_lab)
 				continue;
 		}
+		auto list = unassignedAgentList;
+		auto skill = UnitSkillState::Vertical;
 		if (assigned_to_current_lab)
 		{
-			assignedAgentList->addItem(ControlGenerator::createLargeAgentControl(
-			    *state, agent.second, true, UnitSelectionState::NA, false, true));
+			list = assignedAgentList;
+			skill = UnitSkillState::Horizontal;
 		}
-		else
-		{
-			unassignedAgentList->addItem(ControlGenerator::createLargeAgentControl(
-			    *state, agent.second, true, UnitSelectionState::NA, false, false));
-		}
+		list->addItem(
+		    ControlGenerator::createLargeAgentControl(*state, agent.second, list->Size.x, skill));
 	}
 	assignedAgentList->ItemSize = agentEntryHeight;
 	unassignedAgentList->ItemSize = agentEntryHeight;

@@ -44,6 +44,13 @@ enum class UnitSelectionState
 	FirstSelected = 2
 };
 
+enum class UnitSkillState
+{
+	Hidden = 0,
+	Vertical = 1,
+	Horizontal = 2
+};
+
 class ControlGenerator
 {
   private:
@@ -101,12 +108,11 @@ class ControlGenerator
 	createAgentControl(GameState &state, sp<Agent> a,
 	                   UnitSelectionState forcedSelectionState = UnitSelectionState::NA,
 	                   bool forceFade = false);
-	static sp<Control> createLargeAgentControl(GameState &state, const AgentInfo &info,
-	                                           bool addSkill = false, bool labMode = false);
-	static sp<Control>
-	createLargeAgentControl(GameState &state, sp<Agent> a, bool addSkill = false,
-	                        UnitSelectionState forcedSelectionState = UnitSelectionState::NA,
-	                        bool forceFade = false, bool labMode = false);
+	static sp<Control> createLargeAgentControl(GameState &state, const AgentInfo &info, int width,
+	                                           UnitSkillState skill = UnitSkillState::Hidden);
+	static sp<Control> createLargeAgentControl(
+	    GameState &state, sp<Agent> a, int width, UnitSkillState skill = UnitSkillState::Hidden,
+	    UnitSelectionState forcedSelectionState = UnitSelectionState::NA, bool forceFade = false);
 	// Create lab icon control with quantity label.
 	static sp<Control> createLabControl(sp<GameState> state, sp<Facility> facility);
 	// Control containing two MultilistBox for assignment state

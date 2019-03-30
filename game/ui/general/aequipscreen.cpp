@@ -1976,8 +1976,8 @@ void AEquipScreen::updateAgentControl(sp<Agent> agent)
 	}
 
 	auto agentList = formMain->findControlTyped<ListBox>("AGENT_SELECT_BOX");
-	auto control = ControlGenerator::createLargeAgentControl(*state, agent, false, selstate,
-	                                                         !isInVicinity(agent));
+	auto control = ControlGenerator::createLargeAgentControl(
+	    *state, agent, agentList->Size.x, UnitSkillState::Hidden, selstate, !isInVicinity(agent));
 	control->addCallback(FormEventType::MouseEnter, [this, agent](FormsEvent *e) {
 		AgentSheet(formAgentStats).display(agent, bigUnitRanks, isTurnBased());
 		formAgentStats->setVisible(true);
