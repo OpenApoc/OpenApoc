@@ -212,7 +212,12 @@
           <position x="18" y="407"/>
           <size width="259" height="28"/>
         </textbutton>
-        <textbutton id="BUTTON_BATTLE">
+        <textbutton id="BUTTON_EXIT_BATTLE" text="Exit Battle">
+          <font>smalfont</font>
+          <position x="18" y="435"/>
+          <size width="259" height="28"/>
+        </textbutton>
+        <textbutton id="BUTTON_SKIRMISH" text="Skirmish Mode">
           <font>smalfont</font>
           <position x="18" y="435"/>
           <size width="259" height="28"/>

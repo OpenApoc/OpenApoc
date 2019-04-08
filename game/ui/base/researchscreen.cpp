@@ -507,7 +507,7 @@ void ResearchScreen::updateProgressInfo()
 		manufacturing_scroll_left->setVisible(true);
 		manufacturing_scroll_right->setVisible(true);
 		manufacturing_scrollbar->setValue(this->viewFacility->lab->getQuantity());
-		manufacturing_quantity->setText(format(tr("%d"), this->viewFacility->lab->getQuantity()));
+		manufacturing_quantity->setText(format("%d", this->viewFacility->lab->getQuantity()));
 	}
 	else
 	{
