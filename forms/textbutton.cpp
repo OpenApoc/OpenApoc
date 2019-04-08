@@ -21,6 +21,7 @@ TextButton::TextButton(const UString &Text, sp<BitmapFont> font)
       TextHAlign(HorizontalAlignment::Centre), TextVAlign(VerticalAlignment::Centre),
       RenderStyle(ButtonRenderStyle::Menu)
 {
+	isClickable = true;
 	label = mksp<Label>(Text, font);
 }
 

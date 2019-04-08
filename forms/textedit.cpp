@@ -18,6 +18,7 @@ TextEdit::TextEdit(const UString &Text, sp<BitmapFont> font)
       editing(false), SelectionStart(Text.length()), TextHAlign(HorizontalAlignment::Left),
       TextVAlign(VerticalAlignment::Centre)
 {
+	isClickable = true;
 	if (font)
 	{
 		palette = font->getPalette();

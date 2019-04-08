@@ -17,6 +17,7 @@ CheckBox::CheckBox(sp<Image> ImageChecked, sp<Image> ImageUnchecked)
           fw().data->loadSample("RAWSOUND:xcom3/rawsound/strategc/intrface/button1.raw:22050")),
       Checked(false)
 {
+	isClickable = true;
 }
 
 CheckBox::~CheckBox() = default;

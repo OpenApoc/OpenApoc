@@ -19,7 +19,7 @@ Control::Control(bool takesFocus)
     : mouseInside(false), mouseDepressed(false), resolvedLocation(0, 0), Visible(true),
       Name("Control"), Location(0, 0), Size(0, 0), SelectionSize(0, 0),
       BackgroundColour(0, 0, 0, 0), takesFocus(takesFocus), showBounds(false), Enabled(true),
-      canCopy(true), funcPreRender(nullptr),
+      canCopy(true), funcPreRender(nullptr), isClickable(false),
       // Tooltip defaults
       ToolTipBackground{128, 128, 128}, ToolTipBorders{
                                             {1, {0, 0, 0}}, {1, {255, 255, 255}}, {1, {0, 0, 0, 0}}}
@@ -144,6 +144,10 @@ void Control::eventOccured(Event *e)
 			{
 				this->pushFormEvent(FormEventType::MouseDown, e);
 				mouseDepressed = true;
+				if (isClickable)
+				{
+					e->Handled = true;
+				}
 			}
 		}
 
@@ -591,6 +595,10 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 	{
 		this->showBounds = node->attribute("border").as_bool();
 	}
+	if (node->attribute("isclickable"))
+	{
+		this->isClickable = node->attribute("isclickable").as_bool();
+	}
 
 	auto parentControl = this->getParent();
 	for (auto child = node->first_child(); child; child = child.next_sibling())
@@ -1009,6 +1017,7 @@ void Control::copyControlData(sp<Control> CopyOf)
 	CopyOf->takesFocus = this->takesFocus;
 	CopyOf->showBounds = this->showBounds;
 	CopyOf->Visible = this->Visible;
+	CopyOf->isClickable = this->isClickable;
 	CopyOf->ToolTipText = this->ToolTipText;
 	CopyOf->ToolTipFont = this->ToolTipFont;
 	CopyOf->ToolTipBackground = this->ToolTipBackground;
