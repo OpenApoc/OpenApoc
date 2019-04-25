@@ -1,6 +1,7 @@
 #include "game/ui/general/difficultymenu.h"
 #include "forms/form.h"
 #include "forms/ui.h"
+#include "framework/configfile.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
@@ -8,6 +9,14 @@
 #include "game/state/gamestate.h"
 #include "game/ui/general/loadingscreen.h"
 #include "game/ui/tileview/cityview.h"
+
+namespace
+{
+OpenApoc::ConfigOptionString
+    modList("Game", "Mods", "A colon-separated list of mods to load (relative to data directory)",
+            "");
+
+} // anonymous namespace
 
 namespace OpenApoc
 {
@@ -40,6 +49,16 @@ std::shared_future<void> loadGame(const UString &path, sp<GameState> state)
 			LogError("Failed to load '%s'", path);
 			return;
 		}
+		auto mods = modList.get().split(":");
+		for (const auto &modString : mods)
+		{
+			LogWarning("loading mod \"%s\"", modString);
+			if (!state->loadGame(fw().getDataDir() + "/" + modString))
+			{
+				LogError("Failed to load mod \"%s\"", modString);
+			}
+		}
+
 		state->startGame();
 		state->initState();
 		state->fillPlayerStartingProperty();
