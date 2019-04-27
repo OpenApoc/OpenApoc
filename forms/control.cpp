@@ -331,13 +331,13 @@ void Control::eventOccured(Event *e)
 				                     Vec2<int>{surface->size.x / 2, surface->size.y});
 			}
 		}
-	}
-	else if (e->forms().EventFlag == FormEventType::MouseClick ||
-	         e->forms().EventFlag == FormEventType::MouseDown)
-	{
-		if (e->forms().RaisedBy == shared_from_this())
+		else if (e->forms().EventFlag == FormEventType::MouseClick ||
+		         e->forms().EventFlag == FormEventType::MouseDown)
 		{
-			fw().toolTipStopTimer();
+			if (e->forms().RaisedBy == shared_from_this())
+			{
+				fw().toolTipStopTimer();
+			}
 		}
 	}
 }
