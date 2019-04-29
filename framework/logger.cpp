@@ -293,34 +293,8 @@ void Log(LogLevel level, UString prefix, const UString &text)
 		}
 		else
 		{
-			SDL_MessageBoxData mBoxData;
-			mBoxData.flags = SDL_MESSAGEBOX_ERROR;
-			mBoxData.window = NULL; // Might happen before we get our window?
-			mBoxData.title = "OpenApoc ERROR";
-			mBoxData.message = text.cStr();
-			mBoxData.numbuttons = 2;
-			SDL_MessageBoxButtonData buttons[2];
-			buttons[0].flags = SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT;
-			buttons[0].buttonid = 1;
-			buttons[0].text = "Exit";
-			buttons[1].flags = SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT;
-			buttons[1].buttonid = 2;
-			buttons[1].text = "try to limp along";
-			mBoxData.buttons = buttons;
-			mBoxData.colorScheme = NULL; // Use system settings
-
-			int but;
-			SDL_ShowMessageBox(&mBoxData, &but);
-
-			/* button 1 = "exit", button 2 = "try to limp along" */
-			if (but == 1)
-			{
-				exit_app = true;
-			}
-			else
-			{
-				exit_app = false;
-			}
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "OpenApoc error", text.cStr(),
+			                         static_cast<SDL_Window *>(fw().getWindowHandle()));
 		}
 	}
 #endif
