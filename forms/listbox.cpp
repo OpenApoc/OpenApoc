@@ -285,7 +285,6 @@ void ListBox::clear()
 void ListBox::addItem(sp<Control> Item)
 {
 	Item->setParent(shared_from_this());
-	Item->ToolTipFont = this->ToolTipFont;
 	resolveLocation();
 	if (selected == nullptr)
 	{
@@ -306,7 +305,6 @@ void ListBox::replaceItem(sp<Control> Item)
 		{
 			Controls.erase(Controls.begin() + i);
 			Item->setParent(shared_from_this(), i);
-			Item->ToolTipFont = this->ToolTipFont;
 			resolveLocation();
 			if (oldItem == this->selected)
 			{
