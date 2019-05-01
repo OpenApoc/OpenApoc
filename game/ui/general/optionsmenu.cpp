@@ -24,7 +24,7 @@ OptionsMenu::OptionsMenu() : Stage(), menuform(ui().getForm("options"))
 			listbox->addItem(mksp<TextButton>(section.first, ui().getFont("smalfont")));
 			for (auto &opt : section.second)
 			{
-				listbox->addItem(createOptionRow(opt));
+				this->createOptionRow(opt, listbox);
 			}
 		}
 	}
@@ -32,7 +32,7 @@ OptionsMenu::OptionsMenu() : Stage(), menuform(ui().getForm("options"))
 
 OptionsMenu::~OptionsMenu() = default;
 
-sp<Control> OptionsMenu::createOptionRow(const ConfigOption &option)
+void OptionsMenu::createOptionRow(const ConfigOption &option, sp<ListBox> listbox)
 {
 	auto control = mksp<Control>();
 
@@ -51,10 +51,10 @@ sp<Control> OptionsMenu::createOptionRow(const ConfigOption &option)
 	value->TextVAlign = VerticalAlignment::Centre;
 	*/
 
-	control->ToolTipText = option.getDescription();
-	control->ToolTipFont = ui().getFont("smallset");
+	label->ToolTipText = option.getDescription();
+	label->ToolTipFont = listbox->ToolTipFont;
 
-	return control;
+	listbox->addItem(control);
 }
 
 void OptionsMenu::begin() {}

@@ -9,13 +9,14 @@ namespace OpenApoc
 class Form;
 class Control;
 class ConfigOption;
+class ListBox;
 
 class OptionsMenu : public Stage
 {
   private:
 	sp<Form> menuform;
 
-	sp<Control> createOptionRow(const ConfigOption &option);
+	void createOptionRow(const ConfigOption &option, sp<ListBox> listbox);
 
   public:
 	OptionsMenu();

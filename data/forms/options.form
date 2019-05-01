@@ -23,6 +23,7 @@
         <position x="28" y="74"/>
         <size width="510" height="375"/>
         <item size="21" spacing="4"/>
+		<tooltip font="smallset" />
       </listbox>
       <graphicbutton id="LISTBOX_SCROLL_UP" scrollprev="LISTBOX_SCROLL">
         <tooltip text="Scroll Up" font="smallset"/>
