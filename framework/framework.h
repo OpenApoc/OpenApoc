@@ -70,7 +70,7 @@ class Framework
 	void displaySetTitle(UString NewTitle);
 	void displaySetIcon(sp<RGBImage> icon);
 	bool displayHasWindow() const;
-	void* getWindowHandle() const;
+	void * getWindowHandle() const;
 
 	bool isSlowMode();
 	void setSlowMode(bool SlowEnabled);
