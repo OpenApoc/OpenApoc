@@ -45,7 +45,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	                   item->modified_stats.health, 100, healthColour, {100, 4}));
 	tmpTTTxt = form->findControlTyped<Label>("LABEL_1")->getText() + ": " +
 			std::to_string(item->modified_stats.health);
-    if (item->current_stats.health != item->modified_stats.health)
+    	if (item->current_stats.health != item->modified_stats.health)
        	tmpTTTxt += "/" + std::to_string(item->current_stats.health);
 	form->findControlTyped<Graphic>("VALUE_1")->ToolTipText = tmpTTTxt;
 
@@ -55,7 +55,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	                   item->modified_stats.accuracy, 100, accuracyColour, {100, 4}));
 	tmpTTTxt = form->findControlTyped<Label>("LABEL_2")->getText() + ": " +
 			std::to_string(item->modified_stats.accuracy);
-    if (item->current_stats.accuracy != item->modified_stats.accuracy)
+    	if (item->current_stats.accuracy != item->modified_stats.accuracy)
        	tmpTTTxt += "/" + std::to_string(item->current_stats.accuracy);
 	form->findControlTyped<Graphic>("VALUE_2")->ToolTipText = tmpTTTxt;
 
@@ -65,7 +65,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	                   item->modified_stats.reactions, 100, reactionsColour, {100, 4}));
 	tmpTTTxt = form->findControlTyped<Label>("LABEL_3")->getText() + ": " +
 			std::to_string(item->modified_stats.reactions);
-    if (item->current_stats.reactions != item->modified_stats.reactions)
+    	if (item->current_stats.reactions != item->modified_stats.reactions)
        	tmpTTTxt += "/" + std::to_string(item->current_stats.reactions);
 	form->findControlTyped<Graphic>("VALUE_3")->ToolTipText = tmpTTTxt;
 
@@ -77,7 +77,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 		    createStatsBar(item->initial_stats.time_units, item->current_stats.time_units,
 		                   item->modified_stats.time_units, 100, speedColour, {100, 4}));
 		tmpTTTxt += std::to_string(item->modified_stats.time_units);
-        if (item->current_stats.time_units != item->modified_stats.time_units)
+        	if (item->current_stats.time_units != item->modified_stats.time_units)
             		tmpTTTxt += "/" + std::to_string(item->current_stats.time_units);
 	}
 	else
@@ -86,7 +86,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 		    item->initial_stats.getDisplaySpeedValue(), item->current_stats.getDisplaySpeedValue(),
 		    item->modified_stats.getDisplaySpeedValue(), 100, speedColour, {100, 4}));
 		tmpTTTxt +=	std::to_string(item->modified_stats.getDisplaySpeedValue());
-       	if (item->current_stats.getDisplaySpeedValue() != item->modified_stats.getDisplaySpeedValue())
+       		if (item->current_stats.getDisplaySpeedValue() != item->modified_stats.getDisplaySpeedValue())
 	           		tmpTTTxt += "/" + std::to_string(item->current_stats.getDisplaySpeedValue());
 	}
 	form->findControlTyped<Graphic>("VALUE_4")->ToolTipText = tmpTTTxt;
@@ -97,7 +97,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	    item->modified_stats.getDisplayStaminaValue(), 100, staminaColour, {100, 4}));
 	tmpTTTxt = form->findControlTyped<Label>("LABEL_5")->getText() + ": " +
 			std::to_string(item->modified_stats.getDisplayStaminaValue());
-    if (item->current_stats.getDisplayStaminaValue() != item->modified_stats.getDisplayStaminaValue())
+    	if (item->current_stats.getDisplayStaminaValue() != item->modified_stats.getDisplayStaminaValue())
         	tmpTTTxt += "/" + std::to_string(item->current_stats.getDisplayStaminaValue());
 	form->findControlTyped<Graphic>("VALUE_5")->ToolTipText = tmpTTTxt;
 
@@ -107,7 +107,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	                   item->modified_stats.bravery, 100, braveryColour, {100, 4}));
 	tmpTTTxt = form->findControlTyped<Label>("LABEL_6")->getText() + ": " +
 			std::to_string(item->modified_stats.bravery);
-    if (item->current_stats.bravery != item->modified_stats.bravery)
+    	if (item->current_stats.bravery != item->modified_stats.bravery)
         	tmpTTTxt += "/" + std::to_string(item->current_stats.bravery);
 	form->findControlTyped<Graphic>("VALUE_6")->ToolTipText = tmpTTTxt;
 
@@ -117,7 +117,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	                   item->modified_stats.strength, 100, strengthColour, {100, 4}));
 	tmpTTTxt = form->findControlTyped<Label>("LABEL_7")->getText() + ": " +
 			std::to_string(item->modified_stats.strength);
-    if (item->current_stats.strength != item->modified_stats.strength)
+    	if (item->current_stats.strength != item->modified_stats.strength)
         	tmpTTTxt += "/" + std::to_string(item->current_stats.strength);
 	form->findControlTyped<Graphic>("VALUE_7")->ToolTipText = tmpTTTxt;
 
@@ -127,7 +127,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	                   item->modified_stats.psi_energy, 100, psiEnergyColour, {100, 4}));
 	tmpTTTxt = form->findControlTyped<Label>("LABEL_8")->getText() + ": " +
 			std::to_string(item->modified_stats.psi_energy);
-    if (item->current_stats.psi_energy != item->modified_stats.psi_energy)
+    	if (item->current_stats.psi_energy != item->modified_stats.psi_energy)
         	tmpTTTxt += "/" + std::to_string(item->current_stats.psi_energy);
 	form->findControlTyped<Graphic>("VALUE_8")->ToolTipText = tmpTTTxt;
 
@@ -137,7 +137,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	                   item->modified_stats.psi_attack, 100, psiAttackColour, {100, 4}));
 	tmpTTTxt = form->findControlTyped<Label>("LABEL_9")->getText() + ": " +
 			std::to_string(item->modified_stats.psi_attack);
-    if (item->current_stats.psi_attack != item->modified_stats.psi_attack)
+    	if (item->current_stats.psi_attack != item->modified_stats.psi_attack)
         	tmpTTTxt += "/" + std::to_string(item->current_stats.psi_attack);
 	form->findControlTyped<Graphic>("VALUE_9")->ToolTipText = tmpTTTxt;
 
@@ -148,7 +148,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	                              {100, 4}));
 	tmpTTTxt = form->findControlTyped<Label>("LABEL_10")->getText() + ": " +
 			std::to_string(item->modified_stats.psi_defence);
-    if (item->current_stats.psi_defence != item->modified_stats.psi_defence)
+    	if (item->current_stats.psi_defence != item->modified_stats.psi_defence)
         	tmpTTTxt += "/" + std::to_string(item->current_stats.psi_defence);
 	form->findControlTyped<Graphic>("VALUE_10")->ToolTipText = tmpTTTxt;
 }
@@ -198,18 +198,20 @@ sp<Image> AgentSheet::createStatsBar(int initialValue, int currentValue, int mod
 	sp<RGBImage> img = mksp<RGBImage>(imageSize);
 	RGBImageLock l(img);
 
-	for (int x = 0; x < currentPixels; x++)
+	for (int x = 0; x < imageSize.x; x++)
 	{
-		for (int y = 0; y < imageSize.y; y++)
-		{
-			const Colour &col = x <= initialPixels ? colours.first : colours.second;
-			// draw pixel at the top/bottom border of the bar or if filling the bar or if at the
-			// right border
-			if (y == 0 || y == imageSize.y - 1 || x <= modifiedPixels || x == currentPixels - 1)
-			{
-				l.set({x, y}, col);
-			}
-		}
+        if (x < currentPixels)
+    		for (int y = 0; y < imageSize.y; y++)
+	    	{
+	    		const Colour &col = x <= initialPixels ? colours.first : colours.second;
+	    		// draw pixel at the top/bottom border of the bar or if filling the bar or if at the
+	    		// right border
+	    		if (y == 0 || y == imageSize.y - 1 || x <= modifiedPixels || x == currentPixels - 1)
+	    		{
+	    			l.set({x, y}, col);
+	    		}
+		    }
+        else l.set({x, imageSize.y - 1}, colours.first);
 	}
 
 	return img;
