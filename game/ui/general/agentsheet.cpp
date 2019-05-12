@@ -26,6 +26,7 @@ const std::pair<Colour, Colour> strengthColour{{140, 136, 136}, {204, 200, 200}}
 const std::pair<Colour, Colour> psiEnergyColour{{192, 56, 144}, {255, 120, 208}};
 const std::pair<Colour, Colour> psiAttackColour{{192, 56, 144}, {255, 120, 208}};
 const std::pair<Colour, Colour> psiDefenceColour{{192, 56, 144}, {255, 120, 208}};
+const Colour bkgColour {36, 36, 36};
 
 AgentSheet::AgentSheet(sp<Form> dstForm) : form(dstForm) {}
 
@@ -42,7 +43,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	form->findControlTyped<Label>("LABEL_1")->setText(tr("Health"));
 	form->findControlTyped<Graphic>("VALUE_1")->setImage(
 	    createStatsBar(item->initial_stats.health, item->current_stats.health,
-	                   item->modified_stats.health, 100, healthColour, {100, 4}));
+	                   item->modified_stats.health, 100, healthColour, {100, 7}));
 	tmpTTTxt = form->findControlTyped<Label>("LABEL_1")->getText() + ": " +
 			std::to_string(item->modified_stats.health);
     	if (item->current_stats.health != item->modified_stats.health)
@@ -52,7 +53,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	form->findControlTyped<Label>("LABEL_2")->setText(tr("Accuracy"));
 	form->findControlTyped<Graphic>("VALUE_2")->setImage(
 	    createStatsBar(item->initial_stats.accuracy, item->current_stats.accuracy,
-	                   item->modified_stats.accuracy, 100, accuracyColour, {100, 4}));
+	                   item->modified_stats.accuracy, 100, accuracyColour, {100, 7}));
 	tmpTTTxt = form->findControlTyped<Label>("LABEL_2")->getText() + ": " +
 			std::to_string(item->modified_stats.accuracy);
     	if (item->current_stats.accuracy != item->modified_stats.accuracy)
@@ -62,7 +63,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	form->findControlTyped<Label>("LABEL_3")->setText(tr("Reactions"));
 	form->findControlTyped<Graphic>("VALUE_3")->setImage(
 	    createStatsBar(item->initial_stats.reactions, item->current_stats.reactions,
-	                   item->modified_stats.reactions, 100, reactionsColour, {100, 4}));
+	                   item->modified_stats.reactions, 100, reactionsColour, {100, 7}));
 	tmpTTTxt = form->findControlTyped<Label>("LABEL_3")->getText() + ": " +
 			std::to_string(item->modified_stats.reactions);
     	if (item->current_stats.reactions != item->modified_stats.reactions)
@@ -75,7 +76,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	{
 		form->findControlTyped<Graphic>("VALUE_4")->setImage(
 		    createStatsBar(item->initial_stats.time_units, item->current_stats.time_units,
-		                   item->modified_stats.time_units, 100, speedColour, {100, 4}));
+		                   item->modified_stats.time_units, 100, speedColour, {100, 7}));
 		tmpTTTxt += std::to_string(item->modified_stats.time_units);
         	if (item->current_stats.time_units != item->modified_stats.time_units)
             		tmpTTTxt += "/" + std::to_string(item->current_stats.time_units);
@@ -84,7 +85,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	{
 		form->findControlTyped<Graphic>("VALUE_4")->setImage(createStatsBar(
 		    item->initial_stats.getDisplaySpeedValue(), item->current_stats.getDisplaySpeedValue(),
-		    item->modified_stats.getDisplaySpeedValue(), 100, speedColour, {100, 4}));
+		    item->modified_stats.getDisplaySpeedValue(), 100, speedColour, {100, 7}));
 		tmpTTTxt +=	std::to_string(item->modified_stats.getDisplaySpeedValue());
        		if (item->current_stats.getDisplaySpeedValue() != item->modified_stats.getDisplaySpeedValue())
 	           		tmpTTTxt += "/" + std::to_string(item->current_stats.getDisplaySpeedValue());
@@ -94,7 +95,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	form->findControlTyped<Label>("LABEL_5")->setText(tr("Stamina"));
 	form->findControlTyped<Graphic>("VALUE_5")->setImage(createStatsBar(
 	    item->initial_stats.getDisplayStaminaValue(), item->current_stats.getDisplayStaminaValue(),
-	    item->modified_stats.getDisplayStaminaValue(), 100, staminaColour, {100, 4}));
+	    item->modified_stats.getDisplayStaminaValue(), 100, staminaColour, {100, 7}));
 	tmpTTTxt = form->findControlTyped<Label>("LABEL_5")->getText() + ": " +
 			std::to_string(item->modified_stats.getDisplayStaminaValue());
     	if (item->current_stats.getDisplayStaminaValue() != item->modified_stats.getDisplayStaminaValue())
@@ -104,7 +105,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	form->findControlTyped<Label>("LABEL_6")->setText(tr("Bravery"));
 	form->findControlTyped<Graphic>("VALUE_6")->setImage(
 	    createStatsBar(item->initial_stats.bravery, item->current_stats.bravery,
-	                   item->modified_stats.bravery, 100, braveryColour, {100, 4}));
+	                   item->modified_stats.bravery, 100, braveryColour, {100, 7}));
 	tmpTTTxt = form->findControlTyped<Label>("LABEL_6")->getText() + ": " +
 			std::to_string(item->modified_stats.bravery);
     	if (item->current_stats.bravery != item->modified_stats.bravery)
@@ -114,7 +115,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	form->findControlTyped<Label>("LABEL_7")->setText(tr("Strength"));
 	form->findControlTyped<Graphic>("VALUE_7")->setImage(
 	    createStatsBar(item->initial_stats.strength, item->current_stats.strength,
-	                   item->modified_stats.strength, 100, strengthColour, {100, 4}));
+	                   item->modified_stats.strength, 100, strengthColour, {100, 7}));
 	tmpTTTxt = form->findControlTyped<Label>("LABEL_7")->getText() + ": " +
 			std::to_string(item->modified_stats.strength);
     	if (item->current_stats.strength != item->modified_stats.strength)
@@ -124,7 +125,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	form->findControlTyped<Label>("LABEL_8")->setText(tr("Psi-energy"));
 	form->findControlTyped<Graphic>("VALUE_8")->setImage(
 	    createStatsBar(item->initial_stats.psi_energy, item->current_stats.psi_energy,
-	                   item->modified_stats.psi_energy, 100, psiEnergyColour, {100, 4}));
+	                   item->modified_stats.psi_energy, 100, psiEnergyColour, {100, 7}));
 	tmpTTTxt = form->findControlTyped<Label>("LABEL_8")->getText() + ": " +
 			std::to_string(item->modified_stats.psi_energy);
     	if (item->current_stats.psi_energy != item->modified_stats.psi_energy)
@@ -134,7 +135,7 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	form->findControlTyped<Label>("LABEL_9")->setText(tr("Psi-attack"));
 	form->findControlTyped<Graphic>("VALUE_9")->setImage(
 	    createStatsBar(item->initial_stats.psi_attack, item->current_stats.psi_attack,
-	                   item->modified_stats.psi_attack, 100, psiAttackColour, {100, 4}));
+	                   item->modified_stats.psi_attack, 100, psiAttackColour, {100, 7}));
 	tmpTTTxt = form->findControlTyped<Label>("LABEL_9")->getText() + ": " +
 			std::to_string(item->modified_stats.psi_attack);
     	if (item->current_stats.psi_attack != item->modified_stats.psi_attack)
@@ -144,8 +145,8 @@ void AgentSheet::display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool tur
 	form->findControlTyped<Label>("LABEL_10")->setText(tr("Psi-defence"));
 	form->findControlTyped<Graphic>("VALUE_10")
 	    ->setImage(createStatsBar(item->initial_stats.psi_defence, item->current_stats.psi_defence,
-	                              item->modified_stats.psi_defence, 100, psiDefenceColour,
-	                              {100, 4}));
+	                              item->modified_stats.psi_defence,
+	                              100, psiDefenceColour, {100, 7}));
 	tmpTTTxt = form->findControlTyped<Label>("LABEL_10")->getText() + ": " +
 			std::to_string(item->modified_stats.psi_defence);
     	if (item->current_stats.psi_defence != item->modified_stats.psi_defence)
@@ -200,18 +201,18 @@ sp<Image> AgentSheet::createStatsBar(int initialValue, int currentValue, int mod
 
 	for (int x = 0; x < imageSize.x; x++)
 	{
-        if (x < currentPixels)
-    		for (int y = 0; y < imageSize.y; y++)
-	    	{
-	    		const Colour &col = x <= initialPixels ? colours.first : colours.second;
-	    		// draw pixel at the top/bottom border of the bar or if filling the bar or if at the
-	    		// right border
-	    		if (y == 0 || y == imageSize.y - 1 || x <= modifiedPixels || x == currentPixels - 1)
+        
+   		for (int y = 0; y < imageSize.y; y++)
+    	{
+            {
+    		    const Colour &col = x <= initialPixels ? colours.first : colours.second;
+    		    if (x < currentPixels && (y == 0 || y == imageSize.y - 1 || x <= modifiedPixels || x == currentPixels - 1))
 	    		{
-	    			l.set({x, y}, col);
-	    		}
-		    }
-        else l.set({x, imageSize.y - 1}, colours.first);
+                    l.set({x, y}, col);
+        		}
+                else l.set({x, y}, bkgColour);
+            }
+	    }
 	}
 
 	return img;
