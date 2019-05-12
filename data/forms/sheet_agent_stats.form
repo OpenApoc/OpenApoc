@@ -84,42 +84,52 @@
         <font>smalfont</font>
       </label>
       <graphic id="VALUE_1">
+        <tooltip text="" font="smallset"/>
         <position x="72" y="111"/>
         <size width="100" height="4"/>
       </graphic>
       <graphic id="VALUE_2">
+        <tooltip text="" font="smallset"/>
         <position x="72" y="127"/>
         <size width="100" height="4"/>
       </graphic>
       <graphic id="VALUE_3">
+        <tooltip text="" font="smallset"/>
         <position x="72" y="143"/>
         <size width="100" height="4"/>
       </graphic>
       <graphic id="VALUE_4">
+        <tooltip text="" font="smallset"/>
         <position x="72" y="159"/>
         <size width="100" height="4"/>
       </graphic>
       <graphic id="VALUE_5">
+        <tooltip text="" font="smallset"/>
         <position x="72" y="175"/>
         <size width="100" height="4"/>
       </graphic>
       <graphic id="VALUE_6">
+        <tooltip text="" font="smallset"/>
         <position x="72" y="191"/>
         <size width="100" height="4"/>
       </graphic>
       <graphic id="VALUE_7">
+        <tooltip text="" font="smallset"/>
         <position x="72" y="207"/>
         <size width="100" height="4"/>
       </graphic>
       <graphic id="VALUE_8">
+        <tooltip text="" font="smallset"/>
         <position x="72" y="223"/>
         <size width="100" height="4"/>
       </graphic>
       <graphic id="VALUE_9">
+        <tooltip text="" font="smallset"/>
         <position x="72" y="239"/>
         <size width="100" height="4"/>
       </graphic>
       <graphic id="VALUE_10">
+        <tooltip text="" font="smallset"/>
         <position x="72" y="255"/>
         <size width="100" height="4"/>
       </graphic>
