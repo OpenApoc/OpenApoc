@@ -1642,7 +1642,7 @@ class OGLES30Renderer final : public Renderer
 		}
 		// Cleanup any outstanding destroyed texture or framebuffer objects
 		{
-			std::lock_guard lock(this->destroyed_texture_list_mutex);
+			std::lock_guard<std::mutex> lock(this->destroyed_texture_list_mutex);
 
 			for (auto &id : this->destroyed_texture_list)
 			{
@@ -1651,7 +1651,7 @@ class OGLES30Renderer final : public Renderer
 			this->destroyed_texture_list.clear();
 		}
 		{
-			std::lock_guard lock(this->destroyed_framebuffer_list_mutex);
+			std::lock_guard<std::mutex> lock(this->destroyed_framebuffer_list_mutex);
 
 			for (auto &id : this->destroyed_framebuffer_list)
 			{
@@ -1673,7 +1673,7 @@ class OGLES30Renderer final : public Renderer
 		}
 		// Otherwise add it to a list for future destruction
 		{
-			std::lock_guard lock(this->destroyed_texture_list_mutex);
+			std::lock_guard<std::mutex> lock(this->destroyed_texture_list_mutex);
 			this->destroyed_texture_list.push_back(id);
 		}
 	}
@@ -1687,7 +1687,7 @@ class OGLES30Renderer final : public Renderer
 		}
 		// Otherwise add it to a list for future destruction
 		{
-			std::lock_guard lock(this->destroyed_framebuffer_list_mutex);
+			std::lock_guard<std::mutex> lock(this->destroyed_framebuffer_list_mutex);
 			this->destroyed_framebuffer_list.push_back(id);
 		}
 	}
