@@ -77,7 +77,6 @@ ConfigOptionBool showDialogOnErrorOption("Logger", "ShowDialog", "Show dialog on
 #if defined(BACKTRACE_LIBUNWIND)
 static void print_backtrace(FILE *f)
 {
-
 	unw_cursor_t cursor;
 	unw_context_t ctx;
 	unw_word_t ip;
@@ -219,6 +218,8 @@ static void initLogger()
 		return;
 	}
 }
+
+bool _logLevelEnabled(LogLevel level) { return level >= stderrLogLevel || level >= fileLogLevel; }
 
 void _logAssert(UString prefix, UString string, int line, UString file)
 {
