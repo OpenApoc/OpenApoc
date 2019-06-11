@@ -2,6 +2,7 @@
 #include "dependencies/pugixml/src/pugixml.hpp"
 #include "forms/forms.h"
 #include "forms/ui.h"
+#include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/font.h"
@@ -15,6 +16,9 @@
 namespace OpenApoc
 {
 
+ConfigOptionString defaultTooltipFont("Forms", "TooltipFont", "The default tooltip font",
+                                      "smallset");
+
 Control::Control(bool takesFocus)
     : mouseInside(false), mouseDepressed(false), resolvedLocation(0, 0), Visible(true),
       Name("Control"), Location(0, 0), Size(0, 0), SelectionSize(0, 0),
@@ -24,6 +28,7 @@ Control::Control(bool takesFocus)
       ToolTipBackground{128, 128, 128}, ToolTipBorders{
                                             {1, {0, 0, 0}}, {1, {255, 255, 255}}, {1, {0, 0, 0, 0}}}
 {
+	this->ToolTipFont = ui().getFont(defaultTooltipFont.get());
 }
 
 Control::~Control() { unloadResources(); }
