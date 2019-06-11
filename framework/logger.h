@@ -38,7 +38,7 @@ enum class LogLevel : int
 	Error = 1,
 	Warning = 2,
 	Info = 3,
-	Debug = 3,
+	Debug = 4,
 };
 void Log(LogLevel level, UString prefix, const UString &text);
 

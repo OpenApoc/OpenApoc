@@ -253,6 +253,9 @@ void Log(LogLevel level, UString prefix, const UString &text)
 
 	switch (level)
 	{
+		case LogLevel::Debug:
+			level_prefix = "D";
+			break;
 		case LogLevel::Info:
 			level_prefix = "I";
 			break;
