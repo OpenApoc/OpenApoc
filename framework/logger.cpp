@@ -233,103 +233,103 @@ void Log(LogLevel level, UString prefix, const UString &text)
 	bool exit_app = false;
 	const char *level_prefix;
 
-	logMutex.lock();
-	if (!loggerInited)
 	{
-		initLogger();
-	}
-
-	bool writeToFile = (level <= fileLogLevel);
-	bool writeToStderr = (level <= stderrLogLevel);
-	if (!writeToFile && !writeToStderr)
-	{
-		// Nothing to do
-		return;
-	}
-
-	auto timeNow = std::chrono::high_resolution_clock::now();
-	unsigned long long clockns =
-	    std::chrono::duration<unsigned long long, std::nano>(timeNow - timeInit).count();
-
-	switch (level)
-	{
-		case LogLevel::Debug:
-			level_prefix = "D";
-			break;
-		case LogLevel::Info:
-			level_prefix = "I";
-			break;
-		case LogLevel::Warning:
-			level_prefix = "W";
-			break;
-		default:
-			level_prefix = "E";
-			exit_app = true;
-			break;
-	}
-
-	if (writeToFile)
-	{
-		fprintf(outFile, "%s %llu %s: %s\n", level_prefix, clockns, prefix.cStr(), text.cStr());
-		// On error print a backtrace to the log file
-		if (level <= backtraceLogLevel)
-			print_backtrace(outFile);
-		fflush(outFile);
-	}
-
-	if (writeToStderr)
-	{
-		fprintf(stderr, "%s %llu %s: %s\n", level_prefix, clockns, prefix.cStr(), text.cStr());
-		if (level <= backtraceLogLevel)
-			print_backtrace(stderr);
-		fflush(stderr);
-	}
-#if defined(ERROR_DIALOG)
-	if (showDialogOnError && level == LogLevel::Error)
-	{
-		if (!Framework::tryGetInstance())
+		std::lock_guard<std::mutex> lock(logMutex);
+		if (!loggerInited)
 		{
-			// No framework to have created a window, so don't try to show a dialog
+			initLogger();
 		}
-		else if (!fw().displayHasWindow())
+
+		bool writeToFile = (level <= fileLogLevel);
+		bool writeToStderr = (level <= stderrLogLevel);
+		if (!writeToFile && !writeToStderr)
 		{
-			// Framework created but without window, so don't try to show a dialog
+			// Nothing to do
+			return;
 		}
-		else
+
+		auto timeNow = std::chrono::high_resolution_clock::now();
+		unsigned long long clockns =
+		    std::chrono::duration<unsigned long long, std::nano>(timeNow - timeInit).count();
+
+		switch (level)
 		{
-			SDL_MessageBoxData mBoxData;
-			mBoxData.flags = SDL_MESSAGEBOX_ERROR;
-			mBoxData.window = NULL; // Might happen before we get our window?
-			mBoxData.title = "OpenApoc ERROR";
-			mBoxData.message = text.cStr();
-			mBoxData.numbuttons = 2;
-			SDL_MessageBoxButtonData buttons[2];
-			buttons[0].flags = SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT;
-			buttons[0].buttonid = 1;
-			buttons[0].text = "Exit";
-			buttons[1].flags = SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT;
-			buttons[1].buttonid = 2;
-			buttons[1].text = "try to limp along";
-			mBoxData.buttons = buttons;
-			mBoxData.colorScheme = NULL; // Use system settings
-
-			int but;
-			SDL_ShowMessageBox(&mBoxData, &but);
-
-			/* button 1 = "exit", button 2 = "try to limp along" */
-			if (but == 1)
-			{
+			case LogLevel::Debug:
+				level_prefix = "D";
+				break;
+			case LogLevel::Info:
+				level_prefix = "I";
+				break;
+			case LogLevel::Warning:
+				level_prefix = "W";
+				break;
+			default:
+				level_prefix = "E";
 				exit_app = true;
+				break;
+		}
+
+		if (writeToFile)
+		{
+			fprintf(outFile, "%s %llu %s: %s\n", level_prefix, clockns, prefix.cStr(), text.cStr());
+			// On error print a backtrace to the log file
+			if (level <= backtraceLogLevel)
+				print_backtrace(outFile);
+			fflush(outFile);
+		}
+
+		if (writeToStderr)
+		{
+			fprintf(stderr, "%s %llu %s: %s\n", level_prefix, clockns, prefix.cStr(), text.cStr());
+			if (level <= backtraceLogLevel)
+				print_backtrace(stderr);
+			fflush(stderr);
+		}
+#if defined(ERROR_DIALOG)
+		if (showDialogOnError && level == LogLevel::Error)
+		{
+			if (!Framework::tryGetInstance())
+			{
+				// No framework to have created a window, so don't try to show a dialog
+			}
+			else if (!fw().displayHasWindow())
+			{
+				// Framework created but without window, so don't try to show a dialog
 			}
 			else
 			{
-				exit_app = false;
+				SDL_MessageBoxData mBoxData;
+				mBoxData.flags = SDL_MESSAGEBOX_ERROR;
+				mBoxData.window = NULL; // Might happen before we get our window?
+				mBoxData.title = "OpenApoc ERROR";
+				mBoxData.message = text.cStr();
+				mBoxData.numbuttons = 2;
+				SDL_MessageBoxButtonData buttons[2];
+				buttons[0].flags = SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT;
+				buttons[0].buttonid = 1;
+				buttons[0].text = "Exit";
+				buttons[1].flags = SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT;
+				buttons[1].buttonid = 2;
+				buttons[1].text = "try to limp along";
+				mBoxData.buttons = buttons;
+				mBoxData.colorScheme = NULL; // Use system settings
+
+				int but;
+				SDL_ShowMessageBox(&mBoxData, &but);
+
+				/* button 1 = "exit", button 2 = "try to limp along" */
+				if (but == 1)
+				{
+					exit_app = true;
+				}
+				else
+				{
+					exit_app = false;
+				}
 			}
 		}
-	}
 #endif
-
-	logMutex.unlock();
+	}
 
 	if (exit_app)
 	{
