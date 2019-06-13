@@ -7,6 +7,9 @@
 #include <algorithm>
 #include <cstdint>
 #include <glm/gtx/rotate_vector.hpp>
+#include <list>
+#include <mutex>
+#include <thread>
 
 #define GLESWRAP_GLES3
 #include "framework/render/gles30_v2/gleswrap.h"
@@ -20,6 +23,9 @@ namespace OpenApoc
 {
 namespace
 {
+
+// Forward declaration needed for RendererImageData
+class OGLES30Renderer;
 
 using GL = gles_wrap::Gles3;
 
@@ -676,9 +682,10 @@ class SpriteDrawMachine
 class GLRGBTexture final : public RendererImageData
 {
   public:
-	GL::GLuint tex_id;
+	GL::GLuint tex_id = 0;
 	Vec2<unsigned int> size;
-	GLRGBTexture(sp<RGBImage> i)
+	OGLES30Renderer *owner;
+	GLRGBTexture(sp<RGBImage> i, OGLES30Renderer *owner) : size(i->size), owner(owner)
 	{
 		TRACE_FN;
 		RGBImageLock l(i);
@@ -692,15 +699,16 @@ class GLRGBTexture final : public RendererImageData
 		gl->TexParameteri(GL::TEXTURE_2D, GL::TEXTURE_WRAP_S, GL::CLAMP_TO_EDGE);
 		gl->TexParameteri(GL::TEXTURE_2D, GL::TEXTURE_WRAP_T, GL::CLAMP_TO_EDGE);
 	}
-	~GLRGBTexture() override { gl->DeleteTextures(1, &this->tex_id); }
+	~GLRGBTexture() override;
 };
 
 class GLPaletteTexture final : public RendererImageData
 {
   public:
-	GL::GLuint tex_id;
+	GL::GLuint tex_id = 0;
 	Vec2<unsigned int> size;
-	GLPaletteTexture(sp<PaletteImage> i)
+	OGLES30Renderer *owner;
+	GLPaletteTexture(sp<PaletteImage> i, OGLES30Renderer *owner) : size(i->size), owner(owner)
 	{
 		TRACE_FN;
 		PaletteImageLock l(i);
@@ -714,7 +722,7 @@ class GLPaletteTexture final : public RendererImageData
 		gl->TexParameteri(GL::TEXTURE_2D, GL::TEXTURE_WRAP_S, GL::CLAMP_TO_EDGE);
 		gl->TexParameteri(GL::TEXTURE_2D, GL::TEXTURE_WRAP_T, GL::CLAMP_TO_EDGE);
 	}
-	~GLPaletteTexture() override { gl->DeleteTextures(1, &this->tex_id); }
+	~GLPaletteTexture() override;
 };
 
 class BindFramebuffer
@@ -748,8 +756,12 @@ class GLSurface final : public RendererImageData
 	GL::GLuint fbo_id;
 	GL::GLuint tex_id;
 	Vec2<unsigned int> size;
-	GLSurface(GL::GLuint fbo, Vec2<unsigned int> size) : fbo_id(fbo), tex_id(0), size(size) {}
-	GLSurface(Vec2<unsigned int> size)
+	OGLES30Renderer *owner;
+	GLSurface(GL::GLuint fbo, Vec2<unsigned int> size, OGLES30Renderer *owner)
+	    : fbo_id(fbo), tex_id(0), size(size), owner(owner)
+	{
+	}
+	GLSurface(Vec2<unsigned int> size, OGLES30Renderer *owner) : size(size), owner(owner)
 	{
 		LogAssert(size.x > 0 && size.y > 0);
 		TRACE_FN;
@@ -772,13 +784,7 @@ class GLSurface final : public RendererImageData
 			LogError("Surface framebuffer not complete");
 		}
 	}
-	~GLSurface() override
-	{
-		if (this->fbo_id)
-			gl->DeleteFramebuffers(1, &this->fbo_id);
-		if (this->tex_id)
-			gl->DeleteTextures(1, &this->tex_id);
-	}
+	~GLSurface() override;
 	sp<Image> readBack() override
 	{
 		BindFramebuffer b(this->fbo_id);
@@ -882,12 +888,14 @@ class TexturedDrawMachine
 	{
 		VertexDesc vertices[4];
 	};
+	OGLES30Renderer *owner;
 
   public:
 	unsigned int used_buffers = 0;
-	TexturedDrawMachine(unsigned int bufferCount, GL::GLuint position_attr = 0,
-	                    GL::GLuint texcoord_attr = 1, GL::GLuint tint_attr = 2)
-	    : current_buffer(0), tex_program_id(0)
+	TexturedDrawMachine(unsigned int bufferCount, OGLES30Renderer *owner,
+	                    GL::GLuint position_attr = 0, GL::GLuint texcoord_attr = 1,
+	                    GL::GLuint tint_attr = 2)
+	    : current_buffer(0), tex_program_id(0), owner(owner)
 	{
 		TRACE_FN;
 		LogAssert(bufferCount > 0);
@@ -1011,7 +1019,7 @@ class TexturedDrawMachine
 		auto tex = std::dynamic_pointer_cast<GLRGBTexture>(i->rendererPrivateData);
 		if (!tex)
 		{
-			tex = mksp<GLRGBTexture>(i);
+			tex = mksp<GLRGBTexture>(i, owner);
 			i->rendererPrivateData = tex;
 		}
 		gl->ActiveTexture(RGB_IMAGE_TEX_SLOT);
@@ -1039,7 +1047,7 @@ class TexturedDrawMachine
 		if (!tex)
 		{
 			LogWarning("Drawing using undefined surface contents");
-			tex = mksp<GLSurface>(i->size);
+			tex = mksp<GLSurface>(i->size, owner);
 			i->rendererPrivateData = tex;
 		}
 		gl->ActiveTexture(RGB_IMAGE_TEX_SLOT);
@@ -1065,7 +1073,7 @@ class TexturedDrawMachine
 		auto tex = std::dynamic_pointer_cast<GLPaletteTexture>(i->rendererPrivateData);
 		if (!tex)
 		{
-			tex = mksp<GLPaletteTexture>(i);
+			tex = mksp<GLPaletteTexture>(i, owner);
 			i->rendererPrivateData = tex;
 		}
 		gl->ActiveTexture(PALETTE_IMAGE_TEX_SLOT);
@@ -1274,7 +1282,7 @@ class OGLES30Renderer final : public Renderer
 		auto fbo = std::dynamic_pointer_cast<GLSurface>(s->rendererPrivateData);
 		if (!fbo)
 		{
-			fbo = mksp<GLSurface>(s->size);
+			fbo = mksp<GLSurface>(s->size, this);
 			s->rendererPrivateData = fbo;
 		}
 		gl->BindFramebuffer(GL::DRAW_FRAMEBUFFER, fbo->fbo_id);
@@ -1305,6 +1313,12 @@ class OGLES30Renderer final : public Renderer
 	sp<Surface> default_surface;
 	sp<Surface> current_surface;
 	sp<Palette> current_palette;
+
+	std::thread::id bound_thread;
+	std::mutex destroyed_texture_list_mutex;
+	std::list<GL::GLuint> destroyed_texture_list;
+	std::mutex destroyed_framebuffer_list_mutex;
+	std::list<GL::GLuint> destroyed_framebuffer_list;
 
   public:
 	OGLES30Renderer();
@@ -1626,9 +1640,57 @@ class OGLES30Renderer final : public Renderer
 			this->spriteMachine->flush(viewport_size, flip_y);
 			this->state = State::Idle;
 		}
+		// Cleanup any outstanding destroyed texture or framebuffer objects
+		{
+			std::lock_guard<std::mutex> lock(this->destroyed_texture_list_mutex);
+
+			for (auto &id : this->destroyed_texture_list)
+			{
+				gl->DeleteTextures(1, &id);
+			}
+			this->destroyed_texture_list.clear();
+		}
+		{
+			std::lock_guard<std::mutex> lock(this->destroyed_framebuffer_list_mutex);
+
+			for (auto &id : this->destroyed_framebuffer_list)
+			{
+				gl->DeleteFramebuffers(1, &id);
+			}
+			this->destroyed_framebuffer_list.clear();
+		}
 	}
 	UString getName() override { return "GLES30 Renderer"; }
 	sp<Surface> getDefaultSurface() override { return this->default_surface; }
+	// These can be called from any thread - e.g. from the Image destructors
+	void delete_texture_object(GL::GLuint id)
+	{
+		// If we're already on the bound thread, just immediately destroy
+		if (this->bound_thread == std::this_thread::get_id())
+		{
+			gl->DeleteTextures(1, &id);
+			return;
+		}
+		// Otherwise add it to a list for future destruction
+		{
+			std::lock_guard<std::mutex> lock(this->destroyed_texture_list_mutex);
+			this->destroyed_texture_list.push_back(id);
+		}
+	}
+	void delete_framebuffer_object(GL::GLuint id)
+	{
+		// If we're already on the bound thread, just immediately destroy
+		if (this->bound_thread == std::this_thread::get_id())
+		{
+			gl->DeleteFramebuffers(1, &id);
+			return;
+		}
+		// Otherwise add it to a list for future destruction
+		{
+			std::lock_guard<std::mutex> lock(this->destroyed_framebuffer_list_mutex);
+			this->destroyed_framebuffer_list.push_back(id);
+		}
+	}
 };
 
 void GLESWRAP_APIENTRY debug_message_proc(GL::KhrDebug::GLenum, GL::KhrDebug::GLenum, GL::GLuint,
@@ -1654,16 +1716,17 @@ void GLESWRAP_APIENTRY debug_message_proc(GL::KhrDebug::GLenum, GL::KhrDebug::GL
 OGLES30Renderer::OGLES30Renderer() : state(State::Idle)
 {
 	TRACE_FN;
+	this->bound_thread = std::this_thread::get_id();
 	this->spriteMachine.reset(
 	    new SpriteDrawMachine{spriteBufferSize, spriteBufferCount, spritesheetPageSize});
-	this->texturedMachine.reset(new TexturedDrawMachine{texturedBufferCount});
+	this->texturedMachine.reset(new TexturedDrawMachine{texturedBufferCount, this});
 	this->colouredDrawMachine.reset(new ColouredDrawMachine{quadBufferCount});
 	GL::GLint viewport[4];
 	gl->GetIntegerv(GL::VIEWPORT, viewport);
 	LogInfo("Viewport {%d,%d,%d,%d}", viewport[0], viewport[1], viewport[2], viewport[3]);
 	this->default_surface = mksp<Surface>(Vec2<int>{viewport[2], viewport[3]});
 	this->default_surface->rendererPrivateData =
-	    mksp<GLSurface>(0, Vec2<int>{viewport[2], viewport[3]});
+	    mksp<GLSurface>(0, Vec2<int>{viewport[2], viewport[3]}, this);
 	this->current_surface = default_surface;
 	gl->Enable(GL::BLEND);
 	gl->BlendFuncSeparate(GL::SRC_ALPHA, GL::ONE_MINUS_SRC_ALPHA, GL::SRC_ALPHA, GL::DST_ALPHA);
@@ -1735,6 +1798,16 @@ class OGLES30RendererFactory : public RendererFactory
 		}
 	}
 };
+
+GLRGBTexture::~GLRGBTexture() { owner->delete_texture_object(this->tex_id); }
+GLPaletteTexture::~GLPaletteTexture() { owner->delete_texture_object(this->tex_id); }
+GLSurface::~GLSurface()
+{
+	if (this->fbo_id)
+		owner->delete_framebuffer_object(this->fbo_id);
+	if (this->tex_id)
+		owner->delete_texture_object(this->tex_id);
+}
 
 } // anonymous namespace
 
