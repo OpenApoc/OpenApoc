@@ -529,6 +529,9 @@ Framework::~Framework()
 		config().save();
 
 	LogInfo("Shutdown");
+	// Make sure we destroy the data implementation before the renderer to ensure any possibly
+	// cached images are already destroyed
+	this->data.reset();
 	if (createWindow)
 	{
 		displayShutdown();
