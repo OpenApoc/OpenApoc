@@ -288,7 +288,7 @@ ConfigOptionBool optionEnableTouchEvents("Framework", "EnableTouchEvents", "Enab
 #else
                                          false
 #endif
-);
+                                         );
 
 } // anonymous namespace
 
