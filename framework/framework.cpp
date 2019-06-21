@@ -282,6 +282,14 @@ ConfigOptionFloat optionHostilesMultiplierCheat("OpenApoc.Cheat", "HostilesMulti
 ConfigOptionFloat optionStatGrowthMultiplierCheat("OpenApoc.Cheat", "StatGrowthMultiplier",
                                                   "Multiplier for agent stat growth", 1.0f);
 
+ConfigOptionBool optionEnableTouchEvents("Framework", "EnableTouchEvents", "Enable touch events",
+#ifdef ANDROID
+                                         true
+#else
+                                         false
+#endif
+                                         );
+
 } // anonymous namespace
 
 namespace OpenApoc
@@ -741,6 +749,7 @@ void Framework::translateSdlEvents()
 {
 	SDL_Event e;
 	Event *fwE;
+	bool touch_events_enabled = optionEnableTouchEvents.get();
 
 	// FIXME: That's not the right way to figure out the primary finger!
 	int primaryFingerID = -1;
@@ -838,6 +847,8 @@ void Framework::translateSdlEvents()
 				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_FINGERDOWN:
+				if (!touch_events_enabled)
+					break;
 				fwE = new FingerEvent(EVENT_FINGER_DOWN);
 				fwE->finger().X = static_cast<int>(e.tfinger.x * displayGetWidth());
 				fwE->finger().Y = static_cast<int>(e.tfinger.y * displayGetHeight());
@@ -850,6 +861,8 @@ void Framework::translateSdlEvents()
 				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_FINGERUP:
+				if (!touch_events_enabled)
+					break;
 				fwE = new FingerEvent(EVENT_FINGER_UP);
 				fwE->finger().X = static_cast<int>(e.tfinger.x * displayGetWidth());
 				fwE->finger().Y = static_cast<int>(e.tfinger.y * displayGetHeight());
@@ -862,6 +875,8 @@ void Framework::translateSdlEvents()
 				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_FINGERMOTION:
+				if (!touch_events_enabled)
+					break;
 				fwE = new FingerEvent(EVENT_FINGER_MOVE);
 				fwE->finger().X = static_cast<int>(e.tfinger.x * displayGetWidth());
 				fwE->finger().Y = static_cast<int>(e.tfinger.y * displayGetHeight());
