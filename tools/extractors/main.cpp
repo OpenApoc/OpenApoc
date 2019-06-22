@@ -33,38 +33,38 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     extractDifficulty(e, "data/difficulty1_patched",
 	                       InitialGameStateExtractor::Difficulty::DIFFICULTY_1,
 	                       "data/difficulty1_patch");
-	 }},
+     }},
     {"difficulty2",
      [](const InitialGameStateExtractor &e) {
 	     extractDifficulty(e, "data/difficulty2_patched",
 	                       InitialGameStateExtractor::Difficulty::DIFFICULTY_2,
 	                       "data/difficulty2_patch");
-	 }},
+     }},
     {"difficulty3",
      [](const InitialGameStateExtractor &e) {
 	     extractDifficulty(e, "data/difficulty3_patched",
 	                       InitialGameStateExtractor::Difficulty::DIFFICULTY_3,
 	                       "data/difficulty3_patch");
-	 }},
+     }},
     {"difficulty4",
      [](const InitialGameStateExtractor &e) {
 	     extractDifficulty(e, "data/difficulty4_patched",
 	                       InitialGameStateExtractor::Difficulty::DIFFICULTY_4,
 	                       "data/difficulty4_patch");
-	 }},
+     }},
     {"difficulty5",
      [](const InitialGameStateExtractor &e) {
 	     extractDifficulty(e, "data/difficulty5_patched",
 	                       InitialGameStateExtractor::Difficulty::DIFFICULTY_5,
 	                       "data/difficulty5_patch");
-	 }},
+     }},
     {"common_gamestate",
      [](const InitialGameStateExtractor &e) {
 	     GameState s;
 	     e.extractCommon(s);
 	     s.loadGame("data/common_patch");
 	     s.saveGame("data/gamestate_common");
-	 }},
+     }},
     {"city_bullet_sprites",
      [](const InitialGameStateExtractor &e) {
 	     auto bullet_sprites = e.extractBulletSpritesCity();
@@ -74,7 +74,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 		     auto path = "data/" + sprite_pair.first;
 		     fw().data->writeImage(path, sprite_pair.second);
 	     }
-	 }},
+     }},
     {"battle_bullet_sprites",
      [](const InitialGameStateExtractor &e) {
 	     auto bullet_sprites = e.extractBulletSpritesBattle();
@@ -85,7 +85,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 		     fw().data->writeImage(path, sprite_pair.second,
 		                           fw().data->loadPalette("xcom3/tacdata/tactical.pal"));
 	     }
-	 }},
+     }},
     {"unit_image_packs",
      [](const InitialGameStateExtractor &e) {
 	     for (auto &imagePackStrings : e.unitImagePackPaths)
@@ -108,7 +108,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 			     }
 		     }
 	     }
-	 }},
+     }},
     {"item_image_packs",
      [](const InitialGameStateExtractor &e) {
 	     int itemImagePacksCount = e.getItemImagePacksCount();
@@ -132,7 +132,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 			     }
 		     }
 	     }
-	 }},
+     }},
     {"unit_shadow_packs",
      [](const InitialGameStateExtractor &e) {
 	     for (auto &imagePackStrings : e.unitShadowPackPaths)
@@ -155,7 +155,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 			     }
 		     }
 	     }
-	 }},
+     }},
     {"unit_animation_packs",
      [](const InitialGameStateExtractor &e) {
 	     for (auto &animationPackStrings : e.unitAnimationPackPaths)
@@ -180,7 +180,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 			     }
 		     }
 	     }
-	 }},
+     }},
 
     {"battle_map_tilesets",
      [](const InitialGameStateExtractor &e) {
@@ -206,7 +206,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 			     }
 		     }
 	     }
-	 }},
+     }},
     {"battle_map_sectors",
      [](const InitialGameStateExtractor &e) {
 	     for (auto &mapName : e.battleMapPaths)
@@ -234,7 +234,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 			     }
 		     }
 	     }
-	 }},
+     }},
 };
 
 int main(int argc, char *argv[])

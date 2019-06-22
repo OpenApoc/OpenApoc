@@ -1,4 +1,5 @@
-extern "C" {
+extern "C"
+{
 #include "dependencies/lua/lauxlib.h"
 #include "dependencies/lua/lua.h"
 #include "dependencies/lua/lualib.h"
@@ -96,9 +97,8 @@ template <> lua_CFunction getLuaObjectMethods<City>(const std::string &key)
 			getFromLua(L, 4, position);
 			float facing = static_cast<float>(luaL_optnumber(L, 5, 0.0));
 			lua_settop(L, 0);
-			pushToLua(L,
-			          (*obj)->placeVehicle(*getGameStateFromLua(L), vehicleType, owner, position,
-			                               facing));
+			pushToLua(L, (*obj)->placeVehicle(*getGameStateFromLua(L), vehicleType, owner, position,
+			                                  facing));
 			return 1;
 		};
 	return getLuaObjectConstMethods<City>(key);

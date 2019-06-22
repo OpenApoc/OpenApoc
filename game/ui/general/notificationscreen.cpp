@@ -26,7 +26,7 @@ NotificationScreen::NotificationScreen(sp<GameState> state, CityView &cityView,
 		    cityView.zoomLastEvent();
 		    cityView.setUpdateSpeed(CityUpdateSpeed::Pause);
 		    fw().stageQueueCommand({StageCmd::Command::POP});
-		});
+	    });
 }
 
 NotificationScreen::NotificationScreen(sp<GameState> state, BattleView &battleView,
@@ -40,7 +40,7 @@ NotificationScreen::NotificationScreen(sp<GameState> state, BattleView &battleVi
 		    battleView.zoomLastEvent();
 		    battleView.setUpdateSpeed(BattleUpdateSpeed::Pause);
 		    fw().stageQueueCommand({StageCmd::Command::POP});
-		});
+	    });
 }
 
 NotificationScreen::~NotificationScreen() = default;

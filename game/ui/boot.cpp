@@ -74,7 +74,7 @@ void BootUp::update()
 			    {
 				    return mksp<CityView>(loadedState);
 			    }
-			});
+		    });
 	}
 	else
 	{

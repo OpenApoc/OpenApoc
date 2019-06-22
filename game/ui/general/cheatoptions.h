@@ -37,4 +37,4 @@ class CheatOptions : public Stage
 	                                 int scrollMin, int scrollMax);
 	void updateMultiplierText(UString controlName, float multMin, float multMax);
 };
-}
+} // namespace OpenApoc

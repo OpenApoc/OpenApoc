@@ -69,12 +69,15 @@ float BattleUnitTileHelper::getDistanceStatic(Vec3<float> from, Vec3<float> toSt
 {
 	auto diffStart = toStart - from;
 	auto diffEnd = toEnd - from - Vec3<float>{1.0f, 1.0f, 1.0f};
-	auto xDiff = from.x >= toStart.x && from.x < toEnd.x ? 0.0f : std::min(std::abs(diffStart.x),
-	                                                                       std::abs(diffEnd.x));
-	auto yDiff = from.y >= toStart.y && from.y < toEnd.y ? 0.0f : std::min(std::abs(diffStart.y),
-	                                                                       std::abs(diffEnd.y));
-	auto zDiff = from.z >= toStart.z && from.z < toEnd.z ? 0.0f : std::min(std::abs(diffStart.z),
-	                                                                       std::abs(diffEnd.z));
+	auto xDiff = from.x >= toStart.x && from.x < toEnd.x
+	                 ? 0.0f
+	                 : std::min(std::abs(diffStart.x), std::abs(diffEnd.x));
+	auto yDiff = from.y >= toStart.y && from.y < toEnd.y
+	                 ? 0.0f
+	                 : std::min(std::abs(diffStart.y), std::abs(diffEnd.y));
+	auto zDiff = from.z >= toStart.z && from.z < toEnd.z
+	                 ? 0.0f
+	                 : std::min(std::abs(diffStart.z), std::abs(diffEnd.z));
 	return (std::max(std::max(xDiff, yDiff), zDiff) + xDiff + yDiff + zDiff) * 2.0f;
 }
 
@@ -179,8 +182,9 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 			auto middle = map.getTile(fromPos + (toPos - fromPos) / 2);
 			if (canEnterTile(from, middle, true, jumped, cost, doorInTheWay, ignoreStaticUnits,
 			                 ignoreMovingUnits, ignoreAllUnits) &&
-			    jumped && canEnterTile(middle, to, false, jumped, cost, doorInTheWay,
-			                           ignoreStaticUnits, ignoreMovingUnits, ignoreAllUnits))
+			    jumped &&
+			    canEnterTile(middle, to, false, jumped, cost, doorInTheWay, ignoreStaticUnits,
+			                 ignoreMovingUnits, ignoreAllUnits))
 			{
 				return true;
 			}
@@ -1549,8 +1553,9 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 	{
 		case Type::Jump:
 			if (!jumped && !u.falling && u.atGoal && u.facing == u.goalFacing &&
-			    u.facing == targetFacing && (u.current_body_state == u.target_body_state ||
-			                                 targetBodyState == BodyState::Jumping) &&
+			    u.facing == targetFacing &&
+			    (u.current_body_state == u.target_body_state ||
+			     targetBodyState == BodyState::Jumping) &&
 			    u.target_body_state == targetBodyState)
 			{
 				// Jumping cost assumed same as walking into tile
@@ -1658,9 +1663,8 @@ void BattleUnitMission::update(GameState &state, BattleUnit &u, unsigned int tic
 						         .empty())
 						{
 							fw().soundBackend->playSample(
-							    pickRandom(state.rng,
-							               targetUnit->agent->type->fatalWoundSfx.at(
-							                   targetUnit->agent->gender)),
+							    pickRandom(state.rng, targetUnit->agent->type->fatalWoundSfx.at(
+							                              targetUnit->agent->gender)),
 							    targetUnit->position);
 						}
 						break;
@@ -2135,10 +2139,9 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 	bool newDoorInWay = false;
 	bool newJumped = false;
 	while (it != currentPlannedPath.end() &&
-	       (tFrom->position == *it ||
-	        (allowSkipNodes &&
-	         BattleUnitTileHelper{map, u}.canEnterTile(tFrom, map.getTile(*it), !u.canFly(),
-	                                                   newJumped, newCost, newDoorInWay))))
+	       (tFrom->position == *it || (allowSkipNodes && BattleUnitTileHelper{map, u}.canEnterTile(
+	                                                         tFrom, map.getTile(*it), !u.canFly(),
+	                                                         newJumped, newCost, newDoorInWay))))
 	{
 		currentPlannedPath.pop_front();
 		it = ++currentPlannedPath.begin();
@@ -2239,7 +2242,8 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 		// FIXME: Check unit's allegiance? Will neutrals give way? I think they did in vanilla!
 		u.current_movement_state = MovementState::None;
 		// If this unit is still patient enough, and we can ask that unit to give way
-		if (giveWayAttemptsRemaining-- > 0 && blockingUnit->owner == u.owner
+		if (giveWayAttemptsRemaining-- > 0 &&
+		    blockingUnit->owner == u.owner
 		    // and we're not trying to stay there
 		    && currentPlannedPath.size() > 1
 		    // and unit we're asking is not big

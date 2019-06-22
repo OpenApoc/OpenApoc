@@ -581,19 +581,17 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 								vehicle
 								    ->voxelMaps[FACING_NORTH]
 								               [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   verticalVoxelMapIdx)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      verticalVoxelMapIdx)));
 								vehicle
 								    ->voxelMapsLOS[FACING_NORTH]
 								                  [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   losVoxelMapIndex)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      losVoxelMapIndex)));
 							}
 						}
 					}
@@ -673,70 +671,62 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 								vehicle
 								    ->voxelMaps[FACING_NORTH]
 								               [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   verticalVoxelMapIdx)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      verticalVoxelMapIdx)));
 								vehicle
 								    ->voxelMapsLOS[FACING_NORTH]
 								                  [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   losVoxelMapIndex)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      losVoxelMapIndex)));
 								// Facing east
 								vehicle
 								    ->voxelMaps[FACING_EAST]
 								               [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   horizontalVoxelMapIndex)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      horizontalVoxelMapIndex)));
 								vehicle
 								    ->voxelMapsLOS[FACING_EAST]
 								                  [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   losVoxelMapIndex)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      losVoxelMapIndex)));
 								// Facing south
 								vehicle
 								    ->voxelMaps[FACING_SOUTH]
 								               [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   verticalVoxelMapIdx)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      verticalVoxelMapIdx)));
 								vehicle
 								    ->voxelMapsLOS[FACING_SOUTH]
 								                  [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   losVoxelMapIndex)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      losVoxelMapIndex)));
 								// Facing west
 								vehicle
 								    ->voxelMaps[FACING_WEST]
 								               [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   horizontalVoxelMapIndex)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      horizontalVoxelMapIndex)));
 								vehicle
 								    ->voxelMapsLOS[FACING_WEST]
 								                  [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   losVoxelMapIndex)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      losVoxelMapIndex)));
 							}
 						}
 					}
@@ -815,70 +805,62 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 								vehicle
 								    ->voxelMaps[FACING_NORTH]
 								               [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   122)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      122)));
 								vehicle
 								    ->voxelMapsLOS[FACING_NORTH]
 								                  [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   losVoxelMapIndex)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      losVoxelMapIndex)));
 								// Facing east
 								vehicle
 								    ->voxelMaps[FACING_EAST]
 								               [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   123)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      123)));
 								vehicle
 								    ->voxelMapsLOS[FACING_EAST]
 								                  [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   losVoxelMapIndex)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      losVoxelMapIndex)));
 								// Facing south
 								vehicle
 								    ->voxelMaps[FACING_SOUTH]
 								               [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   124)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      124)));
 								vehicle
 								    ->voxelMapsLOS[FACING_SOUTH]
 								                  [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   losVoxelMapIndex)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      losVoxelMapIndex)));
 								// Facing west
 								vehicle
 								    ->voxelMaps[FACING_WEST]
 								               [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   125)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      125)));
 								vehicle
 								    ->voxelMapsLOS[FACING_WEST]
 								                  [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   losVoxelMapIndex)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      losVoxelMapIndex)));
 							}
 						}
 					}
@@ -921,19 +903,17 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 							vehicle
 							    ->voxelMaps[FACING_NORTH][z * v.size_y * v.size_x +
 							                              pair.first.y * v.size_x + pair.first.x]
-							    ->setSlice(i,
-							               fw().data->loadVoxelSlice(
-							                   format("LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-							                          "ufodata/loftemps.tab:%d",
-							                          pair.second)));
+							    ->setSlice(i, fw().data->loadVoxelSlice(format(
+							                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+							                      "ufodata/loftemps.tab:%d",
+							                      pair.second)));
 							vehicle
 							    ->voxelMapsLOS[FACING_NORTH][z * v.size_y * v.size_x +
 							                                 pair.first.y * v.size_x + pair.first.x]
-							    ->setSlice(i,
-							               fw().data->loadVoxelSlice(
-							                   format("LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-							                          "ufodata/loftemps.tab:%d",
-							                          pair.second)));
+							    ->setSlice(i, fw().data->loadVoxelSlice(format(
+							                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+							                      "ufodata/loftemps.tab:%d",
+							                      pair.second)));
 						}
 					}
 				}
@@ -1017,11 +997,10 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 								vehicle
 								    ->voxelMapsLOS[FACING_NORTH]
 								                  [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   losVoxelMapIndex)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      losVoxelMapIndex)));
 								// Facing east
 								vehicle
 								    ->voxelMaps[FACING_EAST]
@@ -1031,11 +1010,10 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 								vehicle
 								    ->voxelMapsLOS[FACING_EAST]
 								                  [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   losVoxelMapIndex)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      losVoxelMapIndex)));
 								// Facing south
 								vehicle
 								    ->voxelMaps[FACING_SOUTH]
@@ -1045,11 +1023,10 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 								vehicle
 								    ->voxelMapsLOS[FACING_SOUTH]
 								                  [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   losVoxelMapIndex)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      losVoxelMapIndex)));
 								// Facing west
 								vehicle
 								    ->voxelMaps[FACING_WEST]
@@ -1059,11 +1036,10 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 								vehicle
 								    ->voxelMapsLOS[FACING_WEST]
 								                  [z * v.size_y * v.size_x + y * v.size_x + x]
-								    ->setSlice(i,
-								               fw().data->loadVoxelSlice(format(
-								                   "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
-								                   "ufodata/loftemps.tab:%d",
-								                   losVoxelMapIndex)));
+								    ->setSlice(i, fw().data->loadVoxelSlice(format(
+								                      "LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/"
+								                      "ufodata/loftemps.tab:%d",
+								                      losVoxelMapIndex)));
 							}
 						}
 					}

@@ -31,7 +31,7 @@ std::list<multiplierDescriptor> multiplierDescriptors{
     {"DAMAGE_RECEIVED_MULT", 0.0f, 5.0f, "OpenApoc.Cheat.DamageReceivedMultiplier"},
     {"HOSTILES_MULT", 0.5f, 3.0f, "OpenApoc.Cheat.HostilesMultiplier"},
     {"STAT_GROWTH_MULT", 0.0f, 99.5f, "OpenApoc.Cheat.StatGrowthMultiplier"}};
-}
+} // namespace
 
 CheatOptions::CheatOptions(sp<GameState> state)
     : Stage(), menuform(ui().getForm("cheatoptions")), state(state)
@@ -76,10 +76,9 @@ void CheatOptions::updateMultiplierText(UString controlName, float multMin, floa
 	float multValue = ((double)bar->getValue() - bar->getMinimum()) /
 	                      ((double)bar->getMaximum() - bar->getMinimum()) * (multMax - multMin) +
 	                  multMin;
-	label->setText(format("%d%%",
-	                      scaleScrollbarToMultiplier(bar->getValue(), multMin, multMax,
-	                                                 bar->getMinimum(), bar->getMaximum()) *
-	                          100));
+	label->setText(format("%d%%", scaleScrollbarToMultiplier(bar->getValue(), multMin, multMax,
+	                                                         bar->getMinimum(), bar->getMaximum()) *
+	                                  100));
 }
 
 void CheatOptions::pause() {}
@@ -226,4 +225,4 @@ void CheatOptions::render()
 	fw().stageGetPrevious(this->shared_from_this())->render();
 	menuform->render();
 }
-}
+} // namespace OpenApoc
