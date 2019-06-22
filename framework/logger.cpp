@@ -306,7 +306,7 @@ void Log(LogLevel level, UString prefix, const UString &text)
 			else
 			{
 				SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "OpenApoc error", text.cStr(),
-			                         static_cast<SDL_Window *>(fw().getWindowHandle()));
+				                         static_cast<SDL_Window *>(fw().getWindowHandle()));
 			}
 		}
 #endif
