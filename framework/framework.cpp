@@ -505,8 +505,8 @@ Framework::Framework(const UString programName, bool createWindow)
 	boost::locale::generator gen;
 
 	std::vector<UString> resourcePaths;
-	resourcePaths.push_back(dataPathOption.get());
 	resourcePaths.push_back(cdPathOption.get());
+	resourcePaths.push_back(dataPathOption.get());
 
 	for (auto &path : resourcePaths)
 	{
