@@ -331,6 +331,8 @@ class JukeBoxImpl : public JukeBox
 	}
 	~JukeBoxImpl() override { this->stop(); }
 
+	void shuffle() { std::random_shuffle(trackList.begin(), trackList.end()); }
+
 	void play(PlayList list, PlayMode mode) override
 	{
 		if (this->list == list)
@@ -359,9 +361,12 @@ class JukeBoxImpl : public JukeBox
 			else
 				this->trackList.push_back(musicTrack);
 		}
+		if (mode == PlayMode::Shuffle)
+			shuffle();
 		this->progressTrack(this);
 		this->fw.soundBackend->playMusic(progressTrack, this);
 	}
+
 	static void progressTrack(void *data)
 	{
 		JukeBoxImpl *jukebox = static_cast<JukeBoxImpl *>(data);
@@ -370,9 +375,6 @@ class JukeBoxImpl : public JukeBox
 			LogWarning("Trying to play empty jukebox");
 			return;
 		}
-		if (jukebox->mode == PlayMode::Shuffle)
-			jukebox->position = rand() % jukebox->trackList.size();
-
 		if (jukebox->position >= jukebox->trackList.size())
 		{
 			LogInfo("End of jukebox playlist");
@@ -383,9 +385,20 @@ class JukeBoxImpl : public JukeBox
 		jukebox->fw.soundBackend->setTrack(jukebox->trackList[jukebox->position]);
 
 		jukebox->position++;
-		if (jukebox->mode == PlayMode::Loop)
-			jukebox->position = jukebox->position % jukebox->trackList.size();
+		if (jukebox->position >= jukebox->trackList.size())
+		{
+			if (jukebox->mode == PlayMode::Loop)
+			{
+				jukebox->position = 0;
+			}
+			else if (jukebox->mode == PlayMode::Shuffle)
+			{
+				jukebox->position = 0;
+				jukebox->shuffle();
+			}
+		}
 	}
+
 	void stop() override
 	{
 		this->list = PlayList::None;
@@ -566,8 +579,8 @@ Framework::~Framework()
 	TRACE_FN;
 	LogInfo("Destroying framework");
 	// Stop any audio first, as if you've got ongoing music/samples it could call back into the
-	// framework for the threadpool/data read/all kinda of stuff it shouldn't do on a half-destroyed
-	// framework
+	// framework for the threadpool/data read/all kinda of stuff it shouldn't do on a
+	// half-destroyed framework
 	audioShutdown();
 	LogInfo("Stopping threadpool");
 	p->threadPool.reset();
@@ -770,8 +783,8 @@ void Framework::processEvents()
 				break;
 		}
 	}
-	/* Drop any events left in the list, as it's possible an event caused the last stage to pop with
-	 * events outstanding, but they can safely be ignored as we're quitting anyway */
+	/* Drop any events left in the list, as it's possible an event caused the last stage to pop
+	 * with events outstanding, but they can safely be ignored as we're quitting anyway */
 	{
 		std::lock_guard<std::mutex> l(p->eventQueueLock);
 		p->eventQueue.clear();
@@ -897,8 +910,8 @@ void Framework::translateSdlEvents()
 				fwE->finger().DeltaY = static_cast<int>(e.tfinger.dy * displayGetHeight());
 				fwE->finger().Id = e.tfinger.fingerId;
 				fwE->finger().IsPrimary =
-				    e.tfinger.fingerId ==
-				    primaryFingerID; // FIXME: Try to remember the ID of the first touching finger!
+				    e.tfinger.fingerId == primaryFingerID; // FIXME: Try to remember the ID of
+				                                           // the first touching finger!
 				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_FINGERUP:
@@ -911,8 +924,8 @@ void Framework::translateSdlEvents()
 				fwE->finger().DeltaY = static_cast<int>(e.tfinger.dy * displayGetHeight());
 				fwE->finger().Id = e.tfinger.fingerId;
 				fwE->finger().IsPrimary =
-				    e.tfinger.fingerId ==
-				    primaryFingerID; // FIXME: Try to remember the ID of the first touching finger!
+				    e.tfinger.fingerId == primaryFingerID; // FIXME: Try to remember the ID of
+				                                           // the first touching finger!
 				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_FINGERMOTION:
@@ -925,8 +938,8 @@ void Framework::translateSdlEvents()
 				fwE->finger().DeltaY = static_cast<int>(e.tfinger.dy * displayGetHeight());
 				fwE->finger().Id = e.tfinger.fingerId;
 				fwE->finger().IsPrimary =
-				    e.tfinger.fingerId ==
-				    primaryFingerID; // FIXME: Try to remember the ID of the first touching finger!
+				    e.tfinger.fingerId == primaryFingerID; // FIXME: Try to remember the ID of
+				                                           // the first touching finger!
 				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_WINDOWEVENT:
@@ -961,7 +974,8 @@ void Framework::translateSdlEvents()
 					case SDL_WINDOWEVENT_EXPOSED:
 					case SDL_WINDOWEVENT_RESTORED:
 					case SDL_WINDOWEVENT_ENTER:
-						// FIXME: Should we handle all these events as "aaand we're back" events?
+						// FIXME: Should we handle all these events as "aaand we're back"
+						// events?
 						fwE = new DisplayEvent(EVENT_WINDOW_ACTIVATE);
 						fwE->display().X = 0;
 						fwE->display().Y = 0;
@@ -1130,7 +1144,8 @@ void Framework::displayInitialise()
 	SDL_GetWindowSize(p->window, &width, &height);
 	p->windowSize = {width, height};
 
-	// FIXME: Scale is currently stored as an integer in 1/100 units (ie 100 is 1.0 == same size)
+	// FIXME: Scale is currently stored as an integer in 1/100 units (ie 100 is 1.0 == same
+	// size)
 	int scaleX = screenScaleXOption.get();
 	int scaleY = screenScaleYOption.get();
 
