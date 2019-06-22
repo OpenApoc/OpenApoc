@@ -183,7 +183,7 @@ static void initLogger()
 {
 	outFile = NULL;
 
-	// Handle Log calls befoore the settings are read, just output everything to stdout
+	// Handle Log calls before the settings are read, just output everything to stdout
 
 	if (!ConfigFile::getInstance().loaded())
 	{
@@ -191,7 +191,7 @@ static void initLogger()
 		fileLogLevel = LogLevel::Nothing;
 		backtraceLogLevel = LogLevel::Nothing;
 		showDialogOnError = false;
-		// Returning withoput setting loggerInited causes this to be called evey Log call until the
+		// Returning without setting loggerInited causes this to be called evey Log call until the
 		// config is parsed
 		return;
 	}
@@ -219,7 +219,14 @@ static void initLogger()
 	}
 }
 
-bool _logLevelEnabled(LogLevel level) { return level >= stderrLogLevel || level >= fileLogLevel; }
+bool _logLevelEnabled(LogLevel level)
+{
+	if (!loggerInited)
+	{
+		initLogger();
+	}
+	return level <= stderrLogLevel || level <= fileLogLevel;
+}
 
 void _logAssert(UString prefix, UString string, int line, UString file)
 {
