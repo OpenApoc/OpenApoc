@@ -301,9 +301,9 @@ sp<ImageSet> DataImpl::loadImageSet(const UString &path)
 	if (path.substr(0, 4) == "RAW:")
 	{
 		auto splitString = path.split(':');
-		imgSet =
-		    RawImage::loadSet(*this, splitString[1], Vec2<int>{Strings::toInteger(splitString[2]),
-		                                                       Strings::toInteger(splitString[3])});
+		imgSet = RawImage::loadSet(
+		    *this, splitString[1],
+		    Vec2<int>{Strings::toInteger(splitString[2]), Strings::toInteger(splitString[3])});
 	}
 	// PCK resources come in the format:
 	//"PCK:PCKFILE:TABFILE[:optional/ignored]"
@@ -786,7 +786,7 @@ bool DataImpl::writeImage(UString systemPath, sp<Image> image, sp<Palette> palet
 				fs::create_directories(outDir);
 			}
 			// Just catch any problem and continue anyway?
-			catch (fs::filesystem_error e)
+			catch (fs::filesystem_error &e)
 			{
 				LogWarning("create_directories failed with \"%s\"", e.what());
 			}

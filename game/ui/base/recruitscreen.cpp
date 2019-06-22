@@ -487,9 +487,9 @@ void RecruitScreen::attemptCloseScreen()
 		}
 		fw().stageQueueCommand(
 		    {StageCmd::Command::PUSH,
-		     mksp<MessageBox>(tr("Confirm Orders"), message, MessageBox::ButtonOptions::YesNoCancel,
-		                      [this] { this->closeScreen(true); },
-		                      [this] { this->closeScreen(); })});
+		     mksp<MessageBox>(
+		         tr("Confirm Orders"), message, MessageBox::ButtonOptions::YesNoCancel,
+		         [this] { this->closeScreen(true); }, [this] { this->closeScreen(); })});
 	}
 	else
 	{

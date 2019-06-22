@@ -314,7 +314,7 @@ void InGameOptions::eventOccurred(Event *e)
 				                      Battle::finishBattle(*state);
 				                      fw().stageQueueCommand({StageCmd::Command::REPLACEALL,
 				                                              mksp<BattleDebriefing>(state)});
-				                  })});
+			                      })});
 		}
 		else if (e->forms().RaisedBy->Name == "BUTTON_SKIRMISH")
 		{

@@ -84,44 +84,54 @@
         <font>smalfont</font>
       </label>
       <graphic id="VALUE_1">
-        <position x="72" y="111"/>
-        <size width="100" height="4"/>
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="110"/>
+        <size width="100" height="7"/>
       </graphic>
       <graphic id="VALUE_2">
-        <position x="72" y="127"/>
-        <size width="100" height="4"/>
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="126"/>
+        <size width="100" height="7"/>
       </graphic>
       <graphic id="VALUE_3">
-        <position x="72" y="143"/>
-        <size width="100" height="4"/>
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="142"/>
+        <size width="100" height="7"/>
       </graphic>
       <graphic id="VALUE_4">
-        <position x="72" y="159"/>
-        <size width="100" height="4"/>
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="158"/>
+        <size width="100" height="7"/>
       </graphic>
       <graphic id="VALUE_5">
-        <position x="72" y="175"/>
-        <size width="100" height="4"/>
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="174"/>
+        <size width="100" height="7"/>
       </graphic>
       <graphic id="VALUE_6">
-        <position x="72" y="191"/>
-        <size width="100" height="4"/>
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="190"/>
+        <size width="100" height="7"/>
       </graphic>
       <graphic id="VALUE_7">
-        <position x="72" y="207"/>
-        <size width="100" height="4"/>
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="206"/>
+        <size width="100" height="7"/>
       </graphic>
       <graphic id="VALUE_8">
-        <position x="72" y="223"/>
-        <size width="100" height="4"/>
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="222"/>
+        <size width="100" height="7"/>
       </graphic>
       <graphic id="VALUE_9">
-        <position x="72" y="239"/>
-        <size width="100" height="4"/>
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="238"/>
+        <size width="100" height="7"/>
       </graphic>
       <graphic id="VALUE_10">
-        <position x="72" y="255"/>
-        <size width="100" height="4"/>
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="254"/>
+        <size width="100" height="7"/>
       </graphic>
     </style>
   </form>

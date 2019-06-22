@@ -2,6 +2,7 @@
 #include "dependencies/pugixml/src/pugixml.hpp"
 #include "forms/forms.h"
 #include "forms/ui.h"
+#include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/font.h"
@@ -15,15 +16,19 @@
 namespace OpenApoc
 {
 
+ConfigOptionString defaultTooltipFont("Forms", "TooltipFont", "The default tooltip font",
+                                      "smallset");
+
 Control::Control(bool takesFocus)
-    : mouseInside(false), mouseDepressed(false), resolvedLocation(0, 0), Visible(true),
-      Name("Control"), Location(0, 0), Size(0, 0), SelectionSize(0, 0),
-      BackgroundColour(0, 0, 0, 0), takesFocus(takesFocus), showBounds(false), Enabled(true),
-      canCopy(true), funcPreRender(nullptr), isClickable(false),
+    : funcPreRender(nullptr), mouseInside(false), mouseDepressed(false), resolvedLocation(0, 0),
+      Visible(true), isClickable(false), Name("Control"), Location(0, 0), Size(0, 0),
+      SelectionSize(0, 0), BackgroundColour(0, 0, 0, 0), takesFocus(takesFocus), showBounds(false),
+      Enabled(true), canCopy(true),
       // Tooltip defaults
       ToolTipBackground{128, 128, 128}, ToolTipBorders{
                                             {1, {0, 0, 0}}, {1, {255, 255, 255}}, {1, {0, 0, 0, 0}}}
 {
+	this->ToolTipFont = ui().getFont(defaultTooltipFont.get());
 }
 
 Control::~Control() { unloadResources(); }
@@ -326,9 +331,8 @@ void Control::eventOccured(Event *e)
 				}
 				fw().renderer->draw(textImage, {totalBorder, totalBorder});
 
-				fw().showToolTip(surface,
-				                 pos + resolvedLocation -
-				                     Vec2<int>{surface->size.x / 2, surface->size.y});
+				fw().showToolTip(surface, pos + resolvedLocation -
+				                              Vec2<int>{surface->size.x / 2, surface->size.y});
 			}
 		}
 		else if (e->forms().EventFlag == FormEventType::MouseClick ||
@@ -825,11 +829,11 @@ sp<Control> Control::findControl(UString ID) const
 
 bool Control::replaceChildByName(sp<Control> ctrl)
 {
-	for (int i = 0; i < Controls.size(); i++)
+	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
-		if (Controls[i]->Name == ctrl->Name)
+		if ((*c)->Name == ctrl->Name)
 		{
-			Controls[i] = ctrl;
+			(*c) = ctrl;
 			ctrl->owningControl = shared_from_this();
 			setDirty();
 			return true;

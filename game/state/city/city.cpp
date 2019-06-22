@@ -827,7 +827,7 @@ void City::accuracyAlgorithmCity(GameState &state, Vec3<float> firePosition, Vec
 
 void RoadSegment::notifyRoadChange(const Vec3<int> &position, bool newIntact)
 {
-	for (int i = 0; i < tilePosition.size(); i++)
+	for (size_t i = 0; i < tilePosition.size(); i++)
 	{
 		if (tilePosition.at(i) == position)
 		{
@@ -836,7 +836,7 @@ void RoadSegment::notifyRoadChange(const Vec3<int> &position, bool newIntact)
 		}
 	}
 	intact = true;
-	for (int i = 0; i < tileIntact.size(); i++)
+	for (size_t i = 0; i < tileIntact.size(); i++)
 	{
 		if (!tileIntact[i])
 		{
@@ -880,7 +880,7 @@ bool RoadSegment::getIntactByConnectID(int id) const
 
 bool RoadSegment::getIntactByTile(const Vec3<int> &position) const
 {
-	for (int i = 0; i < tilePosition.size(); i++)
+	for (size_t i = 0; i < tilePosition.size(); i++)
 	{
 		if (tilePosition[i] == position)
 		{

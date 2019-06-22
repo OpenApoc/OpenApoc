@@ -38,11 +38,22 @@ enum class LogLevel : int
 	Error = 1,
 	Warning = 2,
 	Info = 3,
-	Debug = 3,
+	Debug = 4,
 };
 void Log(LogLevel level, UString prefix, const UString &text);
 
 NORETURN_FUNCTION void _logAssert(UString prefix, UString string, int line, UString file);
+
+/* Returns if the log level will be output (either to file or stderr or both) */
+bool _logLevelEnabled(LogLevel level);
+static inline bool logLevelEnabled(LogLevel level)
+{
+#ifdef NDEBUG
+	if (level >= LogLevel::Debug)
+		return false;
+#endif
+	return _logLevelEnabled(level);
+}
 
 // All logger output will be UTF8
 }; // namespace OpenApoc
@@ -54,36 +65,80 @@ NORETURN_FUNCTION void _logAssert(UString prefix, UString string, int line, UStr
 			OpenApoc::_logAssert(LOGGER_PREFIX, STR(X), __LINE__, __FILE__);                       \
 	} while (0)
 
-//#ifndef __ANDROID__
 #if defined(__GNUC__)
 // GCC has an extension if __VA_ARGS__ are not supplied to 'remove' the precending comma
 #define LogDebug(f, ...)                                                                           \
-	OpenApoc::Log(OpenApoc::LogLevel::Debug, OpenApoc::UString(LOGGER_PREFIX),                     \
-	              ::OpenApoc::format(f, ##__VA_ARGS__))
+	do                                                                                             \
+	{                                                                                              \
+		if (OpenApoc::logLevelEnabled(OpenApoc::LogLevel::Debug))                                  \
+		{                                                                                          \
+			OpenApoc::Log(OpenApoc::LogLevel::Debug, OpenApoc::UString(LOGGER_PREFIX),             \
+			              ::OpenApoc::format(f, ##__VA_ARGS__));                                   \
+		}                                                                                          \
+	} while (0)
 #define LogInfo(f, ...)                                                                            \
-	OpenApoc::Log(OpenApoc::LogLevel::Info, OpenApoc::UString(LOGGER_PREFIX),                      \
-	              ::OpenApoc::format(f, ##__VA_ARGS__))
+	do                                                                                             \
+	{                                                                                              \
+		if (OpenApoc::logLevelEnabled(OpenApoc::LogLevel::Info))                                   \
+		{                                                                                          \
+			OpenApoc::Log(OpenApoc::LogLevel::Info, OpenApoc::UString(LOGGER_PREFIX),              \
+			              ::OpenApoc::format(f, ##__VA_ARGS__));                                   \
+		}                                                                                          \
+	} while (0)
 #define LogWarning(f, ...)                                                                         \
-	OpenApoc::Log(OpenApoc::LogLevel::Warning, OpenApoc::UString(LOGGER_PREFIX),                   \
-	              ::OpenApoc::format(f, ##__VA_ARGS__))
+	do                                                                                             \
+	{                                                                                              \
+		if (OpenApoc::logLevelEnabled(OpenApoc::LogLevel::Warning))                                \
+		{                                                                                          \
+			OpenApoc::Log(OpenApoc::LogLevel::Warning, OpenApoc::UString(LOGGER_PREFIX),           \
+			              ::OpenApoc::format(f, ##__VA_ARGS__));                                   \
+		}                                                                                          \
+	} while (0)
 #define LogError(f, ...)                                                                           \
-	OpenApoc::Log(OpenApoc::LogLevel::Error, OpenApoc::UString(LOGGER_PREFIX),                     \
-	              ::OpenApoc::format(f, ##__VA_ARGS__))
+	do                                                                                             \
+	{                                                                                              \
+		if (OpenApoc::logLevelEnabled(OpenApoc::LogLevel::Error))                                  \
+		{                                                                                          \
+			OpenApoc::Log(OpenApoc::LogLevel::Error, OpenApoc::UString(LOGGER_PREFIX),             \
+			              ::OpenApoc::format(f, ##__VA_ARGS__));                                   \
+		}                                                                                          \
+	} while (0)
 #else
 // At least msvc automatically removes the comma
 #define LogDebug(f, ...)                                                                           \
-	OpenApoc::Log(OpenApoc::LogLevel::Debug, LOGGER_PREFIX, ::OpenApoc::format(f, __VA_ARGS__))
+	do                                                                                             \
+	{                                                                                              \
+		if (OpenApoc::logLevelEnabled(OpenApoc::LogLevel::Debug))                                  \
+		{                                                                                          \
+			OpenApoc::Log(OpenApoc::LogLevel::Debug, LOGGER_PREFIX,                                \
+			              ::OpenApoc::format(f, __VA_ARGS__));                                     \
+		}                                                                                          \
+	} while (0)
 #define LogInfo(f, ...)                                                                            \
-	OpenApoc::Log(OpenApoc::LogLevel::Info, LOGGER_PREFIX, ::OpenApoc::format(f, __VA_ARGS__))
+	do                                                                                             \
+	{                                                                                              \
+		if (OpenApoc::logLevelEnabled(OpenApoc::LogLevel::Info))                                   \
+		{                                                                                          \
+			OpenApoc::Log(OpenApoc::LogLevel::Info, LOGGER_PREFIX,                                 \
+			              ::OpenApoc::format(f, __VA_ARGS__));                                     \
+		}                                                                                          \
+	} while (0)
 #define LogWarning(f, ...)                                                                         \
-	OpenApoc::Log(OpenApoc::LogLevel::Warning, LOGGER_PREFIX, ::OpenApoc::format(f, __VA_ARGS__))
+	do                                                                                             \
+	{                                                                                              \
+		if (OpenApoc::logLevelEnabled(OpenApoc::LogLevel::Warning))                                \
+		{                                                                                          \
+			OpenApoc::Log(OpenApoc::LogLevel::Warning, LOGGER_PREFIX,                              \
+			              ::OpenApoc::format(f, __VA_ARGS__));                                     \
+		}                                                                                          \
+	} while (0)
 #define LogError(f, ...)                                                                           \
-	OpenApoc::Log(OpenApoc::LogLevel::Error, LOGGER_PREFIX, ::OpenApoc::format(f, __VA_ARGS__))
+	do                                                                                             \
+	{                                                                                              \
+		if (OpenApoc::logLevelEnabled(OpenApoc::LogLevel::Error))                                  \
+		{                                                                                          \
+			OpenApoc::Log(OpenApoc::LogLevel::Error, LOGGER_PREFIX,                                \
+			              ::OpenApoc::format(f, __VA_ARGS__));                                     \
+		}                                                                                          \
+	} while (0)
 #endif
-//#else
-#if 0
-#define LogInfo(f, ...)
-#define LogWarning(f, ...)
-#define LogError(f, ...)
-#endif
-//#endif

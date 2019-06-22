@@ -48,7 +48,7 @@ template <typename Variant> struct any_to_variant<Variant, 0>
 		return boost::any_cast<typename std::variant_alternative<0, Variant>::type>(opt);
 	}
 };
-}
+} // namespace
 
 class ConfigFileImpl
 {
@@ -134,9 +134,17 @@ class ConfigFileImpl
 
 		try
 		{
-			po::store(
-			    po::command_line_parser(argc, argv).positional(posDesc).options(allOptions).run(),
-			    vm);
+			auto parsed = po::command_line_parser(argc, argv)
+			                  .positional(posDesc)
+			                  .options(allOptions)
+			                  .allow_unregistered()
+			                  .run();
+			po::store(parsed, vm);
+			auto unknown_options = po::collect_unrecognized(parsed.options, po::include_positional);
+			for (const auto &unknown : unknown_options)
+			{
+				LogWarning("Ignoring option \"%s\"", unknown);
+			}
 		}
 		catch (po::error &err)
 		{

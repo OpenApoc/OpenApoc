@@ -91,7 +91,7 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 			    currentAgent->name =
 			        std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)->getText();
 		    }
-		});
+	    });
 	formAgentStats->findControlTyped<TextEdit>("AGENT_NAME")
 	    ->addCallback(FormEventType::TextEditCancel, [this](FormsEvent *e) {
 		    auto currentAgent = selectedAgents.empty() ? nullptr : selectedAgents.front();
@@ -100,7 +100,7 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 			    std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)
 			        ->setText(currentAgent->name);
 		    }
-		});
+	    });
 
 	woundImage = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
 	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
@@ -937,7 +937,7 @@ void AEquipScreen::populateInventoryItemsBase()
 		{
 			equipment->ammo = ammoRemaining;
 		}
-		else if (type->ammo_types.size() == 0)
+		else if (type->ammo_types.empty())
 		{
 			equipment->ammo = type->max_ammo;
 		}
@@ -1547,7 +1547,7 @@ void AEquipScreen::processTemplate(int idx, bool remember)
 					{
 						equipment->ammo = ammoRemainingType;
 					}
-					else if (type->ammo_types.size() == 0)
+					else if (type->ammo_types.empty())
 					{
 						equipment->ammo = type->max_ammo;
 					}
@@ -1884,8 +1884,9 @@ void AEquipScreen::attemptCloseScreen()
 	{
 		fw().stageQueueCommand(
 		    {StageCmd::Command::PUSH,
-		     mksp<MessageBox>(tr("WARNING"), tr("You will lose any equipment left on the floor. "
-		                                        "Are you sure you wish to leave this agent?"),
+		     mksp<MessageBox>(tr("WARNING"),
+		                      tr("You will lose any equipment left on the floor. "
+		                         "Are you sure you wish to leave this agent?"),
 		                      MessageBox::ButtonOptions::YesNo, [this] { this->closeScreen(); })});
 	}
 	else

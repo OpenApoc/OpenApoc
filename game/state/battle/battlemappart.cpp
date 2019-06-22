@@ -141,9 +141,8 @@ int BattleMapPart::getAnimationFrame()
 	}
 	else
 	{
-		return type->animation_frames.size() == 0
-		           ? -1
-		           : animation_frame_ticks / TICKS_PER_FRAME_MAP_PART;
+		return type->animation_frames.empty() ? -1
+		                                      : animation_frame_ticks / TICKS_PER_FRAME_MAP_PART;
 	}
 }
 

@@ -359,7 +359,7 @@ void AgentAssignment::updateLocation()
 				    buildingLeftControl->findControl(AGENT_LIST_NAME)->setDirty();
 				    sourceRaisedBy->clearSelection();
 			    }
-			});
+		    });
 		leftList->addItem(buildingLeftControl);
 
 		auto agentLeftList = buildingLeftControl->createChild<MultilistBox>();
@@ -527,7 +527,7 @@ void AgentAssignment::addVehiclesToList(sp<MultilistBox> list, const int listOff
 				                            this->sourceRaisedBy = agentRightList;
 				                            this->isDragged = true;
 			                            }
-			                        });
+		                            });
 
 		addAgentsToList(agentRightList, offset + listOffset);
 	}

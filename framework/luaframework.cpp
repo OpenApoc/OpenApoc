@@ -16,7 +16,7 @@ template <typename RngPrecision> int metamethodXorshift128PlusToString(lua_State
 	lua_pushfstring(L, "[Xorshift128Plus @ %p]", (const void *)(*obj));
 	return 1;
 }
-}
+} // namespace
 
 void getFromLua(lua_State *L, int argNum, bool &v) { v = luaL_checkinteger(L, argNum); }
 void getFromLua(lua_State *L, int argNum, float &v) { v = luaL_checknumber(L, argNum); }

@@ -10,7 +10,8 @@
 #include <queue>
 
 // libsmacker.h doesn't set C abi by default, so wrap
-extern "C" {
+extern "C"
+{
 #include "dependencies/libsmacker/smacker.h"
 }
 

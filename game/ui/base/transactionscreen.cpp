@@ -232,9 +232,12 @@ void TransactionScreen::populateControlsVehicle()
 void TransactionScreen::populateControlsAgentEquipment()
 {
 	static const std::list<AEquipmentType::Type> agTypes = {
-	    AEquipmentType::Type::Grenade, AEquipmentType::Type::Weapon,
+	    AEquipmentType::Type::Grenade,
+	    AEquipmentType::Type::Weapon,
 	    // Ammo means everything else
-	    AEquipmentType::Type::Ammo, AEquipmentType::Type::Armor, AEquipmentType::Type::Loot,
+	    AEquipmentType::Type::Ammo,
+	    AEquipmentType::Type::Armor,
+	    AEquipmentType::Type::Loot,
 	};
 	int leftIndex = getLeftIndex();
 	int rightIndex = getRightIndex();
@@ -628,11 +631,11 @@ void TransactionScreen::attemptCloseScreen()
 	}
 	else
 	{
-		fw().stageQueueCommand(
-		    {StageCmd::Command::PUSH,
-		     mksp<MessageBox>(confirmClosureText, "", MessageBox::ButtonOptions::YesNoCancel,
-		                      [this] { closeScreen(); },
-		                      [] { fw().stageQueueCommand({StageCmd::Command::POP}); })});
+		fw().stageQueueCommand({StageCmd::Command::PUSH,
+		                        mksp<MessageBox>(
+		                            confirmClosureText, "", MessageBox::ButtonOptions::YesNoCancel,
+		                            [this] { closeScreen(); },
+		                            [] { fw().stageQueueCommand({StageCmd::Command::POP}); })});
 	}
 }
 

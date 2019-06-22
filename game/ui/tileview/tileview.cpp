@@ -13,8 +13,7 @@ namespace OpenApoc
 TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
                    TileViewMode initialMode)
     : Stage(), map(map), isoTileSize(isoTileSize), stratTileSize(stratTileSize),
-      viewMode(initialMode), scrollUpKB(false), scrollDownKB(false), scrollLeftKB(false),
-      scrollRightKB(false), dpySize(fw().displayGetWidth(), fw().displayGetHeight()),
+      viewMode(initialMode), dpySize(fw().displayGetWidth(), fw().displayGetHeight()),
       strategyViewBoxColour(212, 176, 172, 255), strategyViewBoxThickness(2.0f),
       selectedTilePosition(0, 0, 0), maxZDraw(map.size.z), centerPos(0, 0, 0),
       isoScrollSpeed(0.5, 0.5), stratScrollSpeed(2.0f, 2.0f)
