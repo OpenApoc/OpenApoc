@@ -301,9 +301,9 @@ sp<ImageSet> DataImpl::loadImageSet(const UString &path)
 	if (path.substr(0, 4) == "RAW:")
 	{
 		auto splitString = path.split(':');
-		imgSet =
-		    RawImage::loadSet(*this, splitString[1], Vec2<int>{Strings::toInteger(splitString[2]),
-		                                                       Strings::toInteger(splitString[3])});
+		imgSet = RawImage::loadSet(
+		    *this, splitString[1],
+		    Vec2<int>{Strings::toInteger(splitString[2]), Strings::toInteger(splitString[3])});
 	}
 	// PCK resources come in the format:
 	//"PCK:PCKFILE:TABFILE[:optional/ignored]"

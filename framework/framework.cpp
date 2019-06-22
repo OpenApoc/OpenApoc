@@ -288,7 +288,7 @@ ConfigOptionBool optionEnableTouchEvents("Framework", "EnableTouchEvents", "Enab
 #else
                                          false
 #endif
-                                         );
+);
 
 } // anonymous namespace
 
@@ -1253,13 +1253,14 @@ void Framework::toolTipStartTimer(up<Event> e)
 	// remove any pending timers
 	toolTipStopTimer();
 	p->toolTipTimerEvent = std::move(e);
-	p->toolTipTimerId = SDL_AddTimer(delay,
-	                                 [](unsigned int interval, void *data) -> unsigned int {
-		                                 fw().toolTipTimerCallback(interval, data);
-		                                 // remove this sdl timer
-		                                 return 0;
-		                             },
-	                                 nullptr);
+	p->toolTipTimerId = SDL_AddTimer(
+	    delay,
+	    [](unsigned int interval, void *data) -> unsigned int {
+		    fw().toolTipTimerCallback(interval, data);
+		    // remove this sdl timer
+		    return 0;
+	    },
+	    nullptr);
 }
 void Framework::toolTipStopTimer()
 {

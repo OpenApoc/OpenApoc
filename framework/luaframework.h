@@ -6,7 +6,8 @@
 #include <string>
 #include <vector>
 
-extern "C" {
+extern "C"
+{
 #include "dependencies/lua/lauxlib.h"
 #include "dependencies/lua/lua.h"
 #include "dependencies/lua/lualib.h"

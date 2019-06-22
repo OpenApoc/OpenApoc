@@ -11,7 +11,8 @@ namespace
 using namespace OpenApoc;
 
 std::set<int> allowedSampleRates = {
-    11025, 22050,
+    11025,
+    22050,
 };
 
 class RawSampleLoader : public SampleLoader

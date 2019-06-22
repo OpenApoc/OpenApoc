@@ -1,6 +1,7 @@
 #pragma once
 
-extern "C" {
+extern "C"
+{
 #include "dependencies/lua/lua.h"
 }
 #include "library/strings.h"
@@ -28,4 +29,4 @@ class LuaGameState
 	operator bool() const;
 	int callHook(const UString &hookName, int nargs, int nresults);
 };
-}
+} // namespace OpenApoc

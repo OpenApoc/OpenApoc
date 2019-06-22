@@ -222,7 +222,10 @@ int main(int argc, char **argv)
 		return EXIT_FAILURE;
 	}
 	const std::vector<Vec3<int>> voxel_sizes = {
-	    {1, 1, 1}, {32, 32, 16}, {33, 32, 16}, {77, 75, 2222},
+	    {1, 1, 1},
+	    {32, 32, 16},
+	    {33, 32, 16},
+	    {77, 75, 2222},
 	};
 	for (auto &size : voxel_sizes)
 	{
