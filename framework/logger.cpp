@@ -295,19 +295,12 @@ void Log(LogLevel level, UString prefix, const UString &text)
 #if defined(ERROR_DIALOG)
 		if (showDialogOnError && level == LogLevel::Error)
 		{
-			if (!Framework::tryGetInstance())
+			SDL_Window *window = nullptr;
+			if (Framework::tryGetInstance() && fw().displayHasWindow())
 			{
-				// No framework to have created a window, so don't try to show a dialog
+				window = static_cast<SDL_Window *>(fw().getWindowHandle());
 			}
-			else if (!fw().displayHasWindow())
-			{
-				// Framework created but without window, so don't try to show a dialog
-			}
-			else
-			{
-				SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "OpenApoc error", text.cStr(),
-			                         static_cast<SDL_Window *>(fw().getWindowHandle()));
-			}
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "OpenApoc error", text.cStr(), window);
 		}
 #endif
 	}
