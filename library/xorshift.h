@@ -23,11 +23,12 @@ template <class T, uint64_t A = 23, uint64_t B = 18, uint64_t C = 5> class Xorsh
 	static_assert(std::numeric_limits<result_type>::max() <= std::numeric_limits<uint64_t>::max(),
 	              "Can only be used on types of uint64_t size or smaller");
 
-	Xorshift128Plus(uint64_t seed = 0)
+	Xorshift128Plus(uint64_t initial_seed = 0) { seed(initial_seed); }
+	void seed(uint64_t seed_value)
 	{
 		// splitmix64 to initial seed to make sure there are some non-zero bits
-		s[0] = static_cast<result_type>(splitmix64(seed));
-		s[1] = static_cast<result_type>(splitmix64(seed ^ s[0]));
+		s[0] = static_cast<result_type>(splitmix64(seed_value));
+		s[1] = static_cast<result_type>(splitmix64(seed_value ^ s[0]));
 	}
 	Xorshift128Plus(uint64_t state[2])
 	{

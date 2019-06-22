@@ -151,14 +151,13 @@ void pushToLua(lua_State *L, const Xorshift128Plus<uint32_t> &v)
 
 template <> lua_CFunction getLuaObjectMethods<Xorshift128Plus<uint32_t>>(const std::string &key)
 {
-	if (key == "setState")
+	if (key == "seed")
 		return [](lua_State *L) {
 			Xorshift128Plus<uint32_t> **xorshift =
 			    (Xorshift128Plus<uint32_t> **)lua_touserdata(L, 1);
-			uint64_t buf[2] = {static_cast<uint64_t>(luaL_checkinteger(L, 2)),
-			                   static_cast<uint64_t>(luaL_checkinteger(L, 3))};
+			uint64_t buf = static_cast<uint64_t>(luaL_checkinteger(L, 2));
 			lua_settop(L, 0);
-			(*xorshift)->setState(buf);
+			(*xorshift)->seed(buf);
 			return 0;
 		};
 	else if (key == "randBoundsInclusive")
