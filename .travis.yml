@@ -18,7 +18,7 @@ matrix:
           packages:
             - g++-9
       env:
-        - MATRIX_ENV="PASS=build CXX='g++-9' CC='gcc-9' BUILD_TYPE=RelWithDebInfo"
+        - MATRIX_ENV="PASS=build CXX='g++-9' CC='gcc-9' BUILD_TYPE=Quick"
     - os: linux
       addons:
         apt:
