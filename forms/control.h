@@ -85,16 +85,15 @@ class Control : public std::enable_shared_from_this<Control>
 	bool takesFocus;
 	bool showBounds;
 	bool Enabled;
+	bool canCopy;
+	wp<Control> lastCopiedTo;
+	std::vector<sp<Control>> Controls;
 
 	UString ToolTipText;
 	sp<BitmapFont> ToolTipFont;
 	// transparent background by default
 	Colour ToolTipBackground;
 	std::vector<std::pair<unsigned int, Colour>> ToolTipBorders;
-
-	bool canCopy;
-	wp<Control> lastCopiedTo;
-	std::vector<sp<Control>> Controls;
 
 	std::map<UString, sp<RadioButtonGroup>> radiogroups;
 

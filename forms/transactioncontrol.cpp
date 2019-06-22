@@ -229,6 +229,7 @@ sp<TransactionControl> TransactionControl::createControl(GameState &state, State
 			break;
 		default:
 			LogError("Unknown type of agent %s.", agent.id);
+			return nullptr;
 	}
 
 	int price = 0;

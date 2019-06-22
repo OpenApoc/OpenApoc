@@ -23,6 +23,7 @@ class UnitAI
 		Hardcore
 	};
 	Type type; // cannot hide because serializer won't work
+	virtual ~UnitAI() = default;
 	virtual const UString getName();
 
 	// Wether AI is currently active

@@ -623,22 +623,22 @@ BattleView::BattleView(sp<GameState> gameState)
 		}
 	};
 
-	std::function<void(FormsEvent * e)> clickedSquad1 = [this, clickedSquad](FormsEvent *) {
+	std::function<void(FormsEvent * e)> clickedSquad1 = [clickedSquad](FormsEvent *) {
 		clickedSquad(0);
 	};
-	std::function<void(FormsEvent * e)> clickedSquad2 = [this, clickedSquad](FormsEvent *) {
+	std::function<void(FormsEvent * e)> clickedSquad2 = [clickedSquad](FormsEvent *) {
 		clickedSquad(1);
 	};
-	std::function<void(FormsEvent * e)> clickedSquad3 = [this, clickedSquad](FormsEvent *) {
+	std::function<void(FormsEvent * e)> clickedSquad3 = [clickedSquad](FormsEvent *) {
 		clickedSquad(2);
 	};
-	std::function<void(FormsEvent * e)> clickedSquad4 = [this, clickedSquad](FormsEvent *) {
+	std::function<void(FormsEvent * e)> clickedSquad4 = [clickedSquad](FormsEvent *) {
 		clickedSquad(3);
 	};
-	std::function<void(FormsEvent * e)> clickedSquad5 = [this, clickedSquad](FormsEvent *) {
+	std::function<void(FormsEvent * e)> clickedSquad5 = [clickedSquad](FormsEvent *) {
 		clickedSquad(4);
 	};
-	std::function<void(FormsEvent * e)> clickedSquad6 = [this, clickedSquad](FormsEvent *) {
+	std::function<void(FormsEvent * e)> clickedSquad6 = [clickedSquad](FormsEvent *) {
 		clickedSquad(5);
 	};
 	baseForm->findControlTyped<Graphic>("SQUAD_1_OVERLAY")
@@ -682,18 +682,24 @@ BattleView::BattleView(sp<GameState> gameState)
 			this->zoomAt(unit->position);
 		}
 	};
-	std::function<void(FormsEvent * e)> clickedUnitPortrait1 =
-	    [this, clickedUnitPortrait](FormsEvent *) { clickedUnitPortrait(0); };
-	std::function<void(FormsEvent * e)> clickedUnitPortrait2 =
-	    [this, clickedUnitPortrait](FormsEvent *) { clickedUnitPortrait(1); };
-	std::function<void(FormsEvent * e)> clickedUnitPortrait3 =
-	    [this, clickedUnitPortrait](FormsEvent *) { clickedUnitPortrait(2); };
-	std::function<void(FormsEvent * e)> clickedUnitPortrait4 =
-	    [this, clickedUnitPortrait](FormsEvent *) { clickedUnitPortrait(3); };
-	std::function<void(FormsEvent * e)> clickedUnitPortrait5 =
-	    [this, clickedUnitPortrait](FormsEvent *) { clickedUnitPortrait(4); };
-	std::function<void(FormsEvent * e)> clickedUnitPortrait6 =
-	    [this, clickedUnitPortrait](FormsEvent *) { clickedUnitPortrait(5); };
+	std::function<void(FormsEvent * e)> clickedUnitPortrait1 = [clickedUnitPortrait](FormsEvent *) {
+		clickedUnitPortrait(0);
+	};
+	std::function<void(FormsEvent * e)> clickedUnitPortrait2 = [clickedUnitPortrait](FormsEvent *) {
+		clickedUnitPortrait(1);
+	};
+	std::function<void(FormsEvent * e)> clickedUnitPortrait3 = [clickedUnitPortrait](FormsEvent *) {
+		clickedUnitPortrait(2);
+	};
+	std::function<void(FormsEvent * e)> clickedUnitPortrait4 = [clickedUnitPortrait](FormsEvent *) {
+		clickedUnitPortrait(3);
+	};
+	std::function<void(FormsEvent * e)> clickedUnitPortrait5 = [clickedUnitPortrait](FormsEvent *) {
+		clickedUnitPortrait(4);
+	};
+	std::function<void(FormsEvent * e)> clickedUnitPortrait6 = [clickedUnitPortrait](FormsEvent *) {
+		clickedUnitPortrait(5);
+	};
 	baseForm->findControlTyped<Graphic>("UNIT_1")->addCallback(FormEventType::MouseClick,
 	                                                           clickedUnitPortrait1);
 	baseForm->findControlTyped<Graphic>("UNIT_2")->addCallback(FormEventType::MouseClick,
@@ -726,18 +732,24 @@ BattleView::BattleView(sp<GameState> gameState)
 		}
 		this->zoomAt((*it)->position);
 	};
-	std::function<void(FormsEvent * e)> clickedUnitHostiles1 =
-	    [this, clickedUnitHostiles](FormsEvent *) { clickedUnitHostiles(0); };
-	std::function<void(FormsEvent * e)> clickedUnitHostiles2 =
-	    [this, clickedUnitHostiles](FormsEvent *) { clickedUnitHostiles(1); };
-	std::function<void(FormsEvent * e)> clickedUnitHostiles3 =
-	    [this, clickedUnitHostiles](FormsEvent *) { clickedUnitHostiles(2); };
-	std::function<void(FormsEvent * e)> clickedUnitHostiles4 =
-	    [this, clickedUnitHostiles](FormsEvent *) { clickedUnitHostiles(3); };
-	std::function<void(FormsEvent * e)> clickedUnitHostiles5 =
-	    [this, clickedUnitHostiles](FormsEvent *) { clickedUnitHostiles(4); };
-	std::function<void(FormsEvent * e)> clickedUnitHostiles6 =
-	    [this, clickedUnitHostiles](FormsEvent *) { clickedUnitHostiles(5); };
+	std::function<void(FormsEvent * e)> clickedUnitHostiles1 = [clickedUnitHostiles](FormsEvent *) {
+		clickedUnitHostiles(0);
+	};
+	std::function<void(FormsEvent * e)> clickedUnitHostiles2 = [clickedUnitHostiles](FormsEvent *) {
+		clickedUnitHostiles(1);
+	};
+	std::function<void(FormsEvent * e)> clickedUnitHostiles3 = [clickedUnitHostiles](FormsEvent *) {
+		clickedUnitHostiles(2);
+	};
+	std::function<void(FormsEvent * e)> clickedUnitHostiles4 = [clickedUnitHostiles](FormsEvent *) {
+		clickedUnitHostiles(3);
+	};
+	std::function<void(FormsEvent * e)> clickedUnitHostiles5 = [clickedUnitHostiles](FormsEvent *) {
+		clickedUnitHostiles(4);
+	};
+	std::function<void(FormsEvent * e)> clickedUnitHostiles6 = [clickedUnitHostiles](FormsEvent *) {
+		clickedUnitHostiles(5);
+	};
 	baseForm->findControlTyped<Graphic>("UNIT_1_HOSTILES")
 	    ->addCallback(FormEventType::MouseClick, clickedUnitHostiles1);
 	baseForm->findControlTyped<Graphic>("UNIT_2_HOSTILES")

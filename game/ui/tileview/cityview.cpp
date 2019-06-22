@@ -3651,7 +3651,7 @@ bool CityView::handleGameStateEvent(Event *e)
 				    }
 			    },
 			    // "No" callback
-			    [this, game_state, lab_facility]() {
+			    [game_state, lab_facility]() {
 				    fw().stageQueueCommand(
 				        {StageCmd::Command::PUSH, mksp<ResearchScreen>(game_state, lab_facility)});
 			    });
@@ -3710,7 +3710,7 @@ bool CityView::handleGameStateEvent(Event *e)
 			           ev->goal, tr("Do you wish to reasign the Workshop?")),
 			    MessageBox::ButtonOptions::YesNo,
 			    // Yes callback
-			    [this, game_state, lab_facility]() {
+			    [game_state, lab_facility]() {
 				    fw().stageQueueCommand(
 				        {StageCmd::Command::PUSH, mksp<ResearchScreen>(game_state, lab_facility)});
 			    });

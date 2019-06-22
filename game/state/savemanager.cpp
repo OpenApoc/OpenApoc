@@ -77,7 +77,7 @@ std::shared_future<void> SaveManager::loadSpecialSave(const SaveType type,
 	{
 		saveName = saveTypeNames.at(type);
 	}
-	catch (std::out_of_range)
+	catch (std::out_of_range &)
 	{
 		LogError("Cannot find name of save type %i", static_cast<int>(type));
 		return std::async(std::launch::deferred, []() -> void { return; });
@@ -146,7 +146,7 @@ bool writeArchiveWithBackup(SerializationArchive *archive, const UString &path, 
 			fs::rename(tempPath, savePath);
 		}
 	}
-	catch (fs::filesystem_error exception)
+	catch (fs::filesystem_error &exception)
 	{
 		if (shouldCleanup)
 		{
@@ -212,7 +212,7 @@ bool SaveManager::overrideGame(const SaveMetadata &metadata, const UString &newN
 			{
 				fs::rename(metadata.getFile().str(), newFile.str());
 			}
-			catch (fs::filesystem_error error)
+			catch (fs::filesystem_error &error)
 			{
 				LogWarning("Error while removing renamed save: \"%s\"", error.what());
 			}
@@ -249,7 +249,7 @@ bool SaveManager::specialSaveGame(SaveType type, const sp<GameState> gameState) 
 	{
 		saveName = saveTypeNames.at(type);
 	}
-	catch (std::out_of_range)
+	catch (std::out_of_range &)
 	{
 		LogError("Cannot find name of save type %i", static_cast<int>(type));
 		return false;
@@ -297,7 +297,7 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 			}
 		}
 	}
-	catch (fs::filesystem_error er)
+	catch (fs::filesystem_error &er)
 	{
 		LogError("Error while enumerating directory: \"%s\"", er.what());
 	}
@@ -322,7 +322,7 @@ bool SaveManager::deleteGame(const sp<SaveMetadata> &slot) const
 		fs::remove_all(slot->getFile().str());
 		return true;
 	}
-	catch (fs::filesystem_error exception)
+	catch (fs::filesystem_error &exception)
 	{
 		LogError("Unable to delete saved gane: \"%s\"", exception.what());
 		return false;

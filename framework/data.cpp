@@ -786,7 +786,7 @@ bool DataImpl::writeImage(UString systemPath, sp<Image> image, sp<Palette> palet
 				fs::create_directories(outDir);
 			}
 			// Just catch any problem and continue anyway?
-			catch (fs::filesystem_error e)
+			catch (fs::filesystem_error &e)
 			{
 				LogWarning("create_directories failed with \"%s\"", e.what());
 			}
