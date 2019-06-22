@@ -134,7 +134,7 @@ void Battle::initBattle(GameState &state, bool first)
 		o.second->psiSuccessSounds = state.battle_common_sample_list->psiSuccessSounds;
 		o.second->psiFailSounds = state.battle_common_sample_list->psiFailSounds;
 	}
-	if (forces.size() == 0)
+	if (forces.empty())
 	{
 		// Init forces and fill squads with nullptrs so that we have where to place units
 		for (auto &o : this->participants)
@@ -911,13 +911,13 @@ void Battle::initialUnitSpawn(GameState &state)
 								}
 								u->position = tile->getRestingPosition(u->isLarge());
 								unitsToSpawn.pop_back();
-								if (unitsToSpawn.size() == 0)
+								if (unitsToSpawn.empty())
 									break;
 							}
-							if (unitsToSpawn.size() == 0)
+							if (unitsToSpawn.empty())
 								break;
 						}
-						if (unitsToSpawn.size() == 0)
+						if (unitsToSpawn.empty())
 							break;
 					}
 
@@ -1004,7 +1004,7 @@ void Battle::initialUnitSpawn(GameState &state)
 								*/
 								unitsToSpawn.pop_back();
 								numSpawned++;
-								if (unitsToSpawn.size() == 0
+								if (unitsToSpawn.empty()
 								    // This makes us spawn every civilian and loner individually
 								    // Except X-Com scientists
 								    || (numSpawned > 0 && !requestCivilian &&

@@ -230,7 +230,7 @@ void Building::updateCargo(GameState &state)
 						ferries.emplace_back(&state, t.first);
 					}
 				}
-				if (ferries.size() == 0)
+				if (ferries.empty())
 				{
 					LogError("There is no ferry type for cargo with bio = %s in the game!?",
 					         needBio);
@@ -280,7 +280,7 @@ void Building::updateCargo(GameState &state)
 						ferries.emplace_back(&state, t.first);
 					}
 				}
-				if (ferries.size() == 0)
+				if (ferries.empty())
 				{
 					LogError("There is no ferry type for agents in the game!?");
 					return;

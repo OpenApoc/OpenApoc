@@ -687,7 +687,7 @@ sp<AEquipment> Agent::addEquipmentByType(GameState &state, Vec2<int> pos,
 	auto equipment = mksp<AEquipment>();
 	equipment->type = equipmentType;
 	equipment->armor = equipmentType->armor;
-	if (equipmentType->ammo_types.size() == 0)
+	if (equipmentType->ammo_types.empty())
 	{
 		equipment->ammo = equipmentType->max_ammo;
 	}

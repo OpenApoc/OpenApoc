@@ -564,7 +564,7 @@ bool placeSector(GameState &state, std::vector<sp<BattleMapSector>> &sec_map,
 			}
 		}
 
-		if (possible_locations.size() == 0)
+		if (possible_locations.empty())
 			continue;
 
 		auto location = pickRandom(state.rng, possible_locations);
@@ -1140,7 +1140,7 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 				}
 				for (auto &pair : tiles.loot_locations)
 				{
-					if (target_organisation->loot[pair.second].size() == 0)
+					if (target_organisation->loot[pair.second].empty())
 						continue;
 					auto l = pickRandom(state.rng, target_organisation->loot[pair.second]);
 					if (!l)

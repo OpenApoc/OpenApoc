@@ -370,7 +370,7 @@ class JukeBoxImpl : public JukeBox
 	static void progressTrack(void *data)
 	{
 		JukeBoxImpl *jukebox = static_cast<JukeBoxImpl *>(data);
-		if (jukebox->trackList.size() == 0)
+		if (jukebox->trackList.empty())
 		{
 			LogWarning("Trying to play empty jukebox");
 			return;

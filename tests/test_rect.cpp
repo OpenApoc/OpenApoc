@@ -20,7 +20,7 @@ static bool test_one_rect_compaction(std::set<Rect<T>> rect_set, unsigned expect
 	}
 	unsigned num_collapsed = Rect<T>::compactRectSet(rect_set);
 
-	if (expected_start_count != 0 && rect_set.size() == 0)
+	if (expected_start_count != 0 && rect_set.empty())
 	{
 		LogError("Collapsed down to zero size set");
 		return false;

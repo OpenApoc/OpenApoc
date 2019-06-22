@@ -938,7 +938,7 @@ BattleView::BattleView(sp<GameState> gameState)
 
 	std::function<void(bool right)> throwItem = [this](bool right) {
 		bool fail = false;
-		if (this->battle.battleViewSelectedUnits.size() == 0)
+		if (this->battle.battleViewSelectedUnits.empty())
 		{
 			fail = true;
 		}
@@ -1731,9 +1731,8 @@ void BattleView::updateSelectedUnits()
 			it++;
 		}
 	}
-	lastSelectedUnit = battle.battleViewSelectedUnits.size() == 0
-	                       ? nullptr
-	                       : battle.battleViewSelectedUnits.front();
+	lastSelectedUnit =
+	    battle.battleViewSelectedUnits.empty() ? nullptr : battle.battleViewSelectedUnits.front();
 
 	// Cancel stuff that cancels on unit change
 	if (prevLSU != lastSelectedUnit)
@@ -1770,7 +1769,7 @@ void BattleView::updateSelectedUnits()
 
 void BattleView::updateSelectionMode()
 {
-	if (battle.battleViewSelectedUnits.size() == 0)
+	if (battle.battleViewSelectedUnits.empty())
 	{
 		if (modifierLCtrl || modifierRCtrl)
 		{
@@ -2426,7 +2425,7 @@ void BattleView::orderTurn(Vec3<int> target)
 
 void BattleView::orderThrow(Vec3<int> target, bool right)
 {
-	if (battle.battleViewSelectedUnits.size() == 0)
+	if (battle.battleViewSelectedUnits.empty())
 	{
 		return;
 	}
@@ -2453,7 +2452,7 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 
 void BattleView::orderUse(bool right, bool automatic)
 {
-	if (battle.battleViewSelectedUnits.size() == 0)
+	if (battle.battleViewSelectedUnits.empty())
 	{
 		return;
 	}
@@ -2582,7 +2581,7 @@ void BattleView::openAgentInventory()
 
 void BattleView::orderDrop(bool right)
 {
-	if (battle.battleViewSelectedUnits.size() == 0)
+	if (battle.battleViewSelectedUnits.empty())
 	{
 		return;
 	}
@@ -2682,7 +2681,7 @@ void BattleView::orderSelect(StateRef<BattleUnit> u, bool inverse, bool additive
 
 void BattleView::orderTeleport(Vec3<int> target, bool right)
 {
-	if (battle.battleViewSelectedUnits.size() == 0)
+	if (battle.battleViewSelectedUnits.empty())
 	{
 		return;
 	}
@@ -2797,7 +2796,7 @@ void BattleView::orderFocus(StateRef<BattleUnit> u)
 
 void BattleView::orderCancelPsi()
 {
-	if (battle.battleViewSelectedUnits.size() == 0)
+	if (battle.battleViewSelectedUnits.empty())
 	{
 		return;
 	}
@@ -2807,7 +2806,7 @@ void BattleView::orderCancelPsi()
 
 void BattleView::orderPsiAttack(StateRef<BattleUnit> u, PsiStatus status, bool right)
 {
-	if (battle.battleViewSelectedUnits.size() == 0)
+	if (battle.battleViewSelectedUnits.empty())
 	{
 		return;
 	}
@@ -4395,7 +4394,7 @@ void BattleView::finish()
 AgentEquipmentInfo BattleView::createItemOverlayInfo(bool rightHand)
 {
 	AgentEquipmentInfo a;
-	if (battle.battleViewSelectedUnits.size() == 0)
+	if (battle.battleViewSelectedUnits.empty())
 	{
 		return a;
 	}

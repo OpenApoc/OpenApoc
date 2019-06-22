@@ -937,7 +937,7 @@ void AEquipScreen::populateInventoryItemsBase()
 		{
 			equipment->ammo = ammoRemaining;
 		}
-		else if (type->ammo_types.size() == 0)
+		else if (type->ammo_types.empty())
 		{
 			equipment->ammo = type->max_ammo;
 		}
@@ -1547,7 +1547,7 @@ void AEquipScreen::processTemplate(int idx, bool remember)
 					{
 						equipment->ammo = ammoRemainingType;
 					}
-					else if (type->ammo_types.size() == 0)
+					else if (type->ammo_types.empty())
 					{
 						equipment->ammo = type->max_ammo;
 					}

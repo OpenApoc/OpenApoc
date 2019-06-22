@@ -453,7 +453,7 @@ class SpriteBuffer
 			gl->DeleteBuffers(1, &vertex_buffer_id);
 	}
 	bool isFull() const { return buffer_contents >= this->buffer.size(); }
-	bool isEmpty() const { return this->buffer.size() == 0; }
+	bool isEmpty() const { return this->buffer.empty(); }
 	void reset() { this->buffer_contents = 0; }
 	void pushRGB(sp<SpritesheetEntry> e, Vec2<float> screenPos, Vec2<float> screenSize, Colour tint)
 	{
