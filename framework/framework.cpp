@@ -301,18 +301,52 @@ UString Framework::getCDPath() const { return cdPathOption.get(); }
 
 Framework *Framework::instance = nullptr;
 
+// TODO: Make this moddable
+const std::vector<std::vector<UString>> playlists = {
+    // None
+    {},
+    // Cityscape Ambient
+    {"music:0", "music:1", "music:2", "music:3", "music:4", "music:5", "music:6", "music:7",
+     "music:8", "music:9"},
+    // Tactical Ambient (also Cityscape Action)
+    {"music:10", "music:11", "music:12", "music:13", "music:14", "music:15", "music:16", "music:17",
+     "music:18", "music:19"},
+    // Tactical Action
+    {"music:20", "music:21", "music:22", "music:23", "music:24", "music:25", "music:26",
+     "music:27"},
+    // Alien Dimension
+    {"music:28", "music:29", "music:30", "music:31", "music:32"}};
+
 class JukeBoxImpl : public JukeBox
 {
 	Framework &fw;
 	unsigned int position;
 	std::vector<sp<MusicTrack>> trackList;
 	PlayMode mode;
+	PlayList list;
 
   public:
-	JukeBoxImpl(Framework &fw) : fw(fw), mode(PlayMode::Loop) {}
+	JukeBoxImpl(Framework &fw) : fw(fw), position(0), mode(PlayMode::Shuffle), list(PlayList::None)
+	{
+	}
 	~JukeBoxImpl() override { this->stop(); }
 
-	void play(std::vector<UString> tracks, PlayMode mode) override
+	void play(PlayList list, PlayMode mode) override
+	{
+		if (this->list == list)
+			return;
+		this->list = list;
+		if (this->list == PlayList::None)
+		{
+			this->stop();
+		}
+		else
+		{
+			this->play(playlists[(int)list], mode);
+		}
+	}
+
+	void play(const std::vector<UString> &tracks, PlayMode mode) override
 	{
 		this->trackList.clear();
 		this->position = 0;
@@ -336,6 +370,9 @@ class JukeBoxImpl : public JukeBox
 			LogWarning("Trying to play empty jukebox");
 			return;
 		}
+		if (jukebox->mode == PlayMode::Shuffle)
+			jukebox->position = rand() % jukebox->trackList.size();
+
 		if (jukebox->position >= jukebox->trackList.size())
 		{
 			LogInfo("End of jukebox playlist");
@@ -349,7 +386,11 @@ class JukeBoxImpl : public JukeBox
 		if (jukebox->mode == PlayMode::Loop)
 			jukebox->position = jukebox->position % jukebox->trackList.size();
 	}
-	void stop() override { fw.soundBackend->stopMusic(); }
+	void stop() override
+	{
+		this->list = PlayList::None;
+		fw.soundBackend->stopMusic();
+	}
 };
 
 class FrameworkPrivate

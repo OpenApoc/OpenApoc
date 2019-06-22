@@ -1202,6 +1202,7 @@ BattleView::~BattleView() = default;
 void BattleView::begin()
 {
 	BattleTileView::begin();
+	fw().jukebox->play(JukeBox::PlayList::Tactical);
 	uiTabsRT[0]->findControl("BUTTON_LAYER_1")->setVisible(maxZDraw >= 1);
 	uiTabsRT[0]->findControl("BUTTON_LAYER_2")->setVisible(maxZDraw >= 2);
 	uiTabsRT[0]->findControl("BUTTON_LAYER_3")->setVisible(maxZDraw >= 3);

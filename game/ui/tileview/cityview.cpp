@@ -1500,6 +1500,15 @@ void CityView::begin()
 {
 	vanillaControls = !config().getBool("OpenApoc.NewFeature.OpenApocCityControls");
 	CityTileView::begin();
+	if (state->current_city.id == "CITYMAP_ALIEN")
+	{
+
+		fw().jukebox->play(JukeBox::PlayList::Alien);
+	}
+	else
+	{
+		fw().jukebox->play(JukeBox::PlayList::City);
+	}
 	if (state->newGame)
 	{
 		state->newGame = false;
