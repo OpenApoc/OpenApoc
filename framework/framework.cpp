@@ -1357,4 +1357,6 @@ UString Framework::textGetClipboard()
 
 void Framework::threadPoolTaskEnqueue(std::function<void()> task) { p->threadPool->enqueue(task); }
 
+void *Framework::getWindowHandle() const { return static_cast<void *>(p->window); }
+
 }; // namespace OpenApoc
