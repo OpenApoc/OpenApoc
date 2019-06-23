@@ -3,6 +3,7 @@
 #endif
 
 #include "framework/data.h"
+#include "framework/filesystem.h"
 #include "framework/framework.h"
 #include "framework/fs.h"
 #include "framework/logger.h"
@@ -238,6 +239,19 @@ FileSystem::FileSystem(std::vector<UString> paths)
 		else
 			LogInfo("Resource dir \"%s\" mounted to \"%s\"", p, PHYSFS_getMountPoint(p.cStr()));
 	}
+	auto current_path = fs::current_path();
+	auto canonical_current_path = fs::canonical(current_path);
+
+	LogInfo("Current path: \"%s\"", canonical_current_path);
+
+	LogInfo("Physfs search dirs:");
+	char **search_paths = PHYSFS_getSearchPath();
+	int index = 0;
+	for (char **i = search_paths; *i != NULL; i++)
+		LogInfo("%d: \"%s\"", index++, *i);
+
+	PHYSFS_freeList(search_paths);
+
 	this->writeDir = PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME);
 	LogInfo("Setting write directory to \"%s\"", this->writeDir);
 	PHYSFS_setWriteDir(this->writeDir.cStr());
