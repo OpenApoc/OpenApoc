@@ -7,6 +7,7 @@
 #include "framework/configfile.h"
 #include "framework/framework.h"
 #include "library/sp.h"
+#include <atomic>
 #include <chrono>
 #include <cstdarg>
 #include <mutex>
@@ -173,7 +174,7 @@ LogLevel fileLogLevel;
 LogLevel backtraceLogLevel;
 bool showDialogOnError;
 
-bool loggerInited = false;
+std::atomic<bool> loggerInited = false;
 
 static std::mutex logMutex;
 static std::chrono::time_point<std::chrono::high_resolution_clock> timeInit =
@@ -181,6 +182,11 @@ static std::chrono::time_point<std::chrono::high_resolution_clock> timeInit =
 
 static void initLogger()
 {
+	std::lock_guard<std::mutex> lock(logMutex);
+	// It's possible we've raced and hit initLogger() from more than 1 thread, so check again with
+	// the logMutex held
+	if (loggerInited)
+		return;
 	outFile = NULL;
 
 	// Handle Log calls before the settings are read, just output everything to stdout
@@ -239,13 +245,13 @@ void Log(LogLevel level, UString prefix, const UString &text)
 {
 	bool exit_app = false;
 	const char *level_prefix;
+	if (!loggerInited)
+	{
+		initLogger();
+	}
 
 	{
 		std::lock_guard<std::mutex> lock(logMutex);
-		if (!loggerInited)
-		{
-			initLogger();
-		}
 
 		bool writeToFile = (level <= fileLogLevel);
 		bool writeToStderr = (level <= stderrLogLevel);
