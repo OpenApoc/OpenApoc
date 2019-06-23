@@ -15,6 +15,7 @@
 #include "library/xorshift.h"
 #include <SDL.h>
 #include <algorithm>
+#include <chrono>
 #include <list>
 #include <map>
 #include <vector>
@@ -330,6 +331,11 @@ class JukeBoxImpl : public JukeBox
   public:
 	JukeBoxImpl(Framework &fw) : fw(fw), position(0), mode(PlayMode::Shuffle), list(PlayList::None)
 	{
+		// Use the time to give a little initial randomness to the shuffle rng
+		auto time_now = std::chrono::system_clock::now();
+		uint64_t time_seconds =
+		    std::chrono::duration_cast<std::chrono::seconds>(time_now.time_since_epoch()).count();
+		rng.seed(time_seconds);
 	}
 	~JukeBoxImpl() override { this->stop(); }
 
