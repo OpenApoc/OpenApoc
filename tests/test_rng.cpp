@@ -31,6 +31,23 @@ int main(int argc, char **argv)
 		return EXIT_FAILURE;
 	}
 
+	// Reseed and check it matches
+	rng.seed(0);
+	r1 = rng();
+	r2 = rng();
+
+	if (r1 != expected_r1)
+	{
+		LogError("unexpected post-reseed r1 0x%016x, expected 0x%016x", r1, expected_r1);
+		return EXIT_FAILURE;
+	}
+
+	if (r2 != expected_r2)
+	{
+		LogError("unexpected post-reseed r2 0x%016x, expected 0x%016x", r2, expected_r2);
+		return EXIT_FAILURE;
+	}
+
 	// Save the state to another rng and check that result matches
 
 	uint64_t s[2];

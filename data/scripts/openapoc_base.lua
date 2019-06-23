@@ -45,7 +45,7 @@ OA.hook.newGame = function()
 	--seed the rng on game start
 	if CFG.getBool('OpenApoc.NewFeature.SeedRng') == true then
 		local seed = os.time()
-		GS.rng:setState(seed, -seed)
+		GS.rng:seed(seed)
 	end
 end
 
