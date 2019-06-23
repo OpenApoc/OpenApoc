@@ -12,6 +12,7 @@
 #include "framework/stagestack.h"
 #include "framework/trace.h"
 #include "library/sp.h"
+#include "library/xorshift.h"
 #include <SDL.h>
 #include <algorithm>
 #include <list>
@@ -324,6 +325,7 @@ class JukeBoxImpl : public JukeBox
 	std::vector<sp<MusicTrack>> trackList;
 	PlayMode mode;
 	PlayList list;
+	Xorshift128Plus<uint64_t> rng;
 
   public:
 	JukeBoxImpl(Framework &fw) : fw(fw), position(0), mode(PlayMode::Shuffle), list(PlayList::None)
@@ -331,7 +333,7 @@ class JukeBoxImpl : public JukeBox
 	}
 	~JukeBoxImpl() override { this->stop(); }
 
-	void shuffle() { std::random_shuffle(trackList.begin(), trackList.end()); }
+	void shuffle() { std::shuffle(trackList.begin(), trackList.end(), rng); }
 
 	void play(PlayList list, PlayMode mode) override
 	{
