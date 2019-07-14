@@ -52,12 +52,12 @@ void BattleMapPart::die(GameState &state, bool explosive, bool violently)
 				break;
 			case BattleMapPartType::Type::LeftWall:
 				state.current_battle->placeDoodad({&state, "DOODAD_29_EXPLODING_TERRAIN"},
-				                                  tileObject->getCenter() -
+				                                  tileObject->getCenter() +
 				                                      Vec3<float>(-0.5f, 0.0f, 0.0f));
 				break;
 			case BattleMapPartType::Type::RightWall:
 				state.current_battle->placeDoodad({&state, "DOODAD_29_EXPLODING_TERRAIN"},
-				                                  tileObject->getCenter() -
+				                                  tileObject->getCenter() +
 				                                      Vec3<float>(0.0f, -0.5f, 0.0f));
 				break;
 			case BattleMapPartType::Type::Feature:
