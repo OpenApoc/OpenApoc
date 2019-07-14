@@ -717,6 +717,8 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void fallUnconscious(GameState &state, StateRef<BattleUnit> attacker = nullptr);
 	// Process unit dying
 	void die(GameState &state, StateRef<BattleUnit> attacker = nullptr, bool violently = true);
+	// Remove unit from any 'visible' lists
+	void markUnVisible(GameState &state);
 
 	// Update
 

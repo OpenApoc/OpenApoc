@@ -4471,7 +4471,11 @@ void BattleUnit::dropDown(GameState &state)
 		}
 	}
 
-	// Remove from list of visible units
+	this->markUnVisible(state);
+}
+
+void BattleUnit::markUnVisible(GameState &state)
+{ // Remove from list of visible units
 	StateRef<BattleUnit> srThis = {&state, id};
 	for (auto &units : state.current_battle->visibleUnits)
 	{
@@ -4499,6 +4503,7 @@ void BattleUnit::dropDown(GameState &state)
 
 void BattleUnit::retreat(GameState &state)
 {
+	this->markUnVisible(state);
 	if (shadowObject)
 	{
 		shadowObject->removeFromMap();
