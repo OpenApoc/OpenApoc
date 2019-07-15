@@ -56,7 +56,7 @@ void BattleTileView::updateHiddenBar()
 		totalTU += u.second->initialTU - reserve;
 		remainingTU += std::max(0, u.second->agent->modified_stats.time_units - reserve);
 	}
-	int maxWidth = clamp(width - remainingTU * width / totalTU, 0, width);
+	int maxWidth = totalTU ? clamp(width - remainingTU * width / totalTU, 0, width) : 0;
 
 	auto progressBar = mksp<RGBImage>(Vec2<int>{width, height});
 	{
