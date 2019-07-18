@@ -1577,6 +1577,13 @@ void BattleTileView::render()
 		                      state.battle_common_sample_list->burn->format.channels;
 		fw().soundBackend->playSample(state.battle_common_sample_list->burn, closestFirePosition);
 	}
+
+	if (this->debugHotkeyMode)
+	{
+		auto font = ui().getFont("smallset");
+		auto cursorPositionString = font->getString(format("Cursor at %s", selectedTilePosition));
+		r.draw(cursorPositionString, {0, 0});
+	}
 }
 
 void BattleTileView::update()
