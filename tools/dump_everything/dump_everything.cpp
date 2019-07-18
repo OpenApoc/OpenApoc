@@ -1,5 +1,8 @@
+#include "framework/configfile.h"
+#include "framework/data.h"
 #include "framework/filesystem.h"
 #include "framework/framework.h"
+#include "framework/image.h"
 #include "framework/logger.h"
 
 using namespace OpenApoc;
@@ -1151,9 +1154,13 @@ static void dumpPcx(fs::path outDir, const UString &prefix)
 	fw().data->writeImage(path.native(), img);
 }
 
-int main(int, char **)
+int main(int argc, char **argv)
 {
-	Framework fw("OpenApoc", {}, false);
+	if (OpenApoc::config().parseOptions(argc, argv))
+	{
+		return EXIT_FAILURE;
+	}
+	Framework fw("OpenApoc", false);
 
 	fs::path dump_path = "dumped_data";
 	fs::remove_all(dump_path);
