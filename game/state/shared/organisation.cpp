@@ -863,7 +863,7 @@ void Organisation::Mission::execute(GameState &state, StateRef<City> city,
 			}
 		}
 	}
-	if (availableVehicles.size() == 0)
+	if (availableVehicles.empty())
 	{
 		// None available to take mission
 		return;
@@ -883,7 +883,7 @@ void Organisation::Mission::execute(GameState &state, StateRef<City> city,
 		}
 	}
 	// Pick one with highest count
-	if (buildingsRandomizer.size() == 0)
+	if (buildingsRandomizer.empty())
 	{
 		count = maxSeenCount;
 		for (auto &e : availableVehicles)
@@ -952,7 +952,7 @@ void Organisation::Mission::execute(GameState &state, StateRef<City> city,
 		}
 		buildingsRandomizer.push_back(b.second);
 	}
-	if (buildingsRandomizer.size() == 0)
+	if (buildingsRandomizer.empty())
 	{
 		return;
 	}

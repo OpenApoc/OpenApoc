@@ -221,12 +221,15 @@ float FlyingVehicleTileHelper::getDistanceStatic(Vec3<float> from, Vec3<float> t
 {
 	auto diffStart = toStart - from;
 	auto diffEnd = toEnd - from - Vec3<float>{1.0f, 1.0f, 1.0f};
-	auto xDiff = from.x >= toStart.x && from.x < toEnd.x ? 0.0f : std::min(std::abs(diffStart.x),
-	                                                                       std::abs(diffEnd.x));
-	auto yDiff = from.y >= toStart.y && from.y < toEnd.y ? 0.0f : std::min(std::abs(diffStart.y),
-	                                                                       std::abs(diffEnd.y));
-	auto zDiff = from.z >= toStart.z && from.z < toEnd.z ? 0.0f : std::min(std::abs(diffStart.z),
-	                                                                       std::abs(diffEnd.z));
+	auto xDiff = from.x >= toStart.x && from.x < toEnd.x
+	                 ? 0.0f
+	                 : std::min(std::abs(diffStart.x), std::abs(diffEnd.x));
+	auto yDiff = from.y >= toStart.y && from.y < toEnd.y
+	                 ? 0.0f
+	                 : std::min(std::abs(diffStart.y), std::abs(diffEnd.y));
+	auto zDiff = from.z >= toStart.z && from.z < toEnd.z
+	                 ? 0.0f
+	                 : std::min(std::abs(diffStart.z), std::abs(diffEnd.z));
 	return sqrtf(xDiff * xDiff + yDiff * yDiff + zDiff * zDiff);
 }
 
@@ -2911,15 +2914,13 @@ bool VehicleMission::advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> 
 				                std::abs(tFrom->position.z - it->z) > 1;
 				if (v.type->isGround())
 				{
-					cantSkip = cantSkip ||
-					           !GroundVehicleTileHelper{tFrom->map, v}.canEnterTile(
-					               tFrom, tFrom->map.getTile(*it));
+					cantSkip = cantSkip || !GroundVehicleTileHelper{tFrom->map, v}.canEnterTile(
+					                           tFrom, tFrom->map.getTile(*it));
 				}
 				else
 				{
-					cantSkip = cantSkip ||
-					           !FlyingVehicleTileHelper{tFrom->map, v}.canEnterTile(
-					               tFrom, tFrom->map.getTile(*it));
+					cantSkip = cantSkip || !FlyingVehicleTileHelper{tFrom->map, v}.canEnterTile(
+					                           tFrom, tFrom->map.getTile(*it));
 				}
 				canSkip = canSkip || !cantSkip;
 			}
@@ -3419,10 +3420,12 @@ float GroundVehicleTileHelper::getDistanceStatic(Vec3<float> from, Vec3<float> t
 {
 	auto diffStart = toStart - from;
 	auto diffEnd = toEnd - from - Vec3<float>{1.0f, 1.0f, 1.0f};
-	auto xDiff = from.x >= toStart.x && from.x < toEnd.x ? 0.0f : std::min(std::abs(diffStart.x),
-	                                                                       std::abs(diffEnd.x));
-	auto yDiff = from.y >= toStart.y && from.y < toEnd.y ? 0.0f : std::min(std::abs(diffStart.y),
-	                                                                       std::abs(diffEnd.y));
+	auto xDiff = from.x >= toStart.x && from.x < toEnd.x
+	                 ? 0.0f
+	                 : std::min(std::abs(diffStart.x), std::abs(diffEnd.x));
+	auto yDiff = from.y >= toStart.y && from.y < toEnd.y
+	                 ? 0.0f
+	                 : std::min(std::abs(diffStart.y), std::abs(diffEnd.y));
 	return xDiff + yDiff;
 }
 

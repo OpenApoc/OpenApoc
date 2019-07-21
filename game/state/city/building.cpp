@@ -230,7 +230,7 @@ void Building::updateCargo(GameState &state)
 						ferries.emplace_back(&state, t.first);
 					}
 				}
-				if (ferries.size() == 0)
+				if (ferries.empty())
 				{
 					LogError("There is no ferry type for cargo with bio = %s in the game!?",
 					         needBio);
@@ -280,7 +280,7 @@ void Building::updateCargo(GameState &state)
 						ferries.emplace_back(&state, t.first);
 					}
 				}
-				if (ferries.size() == 0)
+				if (ferries.empty())
 				{
 					LogError("There is no ferry type for agents in the game!?");
 					return;
@@ -420,9 +420,8 @@ void Building::updateCargo(GameState &state)
 					// Check it agrees to ferry for this org
 					if (checkRelationship)
 					{
-						if (e.first &&
-						    v.second->owner->isRelatedTo(e.first) ==
-						        Organisation::Relation::Hostile)
+						if (e.first && v.second->owner->isRelatedTo(e.first) ==
+						                   Organisation::Relation::Hostile)
 						{
 							continue;
 						}
@@ -543,9 +542,8 @@ void Building::updateCargo(GameState &state)
 					// Check it agrees to ferry for this org
 					if (checkRelationship)
 					{
-						if (e.first &&
-						    v.second->owner->isRelatedTo(e.first) ==
-						        Organisation::Relation::Hostile)
+						if (e.first && v.second->owner->isRelatedTo(e.first) ==
+						                   Organisation::Relation::Hostile)
 						{
 							continue;
 						}

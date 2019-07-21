@@ -12,8 +12,10 @@
 #include "framework/stagestack.h"
 #include "framework/trace.h"
 #include "library/sp.h"
+#include "library/xorshift.h"
 #include <SDL.h>
 #include <algorithm>
+#include <chrono>
 #include <list>
 #include <map>
 #include <vector>
@@ -282,6 +284,14 @@ ConfigOptionFloat optionHostilesMultiplierCheat("OpenApoc.Cheat", "HostilesMulti
 ConfigOptionFloat optionStatGrowthMultiplierCheat("OpenApoc.Cheat", "StatGrowthMultiplier",
                                                   "Multiplier for agent stat growth", 1.0f);
 
+ConfigOptionBool optionEnableTouchEvents("Framework", "EnableTouchEvents", "Enable touch events",
+#ifdef ANDROID
+                                         true
+#else
+                                         false
+#endif
+);
+
 } // anonymous namespace
 
 namespace OpenApoc
@@ -293,18 +303,60 @@ UString Framework::getCDPath() const { return cdPathOption.get(); }
 
 Framework *Framework::instance = nullptr;
 
+// TODO: Make this moddable
+const std::vector<std::vector<UString>> playlists = {
+    // None
+    {},
+    // Cityscape Ambient
+    {"music:0", "music:1", "music:2", "music:3", "music:4", "music:5", "music:6", "music:7",
+     "music:8", "music:9"},
+    // Tactical Ambient (also Cityscape Action)
+    {"music:10", "music:11", "music:12", "music:13", "music:14", "music:15", "music:16", "music:17",
+     "music:18", "music:19"},
+    // Tactical Action
+    {"music:20", "music:21", "music:22", "music:23", "music:24", "music:25", "music:26",
+     "music:27"},
+    // Alien Dimension
+    {"music:28", "music:29", "music:30", "music:31", "music:32"}};
+
 class JukeBoxImpl : public JukeBox
 {
 	Framework &fw;
 	unsigned int position;
 	std::vector<sp<MusicTrack>> trackList;
 	PlayMode mode;
+	PlayList list;
+	Xorshift128Plus<uint64_t> rng;
 
   public:
-	JukeBoxImpl(Framework &fw) : fw(fw), mode(PlayMode::Loop) {}
+	JukeBoxImpl(Framework &fw) : fw(fw), position(0), mode(PlayMode::Shuffle), list(PlayList::None)
+	{
+		// Use the time to give a little initial randomness to the shuffle rng
+		auto time_now = std::chrono::system_clock::now();
+		uint64_t time_seconds =
+		    std::chrono::duration_cast<std::chrono::seconds>(time_now.time_since_epoch()).count();
+		rng.seed(time_seconds);
+	}
 	~JukeBoxImpl() override { this->stop(); }
 
-	void play(std::vector<UString> tracks, PlayMode mode) override
+	void shuffle() { std::shuffle(trackList.begin(), trackList.end(), rng); }
+
+	void play(PlayList list, PlayMode mode) override
+	{
+		if (this->list == list)
+			return;
+		this->list = list;
+		if (this->list == PlayList::None)
+		{
+			this->stop();
+		}
+		else
+		{
+			this->play(playlists[(int)list], mode);
+		}
+	}
+
+	void play(const std::vector<UString> &tracks, PlayMode mode) override
 	{
 		this->trackList.clear();
 		this->position = 0;
@@ -317,13 +369,16 @@ class JukeBoxImpl : public JukeBox
 			else
 				this->trackList.push_back(musicTrack);
 		}
+		if (mode == PlayMode::Shuffle)
+			shuffle();
 		this->progressTrack(this);
 		this->fw.soundBackend->playMusic(progressTrack, this);
 	}
+
 	static void progressTrack(void *data)
 	{
 		JukeBoxImpl *jukebox = static_cast<JukeBoxImpl *>(data);
-		if (jukebox->trackList.size() == 0)
+		if (jukebox->trackList.empty())
 		{
 			LogWarning("Trying to play empty jukebox");
 			return;
@@ -338,10 +393,25 @@ class JukeBoxImpl : public JukeBox
 		jukebox->fw.soundBackend->setTrack(jukebox->trackList[jukebox->position]);
 
 		jukebox->position++;
-		if (jukebox->mode == PlayMode::Loop)
-			jukebox->position = jukebox->position % jukebox->trackList.size();
+		if (jukebox->position >= jukebox->trackList.size())
+		{
+			if (jukebox->mode == PlayMode::Loop)
+			{
+				jukebox->position = 0;
+			}
+			else if (jukebox->mode == PlayMode::Shuffle)
+			{
+				jukebox->position = 0;
+				jukebox->shuffle();
+			}
+		}
 	}
-	void stop() override { fw.soundBackend->stopMusic(); }
+
+	void stop() override
+	{
+		this->list = PlayList::None;
+		fw.soundBackend->stopMusic();
+	}
 };
 
 class FrameworkPrivate
@@ -456,8 +526,8 @@ Framework::Framework(const UString programName, bool createWindow)
 	boost::locale::generator gen;
 
 	std::vector<UString> resourcePaths;
-	resourcePaths.push_back(dataPathOption.get());
 	resourcePaths.push_back(cdPathOption.get());
+	resourcePaths.push_back(dataPathOption.get());
 
 	for (auto &path : resourcePaths)
 	{
@@ -517,8 +587,8 @@ Framework::~Framework()
 	TRACE_FN;
 	LogInfo("Destroying framework");
 	// Stop any audio first, as if you've got ongoing music/samples it could call back into the
-	// framework for the threadpool/data read/all kinda of stuff it shouldn't do on a half-destroyed
-	// framework
+	// framework for the threadpool/data read/all kinda of stuff it shouldn't do on a
+	// half-destroyed framework
 	audioShutdown();
 	LogInfo("Stopping threadpool");
 	p->threadPool.reset();
@@ -529,6 +599,9 @@ Framework::~Framework()
 		config().save();
 
 	LogInfo("Shutdown");
+	// Make sure we destroy the data implementation before the renderer to ensure any possibly
+	// cached images are already destroyed
+	this->data.reset();
 	if (createWindow)
 	{
 		displayShutdown();
@@ -718,8 +791,8 @@ void Framework::processEvents()
 				break;
 		}
 	}
-	/* Drop any events left in the list, as it's possible an event caused the last stage to pop with
-	 * events outstanding, but they can safely be ignored as we're quitting anyway */
+	/* Drop any events left in the list, as it's possible an event caused the last stage to pop
+	 * with events outstanding, but they can safely be ignored as we're quitting anyway */
 	{
 		std::lock_guard<std::mutex> l(p->eventQueueLock);
 		p->eventQueue.clear();
@@ -738,6 +811,7 @@ void Framework::translateSdlEvents()
 {
 	SDL_Event e;
 	Event *fwE;
+	bool touch_events_enabled = optionEnableTouchEvents.get();
 
 	// FIXME: That's not the right way to figure out the primary finger!
 	int primaryFingerID = -1;
@@ -835,6 +909,8 @@ void Framework::translateSdlEvents()
 				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_FINGERDOWN:
+				if (!touch_events_enabled)
+					break;
 				fwE = new FingerEvent(EVENT_FINGER_DOWN);
 				fwE->finger().X = static_cast<int>(e.tfinger.x * displayGetWidth());
 				fwE->finger().Y = static_cast<int>(e.tfinger.y * displayGetHeight());
@@ -842,11 +918,13 @@ void Framework::translateSdlEvents()
 				fwE->finger().DeltaY = static_cast<int>(e.tfinger.dy * displayGetHeight());
 				fwE->finger().Id = e.tfinger.fingerId;
 				fwE->finger().IsPrimary =
-				    e.tfinger.fingerId ==
-				    primaryFingerID; // FIXME: Try to remember the ID of the first touching finger!
+				    e.tfinger.fingerId == primaryFingerID; // FIXME: Try to remember the ID of
+				                                           // the first touching finger!
 				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_FINGERUP:
+				if (!touch_events_enabled)
+					break;
 				fwE = new FingerEvent(EVENT_FINGER_UP);
 				fwE->finger().X = static_cast<int>(e.tfinger.x * displayGetWidth());
 				fwE->finger().Y = static_cast<int>(e.tfinger.y * displayGetHeight());
@@ -854,11 +932,13 @@ void Framework::translateSdlEvents()
 				fwE->finger().DeltaY = static_cast<int>(e.tfinger.dy * displayGetHeight());
 				fwE->finger().Id = e.tfinger.fingerId;
 				fwE->finger().IsPrimary =
-				    e.tfinger.fingerId ==
-				    primaryFingerID; // FIXME: Try to remember the ID of the first touching finger!
+				    e.tfinger.fingerId == primaryFingerID; // FIXME: Try to remember the ID of
+				                                           // the first touching finger!
 				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_FINGERMOTION:
+				if (!touch_events_enabled)
+					break;
 				fwE = new FingerEvent(EVENT_FINGER_MOVE);
 				fwE->finger().X = static_cast<int>(e.tfinger.x * displayGetWidth());
 				fwE->finger().Y = static_cast<int>(e.tfinger.y * displayGetHeight());
@@ -866,8 +946,8 @@ void Framework::translateSdlEvents()
 				fwE->finger().DeltaY = static_cast<int>(e.tfinger.dy * displayGetHeight());
 				fwE->finger().Id = e.tfinger.fingerId;
 				fwE->finger().IsPrimary =
-				    e.tfinger.fingerId ==
-				    primaryFingerID; // FIXME: Try to remember the ID of the first touching finger!
+				    e.tfinger.fingerId == primaryFingerID; // FIXME: Try to remember the ID of
+				                                           // the first touching finger!
 				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_WINDOWEVENT:
@@ -902,7 +982,8 @@ void Framework::translateSdlEvents()
 					case SDL_WINDOWEVENT_EXPOSED:
 					case SDL_WINDOWEVENT_RESTORED:
 					case SDL_WINDOWEVENT_ENTER:
-						// FIXME: Should we handle all these events as "aaand we're back" events?
+						// FIXME: Should we handle all these events as "aaand we're back"
+						// events?
 						fwE = new DisplayEvent(EVENT_WINDOW_ACTIVATE);
 						fwE->display().X = 0;
 						fwE->display().Y = 0;
@@ -1071,7 +1152,8 @@ void Framework::displayInitialise()
 	SDL_GetWindowSize(p->window, &width, &height);
 	p->windowSize = {width, height};
 
-	// FIXME: Scale is currently stored as an integer in 1/100 units (ie 100 is 1.0 == same size)
+	// FIXME: Scale is currently stored as an integer in 1/100 units (ie 100 is 1.0 == same
+	// size)
 	int scaleX = screenScaleXOption.get();
 	int scaleY = screenScaleYOption.get();
 
@@ -1235,13 +1317,14 @@ void Framework::toolTipStartTimer(up<Event> e)
 	// remove any pending timers
 	toolTipStopTimer();
 	p->toolTipTimerEvent = std::move(e);
-	p->toolTipTimerId = SDL_AddTimer(delay,
-	                                 [](unsigned int interval, void *data) -> unsigned int {
-		                                 fw().toolTipTimerCallback(interval, data);
-		                                 // remove this sdl timer
-		                                 return 0;
-		                             },
-	                                 nullptr);
+	p->toolTipTimerId = SDL_AddTimer(
+	    delay,
+	    [](unsigned int interval, void *data) -> unsigned int {
+		    fw().toolTipTimerCallback(interval, data);
+		    // remove this sdl timer
+		    return 0;
+	    },
+	    nullptr);
 }
 void Framework::toolTipStopTimer()
 {
@@ -1281,5 +1364,7 @@ UString Framework::textGetClipboard()
 }
 
 void Framework::threadPoolTaskEnqueue(std::function<void()> task) { p->threadPool->enqueue(task); }
+
+void *Framework::getWindowHandle() const { return static_cast<void *>(p->window); }
 
 }; // namespace OpenApoc

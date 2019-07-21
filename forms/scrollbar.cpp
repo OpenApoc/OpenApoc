@@ -13,8 +13,9 @@ namespace OpenApoc
 ScrollBar::ScrollBar(sp<Image> gripperImage)
     : Control(), capture(false), grippersize(1), segmentsize(1), gripperbutton(gripperImage),
       buttonerror(fw().data->loadSample("RAWSOUND:xcom3/rawsound/extra/textbeep.raw:22050")),
-      Value(0), BarOrientation(Orientation::Vertical), RenderStyle(ScrollBarRenderStyle::Menu),
-      GripperColour(220, 192, 192), Minimum(0), Maximum(10), LargeChange(2), LargePercent(10)
+      Value(0), BarOrientation(Orientation::Vertical), Minimum(0), Maximum(10),
+      RenderStyle(ScrollBarRenderStyle::Menu), GripperColour(220, 192, 192), LargeChange(2),
+      LargePercent(10)
 {
 	isClickable = true;
 	if (!gripperbutton)

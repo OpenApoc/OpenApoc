@@ -7,6 +7,7 @@
 #include "framework/configfile.h"
 #include "framework/framework.h"
 #include "library/sp.h"
+#include <atomic>
 #include <chrono>
 #include <cstdarg>
 #include <mutex>
@@ -77,7 +78,6 @@ ConfigOptionBool showDialogOnErrorOption("Logger", "ShowDialog", "Show dialog on
 #if defined(BACKTRACE_LIBUNWIND)
 static void print_backtrace(FILE *f)
 {
-
 	unw_cursor_t cursor;
 	unw_context_t ctx;
 	unw_word_t ip;
@@ -174,7 +174,7 @@ LogLevel fileLogLevel;
 LogLevel backtraceLogLevel;
 bool showDialogOnError;
 
-bool loggerInited = false;
+std::atomic<bool> loggerInited = false;
 
 static std::mutex logMutex;
 static std::chrono::time_point<std::chrono::high_resolution_clock> timeInit =
@@ -182,9 +182,14 @@ static std::chrono::time_point<std::chrono::high_resolution_clock> timeInit =
 
 static void initLogger()
 {
+	std::lock_guard<std::mutex> lock(logMutex);
+	// It's possible we've raced and hit initLogger() from more than 1 thread, so check again with
+	// the logMutex held
+	if (loggerInited)
+		return;
 	outFile = NULL;
 
-	// Handle Log calls befoore the settings are read, just output everything to stdout
+	// Handle Log calls before the settings are read, just output everything to stdout
 
 	if (!ConfigFile::getInstance().loaded())
 	{
@@ -192,7 +197,7 @@ static void initLogger()
 		fileLogLevel = LogLevel::Nothing;
 		backtraceLogLevel = LogLevel::Nothing;
 		showDialogOnError = false;
-		// Returning withoput setting loggerInited causes this to be called evey Log call until the
+		// Returning without setting loggerInited causes this to be called evey Log call until the
 		// config is parsed
 		return;
 	}
@@ -220,6 +225,15 @@ static void initLogger()
 	}
 }
 
+bool _logLevelEnabled(LogLevel level)
+{
+	if (!loggerInited)
+	{
+		initLogger();
+	}
+	return level <= stderrLogLevel || level <= fileLogLevel;
+}
+
 void _logAssert(UString prefix, UString string, int line, UString file)
 {
 	Log(LogLevel::Error, prefix,
@@ -231,101 +245,71 @@ void Log(LogLevel level, UString prefix, const UString &text)
 {
 	bool exit_app = false;
 	const char *level_prefix;
-
-	logMutex.lock();
 	if (!loggerInited)
 	{
 		initLogger();
 	}
 
-	bool writeToFile = (level <= fileLogLevel);
-	bool writeToStderr = (level <= stderrLogLevel);
-	if (!writeToFile && !writeToStderr)
 	{
-		// Nothing to do
-		return;
-	}
+		std::lock_guard<std::mutex> lock(logMutex);
 
-	auto timeNow = std::chrono::high_resolution_clock::now();
-	unsigned long long clockns =
-	    std::chrono::duration<unsigned long long, std::nano>(timeNow - timeInit).count();
-
-	switch (level)
-	{
-		case LogLevel::Info:
-			level_prefix = "I";
-			break;
-		case LogLevel::Warning:
-			level_prefix = "W";
-			break;
-		default:
-			level_prefix = "E";
-			exit_app = true;
-			break;
-	}
-
-	if (writeToFile)
-	{
-		fprintf(outFile, "%s %llu %s: %s\n", level_prefix, clockns, prefix.cStr(), text.cStr());
-		// On error print a backtrace to the log file
-		if (level <= backtraceLogLevel)
-			print_backtrace(outFile);
-		fflush(outFile);
-	}
-
-	if (writeToStderr)
-	{
-		fprintf(stderr, "%s %llu %s: %s\n", level_prefix, clockns, prefix.cStr(), text.cStr());
-		if (level <= backtraceLogLevel)
-			print_backtrace(stderr);
-		fflush(stderr);
-	}
-#if defined(ERROR_DIALOG)
-	if (showDialogOnError && level == LogLevel::Error)
-	{
-		if (!Framework::tryGetInstance())
+		bool writeToFile = (level <= fileLogLevel);
+		bool writeToStderr = (level <= stderrLogLevel);
+		if (!writeToFile && !writeToStderr)
 		{
-			// No framework to have created a window, so don't try to show a dialog
+			// Nothing to do
+			return;
 		}
-		else if (!fw().displayHasWindow())
-		{
-			// Framework created but without window, so don't try to show a dialog
-		}
-		else
-		{
-			SDL_MessageBoxData mBoxData;
-			mBoxData.flags = SDL_MESSAGEBOX_ERROR;
-			mBoxData.window = NULL; // Might happen before we get our window?
-			mBoxData.title = "OpenApoc ERROR";
-			mBoxData.message = text.cStr();
-			mBoxData.numbuttons = 2;
-			SDL_MessageBoxButtonData buttons[2];
-			buttons[0].flags = SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT;
-			buttons[0].buttonid = 1;
-			buttons[0].text = "Exit";
-			buttons[1].flags = SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT;
-			buttons[1].buttonid = 2;
-			buttons[1].text = "try to limp along";
-			mBoxData.buttons = buttons;
-			mBoxData.colorScheme = NULL; // Use system settings
 
-			int but;
-			SDL_ShowMessageBox(&mBoxData, &but);
+		auto timeNow = std::chrono::high_resolution_clock::now();
+		unsigned long long clockns =
+		    std::chrono::duration<unsigned long long, std::nano>(timeNow - timeInit).count();
 
-			/* button 1 = "exit", button 2 = "try to limp along" */
-			if (but == 1)
-			{
+		switch (level)
+		{
+			case LogLevel::Debug:
+				level_prefix = "D";
+				break;
+			case LogLevel::Info:
+				level_prefix = "I";
+				break;
+			case LogLevel::Warning:
+				level_prefix = "W";
+				break;
+			default:
+				level_prefix = "E";
 				exit_app = true;
-			}
-			else
-			{
-				exit_app = false;
-			}
+				break;
 		}
-	}
-#endif
 
-	logMutex.unlock();
+		if (writeToFile)
+		{
+			fprintf(outFile, "%s %llu %s: %s\n", level_prefix, clockns, prefix.cStr(), text.cStr());
+			// On error print a backtrace to the log file
+			if (level <= backtraceLogLevel)
+				print_backtrace(outFile);
+			fflush(outFile);
+		}
+
+		if (writeToStderr)
+		{
+			fprintf(stderr, "%s %llu %s: %s\n", level_prefix, clockns, prefix.cStr(), text.cStr());
+			if (level <= backtraceLogLevel)
+				print_backtrace(stderr);
+			fflush(stderr);
+		}
+#if defined(ERROR_DIALOG)
+		if (showDialogOnError && level == LogLevel::Error)
+		{
+			SDL_Window *window = nullptr;
+			if (Framework::tryGetInstance() && fw().displayHasWindow())
+			{
+				window = static_cast<SDL_Window *>(fw().getWindowHandle());
+			}
+			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "OpenApoc error", text.cStr(), window);
+		}
+#endif
+	}
 
 	if (exit_app)
 	{

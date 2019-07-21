@@ -134,7 +134,7 @@ void Battle::initBattle(GameState &state, bool first)
 		o.second->psiSuccessSounds = state.battle_common_sample_list->psiSuccessSounds;
 		o.second->psiFailSounds = state.battle_common_sample_list->psiFailSounds;
 	}
-	if (forces.size() == 0)
+	if (forces.empty())
 	{
 		// Init forces and fill squads with nullptrs so that we have where to place units
 		for (auto &o : this->participants)
@@ -911,13 +911,13 @@ void Battle::initialUnitSpawn(GameState &state)
 								}
 								u->position = tile->getRestingPosition(u->isLarge());
 								unitsToSpawn.pop_back();
-								if (unitsToSpawn.size() == 0)
+								if (unitsToSpawn.empty())
 									break;
 							}
-							if (unitsToSpawn.size() == 0)
+							if (unitsToSpawn.empty())
 								break;
 						}
-						if (unitsToSpawn.size() == 0)
+						if (unitsToSpawn.empty())
 							break;
 					}
 
@@ -1004,7 +1004,7 @@ void Battle::initialUnitSpawn(GameState &state)
 								*/
 								unitsToSpawn.pop_back();
 								numSpawned++;
-								if (unitsToSpawn.size() == 0
+								if (unitsToSpawn.empty()
 								    // This makes us spawn every civilian and loner individually
 								    // Except X-Com scientists
 								    || (numSpawned > 0 && !requestCivilian &&
@@ -3033,7 +3033,8 @@ void Battle::exitBattle(GameState &state)
 			for (auto &v : state.vehicles)
 			{
 				// Check every player owned vehicle located in city
-				if (v.second->owner != player || v.second->city != city || v.second->currentBuilding
+				if (v.second->owner != player || v.second->city != city ||
+				    v.second->currentBuilding
 				    // Player's vehicle was already added and has priority
 				    || v.first == state.current_battle->player_craft.id)
 				{
@@ -3186,11 +3187,10 @@ void Battle::exitBattle(GameState &state)
 				{
 					continue;
 				}
-				int maxAmount =
-				    config().getBool("OpenApoc.NewFeature.EnforceCargoLimits")
-				        ? std::min(e.second,
-				                   (v->getMaxCargo() - v->getCargo()) / e.first->store_space)
-				        : e.second;
+				int maxAmount = config().getBool("OpenApoc.NewFeature.EnforceCargoLimits")
+				                    ? std::min(e.second, (v->getMaxCargo() - v->getCargo()) /
+				                                             e.first->store_space)
+				                    : e.second;
 				if (maxAmount > 0)
 				{
 					e.second -= maxAmount;
@@ -3247,9 +3247,8 @@ void Battle::exitBattle(GameState &state)
 				}
 				int divisor = e.first->type == AEquipmentType::Type::Ammo ? e.first->max_ammo : 1;
 				int maxAmount = config().getBool("OpenApoc.NewFeature.EnforceCargoLimits")
-				                    ? std::min(e.second,
-				                               (v->getMaxCargo() - v->getCargo()) /
-				                                   e.first->store_space * divisor)
+				                    ? std::min(e.second, (v->getMaxCargo() - v->getCargo()) /
+				                                             e.first->store_space * divisor)
 				                    : e.second;
 				if (maxAmount > 0)
 				{
@@ -3306,11 +3305,10 @@ void Battle::exitBattle(GameState &state)
 					continue;
 				}
 				int divisor = e.first->type == AEquipmentType::Type::Ammo ? e.first->max_ammo : 1;
-				int maxAmount =
-				    config().getBool("OpenApoc.NewFeature.EnforceCargoLimits")
-				        ? std::min(e.second,
-				                   (v->getMaxBio() - v->getBio()) / e.first->store_space * divisor)
-				        : e.second;
+				int maxAmount = config().getBool("OpenApoc.NewFeature.EnforceCargoLimits")
+				                    ? std::min(e.second, (v->getMaxBio() - v->getBio()) /
+				                                             e.first->store_space * divisor)
+				                    : e.second;
 				if (maxAmount > 0)
 				{
 					e.second -= maxAmount;

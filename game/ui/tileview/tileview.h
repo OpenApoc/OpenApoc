@@ -33,15 +33,15 @@ class TileView : public Stage, public TileTransform
 	Vec2<int> stratTileSize;
 	TileViewMode viewMode;
 
-	bool scrollUpKB;
-	bool scrollDownKB;
-	bool scrollLeftKB;
-	bool scrollRightKB;
+	bool scrollUpKB = false;
+	bool scrollDownKB = false;
+	bool scrollLeftKB = false;
+	bool scrollRightKB = false;
 
-	bool scrollUpM;
-	bool scrollDownM;
-	bool scrollLeftM;
-	bool scrollRightM;
+	bool scrollUpM = false;
+	bool scrollDownM = false;
+	bool scrollLeftM = false;
+	bool scrollRightM = false;
 
 	bool autoScroll = false;
 

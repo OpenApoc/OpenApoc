@@ -1,6 +1,6 @@
 language: cpp
 sudo: required
-dist: trusty
+dist: xenial
 
 cache: ccache
 
@@ -16,27 +16,29 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++-5
+            - g++-9
       env:
-        - MATRIX_ENV="PASS=build CXX='g++-5' CC='gcc-5' BUILD_TYPE=RelWithDebInfo"
+        - MATRIX_ENV="PASS=build CXX='g++-9' CC='gcc-9' BUILD_TYPE=Quick"
     - os: linux
       addons:
         apt:
           sources:
-            - llvm-toolchain-trusty-4.0
+            - llvm-toolchain-xenial-8
+            - ubuntu-toolchain-r-test
           packages:
-            - clang-4.0
+            - clang-8
+            - g++-9
       env:
-        - MATRIX_ENV="PASS=build CXX='clang++-4.0' CC='clang-4.0' BUILD_TYPE=sanitize"
+        - MATRIX_ENV="PASS=build CXX='clang++-8' CC='clang-8' BUILD_TYPE=sanitize"
     - os: linux
       addons:
         apt:
           sources:
-            - llvm-toolchain-trusty-4.0
+            - llvm-toolchain-xenial-8
           packages:
-            - clang-format-4.0
+            - clang-format-8
       env:
-        - MATRIX_ENV="PASS=lint CLANG_FORMAT=clang-format-4.0"
+        - MATRIX_ENV="PASS=lint CLANG_FORMAT=clang-format-8"
 
 # Passes todo:
 #  - osx
@@ -53,7 +55,7 @@ before_install:
 
 before_script:
   - export CFLAGS="-Wall -Wextra" CXXFLAGS="-Wall -Wextra"
-  - if [ "$PASS" = "build" ]; then $(which time) cmake . -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCLANG_TIDY=clang-tidy-4.0 -DCLANG_FORMAT=clang-format-4.0 -DENABLE_TESTS=ON -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}"; fi
+  - if [ "$PASS" = "build" ]; then $(which time) cmake . -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCLANG_TIDY=clang-tidy-8 -DCLANG_FORMAT=clang-format-8 -DENABLE_TESTS=ON -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}"; fi
 
 
 script:

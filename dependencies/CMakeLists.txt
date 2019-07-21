@@ -4,6 +4,9 @@ PROJECT(OpenApoc_Dependencies C CXX)
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
+# hide dependency warnings
+add_compile_options("-w")
+
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package (Threads REQUIRED)
 

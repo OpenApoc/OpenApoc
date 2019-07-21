@@ -56,7 +56,7 @@ void BattleTileView::updateHiddenBar()
 		totalTU += u.second->initialTU - reserve;
 		remainingTU += std::max(0, u.second->agent->modified_stats.time_units - reserve);
 	}
-	int maxWidth = clamp(width - remainingTU * width / totalTU, 0, width);
+	int maxWidth = totalTU ? clamp(width - remainingTU * width / totalTU, 0, width) : 0;
 
 	auto progressBar = mksp<RGBImage>(Vec2<int>{width, height});
 	{
@@ -1200,9 +1200,8 @@ void BattleTileView::render()
 					if (battle.mode == Battle::Mode::TurnBased)
 					{
 						auto &img = tuIndicators[u.second->agent->modified_stats.time_units];
-						r.draw(img,
-						       pos + offset + offsetTU -
-						           Vec2<float>{img->size.x / 2, img->size.y / 2});
+						r.draw(img, pos + offset + offsetTU -
+						                Vec2<float>{img->size.x / 2, img->size.y / 2});
 					}
 
 					for (auto &t : u.second->visibleEnemies)
@@ -1577,6 +1576,13 @@ void BattleTileView::render()
 		                      state.battle_common_sample_list->burn->format.frequency /
 		                      state.battle_common_sample_list->burn->format.channels;
 		fw().soundBackend->playSample(state.battle_common_sample_list->burn, closestFirePosition);
+	}
+
+	if (this->debugHotkeyMode)
+	{
+		auto font = ui().getFont("smallset");
+		auto cursorPositionString = font->getString(format("Cursor at %s", selectedTilePosition));
+		r.draw(cursorPositionString, {0, 0});
 	}
 }
 

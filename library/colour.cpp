@@ -71,4 +71,4 @@ Colour Colour::FromHex(const UString &hexcode)
 		return {0, 0, 0};
 	}
 }
-}
+} // namespace OpenApoc

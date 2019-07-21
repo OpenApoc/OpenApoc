@@ -229,16 +229,16 @@ void writeSource(std::ofstream &out, const StateDefinition &state,
 	    << "{\n"
 	    << "\tlua_createtable(L, 0, 0);\n";
 
-	iterateDepthFirstByNames(state.enums.begin(), state.enums.end(), out, &SerializeEnum::name,
-	                         [&out](auto &e) {
-		                         for (auto &v : e.values)
-		                         {
-			                         out << "\tlua_pushinteger(L, static_cast<int>(" << e.name
-			                             << "::" << v << "));\n"
-			                             << "\tlua_setfield(L, -2, \"" << v << "\");\n";
-		                         }
-		                     },
-	                         [](auto &e) { return std::pair<size_t, size_t>(0, e.values.size()); });
+	iterateDepthFirstByNames(
+	    state.enums.begin(), state.enums.end(), out, &SerializeEnum::name,
+	    [&out](auto &e) {
+		    for (auto &v : e.values)
+		    {
+			    out << "\tlua_pushinteger(L, static_cast<int>(" << e.name << "::" << v << "));\n"
+			        << "\tlua_setfield(L, -2, \"" << v << "\");\n";
+		    }
+	    },
+	    [](auto &e) { return std::pair<size_t, size_t>(0, e.values.size()); });
 	out << "}\n";
 	out << "\n} // namespace OpenApoc\n";
 }

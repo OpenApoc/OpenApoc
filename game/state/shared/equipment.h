@@ -73,6 +73,7 @@ class EquipmentLayoutSlot
 class Equipment
 {
   public:
+	virtual ~Equipment() = default;
 	virtual sp<Image> getEquipmentArmorImage() const = 0;
 	virtual sp<Image> getEquipmentImage() const = 0;
 	// Returns the size in 'slots'
@@ -82,6 +83,7 @@ class Equipment
 class EquippableObject
 {
   public:
+	virtual ~EquippableObject() = default;
 	virtual bool drawLines() const { return true; }
 	virtual sp<Equipment> getEquipmentAt(const Vec2<int> &position) const = 0;
 	virtual const std::list<EquipmentLayoutSlot> &getSlots() const = 0;

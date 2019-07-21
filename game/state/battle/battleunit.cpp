@@ -937,7 +937,8 @@ bool BattleUnit::hasLineToPosition(Vec3<float> targetPosition, bool useLOS) cons
 	// No map part blocks Line
 	return !cMap
 	       // No unit blocks Line
-	       && (!cUnit || owner->isRelatedTo(cUnit->owner) == Organisation::Relation::Hostile
+	       && (!cUnit ||
+	           owner->isRelatedTo(cUnit->owner) == Organisation::Relation::Hostile
 	           // If our head blocks brainsucker on it - no problem, hit will go versus brainsucker
 	           // anyway
 	           || cUnit->brainSucker);
@@ -2904,10 +2905,9 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 		{
 			if (flyingSpeedModifier != 100)
 			{
-				flyingSpeedModifier = std::min((unsigned)100,
-				                               flyingSpeedModifier +
-				                                   moveTicksRemaining / moveTicksConsumeRate /
-				                                       FLYING_ACCELERATION_DIVISOR);
+				flyingSpeedModifier = std::min(
+				    (unsigned)100, flyingSpeedModifier + moveTicksRemaining / moveTicksConsumeRate /
+				                                             FLYING_ACCELERATION_DIVISOR);
 			}
 			movementTicksAccumulated = moveTicksRemaining / moveTicksConsumeRate;
 			auto dir = glm::normalize(vectorToGoal);
@@ -2929,9 +2929,9 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 				movementTicksAccumulated = distanceToGoal;
 				if (flyingSpeedModifier != 100)
 				{
-					flyingSpeedModifier = std::min(
-					    (unsigned)100,
-					    flyingSpeedModifier + distanceToGoal / FLYING_ACCELERATION_DIVISOR);
+					flyingSpeedModifier =
+					    std::min((unsigned)100, flyingSpeedModifier +
+					                                distanceToGoal / FLYING_ACCELERATION_DIVISOR);
 				}
 				moveTicksRemaining -= distanceToGoal * moveTicksConsumeRate;
 				setPosition(state, goalPosition, true);
@@ -4055,9 +4055,9 @@ void BattleUnit::processExperience(GameState &state)
 	{
 		if (state.current_battle->mode == Battle::Mode::TurnBased)
 		{
-			agent->current_stats.reactions += rollForPrimaryStat(
-			    state,
-			    experiencePoints.reactions * agent->type->improvementPercentagePhysical / 100);
+			agent->current_stats.reactions +=
+			    rollForPrimaryStat(state, experiencePoints.reactions *
+			                                  agent->type->improvementPercentagePhysical / 100);
 		}
 		else
 		{
@@ -4471,7 +4471,11 @@ void BattleUnit::dropDown(GameState &state)
 		}
 	}
 
-	// Remove from list of visible units
+	this->markUnVisible(state);
+}
+
+void BattleUnit::markUnVisible(GameState &state)
+{ // Remove from list of visible units
 	StateRef<BattleUnit> srThis = {&state, id};
 	for (auto &units : state.current_battle->visibleUnits)
 	{
@@ -4499,6 +4503,7 @@ void BattleUnit::dropDown(GameState &state)
 
 void BattleUnit::retreat(GameState &state)
 {
+	this->markUnVisible(state);
 	if (shadowObject)
 	{
 		shadowObject->removeFromMap();

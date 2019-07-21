@@ -142,14 +142,14 @@ BattleBriefing::BattleBriefing(sp<GameState> state, StateRef<Organisation> targe
 		    this->state->current_battle->setMode(Battle::Mode::RealTime);
 		    fw().stageQueueCommand(
 		        {StageCmd::Command::REPLACEALL, mksp<BattlePreStart>(this->state)});
-		});
+	    });
 
 	menuform->findControlTyped<GraphicButton>("BUTTON_TURN_BASED")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    this->state->current_battle->setMode(Battle::Mode::TurnBased);
 		    fw().stageQueueCommand(
 		        {StageCmd::Command::REPLACEALL, mksp<BattlePreStart>(this->state)});
-		});
+	    });
 }
 
 void BattleBriefing::begin() {}

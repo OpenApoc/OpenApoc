@@ -84,7 +84,7 @@ class XMLSerializationNode : public SerializationNode
 	}
 
 	XMLSerializationNode(XMLSerializationArchive *archive, xml_node node, const UString &prefix)
-	    : archive(archive), node(node), prefix(prefix), parent(nullptr)
+	    : archive(archive), node(node), parent(nullptr), prefix(prefix)
 	{
 	}
 

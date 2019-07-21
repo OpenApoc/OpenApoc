@@ -518,9 +518,7 @@ sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, const Ag
 	baseControl->setData(info.agent);
 	baseControl->Name = "AGENT_PORTRAIT";
 	baseControl->Size = {width, singleton.labelFont->getFontHeight() * 2};
-	if (skill == UnitSkillState::Horizontal)
-		baseControl->Size.x = 160;
-	else if (skill == UnitSkillState::Vertical)
+	if (skill == UnitSkillState::Vertical)
 		baseControl->Size.y = singleton.labelFont->getFontHeight() * 3;
 
 	auto frameGraphic = baseControl->createChild<Graphic>();
