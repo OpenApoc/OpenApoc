@@ -4047,14 +4047,16 @@ void BattleView::updateItemInfo(bool right)
 		activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND_SELECTED")->setImage(nullptr);
 	}
 
-	auto overlay = mksp<RGBImage>(Vec2<int>{50, 95});
+	constexpr int maxAccuracy = 50;
+
+	auto overlay = mksp<RGBImage>(Vec2<int>{maxAccuracy, 95});
 	{
 		RGBImageLock l(overlay);
 
 		// Draw accuracy
 		if (info.accuracy / 2 > 0)
 		{
-			int accuracy = info.accuracy;
+			int accuracy = std::min(info.accuracy, maxAccuracy);
 			int colorsCount = (int)accuracyColors.size();
 			int y = 93;
 			if (right)
@@ -4069,8 +4071,8 @@ void BattleView::updateItemInfo(bool right)
 			{
 				for (int x = 0; x < accuracy; x++)
 				{
-					l.set({50 - 1 - x, y}, accuracyColors[x * colorsCount / accuracy]);
-					l.set({50 - 1 - x, y + 1}, accuracyColors[x * colorsCount / accuracy]);
+					l.set({maxAccuracy - 1 - x, y}, accuracyColors[x * colorsCount / accuracy]);
+					l.set({maxAccuracy - 1 - x, y + 1}, accuracyColors[x * colorsCount / accuracy]);
 				}
 			}
 		}
