@@ -82,7 +82,17 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 		out << "void serializeIn(const GameState *state, SerializationNode* node, " << object.name
 		    << " &obj)\n{\n";
 
+		/* The GameState may be unused */
+		out << "\tstd::ignore = state;\n";
+
 		out << "\tif (!node) return;\n";
+
+		if (object.members.empty())
+		{
+			/* Some objects may be empty */
+			out << "\tstd::ignore = node;\n";
+			out << "\tstd::ignore = obj;\n";
+		}
 
 		for (auto &member : object.members)
 		{
@@ -113,6 +123,14 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 			out << "inline\n";
 		out << "void serializeOut(SerializationNode* node, const " << object.name << " &obj, const "
 		    << object.name << " &ref)\n{\n";
+
+		if (object.members.empty())
+		{
+			/* Some objects may be empty */
+			out << "\tstd::ignore = node;\n";
+			out << "\tstd::ignore = obj;\n";
+			out << "\tstd::ignore = ref;\n";
+		}
 
 		for (auto &member : object.members)
 		{
@@ -152,6 +170,13 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 			out << "inline\n";
 		out << "bool operator==(const " << object.name << " &a, const " << object.name
 		    << " &b)\n{\n";
+
+		if (object.members.empty())
+		{
+			/* Some objects may be empty */
+			out << "\tstd::ignore = a;\n";
+			out << "\tstd::ignore = b;\n";
+		}
 
 		for (auto &member : object.members)
 		{

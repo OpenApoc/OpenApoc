@@ -2062,7 +2062,7 @@ void Battle::checkMissionEnd(GameState &state, bool retreated, bool forceReCheck
 	}
 }
 
-void Battle::checkIfBuildingDisabled(GameState &state)
+void Battle::checkIfBuildingDisabled(GameState & /*state*/)
 {
 	if (!buildingCanBeDisabled || buildingDisabled || !tryDisableBuilding())
 	{

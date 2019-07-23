@@ -159,7 +159,7 @@ static void print_backtrace(FILE *f)
 }
 #else
 #warning no backtrace enabled for this platform
-static void print_backtrace(FILE *f)
+static void print_backtrace(FILE * /* f */)
 {
 	// TODO: Other platform backtrace?
 }

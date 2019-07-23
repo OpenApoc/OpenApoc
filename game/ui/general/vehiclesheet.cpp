@@ -142,7 +142,7 @@ void VehicleSheet::displayEquipImplementation(sp<VEquipment> item, sp<VEquipment
 	}
 }
 
-void VehicleSheet::displayEngine(sp<VEquipment> item, sp<VEquipmentType> type)
+void VehicleSheet::displayEngine(sp<VEquipment> /*item*/, sp<VEquipmentType> type)
 {
 	form->findControlTyped<Label>("LABEL_2_L")->setText(tr("Top Speed"));
 	form->findControlTyped<Label>("LABEL_2_R")->setText(format("%d", type->top_speed));
@@ -169,7 +169,7 @@ void VehicleSheet::displayWeapon(sp<VEquipment> item, sp<VEquipmentType> type)
 	}
 }
 
-void VehicleSheet::displayGeneral(sp<VEquipment> item, sp<VEquipmentType> type)
+void VehicleSheet::displayGeneral(sp<VEquipment> /*item*/, sp<VEquipmentType> type)
 {
 	int statsCount = 2;
 	if (type->accuracy_modifier)

@@ -1132,8 +1132,8 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 }
 
 std::list<Vec3<int>> City::findShortestPath(Vec3<int> origin, Vec3<int> destination,
-                                            const GroundVehicleTileHelper &canEnterTile,
-                                            bool approachOnly, bool, bool, bool)
+                                            const GroundVehicleTileHelper & /*canEnterTile*/,
+                                            bool /*approachOnly*/, bool, bool, bool)
 {
 	int originID = getRoadSegmentID(origin);
 	int destinationID = getRoadSegmentID(destination);
@@ -1710,7 +1710,7 @@ void City::groupMove(GameState &state, std::list<StateRef<Vehicle>> &selectedVeh
 	}
 }
 
-void City::fillRoadSegmentMap(GameState &state)
+void City::fillRoadSegmentMap(GameState & /*state*/)
 {
 	LogWarning("Begun filling road segment map");
 	// Expecting this to be done on clean intact map

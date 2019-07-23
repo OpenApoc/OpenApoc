@@ -339,7 +339,7 @@ bool CityView::handleClickedVehicle(StateRef<Vehicle> vehicle, bool rightClick,
 }
 
 bool CityView::handleClickedAgent(StateRef<Agent> agent, bool rightClick,
-                                  CitySelectionState selState)
+                                  CitySelectionState /*selState*/)
 {
 	orderSelect(agent, rightClick, modifierLCtrl || modifierRCtrl);
 	return true;
@@ -385,7 +385,7 @@ bool CityView::handleClickedProjectile(sp<Projectile> projectile, bool rightClic
 }
 
 bool CityView::handleClickedOrganisation(StateRef<Organisation> organisation, bool rightClick,
-                                         CitySelectionState selState)
+                                         CitySelectionState /*selState*/)
 {
 	if (rightClick)
 	{
@@ -1005,10 +1005,10 @@ CityView::CityView(sp<GameState> state)
 	{
 		vehicleForm->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_%d_DISABLED", i + 1))
 		    ->addCallback(FormEventType::CheckBoxSelected,
-		                  [this, i](FormsEvent *e) { orderDisableWeapon(i, true); });
+		                  [this, i](FormsEvent * /*e*/) { orderDisableWeapon(i, true); });
 		vehicleForm->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_%d_DISABLED", i + 1))
 		    ->addCallback(FormEventType::CheckBoxDeSelected,
-		                  [this, i](FormsEvent *e) { orderDisableWeapon(i, false); });
+		                  [this, i](FormsEvent * /*e*/) { orderDisableWeapon(i, false); });
 	}
 	vehicleForm->findControl("BUTTON_EQUIP_VEHICLE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {

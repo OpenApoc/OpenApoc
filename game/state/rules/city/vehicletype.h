@@ -85,7 +85,7 @@ class VehicleType : public StateObject
 	{
 		return getMaxHealth(first, last) + getMaxShield(first, last);
 	}
-	template <class IterT> int getMaxHealth(IterT first, IterT last) const
+	template <class IterT> int getMaxHealth(IterT /* first */, IterT /* last */) const
 	{
 		static_assert(std::is_same<typename std::iterator_traits<IterT>::value_type,
 		                           sp<VEquipmentType>>::value,
@@ -111,7 +111,7 @@ class VehicleType : public StateObject
 		return maxShield;
 	}
 	// This is the 'sum' of all armors?
-	template <class IterT> int getArmor(IterT first, IterT last) const
+	template <class IterT> int getArmor(IterT /* first */, IterT /* last */) const
 	{
 		static_assert(std::is_same<typename std::iterator_traits<IterT>::value_type,
 		                           sp<VEquipmentType>>::value,

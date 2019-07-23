@@ -82,6 +82,9 @@ class Gles3::Gles3Loader
 			}
 #elif defined(GLESWRAP_PLATFORM_WGL)
 			this->win32_handle = LoadLibraryA("opengl32.dll");
+			std::ignore = lib_name;
+#else
+			std::ignore = lib_name;
 #endif
 		}
 	}

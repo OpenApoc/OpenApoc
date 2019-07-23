@@ -35,7 +35,7 @@ const UString ControlGenerator::AGENT_ICON_NAME("ICON_A");
 const UString ControlGenerator::LEFT_LIST_NAME("LEFT");
 const UString ControlGenerator::RIGHT_LIST_NAME("RIGHT");
 
-void ControlGenerator::init(GameState &state)
+void ControlGenerator::init(GameState & /*state*/)
 {
 	for (int i = 0; i < 3; i++)
 	{

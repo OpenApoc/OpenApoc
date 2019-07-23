@@ -25,9 +25,9 @@ const GameState *getConstGameStateFromLua(lua_State *L)
 	return r;
 }
 
-void pushToLua(lua_State *L, sp<TacticalAI> &v) { lua_pushnil(L); }
+void pushToLua(lua_State *L, sp<TacticalAI> & /*v*/) { lua_pushnil(L); }
 void pushToLua(lua_State *L, UnitAI &v) { pushToLua(L, v.type); }
-void pushToLua(lua_State *L, const sp<TacticalAI> &v) { lua_pushnil(L); }
+void pushToLua(lua_State *L, const sp<TacticalAI> & /*v*/) { lua_pushnil(L); }
 void pushToLua(lua_State *L, const UnitAI &v) { pushToLua(L, v.type); }
 
 template <> lua_CFunction getLuaObjectMethods<GameState>(const std::string &key)

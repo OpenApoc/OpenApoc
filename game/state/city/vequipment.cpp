@@ -144,7 +144,7 @@ void VEquipment::update(int ticks)
 	}
 }
 
-void VEquipment::noAmmoToReload(const GameState &state, const VEquipment *equipment) const
+void VEquipment::noAmmoToReload(const GameState & /*state*/, const VEquipment *equipment) const
 {
 	switch (equipment->type->type)
 	{
@@ -213,7 +213,7 @@ void VEquipment::equipFromBase(GameState &state, StateRef<Base> base)
 	reload(state, base);
 }
 
-void VEquipment::unequipToBase(GameState &state, StateRef<Base> base)
+void VEquipment::unequipToBase(GameState & /*state*/, StateRef<Base> base)
 {
 	base->inventoryVehicleEquipment[type.id]++;
 	if (ammo > 0 && type->ammo_type)

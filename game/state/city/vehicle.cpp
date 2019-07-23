@@ -1113,7 +1113,7 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 	vehicle.updateSprite(state);
 }
 
-void VehicleMover::updateCrashed(GameState &state, unsigned int ticks)
+void VehicleMover::updateCrashed(GameState &state, unsigned int /*ticks*/)
 {
 	// Tile underneath us is dead?
 	if (vehicle.tileObject && vehicle.tileObject->getOwningTile() &&
@@ -2354,7 +2354,7 @@ void Vehicle::updateCargo(GameState &state)
 	}
 }
 
-void Vehicle::updateSprite(GameState &state)
+void Vehicle::updateSprite(GameState & /*state*/)
 {
 	// Set banking
 	if (ticksToTurn > 0 && angularVelocity > 0.0f)
@@ -2751,8 +2751,8 @@ bool Vehicle::fireWeaponsPointDefense(GameState &state, Vec2<int> arc)
 	return false;
 }
 
-bool Vehicle::fireAtBuilding(GameState &state,
-                             Vec2<int> arc) // TODO: this function must return target only, not fire
+bool Vehicle::fireAtBuilding(
+    GameState &state, Vec2<int> /*arc*/) // TODO: this function must return target only, not fire
 {
 	auto firingRange = getFiringRange();
 
@@ -2805,7 +2805,7 @@ bool Vehicle::fireAtBuilding(GameState &state,
 	return false;
 }
 
-void Vehicle::fireWeaponsManual(GameState &state, Vec2<int> arc)
+void Vehicle::fireWeaponsManual(GameState &state, Vec2<int> /*arc*/)
 {
 	attackTarget(state, manualFirePosition);
 }
@@ -2873,8 +2873,8 @@ bool Vehicle::attackTarget(GameState &state, Vec3<float> target)
 	return false;
 }
 
-sp<VEquipment> Vehicle::getFirstFiringWeapon(GameState &state, Vec3<float> &target, bool checkLOF,
-                                             Vec3<float> targetVelocity,
+sp<VEquipment> Vehicle::getFirstFiringWeapon(GameState & /*state*/, Vec3<float> &target,
+                                             bool checkLOF, Vec3<float> targetVelocity,
                                              sp<TileObjectVehicle> enemyTile, bool pd)
 {
 	static const std::set<TileObject::Type> sceneryVehicleSet = {TileObject::Type::Scenery,
@@ -3944,7 +3944,7 @@ void Cargo::arrive(GameState &state, bool &cargoArrived, bool &bioArrived, bool 
 	count = 0;
 }
 
-void Cargo::seize(GameState &state, StateRef<Organisation> org)
+void Cargo::seize(GameState &state, StateRef<Organisation> /*org*/)
 {
 	switch (type)
 	{

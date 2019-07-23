@@ -28,7 +28,7 @@ MultilistBox::MultilistBox(sp<ScrollBar> ExternalScrollBar)
 		fw().renderer->drawRect(c->Location, c->SelectionSize, this->SelectedColour);
 	};
 
-	setFuncPreRender([this](sp<Control> c) {
+	setFuncPreRender([this](sp<Control> /*c*/) {
 		if (isDirty() && !scroller)
 		{
 			// MultilistBox without scroller should be rendered fully
