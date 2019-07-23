@@ -40,6 +40,7 @@
 
 #include <cstring>
 #include <string>
+#include <tuple>
 
 static const std::string FUNCTION_PREFIX = "gl";
 
