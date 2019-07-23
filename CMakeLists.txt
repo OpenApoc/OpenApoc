@@ -2,7 +2,10 @@
 PROJECT(OpenApoc CXX C)
 
 # check cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.8)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -74,23 +77,6 @@ if (LTO)
 		message(WARNING "LTO not supported by this compiler")
 	endif()
 endif(LTO)
-
-# Cmake doesn't seem to have a good way of saying "try the latest standard, but
-# allow fallbacks all the way back to c++11"
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-CHECK_CXX_COMPILER_FLAG("-std=c++14" COMPILER_SUPPORTS_CXX14)
-CHECK_CXX_COMPILER_FLAG("-std=c++17" COMPILER_SUPPORTS_CXX17)
-
-if (COMPILER_SUPPORTS_CXX17)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
-elseif (COMPILER_SUPPORTS_CXX14)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
-elseif (COMPILER_SUPPORTS_CXX11)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-else()
-	# Other compilers may use different option flags, or not support switching standard versions, so try anyway
-	message(WARNING "Couldn't find a c++ version this compiler supports, trying with default options")
-endif()
 
 # MSVC has default flags that CMake doesn't set
 if (MSVC)
