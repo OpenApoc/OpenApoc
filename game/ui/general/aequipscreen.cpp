@@ -1562,15 +1562,18 @@ void AEquipScreen::processTemplate(int idx, bool remember)
 					// Remove item from base
 					if (type->type == AEquipmentType::Type::Ammo)
 					{
+						LogAssert(base->inventoryAgentEquipment[type->id] >= equipment->ammo);
 						base->inventoryAgentEquipment[type->id] -= equipment->ammo;
 					}
 					else
 					{
+						LogAssert(base->inventoryAgentEquipment[type->id] >= 1);
 						base->inventoryAgentEquipment[type->id]--;
 					}
 					// Remove payload from base
 					if (payloadType && countPayload > 0)
 					{
+						LogAssert(base->inventoryAgentEquipment[type->id] >= equipment->ammo);
 						base->inventoryAgentEquipment[payloadType->id] -= equipment->ammo;
 					}
 				}
