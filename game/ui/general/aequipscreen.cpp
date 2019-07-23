@@ -228,6 +228,47 @@ void AEquipScreen::eventOccurred(Event *e)
 			modifierLShift = false;
 		}
 	}
+	if (e->type() == EVENT_KEY_DOWN)
+	{
+		// Templates:
+		if (config().getBool("OpenApoc.NewFeature.EnableAgentTemplates") &&
+		    !formAgentStats->findControlTyped<TextEdit>("AGENT_NAME")->isFocused())
+		{
+			switch (e->keyboard().KeyCode)
+			{
+				case SDLK_1:
+					processTemplate(1, modifierRCtrl || modifierLCtrl);
+					return;
+				case SDLK_2:
+					processTemplate(2, modifierRCtrl || modifierLCtrl);
+					return;
+				case SDLK_3:
+					processTemplate(3, modifierRCtrl || modifierLCtrl);
+					return;
+				case SDLK_4:
+					processTemplate(4, modifierRCtrl || modifierLCtrl);
+					return;
+				case SDLK_5:
+					processTemplate(5, modifierRCtrl || modifierLCtrl);
+					return;
+				case SDLK_6:
+					processTemplate(6, modifierRCtrl || modifierLCtrl);
+					return;
+				case SDLK_7:
+					processTemplate(7, modifierRCtrl || modifierLCtrl);
+					return;
+				case SDLK_8:
+					processTemplate(8, modifierRCtrl || modifierLCtrl);
+					return;
+				case SDLK_9:
+					processTemplate(9, modifierRCtrl || modifierLCtrl);
+					return;
+				case SDLK_0:
+					processTemplate(0, modifierRCtrl || modifierLCtrl);
+					return;
+			}
+		}
+	}
 
 	// Form buttons
 	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::ButtonClick)
@@ -273,45 +314,6 @@ void AEquipScreen::eventOccurred(Event *e)
 		return;
 	}
 	auto currentAgent = selectedAgents.front();
-
-	// Templates:
-	if (config().getBool("OpenApoc.NewFeature.EnableAgentTemplates") &&
-	    !formAgentStats->findControlTyped<TextEdit>("AGENT_NAME")->isFocused())
-	{
-		switch (e->keyboard().KeyCode)
-		{
-			case SDLK_1:
-				processTemplate(1, modifierRCtrl || modifierLCtrl);
-				return;
-			case SDLK_2:
-				processTemplate(2, modifierRCtrl || modifierLCtrl);
-				return;
-			case SDLK_3:
-				processTemplate(3, modifierRCtrl || modifierLCtrl);
-				return;
-			case SDLK_4:
-				processTemplate(4, modifierRCtrl || modifierLCtrl);
-				return;
-			case SDLK_5:
-				processTemplate(5, modifierRCtrl || modifierLCtrl);
-				return;
-			case SDLK_6:
-				processTemplate(6, modifierRCtrl || modifierLCtrl);
-				return;
-			case SDLK_7:
-				processTemplate(7, modifierRCtrl || modifierLCtrl);
-				return;
-			case SDLK_8:
-				processTemplate(8, modifierRCtrl || modifierLCtrl);
-				return;
-			case SDLK_9:
-				processTemplate(9, modifierRCtrl || modifierLCtrl);
-				return;
-			case SDLK_0:
-				processTemplate(0, modifierRCtrl || modifierLCtrl);
-				return;
-		}
-	}
 
 	// Switch between showing armor or items
 	if (e->type() == EVENT_FORM_INTERACTION &&
