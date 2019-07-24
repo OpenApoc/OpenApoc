@@ -1488,93 +1488,57 @@ void AEquipScreen::processTemplate(int idx, bool remember)
 				auto type = eq.type;
 				auto payloadType = eq.payloadType;
 
-				auto countType = base->inventoryAgentEquipment[type.id];
-				int ammoRemainingType = 0;
-				auto countPayload = base->inventoryAgentEquipment[type.id];
-				int ammoRemainingPayload = 0;
+				LogAssert(type);
 
-				// Find the type count
-				if (type->type == AEquipmentType::Type::Ammo)
-				{
-					int newCountType = countType / type->max_ammo;
-					ammoRemainingType = countType - newCountType * type->max_ammo;
-					countType = newCountType;
-					if (ammoRemainingType > 0)
-					{
-						countType++;
-					}
-				}
-				// If no main type item on base item we can't add anything
+				int countType =
+				    std::min(1, static_cast<int>(base->inventoryAgentEquipment[type.id]));
+
+				// Skip equipment with no available stock
 				if (countType == 0)
 				{
 					continue;
+				}
+				int ammo = 0;
+
+				// If the equipment is a clip the count is set to max_ammo (or the amount of rounds
+				// in inventory if lower)
+				if (type->type == AEquipmentType::Type::Ammo)
+				{
+					countType = std::min(type->max_ammo,
+					                     static_cast<int>(base->inventoryAgentEquipment[type.id]));
+					ammo = countType;
+				}
+
+				int countPayload = 0;
+				if (payloadType)
+				{
+					countPayload =
+					    std::min(payloadType->max_ammo,
+					             static_cast<int>(base->inventoryAgentEquipment[payloadType.id]));
+					ammo = countPayload;
+				}
+				// For equipment with no ammo, just set it to max
+				if (type->ammo_types.empty())
+				{
+					ammo = type->max_ammo;
 				}
 
 				// Make item, set payload and ammo
 				auto equipment = mksp<AEquipment>();
 				equipment->type = type;
 				equipment->armor = type->armor;
-				if (payloadType)
-				{
-					// Find the payloadType count
-					if (payloadType->type == AEquipmentType::Type::Ammo)
-					{
-						int newCountPayload = countPayload / payloadType->max_ammo;
-						ammoRemainingPayload =
-						    countPayload - newCountPayload * payloadType->max_ammo;
-						countPayload = newCountPayload;
-						if (ammoRemainingPayload > 0)
-						{
-							countPayload++;
-						}
-					}
-
-					// If no payload item on base we can't add it
-					if (countPayload > 0)
-					{
-						equipment->payloadType = payloadType;
-						if (countPayload == 1 && ammoRemainingPayload > 0)
-						{
-							equipment->ammo = ammoRemainingPayload;
-						}
-						else
-						{
-							equipment->ammo = payloadType->max_ammo;
-						}
-					}
-				}
-				else
-				{
-					if (countType == 1 && ammoRemainingType > 0)
-					{
-						equipment->ammo = ammoRemainingType;
-					}
-					else if (type->ammo_types.empty())
-					{
-						equipment->ammo = type->max_ammo;
-					}
-				}
+				equipment->payloadType = payloadType;
+				equipment->ammo = ammo;
 				// Actual transaction
 				if (currentAgent->canAddEquipment(pos, equipment->type))
 				{
 					// Give item to agent
 					currentAgent->addEquipment(*state, pos, equipment);
-					// Remove item from base
-					if (type->type == AEquipmentType::Type::Ammo)
+					// Remote equipment and possibly payload from the base
+					base->inventoryAgentEquipment[type->id] -= countType;
+					if (payloadType)
 					{
-						LogAssert(base->inventoryAgentEquipment[type->id] >= equipment->ammo);
-						base->inventoryAgentEquipment[type->id] -= equipment->ammo;
-					}
-					else
-					{
-						LogAssert(base->inventoryAgentEquipment[type->id] >= 1);
-						base->inventoryAgentEquipment[type->id]--;
-					}
-					// Remove payload from base
-					if (payloadType && countPayload > 0)
-					{
-						LogAssert(base->inventoryAgentEquipment[type->id] >= equipment->ammo);
-						base->inventoryAgentEquipment[payloadType->id] -= equipment->ammo;
+						base->inventoryAgentEquipment[payloadType->id] -= countPayload;
 					}
 				}
 				else
