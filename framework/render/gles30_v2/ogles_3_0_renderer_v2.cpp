@@ -5,6 +5,7 @@
 #include "framework/renderer_interface.h"
 #include "framework/trace.h"
 #include <algorithm>
+#include <atomic>
 #include <cstdint>
 #include <glm/gtx/rotate_vector.hpp>
 #include <list>
@@ -23,6 +24,8 @@ namespace OpenApoc
 {
 namespace
 {
+
+static std::atomic<bool> renderer_dead = true;
 
 // Forward declaration needed for RendererImageData
 class OGLES30Renderer;
@@ -1330,6 +1333,7 @@ class OGLES30Renderer final : public Renderer
 	{
 		LogInfo("Max %u sprite buffers %u textured buffers %u coloured buffers",
 		        this->maxSpriteBuffers, this->maxTexturedBuffers, this->maxColouredBuffers);
+		renderer_dead = true;
 	}
 
 	void newFrame() override
@@ -1758,6 +1762,7 @@ OGLES30Renderer::OGLES30Renderer() : state(State::Idle)
 		gl->Enable(static_cast<GL::GLenum>(GL::KhrDebug::DEBUG_OUTPUT));
 		gl->KHR_debug.DebugMessageCallback(debug_message_proc, NULL);
 	}
+	renderer_dead = false;
 }
 
 class OGLES30RendererFactory : public RendererFactory
@@ -1799,10 +1804,32 @@ class OGLES30RendererFactory : public RendererFactory
 	}
 };
 
-GLRGBTexture::~GLRGBTexture() { owner->delete_texture_object(this->tex_id); }
-GLPaletteTexture::~GLPaletteTexture() { owner->delete_texture_object(this->tex_id); }
+GLRGBTexture::~GLRGBTexture()
+{
+	if (renderer_dead)
+	{
+		LogWarning("GLRGBTexture being destroyed after renderer");
+		return;
+	}
+
+	owner->delete_texture_object(this->tex_id);
+}
+GLPaletteTexture::~GLPaletteTexture()
+{
+	if (renderer_dead)
+	{
+		LogWarning("GLPaletteTexture being destroyed after renderer");
+		return;
+	}
+	owner->delete_texture_object(this->tex_id);
+}
 GLSurface::~GLSurface()
 {
+	if (renderer_dead)
+	{
+		LogWarning("GLSurface being destroyed after renderer");
+		return;
+	}
 	if (this->fbo_id)
 		owner->delete_framebuffer_object(this->fbo_id);
 	if (this->tex_id)
