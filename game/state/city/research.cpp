@@ -476,13 +476,20 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 									break;
 									case ResearchTopic::ItemType::AgentEquipment:
 									{
+										int count = 1;
+										auto type = StateRef<AEquipmentType>{
+										    state.get(), lab->current_project->itemId};
+										if (type->type == AEquipmentType::Type::Ammo)
+										{
+											count = type->max_ammo;
+										}
 										// Apparently if we ++ it doesn't work on new entries
 										// properly
 										base.second->inventoryAgentEquipment[lab->current_project
 										                                         ->itemId] =
 										    base.second->inventoryAgentEquipment
 										        [lab->current_project->itemId] +
-										    1;
+										    count;
 									}
 									break;
 									case ResearchTopic::ItemType::Craft:
