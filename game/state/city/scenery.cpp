@@ -22,7 +22,6 @@
 
 namespace OpenApoc
 {
-Scenery::Scenery() : damaged(false), falling(false), destroyed(false) {}
 
 void Scenery::ceaseSupportProvision()
 {
