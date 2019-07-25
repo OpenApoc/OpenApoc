@@ -328,7 +328,7 @@ class VehicleType : public StateObject
 
 	sp<Image> equip_icon_small;
 
-	MapIconType mapIconType;
+	MapIconType mapIconType = MapIconType::Arrow;
 
 	// Flying and ground vehicles have a directional sprite (with optional non-flat banking)
 	std::map<Banking, std::map<Direction, sp<Image>>> directional_sprites;
