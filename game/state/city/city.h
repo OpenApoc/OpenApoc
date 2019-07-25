@@ -83,7 +83,7 @@ class City : public StateObject, public std::enable_shared_from_this<City>
 	void initMap(GameState &state);
 
 	UString id;
-	Vec3<int> size;
+	Vec3<int> size = {0, 0, 0};
 
 	StateRefMap<SceneryTileType> tile_types;
 	std::map<Vec3<int>, StateRef<SceneryTileType>> initial_tiles;
