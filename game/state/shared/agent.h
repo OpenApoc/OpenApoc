@@ -129,9 +129,9 @@ class Agent : public StateObject,
 	// Note that agent cannot ever leave vehicle into city, or enter vehicle from citu
 
 	// Agent's position in the city
-	Vec3<float> position;
+	Vec3<float> position = {0, 0, 0};
 	// Position agent is moving towards
-	Vec3<float> goalPosition;
+	Vec3<float> goalPosition = {0, 0, 0};
 
 	StateRef<Lab> lab_assigned = nullptr;
 	bool assigned_to_lab = false;
