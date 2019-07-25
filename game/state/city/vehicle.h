@@ -1,5 +1,6 @@
 #pragma once
 
+#include "game/state/city/vehiclemission.h"
 #include "game/state/gametime.h"
 #include "game/state/rules/city/vehicletype.h"
 #include "game/state/shared/equipment.h"
@@ -155,7 +156,7 @@ class Vehicle : public StateObject,
 	STATE_OBJECT(Vehicle)
   public:
 	~Vehicle() override;
-	Vehicle();
+	Vehicle() = default;
 
 	enum class AttackMode
 	{
@@ -164,7 +165,7 @@ class Vehicle : public StateObject,
 		Defensive,
 		Evasive
 	};
-	AttackMode attackMode;
+	AttackMode attackMode = AttackMode::Standard;
 
 	enum class Altitude
 	{
@@ -173,7 +174,7 @@ class Vehicle : public StateObject,
 		Standard = 6,
 		Low = 3
 	};
-	Altitude altitude;
+	Altitude altitude = Altitude::Standard;
 	// Adjusts position by altitude preference
 	Vec3<int> getPreferredPosition(Vec3<int> position) const;
 	Vec3<int> getPreferredPosition(int x, int y, int z = 0) const;
@@ -187,10 +188,10 @@ class Vehicle : public StateObject,
 	std::list<sp<VEquipment>> equipment;
 	std::list<StateRef<VEquipmentType>> loot;
 	StateRef<City> city;
-	Vec3<float> position;
-	Vec3<float> goalPosition;
+	Vec3<float> position = {0, 0, 0};
+	Vec3<float> goalPosition = {0, 0, 0};
 	std::list<Vec3<float>> goalWaypoints;
-	Vec3<float> velocity;
+	Vec3<float> velocity = {0, 0, 0};
 	float facing = 0.0f;
 	float goalFacing = 0.0f;
 	float angularVelocity = 0.0f;
@@ -369,7 +370,7 @@ class Vehicle : public StateObject,
 	up<VehicleMover> mover;
 	sp<Doodad> smokeDoodad;
 	std::list<sp<Image>>::iterator animationFrame;
-	int animationDelay;
+	int animationDelay = 0;
 
 	// Following members are not serialized, but rather are set in initCity method
 
