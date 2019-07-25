@@ -2,7 +2,6 @@
 
 #include "framework/image.h"
 #include "game/state/gametime.h"
-#include "game/state/rules/aequipmenttype.h"
 #include "game/state/shared/equipment.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
@@ -30,6 +29,7 @@ class AgentMission;
 class VoxelMap;
 class City;
 enum class AIType;
+class AEquipmentType;
 
 enum class BodyPart
 {

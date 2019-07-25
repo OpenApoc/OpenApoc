@@ -1255,12 +1255,6 @@ void VehicleMover::updateSliding(GameState &state, unsigned int ticks)
 
 VehicleMover::~VehicleMover() = default;
 
-Vehicle::Vehicle()
-    : attackMode(AttackMode::Standard), altitude(Altitude::Standard), position(0, 0, 0),
-      velocity(0, 0, 0)
-{
-}
-
 Vehicle::~Vehicle() = default;
 
 void Vehicle::leaveDimensionGate(GameState &state)

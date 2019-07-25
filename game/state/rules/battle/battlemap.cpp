@@ -88,8 +88,6 @@ int getCorridorSectorID(sp<Base> base, Vec2<int> pos)
 }
 } // namespace
 
-BattleMap::BattleMap() {}
-
 sp<BattleMap> BattleMap::get(const GameState &state, const UString &id)
 {
 	auto it = state.battle_maps.find(id);

@@ -55,6 +55,7 @@ class Vehicle;
 class Building;
 class BattleScanner;
 enum class BattleUnitType;
+class Agent;
 class BattleUnitTileHelper;
 
 class BattleScore

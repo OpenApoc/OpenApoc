@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game/state/city/research.h"
+#include "game/state/rules/agenttype.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -21,7 +22,6 @@ class DamageType;
 class DamageModifier;
 class AgentType;
 class UfopaediaEntry;
-enum class BodyPart;
 
 enum class TriggerType
 {
@@ -64,7 +64,7 @@ class AEquipmentType : public StateObject
 		Loot
 	};
 
-	AEquipmentType();
+	AEquipmentType() = default;
 	~AEquipmentType() override = default;
 
 	// Shared stuff
@@ -74,11 +74,11 @@ class AEquipmentType : public StateObject
 	int weight = 0;
 	StateRef<BattleUnitImagePack> held_image_pack;
 	sp<Image> dropped_sprite;
-	Vec2<float> dropped_offset;
+	Vec2<float> dropped_offset = {0, 0};
 	sp<Image> dropped_shadow_sprite;
-	Vec2<float> shadow_offset;
+	Vec2<float> shadow_offset = {0, 0};
 	sp<Image> equipscreen_sprite;
-	Vec2<int> equipscreen_size;
+	Vec2<int> equipscreen_size = {0, 0};
 	StateRef<Organisation> manufacturer;
 	int store_space = 0;
 	int armor = 0;
@@ -102,7 +102,7 @@ class AEquipmentType : public StateObject
 	// Armor only
 	sp<Image> body_sprite;
 	StateRef<DamageModifier> damage_modifier;
-	BodyPart body_part;
+	BodyPart body_part = BodyPart::Body;
 	StateRef<BattleUnitImagePack> body_image_pack;
 	bool provides_flight = false;
 
