@@ -6,8 +6,6 @@
 namespace OpenApoc
 {
 
-BattleMapSector::BattleMapSector() {}
-
 bool BattleMapSector::LineOfSightBlock::contains(Vec3<int> tile)
 {
 	return tile.x >= start.x && tile.y >= start.y && tile.z >= start.z && tile.x < end.x &&

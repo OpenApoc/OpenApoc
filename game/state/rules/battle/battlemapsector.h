@@ -25,7 +25,7 @@ class BattleMapSector : public StateObject
 {
 	STATE_OBJECT(BattleMapSector)
   public:
-	BattleMapSector();
+	BattleMapSector() = default;
 	~BattleMapSector() override = default;
 
 	class LineOfSightBlock
@@ -52,7 +52,7 @@ class BattleMapSector : public StateObject
 		sp<LineOfSightBlock> clone(Vec3<int> shift);
 	};
 
-	Vec3<int> size;
+	Vec3<int> size = {0, 0, 0};
 	int occurrence_min = 0;
 	int occurrence_max = 0;
 
