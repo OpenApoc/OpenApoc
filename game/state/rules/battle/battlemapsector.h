@@ -32,9 +32,9 @@ class BattleMapSector : public StateObject
 	{
 	  public:
 		// Inclusive lower boundary
-		Vec3<int> start;
+		Vec3<int> start = {0, 0, 0};
 		// Exclusive upper boundary
-		Vec3<int> end;
+		Vec3<int> end = {0, 0, 0};
 
 		int ai_patrol_priority = 0;
 		int ai_target_priority = 0;
