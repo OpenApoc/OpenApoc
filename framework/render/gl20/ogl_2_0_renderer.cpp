@@ -5,6 +5,7 @@
 #include "framework/renderer_interface.h"
 #include "library/sp.h"
 #include <array>
+#include <atomic>
 #include <glm/gtx/rotate_vector.hpp>
 #include <list>
 #include <memory>
@@ -20,6 +21,8 @@ namespace
 {
 
 using namespace OpenApoc;
+
+std::atomic<bool> renderer_dead = true;
 
 // Forward declaration needed for RendererImageData
 class OGL20Renderer;
@@ -723,8 +726,9 @@ class OGL20Renderer : public Renderer
 		gl20::Enable(gl20::BLEND);
 		gl20::BlendFuncSeparate(gl20::SRC_ALPHA, gl20::ONE_MINUS_SRC_ALPHA, gl20::SRC_ALPHA,
 		                        gl20::DST_ALPHA);
+		renderer_dead = false;
 	}
-	~OGL20Renderer() override = default;
+	~OGL20Renderer() override { renderer_dead = true; };
 	void clear(Colour c = Colour{0, 0, 0, 0}) override
 	{
 		this->flush();
@@ -1097,14 +1101,43 @@ class OGL20RendererFactory : public OpenApoc::RendererFactory
 
 FBOData::~FBOData()
 {
+	if (renderer_dead)
+	{
+		LogWarning("FBOData being destroyed after renderer");
+		return;
+	}
 	if (tex)
 		owner->delete_texture_object(tex);
 	if (fbo)
 		owner->delete_framebuffer_object(fbo);
 }
-GLRGBImage::~GLRGBImage() { owner->delete_texture_object(this->texID); }
-GLPalette::~GLPalette() { owner->delete_texture_object(this->texID); }
-GLPaletteImage::~GLPaletteImage() { owner->delete_texture_object(this->texID); }
+GLRGBImage::~GLRGBImage()
+{
+	if (renderer_dead)
+	{
+		LogWarning("GLRGBImage being destroyed after renderer");
+		return;
+	}
+	owner->delete_texture_object(this->texID);
+}
+GLPalette::~GLPalette()
+{
+	if (renderer_dead)
+	{
+		LogWarning("GLPalette being destroyed after renderer");
+		return;
+	}
+	owner->delete_texture_object(this->texID);
+}
+GLPaletteImage::~GLPaletteImage()
+{
+	if (renderer_dead)
+	{
+		LogWarning("GLPaletteImage being destroyed after renderer");
+		return;
+	}
+	owner->delete_texture_object(this->texID);
+}
 
 } // anonymous namespace
 
