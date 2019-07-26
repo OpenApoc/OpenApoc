@@ -504,7 +504,7 @@ void City::repairScenery(GameState &state)
 	}
 }
 
-void City::repairVehicles(GameState &state)
+void City::repairVehicles(GameState &state [[maybe_unused]])
 {
 	for (auto &b : buildings)
 	{

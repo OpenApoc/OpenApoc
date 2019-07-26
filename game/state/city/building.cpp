@@ -1007,6 +1007,6 @@ void Building::decreasePendingInvestigatorCount(GameState &state)
 	}
 }
 
-bool Building::isAlive(GameState &state) const { return !buildingParts.empty(); }
+bool Building::isAlive(GameState &state [[maybe_unused]]) const { return !buildingParts.empty(); }
 
 } // namespace OpenApoc

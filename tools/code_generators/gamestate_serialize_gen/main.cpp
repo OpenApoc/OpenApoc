@@ -79,8 +79,8 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 	{
 		if (object.external == false)
 			out << "inline\n";
-		out << "void serializeIn(const GameState *state, SerializationNode* node, " << object.name
-		    << " &obj)\n{\n";
+		out << "void serializeIn(const GameState *state [[maybe_unused]], SerializationNode* node, "
+		    << object.name << " &obj [[maybe_unused]])\n{\n";
 
 		out << "\tif (!node) return;\n";
 
@@ -111,8 +111,8 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 
 		if (object.external == false)
 			out << "inline\n";
-		out << "void serializeOut(SerializationNode* node, const " << object.name << " &obj, const "
-		    << object.name << " &ref)\n{\n";
+		out << "void serializeOut(SerializationNode* node [[maybe_unused]], const " << object.name
+		    << " &obj [[maybe_unused]], const " << object.name << " &ref [[maybe_unused]])\n{\n";
 
 		for (auto &member : object.members)
 		{
@@ -150,8 +150,8 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 
 		if (object.external == false)
 			out << "inline\n";
-		out << "bool operator==(const " << object.name << " &a, const " << object.name
-		    << " &b)\n{\n";
+		out << "bool operator==(const " << object.name << " &a [[maybe_unused]], const "
+		    << object.name << " &b [[maybe_unused]])\n{\n";
 
 		for (auto &member : object.members)
 		{

@@ -68,12 +68,13 @@ typename std::enable_if<std::is_enum<T>::value>::type getFromLua(lua_State *L, i
 	v = static_cast<T>(integer);
 }
 // trying to get a value from the stack into a const reference (invalid)
-template <typename T> void getFromLua(lua_State *L, int argNum, const T &v)
+template <typename T> void getFromLua(lua_State *L, int argNum, const T &v [[maybe_unused]])
 {
 	int idx = argNum;
 	if (argNum < 0)
 		argNum = lua_gettop(L) + argNum + 1;
 	luaL_error(L, "this member (#%d) cannot be set directly", argNum);
+	LogError("Invalid Lua function");
 }
 
 // functions for pushing objects to the lua stack
@@ -410,8 +411,10 @@ template <typename C> int containerIndexMap(lua_State *L)
 }
 
 // mapping between method name to a pointer-to-function
-template <typename T> lua_CFunction getLuaObjectConstMethods(const std::string &key)
+template <typename T>
+lua_CFunction getLuaObjectConstMethods(const std::string &key [[maybe_unused]])
 {
+	LogError("Unimplemented Lua function");
 	return nullptr;
 }
 

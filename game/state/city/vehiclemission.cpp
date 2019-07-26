@@ -457,7 +457,8 @@ VehicleMission *VehicleMission::attackVehicle(GameState &, Vehicle &, StateRef<V
 	return mission;
 }
 
-VehicleMission *VehicleMission::attackBuilding(GameState &state, Vehicle &v,
+VehicleMission *VehicleMission::attackBuilding(GameState &state [[maybe_unused]],
+                                               Vehicle &v [[maybe_unused]],
                                                StateRef<Building> target)
 {
 	auto *mission = new VehicleMission();
@@ -488,7 +489,8 @@ VehicleMission *VehicleMission::followVehicle(GameState &, Vehicle &,
 	return mission;
 }
 
-VehicleMission *VehicleMission::recoverVehicle(GameState &state, Vehicle &v,
+VehicleMission *VehicleMission::recoverVehicle(GameState &state [[maybe_unused]],
+                                               Vehicle &v [[maybe_unused]],
                                                StateRef<Vehicle> target)
 {
 	auto *mission = new VehicleMission();
@@ -497,8 +499,8 @@ VehicleMission *VehicleMission::recoverVehicle(GameState &state, Vehicle &v,
 	return mission;
 }
 
-VehicleMission *VehicleMission::offerService(GameState &state, Vehicle &v,
-                                             StateRef<Building> target)
+VehicleMission *VehicleMission::offerService(GameState &state [[maybe_unused]],
+                                             Vehicle &v [[maybe_unused]], StateRef<Building> target)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::OfferService;
@@ -586,7 +588,8 @@ VehicleMission *VehicleMission::patrol(GameState &, Vehicle &, bool home, unsign
 	return mission;
 }
 
-VehicleMission *VehicleMission::teleport(GameState &state, Vehicle &v, Vec3<int> target)
+VehicleMission *VehicleMission::teleport(GameState &state [[maybe_unused]],
+                                         Vehicle &v [[maybe_unused]], Vec3<int> target)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::Teleport;
@@ -614,7 +617,7 @@ VehicleMission *VehicleMission::land(Vehicle &, StateRef<Building> b)
 	return mission;
 }
 
-VehicleMission *VehicleMission::investigateBuilding(GameState &, Vehicle &v,
+VehicleMission *VehicleMission::investigateBuilding(GameState &, Vehicle &v [[maybe_unused]],
                                                     StateRef<Building> target, bool allowTeleporter)
 {
 	auto *mission = new VehicleMission();
@@ -2827,7 +2830,7 @@ void VehicleMission::setFollowPath(GameState &state, Vehicle &v)
 }
 
 bool VehicleMission::advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> &destPos,
-                                      float &destFacing, int &turboTiles)
+                                      float &destFacing [[maybe_unused]], int &turboTiles)
 {
 	if (currentPlannedPath.empty())
 	{

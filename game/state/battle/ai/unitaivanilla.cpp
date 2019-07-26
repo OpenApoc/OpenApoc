@@ -923,7 +923,7 @@ void UnitAIVanilla::routine(GameState &state, BattleUnit &u)
 	}
 }
 
-void UnitAIVanilla::raiseFlags(GameState &state, BattleUnit &u)
+void UnitAIVanilla::raiseFlags(GameState &state [[maybe_unused]], BattleUnit &u)
 {
 #ifdef VANILLA_AI_DEBUG_OUTPUT
 	LogWarning("VANILLA AI %s: raiseFlags()", u.id);
@@ -951,7 +951,7 @@ void UnitAIVanilla::raiseFlags(GameState &state, BattleUnit &u)
 	}
 }
 
-void UnitAIVanilla::clearFlags(GameState &state, BattleUnit &u)
+void UnitAIVanilla::clearFlags(GameState &state [[maybe_unused]], BattleUnit &u [[maybe_unused]])
 {
 #ifdef VANILLA_AI_DEBUG_OUTPUT
 	LogWarning("VANILLA AI %s: clearFlags()", u.id);

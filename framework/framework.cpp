@@ -1337,7 +1337,8 @@ void Framework::toolTipStopTimer()
 	p->toolTipImage.reset();
 }
 
-void Framework::toolTipTimerCallback(unsigned int interval, void *data)
+void Framework::toolTipTimerCallback(unsigned int interval [[maybe_unused]],
+                                     void *data [[maybe_unused]])
 {
 	// the sdl timer will be removed, so we forget about
 	// clear the timerid and reset the event
