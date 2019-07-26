@@ -1,5 +1,5 @@
 PROJECT (OpenApoc_Tests CXX C)
-CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.9)
 
 set (TEST_LIST test_rect test_voxel test_tilemap test_rng test_images
 		test_unicode test_colour)

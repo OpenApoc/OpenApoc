@@ -2,7 +2,7 @@
 PROJECT(OpenApoc_Framework CXX C)
 
 # check cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.9)
 
 option(BACKTRACE_ON_ERROR "Print backtrace on logging an error (Requires libunwind on linux, no extra dependencies on windows)" ON)
 option(DIALOG_ON_ERROR "Pop up a dialog box showing errors" ON)

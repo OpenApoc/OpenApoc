@@ -2,7 +2,7 @@
 PROJECT(OpenApoc_Library CXX C)
 
 # check cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.9)
 
 find_package(Boost REQUIRED COMPONENTS locale)
 
