@@ -1,4 +1,4 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.9)
 
 option(BUILD_EXTRACTOR "Build the initial gamestate extractor tool" ON)
 option(BUILD_IMAGEDUMP "Build a tool that dumps apoc images as png files" ON)

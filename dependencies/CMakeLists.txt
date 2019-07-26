@@ -2,7 +2,7 @@
 PROJECT(OpenApoc_Dependencies C CXX)
 
 # check cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.9)
 
 # hide dependency warnings
 add_compile_options("-w")

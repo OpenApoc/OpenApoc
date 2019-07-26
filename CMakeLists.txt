@@ -1,8 +1,8 @@
+# check cmake version
+CMAKE_MINIMUM_REQUIRED(VERSION 3.9)
+
 # project name, and type
 PROJECT(OpenApoc CXX C)
-
-# check cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 3.8)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -54,27 +54,14 @@ if (C_COMPILER_SUPPORTS_HIDDEN_VISIBILITY)
 endif()
 
 if (LTO)
-	CHECK_CXX_COMPILER_FLAG("-flto"
-		COMPILER_SUPPORTS_LTO)
-	CHECK_CXX_COMPILER_FLAG("-flto=4"
-		COMPILER_SUPPORTS_LTO4)
-
-	if(CMAKE_CXX_COMPILER_ID STREQUAL GNU)
-		set(CMAKE_AR gcc-ar)
-		set(CMAKE_RANLIB gcc-ranlib)
-	endif()
-
-	if (MSVC)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /GL")
-		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /LTGC")
-	elseif (COMPILER_SUPPORTS_LTO4)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -flto=4")
-		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -flto=4")
-	elseif(COMPILER_SUPPORTS_LTO)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -flto")
-		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -flto")
+	include(CheckIPOSupported)
+	check_ipo_supported(RESULT result OUTPUT output)
+	message("Enabling LTO")
+	if (result)
+			set (CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+			message("LTO supported")
 	else()
-		message(WARNING "LTO not supported by this compiler")
+		message(WARNING "LTO not supported by this compiler :" ${output})
 	endif()
 endif(LTO)
 
