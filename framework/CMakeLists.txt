@@ -247,7 +247,7 @@ target_include_directories(OpenApoc_Framework PUBLIC ${GLM_INCLIDE_DIR})
 #Require SDL2 for input/graphics/sound/pretty much everything
 if(WIN32)
 	find_package(SDL2 CONFIG REQUIRED)
-	target_link_libraries(OpenApoc_Framework PRIVATE SDL2::SDL2 SDL2::SDL2main)
+	target_link_libraries(OpenApoc_Framework PUBLIC SDL2::SDL2 SDL2::SDL2main)
 	#Workaround vcpkg bug
 	set_target_properties(SDL2::SDL2 SDL2::SDL2main PROPERTIES
 		MAP_IMPORTED_CONFIG_MINSIZEREL Release
