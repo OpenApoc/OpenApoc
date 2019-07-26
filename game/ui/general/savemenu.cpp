@@ -150,7 +150,7 @@ void SaveMenu::begin()
 			}
 
 			auto saveNameTextEdit = newControl->findControlTyped<TextEdit>("TEXTEDIT_SAVE_NAME");
-			if (currentAction != SaveMenuAction::Save && saveNameTextEdit != nullptr)
+			if (saveNameTextEdit != nullptr)
 			{
 				saveNameTextEdit->setVisible(false);
 			}
