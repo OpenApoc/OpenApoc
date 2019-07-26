@@ -243,7 +243,8 @@ AgentMission *AgentMission::awaitPickup(GameState &, Agent &, StateRef<Building>
 	return mission;
 }
 
-AgentMission *AgentMission::teleport(GameState &state, Agent &a, StateRef<Building> b)
+AgentMission *AgentMission::teleport(GameState &state [[maybe_unused]], Agent &a [[maybe_unused]],
+                                     StateRef<Building> b)
 {
 	auto *mission = new AgentMission();
 	mission->type = MissionType::Teleport;
@@ -474,7 +475,7 @@ void AgentMission::start(GameState &state, Agent &a)
 	}
 }
 
-void AgentMission::setPathTo(GameState &state, Agent &a, StateRef<Building> b)
+void AgentMission::setPathTo(GameState &state [[maybe_unused]], Agent &a, StateRef<Building> b)
 {
 	this->currentPlannedPath.clear();
 	auto &map = *a.city->map;

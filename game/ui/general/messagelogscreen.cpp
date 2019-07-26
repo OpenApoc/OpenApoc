@@ -56,7 +56,8 @@ sp<Control> MessageLogScreen::createMessageRow(EventMessage message, sp<GameStat
 	});
 }
 
-sp<Control> MessageLogScreen::createMessageRow(EventMessage message, sp<GameState> state,
+sp<Control> MessageLogScreen::createMessageRow(EventMessage message,
+                                               sp<GameState> state [[maybe_unused]],
                                                std::function<void(FormsEvent *e)> callback)
 {
 	auto control = mksp<Control>();

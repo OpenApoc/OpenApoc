@@ -998,7 +998,7 @@ void Agent::updateEachSecond(GameState &state)
 	}
 }
 
-void Agent::updateDaily(GameState &state) { recentlyFought = false; }
+void Agent::updateDaily(GameState &state [[maybe_unused]]) { recentlyFought = false; }
 
 void Agent::updateHourly(GameState &state)
 {

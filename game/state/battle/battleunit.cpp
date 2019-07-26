@@ -1987,7 +1987,7 @@ void BattleUnit::updateTB(GameState &state)
 	updateRegen(state, TICKS_REGEN_PER_TURN);
 }
 
-void BattleUnit::updateCloak(GameState &state, unsigned int ticks)
+void BattleUnit::updateCloak(GameState &state [[maybe_unused]], unsigned int ticks)
 {
 	if (isConscious())
 	{

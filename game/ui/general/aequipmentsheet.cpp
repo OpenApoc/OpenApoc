@@ -96,7 +96,8 @@ void AEquipmentSheet::displayImplementation(sp<AEquipment> item, sp<AEquipmentTy
 	}
 }
 
-void AEquipmentSheet::displayGrenade(sp<AEquipment> item, sp<AEquipmentType> itemType)
+void AEquipmentSheet::displayGrenade(sp<AEquipment> item [[maybe_unused]],
+                                     sp<AEquipmentType> itemType)
 {
 	form->findControlTyped<Label>("LABEL_2_C")->setText(itemType->damage_type->name);
 
@@ -132,7 +133,8 @@ void AEquipmentSheet::displayAmmo(sp<AEquipment> item, sp<AEquipmentType> itemTy
 	}
 }
 
-void AEquipmentSheet::displayWeapon(sp<AEquipment> item, sp<AEquipmentType> itemType)
+void AEquipmentSheet::displayWeapon(sp<AEquipment> item [[maybe_unused]],
+                                    sp<AEquipmentType> itemType)
 {
 	if (itemType->ammo_types.empty())
 	{
@@ -171,7 +173,10 @@ void AEquipmentSheet::displayArmor(sp<AEquipment> item, sp<AEquipmentType> itemT
 	                   : format("%d", itemType->armor));
 }
 
-void AEquipmentSheet::displayOther(sp<AEquipment> item, sp<AEquipmentType> itemType) {}
+void AEquipmentSheet::displayOther(sp<AEquipment> item [[maybe_unused]],
+                                   sp<AEquipmentType> itemType [[maybe_unused]])
+{
+}
 
 void AEquipmentSheet::displayAlien(sp<AEquipment> item, sp<AEquipmentType> itemType)
 {
