@@ -1,7 +1,19 @@
 #pragma once
 
 #define TINYFORMAT_USE_VARIADIC_TEMPLATES
+
+#ifdef __GNUC__
+// Tinyformat has a number of non-annotated switch fallthrough cases
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
+#endif
+
 #include "dependencies/tinyformat/tinyformat.h"
+
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
+
 #include "library/strings.h"
 namespace OpenApoc
 {
