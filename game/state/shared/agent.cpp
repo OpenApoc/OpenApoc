@@ -1013,11 +1013,13 @@ void Agent::updateHourly(GameState &state)
 		// agent is in a vehicle stationed in home building
 		base = currentVehicle->currentBuilding->base;
 	}
-	else
+
+	if (!base)
 	{
 		// not in a base
 		return;
 	}
+
 	// Heal
 	if (modified_stats.health < current_stats.health && !recentlyFought)
 	{
