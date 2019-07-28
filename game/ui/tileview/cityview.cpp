@@ -2973,24 +2973,29 @@ bool CityView::handleKeyDown(Event *e)
 				{
 					LogWarning("Spawning crashed UFOs...");
 
-					bool nothing = false;
-					auto pos = centerPos;
-					pos.z = 9;
-					auto ufo = state->current_city->placeVehicle(
-					    *state, {state.get(), "VEHICLETYPE_ALIEN_PROBE"}, state->getAliens(), pos);
-					ufo->crash(*state, nullptr);
-					pos.z++;
-					ufo = state->current_city->placeVehicle(
-					    *state, {state.get(), "VEHICLETYPE_ALIEN_BATTLESHIP"}, state->getAliens(),
-					    pos);
-					ufo->crash(*state, nullptr);
-					ufo->applyDamage(*state, 1, 0, nothing);
-					pos.z++;
-					ufo = state->current_city->placeVehicle(
-					    *state, {state.get(), "VEHICLETYPE_ALIEN_TRANSPORTER"}, state->getAliens(),
-					    pos);
-					ufo->crash(*state, nullptr);
-					ufo->applyDamage(*state, 1, 0, nothing);
+					std::vector<StateRef<VehicleType>> validTypes;
+
+					auto pos = this->centerPos;
+
+					for (const auto &type : state->vehicle_types)
+					{
+						if (type.second->crashed_sprite)
+						{
+							validTypes.emplace_back(state.get(), type.second);
+							LogWarning("Valid UFO type: %s", type.second->name);
+						}
+					}
+
+					for (int i = 0; i < 3; i++)
+					{
+						auto type = pickRandom(state->rng, validTypes);
+						LogWarning("Crashing %s", type->name);
+						pos.z = 9 + i;
+						auto ufo = state->current_city->placeVehicle(*state, {state.get(), type},
+						                                             state->getAliens(), pos);
+						ufo->crash(*state, nullptr);
+						ufo->applyDamage(*state, 1, 0);
+					}
 
 					return true;
 				}
