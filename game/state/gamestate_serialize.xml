@@ -459,6 +459,7 @@
 		<member>cargo</member>
 		<member>carriedVehicle</member>
 		<member>carriedByVehicle</member>
+		<member>betweenDimensions</member>
 	</object>
 	<object>
 		<name>VEquipment</name>

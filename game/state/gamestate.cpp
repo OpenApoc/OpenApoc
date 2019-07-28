@@ -182,8 +182,9 @@ void GameState::initState()
 		for (auto &v : this->vehicles)
 		{
 			auto vehicle = v.second;
-			if (vehicle->city == city && !vehicle->currentBuilding)
+			if (vehicle->city == city && !vehicle->currentBuilding && !vehicle->betweenDimensions)
 			{
+
 				city->map->addObjectToMap(*this, vehicle);
 			}
 			vehicle->strategyImages = city_common_image_list->strategyImages;
