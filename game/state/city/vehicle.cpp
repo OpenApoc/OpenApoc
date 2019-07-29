@@ -1271,6 +1271,7 @@ void Vehicle::leaveDimensionGate(GameState &state)
 	auto initialFacing = 0.0f;
 
 	LogInfo("Leaving dimension gate %s", this->name);
+	LogAssert(this->betweenDimensions == true);
 	if (this->tileObject)
 	{
 		LogError("Trying to launch already-launched vehicle");
@@ -1298,10 +1299,12 @@ void Vehicle::leaveDimensionGate(GameState &state)
 			    new GameVehicleEvent(GameEventType::UfoSpotted, {&state, shared_from_this()}));
 		}
 	}
+	this->betweenDimensions = false;
 }
 
 void Vehicle::enterDimensionGate(GameState &state)
 {
+	LogAssert(this->betweenDimensions == false);
 	carriedByVehicle.clear();
 	crashed = false;
 	if (this->currentBuilding)
@@ -1323,6 +1326,7 @@ void Vehicle::enterDimensionGate(GameState &state)
 	this->goalFacing = 0.0f;
 	this->ticksToTurn = 0;
 	this->angularVelocity = 0.0f;
+	this->betweenDimensions = true;
 }
 
 void Vehicle::leaveBuilding(GameState &state, Vec3<float> initialPosition, float initialFacing)

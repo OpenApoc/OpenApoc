@@ -232,6 +232,9 @@ class Vehicle : public StateObject,
 	sp<TileObjectVehicle> tileObject;
 	sp<TileObjectShadow> shadowObject;
 
+	// If the vehicle is currently traveling through a dimension gate
+	bool betweenDimensions = false;
+
 	/* leave the building and put vehicle into the city */
 	void leaveDimensionGate(GameState &state);
 	/* 'enter' the vehicle into a building*/
