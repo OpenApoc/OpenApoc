@@ -135,7 +135,7 @@ void InitialGameStateExtractor::readBattleMapParts(
 			object->strategySprite = fw().data->loadImage(stratImageString);
 		}
 		// It should be {24,34} I guess, since 48/2=24, but 23 gives a little better visual
-		// corellation with the sprites
+		// correlation with the sprites
 		object->imageOffset = BATTLE_IMAGE_OFFSET;
 
 		object->transparent = entry.transparent == 1;
@@ -143,7 +143,7 @@ void InitialGameStateExtractor::readBattleMapParts(
 		object->door = entry.is_door == 1 && entry.is_door_closed == 1;
 		// Unused in vanilla
 		// object->los_through_terrain = entry.los_through_terrain == 1;
-		// Instead we mark objects based on wether they block los or not
+		// Instead we mark objects based on whether they block los or not
 		// For now, we simply cheat and check several voxels
 		switch (type)
 		{

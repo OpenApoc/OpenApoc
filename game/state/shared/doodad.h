@@ -14,7 +14,7 @@ class GameState;
 class VoxelMap;
 
 /* A doodad is a visual only effect (IE doesn't change the game state) for
- * animated sprited, like hit animations/explosions etc. The do not move(?) */
+ * animated sprites, like hit animations/explosions etc. They do not move(?) */
 class Doodad : public std::enable_shared_from_this<Doodad>
 {
   public:

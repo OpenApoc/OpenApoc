@@ -151,10 +151,10 @@ class BattleUnitAnimationPack : public StateObject
 	std::map<ChangingBodyStateAnimationKey, std::map<Vec2<int>, sp<AnimationEntry>>>
 	    body_state_animations;
 
-	// Wether unit has alternative firing animations - upwards and downwards (2 versions each)
+	// Whether unit has alternative firing animations - upwards and downwards (2 versions each)
 	bool hasAlternativeFiringAnimations = false;
 
-	// Wether unit should play it's firing animation when using psionics
+	// Whether unit should play it's firing animation when using psionics
 	bool useFiringAnimationForPsi = false;
 
 	// Animation for alternative aiming/firing. HandState must be "Firing" or "Aiming",

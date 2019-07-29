@@ -216,7 +216,7 @@ Collision Projectile::checkProjectileCollision(TileMap &map)
 		firer = firerUnit->owner;
 	}
 #ifdef DEBUG_ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE
-	// Missiles should not shooot down non-missiles even when friendly firing
+	// Missiles should not shoot down non-missiles even when friendly firing
 	// otherwise they kill themselves immediately
 	if (type == Type::Beam)
 	{

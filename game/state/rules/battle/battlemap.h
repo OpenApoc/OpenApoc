@@ -29,7 +29,7 @@ class BattleMap : public StateObject
 	{
 		// Subtract 1 from larger map side
 		Small = 0,
-		// Standart size
+		// Standard size
 		Normal = 1,
 		// Add 1 to random map side
 		Large = 2,

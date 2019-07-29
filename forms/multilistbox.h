@@ -65,7 +65,7 @@ class MultilistBox : public Control
 	void selectAll();
 	// Deselect all selected items.
 	void clearSelection();
-	// Get vector of controls (whith preservation of order) that have been selected.
+	// Get vector of controls (with preservation of order) that have been selected.
 	std::vector<sp<Control>> getSelectedItems() const;
 	// Get set of controls that have been selected.
 	std::set<sp<Control>> &getSelectedSet() { return selectedSet; }

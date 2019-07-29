@@ -218,7 +218,7 @@ UString UString::substr(size_t offset, size_t length) const
 UString UString::toUpper() const
 {
 	/* Only change the case on ascii range characters (codepoint <=0x7f)
-	 * As we know the top bit is set for any bytes outside this range no matter the postion in the
+	 * As we know the top bit is set for any bytes outside this range no matter the position in the
 	 * utf8 stream, we can cheat a bit here */
 	UString upper_string = *this;
 	for (size_t i = 0; i < upper_string.cStrLength(); i++)
@@ -232,7 +232,7 @@ UString UString::toUpper() const
 UString UString::toLower() const
 {
 	/* Only change the case on ascii range characters (codepoint <=0x7f)
-	 * As we know the top bit is set for any bytes outside this range no matter the postion in the
+	 * As we know the top bit is set for any bytes outside this range no matter the position in the
 	 * utf8 stream, we can cheat a bit here */
 	UString lower_string = *this;
 	for (size_t i = 0; i < lower_string.cStrLength(); i++)

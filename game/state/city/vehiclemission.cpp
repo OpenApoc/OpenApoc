@@ -902,7 +902,7 @@ VehicleTargetHelper::adjustTargetToClosestFlying(GameState &state, Vehicle &v, V
 	{
 		return {reachability, true};
 	}
-	// Check if target tile has no vehicle termporarily blocking it
+	// Check if target tile has no vehicle temporarily blocking it
 	// If it does, find a random location around it that is not blocked
 	bool containsVehicle = false;
 	for (auto &obj : targetTile->intersectingObjects)
@@ -2900,9 +2900,9 @@ bool VehicleMission::advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> 
 
 	// See if we can make a shortcut
 	{
-		// When ordering move to vehidle already on the move, we can have a situation
+		// When ordering move to vehicle already on the move, we can have a situation
 		// where going directly to 2nd step in the path is faster than going to the first
-		// In this case, we should skip unnesecary steps
+		// In this case, we should skip unnecessary steps
 		auto it = ++currentPlannedPath.begin();
 		// Start with position after next
 		// If next position has a node and we can go directly to that node

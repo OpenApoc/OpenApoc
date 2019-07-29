@@ -63,7 +63,7 @@ GameState::~GameState()
 	{
 		auto vehicle = v.second;
 		vehicle->removeFromMap(*this);
-		// Detatch some back-pointers otherwise we get circular sp<> depedencies and leak
+		// Detach some back-pointers otherwise we get circular sp<> dependencies and leak
 		// FIXME: This is not a 'good' way of doing this, maybe add a destroyVehicle() function? Or
 		// make StateRefWeak<> or something?
 		//
@@ -216,7 +216,7 @@ void GameState::initState()
 		a.second->leftHandItem = a.second->getFirstItemInSlot(EquipmentSlotType::LeftHand, false);
 		a.second->rightHandItem = a.second->getFirstItemInSlot(EquipmentSlotType::RightHand, false);
 	}
-	// Run nessecary methods for different types
+	// Run necessary methods for different types
 	research.updateTopicList();
 	// Apply mods (Stub until we actually have mods)
 	applyMods();
@@ -612,7 +612,7 @@ void GameState::startGame()
 // Fills out initial player property
 void GameState::fillPlayerStartingProperty()
 {
-	// Create the intial starting base
+	// Create the initial starting base
 	// Randomly shuffle buildings until we find one with a base layout
 	sp<City> humanCity = this->cities["CITYMAP_HUMAN"];
 	setCurrentCity({this, humanCity});

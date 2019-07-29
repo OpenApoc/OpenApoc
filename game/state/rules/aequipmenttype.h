@@ -84,7 +84,7 @@ class AEquipmentType : public StateObject
 	int armor = 0;
 	int score = 0;
 	ResearchDependency research_dependency;
-	// Wether item is carried two-handed (for display purposes)
+	// Whether item is carried two-handed (for display purposes)
 	bool two_handed = false;
 
 	// Item goes to alien containment
@@ -108,7 +108,7 @@ class AEquipmentType : public StateObject
 
 	// Weapon & Grenade only
 	// For weapons with built-in ammo and for grenades leave this empty
-	// This is not stored in files, but rather filled in gamestate inint
+	// This is not stored in files, but rather filled in gamestate init
 	// In files we only store ammo's link to the weapon
 	// This way, modders can introduce ammunition for existing weapons without having mod conflicts
 	std::list<StateRef<AEquipmentType>> ammo_types;

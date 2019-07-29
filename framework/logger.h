@@ -21,7 +21,7 @@
 
 namespace OpenApoc
 {
-/* MSVC doesn't ahve __PRETTY_FUNCTION__ but __FUNCSIG__? */
+/* MSVC doesn't have __PRETTY_FUNCTION__ but __FUNCSIG__? */
 // FIXME: !__GNUC__ isn't the same as MSVC
 #ifndef __GNUC__
 #define LOGGER_PREFIX __FUNCSIG__
@@ -66,7 +66,7 @@ static inline bool logLevelEnabled(LogLevel level)
 	} while (0)
 
 #if defined(__GNUC__)
-// GCC has an extension if __VA_ARGS__ are not supplied to 'remove' the precending comma
+// GCC has an extension if __VA_ARGS__ are not supplied to 'remove' the preceding comma
 #define LogDebug(f, ...)                                                                           \
 	do                                                                                             \
 	{                                                                                              \

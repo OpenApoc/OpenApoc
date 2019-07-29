@@ -239,7 +239,7 @@ void TransferScreen::closeScreen()
 {
 	auto player = state->getPlayer();
 
-	// Step 01: Check accomodation of different sorts
+	// Step 01: Check accommodation of different sorts
 	{
 		std::array<int, MAX_BASES> vecCrewDelta;
 		std::array<int, MAX_BASES> vecCargoDelta;

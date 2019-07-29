@@ -287,7 +287,7 @@ class FlyingVehicleMover : public VehicleMover
 						{
 							// Angle between vector to us and vector towards location
 							auto angle = glm::angle(point2d, glm::normalize(Vec2<float>{x, y}));
-							// Wether this location lies to our right side
+							// Whether this location lies to our right side
 							bool right =
 							    asinf(glm::angle(point2d,
 							                     glm::normalize(point2d + Vec2<float>{x, y}))) >= 0;
@@ -404,7 +404,7 @@ class FlyingVehicleMover : public VehicleMover
 		// or to tick_scale * city_scale / speed
 		int ticksPerTile = TICK_SCALE * VELOCITY_SCALE_CITY.x / vehicle.getSpeed();
 
-		// Flag wether we need to update banking and direction
+		// Flag whether we need to update banking and direction
 		bool updateSprite = false;
 		// Move until we become idle or run out of ticks
 		while (ticksToMove != lastTicksToMove || ticksToTurn != lastTicksToTurn)
@@ -650,7 +650,7 @@ class GroundVehicleMover : public VehicleMover
 			return;
 		}
 
-		// Flag wether we need to update banking and direction
+		// Flag whether we need to update banking and direction
 		bool updateSprite = false;
 		// Move until we become idle or run out of ticks
 		while (ticksToMove != lastTicksToMove)
@@ -2768,7 +2768,7 @@ bool Vehicle::fireAtBuilding(
 				                0};
 				inRange = tileObject->getDistanceTo(position + targetVector) <= firingRange;
 			}
-			// Look for a tile in front of us so that we can hit it easilly
+			// Look for a tile in front of us so that we can hit it easily
 			auto forwardPos = position;
 			if (velocity.x != 0 || velocity.y != 0)
 			{

@@ -143,7 +143,7 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 				{
 					velocity.z = 1.0f;
 				}
-				// Determine wether to hit head, legs or torso
+				// Determine whether to hit head, legs or torso
 				auto cposition = u->position;
 				// Hit torso if coming from the side, not from above or below
 				if (sqrtf(velocity.x * velocity.x + velocity.y * velocity.y) > std::abs(velocity.z))
@@ -158,7 +158,7 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 				// Hit legs if coming from below
 				else
 				{
-					// Legs are defeault already
+					// Legs are default already
 				}
 				// Apply
 				u->applyDamage(state, damage, damageType,

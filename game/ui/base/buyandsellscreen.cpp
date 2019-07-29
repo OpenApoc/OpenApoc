@@ -113,7 +113,7 @@ void BuyAndSellScreen::closeScreen()
 		}
 	}
 
-	// Step 02: Check accomodation of different sorts
+	// Step 02: Check accommodation of different sorts
 	{
 		std::array<int, MAX_BASES> vecCargoDelta;
 		std::array<bool, MAX_BASES> vecChanged;

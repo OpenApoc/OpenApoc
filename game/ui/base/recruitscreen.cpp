@@ -361,7 +361,7 @@ void RecruitScreen::fillBaseBar(int percent)
 	auto progressImage = mksp<RGBImage>(facilityBar->Size);
 	int redHeight = progressImage->size.y * std::min(100, percent) / 100;
 	{
-		// FIXME: For some reason, there's no border here like in the research sceen, so we
+		// FIXME: For some reason, there's no border here like in the research screen, so we
 		// have to make one manually, probably there's a better way
 		RGBImageLock l(progressImage);
 		for (int x = 0; x < 2; x++)
@@ -404,7 +404,7 @@ void RecruitScreen::displayAgentStats(sp<Agent> agent)
 }
 
 /**
- * Fills the form of personel's statistics. Such as skill and that's all.
+ * Fills the form of personnel's statistics. Such as skill and that's all.
  * @agent - an agent whose stats will be displayed
  * @formPersonnelStats - a form of stats
  */
@@ -653,7 +653,7 @@ void RecruitScreen::closeScreen(bool confirmed)
 		return;
 	}
 
-	// Sufficnient funds and space, execute
+	// Sufficient funds and space, execute
 	executeOrders();
 	fw().stageQueueCommand({StageCmd::Command::POP});
 }

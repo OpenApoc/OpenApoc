@@ -39,7 +39,7 @@ class BattleUnitTileHelper : public CanEnterTileHelper
 	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
 	                  bool ignoreMovingUnits = true, bool ignoreAllUnits = false) const override;
 	// Alexey Andronov:
-	// This huge function figures out wether unit can go from one tile to another
+	// This huge function figures out whether unit can go from one tile to another
 	// It's huge but I see no way to split it
 	bool canEnterTile(Tile *from, Tile *to, bool allowJumping, bool &jumped, float &cost,
 	                  bool &doorInTheWay, bool ignoreStaticUnits = false,
@@ -87,7 +87,7 @@ class BattleUnitMission
 
 	// Called each owner's update, plus always called before finished/cancelled mission is removed
 	void update(GameState &state, BattleUnit &u, unsigned int ticks, bool finished = false);
-	// Checks wether mission is finished
+	// Checks whether mission is finished
 	bool isFinished(GameState &state, BattleUnit &u, bool callUpdateIfFinished = true);
 	// Start mission
 	void start(GameState &state, BattleUnit &u);
@@ -106,7 +106,7 @@ class BattleUnitMission
 	MovementState getNextMovementState(GameState &state, BattleUnit &u);
 
 	// Spend agent TUs or append AcquireTU mission
-	// Return wether successfully spent TU
+	// Return whether successfully spent TU
 	bool spendAgentTUs(GameState &state, BattleUnit &u, int cost, bool cancel = false,
 	                   bool ignoreKneelReserve = false, bool allowInterrupt = false);
 	// Get next facing step when turning towards target facing
@@ -151,7 +151,7 @@ class BattleUnitMission
 
 	// Mission type
 	Type type = Type::GotoLocation;
-	// Mission cancelled (due to unsufficient TUs or something else failing)
+	// Mission cancelled (due to insufficient TUs or something else failing)
 	bool cancelled = false;
 
 	// Properties unique to certain missions

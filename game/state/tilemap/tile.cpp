@@ -422,7 +422,7 @@ void Tile::updateBattlescapeParameters()
 	{
 		// check if tile below is full height
 		auto t = map.getTile(position.x, position.y, position.z - 1);
-		// Floating point precision is lacking somtimes so even though we have to compare with
+		// Floating point precision is lacking sometimes so even though we have to compare with
 		// 0.975, we do this
 		canStand = t->solidGround && t->height >= 0.9625f;
 		if (canStand)

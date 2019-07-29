@@ -76,7 +76,7 @@ void TileObjectProjectile::addToDrawnTiles(Tile *)
 	for (auto &pos : p->spritePositions)
 	{
 
-		// Projectiles are drawn in the tile that containts their point that is closest to camera
+		// Projectiles are drawn in the tile that contains their point that is closest to camera
 		if (maxCoords.z * 1000 + maxCoords.x + maxCoords.y < pos.z * 1000 + pos.x + pos.y)
 		{
 			maxCoords = {pos.x, pos.y, pos.z};

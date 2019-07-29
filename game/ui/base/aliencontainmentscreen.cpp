@@ -51,7 +51,7 @@ AlienContainmentScreen::AlienContainmentScreen(sp<GameState> state, bool forceLi
 
 void AlienContainmentScreen::closeScreen()
 {
-	// Step 01: Check accomodation of different sorts
+	// Step 01: Check accommodation of different sorts
 	{
 		std::array<int, MAX_BASES> vecBioDelta;
 		std::array<bool, MAX_BASES> vecChanged;

@@ -197,7 +197,7 @@ static void initLogger()
 		fileLogLevel = LogLevel::Nothing;
 		backtraceLogLevel = LogLevel::Nothing;
 		showDialogOnError = false;
-		// Returning without setting loggerInited causes this to be called evey Log call until the
+		// Returning without setting loggerInited causes this to be called every Log call until the
 		// config is parsed
 		return;
 	}

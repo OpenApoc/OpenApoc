@@ -180,7 +180,7 @@ void InGameOptions::loadNextList()
 
 void InGameOptions::begin()
 {
-	/* Initialse all initial values */
+	/* Initialise all initial values */
 
 	menuform->findControlTyped<ScrollBar>("GLOBAL_GAIN_SLIDER")
 	    ->setValue(config().getInt("Framework.Audio.GlobalGain"));

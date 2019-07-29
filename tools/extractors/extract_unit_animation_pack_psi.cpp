@@ -57,7 +57,7 @@ void extractAnimationPackPsiInternal(sp<BattleUnitAnimationPack> p,
 
 	// Body state change animations
 	{
-		// Body Flying -> Downned/Dead animation: 2
+		// Body Flying -> Downed/Dead animation: 2
 		p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 		                          BodyState::Flying, BodyState::Downed}][{x, y}] =
 		    e.getAnimationEntry(dataAD, dataUA, dataUF, 2, {x, y}, offset, offset);
@@ -65,7 +65,7 @@ void extractAnimationPackPsiInternal(sp<BattleUnitAnimationPack> p,
 		                          BodyState::Flying, BodyState::Dead}][{x, y}] =
 		    e.getAnimationEntry(dataAD, dataUA, dataUF, 2, {x, y}, offset, offset);
 
-		// Body Downned -> Flying animation: 2
+		// Body Downed -> Flying animation: 2
 		p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 		                          BodyState::Downed, BodyState::Flying}][{x, y}] =
 		    e.getAnimationEntryInv(dataAD, dataUA, dataUF, 2, {x, y}, 100, false, offset, offset);

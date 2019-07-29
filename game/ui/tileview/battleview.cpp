@@ -1372,7 +1372,7 @@ void BattleView::update()
 			}
 		}
 
-		// Figure out wether our/not our turn state has changed
+		// Figure out whether our/not our turn state has changed
 		bool notMyTurn = endTurnRequested || battle.turnEndAllowed ||
 		                 !battle.interruptUnits.empty() || !battle.interruptQueue.empty() ||
 		                 battle.currentActiveOrganisation != battle.currentPlayer;
@@ -2180,7 +2180,7 @@ void BattleView::updatePathPreview()
 	auto &map = lastSelectedUnit->tileObject->map;
 	auto to = map.getTile(target);
 
-	// Standart check for passability
+	// Standard check for passability
 	while (true)
 	{
 		auto u = to->getUnitIfPresent(true, true, false, nullptr, false, true);

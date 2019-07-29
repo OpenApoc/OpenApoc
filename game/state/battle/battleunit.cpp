@@ -272,7 +272,7 @@ bool BattleUnit::isWithinVision(Vec3<int> pos)
 	{
 		return false;
 	}
-	// Facing: Diagonalley
+	// Facing: Diagonally
 	if (facing.x != 0 && facing.y != 0)
 	{
 		// Nothing to be done, we already checked above
@@ -2945,7 +2945,7 @@ void BattleUnit::updateMovementNormal(GameState &state, unsigned int &moveTicksR
 			}
 		}
 
-		// Scale ticks so that animations look proper on isometric sceen
+		// Scale ticks so that animations look proper on isometric screen
 		// facing down or up on screen
 		if (facing.x == facing.y)
 		{
@@ -3131,9 +3131,9 @@ void BattleUnit::updateTurning(GameState &state, unsigned int &turnTicksRemainin
 		// If firing then consume turning ticks since we can't turn while firing
 		if (firing_animation_ticks_remaining > 0)
 		{
-			// If firing animation will be finished this time, then substract
+			// If firing animation will be finished this time, then subtract
 			// the amount of ticks required to finish it
-			// Otherwise substract all ticks
+			// Otherwise subtract all ticks
 			turnTicksRemaining -= handsTicksRemaining >= firing_animation_ticks_remaining
 			                          ? firing_animation_ticks_remaining
 			                          : turnTicksRemaining;
@@ -3244,7 +3244,7 @@ bool BattleUnit::updateAttackingRunCanFireChecks(GameState &state, unsigned int 
 	// and track (turn to) target unit if it's visible
 
 	// Note:
-	// - If target is a unit, this check is done regularily
+	// - If target is a unit, this check is done regularly
 	// - If target is a tile, this check will only be done once after start,
 	//   and again once each time this unit stops moving
 	if (ticksUntillNextTargetCheck == 0)
@@ -3454,7 +3454,7 @@ void BattleUnit::updateFiring(GameState &state, sp<AEquipment> &weaponLeft,
 		beginHandStateChange(HandState::Aiming);
 	}
 
-	// Should we beging fire delay countdown?
+	// Should we begin fire delay countdown?
 	if (target_hand_state == HandState::Aiming)
 	{
 		if (weaponRight && !weaponRight->isFiring())
@@ -4071,7 +4071,7 @@ void BattleUnit::processExperience(GameState &state)
 		    10 * randBoundsExclusive(state.rng, 0, 99) <
 		    experiencePoints.bravery * 9 * agent->type->improvementPercentagePhysical / 100;
 	}
-	// Units with slower improvement rates need to gain more xp to have a chance to iprove
+	// Units with slower improvement rates need to gain more xp to have a chance to improve
 	// >= 100% improvement rate need just 1 xp
 	// 50% improvement rate needs 2 xp
 	// 10% improvement rate needs 10 xp
@@ -4366,7 +4366,7 @@ void BattleUnit::tryToRiseUp(GameState &state)
 		}
 		else
 		{
-			// Prone only unit ignores wether prone is allowed
+			// Prone only unit ignores whether prone is allowed
 			targetState = BodyState::Prone;
 		}
 	}
@@ -4404,7 +4404,7 @@ void BattleUnit::dropDown(GameState &state)
 	moraleState = MoraleState::Normal;
 	BodyState targetState = isDead() ? BodyState::Dead : BodyState::Downed;
 	// Check if we can drop from current state
-	// Adjust current state so that we canthen drop down
+	// Adjust current state so that we can then drop down
 	BodyState proposedBodyState = current_body_state;
 	while (agent->getAnimationPack()->getFrameCountBody(displayedItem, proposedBodyState,
 	                                                    targetState, current_hand_state,

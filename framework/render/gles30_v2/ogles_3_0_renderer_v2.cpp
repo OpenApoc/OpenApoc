@@ -1554,7 +1554,7 @@ class OGLES30Renderer final : public Renderer
 	}
 	void drawRect(Vec2<float> position, Vec2<float> size, Colour c, float thickness) override
 	{
-		// The lines are all shifted in x/y by {capsize} to ensure the corners are correcly covered
+		// The lines are all shifted in x/y by {capsize} to ensure the corners are correctly covered
 		// and don't overlap (which may be an issue if alpha != 1.0f:
 		//
 		// The cap 'ownership' for lines 1,2,3,4 is shifted by (x-1), (y-1), (x+1), (y+1)
@@ -1783,7 +1783,7 @@ class OGLES30RendererFactory : public RendererFactory
 				LogInfo("Using OpenGL ES3 compatibility");
 				gl.reset(new GL(true));
 			}
-			// Then check for ES3 compatibilty extension on desktop OpenGL
+			// Then check for ES3 compatibility extension on desktop OpenGL
 			else if (GL::supported(false))
 			{
 				LogInfo("Using OpenGL|ES context");

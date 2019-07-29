@@ -551,7 +551,7 @@ void CityTileView::render()
 			std::list<std::tuple<sp<Vehicle>, bool, bool, int>> vehiclesToDraw;
 			std::set<sp<Vehicle>> vehiclesUnderAttack;
 			std::set<sp<Building>> buildingsSelected;
-			// Lines to draw between unit and destination, bool is wether target x is drawn
+			// Lines to draw between unit and destination, bool is whether target x is drawn
 			std::list<std::tuple<Vec3<float>, Vec3<float>, bool, bool>> targetLocationsToDraw;
 
 			for (int z = 0; z < maxZDraw; z++)

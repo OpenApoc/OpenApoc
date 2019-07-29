@@ -59,14 +59,14 @@ void extractAnimationPackMegaInternal(sp<BattleUnitAnimationPack> p,
 
 	// Body state change animations
 	{
-		// Body Standing -> Downned/Dead animation: 1
+		// Body Standing -> Downed/Dead animation: 1
 		p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 		                          BodyState::Standing, BodyState::Downed}][{x, y}] =
 		    e.getAnimationEntry(dataAD, dataUA, dataUF, 1, {x, y}, offset, offset);
 		p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 		                          BodyState::Standing, BodyState::Dead}][{x, y}] =
 		    e.getAnimationEntry(dataAD, dataUA, dataUF, 1, {x, y}, offset, offset);
-		// Body Downned -> Standing animation: 1
+		// Body Downed -> Standing animation: 1
 		p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 		                          BodyState::Downed, BodyState::Standing}][{x, y}] =
 		    e.getAnimationEntryInv(dataAD, dataUA, dataUF, 1, {x, y}, 100, false, offset, offset);

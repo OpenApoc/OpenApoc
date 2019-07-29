@@ -29,7 +29,7 @@ class BattleTileView : public TileView
 	// Total amount of different focus icon states
 	static const int FOCUS_ICONS_ANIMATION_FRAMES = 4;
 
-	// Forrmula: FPS / FOCUS_ICONS_ANIMATION_FRAMES(both ways) / DESIRED_ANIMATIONS_PER_SECOND
+	// Formula: FPS / FOCUS_ICONS_ANIMATION_FRAMES(both ways) / DESIRED_ANIMATIONS_PER_SECOND
 	static const int FOCUS_ICONS_ANIMATION_DELAY = 60 / (2 * FOCUS_ICONS_ANIMATION_FRAMES - 2) / 2;
 
   public:

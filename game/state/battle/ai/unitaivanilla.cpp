@@ -28,10 +28,10 @@ static const Vec3<int> NONE = {-1, -1, -1};
 
 options (checked for every visible target):
 - stand still and shoot at target with weapon
-  (advance to target's location while shoooting at it)
+  (advance to target's location while shooting at it)
 - run forward to get in range for firing a weapon
 - throw a grenade
-- run forward to get in range for a greande throw
+- run forward to get in range for a grenade throw
 - use psi attack
 
 - calculate priority for each action
@@ -43,7 +43,7 @@ options (checked for every visible target):
 
 // AI Logic for attacking:
 //
-// We go through every possibile tool:
+// We go through every possible tool:
 // - first mindbender encountered if we have it
 // - every weapon with loaded ammo
 // - every grenade
@@ -58,7 +58,7 @@ options (checked for every visible target):
 // - For psi stun, resultant value is just the avg stun damage done divided by HP
 //
 // 2) Collateral damage, for explosives we consider units in a radius of 4,
-//   and simply subtract depletion rate multiplied by distane to them,
+//   and simply subtract depletion rate multiplied by distance to them,
 //   and repeat calculations above and add (hostile) or subtract (friendly)
 //
 // 3) Chance to hit, which will be determined in some simplified approximated way
@@ -292,7 +292,7 @@ UnitAIVanilla::getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment
 		movement->type = AIMovement::Type::GetInRange;
 		movement->movementMode = MovementMode::Running;
 		movement->targetLocation = target->position;
-		// Properly get rethingdelay based on how far we must run to reach throwable point?
+		// Properly get rethinkdelay based on how far we must run to reach throwable point?
 		reThinkDelay = TICKS_PER_TURN * 2;
 		priority /= 2.0f;
 	}
@@ -466,7 +466,7 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getAttackDecision(GameSta
 				}
 				// Replace if:
 				// - new one weights less
-				// - new one is explsive and old one is not
+				// - new one is explosive and old one is not
 				// - new one deals more damage
 				if (e->getWeight() < grenade->getWeight() ||
 				    (e->type->damage_type->doesImpactDamage() &&
@@ -720,7 +720,7 @@ AIDecision UnitAIVanilla::thinkInternal(GameState &state, BattleUnit &u)
 	if (lastDecision.action && lastDecision.action->isFinished(u))
 	{
 		lastDecision.action = nullptr;
-		// Clear subordinate movmenent
+		// Clear subordinate movement
 		if (lastDecision.movement && lastDecision.movement->subordinate)
 		{
 			lastDecision.movement = nullptr;
@@ -747,7 +747,7 @@ AIDecision UnitAIVanilla::thinkInternal(GameState &state, BattleUnit &u)
 	}
 
 	//
-	// See wether re-think is required
+	// See whether re-think is required
 	//
 
 	// Conditions that prevent re-thinking:

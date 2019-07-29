@@ -341,7 +341,7 @@ void BaseScreen::eventOccurred(Event *e)
 							                      MessageBox::ButtonOptions::Ok)});
 							break;
 						case Base::BuildError::Indestructible:
-							// Indestrictible facilities (IE the access lift) are just silently
+							// Indestructible facilities (IE the access lift) are just silently
 							// ignored
 							break;
 					}

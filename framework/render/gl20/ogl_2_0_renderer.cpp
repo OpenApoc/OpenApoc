@@ -844,7 +844,7 @@ class OGL20Renderer : public Renderer
 	void drawRect(Vec2<float> position, Vec2<float> size, Colour c, float thickness = 1.0) override
 	{
 
-		// The lines are all shifted in x/y by {capsize} to ensure the corners are correcly covered
+		// The lines are all shifted in x/y by {capsize} to ensure the corners are correctly covered
 		// and don't overlap (which may be an issue if alpha != 1.0f:
 		//
 		// The cap 'ownership' for lines 1,2,3,4 is shifted by (x-1), (y-1), (x+1), (y+1)

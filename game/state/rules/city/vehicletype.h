@@ -293,7 +293,7 @@ class VehicleType : public StateObject
 		return speed;
 	}
 
-	// This is explictly mutable it can be used through a const ref
+	// This is explicitly mutable it can be used through a const ref
 	// FIXME: Should this go somewhere else in the state? If the rules are meant to be immutable
 	// this may be lost after serialisation?
 	mutable unsigned numCreated = 0;

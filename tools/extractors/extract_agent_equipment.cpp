@@ -261,7 +261,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 		UString id = format("%s%s", HazardType::getPrefix(), "FIRE");
 		auto h = mksp<HazardType>();
 		h->doodadType = {&state, "DOODAD_17_FIRE"};
-		// Fire has a starting deviation of 0 to 2, fire's ttl works in a completely differnt way
+		// Fire has a starting deviation of 0 to 2, fire's ttl works in a completely different way
 		h->minLifetime = 0;
 		h->maxLifetime = 1;
 		h->fire = true;

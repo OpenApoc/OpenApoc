@@ -514,7 +514,7 @@ Framework::Framework(const UString programName, bool createWindow)
 	settingsPath += "/settings.cfg";
 
 	// This is always set, the default being an empty string (which correctly chooses 'system
-	// langauge')
+	// language')
 	UString desiredLanguageName;
 	if (!languageOption.get().empty())
 	{
@@ -570,7 +570,7 @@ Framework::Framework(const UString programName, bool createWindow)
 	auto testFile2 = this->data->fs.open("filedoesntexist");
 	if (testFile2)
 	{
-		LogError("Succeded in opening \"FileDoesntExist\" - either you have the weirdest filename "
+		LogError("Succeeded in opening \"FileDoesntExist\" - either you have the weirdest filename "
 		         "preferences or something is wrong");
 	}
 	srand(static_cast<unsigned int>(SDL_GetTicks()));

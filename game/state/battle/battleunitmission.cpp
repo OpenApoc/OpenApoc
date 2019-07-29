@@ -2130,7 +2130,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 	// --
 	// When ordering move to a unit already on the move, we can have a situation
 	// where going directly to 2nd step in the path is faster than going to the first
-	// In this case, we should skip unnesecary steps
+	// In this case, we should skip unnecessary steps
 	// --
 	// Start with position after next
 	// If the next position has a node and we can go directly to that node,
@@ -2329,7 +2329,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 
 	// Spend stamina TB.  As per Mell from forums it takes:
 	// - 0.6 vanilla stamina to run regardless of diagonal or not
-	// - 0.85 vanilla stamina to go prone regradless of diagonal or not
+	// - 0.85 vanilla stamina to go prone regardless of diagonal or not
 	if (!realTime)
 	{
 		int staCost = 0;
@@ -2488,7 +2488,7 @@ bool BattleUnitMission::advanceBodyState(GameState &state, BattleUnit &u, BodySt
 	// Cost to reach goal is free
 	int cost =
 	    type == Type::ReachGoal ? 0 : u.getBodyStateChangeCost(u.target_body_state, targetState);
-	// If unsufficient TUs - cancel missions other than GotoLocation
+	// If insufficient TUs - cancel missions other than GotoLocation
 	if (!spendAgentTUs(state, u, cost, type != Type::GotoLocation,
 	                   targetState == BodyState::Kneeling))
 	{

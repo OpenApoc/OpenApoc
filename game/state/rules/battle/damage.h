@@ -25,7 +25,7 @@ class HazardType : public StateObject
 	unsigned minLifetime = 0;
 	unsigned maxLifetime = 0;
 
-	// Wether frames follow the logic of fire
+	// Whether frames follow the logic of fire
 	bool fire = false;
 
 	// Get first frame used for age and offset
@@ -78,7 +78,7 @@ class DamageType : public StateObject
 	sp<Image> icon_sprite;
 	std::map<StateRef<DamageModifier>, int> modifiers;
 
-	// Wether this damage type produces explosion on hit
+	// Whether this damage type produces explosion on hit
 	bool explosive = false;
 	// Doodad used by explosion, if nullptr will use common explosion doodad set
 	StateRef<DoodadType> explosionDoodad;

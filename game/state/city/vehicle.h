@@ -47,7 +47,7 @@ static const float FV_PLOW_CHANCE_HIGH_SPEED_MULTIPLIER = 1.5f;
 static const float FV_PLOW_CHANCE_CONSTITUTION_MULTIPLIER = 2.0f;
 // How much 1 of X is the damage evasion chance (i.e. 8 means 1/8th or 12.5%)
 static const int FV_COLLISION_DAMAGE_ONE_IN_CHANCE_TO_EVADE = 8;
-// How much X in 100 is the chance for recovered vehicle to arrive intact (othrewise scrapped)
+// How much X in 100 is the chance for recovered vehicle to arrive intact (otherwise scrapped)
 static const int FV_CHANCE_TO_RECOVER_VEHICLE = 100;
 // How much X in 100 is chance to recover every equipment part (otherwise scrapped)
 static const int FV_CHANCE_TO_RECOVER_EQUIPMENT = 90;

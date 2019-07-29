@@ -63,7 +63,7 @@ class Scenery : public SupportedMapPart, public std::enable_shared_from_this<Sce
 	void die(GameState &state, bool forced = false);
 	// Collapses mappart immediately
 	void collapse(GameState &state);
-	// Wether mappart is queued to collapse
+	// Whether mappart is queued to collapse
 	bool willCollapse() const { return ticksUntilCollapse > 0; }
 
 	void update(GameState &state, unsigned int ticks);
@@ -102,7 +102,7 @@ class Scenery : public SupportedMapPart, public std::enable_shared_from_this<Sce
 
 	// Compiles a list of parts supported by this part
 	// Using sp because we switch to a new one constantly in re-linking
-	// Using set because we need to easilly weed out duplicates
+	// Using set because we need to easily weed out duplicates
 	sp<std::set<SupportedMapPart *>> getSupportedParts() override;
 
 	// Clears parts supported by this

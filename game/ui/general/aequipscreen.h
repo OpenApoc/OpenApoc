@@ -84,7 +84,7 @@ class AEquipScreen : public Stage
 	bool modifierLShift = false;
 	bool modifierRShift = false;
 
-	// Checks wether agent should be displayed in the agent list
+	// Checks whether agent should be displayed in the agent list
 	bool checkAgent(sp<Agent> agent, sp<Organisation> owner);
 	void updateAgents();
 	void updateAgentControl(sp<Agent> agent);

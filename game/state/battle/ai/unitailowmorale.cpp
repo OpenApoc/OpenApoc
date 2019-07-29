@@ -122,7 +122,7 @@ std::tuple<AIDecision, bool> UnitAILowMorale::think(GameState &state, BattleUnit
 				// 20% chance to attack a friendly, 40% chance to attack an enemy, 40% chance to
 				// attack random tile
 				int shootType = roll < 20 ? 1 : (roll < 60 ? 2 : 3);
-				// Intentional fall-through in case we cannot find a vaild target
+				// Intentional fall-through in case we cannot find a valid target
 				switch (shootType)
 				{
 					case 1:

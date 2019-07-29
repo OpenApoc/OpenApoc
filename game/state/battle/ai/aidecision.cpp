@@ -73,7 +73,7 @@ bool AIAction::inProgressInternal(BattleUnit &u)
 		case AIAction::Type::AttackPsiStun:
 		case AIAction::Type::AttackPsiPanic:
 			// Even though the attack might already be over, we won't check for it
-			// This is intentional. Psi attack is considered "in progress" indefinetly
+			// This is intentional. Psi attack is considered "in progress" indefinitely
 			// otherwise, especially in TB, when attack is instant, AI would spam attacks and
 			// we would rather have them do attacks with a small delay
 			// which we introduce via reThinkDelay value

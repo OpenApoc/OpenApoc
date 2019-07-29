@@ -100,7 +100,7 @@ bool writeArchiveWithBackup(SerializationArchive *archive, const UString &path, 
 
 		// WARNING! Dragons live here! Specifically dragon named miniz who hates windows paths
 		// (or paths not starting with dot)
-		// therefore I'm doing gymnasitcs here to backup and still pass original path string to
+		// therefore I'm doing gymnastics here to backup and still pass original path string to
 		// archive write
 		// that is really bad, because if user clicks exit, save will be renamed to some random
 		// junk
@@ -280,7 +280,7 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 			}
 
 			std::string saveFileName = i->path().filename().string();
-			// miniz can't read paths not starting with dor or with windows slashes
+			// miniz can't read paths not starting with dir or with windows slashes
 			UString savePath = saveDirectory.string() + "/" + saveFileName;
 			if (auto archive = SerializationArchive::readArchive(savePath))
 			{

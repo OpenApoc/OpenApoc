@@ -1702,7 +1702,7 @@ and then skip drawing next two tiles (as we have already drawn it) and skip draw
 the tile (x-1, y+2) on the next row
 
 This is done best by having a set of Vec3<int>'s, and "skip next X tiles" variable.
-When encountering a 2-tile object, we inrement "skip next X tiles" by 1.
+When encountering a 2-tile object, we increment "skip next X tiles" by 1.
 When encountering a 3-tile object, we increment "skip next X tiles" by 2,
 and we add (x-1, y+2) to the set.
 When trying to draw a tile we first check the "skip next X tiles" variable,

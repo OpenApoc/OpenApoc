@@ -46,7 +46,7 @@ void InitialGameStateExtractor::extractResearch(GameState &state) const
 				LogError("Unexpected labSize 0x%02x for research item %s", (unsigned)rdata.labSize,
 				         id);
 		}
-		// FIXME: this assumed all listed techs are reqired, which is not true for some topics
+		// FIXME: this assumed all listed techs are required, which is not true for some topics
 		// (It's possible that an unknown member in ResearchData marks this, or it's done
 		// in-code)
 		// This should be fixed up in the patch.

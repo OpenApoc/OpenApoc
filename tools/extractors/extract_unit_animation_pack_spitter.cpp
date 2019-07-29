@@ -54,7 +54,7 @@ void extractAnimationPackSpitterInternal(sp<BattleUnitAnimationPack> p,
 
 	// Body state change animations
 	{
-		// Body Standing -> Downned/Dead animation: 1
+		// Body Standing -> Downed/Dead animation: 1
 		p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 		                          BodyState::Standing, BodyState::Downed}][{x, y}] =
 		    e.getAnimationEntry(dataAD, dataUA, dataUF, 1, {x, y});

@@ -29,7 +29,7 @@ class VEquipment : public Equipment
 	// All equipment state
 	Vec2<int> equippedPosition;
 	// General equipment state
-	// Engine equipemnt state
+	// Engine equipment state
 	// Weapon equipment state
 	enum class WeaponState
 	{

@@ -120,7 +120,7 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 			o->current_relations[o2] = (float)rdata.relationships[j];
 		}
 
-		// Done in copmmon xml patch
+		// Done in common xml patch
 		/*if (i == ORG_CIVILIAN)
 		{
 		    o->hirableAgentTypes[{&state, "AGENTTYPE_X-COM_QUANTUM_PHYSICIST"}] = {0,2};
@@ -150,7 +150,7 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 			// Vehicle park
 			switch (vdata.vehiclePark)
 			{
-				// No combat vehice park
+				// No combat vehicle park
 				case 0:
 					break;
 				// Nutrivend, SuperDynamics, GeneralMetro

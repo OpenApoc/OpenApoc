@@ -164,7 +164,7 @@ bool CityView::handleClickedBuilding(StateRef<Building> building, bool rightClic
 		return false;
 	}
 
-	// [Alt] + [Shift] gives bulding orders (left = attack, right = move)
+	// [Alt] + [Shift] gives building orders (left = attack, right = move)
 	if ((modifierLShift || modifierRShift) && (modifierLAlt || modifierRAlt))
 	{
 		if (rightClick)
@@ -272,7 +272,7 @@ bool CityView::handleClickedVehicle(StateRef<Vehicle> vehicle, bool rightClick,
 		return true;
 	}
 
-	// [Alt] + [Shift] gives bulding orders (therefore do nothing)
+	// [Alt] + [Shift] gives building orders (therefore do nothing)
 	if ((modifierLShift || modifierRShift) && (modifierLAlt || modifierRAlt))
 	{
 		return false;

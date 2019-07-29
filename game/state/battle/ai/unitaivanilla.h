@@ -25,7 +25,7 @@ class UnitAIVanilla : public UnitAI
 	bool enemySpotted = false;
 	// Previous value, to identify when enemy was first spotted
 	bool enemySpottedPrevious = false;
-	// Pposition of a person who attacked us since last think()
+	// Position of a person who attacked us since last think()
 	Vec3<int> attackerPosition = {-1, -1, -1};
 	// Position of last seen enemy since last think()
 	Vec3<int> lastSeenEnemyPosition = {-1, -1, -1};

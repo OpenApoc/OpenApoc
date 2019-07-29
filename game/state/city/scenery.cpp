@@ -156,8 +156,8 @@ bool Scenery::findSupport(bool allowClinging)
 	// - If allowClinging is true
 	//   - General/Wall/Junk can cling to one adjacent "hard" supported General/Wall
 	//   - General/Wall/Junk can cling to two adjacent "soft" supported General/Wall/Junk
-	//   - General can gling to one General above it
-	//   - General can gling to two Generals adjacent, one above one below on same side (xy)
+	//   - General can cling to one General above it
+	//   - General can cling to two Generals adjacent, one above one below on same side (xy)
 	//	 - Wall can cling to two adjacent Walls below it
 	//   - People tube can cling onto adjacent "hard" General, adhering to its direction
 	//
@@ -1437,7 +1437,7 @@ void Scenery::collapse(GameState &state)
 		// state.current_battle->queuePathfindingRefresh(position);
 		// Note: Pathfinding refresh relies on tile's battlescape parameters being updated
 		// before it happens, so that battlescape parameters already account for the
-		// now disfunctional map part. Pathfinding update will only happen
+		// now dysfunctional map part. Pathfinding update will only happen
 		// after we call setPosition() on the map part, which will
 		// call update to the battlescape parameters of the tile, which will
 		// in turn make us ignore the falling map part properly
@@ -1539,7 +1539,7 @@ void Scenery::updateFalling(GameState &state, unsigned int ticks)
 					break;
 			}
 		}
-		// New tile: If not destroyed yet collid with everything high enough
+		// New tile: If not destroyed yet collide with everything high enough
 		if (!destroyed)
 		{
 			auto newTile = tileObject->map.getTile(newPosition);

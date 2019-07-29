@@ -425,7 +425,7 @@ void AgentMission::start(GameState &state, Agent &a)
 					}
 					else
 					{
-						// FIXME: mplement agent pathing to closest building when in the field and
+						// FIXME: Implement agent pathing to closest building when in the field and
 						// unable to path
 						LogWarning("Implement agent pathing to closest building when in the field "
 						           "and unable to path to "
@@ -540,9 +540,9 @@ bool AgentMission::advanceAlongPath(GameState &state, Agent &a, Vec3<float> &des
 	}
 
 	// See if we can make a shortcut
-	// When ordering move to vehidle already on the move, we can have a situation
+	// When ordering move to vehicle already on the move, we can have a situation
 	// where going directly to 2nd step in the path is faster than going to the first
-	// In this case, we should skip unnesecary steps
+	// In this case, we should skip unnecessary steps
 	auto it = ++currentPlannedPath.begin();
 	// Start with position after next
 	// If next position has a node and we can go directly to that node

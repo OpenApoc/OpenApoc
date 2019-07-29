@@ -73,7 +73,7 @@ class Agent : public StateObject,
 	AgentPortrait getPortrait() { return type->portraits[gender][portrait]; }
 	AgentType::Gender gender = AgentType::Gender::Male;
 
-	AgentStats initial_stats;  // Stats at agent creatrion
+	AgentStats initial_stats;  // Stats at agent creation
 	AgentStats current_stats;  // Stats after agent training/improvement
 	AgentStats modified_stats; // Stats after 'temporary' modification (health damage, slowdown due
 	                           // to equipment weight, used stamina etc)
@@ -126,7 +126,7 @@ class Agent : public StateObject,
 	void enterBuilding(GameState &state, StateRef<Building> b);
 	/* 'enter' the agent in a vehicle from building*/
 	void enterVehicle(GameState &state, StateRef<Vehicle> v);
-	// Note that agent cannot ever leave vehicle into city, or enter vehicle from citu
+	// Note that agent cannot ever leave vehicle into city, or enter vehicle from city
 
 	// Agent's position in the city
 	Vec3<float> position = {0, 0, 0};

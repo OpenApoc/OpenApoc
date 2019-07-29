@@ -628,7 +628,7 @@ void Building::updateCargo(GameState &state)
 
 	// Step 06: Try to load cargo on owner's vehicles if:
 	// - Allowed by game option
-	// - Cargo is expriring
+	// - Cargo is expiring
 	// - Cargo had no ferries ordered for it
 	if (config().getBool("OpenApoc.NewFeature.AllowManualCargoFerry"))
 	{

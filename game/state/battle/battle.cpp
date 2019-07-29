@@ -209,7 +209,7 @@ void Battle::initBattle(GameState &state, bool first)
 		h->updateTileVisionBlock(state);
 	}
 
-	// On first run, init support links and items, do vsibility and pathfinding, reset AI
+	// On first run, init support links and items, do visibility and pathfinding, reset AI
 	if (!first)
 	{
 		return;
@@ -2175,7 +2175,7 @@ void Battle::spawnReinforcements(GameState &state)
 	{
 		return;
 	}
-	// FIXME: Proper spawning algorightm for reinforcements, for now spawn 4 randoms
+	// FIXME: Proper spawning algorithm for reinforcements, for now spawn 4 randoms
 	for (int i = 0; i < 4; i++)
 	{
 		auto pos = pickRandom(state.rng, reinforcementLocations);
@@ -2561,7 +2561,7 @@ void Battle::finishBattle(GameState &state)
 		}
 	}
 
-	// Proces MCed units
+	// Process MCed units
 	for (auto &u : state.current_battle->units)
 	{
 		if (u.second->owner != u.second->agent->owner)
@@ -3141,7 +3141,7 @@ void Battle::exitBattle(GameState &state)
 		{
 			if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
 			{
-				// Still cant't do anything if we're recovering UFO
+				// Still can't do anything if we're recovering UFO
 			}
 			else
 			{

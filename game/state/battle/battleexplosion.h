@@ -26,7 +26,7 @@ class BattleExplosion : public std::enable_shared_from_this<BattleExplosion>
 	// Vector of sets of locations to expand.
 	// Position in the vector determines how long must pass until expansion will happen
 	// This depends on distance (if we went diagonally - we delay by 3, if linearly - by 2)
-	// One value contains a point (where to deal damage and from where to expand) and two balues
+	// One value contains a point (where to deal damage and from where to expand) and two values
 	// First value is how much damage (power) must be applied to the tile
 	// Second value is how much damage must be propagated further
 	// These differ because feature blocks damage going further but not applied to the tile

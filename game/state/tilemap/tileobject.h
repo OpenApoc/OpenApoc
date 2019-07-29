@@ -21,7 +21,7 @@ class TileObject : public std::enable_shared_from_this<TileObject>
   public:
 	enum class Type
 	{
-		// For purpose of detemining draw order, these four must come first
+		// For purpose of determining draw order, these four must come first
 		Ground,
 		LeftWall,
 		RightWall,
