@@ -533,7 +533,11 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		int freeSpace = v.size_z * 16 - v.loftemps_height;
 		int start = (freeSpace + 1) / 2;
 		int end = v.size_z * 16 - freeSpace / 2;
-		end = end % 16;
+		if (end > 16)
+		{
+			LogInfo("Vehicle %s has height %d", vehicle->name, end);
+			end = end % 16;
+		}
 		if (freeSpace > 32)
 		{
 			LogError(
