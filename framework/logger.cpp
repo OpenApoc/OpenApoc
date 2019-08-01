@@ -124,6 +124,9 @@ static std::mutex loggerMutex;
 void defaultLogFunction(LogLevel level, UString prefix, const UString &text)
 {
 	UString levelPrefix;
+	// Only print Warning/Errors by default
+	if (level >= LogLevel::Info)
+		return;
 	switch (level)
 	{
 		case LogLevel::Error:
