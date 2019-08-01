@@ -6,6 +6,7 @@
 #include "framework/event.h"
 #include "framework/font.h"
 #include "framework/image.h"
+#include "framework/logger_file.h"
 #include "framework/logger_sdldialog.h"
 #include "framework/renderer.h"
 #include "framework/renderer_interface.h"
@@ -513,6 +514,11 @@ Framework::Framework(const UString programName, bool createWindow)
 	p->quitProgram = false;
 	UString settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
 	settingsPath += "/settings.cfg";
+
+	UString logPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
+	logPath += "/log.txt";
+
+	enableFileLogger(logPath.cStr());
 
 	// This is always set, the default being an empty string (which correctly chooses 'system
 	// language')

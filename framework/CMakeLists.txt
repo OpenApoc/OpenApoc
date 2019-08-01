@@ -28,7 +28,8 @@ set (FRAMEWORK_SOURCE_FILES
 	stagestack.cpp
 	trace.cpp
 	video/smk.cpp
-	logger_sdldialog.cpp)
+	logger_sdldialog.cpp
+	logger_file.cpp)
 
 source_group(framework\\sources FILES ${FRAMEWORK_SOURCE_FILES})
 list(APPEND ALL_SOURCE_FILES ${FRAMEWORK_SOURCE_FILES})
@@ -63,7 +64,8 @@ set (FRAMEWORK_HEADER_FILES
 	trace.h
 	ThreadPool/ThreadPool.h
 	video.h
-	logger_sdldialog.h)
+	logger_sdldialog.h
+	logger_file.h)
 
 source_group(framework\\headers FILES ${FRAMEWORK_HEADER_FILES})
 list(APPEND ALL_HEADER_FILES ${FRAMEWORK_HEADER_FILES})
