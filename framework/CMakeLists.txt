@@ -202,8 +202,7 @@ if(APPLE)
 	# OSX doesn't seem to support the c++11 'thread_local' keyword
 	target_compile_definitions(OpenApoc_Framework PRIVATE
 			"-DBROKEN_THREAD_LOCAL")
-	# Disable libunwind use on Apple
-	SET(BACKTRACE_ON_ERROR OFF CACHE BOOL "Print backtrace on logging an error (Requires libunwind on linux, no extra dependencies on windows)" FORCE)
+	SET(BACKTRACE_ON_ERROR ON)
 elseif(WIN32)
 	target_compile_definitions(OpenApoc_Framework PRIVATE "-DGLESWRAP_PLATFORM_WGL")
 else()
@@ -284,6 +283,9 @@ endif()
 if(BACKTRACE_ON_ERROR)
 	if(WIN32)
 		target_link_libraries(OpenApoc_Framework PUBLIC dbghelp)
+	elseif(APPLE)
+		# MacOS always has libunwind with no extra libs needed
+		target_compile_definitions(OpenApoc_Framework PUBLIC -DBACKTRACE_LIBUNWIND)
 	else()
 		find_package(PkgConfig)
 		pkg_check_modules(PC_UNWIND libunwind)
