@@ -6,6 +6,7 @@
 #include "framework/event.h"
 #include "framework/font.h"
 #include "framework/image.h"
+#include "framework/logger_sdldialog.h"
 #include "framework/renderer.h"
 #include "framework/renderer_interface.h"
 #include "framework/sound_interface.h"
@@ -578,6 +579,7 @@ Framework::Framework(const UString programName, bool createWindow)
 	if (createWindow)
 	{
 		displayInitialise();
+		enableSDLDialogLogger(p->window);
 		audioInitialise();
 	}
 }
