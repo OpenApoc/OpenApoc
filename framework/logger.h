@@ -54,8 +54,7 @@ std::list<UString> getBacktrace();
 NORETURN_FUNCTION void _logAssert(UString prefix, UString string, int line, UString file);
 
 /* Returns if the log level will be output (either to file or stderr or both) */
-bool _logLevelEnabled(LogLevel level);
-static inline bool logLevelEnabled(LogLevel level)
+static inline bool logLevelEnabled(LogLevel level [[maybe_unused]])
 {
 #ifdef NDEBUG
 	if (level >= LogLevel::Debug)
