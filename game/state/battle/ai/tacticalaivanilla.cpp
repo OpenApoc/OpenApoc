@@ -50,6 +50,7 @@ TacticalAIVanilla::think(GameState &state, StateRef<Organisation> o)
 			unitsActive++;
 		}
 	}
+	LogAssert(unitsTotal > 0);
 	// Chance to retreat is [0 to 50]% as number of neutralised allies goes [50 to 100]%
 	bool retreat =
 	    randBoundsExclusive(state.rng, 0, 100) < (unitsActive - unitsTotal / 2) / unitsTotal;
