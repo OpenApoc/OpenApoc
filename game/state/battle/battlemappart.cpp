@@ -1033,7 +1033,7 @@ void BattleMapPart::ceaseBeingSupported()
 							auto &p = *it;
 							if (p.first == pos && p.second == type->type)
 							{
-								it = supportedParts.erase(it);
+								it = mp->supportedParts.erase(it);
 							}
 							else
 							{
