@@ -130,12 +130,12 @@ class SpriteProgram : public Program
 	}
 
   public:
-	GLint posLoc;
-	GLint texcoordLoc;
-	GLint screenSizeLoc;
-	GLint texLoc;
-	GLint flipYLoc;
-	GLint tintLoc;
+	GLint posLoc = -1;
+	GLint texcoordLoc = -1;
+	GLint screenSizeLoc = -1;
+	GLint texLoc = -1;
+	GLint flipYLoc = -1;
+	GLint tintLoc = -1;
 };
 const char *RGBProgram_vertexSource = {
     "#version 110\n"
