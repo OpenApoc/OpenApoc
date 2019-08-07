@@ -28,7 +28,7 @@ class MultilistBox : public Control
 	std::set<sp<Control>> selectedSet;
 	Vec2<int> scrollOffset = {0, 0};
 	// Execution of selection action.
-	bool selectionAction;
+	bool selectionAction = false;
 	// Strategy func which implements the decision about visibility/invisibility of certain Item.
 	// arg - child control
 	// TODO: move to the Control class

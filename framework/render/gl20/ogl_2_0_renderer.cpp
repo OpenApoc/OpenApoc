@@ -130,12 +130,12 @@ class SpriteProgram : public Program
 	}
 
   public:
-	GLint posLoc;
-	GLint texcoordLoc;
-	GLint screenSizeLoc;
-	GLint texLoc;
-	GLint flipYLoc;
-	GLint tintLoc;
+	GLint posLoc = -1;
+	GLint texcoordLoc = -1;
+	GLint screenSizeLoc = -1;
+	GLint texLoc = -1;
+	GLint flipYLoc = -1;
+	GLint tintLoc = -1;
 };
 const char *RGBProgram_vertexSource = {
     "#version 110\n"
@@ -473,7 +473,6 @@ class BindTexture
   public:
 	GLenum bind;
 	int unit;
-	bool nop;
 	static GLenum getBindEnum(GLenum e)
 	{
 		switch (e)
@@ -509,7 +508,6 @@ template <GLenum param> class TexParam
   public:
 	GLuint id;
 	GLenum type;
-	bool nop;
 
 	TexParam(GLuint id, GLint value, GLenum type = gl20::TEXTURE_2D) : id(id), type(type)
 	{
