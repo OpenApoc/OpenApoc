@@ -473,7 +473,6 @@ class BindTexture
   public:
 	GLenum bind;
 	int unit;
-	bool nop;
 	static GLenum getBindEnum(GLenum e)
 	{
 		switch (e)
@@ -509,7 +508,6 @@ template <GLenum param> class TexParam
   public:
 	GLuint id;
 	GLenum type;
-	bool nop;
 
 	TexParam(GLuint id, GLint value, GLenum type = gl20::TEXTURE_2D) : id(id), type(type)
 	{
