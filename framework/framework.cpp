@@ -4,6 +4,7 @@
 #include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/event.h"
+#include "framework/filesystem.h"
 #include "framework/font.h"
 #include "framework/image.h"
 #include "framework/logger_file.h"
@@ -761,7 +762,13 @@ void Framework::processEvents()
 		{
 			if (e->keyboard().KeyCode == SDLK_PRINTSCREEN)
 			{
-				UString screenshotName = "screenshot.png";
+				int screenshotId = 0;
+				UString screenshotName;
+				do
+				{
+					screenshotName = format("screenshot%03d.png", screenshotId);
+					screenshotId++;
+				} while (fs::exists(fs::path(screenshotName.str())));
 				LogWarning("Writing screenshot to \"%s\"", screenshotName);
 				if (!p->defaultSurface->rendererPrivateData)
 				{

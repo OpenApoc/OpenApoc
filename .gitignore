@@ -106,7 +106,7 @@ game/state/luagamestate_support_generated.h
 
 OpenApoc.exe.lnk
 OpenApoc.lnk
-screenshot.png
+screenshot*.png
 tileviewvoxels.png
 
 # Generated data files
