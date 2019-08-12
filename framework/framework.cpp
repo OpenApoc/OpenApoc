@@ -783,15 +783,17 @@ void Framework::processEvents()
 					}
 					else
 					{
-						auto ret = data->writeImage(screenshotName, img);
-						if (!ret)
-						{
-							LogWarning("Failed to write screenshot");
-						}
-						else
-						{
-							LogWarning("Wrote screenshot to \"%s\"", screenshotName);
-						}
+						this->threadPoolTaskEnqueue([img, screenshotName] {
+							auto ret = fw().data->writeImage(screenshotName, img);
+							if (!ret)
+							{
+								LogWarning("Failed to write screenshot");
+							}
+							else
+							{
+								LogWarning("Wrote screenshot to \"%s\"", screenshotName);
+							}
+						});
 					}
 				}
 			}
