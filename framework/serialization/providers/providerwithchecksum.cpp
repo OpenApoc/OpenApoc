@@ -21,7 +21,7 @@
 namespace OpenApoc
 {
 ConfigOptionBool useCRCChecksum("Framework.Serialization", "CRC",
-                                "use a CRC checksum when saving files", true);
+                                "use a CRC checksum when saving files", false);
 ConfigOptionBool useSHA1Checksum("Framework.Serialization", "SHA1",
                                  "use a SHA1 checksum when saving files", false);
 
