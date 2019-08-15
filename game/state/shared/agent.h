@@ -70,7 +70,7 @@ class Agent : public StateObject,
 	// Appearance that this specific agent chose from available list of its type
 	int appearance = 0;
 	int portrait = 0;
-	AgentPortrait getPortrait() { return type->portraits[gender][portrait]; }
+	const AgentPortrait &getPortrait() const { return type->portraits.at(gender).at(portrait); }
 	AgentType::Gender gender = AgentType::Gender::Male;
 
 	AgentStats initial_stats;  // Stats at agent creation
