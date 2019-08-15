@@ -1868,7 +1868,7 @@ void AEquipScreen::displayAgent(sp<Agent> agent)
 {
 	formMain->findControlTyped<Graphic>("BACKGROUND")->setImage(agent->type->inventoryBackground);
 
-	AgentSheet(formAgentStats).display(agent, bigUnitRanks, isTurnBased());
+	AgentSheet(formAgentStats).display(*agent, bigUnitRanks, isTurnBased());
 
 	formAgentStats->setVisible(true);
 	formAgentItem->setVisible(false);
@@ -1949,12 +1949,12 @@ void AEquipScreen::updateAgentControl(sp<Agent> agent)
 	auto control = ControlGenerator::createLargeAgentControl(
 	    *state, agent, agentList->Size.x, UnitSkillState::Hidden, selstate, !isInVicinity(agent));
 	control->addCallback(FormEventType::MouseEnter, [this, agent](FormsEvent *e [[maybe_unused]]) {
-		AgentSheet(formAgentStats).display(agent, bigUnitRanks, isTurnBased());
+		AgentSheet(formAgentStats).display(*agent, bigUnitRanks, isTurnBased());
 		formAgentStats->setVisible(true);
 		formAgentItem->setVisible(false);
 	});
 	control->addCallback(FormEventType::MouseLeave, [this](FormsEvent *e [[maybe_unused]]) {
-		AgentSheet(formAgentStats).display(selectedAgents.front(), bigUnitRanks, isTurnBased());
+		AgentSheet(formAgentStats).display(*selectedAgents.front(), bigUnitRanks, isTurnBased());
 		formAgentStats->setVisible(true);
 		formAgentItem->setVisible(false);
 	});

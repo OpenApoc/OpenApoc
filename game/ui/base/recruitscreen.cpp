@@ -392,7 +392,7 @@ void RecruitScreen::displayAgentStats(sp<Agent> agent)
 	switch (agent->type->role)
 	{
 		case AgentType::Role::Soldier:
-			AgentSheet(formAgentStats).display(agent, bigUnitRanks, false);
+			AgentSheet(formAgentStats).display(*agent, bigUnitRanks, false);
 			formAgentStats->setVisible(true);
 			formPersonnelStats->setVisible(false);
 			break;
