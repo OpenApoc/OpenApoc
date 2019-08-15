@@ -220,7 +220,7 @@ void TransferScreen::displayItem(sp<TransactionControl> control)
 		case TransactionControl::Type::Engineer:
 		case TransactionControl::Type::Physicist:
 		{
-			RecruitScreen::personnelSheet(state->agents[control->itemId], formPersonnelStats);
+			RecruitScreen::personnelSheet(*state->agents[control->itemId], formPersonnelStats);
 			formPersonnelStats->setVisible(true);
 			break;
 		}
