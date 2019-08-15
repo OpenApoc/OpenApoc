@@ -4517,7 +4517,7 @@ void BattleUnit::retreat(GameState &state)
 	state.current_battle->checkMissionEnd(state, true);
 }
 
-bool BattleUnit::useSpawner(GameState &state, sp<AEquipmentType> item)
+bool BattleUnit::useSpawner(GameState &state, const AEquipmentType &item)
 {
 	std::list<Vec3<int>> posToCheck;
 	Vec3<int> curPos = position;
@@ -4536,7 +4536,7 @@ bool BattleUnit::useSpawner(GameState &state, sp<AEquipmentType> item)
 	std::list<Vec3<int>> posToSpawn;
 	posToSpawn.push_back(curPos);
 	int numToSpawn = -1;
-	for (auto &entry : item->spawnList)
+	for (const auto &entry : item.spawnList)
 	{
 		numToSpawn += entry.second;
 	}
@@ -4558,7 +4558,7 @@ bool BattleUnit::useSpawner(GameState &state, sp<AEquipmentType> item)
 		}
 	}
 	auto aliens = state.getAliens();
-	for (auto &entry : item->spawnList)
+	for (const auto &entry : item.spawnList)
 	{
 		for (int i = 0; i < entry.second; i++)
 		{
@@ -4596,7 +4596,7 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 					break;
 				case AEquipmentType::Type::Spawner:
 				{
-					useSpawner(state, e->type);
+					useSpawner(state, *e->type);
 					break;
 				}
 				default:
