@@ -561,7 +561,7 @@ void TransactionScreen::displayItem(sp<TransactionControl> control)
 		case TransactionControl::Type::AgentEquipmentCargo:
 		{
 			AEquipmentSheet(formItemAgent)
-			    .display(state->agent_equipment[control->itemId], control->researched);
+			    .display(*state->agent_equipment[control->itemId], control->researched);
 			formItemAgent->setVisible(true);
 			break;
 		}
