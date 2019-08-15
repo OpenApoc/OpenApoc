@@ -232,7 +232,7 @@ class EquipmentSet : public StateObject
 	std::vector<GrenadeData> grenades;
 	std::vector<EquipmentData> equipment;
 
-	std::list<sp<AEquipmentType>> generateEquipmentList(GameState &state);
+	std::list<const AEquipmentType *> generateEquipmentList(GameState &state);
 
 	static sp<EquipmentSet> getByScore(const GameState &state, const int score);
 	static sp<EquipmentSet> getByLevel(const GameState &state, const int level);
