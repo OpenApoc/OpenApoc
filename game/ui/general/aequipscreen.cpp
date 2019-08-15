@@ -598,7 +598,7 @@ void AEquipScreen::handleItemPlacement(Vec2<int> mousePos)
 		{
 			continue;
 		}
-		bool pickedUp = draggedType ? tryPickUpItem(draggedType)
+		bool pickedUp = draggedType ? tryPickUpItem(*draggedType)
 		                            : tryPickUpItem(agent, draggedFrom, draggedAlternative);
 		if (!pickedUp)
 		{
@@ -661,7 +661,7 @@ void AEquipScreen::handleItemPlacement(bool toAgent)
 		{
 			continue;
 		}
-		bool pickedUp = draggedType ? tryPickUpItem(draggedType)
+		bool pickedUp = draggedType ? tryPickUpItem(*draggedType)
 		                            : tryPickUpItem(agent, draggedFrom, draggedAlternative);
 		if (!pickedUp)
 		{
@@ -1283,11 +1283,11 @@ bool AEquipScreen::tryPickUpItem(Vec2<int> inventoryPos, bool *alienArtifact)
 	return false;
 }
 
-bool AEquipScreen::tryPickUpItem(sp<AEquipmentType> item)
+bool AEquipScreen::tryPickUpItem(const AEquipmentType &item)
 {
 	for (auto &tuple : inventoryItems)
 	{
-		if (std::get<2>(tuple)->type == item)
+		if (std::get<2>(tuple)->type == &item)
 		{
 			pickUpItem(std::get<2>(tuple));
 			return true;
