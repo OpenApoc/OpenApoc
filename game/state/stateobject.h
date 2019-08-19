@@ -200,6 +200,12 @@ template <typename T> class StateRef
 			resolve();
 		return obj;
 	}
+	const T *get() const
+	{
+		if (!obj)
+			resolve();
+		return obj.get();
+	}
 	bool operator<(const StateRef<T> &other) const { return this->id < other.id; }
 	void clear()
 	{

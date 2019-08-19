@@ -433,7 +433,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Use brainsucker ability
 	bool useBrainsucker(GameState &state);
 	// Use unit spawner (suicide)
-	bool useSpawner(GameState &state, sp<AEquipmentType> item);
+	bool useSpawner(GameState &state, const AEquipmentType &item);
 
 	// Body
 

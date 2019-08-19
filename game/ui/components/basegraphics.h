@@ -27,11 +27,11 @@ enum class FacilityHighlight
 	Aliens
 };
 
-int getCorridorSprite(sp<Base> base, Vec2<int> pos);
-void renderBase(Vec2<int> renderPos, sp<Base> base);
-sp<RGBImage> drawMiniBase(sp<Base> base, FacilityHighlight highlight = FacilityHighlight::None,
+int getCorridorSprite(const Base &base, Vec2<int> pos);
+void renderBase(Vec2<int> renderPos, const Base &base);
+sp<RGBImage> drawMiniBase(const Base &base, FacilityHighlight highlight = FacilityHighlight::None,
                           sp<Facility> selected = nullptr);
-sp<RGBImage> drawMinimap(sp<GameState> state, sp<Building> selected);
+sp<RGBImage> drawMinimap(sp<GameState> state, const Building &selected);
 } // namespace BaseGraphics
 
 }; // namespace OpenApoc

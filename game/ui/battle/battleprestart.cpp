@@ -40,7 +40,7 @@ void BattlePreStart::displayAgent(sp<Agent> agent)
 	}
 
 	AgentSheet(formAgentStats)
-	    .display(agent, bigUnitRanks, state->current_battle->mode == Battle::Mode::TurnBased);
+	    .display(*agent, bigUnitRanks, state->current_battle->mode == Battle::Mode::TurnBased);
 	formAgentStats->setVisible(true);
 
 	auto rHand = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);

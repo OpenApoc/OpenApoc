@@ -120,7 +120,7 @@ class AEquipScreen : public Stage
 	bool tryPickUpItem(sp<Agent> agent, Vec2<int> slotPos, bool alternative,
 	                   bool *alienArtifact = nullptr, bool forced = false);
 	bool tryPickUpItem(Vec2<int> inventoryPos, bool *alienArtifact = nullptr);
-	bool tryPickUpItem(sp<AEquipmentType> item);
+	bool tryPickUpItem(const AEquipmentType &item);
 	void pickUpItem(sp<AEquipment> item);
 	bool tryPlaceItem(sp<Agent> agent, Vec2<int> slotPos, bool *insufficientTU = nullptr,
 	                  bool *alienArtifact = nullptr);

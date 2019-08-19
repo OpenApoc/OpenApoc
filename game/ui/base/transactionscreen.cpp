@@ -462,7 +462,7 @@ void TransactionScreen::updateBaseHighlight()
 		{
 			auto viewName = format("BUTTON_BASE_%d", ++i);
 			auto view = form->findControlTyped<GraphicButton>(viewName);
-			auto viewImage = drawMiniBase(b.second, viewHighlight, viewFacility);
+			auto viewImage = drawMiniBase(*b.second, viewHighlight, viewFacility);
 			view->setImage(viewImage);
 			view->setDepressedImage(viewImage);
 		}
@@ -561,7 +561,7 @@ void TransactionScreen::displayItem(sp<TransactionControl> control)
 		case TransactionControl::Type::AgentEquipmentCargo:
 		{
 			AEquipmentSheet(formItemAgent)
-			    .display(state->agent_equipment[control->itemId], control->researched);
+			    .display(*state->agent_equipment[control->itemId], control->researched);
 			formItemAgent->setVisible(true);
 			break;
 		}

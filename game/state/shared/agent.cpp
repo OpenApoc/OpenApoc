@@ -141,7 +141,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	state.agents[ID] = agent;
 
 	// Fill initial equipment list
-	std::list<sp<AEquipmentType>> initialEquipment;
+	std::list<const AEquipmentType *> initialEquipment;
 	if (type->inventory)
 	{
 		// Player gets no default equipment
@@ -163,8 +163,8 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	}
 	else
 	{
-		initialEquipment.push_back(type->built_in_weapon_right);
-		initialEquipment.push_back(type->built_in_weapon_left);
+		initialEquipment.push_back(type->built_in_weapon_right.get());
+		initialEquipment.push_back(type->built_in_weapon_left.get());
 	}
 
 	// Add initial equipment

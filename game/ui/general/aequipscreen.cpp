@@ -598,7 +598,7 @@ void AEquipScreen::handleItemPlacement(Vec2<int> mousePos)
 		{
 			continue;
 		}
-		bool pickedUp = draggedType ? tryPickUpItem(draggedType)
+		bool pickedUp = draggedType ? tryPickUpItem(*draggedType)
 		                            : tryPickUpItem(agent, draggedFrom, draggedAlternative);
 		if (!pickedUp)
 		{
@@ -661,7 +661,7 @@ void AEquipScreen::handleItemPlacement(bool toAgent)
 		{
 			continue;
 		}
-		bool pickedUp = draggedType ? tryPickUpItem(draggedType)
+		bool pickedUp = draggedType ? tryPickUpItem(*draggedType)
 		                            : tryPickUpItem(agent, draggedFrom, draggedAlternative);
 		if (!pickedUp)
 		{
@@ -1283,11 +1283,11 @@ bool AEquipScreen::tryPickUpItem(Vec2<int> inventoryPos, bool *alienArtifact)
 	return false;
 }
 
-bool AEquipScreen::tryPickUpItem(sp<AEquipmentType> item)
+bool AEquipScreen::tryPickUpItem(const AEquipmentType &item)
 {
 	for (auto &tuple : inventoryItems)
 	{
-		if (std::get<2>(tuple)->type == item)
+		if (std::get<2>(tuple)->type == &item)
 		{
 			pickUpItem(std::get<2>(tuple));
 			return true;
@@ -1868,7 +1868,7 @@ void AEquipScreen::displayAgent(sp<Agent> agent)
 {
 	formMain->findControlTyped<Graphic>("BACKGROUND")->setImage(agent->type->inventoryBackground);
 
-	AgentSheet(formAgentStats).display(agent, bigUnitRanks, isTurnBased());
+	AgentSheet(formAgentStats).display(*agent, bigUnitRanks, isTurnBased());
 
 	formAgentStats->setVisible(true);
 	formAgentItem->setVisible(false);
@@ -1949,12 +1949,12 @@ void AEquipScreen::updateAgentControl(sp<Agent> agent)
 	auto control = ControlGenerator::createLargeAgentControl(
 	    *state, agent, agentList->Size.x, UnitSkillState::Hidden, selstate, !isInVicinity(agent));
 	control->addCallback(FormEventType::MouseEnter, [this, agent](FormsEvent *e [[maybe_unused]]) {
-		AgentSheet(formAgentStats).display(agent, bigUnitRanks, isTurnBased());
+		AgentSheet(formAgentStats).display(*agent, bigUnitRanks, isTurnBased());
 		formAgentStats->setVisible(true);
 		formAgentItem->setVisible(false);
 	});
 	control->addCallback(FormEventType::MouseLeave, [this](FormsEvent *e [[maybe_unused]]) {
-		AgentSheet(formAgentStats).display(selectedAgents.front(), bigUnitRanks, isTurnBased());
+		AgentSheet(formAgentStats).display(*selectedAgents.front(), bigUnitRanks, isTurnBased());
 		formAgentStats->setVisible(true);
 		formAgentItem->setVisible(false);
 	});

@@ -344,7 +344,7 @@ void Skirmish::goToBattle(bool customAliens, std::map<StateRef<AgentType>, int> 
 	{
 		auto initialEquipment =
 		    playerTech == 0
-		        ? std::list<sp<AEquipmentType>>()
+		        ? std::list<const AEquipmentType *>()
 		        : EquipmentSet::getByLevel(state, playerTech)->generateEquipmentList(state);
 
 		int initialArmorType = menuform->findControlTyped<ScrollBar>("ARMOR_SLIDER")->getValue();
@@ -352,66 +352,68 @@ void Skirmish::goToBattle(bool customAliens, std::map<StateRef<AgentType>, int> 
 		{
 			case 1:
 				// armor = "MEGAPOL";
-				initialEquipment.push_back(state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_HELMET"]);
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_BODY_ARMOR"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_HELMET"].get());
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_LEFT_ARM_ARMOR"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_BODY_ARMOR"].get());
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_RIGHT_ARM_ARMOR"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_LEFT_ARM_ARMOR"].get());
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_LEG_ARMOR"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_RIGHT_ARM_ARMOR"].get());
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_LEG_ARMOR"].get());
 				break;
 			case 2:
 				// armor = "MEGAPOL+MB";
-				initialEquipment.push_back(state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_HELMET"]);
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_BODY_UNIT"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_HELMET"].get());
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_LEFT_ARM_ARMOR"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_BODY_UNIT"].get());
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_RIGHT_ARM_ARMOR"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_LEFT_ARM_ARMOR"].get());
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_LEG_ARMOR"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_RIGHT_ARM_ARMOR"].get());
+				initialEquipment.push_back(
+				    state.agent_equipment["AEQUIPMENTTYPE_MEGAPOL_LEG_ARMOR"].get());
 				break;
 			case 3:
 				// armor = "MARSEC";
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_HEAD_UNIT"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_HEAD_UNIT"].get());
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_BODY_UNIT"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_BODY_UNIT"].get());
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_LEFT_ARM_UNIT"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_LEFT_ARM_UNIT"].get());
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_RIGHT_ARM_UNIT"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_RIGHT_ARM_UNIT"].get());
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_LEG_UNITS"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_LEG_UNITS"].get());
 				break;
 			case 4:
 				// armor = "X-COM+MB";
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_HEAD_SHIELD"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_HEAD_SHIELD"].get());
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_BODY_UNIT"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_MARSEC_BODY_UNIT"].get());
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_LEFT_ARM_SHIELD"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_LEFT_ARM_SHIELD"].get());
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_RIGHT_ARM_SHIELD"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_RIGHT_ARM_SHIELD"].get());
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_LEG_SHIELDS"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_LEG_SHIELDS"].get());
 				break;
 			case 5:
 				// armor = "X-COM";
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_HEAD_SHIELD"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_HEAD_SHIELD"].get());
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_BODY_SHIELD"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_BODY_SHIELD"].get());
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_LEFT_ARM_SHIELD"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_LEFT_ARM_SHIELD"].get());
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_RIGHT_ARM_SHIELD"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_RIGHT_ARM_SHIELD"].get());
 				initialEquipment.push_back(
-				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_LEG_SHIELDS"]);
+				    state.agent_equipment["AEQUIPMENTTYPE_X-COM_LEG_SHIELDS"].get());
 				break;
 			default:
 				break;

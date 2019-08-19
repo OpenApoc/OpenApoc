@@ -1544,7 +1544,7 @@ void CityView::resume()
 			LogError("Failed to find UI control matching \"%s\"", viewName);
 		}
 		view->setData(viewBase);
-		auto viewImage = BaseGraphics::drawMiniBase(viewBase);
+		auto viewImage = BaseGraphics::drawMiniBase(*viewBase);
 		view->setImage(viewImage);
 		view->setDepressedImage(viewImage);
 		view->ToolTipText = viewBase->name;
