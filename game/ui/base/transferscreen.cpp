@@ -148,7 +148,7 @@ void TransferScreen::updateBaseHighlight()
 		{
 			auto viewName = format("BUTTON_SECOND_BASE_%d", ++i);
 			auto view = form->findControlTyped<GraphicButton>(viewName);
-			auto viewImage = drawMiniBase(b.second, viewHighlight, viewFacility);
+			auto viewImage = drawMiniBase(*b.second, viewHighlight, viewFacility);
 			view->setImage(viewImage);
 			view->setDepressedImage(viewImage);
 		}
@@ -657,7 +657,7 @@ void TransferScreen::initViewSecondBase()
 			currentSecondView = view;
 		}
 		view->setData(b.second);
-		auto viewImage = drawMiniBase(b.second, viewHighlight, viewFacility);
+		auto viewImage = drawMiniBase(*b.second, viewHighlight, viewFacility);
 		view->setImage(viewImage);
 		view->setDepressedImage(viewImage);
 		wp<GraphicButton> weakView(view);

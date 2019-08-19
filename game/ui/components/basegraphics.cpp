@@ -28,21 +28,21 @@ const std::unordered_map<std::vector<bool>, int> TILE_CORRIDORS = {
     {{true, true, true, false}, 16},  {{false, true, true, true}, 17},
     {{true, true, true, true}, 18}};
 
-int BaseGraphics::getCorridorSprite(sp<Base> base, Vec2<int> pos)
+int BaseGraphics::getCorridorSprite(const Base &base, Vec2<int> pos)
 {
 	if (pos.x < 0 || pos.y < 0 || pos.x >= Base::SIZE || pos.y >= Base::SIZE ||
-	    !base->corridors[pos.x][pos.y])
+	    !base.corridors[pos.x][pos.y])
 	{
 		return 0;
 	}
-	bool north = pos.y > 0 && base->corridors[pos.x][pos.y - 1];
-	bool south = pos.y < Base::SIZE - 1 && base->corridors[pos.x][pos.y + 1];
-	bool west = pos.x > 0 && base->corridors[pos.x - 1][pos.y];
-	bool east = pos.x < Base::SIZE - 1 && base->corridors[pos.x + 1][pos.y];
+	bool north = pos.y > 0 && base.corridors[pos.x][pos.y - 1];
+	bool south = pos.y < Base::SIZE - 1 && base.corridors[pos.x][pos.y + 1];
+	bool west = pos.x > 0 && base.corridors[pos.x - 1][pos.y];
+	bool east = pos.x < Base::SIZE - 1 && base.corridors[pos.x + 1][pos.y];
 	return TILE_CORRIDORS.at({north, south, west, east});
 }
 
-void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
+void BaseGraphics::renderBase(Vec2<int> renderPos, const Base &base)
 {
 	// Draw grid
 	sp<Image> grid = fw().data->loadImage(
@@ -80,7 +80,7 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 	sp<Image> circleL = fw().data->loadImage(
 	    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:26:xcom3/ufodata/base.pcx");
 	auto font = ui().getFont("smalfont");
-	for (auto &facility : base->facilities)
+	for (auto &facility : base.facilities)
 	{
 		sp<Image> sprite = facility->type->sprite;
 		Vec2<int> pos = renderPos + facility->pos * TILE_SIZE;
@@ -116,7 +116,7 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 	    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:2:xcom3/ufodata/base.pcx");
 	sp<Image> doorBottom = fw().data->loadImage(
 	    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:3:xcom3/ufodata/base.pcx");
-	for (auto &facility : base->facilities)
+	for (auto &facility : base.facilities)
 	{
 		for (int y = 0; y < facility->type->size; y++)
 		{
@@ -139,7 +139,7 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 	}
 }
 
-sp<RGBImage> BaseGraphics::drawMiniBase(sp<Base> base, FacilityHighlight highlight,
+sp<RGBImage> BaseGraphics::drawMiniBase(const Base &base, FacilityHighlight highlight,
                                         sp<Facility> selected)
 {
 	auto minibase = mksp<RGBImage>(Vec2<unsigned int>{32, 32});
@@ -170,7 +170,7 @@ sp<RGBImage> BaseGraphics::drawMiniBase(sp<Base> base, FacilityHighlight highlig
 	    fw().data->loadImage("RAW:xcom3/ufodata/minibase.dat:4:4:17:xcom3/ufodata/base.pcx");
 	sp<Image> spriteSelected =
 	    fw().data->loadImage("RAW:xcom3/ufodata/minibase.dat:4:4:18:xcom3/ufodata/base.pcx");
-	for (auto &facility : base->facilities)
+	for (const auto &facility : base.facilities)
 	{
 		// FIXME: When we implement displaying capacity make sure to round up
 		// So that once it reaches over-capacity it immediately shows 101%

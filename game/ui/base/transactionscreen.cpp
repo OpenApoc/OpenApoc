@@ -462,7 +462,7 @@ void TransactionScreen::updateBaseHighlight()
 		{
 			auto viewName = format("BUTTON_BASE_%d", ++i);
 			auto view = form->findControlTyped<GraphicButton>(viewName);
-			auto viewImage = drawMiniBase(b.second, viewHighlight, viewFacility);
+			auto viewImage = drawMiniBase(*b.second, viewHighlight, viewFacility);
 			view->setImage(viewImage);
 			view->setDepressedImage(viewImage);
 		}

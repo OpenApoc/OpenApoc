@@ -172,7 +172,7 @@ bool BaseBuyScreen::isTransition() { return false; }
 
 void BaseBuyScreen::renderBase()
 {
-	BaseGraphics::renderBase(baseView->getLocationOnScreen(), base);
+	BaseGraphics::renderBase(baseView->getLocationOnScreen(), *base);
 }
 
 }; // namespace OpenApoc
