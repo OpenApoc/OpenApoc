@@ -43,7 +43,7 @@ void BaseBuyScreen::begin()
 	text->setText(format(tr("This Building will cost $%d"), price));
 
 	form->findControlTyped<Graphic>("GRAPHIC_MINIMAP")
-	    ->setImage(BaseGraphics::drawMinimap(state, base->building));
+	    ->setImage(BaseGraphics::drawMinimap(state, *base->building));
 }
 
 void BaseBuyScreen::pause() {}

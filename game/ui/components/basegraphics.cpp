@@ -219,7 +219,7 @@ sp<RGBImage> BaseGraphics::drawMiniBase(const Base &base, FacilityHighlight high
 	return minibase;
 }
 
-sp<RGBImage> BaseGraphics::drawMinimap(sp<GameState> state, sp<Building> selected)
+sp<RGBImage> BaseGraphics::drawMinimap(sp<GameState> state, const Building &selected)
 {
 	// FIXME: add city ref to building
 	auto city = state->cities["CITYMAP_HUMAN"];
@@ -264,9 +264,9 @@ sp<RGBImage> BaseGraphics::drawMinimap(sp<GameState> state, sp<Building> selecte
 	}
 
 	// Draw the current base as a red block
-	for (int y = selected->bounds.p0.y; y < selected->bounds.p1.y; y++)
+	for (int y = selected.bounds.p0.y; y < selected.bounds.p1.y; y++)
 	{
-		for (int x = selected->bounds.p0.x; x < selected->bounds.p1.x; x++)
+		for (int x = selected.bounds.p0.x; x < selected.bounds.p1.x; x++)
 		{
 			l.set({x - offset.x, y - offset.y}, {255, 0, 0, 255});
 		}

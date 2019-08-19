@@ -47,7 +47,7 @@ void BaseScreen::changeBase(sp<Base> newBase)
 	BaseStage::changeBase(newBase);
 	form->findControlTyped<TextEdit>("TEXT_BASE_NAME")->setText(state->current_base->name);
 	form->findControlTyped<Graphic>("GRAPHIC_MINIMAP")
-	    ->setImage(BaseGraphics::drawMinimap(state, state->current_base->building));
+	    ->setImage(BaseGraphics::drawMinimap(state, *state->current_base->building));
 }
 
 void BaseScreen::begin()
