@@ -89,7 +89,7 @@ class ConfigFileImpl
 		this->modifiedOptions[key] = value;
 	}
 
-	bool parseOptions(int argc, char *argv[])
+	bool parseOptions(int argc, const char *argv[])
 	{
 		if (this->parsed)
 		{
@@ -450,7 +450,7 @@ void ConfigFile::addPositionalArgument(const UString name, const UString descrip
 	this->pimpl->addPositionalArgument(name, description);
 }
 
-bool ConfigFile::parseOptions(int argc, char *argv[])
+bool ConfigFile::parseOptions(int argc, const char *argv[])
 {
 	return this->pimpl->parseOptions(argc, argv);
 }

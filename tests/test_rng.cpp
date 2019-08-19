@@ -4,7 +4,7 @@
 
 using namespace OpenApoc;
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	if (config().parseOptions(argc, argv))
 	{

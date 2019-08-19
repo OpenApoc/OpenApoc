@@ -65,7 +65,7 @@ static bool testImage(const UString &imageName, const UString &referenceName)
 	return true;
 }
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	if (config().parseOptions(argc, argv))
 	{

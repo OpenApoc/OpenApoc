@@ -67,7 +67,7 @@ bool test_gamestate_serialization(OpenApoc::sp<OpenApoc::GameState> state)
 	return true;
 }
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	OpenApoc::config().addPositionalArgument("common", "Common gamestate to load");
 	OpenApoc::config().addPositionalArgument("gamestate", "Gamestate to load");

@@ -53,7 +53,7 @@ static void test_collision(const TileMap &map, Vec3<float> line_start, Vec3<floa
 	}
 }
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	if (config().parseOptions(argc, argv))
 	{

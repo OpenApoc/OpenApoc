@@ -243,7 +243,7 @@ void writeSource(std::ofstream &out, const StateDefinition &state,
 	out << "\n} // namespace OpenApoc\n";
 }
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 
 	po::options_description desc("Allowed options");

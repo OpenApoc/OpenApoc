@@ -237,7 +237,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
      }},
 };
 
-int main(int argc, char *argv[])
+int main(int argc, const char *argv[])
 {
 	ConfigOptionString extractList(
 	    "Extractor", "extract",

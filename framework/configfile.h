@@ -50,7 +50,7 @@ class ConfigFile
 	void addPositionalArgument(const UString name, const UString description);
 
 	// returns 'true' if the program should exit (invalid option/'--help' specified)
-	bool parseOptions(int argc, char *argv[]);
+	bool parseOptions(int argc, const char *argv[]);
 
 	// Prints out the help to stdout, used if the running program has decided some argument is
 	// invalid

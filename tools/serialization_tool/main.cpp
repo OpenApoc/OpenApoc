@@ -26,7 +26,7 @@ static OpenApoc::ConfigOptionBool
 static OpenApoc::ConfigOptionString
     deltaGamestate("", "delta", "Only output the differences from specified parent gamestate");
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	OpenApoc::config().addPositionalArgument("input1", "Input file");
 	OpenApoc::config().addPositionalArgument("input2", "Input file");

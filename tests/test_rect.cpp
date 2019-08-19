@@ -160,7 +160,7 @@ void test_rect_intersects(Rect<int> r1, Rect<int> r2, bool expected)
 		exit(EXIT_FAILURE);
 	}
 }
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	if (config().parseOptions(argc, argv))
 	{

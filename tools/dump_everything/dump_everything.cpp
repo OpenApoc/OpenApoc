@@ -1154,7 +1154,7 @@ static void dumpPcx(fs::path outDir, const UString &prefix)
 	fw().data->writeImage(path.native(), img);
 }
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	if (OpenApoc::config().parseOptions(argc, argv))
 	{

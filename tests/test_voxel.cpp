@@ -215,7 +215,7 @@ static void test_voxel(Vec3<int> voxel_size)
 	return;
 }
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	if (config().parseOptions(argc, argv))
 	{

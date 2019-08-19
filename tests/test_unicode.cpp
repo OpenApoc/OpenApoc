@@ -92,7 +92,7 @@ static bool test_insert(const UString &initial, const UString &expected, size_t 
 	return true;
 }
 
-int main(int argc, char **argv)
+int main(int argc, const char **argv)
 {
 	if (config().parseOptions(argc, argv))
 	{

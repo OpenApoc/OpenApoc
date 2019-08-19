@@ -5,7 +5,7 @@
 
 using namespace OpenApoc;
 
-int main(int argc, char *argv[])
+int main(int argc, const char *argv[])
 {
 	config().addPositionalArgument("image_string", "Image string to read");
 	config().addPositionalArgument("output_file", "Output .png file");
