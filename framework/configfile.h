@@ -85,6 +85,7 @@ class ConfigOptionString : public ConfigOption
 	ConfigOptionString(const UString section, const UString name, const UString description,
 	                   const UString defaultValue = "");
 	UString get() const;
+	void set(const UString &newValue);
 };
 
 class ConfigOptionInt : public ConfigOption
@@ -96,6 +97,7 @@ class ConfigOptionInt : public ConfigOption
 	ConfigOptionInt(const UString section, const UString name, const UString description,
 	                const int defaultValue = 0);
 	int get() const;
+	void set(int newValue);
 };
 
 class ConfigOptionBool : public ConfigOption
@@ -107,6 +109,7 @@ class ConfigOptionBool : public ConfigOption
 	ConfigOptionBool(const UString section, const UString name, const UString description,
 	                 const bool defaultValue = false);
 	bool get() const;
+	void set(bool newValue);
 };
 
 class ConfigOptionFloat : public ConfigOption
