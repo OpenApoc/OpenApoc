@@ -21,8 +21,13 @@ init:
 #clone_depth: 10
 cache: c:\tools\vcpkg\installed
 before_build:
+  - cd c:\tools\vcpkg
+  - git pull
+  - git checkout 2019.07
+  - cd c:\projects\openapoc
   - vcpkg install sdl2 boost-locale boost-program-options boost-uuid boost-crc
   - vcpkg upgrade --no-dry-run
+  - vcpkg remove --outdated
   - git submodule update --init --recursive
   - curl http://s2.jonnyh.net/pub/cd_minimal.iso.xz -o temp\cd.iso.xz
   - 7z e temp\cd.iso.xz -odata\
