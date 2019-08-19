@@ -27,7 +27,7 @@ namespace OpenApoc
 
 namespace
 {
-int getCorridorSectorID(sp<Base> base, Vec2<int> pos)
+int getCorridorSectorID(const Base &base, Vec2<int> pos)
 {
 	// key is North South West East (true = occupied, false = vacant)
 	const std::unordered_map<std::vector<bool>, int> TILE_CORRIDORS = {
@@ -45,7 +45,7 @@ int getCorridorSectorID(sp<Base> base, Vec2<int> pos)
 		LogError("Going out of bounds for base");
 		return 0;
 	}
-	else if (!base->corridors[pos.x][pos.y])
+	else if (!base.corridors[pos.x][pos.y])
 	{
 		// We need to cap any facilities
 		// For that we need to find where facilities are
@@ -55,7 +55,7 @@ int getCorridorSectorID(sp<Base> base, Vec2<int> pos)
 		{
 			facilities[i].resize(Base::SIZE);
 		}
-		for (auto &facility : base->facilities)
+		for (auto &facility : base.facilities)
 		{
 			if (facility->buildTime > 0)
 			{
@@ -79,10 +79,10 @@ int getCorridorSectorID(sp<Base> base, Vec2<int> pos)
 	}
 	else
 	{
-		bool north = pos.y > 0 && base->corridors[pos.x][pos.y - 1];
-		bool south = pos.y < Base::SIZE - 1 && base->corridors[pos.x][pos.y + 1];
-		bool west = pos.x > 0 && base->corridors[pos.x - 1][pos.y];
-		bool east = pos.x < Base::SIZE - 1 && base->corridors[pos.x + 1][pos.y];
+		bool north = pos.y > 0 && base.corridors[pos.x][pos.y - 1];
+		bool south = pos.y < Base::SIZE - 1 && base.corridors[pos.x][pos.y + 1];
+		bool west = pos.x > 0 && base.corridors[pos.x - 1][pos.y];
+		bool east = pos.x < Base::SIZE - 1 && base.corridors[pos.x + 1][pos.y];
 		return TILE_CORRIDORS.at({north, south, west, east}) - 3 + 15;
 	}
 }
@@ -947,7 +947,7 @@ bool BattleMap::generateBase(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int
 	{
 		for (i.y = 0; i.y < Base::SIZE; i.y++)
 		{
-			sec_map[i.x + i.y * size.x] = secRefs[getCorridorSectorID(base, i)];
+			sec_map[i.x + i.y * size.x] = secRefs[getCorridorSectorID(*base, i)];
 		}
 	}
 
