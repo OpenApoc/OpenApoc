@@ -2,6 +2,7 @@
 #include <QFileDialog>
 #include <QProcess>
 #include <QSize>
+#include <QtGlobal>
 #include <array>
 #include <utility>
 
