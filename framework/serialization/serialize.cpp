@@ -9,6 +9,7 @@
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/strings_format.h"
+#include <deque>
 #include <map>
 #include <sstream>
 
@@ -46,26 +47,7 @@ SerializationNode *SerializationNode::getNextSiblingReq(const char *name)
 }
 
 using namespace pugi;
-class XMLSerializationNode;
-
-class XMLSerializationArchive final : public SerializationArchive
-{
-  private:
-	up<SerializationDataProvider> dataProvider;
-	std::map<UString, xml_document> docRoots;
-	std::vector<up<SerializationNode>> nodes;
-	friend class SerializationArchive;
-	friend class XMLSerializationNode;
-
-  public:
-	SerializationNode *newRoot(const UString &prefix, const char *name) override;
-	SerializationNode *getRoot(const UString &prefix, const char *name) override;
-	bool write(const UString &path, bool pack, bool pretty) override;
-	XMLSerializationArchive() : dataProvider(nullptr), docRoots(){};
-	XMLSerializationArchive(up<SerializationDataProvider> dataProvider)
-	    : dataProvider(std::move(dataProvider)){};
-	~XMLSerializationArchive() override = default;
-};
+class XMLSerializationArchive;
 
 class XMLSerializationNode final : public SerializationNode
 {
@@ -136,6 +118,25 @@ class XMLSerializationNode final : public SerializationNode
 	~XMLSerializationNode() override = default;
 };
 
+class XMLSerializationArchive final : public SerializationArchive
+{
+  private:
+	up<SerializationDataProvider> dataProvider;
+	std::map<UString, xml_document> docRoots;
+	std::deque<XMLSerializationNode> nodes;
+	friend class SerializationArchive;
+	friend class XMLSerializationNode;
+
+  public:
+	SerializationNode *newRoot(const UString &prefix, const char *name) override;
+	SerializationNode *getRoot(const UString &prefix, const char *name) override;
+	bool write(const UString &path, bool pack, bool pretty) override;
+	XMLSerializationArchive() : dataProvider(nullptr), docRoots(){};
+	XMLSerializationArchive(up<SerializationDataProvider> dataProvider)
+	    : dataProvider(std::move(dataProvider)){};
+	~XMLSerializationArchive() override = default;
+};
+
 up<SerializationArchive> SerializationArchive::createArchive()
 {
 	return mkup<XMLSerializationArchive>();
@@ -176,8 +177,7 @@ SerializationNode *XMLSerializationArchive::newRoot(const UString &prefix, const
 	decl.append_attribute("version") = "1.0";
 	decl.append_attribute("encoding") = "UTF-8";
 	root.set_name(name);
-	this->nodes.push_back(mkup<XMLSerializationNode>(this, root, prefix + name + "/"));
-	return this->nodes.back().get();
+	return &this->nodes.emplace_back(this, root, prefix + name + "/");
 }
 
 SerializationNode *XMLSerializationArchive::getRoot(const UString &prefix, const char *name)
@@ -221,8 +221,7 @@ SerializationNode *XMLSerializationArchive::getRoot(const UString &prefix, const
 		LogWarning("Failed to find root with name \"%s\" in \"%s\"", name, path);
 		return nullptr;
 	}
-	this->nodes.push_back(mkup<XMLSerializationNode>(this, root, prefix + name + "/"));
-	return this->nodes.back().get();
+	return &this->nodes.emplace_back(this, root, prefix + name + "/");
 }
 
 bool XMLSerializationArchive::write(const UString &path, bool pack, bool pretty)
@@ -262,8 +261,7 @@ SerializationNode *XMLSerializationNode::addNode(const char *name, const UString
 	auto newNode = this->node.append_child();
 	newNode.set_name(name);
 	newNode.text().set(value.cStr());
-	this->archive->nodes.push_back(mkup<XMLSerializationNode>(this->archive, newNode, this));
-	return this->archive->nodes.back().get();
+	return &this->archive->nodes.emplace_back(this->archive, newNode, this);
 }
 
 SerializationNode *XMLSerializationNode::getNodeOpt(const char *name)
@@ -273,8 +271,7 @@ SerializationNode *XMLSerializationNode::getNodeOpt(const char *name)
 	{
 		return nullptr;
 	}
-	this->archive->nodes.push_back(mkup<XMLSerializationNode>(this->archive, newNode, this));
-	return this->archive->nodes.back().get();
+	return &this->archive->nodes.emplace_back(this->archive, newNode, this);
 }
 
 SerializationNode *XMLSerializationNode::getNextSiblingOpt(const char *name)
@@ -284,8 +281,7 @@ SerializationNode *XMLSerializationNode::getNextSiblingOpt(const char *name)
 	{
 		return nullptr;
 	}
-	this->archive->nodes.push_back(mkup<XMLSerializationNode>(this->archive, newNode, this));
-	return this->archive->nodes.back().get();
+	return &this->archive->nodes.emplace_back(this->archive, newNode, this);
 }
 
 SerializationNode *XMLSerializationNode::addSection(const char *name)
