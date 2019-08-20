@@ -47,7 +47,8 @@ after_build:
   - echo %APPVEYOR_REPO_COMMIT% > OpenApoc-%OPENAPOC_VERSION%\git-commit
   - echo %OPENAPOC_VERSION% > OpenApoc-%OPENAPOC_VERSION%\build-id
   - copy bin\*.dll OpenApoc-%OPENAPOC_VERSION%\
-  - copy bin\OpenApoc.exe OpenApoc-%OPENAPOC_VERSION%\
+  - copy bin\*.exe OpenApoc-%OPENAPOC_VERSION%\
+  - copy %QTPATH%\bin\*.dll OpenApoc-%OPENAPOC_VERSION%\
   - del data\cd.iso
   - xcopy /E data OpenApoc-%OPENAPOC_VERSION%\data\
   - copy portable.txt OpenApoc-%OPENAPOC_VERSION%\
