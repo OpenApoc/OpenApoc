@@ -57,6 +57,7 @@ after_build:
   - copy README_HOTKEYS.txt OpenApoc-%OPENAPOC_VERSION%\
   - 7z a %OPENAPOC_FILENAME% OpenApoc-%OPENAPOC_VERSION%
   - appveyor PushArtifact %OPENAPOC_FILENAME%
+  - del OpenApoc-%OPENAPOC_VERSION%\potable.txt
   - '"C:\Program Files (x86)\NSIS\makensis.exe" /DGAME_VERSION=%OPENAPOC_VERSION% install\windows\installer.nsi'
   - appveyor PushArtifact install\windows\install-openapoc-%OPENAPOC_VERSION%.exe
   - copy bin\*.pdb OpenApoc-%OPENAPOC_VERSION%\

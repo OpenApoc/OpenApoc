@@ -106,7 +106,7 @@
 	!insertmacro MUI_PAGE_INSTFILES
 	
 	;Finish Page Configuration
-	!define MUI_FINISHPAGE_RUN "$INSTDIR\OpenApoc.exe"
+	!define MUI_FINISHPAGE_RUN "$INSTDIR\OpenApoc_launcher.exe"
 	!define MUI_FINISHPAGE_NOREBOOTSUPPORT
 	
 	!insertmacro MUI_PAGE_FINISH
@@ -303,7 +303,7 @@ Section /o "$(SETUP_DESKTOP)" SecDesktop
 
 	SetOutPath "$INSTDIR"
 	
-	CreateShortCut "$DESKTOP\${GAME_NAME}.lnk" "$INSTDIR\OpenApoc.exe"
+	CreateShortCut "$DESKTOP\${GAME_NAME}.lnk" "$INSTDIR\OpenApoc_launcher.exe"
 
 SectionEnd
 
