@@ -4,8 +4,6 @@
 #include <array>
 #include <map>
 
-#include "framework/logger.h"
-
 namespace OpenApoc
 {
 
@@ -27,7 +25,6 @@ Colour Colour::FromHtmlName(const UString &name)
 	auto it = html4Colours.find(name.toLower());
 	if (it != html4Colours.end())
 		return it->second;
-	LogWarning("Unknown colour name: %s", name);
 	return {0, 0, 0, 0};
 }
 
@@ -36,19 +33,16 @@ Colour Colour::FromHex(const UString &hexcode)
 	UString hexcode_lower = hexcode.toLower();
 	if (hexcode_lower.empty())
 	{
-		LogWarning("Empty colour hex code");
 		return {0, 0, 0};
 	}
 	// invalid initial character
 	else if (*hexcode_lower.begin() != '#')
 	{
-		LogWarning("Unexpected hex triplet initial character: %c", *hexcode_lower.begin());
 		return {0, 0, 0};
 	}
 	// invalid characters
 	else if (!std::all_of(++hexcode_lower.begin(), hexcode_lower.end(), isxdigit))
 	{
-		LogWarning("Invalid characters found in hex triplet: %s", hexcode);
 		return {0, 0, 0};
 	}
 	std::array<int, 6> digits;
@@ -67,7 +61,6 @@ Colour Colour::FromHex(const UString &hexcode)
 	}
 	else
 	{
-		LogWarning("Unexpected hex triplet length (%d) in %s", hexcode_lower.length(), hexcode);
 		return {0, 0, 0};
 	}
 }
