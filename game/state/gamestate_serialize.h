@@ -243,7 +243,7 @@ void serializeInSectionMap(const GameState *state, SerializationNode *node,
 		UString key;
 		serializeIn(state, entry->getNodeReq("key"), key);
 		auto &value = map[key];
-		serializeIn(state, entry->getSectionReq(key), value);
+		serializeIn(state, entry->getSectionReq(key.cStr()), value);
 
 		entry = entry->getNextSiblingOpt("entry");
 	}
@@ -491,7 +491,7 @@ void serializeOutSectionMap(SerializationNode *node, const std::map<UString, Val
 			{
 				auto entry = node->addNode("entry");
 				serializeOut(entry->addNode("key"), pair.first, defaultKey);
-				serializeOut(entry->addSection(pair.first), pair.second, refIt->second);
+				serializeOut(entry->addSection(pair.first.cStr()), pair.second, refIt->second);
 			}
 			else
 			{
@@ -502,7 +502,7 @@ void serializeOutSectionMap(SerializationNode *node, const std::map<UString, Val
 		{
 			auto entry = node->addNode("entry");
 			serializeOut(entry->addNode("key"), pair.first, defaultKey);
-			serializeOut(entry->addSection(pair.first), pair.second, defaultValue);
+			serializeOut(entry->addSection(pair.first.cStr()), pair.second, defaultValue);
 		}
 	}
 }
