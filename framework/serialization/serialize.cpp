@@ -55,16 +55,16 @@ class XMLSerializationNode final : public SerializationNode
 	XMLSerializationArchive *archive;
 	xml_node node;
 	XMLSerializationNode *parent;
-	UString prefix;
+	const UString *prefix;
 
   public:
 	XMLSerializationNode(XMLSerializationArchive *archive, xml_node node,
 	                     XMLSerializationNode *parent)
-	    : archive(archive), node(node), parent(parent)
+	    : archive(archive), node(node), parent(parent), prefix(nullptr)
 	{
 	}
 
-	XMLSerializationNode(XMLSerializationArchive *archive, xml_node node, const UString &prefix)
+	XMLSerializationNode(XMLSerializationArchive *archive, xml_node node, const UString *prefix)
 	    : archive(archive), node(node), parent(nullptr), prefix(prefix)
 	{
 	}
@@ -108,10 +108,13 @@ class XMLSerializationNode final : public SerializationNode
 	UString getFullPath() override;
 	const UString &getPrefix() const override
 	{
+		static const UString emptyString = "";
 		if (this->parent)
 			return this->parent->getPrefix();
+		else if (this->prefix)
+			return *this->prefix;
 		else
-			return this->prefix;
+			return emptyString;
 	}
 
 	~XMLSerializationNode() override = default;
@@ -125,6 +128,7 @@ class XMLSerializationArchive final : public SerializationArchive
 	std::deque<XMLSerializationNode> nodes;
 	friend class SerializationArchive;
 	friend class XMLSerializationNode;
+	std::deque<UString> prefixes;
 
   public:
 	SerializationNode *newRoot(const UString &prefix, const char *name) override;
@@ -176,7 +180,8 @@ SerializationNode *XMLSerializationArchive::newRoot(const UString &prefix, const
 	decl.append_attribute("version") = "1.0";
 	decl.append_attribute("encoding") = "UTF-8";
 	root.set_name(name);
-	return &this->nodes.emplace_back(this, root, prefix + name + "/");
+	const UString *newPrefix = &this->prefixes.emplace_back(prefix + name + "/");
+	return &this->nodes.emplace_back(this, root, newPrefix);
 }
 
 SerializationNode *XMLSerializationArchive::getRoot(const UString &prefix, const char *name)
@@ -220,7 +225,8 @@ SerializationNode *XMLSerializationArchive::getRoot(const UString &prefix, const
 		LogWarning("Failed to find root with name \"%s\" in \"%s\"", name, path);
 		return nullptr;
 	}
-	return &this->nodes.emplace_back(this, root, prefix + name + "/");
+	const UString *newPrefix = &this->prefixes.emplace_back(prefix + name + "/");
+	return &this->nodes.emplace_back(this, root, newPrefix);
 }
 
 bool XMLSerializationArchive::write(const UString &path, bool pack, bool pretty)
