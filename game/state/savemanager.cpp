@@ -331,7 +331,7 @@ bool SaveManager::deleteGame(const sp<SaveMetadata> &slot) const
 
 bool SaveMetadata::deserializeManifest(SerializationArchive *archive, const UString &saveFileName)
 {
-	auto root = archive->getRoot("", saveManifestName);
+	auto root = archive->getRoot("", saveManifestName.cStr());
 	if (!root)
 	{
 		return false;
@@ -381,7 +381,7 @@ bool SaveMetadata::deserializeManifest(SerializationArchive *archive, const UStr
 
 bool SaveMetadata::serializeManifest(SerializationArchive *archive) const
 {
-	auto root = archive->newRoot("", saveManifestName);
+	auto root = archive->newRoot("", saveManifestName.cStr());
 	if (!root)
 	{
 		return false;
