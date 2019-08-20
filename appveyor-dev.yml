@@ -48,7 +48,10 @@ after_build:
   - echo %OPENAPOC_VERSION% > OpenApoc-%OPENAPOC_VERSION%\build-id
   - copy bin\*.dll OpenApoc-%OPENAPOC_VERSION%\
   - copy bin\*.exe OpenApoc-%OPENAPOC_VERSION%\
-  - copy %QTPATH%\bin\*.dll OpenApoc-%OPENAPOC_VERSION%\
+  - copy %QTPATH%\bin\qt5core.dll OpenApoc-%OPENAPOC_VERSION%\
+  - copy %QTPATH%\bin\qt5gui.dll OpenApoc-%OPENAPOC_VERSION%\
+  - copy %QTPATH%\bin\qt5widgets.dll OpenApoc-%OPENAPOC_VERSION%\
+  - xcopy /e %QTPATH%\bin\plugins OpenApoc-%OPENAPOC_VERSION%\plugins\
   - del data\cd.iso
   - xcopy /E data OpenApoc-%OPENAPOC_VERSION%\data\
   - copy portable.txt OpenApoc-%OPENAPOC_VERSION%\
