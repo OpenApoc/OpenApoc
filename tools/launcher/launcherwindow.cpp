@@ -2,7 +2,6 @@
 #include <QFileDialog>
 #include <QProcess>
 #include <QSize>
-#include <QtGlobal>
 #include <array>
 #include <utility>
 
@@ -38,7 +37,7 @@ LauncherWindow::LauncherWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui
 	connect(ui->browseCDFile, &QPushButton::clicked, this, &LauncherWindow::browseCDFile);
 	connect(ui->browseCDDir, &QPushButton::clicked, this, &LauncherWindow::browseCDDir);
 	connect(ui->browseDataDir, &QPushButton::clicked, this, &LauncherWindow::browseDataDir);
-	connect(ui->resolutionBox, QOverload<int>::of(&QComboBox::activated), this,
+	connect(ui->resolutionBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this,
 	        &LauncherWindow::setResolutionSelection);
 
 	ui->customResolutionX->setValidator(
