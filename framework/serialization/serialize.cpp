@@ -48,7 +48,7 @@ SerializationNode *SerializationNode::getNextSiblingReq(const char *name)
 using namespace pugi;
 class XMLSerializationNode;
 
-class XMLSerializationArchive : public SerializationArchive
+class XMLSerializationArchive final : public SerializationArchive
 {
   private:
 	up<SerializationDataProvider> dataProvider;
@@ -67,7 +67,7 @@ class XMLSerializationArchive : public SerializationArchive
 	~XMLSerializationArchive() override = default;
 };
 
-class XMLSerializationNode : public SerializationNode
+class XMLSerializationNode final : public SerializationNode
 {
   private:
 	SerializationDataProvider *dataProvider;
