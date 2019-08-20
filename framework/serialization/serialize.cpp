@@ -52,7 +52,6 @@ class XMLSerializationArchive;
 class XMLSerializationNode final : public SerializationNode
 {
   private:
-	SerializationDataProvider *dataProvider;
 	XMLSerializationArchive *archive;
 	xml_node node;
 	XMLSerializationNode *parent;
