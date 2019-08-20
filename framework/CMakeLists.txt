@@ -258,6 +258,7 @@ if(WIN32)
 		MAP_IMPORTED_CONFIG_MINSIZEREL Release
 		MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release
 	)
+	target_compile_definitions(OpenApoc_Framework PUBLIC "-DSDL_MAIN_HANDLED")
 else()
 	find_package(PkgConfig)
 	pkg_check_modules(PC_SDL2 REQUIRED sdl2>=2.0)

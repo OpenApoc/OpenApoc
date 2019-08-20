@@ -221,6 +221,8 @@ Framework::Framework(const UString programName, bool createWindow)
 	TRACE_FN;
 	LogInfo("Starting framework");
 
+	SDL_SetMainReady();
+
 	if (this->instance)
 	{
 		LogError("Multiple Framework instances created");
