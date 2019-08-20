@@ -234,18 +234,8 @@ Section "$(SETUP_GAME)" SecMain
 	
 	SetOutPath "$INSTDIR"
 
-	File "..\..\OpenApoc-${GAME_VERSION}\*.dll"
-	File "..\..\OpenApoc-${GAME_VERSION}\*.exe"
+	File /r "..\..\OpenApoc-${GAME_VERSION}\*"
 
-	File "..\..\build-id"
-	File "..\..\OpenApoc-${GAME_VERSION}\git-commit"
-	File /oname=README.txt "..\..\README.md"
-	File "..\..\README_HOTKEYS.txt"
-	File /oname=LICENSE.txt "..\..\LICENSE"
-
-	SetOutPath "$INSTDIR\data"
-	File /r "..\..\data\"
-	SetOutPath "$INSTDIR"
 	
 	;Generate config
 	${If} $PortableMode == ${BST_CHECKED}
@@ -296,7 +286,7 @@ Section "$(SETUP_GAME)" SecMain
 	!insertmacro MUI_STARTMENU_WRITE_BEGIN Application
 	
 		CreateDirectory "$SMPROGRAMS\$StartMenuFolder"
-		CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${GAME_NAME}.lnk" "$INSTDIR\OpenApoc.exe"
+		CreateShortCut "$SMPROGRAMS\$StartMenuFolder\${GAME_NAME}.lnk" "$INSTDIR\OpenApoc_launcher.exe"
 		CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(SETUP_SHORTCUT_README).lnk" "$INSTDIR\README.txt"
 ${If} $PortableMode == ${BST_CHECKED}
 		CreateShortCut "$SMPROGRAMS\$StartMenuFolder\$(SETUP_SHORTCUT_USER).lnk" "$INSTDIR"
@@ -456,6 +446,11 @@ Section "-un.Main"
 	Delete "$INSTDIR\build-id"
 	Delete "$INSTDIR\git-commit"
 	RMDir /r "$INSTDIR\data"
+	RMDir /r "$INSTDIR\iconengines"
+	RMDir /r "$INSTDIR\imageformats"
+	RMDir /r "$INSTDIR\platforms"
+	RMDir /r "$INSTDIR\styles"
+	RMDir /r "$INSTDIR\translations"
 
 	Delete "$INSTDIR\Uninstall.exe"
 	RMDir "$INSTDIR"
