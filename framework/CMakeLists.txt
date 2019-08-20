@@ -254,7 +254,7 @@ if(WIN32)
 	find_package(SDL2 CONFIG REQUIRED)
 	target_link_libraries(OpenApoc_Framework PUBLIC SDL2::SDL2 SDL2::SDL2main)
 	#Workaround vcpkg bug
-	set_target_properties(SDL2::SDL2 SDL2::SDL2main PROPERTIES
+	set_target_properties(SDL2::SDL2 PROPERTIES
 		MAP_IMPORTED_CONFIG_MINSIZEREL Release
 		MAP_IMPORTED_CONFIG_RELWITHDEBINFO Release
 	)
