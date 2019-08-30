@@ -19,6 +19,7 @@
 #include <SDL.h>
 #include <algorithm>
 #include <chrono>
+#include <fstream>
 #include <list>
 #include <map>
 #include <vector>
@@ -517,6 +518,12 @@ Framework::Framework(const UString programName, bool createWindow)
 	settingsPath += "/settings.cfg";
 
 	UString logPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
+	std::ifstream portableFile("./portable.txt");
+	if (portableFile)
+	{
+		logPath = ".";
+	}
+
 	logPath += "/log.txt";
 
 	enableFileLogger(logPath.cStr());
