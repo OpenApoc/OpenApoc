@@ -2122,6 +2122,7 @@ bool BattleUnitMission::advanceAlongPath(GameState &state, BattleUnit &u, Vec3<f
 	{
 		// Next tile became impassable, pick a new path
 		currentPlannedPath.clear();
+		u.addMission(state, BattleUnitMission::snooze(u, 1));
 		u.addMission(state, Type::RestartNextMission);
 		return false;
 	}
