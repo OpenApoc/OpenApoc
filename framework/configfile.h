@@ -70,8 +70,9 @@ class ConfigOption
 
   public:
 	ConfigOption(const UString section, const UString name, const UString description);
-	UString getName() const { return name; }
-	UString getDescription() const { return description; }
+	const UString &getName() const { return name; }
+	const UString &getSection() const { return section; }
+	const UString &getDescription() const { return description; }
 	UString getKey() const;
 };
 

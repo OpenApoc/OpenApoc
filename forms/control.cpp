@@ -8,6 +8,7 @@
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/image.h"
+#include "framework/options.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
 #include "framework/trace.h"
@@ -15,9 +16,6 @@
 
 namespace OpenApoc
 {
-
-ConfigOptionString defaultTooltipFont("Forms", "TooltipFont", "The default tooltip font",
-                                      "smallset");
 
 Control::Control(bool takesFocus)
     : funcPreRender(nullptr), mouseInside(false), mouseDepressed(false), resolvedLocation(0, 0),
@@ -28,7 +26,7 @@ Control::Control(bool takesFocus)
       ToolTipBackground{128, 128, 128}, ToolTipBorders{
                                             {1, {0, 0, 0}}, {1, {255, 255, 255}}, {1, {0, 0, 0, 0}}}
 {
-	this->ToolTipFont = ui().getFont(defaultTooltipFont.get());
+	this->ToolTipFont = ui().getFont(Options::defaultTooltipFont.get());
 }
 
 Control::~Control() { unloadResources(); }

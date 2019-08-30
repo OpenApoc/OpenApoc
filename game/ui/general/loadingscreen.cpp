@@ -6,6 +6,7 @@
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/options.h"
 #include "framework/renderer.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
@@ -16,9 +17,6 @@
 
 namespace OpenApoc
 {
-
-ConfigOptionBool asyncLoading("Game", "ASyncLoading",
-                              "Load in background while displaying animated loading screen", true);
 
 LoadingScreen::LoadingScreen(sp<GameState> state, std::shared_future<void> task,
                              std::function<sp<Stage>()> nextScreenFn, sp<Image> background,
@@ -42,7 +40,7 @@ void LoadingScreen::begin()
 	}
 	fw().displaySetIcon(std::dynamic_pointer_cast<RGBImage>(backgroundimage));
 	loadingimageangle = 0;
-	if (asyncLoading.get() == false)
+	if (Options::asyncLoading.get() == false)
 	{
 		loadingTask.wait();
 	}
@@ -87,7 +85,7 @@ void LoadingScreen::update()
 		loadingimageangle -= (float)(M_PI * 2.0f);
 
 	auto status = this->loadingTask.wait_for(std::chrono::seconds(0));
-	if (asyncLoading.get() == false)
+	if (Options::asyncLoading.get() == false)
 	{
 		LogAssert(status == std::future_status::ready);
 	}
