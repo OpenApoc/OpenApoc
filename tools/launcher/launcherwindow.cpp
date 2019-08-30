@@ -11,7 +11,7 @@
 #include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
-#include "framework/shared_config.h"
+#include "framework/options.h"
 
 using namespace OpenApoc;
 
@@ -45,13 +45,13 @@ LauncherWindow::LauncherWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui
 	ui->customResolutionY->setValidator(
 	    new QIntValidator(MINIMUM_RESOLUTION.height(), MAXIMUM_RESOLUTION.height(), this));
 
-	ui->fullscreenCheckBox->setCheckState(OpenApoc::Config::screenFullscreenOption.get()
+	ui->fullscreenCheckBox->setCheckState(OpenApoc::Options::screenFullscreenOption.get()
 	                                          ? Qt::CheckState::Checked
 	                                          : Qt::CheckState::Unchecked);
 	setupResolutionDisplay();
 
-	ui->cdPath->setText(QString::fromStdString(OpenApoc::Config::cdPathOption.get().str()));
-	ui->dataPath->setText(QString::fromStdString(OpenApoc::Config::dataPathOption.get().str()));
+	ui->cdPath->setText(QString::fromStdString(OpenApoc::Options::cdPathOption.get().str()));
+	ui->dataPath->setText(QString::fromStdString(OpenApoc::Options::dataPathOption.get().str()));
 }
 
 LauncherWindow::~LauncherWindow() {}
@@ -59,8 +59,8 @@ LauncherWindow::~LauncherWindow() {}
 void LauncherWindow::setupResolutionDisplay()
 {
 	auto &comboBox = *ui->resolutionBox;
-	const QSize current_size = {OpenApoc::Config::screenWidthOption.get(),
-	                            OpenApoc::Config::screenHeightOption.get()};
+	const QSize current_size = {OpenApoc::Options::screenWidthOption.get(),
+	                            OpenApoc::Options::screenHeightOption.get()};
 	bool is_custom = true;
 
 	comboBox.clear();
@@ -124,8 +124,8 @@ void LauncherWindow::setResolutionSelection(int index)
 		y = size.height();
 		is_custom = false;
 	}
-	OpenApoc::Config::screenWidthOption.set(x);
-	OpenApoc::Config::screenHeightOption.set(y);
+	OpenApoc::Options::screenWidthOption.set(x);
+	OpenApoc::Options::screenHeightOption.set(y);
 
 	if (is_custom)
 	{
@@ -149,21 +149,21 @@ void LauncherWindow::saveConfig()
 		auto &heightBox = *ui->customResolutionY;
 		const auto x = widthBox.text().toInt();
 		const auto y = heightBox.text().toInt();
-		OpenApoc::Config::screenWidthOption.set(x);
-		OpenApoc::Config::screenHeightOption.set(y);
+		OpenApoc::Options::screenWidthOption.set(x);
+		OpenApoc::Options::screenHeightOption.set(y);
 	}
 	else
 	{
 		const auto &selectionVariant = comboBox.currentData();
 		const auto &size = selectionVariant.toSize();
-		OpenApoc::Config::screenWidthOption.set(size.width());
-		OpenApoc::Config::screenHeightOption.set(size.height());
+		OpenApoc::Options::screenWidthOption.set(size.width());
+		OpenApoc::Options::screenHeightOption.set(size.height());
 	}
 
-	OpenApoc::Config::screenFullscreenOption.set(ui->fullscreenCheckBox->checkState() ==
-	                                             Qt::CheckState::Checked);
-	OpenApoc::Config::cdPathOption.set(ui->cdPath->text().toStdString());
-	OpenApoc::Config::dataPathOption.set(ui->dataPath->text().toStdString());
+	OpenApoc::Options::screenFullscreenOption.set(ui->fullscreenCheckBox->checkState() ==
+	                                              Qt::CheckState::Checked);
+	OpenApoc::Options::cdPathOption.set(ui->cdPath->text().toStdString());
+	OpenApoc::Options::dataPathOption.set(ui->dataPath->text().toStdString());
 	OpenApoc::config().save();
 }
 
