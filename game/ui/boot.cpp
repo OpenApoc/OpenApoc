@@ -5,6 +5,7 @@
 #include "forms/ui.h"
 #include "framework/configfile.h"
 #include "framework/framework.h"
+#include "framework/options.h"
 #include "game/state/gamestate.h"
 #include "game/ui/general/loadingscreen.h"
 #include "game/ui/general/mainmenu.h"
@@ -15,8 +16,6 @@
 
 namespace OpenApoc
 {
-ConfigOptionBool skipIntroOption("Game", "SkipIntro", "Skip intro video", false);
-ConfigOptionString loadGameOption("Game", "Load", "Path to save game to load at startup", "");
 
 void BootUp::begin() {}
 
@@ -30,13 +29,13 @@ void BootUp::eventOccurred(Event *e) { std::ignore = e; }
 
 void BootUp::update()
 {
-	bool skipIntro = skipIntroOption.get();
+	bool skipIntro = Options::skipIntroOption.get();
 	// The first forms instance causes it to get loaded
 	sp<GameState> loadedState;
 	std::shared_future<void> loadTask;
 	bool loadGame = false;
 
-	if (loadGameOption.get().empty())
+	if (Options::loadGameOption.get().empty())
 	{
 		loadTask = fw().threadPoolEnqueue([]() {
 			auto &ui_instance = ui();
@@ -46,7 +45,7 @@ void BootUp::update()
 	else
 	{
 		loadGame = true;
-		auto path = loadGameOption.get();
+		auto path = Options::loadGameOption.get();
 		loadedState = mksp<GameState>();
 		loadTask = fw().threadPoolEnqueue([loadedState, path]() {
 			auto &ui_instance = ui();

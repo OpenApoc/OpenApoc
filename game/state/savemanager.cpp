@@ -2,6 +2,7 @@
 #include "framework/configfile.h"
 #include "framework/filesystem.h"
 #include "framework/framework.h"
+#include "framework/options.h"
 #include "framework/serialization/serialize.h"
 #include "framework/trace.h"
 #include "game/state/gamestate.h"
@@ -20,11 +21,7 @@ namespace OpenApoc
 const UString saveManifestName = "save_manifest";
 const UString saveFileExtension = ".save";
 
-ConfigOptionString saveDirOption("Game.Save", "Directory", "Directory containing saved games",
-                                 "./saves");
-ConfigOptionBool packSaveOption("Game.Save", "Pack", "Pack saved games into a zip", true);
-
-SaveManager::SaveManager() : saveDirectory(saveDirOption.get()) {}
+SaveManager::SaveManager() : saveDirectory(Options::saveDirOption.get()) {}
 
 UString SaveManager::createSavePath(const UString &name) const
 {
@@ -224,7 +221,7 @@ bool SaveManager::overrideGame(const SaveMetadata &metadata, const UString &newN
 
 bool SaveManager::saveGame(const SaveMetadata &metadata, const sp<GameState> gameState) const
 {
-	bool pack = packSaveOption.get();
+	bool pack = Options::packSaveOption.get();
 	const UString path = metadata.getFile();
 	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
@@ -261,7 +258,7 @@ bool SaveManager::specialSaveGame(SaveType type, const sp<GameState> gameState) 
 
 std::vector<SaveMetadata> SaveManager::getSaveList() const
 {
-	auto dirString = saveDirOption.get();
+	auto dirString = Options::saveDirOption.get();
 	fs::path saveDirectory = dirString.str();
 	std::vector<SaveMetadata> saveList;
 	try

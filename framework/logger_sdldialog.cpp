@@ -1,6 +1,7 @@
 #include "framework/logger_sdldialog.h"
 #include "framework/configfile.h"
 #include "framework/logger.h"
+#include "framework/options.h"
 
 #include <SDL_messagebox.h>
 #include <atomic>
@@ -10,10 +11,6 @@ namespace OpenApoc
 
 namespace
 {
-
-ConfigOptionInt dialogLogLevelOption(
-    "Logger", "dialogLevel",
-    "Loglevel to pop up a dialog(0 = nothing, 1 = error, 2 = warning, 3 = info, 4 = debug) ", 1);
 
 LogFunction previousFunction; // To allow chaining log functions
 
@@ -42,7 +39,7 @@ void enableSDLDialogLogger(SDL_Window *win)
 		return;
 	}
 	parentWindow = win;
-	dialogLogLevel = (LogLevel)dialogLogLevelOption.get();
+	dialogLogLevel = (LogLevel)Options::dialogLogLevelOption.get();
 	previousFunction = getLogCallback();
 	setLogCallback(SDLDialogLogFunction);
 }

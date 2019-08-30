@@ -1,6 +1,6 @@
 #include "framework/logger_file.h"
-#include "framework/configfile.h"
 #include "framework/logger.h"
+#include "framework/options.h"
 
 #include <fstream>
 
@@ -9,15 +9,6 @@ namespace OpenApoc
 
 namespace
 {
-
-ConfigOptionInt fileLogLevelOption(
-    "Logger", "FileLevel",
-    "Loglevel to output to file (0 = nothing, 1 = error, 2 = warning, 3 = info, 4 = debug)", 3);
-
-ConfigOptionInt backtraceLogLevelOption("Logger", "BacktraceLevel",
-                                        "Loglevel to print a backtrace to file log (0 = nothing, 1 "
-                                        "= error, 2 = warning, 3 = info, 4 = debug)",
-                                        1);
 
 LogFunction previousFunction; // To allow chaining log functions
 
@@ -73,8 +64,8 @@ void enableFileLogger(const char *outputFile)
 	{
 		LogError("File logger failed to open file \"%s\"", outputFile);
 	}
-	fileLogLevel = (LogLevel)fileLogLevelOption.get();
-	backtraceLogLevel = (LogLevel)backtraceLogLevelOption.get();
+	fileLogLevel = (LogLevel)Options::fileLogLevelOption.get();
+	backtraceLogLevel = (LogLevel)Options::backtraceLogLevelOption.get();
 	previousFunction = getLogCallback();
 	setLogCallback(FileLogFunction);
 }

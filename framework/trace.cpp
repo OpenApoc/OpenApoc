@@ -1,5 +1,6 @@
 #include "framework/trace.h"
 #include "framework/configfile.h"
+#include "framework/options.h"
 #include <chrono>
 #include <fstream>
 #include <list>
@@ -15,10 +16,6 @@ namespace
 
 using OpenApoc::UString;
 
-OpenApoc::ConfigOptionBool enableTrace("Trace", "enable", "Enable json call/time tracking");
-OpenApoc::ConfigOptionString traceFile("Trace", "outputFile", "File to output trace json to",
-                                       "openapoc.trace");
-
 const unsigned int TRACE_CHUNK_SIZE = 100000;
 
 std::mutex initTraceLock;
@@ -31,7 +28,7 @@ static void initTrace()
 	if (traceInited)
 		return;
 	traceInited = true;
-	if (enableTrace.get())
+	if (OpenApoc::Options::enableTrace.get())
 		OpenApoc::Trace::enable();
 }
 
@@ -103,11 +100,11 @@ class TraceManager
 	}
 	~TraceManager();
 	std::ofstream outFile;
-	TraceManager() : outFile(traceFile.get().str())
+	TraceManager() : outFile(OpenApoc::Options::traceFile.get().str())
 	{
 		if (!outFile)
 		{
-			LogError("Failed to open trace file \"%s\"", traceFile.get());
+			LogError("Failed to open trace file \"%s\"", OpenApoc::Options::traceFile.get());
 			return;
 		}
 	}
