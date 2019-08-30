@@ -265,6 +265,8 @@ Framework::Framework(const UString programName, bool createWindow)
 
 	enableFileLogger(logPath.cStr());
 
+	Options::dumpOptionsToLog();
+
 	// This is always set, the default being an empty string (which correctly chooses 'system
 	// language')
 	UString desiredLanguageName;

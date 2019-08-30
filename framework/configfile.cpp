@@ -191,8 +191,6 @@ class ConfigFileImpl
 			return true;
 		}
 
-		Options::dumpOptionsToLog();
-
 		return false;
 	}
 
