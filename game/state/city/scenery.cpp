@@ -1504,6 +1504,10 @@ void Scenery::updateFalling(GameState &state, unsigned int ticks)
 	if (floorf(newPosition.z) != floorf(currentPosition.z))
 	{
 		// Leaving tile: collide with everything left
+		// NOTE: Vehicle::applyDamage() may destroy a vehicle, removing it from the map invalidating
+		// the ownedObjects iterator, so keep a reference to all hit vehicles and process them
+		// outside the ownedObjects iterator loop
+		std::set<sp<Vehicle>> hitVehicles;
 		for (auto &obj : tileObject->getOwningTile()->ownedObjects)
 		{
 			switch (obj->getType())
@@ -1527,17 +1531,21 @@ void Scenery::updateFalling(GameState &state, unsigned int ticks)
 				case TileObject::Type::Vehicle:
 				{
 					auto v = std::static_pointer_cast<TileObjectVehicle>(obj)->getVehicle();
-					v->applyDamage(state,
-					               (v->falling || v->crashed || v->sliding)
-					                   ? FV_COLLISION_DAMAGE_LIMIT
-					                   : SC_COLLISION_DAMAGE,
-					               0);
+					hitVehicles.insert(v);
+
 					break;
 				}
 				default:
 					// Ignore other object types?
 					break;
 			}
+		}
+		for (auto &v : hitVehicles)
+		{
+			v->applyDamage(state,
+			               (v->falling || v->crashed || v->sliding) ? FV_COLLISION_DAMAGE_LIMIT
+			                                                        : SC_COLLISION_DAMAGE,
+			               0);
 		}
 		// New tile: If not destroyed yet collide with everything high enough
 		if (!destroyed)
