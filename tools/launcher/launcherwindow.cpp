@@ -172,11 +172,10 @@ void LauncherWindow::play()
 	saveConfig();
 	this->currentFramework.reset();
 
-	auto path = QCoreApplication::applicationDirPath();
 #ifdef _WIN32
-	path += "/OpenApoc.exe";
+	QString path = "OpenApoc.exe";
 #else
-	path += "/OpenApoc";
+	QString path = QCoreApplication::applicationDirPath() + "/OpenApoc";
 #endif
 
 	LogWarning("Running \"%s\"", path.toStdString());
