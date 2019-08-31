@@ -103,7 +103,7 @@ if (WIN32)
 	set(sources ${sources} "apocicon.rc")
 endif()
 
-ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} WIN32 game/main.cpp ${sources}
+ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} game/main.cpp ${sources}
 		${FRAMEWORK_SOURCES})
 
 target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Library)
