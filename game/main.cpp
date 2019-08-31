@@ -1,3 +1,6 @@
+#define SDL_MAIN_HANDLED
+
+
 #include "forms/ui.h"
 #include "framework/configfile.h"
 #include "framework/framework.h"
