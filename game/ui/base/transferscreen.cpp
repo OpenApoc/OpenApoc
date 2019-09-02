@@ -503,8 +503,11 @@ void TransferScreen::executeOrders()
 					case TransactionControl::Type::Physicist:
 					{
 						StateRef<Agent> agent{state.get(), c->itemId};
-						StateRef<Lab> lab{state.get(), agent->lab_assigned};
-						agent->lab_assigned->removeAgent(lab, agent);
+						if (agent->lab_assigned)
+						{
+							StateRef<Lab> lab{state.get(), agent->lab_assigned};
+							agent->lab_assigned->removeAgent(lab, agent);
+						}
 						agent->transfer(*state, newBase->building);
 						break;
 					}
