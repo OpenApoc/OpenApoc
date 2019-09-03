@@ -79,7 +79,7 @@ void AEquipmentSheet::displayImplementation(sp<AEquipment> item, const AEquipmen
 			else if (itemType.ammo_types.size() ==
 			         1) // weapon without ammo but a single ammo type like lawpistol
 			{
-				displayAmmo(item, *itemType.ammo_types.front());
+				displayAmmo(item, **itemType.ammo_types.begin());
 			}
 			else
 			{
@@ -142,7 +142,7 @@ void AEquipmentSheet::displayWeapon(sp<AEquipment> item [[maybe_unused]],
 		return;
 	}
 
-	auto &ammoType = itemType.ammo_types.front();
+	auto &ammoType = *itemType.ammo_types.begin();
 	form->findControlTyped<Label>("LABEL_2_L")->setText(tr("Accuracy"));
 	form->findControlTyped<Label>("LABEL_2_R")->setText(format("%d", ammoType->accuracy));
 
