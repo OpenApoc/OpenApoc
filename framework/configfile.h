@@ -50,7 +50,7 @@ class ConfigFile
 	void addPositionalArgument(const UString name, const UString description);
 
 	// returns 'true' if the program should exit (invalid option/'--help' specified)
-	bool parseOptions(int argc, char *argv[]);
+	bool parseOptions(int argc, const char *const argv[]);
 
 	// Prints out the help to stdout, used if the running program has decided some argument is
 	// invalid
@@ -85,6 +85,7 @@ class ConfigOptionString : public ConfigOption
 	ConfigOptionString(const UString section, const UString name, const UString description,
 	                   const UString defaultValue = "");
 	UString get() const;
+	void set(const UString &newValue);
 };
 
 class ConfigOptionInt : public ConfigOption
@@ -96,6 +97,7 @@ class ConfigOptionInt : public ConfigOption
 	ConfigOptionInt(const UString section, const UString name, const UString description,
 	                const int defaultValue = 0);
 	int get() const;
+	void set(int newValue);
 };
 
 class ConfigOptionBool : public ConfigOption
@@ -107,6 +109,7 @@ class ConfigOptionBool : public ConfigOption
 	ConfigOptionBool(const UString section, const UString name, const UString description,
 	                 const bool defaultValue = false);
 	bool get() const;
+	void set(bool newValue);
 };
 
 class ConfigOptionFloat : public ConfigOption
