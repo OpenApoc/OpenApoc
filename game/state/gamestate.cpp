@@ -2,6 +2,8 @@
 #include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/framework.h"
+#include "framework/modinfo.h"
+#include "framework/options.h"
 #include "framework/sound.h"
 #include "framework/trace.h"
 #include "game/state/battle/battle.h"
@@ -1340,6 +1342,33 @@ int GameScore::getTotal()
 {
 	return tacticalMissions + researchCompleted + alienIncidents + craftShotDownUFO +
 	       craftShotDownXCom + incursions + cityDamage;
+}
+
+void GameState::loadMods()
+{
+	auto mods = Options::modList.get().split(":");
+	for (const auto &modString : mods)
+	{
+		LogWarning("loading mod \"%s\"", modString);
+		auto modPath = Options::modPath.get() + "/" + modString;
+		auto modInfo = ModInfo::getInfo(modPath);
+		if (!modInfo)
+		{
+			LogError("Failed to load ModInfo for mod \"%s\"", modString);
+			continue;
+		}
+		LogWarning("Loaded modinfo for mod ID \"%s\"", modInfo->getID());
+		if (modInfo->getStatePath() != "")
+		{
+			auto modStatePath = modPath + "/" + modInfo->getStatePath();
+			LogWarning("Loading mod gamestate \"%s\"", modStatePath);
+
+			if (!this->loadGame(modStatePath))
+			{
+				LogError("Failed to load mod ID \"%s\"", modInfo->getID());
+			}
+		}
+	}
 }
 
 }; // namespace OpenApoc

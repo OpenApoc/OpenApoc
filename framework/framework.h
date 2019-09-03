@@ -1,5 +1,6 @@
 #pragma once
 
+#include "framework/modinfo.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
@@ -115,6 +116,8 @@ class Framework
 
 	UString getDataDir() const;
 	UString getCDPath() const;
+
+	void setupModDataPaths();
 };
 
 static inline Framework &fw() { return Framework::getInstance(); }

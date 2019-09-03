@@ -4,7 +4,9 @@
 #include "game/ui/boot.h"
 #include "forms/ui.h"
 #include "framework/configfile.h"
+#include "framework/data.h"
 #include "framework/framework.h"
+#include "framework/modinfo.h"
 #include "framework/options.h"
 #include "game/state/gamestate.h"
 #include "game/ui/general/loadingscreen.h"
@@ -34,6 +36,8 @@ void BootUp::update()
 	sp<GameState> loadedState;
 	std::shared_future<void> loadTask;
 	bool loadGame = false;
+
+	fw().setupModDataPaths();
 
 	if (Options::loadGameOption.get().empty())
 	{
@@ -89,5 +93,4 @@ void BootUp::update()
 void BootUp::render() {}
 
 bool BootUp::isTransition() { return false; }
-
-}; // namespace OpenApoc
+} // namespace OpenApoc
