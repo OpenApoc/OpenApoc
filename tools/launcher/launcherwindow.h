@@ -1,3 +1,4 @@
+#include "library/strings.h"
 #include <QMainWindow>
 #include <map>
 #include <memory>
@@ -11,6 +12,7 @@ class LauncherWindow;
 namespace OpenApoc
 {
 class Framework;
+class ModInfo;
 } // namespace OpenApoc
 
 class LauncherWindow : public QMainWindow
@@ -30,10 +32,20 @@ class LauncherWindow : public QMainWindow
 	void browseCDDir();
 	void browseDataDir();
 
+	void enabledModSelected(const QString &modName);
+	void disabledModSelected(const QString &modName);
+	void enableModClicked();
+	void disableModClicked();
+
   private:
 	void setupResolutionDisplay();
 	void saveConfig();
+	void setupModList();
+	void showModInfo(const OpenApoc::ModInfo &info);
+	void rebuildModList();
 
 	std::unique_ptr<OpenApoc::Framework> currentFramework;
 	std::unique_ptr<Ui::LauncherWindow> ui;
+
+	OpenApoc::UString selectedModName;
 };

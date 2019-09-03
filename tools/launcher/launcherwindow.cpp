@@ -9,11 +9,41 @@
 #include "ui_launcherwindow.h"
 
 #include "framework/configfile.h"
+#include "framework/filesystem.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
+#include "framework/modinfo.h"
 #include "framework/options.h"
 
 using namespace OpenApoc;
+
+static std::list<std::pair<UString, ModInfo>> enumerateMods()
+{
+	fs::path modPath = Options::modPath.get().str();
+	if (!fs::is_directory(modPath))
+	{
+		LogError("Mod path \"%s\" not a valid directory", modPath.string());
+		return {};
+	}
+
+	std::list<std::pair<UString, ModInfo>> foundMods;
+
+	for (const auto &dentry : fs::directory_iterator(modPath))
+	{
+		// Skip any non-directories
+		if (!fs::is_directory(dentry))
+			continue;
+		auto path = dentry.path();
+		auto modInfo = ModInfo::getInfo(path.string());
+		// Skip anything without a valid modinfo.xml
+		if (!modInfo)
+			continue;
+		// Otherwise store the directory/modinfo pair
+		foundMods.push_back({fs::relative(path, modPath).string(), *modInfo});
+	}
+
+	return foundMods;
+}
 
 constexpr std::array<QSize, 4> default_resolutions = {
 
@@ -40,6 +70,13 @@ LauncherWindow::LauncherWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui
 	connect(ui->resolutionBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this,
 	        &LauncherWindow::setResolutionSelection);
 
+	connect(ui->enabledModsList, &QListWidget::currentTextChanged, this,
+	        &LauncherWindow::enabledModSelected);
+	connect(ui->disabledModsList, &QListWidget::currentTextChanged, this,
+	        &LauncherWindow::disabledModSelected);
+	connect(ui->enableButton, &QPushButton::clicked, this, &LauncherWindow::enableModClicked);
+	connect(ui->disableButton, &QPushButton::clicked, this, &LauncherWindow::disableModClicked);
+
 	ui->customResolutionX->setValidator(
 	    new QIntValidator(MINIMUM_RESOLUTION.width(), MAXIMUM_RESOLUTION.width(), this));
 	ui->customResolutionY->setValidator(
@@ -52,6 +89,8 @@ LauncherWindow::LauncherWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui
 
 	ui->cdPath->setText(QString::fromStdString(OpenApoc::Options::cdPathOption.get().str()));
 	ui->dataPath->setText(QString::fromStdString(OpenApoc::Options::dataPathOption.get().str()));
+
+	setupModList();
 }
 
 LauncherWindow::~LauncherWindow() {}
@@ -165,6 +204,7 @@ void LauncherWindow::saveConfig()
 	OpenApoc::Options::cdPathOption.set(ui->cdPath->text().toStdString());
 	OpenApoc::Options::dataPathOption.set(ui->dataPath->text().toStdString());
 	OpenApoc::config().save();
+	this->rebuildModList();
 }
 
 void LauncherWindow::play()
@@ -228,6 +268,181 @@ void LauncherWindow::browseDataDir()
 
 void LauncherWindow::exit()
 {
+	this->saveConfig();
 	this->currentFramework.reset();
 	QCoreApplication::quit();
+}
+
+void LauncherWindow::setupModList()
+{
+	auto foundMods = enumerateMods();
+	auto enabledMods = Options::modList.get().split(':');
+
+	ui->enabledModsList->clear();
+	ui->disabledModsList->clear();
+
+	// First set enabled mods in order
+
+	for (const auto &enabledModName : enabledMods)
+	{
+		for (const auto &[modDir, modInfo] : foundMods)
+		{
+			if (modDir == enabledModName)
+			{
+				const auto &modName = modInfo.getName();
+				ui->enabledModsList->addItem(QString::fromStdString(modName.str()));
+			}
+		}
+	}
+
+	// Then fill the disabled modlist with anything else
+
+	for (const auto &[modDir, modInfo] : foundMods)
+	{
+		bool enabled = false;
+		// Is this enabled?
+		for (const auto &enabledModName : enabledMods)
+		{
+			if (modDir == enabledModName)
+			{
+				enabled = true;
+				break;
+			}
+		}
+		const auto &modName = modInfo.getName();
+		if (!enabled)
+			ui->disabledModsList->addItem(QString::fromStdString(modName.str()));
+	}
+}
+
+void LauncherWindow::enabledModSelected(const QString &itemName)
+{
+	UString modName = itemName.toStdString();
+	const auto foundMods = enumerateMods();
+	for (const auto &mod : foundMods)
+	{
+		const auto &modInfo = mod.second;
+		if (modInfo.getName() == modName)
+		{
+			this->showModInfo(modInfo);
+			this->selectedModName = modName;
+			return;
+		}
+	}
+}
+
+void LauncherWindow::disabledModSelected(const QString &itemName)
+{
+	UString modName = itemName.toStdString();
+	const auto foundMods = enumerateMods();
+	for (const auto &mod : foundMods)
+	{
+		const auto &modInfo = mod.second;
+		if (modInfo.getName() == modName)
+		{
+			this->showModInfo(modInfo);
+			this->selectedModName = modName;
+			return;
+		}
+	}
+}
+
+void LauncherWindow::showModInfo(const ModInfo &info)
+{
+	ui->modName->setText(QString::fromStdString(info.getName().str()));
+	ui->modAuthor->setText(QString::fromStdString(info.getAuthor().str()));
+	ui->modVersion->setText(QString::fromStdString(info.getVersion().str()));
+	ui->modDescription->setText(QString::fromStdString(info.getDescription().str()));
+
+	auto linkText = format("<a href=\"%s\">%s</a>", info.getLink(), info.getLink());
+
+	ui->modLink->setText(QString::fromStdString(linkText.str()));
+}
+
+void LauncherWindow::rebuildModList()
+{
+
+	const auto foundMods = enumerateMods();
+
+	std::list<UString> enabledMods;
+
+	for (int i = 0; i < ui->enabledModsList->count(); i++)
+	{
+		auto listItem = ui->enabledModsList->item(i);
+		LogAssert(listItem != nullptr);
+		auto name = listItem->text().toStdString();
+
+		for (const auto &[modDir, modInfo] : foundMods)
+		{
+			if (modInfo.getName() == name)
+			{
+				enabledMods.push_back(modDir);
+				break;
+			}
+		}
+	}
+
+	UString modString;
+	for (const auto &modDir : enabledMods)
+	{
+		if (modString != "")
+			modString += ":";
+		modString += modDir;
+	}
+
+	Options::modList.set(modString);
+}
+
+void LauncherWindow::enableModClicked()
+{
+	if (selectedModName == "")
+		return;
+
+	for (const auto &matchingItem : ui->enabledModsList->findItems(
+	         QString::fromStdString(selectedModName.str()), Qt::MatchExactly))
+	{
+		auto matchingName = matchingItem->text();
+		// Already enabled
+		if (matchingName.toStdString() == selectedModName.str())
+		{
+			return;
+		}
+	}
+
+	ui->enabledModsList->addItem(QString::fromStdString(selectedModName.str()));
+
+	for (const auto &matchingItem : ui->disabledModsList->findItems(
+	         QString::fromStdString(selectedModName.str()), Qt::MatchExactly))
+	{
+		delete matchingItem;
+	}
+
+	this->rebuildModList();
+}
+
+void LauncherWindow::disableModClicked()
+{
+	if (selectedModName == "")
+		return;
+
+	for (const auto &matchingItem : ui->disabledModsList->findItems(
+	         QString::fromStdString(selectedModName.str()), Qt::MatchExactly))
+	{
+		auto matchingName = matchingItem->text();
+		// Already disabled
+		if (matchingName.toStdString() == selectedModName.str())
+		{
+			return;
+		}
+	}
+
+	ui->disabledModsList->addItem(QString::fromStdString(selectedModName.str()));
+
+	for (const auto &matchingItem : ui->enabledModsList->findItems(
+	         QString::fromStdString(selectedModName.str()), Qt::MatchExactly))
+	{
+		delete matchingItem;
+	}
+
+	this->rebuildModList();
 }
