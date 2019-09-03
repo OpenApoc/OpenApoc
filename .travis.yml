@@ -1,6 +1,6 @@
 language: cpp
 sudo: required
-dist: xenial
+dist: bionic
 
 cache: ccache
 
@@ -11,32 +11,12 @@ cache: ccache
 matrix:
   include:
     - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-9
       env:
         - MATRIX_ENV="PASS=build CXX='g++-9' CC='gcc-9' BUILD_TYPE=Quick"
     - os: linux
-      addons:
-        apt:
-          sources:
-            - llvm-toolchain-xenial-8
-            - ubuntu-toolchain-r-test
-          packages:
-            - clang-8
-            - g++-9
       env:
         - MATRIX_ENV="PASS=build CXX='clang++-8' CC='clang-8' BUILD_TYPE=sanitize"
     - os: linux
-      addons:
-        apt:
-          sources:
-            - llvm-toolchain-xenial-8
-          packages:
-            - clang-format-8
       env:
         - MATRIX_ENV="PASS=lint CLANG_FORMAT=clang-format-8"
 
@@ -46,6 +26,11 @@ matrix:
 #  - linux static analysis (clang-tidy?)
 
 before_install:
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+  - sudo add-apt-repository 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-8 main' -y
+  - sudo apt-get update -q
+  - sudo apt-get install g++-9 clang-8 clang-format-8 -y
   - eval "${MATRIX_ENV}"
   - env
   - if [ "$TRAVIS_OS_NAME" = "linux" -a "$PASS" = "build" ]; then ./tools/travis-scripts/build_prepare_linux.sh; fi
