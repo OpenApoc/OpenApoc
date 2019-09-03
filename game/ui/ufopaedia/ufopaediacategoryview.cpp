@@ -460,7 +460,7 @@ void UfopaediaCategoryView::setFormStats()
 					else if (ref->type == AEquipmentType::Type::Weapon &&
 					         ref->ammo_types.size() == 1)
 					{
-						auto ammoType = ref->ammo_types.front();
+						const auto &ammoType = *ref->ammo_types.begin();
 						statsLabels[row]->setText(tr("Power"));
 						statsValues[row++]->setText(Strings::fromInteger(ammoType->damage));
 						statsLabels[row]->setText(tr("Damage Type"));
