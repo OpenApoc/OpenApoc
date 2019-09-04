@@ -114,7 +114,8 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 		     }
 		     else
 		     {
-			     if (!imagePack->saveImagePack(BattleUnitImagePack::getImagePackPath() + "/" +
+			     if (!imagePack->saveImagePack(fw().getDataDir() +
+			                                       BattleUnitImagePack::getImagePackPath() + "/" +
 			                                       imagePackStrings.first,
 			                                   true))
 			     {
@@ -139,7 +140,9 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 		     else
 		     {
 			     if (!imagePack->saveImagePack(
-			             format("%s%s%d", BattleUnitImagePack::getImagePackPath(), "/item", i),
+			             format("%s%s%d",
+			                    fw().getDataDir() + BattleUnitImagePack::getImagePackPath(),
+			                    "/item", i),
 			             true))
 			     {
 				     LogError("Failed to save  item image pack \"%d\"", i);
@@ -161,7 +164,8 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 		     }
 		     else
 		     {
-			     if (!imagePack->saveImagePack(BattleUnitImagePack::getImagePackPath() + "/" +
+			     if (!imagePack->saveImagePack(fw().getDataDir() +
+			                                       BattleUnitImagePack::getImagePackPath() + "/" +
 			                                       imagePackStrings.first,
 			                                   true))
 			     {
