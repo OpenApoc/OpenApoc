@@ -246,11 +246,13 @@ bool XMLSerializationArchive::write(const UString &path, bool pack, bool pretty)
 		TraceObj traceSave("Saving root", {{"root", root.first}});
 		std::stringstream ss;
 		unsigned int flags = pugi::format_default;
+		const char *indent = "  ";
 		if (pretty == false)
 		{
 			flags = pugi::format_raw;
+			indent = "";
 		}
-		root.second.save(ss, "", flags);
+		root.second.save(ss, indent, flags);
 		TraceObj traceSaveData("Saving root data", {{"root", root.first}});
 		if (!dataProvider->saveDocument(root.first, ss.str()))
 		{
