@@ -215,32 +215,34 @@ endif()
 # serialization
 
 set(BOOST_PACKAGES locale system program_options)
+# Arbitrary version that I remember testing previously
+set(BOOST_VERSION 1.50)
 
-set(USE_EXPERIMENTAL_FILESYSTEM FALSE)
+set(USE_STD_FILESYSTEM FALSE)
 
 if(CMAKE_COMPILER_IS_GNUCC)
-	if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.3 OR
-					CMAKE_CXX_COMPILER_VERSION VERSION_EQUAL 5.3)
-		set(USE_EXPERIMENTAL_FILESYSTEM TRUE)
-		target_link_libraries(OpenApoc_Framework PUBLIC stdc++fs)
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 8.0)
+			set(USE_STD_FILESYSTEM TRUE)
 	endif()
 endif()
 if(MSVC)
-	if (MSVC_VERSION GREATER_EQUAL 1900)
-		set(USE_EXPERIMENTAL_FILESYSTEM TRUE)
+	if (MSVC_VERSION GREATER_EQUAL 1910)
+		set(USE_STD_FILESYSTEM TRUE)
 	endif()
 endif()
 
-if (USE_EXPERIMENTAL_FILESYSTEM)
-	message(STATUS "Using <experimental/filesystem>")
-	target_compile_definitions(OpenApoc_Framework PUBLIC "-DUSE_EXPERIMENTAL_FILESYSTEM")
+if(USE_STD_FILESYSTEM)
+    message(STATUS "Using <filesystem>")
+	target_compile_definitions(OpenApoc_Framework PUBLIC "-DUSE_STD_FILESYSTEM")
 else()
 	message(STATUS "Using <boost/filesystem>")
 	set(BOOST_PACKAGES ${BOOST_PACKAGES} filesystem)
+	# filesystem::relative() didn't exist until 1.60 from what I can see in the docs
+	set(BOOST_VERSION 1.60)
 	target_compile_definitions(OpenApoc_Framework PUBLIC "-DUSE_BOOST_FILESYSTEM")
 endif()
 
-find_package(Boost REQUIRED COMPONENTS ${BOOST_PACKAGES})
+find_package(Boost ${BOOST_VERSION} REQUIRED COMPONENTS ${BOOST_PACKAGES})
 target_link_libraries(OpenApoc_Framework PUBLIC ${Boost_LIBRARIES})
 target_include_directories(OpenApoc_Framework PUBLIC ${Boost_INCLUDE_DIRS})
 
