@@ -8,6 +8,13 @@
       "projectTarget": "OpenApoc.exe (bin\\OpenApoc.exe)",
       "name": "OpenApoc.exe (bin\\OpenApoc.exe)",
       "currentDir": "${workspaceRoot}"
+    },
+    {
+      "type": "default",
+      "project": "CMakeLists.txt",
+      "projectTarget": "OpenApoc_Launcher.exe (bin\\OpenApoc_Launcher.exe)",
+      "name": "OpenApoc_Launcher.exe (bin\\OpenApoc_Launcher.exe)",
+      "currentDir": "${workspaceRoot}"
     }
   ]
 }
