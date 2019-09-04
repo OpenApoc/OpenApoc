@@ -618,11 +618,19 @@ bool BattleUnitImagePack::saveImagePack(const UString &path, bool pack, bool pre
 bool BattleUnitImagePack::loadImagePack(GameState &state, const UString &path)
 {
 
-	TRACE_FN_ARGS1("path", path);
-	auto archive = SerializationArchive::readArchive(path);
+	auto file = fw().data->fs.open(path);
+	if (!file)
+	{
+		LogError("Failed to open image pack \"%s\"", path);
+		return false;
+	}
+	auto fullPath = file.systemPath();
+
+	TRACE_FN_ARGS1("path", fullPath);
+	auto archive = SerializationArchive::readArchive(fullPath);
 	if (!archive)
 	{
-		LogError("Failed to read \"%s\"", path);
+		LogError("Failed to read \"%s\"", fullPath);
 		return false;
 	}
 
