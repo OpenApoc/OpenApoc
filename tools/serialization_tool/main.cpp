@@ -81,16 +81,17 @@ int main(int argc, char **argv)
 	}
 
 	auto referenceState = OpenApoc::mksp<OpenApoc::GameState>();
-	if (!parentGamestate.empty())
+	auto deltaPath = deltaGamestate.get();
+	if (!deltaPath.empty())
 	{
-		if (!referenceState->loadGame(parentGamestate))
+		if (!referenceState->loadGame(deltaPath))
 		{
-			LogError("Failed to load parent gamestate \"%s\"", parentGamestate);
+			LogError("Failed to load delta gamestate \"%s\"", parentGamestate);
 			return EXIT_FAILURE;
 		}
 	}
 
-	if (!state->saveGame(outputPath, pack, pretty))
+	if (!state->saveGameDelta(outputPath, *referenceState, pack, pretty))
 	{
 		LogError("Failed to write output gamestate to \"%s\"", outputPath);
 		return EXIT_FAILURE;
