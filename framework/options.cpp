@@ -169,6 +169,7 @@ void dumpOptionsToLog()
 	dumpOption(loadGameOption);
 
 	dumpOption(modList);
+	dumpOption(modPath);
 
 	dumpOption(asyncLoading);
 }
@@ -468,8 +469,9 @@ ConfigOptionBool skipIntroOption("Game", "SkipIntro", "Skip intro video", false)
 ConfigOptionString loadGameOption("Game", "Load", "Path to save game to load at startup", "");
 
 ConfigOptionString modList("Game", "Mods",
-                           "A colon-separated list of mods to load (relative to data directory)",
-                           "");
+                           "A colon-separated list of mods to load (relative to mod directory)",
+                           "base");
+ConfigOptionString modPath("Game", "ModPath", "Directory containing mods", "./data/mods");
 ConfigOptionBool asyncLoading("Game", "ASyncLoading",
                               "Load in background while displaying animated loading screen", true);
 

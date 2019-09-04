@@ -107,7 +107,7 @@ endfunction(add_extractor)
 
 SET(EXTRACTOR_TARGET_LIST "")
 
-add_extractor(EXTRACTOR_TARGET_LIST "all" "data/gamestate_common")
+add_extractor(EXTRACTOR_TARGET_LIST "all" "data/mods/base/base_gamestate")
 
 option(EXTRACT_DATA "Run the data extractor as part of the default target" ON)
 

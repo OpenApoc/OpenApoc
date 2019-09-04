@@ -1138,4 +1138,27 @@ void Framework::threadPoolTaskEnqueue(std::function<void()> task) { p->threadPoo
 
 void *Framework::getWindowHandle() const { return static_cast<void *>(p->window); }
 
+void Framework::setupModDataPaths()
+{
+	auto mods = Options::modList.get().split(":");
+	for (const auto &modString : mods)
+	{
+		LogWarning("loading mod \"%s\"", modString);
+		auto modPath = Options::modPath.get() + "/" + modString;
+		auto modInfo = ModInfo::getInfo(modPath);
+		if (!modInfo)
+		{
+			LogError("Failed to load ModInfo for mod \"%s\"", modString);
+			continue;
+		}
+		auto modDataPath = modPath + "/" + modInfo->getDataPath();
+		LogWarning("Loaded modinfo for mod ID \"%s\"", modInfo->getID());
+		if (modInfo->getDataPath() != "")
+		{
+			LogWarning("Appending data path \"%s\"", modDataPath);
+			this->data->fs.addPath(modDataPath);
+		}
+	}
+}
+
 }; // namespace OpenApoc

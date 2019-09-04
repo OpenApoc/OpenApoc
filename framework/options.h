@@ -147,6 +147,7 @@ extern ConfigOptionBool skipIntroOption;
 extern ConfigOptionString loadGameOption;
 
 extern ConfigOptionString modList;
+extern ConfigOptionString modPath;
 
 extern ConfigOptionBool asyncLoading;
 

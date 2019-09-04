@@ -30,7 +30,8 @@ set (FRAMEWORK_SOURCE_FILES
 	video/smk.cpp
 	logger_sdldialog.cpp
 	logger_file.cpp
-	options.cpp)
+	options.cpp
+	modinfo.cpp)
 
 source_group(framework\\sources FILES ${FRAMEWORK_SOURCE_FILES})
 list(APPEND ALL_SOURCE_FILES ${FRAMEWORK_SOURCE_FILES})
@@ -67,7 +68,8 @@ set (FRAMEWORK_HEADER_FILES
 	video.h
 	logger_sdldialog.h
 	logger_file.h
-	options.h)
+	options.h
+	modinfo.h)
 
 source_group(framework\\headers FILES ${FRAMEWORK_HEADER_FILES})
 list(APPEND ALL_HEADER_FILES ${FRAMEWORK_HEADER_FILES})

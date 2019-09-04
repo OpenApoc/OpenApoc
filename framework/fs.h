@@ -43,6 +43,7 @@ class FileSystem
   public:
 	FileSystem(std::vector<UString> paths);
 	~FileSystem();
+	bool addPath(const UString &newPath);
 	IFile open(const UString &path);
 	UString getCorrectCaseFilename(const UString &path);
 	std::list<UString> enumerateDirectory(const UString &path, const UString &extension) const;

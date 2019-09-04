@@ -249,6 +249,10 @@ class GameState : public std::enable_shared_from_this<GameState>
 	bool skipTurboCalculations = false;
 
 	LuaGameState luaGameState;
+
+	// Loads all mods set in the options - note this likely requires the mod data directories to
+	// already be added to the filesystem
+	void loadMods();
 };
 
 }; // namespace OpenApoc

@@ -22,8 +22,8 @@ target_link_libraries(${TEST} OpenApoc_Library OpenApoc_Framework
 		OpenApoc_GameState)
 target_compile_definitions(${TEST} PRIVATE -DUNIT_TEST)
 add_test(NAME ${TEST}_difficulty1 COMMAND ${TEST}
-		${CMAKE_SOURCE_DIR}/data/difficulty1_patched
-		${CMAKE_SOURCE_DIR}/data/gamestate_common
+		${CMAKE_SOURCE_DIR}/data/mods/base/difficulty1_patched
+		${CMAKE_SOURCE_DIR}/data/mods/base/base_gamestate
 		--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)
 
 # MSVC is bad at detecting utf8
