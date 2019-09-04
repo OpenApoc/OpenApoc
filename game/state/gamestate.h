@@ -178,9 +178,14 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// high level api for saving game
 	// WARNING! Does not save metadata
 	bool saveGame(const UString &path, bool pack = true, bool pretty = false);
+	bool saveGameDelta(const UString &path, const GameState &reference, bool pack = true,
+	                   bool pretty = false);
 
 	// serializes gamestate to archive
 	bool serialize(SerializationArchive *archive) const;
+	// Serializes gamestate to archive with a reference (IE values the same as the reference are not
+	// saved)
+	bool serialize(SerializationArchive *archive, const GameState &reference) const;
 
 	// deserializes gamestate from archive
 	bool deserialize(SerializationArchive *archive);
