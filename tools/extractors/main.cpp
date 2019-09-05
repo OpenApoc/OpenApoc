@@ -190,7 +190,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 		     else
 		     {
 			     if (!animationPack->saveAnimationPack(
-			             BattleUnitAnimationPack::getAnimationPackPath() + "/" +
+			             fw().getDataDir() + BattleUnitAnimationPack::getAnimationPackPath() + "/" +
 			                 animationPackStrings.first,
 			             true))
 			     {
