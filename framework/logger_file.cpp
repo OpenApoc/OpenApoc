@@ -19,6 +19,7 @@ std::ofstream logFile;
 void FileLogFunction(LogLevel level, UString prefix, const UString &text)
 {
 	previousFunction(level, prefix, text);
+	auto flush = false;
 	if (level <= fileLogLevel)
 	{
 		UString levelPrefix;
@@ -26,9 +27,11 @@ void FileLogFunction(LogLevel level, UString prefix, const UString &text)
 		{
 			case LogLevel::Error:
 				levelPrefix = "E";
+				flush = true;
 				break;
 			case LogLevel::Warning:
 				levelPrefix = "W";
+				flush = true;
 				break;
 			case LogLevel::Info:
 				levelPrefix = "I";
@@ -40,18 +43,21 @@ void FileLogFunction(LogLevel level, UString prefix, const UString &text)
 				levelPrefix = "U";
 				break;
 		}
-		auto message = OpenApoc::format("%s %s: %s", levelPrefix, prefix, text);
+		const auto message = OpenApoc::format("%s %s: %s", levelPrefix, prefix, text);
 		logFile << message << std::endl;
 	}
 
 	if (level <= backtraceLogLevel)
 	{
-		auto backtrace = getBacktrace();
+		const auto backtrace = getBacktrace();
 		for (const auto &frame : backtrace)
 		{
 			logFile << frame << std::endl;
 		}
+		flush = true;
 	}
+	if (flush)
+		logFile.flush();
 }
 
 } // namespace
