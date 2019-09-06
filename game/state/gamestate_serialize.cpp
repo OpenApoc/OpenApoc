@@ -681,12 +681,18 @@ bool BattleUnitAnimationPack::saveAnimationPack(const UString &path, bool pack, 
 
 bool BattleUnitAnimationPack::loadAnimationPack(GameState &state, const UString &path)
 {
+	auto file = fw().data->fs.open(path);
+	if (!file)
+	{
+		LogError("Failed to open animation pack \"%s\"", path);
+	}
+	const auto fullPath = file.systemPath();
 
-	TRACE_FN_ARGS1("path", path);
-	auto archive = SerializationArchive::readArchive(path);
+	TRACE_FN_ARGS1("path", fullPath);
+	auto archive = SerializationArchive::readArchive(fullPath);
 	if (!archive)
 	{
-		LogError("Failed to read \"%s\"", path);
+		LogError("Failed to read \"%s\"", fullPath);
 		return false;
 	}
 

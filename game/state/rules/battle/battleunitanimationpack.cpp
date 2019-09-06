@@ -7,10 +7,7 @@
 namespace OpenApoc
 {
 
-UString BattleUnitAnimationPack::getAnimationPackPath()
-{
-	return fw().getDataDir() + "/animationpacks";
-}
+UString BattleUnitAnimationPack::getAnimationPackPath() { return "/animationpacks"; }
 
 sp<BattleUnitAnimationPack> BattleUnitAnimationPack::get(const GameState &state, const UString &id)
 {
