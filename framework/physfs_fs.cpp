@@ -277,7 +277,7 @@ FileSystem::FileSystem(std::vector<UString> paths)
 
 FileSystem::~FileSystem() = default;
 
-IFile FileSystem::open(const UString &path)
+IFile FileSystem::open(const UString &path) const
 {
 	TRACE_FN_ARGS1("PATH", path);
 	IFile f;
