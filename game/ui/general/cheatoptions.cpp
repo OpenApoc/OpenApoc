@@ -182,6 +182,18 @@ void CheatOptions::eventOccurred(Event *e)
 			    menuform->findControlTyped<ScrollBar>("MODIFY_FUNDS")->getValue() * 1000;
 			menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 		}
+		else if (e->forms().RaisedBy->Name == "BUTTON_FAST_FORWARD_DAY")
+		{
+			state->gameTime.addTicks(TICKS_PER_DAY);
+			// state->gameTime.setDayPassed( true);
+			LogWarning("Scheduling end of day");
+		}
+		else if (e->forms().RaisedBy->Name == "BUTTON_FAST_FORWARD_WEEK")
+		{
+			state->gameTime.addTicks(TICKS_PER_DAY * 7);
+			//	state->gameTime.setWeekPassed( true);
+			LogWarning("Scheduling end of week");
+		}
 	}
 	if (e->type() == EVENT_FORM_INTERACTION &&
 	    e->forms().EventFlag == FormEventType::ScrollBarChange)
