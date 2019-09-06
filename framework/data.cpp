@@ -140,6 +140,7 @@ DataImpl::DataImpl(std::vector<UString> paths) : Data(paths)
 	}
 
 	registeredSampleLoaders["raw"].reset(getRAWSampleLoaderFactory());
+	registeredSampleLoaders["wav"].reset(getWAVSampleLoaderFactory());
 	for (auto &sampleBackend : registeredSampleLoaders)
 	{
 		auto t = sampleBackend.first;

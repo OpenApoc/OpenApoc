@@ -115,7 +115,8 @@ source_group(framework\\imageloader\\headers FILES
 list(APPEND ALL_HEADER_FILES ${IMAGELOADER_HEADER_FILES})
 
 set (SAMPLELOADER_SOURCE_FILES
-	sampleloader/rawsound.cpp)
+	sampleloader/rawsound.cpp
+	sampleloader/wavsound.cpp)
 
 source_group(framework\\sampleloader\\sources FILES
 		${SAMPLELOADER_SOURCE_FILES})
