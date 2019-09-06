@@ -44,8 +44,7 @@ class FileSystem
 	FileSystem(std::vector<UString> paths);
 	~FileSystem();
 	bool addPath(const UString &newPath);
-	IFile open(const UString &path);
-	UString getCorrectCaseFilename(const UString &path);
+	IFile open(const UString &path) const;
 	std::list<UString> enumerateDirectory(const UString &path, const UString &extension) const;
 	std::list<UString> enumerateDirectoryRecursive(const UString &path,
 	                                               const UString &extension) const;
