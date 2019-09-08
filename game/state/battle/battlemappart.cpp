@@ -536,7 +536,8 @@ bool BattleMapPart::findSupport(bool allowClinging)
 						auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
 						// Seems that "provide support" flag only matters for providing support
 						// upwards
-						if (mp != sft && mp->isAlive() && !mp->damaged &&
+						if (mp != sft && mp->isAlive() &&
+						    (!mp->damaged || mp->type->type == BattleMapPartType::Type::Ground) &&
 						    (mp->type->type != BattleMapPartType::Type::Ground || z == pos.z) &&
 						    (mp->type->provides_support || z >= pos.z))
 						{
