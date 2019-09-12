@@ -2339,6 +2339,10 @@ void BattleUnit::updateGiveWay(GameState &state)
 						// Try the new heading
 						Vec3<int> pos = {position.x + newHeading.x, position.y + newHeading.y,
 						                 position.z + z};
+
+						if (!tileObject->map.isTileInBounds(pos))
+							continue;
+
 						auto to = tileObject->map.getTile(pos);
 						// Check if heading on our level is acceptable
 						bool acceptable =
