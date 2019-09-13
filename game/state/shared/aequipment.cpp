@@ -708,7 +708,7 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 	{
 		fw().soundBackend->playSample(payload->fire_sfx, unit->position);
 	}
-	
+
 	number_of_shots = this->type->burst;
 	if (number_of_shots == 0)
 	{
@@ -737,7 +737,7 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 			return;
 		}
 		// Throw item (accuracy applied inside)
-		
+
 		for (number_of_shots; number_of_shots > 0; number_of_shots--)
 		{
 			item->throwItem(state, targetPosition, velocityXY, velocityZ, true);
@@ -749,15 +749,15 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 
 		auto fromPos = unitPos * VELOCITY_SCALE_BATTLE;
 		auto toPos = targetPosition * VELOCITY_SCALE_BATTLE;
-		
+
 		for (number_of_shots; number_of_shots > 0; number_of_shots--)
 		{
 			// Apply accuracy algorithm
 			Battle::accuracyAlgorithmBattle(state, fromPos, toPos,
-											getAccuracy(unit->current_body_state,
-											unit->current_movement_state,
-											unit->fire_aiming_mode),
-											targetUnit && targetUnit->isCloaked());
+			                                getAccuracy(unit->current_body_state,
+			                                            unit->current_movement_state,
+			                                            unit->fire_aiming_mode),
+			                                targetUnit && targetUnit->isCloaked());
 			// Fire
 			Vec3<float> velocity = toPos - fromPos;
 			velocity = glm::normalize(velocity);
@@ -771,14 +771,14 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 			// Scale velocity according to speed
 			velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 
- 			if (state.current_battle->map->tileIsValid(unitPos))
+			if (state.current_battle->map->tileIsValid(unitPos))
 			{
 				auto p = mksp<Projectile>(
-					payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam, unit,
-					targetUnit, originalTarget, unitPos, velocity, payload->turn_rate, payload->ttl,
-					payload->damage, payload->projectile_delay, payload->explosion_depletion_rate,
-					payload->tail_size, payload->projectile_sprites, payload->impact_sfx,
-					payload->explosion_graphic, payload->damage_type);
+				    payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam, unit,
+				    targetUnit, originalTarget, unitPos, velocity, payload->turn_rate, payload->ttl,
+				    payload->damage, payload->projectile_delay, payload->explosion_depletion_rate,
+				    payload->tail_size, payload->projectile_sprites, payload->impact_sfx,
+				    payload->explosion_graphic, payload->damage_type);
 				state.current_battle->map->addObjectToMap(p);
 				state.current_battle->projectiles.insert(p);
 			}
