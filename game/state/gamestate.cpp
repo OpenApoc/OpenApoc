@@ -651,31 +651,37 @@ void GameState::fillPlayerStartingProperty()
 	    auto v = current_city->placeVehicle(*this, {this, type}, this->getPlayer(), {this, bld});
 	    v->homeBuilding = v->currentBuilding;
 	}*/
+	
 	for (auto &pair : this->initial_vehicles)
 	{
 		auto v = current_city->createVehicle(*this, pair.first, this->getPlayer(), {this, bld});
 		v->homeBuilding = v->currentBuilding;
 		for (auto &eq : pair.second)
 		{
-			v->addEquipment(*this, eq);
+			auto device = v->addEquipment(*this, eq);
+			device->ammo = eq->max_ammo;
 		}
 	}
+	
 	// Give the player initial vehicle equipment
 	for (auto &pair : this->initial_vehicle_equipment)
 	{
 		base->inventoryVehicleEquipment[pair.first.id] = pair.second;
 	}
+	
 	// Give the player initial vehicle ammo
 	for (auto &pair : this->initial_vehicle_ammo)
 	{
 		base->inventoryVehicleAmmo[pair.first.id] = pair.second;
 	}
+	
 	// Give base starting agent equipment
 	for (auto &pair : this->initial_base_agent_equipment)
 	{
 		auto &equipmentID = pair.first;
 		base->inventoryAgentEquipment[equipmentID] = pair.second;
 	}
+	
 	// Give starting agents and their equipment
 	for (auto &agentTypePair : this->initial_agents)
 	{

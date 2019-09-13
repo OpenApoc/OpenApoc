@@ -118,6 +118,7 @@ class AEquipmentType : public StateObject
 
 	// Ammo, Weapons & Grenades with built-in ammo, General with charge
 	int max_ammo = 0;
+	int burst = 0;
 	int recharge = 0;
 	int rechargeTB = 0;
 
