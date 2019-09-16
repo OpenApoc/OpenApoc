@@ -172,7 +172,7 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 			economy.currentStock -= count;
 			if (economy.currentStock < 0)
 			{
-				LogInfo("Economy went into negative stock for %s: Was it because we used economy "
+				LogError("Economy went into negative stock for %s: Was it because we used economy "
 				        "to transfer?",
 				        vehicleEquipment.id);
 			}
@@ -183,7 +183,7 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 	auto building = buyer->owner->id == id ? buyer : getPurchaseBuilding(state, buyer);
 	building->cargo.emplace_back(state, vehicleEquipment, count, price,
 	                             StateRef<Organisation>{&state, id}, buyer);
-	LogWarning("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count,
+	LogInfo("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count,
 	           vehicleEquipment.id, building.id, buyer.id);
 	auto owner = buyer->owner;
 	owner->balance -= count * price;
@@ -206,7 +206,7 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 			economy.currentStock -= count;
 			if (economy.currentStock < 0)
 			{
-				LogInfo("Economy went into negative stock for %s: Was it because we used economy "
+				LogError("Economy went into negative stock for %s: Was it because we used economy "
 				        "to transfer?",
 				        vehicleAmmo.id);
 			}
@@ -217,7 +217,7 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 	auto building = buyer->owner->id == id ? buyer : getPurchaseBuilding(state, buyer);
 	building->cargo.emplace_back(state, vehicleAmmo, count, price,
 	                             StateRef<Organisation>{&state, id}, buyer);
-	LogWarning("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count, vehicleAmmo.id,
+	LogInfo("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count, vehicleAmmo.id,
 	           building.id, buyer.id);
 	auto owner = buyer->owner;
 	owner->balance -= count * price;
@@ -240,7 +240,7 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 			economy.currentStock -= count;
 			if (economy.currentStock < 0)
 			{
-				LogInfo("Economy went into negative stock for %s: Was it because we used economy "
+				LogError("Economy went into negative stock for %s: Was it because we used economy "
 				        "to transfer?",
 				        agentEquipment.id);
 			}
@@ -253,7 +253,7 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 	    state, agentEquipment,
 	    count * (agentEquipment->type == AEquipmentType::Type::Ammo ? agentEquipment->max_ammo : 1),
 	    price, StateRef<Organisation>{&state, id}, buyer);
-	LogWarning("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count, agentEquipment.id,
+	LogInfo("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count, agentEquipment.id,
 	           building.id, buyer.id);
 	auto owner = buyer->owner;
 	owner->balance -= count * price;
@@ -288,7 +288,7 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 		v->homeBuilding = buyer;
 		v->setMission(state, VehicleMission::gotoBuilding(state, *v));
 	}
-	LogWarning("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count, vehicleType.id,
+	LogInfo("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count, vehicleType.id,
 	           building.id, buyer.id);
 	auto owner = buyer->owner;
 	owner->balance -= count * price;
