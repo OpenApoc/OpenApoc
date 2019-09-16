@@ -6,7 +6,6 @@
 #include "forms/listbox.h"
 #include "forms/radiobutton.h"
 #include "forms/scrollbar.h"
-#include "forms/transactioncontrol.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
@@ -24,6 +23,7 @@
 #include "game/state/shared/organisation.h"
 #include "game/ui/general/aequipmentsheet.h"
 #include "game/ui/general/messagebox.h"
+#include "game/ui/general/transactioncontrol.h"
 #include "game/ui/general/vehiclesheet.h"
 #include <array>
 

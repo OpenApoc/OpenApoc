@@ -1,4 +1,4 @@
-#include "forms/transactioncontrol.h"
+#include "game/ui/general/transactioncontrol.h"
 #include "forms/graphicbutton.h"
 #include "forms/label.h"
 #include "forms/listbox.h"
