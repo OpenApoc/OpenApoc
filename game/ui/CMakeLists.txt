@@ -58,6 +58,7 @@ set (GAMEUI_SOURCE_FILES
 	general/messagelogscreen.cpp
 	general/notificationscreen.cpp
 	general/vehiclesheet.cpp
+	general/transactioncontrol.cpp
 
 	skirmish/skirmish.cpp
 	skirmish/selectforces.cpp
@@ -126,6 +127,7 @@ set (GAMEUI_HEADER_FILES
 	general/messagelogscreen.h
 	general/notificationscreen.h
 	general/vehiclesheet.h
+	general/transactioncontrol.h
 
 	skirmish/skirmish.h
 	skirmish/selectforces.h
