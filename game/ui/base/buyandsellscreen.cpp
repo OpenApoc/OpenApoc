@@ -467,12 +467,20 @@ void BuyAndSellScreen::executeOrders()
 							{
 								economy.currentStock += order;
 								player->balance += order * economy.currentPrice;
-
 								StateRef<AEquipmentType> equipment{state.get(), c->itemId};
-								b.second->inventoryAgentEquipment[c->itemId] -=
-								    order * (equipment->type == AEquipmentType::Type::Ammo
-								                 ? equipment->max_ammo
-								                 : 1);
+
+								const auto numItemsPerUnit =
+								    equipment->type == AEquipmentType::Type::Ammo
+								        ? equipment->max_ammo
+								        : 1;
+								auto numItems = numItemsPerUnit * order;
+
+								LogAssert(b.second->inventoryAgentEquipment[c->itemId] <=
+								          std::numeric_limits<int>::max());
+								numItems = std::min(
+								    numItems, (int)b.second->inventoryAgentEquipment[c->itemId]);
+
+								b.second->inventoryAgentEquipment[c->itemId] -= numItems;
 								break;
 							}
 							case TransactionControl::Type::VehicleAmmo:
