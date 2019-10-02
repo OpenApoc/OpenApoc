@@ -251,3 +251,8 @@ add_custom_command(OUTPUT
 		DEPENDS
 		OpenApoc_LuaGamestateSupportGen
 		${CMAKE_SOURCE_DIR}/game/state/gamestate_serialize.xml)
+
+add_custom_target(generated-source
+		DEPENDS
+		gamestate_serialize_generated.h gamestate_serialize_generated.cpp
+		luagamestate_support_generated.h luagamestate_support_generated.cpp)
