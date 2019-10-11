@@ -1,45 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <buildings>
   <entry>
-    <key>BUILDING_CAMPESINO_APARTMENTS</key>
-    <value>
-      <base_layout>BASELAYOUT_4</base_layout>
-    </value>
-  </entry>
-  <entry>
-    <key>BUILDING_CHRONOS_BLOCK</key>
-    <value>
-      <base_layout>BASELAYOUT_10</base_layout>
-    </value>
-  </entry>
-  <entry>
     <key>BUILDING_WAREHOUSE_ONE</key>
-    <value>
-      <base_layout>BASELAYOUT_10</base_layout>
-    </value>
-  </entry>
-  <entry>
-    <key>BUILDING_WAREHOUSE_SIX</key>
     <value>
       <base_layout>BASELAYOUT_1</base_layout>
     </value>
   </entry>
   <entry>
+    <key>BUILDING_WAREHOUSE_TWO</key>
+    <value>
+      <base_layout>BASELAYOUT_7</base_layout>
+    </value>
+  </entry>
+  <entry>
     <key>BUILDING_WAREHOUSE_EIGHT</key>
     <value>
-      <base_layout>BASELAYOUT_14</base_layout>
+      <base_layout>BASELAYOUT_3</base_layout>
     </value>
   </entry>
   <entry>
-    <key>BUILDING_WAREHOUSE_FIVE</key>
+    <key>BUILDING_THOMAS_MORE_TOWER</key>
     <value>
-      <base_layout>BASELAYOUT_15</base_layout>
+      <base_layout>BASELAYOUT_4</base_layout>
     </value>
   </entry>
   <entry>
-    <key>BUILDING_HADES_BLOCK</key>
+    <key>BUILDING_LOVECRAFT_BLOCK</key>
     <value>
       <base_layout>BASELAYOUT_0</base_layout>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_GRIMOIRE_BLOCK</key>
+    <value>
+      <base_layout>BASELAYOUT_6</base_layout>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_TEN</key>
+    <value>
+      <base_layout>BASELAYOUT_9</base_layout>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_ELEVEN</key>
+    <value>
+      <base_layout>BASELAYOUT_10</base_layout>
     </value>
   </entry>
 </buildings>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildings>
+  <entry>
+    <key>BUILDING_DICKENS_ESTATE</key>
+    <value>
+      <base_layout>BASELAYOUT_5</base_layout>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_HEAVENLY_TOWERS</key>
+    <value>
+      <base_layout>BASELAYOUT_12</base_layout>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_THREE</key>
+    <value>
+      <base_layout>BASELAYOUT_2</base_layout>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_FOUR</key>
+    <value>
+      <base_layout>BASELAYOUT_3</base_layout>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_SEVEN</key>
+    <value>
+      <base_layout>BASELAYOUT_12</base_layout>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_NINE</key>
+    <value>
+      <base_layout>BASELAYOUT_0</base_layout>
+    </value>
+  </entry>
+</buildings>

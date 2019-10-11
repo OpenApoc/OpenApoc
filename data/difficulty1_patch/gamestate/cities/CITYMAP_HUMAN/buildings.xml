@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <buildings>
   <entry>
-    <key>BUILDING_DICKENS_ESTATE</key>
+    <key>BUILDING_WAREHOUSE_ONE</key>
+    <value>
+      <base_layout>BASELAYOUT_10</base_layout>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_TWO</key>
     <value>
       <base_layout>BASELAYOUT_5</base_layout>
     </value>
   </entry>
   <entry>
+    <key>BUILDING_WAREHOUSE_SIX</key>
+    <value>
+      <base_layout>BASELAYOUT_9</base_layout>
+    </value>
+  </entry>
+  <entry>
     <key>BUILDING_HEAVENLY_TOWERS</key>
     <value>
-      <base_layout>BASELAYOUT_12</base_layout>
-    </value>
-  </entry>
-  <entry>
-    <key>BUILDING_WAREHOUSE_THREE</key>
-    <value>
-      <base_layout>BASELAYOUT_2</base_layout>
-    </value>
-  </entry>
-  <entry>
-    <key>BUILDING_WAREHOUSE_FOUR</key>
-    <value>
-      <base_layout>BASELAYOUT_3</base_layout>
-    </value>
-  </entry>
-  <entry>
-    <key>BUILDING_WAREHOUSE_SEVEN</key>
-    <value>
-      <base_layout>BASELAYOUT_12</base_layout>
+      <base_layout>BASELAYOUT_15</base_layout>
     </value>
   </entry>
   <entry>
     <key>BUILDING_WAREHOUSE_NINE</key>
     <value>
-      <base_layout>BASELAYOUT_0</base_layout>
+      <base_layout>BASELAYOUT_8</base_layout>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_BAKUNIN_BLOCK</key>
+    <value>
+      <base_layout>BASELAYOUT_13</base_layout>
     </value>
   </entry>
 </buildings>

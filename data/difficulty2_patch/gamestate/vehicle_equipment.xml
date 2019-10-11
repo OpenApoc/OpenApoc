@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <vehicle_equipment>
 <entry><key>VEQUIPMENTTYPE_SMALL_DISRUPTION_SHIELD</key><value>
-<scoreRequirement>1750</scoreRequirement>
+<scoreRequirement>1500</scoreRequirement>
 </value></entry>
 <entry><key>VEQUIPMENTTYPE_LARGE_DISRUPTION_SHIELD</key><value>
-<scoreRequirement>3500</scoreRequirement>
+<scoreRequirement>3000</scoreRequirement>
 </value></entry>
 <entry><key>VEQUIPMENTTYPE_CLOAKING_FIELD</key><value>
-<scoreRequirement>7000</scoreRequirement>
+<scoreRequirement>6000</scoreRequirement>
 </value></entry>
 <entry><key>VEQUIPMENTTYPE_TELEPORTER</key><value>
-<scoreRequirement>14000</scoreRequirement>
+<scoreRequirement>12000</scoreRequirement>
 </value></entry>
 </vehicle_equipment>
