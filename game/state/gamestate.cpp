@@ -1362,6 +1362,15 @@ void GameState::loadMods()
 				LogError("Failed to load mod ID \"%s\"", modInfo->getID());
 			}
 		}
+
+		const auto &modLoadScript = modInfo->getModLoadScript();
+
+		if (!modLoadScript.empty())
+		{
+			LogInfo("Executing modLoad script \"%s\" for mod \"%s\"", modLoadScript,
+			        modInfo->getID());
+			this->luaGameState.runScript(modLoadScript);
+		}
 	}
 }
 
