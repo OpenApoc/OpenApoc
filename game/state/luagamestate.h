@@ -28,5 +28,6 @@ class LuaGameState
 
 	operator bool() const;
 	int callHook(const UString &hookName, int nargs, int nresults);
+	bool runScript(const UString &scriptName);
 };
 } // namespace OpenApoc
