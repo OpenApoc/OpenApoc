@@ -1362,7 +1362,28 @@ void GameState::loadMods()
 				LogError("Failed to load mod ID \"%s\"", modInfo->getID());
 			}
 		}
+
+		const auto &modLoadScript = modInfo->getModLoadScript();
+
+		if (!modLoadScript.empty())
+		{
+			LogInfo("Executing modLoad script \"%s\" for mod \"%s\"", modLoadScript,
+			        modInfo->getID());
+			this->luaGameState.runScript(modLoadScript);
+		}
 	}
+}
+
+bool GameState::appendGameState(const UString &gamestatePath)
+{
+	LogInfo("Appending gamestate \"%s\"", gamestatePath);
+	auto file = fw().data->fs.open(gamestatePath);
+	if (!file)
+	{
+		LogWarning("Failed to open gamestate file \"%s\"", gamestatePath);
+		return false;
+	}
+	return this->loadGame(file.systemPath());
 }
 
 }; // namespace OpenApoc
