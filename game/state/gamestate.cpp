@@ -48,7 +48,7 @@
 namespace OpenApoc
 {
 
-GameState::GameState() : player(this) {}
+GameState::GameState() : player(this) { luaGameState.init(*this); }
 
 GameState::~GameState()
 {
@@ -136,12 +136,6 @@ StateRef<Organisation> GameState::getCivilian() { return this->civilian; }
 
 void GameState::initState()
 {
-	// the LuaGameState has not been initialized if we're loading a saved game
-	if (!luaGameState)
-	{
-		luaGameState.init(*this);
-	}
-
 	if (current_battle)
 	{
 		current_battle->initBattle(*this);
@@ -497,7 +491,6 @@ void GameState::fillOrgStartingProperty()
 
 void GameState::startGame()
 {
-	luaGameState.init(*this);
 	luaGameState.callHook("newGame", 0, 0);
 
 	agentEquipmentTemplates.resize(10);
