@@ -36,7 +36,7 @@ before_build:
   - choco install ninja
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %VCVARS_ARCH%
 build_script:
-  - cmake -DMSVC_PDB=ON . -GNinja -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE="%CONFIGURATION%" -DCMAKE_PREFIX_PATH=%QTPATH% -DCMAKE_SYSTEM_VERSION=8.1
+  - cmake -DMSVC_PDB=ON . -GNinja -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE="%CONFIGURATION%" -DCMAKE_PREFIX_PATH=%QTPATH%
   - cmake --build .
 after_build:
   - git describe --tags > build-id
