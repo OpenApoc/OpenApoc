@@ -741,7 +741,7 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 	auto payload = getPayloadType();
 	Vec3<float> originalTarget = targetPosition;
 	int number_of_shots;
-	
+
 	if (payload->fire_sfx)
 	{
 		fw().soundBackend->playSample(payload->fire_sfx, unit->position);
@@ -752,7 +752,7 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 	{
 		number_of_shots = 1;
 	}
-	
+
 	if (type->launcher)
 	{
 		auto item = mksp<AEquipment>();
@@ -792,10 +792,10 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 		{
 			// Apply accuracy algorithm
 			Battle::accuracyAlgorithmBattle(state, fromPos, toPos,
-											getAccuracy(unit->current_body_state,
-														unit->current_movement_state,
-														unit->fire_aiming_mode),
-											targetUnit && targetUnit->isCloaked());
+			                                getAccuracy(unit->current_body_state,
+			                                            unit->current_movement_state,
+			                                            unit->fire_aiming_mode),
+			                                targetUnit && targetUnit->isCloaked());
 			// Fire
 			Vec3<float> velocity = toPos - fromPos;
 			velocity = glm::normalize(velocity);
@@ -812,11 +812,11 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 			if (state.current_battle->map->tileIsValid(unitPos))
 			{
 				auto p = mksp<Projectile>(
-					payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam, unit,
-					targetUnit, originalTarget, unitPos, velocity, payload->turn_rate, payload->ttl,
-					payload->damage, payload->projectile_delay, payload->explosion_depletion_rate,
-					payload->tail_size, payload->projectile_sprites, payload->impact_sfx,
-					payload->explosion_graphic, payload->damage_type);
+				    payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam, unit,
+				    targetUnit, originalTarget, unitPos, velocity, payload->turn_rate, payload->ttl,
+				    payload->damage, payload->projectile_delay, payload->explosion_depletion_rate,
+				    payload->tail_size, payload->projectile_sprites, payload->impact_sfx,
+				    payload->explosion_graphic, payload->damage_type);
 				state.current_battle->map->addObjectToMap(p);
 				state.current_battle->projectiles.insert(p);
 			}
