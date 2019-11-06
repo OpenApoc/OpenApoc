@@ -660,7 +660,8 @@ void GameState::fillPlayerStartingProperty()
 		v->homeBuilding = v->currentBuilding;
 		for (auto &eq : pair.second)
 		{
-			v->addEquipment(*this, eq);
+			auto device = v->addEquipment(*this, eq);
+			device->ammo = eq->max_ammo;
 		}
 	}
 	// Give the player initial vehicle equipment
