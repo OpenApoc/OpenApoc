@@ -20,6 +20,7 @@
 	<score>10</score>
 	<two_handed>true</two_handed>
 	<max_ammo>100</max_ammo>
+	<burst>10</burst>
 	<recharge>100</recharge>
 	<rechargeTB>100</rechargeTB>
 	<speed>26</speed>

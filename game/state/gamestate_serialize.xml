@@ -1221,6 +1221,7 @@
 		<member>provides_flight</member>
 		<member>weapon_types</member>
 		<member>max_ammo</member>
+		<member>burst</member>
 		<member>recharge</member>
 		<member>rechargeTB</member>
 		<member>speed</member>
@@ -1250,6 +1251,7 @@
 		<member>name</member>
 		<member>weight</member>
 		<member>max_ammo</member>
+		<member>burst</member>
 		<member>ammo_type</member>
 		<member>equipscreen_sprite</member>
 		<member>equipscreen_size</member>

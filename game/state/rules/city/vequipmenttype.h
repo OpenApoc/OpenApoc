@@ -40,6 +40,7 @@ class VEquipmentType : public StateObject<VEquipmentType>
 	UString name;
 	int weight = 0;
 	int max_ammo = 0;
+	int burst = 0;
 	StateRef<VAmmoType> ammo_type;
 	sp<Image> equipscreen_sprite;
 	Vec2<int> equipscreen_size = {0, 0};
