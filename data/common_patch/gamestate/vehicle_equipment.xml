@@ -11,7 +11,7 @@
 <entry><key>VEQUIPMENTTYPE_AIRGUARD_ANTI-AIR_CANNON</key>
 <value>
 <ammo_type>VEQUIPMENTAMMOTYPE_AIRGUARD_52MM_CANNON_ROUND</ammo_type>
-<burst>3</burst>
+<burst>2</burst>
 </value>
 </entry>
 <entry><key>VEQUIPMENTTYPE_DISRUPTOR_BOMB_LAUNCHER</key>
