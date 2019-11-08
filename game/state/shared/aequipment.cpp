@@ -776,7 +776,7 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 		}
 		// Throw item (accuracy applied inside)
 
-		for (number_of_shots; number_of_shots > 0; number_of_shots--)
+		for (int shot_number = 0; shot_number < number_of_shots; shot_number++)
 		{
 			item->throwItem(state, targetPosition, velocityXY, velocityZ, true);
 		}
@@ -788,7 +788,7 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 		auto fromPos = unitPos * VELOCITY_SCALE_BATTLE;
 		auto toPos = targetPosition * VELOCITY_SCALE_BATTLE;
 
-		for (number_of_shots; number_of_shots > 0; number_of_shots--)
+		for (int shot_number = 0; shot_number < number_of_shots; shot_number++)
 		{
 			// Apply accuracy algorithm
 			Battle::accuracyAlgorithmBattle(state, fromPos, toPos,
@@ -811,8 +811,8 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 
 			if (state.current_battle->map->tileIsValid(unitPos))
 			{
-				auto p = mksp<Projectile>(
-				    payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam, unit,
+				const auto projectile_type =
+				    type->isGuided ? Projectile::Type::Missile : Projectile::Type::Beam; unit,
 				    targetUnit, originalTarget, unitPos, velocity, payload->turn_rate, payload->ttl,
 				    payload->damage, payload->projectile_delay, payload->explosion_depletion_rate,
 				    payload->tail_size, payload->projectile_sprites, payload->impact_sfx,
