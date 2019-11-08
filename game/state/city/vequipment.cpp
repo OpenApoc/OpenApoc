@@ -102,7 +102,7 @@ bool VEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> 
 	auto fromScaled = vehicleMuzzle * VELOCITY_SCALE_CITY;
 	auto toScaled = targetPosition * VELOCITY_SCALE_CITY;
 
-	for (number_of_shots; number_of_shots > 0; number_of_shots--)
+	for (int shot_number = 0; shot_number < number_of_shots; shot_number++)
 	{
 		City::accuracyAlgorithmCity(state, fromScaled, toScaled,
 		                            type->accuracy + owner->getAccuracy(),
@@ -113,8 +113,8 @@ bool VEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> 
 		// I believe this is the correct formula
 		velocity *= type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 
-		auto projectile = mksp<Projectile>(
-		    type->guided ? Projectile::Type::Missile : Projectile::Type::Beam, owner, targetVehicle,
+		const auto projectile_type =
+		    type->isGuided ? Projectile::Type::Missile : Projectile::Type::Beam; owner, targetVehicle,
 		    homingPosition, muzzle, velocity, type->turn_rate, type->ttl, type->damage, /*delay*/ 0,
 		    /*depletion rate*/ 0, type->tail_size, type->projectile_sprites, type->impact_sfx,
 		    type->explosion_graphic, state.city_common_image_list->projectileVoxelMap,
