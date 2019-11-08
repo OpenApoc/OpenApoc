@@ -812,7 +812,7 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 			if (state.current_battle->map->tileIsValid(unitPos))
 			{
 				const auto projectile_type =
-				    type->isGuided ? Projectile::Type::Missile : Projectile::Type::Beam; unit,
+				    payload->isGuided ? Projectile::Type::Missile : Projectile::Type::Beam; unit,
 				    targetUnit, originalTarget, unitPos, velocity, payload->turn_rate, payload->ttl,
 				    payload->damage, payload->projectile_delay, payload->explosion_depletion_rate,
 				    payload->tail_size, payload->projectile_sprites, payload->impact_sfx,
