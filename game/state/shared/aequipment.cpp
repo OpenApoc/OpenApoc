@@ -812,11 +812,14 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 			if (state.current_battle->map->tileIsValid(unitPos))
 			{
 				const auto projectile_type =
-				    payload->isGuided ? Projectile::Type::Missile : Projectile::Type::Beam; unit,
-				    targetUnit, originalTarget, unitPos, velocity, payload->turn_rate, payload->ttl,
-				    payload->damage, payload->projectile_delay, payload->explosion_depletion_rate,
-				    payload->tail_size, payload->projectile_sprites, payload->impact_sfx,
-				    payload->explosion_graphic, payload->damage_type);
+				    payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam;
+
+				auto projectile = mksp<Projectile>(
+				    projectile_type, unit, targetUnit, originalTarget, unitPos, velocity,
+				    payload->turn_rate, payload->ttl, payload->damage, payload->projectile_delay,
+				    payload->explosion_depletion_rate, payload->tail_size,
+				    payload->projectile_sprites, payload->impact_sfx, payload->explosion_graphic,
+				    payload->damage_type);
 				state.current_battle->map->addObjectToMap(p);
 				state.current_battle->projectiles.insert(p);
 			}
