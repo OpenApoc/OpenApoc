@@ -820,8 +820,8 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 				    payload->explosion_depletion_rate, payload->tail_size,
 				    payload->projectile_sprites, payload->impact_sfx, payload->explosion_graphic,
 				    payload->damage_type);
-				state.current_battle->map->addObjectToMap(p);
-				state.current_battle->projectiles.insert(p);
+				state.current_battle->map->addObjectToMap(Projectile);
+				state.current_battle->projectiles.insert(Projectile);
 			}
 		}
 	}
