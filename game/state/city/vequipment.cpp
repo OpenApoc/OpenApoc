@@ -114,8 +114,11 @@ bool VEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> 
 		velocity *= type->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 
 		const auto projectile_type =
-		    type->isGuided ? Projectile::Type::Missile : Projectile::Type::Beam; owner, targetVehicle,
-		    homingPosition, muzzle, velocity, type->turn_rate, type->ttl, type->damage, /*delay*/ 0,
+		    type->guided ? Projectile::Type::Missile : Projectile::Type::Beam;
+
+		auto projectile = mksp<Projectile>(
+		    projectile_type, owner, targetVehicle, homingPosition, muzzle, velocity,
+		    type->turn_rate, type->ttl, type->damage, /*delay*/ 0,
 		    /*depletion rate*/ 0, type->tail_size, type->projectile_sprites, type->impact_sfx,
 		    type->explosion_graphic, state.city_common_image_list->projectileVoxelMap,
 		    type->stunTicks, type->splitIntoTypes, manual);
