@@ -16,10 +16,10 @@ environment:
 init:
   - if "%PLATFORM%"=="x64" (set VCPKG_DEFAULT_TRIPLET=x64-windows)
   - if "%PLATFORM%"=="x64" (set VCVARS_ARCH=amd64)
-  - if "%PLATFORM%"=="x64" (set QTPATH=C:\Qt\5.13.0\msvc2017_64)
+  - if "%PLATFORM%"=="x64" (set QTPATH=C:\Qt\5.13\msvc2017_64)
   - if "%PLATFORM%"=="Win32" (set VCPKG_DEFAULT_TRIPLET=x86-windows)
   - if "%PLATFORM%"=="Win32" (set VCVARS_ARCH=amd64_x86)
-  - if "%PLATFORM%"=="Win32" (set QTPATH=C:\Qt\5.13.0\msvc2017)
+  - if "%PLATFORM%"=="Win32" (set QTPATH=C:\Qt\5.13\msvc2017)
 #clone_depth: 10
 cache: c:\tools\vcpkg\installed
 before_build:
