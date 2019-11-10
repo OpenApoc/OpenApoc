@@ -747,9 +747,9 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 		fw().soundBackend->playSample(payload->fire_sfx, unit->position);
 	}
 
-	std::min(this->type->burst, this->ammo)
+	std::min(this->type->burst, this->ammo);
 
-	    if (type->launcher)
+	if (type->launcher)
 	{
 		auto item = mksp<AEquipment>();
 		item->type = payload;
