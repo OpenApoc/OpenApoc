@@ -70,7 +70,7 @@ bool VEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> 
 	this->reloadTime = type->fire_delay;
 	this->weaponState = WeaponState::Reloading;
 
-	std::min(this->type->burst, this->ammo);
+	number_of_shots = std::min(this->type->burst, this->ammo);
 
 	if (this->type->max_ammo != 0)
 	{
