@@ -42,6 +42,7 @@ void dumpOptionsToLog()
 	dumpOption(screenScaleYOption);
 	dumpOption(languageOption);
 
+	dumpOption(targetFPS);
 	dumpOption(frameLimit);
 	dumpOption(swapInterval);
 
@@ -218,6 +219,8 @@ ConfigOptionInt screenScaleYOption("Framework.Screen", "ScaleY",
 ConfigOptionString languageOption("Framework", "Language",
                                   "The language used ingame (empty for system default)", "");
 
+ConfigOptionInt targetFPS("Framework", "TargetFPS", "The target FPS count - affects game speed!",
+                          60);
 ConfigOptionInt frameLimit("Framework", "FrameLimit", "Quit after this many frames - 0 = unlimited",
                            0);
 ConfigOptionInt swapInterval("Framework", "SwapInterval",
