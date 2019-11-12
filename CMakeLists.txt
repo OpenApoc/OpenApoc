@@ -103,8 +103,17 @@ if (WIN32)
 	set(sources ${sources} "apocicon.rc")
 endif()
 
+
+if (APPLE)
+set(MACOSX_BUNDLE_BUNDLE_NAME OpenApoc)
+
+ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} MACOSX_BUNDLE game/main.cpp ${sources}
+		${FRAMEWORK_SOURCES})
+else()
 ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} game/main.cpp ${sources}
 		${FRAMEWORK_SOURCES})
+endif()
+
 
 target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Library)
 target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Framework)
@@ -125,9 +134,12 @@ INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
 # apoc data copy
 SET( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
 
-install(TARGETS ${CMAKE_PROJECT_NAME}
-		RUNTIME DESTINATION bin)
-install(DIRECTORY ${CMAKE_SOURCE_DIR}data/ DESTINATION share/OpenApoc)
+
+if (NOT APPLE)
+		install(TARGETS ${CMAKE_PROJECT_NAME}
+				RUNTIME DESTINATION bin)
+		install(DIRECTORY ${CMAKE_SOURCE_DIR}data/ DESTINATION share/OpenApoc)
+endif()
 
 if(ENABLE_TESTS)
 	enable_testing()
