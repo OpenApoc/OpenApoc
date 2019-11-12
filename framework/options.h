@@ -21,6 +21,7 @@ extern ConfigOptionInt screenScaleYOption;
 extern ConfigOptionString languageOption;
 
 extern ConfigOptionInt frameLimit;
+extern ConfigOptionInt targetFPS;
 extern ConfigOptionInt swapInterval;
 
 extern ConfigOptionBool autoScrollOption;

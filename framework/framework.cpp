@@ -396,14 +396,39 @@ void Framework::run(sp<Stage> initialStage)
 	TRACE_FN;
 	LogInfo("Program loop started");
 
+	auto target_frame_duration =
+	    std::chrono::duration<int64_t, std::micro>(1000000 / Options::targetFPS.get());
+
 	p->ProgramStages.push(initialStage);
 
 	this->renderer->setPalette(this->data->loadPalette("xcom3/ufodata/pal_06.dat"));
+	auto expected_frame_time = std::chrono::steady_clock::now();
+
+	bool frame_time_limited_warning_shown = false;
 
 	while (!p->quitProgram)
 	{
+		auto frame_time_now = std::chrono::steady_clock::now();
+		if (expected_frame_time > frame_time_now)
+		{
+			TraceObj sleepTrace{"Sleep"};
+			auto time_to_sleep = expected_frame_time - frame_time_now;
+			auto time_to_sleep_us =
+			    std::chrono::duration_cast<std::chrono::microseconds>(time_to_sleep);
+			LogDebug("sleeping for %d us", time_to_sleep_us.count());
+			std::this_thread::sleep_for(time_to_sleep);
+			continue;
+		}
+		expected_frame_time += target_frame_duration;
 		frame++;
 		TraceObj obj{"Frame", {{"frame", Strings::fromInteger(frame)}}};
+
+		if (!frame_time_limited_warning_shown &&
+		    frame_time_now > expected_frame_time + 5 * target_frame_duration)
+		{
+			frame_time_limited_warning_shown = true;
+			LogWarning("Over 5 frames behind - likely vsync limited?");
+		}
 
 		processEvents();
 
