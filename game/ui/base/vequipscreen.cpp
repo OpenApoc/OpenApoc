@@ -403,53 +403,60 @@ void VEquipScreen::render()
 	{
 		auto inventoryControl = form->findControlTyped<Graphic>("INVENTORY");
 		Vec2<int> inventoryPosition = inventoryControl->getLocationOnScreen();
-		for (auto &invPair : base->inventoryVehicleEquipment)
+		if (inventoryPosition == Vec2<int>(0, 0))
 		{
-			// The gap between the bottom of the inventory image and the count label
-			static const int INVENTORY_COUNT_Y_GAP = 4;
-			// The gap between the end of one inventory image and the start of the next
-			static const int INVENTORY_IMAGE_X_GAP = 4;
-			auto equipIt = state->vehicle_equipment.find(invPair.first);
-			if (equipIt == state->vehicle_equipment.end())
+			LogWarning("Attempted to draw inventory items at (0, 0) - skipping");
+		}
+		else 
+		{
+			for (auto &invPair : base->inventoryVehicleEquipment)
 			{
-				// It's not vehicle equipment, skip
-				continue;
-			}
-			auto equipmentType = StateRef<VEquipmentType>{state.get(), equipIt->first};
-			if (equipmentType->type != this->selectionType)
-			{
-				// Skip equipment of different types
-				continue;
-			}
-			if (!equipmentType->users.count(allowedEquipmentUser))
-			{
-				// The selected vehicle is not a valid user of the equipment, don't draw
-				continue;
-			}
-			int count = invPair.second;
-			if (count == 0)
-			{
-				// Not in stock
-				continue;
-			}
-			auto countImage = labelFont->getString(format("%d", count));
-			auto &equipmentImage = equipmentType->equipscreen_sprite;
-			fw().renderer->draw(equipmentImage, inventoryPosition);
+				// The gap between the bottom of the inventory image and the count label
+				static const int INVENTORY_COUNT_Y_GAP = 4;
+				// The gap between the end of one inventory image and the start of the next
+				static const int INVENTORY_IMAGE_X_GAP = 4;
+				auto equipIt = state->vehicle_equipment.find(invPair.first);
+				if (equipIt == state->vehicle_equipment.end())
+				{
+					// It's not vehicle; equipment, skip
+					continue;
+				}
+				auto equipmentType = StateRef<VEquipmentType>{ state.get(), equipIt->first };
+				if (equipmentType->type != this->selectionType)
+				{
+					// Skip equipment of different types
+					continue;
+				}
+				if (!equipmentType->users.count(allowedEquipmentUser))
+				{
+					// The selected vehicle is not a valid user of the equipment, don't draw
+					continue;
+				}
+				int count = invPair.second;
+				if (count == 0)
+				{
+					// Not in stock
+					continue;
+				}
+				auto countImage = labelFont->getString(format("%d", count));
+				auto &equipmentImage = equipmentType->equipscreen_sprite;
+				fw().renderer->draw(equipmentImage, inventoryPosition);
 
-			Vec2<int> countLabelPosition = inventoryPosition;
-			countLabelPosition.y += INVENTORY_COUNT_Y_GAP + equipmentImage->size.y;
-			// FIXME: Center in X?
-			fw().renderer->draw(countImage, countLabelPosition);
+				Vec2<int> countLabelPosition = inventoryPosition;
+				countLabelPosition.y += INVENTORY_COUNT_Y_GAP + equipmentImage->size.y;
+				// FIXME: Center in X?
+				fw().renderer->draw(countImage, countLabelPosition);
 
-			Vec2<int> inventoryEndPosition = inventoryPosition;
-			inventoryEndPosition.x += equipmentImage->size.x;
-			inventoryEndPosition.y += equipmentImage->size.y;
+				Vec2<int> inventoryEndPosition = inventoryPosition;
+				inventoryEndPosition.x += equipmentImage->size.x;
+				inventoryEndPosition.y += equipmentImage->size.y;
 
-			this->inventoryItems.emplace_back(Rect<int>{inventoryPosition, inventoryEndPosition},
-			                                  equipmentType);
+				this->inventoryItems.emplace_back(Rect<int>{inventoryPosition, inventoryEndPosition},
+				                                  equipmentType);
 
-			// Progress inventory offset by width of image + gap
-			inventoryPosition.x += INVENTORY_IMAGE_X_GAP + equipmentImage->size.x;
+				// Progress inventory offset by width of image + gap
+				inventoryPosition.x += INVENTORY_IMAGE_X_GAP + equipmentImage->size.x;
+			}
 		}
 	}
 	if (this->drawHighlightBox)
