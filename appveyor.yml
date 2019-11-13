@@ -25,7 +25,7 @@ cache: c:\tools\vcpkg\installed
 before_build:
   - cd c:\tools\vcpkg
   - git pull
-  - git checkout 2019.07
+  - git checkout 2019.10
   - cd c:\projects\openapoc
   - vcpkg install sdl2 boost-locale boost-program-options boost-uuid boost-crc
   - vcpkg upgrade --no-dry-run
