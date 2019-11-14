@@ -395,7 +395,7 @@ template <typename T> void serializeOut(SerializationNode *node, const up<T> &pt
 			serializeOut(node, *ptr, *ref);
 		else
 		{
-			T defaultRef;
+			const T defaultRef{};
 			serializeOut(node, *ptr, defaultRef);
 		}
 	}
@@ -409,8 +409,11 @@ template <typename T> void serializeOut(SerializationNode *node, const sp<T> &pt
 			serializeOut(node, *ptr, *ref);
 		else
 		{
-			T defaultRef;
-			serializeOut(node, *ptr, defaultRef);
+			// Here we need to mksp<>, as type T may have a protected destructor (e.g.
+			// shared_from_this-enabled mobjects)
+
+			const sp<T> defaultRef = mksp<T>();
+			serializeOut(node, *ptr, *defaultRef);
 		}
 	}
 }
@@ -419,8 +422,8 @@ template <typename Key, typename Value>
 void serializeOut(SerializationNode *node, const std::map<Key, Value> &map,
                   const std::map<Key, Value> &ref)
 {
-	Key defaultKey;
-	Value defaultValue;
+	const Key defaultKey{};
+	const Value defaultValue{};
 	for (const auto &pair : map)
 	{
 		auto refIt = ref.find(pair.first);
@@ -449,8 +452,8 @@ void serializeOut(SerializationNode *node, const std::map<Key, Value> &map,
 template <typename T>
 void serializeOut(SerializationNode *node, const StateRefMap<T> &map, const StateRefMap<T> &ref)
 {
-	UString defaultKey;
-	sp<T> defaultValue;
+	const UString defaultKey{};
+	const sp<T> defaultValue{};
 	for (const auto &pair : map)
 	{
 		auto refIt = ref.find(pair.first);
@@ -480,8 +483,8 @@ template <typename Value>
 void serializeOutSectionMap(SerializationNode *node, const std::map<UString, Value> &map,
                             const std::map<UString, Value> &ref)
 {
-	UString defaultKey;
-	Value defaultValue;
+	const UString defaultKey{};
+	const Value defaultValue{};
 	for (const auto &pair : map)
 	{
 		auto refIt = ref.find(pair.first);
@@ -510,7 +513,7 @@ void serializeOutSectionMap(SerializationNode *node, const std::map<UString, Val
 template <typename T>
 void serializeOut(SerializationNode *node, const std::set<T> &set, const std::set<T> &)
 {
-	T defaultRef;
+	const T defaultRef{};
 	for (const auto &entry : set)
 	{
 		serializeOut(node->addNode("entry"), entry, defaultRef);
@@ -527,7 +530,7 @@ void serializeOut(SerializationNode *node, const std::pair<A, B> &pair, const st
 template <typename T>
 void serializeOut(SerializationNode *node, const std::list<T> &list, const std::list<T> &)
 {
-	T defaultRef;
+	const T defaultRef{};
 	for (auto &entry : list)
 	{
 		serializeOut(node->addNode("entry"), entry, defaultRef);
@@ -537,7 +540,7 @@ void serializeOut(SerializationNode *node, const std::list<T> &list, const std::
 template <typename T>
 void serializeOut(SerializationNode *node, const std::vector<T> &vector, const std::vector<T> &)
 {
-	T defaultRef;
+	const T defaultRef{};
 	for (auto &entry : vector)
 	{
 		serializeOut(node->addNode("entry"), entry, defaultRef);
