@@ -747,7 +747,7 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 		fw().soundBackend->playSample(payload->fire_sfx, unit->position);
 	}
 
-	number_of_shots = std::min(this->type->burst, this->payloadType);
+	number_of_shots = std::min(this->type->burst, this->ammo);
 
 	if (type->launcher)
 	{
