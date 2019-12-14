@@ -182,7 +182,7 @@ template <typename T> class StateRef
 		return obj.get() != other;
 	}
 	StateRef<T> &operator=(const StateRef<T> &other) = default;
-	// Explicity handle "object = nullptr", as otherwise gcc doesn't know which overload to use
+	// Explicitly handle "object = nullptr", as otherwise gcc doesn't know which overload to use
 	StateRef<T> &operator=(std::nullptr_t)
 	{
 		this->clear();
@@ -199,6 +199,12 @@ template <typename T> class StateRef
 		if (!obj)
 			resolve();
 		return obj;
+	}
+	const T *get() const
+	{
+		if (!obj)
+			resolve();
+		return obj.get();
 	}
 	bool operator<(const StateRef<T> &other) const { return this->id < other.id; }
 	void clear()

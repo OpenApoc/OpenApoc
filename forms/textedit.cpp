@@ -68,7 +68,7 @@ void TextEdit::eventOccured(Event *e)
 			{
 				// FIXME: Due to event duplication (?), this code won't work. Can only stop editing
 				// text by pressing enter.
-				// editting = false;
+				// editing = false;
 				// fw().textStopInput();
 				// raiseEvent(FormEventType::TextEditFinish);
 			}

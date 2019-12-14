@@ -55,7 +55,7 @@ class BattleMapPart : public SupportedMapPart, public std::enable_shared_from_th
 	// Called when map part is burnt by fire. Returns true if burn was successful (provided fuel for
 	// the fire)
 	bool applyBurning(GameState &state, int age);
-	// Wether this map part can burn (due to resist, timer and already burnt state)
+	// Whether this map part can burn (due to resist, timer and already burnt state)
 	bool canBurn(int age);
 	// Returns true if sound and doodad were handled by it
 	bool handleCollision(GameState &state, Collision &c);
@@ -63,7 +63,7 @@ class BattleMapPart : public SupportedMapPart, public std::enable_shared_from_th
 	void die(GameState &state, bool explosive = false, bool violently = true);
 	// Collapses mappart immediately
 	void collapse(GameState &state);
-	// Wether mappart is queued to collapse
+	// Whether mappart is queued to collapse
 	bool willCollapse() const { return ticksUntilCollapse > 0; }
 
 	void ceaseDoorFunction();
@@ -99,7 +99,7 @@ class BattleMapPart : public SupportedMapPart, public std::enable_shared_from_th
 
 	// Compiles a list of parts supported by this part
 	// Using sp because we switch to a new one constantly in re-linking
-	// Using set because we need to easilly weed out duplicates
+	// Using set because we need to easily weed out duplicates
 	sp<std::set<SupportedMapPart *>> getSupportedParts() override;
 
 	// Clears parts supported by this

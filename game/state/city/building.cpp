@@ -628,7 +628,7 @@ void Building::updateCargo(GameState &state)
 
 	// Step 06: Try to load cargo on owner's vehicles if:
 	// - Allowed by game option
-	// - Cargo is expriring
+	// - Cargo is expiring
 	// - Cargo had no ferries ordered for it
 	if (config().getBool("OpenApoc.NewFeature.AllowManualCargoFerry"))
 	{
@@ -1007,6 +1007,6 @@ void Building::decreasePendingInvestigatorCount(GameState &state)
 	}
 }
 
-bool Building::isAlive(GameState &state) const { return !buildingParts.empty(); }
+bool Building::isAlive(GameState &state [[maybe_unused]]) const { return !buildingParts.empty(); }
 
 } // namespace OpenApoc

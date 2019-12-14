@@ -105,7 +105,7 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 			// 16 Hotel is not used in vanilla
 			// Still, we should provide a reasonable substitute
 			case 15:
-				battle_map_index = 14; // 15 Luxury Appartments
+				battle_map_index = 14; // 15 Luxury Apartments
 				break;
 			// 17 Atmosphere Processor is not used in vanilla
 			// Still, we should provide a reasonable substitute
@@ -117,8 +117,9 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 			case 28:
 				battle_map_index = 10; // 11 Procreation Park
 				break;
-				// 31 Space Ship is not used in vanilla
-				// Still, we should provide a reasonable substitutecase 31:
+			// 31 Space Ship is not used in vanilla
+			// Still, we should provide a reasonable substitute
+			case 31:
 				battle_map_index = 7; // 08 Space Port
 				break;
 			// 34 Outdoor Parks is not used in vanilla

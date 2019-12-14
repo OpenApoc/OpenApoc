@@ -8,21 +8,18 @@
         <image>xcom3/ufodata/fundadj.pcx</image>
         <position x="0" y="0"/>
         <size width="640" height="480"/>
-
         <label text="CHEATS">
           <position x="113" y="0"/>
           <size width="420" height="32"/>
           <alignment horizontal="centre" vertical="centre"/>
           <font>bigfont</font>
         </label>
-
         <label id="TEXT_FUNDS">
           <position x="572" y="11"/>
           <size width="60" height="10"/>
           <alignment horizontal="left" vertical="centre"/>
           <font>smalfont</font>
         </label>
-
         <textbutton text="Give all research" id="BUTTON_GIVE_ALL_RESEARCH">
           <font>smalfont</font>
           <position x="290" y="100"/>
@@ -48,7 +45,16 @@
           <position x="290" y="226"/>
           <size width="140" height="28"/>
         </textbutton>
-
+        <textbutton text="Go forward 1 day" id="BUTTON_FAST_FORWARD_DAY">
+          <font>smalfont</font>
+          <position x="290" y="254"/>
+          <size width="140" height="28"/>
+        </textbutton>
+        <textbutton text="Go forward 1 week" id="BUTTON_FAST_FORWARD_WEEK">
+          <font>smalfont</font>
+          <position x="290" y="282"/>
+          <size width="140" height="28"/>
+        </textbutton>
         <checkbox id="CHECKBOX_INFINITE_AMMO">
           <position x="440" y="100"/>
           <size width="150" height="16"/>
@@ -60,7 +66,6 @@
             <size width="120" height="16"/>
           </label>
         </checkbox>
-
         <textbutton id="BUTTON_MODIFY_FUNDS" text="Modify funds">
           <font>smalfont</font>
           <position x="56" y="102"/>
@@ -70,7 +75,6 @@
           <position x="42" y="122"/>
           <size width="224" height="18"/>
           <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
-
           <scroll id="MODIFY_FUNDS">
             <position x="14" y="2"/>
             <size width="148" height="15"/>
@@ -95,7 +99,6 @@
             <font>smalfont</font>
           </label>
         </graphic>
-
         <label text="Damage Inflicted">
           <position x="56" y="166"/>
           <font>smalfont</font>
@@ -106,7 +109,6 @@
           <position x="42" y="182"/>
           <size width="224" height="18"/>
           <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
-
           <scroll id="DAMAGE_INFLICTED_MULT">
             <position x="14" y="2"/>
             <size width="148" height="15"/>
@@ -131,7 +133,6 @@
             <font>smalfont</font>
           </label>
         </graphic>
-
         <label text="Damage Received">
           <position x="56" y="226"/>
           <font>smalfont</font>
@@ -142,7 +143,6 @@
           <position x="42" y="242"/>
           <size width="224" height="18"/>
           <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
-
           <scroll id="DAMAGE_RECEIVED_MULT">
             <position x="14" y="2"/>
             <size width="148" height="16"/>
@@ -167,8 +167,6 @@
             <font>smalfont</font>
           </label>
         </graphic>
-
-
         <label text="Hostiles multiplier">
           <position x="56" y="286"/>
           <font>smalfont</font>
@@ -179,7 +177,6 @@
           <position x="42" y="302"/>
           <size width="224" height="18"/>
           <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
-
           <scroll id="HOSTILES_MULT">
             <position x="14" y="2"/>
             <size width="148" height="16"/>
@@ -204,8 +201,6 @@
             <font>smalfont</font>
           </label>
         </graphic>
-
-
         <label text="Agent Stat Growth">
           <position x="56" y="346"/>
           <font>smalfont</font>
@@ -216,7 +211,6 @@
           <position x="42" y="362"/>
           <size width="224" height="18"/>
           <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
-
           <scroll id="STAT_GROWTH_MULT">
             <position x="14" y="2"/>
             <size width="148" height="16"/>
@@ -241,7 +235,6 @@
             <font>smalfont</font>
           </label>
         </graphic>
-
         <graphicbutton id="BUTTON_OK">
           <position x="602" y="443"/>
           <size width="35" height="34"/>

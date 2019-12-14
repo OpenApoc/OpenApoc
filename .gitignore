@@ -82,6 +82,7 @@ CMakeSettings.json
 [Dd]ata/cd.iso
 [Dd]ata/XCOM.BIN
 [Dd]ata.old/
+[Dd]ata/mods/
 
 # Netbeans project folder
 nbproject/
@@ -106,7 +107,7 @@ game/state/luagamestate_support_generated.h
 
 OpenApoc.exe.lnk
 OpenApoc.lnk
-screenshot.png
+screenshot*.png
 tileviewvoxels.png
 
 # Generated data files

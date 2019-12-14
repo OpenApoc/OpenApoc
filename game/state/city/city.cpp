@@ -504,7 +504,7 @@ void City::repairScenery(GameState &state)
 	}
 }
 
-void City::repairVehicles(GameState &state)
+void City::repairVehicles(GameState &state [[maybe_unused]])
 {
 	for (auto &b : buildings)
 	{
@@ -523,7 +523,7 @@ void City::repairVehicles(GameState &state)
 			if (!vehiclesToRepair.empty())
 			{
 				int repairPerVehicle = std::max(1, repairPoints / (int)vehiclesToRepair.size());
-				// Twice since we can have a situiaton like 1 repair bay and 7 vehicles,
+				// Twice since we can have a situation like 1 repair bay and 7 vehicles,
 				// in this case we repair them for 1 and we have 5 points remaining
 				// which we assign again
 				for (int i = 0; i < 2; i++)

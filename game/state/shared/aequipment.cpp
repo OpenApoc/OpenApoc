@@ -748,7 +748,7 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 		Vec3<float> velocity = toPos - fromPos;
 		velocity = glm::normalize(velocity);
 		// Move projectile a little bit forward so that it does not shoot from inside our chest
-		// We are protecting firer from collisison for first frames anyway, so this is redundant
+		// We are protecting firer from collision for first frames anyway, so this is redundant
 		// for all cases except when a unit fires with a brainsucker on it's head!
 		// But this also looks better since it does visually fire from the muzzle, not from inside
 		// the soldier
@@ -797,7 +797,7 @@ void AEquipment::throwItem(GameState &state, Vec3<int> targetPosition, float vel
 	// This will be modified by the accuracy algorithm
 	Vec3<float> targetLocationModified =
 	    Vec3<float>(targetPosition) + Vec3<float>{0.5f, 0.5f, 0.0f};
-	// This is proper target vector, stored to get differnece later
+	// This is proper target vector, stored to get difference later
 	Vec3<float> targetVector = targetLocationModified - position;
 	// Apply accuracy (if launching apply normal, narrower spread)
 	Battle::accuracyAlgorithmBattle(state, position, targetLocationModified,
@@ -897,7 +897,7 @@ bool AEquipment::calculateNextVelocityForThrow(float distanceXY, float diffZ, fl
 	//
 	// t = time, in ticks
 	// VelocityZ(t) = VelocityZ0 - (Falling_Acceleration / VELOCITY_SCALE_Z) * t;
-	// Let:	a = -Faclling_acc / VELOCITY_SCALE_Z/ 2 / TICK_SCALE,
+	// Let:	a = -Falling_acc / VELOCITY_SCALE_Z/ 2 / TICK_SCALE,
 	//		b = a + VelocityZ / TICK_SCALE,
 	//		c = diffZ
 	// z(t) = a*t^2 + b*t + c
@@ -912,7 +912,7 @@ bool AEquipment::calculateNextVelocityForThrow(float distanceXY, float diffZ, fl
 	// b =  (-c-a*t^2)/t
 	// VelocityZ = TICK_SCALE * ((-c -a * t^2) / t - a)
 	//
-	// Howver, item must fall from above to the target
+	// However, item must fall from above to the target
 	// Therefore, it's VelocityZ when arriving at target must be negative, and big enough
 	// If it's not, we must reduce VelocityX
 
@@ -924,7 +924,7 @@ bool AEquipment::calculateNextVelocityForThrow(float distanceXY, float diffZ, fl
 	// that makes the item fall on top of the tile
 	while (velocityXY > 0.0f)
 	{
-		// FIXME: Should we prevent very high Z-trajectories, unreallistic for heavy items?
+		// FIXME: Should we prevent very high Z-trajectories, unrealistic for heavy items?
 		t = distanceXY * TICK_SCALE / (velocityXY);
 		velocityZ = TICK_SCALE * ((-c - a * t * t) / t - a);
 		if (velocityZ - (FALLING_ACCELERATION_ITEM / VELOCITY_SCALE_BATTLE.z) * t < -0.125f)
@@ -1002,7 +1002,7 @@ bool AEquipment::getVelocityForLaunch(const BattleUnit &unit, Vec3<int> target, 
 {
 	// Launchers use weapon's projectile speed as their XY speed
 	// Item's velocityXY is later multiplied by velocity_scale
-	// Projectie's speed is already in that scale, but is later multiplied by velocity_multiplier
+	// Projectile's speed is already in that scale, but is later multiplied by velocity_multiplier
 	// Therefore we multiply by velocity_mult and divide by scale to convert proj speed to item
 	// speed
 	velocityXY =

@@ -61,7 +61,7 @@ void VoxelMap::calculateCentre()
 {
 	this->centreChanged = false;
 
-	// This calcualtes the 'centre' of the voxel map by finding
+	// This calculates the 'centre' of the voxel map by finding
 	// the average position of all 'filled' voxels
 	// An 'int' should be more than enough to keep the sum
 	// of even the largest completely filled voxel map
@@ -70,7 +70,7 @@ void VoxelMap::calculateCentre()
 
 	for (int z = 0; z < this->size.z; z++)
 	{
-		// The following would figure out wether a pixel is filled or not
+		// The following would figure out whether a pixel is filled or not
 		// However, vanilla always aims at map's centre
 		// This provides for small vehicles to "dodge shots", which actually
 		// are just misaligned voxelmaps assigned to them

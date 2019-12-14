@@ -59,7 +59,8 @@ RecruitScreen::RecruitScreen(sp<GameState> state)
 	onHover = [this](FormsEvent *e) {
 		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
 		auto agent = list->getHoveredData<Agent>();
-		displayAgentStats(agent);
+		if (agent)
+			displayAgentStats(*agent);
 	};
 
 	form->findControlTyped<ListBox>("LIST1")->addCallback(FormEventType::ListBoxChangeHover,
@@ -361,7 +362,7 @@ void RecruitScreen::fillBaseBar(int percent)
 	auto progressImage = mksp<RGBImage>(facilityBar->Size);
 	int redHeight = progressImage->size.y * std::min(100, percent) / 100;
 	{
-		// FIXME: For some reason, there's no border here like in the research sceen, so we
+		// FIXME: For some reason, there's no border here like in the research screen, so we
 		// have to make one manually, probably there's a better way
 		RGBImageLock l(progressImage);
 		for (int x = 0; x < 2; x++)
@@ -382,14 +383,10 @@ void RecruitScreen::fillBaseBar(int percent)
  * Display stats of an agent
  * @agent - the agent
  */
-void RecruitScreen::displayAgentStats(sp<Agent> agent)
+void RecruitScreen::displayAgentStats(const Agent &agent)
 {
-	if (!agent)
-	{
-		return;
-	}
 
-	switch (agent->type->role)
+	switch (agent.type->role)
 	{
 		case AgentType::Role::Soldier:
 			AgentSheet(formAgentStats).display(agent, bigUnitRanks, false);
@@ -404,17 +401,17 @@ void RecruitScreen::displayAgentStats(sp<Agent> agent)
 }
 
 /**
- * Fills the form of personel's statistics. Such as skill and that's all.
+ * Fills the form of personnel's statistics. Such as skill and that's all.
  * @agent - an agent whose stats will be displayed
  * @formPersonnelStats - a form of stats
  */
-void RecruitScreen::personnelSheet(sp<Agent> agent, sp<Form> formPersonnelStats)
+void RecruitScreen::personnelSheet(const Agent &agent, sp<Form> formPersonnelStats)
 {
-	formPersonnelStats->findControlTyped<Label>("AGENT_NAME")->setText(agent->name);
+	formPersonnelStats->findControlTyped<Label>("AGENT_NAME")->setText(agent.name);
 	formPersonnelStats->findControlTyped<Graphic>("SELECTED_PORTRAIT")
-	    ->setImage(agent->getPortrait().photo);
+	    ->setImage(agent.getPortrait().photo);
 	formPersonnelStats->findControlTyped<Label>("VALUE_SKILL")
-	    ->setText(format("%d", agent->getSkill()));
+	    ->setText(format("%d", agent.getSkill()));
 }
 
 /**
@@ -653,7 +650,7 @@ void RecruitScreen::closeScreen(bool confirmed)
 		return;
 	}
 
-	// Sufficnient funds and space, execute
+	// Sufficient funds and space, execute
 	executeOrders();
 	fw().stageQueueCommand({StageCmd::Command::POP});
 }

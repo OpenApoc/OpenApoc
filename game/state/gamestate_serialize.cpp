@@ -443,6 +443,19 @@ bool GameState::saveGame(const UString &path, bool pack, bool pretty)
 	return false;
 }
 
+bool GameState::saveGameDelta(const UString &path, const GameState &reference, bool pack,
+                              bool pretty)
+{
+	TRACE_FN_ARGS1("path", path);
+	auto archive = SerializationArchive::createArchive();
+	if (serialize(archive.get(), reference))
+	{
+		archive->write(path, pack, pretty);
+		return true;
+	}
+	return false;
+}
+
 bool GameState::loadGame(const UString &path)
 {
 
@@ -465,6 +478,22 @@ bool GameState::serialize(SerializationArchive *archive) const
 		auto root = archive->newRoot("", "gamestate");
 		root->addNode("serialization_version", GAMESTATE_SERIALIZATION_VERSION);
 		serializeOut(root, *this, defaultState);
+	}
+	catch (SerializationException &e)
+	{
+		LogError("Serialization failed: \"%s\"", e.what());
+		return false;
+	}
+	return true;
+}
+
+bool GameState::serialize(SerializationArchive *archive, const GameState &reference) const
+{
+	try
+	{
+		auto root = archive->newRoot("", "gamestate");
+		root->addNode("serialization_version", GAMESTATE_SERIALIZATION_VERSION);
+		serializeOut(root, *this, reference);
 	}
 	catch (SerializationException &e)
 	{
@@ -589,11 +618,19 @@ bool BattleUnitImagePack::saveImagePack(const UString &path, bool pack, bool pre
 bool BattleUnitImagePack::loadImagePack(GameState &state, const UString &path)
 {
 
-	TRACE_FN_ARGS1("path", path);
-	auto archive = SerializationArchive::readArchive(path);
+	auto file = fw().data->fs.open(path);
+	if (!file)
+	{
+		LogError("Failed to open image pack \"%s\"", path);
+		return false;
+	}
+	auto fullPath = file.systemPath();
+
+	TRACE_FN_ARGS1("path", fullPath);
+	auto archive = SerializationArchive::readArchive(fullPath);
 	if (!archive)
 	{
-		LogError("Failed to read \"%s\"", path);
+		LogError("Failed to read \"%s\"", fullPath);
 		return false;
 	}
 
@@ -644,12 +681,18 @@ bool BattleUnitAnimationPack::saveAnimationPack(const UString &path, bool pack, 
 
 bool BattleUnitAnimationPack::loadAnimationPack(GameState &state, const UString &path)
 {
+	auto file = fw().data->fs.open(path);
+	if (!file)
+	{
+		LogError("Failed to open animation pack \"%s\"", path);
+	}
+	const auto fullPath = file.systemPath();
 
-	TRACE_FN_ARGS1("path", path);
-	auto archive = SerializationArchive::readArchive(path);
+	TRACE_FN_ARGS1("path", fullPath);
+	auto archive = SerializationArchive::readArchive(fullPath);
 	if (!archive)
 	{
-		LogError("Failed to read \"%s\"", path);
+		LogError("Failed to read \"%s\"", fullPath);
 		return false;
 	}
 

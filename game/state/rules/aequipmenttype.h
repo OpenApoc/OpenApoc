@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game/state/city/research.h"
+#include "game/state/rules/agenttype.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -21,7 +22,6 @@ class DamageType;
 class DamageModifier;
 class AgentType;
 class UfopaediaEntry;
-enum class BodyPart;
 
 enum class TriggerType
 {
@@ -64,7 +64,7 @@ class AEquipmentType : public StateObject
 		Loot
 	};
 
-	AEquipmentType();
+	AEquipmentType() = default;
 	~AEquipmentType() override = default;
 
 	// Shared stuff
@@ -74,17 +74,17 @@ class AEquipmentType : public StateObject
 	int weight = 0;
 	StateRef<BattleUnitImagePack> held_image_pack;
 	sp<Image> dropped_sprite;
-	Vec2<float> dropped_offset;
+	Vec2<float> dropped_offset = {0, 0};
 	sp<Image> dropped_shadow_sprite;
-	Vec2<float> shadow_offset;
+	Vec2<float> shadow_offset = {0, 0};
 	sp<Image> equipscreen_sprite;
-	Vec2<int> equipscreen_size;
+	Vec2<int> equipscreen_size = {0, 0};
 	StateRef<Organisation> manufacturer;
 	int store_space = 0;
 	int armor = 0;
 	int score = 0;
 	ResearchDependency research_dependency;
-	// Wether item is carried two-handed (for display purposes)
+	// Whether item is carried two-handed (for display purposes)
 	bool two_handed = false;
 
 	// Item goes to alien containment
@@ -102,16 +102,16 @@ class AEquipmentType : public StateObject
 	// Armor only
 	sp<Image> body_sprite;
 	StateRef<DamageModifier> damage_modifier;
-	BodyPart body_part;
+	BodyPart body_part = BodyPart::Body;
 	StateRef<BattleUnitImagePack> body_image_pack;
 	bool provides_flight = false;
 
 	// Weapon & Grenade only
 	// For weapons with built-in ammo and for grenades leave this empty
-	// This is not stored in files, but rather filled in gamestate inint
+	// This is not stored in files, but rather filled in gamestate init
 	// In files we only store ammo's link to the weapon
 	// This way, modders can introduce ammunition for existing weapons without having mod conflicts
-	std::list<StateRef<AEquipmentType>> ammo_types;
+	std::set<StateRef<AEquipmentType>> ammo_types;
 
 	// Ammo only
 	std::list<StateRef<AEquipmentType>> weapon_types;
@@ -232,7 +232,7 @@ class EquipmentSet : public StateObject
 	std::vector<GrenadeData> grenades;
 	std::vector<EquipmentData> equipment;
 
-	std::list<sp<AEquipmentType>> generateEquipmentList(GameState &state);
+	std::list<const AEquipmentType *> generateEquipmentList(GameState &state);
 
 	static sp<EquipmentSet> getByScore(const GameState &state, const int score);
 	static sp<EquipmentSet> getByLevel(const GameState &state, const int level);

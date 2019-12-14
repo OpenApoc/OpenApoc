@@ -405,7 +405,7 @@ void BattleHazard::applyEffect(GameState &state)
 			{
 				velocity.z = 1.0f;
 			}
-			// Determine wether to hit head, legs or torso
+			// Determine whether to hit head, legs or torso
 			auto cposition = u->position;
 			// Hit torso
 			if (sqrtf(velocity.x * velocity.x + velocity.y * velocity.y) > std::abs(velocity.z))
@@ -419,7 +419,7 @@ void BattleHazard::applyEffect(GameState &state)
 			}
 			else
 			{
-				// Legs are defeault already
+				// Legs are default already
 			}
 			// Apply
 			u->applyDamage(state, power, damageType,

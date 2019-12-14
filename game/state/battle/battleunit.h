@@ -255,7 +255,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Stealth, increases each turn, set to 0 when taking action or no stealth in hand
 	// Unit is cloaked when this is >= CLOAK_TICKS_REQUIRED_UNIT
 	unsigned int cloakTicksAccumulated = 0;
-	// Ticks until spound is emmited
+	// Ticks until sound is emitted
 	int ticksUntillNextCry = 0;
 
 	// User set modes
@@ -368,12 +368,12 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Remove unit from squad in battle's forces
 	void removeFromSquad(Battle &b);
-	// Assign unit to squad (optinally specify squad number and position)
+	// Assign unit to squad (optionally specify squad number and position)
 	bool assignToSquad(Battle &b, int squadNumber = -1, int squadPosition = -1);
 
 	// Fatal wounds
 
-	// Wether unit is fatally wounded
+	// Whether unit is fatally wounded
 	bool isFatallyWounded();
 	// Add fatal wound to a body part
 	void addFatalWound(BodyPart fatalWoundPart);
@@ -393,10 +393,10 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Cease attacking
 	void stopAttacking();
 	// Returns which hands can be used for an attack (or none if attack cannot be made)
-	// Checks wether target unit is in range, and clear LOF exists to it
+	// Checks whether target unit is in range, and clear LOF exists to it
 	WeaponStatus canAttackUnit(GameState &state, sp<BattleUnit> unit);
-	// Returns wether unit can be attacked by one of the two supplied weapons
-	// Checks wether target unit is in range, and clear LOF exists to it
+	// Returns whether unit can be attacked by one of the two supplied weapons
+	// Checks whether target unit is in range, and clear LOF exists to it
 	WeaponStatus canAttackUnit(GameState &state, sp<BattleUnit> unit, sp<AEquipment> rightHand,
 	                           sp<AEquipment> leftHand = nullptr);
 	// Clear LOF means no friendly fire and no map part in between
@@ -412,7 +412,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	int getPsiCost(PsiStatus status, bool attack = true);
 	// Get chance of psi attack to succeed
 	int getPsiChance(StateRef<BattleUnit> target, PsiStatus status, StateRef<AEquipmentType> item);
-	// Starts attacking taget, returns if attack successful
+	// Starts attacking target, returns if attack successful
 	bool startAttackPsi(GameState &state, StateRef<BattleUnit> target, PsiStatus status,
 	                    StateRef<AEquipmentType> item);
 	// Stop / break psi attack
@@ -421,7 +421,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// of some failure
 	void applyPsiAttack(GameState &state, BattleUnit &attacker, PsiStatus status,
 	                    StateRef<AEquipmentType> item, bool impact);
-	// Cange unit's owner (mind control)
+	// Change unit's owner (mind control)
 	void changeOwner(GameState &state, StateRef<Organisation> newOwner);
 
 	// Items
@@ -433,7 +433,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Use brainsucker ability
 	bool useBrainsucker(GameState &state);
 	// Use unit spawner (suicide)
-	bool useSpawner(GameState &state, sp<AEquipmentType> item);
+	bool useSpawner(GameState &state, const AEquipmentType &item);
 
 	// Body
 
@@ -452,7 +452,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void setHandState(HandState state);
 	// Begin unit's hand state change towards target state
 	void beginHandStateChange(HandState state);
-	// Wether unit is allowed to change handState to target state
+	// Whether unit is allowed to change handState to target state
 	bool canHandStateChange(HandState state);
 
 	// Movement
@@ -491,7 +491,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void playDistantSound(GameState &state, sp<Sample> sfx, float gainMult = 1.0f);
 	// Init the delay before first time unit emits a cry in combat
 	void initCryTimer(GameState &state);
-	// Reest the delay before unit emits a cry next time in combat
+	// Reset the delay before unit emits a cry next time in combat
 	void resetCryTimer(GameState &state);
 
 	// Movement and position
@@ -512,9 +512,9 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// For explanation how it works look @ AEquipment::calculateNextVelocityForThrow
 	void calculateVelocityForJump(float distanceXY, float diffZ, float &velocityXY,
 	                              float &velocityZ, bool diagonAlley);
-	// Returns wether unit can launch towards target position
+	// Returns whether unit can launch towards target position
 	bool canLaunch(Vec3<float> targetPosition);
-	// Returns wether unit can launch, and calculates all vectors and velocities if yes
+	// Returns whether unit can launch, and calculates all vectors and velocities if yes
 	bool canLaunch(Vec3<float> targetPosition, Vec3<float> &targetVectorXY, float &velocityXY,
 	               float &velocityZ);
 	// Launch unit towards target position
@@ -540,7 +540,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Pops all finished missions, returns true if popped
 	bool popFinishedMissions(GameState &state);
-	// Returns wether unit has a mission queued that will make it move
+	// Returns whether unit has a mission queued that will make it move
 	bool hasMovementQueued();
 	// Gets next destination from current mission, returns true if got one
 	bool getNextDestination(GameState &state, Vec3<float> &dest);
@@ -564,10 +564,10 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 
 	// Refresh unit's reserve cost
 	void refreshReserveCost(GameState &state);
-	// Returns wether unit can afford action
+	// Returns whether unit can afford action
 	bool canAfford(GameState &state, int cost, bool ignoreKneelReserve = false,
 	               bool ignoreShootReserve = false) const;
-	// Returns if unit did spend (false if unsufficient TUs)
+	// Returns if unit did spend (false if insufficient TUs)
 	bool spendTU(GameState &state, int cost, bool ignoreKneelReserve = false,
 	             bool ignoreShootReserve = false, bool allowInterrupt = false);
 	// Spend all remaining TUs for the unit
@@ -626,25 +626,25 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Returns true if the unit is unconscious and not dead
 	bool isUnconscious() const;
 	// Return true if the unit is conscious
-	// and not currently in the dropped state (curent and target)
+	// and not currently in the dropped state (current and target)
 	bool isConscious() const;
 	// So we can stop going ->isLarge() all the time
 	bool isLarge() const { return agent->type->bodyType->large; }
-	// Wether unit is static - not moving, not falling, not changing body state
+	// Whether unit is static - not moving, not falling, not changing body state
 	bool isStatic() const;
-	// Wether unit is busy - with aiming or firing or otherwise involved
+	// Whether unit is busy - with aiming or firing or otherwise involved
 	bool isBusy() const;
-	// Wether unit is firing its weapon (or aiming in preparation of firing)
+	// Whether unit is firing its weapon (or aiming in preparation of firing)
 	bool isAttacking() const;
-	// Wether unit is throwing an item
+	// Whether unit is throwing an item
 	bool isThrowing() const;
-	// Wether unit is moving (has Goto Location queued)
+	// Whether unit is moving (has Goto Location queued)
 	bool isMoving() const;
-	// Wether unit is doing a specific mission (has it queued)
+	// Whether unit is doing a specific mission (has it queued)
 	bool isDoing(BattleUnitMission::Type missionType) const;
 	// Return unit's general type
 	BattleUnitType getType() const;
-	// Wether unit is AI controlled
+	// Whether unit is AI controlled
 	bool isAIControlled(GameState &state) const;
 	// Cloaked status
 	bool isCloaked() const;
@@ -655,9 +655,9 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	bool canFly() const;
 	// Returns true if the unit is conscious and can fly
 	bool canMove() const;
-	// Wether unit can go prone in position and facing
+	// Whether unit can go prone in position and facing
 	bool canProne(Vec3<int> pos, Vec2<int> fac) const;
-	// Wether unit can kneel in current position and facing
+	// Whether unit can kneel in current position and facing
 	bool canKneel() const;
 
 	// Get unit's height in current situation
@@ -694,7 +694,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Request this unit give way to other unit
 	void requestGiveWay(const BattleUnit &requestor, const std::list<Vec3<int>> &plannedPath,
 	                    Vec3<int> pos);
-	// Appply enzyme to this unit
+	// Apply enzyme to this unit
 	void applyEnzymeEffect(GameState &state);
 	// Spawn enzyme smoke on this unit
 	void spawnEnzymeSmoke(GameState &state);
@@ -746,9 +746,9 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	void updateCrying(GameState &state);
 	// Checks if unit should begin falling
 	void updateCheckBeginFalling(GameState &state);
-	// Updates unit's body trainsition and acquires new target body state
+	// Updates unit's body transition and acquires new target body state
 	void updateBody(GameState &state, unsigned int &bodyTicksRemaining);
-	// Updates unit's hands trainsition
+	// Updates unit's hands transition
 	void updateHands(GameState &state, unsigned int &handsTicksRemaining);
 	// Updates unit's movement if unit is falling
 	void updateMovementFalling(GameState &state, unsigned int &moveTicksRemaining,
@@ -767,7 +767,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
 	// Updates unit's movement
 	// Return true if retreated or destroyed and we must halt immediately
 	void updateMovement(GameState &state, unsigned int &moveTicksRemaining, bool &wasUsingLift);
-	// Updates unit's trainsition and acquires new target
+	// Updates unit's transition and acquires new target
 	void updateTurning(GameState &state, unsigned int &turnTicksRemaining,
 	                   unsigned int const handsTicksRemaining);
 	// Updates unit's displayed item (which one will draw in unit's hands on screen)
@@ -803,7 +803,7 @@ class BattleUnit : public StateObject, public std::enable_shared_from_this<Battl
   private:
 	friend class Battle;
 
-	// Start attacking (inner function which initialises everything regardles of target)
+	// Start attacking (inner function which initialises everything regardless of target)
 	bool startAttacking(GameState &state, WeaponStatus status);
 	// Start psi (internal function which actually does the attack)
 	bool startAttackPsiInternal(GameState &state, StateRef<BattleUnit> target, PsiStatus status,

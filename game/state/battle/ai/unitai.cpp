@@ -142,7 +142,7 @@ AIDecision AIBlockUnit::think(GameState &state, BattleUnit &u, bool forceInterru
 			// We can keep last decision's movement if this one is action only,
 			// because that would mean this decision may be possible to be done on the move
 			// We cannot take last decision's action because it might override
-			// our move or maulfunction otherwise
+			// our move or malfunction otherwise
 			if (!newDecision.movement && decision.movement)
 			{
 				newDecision.movement = decision.movement;

@@ -273,7 +273,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 	}
 
 	// It is not understood in what order animations come in .AD files.
-	// Plus, some simplier aliens are missing those files alltogether.
+	// Plus, some simpler aliens are missing those files altogether.
 	// Therefore, we have to parse them all manually here. I see no other option
 
 	if (name == "unit")

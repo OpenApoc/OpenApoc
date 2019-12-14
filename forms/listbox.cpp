@@ -362,7 +362,7 @@ sp<Control> ListBox::removeItem(int Index)
 	}
 	if (c == this->hovered)
 	{
-		this->selected = nullptr;
+		this->hovered = nullptr;
 	}
 	c->setParent(nullptr);
 	return c;

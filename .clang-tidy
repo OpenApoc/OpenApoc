@@ -1,5 +1,5 @@
 ---
-Checks:          'clang-diagnostic-*,clang-analyzer-*,-clang-analyzer-alpha*,misc-static-assert,modernize-use-auto,modernize-use-default,modernize-usenullptr,modernize-use-override,readability-identifier-naming'
+Checks:          'clang-diagnostic-*,clang-analyzer-*,misc-static-assert,modernize-use-auto,modernize-use-default,modernize-usenullptr,modernize-use-override,performance-*,readability-non-const-parameter,readability-redundant-*,readability-simplify-*,bugprone-*'
 HeaderFilterRegex: 'forms/.*|framework/.*|game/.*|library/.*|tests/.*|tools/.*'
 AnalyzeTemporaryDtors: false
 User:            jonny

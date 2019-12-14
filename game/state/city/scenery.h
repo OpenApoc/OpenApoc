@@ -38,17 +38,17 @@ class Scenery : public SupportedMapPart, public std::enable_shared_from_this<Sce
 		return offsetPos;
 	}
 
-	Vec3<int> initialPosition;
-	Vec3<float> currentPosition;
+	Vec3<int> initialPosition = {0, 0, 0};
+	Vec3<float> currentPosition = {0, 0, 0};
 	void setPosition(const Vec3<float> &pos);
 	unsigned int ticksUntilCollapse = 0;
 	std::set<Vec3<int>> supportedParts;
 	std::list<Vec3<int>> supportedBy;
 
-	bool damaged;
-	bool falling;
+	bool damaged = false;
+	bool falling = false;
 	float fallingSpeed = 0.0f;
-	bool destroyed;
+	bool destroyed = false;
 	int supportHardness = 0;
 
 	// Update relation with attacker which killed or hit us
@@ -63,7 +63,7 @@ class Scenery : public SupportedMapPart, public std::enable_shared_from_this<Sce
 	void die(GameState &state, bool forced = false);
 	// Collapses mappart immediately
 	void collapse(GameState &state);
-	// Wether mappart is queued to collapse
+	// Whether mappart is queued to collapse
 	bool willCollapse() const { return ticksUntilCollapse > 0; }
 
 	void update(GameState &state, unsigned int ticks);
@@ -84,7 +84,7 @@ class Scenery : public SupportedMapPart, public std::enable_shared_from_this<Sce
 	StateRef<Building> building;
 	StateRef<City> city;
 
-	Scenery();
+	Scenery() = default;
 	~Scenery() = default;
 
   private:
@@ -102,7 +102,7 @@ class Scenery : public SupportedMapPart, public std::enable_shared_from_this<Sce
 
 	// Compiles a list of parts supported by this part
 	// Using sp because we switch to a new one constantly in re-linking
-	// Using set because we need to easilly weed out duplicates
+	// Using set because we need to easily weed out duplicates
 	sp<std::set<SupportedMapPart *>> getSupportedParts() override;
 
 	// Clears parts supported by this

@@ -373,7 +373,7 @@ void extractAnimationPackUnitInternal(sp<BattleUnitAnimationPack> p,
 
 	// Body state change animations
 	{
-		// Body Standing -> Downned/Dead animation: 47
+		// Body Standing -> Downed/Dead animation: 47
 		p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 		                          BodyState::Standing, BodyState::Downed}][{x, y}] =
 		    e.getAnimationEntry(dataAD, dataUA, dataUF, 47, {x, y});
@@ -393,7 +393,7 @@ void extractAnimationPackUnitInternal(sp<BattleUnitAnimationPack> p,
 		                          BodyState::Standing, BodyState::Dead}][{x, y}] =
 		    e.getAnimationEntry(dataAD, dataUA, dataUF, 47, {x, y});
 
-		// Body Downned -> Standing animation: 47
+		// Body Downed -> Standing animation: 47
 		p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 		                          BodyState::Downed, BodyState::Standing}][{x, y}] =
 		    e.getAnimationEntryInv(dataAD, dataUA, dataUF, 47, {x, y});
@@ -404,7 +404,7 @@ void extractAnimationPackUnitInternal(sp<BattleUnitAnimationPack> p,
 		                          BodyState::Downed, BodyState::Standing}][{x, y}] =
 		    e.getAnimationEntryInv(dataAD, dataUA, dataUF, 47, {x, y});
 
-		// Body Kneeling -> Downned/Dead animation: 49
+		// Body Kneeling -> Downed/Dead animation: 49
 		p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 		                          BodyState::Kneeling, BodyState::Downed}][{x, y}] =
 		    e.getAnimationEntry(dataAD, dataUA, dataUF, 49, {x, y});
@@ -424,7 +424,7 @@ void extractAnimationPackUnitInternal(sp<BattleUnitAnimationPack> p,
 		                          BodyState::Kneeling, BodyState::Dead}][{x, y}] =
 		    e.getAnimationEntry(dataAD, dataUA, dataUF, 49, {x, y});
 
-		// Body Prone -> Downned/Dead animation: 50
+		// Body Prone -> Downed/Dead animation: 50
 		p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 		                          BodyState::Prone, BodyState::Downed}][{x, y}] =
 		    e.getAnimationEntry(dataAD, dataUA, dataUF, 50, {x, y}, e.gPrOff({x, y}), {0, 0});
@@ -444,7 +444,7 @@ void extractAnimationPackUnitInternal(sp<BattleUnitAnimationPack> p,
 		                          BodyState::Prone, BodyState::Dead}][{x, y}] =
 		    e.getAnimationEntry(dataAD, dataUA, dataUF, 50, {x, y}, e.gPrOff({x, y}), {0, 0});
 
-		// Body Flying -> Downned/Dead animation: 51
+		// Body Flying -> Downed/Dead animation: 51
 		p->body_state_animations[{ItemWieldMode::None, HandState::AtEase, MovementState::None,
 		                          BodyState::Flying, BodyState::Downed}][{x, y}] =
 		    e.getAnimationEntry(dataAD, dataUA, dataUF, 51, {x, y});

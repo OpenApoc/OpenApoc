@@ -1,4 +1,4 @@
-#include "forms/transactioncontrol.h"
+#include "game/ui/general/transactioncontrol.h"
 #include "forms/graphicbutton.h"
 #include "forms/label.h"
 #include "forms/listbox.h"
@@ -527,7 +527,7 @@ sp<TransactionControl> TransactionControl::createControl(GameState &state,
 			// Nothing, we can still sell it for parts or transfer!
 		}
 	}
-	LogWarning("Vehicle type %s starting price %d", vehicle->type.id, price);
+	LogInfo("Vehicle type %s starting price %d", vehicle->type.id, price);
 	// Add price of ammo and equipment
 	for (auto &e : vehicle->equipment)
 	{
@@ -538,8 +538,8 @@ sp<TransactionControl> TransactionControl::createControl(GameState &state,
 			{
 				price += e->ammo * state.economy[e->type->ammo_type.id].currentPrice;
 			}
-			LogWarning("Vehicle type %s price increased to %d after counting %s", vehicle->type.id,
-			           price, e->type.id);
+			LogInfo("Vehicle type %s price increased to %d after counting %s", vehicle->type.id,
+			        price, e->type.id);
 		}
 	}
 	// Subtract price of default equipment
@@ -548,11 +548,11 @@ sp<TransactionControl> TransactionControl::createControl(GameState &state,
 		if (state.economy.find(e.second.id) != state.economy.end())
 		{
 			price -= state.economy[e.second.id].currentPrice;
-			LogWarning("Vehicle type %s price decreased to %d after counting %s", vehicle->type.id,
-			           price, e.second.id);
+			LogInfo("Vehicle type %s price decreased to %d after counting %s", vehicle->type.id,
+			        price, e.second.id);
 		}
 	}
-	LogWarning("Vehicle type %s final price %d", vehicle->type.id, price);
+	LogInfo("Vehicle type %s final price %d", vehicle->type.id, price);
 
 	auto manufacturer = vehicle->type->manufacturer;
 	bool isAmmo = false;

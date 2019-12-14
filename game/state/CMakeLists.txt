@@ -2,7 +2,7 @@
 PROJECT(OpenApoc_GameState CXX C)
 
 # check cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.9)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
@@ -251,3 +251,8 @@ add_custom_command(OUTPUT
 		DEPENDS
 		OpenApoc_LuaGamestateSupportGen
 		${CMAKE_SOURCE_DIR}/game/state/gamestate_serialize.xml)
+
+add_custom_target(generated-source
+		DEPENDS
+		gamestate_serialize_generated.h gamestate_serialize_generated.cpp
+		luagamestate_support_generated.h luagamestate_support_generated.cpp)

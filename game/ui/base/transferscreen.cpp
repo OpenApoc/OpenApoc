@@ -5,7 +5,6 @@
 #include "forms/label.h"
 #include "forms/radiobutton.h"
 #include "forms/scrollbar.h"
-#include "forms/transactioncontrol.h"
 #include "forms/ui.h"
 #include "framework/configfile.h"
 #include "framework/data.h"
@@ -24,6 +23,7 @@
 #include "game/ui/base/recruitscreen.h"
 #include "game/ui/general/agentsheet.h"
 #include "game/ui/general/messagebox.h"
+#include "game/ui/general/transactioncontrol.h"
 #include <array>
 
 namespace OpenApoc
@@ -148,7 +148,7 @@ void TransferScreen::updateBaseHighlight()
 		{
 			auto viewName = format("BUTTON_SECOND_BASE_%d", ++i);
 			auto view = form->findControlTyped<GraphicButton>(viewName);
-			auto viewImage = drawMiniBase(b.second, viewHighlight, viewFacility);
+			auto viewImage = drawMiniBase(*b.second, viewHighlight, viewFacility);
 			view->setImage(viewImage);
 			view->setDepressedImage(viewImage);
 		}
@@ -220,13 +220,14 @@ void TransferScreen::displayItem(sp<TransactionControl> control)
 		case TransactionControl::Type::Engineer:
 		case TransactionControl::Type::Physicist:
 		{
-			RecruitScreen::personnelSheet(state->agents[control->itemId], formPersonnelStats);
+			RecruitScreen::personnelSheet(*state->agents[control->itemId], formPersonnelStats);
 			formPersonnelStats->setVisible(true);
 			break;
 		}
 		case TransactionControl::Type::Soldier:
 		{
-			AgentSheet(formAgentStats).display(state->agents[control->itemId], bigUnitRanks, false);
+			AgentSheet(formAgentStats)
+			    .display(*state->agents[control->itemId], bigUnitRanks, false);
 			formAgentStats->setVisible(true);
 			break;
 		}
@@ -239,7 +240,7 @@ void TransferScreen::closeScreen()
 {
 	auto player = state->getPlayer();
 
-	// Step 01: Check accomodation of different sorts
+	// Step 01: Check accommodation of different sorts
 	{
 		std::array<int, MAX_BASES> vecCrewDelta;
 		std::array<int, MAX_BASES> vecCargoDelta;
@@ -502,8 +503,11 @@ void TransferScreen::executeOrders()
 					case TransactionControl::Type::Physicist:
 					{
 						StateRef<Agent> agent{state.get(), c->itemId};
-						StateRef<Lab> lab{state.get(), agent->lab_assigned};
-						agent->lab_assigned->removeAgent(lab, agent);
+						if (agent->lab_assigned)
+						{
+							StateRef<Lab> lab{state.get(), agent->lab_assigned};
+							agent->lab_assigned->removeAgent(lab, agent);
+						}
 						agent->transfer(*state, newBase->building);
 						break;
 					}
@@ -656,7 +660,7 @@ void TransferScreen::initViewSecondBase()
 			currentSecondView = view;
 		}
 		view->setData(b.second);
-		auto viewImage = drawMiniBase(b.second, viewHighlight, viewFacility);
+		auto viewImage = drawMiniBase(*b.second, viewHighlight, viewFacility);
 		view->setImage(viewImage);
 		view->setDepressedImage(viewImage);
 		wp<GraphicButton> weakView(view);

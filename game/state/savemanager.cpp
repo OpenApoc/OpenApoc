@@ -2,6 +2,7 @@
 #include "framework/configfile.h"
 #include "framework/filesystem.h"
 #include "framework/framework.h"
+#include "framework/options.h"
 #include "framework/serialization/serialize.h"
 #include "framework/trace.h"
 #include "game/state/gamestate.h"
@@ -20,11 +21,7 @@ namespace OpenApoc
 const UString saveManifestName = "save_manifest";
 const UString saveFileExtension = ".save";
 
-ConfigOptionString saveDirOption("Game.Save", "Directory", "Directory containing saved games",
-                                 "./saves");
-ConfigOptionBool packSaveOption("Game.Save", "Pack", "Pack saved games into a zip", true);
-
-SaveManager::SaveManager() : saveDirectory(saveDirOption.get()) {}
+SaveManager::SaveManager() : saveDirectory(Options::saveDirOption.get()) {}
 
 UString SaveManager::createSavePath(const UString &name) const
 {
@@ -100,7 +97,7 @@ bool writeArchiveWithBackup(SerializationArchive *archive, const UString &path, 
 
 		// WARNING! Dragons live here! Specifically dragon named miniz who hates windows paths
 		// (or paths not starting with dot)
-		// therefore I'm doing gymnasitcs here to backup and still pass original path string to
+		// therefore I'm doing gymnastics here to backup and still pass original path string to
 		// archive write
 		// that is really bad, because if user clicks exit, save will be renamed to some random
 		// junk
@@ -224,7 +221,7 @@ bool SaveManager::overrideGame(const SaveMetadata &metadata, const UString &newN
 
 bool SaveManager::saveGame(const SaveMetadata &metadata, const sp<GameState> gameState) const
 {
-	bool pack = packSaveOption.get();
+	bool pack = Options::packSaveOption.get();
 	const UString path = metadata.getFile();
 	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
@@ -261,7 +258,7 @@ bool SaveManager::specialSaveGame(SaveType type, const sp<GameState> gameState) 
 
 std::vector<SaveMetadata> SaveManager::getSaveList() const
 {
-	auto dirString = saveDirOption.get();
+	auto dirString = Options::saveDirOption.get();
 	fs::path saveDirectory = dirString.str();
 	std::vector<SaveMetadata> saveList;
 	try
@@ -280,7 +277,7 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 			}
 
 			std::string saveFileName = i->path().filename().string();
-			// miniz can't read paths not starting with dor or with windows slashes
+			// miniz can't read paths not starting with dir or with windows slashes
 			UString savePath = saveDirectory.string() + "/" + saveFileName;
 			if (auto archive = SerializationArchive::readArchive(savePath))
 			{
@@ -331,7 +328,7 @@ bool SaveManager::deleteGame(const sp<SaveMetadata> &slot) const
 
 bool SaveMetadata::deserializeManifest(SerializationArchive *archive, const UString &saveFileName)
 {
-	auto root = archive->getRoot("", saveManifestName);
+	auto root = archive->getRoot("", saveManifestName.cStr());
 	if (!root)
 	{
 		return false;
@@ -381,7 +378,7 @@ bool SaveMetadata::deserializeManifest(SerializationArchive *archive, const UStr
 
 bool SaveMetadata::serializeManifest(SerializationArchive *archive) const
 {
-	auto root = archive->newRoot("", saveManifestName);
+	auto root = archive->newRoot("", saveManifestName.cStr());
 	if (!root)
 	{
 		return false;

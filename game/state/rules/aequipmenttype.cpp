@@ -6,7 +6,6 @@
 
 namespace OpenApoc
 {
-AEquipmentType::AEquipmentType() : body_part(BodyPart::Body) {}
 
 const UString &AEquipmentType::getPrefix()
 {
@@ -58,19 +57,19 @@ sp<EquipmentSet> EquipmentSet::get(const GameState &state, const UString &id)
 	return it->second;
 }
 
-std::list<sp<AEquipmentType>> EquipmentSet::generateEquipmentList(GameState &state)
+std::list<const AEquipmentType *> EquipmentSet::generateEquipmentList(GameState &state)
 {
-	std::list<sp<AEquipmentType>> output;
+	std::list<const AEquipmentType *> output;
 
 	if (weapons.size() > 0)
 	{
 		auto wd = weapons[randBoundsExclusive(state.rng, 0, (int)weapons.size())];
-		output.push_back(wd.weapon);
+		output.push_back(wd.weapon.get());
 		if (wd.clip)
 		{
 			for (int i = 0; i < wd.clip_amount; i++)
 			{
-				output.push_back(wd.clip);
+				output.push_back(wd.clip.get());
 			}
 		}
 	}
@@ -79,7 +78,7 @@ std::list<sp<AEquipmentType>> EquipmentSet::generateEquipmentList(GameState &sta
 		auto gd = grenades[randBoundsExclusive(state.rng, 0, (int)grenades.size())];
 		for (int i = 0; i < gd.grenade_amount; i++)
 		{
-			output.push_back(gd.grenade);
+			output.push_back(gd.grenade.get());
 		}
 	}
 	if (equipment.size() > 0)
@@ -87,7 +86,7 @@ std::list<sp<AEquipmentType>> EquipmentSet::generateEquipmentList(GameState &sta
 		auto ed = equipment[randBoundsExclusive(state.rng, 0, (int)equipment.size())];
 		for (auto &e : ed.equipment)
 		{
-			output.push_back(e);
+			output.push_back(e.get());
 		}
 	}
 

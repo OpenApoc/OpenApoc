@@ -67,7 +67,10 @@ float TileObjectDoodad::getZOrder() const
 	return getCenter().z + 3.5f + (float)getType() / 1000.0f;
 }
 
-bool TileObjectDoodad::hasVoxelMap(bool los) const { return doodad.lock()->voxelMap != nullptr; }
+bool TileObjectDoodad::hasVoxelMap(bool los [[maybe_unused]]) const
+{
+	return doodad.lock()->voxelMap != nullptr;
+}
 
 sp<VoxelMap> TileObjectDoodad::getVoxelMap(Vec3<int> mapIndex, bool los) const
 {

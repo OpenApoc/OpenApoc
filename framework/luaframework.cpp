@@ -64,8 +64,16 @@ void pushToLua(lua_State *L, sp<Image> &v)
 	else
 		lua_pushnil(L);
 }
-void pushToLua(lua_State *L, sp<LazyImage> &v) { lua_pushnil(L); }
-void pushToLua(lua_State *L, sp<VoxelSlice> &v) { lua_pushnil(L); }
+void pushToLua(lua_State *L, sp<LazyImage> &v [[maybe_unused]])
+{
+	lua_pushnil(L);
+	LogError("Unimplemented Lua function");
+}
+void pushToLua(lua_State *L, sp<VoxelSlice> &v [[maybe_unused]])
+{
+	lua_pushnil(L);
+	LogError("Unimplemented Lua function");
+}
 void pushToLua(lua_State *L, sp<Sample> &v)
 {
 	if (v)
@@ -73,7 +81,11 @@ void pushToLua(lua_State *L, sp<Sample> &v)
 	else
 		lua_pushnil(L);
 }
-void pushToLua(lua_State *L, sp<VoxelMap> &v) { lua_pushnil(L); }
+void pushToLua(lua_State *L, sp<VoxelMap> &v [[maybe_unused]])
+{
+	lua_pushnil(L);
+	LogError("Unimplemented Lua function");
+}
 void pushToLua(lua_State *L, Colour &v)
 {
 	lua_createtable(L, 0, 4);
@@ -87,11 +99,31 @@ void pushToLua(lua_State *L, Colour &v)
 	lua_setfield(L, -2, "a");
 }
 
-void pushToLua(lua_State *L, const sp<Image> &v) { lua_pushnil(L); }
-void pushToLua(lua_State *L, const sp<LazyImage> &v) { lua_pushnil(L); }
-void pushToLua(lua_State *L, const sp<VoxelSlice> &v) { lua_pushnil(L); }
-void pushToLua(lua_State *L, const sp<Sample> &v) { lua_pushnil(L); }
-void pushToLua(lua_State *L, const sp<VoxelMap> &v) { lua_pushnil(L); }
+void pushToLua(lua_State *L, const sp<Image> &v [[maybe_unused]])
+{
+	lua_pushnil(L);
+	LogError("Unimplemented Lua function");
+}
+void pushToLua(lua_State *L, const sp<LazyImage> &v [[maybe_unused]])
+{
+	lua_pushnil(L);
+	LogError("Unimplemented Lua function");
+}
+void pushToLua(lua_State *L, const sp<VoxelSlice> &v [[maybe_unused]])
+{
+	lua_pushnil(L);
+	LogError("Unimplemented Lua function");
+}
+void pushToLua(lua_State *L, const sp<Sample> &v [[maybe_unused]])
+{
+	lua_pushnil(L);
+	LogError("Unimplemented Lua function");
+}
+void pushToLua(lua_State *L, const sp<VoxelMap> &v [[maybe_unused]])
+{
+	lua_pushnil(L);
+	LogError("Unimplemented Lua function");
+}
 void pushToLua(lua_State *L, const Colour &v)
 {
 	lua_createtable(L, 0, 4);
@@ -208,7 +240,7 @@ lua_CFunction getLuaObjectConstMethods<Xorshift128Plus<uint32_t>>(const std::str
 	return nullptr;
 }
 
-void pushToLua(lua_State *L) {}
+void pushToLua(lua_State *L [[maybe_unused]]) { LogError("Unimplemented Lua function"); }
 
 void pushLuaDebugTraceback(lua_State *L)
 {

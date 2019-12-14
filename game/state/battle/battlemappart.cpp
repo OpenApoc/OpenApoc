@@ -48,7 +48,7 @@ void BattleMapPart::die(GameState &state, bool explosive, bool violently)
 		switch (type->type)
 		{
 			case BattleMapPartType::Type::Ground:
-				// No dooad for grounds
+				// No doodad for grounds
 				break;
 			case BattleMapPartType::Type::LeftWall:
 				state.current_battle->placeDoodad({&state, "DOODAD_29_EXPLODING_TERRAIN"},
@@ -194,7 +194,7 @@ bool BattleMapPart::applyDamage(GameState &state, int power, StateRef<DamageType
 	int damage;
 	if (damageType->explosive)
 	{
-		// Apparently Apoc uses 100% explosive damgage instead of 50% like in UFO1&2
+		// Apparently Apoc uses 100% explosive damage instead of 50% like in UFO1&2
 		damage = damageType->dealDamage(power, type->damageModifier);
 	}
 	else
@@ -536,7 +536,8 @@ bool BattleMapPart::findSupport(bool allowClinging)
 						auto mp = std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
 						// Seems that "provide support" flag only matters for providing support
 						// upwards
-						if (mp != sft && mp->isAlive() && !mp->damaged &&
+						if (mp != sft && mp->isAlive() &&
+						    (!mp->damaged || mp->type->type == BattleMapPartType::Type::Ground) &&
 						    (mp->type->type != BattleMapPartType::Type::Ground || z == pos.z) &&
 						    (mp->type->provides_support || z >= pos.z))
 						{
@@ -1033,7 +1034,7 @@ void BattleMapPart::ceaseBeingSupported()
 							auto &p = *it;
 							if (p.first == pos && p.second == type->type)
 							{
-								it = supportedParts.erase(it);
+								it = mp->supportedParts.erase(it);
 							}
 							else
 							{
@@ -1085,7 +1086,7 @@ void BattleMapPart::collapse(GameState &state)
 		state.current_battle->queuePathfindingRefresh(position);
 		// Note: Pathfinding refresh relies on tile's battlescape parameters being updated
 		// before it happens, so that battlescape parameters already account for the
-		// now disfunctional map part. Pathfinding update will only happen
+		// now dysfunctional map part. Pathfinding update will only happen
 		// after we call setPosition() on the map part, which will
 		// call update to the battlescape parameters of the tile, which will
 		// in turn make us ignore the falling map part properly

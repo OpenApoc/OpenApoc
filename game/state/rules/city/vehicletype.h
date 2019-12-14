@@ -85,7 +85,8 @@ class VehicleType : public StateObject
 	{
 		return getMaxHealth(first, last) + getMaxShield(first, last);
 	}
-	template <class IterT> int getMaxHealth(IterT first, IterT last) const
+	template <class IterT>
+	int getMaxHealth(IterT first [[maybe_unused]], IterT last [[maybe_unused]]) const
 	{
 		static_assert(std::is_same<typename std::iterator_traits<IterT>::value_type,
 		                           sp<VEquipmentType>>::value,
@@ -111,7 +112,8 @@ class VehicleType : public StateObject
 		return maxShield;
 	}
 	// This is the 'sum' of all armors?
-	template <class IterT> int getArmor(IterT first, IterT last) const
+	template <class IterT>
+	int getArmor(IterT first [[maybe_unused]], IterT last [[maybe_unused]]) const
 	{
 		static_assert(std::is_same<typename std::iterator_traits<IterT>::value_type,
 		                           sp<VEquipmentType>>::value,
@@ -291,7 +293,7 @@ class VehicleType : public StateObject
 		return speed;
 	}
 
-	// This is explictly mutable it can be used through a const ref
+	// This is explicitly mutable it can be used through a const ref
 	// FIXME: Should this go somewhere else in the state? If the rules are meant to be immutable
 	// this may be lost after serialisation?
 	mutable unsigned numCreated = 0;
@@ -328,7 +330,7 @@ class VehicleType : public StateObject
 
 	sp<Image> equip_icon_small;
 
-	MapIconType mapIconType;
+	MapIconType mapIconType = MapIconType::Arrow;
 
 	// Flying and ground vehicles have a directional sprite (with optional non-flat banking)
 	std::map<Banking, std::map<Direction, sp<Image>>> directional_sprites;

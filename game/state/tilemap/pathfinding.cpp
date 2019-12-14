@@ -420,7 +420,7 @@ std::list<Vec3<int>> Battle::findShortestPath(Vec3<int> origin, Vec3<int> destin
                                               bool forceDirect, bool ignoreAllUnits, float *cost,
                                               float maxCost)
 {
-	// Maximum distance, in tiless, that will result in trying the direct pathfinding first
+	// Maximum distance, in tiles, that will result in trying the direct pathfinding first
 	// Otherwise, we start with pathfinding using LOS blocks immediately
 	static const int MAX_DISTANCE_TO_PATHFIND_DIRECTLY = 20;
 
@@ -483,7 +483,7 @@ std::list<Vec3<int>> Battle::findShortestPath(Vec3<int> origin, Vec3<int> destin
 		{
 			// Vector to target, determines order in which we will try things
 			auto targetVector = destination - origin;
-			// Wether positive or negative tile is in front of destination relative to our position
+			// Whether positive or negative tile is in front of destination relative to our position
 			int xSign = targetVector.x < 0 ? 1 : -1;
 			int ySign = targetVector.y < 0 ? 1 : -1;
 			// Which is "front" to us, x or y
@@ -1132,8 +1132,9 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 }
 
 std::list<Vec3<int>> City::findShortestPath(Vec3<int> origin, Vec3<int> destination,
-                                            const GroundVehicleTileHelper &canEnterTile,
-                                            bool approachOnly, bool, bool, bool)
+                                            const GroundVehicleTileHelper &canEnterTile
+                                            [[maybe_unused]],
+                                            bool approachOnly [[maybe_unused]], bool, bool, bool)
 {
 	int originID = getRoadSegmentID(origin);
 	int destinationID = getRoadSegmentID(destination);
@@ -1710,7 +1711,7 @@ void City::groupMove(GameState &state, std::list<StateRef<Vehicle>> &selectedVeh
 	}
 }
 
-void City::fillRoadSegmentMap(GameState &state)
+void City::fillRoadSegmentMap(GameState &state [[maybe_unused]])
 {
 	LogWarning("Begun filling road segment map");
 	// Expecting this to be done on clean intact map
@@ -1744,7 +1745,7 @@ void City::fillRoadSegmentMap(GameState &state)
 					{
 						continue;
 					}
-					// Get dataz
+					// Get data
 					auto tile = m.getTile(tileToTryNext);
 					auto scenery = tile->presentScenery ? tile->presentScenery->type : nullptr;
 					// Not a road

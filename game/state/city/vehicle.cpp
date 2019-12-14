@@ -287,7 +287,7 @@ class FlyingVehicleMover : public VehicleMover
 						{
 							// Angle between vector to us and vector towards location
 							auto angle = glm::angle(point2d, glm::normalize(Vec2<float>{x, y}));
-							// Wether this location lies to our right side
+							// Whether this location lies to our right side
 							bool right =
 							    asinf(glm::angle(point2d,
 							                     glm::normalize(point2d + Vec2<float>{x, y}))) >= 0;
@@ -404,7 +404,7 @@ class FlyingVehicleMover : public VehicleMover
 		// or to tick_scale * city_scale / speed
 		int ticksPerTile = TICK_SCALE * VELOCITY_SCALE_CITY.x / vehicle.getSpeed();
 
-		// Flag wether we need to update banking and direction
+		// Flag whether we need to update banking and direction
 		bool updateSprite = false;
 		// Move until we become idle or run out of ticks
 		while (ticksToMove != lastTicksToMove || ticksToTurn != lastTicksToTurn)
@@ -650,7 +650,7 @@ class GroundVehicleMover : public VehicleMover
 			return;
 		}
 
-		// Flag wether we need to update banking and direction
+		// Flag whether we need to update banking and direction
 		bool updateSprite = false;
 		// Move until we become idle or run out of ticks
 		while (ticksToMove != lastTicksToMove)
@@ -1113,7 +1113,7 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 	vehicle.updateSprite(state);
 }
 
-void VehicleMover::updateCrashed(GameState &state, unsigned int ticks)
+void VehicleMover::updateCrashed(GameState &state, unsigned int ticks [[maybe_unused]])
 {
 	// Tile underneath us is dead?
 	if (vehicle.tileObject && vehicle.tileObject->getOwningTile() &&
@@ -1255,12 +1255,6 @@ void VehicleMover::updateSliding(GameState &state, unsigned int ticks)
 
 VehicleMover::~VehicleMover() = default;
 
-Vehicle::Vehicle()
-    : attackMode(AttackMode::Standard), altitude(Altitude::Standard), position(0, 0, 0),
-      velocity(0, 0, 0)
-{
-}
-
 Vehicle::~Vehicle() = default;
 
 void Vehicle::leaveDimensionGate(GameState &state)
@@ -1277,6 +1271,7 @@ void Vehicle::leaveDimensionGate(GameState &state)
 	auto initialFacing = 0.0f;
 
 	LogInfo("Leaving dimension gate %s", this->name);
+	LogAssert(this->betweenDimensions == true);
 	if (this->tileObject)
 	{
 		LogError("Trying to launch already-launched vehicle");
@@ -1304,10 +1299,12 @@ void Vehicle::leaveDimensionGate(GameState &state)
 			    new GameVehicleEvent(GameEventType::UfoSpotted, {&state, shared_from_this()}));
 		}
 	}
+	this->betweenDimensions = false;
 }
 
 void Vehicle::enterDimensionGate(GameState &state)
 {
+	LogAssert(this->betweenDimensions == false);
 	carriedByVehicle.clear();
 	crashed = false;
 	if (this->currentBuilding)
@@ -1329,6 +1326,7 @@ void Vehicle::enterDimensionGate(GameState &state)
 	this->goalFacing = 0.0f;
 	this->ticksToTurn = 0;
 	this->angularVelocity = 0.0f;
+	this->betweenDimensions = true;
 }
 
 void Vehicle::leaveBuilding(GameState &state, Vec3<float> initialPosition, float initialFacing)
@@ -2354,7 +2352,7 @@ void Vehicle::updateCargo(GameState &state)
 	}
 }
 
-void Vehicle::updateSprite(GameState &state)
+void Vehicle::updateSprite(GameState &state [[maybe_unused]])
 {
 	// Set banking
 	if (ticksToTurn > 0 && angularVelocity > 0.0f)
@@ -2751,8 +2749,9 @@ bool Vehicle::fireWeaponsPointDefense(GameState &state, Vec2<int> arc)
 	return false;
 }
 
-bool Vehicle::fireAtBuilding(GameState &state,
-                             Vec2<int> arc) // TODO: this function must return target only, not fire
+bool Vehicle::fireAtBuilding(
+    GameState &state,
+    Vec2<int> arc [[maybe_unused]]) // TODO: this function must return target only, not fire
 {
 	auto firingRange = getFiringRange();
 
@@ -2773,7 +2772,7 @@ bool Vehicle::fireAtBuilding(GameState &state,
 				                0};
 				inRange = tileObject->getDistanceTo(position + targetVector) <= firingRange;
 			}
-			// Look for a tile in front of us so that we can hit it easilly
+			// Look for a tile in front of us so that we can hit it easily
 			auto forwardPos = position;
 			if (velocity.x != 0 || velocity.y != 0)
 			{
@@ -2805,7 +2804,7 @@ bool Vehicle::fireAtBuilding(GameState &state,
 	return false;
 }
 
-void Vehicle::fireWeaponsManual(GameState &state, Vec2<int> arc)
+void Vehicle::fireWeaponsManual(GameState &state, Vec2<int> arc [[maybe_unused]])
 {
 	attackTarget(state, manualFirePosition);
 }
@@ -2873,8 +2872,8 @@ bool Vehicle::attackTarget(GameState &state, Vec3<float> target)
 	return false;
 }
 
-sp<VEquipment> Vehicle::getFirstFiringWeapon(GameState &state, Vec3<float> &target, bool checkLOF,
-                                             Vec3<float> targetVelocity,
+sp<VEquipment> Vehicle::getFirstFiringWeapon(GameState &state [[maybe_unused]], Vec3<float> &target,
+                                             bool checkLOF, Vec3<float> targetVelocity,
                                              sp<TileObjectVehicle> enemyTile, bool pd)
 {
 	static const std::set<TileObject::Type> sceneryVehicleSet = {TileObject::Type::Scenery,
@@ -3944,7 +3943,7 @@ void Cargo::arrive(GameState &state, bool &cargoArrived, bool &bioArrived, bool 
 	count = 0;
 }
 
-void Cargo::seize(GameState &state, StateRef<Organisation> org)
+void Cargo::seize(GameState &state, StateRef<Organisation> org [[maybe_unused]])
 {
 	switch (type)
 	{

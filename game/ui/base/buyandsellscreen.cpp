@@ -5,7 +5,6 @@
 #include "forms/label.h"
 #include "forms/radiobutton.h"
 #include "forms/scrollbar.h"
-#include "forms/transactioncontrol.h"
 #include "forms/ui.h"
 #include "framework/configfile.h"
 #include "framework/data.h"
@@ -20,6 +19,7 @@
 #include "game/state/rules/city/vammotype.h"
 #include "game/state/shared/organisation.h"
 #include "game/ui/general/messagebox.h"
+#include "game/ui/general/transactioncontrol.h"
 #include <array>
 
 namespace OpenApoc
@@ -113,7 +113,7 @@ void BuyAndSellScreen::closeScreen()
 		}
 	}
 
-	// Step 02: Check accomodation of different sorts
+	// Step 02: Check accommodation of different sorts
 	{
 		std::array<int, MAX_BASES> vecCargoDelta;
 		std::array<bool, MAX_BASES> vecChanged;
@@ -467,12 +467,20 @@ void BuyAndSellScreen::executeOrders()
 							{
 								economy.currentStock += order;
 								player->balance += order * economy.currentPrice;
-
 								StateRef<AEquipmentType> equipment{state.get(), c->itemId};
-								b.second->inventoryAgentEquipment[c->itemId] -=
-								    order * (equipment->type == AEquipmentType::Type::Ammo
-								                 ? equipment->max_ammo
-								                 : 1);
+
+								const auto numItemsPerUnit =
+								    equipment->type == AEquipmentType::Type::Ammo
+								        ? equipment->max_ammo
+								        : 1;
+								auto numItems = numItemsPerUnit * order;
+
+								LogAssert(b.second->inventoryAgentEquipment[c->itemId] <=
+								          std::numeric_limits<int>::max());
+								numItems = std::min(
+								    numItems, (int)b.second->inventoryAgentEquipment[c->itemId]);
+
+								b.second->inventoryAgentEquipment[c->itemId] -= numItems;
 								break;
 							}
 							case TransactionControl::Type::VehicleAmmo:

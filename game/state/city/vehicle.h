@@ -1,5 +1,6 @@
 #pragma once
 
+#include "game/state/city/vehiclemission.h"
 #include "game/state/gametime.h"
 #include "game/state/rules/city/vehicletype.h"
 #include "game/state/shared/equipment.h"
@@ -46,7 +47,7 @@ static const float FV_PLOW_CHANCE_HIGH_SPEED_MULTIPLIER = 1.5f;
 static const float FV_PLOW_CHANCE_CONSTITUTION_MULTIPLIER = 2.0f;
 // How much 1 of X is the damage evasion chance (i.e. 8 means 1/8th or 12.5%)
 static const int FV_COLLISION_DAMAGE_ONE_IN_CHANCE_TO_EVADE = 8;
-// How much X in 100 is the chance for recovered vehicle to arrive intact (othrewise scrapped)
+// How much X in 100 is the chance for recovered vehicle to arrive intact (otherwise scrapped)
 static const int FV_CHANCE_TO_RECOVER_VEHICLE = 100;
 // How much X in 100 is chance to recover every equipment part (otherwise scrapped)
 static const int FV_CHANCE_TO_RECOVER_EQUIPMENT = 90;
@@ -155,7 +156,7 @@ class Vehicle : public StateObject,
 	STATE_OBJECT(Vehicle)
   public:
 	~Vehicle() override;
-	Vehicle();
+	Vehicle() = default;
 
 	enum class AttackMode
 	{
@@ -164,7 +165,7 @@ class Vehicle : public StateObject,
 		Defensive,
 		Evasive
 	};
-	AttackMode attackMode;
+	AttackMode attackMode = AttackMode::Standard;
 
 	enum class Altitude
 	{
@@ -173,7 +174,7 @@ class Vehicle : public StateObject,
 		Standard = 6,
 		Low = 3
 	};
-	Altitude altitude;
+	Altitude altitude = Altitude::Standard;
 	// Adjusts position by altitude preference
 	Vec3<int> getPreferredPosition(Vec3<int> position) const;
 	Vec3<int> getPreferredPosition(int x, int y, int z = 0) const;
@@ -187,10 +188,10 @@ class Vehicle : public StateObject,
 	std::list<sp<VEquipment>> equipment;
 	std::list<StateRef<VEquipmentType>> loot;
 	StateRef<City> city;
-	Vec3<float> position;
-	Vec3<float> goalPosition;
+	Vec3<float> position = {0, 0, 0};
+	Vec3<float> goalPosition = {0, 0, 0};
 	std::list<Vec3<float>> goalWaypoints;
-	Vec3<float> velocity;
+	Vec3<float> velocity = {0, 0, 0};
 	float facing = 0.0f;
 	float goalFacing = 0.0f;
 	float angularVelocity = 0.0f;
@@ -230,6 +231,9 @@ class Vehicle : public StateObject,
 
 	sp<TileObjectVehicle> tileObject;
 	sp<TileObjectShadow> shadowObject;
+
+	// If the vehicle is currently traveling through a dimension gate
+	bool betweenDimensions = false;
 
 	/* leave the building and put vehicle into the city */
 	void leaveDimensionGate(GameState &state);
@@ -369,7 +373,7 @@ class Vehicle : public StateObject,
 	up<VehicleMover> mover;
 	sp<Doodad> smokeDoodad;
 	std::list<sp<Image>>::iterator animationFrame;
-	int animationDelay;
+	int animationDelay = 0;
 
 	// Following members are not serialized, but rather are set in initCity method
 

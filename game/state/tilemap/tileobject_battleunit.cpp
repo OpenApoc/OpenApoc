@@ -269,7 +269,7 @@ void TileObjectBattleUnit::setPosition(Vec3<float> newPosition)
 	// Vanilla allowed units to "pop into" other units without any limit
 	// That is, unit can stand on height 38 while another unit is hovering in the tile above,
 	// and cause no problems whatsoever, even though they're almost fully inside each other
-	// (theis positions only differ by 1 pixel)
+	// (their positions only differ by 1 pixel)
 	// We could introduce an option to disallow this?
 	// Right now, here goes vanilla behavior
 	if (u->current_movement_state == MovementState::Brainsuck)

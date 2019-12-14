@@ -38,8 +38,8 @@ class TileObjectBattleUnit : public TileObject
 	void removeFromMap() override;
 	void addToDrawnTiles(Tile *tile) override;
 
-	bool hasVoxelMap(bool los) const override { return true; }
-	sp<VoxelMap> getVoxelMap(Vec3<int> mapIndex, bool) const override;
+	bool hasVoxelMap(bool los [[maybe_unused]]) const override { return true; }
+	sp<VoxelMap> getVoxelMap(Vec3<int> mapIndex, bool los [[maybe_unused]]) const override;
 	Vec3<float> getPosition() const override;
 
   private:

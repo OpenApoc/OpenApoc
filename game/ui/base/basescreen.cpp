@@ -47,7 +47,7 @@ void BaseScreen::changeBase(sp<Base> newBase)
 	BaseStage::changeBase(newBase);
 	form->findControlTyped<TextEdit>("TEXT_BASE_NAME")->setText(state->current_base->name);
 	form->findControlTyped<Graphic>("GRAPHIC_MINIMAP")
-	    ->setImage(BaseGraphics::drawMinimap(state, state->current_base->building));
+	    ->setImage(BaseGraphics::drawMinimap(state, *state->current_base->building));
 }
 
 void BaseScreen::begin()
@@ -341,7 +341,7 @@ void BaseScreen::eventOccurred(Event *e)
 							                      MessageBox::ButtonOptions::Ok)});
 							break;
 						case Base::BuildError::Indestructible:
-							// Indestrictible facilities (IE the access lift) are just silently
+							// Indestructible facilities (IE the access lift) are just silently
 							// ignored
 							break;
 					}
@@ -418,7 +418,7 @@ void BaseScreen::eventOccurred(Event *e)
 	}
 	else if (selection != NO_SELECTION)
 	{
-		int sprite = BaseGraphics::getCorridorSprite(state->current_base, selection);
+		int sprite = BaseGraphics::getCorridorSprite(*state->current_base, selection);
 		auto image = format(
 		    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:%d:xcom3/ufodata/base.pcx", sprite);
 		if (sprite != 0)
@@ -449,7 +449,7 @@ void BaseScreen::renderBase()
 {
 	const Vec2<int> BASE_POS = baseView->getLocationOnScreen();
 
-	BaseGraphics::renderBase(BASE_POS, state->current_base);
+	BaseGraphics::renderBase(BASE_POS, *state->current_base);
 
 	// Draw selection
 	if (selection != NO_SELECTION)

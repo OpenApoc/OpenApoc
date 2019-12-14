@@ -13,7 +13,7 @@ class AgentSheet
 {
   public:
 	AgentSheet(sp<Form> form);
-	void display(sp<Agent> item, std::vector<sp<Image>> &ranks, bool turnBased = true);
+	void display(const Agent &item, std::vector<sp<Image>> &ranks, bool turnBased = true);
 	void clear();
 
   private:

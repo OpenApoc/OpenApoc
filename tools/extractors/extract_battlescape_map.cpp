@@ -460,7 +460,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 									break;
 								// TacEdit (map editor from vanilla creators) allows values up to 8,
 								// but
-								// they are unused, so we should accomodate for that
+								// they are unused, so we should accommodate for that
 								default:
 									// Disable spawning and leave the type to its default value
 									los_block->spawn_priority = 0;
@@ -618,7 +618,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 				}
 			}
 
-			// Manipualte sector map
+			// Manipulate sector map
 			if (baseMap && fileCounter == 0 && groundCounter != 15)
 			{
 				auto tileName =

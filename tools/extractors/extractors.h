@@ -18,7 +18,7 @@ namespace
 {
 // Proper value MUST be 24 on x, because width is 48, but no matter how I look at it, I just
 // can't accept it.
-// Voxel Maps ARE better suited for an offest of 23, period!
+// Voxel Maps ARE better suited for an offset of 23, period!
 const Vec2<float> BATTLE_IMAGE_OFFSET = {23, 34};
 const Vec2<float> BATTLE_SHADOW_OFFSET = {23, 6};
 

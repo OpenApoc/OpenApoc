@@ -53,6 +53,8 @@ class Sample : public ResObject
 {
   public:
 	AudioFormat format;
+	// The samplecount is for a single channel - e.g. having 2 channels means there's
+	// (2*sampleCount) total samples in *data
 	unsigned int sampleCount;
 	std::unique_ptr<uint8_t[]> data;
 	sp<BackendSampleData> backendData;

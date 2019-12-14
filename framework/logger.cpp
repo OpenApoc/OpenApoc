@@ -7,9 +7,6 @@
 #include "framework/configfile.h"
 #include "framework/framework.h"
 #include "library/sp.h"
-#include <atomic>
-#include <chrono>
-#include <cstdarg>
 #include <mutex>
 #ifdef BACKTRACE_LIBUNWIND
 #ifndef _GNU_SOURCE
@@ -24,59 +21,12 @@
 #include <DbgHelp.h>
 #endif
 
-#ifndef LOGFILE
-#define LOGFILE "openapoc_log.txt"
-#endif
-
-// Don't have interactive dialogues in unit tests
-#ifdef UNIT_TEST
-#undef ERROR_DIALOG
-#else
-
-#if defined(ERROR_DIALOG)
-#include <SDL_messagebox.h>
-#endif
-
-#endif
-
-#ifdef ANDROID
-#include <android/log.h>
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "OpenApoc", __VA_ARGS__)
-#define LOGDV(fmt, ap) __android_log_vprint(ANDROID_LOG_DEBUG, "OpenApoc", fmt, ap)
-#define LOGW(...) __android_log_print(ANDROID_LOG_WARN, "OpenApoc", __VA_ARGS__)
-#define LOGWV(fmt, ap) __android_log_vprint(ANDROID_LOG_WARN, "OpenApoc", fmt, ap)
-#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, "OpenApoc", __VA_ARGS__)
-#define LOGEV(fmt, ap) __android_log_vprint(ANDROID_LOG_ERROR, "OpenApoc", fmt, ap)
-#define LOG_PATH "/storage/emulated/0/openapoc/data/"
-#else
-#define LOGD(...)
-#define LOGDV(fmt, ap)
-#define LOGW(...)
-#define LOGWV(fmt, ap)
-#define LOGE(...)
-#define LOGEV(fmt, ap)
-#define LOG_PATH
-#endif
-
 #define MAX_SYMBOL_LENGTH 1000
 
 namespace OpenApoc
 {
-ConfigOptionInt stderrLogLevelOption(
-    "Logger", "StderrLevel",
-    "Loglevel to output to stderr (0 = nothing, 1 = error, 2 = warning, 3 = info, 4 = debug) ", 2);
-ConfigOptionInt fileLogLevelOption(
-    "Logger", "FileLevel",
-    "Loglevel to output to file (0 = nothing, 1 = error, 2 = warning, 3 = info, 4 = debug)", 3);
-ConfigOptionInt backtraceLogLevelOption(
-    "Logger", "BacktraceLevel",
-    "Loglevel to print a backtrace on (0 = nothing, 1 = error, 2 = warning, 3 = info, 4 = debug)",
-    1);
-ConfigOptionString logFileOption("Logger", "File", "File to write log to", LOG_PATH LOGFILE);
-ConfigOptionBool showDialogOnErrorOption("Logger", "ShowDialog", "Show dialog on error", true);
-
 #if defined(BACKTRACE_LIBUNWIND)
-static void print_backtrace(FILE *f)
+std::list<UString> getBacktrace()
 {
 	unw_cursor_t cursor;
 	unw_context_t ctx;
@@ -84,7 +34,8 @@ static void print_backtrace(FILE *f)
 	unw_getcontext(&ctx);
 	unw_init_local(&cursor, &ctx);
 
-	fprintf(f, "  called by:\n");
+	std::list<UString> backtrace;
+
 	while (unw_step(&cursor) > 0)
 	{
 		Dl_info info;
@@ -94,9 +45,10 @@ static void print_backtrace(FILE *f)
 		dladdr(reinterpret_cast<void *>(ip), &info);
 		if (info.dli_sname)
 		{
-			fprintf(f, "  0x%zx %s+0x%zx (%s)\n", static_cast<uintptr_t>(ip), info.dli_sname,
-			        static_cast<uintptr_t>(ip) - reinterpret_cast<uintptr_t>(info.dli_saddr),
-			        info.dli_fname);
+			backtrace.push_back(
+			    format("  0x%zx %s+0x%zx (%s)\n", static_cast<uintptr_t>(ip), info.dli_sname,
+			           static_cast<uintptr_t>(ip) - reinterpret_cast<uintptr_t>(info.dli_saddr),
+			           info.dli_fname));
 			continue;
 		}
 		// If dladdr() failed, try libunwind
@@ -104,17 +56,18 @@ static void print_backtrace(FILE *f)
 		char fnName[MAX_SYMBOL_LENGTH];
 		if (!unw_get_proc_name(&cursor, fnName, MAX_SYMBOL_LENGTH, &offsetInFn))
 		{
-			fprintf(f, "  0x%zx %s+0x%zx (%s)\n", static_cast<uintptr_t>(ip), fnName, offsetInFn,
-			        info.dli_fname);
+			backtrace.push_back(format("  0x%zx %s+0x%zx (%s)\n", static_cast<uintptr_t>(ip),
+			                           fnName, offsetInFn, info.dli_fname));
 			continue;
 		}
 		else
-			fprintf(f, "  0x%zx\n", static_cast<uintptr_t>(ip));
+			backtrace.push_back(format("  0x%zx\n", static_cast<uintptr_t>(ip)));
 	}
+	return backtrace;
 }
 #elif defined(BACKTRACE_WINDOWS)
 #define MAX_STACK_FRAMES 100
-static void print_backtrace(FILE *f)
+std::list<UString> getBacktrace()
 {
 	static bool initialised = false;
 	static HANDLE process;
@@ -122,6 +75,7 @@ static void print_backtrace(FILE *f)
 	unsigned int frames;
 	void *ip[MAX_STACK_FRAMES];
 	SYMBOL_INFO *sym;
+	std::list<UString> backtrace;
 
 	if (!initialised)
 	{
@@ -132,189 +86,93 @@ static void print_backtrace(FILE *f)
 
 	if (!process)
 	{
-		fprintf(f, "Failed to get process for backtrace\n");
-		return;
+		return backtrace;
 	}
 
 	sym = (SYMBOL_INFO *)calloc(sizeof(SYMBOL_INFO) + MAX_SYMBOL_LENGTH * (sizeof(char)), 1);
 	if (!sym)
 	{
-		fprintf(f, "Failed to allocate symbol info for backtrace\n");
-		return;
+		return backtrace;
 	}
 	sym->MaxNameLen = MAX_SYMBOL_LENGTH;
 	sym->SizeOfStruct = sizeof(SYMBOL_INFO);
 
-	/* Skip 2 frames (print_backtrace and the LogError function itself) */
-	frames = CaptureStackBackTrace(2, MAX_STACK_FRAMES, ip, NULL);
+	/* Skip 1 frame (getBacktrace and the LogError function itself) */
+	frames = CaptureStackBackTrace(1, MAX_STACK_FRAMES, ip, NULL);
 
 	for (unsigned int frame = 0; frame < frames; frame++)
 	{
 		SymFromAddr(process, (DWORD64)(ip[frame]), 0, sym);
-		fprintf(f, "  0x%p %s+0x%Ix\n", ip[frame], sym->Name,
-		        (uintptr_t)ip[frame] - (uintptr_t)sym->Address);
+		backtrace.push_back(format("  0x%p %s+0x%Ix\n", ip[frame], sym->Name,
+		                           (uintptr_t)ip[frame] - (uintptr_t)sym->Address));
 	}
 
 	free(sym);
+	return backtrace;
 }
 #else
 #warning no backtrace enabled for this platform
-static void print_backtrace(FILE *f)
+std::list<UString> getBacktrace()
 {
 	// TODO: Other platform backtrace?
+	return {};
 }
 #endif
 
-static FILE *outFile = nullptr;
+static std::mutex loggerMutex;
 
-// We store options after init as querying every LogInfo() takes a long time
-
-LogLevel stderrLogLevel;
-LogLevel fileLogLevel;
-LogLevel backtraceLogLevel;
-bool showDialogOnError;
-
-std::atomic<bool> loggerInited = false;
-
-static std::mutex logMutex;
-static std::chrono::time_point<std::chrono::high_resolution_clock> timeInit =
-    std::chrono::high_resolution_clock::now();
-
-static void initLogger()
+void defaultLogFunction(LogLevel level, UString prefix, const UString &text)
 {
-	std::lock_guard<std::mutex> lock(logMutex);
-	// It's possible we've raced and hit initLogger() from more than 1 thread, so check again with
-	// the logMutex held
-	if (loggerInited)
+	UString levelPrefix;
+	// Only print Warning/Errors by default
+	if (level >= LogLevel::Info)
 		return;
-	outFile = NULL;
-
-	// Handle Log calls before the settings are read, just output everything to stdout
-
-	if (!ConfigFile::getInstance().loaded())
+	switch (level)
 	{
-		stderrLogLevel = LogLevel::Debug;
-		fileLogLevel = LogLevel::Nothing;
-		backtraceLogLevel = LogLevel::Nothing;
-		showDialogOnError = false;
-		// Returning without setting loggerInited causes this to be called evey Log call until the
-		// config is parsed
-		return;
+		case LogLevel::Error:
+			levelPrefix = "E";
+			break;
+		case LogLevel::Warning:
+			levelPrefix = "W";
+			break;
+		case LogLevel::Info:
+			levelPrefix = "I";
+			break;
+		case LogLevel::Debug:
+			levelPrefix = "D";
+			break;
+		default:
+			levelPrefix = "U";
+			break;
 	}
-
-	loggerInited = true;
-
-	stderrLogLevel = (LogLevel)stderrLogLevelOption.get();
-	fileLogLevel = (LogLevel)fileLogLevelOption.get();
-	backtraceLogLevel = (LogLevel)backtraceLogLevelOption.get();
-	showDialogOnError = showDialogOnErrorOption.get();
-
-	auto logFilePath = logFileOption.get();
-	if (logFilePath.empty())
-	{
-		// No log file set, disabling logging to file
-		fileLogLevel = LogLevel::Nothing;
-		return;
-	}
-	outFile = fopen(logFilePath.cStr(), "w");
-	if (!outFile)
-	{
-		// Failed to open log file, disabling logging to file
-		fileLogLevel = LogLevel::Nothing;
-		return;
-	}
+	std::cerr << levelPrefix << " " << prefix << " " << text << std::endl;
 }
 
-bool _logLevelEnabled(LogLevel level)
+static LogFunction logFunction = defaultLogFunction;
+
+void Log(LogLevel level, UString prefix, const UString &text)
 {
-	if (!loggerInited)
-	{
-		initLogger();
-	}
-	return level <= stderrLogLevel || level <= fileLogLevel;
+	std::lock_guard<std::mutex> lock(loggerMutex);
+	logFunction(level, prefix, text);
 }
 
 void _logAssert(UString prefix, UString string, int line, UString file)
 {
-	Log(LogLevel::Error, prefix,
-	    ::OpenApoc::format("Assertion \"%s\" failed at %s:%d", string.cStr(), file.cStr(), line));
-	exit(EXIT_FAILURE);
+	Log(LogLevel::Error, prefix, format("%s:%d Assertion failed %s", file, line, string));
+	exit(1);
 }
 
-void Log(LogLevel level, UString prefix, const UString &text)
+void setLogCallback(LogFunction function)
 {
-	bool exit_app = false;
-	const char *level_prefix;
-	if (!loggerInited)
-	{
-		initLogger();
-	}
+	std::lock_guard<std::mutex> lock(loggerMutex);
+	logFunction = function;
+}
 
-	{
-		std::lock_guard<std::mutex> lock(logMutex);
+LogFunction getLogCallback()
+{
 
-		bool writeToFile = (level <= fileLogLevel);
-		bool writeToStderr = (level <= stderrLogLevel);
-		if (!writeToFile && !writeToStderr)
-		{
-			// Nothing to do
-			return;
-		}
-
-		auto timeNow = std::chrono::high_resolution_clock::now();
-		unsigned long long clockns =
-		    std::chrono::duration<unsigned long long, std::nano>(timeNow - timeInit).count();
-
-		switch (level)
-		{
-			case LogLevel::Debug:
-				level_prefix = "D";
-				break;
-			case LogLevel::Info:
-				level_prefix = "I";
-				break;
-			case LogLevel::Warning:
-				level_prefix = "W";
-				break;
-			default:
-				level_prefix = "E";
-				exit_app = true;
-				break;
-		}
-
-		if (writeToFile)
-		{
-			fprintf(outFile, "%s %llu %s: %s\n", level_prefix, clockns, prefix.cStr(), text.cStr());
-			// On error print a backtrace to the log file
-			if (level <= backtraceLogLevel)
-				print_backtrace(outFile);
-			fflush(outFile);
-		}
-
-		if (writeToStderr)
-		{
-			fprintf(stderr, "%s %llu %s: %s\n", level_prefix, clockns, prefix.cStr(), text.cStr());
-			if (level <= backtraceLogLevel)
-				print_backtrace(stderr);
-			fflush(stderr);
-		}
-#if defined(ERROR_DIALOG)
-		if (showDialogOnError && level == LogLevel::Error)
-		{
-			SDL_Window *window = nullptr;
-			if (Framework::tryGetInstance() && fw().displayHasWindow())
-			{
-				window = static_cast<SDL_Window *>(fw().getWindowHandle());
-			}
-			SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "OpenApoc error", text.cStr(), window);
-		}
-#endif
-	}
-
-	if (exit_app)
-	{
-		exit(EXIT_FAILURE);
-	}
+	std::lock_guard<std::mutex> lock(loggerMutex);
+	return logFunction;
 }
 
 }; // namespace OpenApoc

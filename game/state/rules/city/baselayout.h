@@ -13,7 +13,7 @@ class BaseLayout : public StateObject
 	STATE_OBJECT(BaseLayout)
   public:
 	std::set<Rect<int>> baseCorridors;
-	Vec2<int> baseLift;
+	Vec2<int> baseLift = {0, 0};
 };
 
 }; // namespace OpenApoc

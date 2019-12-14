@@ -10,21 +10,21 @@ namespace OpenApoc
 class SerializationNode
 {
   public:
-	virtual SerializationNode *addNode(const UString &name, const UString &value = "") = 0;
-	virtual SerializationNode *addSection(const UString &name) = 0;
+	virtual SerializationNode *addNode(const char *name, const UString &value = "") = 0;
+	virtual SerializationNode *addSection(const char *name) = 0;
 
 	// Opt versions may return nullptr (they're 'optional'), Req gets throw an exception if
 	// missing
-	virtual SerializationNode *getNodeReq(const UString &name);
-	virtual SerializationNode *getNodeOpt(const UString &name) = 0;
-	virtual SerializationNode *getNextSiblingReq(const UString &name);
-	virtual SerializationNode *getNextSiblingOpt(const UString &name) = 0;
-	virtual SerializationNode *getSectionReq(const UString &name);
-	virtual SerializationNode *getSectionOpt(const UString &name) = 0;
+	virtual SerializationNode *getNodeReq(const char *name);
+	virtual SerializationNode *getNodeOpt(const char *name) = 0;
+	virtual SerializationNode *getNextSiblingReq(const char *name);
+	virtual SerializationNode *getNextSiblingOpt(const char *name) = 0;
+	virtual SerializationNode *getSectionReq(const char *name);
+	virtual SerializationNode *getSectionOpt(const char *name) = 0;
 
-	SerializationNode *getNode(const UString &name) { return this->getNodeOpt(name); }
-	SerializationNode *getNextSibling(const UString &name) { return this->getNextSiblingOpt(name); }
-	SerializationNode *getSection(const UString &name) { return this->getSectionOpt(name); }
+	SerializationNode *getNode(const char *name) { return this->getNodeOpt(name); }
+	SerializationNode *getNextSibling(const char *name) { return this->getNextSiblingOpt(name); }
+	SerializationNode *getSection(const char *name) { return this->getSectionOpt(name); }
 
 	virtual UString getName() = 0;
 	virtual void setName(const UString &str) = 0;
@@ -68,8 +68,8 @@ class SerializationArchive
 	static up<SerializationArchive> createArchive();
 	static up<SerializationArchive> readArchive(const UString &path);
 
-	virtual SerializationNode *newRoot(const UString &prefix, const UString &name) = 0;
-	virtual SerializationNode *getRoot(const UString &prefix, const UString &name) = 0;
+	virtual SerializationNode *newRoot(const UString &prefix, const char *name) = 0;
+	virtual SerializationNode *getRoot(const UString &prefix, const char *name) = 0;
 	virtual bool write(const UString &path, bool pack = true, bool pretty = false) = 0;
 	virtual ~SerializationArchive() = default;
 };

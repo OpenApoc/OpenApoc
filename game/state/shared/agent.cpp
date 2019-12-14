@@ -100,7 +100,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	{
 		agent->name = type->name;
 	}
-	// FIXME: When rng is fixed we can remove this unnesecary kludge
+	// FIXME: When rng is fixed we can remove this unnecessary kludge
 	// RNG is bad at generating small numbers, so we generate more and divide
 	agent->appearance = randBoundsExclusive(state.rng, 0, type->appearance_count * 10) / 10;
 
@@ -141,7 +141,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	state.agents[ID] = agent;
 
 	// Fill initial equipment list
-	std::list<sp<AEquipmentType>> initialEquipment;
+	std::list<const AEquipmentType *> initialEquipment;
 	if (type->inventory)
 	{
 		// Player gets no default equipment
@@ -163,8 +163,8 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	}
 	else
 	{
-		initialEquipment.push_back(type->built_in_weapon_right);
-		initialEquipment.push_back(type->built_in_weapon_left);
+		initialEquipment.push_back(type->built_in_weapon_right.get());
+		initialEquipment.push_back(type->built_in_weapon_left.get());
 	}
 
 	// Add initial equipment
@@ -469,7 +469,7 @@ bool Agent::canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> equipmentTyp
 		}
 
 		// This could would check that every slot is of appropriate type,
-		// But for units armor this is unnecesary
+		// But for units armor this is unnecessary
 		/*
 		for (int y = 0; y < type->equipscreen_size.y; y++)
 		{
@@ -977,7 +977,7 @@ void Agent::update(GameState &state, unsigned ticks)
 		teleportTicksAccumulated = 0;
 	}
 
-	// Agents in vehicles don't update missions and dont' move
+	// Agents in vehicles don't update missions and don't move
 	if (!currentVehicle)
 	{
 		if (!this->missions.empty())
@@ -998,7 +998,7 @@ void Agent::updateEachSecond(GameState &state)
 	}
 }
 
-void Agent::updateDaily(GameState &state) { recentlyFought = false; }
+void Agent::updateDaily(GameState &state [[maybe_unused]]) { recentlyFought = false; }
 
 void Agent::updateHourly(GameState &state)
 {
@@ -1013,11 +1013,13 @@ void Agent::updateHourly(GameState &state)
 		// agent is in a vehicle stationed in home building
 		base = currentVehicle->currentBuilding->base;
 	}
-	else
+
+	if (!base)
 	{
 		// not in a base
 		return;
 	}
+
 	// Heal
 	if (modified_stats.health < current_stats.health && !recentlyFought)
 	{
@@ -1165,7 +1167,7 @@ void Agent::trainPsi(GameState &state, unsigned ticks)
 		// already)
 		//   Or, for initial 10, even at 30 the formula would be 100 - (90-10) = 20% improve chance
 		//   In this formula the bigger is the initial stat, the harder it is to improve
-		// Therefore, we'll use a formula that makes senes and follows what he said.
+		// Therefore, we'll use a formula that makes sense and follows what he said.
 		// Properties of our formula:
 		// - properly gives 0 chance when current = 3x initial
 		// - gives higher chance with higher initial values

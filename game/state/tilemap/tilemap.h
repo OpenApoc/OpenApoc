@@ -85,6 +85,17 @@ class TileMap
 	std::vector<std::set<TileObject::Type>> layerMap;
 
   public:
+	const bool isTileInBounds(int x, int y, int z) const
+	{
+		if (x < 0 || x >= size.x)
+			return false;
+		if (y < 0 || y >= size.y)
+			return false;
+		if (z < 0 || z >= size.z)
+			return false;
+		return true;
+	}
+	const bool isTileInBounds(Vec3<int> pos) const { return isTileInBounds(pos.x, pos.y, pos.z); }
 	const Tile *getTile(int x, int y, int z) const
 	{
 

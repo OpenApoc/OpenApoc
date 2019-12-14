@@ -29,7 +29,7 @@ void BaseStage::changeBase(sp<Base> newBase)
 
 void BaseStage::refreshView()
 {
-	auto viewImage = drawMiniBase(state->current_base, viewHighlight, viewFacility);
+	auto viewImage = drawMiniBase(*state->current_base, viewHighlight, viewFacility);
 	currentView->setImage(viewImage);
 	currentView->setDepressedImage(viewImage);
 }
@@ -57,7 +57,7 @@ void BaseStage::begin()
 			currentView = view;
 		}
 		view->setData(viewBase);
-		auto viewImage = drawMiniBase(viewBase, viewHighlight, viewFacility);
+		auto viewImage = drawMiniBase(*viewBase, viewHighlight, viewFacility);
 		view->setImage(viewImage);
 		view->setDepressedImage(viewImage);
 		wp<GraphicButton> weakView(view);

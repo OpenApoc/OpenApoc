@@ -67,7 +67,7 @@ class TransactionScreen : public BaseStage
 	sp<Label> textViewBaseStatic;
 
 	Type type;
-	// Wether player must conform to limits even on bases which did not change
+	// Whether player must conform to limits even on bases which did not change
 	bool forceLimits;
 	std::map<Type, std::list<sp<TransactionControl>>> transactionControls;
 

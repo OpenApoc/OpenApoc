@@ -310,7 +310,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 						           (int)(v.graphic_frame + image_offset++));
 						vehicle->directional_sprites[bank][dir] = fw().data->loadImage(str);
 					}
-					// XXX HACK - The space liner doesn't have banking/ascending/descendimg images
+					// XXX HACK - The space liner doesn't have banking/ascending/descending images
 					if (id == std::string("VEHICLETYPE_SPACE_LINER"))
 						break;
 				}
@@ -443,7 +443,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		//  As we can see, we must do some adjustments to use them properly
 		//  Especially since we only use static size loftemps (32x32x16)
 		//
-		//  1) 119 and 120 have 166 and 117 respectively for horisontal alignment
+		//  1) 119 and 120 have 166 and 117 respectively for horizontal alignment
 		//	   Unfortunately, there is no diagonal version
 		//	2) 121 can be used without any adjustment as it's omnidirectional
 		//	3) 122 is clearly a mistake. It's a part of 2x2 image.
@@ -454,7 +454,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		//	4) 150 can be substituted with 2x2 consisting of 93, 94, 96, 95
 		//	   which form the same circle but are 32x32 in size each
 		//	5) 151 is obviously a mistake, as Hoverbike is the only vehicle that uses it
-		//	   and Hoverbike is 1x1x1 vehicle. We hsould just discard the bottom part
+		//	   and Hoverbike is 1x1x1 vehicle. We should just discard the bottom part
 		//
 		//	----------------------------------------------------------------
 		//
@@ -533,7 +533,11 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		int freeSpace = v.size_z * 16 - v.loftemps_height;
 		int start = (freeSpace + 1) / 2;
 		int end = v.size_z * 16 - freeSpace / 2;
-		end = end % 16;
+		if (end > 16)
+		{
+			LogInfo("Vehicle %s has height %d", vehicle->name, end);
+			end = end % 16;
+		}
 		if (freeSpace > 32)
 		{
 			LogError(

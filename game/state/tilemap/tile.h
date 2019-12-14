@@ -101,7 +101,7 @@ class Tile
 	sp<std::vector<sp<Sample>>> walkSfx;
 	// sfx to use when object falls on tile
 	sp<Sample> objectDropSfx;
-	// Solid tileobject in the tile with the highest height that supports itemsl
+	// Solid tileobject in the tile with the highest height that supports items
 	sp<BattleMapPart> supportProviderForItems;
 	// How much tiles are added to vision distance after passing this tile
 	int visionBlockValue = 0;
@@ -136,7 +136,7 @@ class Tile
 	bool getCanStand(bool large = false);
 	// Returns if the tile is solid (cannot pop head into it)
 	bool getSolidGround(bool large = false);
-	// Returns wether tile is an exit
+	// Returns whether tile is an exit
 	bool getHasExit(bool large = false);
 
 	// Updaters

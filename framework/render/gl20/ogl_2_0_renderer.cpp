@@ -5,6 +5,7 @@
 #include "framework/renderer_interface.h"
 #include "library/sp.h"
 #include <array>
+#include <atomic>
 #include <glm/gtx/rotate_vector.hpp>
 #include <list>
 #include <memory>
@@ -20,6 +21,8 @@ namespace
 {
 
 using namespace OpenApoc;
+
+std::atomic<bool> renderer_dead = true;
 
 // Forward declaration needed for RendererImageData
 class OGL20Renderer;
@@ -127,12 +130,12 @@ class SpriteProgram : public Program
 	}
 
   public:
-	GLint posLoc;
-	GLint texcoordLoc;
-	GLint screenSizeLoc;
-	GLint texLoc;
-	GLint flipYLoc;
-	GLint tintLoc;
+	GLint posLoc = -1;
+	GLint texcoordLoc = -1;
+	GLint screenSizeLoc = -1;
+	GLint texLoc = -1;
+	GLint flipYLoc = -1;
+	GLint tintLoc = -1;
 };
 const char *RGBProgram_vertexSource = {
     "#version 110\n"
@@ -470,7 +473,6 @@ class BindTexture
   public:
 	GLenum bind;
 	int unit;
-	bool nop;
 	static GLenum getBindEnum(GLenum e)
 	{
 		switch (e)
@@ -506,7 +508,6 @@ template <GLenum param> class TexParam
   public:
 	GLuint id;
 	GLenum type;
-	bool nop;
 
 	TexParam(GLuint id, GLint value, GLenum type = gl20::TEXTURE_2D) : id(id), type(type)
 	{
@@ -723,8 +724,9 @@ class OGL20Renderer : public Renderer
 		gl20::Enable(gl20::BLEND);
 		gl20::BlendFuncSeparate(gl20::SRC_ALPHA, gl20::ONE_MINUS_SRC_ALPHA, gl20::SRC_ALPHA,
 		                        gl20::DST_ALPHA);
+		renderer_dead = false;
 	}
-	~OGL20Renderer() override = default;
+	~OGL20Renderer() override { renderer_dead = true; };
 	void clear(Colour c = Colour{0, 0, 0, 0}) override
 	{
 		this->flush();
@@ -840,7 +842,7 @@ class OGL20Renderer : public Renderer
 	void drawRect(Vec2<float> position, Vec2<float> size, Colour c, float thickness = 1.0) override
 	{
 
-		// The lines are all shifted in x/y by {capsize} to ensure the corners are correcly covered
+		// The lines are all shifted in x/y by {capsize} to ensure the corners are correctly covered
 		// and don't overlap (which may be an issue if alpha != 1.0f:
 		//
 		// The cap 'ownership' for lines 1,2,3,4 is shifted by (x-1), (y-1), (x+1), (y+1)
@@ -1097,14 +1099,43 @@ class OGL20RendererFactory : public OpenApoc::RendererFactory
 
 FBOData::~FBOData()
 {
+	if (renderer_dead)
+	{
+		LogWarning("FBOData being destroyed after renderer");
+		return;
+	}
 	if (tex)
 		owner->delete_texture_object(tex);
 	if (fbo)
 		owner->delete_framebuffer_object(fbo);
 }
-GLRGBImage::~GLRGBImage() { owner->delete_texture_object(this->texID); }
-GLPalette::~GLPalette() { owner->delete_texture_object(this->texID); }
-GLPaletteImage::~GLPaletteImage() { owner->delete_texture_object(this->texID); }
+GLRGBImage::~GLRGBImage()
+{
+	if (renderer_dead)
+	{
+		LogWarning("GLRGBImage being destroyed after renderer");
+		return;
+	}
+	owner->delete_texture_object(this->texID);
+}
+GLPalette::~GLPalette()
+{
+	if (renderer_dead)
+	{
+		LogWarning("GLPalette being destroyed after renderer");
+		return;
+	}
+	owner->delete_texture_object(this->texID);
+}
+GLPaletteImage::~GLPaletteImage()
+{
+	if (renderer_dead)
+	{
+		LogWarning("GLPaletteImage being destroyed after renderer");
+		return;
+	}
+	owner->delete_texture_object(this->texID);
+}
 
 } // anonymous namespace
 

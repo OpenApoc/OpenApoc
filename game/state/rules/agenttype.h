@@ -2,7 +2,6 @@
 
 #include "framework/image.h"
 #include "game/state/gametime.h"
-#include "game/state/rules/aequipmenttype.h"
 #include "game/state/shared/equipment.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
@@ -30,6 +29,7 @@ class AgentMission;
 class VoxelMap;
 class City;
 enum class AIType;
+class AEquipmentType;
 
 enum class BodyPart
 {
@@ -214,7 +214,7 @@ class AgentType : public StateObject
 
 	// Background used for agent equipment screen
 	sp<Image> inventoryBackground;
-	// Wether agent's rank should be displayed in the equipment screen
+	// Whether agent's rank should be displayed in the equipment screen
 	bool displayRank = false;
 
 	// This agent must be killed to disable the building it's in
@@ -244,8 +244,8 @@ class AgentBodyType : public StateObject
 {
 	STATE_OBJECT(AgentBodyType)
   public:
-	// This, among others, determines wether unit has built-in hover capability, can can be
-	// overriden by use of certain armor
+	// This, among others, determines whether unit has built-in hover capability, can can be
+	// overridden by use of certain armor
 	std::set<BodyState> allowed_body_states;
 	// Allowed movement states for the unit
 	// If unit is to be allowed to move at all, it should have at least Normal or Running movement
@@ -263,7 +263,7 @@ class AgentBodyType : public StateObject
 	// Unit's height in each body state, used when displaying unit selection arrows
 	// as well as for determining collision model height
 	std::map<BodyState, int> height;
-	// Unit's mullzle location in each body state, used when firing
+	// Unit's muzzle location in each body state, used when firing
 	std::map<BodyState, int> muzzleZPosition;
 
 	// Voxel maps (x,y,z) for each body state and facing of the agent

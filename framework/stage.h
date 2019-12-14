@@ -89,7 +89,7 @@ class Stage : public std::enable_shared_from_this<Stage>
 	    All events generated within the program are provided to the stage for any additional
 	   processing
 	    Parameters:
-	        e - Event object detailing the event that has occured
+	        e - Event object detailing the event that has occurred
 	*/
 	virtual void eventOccurred(Event *e) = 0;
 
@@ -114,7 +114,7 @@ class Stage : public std::enable_shared_from_this<Stage>
 	*/
 	virtual bool isTransition() = 0;
 
-	/* Need a virtual destructor to correctly call any subclass descructors */
+	/* Need a virtual destructor to correctly call any subclass destructors */
 	virtual ~Stage() = default;
 };
 

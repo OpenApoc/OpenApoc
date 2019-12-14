@@ -17,17 +17,18 @@ class AEquipmentSheet
   public:
 	AEquipmentSheet(sp<Form> form);
 	void display(sp<AEquipment> item, bool researched = true);
-	void display(sp<AEquipmentType> itemType, bool researched = true);
+	void display(const AEquipmentType &itemType, bool researched = true);
 	void clear();
 
   private:
-	void displayImplementation(sp<AEquipment> item, sp<AEquipmentType> itemType, bool researched);
-	void displayGrenade(sp<AEquipment> item, sp<AEquipmentType> itemType);
-	void displayWeapon(sp<AEquipment> item, sp<AEquipmentType> itemType);
-	void displayAmmo(sp<AEquipment> item, sp<AEquipmentType> itemType);
-	void displayArmor(sp<AEquipment> item, sp<AEquipmentType> itemType);
-	void displayOther(sp<AEquipment> item, sp<AEquipmentType> itemType);
-	void displayAlien(sp<AEquipment> item, sp<AEquipmentType> itemType);
+	void displayImplementation(sp<AEquipment> item, const AEquipmentType &itemType,
+	                           bool researched);
+	void displayGrenade(sp<AEquipment> item, const AEquipmentType &itemType);
+	void displayWeapon(sp<AEquipment> item, const AEquipmentType &itemType);
+	void displayAmmo(sp<AEquipment> item, const AEquipmentType &itemType);
+	void displayArmor(sp<AEquipment> item, const AEquipmentType &itemType);
+	void displayOther(sp<AEquipment> item, const AEquipmentType &itemType);
+	void displayAlien(sp<AEquipment> item, const AEquipmentType &itemType);
 	sp<Form> form;
 };
 

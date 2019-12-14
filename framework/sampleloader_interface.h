@@ -24,5 +24,6 @@ class SampleLoaderFactory
 };
 
 SampleLoaderFactory *getRAWSampleLoaderFactory();
+SampleLoaderFactory *getWAVSampleLoaderFactory();
 
 }; // namespace OpenApoc

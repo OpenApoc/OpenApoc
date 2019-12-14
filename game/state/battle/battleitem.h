@@ -5,7 +5,7 @@
 #include "library/vec.h"
 
 #define FALLING_ACCELERATION_ITEM 0.14285714f // 1/7th
-// IT was observed that boomeroid hops towards objects moving up to 14 tiles away
+// It was observed that boomeroid hops towards objects moving up to 14 tiles away
 #define BOOMEROID_RANGE 14.0f * 4.0f
 
 namespace OpenApoc

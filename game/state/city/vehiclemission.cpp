@@ -457,7 +457,8 @@ VehicleMission *VehicleMission::attackVehicle(GameState &, Vehicle &, StateRef<V
 	return mission;
 }
 
-VehicleMission *VehicleMission::attackBuilding(GameState &state, Vehicle &v,
+VehicleMission *VehicleMission::attackBuilding(GameState &state [[maybe_unused]],
+                                               Vehicle &v [[maybe_unused]],
                                                StateRef<Building> target)
 {
 	auto *mission = new VehicleMission();
@@ -488,7 +489,8 @@ VehicleMission *VehicleMission::followVehicle(GameState &, Vehicle &,
 	return mission;
 }
 
-VehicleMission *VehicleMission::recoverVehicle(GameState &state, Vehicle &v,
+VehicleMission *VehicleMission::recoverVehicle(GameState &state [[maybe_unused]],
+                                               Vehicle &v [[maybe_unused]],
                                                StateRef<Vehicle> target)
 {
 	auto *mission = new VehicleMission();
@@ -497,8 +499,8 @@ VehicleMission *VehicleMission::recoverVehicle(GameState &state, Vehicle &v,
 	return mission;
 }
 
-VehicleMission *VehicleMission::offerService(GameState &state, Vehicle &v,
-                                             StateRef<Building> target)
+VehicleMission *VehicleMission::offerService(GameState &state [[maybe_unused]],
+                                             Vehicle &v [[maybe_unused]], StateRef<Building> target)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::OfferService;
@@ -586,7 +588,8 @@ VehicleMission *VehicleMission::patrol(GameState &, Vehicle &, bool home, unsign
 	return mission;
 }
 
-VehicleMission *VehicleMission::teleport(GameState &state, Vehicle &v, Vec3<int> target)
+VehicleMission *VehicleMission::teleport(GameState &state [[maybe_unused]],
+                                         Vehicle &v [[maybe_unused]], Vec3<int> target)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::Teleport;
@@ -614,7 +617,7 @@ VehicleMission *VehicleMission::land(Vehicle &, StateRef<Building> b)
 	return mission;
 }
 
-VehicleMission *VehicleMission::investigateBuilding(GameState &, Vehicle &v,
+VehicleMission *VehicleMission::investigateBuilding(GameState &, Vehicle &v [[maybe_unused]],
                                                     StateRef<Building> target, bool allowTeleporter)
 {
 	auto *mission = new VehicleMission();
@@ -899,7 +902,7 @@ VehicleTargetHelper::adjustTargetToClosestFlying(GameState &state, Vehicle &v, V
 	{
 		return {reachability, true};
 	}
-	// Check if target tile has no vehicle termporarily blocking it
+	// Check if target tile has no vehicle temporarily blocking it
 	// If it does, find a random location around it that is not blocked
 	bool containsVehicle = false;
 	for (auto &obj : targetTile->intersectingObjects)
@@ -2827,7 +2830,7 @@ void VehicleMission::setFollowPath(GameState &state, Vehicle &v)
 }
 
 bool VehicleMission::advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> &destPos,
-                                      float &destFacing, int &turboTiles)
+                                      float &destFacing [[maybe_unused]], int &turboTiles)
 {
 	if (currentPlannedPath.empty())
 	{
@@ -2897,9 +2900,9 @@ bool VehicleMission::advanceAlongPath(GameState &state, Vehicle &v, Vec3<float> 
 
 	// See if we can make a shortcut
 	{
-		// When ordering move to vehidle already on the move, we can have a situation
+		// When ordering move to vehicle already on the move, we can have a situation
 		// where going directly to 2nd step in the path is faster than going to the first
-		// In this case, we should skip unnesecary steps
+		// In this case, we should skip unnecessary steps
 		auto it = ++currentPlannedPath.begin();
 		// Start with position after next
 		// If next position has a node and we can go directly to that node

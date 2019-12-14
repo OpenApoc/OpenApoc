@@ -21,7 +21,7 @@ class TileObject : public std::enable_shared_from_this<TileObject>
   public:
 	enum class Type
 	{
-		// For purpose of detemining draw order, these four must come first
+		// For purpose of determining draw order, these four must come first
 		Ground,
 		LeftWall,
 		RightWall,
@@ -68,8 +68,12 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	Tile *getOwningTile() const { return this->owningTile; }
 	std::vector<Tile *> getIntersectingTiles() const { return this->intersectingTiles; }
 
-	virtual sp<VoxelMap> getVoxelMap(Vec3<int> /*mapIndex*/, bool /*los*/) const { return nullptr; }
-	virtual bool hasVoxelMap(bool los) const { return false; }
+	virtual sp<VoxelMap> getVoxelMap(Vec3<int> mapIndex [[maybe_unused]],
+	                                 bool los [[maybe_unused]]) const
+	{
+		return nullptr;
+	}
+	virtual bool hasVoxelMap(bool los [[maybe_unused]]) const { return false; }
 	// Vector from voxel map top left back corner to object center
 	virtual Vec3<float> getVoxelOffset() const { return bounds_div_2; }
 	virtual Vec3<float> getVoxelCentrePosition() const { return {0.0, 0.0, 0.0}; }

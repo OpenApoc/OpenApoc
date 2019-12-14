@@ -44,7 +44,7 @@ class AIAction
 	// If attacking with weapons, which hands to use
 	// (init in constructor since it's undefined here)
 	WeaponStatus weaponStatus;
-	// Psi energy value, used to track wether unit psi attacked
+	// Psi energy value, used to track whether unit psi attacked
 	int psiEnergySnapshot = 0;
 	// Prevent out of turn re-thinking
 	bool preventOutOfTurnReThink = false;
@@ -53,11 +53,11 @@ class AIAction
 	// Methods
 
 	UString getName();
-	// Returns wether action is being undertaken by unit right now
+	// Returns whether action is being undertaken by unit right now
 	// Meaning the unit is doing it but it's not done
 	// Also flags "executed" when it sees it undertaken for the first time
 	bool inProgress(BattleUnit &u);
-	// Returns wether action was in progress and is no longer
+	// Returns whether action was in progress and is no longer
 	bool isFinished(BattleUnit &u);
 
   private:
@@ -103,7 +103,7 @@ class AIMovement
 	// Preferred kneeling state (not used for Stop or Turn)
 	// (init in constructor since it's undefined here)
 	KneelingMode kneelingMode;
-	// Wether movement is only useful to achieve the action
+	// Whether movement is only useful to achieve the action
 	// Means, if action is finished, movement is finished too
 	bool subordinate = false;
 	bool executed = false;
@@ -111,11 +111,11 @@ class AIMovement
 	// Methods
 
 	UString getName();
-	// Returns wether action is being undertaken by unit right now
+	// Returns whether action is being undertaken by unit right now
 	// Meaning the unit is doing it but it's not done
 	// Also flags "executed" when it sees it undertaken for the first time
 	bool inProgress(BattleUnit &u);
-	// Returns wether movement was in progress and is no longer
+	// Returns whether movement was in progress and is no longer
 	bool isFinished(BattleUnit &u);
 
   private:

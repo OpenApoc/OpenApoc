@@ -1372,7 +1372,7 @@ void BattleView::update()
 			}
 		}
 
-		// Figure out wether our/not our turn state has changed
+		// Figure out whether our/not our turn state has changed
 		bool notMyTurn = endTurnRequested || battle.turnEndAllowed ||
 		                 !battle.interruptUnits.empty() || !battle.interruptQueue.empty() ||
 		                 battle.currentActiveOrganisation != battle.currentPlayer;
@@ -2180,7 +2180,7 @@ void BattleView::updatePathPreview()
 	auto &map = lastSelectedUnit->tileObject->map;
 	auto to = map.getTile(target);
 
-	// Standart check for passability
+	// Standard check for passability
 	while (true)
 	{
 		auto u = to->getUnitIfPresent(true, true, false, nullptr, false, true);
@@ -4047,14 +4047,16 @@ void BattleView::updateItemInfo(bool right)
 		activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND_SELECTED")->setImage(nullptr);
 	}
 
-	auto overlay = mksp<RGBImage>(Vec2<int>{50, 95});
+	constexpr int maxAccuracy = 50;
+
+	auto overlay = mksp<RGBImage>(Vec2<int>{maxAccuracy, 95});
 	{
 		RGBImageLock l(overlay);
 
 		// Draw accuracy
 		if (info.accuracy / 2 > 0)
 		{
-			int accuracy = info.accuracy;
+			int accuracy = std::min(info.accuracy, maxAccuracy);
 			int colorsCount = (int)accuracyColors.size();
 			int y = 93;
 			if (right)
@@ -4069,8 +4071,8 @@ void BattleView::updateItemInfo(bool right)
 			{
 				for (int x = 0; x < accuracy; x++)
 				{
-					l.set({50 - 1 - x, y}, accuracyColors[x * colorsCount / accuracy]);
-					l.set({50 - 1 - x, y + 1}, accuracyColors[x * colorsCount / accuracy]);
+					l.set({maxAccuracy - 1 - x, y}, accuracyColors[x * colorsCount / accuracy]);
+					l.set({maxAccuracy - 1 - x, y + 1}, accuracyColors[x * colorsCount / accuracy]);
 				}
 			}
 		}

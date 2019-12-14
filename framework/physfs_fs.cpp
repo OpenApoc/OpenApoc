@@ -221,6 +221,22 @@ std::unique_ptr<char[]> IFile::readAll()
 
 IFile::~IFile() = default;
 
+bool FileSystem::addPath(const UString &newPath)
+{
+	if (!PHYSFS_mount(newPath.cStr(), "/", 0))
+	{
+		LogInfo("Failed to add resource dir \"%s\", error: %s", newPath,
+		        PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
+		return false;
+	}
+	else
+	{
+		LogInfo("Resource dir \"%s\" mounted to \"%s\"", newPath,
+		        PHYSFS_getMountPoint(newPath.cStr()));
+		return true;
+	}
+}
+
 FileSystem::FileSystem(std::vector<UString> paths)
 {
 	// FIXME: Is this the right thing to do that?
@@ -261,7 +277,7 @@ FileSystem::FileSystem(std::vector<UString> paths)
 
 FileSystem::~FileSystem() = default;
 
-IFile FileSystem::open(const UString &path)
+IFile FileSystem::open(const UString &path) const
 {
 	TRACE_FN_ARGS1("PATH", path);
 	IFile f;

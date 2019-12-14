@@ -3,7 +3,7 @@ Openapoc Coding Style Guidelines
 
 This document specifies the guidelines for writing and formatting the c++ code that forms the core of OpenApoc.
 
-Globally, we use 'standard' c++11. This requires reasonably modern compilers (gcc 4.7+, MSVC 2013+ , clang 3.6+ have been tested). You should avoid using compiler-specific stuff where possible. Exceptions to this exist, but should be wrapped in a #ifdef:
+Globally, we use 'standard' c++17. This requires reasonably modern compilers (gcc 8, MSVC 2019+ , clang 7+ have been tested). You should avoid using compiler-specific stuff where possible. Exceptions to this exist, but should be wrapped in a #ifdef:
 ```C++
 #ifdef _MSC_VER
 MSVCIsCrazySometimes

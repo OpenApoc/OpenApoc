@@ -459,6 +459,7 @@
 		<member>cargo</member>
 		<member>carriedVehicle</member>
 		<member>carriedByVehicle</member>
+		<member>betweenDimensions</member>
 	</object>
 	<object>
 		<name>VEquipment</name>
@@ -1526,6 +1527,7 @@
 		<value>RecoverVehicle</value>
 		<value>AttackVehicle</value>
 		<value>AttackBuilding</value>
+		<value>RestartNextMission</value>
 		<value>Snooze</value>
 		<value>TakeOff</value>
 		<value>Land</value>

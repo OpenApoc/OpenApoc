@@ -25,7 +25,7 @@ class TileObjectVehicle : public TileObject
 	sp<Vehicle> getVehicle() const;
 
 	Vec3<float> getVoxelCentrePosition() const override;
-	bool hasVoxelMap(bool los) const override { return true; }
+	bool hasVoxelMap(bool los [[maybe_unused]]) const override { return true; }
 	sp<VoxelMap> getVoxelMap(Vec3<int> mapIndex, bool los) const override;
 	Vec3<float> getPosition() const override;
 	void setPosition(Vec3<float> newPosition) override;

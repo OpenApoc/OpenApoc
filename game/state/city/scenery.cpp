@@ -22,7 +22,6 @@
 
 namespace OpenApoc
 {
-Scenery::Scenery() : damaged(false), falling(false), destroyed(false) {}
 
 void Scenery::ceaseSupportProvision()
 {
@@ -157,8 +156,8 @@ bool Scenery::findSupport(bool allowClinging)
 	// - If allowClinging is true
 	//   - General/Wall/Junk can cling to one adjacent "hard" supported General/Wall
 	//   - General/Wall/Junk can cling to two adjacent "soft" supported General/Wall/Junk
-	//   - General can gling to one General above it
-	//   - General can gling to two Generals adjacent, one above one below on same side (xy)
+	//   - General can cling to one General above it
+	//   - General can cling to two Generals adjacent, one above one below on same side (xy)
 	//	 - Wall can cling to two adjacent Walls below it
 	//   - People tube can cling onto adjacent "hard" General, adhering to its direction
 	//
@@ -1438,7 +1437,7 @@ void Scenery::collapse(GameState &state)
 		// state.current_battle->queuePathfindingRefresh(position);
 		// Note: Pathfinding refresh relies on tile's battlescape parameters being updated
 		// before it happens, so that battlescape parameters already account for the
-		// now disfunctional map part. Pathfinding update will only happen
+		// now dysfunctional map part. Pathfinding update will only happen
 		// after we call setPosition() on the map part, which will
 		// call update to the battlescape parameters of the tile, which will
 		// in turn make us ignore the falling map part properly
@@ -1505,6 +1504,10 @@ void Scenery::updateFalling(GameState &state, unsigned int ticks)
 	if (floorf(newPosition.z) != floorf(currentPosition.z))
 	{
 		// Leaving tile: collide with everything left
+		// NOTE: Vehicle::applyDamage() may destroy a vehicle, removing it from the map invalidating
+		// the ownedObjects iterator, so keep a reference to all hit vehicles and process them
+		// outside the ownedObjects iterator loop
+		std::set<sp<Vehicle>> hitVehicles;
 		for (auto &obj : tileObject->getOwningTile()->ownedObjects)
 		{
 			switch (obj->getType())
@@ -1528,11 +1531,8 @@ void Scenery::updateFalling(GameState &state, unsigned int ticks)
 				case TileObject::Type::Vehicle:
 				{
 					auto v = std::static_pointer_cast<TileObjectVehicle>(obj)->getVehicle();
-					v->applyDamage(state,
-					               (v->falling || v->crashed || v->sliding)
-					                   ? FV_COLLISION_DAMAGE_LIMIT
-					                   : SC_COLLISION_DAMAGE,
-					               0);
+					hitVehicles.insert(v);
+
 					break;
 				}
 				default:
@@ -1540,7 +1540,14 @@ void Scenery::updateFalling(GameState &state, unsigned int ticks)
 					break;
 			}
 		}
-		// New tile: If not destroyed yet collid with everything high enough
+		for (auto &v : hitVehicles)
+		{
+			v->applyDamage(state,
+			               (v->falling || v->crashed || v->sliding) ? FV_COLLISION_DAMAGE_LIMIT
+			                                                        : SC_COLLISION_DAMAGE,
+			               0);
+		}
+		// New tile: If not destroyed yet collide with everything high enough
 		if (!destroyed)
 		{
 			auto newTile = tileObject->map.getTile(newPosition);

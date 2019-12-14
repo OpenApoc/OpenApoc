@@ -13,6 +13,9 @@
 
 using namespace OpenApoc;
 
+static ConfigOptionString outputPath("Extractor", "output",
+                                     "Path to the extractor output directory", "./data");
+
 static void extractDifficulty(const InitialGameStateExtractor &e, UString outputPath,
                               InitialGameStateExtractor::Difficulty difficulty, UString patchPath)
 {
@@ -30,31 +33,31 @@ static void extractDifficulty(const InitialGameStateExtractor &e, UString output
 std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thingsToExtract = {
     {"difficulty1",
      [](const InitialGameStateExtractor &e) {
-	     extractDifficulty(e, "data/difficulty1_patched",
+	     extractDifficulty(e, outputPath.get() + "/mods/base/difficulty1_patched",
 	                       InitialGameStateExtractor::Difficulty::DIFFICULTY_1,
 	                       "data/difficulty1_patch");
      }},
     {"difficulty2",
      [](const InitialGameStateExtractor &e) {
-	     extractDifficulty(e, "data/difficulty2_patched",
+	     extractDifficulty(e, outputPath.get() + "/mods/base/difficulty2_patched",
 	                       InitialGameStateExtractor::Difficulty::DIFFICULTY_2,
 	                       "data/difficulty2_patch");
      }},
     {"difficulty3",
      [](const InitialGameStateExtractor &e) {
-	     extractDifficulty(e, "data/difficulty3_patched",
+	     extractDifficulty(e, outputPath.get() + "/mods/base/difficulty3_patched",
 	                       InitialGameStateExtractor::Difficulty::DIFFICULTY_3,
 	                       "data/difficulty3_patch");
      }},
     {"difficulty4",
      [](const InitialGameStateExtractor &e) {
-	     extractDifficulty(e, "data/difficulty4_patched",
+	     extractDifficulty(e, outputPath.get() + "/mods/base/difficulty4_patched",
 	                       InitialGameStateExtractor::Difficulty::DIFFICULTY_4,
 	                       "data/difficulty4_patch");
      }},
     {"difficulty5",
      [](const InitialGameStateExtractor &e) {
-	     extractDifficulty(e, "data/difficulty5_patched",
+	     extractDifficulty(e, outputPath.get() + "/mods/base/difficulty5_patched",
 	                       InitialGameStateExtractor::Difficulty::DIFFICULTY_5,
 	                       "data/difficulty5_patch");
      }},
@@ -63,7 +66,18 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     GameState s;
 	     e.extractCommon(s);
 	     s.loadGame("data/common_patch");
-	     s.saveGame("data/gamestate_common");
+	     s.saveGame(outputPath.get() + "/mods/base/base_gamestate");
+	     ModInfo info;
+	     info.setName("OpenApoc base game");
+	     info.setAuthor("OpenApoc team");
+	     info.setVersion("0.1");
+	     info.setDescription("The base OpenApoc game");
+	     info.setLink("http://www.openapoc.org");
+	     info.setID("org.openapoc.base");
+	     info.setStatePath("base_gamestate");
+	     info.setDataPath("data");
+
+	     info.writeInfo(outputPath.get() + "/mods/base");
      }},
     {"city_bullet_sprites",
      [](const InitialGameStateExtractor &e) {
@@ -71,7 +85,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 
 	     for (auto &sprite_pair : bullet_sprites)
 	     {
-		     auto path = "data/" + sprite_pair.first;
+		     auto path = outputPath.get() + "/" + sprite_pair.first;
 		     fw().data->writeImage(path, sprite_pair.second);
 	     }
      }},
@@ -81,7 +95,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 
 	     for (auto &sprite_pair : bullet_sprites)
 	     {
-		     auto path = "data/" + sprite_pair.first;
+		     auto path = outputPath.get() + "/" + sprite_pair.first;
 		     fw().data->writeImage(path, sprite_pair.second,
 		                           fw().data->loadPalette("xcom3/tacdata/tactical.pal"));
 	     }
@@ -100,7 +114,8 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 		     }
 		     else
 		     {
-			     if (!imagePack->saveImagePack(BattleUnitImagePack::getImagePackPath() + "/" +
+			     if (!imagePack->saveImagePack(fw().getDataDir() +
+			                                       BattleUnitImagePack::getImagePackPath() + "/" +
 			                                       imagePackStrings.first,
 			                                   true))
 			     {
@@ -125,7 +140,9 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 		     else
 		     {
 			     if (!imagePack->saveImagePack(
-			             format("%s%s%d", BattleUnitImagePack::getImagePackPath(), "/item", i),
+			             format("%s%s%d",
+			                    fw().getDataDir() + BattleUnitImagePack::getImagePackPath(),
+			                    "/item", i),
 			             true))
 			     {
 				     LogError("Failed to save  item image pack \"%d\"", i);
@@ -147,7 +164,8 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 		     }
 		     else
 		     {
-			     if (!imagePack->saveImagePack(BattleUnitImagePack::getImagePackPath() + "/" +
+			     if (!imagePack->saveImagePack(fw().getDataDir() +
+			                                       BattleUnitImagePack::getImagePackPath() + "/" +
 			                                       imagePackStrings.first,
 			                                   true))
 			     {
@@ -172,7 +190,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 		     else
 		     {
 			     if (!animationPack->saveAnimationPack(
-			             BattleUnitAnimationPack::getAnimationPackPath() + "/" +
+			             fw().getDataDir() + BattleUnitAnimationPack::getAnimationPackPath() + "/" +
 			                 animationPackStrings.first,
 			             true))
 			     {

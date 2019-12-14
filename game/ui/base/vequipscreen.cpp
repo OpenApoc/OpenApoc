@@ -50,7 +50,7 @@ VEquipScreen::VEquipScreen(sp<GameState> state)
 	    paperDollPlaceholder->Location, paperDollPlaceholder->Size, EQUIP_GRID_SLOT_SIZE);
 
 	// when hovering the paperdoll, display the selected vehicle stats
-	paperDoll->addCallback(FormEventType::MouseEnter, [this](FormsEvent *e) {
+	paperDoll->addCallback(FormEventType::MouseEnter, [this](FormsEvent *e [[maybe_unused]]) {
 		highlightedVehicle = selected;
 		VehicleSheet(formVehicleItem).display(selected);
 	});
@@ -108,14 +108,16 @@ void VEquipScreen::begin()
 		auto graphic = mksp<Graphic>(vehicle->type->equip_icon_big);
 
 		// when entering a selectbox item, display that vehicle's stats
-		graphic->addCallback(FormEventType::MouseEnter, [this, vehicle](FormsEvent *e) {
-			highlightedVehicle = vehicle;
-			VehicleSheet(formVehicleItem).display(vehicle);
-		});
-		vehicleSelectBox->addCallback(FormEventType::MouseLeave, [this](FormsEvent *e) {
-			highlightedVehicle = selected;
-			VehicleSheet(formVehicleItem).display(selected);
-		});
+		graphic->addCallback(FormEventType::MouseEnter,
+		                     [this, vehicle](FormsEvent *e [[maybe_unused]]) {
+			                     highlightedVehicle = vehicle;
+			                     VehicleSheet(formVehicleItem).display(vehicle);
+		                     });
+		vehicleSelectBox->addCallback(FormEventType::MouseLeave,
+		                              [this](FormsEvent *e [[maybe_unused]]) {
+			                              highlightedVehicle = selected;
+			                              VehicleSheet(formVehicleItem).display(selected);
+		                              });
 		graphic->AutoSize = true;
 		vehicleSelectBox->addItem(graphic);
 		this->vehicleSelectionControls[graphic] = vehicle;

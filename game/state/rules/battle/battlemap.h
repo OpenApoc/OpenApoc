@@ -29,7 +29,7 @@ class BattleMap : public StateObject
 	{
 		// Subtract 1 from larger map side
 		Small = 0,
-		// Standart size
+		// Standard size
 		Normal = 1,
 		// Add 1 to random map side
 		Large = 2,
@@ -39,13 +39,13 @@ class BattleMap : public StateObject
 		Maximum = 4
 	};
 
-	BattleMap();
+	BattleMap() = default;
 	~BattleMap() override = default;
 
 	UString id;
 
-	Vec3<int> chunk_size;
-	Vec3<int> max_battle_size;
+	Vec3<int> chunk_size = {0, 0, 0};
+	Vec3<int> max_battle_size = {0, 0, 0};
 
 	std::map<MapDirection, bool> allow_entrance;
 	std::map<MapDirection, bool> allow_exit;

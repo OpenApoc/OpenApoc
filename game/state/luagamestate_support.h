@@ -118,7 +118,7 @@ template <> lua_CFunction getLuaObjectMethods<City>(const std::string &key);
 template <> lua_CFunction getLuaObjectConstMethods<AgentGenerator>(const std::string &key);
 template <> lua_CFunction getLuaObjectConstMethods<GameTime>(const std::string &key);
 
-// implemeted in luagamestate_support_generated.cpp file
+// implemented in luagamestate_support_generated.cpp file
 void pushLuaGamestateEnums(lua_State *L);
 
 } // namespace OpenApoc

@@ -164,7 +164,7 @@ bool CityView::handleClickedBuilding(StateRef<Building> building, bool rightClic
 		return false;
 	}
 
-	// [Alt] + [Shift] gives bulding orders (left = attack, right = move)
+	// [Alt] + [Shift] gives building orders (left = attack, right = move)
 	if ((modifierLShift || modifierRShift) && (modifierLAlt || modifierRAlt))
 	{
 		if (rightClick)
@@ -272,7 +272,7 @@ bool CityView::handleClickedVehicle(StateRef<Vehicle> vehicle, bool rightClick,
 		return true;
 	}
 
-	// [Alt] + [Shift] gives bulding orders (therefore do nothing)
+	// [Alt] + [Shift] gives building orders (therefore do nothing)
 	if ((modifierLShift || modifierRShift) && (modifierLAlt || modifierRAlt))
 	{
 		return false;
@@ -339,7 +339,7 @@ bool CityView::handleClickedVehicle(StateRef<Vehicle> vehicle, bool rightClick,
 }
 
 bool CityView::handleClickedAgent(StateRef<Agent> agent, bool rightClick,
-                                  CitySelectionState selState)
+                                  CitySelectionState selState [[maybe_unused]])
 {
 	orderSelect(agent, rightClick, modifierLCtrl || modifierRCtrl);
 	return true;
@@ -385,7 +385,7 @@ bool CityView::handleClickedProjectile(sp<Projectile> projectile, bool rightClic
 }
 
 bool CityView::handleClickedOrganisation(StateRef<Organisation> organisation, bool rightClick,
-                                         CitySelectionState selState)
+                                         CitySelectionState selState [[maybe_unused]])
 {
 	if (rightClick)
 	{
@@ -1004,11 +1004,13 @@ CityView::CityView(sp<GameState> state)
 	for (int i = 0; i < weaponDisabled.size(); i++)
 	{
 		vehicleForm->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_%d_DISABLED", i + 1))
-		    ->addCallback(FormEventType::CheckBoxSelected,
-		                  [this, i](FormsEvent *e) { orderDisableWeapon(i, true); });
+		    ->addCallback(
+		        FormEventType::CheckBoxSelected,
+		        [this, i](FormsEvent *e [[maybe_unused]]) { orderDisableWeapon(i, true); });
 		vehicleForm->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_%d_DISABLED", i + 1))
-		    ->addCallback(FormEventType::CheckBoxDeSelected,
-		                  [this, i](FormsEvent *e) { orderDisableWeapon(i, false); });
+		    ->addCallback(
+		        FormEventType::CheckBoxDeSelected,
+		        [this, i](FormsEvent *e [[maybe_unused]]) { orderDisableWeapon(i, false); });
 	}
 	vehicleForm->findControl("BUTTON_EQUIP_VEHICLE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
@@ -1542,7 +1544,7 @@ void CityView::resume()
 			LogError("Failed to find UI control matching \"%s\"", viewName);
 		}
 		view->setData(viewBase);
-		auto viewImage = BaseGraphics::drawMiniBase(viewBase);
+		auto viewImage = BaseGraphics::drawMiniBase(*viewBase);
 		view->setImage(viewImage);
 		view->setDepressedImage(viewImage);
 		view->ToolTipText = viewBase->name;
@@ -2971,24 +2973,29 @@ bool CityView::handleKeyDown(Event *e)
 				{
 					LogWarning("Spawning crashed UFOs...");
 
-					bool nothing = false;
-					auto pos = centerPos;
-					pos.z = 9;
-					auto ufo = state->current_city->placeVehicle(
-					    *state, {state.get(), "VEHICLETYPE_ALIEN_PROBE"}, state->getAliens(), pos);
-					ufo->crash(*state, nullptr);
-					pos.z++;
-					ufo = state->current_city->placeVehicle(
-					    *state, {state.get(), "VEHICLETYPE_ALIEN_BATTLESHIP"}, state->getAliens(),
-					    pos);
-					ufo->crash(*state, nullptr);
-					ufo->applyDamage(*state, 1, 0, nothing);
-					pos.z++;
-					ufo = state->current_city->placeVehicle(
-					    *state, {state.get(), "VEHICLETYPE_ALIEN_TRANSPORTER"}, state->getAliens(),
-					    pos);
-					ufo->crash(*state, nullptr);
-					ufo->applyDamage(*state, 1, 0, nothing);
+					std::vector<StateRef<VehicleType>> validTypes;
+
+					auto pos = this->centerPos;
+
+					for (const auto &type : state->vehicle_types)
+					{
+						if (type.second->crashed_sprite)
+						{
+							validTypes.emplace_back(state.get(), type.second);
+							LogWarning("Valid UFO type: %s", type.second->name);
+						}
+					}
+
+					for (int i = 0; i < 3; i++)
+					{
+						auto type = pickRandom(state->rng, validTypes);
+						LogWarning("Crashing %s", type->name);
+						pos.z = 9 + i;
+						auto ufo = state->current_city->placeVehicle(*state, {state.get(), type},
+						                                             state->getAliens(), pos);
+						ufo->crash(*state, nullptr);
+						ufo->applyDamage(*state, 1, 0);
+					}
 
 					return true;
 				}

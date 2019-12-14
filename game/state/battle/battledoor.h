@@ -21,7 +21,7 @@ class BattleDoor : public StateObject, public std::enable_shared_from_this<Battl
   public:
 	UString id;
 
-	// wether this door is still operational
+	// whether this door is still operational
 	bool operational = false;
 	bool right = false;
 	// "Open" flag for doors

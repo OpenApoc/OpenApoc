@@ -2,7 +2,7 @@
 PROJECT(OpenApoc_Framework CXX C)
 
 # check cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.9)
 
 option(BACKTRACE_ON_ERROR "Print backtrace on logging an error (Requires libunwind on linux, no extra dependencies on windows)" ON)
 option(DIALOG_ON_ERROR "Pop up a dialog box showing errors" ON)
@@ -27,7 +27,11 @@ set (FRAMEWORK_SOURCE_FILES
 	sound.cpp
 	stagestack.cpp
 	trace.cpp
-	video/smk.cpp)
+	video/smk.cpp
+	logger_sdldialog.cpp
+	logger_file.cpp
+	options.cpp
+	modinfo.cpp)
 
 source_group(framework\\sources FILES ${FRAMEWORK_SOURCE_FILES})
 list(APPEND ALL_SOURCE_FILES ${FRAMEWORK_SOURCE_FILES})
@@ -61,7 +65,11 @@ set (FRAMEWORK_HEADER_FILES
 	stagestack.h
 	trace.h
 	ThreadPool/ThreadPool.h
-	video.h)
+	video.h
+	logger_sdldialog.h
+	logger_file.h
+	options.h
+	modinfo.h)
 
 source_group(framework\\headers FILES ${FRAMEWORK_HEADER_FILES})
 list(APPEND ALL_HEADER_FILES ${FRAMEWORK_HEADER_FILES})
@@ -107,7 +115,8 @@ source_group(framework\\imageloader\\headers FILES
 list(APPEND ALL_HEADER_FILES ${IMAGELOADER_HEADER_FILES})
 
 set (SAMPLELOADER_SOURCE_FILES
-	sampleloader/rawsound.cpp)
+	sampleloader/rawsound.cpp
+	sampleloader/wavsound.cpp)
 
 source_group(framework\\sampleloader\\sources FILES
 		${SAMPLELOADER_SOURCE_FILES})
@@ -198,8 +207,7 @@ if(APPLE)
 	# OSX doesn't seem to support the c++11 'thread_local' keyword
 	target_compile_definitions(OpenApoc_Framework PRIVATE
 			"-DBROKEN_THREAD_LOCAL")
-	# Disable libunwind use on Apple
-	SET(BACKTRACE_ON_ERROR OFF CACHE BOOL "Print backtrace on logging an error (Requires libunwind on linux, no extra dependencies on windows)" FORCE)
+	SET(BACKTRACE_ON_ERROR ON)
 elseif(WIN32)
 	target_compile_definitions(OpenApoc_Framework PRIVATE "-DGLESWRAP_PLATFORM_WGL")
 else()
@@ -210,32 +218,34 @@ endif()
 # serialization
 
 set(BOOST_PACKAGES locale system program_options)
+# Arbitrary version that I remember testing previously
+set(BOOST_VERSION 1.50)
 
-set(USE_EXPERIMENTAL_FILESYSTEM FALSE)
+set(USE_STD_FILESYSTEM FALSE)
 
 if(CMAKE_COMPILER_IS_GNUCC)
-	if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 5.3 OR
-					CMAKE_CXX_COMPILER_VERSION VERSION_EQUAL 5.3)
-		set(USE_EXPERIMENTAL_FILESYSTEM TRUE)
-		target_link_libraries(OpenApoc_Framework PUBLIC stdc++fs)
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 8.0)
+			set(USE_STD_FILESYSTEM TRUE)
 	endif()
 endif()
 if(MSVC)
-	if (MSVC_VERSION GREATER_EQUAL 1900)
-		set(USE_EXPERIMENTAL_FILESYSTEM TRUE)
+	if (MSVC_VERSION GREATER_EQUAL 1910)
+		set(USE_STD_FILESYSTEM TRUE)
 	endif()
 endif()
 
-if (USE_EXPERIMENTAL_FILESYSTEM)
-	message(STATUS "Using <experimental/filesystem>")
-	target_compile_definitions(OpenApoc_Framework PUBLIC "-DUSE_EXPERIMENTAL_FILESYSTEM")
+if(USE_STD_FILESYSTEM)
+    message(STATUS "Using <filesystem>")
+	target_compile_definitions(OpenApoc_Framework PUBLIC "-DUSE_STD_FILESYSTEM")
 else()
 	message(STATUS "Using <boost/filesystem>")
 	set(BOOST_PACKAGES ${BOOST_PACKAGES} filesystem)
+	# filesystem::relative() didn't exist until 1.60 from what I can see in the docs
+	set(BOOST_VERSION 1.60)
 	target_compile_definitions(OpenApoc_Framework PUBLIC "-DUSE_BOOST_FILESYSTEM")
 endif()
 
-find_package(Boost REQUIRED COMPONENTS ${BOOST_PACKAGES})
+find_package(Boost ${BOOST_VERSION} REQUIRED COMPONENTS ${BOOST_PACKAGES})
 target_link_libraries(OpenApoc_Framework PUBLIC ${Boost_LIBRARIES})
 target_include_directories(OpenApoc_Framework PUBLIC ${Boost_INCLUDE_DIRS})
 
@@ -247,7 +257,7 @@ target_include_directories(OpenApoc_Framework PUBLIC ${GLM_INCLIDE_DIR})
 #Require SDL2 for input/graphics/sound/pretty much everything
 if(WIN32)
 	find_package(SDL2 CONFIG REQUIRED)
-	target_link_libraries(OpenApoc_Framework PRIVATE SDL2::SDL2 SDL2::SDL2main)
+	target_link_libraries(OpenApoc_Framework PUBLIC SDL2::SDL2 SDL2::SDL2main)
 	#Workaround vcpkg bug
 	set_target_properties(SDL2::SDL2 SDL2::SDL2main PROPERTIES
 		MAP_IMPORTED_CONFIG_MINSIZEREL Release
@@ -280,6 +290,9 @@ endif()
 if(BACKTRACE_ON_ERROR)
 	if(WIN32)
 		target_link_libraries(OpenApoc_Framework PUBLIC dbghelp)
+	elseif(APPLE)
+		# MacOS always has libunwind with no extra libs needed
+		target_compile_definitions(OpenApoc_Framework PUBLIC -DBACKTRACE_LIBUNWIND)
 	else()
 		find_package(PkgConfig)
 		pkg_check_modules(PC_UNWIND libunwind)

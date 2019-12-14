@@ -5,7 +5,6 @@
 #include "forms/label.h"
 #include "forms/radiobutton.h"
 #include "forms/scrollbar.h"
-#include "forms/transactioncontrol.h"
 #include "forms/ui.h"
 #include "framework/data.h"
 #include "framework/event.h"
@@ -17,6 +16,7 @@
 #include "game/state/gamestate.h"
 #include "game/ui/base/basestage.h"
 #include "game/ui/general/messagebox.h"
+#include "game/ui/general/transactioncontrol.h"
 #include <array>
 
 namespace OpenApoc
@@ -51,7 +51,7 @@ AlienContainmentScreen::AlienContainmentScreen(sp<GameState> state, bool forceLi
 
 void AlienContainmentScreen::closeScreen()
 {
-	// Step 01: Check accomodation of different sorts
+	// Step 01: Check accommodation of different sorts
 	{
 		std::array<int, MAX_BASES> vecBioDelta;
 		std::array<bool, MAX_BASES> vecChanged;

@@ -55,6 +55,7 @@ class Vehicle;
 class Building;
 class BattleScanner;
 enum class BattleUnitType;
+class Agent;
 class BattleUnitTileHelper;
 
 class BattleScore
@@ -101,21 +102,21 @@ class Battle : public std::enable_shared_from_this<Battle>
 	std::map<StateRef<Organisation>, std::set<StateRef<BattleUnit>>> visibleUnits;
 	std::map<StateRef<Organisation>, std::set<StateRef<BattleUnit>>> visibleEnemies;
 
-	// Map of vector of flags, wether los block is available for pathfinding for this type
+	// Map of vector of flags, whether los block is available for pathfinding for this type
 	std::map<BattleUnitType, std::vector<bool>> blockAvailable;
 	// Map of vector of positions, those are center positions of a LOS block
 	// (for pathfinding calculations) for every kind of unit and every block
 	std::map<BattleUnitType, std::vector<Vec3<int>>> blockCenterPos;
-	// Vector which contains a 2d array of bools, which denotes wether
-	// a connection between two los blocks exists (wether they are adjacent)
+	// Vector which contains a 2d array of bools, which denotes whether
+	// a connection between two los blocks exists (whether they are adjacent)
 	std::vector<bool> linkAvailable;
 	// Map of vector which contains a 2d array of ints, which denotes
 	// cost of a link (with -1 being no link present)
 	std::map<BattleUnitType, std::vector<int>> linkCost;
-	// Vector of flags, one for each los block, which deontes wether
+	// Vector of flags, one for each los block, which denotes whether
 	// los block had changed and needs update
 	std::vector<bool> blockNeedsUpdate;
-	// Vector which contains a 2d array of bools, which denotes wether
+	// Vector which contains a 2d array of bools, which denotes whether
 	// a connection between two los blocks needs an update
 	// Note: technically, this is a 2d array, but we only fill half of it
 	// We fill only values for 2nd index which is bigger than 1st

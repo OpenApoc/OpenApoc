@@ -5,6 +5,7 @@
 #include "framework/configfile.h"
 #include "framework/filesystem.h"
 #include "framework/logger.h"
+#include "framework/options.h"
 #include <fstream>
 #include <iostream>
 #include <list>
@@ -88,7 +89,7 @@ class ConfigFileImpl
 		this->modifiedOptions[key] = value;
 	}
 
-	bool parseOptions(int argc, char *argv[])
+	bool parseOptions(int argc, const char *const argv[])
 	{
 		if (this->parsed)
 		{
@@ -449,7 +450,7 @@ void ConfigFile::addPositionalArgument(const UString name, const UString descrip
 	this->pimpl->addPositionalArgument(name, description);
 }
 
-bool ConfigFile::parseOptions(int argc, char *argv[])
+bool ConfigFile::parseOptions(int argc, const char *const argv[])
 {
 	return this->pimpl->parseOptions(argc, argv);
 }
@@ -485,6 +486,8 @@ ConfigOptionString::ConfigOptionString(const UString section, const UString name
 
 UString ConfigOptionString::get() const { return config().getString(getKey()); }
 
+void ConfigOptionString::set(const UString &newValue) { config().set(getKey(), newValue); }
+
 ConfigOptionInt::ConfigOptionInt(const UString section, const UString name,
                                  const UString description, const int defaultValue)
     : ConfigOption(section, name, description), defaultValue(defaultValue)
@@ -494,6 +497,8 @@ ConfigOptionInt::ConfigOptionInt(const UString section, const UString name,
 
 int ConfigOptionInt::get() const { return config().getInt(getKey()); }
 
+void ConfigOptionInt::set(int newValue) { config().set(getKey(), newValue); }
+
 ConfigOptionBool::ConfigOptionBool(const UString section, const UString name,
                                    const UString description, const bool defaultValue)
     : ConfigOption(section, name, description), defaultValue(defaultValue)
@@ -502,6 +507,7 @@ ConfigOptionBool::ConfigOptionBool(const UString section, const UString name,
 }
 
 bool ConfigOptionBool::get() const { return config().getBool(getKey()); }
+void ConfigOptionBool::set(bool newValue) { config().set(getKey(), newValue); }
 
 ConfigOptionFloat::ConfigOptionFloat(const UString section, const UString name,
                                      const UString description, const float defaultValue)

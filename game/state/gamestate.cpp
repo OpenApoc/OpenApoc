@@ -2,6 +2,8 @@
 #include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/framework.h"
+#include "framework/modinfo.h"
+#include "framework/options.h"
 #include "framework/sound.h"
 #include "framework/trace.h"
 #include "game/state/battle/battle.h"
@@ -63,7 +65,7 @@ GameState::~GameState()
 	{
 		auto vehicle = v.second;
 		vehicle->removeFromMap(*this);
-		// Detatch some back-pointers otherwise we get circular sp<> depedencies and leak
+		// Detach some back-pointers otherwise we get circular sp<> dependencies and leak
 		// FIXME: This is not a 'good' way of doing this, maybe add a destroyVehicle() function? Or
 		// make StateRefWeak<> or something?
 		//
@@ -182,8 +184,9 @@ void GameState::initState()
 		for (auto &v : this->vehicles)
 		{
 			auto vehicle = v.second;
-			if (vehicle->city == city && !vehicle->currentBuilding)
+			if (vehicle->city == city && !vehicle->currentBuilding && !vehicle->betweenDimensions)
 			{
+
 				city->map->addObjectToMap(*this, vehicle);
 			}
 			vehicle->strategyImages = city_common_image_list->strategyImages;
@@ -204,7 +207,7 @@ void GameState::initState()
 	{
 		for (auto &w : t.second->weapon_types)
 		{
-			w->ammo_types.emplace_back(this, t.first);
+			w->ammo_types.emplace(this, t.first);
 		}
 	}
 	for (auto &a : this->agent_types)
@@ -216,7 +219,7 @@ void GameState::initState()
 		a.second->leftHandItem = a.second->getFirstItemInSlot(EquipmentSlotType::LeftHand, false);
 		a.second->rightHandItem = a.second->getFirstItemInSlot(EquipmentSlotType::RightHand, false);
 	}
-	// Run nessecary methods for different types
+	// Run necessary methods for different types
 	research.updateTopicList();
 	// Apply mods (Stub until we actually have mods)
 	applyMods();
@@ -612,7 +615,7 @@ void GameState::startGame()
 // Fills out initial player property
 void GameState::fillPlayerStartingProperty()
 {
-	// Create the intial starting base
+	// Create the initial starting base
 	// Randomly shuffle buildings until we find one with a base layout
 	sp<City> humanCity = this->cities["CITYMAP_HUMAN"];
 	setCurrentCity({this, humanCity});
@@ -657,7 +660,8 @@ void GameState::fillPlayerStartingProperty()
 		v->homeBuilding = v->currentBuilding;
 		for (auto &eq : pair.second)
 		{
-			v->addEquipment(*this, eq);
+			auto device = v->addEquipment(*this, eq);
+			device->ammo = eq->max_ammo;
 		}
 	}
 	// Give the player initial vehicle equipment
@@ -1339,6 +1343,33 @@ int GameScore::getTotal()
 {
 	return tacticalMissions + researchCompleted + alienIncidents + craftShotDownUFO +
 	       craftShotDownXCom + incursions + cityDamage;
+}
+
+void GameState::loadMods()
+{
+	auto mods = Options::modList.get().split(":");
+	for (const auto &modString : mods)
+	{
+		LogWarning("loading mod \"%s\"", modString);
+		auto modPath = Options::modPath.get() + "/" + modString;
+		auto modInfo = ModInfo::getInfo(modPath);
+		if (!modInfo)
+		{
+			LogError("Failed to load ModInfo for mod \"%s\"", modString);
+			continue;
+		}
+		LogWarning("Loaded modinfo for mod ID \"%s\"", modInfo->getID());
+		if (modInfo->getStatePath() != "")
+		{
+			auto modStatePath = modPath + "/" + modInfo->getStatePath();
+			LogWarning("Loading mod gamestate \"%s\"", modStatePath);
+
+			if (!this->loadGame(modStatePath))
+			{
+				LogError("Failed to load mod ID \"%s\"", modInfo->getID());
+			}
+		}
+	}
 }
 
 }; // namespace OpenApoc

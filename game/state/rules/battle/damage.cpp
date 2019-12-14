@@ -95,7 +95,7 @@ sp<Image> HazardType::getFrame(unsigned age, int offset)
 		// Get min and max frames for this stage
 		int minFrame = clamp((stage - 5) / 10, 0, 11);
 		int maxFrame = clamp((stage + 5 + 5) / 10, 0, 11);
-		// Trun offset if it's too big
+		// Trunc offset if it's too big
 		if (minFrame + offset > maxFrame)
 		{
 			offset = 0;

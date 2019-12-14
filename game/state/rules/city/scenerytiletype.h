@@ -44,7 +44,7 @@ class SceneryTileType : public StateObject
 	sp<VoxelMap> voxelMap;
 	// FIXME: If the damaged tile links form a loop this will leak?
 	StateRef<SceneryTileType> damagedTile;
-	Vec2<float> imageOffset;
+	Vec2<float> imageOffset = {0, 0};
 	bool isLandingPad = false;
 	Colour minimap_colour;
 
