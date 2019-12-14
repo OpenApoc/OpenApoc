@@ -149,8 +149,8 @@ urpmi "cmake(sdl2)" libstdc++-static-devel boost-devel boost unwind-devel task-c
 * On Fedora or other RedHat distro the folowing packages as root:
 
 ```sh
-sudo yum groupinstall "Development Tools" "Development Libraries"
-sudo yum install git SDL2-devel cmake libunwind-devel qt5-qtbase-devel
+yum groupinstall "Development Tools" "Development Libraries"
+yum install git SDL2-devel cmake libunwind-devel qt5-qtbase-devel
 ```
 
 * Checkout OpenApoc from GitHub.
