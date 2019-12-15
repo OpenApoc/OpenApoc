@@ -146,6 +146,13 @@ sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboo
 urpmi "cmake(sdl2)" libstdc++-static-devel boost-devel boost unwind-devel task-c++-devel cmake git qtbase5-devel
 ```
 
+* On Fedora or other RedHat distro, install the folowing packages as root:
+
+```sh
+yum groupinstall "Development Tools" "Development Libraries"
+yum install git SDL2-devel cmake libunwind-devel qt5-qtbase-devel
+```
+
 * Checkout OpenApoc from GitHub.
 * Fetch the dependencies from git with the following terminal command (run from the just-created OpenApoc folder).
 
