@@ -95,6 +95,7 @@ save.zip
 openapoc_log.txt
 version.h
 saves/
+/log.txt
 
 # Vim swap files
 .*.swp
