@@ -81,10 +81,11 @@ That will be a game which has all of its main mechanics implemented. We still ha
 
 ## Building
 
-OpenApocalypse is built leveraging a number of libraries - to provide needed functionality (and save us the time of implementing it ourselves badly)
+OpenApocalypse is built leveraging a number of libraries - to provide needed functionality (and save us the time of implementing it ourselves badly). 
+Note: The following libraries will be fetched and built with vcpkg in a later step, ensuring you get the correct version
 
-* [SDL2](https://www.libsdl.org)
-* [Boost](http://boost.org) - specifially the 'locale' library, used for localisation, 'program-options' for settings management, and 'filesystem'.
+* [SDL2](https://www.libsdl.org) 
+* [Boost](http://boost.org) We use specifially the 'locale' library, used for localisation, 'program-options' for settings management, and 'filesystem'.
 * [Libunwind](https://nongnu.org/libunwind/download.html) - debug backtracing on linux - not needed on windows.
 
 The following libraries are also used, but are shipped as submodules in the repository and directly included in the build, so you don't need to install these dependencies to build or use openapoc.
@@ -114,6 +115,7 @@ vcpkg install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-b
 ```
 
 * Copy the original XCom:Apocalypse .iso file into the "data/" directory. This could also be a directory containing all the extracted files from the CD, and it should be named the same (IE the directory should be data/cd.iso/). This is used during the build to extract some data tables.
+* If you do not have Visual Studio (community edition works fine) already, install it and make sure to enable c++ support (Check "Desktop development with C++" in the VS setup)
 * Open the Git directory in Visual Studio (if you don't have an Open Folder option, generate a project from CMake).
 * Visual Studio should automatically detect and configure CMake appropriately. To add your Vcpkg dependencies, edit your CMake Settings file and add:
 
