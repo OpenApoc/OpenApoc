@@ -26,7 +26,7 @@ before_build:
   - cd c:\tools\vcpkg
   - git pull
   - git checkout 2019.12
-  - cd c:\projects\openapoc
+  - cd %APPVEYOR_BUILD_FOLDER%
   - vcpkg install sdl2 boost-locale boost-program-options boost-uuid boost-crc
   - vcpkg upgrade --no-dry-run
   - vcpkg remove --outdated
