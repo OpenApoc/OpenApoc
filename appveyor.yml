@@ -21,7 +21,7 @@ init:
   - if "%PLATFORM%"=="Win32" (set VCVARS_ARCH=amd64_x86)
   - if "%PLATFORM%"=="Win32" (set QTPATH=C:\Qt\5.13\msvc2017)
 #clone_depth: 10
-#cache: c:\tools\vcpkg\installed
+cache: c:\tools\vcpkg\installed
 before_build:
   - cd c:\tools\vcpkg
   - git pull
