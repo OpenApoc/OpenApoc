@@ -258,8 +258,13 @@ add_custom_target(tidy ${CLANG_TIDY}
 
 set(LANGUAGES en_GB fr_FR de_DE cs es it pl pt_BR ru_RU uk)
 
+set(SOURCE_POT_FILE ${CMAKE_SOURCE_DIR}/data/languages/source.pot)
+set(FORM_POT_FILE ${CMAKE_SOURCE_DIR}/data/languages/forms.pot)
+
 find_package(Gettext)
 if (GETTEXT_FOUND)
+
+
 		foreach(LANG ${LANGUAGES})
 				GETTEXT_PROCESS_PO_FILES(${LANG} PO_FILES
 						${CMAKE_SOURCE_DIR}/data/languages/ufo_string_${LANG}.po)
@@ -272,3 +277,23 @@ if (GETTEXT_FOUND)
 						${CMAKE_SOURCE_DIR}/data/languages/${LANG}/LC_MESSAGES/ufo_string.mo)
 		endforeach()
 endif(GETTEXT_FOUND)
+
+
+FIND_PROGRAM(XGETTEXT_EXECUTABLE xgettext)
+
+IF(XGETTEXT_EXECUTABLE)
+    SET(XGETTEXT_FOUND TRUE)
+ELSE(XGETTEXT_EXECUTABLE)
+    MESSAGE(STATUS "xgettext not found.")
+    SET(XGETTTEXT_FOUND FALSE)
+ENDIF(XGETTEXT_EXECUTABLE)
+
+
+if (XGETTEXT_FOUND)
+		add_custom_command(OUTPUT ${SOURCE_POT_FILE}
+				COMMAND ${XGETTEXT_EXECUTABLE} -ktformat -ktr -o ${SOURCE_POT_FILE} ${FORMAT_SOURCES}
+				DEPENDS ${FORMAT_SOURCES})
+		add_custom_target(extract-source-translations
+				DEPENDS ${SOURCE_POT_FILE})
+
+endif()
