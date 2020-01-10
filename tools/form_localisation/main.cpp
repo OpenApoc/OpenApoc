@@ -4,6 +4,7 @@
 #include <set>
 #include <string>
 #include <string_view>
+#include <cctype>
 
 const auto header = R"foo(msgid ""
 msgstr ""
