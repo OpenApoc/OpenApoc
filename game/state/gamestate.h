@@ -257,6 +257,12 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// appends a GameState package from "submodPath", relative to the currently set data directories
 	// Returns true on success, false on failure
 	bool appendGameState(const UString &gamestatePath);
+
+	// BIT OF A HACK - we (ab)use the serializeIn generate code to dump translation strings
+	// This should probably be tweaked to generate code to allow a visitor to be called each object?
+	// Mutable as serializeIn takes a const GameState
+	mutable std::set<UString> translateable_strings;
+	bool populate_translateable_strings = false;
 };
 
 }; // namespace OpenApoc

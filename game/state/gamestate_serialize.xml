@@ -111,7 +111,7 @@
 	<object>
 		<name>AgentType</name>
 		<member>id</member>
-		<member>name</member>
+		<member translate="true">name</member>
 		<member>role</member>
 		<member>possible_genders</member>
 		<member>gender_chance</member>
@@ -282,9 +282,9 @@
 	</object>
 	<object>
 		<name>ResearchTopic</name>
-		<member>name</member>
+		<member translate="true">name</member>
 		<member>order</member>
-		<member>description</member>
+		<member translate="true">description</member>
 		<member>man_hours</member>
 		<member>type</member>
 		<member>required_lab_size</member>
@@ -314,8 +314,8 @@
 	</object>
 	<object>
 		<name>UfopaediaCategory</name>
-		<member>title</member>
-		<member>description</member>
+		<member translate="true">title</member>
+		<member translate="true">description</member>
 		<member>background</member>
 		<member>entries</member>
 	</object>
@@ -425,7 +425,7 @@
 		<name>Vehicle</name>
 		<member>type</member>
 		<member>owner</member>
-		<member>name</member>
+		<member translate="true">name</member>
 		<member>attackMode</member>
 		<member>altitude</member>
 		<member>missions</member>
@@ -1044,14 +1044,14 @@
 	</object>
 	<object>
 		<name>BuildingFunction</name>
-		<member>name</member>
+		<member translate="true">name</member>
 		<member>infiltrationSpeed</member>
 		<member>detectionWeight</member>
 		<member>ufopaedia_entry</member>
 	</object>
 	<object>
 		<name>Building</name>
-		<member>name</member>
+		<member translate="true">name</member>
 		<member>city</member>
 		<member>function</member>
 		<member>owner</member>
@@ -1126,7 +1126,7 @@
 	<object>
 		<name>VAmmoType</name>
 		<member>id</member>
-		<member>name</member>
+		<member translate="true">name</member>
 		<member>weight</member>
 		<member>ammo_id</member>
 		<member>manufacturer</member>
@@ -1161,7 +1161,7 @@
 	</enum>
 	<object>
 		<name>DamageType</name>
-		<member>name</member>
+		<member translate="true">name</member>
 		<member>icon_sprite</member>
 		<member>ignore_shield</member>
 		<member>non_violent</member>
@@ -1177,7 +1177,7 @@
 		<name>AEquipmentType</name>
 		<member>type</member>
 		<member>id</member>
-		<member>name</member>
+		<member translate="true">name</member>
 		<member>weight</member>
 		<member>held_image_pack</member>
 		<member>dropped_sprite</member>
@@ -1229,7 +1229,7 @@
 		<name>VEquipmentType</name>
 		<member>type</member>
 		<member>id</member>
-		<member>name</member>
+		<member translate="true">name</member>
 		<member>weight</member>
 		<member>max_ammo</member>
 		<member>ammo_type</member>
@@ -1277,7 +1277,7 @@
 	</object>
 	<object>
 		<name>FacilityType</name>
-		<member>name</member>
+		<member translate="true">name</member>
 		<member>fixed</member>
 		<member>buildCost</member>
 		<member>buildTime</member>
@@ -1324,7 +1324,7 @@
 	<object>
 		<name>Organisation</name>
 		<member>id</member>
-		<member>name</member>
+		<member translate="true">name</member>
 		<member>balance</member>
 		<member>income</member>
 		<member>infiltrationValue</member>
@@ -1349,7 +1349,7 @@
 		<name>VehicleType</name>
 		<member>numCreated</member>
 		<member>type</member>
-		<member>name</member>
+		<member translate="true">name</member>
 		<member>manufacturer</member>
 		<member>image_offset</member>
 		<member>acceleration</member>
@@ -1390,8 +1390,8 @@
 	</object>
 	<object>
 		<name>UfopaediaEntry</name>
-		<member>title</member>
-		<member>description</member>
+		<member translate="true">title</member>
+		<member translate="true">description</member>
 		<member>background</member>
 		<member>data_id</member>
 		<member>data_type</member>

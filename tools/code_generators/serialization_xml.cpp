@@ -103,8 +103,14 @@ bool readXml(std::istream &in, StateDefinition &state)
 									std::cerr << "Unknown member type attribute \"" << typeName
 									          << "\"\n";
 							}
+
 							SerializeNode member(memberName);
 							member.type = type;
+							std::string translate = memberNode.attribute("translate").as_string();
+							if (translate == "true")
+							{
+								member.translate = true;
+							}
 							obj.members.push_back(std::make_pair(member.name, member));
 						}
 						else if (std::string(memberNode.name()) == "name")

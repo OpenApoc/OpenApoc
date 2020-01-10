@@ -10,6 +10,7 @@ option(BUILD_SERIALIZATIONTOOL "Tool to work with serialized gamestate
 archives" ON)
 option(BUILD_LAUNCHER "Build the launcher" ON)
 option(BUILD_FORM_LOCALISATION "Build form locale string extractor" ON)
+option(BUILD_GAMESTATE_LOCALISATION "Build gamestate locale string extractor" ON)
 
 if(BUILD_EXTRACTOR)
 		add_subdirectory(extractors)
@@ -37,6 +38,10 @@ endif()
 
 if (BUILD_FORM_LOCALISATION)
 		add_subdirectory(form_localisation)
+endif()
+
+if (BUILD_GAMESTATE_LOCALISATION)
+		add_subdirectory(gamestate_localisation)
 endif()
 
 

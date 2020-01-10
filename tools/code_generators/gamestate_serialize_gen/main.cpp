@@ -103,6 +103,16 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 					newNodeFn = "getSection";
 					break;
 			}
+			if (member.second.translate)
+			{
+				out << "\tif (state->populate_translateable_strings)\n"
+				    << "\t{\n"
+				    << "\t\tUString translate_string;\n"
+				    << "\t\tserializeIn(state, node->getNode(\"" << member.first
+				    << "\"), translate_string);\n"
+				    << "\t\tstate->translateable_strings.insert(translate_string);\n"
+				    << "\t}\n";
+			}
 			out << "\t" << serializeFn << "(state, node->" << newNodeFn << "(\"" << member.first
 			    << "\"), obj." << member.first << ");\n";
 		}

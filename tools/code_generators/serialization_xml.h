@@ -27,6 +27,7 @@ class SerializeNode
   public:
 	std::string name;
 	NodeType type = NodeType::Normal;
+	bool translate = false;
 	SerializeNode(std::string name) : name(name) {}
 };
 
