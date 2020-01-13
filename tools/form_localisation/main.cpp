@@ -134,7 +134,7 @@ int main(int argc, char **argv)
 	{
 		const auto escaped_string = escape_string(string);
 		std::cout << "msgid \"" << escaped_string << "\"\n";
-		std::cout << "msgstr \"" << escaped_string << "\"\n\n";
+		std::cout << "msgstr \"\"\n\n";
 	}
 
 	return EXIT_SUCCESS;
