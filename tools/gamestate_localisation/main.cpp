@@ -4,10 +4,10 @@
 #include "framework/logger.h"
 #include "game/state/gamestate.h"
 #include "game/state/gamestate_serialize.h"
+#include <cctype>
 #include <iostream>
 #include <sstream>
 #include <string_view>
-#include <cctype>
 
 const auto header = R"foo(msgid ""
 msgstr ""
