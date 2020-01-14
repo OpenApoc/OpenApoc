@@ -250,7 +250,7 @@ void GameState::validateResearch()
 		{
 			if (t.second->itemId.length() == 0)
 			{
-				LogError("EMPTY REFERENCE resulting item for %s", t.first);
+				LogError("EMPTY REFERENCE resulting item for {}", t.first);
 			}
 			else
 			{
@@ -284,7 +284,7 @@ void GameState::validateResearch()
 				}
 				if (fail)
 				{
-					LogError("%s DOES NOT EXIST: referenced as manufactured by %s",
+					LogError("{} DOES NOT EXIST: referenced as manufactured by {}",
 					         t.second->itemId, t.first);
 				}
 			}
@@ -295,11 +295,11 @@ void GameState::validateResearch()
 			{
 				if (topic.id.length() == 0)
 				{
-					LogError("EMPTY REFERENCE required topic for %s", t.first);
+					LogError("EMPTY REFERENCE required topic for {}", t.first);
 				}
 				else if (research.topics.find(topic.id) == research.topics.end())
 				{
-					LogError("%s DOES NOT EXIST: referenced as required topic for %s", topic.id,
+					LogError("{} DOES NOT EXIST: referenced as required topic for {}", topic.id,
 					         t.first);
 				}
 			}
@@ -308,11 +308,11 @@ void GameState::validateResearch()
 		{
 			if (entry.first.id.length() == 0)
 			{
-				LogError("EMPTY REFERENCE required item for %s", t.first);
+				LogError("EMPTY REFERENCE required item for {}", t.first);
 			}
 			else if (agent_equipment.find(entry.first.id) == agent_equipment.end())
 			{
-				LogError("%s DOES NOT EXIST: referenced as required item for %s", entry.first.id,
+				LogError("{} DOES NOT EXIST: referenced as required item for {}", entry.first.id,
 				         t.first);
 			}
 		}
@@ -320,11 +320,11 @@ void GameState::validateResearch()
 		{
 			if (entry.first.id.length() == 0)
 			{
-				LogError("EMPTY REFERENCE consumed item for %s", t.first);
+				LogError("EMPTY REFERENCE consumed item for {}", t.first);
 			}
 			else if (agent_equipment.find(entry.first.id) == agent_equipment.end())
 			{
-				LogError("%s DOES NOT EXIST: referenced as consumed item for %s", entry.first.id,
+				LogError("{} DOES NOT EXIST: referenced as consumed item for {}", entry.first.id,
 				         t.first);
 			}
 		}
@@ -332,11 +332,11 @@ void GameState::validateResearch()
 		{
 			if (entry.first.id.length() == 0)
 			{
-				LogError("EMPTY REFERENCE required item for %s", t.first);
+				LogError("EMPTY REFERENCE required item for {}", t.first);
 			}
 			else if (vehicle_equipment.find(entry.first.id) == vehicle_equipment.end())
 			{
-				LogError("%s DOES NOT EXIST: referenced as required item for %s", entry.first.id,
+				LogError("{} DOES NOT EXIST: referenced as required item for {}", entry.first.id,
 				         t.first);
 			}
 		}
@@ -344,11 +344,11 @@ void GameState::validateResearch()
 		{
 			if (entry.first.id.length() == 0)
 			{
-				LogError("EMPTY REFERENCE consumed item for %s", t.first);
+				LogError("EMPTY REFERENCE consumed item for {}", t.first);
 			}
 			else if (vehicle_equipment.find(entry.first.id) == vehicle_equipment.end())
 			{
-				LogError("%s DOES NOT EXIST: referenced as consumed item for %s", entry.first.id,
+				LogError("{} DOES NOT EXIST: referenced as consumed item for {}", entry.first.id,
 				         t.first);
 			}
 		}
@@ -357,12 +357,12 @@ void GameState::validateResearch()
 			if (t.second->dependencies.items.agentItemsRequired.find(entry.first) ==
 			    t.second->dependencies.items.agentItemsRequired.end())
 			{
-				LogError("Consumed agent item %s not in required list for topic %s", entry.first.id,
+				LogError("Consumed agent item {} not in required list for topic {}", entry.first.id,
 				         t.first);
 			}
 			else if (t.second->dependencies.items.agentItemsRequired.at(entry.first) < entry.second)
 			{
-				LogError("Consumed agent items %s has bigger count than required for topic %s",
+				LogError("Consumed agent items {} has bigger count than required for topic {}",
 				         entry.first.id, t.first);
 			}
 		}
@@ -371,13 +371,13 @@ void GameState::validateResearch()
 			if (t.second->dependencies.items.vehicleItemsRequired.find(entry.first) ==
 			    t.second->dependencies.items.vehicleItemsRequired.end())
 			{
-				LogError("Consumed vehicle item %s not in required list for topic %s",
+				LogError("Consumed vehicle item {} not in required list for topic {}",
 				         entry.first.id, t.first);
 			}
 			else if (t.second->dependencies.items.vehicleItemsRequired.at(entry.first) <
 			         entry.second)
 			{
-				LogError("Consumed vehicle item %s has bigger count than required for topic %s",
+				LogError("Consumed vehicle item {} has bigger count than required for topic {}",
 				         entry.first.id, t.first);
 			}
 		}
@@ -426,8 +426,8 @@ void GameState::validateScenery()
 				}
 				if (newRoad || (roadAlive && roadDead))
 				{
-					LogError("ROAD MUTATION: In %s when damaged from %s to %s roads go [%d%d%d%d] "
-					         "to [%d%d%d%d]",
+					LogError("ROAD MUTATION: In {} when damaged from {} to {} roads go [{}{}{}{}] "
+					         "to [{}{}{}{}]",
 					         sc.first, thisSc.id, thisSc->damagedTile.id,
 					         (int)thisSc->connection[0], (int)thisSc->connection[1],
 					         (int)thisSc->connection[2], (int)thisSc->connection[3],
@@ -455,12 +455,12 @@ void GameState::validateAgentEquipment()
 			if (ae.second->max_ammo == 0)
 			{
 				LogError(
-				    "%s ZERO MAX AMMO: equipment of type ammo must always have non-zero max ammo",
+				    "{} ZERO MAX AMMO: equipment of type ammo must always have non-zero max ammo",
 				    ae.first);
 			}
 			if (ae.second->max_ammo != 1 && ae.second->bioStorage)
 			{
-				LogError("%s BIO AMMO CLIP: equipment stored in alien containment must never have "
+				LogError("{} BIO AMMO CLIP: equipment stored in alien containment must never have "
 				         "max ammo other than 1",
 				         ae.first);
 			}
@@ -773,11 +773,11 @@ void GameState::invasion()
 	// Select a random mission type
 	int week = this->gameTime.getWeek();
 	auto preference =
-	    this->ufo_mission_preference.find(format("%s%d", UFOMissionPreference::getPrefix(), week));
+	    this->ufo_mission_preference.find(format("{}{}", UFOMissionPreference::getPrefix(), week));
 	if (preference == this->ufo_mission_preference.end())
 	{
 		preference = this->ufo_mission_preference.find(
-		    format("%s%s", UFOMissionPreference::getPrefix(), "DEFAULT"));
+		    format("{}{}", UFOMissionPreference::getPrefix(), "DEFAULT"));
 	}
 	auto missionType = pickRandom(rng, preference->second->missionList);
 	// Compile list of missions rated by priority
@@ -1343,23 +1343,23 @@ void GameState::loadMods()
 	auto mods = Options::modList.get().split(":");
 	for (const auto &modString : mods)
 	{
-		LogWarning("loading mod \"%s\"", modString);
+		LogWarning("loading mod \"{}\"", modString);
 		auto modPath = Options::modPath.get() + "/" + modString;
 		auto modInfo = ModInfo::getInfo(modPath);
 		if (!modInfo)
 		{
-			LogError("Failed to load ModInfo for mod \"%s\"", modString);
+			LogError("Failed to load ModInfo for mod \"{}\"", modString);
 			continue;
 		}
-		LogWarning("Loaded modinfo for mod ID \"%s\"", modInfo->getID());
+		LogWarning("Loaded modinfo for mod ID \"{}\"", modInfo->getID());
 		if (modInfo->getStatePath() != "")
 		{
 			auto modStatePath = modPath + "/" + modInfo->getStatePath();
-			LogWarning("Loading mod gamestate \"%s\"", modStatePath);
+			LogWarning("Loading mod gamestate \"{}\"", modStatePath);
 
 			if (!this->loadGame(modStatePath))
 			{
-				LogError("Failed to load mod ID \"%s\"", modInfo->getID());
+				LogError("Failed to load mod ID \"{}\"", modInfo->getID());
 			}
 		}
 

@@ -74,7 +74,7 @@ void TextEdit::eventOccured(Event *e)
 			}
 			if (e->forms().EventFlag == FormEventType::KeyDown)
 			{
-				LogInfo("Key pressed: %d", e->forms().KeyInfo.KeyCode);
+				LogInfo("Key pressed: {}", e->forms().KeyInfo.KeyCode);
 				switch (e->forms().KeyInfo.KeyCode)
 				{
 					case SDLK_BACKSPACE:

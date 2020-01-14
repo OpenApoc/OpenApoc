@@ -73,7 +73,7 @@ sp<Image> Doodad::getSprite()
 		if (animTime > age)
 			return frame;
 	}
-	LogWarning("Doodad reached age %d with no frame", age);
+	LogWarning("Doodad reached age {} with no frame", age);
 	return frame;
 }
 

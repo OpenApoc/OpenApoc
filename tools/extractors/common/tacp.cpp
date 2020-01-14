@@ -22,7 +22,7 @@ TACP::TACP(std::string file_name)
 
 	if (!file)
 	{
-		LogError("Failed to open \"%s\"", file_name.c_str());
+		LogError("Failed to open \"{}\"", file_name.c_str());
 		exit(1);
 	}
 
@@ -34,7 +34,7 @@ TACP::TACP(std::string file_name)
 
 	if (crc32 != expected_tacp_crc32)
 	{
-		LogError("File \"%s\"\" has an unknown crc32 value of 0x%08x - expected 0x%08x",
+		LogError("File \"{}\"\" has an unknown crc32 value of 0x%08x - expected 0x%08x",
 		         file_name.c_str(), crc32, expected_tacp_crc32);
 	}
 

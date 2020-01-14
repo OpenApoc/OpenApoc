@@ -17,7 +17,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
                                                               const UString dirName,
                                                               const int index) const
 {
-	UString tilePrefix = format("%s_", dirName);
+	UString tilePrefix = format("{}_", dirName);
 	UString map_prefix = "xcom3/maps/";
 	UString mapunits_suffix = "/mapunits/";
 	bool baseMap = dirName == "37base";
@@ -30,14 +30,14 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 		auto inFile = fw().data->fs.open(datFileName);
 		if (!inFile)
 		{
-			LogError("Failed to open \"%s\"", fileName);
+			LogError("Failed to open \"{}\"", fileName);
 			return;
 		}
 
 		inFile.read((char *)&bdata, sizeof(bdata));
 		if (!inFile)
 		{
-			LogError("Failed to read entry in \"%s\"", fileName);
+			LogError("Failed to read entry in \"{}\"", fileName);
 			return;
 		}
 	}
@@ -49,14 +49,14 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 		auto inFile = fw().data->fs.open(fullPath);
 		if (!inFile)
 		{
-			LogError("Failed to open \"%s\"", fileName);
+			LogError("Failed to open \"{}\"", fileName);
 			return;
 		}
 
 		inFile.read((char *)&rdata, sizeof(rdata));
 		if (!inFile)
 		{
-			LogError("Failed to read entry in \"%s\"", fileName);
+			LogError("Failed to read entry in \"{}\"", fileName);
 			return;
 		}
 	}
@@ -69,7 +69,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 		auto inFile = fw().data->fs.open(fullPath);
 		if (!inFile)
 		{
-			LogError("Failed to open \"%s\"", fileName);
+			LogError("Failed to open \"{}\"", fileName);
 			return;
 		}
 
@@ -80,7 +80,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 
 	auto m = mksp<BattleMap>();
 
-	UString id = format("%s%s", BattleMap::getPrefix(), this->battleMapPaths[index]);
+	UString id = format("{}{}", BattleMap::getPrefix(), this->battleMapPaths[index]);
 
 	m->id = id;
 	m->chunk_size = {bdata.chunk_x, bdata.chunk_y, bdata.chunk_z};
@@ -125,7 +125,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 
 	if (bdata.destroyed_ground_idx != 0)
 		m->destroyed_ground_tile = {&state,
-		                            format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix,
+		                            format("{}{}{}{}", BattleMapPartType::getPrefix(), tilePrefix,
 		                                   "GD_", (unsigned)bdata.destroyed_ground_idx)};
 
 	for (int i = 0; i < 5; i++)
@@ -133,26 +133,26 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 		if (rdata.left_wall[i] != 0)
 		{
 			m->rubble_left_wall.emplace_back(
-			    &state, format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix, "LW_",
+			    &state, format("{}{}{}{}", BattleMapPartType::getPrefix(), tilePrefix, "LW_",
 			                   (unsigned)rdata.left_wall[i]));
 		}
 		if (rdata.right_wall[i] != 0)
 		{
 			m->rubble_right_wall.emplace_back(
-			    &state, format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix, "RW_",
+			    &state, format("{}{}{}{}", BattleMapPartType::getPrefix(), tilePrefix, "RW_",
 			                   (unsigned)rdata.right_wall[i]));
 		}
 		if (rdata.feature[i] != 0)
 		{
 			m->rubble_feature.emplace_back(&state,
-			                               format("%s%s%s%u", BattleMapPartType::getPrefix(),
+			                               format("{}{}{}{}", BattleMapPartType::getPrefix(),
 			                                      tilePrefix, "FT_", (unsigned)rdata.feature[i]));
 		}
 	}
 
 	for (int i = 0; i < 4; i++)
 	{
-		m->exit_grounds.emplace_back(&state, format("%s%s%s%u", BattleMapPartType::getPrefix(),
+		m->exit_grounds.emplace_back(&state, format("{}{}{}{}", BattleMapPartType::getPrefix(),
 		                                            tilePrefix, "GD_", (unsigned)firstExitIdx + i));
 	}
 
@@ -168,7 +168,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 	for (const auto &sdtFile : sdtFiles)
 	{
 		fileCounter++;
-		LogInfo("Reading map %s", sdtFile);
+		LogInfo("Reading map {}", sdtFile);
 		/*  Trim off '.sdt' to get the base map name */
 		LogAssert(sdtFile.length() >= 4);
 		auto secName = sdtFile.substr(0, sdtFile.length() - 4);
@@ -184,19 +184,19 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 			{
 				if (fileCounter == 0)
 				{
-					tilesName = format("%s_%02d", dirName, groundCounter);
+					tilesName = format("{}_%02d", dirName, groundCounter);
 					secID = format("SEC%02d", groundCounter);
 				}
 				else
 				{
-					tilesName = format("%s_%02d", dirName, fileCounter + 15);
+					tilesName = format("{}_%02d", dirName, fileCounter + 15);
 					secID = format("SEC%02d", fileCounter + 15);
 				}
 			}
 			else
 			{
-				tilesName = format("%s_%s", dirName, sector);
-				secID = format("SEC%s", sector);
+				tilesName = format("{}_{}", dirName, sector);
+				secID = format("SEC{}", sector);
 			}
 
 			SecSdtStructure sdata;
@@ -207,14 +207,14 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 				auto inFile = fw().data->fs.open(fullPath);
 				if (!inFile)
 				{
-					LogInfo("Sector %s not present for map %d", sector, index);
+					LogInfo("Sector {} not present for map {}", sector, index);
 					continue;
 				}
 
 				inFile.read((char *)&sdata, sizeof(sdata));
 				if (!inFile)
 				{
-					LogError("Failed to read entry in \"%s\"", fileName);
+					LogError("Failed to read entry in \"{}\"", fileName);
 					return;
 				}
 			}
@@ -249,7 +249,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 
 	if (bdata.destroyed_ground_idx != 0)
 		m->destroyed_ground_tile = {&state,
-		                            format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix,
+		                            format("{}{}{}{}", BattleMapPartType::getPrefix(), tilePrefix,
 		                                   "GD_", (unsigned)bdata.destroyed_ground_idx)};
 
 	state.battle_maps[id] = m;
@@ -261,7 +261,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 	std::map<UString, up<BattleMapSectorTiles>> sectors;
 	UString map_prefix = "xcom3/maps/";
 	UString dirName = mapRootName;
-	UString tilePrefix = format("%s_", dirName);
+	UString tilePrefix = format("{}_", dirName);
 	bool baseMap = mapRootName == "37base";
 	BuildingDatStructure bdata;
 	{
@@ -271,14 +271,14 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 		auto inFile = fw().data->fs.open(datFileName);
 		if (!inFile)
 		{
-			LogError("Failed to open \"%s\"", fileName);
+			LogError("Failed to open \"{}\"", fileName);
 			return {};
 		}
 
 		inFile.read((char *)&bdata, sizeof(bdata));
 		if (!inFile)
 		{
-			LogError("Failed to read entry in \"%s\"", fileName);
+			LogError("Failed to read entry in \"{}\"", fileName);
 			return {};
 		}
 	}
@@ -288,7 +288,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 	for (const auto &sdtFile : sdtFiles)
 	{
 		fileCounter++;
-		LogInfo("Reading map %s", sdtFile);
+		LogInfo("Reading map {}", sdtFile);
 		/*  Trim off '.sdt' to get the base map name */
 		LogAssert(sdtFile.length() >= 4);
 		auto secName = sdtFile.substr(0, sdtFile.length() - 4);
@@ -304,16 +304,16 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 			{
 				if (fileCounter == 0)
 				{
-					tilesName = format("%s_%02d", dirName, groundCounter);
+					tilesName = format("{}_%02d", dirName, groundCounter);
 				}
 				else
 				{
-					tilesName = format("%s_%02d", dirName, fileCounter + 15);
+					tilesName = format("{}_%02d", dirName, fileCounter + 15);
 				}
 			}
 			else
 			{
-				tilesName = format("%s_%s", dirName, sector);
+				tilesName = format("{}_{}", dirName, sector);
 			}
 			up<BattleMapSectorTiles> tiles(new BattleMapSectorTiles());
 			SecSdtStructure sdata;
@@ -324,14 +324,14 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 				auto inFile = fw().data->fs.open(fullPath);
 				if (!inFile)
 				{
-					LogInfo("Sector %s not present for map %s", sector, mapRootName);
+					LogInfo("Sector {} not present for map {}", sector, mapRootName);
 					continue;
 				}
 
 				inFile.read((char *)&sdata, sizeof(sdata));
 				if (!inFile)
 				{
-					LogError("Failed to read entry in \"%s\"", fileName);
+					LogError("Failed to read entry in \"{}\"", fileName);
 					return {};
 				}
 			}
@@ -344,7 +344,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 				auto inFile = fw().data->fs.open(fullPath);
 				if (!inFile)
 				{
-					LogError("Failed to open \"%s\"", fileName);
+					LogError("Failed to open \"{}\"", fileName);
 					return {};
 				}
 
@@ -358,7 +358,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 					inFile.read((char *)&ldata, sizeof(ldata));
 					if (!inFile)
 					{
-						LogError("Failed to read entry %d in \"%s\"", i, fileName);
+						LogError("Failed to read entry {} in \"{}\"", i, fileName);
 						return {};
 					}
 
@@ -491,7 +491,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 						inFile.read((char *)&ldata, sizeof(ldata));
 						if (!inFile)
 						{
-							LogError("Failed to read entry %d in \"%s\"", i, fileName);
+							LogError("Failed to read entry {} in \"{}\"", i, fileName);
 							return {};
 						}
 
@@ -511,7 +511,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 								lp = Organisation::LootPriority::C;
 								break;
 							default:
-								LogError("Encountered invalid loot priority in %d for sector %d", i,
+								LogError("Encountered invalid loot priority in {} for sector {}", i,
 								         sector);
 								return {};
 						}
@@ -530,13 +530,13 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 				auto inFile = fw().data->fs.open(fullPath);
 				if (!inFile)
 				{
-					LogError("Failed to open \"%s\"", fileName);
+					LogError("Failed to open \"{}\"", fileName);
 				}
 				auto fileSize = inFile.size();
 
 				if (fileSize != expectedFileSize)
 				{
-					LogError("Unexpected filesize %zu - expected %u", fileSize, expectedFileSize);
+					LogError("Unexpected filesize {} - expected {}", fileSize, expectedFileSize);
 				}
 
 				for (unsigned int z = 0; z < bdata.chunk_z * sdata.chunks_z; z++)
@@ -550,14 +550,14 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 							inFile.read((char *)&tdata, sizeof(tdata));
 							if (!inFile)
 							{
-								LogError("Failed to read entry %d,%d,%d in \"%s\"", x, y, z,
+								LogError("Failed to read entry {},{},{} in \"{}\"", x, y, z,
 								         fileName);
 								return {};
 							}
 							// read ground
 							if (tdata.GD != 0)
 							{
-								auto tileName = format("%s%s%s%u", BattleMapPartType::getPrefix(),
+								auto tileName = format("{}{}{}{}", BattleMapPartType::getPrefix(),
 								                       tilePrefix, "GD_", (unsigned)tdata.GD);
 
 								tiles->initial_grounds[Vec3<int>{x, y, z}] = {&state, tileName};
@@ -565,7 +565,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 							// read left wall
 							if (tdata.LW != 0)
 							{
-								auto tileName = format("%s%s%s%u", BattleMapPartType::getPrefix(),
+								auto tileName = format("{}{}{}{}", BattleMapPartType::getPrefix(),
 								                       tilePrefix, "LW_", (unsigned)tdata.LW);
 
 								tiles->initial_left_walls[Vec3<int>{x, y, z}] = {&state, tileName};
@@ -573,7 +573,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 							// read right wall
 							if (tdata.RW != 0)
 							{
-								auto tileName = format("%s%s%s%u", BattleMapPartType::getPrefix(),
+								auto tileName = format("{}{}{}{}", BattleMapPartType::getPrefix(),
 								                       tilePrefix, "RW_", (unsigned)tdata.RW);
 
 								tiles->initial_right_walls[Vec3<int>{x, y, z}] = {&state, tileName};
@@ -599,14 +599,14 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 									}
 									else
 									{
-										LogError("Encountered gun emplacement %d in sector %s",
+										LogError("Encountered gun emplacement {} in sector {}",
 										         tdata.FT, sector);
 									}
 								}
 								else
 								{
 									auto tileName =
-									    format("%s%s%s%u", BattleMapPartType::getPrefix(),
+									    format("{}{}{}{}", BattleMapPartType::getPrefix(),
 									           tilePrefix, "FT_", (unsigned)tdata.FT);
 
 									tiles->initial_features[Vec3<int>{x, y, z}] = {&state,
@@ -622,7 +622,7 @@ InitialGameStateExtractor::extractMapSectors(GameState &state, const UString &ma
 			if (baseMap && fileCounter == 0 && groundCounter != 15)
 			{
 				auto tileName =
-				    format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix, "FT_", 78);
+				    format("{}{}{}{}", BattleMapPartType::getPrefix(), tilePrefix, "FT_", 78);
 
 				// key is North South West East (true = occupied, false = vacant)
 				const std::unordered_map<int, std::vector<bool>> PRESENT_ROOMS = {

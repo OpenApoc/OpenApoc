@@ -239,7 +239,7 @@ void ListBox::update()
 				break;
 			}
 			default:
-				LogWarning("Unknown ListBox::ListOrientation value: %d",
+				LogWarning("Unknown ListBox::ListOrientation value: {}",
 				           static_cast<int>(ListOrientation));
 				break;
 		}

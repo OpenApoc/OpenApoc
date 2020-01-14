@@ -52,7 +52,7 @@ template <> sp<BattleUnit> StateObject<BattleUnit>::get(const GameState &state, 
 	auto it = state.current_battle->units.find(id);
 	if (it == state.current_battle->units.end())
 	{
-		LogError("No agent_type matching ID \"%s\"", id);
+		LogError("No agent_type matching ID \"{}\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -77,7 +77,7 @@ const UString &StateObject<BattleUnit>::getId(const GameState &state, const sp<B
 		if (a.second == ptr)
 			return a.first;
 	}
-	LogError("No battleUnit matching pointer %p", ptr.get());
+	LogError("No battleUnit matching pointer %p", static_cast<void*>(ptr.get()));
 	return emptyString;
 }
 
@@ -1057,7 +1057,7 @@ bool BattleUnit::startAttackPsiInternal(GameState &state, StateRef<BattleUnit> t
 	int roll = randBoundsExclusive(state.rng, 0, 100);
 	experiencePoints.psi_attack++;
 	experiencePoints.psi_energy++;
-	LogWarning("Psi Attack #%d Roll %d Chance %d %s Attacker %s Target %s", (int)status, roll,
+	LogWarning("Psi Attack #{} Roll {} Chance {} {} Attacker {} Target {}", (int)status, roll,
 	           chance, roll < chance ? (UString) "SUCCESS" : (UString) "FAILURE", id, target->id);
 	if (roll >= chance)
 	{
@@ -2403,11 +2403,11 @@ void BattleUnit::updateIdling(GameState &state)
 		// Sanity checks
 		if (goalFacing != facing)
 		{
-			LogError("Unit %s (%s) turning without a mission, wtf?", id, agent->type->id);
+			LogError("Unit {} ({}) turning without a mission, wtf?", id, agent->type->id);
 		}
 		if (target_body_state != current_body_state)
 		{
-			LogError("Unit %s (%s) changing body state without a mission, wtf?", id,
+			LogError("Unit {} ({}) changing body state without a mission, wtf?", id,
 			         agent->type->id);
 		}
 
@@ -2704,7 +2704,7 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 				               std::min(newPosition.z, previousPosition.z)};
 				break;
 			default:
-				LogError("What the hell is this unit colliding with? Type is %d",
+				LogError("What the hell is this unit colliding with? Type is {}",
 				         (int)c.obj->getType());
 				break;
 		}
@@ -2744,7 +2744,7 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 		// Fell below 0???
 		if (newPosition.z < 0)
 		{
-			LogError("Unit at %f %f fell off the end of the world!?", newPosition.x, newPosition.y);
+			LogError("Unit at {} {} fell off the end of the world!?", newPosition.x, newPosition.y);
 			die(state, nullptr, false);
 			destroyed = true;
 			return;
@@ -3670,7 +3670,7 @@ void BattleUnit::updateAI(GameState &state, unsigned int)
 	auto decision = aiList.think(state, *this);
 	if (!decision.isEmpty())
 	{
-		LogWarning("AI %s for unit %s decided to %s", decision.ai, id, decision.getName());
+		LogWarning("AI {} for unit {} decided to {}", decision.ai, id, decision.getName());
 		executeAIDecision(state, decision);
 	}
 }
@@ -4968,7 +4968,7 @@ bool BattleUnit::useItem(GameState &state, sp<AEquipment> item)
 	if (item->ownerAgent != agent || (item->equippedSlotType != EquipmentSlotType::RightHand &&
 	                                  item->equippedSlotType != EquipmentSlotType::LeftHand))
 	{
-		LogError("Unit %s attempting to use item that is not in hand or does not belong to us?",
+		LogError("Unit {} attempting to use item that is not in hand or does not belong to us?",
 		         id);
 		return false;
 	}
@@ -5071,7 +5071,7 @@ void BattleUnit::setBodyState(GameState &state, BodyState bodyState)
 {
 	if (!agent->isBodyStateAllowed(bodyState))
 	{
-		LogError("SetBodyState called on %s (%s) (%s) with bodyState %d", id, agent->name,
+		LogError("SetBodyState called on {} ({}) ({}) with bodyState {}", id, agent->name,
 		         agent->type->id, (int)bodyState);
 		return;
 	}
@@ -5248,7 +5248,7 @@ void BattleUnit::setMovementState(MovementState state)
 		}
 		else
 		{
-			LogError("setMovementState %d incompatible with current body states %d to %d",
+			LogError("setMovementState {} incompatible with current body states {} to {}",
 			         (int)state, (int)current_body_state, (int)target_body_state);
 			return;
 		}
@@ -5458,7 +5458,7 @@ bool BattleUnit::popFinishedMissions(GameState &state)
 	bool popped = false;
 	while (missions.size() > 0 && missions.front()->isFinished(state, *this))
 	{
-		LogWarning("Unit %s mission \"%s\" finished", id, missions.front()->getName());
+		LogWarning("Unit {} mission \"{}\" finished", id, missions.front()->getName());
 		missions.pop_front();
 		popped = true;
 		// We may have retreated as a result of finished mission

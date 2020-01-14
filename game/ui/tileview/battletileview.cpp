@@ -134,43 +134,43 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 	targetTacticalThisLevel =
 
 	    fw().data->loadImage(format("PCKSTRAT:xcom3/tacdata/stratico.pck:xcom3/tacdata/"
-	                                "stratico.tab:%d",
+	                                "stratico.tab:{}",
 	                                482));
 	targetTacticalOtherLevel =
 	    fw().data->loadImage(format("PCKSTRAT:xcom3/tacdata/stratico.pck:xcom3/tacdata/"
-	                                "stratico.tab:%d",
+	                                "stratico.tab:{}",
 	                                483));
 	selectedTileEmptyImageBack =
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                182));
 	selectedTileEmptyImageFront =
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                183));
 	selectedTileFilledImageBack =
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                184));
 	selectedTileFilledImageFront =
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                185));
 	selectedTileFireImageBack =
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                186));
 	selectedTileFireImageFront =
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                187));
 	selectedTileBackgroundImageBack =
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                188));
 	selectedTileBackgroundImageFront =
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                189));
 	selectedTileImageOffset = {23, 42};
 	pal = fw().data->loadPalette("xcom3/tacdata/tactical.pal");
@@ -185,11 +185,11 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 	{
 		activeUnitSelectionArrow.push_back(
 		    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+		                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 		                                167 + i)));
 		inactiveUnitSelectionArrow.push_back(
 		    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-		                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+		                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 		                                173 + i)));
 	}
 	// Alexey Andronov (Istrebitel)
@@ -201,101 +201,101 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 
 	behaviorUnitSelectionUnderlay[BattleUnit::BehaviorMode::Evasive] =
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                190));
 	behaviorUnitSelectionUnderlay[BattleUnit::BehaviorMode::Normal] =
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                191));
 	behaviorUnitSelectionUnderlay[BattleUnit::BehaviorMode::Aggressive] =
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                192));
 
 	runningIcon = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                          "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                          "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                          193));
 
 	bleedingIcon = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                           "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                           "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                           194));
 
 	healingIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                                   195)));
 	healingIcons.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                                   196)));
 
 	lowMoraleIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                197)));
 	lowMoraleIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                198)));
 
 	psiIcons[PsiStatus::Probe].push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                199)));
 	psiIcons[PsiStatus::Probe].push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                200)));
 	psiIcons[PsiStatus::Panic].push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                201)));
 	psiIcons[PsiStatus::Panic].push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                202)));
 	psiIcons[PsiStatus::Stun].push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                203)));
 	psiIcons[PsiStatus::Stun].push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                204)));
 	psiIcons[PsiStatus::Control].push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                205)));
 	psiIcons[PsiStatus::Control].push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                206)));
 	psiIcons[PsiStatus::NotEngaged].push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                207)));
 	psiIcons[PsiStatus::NotEngaged].push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                208)));
 
 	targetLocationIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                68)));
 	targetLocationIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                69)));
 	targetLocationIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                70)));
 	targetLocationIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                69)));
 	targetLocationIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                68)));
 	targetLocationOffset = {23, 42};
 
@@ -315,7 +315,7 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 
 	for (int i = 0; i <= 255; i++)
 	{
-		tuIndicators.push_back(font->getString(format("%d", i)));
+		tuIndicators.push_back(font->getString(format("{}", i)));
 	}
 	tuSeparator = font->getString("/");
 	pathPreviewTooFar = font->getString(tr("Too Far"));
@@ -1566,7 +1566,7 @@ void BattleTileView::render()
 		}
 		break;
 		default:
-			LogError("Unexpected tile view mode \"%d\"", (int)this->viewMode);
+			LogError("Unexpected tile view mode \"{}\"", (int)this->viewMode);
 			break;
 	}
 
@@ -1581,7 +1581,7 @@ void BattleTileView::render()
 	if (this->debugHotkeyMode)
 	{
 		auto font = ui().getFont("smallset");
-		auto cursorPositionString = font->getString(format("Cursor at %s", selectedTilePosition));
+		auto cursorPositionString = font->getString(format("Cursor at {}", selectedTilePosition));
 		r.draw(cursorPositionString, {0, 0});
 	}
 }

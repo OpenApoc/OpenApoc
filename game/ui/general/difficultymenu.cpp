@@ -83,7 +83,7 @@ void DifficultyMenu::eventOccurred(Event *e)
 		}
 		else
 		{
-			LogWarning("Unknown button pressed: %s", e->forms().RaisedBy->Name);
+			LogWarning("Unknown button pressed: {}", e->forms().RaisedBy->Name);
 			return;
 		}
 

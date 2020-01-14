@@ -76,7 +76,7 @@ void CheatOptions::updateMultiplierText(UString controlName, float multMin, floa
 	float multValue = ((double)bar->getValue() - bar->getMinimum()) /
 	                      ((double)bar->getMaximum() - bar->getMinimum()) * (multMax - multMin) +
 	                  multMin;
-	label->setText(format("%d%%", scaleScrollbarToMultiplier(bar->getValue(), multMin, multMax,
+	label->setText(format("{}%%", scaleScrollbarToMultiplier(bar->getValue(), multMin, multMax,
 	                                                         bar->getMinimum(), bar->getMaximum()) *
 	                                  100));
 }
@@ -124,16 +124,16 @@ void CheatOptions::eventOccurred(Event *e)
 		{
 			for (auto &r : this->state->research.topics)
 			{
-				LogWarning("Topic \"%s\"", r.first);
+				LogWarning("Topic \"{}\"", r.first);
 				auto &topic = r.second;
 				if (topic->isComplete())
 				{
-					LogWarning("Topic \"%s\" already complete", r.first);
+					LogWarning("Topic \"{}\" already complete", r.first);
 				}
 				else
 				{
 					topic->forceComplete();
-					LogWarning("Topic \"%s\" marked as complete", r.first);
+					LogWarning("Topic \"{}\" marked as complete", r.first);
 				}
 			}
 			this->state->research.resortTopicList();
@@ -203,7 +203,7 @@ void CheatOptions::eventOccurred(Event *e)
 			auto bar = std::dynamic_pointer_cast<ScrollBar>(e->forms().RaisedBy);
 			if (!bar)
 			{
-				LogError("Failed to cast \"%s\" control to ScrollBar", e->forms().RaisedBy->Name);
+				LogError("Failed to cast \"{}\" control to ScrollBar", e->forms().RaisedBy->Name);
 				return;
 			}
 			menuform->findControlTyped<Label>("TEXT_MODIFY_FUNDS")
@@ -218,7 +218,7 @@ void CheatOptions::eventOccurred(Event *e)
 					auto bar = std::dynamic_pointer_cast<ScrollBar>(e->forms().RaisedBy);
 					if (!bar)
 					{
-						LogError("Failed to cast \"%s\" control to ScrollBar",
+						LogError("Failed to cast \"{}\" control to ScrollBar",
 						         e->forms().RaisedBy->Name);
 						return;
 					}

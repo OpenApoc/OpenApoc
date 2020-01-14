@@ -81,7 +81,7 @@ int main(int argc, char **argv)
 	LogWarning("RNG buckets:");
 	for (int i = 0; i < num_test_buckets; i++)
 	{
-		LogWarning("%d:\t%u", i, buckets[i]);
+		LogWarning("{}:\t{}", i, buckets[i]);
 	}
 
 	return EXIT_SUCCESS;

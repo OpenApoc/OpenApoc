@@ -12,7 +12,7 @@ bool FileDataProvider::openArchive(const UString &path, bool write)
 	archivePath = path;
 	if (!write && !fs::exists(path.str()))
 	{
-		LogWarning("Attempt to open not existing directory \"%s\"", path);
+		LogWarning("Attempt to open not existing directory \"{}\"", path);
 		return false;
 	}
 	return true;
@@ -35,7 +35,7 @@ bool FileDataProvider::saveDocument(const UString &path, const UString &contents
 	{
 		if (!fs::create_directories(directoryPath))
 		{
-			LogWarning("Failed to create directory \"%s\"", directoryPath.string());
+			LogWarning("Failed to create directory \"{}\"", directoryPath.string());
 			return false;
 		}
 	}

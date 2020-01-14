@@ -460,7 +460,7 @@ void TransactionScreen::updateBaseHighlight()
 		int i = 0;
 		for (auto &b : state->player_bases)
 		{
-			auto viewName = format("BUTTON_BASE_%d", ++i);
+			auto viewName = format("BUTTON_BASE_{}", ++i);
 			auto view = form->findControlTyped<GraphicButton>(viewName);
 			auto viewImage = drawMiniBase(*b.second, viewHighlight, viewFacility);
 			view->setImage(viewImage);
@@ -482,7 +482,7 @@ void TransactionScreen::updateBaseHighlight()
 			fillBaseBar(true, usage);
 			auto facilityLabel = form->findControlTyped<Label>("FACILITY_FIRST_TEXT");
 			facilityLabel->setVisible(true);
-			facilityLabel->setText(format("%s%%", usage));
+			facilityLabel->setText(format("{}%%", usage));
 			break;
 		}
 		case BaseGraphics::FacilityHighlight::Stores:
@@ -496,7 +496,7 @@ void TransactionScreen::updateBaseHighlight()
 			fillBaseBar(true, usage);
 			auto facilityLabel = form->findControlTyped<Label>("FACILITY_FIRST_TEXT");
 			facilityLabel->setVisible(true);
-			facilityLabel->setText(format("%s%%", usage));
+			facilityLabel->setText(format("{}%%", usage));
 			break;
 		}
 		case BaseGraphics::FacilityHighlight::Aliens:
@@ -510,7 +510,7 @@ void TransactionScreen::updateBaseHighlight()
 			fillBaseBar(true, usage);
 			auto facilityLabel = form->findControlTyped<Label>("FACILITY_FIRST_TEXT");
 			facilityLabel->setVisible(true);
-			facilityLabel->setText(format("%s%%", usage));
+			facilityLabel->setText(format("{}%%", usage));
 			break;
 		}
 		default:
@@ -651,7 +651,7 @@ void TransactionScreen::initViewSecondBase()
 {
 	for (int i = 1; i <= MAX_BASES; i++)
 	{
-		auto viewName = format("BUTTON_SECOND_BASE_%d", i);
+		auto viewName = format("BUTTON_SECOND_BASE_{}", i);
 		form->findControlTyped<GraphicButton>(viewName)->setVisible(false);
 	}
 	form->findControlTyped<Graphic>("FACILITY_SECOND_PIC")->setVisible(false);

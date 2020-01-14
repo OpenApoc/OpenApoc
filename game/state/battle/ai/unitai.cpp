@@ -28,7 +28,7 @@ const UString UnitAI::getName()
 		case Type::Hardcore:
 			return "UnitAIHardcore";
 	}
-	LogError("Unimplemented getName for Unit AI Type %d", (int)type);
+	LogError("Unimplemented getName for Unit AI Type {}", (int)type);
 	return "";
 }
 

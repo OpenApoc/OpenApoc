@@ -8,6 +8,7 @@
 #include "framework/framework.h"
 #include "library/sp.h"
 #include <mutex>
+#include <iostream>
 #ifdef BACKTRACE_LIBUNWIND
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE
@@ -46,7 +47,7 @@ std::list<UString> getBacktrace()
 		if (info.dli_sname)
 		{
 			backtrace.push_back(
-			    format("  0x%zx %s+0x%zx (%s)\n", static_cast<uintptr_t>(ip), info.dli_sname,
+			    format("  0x%zx {}+0x%zx ({})\n", static_cast<uintptr_t>(ip), info.dli_sname,
 			           static_cast<uintptr_t>(ip) - reinterpret_cast<uintptr_t>(info.dli_saddr),
 			           info.dli_fname));
 			continue;
@@ -56,7 +57,7 @@ std::list<UString> getBacktrace()
 		char fnName[MAX_SYMBOL_LENGTH];
 		if (!unw_get_proc_name(&cursor, fnName, MAX_SYMBOL_LENGTH, &offsetInFn))
 		{
-			backtrace.push_back(format("  0x%zx %s+0x%zx (%s)\n", static_cast<uintptr_t>(ip),
+			backtrace.push_back(format("  0x%zx {}+0x%zx ({})\n", static_cast<uintptr_t>(ip),
 			                           fnName, offsetInFn, info.dli_fname));
 			continue;
 		}
@@ -103,7 +104,7 @@ std::list<UString> getBacktrace()
 	for (unsigned int frame = 0; frame < frames; frame++)
 	{
 		SymFromAddr(process, (DWORD64)(ip[frame]), 0, sym);
-		backtrace.push_back(format("  0x%p %s+0x%Ix\n", ip[frame], sym->Name,
+		backtrace.push_back(format("  0x%p {}+0x%Ix\n", ip[frame], sym->Name,
 		                           (uintptr_t)ip[frame] - (uintptr_t)sym->Address));
 	}
 
@@ -158,7 +159,7 @@ void Log(LogLevel level, UString prefix, const UString &text)
 
 void _logAssert(UString prefix, UString string, int line, UString file)
 {
-	Log(LogLevel::Error, prefix, format("%s:%d Assertion failed %s", file, line, string));
+	Log(LogLevel::Error, prefix, format("{}:{} Assertion failed {}", file, line, string));
 	exit(1);
 }
 

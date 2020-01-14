@@ -34,9 +34,9 @@ static std::vector<UString> vehicleAmmoNames = {
 void InitialGameStateExtractor::extractEconomy(GameState &state) const
 {
 	auto &data = this->ufo2p;
-	LogInfo("Number of economy 1 data chunks: %u", (unsigned)data.economy_data1->count());
-	LogInfo("Number of economy 2 data chunks: %u", (unsigned)data.economy_data2->count());
-	LogInfo("Number of economy 3 data chunks: %u", (unsigned)data.economy_data3->count());
+	LogInfo("Number of economy 1 data chunks: {}", (unsigned)data.economy_data1->count());
+	LogInfo("Number of economy 2 data chunks: {}", (unsigned)data.economy_data2->count());
+	LogInfo("Number of economy 3 data chunks: {}", (unsigned)data.economy_data3->count());
 
 	for (unsigned idx = 0; idx < data.economy_data1->count(); idx++)
 	{
@@ -119,7 +119,7 @@ void InitialGameStateExtractor::extractEconomy(GameState &state) const
 		if (i < 87)
 		{
 			id = data.agent_equipment_names->get(i);
-			id = format("%s%s", AEquipmentType::getPrefix(), canon_string(id));
+			id = format("{}{}", AEquipmentType::getPrefix(), canon_string(id));
 		}
 		else
 		{

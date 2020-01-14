@@ -73,7 +73,7 @@ template <typename T> void getFromLua(lua_State *L, int argNum, const T &v [[may
 	int idx = argNum;
 	if (argNum < 0)
 		argNum = lua_gettop(L) + argNum + 1;
-	luaL_error(L, "this member (#%d) cannot be set directly", argNum);
+	luaL_error(L, "this member (#{}) cannot be set directly", argNum);
 	LogError("Invalid Lua function");
 }
 

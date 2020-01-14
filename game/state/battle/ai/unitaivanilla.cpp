@@ -91,7 +91,7 @@ UnitAIVanilla::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment>
                                  StateRef<BattleUnit> target)
 {
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-	LogWarning("VANILLA AI %s: getWeaponDecision()", u.id);
+	LogWarning("VANILLA AI {}: getWeaponDecision()", u.id);
 #endif
 	auto action = mksp<AIAction>();
 	action->item = e;
@@ -163,7 +163,7 @@ UnitAIVanilla::getPsiDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
                               StateRef<BattleUnit> target, PsiStatus status)
 {
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-	LogWarning("VANILLA AI %s: getPsiDecision()", u.id);
+	LogWarning("VANILLA AI {}: getPsiDecision()", u.id);
 #endif
 	std::ignore = state;
 
@@ -195,7 +195,7 @@ UnitAIVanilla::getPsiDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
 			priority *= 16.0f;
 			break;
 		default:
-			LogError("Invalid psi attack state for getPsiDecision %d", (int)status);
+			LogError("Invalid psi attack state for getPsiDecision {}", (int)status);
 			return NULLTUPLE3;
 	}
 	action->psiEnergySnapshot = u.agent->modified_stats.psi_energy;
@@ -217,7 +217,7 @@ UnitAIVanilla::getGrenadeDecision(GameState &state, BattleUnit &u, sp<AEquipment
                                   StateRef<BattleUnit> target)
 {
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-	LogWarning("VANILLA AI %s: getGrenadeDecision()", u.id);
+	LogWarning("VANILLA AI {}: getGrenadeDecision()", u.id);
 #endif
 	auto action = mksp<AIAction>();
 	action->item = e;
@@ -304,7 +304,7 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getBrainsuckerDecision(Ga
                                                                               BattleUnit &u)
 {
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-	LogWarning("VANILLA AI %s: getBrainsuckerDecision()", u.id);
+	LogWarning("VANILLA AI {}: getBrainsuckerDecision()", u.id);
 #endif
 	auto action = mksp<AIAction>();
 	action->type = AIAction::Type::AttackBrainsucker;
@@ -359,7 +359,7 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getSuicideDecision(GameSt
                                                                           BattleUnit &u)
 {
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-	LogWarning("VANILLA AI %s: getSuicideDecision()", u.id);
+	LogWarning("VANILLA AI {}: getSuicideDecision()", u.id);
 #endif
 	std::tuple<AIDecision, float, unsigned> decision = NULLTUPLE3;
 
@@ -408,7 +408,7 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getAttackDecision(GameSta
                                                                          BattleUnit &u)
 {
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-	LogWarning("VANILLA AI %s getAttackDecision()", u.id);
+	LogWarning("VANILLA AI {} getAttackDecision()", u.id);
 #endif
 	std::tuple<AIDecision, float, unsigned> decision = NULLTUPLE3;
 
@@ -577,7 +577,7 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::getAttackDecision(GameSta
 std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkGreen(GameState &state, BattleUnit &u)
 {
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-	LogWarning("VANILLA AI %s: thinkGreen()", u.id);
+	LogWarning("VANILLA AI {}: thinkGreen()", u.id);
 #endif
 
 	bool isMoving = lastDecision.movement && u.isMoving();
@@ -596,7 +596,7 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkGreen(GameState &sta
 	if (isUnderAttack)
 	{
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-		LogWarning("VANILLA AI %s: getTakeCoverMovement()", u.id);
+		LogWarning("VANILLA AI {}: getTakeCoverMovement()", u.id);
 #endif
 		auto takeCover = UnitAIHelper::getTakeCoverMovement(state, u);
 		if (takeCover)
@@ -608,7 +608,7 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkGreen(GameState &sta
 	if (wasEnemyVisible)
 	{
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-		LogWarning("VANILLA AI %s: getPursueMovement()", u.id);
+		LogWarning("VANILLA AI {}: getPursueMovement()", u.id);
 #endif
 		auto pursue = UnitAIHelper::getPursueMovement(state, u, flagLastSeenPosition);
 		if (pursue)
@@ -627,7 +627,7 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkGreen(GameState &sta
 		if (u.missions.empty() || u.missions.front()->type != BattleUnitMission::Type::Turn)
 		{
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-			LogWarning("VANILLA AI %s: getTurnMovement()", u.id);
+			LogWarning("VANILLA AI {}: getTurnMovement()", u.id);
 #endif
 			auto turn = UnitAIHelper::getTurnMovement(state, u, flagLastAttackerPosition);
 			return std::make_tuple(AIDecision(nullptr, turn), 0.0f, 0);
@@ -635,7 +635,7 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkGreen(GameState &sta
 	}
 
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-	LogWarning("VANILLA AI %s: getFallbackMovement()", u.id);
+	LogWarning("VANILLA AI {}: getFallbackMovement()", u.id);
 #endif
 
 	auto fallback = UnitAIHelper::getFallbackMovement(state, u);
@@ -651,7 +651,7 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkGreen(GameState &sta
 std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkRed(GameState &state, BattleUnit &u)
 {
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-	LogWarning("VANILLAAI %s: thinkRed()", u.id);
+	LogWarning("VANILLAAI {}: thinkRed()", u.id);
 #endif
 	bool isUnderAttack = flagLastAttackerPosition != NONE;
 	bool isInterrupted =
@@ -660,7 +660,7 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkRed(GameState &state
 	if (isUnderAttack)
 	{
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-		LogWarning("VANILLA AI %s: getFallbackMovement()", u.id);
+		LogWarning("VANILLA AI {}: getFallbackMovement()", u.id);
 #endif
 		auto fallback = UnitAIHelper::getFallbackMovement(state, u);
 		if (fallback)
@@ -669,7 +669,7 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkRed(GameState &state
 		}
 
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-		LogWarning("VANILLA AI %s: getTakeCoverMovement()", u.id);
+		LogWarning("VANILLA AI {}: getTakeCoverMovement()", u.id);
 #endif
 		auto takeCover = UnitAIHelper::getTakeCoverMovement(state, u);
 		if (takeCover)
@@ -678,7 +678,7 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkRed(GameState &state
 		}
 
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-		LogWarning("VANILLA AI %s: getKneelMovement()", u.id);
+		LogWarning("VANILLA AI {}: getKneelMovement()", u.id);
 #endif
 		auto kneel = UnitAIHelper::getKneelMovement(state, u);
 		if (kneel)
@@ -698,7 +698,7 @@ std::tuple<AIDecision, float, unsigned> UnitAIVanilla::thinkRed(GameState &state
 AIDecision UnitAIVanilla::thinkInternal(GameState &state, BattleUnit &u)
 {
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-	LogWarning("VANILLA AI %s: thinkInternal()", u.id);
+	LogWarning("VANILLA AI {}: thinkInternal()", u.id);
 #endif
 	switch (u.getAIType())
 	{
@@ -756,7 +756,7 @@ AIDecision UnitAIVanilla::thinkInternal(GameState &state, BattleUnit &u)
 	if (!u.missions.empty() && u.missions.front()->type == BattleUnitMission::Type::ThrowItem)
 	{
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-		LogWarning("VANILLA AI %s: RETHINK PRENVENTED", u.id);
+		LogWarning("VANILLA AI {}: RETHINK PRENVENTED", u.id);
 #endif
 		return {};
 	}
@@ -789,7 +789,7 @@ AIDecision UnitAIVanilla::thinkInternal(GameState &state, BattleUnit &u)
 	if (!reThink)
 	{
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-		LogWarning("VANILLA AI %s: RETHINK DENIED", u.id);
+		LogWarning("VANILLA AI {}: RETHINK DENIED", u.id);
 #endif
 		return lastDecision;
 	}
@@ -803,12 +803,12 @@ AIDecision UnitAIVanilla::thinkInternal(GameState &state, BattleUnit &u)
 	if (decision.isEmpty())
 	{
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-		LogWarning("VANILLA AI %s: RETHINK EMPTY", u.id);
+		LogWarning("VANILLA AI {}: RETHINK EMPTY", u.id);
 #endif
 		return {};
 	}
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-	LogWarning("VANILLA AI %s: RETHINK SUCCESS", u.id);
+	LogWarning("VANILLA AI {}: RETHINK SUCCESS", u.id);
 #endif
 
 	ticksLastThink = state.gameTime.getTicks();
@@ -828,7 +828,7 @@ std::tuple<AIDecision, bool> UnitAIVanilla::think(GameState &state, BattleUnit &
 	}
 
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-	LogWarning("VANILLA AI %s: think()", u.id);
+	LogWarning("VANILLA AI {}: think()", u.id);
 #endif
 
 	raiseFlags(state, u);
@@ -926,26 +926,26 @@ void UnitAIVanilla::routine(GameState &state, BattleUnit &u)
 void UnitAIVanilla::raiseFlags(GameState &state [[maybe_unused]], BattleUnit &u)
 {
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-	LogWarning("VANILLA AI %s: raiseFlags()", u.id);
+	LogWarning("VANILLA AI {}: raiseFlags()", u.id);
 #endif
 	if (!u.visibleEnemies.empty() && !enemySpottedPrevious)
 	{
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-		LogWarning("VANILLA AI %s: RAISED ENEMY SPOTTED", u.id);
+		LogWarning("VANILLA AI {}: RAISED ENEMY SPOTTED", u.id);
 #endif
 		flagEnemySpotted = enemySpotted;
 	}
 	if (lastSeenEnemyPosition != NONE)
 	{
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-		LogWarning("VANILLA AI %s: RAISED LAST SEEN", u.id);
+		LogWarning("VANILLA AI {}: RAISED LAST SEEN", u.id);
 #endif
 		flagLastSeenPosition = lastSeenEnemyPosition;
 	}
 	if (attackerPosition != NONE)
 	{
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-		LogWarning("VANILLA AI %s: RAISED LAST ATTACKER", u.id);
+		LogWarning("VANILLA AI {}: RAISED LAST ATTACKER", u.id);
 #endif
 		flagLastAttackerPosition = attackerPosition;
 	}
@@ -954,7 +954,7 @@ void UnitAIVanilla::raiseFlags(GameState &state [[maybe_unused]], BattleUnit &u)
 void UnitAIVanilla::clearFlags(GameState &state [[maybe_unused]], BattleUnit &u [[maybe_unused]])
 {
 #ifdef VANILLA_AI_DEBUG_OUTPUT
-	LogWarning("VANILLA AI %s: clearFlags()", u.id);
+	LogWarning("VANILLA AI {}: clearFlags()", u.id);
 #endif
 	flagEnemySpotted = false;
 	flagLastSeenPosition = NONE;

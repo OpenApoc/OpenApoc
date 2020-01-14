@@ -22,7 +22,7 @@ template <> sp<HazardType> StateObject<HazardType>::get(const GameState &state, 
 	auto it = state.hazard_types.find(id);
 	if (it == state.hazard_types.end())
 	{
-		LogError("No hazard type matching ID \"%s\"", id);
+		LogError("No hazard type matching ID \"{}\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -46,7 +46,7 @@ sp<DamageModifier> StateObject<DamageModifier>::get(const GameState &state, cons
 	auto it = state.damage_modifiers.find(id);
 	if (it == state.damage_modifiers.end())
 	{
-		LogError("No damage modifier type matching ID \"%s\"", id);
+		LogError("No damage modifier type matching ID \"{}\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -69,7 +69,7 @@ template <> sp<DamageType> StateObject<DamageType>::get(const GameState &state, 
 	auto it = state.damage_types.find(id);
 	if (it == state.damage_types.end())
 	{
-		LogError("No damage type type matching ID \"%s\"", id);
+		LogError("No damage type type matching ID \"{}\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -79,7 +79,7 @@ int DamageType::dealDamage(int damage, StateRef<DamageModifier> modifier) const
 {
 	if (modifiers.find(modifier) == modifiers.end())
 	{
-		LogError("Do not know how to deal damage type to modifier %s!", modifier.id);
+		LogError("Do not know how to deal damage type to modifier {}!", modifier.id);
 		return damage;
 	}
 	else

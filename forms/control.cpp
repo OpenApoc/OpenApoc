@@ -515,7 +515,7 @@ void Control::configureChildrenFromXml(pugi::xml_node *parent)
 			}
 			else
 			{
-				LogError("Radiobutton \"%s\" has no group", node.attribute("id").as_string());
+				LogError("Radiobutton \"{}\" has no group", node.attribute("id").as_string());
 			}
 			auto rb = this->createChild<RadioButton>(group);
 			rb->configureFromXml(&node);
@@ -612,7 +612,7 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 			auto pal = fw().data->loadPalette(child.text().get());
 			if (!pal)
 			{
-				LogError("Control referenced palette \"%s\" that cannot be loaded",
+				LogError("Control referenced palette \"{}\" that cannot be loaded",
 				         child.text().get());
 			}
 			this->palette = pal;
@@ -683,7 +683,7 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 				}
 				else
 				{
-					LogWarning("Control \"%s\" has not supported size x value \"%s\"", this->Name,
+					LogWarning("Control \"{}\" has not supported size x value \"{}\"", this->Name,
 					           specialsizex);
 				}
 			}
@@ -712,13 +712,13 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 					else
 					{
 						LogWarning(
-						    "Control \"%s\" with \"item\" size.y does not have ListBox parent ",
+						    "Control \"{}\" with \"item\" size.y does not have ListBox parent ",
 						    this->Name);
 					}
 				}
 				else
 				{
-					LogWarning("Control \"%s\" has not supported size y value \"%s\"", this->Name,
+					LogWarning("Control \"{}\" has not supported size y value \"{}\"", this->Name,
 					           specialsizey);
 				}
 			}
@@ -733,7 +733,7 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 			}
 			else
 			{
-				LogWarning("Could not find font for tooltip of control \"%s\"", Name);
+				LogWarning("Could not find font for tooltip of control \"{}\"", Name);
 			}
 			UString backgroundString = child.attribute("background").as_string();
 			if (!backgroundString.empty())
@@ -801,7 +801,7 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 		}
 	}
 
-	LogInfo("Control \"%s\" has %zu subcontrols (%d, %d, %d, %d)", this->Name, Controls.size(),
+	LogInfo("Control \"{}\" has {} subcontrols ({}, {}, {}, {})", this->Name, Controls.size(),
 	        Location.x, Location.y, Size.x, Size.y);
 }
 
@@ -1142,7 +1142,7 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 			break;
 		}
 		default:
-			LogError("Unexpected event type %d", (int)type);
+			LogError("Unexpected event type {}", (int)type);
 	}
 	this->triggerEventCallbacks(event);
 }

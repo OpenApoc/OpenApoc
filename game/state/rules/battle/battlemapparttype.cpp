@@ -13,7 +13,7 @@ sp<BattleMapPartType> StateObject<BattleMapPartType>::get(const GameState &state
 	auto it = state.battleMapTiles.find(id);
 	if (it != state.battleMapTiles.end())
 		return it->second;
-	LogError("No battle map part type matching ID \"%s\"", id);
+	LogError("No battle map part type matching ID \"{}\"", id);
 
 	return nullptr;
 }

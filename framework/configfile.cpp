@@ -144,7 +144,7 @@ class ConfigFileImpl
 			auto unknown_options = po::collect_unrecognized(parsed.options, po::include_positional);
 			for (const auto &unknown : unknown_options)
 			{
-				LogWarning("Ignoring option \"%s\"", unknown);
+				LogWarning("Ignoring option \"{}\"", unknown);
 			}
 		}
 		catch (po::error &err)
@@ -216,7 +216,7 @@ class ConfigFileImpl
 			auto splitString = optionPair.first.split(".");
 			if (splitString.size() < 1)
 			{
-				LogError("Invalid option string \"%s\"", optionPair.first.cStr());
+				LogError("Invalid option string \"{}\"", optionPair.first.cStr());
 				continue;
 			}
 			UString sectionName;
@@ -289,7 +289,7 @@ class ConfigFileImpl
 		}
 		if (!this->get(key))
 		{
-			LogError("Option \"%s\" not set", key.cStr());
+			LogError("Option \"{}\" not set", key.cStr());
 			throw std::exception();
 		}
 		auto it = this->modifiedOptions.find(key);

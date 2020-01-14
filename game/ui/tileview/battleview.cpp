@@ -84,69 +84,69 @@ BattleView::BattleView(sp<GameState> gameState)
 {
 	motionScannerDirectionIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                88)));
 	motionScannerDirectionIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                89)));
 	motionScannerDirectionIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                90)));
 	motionScannerDirectionIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                91)));
 	motionScannerDirectionIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                92)));
 	motionScannerDirectionIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                93)));
 	motionScannerDirectionIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                94)));
 	motionScannerDirectionIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                95)));
 
 	selectedItemOverlay = fw().data->loadImage("battle/battle-item-select-icon.png");
 	selectedPsiOverlay = fw().data->loadImage("battle/battle-psi-select-icon.png");
 	pauseIcon = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                        "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                        "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                        260));
 
 	squadOverlay.emplace_back();
 	squadOverlay.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                                   1)));
 	squadOverlay.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                                   0)));
 
 	unitHostiles.emplace_back();
 	unitHostiles.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                                   7)));
 	unitHostiles.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                                   8)));
 	unitHostiles.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                                   9)));
 	unitHostiles.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                                   10)));
 	unitHostiles.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                                   11)));
 	unitHostiles.push_back(fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                                   "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                                   "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                                   12)));
 
 	lastClickedHostile.resize(6);
@@ -155,18 +155,18 @@ BattleView::BattleView(sp<GameState> gameState)
 	squadNumber.emplace_back();
 	for (int i = 1; i <= 6; i++)
 	{
-		squadNumber.push_back(font->getString(format("%d", i)));
+		squadNumber.push_back(font->getString(format("{}", i)));
 	}
 
 	for (int i = 0; i < NUM_TABS_RT; ++i)
 	{
-		sp<Form> f = baseForm->findControlTyped<Form>(format("SUBFORM_RT_%d", i + 1));
+		sp<Form> f = baseForm->findControlTyped<Form>(format("SUBFORM_RT_{}", i + 1));
 		f->takesFocus = false;
 		uiTabsRT.push_back(f);
 	}
 	for (int i = 0; i < NUM_TABS_TB; ++i)
 	{
-		sp<Form> f = baseForm->findControlTyped<Form>(format("SUBFORM_TB_%d", i + 1));
+		sp<Form> f = baseForm->findControlTyped<Form>(format("SUBFORM_TB_{}", i + 1));
 		f->takesFocus = false;
 		uiTabsTB.push_back(f);
 	}
@@ -1361,7 +1361,7 @@ void BattleView::update()
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(
 				         "Next Turn",
-				         format("%s, it is your turn!",
+				         format("{}, it is your turn!",
 				                state->current_battle->currentActiveOrganisation->name),
 				         MessageBox::ButtonOptions::Ok, [this] {
 					         state->current_battle->currentPlayer =
@@ -2102,7 +2102,7 @@ void BattleView::updateTBButtons()
 void BattleView::updateHiddenForm()
 {
 	hideDisplay = true;
-	hiddenForm->findControlTyped<Label>("TEXT_TURN")->setText(format("%d", battle.currentTurn));
+	hiddenForm->findControlTyped<Label>("TEXT_TURN")->setText(format("{}", battle.currentTurn));
 	hiddenForm->findControlTyped<Label>("TEXT_SIDE")
 	    ->setText(battle.currentActiveOrganisation->name);
 	bool player = state->current_battle->hotseat &&
@@ -2116,7 +2116,7 @@ void BattleView::updateHiddenForm()
 void BattleView::refreshDelayText()
 {
 	int delay = primingTab->findControlTyped<ScrollBar>("DELAY_SLIDER")->getValue();
-	LogWarning("Delay %d", delay);
+	LogWarning("Delay {}", delay);
 	UString text;
 	if (delay == 0)
 	{
@@ -2132,7 +2132,7 @@ void BattleView::refreshDelayText()
 			}
 			else
 			{
-				text = format("%s %d", tr("Turns before activation:"), delay - 1);
+				text = format("{} {}", tr("Turns before activation:"), delay - 1);
 			}
 		}
 		else
@@ -2205,7 +2205,7 @@ void BattleView::updatePathPreview()
 		target.z--;
 		if (target.z == -1)
 		{
-			LogError("Solid ground missing on level 0? Reached %d %d %d", target.x, target.y,
+			LogError("Solid ground missing on level 0? Reached {} {} {}", target.x, target.y,
 			         target.z);
 			return;
 		}
@@ -2398,11 +2398,11 @@ void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 
 			if (unit->setMission(*state, mission))
 			{
-				LogInfo("BattleUnit \"%s\" going to location %s", unit->agent->name, target);
+				LogInfo("BattleUnit \"{}\" going to location {}", unit->agent->name, target);
 			}
 			else
 			{
-				LogInfo("BattleUnit \"%s\" could not receive order to move", unit->agent->name);
+				LogInfo("BattleUnit \"{}\" could not receive order to move", unit->agent->name);
 			}
 		}
 	}
@@ -2414,11 +2414,11 @@ void BattleView::orderTurn(Vec3<int> target)
 	{
 		if (unit->setMission(*state, BattleUnitMission::turn(*unit, target)))
 		{
-			LogWarning("BattleUnit \"%s\" turning to face location %s", unit->agent->name, target);
+			LogWarning("BattleUnit \"{}\" turning to face location {}", unit->agent->name, target);
 		}
 		else
 		{
-			LogWarning("BattleUnit \"%s\" could not receive order to turn", unit->agent->name);
+			LogWarning("BattleUnit \"{}\" could not receive order to turn", unit->agent->name);
 		}
 	}
 }
@@ -2439,7 +2439,7 @@ void BattleView::orderThrow(Vec3<int> target, bool right)
 
 	if (unit->setMission(*state, BattleUnitMission::throwItem(*unit, item, target)))
 	{
-		LogWarning("BattleUnit \"%s\" throwing item in the %s hand", unit->agent->name,
+		LogWarning("BattleUnit \"{}\" throwing item in the {} hand", unit->agent->name,
 		           right ? "right" : "left");
 		selectionState = BattleSelectionState::Normal;
 	}
@@ -2598,7 +2598,7 @@ void BattleView::orderDrop(bool right)
 	{
 		// Special case, just add mission in front of anything and start it, no need to clear orders
 		unit->addMission(*state, BattleUnitMission::dropItem(*unit, item));
-		LogWarning("BattleUnit \"%s\" dropping item in %s hand", unit->agent->name,
+		LogWarning("BattleUnit \"{}\" dropping item in {} hand", unit->agent->name,
 		           right ? "right" : "left");
 	}
 	else // Try to pick something up
@@ -2707,14 +2707,14 @@ void BattleView::orderTeleport(Vec3<int> target, bool right)
 	auto m = BattleUnitMission::teleport(*unit, item, target);
 	if (unit->setMission(*state, m) && !m->cancelled)
 	{
-		LogWarning("BattleUnit \"%s\" teleported using item in %s hand ", unit->agent->name,
+		LogWarning("BattleUnit \"{}\" teleported using item in {} hand ", unit->agent->name,
 		           right ? "right" : "left");
 		selectionState = BattleSelectionState::Normal;
 	}
 	else
 	{
 		actionImpossibleDelay = 40;
-		LogWarning("BattleUnit \"%s\" could not teleport using item in %s hand ", unit->agent->name,
+		LogWarning("BattleUnit \"{}\" could not teleport using item in {} hand ", unit->agent->name,
 		           right ? "right" : "left");
 	}
 }
@@ -3517,7 +3517,7 @@ bool BattleView::handleMouseDown(Event *e)
 			}
 		}
 		// Determine course of action
-		LogWarning("Click at tile %d, %d, %d", t.x, t.y, t.z);
+		LogWarning("Click at tile {}, {}, {}", t.x, t.y, t.z);
 		switch (selectionState)
 		{
 			case BattleSelectionState::Normal:
@@ -3633,11 +3633,11 @@ bool BattleView::handleMouseDown(Event *e)
 				if (true)
 				{
 					UString debug = "";
-					debug += format("\nDEBUG INFORMATION ABOUT TILE %d, %d, %d", t.x, t.y, t.z);
-					debug += format("\n LOS BLOCK %d", battle.getLosBlockID(t.x, t.y, t.z));
+					debug += format("\nDEBUG INFORMATION ABOUT TILE {}, {}, {}", t.x, t.y, t.z);
+					debug += format("\n LOS BLOCK {}", battle.getLosBlockID(t.x, t.y, t.z));
 					auto &map = *battle.map;
 					auto tile = map.getTile(t);
-					debug += format("\n STAND %d PASS %d", (int)tile->canStand,
+					debug += format("\n STAND {} PASS {}", (int)tile->canStand,
 					                (int)tile->getPassable());
 					for (auto &o : tile->ownedObjects)
 					{
@@ -3649,7 +3649,7 @@ bool BattleView::handleMouseDown(Event *e)
 							auto mp =
 							    std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
 							debug += format(
-							    "\n[%s] SBT %d STATUS %s\nFIRE Res=%d Tim=%d Burned=%D",
+							    "\n[{}] SBT {} STATUS {}\nFIRE Res={} Tim={} Burned=%D",
 							    mp->type.id, mp->type->getVanillaSupportedById(),
 							    !mp->isAlive()
 							        ? "DEAD "
@@ -3684,7 +3684,7 @@ bool BattleView::handleMouseDown(Event *e)
 													if (p.first == t && p.second == mp->type->type)
 													{
 														debug +=
-														    format("\nSupported by %s at %d %d %d",
+														    format("\nSupported by {} at {} {} {}",
 														           mp2->type.id, x - t.x, y - t.y,
 														           z - t.z);
 													}
@@ -3700,7 +3700,7 @@ bool BattleView::handleMouseDown(Event *e)
 							auto h =
 							    std::static_pointer_cast<TileObjectBattleHazard>(o)->getHazard();
 							debug +=
-							    format("\nHazard %s %s Pow=%d Age=%d LT=%d  ", h->damageType.id,
+							    format("\nHazard {} {} Pow={} Age={} LT={}  ", h->damageType.id,
 							           h->damageType->hazardType.id, h->power, h->age, h->lifetime);
 						}
 					}
@@ -3709,38 +3709,38 @@ bool BattleView::handleMouseDown(Event *e)
 					if (uto)
 					{
 						auto u = uto->getUnit();
-						debug += format("\nContains unit %s.", u->id.cStr());
-						debug += format("\nMorale state: %d", (int)u->moraleState);
-						debug += format("\nPosition: %f, %f, %f", u->position.x, u->position.y,
+						debug += format("\nContains unit {}.", u->id.cStr());
+						debug += format("\nMorale state: {}", (int)u->moraleState);
+						debug += format("\nPosition: {}, {}, {}", u->position.x, u->position.y,
 						                u->position.z);
-						debug += format("\nGoal: %f, %f, %f", u->goalPosition.x, u->goalPosition.y,
+						debug += format("\nGoal: {}, {}, {}", u->goalPosition.x, u->goalPosition.y,
 						                u->goalPosition.z);
-						debug += format("\nCurrent movement: %d, falling: %d",
+						debug += format("\nCurrent movement: {}, falling: {}",
 						                (int)u->current_movement_state, (int)u->falling);
-						debug += format("\nItems [%d]:", (int)u->agent->equipment.size());
+						debug += format("\nItems [{}]:", (int)u->agent->equipment.size());
 						for (auto &e : u->agent->equipment)
 						{
-							debug += format("\n%s", e->type.id);
+							debug += format("\n{}", e->type.id);
 						}
-						debug += format("\nMissions [%d]:", (int)u->missions.size());
+						debug += format("\nMissions [{}]:", (int)u->missions.size());
 						for (auto &m : u->missions)
 						{
-							debug += format("\n%s", m->getName());
+							debug += format("\n{}", m->getName());
 						}
-						debug += format("\nSeen units [%d]:", (int)u->visibleUnits.size());
+						debug += format("\nSeen units [{}]:", (int)u->visibleUnits.size());
 						for (auto &unit : u->visibleUnits)
 						{
-							debug += format("\n%s", unit.id);
+							debug += format("\n{}", unit.id);
 						}
 						/*	debug += format(
-						"\nCurrent ai state:\n  %s\n  enSp %d enSpPr %d attPos %s "
-						"lasSnEnPos %s",
+						"\nCurrent ai state:\n  {}\n  enSp {} enSpPr {} attPos {} "
+						"lasSnEnPos {}",
 						u->aiList.lastDecision.getName(), (int)u->aiState.enemySpotted,
 						(int)u->aiState.enemySpottedPrevious,
 						u->aiState.attackerPosition,
 						u->aiList.lastSeenEnemyPosition);*/
 					}
-					LogWarning("%s", debug);
+					LogWarning("{}", debug);
 				}
 				break;
 			case BattleSelectionState::FireAny:
@@ -4117,11 +4117,11 @@ void BattleView::updatePsiInfo()
 	    ->setImage(psiInfo.status == PsiStatus::Probe ? selectedPsiOverlay : nullptr);
 
 	activeTab->findControlTyped<Label>("PSI_ENERGY_LABEL")
-	    ->setText(format("%d", psiInfo.curEnergy));
+	    ->setText(format("{}", psiInfo.curEnergy));
 	activeTab->findControlTyped<Label>("PSI_ATTACK_LABEL")
-	    ->setText(format("%d", psiInfo.curAttack));
+	    ->setText(format("{}", psiInfo.curAttack));
 	activeTab->findControlTyped<Label>("PSI_DEFENSE_LABEL")
-	    ->setText(format("%d", psiInfo.curDefense));
+	    ->setText(format("{}", psiInfo.curDefense));
 
 	// FIXME: Maybe pre-draw all 100 of them?
 
@@ -4327,7 +4327,7 @@ AgentInfo BattleView::createUnitInfo(int index)
 void BattleView::updateUnitInfo(int index)
 {
 	AgentInfo info = unitInfo[index];
-	auto baseControl = baseForm->findControlTyped<Graphic>(format("UNIT_%d", index + 1));
+	auto baseControl = baseForm->findControlTyped<Graphic>(format("UNIT_{}", index + 1));
 	baseControl->Controls.clear();
 	if (!info.agent)
 	{
@@ -4341,12 +4341,12 @@ void BattleView::updateSpottedInfo(int index)
 {
 	if (spottedInfo[index] == 0)
 	{
-		baseForm->findControlTyped<Graphic>(format("UNIT_%d_HOSTILES", index + 1))
+		baseForm->findControlTyped<Graphic>(format("UNIT_{}_HOSTILES", index + 1))
 		    ->setImage(nullptr);
 	}
 	else
 	{
-		baseForm->findControlTyped<Graphic>(format("UNIT_%d_HOSTILES", index + 1))
+		baseForm->findControlTyped<Graphic>(format("UNIT_{}_HOSTILES", index + 1))
 		    ->setImage(unitHostiles[spottedInfo[index]]);
 	}
 }
@@ -4381,9 +4381,9 @@ void BattleView::updateSquadInfo(int index)
 {
 	SquadInfo info = squadInfo[index];
 
-	baseForm->findControlTyped<Graphic>(format("SQUAD_%d", index + 1))
+	baseForm->findControlTyped<Graphic>(format("SQUAD_{}", index + 1))
 	    ->setImage(squadNumber[info.units]);
-	baseForm->findControlTyped<Graphic>(format("SQUAD_%d_OVERLAY", index + 1))
+	baseForm->findControlTyped<Graphic>(format("SQUAD_{}_OVERLAY", index + 1))
 	    ->setImage(squadOverlay[info.selectedMode]);
 }
 

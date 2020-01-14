@@ -65,7 +65,7 @@ TileObject::Type TileObjectBattleMapPart::convertType(BattleMapPartType::Type ty
 		case BattleMapPartType::Type::Feature:
 			return TileObject::Type::Feature;
 		default:
-			LogError("Unknown BattleMapPartType::Type %d", (int)type);
+			LogError("Unknown BattleMapPartType::Type {}", (int)type);
 			return TileObject::Type::Ground;
 	}
 }
@@ -141,7 +141,7 @@ float TileObjectBattleMapPart::getZOrder() const
 			return z + (float)map_part->type->height / 40.0f / 2.0f - 14.0f;
 		}
 		default:
-			LogError("Impossible map part type %d", (int)type);
+			LogError("Impossible map part type {}", (int)type);
 			return 0.0f;
 	}
 }

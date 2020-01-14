@@ -18,7 +18,7 @@ sp<UfopaediaEntry> StateObject<UfopaediaEntry>::get(const GameState &state, cons
 		if (entry != cat.second->entries.end())
 			return entry->second;
 	}
-	LogError("No UFOPaedia entry matching ID \"%s\"", id);
+	LogError("No UFOPaedia entry matching ID \"{}\"", id);
 	return nullptr;
 }
 

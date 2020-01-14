@@ -104,7 +104,7 @@ class TraceManager
 	{
 		if (!outFile)
 		{
-			LogError("Failed to open trace file \"%s\"", OpenApoc::Options::traceFile.get());
+			LogError("Failed to open trace file \"{}\"", OpenApoc::Options::traceFile.get());
 			return;
 		}
 	}
@@ -216,7 +216,7 @@ void Trace::enable()
 {
 	if (!traceInited)
 		initTrace();
-	LogWarning("Enabling tracing - sizeof(TraceEvent) = %u", (unsigned)sizeof(TraceEvent));
+	LogWarning("Enabling tracing - sizeof(TraceEvent) = {}", (unsigned)sizeof(TraceEvent));
 	LogAssert(!trace_manager);
 	trace_manager.reset(new TraceManager);
 #if defined(BROKEN_THREAD_LOCAL)

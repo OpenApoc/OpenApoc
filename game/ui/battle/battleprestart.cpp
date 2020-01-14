@@ -75,7 +75,7 @@ BattlePreStart::BattlePreStart(sp<GameState> state)
 	{
 		bigUnitRanks.push_back(
 		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+		                                "tacbut.tab:{}:xcom3/tacdata/tactical.pal",
 		                                i)));
 	}
 }

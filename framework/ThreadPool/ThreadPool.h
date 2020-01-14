@@ -61,7 +61,7 @@ inline ThreadPool::ThreadPool(size_t threads) : stop(false)
 				}
 				catch (std::exception &e)
 				{
-					LogError("Exception occurred in threadpool: %s", e.what());
+					LogError("Exception occurred in threadpool: {}", e.what());
 				}
 			}
 		});

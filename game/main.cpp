@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 	{
 		return EXIT_FAILURE;
 	}
-	LogInfo("Starting OpenApoc \"%s\"", OPENAPOC_VERSION);
+	LogInfo("Starting OpenApoc \"{}\"", OPENAPOC_VERSION);
 
 	{
 		Trace::setThreadName("main");

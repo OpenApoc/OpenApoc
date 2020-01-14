@@ -157,6 +157,18 @@ UString tr(const UString &str, const UString domain)
 #endif
 	return UString(boost::locale::translate(str.str()).str(domain.str()));
 }
+UString tr(const char* str, const UString domain)
+{
+#ifdef DUMP_TRANSLATION_STRINGS
+	if (str != "")
+	{
+		trStrings[domain].insert(str);
+	}
+#endif
+	return UString(boost::locale::translate(str).str(domain.str()));
+}
+
+
 
 UString::~UString() = default;
 
@@ -459,9 +471,9 @@ bool Strings::isFloat(const UString &s)
 	return (endpos != u8str.c_str());
 }
 
-UString Strings::fromInteger(int i) { return format("%d", i); }
+UString Strings::fromInteger(int i) { return format("{}", i); }
 
-UString Strings::fromFloat(float f) { return format("%f", f); }
+UString Strings::fromFloat(float f) { return format("{}", f); }
 
 bool Strings::isWhiteSpace(UniChar c)
 {
@@ -469,6 +481,6 @@ bool Strings::isWhiteSpace(UniChar c)
 	return isspace(c) != 0;
 }
 
-UString Strings::fromU64(uint64_t i) { return format("%llu", i); }
+UString Strings::fromU64(uint64_t i) { return format("{}", i); }
 
 }; // namespace OpenApoc

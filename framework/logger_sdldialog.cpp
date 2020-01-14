@@ -24,7 +24,7 @@ void SDLDialogLogFunction(LogLevel level, UString prefix, const UString &text)
 	{
 		return;
 	}
-	auto message = OpenApoc::format("%s: %s", prefix, text);
+	auto message = OpenApoc::format("{}: {}", prefix, text);
 	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "OpenApoc error", message.cStr(), parentWindow);
 }
 

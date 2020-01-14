@@ -111,7 +111,7 @@ void SaveMenu::begin()
 				if (timestamp != 0 && tminfo != nullptr)
 				{
 					char temp_time[1024];
-					strftime(temp_time, sizeof(temp_time), "%d/%m/%y %T", tminfo);
+					strftime(temp_time, sizeof(temp_time), "{}/%m/%y %T", tminfo);
 					ss << temp_time;
 				}
 				saveTimeLabel->setText(ss.str());

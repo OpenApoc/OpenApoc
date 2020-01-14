@@ -40,7 +40,7 @@ void BaseBuyScreen::begin()
 	form->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 
 	auto text = form->findControlTyped<Label>("TEXT_PRICE");
-	text->setText(format(tr("This Building will cost $%d"), price));
+	text->setText(format(tr("This Building will cost ${}"), price));
 
 	form->findControlTyped<Graphic>("GRAPHIC_MINIMAP")
 	    ->setImage(BaseGraphics::drawMinimap(state, *base->building));
@@ -87,7 +87,7 @@ void BaseBuyScreen::eventOccurred(Event *e)
 				}
 				if (!newBuilding)
 				{
-					LogError("We just bought %s's last building? WTF?",
+					LogError("We just bought {}'s last building? WTF?",
 					         base->building->owner->name);
 				}
 				base->building->owner = state->getPlayer();

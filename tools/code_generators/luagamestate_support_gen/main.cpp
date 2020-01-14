@@ -168,7 +168,7 @@ void writeSource(std::ofstream &out, const StateDefinition &state,
 			    << ");\n"
 			    << "\telse ";
 		}
-		out << "luaL_error(L, \"member variable %s not found in %s\", key.c_str(), \""
+		out << "luaL_error(L, \"member variable {} not found in {}\", key.c_str(), \""
 		    << object.name.c_str() << "\");\n"
 		    << "\tlua_pop(L, 3);\n"
 		    << "\treturn 0;\n"

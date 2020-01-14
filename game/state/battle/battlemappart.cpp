@@ -884,7 +884,7 @@ bool BattleMapPart::findSupport(bool allowClinging)
 				}
 				if (!mp)
 				{
-					LogError("Map part disappeared? %d %d %d", x, y, z);
+					LogError("Map part disappeared? {} {} {}", x, y, z);
 					return false;
 				}
 				mp->supportedParts.emplace_back(position, type->type);
@@ -963,7 +963,7 @@ bool BattleMapPart::findSupport(bool allowClinging)
 				}
 				if (!mp)
 				{
-					LogError("Map part disappeared? %d %d %d", x, y, z);
+					LogError("Map part disappeared? {} {} {}", x, y, z);
 					return false;
 				}
 				mp->supportedParts.emplace_back(position, type->type);

@@ -46,19 +46,19 @@ class RawMusicTrack : public MusicTrack
 	{
 		if (!file)
 		{
-			LogError("Failed to open file \"%s\"", fileName);
+			LogError("Failed to open file \"{}\"", fileName);
 			return;
 		}
 		if (file.size() < fileOffset + (numSamples * MusicChannels * MusicBytesPerSample))
 		{
-			LogError("File \"%s\" insufficient size for offset %u + size %u - returned size %zu",
+			LogError("File \"{}\" insufficient size for offset {} + size {} - returned size {}",
 			         fileName, fileOffset, numSamples * MusicChannels * MusicBytesPerSample,
 			         file.size());
 			return;
 		}
 		if (!file.seekg(fileOffset))
 		{
-			LogError("Failed to seek to offset %u", fileOffset);
+			LogError("Failed to seek to offset {}", fileOffset);
 			return;
 		}
 
@@ -79,7 +79,7 @@ class RawMusicTrack : public MusicTrack
 	{
 		if (!valid)
 		{
-			LogError("Playing invalid file \"%s\"", file.fileName());
+			LogError("Playing invalid file \"{}\"", file.fileName());
 			*returnedSamples = 0;
 			return MusicCallbackReturn::End;
 		}
@@ -91,7 +91,7 @@ class RawMusicTrack : public MusicTrack
 		if (!file.read(reinterpret_cast<char *>(sampleBuffer),
 		               samples * MusicBytesPerSample * MusicChannels))
 		{
-			LogError("Failed to read sample data in \"%s\"", file.fileName());
+			LogError("Failed to read sample data in \"{}\"", file.fileName());
 			this->valid = false;
 			samples = 0;
 		}
@@ -101,7 +101,7 @@ class RawMusicTrack : public MusicTrack
 			// Prepare this track to be reused
 			if (!file.seekg(startingPosition))
 			{
-				LogWarning("Could not rewind track %s", name);
+				LogWarning("Could not rewind track {}", name);
 			}
 			samplePosition = 0;
 			return MusicCallbackReturn::End;
@@ -133,20 +133,20 @@ class RawMusicLoader : public MusicLoader
 		auto strings = path.split(':');
 		if (strings.size() != 2)
 		{
-			LogInfo("Invalid raw music path string \"%s\"", path);
+			LogInfo("Invalid raw music path string \"{}\"", path);
 			return nullptr;
 		}
 
 		if (!Strings::isInteger(strings[1]))
 		{
-			LogInfo("Raw music track \"%s\" doesn't look like a number", strings[1]);
+			LogInfo("Raw music track \"{}\" doesn't look like a number", strings[1]);
 			return nullptr;
 		}
 
 		unsigned int track = Strings::toInteger(strings[1]);
 		if (track > lengths.size())
 		{
-			LogInfo("Raw music track %d out of bounds", track);
+			LogInfo("Raw music track {} out of bounds", track);
 			return nullptr;
 		}
 		return mksp<RawMusicTrack>(data, path, strings[0], offsets[track],

@@ -122,13 +122,13 @@ class Control : public std::enable_shared_from_this<Control>
 		auto c = this->findControl(name);
 		if (!c)
 		{
-			LogError("Failed to find control \"%s\" within form \"%s\"", name, this->Name);
+			LogError("Failed to find control \"{}\" within form \"{}\"", name, this->Name);
 			return nullptr;
 		}
 		sp<T> typedControl = std::dynamic_pointer_cast<T>(c);
 		if (!typedControl)
 		{
-			LogError("Failed to cast control \"%s\" within form \"%s\" to type \"%s\"", name,
+			LogError("Failed to cast control \"{}\" within form \"{}\" to type \"{}\"", name,
 			         this->Name, typeid(T).name());
 			return nullptr;
 		}

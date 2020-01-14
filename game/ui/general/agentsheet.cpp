@@ -44,7 +44,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 	                   item.modified_stats.health, 100, healthColour, {88, 7}));
 	form->findControlTyped<Graphic>("VALUE_1")->ToolTipText =
 	    form->findControlTyped<Label>("LABEL_1")->getText() +
-	    format(": %d/%d", item.modified_stats.health, item.current_stats.health);
+	    format(": {}/{}", item.modified_stats.health, item.current_stats.health);
 
 	form->findControlTyped<Label>("LABEL_2")->setText(tr("Accuracy"));
 	form->findControlTyped<Graphic>("VALUE_2")->setImage(
@@ -52,7 +52,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 	                   item.modified_stats.accuracy, 100, accuracyColour, {88, 7}));
 	form->findControlTyped<Graphic>("VALUE_2")->ToolTipText =
 	    form->findControlTyped<Label>("LABEL_2")->getText() +
-	    format(": %d/%d", item.modified_stats.accuracy, item.current_stats.accuracy);
+	    format(": {}/{}", item.modified_stats.accuracy, item.current_stats.accuracy);
 
 	form->findControlTyped<Label>("LABEL_3")->setText(tr("Reactions"));
 	form->findControlTyped<Graphic>("VALUE_3")->setImage(
@@ -60,7 +60,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 	                   item.modified_stats.reactions, 100, reactionsColour, {88, 7}));
 	form->findControlTyped<Graphic>("VALUE_3")->ToolTipText =
 	    form->findControlTyped<Label>("LABEL_3")->getText() +
-	    format(": %d/%d", item.modified_stats.reactions, item.current_stats.reactions);
+	    format(": {}/{}", item.modified_stats.reactions, item.current_stats.reactions);
 
 	form->findControlTyped<Label>("LABEL_4")->setText(turnBased ? tr("Time Units") : tr("Speed"));
 	form->findControlTyped<Graphic>("VALUE_4")->ToolTipText =
@@ -71,7 +71,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 		    createStatsBar(item.initial_stats.time_units, item.current_stats.time_units,
 		                   item.modified_stats.time_units, 100, speedColour, {88, 7}));
 		form->findControlTyped<Graphic>("VALUE_4")->ToolTipText +=
-		    format("^ %d/%d", item.modified_stats.time_units, item.current_stats.time_units);
+		    format("^ {}/{}", item.modified_stats.time_units, item.current_stats.time_units);
 	}
 	else
 	{
@@ -79,7 +79,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 		    item.initial_stats.getDisplaySpeedValue(), item.current_stats.getDisplaySpeedValue(),
 		    item.modified_stats.getDisplaySpeedValue(), 100, speedColour, {88, 7}));
 		form->findControlTyped<Graphic>("VALUE_4")->ToolTipText +=
-		    format("^ %d/%d", item.modified_stats.getDisplaySpeedValue(),
+		    format("^ {}/{}", item.modified_stats.getDisplaySpeedValue(),
 		           item.current_stats.getDisplaySpeedValue());
 	}
 
@@ -89,7 +89,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 	    item.modified_stats.getDisplayStaminaValue(), 100, staminaColour, {88, 7}));
 	form->findControlTyped<Graphic>("VALUE_5")->ToolTipText =
 	    form->findControlTyped<Label>("LABEL_5")->getText() +
-	    format(": %d/%d", item.modified_stats.getDisplayStaminaValue(),
+	    format(": {}/{}", item.modified_stats.getDisplayStaminaValue(),
 	           item.current_stats.getDisplayStaminaValue());
 
 	form->findControlTyped<Label>("LABEL_6")->setText(tr("Bravery"));
@@ -98,7 +98,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 	                   item.modified_stats.bravery, 100, braveryColour, {88, 7}));
 	form->findControlTyped<Graphic>("VALUE_6")->ToolTipText =
 	    form->findControlTyped<Label>("LABEL_6")->getText() +
-	    format(": %d/%d", item.modified_stats.bravery, item.current_stats.bravery);
+	    format(": {}/{}", item.modified_stats.bravery, item.current_stats.bravery);
 
 	form->findControlTyped<Label>("LABEL_7")->setText(tr("Strength"));
 	form->findControlTyped<Graphic>("VALUE_7")->setImage(
@@ -106,7 +106,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 	                   item.modified_stats.strength, 100, strengthColour, {88, 7}));
 	form->findControlTyped<Graphic>("VALUE_7")->ToolTipText =
 	    form->findControlTyped<Label>("LABEL_7")->getText() +
-	    format(": %d/%d", item.modified_stats.strength, item.current_stats.strength);
+	    format(": {}/{}", item.modified_stats.strength, item.current_stats.strength);
 
 	form->findControlTyped<Label>("LABEL_8")->setText(tr("Psi-energy"));
 	form->findControlTyped<Graphic>("VALUE_8")->setImage(
@@ -114,7 +114,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 	                   item.modified_stats.psi_energy, 100, psiEnergyColour, {88, 7}));
 	form->findControlTyped<Graphic>("VALUE_8")->ToolTipText =
 	    form->findControlTyped<Label>("LABEL_8")->getText() +
-	    format(": %d/%d", item.modified_stats.psi_energy, item.current_stats.psi_energy);
+	    format(": {}/{}", item.modified_stats.psi_energy, item.current_stats.psi_energy);
 
 	form->findControlTyped<Label>("LABEL_9")->setText(tr("Psi-attack"));
 	form->findControlTyped<Graphic>("VALUE_9")->setImage(
@@ -122,7 +122,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 	                   item.modified_stats.psi_attack, 100, psiAttackColour, {88, 7}));
 	form->findControlTyped<Graphic>("VALUE_9")->ToolTipText =
 	    form->findControlTyped<Label>("LABEL_9")->getText() +
-	    format(": %d/%d", item.modified_stats.psi_attack, item.current_stats.psi_attack);
+	    format(": {}/{}", item.modified_stats.psi_attack, item.current_stats.psi_attack);
 
 	form->findControlTyped<Label>("LABEL_10")->setText(tr("Psi-defence"));
 	form->findControlTyped<Graphic>("VALUE_10")
@@ -130,18 +130,18 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 	                              item.modified_stats.psi_defence, 100, psiDefenceColour, {88, 7}));
 	form->findControlTyped<Graphic>("VALUE_10")->ToolTipText =
 	    form->findControlTyped<Label>("LABEL_10")->getText() +
-	    format(": %d/%d", item.modified_stats.psi_defence, item.current_stats.psi_defence);
+	    format(": {}/{}", item.modified_stats.psi_defence, item.current_stats.psi_defence);
 }
 
 void AgentSheet::clear()
 {
 	for (int i = 0; i < 10; i++)
 	{
-		auto labelName = format("LABEL_%d", i + 1);
+		auto labelName = format("LABEL_{}", i + 1);
 		auto label = form->findControlTyped<Label>(labelName);
 		if (!label)
 		{
-			LogError("Failed to find UI control matching \"%s\"", labelName);
+			LogError("Failed to find UI control matching \"{}\"", labelName);
 		}
 		else
 		{

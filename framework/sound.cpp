@@ -42,7 +42,7 @@ void SoundBackend::playSample(sp<Sample> sample, Vec3<float> position, float gai
 			distance -= lutDistance;
 		}
 	}
-	LogInfo("Playing sample at {%f,%f,%f} - distance to camera %f, gain %f", position.x, position.y,
+	LogInfo("Playing sample at {{},{},{}} - distance to camera {}, gain {}", position.x, position.y,
 	        position.z, distance, gain);
 	// Anything within CLOSE_RANGE is at full volume
 	this->playSample(sample, gain * gainMultiplier);

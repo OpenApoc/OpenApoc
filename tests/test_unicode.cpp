@@ -14,13 +14,13 @@ struct example_unicode
 
 	bool test() const
 	{
-		LogInfo("Testing string \"%s\"", u8string);
+		LogInfo("Testing string \"{}\"", u8string);
 		const auto num_codepoints = expected_codepoints.size();
 		UString string(u8string);
 		UString string2;
 		if (string.length() != num_codepoints)
 		{
-			LogError("String \"%s\" has unexpected length %zu , expected %zu", u8string,
+			LogError("String \"{}\" has unexpected length {} , expected {}", u8string,
 			         string.length(), num_codepoints);
 			return false;
 		}
@@ -32,7 +32,7 @@ struct example_unicode
 
 		if (decoded_codepoints.size() != num_codepoints)
 		{
-			LogError("String \"%s\" has unexpected iterated length %zu , expected %zu", u8string,
+			LogError("String \"{}\" has unexpected iterated length {} , expected {}", u8string,
 			         decoded_codepoints.size(), num_codepoints);
 			return false;
 		}
@@ -42,7 +42,7 @@ struct example_unicode
 			if (expected_codepoints[i] != decoded_codepoints[i])
 			{
 				LogError(
-				    "String \"%s\" has unexpected codepoint at index %zu - got 0x%x expected 0x%x",
+				    "String \"{}\" has unexpected codepoint at index {} - got 0x{:x} expected 0x{:x}",
 				    u8string, i, decoded_codepoints[i], expected_codepoints[i]);
 				return false;
 			}
@@ -52,7 +52,7 @@ struct example_unicode
 		if (string != string2)
 		{
 			LogError(
-			    "String \"%s\" compared false after utf8->unichar->utf8 conversion - got \"%s\"",
+			    "String \"{}\" compared false after utf8->unichar->utf8 conversion - got \"{}\"",
 			    u8string, string2);
 
 			return false;
@@ -71,7 +71,7 @@ static bool test_remove(const UString &initial, const UString &expected, size_t 
 	removed.remove(offset, count);
 	if (removed != expected)
 	{
-		LogError("\"%s\".remove(%zu, %zu) = \"%s\", expected \"%s\"", initial, offset, count,
+		LogError("\"{}\".remove({}, {}) = \"{}\", expected \"{}\"", initial, offset, count,
 		         removed, expected);
 		return false;
 	}
@@ -85,7 +85,7 @@ static bool test_insert(const UString &initial, const UString &expected, size_t 
 	inserted.insert(offset, str);
 	if (inserted != expected)
 	{
-		LogError("\"%s\".inserted(%zu, \"%s\") = \"%s\", expected \"%s\"", initial, offset, str,
+		LogError("\"{}\".inserted({}, \"{}\") = \"{}\", expected \"{}\"", initial, offset, str,
 		         inserted, expected);
 		return false;
 	}
@@ -121,12 +121,12 @@ int main(int argc, char **argv)
 	auto upper = example.toUpper();
 	if (lower != lower_example)
 	{
-		LogError("toLower(\"%s\") returned \"%s\", expected \"%s\"", example, lower, lower_example);
+		LogError("toLower(\"{}\") returned \"{}\", expected \"{}\"", example, lower, lower_example);
 		return EXIT_FAILURE;
 	}
 	if (upper != upper_example)
 	{
-		LogError("toUpper(\"%s\") returned \"%s\", expected \"%s\"", example, upper, upper_example);
+		LogError("toUpper(\"{}\") returned \"{}\", expected \"{}\"", example, upper, upper_example);
 		return EXIT_FAILURE;
 	}
 

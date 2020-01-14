@@ -38,13 +38,13 @@ void SupportedMapPart::attemptReLinkSupports(sp<std::set<SupportedMapPart *>> cu
 	do
 	{
 #ifdef MAP_PART_LINK_DEBUG_OUTPUT
-		LogWarning("%s", log);
+		LogWarning("{}", log);
 		log = "";
-		log += format("\nIteration begins. List contains %d items:", (int)currentSet->size());
+		log += format("\nIteration begins. List contains {} items:", (int)currentSet->size());
 		for (auto &mp : *currentSet)
 		{
 			auto pos = mp->getTilePosition();
-			log += format("\n %s at %d %d %d", mp->getId(), pos.x, pos.y, pos.z);
+			log += format("\n {} at {} {} {}", mp->getId(), pos.x, pos.y, pos.z);
 		}
 		log += format("\n");
 #endif
@@ -78,7 +78,7 @@ void SupportedMapPart::attemptReLinkSupports(sp<std::set<SupportedMapPart *>> cu
 			{
 #ifdef MAP_PART_LINK_DEBUG_OUTPUT
 				auto pos = curSetPart->getTilePosition();
-				log += format("\n Processing %s at %d %d %d: OK %s", curSetPart->getId(), pos.x,
+				log += format("\n Processing {} at {} {} {}: OK {}", curSetPart->getId(), pos.x,
 				              pos.y, pos.z, curSetPart->getSupportString());
 				{
 					auto &map = curSetPart->getMap();
@@ -110,7 +110,7 @@ void SupportedMapPart::attemptReLinkSupports(sp<std::set<SupportedMapPart *>> cu
 											    p.second ==
 											        (BattleMapPartType::Type)curSetPart->getType())
 											{
-												log += format("\n - Supported by %s at %d %d %d",
+												log += format("\n - Supported by {} at {} {} {}",
 												              mp2->type.id, x - pos.x, y - pos.y,
 												              z - pos.z);
 											}
@@ -124,7 +124,7 @@ void SupportedMapPart::attemptReLinkSupports(sp<std::set<SupportedMapPart *>> cu
 										{
 											if (p == pos)
 											{
-												log += format("\n - Supported by %s at %d %d %d",
+												log += format("\n - Supported by {} at {} {} {}",
 												              mp2->type.id, x - pos.x, y - pos.y,
 												              z - pos.z);
 											}
@@ -151,7 +151,7 @@ void SupportedMapPart::attemptReLinkSupports(sp<std::set<SupportedMapPart *>> cu
 			{
 #ifdef MAP_PART_LINK_DEBUG_OUTPUT
 				auto pos = curSetPart->getTilePosition();
-				log += format("\n Processing %s at %s: FAIL, remains in next iteration",
+				log += format("\n Processing {} at {}: FAIL, remains in next iteration",
 				              curSetPart->getId(), pos);
 #endif
 				// Step 4: Failure [If no support is found]
@@ -161,7 +161,7 @@ void SupportedMapPart::attemptReLinkSupports(sp<std::set<SupportedMapPart *>> cu
 				{
 #ifdef MAP_PART_LINK_DEBUG_OUTPUT
 					auto newpos = supportedPart->getTilePosition();
-					log += format("\n - %s at %s added to next iteration", supportedPart->getId(),
+					log += format("\n - {} at {} added to next iteration", supportedPart->getId(),
 					              newpos);
 #endif
 					supportedPart->ceaseBeingSupported();
@@ -183,9 +183,9 @@ void SupportedMapPart::attemptReLinkSupports(sp<std::set<SupportedMapPart *>> cu
 	for (auto &sp : *currentSet)
 	{
 		log += format("\nAttempt over");
-		log += format("\n%s at %s will fall", sp->getId(), sp->getTilePosition());
+		log += format("\n{} at {} will fall", sp->getId(), sp->getTilePosition());
 	}
-	LogWarning("%s", log);
+	LogWarning("{}", log);
 #endif
 }
 

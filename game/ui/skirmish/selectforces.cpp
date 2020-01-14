@@ -24,38 +24,38 @@ SelectForces::SelectForces(sp<GameState> state, Skirmish &skirmish,
 	menuform->findControlTyped<ScrollBar>("NUM_BSK_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_BSK")->setText(
-		        format("%d", menuform->findControlTyped<ScrollBar>("NUM_BSK_SLIDER")->getValue()));
+		        format("{}", menuform->findControlTyped<ScrollBar>("NUM_BSK_SLIDER")->getValue()));
 	    });
 	menuform->findControlTyped<ScrollBar>("NUM_CHRYS_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_CHRYS")
 		        ->setText(format(
-		            "%d", menuform->findControlTyped<ScrollBar>("NUM_CHRYS_SLIDER")->getValue()));
+		            "{}", menuform->findControlTyped<ScrollBar>("NUM_CHRYS_SLIDER")->getValue()));
 	    });
 	menuform->findControlTyped<ScrollBar>("NUM_EGG_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_EGG")->setText(
-		        format("%d", menuform->findControlTyped<ScrollBar>("NUM_EGG_SLIDER")->getValue()));
+		        format("{}", menuform->findControlTyped<ScrollBar>("NUM_EGG_SLIDER")->getValue()));
 	    });
 
 	menuform->findControlTyped<ScrollBar>("NUM_SPITTER_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_SPITTER")
 		        ->setText(format(
-		            "%d", menuform->findControlTyped<ScrollBar>("NUM_SPITTER_SLIDER")->getValue()));
+		            "{}", menuform->findControlTyped<ScrollBar>("NUM_SPITTER_SLIDER")->getValue()));
 	    });
 	menuform->findControlTyped<ScrollBar>("NUM_ANTHROPOD_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_ANTHROPOD")
 		        ->setText(format(
-		            "%d",
+		            "{}",
 		            menuform->findControlTyped<ScrollBar>("NUM_ANTHROPOD_SLIDER")->getValue()));
 	    });
 	menuform->findControlTyped<ScrollBar>("NUM_MULTIWORM_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_MULTIWORM")
 		        ->setText(format(
-		            "%d",
+		            "{}",
 		            menuform->findControlTyped<ScrollBar>("NUM_MULTIWORM_SLIDER")->getValue()));
 	    });
 
@@ -63,19 +63,19 @@ SelectForces::SelectForces(sp<GameState> state, Skirmish &skirmish,
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_POPPER")
 		        ->setText(format(
-		            "%d", menuform->findControlTyped<ScrollBar>("NUM_POPPER_SLIDER")->getValue()));
+		            "{}", menuform->findControlTyped<ScrollBar>("NUM_POPPER_SLIDER")->getValue()));
 	    });
 	menuform->findControlTyped<ScrollBar>("NUM_SKEL_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_SKEL")
 		        ->setText(format(
-		            "%d", menuform->findControlTyped<ScrollBar>("NUM_SKEL_SLIDER")->getValue()));
+		            "{}", menuform->findControlTyped<ScrollBar>("NUM_SKEL_SLIDER")->getValue()));
 	    });
 	menuform->findControlTyped<ScrollBar>("NUM_HYPERWORM_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_HYPERWORM")
 		        ->setText(format(
-		            "%d",
+		            "{}",
 		            menuform->findControlTyped<ScrollBar>("NUM_HYPERWORM_SLIDER")->getValue()));
 	    });
 
@@ -83,32 +83,32 @@ SelectForces::SelectForces(sp<GameState> state, Skirmish &skirmish,
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_MEGA")
 		        ->setText(format(
-		            "%d", menuform->findControlTyped<ScrollBar>("NUM_MEGA_SLIDER")->getValue()));
+		            "{}", menuform->findControlTyped<ScrollBar>("NUM_MEGA_SLIDER")->getValue()));
 	    });
 	menuform->findControlTyped<ScrollBar>("NUM_PSI_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_PSI")->setText(
-		        format("%d", menuform->findControlTyped<ScrollBar>("NUM_PSI_SLIDER")->getValue()));
+		        format("{}", menuform->findControlTyped<ScrollBar>("NUM_PSI_SLIDER")->getValue()));
 	    });
 	menuform->findControlTyped<ScrollBar>("NUM_MICRO_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_MICRO")
 		        ->setText(format(
-		            "%d", menuform->findControlTyped<ScrollBar>("NUM_MICRO_SLIDER")->getValue()));
+		            "{}", menuform->findControlTyped<ScrollBar>("NUM_MICRO_SLIDER")->getValue()));
 	    });
 
 	menuform->findControlTyped<ScrollBar>("NUM_GUARD_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_GUARD")
 		        ->setText(format(
-		            "%d", menuform->findControlTyped<ScrollBar>("NUM_GUARD_SLIDER")->getValue()));
+		            "{}", menuform->findControlTyped<ScrollBar>("NUM_GUARD_SLIDER")->getValue()));
 	    });
 
 	menuform->findControlTyped<ScrollBar>("NUM_CIVILIAN_SLIDER")
 	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
 		    menuform->findControlTyped<Label>("NUM_CIVILIAN")
 		        ->setText(format(
-		            "%d",
+		            "{}",
 		            menuform->findControlTyped<ScrollBar>("NUM_CIVILIAN_SLIDER")->getValue()));
 	    });
 

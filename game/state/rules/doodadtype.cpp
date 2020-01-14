@@ -11,7 +11,7 @@ sp<DoodadType> StateObject<DoodadType>::get(const GameState &state, const UStrin
 	auto it = state.doodad_types.find(id);
 	if (it == state.doodad_types.end())
 	{
-		LogError("No doodad type matching ID \"%s\"", id);
+		LogError("No doodad type matching ID \"{}\"", id);
 		return nullptr;
 	}
 	return it->second;

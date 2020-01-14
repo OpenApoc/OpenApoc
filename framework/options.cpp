@@ -6,19 +6,19 @@ namespace
 using namespace OpenApoc;
 void dumpOption(const ConfigOptionInt &opt)
 {
-	LogInfo("OPTION \"%s.%s\" = %d", opt.getSection(), opt.getName(), opt.get());
+	LogInfo("OPTION \"{}.{}\" = {}", opt.getSection(), opt.getName(), opt.get());
 }
 void dumpOption(const ConfigOptionBool &opt)
 {
-	LogInfo("OPTION \"%s.%s\" = %s", opt.getSection(), opt.getName(), opt.get() ? "true" : "false");
+	LogInfo("OPTION \"{}.{}\" = {}", opt.getSection(), opt.getName(), opt.get() ? "true" : "false");
 }
 void dumpOption(const ConfigOptionFloat &opt)
 {
-	LogInfo("OPTION \"%s.%s\" = %f", opt.getSection(), opt.getName(), opt.get());
+	LogInfo("OPTION \"{}.{}\" = {}", opt.getSection(), opt.getName(), opt.get());
 }
 void dumpOption(const ConfigOptionString &opt)
 {
-	LogInfo("OPTION \"%s.%s\" = \"%s\"", opt.getSection(), opt.getName(), opt.get());
+	LogInfo("OPTION \"{}.{}\" = \"{}\"", opt.getSection(), opt.getName(), opt.get());
 }
 
 } // anonymous namespace

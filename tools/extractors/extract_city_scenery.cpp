@@ -74,16 +74,16 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 	auto inFile = fw().data->fs.open("xcom3/ufodata/" + datFile + ".dat");
 	if (!inFile)
 	{
-		LogError("Failed to open \"%s.dat\"", datFile);
+		LogError("Failed to open \"{}.dat\"", datFile);
 	}
 
 	auto fileSize = inFile.size();
 
 	auto tileCount = fileSize / sizeof(struct citymap_tile_entry);
-	LogInfo("Loading %zu tile entries", tileCount);
+	LogInfo("Loading {} tile entries", tileCount);
 	if (fileSize % sizeof(citymap_tile_entry))
 	{
-		LogWarning("filesize %zu doesn't divide by tile record size", fileSize);
+		LogWarning("filesize {} doesn't divide by tile record size", fileSize);
 	}
 
 	for (unsigned i = 0; i < tileCount; i++)
@@ -91,7 +91,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		struct citymap_tile_entry entry;
 		inFile.read((char *)&entry, sizeof(entry));
 
-		UString id = format("%s%s%u", SceneryTileType::getPrefix(), tilePrefix, i);
+		UString id = format("{}{}{}", SceneryTileType::getPrefix(), tilePrefix, i);
 
 		auto tile = mksp<SceneryTileType>();
 
@@ -111,7 +111,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				tile->walk_mode = SceneryTileType::WalkMode::Onto;
 				break;
 			default:
-				LogError("Unexpected scenery walk type %d for ID %s", (int)entry.walk_type, id);
+				LogError("Unexpected scenery walk type {} for ID {}", (int)entry.walk_type, id);
 		}
 
 		switch (entry.tile_type)
@@ -133,7 +133,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				tile->tile_type = SceneryTileType::TileType::CityWall;
 				break;
 			default:
-				LogError("Unexpected scenery tile type %d for ID %s", (int)entry.tile_type, id);
+				LogError("Unexpected scenery tile type {} for ID {}", (int)entry.tile_type, id);
 		}
 
 		switch (entry.road_type)
@@ -148,7 +148,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				tile->road_type = SceneryTileType::RoadType::Terminal;
 				break;
 			default:
-				LogError("Unexpected scenery road type %d for ID %s", (int)entry.road_type, id);
+				LogError("Unexpected scenery road type {} for ID {}", (int)entry.road_type, id);
 		}
 
 		tile->connection.resize(4);
@@ -243,12 +243,12 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		}
 		if (entry.damagedtile_idx)
 		{
-			tile->damagedTile = {&state, format("%s%s%u", SceneryTileType::getPrefix(), tilePrefix,
+			tile->damagedTile = {&state, format("{}{}{}", SceneryTileType::getPrefix(), tilePrefix,
 			                                    entry.damagedtile_idx)};
 		}
 
 		auto imageString = format(
-		    "PCK:xcom3/ufodata/" + spriteFile + ".pck:xcom3/ufodata/" + spriteFile + ".tab:%u", i);
+		    "PCK:xcom3/ufodata/" + spriteFile + ".pck:xcom3/ufodata/" + spriteFile + ".tab:{}", i);
 
 		tile->sprite = fw().data->loadImage(imageString);
 
@@ -259,7 +259,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 			if (entry.voxelIdx[z] == 0)
 				continue;
 			auto lofString = format("LOFTEMPS:xcom3/ufodata/" + lofFile + ".dat:xcom3/ufodata/" +
-			                            lofFile + ".tab:%d",
+			                            lofFile + ".tab:{}",
 			                        (int)entry.voxelIdx[z]);
 			tile->voxelMap->slices[z] = fw().data->loadVoxelSlice(lofString);
 		}
@@ -267,7 +267,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		if (entry.stratmap_idx != 0)
 		{
 			auto stratmapString = format("PCKSTRAT:xcom3/ufodata/" + stratmapFile +
-			                                 ".pck:xcom3/ufodata/" + stratmapFile + ".tab:%d",
+			                                 ".pck:xcom3/ufodata/" + stratmapFile + ".tab:{}",
 			                             (int)entry.stratmap_idx);
 			tile->strategySprite = fw().data->loadImage(stratmapString);
 		}
@@ -285,7 +285,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		if (entry.overlaytile_idx != 0xff)
 		{
 			auto overlayString =
-			    format("PCK:xcom3/ufodata/" + ovrFile + ".pck:xcom3/ufodata/" + ovrFile + ".tab:%d",
+			    format("PCK:xcom3/ufodata/" + ovrFile + ".pck:xcom3/ufodata/" + ovrFile + ".tab:{}",
 			           (int)entry.overlaytile_idx);
 			tile->overlaySprite = fw().data->loadImage(overlayString);
 		}

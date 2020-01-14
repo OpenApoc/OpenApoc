@@ -43,7 +43,7 @@ UfopaediaCategoryView::UfopaediaCategoryView(sp<GameState> state, sp<UfopaediaCa
 		}
 		if (it == cat->entries.end())
 		{
-			LogError("Failed to find UFOpaedia entry %s in category %s", entry->title, cat->title);
+			LogError("Failed to find UFOpaedia entry {} in category {}", entry->title, cat->title);
 		}
 	}
 }
@@ -76,40 +76,40 @@ void UfopaediaCategoryView::begin()
 	baseY = infoLabel->Location.y;
 	for (int i = 0; i < 9; i++)
 	{
-		auto labelName = format("LABEL_%d", i + 1);
+		auto labelName = format("LABEL_{}", i + 1);
 		auto label = menuform->findControlTyped<Label>(labelName);
 		if (!label)
 		{
-			LogError("Failed to find UI control matching \"%s\"", labelName);
+			LogError("Failed to find UI control matching \"{}\"", labelName);
 		}
 		label->setText("");
 		statsLabels.push_back(label);
 
-		auto valueName = format("VALUE_%d", i + 1);
+		auto valueName = format("VALUE_{}", i + 1);
 		auto value = menuform->findControlTyped<Label>(valueName);
 		if (!value)
 		{
-			LogError("Failed to find UI control matching \"%s\"", valueName);
+			LogError("Failed to find UI control matching \"{}\"", valueName);
 		}
 		value->setText("");
 		statsValues.push_back(value);
 	}
 	for (int i = 0; i < 4; i++)
 	{
-		auto labelName = format("ORG_LABEL_%d", i + 1);
+		auto labelName = format("ORG_LABEL_{}", i + 1);
 		auto label = menuform->findControlTyped<Label>(labelName);
 		if (!label)
 		{
-			LogError("Failed to find UI control matching \"%s\"", labelName);
+			LogError("Failed to find UI control matching \"{}\"", labelName);
 		}
 		label->setText("");
 		orgLabels.push_back(label);
 
-		auto valueName = format("ORG_VALUE_%d", i + 1);
+		auto valueName = format("ORG_VALUE_{}", i + 1);
 		auto value = menuform->findControlTyped<Label>(valueName);
 		if (!value)
 		{
-			LogError("Failed to find UI control matching \"%s\"", valueName);
+			LogError("Failed to find UI control matching \"{}\"", valueName);
 		}
 		value->setText("");
 		orgValues.push_back(value);
@@ -188,7 +188,7 @@ void UfopaediaCategoryView::eventOccurred(Event *e)
 				it++;
 				if (it == this->category->entries.end())
 				{
-					LogError("Failed to find current category \"%s\"", this->category->title);
+					LogError("Failed to find current category \"{}\"", this->category->title);
 				}
 			}
 			this->position_iterator = it;
@@ -269,9 +269,9 @@ void UfopaediaCategoryView::setFormStats()
 					if (data_id != "ORG_ALIEN")
 					{
 						orgLabels[1]->setText(tr("Balance"));
-						orgValues[1]->setText(format("$%d", ref->balance));
+						orgValues[1]->setText(format("${}", ref->balance));
 						orgLabels[2]->setText(tr("Income"));
-						orgValues[2]->setText(format("$%d", ref->income));
+						orgValues[2]->setText(format("${}", ref->income));
 
 						if (ref != player)
 						{
@@ -297,7 +297,7 @@ void UfopaediaCategoryView::setFormStats()
 							relation += UString(" ") + tr(player->name);
 							orgLabels[0]->setText(relation);
 							orgLabels[3]->setText(tr("Alien Infiltration"));
-							orgValues[3]->setText(format("%d%%", ref->infiltrationValue / 2));
+							orgValues[3]->setText(format("{}%%", ref->infiltrationValue / 2));
 						}
 					}
 					break;
@@ -358,7 +358,7 @@ void UfopaediaCategoryView::setFormStats()
 					statsValues[row++]->setText(Strings::fromInteger(ref->weight));
 					statsLabels[row]->setText(tr("Size"));
 					statsValues[row++]->setText(
-					    format("%dx%d", ref->equipscreen_size.x, ref->equipscreen_size.y));
+					    format("{}x{}", ref->equipscreen_size.x, ref->equipscreen_size.y));
 					switch (ref->type)
 					{
 						case EquipmentSlotType::VehicleEngine:
@@ -371,9 +371,9 @@ void UfopaediaCategoryView::setFormStats()
 							statsLabels[row]->setText(tr("Damage"));
 							statsValues[row++]->setText(Strings::fromInteger(ref->damage));
 							statsLabels[row]->setText(tr("Accuracy"));
-							statsValues[row++]->setText(format("%d%%", ref->accuracy));
+							statsValues[row++]->setText(format("{}%%", ref->accuracy));
 							statsLabels[row]->setText(tr("Range"));
-							statsValues[row++]->setText(format("%dm", ref->getRangeInMetres()));
+							statsValues[row++]->setText(format("{}m", ref->getRangeInMetres()));
 							statsLabels[row]->setText(tr("Fire Rate"));
 							statsValues[row++]->setText(format(
 							    "%.2f r/s", (float)TICKS_PER_SECOND / (float)ref->fire_delay));
@@ -395,7 +395,7 @@ void UfopaediaCategoryView::setFormStats()
 							{
 								statsLabels[row]->setText(tr("Accuracy"));
 								statsValues[row++]->setText(
-								    format("+%d%%", ref->accuracy_modifier));
+								    format("+{}%%", ref->accuracy_modifier));
 							}
 							if (ref->cargo_space > 0)
 							{
@@ -415,12 +415,12 @@ void UfopaediaCategoryView::setFormStats()
 							if (ref->missile_jamming > 0)
 							{
 								statsLabels[row]->setText(tr("Jamming"));
-								statsValues[row++]->setText(format("%d%%", ref->missile_jamming));
+								statsValues[row++]->setText(format("{}%%", ref->missile_jamming));
 							}
 							if (ref->shielding > 0)
 							{
 								statsLabels[row]->setText(tr("Shielding"));
-								statsValues[row++]->setText(format("+%d", ref->shielding));
+								statsValues[row++]->setText(format("+{}", ref->shielding));
 							}
 							if (ref->cloaking)
 							{
@@ -437,7 +437,7 @@ void UfopaediaCategoryView::setFormStats()
 					statsValues[row++]->setText(Strings::fromInteger(ref->weight));
 					statsLabels[row]->setText(tr("Size"));
 					statsValues[row++]->setText(
-					    format("%dx%d", ref->equipscreen_size.x, ref->equipscreen_size.y));
+					    format("{}x{}", ref->equipscreen_size.x, ref->equipscreen_size.y));
 					if (ref->type == AEquipmentType::Type::Ammo ||
 					    ref->type == AEquipmentType::Type::Weapon && ref->ammo_types.empty())
 					{
@@ -446,7 +446,7 @@ void UfopaediaCategoryView::setFormStats()
 						statsLabels[row]->setText(tr("Damage Type"));
 						statsValues[row++]->setText(ref->damage_type->name);
 						statsLabels[row]->setText("Range");
-						statsValues[row++]->setText(format("%dm", ref->getRangeInMetres()));
+						statsValues[row++]->setText(format("{}m", ref->getRangeInMetres()));
 						statsLabels[row]->setText("Fire Rate");
 						statsValues[row++]->setText(format("%.2f r/s", ref->getRoundsPerSecond()));
 					}
@@ -466,7 +466,7 @@ void UfopaediaCategoryView::setFormStats()
 						statsLabels[row]->setText(tr("Damage Type"));
 						statsValues[row++]->setText(ammoType->damage_type->name);
 						statsLabels[row]->setText(tr("Range"));
-						statsValues[row++]->setText(format("%dm", ammoType->getRangeInMetres()));
+						statsValues[row++]->setText(format("{}m", ammoType->getRangeInMetres()));
 						statsLabels[row]->setText(tr("Fire Rate"));
 						statsValues[row++]->setText(
 						    format("%.2f r/s", ammoType->getRoundsPerSecond()));
@@ -493,11 +493,11 @@ void UfopaediaCategoryView::setFormStats()
 				{
 					StateRef<FacilityType> ref = {state.get(), data_id};
 					statsLabels[row]->setText(tr("Construction cost"));
-					statsValues[row++]->setText(format("$%d", ref->buildCost));
+					statsValues[row++]->setText(format("${}", ref->buildCost));
 					statsLabels[row]->setText(tr("Days to build"));
 					statsValues[row++]->setText(Strings::fromInteger(ref->buildTime));
 					statsLabels[row]->setText(tr("Weekly cost"));
-					statsValues[row++]->setText(format("$%d", ref->weeklyCost));
+					statsValues[row++]->setText(format("${}", ref->weeklyCost));
 					if (ref->capacityAmount > 0)
 					{
 						statsLabels[row]->setText(tr("Capacity"));
@@ -578,7 +578,7 @@ void UfopaediaCategoryView::setNextSection()
 		it++;
 		if (it == state->ufopaedia.end())
 		{
-			LogError("Failed to find current category \"%s\"", this->category->title);
+			LogError("Failed to find current category \"{}\"", this->category->title);
 		}
 	}
 	// Increment it once to get the next
@@ -602,7 +602,7 @@ void UfopaediaCategoryView::setPreviousSection()
 		it++;
 		if (it == state->ufopaedia.end())
 		{
-			LogError("Failed to find current category \"%s\"", this->category->title);
+			LogError("Failed to find current category \"{}\"", this->category->title);
 		}
 	}
 	// Loop around to the beginning

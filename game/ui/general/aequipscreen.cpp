@@ -59,7 +59,7 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 	{
 		bigUnitRanks.push_back(
 		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+		                                "tacbut.tab:{}:xcom3/tacdata/tactical.pal",
 		                                i)));
 	}
 
@@ -103,7 +103,7 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 	    });
 
 	woundImage = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                         "icons.tab:{}:xcom3/tacdata/tactical.pal",
 	                                         258));
 	FATAL_WOUND_LOCATIONS[BodyPart::Helmet] = {{310, 130}, {307, 117}, {327, 137},
 	                                           {312, 128}, {309, 118}, {317, 123}};
@@ -429,7 +429,7 @@ void AEquipScreen::render()
 		auto rect = std::get<0>(tuple);
 		auto pos = rect.p0;
 		pos.x -= inventoryPage * inventoryControl->Size.x;
-		auto countImage = count > 0 ? labelFont->getString(format("%d", count)) : nullptr;
+		auto countImage = count > 0 ? labelFont->getString(format("{}", count)) : nullptr;
 		auto &equipmentImage = item->type->equipscreen_sprite;
 
 		if (pos.x < inventoryControl->Location.x + formMain->Location.x ||
@@ -580,7 +580,7 @@ void AEquipScreen::handleItemPlacement(Vec2<int> mousePos)
 	{
 		auto message_box = mksp<MessageBox>(
 		    tr("NOT ENOUGH TU'S"),
-		    format("%s %d", tr("TU cost per item picked up:"), currentAgent->unit->getPickupCost()),
+		    format("{} {}", tr("TU cost per item picked up:"), currentAgent->unit->getPickupCost()),
 		    MessageBox::ButtonOptions::Ok);
 		fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 	}
@@ -650,7 +650,7 @@ void AEquipScreen::handleItemPlacement(bool toAgent)
 	{
 		auto message_box = mksp<MessageBox>(
 		    tr("NOT ENOUGH TU'S"),
-		    format("%s %d", tr("TU cost per item picked up:"), currentAgent->unit->getPickupCost()),
+		    format("{} {}", tr("TU cost per item picked up:"), currentAgent->unit->getPickupCost()),
 		    MessageBox::ButtonOptions::Ok);
 		fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 	}
@@ -1543,7 +1543,7 @@ void AEquipScreen::processTemplate(int idx, bool remember)
 				}
 				else
 				{
-					LogError("Agent %s cannot apply template, fail at pos %s item %s",
+					LogError("Agent {} cannot apply template, fail at pos {} item {}",
 					         currentAgent->name, pos, type.id);
 				}
 			}

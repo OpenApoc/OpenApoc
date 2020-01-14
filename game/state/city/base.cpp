@@ -69,7 +69,7 @@ Base::Base(GameState &state, StateRef<Building> building) : building(building)
 	StateRef<FacilityType> type = {&state, FacilityType::getPrefix() + "ACCESS_LIFT"};
 	if (canBuildFacility(type, building->base_layout->baseLift, true) != BuildError::NoError)
 	{
-		LogError("Building %s has invalid lift location", building->name);
+		LogError("Building {} has invalid lift location", building->name);
 	}
 	else
 	{
@@ -189,7 +189,7 @@ static bool randomlyPlaceFacility(GameState &state, Base &base, StateRef<Facilit
 	}
 	else
 	{
-		LogError("Position %s in base in possible list but failed to build", position);
+		LogError("Position {} in base in possible list but failed to build", position);
 		return false;
 	}
 }

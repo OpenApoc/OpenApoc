@@ -82,7 +82,7 @@ void BribeScreen::updateInfo()
 	}
 
 	labelFunds->setText(state->getPlayerBalance());
-	labelRelation->setText(format("%s%s X-COM", tr(organisation->name), tr(relationship)));
+	labelRelation->setText(format("{}{} X-COM", tr(organisation->name), tr(relationship)));
 	labelOffer->setText(offer);
 }
 
@@ -94,7 +94,7 @@ void BribeScreen::updateInfo()
  */
 UString BribeScreen::getOfferString(int itWillCost, const UString &newAttitude) const
 {
-	return format("%s %d  %s  %s", tr("It will cost: $"), itWillCost,
+	return format("{} {}  {}  {}", tr("It will cost: $"), itWillCost,
 	              tr("to improve relations to:"), newAttitude);
 }
 

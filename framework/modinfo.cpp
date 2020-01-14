@@ -26,14 +26,14 @@ std::optional<ModInfo> ModInfo::getInfo(const UString &path)
 	auto parseResult = doc.load_file(filePath.cStr());
 	if (!parseResult)
 	{
-		LogWarning("Failed to parse ModInfo at \"%s\": %s at offset %u", filePath,
+		LogWarning("Failed to parse ModInfo at \"{}\": {} at offset {}", filePath,
 		           parseResult.description(), parseResult.offset);
 		return {};
 	}
 	auto infoNode = doc.child("openapoc_modinfo");
 	if (!infoNode)
 	{
-		LogWarning("ModInfo at \"%s\" doesn't have an \"openapoc_modinfo\" root node", filePath);
+		LogWarning("ModInfo at \"{}\" doesn't have an \"openapoc_modinfo\" root node", filePath);
 		return {};
 	}
 
@@ -98,7 +98,7 @@ bool ModInfo::writeInfo(const UString &path)
 	auto saveResult = doc.save_file(filePath.cStr());
 	if (!saveResult)
 	{
-		LogWarning("Failed to save ModInfo to \"%s\"", filePath);
+		LogWarning("Failed to save ModInfo to \"{}\"", filePath);
 		return false;
 	}
 

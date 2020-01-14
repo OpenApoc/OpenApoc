@@ -53,12 +53,12 @@ bool AgentTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, float &co
 	Vec3<int> toPos = to->position;
 	if (fromPos == toPos)
 	{
-		LogError("FromPos == ToPos %s", toPos);
+		LogError("FromPos == ToPos {}", toPos);
 		return false;
 	}
 	if (!map.tileIsValid(toPos))
 	{
-		LogError("ToPos %s is not on the map", toPos);
+		LogError("ToPos {} is not on the map", toPos);
 		return false;
 	}
 
@@ -484,7 +484,7 @@ void AgentMission::setPathTo(GameState &state [[maybe_unused]], Agent &a, StateR
 	auto key = Vec3<int>{(Vec3<int>)a.position * map.size + b->crewQuarters};
 	if (map.agentPathCache.find(key) != map.agentPathCache.end())
 	{
-		LogWarning("Found cached path from %s to %s, using it", a.position, b->crewQuarters);
+		LogWarning("Found cached path from {} to {}, using it", a.position, b->crewQuarters);
 		path = map.agentPathCache[key];
 	}
 	else
@@ -584,7 +584,7 @@ UString AgentMission::getName()
 			name += " " + this->targetBuilding.id;
 			break;
 		case MissionType::Snooze:
-			name += format(" for %u ticks", this->timeToSnooze);
+			name += format(" for {} ticks", this->timeToSnooze);
 			break;
 		case MissionType::Teleport:
 			name += " " + this->targetBuilding.id;

@@ -41,10 +41,10 @@ void ControlGenerator::init(GameState &state [[maybe_unused]])
 	{
 		battleSelect.push_back(
 		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+		                                "tacbut.tab:{}:xcom3/tacdata/tactical.pal",
 		                                25 + i)));
 		citySelect.push_back(fw().data->loadImage(format(
-		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
+		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:{}:xcom3/ufodata/pal_01.dat",
 		    37 + i)));
 	}
 
@@ -56,7 +56,7 @@ void ControlGenerator::init(GameState &state [[maybe_unused]])
 	{
 		unitRanks.push_back(
 		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+		                                "tacbut.tab:{}:xcom3/tacdata/tactical.pal",
 		                                i)));
 	}
 
@@ -86,7 +86,7 @@ void ControlGenerator::init(GameState &state [[maybe_unused]])
 	for (int i = 47; i <= 50; i++)
 	{
 		icons.push_back(fw().data->loadImage(format(
-		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%s:xcom3/ufodata/pal_01.dat",
+		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:{}:xcom3/ufodata/pal_01.dat",
 		    i)));
 	}
 
@@ -94,7 +94,7 @@ void ControlGenerator::init(GameState &state [[maybe_unused]])
 	for (int i = 51; i <= 63; i++)
 	{
 		vehiclePassengerCountIcons.push_back(fw().data->loadImage(format(
-		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%s:xcom3/ufodata/pal_01.dat",
+		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:{}:xcom3/ufodata/pal_01.dat",
 		    i)));
 	}
 	labelFont = ui().getFont("smalfont");
@@ -534,7 +534,7 @@ sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, const Ag
 	if (skill != UnitSkillState::Hidden)
 	{
 		auto skillLabel = baseControl->createChild<Label>(
-		    format(tr("Skill %s"), info.agent->getSkill()), singleton.labelFont);
+		    format(tr("Skill {}"), info.agent->getSkill()), singleton.labelFont);
 		skillLabel->Tint = {192, 192, 192};
 
 		skillLabel->Size = {nameLabel->Size.x, singleton.labelFont->getFontHeight()};

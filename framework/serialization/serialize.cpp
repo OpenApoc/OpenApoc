@@ -21,7 +21,7 @@ SerializationNode *SerializationNode::getNodeReq(const char *name)
 	auto node = this->getNodeOpt(name);
 	if (!node)
 	{
-		throw SerializationException(format("Missing node \"%s\"", name), this);
+		throw SerializationException(format("Missing node \"{}\"", name), this);
 	}
 	return node;
 }
@@ -31,7 +31,7 @@ SerializationNode *SerializationNode::getSectionReq(const char *name)
 	auto node = this->getSectionOpt(name);
 	if (!node)
 	{
-		throw SerializationException(format("Missing section \"%s\"", name), this);
+		throw SerializationException(format("Missing section \"{}\"", name), this);
 	}
 	return node;
 }
@@ -41,7 +41,7 @@ SerializationNode *SerializationNode::getNextSiblingReq(const char *name)
 	auto node = this->getNextSiblingOpt(name);
 	if (!node)
 	{
-		throw SerializationException(format("Missing sibling of \"%s\"", name), this);
+		throw SerializationException(format("Missing sibling of \"{}\"", name), this);
 	}
 	return node;
 }
@@ -164,10 +164,10 @@ up<SerializationArchive> SerializationArchive::readArchive(const UString &path)
 	up<SerializationDataProvider> dataProvider = getProvider(!fs::is_directory(path.str()));
 	if (!dataProvider->openArchive(path, false))
 	{
-		LogWarning("Failed to open archive at \"%s\"", path);
+		LogWarning("Failed to open archive at \"{}\"", path);
 		return nullptr;
 	}
-	LogInfo("Opened archive \"%s\"", path);
+	LogInfo("Opened archive \"{}\"", path);
 
 	return mkup<XMLSerializationArchive>(std::move(dataProvider));
 }
@@ -189,7 +189,7 @@ SerializationNode *XMLSerializationArchive::getRoot(const UString &prefix, const
 	auto path = prefix + name + ".xml";
 	if (dataProvider == nullptr)
 	{
-		LogWarning("Reading from not opened archive: %s!", path);
+		LogWarning("Reading from not opened archive: {}!", path);
 		return nullptr;
 	}
 
@@ -206,12 +206,12 @@ SerializationNode *XMLSerializationArchive::getRoot(const UString &prefix, const
 			auto parse_result = doc.load_string(content.cStr());
 			if (!parse_result)
 			{
-				LogInfo("Failed to parse \"%s\" : \"%s\" at \"%llu\"", path,
+				LogInfo("Failed to parse \"{}\" : \"{}\" at \"{}\"", path,
 				        parse_result.description(), (unsigned long long)parse_result.offset);
 				return nullptr;
 			}
 			it = this->docRoots.find(path);
-			LogInfo("Parsed \"%s\"", path);
+			LogInfo("Parsed \"{}\"", path);
 		}
 	}
 	if (it == this->docRoots.end())
@@ -222,7 +222,7 @@ SerializationNode *XMLSerializationArchive::getRoot(const UString &prefix, const
 	auto root = it->second.child(name);
 	if (!root)
 	{
-		LogWarning("Failed to find root with name \"%s\" in \"%s\"", name, path);
+		LogWarning("Failed to find root with name \"{}\" in \"{}\"", name, path);
 		return nullptr;
 	}
 	const UString *newPrefix = &this->prefixes.emplace_back(prefix + name + "/");
@@ -237,7 +237,7 @@ bool XMLSerializationArchive::write(const UString &path, bool pack, bool pretty)
 	auto dataProvider = getProvider(pack);
 	if (!dataProvider->openArchive(path, true))
 	{
-		LogWarning("Failed to open archive at \"%s\"", path);
+		LogWarning("Failed to open archive at \"{}\"", path);
 		return false;
 	}
 
@@ -324,7 +324,7 @@ unsigned char XMLSerializationNode::getValueUChar()
 	auto uint = node.text().as_uint();
 	if (uint > std::numeric_limits<unsigned char>::max())
 	{
-		throw SerializationException(format("Value %u is out of range of unsigned char type", uint),
+		throw SerializationException(format("Value {} is out of range of unsigned char type", uint),
 		                             this);
 	}
 	return static_cast<unsigned char>(uint);

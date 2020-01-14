@@ -49,7 +49,7 @@ std::shared_future<void> SaveManager::loadGame(const UString &savePath, sp<GameS
 	auto loadTask = fw().threadPoolEnqueue([saveArchiveLocation, state]() -> void {
 		if (!state->loadGame(saveArchiveLocation))
 		{
-			LogError("Failed to load '%s'", saveArchiveLocation);
+			LogError("Failed to load '{}'", saveArchiveLocation);
 			return;
 		}
 		state->initState();
@@ -119,7 +119,7 @@ bool writeArchiveWithBackup(SerializationArchive *archive, const UString &path, 
 
 		if (!haveNewName)
 		{
-			LogError("Unable to create temporary file at \"%s\"", tempPath.string());
+			LogError("Unable to create temporary file at \"{}\"", tempPath.string());
 			return false;
 		}
 
@@ -154,7 +154,7 @@ bool writeArchiveWithBackup(SerializationArchive *archive, const UString &path, 
 			fs::rename(tempPath, savePath);
 		}
 
-		LogError("Unable to save game: \"%s\"", exception.what());
+		LogError("Unable to save game: \"{}\"", exception.what());
 	}
 
 	return false;
@@ -174,7 +174,7 @@ bool SaveManager::findFreePath(UString &path, const UString &name) const
 			}
 		}
 
-		LogError("Unable to generate filename for save %s", name);
+		LogError("Unable to generate filename for save {}", name);
 		return false;
 	}
 
@@ -211,7 +211,7 @@ bool SaveManager::overrideGame(const SaveMetadata &metadata, const UString &newN
 			}
 			catch (fs::filesystem_error &error)
 			{
-				LogWarning("Error while removing renamed save: \"%s\"", error.what());
+				LogWarning("Error while removing renamed save: \"{}\"", error.what());
 			}
 		}
 	}
@@ -265,7 +265,7 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 	{
 		if (!fs::exists(saveDirectory) && !fs::create_directories(saveDirectory))
 		{
-			LogWarning("Save directory \"%s\" not found, and could not be created!", saveDirectory);
+			LogWarning("Save directory \"{}\" not found, and could not be created!", saveDirectory);
 			return saveList;
 		}
 
@@ -296,7 +296,7 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 	}
 	catch (fs::filesystem_error &er)
 	{
-		LogError("Error while enumerating directory: \"%s\"", er.what());
+		LogError("Error while enumerating directory: \"{}\"", er.what());
 	}
 
 	sort(saveList.begin(), saveList.end(), [](const SaveMetadata &lhs, const SaveMetadata &rhs) {
@@ -321,7 +321,7 @@ bool SaveManager::deleteGame(const sp<SaveMetadata> &slot) const
 	}
 	catch (fs::filesystem_error &exception)
 	{
-		LogError("Unable to delete saved gane: \"%s\"", exception.what());
+		LogError("Unable to delete saved gane: \"{}\"", exception.what());
 		return false;
 	}
 }
