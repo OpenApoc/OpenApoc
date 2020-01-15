@@ -109,9 +109,20 @@ git submodule update --init --recursive
 
 * All the other dependencies (Boost, SDL2) need to be supplied separately. Install [Vcpkg](https://github.com/Microsoft/vcpkg) and run the following command:
 
+* For x64 builds:
+
 ```cmd
-vcpkg install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-base
+vcpkg --triplet x64-windows install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-base
 ```
+
+* For x86 builds:
+
+```cmd
+vcpkg --triplet x86-windows install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-base
+```
+
+* For list of all supported by Vcpkg architectures: `vcpkg help triplet`
+
 
 * Copy the original XCom:Apocalypse .iso file into the "data/" directory. This could also be a directory containing all the extracted files from the CD, and it should be named the same (IE the directory should be data/cd.iso/). This is used during the build to extract some data tables.
 * Open the Git directory in Visual Studio (if you don't have an Open Folder option, generate a project from CMake).
@@ -132,7 +143,7 @@ vcpkg install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-b
 
 ### Building on Linux
 
-(Tested on Ubuntu 16.04 and Mageia 6)
+(Tested on Ubuntu 16.04, Mageia 6 and Fedora 31)
 
 * On Ubuntu, install the following packages:
 
