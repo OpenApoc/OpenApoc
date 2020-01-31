@@ -144,8 +144,8 @@ void BaseBuyScreen::eventOccurred(Event *e)
 
 				state->baseIndex += 1;
 				base->name = "Base " + Strings::fromInteger(state->baseIndex);
-				state->player_bases[Base::getPrefix() +
-				                    Strings::fromInteger(state->baseIndex)] = base;
+				state->player_bases[Base::getPrefix() + Strings::fromInteger(state->baseIndex)] =
+				    base;
 				base->building->base = {state.get(), base};
 
 				fw().stageQueueCommand({StageCmd::Command::REPLACE, mksp<CityView>(state)});

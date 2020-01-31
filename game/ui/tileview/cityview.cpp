@@ -1532,15 +1532,17 @@ void CityView::resume()
 	modifierRShift = false;
 
 	this->uiTabs[0]->findControlTyped<Label>("TEXT_BASE_NAME")->setText(state->current_base->name);
-	
+
 	refreshBaseView();
 }
 
 void CityView::refreshBaseView()
 {
-	if(miniViews.size() != state->player_bases.size())
+	if (miniViews.size() != state->player_bases.size())
 	{
-		this->uiTabs[0]->findControlTyped<Label>("TEXT_BASE_NAME")->setText(state->current_base->name);
+		this->uiTabs[0]
+		    ->findControlTyped<Label>("TEXT_BASE_NAME")
+		    ->setText(state->current_base->name);
 		for (auto view : miniViews)
 		{
 			view->setData(nullptr);
@@ -1829,10 +1831,11 @@ void CityView::update()
 	clockControl->setText(state->gameTime.getLongTimeString());
 
 	// Update base icons
-	if (activeTab == uiTabs[0]) {
-		refreshBaseView();	
+	if (activeTab == uiTabs[0])
+	{
+		refreshBaseView();
 	}
-	
+
 	// Update owned vehicle controls
 	if (activeTab == uiTabs[1])
 	{
