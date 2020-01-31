@@ -1532,7 +1532,29 @@ void CityView::resume()
 	modifierRShift = false;
 
 	this->uiTabs[0]->findControlTyped<Label>("TEXT_BASE_NAME")->setText(state->current_base->name);
-	miniViews.clear();
+
+	refreshBaseView();
+}
+
+void CityView::refreshBaseView()
+{
+	if (miniViews.size() != state->player_bases.size())
+	{
+		this->uiTabs[0]
+		    ->findControlTyped<Label>("TEXT_BASE_NAME")
+		    ->setText(state->current_base->name);
+		for (auto view : miniViews)
+		{
+			view->setData(nullptr);
+			view->setImage(nullptr);
+			view->setDepressedImage(nullptr);
+			view->ToolTipText = "";
+			view->setVisible(false);
+		}
+
+		miniViews.clear();
+	}
+
 	int b = 0;
 	for (auto &pair : state->player_bases)
 	{
@@ -1543,6 +1565,7 @@ void CityView::resume()
 		{
 			LogError("Failed to find UI control matching \"%s\"", viewName);
 		}
+		view->setVisible(true);
 		view->setData(viewBase);
 		auto viewImage = BaseGraphics::drawMiniBase(*viewBase);
 		view->setImage(viewImage);
@@ -1806,6 +1829,12 @@ void CityView::update()
 	// Update time display
 	auto clockControl = baseForm->findControlTyped<Label>("CLOCK");
 	clockControl->setText(state->gameTime.getLongTimeString());
+
+	// Update base icons
+	if (activeTab == uiTabs[0])
+	{
+		refreshBaseView();
+	}
 
 	// Update owned vehicle controls
 	if (activeTab == uiTabs[1])
