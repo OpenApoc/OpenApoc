@@ -128,6 +128,7 @@ class CityView : public CityTileView
 
 	void begin() override;
 	void resume() override;
+	void refreshBaseView();
 	void update() override;
 	void render() override;
 	void eventOccurred(Event *e) override;

@@ -105,6 +105,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	std::list<EventMessage> messages;
 
+	int baseIndex = 1;
 	int difficulty = 0;
 	bool firstDetection = false;
 	uint64_t nextInvasion = 0;
