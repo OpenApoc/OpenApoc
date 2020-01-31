@@ -141,9 +141,11 @@ void BaseBuyScreen::eventOccurred(Event *e)
 						a.second->setMission(*state, AgentMission::gotoBuilding(*state, *a.second));
 					}
 				}
-				base->name = "Base " + Strings::fromInteger(state->player_bases.size() + 1);
-				state->player_bases[Base::getPrefix() +
-				                    Strings::fromInteger(state->player_bases.size() + 1)] = base;
+
+				state->baseIndex += 1;
+				base->name = "Base " + Strings::fromInteger(state->baseIndex);
+				state->player_bases[Base::getPrefix() + Strings::fromInteger(state->baseIndex)] =
+				    base;
 				base->building->base = {state.get(), base};
 
 				fw().stageQueueCommand({StageCmd::Command::REPLACE, mksp<CityView>(state)});
