@@ -1,5 +1,6 @@
 #include "game/state/luagamestate.h"
 #include "framework/configfile.h"
+#include "framework/framework.h"
 #include "framework/luaframework.h"
 #include "game/state/gamestate.h"
 #include "game/state/luagamestate_support.h"
@@ -101,6 +102,33 @@ int LuaGameState::callHook(const UString &hookName, int nresults, int nargs)
 	lua_remove(L, -1 - nresults);
 	// return number of results in the stack
 	return nresults;
+}
+
+bool LuaGameState::runScript(const UString &scriptPath)
+{
+	LogInfo("Running script \"%s\"", scriptPath);
+	auto scriptFile = fw().data->fs.open(scriptPath);
+	if (!scriptFile)
+	{
+		LogWarning("Failed to open script \"%s\"", scriptPath);
+		return false;
+	}
+
+	const auto &fullPath = scriptFile.systemPath();
+	LogInfo("Loading script from \"%s\"", fullPath);
+
+	bool ret = true;
+	pushLuaDebugTraceback(L);
+	// this is only true if loadfile or pcall raised an error
+	if (luaL_loadfile(L, fullPath.cStr()) || lua_pcall(L, 0, 0, -2))
+	{
+		handleLuaError(L);
+		LogWarning("Script \"%s\" failed", scriptPath);
+		ret = false;
+	}
+	lua_pop(L, 1); // pop debug.traceback function
+	LogInfo("Script run %s", ret ? "success" : "fail");
+	return ret;
 }
 
 } // namespace OpenApoc

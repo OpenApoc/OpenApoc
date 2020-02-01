@@ -46,6 +46,7 @@ std::optional<ModInfo> ModInfo::getInfo(const UString &path)
 	info.setDataPath(readNode("datapath", infoNode));
 	info.setStatePath(readNode("statepath", infoNode));
 	info.setMinVersion(readNode("minversion", infoNode));
+	info.setModLoadScript(readNode("modloadscript", infoNode));
 
 	auto requiresNode = infoNode.child("requires");
 	if (requiresNode)
@@ -80,6 +81,7 @@ bool ModInfo::writeInfo(const UString &path)
 	infoNode.append_child("datapath").text() = dataPath.cStr();
 	infoNode.append_child("statepath").text() = statePath.cStr();
 	infoNode.append_child("minversion").text() = minVersion.cStr();
+	infoNode.append_child("modloadscript").text() = modLoadScript.cStr();
 
 	auto requiresNode = infoNode.append_child("requires");
 	for (const auto &require : _requires)

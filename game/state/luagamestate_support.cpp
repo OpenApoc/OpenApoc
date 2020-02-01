@@ -49,6 +49,15 @@ template <> lua_CFunction getLuaObjectMethods<GameState>(const std::string &key)
 			(*obj)->loadGame(path);
 			return 0;
 		};
+	else if (key == "appendGameState")
+		return [](lua_State *L) {
+			GameState **obj = (GameState **)lua_touserdata(L, 1);
+			UString path;
+			getFromLua(L, 2, path);
+			lua_settop(L, 0);
+			pushToLua(L, (*obj)->appendGameState(path));
+			return 1;
+		};
 	return getLuaObjectConstMethods<GameState>(key);
 }
 

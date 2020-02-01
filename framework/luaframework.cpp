@@ -266,6 +266,12 @@ void pushLuaFramework(lua_State *L)
 	// because you can just do all the formatting and concatenation in lua
 	lua_pushcfunction(L, [](lua_State *L) {
 		lua_settop(L, 1);
+		handleLuaError(L, LogLevel::Info);
+		return 0;
+	});
+	lua_setfield(L, -2, "LogInfo");
+	lua_pushcfunction(L, [](lua_State *L) {
+		lua_settop(L, 1);
 		handleLuaError(L, LogLevel::Warning);
 		return 0;
 	});
