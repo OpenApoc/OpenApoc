@@ -3706,6 +3706,12 @@ void BattleUnit::triggerProximity(GameState &state)
 
 void BattleUnit::triggerBrainsuckers(GameState &state)
 {
+	// Androids do not trigger brainsuckers
+	if(this->agent->type->canTrain == false)
+	{
+		return;
+	}
+	
 	StateRef<DamageType> brainsucker = {&state, "DAMAGETYPE_BRAINSUCKER"};
 	if (brainsucker->dealDamage(100, agent->type->damage_modifier) == 0)
 		return;
