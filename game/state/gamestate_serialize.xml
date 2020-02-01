@@ -62,7 +62,7 @@
 		<member type="Section">equipment_sets_by_level</member>
 		<member type="Section">building_functions</member>
 		<member>messages</member>
-    <member>baseIndex</member>
+		<member>baseIndex</member>
 		<member>difficulty</member>
 		<member>firstDetection</member>
 		<member>nextInvasion</member>
