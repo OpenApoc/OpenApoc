@@ -149,11 +149,10 @@ class VehicleMover
 	virtual ~VehicleMover();
 };
 
-class Vehicle : public StateObject,
+class Vehicle : public StateObject<Vehicle>,
                 public std::enable_shared_from_this<Vehicle>,
                 public EquippableObject
 {
-	STATE_OBJECT(Vehicle)
   public:
 	~Vehicle() override;
 	Vehicle() = default;

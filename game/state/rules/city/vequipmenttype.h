@@ -19,9 +19,8 @@ class DoodadType;
 class Organisation;
 class VAmmoType;
 
-class VEquipmentType : public StateObject
+class VEquipmentType : public StateObject<VEquipmentType>
 {
-	STATE_OBJECT(VEquipmentType)
   public:
 	VEquipmentType() = default;
 

@@ -4,7 +4,7 @@
 namespace OpenApoc
 {
 
-sp<BaseLayout> BaseLayout::get(const GameState &state, const UString &id)
+template <> sp<BaseLayout> StateObject<BaseLayout>::get(const GameState &state, const UString &id)
 {
 	auto it = state.base_layouts.find(id);
 	if (it == state.base_layouts.end())
@@ -15,12 +15,12 @@ sp<BaseLayout> BaseLayout::get(const GameState &state, const UString &id)
 	return it->second;
 }
 
-const UString &BaseLayout::getPrefix()
+template <> const UString &StateObject<BaseLayout>::getPrefix()
 {
 	static UString prefix = "BASELAYOUT_";
 	return prefix;
 }
-const UString &BaseLayout::getTypeName()
+template <> const UString &StateObject<BaseLayout>::getTypeName()
 {
 	static UString name = "BaseLayout";
 	return name;

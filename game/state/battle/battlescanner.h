@@ -22,9 +22,8 @@ static const unsigned TICKS_SCANNER_REMAIN_LIT = TICKS_PER_TURN / 2;
 
 class BattleUnit;
 
-class BattleScanner : public StateObject
+class BattleScanner : public StateObject<BattleScanner>
 {
-	STATE_OBJECT(BattleScanner)
 
   public:
 	BattleScanner();

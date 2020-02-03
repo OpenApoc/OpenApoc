@@ -73,9 +73,8 @@ class RoadSegment
 	std::list<Vec3<int>> findPathThrough(int id) const;
 };
 
-class City : public StateObject, public std::enable_shared_from_this<City>
+class City : public StateObject<City>, public std::enable_shared_from_this<City>
 {
-	STATE_OBJECT(City)
   public:
 	City() = default;
 	~City() override;

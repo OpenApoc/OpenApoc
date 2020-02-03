@@ -11,9 +11,8 @@ class Sample;
 class DoodadType;
 class GameState;
 
-class HazardType : public StateObject
+class HazardType : public StateObject<HazardType>
 {
-	STATE_OBJECT(HazardType)
   public:
 	StateRef<DoodadType> doodadType;
 	sp<Sample> sound;
@@ -35,9 +34,8 @@ class HazardType : public StateObject
 	int getLifetime(GameState &state);
 };
 
-class DamageModifier : public StateObject
+class DamageModifier : public StateObject<DamageModifier>
 {
-	STATE_OBJECT(DamageModifier)
   public:
 	// nothing?
 };
@@ -49,9 +47,8 @@ enum class DamageSource
 	Debuff
 };
 
-class DamageType : public StateObject
+class DamageType : public StateObject<DamageType>
 {
-	STATE_OBJECT(DamageType)
   public:
 	enum class BlockType
 	{

@@ -23,9 +23,8 @@ class ResearchTopic;
 class AgentType;
 class UfopaediaEntry;
 
-class VehicleType : public StateObject
+class VehicleType : public StateObject<VehicleType>
 {
-	STATE_OBJECT(VehicleType)
   public:
 	enum class Type
 	{

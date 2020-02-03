@@ -88,7 +88,7 @@ int getCorridorSectorID(const Base &base, Vec2<int> pos)
 }
 } // namespace
 
-sp<BattleMap> BattleMap::get(const GameState &state, const UString &id)
+template <> sp<BattleMap> StateObject<BattleMap>::get(const GameState &state, const UString &id)
 {
 	auto it = state.battle_maps.find(id);
 	if (it == state.battle_maps.end())
@@ -98,18 +98,18 @@ sp<BattleMap> BattleMap::get(const GameState &state, const UString &id)
 	}
 	return it->second;
 }
-
-const UString &BattleMap::getPrefix()
+template <> const UString &StateObject<BattleMap>::getPrefix()
 {
 	static UString prefix = "BATTLEMAP_";
 	return prefix;
 }
-const UString &BattleMap::getTypeName()
+template <> const UString &StateObject<BattleMap>::getTypeName()
 {
 	static UString name = "BattleMap";
 	return name;
 }
-const UString &BattleMap::getId(const GameState &state, const sp<BattleMap> ptr)
+template <>
+const UString &StateObject<BattleMap>::getId(const GameState &state, const sp<BattleMap> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &a : state.battle_maps)

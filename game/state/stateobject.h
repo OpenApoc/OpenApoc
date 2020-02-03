@@ -25,29 +25,14 @@ template <typename T> class StateRefMap : public std::map<UString, sp<T>>
 	}
 };
 
-#define STATE_OBJECT(Type)                                                                         \
-  public:                                                                                          \
-	static sp<Type> get(const GameState &state, const UString &id);                                \
-	static const UString &getId(const GameState &state, const sp<Type> ptr);                       \
-	static const UString &getPrefix();                                                             \
-	static const UString &getTypeName();                                                           \
-	static UString generateObjectID(GameState &state)                                              \
-	{                                                                                              \
-		auto id = getNextObjectID(state, getPrefix());                                             \
-		return getPrefix() + Strings::fromU64(id);                                                 \
-	}
-
-class StateObject
+template <typename T> class StateObject
 {
   public:
 	StateObject() = default;
 	virtual ~StateObject() = default;
 
-#if 0
-
 	static sp<T> get(const GameState &state, const UString &id);
 	static const UString &getId(const GameState &state, const sp<T> ptr);
-
 	static const UString &getPrefix();
 	static const UString &getTypeName();
 	static UString generateObjectID(GameState &state)
@@ -55,7 +40,6 @@ class StateObject
 		auto id = getNextObjectID(state, getPrefix());
 		return getPrefix() + Strings::fromU64(id);
 	}
-#endif
 
 	virtual void destroy(){};
 	// StateObjects are not copy-able

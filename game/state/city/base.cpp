@@ -20,6 +20,39 @@ namespace OpenApoc
 
 constexpr int Base::SIZE;
 
+template <> sp<Base> StateObject<Base>::get(const GameState &state, const UString &id)
+{
+	auto it = state.player_bases.find(id);
+	if (it == state.player_bases.end())
+	{
+		LogError("No baseas matching ID \"%s\"", id);
+		return nullptr;
+	}
+	return it->second;
+}
+
+template <> const UString &StateObject<Base>::getPrefix()
+{
+	static UString prefix = "BASE_";
+	return prefix;
+}
+template <> const UString &StateObject<Base>::getTypeName()
+{
+	static UString name = "Base";
+	return name;
+}
+template <> const UString &StateObject<Base>::getId(const GameState &state, const sp<Base> ptr)
+{
+	static const UString emptyString = "";
+	for (auto &b : state.player_bases)
+	{
+		if (b.second == ptr)
+			return b.first;
+	}
+	LogError("No base matching pointer %p", ptr.get());
+	return emptyString;
+}
+
 Base::Base(GameState &state, StateRef<Building> building) : building(building)
 {
 	corridors = std::vector<std::vector<bool>>(SIZE, std::vector<bool>(SIZE, false));
@@ -546,38 +579,5 @@ int Base::getUsage(GameState &state, FacilityType::Capacity type, int delta) con
 
 	// + total / 2  due to rounding
 	return std::min(999, (100 * used + total / 2) / total);
-}
-
-sp<Base> Base::get(const GameState &state, const UString &id)
-{
-	auto it = state.player_bases.find(id);
-	if (it == state.player_bases.end())
-	{
-		LogError("No baseas matching ID \"%s\"", id);
-		return nullptr;
-	}
-	return it->second;
-}
-
-const UString &Base::getPrefix()
-{
-	static UString prefix = "BASE_";
-	return prefix;
-}
-const UString &Base::getTypeName()
-{
-	static UString name = "Base";
-	return name;
-}
-const UString &Base::getId(const GameState &state, const sp<Base> ptr)
-{
-	static const UString emptyString = "";
-	for (auto &b : state.player_bases)
-	{
-		if (b.second == ptr)
-			return b.first;
-	}
-	LogError("No base matching pointer %p", ptr.get());
-	return emptyString;
 }
 }; // namespace OpenApoc

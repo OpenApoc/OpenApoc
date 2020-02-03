@@ -11,9 +11,8 @@ class Image;
 class Sample;
 class Organisation;
 
-class VAmmoType : public StateObject
+class VAmmoType : public StateObject<VAmmoType>
 {
-	STATE_OBJECT(VAmmoType)
   public:
 	VAmmoType() = default;
 

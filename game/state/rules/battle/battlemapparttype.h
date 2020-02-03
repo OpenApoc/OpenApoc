@@ -15,9 +15,8 @@ class DamageModifier;
 class Image;
 class VoxelMap;
 
-class BattleMapPartType : public StateObject
+class BattleMapPartType : public StateObject<BattleMapPartType>
 {
-	STATE_OBJECT(BattleMapPartType)
   public:
 	enum class Type
 	{

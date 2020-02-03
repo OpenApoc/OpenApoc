@@ -9,9 +9,8 @@ namespace OpenApoc
 {
 class Image;
 class VoxelMap;
-class SceneryTileType : public StateObject
+class SceneryTileType : public StateObject<SceneryTileType>
 {
-	STATE_OBJECT(SceneryTileType)
   public:
 	SceneryTileType() = default;
 

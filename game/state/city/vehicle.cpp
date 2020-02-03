@@ -66,18 +66,20 @@ float facingDistance(float f1, float f2)
 }
 } // namespace
 
-const UString &Vehicle::getPrefix()
+template <> const UString &StateObject<Vehicle>::getPrefix()
 {
 	static UString prefix = "VEHICLE_";
 	return prefix;
 }
-const UString &Vehicle::getTypeName()
+
+template <> const UString &StateObject<Vehicle>::getTypeName()
 {
 	static UString name = "Vehicle";
 	return name;
 }
 
-const UString &Vehicle::getId(const GameState &state, const sp<Vehicle> ptr)
+template <>
+const UString &StateObject<Vehicle>::getId(const GameState &state, const sp<Vehicle> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &v : state.vehicles)
@@ -3725,7 +3727,8 @@ void Vehicle::nextFrame(int ticks)
 		}
 	}
 }
-sp<Vehicle> Vehicle::get(const GameState &state, const UString &id)
+
+template <> sp<Vehicle> StateObject<Vehicle>::get(const GameState &state, const UString &id)
 {
 	auto it = state.vehicles.find(id);
 	if (it == state.vehicles.end())

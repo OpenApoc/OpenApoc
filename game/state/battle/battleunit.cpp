@@ -47,7 +47,7 @@ static const std::map<int, Vec2<int>> dir_facing_map = {{0, {0, -1}}, {1, {1, -1
                                                         {6, {-1, 0}}, {7, {-1, -1}}};
 } // namespace
 
-sp<BattleUnit> BattleUnit::get(const GameState &state, const UString &id)
+template <> sp<BattleUnit> StateObject<BattleUnit>::get(const GameState &state, const UString &id)
 {
 	auto it = state.current_battle->units.find(id);
 	if (it == state.current_battle->units.end())
@@ -58,17 +58,18 @@ sp<BattleUnit> BattleUnit::get(const GameState &state, const UString &id)
 	return it->second;
 }
 
-const UString &BattleUnit::getPrefix()
+template <> const UString &StateObject<BattleUnit>::getPrefix()
 {
 	static UString prefix = "BATTLEUNIT_";
 	return prefix;
 }
-const UString &BattleUnit::getTypeName()
+template <> const UString &StateObject<BattleUnit>::getTypeName()
 {
 	static UString name = "BattleUnit";
 	return name;
 }
-const UString &BattleUnit::getId(const GameState &state, const sp<BattleUnit> ptr)
+template <>
+const UString &StateObject<BattleUnit>::getId(const GameState &state, const sp<BattleUnit> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &a : state.current_battle->units)

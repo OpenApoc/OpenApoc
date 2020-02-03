@@ -764,7 +764,8 @@ bool Organisation::bribedBy(GameState &state, StateRef<Organisation> other, int 
 	return true;
 }
 
-sp<Organisation> Organisation::get(const GameState &state, const UString &id)
+template <>
+sp<Organisation> StateObject<Organisation>::get(const GameState &state, const UString &id)
 {
 	auto it = state.organisations.find(id);
 	if (it == state.organisations.end())
@@ -775,12 +776,12 @@ sp<Organisation> Organisation::get(const GameState &state, const UString &id)
 	return it->second;
 }
 
-const UString &Organisation::getPrefix()
+template <> const UString &StateObject<Organisation>::getPrefix()
 {
 	static UString prefix = "ORG_";
 	return prefix;
 }
-const UString &Organisation::getTypeName()
+template <> const UString &StateObject<Organisation>::getTypeName()
 {
 	static UString name = "Organisation";
 	return name;

@@ -4,7 +4,9 @@
 namespace OpenApoc
 {
 
-sp<UFOMissionPreference> UFOMissionPreference::get(const GameState &state, const UString &id)
+template <>
+sp<UFOMissionPreference> StateObject<UFOMissionPreference>::get(const GameState &state,
+                                                                const UString &id)
 {
 	auto it = state.ufo_mission_preference.find(id);
 	if (it == state.ufo_mission_preference.end())
@@ -15,12 +17,12 @@ sp<UFOMissionPreference> UFOMissionPreference::get(const GameState &state, const
 	return it->second;
 }
 
-const UString &UFOMissionPreference::getPrefix()
+template <> const UString &StateObject<UFOMissionPreference>::getPrefix()
 {
 	static UString prefix = "UFO_MISSION_PREFERENCE_";
 	return prefix;
 }
-const UString &UFOMissionPreference::getTypeName()
+template <> const UString &StateObject<UFOMissionPreference>::getTypeName()
 {
 	static UString name = "UFOMissionPreference";
 	return name;

@@ -32,9 +32,8 @@ enum class TriggerType
 	Boomeroid
 };
 
-class AEquipmentType : public StateObject
+class AEquipmentType : public StateObject<AEquipmentType>
 {
-	STATE_OBJECT(AEquipmentType)
   public:
 	enum class Type
 	{
@@ -178,9 +177,8 @@ class AEquipmentType : public StateObject
 	bool canBeUsed(GameState &state, StateRef<Organisation> user) const;
 };
 
-class EquipmentSet : public StateObject
+class EquipmentSet : public StateObject<EquipmentSet>
 {
-	STATE_OBJECT(EquipmentSet)
   public:
 	class WeaponData
 	{

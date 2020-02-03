@@ -33,9 +33,8 @@ class VehicleType;
 class UfopaediaEntry;
 class Image;
 
-class Organisation : public StateObject
+class Organisation : public StateObject<Organisation>
 {
-	STATE_OBJECT(Organisation)
   public:
 	enum class PurchaseResult
 	{

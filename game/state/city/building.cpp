@@ -17,7 +17,8 @@
 namespace OpenApoc
 {
 
-sp<BuildingFunction> BuildingFunction::get(const GameState &state, const UString &id)
+template <>
+sp<BuildingFunction> StateObject<BuildingFunction>::get(const GameState &state, const UString &id)
 {
 	auto it = state.building_functions.find(id);
 	if (it == state.building_functions.end())
@@ -28,18 +29,18 @@ sp<BuildingFunction> BuildingFunction::get(const GameState &state, const UString
 	return it->second;
 }
 
-const UString &BuildingFunction::getPrefix()
+template <> const UString &StateObject<BuildingFunction>::getPrefix()
 {
 	static UString prefix = "BUILDINGFUNCTION_";
 	return prefix;
 }
-const UString &BuildingFunction::getTypeName()
+template <> const UString &StateObject<BuildingFunction>::getTypeName()
 {
 	static UString name = "AgentType";
 	return name;
 }
 
-sp<Building> Building::get(const GameState &state, const UString &id)
+template <> sp<Building> StateObject<Building>::get(const GameState &state, const UString &id)
 {
 	for (auto &city : state.cities)
 	{
@@ -52,18 +53,19 @@ sp<Building> Building::get(const GameState &state, const UString &id)
 	return nullptr;
 }
 
-const UString &Building::getPrefix()
+template <> const UString &StateObject<Building>::getPrefix()
 {
 	static UString prefix = "BUILDING_";
 	return prefix;
 }
-const UString &Building::getTypeName()
+template <> const UString &StateObject<Building>::getTypeName()
 {
 	static UString name = "Building";
 	return name;
 }
 
-const UString &Building::getId(const GameState &state, const sp<Building> ptr)
+template <>
+const UString &StateObject<Building>::getId(const GameState &state, const sp<Building> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &c : state.cities)

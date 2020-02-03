@@ -4,7 +4,7 @@
 namespace OpenApoc
 {
 
-sp<UFOGrowth> UFOGrowth::get(const GameState &state, const UString &id)
+template <> sp<UFOGrowth> StateObject<UFOGrowth>::get(const GameState &state, const UString &id)
 {
 	auto it = state.ufo_growth_lists.find(id);
 	if (it == state.ufo_growth_lists.end())
@@ -15,12 +15,12 @@ sp<UFOGrowth> UFOGrowth::get(const GameState &state, const UString &id)
 	return it->second;
 }
 
-const UString &UFOGrowth::getPrefix()
+template <> const UString &StateObject<UFOGrowth>::getPrefix()
 {
 	static UString prefix = "UFO_GROWTH_";
 	return prefix;
 }
-const UString &UFOGrowth::getTypeName()
+template <> const UString &StateObject<UFOGrowth>::getTypeName()
 {
 	static UString name = "UFOGrowth";
 	return name;
