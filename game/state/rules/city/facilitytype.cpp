@@ -12,7 +12,8 @@ FacilityType::FacilityType()
 
 bool FacilityType::isVisible() const { return !this->fixed && this->dependency.satisfied(); }
 
-sp<FacilityType> FacilityType::get(const GameState &state, const UString &id)
+template <>
+sp<FacilityType> StateObject<FacilityType>::get(const GameState &state, const UString &id)
 {
 	auto it = state.facility_types.find(id);
 	if (it == state.facility_types.end())
@@ -23,13 +24,13 @@ sp<FacilityType> FacilityType::get(const GameState &state, const UString &id)
 	return it->second;
 }
 
-const UString &FacilityType::getPrefix()
+template <> const UString &StateObject<FacilityType>::getPrefix()
 {
 	static UString prefix = "FACILITYTYPE_";
 	return prefix;
 }
 
-const UString &FacilityType::getTypeName()
+template <> const UString &StateObject<FacilityType>::getTypeName()
 {
 	static UString name = "FacilityType";
 	return name;

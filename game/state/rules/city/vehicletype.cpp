@@ -47,7 +47,7 @@ const Vec3<float> &VehicleType::directionToVector(Direction d)
 
 bool VehicleType::isGround() const { return type == Type::Road || type == Type::ATV; }
 
-sp<VehicleType> VehicleType::get(const GameState &state, const UString &id)
+template <> sp<VehicleType> StateObject<VehicleType>::get(const GameState &state, const UString &id)
 {
 	auto it = state.vehicle_types.find(id);
 	if (it == state.vehicle_types.end())
@@ -58,17 +58,18 @@ sp<VehicleType> VehicleType::get(const GameState &state, const UString &id)
 	return it->second;
 }
 
-const UString &VehicleType::getPrefix()
+template <> const UString &StateObject<VehicleType>::getPrefix()
 {
 	static UString prefix = "VEHICLETYPE_";
 	return prefix;
 }
-const UString &VehicleType::getTypeName()
+template <> const UString &StateObject<VehicleType>::getTypeName()
 {
 	static UString name = "VehicleType";
 	return name;
 }
-const UString &VehicleType::getId(const GameState &state, const sp<VehicleType> ptr)
+template <>
+const UString &StateObject<VehicleType>::getId(const GameState &state, const sp<VehicleType> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &v : state.vehicle_types)

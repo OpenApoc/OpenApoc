@@ -9,7 +9,8 @@ UfopaediaEntry::UfopaediaEntry() : data_type(Data::Nothing) {}
 
 bool UfopaediaEntry::isVisible() const { return this->dependency.satisfied(); }
 
-sp<UfopaediaEntry> UfopaediaEntry::get(const GameState &state, const UString &id)
+template <>
+sp<UfopaediaEntry> StateObject<UfopaediaEntry>::get(const GameState &state, const UString &id)
 {
 	for (auto &cat : state.ufopaedia)
 	{
@@ -21,12 +22,12 @@ sp<UfopaediaEntry> UfopaediaEntry::get(const GameState &state, const UString &id
 	return nullptr;
 }
 
-const UString &UfopaediaEntry::getPrefix()
+template <> const UString &StateObject<UfopaediaEntry>::getPrefix()
 {
 	static UString prefix = "PAEDIAENTRY_";
 	return prefix;
 }
-const UString &UfopaediaEntry::getTypeName()
+template <> const UString &StateObject<UfopaediaEntry>::getTypeName()
 {
 	static UString name = "UfopaediaEntry";
 	return name;

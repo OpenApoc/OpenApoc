@@ -14,7 +14,7 @@
 namespace OpenApoc
 {
 
-sp<BattleDoor> BattleDoor::get(const GameState &state, const UString &id)
+template <> sp<BattleDoor> StateObject<BattleDoor>::get(const GameState &state, const UString &id)
 {
 	auto it = state.current_battle->doors.find(id);
 	if (it == state.current_battle->doors.end())
@@ -25,17 +25,18 @@ sp<BattleDoor> BattleDoor::get(const GameState &state, const UString &id)
 	return it->second;
 }
 
-const UString &BattleDoor::getPrefix()
+template <> const UString &StateObject<BattleDoor>::getPrefix()
 {
 	static UString prefix = "BATTLEDOOR_";
 	return prefix;
 }
-const UString &BattleDoor::getTypeName()
+template <> const UString &StateObject<BattleDoor>::getTypeName()
 {
 	static UString name = "BattleDoor";
 	return name;
 }
-const UString &BattleDoor::getId(const GameState &state, const sp<BattleDoor> ptr)
+template <>
+const UString &StateObject<BattleDoor>::getId(const GameState &state, const sp<BattleDoor> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &a : state.current_battle->doors)

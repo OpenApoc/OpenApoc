@@ -12,9 +12,8 @@ namespace OpenApoc
 class ResearchTopic;
 class LazyImage;
 
-class UfopaediaEntry : public StateObject
+class UfopaediaEntry : public StateObject<UfopaediaEntry>
 {
-	STATE_OBJECT(UfopaediaEntry)
   public:
 	enum class Data
 	{
@@ -38,9 +37,8 @@ class UfopaediaEntry : public StateObject
 	bool isVisible() const;
 };
 
-class UfopaediaCategory : public StateObject
+class UfopaediaCategory : public StateObject<UfopaediaCategory>
 {
-	STATE_OBJECT(UfopaediaCategory)
   public:
 	UString title;
 	UString description;

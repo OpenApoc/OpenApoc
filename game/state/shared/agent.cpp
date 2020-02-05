@@ -26,7 +26,7 @@ namespace OpenApoc
 static const unsigned TICKS_PER_PHYSICAL_TRAINING = 4 * TICKS_PER_HOUR;
 static const unsigned TICKS_PER_PSI_TRAINING = 4 * TICKS_PER_HOUR;
 
-sp<Agent> Agent::get(const GameState &state, const UString &id)
+template <> sp<Agent> StateObject<Agent>::get(const GameState &state, const UString &id)
 {
 	auto it = state.agents.find(id);
 	if (it == state.agents.end())
@@ -37,17 +37,17 @@ sp<Agent> Agent::get(const GameState &state, const UString &id)
 	return it->second;
 }
 
-const UString &Agent::getPrefix()
+template <> const UString &StateObject<Agent>::getPrefix()
 {
 	static UString prefix = "AGENT_";
 	return prefix;
 }
-const UString &Agent::getTypeName()
+template <> const UString &StateObject<Agent>::getTypeName()
 {
 	static UString name = "Agent";
 	return name;
 }
-const UString &Agent::getId(const GameState &state, const sp<Agent> ptr)
+template <> const UString &StateObject<Agent>::getId(const GameState &state, const sp<Agent> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &a : state.agents)

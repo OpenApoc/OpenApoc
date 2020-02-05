@@ -11,9 +11,8 @@ namespace OpenApoc
 class Image;
 class UfopaediaEntry;
 class BattleMapSector;
-class FacilityType : public StateObject
+class FacilityType : public StateObject<FacilityType>
 {
-	STATE_OBJECT(FacilityType)
   public:
 	enum class Capacity
 	{

@@ -118,16 +118,14 @@ class AgentPortrait
 	sp<Image> icon;
 };
 
-class AgentEquipmentLayout : public StateObject
+class AgentEquipmentLayout : public StateObject<AgentEquipmentLayout>
 {
-	STATE_OBJECT(AgentEquipmentLayout)
   public:
 	std::list<EquipmentLayoutSlot> slots;
 };
 
-class AgentType : public StateObject
+class AgentType : public StateObject<AgentType>
 {
-	STATE_OBJECT(AgentType)
   public:
 	enum class Role
 	{
@@ -240,9 +238,8 @@ class AgentType : public StateObject
 	sp<Sample> gravLiftSfx;
 };
 
-class AgentBodyType : public StateObject
+class AgentBodyType : public StateObject<AgentBodyType>
 {
-	STATE_OBJECT(AgentBodyType)
   public:
 	// This, among others, determines whether unit has built-in hover capability, can can be
 	// overridden by use of certain armor

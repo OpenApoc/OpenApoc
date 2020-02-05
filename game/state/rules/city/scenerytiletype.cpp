@@ -5,7 +5,8 @@
 namespace OpenApoc
 {
 
-sp<SceneryTileType> SceneryTileType::get(const GameState &state, const UString &id)
+template <>
+sp<SceneryTileType> StateObject<SceneryTileType>::get(const GameState &state, const UString &id)
 {
 	for (auto &pair : state.cities)
 	{
@@ -17,12 +18,12 @@ sp<SceneryTileType> SceneryTileType::get(const GameState &state, const UString &
 	return nullptr;
 }
 
-const UString &SceneryTileType::getPrefix()
+template <> const UString &StateObject<SceneryTileType>::getPrefix()
 {
 	static UString prefix = "CITYTILE_";
 	return prefix;
 }
-const UString &SceneryTileType::getTypeName()
+template <> const UString &StateObject<SceneryTileType>::getTypeName()
 {
 	static UString name = "SceneryTileType";
 	return name;

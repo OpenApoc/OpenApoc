@@ -55,11 +55,10 @@ enum class TrainingAssignment
 	Psi
 };
 
-class Agent : public StateObject,
+class Agent : public StateObject<Agent>,
               public std::enable_shared_from_this<Agent>,
               public EquippableObject
 {
-	STATE_OBJECT(Agent)
   public:
 	Agent() = default;
 

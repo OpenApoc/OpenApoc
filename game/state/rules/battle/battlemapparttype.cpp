@@ -7,7 +7,8 @@
 namespace OpenApoc
 {
 
-sp<BattleMapPartType> BattleMapPartType::get(const GameState &state, const UString &id)
+template <>
+sp<BattleMapPartType> StateObject<BattleMapPartType>::get(const GameState &state, const UString &id)
 {
 	auto it = state.battleMapTiles.find(id);
 	if (it != state.battleMapTiles.end())
@@ -17,12 +18,12 @@ sp<BattleMapPartType> BattleMapPartType::get(const GameState &state, const UStri
 	return nullptr;
 }
 
-const UString &BattleMapPartType::getPrefix()
+template <> const UString &StateObject<BattleMapPartType>::getPrefix()
 {
 	static UString prefix = "BATTLEMAPPART_";
 	return prefix;
 }
-const UString &BattleMapPartType::getTypeName()
+template <> const UString &StateObject<BattleMapPartType>::getTypeName()
 {
 	static UString name = "BattleMapPart";
 	return name;
