@@ -25,6 +25,11 @@
 #include <map>
 #include <vector>
 
+#ifdef __APPLE__
+// Used for NASTY chdir() app bundle hacks
+#include <unistd.h>
+#endif
+
 // SDL_syswm includes windows.h on windows, which does all kinds of polluting
 // defines/namespace stuff, so try to avoid that
 #define WIN32_LEAN_AND_MEAN
@@ -227,6 +232,26 @@ Framework::Framework(const UString programName, bool createWindow)
 	}
 
 	this->instance = this;
+
+#ifdef __APPLE__
+	{
+		// FIXME: A hack to set the working directory to the Resources directory in the app bundle.
+		char *basePath = SDL_GetBasePath();
+		// FIXME: How to check we're being run from the app bundle and not directly from the
+		// terminal? On my testing (macos 10.15.1 19B88) it seems to have a "/" working directory,
+		// which is unlikely in terminal use, so use that?
+		if (fs::current_path() == "/")
+		{
+			LogWarning("Setting working directory to \"%s\"", basePath);
+			chdir(basePath);
+		}
+		else
+		{
+			LogWarning("Leaving default working directory \"%s\"", fs::current_path());
+		}
+		SDL_free(basePath);
+	}
+#endif
 
 	if (!PHYSFS_isInit())
 	{
