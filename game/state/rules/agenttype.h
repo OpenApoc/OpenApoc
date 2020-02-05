@@ -187,6 +187,8 @@ class AgentType : public StateObject<AgentType>
 	int improvementPercentagePsi = 0;
 	// Can be assigned to training
 	bool canTrain = false;
+	// Is agent immune to brainsuckers
+	bool immuneToBrainsuckers = false;
 	// Can this be generated for the player
 	bool playable = false;
 	// Can this be controlled by a player (if false, even when control is gained, AI will act)

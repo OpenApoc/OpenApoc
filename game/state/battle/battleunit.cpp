@@ -3707,7 +3707,7 @@ void BattleUnit::triggerProximity(GameState &state)
 void BattleUnit::triggerBrainsuckers(GameState &state)
 {
 	// Androids do not trigger brainsuckers
-	if(this->agent->type->canTrain == false)
+	if(this->agent->type->immuneToBrainsuckers == false)
 	{
 		return;
 	}
