@@ -28,3 +28,14 @@ set( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
 target_link_libraries(OpenApoc_GamestateLocalisation OpenApoc_Library)
 target_link_libraries(OpenApoc_GamestateLocalisation OpenApoc_Framework)
 target_link_libraries(OpenApoc_GamestateLocalisation OpenApoc_GameState)
+
+set(BASE_GAMESTATE_POT_FILE ${CMAKE_SOURCE_DIR}/data/languages/base_gamestate.pot)
+set(BASE_GAMESTATE_SOURCE_FILE ${CMAKE_SOURCE_DIR}/data/mods/base/base_gamestate)
+
+add_custom_command(
+OUTPUT ${BASE_GAMESTATE_POT_FILE}
+COMMAND OpenApoc_GamestateLocalisation ${BASE_GAMESTATE_SOURCE_FILE} --Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data> ${BASE_GAMESTATE_POT_FILE}
+DEPENDS ${BASE_GAMESTATE_SOURCE_FILE})
+
+add_custom_target(extract-gamestate-translations
+		DEPENDS ${BASE_GAMESTATE_POT_FILE})

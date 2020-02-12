@@ -30,5 +30,5 @@ add_custom_command(
 		COMMAND OpenApoc_FormLocalisation ${FORM_FILES} > ${FORM_POT_FILE}
 		DEPENDS ${FORM_FILES})
 
-add_custom_target(update-form-translations
+add_custom_target(extract-form-translations
 		DEPENDS ${FORM_POT_FILE})

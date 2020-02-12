@@ -1,0 +1,1630 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:374
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-11 18:11-0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/battle/battle.cpp:3733
+msgid "Very Good"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/battle/battle.cpp:3737
+msgid "Good"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/battle/battle.cpp:3741
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/messagebox.cpp:46
+msgid "OK"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/battle/battle.cpp:3745
+msgid "Poor"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/battle/battle.cpp:3749
+msgid "Very Poor"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:71
+msgid "Mission completed in Alien building."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:73
+msgid "X-COM returning from UFO mission."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:75
+msgid "Building has been disabled"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:87
+msgid "UFO spotted."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:89
+msgid "UFO crash landed:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:91
+msgid "Unmanned UFO recovered:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:93
+msgid "Vehicle successfully recovered:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:95
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:394
+msgid "Vehicle out of fuel:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:99
+msgid "Vehicle lightly damaged:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:101
+msgid "Vehicle moderately damaged:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:103
+msgid "Vehicle heavily damaged:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:105
+msgid "Vehicle returning to base as damaged:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:107
+msgid ": Weapon out of ammo:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:109
+msgid "Vehicle low on fuel:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:111
+msgid "Vehicle Repaired:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:113
+msgid "Vehicle Rearmed:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:115
+msgid "Vehicle Refuelled:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:117
+msgid "Vehicle has no engine:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:121
+msgid "An illegal road vehicle has been detected."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:125
+msgid "An illegal flyer has been detected."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:128
+msgid "Not enough ammo to rearm vehicle:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:130
+msgid "Not enough fuel to refuel vehicle"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:145
+msgid "New transfer arrived:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:149
+msgid "New recruit arrived:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:154
+msgid ""
+": Unable to reach destination due to damaged people tube network and / or "
+"poor diplomatic relations with Transtellar."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:157
+msgid "Hostile unit spotted"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:159
+msgid "Unit Brainsucked:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:161
+msgid "Unit has died:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:163
+msgid "Hostile unit has died"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:165
+msgid "Unknown Unit has died"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:167
+msgid "Unit critically wounded"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:169
+msgid "Unit badly injured:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:171
+msgid "Unit injured:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:173
+msgid "Unit under fire:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:175
+msgid "Unit has lost consciousness:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:177
+msgid "Unit has left combat zone:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:179
+msgid "Unit has frozen:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:181
+msgid "Unit has gone berserk:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:183
+msgid "Unit has panicked:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:185
+msgid "Unit has stopped panicking:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:187
+msgid "Psionic attack on unit:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:189
+msgid "Unit under Psionic control:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:191
+msgid "Unit freed from Psionic control:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:193
+msgid "No line of fire"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:208
+msgid "X-COM returning from mission at:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:210
+msgid "X-COM returning from raid at:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:212
+msgid "Building under attack :"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:213
+msgid "Attacked by:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:215
+msgid "Live Alien spotted."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:217
+msgid "Cargo expires soon:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:232
+msgid "Agent(s) rearmed:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:238
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:242
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:248
+msgid "Cargo expired:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:238
+msgid "Returned to base"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:243
+msgid "Refunded by supplier: "
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:252
+msgid "Cargo seized:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:252
+msgid "By hostile organisation: "
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:258
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:263
+msgid "Cargo arrived:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:258
+msgid "Supplier: "
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:268
+msgid "Transferred Alien specimens have arrived:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:272
+msgid "Transferred goods have arrived:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:275
+msgid "Items from tactical combat zone have arrived:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:277
+msgid "Base mission completed at:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:291
+msgid "Turn:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:291
+msgid "Side:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:366
+msgid "Agent has died:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:371
+msgid "X-COM base destroyed by hostile forces."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:375
+msgid "X-COM Base destroyed due to collapsing building."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:381
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:386
+msgid "Vehicle destroyed:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:382
+msgid "destroyed by"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:391
+msgid "Scrapped vehicle recovered in irreparable condition:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:74
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:110
+msgid "January"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:74
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:110
+msgid "February"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:74
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:110
+msgid "March"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:75
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:111
+msgid "April"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:75
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:111
+msgid "May"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:75
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:111
+msgid "June"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:76
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:112
+msgid "July"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:76
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:112
+msgid "August"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:76
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:112
+msgid "September"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:77
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:113
+msgid "October"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:77
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:113
+msgid "November"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:77
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:113
+msgid "December"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:81
+msgid "Sunday"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:81
+msgid "Monday"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:81
+msgid "Tuesday"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:81
+msgid "Wednesday"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:82
+msgid "Thursday"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:82
+msgid "Friday"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:82
+msgid "Saturday"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:86
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:117
+msgid "1st"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:86
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:117
+msgid "2nd"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:86
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:117
+msgid "3rd"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:86
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:117
+msgid "4th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:87
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:118
+msgid "5th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:87
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:118
+msgid "6th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:87
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:118
+msgid "7th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:87
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:118
+msgid "8th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:88
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:119
+msgid "9th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:88
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:119
+msgid "10th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:88
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:119
+msgid "11th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:88
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:119
+msgid "12th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:89
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:120
+msgid "13th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:89
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:120
+msgid "14th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:89
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:120
+msgid "15th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:89
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:120
+msgid "16th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:90
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:121
+msgid "17th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:90
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:121
+msgid "18th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:90
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:121
+msgid "19th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:90
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:121
+msgid "20th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:91
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:122
+msgid "21st"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:91
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:122
+msgid "22nd"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:91
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:122
+msgid "23rd"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:91
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:122
+msgid "24th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:92
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:123
+msgid "25th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:92
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:123
+msgid "26th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:92
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:123
+msgid "27th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:92
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:123
+msgid "28th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:93
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:124
+msgid "29th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:93
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:124
+msgid "30th"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:93
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:124
+msgid "31st"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/gametime.cpp:132
+msgid "Week"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/shared/agent.cpp:270
+msgid "Rookie"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/shared/agent.cpp:272
+msgid "Squaddie"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/shared/agent.cpp:274
+msgid "Squad leader"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/shared/agent.cpp:276
+msgid "Sergeant"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/shared/agent.cpp:278
+msgid "Captain"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/shared/agent.cpp:280
+msgid "Colonel"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/state/shared/agent.cpp:282
+msgid "Commander"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/aliencontainmentscreen.cpp:28
+msgid "ALIEN CONTAINMENT"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/aliencontainmentscreen.cpp:46
+msgid "Confirm Alien Containment Orders"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/aliencontainmentscreen.cpp:106
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:333
+msgid "Alien Containment space exceeded"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/aliencontainmentscreen.cpp:107
+msgid "Alien Containment space exceeded. Destroy more Aliens!"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:111
+msgid "Transfer"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:112
+msgid "At least two bases are required before transfers become possible."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:317
+msgid "Area Occupied By Existing Facility"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:318
+msgid ""
+"Existing facilities in this area of the base must be destroyed before "
+"construction work can begin."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:327
+msgid "Planning Permission Denied"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:328
+msgid ""
+"Planning permission is denied for this proposed extension to the base, on "
+"the grounds that the additional excavations required would seriously weaken "
+"the foundations of the building."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:338
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:109
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:613
+msgid "Funds exceeded"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:339
+msgid ""
+"The proposed construction work is not possible with your available funds."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:364
+msgid "Destroy facility"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:364
+msgid "Are you sure?"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:374
+msgid "Facility in use"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:399
+msgid "Cost to build"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:401
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:497
+msgid "Days to build"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:403
+msgid "Maintenance cost"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:412
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:503
+msgid "Capacity"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:414
+msgid "Usage"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:426
+msgid "Corridor"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:430
+msgid "Earth"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:31
+msgid "BUY AND SELL"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:69
+msgid "Confirm Sales/Purchases"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:110
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:613
+msgid "Order limited by your available funds."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:162
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:327
+msgid "Storage space exceeded"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:164
+msgid "Storage space exceeded. Sell off more items!"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:165
+msgid "Order limited by the available storage space at this base."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:258
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:291
+msgid ""
+"Hostile organization refuses to carry out the requested transportation for "
+"this company."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:260
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:264
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:278
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:369
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:373
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:387
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:426
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:430
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:444
+msgid "Proceed?"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:262
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:276
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:371
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:385
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:428
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:442
+msgid ""
+"No free transport to carry out the requested transportation detected in the "
+"city."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:367
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:400
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:424
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:457
+msgid "This hostile organization refuses to carry out the requested transfer."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:122
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:635
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:321
+msgid "Accomodation exceeded"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:123
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:636
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:322
+msgid "Transfer limited by available accommodation."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:238
+msgid "X-COM Agents"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:241
+msgid "Biochemists"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:244
+msgid "Quantum Physicists"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:247
+msgid "Engineers"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:480
+msgid "unit(s) hired"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:480
+msgid "unit(s) fired."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:483
+msgid "units(s) transferred"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:488
+msgid "Confirm Orders"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchscreen.cpp:330
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchscreen.cpp:414
+msgid "Total Skill: {}"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchscreen.cpp:342
+msgid "Biochemistry"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchscreen.cpp:347
+msgid "Quantum Physics"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchscreen.cpp:352
+msgid "Engineering"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchscreen.cpp:480
+#, c-format
+msgid "{}%%"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchscreen.cpp:488
+msgid "No Project"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:46
+msgid "Select Biochemistry Project"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:47
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:52
+msgid "Progress"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:48
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:53
+msgid "Skill"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:51
+msgid "Select Physics Project"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:56
+msgid "Select Manufacturing Project"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:57
+msgid "Unit Cost"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:58
+msgid "Skill Hours"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:61
+msgid "Select Unknown Project"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:83
+msgid "PROJECT COMPLETE"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:83
+msgid "This project is already complete."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:93
+msgid "PROJECT TOO LARGE"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:93
+msgid "This project requires an advanced lab or workshop."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:102
+msgid "FUNDS EXCEEDED"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:103
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3806
+msgid "Production costs exceed your available funds."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:238
+msgid "Complete"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:297
+msgid "Small"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:300
+msgid "Large"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:303
+msgid "UNKNOWN"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:35
+msgid "TRANSFER"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:103
+msgid "Confirm Transfers"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:328
+msgid "Transfer limited by available storage space."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:334
+msgid "Transfer limited by available Alien Containment space."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/battle/battledebriefing.cpp:49
+msgid "promoted to"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/alertscreen.cpp:75
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:134
+msgid "No Agents Selected"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/alertscreen.cpp:76
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:135
+msgid ""
+"You need to select the agents you want to become active within the building."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/basebuyscreen.cpp:43
+msgid "This Building will cost ${}"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/basebuyscreen.cpp:156
+msgid "No Sale"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/basebuyscreen.cpp:156
+msgid "Not enough money to buy this building."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:37
+msgid ""
+"X-COM is ALLIED with this organization. The relationship cannot be improved."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:43
+msgid "ALLIED"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:48
+msgid "FRIENDLY"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:53
+msgid "NEUTRAL"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:60
+msgid ""
+"Whilst X-COM continue to oppose our Alien friends we will remain hostile. "
+"Negotiations are impossible."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:66
+msgid "UNFRIENDLY"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:79
+msgid ""
+"This organization is under Alien control.The Alien race will not enter "
+"negotiations with X-COM."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:97
+msgid "It will cost: $"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:98
+msgid "to improve relations to:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:106
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:115
+msgid "No Entrance"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:106
+msgid "Cannot raid as building destroyed"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:116
+msgid ""
+"Our Agents are unable to find an entrance to this building. Our Scientists "
+"back at HQ must complete their research."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:192
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:217
+msgid "No Hostile Forces Discovered"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:218
+msgid "You have not found any hostile forces in this building."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/scorescreen.cpp:89
+msgid "SCORE"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/scorescreen.cpp:160
+msgid "Initial funds>"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/scorescreen.cpp:163
+msgid "Remaining finds>"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/city/scorescreen.cpp:166
+msgid "FINANCE"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/components/controlgenerator.cpp:537
+msgid "Skill {}"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/components/locationscreen.cpp:30
+msgid "AGENT LOCATION"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/components/locationscreen.cpp:42
+msgid "VEHICLE LOCATION"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:58
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:187
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:78
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:127
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:234
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:317
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:357
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:436
+msgid "Weight"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:104
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:123
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:149
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:365
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:444
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:455
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:464
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:477
+msgid "Power"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:110
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:146
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:49
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:75
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:159
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:177
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:373
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:396
+msgid "Accuracy"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:113
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:149
+msgid "Fire rate"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:117
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:153
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:157
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:375
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:468
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:481
+msgid "Range"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:120
+msgid "Ammo Type:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:126
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:165
+msgid "Rounds"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:132
+msgid "(Recharges)"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:156
+msgid "Ammo types:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:170
+msgid "Protection"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:184
+msgid "Alien Organism"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:184
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:518
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:541
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:590
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/transactioncontrol.cpp:615
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:232
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:2470
+msgid "Alien Artifact"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:164
+msgid "MIND PROBE"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:168
+msgid "EQUIP AGENT"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:518
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:542
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:590
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:2470
+msgid "You must research Alien technology before you can use it."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:582
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:652
+msgid "NOT ENOUGH TU'S"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:583
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:653
+msgid "TU cost per item picked up:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:1856
+msgid "WARNING"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:1857
+msgid ""
+"You will lose any equipment left on the floor. Are you sure you wish to "
+"leave this agent?"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:41
+msgid "Health"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:57
+msgid "Reactions"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:65
+msgid "Time Units"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:65
+msgid "Speed"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:86
+msgid "Stamina"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:95
+msgid "Bravery"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:103
+msgid "Strength"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:111
+msgid "Psi-energy"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:119
+msgid "Psi-attack"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:127
+msgid "Psi-defence"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/ingameoptions.cpp:117
+msgid "Message Toggles"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/ingameoptions.cpp:117
+msgid "OpenApoc Features"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/ingameoptions.cpp:310
+msgid "Abort Mission"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/ingameoptions.cpp:311
+msgid "Units Lost :"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/messagebox.cpp:58
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/messagebox.cpp:77
+msgid "Yes"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/messagebox.cpp:65
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/messagebox.cpp:84
+msgid "No"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/messagebox.cpp:91
+msgid "Cancel"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/transactioncontrol.cpp:110
+msgid "Order canceled by the hostile manufacturer."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/transactioncontrol.cpp:111
+msgid ""
+"Manufacturer has no intact buildings in this city to deliver goods from."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:73
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:308
+msgid "Constitution"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:74
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:315
+msgid "Armor"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:76
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:147
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:367
+msgid "Top Speed"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:77
+msgid "Acceleration"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:79
+msgid "Fuel"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:80
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:191
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:319
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:407
+msgid "Passengers"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:81
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:184
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:402
+msgid "Cargo"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:155
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:371
+msgid "Damage"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:198
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:412
+msgid "Aliens Held"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:205
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:417
+msgid "Jamming"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:212
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:422
+msgid "Shielding"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:220
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:427
+msgid "Cloaks Craft"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:225
+msgid "Teleports"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battletileview.cpp:321
+msgid "Too Far"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battletileview.cpp:322
+msgid "Blocked"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battletileview.cpp:323
+msgid "Out of range"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battletileview.cpp:324
+msgid "No arc of throw"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:175
+msgid "Execute remaining movement orders for this unit?"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:1679
+msgid "All hostile units have fled the combat zone. You win."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:1685
+msgid "All your units have fled the combat zone. You win."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:1689
+msgid "All hostile units are dead or unconscious. You win."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:1694
+msgid "All your units have fled the combat zone. You lose."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:1698
+msgid "All hostile units have fled the combat zone. You lose."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:1702
+msgid "All your units are unconscious or dead. You lose."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:2123
+msgid "Activates now."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:2131
+msgid "Activates at end of turn."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:2135
+msgid "Turns before activation:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:2140
+#, c-format
+msgid "Delay = %i"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:2150
+#, c-format
+msgid "Range = %2.1fm."
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:4027
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:4036
+msgid "None"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:4033
+msgid "Empty"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:1518
+msgid "Welcome to X-COM Apocalypse"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2056
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2060
+msgid "At"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2066
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2078
+msgid "Returning to base"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2069
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2080
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2085
+msgid "Traveling to:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2086
+msgid "map point"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2089
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2257
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2383
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2506
+msgid "Reporting to base"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2102
+msgid "Wounded"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2108
+msgid "Not assigned to training"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2110
+msgid "(Android training not possible)"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2114
+msgid "Combat training (efficiency="
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2123
+msgid "Psionic training (efficiency="
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2247
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2373
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2496
+msgid "No project assigned"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2255
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2504
+msgid "Not assigned to lab"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2381
+msgid "Not assigned to workshop"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2706
+msgid ": allied with:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2709
+msgid ": friendly with:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2712
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:288
+msgid ": neutral towards:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2715
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:291
+msgid ": unfriendly towards:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2718
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:294
+msgid ": hostile towards:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3605
+msgid "Commence investigation"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3606
+msgid ""
+"All selected units and crafts have arrived at {}. Proceed with "
+"investigation? ({} units)"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3673
+msgid "RESEARCH COMPLETE"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3674
+msgid "Research project completed:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3675
+msgid "Do you wish to view the UFOpaedia report?"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3744
+msgid "MANUFACTURE COMPLETED"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3745
+msgid "Quantity:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3746
+msgid "Do you wish to reasign the Workshop?"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3803
+msgid "MANUFACTURING HALTED"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3805
+msgid "Completion status:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3821
+msgid "FACILITY COMPLETED"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3947
+msgid "Click on building for selected vehicle to attack"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3954
+msgid "Click on target vehicle for selected vehicle"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3965
+msgid "Click on destination building for selected vehicles"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3969
+msgid "Click on destination building for selected vehicle"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3976
+msgid "Click on destination building for selected people"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3980
+msgid "Click on destination building for selected person"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3990
+msgid "Click on destination map point for selected vehicle"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3996
+msgid "Manual control"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:271
+msgid "Balance"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:273
+msgid "Income"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:282
+msgid ": allied towards:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:285
+msgid ": friendly towards:"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:299
+msgid "Alien Infiltration"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:344
+msgid "Weapons space"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:346
+msgid "Weapons slots"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:348
+msgid "Engine size"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:350
+msgid "Equipment space"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:359
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:438
+msgid "Size"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:377
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:470
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:483
+msgid "Fire Rate"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:382
+msgid "Ammo type"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:384
+msgid "Ammo capacity"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:389
+msgid "Turn Rate"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:446
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:457
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:466
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:479
+msgid "Damage Type"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:478
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:480
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:482
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:484
+msgid "Depends on clip"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:495
+msgid "Construction cost"
+msgstr ""
+
+#: /Users/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:499
+msgid "Weekly cost"
+msgstr ""

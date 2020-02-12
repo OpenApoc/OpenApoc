@@ -1,0 +1,840 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenApoc\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2020-01-04 16:20+0800\n"
+"Last-Translator: JonnyH\n"
+"Language-Team: English (United Kingdom) (http://www.transifex.com/x-com-apocalypse/apocalypse/language/en_GB/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en_GB\n"
+
+msgid "0"
+msgstr ""
+
+msgid "0%"
+msgstr ""
+
+msgid "1"
+msgstr ""
+
+msgid "223"
+msgstr ""
+
+msgid "AGENT NAME GOES HERE"
+msgstr ""
+
+msgid "ALIEN INFILTRATION"
+msgstr ""
+
+msgid "ALIENS"
+msgstr ""
+
+msgid "Accuracy"
+msgstr ""
+
+msgid "Agent equipment"
+msgstr ""
+
+msgid "Agent tab"
+msgstr ""
+
+msgid "Agents"
+msgstr ""
+
+msgid "Aggressive"
+msgstr ""
+
+msgid "Aggressive mode"
+msgstr ""
+
+msgid "Aimed shot"
+msgstr ""
+
+msgid "Airborne vehicle equipment/fuel"
+msgstr ""
+
+msgid "Alien Containment"
+msgstr ""
+
+msgid "Alien Craft"
+msgstr ""
+
+msgid "Alien Incidents in City"
+msgstr ""
+
+msgid "Alien Score Level"
+msgstr ""
+
+msgid "Alien infiltration graph"
+msgstr ""
+
+msgid "Aliens"
+msgstr ""
+
+msgid "Always pause to display this message?"
+msgstr ""
+
+msgid "Anthropod"
+msgstr ""
+
+msgid "Assign project"
+msgstr ""
+
+msgid "Assign units to squad"
+msgstr ""
+
+msgid "Attack building"
+msgstr ""
+
+msgid "Attack hostile unit"
+msgstr ""
+
+msgid "Auto shot"
+msgstr ""
+
+msgid "BASE ATTACK"
+msgstr ""
+
+msgid "BASES"
+msgstr ""
+
+msgid "BUY NEW BASE"
+msgstr ""
+
+msgid "Base Facilities"
+msgstr ""
+
+msgid "Bases"
+msgstr ""
+
+msgid "Bases tab"
+msgstr ""
+
+msgid "Biochemistry tab"
+msgstr ""
+
+msgid "Biochemists"
+msgstr ""
+
+msgid "Brainsucker"
+msgstr ""
+
+msgid "Bravery"
+msgstr ""
+
+msgid "Buildings"
+msgstr ""
+
+msgid "Buy This Building"
+msgstr ""
+
+msgid "Buy new base"
+msgstr ""
+
+msgid "Buy/Sell"
+msgstr ""
+
+msgid "CATEGORY"
+msgstr ""
+
+msgid "CUSTOMIZE FORCES"
+msgstr ""
+
+msgid "Casualty penalty"
+msgstr ""
+
+msgid "Cautious mode"
+msgstr ""
+
+msgid "Center and pause game"
+msgstr ""
+
+msgid "Center on message"
+msgstr ""
+
+msgid "Chrysalis"
+msgstr ""
+
+msgid "Civilian"
+msgstr ""
+
+msgid "Civilians"
+msgstr ""
+
+msgid "Click on building to buy"
+msgstr ""
+
+msgid "Combat Training"
+msgstr ""
+
+msgid "Combat rating"
+msgstr ""
+
+msgid "Computer"
+msgstr ""
+
+msgid "Continue"
+msgstr ""
+
+msgid "Control body"
+msgstr ""
+
+msgid "Crawl"
+msgstr ""
+
+msgid "Current Project"
+msgstr ""
+
+msgid "Customize forces"
+msgstr ""
+
+msgid "DEBRIEFING"
+msgstr ""
+
+msgid "DELETE OLD SAVED GAME"
+msgstr ""
+
+msgid "Damage to City"
+msgstr ""
+
+msgid "Days of Physical Gym Training"
+msgstr ""
+
+msgid "Days of Psi Gym Training"
+msgstr ""
+
+msgid "Debug Menu"
+msgstr ""
+
+msgid "Default"
+msgstr ""
+
+msgid "Default equipment tech level"
+msgstr ""
+
+msgid "Default equipped armor"
+msgstr ""
+
+msgid "Defensive"
+msgstr ""
+
+msgid "Double speed"
+msgstr ""
+
+msgid "Down"
+msgstr ""
+
+msgid "Drop object"
+msgstr ""
+
+msgid "EMPLOYEE TYPE"
+msgstr ""
+
+msgid "EQUIP VEHICLE"
+msgstr ""
+
+msgid "Easy"
+msgstr ""
+
+msgid "End turn"
+msgstr ""
+
+msgid "Engineering tab"
+msgstr ""
+
+msgid "Engineers"
+msgstr ""
+
+msgid "Engines"
+msgstr ""
+
+msgid "Equip agent"
+msgstr ""
+
+msgid "Equip vehicle"
+msgstr ""
+
+msgid "Equipment"
+msgstr ""
+
+msgid "Equipment captured"
+msgstr ""
+
+msgid "Equipment lost"
+msgstr ""
+
+msgid "Evasive"
+msgstr ""
+
+msgid "Excellent"
+msgstr ""
+
+msgid "Exit Psionics"
+msgstr ""
+
+msgid "Finance"
+msgstr ""
+
+msgid "Function>"
+msgstr ""
+
+msgid "Game Turn:"
+msgstr ""
+
+msgid "Go to building"
+msgstr ""
+
+msgid "Go to map point"
+msgstr ""
+
+msgid "Group formation"
+msgstr ""
+
+msgid "Guards"
+msgstr ""
+
+msgid "HIRE AND FIRE"
+msgstr ""
+
+msgid "Hard"
+msgstr ""
+
+msgid "Health"
+msgstr ""
+
+msgid "Hidden Movement"
+msgstr ""
+
+msgid "High altitude"
+msgstr ""
+
+msgid "Highest altitude"
+msgstr ""
+
+msgid "Hire/Fire staff"
+msgstr ""
+
+msgid "Hostile forces have invaded your base. Equip your Agents before battle."
+msgstr ""
+
+msgid "Hostile vehicles tab"
+msgstr ""
+
+msgid "Hotseat multiplayer"
+msgstr ""
+
+msgid "Hyperworm"
+msgstr ""
+
+msgid "ITEM"
+msgstr ""
+
+msgid "ITEM NAME GOES HERE"
+msgstr ""
+
+msgid "Initial finds>"
+msgstr ""
+
+msgid "Investigate building for Alien activity"
+msgstr ""
+
+msgid "Kneel down"
+msgstr ""
+
+msgid "LABEL_1"
+msgstr ""
+
+msgid "LABEL_10"
+msgstr ""
+
+msgid "LABEL_2"
+msgstr ""
+
+msgid "LABEL_3"
+msgstr ""
+
+msgid "LABEL_4"
+msgstr ""
+
+msgid "LABEL_5"
+msgstr ""
+
+msgid "LABEL_6"
+msgstr ""
+
+msgid "LABEL_7"
+msgstr ""
+
+msgid "LABEL_8"
+msgstr ""
+
+msgid "LABEL_9"
+msgstr ""
+
+msgid "LOAD GAME"
+msgstr ""
+
+msgid "Lab Size Needed"
+msgstr ""
+
+msgid "Lab Type"
+msgstr ""
+
+msgid "Leadership bonus"
+msgstr ""
+
+msgid "Level indicator"
+msgstr ""
+
+msgid "Live Aliens captured"
+msgstr ""
+
+msgid "Load Saved Game"
+msgstr ""
+
+msgid "Low altitude"
+msgstr ""
+
+msgid "MAINTENANCE"
+msgstr ""
+
+msgid "MESSAGE HISTORY"
+msgstr ""
+
+msgid "MISSION BRIEFING"
+msgstr ""
+
+msgid "Medium"
+msgstr ""
+
+msgid "Medium altitude"
+msgstr ""
+
+msgid "Megaspawn"
+msgstr ""
+
+msgid "Message history"
+msgstr ""
+
+msgid "Micronoid"
+msgstr ""
+
+msgid "Mission performance"
+msgstr ""
+
+msgid "Multiworm"
+msgstr ""
+
+msgid "Multiworm Egg"
+msgstr ""
+
+msgid "No shot"
+msgstr ""
+
+msgid "No, cancel operation"
+msgstr ""
+
+msgid "Normal speed"
+msgstr ""
+
+msgid "Novice"
+msgstr ""
+
+msgid "Number of Android Agents"
+msgstr ""
+
+msgid "Number of Human Agents"
+msgstr ""
+
+msgid "Number of Hybrid Agents"
+msgstr ""
+
+msgid "Number to make"
+msgstr ""
+
+msgid "OFFER CASH SETTLEMENT"
+msgstr ""
+
+msgid "OPTIONS"
+msgstr ""
+
+msgid "Offer settlement"
+msgstr ""
+
+msgid "Options"
+msgstr ""
+
+msgid "Organisation Tech Level"
+msgstr ""
+
+msgid "Organizations"
+msgstr ""
+
+msgid "Organizations tab"
+msgstr ""
+
+msgid "Owner>"
+msgstr ""
+
+msgid "PLAYER / TECH LEVEL / SCORE SETTINGS"
+msgstr ""
+
+msgid "Panic unit"
+msgstr ""
+
+msgid "Pause"
+msgstr ""
+
+msgid "Pay organization"
+msgstr ""
+
+msgid "Performance log"
+msgstr ""
+
+msgid "Player:"
+msgstr ""
+
+msgid "Popper"
+msgstr ""
+
+msgid "Probe unit"
+msgstr ""
+
+msgid "Progress"
+msgstr ""
+
+msgid "Project"
+msgstr ""
+
+msgid "Psi-Training"
+msgstr ""
+
+msgid "Psi-attack"
+msgstr ""
+
+msgid "Psi-defence"
+msgstr ""
+
+msgid "Psi-energy"
+msgstr ""
+
+msgid "Psimorph"
+msgstr ""
+
+msgid "QUANTITY"
+msgstr ""
+
+msgid "Quadruple speed"
+msgstr ""
+
+msgid "Quantum Physicists"
+msgstr ""
+
+msgid "Quantum physics tab"
+msgstr ""
+
+msgid "Queenspawn"
+msgstr ""
+
+msgid "Quit"
+msgstr ""
+
+msgid "RESEARCH AND MANUFACTURE"
+msgstr ""
+
+msgid "Raid building"
+msgstr ""
+
+msgid "Raid mode"
+msgstr ""
+
+msgid "Reactions"
+msgstr ""
+
+msgid "Remaining finds>"
+msgstr ""
+
+msgid "Research Completed"
+msgstr ""
+
+msgid "Research and manufacture"
+msgstr ""
+
+msgid "Reserve TUs for aimed shot"
+msgstr ""
+
+msgid "Reserve TUs for auto shot"
+msgstr ""
+
+msgid "Reserve TUs for kneel"
+msgstr ""
+
+msgid "Reserve TUs for snap shot"
+msgstr ""
+
+msgid "Return to base"
+msgstr ""
+
+msgid "Review briefing"
+msgstr ""
+
+msgid "Road vehicle equipment/fuel"
+msgstr ""
+
+msgid "Run"
+msgstr ""
+
+msgid "SAVE GAME"
+msgstr ""
+
+msgid "SCORE"
+msgstr ""
+
+msgid "SELECT PROJECT"
+msgstr ""
+
+msgid "SELECT SKIRMISH LOCATION"
+msgstr ""
+
+msgid "SKIRMISH"
+msgstr ""
+
+msgid "SQUAD ASSIGNMENT"
+msgstr ""
+
+msgid "Safe mode"
+msgstr ""
+
+msgid "Scroll Down"
+msgstr ""
+
+msgid "Scroll Left"
+msgstr ""
+
+msgid "Scroll Right"
+msgstr ""
+
+msgid "Scroll Up"
+msgstr ""
+
+msgid "Select"
+msgstr ""
+
+msgid "Send selected units to investigate incident"
+msgstr ""
+
+msgid "Show available armor"
+msgstr ""
+
+msgid "Show available equipment"
+msgstr ""
+
+msgid "Show ten most infiltrated organizations not under Alien control."
+msgstr ""
+
+msgid "Side:"
+msgstr ""
+
+msgid "Single file"
+msgstr ""
+
+msgid "Skeletoid"
+msgstr ""
+
+msgid "Skill"
+msgstr ""
+
+msgid "Slow speed"
+msgstr ""
+
+msgid "Snap shot"
+msgstr ""
+
+msgid "Speed"
+msgstr ""
+
+msgid "Spitters"
+msgstr ""
+
+msgid "Squad icons"
+msgstr ""
+
+msgid "Stamina"
+msgstr ""
+
+msgid "Standard"
+msgstr ""
+
+msgid "Start Campaign Game"
+msgstr ""
+
+msgid "Start real time game"
+msgstr ""
+
+msgid "Start turn-based game"
+msgstr ""
+
+msgid "Stop project"
+msgstr ""
+
+msgid "Strength"
+msgstr ""
+
+msgid "Stun unit"
+msgstr ""
+
+msgid "Superhuman"
+msgstr ""
+
+msgid "Switch camera mode"
+msgstr ""
+
+msgid "Switch map view"
+msgstr ""
+
+msgid "TICK TOCK"
+msgstr ""
+
+msgid "TOTAL"
+msgstr ""
+
+msgid "TOTAL OVERHEADS>"
+msgstr ""
+
+msgid "Tactical Missions"
+msgstr ""
+
+msgid "The Alien Dimension"
+msgstr ""
+
+msgid "Throw object"
+msgstr ""
+
+msgid "Toggle camera mode"
+msgstr ""
+
+msgid "Toggle map level display mode"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Total Skill: 0"
+msgstr ""
+
+msgid "Transfer"
+msgstr ""
+
+msgid "UFO Incursions"
+msgstr ""
+
+msgid "UFOs Shot Down"
+msgstr ""
+
+msgid "Ufopaedia"
+msgstr ""
+
+msgid "Ultra fast"
+msgstr ""
+
+msgid "Unassigned Agents"
+msgstr ""
+
+msgid "Unit location"
+msgstr ""
+
+msgid "Up"
+msgstr ""
+
+msgid "VALUE_1"
+msgstr ""
+
+msgid "VALUE_10"
+msgstr ""
+
+msgid "VALUE_2"
+msgstr ""
+
+msgid "VALUE_3"
+msgstr ""
+
+msgid "VALUE_4"
+msgstr ""
+
+msgid "VALUE_5"
+msgstr ""
+
+msgid "VALUE_6"
+msgstr ""
+
+msgid "VALUE_7"
+msgstr ""
+
+msgid "VALUE_8"
+msgstr ""
+
+msgid "VALUE_9"
+msgstr ""
+
+msgid "VEHICLE NAME GOES HERE"
+msgstr ""
+
+msgid "Vehicle Assignments"
+msgstr ""
+
+msgid "Vehicle Equipment"
+msgstr ""
+
+msgid "Vehicle location / passengers"
+msgstr ""
+
+msgid "Vehicles"
+msgstr ""
+
+msgid "View all organizations"
+msgstr ""
+
+msgid "View allied organizations"
+msgstr ""
+
+msgid "View friendly organizations"
+msgstr ""
+
+msgid "View hostile organizations"
+msgstr ""
+
+msgid "View neutral organizations"
+msgstr ""
+
+msgid "View unfriendly organizations"
+msgstr ""
+
+msgid "WAGES"
+msgstr ""
+
+msgid "WEEK"
+msgstr ""
+
+msgid "Walk"
+msgstr ""
+
+msgid "Weapons"
+msgstr ""
+
+msgid "X-COM Agents"
+msgstr ""
+
+msgid "X-COM Craft Shot Down"
+msgstr ""
+
+msgid "X-COM Vehicles tab"
+msgstr ""
+
+msgid "Yes, prime grenade"
+msgstr ""
+
+msgid "_____________________________________________________"
+msgstr ""
+
