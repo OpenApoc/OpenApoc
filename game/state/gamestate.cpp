@@ -1367,7 +1367,7 @@ void GameState::loadMods()
 
 		if (!modLoadScript.empty())
 		{
-			LogInfo("Executing modLoad script \"%s\" for mod \"%s\"", modLoadScript,
+			LogInfo("Executing modLoad script \"{}\" for mod \"{}\"", modLoadScript,
 			        modInfo->getID());
 			this->luaGameState.runScript(modLoadScript);
 		}
@@ -1376,11 +1376,11 @@ void GameState::loadMods()
 
 bool GameState::appendGameState(const UString &gamestatePath)
 {
-	LogInfo("Appending gamestate \"%s\"", gamestatePath);
+	LogInfo("Appending gamestate \"{}\"", gamestatePath);
 	auto file = fw().data->fs.open(gamestatePath);
 	if (!file)
 	{
-		LogWarning("Failed to open gamestate file \"%s\"", gamestatePath);
+		LogWarning("Failed to open gamestate file \"{}\"", gamestatePath);
 		return false;
 	}
 	return this->loadGame(file.systemPath());

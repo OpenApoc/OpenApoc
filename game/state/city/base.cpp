@@ -25,7 +25,7 @@ template <> sp<Base> StateObject<Base>::get(const GameState &state, const UStrin
 	auto it = state.player_bases.find(id);
 	if (it == state.player_bases.end())
 	{
-		LogError("No baseas matching ID \"%s\"", id);
+		LogError("No baseas matching ID \"{}\"", id);
 		return nullptr;
 	}
 	return it->second;

@@ -1727,7 +1727,7 @@ OGLES30Renderer::OGLES30Renderer() : state(State::Idle)
 	this->colouredDrawMachine.reset(new ColouredDrawMachine{quadBufferCount});
 	GL::GLint viewport[4];
 	gl->GetIntegerv(GL::VIEWPORT, viewport);
-	LogInfo("Viewport {{},{},{},{}}", viewport[0], viewport[1], viewport[2], viewport[3]);
+	LogInfo("Viewport {{{},{},{},{}}}", viewport[0], viewport[1], viewport[2], viewport[3]);
 	this->default_surface = mksp<Surface>(Vec2<int>{viewport[2], viewport[3]});
 	this->default_surface->rendererPrivateData =
 	    mksp<GLSurface>(0, Vec2<int>{viewport[2], viewport[3]}, this);

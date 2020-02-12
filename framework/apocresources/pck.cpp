@@ -365,7 +365,7 @@ sp<ImageSet> PCKLoader::loadStrat(Data &data, UString PckFilename, UString TabFi
 		}
 		if (img->size != Vec2<unsigned int>{8, 8})
 		{
-			LogError("Invalid size of {{},{}} in stratmap image", img->size.x, img->size.y);
+			LogError("Invalid size of {{{},{}}} in stratmap image", img->size.x, img->size.y);
 			return nullptr;
 		}
 		imageSet->images.push_back(img);

@@ -17,7 +17,7 @@ sp<PaletteImage> RawImage::load(Data &data, const UString &filename, const Vec2<
 	}
 	if (size.x <= 0 || size.y <= 0)
 	{
-		LogWarning("Trying to read image of invalid size {{},{}}", size.x, size.y);
+		LogWarning("Trying to read image of invalid size {{{},{}}}", size.x, size.y);
 		return nullptr;
 	}
 
@@ -38,7 +38,7 @@ sp<PaletteImage> RawImage::load(Data &data, const UString &filename, const Vec2<
 			uint8_t idx;
 			if (!infile.read(reinterpret_cast<char *>(&idx), 1))
 			{
-				LogError("Unexpected EOF in file \"{}\" at {{},{}}", filename, x, y);
+				LogError("Unexpected EOF in file \"{}\" at {{{},{}}}", filename, x, y);
 				return nullptr;
 			}
 			l.set(Vec2<unsigned int>{x, y}, idx);

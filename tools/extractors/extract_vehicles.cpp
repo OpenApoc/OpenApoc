@@ -224,7 +224,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 				}
 				else
 				{
-					LogError("Unknown vehicle size {{},{}}", v.size_x, v.size_y);
+					LogError("Unknown vehicle size {{{},{}}}", v.size_x, v.size_y);
 				}
 				int animFrames = UFOAnimationFrames[id];
 

@@ -249,7 +249,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 		}
 
 		this->frame_size = {width, height};
-		LogInfo("Video frame size {{},{}}", this->frame_size.x, this->frame_size.y);
+		LogInfo("Video frame size {{{},{}}}", this->frame_size.x, this->frame_size.y);
 
 		auto ret = smk_enable_video(this->smk_ctx, 1);
 		if (ret == SMK_ERROR)

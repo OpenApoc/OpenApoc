@@ -2519,7 +2519,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						}
 					}
 
-					LogInfo("Vehicle mission {}: Infiltrating from {{},{},{}}", name, pos.x, pos.y,
+					LogInfo("Vehicle mission {}: Infiltrating from {{{},{},{}}}", name, pos.x, pos.y,
 					        pos.z);
 
 					// If arrived to a location above building, deposit aliens or subvert

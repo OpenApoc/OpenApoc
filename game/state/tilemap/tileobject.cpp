@@ -142,7 +142,7 @@ void TileObject::setPosition(Vec3<float> newPosition)
 				Tile *intersectingTile = map.getTile(x, y, z);
 				if (!intersectingTile)
 				{
-					LogError("Failed to get intersecting tile at {{},{},{}}", x, y, z);
+					LogError("Failed to get intersecting tile at {{{},{},{}}}", x, y, z);
 					continue;
 				}
 				this->intersectingTiles.push_back(intersectingTile);

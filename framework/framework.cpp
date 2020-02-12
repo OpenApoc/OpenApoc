@@ -242,12 +242,12 @@ Framework::Framework(const UString programName, bool createWindow)
 		// which is unlikely in terminal use, so use that?
 		if (fs::current_path() == "/")
 		{
-			LogWarning("Setting working directory to \"%s\"", basePath);
+			LogWarning("Setting working directory to \"{}\"", basePath);
 			chdir(basePath);
 		}
 		else
 		{
-			LogWarning("Leaving default working directory \"%s\"", fs::current_path());
+			LogWarning("Leaving default working directory \"{}\"", fs::current_path());
 		}
 		SDL_free(basePath);
 	}
@@ -872,7 +872,7 @@ void Framework::displayInitialise()
 	if (scrW < 640 || scrH < 480)
 	{
 		LogError(
-		    "Requested display size of {{},{}} is lower than {640,480} and probably won't work",
+		    "Requested display size of {{{},{}}} is lower than {{640,480}} and probably won't work",
 		    scrW, scrH);
 	}
 

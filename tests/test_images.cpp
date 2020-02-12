@@ -54,7 +54,7 @@ static bool testImage(const UString &imageName, const UString &referenceName)
 			if (i != r)
 			{
 				LogWarning(
-				    "Image mismatch at {{},{}} (RGBA img {{},{},{},{}} != RGBA ref {{},{},{},{}}",
+				    "Image mismatch at {{{},{}}} (RGBA img {{{},{},{},{}}} != RGBA ref {{{},{},{},{}}}",
 				    x, y, (int)i.r, (int)i.g, (int)i.b, (int)i.a, (int)r.r, (int)r.g, (int)r.b,
 				    (int)r.a);
 

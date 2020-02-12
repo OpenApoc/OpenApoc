@@ -711,7 +711,7 @@ class OGL20Renderer : public Renderer
 		this->bound_thread = std::this_thread::get_id();
 		GLint viewport[4];
 		gl20::GetIntegerv(gl20::VIEWPORT, viewport);
-		LogInfo("Viewport {{},{},{},{}}", viewport[0], viewport[1], viewport[2], viewport[3]);
+		LogInfo("Viewport {{{},{},{},{}}}", viewport[0], viewport[1], viewport[2], viewport[3]);
 		LogAssert(viewport[0] == 0 && viewport[1] == 0);
 		this->defaultSurface = mksp<Surface>(Vec2<int>{viewport[2], viewport[3]});
 		this->defaultSurface->rendererPrivateData.reset(

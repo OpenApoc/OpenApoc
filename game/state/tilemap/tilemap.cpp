@@ -254,7 +254,7 @@ sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &
 
 	LogWarning("ViewRect {}", viewRect);
 
-	LogWarning("Dumping voxels {{},{}} voxels w/offset {}", w, h, offset);
+	LogWarning("Dumping voxels {{{},{}}} voxels w/offset {}", w, h, offset);
 
 	int inc = fast ? 2 : 1;
 
