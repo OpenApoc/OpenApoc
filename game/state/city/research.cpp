@@ -182,7 +182,7 @@ const UString &StateObject<ResearchTopic>::getId(const GameState &state,
 		if (r.second == ptr)
 			return r.first;
 	}
-	LogError("No research matching pointer %p", static_cast<void*>(ptr.get()));
+	LogError("No research matching pointer {}", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 
@@ -216,7 +216,7 @@ template <> const UString &StateObject<Lab>::getId(const GameState &state, const
 		if (l.second == ptr)
 			return l.first;
 	}
-	LogError("No lab matching pointer %p", static_cast<void*>(ptr.get()));
+	LogError("No lab matching pointer {}", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 

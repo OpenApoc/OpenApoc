@@ -324,7 +324,7 @@ class SDLRawBackend : public SoundBackend
 			std::lock_guard<std::recursive_mutex> l(this->audio_lock);
 			this->live_samples.emplace_back(sample, gain);
 		}
-		LogInfo("Placed sound %p on queue", static_cast<void*>(sample.get()));
+		LogInfo("Placed sound {} on queue", static_cast<void *>(sample.get()));
 	}
 
 	void playMusic(std::function<void(void *)> finishedCallback, void *callbackData) override
@@ -343,7 +343,7 @@ class SDLRawBackend : public SoundBackend
 	void setTrack(sp<MusicTrack> track) override
 	{
 		std::lock_guard<std::recursive_mutex> l(this->audio_lock);
-		LogInfo("Setting track to %p", static_cast<void*>(track.get()));
+		LogInfo("Setting track to {}", static_cast<void *>(track.get()));
 		this->track = track;
 		while (!music_queue.empty())
 			music_queue.pop();

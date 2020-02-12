@@ -769,7 +769,7 @@ template <> const UString &StateObject<City>::getId(const GameState &state, cons
 			return c.first;
 		}
 	}
-	LogError("No city matching pointer %p", static_cast<void*>(ptr.get()));
+	LogError("No city matching pointer {}", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 

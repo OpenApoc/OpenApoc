@@ -157,7 +157,7 @@ UString tr(const UString &str, const UString domain)
 #endif
 	return UString(boost::locale::translate(str.str()).str(domain.str()));
 }
-UString tr(const char* str, const UString domain)
+UString tr(const char *str, const UString domain)
 {
 #ifdef DUMP_TRANSLATION_STRINGS
 	if (str != "")
@@ -167,8 +167,6 @@ UString tr(const char* str, const UString domain)
 #endif
 	return UString(boost::locale::translate(str).str(domain.str()));
 }
-
-
 
 UString::~UString() = default;
 

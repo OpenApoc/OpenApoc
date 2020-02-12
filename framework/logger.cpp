@@ -7,8 +7,8 @@
 #include "framework/configfile.h"
 #include "framework/framework.h"
 #include "library/sp.h"
-#include <mutex>
 #include <iostream>
+#include <mutex>
 #ifdef BACKTRACE_LIBUNWIND
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE
@@ -104,7 +104,7 @@ std::list<UString> getBacktrace()
 	for (unsigned int frame = 0; frame < frames; frame++)
 	{
 		SymFromAddr(process, (DWORD64)(ip[frame]), 0, sym);
-		backtrace.push_back(format("  0x%p {}+0x%Ix\n", ip[frame], sym->Name,
+		backtrace.push_back(format("  0x{} {}+0x%Ix\n", ip[frame], sym->Name,
 		                           (uintptr_t)ip[frame] - (uintptr_t)sym->Address));
 	}
 

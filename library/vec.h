@@ -4,9 +4,9 @@
 #define GLM_ENABLE_EXPERIMENTAL
 
 #define GLM_FORCE_RADIANS
+#include "library/strings_format.h"
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
-#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -64,24 +64,22 @@ template <typename T> bool operator<(const glm::vec<2, T, highp> &a, const glm::
 }
 } // namespace glm
 
-template <typename T>
-struct fmt::formatter<OpenApoc::Vec2<T>> {
-  constexpr auto parse(format_parse_context& ctx) { return ctx.begin(); }
+template <typename T> struct fmt::formatter<OpenApoc::Vec2<T>>
+{
+	constexpr auto parse(format_parse_context &ctx) { return ctx.begin(); }
 
-  template <typename FormatContext>
-  auto format(const OpenApoc::Vec2<T>& v, FormatContext& ctx) {
-return format_to(ctx.out(), "{{{},{}}}", v.x, v.y);
-  }
+	template <typename FormatContext> auto format(const OpenApoc::Vec2<T> &v, FormatContext &ctx)
+	{
+		return format_to(ctx.out(), "{{{},{}}}", v.x, v.y);
+	}
 };
 
-template <typename T>
-struct fmt::formatter<OpenApoc::Vec3<T>> {
-  constexpr auto parse(format_parse_context& ctx) { return ctx.begin(); }
+template <typename T> struct fmt::formatter<OpenApoc::Vec3<T>>
+{
+	constexpr auto parse(format_parse_context &ctx) { return ctx.begin(); }
 
-  template <typename FormatContext>
-  auto format(const OpenApoc::Vec3<T>& v, FormatContext& ctx) {
-return format_to(ctx.out(), "{{{},{},{}}}", v.x, v.y, v.z);
-  }
+	template <typename FormatContext> auto format(const OpenApoc::Vec3<T> &v, FormatContext &ctx)
+	{
+		return format_to(ctx.out(), "{{{},{},{}}}", v.x, v.y, v.z);
+	}
 };
-
-

@@ -212,8 +212,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 		auto video_path = file.systemPath();
 		this->file_path = video_path;
 
-		LogInfo("Read {} bytes from video",
-		        static_cast<unsigned long long>(this->video_data_size));
+		LogInfo("Read {} bytes from video", static_cast<unsigned long long>(this->video_data_size));
 
 		this->smk_ctx = smk_open_memory(reinterpret_cast<unsigned char *>(this->video_data.get()),
 		                                static_cast<unsigned long>(this->video_data_size));

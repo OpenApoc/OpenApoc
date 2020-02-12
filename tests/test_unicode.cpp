@@ -41,9 +41,9 @@ struct example_unicode
 		{
 			if (expected_codepoints[i] != decoded_codepoints[i])
 			{
-				LogError(
-				    "String \"{}\" has unexpected codepoint at index {} - got 0x{:x} expected 0x{:x}",
-				    u8string, i, decoded_codepoints[i], expected_codepoints[i]);
+				LogError("String \"{}\" has unexpected codepoint at index {} - got 0x{:x} expected "
+				         "0x{:x}",
+				         u8string, i, decoded_codepoints[i], expected_codepoints[i]);
 				return false;
 			}
 			string2 += decoded_codepoints[i];
@@ -71,8 +71,8 @@ static bool test_remove(const UString &initial, const UString &expected, size_t 
 	removed.remove(offset, count);
 	if (removed != expected)
 	{
-		LogError("\"{}\".remove({}, {}) = \"{}\", expected \"{}\"", initial, offset, count,
-		         removed, expected);
+		LogError("\"{}\".remove({}, {}) = \"{}\", expected \"{}\"", initial, offset, count, removed,
+		         expected);
 		return false;
 	}
 	return true;
