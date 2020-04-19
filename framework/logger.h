@@ -32,8 +32,6 @@ LogFunction getLogCallback();
 
 void Log(LogLevel level, UString prefix, const UString &text);
 
-std::list<UString> getBacktrace();
-
 /* MSVC doesn't have __PRETTY_FUNCTION__ but __FUNCSIG__? */
 // FIXME: !__GNUC__ isn't the same as MSVC
 #ifndef __GNUC__
