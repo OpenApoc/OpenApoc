@@ -28,8 +28,7 @@ template <typename T, bool conservative> class LineSegment
 	LineSegmentIterator<T, conservative> end();
 };
 
-template <typename T, bool conservative>
-class LineSegmentIterator : public std::iterator<std::forward_iterator_tag, Vec3<T>>
+template <typename T, bool conservative> class LineSegmentIterator
 {
   private:
 	Vec3<T> point;
@@ -42,6 +41,11 @@ class LineSegmentIterator : public std::iterator<std::forward_iterator_tag, Vec3
 	LineSegment<T, conservative> &line;
 
   public:
+	using iterator_category = std::forward_iterator_tag;
+	using value_type = Vec3<T>;
+	using difference_type = ptrdiff_t;
+	using pointer = Vec3<T> *;
+	using reference = Vec3<T> &;
 	LineSegmentIterator(Vec3<T> start, LineSegment<T, conservative> &l) : point(start), line(l)
 	{
 		err = {static_cast<T>(0), static_cast<T>(0), static_cast<T>(0)};

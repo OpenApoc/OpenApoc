@@ -1,6 +1,7 @@
 #include "framework/logger_file.h"
 #include "framework/logger.h"
 #include "framework/options.h"
+#include "library/backtrace.h"
 
 #include <fstream>
 
@@ -49,11 +50,8 @@ void FileLogFunction(LogLevel level, UString prefix, const UString &text)
 
 	if (level <= backtraceLogLevel)
 	{
-		const auto backtrace = getBacktrace();
-		for (const auto &frame : backtrace)
-		{
-			logFile << frame << std::endl;
-		}
+		const auto backtrace = new_backtrace();
+		logFile << *backtrace << std::endl;
 		flush = true;
 	}
 	if (flush)

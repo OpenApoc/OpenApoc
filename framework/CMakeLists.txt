@@ -4,7 +4,6 @@ PROJECT(OpenApoc_Framework CXX C)
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.9)
 
-option(BACKTRACE_ON_ERROR "Print backtrace on logging an error (Requires libunwind on linux, no extra dependencies on windows)" ON)
 option(DIALOG_ON_ERROR "Pop up a dialog box showing errors" ON)
 
 
@@ -207,7 +206,6 @@ if(APPLE)
 	# OSX doesn't seem to support the c++11 'thread_local' keyword
 	target_compile_definitions(OpenApoc_Framework PRIVATE
 			"-DBROKEN_THREAD_LOCAL")
-	SET(BACKTRACE_ON_ERROR ON)
 elseif(WIN32)
 	target_compile_definitions(OpenApoc_Framework PRIVATE "-DGLESWRAP_PLATFORM_WGL")
 else()
@@ -284,33 +282,6 @@ endif()
 # Dialog is handled by SDL2
 if(DIALOG_ON_ERROR)
 	target_compile_definitions(OpenApoc_Framework PUBLIC -DERROR_DIALOG)
-endif()
-
-# Backtrace required libunwind
-if(BACKTRACE_ON_ERROR)
-	if(WIN32)
-		target_link_libraries(OpenApoc_Framework PUBLIC dbghelp)
-	elseif(APPLE)
-		# MacOS always has libunwind with no extra libs needed
-		target_compile_definitions(OpenApoc_Framework PUBLIC -DBACKTRACE_LIBUNWIND)
-	else()
-		find_package(PkgConfig)
-		pkg_check_modules(PC_UNWIND libunwind)
-		if (NOT PC_UNWIND_FOUND)
-			#Ubuntu 12.04 libunwind doesn't have a pkgconfig - try 'current' paths anyway
-			find_path(UNWIND_INCLUDE_DIR libunwind.h HINTS ${FRAMEWORK_INCLUDE_DIRS})
-			if (NOT UNWIND_INCLUDE_DIR)
-					message(FATAL_ERROR "Libunwind not found")
-			endif()
-			target_link_libraries(OpenApoc_Framework PUBLIC unwind dl)
-			#HACK - this assumes the library path is already searched?
-		else()
-			find_path(UNWIND_INCLUDE_DIR libunwind.h HINTS ${PC_UNWIND_INCLUDEDIR})
-			target_link_libraries(OpenApoc_Framework PUBLIC ${PC_UNWIND_LIBRARIES} dl)
-		endif()
-		target_compile_definitions(OpenApoc_Framework PUBLIC -DBACKTRACE_LIBUNWIND)
-		target_include_directories(OpenApoc_Framework PUBLIC ${UNWIND_INCLUDE_DIR})
-	endif()
 endif()
 
 # OpenGL is required for any renderer
