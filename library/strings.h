@@ -16,7 +16,7 @@ class UString
 	std::string u8Str;
 
   public:
-	class ConstIterator : public std::iterator<std::forward_iterator_tag, UniChar>
+	class ConstIterator
 	{
 	  private:
 		const UString &s;
@@ -31,6 +31,12 @@ class UString
 		ConstIterator operator++();
 		ConstIterator operator--();
 		UniChar operator*() const;
+
+		using iterator_category = std::forward_iterator_tag;
+		using value_type = UniChar;
+		using difference_type = ptrdiff_t;
+		using pointer = UniChar *;
+		using reference = UniChar &;
 	};
 
 	// ASSUMPTIONS:
