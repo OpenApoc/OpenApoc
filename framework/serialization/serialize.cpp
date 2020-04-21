@@ -78,6 +78,8 @@ class XMLSerializationNode final : public SerializationNode
 
 	UString getName() override;
 	void setName(const UString &str) override;
+	UString getAttribute(const UString &attribute) override;
+	void setAttribute(const UString &attribute, const UString &value) override;
 	UString getValue() override;
 	void setValue(const UString &str) override;
 
@@ -314,6 +316,16 @@ void XMLSerializationNode::setName(const UString &str) { node.set_name(str.cStr(
 UString XMLSerializationNode::getValue() { return node.text().get(); }
 
 void XMLSerializationNode::setValue(const UString &str) { node.text().set(str.cStr()); }
+
+UString XMLSerializationNode::getAttribute(const UString &attribute)
+{
+	return node.attribute(attribute.cStr()).value();
+}
+
+void XMLSerializationNode::setAttribute(const UString &attribute, const UString &value)
+{
+	node.attribute(attribute.cStr()).set_value(value.cStr());
+}
 
 unsigned int XMLSerializationNode::getValueUInt() { return node.text().as_uint(); }
 

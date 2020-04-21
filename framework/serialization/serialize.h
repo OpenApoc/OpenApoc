@@ -28,6 +28,8 @@ class SerializationNode
 
 	virtual UString getName() = 0;
 	virtual void setName(const UString &str) = 0;
+	virtual UString getAttribute(const UString &attribute) = 0;
+	virtual void setAttribute(const UString &attribute, const UString &value) = 0;
 	virtual UString getValue() = 0;
 	virtual void setValue(const UString &str) = 0;
 
