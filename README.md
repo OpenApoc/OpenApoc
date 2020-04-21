@@ -1,13 +1,13 @@
 # OpenApocalypse [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Are%20you%20a%20fan%20of%20X-Com%20Apocalypse?%20OpenApoc%20is%20a%20clone%20of%20this%20great%20game%20-%20contribute!%20https://github.com/OpenApoc/OpenApoc&hashtags=games,openapoc,xcom)
 
-> OpenApoc is an open-source re-implementation of the original [X-COM: Apocalypse](https://www.ufopaedia.org/index.php/Apocalypse), that requires the original files to run, licensed under the MIT and written in C++ / SDL2. It was originally founded by PmProg in July 2014, and has since grown in [community](https://www.ufopaedia.org/index.php/Credits_(OpenApoc)).
+> OpenApoc is an open-source re-implementation of the original [X-COM: Apocalypse](https://www.ufopaedia.org/index.php/Apocalypse), that requires the original files to run, licensed under the GPL3 and written in C++ / SDL2. It was originally founded by PmProg in July 2014, and has since grown in [community](https://www.ufopaedia.org/index.php/Credits_(OpenApoc)).
 
 [![Linux Build Status](https://img.shields.io/travis/OpenApoc/OpenApoc.svg?label=LinuxTravis)](https://travis-ci.org/OpenApoc/OpenApoc)
 [![Windows Build Status](https://img.shields.io/appveyor/ci/OpenApoc/openapoc.svg?label=WindowsAppveyor)](https://ci.appveyor.com/project/OpenApoc/openapoc)
 [![Openapoc issues](https://img.shields.io/github/issues/openapoc/openapoc.svg)](https://github.com/openapoc/openapoc/issues)
 [![See our Trello TO-DO list for more info](https://img.shields.io/badge/See%20our-Trello%20TO--DO%20list-blue.svg)](https://trello.com/b/lX5Y3DwR/openapoc)
 [![Translate OpenApoc to your language](https://img.shields.io/badge/Translate-Openapoc-blue.svg)](https://www.transifex.com/x-com-apocalypse/apocalypse/)
-[![OpenApoc MIT license](https://img.shields.io/badge/license-MIT-red.svg)](https://github.com/OpenApoc/OpenApoc/blob/master/LICENSE)\
+[![OpenApoc GPL3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/OpenApoc/OpenApoc/blob/master/LICENSE)\
 [![Openapoc forum](https://img.shields.io/badge/Visit%20our-forum-orange.svg)](http://openapoc.org)
 [![Openapoc IRC chat](https://img.shields.io/badge/IRC-devs%20chat-brightgreen.svg)](http://webchat.freenode.net/?channels=openapoc)
 [![Openapoc Discord](https://img.shields.io/discord/142798944970211328.svg?label=discord)](https://discord.gg/d6DAHEb)
