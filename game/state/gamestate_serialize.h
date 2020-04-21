@@ -340,6 +340,11 @@ void serializeIn(const GameState *state, SerializationNode *node, std::list<T> &
 {
 	if (!node)
 		return;
+	const auto delete_list = (node->getAttribute("op") == DELETE_OP_ATTRIBUTE);
+	if (delete_list)
+	{
+		list.clear();
+	}
 	auto entry = node->getNodeOpt("entry");
 	while (entry)
 	{
@@ -354,6 +359,11 @@ void serializeIn(const GameState *state, SerializationNode *node, std::vector<T>
 {
 	if (!node)
 		return;
+	const auto delete_vector = (node->getAttribute("op") == DELETE_OP_ATTRIBUTE);
+	if (delete_vector)
+	{
+		vector.clear();
+	}
 	auto entry = node->getNodeOpt("entry");
 	uint64_t sizeHint = 0;
 	serializeIn(state, node->getNodeOpt("sizeHint"), sizeHint);
@@ -376,12 +386,25 @@ void serializeIn(const GameState *state, SerializationNode *node, std::set<T> &s
 {
 	if (!node)
 		return;
+	const auto delete_set = (node->getAttribute("op") == DELETE_OP_ATTRIBUTE);
+	if (delete_set)
+	{
+		set.clear();
+	}
 	auto entry = node->getNodeOpt("entry");
 	while (entry)
 	{
 		T type = {};
 		serializeIn(state, entry, type);
-		set.insert(type);
+		const auto delete_entry = (entry->getAttribute("op") == DELETE_OP_ATTRIBUTE);
+		if (delete_entry)
+		{
+			set.erase(type);
+		}
+		else
+		{
+			set.insert(type);
+		}
 		entry = entry->getNextSiblingOpt("entry");
 	}
 }
