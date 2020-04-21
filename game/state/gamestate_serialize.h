@@ -71,6 +71,10 @@
 namespace OpenApoc
 {
 
+static const UString OVERRIDE_OP_ATTRIBUTE = "override";
+static const UString DELETE_OP_ATTRIBUTE = "delete";
+static const UString APPEND_OP_ATTRIBUTE = "append";
+
 template <typename T> bool operator==(const StateRefMap<T> &a, const StateRefMap<T> &b)
 {
 	if (a.size() != b.size())
@@ -219,13 +223,32 @@ void serializeIn(const GameState *state, SerializationNode *node, std::map<Key, 
 {
 	if (!node)
 		return;
+
+	const auto delete_map = (node->getAttribute("op") == DELETE_OP_ATTRIBUTE);
+	if (delete_map)
+	{
+		map.clear();
+	}
 	auto entry = node->getNodeOpt("entry");
 	while (entry)
 	{
 		Key key;
-		serializeIn(state, entry->getNodeReq("key"), key);
-		auto &value = map[key];
-		serializeIn(state, entry->getNodeReq("value"), value);
+		const auto keyNode = entry->getNodeReq("key");
+		serializeIn(state, keyNode, key);
+
+		const auto delete_node = (entry->getAttribute("op") == DELETE_OP_ATTRIBUTE);
+
+		if (delete_node)
+		{
+			map.erase(key);
+		}
+
+		const auto valueNode = entry->getNodeOpt("value");
+		if (valueNode)
+		{
+			auto &value = map[key];
+			serializeIn(state, valueNode, value);
+		}
 
 		entry = entry->getNextSiblingOpt("entry");
 	}
@@ -237,13 +260,31 @@ void serializeInSectionMap(const GameState *state, SerializationNode *node,
 {
 	if (!node)
 		return;
+	const auto delete_map = (node->getAttribute("op") == DELETE_OP_ATTRIBUTE);
+	if (delete_map)
+	{
+		map.clear();
+	}
 	auto entry = node->getNodeOpt("entry");
 	while (entry)
 	{
 		UString key;
-		serializeIn(state, entry->getNodeReq("key"), key);
-		auto &value = map[key];
-		serializeIn(state, entry->getSectionReq(key.cStr()), value);
+		const auto keyNode = entry->getNodeReq("key");
+		serializeIn(state, keyNode, key);
+
+		const auto delete_node = (entry->getAttribute("op") == DELETE_OP_ATTRIBUTE);
+		if (delete_node)
+		{
+			map.erase(key);
+		}
+
+		const auto sectionNode = entry->getSectionOpt(key.cStr());
+		if (sectionNode)
+		{
+
+			auto &value = map[key];
+			serializeIn(state, sectionNode, value);
+		}
 
 		entry = entry->getNextSiblingOpt("entry");
 	}
@@ -255,13 +296,31 @@ void serializeIn(const GameState *state, SerializationNode *node, std::map<Key, 
 {
 	if (!node)
 		return;
+	const auto delete_map = (node->getAttribute("op") == DELETE_OP_ATTRIBUTE);
+	if (delete_map)
+	{
+		map.clear();
+	}
 	auto entry = node->getNodeOpt("entry");
 	while (entry)
 	{
 		Key key = {};
-		serializeIn(state, entry->getNodeReq("key"), key, keyMap);
-		auto &value = map[key];
-		serializeIn(state, entry->getNodeReq("value"), value);
+		const auto keyNode = entry->getNodeReq("key");
+		serializeIn(state, keyNode, key);
+
+		const auto delete_node = (entry->getAttribute("op") == DELETE_OP_ATTRIBUTE);
+		if (delete_node)
+		{
+			map.erase(key);
+		}
+
+		const auto valueNode = entry->getNodeReq("value");
+		if (valueNode)
+		{
+
+			auto &value = map[key];
+			serializeIn(state, valueNode, value);
+		}
 
 		entry = entry->getNextSiblingOpt("entry");
 	}
