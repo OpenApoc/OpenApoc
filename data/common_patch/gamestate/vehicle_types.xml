@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vehicle_types>
+  <entry>
+    <key>VEHICLETYPE_DIMENSION_PROBE</key>
+    <value>
+      <name>Dimension Probe</name>
+      <manufacturer>ORG_X-COM</manufacturer>
+    </value>
+  </entry>
+</vehicle_types>
