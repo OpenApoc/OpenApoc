@@ -293,7 +293,10 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 				};
 
 				vehicle->mapIconType = VehicleType::MapIconType::Arrow;
-				vehicle->canEnterDimensionGate = vehicle->manufacturer.id == "ORG_X-COM";
+				vehicle->canEnterDimensionGate =
+				    vehicle->manufacturer.id == "ORG_X-COM" ||
+				    // for some reason Dimension Probe has Marsec as manufacturer
+				    id == "VEHICLETYPE_DIMENSION_PROBE";
 
 				int image_offset = 0;
 				for (auto &bank : bankings)
