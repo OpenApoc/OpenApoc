@@ -3602,6 +3602,13 @@ bool CityView::handleGameStateEvent(Event *e)
 				}
 			}
 
+			// the player may have recalled agents
+			// in that case we don't want to prompt for investigation
+			if (agents.empty())
+			{
+				break;
+			}
+
 			UString title = tr("Commence investigation");
 			UString message = format(tr("All selected units and crafts have arrived at %s. "
 			                            "Proceed with investigation? (%d units)"),
