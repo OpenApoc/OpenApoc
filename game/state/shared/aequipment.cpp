@@ -1,7 +1,7 @@
 #include "game/state/shared/aequipment.h"
-#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
+#include "framework/options.h"
 #include "framework/sound.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleitem.h"
@@ -292,6 +292,12 @@ static sp<AEquipment> getAutoreloadAmmoType(const AEquipment &weapon)
 {
 	LogAssert(weapon.type->type == AEquipmentType::Type::Weapon);
 	LogAssert(weapon.getPayloadType() != weapon.type);
+
+	// Check if the auto-reload option is disabled
+	if (!Options::optionAutoReload.get())
+	{
+		return nullptr;
+	}
 
 	// Prefer loading the same type of ammo again
 	if (weapon.lastLoadedAmmoType)

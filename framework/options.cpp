@@ -123,6 +123,7 @@ void dumpOptionsToLog()
 	dumpOption(optionSkipTurbo);
 	dumpOption(optionRunAndKneel);
 	dumpOption(optionSeedRng);
+	dumpOption(optionAutoReload);
 
 	dumpOption(optionStunHostileAction);
 	dumpOption(optionRaidHostileAction);
@@ -385,6 +386,8 @@ ConfigOptionBool optionSkipTurbo("OpenApoc.NewFeature", "SkipTurboMovement",
 ConfigOptionBool optionRunAndKneel("OpenApoc.NewFeature", "RunAndKneel",
                                    "All units run and kneel by default", false);
 ConfigOptionBool optionSeedRng("OpenApoc.NewFeature", "SeedRng", "Seed RNG on game start", true);
+ConfigOptionBool optionAutoReload("OpenApoc.NewFeature", "AutoReload",
+                                  "Automatically reload weapons when empty", true);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);
