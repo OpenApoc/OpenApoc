@@ -1335,6 +1335,30 @@ bool AEquipScreen::tryPlaceItem(sp<Agent> agent, Vec2<int> slotPos, bool *insuff
 			}
 		}
 	}
+
+	if (!canAdd)
+	{
+		// Try adjacent positions
+		// FIXME: Vec2<int> constexpr?
+		static const std::array<Vec2<int>, 8> adjacent_offsets = {
+		    Vec2<int>{1, 0}, Vec2<int>{-1, 0}, Vec2<int>{0, 1},  Vec2<int>{0, -1},
+		    Vec2<int>{1, 1}, Vec2<int>{1, -1}, Vec2<int>{-1, 1}, Vec2<int>{-1, -1}};
+		for (const auto offset : adjacent_offsets)
+		{
+			const auto offsetPosition = slotPos + offset;
+			if (offsetPosition.x < 0 || offsetPosition.y < 0)
+				continue;
+			const bool canAddOffset =
+			    agent->canAddEquipment(offsetPosition, draggedEquipment->type);
+			if (canAddOffset)
+			{
+				canAdd = true;
+				slotPos = offsetPosition;
+				break;
+			}
+		}
+	}
+
 	if (canAdd && agent->unit && agent->unit->tileObject &&
 	    state->current_battle->mode == Battle::Mode::TurnBased && draggedEquipmentOrigin.x == -1 &&
 	    draggedEquipmentOrigin.y == -1 &&
