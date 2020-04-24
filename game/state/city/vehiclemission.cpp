@@ -2249,7 +2249,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				return;
 			}
 			// Target not crashed or dead or already rescued
-			if (!targetVehicle ||
+			if (!targetVehicle || targetVehicle->isDead() ||
 			    (!targetVehicle->crashed && !targetVehicle->sliding && !targetVehicle->falling) ||
 			    targetVehicle->carriedByVehicle)
 			{

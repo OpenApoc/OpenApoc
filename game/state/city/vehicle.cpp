@@ -1133,7 +1133,8 @@ void VehicleMover::updateCrashed(GameState &state, unsigned int ticks [[maybe_un
 void VehicleMover::updateSliding(GameState &state, unsigned int ticks)
 {
 	// Slided off?
-	auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
+	auto presentScenery =
+	    vehicle.tileObject ? vehicle.tileObject->getOwningTile()->presentScenery : nullptr;
 	if (!presentScenery)
 	{
 		vehicle.sliding = false;
