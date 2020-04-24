@@ -169,6 +169,7 @@
 		<name>AEquipment</name>
 		<member>type</member>
 		<member>payloadType</member>
+		<member>lastLoadedAmmoType</member>
 		<member>equippedPosition</member>
 		<member>equippedSlotType</member>
 		<member>ownerAgent</member>

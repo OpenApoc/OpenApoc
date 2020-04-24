@@ -33,6 +33,7 @@ class AEquipment : public std::enable_shared_from_this<AEquipment>, public Equip
 	StateRef<AEquipmentType> type;
 	// Type of loaded ammunition
 	StateRef<AEquipmentType> payloadType;
+	StateRef<AEquipmentType> lastLoadedAmmoType;
 	// Function to simplify getting payload for weapons and grenades
 	StateRef<AEquipmentType> getPayloadType() const;
 
