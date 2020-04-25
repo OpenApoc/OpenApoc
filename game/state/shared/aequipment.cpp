@@ -826,7 +826,11 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 	if (!config().getBool("OpenApoc.Cheat.InfiniteAmmo") ||
 	    this->ownerAgent->owner != state.getPlayer())
 	{
-		ammo--;
+			if (this->ammo < number_of_shots)
+			{
+				number_of_shots = this->ammo;
+			}
+			this->ammo -= number_of_shots;
 	}
 	if (ammo == 0 && payloadType)
 	{
