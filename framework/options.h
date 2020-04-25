@@ -101,6 +101,7 @@ extern ConfigOptionBool optionFuelCrashingVehicles;
 extern ConfigOptionBool optionSkipTurbo;
 extern ConfigOptionBool optionRunAndKneel;
 extern ConfigOptionBool optionSeedRng;
+extern ConfigOptionBool optionAutoReload;
 
 extern ConfigOptionBool optionStunHostileAction;
 extern ConfigOptionBool optionRaidHostileAction;
