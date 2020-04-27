@@ -3013,7 +3013,7 @@ bool BattleView::handleKeyDown(Event *e)
 				bool local = !(modifierLCtrl || modifierRCtrl);
 				for (auto &u : battle.units)
 				{
-					if (u.second->isDead())
+					if (u.second->isDead() || u.second->retreated)
 					{
 						continue;
 					}
