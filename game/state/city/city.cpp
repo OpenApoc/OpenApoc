@@ -412,6 +412,10 @@ void City::repairScenery(GameState &state)
 			owner->balance -= initialType->value;
 			s->damaged = false;
 			s->type = initialType;
+			if (s->type->tile_type == SceneryTileType::TileType::Road)
+			{
+				notifyRoadChange(s->initialPosition, true);
+			}
 		}
 	}
 	// Step 02: Repair destroyed scenery
