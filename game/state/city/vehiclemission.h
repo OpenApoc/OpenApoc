@@ -185,6 +185,7 @@ class VehicleMission
 	bool acquireTargetBuilding(GameState &state, Vehicle &v);
 	void updateTimer(unsigned ticks);
 	void takePositionNearPortal(GameState &state, Vehicle &v);
+	static bool canRecoverVehicle(GameState &state, Vehicle &v, Vehicle &target);
 
 	// Methods to create new missions
 

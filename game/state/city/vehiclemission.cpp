@@ -856,20 +856,6 @@ VehicleTargetHelper::adjustTargetToClosestFlying(GameState &state, Vehicle &v, V
 	while (true)
 	{
 		bool foundScenery = false;
-		bool foundCrash = false;
-
-		for (auto &obj : targetTile->intersectingObjects)
-		{
-			if (obj->getType() == TileObject::Type::Vehicle)
-			{
-				auto vehicle = std::static_pointer_cast<TileObjectVehicle>(obj);
-				if (vehicle->getVehicle()->crashed)
-				{
-					foundCrash = true;
-					break;
-				}
-			}
-		}
 		for (auto &obj : targetTile->ownedObjects)
 		{
 			if (obj->getType() == TileObject::Type::Scenery)
@@ -883,12 +869,10 @@ VehicleTargetHelper::adjustTargetToClosestFlying(GameState &state, Vehicle &v, V
 				break;
 			}
 		}
-		if (foundCrash || !foundScenery)
+		if (!foundScenery)
 		{
 			break;
 		}
-		LogInfo("Cannot move to %d %d %d, contains scenery that is not a landing pad", target.x,
-		        target.y, target.z);
 		reachability = Reachability::BlockedByScenery;
 		target.z++;
 		if (target.z >= map.size.z)
@@ -2242,45 +2226,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		}
 		case MissionType::RecoverVehicle:
 		{
-			// Ground can't recover
-			if (v.type->isGround())
-			{
-				cancelled = true;
-				return;
-			}
-			// Target not crashed or dead or already rescued
-			if (!targetVehicle || targetVehicle->isDead() ||
-			    (!targetVehicle->crashed && !targetVehicle->sliding && !targetVehicle->falling) ||
-			    targetVehicle->carriedByVehicle)
-			{
-				cancelled = true;
-				return;
-			}
-			// Can't rescue
-			if (targetVehicle->owner != state.getAliens() && !v.type->canRescueCrashed)
-			{
-				cancelled = true;
-				return;
-			}
-			// Only X-Com can storm UFO
-			if (targetVehicle->owner == state.getAliens() && v.owner != state.getPlayer())
-			{
-				cancelled = true;
-				return;
-			}
-			// Find soldier
-			bool needSoldiersButNotFound =
-			    v.owner == state.getPlayer() ||
-			    v.owner->isRelatedTo(targetVehicle->owner) == Organisation::Relation::Hostile;
-			for (auto &a : v.currentAgents)
-			{
-				if (a->type->role == AgentType::Role::Soldier)
-				{
-					needSoldiersButNotFound = false;
-					break;
-				}
-			}
-			if (needSoldiersButNotFound)
+			if (!targetVehicle || !VehicleMission::canRecoverVehicle(state, v, *targetVehicle))
 			{
 				cancelled = true;
 				return;
@@ -3065,6 +3011,62 @@ void VehicleMission::takePositionNearPortal(GameState &state, Vehicle &v)
 	std::uniform_int_distribution<int> yPos((int)v.position.y - 2, (int)v.position.y + 2);
 	v.addMission(state, VehicleMission::gotoLocation(
 	                        state, v, v.getPreferredPosition(xPos(state.rng), yPos(state.rng))));
+}
+
+bool VehicleMission::canRecoverVehicle(GameState &state, Vehicle &v, Vehicle &target)
+{
+	// Ground can't recover
+	if (v.type->isGround())
+	{
+		return false;
+	}
+	// Target not crashed or dead or already rescued
+	if (target.isDead() || (!target.crashed && !target.sliding && !target.falling) ||
+	    target.carriedByVehicle)
+	{
+		return false;
+	}
+	// Only X-Com pursues sliding or falling crafts
+	if (!target.crashed && v.owner != state.getPlayer())
+	{
+		return false;
+	}
+	// Can't rescue
+	if (target.owner != state.getAliens() && !v.type->canRescueCrashed)
+	{
+		return false;
+	}
+	// Only X-Com can storm UFO
+	if (target.owner == state.getAliens() && v.owner != state.getPlayer())
+	{
+		return false;
+	}
+	// Find soldier
+	bool needSoldiersButNotFound =
+	    v.owner == state.getPlayer() ||
+	    v.owner->isRelatedTo(target.owner) == Organisation::Relation::Hostile;
+	for (auto &a : v.currentAgents)
+	{
+		if (a->type->role == AgentType::Role::Soldier)
+		{
+			needSoldiersButNotFound = false;
+			break;
+		}
+	}
+	if (needSoldiersButNotFound)
+	{
+		return false;
+	}
+	// Don't attempt to rescue unreachable craft
+	Vec3<int> closestPosition = target.position;
+	if (VehicleTargetHelper::adjustTargetToClosest(
+	        state, v, closestPosition, VehicleTargetHelper::VehicleAvoidance::Ignore, true)
+	        .reachability != VehicleTargetHelper::Reachability::Reachable)
+	{
+		return false;
+	}
+
+	return true;
 }
 
 UString VehicleMission::getName()
