@@ -143,12 +143,23 @@ class VehicleTargetHelper
 	                                                const VehicleAvoidance vehicleAvoidance,
 	                                                bool adjustForFlying);
 
+	// Checks reachability of the target location for the given vehicle.
+	// Args:
+	//   vehicle: Vehicle, only used for looking up the type.
+	//   target: Location to be checked for reachability.
+	// Returns: Reachability, see above for details.
+	static Reachability isReachableTarget(const Vehicle &v, Vec3<int> target);
+
   private:
 	static AdjustTargetResult adjustTargetToClosestFlying(GameState &state, Vehicle &v,
 	                                                      Vec3<int> &target,
 	                                                      const VehicleAvoidance vehicleAvoidance);
 	static AdjustTargetResult adjustTargetToClosestRoad(Vehicle &v, Vec3<int> &target);
 	static AdjustTargetResult adjustTargetToClosestGround(Vehicle &v, Vec3<int> &target);
+
+	static Reachability isReachableTargetFlying(const Vehicle &v, Vec3<int> target);
+	static Reachability isReachableTargetRoad(const Vehicle &v, Vec3<int> target);
+	static Reachability isReachableTargetGround(const Vehicle &v, Vec3<int> target);
 };
 
 class VehicleMission
@@ -185,7 +196,7 @@ class VehicleMission
 	bool acquireTargetBuilding(GameState &state, Vehicle &v);
 	void updateTimer(unsigned ticks);
 	void takePositionNearPortal(GameState &state, Vehicle &v);
-	static bool canRecoverVehicle(GameState &state, Vehicle &v, Vehicle &target);
+	static bool canRecoverVehicle(const GameState &state, const Vehicle &v, const Vehicle &target);
 
 	// Methods to create new missions
 
