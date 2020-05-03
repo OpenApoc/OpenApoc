@@ -605,6 +605,11 @@ bool BattleMapPart::findSupport(bool allowClinging)
 							partList.emplace_back(Vec3<int>{pos.x, pos.y, pos.z + p.first},
 							                      TileObject::Type::LeftWall);
 							break;
+						case MapDirection::Up:
+							[[fallthrough]];
+						case MapDirection::Down:
+							// Up and Down don't have map parts
+							break;
 					}
 				}
 
@@ -644,6 +649,11 @@ bool BattleMapPart::findSupport(bool allowClinging)
 					case MapDirection::West:
 						dx = negInc;
 						break;
+					case MapDirection::Up:
+						[[fallthrough]];
+					case MapDirection::Down:
+						// Up and Down don't have map parts
+						break;
 				}
 				partList.emplace_back(Vec3<int>{pos.x + dx, pos.y + dy, pos.z + p.first}, p.second);
 
@@ -658,6 +668,7 @@ bool BattleMapPart::findSupport(bool allowClinging)
 					switch (d)
 					{
 						case MapDirection::North:
+							[[fallthrough]];
 						case MapDirection::South:
 							switch (d)
 							{
@@ -668,11 +679,18 @@ bool BattleMapPart::findSupport(bool allowClinging)
 									dx = -1;
 									break;
 								case MapDirection::North:
+									[[fallthrough]];
 								case MapDirection::South:
 									continue;
+								case MapDirection::Up:
+									[[fallthrough]];
+								case MapDirection::Down:
+									// Up and Down don't have map parts
+									break;
 							}
 							break;
 						case MapDirection::East:
+							[[fallthrough]];
 						case MapDirection::West:
 							switch (d)
 							{
@@ -683,9 +701,20 @@ bool BattleMapPart::findSupport(bool allowClinging)
 									dy = 1;
 									break;
 								case MapDirection::East:
+									[[fallthrough]];
 								case MapDirection::West:
 									continue;
+								case MapDirection::Up:
+									[[fallthrough]];
+								case MapDirection::Down:
+									// Up and Down don't have map parts
+									break;
 							}
+							break;
+						case MapDirection::Up:
+							[[fallthrough]];
+						case MapDirection::Down:
+							// Up and Down don't have map parts
 							break;
 					}
 					partList.emplace_back(Vec3<int>{pos.x + dx, pos.y + dy, pos.z + p.first},
