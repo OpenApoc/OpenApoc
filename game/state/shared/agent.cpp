@@ -900,7 +900,6 @@ bool Agent::getNewGoal(GameState &state)
 {
 	bool popped = false;
 	bool acquired = false;
-	Vec3<float> nextGoal;
 	// Pop finished missions if present
 	popped = popFinishedMissions(state);
 	do
