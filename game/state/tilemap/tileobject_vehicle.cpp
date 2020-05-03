@@ -56,7 +56,6 @@ void TileObjectVehicle::drawStatic(Renderer &r, sp<Vehicle> vehicle, TileTransfo
 	{
 		case TileViewMode::Isometric:
 		{
-			float closestAngle = FLT_MAX;
 			sp<Image> closestImage;
 
 			if (vehicle->type->type == VehicleType::Type::UFO)
