@@ -1047,7 +1047,7 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 				case SceneryTileType::WalkMode::Onto:
 				case SceneryTileType::WalkMode::Into:
 				{
-					if (newPosition.z < tile->getRestingPosition(false, true).z)
+					if (newPosition.z <= tile->getRestingPosition(false, true).z)
 					{
 						vehicle.falling = false;
 					}
