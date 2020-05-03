@@ -29,10 +29,10 @@ namespace OpenApoc
 CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
                            TileViewMode initialMode, Vec3<float> screenCenterTile,
                            GameState &gameState)
-    : TileView(map, isoTileSize, stratTileSize, initialMode), state(gameState),
+    : TileView(map, isoTileSize, stratTileSize, initialMode),
       day_palette(fw().data->loadPalette("xcom3/ufodata/pal_01.dat")),
       twilight_palette(fw().data->loadPalette("xcom3/ufodata/pal_02.dat")),
-      night_palette(fw().data->loadPalette("xcom3/ufodata/pal_03.dat"))
+      night_palette(fw().data->loadPalette("xcom3/ufodata/pal_03.dat")), state(gameState)
 {
 	std::vector<sp<Palette>> newPal;
 	newPal.resize(3);
