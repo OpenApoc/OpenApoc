@@ -296,12 +296,15 @@ void TransferScreen::closeScreen()
 		{
 			if (vecChanged[i] || forceLimits)
 			{
-				crewOverLimit = b.second->getUsage(*state, FacilityType::Capacity::Quarters,
+				crewOverLimit = vecCrewDelta[i] > 0 &&
+				                b.second->getUsage(*state, FacilityType::Capacity::Quarters,
 				                                   vecCrewDelta[i]) > 100;
-				cargoOverLimit = b.second->getUsage(*state, FacilityType::Capacity::Stores,
+				cargoOverLimit = vecCargoDelta[i] > 0 &&
+				                 b.second->getUsage(*state, FacilityType::Capacity::Stores,
 				                                    vecCargoDelta[i]) > 100;
-				alienOverLimit = b.second->getUsage(*state, FacilityType::Capacity::Aliens,
-				                                    vecBioDelta[i]) > 100;
+				alienOverLimit =
+				    vecBioDelta[i] > 0 && b.second->getUsage(*state, FacilityType::Capacity::Aliens,
+				                                             vecBioDelta[i]) > 100;
 				if (crewOverLimit || cargoOverLimit || alienOverLimit)
 				{
 					bad_base = b.second->building->base;
