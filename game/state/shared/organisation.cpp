@@ -327,8 +327,8 @@ void Organisation::updateMissions(GameState &state)
 		// Rescue owned
 		for (auto &v : state.vehicles)
 		{
-			if (v.second->city == rescueTransport->city && v.second->crashed &&
-			    !v.second->carriedByVehicle && v.second->owner.id == id)
+			if (v.second->city == rescueTransport->city && v.second->owner.id == id &&
+			    VehicleMission::canRecoverVehicle(state, *rescueTransport, *v.second))
 			{
 				bool foundRescuer = false;
 				for (auto &r : state.vehicles)
@@ -360,9 +360,9 @@ void Organisation::updateMissions(GameState &state)
 		// Rescue allies but not aliens
 		for (auto &v : state.vehicles)
 		{
-			if (v.second->city == rescueTransport->city && v.second->crashed &&
-			    v.second->owner != state.getAliens() && !v.second->carriedByVehicle &&
-			    v.second->owner.id != id && isRelatedTo(v.second->owner) == Relation::Allied)
+			if (v.second->city == rescueTransport->city && v.second->owner != state.getAliens() &&
+			    v.second->owner.id != id && isRelatedTo(v.second->owner) == Relation::Allied &&
+			    VehicleMission::canRecoverVehicle(state, *rescueTransport, *v.second))
 			{
 				bool foundRescuer = false;
 				for (auto &r : state.vehicles)
