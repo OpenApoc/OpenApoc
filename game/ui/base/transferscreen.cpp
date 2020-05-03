@@ -636,6 +636,12 @@ void TransferScreen::executeOrders()
 							b.second->inventoryVehicleEquipment[c->itemId] -= order;
 							break;
 						}
+						default:
+						{
+							LogError("Unhandled TransactionControl::Type %d",
+							         static_cast<int>(c->itemType));
+							break;
+						}
 					}
 				}
 			}
