@@ -3120,6 +3120,8 @@ Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 		case VehicleMission::MissionType::InfiltrateSubvert:
 		case VehicleMission::MissionType::OfferService:
 		case VehicleMission::MissionType::Teleport:
+		case VehicleMission::MissionType::DepartToSpace:
+		case VehicleMission::MissionType::ArriveFromDimensionGate:
 			if (crashed || sliding || falling || carriedVehicle)
 			{
 				delete mission;
@@ -3183,6 +3185,8 @@ bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 		case VehicleMission::MissionType::InfiltrateSubvert:
 		case VehicleMission::MissionType::OfferService:
 		case VehicleMission::MissionType::Teleport:
+		case VehicleMission::MissionType::DepartToSpace:
+		case VehicleMission::MissionType::ArriveFromDimensionGate:
 			if (crashed || sliding || falling || carriedVehicle)
 			{
 				delete mission;
