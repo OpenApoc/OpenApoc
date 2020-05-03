@@ -307,7 +307,6 @@ void TransactionScreen::populateControlsAgentEquipment()
 void TransactionScreen::populateControlsVehicleEquipment()
 {
 	bool flying = type == Type::FlyingEquipment;
-	auto otherType = flying ? Type::GroundEquipment : Type::FlyingEquipment;
 	static const std::list<EquipmentSlotType> vehTypes = {EquipmentSlotType::VehicleWeapon,
 	                                                      EquipmentSlotType::VehicleGeneral,
 	                                                      EquipmentSlotType::VehicleEngine};
@@ -602,7 +601,7 @@ bool TransactionScreen::isClosable() const
 			}
 
 			int i = 0;
-			for (auto &b : state->player_bases)
+			for ([[maybe_unused]] auto &b : state->player_bases)
 			{
 				if (c->tradeState.shipmentsTotal(i++))
 				{
