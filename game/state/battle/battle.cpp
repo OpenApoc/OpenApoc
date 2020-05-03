@@ -3028,7 +3028,6 @@ void Battle::exitBattle(GameState &state)
 	{
 		if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
 		{
-			Vec2<int> battleLocation;
 			StateRef<City> city;
 			StateRef<Vehicle> location = {&state, state.current_battle->mission_location_id};
 			city = location->city;
