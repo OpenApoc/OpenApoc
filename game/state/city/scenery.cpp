@@ -1310,6 +1310,9 @@ void Scenery::die(GameState &state, bool forced)
 								vehiclesToDamage.push_back(v);
 								break;
 							}
+							default:
+								// Other tiles don't get damaged or block smoke
+								break;
 						}
 					}
 					for (auto &v : vehiclesToDamage)
