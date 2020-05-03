@@ -715,6 +715,9 @@ void AgentAssignment::eventOccured(Event *e)
 				}
 			}
 			break;
+		default:
+			// All other events ignored
+			break;
 	}
 }
 
