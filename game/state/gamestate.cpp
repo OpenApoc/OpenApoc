@@ -1377,13 +1377,8 @@ void GameState::loadMods()
 bool GameState::appendGameState(const UString &gamestatePath)
 {
 	LogInfo("Appending gamestate \"%s\"", gamestatePath);
-	auto file = fw().data->fs.open(gamestatePath);
-	if (!file)
-	{
-		LogWarning("Failed to open gamestate file \"%s\"", gamestatePath);
-		return false;
-	}
-	return this->loadGame(file.systemPath());
+	auto systemPath = fw().data->fs.resolvePath(gamestatePath);
+	return this->loadGame(systemPath);
 }
 
 }; // namespace OpenApoc
