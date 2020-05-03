@@ -2891,6 +2891,9 @@ void BattleView::eventOccurred(Event *e)
 				return;
 			}
 			break;
+		default:
+			// Other events aren't handled
+			break;
 	}
 	BattleTileView::eventOccurred(e);
 }
