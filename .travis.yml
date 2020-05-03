@@ -47,4 +47,4 @@ script:
 # Create the GameState as that triggers the generated source commands
   - if [ "$PASS" = "build" ]; then echo "Building revision $(git describe --tags --all --long --always)"; $(which time) ninja && `which time` ctest -V -j 2; fi
   - if [ "$PASS" = "lint" ]; then echo "clang-format linting range ${TRAVIS_COMMIT_RANGE}"; CLANG_FORMAT=${CLANG_FORMAT} ./tools/lint.sh ${TRAVIS_COMMIT_RANGE}; fi
-  - if [ "$PASS" = "lint" ]; then ninja generated-source && echo "clang-tidy linting range ${TRAVIS_COMMIT_RANGE}"; CLANG_TIDY=clang-tidy BUILD_DIR=$(pwd) ./tools/lint-tidy.sh ${TRAVIS_COMMIT_RANGE}; fi
+  - if [ "$PASS" = "lint" ]; then ninja generated-source && echo "clang-tidy linting range ${TRAVIS_COMMIT_RANGE}"; CLANG_TIDY=clang-tidy BUILD_DIR=$(pwd) ./tools/lint-tidy.sh ${TRAVIS_COMMIT_RANGE} || true; fi
