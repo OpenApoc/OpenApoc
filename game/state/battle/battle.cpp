@@ -2025,6 +2025,8 @@ void Battle::checkMissionEnd(GameState &state, bool retreated, bool forceReCheck
 						case OpenApoc::MovementState::Brainsuck:
 							normalUnit = true;
 							break;
+						default:
+							break;
 					}
 					if (normalUnit)
 						break;
