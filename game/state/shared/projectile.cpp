@@ -30,10 +30,9 @@ Projectile::Projectile(Type type, StateRef<Vehicle> firer, StateRef<Vehicle> tar
       depletionRate(depletionRate), firerVehicle(firer), firerPosition(firer->position),
       trackedVehicle(target), targetPosition(targetPosition), previousPosition(position),
       spritePositions({position}), tail_length(tail_length), projectile_sprites(projectile_sprites),
-      sprite_distance(1.0f / TILE_Y_CITY), voxelMapLos(voxelMap),
-      voxelMapLof(turnRate > 0 ? voxelMap : nullptr), manualFire(manualFire), impactSfx(impactSfx),
-      doodadType(doodadType), velocityScale(VELOCITY_SCALE_CITY), stunTicks(stunTicks),
-      splitIntoTypesCity(splitIntoTypes)
+      sprite_distance(1.0f / TILE_Y_CITY), voxelMapLof(turnRate > 0 ? voxelMap : nullptr),
+      voxelMapLos(voxelMap), manualFire(manualFire), impactSfx(impactSfx), doodadType(doodadType),
+      velocityScale(VELOCITY_SCALE_CITY), stunTicks(stunTicks), splitIntoTypesCity(splitIntoTypes)
 {
 	// enough ticks to pass 1 tile diagonally and some more since vehicles can move quite quickly
 	ownerInvulnerableTicks =
@@ -54,10 +53,10 @@ Projectile::Projectile(Type type, StateRef<BattleUnit> firer, StateRef<BattleUni
       depletionRate(depletionRate), firerUnit(firer), firerPosition(firer->position),
       trackedUnit(target), targetPosition(targetPosition), previousPosition(position),
       spritePositions({position}), tail_length(tail_length), projectile_sprites(projectile_sprites),
-      sprite_distance(1.0f / TILE_Y_BATTLE), voxelMapLos(voxelMap),
-      voxelMapLof(turnRate > 0 ? voxelMap : nullptr), manualFire(manualFire), impactSfx(impactSfx),
-      doodadType(doodadType), damageType(damageType), velocityScale(VELOCITY_SCALE_BATTLE),
-      stunTicks(stunTicks), splitIntoTypesBattle(splitIntoTypes)
+      sprite_distance(1.0f / TILE_Y_BATTLE), voxelMapLof(turnRate > 0 ? voxelMap : nullptr),
+      voxelMapLos(voxelMap), manualFire(manualFire), impactSfx(impactSfx), doodadType(doodadType),
+      damageType(damageType), velocityScale(VELOCITY_SCALE_BATTLE), stunTicks(stunTicks),
+      splitIntoTypesBattle(splitIntoTypes)
 {
 	// enough ticks to pass 1 tile diagonally
 	ownerInvulnerableTicks =
