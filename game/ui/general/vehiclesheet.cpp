@@ -139,6 +139,9 @@ void VehicleSheet::displayEquipImplementation(sp<VEquipment> item, sp<VEquipment
 		case EquipmentSlotType::VehicleGeneral:
 			displayGeneral(item, type);
 			break;
+		default:
+			LogError("Unhandled equipment type %s on vehicle", type->id);
+			break;
 	}
 }
 
