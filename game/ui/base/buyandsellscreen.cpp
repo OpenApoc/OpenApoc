@@ -509,6 +509,14 @@ void BuyAndSellScreen::executeOrders()
 								         c->itemId);
 								break;
 							}
+							case TransactionControl::Type::Soldier:
+							case TransactionControl::Type::BioChemist:
+							case TransactionControl::Type::Physicist:
+							case TransactionControl::Type::Engineer:
+							{
+								LogError("How did we manage to sell an agent type %s!", c->itemId);
+								break;
+							}
 						}
 					}
 
@@ -558,6 +566,14 @@ void BuyAndSellScreen::executeOrders()
 							{
 								StateRef<VehicleType> vehicle{state.get(), c->itemId};
 								org->purchase(*state, b.second->building, vehicle, -order);
+								break;
+							}
+							case TransactionControl::Type::Soldier:
+							case TransactionControl::Type::BioChemist:
+							case TransactionControl::Type::Physicist:
+							case TransactionControl::Type::Engineer:
+							{
+								LogError("How did we manage to sell an agent type %s!", c->itemId);
 								break;
 							}
 						}
