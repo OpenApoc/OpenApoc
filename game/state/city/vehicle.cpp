@@ -1814,6 +1814,10 @@ void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 		}
 	}
 	auto id = getId(state, shared_from_this());
+	if (carriedVehicle)
+	{
+		dropCarriedVehicle(state);
+	}
 	if (carriedByVehicle)
 	{
 		carriedByVehicle->carriedVehicle.clear();
