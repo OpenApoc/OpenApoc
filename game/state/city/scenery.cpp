@@ -67,7 +67,6 @@ bool Scenery::attachToSomething()
 	auto pos = tileObject->getOwningTile()->position;
 	supportHardness = -10;
 	auto &map = tileObject->map;
-	auto tileType = tileObject->getType();
 	auto thisPtr = shared_from_this();
 
 	int startX = pos.x - 1;
@@ -118,7 +117,6 @@ bool Scenery::findSupport(bool allowClinging)
 		return true;
 	}
 	auto &map = tileObject->map;
-	auto tileType = tileObject->getType();
 	auto thisPtr = shared_from_this();
 
 	// Forward lookup for adding increments
