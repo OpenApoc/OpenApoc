@@ -78,9 +78,6 @@ class ConfigOption
 
 class ConfigOptionString : public ConfigOption
 {
-  private:
-	UString defaultValue;
-
   public:
 	ConfigOptionString(const UString section, const UString name, const UString description,
 	                   const UString defaultValue = "");
@@ -90,9 +87,6 @@ class ConfigOptionString : public ConfigOption
 
 class ConfigOptionInt : public ConfigOption
 {
-  private:
-	int defaultValue;
-
   public:
 	ConfigOptionInt(const UString section, const UString name, const UString description,
 	                const int defaultValue = 0);
@@ -102,9 +96,6 @@ class ConfigOptionInt : public ConfigOption
 
 class ConfigOptionBool : public ConfigOption
 {
-  private:
-	bool defaultValue;
-
   public:
 	ConfigOptionBool(const UString section, const UString name, const UString description,
 	                 const bool defaultValue = false);
@@ -114,9 +105,6 @@ class ConfigOptionBool : public ConfigOption
 
 class ConfigOptionFloat : public ConfigOption
 {
-  private:
-	float defaultValue;
-
   public:
 	ConfigOptionFloat(const UString section, const UString name, const UString description,
 	                  const float defaultValue = 0.0f);
