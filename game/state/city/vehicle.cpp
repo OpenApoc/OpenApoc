@@ -632,7 +632,6 @@ class GroundVehicleMover : public VehicleMover
 		// or to tick_scale * city_scale / speed
 		int ticksPerTile = TICK_SCALE * VELOCITY_SCALE_CITY.x / vehicle.getSpeed();
 
-		unsigned lastTicksToTurn = 0;
 		unsigned lastTicksToMove = 0;
 
 		// See that we're not in the air
@@ -1705,7 +1704,6 @@ void Vehicle::provideServicePassengers(GameState &state, bool otherOrg)
 StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 {
 	bool fromTactical = false;
-	bool agentsArrived = false;
 	bool cargoArrived = false;
 	bool bioArrived = false;
 	bool recoveryArrived = false;
@@ -2889,7 +2887,6 @@ sp<VEquipment> Vehicle::getFirstFiringWeapon(GameState &state [[maybe_unused]], 
 	sp<VEquipment> firingWeapon;
 
 	auto firePosition = getMuzzleLocation();
-	auto distanceTiles = glm::length(position - target);
 	auto distanceVoxels = this->tileObject->getDistanceTo(target);
 	bool outsideArc = false;
 
