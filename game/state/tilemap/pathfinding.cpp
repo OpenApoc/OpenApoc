@@ -1856,9 +1856,6 @@ void City::fillRoadSegmentMap(GameState &state [[maybe_unused]])
 											continue;
 										}
 										auto nextTile = m.getTile(nextPosition);
-										float thisCost = 0.0f;
-										bool unused = false;
-										bool jumped = false;
 										if (!helper.canEnterTile(thisTile, nextTile))
 										{
 											continue;
