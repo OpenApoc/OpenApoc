@@ -734,6 +734,7 @@ void CityTileView::render()
 					switch (m->type)
 					{
 						case VehicleMission::MissionType::AttackVehicle:
+						case VehicleMission::MissionType::RecoverVehicle:
 						{
 							if (!m->targetVehicle)
 								break;
@@ -752,8 +753,11 @@ void CityTileView::render()
 						}
 						case VehicleMission::MissionType::AttackBuilding:
 						case VehicleMission::MissionType::GotoBuilding:
+						case VehicleMission::MissionType::Land:
+						case VehicleMission::MissionType::OfferService:
+						case VehicleMission::MissionType::InvestigateBuilding:
 							buildingsSelected.insert(m->targetBuilding);
-						// Intentional fall-through
+							[[fallthrough]];
 						case VehicleMission::MissionType::Crash:
 						{
 							if (!m->currentPlannedPath.empty())
@@ -769,10 +773,21 @@ void CityTileView::render()
 						case VehicleMission::MissionType::InfiltrateSubvert:
 						case VehicleMission::MissionType::Patrol:
 						case VehicleMission::MissionType::GotoPortal:
+						case VehicleMission::MissionType::Teleport:
+						case VehicleMission::MissionType::DepartToSpace:
 						{
 							targetLocationsToDraw.emplace_back((Vec3<float>)m->targetLocation +
 							                                       Vec3<float>{0.5f, 0.5f, 0.0f},
 							                                   v.second->position, true, false);
+							break;
+						}
+						case VehicleMission::MissionType::Snooze:
+						case VehicleMission::MissionType::RestartNextMission:
+						case VehicleMission::MissionType::TakeOff:
+						case VehicleMission::MissionType::SelfDestruct:
+						case VehicleMission::MissionType::ArriveFromDimensionGate:
+						{
+							// These have no destination to draw
 							break;
 						}
 					}
