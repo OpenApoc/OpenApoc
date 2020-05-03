@@ -319,7 +319,7 @@ template <typename T> void pushToLua(lua_State *L, const std::set<T> &v)
 	int i = 0;
 	for (const auto &item : v)
 	{
-		pushToLua(L, v);
+		pushToLua(L, item);
 		lua_seti(L, -2, i + 1);
 		++i;
 	}
