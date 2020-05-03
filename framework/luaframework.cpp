@@ -144,7 +144,6 @@ void pushToLua(lua_State *L, Xorshift128Plus<uint32_t> &v)
 	*udata = &v;
 	lua_createtable(L, 0, 0);
 	lua_pushcfunction(L, [](lua_State *L) {
-		Xorshift128Plus<uint32_t> **xorshift = (Xorshift128Plus<uint32_t> **)lua_touserdata(L, 1);
 		std::string key = lua_tostring(L, 2);
 		lua_settop(L, 0);
 		if (auto method = getLuaObjectMethods<Xorshift128Plus<uint32_t>>(key))
@@ -166,7 +165,6 @@ void pushToLua(lua_State *L, const Xorshift128Plus<uint32_t> &v)
 	*udata = &v;
 	lua_createtable(L, 0, 0);
 	lua_pushcfunction(L, [](lua_State *L) {
-		Xorshift128Plus<uint32_t> **xorshift = (Xorshift128Plus<uint32_t> **)lua_touserdata(L, 1);
 		std::string key = lua_tostring(L, 2);
 		lua_settop(L, 0);
 		if (auto method = getLuaObjectConstMethods<Xorshift128Plus<uint32_t>>(key))

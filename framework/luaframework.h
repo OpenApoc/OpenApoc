@@ -70,7 +70,6 @@ typename std::enable_if<std::is_enum<T>::value>::type getFromLua(lua_State *L, i
 // trying to get a value from the stack into a const reference (invalid)
 template <typename T> void getFromLua(lua_State *L, int argNum, const T &v [[maybe_unused]])
 {
-	int idx = argNum;
 	if (argNum < 0)
 		argNum = lua_gettop(L) + argNum + 1;
 	luaL_error(L, "this member (#%d) cannot be set directly", argNum);
