@@ -189,8 +189,6 @@ void BuyAndSellScreen::closeScreen()
 	// Step 03.01: Check transportation for purchases
 	bool purchaseTransferFound = false;
 	{
-		bool noFerry = false;
-
 		// Find all orgs that we buy from
 		std::set<StateRef<Organisation>> orgsBuyFrom;
 		for (auto &l : transactionControls)
