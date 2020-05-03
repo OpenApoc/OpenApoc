@@ -694,11 +694,6 @@ void CityTileView::render()
 				{
 					continue;
 				}
-				bool selected =
-				    std::find(state.current_city->cityViewSelectedAgents.begin(),
-				              state.current_city->cityViewSelectedAgents.end(),
-				              a.second) != state.current_city->cityViewSelectedAgents.end();
-
 				for (auto &m : a.second->missions)
 				{
 					if (m->type == AgentMission::MissionType::GotoBuilding)
