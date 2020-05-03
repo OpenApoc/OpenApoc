@@ -1,6 +1,7 @@
 #include "library/strings.h"
 #include "library/strings_format.h"
 #include <cctype>
+#include <iterator>
 #include <tuple> // used for std::ignore
 
 #include <boost/algorithm/string/predicate.hpp>
@@ -251,13 +252,7 @@ UString &UString::operator+=(const UString &other)
 	return *this;
 }
 
-size_t UString::length() const
-{
-	size_t len = 0;
-	for (const auto &c : *this)
-		len++;
-	return len;
-}
+size_t UString::length() const { return std::distance(this->begin(), this->end()); }
 
 void UString::insert(size_t offset, const UString &other)
 {
