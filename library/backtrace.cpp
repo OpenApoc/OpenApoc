@@ -1,6 +1,13 @@
 #ifdef _WIN32
 #define BACKTRACE_WINDOWS
 #define _CRT_SECURE_NO_WARNINGS
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+#define USE_DEBUGBREAK_TRAP
+#else
+// We assume we're on a posix platform if not windows
+#define USE_SIGNAL_TRAP
+#include <signal.h>
 #endif
 
 #include "library/backtrace.h"
@@ -24,6 +31,15 @@
 
 namespace OpenApoc
 {
+
+#ifdef USE_DEBUGBREAK_TRAP
+void debug_trap() { DebugBreak(); }
+#endif
+
+#ifdef USE_SIGNAL_TRAP
+void debug_trap() { raise(SIGTRAP); }
+#endif
+
 #if defined(BACKTRACE_LIBUNWIND)
 
 class libunwind_backtrace : public backtrace
