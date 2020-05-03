@@ -3126,6 +3126,10 @@ UString VehicleMission::getName()
 			break;
 		case MissionType::RestartNextMission:
 			break;
+		case MissionType::OfferService:
+			name += format(" counter: %u, target %s", missionCounter,
+			               targetBuilding ? targetBuilding->name : "null");
+			break;
 	}
 	return name;
 }
