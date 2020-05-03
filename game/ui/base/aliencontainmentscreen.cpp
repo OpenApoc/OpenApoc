@@ -67,7 +67,7 @@ void AlienContainmentScreen::closeScreen()
 				continue;
 			}
 			int i = 0;
-			for (auto &b : state->player_bases)
+			for ([[maybe_unused]] const auto &b : state->player_bases)
 			{
 				int bioDelta = c->getBioDelta(i);
 				if (bioDelta)
