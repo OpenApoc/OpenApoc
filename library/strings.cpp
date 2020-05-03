@@ -179,7 +179,7 @@ UString::UString(const char *cstr, size_t count) : u8Str(cstr, count) {}
 
 UString::UString(const UString &) = default;
 
-UString::UString(UString &&other) { this->u8Str = std::move(other.u8Str); }
+UString::UString(UString &&other) noexcept { this->u8Str = std::move(other.u8Str); }
 
 UString::UString(UniChar uc) : u8Str()
 {
