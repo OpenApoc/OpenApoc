@@ -427,6 +427,13 @@ void UfopaediaCategoryView::setFormStats()
 								statsValues[row++]->setText(tr("Cloaks Craft"));
 							}
 							break;
+						default:
+						{
+							LogError("Trying to read non-vehicle equipment type %s on vehicle "
+							         "equipment ufopaedia page",
+							         ref->id);
+							break;
+						}
 					}
 					break;
 				}
