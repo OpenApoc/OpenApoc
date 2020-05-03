@@ -24,8 +24,8 @@ template <typename T, bool conservative> class LineSegment
 		inc.y = (d.y < static_cast<T>(0)) ? -increment : increment;
 		inc.z = (d.z < static_cast<T>(0)) ? -increment : increment;
 	}
-	LineSegmentIterator<T, conservative> begin();
-	LineSegmentIterator<T, conservative> end();
+	LineSegmentIterator<T, conservative> begin() const;
+	LineSegmentIterator<T, conservative> end() const;
 };
 
 template <typename T, bool conservative> class LineSegmentIterator
@@ -38,7 +38,7 @@ template <typename T, bool conservative> class LineSegmentIterator
 	Vec3<T> inc;
 	T dstep2;
 
-	LineSegment<T, conservative> &line;
+	const LineSegment<T, conservative> &line;
 
   public:
 	using iterator_category = std::forward_iterator_tag;
@@ -46,7 +46,8 @@ template <typename T, bool conservative> class LineSegmentIterator
 	using difference_type = ptrdiff_t;
 	using pointer = Vec3<T> *;
 	using reference = Vec3<T> &;
-	LineSegmentIterator(Vec3<T> start, LineSegment<T, conservative> &l) : point(start), line(l)
+	LineSegmentIterator(Vec3<T> start, const LineSegment<T, conservative> &l)
+	    : point(start), line(l)
 	{
 		err = {static_cast<T>(0), static_cast<T>(0), static_cast<T>(0)};
 		step = {static_cast<T>(0), static_cast<T>(0), static_cast<T>(0)};
@@ -133,13 +134,13 @@ template <typename T, bool conservative> class LineSegmentIterator
 };
 
 template <typename T, bool conservative>
-LineSegmentIterator<T, conservative> LineSegment<T, conservative>::begin()
+LineSegmentIterator<T, conservative> LineSegment<T, conservative>::begin() const
 {
 	return LineSegmentIterator<T, conservative>(this->startPoint, *this);
 }
 
 template <typename T, bool conservative>
-LineSegmentIterator<T, conservative> LineSegment<T, conservative>::end()
+LineSegmentIterator<T, conservative> LineSegment<T, conservative>::end() const
 {
 	return LineSegmentIterator<T, conservative>(this->endPoint + this->inc, *this);
 }
