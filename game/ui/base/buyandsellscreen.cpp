@@ -209,6 +209,9 @@ void BuyAndSellScreen::closeScreen()
 							case TransactionControl::Type::VehicleAmmo:
 								orgsBuyFrom.insert(c->manufacturer);
 								break;
+							default:
+								// Other types find their own transportation
+								break;
 						}
 					}
 				}
@@ -241,6 +244,9 @@ void BuyAndSellScreen::closeScreen()
 				case Organisation::PurchaseResult::OrgHasNoBuildings:
 				case Organisation::PurchaseResult::OrgHostile:
 					LogError("How did we end up buying from an org we can't buy from!?");
+					break;
+				case Organisation::PurchaseResult::OK:
+					// Everything went fine
 					break;
 			}
 		}
