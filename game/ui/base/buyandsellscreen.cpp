@@ -128,7 +128,7 @@ void BuyAndSellScreen::closeScreen()
 				if (!c->getLinked() || c->getLinked()->front().lock() == c)
 				{
 					int i = 0;
-					for (auto &b : state->player_bases)
+					for ([[maybe_unused]] const auto &b : state->player_bases)
 					{
 						int cargoDelta = c->getCargoDelta(i);
 						if (cargoDelta)
