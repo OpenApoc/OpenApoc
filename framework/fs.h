@@ -48,6 +48,7 @@ class FileSystem
 	std::list<UString> enumerateDirectory(const UString &path, const UString &extension) const;
 	std::list<UString> enumerateDirectoryRecursive(const UString &path,
 	                                               const UString &extension) const;
+	UString resolvePath(const UString &path) const;
 };
 
 } // namespace OpenApoc
