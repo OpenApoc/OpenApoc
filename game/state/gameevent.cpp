@@ -393,6 +393,10 @@ GameSomethingDiedEvent::GameSomethingDiedEvent(GameEventType type, UString name,
 		case GameEventType::VehicleNoFuel:
 			messageInner = format("%s %s", tr("Vehicle out of fuel:"), name);
 			break;
+		default:
+			LogWarning("GameSomethingDiedEvent %s called on non-death event %d", name,
+			           static_cast<int>(type));
+			break;
 	}
 }
 UString GameSomethingDiedEvent::message() { return messageInner; }
