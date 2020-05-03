@@ -262,7 +262,7 @@ void TransferScreen::closeScreen()
 					continue;
 				}
 				int i = 0;
-				for (auto &b : state->player_bases)
+				for ([[maybe_unused]] auto &b : state->player_bases)
 				{
 					int crewDelta = c->getCrewDelta(i);
 					int cargoDelta = c->getCargoDelta(i);
