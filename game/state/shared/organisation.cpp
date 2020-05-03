@@ -496,6 +496,11 @@ void Organisation::updateInfiltration(GameState &state)
 	org->infiltrationValue = clamp(org->infiltrationValue + infiltrationModifier, 0, 200);
 }
 
+void Organisation::updateDailyInfiltrationHistory()
+{
+	infiltrationHistory.push_front(this->infiltrationValue);
+}
+
 void Organisation::updateTakeOver(GameState &state, unsigned int ticks)
 {
 	ticksTakeOverAttemptAccumulated += ticks;

@@ -1183,6 +1183,7 @@ void GameState::updateEndOfDay()
 	{
 		o.second->updateVehicleAgentPark(*this);
 		o.second->updateHirableAgents(*this);
+		o.second->updateDailyInfiltrationHistory();
 	}
 	Trace::end("GameState::updateEndOfDay::organisations");
 	Trace::start("GameState::updateEndOfDay::agents");
