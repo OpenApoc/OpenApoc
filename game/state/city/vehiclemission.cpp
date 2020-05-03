@@ -64,7 +64,7 @@ FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, Vehicle &v)
 
 FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, VehicleType &vehType, bool crashed,
                                                  int altitude)
-    : map(map), type(vehType.type), crashed(crashed), altitude(altitude)
+    : map(map), crashed(crashed), altitude(altitude)
 {
 	int xMax = 0;
 	int yMax = 0;
@@ -77,10 +77,9 @@ FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, VehicleType &vehT
 	large = size.x > 1 || size.y > 1;
 }
 
-FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, VehicleType::Type type, bool crashed,
-                                                 Vec2<int> size, int altitude)
-    : map(map), type(type), crashed(crashed), size(size), large(size.x > 1 || size.y > 1),
-      altitude(altitude)
+FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, bool crashed, Vec2<int> size,
+                                                 int altitude)
+    : map(map), crashed(crashed), size(size), large(size.x > 1 || size.y > 1), altitude(altitude)
 {
 }
 
@@ -3135,11 +3134,11 @@ UString VehicleMission::getName()
 }
 
 GroundVehicleTileHelper::GroundVehicleTileHelper(TileMap &map, Vehicle &v)
-    : GroundVehicleTileHelper(map, v.type->type, v.crashed)
+    : GroundVehicleTileHelper(map, v.type->type)
 {
 }
-GroundVehicleTileHelper::GroundVehicleTileHelper(TileMap &map, VehicleType::Type type, bool crashed)
-    : map(map), type(type), crashed(crashed)
+GroundVehicleTileHelper::GroundVehicleTileHelper(TileMap &map, VehicleType::Type type)
+    : map(map), type(type)
 {
 }
 

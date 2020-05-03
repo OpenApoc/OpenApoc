@@ -1718,7 +1718,7 @@ void City::fillRoadSegmentMap(GameState &state [[maybe_unused]])
 	tileToRoadSegmentMap.clear();
 	roadSegments.clear();
 	auto &m = *map;
-	auto helper = GroundVehicleTileHelper{m, VehicleType::Type::Road, false};
+	auto helper = GroundVehicleTileHelper{m, VehicleType::Type::Road};
 
 	// -2 means not processed, -1 means no road, otherwise segment index
 	tileToRoadSegmentMap.resize(m.size.x * m.size.y * m.size.z, -2);
