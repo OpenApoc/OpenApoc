@@ -1329,6 +1329,7 @@
 		<member>balance</member>
 		<member>income</member>
 		<member>infiltrationValue</member>
+		<member>infiltrationHistory</member>
 		<member>infiltrationSpeed</member>
 		<member>takenOver</member>
 		<member>ticksTakeOverAttemptAccumulated</member>
