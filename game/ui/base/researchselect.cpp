@@ -108,6 +108,10 @@ void ResearchSelect::begin()
 				return;
 			}
 		}
+		if (current_topic && topic != current_topic)
+		{
+			control_map[current_topic]->setDirty();
+		}
 		current_topic = topic;
 		this->redrawResearchList();
 	});
@@ -315,6 +319,11 @@ void ResearchSelect::populateResearchList()
 
 		research_list->addItem(control);
 		control_map[t] = control;
+	}
+
+	if (current_topic)
+	{
+		research_list->setSelected(control_map[current_topic]);
 	}
 }
 
