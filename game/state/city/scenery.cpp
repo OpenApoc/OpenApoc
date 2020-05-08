@@ -974,7 +974,7 @@ bool Scenery::findSupport(bool allowClinging)
 
 		for (auto &list : incrementsList)
 		{
-			bool found;
+			bool found = false;
 			for (auto &increment : list)
 			{
 				found = false;
