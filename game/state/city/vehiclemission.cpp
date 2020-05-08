@@ -900,6 +900,9 @@ VehicleTargetHelper::adjustTargetToClosest(GameState &state, Vehicle &v, Vec3<in
 			return adjustTargetToClosestRoad(v, target);
 		case VehicleType::Type::ATV:
 			return adjustTargetToClosestGround(v, target);
+		default:
+			LogError("Vehicle [%s] has unknown type [%s]", v.name, v.type->name);
+			[[fallthrough]];
 		case VehicleType::Type::Flying:
 		case VehicleType::Type::UFO:
 			if (!adjustForFlying)
@@ -908,8 +911,6 @@ VehicleTargetHelper::adjustTargetToClosest(GameState &state, Vehicle &v, Vec3<in
 				return {Reachability::Reachable, true};
 			}
 			return adjustTargetToClosestFlying(state, v, target, vehicleAvoidance);
-		default:
-			LogError("Vehicle [%s] has unknown type [%s]", v.name, v.type->name);
 	}
 }
 
@@ -921,11 +922,12 @@ Reachability VehicleTargetHelper::isReachableTarget(const Vehicle &v, Vec3<int> 
 			return isReachableTargetRoad(v, target);
 		case VehicleType::Type::ATV:
 			return isReachableTargetGround(v, target);
+		default:
+			LogError("Vehicle [%s] has unknown type [%s]", v.name, v.type->name);
+			[[fallthrough]];
 		case VehicleType::Type::Flying:
 		case VehicleType::Type::UFO:
 			return isReachableTargetFlying(v, target);
-		default:
-			LogError("Vehicle [%s] has unknown type [%s]", v.name, v.type->name);
 	}
 }
 
