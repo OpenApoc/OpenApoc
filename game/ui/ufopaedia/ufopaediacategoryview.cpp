@@ -446,7 +446,7 @@ void UfopaediaCategoryView::setFormStats()
 					statsValues[row++]->setText(
 					    format("%dx%d", ref->equipscreen_size.x, ref->equipscreen_size.y));
 					if (ref->type == AEquipmentType::Type::Ammo ||
-					    ref->type == AEquipmentType::Type::Weapon && ref->ammo_types.empty())
+					    (ref->type == AEquipmentType::Type::Weapon && ref->ammo_types.empty()))
 					{
 						statsLabels[row]->setText(tr("Power"));
 						statsValues[row++]->setText(Strings::fromInteger(ref->damage));

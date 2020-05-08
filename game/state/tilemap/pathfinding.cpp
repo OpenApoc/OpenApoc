@@ -1645,7 +1645,7 @@ void City::groupMove(GameState &state, std::list<StateRef<Vehicle>> &selectedVeh
 		return;
 	}
 	if (selectedVehicles.size() == 1 ||
-	    selectedVehicles.size() == 2 && selectedVehicles.front()->owner != state.getPlayer())
+	    (selectedVehicles.size() == 2 && selectedVehicles.front()->owner != state.getPlayer()))
 	{
 		auto v = selectedVehicles.front();
 		if (v->owner == state.getPlayer())
