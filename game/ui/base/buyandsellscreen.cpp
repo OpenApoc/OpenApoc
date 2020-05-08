@@ -220,7 +220,6 @@ void BuyAndSellScreen::closeScreen()
 		// Check orgs
 		std::list<StateRef<Organisation>> badOrgs;
 		bool transportationHostile = false;
-		bool transportationBusy = false;
 		for (auto &o : orgsBuyFrom)
 		{
 			if (o == player)
@@ -232,7 +231,6 @@ void BuyAndSellScreen::closeScreen()
 			switch (canBuy)
 			{
 				case Organisation::PurchaseResult::NoTransportAvailable:
-					transportationBusy = true;
 					badOrgs.push_back(o);
 					break;
 				case Organisation::PurchaseResult::TranportHostile:
