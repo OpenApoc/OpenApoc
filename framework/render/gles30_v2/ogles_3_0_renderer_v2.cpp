@@ -1189,8 +1189,6 @@ class ColouredDrawMachine
 		TRACE_FN;
 		auto &buf = this->buffers[this->current_buffer];
 
-		ColouredDescription d;
-
 		for (int i = 0; i < 4; i++)
 		{
 			buf.data.vertices[i].position = positions[i];
@@ -1215,8 +1213,6 @@ class ColouredDrawMachine
 	{
 		TRACE_FN;
 		auto &buf = this->buffers[this->current_buffer];
-
-		ColouredDescription d;
 
 		for (unsigned int i = 0; i < 2; i++)
 		{
