@@ -1634,7 +1634,7 @@ bool Scenery::canRepair() const
 void Scenery::repair(GameState &state)
 {
 	auto &map = *city->map;
-	if (this->isAlive())
+	if (this->isAlive() && !damaged)
 	{
 		LogError("Trying to fix something that isn't broken");
 	}

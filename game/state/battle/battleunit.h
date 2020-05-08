@@ -140,9 +140,8 @@ static const std::list<BattleUnitType> BattleUnitTypeList = {
     BattleUnitType::LargeFlyer, BattleUnitType::LargeWalker, BattleUnitType::SmallFlyer,
     BattleUnitType::SmallWalker};
 
-class BattleUnit : public StateObject, public std::enable_shared_from_this<BattleUnit>
+class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_from_this<BattleUnit>
 {
-	STATE_OBJECT(BattleUnit)
   public:
 	// [Enums]
 

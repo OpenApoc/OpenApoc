@@ -31,35 +31,35 @@ static void extractDifficulty(const InitialGameStateExtractor &e, UString output
 }
 
 std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thingsToExtract = {
+    {"difficulty0",
+     [](const InitialGameStateExtractor &e) {
+	     extractDifficulty(
+	         e, outputPath.get() + "/mods/base/data/submods/org.openapoc.base/difficulty0",
+	         InitialGameStateExtractor::Difficulty::DIFFICULTY_1, "data/difficulty0_patch");
+     }},
     {"difficulty1",
      [](const InitialGameStateExtractor &e) {
-	     extractDifficulty(e, outputPath.get() + "/mods/base/difficulty1_patched",
-	                       InitialGameStateExtractor::Difficulty::DIFFICULTY_1,
-	                       "data/difficulty1_patch");
+	     extractDifficulty(
+	         e, outputPath.get() + "/mods/base/data/submods/org.openapoc.base/difficulty1",
+	         InitialGameStateExtractor::Difficulty::DIFFICULTY_2, "data/difficulty1_patch");
      }},
     {"difficulty2",
      [](const InitialGameStateExtractor &e) {
-	     extractDifficulty(e, outputPath.get() + "/mods/base/difficulty2_patched",
-	                       InitialGameStateExtractor::Difficulty::DIFFICULTY_2,
-	                       "data/difficulty2_patch");
+	     extractDifficulty(
+	         e, outputPath.get() + "/mods/base/data/submods/org.openapoc.base/difficulty2",
+	         InitialGameStateExtractor::Difficulty::DIFFICULTY_3, "data/difficulty2_patch");
      }},
     {"difficulty3",
      [](const InitialGameStateExtractor &e) {
-	     extractDifficulty(e, outputPath.get() + "/mods/base/difficulty3_patched",
-	                       InitialGameStateExtractor::Difficulty::DIFFICULTY_3,
-	                       "data/difficulty3_patch");
+	     extractDifficulty(
+	         e, outputPath.get() + "/mods/base/data/submods/org.openapoc.base/difficulty3",
+	         InitialGameStateExtractor::Difficulty::DIFFICULTY_4, "data/difficulty3_patch");
      }},
     {"difficulty4",
      [](const InitialGameStateExtractor &e) {
-	     extractDifficulty(e, outputPath.get() + "/mods/base/difficulty4_patched",
-	                       InitialGameStateExtractor::Difficulty::DIFFICULTY_4,
-	                       "data/difficulty4_patch");
-     }},
-    {"difficulty5",
-     [](const InitialGameStateExtractor &e) {
-	     extractDifficulty(e, outputPath.get() + "/mods/base/difficulty5_patched",
-	                       InitialGameStateExtractor::Difficulty::DIFFICULTY_5,
-	                       "data/difficulty5_patch");
+	     extractDifficulty(
+	         e, outputPath.get() + "/mods/base/data/submods/org.openapoc.base/difficulty4",
+	         InitialGameStateExtractor::Difficulty::DIFFICULTY_5, "data/difficulty4_patch");
      }},
     {"common_gamestate",
      [](const InitialGameStateExtractor &e) {
@@ -76,6 +76,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     info.setID("org.openapoc.base");
 	     info.setStatePath("base_gamestate");
 	     info.setDataPath("data");
+	     info.setModLoadScript("scripts/org.openapoc.base/onload.lua");
 
 	     info.writeInfo(outputPath.get() + "/mods/base");
      }},

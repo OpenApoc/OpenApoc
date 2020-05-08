@@ -14,7 +14,9 @@ struct VehicleData
 	uint16_t image_position_4;
 	uint16_t graphic_frame;
 	uint16_t acceleration;
-	uint16_t unknown;
+	/* All dimension-capable craft have a non-zero value, I don't know what the values (1-8) then
+	 * mean... */
+	uint16_t dimension_travel;
 	uint16_t top_speed;
 	uint16_t shadow_graphic;
 	uint16_t shadow_position_1;

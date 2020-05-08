@@ -8,9 +8,8 @@
 namespace OpenApoc
 {
 
-class UFOMissionPreference : public StateObject
+class UFOMissionPreference : public StateObject<UFOMissionPreference>
 {
-	STATE_OBJECT(UFOMissionPreference)
   public:
 	int week = 0;
 	std::list<UFOIncursion::PrimaryMission> missionList;

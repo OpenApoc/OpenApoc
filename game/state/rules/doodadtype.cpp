@@ -4,8 +4,9 @@
 
 namespace OpenApoc
 {
+template <>
 
-sp<DoodadType> DoodadType::get(const GameState &state, const UString &id)
+sp<DoodadType> StateObject<DoodadType>::get(const GameState &state, const UString &id)
 {
 	auto it = state.doodad_types.find(id);
 	if (it == state.doodad_types.end())
@@ -16,12 +17,12 @@ sp<DoodadType> DoodadType::get(const GameState &state, const UString &id)
 	return it->second;
 }
 
-const UString &DoodadType::getPrefix()
+template <> const UString &StateObject<DoodadType>::getPrefix()
 {
 	static UString prefix = "DOODAD_";
 	return prefix;
 }
-const UString &DoodadType::getTypeName()
+template <> const UString &StateObject<DoodadType>::getTypeName()
 {
 	static UString name = "DoodadType";
 	return name;

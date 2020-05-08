@@ -412,6 +412,10 @@ void City::repairScenery(GameState &state)
 			owner->balance -= initialType->value;
 			s->damaged = false;
 			s->type = initialType;
+			if (s->type->tile_type == SceneryTileType::TileType::Road)
+			{
+				notifyRoadChange(s->initialPosition, true);
+			}
 		}
 	}
 	// Step 02: Repair destroyed scenery
@@ -737,7 +741,7 @@ sp<Vehicle> City::placeVehicle(GameState &state, StateRef<VehicleType> type,
 	return v;
 }
 
-sp<City> City::get(const GameState &state, const UString &id)
+template <> sp<City> StateObject<City>::get(const GameState &state, const UString &id)
 {
 	auto it = state.cities.find(id);
 	if (it == state.cities.end())
@@ -748,18 +752,18 @@ sp<City> City::get(const GameState &state, const UString &id)
 	return it->second;
 }
 
-const UString &City::getPrefix()
+template <> const UString &StateObject<City>::getPrefix()
 {
 	static UString prefix = "CITYMAP_";
 	return prefix;
 }
-const UString &City::getTypeName()
+template <> const UString &StateObject<City>::getTypeName()
 {
 	static UString name = "City";
 	return name;
 }
 
-const UString &City::getId(const GameState &state, const sp<City> ptr)
+template <> const UString &StateObject<City>::getId(const GameState &state, const sp<City> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &c : state.cities)

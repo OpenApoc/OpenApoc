@@ -19,9 +19,8 @@ class Vehicle;
 class BattleMapPartType;
 class BattleMapSector;
 
-class BattleMap : public StateObject
+class BattleMap : public StateObject<BattleMap>
 {
-	STATE_OBJECT(BattleMap)
 
   public:
 	// Different ways to alter map size for generation

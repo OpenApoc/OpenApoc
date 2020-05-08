@@ -116,3 +116,7 @@ add_custom_target(extract-data ALL DEPENDS ${EXTRACTOR_TARGET_LIST})
 else()
 add_custom_target(extract-data DEPENDS ${EXTRACTOR_TARGET_LIST})
 endif()
+
+if (APPLE)
+add_custom_command(TARGET extract-data POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/data ${CMAKE_BINARY_DIR}/bin/OpenApoc.app/Contents/Resources/data)
+endif()

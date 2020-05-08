@@ -4,7 +4,8 @@
 namespace OpenApoc
 {
 
-sp<UFOIncursion> UFOIncursion::get(const GameState &state, const UString &id)
+template <>
+sp<UFOIncursion> StateObject<UFOIncursion>::get(const GameState &state, const UString &id)
 {
 	auto it = state.ufo_incursions.find(id);
 	if (it == state.ufo_incursions.end())
@@ -15,12 +16,12 @@ sp<UFOIncursion> UFOIncursion::get(const GameState &state, const UString &id)
 	return it->second;
 }
 
-const UString &UFOIncursion::getPrefix()
+template <> const UString &StateObject<UFOIncursion>::getPrefix()
 {
 	static UString prefix = "UFO_INCURSION_";
 	return prefix;
 }
-const UString &UFOIncursion::getTypeName()
+template <> const UString &StateObject<UFOIncursion>::getTypeName()
 {
 	static UString name = "UFOIncursion";
 	return name;

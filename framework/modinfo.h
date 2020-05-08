@@ -19,6 +19,7 @@ class ModInfo
 	UString dataPath;
 	UString statePath;
 	UString minVersion;
+	UString modLoadScript;
 
   public:
 	// The user-visible name of the mod
@@ -67,5 +68,8 @@ class ModInfo
 
 	static std::optional<ModInfo> getInfo(const UString &path);
 	bool writeInfo(const UString &path);
+
+	const UString &getModLoadScript() const { return modLoadScript; }
+	void setModLoadScript(const UString &newScript) { modLoadScript = newScript; }
 };
 } // namespace OpenApoc

@@ -66,18 +66,20 @@ float facingDistance(float f1, float f2)
 }
 } // namespace
 
-const UString &Vehicle::getPrefix()
+template <> const UString &StateObject<Vehicle>::getPrefix()
 {
 	static UString prefix = "VEHICLE_";
 	return prefix;
 }
-const UString &Vehicle::getTypeName()
+
+template <> const UString &StateObject<Vehicle>::getTypeName()
 {
 	static UString name = "Vehicle";
 	return name;
 }
 
-const UString &Vehicle::getId(const GameState &state, const sp<Vehicle> ptr)
+template <>
+const UString &StateObject<Vehicle>::getId(const GameState &state, const sp<Vehicle> ptr)
 {
 	static const UString emptyString = "";
 	for (auto &v : state.vehicles)
@@ -1045,7 +1047,7 @@ void VehicleMover::updateFalling(GameState &state, unsigned int ticks)
 				case SceneryTileType::WalkMode::Onto:
 				case SceneryTileType::WalkMode::Into:
 				{
-					if (newPosition.z < tile->getRestingPosition(false, true).z)
+					if (newPosition.z <= tile->getRestingPosition(false, true).z)
 					{
 						vehicle.falling = false;
 					}
@@ -1131,7 +1133,8 @@ void VehicleMover::updateCrashed(GameState &state, unsigned int ticks [[maybe_un
 void VehicleMover::updateSliding(GameState &state, unsigned int ticks)
 {
 	// Slided off?
-	auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
+	auto presentScenery =
+	    vehicle.tileObject ? vehicle.tileObject->getOwningTile()->presentScenery : nullptr;
 	if (!presentScenery)
 	{
 		vehicle.sliding = false;
@@ -1811,6 +1814,10 @@ void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 		}
 	}
 	auto id = getId(state, shared_from_this());
+	if (carriedVehicle)
+	{
+		dropCarriedVehicle(state);
+	}
 	if (carriedByVehicle)
 	{
 		carriedByVehicle->carriedVehicle.clear();
@@ -3725,7 +3732,8 @@ void Vehicle::nextFrame(int ticks)
 		}
 	}
 }
-sp<Vehicle> Vehicle::get(const GameState &state, const UString &id)
+
+template <> sp<Vehicle> StateObject<Vehicle>::get(const GameState &state, const UString &id)
 {
 	auto it = state.vehicles.find(id);
 	if (it == state.vehicles.end())

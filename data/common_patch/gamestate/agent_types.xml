@@ -535,6 +535,7 @@
       <improvementPercentagePhysical>100</improvementPercentagePhysical>
 	  <improvementPercentagePsi>100</improvementPercentagePsi>
 	  <canTrain>true</canTrain>
+      <immuneToBrainsuckers>false</immuneToBrainsuckers>
       <playable>true</playable>
       <allowsDirectControl>true</allowsDirectControl>
       <aiType>Group</aiType>
@@ -778,6 +779,7 @@
       <improvementPercentagePhysical>100</improvementPercentagePhysical>
 	  <improvementPercentagePsi>100</improvementPercentagePsi>
 	  <canTrain>true</canTrain>
+      <immuneToBrainsuckers>false</immuneToBrainsuckers>
       <playable>true</playable>
       <allowsDirectControl>true</allowsDirectControl>
       <aiType>Group</aiType>
@@ -973,6 +975,7 @@
       <improvementPercentagePhysical>10</improvementPercentagePhysical>
 	  <improvementPercentagePsi>0</improvementPercentagePsi>
 	  <canTrain>false</canTrain>
+      <immuneToBrainsuckers>true</immuneToBrainsuckers>
       <playable>true</playable>
       <allowsDirectControl>true</allowsDirectControl>
       <aiType>Group</aiType>

@@ -630,11 +630,11 @@ VehicleMission *VehicleMission::investigateBuilding(GameState &, Vehicle &v [[ma
 AdjustTargetResult VehicleTargetHelper::adjustTargetToClosestRoad(Vehicle &v, Vec3<int> &target)
 {
 	auto &map = *v.city->map;
-	auto scenery = map.getTile(target)->presentScenery;
+	auto reachability = isReachableTargetRoad(v, target);
 	// Clicked on road
-	if (scenery && scenery->type->tile_type == SceneryTileType::TileType::Road)
+	if (reachability == Reachability::Reachable)
 	{
-		return {Reachability::Reachable, true};
+		return {reachability, true};
 	}
 	// Try to find road in general vicinity of +-10 tiles
 	Vec3<int> closestPos = target;
@@ -645,8 +645,8 @@ AdjustTargetResult VehicleTargetHelper::adjustTargetToClosestRoad(Vehicle &v, Ve
 		{
 			for (int z = 0; z < map.size.z; z++)
 			{
-				auto sceneryHere = map.getTile(x, y, z)->presentScenery;
-				if (sceneryHere && sceneryHere->type->tile_type == SceneryTileType::TileType::Road)
+				auto reachabilityHere = isReachableTargetRoad(v, {x, y, z});
+				if (reachabilityHere == Reachability::Reachable)
 				{
 					int dist = std::abs(target.x - x) + std::abs(target.y - y) +
 					           std::abs(target.z - z) / 2;
@@ -662,7 +662,7 @@ AdjustTargetResult VehicleTargetHelper::adjustTargetToClosestRoad(Vehicle &v, Ve
 	if (closestDist < INT_MAX)
 	{
 		target = closestPos;
-		return {Reachability::BlockedByScenery, true};
+		return {reachability, true};
 	}
 	// Try to find road anywhere
 	for (int x = 0; x < map.size.x; x++)
@@ -676,8 +676,8 @@ AdjustTargetResult VehicleTargetHelper::adjustTargetToClosestRoad(Vehicle &v, Ve
 			}
 			for (int z = 0; z < map.size.z; z++)
 			{
-				auto sceneryHere = map.getTile(x, y, z)->presentScenery;
-				if (sceneryHere && sceneryHere->type->tile_type == SceneryTileType::TileType::Road)
+				auto reachabilityHere = isReachableTargetRoad(v, {x, y, z});
+				if (reachabilityHere == Reachability::Reachable)
 				{
 					int dist = std::abs(target.x - x) + std::abs(target.y - y) +
 					           std::abs(target.z - z) / 2;
@@ -693,41 +693,20 @@ AdjustTargetResult VehicleTargetHelper::adjustTargetToClosestRoad(Vehicle &v, Ve
 	if (closestDist < INT_MAX)
 	{
 		target = closestPos;
-		return {Reachability::BlockedByScenery, true};
+		return {reachability, true};
 	}
 	LogWarning("No road exists anywhere in the city? Really?");
-	return {Reachability::BlockedByScenery, false};
+	return {reachability, false};
 }
 
 AdjustTargetResult VehicleTargetHelper::adjustTargetToClosestGround(Vehicle &v, Vec3<int> &target)
 {
 	auto &map = *v.city->map;
-	auto scenery = map.getTile(target)->presentScenery;
-	// Clicked on road
-	if (scenery)
+	auto reachability = isReachableTargetGround(v, target);
+	// Clicked on reachable ground
+	if (reachability == Reachability::Reachable)
 	{
-		auto walkMode = scenery->type->getATVMode();
-		switch (walkMode)
-		{
-			case SceneryTileType::WalkMode::Onto:
-			{
-				// If moving to an "onto" tile must have clear above
-				auto checkedPos = target + Vec3<int>(0, 0, 1);
-				if (map.tileIsValid(checkedPos))
-				{
-					auto checkedTile = map.getTile(checkedPos);
-					if (checkedTile->presentScenery)
-					{
-						break;
-					}
-				}
-			}
-			// Intentional fall-through
-			case SceneryTileType::WalkMode::Into:
-				return {Reachability::Reachable, true};
-			case SceneryTileType::WalkMode::None:
-				break;
-		}
+		return {reachability, true};
 	}
 	// Try to find ground in general vicinity of +-10 tiles
 	Vec3<int> closestPos = target;
@@ -738,40 +717,15 @@ AdjustTargetResult VehicleTargetHelper::adjustTargetToClosestGround(Vehicle &v, 
 		{
 			for (int z = 0; z < map.size.z; z++)
 			{
-				auto sceneryHere = map.getTile(x, y, z)->presentScenery;
-				if (sceneryHere)
+				auto reachabilityHere = isReachableTargetGround(v, {x, y, z});
+				if (reachabilityHere == Reachability::Reachable)
 				{
-					auto walkMode = sceneryHere->type->getATVMode();
-					switch (walkMode)
+					int dist = std::abs(target.x - x) + std::abs(target.y - y) +
+					           std::abs(target.z - z) / 2;
+					if (dist < closestDist)
 					{
-						case SceneryTileType::WalkMode::Onto:
-						{
-							// If moving to an "onto" tile must have clear above
-							auto checkedPos =
-							    (Vec3<int>)sceneryHere->currentPosition + Vec3<int>(0, 0, 1);
-							if (map.tileIsValid(checkedPos))
-							{
-								auto checkedTile = map.getTile(checkedPos);
-								if (checkedTile->presentScenery)
-								{
-									break;
-								}
-							}
-						}
-						// Intentional fall-through
-						case SceneryTileType::WalkMode::Into:
-						{
-							int dist = std::abs(target.x - x) + std::abs(target.y - y) +
-							           std::abs(target.z - z) / 2;
-							if (dist < closestDist)
-							{
-								closestDist = dist;
-								closestPos = {x, y, z};
-							}
-							break;
-						}
-						case SceneryTileType::WalkMode::None:
-							break;
+						closestDist = dist;
+						closestPos = {x, y, z};
 					}
 				}
 			}
@@ -780,7 +734,7 @@ AdjustTargetResult VehicleTargetHelper::adjustTargetToClosestGround(Vehicle &v, 
 	if (closestDist < INT_MAX)
 	{
 		target = closestPos;
-		return {Reachability::BlockedByScenery, true};
+		return {reachability, true};
 	}
 	// Try to find ground anywhere
 	for (int x = 0; x < map.size.x; x++)
@@ -794,40 +748,15 @@ AdjustTargetResult VehicleTargetHelper::adjustTargetToClosestGround(Vehicle &v, 
 			}
 			for (int z = 0; z < map.size.z; z++)
 			{
-				auto sceneryHere = map.getTile(x, y, z)->presentScenery;
-				if (sceneryHere)
+				auto reachabilityHere = isReachableTargetGround(v, {x, y, z});
+				if (reachabilityHere == Reachability::Reachable)
 				{
-					auto walkMode = sceneryHere->type->getATVMode();
-					switch (walkMode)
+					int dist = std::abs(target.x - x) + std::abs(target.y - y) +
+					           std::abs(target.z - z) / 2;
+					if (dist < closestDist)
 					{
-						case SceneryTileType::WalkMode::Onto:
-						{
-							// If moving to an "onto" tile must have clear above
-							auto checkedPos =
-							    (Vec3<int>)sceneryHere->currentPosition + Vec3<int>(0, 0, 1);
-							if (map.tileIsValid(checkedPos))
-							{
-								auto checkedTile = map.getTile(checkedPos);
-								if (checkedTile->presentScenery)
-								{
-									break;
-								}
-							}
-						}
-						// Intentional fall-through
-						case SceneryTileType::WalkMode::Into:
-						{
-							int dist = std::abs(target.x - x) + std::abs(target.y - y) +
-							           std::abs(target.z - z) / 2;
-							if (dist < closestDist)
-							{
-								closestDist = dist;
-								closestPos = {x, y, z};
-							}
-							break;
-						}
-						case SceneryTileType::WalkMode::None:
-							break;
+						closestDist = dist;
+						closestPos = {x, y, z};
 					}
 				}
 			}
@@ -836,10 +765,10 @@ AdjustTargetResult VehicleTargetHelper::adjustTargetToClosestGround(Vehicle &v, 
 	if (closestDist < INT_MAX)
 	{
 		target = closestPos;
-		return {Reachability::BlockedByScenery, true};
+		return {reachability, true};
 	}
 	LogError("NO GROUND IN THE CITY!? WTF?");
-	return {Reachability::BlockedByScenery, false};
+	return {reachability, false};
 }
 
 AdjustTargetResult
@@ -847,85 +776,35 @@ VehicleTargetHelper::adjustTargetToClosestFlying(GameState &state, Vehicle &v, V
                                                  const VehicleAvoidance vehicleAvoidance)
 {
 	auto &map = *v.city->map;
-	Tile *targetTile = map.getTile(target);
-
-	Reachability reachability = Reachability::Reachable;
+	auto reachability = isReachableTargetFlying(v, target);
+	// Clicked on reachable tile
+	if (reachability == Reachability::Reachable ||
+	    (reachability == Reachability::BlockedByVehicle &&
+	     vehicleAvoidance == VehicleAvoidance::Ignore))
+	{
+		return {Reachability::Reachable, true};
+	}
 
 	// Check if target tile has no scenery permanently blocking it
 	// If it does, go up until we've got clear sky
-	while (true)
+	while (reachability == Reachability::BlockedByScenery)
 	{
-		bool foundScenery = false;
-		bool foundCrash = false;
-
-		for (auto &obj : targetTile->intersectingObjects)
-		{
-			if (obj->getType() == TileObject::Type::Vehicle)
-			{
-				auto vehicle = std::static_pointer_cast<TileObjectVehicle>(obj);
-				if (vehicle->getVehicle()->crashed)
-				{
-					foundCrash = true;
-					break;
-				}
-			}
-		}
-		for (auto &obj : targetTile->ownedObjects)
-		{
-			if (obj->getType() == TileObject::Type::Scenery)
-			{
-				auto sceneryTile = std::static_pointer_cast<TileObjectScenery>(obj);
-				if (sceneryTile->scenery.lock()->type->isLandingPad)
-				{
-					continue;
-				}
-				foundScenery = true;
-				break;
-			}
-		}
-		if (foundCrash || !foundScenery)
-		{
-			break;
-		}
-		LogInfo("Cannot move to %d %d %d, contains scenery that is not a landing pad", target.x,
-		        target.y, target.z);
-		reachability = Reachability::BlockedByScenery;
 		target.z++;
 		if (target.z >= map.size.z)
 		{
 			LogError("No space in the sky? Reached %d %d %d", target.x, target.y, target.z);
 			return {reachability, false};
 		}
-		targetTile = map.getTile(target);
-	}
-	if (vehicleAvoidance == VehicleAvoidance::Ignore)
-	{
-		return {reachability, true};
-	}
-	// Check if target tile has no vehicle temporarily blocking it
-	// If it does, find a random location around it that is not blocked
-	bool containsVehicle = false;
-	for (auto &obj : targetTile->intersectingObjects)
-	{
-		if (obj->getType() == TileObject::Type::Vehicle)
+		reachability = isReachableTargetFlying(v, target);
+		if (reachability == Reachability::Reachable ||
+		    (reachability == Reachability::BlockedByVehicle &&
+		     vehicleAvoidance == VehicleAvoidance::Ignore))
 		{
-			auto otherVehicle = std::static_pointer_cast<TileObjectVehicle>(obj)->getVehicle();
-			// Don't collide with self.
-			if (v.name == otherVehicle->name)
-				continue;
-			// Non-crashed can go into crashed
-			if (v.crashed || !otherVehicle->crashed)
-			{
-				containsVehicle = true;
-				break;
-			}
+			return {Reachability::BlockedByScenery, true};
 		}
 	}
-	if (!containsVehicle)
-	{
-		return {reachability, true};
-	}
-	reachability = Reachability::BlockedByVehicle;
+
+	// Find a random location around the blocking vehicle that is not blocked
 
 	// How far to deviate from target point
 	int maxDiff = 2;
@@ -1033,6 +912,109 @@ VehicleTargetHelper::adjustTargetToClosest(GameState &state, Vehicle &v, Vec3<in
 		default:
 			LogError("Vehicle [%s] has unknown type [%s]", v.name, v.type->name);
 	}
+}
+
+Reachability VehicleTargetHelper::isReachableTarget(const Vehicle &v, Vec3<int> target)
+{
+	switch (v.type->type)
+	{
+		case VehicleType::Type::Road:
+			return isReachableTargetRoad(v, target);
+		case VehicleType::Type::ATV:
+			return isReachableTargetGround(v, target);
+		case VehicleType::Type::Flying:
+		case VehicleType::Type::UFO:
+			return isReachableTargetFlying(v, target);
+		default:
+			LogError("Vehicle [%s] has unknown type [%s]", v.name, v.type->name);
+	}
+}
+
+Reachability VehicleTargetHelper::isReachableTargetFlying(const Vehicle &v, Vec3<int> target)
+{
+	auto &map = *v.city->map;
+	auto targetTile = map.getTile(target);
+
+	// Check if target tile has no scenery permanently blocking it
+	for (auto &obj : targetTile->ownedObjects)
+	{
+		if (obj->getType() == TileObject::Type::Scenery)
+		{
+			auto sceneryTile = std::static_pointer_cast<TileObjectScenery>(obj);
+			if (!sceneryTile->scenery.lock()->type->isLandingPad)
+			{
+				return Reachability::BlockedByScenery;
+			}
+		}
+	}
+
+	// Check if target tile has no vehicle temporarily blocking it
+	for (auto &obj : targetTile->intersectingObjects)
+	{
+		if (obj->getType() == TileObject::Type::Vehicle)
+		{
+			auto otherVehicle = std::static_pointer_cast<TileObjectVehicle>(obj)->getVehicle();
+			// Don't collide with self.
+			if (v.name == otherVehicle->name)
+				continue;
+			// Non-crashed can go into crashed
+			if (v.crashed || !otherVehicle->crashed)
+			{
+				return Reachability::BlockedByVehicle;
+			}
+		}
+	}
+
+	return Reachability::Reachable;
+}
+
+Reachability VehicleTargetHelper::isReachableTargetRoad(const Vehicle &v, Vec3<int> target)
+{
+	auto &map = *v.city->map;
+	auto scenery = map.getTile(target)->presentScenery;
+
+	// Check if target tile is a road
+	if (scenery && scenery->type->tile_type == SceneryTileType::TileType::Road)
+	{
+		return Reachability::Reachable;
+	}
+
+	return Reachability::BlockedByScenery;
+}
+
+Reachability VehicleTargetHelper::isReachableTargetGround(const Vehicle &v, Vec3<int> target)
+{
+	auto &map = *v.city->map;
+	auto scenery = map.getTile(target)->presentScenery;
+
+	// Check if target tile can be accessed by an ATV
+	if (scenery)
+	{
+		auto walkMode = scenery->type->getATVMode();
+		switch (walkMode)
+		{
+			case SceneryTileType::WalkMode::Onto:
+			{
+				// If moving to an "onto" tile must have clear above
+				auto checkedPos = target + Vec3<int>(0, 0, 1);
+				if (map.tileIsValid(checkedPos))
+				{
+					auto checkedTile = map.getTile(checkedPos);
+					if (checkedTile->presentScenery)
+					{
+						break;
+					}
+				}
+			}
+			// Intentional fall-through
+			case SceneryTileType::WalkMode::Into:
+				return Reachability::Reachable;
+			case SceneryTileType::WalkMode::None:
+				break;
+		}
+	}
+
+	return Reachability::BlockedByScenery;
 }
 
 bool VehicleMission::takeOffCheck(GameState &state, Vehicle &v)
@@ -2242,45 +2224,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		}
 		case MissionType::RecoverVehicle:
 		{
-			// Ground can't recover
-			if (v.type->isGround())
-			{
-				cancelled = true;
-				return;
-			}
-			// Target not crashed or dead or already rescued
-			if (!targetVehicle ||
-			    (!targetVehicle->crashed && !targetVehicle->sliding && !targetVehicle->falling) ||
-			    targetVehicle->carriedByVehicle)
-			{
-				cancelled = true;
-				return;
-			}
-			// Can't rescue
-			if (targetVehicle->owner != state.getAliens() && !v.type->canRescueCrashed)
-			{
-				cancelled = true;
-				return;
-			}
-			// Only X-Com can storm UFO
-			if (targetVehicle->owner == state.getAliens() && v.owner != state.getPlayer())
-			{
-				cancelled = true;
-				return;
-			}
-			// Find soldier
-			bool needSoldiersButNotFound =
-			    v.owner == state.getPlayer() ||
-			    v.owner->isRelatedTo(targetVehicle->owner) == Organisation::Relation::Hostile;
-			for (auto &a : v.currentAgents)
-			{
-				if (a->type->role == AgentType::Role::Soldier)
-				{
-					needSoldiersButNotFound = false;
-					break;
-				}
-			}
-			if (needSoldiersButNotFound)
+			if (!targetVehicle || !VehicleMission::canRecoverVehicle(state, v, *targetVehicle))
 			{
 				cancelled = true;
 				return;
@@ -3065,6 +3009,61 @@ void VehicleMission::takePositionNearPortal(GameState &state, Vehicle &v)
 	std::uniform_int_distribution<int> yPos((int)v.position.y - 2, (int)v.position.y + 2);
 	v.addMission(state, VehicleMission::gotoLocation(
 	                        state, v, v.getPreferredPosition(xPos(state.rng), yPos(state.rng))));
+}
+
+bool VehicleMission::canRecoverVehicle(const GameState &state, const Vehicle &v,
+                                       const Vehicle &target)
+{
+	// Ground can't recover
+	if (v.type->isGround())
+	{
+		return false;
+	}
+	// Target not crashed or dead or already rescued
+	if (target.isDead() || (!target.crashed && !target.sliding && !target.falling) ||
+	    target.carriedByVehicle)
+	{
+		return false;
+	}
+	// Only X-Com pursues sliding or falling crafts
+	if (!target.crashed && v.owner != state.getPlayer())
+	{
+		return false;
+	}
+	// Can't rescue
+	if (target.owner != state.getAliens() && !v.type->canRescueCrashed)
+	{
+		return false;
+	}
+	// Only X-Com can storm UFO
+	if (target.owner == state.getAliens() && v.owner != state.getPlayer())
+	{
+		return false;
+	}
+	// Find soldier
+	bool needSoldiersButNotFound =
+	    v.owner == state.getPlayer() ||
+	    v.owner->isRelatedTo(target.owner) == Organisation::Relation::Hostile;
+	for (const auto &a : v.currentAgents)
+	{
+		if (a->type->role == AgentType::Role::Soldier)
+		{
+			needSoldiersButNotFound = false;
+			break;
+		}
+	}
+	if (needSoldiersButNotFound)
+	{
+		return false;
+	}
+	// Don't attempt to rescue permanently unreachable craft
+	if (VehicleTargetHelper::isReachableTarget(v, target.position) ==
+	    Reachability::BlockedByScenery)
+	{
+		return false;
+	}
+
+	return true;
 }
 
 UString VehicleMission::getName()

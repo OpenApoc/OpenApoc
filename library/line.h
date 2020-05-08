@@ -24,12 +24,11 @@ template <typename T, bool conservative> class LineSegment
 		inc.y = (d.y < static_cast<T>(0)) ? -increment : increment;
 		inc.z = (d.z < static_cast<T>(0)) ? -increment : increment;
 	}
-	LineSegmentIterator<T, conservative> begin();
-	LineSegmentIterator<T, conservative> end();
+	LineSegmentIterator<T, conservative> begin() const;
+	LineSegmentIterator<T, conservative> end() const;
 };
 
-template <typename T, bool conservative>
-class LineSegmentIterator : public std::iterator<std::forward_iterator_tag, Vec3<T>>
+template <typename T, bool conservative> class LineSegmentIterator
 {
   private:
 	Vec3<T> point;
@@ -39,10 +38,16 @@ class LineSegmentIterator : public std::iterator<std::forward_iterator_tag, Vec3
 	Vec3<T> inc;
 	T dstep2;
 
-	LineSegment<T, conservative> &line;
+	const LineSegment<T, conservative> &line;
 
   public:
-	LineSegmentIterator(Vec3<T> start, LineSegment<T, conservative> &l) : point(start), line(l)
+	using iterator_category = std::forward_iterator_tag;
+	using value_type = Vec3<T>;
+	using difference_type = ptrdiff_t;
+	using pointer = Vec3<T> *;
+	using reference = Vec3<T> &;
+	LineSegmentIterator(Vec3<T> start, const LineSegment<T, conservative> &l)
+	    : point(start), line(l)
 	{
 		err = {static_cast<T>(0), static_cast<T>(0), static_cast<T>(0)};
 		step = {static_cast<T>(0), static_cast<T>(0), static_cast<T>(0)};
@@ -129,13 +134,13 @@ class LineSegmentIterator : public std::iterator<std::forward_iterator_tag, Vec3
 };
 
 template <typename T, bool conservative>
-LineSegmentIterator<T, conservative> LineSegment<T, conservative>::begin()
+LineSegmentIterator<T, conservative> LineSegment<T, conservative>::begin() const
 {
 	return LineSegmentIterator<T, conservative>(this->startPoint, *this);
 }
 
 template <typename T, bool conservative>
-LineSegmentIterator<T, conservative> LineSegment<T, conservative>::end()
+LineSegmentIterator<T, conservative> LineSegment<T, conservative>::end() const
 {
 	return LineSegmentIterator<T, conservative>(this->endPoint + this->inc, *this);
 }

@@ -327,8 +327,8 @@ void Organisation::updateMissions(GameState &state)
 		// Rescue owned
 		for (auto &v : state.vehicles)
 		{
-			if (v.second->city == rescueTransport->city && v.second->crashed &&
-			    !v.second->carriedByVehicle && v.second->owner.id == id)
+			if (v.second->city == rescueTransport->city && v.second->owner.id == id &&
+			    VehicleMission::canRecoverVehicle(state, *rescueTransport, *v.second))
 			{
 				bool foundRescuer = false;
 				for (auto &r : state.vehicles)
@@ -360,9 +360,9 @@ void Organisation::updateMissions(GameState &state)
 		// Rescue allies but not aliens
 		for (auto &v : state.vehicles)
 		{
-			if (v.second->city == rescueTransport->city && v.second->crashed &&
-			    v.second->owner != state.getAliens() && !v.second->carriedByVehicle &&
-			    v.second->owner.id != id && isRelatedTo(v.second->owner) == Relation::Allied)
+			if (v.second->city == rescueTransport->city && v.second->owner != state.getAliens() &&
+			    v.second->owner.id != id && isRelatedTo(v.second->owner) == Relation::Allied &&
+			    VehicleMission::canRecoverVehicle(state, *rescueTransport, *v.second))
 			{
 				bool foundRescuer = false;
 				for (auto &r : state.vehicles)
@@ -494,6 +494,11 @@ void Organisation::updateInfiltration(GameState &state)
 		infiltrationModifier--;
 	}
 	org->infiltrationValue = clamp(org->infiltrationValue + infiltrationModifier, 0, 200);
+}
+
+void Organisation::updateDailyInfiltrationHistory()
+{
+	infiltrationHistory.push_front(this->infiltrationValue);
 }
 
 void Organisation::updateTakeOver(GameState &state, unsigned int ticks)
@@ -764,7 +769,8 @@ bool Organisation::bribedBy(GameState &state, StateRef<Organisation> other, int 
 	return true;
 }
 
-sp<Organisation> Organisation::get(const GameState &state, const UString &id)
+template <>
+sp<Organisation> StateObject<Organisation>::get(const GameState &state, const UString &id)
 {
 	auto it = state.organisations.find(id);
 	if (it == state.organisations.end())
@@ -775,12 +781,12 @@ sp<Organisation> Organisation::get(const GameState &state, const UString &id)
 	return it->second;
 }
 
-const UString &Organisation::getPrefix()
+template <> const UString &StateObject<Organisation>::getPrefix()
 {
 	static UString prefix = "ORG_";
 	return prefix;
 }
-const UString &Organisation::getTypeName()
+template <> const UString &StateObject<Organisation>::getTypeName()
 {
 	static UString name = "Organisation";
 	return name;

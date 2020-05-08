@@ -10,7 +10,7 @@ configuration:
 #  - Debug
 platform:
   - x64
-  - Win32
+#  - Win32
 environment:
   APPVEYOR_SAVE_CACHE_ON_ERROR: true
 init:
@@ -25,10 +25,11 @@ cache: c:\tools\vcpkg\installed
 before_build:
   - cd c:\tools\vcpkg
   - git pull
-  - git checkout 2019.10
-  - cd c:\projects\openapoc
+  - git checkout 2019.12
+  - cd %APPVEYOR_BUILD_FOLDER%
   - vcpkg install sdl2 boost-locale boost-program-options boost-uuid boost-crc
   - vcpkg upgrade --no-dry-run
+  - vcpkg remove --outdated
   - git submodule update --init --recursive
   - curl http://s2.jonnyh.net/pub/cd_minimal.iso.xz -o temp\cd.iso.xz
   - 7z e temp\cd.iso.xz -odata\
@@ -60,9 +61,6 @@ after_build:
   - del OpenApoc-%OPENAPOC_VERSION%\portable.txt
   - '"C:\Program Files (x86)\NSIS\makensis.exe" /DGAME_VERSION=%OPENAPOC_VERSION% install\windows\installer.nsi'
   - appveyor PushArtifact install\windows\install-openapoc-%OPENAPOC_VERSION%.exe
-  - copy bin\*.pdb OpenApoc-%OPENAPOC_VERSION%\
-  - 7z a %OPENAPOC_DEBUG_FILENAME% OpenApoc-%OPENAPOC_VERSION%\*.pdb
-  - appveyor PushArtifact %OPENAPOC_DEBUG_FILENAME%
 before_test:
   - 7z e temp\cd.iso.xz -odata\
 test_script:

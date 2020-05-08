@@ -13,6 +13,7 @@
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vehicle_ammo.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="research.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_body_types.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vehicle_types.xml"/>
   <initial_agents>
     <entry>
       <key>Soldier</key>

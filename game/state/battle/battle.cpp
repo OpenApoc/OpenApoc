@@ -2552,12 +2552,13 @@ void Battle::finishBattle(GameState &state)
 	auto aliens = state.getAliens();
 	state.current_battle->unloadResources(state);
 
-	// Remove active battle scanners
+	// Remove active battle scanners and deactivate medikits and motion scanners
 	for (auto &u : state.current_battle->units)
 	{
 		for (auto &e : u.second->agent->equipment)
 		{
 			e->battleScanner.clear();
+			e->inUse = false;
 		}
 	}
 

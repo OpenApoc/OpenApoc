@@ -9,9 +9,8 @@
 namespace OpenApoc
 {
 
-class UFOIncursion : public StateObject
+class UFOIncursion : public StateObject<UFOIncursion>
 {
-	STATE_OBJECT(UFOIncursion)
   public:
 	enum class PrimaryMission
 	{

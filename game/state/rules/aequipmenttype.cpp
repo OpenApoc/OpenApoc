@@ -7,19 +7,20 @@
 namespace OpenApoc
 {
 
-const UString &AEquipmentType::getPrefix()
+template <> const UString &StateObject<AEquipmentType>::getPrefix()
 {
 	static UString prefix = "AEQUIPMENTTYPE_";
 	return prefix;
 }
 
-const UString &AEquipmentType::getTypeName()
+template <> const UString &StateObject<AEquipmentType>::getTypeName()
 {
 	static UString name = "AEquipmentType";
 	return name;
 }
 
-sp<AEquipmentType> AEquipmentType::get(const GameState &state, const UString &id)
+template <>
+sp<AEquipmentType> StateObject<AEquipmentType>::get(const GameState &state, const UString &id)
 {
 	auto it = state.agent_equipment.find(id);
 	if (it == state.agent_equipment.end())
@@ -30,19 +31,20 @@ sp<AEquipmentType> AEquipmentType::get(const GameState &state, const UString &id
 	return it->second;
 }
 
-const UString &EquipmentSet::getPrefix()
+template <> const UString &StateObject<EquipmentSet>::getPrefix()
 {
 	static UString prefix = "EQUIPMENTSET_";
 	return prefix;
 }
 
-const UString &EquipmentSet::getTypeName()
+template <> const UString &StateObject<EquipmentSet>::getTypeName()
 {
 	static UString name = "EquipmentSet";
 	return name;
 }
 
-sp<EquipmentSet> EquipmentSet::get(const GameState &state, const UString &id)
+template <>
+sp<EquipmentSet> StateObject<EquipmentSet>::get(const GameState &state, const UString &id)
 {
 	auto it = state.equipment_sets_by_score.find(id);
 	if (it == state.equipment_sets_by_score.end())

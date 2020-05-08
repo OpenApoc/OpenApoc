@@ -24,9 +24,8 @@ enum class ItemWieldMode
 	TwoHanded
 };
 
-class BattleUnitAnimationPack : public StateObject
+class BattleUnitAnimationPack : public StateObject<BattleUnitAnimationPack>
 {
-	STATE_OBJECT(BattleUnitAnimationPack)
   public:
 	class AnimationEntry
 	{

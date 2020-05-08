@@ -1,13 +1,13 @@
 # OpenApocalypse [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Are%20you%20a%20fan%20of%20X-Com%20Apocalypse?%20OpenApoc%20is%20a%20clone%20of%20this%20great%20game%20-%20contribute!%20https://github.com/OpenApoc/OpenApoc&hashtags=games,openapoc,xcom)
 
-> OpenApoc is an open-source re-implementation of the original [X-COM: Apocalypse](https://www.ufopaedia.org/index.php/Apocalypse), that requires the original files to run, licensed under the MIT and written in C++ / SDL2. It was originally founded by PmProg in July 2014, and has since grown in [community](https://www.ufopaedia.org/index.php/Credits_(OpenApoc)).
+> OpenApoc is an open-source re-implementation of the original [X-COM: Apocalypse](https://www.ufopaedia.org/index.php/Apocalypse), that requires the original files to run, licensed under the GPL3 and written in C++ / SDL2. It was originally founded by PmProg in July 2014, and has since grown in [community](https://www.ufopaedia.org/index.php/Credits_(OpenApoc)).
 
 [![Linux Build Status](https://img.shields.io/travis/OpenApoc/OpenApoc.svg?label=LinuxTravis)](https://travis-ci.org/OpenApoc/OpenApoc)
 [![Windows Build Status](https://img.shields.io/appveyor/ci/OpenApoc/openapoc.svg?label=WindowsAppveyor)](https://ci.appveyor.com/project/OpenApoc/openapoc)
 [![Openapoc issues](https://img.shields.io/github/issues/openapoc/openapoc.svg)](https://github.com/openapoc/openapoc/issues)
 [![See our Trello TO-DO list for more info](https://img.shields.io/badge/See%20our-Trello%20TO--DO%20list-blue.svg)](https://trello.com/b/lX5Y3DwR/openapoc)
 [![Translate OpenApoc to your language](https://img.shields.io/badge/Translate-Openapoc-blue.svg)](https://www.transifex.com/x-com-apocalypse/apocalypse/)
-[![OpenApoc MIT license](https://img.shields.io/badge/license-MIT-red.svg)](https://github.com/OpenApoc/OpenApoc/blob/master/LICENSE)\
+[![OpenApoc GPL3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/OpenApoc/OpenApoc/blob/master/LICENSE)\
 [![Openapoc forum](https://img.shields.io/badge/Visit%20our-forum-orange.svg)](http://openapoc.org)
 [![Openapoc IRC chat](https://img.shields.io/badge/IRC-devs%20chat-brightgreen.svg)](http://webchat.freenode.net/?channels=openapoc)
 [![Openapoc Discord](https://img.shields.io/discord/142798944970211328.svg?label=discord)](https://discord.gg/d6DAHEb)
@@ -84,8 +84,9 @@ That will be a game which has all of its main mechanics implemented. We still ha
 OpenApocalypse is built leveraging a number of libraries - to provide needed functionality (and save us the time of implementing it ourselves badly). 
 Note: The following libraries will be fetched and built with vcpkg in a later step, ensuring you get the correct version
 
-* [SDL2](https://www.libsdl.org) 
-* [Boost](http://boost.org) We use specifially the 'locale' library, used for localisation, 'program-options' for settings management, and 'filesystem'.
+* [SDL2](https://www.libsdl.org)
+* [Boost](https://boost.org) - We specifially use the 'locale' library, used for localisation, 'program-options' for settings management, and 'filesystem'.
+* [Qt](https://www.qt.io/) - needed for the launcher, can be disabled with 'BUILD_LAUNCHER'.
 * [Libunwind](https://nongnu.org/libunwind/download.html) - debug backtracing on linux - not needed on windows.
 
 The following libraries are also used, but are shipped as submodules in the repository and directly included in the build, so you don't need to install these dependencies to build or use openapoc.
@@ -101,23 +102,38 @@ The following libraries are also used, but are shipped as submodules in the repo
 
 ### Building on Windows
 
+* Install [Visual Studio](https://visualstudio.microsoft.com/vs/) (2017 or later) with "Desktop Development with C++" workload.
+* Install a Git client eg. [Github Desktop](https://desktop.github.com/).
 * Checkout OpenApoc from GitHub.
-* If you are using the GitHub client for Windows, the submodules should already be setup at first checkout. If not using the github client, or if the submodules have been updated, run the following commands in the 'git shell' from the root of the OpenApoc repository. This should reset the submodule checkouts to the latest versions (NOTE: This will overwrite any changes to code in the dependencies/ directory).
+* If you are using the GitHub Desktop client, the submodules should already be setup at first checkout. If not, or if the submodules have been updated, run the following commands in the 'git shell' from the root of the OpenApoc repository. This should reset the submodule checkouts to the latest versions (NOTE: This will overwrite any changes to code in the dependencies/ directory).
 
 ```cmd
 git submodule update --init --recursive
 ```
 
-* All the other dependencies (Boost, SDL2) need to be supplied separately. Install [Vcpkg](https://github.com/Microsoft/vcpkg) and run the following command:
+* All the other dependencies (Boost, SDL2, Qt) need to be supplied separately. Install [Vcpkg](https://github.com/Microsoft/vcpkg) and run the following command:
+
+  * For x64 builds:
 
 ```cmd
-vcpkg install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-base
+vcpkg --triplet x64-windows install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-base
 ```
+
+  * For x86 builds:
+
+```cmd
+vcpkg --triplet x86-windows install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-base
+```
+
+  * For list of all supported by Vcpkg architectures: `vcpkg help triplet`
 
 * Copy the original XCom:Apocalypse .iso file into the "data/" directory. This could also be a directory containing all the extracted files from the CD, and it should be named the same (IE the directory should be data/cd.iso/). This is used during the build to extract some data tables.
 * If you do not have Visual Studio (community edition works fine) already, install it and make sure to enable c++ support (Check "Desktop development with C++" in the VS setup)
-* Open the Git directory in Visual Studio (if you don't have an Open Folder option, generate a project from CMake).
-* Visual Studio should automatically detect and configure CMake appropriately. To add your Vcpkg dependencies, edit your CMake Settings file and add:
+* Open the OpenApoc directory in Visual Studio (if you don't have an Open Folder option, generate a project with [CMake](https://cmake.org/)).
+* Set your configuration to x64-Release or x86-Release (must match your Vcpkg dependencies). Release is recommended as Debug is very slow.
+
+* Visual Studio should automatically detect and configure CMake appropriately. If you didn't integrate Vcpkg, you will need to manually add it to your CMake Settings file:
+  * Visual Studio 2017:
 
 ```json
 "variables": [
@@ -127,14 +143,14 @@ vcpkg install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-b
     }
 ]
 ```
+  * Visual Studio 2019: Build > CMake Settings > Toolchain file > `<path to vcpkg>\\scripts\\buildsystems\\vcpkg.cmake`
 
-* If you get errors, clear your cache from the CMake menu and generate again.
-* Build (Release/Debug x86/x64 should all work). Release is recommended as Debug is very slow.
+* Build OpenApoc. If you get errors, clear your cache from the CMake menu and generate again.
 * When running from the Visual Studio UI, the working directory is set to the root of the project, so the data folder should already be in the right place. If you want to run outside of Visual Studio, you need to copy the whole 'data' folder (including the cd.iso file) into the folder openapoc.exe resides in.
 
 ### Building on Linux
 
-(Tested on Ubuntu 16.04 and Mageia 6)
+(Tested on Ubuntu 16.04, Mageia 6 and Fedora 31)
 
 * On Ubuntu, install the following packages:
 
@@ -192,22 +208,19 @@ make -j4
 
 ## How to setup OpenApoc
 
-* This assumes that you have the file 'cd.iso' - a copy of the original X-Com Apocalypse CD (This can be acquired from [Steam](http://store.steampowered.com/app/7660/) - this is _required_ to run)
-  * you need have all files in ISO file including MUSIC etc
-  * if it's in .iso format, rename it to "cd.iso"
-  * if it's not, copy all the contents into a folder and rename the folder to "cd.iso"
-  * we also support the .cue / .bin files (which are used, for example, in the gog.com version)
-  * you rename the .cue file "cd.iso", put it in the data/ folder, then put the .bin file in the same folder
-
-(without changing it's name - so for example the gog.com file remails "XCOM.BIN")
-
 * Download OpenApoc: [![Windows Build Status](https://img.shields.io/appveyor/ci/OpenApoc/openapoc.svg?label=WindowsAppveyor)](https://ci.appveyor.com/project/openapoc/openapoc/)
   * If you see a green latest build then you can get it, if it's not then go to HISTORY at the top and click another build that's green
   * Click Platform x64 (or Win32 if you need 32bit binaries)
   * Click ARTIFACTS
   * Download the first option (without "debug" in it)
   * Unzip downloaded file which will create a new folder with everything from us inside
-* Put cd.iso (image or folder) into data folder inside OpenApoc folder
+
+* Put original X-Com Apocalypse CD into data folder inside OpenApoc folder:
+  * if you have disc, copy contents to 'cd.iso' subfolder in data.
+  * if you have [Steam](https://store.steampowered.com/app/7660/) version, copy 'cd.iso' file to data.
+  * if you have [GOG](https://www.gog.com/game/xcom_apocalypse) version, copy 'xcom.bin' and 'xcom.cue' to data, and rename 'xcom.cue' to 'cd.iso'.
+  * pirated versions will not work!
+
 * Run and enjoy!
   * If you find bug report it [here](https://github.com/openapoc/openapoc/issues) (upload also openapoc_log.txt from game folder)
 

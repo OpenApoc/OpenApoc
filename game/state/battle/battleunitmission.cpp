@@ -2056,6 +2056,14 @@ void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> tar
 		    u.goalPosition, target, BattleUnitTileHelper{map, u}, approachOnly, demandGiveWay,
 		    !blockedByMovingUnit);
 
+		// Cancel movement if the closest path ends at the current position
+		if (path.size() == 1 && path.back() == Vec3<int>{u.position})
+		{
+			LogInfo("Cannot move to %s, closest path ends at origin", Vec3<int>{u.goalPosition});
+			cancelled = true;
+			return;
+		}
+
 		// Always start with the current position
 		this->currentPlannedPath.push_back(u.goalPosition);
 		for (auto &p : path)

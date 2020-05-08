@@ -1,7 +1,7 @@
 #include "game/state/shared/aequipment.h"
-#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
+#include "framework/options.h"
 #include "framework/sound.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleitem.h"
@@ -288,6 +288,41 @@ void AEquipment::startFiring(WeaponAimingMode fireMode, bool instant)
 	aimingMode = fireMode;
 }
 
+static sp<AEquipment> getAutoreloadAmmoType(const AEquipment &weapon)
+{
+	LogAssert(weapon.type->type == AEquipmentType::Type::Weapon);
+	LogAssert(weapon.getPayloadType() != weapon.type);
+
+	// Check if the auto-reload option is disabled
+	if (!Options::optionAutoReload.get())
+	{
+		return nullptr;
+	}
+
+	// Prefer loading the same type of ammo again
+	if (weapon.lastLoadedAmmoType)
+	{
+		auto equippedAmmo = weapon.ownerAgent->getFirstItemByType(weapon.lastLoadedAmmoType);
+		if (equippedAmmo)
+		{
+			LogAssert(equippedAmmo->type->type == AEquipmentType::Type::Ammo);
+			return equippedAmmo;
+		}
+	}
+	// Otherwise find any possible ammo on the agent
+	for (const auto &ammoType : weapon.type->ammo_types)
+	{
+		auto equippedAmmo = weapon.ownerAgent->getFirstItemByType(ammoType);
+		if (equippedAmmo)
+		{
+			LogAssert(equippedAmmo->type->type == AEquipmentType::Type::Ammo);
+			return equippedAmmo;
+		}
+	}
+	// No ammo found
+	return nullptr;
+}
+
 void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 {
 	// Cannot load if this is using itself for payload or is not a weapon
@@ -303,16 +338,7 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 			LogError("Trying to auto-reload a weapon not in agent inventory!?");
 			return;
 		}
-		auto it = type->ammo_types.rbegin();
-		while (it != type->ammo_types.rend())
-		{
-			ammoItem = ownerAgent->getFirstItemByType(*it);
-			if (ammoItem)
-			{
-				break;
-			}
-			it++;
-		}
+		ammoItem = getAutoreloadAmmoType(*this);
 	}
 	// Cannot load non-ammo or if no ammo was found in the inventory
 	if (!ammoItem || ammoItem->type->type != AEquipmentType::Type::Ammo)
@@ -325,6 +351,8 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 	{
 		return;
 	}
+	// Store the loaded ammo type for autoreload
+	lastLoadedAmmoType = ammoItem->type;
 
 	// If this has ammo then swap
 	if (payloadType)

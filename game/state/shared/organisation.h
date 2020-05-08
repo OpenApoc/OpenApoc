@@ -33,9 +33,8 @@ class VehicleType;
 class UfopaediaEntry;
 class Image;
 
-class Organisation : public StateObject
+class Organisation : public StateObject<Organisation>
 {
-	STATE_OBJECT(Organisation)
   public:
 	enum class PurchaseResult
 	{
@@ -103,6 +102,7 @@ class Organisation : public StateObject
 	int balance = 0;
 	int income = 0;
 	int infiltrationValue = 0;
+	std::list<int> infiltrationHistory;
 	// Modified for all infiltration attempts at this org
 	int infiltrationSpeed = 0;
 	bool takenOver = false;
@@ -134,6 +134,7 @@ class Organisation : public StateObject
 	void updateInfiltration(GameState &state);
 	void updateTakeOver(GameState &state, unsigned int ticks);
 	void updateVehicleAgentPark(GameState &state);
+	void updateDailyInfiltrationHistory();
 
 	int getGuardCount(GameState &state) const;
 

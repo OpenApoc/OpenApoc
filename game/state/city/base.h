@@ -16,9 +16,8 @@ class Facility;
 class GameState;
 class Organisation;
 
-class Base : public StateObject, public std::enable_shared_from_this<Base>
+class Base : public StateObject<Base>, public std::enable_shared_from_this<Base>
 {
-	STATE_OBJECT(Base)
   public:
 	std::vector<std::vector<bool>> corridors;
 	std::vector<sp<Facility>> facilities;

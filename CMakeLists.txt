@@ -37,8 +37,8 @@ message("Using CD at \"${CD_PATH}\"")
 set(CMAKE_C_FLAGS_SANITIZE "-O1 -g -fsanitize=address")
 set(CMAKE_CXX_FLAGS_SANITIZE "-O1 -g -fsanitize=address")
 
-set(CMAKE_C_FLAGS_QUICK "-O1 -g0")
-set(CMAKE_CXX_FLAGS_QUICK "-O1 -g0")
+set(CMAKE_C_FLAGS_QUICK "-O1 -g1")
+set(CMAKE_CXX_FLAGS_QUICK "-O1 -g1")
 
 
 CHECK_CXX_COMPILER_FLAG("-fvisibility=hidden"
@@ -103,8 +103,17 @@ if (WIN32)
 	set(sources ${sources} "apocicon.rc")
 endif()
 
+
+if (APPLE)
+set(MACOSX_BUNDLE_BUNDLE_NAME OpenApoc)
+
+ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} MACOSX_BUNDLE game/main.cpp ${sources}
+		${FRAMEWORK_SOURCES})
+else()
 ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} game/main.cpp ${sources}
 		${FRAMEWORK_SOURCES})
+endif()
+
 
 target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Library)
 target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Framework)
@@ -125,9 +134,12 @@ INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
 # apoc data copy
 SET( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
 
-install(TARGETS ${CMAKE_PROJECT_NAME}
-		RUNTIME DESTINATION bin)
-install(DIRECTORY ${CMAKE_SOURCE_DIR}data/ DESTINATION share/OpenApoc)
+
+if (NOT APPLE)
+		install(TARGETS ${CMAKE_PROJECT_NAME}
+				RUNTIME DESTINATION bin)
+		install(DIRECTORY ${CMAKE_SOURCE_DIR}data/ DESTINATION share/OpenApoc)
+endif()
 
 if(ENABLE_TESTS)
 	enable_testing()

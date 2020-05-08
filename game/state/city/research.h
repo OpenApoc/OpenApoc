@@ -44,9 +44,8 @@ class ProjectDependencies
 	bool satisfied(StateRef<Base> base) const;
 };
 
-class ResearchTopic : public StateObject
+class ResearchTopic : public StateObject<ResearchTopic>
 {
-	STATE_OBJECT(ResearchTopic)
   public:
 	ResearchTopic() = default;
 	enum class Type
@@ -111,9 +110,8 @@ class ResearchDependency
 	bool satisfied() const;
 };
 
-class Lab : public StateObject
+class Lab : public StateObject<Lab>
 {
-	STATE_OBJECT(Lab)
   public:
 	Lab() = default;
 	~Lab() override;

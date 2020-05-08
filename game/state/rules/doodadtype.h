@@ -19,9 +19,8 @@ class DoodadFrame
 	DoodadFrame(sp<Image> image, int time) : image(image), time(time){};
 };
 
-class DoodadType : public StateObject
+class DoodadType : public StateObject<DoodadType>
 {
-	STATE_OBJECT(DoodadType)
   public:
 	DoodadType() = default;
 	int lifetime = 0;

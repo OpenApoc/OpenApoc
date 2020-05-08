@@ -15,9 +15,8 @@ class BattleMapPart;
 class Battle;
 class Sample;
 
-class BattleDoor : public StateObject, public std::enable_shared_from_this<BattleDoor>
+class BattleDoor : public StateObject<BattleDoor>, public std::enable_shared_from_this<BattleDoor>
 {
-	STATE_OBJECT(BattleDoor)
   public:
 	UString id;
 

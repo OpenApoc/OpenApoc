@@ -33,9 +33,8 @@ class Cargo;
 class UfopaediaEntry;
 class ResearchTopic;
 
-class BuildingFunction : public StateObject
+class BuildingFunction : public StateObject<BuildingFunction>
 {
-	STATE_OBJECT(BuildingFunction)
   public:
 	UString name;
 	int infiltrationSpeed = 0;
@@ -43,9 +42,8 @@ class BuildingFunction : public StateObject
 	StateRef<UfopaediaEntry> ufopaedia_entry;
 };
 
-class Building : public StateObject, public std::enable_shared_from_this<Building>
+class Building : public StateObject<Building>, public std::enable_shared_from_this<Building>
 {
-	STATE_OBJECT(Building)
   public:
 	UString name;
 	StateRef<City> city;

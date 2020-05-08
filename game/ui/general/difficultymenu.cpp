@@ -31,15 +31,10 @@ void DifficultyMenu::resume() {}
 
 void DifficultyMenu::finish() {}
 
-std::shared_future<void> loadGame(const UString &difficulty, sp<GameState> state)
+std::shared_future<void> loadGame(sp<GameState> state)
 {
-	auto loadTask = fw().threadPoolEnqueue([difficulty, state]() -> void {
+	auto loadTask = fw().threadPoolEnqueue([state]() -> void {
 		state->loadMods();
-		// FIXME: Make the difficulty load after the base but before any other mods?
-		// Maybe make loading states possible as a result of another state? Some "on_load" hook?
-		auto difficultyPatchPath = Options::modPath.get() + "/base/" + difficulty;
-		state->loadGame(difficultyPatchPath);
-
 		state->startGame();
 		state->initState();
 		state->fillPlayerStartingProperty();
@@ -65,26 +60,26 @@ void DifficultyMenu::eventOccurred(Event *e)
 
 	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::ButtonClick)
 	{
-		UString initialStatePath;
+		int difficulty;
 		if (e->forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY1") == 0)
 		{
-			initialStatePath = "difficulty1_patched";
+			difficulty = 0;
 		}
 		else if (e->forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY2") == 0)
 		{
-			initialStatePath = "difficulty2_patched";
+			difficulty = 1;
 		}
 		else if (e->forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY3") == 0)
 		{
-			initialStatePath = "difficulty3_patched";
+			difficulty = 2;
 		}
 		else if (e->forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY4") == 0)
 		{
-			initialStatePath = "difficulty4_patched";
+			difficulty = 3;
 		}
 		else if (e->forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY5") == 0)
 		{
-			initialStatePath = "difficulty5_patched";
+			difficulty = 4;
 		}
 		else
 		{
@@ -93,10 +88,11 @@ void DifficultyMenu::eventOccurred(Event *e)
 		}
 
 		auto loadedState = mksp<GameState>();
+		loadedState->difficulty = difficulty;
 
 		fw().stageQueueCommand(
 		    {StageCmd::Command::PUSH,
-		     mksp<LoadingScreen>(nullptr, loadGame(initialStatePath, loadedState),
+		     mksp<LoadingScreen>(nullptr, loadGame(loadedState),
 		                         [loadedState]() { return mksp<CityView>(loadedState); })});
 		return;
 	}

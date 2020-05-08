@@ -105,6 +105,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	std::list<EventMessage> messages;
 
+	int baseIndex = 1;
 	int difficulty = 0;
 	bool firstDetection = false;
 	uint64_t nextInvasion = 0;
@@ -253,6 +254,9 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// Loads all mods set in the options - note this likely requires the mod data directories to
 	// already be added to the filesystem
 	void loadMods();
+	// appends a GameState package from "submodPath", relative to the currently set data directories
+	// Returns true on success, false on failure
+	bool appendGameState(const UString &gamestatePath);
 };
 
 }; // namespace OpenApoc

@@ -9,9 +9,8 @@
 namespace OpenApoc
 {
 class Image;
-class BattleUnitImagePack : public StateObject
+class BattleUnitImagePack : public StateObject<BattleUnitImagePack>
 {
-	STATE_OBJECT(BattleUnitImagePack)
   public:
 	Vec2<float> image_offset;
 

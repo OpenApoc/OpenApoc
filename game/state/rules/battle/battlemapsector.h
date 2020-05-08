@@ -21,9 +21,8 @@ enum class SpawnType
 	Civilian
 };
 
-class BattleMapSector : public StateObject
+class BattleMapSector : public StateObject<BattleMapSector>
 {
-	STATE_OBJECT(BattleMapSector)
   public:
 	BattleMapSector() = default;
 	~BattleMapSector() override = default;

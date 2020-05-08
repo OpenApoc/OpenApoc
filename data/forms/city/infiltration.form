@@ -9,6 +9,10 @@
         <position x="0" y="0"/>
         <size width="640" height="480"/>
       </graphic>
+      <graphic id="GRAPH">
+        <position x="22" y="69"/>
+        <size width="336" height="279"/>
+      </graphic>
       <label text="ALIEN INFILTRATION">
         <position x="113" y="0"/>
         <size width="420" height="32"/>
@@ -34,6 +38,56 @@
         <image/>
         <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
       </graphicbutton>
+      <label id="ORG_NAME_0">
+        <position x="38" y="386"/>
+        <size width="260" height="14"/>
+	<font>smalfont</font>
+      </label>
+      <label id="ORG_NAME_1">
+        <position x="38" y="403"/>
+        <size width="260" height="15"/>
+	<font>smalfont</font>
+      </label>
+      <label id="ORG_NAME_2">
+        <position x="38" y="420"/>
+        <size width="260" height="15"/>
+	<font>smalfont</font>
+      </label>
+      <label id="ORG_NAME_3">
+        <position x="38" y="437"/>
+        <size width="260" height="15"/>
+	<font>smalfont</font>
+      </label>
+      <label id="ORG_NAME_4">
+        <position x="38" y="454"/>
+        <size width="260" height="15"/>
+	<font>smalfont</font>
+      </label>
+      <label id="ORG_NAME_5">
+        <position x="318" y="386"/>
+        <size width="260" height="15"/>
+	<font>smalfont</font>
+      </label>
+      <label id="ORG_NAME_6">
+        <position x="318" y="403"/>
+        <size width="260" height="15"/>
+	<font>smalfont</font>
+      </label>
+      <label id="ORG_NAME_7">
+        <position x="318" y="420"/>
+        <size width="260" height="15"/>
+	<font>smalfont</font>
+      </label>
+      <label id="ORG_NAME_8">
+        <position x="318" y="437"/>
+        <size width="260" height="15"/>
+	<font>smalfont</font>
+      </label>
+      <label id="ORG_NAME_9">
+        <position x="318" y="454"/>
+        <size width="260" height="15"/>
+	<font>smalfont</font>
+      </label>
     </style>
   </form>
 </openapoc>
