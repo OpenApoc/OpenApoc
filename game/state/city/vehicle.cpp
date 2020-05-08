@@ -241,7 +241,7 @@ class FlyingVehicleMover : public VehicleMover
 
 				// Rotate space so that we see where the hit point is
 				// Calculate change-of-basis matrix
-				glm::mat3 transform;
+				glm::mat3 transform = {};
 				if (pointNorm.x == 0 && pointNorm.z == 0)
 				{
 					if (pointNorm.y < 0) // rotate 180 degrees
