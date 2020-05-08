@@ -1703,7 +1703,6 @@ void Vehicle::provideServicePassengers(GameState &state, bool otherOrg)
 
 StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 {
-	bool fromTactical = false;
 	bool cargoArrived = false;
 	bool bioArrived = false;
 	bool recoveryArrived = false;
@@ -1716,10 +1715,6 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 	{
 		if (it->destination == currentBuilding)
 		{
-			if (!it->originalOwner)
-			{
-				fromTactical = true;
-			}
 			it->arrive(state, cargoArrived, bioArrived, recoveryArrived, transferArrived,
 			           suppliers);
 			it = cargo.erase(it);
