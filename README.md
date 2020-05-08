@@ -81,10 +81,11 @@ That will be a game which has all of its main mechanics implemented. We still ha
 
 ## Building
 
-OpenApocalypse is built leveraging a number of libraries - to provide needed functionality (and save us the time of implementing it ourselves badly)
+OpenApocalypse is built leveraging a number of libraries - to provide needed functionality (and save us the time of implementing it ourselves badly). 
+Note: The following libraries will be fetched and built with vcpkg in a later step, ensuring you get the correct version
 
 * [SDL2](https://www.libsdl.org)
-* [Boost](https://boost.org) - specifially the 'locale' library, used for localisation, 'program-options' for settings management, and 'filesystem'.
+* [Boost](https://boost.org) - We specifially use the 'locale' library, used for localisation, 'program-options' for settings management, and 'filesystem'.
 * [Qt](https://www.qt.io/) - needed for the launcher, can be disabled with 'BUILD_LAUNCHER'.
 * [Libunwind](https://nongnu.org/libunwind/download.html) - debug backtracing on linux - not needed on windows.
 
@@ -127,6 +128,7 @@ vcpkg --triplet x86-windows install sdl2 boost-locale boost-program-options boos
   * For list of all supported by Vcpkg architectures: `vcpkg help triplet`
 
 * Copy the original XCom:Apocalypse .iso file into the "data/" directory. This could also be a directory containing all the extracted files from the CD, and it should be named the same (IE the directory should be data/cd.iso/). This is used during the build to extract some data tables.
+* If you do not have Visual Studio (community edition works fine) already, install it and make sure to enable c++ support (Check "Desktop development with C++" in the VS setup)
 * Open the OpenApoc directory in Visual Studio (if you don't have an Open Folder option, generate a project with [CMake](https://cmake.org/)).
 * Set your configuration to x64-Release or x86-Release (must match your Vcpkg dependencies). Release is recommended as Debug is very slow.
 
