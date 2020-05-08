@@ -51,7 +51,7 @@ void BattlePreStart::displayAgent(sp<Agent> agent)
 	    ->setImage(lHand ? lHand->type->equipscreen_sprite : nullptr);
 }
 BattlePreStart::BattlePreStart(sp<GameState> state)
-    : Stage(), menuform(ui().getForm("battle/prestart")), TOP_LEFT({302, 80}), state(state)
+    : Stage(), TOP_LEFT({302, 80}), menuform(ui().getForm("battle/prestart")), state(state)
 {
 
 	menuform->findControlTyped<GraphicButton>("BUTTON_EQUIP")

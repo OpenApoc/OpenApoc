@@ -971,13 +971,9 @@ BattleView::BattleView(sp<GameState> gameState)
 		}
 	};
 
-	std::function<void(FormsEvent * e)> throwRightHand = [this, throwItem](Event *) {
-		throwItem(true);
-	};
+	std::function<void(FormsEvent * e)> throwRightHand = [throwItem](Event *) { throwItem(true); };
 
-	std::function<void(FormsEvent * e)> throwLeftHand = [this, throwItem](Event *) {
-		throwItem(false);
-	};
+	std::function<void(FormsEvent * e)> throwLeftHand = [throwItem](Event *) { throwItem(false); };
 
 	std::function<void(FormsEvent * e)> finishPriming = [this, throwItem](Event *) {
 		bool right =
@@ -2894,6 +2890,9 @@ void BattleView::eventOccurred(Event *e)
 			{
 				return;
 			}
+			break;
+		default:
+			// Other events aren't handled
 			break;
 	}
 	BattleTileView::eventOccurred(e);

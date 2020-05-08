@@ -483,7 +483,9 @@ int Base::getCapacityUsed(GameState &state, FacilityType::Capacity type) const
 			}
 			break;
 		case FacilityType::Capacity::Chemistry:
+			[[fallthrough]];
 		case FacilityType::Capacity::Physics:
+			[[fallthrough]];
 		case FacilityType::Capacity::Workshop:
 			for (auto f = facilities.begin(); f != facilities.end(); ++f)
 			{
@@ -527,6 +529,9 @@ int Base::getCapacityUsed(GameState &state, FacilityType::Capacity type) const
 				StateRef<AEquipmentType> ae = {&state, e.first};
 				total += ae->store_space * e.second;
 			}
+			break;
+		case FacilityType::Capacity::Nothing:
+			// Nothing needs to be handled
 			break;
 	}
 

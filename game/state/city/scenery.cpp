@@ -67,7 +67,6 @@ bool Scenery::attachToSomething()
 	auto pos = tileObject->getOwningTile()->position;
 	supportHardness = -10;
 	auto &map = tileObject->map;
-	auto tileType = tileObject->getType();
 	auto thisPtr = shared_from_this();
 
 	int startX = pos.x - 1;
@@ -118,7 +117,6 @@ bool Scenery::findSupport(bool allowClinging)
 		return true;
 	}
 	auto &map = tileObject->map;
-	auto tileType = tileObject->getType();
 	auto thisPtr = shared_from_this();
 
 	// Forward lookup for adding increments
@@ -976,7 +974,7 @@ bool Scenery::findSupport(bool allowClinging)
 
 		for (auto &list : incrementsList)
 		{
-			bool found;
+			bool found = false;
 			for (auto &increment : list)
 			{
 				found = false;
@@ -1312,6 +1310,9 @@ void Scenery::die(GameState &state, bool forced)
 								vehiclesToDamage.push_back(v);
 								break;
 							}
+							default:
+								// Other tiles don't get damaged or block smoke
+								break;
 						}
 					}
 					for (auto &v : vehiclesToDamage)

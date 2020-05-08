@@ -262,7 +262,7 @@ void TransferScreen::closeScreen()
 					continue;
 				}
 				int i = 0;
-				for (auto &b : state->player_bases)
+				for ([[maybe_unused]] auto &b : state->player_bases)
 				{
 					int crewDelta = c->getCrewDelta(i);
 					int cargoDelta = c->getCargoDelta(i);
@@ -634,6 +634,12 @@ void TransferScreen::executeOrders()
 							b.second->building->cargo.emplace_back(*state, equipment, order, 0,
 							                                       player, b2.second->building);
 							b.second->inventoryVehicleEquipment[c->itemId] -= order;
+							break;
+						}
+						default:
+						{
+							LogError("Unhandled TransactionControl::Type %d",
+							         static_cast<int>(c->itemType));
 							break;
 						}
 					}

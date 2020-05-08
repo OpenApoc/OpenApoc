@@ -2025,6 +2025,8 @@ void Battle::checkMissionEnd(GameState &state, bool retreated, bool forceReCheck
 						case OpenApoc::MovementState::Brainsuck:
 							normalUnit = true;
 							break;
+						default:
+							break;
 					}
 					if (normalUnit)
 						break;
@@ -3026,7 +3028,6 @@ void Battle::exitBattle(GameState &state)
 	{
 		if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
 		{
-			Vec2<int> battleLocation;
 			StateRef<City> city;
 			StateRef<Vehicle> location = {&state, state.current_battle->mission_location_id};
 			city = location->city;

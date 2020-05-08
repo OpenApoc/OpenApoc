@@ -73,9 +73,6 @@ void CheatOptions::updateMultiplierText(UString controlName, float multMin, floa
 {
 	auto bar = menuform->findControlTyped<ScrollBar>(controlName);
 	auto label = menuform->findControlTyped<Label>("TEXT_" + controlName);
-	float multValue = ((double)bar->getValue() - bar->getMinimum()) /
-	                      ((double)bar->getMaximum() - bar->getMinimum()) * (multMax - multMin) +
-	                  multMin;
 	label->setText(format("%d%%", scaleScrollbarToMultiplier(bar->getValue(), multMin, multMax,
 	                                                         bar->getMinimum(), bar->getMaximum()) *
 	                                  100));

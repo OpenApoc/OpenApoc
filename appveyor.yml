@@ -4,7 +4,7 @@ branches:
   - master
   - /release.*/
 # skip_tags: true
-os: Visual Studio 2017
+os: Visual Studio 2019
 configuration:
   - Release
 #  - Debug
@@ -26,6 +26,7 @@ before_build:
   - cd c:\tools\vcpkg
   - git pull
   - git checkout 2019.12
+  - .\bootstrap-vcpkg.bat
   - cd %APPVEYOR_BUILD_FOLDER%
   - vcpkg install sdl2 boost-locale boost-program-options boost-uuid boost-crc
   - vcpkg upgrade --no-dry-run
@@ -35,7 +36,7 @@ before_build:
   - 7z e temp\cd.iso.xz -odata\
   - choco install nsis -pre
   - choco install ninja
-  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %VCVARS_ARCH%
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" %VCVARS_ARCH%
 build_script:
   - cmake -DMSVC_PDB=ON . -GNinja -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE="%CONFIGURATION%" -DCMAKE_PREFIX_PATH=%QTPATH%
   - cmake --build .

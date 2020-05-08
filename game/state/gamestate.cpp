@@ -470,8 +470,6 @@ void GameState::validateAgentEquipment()
 
 void GameState::fillOrgStartingProperty()
 {
-	auto buildingIt = this->cities["CITYMAP_HUMAN"]->buildings.begin();
-
 	for (auto &o : this->organisations)
 	{
 		o.second->updateVehicleAgentPark(*this);

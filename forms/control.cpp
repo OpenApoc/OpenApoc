@@ -725,7 +725,8 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 		}
 		else if (childName == "tooltip")
 		{
-			if (ToolTipFont = ui().getFont(child.attribute("font").as_string()))
+			const auto tooltipFont = ui().getFont(child.attribute("font").as_string());
+			if (!tooltipFont)
 			{
 				ToolTipText = child.attribute("text").as_string();
 				if (!ToolTipText.empty())
@@ -862,6 +863,21 @@ sp<Form> Control::getForm()
 	return std::dynamic_pointer_cast<Form>(c);
 }
 
+void Control::setParent(sp<Control> Parent)
+{
+	if (Parent)
+	{
+		auto previousParent = this->owningControl.lock();
+		if (previousParent)
+		{
+			LogError("Reparenting control");
+		}
+		Parent->Controls.push_back(shared_from_this());
+		Parent->setDirty();
+	}
+	owningControl = Parent;
+}
+
 void Control::setParent(sp<Control> Parent, int position)
 {
 	if (Parent)
@@ -871,14 +887,7 @@ void Control::setParent(sp<Control> Parent, int position)
 		{
 			LogError("Reparenting control");
 		}
-		if (position == -1)
-		{
-			Parent->Controls.push_back(shared_from_this());
-		}
-		else
-		{
-			Parent->Controls.insert(Parent->Controls.begin() + position, shared_from_this());
-		}
+		Parent->Controls.insert(Parent->Controls.begin() + position, shared_from_this());
 		Parent->setDirty();
 	}
 	owningControl = Parent;

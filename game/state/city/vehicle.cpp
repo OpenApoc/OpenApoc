@@ -241,7 +241,7 @@ class FlyingVehicleMover : public VehicleMover
 
 				// Rotate space so that we see where the hit point is
 				// Calculate change-of-basis matrix
-				glm::mat3 transform;
+				glm::mat3 transform = {};
 				if (pointNorm.x == 0 && pointNorm.z == 0)
 				{
 					if (pointNorm.y < 0) // rotate 180 degrees
@@ -632,7 +632,6 @@ class GroundVehicleMover : public VehicleMover
 		// or to tick_scale * city_scale / speed
 		int ticksPerTile = TICK_SCALE * VELOCITY_SCALE_CITY.x / vehicle.getSpeed();
 
-		unsigned lastTicksToTurn = 0;
 		unsigned lastTicksToMove = 0;
 
 		// See that we're not in the air
@@ -1704,8 +1703,6 @@ void Vehicle::provideServicePassengers(GameState &state, bool otherOrg)
 
 StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 {
-	bool fromTactical = false;
-	bool agentsArrived = false;
 	bool cargoArrived = false;
 	bool bioArrived = false;
 	bool recoveryArrived = false;
@@ -1718,10 +1715,6 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 	{
 		if (it->destination == currentBuilding)
 		{
-			if (!it->originalOwner)
-			{
-				fromTactical = true;
-			}
 			it->arrive(state, cargoArrived, bioArrived, recoveryArrived, transferArrived,
 			           suppliers);
 			it = cargo.erase(it);
@@ -2889,7 +2882,6 @@ sp<VEquipment> Vehicle::getFirstFiringWeapon(GameState &state [[maybe_unused]], 
 	sp<VEquipment> firingWeapon;
 
 	auto firePosition = getMuzzleLocation();
-	auto distanceTiles = glm::length(position - target);
 	auto distanceVoxels = this->tileObject->getDistanceTo(target);
 	bool outsideArc = false;
 
@@ -3123,6 +3115,8 @@ Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 		case VehicleMission::MissionType::InfiltrateSubvert:
 		case VehicleMission::MissionType::OfferService:
 		case VehicleMission::MissionType::Teleport:
+		case VehicleMission::MissionType::DepartToSpace:
+		case VehicleMission::MissionType::ArriveFromDimensionGate:
 			if (crashed || sliding || falling || carriedVehicle)
 			{
 				delete mission;
@@ -3186,6 +3180,8 @@ bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 		case VehicleMission::MissionType::InfiltrateSubvert:
 		case VehicleMission::MissionType::OfferService:
 		case VehicleMission::MissionType::Teleport:
+		case VehicleMission::MissionType::DepartToSpace:
+		case VehicleMission::MissionType::ArriveFromDimensionGate:
 			if (crashed || sliding || falling || carriedVehicle)
 			{
 				delete mission;

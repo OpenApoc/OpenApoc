@@ -47,7 +47,7 @@ class UString
 	UString(UniChar uc);
 	UString(const char *cstr);
 	UString(const char *cstr, size_t count);
-	UString(UString &&other);
+	UString(UString &&other) noexcept;
 	UString(ConstIterator first, ConstIterator last);
 	UString();
 	~UString();

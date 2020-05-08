@@ -128,7 +128,7 @@ void BuyAndSellScreen::closeScreen()
 				if (!c->getLinked() || c->getLinked()->front().lock() == c)
 				{
 					int i = 0;
-					for (auto &b : state->player_bases)
+					for ([[maybe_unused]] const auto &b : state->player_bases)
 					{
 						int cargoDelta = c->getCargoDelta(i);
 						if (cargoDelta)
@@ -189,8 +189,6 @@ void BuyAndSellScreen::closeScreen()
 	// Step 03.01: Check transportation for purchases
 	bool purchaseTransferFound = false;
 	{
-		bool noFerry = false;
-
 		// Find all orgs that we buy from
 		std::set<StateRef<Organisation>> orgsBuyFrom;
 		for (auto &l : transactionControls)
@@ -209,6 +207,9 @@ void BuyAndSellScreen::closeScreen()
 							case TransactionControl::Type::VehicleAmmo:
 								orgsBuyFrom.insert(c->manufacturer);
 								break;
+							default:
+								// Other types find their own transportation
+								break;
 						}
 					}
 				}
@@ -219,7 +220,6 @@ void BuyAndSellScreen::closeScreen()
 		// Check orgs
 		std::list<StateRef<Organisation>> badOrgs;
 		bool transportationHostile = false;
-		bool transportationBusy = false;
 		for (auto &o : orgsBuyFrom)
 		{
 			if (o == player)
@@ -231,7 +231,6 @@ void BuyAndSellScreen::closeScreen()
 			switch (canBuy)
 			{
 				case Organisation::PurchaseResult::NoTransportAvailable:
-					transportationBusy = true;
 					badOrgs.push_back(o);
 					break;
 				case Organisation::PurchaseResult::TranportHostile:
@@ -241,6 +240,9 @@ void BuyAndSellScreen::closeScreen()
 				case Organisation::PurchaseResult::OrgHasNoBuildings:
 				case Organisation::PurchaseResult::OrgHostile:
 					LogError("How did we end up buying from an org we can't buy from!?");
+					break;
+				case Organisation::PurchaseResult::OK:
+					// Everything went fine
 					break;
 			}
 		}
@@ -503,6 +505,14 @@ void BuyAndSellScreen::executeOrders()
 								         c->itemId);
 								break;
 							}
+							case TransactionControl::Type::Soldier:
+							case TransactionControl::Type::BioChemist:
+							case TransactionControl::Type::Physicist:
+							case TransactionControl::Type::Engineer:
+							{
+								LogError("How did we manage to sell an agent type %s!", c->itemId);
+								break;
+							}
 						}
 					}
 
@@ -552,6 +562,14 @@ void BuyAndSellScreen::executeOrders()
 							{
 								StateRef<VehicleType> vehicle{state.get(), c->itemId};
 								org->purchase(*state, b.second->building, vehicle, -order);
+								break;
+							}
+							case TransactionControl::Type::Soldier:
+							case TransactionControl::Type::BioChemist:
+							case TransactionControl::Type::Physicist:
+							case TransactionControl::Type::Engineer:
+							{
+								LogError("How did we manage to sell an agent type %s!", c->itemId);
 								break;
 							}
 						}

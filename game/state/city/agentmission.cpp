@@ -510,7 +510,6 @@ bool AgentMission::advanceAlongPath(GameState &state, Agent &a, Vec3<float> &des
 {
 	// Add {0.5,0.5,0.5} to make it route to the center of the tile
 	static const Vec3<float> offset{0.5f, 0.5f, 0.5f};
-	static const Vec3<float> offsetLand{0.5f, 0.5f, 0.0f};
 
 	if (currentPlannedPath.empty())
 	{

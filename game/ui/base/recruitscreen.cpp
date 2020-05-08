@@ -560,7 +560,6 @@ void RecruitScreen::closeScreen(bool confirmed)
 	}
 
 	// Step 01 : Calculate money and lq deltas
-	int leftIndex = getLeftIndex();
 	int moneyDelta = 0;
 	std::vector<int> vecLqDelta;
 	vecLqDelta.resize(8);

@@ -268,6 +268,11 @@ bool CityView::handleClickedVehicle(StateRef<Vehicle> vehicle, bool rightClick,
 				setSelectionState(CitySelectionState::Normal);
 				break;
 			}
+			default:
+			{
+				// Other selection states don't affect vehicles
+				break;
+			}
 		}
 		return true;
 	}
@@ -333,6 +338,11 @@ bool CityView::handleClickedVehicle(StateRef<Vehicle> vehicle, bool rightClick,
 			orderAttack(vehicle, modifierLCtrl || modifierRCtrl);
 			setSelectionState(CitySelectionState::Normal);
 			return true;
+		}
+		default:
+		{
+			// Other selection states don't affect vehicles
+			break;
 		}
 	}
 	return false;
@@ -3439,6 +3449,11 @@ bool CityView::handleMouseDown(Event *e)
 					{
 						orderMove(position, modifierRCtrl || modifierLCtrl);
 					}
+					break;
+				}
+				default:
+				{
+					// Other selection modes don't affect these objects
 					break;
 				}
 			}

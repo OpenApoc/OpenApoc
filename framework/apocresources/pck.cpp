@@ -112,7 +112,7 @@ static sp<PaletteImage> readPckCompression3(std::istream &input, Vec2<unsigned> 
 			return nullptr;
 		}
 		blkSize = blkFile.size();
-		blkData = std::move(blkFile.readAll());
+		blkData = blkFile.readAll();
 		LogInfo("Loaded %zu bytes of xcom.blk", blkSize);
 	}
 

@@ -64,7 +64,7 @@ FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, Vehicle &v)
 
 FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, VehicleType &vehType, bool crashed,
                                                  int altitude)
-    : map(map), type(vehType.type), crashed(crashed), altitude(altitude)
+    : map(map), crashed(crashed), altitude(altitude)
 {
 	int xMax = 0;
 	int yMax = 0;
@@ -77,10 +77,9 @@ FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, VehicleType &vehT
 	large = size.x > 1 || size.y > 1;
 }
 
-FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, VehicleType::Type type, bool crashed,
-                                                 Vec2<int> size, int altitude)
-    : map(map), type(type), crashed(crashed), size(size), large(size.x > 1 || size.y > 1),
-      altitude(altitude)
+FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, bool crashed, Vec2<int> size,
+                                                 int altitude)
+    : map(map), crashed(crashed), size(size), large(size.x > 1 || size.y > 1), altitude(altitude)
 {
 }
 
@@ -901,6 +900,9 @@ VehicleTargetHelper::adjustTargetToClosest(GameState &state, Vehicle &v, Vec3<in
 			return adjustTargetToClosestRoad(v, target);
 		case VehicleType::Type::ATV:
 			return adjustTargetToClosestGround(v, target);
+		default:
+			LogError("Vehicle [%s] has unknown type [%s]", v.name, v.type->name);
+			[[fallthrough]];
 		case VehicleType::Type::Flying:
 		case VehicleType::Type::UFO:
 			if (!adjustForFlying)
@@ -909,8 +911,6 @@ VehicleTargetHelper::adjustTargetToClosest(GameState &state, Vehicle &v, Vec3<in
 				return {Reachability::Reachable, true};
 			}
 			return adjustTargetToClosestFlying(state, v, target, vehicleAvoidance);
-		default:
-			LogError("Vehicle [%s] has unknown type [%s]", v.name, v.type->name);
 	}
 }
 
@@ -922,11 +922,12 @@ Reachability VehicleTargetHelper::isReachableTarget(const Vehicle &v, Vec3<int> 
 			return isReachableTargetRoad(v, target);
 		case VehicleType::Type::ATV:
 			return isReachableTargetGround(v, target);
+		default:
+			LogError("Vehicle [%s] has unknown type [%s]", v.name, v.type->name);
+			[[fallthrough]];
 		case VehicleType::Type::Flying:
 		case VehicleType::Type::UFO:
 			return isReachableTargetFlying(v, target);
-		default:
-			LogError("Vehicle [%s] has unknown type [%s]", v.name, v.type->name);
 	}
 }
 
@@ -3126,16 +3127,20 @@ UString VehicleMission::getName()
 			break;
 		case MissionType::RestartNextMission:
 			break;
+		case MissionType::OfferService:
+			name += format(" counter: %u, target %s", missionCounter,
+			               targetBuilding ? targetBuilding->name : "null");
+			break;
 	}
 	return name;
 }
 
 GroundVehicleTileHelper::GroundVehicleTileHelper(TileMap &map, Vehicle &v)
-    : GroundVehicleTileHelper(map, v.type->type, v.crashed)
+    : GroundVehicleTileHelper(map, v.type->type)
 {
 }
-GroundVehicleTileHelper::GroundVehicleTileHelper(TileMap &map, VehicleType::Type type, bool crashed)
-    : map(map), type(type), crashed(crashed)
+GroundVehicleTileHelper::GroundVehicleTileHelper(TileMap &map, VehicleType::Type type)
+    : map(map), type(type)
 {
 }
 

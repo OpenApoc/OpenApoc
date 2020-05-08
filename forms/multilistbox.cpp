@@ -236,6 +236,9 @@ void MultilistBox::eventOccured(Event *e)
 					}
 				}
 				break;
+			default:
+				// Don't handle other events
+				break;
 		}
 	}
 }

@@ -302,6 +302,10 @@ int Agent::getSkill() const
 		case AgentType::Role::Engineer:
 			skill = current_stats.engineering_skill;
 			break;
+		case AgentType::Role::Soldier:
+			// Soldiers can't be used for anything that uses a skill value
+			skill = 0;
+			break;
 	}
 
 	return skill;
@@ -896,7 +900,6 @@ bool Agent::getNewGoal(GameState &state)
 {
 	bool popped = false;
 	bool acquired = false;
-	Vec3<float> nextGoal;
 	// Pop finished missions if present
 	popped = popFinishedMissions(state);
 	do

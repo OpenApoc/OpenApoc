@@ -71,6 +71,5 @@ class CityTileView : public TileView
 	sp<Image> selectedTileImageFront;
 	Vec2<int> selectedTileImageOffset;
 	Colour alienDetectionColour;
-	float alienDetectionThickness;
 };
 } // namespace OpenApoc

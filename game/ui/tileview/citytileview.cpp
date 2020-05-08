@@ -29,10 +29,10 @@ namespace OpenApoc
 CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
                            TileViewMode initialMode, Vec3<float> screenCenterTile,
                            GameState &gameState)
-    : TileView(map, isoTileSize, stratTileSize, initialMode), state(gameState),
+    : TileView(map, isoTileSize, stratTileSize, initialMode),
       day_palette(fw().data->loadPalette("xcom3/ufodata/pal_01.dat")),
       twilight_palette(fw().data->loadPalette("xcom3/ufodata/pal_02.dat")),
-      night_palette(fw().data->loadPalette("xcom3/ufodata/pal_03.dat"))
+      night_palette(fw().data->loadPalette("xcom3/ufodata/pal_03.dat")), state(gameState)
 {
 	std::vector<sp<Palette>> newPal;
 	newPal.resize(3);
@@ -694,11 +694,6 @@ void CityTileView::render()
 				{
 					continue;
 				}
-				bool selected =
-				    std::find(state.current_city->cityViewSelectedAgents.begin(),
-				              state.current_city->cityViewSelectedAgents.end(),
-				              a.second) != state.current_city->cityViewSelectedAgents.end();
-
 				for (auto &m : a.second->missions)
 				{
 					if (m->type == AgentMission::MissionType::GotoBuilding)
@@ -739,6 +734,7 @@ void CityTileView::render()
 					switch (m->type)
 					{
 						case VehicleMission::MissionType::AttackVehicle:
+						case VehicleMission::MissionType::RecoverVehicle:
 						{
 							if (!m->targetVehicle)
 								break;
@@ -757,8 +753,11 @@ void CityTileView::render()
 						}
 						case VehicleMission::MissionType::AttackBuilding:
 						case VehicleMission::MissionType::GotoBuilding:
+						case VehicleMission::MissionType::Land:
+						case VehicleMission::MissionType::OfferService:
+						case VehicleMission::MissionType::InvestigateBuilding:
 							buildingsSelected.insert(m->targetBuilding);
-						// Intentional fall-through
+							[[fallthrough]];
 						case VehicleMission::MissionType::Crash:
 						{
 							if (!m->currentPlannedPath.empty())
@@ -774,10 +773,21 @@ void CityTileView::render()
 						case VehicleMission::MissionType::InfiltrateSubvert:
 						case VehicleMission::MissionType::Patrol:
 						case VehicleMission::MissionType::GotoPortal:
+						case VehicleMission::MissionType::Teleport:
+						case VehicleMission::MissionType::DepartToSpace:
 						{
 							targetLocationsToDraw.emplace_back((Vec3<float>)m->targetLocation +
 							                                       Vec3<float>{0.5f, 0.5f, 0.0f},
 							                                   v.second->position, true, false);
+							break;
+						}
+						case VehicleMission::MissionType::Snooze:
+						case VehicleMission::MissionType::RestartNextMission:
+						case VehicleMission::MissionType::TakeOff:
+						case VehicleMission::MissionType::SelfDestruct:
+						case VehicleMission::MissionType::ArriveFromDimensionGate:
+						{
+							// These have no destination to draw
 							break;
 						}
 					}

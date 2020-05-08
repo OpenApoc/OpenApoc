@@ -142,11 +142,10 @@ class SpritesheetPage
   private:
 	up<stbrp_node[]> pack_nodes;
 	stbrp_context pack_context;
-	Vec2<int> size;
 	int page_no;
 
   public:
-	SpritesheetPage(int page_no, Vec2<int> size, int node_count) : size(size), page_no(page_no)
+	SpritesheetPage(int page_no, Vec2<int> size, int node_count) : page_no(page_no)
 	{
 		LogAssert(node_count > 0);
 		LogAssert(size.x > 0);
@@ -1190,8 +1189,6 @@ class ColouredDrawMachine
 		TRACE_FN;
 		auto &buf = this->buffers[this->current_buffer];
 
-		ColouredDescription d;
-
 		for (int i = 0; i < 4; i++)
 		{
 			buf.data.vertices[i].position = positions[i];
@@ -1216,8 +1213,6 @@ class ColouredDrawMachine
 	{
 		TRACE_FN;
 		auto &buf = this->buffers[this->current_buffer];
-
-		ColouredDescription d;
 
 		for (unsigned int i = 0; i < 2; i++)
 		{

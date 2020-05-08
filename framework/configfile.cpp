@@ -479,7 +479,7 @@ UString ConfigOption::getKey() const
 
 ConfigOptionString::ConfigOptionString(const UString section, const UString name,
                                        const UString description, const UString defaultValue)
-    : ConfigOption(section, name, description), defaultValue(defaultValue)
+    : ConfigOption(section, name, description)
 {
 	config().addOptionString(section, name, "", description, defaultValue);
 }
@@ -490,7 +490,7 @@ void ConfigOptionString::set(const UString &newValue) { config().set(getKey(), n
 
 ConfigOptionInt::ConfigOptionInt(const UString section, const UString name,
                                  const UString description, const int defaultValue)
-    : ConfigOption(section, name, description), defaultValue(defaultValue)
+    : ConfigOption(section, name, description)
 {
 	config().addOptionInt(section, name, "", description, defaultValue);
 }
@@ -501,7 +501,7 @@ void ConfigOptionInt::set(int newValue) { config().set(getKey(), newValue); }
 
 ConfigOptionBool::ConfigOptionBool(const UString section, const UString name,
                                    const UString description, const bool defaultValue)
-    : ConfigOption(section, name, description), defaultValue(defaultValue)
+    : ConfigOption(section, name, description)
 {
 	config().addOptionBool(section, name, "", description, defaultValue);
 }
@@ -511,7 +511,7 @@ void ConfigOptionBool::set(bool newValue) { config().set(getKey(), newValue); }
 
 ConfigOptionFloat::ConfigOptionFloat(const UString section, const UString name,
                                      const UString description, const float defaultValue)
-    : ConfigOption(section, name, description), defaultValue(defaultValue)
+    : ConfigOption(section, name, description)
 {
 	config().addOptionFloat(section, name, "", description, defaultValue);
 }

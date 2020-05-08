@@ -1645,7 +1645,7 @@ void City::groupMove(GameState &state, std::list<StateRef<Vehicle>> &selectedVeh
 		return;
 	}
 	if (selectedVehicles.size() == 1 ||
-	    selectedVehicles.size() == 2 && selectedVehicles.front()->owner != state.getPlayer())
+	    (selectedVehicles.size() == 2 && selectedVehicles.front()->owner != state.getPlayer()))
 	{
 		auto v = selectedVehicles.front();
 		if (v->owner == state.getPlayer())
@@ -1718,7 +1718,7 @@ void City::fillRoadSegmentMap(GameState &state [[maybe_unused]])
 	tileToRoadSegmentMap.clear();
 	roadSegments.clear();
 	auto &m = *map;
-	auto helper = GroundVehicleTileHelper{m, VehicleType::Type::Road, false};
+	auto helper = GroundVehicleTileHelper{m, VehicleType::Type::Road};
 
 	// -2 means not processed, -1 means no road, otherwise segment index
 	tileToRoadSegmentMap.resize(m.size.x * m.size.y * m.size.z, -2);
@@ -1856,9 +1856,6 @@ void City::fillRoadSegmentMap(GameState &state [[maybe_unused]])
 											continue;
 										}
 										auto nextTile = m.getTile(nextPosition);
-										float thisCost = 0.0f;
-										bool unused = false;
-										bool jumped = false;
 										if (!helper.canEnterTile(thisTile, nextTile))
 										{
 											continue;
