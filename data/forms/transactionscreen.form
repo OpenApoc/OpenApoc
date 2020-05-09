@@ -168,7 +168,7 @@
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:62:xcom3/ufodata/research.pcx</image>
       </graphic>
       <graphic id="FACILITY_FIRST_FILL">
-        <position x="219" y="60"/>
+        <position x="218" y="60"/>
         <size width="2" height="50"/>
       </graphic>
       <label id="FACILITY_FIRST_TEXT">
