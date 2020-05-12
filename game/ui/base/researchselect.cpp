@@ -65,7 +65,6 @@ void ResearchSelect::begin()
 	this->redrawResearchList();
 
 	auto research_list = form->findControlTyped<ListBox>("LIST");
-	research_list->AlwaysEmitSelectionEvents = true;
 
 	research_list->addCallback(FormEventType::ListBoxChangeSelected, [this](FormsEvent *e) {
 		LogInfo("Research selection change");
@@ -80,31 +79,32 @@ void ResearchSelect::begin()
 			if (topic->isComplete())
 			{
 				LogInfo("Topic already complete");
-				auto message_box = mksp<MessageBox>(tr("PROJECT COMPLETE"),
-				                                    tr("This project is already complete."),
-				                                    MessageBox::ButtonOptions::Ok);
-				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+				fw().stageQueueCommand({StageCmd::Command::PUSH,
+				                        mksp<MessageBox>(tr("PROJECT COMPLETE"),
+				                                         tr("This project is already complete."),
+				                                         MessageBox::ButtonOptions::Ok)});
 				return;
 			}
 			if (topic->required_lab_size == ResearchTopic::LabSize::Large &&
 			    this->lab->size == ResearchTopic::LabSize::Small)
 			{
 				LogInfo("Topic is large and lab is small");
-				auto message_box =
-				    mksp<MessageBox>(tr("PROJECT TOO LARGE"),
-				                     tr("This project requires an advanced lab or workshop."),
-				                     MessageBox::ButtonOptions::Ok);
-				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<MessageBox>(tr("PROJECT TOO LARGE"),
+				                      tr("This project requires an advanced lab or workshop."),
+				                      MessageBox::ButtonOptions::Ok)});
 				return;
 			}
 			if (this->lab->type == ResearchTopic::Type::Engineering &&
 			    topic->cost > state->player->balance)
 			{
 				LogInfo("Cannot afford to manufacture");
-				auto message_box = mksp<MessageBox>(
-				    tr("FUNDS EXCEEDED"), tr("Production costs exceed your available funds."),
-				    MessageBox::ButtonOptions::Ok);
-				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<MessageBox>(tr("FUNDS EXCEEDED"),
+				                      tr("Production costs exceed your available funds."),
+				                      MessageBox::ButtonOptions::Ok)});
 				return;
 			}
 		}
