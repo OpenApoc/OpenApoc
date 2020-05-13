@@ -25,6 +25,12 @@ option(MSVC_PDB "Always generate PDB files" OFF)
 option(ENABLE_TESTS "Build some unit tests" ON)
 option(EXTRACT_DATA "Run the data extractor as part of the default target" ON)
 
+option(USE_VCPKG_GLM "Use GLM library from VCPKG toolchain" ${WIN32})
+option(USE_VCPKG_LODEPNG "Use LodePNG library from VCPKG toolchain" ${WIN32})
+option(USE_VCPKG_LUA "Use LUA library from VCPKG toolchain" ${WIN32})
+option(USE_VCPKG_MINIZ "Use MiniZ library from VCPKG toolchain" ${WIN32})
+option(USE_VCPKG_PUGIXML "Use PugiXML library from VCPKG toolchain" ${WIN32})
+
 set(CD_PATH ${CMAKE_SOURCE_DIR}/data/cd.iso CACHE STRING "Path to cd.iso (used
 by test and extractor")
 
@@ -87,9 +93,6 @@ endif()
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Qunused-arguments")
 endif()
-
-set(GLM_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/dependencies/glm)
-MARK_AS_ADVANCED(GLM_INCLUDE_DIR)
 
 add_subdirectory(library)
 add_subdirectory(framework)

@@ -66,7 +66,7 @@ void writeHeader(std::ofstream &out, const StateDefinition &state)
 	    << "#include \"game/state/gamestate.h\"\n\n"
 	    << "#include \"game/state/luagamestate_support.h\"\n\n"
 	    << "extern \"C\"\n{\n"
-	    << "#include \"dependencies/lua/lua.h\"\n"
+	    << "#include <lua.h>\n"
 	    << "}\n\n"
 	    << "namespace OpenApoc {\n\n"
 	    << "static constexpr const char* const LUAGAMESTATE_SUPPORT_VERSION = \""

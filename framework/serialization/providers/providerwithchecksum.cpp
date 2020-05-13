@@ -6,9 +6,8 @@
 #include "framework/trace.h"
 #include "library/strings.h"
 #include "library/strings_format.h"
+#include <pugixml.hpp>
 #include <sstream>
-
-#include "dependencies/pugixml/src/pugixml.hpp"
 
 #include <boost/crc.hpp>
 #include <boost/version.hpp>

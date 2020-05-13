@@ -1,5 +1,4 @@
 #include "forms/ui.h"
-#include "dependencies/pugixml/src/pugixml.hpp"
 #include "forms/forms.h"
 #include "framework/apocresources/apocfont.h"
 #include "framework/configfile.h"
@@ -7,6 +6,7 @@
 #include "framework/framework.h"
 #include "framework/trace.h"
 #include "library/sp.h"
+#include <pugixml.hpp>
 #include <stdexcept>
 
 namespace OpenApoc

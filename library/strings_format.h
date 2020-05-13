@@ -8,7 +8,7 @@
 #pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
 #endif
 
-#include "dependencies/tinyformat/tinyformat.h"
+#include <tinyformat.h>
 
 #ifdef __GNUC__
 #pragma GCC diagnostic pop

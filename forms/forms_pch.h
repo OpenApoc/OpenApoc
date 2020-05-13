@@ -1,6 +1,5 @@
 #pragma once
 
-#include "dependencies/pugixml/src/pugixml.hpp"
 #include "forms/control.h"
 #include "framework/apocresources/apocfont.h"
 #include "framework/configfile.h"
@@ -22,5 +21,6 @@
 #include <functional>
 #include <list>
 #include <map>
+#include <pugixml.hpp>
 #include <queue>
 #include <stdexcept>

@@ -296,11 +296,9 @@ target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_Library)
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibSmacker)
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibPugixml)
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibLodepng)
+target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_Lua)
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_Miniz)
+target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_PhysFS)
 target_link_libraries(OpenApoc_Framework PUBLIC ${CMAKE_DL_LIBS})
 
-target_link_libraries(OpenApoc_Framework PUBLIC physfs-static)
-
-target_include_directories(OpenApoc_Framework PRIVATE
-		${CMAKE_SOURCE_DIR}/dependencies/physfs/src)
 target_include_directories(OpenApoc_Framework PUBLIC ${CMAKE_SOURCE_DIR})
