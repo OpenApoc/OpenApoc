@@ -1412,12 +1412,31 @@
     </entry>
     <!-- Bio-Chemistry Vehicle Equipment Topics End -->
     <!-- Bio-Chemistry Alien Building Topics Begin -->
-    <entry>
+    <entry op="delete">
       <key>RESEARCH_ALIEN_BUILDING</key>
+    </entry>
+    <entry>
+      <key>RESEARCH_ALIEN_BUILDING_0</key>
       <value>
+        <name>Alien building</name>
         <order>70100</order>
+        <description>This research could reveal a weakness in the Alien defenses.</description>
+        <man_hours>38000</man_hours>
+        <dependencies>
+          <research>
+            <entry>
+              <type>All</type>
+            </entry>
+            <entry>
+              <type>All</type>
+              <topics>
+                <entry>RESEARCH_THE_ALIEN_DIMENSION</entry>
+              </topics>
+            </entry>
+          </research>
+        </dependencies>
         <ufopaedia_entry>PAEDIAENTRY_SLEEPING_CHAMBER</ufopaedia_entry>
-		<dependencies><research><entry><type>All</type><topics><entry>RESEARCH_THE_ALIEN_DIMENSION</entry></topics></entry></research></dependencies>
+        <score>380</score>
       </value>
     </entry>
     <entry>
