@@ -2407,7 +2407,7 @@
             <dependency>
               <type>Any</type>
               <topics>
-                <entry>RESEARCH_ALIEN_BUILDING</entry>
+                <entry>RESEARCH_ALIEN_BUILDING_0</entry>
               </topics>
             </dependency>
           </value>

@@ -1811,18 +1811,21 @@ void CityView::update()
 			}
 		}
 	}
-	if (DEBUG_SHOW_ALIEN)
-	{
-		switchDimension = state->current_city.id != "CITYMAP_ALIEN";
-	}
-	if (switchDimension)
+	if (DEBUG_SHOW_ALIEN ? state->current_city.id != "CITYMAP_ALIEN" : switchDimension)
 	{
 		setUpdateSpeed(CityUpdateSpeed::Speed1);
 		for (auto &newCity : state->cities)
 		{
 			if (state->current_city != newCity.second)
 			{
-				state->current_city = {state.get(), newCity.first};
+				if (switchDimension)
+				{
+					state->setCurrentCity({state.get(), newCity.first});
+				}
+				else // Debug warping should not trigger research unlocks
+				{
+					state->current_city = {state.get(), newCity.first};
+				}
 				auto cityView = mksp<CityView>(state);
 				cityView->DEBUG_SHOW_ALIEN = DEBUG_SHOW_ALIEN;
 				fw().stageQueueCommand({StageCmd::Command::REPLACEALL, cityView});

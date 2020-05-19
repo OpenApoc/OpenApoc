@@ -67,7 +67,7 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 			LogInfo("Alien bld %d %s func %d %s", entry.name_idx, b->name, entry.function_idx,
 			        b->function.id);
 
-			b->accessTopic = {&state, format("RESEARCH_UNLOCK_ALIEN_BUILDING_%d", i)};
+			b->accessTopic = {&state, format("RESEARCH_ALIEN_BUILDING_%d", i)};
 			if (i < 9)
 			{
 				b->researchUnlock.emplace_back(&state,
