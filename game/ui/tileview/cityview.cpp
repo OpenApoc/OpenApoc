@@ -3344,7 +3344,14 @@ bool CityView::handleMouseDown(Event *e)
 							vehicle->health = vehicle->type->crash_health > 0
 							                      ? vehicle->type->crash_health
 							                      : vehicle->getMaxHealth() / 4;
-							vehicle->startFalling(*state);
+							if (vehicle->type->type == VehicleType::Type::UFO)
+							{
+								vehicle->crash(*state, nullptr);
+							}
+							else
+							{
+								vehicle->startFalling(*state);
+							}
 						}
 						return true;
 					}
