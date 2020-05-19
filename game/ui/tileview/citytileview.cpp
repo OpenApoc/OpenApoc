@@ -756,7 +756,10 @@ void CityTileView::render()
 						case VehicleMission::MissionType::Land:
 						case VehicleMission::MissionType::OfferService:
 						case VehicleMission::MissionType::InvestigateBuilding:
-							buildingsSelected.insert(m->targetBuilding);
+							if (m->targetBuilding)
+							{
+								buildingsSelected.insert(m->targetBuilding);
+							}
 							[[fallthrough]];
 						case VehicleMission::MissionType::Crash:
 						{
