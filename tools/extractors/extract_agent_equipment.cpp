@@ -44,6 +44,11 @@
 #define DT_EXPLOSIVE 4
 #define DT_STUNGUN 5
 #define DT_PSIBLAST 6
+#define DT_LASER 8
+#define DT_PLASMA 9
+#define DT_TOXINA 10
+#define DT_TOXINB 11
+#define DT_TOXINC 12
 #define DT_DISRUPTOR 14
 #define DT_EXPLOSIVE2 15
 #define DT_BRAINSUCKER 18
@@ -324,6 +329,11 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 			case DT_EXPLOSIVE2:
 				d->explosive = true;
 				break;
+			case DT_LASER:
+			case DT_PLASMA:
+			case DT_TOXINA:
+			case DT_TOXINB:
+			case DT_TOXINC:
 			case DT_DISRUPTOR:
 				d->non_violent = true;
 				break;
