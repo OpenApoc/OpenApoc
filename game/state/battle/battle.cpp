@@ -3455,6 +3455,9 @@ void Battle::exitBattle(GameState &state)
 	}
 
 	state.current_battle = nullptr;
+
+	// Remove all dead vehicles from the state
+	state.cleanUpDeathNote();
 }
 
 void Battle::loadResources(GameState &state)
