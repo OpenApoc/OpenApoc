@@ -4591,6 +4591,7 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 {
 	auto attackerOrg = attacker ? attacker->agent->owner : nullptr;
 	auto ourOrg = agent->owner;
+	bool destroy = false;
 	// Violent deaths (spawn stuff, blow up)
 	if (violently)
 	{
@@ -4604,6 +4605,7 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 					                                   e->type->damage_type->explosionDoodad,
 					                                   e->type->damage_type, e->type->damage,
 					                                   e->type->explosion_depletion_rate, owner);
+					destroy = true;
 					break;
 				case AEquipmentType::Type::Spawner:
 				{
@@ -4750,8 +4752,22 @@ void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool viole
 	removeFromSquad(*state.current_battle);
 	// Agent also dies
 	agent->die(state);
-	// Animate body
-	dropDown(state);
+	if (!destroy)
+	{
+		// Animate body
+		dropDown(state);
+	}
+	else
+	{
+		// Remove body
+		markUnVisible(state);
+		if (shadowObject)
+		{
+			shadowObject->removeFromMap();
+		}
+		tileObject->removeFromMap();
+		destroyed = true;
+	}
 }
 
 void BattleUnit::fallUnconscious(GameState &state, StateRef<BattleUnit> attacker)

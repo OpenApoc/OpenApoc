@@ -2705,7 +2705,7 @@ void Battle::finishBattle(GameState &state)
 		// Dead alien loot
 		for (auto &u : deadAliens)
 		{
-			if (u->agent->type->deadSpeciesItem)
+			if (u->agent->type->deadSpeciesItem && !u->destroyed)
 			{
 				if (u->agent->type->deadSpeciesItem->bioStorage)
 				{
