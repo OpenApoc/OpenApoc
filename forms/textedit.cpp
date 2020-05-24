@@ -8,7 +8,7 @@
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
 #include "library/sp.h"
-#include "library/strings_format.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -278,7 +278,7 @@ void TextEdit::configureSelfFromXml(pugi::xml_node *node)
 
 	if (node->attribute("text"))
 	{
-		text = tr(node->attribute("text").as_string());
+		text = translate(node->attribute("text").as_string());
 	}
 	auto fontNode = node->child("font");
 	if (fontNode)
