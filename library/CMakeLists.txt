@@ -22,6 +22,7 @@ set (LIBRARY_HEADER_FILES
 	sp.h
 	strings.h
 	strings_format.h
+	strings_translate.h
 	vec.h
 	resource.h
 	voxel.h

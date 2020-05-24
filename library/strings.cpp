@@ -194,6 +194,22 @@ UString::UString(UString::ConstIterator first, UString::ConstIterator last)
 {
 }
 
+UString::UString(const boost::locale::basic_format<char> &format_string)
+{
+	// TODO: Are stringstreams imbued with the correct locale?
+	std::ostringstream ss;
+	ss << format_string;
+	this->u8Str = ss.str();
+}
+
+UString::UString(const boost::locale::basic_message<char> &message_string)
+{
+	// TODO: Are stringstreams imbued with the correct locale?
+	std::ostringstream ss;
+	ss << message_string;
+	this->u8Str = ss.str();
+}
+
 const std::string &UString::str() const { return this->u8Str; }
 
 const char *UString::cStr() const { return this->u8Str.c_str(); }

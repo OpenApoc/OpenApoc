@@ -5,6 +5,12 @@
 #include <string>
 #include <vector>
 
+namespace boost::locale
+{
+template <typename T> class basic_format;
+template <typename T> class basic_message;
+} // namespace boost::locale
+
 namespace OpenApoc
 {
 
@@ -46,6 +52,8 @@ class UString
 	UString(std::string &&str);
 	UString(UniChar uc);
 	UString(const char *cstr);
+	UString(const boost::locale::basic_format<char> &format_string);
+	UString(const boost::locale::basic_message<char> &message_string);
 	UString(const char *cstr, size_t count);
 	UString(UString &&other) noexcept;
 	UString(ConstIterator first, ConstIterator last);
