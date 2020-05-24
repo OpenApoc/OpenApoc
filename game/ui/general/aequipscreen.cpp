@@ -32,6 +32,7 @@
 #include "game/ui/general/aequipmentsheet.h"
 #include "game/ui/general/agentsheet.h"
 #include "game/ui/general/messagebox.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -161,11 +162,11 @@ void AEquipScreen::begin()
 	auto mode = getMode();
 	if (mode == Mode::Enemy)
 	{
-		formMain->findControlTyped<Label>("EQUIP_AGENT")->setText(tr("MIND PROBE"));
+		formMain->findControlTyped<Label>("EQUIP_AGENT")->setText(translate("MIND PROBE"));
 	}
 	else
 	{
-		formMain->findControlTyped<Label>("EQUIP_AGENT")->setText(tr("EQUIP AGENT"));
+		formMain->findControlTyped<Label>("EQUIP_AGENT")->setText(translate("EQUIP AGENT"));
 	}
 
 	formMain->findControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->setChecked(true);
@@ -514,9 +515,10 @@ void AEquipScreen::handleItemPickup(Vec2<int> mousePos)
 	}
 	else if (alienArtifact)
 	{
-		auto message_box = mksp<MessageBox>(
-		    tr("Alien Artifact"), tr("You must research Alien technology before you can use it."),
-		    MessageBox::ButtonOptions::Ok);
+		auto message_box =
+		    mksp<MessageBox>(translate("Alien Artifact"),
+		                     translate("You must research Alien technology before you can use it."),
+		                     MessageBox::ButtonOptions::Ok);
 		fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 	}
 	else // no doll equipment under cursor
@@ -537,10 +539,10 @@ void AEquipScreen::handleItemPickup(Vec2<int> mousePos)
 		}
 		else if (alienArtifact)
 		{
-			auto message_box =
-			    mksp<MessageBox>(tr("Alien Artifact"),
-			                     tr("You must research Alien technology before you can use it."),
-			                     MessageBox::ButtonOptions::Ok);
+			auto message_box = mksp<MessageBox>(
+			    translate("Alien Artifact"),
+			    translate("You must research Alien technology before you can use it."),
+			    MessageBox::ButtonOptions::Ok);
 			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 		}
 	}
@@ -578,17 +580,18 @@ void AEquipScreen::handleItemPlacement(Vec2<int> mousePos)
 	}
 	if (insufficientTU)
 	{
-		auto message_box = mksp<MessageBox>(
-		    tr("NOT ENOUGH TU'S"),
-		    format("%s %d", tr("TU cost per item picked up:"), currentAgent->unit->getPickupCost()),
-		    MessageBox::ButtonOptions::Ok);
+		auto message_box = mksp<MessageBox>(translate("NOT ENOUGH TU'S"),
+		                                    tformat("TU cost per item picked up: {1}") %
+		                                        currentAgent->unit->getPickupCost(),
+		                                    MessageBox::ButtonOptions::Ok);
 		fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 	}
 	else if (alienArtifact)
 	{
-		auto message_box = mksp<MessageBox>(
-		    tr("Alien Artifact"), tr("You must research Alien technology before you can use it."),
-		    MessageBox::ButtonOptions::Ok);
+		auto message_box =
+		    mksp<MessageBox>(translate("Alien Artifact"),
+		                     translate("You must research Alien technology before you can use it."),
+		                     MessageBox::ButtonOptions::Ok);
 		fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 	}
 	// Other agents
@@ -648,10 +651,10 @@ void AEquipScreen::handleItemPlacement(bool toAgent)
 	}
 	if (insufficientTU)
 	{
-		auto message_box = mksp<MessageBox>(
-		    tr("NOT ENOUGH TU'S"),
-		    format("%s %d", tr("TU cost per item picked up:"), currentAgent->unit->getPickupCost()),
-		    MessageBox::ButtonOptions::Ok);
+		auto message_box = mksp<MessageBox>(translate("NOT ENOUGH TU'S"),
+		                                    tformat("TU cost per item picked up: {1}") %
+		                                        currentAgent->unit->getPickupCost(),
+		                                    MessageBox::ButtonOptions::Ok);
 		fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 	}
 	// Other agents
@@ -1877,9 +1880,9 @@ void AEquipScreen::attemptCloseScreen()
 	{
 		fw().stageQueueCommand(
 		    {StageCmd::Command::PUSH,
-		     mksp<MessageBox>(tr("WARNING"),
-		                      tr("You will lose any equipment left on the floor. "
-		                         "Are you sure you wish to leave this agent?"),
+		     mksp<MessageBox>(translate("WARNING"),
+		                      translate("You will lose any equipment left on the floor. "
+		                                "Are you sure you wish to leave this agent?"),
 		                      MessageBox::ButtonOptions::YesNo, [this] { this->closeScreen(); })});
 	}
 	else

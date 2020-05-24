@@ -26,7 +26,7 @@
 #include "game/ui/components/controlgenerator.h"
 #include "game/ui/general/agentsheet.h"
 #include "game/ui/general/messagebox.h"
-#include "library/strings_format.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -119,8 +119,8 @@ RecruitScreen::RecruitScreen(sp<GameState> state)
 				{
 					fw().stageQueueCommand(
 					    {StageCmd::Command::PUSH,
-					     mksp<MessageBox>(tr("Accomodation exceeded"),
-					                      tr("Transfer limited by available accommodation."),
+					     mksp<MessageBox>(translate("Accomodation exceeded"),
+					                      translate("Transfer limited by available accommodation."),
 					                      MessageBox::ButtonOptions::Ok)});
 				}
 				else
@@ -235,16 +235,16 @@ void RecruitScreen::setDisplayType(const AgentType::Role role)
 	switch (type)
 	{
 		case AgentType::Role::Soldier:
-			label->setText(tr("X-COM Agents"));
+			label->setText(translate("X-COM Agents"));
 			break;
 		case AgentType::Role::BioChemist:
-			label->setText(tr("Biochemists"));
+			label->setText(translate("Biochemists"));
 			break;
 		case AgentType::Role::Physicist:
-			label->setText(tr("Quantum Physicists"));
+			label->setText(translate("Quantum Physicists"));
 			break;
 		case AgentType::Role::Engineer:
-			label->setText(tr("Engineers"));
+			label->setText(translate("Engineers"));
 			break;
 	}
 
@@ -476,16 +476,17 @@ void RecruitScreen::attemptCloseScreen()
 
 	if (hired != 0 || fired != 0 || transferred != 0)
 	{
-		UString message =
-		    format("%d %s\n%d %s", hired, tr("unit(s) hired"), fired, tr("unit(s) fired."));
+		// TODO: Translate pleurals
+		UString message;
 		if (transferred > 0)
-		{
-			message = format("%s\n(%d %s)", message, transferred, tr("units(s) transferred"));
-		}
+			message = tformat("{1} unit(s) hired\n {2} unit(s) fired\n {3} unit(s) transferred") %
+			          hired % fired % transferred;
+		else
+			message = tformat("{1} unit(s) hired\n {2} unit(s) fired\n") % hired % fired;
 		fw().stageQueueCommand(
 		    {StageCmd::Command::PUSH,
 		     mksp<MessageBox>(
-		         tr("Confirm Orders"), message, MessageBox::ButtonOptions::YesNoCancel,
+		         translate("Confirm Orders"), message, MessageBox::ButtonOptions::YesNoCancel,
 		         [this] { this->closeScreen(true); }, [this] { this->closeScreen(); })});
 	}
 	else
@@ -609,7 +610,8 @@ void RecruitScreen::closeScreen(bool confirmed)
 	{
 		fw().stageQueueCommand(
 		    {StageCmd::Command::PUSH,
-		     mksp<MessageBox>(tr("Funds exceeded"), tr("Order limited by your available funds."),
+		     mksp<MessageBox>(translate("Funds exceeded"),
+		                      translate("Order limited by your available funds."),
 		                      MessageBox::ButtonOptions::Ok)});
 		return;
 	}
@@ -630,10 +632,11 @@ void RecruitScreen::closeScreen(bool confirmed)
 	// Found bad base
 	if (bad_base)
 	{
-		fw().stageQueueCommand({StageCmd::Command::PUSH,
-		                        mksp<MessageBox>(tr("Accomodation exceeded"),
-		                                         tr("Transfer limited by available accommodation."),
-		                                         MessageBox::ButtonOptions::Ok)});
+		fw().stageQueueCommand(
+		    {StageCmd::Command::PUSH,
+		     mksp<MessageBox>(translate("Accomodation exceeded"),
+		                      translate("Transfer limited by available accommodation."),
+		                      MessageBox::ButtonOptions::Ok)});
 		if (bad_base != state->current_base)
 		{
 			for (auto &view : miniViews)

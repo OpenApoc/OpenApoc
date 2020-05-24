@@ -16,7 +16,7 @@
 #include "game/ui/components/agentassignment.h"
 #include "game/ui/general/aequipscreen.h"
 #include "game/ui/general/messagebox.h"
-#include "library/strings_format.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -25,9 +25,9 @@ AlertScreen::AlertScreen(sp<GameState> state, sp<Building> building)
     : Stage(), menuform(ui().getForm("city/alert")), state(state), building(building)
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
-	menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(tr(building->owner->name));
+	menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(translate(building->owner->name));
 	menuform->findControlTyped<Label>("TEXT_BUILDING_FUNCTION")
-	    ->setText(tr(building->function->name));
+	    ->setText(translate(building->function->name));
 }
 
 AlertScreen::~AlertScreen() = default;
@@ -72,9 +72,9 @@ void AlertScreen::eventOccurred(Event *e)
 			{
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
-				     mksp<MessageBox>(tr("No Agents Selected"),
-				                      tr("You need to select the agents you want to "
-				                         "become active within the building."),
+				     mksp<MessageBox>(translate("No Agents Selected"),
+				                      translate("You need to select the agents you want to "
+				                                "become active within the building."),
 				                      MessageBox::ButtonOptions::Ok)});
 				return;
 			}

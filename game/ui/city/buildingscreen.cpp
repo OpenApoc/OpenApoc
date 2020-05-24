@@ -17,7 +17,7 @@
 #include "game/ui/components/agentassignment.h"
 #include "game/ui/general/aequipscreen.h"
 #include "game/ui/general/messagebox.h"
-#include "library/strings_format.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -49,10 +49,10 @@ BuildingScreen::BuildingScreen(sp<GameState> state, sp<Building> building)
     : Stage(), menuform(ui().getForm("city/building")), state(state), building(building)
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
-	menuform->findControlTyped<Label>("TEXT_BUILDING_NAME")->setText(tr(building->name));
-	menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(tr(building->owner->name));
+	menuform->findControlTyped<Label>("TEXT_BUILDING_NAME")->setText(translate(building->name));
+	menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(translate(building->owner->name));
 	menuform->findControlTyped<Label>("TEXT_BUILDING_FUNCTION")
-	    ->setText(tr(building->function->name));
+	    ->setText(translate(building->function->name));
 }
 
 BuildingScreen::~BuildingScreen() = default;
@@ -103,7 +103,8 @@ void BuildingScreen::eventOccurred(Event *e)
 			{
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
-				     mksp<MessageBox>(tr("No Entrance"), tr("Cannot raid as building destroyed"),
+				     mksp<MessageBox>(translate("No Entrance"),
+				                      translate("Cannot raid as building destroyed"),
 				                      MessageBox::ButtonOptions::Ok)});
 				return;
 			}
@@ -112,10 +113,10 @@ void BuildingScreen::eventOccurred(Event *e)
 			{
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
-				     mksp<MessageBox>(tr("No Entrance"),
-				                      tr("Our Agents are unable to find an entrance to this "
-				                         "building. Our Scientists "
-				                         "back at HQ must complete their research."),
+				     mksp<MessageBox>(translate("No Entrance"),
+				                      translate("Our Agents are unable to find an entrance to this "
+				                                "building. Our Scientists "
+				                                "back at HQ must complete their research."),
 				                      MessageBox::ButtonOptions::Ok)});
 				return;
 			}
@@ -131,10 +132,11 @@ void BuildingScreen::eventOccurred(Event *e)
 			{
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
-				     mksp<MessageBox>(tr("No Agents Selected"),
-				                      tr("You need to select the agents you want to become active "
-				                         "within the building."),
-				                      MessageBox::ButtonOptions::Ok)});
+				     mksp<MessageBox>(
+				         translate("No Agents Selected"),
+				         translate("You need to select the agents you want to become active "
+				                   "within the building."),
+				         MessageBox::ButtonOptions::Ok)});
 			}
 			else
 			{
@@ -152,7 +154,8 @@ void BuildingScreen::eventOccurred(Event *e)
 					}
 					if (!foundAlien)
 					{
-						UString message = "You have not found any Aliens in this building.";
+						UString message =
+						    translate("You have not found any Aliens in this building.");
 						if (building->owner != state->getPlayer())
 						{
 							auto priorRelationship =
@@ -163,33 +166,36 @@ void BuildingScreen::eventOccurred(Event *e)
 							if (newRelationship != priorRelationship &&
 							    newRelationship == Organisation::Relation::Unfriendly)
 							{
-								message = "You have not found any Aliens in this building. As "
-								          "a consequence of your "
-								          "unwelcome intrusion the owner of the building has "
-								          "now become unfriendly "
-								          "towards X-Com.";
+								message =
+								    translate("You have not found any Aliens in this building. As "
+								              "a consequence of your "
+								              "unwelcome intrusion the owner of the building has "
+								              "now become unfriendly "
+								              "towards X-Com.");
 							}
 							else if (newRelationship != priorRelationship &&
 							         newRelationship == Organisation::Relation::Hostile)
 							{
-								message = "You have not found any Aliens in this building. As "
-								          "a consequence of your "
-								          "unwelcome intrusion the owner of the building has "
-								          "now become hostile towards"
-								          " X-Com.";
+								message =
+								    translate("You have not found any Aliens in this building. As "
+								              "a consequence of your "
+								              "unwelcome intrusion the owner of the building has "
+								              "now become hostile towards"
+								              " X-Com.");
 							}
 							else
 							{
-								message = "You have not found any Aliens in this building. "
-								          "As a consequence of your "
-								          "unwelcome intrusion the owner of the building is "
-								          "less favorably disposed "
-								          "towards X-Com.";
+								message =
+								    translate("You have not found any Aliens in this building. "
+								              "As a consequence of your "
+								              "unwelcome intrusion the owner of the building is "
+								              "less favorably disposed "
+								              "towards X-Com.");
 							}
 						}
 						fw().stageQueueCommand(
 						    {StageCmd::Command::PUSH,
-						     mksp<MessageBox>(tr("No Hostile Forces Discovered"), tr(message),
+						     mksp<MessageBox>(translate("No Hostile Forces Discovered"), message,
 						                      MessageBox::ButtonOptions::Ok)});
 					}
 					else
@@ -214,8 +220,9 @@ void BuildingScreen::eventOccurred(Event *e)
 						fw().stageQueueCommand(
 						    {StageCmd::Command::PUSH,
 						     mksp<MessageBox>(
-						         tr("No Hostile Forces Discovered"),
-						         tr("You have not found any hostile forces in this building."),
+						         translate("No Hostile Forces Discovered"),
+						         translate(
+						             "You have not found any hostile forces in this building."),
 						         MessageBox::ButtonOptions::Ok)});
 						return;
 					}

@@ -28,8 +28,6 @@ class BribeScreen : public Stage
 
 	// Update info about deal.
 	void updateInfo();
-	// Get the offer of a bribe.
-	UString getOfferString(int itWillCost, const UString &newAttitude) const;
 
   public:
 	BribeScreen(sp<GameState> state);

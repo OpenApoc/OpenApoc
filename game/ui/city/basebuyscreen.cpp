@@ -18,7 +18,7 @@
 #include "game/ui/components/basegraphics.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/tileview/cityview.h"
-#include "library/strings_format.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -40,7 +40,7 @@ void BaseBuyScreen::begin()
 	form->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 
 	auto text = form->findControlTyped<Label>("TEXT_PRICE");
-	text->setText(format(tr("This Building will cost $%d"), price));
+	text->setText(tformat("This Building will cost ${1}") % price);
 
 	form->findControlTyped<Graphic>("GRAPHIC_MINIMAP")
 	    ->setImage(BaseGraphics::drawMinimap(state, *base->building));
@@ -152,9 +152,9 @@ void BaseBuyScreen::eventOccurred(Event *e)
 			}
 			else
 			{
-				auto messagebox =
-				    mksp<MessageBox>(tr("No Sale"), tr("Not enough money to buy this building."),
-				                     MessageBox::ButtonOptions::Ok);
+				auto messagebox = mksp<MessageBox>(
+				    translate("No Sale"), translate("Not enough money to buy this building."),
+				    MessageBox::ButtonOptions::Ok);
 				fw().stageQueueCommand({StageCmd::Command::PUSH, messagebox});
 			}
 		}

@@ -8,7 +8,7 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
-#include "library/strings_format.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -43,7 +43,7 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 	{
 		case ButtonOptions::Ok:
 		{
-			auto bOk = form->createChild<TextButton>(tr("OK"), ui().getFont("smallset"));
+			auto bOk = form->createChild<TextButton>(translate("OK"), ui().getFont("smallset"));
 			bOk->Name = "BUTTON_OK";
 			bOk->Size = BUTTON_SIZE;
 			bOk->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
@@ -55,14 +55,14 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 		}
 		case ButtonOptions::YesNo:
 		{
-			auto bYes = form->createChild<TextButton>(tr("Yes"), ui().getFont("smallset"));
+			auto bYes = form->createChild<TextButton>(translate("Yes"), ui().getFont("smallset"));
 			bYes->Name = "BUTTON_YES";
 			bYes->Size = BUTTON_SIZE;
 			bYes->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
 			bYes->Location.x = MARGIN;
 			bYes->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
-			auto bNo = form->createChild<TextButton>(tr("No"), ui().getFont("smallset"));
+			auto bNo = form->createChild<TextButton>(translate("No"), ui().getFont("smallset"));
 			bNo->Name = "BUTTON_NO";
 			bNo->Size = BUTTON_SIZE;
 			bNo->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
@@ -74,21 +74,22 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 		}
 		case ButtonOptions::YesNoCancel:
 		{
-			auto bYes = form->createChild<TextButton>(tr("Yes"), ui().getFont("smallset"));
+			auto bYes = form->createChild<TextButton>(translate("Yes"), ui().getFont("smallset"));
 			bYes->Name = "BUTTON_YES";
 			bYes->Size = BUTTON_SIZE_2;
 			bYes->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
 			bYes->Location.x = MARGIN;
 			bYes->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
-			auto bNo = form->createChild<TextButton>(tr("No"), ui().getFont("smallset"));
+			auto bNo = form->createChild<TextButton>(translate("No"), ui().getFont("smallset"));
 			bNo->Name = "BUTTON_NO2";
 			bNo->Size = BUTTON_SIZE_2;
 			bNo->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
 			bNo->Location.x = form->Size.x / 2 - bNo->Size.x / 2;
 			bNo->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
-			auto bCan = form->createChild<TextButton>(tr("Cancel"), ui().getFont("smallset"));
+			auto bCan =
+			    form->createChild<TextButton>(translate("Cancel"), ui().getFont("smallset"));
 			bCan->Name = "BUTTON_CANCEL";
 			bCan->Size = BUTTON_SIZE_2;
 			bCan->RenderStyle = TextButton::ButtonRenderStyle::Bevel;

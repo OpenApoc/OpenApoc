@@ -17,7 +17,7 @@
 #include "game/state/gamestate.h"
 #include "game/ui/base/researchselect.h"
 #include "game/ui/components/controlgenerator.h"
-#include "library/strings_format.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -327,7 +327,7 @@ void ResearchScreen::setCurrentLabInfo()
 		assignedAgentList->clear();
 		form->findControlTyped<Label>("TEXT_LAB_TYPE")->setText("");
 		auto totalSkillLabel = form->findControlTyped<Label>("TEXT_TOTAL_SKILL");
-		totalSkillLabel->setText(format(tr("Total Skill: %d"), 0));
+		totalSkillLabel->setText(tformat("Total Skill: {1}") % 0);
 		updateProgressInfo();
 		return;
 	}
@@ -339,17 +339,17 @@ void ResearchScreen::setCurrentLabInfo()
 
 	if (labType == FacilityType::Capacity::Chemistry)
 	{
-		labTypeName = tr("Biochemistry");
+		labTypeName = translate("Biochemistry");
 		listedAgentType = AgentType::Role::BioChemist;
 	}
 	else if (labType == FacilityType::Capacity::Physics)
 	{
-		labTypeName = tr("Quantum Physics");
+		labTypeName = translate("Quantum Physics");
 		listedAgentType = AgentType::Role::Physicist;
 	}
 	else if (labType == FacilityType::Capacity::Workshop)
 	{
-		labTypeName = tr("Engineering");
+		labTypeName = translate("Engineering");
 		listedAgentType = AgentType::Role::Engineer;
 	}
 	else
@@ -410,8 +410,8 @@ void ResearchScreen::setCurrentLabInfo()
 	unassignedAgentList->ItemSize = agentEntryHeight;
 
 	auto totalSkillLabel = form->findControlTyped<Label>("TEXT_TOTAL_SKILL");
-	totalSkillLabel->setText(
-	    format(tr("Total Skill: %d"), this->viewFacility->lab->getTotalSkill()));
+	totalSkillLabel->setText(tformat("Total Skill: {1}") %
+	                         this->viewFacility->lab->getTotalSkill());
 
 	// update scientists quantity for selected lab
 	auto uiListLabs = form->findControlTyped<ListBox>("LIST_SMALL_LABS");
@@ -475,9 +475,9 @@ void ResearchScreen::updateProgressInfo()
 		}
 		progressBar->setImage(progressImage);
 		auto topicTitle = form->findControlTyped<Label>("TEXT_CURRENT_PROJECT");
-		topicTitle->setText(tr(topic->name));
+		topicTitle->setText(translate(topic->name));
 		auto completionPercent = form->findControlTyped<Label>("TEXT_PROJECT_COMPLETION");
-		auto completionText = format(tr("%d%%"), static_cast<int>(projectProgress * 100.0f));
+		auto completionText = format("%d%%", static_cast<int>(projectProgress * 100.0f));
 		completionPercent->setText(completionText);
 	}
 	else
@@ -485,7 +485,7 @@ void ResearchScreen::updateProgressInfo()
 		auto progressBar = form->findControlTyped<Graphic>("GRAPHIC_PROGRESS_BAR");
 		progressBar->setImage(nullptr);
 		auto topicTitle = form->findControlTyped<Label>("TEXT_CURRENT_PROJECT");
-		topicTitle->setText(tr("No Project"));
+		topicTitle->setText(translate("No Project"));
 		auto completionPercent = form->findControlTyped<Label>("TEXT_PROJECT_COMPLETION");
 		completionPercent->setText("");
 	}
