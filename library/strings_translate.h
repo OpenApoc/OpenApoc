@@ -10,7 +10,10 @@ class UString;
 
 inline auto translate(const UString &str) { return boost::locale::translate(str.str()); }
 
-inline auto tformat(const char *str) { return boost::locale::format(boost::locale::translate(str)); }
+inline auto tformat(const char *str)
+{
+	return boost::locale::format(boost::locale::translate(str));
+}
 
 // TODO: Pleural message formatting
 
