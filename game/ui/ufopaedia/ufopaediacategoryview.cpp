@@ -275,23 +275,28 @@ void UfopaediaCategoryView::setFormStats()
 
 						if (ref != player)
 						{
-							UString relation ;
+							UString relation;
 							switch (ref->isRelatedTo(player))
 							{
 								case Organisation::Relation::Allied:
-									relation = tformat("{1}: allied towards: {2}")%translate(ref->name) % translate(player->name);
+									relation = tformat("{1}: allied towards: {2}") %
+									           translate(ref->name) % translate(player->name);
 									break;
 								case Organisation::Relation::Friendly:
-									relation = tformat("{1}: friendly towards: {2}")%translate(ref->name) % translate(player->name);
+									relation = tformat("{1}: friendly towards: {2}") %
+									           translate(ref->name) % translate(player->name);
 									break;
 								case Organisation::Relation::Neutral:
-									relation = tformat("{1}: neutral towards: {2}")%translate(ref->name) % translate(player->name);
+									relation = tformat("{1}: neutral towards: {2}") %
+									           translate(ref->name) % translate(player->name);
 									break;
 								case Organisation::Relation::Unfriendly:
-									relation = tformat("{1}: unfriendly towards: {2}")%translate(ref->name) % translate(player->name);
+									relation = tformat("{1}: unfriendly towards: {2}") %
+									           translate(ref->name) % translate(player->name);
 									break;
 								case Organisation::Relation::Hostile:
-									relation = tformat("{1}: hostile towards: {2}")%translate(ref->name) % translate(player->name);
+									relation = tformat("{1}: hostile towards: {2}") %
+									           translate(ref->name) % translate(player->name);
 									break;
 							}
 							orgLabels[0]->setText(relation);
