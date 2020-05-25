@@ -129,8 +129,4 @@ class Strings
 	static bool isWhiteSpace(UniChar c);
 };
 
-#ifdef DUMP_TRANSLATION_STRINGS
-void dumpStrings();
-#endif
-
 }; // namespace OpenApoc

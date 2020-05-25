@@ -23,6 +23,4 @@ template <typename... Args> static UString format(const UString &fmt, Args &&...
 	return tfm::format(fmt.cStr(), std::forward<Args>(args)...);
 }
 
-UString tr(const UString &str, const UString domain = "ufo_string");
-
 } // namespace OpenApoc
