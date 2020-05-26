@@ -516,7 +516,7 @@ ConfigOptionFloat::ConfigOptionFloat(const UString section, const UString name,
 	config().addOptionFloat(section, name, "", description, defaultValue);
 }
 
-bool ConfigOptionFloat::get() const { return config().getFloat(getKey()); }
+float ConfigOptionFloat::get() const { return config().getFloat(getKey()); }
 
 void validate(boost::any &v, const std::vector<std::string> &values, UString *, int)
 {

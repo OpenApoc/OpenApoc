@@ -108,7 +108,7 @@ class ConfigOptionFloat : public ConfigOption
   public:
 	ConfigOptionFloat(const UString section, const UString name, const UString description,
 	                  const float defaultValue = 0.0f);
-	bool get() const;
+	float get() const;
 };
 static inline ConfigFile &config() { return ConfigFile::getInstance(); }
 
