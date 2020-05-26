@@ -726,7 +726,7 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 		else if (childName == "tooltip")
 		{
 			const auto tooltipFont = ui().getFont(child.attribute("font").as_string());
-			if (!tooltipFont)
+			if (tooltipFont)
 			{
 				ToolTipText = child.attribute("text").as_string();
 				if (!ToolTipText.empty())
