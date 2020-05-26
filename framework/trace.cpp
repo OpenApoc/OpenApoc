@@ -11,6 +11,13 @@
 #include <utility>
 #include <vector>
 
+#if !defined(PTHREADS_AVAILABLE) && defined(_WIN32)
+#include <codecvt>
+#include <locale>
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#endif
+
 namespace
 {
 
@@ -249,6 +256,14 @@ void Trace::setThreadName(const UString &name)
 #elif defined(__APPLE__)
 	pthread_setname_np(name.cStr());
 #endif
+#elif defined(_WIN32)
+	static auto SetThreadDescriptionPtr = (HRESULT(WINAPI *)(HANDLE, PCWSTR))GetProcAddress(
+	    GetModuleHandleW(L"kernel32.dll"), "SetThreadDescription");
+	if (SetThreadDescriptionPtr)
+	{
+		std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+		SetThreadDescriptionPtr(GetCurrentThread(), conv.from_bytes(name.str()).c_str());
+	}
 #endif
 	if (!enabled)
 		return;
