@@ -57,30 +57,18 @@ static const std::map<UString, std::pair<unsigned, unsigned>> selfDestructTimer 
     {"VEHICLETYPE_ALIEN_MOTHERSHIP", {60 / 5 * TICKS_PER_MINUTE, 240 / 5 * TICKS_PER_MINUTE}}};
 } // namespace
 
-FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, Vehicle &v)
-    : FlyingVehicleTileHelper(map, *v.type, v.crashed, (int)v.altitude)
-{
-}
-
-FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, VehicleType &vehType, bool crashed,
-                                                 int altitude)
-    : map(map), crashed(crashed), altitude(altitude)
+FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, const Vehicle &v)
+    : map(map), v(v), altitude((int)v.altitude)
 {
 	int xMax = 0;
 	int yMax = 0;
-	for (auto &s : vehType.size)
+	for (const auto &s : v.type->size)
 	{
 		xMax = std::max(xMax, s.second.x);
 		yMax = std::max(yMax, s.second.y);
 	}
 	size = {xMax, yMax};
 	large = size.x > 1 || size.y > 1;
-}
-
-FlyingVehicleTileHelper::FlyingVehicleTileHelper(TileMap &map, bool crashed, Vec2<int> size,
-                                                 int altitude)
-    : map(map), crashed(crashed), size(size), large(size.x > 1 || size.y > 1), altitude(altitude)
-{
 }
 
 bool FlyingVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits,
@@ -132,14 +120,20 @@ bool FlyingVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, f
 	// Allow pathing into tiles with crashes
 	bool foundCrash = false;
 	bool foundScenery = false;
+	const auto self = v.shared_from_this();
 	for (auto &obj : to->intersectingObjects)
 	{
 		if (obj->getType() == TileObject::Type::Vehicle)
 		{
 			auto vehicleTile = std::static_pointer_cast<TileObjectVehicle>(obj);
+			// Large vehicles span multiple tiles
+			if (vehicleTile->getVehicle() == self)
+			{
+				continue;
+			}
 			// Non-crashed can go into crashed
 			bool vehicleCrashed = vehicleTile->getVehicle()->crashed;
-			if (crashed || !vehicleCrashed)
+			if (v.crashed || !vehicleCrashed)
 			{
 				return false;
 			}
