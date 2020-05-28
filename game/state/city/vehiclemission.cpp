@@ -1405,8 +1405,15 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 		{
 			if (finished)
 			{
-				fw().pushEvent(new GameVehicleEvent(GameEventType::UfoCrashed,
-				                                    {&state, v.shared_from_this()}));
+				if (v.city.id == "CITYMAP_HUMAN")
+				{
+					fw().pushEvent(new GameVehicleEvent(GameEventType::UfoCrashed,
+					                                    {&state, v.shared_from_this()}));
+				}
+				else
+				{
+					v.die(state, false);
+				}
 				return;
 			}
 			auto vTile = v.tileObject;
