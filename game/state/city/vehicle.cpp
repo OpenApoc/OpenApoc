@@ -558,9 +558,10 @@ class FlyingVehicleMover : public VehicleMover
 						Vec3<float> vectorToGoal =
 						    (vehicle.goalPosition - vehicle.position) * VELOCITY_SCALE_CITY;
 						int ticksToMove =
-						    floorf(glm::length(vectorToGoal) / glm::length(vehicle.velocity) *
-						           (float)TICK_SCALE) -
-						    5.0f;
+						    std::max(floorf(glm::length(vectorToGoal) /
+						                    glm::length(vehicle.velocity) * (float)TICK_SCALE) -
+						                 5.0f,
+						             1.0f);
 						if (ticksToMove < vehicle.ticksToTurn)
 						{
 							vehicle.velocity *= (float)ticksToMove / (float)vehicle.ticksToTurn;
