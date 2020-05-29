@@ -32,15 +32,13 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 {
   private:
 	TileMap &map;
-	bool crashed;
+	const Vehicle &v;
 	Vec2<int> size;
 	bool large;
 	int altitude;
 
   public:
-	FlyingVehicleTileHelper(TileMap &map, Vehicle &v);
-	FlyingVehicleTileHelper(TileMap &map, VehicleType &vehType, bool crashed, int altitude);
-	FlyingVehicleTileHelper(TileMap &map, bool crashed, Vec2<int> size, int altitude);
+	FlyingVehicleTileHelper(TileMap &map, const Vehicle &v);
 
 	bool canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits = false,
 	                  bool ignoreMovingUnits = true, bool ignoreAllUnits = false) const override;
