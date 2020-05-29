@@ -942,6 +942,23 @@ void OpenApoc::GameState::cleanUpDeathNote()
 		for (auto &name : this->vehiclesDeathNote)
 		{
 			vehicles.erase(name);
+
+			// Remove vehicle from selection
+			for (const auto &[cityId, city] : cities)
+			{
+				for (auto it = city->cityViewSelectedVehicles.begin();
+				     it != city->cityViewSelectedVehicles.end();)
+				{
+					if (it->id == name)
+					{
+						it = city->cityViewSelectedVehicles.erase(it);
+					}
+					else
+					{
+						++it;
+					}
+				}
+			}
 		}
 		vehiclesDeathNote.clear();
 	}
