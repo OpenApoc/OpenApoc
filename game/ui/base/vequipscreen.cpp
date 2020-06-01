@@ -178,7 +178,7 @@ void VEquipScreen::eventOccurred(Event *e)
 			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
-		if (e->keyboard().KeyCode == SDLK_RETURN)
+		if (e->keyboard().KeyCode == SDLK_RETURN || e->keyboard().KeyCode == SDLK_KP_ENTER)
 		{
 			form->findControl("BUTTON_OK")->click();
 			return;

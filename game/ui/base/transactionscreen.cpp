@@ -684,6 +684,7 @@ void TransactionScreen::eventOccurred(Event *e)
 			case SDLK_ESCAPE:
 			case SDLK_RETURN:
 			case SDLK_SPACE:
+			case SDLK_KP_ENTER:
 				form->findControl("BUTTON_OK")->click();
 				return;
 		}

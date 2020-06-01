@@ -165,7 +165,7 @@ void BattleBriefing::eventOccurred(Event *e)
 	menuform->eventOccured(e);
 	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->keyboard().KeyCode == SDLK_RETURN)
+		if (e->keyboard().KeyCode == SDLK_RETURN || e->keyboard().KeyCode == SDLK_KP_ENTER)
 		{
 			menuform->findControl("BUTTON_REAL_TIME")->click();
 			return;

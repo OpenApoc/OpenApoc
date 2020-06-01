@@ -3309,6 +3309,7 @@ bool BattleView::handleKeyDown(Event *e)
 				}
 				return true;
 			case SDLK_RETURN:
+			case SDLK_KP_ENTER:
 				if (activeTab == mainTab)
 				{
 					activeTab->findControl("BUTTON_INVENTORY")->click();
