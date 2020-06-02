@@ -57,8 +57,6 @@ void ListBox::onRender()
 		auto ctrl = *c;
 		if (ctrl != scroller && ctrl->isVisible())
 		{
-			ctrl->Location = controlOffset - this->scrollOffset;
-
 			if (ListOrientation == ScrollOrientation && ItemSize != 0)
 			{
 				switch (ScrollOrientation)
@@ -77,20 +75,24 @@ void ListBox::onRender()
 			switch (ListOrientation)
 			{
 				case Orientation::Vertical:
-					controlOffset.y += ctrl->Size.y + ItemSpacing;
-					if (ListOrientation != ScrollOrientation && controlOffset.y >= Size.y)
+					if (ListOrientation != ScrollOrientation &&
+					    controlOffset.y + ctrl->Size.y > Size.y)
 					{
 						controlOffset.y = 0;
 						controlOffset.x += ctrl->Size.x + ItemSpacing;
 					}
+					ctrl->Location = controlOffset - this->scrollOffset;
+					controlOffset.y += ctrl->Size.y + ItemSpacing;
 					break;
 				case Orientation::Horizontal:
-					controlOffset.x += ctrl->Size.x + ItemSpacing;
-					if (ListOrientation != ScrollOrientation && controlOffset.x >= Size.x)
+					if (ListOrientation != ScrollOrientation &&
+					    controlOffset.x + ctrl->Size.x > Size.x)
 					{
 						controlOffset.x = 0;
 						controlOffset.y += ctrl->Size.y + ItemSpacing;
 					}
+					ctrl->Location = controlOffset - this->scrollOffset;
+					controlOffset.x += ctrl->Size.x + ItemSpacing;
 					break;
 			}
 		}
