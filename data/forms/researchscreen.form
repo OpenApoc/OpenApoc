@@ -162,7 +162,7 @@
       </listbox>
       <listbox id="LIST_ASSIGNED">
         <position x="248" y="285"/>
-        <size height="160" width="320"/>
+        <size height="160" width="322"/>
         <orientation list="vertical" scroll="horizontal"/>
         <hovercolour r="255" g="255" b="255" a="255"/>
       </listbox>
