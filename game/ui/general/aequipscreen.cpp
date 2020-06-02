@@ -65,7 +65,6 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 
 	// Agent list functionality
 	auto agentList = formMain->findControlTyped<ListBox>("AGENT_SELECT_BOX");
-	agentList->AlwaysEmitSelectionEvents = true;
 	agentList->addCallback(FormEventType::ListBoxChangeSelected, [this](FormsEvent *e) {
 		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
 		auto agent = list->getSelectedData<Agent>();

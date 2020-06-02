@@ -88,6 +88,7 @@
         <item size="0" spacing="5"/>
         <hovercolour r="255" g="255" b="255" a="0"/>
         <selcolour r="255" g="255" b="255" a="0"/>
+        <autoselect>no</autoselect>
       </listbox>
       <graphicbutton id="AGENT_SCROLL_UP" scrollprev="AGENT_SELECT_SCROLL">
         <tooltip text="Scroll Up" font="smallset"/>

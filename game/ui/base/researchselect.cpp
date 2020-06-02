@@ -65,7 +65,6 @@ void ResearchSelect::begin()
 	this->redrawResearchList();
 
 	auto research_list = form->findControlTyped<ListBox>("LIST");
-	research_list->AlwaysEmitSelectionEvents = true;
 
 	research_list->addCallback(FormEventType::ListBoxChangeSelected, [this](FormsEvent *e) {
 		LogInfo("Research selection change");
@@ -84,6 +83,8 @@ void ResearchSelect::begin()
 				                                    tr("This project is already complete."),
 				                                    MessageBox::ButtonOptions::Ok);
 				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+				// Restore previous selection
+				list->setSelected(current_topic ? control_map[current_topic] : nullptr);
 				return;
 			}
 			if (topic->required_lab_size == ResearchTopic::LabSize::Large &&
@@ -95,6 +96,8 @@ void ResearchSelect::begin()
 				                     tr("This project requires an advanced lab or workshop."),
 				                     MessageBox::ButtonOptions::Ok);
 				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+				// Restore previous selection
+				list->setSelected(current_topic ? control_map[current_topic] : nullptr);
 				return;
 			}
 			if (this->lab->type == ResearchTopic::Type::Engineering &&
@@ -105,6 +108,8 @@ void ResearchSelect::begin()
 				    tr("FUNDS EXCEEDED"), tr("Production costs exceed your available funds."),
 				    MessageBox::ButtonOptions::Ok);
 				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+				// Restore previous selection
+				list->setSelected(current_topic ? control_map[current_topic] : nullptr);
 				return;
 			}
 		}
