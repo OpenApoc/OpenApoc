@@ -90,7 +90,7 @@ void NotificationScreen::eventOccurred(Event *e)
 			menuform->findControl("CHECKBOX_ALWAYS_PAUSE")->click();
 			return;
 		}
-		if (e->keyboard().KeyCode == SDLK_RETURN)
+		if (e->keyboard().KeyCode == SDLK_RETURN || e->keyboard().KeyCode == SDLK_KP_ENTER)
 		{
 			menuform->findControl("BUTTON_PAUSE")->click();
 			return;

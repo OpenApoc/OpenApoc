@@ -186,6 +186,7 @@ void ScoreScreen::eventOccurred(Event *e)
 		{
 			case SDLK_ESCAPE:
 			case SDLK_RETURN:
+			case SDLK_KP_ENTER:
 				menuform->findControl("BUTTON_OK")->click();
 		}
 		return;

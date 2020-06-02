@@ -122,6 +122,7 @@ void TextEdit::eventOccured(Event *e)
 						raiseEvent(FormEventType::TextEditCancel);
 						break;
 					case SDLK_RETURN:
+					case SDLK_KP_ENTER:
 						editing = false;
 						fw().textStopInput();
 						raiseEvent(FormEventType::TextEditFinish);

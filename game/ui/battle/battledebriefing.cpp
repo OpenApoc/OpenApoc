@@ -64,7 +64,7 @@ void BattleDebriefing::eventOccurred(Event *e)
 	if (e->type() == EVENT_KEY_DOWN)
 	{
 		if (e->keyboard().KeyCode == SDLK_RETURN || e->keyboard().KeyCode == SDLK_ESCAPE ||
-		    e->keyboard().KeyCode == SDLK_SPACE)
+		    e->keyboard().KeyCode == SDLK_SPACE || e->keyboard().KeyCode == SDLK_KP_ENTER)
 		{
 			menuform->findControl("BUTTON_OK")->click();
 			return;

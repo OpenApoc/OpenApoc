@@ -131,7 +131,7 @@ void MessageBox::eventOccurred(Event *e)
 			}
 			return;
 		}
-		if (e->keyboard().KeyCode == SDLK_RETURN)
+		if (e->keyboard().KeyCode == SDLK_RETURN || e->keyboard().KeyCode == SDLK_KP_ENTER)
 		{
 			if (form->findControl("BUTTON_OK"))
 			{

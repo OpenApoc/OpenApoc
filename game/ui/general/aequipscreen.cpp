@@ -303,6 +303,7 @@ void AEquipScreen::eventOccurred(Event *e)
 				attemptCloseScreen();
 				return;
 			case SDLK_RETURN:
+			case SDLK_KP_ENTER:
 				formMain->findControl("BUTTON_OK")->click();
 				return;
 		}
