@@ -253,7 +253,7 @@ void InGameOptions::eventOccurred(Event *e)
 		if (e->keyboard().KeyCode == SDLK_ESCAPE || e->keyboard().KeyCode == SDLK_RETURN ||
 		    e->keyboard().KeyCode == SDLK_KP_ENTER)
 		{
-			fw().stageQueueCommand({StageCmd::Command::POP});
+			menuform->findControl("BUTTON_OK")->click();
 			return;
 		}
 	}

@@ -57,7 +57,7 @@ void BaseSelectScreen::eventOccurred(Event *e)
 	    (e->keyboard().KeyCode == SDLK_ESCAPE || e->keyboard().KeyCode == SDLK_RETURN ||
 	     e->keyboard().KeyCode == SDLK_KP_ENTER))
 	{
-		fw().stageQueueCommand({StageCmd::Command::POP});
+		menuform->findControl("BUTTON_OK")->click();
 	}
 	// Exclude mouse down events that are over the form
 	else if (e->type() == EVENT_MOUSE_DOWN)
