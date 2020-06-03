@@ -132,6 +132,8 @@ void UfopaediaCategoryView::eventOccurred(Event *e)
 		switch (e->keyboard().KeyCode)
 		{
 			case SDLK_ESCAPE:
+			case SDLK_RETURN:
+			case SDLK_KP_ENTER:
 				fw().stageQueueCommand({StageCmd::Command::POP});
 				return;
 			case SDLK_UP:

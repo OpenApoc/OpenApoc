@@ -53,7 +53,9 @@ void BaseSelectScreen::eventOccurred(Event *e)
 		return;
 	}
 
-	if (e->type() == EVENT_KEY_DOWN && e->keyboard().KeyCode == SDLK_ESCAPE)
+	if (e->type() == EVENT_KEY_DOWN &&
+	    (e->keyboard().KeyCode == SDLK_ESCAPE || e->keyboard().KeyCode == SDLK_RETURN ||
+	     e->keyboard().KeyCode == SDLK_KP_ENTER))
 	{
 		fw().stageQueueCommand({StageCmd::Command::POP});
 	}
