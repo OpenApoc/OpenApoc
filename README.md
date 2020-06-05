@@ -208,8 +208,8 @@ make -j4
 
 ## How to setup OpenApoc
 
-* Download OpenApoc: [![Windows Build Status](https://img.shields.io/appveyor/ci/OpenApoc/openapoc.svg?label=WindowsAppveyor)](https://ci.appveyor.com/project/openapoc/openapoc/)
-  * If you see a green latest build then you can get it, if it's not then go to HISTORY at the top and click another build that's green
+* Download OpenApoc: [![Windows Build Status](https://img.shields.io/appveyor/ci/OpenApoc/openapoc.svg?label=WindowsAppveyor)](https://ci.appveyor.com/project/openapoc/openapoc/branch/master)
+  * If you see a green latest build then you can get it, if it's not then go to HISTORY at the top and click another build from *master* branch that's green (look for a title beginning with "Merge pull request #")
   * Click Platform x64 (or Win32 if you need 32bit binaries)
   * Click ARTIFACTS
   * Download the first option (without "debug" in it)
