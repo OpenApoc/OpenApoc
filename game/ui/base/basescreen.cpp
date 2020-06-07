@@ -163,12 +163,8 @@ void BaseScreen::eventOccurred(Event *e)
 	{
 		if (form->findControlTyped<TextEdit>("TEXT_BASE_NAME")->isFocused())
 			return;
-		if (e->keyboard().KeyCode == SDLK_ESCAPE)
-		{
-			fw().stageQueueCommand({StageCmd::Command::POP});
-			return;
-		}
-		if (e->keyboard().KeyCode == SDLK_RETURN || e->keyboard().KeyCode == SDLK_KP_ENTER)
+		if (e->keyboard().KeyCode == SDLK_ESCAPE || e->keyboard().KeyCode == SDLK_RETURN ||
+		    e->keyboard().KeyCode == SDLK_KP_ENTER)
 		{
 			form->findControl("BUTTON_OK")->click();
 			return;
