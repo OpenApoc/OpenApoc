@@ -13,8 +13,7 @@ ListBox::ListBox() : ListBox(nullptr) {}
 ListBox::ListBox(sp<ScrollBar> ExternalScrollBar)
     : Control(), scroller_is_internal(ExternalScrollBar == nullptr), scroller(ExternalScrollBar),
       ItemSize(64), ItemSpacing(1), ListOrientation(Orientation::Vertical),
-      ScrollOrientation(ListOrientation), HoverColour(0, 0, 0, 0), SelectedColour(0, 0, 0, 0),
-      AlwaysEmitSelectionEvents(false)
+      ScrollOrientation(ListOrientation), HoverColour(0, 0, 0, 0), SelectedColour(0, 0, 0, 0)
 {
 }
 
@@ -185,11 +184,11 @@ void ListBox::eventOccured(Event *e)
 		}
 		else if (e->forms().EventFlag == FormEventType::MouseDown)
 		{
-			if (ctrl == shared_from_this() || ctrl == scroller)
+			if (ctrl == shared_from_this() || ctrl == scroller || ctrl != child)
 			{
 				child = nullptr;
 			}
-			if ((AlwaysEmitSelectionEvents || selected != child) && child != nullptr)
+			if (selected != child && child != nullptr)
 			{
 				selected = child;
 				this->pushFormEvent(FormEventType::ListBoxChangeSelected, e);
@@ -289,7 +288,7 @@ void ListBox::addItem(sp<Control> Item)
 	Item->setParent(shared_from_this());
 	Item->ToolTipFont = this->ToolTipFont;
 	resolveLocation();
-	if (selected == nullptr)
+	if (selected == nullptr && AutoSelect)
 	{
 		selected = Item;
 	}
@@ -396,6 +395,7 @@ sp<Control> ListBox::copyTo(sp<Control> CopyParent)
 	copy->ScrollOrientation = this->ScrollOrientation;
 	copy->HoverColour = this->HoverColour;
 	copy->SelectedColour = this->SelectedColour;
+	copy->AutoSelect = this->AutoSelect;
 	copyControlData(copy);
 	return copy;
 }
@@ -472,6 +472,11 @@ void ListBox::configureSelfFromXml(pugi::xml_node *node)
 		uint8_t b = selColourNode.attribute("b").as_uint(0);
 		uint8_t a = selColourNode.attribute("a").as_uint(255);
 		SelectedColour = {r, g, b, a};
+	}
+	auto autoSelectNode = node->child("autoselect");
+	if (autoSelectNode)
+	{
+		AutoSelect = autoSelectNode.text().as_bool(true);
 	}
 }
 

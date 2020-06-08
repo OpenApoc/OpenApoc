@@ -50,6 +50,7 @@
         <size height="266" width="542"/>
         <orientation>vertical</orientation>
         <hovercolour r="255" g="255" b="255" a="255"/>
+        <autoselect>no</autoselect>
       </listbox>
       <label text="Project">
         <position x="23" y="63"/>

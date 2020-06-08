@@ -156,11 +156,6 @@ void ResearchScreen::begin()
 	};
 	auto assignedAgentList = form->findControlTyped<ListBox>("LIST_ASSIGNED");
 	assignedAgentList->addCallback(FormEventType::ListBoxChangeSelected, removeFn);
-
-	// Set the listboxes to always emit events, otherwise the first entry is considered 'selected'
-	// to clicking on it won't get a callback
-	assignedAgentList->AlwaysEmitSelectionEvents = true;
-	unassignedAgentList->AlwaysEmitSelectionEvents = true;
 }
 
 void ResearchScreen::pause() {}

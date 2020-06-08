@@ -30,11 +30,11 @@ class ListBox : public Control
 	int ItemSize, ItemSpacing;
 	Orientation ListOrientation, ScrollOrientation;
 	Colour HoverColour, SelectedColour;
+	bool AutoSelect = true;
 	// Image to use instead of frame for hover
 	sp<Image> HoverImage;
 	// Image to use instead of frame for selection
 	sp<Image> SelectedImage;
-	bool AlwaysEmitSelectionEvents;
 
 	ListBox();
 	ListBox(sp<ScrollBar> ExternalScrollBar);

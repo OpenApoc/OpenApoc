@@ -165,6 +165,7 @@
         <size height="160" width="322"/>
         <orientation list="vertical" scroll="horizontal"/>
         <hovercolour r="255" g="255" b="255" a="255"/>
+        <autoselect>no</autoselect>
       </listbox>
       <scroll id="LIST_UNASSIGNED_SCROLL">
         <position x="164" y="192"/>
@@ -189,6 +190,7 @@
         <size height="256" width="128"/>
         <orientation>vertical</orientation>
         <hovercolour r="255" g="255" b="255" a="255"/>
+        <autoselect>no</autoselect>
       </listbox>
       <graphic id="MAGIC_ARROW">
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:60:xcom3/ufodata/research.pcx</image>
