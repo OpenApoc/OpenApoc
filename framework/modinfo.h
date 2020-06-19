@@ -14,7 +14,7 @@ class ModInfo
 	UString description;
 	UString link;
 	UString ID;
-	std::list<UString> _requires;
+	std::list<UString> _requirements;
 	std::list<UString> _conflicts;
 	UString dataPath;
 	UString statePath;
@@ -46,8 +46,8 @@ class ModInfo
 	const UString &getID() const { return ID; }
 	void setID(const UString &newID) { ID = newID; }
 	// A list of IDs this mod depends on
-	const std::list<UString> &requires() const { return _requires; }
-	std::list<UString> requires() { return _requires; }
+	const std::list<UString> &requirements() const { return _requirements; }
+	std::list<UString> requirements() { return _requirements; }
 	// A list of IDs this mod is known to not work with
 	const std::list<UString> &conflicts() const { return _conflicts; }
 	std::list<UString> conflicts() { return _conflicts; }

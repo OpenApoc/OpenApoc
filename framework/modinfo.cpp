@@ -53,7 +53,7 @@ std::optional<ModInfo> ModInfo::getInfo(const UString &path)
 	{
 		for (const auto node : requiresNode.children("entry"))
 		{
-			info.requires().push_back(node.value());
+			info.requirements().push_back(node.value());
 		}
 	}
 
@@ -84,9 +84,9 @@ bool ModInfo::writeInfo(const UString &path)
 	infoNode.append_child("modloadscript").text() = modLoadScript.cStr();
 
 	auto requiresNode = infoNode.append_child("requires");
-	for (const auto &require : _requires)
+	for (const auto &requirement : _requirements)
 	{
-		requiresNode.append_child("entry").text() = require.cStr();
+		requiresNode.append_child("entry").text() = requirement.cStr();
 	}
 	auto conflictsNode = infoNode.append_child("conflicts");
 	for (const auto &conflict : _conflicts)
