@@ -466,4 +466,8 @@ bool Strings::isWhiteSpace(UniChar c)
 
 UString Strings::fromU64(uint64_t i) { return format("%llu", i); }
 
+#ifdef __cpp_char8_t
+UString::UString(const char8_t *cstr) : u8Str(reinterpret_cast<const char *>(cstr)) {}
+#endif
+
 }; // namespace OpenApoc

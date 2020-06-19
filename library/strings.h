@@ -52,6 +52,10 @@ class UString
 	UString();
 	~UString();
 
+#ifdef __cpp_char8_t
+	UString(const char8_t *cstr);
+#endif
+
 	UString(const UString &other);
 	UString &operator=(const UString &other);
 
