@@ -43,7 +43,8 @@ struct example_unicode
 			{
 				LogError(
 				    "String \"%s\" has unexpected codepoint at index %zu - got 0x%x expected 0x%x",
-				    u8string, i, decoded_codepoints[i], expected_codepoints[i]);
+				    u8string, i, static_cast<uint32_t>(decoded_codepoints[i]),
+				    static_cast<uint32_t>(expected_codepoints[i]));
 				return false;
 			}
 			string2 += decoded_codepoints[i];
