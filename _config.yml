@@ -1,0 +1,8 @@
+title: OpenApoc
+description: Opensource rebuild of the XCOM Apocalypse Engine
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-architect
+
+gems:
+  - jekyll-mentions
