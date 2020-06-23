@@ -387,6 +387,10 @@ VehicleMission *VehicleMission::gotoPortal(GameState &state, Vehicle &v)
 			}
 		}
 	}
+	else
+	{
+		target = pickRandom(state.rng, v.city->portals)->position;
+	}
 	return gotoPortal(state, v, target);
 }
 

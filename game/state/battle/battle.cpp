@@ -3358,8 +3358,15 @@ void Battle::exitBattle(GameState &state)
 		v->cargo.emplace_front(
 		    state, StateRef<AEquipmentType>(&state, state.agent_equipment.begin()->first), 0, 0,
 		    nullptr, v->homeBuilding);
-		v->setMission(state, VehicleMission::gotoBuilding(state, *v));
-		v->addMission(state, VehicleMission::offerService(state, *v), true);
+		if (v->city.id == "CITYMAP_HUMAN")
+		{
+			v->setMission(state, VehicleMission::gotoBuilding(state, *v));
+			v->addMission(state, VehicleMission::offerService(state, *v), true);
+		}
+		else
+		{
+			v->setMission(state, VehicleMission::gotoPortal(state, *v));
+		}
 	}
 
 	// Event and result
