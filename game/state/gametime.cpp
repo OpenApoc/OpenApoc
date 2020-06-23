@@ -139,7 +139,7 @@ unsigned int GameTime::getWeek() const
 	return duration.days() / 7 + 1;
 }
 
-unsigned int GameTime::getDay() const { return getPtime(this->ticks).date().day(); }
+unsigned int GameTime::getDay() const { return (this->ticks + TICKS_PER_DAY - 1) / TICKS_PER_DAY; }
 
 unsigned int GameTime::getHours() const { return getPtime(this->ticks).time_of_day().hours(); }
 
