@@ -465,7 +465,15 @@ void CityView::orderGoToBase()
 				}
 				LogInfo("Vehicle \"%s\" goto building \"%s\"", v->name, bld->name);
 				// FIXME: Don't clear missions if not replacing current mission
-				v->setMission(*this->state, VehicleMission::gotoBuilding(*this->state, *v, bld));
+				if (v->city.id == "CITYMAP_HUMAN")
+				{
+					v->setMission(*this->state,
+					              VehicleMission::gotoBuilding(*this->state, *v, bld));
+				}
+				else
+				{
+					v->setMission(*this->state, VehicleMission::gotoPortal(*this->state, *v));
+				}
 			}
 		}
 		return;
