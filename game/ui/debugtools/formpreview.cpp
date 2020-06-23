@@ -145,6 +145,7 @@ void FormPreview::eventOccurred(Event *e)
 			if (currentSelected != nullptr)
 			{
 				currentSelected->BackgroundColour.a = 0;
+				currentSelected->setDirty();
 			}
 
 			currentSelected = std::dynamic_pointer_cast<Label>(e->forms().RaisedBy);
