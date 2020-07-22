@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_SCORE_SCREEN">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="640" height="480"/>
+      <graphic>
+        <image>xcom3/ufodata/dip_rift.pcx</image>
+        <position x="0" y="0"/>
+        <size width="640" height="480"/>
+      </graphic>
+      <label text="OFFER CASH SETTLEMENT">
+        <position x="113" y="0"/>
+        <size width="420" height="32"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>bigfont</font>
+      </label>
+      <label id="TEXT_FUNDS">
+        <position x="572" y="11"/>
+        <size width="60" height="10"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_DATE">
+        <position x="27" y="77"/>
+        <size width="300" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_RELATION">
+        <position x="27" y="102"/>
+        <size width="300" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_OFFER">
+        <position x="27" y="152"/>
+        <size width="400" height="30"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <graphicbutton id="BUTTON_BRIBE">
+        <tooltip text="Pay organization" font="smallset"/>
+        <position x="602" y="40"/>
+        <size width="35" height="34"/>
+        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:78:xcom3/ufodata/base.pcx</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_QUIT">
+        <position x="602" y="443"/>
+        <size width="35" height="34"/>
+        <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
+      </graphicbutton>
+    </style>
+  </form>
+</openapoc>

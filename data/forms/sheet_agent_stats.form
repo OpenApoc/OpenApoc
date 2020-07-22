@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_AEQUIPSCREEN_AGENT_STATS">
+    <style minwidth="160" minheight="280">
+      <position x="centre" y="centre"/>
+      <size width="160" height="280"/>
+      <textedit id="AGENT_NAME" text="AGENT NAME GOES HERE">
+        <position x="0" y="86"/>
+        <size width="160" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </textedit>
+      <graphic id="SELECTED_PORTRAIT">
+        <position x="11" y="7"/>
+        <size width="65" height="64"/>
+        <image>placeholder.png</image>
+        <imageposition>fit</imageposition>
+      </graphic>
+      <graphic id="SELECTED_RANK">
+        <position x="122" y="41"/>
+        <size width="33" height="32"/>
+        <image>placeholder.png</image>
+        <imageposition>fit</imageposition>
+      </graphic>
+
+      <label id="LABEL_1" text="Health">
+        <position x="0" y="105"/>
+        <size width="71" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_2" text="Accuracy">
+        <position x="0" y="121"/>
+        <size width="71" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_3" text="Reactions">
+        <position x="0" y="137"/>
+        <size width="71" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_4" text="Speed">
+        <position x="0" y="153"/>
+        <size width="71" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_5" text="Stamina">
+        <position x="0" y="169"/>
+        <size width="71" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_6" text="Bravery">
+        <position x="0" y="185"/>
+        <size width="71" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_7" text="Strength">
+        <position x="0" y="201"/>
+        <size width="71" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_8" text="Psi-energy">
+        <position x="0" y="217"/>
+        <size width="71" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_9" text="Psi-attack">
+        <position x="0" y="233"/>
+        <size width="71" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="LABEL_10" text="Psi-defence">
+        <position x="0" y="249"/>
+        <size width="71" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphic id="VALUE_1">
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="110"/>
+        <size width="100" height="7"/>
+      </graphic>
+      <graphic id="VALUE_2">
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="126"/>
+        <size width="100" height="7"/>
+      </graphic>
+      <graphic id="VALUE_3">
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="142"/>
+        <size width="100" height="7"/>
+      </graphic>
+      <graphic id="VALUE_4">
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="158"/>
+        <size width="100" height="7"/>
+      </graphic>
+      <graphic id="VALUE_5">
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="174"/>
+        <size width="100" height="7"/>
+      </graphic>
+      <graphic id="VALUE_6">
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="190"/>
+        <size width="100" height="7"/>
+      </graphic>
+      <graphic id="VALUE_7">
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="206"/>
+        <size width="100" height="7"/>
+      </graphic>
+      <graphic id="VALUE_8">
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="222"/>
+        <size width="100" height="7"/>
+      </graphic>
+      <graphic id="VALUE_9">
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="238"/>
+        <size width="100" height="7"/>
+      </graphic>
+      <graphic id="VALUE_10">
+        <tooltip text="" font="smallset"/>
+        <position x="72" y="254"/>
+        <size width="100" height="7"/>
+      </graphic>
+    </style>
+  </form>
+</openapoc>

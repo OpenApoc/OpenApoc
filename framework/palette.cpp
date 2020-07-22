@@ -1,5 +1,4 @@
 #include "framework/palette.h"
-#include <cassert>
 
 namespace OpenApoc
 {
@@ -10,7 +9,7 @@ Palette::Palette(unsigned int size, Colour initialColour) : colours(size)
 		colours[i] = initialColour;
 }
 
-Palette::~Palette() {}
+Palette::~Palette() = default;
 
 Palette::Palette(const Palette &source) { this->colours = source.colours; }
 

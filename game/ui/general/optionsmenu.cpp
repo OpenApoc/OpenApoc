@@ -1,72 +1,98 @@
 #include "game/ui/general/optionsmenu.h"
+#include "forms/form.h"
+#include "forms/label.h"
+#include "forms/listbox.h"
+#include "forms/textbutton.h"
+#include "forms/textedit.h"
 #include "forms/ui.h"
+#include "framework/configfile.h"
 #include "framework/event.h"
 #include "framework/framework.h"
-#include "game/ui/debugtools/debugmenu.h"
+#include "framework/keycodes.h"
 
 namespace OpenApoc
 {
 
-OptionsMenu::OptionsMenu() : Stage(), menuform(ui().GetForm("FORM_OPTIONSMENU")) {}
-
-OptionsMenu::~OptionsMenu() {}
-
-void OptionsMenu::Begin() {}
-
-void OptionsMenu::Pause() {}
-
-void OptionsMenu::Resume() {}
-
-void OptionsMenu::Finish() {}
-
-void OptionsMenu::EventOccurred(Event *e)
+OptionsMenu::OptionsMenu() : Stage(), menuform(ui().getForm("options"))
 {
-	menuform->EventOccured(e);
-
-	if (e->Type() == EVENT_KEY_DOWN)
+	auto options = config().getOptions();
+	auto listbox = menuform->findControlTyped<ListBox>("LISTBOX_OPTIONS");
+	for (auto &section : options)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (!section.first.empty())
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
-			return;
-		}
-	}
-
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
-	{
-		if (e->Forms().RaisedBy->Name == "BUTTON_TEST_XCOMBASE")
-		{
-			return;
-		}
-		if (e->Forms().RaisedBy->Name == "BUTTON_DEBUGGING")
-		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<DebugMenu>();
-			return;
-		}
-		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
-		{
-			stageCmd.cmd = StageCmd::Command::POP;
-			return;
+			listbox->addItem(mksp<TextButton>(section.first, ui().getFont("smalfont")));
+			for (auto &opt : section.second)
+			{
+				listbox->addItem(createOptionRow(opt));
+			}
 		}
 	}
 }
 
-void OptionsMenu::Update(StageCmd *const cmd)
+OptionsMenu::~OptionsMenu() = default;
+
+sp<Control> OptionsMenu::createOptionRow(const ConfigOption &option)
 {
-	menuform->Update();
-	*cmd = this->stageCmd;
-	// Reset the command to default
-	this->stageCmd = StageCmd();
+	auto control = mksp<Control>();
+
+	const int HEIGHT = 21;
+
+	auto label = control->createChild<Label>(option.getName(), ui().getFont("smalfont"));
+	label->Location = {0, 0};
+	label->Size = {250, HEIGHT};
+	label->TextVAlign = VerticalAlignment::Centre;
+
+	/*
+	auto value = control->createChild<TextEdit>(config().getString(option.getKey()),
+	                                            ui().getFont("smalfont"));
+	value->Location = {0, 0};
+	value->Size = {250, HEIGHT};
+	value->TextVAlign = VerticalAlignment::Centre;
+	*/
+
+	control->ToolTipText = option.getDescription();
+	control->ToolTipFont = ui().getFont("smallset");
+
+	return control;
 }
 
-void OptionsMenu::Render()
+void OptionsMenu::begin() {}
+
+void OptionsMenu::pause() {}
+
+void OptionsMenu::resume() {}
+
+void OptionsMenu::finish() {}
+
+void OptionsMenu::eventOccurred(Event *e)
 {
-	fw().Stage_GetPrevious(this->shared_from_this())->Render();
-	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
-	menuform->Render();
+	menuform->eventOccured(e);
+
+	if (e->type() == EVENT_KEY_DOWN)
+	{
+		if (e->keyboard().KeyCode == SDLK_ESCAPE || e->keyboard().KeyCode == SDLK_RETURN ||
+		    e->keyboard().KeyCode == SDLK_KP_ENTER)
+		{
+			menuform->findControl("BUTTON_OK")->click();
+			return;
+		}
+	}
+
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::ButtonClick)
+	{
+		if (e->forms().RaisedBy->Name == "BUTTON_OK")
+		{
+			fw().stageQueueCommand({StageCmd::Command::POP});
+			return;
+		}
+	}
 }
 
-bool OptionsMenu::IsTransition() { return false; }
+void OptionsMenu::update() { menuform->update(); }
+
+void OptionsMenu::render() { menuform->render(); }
+
+bool OptionsMenu::isTransition() { return false; }
 
 }; // namespace OpenApoc

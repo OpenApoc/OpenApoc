@@ -2,14 +2,16 @@
 // Created by Alexey on 20.11.2015.
 //
 
-#include "framework/imageloader/lodepng.h"
+#include "dependencies/lodepng/lodepng.h"
 #include "framework/apocresources/apocpalette.h"
 #include "framework/data.h"
+#include "framework/image.h"
 #include "framework/imageloader_interface.h"
 #include "framework/logger.h"
 #include "framework/palette.h"
 #include "library/sp.h"
 #include "library/vec.h"
+#include <ostream>
 #include <vector>
 
 using namespace OpenApoc;
@@ -19,7 +21,7 @@ sp<Palette> OpenApoc::loadPNGPalette(Data &d, const UString fileName)
 	auto f = d.fs.open(fileName);
 	if (!f)
 	{
-		LogInfo("Failed to open file \"%s\" - skipping", fileName.c_str());
+		LogInfo("Failed to open file \"%s\" - skipping", fileName);
 		return nullptr;
 	}
 	auto data = f.readAll();
@@ -30,65 +32,38 @@ sp<Palette> OpenApoc::loadPNGPalette(Data &d, const UString fileName)
 	                           reinterpret_cast<unsigned char *>(data.get()), dataSize);
 	if (err)
 	{
-		LogInfo("Failed to read PNG headers from \"%s\" (%u) : %s - skipping",
-		        f.systemPath().c_str(), err, lodepng_error_text(err));
+		LogInfo("Failed to read PNG headers from \"%s\" (%u) : %s - skipping", f.systemPath(), err,
+		        lodepng_error_text(err));
 		return nullptr;
 	}
-	// 2 possible types of PNG palette - either a PALETTE section, or a 256-pixel long image
-	if (png_state.info_png.color.colortype == LCT_PALETTE)
+	if (width * height != 256)
 	{
-		if (png_state.info_png.color.bitdepth != 8)
-		{
-			LogWarning("PNG \"%s\" has unsupported palette bit depth %u (expected '8')",
-			           f.systemPath().c_str(), png_state.info_png.color.bitdepth);
-			return nullptr;
-		}
-		if (png_state.info_png.color.palettesize != 256)
-		{
-			LogWarning("PNG \"%s\" has unsupported palette size %zu (expected '256')",
-			           f.systemPath().c_str(), png_state.info_png.color.palettesize);
-			return nullptr;
-		}
-		auto pal = mksp<Palette>();
-		// The lodepng palette is already in R G B A byte order and is u8
-		uint8_t *palPos = png_state.info_png.color.palette;
-		for (unsigned int i = 0; i < 256; i++)
-		{
-			pal->SetColour(i, Colour{*palPos++, *palPos++, *palPos++, *palPos++});
-		}
-		return pal;
-	}
-	else
-	{
-		if (width * height != 256)
-		{
 
-			LogWarning("PNG \"%s\" size {%u,%u} too large for palette (must be 256 pixels total)",
-			           f.systemPath().c_str(), width, height);
-			return nullptr;
-		}
-		std::vector<unsigned char> pixels;
-		auto error = lodepng::decode(pixels, width, height,
-		                             reinterpret_cast<unsigned char *>(data.get()), dataSize);
-		if (error)
-		{
-			LogInfo("Failed to read PNG \"%s\" (%u) : %s", f.systemPath().c_str(), err,
-			        lodepng_error_text(err));
-			return nullptr;
-		}
-		auto pal = mksp<Palette>();
-		// The lodepng default data output is already in R G B A byte order and is u8
-		uint8_t *palPos = pixels.data();
-		for (unsigned int i = 0; i < 256; i++)
-		{
-			uint8_t r = *palPos++;
-			uint8_t g = *palPos++;
-			uint8_t b = *palPos++;
-			uint8_t a = *palPos++;
-			pal->SetColour(i, Colour{r, g, b, a});
-		}
-		return pal;
+		LogWarning("PNG \"%s\" size {%u,%u} too large for palette (must be 256 pixels total)",
+		           f.systemPath(), width, height);
+		return nullptr;
 	}
+	std::vector<unsigned char> pixels;
+	auto error = lodepng::decode(pixels, width, height,
+	                             reinterpret_cast<unsigned char *>(data.get()), dataSize);
+	if (error)
+	{
+		LogInfo("Failed to read PNG \"%s\" (%u) : %s", f.systemPath(), err,
+		        lodepng_error_text(err));
+		return nullptr;
+	}
+	auto pal = mksp<Palette>();
+	// The lodepng default data output is already in R G B A byte order and is u8
+	uint8_t *palPos = pixels.data();
+	for (unsigned int i = 0; i < 256; i++)
+	{
+		uint8_t r = *palPos++;
+		uint8_t g = *palPos++;
+		uint8_t b = *palPos++;
+		uint8_t a = *palPos++;
+		pal->setColour(i, Colour{r, g, b, a});
+	}
+	return pal;
 }
 
 namespace
@@ -113,56 +88,17 @@ class LodepngImageLoader : public OpenApoc::ImageLoader
 		                                   reinterpret_cast<unsigned char *>(data.get()), dataSize);
 		if (err)
 		{
-			LogInfo("Failed to read PNG headers from \"%s\" (%u) : %s", file.systemPath().c_str(),
-			        err, lodepng_error_text(err));
+			LogInfo("Failed to read PNG headers from \"%s\" (%u) : %s", file.systemPath(), err,
+			        lodepng_error_text(err));
 			return nullptr;
 		}
 
-		LogInfo("Loading PNG \"%s\" size {%u,%d} - colour mode %d depth %u",
-		        file.systemPath().c_str(), width, height, png_state.info_png.color.colortype,
+		LogInfo("Loading PNG \"%s\" size {%u,%d} - colour mode %d depth %u", file.systemPath(),
+		        width, height, png_state.info_png.color.colortype,
 		        png_state.info_png.color.bitdepth);
 
-		if (png_state.info_png.color.colortype == LCT_PALETTE)
-		{
-			if (png_state.info_png.color.bitdepth != 8)
-			{
-				LogWarning("PNG \"%s\" has unsupported palette bit depth %u (expected '8')",
-				           file.systemPath().c_str(), png_state.info_png.color.bitdepth);
-				return nullptr;
-			}
-			std::vector<unsigned char> pixels;
-			err = lodepng::decode(pixels, width, height,
-			                      reinterpret_cast<unsigned char *>(data.get()), dataSize,
-			                      LCT_PALETTE, 8);
-			if (err)
-			{
-				LogInfo("Failed to read PNG \"%s\" (%u) : %s", file.systemPath().c_str(), err,
-				        lodepng_error_text(err));
-				return nullptr;
-			}
-			if (pixels.size() < width * height)
-			{
-				LogWarning("PNG \"%s\" has insufficient size %zu for {%u,%u} image",
-				           file.systemPath().c_str(), pixels.size(), width, height);
-				return nullptr;
-			}
-			auto img = mksp<PaletteImage>(Vec2<unsigned int>{width, height});
-			PaletteImageLock dst(img, ImageLockUse::Write);
-			uint8_t *readPos = pixels.data();
-
-			for (unsigned y = 0; y < height; y++)
-			{
-				for (unsigned x = 0; x < width; x++)
-				{
-					dst.set({x, y}, *readPos);
-					readPos++;
-				}
-			}
-
-			return img;
-		}
-
-		// Otherwise just convert to RGBA
+		// Just convert to RGBA, as PNG palettes are often reordered/trimmed at every turn by any
+		// app modifying them
 
 		std::vector<unsigned char> image;
 		unsigned int error = lodepng::decode(
@@ -173,7 +109,7 @@ class LodepngImageLoader : public OpenApoc::ImageLoader
 		}
 		if (!image.size())
 		{
-			LogInfo("Failed to load image %s (not a PNG?)", file.systemPath().c_str());
+			LogInfo("Failed to load image %s (not a PNG?)", file.systemPath());
 			return nullptr;
 		}
 		OpenApoc::Vec2<int> size(width, height);
@@ -201,7 +137,7 @@ class LodepngImageLoaderFactory : public OpenApoc::ImageLoaderFactory
 {
   public:
 	OpenApoc::ImageLoader *create() override { return new LodepngImageLoader(); }
-	virtual ~LodepngImageLoaderFactory() {}
+	~LodepngImageLoaderFactory() override = default;
 };
 
 class LodepngImageWriter : public OpenApoc::ImageWriter
@@ -227,7 +163,7 @@ class LodepngImageWriter : public OpenApoc::ImageWriter
 
 		for (unsigned i = 0; i < 256; i++)
 		{
-			auto &c = pal->GetColour(i);
+			auto &c = pal->getColour(i);
 			auto err = lodepng_palette_add(&state.info_raw, c.r, c.g, c.b, c.a);
 			if (err)
 			{
@@ -286,7 +222,7 @@ class LodepngImageWriterFactory : public OpenApoc::ImageWriterFactory
 {
   public:
 	OpenApoc::ImageWriter *create() override { return new LodepngImageWriter(); }
-	virtual ~LodepngImageWriterFactory() {}
+	~LodepngImageWriterFactory() override = default;
 };
 
 } // anonymous namespace

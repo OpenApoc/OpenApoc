@@ -1,5 +1,5 @@
 #pragma once
-struct research_data_t
+struct ResearchData
 {
 	uint8_t labSize; // 0 = small, 1 = large
 	uint8_t unknown1;
@@ -18,7 +18,7 @@ struct research_data_t
 	uint16_t ufopaediaEntry;
 };
 
-static_assert(sizeof(struct research_data_t) == 28, "Invalid research_data size");
+static_assert(sizeof(struct ResearchData) == 28, "Invalid research_data size");
 
 #define RESEARCH_DATA_OFFSET_START 0x13EE80
 #define RESEARCH_DATA_OFFSET_END 0x13F954

@@ -3,8 +3,6 @@
 #include "library/strings.h"
 // Include logger for 'LOGGER_PREFIX' definition
 #include "framework/logger.h"
-
-#include <utility>
 #include <vector>
 
 namespace OpenApoc

@@ -1,7 +1,9 @@
 #include "game/ui/ufopaedia/ufopaediaview.h"
+#include "forms/form.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/keycodes.h"
 #include "game/state/gamestate.h"
 #include "game/ui/ufopaedia/ufopaediacategoryview.h"
 #include "library/sp.h"
@@ -10,52 +12,53 @@ namespace OpenApoc
 {
 
 UfopaediaView::UfopaediaView(sp<GameState> state)
-    : Stage(), menuform(ui().GetForm("FORM_UFOPAEDIA_TITLE")), state(state)
+    : Stage(), menuform(ui().getForm("ufopaediatitle")), state(state)
 {
 }
 
-UfopaediaView::~UfopaediaView() {}
+UfopaediaView::~UfopaediaView() = default;
 
-void UfopaediaView::Begin() {}
+void UfopaediaView::begin() {}
 
-void UfopaediaView::Pause() {}
+void UfopaediaView::pause() {}
 
-void UfopaediaView::Resume() {}
+void UfopaediaView::resume() {}
 
-void UfopaediaView::Finish() {}
+void UfopaediaView::finish() {}
 
-void UfopaediaView::EventOccurred(Event *e)
+void UfopaediaView::eventOccurred(Event *e)
 {
-	menuform->EventOccured(e);
+	menuform->eventOccured(e);
 
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (e->keyboard().KeyCode == SDLK_ESCAPE || e->keyboard().KeyCode == SDLK_RETURN ||
+		    e->keyboard().KeyCode == SDLK_KP_ENTER)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			menuform->findControl("BUTTON_QUIT")->click();
 			return;
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
+		if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 
-		if (e->Forms().RaisedBy->Name.substr(0, 7) == "BUTTON_")
+		if (e->forms().RaisedBy->Name.substr(0, 7) == "BUTTON_")
 		{
 			for (auto &cat : state->ufopaedia)
 			{
 				auto catName = cat.first;
 				UString butName = "BUTTON_" + catName;
-				if (butName == e->Forms().RaisedBy->Name)
+				if (butName == e->forms().RaisedBy->Name)
 				{
-					stageCmd.cmd = StageCmd::Command::PUSH;
-					stageCmd.nextStage = mksp<UfopaediaCategoryView>(state, cat.second);
-					LogInfo("Clicked category \"%s\"", catName.c_str());
+					fw().stageQueueCommand(
+					    {StageCmd::Command::PUSH, mksp<UfopaediaCategoryView>(state, cat.second)});
+					LogInfo("Clicked category \"%s\"", catName);
 					return;
 				}
 			}
@@ -63,21 +66,14 @@ void UfopaediaView::EventOccurred(Event *e)
 	}
 }
 
-void UfopaediaView::Update(StageCmd *const cmd)
+void UfopaediaView::update() { menuform->update(); }
+
+void UfopaediaView::render()
 {
-	menuform->Update();
-	*cmd = this->stageCmd;
-	// Reset the command to default
-	this->stageCmd = StageCmd();
+	fw().stageGetPrevious(this->shared_from_this())->render();
+	menuform->render();
 }
 
-void UfopaediaView::Render()
-{
-	fw().Stage_GetPrevious(this->shared_from_this())->Render();
-	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
-	menuform->Render();
-}
-
-bool UfopaediaView::IsTransition() { return false; }
+bool UfopaediaView::isTransition() { return false; }
 
 }; // namespace OpenApoc

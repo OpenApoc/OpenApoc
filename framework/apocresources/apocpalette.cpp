@@ -11,7 +11,7 @@ sp<Palette> loadApocPalette(Data &data, const UString fileName)
 	auto f = data.fs.open(fileName);
 	if (!f)
 		return nullptr;
-	auto numEntries = f.size() / 3;
+	auto numEntries = (unsigned)f.size() / 3;
 	auto p = mksp<Palette>(numEntries);
 	for (unsigned int i = 0; i < numEntries; i++)
 	{
@@ -32,7 +32,7 @@ sp<Palette> loadApocPalette(Data &data, const UString fileName)
 			uint8_t a = 255;
 			c = {r, g, b, a};
 		}
-		p->SetColour(i, c);
+		p->setColour(i, c);
 	}
 
 	return p;
@@ -69,14 +69,14 @@ sp<Palette> loadPCXPalette(Data &data, const UString fileName)
 	auto length = fileName.length();
 	if (length < 4 || fileName.substr(length - 4, 4).toUpper() != ".PCX")
 	{
-		LogInfo("Skipping file \"%s\" as it doesn't look like a .pcx", fileName.c_str());
+		LogInfo("Skipping file \"%s\" as it doesn't look like a .pcx", fileName);
 		return nullptr;
 	}
 
 	auto file = data.fs.open(fileName);
 	if (!file)
 	{
-		LogInfo("File \"%s\" failed to be opened", fileName.c_str());
+		LogInfo("File \"%s\" failed to be opened", fileName);
 		return nullptr;
 	}
 
@@ -84,7 +84,7 @@ sp<Palette> loadPCXPalette(Data &data, const UString fileName)
 	// files will never be smaller than sizeof(header) + sizeof(palette)
 	if (file.size() < sizeof(PcxHeader) + 256 * 3)
 	{
-		LogInfo("File \"%s\" has size %zu - too small for header and palette", fileName.c_str(),
+		LogInfo("File \"%s\" has size %zu - too small for header and palette", fileName,
 		        file.size());
 		return nullptr;
 	}
@@ -94,19 +94,19 @@ sp<Palette> loadPCXPalette(Data &data, const UString fileName)
 	file.read(reinterpret_cast<char *>(&header), sizeof(header));
 	if (!file)
 	{
-		LogInfo("File \"%s\" failed to read PCX header", fileName.c_str());
+		LogInfo("File \"%s\" failed to read PCX header", fileName);
 		return nullptr;
 	}
 
 	if (header.Identifier != PcxIdentifier)
 	{
-		LogInfo("File \"%s\" doesn't have PCX header magic", fileName.c_str());
+		LogInfo("File \"%s\" doesn't have PCX header magic", fileName);
 		return nullptr;
 	}
 
 	if (header.BitsPerPixel != 8)
 	{
-		LogInfo("File \"%s\" has non-8-bit image", fileName.c_str());
+		LogInfo("File \"%s\" has non-8-bit image", fileName);
 		return nullptr;
 	}
 
@@ -130,7 +130,7 @@ sp<Palette> loadPCXPalette(Data &data, const UString fileName)
 		else
 			c = {static_cast<uint8_t>(colour[0]), static_cast<uint8_t>(colour[1]),
 			     static_cast<uint8_t>(colour[2]), 255};
-		p->SetColour(i, c);
+		p->setColour(i, c);
 	}
 
 	return p;

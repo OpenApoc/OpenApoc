@@ -1,6 +1,5 @@
 #pragma once
 
-#include "forms/forms.h"
 #include "game/state/stateobject.h"
 #include "game/ui/base/basestage.h"
 #include "library/sp.h"
@@ -15,36 +14,41 @@ class Facility;
 class GameState;
 class ResearchTopic;
 class Agent;
+class Control;
+class Image;
+class ResearchTopic;
+class Graphic;
 
 class ResearchScreen : public BaseStage
 {
   private:
-	StageCmd stageCmd;
-	sp<Facility> selected_lab;
 	StateRef<ResearchTopic> current_topic;
-	std::list<sp<Facility>> labs;
+	std::list<sp<Facility>> smallLabs;
+	std::list<sp<Facility>> largeLabs;
 
+	// Populating the UI lab list.
+	void populateUILabList(const UString &listName, std::list<sp<Facility>> &list);
 	void setCurrentLabInfo();
-	sp<Control> createAgentControl(Vec2<int> size, StateRef<Agent> agent);
-	// FIXME: healthImage has a copy in CityView - maybe opportunity to merge?
-	sp<Image> healthImage;
+	void updateProgressInfo();
 
 	int assigned_agent_count;
 
-	void ChangeBase(sp<Base> newBase) override;
+	sp<Graphic> arrow;
+
+	void changeBase(sp<Base> newBase) override;
 
   public:
-	ResearchScreen(sp<GameState> state, sp<Facility> selected_lab = nullptr);
-	~ResearchScreen();
+	ResearchScreen(sp<GameState> state, sp<Facility> selectedLab = nullptr);
+	~ResearchScreen() override;
 	// Stage control
-	void Begin() override;
-	void Pause() override;
-	void Resume() override;
-	void Finish() override;
-	void EventOccurred(Event *e) override;
-	void Update(StageCmd *const cmd) override;
-	void Render() override;
-	bool IsTransition() override;
+	void begin() override;
+	void pause() override;
+	void resume() override;
+	void finish() override;
+	void eventOccurred(Event *e) override;
+	void update() override;
+	void render() override;
+	bool isTransition() override;
 };
 
 }; // namespace OpenApoc

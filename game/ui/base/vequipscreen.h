@@ -1,7 +1,9 @@
 #pragma once
 
+#include "forms/listbox.h"
 #include "framework/stage.h"
-#include "game/state/rules/vequipment_type.h"
+#include "game/state/rules/city/vequipmenttype.h"
+#include "game/state/stateobject.h"
 #include "library/colour.h"
 #include "library/rect.h"
 #include "library/sp.h"
@@ -17,14 +19,19 @@ class VEquipment;
 class BitmapFont;
 class GameState;
 class Control;
+class VEquipmentType;
+class EquipmentPaperDoll;
 
 class VEquipScreen : public Stage
 {
   private:
-	StageCmd stageCmd;
 	sp<Form> form;
+	sp<Form> formVehicleItem;
+
+	sp<ListBox> vehicleSelectBox;
+
 	sp<Vehicle> selected;
-	VEquipmentType::Type selectionType;
+	EquipmentSlotType selectionType;
 	sp<Palette> pal;
 	sp<BitmapFont> labelFont;
 
@@ -38,11 +45,11 @@ class VEquipScreen : public Stage
 	Vec2<int> draggedEquipmentOffset;
 	StateRef<VEquipmentType> draggedEquipment;
 
+	sp<EquipmentPaperDoll> paperDoll;
+
 	static const Vec2<int> EQUIP_GRID_SLOT_SIZE;
 	static const Vec2<int> EQUIP_GRID_SLOTS;
 
-	// List of screen-space rects for all equipped items
-	std::list<std::pair<Rect<int>, sp<VEquipment>>> equippedItems;
 	// List of screen-space rects for all inventory items
 	std::list<std::pair<Rect<int>, StateRef<VEquipmentType>>> inventoryItems;
 
@@ -50,22 +57,24 @@ class VEquipScreen : public Stage
 
 	sp<GameState> state;
 
-	float glowCounter;
+	bool modifierLShift = false;
+	bool modifierRShift = false;
 
   public:
 	VEquipScreen(sp<GameState> state);
-	virtual ~VEquipScreen();
+	~VEquipScreen() override;
 
-	void Begin() override;
-	void Pause() override;
-	void Resume() override;
-	void Finish() override;
-	void EventOccurred(Event *e) override;
-	void Update(StageCmd *const cmd) override;
-	void Render() override;
-	bool IsTransition() override;
+	void begin() override;
+	void pause() override;
+	void resume() override;
+	void finish() override;
+	void eventOccurred(Event *e) override;
+	void update() override;
+	void render() override;
+	bool isTransition() override;
 
 	void setSelectedVehicle(sp<Vehicle> vehicle);
+	void setHighlightedSlotType(EquipmentSlotType type);
 };
 
 } // namespace OpenApoc

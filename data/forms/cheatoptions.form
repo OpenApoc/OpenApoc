@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_CHEATOPTIONS">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="640" height="480"/>
+      <graphic>
+        <image>xcom3/ufodata/fundadj.pcx</image>
+        <position x="0" y="0"/>
+        <size width="640" height="480"/>
+        <label text="CHEATS">
+          <position x="113" y="0"/>
+          <size width="420" height="32"/>
+          <alignment horizontal="centre" vertical="centre"/>
+          <font>bigfont</font>
+        </label>
+        <label id="TEXT_FUNDS">
+          <position x="572" y="11"/>
+          <size width="60" height="10"/>
+          <alignment horizontal="left" vertical="centre"/>
+          <font>smalfont</font>
+        </label>
+        <textbutton text="Give all research" id="BUTTON_GIVE_ALL_RESEARCH">
+          <font>smalfont</font>
+          <position x="290" y="100"/>
+          <size width="140" height="28"/>
+        </textbutton>
+        <textbutton text="Utopia" id="BUTTON_ORGS_UTOPIA">
+          <font>smalfont</font>
+          <position x="290" y="142"/>
+          <size width="140" height="28"/>
+        </textbutton>
+        <textbutton text="All orgs. friendly" id="BUTTON_ORGS_FRIENDLY">
+          <font>smalfont</font>
+          <position x="290" y="170"/>
+          <size width="140" height="28"/>
+        </textbutton>
+        <textbutton text="All orgs. hostile" id="BUTTON_ORGS_HOSTILE">
+          <font>smalfont</font>
+          <position x="290" y="198"/>
+          <size width="140" height="28"/>
+        </textbutton>
+        <textbutton text="Chaos" id="BUTTON_ORGS_CHAOS">
+          <font>smalfont</font>
+          <position x="290" y="226"/>
+          <size width="140" height="28"/>
+        </textbutton>
+        <textbutton text="Go forward 1 day" id="BUTTON_FAST_FORWARD_DAY">
+          <font>smalfont</font>
+          <position x="290" y="254"/>
+          <size width="140" height="28"/>
+        </textbutton>
+        <textbutton text="Go forward 1 week" id="BUTTON_FAST_FORWARD_WEEK">
+          <font>smalfont</font>
+          <position x="290" y="282"/>
+          <size width="140" height="28"/>
+        </textbutton>
+        <checkbox id="CHECKBOX_INFINITE_AMMO">
+          <position x="440" y="100"/>
+          <size width="150" height="16"/>
+          <image>BUTTON_CHECKBOX_FALSE</image>
+          <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+          <label text="Infinite ammo">
+            <position x="24" y="0"/>
+            <font>smalfont</font>
+            <size width="120" height="16"/>
+          </label>
+        </checkbox>
+        <textbutton id="BUTTON_MODIFY_FUNDS" text="Modify funds">
+          <font>smalfont</font>
+          <position x="56" y="102"/>
+          <size width="148" height="20"/>
+        </textbutton>
+        <graphic>
+          <position x="42" y="122"/>
+          <size width="224" height="18"/>
+          <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
+          <scroll id="MODIFY_FUNDS">
+            <position x="14" y="2"/>
+            <size width="148" height="15"/>
+            <range min="-999" max="999"/>
+          </scroll>
+          <graphicbutton scrollprev="MODIFY_FUNDS">
+            <position x="0" y="0"/>
+            <size width="16" height="20"/>
+            <image/>
+            <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+          </graphicbutton>
+          <graphicbutton scrollnext="MODIFY_FUNDS">
+            <position x="161" y="0"/>
+            <size width="17" height="20"/>
+            <image/>
+            <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+          </graphicbutton>
+          <label id="TEXT_MODIFY_FUNDS" text="+99k">
+            <position x="184" y="2"/>
+            <size width="36" height="14"/>
+            <alignment horizontal="centre" vertical="centre"/>
+            <font>smalfont</font>
+          </label>
+        </graphic>
+        <label text="Damage Inflicted">
+          <position x="56" y="166"/>
+          <font>smalfont</font>
+          <size width="148" height="16"/>
+          <alignment horizontal="left" vertical="centre"/>
+        </label>
+        <graphic>
+          <position x="42" y="182"/>
+          <size width="224" height="18"/>
+          <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
+          <scroll id="DAMAGE_INFLICTED_MULT">
+            <position x="14" y="2"/>
+            <size width="148" height="15"/>
+            <range min="0" max="50"/>
+          </scroll>
+          <graphicbutton scrollprev="DAMAGE_INFLICTED_MULT">
+            <position x="0" y="0"/>
+            <size width="16" height="20"/>
+            <image/>
+            <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+          </graphicbutton>
+          <graphicbutton scrollnext="DAMAGE_INFLICTED_MULT">
+            <position x="161" y="0"/>
+            <size width="17" height="20"/>
+            <image/>
+            <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+          </graphicbutton>
+          <label id="TEXT_DAMAGE_INFLICTED_MULT" text="123%">
+            <position x="184" y="2"/>
+            <size width="36" height="14"/>
+            <alignment horizontal="centre" vertical="centre"/>
+            <font>smalfont</font>
+          </label>
+        </graphic>
+        <label text="Damage Received">
+          <position x="56" y="226"/>
+          <font>smalfont</font>
+          <size width="148" height="16"/>
+          <alignment horizontal="left" vertical="centre"/>
+        </label>
+        <graphic>
+          <position x="42" y="242"/>
+          <size width="224" height="18"/>
+          <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
+          <scroll id="DAMAGE_RECEIVED_MULT">
+            <position x="14" y="2"/>
+            <size width="148" height="16"/>
+            <range min="0" max="50"/>
+          </scroll>
+          <graphicbutton scrollprev="DAMAGE_RECEIVED_MULT">
+            <position x="0" y="0"/>
+            <size width="16" height="20"/>
+            <image/>
+            <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+          </graphicbutton>
+          <graphicbutton scrollnext="DAMAGE_RECEIVED_MULT">
+            <position x="161" y="0"/>
+            <size width="17" height="20"/>
+            <image/>
+            <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+          </graphicbutton>
+          <label id="TEXT_DAMAGE_RECEIVED_MULT" text="123%">
+            <position x="184" y="2"/>
+            <size width="36" height="14"/>
+            <alignment horizontal="centre" vertical="centre"/>
+            <font>smalfont</font>
+          </label>
+        </graphic>
+        <label text="Hostiles multiplier">
+          <position x="56" y="286"/>
+          <font>smalfont</font>
+          <size width="148" height="16"/>
+          <alignment horizontal="left" vertical="centre"/>
+        </label>
+        <graphic>
+          <position x="42" y="302"/>
+          <size width="224" height="18"/>
+          <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
+          <scroll id="HOSTILES_MULT">
+            <position x="14" y="2"/>
+            <size width="148" height="16"/>
+            <range min="0" max="50"/>
+          </scroll>
+          <graphicbutton id="HOSTILES_MULT_DOWN" scrollprev="HOSTILES_MULT">
+            <position x="0" y="0"/>
+            <size width="16" height="20"/>
+            <image/>
+            <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+          </graphicbutton>
+          <graphicbutton id="HOSTILES_MULT_UP" scrollnext="HOSTILES_MULT">
+            <position x="161" y="0"/>
+            <size width="17" height="20"/>
+            <image/>
+            <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+          </graphicbutton>
+          <label id="TEXT_HOSTILES_MULT" text="123%">
+            <position x="184" y="2"/>
+            <size width="36" height="14"/>
+            <alignment horizontal="centre" vertical="centre"/>
+            <font>smalfont</font>
+          </label>
+        </graphic>
+        <label text="Agent Stat Growth">
+          <position x="56" y="346"/>
+          <font>smalfont</font>
+          <size width="148" height="16"/>
+          <alignment horizontal="left" vertical="centre"/>
+        </label>
+        <graphic>
+          <position x="42" y="362"/>
+          <size width="224" height="18"/>
+          <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
+          <scroll id="STAT_GROWTH_MULT">
+            <position x="14" y="2"/>
+            <size width="148" height="16"/>
+            <range min="0" max="199"/>
+          </scroll>
+          <graphicbutton id="STAT_GROWTH_MULT_DOWN" scrollprev="STAT_GROWTH_MULT">
+            <position x="0" y="0"/>
+            <size width="16" height="20"/>
+            <image/>
+            <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+          </graphicbutton>
+          <graphicbutton id="STAT_GROWTH_MULT_UP" scrollnext="STAT_GROWTH_MULT">
+            <position x="161" y="0"/>
+            <size width="17" height="20"/>
+            <image/>
+            <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+          </graphicbutton>
+          <label id="TEXT_STAT_GROWTH_MULT" text="123%">
+            <position x="184" y="2"/>
+            <size width="36" height="14"/>
+            <alignment horizontal="centre" vertical="centre"/>
+            <font>smalfont</font>
+          </label>
+        </graphic>
+        <graphicbutton id="BUTTON_OK">
+          <position x="602" y="443"/>
+          <size width="35" height="34"/>
+          <image/>
+          <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
+        </graphicbutton>
+      </graphic>
+    </style>
+  </form>
+</openapoc>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gamestate>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="cities.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="organisations.xml"/>
+  <micronoidRainChance>10</micronoidRainChance>
+</gamestate>

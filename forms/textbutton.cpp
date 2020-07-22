@@ -1,48 +1,56 @@
 #include "forms/textbutton.h"
+#include "dependencies/pugixml/src/pugixml.hpp"
 #include "forms/label.h"
 #include "forms/ui.h"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/image.h"
+#include "framework/renderer.h"
+#include "framework/sound.h"
 #include "library/sp.h"
-#include <tinyxml2.h>
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
 
 TextButton::TextButton(const UString &Text, sp<BitmapFont> font)
-    : Control(), buttonclick(fw().data->load_sample(
-                     "RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
-      buttonbackground(fw().data->load_image("UI/TEXTBUTTONBACK.PNG")),
+    : Control(), buttonclick(fw().data->loadSample(
+                     "RAWSOUND:xcom3/rawsound/strategc/intrface/button1.raw:22050")),
+      buttonbackground(fw().data->loadImage("ui/textbuttonback.png")),
       TextHAlign(HorizontalAlignment::Centre), TextVAlign(VerticalAlignment::Centre),
       RenderStyle(ButtonRenderStyle::Menu)
 {
+	isClickable = true;
 	label = mksp<Label>(Text, font);
 }
 
-TextButton::~TextButton() {}
+TextButton::~TextButton() = default;
 
-void TextButton::EventOccured(Event *e)
+void TextButton::eventOccured(Event *e)
 {
-	Control::EventOccured(e);
+	Control::eventOccured(e);
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
-	    e->Forms().EventFlag == FormEventType::MouseDown)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
+	    e->forms().EventFlag == FormEventType::MouseDown)
 	{
 		fw().soundBackend->playSample(buttonclick);
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
-	    e->Forms().EventFlag == FormEventType::MouseClick)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
+	    e->forms().EventFlag == FormEventType::MouseClick)
 	{
 		this->pushFormEvent(FormEventType::ButtonClick, e);
 	}
 }
 
-void TextButton::OnRender()
+void TextButton::onRender()
 {
-	if (label->GetParent() == nullptr)
+	Control::onRender();
+
+	if (label->getParent() == nullptr)
 	{
-		label->SetParent(shared_from_this());
+		label->setParent(shared_from_this());
 		label->Size = this->Size;
 		label->TextHAlign = this->TextHAlign;
 		label->TextVAlign = this->TextVAlign;
@@ -105,50 +113,51 @@ void TextButton::OnRender()
 	}
 }
 
-void TextButton::Update()
+void TextButton::update()
 {
 	// No "updates"
 }
 
-void TextButton::UnloadResources() {}
+void TextButton::unloadResources() {}
 
-UString TextButton::GetText() const { return label->GetText(); }
+UString TextButton::getText() const { return label->getText(); }
 
-void TextButton::SetText(const UString &Text) { label->SetText(Text); }
+void TextButton::setText(const UString &Text) { label->setText(Text); }
 
-sp<BitmapFont> TextButton::GetFont() const { return label->GetFont(); }
+sp<BitmapFont> TextButton::getFont() const { return label->getFont(); }
 
-void TextButton::SetFont(sp<BitmapFont> NewFont) { label->SetFont(NewFont); }
+void TextButton::setFont(sp<BitmapFont> NewFont) { label->setFont(NewFont); }
 
-sp<Control> TextButton::CopyTo(sp<Control> CopyParent)
+sp<Control> TextButton::copyTo(sp<Control> CopyParent)
 {
 	sp<TextButton> copy;
 	if (CopyParent)
 	{
-		copy = CopyParent->createChild<TextButton>(label->GetText(), label->GetFont());
+		copy = CopyParent->createChild<TextButton>(label->getText(), label->getFont());
 	}
 	else
 	{
-		copy = mksp<TextButton>(label->GetText(), label->GetFont());
+		copy = mksp<TextButton>(label->getText(), label->getFont());
 	}
 	copy->TextHAlign = this->TextHAlign;
 	copy->TextVAlign = this->TextVAlign;
 	copy->RenderStyle = this->RenderStyle;
-	CopyControlData(copy);
+	copyControlData(copy);
 	return copy;
 }
 
-void TextButton::ConfigureFromXML(tinyxml2::XMLElement *Element)
+void TextButton::configureSelfFromXml(pugi::xml_node *node)
 {
-	Control::ConfigureFromXML(Element);
+	Control::configureSelfFromXml(node);
 
-	if (Element->Attribute("text") != nullptr)
+	if (node->attribute("text"))
 	{
-		label->SetText(tr(Element->Attribute("text")));
+		label->setText(tr(node->attribute("text").as_string()));
 	}
-	if (Element->FirstChildElement("font") != nullptr)
+	auto fontNode = node->child("font");
+	if (fontNode)
 	{
-		label->SetFont(ui().GetFont(Element->FirstChildElement("font")->GetText()));
+		label->setFont(ui().getFont(fontNode.text().get()));
 	}
 }
 }; // namespace OpenApoc

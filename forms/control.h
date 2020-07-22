@@ -1,26 +1,27 @@
 #pragma once
+
 #include "forms/forms_enums.h"
-#include "framework/font.h"
 #include "framework/logger.h"
 #include "library/colour.h"
 #include "library/sp.h"
+#include "library/vec.h"
 #include <functional>
 #include <list>
 #include <map>
 
-namespace tinyxml2
+namespace pugi
 {
-class XMLElement;
-} // namespace tinyxml2
+class xml_node;
+} // namespace pugi
 
 namespace OpenApoc
 {
 
+class BitmapFont;
 class Form;
 class Event;
 class Surface;
 class Palette;
-class RadioButton;
 class Control;
 class RadioButtonGroup;
 class FormsEvent;
@@ -33,6 +34,14 @@ class Control : public std::enable_shared_from_this<Control>
 
 	std::map<FormEventType, std::list<std::function<void(FormsEvent *e)>>> callbacks;
 
+	// Configures children of element after it was configured, see ConfigureFromXML
+	void configureChildrenFromXml(pugi::xml_node *parent);
+	// The function will be called during pre-rendering of the control.
+	// arg - this control
+	std::function<void(sp<Control>)> funcPreRender;
+
+	bool dirty = true;
+
   protected:
 	sp<Palette> palette;
 	wp<Control> owningControl;
@@ -40,92 +49,132 @@ class Control : public std::enable_shared_from_this<Control>
 	bool mouseDepressed;
 	Vec2<int> resolvedLocation;
 
-	virtual void PreRender();
-	virtual void PostRender();
-	virtual void OnRender();
+	virtual void postRender();
+	virtual void onRender();
 
-	bool IsFocused() const;
+	virtual bool isFocused() const;
 
-	void ResolveLocation();
-	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element);
+	void resolveLocation();
+	bool isPointInsideControlBounds(int x, int y) const;
 
-	sp<Control> GetRootControl();
+	// Loads control and all subcontrols from xml
+	void configureFromXml(pugi::xml_node *node);
+	// configures current element from xml element (without children)
+	virtual void configureSelfFromXml(pugi::xml_node *node);
 
-	void CopyControlData(sp<Control> CopyOf);
+	sp<Control> getRootControl();
 
 	void pushFormEvent(FormEventType type, Event *parentEvent);
 
 	void triggerEventCallbacks(FormsEvent *e);
 
+	bool isDirty() const { return dirty; }
+
+	bool Visible;
+	bool isClickable;
+
   public:
 	UString Name;
+	// Relative location.
 	Vec2<int> Location;
+	// Size of the control.
 	Vec2<int> Size;
+	// Which area size will be selected.
+	Vec2<int> SelectionSize;
 	Colour BackgroundColour;
 	bool takesFocus;
 	bool showBounds;
-	bool Visible;
-
+	bool Enabled;
 	bool canCopy;
 	wp<Control> lastCopiedTo;
 	std::vector<sp<Control>> Controls;
 
+	UString ToolTipText;
+	sp<BitmapFont> ToolTipFont;
+	// transparent background by default
+	Colour ToolTipBackground;
+	std::vector<std::pair<unsigned int, Colour>> ToolTipBorders;
+
 	std::map<UString, sp<RadioButtonGroup>> radiogroups;
+
+	void copyControlData(sp<Control> CopyOf);
 
 	Control(bool takesFocus = true);
 	virtual ~Control();
 
-	sp<Control> GetActiveControl() const;
-
-	virtual void EventOccured(Event *e);
-	void Render();
-	virtual void Update();
-	virtual void UnloadResources();
+	virtual void eventOccured(Event *e);
+	// Used if controls require computations before rendering.
+	void preRender();
+	void render();
+	virtual void update();
+	virtual void unloadResources();
 
 	sp<Control> operator[](int Index) const;
-	sp<Control> FindControl(UString ID) const;
+	sp<Control> findControl(UString ID) const;
+	bool replaceChildByName(sp<Control> ctrl);
 
-	template <typename T> sp<T> FindControlTyped(const UString &name) const
+	void setDirty();
+	void setVisible(bool value);
+	bool isVisible() const { return Visible; };
+
+	template <typename T> sp<T> findControlTyped(const UString &name) const
 	{
-		auto c = this->FindControl(name);
+		auto c = this->findControl(name);
 		if (!c)
 		{
-			LogError("Failed to find control \"%s\" within form \"%s\"", name.c_str(),
-			         this->Name.c_str());
+			LogError("Failed to find control \"%s\" within form \"%s\"", name, this->Name);
 			return nullptr;
 		}
 		sp<T> typedControl = std::dynamic_pointer_cast<T>(c);
 		if (!typedControl)
 		{
-			LogError("Failed to cast control \"%s\" within form \"%s\" to type \"%s\"",
-			         name.c_str(), this->Name.c_str(), typeid(T).name());
+			LogError("Failed to cast control \"%s\" within form \"%s\" to type \"%s\"", name,
+			         this->Name, typeid(T).name());
 			return nullptr;
 		}
 		return typedControl;
 	}
 
-	sp<Control> GetParent() const;
-	sp<Form> GetForm();
-	void SetParent(sp<Control> Parent);
-	sp<Control> GetAncestor(sp<Control> Parent);
+	sp<Control> getParent() const;
+	sp<Form> getForm();
+	void setParent(sp<Control> Parent, int position);
+	void setParent(sp<Control> Parent);
+	sp<Control> getAncestor(sp<Control> Parent);
 
-	Vec2<int> GetLocationOnScreen() const;
+	Vec2<int> getLocationOnScreen() const { return resolvedLocation; }
 
-	virtual sp<Control> CopyTo(sp<Control> CopyParent);
+	void setRelativeWidth(float widthPercent);
+	void setRelativeHeight(float widthPercent);
 
-	template <typename T> sp<T> GetData() const { return std::static_pointer_cast<T>(data); }
-	void SetData(sp<void> Data) { data = Data; }
+	Vec2<int> getParentSize() const;
+	static int align(HorizontalAlignment HAlign, int ParentWidth, int ChildWidth);
+	static int align(VerticalAlignment VAlign, int ParentHeight, int ChildHeight);
+
+	void align(HorizontalAlignment HAlign);
+	void align(VerticalAlignment VAlign);
+	void align(HorizontalAlignment HAlign, VerticalAlignment VAlign);
+
+	virtual sp<Control> copyTo(sp<Control> CopyParent);
+
+	template <typename T> sp<T> getData() const { return std::static_pointer_cast<T>(data); }
+	void setData(sp<void> Data) { data = Data; }
 
 	bool eventIsWithin(const Event *e) const;
+	bool isPointInsideControlBounds(Event *e, sp<Control> c) const;
 
 	template <typename T, typename... Args> sp<T> createChild(Args &&... args)
 	{
 		sp<T> newControl = mksp<T>(std::forward<Args>(args)...);
-		newControl->SetParent(shared_from_this());
+		newControl->setParent(shared_from_this());
 		return newControl;
 	}
 
 	void addCallback(FormEventType event, std::function<void(FormsEvent *e)> callback);
+
+	// Simulate mouse click on control
+	virtual bool click();
+	// Setter for funcPreRender
+	void setFuncPreRender(std::function<void(sp<Control>)> func) { funcPreRender = func; }
 };
 
 }; // namespace OpenApoc

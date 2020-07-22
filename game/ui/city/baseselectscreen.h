@@ -1,36 +1,32 @@
-
 #pragma once
 
-#include "forms/forms.h"
 #include "framework/stage.h"
-#include "game/ui/tileview/tileview.h"
+#include "game/ui/tileview/citytileview.h"
 #include "library/sp.h"
 
 namespace OpenApoc
 {
 
-class BaseSelectScreen : public TileView
+class Form;
+class GameState;
+
+class BaseSelectScreen : public CityTileView
 {
   private:
-	static const int COUNTER_MAX = 90;
-
 	sp<Form> menuform;
-	StageCmd stageCmd;
-
 	sp<GameState> state;
-	int counter;
 
   public:
 	BaseSelectScreen(sp<GameState> state, Vec3<float> centerPos);
-	~BaseSelectScreen();
+	~BaseSelectScreen() override;
 	// Stage control
-	void Begin() override;
-	void Pause() override;
-	void Resume() override;
-	void Finish() override;
-	void EventOccurred(Event *e) override;
-	void Update(StageCmd *const cmd) override;
-	void Render() override;
-	bool IsTransition() override;
+	void begin() override;
+	void pause() override;
+	void resume() override;
+	void finish() override;
+	void eventOccurred(Event *e) override;
+	void update() override;
+	void render() override;
+	bool isTransition() override;
 };
 }; // namespace OpenApoc

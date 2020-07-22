@@ -3,167 +3,162 @@
   <entry>
     <key>FACILITYTYPE_ACCESS_LIFT</key>
     <value>
-      <sp>
-        <fixed>true</fixed>
-      </sp>
+      <fixed>true</fixed>
+      <ufopaedia_entry>PAEDIAENTRY_ACCESS_LIFT</ufopaedia_entry>
     </value>
   </entry>
   <entry>
     <key>FACILITYTYPE_ADVANCED_ALIEN_CONTAINMENT</key>
     <value>
-      <sp>
-        <capacityType>aliens</capacityType>
-        <dependency>
-          <type>any</type>
-          <topics>
-            <entry>RESEARCH_ADVANCED_ALIEN_CONTAINMENT</entry>
-          </topics>
-        </dependency>
-      </sp>
+      <capacityType>Aliens</capacityType>
+      <dependency>
+        <type>Any</type>
+        <topics>
+          <entry>RESEARCH_ADVANCED_ALIEN_CONTAINMENT</entry>
+        </topics>
+      </dependency>
+      <ufopaedia_entry>PAEDIAENTRY_ADVANCED_ALIEN_CONTAINMENT</ufopaedia_entry>
     </value>
   </entry>
   <entry>
     <key>FACILITYTYPE_ADVANCED_BIOCHEMISTRY_LAB</key>
     <value>
-      <sp>
-        <capacityType>chemistry</capacityType>
-        <dependency>
-          <type>any</type>
-          <topics>
-            <entry>RESEARCH_ADVANCED_BIOCHEMISTRY_LAB</entry>
-          </topics>
-        </dependency>
-      </sp>
+      <capacityType>Chemistry</capacityType>
+      <dependency>
+        <type>Any</type>
+        <topics>
+          <entry>RESEARCH_ADVANCED_BIOCHEMISTRY_LAB</entry>
+        </topics>
+      </dependency>
+      <ufopaedia_entry>PAEDIAENTRY_ADVANCED_BIOCHEMISTRY_LAB</ufopaedia_entry>
     </value>
   </entry>
   <entry>
     <key>FACILITYTYPE_ADVANCED_QUANTUM_PHYSICS_LAB</key>
     <value>
-      <sp>
-        <capacityType>physics</capacityType>
-        <dependency>
-          <type>any</type>
-          <topics>
-            <entry>RESEARCH_ADVANCED_QUANTUM_PHYSICS_LAB</entry>
-          </topics>
-        </dependency>
-      </sp>
+      <capacityType>Physics</capacityType>
+      <dependency>
+        <type>Any</type>
+        <topics>
+          <entry>RESEARCH_ADVANCED_QUANTUM_PHYSICS_LAB</entry>
+        </topics>
+      </dependency>
+      <ufopaedia_entry>PAEDIAENTRY_ADVANCED_QUANTUM_PHYSICS_LAB</ufopaedia_entry>
     </value>
   </entry>
   <entry>
     <key>FACILITYTYPE_ADVANCED_SECURITY_STATION</key>
     <value>
-      <sp>
-        <dependency>
-          <type>any</type>
-          <topics>
-            <entry>RESEARCH_ADVANCED_SECURITY_STATION</entry>
-          </topics>
-        </dependency>
-      </sp>
+      <dependency>
+        <type>Any</type>
+        <topics>
+          <entry>RESEARCH_ADVANCED_SECURITY_STATION</entry>
+        </topics>
+      </dependency>
+      <ufopaedia_entry>PAEDIAENTRY_ADVANCED_SECURITY_STATION</ufopaedia_entry>
     </value>
   </entry>
   <entry>
     <key>FACILITYTYPE_ADVANCED_WORKSHOP</key>
     <value>
-      <sp>
-        <capacityType>workshop</capacityType>
-        <dependency>
-          <type>any</type>
-          <topics>
-            <entry>RESEARCH_ADVANCED_WORKSHOP</entry>
-          </topics>
-        </dependency>
-      </sp>
+      <capacityType>Workshop</capacityType>
+      <dependency>
+        <type>Any</type>
+        <topics>
+          <entry>RESEARCH_ADVANCED_WORKSHOP</entry>
+        </topics>
+      </dependency>
+      <ufopaedia_entry>PAEDIAENTRY_ADVANCED_WORKSHOP</ufopaedia_entry>
     </value>
   </entry>
   <entry>
     <key>FACILITYTYPE_ALIEN_CONTAINMENT</key>
     <value>
-      <sp>
-        <capacityType>aliens</capacityType>
-      </sp>
+      <capacityType>Aliens</capacityType>
+      <ufopaedia_entry>PAEDIAENTRY_ALIEN_CONTAINMENT</ufopaedia_entry>
     </value>
   </entry>
   <entry>
     <key>FACILITYTYPE_BIOCHEMISTRY_LAB</key>
     <value>
-      <sp>
-        <capacityType>chemistry</capacityType>
-      </sp>
+      <capacityType>Chemistry</capacityType>
+      <ufopaedia_entry>PAEDIAENTRY_BIOCHEMISTRY_LAB</ufopaedia_entry>
     </value>
   </entry>
   <entry>
     <key>FACILITYTYPE_CELLS</key>
     <value>
-      <sp>
-        <capacityType>aliens</capacityType>
-      </sp>
+      <capacityType>Aliens</capacityType>
+      <dependency>
+        <type>Any</type>
+        <topics>
+          <entry>RESEARCH_UNLOCK_CELLS</entry>
+        </topics>
+      </dependency>
+      <ufopaedia_entry/>
     </value>
   </entry>
   <entry>
     <key>FACILITYTYPE_LIVING_QUARTERS</key>
     <value>
-      <sp>
-        <capacityType>quarters</capacityType>
-      </sp>
+      <capacityType>Quarters</capacityType>
+      <ufopaedia_entry>PAEDIAENTRY_LIVING_QUARTERS</ufopaedia_entry>
     </value>
   </entry>
   <entry>
     <key>FACILITYTYPE_MEDICAL_BAY</key>
     <value>
-      <sp>
-        <capacityType>medical</capacityType>
-      </sp>
+      <capacityType>Medical</capacityType>
+      <ufopaedia_entry>PAEDIAENTRY_MEDICAL_BAY</ufopaedia_entry>
     </value>
   </entry>
   <entry>
     <key>FACILITYTYPE_PSI-GYM</key>
     <value>
-      <sp>
-        <capacityType>psi</capacityType>
-      </sp>
+      <capacityType>Psi</capacityType>
+      <ufopaedia_entry>PAEDIAENTRY_PSI-GYM</ufopaedia_entry>
     </value>
   </entry>
   <entry>
     <key>FACILITYTYPE_QUANTUM_PHYSICS_LAB</key>
     <value>
-      <sp>
-        <capacityType>physics</capacityType>
-      </sp>
+      <capacityType>Physics</capacityType>
+      <ufopaedia_entry>PAEDIAENTRY_QUANTUM_PHYSICS_LAB</ufopaedia_entry>
+    </value>
+  </entry>
+  <entry>
+    <key>FACILITYTYPE_SECURITY_STATION</key>
+    <value>
+      <ufopaedia_entry>PAEDIAENTRY_SECURITY_STATION</ufopaedia_entry>
     </value>
   </entry>
   <entry>
     <key>FACILITYTYPE_STORES</key>
     <value>
-      <sp>
-        <capacityType>stores</capacityType>
-      </sp>
+      <capacityType>Stores</capacityType>
+      <ufopaedia_entry>PAEDIAENTRY_STORES</ufopaedia_entry>
     </value>
   </entry>
   <entry>
     <key>FACILITYTYPE_TRAINING_AREA</key>
     <value>
-      <sp>
-        <capacityType>training</capacityType>
-      </sp>
+      <capacityType>Training</capacityType>
+      <ufopaedia_entry>PAEDIAENTRY_TRAINING_AREA</ufopaedia_entry>
     </value>
   </entry>
   <entry>
     <key>FACILITYTYPE_VEHICLE_REPAIR_BAY</key>
     <value>
-      <sp>
-        <capacityType>repair</capacityType>
-        <capacityAmount>1</capacityAmount>
-      </sp>
+      <capacityType>Repair</capacityType>
+      <capacityAmount>12</capacityAmount>
+      <ufopaedia_entry>PAEDIAENTRY_VEHICLE_REPAIR_BAY</ufopaedia_entry>
     </value>
   </entry>
   <entry>
     <key>FACILITYTYPE_WORKSHOP</key>
     <value>
-      <sp>
-        <capacityType>workshop</capacityType>
-      </sp>
+      <capacityType>Workshop</capacityType>
+      <ufopaedia_entry>PAEDIAENTRY_WORKSHOP</ufopaedia_entry>
     </value>
   </entry>
 </facility_types>

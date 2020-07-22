@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_MAPSELECTOR">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="640" height="480"/>
+      <graphic>
+        <image>xcom3/ufodata/message.pcx</image>
+        <position x="0" y="0"/>
+        <size width="640" height="480"/>
+      </graphic>
+      <label text="SELECT SKIRMISH LOCATION">
+        <position x="113" y="0"/>
+        <size width="420" height="32"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>bigfont</font>
+      </label>
+      <label id="TEXT_FUNDS">
+        <position x="572" y="11"/>
+        <size width="60" height="10"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <scroll id="LISTBOX_SCROLL">
+        <position x="553" y="82"/>
+        <size width="26" height="356"/>
+      </scroll>
+      <listbox id="LISTBOX_MAPS" scrollbarid="LISTBOX_SCROLL">
+        <position x="28" y="74"/>
+        <size width="510" height="375"/>
+        <item size="21" spacing="4"/>
+      </listbox>
+      <graphicbutton id="LISTBOX_SCROLL_UP" scrollprev="LISTBOX_SCROLL">
+        <tooltip text="Scroll Up" font="smallset"/>
+        <position x="555" y="58"/>
+        <size width="22" height="21"/>
+        <image/>
+        <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="LISTBOX_SCROLL_DOWN" scrollnext="LISTBOX_SCROLL">
+        <tooltip text="Scroll Down" font="smallset"/>
+        <position x="555" y="441"/>
+        <size width="22" height="21"/>
+        <image/>
+        <imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_OK">
+        <position x="602" y="443"/>
+        <size width="40" height="40"/>
+        <image/>
+        <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
+      </graphicbutton>
+    </style>
+  </form>
+</openapoc>

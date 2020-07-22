@@ -1,8 +1,7 @@
-
 #pragma once
 
-#include "control.h"
-#include "forms_enums.h"
+#include "forms/control.h"
+#include "forms/forms_enums.h"
 #include "library/sp.h"
 
 namespace OpenApoc
@@ -22,10 +21,13 @@ class ScrollBar : public Control
 
 	int Value;
 	Orientation BarOrientation;
-	void LoadResources();
+	void loadResources();
 
   protected:
-	void OnRender() override;
+	void onRender() override;
+
+	int Minimum;
+	int Maximum;
 
   public:
 	enum class ScrollBarRenderStyle
@@ -36,23 +38,28 @@ class ScrollBar : public Control
 
 	ScrollBarRenderStyle RenderStyle;
 	Colour GripperColour;
-	int Minimum;
-	int Maximum;
 	int LargeChange;
+	int LargePercent;
 
-	ScrollBar();
-	virtual ~ScrollBar();
+	void updateLargeChangeValue();
 
-	void EventOccured(Event *e) override;
-	void Update() override;
-	void UnloadResources() override;
-	virtual int GetValue() const { return Value; }
-	virtual bool SetValue(int newValue);
-	virtual void ScrollPrev();
-	virtual void ScrollNext();
+	ScrollBar(sp<Image> gripperImage = nullptr);
+	~ScrollBar() override;
 
-	sp<Control> CopyTo(sp<Control> CopyParent) override;
-	void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
+	void eventOccured(Event *e) override;
+	void update() override;
+	void unloadResources() override;
+	virtual int getValue() const { return Value; }
+	virtual int getMinimum() const { return Minimum; }
+	virtual int getMaximum() const { return Maximum; }
+	virtual bool setValue(int newValue);
+	virtual bool setMinimum(int newMininum);
+	virtual bool setMaximum(int newMaximum);
+	virtual void scrollPrev(bool small = false);
+	virtual void scrollNext(bool small = false);
+
+	sp<Control> copyTo(sp<Control> CopyParent) override;
+	void configureSelfFromXml(pugi::xml_node *node) override;
 };
 
 }; // namespace OpenApoc

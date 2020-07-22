@@ -3,11 +3,6 @@
 #include "forms/forms_enums.h"
 #include "library/sp.h"
 #include "library/strings.h"
-// FIXME: Remove SDL headers - we currently use SDL types directly in input events
-#include <SDL_keyboard.h>
-#include <SDL_keycode.h>
-#include <SDL_mouse.h>
-#include <SDL_scancode.h>
 
 namespace OpenApoc
 {
@@ -39,30 +34,31 @@ enum EventTypes
 	EVENT_AUDIO_STREAM_FINISHED,
 	EVENT_FORM_INTERACTION,
 	EVENT_TEXT_INPUT,
+	EVENT_GAME_STATE,
 	EVENT_USER,
 	EVENT_END_OF_FRAME,
 	EVENT_UNDEFINED
 };
 
-typedef struct FRAMEWORK_DISPLAY_EVENT
+typedef struct FrameworkDisplayEvent
 {
 	bool Active;
 	int X;
 	int Y;
 	int Width;
 	int Height;
-} FRAMEWORK_DISPLAY_EVENT;
+} FrameworkDisplayEvent;
 
-typedef struct FRAMEWORK_JOYSTICK_EVENT
+typedef struct FrameworkJoystickEvent
 {
 	int ID;
 	int Stick;
 	int Axis;
 	float Position;
 	int Button;
-} FRAMEWORK_JOYSTICK_EVENT;
+} FrameworkJoystickEvent;
 
-typedef struct FRAMEWORK_MOUSE_EVENT
+typedef struct FrameworkMouseEvent
 {
 	int X;
 	int Y;
@@ -71,9 +67,9 @@ typedef struct FRAMEWORK_MOUSE_EVENT
 	int DeltaX;
 	int DeltaY;
 	int Button;
-} FRAMEWORK_MOUSE_EVENT;
+} FrameworkMouseEvent;
 
-typedef struct FRAMEWORK_FINGER_EVENT
+typedef struct FrameworkFingerEvent
 {
 	// Touch coordinates and deltas
 	int X;
@@ -84,34 +80,35 @@ typedef struct FRAMEWORK_FINGER_EVENT
 	int Id;
 	// Should this be considered a "primary" touch? (first finger?)
 	bool IsPrimary;
-} FRAMEWORK_FINGER_EVENT;
+} FrameworkFingerEvent;
 
-typedef struct FRAMEWORK_KEYBOARD_EVENT
+typedef struct FrameworkKeyboardEvent
 {
 	int KeyCode;
-	int UniChar;
+	int ScanCode;
 	unsigned int Modifiers;
-} FRAMEWORK_KEYBOARD_EVENT;
+} FrameworkKeyboardEvent;
 
-typedef struct FRAMEWORK_TIMER_EVENT
+typedef struct FrameworkTimerEvent
 {
 	void *TimerObject;
-} FRAMEWORK_TIMER_EVENT;
+} FrameworkTimerEvent;
 
-typedef struct FRAMEWORK_FORMS_EVENT
+typedef struct FrameworkTextEvent
+{
+	UString Input;
+} FrameworkTextEvent;
+
+typedef struct FrameworkFormsEvent
 {
 	sp<Control> RaisedBy;
 	FormEventType EventFlag;
-	FRAMEWORK_MOUSE_EVENT MouseInfo;
-	FRAMEWORK_KEYBOARD_EVENT KeyInfo;
-} FRAMEWORK_FORMS_EVENT;
+	FrameworkMouseEvent MouseInfo;
+	FrameworkKeyboardEvent KeyInfo;
+	FrameworkTextEvent Input;
+} FrameworkFormsEvent;
 
-typedef struct FRAMEWORK_TEXT_EVENT
-{
-	UString Input;
-} FRAMEWORK_TEXT_EVENT;
-
-struct FRAMEWORK_USER_EVENT
+struct FrameworkUserEvent
 {
 	UString ID;
 	sp<void> data;
@@ -124,6 +121,18 @@ struct FRAMEWORK_USER_EVENT
 */
 class Event
 {
+  public:
+	enum class MouseButton
+	{
+		Left = 1,
+		Middle = 2,
+		Right = 3,
+		Back = 4,
+		Forward = 5
+	};
+
+	static bool isPressed(int mask, MouseButton button);
+
   protected:
 	Event(EventTypes type);
 	EventTypes eventType;
@@ -131,27 +140,27 @@ class Event
   public:
 	bool Handled;
 
-	EventTypes Type() const;
+	EventTypes type() const;
 
-	FRAMEWORK_DISPLAY_EVENT &Display();
-	FRAMEWORK_JOYSTICK_EVENT &Joystick();
-	FRAMEWORK_KEYBOARD_EVENT &Keyboard();
-	FRAMEWORK_MOUSE_EVENT &Mouse();
-	FRAMEWORK_FINGER_EVENT &Finger();
-	FRAMEWORK_TIMER_EVENT &Timer();
-	FRAMEWORK_FORMS_EVENT &Forms();
-	FRAMEWORK_TEXT_EVENT &Text();
-	FRAMEWORK_USER_EVENT &User();
+	FrameworkDisplayEvent &display();
+	FrameworkJoystickEvent &joystick();
+	FrameworkKeyboardEvent &keyboard();
+	FrameworkMouseEvent &mouse();
+	FrameworkFingerEvent &finger();
+	FrameworkTimerEvent &timer();
+	FrameworkFormsEvent &forms();
+	FrameworkTextEvent &text();
+	FrameworkUserEvent &user();
 
-	const FRAMEWORK_DISPLAY_EVENT &Display() const;
-	const FRAMEWORK_JOYSTICK_EVENT &Joystick() const;
-	const FRAMEWORK_KEYBOARD_EVENT &Keyboard() const;
-	const FRAMEWORK_MOUSE_EVENT &Mouse() const;
-	const FRAMEWORK_FINGER_EVENT &Finger() const;
-	const FRAMEWORK_TIMER_EVENT &Timer() const;
-	const FRAMEWORK_FORMS_EVENT &Forms() const;
-	const FRAMEWORK_TEXT_EVENT &Text() const;
-	const FRAMEWORK_USER_EVENT &User() const;
+	const FrameworkDisplayEvent &display() const;
+	const FrameworkJoystickEvent &joystick() const;
+	const FrameworkKeyboardEvent &keyboard() const;
+	const FrameworkMouseEvent &mouse() const;
+	const FrameworkFingerEvent &finger() const;
+	const FrameworkTimerEvent &timer() const;
+	const FrameworkFormsEvent &forms() const;
+	const FrameworkTextEvent &text() const;
+	const FrameworkUserEvent &user() const;
 
 	virtual ~Event() = default;
 };
@@ -159,7 +168,7 @@ class Event
 class DisplayEvent : public Event
 {
   private:
-	FRAMEWORK_DISPLAY_EVENT Data;
+	FrameworkDisplayEvent Data;
 	friend class Event;
 
   public:
@@ -170,7 +179,7 @@ class DisplayEvent : public Event
 class JoystickEvent : public Event
 {
   private:
-	FRAMEWORK_JOYSTICK_EVENT Data;
+	FrameworkJoystickEvent Data;
 	friend class Event;
 
   public:
@@ -181,7 +190,7 @@ class JoystickEvent : public Event
 class KeyboardEvent : public Event
 {
   private:
-	FRAMEWORK_KEYBOARD_EVENT Data;
+	FrameworkKeyboardEvent Data;
 	friend class Event;
 
   public:
@@ -192,7 +201,7 @@ class KeyboardEvent : public Event
 class MouseEvent : public Event
 {
   private:
-	FRAMEWORK_MOUSE_EVENT Data;
+	FrameworkMouseEvent Data;
 	friend class Event;
 
   public:
@@ -203,7 +212,7 @@ class MouseEvent : public Event
 class FingerEvent : public Event
 {
   private:
-	FRAMEWORK_FINGER_EVENT Data;
+	FrameworkFingerEvent Data;
 	friend class Event;
 
   public:
@@ -214,7 +223,7 @@ class FingerEvent : public Event
 class TimerEvent : public Event
 {
   private:
-	FRAMEWORK_TIMER_EVENT Data;
+	FrameworkTimerEvent Data;
 	friend class Event;
 
   public:
@@ -225,7 +234,7 @@ class TimerEvent : public Event
 class FormsEvent : public Event
 {
   private:
-	FRAMEWORK_FORMS_EVENT Data;
+	FrameworkFormsEvent Data;
 	friend class Event;
 
   public:
@@ -236,7 +245,7 @@ class FormsEvent : public Event
 class TextEvent : public Event
 {
   private:
-	FRAMEWORK_TEXT_EVENT Data;
+	FrameworkTextEvent Data;
 	friend class Event;
 
   public:
@@ -247,7 +256,7 @@ class TextEvent : public Event
 class UserEvent : public Event
 {
   private:
-	FRAMEWORK_USER_EVENT Data;
+	FrameworkUserEvent Data;
 	friend class Event;
 
   public:

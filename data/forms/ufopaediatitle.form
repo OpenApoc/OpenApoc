@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_UFOPAEDIA_TITLE">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="644" height="484"/>
+      <backcolour r="80" g="80" b="80"/>
+      <graphic>
+        <image>xcom3/ufopaedi/title.pcx</image>
+        <position x="2" y="2"/>
+        <size width="640" height="480"/>
+      </graphic>
+      <label text="Ufopaedia">
+        <position x="20" y="16"/>
+        <size width="600" height="40"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>bigfont</font>
+      </label>
+      <label text="Organizations">
+        <position x="344" y="62"/>
+        <size width="270" height="40"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_ORGANISATIONS">
+        <position x="4" y="62"/>
+        <size width="636" height="40"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <label text="Vehicles">
+        <position x="344" y="102"/>
+        <size width="270" height="40"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_VEHICLES">
+        <position x="4" y="102"/>
+        <size width="636" height="40"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <label text="Vehicle Equipment">
+        <position x="344" y="142"/>
+        <size width="270" height="40"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_VEHICLE_EQUIPMENT">
+        <position x="4" y="142"/>
+        <size width="636" height="40"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <label text="Equipment">
+        <position x="344" y="182"/>
+        <size width="270" height="40"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_EQUIPMENT">
+        <position x="4" y="182"/>
+        <size width="636" height="40"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <label text="Base Facilities">
+        <position x="344" y="222"/>
+        <size width="270" height="40"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_BASE_FACILITIES">
+        <position x="4" y="222"/>
+        <size width="636" height="40"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <label text="Alien Craft">
+        <position x="344" y="262"/>
+        <size width="270" height="40"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_ALIEN_CRAFT">
+        <position x="4" y="262"/>
+        <size width="636" height="40"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <label text="Aliens">
+        <position x="344" y="302"/>
+        <size width="270" height="40"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_ALIENS">
+        <position x="4" y="302"/>
+        <size width="636" height="40"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <label text="The Alien Dimension">
+        <position x="344" y="342"/>
+        <size width="270" height="40"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_THE_ALIEN_DIMENSION">
+        <position x="4" y="342"/>
+        <size width="636" height="40"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <label text="Buildings">
+        <position x="344" y="382"/>
+        <size width="270" height="40"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_BUILDINGS">
+        <position x="4" y="382"/>
+        <size width="636" height="40"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_QUIT">
+        <position x="604" y="444"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
+      </graphicbutton>
+    </style>
+  </form>
+</openapoc>

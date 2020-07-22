@@ -1,21 +1,21 @@
 #pragma once
-#include "framework/font.h"
+
 #include "library/sp.h"
 
-namespace tinyxml2
+namespace pugi
 {
-class XMLElement;
-} // namespace tinyxml2
+class xml_node;
+} // namespace pugi
 
 namespace OpenApoc
 {
 
-class Image;
-class Renderer;
+class UString;
+class BitmapFont;
 
 class ApocalypseFont
 {
   public:
-	static sp<BitmapFont> loadFont(tinyxml2::XMLElement *fontElement);
+	static sp<BitmapFont> loadFont(const UString &fontDescPath);
 };
 }; // namespace OpenApoc

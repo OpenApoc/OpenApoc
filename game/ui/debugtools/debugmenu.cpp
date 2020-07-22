@@ -1,143 +1,146 @@
 #include "game/ui/debugtools/debugmenu.h"
+#include "forms/form.h"
 #include "forms/ui.h"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/image.h"
+#include "framework/keycodes.h"
+#include "framework/renderer.h"
 #include "game/ui/debugtools/formpreview.h"
+#include "game/ui/debugtools/imagepreview.h"
 #include "library/sp.h"
 
 namespace OpenApoc
 {
 
-DebugMenu::DebugMenu() : Stage(), menuform(ui().GetForm("FORM_DEBUG_MENU")) {}
+DebugMenu::DebugMenu() : Stage(), menuform(ui().getForm("debugmenu")) {}
 
-DebugMenu::~DebugMenu() {}
+DebugMenu::~DebugMenu() = default;
 
-void DebugMenu::Begin() {}
+void DebugMenu::begin() {}
 
-void DebugMenu::Pause() {}
+void DebugMenu::pause() {}
 
-void DebugMenu::Resume() {}
+void DebugMenu::resume() {}
 
-void DebugMenu::Finish() {}
+void DebugMenu::finish() {}
 
-void DebugMenu::EventOccurred(Event *e)
+void DebugMenu::eventOccurred(Event *e)
 {
-	menuform->EventOccured(e);
+	menuform->eventOccured(e);
 
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
+		if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
-		else if (e->Forms().RaisedBy->Name == "BUTTON_DUMPPCK")
+		else if (e->forms().RaisedBy->Name == "BUTTON_DUMPPCK")
 		{
-			BulkExportPCKs();
+			bulkExportPcks();
 			return;
 		}
-		else if (e->Forms().RaisedBy->Name == "BUTTON_FORMPREVIEW")
+		else if (e->forms().RaisedBy->Name == "BUTTON_FORMPREVIEW")
 		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<FormPreview>();
+			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<FormPreview>()});
+		}
+		else if (e->forms().RaisedBy->Name == "BUTTON_IMAGEPREVIEW")
+		{
+			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<ImagePreview>()});
 		}
 	}
 }
 
-void DebugMenu::Update(StageCmd *const cmd)
-{
-	menuform->Update();
-	*cmd = this->stageCmd;
-	// Reset the command to default
-	this->stageCmd = StageCmd();
-}
+void DebugMenu::update() { menuform->update(); }
 
-void DebugMenu::Render()
+void DebugMenu::render()
 {
-	fw().Stage_GetPrevious(this->shared_from_this())->Render();
+	fw().stageGetPrevious(this->shared_from_this())->render();
 	fw().renderer->drawFilledRect(Vec2<float>(0, 0),
-	                              Vec2<float>(fw().Display_GetWidth(), fw().Display_GetHeight()),
+	                              Vec2<float>(fw().displayGetWidth(), fw().displayGetHeight()),
 	                              Colour(0, 0, 0, 128));
-	menuform->Render();
+	menuform->render();
 }
 
-bool DebugMenu::IsTransition() { return false; }
+bool DebugMenu::isTransition() { return false; }
 
-void DebugMenu::BulkExportPCKs()
+void DebugMenu::bulkExportPcks()
 {
 	std::vector<UString> PaletteNames;
 	std::vector<sp<Palette>> PaletteList;
 	std::vector<UString> PckNames;
 
 	// All the palettes
-	PaletteNames.push_back("XCOM3/UFODATA/PAL_01.DAT");
-	PaletteNames.push_back("XCOM3/UFODATA/PAL_02.DAT");
-	PaletteNames.push_back("XCOM3/UFODATA/PAL_03.DAT");
-	PaletteNames.push_back("XCOM3/UFODATA/PAL_04.DAT");
-	PaletteNames.push_back("XCOM3/UFODATA/PAL_05.DAT");
-	PaletteNames.push_back("XCOM3/UFODATA/PAL_06.DAT");
-	PaletteNames.push_back("XCOM3/UFODATA/PAL_99.DAT");
-	// PaletteNames.push_back("XCOM3/TACDATA/DEFAULT.PAL");
-	// PaletteNames.push_back("XCOM3/TACDATA/EQUIP.PAL");
-	// PaletteNames.push_back("XCOM3/TACDATA/TACTICAL.PAL");
+	PaletteNames.push_back("xcom3/ufodata/pal_01.dat");
+	PaletteNames.push_back("xcom3/ufodata/pal_02.dat");
+	PaletteNames.push_back("xcom3/ufodata/pal_03.dat");
+	PaletteNames.push_back("xcom3/ufodata/pal_04.dat");
+	PaletteNames.push_back("xcom3/ufodata/pal_05.dat");
+	PaletteNames.push_back("xcom3/ufodata/pal_06.dat");
+	PaletteNames.push_back("xcom3/ufodata/pal_99.dat");
+	// PaletteNames.push_back("xcom3/tacdata/default.pal");
+	// PaletteNames.push_back("xcom3/tacdata/equip.pal");
+	// PaletteNames.push_back("xcom3/tacdata/tactical.pal");
 
 	// Load them up
 	for (auto i = PaletteNames.begin(); i != PaletteNames.end(); i++)
 	{
 		UString palname = (*i);
-		PaletteList.push_back(fw().data->load_palette(palname));
+		PaletteList.push_back(fw().data->loadPalette(palname));
 	}
 
 	// All the PCKs
-	PckNames.push_back("XCOM3/UFODATA/AGNTICO.PCK");
-	PckNames.push_back("XCOM3/UFODATA/ALIEN.PCK");
-	PckNames.push_back("XCOM3/UFODATA/ALIEN_S.PCK");
-	PckNames.push_back("XCOM3/UFODATA/ARMOUR.PCK");
-	PckNames.push_back("XCOM3/UFODATA/BASE.PCK");
-	PckNames.push_back("XCOM3/UFODATA/BIGVEH.PCK");
-	PckNames.push_back("XCOM3/UFODATA/CITY.PCK");
-	PckNames.push_back("XCOM3/UFODATA/CITYOVR.PCK");
-	PckNames.push_back("XCOM3/UFODATA/CONTICO.PCK");
-	PckNames.push_back("XCOM3/UFODATA/DESCURS.PCK");
-	PckNames.push_back("XCOM3/UFODATA/ICONS.PCK");
-	PckNames.push_back("XCOM3/UFODATA/ICON_M.PCK");
-	PckNames.push_back("XCOM3/UFODATA/ICON_S.PCK");
-	PckNames.push_back("XCOM3/UFODATA/NEWBUT.PCK");
-	// PckNames.push_back("XCOM3/UFODATA/OVER-A.PCK");
-	// PckNames.push_back("XCOM3/UFODATA/OVER-B.PCK");
-	// PckNames.push_back("XCOM3/UFODATA/OVER-S.PCK");
-	PckNames.push_back("XCOM3/UFODATA/PED-BUT.PCK");
-	PckNames.push_back("XCOM3/UFODATA/PEQUIP.PCK");
-	PckNames.push_back("XCOM3/UFODATA/PHOTO.PCK");
-	PckNames.push_back("XCOM3/UFODATA/PTANG.PCK");
-	PckNames.push_back("XCOM3/UFODATA/SAUCER.PCK");
-	// PckNames.push_back("XCOM3/UFODATA/SHADOW.PCK");
-	PckNames.push_back("XCOM3/UFODATA/SMALVEH.PCK");
-	// PckNames.push_back("XCOM3/UFODATA/STRATMAP.PCK");
-	PckNames.push_back("XCOM3/UFODATA/VEHEQUIP.PCK");
-	PckNames.push_back("XCOM3/UFODATA/VEHICLE.PCK");
-	PckNames.push_back("XCOM3/UFODATA/VS_ICON.PCK");
-	PckNames.push_back("XCOM3/UFODATA/VS_OBS.PCK");
+	PckNames.push_back("xcom3/ufodata/agntico.pck");
+	PckNames.push_back("xcom3/ufodata/alien.pck");
+	PckNames.push_back("xcom3/ufodata/alien_s.pck");
+	PckNames.push_back("xcom3/ufodata/armour.pck");
+	PckNames.push_back("xcom3/ufodata/base.pck");
+	PckNames.push_back("xcom3/ufodata/bigveh.pck");
+	PckNames.push_back("xcom3/ufodata/city.pck");
+	PckNames.push_back("xcom3/ufodata/cityovr.pck");
+	PckNames.push_back("xcom3/ufodata/contico.pck");
+	PckNames.push_back("xcom3/ufodata/descurs.pck");
+	PckNames.push_back("xcom3/ufodata/icons.pck");
+	PckNames.push_back("xcom3/ufodata/icon_m.pck");
+	PckNames.push_back("xcom3/ufodata/icon_s.pck");
+	PckNames.push_back("xcom3/ufodata/newbut.pck");
+	// PckNames.push_back("xcom3/ufodata/over-a.pck");
+	// PckNames.push_back("xcom3/ufodata/over-b.pck");
+	// PckNames.push_back("xcom3/ufodata/over-s.pck");
+	PckNames.push_back("xcom3/ufodata/ped-but.pck");
+	PckNames.push_back("xcom3/ufodata/pequip.pck");
+	PckNames.push_back("xcom3/ufodata/photo.pck");
+	PckNames.push_back("xcom3/ufodata/ptang.pck");
+	PckNames.push_back("xcom3/ufodata/saucer.pck");
+	// PckNames.push_back("xcom3/ufodata/shadow.pck");
+	PckNames.push_back("xcom3/ufodata/smalveh.pck");
+	// PckNames.push_back("xcom3/ufodata/stratmap.pck");
+	PckNames.push_back("xcom3/ufodata/vehequip.pck");
+	PckNames.push_back("xcom3/ufodata/vehicle.pck");
+	PckNames.push_back("xcom3/ufodata/vs_icon.pck");
+	PckNames.push_back("xcom3/ufodata/vs_obs.pck");
 
 	// Load them up
 	for (auto i = PckNames.begin(); i != PckNames.end(); i++)
 	{
 		UString pckname = (*i);
 		UString pckloadstr = UString("PCK:") + pckname + UString(":") +
-		                     pckname.substr(0, pckname.length() - 3) + UString("TAB");
+		                     pckname.substr(0, pckname.length() - 3) + UString("tab");
 
-		LogInfo("Processing %s", pckloadstr.c_str());
+		LogInfo("Processing %s", pckloadstr);
 
-		sp<ImageSet> pckset = fw().data->load_image_set(pckloadstr);
+		sp<ImageSet> pckset = fw().data->loadImageSet(pckloadstr);
 
 		if (pckset != nullptr)
 		{
@@ -146,25 +149,25 @@ void DebugMenu::BulkExportPCKs()
 			for (unsigned int idx = 0; idx < pckset->images.size(); idx++)
 			{
 				UString outputname = UString("Extracted/") + pckname + UString("/") +
-				                     Strings::FromInteger(idx) + UString(".PNG");
+				                     Strings::fromInteger(idx) + UString(".png");
 				sp<Image> curimg = pckset->images.at(idx);
 
-				if (RGBImage *bi = dynamic_cast<RGBImage *>(curimg.get()))
+				if (sp<RGBImage> bi = std::dynamic_pointer_cast<RGBImage>(curimg))
 				{
 
-					LogInfo("Saving %s", outputname.c_str());
-					bi->saveBitmap(outputname);
+					LogInfo("Saving %s", outputname);
+					fw().data->writeImage(outputname, bi);
 				}
-				else if (PaletteImage *pi = dynamic_cast<PaletteImage *>(curimg.get()))
+				else if (sp<PaletteImage> pi = std::dynamic_pointer_cast<PaletteImage>(curimg))
 				{
 
 					for (unsigned int palidx = 0; palidx < PaletteList.size(); palidx++)
 					{
-						outputname = UString("Extracted/") + pckname + UString("/") +
-						             Strings::FromInteger(idx) + UString(".#") +
-						             Strings::FromInteger(palidx) + UString(".PNG");
-						LogInfo("Saving %s", outputname.c_str());
-						pi->toRGBImage(PaletteList.at(palidx))->saveBitmap(outputname);
+						outputname = UString("extracted/") + pckname + UString("/") +
+						             Strings::fromInteger(idx) + UString(".#") +
+						             Strings::fromInteger(palidx) + UString(".png");
+						LogInfo("Saving %s", outputname);
+						fw().data->writeImage(outputname, pi, PaletteList.at(palidx));
 					}
 				}
 			}

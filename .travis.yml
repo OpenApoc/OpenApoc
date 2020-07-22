@@ -1,51 +1,50 @@
 language: cpp
 sudo: required
-dist: trusty
+dist: bionic
 
-compiler:
-  - gcc
-  - clang
+cache: ccache
+
+#compiler:
+#  - gcc
+#  - clang
 
 matrix:
-  exclude:
-    - compiler: gcc
-      env: TIDY="true"
+  include:
+    - os: linux
+      env:
+        - MATRIX_ENV="PASS=build CXX='g++-9' CC='gcc-9' BUILD_TYPE=Quick"
+    - os: linux
+      env:
+        - MATRIX_ENV="PASS=build CXX='clang++-8' CC='clang-8' BUILD_TYPE=sanitize"
+    - os: linux
+      env:
+        - MATRIX_ENV="PASS=lint CLANG_FORMAT=clang-format-8"
+
+# Passes todo:
+#  - osx
+#  - linux sanitize
+#  - linux static analysis (clang-tidy?)
 
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo add-apt-repository "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.8 main" -y
-  - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|sudo apt-key add -
-  - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|sudo apt-key add -
-  - sudo apt-get update
-  - if [ "$CXX" = "g++" ]; then sudo apt-get install g++-5 -y; fi
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
-  - if [ "$CXX" = "clang++" ]; then sudo apt-get install clang-3.8 --force-yes -y; fi
-  - if [ "$CXX" = "clang++" ]; then export CXX="clang++-3.8" CC="clang-3.8"; fi
-  - if [ "${TIDY}" = "true" ]; then sudo apt-get install clang-tidy-3.8 clang-format-3.8 --force-yes -y; fi
-  - sudo apt-get install libunwind8-dev libsdl2-dev libboost-locale-dev libboost-filesystem-dev -y
+  - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+  - sudo add-apt-repository 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-8 main' -y
+  - sudo apt-get update -q
+  - sudo apt-get install g++-9 clang-8 clang-format-8 clang-tidy-8 ninja-build -y
+  - eval "${MATRIX_ENV}"
+  - env
+  - ./tools/travis-scripts/build_prepare_linux.sh
   - ${CXX} --version
   - ${CC} --version
-  - mkdir ~/dependency-prefix
-  - export PKG_CONFIG_PATH=~/dependency-prefix/lib/pkgconfig
 
-env:
-  - BUILD_TYPE="Release"
-  - TIDY="true"
-
-install:
-  - pushd ./dependencies/tinyxml2 && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make -j2 && make install && popd;
-  - pushd ./dependencies/glm && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make -j2 && make install && popd;
-  - pushd ./dependencies/physfs && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make -j2 && make install && popd;
 
 before_script:
-  - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCLANG_TIDY=clang-tidy-3.8 -DCLANG_FORMAT=clang-format-3.8 -DENABLE_TESTS=ON
-# Do the format before the script so the output is cleaner - just showing the diff (if any) and the tidy results
-  - if [ "${TIDY}" = "true" ]; then make format -j2; fi
+  - export CFLAGS="-Wall" CXXFLAGS="-Wall -Werror -Wno-error=sign-compare"
+  - $(which time) cmake . -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCLANG_TIDY=clang-tidy-8 -DCLANG_FORMAT=clang-format-8 -DENABLE_TESTS=ON -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}" -GNinja
+
 
 script:
-  - if [ "${TIDY}" != "true" ]; then make -j2 && ctest -V; fi
-  - if [ "${TIDY}" = "true" ]; then git --no-pager diff --ignore-submodules && make tidy; fi
-
-os:
-  - linux
-
+# Create the GameState as that triggers the generated source commands
+  - if [ "$PASS" = "build" ]; then echo "Building revision $(git describe --tags --all --long --always)"; $(which time) ninja && `which time` ctest -V -j 2; fi
+  - if [ "$PASS" = "lint" ]; then echo "clang-format linting range ${TRAVIS_COMMIT_RANGE}"; CLANG_FORMAT=${CLANG_FORMAT} ./tools/lint.sh ${TRAVIS_COMMIT_RANGE}; fi
+  - if [ "$PASS" = "lint" ]; then ninja generated-source && echo "clang-tidy linting range ${TRAVIS_COMMIT_RANGE}"; CLANG_TIDY=clang-tidy BUILD_DIR=$(pwd) ./tools/lint-tidy.sh ${TRAVIS_COMMIT_RANGE} || true; fi

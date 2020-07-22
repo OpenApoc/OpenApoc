@@ -1,6 +1,8 @@
 #pragma once
 
-#include "checkbox.h"
+#include "forms/checkbox.h"
+#include "library/sp.h"
+#include "library/strings.h"
 #include <list>
 
 namespace OpenApoc
@@ -25,10 +27,11 @@ class RadioButton : public CheckBox
   public:
 	RadioButton(sp<RadioButtonGroup> radioButtonGroup = nullptr, sp<Image> ImageChecked = nullptr,
 	            sp<Image> ImageUnchecked = nullptr);
-	virtual ~RadioButton();
-	void SetChecked(bool checked) override;
+	~RadioButton() override;
+	void setChecked(bool checked) override;
+	void eventOccured(Event *e) override;
 
-	sp<Control> CopyTo(sp<Control> CopyParent) override;
+	sp<Control> copyTo(sp<Control> CopyParent) override;
 };
 
 }; // namespace OpenApoc

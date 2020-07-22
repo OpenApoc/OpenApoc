@@ -6,9 +6,12 @@
 #include "library/vec.h"
 #include <SDL.h>
 #include <SDL_audio.h>
+#include <algorithm>
+#include <functional>
 #include <list>
 #include <mutex>
 #include <queue>
+#include <vector>
 
 namespace
 {
@@ -19,7 +22,7 @@ struct SampleData
 {
 	sp<Sample> sample;
 	float gain;
-	int sample_position; // in bytes
+	unsigned int sample_position; // in bytes
 	SampleData(sp<Sample> sample, float gain) : sample(sample), gain(gain), sample_position(0) {}
 };
 
@@ -27,7 +30,7 @@ struct MusicData
 {
 	MusicData() : sample_position(0) {}
 	std::vector<unsigned char> samples;
-	int sample_position; // in bytes
+	unsigned int sample_position; // in bytes
 };
 
 // 'samples' must already be large enough to contain the full output size
@@ -65,8 +68,16 @@ static bool ConvertAudio(AudioFormat input_format, SDL_AudioSpec &output_spec, i
 	else
 	{
 		cvt.len = input_size_bytes;
+		size_t neededSize = std::max(1, cvt.len_mult) * cvt.len;
+		if (samples.size() < neededSize)
+		{
+			LogInfo("Expanding sample output buffer from %zu to %zu bytes", samples.size(),
+			        neededSize);
+			samples.resize(neededSize);
+		}
 		cvt.buf = (Uint8 *)samples.data();
 		SDL_ConvertAudio(&cvt);
+		samples.resize(cvt.len_cvt);
 		return true;
 	}
 }
@@ -76,17 +87,14 @@ class SDLSampleData : public BackendSampleData
   public:
 	SDLSampleData(sp<Sample> sample, SDL_AudioSpec &output_spec)
 	{
-		unsigned int input_size =
+		unsigned long int input_size =
 		    sample->format.getSampleSize() * sample->format.channels * sample->sampleCount;
-		unsigned int output_size = (SDL_AUDIO_BITSIZE(output_spec.format) / 8) *
-		                           output_spec.channels * sample->sampleCount;
-		this->samples.resize(std::max(input_size, output_size));
+		this->samples.resize(input_size);
 		memcpy(this->samples.data(), sample->data.get(), input_size);
 		if (!ConvertAudio(sample->format, output_spec, input_size, this->samples))
 		{
 			LogWarning("Failed to convert sample data");
 		}
-		this->samples.resize(output_size);
 	}
 	~SDLSampleData() override = default;
 	std::vector<unsigned char> samples;
@@ -117,11 +125,11 @@ class SDLRawBackend : public SoundBackend
 	sp<MusicData> current_music_data;
 	std::queue<sp<MusicData>> music_queue;
 
-	std::future<void> get_music_future;
+	std::shared_future<void> get_music_future;
 
-	int music_queue_size;
+	unsigned int music_queue_size;
 
-	void get_more_music()
+	void getMoreMusic()
 	{
 		TRACE_FN;
 		std::lock_guard<std::recursive_mutex> lock(this->audio_lock);
@@ -198,7 +206,7 @@ class SDLRawBackend : public SoundBackend
 				if (!this->current_music_data)
 				{
 					this->get_music_future =
-					    fw().threadPool->enqueue(std::mem_fn(&SDLRawBackend::get_more_music), this);
+					    fw().threadPoolEnqueue(std::mem_fn(&SDLRawBackend::getMoreMusic), this);
 					if (this->music_queue.empty())
 					{
 						LogWarning("Music underrun!");
@@ -210,14 +218,15 @@ class SDLRawBackend : public SoundBackend
 				int bytes_from_this_chunk =
 				    std::min(len - music_bytes, (int)(this->current_music_data->samples.size() -
 				                                      this->current_music_data->sample_position));
-				SDL_MixAudioFormat(
-				    stream + music_bytes, this->current_music_data->samples.data() +
-				                              this->current_music_data->sample_position,
-				    this->output_spec.format, bytes_from_this_chunk, int_music_volume);
+				SDL_MixAudioFormat(stream + music_bytes,
+				                   this->current_music_data->samples.data() +
+				                       this->current_music_data->sample_position,
+				                   this->output_spec.format, bytes_from_this_chunk,
+				                   int_music_volume);
 				music_bytes += bytes_from_this_chunk;
 				this->current_music_data->sample_position += bytes_from_this_chunk;
-				assert(this->current_music_data->sample_position <=
-				       this->current_music_data->samples.size());
+				LogAssert(this->current_music_data->sample_position <=
+				          this->current_music_data->samples.size());
 				if (this->current_music_data->sample_position ==
 				    this->current_music_data->samples.size())
 				{
@@ -254,15 +263,15 @@ class SDLRawBackend : public SoundBackend
 			SDL_MixAudioFormat(stream, sampleData->samples.data() + sampleIt->sample_position,
 			                   this->output_spec.format, bytes_to_mix, int_sample_volume);
 			sampleIt->sample_position += bytes_to_mix;
-			assert(sampleIt->sample_position <= sampleData->samples.size());
+			LogAssert(sampleIt->sample_position <= sampleData->samples.size());
 
 			sampleIt++;
 		}
 	}
 
 	SDLRawBackend()
-	    : overall_volume(1.0f), music_volume(1.0f), sound_volume(1.0f),
-	      music_callback_data(nullptr), music_playing(false), music_queue_size(2)
+	    : overall_volume(1.0f), music_volume(1.0f), sound_volume(1.0f), music_playing(false),
+	      music_callback_data(nullptr), music_queue_size(2)
 	{
 		SDL_Init(SDL_INIT_AUDIO);
 		preferred_format.channels = 2;
@@ -294,9 +303,14 @@ class SDLRawBackend : public SoundBackend
 		    &wantFormat, &output_spec,
 		    SDL_AUDIO_ALLOW_ANY_CHANGE); // hopefully we'll get a sane output format
 		SDL_PauseAudioDevice(devID, 0);  // Run at once?
-		LogInfo("Audio output format: Channels %d, format %d, freq %d, samples %d",
-		        (int)output_spec.channels, (int)output_spec.format, (int)output_spec.freq,
-		        (int)output_spec.samples);
+
+		LogWarning("Audio output format: Channels %d, format: %s %s %s %dbit, freq %d, samples %d",
+		           (int)output_spec.channels,
+		           SDL_AUDIO_ISSIGNED(output_spec.format) ? "signed" : "unsigned",
+		           SDL_AUDIO_ISFLOAT(output_spec.format) ? "float" : "int",
+		           SDL_AUDIO_ISBIGENDIAN(output_spec.format) ? "BE" : "LE",
+		           SDL_AUDIO_BITSIZE(output_spec.format), (int)output_spec.freq,
+		           (int)output_spec.samples);
 	}
 	void playSample(sp<Sample> sample, float gain) override
 	{
@@ -322,7 +336,7 @@ class SDLRawBackend : public SoundBackend
 		music_callback_data = callbackData;
 		music_playing = true;
 		this->get_music_future =
-		    fw().threadPool->enqueue(std::mem_fn(&SDLRawBackend::get_more_music), this);
+		    fw().threadPoolEnqueue(std::mem_fn(&SDLRawBackend::getMoreMusic), this);
 		LogInfo("Playing music on SDL backend");
 	}
 
@@ -337,7 +351,7 @@ class SDLRawBackend : public SoundBackend
 
 	void stopMusic() override
 	{
-		std::future<void> outstanding_get_music;
+		std::shared_future<void> outstanding_get_music;
 		{
 			std::lock_guard<std::recursive_mutex> l(this->audio_lock);
 			this->music_playing = false;
@@ -351,7 +365,7 @@ class SDLRawBackend : public SoundBackend
 			outstanding_get_music.wait();
 	}
 
-	virtual ~SDLRawBackend()
+	~SDLRawBackend() override
 	{
 		// Lock the device and stop any outstanding music threads to ensure everything is dead
 		// before destroying the device
@@ -422,7 +436,7 @@ class SDLRawBackendFactory : public SoundBackendFactory
 		return new SDLRawBackend();
 	}
 
-	virtual ~SDLRawBackendFactory() {}
+	~SDLRawBackendFactory() override = default;
 };
 
 }; // anonymous namespace

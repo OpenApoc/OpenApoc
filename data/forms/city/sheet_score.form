@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_SCORE_SCREEN_SCORE_VIEW">
+    <style minwidth="440" minheight="280">
+      <position x="centre" y="centre"/>
+      <size width="440" height="280"/>
+
+      <!-- Category -->
+      <label id="CATEGORY" text="CATEGORY">
+        <position x="0" y="0"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="TACTICAL_C" text="Tactical Missions">
+        <position x="0" y="24"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="RESEARCH_C" text="Research Completed">
+        <position x="0" y="44"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="ALIEN_C" text="Alien Incidents in City">
+        <position x="0" y="64"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="UFO_SHOTDOWN_C" text="UFOs Shot Down">
+        <position x="0" y="84"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="CRAFT_SHOTDOWN_C" text="X-COM Craft Shot Down">
+        <position x="0" y="104"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="INCURSIONS_C" text="UFO Incursions">
+        <position x="0" y="124"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="DAMAGE_C" text="Damage to City">
+        <position x="0" y="144"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TOTAL_C" text="Total">
+        <position x="0" y="196"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <!-- Week -->
+      <label id="WEEK" text="WEEK">
+        <position x="224" y="0"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="TACTICAL_W">
+        <position x="224" y="24"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="RESEARCH_W">
+        <position x="224" y="44"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="ALIEN_W">
+        <position x="224" y="64"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="UFO_SHOTDOWN_W">
+        <position x="224" y="84"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="CRAFT_SHOTDOWN_W">
+        <position x="224" y="104"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="INCURSIONS_W">
+        <position x="224" y="124"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="DAMAGE_W">
+        <position x="224" y="144"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TOTAL_W">
+        <position x="224" y="196"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <!-- Total -->
+      <label id="TOTAL" text="TOTAL">
+        <position x="334" y="0"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="TACTICAL_T">
+        <position x="334" y="24"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="RESEARCH_T">
+        <position x="334" y="44"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="ALIEN_T">
+        <position x="334" y="64"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="UFO_SHOTDOWN_T">
+        <position x="334" y="84"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="CRAFT_SHOTDOWN_T">
+        <position x="334" y="104"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="INCURSIONS_T">
+        <position x="334" y="124"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="DAMAGE_T">
+        <position x="334" y="144"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TOTAL_T">
+        <position x="334" y="196"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+    </style>
+  </form>
+</openapoc>

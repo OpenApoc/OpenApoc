@@ -1,8 +1,12 @@
 #include "forms/checkbox.h"
+#include "dependencies/pugixml/src/pugixml.hpp"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/image.h"
+#include "framework/renderer.h"
+#include "framework/sound.h"
 #include "library/sp.h"
-#include <tinyxml2.h>
 
 namespace OpenApoc
 {
@@ -10,60 +14,75 @@ namespace OpenApoc
 CheckBox::CheckBox(sp<Image> ImageChecked, sp<Image> ImageUnchecked)
     : Control(), imagechecked(ImageChecked), imageunchecked(ImageUnchecked),
       buttonclick(
-          fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
+          fw().data->loadSample("RAWSOUND:xcom3/rawsound/strategc/intrface/button1.raw:22050")),
       Checked(false)
 {
+	isClickable = true;
 }
 
-CheckBox::~CheckBox() {}
+CheckBox::~CheckBox() = default;
 
-void CheckBox::EventOccured(Event *e)
+bool CheckBox::click()
 {
-	Control::EventOccured(e);
-
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
-	    e->Forms().EventFlag == FormEventType::MouseDown)
+	if (!Control::click())
+	{
+		return false;
+	}
+	if (buttonclick)
 	{
 		fw().soundBackend->playSample(buttonclick);
 	}
+	return true;
+}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
-	    e->Forms().EventFlag == FormEventType::MouseClick)
+void CheckBox::eventOccured(Event *e)
+{
+	Control::eventOccured(e);
+
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
+	    e->forms().EventFlag == FormEventType::MouseDown)
 	{
-		SetChecked(!IsChecked());
+		if (buttonclick)
+		{
+			fw().soundBackend->playSample(buttonclick);
+		}
+	}
+
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
+	    e->forms().EventFlag == FormEventType::MouseClick)
+	{
+		setChecked(!isChecked());
 	}
 }
 
-void CheckBox::OnRender()
+void CheckBox::onRender()
 {
+	Control::onRender();
+
 	sp<Image> useimage;
 
 	useimage = (Checked ? imagechecked : imageunchecked);
 
 	if (useimage != nullptr)
 	{
-		if (useimage->size == Vec2<unsigned int>{Size.x, Size.y})
-		{
-			fw().renderer->draw(useimage, Vec2<float>{0, 0});
-		}
-		else
-		{
-			fw().renderer->drawScaled(useimage, Vec2<float>{0, 0},
-			                          Vec2<float>{this->Size.x, this->Size.y});
-		}
+		fw().renderer->draw(useimage, Vec2<float>{0, 0});
 	}
 }
 
-void CheckBox::Update() { Control::Update(); }
+void CheckBox::update() { Control::update(); }
 
-void CheckBox::UnloadResources()
+void CheckBox::unloadResources()
 {
 	imagechecked.reset();
 	imageunchecked.reset();
-	Control::UnloadResources();
+	Control::unloadResources();
 }
 
-void CheckBox::SetChecked(bool checked)
+sp<Sample> CheckBox::getClickSound() const { return buttonclick; }
+
+void CheckBox::setClickSound(sp<Sample> sample) { buttonclick = sample; }
+
+void CheckBox::setChecked(bool checked)
 {
 	if (Checked == checked)
 		return;
@@ -79,7 +98,7 @@ void CheckBox::SetChecked(bool checked)
 	}
 }
 
-sp<Control> CheckBox::CopyTo(sp<Control> CopyParent)
+sp<Control> CheckBox::copyTo(sp<Control> CopyParent)
 {
 	sp<CheckBox> copy;
 	if (CopyParent)
@@ -91,20 +110,20 @@ sp<Control> CheckBox::CopyTo(sp<Control> CopyParent)
 		copy = mksp<CheckBox>(imagechecked, imageunchecked);
 	}
 	copy->Checked = this->Checked;
-	CopyControlData(copy);
+	copyControlData(copy);
 	return copy;
 }
 
-void CheckBox::ConfigureFromXML(tinyxml2::XMLElement *Element)
+void CheckBox::configureSelfFromXml(pugi::xml_node *node)
 {
-	Control::ConfigureFromXML(Element);
-	if (Element->FirstChildElement("image") != nullptr)
+	Control::configureSelfFromXml(node);
+	if (node->child("image"))
 	{
-		imageunchecked = fw().data->load_image(Element->FirstChildElement("image")->GetText());
+		imageunchecked = fw().data->loadImage(node->child("image").text().get());
 	}
-	if (Element->FirstChildElement("imagechecked") != nullptr)
+	if (node->child("imagechecked"))
 	{
-		imagechecked = fw().data->load_image(Element->FirstChildElement("imagechecked")->GetText());
+		imagechecked = fw().data->loadImage(node->child("imagechecked").text().get());
 	}
 }
 }; // namespace OpenApoc

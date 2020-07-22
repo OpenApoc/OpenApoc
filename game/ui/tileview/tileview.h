@@ -1,36 +1,58 @@
 #pragma once
-#include "framework/includes.h"
+
 #include "framework/logger.h"
-#include "framework/palette.h"
 #include "framework/stage.h"
-#include "game/state/gamestate.h"
-#include "game/state/tileview/tile.h"
+#include "game/state/tilemap/tilemap.h"
+#include "library/colour.h"
 #include "library/sp.h"
+#include "library/vec.h"
+
+#define STRAT_TILE_X 8
+#define STRAT_TILE_Y 8
 
 namespace OpenApoc
 {
 
 class TileMap;
 class Image;
+class Palette;
 
 class TileView : public Stage, public TileTransform
 {
   protected:
-	StageCmd stageCmd;
+	// Formula: FPS / DESIRED_ANIMATIONS_PER_SECOND
+
+	static const int SELECTION_FRAME_ANIMATION_DELAY = 60 / 5;
+	static const int PORTAL_FRAME_ANIMATION_DELAY = 60 / 15;
+	// How many pixels from edge trigger scroll
+	static const int MOUSE_SCROLL_MARGIN = 1;
+
+  protected:
 	TileMap &map;
 	Vec3<int> isoTileSize;
 	Vec2<int> stratTileSize;
 	TileViewMode viewMode;
 
-	bool scrollUp;
-	bool scrollDown;
-	bool scrollLeft;
-	bool scrollRight;
+	bool scrollUpKB = false;
+	bool scrollDownKB = false;
+	bool scrollLeftKB = false;
+	bool scrollRightKB = false;
+
+	bool scrollUpM = false;
+	bool scrollDownM = false;
+	bool scrollLeftM = false;
+	bool scrollRightM = false;
+
+	bool autoScroll = false;
 
 	Vec2<int> dpySize;
 
 	Colour strategyViewBoxColour;
 	float strategyViewBoxThickness;
+
+	Vec3<int> selectedTilePosition;
+
+	bool debugHotkeyMode = false;
 
   public:
 	int maxZDraw;
@@ -38,17 +60,27 @@ class TileView : public Stage, public TileTransform
 	Vec2<float> isoScrollSpeed;
 	Vec2<float> stratScrollSpeed;
 
-	Vec3<int> selectedTilePosition;
-	sp<Image> selectedTileImageBack, selectedTileImageFront;
 	sp<Palette> pal;
 
 	TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
 	         TileViewMode initialMode);
-	~TileView();
+	~TileView() override;
 
 	Vec2<int> getScreenOffset() const;
-	void setScreenCenterTile(Vec2<float> center);
-	void setScreenCenterTile(Vec3<float> center);
+	virtual void setScreenCenterTile(Vec2<float> center);
+	virtual void setScreenCenterTile(Vec3<float> center);
+	virtual void setScreenCenterTile(Vec2<int> center)
+	{
+		this->setScreenCenterTile(Vec2<float>{center.x, center.y});
+	}
+	virtual void setScreenCenterTile(Vec3<int> center)
+	{
+
+		this->setScreenCenterTile(Vec3<float>{center.x, center.y, center.z});
+	}
+
+	Vec3<int> getSelectedTilePosition();
+	virtual void setSelectedTilePosition(Vec3<int> newPosition);
 
 	template <typename T> Vec2<T> tileToScreenCoords(Vec3<T> c, TileViewMode v) const
 	{
@@ -130,15 +162,18 @@ class TileView : public Stage, public TileTransform
 	}
 
 	// Stage control
-	void Begin() override;
-	void Pause() override;
-	void Resume() override;
-	void Finish() override;
-	void EventOccurred(Event *e) override;
-	void Render() override;
-	bool IsTransition() override;
+	void begin() override;
+	void pause() override;
+	void resume() override;
+	void finish() override;
+	void update() override;
+	void eventOccurred(Event *e) override;
+	bool isTransition() override;
 
 	virtual void setViewMode(TileViewMode newMode);
 	virtual TileViewMode getViewMode() const;
+
+	void applyScrolling();
+	void renderStrategyOverlay(Renderer &r);
 };
 }; // namespace OpenApoc

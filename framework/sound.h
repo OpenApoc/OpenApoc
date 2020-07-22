@@ -1,10 +1,10 @@
 #pragma once
+
 #include "library/resource.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
 #include <functional>
-#include <memory>
 #include <vector>
 
 namespace OpenApoc
@@ -46,18 +46,20 @@ class AudioFormat
 class BackendSampleData
 {
   public:
-	virtual ~BackendSampleData() {}
+	virtual ~BackendSampleData() = default;
 };
 
 class Sample : public ResObject
 {
   public:
 	AudioFormat format;
+	// The samplecount is for a single channel - e.g. having 2 channels means there's
+	// (2*sampleCount) total samples in *data
 	unsigned int sampleCount;
 	std::unique_ptr<uint8_t[]> data;
 	sp<BackendSampleData> backendData;
 
-	virtual ~Sample() {}
+	virtual ~Sample() = default;
 };
 
 class MusicTrack : public ResObject
@@ -77,13 +79,13 @@ class MusicTrack : public ResObject
 	                                  void *sampleBuffer, unsigned int *returnedSamples)>
 	    callback;
 	virtual const UString &getName() const = 0;
-	virtual ~MusicTrack() {}
+	virtual ~MusicTrack() = default;
 };
 
 class SoundBackend
 {
   public:
-	virtual ~SoundBackend() {}
+	virtual ~SoundBackend() = default;
 	virtual void playSample(sp<Sample> sample, float gain = 1.0f) = 0;
 	virtual void playMusic(std::function<void(void *)> finishedCallback,
 	                       void *callbackData = nullptr) = 0;
@@ -114,7 +116,7 @@ class SoundBackend
 
 	Vec3<float> listenerPosition;
 	/* A quick attempt at 'positional' audio */
-	virtual void playSample(sp<Sample> sample, Vec3<float> position);
+	virtual void playSample(sp<Sample> sample, Vec3<float> position, float gainMultiplier = 1.0f);
 	virtual void setListenerPosition(Vec3<float> position);
 };
 
@@ -125,9 +127,19 @@ class JukeBox
 	{
 		Once,
 		Loop,
+		Shuffle
 	};
-	virtual ~JukeBox() {}
-	virtual void play(std::vector<UString> tracks, PlayMode mode = PlayMode::Loop) = 0;
+	enum class PlayList
+	{
+		None,
+		City,
+		Tactical,
+		Action,
+		Alien
+	};
+	virtual ~JukeBox() = default;
+	virtual void play(PlayList list, PlayMode mode = PlayMode::Shuffle) = 0;
+	virtual void play(const std::vector<UString> &tracks, PlayMode mode = PlayMode::Shuffle) = 0;
 	virtual void stop() = 0;
 };
-};
+}; // namespace OpenApoc

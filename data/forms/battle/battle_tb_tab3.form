@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <!-- Turn-Based Grenade Prime -->
+  <form id="FORM_BATTLE_UI_TB_3">
+    <style minwidth="640" minheight="128">
+      <position x="centre" y="bottom"/>
+      <size width="640" height="128"/>
+      <backcolour r="128" g="96" b="80"/>
+      <graphic>
+        <size width="640" height="128"/>
+        <image>RAW:xcom3/tacdata/tacbord7.dat:640:128:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+      <!-- Grenade interface -->
+      <checkbox id="HIDDEN_CHECK_RIGHT_HAND">
+        <position x="0" y="0"/>
+        <size width="0" height="0"/>
+      </checkbox>
+      <graphicbutton id="BUTTON_CANCEL">
+        <tooltip text="No, cancel operation" font="smallset"/>
+        <position x="201" y="101"/>
+        <size width="54" height="25"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:318:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_OK">
+        <tooltip text="Yes, prime grenade" font="smallset"/>
+        <position x="385" y="101"/>
+        <size width="54" height="25"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:317:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
+      <label id="DELAY_TEXT">
+        <position x="273" y="37"/>
+        <size width="94" height="25"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="RANGE_TEXT">
+        <position x="262" y="91"/>
+        <size width="116" height="12"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphic id="DELAY_SLIDER_LEFT">
+        <position x="263" y="78"/>
+        <size width="7" height="11"/>
+        <imageposition>stretch</imageposition>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:81:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+      <graphic id="DELAY_SLIDER_MIDDLE">
+        <position x="269" y="78"/>
+        <size width="102" height="11"/>
+        <imageposition>stretch</imageposition>
+        <image>battle/battle-grenade-scroll.png</image>
+      </graphic>
+      <graphic id="DELAY_SLIDER_RIGHT">
+        <position x="371" y="78"/>
+        <size width="7" height="11"/>
+        <imageposition>stretch</imageposition>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:82:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+      <scroll id="DELAY_SLIDER">
+        <position x="263" y="75"/>
+        <size width="114" height="15"/>
+        <range min="0" max="5"/>
+        <gripperimage>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:84:xcom3/tacdata/tactical.pal</gripperimage>
+      </scroll>
+      <graphic id="RANGE_SLIDER_LEFT">
+        <position x="263" y="106"/>
+        <size width="7" height="11"/>
+        <imageposition>stretch</imageposition>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:81:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+      <graphic id="RANGE_SLIDER_MIDDLE">
+        <position x="269" y="106"/>
+        <size width="102" height="11"/>
+        <imageposition>stretch</imageposition>
+        <image>battle/battle-grenade-scroll.png</image>
+      </graphic>
+      <graphic id="RANGE_SLIDER_RIGHT">
+        <position x="371" y="106"/>
+        <size width="7" height="11"/>
+        <imageposition>stretch</imageposition>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:82:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+      <scroll id="RANGE_SLIDER">
+        <position x="263" y="103"/>
+        <size width="114" height="15"/>
+        <range min="0" max="6"/>
+        <gripperimage>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:84:xcom3/tacdata/tactical.pal</gripperimage>
+      </scroll>
+    </style>
+  </form>
+</openapoc>

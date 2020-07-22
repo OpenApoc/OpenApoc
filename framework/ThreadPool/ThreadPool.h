@@ -17,8 +17,7 @@ class ThreadPool
 {
   public:
 	ThreadPool(size_t);
-	template <class F, class... Args>
-	auto enqueue(F &&f, Args &&... args) -> std::future<typename std::result_of<F(Args...)>::type>;
+	void enqueue(std::function<void()> task);
 	~ThreadPool();
 
   private:
@@ -37,11 +36,11 @@ class ThreadPool
 inline ThreadPool::ThreadPool(size_t threads) : stop(false)
 {
 	// Having a zero-sized threadpool really doesn't make sense
-	assert(threads > 0);
+	LogAssert(threads > 0);
 	for (size_t i = 0; i < threads; ++i)
 		workers.emplace_back([this, i] {
 			OpenApoc::Trace::setThreadName("ThreadPool " +
-			                               OpenApoc::Strings::FromInteger(static_cast<int>(i)));
+			                               OpenApoc::Strings::fromInteger(static_cast<int>(i)));
 			for (;;)
 			{
 				std::function<void()> task;
@@ -69,16 +68,8 @@ inline ThreadPool::ThreadPool(size_t threads) : stop(false)
 }
 
 // add new work item to the pool
-template <class F, class... Args>
-auto ThreadPool::enqueue(F &&f, Args &&... args)
-    -> std::future<typename std::result_of<F(Args...)>::type>
+void ThreadPool::enqueue(std::function<void()> task)
 {
-	using return_type = typename std::result_of<F(Args...)>::type;
-
-	auto task = std::make_shared<std::packaged_task<return_type()>>(
-	    std::bind(std::forward<F>(f), std::forward<Args>(args)...));
-
-	std::future<return_type> res = task->get_future();
 	{
 		std::unique_lock<std::mutex> lock(queue_mutex);
 
@@ -86,10 +77,9 @@ auto ThreadPool::enqueue(F &&f, Args &&... args)
 		if (stop)
 			throw std::runtime_error("enqueue on stopped ThreadPool");
 
-		tasks.emplace([task]() { (*task)(); });
+		tasks.emplace(task);
 	}
 	condition.notify_one();
-	return res;
 }
 
 // the destructor joins all threads

@@ -1,11 +1,9 @@
 #pragma once
 
-#include <cstdint>
-#include <map>
-#include <mutex>
-
 #include "library/sp.h"
 #include "library/strings.h"
+#include <cstdint>
+#include <istream>
 
 #define PROGRAM_NAME "OpenApoc"
 #define PROGRAM_ORGANISATION "OpenApoc"
@@ -22,14 +20,14 @@ class IFileImpl
 class IFile : public std::istream
 {
   private:
-	std::unique_ptr<IFileImpl> f;
+	up<IFileImpl> f;
 	IFile();
 	friend class FileSystem;
 
   public:
-	~IFile();
+	~IFile() override;
 	size_t size() const;
-	std::unique_ptr<char[]> readAll();
+	up<char[]> readAll();
 	bool readule16(uint16_t &val);
 	bool readule32(uint32_t &val);
 	const UString &fileName() const;
@@ -42,22 +40,15 @@ class FileSystem
   private:
 	UString writeDir;
 
-	// Some operating systems (windows, android) seem to have be somewhat inefficient stat() or
-	// similay, so the current implementation of getCorrectCaseFilename can take a surprisingly
-	// large amount of the startup time.
-	//
-	// So, for now keep a massive map of < toupper(path), systemPath > for things we've already
-	// enumerated
-	// FIXME: When we allow adding/removing paths from the search path list, this cache will likely
-	// have to be invalidated
-	std::map<UString, UString> pathCache;
-	std::recursive_mutex pathCacheLock;
-
   public:
 	FileSystem(std::vector<UString> paths);
 	~FileSystem();
-	IFile open(const UString &path);
-	UString getCorrectCaseFilename(const UString &path);
+	bool addPath(const UString &newPath);
+	IFile open(const UString &path) const;
+	std::list<UString> enumerateDirectory(const UString &path, const UString &extension) const;
+	std::list<UString> enumerateDirectoryRecursive(const UString &path,
+	                                               const UString &extension) const;
+	UString resolvePath(const UString &path) const;
 };
 
 } // namespace OpenApoc

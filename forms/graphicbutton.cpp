@@ -1,9 +1,13 @@
 #include "forms/graphicbutton.h"
+#include "dependencies/pugixml/src/pugixml.hpp"
 #include "forms/scrollbar.h"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/image.h"
+#include "framework/renderer.h"
+#include "framework/sound.h"
 #include "library/sp.h"
-#include <tinyxml2.h>
 
 namespace OpenApoc
 {
@@ -11,41 +15,60 @@ namespace OpenApoc
 GraphicButton::GraphicButton(sp<Image> image, sp<Image> imageDepressed, sp<Image> imageHover)
     : Control(), image(image), imagedepressed(imageDepressed), imagehover(imageHover),
       buttonclick(
-          fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050"))
+          fw().data->loadSample("RAWSOUND:xcom3/rawsound/strategc/intrface/button1.raw:22050"))
 {
+	isClickable = true;
 }
 
-GraphicButton::~GraphicButton() {}
+GraphicButton::~GraphicButton() = default;
 
-void GraphicButton::EventOccured(Event *e)
+bool GraphicButton::click()
 {
-	Control::EventOccured(e);
-
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
-	    e->Forms().EventFlag == FormEventType::MouseDown)
+	if (!Control::click())
+	{
+		return false;
+	}
+	if (buttonclick)
 	{
 		fw().soundBackend->playSample(buttonclick);
 	}
+	return true;
+}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
-	    e->Forms().EventFlag == FormEventType::MouseClick)
+void GraphicButton::eventOccured(Event *e)
+{
+	Control::eventOccured(e);
+
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
+	    e->forms().EventFlag == FormEventType::MouseDown)
+	{
+		if (buttonclick)
+		{
+			fw().soundBackend->playSample(buttonclick);
+		}
+	}
+
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
+	    e->forms().EventFlag == FormEventType::MouseClick)
 	{
 		this->pushFormEvent(FormEventType::ButtonClick, e);
 
 		if (ScrollBarPrev != nullptr)
 		{
-			ScrollBarPrev->ScrollPrev();
+			ScrollBarPrev->scrollPrev(!scrollLarge);
 		}
 
 		if (ScrollBarNext != nullptr)
 		{
-			ScrollBarNext->ScrollNext();
+			ScrollBarNext->scrollNext(!scrollLarge);
 		}
 	}
 }
 
-void GraphicButton::OnRender()
+void GraphicButton::onRender()
 {
+	Control::onRender();
+
 	sp<Image> useimage;
 
 	if (image)
@@ -84,29 +107,45 @@ void GraphicButton::OnRender()
 	}
 }
 
-void GraphicButton::Update() { Control::Update(); }
+void GraphicButton::update() { Control::update(); }
 
-void GraphicButton::UnloadResources()
+void GraphicButton::unloadResources()
 {
 	image.reset();
 	imagedepressed.reset();
 	imagehover.reset();
-	Control::UnloadResources();
+	Control::unloadResources();
 }
 
-sp<Image> GraphicButton::GetImage() const { return image; }
+sp<Sample> GraphicButton::getClickSound() const { return buttonclick; }
 
-void GraphicButton::SetImage(sp<Image> Image) { image = Image; }
+void GraphicButton::setClickSound(sp<Sample> sample) { buttonclick = sample; }
 
-sp<Image> GraphicButton::GetDepressedImage() const { return imagedepressed; }
+sp<Image> GraphicButton::getImage() const { return image; }
 
-void GraphicButton::SetDepressedImage(sp<Image> Image) { imagedepressed = Image; }
+void GraphicButton::setImage(sp<Image> Image)
+{
+	image = Image;
+	this->setDirty();
+}
 
-sp<Image> GraphicButton::GetHoverImage() const { return imagehover; }
+sp<Image> GraphicButton::getDepressedImage() const { return imagedepressed; }
 
-void GraphicButton::SetHoverImage(sp<Image> Image) { imagehover = Image; }
+void GraphicButton::setDepressedImage(sp<Image> Image)
+{
+	imagedepressed = Image;
+	this->setDirty();
+}
 
-sp<Control> GraphicButton::CopyTo(sp<Control> CopyParent)
+sp<Image> GraphicButton::getHoverImage() const { return imagehover; }
+
+void GraphicButton::setHoverImage(sp<Image> Image)
+{
+	imagehover = Image;
+	this->setDirty();
+}
+
+sp<Control> GraphicButton::copyTo(sp<Control> CopyParent)
 {
 	sp<GraphicButton> copy;
 	if (CopyParent)
@@ -128,25 +167,33 @@ sp<Control> GraphicButton::CopyTo(sp<Control> CopyParent)
 		copy->ScrollBarNext =
 		    std::dynamic_pointer_cast<ScrollBar>(ScrollBarNext->lastCopiedTo.lock());
 	}
-	CopyControlData(copy);
+	copy->scrollLarge = scrollLarge;
+	copyControlData(copy);
 	return copy;
 }
 
-void GraphicButton::ConfigureFromXML(tinyxml2::XMLElement *Element)
+void GraphicButton::configureSelfFromXml(pugi::xml_node *node)
 {
-	Control::ConfigureFromXML(Element);
-	if (Element->FirstChildElement("image") != nullptr)
+	Control::configureSelfFromXml(node);
+
+	if (auto scrollLarge = node->attribute("scrolllarge"))
 	{
-		image = fw().data->load_image(Element->FirstChildElement("image")->GetText());
+		this->scrollLarge = scrollLarge.as_bool();
 	}
-	if (Element->FirstChildElement("imagedepressed") != nullptr)
+	auto imageNode = node->child("image");
+	if (imageNode)
 	{
-		imagedepressed =
-		    fw().data->load_image(Element->FirstChildElement("imagedepressed")->GetText());
+		image = fw().data->loadImage(imageNode.text().get());
 	}
-	if (Element->FirstChildElement("imagehover") != nullptr)
+	auto imageDepressedNode = node->child("imagedepressed");
+	if (imageDepressedNode)
 	{
-		imagehover = fw().data->load_image(Element->FirstChildElement("imagehover")->GetText());
+		imagedepressed = fw().data->loadImage(imageDepressedNode.text().get());
+	}
+	auto imageHoverNode = node->child("imagehover");
+	if (imageHoverNode)
+	{
+		imagehover = fw().data->loadImage(imageHoverNode.text().get());
 	}
 }
 }; // namespace OpenApoc

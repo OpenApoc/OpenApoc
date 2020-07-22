@@ -1,30 +1,46 @@
-
 #pragma once
 
 #include "framework/stage.h"
-
-#include "forms/forms.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {
+
+class GameState;
+class Form;
+class Label;
 
 class ScoreScreen : public Stage
 {
   private:
 	sp<Form> menuform;
-	StageCmd stageCmd;
+	sp<Form> formScore;
+	sp<Form> formFinance;
+	sp<Label> title;
+
+	sp<GameState> state;
+
+	// The form filling status.
+	bool formScoreFilled = false;
+	bool formFinanceFilled = false;
+
+	// Setup the score mode.
+	void setScoreMode();
+	// Setup the finance mode.
+	void setFinanceMode();
 
   public:
-	ScoreScreen();
-	~ScoreScreen();
+	ScoreScreen(sp<GameState> state);
+	~ScoreScreen() override;
+
 	// Stage control
-	void Begin() override;
-	void Pause() override;
-	void Resume() override;
-	void Finish() override;
-	void EventOccurred(Event *e) override;
-	void Update(StageCmd *const cmd) override;
-	void Render() override;
-	bool IsTransition() override;
+	void begin() override;
+	void pause() override;
+	void resume() override;
+	void finish() override;
+	void eventOccurred(Event *e) override;
+	void update() override;
+	void render() override;
+	bool isTransition() override;
 };
 }; // namespace OpenApoc

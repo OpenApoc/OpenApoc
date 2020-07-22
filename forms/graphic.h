@@ -1,13 +1,13 @@
-
 #pragma once
-#include "library/sp.h"
 
-#include "control.h"
-#include "forms_enums.h"
-#include "framework/image.h"
+#include "forms/control.h"
+#include "forms/forms_enums.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {
+
+class Image;
 
 class Graphic : public Control
 {
@@ -16,7 +16,7 @@ class Graphic : public Control
 	sp<Image> image;
 
   protected:
-	void OnRender() override;
+	void onRender() override;
 
   public:
 	HorizontalAlignment ImageHAlign;
@@ -25,17 +25,17 @@ class Graphic : public Control
 	bool AutoSize;
 
 	Graphic(sp<Image> Image = nullptr);
-	virtual ~Graphic();
+	~Graphic() override;
 
-	void EventOccured(Event *e) override;
-	void Update() override;
-	void UnloadResources() override;
+	void eventOccured(Event *e) override;
+	void update() override;
+	void unloadResources() override;
 
-	sp<Image> GetImage() const;
-	void SetImage(sp<Image> Image);
+	sp<Image> getImage() const;
+	void setImage(sp<Image> Image);
 
-	sp<Control> CopyTo(sp<Control> CopyParent) override;
-	void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
+	sp<Control> copyTo(sp<Control> CopyParent) override;
+	void configureSelfFromXml(pugi::xml_node *node) override;
 };
 
 }; // namespace OpenApoc

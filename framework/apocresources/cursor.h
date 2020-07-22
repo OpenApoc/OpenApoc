@@ -1,8 +1,8 @@
-
 #pragma once
-#include "library/sp.h"
 
-#include "framework/includes.h"
+#include "library/sp.h"
+#include "library/vec.h"
+#include <vector>
 
 namespace OpenApoc
 {
@@ -34,12 +34,12 @@ class ApocCursor
 
 	CursorType CurrentType;
 
-	const Vec2<int> &getPosition() { return cursorPos; }
+	const Vec2<int> &getPosition() const { return cursorPos; }
 
 	ApocCursor(sp<Palette> ColourPalette);
 	~ApocCursor();
 
-	void EventOccured(Event *e);
-	void Render();
+	void eventOccured(Event *e);
+	void render();
 };
 }; // namespace OpenApoc

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <!-- Turn-Based Main Screen -->
+  <form id="FORM_BATTLE_UI_TB_1">
+    <style minwidth="640" minheight="128">
+      <position x="centre" y="bottom"/>
+      <size width="640" height="128"/>
+      <backcolour r="128" g="96" b="80"/>
+      <graphic>
+        <size width="640" height="128"/>
+        <image>RAW:xcom3/tacdata/tacbord5.dat:640:128:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+      <!-- Turn based buttons -->
+      <!-- TBD -->
+      <!-- TBD -->
+      <!-- TBD -->
+      <!-- Layers -->
+      <radiobutton id="BUTTON_LAYER_1" groupid="LAYER">
+        <tooltip text="Level indicator" font="smallset"/>
+        <position x="314" y="113"/>
+        <size width="13" height="8"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:100:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:33:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_2" groupid="LAYER">
+        <tooltip text="Level indicator" font="smallset"/>
+        <position x="314" y="104"/>
+        <size width="13" height="8"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:101:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:34:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_3" groupid="LAYER">
+        <tooltip text="Level indicator" font="smallset"/>
+        <position x="314" y="95"/>
+        <size width="13" height="8"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:102:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:35:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_4" groupid="LAYER">
+        <tooltip text="Level indicator" font="smallset"/>
+        <position x="314" y="86"/>
+        <size width="13" height="8"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:103:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:36:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_5" groupid="LAYER">
+        <tooltip text="Level indicator" font="smallset"/>
+        <position x="314" y="77"/>
+        <size width="13" height="8"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:104:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:37:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_6" groupid="LAYER">
+        <tooltip text="Level indicator" font="smallset"/>
+        <position x="314" y="68"/>
+        <size width="13" height="8"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:105:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:38:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_7" groupid="LAYER">
+        <tooltip text="Level indicator" font="smallset"/>
+        <position x="314" y="59"/>
+        <size width="13" height="8"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:106:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:39:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_8" groupid="LAYER">
+        <tooltip text="Level indicator" font="smallset"/>
+        <position x="314" y="50"/>
+        <size width="13" height="8"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:107:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:40:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_LAYER_9" groupid="LAYER">
+        <tooltip text="Level indicator" font="smallset"/>
+        <position x="314" y="41"/>
+        <size width="13" height="8"/>
+        <image>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:108:xcom3/tacdata/tactical.pal</image>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:41:xcom3/tacdata/tactical.pal</imagechecked>
+      </radiobutton>
+      <!-- Items in hands -->
+      <graphic id="IMAGE_RIGHT_HAND">
+        <tooltip text="" font="smallset"/>
+        <position x="263" y="29"/>
+        <size width="50" height="92"/>
+        <alignment horizontal="centre" vertical="centre"/>
+      </graphic>
+      <graphic id="IMAGE_RIGHT_HAND_SELECTED">
+        <position x="266" y="42"/>
+        <size width="45" height="78"/>
+      </graphic>
+      <graphic id="IMAGE_RIGHT_DAMAGETYPE">
+        <tooltip text="" font="smallset"/>
+        <position x="229" y="68"/>
+        <size width="29" height="29"/>
+        <alignment horizontal="centre" vertical="centre"/>
+      </graphic>
+      <graphic id="OVERLAY_RIGHT_HAND">
+        <position x="262" y="29"/>
+        <size width="50" height="95"/>
+      </graphic>
+      <graphic id="CLICKY_RIGHT_HAND">
+        <position x="262" y="39"/>
+        <size width="50" height="85"/>
+      </graphic>
+      <graphicbutton id="BUTTON_RIGHT_HAND_DROP">
+        <tooltip text="Drop object" font="smallset"/>
+        <position x="201" y="101"/>
+        <size width="26" height="25"/>
+        <image/>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:163:xcom3/tacdata/tactical.pal</imagechecked>
+      </graphicbutton>
+      <checkbox id="BUTTON_RIGHT_HAND_THROW">
+        <tooltip text="Throw object" font="smallset"/>
+        <position x="228" y="101"/>
+        <size width="26" height="25"/>
+        <image/>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:162:xcom3/tacdata/tactical.pal</imagechecked>
+      </checkbox>
+      <graphic id="IMAGE_LEFT_HAND">
+        <tooltip text="" font="smallset"/>
+        <position x="328" y="29"/>
+        <size width="50" height="93"/>
+        <alignment horizontal="centre" vertical="centre"/>
+      </graphic>
+      <graphic id="IMAGE_LEFT_HAND_SELECTED">
+        <position x="329" y="42"/>
+        <size width="45" height="78"/>
+      </graphic>
+      <graphic id="IMAGE_LEFT_DAMAGETYPE">
+        <tooltip text="" font="smallset"/>
+        <position x="382" y="68"/>
+        <size width="29" height="29"/>
+        <alignment horizontal="centre" vertical="centre"/>
+      </graphic>
+      <graphic id="OVERLAY_LEFT_HAND">
+        <position x="328" y="29"/>
+        <size width="50" height="95"/>
+      </graphic>
+      <graphic id="CLICKY_LEFT_HAND">
+        <position x="328" y="39"/>
+        <size width="50" height="85"/>
+      </graphic>
+      <graphicbutton id="BUTTON_LEFT_HAND_DROP">
+        <tooltip text="Drop object" font="smallset"/>
+        <position x="411" y="101"/>
+        <size width="26" height="25"/>
+        <image/>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:163:xcom3/tacdata/tactical.pal</imagechecked>
+      </graphicbutton>
+      <checkbox id="BUTTON_LEFT_HAND_THROW">
+        <tooltip text="Throw object" font="smallset"/>
+        <position x="385" y="101"/>
+        <size width="26" height="25"/>
+        <image/>
+        <imagechecked>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:164:xcom3/tacdata/tactical.pal</imagechecked>
+      </checkbox>
+      <graphicbutton id="BUTTON_INVENTORY">
+        <tooltip text="Equip agent" font="smallset"/>
+        <position x="299" y="25"/>
+        <size width="43" height="16"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:161:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
+    </style>
+  </form>
+</openapoc>

@@ -86,7 +86,7 @@ static PROC WinGetProcAddress(const char *name)
 	#endif
 #endif
 
-namespace gl
+namespace gl20
 {
 	namespace exts
 	{
@@ -2402,7 +2402,7 @@ namespace gl
 			
 			void LoadExtByName(std::vector<MapEntry> &table, const char *extensionName)
 			{
-				std::vector<MapEntry>::iterator entry = std::find_if(table.begin(), table.end(), MapCompare(extensionName));
+				auto entry = std::find_if(table.begin(), table.end(), MapCompare(extensionName));
 				
 				if(entry != table.end())
 				{
@@ -2462,7 +2462,7 @@ namespace gl
 			_detail::GetString = reinterpret_cast<_detail::PFNGETSTRING>(IntGetProcAddress("glGetString"));
 			if(!_detail::GetString) return exts::LoadTest();
 			
-			ProcExtsFromExtString((const char *)gl::_detail::GetString(gl::EXTENSIONS), table);
+			ProcExtsFromExtString((const char *)gl20::_detail::GetString(gl20::EXTENSIONS), table);
 			
 			int numFailed = _detail::LoadCoreFunctions();
 			return exts::LoadTest(true, numFailed);

@@ -1,4 +1,3 @@
-
 #pragma once
 
 namespace OpenApoc
@@ -23,14 +22,20 @@ enum class FormEventType
 	KeyPress,
 	KeyUp,
 	TextInput,
+	ToolTip,
 
 	ButtonClick,
 	CheckBoxChange,
 	CheckBoxSelected,
 	CheckBoxDeSelected,
+	TriStateBoxChange,
+	TriStateBoxState1Selected,
+	TriStateBoxState2Selected,
+	TriStateBoxState3Selected,
 	ScrollBarChange,
 	TextChanged,
 	TextEditFinish,
+	TextEditCancel,
 	ListBoxChangeHover,
 	ListBoxChangeSelected
 };

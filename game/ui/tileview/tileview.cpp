@@ -1,9 +1,11 @@
 #include "game/ui/tileview/tileview.h"
+#include "framework/configfile.h"
 #include "framework/event.h"
 #include "framework/framework.h"
-#include "framework/includes.h"
-#include "game/state/tileview/tile.h"
-#include "game/state/tileview/tileobject.h"
+#include "framework/keycodes.h"
+#include "framework/renderer.h"
+#include "framework/sound.h"
+#include "game/state/battle/battle.h"
 
 namespace OpenApoc
 {
@@ -11,46 +13,45 @@ namespace OpenApoc
 TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
                    TileViewMode initialMode)
     : Stage(), map(map), isoTileSize(isoTileSize), stratTileSize(stratTileSize),
-      viewMode(initialMode), scrollUp(false), scrollDown(false), scrollLeft(false),
-      scrollRight(false), dpySize(fw().Display_GetWidth(), fw().Display_GetHeight()),
-      strategyViewBoxColour(212, 176, 172, 255), strategyViewBoxThickness(2.0f), maxZDraw(10),
-      centerPos(0, 0, 0), isoScrollSpeed(0.5, 0.5), stratScrollSpeed(2.0f, 2.0f),
-      selectedTilePosition(0, 0, 0),
-      selectedTileImageBack(fw().data->load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
-      selectedTileImageFront(fw().data->load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")),
-      pal(fw().data->load_palette("xcom3/ufodata/PAL_01.DAT"))
+      viewMode(initialMode), dpySize(fw().displayGetWidth(), fw().displayGetHeight()),
+      strategyViewBoxColour(212, 176, 172, 255), strategyViewBoxThickness(2.0f),
+      selectedTilePosition(0, 0, 0), maxZDraw(map.size.z), centerPos(0, 0, 0),
+      isoScrollSpeed(0.5, 0.5), stratScrollSpeed(2.0f, 2.0f)
 {
-	LogWarning("dpySize: {%d,%d}", dpySize.x, dpySize.y);
+	LogInfo("dpySize: %s", dpySize);
 }
 
-TileView::~TileView() {}
+TileView::~TileView() = default;
 
-void TileView::Begin() {}
+void TileView::begin() { autoScroll = config().getBool("Options.Misc.AutoScroll"); }
 
-void TileView::Pause() {}
+void TileView::pause() {}
 
-void TileView::Resume() {}
+void TileView::resume() { autoScroll = config().getBool("Options.Misc.AutoScroll"); }
 
-void TileView::Finish() {}
+void TileView::finish() {}
 
-void TileView::EventOccurred(Event *e)
+void TileView::eventOccurred(Event *e)
 {
-
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		switch (e->Keyboard().KeyCode)
+		switch (e->keyboard().KeyCode)
 		{
+			case SDLK_F1:
+				debugHotkeyMode = !debugHotkeyMode;
+				LogWarning("DEBUG MODE %s", debugHotkeyMode);
+				break;
 			case SDLK_UP:
-				scrollUp = true;
+				scrollUpKB = true;
 				break;
 			case SDLK_DOWN:
-				scrollDown = true;
+				scrollDownKB = true;
 				break;
 			case SDLK_LEFT:
-				scrollLeft = true;
+				scrollLeftKB = true;
 				break;
 			case SDLK_RIGHT:
-				scrollRight = true;
+				scrollRightKB = true;
 				break;
 			case SDLK_s:
 				if (selectedTilePosition.y < (map.size.y - 1))
@@ -76,49 +77,32 @@ void TileView::EventOccurred(Event *e)
 				if (selectedTilePosition.z > 0)
 					selectedTilePosition.z--;
 				break;
-			case SDLK_1:
-				pal = fw().data->load_palette("xcom3/ufodata/PAL_01.DAT");
-				break;
-			case SDLK_2:
-				pal = fw().data->load_palette("xcom3/ufodata/PAL_02.DAT");
-				break;
-			case SDLK_3:
-				pal = fw().data->load_palette("xcom3/ufodata/PAL_03.DAT");
-				break;
-			case SDLK_F6:
-			{
-				LogWarning("Writing voxel view to tileviewvoxels.png");
-				auto imageOffset = -this->getScreenOffset();
-				auto img = std::dynamic_pointer_cast<RGBImage>(
-				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this));
-				fw().data->write_image("tileviewvoxels.png", img);
-			}
 		}
 	}
-	else if (e->Type() == EVENT_KEY_UP)
+	else if (e->type() == EVENT_KEY_UP)
 	{
-		switch (e->Keyboard().KeyCode)
+		switch (e->keyboard().KeyCode)
 		{
 			case SDLK_UP:
-				scrollUp = false;
+				scrollUpKB = false;
 				break;
 			case SDLK_DOWN:
-				scrollDown = false;
+				scrollDownKB = false;
 				break;
 			case SDLK_LEFT:
-				scrollLeft = false;
+				scrollLeftKB = false;
 				break;
 			case SDLK_RIGHT:
-				scrollRight = false;
+				scrollRightKB = false;
 				break;
 		}
 	}
-	else if (e->Type() == EVENT_FINGER_MOVE)
+	else if (e->type() == EVENT_FINGER_MOVE)
 	{
 		// FIXME: Review this code for sanity
-		if (e->Finger().IsPrimary)
+		if (e->finger().IsPrimary)
 		{
-			Vec3<float> deltaPos(e->Finger().DeltaX, e->Finger().DeltaY, 0);
+			Vec3<float> deltaPos(e->finger().DeltaX, e->finger().DeltaY, 0);
 			if (this->viewMode == TileViewMode::Isometric)
 			{
 				deltaPos.x /= isoTileSize.x;
@@ -135,34 +119,99 @@ void TileView::EventOccurred(Event *e)
 			this->setScreenCenterTile(newPos);
 		}
 	}
+	else if (e->type() == EVENT_MOUSE_MOVE)
+	{
+		scrollLeftM = autoScroll && e->mouse().X < MOUSE_SCROLL_MARGIN;
+		scrollRightM = autoScroll && e->mouse().X >= dpySize.x - MOUSE_SCROLL_MARGIN;
+		scrollUpM = autoScroll && e->mouse().Y < MOUSE_SCROLL_MARGIN;
+		scrollDownM = autoScroll && e->mouse().Y >= dpySize.y - MOUSE_SCROLL_MARGIN;
+	}
 }
 
-void TileView::Render()
-{
-	TRACE_FN;
-	Renderer &r = *fw().renderer;
-	r.clear();
-	r.setPalette(this->pal);
+bool TileView::isTransition() { return false; }
 
+void TileView::setViewMode(TileViewMode newMode) { this->viewMode = newMode; }
+
+TileViewMode TileView::getViewMode() const { return this->viewMode; }
+
+Vec2<int> TileView::getScreenOffset() const
+{
+	Vec2<float> screenOffset = this->tileToScreenCoords(this->centerPos);
+
+	return Vec2<int>{dpySize.x / 2 - screenOffset.x, dpySize.y / 2 - screenOffset.y};
+}
+
+void TileView::setScreenCenterTile(Vec3<float> center)
+{
+	fw().soundBackend->setListenerPosition({center.x, center.y, map.size.z / 2});
+	Vec3<float> clampedCenter;
+	if (center.x < 0.0f)
+		clampedCenter.x = 0.0f;
+	else if (center.x > map.size.x)
+		clampedCenter.x = map.size.x;
+	else
+		clampedCenter.x = center.x;
+	if (center.y < 0.0f)
+		clampedCenter.y = 0.0f;
+	else if (center.y > map.size.y)
+		clampedCenter.y = map.size.y;
+	else
+		clampedCenter.y = center.y;
+	if (center.z < 0.0f)
+		clampedCenter.z = 0.0f;
+	else if (center.z > map.size.z)
+		clampedCenter.z = map.size.z;
+	else
+		clampedCenter.z = center.z;
+
+	this->centerPos = clampedCenter;
+}
+
+void TileView::setScreenCenterTile(Vec2<float> center)
+{
+	this->setScreenCenterTile(Vec3<float>{center.x, center.y, 1});
+}
+
+Vec3<int> TileView::getSelectedTilePosition() { return selectedTilePosition; }
+
+void TileView::setSelectedTilePosition(Vec3<int> newPosition)
+{
+	selectedTilePosition = newPosition;
+	if (selectedTilePosition.x < 0)
+		selectedTilePosition.x = 0;
+	if (selectedTilePosition.y < 0)
+		selectedTilePosition.y = 0;
+	if (selectedTilePosition.z < 0)
+		selectedTilePosition.z = 0;
+	if (selectedTilePosition.x >= map.size.x)
+		selectedTilePosition.x = map.size.x - 1;
+	if (selectedTilePosition.y >= map.size.y)
+		selectedTilePosition.y = map.size.y - 1;
+	if (selectedTilePosition.z >= map.size.z)
+		selectedTilePosition.z = map.size.z - 1;
+}
+
+void TileView::applyScrolling()
+{
 	Vec3<float> newPos = this->centerPos;
 	if (this->viewMode == TileViewMode::Isometric)
 	{
-		if (scrollLeft)
+		if (scrollLeftKB || scrollLeftM)
 		{
 			newPos.x -= isoScrollSpeed.x;
 			newPos.y += isoScrollSpeed.y;
 		}
-		if (scrollRight)
+		if (scrollRightKB || scrollRightM)
 		{
 			newPos.x += isoScrollSpeed.x;
 			newPos.y -= isoScrollSpeed.y;
 		}
-		if (scrollUp)
+		if (scrollUpKB || scrollUpM)
 		{
 			newPos.y -= isoScrollSpeed.y;
 			newPos.x -= isoScrollSpeed.x;
 		}
-		if (scrollDown)
+		if (scrollDownKB || scrollDownM)
 		{
 			newPos.y += isoScrollSpeed.y;
 			newPos.x += isoScrollSpeed.x;
@@ -170,13 +219,13 @@ void TileView::Render()
 	}
 	else if (this->viewMode == TileViewMode::Strategy)
 	{
-		if (scrollLeft)
+		if (scrollLeftKB || scrollLeftM)
 			newPos.x -= stratScrollSpeed.x;
-		if (scrollRight)
+		if (scrollRightKB || scrollRightM)
 			newPos.x += stratScrollSpeed.x;
-		if (scrollUp)
+		if (scrollUpKB || scrollUpM)
 			newPos.y -= stratScrollSpeed.y;
-		if (scrollDown)
+		if (scrollDownKB || scrollDownM)
 			newPos.y += stratScrollSpeed.y;
 	}
 	else
@@ -185,39 +234,10 @@ void TileView::Render()
 	}
 
 	this->setScreenCenterTile(newPos);
+}
 
-	// screenOffset.x/screenOffset.y is the 'amount added to the tile coords' - so we want
-	// the inverse to tell which tiles are at the screen bounds
-	auto topLeft = offsetScreenToTileCoords(Vec2<int>{-isoTileSize.x, -isoTileSize.y}, 0);
-	auto topRight = offsetScreenToTileCoords(Vec2<int>{dpySize.x, -isoTileSize.y}, 0);
-	auto bottomLeft = offsetScreenToTileCoords(Vec2<int>{-isoTileSize.x, dpySize.y}, map.size.z);
-	auto bottomRight = offsetScreenToTileCoords(Vec2<int>{dpySize.x, dpySize.y}, map.size.z);
-
-	int minX = std::max(0, topLeft.x);
-	int maxX = std::min(map.size.x, bottomRight.x);
-
-	int minY = std::max(0, topRight.y);
-	int maxY = std::min(map.size.y, bottomLeft.y);
-
-	for (int z = 0; z < maxZDraw; z++)
-	{
-		for (int layer = 0; layer < map.getLayerCount(); layer++)
-		{
-			for (int y = minY; y < maxY; y++)
-			{
-				for (int x = minX; x < maxX; x++)
-				{
-					auto tile = map.getTile(x, y, z);
-					for (auto &obj : tile->drawnObjects[layer])
-					{
-						Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
-						obj->draw(r, *this, pos, this->viewMode);
-					}
-				}
-			}
-		}
-	}
-
+void TileView::renderStrategyOverlay(Renderer &r)
+{
 	if (this->viewMode == TileViewMode::Strategy)
 	{
 		Vec2<float> centerIsoScreenPos = this->tileToScreenCoords(
@@ -266,48 +286,5 @@ void TileView::Render()
 	}
 }
 
-bool TileView::IsTransition() { return false; }
-
-void TileView::setViewMode(TileViewMode newMode) { this->viewMode = newMode; }
-
-TileViewMode TileView::getViewMode() const { return this->viewMode; }
-
-Vec2<int> TileView::getScreenOffset() const
-{
-	Vec2<float> screenOffset = this->tileToScreenCoords(this->centerPos);
-
-	return Vec2<int>{dpySize.x / 2 - screenOffset.x, dpySize.y / 2 - screenOffset.y};
-}
-
-void TileView::setScreenCenterTile(Vec3<float> center)
-{
-	fw().soundBackend->setListenerPosition({center.x, center.y, map.size.z / 2});
-	Vec3<float> clampedCenter;
-	if (center.x < 0.0f)
-		clampedCenter.x = 0.0f;
-	else if (center.x > map.size.x)
-		clampedCenter.x = map.size.x;
-	else
-		clampedCenter.x = center.x;
-	if (center.y < 0.0f)
-		clampedCenter.y = 0.0f;
-	else if (center.y > map.size.y)
-		clampedCenter.y = map.size.y;
-	else
-		clampedCenter.y = center.y;
-	if (center.z < 0.0f)
-		clampedCenter.z = 0.0f;
-	else if (center.z > map.size.z)
-		clampedCenter.z = map.size.z;
-	else
-		clampedCenter.z = center.z;
-
-	this->centerPos = clampedCenter;
-}
-
-void TileView::setScreenCenterTile(Vec2<float> center)
-{
-	this->setScreenCenterTile(Vec3<float>{center.x, center.y, 0});
-}
-
+void TileView::update() { applyScrolling(); }
 }; // namespace OpenApoc

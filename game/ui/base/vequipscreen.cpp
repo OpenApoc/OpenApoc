@@ -1,11 +1,28 @@
 #include "game/ui/base/vequipscreen.h"
-#include "forms/forms.h"
+#include "forms/form.h"
+#include "forms/graphic.h"
+#include "forms/label.h"
+#include "forms/radiobutton.h"
+#include "forms/textedit.h"
 #include "forms/ui.h"
+#include "framework/apocresources/cursor.h"
+#include "framework/configfile.h"
+#include "framework/data.h"
 #include "framework/event.h"
+#include "framework/font.h"
 #include "framework/framework.h"
+#include "framework/keycodes.h"
+#include "framework/renderer.h"
+#include "game/state/city/base.h"
+#include "game/state/city/building.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vequipment.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/city/vehicletype.h"
+#include "game/state/tilemap/tilemap.h"
+#include "game/ui/components/equipscreen.h"
+#include "game/ui/general/vehiclesheet.h"
+#include "library/strings_format.h"
 #include <cmath>
 
 namespace OpenApoc
@@ -17,15 +34,26 @@ static const Colour EQUIP_GRID_COLOUR{40, 40, 40, 255};
 static const Colour EQUIP_GRID_COLOUR_ENGINE{255, 255, 40, 255};
 static const Colour EQUIP_GRID_COLOUR_WEAPON{255, 40, 40, 255};
 static const Colour EQUIP_GRID_COLOUR_GENERAL{255, 40, 255, 255};
-static const float GLOW_COUNTER_INCREMENT = M_PI / 15.0f;
 
 VEquipScreen::VEquipScreen(sp<GameState> state)
-    : Stage(), form(ui().GetForm("FORM_VEQUIPSCREEN")), selectionType(VEquipmentType::Type::Weapon),
-      pal(fw().data->load_palette("xcom3/UFODATA/VROADWAR.PCX")),
-      labelFont(ui().GetFont("SMALFONT")), drawHighlightBox(false), state(state), glowCounter(0)
+    : Stage(), form(ui().getForm("vequipscreen")),
+      pal(fw().data->loadPalette("xcom3/ufodata/vroadwar.pcx")),
+      labelFont(ui().getFont("smalfont")), drawHighlightBox(false), state(state)
 
 {
-	form->FindControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->SetChecked(true);
+	formVehicleItem = form->findControlTyped<Form>("VEHICLE_STATS_VIEW");
+	form->findControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->setChecked(true);
+
+	auto paperDollPlaceholder = form->findControlTyped<Graphic>("PAPER_DOLL");
+
+	this->paperDoll = form->createChild<EquipmentPaperDoll>(
+	    paperDollPlaceholder->Location, paperDollPlaceholder->Size, EQUIP_GRID_SLOT_SIZE);
+
+	// when hovering the paperdoll, display the selected vehicle stats
+	paperDoll->addCallback(FormEventType::MouseEnter, [this](FormsEvent *e [[maybe_unused]]) {
+		highlightedVehicle = selected;
+		VehicleSheet(formVehicleItem).display(selected);
+	});
 
 	for (auto &v : state->vehicles)
 	{
@@ -33,118 +61,195 @@ VEquipScreen::VEquipScreen(sp<GameState> state)
 		if (vehicle->owner != state->getPlayer())
 			continue;
 		this->setSelectedVehicle(vehicle);
+		highlightedVehicle = vehicle;
+		VehicleSheet(formVehicleItem).display(vehicle);
 		break;
 	}
 	if (!this->selected)
 	{
 		LogError("No vehicles found - the original apoc didn't open the equip screen in this case");
 	}
+
+	// Vehicle name edit
+	form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")
+	    ->addCallback(FormEventType::TextEditFinish, [this](FormsEvent *e) {
+		    if (this->selected)
+		    {
+			    this->selected->name =
+			        std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)->getText();
+		    }
+	    });
+	form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")
+	    ->addCallback(FormEventType::TextEditCancel, [this](FormsEvent *e) {
+		    if (this->selected)
+		    {
+			    std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)
+			        ->setText(this->selected->name);
+		    }
+	    });
+
+	this->paperDoll->setNonHighlightColour(EQUIP_GRID_COLOUR);
+	this->setHighlightedSlotType(EquipmentSlotType::VehicleWeapon);
 }
 
-VEquipScreen::~VEquipScreen() {}
+VEquipScreen::~VEquipScreen() = default;
 
-void VEquipScreen::Begin()
+void VEquipScreen::begin()
 {
-	form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+	form->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 
-	auto list = form->FindControlTyped<ListBox>("VEHICLE_SELECT_BOX");
+	vehicleSelectBox = form->findControlTyped<ListBox>("VEHICLE_SELECT_BOX");
+
 	for (auto &v : state->vehicles)
 	{
 		auto vehicle = v.second;
 		if (vehicle->owner != state->getPlayer())
 			continue;
 		auto graphic = mksp<Graphic>(vehicle->type->equip_icon_big);
+
+		// when entering a selectbox item, display that vehicle's stats
+		graphic->addCallback(FormEventType::MouseEnter,
+		                     [this, vehicle](FormsEvent *e [[maybe_unused]]) {
+			                     highlightedVehicle = vehicle;
+			                     VehicleSheet(formVehicleItem).display(vehicle);
+		                     });
+		vehicleSelectBox->addCallback(FormEventType::MouseLeave,
+		                              [this](FormsEvent *e [[maybe_unused]]) {
+			                              highlightedVehicle = selected;
+			                              VehicleSheet(formVehicleItem).display(selected);
+		                              });
 		graphic->AutoSize = true;
-		list->AddItem(graphic);
+		vehicleSelectBox->addItem(graphic);
 		this->vehicleSelectionControls[graphic] = vehicle;
 
 		if (vehicle == this->selected)
 		{
-			list->setSelected(graphic);
+			vehicleSelectBox->setSelected(graphic);
+			highlightedVehicle = vehicle;
+			VehicleSheet(formVehicleItem).display(vehicle);
 		}
 	}
 }
 
-void VEquipScreen::Pause() {}
+void VEquipScreen::pause() {}
 
-void VEquipScreen::Resume() {}
-
-void VEquipScreen::Finish() {}
-
-void VEquipScreen::EventOccurred(Event *e)
+void VEquipScreen::resume()
 {
-	form->EventOccured(e);
+	modifierLShift = false;
+	modifierRShift = false;
+}
 
-	if (e->Type() == EVENT_KEY_DOWN)
+void VEquipScreen::finish() {}
+
+void VEquipScreen::eventOccurred(Event *e)
+{
+	form->eventOccured(e);
+
+	// Modifiers
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (e->keyboard().KeyCode == SDLK_RSHIFT)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			modifierRShift = true;
+		}
+		if (e->keyboard().KeyCode == SDLK_LSHIFT)
+		{
+			modifierLShift = true;
+		}
+	}
+	if (e->type() == EVENT_KEY_UP)
+	{
+		if (e->keyboard().KeyCode == SDLK_RSHIFT)
+		{
+			modifierRShift = false;
+		}
+		if (e->keyboard().KeyCode == SDLK_LSHIFT)
+		{
+			modifierLShift = false;
+		}
+	}
+
+	if (e->type() == EVENT_KEY_DOWN)
+	{
+		if (form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")->isFocused())
+			return;
+		if (e->keyboard().KeyCode == SDLK_ESCAPE || e->keyboard().KeyCode == SDLK_RETURN ||
+		    e->keyboard().KeyCode == SDLK_KP_ENTER)
+		{
+			form->findControl("BUTTON_OK")->click();
 			return;
 		}
 	}
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::MouseDown)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::MouseDown)
 	{
-		auto it = this->vehicleSelectionControls.find(e->Forms().RaisedBy);
+		auto it = this->vehicleSelectionControls.find(e->forms().RaisedBy);
 		if (it != this->vehicleSelectionControls.end())
 		{
 			this->setSelectedVehicle(it->second);
+			if (highlightedEquipment)
+			{
+				VehicleSheet(formVehicleItem).display(highlightedEquipment);
+			}
+			else
+			{
+				VehicleSheet(formVehicleItem).display(selected);
+			}
 			return;
 		}
 	}
-	else if (e->Type() == EVENT_FORM_INTERACTION &&
-	         e->Forms().EventFlag == FormEventType::ButtonClick)
+	else if (e->type() == EVENT_FORM_INTERACTION &&
+	         e->forms().EventFlag == FormEventType::ButtonClick)
 	{
 
-		if (e->Forms().RaisedBy->Name == "BUTTON_OK")
+		if (e->forms().RaisedBy->Name == "BUTTON_OK")
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
-	else if (e->Type() == EVENT_FORM_INTERACTION &&
-	         e->Forms().EventFlag == FormEventType::CheckBoxChange)
+	else if (e->type() == EVENT_FORM_INTERACTION &&
+	         e->forms().EventFlag == FormEventType::CheckBoxChange)
 	{
-		if (form->FindControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->IsChecked())
+		if (form->findControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->isChecked())
 		{
-			this->selectionType = VEquipmentType::Type::Weapon;
+			this->setHighlightedSlotType(EquipmentSlotType::VehicleWeapon);
 			return;
 		}
-		else if (form->FindControlTyped<RadioButton>("BUTTON_SHOW_ENGINES")->IsChecked())
+		else if (form->findControlTyped<RadioButton>("BUTTON_SHOW_ENGINES")->isChecked())
 		{
-			this->selectionType = VEquipmentType::Type::Engine;
+			this->setHighlightedSlotType(EquipmentSlotType::VehicleEngine);
 			return;
 		}
-		else if (form->FindControlTyped<RadioButton>("BUTTON_SHOW_GENERAL")->IsChecked())
+		else if (form->findControlTyped<RadioButton>("BUTTON_SHOW_GENERAL")->isChecked())
 		{
-			this->selectionType = VEquipmentType::Type::General;
+			this->setHighlightedSlotType(EquipmentSlotType::VehicleGeneral);
 			return;
 		}
 	}
 
 	// Reset the highlight box even if we're dragging
-	if (e->Type() == EVENT_MOUSE_MOVE)
+	if (e->type() == EVENT_MOUSE_MOVE)
 	{
 		this->drawHighlightBox = false;
 	}
 
 	// Check if we've moused over equipment/vehicle so we can show the stats.
-	if (e->Type() == EVENT_MOUSE_MOVE && !this->draggedEquipment)
+	if (e->type() == EVENT_MOUSE_MOVE && !this->draggedEquipment)
 	{
 		// Wipe any previously-highlighted stuff
-		this->highlightedVehicle = nullptr;
 		this->highlightedEquipment = "";
 
-		Vec2<int> mousePos{e->Mouse().X, e->Mouse().Y};
+		Vec2<int> mousePos{e->mouse().X, e->mouse().Y};
 
 		// Check if we're over any equipment in the paper doll
-		for (auto &pair : this->equippedItems)
+		auto mouseSlotPos = this->paperDoll->getSlotPositionFromScreenPosition(mousePos);
+		auto equipment =
+		    std::dynamic_pointer_cast<VEquipment>(this->selected->getEquipmentAt(mouseSlotPos));
+		if (equipment)
 		{
-			if (pair.first.within(mousePos))
-			{
-				this->highlightedEquipment = pair.second->type;
-				return;
-			}
+			this->highlightedEquipment = equipment->type;
+			VehicleSheet(formVehicleItem).display(highlightedEquipment);
+			return;
 		}
 
 		// Check if we're over any equipment in the list at the bottom
@@ -156,39 +261,42 @@ void VEquipScreen::EventOccurred(Event *e)
 				this->drawHighlightBox = true;
 				this->highlightBoxColour = {255, 255, 255, 255};
 				this->highlightBox = pair.first;
+				VehicleSheet(formVehicleItem).display(highlightedEquipment);
 				return;
 			}
 		}
+		VehicleSheet(formVehicleItem).display(highlightedVehicle);
+	}
+	// Find the base this vehicle is landed in
+	StateRef<Base> base = selected->currentBuilding ? selected->currentBuilding->base : nullptr;
 
-		// Check if we're over any vehicles in the side bar
-	}
-	StateRef<Base> base;
-	for (auto &b : state->player_bases)
-	{
-		if (b.second->building == selected->currentlyLandedBuilding)
-			base = {state.get(), b.first};
-	}
 	// Only allow removing equipment if we're in a base, otherwise it'll disappear
-	if (e->Type() == EVENT_MOUSE_DOWN && base)
+	if (e->type() == EVENT_MOUSE_DOWN && base)
 	{
-		Vec2<int> mousePos{e->Mouse().X, e->Mouse().Y};
+		Vec2<int> mousePos{e->mouse().X, e->mouse().Y};
 
 		// Check if we're over any equipment in the paper doll
-		for (auto &pair : this->equippedItems)
+		auto mouseSlotPos = this->paperDoll->getSlotPositionFromScreenPosition(mousePos);
+		auto equipment =
+		    std::dynamic_pointer_cast<VEquipment>(this->selected->getEquipmentAt(mouseSlotPos));
+		if (equipment)
 		{
-			if (pair.first.within(mousePos))
-			{
-				// FIXME: base->addBackToInventory(item); vehicle->unequip(item);
-				this->draggedEquipment = pair.second->type;
-				this->draggedEquipmentOffset = pair.first.p0 - mousePos;
+			// FIXME: base->addBackToInventory(item); vehicle->unequip(item);
+			this->draggedEquipment = equipment->type;
+			this->draggedEquipmentOffset = {0, 0};
 
-				// Return the equipment to the inventory
-				this->selected->removeEquipment(pair.second);
-				base->inventory[pair.second->type.id]++;
-				// FIXME: Return ammo to inventory
-				// FIXME: what happens if we don't have the stores to return?
-				return;
+			// Return the equipment to the inventory
+			this->selected->removeEquipment(equipment);
+			equipment->unequipToBase(*state, base);
+			this->paperDoll->updateEquipment();
+
+			// Immediate action: put to the base
+			if ((modifierLShift || modifierRShift) &&
+			    config().getBool("OpenApoc.NewFeature.AdvancedInventoryControls"))
+			{
+				this->draggedEquipment = nullptr;
 			}
+			return;
 		}
 
 		// Check if we're over any equipment in the list at the bottom
@@ -199,31 +307,46 @@ void VEquipScreen::EventOccurred(Event *e)
 				// Dragging an object doesn't (Yet) remove it from the inventory
 				this->draggedEquipment = pair.second;
 				this->draggedEquipmentOffset = pair.first.p0 - mousePos;
+
+				// Immediate action: try put on vehicle
+				if ((modifierLShift || modifierRShift) &&
+				    config().getBool("OpenApoc.NewFeature.AdvancedInventoryControls"))
+				{
+					auto e = this->selected->addEquipment(*state, this->draggedEquipment);
+					if (e)
+					{
+						e->equipFromBase(*state, base);
+						this->paperDoll->updateEquipment();
+					}
+					this->draggedEquipment = nullptr;
+				}
 				return;
 			}
 		}
 	}
-	if (e->Type() == EVENT_MOUSE_UP)
+	if (e->type() == EVENT_MOUSE_UP)
 	{
 		if (this->draggedEquipment)
 		{
 			// Are we over the grid? If so try to place it on the vehicle.
-			auto paperDollControl = form->FindControlTyped<Graphic>("PAPER_DOLL");
-			Vec2<int> equipOffset = paperDollControl->Location + form->Location;
+			auto paperDollControl = form->findControlTyped<Graphic>("PAPER_DOLL");
+			Vec2<int> equipOffset = paperDollControl->getLocationOnScreen();
 
-			Vec2<int> equipmentPos = fw().getCursorPosition() + this->draggedEquipmentOffset;
+			Vec2<int> equipmentPos = fw().getCursor().getPosition() + this->draggedEquipmentOffset;
 			// If this is within the grid try to snap it
 			Vec2<int> equipmentGridPos = equipmentPos - equipOffset;
 			equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
 			if (this->selected->canAddEquipment(equipmentGridPos, this->draggedEquipment))
 			{
-				if (base->inventory[draggedEquipment->id] <= 0)
+				if (base->inventoryVehicleEquipment[draggedEquipment->id] <= 0)
 				{
 					LogError("Trying to equip item \"%s\" with zero inventory",
-					         this->draggedEquipment->id.c_str());
+					         this->draggedEquipment->id);
 				}
-				base->inventory[draggedEquipment->id]--;
-				this->selected->addEquipment(*state, equipmentGridPos, this->draggedEquipment);
+				auto e =
+				    this->selected->addEquipment(*state, equipmentGridPos, this->draggedEquipment);
+				e->equipFromBase(*state, base);
+				this->paperDoll->updateEquipment();
 				// FIXME: Add ammo to equipment
 			}
 			this->draggedEquipment = "";
@@ -231,366 +354,52 @@ void VEquipScreen::EventOccurred(Event *e)
 	}
 }
 
-void VEquipScreen::Update(StageCmd *const cmd)
-{
-	this->glowCounter += GLOW_COUNTER_INCREMENT;
-	// Loop the increment over the period, otherwise we could start getting lower precision etc. if
-	// people leave the screen going for a few centuries
-	while (this->glowCounter > 2.0f * M_PI)
-	{
-		this->glowCounter -= 2.0f * M_PI;
-	}
-	form->Update();
-	*cmd = stageCmd;
-	stageCmd = StageCmd();
-}
+void VEquipScreen::update() { form->update(); }
 
-void VEquipScreen::Render()
+void VEquipScreen::render()
 {
-	this->equippedItems.clear();
 	this->inventoryItems.clear();
 
-	fw().Stage_GetPrevious(this->shared_from_this())->Render();
+	fw().stageGetPrevious(this->shared_from_this())->render();
 
 	fw().renderer->setPalette(this->pal);
 
-	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
-
-	// The labels/values in the stats column are used for lots of different things, so keep them
-	// around clear them and keep them around in a vector so we don't have 5 copies of the same
-	// "reset unused entries" code around
-	std::vector<sp<Label>> statsLabels;
-	std::vector<sp<Label>> statsValues;
-	for (int i = 0; i < 9; i++)
-	{
-		auto labelName = UString::format("LABEL_%d", i + 1);
-		auto label = form->FindControlTyped<Label>(labelName);
-		if (!label)
-		{
-			LogError("Failed to find UI control matching \"%s\"", labelName.c_str());
-		}
-		label->SetText("");
-		statsLabels.push_back(label);
-
-		auto valueName = UString::format("VALUE_%d", i + 1);
-		auto value = form->FindControlTyped<Label>(valueName);
-		if (!value)
-		{
-			LogError("Failed to find UI control matching \"%s\"", valueName.c_str());
-		}
-		value->SetText("");
-		statsValues.push_back(value);
-	}
-	auto nameLabel = form->FindControlTyped<Label>("NAME");
-	auto iconGraphic = form->FindControlTyped<Graphic>("SELECTED_ICON");
-	// If no vehicle/equipment is highlighted (mouse-over), or if we're dragging equipment around
-	// show the currently selected vehicle stats.
-	//
-	// Otherwise we show the stats of the vehicle/equipment highlighted.
-
-	if (highlightedEquipment)
-	{
-		iconGraphic->SetImage(highlightedEquipment->equipscreen_sprite);
-		nameLabel->SetText(tr(highlightedEquipment->name));
-		int statsCount = 0;
-
-		// All equipment has a weight
-		statsLabels[statsCount]->SetText(tr("Weight"));
-		statsValues[statsCount]->SetText(UString::format("%d", highlightedEquipment->weight));
-		statsCount++;
-
-		// Draw equipment stats
-		switch (highlightedEquipment->type)
-		{
-			case VEquipmentType::Type::Engine:
-			{
-				auto &engineType = *highlightedEquipment;
-				statsLabels[statsCount]->SetText(tr("Top Speed"));
-				statsValues[statsCount]->SetText(UString::format("%d", engineType.top_speed));
-				statsCount++;
-				statsLabels[statsCount]->SetText(tr("Power"));
-				statsValues[statsCount]->SetText(UString::format("%d", engineType.power));
-				break;
-			}
-			case VEquipmentType::Type::Weapon:
-			{
-				auto &weaponType = *highlightedEquipment;
-				statsLabels[statsCount]->SetText(tr("Damage"));
-				statsValues[statsCount]->SetText(UString::format("%d", weaponType.damage));
-				statsCount++;
-				statsLabels[statsCount]->SetText(tr("Range"));
-				statsValues[statsCount]->SetText(UString::format("%dm", weaponType.range / 2));
-				statsCount++;
-				statsLabels[statsCount]->SetText(tr("Accuracy"));
-				statsValues[statsCount]->SetText(
-				    UString::format("%d%%", 100 - weaponType.accuracy));
-				statsCount++;
-
-				// Only show rounds if non-zero (IE not infinite ammo)
-				if (highlightedEquipment->max_ammo)
-				{
-					statsLabels[statsCount]->SetText(tr("Rounds"));
-					statsValues[statsCount]->SetText(
-					    UString::format("%d", highlightedEquipment->max_ammo));
-					statsCount++;
-				}
-				break;
-			}
-			case VEquipmentType::Type::General:
-			{
-				auto &generalType = *highlightedEquipment;
-				if (generalType.accuracy_modifier)
-				{
-					statsLabels[statsCount]->SetText(tr("Accuracy"));
-					statsValues[statsCount]->SetText(
-					    UString::format("%d%%", 100 - generalType.accuracy_modifier));
-					statsCount++;
-				}
-				if (generalType.cargo_space)
-				{
-					statsLabels[statsCount]->SetText(tr("Cargo"));
-					statsValues[statsCount]->SetText(
-					    UString::format("%d", generalType.cargo_space));
-					statsCount++;
-				}
-				if (generalType.passengers)
-				{
-					statsLabels[statsCount]->SetText(tr("Passengers"));
-					statsValues[statsCount]->SetText(UString::format("%d", generalType.passengers));
-					statsCount++;
-				}
-				if (generalType.alien_space)
-				{
-					statsLabels[statsCount]->SetText(tr("Aliens Held"));
-					statsValues[statsCount]->SetText(
-					    UString::format("%d", generalType.alien_space));
-					statsCount++;
-				}
-				if (generalType.missile_jamming)
-				{
-					statsLabels[statsCount]->SetText(tr("Jamming"));
-					statsValues[statsCount]->SetText(
-					    UString::format("%d", generalType.missile_jamming));
-					statsCount++;
-				}
-				if (generalType.shielding)
-				{
-					statsLabels[statsCount]->SetText(tr("Shielding"));
-					statsValues[statsCount]->SetText(UString::format("%d", generalType.shielding));
-					statsCount++;
-				}
-				if (generalType.cloaking)
-				{
-					statsLabels[statsCount]->SetText(tr("Cloaks Craft"));
-					statsCount++;
-				}
-				if (generalType.teleporting)
-				{
-					statsLabels[statsCount]->SetText(tr("Teleports"));
-					statsCount++;
-				}
-
-				break;
-			}
-		}
-	}
-	else
-	{
-		auto vehicle = this->highlightedVehicle;
-		if (!vehicle)
-			vehicle = this->selected;
-
-		nameLabel->SetText(vehicle->name);
-
-		// FIXME: These stats would be great to have a generic (string?) referenced list
-		statsLabels[0]->SetText(tr("Constitution"));
-		if (vehicle->getConstitution() == vehicle->getMaxConstitution())
-		{
-			statsValues[0]->SetText(UString::format("%d", vehicle->getConstitution()));
-		}
-		else
-		{
-			statsValues[0]->SetText(UString::format("%d/%d", vehicle->getConstitution(),
-			                                        vehicle->getMaxConstitution()));
-		}
-
-		statsLabels[1]->SetText(tr("Armor"));
-		statsValues[1]->SetText(UString::format("%d", vehicle->getArmor()));
-
-		// FIXME: This value doesn't seem to be the same as the %age shown in the ui?
-		statsLabels[2]->SetText(tr("Accuracy"));
-		statsValues[2]->SetText(UString::format("%d%%", vehicle->getAccuracy()));
-
-		statsLabels[3]->SetText(tr("Top Speed"));
-		statsValues[3]->SetText(UString::format("%d", vehicle->getTopSpeed()));
-
-		statsLabels[4]->SetText(tr("Acceleration"));
-		statsValues[4]->SetText(UString::format("%d", vehicle->getAcceleration()));
-
-		statsLabels[5]->SetText(tr("Weight"));
-		statsValues[5]->SetText(UString::format("%d", vehicle->getWeight()));
-
-		statsLabels[6]->SetText(tr("Fuel"));
-		statsValues[6]->SetText(UString::format("%d", vehicle->getFuel()));
-
-		statsLabels[7]->SetText(tr("Passengers"));
-		statsValues[7]->SetText(
-		    UString::format("%d/%d", vehicle->getPassengers(), vehicle->getMaxPassengers()));
-
-		statsLabels[8]->SetText(tr("Cargo"));
-		statsValues[8]->SetText(
-		    UString::format("%d/%d", vehicle->getCargo(), vehicle->getMaxCargo()));
-
-		iconGraphic->SetImage(vehicle->type->equip_icon_small);
-	}
 	// Now draw the form, the actual equipment is then drawn on top
-	form->Render();
+	form->render();
 
-	auto paperDollControl = form->FindControlTyped<Graphic>("PAPER_DOLL");
-	Vec2<int> equipOffset = paperDollControl->Location + form->Location;
-	// Draw the equipment grid
-	{
-		for (auto &slot : selected->type->equipment_layout_slots)
-		{
-			Vec2<int> p00 = (slot.bounds.p0 * EQUIP_GRID_SLOT_SIZE) + equipOffset;
-			Vec2<int> p11 = (slot.bounds.p1 * EQUIP_GRID_SLOT_SIZE) + equipOffset;
-			Vec2<int> p01 = {p00.x, p11.y};
-			Vec2<int> p10 = {p11.x, p00.y};
-			if (slot.type == selectionType)
-			{
-				// Scale the sin curve from (-1, 1) to (0, 1)
-				float glowFactor = (sin(this->glowCounter) + 1.0f) / 2.0f;
-				Colour equipColour;
-				switch (selectionType)
-				{
-					case VEquipmentType::Type::Engine:
-						equipColour = EQUIP_GRID_COLOUR_ENGINE;
-						break;
-					case VEquipmentType::Type::Weapon:
-						equipColour = EQUIP_GRID_COLOUR_WEAPON;
-						break;
-					case VEquipmentType::Type::General:
-						equipColour = EQUIP_GRID_COLOUR_GENERAL;
-						break;
-				}
-				Colour selectedColour;
-				selectedColour.r = mix(equipColour.r, EQUIP_GRID_COLOUR.r, glowFactor);
-				selectedColour.g = mix(equipColour.g, EQUIP_GRID_COLOUR.g, glowFactor);
-				selectedColour.b = mix(equipColour.b, EQUIP_GRID_COLOUR.b, glowFactor);
-				selectedColour.a = 255;
-				fw().renderer->drawLine(p00, p01, selectedColour, 2);
-				fw().renderer->drawLine(p01, p11, selectedColour, 2);
-				fw().renderer->drawLine(p11, p10, selectedColour, 2);
-				fw().renderer->drawLine(p10, p00, selectedColour, 2);
-			}
-			else
-			{
-				fw().renderer->drawLine(p00, p01, EQUIP_GRID_COLOUR, 2);
-				fw().renderer->drawLine(p01, p11, EQUIP_GRID_COLOUR, 2);
-				fw().renderer->drawLine(p11, p10, EQUIP_GRID_COLOUR, 2);
-				fw().renderer->drawLine(p10, p00, EQUIP_GRID_COLOUR, 2);
-			}
-		}
-	}
-	// Draw the equipped stuff
-	for (auto &e : selected->equipment)
-	{
-		auto pos = e->equippedPosition;
-
-		VehicleType::AlignmentX alignX = VehicleType::AlignmentX::Left;
-		VehicleType::AlignmentY alignY = VehicleType::AlignmentY::Top;
-		Rect<int> slotBounds;
-		bool slotFound = false;
-
-		for (auto &slot : this->selected->type->equipment_layout_slots)
-		{
-			if (slot.bounds.p0 == pos)
-			{
-				alignX = slot.align_x;
-				alignY = slot.align_y;
-				slotBounds = slot.bounds;
-				slotFound = true;
-				break;
-			}
-		}
-
-		if (!slotFound)
-		{
-			LogError("No matching slot for equipment at {%d,%d}", pos.x, pos.y);
-		}
-
-		if (pos.x >= EQUIP_GRID_SLOTS.x || pos.y >= EQUIP_GRID_SLOTS.y)
-		{
-			LogError("Equipment at {%d,%d} outside grid", pos.x, pos.y);
-		}
-		pos *= EQUIP_GRID_SLOT_SIZE;
-		pos += equipOffset;
-
-		int diffX = slotBounds.getWidth() - e->type->equipscreen_size.x;
-		int diffY = slotBounds.getHeight() - e->type->equipscreen_size.y;
-
-		switch (alignX)
-		{
-			case VehicleType::AlignmentX::Left:
-				pos.x += 0;
-				break;
-			case VehicleType::AlignmentX::Right:
-				pos.x += diffX * EQUIP_GRID_SLOT_SIZE.x;
-				break;
-			case VehicleType::AlignmentX::Centre:
-				pos.x += (diffX * EQUIP_GRID_SLOT_SIZE.x) / 2;
-				break;
-		}
-
-		switch (alignY)
-		{
-			case VehicleType::AlignmentY::Top:
-				pos.y += 0;
-				break;
-			case VehicleType::AlignmentY::Bottom:
-				pos.y += diffY * EQUIP_GRID_SLOT_SIZE.y;
-
-				break;
-			case VehicleType::AlignmentY::Centre:
-				pos.y += (diffY * EQUIP_GRID_SLOT_SIZE.y) / 2;
-				break;
-		}
-
-		fw().renderer->draw(e->type->equipscreen_sprite, pos);
-		Vec2<int> endPos = pos;
-		endPos.x += e->type->equipscreen_sprite->size.x;
-		endPos.y += e->type->equipscreen_sprite->size.y;
-		this->equippedItems.emplace_back(std::make_pair(Rect<int>{pos, endPos}, e));
-	}
+	Vec2<int> equipOffset = this->paperDoll->getLocationOnScreen();
 
 	// Only draw inventory that can be used by this type of craft
 	VEquipmentType::User allowedEquipmentUser;
 	switch (this->selected->type->type)
 	{
 		case VehicleType::Type::Flying:
+		case VehicleType::Type::UFO:
 			allowedEquipmentUser = VEquipmentType::User::Air;
 			break;
-		case VehicleType::Type::Ground:
+		case VehicleType::Type::Road:
+		case VehicleType::Type::ATV:
 			allowedEquipmentUser = VEquipmentType::User::Ground;
 			break;
 		default:
 			LogError(
 			    "Trying to draw equipment screen of unsupported vehicle type for vehicle \"%s\"",
-			    this->selected->name.c_str());
+			    this->selected->name);
 			allowedEquipmentUser = VEquipmentType::User::Air;
+			break;
 	}
 	// Draw the inventory if the selected is in a building, and that is a base
 	StateRef<Base> base;
 	for (auto &b : state->player_bases)
 	{
-		if (b.second->building == selected->currentlyLandedBuilding)
+		if (b.second->building == selected->currentBuilding)
 			base = {state.get(), b.first};
 	}
 	if (base)
 	{
-		auto inventoryControl = form->FindControlTyped<Graphic>("INVENTORY");
-		Vec2<int> inventoryPosition = inventoryControl->Location + form->Location;
-		for (auto &invPair : base->inventory)
+		auto inventoryControl = form->findControlTyped<Graphic>("INVENTORY");
+		Vec2<int> inventoryPosition = inventoryControl->getLocationOnScreen();
+		for (auto &invPair : base->inventoryVehicleEquipment)
 		{
 			// The gap between the bottom of the inventory image and the count label
 			static const int INVENTORY_COUNT_Y_GAP = 4;
@@ -619,7 +428,7 @@ void VEquipScreen::Render()
 				// Not in stock
 				continue;
 			}
-			auto countImage = labelFont->getString(UString::format("%d", count));
+			auto countImage = labelFont->getString(format("%d", count));
 			auto &equipmentImage = equipmentType->equipscreen_sprite;
 			fw().renderer->draw(equipmentImage, inventoryPosition);
 
@@ -653,14 +462,14 @@ void VEquipScreen::Render()
 	if (this->draggedEquipment)
 	{
 		// Draw equipment we're currently dragging (snapping to the grid if possible)
-		Vec2<int> equipmentPos = fw().getCursorPosition() + this->draggedEquipmentOffset;
+		Vec2<int> equipmentPos = fw().getCursor().getPosition() + this->draggedEquipmentOffset;
 		// If this is within the grid try to snap it
 		Vec2<int> equipmentGridPos = equipmentPos - equipOffset;
 		equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
 		if (equipmentGridPos.x < 0 || equipmentGridPos.x >= EQUIP_GRID_SLOTS.x ||
 		    equipmentGridPos.y < 0 || equipmentGridPos.y >= EQUIP_GRID_SLOTS.y)
 		{
-			// This is outside thge grid
+			// This is outside the grid
 		}
 		else
 		{
@@ -672,7 +481,7 @@ void VEquipScreen::Render()
 	}
 }
 
-bool VEquipScreen::IsTransition() { return false; }
+bool VEquipScreen::isTransition() { return false; }
 
 void VEquipScreen::setSelectedVehicle(sp<Vehicle> vehicle)
 {
@@ -681,18 +490,42 @@ void VEquipScreen::setSelectedVehicle(sp<Vehicle> vehicle)
 		LogError("Trying to set invalid selected vehicle");
 		return;
 	}
-	LogInfo("Selecting vehicle \"%s\"", vehicle->name.c_str());
+	LogInfo("Selecting vehicle \"%s\"", vehicle->name);
 	this->selected = vehicle;
 	auto backgroundImage = vehicle->type->equipment_screen;
 	if (!backgroundImage)
 	{
 		LogError("Trying to view equipment screen of vehicle \"%s\" which has no equipment screen "
 		         "background",
-		         vehicle->type->name.c_str());
+		         vehicle->type->name);
 	}
 
-	auto backgroundControl = form->FindControlTyped<Graphic>("BACKGROUND");
-	backgroundControl->SetImage(backgroundImage);
+	auto backgroundControl = form->findControlTyped<Graphic>("BACKGROUND");
+	backgroundControl->setImage(backgroundImage);
+
+	this->paperDoll->setObject(vehicle);
+}
+
+void VEquipScreen::setHighlightedSlotType(EquipmentSlotType type)
+{
+	this->selectionType = type;
+	this->paperDoll->setHighlight({type});
+	switch (type)
+	{
+		case EquipmentSlotType::VehicleGeneral:
+			this->paperDoll->setHighlightColours({EQUIP_GRID_COLOUR, EQUIP_GRID_COLOUR_GENERAL});
+			break;
+		case EquipmentSlotType::VehicleWeapon:
+			this->paperDoll->setHighlightColours({EQUIP_GRID_COLOUR, EQUIP_GRID_COLOUR_WEAPON});
+			break;
+		case EquipmentSlotType::VehicleEngine:
+			this->paperDoll->setHighlightColours({EQUIP_GRID_COLOUR, EQUIP_GRID_COLOUR_ENGINE});
+			break;
+		default:
+		{
+			LogError("Non-vehicle slot type in VEquipScreen?");
+		}
+	}
 }
 
 } // namespace OpenApoc

@@ -7,11 +7,11 @@
 
 namespace gles_wrap
 {
-class gles3
+class Gles3
 {
   private:
-	class gles3_loader;
-	gles3_loader *loader;
+	class Gles3Loader;
+	Gles3Loader *loader;
 	bool desktop_extension;
 
   public:
@@ -19,8 +19,8 @@ class gles3
 	// with GL_ARB_ES3_compatibility, thus should GetProcAddress instead of dlsym
 	// for symbol resolution
 	static bool supported(bool desktop_extension, std::string lib_name = "libGLESv2.so");
-	gles3(bool desktop_extension, std::string lib_name = "libGLESv2.so");
-	~gles3();
+	Gles3(bool desktop_extension, std::string lib_name = "libGLESv2.so");
+	~Gles3();
 
 	std::string VersionString;
 	std::string VendorString;
@@ -35,7 +35,7 @@ class gles3
 	typedef short GLshort;
 	typedef unsigned short GLushort;
 	typedef void GLvoid;
-	typedef struct __GLsync *GLsync;
+	typedef void *GLsync;
 	typedef int64_t GLint64;
 	typedef uint64_t GLuint64;
 	// typedef unsigned int GLenum;
@@ -1019,14 +1019,14 @@ class gles3
 	void(GLESWRAP_APIENTRY *GetInternalformativ)(GLenum target, GLenum internalformat, GLenum pname,
 	                                             GLsizei bufSize, GLint *params);
 
-	class KHR_debug
+	class KhrDebug
 	{
 	  private:
-		friend class gles3;
-		KHR_debug(const gles3 *parent = nullptr);
+		friend class Gles3;
+		KhrDebug(const Gles3 *parent = nullptr);
 
 	  public:
-		bool supported;
+		bool supported = false;
 		std::string name;
 		enum GLenum : unsigned int
 		{
@@ -1078,27 +1078,28 @@ class gles3
 
 		void(GLESWRAP_APIENTRY *DebugMessageControl)(GLenum source, GLenum type, GLenum severity,
 		                                             GLsizei count, const GLuint *ids,
-		                                             GLboolean enabled);
+		                                             GLboolean enabled) = nullptr;
 		void(GLESWRAP_APIENTRY *DebugMessageInsert)(GLenum source, GLenum type, GLuint id,
 		                                            GLenum severity, GLsizei length,
-		                                            const GLchar *buf);
+		                                            const GLchar *buf) = nullptr;
 		void(GLESWRAP_APIENTRY *DebugMessageCallback)(GLDEBUGPROC callback,
-		                                              const GLvoid *userParam);
+		                                              const GLvoid *userParam) = nullptr;
 		GLuint(GLESWRAP_APIENTRY *GetDebugMessageLog)(GLuint count, GLsizei bufSize,
 		                                              GLenum *sources, GLenum *types, GLuint *ids,
 		                                              GLenum *severities, GLsizei *lengths,
-		                                              GLchar *messageLog);
-		void(GLESWRAP_APIENTRY *GetPointerv)(GLenum pname, GLvoid **params);
+		                                              GLchar *messageLog) = nullptr;
+		void(GLESWRAP_APIENTRY *GetPointerv)(GLenum pname, GLvoid **params) = nullptr;
 		void(GLESWRAP_APIENTRY *PushDebugGroup)(GLenum source, GLuint id, GLsizei length,
-		                                        const GLchar *message);
-		void(GLESWRAP_APIENTRY *PopDebugGroup)(void);
+		                                        const GLchar *message) = nullptr;
+		void(GLESWRAP_APIENTRY *PopDebugGroup)(void) = nullptr;
 		void(GLESWRAP_APIENTRY *ObjectLabel)(GLenum identifier, GLuint name, GLsizei length,
-		                                     const GLchar *label);
+		                                     const GLchar *label) = nullptr;
 		void(GLESWRAP_APIENTRY *GetObjectLabel)(GLenum identifier, GLuint name, GLsizei bufSize,
-		                                        GLsizei *length, GLchar *label);
-		void(GLESWRAP_APIENTRY *ObjectPtrLabel)(GLvoid *ptr, GLsizei length, const GLchar *label);
+		                                        GLsizei *length, GLchar *label) = nullptr;
+		void(GLESWRAP_APIENTRY *ObjectPtrLabel)(GLvoid *ptr, GLsizei length,
+		                                        const GLchar *label) = nullptr;
 		void(GLESWRAP_APIENTRY *GetObjectPtrLabel)(GLvoid *ptr, GLsizei bufSize, GLsizei *length,
-		                                           GLchar *label);
+		                                           GLchar *label) = nullptr;
 	} KHR_debug;
 };
 } // namespace gles_wrap

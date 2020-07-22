@@ -1,0 +1,17 @@
+What do we want:
+- Vanilla experience 100% sans bugs and inconviniences
+
+What do we need still:
+- When no action visible to player happens for 1 second hide behind screen
+- When screen is shown fast forward updates and cull walking sounds
+- When action first visible to player move camera to center on action and remove screen
+
+1. Introduce system like for end turn
+- Counter for how long was action not seen by a player
+- When updating action, check who sees it and nullify related counters, also set position of last seen action
+- When counter for active player is more than CONST, set flag "hideScreen" in battletileview
+- When flag "hideScreen" is set, random bg is chosen
+- If flag is set, instead of rendering battleview nothing is rendered, and instead of battletileview bg with text is rendered
+- Once per 30 renders, progressbar is updated (total tu left / total tu at start)
+- update in batches of 10x1 tick if no action is visible (fast forwarding action)
+- When action is visible while flag is set, unsed flag and zoom to last action position

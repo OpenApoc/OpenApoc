@@ -1,8 +1,11 @@
 #include "forms/graphic.h"
+#include "dependencies/pugixml/src/pugixml.hpp"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/image.h"
+#include "framework/renderer.h"
 #include "library/sp.h"
-#include <tinyxml2.h>
 
 namespace OpenApoc
 {
@@ -13,12 +16,14 @@ Graphic::Graphic(sp<Image> Image)
 {
 }
 
-Graphic::~Graphic() {}
+Graphic::~Graphic() = default;
 
-void Graphic::EventOccured(Event *e) { Control::EventOccured(e); }
+void Graphic::eventOccured(Event *e) { Control::eventOccured(e); }
 
-void Graphic::OnRender()
+void Graphic::onRender()
 {
+	Control::onRender();
+
 	if (!image)
 	{
 		return;
@@ -86,9 +91,9 @@ void Graphic::OnRender()
 	}
 }
 
-void Graphic::Update()
+void Graphic::update()
 {
-	Control::Update();
+	Control::update();
 
 	if (image && AutoSize)
 	{
@@ -96,17 +101,21 @@ void Graphic::Update()
 	}
 }
 
-void Graphic::UnloadResources()
+void Graphic::unloadResources()
 {
 	image.reset();
-	Control::UnloadResources();
+	Control::unloadResources();
 }
 
-sp<Image> Graphic::GetImage() const { return image; }
+sp<Image> Graphic::getImage() const { return image; }
 
-void Graphic::SetImage(sp<Image> Image) { image = Image; }
+void Graphic::setImage(sp<Image> Image)
+{
+	image = Image;
+	this->setDirty();
+}
 
-sp<Control> Graphic::CopyTo(sp<Control> CopyParent)
+sp<Control> Graphic::copyTo(sp<Control> CopyParent)
 {
 	sp<Graphic> copy;
 	if (CopyParent)
@@ -121,83 +130,70 @@ sp<Control> Graphic::CopyTo(sp<Control> CopyParent)
 	copy->ImageVAlign = this->ImageVAlign;
 	copy->ImagePosition = this->ImagePosition;
 	copy->AutoSize = this->AutoSize;
-	CopyControlData(copy);
+	copyControlData(copy);
 	return copy;
 }
 
-void Graphic::ConfigureFromXML(tinyxml2::XMLElement *Element)
+void Graphic::configureSelfFromXml(pugi::xml_node *node)
 {
-	Control::ConfigureFromXML(Element);
-	tinyxml2::XMLElement *subnode;
-	UString attribvalue;
+	Control::configureSelfFromXml(node);
 
-	if (Element->FirstChildElement("image") != nullptr)
+	auto imageNode = node->child("image");
+	if (imageNode)
 	{
-		image = fw().data->load_image(Element->FirstChildElement("image")->GetText());
+		image = fw().data->loadImage(imageNode.text().get());
 	}
-	subnode = Element->FirstChildElement("alignment");
-	if (subnode != nullptr)
+	auto alignNode = node->child("alignment");
+	if (alignNode)
 	{
-		if (subnode->Attribute("horizontal") != nullptr)
+		UString hAlign = alignNode.attribute("horizontal").as_string();
+		if (hAlign == "left")
 		{
-			attribvalue = subnode->Attribute("horizontal");
-			if (attribvalue == "left")
-			{
-				ImageHAlign = HorizontalAlignment::Left;
-			}
-			else if (attribvalue == "centre")
-			{
-				ImageHAlign = HorizontalAlignment::Centre;
-			}
-			else if (attribvalue == "right")
-			{
-				ImageHAlign = HorizontalAlignment::Right;
-			}
+			ImageHAlign = HorizontalAlignment::Left;
 		}
-		if (subnode->Attribute("vertical") != nullptr)
+		else if (hAlign == "centre")
 		{
-			attribvalue = subnode->Attribute("vertical");
-			if (attribvalue == "top")
-			{
-				ImageVAlign = VerticalAlignment::Top;
-			}
-			else if (attribvalue == "centre")
-			{
-				ImageVAlign = VerticalAlignment::Centre;
-			}
-			else if (attribvalue == "bottom")
-			{
-				ImageVAlign = VerticalAlignment::Bottom;
-			}
+			ImageHAlign = HorizontalAlignment::Centre;
+		}
+		else if (hAlign == "right")
+		{
+			ImageHAlign = HorizontalAlignment::Right;
+		}
+		UString vAlign = alignNode.attribute("vertical").as_string();
+		if (vAlign == "top")
+		{
+			ImageVAlign = VerticalAlignment::Top;
+		}
+		else if (vAlign == "centre")
+		{
+			ImageVAlign = VerticalAlignment::Centre;
+		}
+		else if (vAlign == "bottom")
+		{
+			ImageVAlign = VerticalAlignment::Bottom;
 		}
 	}
-	subnode = Element->FirstChildElement("imageposition");
-	if (subnode != nullptr)
+	auto imagePositionNode = node->child("imageposition");
+	if (imagePositionNode)
 	{
-		if (subnode->GetText() != nullptr)
+		UString position = imagePositionNode.text().get();
+		if (position == "stretch")
 		{
-			attribvalue = subnode->GetText();
-			if (attribvalue == "stretch")
-			{
-				ImagePosition = FillMethod::Stretch;
-			}
-			else if (attribvalue == "fit")
-			{
-				ImagePosition = FillMethod::Fit;
-			}
-			else if (attribvalue == "tile")
-			{
-				ImagePosition = FillMethod::Tile;
-			}
+			ImagePosition = FillMethod::Stretch;
+		}
+		else if (position == "fit")
+		{
+			ImagePosition = FillMethod::Fit;
+		}
+		else if (position == "tile")
+		{
+			ImagePosition = FillMethod::Tile;
 		}
 	}
-	subnode = Element->FirstChildElement("autosize");
-	if (subnode != nullptr)
+	auto autoSizeNode = node->child("autosize");
+	if (autoSizeNode)
 	{
-		if (subnode->QueryBoolText(&AutoSize) != tinyxml2::XML_SUCCESS)
-		{
-			LogError("Unknown AutoSize attribute");
-		}
+		AutoSize = autoSizeNode.text().as_bool();
 	}
 }
 }; // namespace OpenApoc

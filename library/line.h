@@ -1,5 +1,9 @@
 #pragma once
 
+#include "library/vec.h"
+#include <glm/glm.hpp>
+#include <iterator>
+
 namespace OpenApoc
 {
 
@@ -10,38 +14,45 @@ template <typename T, bool conservative> class LineSegment
   public:
 	Vec3<T> startPoint;
 	Vec3<T> endPoint;
+	Vec3<T> inc;
 	T increment;
 	LineSegment(Vec3<T> start, Vec3<T> end, T increment = 1)
 	    : startPoint(start), endPoint(end), increment(increment)
 	{
+		Vec3<T> d = endPoint - startPoint;
+		inc.x = (d.x < static_cast<T>(0)) ? -increment : increment;
+		inc.y = (d.y < static_cast<T>(0)) ? -increment : increment;
+		inc.z = (d.z < static_cast<T>(0)) ? -increment : increment;
 	}
-	LineSegmentIterator<T, conservative> begin();
-	LineSegmentIterator<T, conservative> end();
+	LineSegmentIterator<T, conservative> begin() const;
+	LineSegmentIterator<T, conservative> end() const;
 };
 
-template <typename T, bool conservative>
-class LineSegmentIterator : public std::iterator<std::forward_iterator_tag, Vec3<T>>
+template <typename T, bool conservative> class LineSegmentIterator
 {
   private:
 	Vec3<T> point;
 	Vec3<T> err;
-	Vec3<T> inc;
 	Vec3<T> step;
 	Vec3<T> d2;
+	Vec3<T> inc;
 	T dstep2;
 
-	LineSegment<T, conservative> &line;
+	const LineSegment<T, conservative> &line;
 
   public:
-	LineSegmentIterator(Vec3<T> start, LineSegment<T, conservative> &l) : point(start), line(l)
+	using iterator_category = std::forward_iterator_tag;
+	using value_type = Vec3<T>;
+	using difference_type = ptrdiff_t;
+	using pointer = Vec3<T> *;
+	using reference = Vec3<T> &;
+	LineSegmentIterator(Vec3<T> start, const LineSegment<T, conservative> &l)
+	    : point(start), line(l)
 	{
 		err = {static_cast<T>(0), static_cast<T>(0), static_cast<T>(0)};
 		step = {static_cast<T>(0), static_cast<T>(0), static_cast<T>(0)};
 		Vec3<T> d = l.endPoint - l.startPoint;
-		inc.x = (d.x < static_cast<T>(0)) ? -l.increment : l.increment;
-		inc.y = (d.y < static_cast<T>(0)) ? -l.increment : l.increment;
-		inc.z = (d.z < static_cast<T>(0)) ? -l.increment : l.increment;
-
+		inc = l.inc;
 		Vec3<T> absd = glm::abs(d);
 		d2 = absd * static_cast<T>(2);
 		if (absd.x >= absd.y && absd.x >= absd.z)
@@ -123,15 +134,15 @@ class LineSegmentIterator : public std::iterator<std::forward_iterator_tag, Vec3
 };
 
 template <typename T, bool conservative>
-LineSegmentIterator<T, conservative> LineSegment<T, conservative>::begin()
+LineSegmentIterator<T, conservative> LineSegment<T, conservative>::begin() const
 {
 	return LineSegmentIterator<T, conservative>(this->startPoint, *this);
 }
 
 template <typename T, bool conservative>
-LineSegmentIterator<T, conservative> LineSegment<T, conservative>::end()
+LineSegmentIterator<T, conservative> LineSegment<T, conservative>::end() const
 {
-	return LineSegmentIterator<T, conservative>(this->endPoint + Vec3<T>{1, 1, 1}, *this);
+	return LineSegmentIterator<T, conservative>(this->endPoint + this->inc, *this);
 }
 
-} // nammespace OpenApoc
+} // namespace OpenApoc

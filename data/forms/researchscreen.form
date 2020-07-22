@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_RESEARCHSCREEN">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="640" height="480"/>
+      <graphic>
+        <image>xcom3/ufodata/research.pcx</image>
+        <position x="0" y="0"/>
+        <size width="640" height="480"/>
+      </graphic>
+      <label text="RESEARCH AND MANUFACTURE">
+        <position x="20" y="0"/>
+        <size width="600" height="36"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>bigfont</font>
+      </label>
+      <label id="TEXT_FUNDS">
+        <position x="572" y="11"/>
+        <size width="60" height="10"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphicbutton id="BUTTON_BASE_1">
+        <position x="24" y="53"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_2">
+        <position x="60" y="53"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_3">
+        <position x="96" y="53"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_4">
+        <position x="132" y="53"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_5">
+        <position x="24" y="89"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_6">
+        <position x="60" y="89"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_7">
+        <position x="96" y="89"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_8">
+        <position x="132" y="89"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <label id="TEXT_BUTTON_BASE">
+        <position x="15" y="124"/>
+        <size width="157" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_LAB_TYPE" text="Lab Type">
+        <position x="277" y="166"/>
+        <size width="264" height="14"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_CURRENT_PROJECT" text="Current Project">
+        <position x="277" y="200"/>
+        <size width="264" height="10"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_PROJECT_COMPLETION" text="0%">
+        <position x="478" y="220"/>
+        <size width="50" height="14"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphic id="GRAPHIC_PROGRESS_BAR">
+        <position x="326" y="226"/>
+        <size width="150" height="2"/>
+        <image/>
+      </graphic>
+      <graphic id="MANUFACTURE_BG">
+        <position x="247" y="241"/>
+        <size width="224" height="18"/>
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
+      </graphic>
+      <scroll id="MANUFACTURE_QUANTITY_SLIDER">
+        <position x="261" y="243"/>
+        <size width="148" height="16"/>
+        <range min="1" max="50"/>
+      </scroll>
+      <graphicbutton id="MANUFACTURE_QUANTITY_DOWN" scrollprev="MANUFACTURE_QUANTITY_SLIDER">
+        <position x="247" y="241"/>
+        <size width="16" height="20"/>
+        <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="MANUFACTURE_QUANTITY_UP" scrollnext="MANUFACTURE_QUANTITY_SLIDER">
+        <position x="408" y="241"/>
+        <size width="17" height="20"/>
+        <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <label id="TEXT_QUANTITY" text="">
+        <position x="438" y="242"/>
+        <size width="28" height="14"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_NUMBER_TO_MAKE" text="Number to make">
+        <position x="474" y="243"/>
+        <size width="110" height="14"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_TOTAL_SKILL" text="Total Skill: 0">
+        <position x="232" y="451"/>
+        <size width="354" height="10"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <scroll id="LIST_SMALL_LABS_SCROLL">
+        <position x="278" y="58"/>
+        <size height="16" width="262"/>
+      </scroll>
+      <scroll id="LIST_LARGE_LABS_SCROLL">
+        <position x="272" y="98"/>
+        <size height="16" width="274"/>
+      </scroll>
+      <listbox id="LIST_SMALL_LABS" scrollbarid="LIST_SMALL_LABS_SCROLL">
+        <position x="278" y="58"/>
+        <size height="35" width="262"/>
+        <item size="0" spacing="6"/>
+        <orientation>horizontal</orientation>
+        <hovercolour r="255" g="255" b="255" a="255"/>
+        <selcolour r="255" g="0" b="0" a="255"/>
+      </listbox>
+      <listbox id="LIST_LARGE_LABS" scrollbarid="LIST_LARGE_LABS_SCROLL">
+        <position x="272" y="98"/>
+        <size height="70" width="274"/>
+        <item size="0" spacing="6"/>
+        <orientation>horizontal</orientation>
+        <hovercolour r="255" g="255" b="255" a="255"/>
+        <selcolour r="255" g="0" b="0" a="255"/>
+      </listbox>
+      <listbox id="LIST_ASSIGNED">
+        <position x="248" y="285"/>
+        <size height="160" width="322"/>
+        <orientation list="vertical" scroll="horizontal"/>
+        <hovercolour r="255" g="255" b="255" a="255"/>
+        <autoselect>no</autoselect>
+      </listbox>
+      <scroll id="LIST_UNASSIGNED_SCROLL">
+        <position x="164" y="192"/>
+        <size width="15" height="254"/>
+      </scroll>
+      <graphicbutton id="LIST_UNASSIGNED_SCROLL_UP" scrollprev="LIST_UNASSIGNED_SCROLL">
+        <tooltip text="Scroll Up" font="smallset"/>
+        <position x="161" y="168"/>
+        <size width="22" height="21"/>
+        <image/>
+        <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="LIST_UNASSIGNED_SCROLL_DOWN" scrollnext="LIST_UNASSIGNED_SCROLL">
+        <tooltip text="Scroll Down" font="smallset"/>
+        <position x="161" y="449"/>
+        <size width="22" height="21"/>
+        <image/>
+        <imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <listbox id="LIST_UNASSIGNED" scrollbarid="LIST_UNASSIGNED_SCROLL">
+        <position x="20" y="183"/>
+        <size height="256" width="128"/>
+        <orientation>vertical</orientation>
+        <hovercolour r="255" g="255" b="255" a="255"/>
+        <autoselect>no</autoselect>
+      </listbox>
+      <graphic id="MAGIC_ARROW">
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:60:xcom3/ufodata/research.pcx</image>
+        <position x="184" y="360"/>
+        <size width="43" height="31"/>
+      </graphic>
+      <graphicbutton id="BUTTON_RESEARCH_NEWPROJECT">
+        <tooltip text="Assign project" font="smallset"/>
+        <position x="602" y="40"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:58:xcom3/ufodata/research.pcx</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_RESEARCH_CANCELPROJECT">
+        <tooltip text="Stop project" font="smallset"/>
+        <position x="602" y="80"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:59:xcom3/ufodata/research.pcx</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_OK">
+        <position x="602" y="443"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
+      </graphicbutton>
+    </style>
+  </form>
+</openapoc>

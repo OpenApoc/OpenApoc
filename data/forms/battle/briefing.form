@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_BATTLE_BRIEFING">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="644" height="484"/>
+      <backcolour r="128" g="80" b="80"/>
+      <graphic id="BRIEFING_IMAGE">
+        <image>xcom3/tacdata/brief5.pcx</image>
+        <position x="2" y="2"/>
+        <size width="640" height="480"/>
+      </graphic>
+      <label text="MISSION BRIEFING">
+        <position x="20" y="0"/>
+        <size width="600" height="40"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>bigfont</font>
+      </label>
+      <label id="TEXT_DATE" text="">
+        <position x="343" y="61"/>
+        <size width="280" height="360"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_BRIEFING" text="">
+        <position x="343" y="85"/>
+        <size width="280" height="360"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <graphicbutton id="BUTTON_REAL_TIME">
+        <tooltip text="Start real time game" font="smallset"/>
+        <position x="475" y="434"/>
+        <size width="50" height="48"/>
+        <image>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:42:xcom3/tacdata/tactical.pal</image>
+        <imagedepressed>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:45:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_TURN_BASED">
+        <tooltip text="Start turn-based game" font="smallset"/>
+        <position x="563" y="434"/>
+        <size width="50" height="48"/>
+        <image>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:43:xcom3/tacdata/tactical.pal</image>
+        <imagedepressed>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:46:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
+    </style>
+  </form>
+</openapoc>

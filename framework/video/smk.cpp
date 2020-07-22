@@ -5,11 +5,13 @@
 #include "framework/sound.h"
 #include "framework/trace.h"
 #include "framework/video.h"
+#include <cstring>
 #include <mutex>
 #include <queue>
 
 // libsmacker.h doesn't set C abi by default, so wrap
-extern "C" {
+extern "C"
+{
 #include "dependencies/libsmacker/smacker.h"
 }
 
@@ -78,7 +80,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 
 	sp<FrameImage> popImage() override
 	{
-		TRACE_FN_ARGS1("Frame", Strings::FromInteger(this->current_frame_video));
+		TRACE_FN_ARGS1("Frame", Strings::fromInteger(this->current_frame_video));
 		std::lock_guard<std::recursive_mutex> l(this->frame_queue_lock);
 		if (this->image_queue.empty())
 		{
@@ -95,7 +97,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 
 	sp<FrameAudio> popAudio() override
 	{
-		TRACE_FN_ARGS1("Frame", Strings::FromInteger(this->current_frame_audio));
+		TRACE_FN_ARGS1("Frame", Strings::fromInteger(this->current_frame_audio));
 		std::lock_guard<std::recursive_mutex> l(this->frame_queue_lock);
 		if (this->audio_queue.empty())
 		{
@@ -135,13 +137,13 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 			this->stopped = true;
 		}
 
-		unsigned char *palette_data = smk_get_palette(this->smk_ctx);
+		const unsigned char *palette_data = smk_get_palette(this->smk_ctx);
 		if (!palette_data)
 		{
 			LogWarning("Failed to get palette data for frame %u", this->current_frame_read);
 			return false;
 		}
-		unsigned char *image_data = smk_get_video(this->smk_ctx);
+		const unsigned char *image_data = smk_get_video(this->smk_ctx);
 		if (!image_data)
 		{
 			LogWarning("Failed to get image data for frame %u", this->current_frame_read);
@@ -163,7 +165,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 			auto red = *palette_data++;
 			auto green = *palette_data++;
 			auto blue = *palette_data++;
-			frame->palette->SetColour(i, {red, green, blue});
+			frame->palette->setColour(i, {red, green, blue});
 		}
 
 		auto audio_frame = mksp<FrameAudio>();
@@ -217,7 +219,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 		                                static_cast<unsigned long>(this->video_data_size));
 		if (!this->smk_ctx)
 		{
-			LogWarning("Failed to read SMK file \"%s\"", video_path.c_str());
+			LogWarning("Failed to read SMK file \"%s\"", video_path);
 			this->video_data.reset();
 			return false;
 		}
@@ -225,7 +227,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 
 		if (smk_info_all(this->smk_ctx, nullptr, &this->frame_count, &usf))
 		{
-			LogWarning("Failed to read SMK file info from \"%s\"", video_path.c_str());
+			LogWarning("Failed to read SMK file info from \"%s\"", video_path);
 			this->video_data.reset();
 			smk_close(this->smk_ctx);
 			this->smk_ctx = nullptr;
@@ -240,7 +242,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 		unsigned long height, width;
 		if (smk_info_video(this->smk_ctx, &width, &height, nullptr))
 		{
-			LogWarning("Failed to read SMK video info from \"%s\"", video_path.c_str());
+			LogWarning("Failed to read SMK video info from \"%s\"", video_path);
 			this->video_data.reset();
 			smk_close(this->smk_ctx);
 			this->smk_ctx = nullptr;
@@ -253,7 +255,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 		auto ret = smk_enable_video(this->smk_ctx, 1);
 		if (ret == SMK_ERROR)
 		{
-			LogWarning("Error enabling video for \"%s\"", video_path.c_str());
+			LogWarning("Error enabling video for \"%s\"", video_path);
 			return false;
 		}
 
@@ -265,20 +267,20 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 		ret = smk_info_audio(this->smk_ctx, &audio_track_mask, channels, bitdepth, audio_rate);
 		if (ret == SMK_ERROR)
 		{
-			LogWarning("Error reading audio info for \"%s\"", video_path.c_str());
+			LogWarning("Error reading audio info for \"%s\"", video_path);
 			return false;
 		}
 
 		if (audio_track_mask & SMK_AUDIO_TRACK_0)
 		{
 			// WE only support a single track
-			LogWarning("Audio track: channels %u depth %u rate %lu", (unsigned)channels[0],
-			           (unsigned)bitdepth[0], audio_rate[0]);
+			LogInfo("Audio track: channels %u depth %u rate %lu", (unsigned)channels[0],
+			        (unsigned)bitdepth[0], audio_rate[0]);
 		}
 		else
 		{
 			LogWarning("Unsupported audio track mask 0x%02x for \"%s\"", (unsigned)audio_track_mask,
-			           video_path.c_str());
+			           video_path);
 			return false;
 		}
 		switch (channels[0])
@@ -294,7 +296,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 				break;
 			default:
 				LogWarning("Unsupported audio channel count %u for \"%s\"", (unsigned)channels[0],
-				           video_path.c_str());
+				           video_path);
 				return false;
 		}
 		switch (bitdepth[0])
@@ -309,7 +311,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 				break;
 			default:
 				LogWarning("Unsupported audio bit depth %u for \"%s\"", (unsigned)bitdepth[0],
-				           video_path.c_str());
+				           video_path);
 				return false;
 		}
 		this->audio_format.frequency = audio_rate[0];
@@ -318,7 +320,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 
 		if (ret == SMK_ERROR)
 		{
-			LogWarning("Error enabling audio track 0 for \"%s\"", video_path.c_str());
+			LogWarning("Error enabling audio track 0 for \"%s\"", video_path);
 		}
 
 		// Everything looks  good
@@ -347,7 +349,7 @@ MusicTrack::MusicCallbackReturn fillSMKMusicData(sp<MusicTrack> thisTrack, unsig
                                                  void *sampleBuffer, unsigned int *returnedSamples)
 {
 	auto track = std::dynamic_pointer_cast<SMKMusicTrack>(thisTrack);
-	assert(track);
+	LogAssert(track);
 	return track->fillData(maxSamples, sampleBuffer, returnedSamples);
 }
 SMKMusicTrack::SMKMusicTrack(sp<SMKVideo> video)
@@ -364,7 +366,6 @@ MusicTrack::MusicCallbackReturn SMKMusicTrack::fillData(unsigned int maxSamples,
                                                         unsigned int *returnedSamples)
 {
 	TRACE_FN;
-	char *sample_buffer_position = (char *)sampleBuffer;
 	if (!this->current_frame)
 	{
 		LogWarning("Playing beyond end of video");
@@ -388,7 +389,7 @@ MusicTrack::MusicCallbackReturn SMKMusicTrack::fillData(unsigned int maxSamples,
 	*returnedSamples = samples_in_this_frame;
 
 	this->current_frame_sample_position += samples_in_this_frame;
-	assert(this->current_frame_sample_position <= this->current_frame->sample_count);
+	LogAssert(this->current_frame_sample_position <= this->current_frame->sample_count);
 
 	if (this->current_frame_sample_position == this->current_frame->sample_count)
 	{

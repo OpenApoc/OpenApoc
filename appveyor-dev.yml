@@ -2,26 +2,74 @@ version: '{branch}-0.0.{build}'
 branches:
   except:
   - master
+  - /release.*/
 skip_tags: true
-os: Visual Studio 2015
-configuration: Release
-platform: x64
-clone_depth: 10
+os: Visual Studio 2019
+configuration:
+  - Release
+#  - Debug
+platform:
+  - x64
+#  - Win32
+environment:
+  APPVEYOR_SAVE_CACHE_ON_ERROR: true
+init:
+  - if "%PLATFORM%"=="x64" (set VCPKG_DEFAULT_TRIPLET=x64-windows)
+  - if "%PLATFORM%"=="x64" (set VCVARS_ARCH=amd64)
+  - if "%PLATFORM%"=="x64" (set QTPATH=C:\Qt\5.13\msvc2017_64)
+  - if "%PLATFORM%"=="Win32" (set VCPKG_DEFAULT_TRIPLET=x86-windows)
+  - if "%PLATFORM%"=="Win32" (set VCVARS_ARCH=amd64_x86)
+  - if "%PLATFORM%"=="Win32" (set QTPATH=C:\Qt\5.13\msvc2017)
+#clone_depth: 10
+cache: c:\tools\vcpkg\installed
 before_build:
-- git submodule init
-- git submodule update
-- nuget restore OpenApoc.sln
-build:
-  project: OpenApoc.sln
-  verbosity: normal
+  - cd c:\tools\vcpkg
+  - git pull
+  - git checkout 2019.12
+  - .\bootstrap-vcpkg.bat
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - vcpkg install sdl2 boost-locale boost-program-options boost-uuid boost-crc
+  - vcpkg upgrade --no-dry-run
+  - vcpkg remove --outdated
+  - git submodule update --init --recursive
+  - curl http://s2.jonnyh.net/pub/cd_minimal.iso.xz -o temp\cd.iso.xz
+  - 7z e temp\cd.iso.xz -odata\
+  - choco install ninja
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" %VCVARS_ARCH%
+build_script:
+  - cmake -DMSVC_PDB=ON . -GNinja -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE="%CONFIGURATION%" -DCMAKE_PREFIX_PATH=%QTPATH%
+  - cmake --build .
 after_build:
-- mkdir OpenApoc-DEV
-- echo %APPVEYOR_REPO_COMMIT% > OpenApoc-DEV\git-commit
-- echo %APPVEYOR_BUILD_VERSION% > OpenApoc-DEV\build-id
-- copy x64\Release\*.dll OpenApoc-DEV\
-- copy x64\Release\*.exe OpenApoc-DEV\
-- xcopy /E data OpenApoc-DEV\data\
-- 7z a OpenApoc-msvc-dev.zip OpenApoc-DEV
-artifacts:
-- path: OpenApoc-msvc-dev.zip
-  name: built-zip
+  - git describe --tags > build-id
+  - set /p OPENAPOC_VERSION= < build-id
+  - set OPENAPOC_FILENAME=OpenApoc-%PLATFORM%-%OPENAPOC_VERSION%.7z
+  - set OPENAPOC_DEBUG_FILENAME=OpenApoc-debug-%PLATFORM%-%OPENAPOC_VERSION%.7z
+  - mkdir OpenApoc-%OPENAPOC_VERSION%
+  - echo %APPVEYOR_REPO_COMMIT% > OpenApoc-%OPENAPOC_VERSION%\git-commit
+  - echo %OPENAPOC_VERSION% > OpenApoc-%OPENAPOC_VERSION%\build-id
+  - copy bin\*.dll OpenApoc-%OPENAPOC_VERSION%\
+  - copy bin\openapoc.exe OpenApoc-%OPENAPOC_VERSION%\
+  - copy bin\openapoc_launcher.exe OpenApoc-%OPENAPOC_VERSION%\
+  - start %QTPATH%\bin\windeployqt --no-angle --no-opengl-sw --no-compiler-runtime OpenApoc-%OPENAPOC_VERSION%\OpenApoc_Launcher.exe
+  - del data\cd.iso
+  - xcopy /E data OpenApoc-%OPENAPOC_VERSION%\data\
+  - copy portable.txt OpenApoc-%OPENAPOC_VERSION%\
+  - copy README.md OpenApoc-%OPENAPOC_VERSION%\README.txt
+  - copy README_HOTKEYS.txt OpenApoc-%OPENAPOC_VERSION%\
+  - 7z a %OPENAPOC_FILENAME% OpenApoc-%OPENAPOC_VERSION% -mx=9 -myx=7
+  - copy bin\OpenApoc.pdb OpenApoc-%OPENAPOC_VERSION%\
+  - 7z a %OPENAPOC_DEBUG_FILENAME% OpenApoc-%OPENAPOC_VERSION%\*.pdb -mx=9 -myx=7
+  - appveyor PushArtifact %OPENAPOC_FILENAME%
+  - appveyor PushArtifact %OPENAPOC_DEBUG_FILENAME%
+before_test:
+  - 7z e temp\cd.iso.xz -odata\
+test_script:
+  - ctest -T Test -V --no-compress-output -C %CONFIGURATION%
+on_finish:
+  - ps: |
+      $testFile = ".\Testing\$(Get-Content Testing\TAG -TotalCount 1)\Test.xml"
+      $XSLInputElement = New-Object System.Xml.Xsl.XslCompiledTransform
+      $XSLInputElement.Load((Resolve-Path .\tests\ctest-to-junit.xsl))
+      $XSLInputElement.Transform((Resolve-Path $testFile), (Join-Path (Resolve-Path .) "ctest-to-junit-results.xml"))
+      $wc = New-Object 'System.Net.WebClient'
+      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\ctest-to-junit-results.xml))

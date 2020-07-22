@@ -1,83 +1,120 @@
 #include "forms/scrollbar.h"
+#include "dependencies/pugixml/src/pugixml.hpp"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
-#include "framework/includes.h"
-#include <tinyxml2.h>
+#include "framework/image.h"
+#include "framework/renderer.h"
+#include "framework/sound.h"
 
 namespace OpenApoc
 {
 
-ScrollBar::ScrollBar()
-    : Control(), capture(false), grippersize(1), segmentsize(1),
-      gripperbutton(fw().data->load_image(
-          "PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:4:UI/menuopt.pal")),
-      buttonerror(fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/EXTRA/TEXTBEEP.RAW:22050")),
-      Value(0), BarOrientation(Orientation::Vertical), RenderStyle(ScrollBarRenderStyle::Menu),
-      GripperColour(220, 192, 192), Minimum(0), Maximum(10), LargeChange(2)
+ScrollBar::ScrollBar(sp<Image> gripperImage)
+    : Control(), capture(false), grippersize(1), segmentsize(1), gripperbutton(gripperImage),
+      buttonerror(fw().data->loadSample("RAWSOUND:xcom3/rawsound/extra/textbeep.raw:22050")),
+      Value(0), BarOrientation(Orientation::Vertical), Minimum(0), Maximum(10),
+      RenderStyle(ScrollBarRenderStyle::Menu), GripperColour(220, 192, 192), LargeChange(2),
+      LargePercent(10)
 {
-	// LoadResources();
+	isClickable = true;
+	if (!gripperbutton)
+		gripperbutton = fw().data->loadImage(
+		    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:4:ui/menuopt.pal");
+	// loadResources();
 }
 
-ScrollBar::~ScrollBar() {}
+ScrollBar::~ScrollBar() = default;
 
-void ScrollBar::LoadResources() {}
+void ScrollBar::loadResources() {}
 
-bool ScrollBar::SetValue(int newValue)
+bool ScrollBar::setValue(int newValue)
 {
 	newValue = std::max(newValue, Minimum);
 	newValue = std::min(newValue, Maximum);
 	if (newValue == Value)
+	{
 		return false;
+	}
 
-	this->pushFormEvent(FormEventType::ScrollBarChange, nullptr);
 	Value = newValue;
+	this->pushFormEvent(FormEventType::ScrollBarChange, nullptr);
+	setDirty();
 	return true;
 }
 
-void ScrollBar::ScrollPrev()
+bool ScrollBar::setMinimum(int newMininum)
 {
-	if (!SetValue(Value - LargeChange))
+	if (Minimum == newMininum)
+	{
+		return false;
+	}
+	Minimum = newMininum;
+	setValue(Value);
+	setDirty();
+	return true;
+}
+
+bool ScrollBar::setMaximum(int newMaximum)
+{
+	if (Maximum == newMaximum)
+	{
+		return false;
+	}
+	Maximum = newMaximum;
+	setValue(Value);
+	setDirty();
+	return true;
+}
+
+void ScrollBar::scrollPrev(bool small)
+{
+	if (!setValue(Value - (small ? 1 : LargeChange)))
 	{
 		fw().soundBackend->playSample(buttonerror);
 	}
 }
 
-void ScrollBar::ScrollNext()
+void ScrollBar::scrollNext(bool small)
 {
-	if (!SetValue(Value + LargeChange))
+	if (!setValue(Value + (small ? 1 : LargeChange)))
 	{
 		fw().soundBackend->playSample(buttonerror);
 	}
 }
 
-void ScrollBar::EventOccured(Event *e)
+void ScrollBar::eventOccured(Event *e)
 {
-	Control::EventOccured(e);
+	Control::eventOccured(e);
 
 	int mousePosition = 0;
-	if (e->Type() == EVENT_FORM_INTERACTION)
+	if (e->type() == EVENT_FORM_INTERACTION)
 	{
 		switch (BarOrientation)
 		{
 			case Orientation::Vertical:
-				mousePosition = e->Forms().MouseInfo.Y;
+				// MouseInfo.X/Y is relative to the control that raised it
+				// make it relative to this control instead
+				mousePosition = e->forms().MouseInfo.Y +
+				                e->forms().RaisedBy->getLocationOnScreen().y - resolvedLocation.y;
 				break;
 			case Orientation::Horizontal:
-				mousePosition = e->Forms().MouseInfo.X;
+				mousePosition = e->forms().MouseInfo.X +
+				                e->forms().RaisedBy->getLocationOnScreen().x - resolvedLocation.x;
 				break;
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
-	    e->Forms().EventFlag == FormEventType::MouseDown)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
+	    e->forms().EventFlag == FormEventType::MouseDown)
 	{
 		if (mousePosition >= (segmentsize * (Value - Minimum)) + grippersize)
 		{
-			ScrollNext();
+			scrollNext();
 		}
 		else if (mousePosition <= segmentsize * (Value - Minimum))
 		{
-			ScrollPrev();
+			scrollPrev();
 		}
 		else
 		{
@@ -85,22 +122,24 @@ void ScrollBar::EventOccured(Event *e)
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION &&
-	    (capture || e->Forms().RaisedBy == shared_from_this()) &&
-	    e->Forms().EventFlag == FormEventType::MouseUp)
+	if (e->type() == EVENT_FORM_INTERACTION &&
+	    (capture || e->forms().RaisedBy == shared_from_this()) &&
+	    e->forms().EventFlag == FormEventType::MouseUp)
 	{
 		capture = false;
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
-	    e->Forms().EventFlag == FormEventType::MouseMove && capture)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::MouseMove &&
+	    capture)
 	{
-		this->SetValue(static_cast<int>(mousePosition / segmentsize));
+		this->setValue(static_cast<int>(mousePosition / segmentsize) + Minimum);
 	}
 }
 
-void ScrollBar::OnRender()
+void ScrollBar::onRender()
 {
+	Control::onRender();
+
 	// LoadResources();
 	if (Minimum == Maximum)
 		return;
@@ -125,14 +164,31 @@ void ScrollBar::OnRender()
 			fw().renderer->drawFilledRect(newpos, newsize, GripperColour);
 			break;
 		case ScrollBarRenderStyle::Menu:
+			switch (BarOrientation)
+			{
+				case Orientation::Vertical:
+					newpos.x = (Size.x - grippersize) / 2;
+					break;
+				case Orientation::Horizontal:
+					newpos.y = (Size.y - grippersize) / 2;
+					break;
+			}
 			fw().renderer->draw(gripperbutton, newpos);
 			break;
 	}
+
+	updateLargeChangeValue();
 }
 
-void ScrollBar::Update()
+void ScrollBar::updateLargeChangeValue()
 {
-	Control::Update();
+	LargeChange =
+	    static_cast<int>(std::max((Maximum - Minimum + 2) * (float)LargePercent / 100.0f, 2.0f));
+}
+
+void ScrollBar::update()
+{
+	Control::update();
 
 	int size;
 	if (Size.x < Size.y)
@@ -161,14 +217,14 @@ void ScrollBar::Update()
 	}
 }
 
-void ScrollBar::UnloadResources() { Control::UnloadResources(); }
+void ScrollBar::unloadResources() { Control::unloadResources(); }
 
-sp<Control> ScrollBar::CopyTo(sp<Control> CopyParent)
+sp<Control> ScrollBar::copyTo(sp<Control> CopyParent)
 {
 	sp<ScrollBar> copy;
 	if (CopyParent)
 	{
-		copy = CopyParent->createChild<ScrollBar>();
+		copy = CopyParent->createChild<ScrollBar>(gripperbutton);
 	}
 	else
 	{
@@ -179,43 +235,45 @@ sp<Control> ScrollBar::CopyTo(sp<Control> CopyParent)
 	copy->Minimum = this->Minimum;
 	copy->GripperColour = this->GripperColour;
 	copy->LargeChange = this->LargeChange;
+	copy->LargePercent = this->LargePercent;
 	copy->RenderStyle = this->RenderStyle;
-	CopyControlData(copy);
+	copyControlData(copy);
 	return copy;
 }
 
-void ScrollBar::ConfigureFromXML(tinyxml2::XMLElement *Element)
+void ScrollBar::configureSelfFromXml(pugi::xml_node *node)
 {
-	Control::ConfigureFromXML(Element);
-	tinyxml2::XMLElement *subnode;
-	UString attribvalue;
+	Control::configureSelfFromXml(node);
 
-	subnode = Element->FirstChildElement("grippercolour");
-	if (subnode != nullptr)
+	if (auto largeChange = node->attribute("largechange"))
 	{
-		if (subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "")
-		{
-			GripperColour = Colour(
-			    Strings::ToU8(subnode->Attribute("r")), Strings::ToU8(subnode->Attribute("g")),
-			    Strings::ToU8(subnode->Attribute("b")), Strings::ToU8(subnode->Attribute("a")));
-		}
-		else
-		{
-			GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
-			                       Strings::ToU8(subnode->Attribute("g")),
-			                       Strings::ToU8(subnode->Attribute("b")));
-		}
+		this->LargeChange = largeChange.as_int();
 	}
-	subnode = Element->FirstChildElement("range");
-	if (subnode != nullptr)
+	auto gripperImageNode = node->child("gripperimage");
+	if (gripperImageNode)
 	{
-		if (subnode->Attribute("min") != nullptr && UString(subnode->Attribute("min")) != "")
+		gripperbutton = fw().data->loadImage(gripperImageNode.text().get());
+	}
+
+	auto gripperColourNode = node->child("grippercolour");
+	if (gripperColourNode)
+	{
+		uint8_t r = gripperColourNode.attribute("r").as_uint(0);
+		uint8_t g = gripperColourNode.attribute("g").as_uint(0);
+		uint8_t b = gripperColourNode.attribute("b").as_uint(0);
+		uint8_t a = gripperColourNode.attribute("a").as_uint(255);
+		GripperColour = {r, g, b, a};
+	}
+	auto rangeNode = node->child("range");
+	if (rangeNode)
+	{
+		if (rangeNode.attribute("min"))
 		{
-			Minimum = Strings::ToInteger(subnode->Attribute("min"));
+			Minimum = rangeNode.attribute("min").as_int();
 		}
-		if (subnode->Attribute("max") != nullptr && UString(subnode->Attribute("max")) != "")
+		if (rangeNode.attribute("max"))
 		{
-			Maximum = Strings::ToInteger(subnode->Attribute("max"));
+			Maximum = rangeNode.attribute("max").as_int();
 		}
 	}
 }

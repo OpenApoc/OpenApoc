@@ -1,30 +1,33 @@
-
 #pragma once
 
 #include "framework/stage.h"
-
-#include "forms/forms.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {
+
+class Form;
+class Control;
+class ConfigOption;
 
 class OptionsMenu : public Stage
 {
   private:
 	sp<Form> menuform;
-	StageCmd stageCmd;
+
+	sp<Control> createOptionRow(const ConfigOption &option);
 
   public:
 	OptionsMenu();
-	~OptionsMenu();
+	~OptionsMenu() override;
 	// Stage control
-	void Begin() override;
-	void Pause() override;
-	void Resume() override;
-	void Finish() override;
-	void EventOccurred(Event *e) override;
-	void Update(StageCmd *const cmd) override;
-	void Render() override;
-	bool IsTransition() override;
+	void begin() override;
+	void pause() override;
+	void resume() override;
+	void finish() override;
+	void eventOccurred(Event *e) override;
+	void update() override;
+	void render() override;
+	bool isTransition() override;
 };
 }; // namespace OpenApoc

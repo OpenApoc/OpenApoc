@@ -1,7 +1,13 @@
-#include "game/state/base/base.h"
+#include "game/ui/base/basestage.h"
+#include "forms/form.h"
+#include "forms/graphicbutton.h"
+#include "forms/label.h"
 #include "framework/event.h"
 #include "framework/framework.h"
-#include "game/ui/base/basestage.h"
+#include "framework/renderer.h"
+#include "game/state/city/base.h"
+#include "game/state/gamestate.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -11,9 +17,9 @@ BaseStage::BaseStage(sp<GameState> state)
 {
 }
 
-BaseStage::~BaseStage() {}
+BaseStage::~BaseStage() = default;
 
-void BaseStage::ChangeBase(sp<Base> newBase)
+void BaseStage::changeBase(sp<Base> newBase)
 {
 	if (newBase != nullptr)
 	{
@@ -21,26 +27,26 @@ void BaseStage::ChangeBase(sp<Base> newBase)
 	}
 }
 
-void BaseStage::RefreshView()
+void BaseStage::refreshView()
 {
-	auto viewImage = drawMiniBase(state->current_base, viewHighlight, viewFacility);
-	currentView->SetImage(viewImage);
-	currentView->SetDepressedImage(viewImage);
+	auto viewImage = drawMiniBase(*state->current_base, viewHighlight, viewFacility);
+	currentView->setImage(viewImage);
+	currentView->setDepressedImage(viewImage);
 }
 
-void BaseStage::Begin()
+void BaseStage::begin()
 {
-	ChangeBase();
+	changeBase();
 
-	textFunds = form->FindControlTyped<Label>("TEXT_FUNDS");
-	textFunds->SetText(state->getPlayerBalance());
+	textFunds = form->findControlTyped<Label>("TEXT_FUNDS");
+	textFunds->setText(state->getPlayerBalance());
 
 	int b = 0;
 	for (auto &pair : state->player_bases)
 	{
 		auto &viewBase = pair.second;
-		auto viewName = UString::format("BUTTON_BASE_%d", ++b);
-		auto view = form->FindControlTyped<GraphicButton>(viewName);
+		auto viewName = format("BUTTON_BASE_%d", ++b);
+		auto view = form->findControlTyped<GraphicButton>(viewName);
 		if (!view)
 		{
 			// This screen doesn't have miniviews
@@ -50,40 +56,45 @@ void BaseStage::Begin()
 		{
 			currentView = view;
 		}
-		view->SetData(viewBase);
-		auto viewImage = drawMiniBase(viewBase, viewHighlight, viewFacility);
-		view->SetImage(viewImage);
-		view->SetDepressedImage(viewImage);
-		view->addCallback(FormEventType::ButtonClick, [this, view](Event *e) {
-			auto base = e->Forms().RaisedBy->GetData<Base>();
+		view->setData(viewBase);
+		auto viewImage = drawMiniBase(*viewBase, viewHighlight, viewFacility);
+		view->setImage(viewImage);
+		view->setDepressedImage(viewImage);
+		wp<GraphicButton> weakView(view);
+		view->addCallback(FormEventType::ButtonClick, [this, weakView](FormsEvent *e) {
+			auto base = e->forms().RaisedBy->getData<Base>();
 			if (this->state->current_base != base)
 			{
-				this->ChangeBase(base);
-				this->currentView = view;
+				this->changeBase(base);
+				this->currentView = weakView.lock();
 			}
 		});
-		view->addCallback(FormEventType::MouseEnter, [this](Event *e) {
-			auto base = e->Forms().RaisedBy->GetData<Base>();
-			this->textViewBase->SetText(base->name);
+		view->addCallback(FormEventType::MouseEnter, [this](FormsEvent *e) {
+			auto base = e->forms().RaisedBy->getData<Base>();
+			this->textViewBase->setVisible(true);
+			this->textViewBase->setText(base->name);
 		});
-		view->addCallback(FormEventType::MouseLeave,
-		                  [this](Event *e) { this->textViewBase->SetText(""); });
+		view->addCallback(FormEventType::MouseLeave, [this](FormsEvent *) {
+			this->textViewBase->setText("");
+			this->textViewBase->setVisible(false);
+		});
 		miniViews.push_back(view);
 	}
-	textViewBase = form->FindControlTyped<Label>("TEXT_BUTTON_BASE");
+	textViewBase = form->findControlTyped<Label>("TEXT_BUTTON_BASE");
+	this->textViewBase->setVisible(false);
 }
 
-void BaseStage::Render()
+void BaseStage::render()
 {
 	// Highlight selected base
 	if (currentView != nullptr)
 	{
-		auto viewBase = currentView->GetData<Base>();
+		auto viewBase = currentView->getData<Base>();
 		if (state->current_base == viewBase)
 		{
-			Vec2<int> pos = form->Location + currentView->Location - 2;
+			Vec2<int> pos = currentView->getLocationOnScreen() - 2;
 			Vec2<int> size = currentView->Size + 4;
-			fw().renderer->drawRect(pos, size, Colour{255, 0, 0});
+			fw().renderer->drawRect(pos, size, COLOUR_RED);
 		}
 	}
 }

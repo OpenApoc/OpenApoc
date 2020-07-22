@@ -1,8 +1,11 @@
 #include "library/strings.h"
-// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
-// symbols as part of the module that uses it
-#define BOOST_ALL_NO_LIB
-#include <boost/locale.hpp>
+#include "library/strings_format.h"
+#include <cctype>
+#include <iterator>
+#include <tuple> // used for std::ignore
+
+#include <boost/algorithm/string/predicate.hpp>
+#include <boost/locale/message.hpp>
 
 #ifdef DUMP_TRANSLATION_STRINGS
 #include <fstream>
@@ -13,6 +16,108 @@
 
 namespace OpenApoc
 {
+
+static constexpr UniChar REPLACEMENT_CHARACTER = 0xfffd;
+
+static UniChar utf8_to_unichar(const char *str, size_t &num_bytes_read)
+{
+	/* This will pick up null bytes */
+	if ((str[0] & 0b10000000) == 0)
+	{
+		num_bytes_read = 1;
+		return static_cast<UniChar>(str[0]);
+	}
+	if ((str[0] & 0b11100000) == 0b11000000)
+	{
+		num_bytes_read = 2;
+		if ((str[1] & 0b11000000) != 0b10000000)
+		{
+			return REPLACEMENT_CHARACTER;
+		}
+		UniChar c = 0;
+		c = str[0] & 0b00011111;
+		c <<= 6;
+		c |= str[1] & 0b00111111;
+		return c;
+	}
+	if ((str[0] & 0b11110000) == 0b11100000)
+	{
+		num_bytes_read = 3;
+		if ((str[1] & 0b11000000) != 0b10000000 || (str[2] & 0b11000000) != 0b10000000)
+		{
+			return REPLACEMENT_CHARACTER;
+		}
+		UniChar c = 0;
+		c = str[0] & 0b00001111;
+		c <<= 6;
+		c |= str[1] & 0b00111111;
+		c <<= 6;
+		c |= str[2] & 0b00111111;
+		return c;
+	}
+	if ((str[0] & 0b11111000) == 0b11110000)
+	{
+		num_bytes_read = 4;
+		if ((str[1] & 0b11000000) != 0b10000000 || (str[2] & 0b11000000) != 0b10000000 ||
+		    (str[3] & 0b11000000) != 0b10000000)
+		{
+			return REPLACEMENT_CHARACTER;
+		}
+		UniChar c = 0;
+		c = str[0] & 0b00000111;
+		c <<= 6;
+		c |= str[1] & 0b00111111;
+		c <<= 6;
+		c |= str[2] & 0b00111111;
+		c <<= 6;
+		c |= str[3] & 0b00111111;
+		return c;
+	}
+	/* Invalid character start - return a replacement character and skip 1 char */
+	num_bytes_read = 1;
+	return REPLACEMENT_CHARACTER;
+}
+
+/* Returns the number of bytes used */
+static size_t unichar_to_utf8(const UniChar uc, char str[4])
+{
+	if (uc < 0x7F)
+	{
+		str[0] = static_cast<char>(uc);
+		return 1;
+	}
+	if (uc < 0x7FF)
+	{
+		UniChar c = uc;
+		str[1] = 0b10000000 | (0b00111111 & c);
+		c >>= 6;
+		str[0] = 0b11000000 | (0b00011111 & c);
+		return 2;
+	}
+	if (uc < 0xFFFF)
+	{
+		UniChar c = uc;
+		str[2] = 0b10000000 | (0b00111111 & c);
+		c >>= 6;
+		str[1] = 0b10000000 | (0b00111111 & c);
+		c >>= 6;
+		str[0] = 0b11100000 | (0b00001111 & c);
+		return 3;
+	}
+	if (uc < 0x10FFFF)
+	{
+		UniChar c = uc;
+		str[3] = 0b10000000 | (0b00111111 & c);
+		c >>= 6;
+		str[2] = 0b10000000 | (0b00111111 & c);
+		c >>= 6;
+		str[1] = 0b10000000 | (0b00111111 & c);
+		c >>= 6;
+		str[0] = 0b11110000 | (0b00000111 & c);
+		return 4;
+	}
+	return unichar_to_utf8(REPLACEMENT_CHARACTER, str);
+}
 
 #ifdef DUMP_TRANSLATION_STRINGS
 
@@ -35,8 +140,8 @@ void dumpStrings()
 		for (auto &str : p.second)
 		{
 			auto escapedStr = str;
-			outFile << "msgid \"" << str.str() << "\"\n";
-			outFile << "msgstr \"" << str.str() << "\"\n\n";
+			outFile << "msgid \"" << str << "\"\n";
+			outFile << "msgstr \"" << str << "\"\n\n";
 		}
 	}
 }
@@ -54,15 +159,16 @@ UString tr(const UString &str, const UString domain)
 	return UString(boost::locale::translate(str.str()).str(domain.str()));
 }
 
-UString::~UString() {}
+UString::~UString() = default;
 
 UString::UString() : u8Str() {}
 
-UString::UString(std::string str) : u8Str(str) {}
+UString::UString(const std::string &str) : u8Str(str) {}
 
-UString::UString(char c) : u8Str(1, c) {}
+UString::UString(std::string &&str) : u8Str(std::move(str)) {}
 
 UString::UString(const char *cstr)
+
 {
 	// We have to handle this manually as some things thought UString(nullptr) was a good idea
 	if (cstr)
@@ -70,19 +176,29 @@ UString::UString(const char *cstr)
 		this->u8Str = cstr;
 	}
 }
+UString::UString(const char *cstr, size_t count) : u8Str(cstr, count) {}
 
-UString::UString(const UString &other) : u8Str(other.u8Str) {}
+UString::UString(const UString &) = default;
 
-UString::UString(UString &&other) { this->u8Str = std::move(other.u8Str); }
+UString::UString(UString &&other) noexcept { this->u8Str = std::move(other.u8Str); }
 
 UString::UString(UniChar uc) : u8Str()
 {
-	u8Str = boost::locale::conv::utf_to_utf<char>(&uc, &uc + 1);
+	char buf[4];
+	auto bytes = unichar_to_utf8(uc, buf);
+	u8Str = {buf, bytes};
 }
 
-std::string UString::str() const { return this->u8Str; }
+UString::UString(UString::ConstIterator first, UString::ConstIterator last)
+    : UString(first.s.u8Str.substr(first.offset, last.offset - first.offset))
+{
+}
 
-const char *UString::c_str() const { return this->u8Str.c_str(); }
+const std::string &UString::str() const { return this->u8Str; }
+
+const char *UString::cStr() const { return this->u8Str.c_str(); }
+
+size_t UString::cStrLength() const { return this->u8Str.length(); }
 
 bool UString::operator<(const UString &other) const { return (this->u8Str) < (other.u8Str); }
 
@@ -90,18 +206,45 @@ bool UString::operator==(const UString &other) const { return (this->u8Str) == (
 
 UString UString::substr(size_t offset, size_t length) const
 {
-	return this->u8Str.substr(offset, length);
+	auto sub_start = std::next(this->begin(), offset);
+	auto sub_end = sub_start;
+	while (length != 0 && sub_end != this->end())
+	{
+		++sub_end;
+		--length;
+	}
+	return UString{sub_start, sub_end};
 }
 
-UString UString::toUpper() const { return boost::locale::to_upper(this->u8Str); }
-
-UString UString::toLower() const { return boost::locale::to_lower(this->u8Str); }
-
-UString &UString::operator=(const UString &other)
+UString UString::toUpper() const
 {
-	this->u8Str = other.u8Str;
-	return *this;
+	/* Only change the case on ascii range characters (codepoint <=0x7f)
+	 * As we know the top bit is set for any bytes outside this range no matter the position in the
+	 * utf8 stream, we can cheat a bit here */
+	UString upper_string = *this;
+	for (size_t i = 0; i < upper_string.cStrLength(); i++)
+	{
+		if ((upper_string.u8Str[i] & 0b10000000) == 0)
+			upper_string.u8Str[i] = toupper(upper_string.u8Str[i]);
+	}
+	return upper_string;
 }
+
+UString UString::toLower() const
+{
+	/* Only change the case on ascii range characters (codepoint <=0x7f)
+	 * As we know the top bit is set for any bytes outside this range no matter the position in the
+	 * utf8 stream, we can cheat a bit here */
+	UString lower_string = *this;
+	for (size_t i = 0; i < lower_string.cStrLength(); i++)
+	{
+		if ((lower_string.u8Str[i] & 0b10000000) == 0)
+			lower_string.u8Str[i] = tolower(lower_string.u8Str[i]);
+	}
+	return lower_string;
+}
+
+UString &UString::operator=(const UString &other) = default;
 
 UString &UString::operator+=(const UString &other)
 {
@@ -109,18 +252,39 @@ UString &UString::operator+=(const UString &other)
 	return *this;
 }
 
-size_t UString::length() const
-{
-	auto pointString = boost::locale::conv::utf_to_utf<UniChar>(this->u8Str);
-	return pointString.length();
-}
+size_t UString::length() const { return std::distance(this->begin(), this->end()); }
 
 void UString::insert(size_t offset, const UString &other)
 {
-	this->u8Str.insert(offset, other.u8Str);
+	auto it = this->begin();
+	while (offset && it != this->end())
+	{
+		++it;
+		offset--;
+	}
+	if (offset)
+	{
+		throw std::out_of_range("UString::insert() offset longer than string");
+	}
+	this->u8Str.insert(it.offset, other.u8Str);
 }
 
-void UString::remove(size_t offset, size_t count) { this->u8Str.erase(offset, count); }
+void UString::remove(size_t offset, size_t count)
+{
+	auto it = this->begin();
+	while (offset && it != this->end())
+	{
+		++it;
+		offset--;
+	}
+	while (count && it != this->end())
+	{
+		size_t num_bytes;
+		utf8_to_unichar(it.s.cStr() + it.offset, num_bytes);
+		this->u8Str.erase(it.offset, num_bytes);
+		count--;
+	}
+}
 
 bool UString::operator!=(const UString &other) const { return this->u8Str != other.u8Str; }
 
@@ -132,42 +296,39 @@ UString operator+(const UString &lhs, const UString &rhs)
 	return s;
 }
 
+std::ostream &operator<<(std::ostream &lhs, const UString &rhs)
+{
+	lhs << rhs.str();
+	return lhs;
+}
+
+// FIXME: This may not work with certain non-ascii characters
+std::istream &operator>>(std::istream &lhs, UString &rhs)
+{
+	lhs >> rhs.u8Str;
+	return lhs;
+}
+
 std::vector<UString> UString::split(const UString &delims) const
 {
 	// FIXME: Probably won't work if any of 'delims' is outside the ASCII range
-	// FIXME: Doesn't work for more than 1 character in delims
 	std::vector<UString> strings;
-	std::stringstream ss(this->u8Str);
-	std::string tok;
-	if (delims.length() != 1)
+	size_t pos = 0;
+	size_t prev = pos;
+	while ((pos = this->u8Str.find_first_of(delims.str(), prev)) != std::string::npos)
 	{
-		// Invalid delim length
-		return strings;
+		if (pos > prev)
+			strings.push_back(this->u8Str.substr(prev, pos - prev));
+		prev = pos + 1;
 	}
-	while (std::getline(ss, tok, delims.u8Str[0]))
-	{
-		strings.push_back(tok);
-	}
+	strings.push_back(this->u8Str.substr(prev, pos));
 	return strings;
 }
 
 std::list<UString> UString::splitlist(const UString &delims) const
 {
-	// FIXME: Probably won't work if any of 'delims' is outside the ASCII range
-	// FIXME: Doesn't work for more than 1 character in delims
-	std::list<UString> strings;
-	std::stringstream ss(this->u8Str);
-	std::string tok;
-	if (delims.length() != 1)
-	{
-		// Invalid delim length
-		return strings;
-	}
-	while (std::getline(ss, tok, delims.u8Str[0]))
-	{
-		strings.push_back(tok);
-	}
-	return strings;
+	std::vector<UString> strings = split(delims);
+	return std::list<UString>(strings.begin(), strings.end());
 }
 
 UniChar UString::u8Char(char c)
@@ -178,45 +339,106 @@ UniChar UString::u8Char(char c)
 
 int UString::compare(const UString &other) const { return this->u8Str.compare(other.u8Str); }
 
-UString::const_iterator UString::begin() const { return UString::const_iterator(*this, 0); }
-
-UString::const_iterator UString::end() const
+bool UString::endsWith(const UString &suffix) const
 {
-	return UString::const_iterator(*this, this->length());
+	return boost::ends_with(str(), suffix.str());
 }
 
-UString::const_iterator UString::const_iterator::operator++()
+UString UString::trimLeft() const
 {
-	this->offset++;
+	auto first = begin();
+	auto last = end();
+	while (first != last && Strings::isWhiteSpace(*first))
+		++first;
+	return {first, last};
+}
+UString UString::trimRight() const
+{
+	auto first = begin();
+	auto last = end();
+	if (first == last)
+		return {};
+	--last;
+	while (first != last && Strings::isWhiteSpace(*last))
+		--last;
+	return {first, ++last};
+}
+UString UString::trim() const
+{
+	auto first = begin();
+	auto last = end();
+	while (first != last && Strings::isWhiteSpace(*first))
+		++first;
+	if (first == last)
+		return {};
+	--last;
+	while (first != last && Strings::isWhiteSpace(*last))
+		--last;
+	return {first, ++last};
+}
+
+UString::ConstIterator UString::begin() const { return UString::ConstIterator(*this, 0); }
+
+UString::ConstIterator UString::end() const
+{
+	return UString::ConstIterator(*this, this->u8Str.length());
+}
+
+UString::ConstIterator UString::ConstIterator::operator++()
+{
+	const char *ptr = s.cStr();
+	ptr += this->offset;
+	size_t num_bytes = 0;
+	utf8_to_unichar(ptr, num_bytes);
+
+	this->offset += num_bytes;
 	return *this;
 }
 
-bool UString::const_iterator::operator!=(const UString::const_iterator &other) const
+UString::ConstIterator UString::ConstIterator::operator--()
+{
+	const char *ptr = s.cStr();
+	ptr += --this->offset;
+	while (static_cast<unsigned char>(*ptr) >= 0b10000000 &&
+	       static_cast<unsigned char>(*ptr) < 0b11000000)
+	{
+		--this->offset;
+		--ptr;
+	}
+	return *this;
+}
+
+bool UString::ConstIterator::operator!=(const UString::ConstIterator &other) const
 {
 	return (this->offset != other.offset || this->s != other.s);
 }
 
-UniChar UString::const_iterator::operator*() const
+bool UString::ConstIterator::operator==(const UString::ConstIterator &other) const
 {
-	auto pointString = boost::locale::conv::utf_to_utf<int>(this->s.str());
-	return pointString[this->offset];
+	return this->offset == other.offset && this->s == other.s;
 }
 
-int Strings::ToInteger(const UString &s)
+UniChar UString::ConstIterator::operator*() const
+{
+	size_t num_bytes_unused;
+	return utf8_to_unichar(this->s.cStr() + this->offset, num_bytes_unused);
+}
+
+int Strings::toInteger(const UString &s)
 {
 	std::string u8str = s.str();
 	return static_cast<int>(strtol(u8str.c_str(), NULL, 0));
 }
 
-float Strings::ToFloat(const UString &s)
+float Strings::toFloat(const UString &s)
 {
 	std::string u8str = s.str();
 	return static_cast<float>(strtod(u8str.c_str(), NULL));
 }
 
-uint8_t Strings::ToU8(const UString &s) { return static_cast<uint8_t>(ToInteger(s)); }
+uint8_t Strings::toU8(const UString &s) { return static_cast<uint8_t>(toInteger(s)); }
 
-bool Strings::IsInteger(const UString &s)
+bool Strings::isInteger(const UString &s)
 {
 	std::string u8str = s.str();
 	char *endpos;
@@ -224,7 +446,7 @@ bool Strings::IsInteger(const UString &s)
 	return (endpos != u8str.c_str());
 }
 
-bool Strings::IsFloat(const UString &s)
+bool Strings::isFloat(const UString &s)
 {
 	std::string u8str = s.str();
 	char *endpos;
@@ -232,14 +454,16 @@ bool Strings::IsFloat(const UString &s)
 	return (endpos != u8str.c_str());
 }
 
-UString Strings::FromInteger(int i) { return UString::format("%d", i); }
+UString Strings::fromInteger(int i) { return format("%d", i); }
 
-UString Strings::FromFloat(float f) { return UString::format("%f", f); }
+UString Strings::fromFloat(float f) { return format("%f", f); }
 
-bool Strings::IsWhiteSpace(UniChar c)
+bool Strings::isWhiteSpace(UniChar c)
 {
 	// FIXME: Only works on ASCII whitespace
-	return isspace(c);
+	return isspace(c) != 0;
 }
+
+UString Strings::fromU64(uint64_t i) { return format("%llu", i); }
 
 }; // namespace OpenApoc

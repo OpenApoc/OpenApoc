@@ -22,25 +22,25 @@ class NullSoundBackend : public SoundBackend
 	{
 		std::ignore = sample;
 		std::ignore = gain;
-		LogWarning("Called on NULL backend");
+		LogInfo("Called on NULL backend");
 	}
 
 	void playMusic(std::function<void(void *)> finishedCallback, void *callbackData) override
 	{
 		std::ignore = finishedCallback;
 		std::ignore = callbackData;
-		LogWarning("Called on NULL backend");
+		LogInfo("Called on NULL backend");
 	}
 
 	void setTrack(sp<MusicTrack> track) override
 	{
 		std::ignore = track;
-		LogWarning("Called on NULL backend");
+		LogInfo("Called on NULL backend");
 	}
 
-	void stopMusic() override { LogWarning("Called on NULL backend"); }
+	void stopMusic() override { LogInfo("Called on NULL backend"); }
 
-	virtual ~NullSoundBackend() { this->stopMusic(); }
+	~NullSoundBackend() override { this->stopMusic(); }
 
 	virtual const AudioFormat &getPreferredFormat() { return preferredFormat; }
 
@@ -65,7 +65,7 @@ class NullSoundBackendFactory : public SoundBackendFactory
 		return new NullSoundBackend();
 	}
 
-	virtual ~NullSoundBackendFactory() {}
+	~NullSoundBackendFactory() override = default;
 };
 
 }; // anonymous namespace

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <!-- Organizations tab -->
+  <form id="FORM_CITY_UI_8">
+    <style minwidth="640" minheight="128">
+      <position x="centre" y="bottom"/>
+      <size width="640" height="128"/>
+      <graphic>
+        <size width="640" height="128"/>
+        <image>RAW:xcom3/ufodata/isoborda.dat:640:128:xcom3/ufodata/pal_01.dat</image>
+      </graphic>
+
+      <scroll id="ORGANISATION_LIST_SCROLL" visible="N" largepercent = "20">
+        <position x="105" y="66"/>
+        <size width="431" height="16"/>
+      </scroll>
+      <graphicbutton id="ORGANISATION_SCROLL_LEFT" scrollprev="ORGANISATION_LIST_SCROLL" scrolllarge="Y">
+        <tooltip text="Scroll Left" font="smallset"/>
+        <position x="88" y="45"/>
+        <size width="17" height="23"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:15:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="ORGANISATION_SCROLL_RIGHT" scrollnext="ORGANISATION_LIST_SCROLL" scrolllarge="Y">
+        <tooltip text="Scroll Right" font="smallset"/>
+        <position x="534" y="45"/>
+        <size width="18" height="22"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:16:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+      <listbox id="ORGANISATION_LIST" scrollbarid="ORGANISATION_LIST_SCROLL">
+        <tooltip text="" font="smallset"/>
+        <position x="105" y="44"/>
+        <size height="24" width="431"/>
+        <item size="0" spacing="0"/>
+        <orientation>horizontal</orientation>
+      </listbox>
+      <label id="TEXT_ORG_NAME">
+        <position x="100" y="80"/>
+        <size width="275" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_ORG_RELATION">
+        <position x="100" y="98"/>
+        <size width="275" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <radiobutton id="BUTTON_SHOW_ALL" groupid="ORG_SELECT">
+        <tooltip text="View all organizations" font="smallset"/>
+        <size width="27" height="46"/>
+        <position x="297" y="75"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:68:xcom3/ufodata/research.pcx</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_SHOW_ALLIED" groupid="ORG_SELECT">
+        <tooltip text="View allied organizations" font="smallset"/>
+        <size width="27" height="46"/>
+        <position x="338" y="75"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:69:xcom3/ufodata/research.pcx</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_SHOW_FRIENDLY" groupid="ORG_SELECT">
+        <tooltip text="View friendly organizations" font="smallset"/>
+        <size width="27" height="46"/>
+        <position x="373" y="75"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:70:xcom3/ufodata/research.pcx</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_SHOW_NEUTRAL" groupid="ORG_SELECT">
+        <tooltip text="View neutral organizations" font="smallset"/>
+        <size width="27" height="46"/>
+        <position x="408" y="75"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:71:xcom3/ufodata/research.pcx</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_SHOW_UNFRIENDLY" groupid="ORG_SELECT">
+        <tooltip text="View unfriendly organizations" font="smallset"/>
+        <size width="27" height="46"/>
+        <position x="443" y="75"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:72:xcom3/ufodata/research.pcx</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_SHOW_HOSTILE" groupid="ORG_SELECT">
+        <tooltip text="View hostile organizations" font="smallset"/>
+        <size width="27" height="46"/>
+        <position x="478" y="75"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:73:xcom3/ufodata/research.pcx</imagechecked>
+      </radiobutton>
+
+      <graphicbutton id="BUTTON_BRIBE">
+        <tooltip text="Offer settlement" font="smallset"/>
+        <size width="27" height="46"/>
+        <position x="518" y="75"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:74:xcom3/ufodata/research.pcx</imagedepressed>
+      </graphicbutton>
+    </style>
+  </form>
+</openapoc>

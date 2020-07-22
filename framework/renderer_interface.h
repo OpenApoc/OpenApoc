@@ -1,17 +1,17 @@
 #pragma once
-#include "renderer.h"
 
 namespace OpenApoc
 {
+
+class Renderer;
 
 class RendererFactory
 {
   public:
 	virtual Renderer *create() = 0;
-	virtual ~RendererFactory() {}
+	virtual ~RendererFactory() = default;
 };
 
 RendererFactory *getGL20RendererFactory();
-RendererFactory *getGL30RendererFactory();
 RendererFactory *getGLES30RendererFactory();
 }; // namespace OpenApoc

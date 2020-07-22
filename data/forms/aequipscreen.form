@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_AEQUIPSCREEN">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="640" height="480"/>
+      <graphic id="BACKGROUND">
+        <image>xcom3/tacdata/equippic/xcom.pcx</image>
+        <position x="0" y="0"/>
+        <size width="640" height="480"/>
+      </graphic>
+      <label id="EQUIP_AGENT">
+        <position x="20" y="0"/>
+        <size width="600" height="36"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>bigfont</font>
+      </label>
+      <graphic id="DOLLAR">
+        <image>city/dollar-icon.png</image>
+        <size width="15" height="15"/>
+        <position x="552" y="9"/>
+      </graphic>
+      <label id="TEXT_FUNDS">
+        <position x="572" y="11"/>
+        <size width="60" height="10"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphicbutton id="BUTTON_OK">
+        <position x="602" y="443"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_LEFT">
+        <tooltip text="Scroll Left" font="smallset"/>
+        <position x="6" y="449"/>
+        <size width="25" height="21"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:2:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_RIGHT">
+        <tooltip text="Scroll Right" font="smallset"/>
+        <position x="566" y="449"/>
+        <size width="25" height="21"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:3:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
+      <graphic id="PAPER_DOLL">
+        <position x="192" y="65"/>
+        <size width="256" height="256"/>
+        <imageposition>tile</imageposition>
+        <image/>
+      </graphic>
+      <graphic id="INVENTORY">
+        <position x="16" y="364"/>
+        <size width="522" height="84"/>
+        <image/>
+        <imageposition>fit</imageposition>
+      </graphic>
+      <graphic id="BUTTON_UNDERPANTS">
+        <position x="596" y="36"/>
+        <size width="44" height="83"/>
+        <image>city/agent-equip-buttons.png</image>
+        <imageposition>fit</imageposition>
+      </graphic>
+      <radiobutton id="BUTTON_SHOW_WEAPONS" groupid="TYPE">
+        <tooltip text="Show available equipment" font="smallset"/>
+        <position x="602" y="40"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:6:xcom3/ufodata/agenteqp.pcx</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_SHOW_ARMOUR" groupid="TYPE">
+        <tooltip text="Show available armor" font="smallset"/>
+        <position x="602" y="80"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:7:xcom3/ufodata/agenteqp.pcx</imagechecked>
+      </radiobutton>
+      <scroll id="AGENT_SELECT_SCROLL">
+        <position x="566" y="81"/>
+        <size width="26" height="242"/>
+      </scroll>
+      <listbox id="AGENT_SELECT_BOX" scrollbarid="AGENT_SELECT_SCROLL">
+        <position x="463" y="70"/>
+        <size width="98" height="260"/>
+        <item size="0" spacing="5"/>
+        <hovercolour r="255" g="255" b="255" a="0"/>
+        <selcolour r="255" g="255" b="255" a="0"/>
+        <autoselect>no</autoselect>
+      </listbox>
+      <graphicbutton id="AGENT_SCROLL_UP" scrollprev="AGENT_SELECT_SCROLL">
+        <tooltip text="Scroll Up" font="smallset"/>
+        <position x="568" y="56"/>
+        <size width="22" height="21"/>
+        <image/>
+        <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="AGENT_SCROLL_DOWN" scrollnext="AGENT_SELECT_SCROLL">
+        <tooltip text="Scroll Down" font="smallset"/>
+        <position x="568" y="326"/>
+        <size width="22" height="21"/>
+        <image/>
+        <imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <checkbox ID="BUTTON_TOGGLE_STATS">
+        <position x="167" y="56"/>
+        <size width="22" height="21"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:11:xcom3/ufodata/agenteqp.pcx</imagechecked>
+      </checkbox>
+      <graphic id="PAPER_DOLL">
+        <position x="192" y="52"/>
+        <size width="256" height="256"/>
+        <imageposition>tile</imageposition>
+        <image/>
+      </graphic>
+
+      <subform id="AGENT_STATS_VIEW" src="sheet_agent_stats">
+        <position x="17" y="62"/>
+      </subform>
+      <subform id="AGENT_ITEM_VIEW" src="sheet_agent_item">
+        <position x="17" y="62"/>
+      </subform>
+    </style>
+  </form>
+</openapoc>

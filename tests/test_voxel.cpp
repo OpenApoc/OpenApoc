@@ -1,6 +1,12 @@
+#include "framework/configfile.h"
 #include "framework/logger.h"
 #include "library/rect.h"
 #include "library/voxel.h"
+
+// Vanilla did not use voxel map centres properly, just used
+// voxelmap centre without checking bits
+// Therefore, we should not do it
+//#define CHECK_VOXELMAP_CENTRE
 
 using namespace OpenApoc;
 
@@ -8,8 +14,7 @@ static void check_voxel(Vec3<int> position, VoxelMap &v, bool expected)
 {
 	if (v.getBit(position) != expected)
 	{
-		LogError("Unexpected voxel at {%d,%d,%d} - expected %d", position.x, position.y, position.z,
-		         expected ? 1 : 0);
+		LogError("Unexpected voxel at %s - expected %d", position, expected ? 1 : 0);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -18,8 +23,7 @@ static void check_slice(Vec2<int> position, VoxelSlice &s, bool expected)
 {
 	if (s.getBit(position) != expected)
 	{
-		LogError("Unexpected voxel at {%d,%d} - expected %d", position.x, position.y,
-		         expected ? 1 : 0);
+		LogError("Unexpected voxel at %s - expected %d", position, expected ? 1 : 0);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -29,7 +33,7 @@ static void test_voxel(Vec3<int> voxel_size)
 	VoxelMap v{voxel_size};
 	if (v.size != voxel_size)
 	{
-		LogError("Unexpected size {%d,%d,%d}", v.size.x, v.size.y, v.size.z);
+		LogError("Unexpected size %s", v.size);
 		exit(EXIT_FAILURE);
 	}
 	// Ensure everything is '0' at init, and anything outside the bounds should be '0' too
@@ -46,9 +50,9 @@ static void test_voxel(Vec3<int> voxel_size)
 
 	// An empty map should have a center in the 'middle'
 	v.calculateCentre();
-	if (v.centre != v.size / 2)
+	if (v.getCentre() != v.size / 2)
 	{
-		LogError("Unexpected centre {%d,%d,%d} for empty map", v.centre.x, v.centre.y, v.centre.z);
+		LogError("Unexpected centre %s for empty map", v.getCentre());
 		exit(EXIT_FAILURE);
 	}
 
@@ -57,7 +61,7 @@ static void test_voxel(Vec3<int> voxel_size)
 
 	if (slice->size != Vec2<int>{voxel_size.x, voxel_size.y})
 	{
-		LogError("Unexpected slice size {%d,%d}", slice->size.x, slice->size.y);
+		LogError("Unexpected slice size %s", slice->size);
 		exit(EXIT_FAILURE);
 	}
 	// Ensure everything is '0' at init, and anything outside the bounds should be '0' too
@@ -74,12 +78,12 @@ static void test_voxel(Vec3<int> voxel_size)
 	if (bit_position.x > voxel_size.x)
 	{
 		bit_position.x = voxel_size.x - 1;
-		LogWarning("Clamping bit position x to %d", bit_position.x);
+		LogInfo("Clamping bit position x to %d", bit_position.x);
 	}
 	if (bit_position.y >= voxel_size.y)
 	{
 		bit_position.y = voxel_size.y - 1;
-		LogWarning("Clamping bit position y to %d", bit_position.y);
+		LogInfo("Clamping bit position y to %d", bit_position.y);
 	}
 
 	slice->setBit(bit_position, true);
@@ -99,7 +103,7 @@ static void test_voxel(Vec3<int> voxel_size)
 	if (bit_voxel_position.z >= voxel_size.z)
 	{
 		bit_voxel_position.z = voxel_size.z - 1;
-		LogWarning("Clamping bit position z to %d", bit_voxel_position.z);
+		LogInfo("Clamping bit position z to %d", bit_voxel_position.z);
 	}
 	v.setSlice(bit_voxel_position.z, slice);
 	for (int z = -16; z < voxel_size.z + 33; z++)
@@ -117,15 +121,16 @@ static void test_voxel(Vec3<int> voxel_size)
 		}
 	}
 
-	// The centre of a voxelmap with a single bit should be the same as that bit position
+// The centre of a voxelmap with a single bit should be the same as that bit position
+#ifdef CHECK_VOXELMAP_CENTRE
 	v.calculateCentre();
-	if (v.centre != bit_voxel_position)
+	if (v.getCentre() != bit_voxel_position)
 	{
-		LogError("Unexpected centre {%d,%d,%d} for single-bit map, expected {%d,%d,%d}", v.centre.x,
-		         v.centre.y, v.centre.z, bit_voxel_position.x, bit_voxel_position.y,
-		         bit_voxel_position.z);
+		LogError("Unexpected centre %s for single-bit map, expected %s", v.getCentre(),
+		         bit_voxel_position);
 		exit(EXIT_FAILURE);
 	}
+#endif
 
 	// Unset the bit and make sure it's empty again
 	slice->setBit(bit_position, false);
@@ -139,13 +144,15 @@ static void test_voxel(Vec3<int> voxel_size)
 			}
 		}
 	}
+
+#ifdef CHECK_VOXELMAP_CENTRE
 	v.calculateCentre();
-	if (v.centre != v.size / 2)
+	if (v.getCentre() != v.size / 2)
 	{
-		LogError("Unexpected centre {%d,%d,%d} for reset-to-empty map", v.centre.x, v.centre.y,
-		         v.centre.z);
+		LogError("Unexpected centre %s for reset-to-empty map", v.getCentre());
 		exit(EXIT_FAILURE);
 	}
+#endif
 	// and set the bit again to get back to single-bit-set state
 	slice->setBit(bit_position, true);
 
@@ -157,22 +164,22 @@ static void test_voxel(Vec3<int> voxel_size)
 	if (bit_2_voxel_position.x < 0)
 	{
 		bit_2_voxel_position.x = 0;
-		LogWarning("Clamping bit 2 position x to %d", bit_2_voxel_position.x);
+		LogInfo("Clamping bit 2 position x to %d", bit_2_voxel_position.x);
 	}
 	if (bit_2_voxel_position.y < 0)
 	{
 		bit_2_voxel_position.y = 0;
-		LogWarning("Clamping bit 2 position y to %d", bit_2_voxel_position.y);
+		LogInfo("Clamping bit 2 position y to %d", bit_2_voxel_position.y);
 	}
 	if (bit_2_voxel_position.z < 0)
 	{
 		bit_2_voxel_position.z = 0;
-		LogWarning("Clamping bit 2 position z to %d", bit_2_voxel_position.z);
+		LogInfo("Clamping bit 2 position z to %d", bit_2_voxel_position.z);
 	}
 	auto slice2 = mksp<VoxelSlice>(Vec2<int>{voxel_size.x, voxel_size.y});
 	if (bit_2_voxel_position.z == bit_voxel_position.z)
 	{
-		LogWarning("Slice of bit 2 same as bit 1");
+		LogInfo("Slice of bit 2 same as bit 1");
 		slice2 = slice;
 	}
 
@@ -194,28 +201,35 @@ static void test_voxel(Vec3<int> voxel_size)
 		}
 	}
 
-	// Now check the centre
+// Now check the centre
+#ifdef CHECK_VOXELMAP_CENTRE
 	auto expected_centre = (bit_voxel_position + bit_2_voxel_position) / 2;
 	v.calculateCentre();
-	if (v.centre != expected_centre)
+	if (v.getCentre() != expected_centre)
 	{
-		LogError("Unexpected centre {%d,%d,%d} for 2 bit map, expected {%d,%d,%d}", v.centre.x,
-		         v.centre.y, v.centre.z, expected_centre.x, expected_centre.y, expected_centre.z);
+		LogError("Unexpected centre %s for 2 bit map, expected %s", v.getCentre(), expected_centre);
 		exit(EXIT_FAILURE);
 	}
-
+#endif
 	// Everything looks good
 	return;
 }
 
-int main(int, char **)
+int main(int argc, char **argv)
 {
+	if (config().parseOptions(argc, argv))
+	{
+		return EXIT_FAILURE;
+	}
 	const std::vector<Vec3<int>> voxel_sizes = {
-	    {1, 1, 1}, {32, 32, 16}, {33, 32, 16}, {77, 75, 2222},
+	    {1, 1, 1},
+	    {32, 32, 16},
+	    {33, 32, 16},
+	    {77, 75, 2222},
 	};
 	for (auto &size : voxel_sizes)
 	{
-		LogWarning("Testing voxel size {%d,%d,%d}", size.x, size.y, size.z);
+		LogInfo("Testing voxel size %s", size);
 		test_voxel(size);
 	}
 }

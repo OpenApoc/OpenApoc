@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_NOTIFICATION_SCREEN">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="bottom"/>
+      <size width="640" height="128"/>
+      <graphic>
+        <size width="640" height="128"/>
+        <image>RAW:xcom3/ufodata/isobord8.dat:640:128:xcom3/ufodata/pal_01.dat</image>
+      </graphic>
+      <label id="TEXT_NOTIFICATION">
+        <position x="48" y="4"/>
+        <size width="545" height="41"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label text="Always pause to display this message?">
+        <position x="160" y="77"/>
+        <size width="382" height="31"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <graphicbutton id="BUTTON_RESUME">
+        <tooltip text="Continue" font="smallset"/>
+        <position x="13" y="13"/>
+        <size width="24" height="25"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:54:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_PAUSE">
+        <tooltip text="Center and pause game" font="smallset"/>
+        <position x="605" y="13"/>
+        <size width="24" height="25"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:53:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+      <checkbox id="CHECKBOX_ALWAYS_PAUSE">
+        <position x="60" y="80"/>
+        <size width="54" height="25"/>
+        <image>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:6:xcom3/ufodata/pal_01.dat</image>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:58:xcom3/ufodata/pal_01.dat</imagechecked>
+      </checkbox>
+    </style>
+  </form>
+</openapoc>

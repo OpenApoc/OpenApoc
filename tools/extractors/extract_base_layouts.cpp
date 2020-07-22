@@ -1,17 +1,19 @@
 #include "framework/framework.h"
-#include "game/state/city/baselayout.h"
+#include "game/state/gamestate.h"
+#include "game/state/rules/city/baselayout.h"
+#include "library/strings_format.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
 
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::extractBaseLayouts(GameState &state, Difficulty difficulty)
+void InitialGameStateExtractor::extractBaseLayouts(GameState &state) const
 {
 	auto &data = this->ufo2p;
 	for (unsigned i = 0; i < data.baselayouts->count(); i++)
 	{
-		UString id = UString::format("%s%d", BaseLayout::getPrefix().c_str(), i);
+		UString id = format("%s%d", BaseLayout::getPrefix(), i);
 		auto layout = mksp<BaseLayout>();
 		auto b = data.baselayouts->get(i);
 		bool foundLift = false;
@@ -35,7 +37,7 @@ void InitialGameStateExtractor::extractBaseLayouts(GameState &state, Difficulty 
 						if (foundLift)
 						{
 							LogError("Unexpected repeated lift at position {%d,%d} in base %s", row,
-							         col, id.c_str());
+							         col, id);
 						}
 						foundLift = true;
 						layout->baseLift = {col, row};
@@ -47,13 +49,13 @@ void InitialGameStateExtractor::extractBaseLayouts(GameState &state, Difficulty 
 					}
 					default:
 						LogError("Unexpected module id %d at {%d,%d} in base %s",
-						         (int)b.module[row][col], col, row, id.c_str());
+						         (int)b.module[row][col], col, row, id);
 				}
 			}
 		}
 		if (!foundLift)
 		{
-			LogError("No lift found in base %s", id.c_str());
+			LogError("No lift found in base %s", id);
 		}
 		Rect<int>::compactRectSet(layout->baseCorridors);
 		state.base_layouts[id] = layout;

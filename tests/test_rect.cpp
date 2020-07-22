@@ -1,3 +1,4 @@
+#include "framework/configfile.h"
 #include "framework/logger.h"
 #include "library/rect.h"
 
@@ -19,7 +20,7 @@ static bool test_one_rect_compaction(std::set<Rect<T>> rect_set, unsigned expect
 	}
 	unsigned num_collapsed = Rect<T>::compactRectSet(rect_set);
 
-	if (expected_start_count != 0 && rect_set.size() == 0)
+	if (expected_start_count != 0 && rect_set.empty())
 	{
 		LogError("Collapsed down to zero size set");
 		return false;
@@ -138,8 +139,7 @@ void test_point_within(Rect<int> r, Vec2<int> p, bool expected)
 {
 	if (r.within(p) != expected)
 	{
-		LogError("Point {%d,%d} incorrectly %s rect {%d,%d},{%d,%d}", p.x, p.y,
-		         expected ? "not within" : "within", r.p0.x, r.p0.y, r.p1.x, r.p1.y);
+		LogError("Point %s incorrectly %s rect %s", p, expected ? "not within" : "within", r);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -147,9 +147,7 @@ void test_rect_within(Rect<int> r1, Rect<int> r2, bool expected)
 {
 	if (r1.within(r2) != expected)
 	{
-		LogError("Rect {%d,%d},{%d,%d} incorrectly %s rect {%d,%d},{%d,%d}", r2.p0.x, r2.p0.y,
-		         r2.p1.x, r2.p1.y, expected ? "not within" : "within", r1.p0.x, r1.p0.y, r1.p1.x,
-		         r1.p1.y);
+		LogError("Rect %s incorrectly %s rect %s", r2, expected ? "not within" : "within", r1);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -157,17 +155,17 @@ void test_rect_intersects(Rect<int> r1, Rect<int> r2, bool expected)
 {
 	if (r1.intersects(r2) != expected)
 	{
-		LogError("Rect {%d,%d},{%d,%d} incorrectly %s rect {%d,%d},{%d,%d}", r2.p0.x, r2.p0.y,
-		         r2.p1.x, r2.p1.y, expected ? "does not intersect" : "intersects", r1.p0.x, r1.p0.y,
-		         r1.p1.x, r1.p1.y);
+		LogError("Rect %s incorrectly %s rect %s", r2,
+		         expected ? "does not intersect" : "intersects", r1);
 		exit(EXIT_FAILURE);
 	}
 }
 int main(int argc, char **argv)
 {
-	std::ignore = argc;
-	std::ignore = argv;
-
+	if (config().parseOptions(argc, argv))
+	{
+		return EXIT_FAILURE;
+	}
 	test_point_within({0, 0, 1, 1}, {0, 0}, true);
 
 	test_point_within({0, 0, 3, 3}, {1, 0}, true);

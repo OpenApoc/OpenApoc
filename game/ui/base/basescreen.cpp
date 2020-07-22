@@ -1,14 +1,33 @@
-#include "game/state/base/base.h"
+#include "game/ui/base/basescreen.h"
+#include "forms/form.h"
+#include "forms/graphic.h"
+#include "forms/graphicbutton.h"
+#include "forms/label.h"
+#include "forms/listbox.h"
+#include "forms/textedit.h"
 #include "forms/ui.h"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/image.h"
-#include "game/state/base/facility.h"
-#include "game/ui/base/basegraphics.h"
-#include "game/ui/base/basescreen.h"
+#include "framework/keycodes.h"
+#include "framework/renderer.h"
+#include "game/state/city/base.h"
+#include "game/state/city/building.h"
+#include "game/state/city/facility.h"
+#include "game/state/gamestate.h"
+#include "game/state/rules/city/ufopaedia.h"
+#include "game/ui/base/aliencontainmentscreen.h"
+#include "game/ui/base/buyandsellscreen.h"
+#include "game/ui/base/recruitscreen.h"
 #include "game/ui/base/researchscreen.h"
+#include "game/ui/base/transferscreen.h"
 #include "game/ui/base/vequipscreen.h"
+#include "game/ui/components/basegraphics.h"
+#include "game/ui/general/aequipscreen.h"
 #include "game/ui/general/messagebox.h"
+#include "game/ui/ufopaedia/ufopaediacategoryview.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -17,47 +36,47 @@ const Vec2<int> BaseScreen::NO_SELECTION = {-1, -1};
 
 BaseScreen::BaseScreen(sp<GameState> state) : BaseStage(state), selection(NO_SELECTION), drag(false)
 {
-	form = ui().GetForm("FORM_BASESCREEN");
+	form = ui().getForm("basescreen");
 	viewHighlight = BaseGraphics::FacilityHighlight::Construction;
 }
 
-BaseScreen::~BaseScreen() {}
+BaseScreen::~BaseScreen() = default;
 
-void BaseScreen::ChangeBase(sp<Base> newBase)
+void BaseScreen::changeBase(sp<Base> newBase)
 {
-	BaseStage::ChangeBase(newBase);
-	form->FindControlTyped<TextEdit>("TEXT_BASE_NAME")->SetText(state->current_base->name);
-	form->FindControlTyped<Graphic>("GRAPHIC_MINIMAP")
-	    ->SetImage(BaseGraphics::drawMinimap(state, state->current_base->building));
+	BaseStage::changeBase(newBase);
+	form->findControlTyped<TextEdit>("TEXT_BASE_NAME")->setText(state->current_base->name);
+	form->findControlTyped<Graphic>("GRAPHIC_MINIMAP")
+	    ->setImage(BaseGraphics::drawMinimap(state, *state->current_base->building));
 }
 
-void BaseScreen::Begin()
+void BaseScreen::begin()
 {
-	BaseStage::Begin();
+	BaseStage::begin();
 
-	baseView = form->FindControlTyped<Graphic>("GRAPHIC_BASE_VIEW");
-	selText = form->FindControlTyped<Label>("TEXT_SELECTED_FACILITY");
-	selGraphic = form->FindControlTyped<Graphic>("GRAPHIC_SELECTED_FACILITY");
+	baseView = form->findControlTyped<Graphic>("GRAPHIC_BASE_VIEW");
+	selText = form->findControlTyped<Label>("TEXT_SELECTED_FACILITY");
+	selGraphic = form->findControlTyped<Graphic>("GRAPHIC_SELECTED_FACILITY");
 	for (int i = 0; i < 3; i++)
 	{
-		auto labelName = UString::format("LABEL_%d", i + 1);
-		auto label = form->FindControlTyped<Label>(labelName);
+		auto labelName = format("LABEL_%d", i + 1);
+		auto label = form->findControlTyped<Label>(labelName);
 		if (!label)
 		{
-			LogError("Failed to find UI control matching \"%s\"", labelName.c_str());
+			LogError("Failed to find UI control matching \"%s\"", labelName);
 		}
 		statsLabels.push_back(label);
 
-		auto valueName = UString::format("VALUE_%d", i + 1);
-		auto value = form->FindControlTyped<Label>(valueName);
+		auto valueName = format("VALUE_%d", i + 1);
+		auto value = form->findControlTyped<Label>(valueName);
 		if (!value)
 		{
-			LogError("Failed to find UI control matching \"%s\"", valueName.c_str());
+			LogError("Failed to find UI control matching \"%s\"", valueName);
 		}
 		statsValues.push_back(value);
 	}
 
-	auto facilities = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
+	auto facilities = form->findControlTyped<ListBox>("LISTBOX_FACILITIES");
 	for (auto &i : state->facility_types)
 	{
 		auto &facility = i.second;
@@ -66,64 +85,114 @@ void BaseScreen::Begin()
 
 		auto graphic = mksp<Graphic>(facility->sprite);
 		graphic->AutoSize = true;
-		graphic->SetData(mksp<UString>(i.first));
+		graphic->setData(mksp<UString>(i.first));
 		graphic->Name = "FACILITY_BUILD_TILE";
-		facilities->AddItem(graphic);
+		facilities->addItem(graphic);
 	}
 
-	form->FindControlTyped<GraphicButton>("BUTTON_OK")
+	form->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *e) { this->stageCmd.cmd = StageCmd::Command::POP; });
-	form->FindControlTyped<GraphicButton>("BUTTON_BASE_EQUIPVEHICLE")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
+	                  [](Event *) { fw().stageQueueCommand({StageCmd::Command::POP}); });
+	form->findControlTyped<GraphicButton>("BUTTON_BASE_BUYSELL")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BuyAndSellScreen>(state)});
+	    });
+	form->findControlTyped<GraphicButton>("BUTTON_BASE_HIREFIRESTAFF")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<RecruitScreen>(state)});
+	    });
+	form->findControlTyped<GraphicButton>("BUTTON_BASE_TRANSFER")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    if (this->state->player_bases.size() <= 1)
+		    {
+			    fw().stageQueueCommand(
+			        {StageCmd::Command::PUSH,
+			         mksp<MessageBox>(
+			             tr("Transfer"),
+			             tr("At least two bases are required before transfers become possible."),
+			             MessageBox::ButtonOptions::Ok)});
+		    }
+		    else
+		    {
+			    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<TransferScreen>(state)});
+		    }
+	    });
+	form->findControlTyped<GraphicButton>("BUTTON_BASE_ALIEN_CONTAINMENT")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<AlienContainmentScreen>(state)});
+	    });
+	form->findControlTyped<GraphicButton>("BUTTON_BASE_EQUIPAGENT")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    // FIXME: If you don't have any vehicles this button should do nothing
-		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<VEquipScreen>(state);
-		});
-	form->FindControlTyped<GraphicButton>("BUTTON_BASE_RES_AND_MANUF")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<AEquipScreen>(state)});
+	    });
+	form->findControlTyped<GraphicButton>("BUTTON_BASE_EQUIPVEHICLE")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    // FIXME: If you don't have any vehicles this button should do nothing
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<VEquipScreen>(state)});
+	    });
+	form->findControlTyped<GraphicButton>("BUTTON_BASE_RES_AND_MANUF")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    // FIXME: If you don't have any facilities this button should do nothing
-		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<ResearchScreen>(state);
-		});
-	form->FindControlTyped<TextEdit>("TEXT_BASE_NAME")
-	    ->addCallback(FormEventType::TextEditFinish, [this](Event *e) {
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<ResearchScreen>(state)});
+	    });
+	// Base name edit
+	form->findControlTyped<TextEdit>("TEXT_BASE_NAME")
+	    ->addCallback(FormEventType::TextEditFinish, [this](FormsEvent *e) {
 		    this->state->current_base->name =
-		        std::dynamic_pointer_cast<TextEdit>(e->Forms().RaisedBy)->GetText();
-		});
+		        std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)->getText();
+	    });
+	form->findControlTyped<TextEdit>("TEXT_BASE_NAME")
+	    ->addCallback(FormEventType::TextEditCancel, [this](FormsEvent *e) {
+		    std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)
+		        ->setText(this->state->current_base->name);
+	    });
 }
 
-void BaseScreen::Pause() {}
+void BaseScreen::pause() {}
 
-void BaseScreen::Resume() { textFunds->SetText(state->getPlayerBalance()); }
+void BaseScreen::resume() { textFunds->setText(state->getPlayerBalance()); }
 
-void BaseScreen::Finish() {}
+void BaseScreen::finish() {}
 
-void BaseScreen::EventOccurred(Event *e)
+void BaseScreen::eventOccurred(Event *e)
 {
-	form->EventOccured(e);
+	form->eventOccured(e);
 
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (form->findControlTyped<TextEdit>("TEXT_BASE_NAME")->isFocused())
+			return;
+		if (e->keyboard().KeyCode == SDLK_ESCAPE || e->keyboard().KeyCode == SDLK_RETURN ||
+		    e->keyboard().KeyCode == SDLK_KP_ENTER)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			form->findControl("BUTTON_OK")->click();
+			return;
+		}
+		if (e->keyboard().KeyCode == SDLK_F10)
+		{
+			for (auto &facility : state->current_base->facilities)
+			{
+				{
+					facility->buildTime = 0;
+				}
+			}
 			return;
 		}
 	}
 
-	if (e->Type() == EVENT_MOUSE_MOVE)
+	if (e->type() == EVENT_MOUSE_MOVE)
 	{
-		mousePos = {e->Mouse().X, e->Mouse().Y};
+		mousePos = {e->mouse().X, e->mouse().Y};
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION)
+	if (e->type() == EVENT_FORM_INTERACTION)
 	{
-		if (e->Forms().RaisedBy == baseView)
+		if (e->forms().RaisedBy == baseView)
 		{
-			if (e->Forms().EventFlag == FormEventType::MouseMove)
+			if (e->forms().EventFlag == FormEventType::MouseMove)
 			{
-				selection = {e->Forms().MouseInfo.X, e->Forms().MouseInfo.Y};
+				selection = {e->forms().MouseInfo.X, e->forms().MouseInfo.Y};
 				selection /= BaseGraphics::TILE_SIZE;
 				if (!drag)
 				{
@@ -131,19 +200,19 @@ void BaseScreen::EventOccurred(Event *e)
 				}
 				return;
 			}
-			else if (e->Forms().EventFlag == FormEventType::MouseLeave)
+			else if (e->forms().EventFlag == FormEventType::MouseLeave)
 			{
 				selection = NO_SELECTION;
 				selFacility = nullptr;
 				return;
 			}
 		}
-		if (e->Forms().RaisedBy->Name == "LISTBOX_FACILITIES")
+		if (e->forms().RaisedBy->Name == "LISTBOX_FACILITIES")
 		{
-			if (!drag && e->Forms().EventFlag == FormEventType::ListBoxChangeHover)
+			if (!drag && e->forms().EventFlag == FormEventType::ListBoxChangeHover)
 			{
-				auto list = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
-				auto dragFacilityName = list->GetHoveredData<UString>();
+				auto list = form->findControlTyped<ListBox>("LISTBOX_FACILITIES");
+				auto dragFacilityName = list->getHoveredData<UString>();
 				if (dragFacilityName)
 				{
 					dragFacility = StateRef<FacilityType>{state.get(), *dragFacilityName};
@@ -151,9 +220,9 @@ void BaseScreen::EventOccurred(Event *e)
 				}
 			}
 		}
-		if (e->Forms().RaisedBy->Name == "FACILITY_BUILD_TILE")
+		if (e->forms().RaisedBy->Name == "FACILITY_BUILD_TILE")
 		{
-			if (!drag && e->Forms().EventFlag == FormEventType::MouseLeave)
+			if (!drag && e->forms().EventFlag == FormEventType::MouseLeave)
 			{
 				selection = NO_SELECTION;
 				selFacility = nullptr;
@@ -161,18 +230,68 @@ void BaseScreen::EventOccurred(Event *e)
 			}
 		}
 
-		if (e->Forms().EventFlag == FormEventType::MouseDown)
+		if (e->forms().EventFlag == FormEventType::MouseDown)
 		{
-			if (!drag && dragFacility)
+			if (Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Left))
 			{
-				if (e->Forms().RaisedBy->Name == "LISTBOX_FACILITIES")
+				if (!drag && dragFacility)
 				{
-					drag = true;
+					if (e->forms().RaisedBy->Name == "LISTBOX_FACILITIES")
+					{
+						drag = true;
+					}
+				}
+			}
+			else if (Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right))
+			{
+				sp<UString> clickedFacilityName;
+				if (e->forms().RaisedBy->Name == "LISTBOX_FACILITIES")
+				{
+					auto list = std::dynamic_pointer_cast<ListBox>(e->forms().RaisedBy);
+					clickedFacilityName = list->getHoveredData<UString>();
+				}
+				else if (e->forms().RaisedBy->Name == "GRAPHIC_BASE_VIEW")
+				{
+					if (selFacility)
+						clickedFacilityName = mksp<UString>(selFacility->type.id);
+				}
+
+				StateRef<FacilityType> clickedFacility;
+				if (clickedFacilityName)
+					clickedFacility = StateRef<FacilityType>{state.get(), *clickedFacilityName};
+				if (!clickedFacility)
+					return;
+
+				auto ufopaedia_entry = clickedFacility->ufopaedia_entry;
+				sp<UfopaediaCategory> ufopaedia_category;
+				if (ufopaedia_entry)
+				{
+					for (auto &cat : this->state->ufopaedia)
+					{
+						for (auto &entry : cat.second->entries)
+						{
+							if (ufopaedia_entry == entry.second)
+							{
+								ufopaedia_category = cat.second;
+								break;
+							}
+						}
+						if (ufopaedia_category)
+							break;
+					}
+					if (!ufopaedia_category)
+					{
+						LogError("No UFOPaedia category found for entry %s",
+						         ufopaedia_entry->title);
+					}
+					fw().stageQueueCommand(
+					    {StageCmd::Command::PUSH,
+					     mksp<UfopaediaCategoryView>(state, ufopaedia_category, ufopaedia_entry)});
 				}
 			}
 		}
 
-		if (e->Forms().EventFlag == FormEventType::MouseUp)
+		if (e->forms().EventFlag == FormEventType::MouseUp)
 		{
 			// Facility construction
 			if (drag && dragFacility)
@@ -185,33 +304,41 @@ void BaseScreen::EventOccurred(Event *e)
 					{
 						case Base::BuildError::NoError:
 							state->current_base->buildFacility(*state, dragFacility, selection);
-							textFunds->SetText(state->getPlayerBalance());
-							RefreshView();
+							textFunds->setText(state->getPlayerBalance());
+							refreshView();
 							break;
 						case Base::BuildError::Occupied:
-							stageCmd.cmd = StageCmd::Command::PUSH;
-							stageCmd.nextStage = mksp<MessageBox>(
-							    tr("Area Occupied By Existing Facility"),
-							    tr("Existing facilities in this area of the base must be destroyed "
-							       "before construction work can begin."),
-							    MessageBox::ButtonOptions::Ok);
+							fw().stageQueueCommand(
+							    {StageCmd::Command::PUSH,
+							     mksp<MessageBox>(tr("Area Occupied By Existing Facility"),
+							                      tr("Existing facilities in this area of the base "
+							                         "must be destroyed "
+							                         "before construction work can begin."),
+							                      MessageBox::ButtonOptions::Ok)});
 							break;
 						case Base::BuildError::OutOfBounds:
-							stageCmd.cmd = StageCmd::Command::PUSH;
-							stageCmd.nextStage = mksp<MessageBox>(
-							    tr("Planning Permission Denied"),
-							    tr("Planning permission is denied for this proposed extension to "
-							       "the base, on the grounds that the additional excavations "
-							       "required would seriously weaken the foundations of the "
-							       "building."),
-							    MessageBox::ButtonOptions::Ok);
+							fw().stageQueueCommand(
+							    {StageCmd::Command::PUSH,
+							     mksp<MessageBox>(
+							         tr("Planning Permission Denied"),
+							         tr("Planning permission is denied for this proposed extension "
+							            "to "
+							            "the base, on the grounds that the additional excavations "
+							            "required would seriously weaken the foundations of the "
+							            "building."),
+							         MessageBox::ButtonOptions::Ok)});
 							break;
 						case Base::BuildError::NoMoney:
-							stageCmd.cmd = StageCmd::Command::PUSH;
-							stageCmd.nextStage = mksp<MessageBox>(
-							    tr("Funds exceeded"), tr("The proposed construction work is not "
-							                             "possible with your available funds."),
-							    MessageBox::ButtonOptions::Ok);
+							fw().stageQueueCommand(
+							    {StageCmd::Command::PUSH,
+							     mksp<MessageBox>(tr("Funds exceeded"),
+							                      tr("The proposed construction work is not "
+							                         "possible with your available funds."),
+							                      MessageBox::ButtonOptions::Ok)});
+							break;
+						case Base::BuildError::Indestructible:
+							// Indestructible facilities (IE the access lift) are just silently
+							// ignored
 							break;
 					}
 				}
@@ -223,105 +350,102 @@ void BaseScreen::EventOccurred(Event *e)
 			{
 				if (selection != NO_SELECTION)
 				{
-					Base::BuildError error = state->current_base->canDestroyFacility(selection);
+					Base::BuildError error =
+					    state->current_base->canDestroyFacility(*state, selection);
 					switch (error)
 					{
 						case Base::BuildError::NoError:
-							stageCmd.cmd = StageCmd::Command::PUSH;
-							stageCmd.nextStage =
-							    mksp<MessageBox>(tr("Destroy facility"), tr("Are you sure?"),
-							                     MessageBox::ButtonOptions::YesNo, [this] {
-								                     this->state->current_base->destroyFacility(
-								                         *this->state, this->selection);
-								                     this->selFacility = nullptr;
-								                     this->RefreshView();
-								                 });
+							fw().stageQueueCommand(
+							    {StageCmd::Command::PUSH,
+							     mksp<MessageBox>(tr("Destroy facility"), tr("Are you sure?"),
+							                      MessageBox::ButtonOptions::YesNo, [this] {
+								                      this->state->current_base->destroyFacility(
+								                          *this->state, this->selection);
+								                      this->refreshView();
+							                      })});
 							break;
 						case Base::BuildError::Occupied:
-							stageCmd.cmd = StageCmd::Command::PUSH;
-							stageCmd.nextStage = mksp<MessageBox>(tr("Facility in use"), tr(""),
-							                                      MessageBox::ButtonOptions::Ok);
+							fw().stageQueueCommand(
+							    {StageCmd::Command::PUSH,
+							     mksp<MessageBox>(tr("Facility in use"), tr(""),
+							                      MessageBox::ButtonOptions::Ok)});
 						default:
 							break;
 					}
+					selFacility = nullptr;
 				}
 			}
 		}
 	}
 
-	selText->SetText("");
-	selGraphic->SetImage(nullptr);
-	for (auto label : statsLabels)
+	selText->setText("");
+	selGraphic->setImage(nullptr);
+	for (auto &label : statsLabels)
 	{
-		label->SetText("");
+		label->setText("");
 	}
-	for (auto value : statsValues)
+	for (auto &value : statsValues)
 	{
-		value->SetText("");
+		value->setText("");
 	}
 	if (dragFacility)
 	{
-		selText->SetText(tr(dragFacility->name));
-		selGraphic->SetImage(dragFacility->sprite);
-		statsLabels[0]->SetText(tr("Cost to build"));
-		statsValues[0]->SetText(UString::format("$%d", dragFacility->buildCost));
-		statsLabels[1]->SetText(tr("Days to build"));
-		statsValues[1]->SetText(UString::format("%d", dragFacility->buildTime));
-		statsLabels[2]->SetText(tr("Maintenance cost"));
-		statsValues[2]->SetText(UString::format("$%d", dragFacility->weeklyCost));
+		selText->setText(tr(dragFacility->name));
+		selGraphic->setImage(dragFacility->sprite);
+		statsLabels[0]->setText(tr("Cost to build"));
+		statsValues[0]->setText(format("$%d", dragFacility->buildCost));
+		statsLabels[1]->setText(tr("Days to build"));
+		statsValues[1]->setText(format("%d", dragFacility->buildTime));
+		statsLabels[2]->setText(tr("Maintenance cost"));
+		statsValues[2]->setText(format("$%d", dragFacility->weeklyCost));
 	}
 	else if (selFacility != nullptr)
 	{
-		selText->SetText(tr(selFacility->type->name));
-		selGraphic->SetImage(selFacility->type->sprite);
+		selText->setText(tr(selFacility->type->name));
+		selGraphic->setImage(selFacility->type->sprite);
 		if (selFacility->type->capacityAmount > 0)
 		{
-			statsLabels[0]->SetText(tr("Capacity"));
-			statsValues[0]->SetText(UString::format("%d", selFacility->type->capacityAmount));
-			statsLabels[1]->SetText(tr("Usage"));
-			statsValues[1]->SetText(UString::format("%d%%", 0));
+			statsLabels[0]->setText(tr("Capacity"));
+			statsValues[0]->setText(format("%d", selFacility->type->capacityAmount));
+			statsLabels[1]->setText(tr("Usage"));
+			statsValues[1]->setText(
+			    format("%d%%", state->current_base->getUsage(*state, selFacility)));
 		}
 	}
 	else if (selection != NO_SELECTION)
 	{
-		int sprite = BaseGraphics::getCorridorSprite(state->current_base, selection);
-		auto image = UString::format(
-		    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:%d:xcom3/UFODATA/BASE.PCX", sprite);
+		int sprite = BaseGraphics::getCorridorSprite(*state->current_base, selection);
+		auto image = format(
+		    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:%d:xcom3/ufodata/base.pcx", sprite);
 		if (sprite != 0)
 		{
-			selText->SetText(tr("Corridor"));
+			selText->setText(tr("Corridor"));
 		}
 		else
 		{
-			selText->SetText(tr("Earth"));
+			selText->setText(tr("Earth"));
 		}
-		selGraphic->SetImage(fw().data->load_image(image));
+		selGraphic->setImage(fw().data->loadImage(image));
 	}
 }
 
-void BaseScreen::Update(StageCmd *const cmd)
+void BaseScreen::update() { form->update(); }
+
+void BaseScreen::render()
 {
-	form->Update();
-	*cmd = stageCmd;
-	stageCmd = StageCmd();
+	fw().stageGetPrevious(this->shared_from_this())->render();
+	form->render();
+	renderBase();
+	BaseStage::render();
 }
 
-void BaseScreen::Render()
+bool BaseScreen::isTransition() { return false; }
+
+void BaseScreen::renderBase()
 {
-	fw().Stage_GetPrevious(this->shared_from_this())->Render();
-	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
-	form->Render();
-	RenderBase();
-	BaseStage::Render();
-}
+	const Vec2<int> BASE_POS = baseView->getLocationOnScreen();
 
-bool BaseScreen::IsTransition() { return false; }
-
-void BaseScreen::RenderBase()
-{
-	const Vec2<int> BASE_POS = form->Location + baseView->Location;
-
-	BaseGraphics::renderBase(BASE_POS, state->current_base);
+	BaseGraphics::renderBase(BASE_POS, *state->current_base);
 
 	// Draw selection
 	if (selection != NO_SELECTION)
@@ -348,9 +472,8 @@ void BaseScreen::RenderBase()
 		Vec2<int> pos;
 		if (selection == NO_SELECTION)
 		{
-			pos = mousePos -
-			      Vec2<int>{BaseGraphics::TILE_SIZE, BaseGraphics::TILE_SIZE} / 2 *
-			          dragFacility->size;
+			pos = mousePos - Vec2<int>{BaseGraphics::TILE_SIZE, BaseGraphics::TILE_SIZE} / 2 *
+			                     dragFacility->size;
 		}
 		else
 		{

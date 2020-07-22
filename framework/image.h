@@ -1,4 +1,6 @@
 #pragma once
+
+#include "framework/logger.h"
 #include "library/colour.h"
 #include "library/rect.h"
 #include "library/resource.h"
@@ -44,7 +46,7 @@ class LazyImage : public Image
 
   public:
 	LazyImage();
-	virtual ~LazyImage() = default;
+	~LazyImage() override = default;
 	sp<Image> &getRealImage();
 };
 
@@ -53,23 +55,23 @@ class Surface : public Image
 {
   public:
 	Surface(Vec2<unsigned int> size);
-	virtual ~Surface();
+	~Surface() override;
 };
 
 class PaletteImage : public Image
 {
   private:
 	friend class PaletteImageLock;
-	std::unique_ptr<uint8_t[]> indices;
+	up<uint8_t[]> indices;
 
   public:
 	PaletteImage(Vec2<unsigned int> size, uint8_t initialIndex = 0);
-	~PaletteImage();
+	~PaletteImage() override;
 	sp<RGBImage> toRGBImage(sp<Palette> p);
 	static void blit(sp<PaletteImage> src, sp<PaletteImage> dst,
 	                 Vec2<unsigned int> srcOffset = {0, 0}, Vec2<unsigned int> dstOffset = {0, 0});
 
-	void CalculateBounds();
+	void calculateBounds();
 };
 
 class PaletteImageLock
@@ -85,14 +87,16 @@ class PaletteImageLock
 	~PaletteImageLock();
 	uint8_t get(const Vec2<unsigned int> &pos) const
 	{
+		LogAssert(this->use == ImageLockUse::Read || this->use == ImageLockUse::ReadWrite);
 		unsigned offset = pos.y * this->img->size.x + pos.x;
-		assert(offset < this->img->size.x * this->img->size.y);
+		LogAssert(offset < this->img->size.x * this->img->size.y);
 		return this->img->indices[offset];
 	}
 	void set(const Vec2<unsigned int> &pos, const uint8_t idx)
 	{
+		LogAssert(this->use == ImageLockUse::Write || this->use == ImageLockUse::ReadWrite);
 		unsigned offset = pos.y * this->img->size.x + pos.x;
-		assert(offset < this->img->size.x * this->img->size.y);
+		LogAssert(offset < this->img->size.x * this->img->size.y);
 		this->img->indices[offset] = idx;
 	}
 
@@ -104,12 +108,11 @@ class RGBImage : public Image
 {
   private:
 	friend class RGBImageLock;
-	std::unique_ptr<Colour[]> pixels;
+	up<Colour[]> pixels;
 
   public:
 	RGBImage(Vec2<unsigned int> size, Colour initialColour = Colour(0, 0, 0, 0));
-	~RGBImage();
-	void saveBitmap(const UString &filename);
+	~RGBImage() override;
 	static void blit(sp<RGBImage> src, sp<RGBImage> dst, Vec2<unsigned int> srcOffset = {0, 0},
 	                 Vec2<unsigned int> dstOffset = {0, 0});
 };
@@ -127,14 +130,16 @@ class RGBImageLock
 	~RGBImageLock();
 	Colour get(const Vec2<unsigned int> &pos) const
 	{
+		LogAssert(this->use == ImageLockUse::Read || this->use == ImageLockUse::ReadWrite);
 		unsigned offset = pos.y * this->img->size.x + pos.x;
-		assert(offset < this->img->size.x * this->img->size.y);
+		LogAssert(offset < this->img->size.x * this->img->size.y);
 		return this->img->pixels[offset];
 	}
 	void set(const Vec2<unsigned int> &pos, const Colour &c)
 	{
+		LogAssert(this->use == ImageLockUse::Write || this->use == ImageLockUse::ReadWrite);
 		unsigned offset = pos.y * this->img->size.x + pos.x;
-		assert(offset < this->img->size.x * this->img->size.y);
+		LogAssert(offset < this->img->size.x * this->img->size.y);
 		this->img->pixels[offset] = c;
 	}
 

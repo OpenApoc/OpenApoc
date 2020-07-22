@@ -1,8 +1,7 @@
-
 #pragma once
-#include "library/sp.h"
 
-#include "control.h"
+#include "forms/control.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {
@@ -22,28 +21,33 @@ class GraphicButton : public Control
 	sp<Sample> buttonclick;
 
   protected:
-	void OnRender() override;
+	void onRender() override;
 
   public:
 	sp<ScrollBar> ScrollBarPrev, ScrollBarNext;
+	bool scrollLarge = false;
 
 	GraphicButton(sp<Image> image = nullptr, sp<Image> imageDepressed = nullptr,
 	              sp<Image> imageHover = nullptr);
-	virtual ~GraphicButton();
+	~GraphicButton() override;
 
-	void EventOccured(Event *e) override;
-	void Update() override;
-	void UnloadResources() override;
+	bool click() override;
 
-	sp<Image> GetImage() const;
-	void SetImage(sp<Image> Image);
-	sp<Image> GetDepressedImage() const;
-	void SetDepressedImage(sp<Image> Image);
-	sp<Image> GetHoverImage() const;
-	void SetHoverImage(sp<Image> Image);
+	void eventOccured(Event *e) override;
+	void update() override;
+	void unloadResources() override;
 
-	sp<Control> CopyTo(sp<Control> CopyParent) override;
-	void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
+	sp<Sample> getClickSound() const;
+	void setClickSound(sp<Sample> sample);
+	sp<Image> getImage() const;
+	void setImage(sp<Image> Image);
+	sp<Image> getDepressedImage() const;
+	void setDepressedImage(sp<Image> Image);
+	sp<Image> getHoverImage() const;
+	void setHoverImage(sp<Image> Image);
+
+	sp<Control> copyTo(sp<Control> CopyParent) override;
+	void configureSelfFromXml(pugi::xml_node *node) override;
 };
 
 }; // namespace OpenApoc

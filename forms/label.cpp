@@ -1,8 +1,12 @@
 #include "forms/label.h"
+#include "dependencies/pugixml/src/pugixml.hpp"
 #include "forms/ui.h"
+#include "framework/font.h"
 #include "framework/framework.h"
+#include "framework/image.h"
+#include "framework/renderer.h"
 #include "library/sp.h"
-#include <tinyxml2.h>
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -17,74 +21,60 @@ Label::Label(const UString &Text, sp<BitmapFont> font)
 	}
 }
 
-Label::~Label() {}
+Label::~Label() = default;
 
-void Label::EventOccured(Event *e) { Control::EventOccured(e); }
+void Label::eventOccured(Event *e) { Control::eventOccured(e); }
 
-void Label::OnRender()
+void Label::onRender()
 {
+	Control::onRender();
+
 	int xpos;
 	int ypos;
-	std::list<UString> lines = font->WordWrapText(text, Size.x);
+	std::list<UString> lines = font->wordWrapText(text, Size.x);
 
-	switch (TextVAlign)
-	{
-		case VerticalAlignment::Top:
-			ypos = 0;
-			break;
-		case VerticalAlignment::Centre:
-			ypos = (Size.y / 2) - (font->GetFontHeight(text, Size.x) / 2);
-			break;
-		case VerticalAlignment::Bottom:
-			ypos = Size.y - font->GetFontHeight(text, Size.x);
-			break;
-		default:
-			LogError("Unknown TextVAlign");
-			return;
-	}
+	ypos = align(TextVAlign, Size.y, font->getFontHeight(text, Size.x));
 
 	while (lines.size() > 0)
 	{
-		switch (TextHAlign)
-		{
-			case HorizontalAlignment::Left:
-				xpos = 0;
-				break;
-			case HorizontalAlignment::Centre:
-				xpos = (Size.x / 2) - (font->GetFontWidth(lines.front()) / 2);
-				break;
-			case HorizontalAlignment::Right:
-				xpos = Size.x - font->GetFontWidth(lines.front());
-				break;
-			default:
-				LogError("Unknown TextHAlign");
-				return;
-		}
+		xpos = align(TextHAlign, Size.x, font->getFontWidth(lines.front()));
 
 		auto textImage = font->getString(lines.front());
-		fw().renderer->draw(textImage, Vec2<float>{xpos, ypos});
+		fw().renderer->drawTinted(textImage, Vec2<float>{xpos, ypos}, Tint);
 
 		lines.pop_front();
-		ypos += font->GetFontHeight();
+		ypos += font->getFontHeight();
 	}
 }
 
-void Label::Update()
+void Label::update()
 {
 	// No "updates"
 }
 
-void Label::UnloadResources() {}
+void Label::unloadResources() {}
 
-UString Label::GetText() const { return text; }
+UString Label::getText() const { return text; }
 
-void Label::SetText(const UString &Text) { text = Text; }
+void Label::setText(const UString &Text)
+{
+	if (text == Text)
+		return;
+	text = Text;
+	this->setDirty();
+}
 
-sp<BitmapFont> Label::GetFont() const { return font; }
+sp<BitmapFont> Label::getFont() const { return font; }
 
-void Label::SetFont(sp<BitmapFont> NewFont) { font = NewFont; }
+void Label::setFont(sp<BitmapFont> NewFont)
+{
+	if (font == NewFont)
+		return;
+	font = NewFont;
+	this->setDirty();
+}
 
-sp<Control> Label::CopyTo(sp<Control> CopyParent)
+sp<Control> Label::copyTo(sp<Control> CopyParent)
 {
 	sp<Label> copy;
 	if (CopyParent)
@@ -95,61 +85,61 @@ sp<Control> Label::CopyTo(sp<Control> CopyParent)
 	{
 		copy = mksp<Label>(this->text, this->font);
 	}
+	copy->Tint = this->Tint;
 	copy->TextHAlign = this->TextHAlign;
 	copy->TextVAlign = this->TextVAlign;
 	copy->WordWrap = this->WordWrap;
-	CopyControlData(copy);
+	copyControlData(copy);
 	return copy;
 }
 
-void Label::ConfigureFromXML(tinyxml2::XMLElement *Element)
+void Label::configureSelfFromXml(pugi::xml_node *node)
 {
-	Control::ConfigureFromXML(Element);
-	tinyxml2::XMLElement *subnode;
-	UString attribvalue;
+	Control::configureSelfFromXml(node);
+	text = tr(node->attribute("text").as_string());
 
-	if (Element->Attribute("text") != nullptr)
+	UString tintAttribute = node->attribute("tint").as_string();
+	if (!tintAttribute.empty())
 	{
-		text = tr(Element->Attribute("text"));
+		if (*tintAttribute.begin() == '#')
+			Tint = Colour::FromHex(tintAttribute);
+		else
+			Tint = Colour::FromHtmlName(tintAttribute);
 	}
-	if (Element->FirstChildElement("font") != nullptr)
+
+	auto fontNode = node->child("font");
+	if (fontNode)
 	{
-		font = ui().GetFont(Element->FirstChildElement("font")->GetText());
+		font = ui().getFont(fontNode.text().get());
 	}
-	subnode = Element->FirstChildElement("alignment");
-	if (subnode != nullptr)
+	auto alignmentNode = node->child("alignment");
+	if (alignmentNode)
 	{
-		if (subnode->Attribute("horizontal") != nullptr)
+		UString hAlign = alignmentNode.attribute("horizontal").as_string();
+		if (hAlign == "left")
 		{
-			attribvalue = subnode->Attribute("horizontal");
-			if (attribvalue == "left")
-			{
-				TextHAlign = HorizontalAlignment::Left;
-			}
-			else if (attribvalue == "centre")
-			{
-				TextHAlign = HorizontalAlignment::Centre;
-			}
-			else if (attribvalue == "right")
-			{
-				TextHAlign = HorizontalAlignment::Right;
-			}
+			TextHAlign = HorizontalAlignment::Left;
 		}
-		if (subnode->Attribute("vertical") != nullptr)
+		else if (hAlign == "centre")
 		{
-			attribvalue = subnode->Attribute("vertical");
-			if (attribvalue == "top")
-			{
-				TextVAlign = VerticalAlignment::Top;
-			}
-			else if (attribvalue == "centre")
-			{
-				TextVAlign = VerticalAlignment::Centre;
-			}
-			else if (attribvalue == "bottom")
-			{
-				TextVAlign = VerticalAlignment::Bottom;
-			}
+			TextHAlign = HorizontalAlignment::Centre;
+		}
+		else if (hAlign == "right")
+		{
+			TextHAlign = HorizontalAlignment::Right;
+		}
+		UString vAlign = alignmentNode.attribute("vertical").as_string();
+		if (vAlign == "top")
+		{
+			TextVAlign = VerticalAlignment::Top;
+		}
+		else if (vAlign == "centre")
+		{
+			TextVAlign = VerticalAlignment::Centre;
+		}
+		else if (vAlign == "bottom")
+		{
+			TextVAlign = VerticalAlignment::Bottom;
 		}
 	}
 }

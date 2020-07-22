@@ -1,8 +1,8 @@
 #include "framework/data.h"
 #include "framework/logger.h"
 #include "framework/sampleloader_interface.h"
+#include "framework/sound.h"
 #include "library/sp.h"
-
 #include <set>
 
 namespace
@@ -11,7 +11,8 @@ namespace
 using namespace OpenApoc;
 
 std::set<int> allowedSampleRates = {
-    11025, 22050,
+    11025,
+    22050,
 };
 
 class RawSampleLoader : public SampleLoader
@@ -29,27 +30,25 @@ class RawSampleLoader : public SampleLoader
 		auto splitString = path.split(':');
 		if (splitString.size() != 3)
 		{
-			LogInfo("String \"%s\" doesn't look like a rawsample - need 3 elements (got %zu)",
-			        path.c_str(), splitString.size());
+			LogInfo("String \"%s\" doesn't look like a rawsample - need 3 elements (got %zu)", path,
+			        splitString.size());
 			return nullptr;
 		}
 		if (splitString[0] != "RAWSOUND")
 		{
-			LogInfo("String \"%s\" doesn't look like a rawsample - no RAWSOUND prefix",
-			        path.c_str());
+			LogInfo("String \"%s\" doesn't look like a rawsample - no RAWSOUND prefix", path);
 			return nullptr;
 		}
-		int frequency = Strings::ToInteger(splitString[2]);
+		int frequency = Strings::toInteger(splitString[2]);
 		if (allowedSampleRates.find(frequency) == allowedSampleRates.end())
 		{
-			LogWarning("Rawsound \"%s\" has invalid sample rate of %d", path.c_str(), frequency);
+			LogWarning("Rawsound \"%s\" has invalid sample rate of %d", path, frequency);
 			return nullptr;
 		}
 		auto file = data.fs.open(splitString[1]);
 		if (!file)
 		{
-			LogWarning("Rawsound \"%s\" failed to open file \"%s\"", path.c_str(),
-			           splitString[1].c_str());
+			LogWarning("Rawsound \"%s\" failed to open file \"%s\"", path, splitString[1]);
 			return nullptr;
 		}
 
@@ -68,7 +67,7 @@ class RawSampleLoader : public SampleLoader
 class RawSampleLoaderFactory : public SampleLoaderFactory
 {
   public:
-	virtual SampleLoader *create(Data &data) override { return new RawSampleLoader(data); }
+	SampleLoader *create(Data &data) override { return new RawSampleLoader(data); }
 };
 
 }; // anonymous namespace
@@ -76,4 +75,4 @@ class RawSampleLoaderFactory : public SampleLoaderFactory
 namespace OpenApoc
 {
 SampleLoaderFactory *getRAWSampleLoaderFactory() { return new RawSampleLoaderFactory(); }
-}
+} // namespace OpenApoc

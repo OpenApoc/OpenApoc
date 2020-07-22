@@ -1,101 +1,94 @@
 #include "game/ui/general/mainmenu.h"
+#include "forms/form.h"
+#include "forms/label.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
-#include "game/ui/city/cityview.h"
+#include "framework/keycodes.h"
+#include "framework/sound.h"
 #include "game/ui/debugtools/debugmenu.h"
 #include "game/ui/general/difficultymenu.h"
 #include "game/ui/general/loadingscreen.h"
 #include "game/ui/general/optionsmenu.h"
+#include "game/ui/general/savemenu.h"
+#include "game/ui/tileview/cityview.h"
 #include "version.h"
 
 namespace OpenApoc
 {
 
-static std::vector<UString> tracks{"music:0", "music:1", "music:2"};
-
-MainMenu::MainMenu() : Stage(), mainmenuform(ui().GetForm("FORM_MAINMENU"))
+MainMenu::MainMenu() : Stage(), mainmenuform(ui().getForm("mainmenu"))
 {
-	auto versionLabel = mainmenuform->FindControlTyped<Label>("VERSION_LABEL");
-	versionLabel->SetText(OPENAPOC_VERSION);
+	auto versionLabel = mainmenuform->findControlTyped<Label>("VERSION_LABEL");
+	versionLabel->setText(OPENAPOC_VERSION);
+#ifndef NDEBUG
+	auto debugButton = mainmenuform->findControlTyped<Control>("BUTTON_DEBUG");
+	debugButton->setVisible(true);
+#endif
 }
 
-MainMenu::~MainMenu() {}
+MainMenu::~MainMenu() = default;
 
-void MainMenu::Begin() { fw().jukebox->play(tracks); }
+void MainMenu::begin() { fw().jukebox->play(JukeBox::PlayList::City); }
 
-void MainMenu::Pause() {}
+void MainMenu::pause() {}
 
-void MainMenu::Resume() {}
+void MainMenu::resume() {}
 
-void MainMenu::Finish() {}
+void MainMenu::finish() {}
 
-void MainMenu::EventOccurred(Event *e)
+void MainMenu::eventOccurred(Event *e)
 {
-	mainmenuform->EventOccured(e);
+	mainmenuform->eventOccured(e);
 
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::QUIT;
+			fw().stageQueueCommand({StageCmd::Command::QUIT});
+			return;
+		}
+		if (e->keyboard().KeyCode == SDLK_d)
+		{
+			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<DebugMenu>()});
 			return;
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Forms().RaisedBy->Name == "BUTTON_OPTIONS")
+		if (e->forms().RaisedBy->Name == "BUTTON_OPTIONS")
 		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<OptionsMenu>();
+			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<OptionsMenu>()});
 			return;
 		}
-		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
+		if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
-			stageCmd.cmd = StageCmd::Command::QUIT;
+			fw().stageQueueCommand({StageCmd::Command::QUIT});
 			return;
 		}
-		if (e->Forms().RaisedBy->Name == "BUTTON_NEWGAME")
+		if (e->forms().RaisedBy->Name == "BUTTON_NEWGAME")
 		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<DifficultyMenu>();
+			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<DifficultyMenu>()});
 			return;
 		}
-		if (e->Forms().RaisedBy->Name == "BUTTON_DEBUG")
+		if (e->forms().RaisedBy->Name == "BUTTON_DEBUG")
 		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<DebugMenu>();
+			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<DebugMenu>()});
 			return;
 		}
-		if (e->Forms().RaisedBy->Name == "BUTTON_LOADGAME")
+		if (e->forms().RaisedBy->Name == "BUTTON_LOADGAME")
 		{
-			// FIXME: Save game selector
-			auto state = mksp<GameState>();
-			UString savePath = "save";
-			auto loadTask = fw().threadPool->enqueue([state, savePath]() {
-				if (state->loadGame(savePath) == false)
-				{
-					LogError("Failed to load '%s'", savePath.c_str());
-					return;
-				}
-				state->initState();
-			});
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<LoadingScreen>(
-			    std::move(loadTask), [state]() -> sp<Stage> { return mksp<CityView>(state); });
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::LoadNewGame, nullptr)});
+			return;
 		}
 	}
 }
 
-void MainMenu::Update(StageCmd *const cmd)
-{
-	mainmenuform->Update();
-	*cmd = stageCmd;
-	stageCmd = StageCmd();
-}
+void MainMenu::update() { mainmenuform->update(); }
 
-void MainMenu::Render() { mainmenuform->Render(); }
+void MainMenu::render() { mainmenuform->render(); }
 
-bool MainMenu::IsTransition() { return false; }
+bool MainMenu::isTransition() { return false; }
 }; // namespace OpenApoc

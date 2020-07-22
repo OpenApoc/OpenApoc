@@ -1,6 +1,3 @@
-[submodule "dependencies/tinyxml2"]
-	path = dependencies/tinyxml2
-	url = https://github.com/leethomason/tinyxml2.git
 [submodule "dependencies/glm"]
 	path = dependencies/glm
 	url = https://github.com/JonnyH/glm.git
@@ -8,12 +5,21 @@
 [submodule "dependencies/physfs"]
 	path = dependencies/physfs
 	url = https://github.com/JonnyH/physfs-hg-import.git
-[submodule "dependencies/miniz"]
-	path = dependencies/miniz
-	url = https://github.com/tessel/miniz.git
 [submodule "dependencies/pugixml"]
 	path = dependencies/pugixml
 	url = https://github.com/zeux/pugixml.git
 [submodule "dependencies/libsmacker"]
 	path = dependencies/libsmacker
 	url = https://github.com/JonnyH/libsmacker.git
+[submodule "dependencies/miniz"]
+	path = dependencies/miniz
+	url = https://github.com/JonnyH/miniz.git
+[submodule "dependencies/lodepng"]
+	path = dependencies/lodepng
+	url = https://github.com/lvandeve/lodepng.git
+[submodule "dependencies/tinyformat"]
+	path = dependencies/tinyformat
+	url = https://github.com/c42f/tinyformat.git
+[submodule "dependencies/lua"]
+	path = dependencies/lua
+	url = https://github.com/lua/lua.git

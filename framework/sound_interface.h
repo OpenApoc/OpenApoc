@@ -1,5 +1,6 @@
 #pragma once
-#include "sound.h"
+
+#include "framework/sound.h"
 
 namespace OpenApoc
 {
@@ -7,7 +8,7 @@ class SoundBackendFactory
 {
   public:
 	virtual SoundBackend *create() = 0;
-	virtual ~SoundBackendFactory() {}
+	virtual ~SoundBackendFactory() = default;
 };
 
 SoundBackendFactory *getNullSoundBackend();

@@ -1,6 +1,7 @@
 #include "framework/data.h"
 #include "framework/logger.h"
 #include "framework/musicloader_interface.h"
+#include "framework/sound.h"
 #include "library/sp.h"
 #include <algorithm>
 #include <memory>
@@ -11,18 +12,17 @@ namespace
 
 using namespace OpenApoc;
 
-const std::vector<unsigned int> starts = {
-    0,         8467200,   19580400,  35897400,  40131000,  46569600,  57947400,
-    72147600,  84142800,  92610000,  104076000, 107780400, 118540800, 130712400,
-    142090200, 154085400, 165904200, 176664600, 187248600, 196686000, 207270000,
-    218559600, 231436800, 234082800, 237169800, 239815800, 242461800, 245107800,
-    247842000, 250488000, 263365200, 275801400, 287796600, 298821600, 304819200};
-const std::vector<unsigned int> ends = {
-    8202600,   19404000,  35897400,  40131000,  46569600,  57859200,  72147600,
-    84054600,  92610000,  103987800, 107780400, 118452600, 130536000, 142090200,
-    153997200, 165816000, 176488200, 187072200, 196686000, 207093600, 218383200,
-    231348600, 234082800, 237169800, 239815800, 242461800, 245107800, 247842000,
-    250488000, 263188800, 275713200, 287708400, 298821600, 304731000, 311434200};
+const std::vector<unsigned int> offsets = {
+    0,         8413184,   19636224,  35930112,  46612480,  57921536,  72122368,
+    84097024,  92616704,  104065024, 107757568, 118507520, 130648064, 142123008,
+    154044416, 165922816, 176650240, 187213824, 196755456, 207228928, 218535936,
+    231469056, 234115072, 237191168, 239837184, 242477056, 245127168, 247859200,
+    250505216, 263354368, 275763200, 287817728, 298854400};
+const std::vector<unsigned int> lengths = {
+    8413184,  11223040, 16293888, 10682368, 11309056, 14200832, 11974656, 8519680,  11448320,
+    3692544,  10749952, 12140544, 11474944, 11921408, 11878400, 10727424, 10563584, 9541632,
+    10473472, 11307008, 12933120, 2646016,  3076096,  2646016,  2639872,  2650112,  2732032,
+    2646016,  12849152, 12408832, 12054528, 11036672, 12834816};
 
 const int MusicChannels = 2;
 const int MusicBytesPerSample = 2;
@@ -46,13 +46,13 @@ class RawMusicTrack : public MusicTrack
 	{
 		if (!file)
 		{
-			LogError("Failed to open file \"%s\"", fileName.c_str());
+			LogError("Failed to open file \"%s\"", fileName);
 			return;
 		}
 		if (file.size() < fileOffset + (numSamples * MusicChannels * MusicBytesPerSample))
 		{
 			LogError("File \"%s\" insufficient size for offset %u + size %u - returned size %zu",
-			         fileName.c_str(), fileOffset, numSamples * MusicChannels * MusicBytesPerSample,
+			         fileName, fileOffset, numSamples * MusicChannels * MusicBytesPerSample,
 			         file.size());
 			return;
 		}
@@ -79,7 +79,7 @@ class RawMusicTrack : public MusicTrack
 	{
 		if (!valid)
 		{
-			LogError("Playing invalid file \"%s\"", file.fileName().c_str());
+			LogError("Playing invalid file \"%s\"", file.fileName());
 			*returnedSamples = 0;
 			return MusicCallbackReturn::End;
 		}
@@ -91,7 +91,7 @@ class RawMusicTrack : public MusicTrack
 		if (!file.read(reinterpret_cast<char *>(sampleBuffer),
 		               samples * MusicBytesPerSample * MusicChannels))
 		{
-			LogError("Failed to read sample data in \"%s\"", file.fileName().c_str());
+			LogError("Failed to read sample data in \"%s\"", file.fileName());
 			this->valid = false;
 			samples = 0;
 		}
@@ -101,7 +101,7 @@ class RawMusicTrack : public MusicTrack
 			// Prepare this track to be reused
 			if (!file.seekg(startingPosition))
 			{
-				LogWarning("Could not rewind track %s", name.c_str());
+				LogWarning("Could not rewind track %s", name);
 			}
 			samplePosition = 0;
 			return MusicCallbackReturn::End;
@@ -109,14 +109,14 @@ class RawMusicTrack : public MusicTrack
 		return MusicCallbackReturn::Continue;
 	}
 
-	virtual ~RawMusicTrack() {}
+	~RawMusicTrack() override = default;
 };
 
 MusicTrack::MusicCallbackReturn fillMusicData(sp<MusicTrack> thisTrack, unsigned int maxSamples,
                                               void *sampleBuffer, unsigned int *returnedSamples)
 {
 	auto track = std::dynamic_pointer_cast<RawMusicTrack>(thisTrack);
-	assert(track);
+	LogAssert(track);
 	return track->fillData(maxSamples, sampleBuffer, returnedSamples);
 }
 
@@ -126,32 +126,31 @@ class RawMusicLoader : public MusicLoader
 
   public:
 	RawMusicLoader(Data &data) : data(data) {}
-	virtual ~RawMusicLoader() {}
+	~RawMusicLoader() override = default;
 
 	sp<MusicTrack> loadMusic(UString path) override
 	{
 		auto strings = path.split(':');
 		if (strings.size() != 2)
 		{
-			LogInfo("Invalid raw music path string \"%s\"", path.c_str());
+			LogInfo("Invalid raw music path string \"%s\"", path);
 			return nullptr;
 		}
 
-		if (!Strings::IsInteger(strings[1]))
+		if (!Strings::isInteger(strings[1]))
 		{
-			LogInfo("Raw music track \"%s\" doesn't look like a number", strings[1].c_str());
+			LogInfo("Raw music track \"%s\" doesn't look like a number", strings[1]);
 			return nullptr;
 		}
 
-		unsigned int track = Strings::ToInteger(strings[1]);
-		if (track > ends.size())
+		unsigned int track = Strings::toInteger(strings[1]);
+		if (track > lengths.size())
 		{
 			LogInfo("Raw music track %d out of bounds", track);
 			return nullptr;
 		}
-		return mksp<RawMusicTrack>(data, path, strings[0], starts[track],
-		                           (ends[track] - starts[track]) /
-		                               (MusicChannels * MusicBytesPerSample));
+		return mksp<RawMusicTrack>(data, path, strings[0], offsets[track],
+		                           lengths[track] / (MusicChannels * MusicBytesPerSample));
 	}
 };
 

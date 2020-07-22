@@ -1,7 +1,9 @@
 #include "library/sp.h"
 
 #include "forms/radiobutton.h"
+#include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/sound.h"
 
 namespace OpenApoc
 {
@@ -10,11 +12,12 @@ RadioButton::RadioButton(sp<RadioButtonGroup> Group, sp<Image> ImageChecked,
                          sp<Image> ImageUnchecked)
     : CheckBox(ImageChecked, ImageUnchecked), group(Group)
 {
+	isClickable = true;
 }
 
-RadioButton::~RadioButton() {}
+RadioButton::~RadioButton() = default;
 
-sp<Control> RadioButton::CopyTo(sp<Control> CopyParent)
+sp<Control> RadioButton::copyTo(sp<Control> CopyParent)
 {
 	sp<RadioButton> copy;
 	sp<RadioButtonGroup> newGroup;
@@ -35,7 +38,7 @@ sp<Control> RadioButton::CopyTo(sp<Control> CopyParent)
 	{
 		copy = mksp<RadioButton>(newGroup, imagechecked, imageunchecked);
 	}
-	CopyControlData(copy);
+	copyControlData(copy);
 	if (newGroup)
 	{
 		newGroup->radioButtons.push_back(copy);
@@ -43,22 +46,44 @@ sp<Control> RadioButton::CopyTo(sp<Control> CopyParent)
 	return copy;
 }
 
-void RadioButton::SetChecked(bool checked)
+void RadioButton::eventOccured(Event *e)
 {
-	if (checked && !Checked)
+	Control::eventOccured(e);
+
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
+	    e->forms().EventFlag == FormEventType::MouseDown)
 	{
-		if (group)
+		if (buttonclick)
+		{
+			fw().soundBackend->playSample(buttonclick);
+		}
+	}
+
+	/* We have to handle click events slightly differently in radiobutton to checkbox, as clicking
+	 * on a selected radio button shouldn't deselect it, but instead just leave it selected */
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
+	    e->forms().EventFlag == FormEventType::MouseClick && !isChecked())
+	{
+		setChecked(true);
+	}
+}
+
+void RadioButton::setChecked(bool checked)
+{
+	if (checked != Checked)
+	{
+		if (group && checked)
 		{
 			for (auto &c : group->radioButtons)
 			{
 				auto button = c.lock();
 				if (button)
 				{
-					button->Checked = false;
+					button->setChecked(false);
 				}
 			}
 		}
-		CheckBox::SetChecked(checked);
+		CheckBox::setChecked(checked);
 	}
 }
 

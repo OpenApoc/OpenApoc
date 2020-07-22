@@ -1,13 +1,11 @@
 #pragma once
 
-#include "framework/ThreadPool/ThreadPool.h"
-#include "framework/configfile.h"
-#include "framework/data.h"
-#include "framework/renderer.h"
-#include "framework/sound.h"
-#include "framework/stagestack.h"
+#include "framework/modinfo.h"
 #include "library/sp.h"
 #include "library/strings.h"
+#include "library/vec.h"
+#include <functional>
+#include <future>
 
 namespace OpenApoc
 {
@@ -17,68 +15,109 @@ class GameCore;
 class FrameworkPrivate;
 class ApocCursor;
 class Event;
+class Image;
+class Data;
+class Renderer;
+class SoundBackend;
+class JukeBox;
+class StageCmd;
+class Stage;
+class RGBImage;
 
 #define FRAMES_PER_SECOND 100
 
 class Framework
 {
   private:
-	std::unique_ptr<FrameworkPrivate> p;
+	up<FrameworkPrivate> p;
 	UString programName;
 	bool createWindow;
-	void Audio_Initialise();
-	void Audio_Shutdown();
+	void audioInitialise();
+	void audioShutdown();
 
 	static Framework *instance;
 
 	up<ApocCursor> cursor;
 
+	std::list<StageCmd> stageCommands;
+
   public:
 	std::unique_ptr<Data> data;
-	std::unique_ptr<ConfigFile> Settings;
 	std::unique_ptr<Renderer> renderer;
 	std::unique_ptr<SoundBackend> soundBackend;
 	std::unique_ptr<JukeBox> jukebox;
 
-	std::unique_ptr<ThreadPool> threadPool;
-
-	Framework(const UString programName, const std::vector<UString> cmdline,
-	          bool createWindow = true);
+	Framework(const UString programName, bool createWindow = true);
 	~Framework();
 
 	static Framework &getInstance();
+	static Framework *tryGetInstance();
 
-	// If frameCount != 0, it'll quit after that many frames. If it is zero, it'll run forever (Or
-	// until a user quit event)
-	void Run(sp<Stage> initialStage, size_t frameCount = 0);
-	void ProcessEvents();
-	void PushEvent(Event *e);
-	void TranslateSDLEvents();
-	void ShutdownFramework();
-	bool IsShuttingDown();
+	void run(sp<Stage> initialStage);
+	void processEvents();
+	/* PushEvent() take ownership of the Event, and will delete it after use*/
+	void pushEvent(up<Event> e);
+	void pushEvent(Event *e);
 
-	void SaveSettings();
+	void translateSdlEvents();
+	void shutdownFramework();
+	bool isShuttingDown();
 
-	void Display_Initialise();
-	void Display_Shutdown();
-	int Display_GetWidth();
-	int Display_GetHeight();
-	Vec2<int> Display_GetSize();
-	void Display_SetTitle(UString NewTitle);
-	void Display_SetIcon();
+	void displayInitialise();
+	void displayShutdown();
+	int displayGetWidth();
+	int displayGetHeight();
+	Vec2<int> displayGetSize();
+	void displaySetTitle(UString NewTitle);
+	void displaySetIcon(sp<RGBImage> icon);
+	bool displayHasWindow() const;
+	void *getWindowHandle() const;
 
-	bool IsSlowMode();
-	void SetSlowMode(bool SlowEnabled);
+	bool isSlowMode();
+	void setSlowMode(bool SlowEnabled);
 
-	sp<Stage> Stage_GetPrevious();
-	sp<Stage> Stage_GetPrevious(sp<Stage> From);
+	sp<Stage> stageGetCurrent();
+	sp<Stage> stageGetPrevious();
+	sp<Stage> stageGetPrevious(sp<Stage> From);
 
-	void Stage_Push(sp<Stage> stage);
+	void stageQueueCommand(const StageCmd &cmd);
 
-	Vec2<int> getCursorPosition();
+	ApocCursor &getCursor();
 
-	void Text_StartInput();
-	void Text_StopInput();
+	void textStartInput();
+	void textStopInput();
+
+	void toolTipStartTimer(up<Event> e);
+	void toolTipStopTimer();
+	void toolTipTimerCallback(unsigned int interval, void *data);
+	void showToolTip(sp<Image> image, const Vec2<int> &position);
+
+	UString textGetClipboard();
+
+	void threadPoolTaskEnqueue(std::function<void()> task);
+	// add new work item to the pool
+	template <class F, class... Args>
+	auto threadPoolEnqueue(F &&f, Args &&... args)
+	    -> std::shared_future<typename std::result_of<F(Args...)>::type>
+	{
+		using return_type = typename std::result_of<F(Args...)>::type;
+
+		auto task = std::make_shared<std::packaged_task<return_type()>>(
+		    std::bind(std::forward<F>(f), std::forward<Args>(args)...));
+
+		std::shared_future<return_type> res = task->get_future().share();
+		this->threadPoolTaskEnqueue([task, res]() {
+			(*task)();
+			// Without a future.get() any exceptions are dropped on the floor
+			res.get();
+		});
+		return res;
+	}
+
+	UString getDataDir() const;
+	UString getCDPath() const;
+
+	void setupModDataPaths();
 };
 
 static inline Framework &fw() { return Framework::getInstance(); }

@@ -1,71 +1,61 @@
 #include "framework/font.h"
+#include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "library/sp.h"
 
-// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
-// symbols as part of the module that uses it
-#define BOOST_ALL_NO_LIB
-#include <boost/locale.hpp>
-
 namespace OpenApoc
 {
 
-BitmapFont::~BitmapFont() {}
+BitmapFont::~BitmapFont() = default;
 
 sp<PaletteImage> BitmapFont::getString(const UString &Text)
 {
-	int height = this->GetFontHeight();
-	int width = this->GetFontWidth(Text);
+	int height = this->getFontHeight();
+	int width = this->getFontWidth(Text);
 	int pos = 0;
 
-	auto img = fw().data->get_font_string_cache_entry(this->name, Text);
+	auto img = fw().data->getFontStringCacheEntry(this->name, Text);
 	if (img)
 		return img;
 
 	img = mksp<PaletteImage>(Vec2<int>{width, height});
 
-	auto u8Str = Text.str();
-	auto pointString = boost::locale::conv::utf_to_utf<UniChar>(u8Str);
-
-	for (size_t i = 0; i < pointString.length(); i++)
+	for (const auto &c : Text)
 	{
-		UniChar c = pointString[i];
 		auto glyph = this->getGlyph(c);
 		PaletteImage::blit(glyph, img, {0, 0}, {pos, 0});
 		pos += glyph->size.x;
 	}
 
-	fw().data->put_font_string_cache_entry(this->name, Text, img);
+	fw().data->putFontStringCacheEntry(this->name, Text, img);
 
 	return img;
 }
 
-int BitmapFont::GetFontWidth(const UString &Text)
+int BitmapFont::getFontWidth(const UString &Text)
 {
 	int textlen = 0;
-	auto u8Str = Text.str();
-	auto pointString = boost::locale::conv::utf_to_utf<UniChar>(u8Str);
 
-	for (size_t i = 0; i < Text.length(); i++)
+	for (const auto &c : Text)
 	{
-		auto glyph = this->getGlyph(pointString[i]);
+		auto glyph = this->getGlyph(c);
 		textlen += glyph->size.x;
 	}
 	return textlen;
 }
 
-int BitmapFont::GetFontHeight() const { return fontheight; }
+int BitmapFont::getFontHeight() const { return fontheight; }
 
-int BitmapFont::GetFontHeight(const UString &Text, int MaxWidth)
+int BitmapFont::getFontHeight(const UString &Text, int MaxWidth)
 {
-	std::list<UString> lines = WordWrapText(Text, MaxWidth);
+	std::list<UString> lines = wordWrapText(Text, MaxWidth);
 	return lines.size() * fontheight;
 }
 
 UString BitmapFont::getName() const { return this->name; }
 
-int BitmapFont::GetEstimateCharacters(int FitInWidth) const
+int BitmapFont::getEstimateCharacters(int FitInWidth) const
 {
 	return FitInWidth / averagecharacterwidth;
 }
@@ -76,8 +66,8 @@ sp<PaletteImage> BitmapFont::getGlyph(UniChar codepoint)
 	{
 		// FIXME: Hack - assume all missing glyphs are spaces
 		// TODO: Fallback fonts?
-		LogWarning("Font %s missing glyph for character \"%s\" (codepoint %u)",
-		           this->getName().c_str(), UString(codepoint).c_str(), codepoint);
+		LogWarning("Font %s missing glyph for character \"%s\" (codepoint %u)", this->getName(),
+		           UString(codepoint), codepoint);
 		auto missingGlyph = this->getGlyph(UString::u8Char(' '));
 		fontbitmaps.emplace(codepoint, missingGlyph);
 	}
@@ -87,12 +77,14 @@ sp<PaletteImage> BitmapFont::getGlyph(UniChar codepoint)
 sp<Palette> BitmapFont::getPalette() const { return this->palette; }
 
 sp<BitmapFont> BitmapFont::loadFont(const std::map<UniChar, UString> &glyphMap, int spaceWidth,
-                                    int fontHeight, UString fontName, sp<Palette> defaultPalette)
+                                    int fontHeight, int kerning, UString fontName,
+                                    sp<Palette> defaultPalette)
 {
 	auto font = mksp<BitmapFont>();
 
 	font->spacewidth = spaceWidth;
 	font->fontheight = fontHeight;
+	font->kerning = kerning;
 	font->averagecharacterwidth = 0;
 	font->name = fontName;
 	font->palette = defaultPalette;
@@ -101,19 +93,19 @@ sp<BitmapFont> BitmapFont::loadFont(const std::map<UniChar, UString> &glyphMap, 
 
 	for (auto &p : glyphMap)
 	{
-		auto fontImage = fw().data->load_image(p.second);
+		auto fontImage = fw().data->loadImage(p.second);
 		if (!fontImage)
 		{
-			LogError("Failed to read glyph image \"%s\"", p.second.c_str());
+			LogError("Failed to read glyph image \"%s\"", p.second);
 			continue;
 		}
 		auto paletteImage = std::dynamic_pointer_cast<PaletteImage>(fontImage);
 		if (!paletteImage)
 		{
-			LogError("Glyph image \"%s\" doesn't look like a PaletteImage", p.second.c_str());
+			LogError("Glyph image \"%s\" doesn't look like a PaletteImage", p.second);
 			continue;
 		}
-		int maxWidth = 0;
+		unsigned int maxWidth = 0;
 
 		// FIXME: Proper kerning
 		// First find the widest non-transparent part of the glyph
@@ -131,8 +123,8 @@ sp<BitmapFont> BitmapFont::loadFont(const std::map<UniChar, UString> &glyphMap, 
 				}
 			}
 		}
-		// Trim the glyph to the max non-transparent width + 2 px
-		auto trimmedGlyph = mksp<PaletteImage>(Vec2<int>{maxWidth + 2, fontHeight});
+		// Trim the glyph to the max non-transparent width
+		auto trimmedGlyph = mksp<PaletteImage>(Vec2<int>{maxWidth + kerning, fontHeight});
 		PaletteImage::blit(paletteImage, trimmedGlyph);
 
 		font->fontbitmaps[p.first] = trimmedGlyph;
@@ -149,61 +141,64 @@ sp<BitmapFont> BitmapFont::loadFont(const std::map<UniChar, UString> &glyphMap, 
 	return font;
 }
 
-std::list<UString> BitmapFont::WordWrapText(const UString &Text, int MaxWidth)
+std::list<UString> BitmapFont::wordWrapText(const UString &Text, int MaxWidth)
 {
 	int txtwidth;
-	std::list<UString> lines;
+	std::list<UString> lines = Text.splitlist("\n");
+	std::list<UString> wrappedLines;
 
-	txtwidth = GetFontWidth(Text);
-
-	if (txtwidth > MaxWidth)
+	for (UString str : lines)
 	{
-		// TODO: Need to implement a list of line break characters
-		auto remainingChunks = Text.splitlist(" ");
-		UString currentLine;
+		txtwidth = getFontWidth(str);
 
-		while (!remainingChunks.empty())
+		if (txtwidth > MaxWidth)
 		{
-			UString currentTestLine;
-			if (currentLine != "")
-				currentTestLine = currentLine + " ";
+			auto remainingChunks = str.splitlist(" ");
+			UString currentLine;
 
-			auto &currentChunk = remainingChunks.front();
-			currentTestLine += currentChunk;
-
-			auto estimatedLength = GetFontWidth(currentTestLine);
-
-			if (estimatedLength < MaxWidth)
+			while (!remainingChunks.empty())
 			{
-				currentLine = currentTestLine;
-				remainingChunks.pop_front();
-			}
-			else
-			{
-				if (currentLine == "")
+				UString currentTestLine;
+				if (currentLine != "")
+					currentTestLine = currentLine + " ";
+
+				auto &currentChunk = remainingChunks.front();
+				currentTestLine += currentChunk;
+
+				auto estimatedLength = getFontWidth(currentTestLine);
+
+				if (estimatedLength < MaxWidth)
 				{
-					LogWarning(
-					    "No break in line \"%s\" found - this will probably overflow the control",
-					    currentTestLine.c_str());
 					currentLine = currentTestLine;
 					remainingChunks.pop_front();
 				}
 				else
 				{
-					lines.push_back(currentLine);
-					currentLine = "";
+					if (currentLine == "")
+					{
+						LogWarning("No break in line \"%s\" found - this will probably overflow "
+						           "the control",
+						           currentTestLine);
+						currentLine = currentTestLine;
+						remainingChunks.pop_front();
+					}
+					else
+					{
+						wrappedLines.push_back(currentLine);
+						currentLine = "";
+					}
 				}
 			}
+			if (currentLine != "")
+				wrappedLines.push_back(currentLine);
 		}
-		if (currentLine != "")
-			lines.push_back(currentLine);
-	}
-	else
-	{
-		lines.push_back(Text);
+		else
+		{
+			wrappedLines.push_back(str);
+		}
 	}
 
-	return lines;
+	return wrappedLines;
 }
 
 }; // namespace OpenApoc

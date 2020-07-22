@@ -1,8 +1,7 @@
-
 #pragma once
-#include "library/sp.h"
 
-#include "control.h"
+#include "forms/control.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {
@@ -21,20 +20,25 @@ class CheckBox : public Control
 
 	bool Checked;
 
-	void OnRender() override;
+	void onRender() override;
 
   public:
 	CheckBox(sp<Image> ImageChecked = nullptr, sp<Image> ImageUnchecked = nullptr);
-	virtual ~CheckBox();
+	~CheckBox() override;
 
-	void EventOccured(Event *e) override;
-	void Update() override;
-	void UnloadResources() override;
-	virtual bool IsChecked() const { return Checked; }
-	virtual void SetChecked(bool checked);
+	bool click() override;
 
-	sp<Control> CopyTo(sp<Control> CopyParent) override;
-	void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
+	void eventOccured(Event *e) override;
+	void update() override;
+	void unloadResources() override;
+
+	sp<Sample> getClickSound() const;
+	void setClickSound(sp<Sample> sample);
+	virtual bool isChecked() const { return Checked; }
+	virtual void setChecked(bool checked);
+
+	sp<Control> copyTo(sp<Control> CopyParent) override;
+	void configureSelfFromXml(pugi::xml_node *node) override;
 };
 
 }; // namespace OpenApoc

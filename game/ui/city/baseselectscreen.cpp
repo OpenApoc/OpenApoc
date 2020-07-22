@@ -1,73 +1,83 @@
 #include "game/ui/city/baseselectscreen.h"
+#include "forms/form.h"
+#include "forms/label.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
-#include "game/state/tileview/tileobject_scenery.h"
-#include "game/state/tileview/voxel.h"
+#include "framework/keycodes.h"
+#include "framework/renderer.h"
+#include "game/state/city/building.h"
+#include "game/state/city/city.h"
+#include "game/state/city/scenery.h"
+#include "game/state/gamestate.h"
+#include "game/state/rules/city/baselayout.h"
+#include "game/state/tilemap/collision.h"
+#include "game/state/tilemap/tilemap.h"
+#include "game/state/tilemap/tileobject_scenery.h"
 #include "game/ui/city/basebuyscreen.h"
 
 namespace OpenApoc
 {
 
-static const Colour PLAYER_BASE_OWNED{188, 212, 88};
-static const Colour PLAYER_BASE_AVAILABLE{160, 236, 252};
-
 BaseSelectScreen::BaseSelectScreen(sp<GameState> state, Vec3<float> centerPos)
-    : TileView(*state->current_city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
-               Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Strategy),
-      menuform(ui().GetForm("FORM_SELECT_BASE_SCREEN")), state(state), counter(0)
+    : CityTileView(*state->current_city->map, Vec3<int>{TILE_X_CITY, TILE_Y_CITY, TILE_Z_CITY},
+                   Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Strategy,
+                   state->current_city->cityViewScreenCenter, *state),
+      menuform(ui().getForm("city/baseselect")), state(state)
 {
 	this->centerPos = centerPos;
-	this->menuform->FindControl("BUTTON_OK")
-	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *e) { this->stageCmd.cmd = StageCmd::Command::POP; });
+	this->menuform->findControl("BUTTON_OK")->addCallback(FormEventType::ButtonClick, [](Event *) {
+		fw().stageQueueCommand({StageCmd::Command::POP});
+	});
 }
 
-BaseSelectScreen::~BaseSelectScreen() {}
+BaseSelectScreen::~BaseSelectScreen() = default;
 
-void BaseSelectScreen::Begin()
+void BaseSelectScreen::begin()
 {
-	menuform->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 }
 
-void BaseSelectScreen::Pause() {}
+void BaseSelectScreen::pause() {}
 
-void BaseSelectScreen::Resume() {}
+void BaseSelectScreen::resume() {}
 
-void BaseSelectScreen::Finish() {}
+void BaseSelectScreen::finish() {}
 
-void BaseSelectScreen::EventOccurred(Event *e)
+void BaseSelectScreen::eventOccurred(Event *e)
 {
-	menuform->EventOccured(e);
+	menuform->eventOccured(e);
 
 	if (menuform->eventIsWithin(e))
 	{
 		return;
 	}
 
-	if (e->Type() == EVENT_KEY_DOWN && e->Keyboard().KeyCode == SDLK_ESCAPE)
+	if (e->type() == EVENT_KEY_DOWN &&
+	    (e->keyboard().KeyCode == SDLK_ESCAPE || e->keyboard().KeyCode == SDLK_RETURN ||
+	     e->keyboard().KeyCode == SDLK_KP_ENTER))
 	{
-		stageCmd.cmd = StageCmd::Command::POP;
+		menuform->findControl("BUTTON_OK")->click();
 	}
 	// Exclude mouse down events that are over the form
-	else if (e->Type() == EVENT_MOUSE_DOWN)
+	else if (e->type() == EVENT_MOUSE_DOWN)
 	{
-		if (e->Mouse().Button == 2)
+		if (Event::isPressed(e->mouse().Button, Event::MouseButton::Middle))
 		{
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
 			auto clickTile = this->screenToTileCoords(
-			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 0.0f);
-			this->setScreenCenterTile({clickTile.x, clickTile.y});
+			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
+			this->setScreenCenterTile(Vec2<float>{clickTile.x, clickTile.y});
 		}
-		else if (e->Mouse().Button == 1)
+		else if (Event::isPressed(e->mouse().Button, Event::MouseButton::Left))
 		{
 			// If a click has not been handled by a form it's in the map. See if we intersect with
 			// anything
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
 			auto clickTop = this->screenToTileCoords(
-			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 9.99f);
+			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 9.99f);
 			auto clickBottom = this->screenToTileCoords(
-			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 0.0f);
+			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
 			auto collision = state->current_city->map->findCollision(clickTop, clickBottom);
 			if (collision)
 			{
@@ -78,10 +88,10 @@ void BaseSelectScreen::EventOccurred(Event *e)
 					auto building = scenery->building;
 					if (building)
 					{
-						if (building->base_layout && building->owner.id == "ORG_GOVERNMENT")
+						if (building->base_layout && building->owner == state->getGovernment())
 						{
-							stageCmd.cmd = StageCmd::Command::PUSH;
-							stageCmd.nextStage = mksp<BaseBuyScreen>(state, building);
+							fw().stageQueueCommand(
+							    {StageCmd::Command::PUSH, mksp<BaseBuyScreen>(state, building)});
 						}
 					}
 				}
@@ -90,26 +100,26 @@ void BaseSelectScreen::EventOccurred(Event *e)
 	}
 	else
 	{
-		TileView::EventOccurred(e);
+		CityTileView::eventOccurred(e);
 	}
 }
 
-void BaseSelectScreen::Update(StageCmd *const cmd)
+void BaseSelectScreen::update()
 {
-	menuform->Update();
-	*cmd = this->stageCmd;
-	// Reset the command to default
-	this->stageCmd = StageCmd();
-	counter = (counter + 1) % COUNTER_MAX;
+	menuform->update();
+	CityTileView::update();
 }
 
-void BaseSelectScreen::Render()
+void BaseSelectScreen::render()
 {
-	TileView::Render();
-	for (auto b : state->current_city->buildings)
+	CityTileView::render();
+
+	// Draw bases
+	static const Colour PLAYER_BASE_AVAILABLE{160, 236, 252};
+	for (auto &b : state->current_city->buildings)
 	{
 		auto building = b.second;
-		if (building->base_layout)
+		if (building->base_layout && building->owner != state->getPlayer())
 		{
 			Vec3<float> posA = {building->bounds.p0.x, building->bounds.p0.y, 0};
 			Vec2<float> screenPosA = this->tileToOffsetScreenCoords(posA);
@@ -123,21 +133,19 @@ void BaseSelectScreen::Render()
 				screenPosB += Vec2<float>{2.0f, 2.0f};
 			}
 
-			Colour borderColour;
-			if (building->owner == state->getPlayer())
-			{
-				borderColour = PLAYER_BASE_OWNED;
-			}
-			else if (building->owner.id == "ORG_GOVERNMENT")
-			{
-				borderColour = PLAYER_BASE_AVAILABLE;
-			}
-			fw().renderer->drawRect(screenPosA, screenPosB - screenPosA, borderColour, 2.0f);
+			fw().renderer->drawRect(screenPosA, screenPosB - screenPosA, PLAYER_BASE_AVAILABLE,
+			                        2.0f);
 		}
 	}
-	menuform->Render();
+	menuform->render();
+
+	// If there's a modal dialog, darken the screen
+	if (fw().stageGetCurrent() != this->shared_from_this())
+	{
+		fw().renderer->drawFilledRect({0, 0}, fw().displayGetSize(), Colour{0, 0, 0, 128});
+	}
 }
 
-bool BaseSelectScreen::IsTransition() { return false; }
+bool BaseSelectScreen::isTransition() { return false; }
 
 }; // namespace OpenApoc

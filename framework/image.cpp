@@ -1,27 +1,15 @@
 #include "framework/image.h"
+#include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "framework/palette.h"
 #include "library/sp.h"
-
-// Use physfs for RGBImage::saveBitmap directory creation
-#include <SDL_surface.h>
-#include <physfs.h>
+#include <cstring>
 
 namespace OpenApoc
 {
 
-static bool ReadUse(ImageLockUse use)
-{
-	return (use == ImageLockUse::Read || use == ImageLockUse::ReadWrite);
-}
-
-static bool WriteUse(ImageLockUse use)
-{
-	return (use == ImageLockUse::Write || use == ImageLockUse::ReadWrite);
-}
-
-Image::~Image() {}
+Image::~Image() = default;
 
 Image::Image(Vec2<unsigned int> size)
     : size(size), dirty(true), bounds(0, 0, size.x, size.y), indexInSet(0)
@@ -30,7 +18,7 @@ Image::Image(Vec2<unsigned int> size)
 
 Surface::Surface(Vec2<unsigned int> size) : Image(size) {}
 
-Surface::~Surface() {}
+Surface::~Surface() = default;
 
 PaletteImage::PaletteImage(Vec2<unsigned int> size, uint8_t initialIndex)
     : Image(size), indices(new uint8_t[size.x * size.y])
@@ -39,7 +27,7 @@ PaletteImage::PaletteImage(Vec2<unsigned int> size, uint8_t initialIndex)
 		this->indices[i] = initialIndex;
 }
 
-PaletteImage::~PaletteImage() {}
+PaletteImage::~PaletteImage() = default;
 
 sp<RGBImage> PaletteImage::toRGBImage(sp<Palette> p)
 {
@@ -52,7 +40,7 @@ sp<RGBImage> PaletteImage::toRGBImage(sp<Palette> p)
 		for (unsigned int x = 0; x < this->size.x; x++)
 		{
 			uint8_t idx = this->indices[y * this->size.x + x];
-			imgLock.set(Vec2<unsigned int>{x, y}, p->GetColour(idx));
+			imgLock.set(Vec2<unsigned int>{x, y}, p->getColour(idx));
 		}
 	}
 	return i;
@@ -115,53 +103,7 @@ void RGBImage::blit(sp<RGBImage> src, sp<RGBImage> dst, Vec2<unsigned int> srcOf
 	}
 }
 
-void RGBImage::saveBitmap(const UString &filename)
-{
-	// TODO: Check file's path exists
-	std::vector<UString> segs = filename.split('/');
-	UString workingdir("");
-
-	for (unsigned int pidx = 0; segs.size() > 1 && pidx < segs.size() - 1; pidx++)
-	{
-		workingdir += segs.at(pidx);
-
-		if (!PHYSFS_exists(workingdir.c_str()))
-		{
-			LogInfo("Building %s", workingdir.c_str());
-			PHYSFS_mkdir(workingdir.c_str());
-		}
-		if (workingdir.substr(workingdir.length() - 1, 1) != "/")
-		{
-			workingdir += "/";
-		}
-	}
-
-	SDL_Surface *bmp =
-	    SDL_CreateRGBSurface(0, size.x, size.y, 32, 0x000000ff, 0x0000ff00, 0x00ff0000, 0xff000000);
-	SDL_LockSurface(bmp);
-
-	for (unsigned int y = 0; y < size.y; y++)
-	{
-		for (unsigned int x = 0; x < size.x; x++)
-		{
-			int offset = (y * bmp->pitch) + (x * 4);
-			uint8_t *bytedata = reinterpret_cast<uint8_t *>(bmp->pixels);
-			Colour_ARGB8888LE *pxdata = reinterpret_cast<Colour_ARGB8888LE *>(bytedata + offset);
-			Colour c = pixels[(y * size.x) + x];
-
-			pxdata->r = c.r;
-			pxdata->g = c.g;
-			pxdata->b = c.b;
-			pxdata->a = c.a;
-		}
-	}
-
-	SDL_UnlockSurface(bmp);
-	SDL_SaveBMP(bmp, filename.c_str());
-	SDL_FreeSurface(bmp);
-}
-
-RGBImage::~RGBImage() {}
+RGBImage::~RGBImage() = default;
 
 RGBImageLock::RGBImageLock(sp<RGBImage> img, ImageLockUse use) : img(img), use(use)
 {
@@ -169,7 +111,7 @@ RGBImageLock::RGBImageLock(sp<RGBImage> img, ImageLockUse use) : img(img), use(u
 	// FIXME: Disallow multiple locks?
 }
 
-RGBImageLock::~RGBImageLock() {}
+RGBImageLock::~RGBImageLock() = default;
 
 void *RGBImageLock::getData() { return this->img->pixels.get(); }
 
@@ -179,11 +121,11 @@ PaletteImageLock::PaletteImageLock(sp<PaletteImage> img, ImageLockUse use) : img
 	// FIXME: Disallow multiple locks?
 }
 
-PaletteImageLock::~PaletteImageLock() {}
+PaletteImageLock::~PaletteImageLock() = default;
 
 void *PaletteImageLock::getData() { return this->img->indices.get(); }
 
-void PaletteImage::CalculateBounds()
+void PaletteImage::calculateBounds()
 {
 	unsigned int minX = this->size.x, minY = this->size.y, maxX = 0, maxY = 0;
 
@@ -214,7 +156,7 @@ sp<Image> &LazyImage::getRealImage()
 {
 	if (!this->realImage)
 	{
-		this->realImage = fw().data->load_image(this->path);
+		this->realImage = fw().data->loadImage(this->path);
 		this->size = this->realImage->size;
 	}
 	return this->realImage;

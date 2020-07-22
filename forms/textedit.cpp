@@ -1,73 +1,88 @@
 #include "forms/textedit.h"
+#include "dependencies/pugixml/src/pugixml.hpp"
 #include "forms/ui.h"
 #include "framework/event.h"
+#include "framework/font.h"
 #include "framework/framework.h"
+#include "framework/image.h"
+#include "framework/keycodes.h"
+#include "framework/renderer.h"
 #include "library/sp.h"
-#include <tinyxml2.h>
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
 
 TextEdit::TextEdit(const UString &Text, sp<BitmapFont> font)
-    : Control(), caretDraw(false), caretTimer(0), text(Text), font(font), editting(false),
-      editShift(false), editAltGr(false), SelectionStart(Text.length()),
-      TextHAlign(HorizontalAlignment::Left), TextVAlign(VerticalAlignment::Centre)
+    : Control(), caretDraw(false), caretTimer(0), text(Text), cursor("*"), font(font),
+      editing(false), SelectionStart(Text.length()), TextHAlign(HorizontalAlignment::Left),
+      TextVAlign(VerticalAlignment::Centre)
 {
+	isClickable = true;
 	if (font)
 	{
 		palette = font->getPalette();
 	}
 }
 
-TextEdit::~TextEdit() {}
+TextEdit::~TextEdit() = default;
 
-void TextEdit::EventOccured(Event *e)
+bool TextEdit::isFocused() const { return editing; }
+
+void TextEdit::eventOccured(Event *e)
 {
 	UString keyname;
 
-	Control::EventOccured(e);
+	Control::eventOccured(e);
 
-	if (e->Type() == EVENT_FORM_INTERACTION)
+	if (e->type() == EVENT_FORM_INTERACTION)
 	{
-		if (e->Forms().RaisedBy == shared_from_this())
+		if (e->forms().RaisedBy == shared_from_this())
 		{
-			if (e->Forms().EventFlag == FormEventType::GotFocus ||
-			    e->Forms().EventFlag == FormEventType::MouseClick ||
-			    e->Forms().EventFlag == FormEventType::KeyDown)
+			if (e->forms().EventFlag == FormEventType::GotFocus ||
+			    e->forms().EventFlag == FormEventType::MouseClick ||
+			    e->forms().EventFlag == FormEventType::KeyDown)
 			{
-				editting = true;
-				fw().Text_StartInput();
-				// e->Handled = true;
+				if (!editing)
+				{
+					editing = true;
+					fw().textStartInput();
+					// e->Handled = true;
+					// FIXME: Should we really fall through here?
+				}
 			}
 		}
-		if (editting)
+		if (editing)
 		{
-			if (e->Forms().RaisedBy == shared_from_this())
+			if (e->forms().RaisedBy == shared_from_this())
 			{
-				if (e->Forms().EventFlag == FormEventType::LostFocus)
+				if (e->forms().EventFlag == FormEventType::LostFocus)
 				{
-					editting = false;
-					fw().Text_StopInput();
-					RaiseEvent(FormEventType::TextEditFinish);
+					editing = false;
+					fw().textStopInput();
+					raiseEvent(FormEventType::TextEditFinish);
 					// e->Handled = true;
 				}
 			}
-			else if (e->Forms().EventFlag == FormEventType::MouseClick)
+			else if (e->forms().EventFlag == FormEventType::MouseClick)
 			{
-				editting = false;
-				fw().Text_StopInput();
-				RaiseEvent(FormEventType::TextEditFinish);
+				// FIXME: Due to event duplication (?), this code won't work. Can only stop editing
+				// text by pressing enter.
+				// editing = false;
+				// fw().textStopInput();
+				// raiseEvent(FormEventType::TextEditFinish);
 			}
-			if (e->Forms().EventFlag == FormEventType::KeyPress)
+			if (e->forms().EventFlag == FormEventType::KeyDown)
 			{
-				switch (e->Forms().KeyInfo.KeyCode) // TODO: Check scancodes instead of keycodes?
+				LogInfo("Key pressed: %d", e->forms().KeyInfo.KeyCode);
+				switch (e->forms().KeyInfo.KeyCode)
 				{
 					case SDLK_BACKSPACE:
 						if (SelectionStart > 0)
 						{
 							text.remove(SelectionStart - 1, 1);
 							SelectionStart--;
-							RaiseEvent(FormEventType::TextChanged);
+							raiseEvent(FormEventType::TextChanged);
 						}
 						e->Handled = true;
 						break;
@@ -75,7 +90,7 @@ void TextEdit::EventOccured(Event *e)
 						if (SelectionStart < text.length())
 						{
 							text.remove(SelectionStart, 1);
-							RaiseEvent(FormEventType::TextChanged);
+							raiseEvent(FormEventType::TextChanged);
 						}
 						e->Handled = true;
 						break;
@@ -93,14 +108,6 @@ void TextEdit::EventOccured(Event *e)
 						}
 						e->Handled = true;
 						break;
-					case SDLK_LSHIFT:
-					case SDLK_RSHIFT:
-						editShift = true;
-						break;
-					case SDLK_RALT:
-						editAltGr = true;
-						break;
-
 					case SDLK_HOME:
 						SelectionStart = 0;
 						e->Handled = true;
@@ -109,97 +116,82 @@ void TextEdit::EventOccured(Event *e)
 						SelectionStart = text.length();
 						e->Handled = true;
 						break;
-
+					case SDLK_ESCAPE:
+						editing = false;
+						fw().textStopInput();
+						raiseEvent(FormEventType::TextEditCancel);
+						break;
 					case SDLK_RETURN:
-						editting = false;
-						fw().Text_StopInput();
-						RaiseEvent(FormEventType::TextEditFinish);
+					case SDLK_KP_ENTER:
+						editing = false;
+						fw().textStopInput();
+						raiseEvent(FormEventType::TextEditFinish);
 						break;
-				}
-			}
-			else if (e->Forms().EventFlag == FormEventType::KeyUp)
-			{
+					case SDLK_v: // CTRL+V
+						if (e->forms().KeyInfo.Modifiers & KMOD_CTRL)
+						{
+							UString clipboard = fw().textGetClipboard();
 
-				switch (e->Forms().KeyInfo.KeyCode)
-				{
-					case SDLK_LSHIFT:
-					case SDLK_RSHIFT:
-						editShift = false;
-						e->Handled = true;
-						break;
-					case SDLK_RALT:
-						editAltGr = false;
-						e->Handled = true;
+							if (text.length() + clipboard.length() >= this->textMaxLength)
+							{
+								return;
+							}
+							if (!clipboard.empty())
+							{
+								text.insert(SelectionStart, clipboard);
+								SelectionStart += clipboard.length();
+								raiseEvent(FormEventType::TextChanged);
+							}
+						}
 						break;
 				}
 			}
-			else if (e->Forms().EventFlag == FormEventType::TextInput)
+			else if (e->forms().EventFlag == FormEventType::TextInput)
 			{
-				text.insert(SelectionStart, e->Text().Input);
-				SelectionStart += e->Text().Input.length();
-				RaiseEvent(FormEventType::TextChanged);
+				if (text.length() >= this->textMaxLength)
+				{
+					return;
+				}
+
+				UString inputCharacter = e->forms().Input.Input;
+				if (allowedCharacters.empty() ||
+				    allowedCharacters.str().find(inputCharacter.str()) != std::string::npos)
+				{
+					text.insert(SelectionStart, inputCharacter);
+					SelectionStart += inputCharacter.length();
+					raiseEvent(FormEventType::TextChanged);
+				}
 			}
 		}
 	}
 }
 
-void TextEdit::OnRender()
+void TextEdit::onRender()
 {
-	int xpos;
-	int ypos;
+	Control::onRender();
 
-	switch (TextHAlign)
-	{
-		case HorizontalAlignment::Left:
-			xpos = 0;
-			break;
-		case HorizontalAlignment::Centre:
-			xpos = (Size.x / 2) - (font->GetFontWidth(text) / 2);
-			break;
-		case HorizontalAlignment::Right:
-			xpos = Size.x - font->GetFontWidth(text);
-			break;
-		default:
-			LogError("Unknown TextHAlign");
-			return;
-	}
+	int xpos = align(TextHAlign, Size.x, font->getFontWidth(text));
+	int ypos = align(TextVAlign, Size.y, font->getFontHeight());
 
-	switch (TextVAlign)
+	if (editing)
 	{
-		case VerticalAlignment::Top:
-			ypos = 0;
-			break;
-		case VerticalAlignment::Centre:
-			ypos = (Size.y / 2) - (font->GetFontHeight() / 2);
-			break;
-		case VerticalAlignment::Bottom:
-			ypos = Size.y - font->GetFontHeight();
-			break;
-		default:
-			LogError("Unknown TextVAlign");
-			return;
-	}
-
-	if (editting)
-	{
-		int cxpos = xpos + font->GetFontWidth(text.substr(0, SelectionStart)) + 1;
+		int cxpos = xpos + font->getFontWidth(text.substr(0, SelectionStart)) + 1;
 
 		if (cxpos < 0)
 		{
 			xpos += cxpos;
-			cxpos = xpos + font->GetFontWidth(text.substr(0, SelectionStart)) + 1;
+			cxpos = xpos + font->getFontWidth(text.substr(0, SelectionStart)) + 1;
 		}
 		if (cxpos > Size.x)
 		{
 			xpos -= cxpos - Size.x;
-			cxpos = xpos + font->GetFontWidth(text.substr(0, SelectionStart)) + 1;
+			cxpos = xpos + font->getFontWidth(text.substr(0, SelectionStart)) + 1;
 		}
 
 		if (caretDraw)
 		{
-			fw().renderer->drawLine(Vec2<float>{cxpos, ypos},
-			                        Vec2<float>{cxpos, ypos + font->GetFontHeight()},
-			                        Colour{255, 255, 255});
+			auto textImage = font->getString(cursor);
+			fw().renderer->draw(textImage, Vec2<float>{cxpos, ypos});
 		}
 	}
 
@@ -207,40 +199,64 @@ void TextEdit::OnRender()
 	fw().renderer->draw(textImage, Vec2<float>{xpos, ypos});
 }
 
-void TextEdit::Update()
+void TextEdit::update()
 {
-	if (editting)
+	if (editing)
 	{
 		caretTimer = (caretTimer + 1) % TEXTEDITOR_CARET_TOGGLE_TIME;
 		if (caretTimer == 0)
 		{
 			caretDraw = !caretDraw;
+			this->setDirty();
 		}
 	}
 }
 
-void TextEdit::UnloadResources() {}
+void TextEdit::unloadResources() {}
 
-UString TextEdit::GetText() const { return text; }
+UString TextEdit::getText() const { return text; }
 
-void TextEdit::SetText(const UString &Text)
+void TextEdit::setText(const UString &Text)
 {
 	text = Text;
 	SelectionStart = text.length();
-	RaiseEvent(FormEventType::TextChanged);
+	raiseEvent(FormEventType::TextChanged);
 }
 
-void TextEdit::RaiseEvent(FormEventType Type)
+void TextEdit::setCursor(const UString &cursor)
 {
-	std::ignore = Type;
-	this->pushFormEvent(FormEventType::TextChanged, nullptr);
+	this->cursor = cursor;
+	this->setDirty();
 }
 
-sp<BitmapFont> TextEdit::GetFont() const { return font; }
+void TextEdit::setTextMaxSize(size_t length)
+{
+	this->textMaxLength = length;
+	this->setDirty();
+}
 
-void TextEdit::SetFont(sp<BitmapFont> NewFont) { font = NewFont; }
+void TextEdit::setAllowedCharacters(const UString &allowedCharacters)
+{
+	this->allowedCharacters = allowedCharacters;
+	this->setDirty();
+}
 
-sp<Control> TextEdit::CopyTo(sp<Control> CopyParent)
+void TextEdit::raiseEvent(FormEventType Type)
+{
+	//	std::ignore = Type;
+	pushFormEvent(Type, nullptr);
+	// this->pushFormEvent(FormEventType::TextChanged, nullptr);
+}
+
+sp<BitmapFont> TextEdit::getFont() const { return font; }
+
+void TextEdit::setFont(sp<BitmapFont> NewFont)
+{
+	font = NewFont;
+	this->setDirty();
+}
+
+sp<Control> TextEdit::copyTo(sp<Control> CopyParent)
 {
 	sp<TextEdit> copy;
 	if (CopyParent)
@@ -253,58 +269,51 @@ sp<Control> TextEdit::CopyTo(sp<Control> CopyParent)
 	}
 	copy->TextHAlign = this->TextHAlign;
 	copy->TextVAlign = this->TextVAlign;
-	CopyControlData(copy);
+	copyControlData(copy);
 	return copy;
 }
 
-void TextEdit::ConfigureFromXML(tinyxml2::XMLElement *Element)
+void TextEdit::configureSelfFromXml(pugi::xml_node *node)
 {
-	Control::ConfigureFromXML(Element);
-	tinyxml2::XMLElement *subnode;
-	UString attribvalue;
+	Control::configureSelfFromXml(node);
 
-	if (Element->Attribute("text") != nullptr)
+	if (node->attribute("text"))
 	{
-		text = tr(Element->Attribute("text"));
+		text = tr(node->attribute("text").as_string());
 	}
-	if (Element->FirstChildElement("font") != nullptr)
+	auto fontNode = node->child("font");
+	if (fontNode)
 	{
-		font = ui().GetFont(Element->FirstChildElement("font")->GetText());
+		font = ui().getFont(fontNode.text().get());
 	}
-	subnode = Element->FirstChildElement("alignment");
-	if (subnode != nullptr)
+	auto alignmentNode = node->child("alignment");
+	if (alignmentNode)
 	{
-		if (subnode->Attribute("horizontal") != nullptr)
+		UString hAlign = alignmentNode.attribute("horizontal").as_string();
+		if (hAlign == "left")
 		{
-			attribvalue = subnode->Attribute("horizontal");
-			if (attribvalue == "left")
-			{
-				TextHAlign = HorizontalAlignment::Left;
-			}
-			else if (attribvalue == "centre")
-			{
-				TextHAlign = HorizontalAlignment::Centre;
-			}
-			else if (attribvalue == "right")
-			{
-				TextHAlign = HorizontalAlignment::Right;
-			}
+			TextHAlign = HorizontalAlignment::Left;
 		}
-		if (subnode->Attribute("vertical") != nullptr)
+		else if (hAlign == "centre")
 		{
-			attribvalue = subnode->Attribute("vertical");
-			if (attribvalue == "top")
-			{
-				TextVAlign = VerticalAlignment::Top;
-			}
-			else if (attribvalue == "centre")
-			{
-				TextVAlign = VerticalAlignment::Centre;
-			}
-			else if (attribvalue == "bottom")
-			{
-				TextVAlign = VerticalAlignment::Bottom;
-			}
+			TextHAlign = HorizontalAlignment::Centre;
+		}
+		else if (hAlign == "right")
+		{
+			TextHAlign = HorizontalAlignment::Right;
+		}
+		UString vAlign = alignmentNode.attribute("vertical").as_string();
+		if (vAlign == "top")
+		{
+			TextVAlign = VerticalAlignment::Top;
+		}
+		else if (vAlign == "centre")
+		{
+			TextVAlign = VerticalAlignment::Centre;
+		}
+		else if (vAlign == "bottom")
+		{
+			TextVAlign = VerticalAlignment::Bottom;
 		}
 	}
 }

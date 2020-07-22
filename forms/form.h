@@ -9,20 +9,22 @@ class Form : public Control
 {
 
   protected:
-	void OnRender() override;
+	void onRender() override;
 
   public:
-	Form(tinyxml2::XMLElement *FormConfiguration);
+	Form(pugi::xml_node *node);
 	Form();
-	virtual ~Form();
+	~Form() override;
 
-	virtual void ReadFormStyle(tinyxml2::XMLElement *FormConfiguration);
+	virtual void readFormStyle(pugi::xml_node *node);
 
-	void EventOccured(Event *e) override;
-	void Update() override;
-	void UnloadResources() override;
+	void eventOccured(Event *e) override;
+	void update() override;
+	void unloadResources() override;
 
-	sp<Control> CopyTo(sp<Control> CopyParent) override;
+	sp<Control> copyTo(sp<Control> CopyParent) override;
+
+	static sp<Form> loadForm(const UString &path);
 };
 
 }; // namespace OpenApoc

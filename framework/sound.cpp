@@ -1,20 +1,22 @@
 #include "framework/sound.h"
 #include "framework/logger.h"
 #include <array>
+#include <glm/glm.hpp>
 #include <limits>
 #include <memory>
 #include <utility>
 
 namespace OpenApoc
 {
-static const std::array<std::pair<float, float>, 3> positionalAudioLUT = {{
-    std::make_pair(20.0f, 1.0f),   // Anything within 20.0f units is at full volume
-    std::make_pair(100.0f, 0.25f), // That then scales linearly down to 25% over the next 100 units
-    std::make_pair(std::numeric_limits<float>::max(), 0.25f) // Which does not decrease any further
+static const std::array<std::pair<float, float>, 4> positionalAudioLUT = {{
+    std::make_pair(3.0f, 1.0f),   // Anything within 3.0f units is at full volume
+    std::make_pair(30.0f, 0.25f), // That then scales linearly down to 25% over the next 30 units
+    std::make_pair(60.0f, 0.10f), // That then scales linearly down to 10% over the next 30 units
+    std::make_pair(std::numeric_limits<float>::max(), 0.10f) // Which does not decrease any further
 }};
 
-// Position is assumed to be in 'map' units
-void SoundBackend::playSample(sp<Sample> sample, Vec3<float> position)
+// Position is assumed to be in 'map' units, gainMultiplier within 0 and 1
+void SoundBackend::playSample(sp<Sample> sample, Vec3<float> position, float gainMultiplier)
 {
 
 	float distance = glm::length(position - this->listenerPosition);
@@ -43,7 +45,7 @@ void SoundBackend::playSample(sp<Sample> sample, Vec3<float> position)
 	LogInfo("Playing sample at {%f,%f,%f} - distance to camera %f, gain %f", position.x, position.y,
 	        position.z, distance, gain);
 	// Anything within CLOSE_RANGE is at full volume
-	this->playSample(sample, gain);
+	this->playSample(sample, gain * gainMultiplier);
 }
 void SoundBackend::setListenerPosition(Vec3<float> position) { this->listenerPosition = position; }
 }; // namespace OpenApoc

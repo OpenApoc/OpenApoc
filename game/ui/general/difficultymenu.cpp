@@ -1,102 +1,106 @@
 #include "game/ui/general/difficultymenu.h"
+#include "forms/form.h"
 #include "forms/ui.h"
+#include "framework/configfile.h"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/keycodes.h"
+#include "framework/modinfo.h"
+#include "framework/options.h"
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"
-#include "game/ui/city/cityview.h"
 #include "game/ui/general/loadingscreen.h"
+#include "game/ui/tileview/cityview.h"
 
 namespace OpenApoc
 {
 
-DifficultyMenu::DifficultyMenu() : Stage(), difficultymenuform(ui().GetForm("FORM_DIFFICULTYMENU"))
+DifficultyMenu::DifficultyMenu() : Stage(), difficultymenuform(ui().getForm("difficultymenu"))
 {
-	assert(difficultymenuform);
+	LogAssert(difficultymenuform);
 }
 
-DifficultyMenu::~DifficultyMenu() {}
+DifficultyMenu::~DifficultyMenu() = default;
 
-void DifficultyMenu::Begin() {}
+void DifficultyMenu::begin() {}
 
-void DifficultyMenu::Pause() {}
+void DifficultyMenu::pause() {}
 
-void DifficultyMenu::Resume() {}
+void DifficultyMenu::resume() {}
 
-void DifficultyMenu::Finish() {}
+void DifficultyMenu::finish() {}
 
-static void loadGame(sp<GameState> state, UString initialStatePath)
+std::shared_future<void> loadGame(sp<GameState> state)
 {
-	state->loadGame(initialStatePath);
-	state->startGame();
-	state->initState();
-	return;
+	auto loadTask = fw().threadPoolEnqueue([state]() -> void {
+		state->loadMods();
+		state->startGame();
+		state->initState();
+		state->fillPlayerStartingProperty();
+		state->fillOrgStartingProperty();
+		return;
+	});
+
+	return loadTask;
 }
 
-void DifficultyMenu::EventOccurred(Event *e)
+void DifficultyMenu::eventOccurred(Event *e)
 {
-	difficultymenuform->EventOccured(e);
+	difficultymenuform->eventOccured(e);
 
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::ButtonClick)
 	{
-		UString initialStatePath;
-		if (e->Forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY1") == 0)
+		int difficulty;
+		if (e->forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY1") == 0)
 		{
-			initialStatePath = "data/difficulty1_patched";
+			difficulty = 0;
 		}
-		else if (e->Forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY2") == 0)
+		else if (e->forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY2") == 0)
 		{
-			initialStatePath = "data/difficulty2_patched";
+			difficulty = 1;
 		}
-		else if (e->Forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY3") == 0)
+		else if (e->forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY3") == 0)
 		{
-			initialStatePath = "data/difficulty3_patched";
+			difficulty = 2;
 		}
-		else if (e->Forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY4") == 0)
+		else if (e->forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY4") == 0)
 		{
-			initialStatePath = "data/difficulty4_patched";
+			difficulty = 3;
 		}
-		else if (e->Forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY5") == 0)
+		else if (e->forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY5") == 0)
 		{
-			initialStatePath = "data/difficulty5_patched";
+			difficulty = 4;
 		}
 		else
 		{
-			LogWarning("Unknown button pressed: %s", e->Forms().RaisedBy->Name.c_str());
+			LogWarning("Unknown button pressed: %s", e->forms().RaisedBy->Name);
 			return;
 		}
 
-		auto state = mksp<GameState>();
-		auto loadTask = fw().threadPool->enqueue([state, initialStatePath]() {
-			state->loadGame(initialStatePath);
-			state->startGame();
-			state->initState();
-		});
+		auto loadedState = mksp<GameState>();
+		loadedState->difficulty = difficulty;
 
-		stageCmd.cmd = StageCmd::Command::REPLACE;
-		stageCmd.nextStage = mksp<LoadingScreen>(
-		    std::move(loadTask), [state]() -> sp<Stage> { return mksp<CityView>(state); });
+		fw().stageQueueCommand(
+		    {StageCmd::Command::PUSH,
+		     mksp<LoadingScreen>(nullptr, loadGame(loadedState),
+		                         [loadedState]() { return mksp<CityView>(loadedState); })});
 		return;
 	}
 }
 
-void DifficultyMenu::Update(StageCmd *const cmd)
-{
-	difficultymenuform->Update();
-	*cmd = stageCmd;
-	stageCmd = StageCmd();
-}
+void DifficultyMenu::update() { difficultymenuform->update(); }
 
-void DifficultyMenu::Render() { difficultymenuform->Render(); }
+void DifficultyMenu::render() { difficultymenuform->render(); }
 
-bool DifficultyMenu::IsTransition() { return false; }
+bool DifficultyMenu::isTransition() { return false; }
 }; // namespace OpenApoc

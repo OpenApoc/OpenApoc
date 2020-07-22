@@ -1,7 +1,7 @@
 #pragma once
-#include "forms/forms.h"
+
 #include "framework/stage.h"
-#include "game/ui/base/basegraphics.h"
+#include "game/ui/components/basegraphics.h"
 #include "library/sp.h"
 #include <vector>
 
@@ -11,6 +11,9 @@ namespace OpenApoc
 class Base;
 class Facility;
 class GameState;
+class Form;
+class Label;
+class GraphicButton;
 
 class BaseStage : public Stage
 {
@@ -24,16 +27,23 @@ class BaseStage : public Stage
 	BaseGraphics::FacilityHighlight viewHighlight;
 	sp<Facility> viewFacility;
 
+	// Can be introduced during transaction screen manipulation
+	int cargoDelta = 0;
+	// Can be introduced during transaction screen manipulation
+	int bioDelta = 0;
+	// Can be introduced during transaction screen manipulation
+	int lqDelta = 0;
+
 	sp<GameState> state;
-	virtual void ChangeBase(sp<Base> newBase = nullptr);
-	void RefreshView();
+	virtual void changeBase(sp<Base> newBase = nullptr);
+	void refreshView();
 
   public:
 	BaseStage(sp<GameState> state);
-	~BaseStage();
+	~BaseStage() override;
 	// Stage control
-	void Begin() override;
-	void Render() override;
+	void begin() override;
+	void render() override;
 };
 
 }; // namespace OpenApoc

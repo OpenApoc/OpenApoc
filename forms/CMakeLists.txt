@@ -1,8 +1,11 @@
 # project name, and type
 PROJECT(OpenApoc_Forms CXX C)
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package (Threads REQUIRED)
+
 # check cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.9)
 
 set (FORMS_SOURCE_FILES
 	checkbox.cpp
@@ -11,11 +14,14 @@ set (FORMS_SOURCE_FILES
 	graphicbutton.cpp
 	graphic.cpp
 	label.cpp
-	list.cpp
+	listbox.cpp
+	multilistbox.cpp
 	radiobutton.cpp
 	scrollbar.cpp
 	textbutton.cpp
 	textedit.cpp
+	ticker.cpp
+	tristatebox.cpp
 	ui.cpp)
 source_group(forms\\sources FILES ${LIBRARY_SOURCE_FILES})
 
@@ -28,11 +34,14 @@ set (FORMS_HEADER_FILES
 	graphicbutton.h
 	graphic.h
 	label.h
-	list.h
+	listbox.h
+	multilistbox.h
 	radiobutton.h
 	scrollbar.h
 	textbutton.h
 	textedit.h
+	ticker.h
+	tristatebox.h
 	ui.h)
 
 source_group(forms\\headers FILES ${LIBRARY_HEADER_FILES})
@@ -43,23 +52,7 @@ list(APPEND ALL_HEADER_FILES ${LIBRARY_HEADER_FILES})
 add_library(OpenApoc_Forms STATIC ${FORMS_SOURCE_FILES}
 		${FORMS_HEADER_FILES})
 
-target_link_libraries(OpenApoc_Forms PUBLIC OpenApoc_Framework)
-
-FIND_PACKAGE(PkgConfig)
-PKG_CHECK_MODULES(PC_TINYXML2 REQUIRED tinyxml2)
-
-foreach (TINYXML2_LIBRARY ${PC_TINYXML2_LIBRARIES})
-	find_library(TINYXML2_LIBRARY_PATH ${TINYXML2_LIBRARY} HINTS
-		${PC_TINYXML2_LIBRARY_DIRS})
-	if (NOT TINYXML2_LIBRARY_PATH)
-		message(FATAL_ERROR "Failed to find tinyxml2 library
-		${TINYXML2_LIBRARY} in ${PC_TINYXML2_LIBRARY_DIRS}")
-	endif()
-	target_link_libraries(OpenApoc_Forms PUBLIC ${TINYXML2_LIBRARY_PATH})
-endforeach(TINYXML2_LIBRARY)
-target_include_directories(OpenApoc_Forms PUBLIC ${PC_TINYXML2_INCLUDEDIR})
+target_link_libraries(OpenApoc_Forms PUBLIC OpenApoc_Framework
+		OpenApoc_LibPugixml)
 
 target_include_directories(OpenApoc_Forms PUBLIC ${CMAKE_SOURCE_DIR})
-
-set_property(TARGET OpenApoc_Forms PROPERTY CXX_STANDARD 11)
-set_property(TARGET OpenApoc_Forms PROPERTY CXX_STANDARD_REQUIRED ON)

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "library/colour.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -51,6 +52,8 @@ class Renderer
 	virtual void flush() = 0;
 	virtual UString getName() = 0;
 
+	virtual void newFrame(){};
+
 	virtual sp<Surface> getDefaultSurface() = 0;
 };
 
@@ -67,4 +70,4 @@ class RendererSurfaceBinding
 	~RendererSurfaceBinding();
 };
 
-}; // namespace openapoc
+}; // namespace OpenApoc

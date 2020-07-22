@@ -1,7 +1,14 @@
+#ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
+#endif
 #include "game/ui/general/videoscreen.h"
+#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/image.h"
+#include "framework/keycodes.h"
+#include "framework/renderer.h"
+#include "framework/sound.h"
 #include "framework/trace.h"
 #include "framework/video.h"
 #include <chrono>
@@ -10,29 +17,26 @@
 namespace OpenApoc
 {
 
-VideoScreen::VideoScreen(const UString &videoPath, std::future<void> task,
-                         std::function<sp<Stage>()> nextScreenFn, sp<Image> background)
-    : Stage(), loading_task(std::move(task)), nextScreenFn(nextScreenFn),
-      backgroundimage(background)
+VideoScreen::VideoScreen(const UString &videoPath, sp<Stage> nextScreen)
+    : Stage(), nextScreen(nextScreen)
 {
 	if (videoPath != "")
 	{
-		this->video = fw().data->load_video(videoPath);
+		this->video = fw().data->loadVideo(videoPath);
 		if (!this->video)
 		{
-			LogWarning("Failed to load video \"%s\"", videoPath.c_str());
+			LogWarning("Failed to load video \"%s\"", videoPath);
 		}
 		else
 		{
 			// Scale keeping aspect ratio to the max of the screen size
 			Vec2<float> unscaled_frame_size = this->video->getVideoSize();
-			Vec2<float> display_size = fw().Display_GetSize();
+			Vec2<float> display_size = fw().displayGetSize();
 			Vec2<float> scale_factors = display_size / unscaled_frame_size;
 			float scale = std::min(scale_factors.x, scale_factors.y);
 			this->frame_size = unscaled_frame_size * scale;
-			LogInfo("Scaling video from {%d,%d} to {%d,%d}", this->video->getVideoSize().x,
-			        this->video->getVideoSize().y, this->frame_size.x, this->frame_size.y);
-			this->frame_position = (fw().Display_GetSize() / 2) - (this->frame_size / 2);
+			LogInfo("Scaling video from %s to %s", this->video->getVideoSize(), this->frame_size);
+			this->frame_position = (fw().displayGetSize() / 2) - (this->frame_size / 2);
 		}
 	}
 	else
@@ -41,33 +45,28 @@ VideoScreen::VideoScreen(const UString &videoPath, std::future<void> task,
 	}
 }
 
-void VideoScreen::Begin()
+void VideoScreen::begin()
 {
-	// FIXME: This is now useless, as it doesn't actually load anything interesting here
-	loadingimage = fw().data->load_image("UI/LOADING.PNG");
-	if (!backgroundimage)
-	{
-		backgroundimage = fw().data->load_image("UI/LOGO.PNG");
-	}
-	fw().Display_SetIcon();
-	loadingimageangle = 0;
 	last_frame_time = std::chrono::high_resolution_clock::now();
-	this->current_frame = this->video->popImage();
+	if (this->video)
+	{
+		this->current_frame = this->video->popImage();
 
-	fw().soundBackend->setTrack(video->getMusicTrack());
-	fw().soundBackend->playMusic([](void *) {}, nullptr);
+		fw().soundBackend->setTrack(video->getMusicTrack());
+		fw().soundBackend->playMusic([](void *) {}, nullptr);
+	}
 }
 
-void VideoScreen::Pause() {}
+void VideoScreen::pause() {}
 
-void VideoScreen::Resume() {}
+void VideoScreen::resume() {}
 
-void VideoScreen::Finish() {}
+void VideoScreen::finish() {}
 
-void VideoScreen::EventOccurred(Event *e)
+void VideoScreen::eventOccurred(Event *e)
 {
-	if ((e->Type() == EVENT_KEY_DOWN && e->Keyboard().KeyCode == SDLK_ESCAPE) ||
-	    (e->Type() == EVENT_MOUSE_DOWN || e->Type() == EVENT_FINGER_DOWN))
+	if ((e->type() == EVENT_KEY_DOWN && e->keyboard().KeyCode == SDLK_ESCAPE) ||
+	    (e->type() == EVENT_MOUSE_DOWN || e->type() == EVENT_FINGER_DOWN))
 	{
 		// Magically skip the rest of the video
 		if (this->video)
@@ -79,29 +78,15 @@ void VideoScreen::EventOccurred(Event *e)
 	}
 }
 
-void VideoScreen::Update(StageCmd *const cmd)
+void VideoScreen::update()
 {
 	if (!this->current_frame)
 	{
-		loadingimageangle += (M_PI + 0.05f);
-		if (loadingimageangle >= M_PI * 2.0f)
-			loadingimageangle -= M_PI * 2.0f;
-
-		auto status = this->loading_task.wait_for(std::chrono::seconds(0));
-		switch (status)
-		{
-			case std::future_status::ready:
-				cmd->cmd = StageCmd::Command::REPLACE;
-				cmd->nextStage = this->nextScreenFn();
-				return;
-			default:
-				// Not yet finished
-				return;
-		}
+		fw().stageQueueCommand({StageCmd::Command::REPLACE, this->nextScreen});
 	}
 }
 
-void VideoScreen::Render()
+void VideoScreen::render()
 {
 	TRACE_FN;
 	if (this->video)
@@ -129,26 +114,8 @@ void VideoScreen::Render()
 		fw().renderer->drawScaled(this->current_frame->image, this->frame_position,
 		                          this->frame_size, Renderer::Scaler::Nearest);
 	}
-	else
-	{
-
-		int logow = fw().Display_GetWidth() / 3;
-		float logosc = logow / static_cast<float>(backgroundimage->size.x);
-
-		Vec2<float> logoPosition{
-		    fw().Display_GetWidth() / 2 - (backgroundimage->size.x * logosc / 2),
-		    fw().Display_GetHeight() / 2 - (backgroundimage->size.y * logosc / 2)};
-		Vec2<float> logoSize{backgroundimage->size.x * logosc, backgroundimage->size.y * logosc};
-
-		fw().renderer->drawScaled(backgroundimage, logoPosition, logoSize);
-
-		fw().renderer->drawRotated(
-		    loadingimage, Vec2<float>{24, 24},
-		    Vec2<float>{fw().Display_GetWidth() - 50, fw().Display_GetHeight() - 50},
-		    loadingimageangle);
-	}
 }
 
-bool VideoScreen::IsTransition() { return false; }
+bool VideoScreen::isTransition() { return false; }
 
 }; // namespace OpenApoc

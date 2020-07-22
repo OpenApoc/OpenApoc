@@ -6,16 +6,21 @@
 #include <string>
 
 #if defined(_WIN32)
+
 // FIXME: GLESWRAP_APIENTRY is needed on windows?
 #define GLESWRAP_APIENTRY __stdcall
-#else
-#define GLESWRAP_APIENTRY
-#endif
-
 #ifdef _WIN64
 typedef signed long long int ssize_t;
 #else
 typedef signed long int ssize_t;
+#endif
+
+#else
+
+#define GLESWRAP_APIENTRY
+// for ssize_t
+#include <sys/types.h>
+
 #endif
 
 #define IN_GLES_WRAP_H

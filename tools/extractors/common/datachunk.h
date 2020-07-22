@@ -2,7 +2,6 @@
 
 #include "framework/logger.h"
 
-#include <cassert>
 #include <cstdlib>
 #include <fstream>
 #include <vector>
@@ -22,19 +21,19 @@ template <typename T> class DataChunk
 		file.seekg(start_offset, file.beg);
 		for (int i = 0; i < count; i++)
 		{
-			assert(file);
+			LogAssert(file);
 			T data;
 			file.read((char *)&data, sizeof(data));
 			readData.push_back(data);
 		}
 	}
 
-	T get(int offset)
+	T get(unsigned int offset) const
 	{
-		assert(offset < readData.size());
+		LogAssert(offset < readData.size());
 		return readData[offset];
 	}
 
-	unsigned count() { return readData.size(); }
+	size_t count() const { return readData.size(); }
 };
 } // namespace OpenApoc

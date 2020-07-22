@@ -1,9 +1,22 @@
 #include "framework/trace.h"
+#include "framework/configfile.h"
+#include "framework/options.h"
+#include <chrono>
 #include <fstream>
+#include <list>
 #include <memory>
 #include <mutex>
 #include <sstream>
 #include <thread>
+#include <utility>
+#include <vector>
+
+#if !defined(PTHREADS_AVAILABLE) && defined(_WIN32)
+#include <codecvt>
+#include <locale>
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#endif
 
 namespace
 {
@@ -11,6 +24,20 @@ namespace
 using OpenApoc::UString;
 
 const unsigned int TRACE_CHUNK_SIZE = 100000;
+
+std::mutex initTraceLock;
+static bool traceInited = false;
+
+static void initTrace()
+{
+	std::lock_guard<std::mutex> l(initTraceLock);
+	// Something might have enabled this in the time between check and lock
+	if (traceInited)
+		return;
+	traceInited = true;
+	if (OpenApoc::Options::enableTrace.get())
+		OpenApoc::Trace::enable();
+}
 
 enum class EventType : unsigned char
 {
@@ -27,7 +54,7 @@ class TraceEvent
 	std::vector<std::pair<UString, UString>> args;
 	TraceEvent(EventType type, const UString &name,
 	           const std::vector<std::pair<UString, UString>> &args, uint64_t timeNS)
-	    : type(type), name(name), args(args), timeNS(timeNS)
+	    : type(type), timeNS(timeNS), name(name), args(args)
 	{
 	}
 	TraceEvent() = default;
@@ -71,7 +98,7 @@ class TraceManager
 	{
 		std::stringstream ss;
 		listMutex.lock();
-		EventList *list = new EventList;
+		auto list = new EventList;
 		ss << std::this_thread::get_id();
 		list->tid = ss.str();
 		lists.emplace_back(list);
@@ -79,6 +106,15 @@ class TraceManager
 		return list;
 	}
 	~TraceManager();
+	std::ofstream outFile;
+	TraceManager() : outFile(OpenApoc::Options::traceFile.get().str())
+	{
+		if (!outFile)
+		{
+			LogError("Failed to open trace file \"%s\"", OpenApoc::Options::traceFile.get());
+			return;
+		}
+	}
 	void write();
 };
 
@@ -113,10 +149,8 @@ TraceManager::~TraceManager()
 
 void TraceManager::write()
 {
-	assert(OpenApoc::Trace::enabled);
+	LogAssert(OpenApoc::Trace::enabled);
 	OpenApoc::Trace::enabled = false;
-
-	std::ofstream outFile("openapoc_trace.json");
 
 	// FIXME: Use proper json parser instead of magically constructing from strings?
 
@@ -138,10 +172,11 @@ void TraceManager::write()
 
 				outFile << "{"
 				        << "\"pid\":1,"
-				        << "\"tid\":\"" << eventList->tid.str() << "\","
+				        << "\"tid\":\"" << eventList->tid
+				        << "\","
 				        // Time is in microseconds, not nanoseconds
 				        << "\"ts\":" << event.timeNS / 1000 << ","
-				        << "\"name\":\"" << event.name.str() << "\",";
+				        << "\"name\":\"" << event.name << "\",";
 
 				switch (event.type)
 				{
@@ -160,8 +195,7 @@ void TraceManager::write()
 								if (!firstArg)
 									outFile << ",";
 								firstArg = false;
-								outFile << "\"" << arg.first.str() << "\":\"" << arg.second.str()
-								        << "\"";
+								outFile << "\"" << arg.first << "\":\"" << arg.second << "\"";
 							}
 							outFile << "}";
 						}
@@ -187,8 +221,10 @@ bool Trace::enabled = false;
 
 void Trace::enable()
 {
+	if (!traceInited)
+		initTrace();
 	LogWarning("Enabling tracing - sizeof(TraceEvent) = %u", (unsigned)sizeof(TraceEvent));
-	assert(!trace_manager);
+	LogAssert(!trace_manager);
 	trace_manager.reset(new TraceManager);
 #if defined(BROKEN_THREAD_LOCAL)
 	pthread_key_create(&eventListKey, NULL);
@@ -199,7 +235,9 @@ void Trace::enable()
 
 void Trace::disable()
 {
-	assert(trace_manager);
+	if (!enabled)
+		return;
+	LogAssert(trace_manager);
 	trace_manager->write();
 	trace_manager.reset(nullptr);
 #if defined(BROKEN_THREAD_LOCAL)
@@ -210,8 +248,22 @@ void Trace::disable()
 
 void Trace::setThreadName(const UString &name)
 {
+	if (!traceInited)
+		initTrace();
 #if defined(PTHREADS_AVAILABLE)
-	pthread_setname_np(pthread_self(), name.c_str());
+#if defined(_GNU_SOURCE)
+	pthread_setname_np(pthread_self(), name.cStr());
+#elif defined(__APPLE__)
+	pthread_setname_np(name.cStr());
+#endif
+#elif defined(_WIN32)
+	static auto SetThreadDescriptionPtr = (HRESULT(WINAPI *)(HANDLE, PCWSTR))GetProcAddress(
+	    GetModuleHandleW(L"kernel32.dll"), "SetThreadDescription");
+	if (SetThreadDescriptionPtr)
+	{
+		std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+		SetThreadDescriptionPtr(GetCurrentThread(), conv.from_bytes(name.str()).c_str());
+	}
 #endif
 	if (!enabled)
 		return;
@@ -233,6 +285,8 @@ void Trace::setThreadName(const UString &name)
 
 void Trace::start(const UString &name, const std::vector<std::pair<UString, UString>> &args)
 {
+	if (!traceInited)
+		initTrace();
 	if (!enabled)
 		return;
 #if defined(BROKEN_THREAD_LOCAL)

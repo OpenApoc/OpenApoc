@@ -1,0 +1,55 @@
+Brief AI description
+
+- Panic Run AI
+  - Only if in Panic Run mode
+  - Drops whatever in hands
+  - If not moving run to a random LOS block that is further away from closest globally visible enemy than current pos
+  - Prevent further action
+  
+- Panic Freeze AI
+  - Only if in Panic Freeze mode
+  - Do nothing
+  - Prevent further action
+
+- Berserk AI
+  - Only if in Berserk mode
+  - Every several ticks pick a random visible target or a random tile around and shoot at it
+  - Prevent further action
+  
+- Default AI
+  - Always active for all units
+  - Turn to focused or closest enemy
+  - Turn to direction that we were hit from if we don't see who fired
+  - Attack focused or closest enemy with weapons in hand if not on Cease Fire
+  
+- Aggressive AI:
+  - Nothing?
+
+- Normal AI:
+  - Never do anything if already moving
+  - If under fire from unseen enemy then take cover against his approx. position if better cover exists otherwise kneel
+  - If under a lot of fire or hit then take cover against closest enemy if better cover exists otherwise kneel
+  - If cannot fire then take cover against closest enemy if better cover exists otherwise kneel
+  - (when implemented) take solid cover and take potshots from it
+  
+- Cautious AI:
+  - Never do anything if already moving
+  - Always take cover against closest enemy if better cover exists otherwise if can prone go prone otherwise kneel
+  - (when implemented) take solid cover take potshots
+  
+- Vanilla AI:
+  - When idle move to a random LOS block not occupied by an allied unit, using the priority system
+  - Randomly decide to retreat the level when morale is low
+  - Decide which weapon to use, when to use grenades, when to go in melee, when not to use AOE attacks so that friends aren't hurt
+
+- Custom Made AI:
+  - Teleporter assasins (when enemy spotted and no friendly adjacent to it, teleport behind it and switch to auto fire)
+  - Suicide bombers (when enemy close and more than 2 explosives in inventory, prime everything, start running, move towards enemy, when adjacent drop all exposives, switch to auto fire)
+  - Teleporter suicide bombers (teleport behind enemy, prime and drop all explosives, switch to auto fire)
+  - Gang up on enemy (when enemy is spotted all AI units within certain move distance to it and no enemy spotted will move to attack it)
+  - Aggressive grenadiers (if can throw offensive grenade always throw grenade before firing a gun)
+  - Smoke usage (if taking crit damage or more than 33% health damage, prime and drop a smoke then move to an ally that is far away from closest enemy but close to us) (find closest enemy, for every ally calculate it's distance to that enemy minus it's distance to us, pick one with largest value)
+
+Turret AI? 
+  Turrets just get 360 vision and aggressive AI, that's enough
+

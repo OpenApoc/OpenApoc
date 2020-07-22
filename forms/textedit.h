@@ -1,11 +1,11 @@
-
 #pragma once
+
+#include "forms/control.h"
+#include "forms/forms_enums.h"
 #include "library/sp.h"
+#include "library/strings.h"
 
-#include "control.h"
-#include "forms_enums.h"
-
-#define TEXTEDITOR_CARET_TOGGLE_TIME 30
+#define TEXTEDITOR_CARET_TOGGLE_TIME 5
 
 namespace OpenApoc
 {
@@ -19,36 +19,41 @@ class TextEdit : public Control
 	bool caretDraw;
 	int caretTimer;
 	UString text;
+	UString cursor;
 	sp<BitmapFont> font;
-	bool editting;
-	bool editShift;
-	bool editAltGr;
-
-	void RaiseEvent(FormEventType Type);
+	bool editing;
+	UString allowedCharacters;
+	size_t textMaxLength = std::string::npos;
+	void raiseEvent(FormEventType Type);
 
   protected:
-	void OnRender() override;
+	void onRender() override;
 
   public:
+	bool isFocused() const override;
 	unsigned int SelectionStart;
 	HorizontalAlignment TextHAlign;
 	VerticalAlignment TextVAlign;
 
 	TextEdit(const UString &Text = "", sp<BitmapFont> font = nullptr);
-	virtual ~TextEdit();
+	~TextEdit() override;
 
-	void EventOccured(Event *e) override;
-	void Update() override;
-	void UnloadResources() override;
+	void eventOccured(Event *e) override;
+	void update() override;
+	void unloadResources() override;
 
-	UString GetText() const;
-	void SetText(const UString &Text);
+	UString getText() const;
+	void setText(const UString &Text);
+	void setCursor(const UString &cursor);
+	void setTextMaxSize(size_t length);
+	// set to empty string to allow everything
+	void setAllowedCharacters(const UString &allowedCharacters);
 
-	sp<BitmapFont> GetFont() const;
-	void SetFont(sp<BitmapFont> NewFont);
+	sp<BitmapFont> getFont() const;
+	void setFont(sp<BitmapFont> NewFont);
 
-	sp<Control> CopyTo(sp<Control> CopyParent) override;
-	void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
+	sp<Control> copyTo(sp<Control> CopyParent) override;
+	void configureSelfFromXml(pugi::xml_node *node) override;
 };
 
 }; // namespace OpenApoc

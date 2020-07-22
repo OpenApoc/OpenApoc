@@ -1,12 +1,13 @@
 #include "framework/framework.h"
-#include "game/state/city/baselayout.h"
+#include "game/state/gamestate.h"
+#include "game/state/rules/city/baselayout.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
 
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::extractResearch(GameState &state, Difficulty difficulty)
+void InitialGameStateExtractor::extractResearch(GameState &state) const
 {
 	auto &data = this->ufo2p;
 	for (unsigned i = 0; i < data.research_data->count(); i++)
@@ -31,7 +32,7 @@ void InitialGameStateExtractor::extractResearch(GameState &state, Difficulty dif
 				break;
 			default:
 				LogError("Unexpected researchGroup 0x%02x for research item %s",
-				         (unsigned)rdata.researchGroup, id.c_str());
+				         (unsigned)rdata.researchGroup, id);
 		}
 		switch (rdata.labSize)
 		{
@@ -43,10 +44,10 @@ void InitialGameStateExtractor::extractResearch(GameState &state, Difficulty dif
 				break;
 			default:
 				LogError("Unexpected labSize 0x%02x for research item %s", (unsigned)rdata.labSize,
-				         id.c_str());
+				         id);
 		}
-		// FIXME: this assumed all listed techs are reqired, which is not true for some topics
-		// (It's possible that an unknown member in research_data_t marks this, or it's done
+		// FIXME: this assumed all listed techs are required, which is not true for some topics
+		// (It's possible that an unknown member in ResearchData marks this, or it's done
 		// in-code)
 		// This should be fixed up in the patch.
 
@@ -66,11 +67,15 @@ void InitialGameStateExtractor::extractResearch(GameState &state, Difficulty dif
 
 		r->dependencies.research.push_back(dependency);
 
+		/*ItemDependency itemdep;
+		itemdep.agentItemsRequired[{&state, "AEQUIPMENTTYPE_PSICLONE"}] = 1;
+		r->dependencies.items.push_back(itemdep);*/
+
 		r->score = rdata.score;
 
 		if (state.research.topics.find(id) != state.research.topics.end())
 		{
-			LogError("Multiple research topics with ID \"%s\"", id.c_str());
+			LogError("Multiple research topics with ID \"%s\"", id);
 		}
 		state.research.topics[id] = r;
 // FIXME: The ufopaedia entries here don't seem to directly map to the IDs we're currently using?
@@ -96,8 +101,8 @@ void InitialGameStateExtractor::extractResearch(GameState &state, Difficulty dif
 		if (paediaEntry->required_research)
 		{
 			LogError("Multiple required research for UFOPaedia topic \"%s\" - \"%s\" and \"%s\"",
-			         ufopaediaEntryID.c_str(), r->name.c_str(),
-			         paediaEntry->required_research->name.c_str());
+			         ufopaediaEntryID, r->name,
+			         paediaEntry->required_research->name);
 		}
 		paediaEntry->required_research = {&state, id};
 #endif

@@ -1,30 +1,42 @@
-
 #pragma once
 
 #include "framework/stage.h"
-
-#include "forms/forms.h"
+#include "library/sp.h"
+#include <array>
+#include <optional>
 
 namespace OpenApoc
 {
+
+class Form;
+class GameState;
+class Organisation;
+class Label;
+class Graphic;
 
 class InfiltrationScreen : public Stage
 {
   private:
 	sp<Form> menuform;
-	StageCmd stageCmd;
+	sp<Graphic> graph;
+
+	sp<GameState> state;
+	std::array<Label *, 10> shown_org_names;
+	std::array<const Organisation *, 10> shown_orgs;
+	void reset_shown_orgs();
+	void update_view();
 
   public:
-	InfiltrationScreen();
-	~InfiltrationScreen();
+	InfiltrationScreen(sp<GameState> state);
+	~InfiltrationScreen() override;
 	// Stage control
-	void Begin() override;
-	void Pause() override;
-	void Resume() override;
-	void Finish() override;
-	void EventOccurred(Event *e) override;
-	void Update(StageCmd *const cmd) override;
-	void Render() override;
-	bool IsTransition() override;
+	void begin() override;
+	void pause() override;
+	void resume() override;
+	void finish() override;
+	void eventOccurred(Event *e) override;
+	void update() override;
+	void render() override;
+	bool isTransition() override;
 };
 }; // namespace OpenApoc

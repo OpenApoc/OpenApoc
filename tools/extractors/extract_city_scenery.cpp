@@ -1,7 +1,9 @@
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/palette.h"
-#include "game/state/rules/scenery_tile_type.h"
+#include "game/state/city/city.h"
+#include "game/state/rules/city/scenerytiletype.h"
+#include "library/strings_format.h"
 #include "library/voxel.h"
 #include "tools/extractors/extractors.h"
 
@@ -64,14 +66,15 @@ static_assert(sizeof(struct citymap_tile_entry) == 52, "Unexpected citymap_tile_
 void InitialGameStateExtractor::extractCityScenery(GameState &state, UString tilePrefix,
                                                    UString datFile, UString spriteFile,
                                                    UString stratmapFile, UString lofFile,
-                                                   UString ovrFile, sp<City> city)
+                                                   UString ovrFile, sp<City> city) const
 {
 	auto &data = this->ufo2p;
-	auto minimap_palette = fw().data->load_palette(SCENERY_MINIMAP_PALETTE);
+	auto minimap_palette = fw().data->loadPalette(SCENERY_MINIMAP_PALETTE);
+	bool alien = datFile == "alienmap";
 	auto inFile = fw().data->fs.open("xcom3/ufodata/" + datFile + ".dat");
 	if (!inFile)
 	{
-		LogError("Failed to open \"%s.dat\"", datFile.c_str());
+		LogError("Failed to open \"%s.dat\"", datFile);
 	}
 
 	auto fileSize = inFile.size();
@@ -88,10 +91,28 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		struct citymap_tile_entry entry;
 		inFile.read((char *)&entry, sizeof(entry));
 
-		UString id =
-			UString::format("%s%s%u", SceneryTileType::getPrefix().c_str(), tilePrefix.c_str(), i);
+		UString id = format("%s%s%u", SceneryTileType::getPrefix(), tilePrefix, i);
 
 		auto tile = mksp<SceneryTileType>();
+
+		tile->overlayHeight = entry.height;
+		tile->height = entry.height;
+
+		switch (entry.walk_type)
+		{
+			case WALK_TYPE_NONE:
+				tile->walk_mode = SceneryTileType::WalkMode::None;
+				break;
+			case WALK_TYPE_INTO:
+				tile->walk_mode = SceneryTileType::WalkMode::Into;
+				tile->height = 0;
+				break;
+			case WALK_TYPE_ONTO:
+				tile->walk_mode = SceneryTileType::WalkMode::Onto;
+				break;
+			default:
+				LogError("Unexpected scenery walk type %d for ID %s", (int)entry.walk_type, id);
+		}
 
 		switch (entry.tile_type)
 		{
@@ -100,6 +121,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				break;
 			case TILE_TYPE_ROAD:
 				tile->tile_type = SceneryTileType::TileType::Road;
+				tile->height = 0;
 				break;
 			case TILE_TYPE_PEOPLE_TUBE_JUNCTION:
 				tile->tile_type = SceneryTileType::TileType::PeopleTubeJunction;
@@ -111,7 +133,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				tile->tile_type = SceneryTileType::TileType::CityWall;
 				break;
 			default:
-				LogError("Unexpected scenery tile type %d for ID %s", (int)entry.tile_type, id.c_str());
+				LogError("Unexpected scenery tile type %d for ID %s", (int)entry.tile_type, id);
 		}
 
 		switch (entry.road_type)
@@ -126,72 +148,134 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				tile->road_type = SceneryTileType::RoadType::Terminal;
 				break;
 			default:
-				LogError("Unexpected scenery road type %d for ID %s", (int)entry.road_type, id.c_str());
+				LogError("Unexpected scenery road type %d for ID %s", (int)entry.road_type, id);
 		}
 
-		switch (entry.walk_type)
+		tile->connection.resize(4);
+		tile->hill.resize(4);
+		tile->tube.resize(6);
+
+		for (int i = 0; i < 4; i++)
 		{
-			case WALK_TYPE_NONE:
-				tile->walk_mode = SceneryTileType::WalkMode::None;
-				break;
-			case WALK_TYPE_INTO:
-				tile->walk_mode = SceneryTileType::WalkMode::Into;
-				break;
-			case WALK_TYPE_ONTO:
-				tile->walk_mode = SceneryTileType::WalkMode::Onto;
-				break;
-			default:
-				LogError("Unexpected scenery walk type %d for ID %s", (int)entry.walk_type, id.c_str());
+			tile->connection[i] = entry.road_junction[i];
+		}
+		for (int i = 0; i < 4; i++)
+		{
+			tile->hill[i] = entry.road_level_change[i];
+		}
+		for (int i = 0; i < 6; i++)
+		{
+			tile->tube[i] = entry.people_tube_connections[i];
+		}
+
+		if (alien && ((i >= 50 && i <= 58) || i == 61))
+		{
+			if (i == 58 || i == 61)
+			{
+				tile->tile_type = SceneryTileType::TileType::PeopleTubeJunction;
+				tile->tube[5] = true;
+			}
+			else
+			{
+				tile->tile_type = SceneryTileType::TileType::PeopleTube;
+			}
+			std::set<int> north = {52, 53, 54, 57, 61};
+			std::set<int> east = {50, 51, 56, 57, 58};
+			std::set<int> south = {53, 54, 55, 56, 61};
+			std::set<int> west = {50, 51, 52, 55, 58};
+			if (north.find(i) != north.end())
+			{
+				tile->tube[0] = true;
+			}
+			if (east.find(i) != east.end())
+			{
+				tile->tube[1] = true;
+			}
+			if (south.find(i) != south.end())
+			{
+				tile->tube[2] = true;
+			}
+			if (west.find(i) != west.end())
+			{
+				tile->tube[3] = true;
+			}
 		}
 
 		tile->constitution = entry.constitution;
 		tile->strength = entry.strength;
 		tile->mass = entry.mass;
 		tile->value = entry.value;
+		tile->basement = entry.has_basement > 0;
 
 		for (unsigned i = 0; i < 4; i++)
 		{
 			if (entry.road_level_change[i] != 0)
 			{
 				tile->isHill = true;
+				tile->overlayHeight = 8;
+				tile->height = 8;
 				break;
 			}
 		}
-
+		// Correct walk modes
+		if (tile->height < 8 && tile->walk_mode == SceneryTileType::WalkMode::Onto)
+		{
+			tile->walk_mode = SceneryTileType::WalkMode::Into;
+		}
+		if (tile->height >= 8 && tile->walk_mode == SceneryTileType::WalkMode::Into)
+		{
+			tile->walk_mode = SceneryTileType::WalkMode::Onto;
+		}
+		// Common city property
+		if (i < 134 || i == 230 || i == 777 || (i >= 169 && i <= 194) || i > 936)
+		{
+			tile->commonProperty = true;
+		}
+		// Incorrect walkmodes
+		if (i >= 890 && i <= 908)
+		{
+			tile->walk_mode = SceneryTileType::WalkMode::None;
+		}
+		// Roads with overhead stuff
+		if (i == 18 || i == 19 || i == 37 || i == 38)
+		{
+			tile->walk_mode = SceneryTileType::WalkMode::None;
+		}
 		if (entry.damagedtile_idx)
 		{
-			tile->damagedTile = {&state,
-			                     UString::format("%s%s%u", SceneryTileType::getPrefix().c_str(),
-			                                     tilePrefix.c_str(), entry.damagedtile_idx)};
+			tile->damagedTile = {&state, format("%s%s%u", SceneryTileType::getPrefix(), tilePrefix,
+			                                    entry.damagedtile_idx)};
 		}
 
-		auto imageString = UString::format(
-		    "PCK:xcom3/UFODATA/" + spriteFile + ".PCK:xcom3/UFODATA/" + spriteFile + ".TAB:%u", i);
+		auto imageString = format(
+		    "PCK:xcom3/ufodata/" + spriteFile + ".pck:xcom3/ufodata/" + spriteFile + ".tab:%u", i);
 
-		tile->sprite = fw().data->load_image(imageString);
+		tile->sprite = fw().data->loadImage(imageString);
 
 		tile->voxelMap = mksp<VoxelMap>(Vec3<int>{32, 32, 16});
 
 		for (unsigned z = 0; z < 16; z++)
 		{
-			auto lofString = UString::format("LOFTEMPS:xcom3/UFODATA/" + lofFile +
-			                                     ".DAT:xcom3/UFODATA/" + lofFile + ".TAB:%d",
-			                                 (int)entry.voxelIdx[z]);
-			tile->voxelMap->slices[z] = fw().data->load_voxel_slice(lofString);
+			if (entry.voxelIdx[z] == 0)
+				continue;
+			auto lofString = format("LOFTEMPS:xcom3/ufodata/" + lofFile + ".dat:xcom3/ufodata/" +
+			                            lofFile + ".tab:%d",
+			                        (int)entry.voxelIdx[z]);
+			tile->voxelMap->slices[z] = fw().data->loadVoxelSlice(lofString);
 		}
 
 		if (entry.stratmap_idx != 0)
 		{
-			auto stratmapString =
-			    UString::format("PCKSTRAT:xcom3/UFODATA/" + stratmapFile + ".PCK:xcom3/UFODATA/" +
-			                        stratmapFile + ".TAB:%d",
-			                    (int)entry.stratmap_idx);
-			tile->strategySprite = fw().data->load_image(stratmapString);
+			auto stratmapString = format("PCKSTRAT:xcom3/ufodata/" + stratmapFile +
+			                                 ".pck:xcom3/ufodata/" + stratmapFile + ".tab:%d",
+			                             (int)entry.stratmap_idx);
+			tile->strategySprite = fw().data->loadImage(stratmapString);
 		}
 
 		if (entry.landing_pad == 1)
 		{
 			tile->isLandingPad = true;
+			tile->walk_mode = SceneryTileType::WalkMode::None;
 		}
 		else
 		{
@@ -200,10 +284,10 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 
 		if (entry.overlaytile_idx != 0xff)
 		{
-			auto overlayString = UString::format("PCK:xcom3/UFODATA/" + ovrFile +
-			                                         ".PCK:xcom3/UFODATA/" + ovrFile + ".TAB:%d",
-			                                     (int)entry.overlaytile_idx);
-			tile->overlaySprite = fw().data->load_image(overlayString);
+			auto overlayString =
+			    format("PCK:xcom3/ufodata/" + ovrFile + ".pck:xcom3/ufodata/" + ovrFile + ".tab:%d",
+			           (int)entry.overlaytile_idx);
+			tile->overlaySprite = fw().data->loadImage(overlayString);
 		}
 
 		// FIXME: Only the 'human' city has a minimap visible from the base screen? So this doesn't
@@ -211,12 +295,10 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		if (datFile == "citymap")
 		{
 			uint8_t palette_index = data.scenery_minimap_colour->get(i).palette_index;
-			tile->minimap_colour = minimap_palette->GetColour(palette_index);
+			tile->minimap_colour = minimap_palette->getColour(palette_index);
 		}
 
-		// FIXME: I /think/ all scenery tiles have an offset of {32,32} to the center {0.5, 0.5, 0}
-		// point
-		tile->imageOffset = {32, 32};
+		tile->imageOffset = CITY_IMAGE_OFFSET;
 
 		city->tile_types[id] = tile;
 	}

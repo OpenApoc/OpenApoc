@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_BATTLE_DEBRIEFING">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="644" height="484"/>
+      <backcolour r="128" g="80" b="80"/>
+      <graphic>
+        <image>xcom3/tacdata/debrief.pcx</image>
+        <position x="2" y="2"/>
+        <size width="640" height="480"/>
+      </graphic>
+      <label text="DEBRIEFING">
+        <position x="20" y="0"/>
+        <size width="600" height="40"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>bigfont</font>
+      </label>
+      <label text="ITEM">
+        <position x="98" y="70"/>
+        <size width="280" height="24"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label text="SCORE">
+        <position x="467" y="70"/>
+        <size width="70" height="24"/>
+        <alignment horizontal="centre" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label text="Combat rating">
+        <position x="98" y="98"/>
+        <size width="280" height="24"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_SCORE_COMBAT_RATING" text="0">
+        <position x="467" y="98"/>
+        <size width="70" height="24"/>
+        <alignment horizontal="centre" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label text="Casualty penalty">
+        <position x="98" y="122"/>
+        <size width="280" height="24"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_SCORE_CASUALTY_PENALTY" text="0">
+        <position x="467" y="122"/>
+        <size width="70" height="24"/>
+        <alignment horizontal="centre" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label text="Leadership bonus">
+        <position x="98" y="146"/>
+        <size width="280" height="24"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_SCORE_LEADERSHIP_BONUS" text="0">
+        <position x="467" y="146"/>
+        <size width="70" height="24"/>
+        <alignment horizontal="centre" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label text="Live Aliens captured">
+        <position x="98" y="170"/>
+        <size width="280" height="24"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_SCORE_LIVE_ALIENS_CAPTURED" text="0">
+        <position x="467" y="170"/>
+        <size width="70" height="24"/>
+        <alignment horizontal="centre" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label text="Equipment captured">
+        <position x="98" y="194"/>
+        <size width="280" height="24"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_SCORE_EQUIPMENT_CAPTURED" text="0">
+        <position x="467" y="194"/>
+        <size width="70" height="24"/>
+        <alignment horizontal="centre" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label text="Equipment lost">
+        <position x="98" y="218"/>
+        <size width="280" height="24"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_SCORE_EQUIPMENT_LOST" text="0">
+        <position x="467" y="218"/>
+        <size width="70" height="24"/>
+        <alignment horizontal="centre" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label text="Total">
+        <position x="98" y="242"/>
+        <size width="280" height="24"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_SCORE_TOTAL" text="0">
+        <position x="467" y="242"/>
+        <size width="70" height="24"/>
+        <alignment horizontal="centre" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label text="Mission performance">
+        <position x="98" y="266"/>
+        <size width="280" height="24"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TEXT_MISSION_PERFORMANCE" text="Excellent">
+        <position x="467" y="266"/>
+        <size width="70" height="24"/>
+        <alignment horizontal="centre" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="PROMOTION_1">
+        <position x="98" y="314"/>
+        <size width="280" height="24"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="PROMOTION_2">
+        <position x="98" y="338"/>
+        <size width="280" height="24"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="PROMOTION_3">
+        <position x="98" y="362"/>
+        <size width="280" height="24"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="PROMOTION_4">
+        <position x="98" y="386"/>
+        <size width="280" height="24"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="PROMOTION_5">
+        <position x="98" y="410"/>
+        <size width="280" height="24"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <graphicbutton id="BUTTON_OK">
+        <position x="604" y="445"/>
+        <size width="50" height="48"/>
+        <imagedepressed>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:5:xcom3/tacdata/tactical.pal</imagedepressed>
+      </graphicbutton>
+    </style>
+  </form>
+</openapoc>

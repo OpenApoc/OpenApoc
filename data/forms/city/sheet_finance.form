@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_SCORE_SCREEN_FINANCE_VIEW">
+    <style minwidth="440" minheight="280">
+      <position x="centre" y="centre"/>
+      <size width="440" height="280"/>
+
+      <label id="INITIAL" text="Initial finds>">
+        <position x="0" y="0"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <!-- Category -->
+      <label id="CATEGORY" text="EMPLOYEE TYPE">
+        <position x="0" y="32"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="AGENTS_C" text="Agents">
+        <position x="0" y="56"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="BIOCHEMISTS_C" text="Biochemists">
+        <position x="0" y="74"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="ENGINEERS_C" text="Engineers">
+        <position x="0" y="92"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="PHYSICISTS_C" text="Quantum Physicists">
+        <position x="0" y="110"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TOTAL_C" text="TOTAL">
+        <position x="0" y="136"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="BASES_C" text="BASES">
+        <position x="0" y="164"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="OVERHEADS_C" text="TOTAL OVERHEADS>">
+        <position x="0" y="216"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="REMAINING" text="Remaining finds>">
+        <position x="0" y="248"/>
+        <size width="200" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <!-- Quantity -->
+      <label id="QUANTITY" text="QUANTITY">
+        <position x="224" y="32"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="AGENTS_Q">
+        <position x="224" y="56"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="BIOCHEMISTS_Q">
+        <position x="224" y="74"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="ENGINEERS_Q">
+        <position x="224" y="92"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="PHYSICISTS_Q">
+        <position x="224" y="110"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TOTAL_Q">
+        <position x="224" y="136"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="BASES_Q" text="QUANTITY">
+        <position x="224" y="164"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="BASES_TOTAL_Q">
+        <position x="224" y="188"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <!-- Wages -->
+      <label id="WAGES" text="WAGES">
+        <position x="334" y="32"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="AGENTS_W">
+        <position x="334" y="56"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="BIOCHEMISTS_W">
+        <position x="334" y="74"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="ENGINEERS_W">
+        <position x="334" y="92"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="PHYSICISTS_W">
+        <position x="334" y="110"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="TOTAL_W">
+        <position x="334" y="136"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="BASES_W" text="MAINTENANCE">
+        <position x="334" y="164"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="BASES_TOTAL_W">
+        <position x="334" y="188"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="OVERHEADS_W">
+        <position x="334" y="216"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+    </style>
+  </form>
+</openapoc>
