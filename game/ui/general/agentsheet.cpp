@@ -71,7 +71,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 		    createStatsBar(item.initial_stats.time_units, item.current_stats.time_units,
 		                   item.modified_stats.time_units, 100, speedColour, {88, 7}));
 		form->findControlTyped<Graphic>("VALUE_4")->ToolTipText +=
-		    format("^ %d/%d", item.modified_stats.time_units, item.current_stats.time_units);
+		    format(": %d/%d", item.modified_stats.time_units, item.current_stats.time_units);
 	}
 	else
 	{
