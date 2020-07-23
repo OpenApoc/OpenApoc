@@ -201,7 +201,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 				vehicle->type = VehicleType::Type::UFO;
 				if (v.size_x == 1 && v.size_y == 1)
 				{
-					vehicle->mapIconType = VehicleType::MapIconType::SmallCircle;
+					vehicle->mapIconType = VehicleType::MapIconType::Arrow;
 				}
 				else if (v.size_x == 2 && v.size_y == 2)
 				{
