@@ -77,7 +77,7 @@ const UString &StateObject<BattleUnit>::getId(const GameState &state, const sp<B
 		if (a.second == ptr)
 			return a.first;
 	}
-	LogError("No battleUnit matching pointer %p", ptr.get());
+	LogError("No battleUnit matching pointer %p", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 

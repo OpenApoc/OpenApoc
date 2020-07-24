@@ -53,7 +53,7 @@ const UString &StateObject<AgentType>::getId(const GameState &state, const sp<Ag
 		if (a.second == ptr)
 			return a.first;
 	}
-	LogError("No agent_type matching pointer %p", ptr.get());
+	LogError("No agent_type matching pointer %p", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 
@@ -90,7 +90,7 @@ const UString &StateObject<AgentBodyType>::getId(const GameState &state,
 		if (a.second == ptr)
 			return a.first;
 	}
-	LogError("No agent_type matching pointer %p", ptr.get());
+	LogError("No agent_type matching pointer %p", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 
@@ -128,7 +128,7 @@ const UString &StateObject<AgentEquipmentLayout>::getId(const GameState &state,
 		if (a.second == ptr)
 			return a.first;
 	}
-	LogError("No agent_type matching pointer %p", ptr.get());
+	LogError("No agent_type matching pointer %p", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 

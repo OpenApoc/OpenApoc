@@ -49,7 +49,7 @@ template <> const UString &StateObject<Base>::getId(const GameState &state, cons
 		if (b.second == ptr)
 			return b.first;
 	}
-	LogError("No base matching pointer %p", ptr.get());
+	LogError("No base matching pointer %p", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 

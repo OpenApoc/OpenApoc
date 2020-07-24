@@ -117,7 +117,7 @@ const UString &StateObject<BattleMap>::getId(const GameState &state, const sp<Ba
 		if (a.second == ptr)
 			return a.first;
 	}
-	LogError("No battle_map matching pointer %p", ptr.get());
+	LogError("No battle_map matching pointer %p", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 
