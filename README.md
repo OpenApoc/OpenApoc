@@ -98,7 +98,7 @@ The following libraries are also used, but are shipped as submodules in the repo
 * [miniz](https://github.com/richgel999/miniz) - Zlib-comptible compression library.
 * [physfs](https://icculus.org/physfs/) - Library for reading data from .iso files or directory trees (Note: We use a patched version, available on [GitHub](https://github.com/JonnyH/physfs-hg-import/tree/fix-iso) - required to read the .iso files we use).
 * [pugixml](https://pugixml.org) - XML library used for reading/writing the game data files.
-* [tinyformat](https://github.com/c42f/tinyformat) - A c++ typesafe string formatting library.
+* [fmtlib](https://github.com/fmtlib/fmt) - A c++ string formatting library - proposed for c++20 standard.
 
 ### Building on Windows
 
