@@ -3,7 +3,9 @@
 #include "framework/framework.h"
 #include "library/backtrace.h"
 #include "library/sp.h"
+#include <iostream>
 #include <mutex>
+
 namespace OpenApoc
 {
 
