@@ -146,3 +146,5 @@ target_compile_options(OpenApoc_LibPugixml PRIVATE "-w")
 target_compile_options(OpenApoc_LibLodepng PRIVATE "-w")
 target_compile_options(OpenApoc_Miniz PRIVATE "-w")
 target_compile_options(OpenApoc_Lua PRIVATE "-w")
+
+add_subdirectory(fmt)

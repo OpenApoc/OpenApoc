@@ -23,3 +23,6 @@
 [submodule "dependencies/lua"]
 	path = dependencies/lua
 	url = https://github.com/lua/lua.git
+[submodule "dependencies/fmt"]
+	path = dependencies/fmt
+	url = https://github.com/fmtlib/fmt.git
