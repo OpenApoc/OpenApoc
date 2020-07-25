@@ -2,7 +2,6 @@
 // Created by Alexey on 20.11.2015.
 //
 
-#include "dependencies/lodepng/lodepng.h"
 #include "framework/apocresources/apocpalette.h"
 #include "framework/data.h"
 #include "framework/image.h"
@@ -11,6 +10,7 @@
 #include "framework/palette.h"
 #include "library/sp.h"
 #include "library/vec.h"
+#include <lodepng.h>
 #include <ostream>
 #include <vector>
 

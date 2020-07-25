@@ -2,7 +2,7 @@
 
 extern "C"
 {
-#include "dependencies/lua/lua.h"
+#include <lua.h>
 }
 #include "library/strings.h"
 

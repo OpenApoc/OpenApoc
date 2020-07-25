@@ -8,9 +8,9 @@
 
 extern "C"
 {
-#include "dependencies/lua/lauxlib.h"
-#include "dependencies/lua/lua.h"
-#include "dependencies/lua/lualib.h"
+#include <lauxlib.h>
+#include <lua.h>
+#include <lualib.h>
 }
 
 #include "framework/data.h"

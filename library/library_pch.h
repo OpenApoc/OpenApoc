@@ -1,6 +1,5 @@
 #pragma once
 
-#include "dependencies/tinyformat/tinyformat.h"
 #include <algorithm>
 #include <cstdint>
 #include <fstream>
@@ -19,4 +18,5 @@
 #include <set>
 #include <stdexcept>
 #include <string>
+#include <tinyformat.h>
 #include <vector>

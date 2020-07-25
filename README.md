@@ -116,13 +116,13 @@ git submodule update --init --recursive
   * For x64 builds:
 
 ```cmd
-vcpkg --triplet x64-windows install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-base
+vcpkg --triplet x64-windows install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-base pugixml miniz lodepng lua glm
 ```
 
   * For x86 builds:
 
 ```cmd
-vcpkg --triplet x86-windows install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-base
+vcpkg --triplet x86-windows install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-base pugixml miniz lodepng lua glm
 ```
 
   * For list of all supported by Vcpkg architectures: `vcpkg help triplet`
