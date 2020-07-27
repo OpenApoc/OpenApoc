@@ -384,7 +384,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	{
 		if (maxCost > 0.0f)
 		{
-			LogInfo("Could not find path within maxPath, returning closest path ending at %s",
+			LogInfo("Could not find path within maxPath, returning closest path ending at %d",
 			        closestNodeSoFar->thisTile->position.x);
 		}
 		else
