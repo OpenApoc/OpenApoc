@@ -67,7 +67,7 @@ sp<PaletteImage> BitmapFont::getGlyph(UniChar codepoint)
 		// FIXME: Hack - assume all missing glyphs are spaces
 		// TODO: Fallback fonts?
 		LogWarning("Font %s missing glyph for character \"%s\" (codepoint %u)", this->getName(),
-		           UString(codepoint), codepoint);
+		           UString(codepoint), static_cast<uint32_t>(codepoint));
 		auto missingGlyph = this->getGlyph(UString::u8Char(' '));
 		fontbitmaps.emplace(codepoint, missingGlyph);
 	}
