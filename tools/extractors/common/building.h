@@ -5,7 +5,7 @@
 #pragma pack(push, 1)
 struct BldFileEntry
 {
-	uint16_t name_idx; // This value makes no sense
+	uint16_t name_idx; // This index is matched against building name table
 	uint16_t x0;
 	uint16_t x1;
 	uint16_t y0;
@@ -13,14 +13,14 @@ struct BldFileEntry
 	// 0x0A
 	uint16_t unknown1[80]; // People tube data populated in savegame
 	// 0xAA
-	uint16_t function_idx; // Specifies both function and name idx
+	uint16_t function_idx; // Specifies building function (aka type)
 	uint16_t unknown2[5];
 	// 0xB6
 	uint8_t is_purchaseable;
 	uint8_t unknown3_flag;
 	uint16_t unknown4;
 	// 0xBA
-	uint16_t price; // divided by 2000
+	uint16_t price; // Savegame value, divided by 2000
 	uint16_t alien_detection_unknown;
 	uint16_t maintenance_costs;
 	uint16_t maximum_workforce;

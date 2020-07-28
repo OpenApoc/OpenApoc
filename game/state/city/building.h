@@ -60,6 +60,17 @@ class Building : public StateObject<Building>, public std::enable_shared_from_th
 	std::set<StateRef<Agent>> currentAgents;
 	std::list<Cargo> cargo;
 
+	// Building economy data
+	bool isPurchesable = false;
+	uint32_t purchasePrice = 0;
+	uint32_t maintenanceCosts = 0;
+	uint32_t maximumWorkforce = 0;
+	uint32_t currentWorkforce = 0;
+	uint32_t incomePerCapita = 0;
+	uint32_t currentWage = 0;
+	int investment = 0;
+	int prestige = 0;
+
 	uint64_t timeOfLastAttackEvent = 0;
 	unsigned ticksDetectionTimeOut = 0;
 	unsigned ticksDetectionAttemptAccumulated = 0;
