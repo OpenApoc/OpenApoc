@@ -1066,6 +1066,15 @@
 		<member>currentVehicles</member>
 		<member>currentAgents</member>
 		<member>cargo</member>
+		<member>isPurchesable</member>
+		<member>purchasePrice</member>
+		<member>maintenanceCosts</member>
+		<member>maximumWorkforce</member>
+		<member>currentWorkforce</member>
+		<member>incomePerCapita</member>
+		<member>currentWage</member>
+		<member>investment</member>
+		<member>prestige</member>
 		<member>ticksDetectionTimeOut</member>
 		<member>ticksDetectionAttemptAccumulated</member>
 		<member>detected</member>
@@ -1328,6 +1337,7 @@
 		<member>name</member>
 		<member>balance</member>
 		<member>income</member>
+		<member>rebuildingRate</member>
 		<member>infiltrationValue</member>
 		<member>infiltrationHistory</member>
 		<member>infiltrationSpeed</member>

@@ -62,12 +62,12 @@ class Building : public StateObject<Building>, public std::enable_shared_from_th
 
 	// Building economy data
 	bool isPurchesable = false;
-	uint32_t purchasePrice = 0;
-	uint32_t maintenanceCosts = 0;
-	uint32_t maximumWorkforce = 0;
-	uint32_t currentWorkforce = 0;
-	uint32_t incomePerCapita = 0;
-	uint32_t currentWage = 0;
+	unsigned int purchasePrice = 0;
+	unsigned int maintenanceCosts = 0;
+	unsigned int maximumWorkforce = 0;
+	unsigned int currentWorkforce = 0;
+	unsigned int incomePerCapita = 0;
+	unsigned int currentWage = 0;
 	int investment = 0;
 	int prestige = 0;
 

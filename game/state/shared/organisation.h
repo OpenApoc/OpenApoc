@@ -101,6 +101,7 @@ class Organisation : public StateObject<Organisation>
 	UString name;
 	int balance = 0;
 	int income = 0;
+	unsigned int rebuildingRate = 0;
 	int infiltrationValue = 0;
 	std::list<int> infiltrationHistory;
 	// Modified for all infiltration attempts at this org

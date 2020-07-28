@@ -10,13 +10,13 @@ namespace OpenApoc
 #pragma pack(push, 1)
 struct OrganisationData
 {
-	uint16_t unknown01;
-	uint32_t unknown02;
+	uint16_t organization_type;
+	uint32_t raiding_strength;
 	uint8_t starting_tech_level;
 	uint8_t average_guards;
 	uint32_t starting_funds;
 	uint32_t starting_funding;
-	uint16_t unknown03;
+	uint16_t rebuilding_rate;
 };
 #pragma pack(pop)
 static_assert(sizeof(struct OrganisationData) == 18, "Invalid organisation_data size");
