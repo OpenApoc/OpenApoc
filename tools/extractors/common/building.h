@@ -5,18 +5,36 @@
 #pragma pack(push, 1)
 struct BldFileEntry
 {
-	// This value makes no sense
-	uint16_t name_idx;
+	uint16_t name_idx; // This value makes no sense
 	uint16_t x0;
 	uint16_t x1;
 	uint16_t y0;
 	uint16_t y1;
-	uint16_t unknown1[80];
-	// Specifies both function and name idx
-	uint16_t function_idx;
-	uint16_t unknown2[14];
+	// 0x0A
+	uint16_t unknown1[80]; // People tube data populated in savegame
+	// 0xAA
+	uint16_t function_idx; // Specifies both function and name idx
+	uint16_t unknown2[5];
+	// 0xB6
+	uint8_t is_purchaseable;
+	uint8_t unknown3_flag;
+	uint16_t unknown4;
+	// 0xBA
+	uint16_t price; // divided by 2000
+	uint16_t alien_detection_unknown;
+	uint16_t maintenance_costs;
+	uint16_t maximum_workforce;
+	uint16_t current_workforce;
+	uint16_t current_wage;
+	uint16_t income_per_capita;
+	// 0xC8
 	uint16_t owner_idx;
-	uint16_t unknown3[12];
+	uint16_t unknown5;
+	uint8_t investment_value;
+	uint8_t respect_value;
+	uint16_t unknown6[3];
+	// 0xD4
+	uint8_t alien_count[14];
 };
 #pragma pack(pop)
 
