@@ -17,7 +17,6 @@ class Agent;
 class Tile;
 class TileMap;
 class Building;
-class UString;
 class SceneryTileType;
 class City;
 

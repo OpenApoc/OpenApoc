@@ -19,7 +19,7 @@ using namespace OpenApoc;
 
 static std::list<std::pair<UString, ModInfo>> enumerateMods()
 {
-	fs::path modPath = Options::modPath.get().str();
+	fs::path modPath = Options::modPath.get();
 	if (!fs::is_directory(modPath))
 	{
 		LogError("Mod path \"%s\" not a valid directory", modPath.string());
@@ -87,8 +87,8 @@ LauncherWindow::LauncherWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui
 	                                          : Qt::CheckState::Unchecked);
 	setupResolutionDisplay();
 
-	ui->cdPath->setText(QString::fromStdString(OpenApoc::Options::cdPathOption.get().str()));
-	ui->dataPath->setText(QString::fromStdString(OpenApoc::Options::dataPathOption.get().str()));
+	ui->cdPath->setText(QString::fromStdString(OpenApoc::Options::cdPathOption.get()));
+	ui->dataPath->setText(QString::fromStdString(OpenApoc::Options::dataPathOption.get()));
 
 	setupModList();
 }
@@ -276,7 +276,7 @@ void LauncherWindow::exit()
 void LauncherWindow::setupModList()
 {
 	auto foundMods = enumerateMods();
-	auto enabledMods = Options::modList.get().split(':');
+	auto enabledMods = split(Options::modList.get(), ":");
 
 	ui->enabledModsList->clear();
 	ui->disabledModsList->clear();
@@ -290,7 +290,7 @@ void LauncherWindow::setupModList()
 			if (modDir == enabledModName)
 			{
 				const auto &modName = modInfo.getName();
-				ui->enabledModsList->addItem(QString::fromStdString(modName.str()));
+				ui->enabledModsList->addItem(QString::fromStdString(modName));
 			}
 		}
 	}
@@ -311,7 +311,7 @@ void LauncherWindow::setupModList()
 		}
 		const auto &modName = modInfo.getName();
 		if (!enabled)
-			ui->disabledModsList->addItem(QString::fromStdString(modName.str()));
+			ui->disabledModsList->addItem(QString::fromStdString(modName));
 	}
 }
 
@@ -349,14 +349,14 @@ void LauncherWindow::disabledModSelected(const QString &itemName)
 
 void LauncherWindow::showModInfo(const ModInfo &info)
 {
-	ui->modName->setText(QString::fromStdString(info.getName().str()));
-	ui->modAuthor->setText(QString::fromStdString(info.getAuthor().str()));
-	ui->modVersion->setText(QString::fromStdString(info.getVersion().str()));
-	ui->modDescription->setText(QString::fromStdString(info.getDescription().str()));
+	ui->modName->setText(QString::fromStdString(info.getName()));
+	ui->modAuthor->setText(QString::fromStdString(info.getAuthor()));
+	ui->modVersion->setText(QString::fromStdString(info.getVersion()));
+	ui->modDescription->setText(QString::fromStdString(info.getDescription()));
 
 	auto linkText = format("<a href=\"%s\">%s</a>", info.getLink(), info.getLink());
 
-	ui->modLink->setText(QString::fromStdString(linkText.str()));
+	ui->modLink->setText(QString::fromStdString(linkText));
 }
 
 void LauncherWindow::rebuildModList()
@@ -398,21 +398,21 @@ void LauncherWindow::enableModClicked()
 	if (selectedModName == "")
 		return;
 
-	for (const auto &matchingItem : ui->enabledModsList->findItems(
-	         QString::fromStdString(selectedModName.str()), Qt::MatchExactly))
+	for (const auto &matchingItem :
+	     ui->enabledModsList->findItems(QString::fromStdString(selectedModName), Qt::MatchExactly))
 	{
 		auto matchingName = matchingItem->text();
 		// Already enabled
-		if (matchingName.toStdString() == selectedModName.str())
+		if (matchingName.toStdString() == selectedModName)
 		{
 			return;
 		}
 	}
 
-	ui->enabledModsList->addItem(QString::fromStdString(selectedModName.str()));
+	ui->enabledModsList->addItem(QString::fromStdString(selectedModName));
 
-	for (const auto &matchingItem : ui->disabledModsList->findItems(
-	         QString::fromStdString(selectedModName.str()), Qt::MatchExactly))
+	for (const auto &matchingItem :
+	     ui->disabledModsList->findItems(QString::fromStdString(selectedModName), Qt::MatchExactly))
 	{
 		delete matchingItem;
 	}
@@ -425,21 +425,21 @@ void LauncherWindow::disableModClicked()
 	if (selectedModName == "")
 		return;
 
-	for (const auto &matchingItem : ui->disabledModsList->findItems(
-	         QString::fromStdString(selectedModName.str()), Qt::MatchExactly))
+	for (const auto &matchingItem :
+	     ui->disabledModsList->findItems(QString::fromStdString(selectedModName), Qt::MatchExactly))
 	{
 		auto matchingName = matchingItem->text();
 		// Already disabled
-		if (matchingName.toStdString() == selectedModName.str())
+		if (matchingName.toStdString() == selectedModName)
 		{
 			return;
 		}
 	}
 
-	ui->disabledModsList->addItem(QString::fromStdString(selectedModName.str()));
+	ui->disabledModsList->addItem(QString::fromStdString(selectedModName));
 
-	for (const auto &matchingItem : ui->enabledModsList->findItems(
-	         QString::fromStdString(selectedModName.str()), Qt::MatchExactly))
+	for (const auto &matchingItem :
+	     ui->enabledModsList->findItems(QString::fromStdString(selectedModName), Qt::MatchExactly))
 	{
 		delete matchingItem;
 	}

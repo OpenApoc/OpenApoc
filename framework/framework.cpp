@@ -253,7 +253,7 @@ Framework::Framework(const UString programName, bool createWindow)
 
 	if (!PHYSFS_isInit())
 	{
-		if (PHYSFS_init(programName.cStr()) == 0)
+		if (PHYSFS_init(programName.c_str()) == 0)
 		{
 			PHYSFS_ErrorCode error = PHYSFS_getLastErrorCode();
 			LogError("Failed to init code %i PHYSFS: %s", (int)error, PHYSFS_getErrorByCode(error));
@@ -293,7 +293,7 @@ Framework::Framework(const UString programName, bool createWindow)
 
 	logPath += "/log.txt";
 
-	enableFileLogger(logPath.cStr());
+	enableFileLogger(logPath.c_str());
 
 	Options::dumpOptionsToLog();
 
@@ -317,17 +317,17 @@ Framework::Framework(const UString programName, bool createWindow)
 	{
 		auto langPath = path + "/languages";
 		LogInfo("Adding \"%s\" to language path", langPath);
-		gen.add_messages_path(langPath.str());
+		gen.add_messages_path(langPath);
 	}
 
 	std::vector<UString> translationDomains = {"paedia_string", "ufo_string"};
 	for (auto &domain : translationDomains)
 	{
 		LogInfo("Adding \"%s\" to translation domains", domain);
-		gen.add_messages_domain(domain.str());
+		gen.add_messages_domain(domain);
 	}
 
-	std::locale loc = gen(desiredLanguageName.str());
+	std::locale loc = gen(desiredLanguageName);
 	std::locale::global(loc);
 
 	auto localeName = std::use_facet<boost::locale::info>(loc).name();
@@ -559,7 +559,7 @@ void Framework::processEvents()
 				{
 					screenshotName = format("screenshot%03d.png", screenshotId);
 					screenshotId++;
-				} while (fs::exists(fs::path(screenshotName.str())));
+				} while (fs::exists(fs::path(screenshotName)));
 				LogWarning("Writing screenshot to \"%s\"", screenshotName);
 				if (!p->defaultSurface->rendererPrivateData)
 				{
@@ -930,7 +930,7 @@ void Framework::displayInitialise()
 	p->registeredRenderers["GL_2_0"].reset(getGL20RendererFactory());
 #endif
 
-	for (auto &rendererName : Options::renderersOption.get().split(':'))
+	for (auto &rendererName : split(Options::renderersOption.get(), ":"))
 	{
 		auto rendererFactory = p->registeredRenderers.find(rendererName);
 		if (rendererFactory == p->registeredRenderers.end())
@@ -1022,7 +1022,7 @@ void Framework::displaySetTitle(UString NewTitle)
 {
 	if (p->window)
 	{
-		SDL_SetWindowTitle(p->window, NewTitle.cStr());
+		SDL_SetWindowTitle(p->window, NewTitle.c_str());
 	}
 }
 
@@ -1057,7 +1057,7 @@ void Framework::audioInitialise()
 	p->registeredSoundBackends["SDLRaw"].reset(getSDLSoundBackend());
 	p->registeredSoundBackends["null"].reset(getNullSoundBackend());
 
-	for (auto &soundBackendName : Options::audioBackendsOption.get().split(':'))
+	for (auto &soundBackendName : split(Options::audioBackendsOption.get(), ":"))
 	{
 		auto backendFactory = p->registeredSoundBackends.find(soundBackendName);
 		if (backendFactory == p->registeredSoundBackends.end())
@@ -1174,7 +1174,7 @@ void *Framework::getWindowHandle() const { return static_cast<void *>(p->window)
 
 void Framework::setupModDataPaths()
 {
-	auto mods = Options::modList.get().split(":");
+	auto mods = split(Options::modList.get(), ":");
 	for (const auto &modString : mods)
 	{
 		LogWarning("loading mod \"%s\"", modString);

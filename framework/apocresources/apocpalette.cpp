@@ -67,7 +67,7 @@ static_assert(sizeof(struct PcxHeader) == 128, "PcxHeader unexpected size");
 sp<Palette> loadPCXPalette(Data &data, const UString fileName)
 {
 	auto length = fileName.length();
-	if (length < 4 || fileName.substr(length - 4, 4).toUpper() != ".PCX")
+	if (length < 4 || to_upper(fileName.substr(length - 4, 4)) != ".PCX")
 	{
 		LogInfo("Skipping file \"%s\" as it doesn't look like a .pcx", fileName);
 		return nullptr;

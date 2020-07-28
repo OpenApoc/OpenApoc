@@ -80,7 +80,7 @@ class SerializationException : public std::runtime_error
 {
   public:
 	SerializationException(const UString &description, SerializationNode *node)
-	    : std::runtime_error(UString(description + " " + node->getFullPath()).cStr())
+	    : std::runtime_error(UString(description + " " + node->getFullPath()).c_str())
 	{
 	}
 };

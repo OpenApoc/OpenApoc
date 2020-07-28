@@ -3706,7 +3706,7 @@ bool BattleView::handleMouseDown(Event *e)
 					if (uto)
 					{
 						auto u = uto->getUnit();
-						debug += format("\nContains unit %s.", u->id.cStr());
+						debug += format("\nContains unit %s.", u->id.c_str());
 						debug += format("\nMorale state: %d", (int)u->moraleState);
 						debug += format("\nPosition: %f, %f, %f", u->position.x, u->position.y,
 						                u->position.z);

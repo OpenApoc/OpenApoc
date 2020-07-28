@@ -78,7 +78,7 @@ std::vector<UString> UI::getFormIDs()
 			LogWarning("Unexpected form file prefix for \"%s\"", name);
 			continue;
 		}
-		if (!name.endsWith(".form"))
+		if (!ends_with(name, ".form"))
 		{
 			LogWarning("Unexpected extension on form file \"%s\"", name);
 			continue;
