@@ -1046,6 +1046,12 @@
 	<object>
 		<name>BuildingFunction</name>
 		<member>name</member>
+		<member>baseCost</member>
+		<member>baseIncome</member>
+		<member>workersPerTile</member>
+		<member>agentSpawnType</member>
+		<member>investmentValue</member>
+		<member>prestige</member>
 		<member>infiltrationSpeed</member>
 		<member>detectionWeight</member>
 		<member>ufopaedia_entry</member>

@@ -7,6 +7,7 @@
 #include "game/state/rules/battle/battlemap.h"
 #include "game/state/rules/city/ufopaedia.h"
 #include "library/strings_format.h"
+#include "tools/extractors/common/building.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
 
@@ -23,7 +24,13 @@ void InitialGameStateExtractor::extractBuildingFunctions(GameState &state) const
 		f->name = data.building_functions->get(i);
 		if (i < buildingInitCoreData.size())
 		{
-			f->initializationData = buildingInitCoreData[i];
+			// convert all values to signed integers to simplify calculations in-game
+			f->baseCost = static_cast<int>(buildingInitCoreData[i].cost);
+			f->baseIncome = static_cast<int>(buildingInitCoreData[i].income);
+			f->workersPerTile = static_cast<int>(buildingInitCoreData[i].workers);
+			f->agentSpawnType = static_cast<int>(buildingInitCoreData[i].agentSpawnType);
+			f->investmentValue = static_cast<int>(buildingInitCoreData[i].investmentValue);
+			f->prestige = static_cast<int>(buildingInitCoreData[i].respectValue);
 		}
 		if (i < data.infiltration_speed_building->count())
 		{

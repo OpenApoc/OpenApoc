@@ -33,26 +33,19 @@ class Cargo;
 class UfopaediaEntry;
 class ResearchTopic;
 
-// struct that defines features of building type at the start of the game
-class BuildingInitilizationData
-{
-  public:
-	unsigned cost = 0;
-	unsigned income = 0;
-	unsigned workers = 0;
-	unsigned agentSpawnType = 0;
-	int investmentValue = 0;
-	int prestige = 0;
-};
-
 class BuildingFunction : public StateObject<BuildingFunction>
 {
   public:
 	UString name;
+	int baseCost = 0;
+	int baseIncome = 0;
+	int workersPerTile = 0;
+	int agentSpawnType = 0;
+	int investmentValue = 0;
+	int prestige = 0;
 	int infiltrationSpeed = 0;
 	int detectionWeight = 0;
 	StateRef<UfopaediaEntry> ufopaedia_entry;
-	BuildingInitilizationData initializationData;
 };
 
 class Building : public StateObject<Building>, public std::enable_shared_from_this<Building>
@@ -105,8 +98,9 @@ class Building : public StateObject<Building>, public std::enable_shared_from_th
 	void alienGrowth(GameState &state);
 	void alienMovement(GameState &state);
 	void initBuilding(GameState &state);
-	void weeklyUpdate(GameState &state);
 	unsigned countActiveTiles() const;
+	void updateWorkforce();
+	int calculateIncome() const;
 
 	void underAttack(GameState &state, StateRef<Organisation> attacker);
 

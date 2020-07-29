@@ -49,6 +49,16 @@ static_assert(sizeof(struct BldFileEntry) == 226, "Unexpected bld_file_entry siz
 #define ALIEN_BUILDING_NAME_STRTAB_OFFSET_START 0x14AD23
 #define ALIEN_BUILDING_NAME_STRTAB_OFFSET_END 0x14ADCB
 
+struct BuildingCostData
+{
+	uint32_t cost;
+	uint16_t income;
+	uint16_t workers;
+	uint8_t agentSpawnType;
+	uint8_t investmentValue;
+	uint8_t respectValue;
+};
+
 struct BuildingInfiltrationSpeed
 {
 	int32_t speed;

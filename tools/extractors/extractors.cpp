@@ -316,7 +316,7 @@ const std::vector<int> InitialGameStateExtractor::buildingFunctionDetectionWeigh
 
 // Data is pulled from UFO2P, bld_cost_struc (was hard to determine common offset)
 // 49 entries for each building function that affect city economy
-const std::vector<BuildingInitilizationData> InitialGameStateExtractor::buildingInitCoreData = {
+const std::vector<BuildingCostData> InitialGameStateExtractor::buildingInitCoreData = {
     {10000, 100, 100, 0, 5, 5},  {50000, 50, 110, 0, 7, 8},   {8000, 100, 120, 0, 5, 5},
     {30000, 80, 100, 0, 2, 5},   {8000, 80, 80, 0, 1, 5},     {12000, 100, 90, 0, 4, 5},
     {9000, 100, 80, 0, 5, 5},    {16000, 100, 120, 0, 7, 5},  {42000, 50, 140, 0, 6, 5},
