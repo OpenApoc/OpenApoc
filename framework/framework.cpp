@@ -209,7 +209,7 @@ Framework::Framework(const UString programName, bool createWindow)
 		gen.add_messages_path(langPath);
 	}
 
-	std::vector<UString> translationDomains = {"paedia_string", "ufo_string"};
+	std::vector<UString> translationDomains = {"openapoc"};
 	for (auto &domain : translationDomains)
 	{
 		LogInfo("Adding \"%s\" to translation domains", domain);
