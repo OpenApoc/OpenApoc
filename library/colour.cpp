@@ -22,7 +22,7 @@ static const std::map<UString, Colour> html4Colours{
 
 Colour Colour::FromHtmlName(const UString &name)
 {
-	auto it = html4Colours.find(name.toLower());
+	auto it = html4Colours.find(to_lower(name));
 	if (it != html4Colours.end())
 		return it->second;
 	return {0, 0, 0, 0};
@@ -30,7 +30,7 @@ Colour Colour::FromHtmlName(const UString &name)
 
 Colour Colour::FromHex(const UString &hexcode)
 {
-	UString hexcode_lower = hexcode.toLower();
+	UString hexcode_lower = to_lower(hexcode);
 	if (hexcode_lower.empty())
 	{
 		return {0, 0, 0};

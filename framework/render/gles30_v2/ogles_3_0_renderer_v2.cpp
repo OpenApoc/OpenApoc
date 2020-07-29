@@ -45,7 +45,7 @@ static const auto SCRATCH_TEX_SLOT = GL::TEXTURE3;
 GL::GLuint CreateShader(GL::GLenum type, const UString &source)
 {
 	GL::GLuint shader = gl->CreateShader(type);
-	auto sourceString = source.str();
+	auto sourceString = source;
 	const GL::GLchar *string = sourceString.c_str();
 	GL::GLint stringLength = sourceString.length();
 	gl->ShaderSource(shader, 1, &string, &stringLength);

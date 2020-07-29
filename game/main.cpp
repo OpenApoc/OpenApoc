@@ -22,9 +22,6 @@ int main(int argc, char *argv[])
 		fw->run(mksp<BootUp>());
 
 		UI::unload();
-#ifdef DUMP_TRANSLATION_STRINGS
-		dumpStrings();
-#endif
 	}
 
 	return 0;

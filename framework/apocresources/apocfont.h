@@ -1,6 +1,7 @@
 #pragma once
 
 #include "library/sp.h"
+#include "library/strings.h"
 
 namespace pugi
 {
@@ -10,7 +11,6 @@ class xml_node;
 namespace OpenApoc
 {
 
-class UString;
 class BitmapFont;
 
 class ApocalypseFont

@@ -10,7 +10,7 @@ namespace OpenApoc
 bool FileDataProvider::openArchive(const UString &path, bool write)
 {
 	archivePath = path;
-	if (!write && !fs::exists(path.str()))
+	if (!write && !fs::exists(path))
 	{
 		LogWarning("Attempt to open not existing directory \"%s\"", path);
 		return false;
@@ -19,7 +19,7 @@ bool FileDataProvider::openArchive(const UString &path, bool write)
 }
 bool FileDataProvider::readDocument(const UString &path, UString &result)
 {
-	std::string documentPath = (static_cast<fs::path>(archivePath.str()) / path.str()).string();
+	std::string documentPath = (static_cast<fs::path>(archivePath) / path).string();
 	std::ifstream in(documentPath, std::ios::binary);
 	std::ostringstream oss;
 	oss << in.rdbuf();
@@ -29,7 +29,7 @@ bool FileDataProvider::readDocument(const UString &path, UString &result)
 
 bool FileDataProvider::saveDocument(const UString &path, const UString &contents)
 {
-	fs::path documentPath = (static_cast<fs::path>(archivePath.str()) / path.str());
+	fs::path documentPath = (static_cast<fs::path>(archivePath) / path);
 	fs::path directoryPath = documentPath.parent_path();
 	if (!fs::exists(directoryPath))
 	{

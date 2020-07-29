@@ -281,7 +281,7 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		auto list = extractListString.split(",");
+		auto list = split(extractListString, ",");
 		for (auto &extractorName : list)
 		{
 			auto extractor = thingsToExtract.find(extractorName);

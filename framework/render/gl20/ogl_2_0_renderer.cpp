@@ -34,7 +34,7 @@ class Program
 	static GLuint createShader(GLenum type, const UString source)
 	{
 		GLuint shader = gl20::CreateShader(type);
-		auto sourceString = source.str();
+		auto sourceString = source;
 		const GLchar *string = sourceString.c_str();
 		GLint stringLength = sourceString.length();
 		gl20::ShaderSource(shader, 1, &string, &stringLength);

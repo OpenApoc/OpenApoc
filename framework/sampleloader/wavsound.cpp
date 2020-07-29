@@ -37,7 +37,7 @@ class WavSampleLoader : public SampleLoader
 		// WAV:FILENAME
 		// They are all assumed to be PCK_UINT8 1channel
 
-		const auto splitString = path.split(':');
+		const auto splitString = split(path, ":");
 		if (splitString.size() != 2)
 		{
 			LogInfo("String \"%s\" doesn't look like a rawsample - need 2 elements (got %zu)", path,
@@ -63,7 +63,7 @@ class WavSampleLoader : public SampleLoader
 		uint8_t *buf;
 		uint32_t bufSize;
 
-		const auto *returnedSpec = SDL_LoadWAV(fullPath.cStr(), &spec, &buf, &bufSize);
+		const auto *returnedSpec = SDL_LoadWAV(fullPath.c_str(), &spec, &buf, &bufSize);
 		if (returnedSpec == nullptr)
 		{
 			LogWarning("Failed to open WAV file at \"%s\" - \"%s\"", fullPath, SDL_GetError());

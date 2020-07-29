@@ -1317,7 +1317,7 @@ int GameScore::getTotal()
 
 void GameState::loadMods()
 {
-	auto mods = Options::modList.get().split(":");
+	auto mods = split(Options::modList.get(), ":");
 	for (const auto &modString : mods)
 	{
 		LogWarning("loading mod \"%s\"", modString);

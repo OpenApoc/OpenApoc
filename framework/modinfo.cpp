@@ -23,7 +23,7 @@ std::optional<ModInfo> ModInfo::getInfo(const UString &path)
 	ModInfo info;
 
 	auto filePath = path + "/modinfo.xml";
-	auto parseResult = doc.load_file(filePath.cStr());
+	auto parseResult = doc.load_file(filePath.c_str());
 	if (!parseResult)
 	{
 		LogWarning("Failed to parse ModInfo at \"%s\": %s at offset %u", filePath,
@@ -72,30 +72,30 @@ bool ModInfo::writeInfo(const UString &path)
 {
 	xml_document doc;
 	auto infoNode = doc.append_child("openapoc_modinfo");
-	infoNode.append_child("name").text() = name.cStr();
-	infoNode.append_child("author").text() = author.cStr();
-	infoNode.append_child("version").text() = version.cStr();
-	infoNode.append_child("description").text() = description.cStr();
-	infoNode.append_child("link").text() = link.cStr();
-	infoNode.append_child("id").text() = ID.cStr();
-	infoNode.append_child("datapath").text() = dataPath.cStr();
-	infoNode.append_child("statepath").text() = statePath.cStr();
-	infoNode.append_child("minversion").text() = minVersion.cStr();
-	infoNode.append_child("modloadscript").text() = modLoadScript.cStr();
+	infoNode.append_child("name").text() = name.c_str();
+	infoNode.append_child("author").text() = author.c_str();
+	infoNode.append_child("version").text() = version.c_str();
+	infoNode.append_child("description").text() = description.c_str();
+	infoNode.append_child("link").text() = link.c_str();
+	infoNode.append_child("id").text() = ID.c_str();
+	infoNode.append_child("datapath").text() = dataPath.c_str();
+	infoNode.append_child("statepath").text() = statePath.c_str();
+	infoNode.append_child("minversion").text() = minVersion.c_str();
+	infoNode.append_child("modloadscript").text() = modLoadScript.c_str();
 
 	auto requiresNode = infoNode.append_child("requires");
 	for (const auto &requirement : _requirements)
 	{
-		requiresNode.append_child("entry").text() = requirement.cStr();
+		requiresNode.append_child("entry").text() = requirement.c_str();
 	}
 	auto conflictsNode = infoNode.append_child("conflicts");
 	for (const auto &conflict : _conflicts)
 	{
-		conflictsNode.append_child("entry").text() = conflict.cStr();
+		conflictsNode.append_child("entry").text() = conflict.c_str();
 	}
 
 	auto filePath = path + "/modinfo.xml";
-	auto saveResult = doc.save_file(filePath.cStr());
+	auto saveResult = doc.save_file(filePath.c_str());
 	if (!saveResult)
 	{
 		LogWarning("Failed to save ModInfo to \"%s\"", filePath);

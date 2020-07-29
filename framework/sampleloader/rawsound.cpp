@@ -27,7 +27,7 @@ class RawSampleLoader : public SampleLoader
 		// RAWSOUND:FILENAME:SAMPLERATE
 		// They are all assumed to be PCK_UINT8 1channel
 
-		auto splitString = path.split(':');
+		auto splitString = split(path, ":");
 		if (splitString.size() != 3)
 		{
 			LogInfo("String \"%s\" doesn't look like a rawsample - need 3 elements (got %zu)", path,

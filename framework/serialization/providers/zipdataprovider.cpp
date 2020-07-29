@@ -28,13 +28,13 @@ bool ZipDataProvider::openArchive(const UString &path, bool write)
 	writing = write;
 	if (write)
 	{
-		auto outPath = fs::path(path.str());
+		auto outPath = fs::path(path);
 		auto outDir = outPath.parent_path();
 		if (!outDir.empty())
 		{
 			fs::create_directories(outDir);
 		}
-		if (!mz_zip_writer_init_file(&archive, path.cStr(), 0))
+		if (!mz_zip_writer_init_file(&archive, path.c_str(), 0))
 		{
 			LogWarning("Failed to init zip file \"%s\" for writing", path);
 			return false;
@@ -42,7 +42,7 @@ bool ZipDataProvider::openArchive(const UString &path, bool write)
 	}
 	else
 	{
-		if (!mz_zip_reader_init_file(&archive, path.cStr(), 0))
+		if (!mz_zip_reader_init_file(&archive, path.c_str(), 0))
 		{
 			LogWarning("Failed to init zip file \"%s\" for reading", path);
 			return false;
@@ -64,7 +64,7 @@ bool ZipDataProvider::openArchive(const UString &path, bool write)
 bool ZipDataProvider::readDocument(const UString &filename, UString &result)
 {
 
-	auto it = fileLookup.find(filename.str());
+	auto it = fileLookup.find(filename);
 	if (it == fileLookup.end())
 	{
 		LogInfo("File \"%s\" not found in zip in zip \"%s\"", filename, zipPath);
@@ -99,7 +99,7 @@ bool ZipDataProvider::readDocument(const UString &filename, UString &result)
 }
 bool ZipDataProvider::saveDocument(const UString &path, const UString &contents)
 {
-	if (!mz_zip_writer_add_mem(&archive, path.cStr(), contents.cStr(), contents.cStrLength(),
+	if (!mz_zip_writer_add_mem(&archive, path.c_str(), contents.c_str(), contents.length(),
 	                           MZ_DEFAULT_COMPRESSION))
 	{
 		LogWarning("Failed to insert \"%s\" into zip file \"%s\"", path, this->zipPath);

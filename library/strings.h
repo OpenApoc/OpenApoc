@@ -3,130 +3,57 @@
 #include <iterator>
 #include <list>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace OpenApoc
 {
 
-typedef uint32_t UniChar;
+//#ifdef __cpp_char8_t__not_in_this_castle
+//#warning Using char8_t
+// using UString = std::basic_string<char8_t>;
+// using ustring_view = std::basic_string_view<char8_t>;
+//#else
+//#warning Using char
+using UString = std::basic_string<char>;
+using UStringView = std::basic_string_view<char>;
+//#endif
 
-class UString
-{
-  private:
-	std::string u8Str;
+using U32String = std::basic_string<char32_t>;
+using U32StringView = std::basic_string_view<char32_t>;
 
-  public:
-	class ConstIterator
-	{
-	  private:
-		const UString &s;
-		size_t offset;
-		friend class UString;
-		ConstIterator(const UString &s, size_t initial_offset) : s(s), offset(initial_offset) {}
+[[nodiscard]] U32String to_u32string(const UStringView str);
+[[nodiscard]] UString to_ustring(const std::u32string_view str);
+[[nodiscard]] char32_t to_char32(const char c);
 
-	  public:
-		// Just enough to struggle through a range-based for
-		bool operator!=(const ConstIterator &other) const;
-		bool operator==(const ConstIterator &other) const;
-		ConstIterator operator++();
-		ConstIterator operator--();
-		UniChar operator*() const;
+[[nodiscard]] UString to_lower(const UStringView str);
+[[nodiscard]] UString to_upper(const UStringView str);
 
-		using iterator_category = std::forward_iterator_tag;
-		using value_type = UniChar;
-		using difference_type = ptrdiff_t;
-		using pointer = UniChar *;
-		using reference = UniChar &;
-	};
+[[nodiscard]] bool ends_with(const UStringView str, const UStringView ending);
 
-	// ASSUMPTIONS:
-	// All std::string/char are utf8
-	// All lengths/offsets are in unicode code-points (not bytes/anything)
-	UString(const std::string &str);
-	UString(std::string &&str);
-	UString(UniChar uc);
-	UString(const char *cstr);
-	UString(const char *cstr, size_t count);
-	UString(UString &&other) noexcept;
-	UString(ConstIterator first, ConstIterator last);
-	UString();
-	~UString();
+// Removes 'count' codepoints at 'offset' codepoints into the string (note: Not bytes!)
+[[nodiscard]] UString remove(const UStringView str, size_t offset, size_t count);
+[[nodiscard]] U32String remove(const U32StringView str, size_t offset, size_t count);
 
-#ifdef __cpp_char8_t
-	UString(const char8_t *cstr);
-#endif
+[[nodiscard]] std::vector<UString> split(const UStringView str, const UStringView delims);
 
-	UString(const UString &other);
-	UString &operator=(const UString &other);
-
-	const std::string &str() const;
-
-	const char *cStr() const;
-	size_t cStrLength() const;
-
-	/* Only changes case of ASCII-range characters */
-	UString toUpper() const;
-	/* Only changes case of ASCII-range characters */
-	UString toLower() const;
-	std::vector<UString> split(const UString &delims) const;
-	std::list<UString> splitlist(const UString &delims) const;
-
-	size_t length() const;
-	bool empty() const { return this->u8Str.empty(); }
-	UString substr(size_t offset, size_t length = npos) const;
-
-	static const size_t npos = static_cast<size_t>(-1);
-
-	UString &operator+=(const UString &ustr);
-	// UString& operator+=(const std::string& str);
-	// UString& operator+=(const char* cstr);
-	// UString& operator+=(const char& c);
-	// UString& operator+=(const UniChar& uc);
-
-	void remove(size_t offset, size_t count);
-	void insert(size_t offset, const UString &other);
-
-	int compare(const UString &str) const;
-
-	bool endsWith(const UString &suffix) const;
-
-	UString trimLeft() const;
-	UString trimRight() const;
-	UString trim() const;
-
-	bool operator==(const UString &other) const;
-	bool operator!=(const UString &other) const;
-	bool operator<(const UString &other) const;
-
-	ConstIterator begin() const;
-	ConstIterator end() const;
-
-	static UniChar u8Char(char c);
-
-	friend std::istream &operator>>(std::istream &lhs, UString &rhs);
-};
-
-UString operator+(const UString &lhs, const UString &rhs);
-std::ostream &operator<<(std::ostream &lhs, const UString &rhs);
-std::istream &operator>>(std::istream &lhs, UString &rhs);
+// Insert the 'insert' string at 'offset' codepoints into the string 'str' and returns the string
+[[nodiscard]] UString insert_codepoints(const UStringView str, size_t offset,
+                                        const UStringView insert);
 
 class Strings
 {
 
   public:
-	static bool isFloat(const UString &s);
-	static bool isInteger(const UString &s);
-	static int toInteger(const UString &s);
-	static uint8_t toU8(const UString &s);
-	static float toFloat(const UString &s);
-	static UString fromInteger(int i);
-	static UString fromU64(uint64_t i);
-	static UString fromFloat(float f);
-	static bool isWhiteSpace(UniChar c);
+	[[nodiscard]] static bool isFloat(const UStringView s);
+	[[nodiscard]] static bool isInteger(const UStringView s);
+	[[nodiscard]] static int toInteger(const UStringView s);
+	[[nodiscard]] static uint8_t toU8(const UStringView s);
+	[[nodiscard]] static float toFloat(const UStringView s);
+	[[nodiscard]] static UString fromInteger(int i);
+	[[nodiscard]] static UString fromU64(uint64_t i);
+	[[nodiscard]] static UString fromFloat(float f);
+	[[nodiscard]] static bool isWhiteSpace(char32_t c);
 };
-
-#ifdef DUMP_TRANSLATION_STRINGS
-void dumpStrings();
-#endif
 
 }; // namespace OpenApoc

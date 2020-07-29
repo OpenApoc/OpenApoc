@@ -21,11 +21,9 @@ static inline int canon_char(int c)
 	return '_';
 }
 
-static inline std::string canon_string(std::string s)
+static inline OpenApoc::UString canon_string(OpenApoc::UString s)
 {
 	std::transform(s.begin(), s.end(), s.begin(), canon_char);
 
 	return s;
 }
-
-static inline OpenApoc::UString canon_string(OpenApoc::UString &s) { return canon_string(s.str()); }

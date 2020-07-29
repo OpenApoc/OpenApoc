@@ -26,7 +26,7 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 	const Vec2<int> BUTTON_SIZE = {100, 28};
 	const Vec2<int> BUTTON_SIZE_2 = {70, 28};
 
-	auto lTitle = form->createChild<Label>(title.toUpper(), ui().getFont("smalfont"));
+	auto lTitle = form->createChild<Label>(to_upper(title), ui().getFont("smalfont"));
 	lTitle->Size.x = form->Size.x - MARGIN * 2;
 	lTitle->Size.y = ui().getFont("smalfont")->getFontHeight();
 	lTitle->Location = {MARGIN, MARGIN};
