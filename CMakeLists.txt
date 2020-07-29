@@ -272,3 +272,10 @@ if (GETTEXT_FOUND)
 						${CMAKE_SOURCE_DIR}/data/languages/${LANG}/LC_MESSAGES/ufo_string.mo)
 		endforeach()
 endif(GETTEXT_FOUND)
+
+set (XGETTEXT_ARGS --keyword=tformat -L c++)
+
+FIND_PROGRAM(XGETTEXT_EXECUTABLE xgettext)
+if (XGETTEXT_EXECUTABLE)
+	add_custom_target(generate-pot ${XGETTEXT_EXECUTABLE} -o ${CMAKE_SOURCE_DIR}/data/languages/openapoc.pot ${XGETTEXT_ARGS} ${FORMAT_SOURCES})
+endif(XGETTEXT_EXECUTABLE)
