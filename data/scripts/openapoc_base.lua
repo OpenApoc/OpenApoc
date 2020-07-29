@@ -136,14 +136,6 @@ local oldUpdateEndOfWeekHook = OpenApoc.hook.updateEndOfWeek
 OpenApoc.hook.updateEndOfWeek = function()
 	if oldUpdateEndOfWeekHook then oldUpdateEndOfWeekHook() end
 
-	FW.LogWarning('Implement economy for orgs, for now just give em cash')
-	for org_id, org_object in pairs(GS.organisations) do
-		if org_id ~= GS.player.id then
-			if org_object.balance < 100000 then
-				org_object.balance = 100000
-			end
-		end
-	end
 	updateUfoGrowth()
 	updateEconomy()
 end

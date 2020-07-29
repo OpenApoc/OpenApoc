@@ -145,8 +145,8 @@ void City::initCity(GameState &state)
 		}
 		b.second->owner->buildings.emplace_back(&state, b.first);
 
-		populationWorking += b.second->currentWage;
-		populationUnemployed += b.second->currentWage;
+		populationWorking += b.second->currentWorkforce;
+		populationUnemployed += b.second->maximumWorkforce - b.second->currentWorkforce;
 		subtotalIncome += b.second->currentWage;
 	}
 	averageWage = (populationWorking) ? subtotalIncome / populationWorking : 0;
@@ -331,25 +331,6 @@ void City::dailyLoop(GameState &state)
 		}
 	}
 	generatePortals(state);
-}
-
-void City::weeklyLoop(GameState &state)
-{
-	if (state.cities["CITYMAP_ALIEN"] != shared_from_this())
-	{
-		for (auto &org : state.organisations)
-		{
-			if (org.first != "ORG_X-COM" && org.first != "ORG_ALIEN")
-			{
-				org.second->income = 0;
-				for (auto &b : org.second->buildings)
-				{
-					org.second->income += b->calculateIncome();
-				}
-				org.second->balance += org.second->income;
-			}
-		}
-	}
 }
 
 void City::generatePortals(GameState &state)

@@ -1217,12 +1217,68 @@ void GameState::updateEndOfDay()
 
 void GameState::updateEndOfWeek()
 {
-	Trace::start("GameState::updateEndOfWeek::cities");
-	for (auto &c : this->cities)
+	// TODO: remove hardcoded references
+	auto humanCity = cities["CITYMAP_HUMAN"];
+
+	humanCity->populationWorking = 0;
+
+	// Step 1. Everybody gets paid according to the current rates
+	int totalCivilianIncome = 0;
+	for (auto &org : organisations)
 	{
-		c.second->weeklyLoop(*this);
+		if (org.first != player.id && org.first != "ORG_ALIEN")
+		{
+			org.second->income = 0;
+			for (auto &b : org.second->buildings)
+			{
+				org.second->income += b->calculateIncome();
+				humanCity->populationWorking += b->currentWorkforce;
+				totalCivilianIncome += b->currentWage * b->currentWorkforce;
+			}
+			org.second->balance += org.second->income;
+		}
 	}
-	Trace::end("GameState::updateEndOfWeek::cities");
+	humanCity->averageWage =
+	    (humanCity->populationWorking) ? totalCivilianIncome / humanCity->populationWorking : 0;
+
+	// Step 2. Government gets 10% of civilian income as taxes
+	organisations["ORG_GOVERNMENT"]->balance += totalCivilianIncome / 10;
+
+	// Step 3. Calculate civilians leaving work because of the low wage
+	const int minimumWage = std::min(humanCity->averageWage, 30);
+	for (auto &pair : humanCity->buildings)
+	{
+		const auto build = pair.second;
+		if (build->currentWage < minimumWage)
+		{
+			const int satisfiedWorkers = build->currentWorkforce * build->currentWage / minimumWage;
+			const int workersLeaving = build->currentWorkforce - satisfiedWorkers;
+			build->currentWorkforce = satisfiedWorkers;
+			humanCity->populationWorking -= workersLeaving;
+			humanCity->populationUnemployed += workersLeaving;
+		}
+	}
+
+	// Step 4. Civilians will try to apply for a new job (up to 5 times)
+	// Workforce initially expect 20% higher wages to be re-hired, but will reduce demands
+	int expectedWage = minimumWage * 12 / 10;
+	for (int attempt = 0; attempt < 5; ++attempt)
+	{
+		// Check if there's still civilians without work
+		if (humanCity->populationUnemployed <= 0)
+			break;
+
+		for (auto &pair : humanCity->buildings)
+		{
+			const auto build = pair.second;
+		}
+		// Reduce demands by 10%
+		expectedWage -= humanCity->averageWage / 10;
+	}
+
+	// Step 5. Organizations will adjust the wages to attract new workers
+
+	// Step 6. Organizations will fire people to save the money if balance is negative
 
 	luaGameState.callHook("updateEndOfWeek", 0, 0);
 }
