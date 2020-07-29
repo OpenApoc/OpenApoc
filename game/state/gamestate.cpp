@@ -172,6 +172,11 @@ void GameState::initState()
 			{
 				city->fillRoadSegmentMap(*this);
 				city->initialSceneryLinkUp();
+
+				for (auto &b : c.second->buildings)
+				{
+					b.second->initBuilding(*this);
+				}
 			}
 		}
 		// Add vehicles to map
@@ -214,9 +219,14 @@ void GameState::initState()
 		a.second->rightHandItem = a.second->getFirstItemInSlot(EquipmentSlotType::RightHand, false);
 	}
 
-	// Initialize organization funding
+	
 	if (newGame)
+	{
+		// Initialize organization funding by running throught two-week funding
+		// This lets workers to move around
 		updateHumanEconomy();
+		updateHumanEconomy();
+	}
 
 	// Run necessary methods for different types
 	research.updateTopicList();
@@ -1241,9 +1251,12 @@ void GameState::updateHumanEconomy()
 	{
 		if (org.first != player.id && org.first != "ORG_ALIEN")
 		{
-			org.second->income = 0;
 			for (auto &b : org.second->buildings)
 			{
+				// validate the original data
+				if (b->currentWage < 0)
+					b->currentWage = 0;
+
 				org.second->income += b->calculateIncome();
 				humanCity->populationWorking += b->currentWorkforce;
 				totalCivilianIncome += b->currentWage * b->currentWorkforce;
@@ -1258,7 +1271,7 @@ void GameState::updateHumanEconomy()
 	organisations["ORG_GOVERNMENT"]->balance += totalCivilianIncome / 10;
 
 	// Step 3. Calculate civilians leaving work because of the low wage
-	const int minimumWage = std::min(humanCity->averageWage, 30);
+	const int minimumWage = std::max(humanCity->averageWage, 30);
 	for (auto &pair : humanCity->buildings)
 	{
 		const auto build = pair.second;
@@ -1294,7 +1307,7 @@ void GameState::updateHumanEconomy()
 				else if (build->currentWage < 50)
 				{
 					// std::min so we can't overflow here
-					workersJoining *= std::min(build->currentWage, 100) / 100;
+					workersJoining = workersJoining * std::min(build->currentWage, 100) / 100;
 					// fall-through was intended
 					if (build->currentWage < 40)
 						workersJoining /= 10;
@@ -1325,29 +1338,29 @@ void GameState::updateHumanEconomy()
 		const int maximum = build->maximumWorkforce;
 		const int current = build->currentWorkforce;
 		const int profitabilityLimit = build->incomePerCapita - build->maintenanceCosts / maximum;
-		int wage = build->currentWage;
+		double wage = build->currentWage;
 
 		if (current < maximum * 60 / 100)
 		{
 			// severely understaffed, biggest salary bump
-			wage *= 120 / 100;
+			wage *= 1.2;
 		}
 		else if (current < maximum * 80 / 100)
 		{
-			wage *= 110 / 100;
+			wage *= 1.1;
 		}
 		else if (current < maximum * 90 / 100)
 		{
-			wage *= 105 / 100;
+			wage *= 1.05;
 		}
 		else if (current == maximum)
 		{
 			// if we're at 100% capacity reduce the salary
-			wage *= 95 / 100;
+			wage *= 0.95;
 		}
 
 		// make sure we're not losing money
-		build->currentWage = std::min(wage, profitabilityLimit);
+		build->currentWage = (wage < profitabilityLimit) ? profitabilityLimit : wage;
 	}
 }
 

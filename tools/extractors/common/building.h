@@ -52,8 +52,8 @@ static_assert(sizeof(struct BldFileEntry) == 226, "Unexpected bld_file_entry siz
 struct BuildingCostData
 {
 	uint32_t cost;
-	uint16_t income;
 	uint16_t workers;
+	uint16_t income;
 	uint8_t agentSpawnType;
 	uint8_t investmentValue;
 	uint8_t respectValue;
