@@ -98,7 +98,7 @@ class Building : public StateObject<Building>, public std::enable_shared_from_th
 	void buildingPartChange(GameState &state, Vec3<int> part, bool intact);
 	bool isAlive(GameState &state) const;
 
-	// Following members are not serialized, but rather are set in City::initMap method
+	// Following members are not serialized, but rather are set in City::initCity method
 
 	Vec3<int> crewQuarters = {-1, -1, -1};
 	Vec3<int> carEntranceLocation = {-1, -1, -1};

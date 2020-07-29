@@ -77,7 +77,7 @@ class Scenery : public SupportedMapPart, public std::enable_shared_from_this<Sce
 	// Attaches to at least something nearby
 	bool attachToSomething();
 
-	// Following members are not serialized, but rather are set in City::initMap method
+	// Following members are not serialized, but rather are set in City::initCity method
 
 	sp<TileObjectScenery> tileObject;
 	sp<Doodad> overlayDoodad;

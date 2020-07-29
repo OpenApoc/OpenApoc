@@ -72,7 +72,7 @@ City::~City()
 	}
 }
 
-void City::initMap(GameState &state)
+void City::initCity(GameState &state)
 {
 	if (this->map)
 	{
@@ -117,6 +117,8 @@ void City::initMap(GameState &state)
 			}
 		}
 	}
+
+	uint64_t subtotalIncome = 0;
 	for (auto &b : this->buildings)
 	{
 		if (b.second->landingPadLocations.empty())
@@ -142,7 +144,20 @@ void City::initMap(GameState &state)
 			spaceports.emplace_back(&state, b.first);
 		}
 		b.second->owner->buildings.emplace_back(&state, b.first);
+
+		// Initialize economy data
+		//b.second->maintenanceCosts = randBoundsInclusive(state.rng, 90, 110) *
+		//                             bld_cost_struc[b.second->function->getId()].cost_value /
+		//                             100;
+
+		//populationWorking += b.second->maximumWorkforce * 70 / 100;
+		//populationUnemployed += b.second->maximumWorkforce * 30 / 100;
+		populationWorking += b.second->currentWage;
+		populationUnemployed += b.second->currentWage;
+		subtotalIncome += b.second->currentWage;
 	}
+	averageWage = (populationWorking) ? subtotalIncome / populationWorking : 0;
+
 	for (auto &p : this->projectiles)
 	{
 		this->map->addObjectToMap(p);

@@ -165,7 +165,7 @@ void GameState::initState()
 	for (auto &c : this->cities)
 	{
 		auto &city = c.second;
-		city->initMap(*this);
+		city->initCity(*this);
 		if (newGame)
 		{
 			// if (c.first == "CITYMAP_HUMAN")

@@ -36,7 +36,7 @@ template <> const UString &StateObject<BuildingFunction>::getPrefix()
 }
 template <> const UString &StateObject<BuildingFunction>::getTypeName()
 {
-	static UString name = "AgentType";
+	static UString name = "BuildingFunction";
 	return name;
 }
 
