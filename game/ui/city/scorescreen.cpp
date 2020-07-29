@@ -13,6 +13,7 @@
 #include "game/state/shared/agent.h"
 #include "game/state/shared/organisation.h"
 #include "game/ui/base/recruitscreen.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -86,7 +87,7 @@ void ScoreScreen::setScoreMode()
 		    format("%d", state->totalScore.getTotal()));
 	}
 
-	title->setText(tr("SCORE"));
+	title->setText(tformat("SCORE"));
 	formScore->setVisible(true);
 	formFinance->setVisible(false);
 }
@@ -157,13 +158,12 @@ void ScoreScreen::setFinanceMode()
 
 		int balance = state->getPlayer()->balance;
 		formFinance->findControlTyped<Label>("INITIAL")->setText(
-		    format("%s $%d", tr("Initial funds>"), balance));
+		    tformat("Initial funds> ${1}", balance));
 		formFinance->findControlTyped<Label>("REMAINING")
-		    ->setText(
-		        format("%s $%d", tr("Remaining finds>"), balance - agentsSalary - basesCosts));
+		    ->setText(tformat("Remaining funds> ${1}", balance - agentsSalary - basesCosts));
 	}
 
-	title->setText(tr("FINANCE"));
+	title->setText(tformat("FINANCE"));
 	formScore->setVisible(false);
 	formFinance->setVisible(true);
 }

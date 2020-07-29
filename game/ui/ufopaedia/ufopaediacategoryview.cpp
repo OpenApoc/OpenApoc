@@ -19,6 +19,7 @@
 #include "game/state/shared/organisation.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -65,7 +66,7 @@ void UfopaediaCategoryView::begin()
 			continue;
 		}
 
-		auto entryControl = mksp<TextButton>(tr(entry->title), infoLabel->getFont());
+		auto entryControl = mksp<TextButton>(entry->title, infoLabel->getFont());
 		entryControl->Name = "ENTRY_SHORTCUT";
 		entryControl->RenderStyle = TextButton::ButtonRenderStyle::Flat;
 		entryControl->TextHAlign = HorizontalAlignment::Left;
@@ -231,8 +232,8 @@ void UfopaediaCategoryView::setFormData()
 		background = this->position_iterator->second->background->getRealImage();
 	}
 	menuform->findControlTyped<Graphic>("BACKGROUND_PICTURE")->setImage(background);
-	auto tr_description = tr(description);
-	auto tr_title = tr(title);
+	auto tr_description = description;
+	auto tr_title = title;
 	menuform->findControlTyped<Label>("TEXT_INFO")->setText(tr_description);
 	menuform->findControlTyped<Label>("TEXT_TITLE_DATA")->setText(tr_title);
 
@@ -270,35 +271,39 @@ void UfopaediaCategoryView::setFormStats()
 					// FIXME: Should this be hardcoded?
 					if (data_id != "ORG_ALIEN")
 					{
-						orgLabels[1]->setText(tr("Balance"));
+						orgLabels[1]->setText(tformat("Balance"));
 						orgValues[1]->setText(format("$%d", ref->balance));
-						orgLabels[2]->setText(tr("Income"));
+						orgLabels[2]->setText(tformat("Income"));
 						orgValues[2]->setText(format("$%d", ref->income));
 
 						if (ref != player)
 						{
-							UString relation = tr(ref->name);
+							UString relation;
 							switch (ref->isRelatedTo(player))
 							{
 								case Organisation::Relation::Allied:
-									relation += tr(": allied towards:");
+									relation = tformat("{1}: allied towards: {2}", ref->name,
+									                   player->name);
 									break;
 								case Organisation::Relation::Friendly:
-									relation += tr(": friendly towards:");
+									relation = tformat("{1}: friendly towards: {2}", ref->name,
+									                   player->name);
 									break;
 								case Organisation::Relation::Neutral:
-									relation += tr(": neutral towards:");
+									relation = tformat("{1}: neutral towards: {2}", ref->name,
+									                   player->name);
 									break;
 								case Organisation::Relation::Unfriendly:
-									relation += tr(": unfriendly towards:");
+									relation = tformat("{1}: unfriendly towards: {2}", ref->name,
+									                   player->name);
 									break;
 								case Organisation::Relation::Hostile:
-									relation += tr(": hostile towards:");
+									relation = tformat("{1}: hostile towards: {2}", ref->name,
+									                   player->name);
 									break;
 							}
-							relation += UString(" ") + tr(player->name);
 							orgLabels[0]->setText(relation);
-							orgLabels[3]->setText(tr("Alien Infiltration"));
+							orgLabels[3]->setText(tformat("Alien Infiltration"));
 							orgValues[3]->setText(format("%d%%", ref->infiltrationValue / 2));
 						}
 					}
@@ -307,18 +312,18 @@ void UfopaediaCategoryView::setFormStats()
 				case UfopaediaEntry::Data::Vehicle:
 				{
 					StateRef<VehicleType> ref = {state.get(), data_id};
-					statsLabels[row]->setText(tr("Constitution"));
+					statsLabels[row]->setText(tformat("Constitution"));
 					statsValues[row++]->setText(Strings::fromInteger(ref->health));
 					int armour = 0;
 					for (auto &slot : ref->armour)
 					{
 						armour += slot.second;
 					}
-					statsLabels[row]->setText(tr("Armor"));
+					statsLabels[row]->setText(tformat("Armor"));
 					statsValues[row++]->setText(Strings::fromInteger(armour));
-					statsLabels[row]->setText(tr("Weight"));
+					statsLabels[row]->setText(tformat("Weight"));
 					statsValues[row++]->setText(Strings::fromInteger(ref->weight));
-					statsLabels[row]->setText(tr("Passengers"));
+					statsLabels[row]->setText(tformat("Passengers"));
 					statsValues[row++]->setText(Strings::fromInteger(ref->passengers));
 					int weaponSpace = 0;
 					int weaponAmount = 0;
@@ -343,90 +348,90 @@ void UfopaediaCategoryView::setFormStats()
 								break;
 						}
 					}
-					statsLabels[row]->setText(tr("Weapons space"));
+					statsLabels[row]->setText(tformat("Weapons space"));
 					statsValues[row++]->setText(Strings::fromInteger(weaponSpace));
-					statsLabels[row]->setText(tr("Weapons slots"));
+					statsLabels[row]->setText(tformat("Weapons slots"));
 					statsValues[row++]->setText(Strings::fromInteger(weaponAmount));
-					statsLabels[row]->setText(tr("Engine size"));
+					statsLabels[row]->setText(tformat("Engine size"));
 					statsValues[row++]->setText(Strings::fromInteger(engineSpace));
-					statsLabels[row]->setText(tr("Equipment space"));
+					statsLabels[row]->setText(tformat("Equipment space"));
 					statsValues[row++]->setText(Strings::fromInteger(generalSpace));
 					break;
 				}
 				case UfopaediaEntry::Data::VehicleEquipment:
 				{
 					StateRef<VEquipmentType> ref = {state.get(), data_id};
-					statsLabels[row]->setText(tr("Weight"));
+					statsLabels[row]->setText(tformat("Weight"));
 					statsValues[row++]->setText(Strings::fromInteger(ref->weight));
-					statsLabels[row]->setText(tr("Size"));
+					statsLabels[row]->setText(tformat("Size"));
 					statsValues[row++]->setText(
 					    format("%dx%d", ref->equipscreen_size.x, ref->equipscreen_size.y));
 					switch (ref->type)
 					{
 						case EquipmentSlotType::VehicleEngine:
-							statsLabels[row]->setText(tr("Power"));
+							statsLabels[row]->setText(tformat("Power"));
 							statsValues[row++]->setText(Strings::fromInteger(ref->power));
-							statsLabels[row]->setText(tr("Top Speed"));
+							statsLabels[row]->setText(tformat("Top Speed"));
 							statsValues[row++]->setText(Strings::fromInteger(ref->top_speed));
 							break;
 						case EquipmentSlotType::VehicleWeapon:
-							statsLabels[row]->setText(tr("Damage"));
+							statsLabels[row]->setText(tformat("Damage"));
 							statsValues[row++]->setText(Strings::fromInteger(ref->damage));
-							statsLabels[row]->setText(tr("Accuracy"));
+							statsLabels[row]->setText(tformat("Accuracy"));
 							statsValues[row++]->setText(format("%d%%", ref->accuracy));
-							statsLabels[row]->setText(tr("Range"));
+							statsLabels[row]->setText(tformat("Range"));
 							statsValues[row++]->setText(format("%dm", ref->getRangeInMetres()));
-							statsLabels[row]->setText(tr("Fire Rate"));
+							statsLabels[row]->setText(tformat("Fire Rate"));
 							statsValues[row++]->setText(format(
 							    "%.2f r/s", (float)TICKS_PER_SECOND / (float)ref->fire_delay));
 							if (ref->max_ammo > 0 && ref->ammo_type)
 							{
-								statsLabels[row]->setText(tr("Ammo type"));
-								statsValues[row++]->setText(tr(ref->ammo_type->name));
-								statsLabels[row]->setText(tr("Ammo capacity"));
+								statsLabels[row]->setText(tformat("Ammo type"));
+								statsValues[row++]->setText(ref->ammo_type->name);
+								statsLabels[row]->setText(tformat("Ammo capacity"));
 								statsValues[row++]->setText(Strings::fromInteger(ref->max_ammo));
 							}
 							if (ref->turn_rate > 0)
 							{
-								statsLabels[row]->setText(tr("Turn Rate"));
+								statsLabels[row]->setText(tformat("Turn Rate"));
 								statsValues[row++]->setText(Strings::fromInteger(ref->turn_rate));
 							}
 							break;
 						case EquipmentSlotType::VehicleGeneral:
 							if (ref->accuracy_modifier > 0)
 							{
-								statsLabels[row]->setText(tr("Accuracy"));
+								statsLabels[row]->setText(tformat("Accuracy"));
 								statsValues[row++]->setText(
 								    format("+%d%%", ref->accuracy_modifier));
 							}
 							if (ref->cargo_space > 0)
 							{
-								statsLabels[row]->setText(tr("Cargo"));
+								statsLabels[row]->setText(tformat("Cargo"));
 								statsValues[row++]->setText(Strings::fromInteger(ref->cargo_space));
 							}
 							if (ref->passengers > 0)
 							{
-								statsLabels[row]->setText(tr("Passengers"));
+								statsLabels[row]->setText(tformat("Passengers"));
 								statsValues[row++]->setText(Strings::fromInteger(ref->passengers));
 							}
 							if (ref->alien_space > 0)
 							{
-								statsLabels[row]->setText(tr("Aliens Held"));
+								statsLabels[row]->setText(tformat("Aliens Held"));
 								statsValues[row++]->setText(Strings::fromInteger(ref->alien_space));
 							}
 							if (ref->missile_jamming > 0)
 							{
-								statsLabels[row]->setText(tr("Jamming"));
+								statsLabels[row]->setText(tformat("Jamming"));
 								statsValues[row++]->setText(format("%d%%", ref->missile_jamming));
 							}
 							if (ref->shielding > 0)
 							{
-								statsLabels[row]->setText(tr("Shielding"));
+								statsLabels[row]->setText(tformat("Shielding"));
 								statsValues[row++]->setText(format("+%d", ref->shielding));
 							}
 							if (ref->cloaking)
 							{
-								statsValues[row++]->setText(tr("Cloaks Craft"));
+								statsValues[row++]->setText(tformat("Cloaks Craft"));
 							}
 							break;
 						default:
@@ -442,55 +447,55 @@ void UfopaediaCategoryView::setFormStats()
 				case UfopaediaEntry::Data::Equipment:
 				{
 					StateRef<AEquipmentType> ref = {state.get(), data_id};
-					statsLabels[row]->setText(tr("Weight"));
+					statsLabels[row]->setText(tformat("Weight"));
 					statsValues[row++]->setText(Strings::fromInteger(ref->weight));
-					statsLabels[row]->setText(tr("Size"));
+					statsLabels[row]->setText(tformat("Size"));
 					statsValues[row++]->setText(
 					    format("%dx%d", ref->equipscreen_size.x, ref->equipscreen_size.y));
 					if (ref->type == AEquipmentType::Type::Ammo ||
 					    (ref->type == AEquipmentType::Type::Weapon && ref->ammo_types.empty()))
 					{
-						statsLabels[row]->setText(tr("Power"));
+						statsLabels[row]->setText(tformat("Power"));
 						statsValues[row++]->setText(Strings::fromInteger(ref->damage));
-						statsLabels[row]->setText(tr("Damage Type"));
+						statsLabels[row]->setText(tformat("Damage Type"));
 						statsValues[row++]->setText(ref->damage_type->name);
-						statsLabels[row]->setText("Range");
+						statsLabels[row]->setText(tformat("Range"));
 						statsValues[row++]->setText(format("%dm", ref->getRangeInMetres()));
-						statsLabels[row]->setText("Fire Rate");
+						statsLabels[row]->setText(tformat("Fire Rate"));
 						statsValues[row++]->setText(format("%.2f r/s", ref->getRoundsPerSecond()));
 					}
 					else if (ref->type == AEquipmentType::Type::Grenade)
 					{
-						statsLabels[row]->setText(tr("Power"));
+						statsLabels[row]->setText(tformat("Power"));
 						statsValues[row++]->setText(Strings::fromInteger(ref->damage));
-						statsLabels[row]->setText(tr("Damage Type"));
+						statsLabels[row]->setText(tformat("Damage Type"));
 						statsValues[row++]->setText(ref->damage_type->name);
 					}
 					else if (ref->type == AEquipmentType::Type::Weapon &&
 					         ref->ammo_types.size() == 1)
 					{
 						const auto &ammoType = *ref->ammo_types.begin();
-						statsLabels[row]->setText(tr("Power"));
+						statsLabels[row]->setText(tformat("Power"));
 						statsValues[row++]->setText(Strings::fromInteger(ammoType->damage));
-						statsLabels[row]->setText(tr("Damage Type"));
+						statsLabels[row]->setText(tformat("Damage Type"));
 						statsValues[row++]->setText(ammoType->damage_type->name);
-						statsLabels[row]->setText(tr("Range"));
+						statsLabels[row]->setText(tformat("Range"));
 						statsValues[row++]->setText(format("%dm", ammoType->getRangeInMetres()));
-						statsLabels[row]->setText(tr("Fire Rate"));
+						statsLabels[row]->setText(tformat("Fire Rate"));
 						statsValues[row++]->setText(
 						    format("%.2f r/s", ammoType->getRoundsPerSecond()));
 					}
 					else if (ref->type == AEquipmentType::Type::Weapon &&
 					         ref->ammo_types.size() > 1)
 					{
-						statsLabels[row]->setText(tr("Power"));
-						statsValues[row++]->setText(tr("Depends on clip"));
-						statsLabels[row]->setText(tr("Damage Type"));
-						statsValues[row++]->setText(tr("Depends on clip"));
-						statsLabels[row]->setText(tr("Range"));
-						statsValues[row++]->setText(tr("Depends on clip"));
-						statsLabels[row]->setText(tr("Fire Rate"));
-						statsValues[row++]->setText(tr("Depends on clip"));
+						statsLabels[row]->setText(tformat("Power"));
+						statsValues[row++]->setText(tformat("Depends on clip"));
+						statsLabels[row]->setText(tformat("Damage Type"));
+						statsValues[row++]->setText(tformat("Depends on clip"));
+						statsLabels[row]->setText(tformat("Range"));
+						statsValues[row++]->setText(tformat("Depends on clip"));
+						statsLabels[row]->setText(tformat("Fire Rate"));
+						statsValues[row++]->setText(tformat("Depends on clip"));
 					}
 					else if (ref->type == AEquipmentType::Type::Armor)
 					{
@@ -501,15 +506,15 @@ void UfopaediaCategoryView::setFormStats()
 				case UfopaediaEntry::Data::Facility:
 				{
 					StateRef<FacilityType> ref = {state.get(), data_id};
-					statsLabels[row]->setText(tr("Construction cost"));
+					statsLabels[row]->setText(tformat("Construction cost"));
 					statsValues[row++]->setText(format("$%d", ref->buildCost));
-					statsLabels[row]->setText(tr("Days to build"));
+					statsLabels[row]->setText(tformat("Days to build"));
 					statsValues[row++]->setText(Strings::fromInteger(ref->buildTime));
-					statsLabels[row]->setText(tr("Weekly cost"));
+					statsLabels[row]->setText(tformat("Weekly cost"));
 					statsValues[row++]->setText(format("$%d", ref->weeklyCost));
 					if (ref->capacityAmount > 0)
 					{
-						statsLabels[row]->setText(tr("Capacity"));
+						statsLabels[row]->setText(tformat("Capacity"));
 						statsValues[row++]->setText(Strings::fromInteger(ref->capacityAmount));
 					}
 					break;

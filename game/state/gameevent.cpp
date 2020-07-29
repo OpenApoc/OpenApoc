@@ -8,6 +8,7 @@
 #include "game/state/shared/agent.h"
 #include "game/state/shared/organisation.h"
 #include "library/strings_format.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -68,11 +69,11 @@ UString GameEvent::message()
 	switch (type)
 	{
 		case GameEventType::MissionCompletedBuildingAlien:
-			return tr("Mission completed in Alien building.");
+			return tformat("Mission completed in Alien building.");
 		case GameEventType::MissionCompletedVehicle:
-			return tr("X-COM returning from UFO mission.");
+			return tformat("X-COM returning from UFO mission.");
 		case GameEventType::BuildingDisabled:
-			return tr("Building has been disabled");
+			return tformat("Building has been disabled");
 		default:
 			break;
 	}
@@ -84,50 +85,50 @@ UString GameVehicleEvent::message()
 	switch (type)
 	{
 		case GameEventType::UfoSpotted:
-			return tr("UFO spotted.");
+			return tformat("UFO spotted.");
 		case GameEventType::UfoCrashed:
-			return format("%s %s", tr("UFO crash landed:"), vehicle->name);
+			return tformat("UFO crash landed: {1}", vehicle->name);
 		case GameEventType::UfoRecoveryUnmanned:
-			return format("%s %s", tr("Unmanned UFO recovered:"), vehicle->name);
+			return tformat("Unmanned UFO recovered: {1}", vehicle->name);
 		case GameEventType::VehicleRecovered:
-			return format("%s %s", tr("Vehicle successfully recovered:"), vehicle->name);
+			return tformat("Vehicle successfully recovered: {1}", vehicle->name);
 		case GameEventType::VehicleNoFuel:
-			return format("%s %s", tr("Vehicle out of fuel:"), vehicle->name);
+			return tformat("Vehicle out of fuel: {1}", vehicle->name);
 		case GameEventType::UfoRecoveryBegin:
 			return "";
 		case GameEventType::VehicleLightDamage:
-			return format("%s %s", tr("Vehicle lightly damaged:"), vehicle->name);
+			return tformat("Vehicle lightly damaged: {1}", vehicle->name);
 		case GameEventType::VehicleModerateDamage:
-			return format("%s %s", tr("Vehicle moderately damaged:"), vehicle->name);
+			return tformat("Vehicle moderately damaged: {1}", vehicle->name);
 		case GameEventType::VehicleHeavyDamage:
-			return format("%s %s", tr("Vehicle heavily damaged:"), vehicle->name);
+			return tformat("Vehicle heavily damaged: {1}", vehicle->name);
 		case GameEventType::VehicleEscaping:
-			return format("%s %s", tr("Vehicle returning to base as damaged:"), vehicle->name);
+			return tformat("Vehicle returning to base as damaged: {1}", vehicle->name);
 		case GameEventType::VehicleNoAmmo:
-			return format("%s %s", vehicle->name, tr(": Weapon out of ammo:"));
+			return tformat("{1}: Weapon out of ammo", vehicle->name);
 		case GameEventType::VehicleLowFuel:
-			return format("%s %s", tr("Vehicle low on fuel:"), vehicle->name);
+			return tformat("Vehicle low on fuel: {1}", vehicle->name);
 		case GameEventType::VehicleRepaired:
-			return format("%s %s", tr("Vehicle Repaired:"), vehicle->name);
+			return tformat("Vehicle Repaired: {1}", vehicle->name);
 		case GameEventType::VehicleRearmed:
-			return format("%s %s", tr("Vehicle Rearmed:"), vehicle->name);
+			return tformat("Vehicle Rearmed: {1}", vehicle->name);
 		case GameEventType::VehicleRefuelled:
-			return format("%s %s", tr("Vehicle Refuelled:"), vehicle->name);
+			return tformat("Vehicle Refuelled: {1}", vehicle->name);
 		case GameEventType::VehicleNoEngine:
-			return format("%s %s", tr("Vehicle has no engine:"), vehicle->name);
+			return tformat("Vehicle has no engine: {1}", vehicle->name);
 		case GameEventType::UnauthorizedVehicle:
 			if (vehicle->type->isGround())
 			{
-				return tr("An illegal road vehicle has been detected.");
+				return tformat("An illegal road vehicle has been detected.");
 			}
 			else
 			{
-				return tr("An illegal flyer has been detected.");
+				return tformat("An illegal flyer has been detected.");
 			}
 		case GameEventType::NotEnoughAmmo:
-			return format("%s %s", tr("Not enough ammo to rearm vehicle:"), vehicle->name);
+			return tformat("Not enough ammo to rearm vehicle: {1}", vehicle->name);
 		case GameEventType::NotEnoughFuel:
-			return format("%s %s", tr("Not enough fuel to refuel vehicle"), vehicle->name);
+			return tformat("Not enough fuel to refuel vehicle {1}", vehicle->name);
 		default:
 			LogError("Invalid vehicle event type");
 			break;
@@ -142,55 +143,55 @@ UString GameAgentEvent::message()
 		case GameEventType::AgentArrived:
 			if (flag)
 			{
-				return format("%s %s", tr("New transfer arrived:"), agent->name);
+				return tformat("New transfer arrived: {1}", agent->name);
 			}
 			else
 			{
-				return format("%s %s", tr("New recruit arrived:"), agent->name);
+				return tformat("New recruit arrived: {1}", agent->name);
 			}
 		case GameEventType::AgentUnableToReach:
-			return format(
-			    "%s%s", agent->name,
-			    tr(": Unable to reach destination due to damaged people tube network and / or "
-			       "poor diplomatic relations with Transtellar."));
+			return tformat(
+			    "{1}: Unable to reach destination due to damaged people tube network and / or "
+			    "poor diplomatic relations with Transtellar.",
+			    agent->name);
 		case GameEventType::HostileSpotted:
-			return format("%s", tr("Hostile unit spotted"));
+			return tformat("Hostile unit spotted");
 		case GameEventType::AgentBrainsucked:
-			return format("%s %s", tr("Unit Brainsucked:"), agent->name);
+			return tformat("Unit Brainsucked: {1}", agent->name);
 		case GameEventType::AgentDiedBattle:
-			return format("%s %s", tr("Unit has died:"), agent->name);
+			return tformat("Unit has died: {1}", agent->name);
 		case GameEventType::HostileDied:
-			return format("%s %s", tr("Hostile unit has died"), agent->name);
+			return tformat("Hostile unit has died {1}", agent->name);
 		case GameEventType::UnknownDied:
-			return format("%s", tr("Unknown Unit has died"));
+			return tformat("Unknown Unit has died");
 		case GameEventType::AgentCriticallyWounded:
-			return format("%s: %s", tr("Unit critically wounded"), agent->name);
+			return tformat("Unit critically wounded {1}", agent->name);
 		case GameEventType::AgentBadlyInjured:
-			return format("%s %s", tr("Unit badly injured:"), agent->name);
+			return tformat("Unit badly injured: {1}", agent->name);
 		case GameEventType::AgentInjured:
-			return format("%s %s", tr("Unit injured:"), agent->name);
+			return tformat("Unit injured: {1}", agent->name);
 		case GameEventType::AgentUnderFire:
-			return format("%s %s", tr("Unit under fire:"), agent->name);
+			return tformat("Unit under fire: {1}", agent->name);
 		case GameEventType::AgentUnconscious:
-			return format("%s %s", tr("Unit has lost consciousness:"), agent->name);
+			return tformat("Unit has lost consciousness: {1}", agent->name);
 		case GameEventType::AgentLeftCombat:
-			return format("%s %s", tr("Unit has left combat zone:"), agent->name);
+			return tformat("Unit has left combat zone: {1}", agent->name);
 		case GameEventType::AgentFrozen:
-			return format("%s %s", tr("Unit has frozen:"), agent->name);
+			return tformat("Unit has frozen: {1}", agent->name);
 		case GameEventType::AgentBerserk:
-			return format("%s %s", tr("Unit has gone berserk:"), agent->name);
+			return tformat("Unit has gone berserk: {1}", agent->name);
 		case GameEventType::AgentPanicked:
-			return format("%s %s", tr("Unit has panicked:"), agent->name);
+			return tformat("Unit has panicked: {1}", agent->name);
 		case GameEventType::AgentPanicOver:
-			return format("%s %s", tr("Unit has stopped panicking:"), agent->name);
+			return tformat("Unit has stopped panicking: {1}", agent->name);
 		case GameEventType::AgentPsiAttacked:
-			return format("%s %s", tr("Psionic attack on unit:"), agent->name);
+			return tformat("Psionic attack on unit: {1}", agent->name);
 		case GameEventType::AgentPsiControlled:
-			return format("%s %s", tr("Unit under Psionic control:"), agent->name);
+			return tformat("Unit under Psionic control: {1}", agent->name);
 		case GameEventType::AgentPsiOver:
-			return format("%s %s", tr("Unit freed from Psionic control:"), agent->name);
+			return tformat("Unit freed from Psionic control: {1}", agent->name);
 		case GameEventType::NoLOF:
-			return format("%s", tr("No line of fire"));
+			return tformat("No line of fire");
 		case GameEventType::AgentPsiProbed:
 			return "";
 		default:
@@ -205,16 +206,16 @@ UString GameBuildingEvent::message()
 	switch (type)
 	{
 		case GameEventType::MissionCompletedBuildingNormal:
-			return format("%s %s", tr("X-COM returning from mission at:"), building->name);
+			return tformat("X-COM returning from mission at: {1}", building->name);
 		case GameEventType::MissionCompletedBuildingRaid:
-			return format("%s %s", tr("X-COM returning from raid at:"), building->name);
+			return tformat("X-COM returning from raid at: {1}", building->name);
 		case GameEventType::BuildingAttacked:
-			return format("%s %s %s %s", tr("Building under attack :"), building->name,
-			              tr("Attacked by:"), actor->name);
+			return tformat("Building under attack: {1} Attacked by: {2}", building->name,
+			               actor->name);
 		case GameEventType::AlienSpotted:
-			return tr("Live Alien spotted.");
+			return tformat("Live Alien spotted.");
 		case GameEventType::CargoExpiresSoon:
-			return format("%s %s", tr("Cargo expires soon:"), building->name);
+			return tformat("Cargo expires soon: {1}", building->name);
 		case GameEventType::CommenceInvestigation:
 			return "";
 		default:
@@ -229,52 +230,51 @@ UString GameBaseEvent::message()
 	switch (type)
 	{
 		case GameEventType::AgentRearmed:
-			return tr("Agent(s) rearmed:") + " " + base->name;
+			return tformat("Agent(s) rearmed: {1}", base->name);
 		case GameEventType::CargoExpired:
 			if (actor)
 			{
 				if (actor == base->building->owner)
 				{
-					return tr("Cargo expired:") + " " + base->name + " " + tr("Returned to base");
+					return tformat("Cargo expired: {1} Returned to base", base->name);
 				}
 				else
 				{
-					return tr("Cargo expired:") + " " + base->name + " " +
-					       tr("Refunded by supplier: ") + actor->name;
+					return tformat("Cargo expired: {1} Refunded by supplier: {2}", base->name,
+					               actor->name);
 				}
 			}
 			else
 			{
-				return tr("Cargo expired:") + " " + base->name;
+				return tformat("Cargo expired: {1}", base->name);
 			}
 		case GameEventType::CargoSeized:
 		{
-			return tr("Cargo seized:") + " " + base->name + " " + tr("By hostile organisation: ") +
-			       actor->name;
+			return tformat("Cargo seized: {1} By hostile organisation: {2}", base->name,
+			               actor->name);
 		}
 		case GameEventType::CargoArrived:
 			if (actor)
 			{
-				return tr("Cargo arrived:") + " " + base->name + " " + tr("Supplier: ") +
-				       actor->name;
+				return tformat("Cargo arrived: {1} Supplier: {2}", base->name, actor->name);
 			}
 			else
 			{
-				return tr("Cargo arrived:") + " " + base->name;
+				return tformat("Cargo arrived: {1}", base->name);
 			}
 		case GameEventType::TransferArrived:
 			if (flag)
 			{
-				return tr("Transferred Alien specimens have arrived:") + " " + base->name;
+				return tformat("Transferred Alien specimens have arrived: {1}", base->name);
 			}
 			else
 			{
-				return tr("Transferred goods have arrived:") + " " + base->name;
+				return tformat("Transferred goods have arrived: {1}", base->name);
 			}
 		case GameEventType::RecoveryArrived:
-			return tr("Items from tactical combat zone have arrived:") + " " + base->name;
+			return tformat("Items from tactical combat zone have arrived: {1}", base->name);
 		case GameEventType::MissionCompletedBase:
-			return tr("Base mission completed at:") + " " + base->name;
+			return tformat("Base mission completed at: {1}", base->name);
 
 		default:
 			LogError("Invalid event type");
@@ -288,8 +288,8 @@ UString GameBattleEvent::message()
 	switch (type)
 	{
 		case GameEventType::NewTurn:
-			return tr("Turn:") + " " + format("%d", battle->currentTurn) + "   " + tr("Side:") +
-			       "  " + tr(battle->currentActiveOrganisation->name);
+			return tformat("Turn: {1}   Side: {2}", battle->currentTurn,
+			               battle->currentActiveOrganisation->name);
 		default:
 			LogError("Invalid battle event type");
 			break;
@@ -363,35 +363,34 @@ GameSomethingDiedEvent::GameSomethingDiedEvent(GameEventType type, UString name,
 	switch (type)
 	{
 		case GameEventType::AgentDiedCity:
-			messageInner = format("%s %s", tr("Agent has died:"), name);
+			messageInner = tformat("Agent has died: {1}", name);
 			break;
 		case GameEventType::BaseDestroyed:
 			if (actor.length() > 0)
 			{
-				messageInner = tr("X-COM base destroyed by hostile forces.");
+				messageInner = tformat("X-COM base destroyed by hostile forces.");
 			}
 			else
 			{
-				messageInner = tr("X-COM Base destroyed due to collapsing building.");
+				messageInner = tformat("X-COM Base destroyed due to collapsing building.");
 			}
 			break;
 		case GameEventType::VehicleDestroyed:
 			if (actor.length() > 0)
 			{
-				messageInner = format("%s %s %s: %s", tr("Vehicle destroyed:"), name,
-				                      tr("destroyed by"), actor);
+				messageInner = tformat("Vehicle destroyed: {1} destroyed by {2}", name, actor);
 			}
 			else
 			{
-				messageInner = format("%s %s", tr("Vehicle destroyed:"), name);
+				messageInner = tformat("Vehicle destroyed: {1}", name);
 			}
 			break;
 		case GameEventType::VehicleRecovered:
 			messageInner =
-			    format("%s %s", tr("Scrapped vehicle recovered in irreparable condition:"), name);
+			    tformat("Scrapped vehicle recovered in irreparable condition: {1}", name);
 			break;
 		case GameEventType::VehicleNoFuel:
-			messageInner = format("%s %s", tr("Vehicle out of fuel:"), name);
+			messageInner = tformat("Vehicle out of fuel: {1}", name);
 			break;
 		default:
 			LogWarning("GameSomethingDiedEvent %s called on non-death event %d", name,

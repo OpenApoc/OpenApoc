@@ -18,6 +18,7 @@
 #include "game/state/shared/organisation.h"
 #include "game/state/tilemap/tileobject_scenery.h"
 #include "library/strings_format.h"
+#include "library/strings_translate.h"
 #include <glm/glm.hpp>
 
 namespace OpenApoc
@@ -267,19 +268,19 @@ UString Agent::getRankName() const
 	switch (rank)
 	{
 		case Rank::Rookie:
-			return tr("Rookie");
+			return tformat("Rookie");
 		case Rank::Squaddie:
-			return tr("Squaddie");
+			return tformat("Squaddie");
 		case Rank::SquadLeader:
-			return tr("Squad leader");
+			return tformat("Squad leader");
 		case Rank::Sergeant:
-			return tr("Sergeant");
+			return tformat("Sergeant");
 		case Rank::Captain:
-			return tr("Captain");
+			return tformat("Captain");
 		case Rank::Colonel:
-			return tr("Colonel");
+			return tformat("Colonel");
 		case Rank::Commander:
-			return tr("Commander");
+			return tformat("Commander");
 	}
 	LogError("Unknown rank %d", (int)rank);
 	return "";

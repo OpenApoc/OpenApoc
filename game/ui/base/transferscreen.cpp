@@ -24,6 +24,7 @@
 #include "game/ui/general/agentsheet.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/transactioncontrol.h"
+#include "library/strings_translate.h"
 #include <array>
 
 namespace OpenApoc
@@ -32,7 +33,7 @@ namespace OpenApoc
 TransferScreen::TransferScreen(sp<GameState> state, bool forceLimits)
     : TransactionScreen(state, forceLimits), bigUnitRanks(RecruitScreen::getBigUnitRanks())
 {
-	form->findControlTyped<Label>("TITLE")->setText(tr("TRANSFER"));
+	form->findControlTyped<Label>("TITLE")->setText(tformat("TRANSFER"));
 	form->findControlTyped<Graphic>("BG")->setImage(
 	    fw().data->loadImage("xcom3/ufodata/transfer.pcx"));
 	form->findControlTyped<Graphic>("DOLLAR_ICON")->setVisible(false);
@@ -100,7 +101,7 @@ TransferScreen::TransferScreen(sp<GameState> state, bool forceLimits)
 		}
 	}
 
-	confirmClosureText = tr("Confirm Transfers");
+	confirmClosureText = tformat("Confirm Transfers");
 
 	type = Type::Soldier;
 	form->findControlTyped<RadioButton>("BUTTON_SOLDIERS")->setChecked(true);
@@ -321,20 +322,20 @@ void TransferScreen::closeScreen()
 			UString message;
 			if (crewOverLimit)
 			{
-				title = tr("Accomodation exceeded");
-				message = tr("Transfer limited by available accommodation.");
+				title = tformat("Accomodation exceeded");
+				message = tformat("Transfer limited by available accommodation.");
 				type = Type::Soldier;
 			}
 			else if (cargoOverLimit)
 			{
-				title = tr("Storage space exceeded");
-				message = tr("Transfer limited by available storage space.");
+				title = tformat("Storage space exceeded");
+				message = tformat("Transfer limited by available storage space.");
 				type = Type::AgentEquipment;
 			}
 			else if (alienOverLimit)
 			{
-				title = tr("Alien Containment space exceeded");
-				message = tr("Transfer limited by available Alien Containment space.");
+				title = tformat("Alien Containment space exceeded");
+				message = tformat("Transfer limited by available Alien Containment space.");
 				type = Type::Aliens;
 			}
 			fw().stageQueueCommand(
@@ -423,14 +424,10 @@ void TransferScreen::closeScreen()
 			{
 				UString message =
 				    transportationHostile
-				        ? format("%s %s",
-				                 tr("This hostile organization refuses to carry out the "
-				                    "requested transfer."),
-				                 tr("Proceed?"))
-				        : format("%s %s",
-				                 tr("No free transport to carry out the requested "
-				                    "transportation detected in the city."),
-				                 tr("Proceed?"));
+				        ? tformat("This hostile organization refuses to carry out the "
+				                  "requested transfer. Proceed?")
+				        : tformat("No free transport to carry out the requested "
+				                  "transportation detected in the city. Proceed?");
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
@@ -441,10 +438,8 @@ void TransferScreen::closeScreen()
 			else if (!transportationHostile)
 			{
 				// FIXME: Different message maybe? Same for now
-				UString message = format("%s %s",
-				                         tr("No free transport to carry out the requested "
-				                            "transportation detected in the city."),
-				                         tr("Proceed?"));
+				UString message = tformat("No free transport to carry out the requested "
+				                          "transportation detected in the city. Proceed?");
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
@@ -457,8 +452,8 @@ void TransferScreen::closeScreen()
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title,
-				                      tr("This hostile organization refuses to carry out "
-				                         "the requested transfer."),
+				                      tformat("This hostile organization refuses to carry out "
+				                              "the requested transfer."),
 				                      MessageBox::ButtonOptions::Ok)});
 				return;
 			}

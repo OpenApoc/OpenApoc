@@ -11,6 +11,7 @@
 #include "game/state/gamestate.h"
 #include "game/state/rules/battle/battlecommonimagelist.h"
 #include "game/ui/tileview/cityview.h"
+#include "library/strings_translate.h"
 #include <cmath>
 
 namespace OpenApoc
@@ -45,8 +46,7 @@ BattleDebriefing::BattleDebriefing(sp<GameState> state)
 	for (auto &u : state->current_battle->unitsPromoted)
 	{
 		menuform->findControlTyped<Label>(format("PROMOTION_%d", idx++))
-		    ->setText(
-		        format("%s %s %s", u->agent->name, tr("promoted to"), u->agent->getRankName()));
+		    ->setText(tformat("{1} promoted to {2}", u->agent->name, u->agent->getRankName()));
 	}
 }
 

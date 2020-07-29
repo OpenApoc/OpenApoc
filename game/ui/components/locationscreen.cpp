@@ -16,6 +16,7 @@
 #include "game/ui/components/agentassignment.h"
 #include "game/ui/general/aequipscreen.h"
 #include "library/strings_format.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -27,7 +28,7 @@ LocationScreen::LocationScreen(sp<GameState> state, sp<Agent> agent)
 	{
 		building = agent->currentBuilding;
 	}
-	menuform->findControlTyped<Label>("CAPTION")->setText(tr("AGENT LOCATION"));
+	menuform->findControlTyped<Label>("CAPTION")->setText(tformat("AGENT LOCATION"));
 	menuform->findControlTyped<Graphic>("BG")->setImage(
 	    fw().data->loadImage("xcom3/ufodata/location.pcx"));
 }
@@ -39,7 +40,7 @@ LocationScreen::LocationScreen(sp<GameState> state, sp<Vehicle> vehicle)
 	{
 		building = vehicle->currentBuilding;
 	}
-	menuform->findControlTyped<Label>("CAPTION")->setText(tr("VEHICLE LOCATION"));
+	menuform->findControlTyped<Label>("CAPTION")->setText(tformat("VEHICLE LOCATION"));
 	menuform->findControlTyped<Graphic>("BG")->setImage(
 	    fw().data->loadImage("xcom3/ufodata/locatn2.pcx"));
 }
@@ -54,17 +55,17 @@ void LocationScreen::begin()
 	                      agentAssignmentPlaceholder->Location, agentAssignmentPlaceholder->Size);
 	if (building)
 	{
-		menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(tr(building->owner->name));
+		menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(building->owner->name);
 		agentAssignment->setLocation(building);
 	}
 	else if (agent)
 	{
-		menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(tr(agent->owner->name));
+		menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(agent->owner->name);
 		agentAssignment->setLocation(agent);
 	}
 	else if (vehicle)
 	{
-		menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(tr(vehicle->owner->name));
+		menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(vehicle->owner->name);
 		agentAssignment->setLocation(vehicle);
 	}
 	else

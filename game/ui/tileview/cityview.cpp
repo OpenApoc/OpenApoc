@@ -73,6 +73,7 @@
 #include "game/ui/ufopaedia/ufopaediaview.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
+#include "library/strings_translate.h"
 #include <glm/glm.hpp>
 
 // Uncomment to start with paused
@@ -1533,7 +1534,7 @@ void CityView::begin()
 	{
 		state->newGame = false;
 		baseForm->findControlTyped<Ticker>("NEWS_TICKER")
-		    ->addMessage(tr("Welcome to X-COM Apocalypse"));
+		    ->addMessage(tformat("Welcome to X-COM Apocalypse"));
 	}
 }
 
@@ -1978,7 +1979,7 @@ void CityView::update()
 					    ->setImage(weaponType[i]->icon);
 					uiTabs[1]
 					    ->findControlTyped<Graphic>(format("VEHICLE_WEAPON_%d", i + 1))
-					    ->ToolTipText = tr(weaponType[i]->name);
+					    ->ToolTipText = weaponType[i]->name;
 					uiTabs[1]
 					    ->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_%d_DISABLED", i + 1))
 					    ->setVisible(true);
@@ -2056,7 +2057,7 @@ void CityView::update()
 			StateRef<Base> base;
 			if (agent->type->role == AgentType::Role::Soldier)
 			{
-				auto agentRName = tr(agent->getRankName()) + UString(" ") + agent->name;
+				auto agentRName = format("%s %s", agent->getRankName() + agent->name);
 				agentName->setText(agentRName);
 				if (agent->currentBuilding == agent->homeBuilding)
 				{
@@ -2072,21 +2073,21 @@ void CityView::update()
 					if (!agent->recentlyHired)
 					{
 						if (agent->currentBuilding)
-							agentAssignment->setText(tr("At") + UString(" ") +
-							                         tr(agent->currentBuilding->name));
+							agentAssignment->setText(
+							    tformat("At {1}", agent->currentBuilding->name));
 						else if (agent->currentVehicle && agent->currentVehicle->currentBuilding)
 							agentAssignment->setText(
-							    tr("At") + UString(" ") +
-							    tr(agent->currentVehicle->currentBuilding->name));
+							    tformat("At {1}", agent->currentVehicle->currentBuilding->name));
 						else if (!agent->missions.empty() &&
 						         agent->missions.front()->targetBuilding)
 						{
 							if (agent->missions.front()->targetBuilding == agent->homeBuilding)
-								agentAssignment->setText(tr("Returning to base"));
+								agentAssignment->setText(tformat("Returning to base"));
 							else
 								agentAssignment->setText(
-								    tr("Traveling to:") + UString(" ") +
-								    tr(agent->missions.front()->targetBuilding->name));
+
+								    tformat("Traveling to: {1}",
+								            agent->missions.front()->targetBuilding->name));
 						}
 						else if (agent->currentVehicle &&
 						         !agent->currentVehicle->missions.empty() &&
@@ -2094,18 +2095,17 @@ void CityView::update()
 						{
 							if (agent->currentVehicle->missions.front()->targetBuilding ==
 							    agent->homeBuilding)
-								agentAssignment->setText(tr("Returning to base"));
+								agentAssignment->setText(tformat("Returning to base"));
 							else
-								agentAssignment->setText(tr("Traveling to:") + UString(" ") +
-								                         tr(agent->currentVehicle->missions.front()
-								                                ->targetBuilding->name));
+								agentAssignment->setText(tformat(
+								    "Traveling to: {1}",
+								    agent->currentVehicle->missions.front()->targetBuilding->name));
 						}
 						else
-							agentAssignment->setText(tr("Traveling to:") + UString(" ") +
-							                         tr("map point"));
+							agentAssignment->setText(tformat("Traveling to: map point"));
 					}
 					else
-						agentAssignment->setText(tr("Reporting to base"));
+						agentAssignment->setText(tformat("Reporting to base"));
 				}
 			}
 			else
@@ -2118,31 +2118,31 @@ void CityView::update()
 			{
 				if (agent->missions.empty() &&
 				    agent->modified_stats.health < agent->current_stats.health)
-					agentAssignment->setText(tr("Wounded"));
+					agentAssignment->setText(tformat("Wounded"));
 				else
 					switch (agent->trainingAssignment)
 					{
 						case TrainingAssignment::None:
 							if (agent->type->canTrain)
-								agentAssignment->setText(tr("Not assigned to training"));
+								agentAssignment->setText(tformat("Not assigned to training"));
 							else
-								agentAssignment->setText(tr("(Android training not possible)"));
+								agentAssignment->setText(
+								    tformat("(Android training not possible)"));
 							break;
 						case TrainingAssignment::Physical:
 						{
-							UString efficiency = tr("Combat training (efficiency=");
 							int usage = base->getUsage(*state, FacilityType::Capacity::Training);
 							usage = (100.0f / std::max(100, usage)) * 100;
-							efficiency += format("%d%%", usage) + UString(")");
+							UString efficiency = tformat("Combat training (efficiency={1})", usage);
 							agentAssignment->setText(efficiency);
 							break;
 						}
 						case TrainingAssignment::Psi:
 						{
-							UString efficiency = tr("Psionic training (efficiency=");
 							int usage = base->getUsage(*state, FacilityType::Capacity::Psi);
 							usage = (100.0f / std::max(100, usage)) * 100;
-							efficiency += format("%d%%", usage) + UString(")");
+							UString efficiency =
+							    tformat("Psionic training (efficiency={1})", usage);
 							agentAssignment->setText(efficiency);
 							break;
 						}
@@ -2255,7 +2255,7 @@ void CityView::update()
 						{
 							if (fac->lab->current_project)
 							{
-								UString pr = tr(fac->lab->current_project->name);
+								UString pr = fac->lab->current_project->name;
 								int progress = (static_cast<float>(
 								                    fac->lab->current_project->man_hours_progress) /
 								                fac->lab->current_project->man_hours) *
@@ -2263,7 +2263,7 @@ void CityView::update()
 								agentAssignment->setText(pr + format(" (%d%%)", progress));
 							}
 							else
-								agentAssignment->setText(tr("No project assigned"));
+								agentAssignment->setText(tformat("No project assigned"));
 							break;
 						}
 					}
@@ -2271,9 +2271,9 @@ void CityView::update()
 				else
 				{
 					if (!agent->recentlyHired)
-						agentAssignment->setText(tr("Not assigned to lab"));
+						agentAssignment->setText(tformat("Not assigned to lab"));
 					else
-						agentAssignment->setText(tr("Reporting to base"));
+						agentAssignment->setText(tformat("Reporting to base"));
 				}
 			}
 			else
@@ -2378,7 +2378,7 @@ void CityView::update()
 						{
 							if (fac->lab->current_project)
 							{
-								UString pr = tr(fac->lab->current_project->name);
+								UString pr = fac->lab->current_project->name;
 								int progress =
 								    (static_cast<float>(fac->lab->manufacture_man_hours_invested +
 								                        fac->lab->current_project->man_hours *
@@ -2389,7 +2389,7 @@ void CityView::update()
 								agentAssignment->setText(pr + format(" (%d%%)", progress));
 							}
 							else
-								agentAssignment->setText(tr("No project assigned"));
+								agentAssignment->setText(tformat("No project assigned"));
 							break;
 						}
 					}
@@ -2397,9 +2397,9 @@ void CityView::update()
 				else
 				{
 					if (!agent->recentlyHired)
-						agentAssignment->setText(tr("Not assigned to workshop"));
+						agentAssignment->setText(tformat("Not assigned to workshop"));
 					else
-						agentAssignment->setText(tr("Reporting to base"));
+						agentAssignment->setText(tformat("Reporting to base"));
 				}
 			}
 			else
@@ -2504,7 +2504,7 @@ void CityView::update()
 						{
 							if (fac->lab->current_project)
 							{
-								UString pr = tr(fac->lab->current_project->name);
+								UString pr = fac->lab->current_project->name;
 								int progress = (static_cast<float>(
 								                    fac->lab->current_project->man_hours_progress) /
 								                fac->lab->current_project->man_hours) *
@@ -2512,7 +2512,7 @@ void CityView::update()
 								agentAssignment->setText(pr + format(" (%d%%)", progress));
 							}
 							else
-								agentAssignment->setText(tr("No project assigned"));
+								agentAssignment->setText(tformat("No project assigned"));
 							break;
 						}
 					}
@@ -2520,9 +2520,9 @@ void CityView::update()
 				else
 				{
 					if (!agent->recentlyHired)
-						agentAssignment->setText(tr("Not assigned to lab"));
+						agentAssignment->setText(tformat("Not assigned to lab"));
 					else
-						agentAssignment->setText(tr("Reporting to base"));
+						agentAssignment->setText(tformat("Reporting to base"));
 				}
 			}
 			else
@@ -2717,27 +2717,26 @@ void CityView::update()
 		                    static_cast<int>(selectedOrg->isRelatedTo(state->getPlayer())) ==
 		                        state->current_city->cityViewOrgButtonIndex - 1))
 		{
-			uiTabs[7]->findControlTyped<Label>("TEXT_ORG_NAME")->setText(tr(selectedOrg->name));
-			UString relation = "";
+			uiTabs[7]->findControlTyped<Label>("TEXT_ORG_NAME")->setText(selectedOrg->name);
+			UString relation;
 			switch (selectedOrg->isRelatedTo(state->getPlayer()))
 			{
 				case Organisation::Relation::Allied:
-					relation += tr(": allied with:");
+					relation = tformat(": allied with: {1}", state->getPlayer()->name);
 					break;
 				case Organisation::Relation::Friendly:
-					relation += tr(": friendly with:");
+					relation = tformat(": friendly with: {1}", state->getPlayer()->name);
 					break;
 				case Organisation::Relation::Neutral:
-					relation += tr(": neutral towards:");
+					relation = tformat(": neutral towards: {1}", state->getPlayer()->name);
 					break;
 				case Organisation::Relation::Unfriendly:
-					relation += tr(": unfriendly towards:");
+					relation = tformat(": unfriendly towards: {1}", state->getPlayer()->name);
 					break;
 				case Organisation::Relation::Hostile:
-					relation += tr(": hostile towards:");
+					relation = tformat(": hostile towards: {1}", state->getPlayer()->name);
 					break;
 			}
-			relation += UString(" ") + tr(state->getPlayer()->name);
 			uiTabs[7]->findControlTyped<Label>("TEXT_ORG_RELATION")->setText(relation);
 		}
 		else
@@ -3640,10 +3639,10 @@ bool CityView::handleGameStateEvent(Event *e)
 				break;
 			}
 
-			UString title = tr("Commence investigation");
-			UString message = format(tr("All selected units and crafts have arrived at %s. "
-			                            "Proceed with investigation? (%d units)"),
-			                         building->name, agents.size());
+			UString title = tformat("Commence investigation");
+			UString message = tformat("All selected units and crafts have arrived at {1}. "
+			                          "Proceed with investigation? ({2} units)",
+			                          building->name, agents.size());
 			fw().stageQueueCommand({StageCmd::Command::PUSH,
 			                        mksp<MessageBox>(
 			                            title, message, MessageBox::ButtonOptions::YesNo,
@@ -3708,9 +3707,10 @@ bool CityView::handleGameStateEvent(Event *e)
 			}
 			setUpdateSpeed(CityUpdateSpeed::Pause);
 			auto message_box = mksp<MessageBox>(
-			    tr("RESEARCH COMPLETE"),
-			    format("%s\n%s\n%s", tr("Research project completed:"), ev->topic->name,
-			           tr("Do you wish to view the UFOpaedia report?")),
+			    tformat("RESEARCH COMPLETE"),
+			    tformat(
+			        "Research project completed:\n{1}\nDo you wish to view the UFOPaedia report?",
+			        ev->topic->name),
 			    MessageBox::ButtonOptions::YesNo,
 			    // "Yes" callback
 			    [game_state, lab_facility, ufopaedia_category, ufopaedia_entry]() {
@@ -3779,9 +3779,9 @@ bool CityView::handleGameStateEvent(Event *e)
 			}
 			setUpdateSpeed(CityUpdateSpeed::Pause);
 			auto message_box = mksp<MessageBox>(
-			    tr("MANUFACTURE COMPLETED"),
-			    format("%s\n%s\n%s %d\n%d", lab_base->name, tr(item_name), tr("Quantity:"),
-			           ev->goal, tr("Do you wish to reasign the Workshop?")),
+			    tformat("MANUFACTURE COMPLETED"),
+			    tformat("{1}\n{2}\nQuantity: {3}\nDo you wish to reassign the Workshop?",
+			            lab_base->name, item_name, ev->goal),
 			    MessageBox::ButtonOptions::YesNo,
 			    // Yes callback
 			    [game_state, lab_facility]() {
@@ -3838,10 +3838,10 @@ bool CityView::handleGameStateEvent(Event *e)
 			}
 			setUpdateSpeed(CityUpdateSpeed::Pause);
 			auto message_box =
-			    mksp<MessageBox>(tr("MANUFACTURING HALTED"),
-			                     format("%s\n%s\n%s %d/%d\n%d", lab_base->name, tr(item_name),
-			                            tr("Completion status:"), ev->done, ev->goal,
-			                            tr("Production costs exceed your available funds.")),
+			    mksp<MessageBox>(tformat("MANUFACTURING HALTED"),
+			                     tformat("{1}\n{2}\nCompletion status: {3}/{4}\nProduction costs "
+			                             "exceed your availalble funds",
+			                             lab_base->name, item_name, ev->done, ev->goal),
 			                     MessageBox::ButtonOptions::Ok);
 			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 		}
@@ -3856,8 +3856,8 @@ bool CityView::handleGameStateEvent(Event *e)
 			}
 			setUpdateSpeed(CityUpdateSpeed::Pause);
 			auto message_box =
-			    mksp<MessageBox>(tr("FACILITY COMPLETED"),
-			                     format("%s\n%s", ev->base->name, tr(ev->facility->type->name)),
+			    mksp<MessageBox>(tformat("FACILITY COMPLETED"),
+			                     format("%s\n%s", ev->base->name, ev->facility->type->name),
 			                     MessageBox::ButtonOptions::Ok);
 			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 		}
@@ -3982,14 +3982,14 @@ void CityView::setSelectionState(CitySelectionState selectionState)
 		case CitySelectionState::AttackBuilding:
 		{
 			overlayTab->findControlTyped<Label>("TEXT")->setText(
-			    tr("Click on building for selected vehicle to attack"));
+			    tformat("Click on building for selected vehicle to attack"));
 			overlayTab->setVisible(true);
 			break;
 		}
 		case CitySelectionState::AttackVehicle:
 		{
 			overlayTab->findControlTyped<Label>("TEXT")->setText(
-			    tr("Click on target vehicle for selected vehicle"));
+			    tformat("Click on target vehicle for selected vehicle"));
 			overlayTab->setVisible(true);
 			break;
 		}
@@ -4000,22 +4000,22 @@ void CityView::setSelectionState(CitySelectionState selectionState)
 			{
 				if (state->current_city->cityViewSelectedVehicles.size() > 1)
 				{
-					message = tr("Click on destination building for selected vehicles");
+					message = tformat("Click on destination building for selected vehicles");
 				}
 				else
 				{
-					message = tr("Click on destination building for selected vehicle");
+					message = tformat("Click on destination building for selected vehicle");
 				}
 			}
 			else
 			{
 				if (state->current_city->cityViewSelectedAgents.size() > 1)
 				{
-					message = tr("Click on destination building for selected people");
+					message = tformat("Click on destination building for selected people");
 				}
 				else
 				{
-					message = tr("Click on destination building for selected person");
+					message = tformat("Click on destination building for selected person");
 				}
 			}
 			overlayTab->findControlTyped<Label>("TEXT")->setText(message);
@@ -4025,13 +4025,13 @@ void CityView::setSelectionState(CitySelectionState selectionState)
 		case CitySelectionState::GotoLocation:
 		{
 			overlayTab->findControlTyped<Label>("TEXT")->setText(
-			    tr("Click on destination map point for selected vehicle"));
+			    tformat("Click on destination map point for selected vehicle"));
 			overlayTab->setVisible(true);
 			break;
 		}
 		case CitySelectionState::ManualControl:
 		{
-			overlayTab->findControlTyped<Label>("TEXT")->setText(tr("Manual control"));
+			overlayTab->findControlTyped<Label>("TEXT")->setText(tformat("Manual control"));
 			overlayTab->setVisible(true);
 			break;
 		}

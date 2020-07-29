@@ -28,6 +28,7 @@
 #include "game/ui/general/messagebox.h"
 #include "game/ui/ufopaedia/ufopaediacategoryview.h"
 #include "library/strings_format.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -108,8 +109,9 @@ void BaseScreen::begin()
 			    fw().stageQueueCommand(
 			        {StageCmd::Command::PUSH,
 			         mksp<MessageBox>(
-			             tr("Transfer"),
-			             tr("At least two bases are required before transfers become possible."),
+			             tformat("Transfer"),
+			             tformat(
+			                 "At least two bases are required before transfers become possible."),
 			             MessageBox::ButtonOptions::Ok)});
 		    }
 		    else
@@ -310,30 +312,33 @@ void BaseScreen::eventOccurred(Event *e)
 						case Base::BuildError::Occupied:
 							fw().stageQueueCommand(
 							    {StageCmd::Command::PUSH,
-							     mksp<MessageBox>(tr("Area Occupied By Existing Facility"),
-							                      tr("Existing facilities in this area of the base "
-							                         "must be destroyed "
-							                         "before construction work can begin."),
-							                      MessageBox::ButtonOptions::Ok)});
+							     mksp<MessageBox>(
+							         tformat("Area Occupied By Existing Facility"),
+							         tformat("Existing facilities in this area of the base "
+							                 "must be destroyed "
+							                 "before construction work can begin."),
+							         MessageBox::ButtonOptions::Ok)});
 							break;
 						case Base::BuildError::OutOfBounds:
 							fw().stageQueueCommand(
 							    {StageCmd::Command::PUSH,
 							     mksp<MessageBox>(
-							         tr("Planning Permission Denied"),
-							         tr("Planning permission is denied for this proposed extension "
-							            "to "
-							            "the base, on the grounds that the additional excavations "
-							            "required would seriously weaken the foundations of the "
-							            "building."),
+							         tformat("Planning Permission Denied"),
+							         tformat(
+							             "Planning permission is denied for this proposed "
+							             "extension "
+							             "to "
+							             "the base, on the grounds that the additional excavations "
+							             "required would seriously weaken the foundations of the "
+							             "building."),
 							         MessageBox::ButtonOptions::Ok)});
 							break;
 						case Base::BuildError::NoMoney:
 							fw().stageQueueCommand(
 							    {StageCmd::Command::PUSH,
-							     mksp<MessageBox>(tr("Funds exceeded"),
-							                      tr("The proposed construction work is not "
-							                         "possible with your available funds."),
+							     mksp<MessageBox>(tformat("Funds exceeded"),
+							                      tformat("The proposed construction work is not "
+							                              "possible with your available funds."),
 							                      MessageBox::ButtonOptions::Ok)});
 							break;
 						case Base::BuildError::Indestructible:
@@ -357,7 +362,8 @@ void BaseScreen::eventOccurred(Event *e)
 						case Base::BuildError::NoError:
 							fw().stageQueueCommand(
 							    {StageCmd::Command::PUSH,
-							     mksp<MessageBox>(tr("Destroy facility"), tr("Are you sure?"),
+							     mksp<MessageBox>(tformat("Destroy facility"),
+							                      tformat("Are you sure?"),
 							                      MessageBox::ButtonOptions::YesNo, [this] {
 								                      this->state->current_base->destroyFacility(
 								                          *this->state, this->selection);
@@ -367,7 +373,7 @@ void BaseScreen::eventOccurred(Event *e)
 						case Base::BuildError::Occupied:
 							fw().stageQueueCommand(
 							    {StageCmd::Command::PUSH,
-							     mksp<MessageBox>(tr("Facility in use"), tr(""),
+							     mksp<MessageBox>(tformat("Facility in use"), "",
 							                      MessageBox::ButtonOptions::Ok)});
 						default:
 							break;
@@ -390,24 +396,24 @@ void BaseScreen::eventOccurred(Event *e)
 	}
 	if (dragFacility)
 	{
-		selText->setText(tr(dragFacility->name));
+		selText->setText(dragFacility->name);
 		selGraphic->setImage(dragFacility->sprite);
-		statsLabels[0]->setText(tr("Cost to build"));
+		statsLabels[0]->setText(tformat("Cost to build"));
 		statsValues[0]->setText(format("$%d", dragFacility->buildCost));
-		statsLabels[1]->setText(tr("Days to build"));
+		statsLabels[1]->setText(tformat("Days to build"));
 		statsValues[1]->setText(format("%d", dragFacility->buildTime));
-		statsLabels[2]->setText(tr("Maintenance cost"));
+		statsLabels[2]->setText(tformat("Maintenance cost"));
 		statsValues[2]->setText(format("$%d", dragFacility->weeklyCost));
 	}
 	else if (selFacility != nullptr)
 	{
-		selText->setText(tr(selFacility->type->name));
+		selText->setText(selFacility->type->name);
 		selGraphic->setImage(selFacility->type->sprite);
 		if (selFacility->type->capacityAmount > 0)
 		{
-			statsLabels[0]->setText(tr("Capacity"));
+			statsLabels[0]->setText(tformat("Capacity"));
 			statsValues[0]->setText(format("%d", selFacility->type->capacityAmount));
-			statsLabels[1]->setText(tr("Usage"));
+			statsLabels[1]->setText(tformat("Usage"));
 			statsValues[1]->setText(
 			    format("%d%%", state->current_base->getUsage(*state, selFacility)));
 		}
@@ -419,11 +425,11 @@ void BaseScreen::eventOccurred(Event *e)
 		    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:%d:xcom3/ufodata/base.pcx", sprite);
 		if (sprite != 0)
 		{
-			selText->setText(tr("Corridor"));
+			selText->setText(tformat("Corridor"));
 		}
 		else
 		{
-			selText->setText(tr("Earth"));
+			selText->setText(tformat("Earth"));
 		}
 		selGraphic->setImage(fw().data->loadImage(image));
 	}

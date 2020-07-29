@@ -1,6 +1,7 @@
 #include "game/state/gametime.h"
 #include "game/state/gametime_facet.h"
 #include "library/strings_format.h"
+#include "library/strings_translate.h"
 #include <locale>
 #include <sstream>
 
@@ -70,23 +71,25 @@ UString GameTime::getLongDateString() const
 		apoc_date_facet *dateFacet = new apoc_date_facet("%A, %E %B, %Y");
 		DATE_LONG_FORMAT = new std::locale(std::locale::classic(), dateFacet);
 
-		std::vector<std::string> months = {tr("January"), tr("February"), tr("March"),
-		                                   tr("April"),   tr("May"),      tr("June"),
-		                                   tr("July"),    tr("August"),   tr("September"),
-		                                   tr("October"), tr("November"), tr("December")};
+		std::vector<std::string> months = {
+		    tformat("January"),   tformat("February"), tformat("March"),    tformat("April"),
+		    tformat("May"),       tformat("June"),     tformat("July"),     tformat("August"),
+		    tformat("September"), tformat("October"),  tformat("November"), tformat("December")};
 		dateFacet->long_month_names(months);
 
-		std::vector<std::string> weekdays = {tr("Sunday"),    tr("Monday"),   tr("Tuesday"),
-		                                     tr("Wednesday"), tr("Thursday"), tr("Friday"),
-		                                     tr("Saturday")};
+		std::vector<std::string> weekdays = {
+		    tformat("Sunday"),   tformat("Monday"), tformat("Tuesday"), tformat("Wednesday"),
+		    tformat("Thursday"), tformat("Friday"), tformat("Saturday")};
 		dateFacet->long_weekday_names(weekdays);
 
 		std::vector<std::string> days = {
-		    tr("1st"),  tr("2nd"),  tr("3rd"),  tr("4th"),  tr("5th"),  tr("6th"),  tr("7th"),
-		    tr("8th"),  tr("9th"),  tr("10th"), tr("11th"), tr("12th"), tr("13th"), tr("14th"),
-		    tr("15th"), tr("16th"), tr("17th"), tr("18th"), tr("19th"), tr("20th"), tr("21st"),
-		    tr("22nd"), tr("23rd"), tr("24th"), tr("25th"), tr("26th"), tr("27th"), tr("28th"),
-		    tr("29th"), tr("30th"), tr("31st")};
+		    tformat("1st"),  tformat("2nd"),  tformat("3rd"),  tformat("4th"),  tformat("5th"),
+		    tformat("6th"),  tformat("7th"),  tformat("8th"),  tformat("9th"),  tformat("10th"),
+		    tformat("11th"), tformat("12th"), tformat("13th"), tformat("14th"), tformat("15th"),
+		    tformat("16th"), tformat("17th"), tformat("18th"), tformat("19th"), tformat("20th"),
+		    tformat("21st"), tformat("22nd"), tformat("23rd"), tformat("24th"), tformat("25th"),
+		    tformat("26th"), tformat("27th"), tformat("28th"), tformat("29th"), tformat("30th"),
+		    tformat("31st")};
 		dateFacet->longDayNames(days);
 	}
 	ss.imbue(*DATE_LONG_FORMAT);
@@ -102,18 +105,20 @@ UString GameTime::getShortDateString() const
 		apoc_date_facet *dateFacet = new apoc_date_facet("%E %B, %Y");
 		DATE_SHORT_FORMAT = new std::locale(std::locale::classic(), dateFacet);
 
-		std::vector<std::string> months = {tr("January"), tr("February"), tr("March"),
-		                                   tr("April"),   tr("May"),      tr("June"),
-		                                   tr("July"),    tr("August"),   tr("September"),
-		                                   tr("October"), tr("November"), tr("December")};
+		std::vector<std::string> months = {
+		    tformat("January"),   tformat("February"), tformat("March"),    tformat("April"),
+		    tformat("May"),       tformat("June"),     tformat("July"),     tformat("August"),
+		    tformat("September"), tformat("October"),  tformat("November"), tformat("December")};
 		dateFacet->long_month_names(months);
 
 		std::vector<std::string> days = {
-		    tr("1st"),  tr("2nd"),  tr("3rd"),  tr("4th"),  tr("5th"),  tr("6th"),  tr("7th"),
-		    tr("8th"),  tr("9th"),  tr("10th"), tr("11th"), tr("12th"), tr("13th"), tr("14th"),
-		    tr("15th"), tr("16th"), tr("17th"), tr("18th"), tr("19th"), tr("20th"), tr("21st"),
-		    tr("22nd"), tr("23rd"), tr("24th"), tr("25th"), tr("26th"), tr("27th"), tr("28th"),
-		    tr("29th"), tr("30th"), tr("31st")};
+		    tformat("1st"),  tformat("2nd"),  tformat("3rd"),  tformat("4th"),  tformat("5th"),
+		    tformat("6th"),  tformat("7th"),  tformat("8th"),  tformat("9th"),  tformat("10th"),
+		    tformat("11th"), tformat("12th"), tformat("13th"), tformat("14th"), tformat("15th"),
+		    tformat("16th"), tformat("17th"), tformat("18th"), tformat("19th"), tformat("20th"),
+		    tformat("21st"), tformat("22nd"), tformat("23rd"), tformat("24th"), tformat("25th"),
+		    tformat("26th"), tformat("27th"), tformat("28th"), tformat("29th"), tformat("30th"),
+		    tformat("31st")};
 		dateFacet->longDayNames(days);
 	}
 	ss.imbue(*DATE_SHORT_FORMAT);
@@ -121,7 +126,7 @@ UString GameTime::getShortDateString() const
 	return ss.str();
 }
 
-UString GameTime::getWeekString() const { return format("%s %d", tr("Week"), getWeek()); }
+UString GameTime::getWeekString() const { return format("%s %d", tformat("Week"), getWeek()); }
 
 unsigned int GameTime::getWeek() const
 {

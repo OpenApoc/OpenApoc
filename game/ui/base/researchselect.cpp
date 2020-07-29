@@ -19,6 +19,7 @@
 #include "game/state/shared/organisation.h"
 #include "game/ui/general/messagebox.h"
 #include "library/strings_format.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -43,22 +44,22 @@ void ResearchSelect::begin()
 	switch (this->lab->type)
 	{
 		case ResearchTopic::Type::BioChem:
-			title->setText(tr("Select Biochemistry Project"));
-			progress->setText(tr("Progress"));
-			skill->setText(tr("Skill"));
+			title->setText(tformat("Select Biochemistry Project"));
+			progress->setText(tformat("Progress"));
+			skill->setText(tformat("Skill"));
 			break;
 		case ResearchTopic::Type::Physics:
-			title->setText(tr("Select Physics Project"));
-			progress->setText(tr("Progress"));
-			skill->setText(tr("Skill"));
+			title->setText(tformat("Select Physics Project"));
+			progress->setText(tformat("Progress"));
+			skill->setText(tformat("Skill"));
 			break;
 		case ResearchTopic::Type::Engineering:
-			title->setText(tr("Select Manufacturing Project"));
-			progress->setText(tr("Unit Cost"));
-			skill->setText(tr("Skill Hours"));
+			title->setText(tformat("Select Manufacturing Project"));
+			progress->setText(tformat("Unit Cost"));
+			skill->setText(tformat("Skill Hours"));
 			break;
 		default:
-			title->setText(tr("Select Unknown Project"));
+			title->setText(tformat("Select Unknown Project"));
 			break;
 	}
 	this->populateResearchList();
@@ -79,8 +80,8 @@ void ResearchSelect::begin()
 			if (topic->isComplete())
 			{
 				LogInfo("Topic already complete");
-				auto message_box = mksp<MessageBox>(tr("PROJECT COMPLETE"),
-				                                    tr("This project is already complete."),
+				auto message_box = mksp<MessageBox>(tformat("PROJECT COMPLETE"),
+				                                    tformat("This project is already complete."),
 				                                    MessageBox::ButtonOptions::Ok);
 				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 				// Restore previous selection
@@ -92,8 +93,8 @@ void ResearchSelect::begin()
 			{
 				LogInfo("Topic is large and lab is small");
 				auto message_box =
-				    mksp<MessageBox>(tr("PROJECT TOO LARGE"),
-				                     tr("This project requires an advanced lab or workshop."),
+				    mksp<MessageBox>(tformat("PROJECT TOO LARGE"),
+				                     tformat("This project requires an advanced lab or workshop."),
 				                     MessageBox::ButtonOptions::Ok);
 				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 				// Restore previous selection
@@ -104,9 +105,10 @@ void ResearchSelect::begin()
 			    topic->cost > state->player->balance)
 			{
 				LogInfo("Cannot afford to manufacture");
-				auto message_box = mksp<MessageBox>(
-				    tr("FUNDS EXCEEDED"), tr("Production costs exceed your available funds."),
-				    MessageBox::ButtonOptions::Ok);
+				auto message_box =
+				    mksp<MessageBox>(tformat("FUNDS EXCEEDED"),
+				                     tformat("Production costs exceed your available funds."),
+				                     MessageBox::ButtonOptions::Ok);
 				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 				// Restore previous selection
 				list->setSelected(current_topic ? control_map[current_topic] : nullptr);
@@ -130,8 +132,8 @@ void ResearchSelect::begin()
 		auto pic = this->form->findControlTyped<Graphic>("GRAPHIC_SELECTED");
 		if (topic)
 		{
-			title->setText(tr(topic->name));
-			description->setText(tr(topic->description));
+			title->setText(topic->name);
+			description->setText(topic->description);
 			if (topic->picture)
 			{
 				pic->setImage(topic->picture);
@@ -247,7 +249,7 @@ void ResearchSelect::populateResearchList()
 			if (this->lab->type == ResearchTopic::Type::Engineering)
 				progress_text = format("$%d", t->cost);
 			else
-				progress_text = tr("Complete");
+				progress_text = tformat("Complete");
 			auto progress_label =
 			    control->createChild<Label>(progress_text, ui().getFont("smalfont"));
 			progress_label->Size = {100, 18};
@@ -306,13 +308,13 @@ void ResearchSelect::populateResearchList()
 		switch (t->required_lab_size)
 		{
 			case ResearchTopic::LabSize::Small:
-				labSize = tr("Small");
+				labSize = tformat("Small");
 				break;
 			case ResearchTopic::LabSize::Large:
-				labSize = tr("Large");
+				labSize = tformat("Large");
 				break;
 			default:
-				labSize = tr("UNKNOWN");
+				labSize = tformat("UNKNOWN");
 				break;
 		}
 

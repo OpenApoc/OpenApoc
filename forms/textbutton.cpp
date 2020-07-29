@@ -10,6 +10,7 @@
 #include "framework/sound.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -152,7 +153,7 @@ void TextButton::configureSelfFromXml(pugi::xml_node *node)
 
 	if (node->attribute("text"))
 	{
-		label->setText(tr(node->attribute("text").as_string()));
+		label->setText(tformat(node->attribute("text").as_string()));
 	}
 	auto fontNode = node->child("font");
 	if (fontNode)

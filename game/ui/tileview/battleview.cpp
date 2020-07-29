@@ -49,6 +49,7 @@
 #include "game/ui/general/savemenu.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
+#include "library/strings_translate.h"
 #include <cmath>
 #include <glm/glm.hpp>
 
@@ -172,7 +173,7 @@ BattleView::BattleView(sp<GameState> gameState)
 	}
 	{
 		executePlanPopup = mksp<BattleTurnBasedConfirmBox>(
-		    tr("Execute remaining movement orders for this unit?"),
+		    tformat("Execute remaining movement orders for this unit?"),
 		    [this] {
 			    unitPendingConfirmation->missions.pop_front();
 			    unitPendingConfirmation = nullptr;
@@ -1670,30 +1671,30 @@ void BattleView::update()
 			if ((battle.loserHasRetreated && battle.playerWon) ||
 			    (battle.winnerHasRetreated && !battle.playerWon))
 			{
-				message = tr("All hostile units have fled the combat zone. You win.");
+				message = tformat("All hostile units have fled the combat zone. You win.");
 			}
 			else if ((battle.loserHasRetreated && !battle.playerWon) ||
 			         (battle.winnerHasRetreated && battle.playerWon) ||
 			         (!battle.playerWon && !battle.loserHasRetreated && !battle.winnerHasRetreated))
 			{
-				message = tr("All your units have fled the combat zone. You win.");
+				message = tformat("All your units have fled the combat zone. You win.");
 			}
 			else
 			{
-				message = tr("All hostile units are dead or unconscious. You win.");
+				message = tformat("All hostile units are dead or unconscious. You win.");
 			}
 		}
 		else if (battle.loserHasRetreated)
 		{
-			message = tr("All your units have fled the combat zone. You lose.");
+			message = tformat("All your units have fled the combat zone. You lose.");
 		}
 		else if (battle.winnerHasRetreated)
 		{
-			message = tr("All hostile units have fled the combat zone. You lose.");
+			message = tformat("All hostile units have fled the combat zone. You lose.");
 		}
 		else
 		{
-			message = tr("All your units are unconscious or dead. You lose.");
+			message = tformat("All your units are unconscious or dead. You lose.");
 		}
 		fw().stageQueueCommand(
 		    {StageCmd::Command::PUSH, mksp<MessageBox>("", message, MessageBox::ButtonOptions::Ok,
@@ -2114,7 +2115,7 @@ void BattleView::refreshDelayText()
 	UString text;
 	if (delay == 0)
 	{
-		text = format(tr("Activates now."));
+		text = format(tformat("Activates now."));
 	}
 	else
 	{
@@ -2122,16 +2123,16 @@ void BattleView::refreshDelayText()
 		{
 			if (delay == 1)
 			{
-				text = format(tr("Activates at end of turn."));
+				text = format(tformat("Activates at end of turn."));
 			}
 			else
 			{
-				text = format("%s %d", tr("Turns before activation:"), delay - 1);
+				text = format("Turns before activation: {1}", delay - 1);
 			}
 		}
 		else
 		{
-			text = format(tr("Delay = %i"), (int)((float)delay / 4.0f));
+			text = tformat("Delay = {1}", (int)((float)delay / 4.0f));
 		}
 	}
 	primingTab->findControlTyped<Label>("DELAY_TEXT")->setText(text);
@@ -2141,7 +2142,8 @@ void BattleView::refreshRangeText()
 {
 	int range = primingTab->findControlTyped<ScrollBar>("RANGE_SLIDER")->getValue();
 
-	UString text = format(tr("Range = %2.1fm."), ((float)(range + 1) * 1.5f));
+	UString text =
+	    format(tformat("Range = {1,width=2,precision=1}m."), ((float)(range + 1) * 1.5f));
 	primingTab->findControlTyped<Label>("RANGE_TEXT")->setText(text);
 }
 
@@ -2460,9 +2462,10 @@ void BattleView::orderUse(bool right, bool automatic)
 	}
 	if (!item->canBeUsed(*state))
 	{
-		auto message_box = mksp<MessageBox>(
-		    tr("Alien Artifact"), tr("You must research Alien technology before you can use it."),
-		    MessageBox::ButtonOptions::Ok);
+		auto message_box =
+		    mksp<MessageBox>(tformat("Alien Artifact"),
+		                     tformat("You must research Alien technology before you can use it."),
+		                     MessageBox::ButtonOptions::Ok);
 		fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 		return;
 	}
@@ -4009,29 +4012,30 @@ void BattleView::updateItemInfo(bool right)
 		activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND")
 		    ->setImage(info.itemType->equipscreen_sprite);
 		activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND")->ToolTipText =
-		    tr(info.itemType->name);
+		    info.itemType->name;
 		if (info.damageType)
 		{
 			activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_DAMAGETYPE")
 			    ->setImage(info.damageType->icon_sprite);
 			activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_DAMAGETYPE")->ToolTipText =
-			    tr(info.damageType->name);
+			    info.damageType->name;
 		}
 		else
 		{
 			activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_DAMAGETYPE")
 			    ->setImage(nullptr);
 			activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_DAMAGETYPE")->ToolTipText =
-			    tr("None");
+			    tformat("None");
 		}
 	}
 	else
 	{
 		activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND")->setImage(nullptr);
-		activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND")->ToolTipText = tr("Empty");
+		activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_HAND")->ToolTipText =
+		    tformat("Empty");
 		activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_DAMAGETYPE")->setImage(nullptr);
 		activeTab->findControlTyped<Graphic>("IMAGE_" + name + "_DAMAGETYPE")->ToolTipText =
-		    tr("None");
+		    tformat("None");
 	}
 
 	// Selection bracket

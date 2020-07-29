@@ -7,6 +7,7 @@
 #include "framework/renderer.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -96,7 +97,7 @@ sp<Control> Label::copyTo(sp<Control> CopyParent)
 void Label::configureSelfFromXml(pugi::xml_node *node)
 {
 	Control::configureSelfFromXml(node);
-	text = tr(node->attribute("text").as_string());
+	text = tformat(node->attribute("text").as_string());
 
 	UString tintAttribute = node->attribute("tint").as_string();
 	if (!tintAttribute.empty())

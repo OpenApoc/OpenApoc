@@ -9,6 +9,7 @@
 #include "framework/renderer.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/battle/damage.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -38,7 +39,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 	form->findControlTyped<Graphic>("SELECTED_RANK")
 	    ->setImage(item.type->displayRank ? ranks[(int)item.rank] : nullptr);
 
-	form->findControlTyped<Label>("LABEL_1")->setText(tr("Health"));
+	form->findControlTyped<Label>("LABEL_1")->setText(tformat("Health"));
 	form->findControlTyped<Graphic>("VALUE_1")->setImage(
 	    createStatsBar(item.initial_stats.health, item.current_stats.health,
 	                   item.modified_stats.health, 100, healthColour, {88, 7}));
@@ -46,7 +47,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 	    form->findControlTyped<Label>("LABEL_1")->getText() +
 	    format(": %d/%d", item.modified_stats.health, item.current_stats.health);
 
-	form->findControlTyped<Label>("LABEL_2")->setText(tr("Accuracy"));
+	form->findControlTyped<Label>("LABEL_2")->setText(tformat("Accuracy"));
 	form->findControlTyped<Graphic>("VALUE_2")->setImage(
 	    createStatsBar(item.initial_stats.accuracy, item.current_stats.accuracy,
 	                   item.modified_stats.accuracy, 100, accuracyColour, {88, 7}));
@@ -54,7 +55,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 	    form->findControlTyped<Label>("LABEL_2")->getText() +
 	    format(": %d/%d", item.modified_stats.accuracy, item.current_stats.accuracy);
 
-	form->findControlTyped<Label>("LABEL_3")->setText(tr("Reactions"));
+	form->findControlTyped<Label>("LABEL_3")->setText(tformat("Reactions"));
 	form->findControlTyped<Graphic>("VALUE_3")->setImage(
 	    createStatsBar(item.initial_stats.reactions, item.current_stats.reactions,
 	                   item.modified_stats.reactions, 100, reactionsColour, {88, 7}));
@@ -62,7 +63,8 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 	    form->findControlTyped<Label>("LABEL_3")->getText() +
 	    format(": %d/%d", item.modified_stats.reactions, item.current_stats.reactions);
 
-	form->findControlTyped<Label>("LABEL_4")->setText(turnBased ? tr("Time Units") : tr("Speed"));
+	form->findControlTyped<Label>("LABEL_4")->setText(turnBased ? tformat("Time Units")
+	                                                            : tformat("Speed"));
 	form->findControlTyped<Graphic>("VALUE_4")->ToolTipText =
 	    form->findControlTyped<Label>("LABEL_4")->getText();
 	if (turnBased)
@@ -83,7 +85,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 		           item.current_stats.getDisplaySpeedValue());
 	}
 
-	form->findControlTyped<Label>("LABEL_5")->setText(tr("Stamina"));
+	form->findControlTyped<Label>("LABEL_5")->setText(tformat("Stamina"));
 	form->findControlTyped<Graphic>("VALUE_5")->setImage(createStatsBar(
 	    item.initial_stats.getDisplayStaminaValue(), item.current_stats.getDisplayStaminaValue(),
 	    item.modified_stats.getDisplayStaminaValue(), 100, staminaColour, {88, 7}));
@@ -92,7 +94,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 	    format(": %d/%d", item.modified_stats.getDisplayStaminaValue(),
 	           item.current_stats.getDisplayStaminaValue());
 
-	form->findControlTyped<Label>("LABEL_6")->setText(tr("Bravery"));
+	form->findControlTyped<Label>("LABEL_6")->setText(tformat("Bravery"));
 	form->findControlTyped<Graphic>("VALUE_6")->setImage(
 	    createStatsBar(item.initial_stats.bravery, item.current_stats.bravery,
 	                   item.modified_stats.bravery, 100, braveryColour, {88, 7}));
@@ -100,7 +102,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 	    form->findControlTyped<Label>("LABEL_6")->getText() +
 	    format(": %d/%d", item.modified_stats.bravery, item.current_stats.bravery);
 
-	form->findControlTyped<Label>("LABEL_7")->setText(tr("Strength"));
+	form->findControlTyped<Label>("LABEL_7")->setText(tformat("Strength"));
 	form->findControlTyped<Graphic>("VALUE_7")->setImage(
 	    createStatsBar(item.initial_stats.strength, item.current_stats.strength,
 	                   item.modified_stats.strength, 100, strengthColour, {88, 7}));
@@ -108,7 +110,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 	    form->findControlTyped<Label>("LABEL_7")->getText() +
 	    format(": %d/%d", item.modified_stats.strength, item.current_stats.strength);
 
-	form->findControlTyped<Label>("LABEL_8")->setText(tr("Psi-energy"));
+	form->findControlTyped<Label>("LABEL_8")->setText(tformat("Psi-energy"));
 	form->findControlTyped<Graphic>("VALUE_8")->setImage(
 	    createStatsBar(item.initial_stats.psi_energy, item.current_stats.psi_energy,
 	                   item.modified_stats.psi_energy, 100, psiEnergyColour, {88, 7}));
@@ -116,7 +118,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 	    form->findControlTyped<Label>("LABEL_8")->getText() +
 	    format(": %d/%d", item.modified_stats.psi_energy, item.current_stats.psi_energy);
 
-	form->findControlTyped<Label>("LABEL_9")->setText(tr("Psi-attack"));
+	form->findControlTyped<Label>("LABEL_9")->setText(tformat("Psi-attack"));
 	form->findControlTyped<Graphic>("VALUE_9")->setImage(
 	    createStatsBar(item.initial_stats.psi_attack, item.current_stats.psi_attack,
 	                   item.modified_stats.psi_attack, 100, psiAttackColour, {88, 7}));
@@ -124,7 +126,7 @@ void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool 
 	    form->findControlTyped<Label>("LABEL_9")->getText() +
 	    format(": %d/%d", item.modified_stats.psi_attack, item.current_stats.psi_attack);
 
-	form->findControlTyped<Label>("LABEL_10")->setText(tr("Psi-defence"));
+	form->findControlTyped<Label>("LABEL_10")->setText(tformat("Psi-defence"));
 	form->findControlTyped<Graphic>("VALUE_10")
 	    ->setImage(createStatsBar(item.initial_stats.psi_defence, item.current_stats.psi_defence,
 	                              item.modified_stats.psi_defence, 100, psiDefenceColour, {88, 7}));

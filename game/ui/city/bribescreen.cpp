@@ -8,6 +8,7 @@
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"
 #include "game/state/shared/organisation.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -28,61 +29,66 @@ void BribeScreen::updateInfo()
 	UString relationship;
 	UString offer;
 	bribe = organisation->costOfBribeBy(state->getPlayer());
+	const auto &playername = state->getPlayer()->name;
 
 	switch (organisation->isRelatedTo(state->getPlayer()))
 	{
 		case Organisation::Relation::Allied:
-			relationship = ": allied with:";
-			offer =
-			    tr("X-COM is ALLIED with this organization. The relationship cannot be improved.");
+			relationship = tformat("{1}: allied with: {2}", organisation->name, playername);
+			offer = tformat(
+			    "{1} is ALLIED with this organization. The relationship cannot be improved.",
+			    playername);
 			bribe = 0;
 			break;
 
 		case Organisation::Relation::Friendly:
-			relationship = ": friendly with:";
-			offer = getOfferString(bribe, tr("ALLIED"));
+			relationship = tformat("{1}: friendly with: {2}", organisation->name, playername);
+			offer = getOfferString(bribe, tformat("ALLIED"));
 			break;
 
 		case Organisation::Relation::Neutral:
-			relationship = ": neutral towards:";
-			offer = getOfferString(bribe, tr("FRIENDLY"));
+			relationship = tformat("{1}: neutral towards: {2}", organisation->name, playername);
+			offer = getOfferString(bribe, tformat("FRIENDLY"));
 			break;
 
 		case Organisation::Relation::Unfriendly:
-			relationship = ": unfriendly towards:";
-			offer = getOfferString(bribe, tr("NEUTRAL"));
+			relationship = tformat("{1}: unfriendly towards: {2}", organisation->name, playername);
+			offer = getOfferString(bribe, tformat("NEUTRAL"));
 			break;
 
 		case Organisation::Relation::Hostile:
-			relationship = ": hostile towards:";
+			relationship = tformat("{1}: hostile towards: {2}", organisation->name, playername);
 			if (organisation->isRelatedTo(state->getAliens()) == Organisation::Relation::Allied)
 			{
-				offer = tr("Whilst X-COM continue to oppose our Alien friends we will remain "
-				           "hostile. Negotiations are impossible.");
+				offer = tformat("Whilst {1} continue to oppose our Alien friends we will remain "
+				                "hostile. Negotiations are impossible.",
+				                playername);
 				bribe = 0;
 			}
 			else
 			{
-				offer = getOfferString(bribe, tr("UNFRIENDLY"));
+				offer = getOfferString(bribe, tformat("UNFRIENDLY"));
 			}
 			break;
 
 		default:
-			relationship = ": Attitude unknown towards:";
-			offer = "Unconventional relations";
+			relationship =
+			    tformat("{1}: Attitude unknown towards: {2}", organisation->name, playername);
+			offer = tformat("Unconventional relations");
 			bribe = 0;
 			LogError(offer);
 	}
 
 	if (organisation->takenOver)
 	{
-		offer = tr("This organization is under Alien control.The Alien race will not enter "
-		           "negotiations with X-COM.");
+		offer = tformat("This organization is under Alien control.The Alien race will not enter "
+		                "negotiations with {1}.",
+		                playername);
 		bribe = 0;
 	}
 
 	labelFunds->setText(state->getPlayerBalance());
-	labelRelation->setText(format("%s%s X-COM", tr(organisation->name), tr(relationship)));
+	labelRelation->setText(relationship);
 	labelOffer->setText(offer);
 }
 
@@ -94,8 +100,7 @@ void BribeScreen::updateInfo()
  */
 UString BribeScreen::getOfferString(int itWillCost, const UString &newAttitude) const
 {
-	return format("%s %d  %s  %s", tr("It will cost: $"), itWillCost,
-	              tr("to improve relations to:"), newAttitude);
+	return tformat("It will cost: ${1} to improve relations to: {2}", itWillCost, newAttitude);
 }
 
 void BribeScreen::begin()

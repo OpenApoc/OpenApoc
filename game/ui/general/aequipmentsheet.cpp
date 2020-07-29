@@ -3,6 +3,7 @@
 #include "forms/label.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/battle/damage.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -55,7 +56,7 @@ void AEquipmentSheet::displayImplementation(sp<AEquipment> item, const AEquipmen
 	    ->setImage(item ? item->getEquipmentImage() : itemType.equipscreen_sprite);
 
 	// when possible, the actual item's weight takes precedence
-	form->findControlTyped<Label>("LABEL_1_L")->setText(tr("Weight"));
+	form->findControlTyped<Label>("LABEL_1_L")->setText(tformat("Weight"));
 	form->findControlTyped<Label>("LABEL_1_R")
 	    ->setText(format("%d", item ? item->getWeight() : itemType.weight));
 
@@ -101,35 +102,35 @@ void AEquipmentSheet::displayGrenade(sp<AEquipment> item [[maybe_unused]],
 {
 	form->findControlTyped<Label>("LABEL_2_C")->setText(itemType.damage_type->name);
 
-	form->findControlTyped<Label>("LABEL_3_L")->setText(tr("Power"));
+	form->findControlTyped<Label>("LABEL_3_L")->setText(tformat("Power"));
 	form->findControlTyped<Label>("LABEL_3_R")->setText(format("%d", itemType.damage));
 }
 
 void AEquipmentSheet::displayAmmo(sp<AEquipment> item, const AEquipmentType &itemType)
 {
-	form->findControlTyped<Label>("LABEL_2_L")->setText(tr("Accuracy"));
+	form->findControlTyped<Label>("LABEL_2_L")->setText(tformat("Accuracy"));
 	form->findControlTyped<Label>("LABEL_2_R")->setText(format("%d", itemType.accuracy));
 
-	form->findControlTyped<Label>("LABEL_3_L")->setText(tr("Fire rate"));
+	form->findControlTyped<Label>("LABEL_3_L")->setText(tformat("Fire rate"));
 	form->findControlTyped<Label>("LABEL_3_R")
 	    ->setText(format("%.2f", itemType.getRoundsPerSecond()));
 
-	form->findControlTyped<Label>("LABEL_4_L")->setText(tr("Range"));
+	form->findControlTyped<Label>("LABEL_4_L")->setText(tformat("Range"));
 	form->findControlTyped<Label>("LABEL_4_R")->setText(format("%d", itemType.getRangeInTiles()));
 
-	form->findControlTyped<Label>("LABEL_6_C")->setText(tr("Ammo Type:"));
+	form->findControlTyped<Label>("LABEL_6_C")->setText(tformat("Ammo Type:"));
 	form->findControlTyped<Label>("LABEL_7_C")->setText(itemType.damage_type->name);
 
-	form->findControlTyped<Label>("LABEL_8_L")->setText(tr("Power"));
+	form->findControlTyped<Label>("LABEL_8_L")->setText(tformat("Power"));
 	form->findControlTyped<Label>("LABEL_8_R")->setText(format("%d", itemType.damage));
 
-	form->findControlTyped<Label>("LABEL_9_L")->setText(tr("Rounds"));
+	form->findControlTyped<Label>("LABEL_9_L")->setText(tformat("Rounds"));
 	form->findControlTyped<Label>("LABEL_9_R")
 	    ->setText(item ? format("%d / %d", item->ammo, itemType.max_ammo)
 	                   : format("%d", itemType.max_ammo));
 	if (itemType.recharge > 0)
 	{
-		form->findControlTyped<Label>("LABEL_10_C")->setText(tr("(Recharges)"));
+		form->findControlTyped<Label>("LABEL_10_C")->setText(tformat("(Recharges)"));
 	}
 }
 
@@ -143,17 +144,17 @@ void AEquipmentSheet::displayWeapon(sp<AEquipment> item [[maybe_unused]],
 	}
 
 	auto &ammoType = *itemType.ammo_types.begin();
-	form->findControlTyped<Label>("LABEL_2_L")->setText(tr("Accuracy"));
+	form->findControlTyped<Label>("LABEL_2_L")->setText(tformat("Accuracy"));
 	form->findControlTyped<Label>("LABEL_2_R")->setText(format("%d", ammoType->accuracy));
 
-	form->findControlTyped<Label>("LABEL_3_L")->setText(tr("Fire rate"));
+	form->findControlTyped<Label>("LABEL_3_L")->setText(tformat("Fire rate"));
 	form->findControlTyped<Label>("LABEL_3_R")
 	    ->setText(format("%.2f", ammoType->getRoundsPerSecond()));
 
-	form->findControlTyped<Label>("LABEL_4_L")->setText(tr("Range"));
+	form->findControlTyped<Label>("LABEL_4_L")->setText(tformat("Range"));
 	form->findControlTyped<Label>("LABEL_4_R")->setText(format("%d", ammoType->getRangeInTiles()));
 
-	form->findControlTyped<Label>("LABEL_5_C")->setText(tr("Ammo types:"));
+	form->findControlTyped<Label>("LABEL_5_C")->setText(tformat("Ammo types:"));
 	int ammoNum = 1;
 	for (auto &ammo : itemType.ammo_types)
 	{
@@ -167,7 +168,7 @@ void AEquipmentSheet::displayWeapon(sp<AEquipment> item [[maybe_unused]],
 
 void AEquipmentSheet::displayArmor(sp<AEquipment> item, const AEquipmentType &itemType)
 {
-	form->findControlTyped<Label>("LABEL_2_L")->setText(tr("Protection"));
+	form->findControlTyped<Label>("LABEL_2_L")->setText(tformat("Protection"));
 	form->findControlTyped<Label>("LABEL_2_R")
 	    ->setText(item ? format("%d / %d", item->armor, itemType.armor)
 	                   : format("%d", itemType.armor));
@@ -181,10 +182,10 @@ void AEquipmentSheet::displayOther(sp<AEquipment> item [[maybe_unused]],
 void AEquipmentSheet::displayAlien(sp<AEquipment> item, const AEquipmentType &itemType)
 {
 	form->findControlTyped<Label>("ITEM_NAME")
-	    ->setText(itemType.bioStorage ? tr("Alien Organism") : tr("Alien Artifact"));
+	    ->setText(itemType.bioStorage ? tformat("Alien Organism") : tformat("Alien Artifact"));
 	form->findControlTyped<Graphic>("SELECTED_IMAGE")->setImage(itemType.equipscreen_sprite);
 
-	form->findControlTyped<Label>("LABEL_1_L")->setText(tr("Weight"));
+	form->findControlTyped<Label>("LABEL_1_L")->setText(tformat("Weight"));
 	form->findControlTyped<Label>("LABEL_1_R")
 	    ->setText(format("%d", item ? item->getWeight() : itemType.weight));
 }

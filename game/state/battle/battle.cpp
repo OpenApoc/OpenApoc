@@ -41,6 +41,7 @@
 #include "game/state/tilemap/tileobject_projectile.h"
 #include "game/state/tilemap/tileobject_shadow.h"
 #include "library/strings_format.h"
+#include "library/strings_translate.h"
 #include "library/xorshift.h"
 #include <algorithm>
 #include <glm/glm.hpp>
@@ -3705,23 +3706,23 @@ UString BattleScore::getText()
 	auto total = getTotal();
 	if (total > 500)
 	{
-		return tr("Very Good");
+		return tformat("Very Good");
 	}
 	else if (total > 200)
 	{
-		return tr("Good");
+		return tformat("Good");
 	}
 	else if (total > 0)
 	{
-		return tr("OK");
+		return tformat("OK");
 	}
 	else if (total > -200)
 	{
-		return tr("Poor");
+		return tformat("Poor");
 	}
 	else
 	{
-		return tr("Very Poor");
+		return tformat("Very Poor");
 	}
 }
 

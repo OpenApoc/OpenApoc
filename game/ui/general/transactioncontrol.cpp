@@ -18,6 +18,7 @@
 #include "game/state/rules/city/vammotype.h"
 #include "game/state/shared/organisation.h"
 #include "game/ui/general/messagebox.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -107,9 +108,10 @@ void TransactionControl::updateValues()
 
 				auto message_box = mksp<MessageBox>(
 				    manufacturerName,
-				    manufacturerHostile ? tr("Order canceled by the hostile manufacturer.")
-				                        : tr("Manufacturer has no intact buildings in this city to "
-				                             "deliver goods from."),
+				    manufacturerHostile
+				        ? tformat("Order canceled by the hostile manufacturer.")
+				        : tformat("Manufacturer has no intact buildings in this city to "
+				                  "deliver goods from."),
 				    MessageBox::ButtonOptions::Ok);
 				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 				return;
@@ -612,7 +614,7 @@ TransactionControl::createControl(const UString &id, Type type, const UString &n
 	// Add controls
 
 	// Name
-	const UString &labelName = researched ? tr(name) : tr("Alien Artifact");
+	const UString &labelName = researched ? name : tformat("Alien Artifact");
 	if (labelName.length() > 0)
 	{
 		auto label = control->createChild<Label>(labelName, labelFont);
@@ -624,7 +626,7 @@ TransactionControl::createControl(const UString &id, Type type, const UString &n
 	// Manufacturer
 	if (control->manufacturerName.length() > 0)
 	{
-		auto label = control->createChild<Label>(tr(control->manufacturerName), labelFont);
+		auto label = control->createChild<Label>(control->manufacturerName, labelFont);
 		if (manufacturerHostile || manufacturerUnavailable)
 		{
 			label->Tint = {255, 50, 25};

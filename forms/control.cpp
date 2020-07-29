@@ -12,6 +12,7 @@
 #include "framework/renderer.h"
 #include "framework/sound.h"
 #include "library/sp.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -727,7 +728,7 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 			{
 				ToolTipText = child.attribute("text").as_string();
 				if (!ToolTipText.empty())
-					ToolTipText = tr(ToolTipText);
+					ToolTipText = tformat(ToolTipText);
 			}
 			else
 			{

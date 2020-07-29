@@ -20,6 +20,7 @@
 #include "game/state/shared/organisation.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/transactioncontrol.h"
+#include "library/strings_translate.h"
 #include <array>
 
 namespace OpenApoc
@@ -28,7 +29,7 @@ namespace OpenApoc
 BuyAndSellScreen::BuyAndSellScreen(sp<GameState> state, bool forceLimits)
     : TransactionScreen(state, forceLimits)
 {
-	form->findControlTyped<Label>("TITLE")->setText(tr("BUY AND SELL"));
+	form->findControlTyped<Label>("TITLE")->setText(tformat("BUY AND SELL"));
 	form->findControlTyped<Graphic>("BG")->setImage(
 	    fw().data->loadImage("xcom3/ufodata/buy&sell.pcx"));
 	form->findControlTyped<Graphic>("DOLLAR_ICON")->setVisible(true);
@@ -66,7 +67,7 @@ BuyAndSellScreen::BuyAndSellScreen(sp<GameState> state, bool forceLimits)
 	    ->addCallback(FormEventType::CheckBoxSelected,
 	                  [this](Event *) { this->setDisplayType(Type::GroundEquipment); });
 
-	confirmClosureText = tr("Confirm Sales/Purchases");
+	confirmClosureText = tformat("Confirm Sales/Purchases");
 
 	type = Type::Vehicle;
 	form->findControlTyped<RadioButton>("BUTTON_VEHICLES")->setChecked(true);
@@ -105,10 +106,11 @@ void BuyAndSellScreen::closeScreen()
 	{
 		if (player->balance + moneyDelta < 0)
 		{
-			fw().stageQueueCommand({StageCmd::Command::PUSH,
-			                        mksp<MessageBox>(tr("Funds exceeded"),
-			                                         tr("Order limited by your available funds."),
-			                                         MessageBox::ButtonOptions::Ok)});
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH,
+			     mksp<MessageBox>(tformat("Funds exceeded"),
+			                      tformat("Order limited by your available funds."),
+			                      MessageBox::ButtonOptions::Ok)});
 			return;
 		}
 	}
@@ -159,10 +161,11 @@ void BuyAndSellScreen::closeScreen()
 		// Found bad base
 		if (bad_base)
 		{
-			UString title(tr("Storage space exceeded"));
-			UString message(forceLimits
-			                    ? tr("Storage space exceeded. Sell off more items!")
-			                    : tr("Order limited by the available storage space at this base."));
+			UString title(tformat("Storage space exceeded"));
+			UString message(
+			    forceLimits
+			        ? tformat("Storage space exceeded. Sell off more items!")
+			        : tformat("Order limited by the available storage space at this base."));
 
 			fw().stageQueueCommand(
 			    {StageCmd::Command::PUSH,
@@ -255,15 +258,12 @@ void BuyAndSellScreen::closeScreen()
 			// If player can ferry themselves then give option
 			if (config().getBool("OpenApoc.NewFeature.AllowManualCargoFerry"))
 			{
-				UString message = transportationHostile
-				                      ? format("%s %s",
-				                               tr("Hostile organization refuses to carry out the "
-				                                  "requested transportation for this company."),
-				                               tr("Proceed?"))
-				                      : format("%s %s",
-				                               tr("No free transport to carry out the requested "
-				                                  "transportation detected in the city."),
-				                               tr("Proceed?"));
+				UString message =
+				    transportationHostile
+				        ? tformat("Hostile organization refuses to carry out the "
+				                  "requested transportation for this company. Proceed?")
+				        : tformat("No free transport to carry out the requested "
+				                  "transportation detected in the city. Proceed?");
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
@@ -274,10 +274,8 @@ void BuyAndSellScreen::closeScreen()
 			else if (!transportationHostile)
 			{
 				// FIXME: Different message maybe? Same for now
-				UString message = format("%s %s",
-				                         tr("No free transport to carry out the requested "
-				                            "transportation detected in the city."),
-				                         tr("Proceed?"));
+				UString message = tformat("No free transport to carry out the requested "
+				                          "transportation detected in the city. Proceed?");
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
@@ -290,8 +288,8 @@ void BuyAndSellScreen::closeScreen()
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title,
-				                      tr("Hostile organization refuses to carry out the "
-				                         "requested transportation for this company."),
+				                      tformat("Hostile organization refuses to carry out the "
+				                              "requested transportation for this company."),
 				                      MessageBox::ButtonOptions::Ok)});
 				return;
 			}
@@ -357,22 +355,18 @@ void BuyAndSellScreen::closeScreen()
 
 		if (transportationBusy || transportationHostile)
 		{
-			UString title =
-			    format("%s%s", badOrgs.front()->name, badOrgs.size() > 1 ? " & others" : "");
+			UString title = badOrgs.size() > 1 ? badOrgs.front()->name
+			                                   : tformat("{1} & others", badOrgs.front()->name);
 
 			// If player can ferry themselves then give option
 			if (config().getBool("OpenApoc.NewFeature.AllowManualCargoFerry"))
 			{
 				UString message =
 				    transportationHostile
-				        ? format("%s %s",
-				                 tr("This hostile organization refuses to carry out the "
-				                    "requested transfer."),
-				                 tr("Proceed?"))
-				        : format("%s %s",
-				                 tr("No free transport to carry out the requested "
-				                    "transportation detected in the city."),
-				                 tr("Proceed?"));
+				        ? tformat("This hostile organization refuses to carry out the "
+				                  "requested transfer. Proceed?")
+				        : tformat("No free transport to carry out the requested "
+				                  "transportation detected in the city. Proceed?");
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
@@ -383,10 +377,8 @@ void BuyAndSellScreen::closeScreen()
 			else if (!transportationHostile)
 			{
 				// FIXME: Different message maybe? Same for now
-				UString message = format("%s %s",
-				                         tr("No free transport to carry out the requested "
-				                            "transportation detected in the city."),
-				                         tr("Proceed?"));
+				UString message = tformat("No free transport to carry out the requested "
+				                          "transportation detected in the city. Proceed?");
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
@@ -399,8 +391,8 @@ void BuyAndSellScreen::closeScreen()
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title,
-				                      tr("This hostile organization refuses to carry out "
-				                         "the requested transfer."),
+				                      tformat("This hostile organization refuses to carry out "
+				                              "the requested transfer."),
 				                      MessageBox::ButtonOptions::Ok)});
 				return;
 			}

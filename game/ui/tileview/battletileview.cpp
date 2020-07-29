@@ -26,6 +26,7 @@
 #include "game/state/tilemap/tileobject_battleunit.h"
 #include "game/state/tilemap/tileobject_shadow.h"
 #include "library/strings_format.h"
+#include "library/strings_translate.h"
 #include <glm/glm.hpp>
 
 namespace OpenApoc
@@ -317,10 +318,10 @@ BattleTileView::BattleTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> st
 		tuIndicators.push_back(font->getString(format("%d", i)));
 	}
 	tuSeparator = font->getString("/");
-	pathPreviewTooFar = font->getString(tr("Too Far"));
-	pathPreviewUnreachable = font->getString(tr("Blocked"));
-	attackCostOutOfRange = font->getString(tr("Out of range"));
-	attackCostNoArc = font->getString(tr("No arc of throw"));
+	pathPreviewTooFar = font->getString(tformat("Too Far"));
+	pathPreviewUnreachable = font->getString(tformat("Blocked"));
+	attackCostOutOfRange = font->getString(tformat("Out of range"));
+	attackCostNoArc = font->getString(tformat("No arc of throw"));
 
 	for (int i = 0; i < 16; i++)
 	{

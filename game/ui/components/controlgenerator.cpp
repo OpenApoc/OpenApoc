@@ -25,6 +25,7 @@
 #include "game/state/rules/city/vehicletype.h"
 #include "game/state/rules/city/vequipmenttype.h"
 #include "game/state/shared/agent.h"
+#include "library/strings_translate.h"
 
 namespace OpenApoc
 {
@@ -534,7 +535,7 @@ sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, const Ag
 	if (skill != UnitSkillState::Hidden)
 	{
 		auto skillLabel = baseControl->createChild<Label>(
-		    format(tr("Skill %d"), info.agent->getSkill()), singleton.labelFont);
+		    format(tformat("Skill {0}"), info.agent->getSkill()), singleton.labelFont);
 		skillLabel->Tint = {192, 192, 192};
 
 		skillLabel->Size = {nameLabel->Size.x, singleton.labelFont->getFontHeight()};
@@ -637,7 +638,7 @@ sp<Control> ControlGenerator::createOrganisationControl(GameState &state,
 	// FIXME: There's an extra 1 pixel here that's annoying
 	baseControl->Size.x -= 1;
 	baseControl->Name = "ORG_FRAME_" + info.organisation->name;
-	baseControl->ToolTipText = tr(info.organisation->name);
+	baseControl->ToolTipText = info.organisation->name;
 	baseControl->setData(info.organisation);
 
 	auto vehicleIcon = baseControl->createChild<Graphic>(info.organisation->icon);

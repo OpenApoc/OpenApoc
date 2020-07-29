@@ -21,6 +21,7 @@
 #include "game/ui/general/savemenu.h"
 #include "game/ui/skirmish/skirmish.h"
 #include "game/ui/tileview/cityview.h"
+#include "library/strings_translate.h"
 #include <list>
 
 namespace OpenApoc
@@ -115,7 +116,7 @@ std::list<std::pair<UString, UString>> openApocList = {
     {"OpenApoc.Mod", "BSKLauncherSound"},
 };
 
-std::vector<UString> listNames = {tr("Message Toggles"), tr("OpenApoc Features")};
+std::vector<UString> listNames = {tformat("Message Toggles"), tformat("OpenApoc Features")};
 } // namespace
 
 InGameOptions::InGameOptions(sp<GameState> state)
@@ -162,7 +163,7 @@ void InGameOptions::loadList(int id)
 		UString full_name = p.first + "." + p.second;
 		checkBox->setData(mksp<UString>(full_name));
 		checkBox->setChecked(config().getBool(full_name));
-		auto label = checkBox->createChild<Label>(tr(config().describe(p.first, p.second)), font);
+		auto label = checkBox->createChild<Label>(config().describe(p.first, p.second), font);
 		label->Size = {216, listControl->ItemSize};
 		label->Location = {24, 0};
 		listControl->addItem(checkBox);
@@ -309,8 +310,7 @@ void InGameOptions::eventOccurred(Event *e)
 			    *state, state->current_battle->currentPlayer, true);
 			fw().stageQueueCommand(
 			    {StageCmd::Command::PUSH,
-			     mksp<MessageBox>(tr("Abort Mission"),
-			                      format("%s %d", tr("Units Lost :"), unitsLost),
+			     mksp<MessageBox>(tformat("Abort Mission"), tformat("Units Lost : {1}", unitsLost),
 			                      MessageBox::ButtonOptions::YesNo, [this] {
 				                      state->current_battle->abortMission(*state);
 				                      Battle::finishBattle(*state);
