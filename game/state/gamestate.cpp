@@ -1244,13 +1244,13 @@ void GameState::updateHumanEconomy()
 
 	humanCity->populationWorking = 0;
 	// Game resets only Government income, it's not right logically but will keep it to match OG
-	organisations["ORG_GOVERNMENT"]->income = 0;
+	government->income = 0;
 
 	// Step 1. Everybody gets paid according to the current rates
 	int totalCivilianIncome = 0;
 	for (auto &org : organisations)
 	{
-		if (org.first != player.id && org.first != "ORG_ALIEN")
+		if (org.first != player.id && org.first != aliens.id)
 		{
 			for (auto &b : org.second->buildings)
 			{
@@ -1269,7 +1269,7 @@ void GameState::updateHumanEconomy()
 	    (humanCity->populationWorking) ? totalCivilianIncome / humanCity->populationWorking : 0;
 
 	// Step 2. Government additionally gets 10% of civilian income as taxes
-	organisations["ORG_GOVERNMENT"]->balance += totalCivilianIncome / 10;
+	government->balance += totalCivilianIncome / 10;
 
 	// Step 3. Calculate civilians leaving work because of the low wage
 	const int minimumWage = std::max(humanCity->averageWage, 30);
