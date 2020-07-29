@@ -104,10 +104,8 @@ void Building::initBuilding(GameState &state)
 	currentWage = 65;
 	maximumWorkforce = countActiveTiles() * function->workersPerTile * 50 / 100;
 	currentWorkforce = maximumWorkforce * 70 / 100;
-	maintenanceCosts =
-	    randBoundsInclusive(state.rng, 90, 110) * function->baseCost / 100;
-	incomePerCapita =
-	    randBoundsInclusive(state.rng, 90, 110) * function->baseIncome / 100;
+	maintenanceCosts = randBoundsInclusive(state.rng, 90, 110) * function->baseCost / 100;
+	incomePerCapita = randBoundsInclusive(state.rng, 90, 110) * function->baseIncome / 100;
 	investment = function->investmentValue;
 	prestige = function->prestige;
 }
@@ -124,8 +122,7 @@ void Building::updateWorkforce()
 
 int Building::calculateIncome() const
 {
-	return currentWorkforce * (static_cast<int>(incomePerCapita) - static_cast<int>(currentWage)) -
-	       maintenanceCosts;
+	return currentWorkforce * (incomePerCapita - currentWage) - maintenanceCosts;
 }
 
 unsigned Building::countActiveTiles() const

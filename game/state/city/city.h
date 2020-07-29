@@ -163,9 +163,9 @@ class City : public StateObject<City>, public std::enable_shared_from_this<City>
 
 	// Following members are not serialized, but rather are set in initCity method
 	std::list<StateRef<Building>> spaceports;
-	uint64_t populationUnemployed = 0;
-	uint64_t populationWorking = 0;
-	double averageWage = 0.0;
+	int populationUnemployed = 0;
+	int populationWorking = 0;
+	int averageWage = 0;
 };
 
 }; // namespace OpenApoc

@@ -118,7 +118,7 @@ void City::initCity(GameState &state)
 		}
 	}
 
-	uint64_t subtotalIncome = 0;
+	int subtotalIncome = 0;
 	for (auto &b : this->buildings)
 	{
 		if (b.second->landingPadLocations.empty())
@@ -324,15 +324,31 @@ void City::dailyLoop(GameState &state)
 	if (state.cities["CITYMAP_ALIEN"] != shared_from_this())
 	{
 		repairScenery(state);
+		// recalculate building economy
+		for (auto &b : buildings)
+		{
+			b.second->updateWorkforce();
+		}
 	}
 	generatePortals(state);
 }
 
 void City::weeklyLoop(GameState &state)
 {
-	for (auto &b : buildings)
+	if (state.cities["CITYMAP_ALIEN"] != shared_from_this())
 	{
-		b.second->weeklyUpdate(state);
+		for (auto &org : state.organisations)
+		{
+			if (org.first != "ORG_X-COM" && org.first != "ORG_ALIEN")
+			{
+				org.second->income = 0;
+				for (auto &b : org.second->buildings)
+				{
+					org.second->income += b->calculateIncome();
+				}
+				org.second->balance += org.second->income;
+			}
+		}
 	}
 }
 
