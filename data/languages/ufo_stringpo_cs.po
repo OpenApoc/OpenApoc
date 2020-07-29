@@ -2,15 +2,18 @@
 # Translators:
 # Translators:
 # Translators:
-# John Millan <PlayMann.CZ@seznam.cz>, 2018
+# Translators:
+# Translators:
+# John Millan <PlayMann.CZ@seznam.cz>, 2018-2020
 # Maxim Megalinski <kammerer001@yandex.ru>, 2015
+# Michal Breškovec <michal@breskovec.cz>, 2019
 # Petr Schönmann <pschonmann@gmail.com>, 2017
 # Skin36, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Apocalypse\n"
+"Project-Id-Version: OpenApoc\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-10-22 09:34+0000\n"
+"PO-Revision-Date: 2020-06-23 21:52+0000\n"
 "Last-Translator: John Millan <PlayMann.CZ@seznam.cz>\n"
 "Language-Team: Czech (http://www.transifex.com/x-com-apocalypse/apocalypse/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 2.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Click left mouse button or press a key when done"
@@ -843,79 +846,79 @@ msgid "Click on vehicle to select target"
 msgstr "Kliknutím na vozidlo urči cíl"
 
 msgid "Alien Probe"
-msgstr "Průzkumník"
+msgstr "Cizácká Sonda"
 
 msgid "Alien Scout"
-msgstr "Vyzvědač"
+msgstr "Cizácký Zvěd"
 
 msgid "Alien Transporter"
-msgstr "Transportér"
+msgstr "Cizácký Transportér"
 
 msgid "Alien Fast Attack Ship"
-msgstr "Malý útočný člun"
+msgstr "Cizácká Rychle Útočná loď"
 
 msgid "Alien Destroyer"
-msgstr "Ničitel"
+msgstr "Cizácký Ničitel"
 
 msgid "Alien Assault Ship"
-msgstr "Velký útočný člun"
+msgstr "Cizácká Útočná loď"
 
 msgid "Alien Bomber"
-msgstr "Bombardér"
+msgstr "Cizácký Bombardér"
 
 msgid "Alien Escort"
-msgstr "Výsadková loď"
+msgstr "Cizácká Výsadková loď"
 
 msgid "Alien Battleship"
-msgstr "Cizácká válečná loď"
+msgstr "Cizácká Válečná loď"
 
 msgid "Alien Mothership"
-msgstr "Cizácká mateřská loď"
+msgstr "Cizácká Mateřská loď"
 
 msgid "Police Hovercar"
-msgstr "Policejní vznášedlo"
+msgstr "Policejní Vznášedlo"
 
 msgid "Airtaxi"
 msgstr "Aerotaxi"
 
 msgid "Rescue Transport"
-msgstr "Záchranný transportér"
+msgstr "Záchranný Transport"
 
 msgid "Construction Vehicle"
-msgstr "Konstrukční vozidlo"
+msgstr "Konstrukční Vozidlo"
 
 msgid "Airtrans"
 msgstr "Aerotrans"
 
 msgid "Space Liner"
-msgstr "Vesmírná loď"
+msgstr "Vesmírná Loď"
 
 msgid "Phoenix Hovercar"
 msgstr "Vznášedlo Fénix"
 
 msgid "Hoverbike"
-msgstr "Vzdušný skůtr"
+msgstr "Vzdušný Skůtr"
 
 msgid "Valkyrie Interceptor"
-msgstr "Valkýra stíhač"
+msgstr "Valkýra Stíhač"
 
 msgid "Hawk Air Warrior"
-msgstr "Sokol bojovník"
+msgstr "Sokol Bojovník"
 
 msgid "Dimension Probe"
-msgstr "Interdimenzní sonda"
+msgstr "Interdimenzní Sonda"
 
 msgid "Biotrans"
 msgstr "Biotrans"
 
 msgid "Explorer"
-msgstr "Explorer"
+msgstr "Objevitel"
 
 msgid "Retaliator"
 msgstr "Retaliátor"
 
 msgid "Annihilator"
-msgstr "Anihilátor"
+msgstr "Anihilátor "
 
 msgid "Autotaxi"
 msgstr "Autotaxi"
@@ -5794,7 +5797,7 @@ msgstr "Objeveno UFO"
 msgid "Vehicle lightly damaged"
 msgstr "Vozidlo lehce poškozeno"
 
-msgid "Vehicle moderately damage"
+msgid "Vehicle moderately damaged"
 msgstr "Vozidlo středně poškozeno"
 
 msgid "Vehicle heavily damaged"
@@ -8864,3 +8867,419 @@ msgid ""
 "The Car Factory produces many of the smaller vehicles that are part of "
 "everyday life in Mega-Primus."
 msgstr "Automobilka vyrábí mnoho druhů malých vozidel, jež se staly nedílnou součástí života v Mega-Primu."
+
+#: forms/transactioncontrol.cpp:111
+msgid ""
+"Manufacturer has no intact buildings in this city to deliver goods from."
+msgstr "Výrobce nemá v tomto městě žádné nedotčené budovy, ze kterých by mohl dodávat zboží."
+
+#: game/state/gameevent.cpp:92
+#| msgid "Vehicle refuelled"
+msgid "Vehicle successfully recovered:"
+msgstr "Úspěšně opravené vozidlo:"
+
+#: game/state/gameevent.cpp:112
+#| msgid "Vehicle Repaired:"
+msgid "Vehicle Rearmed:"
+msgstr "Dozbrojené vozidlo:"
+
+#: game/state/gameevent.cpp:114
+#| msgid "Vehicle refuelled"
+msgid "Vehicle Refuelled:"
+msgstr "Dotankované vozidlo:"
+
+#: game/state/gameevent.cpp:127
+#| msgid "Not enough ammo to rearm vehicle"
+msgid "Not enough ammo to rearm vehicle:"
+msgstr "Chybí munice k dozbrojení vozidla:"
+
+#: game/state/gameevent.cpp:144
+#| msgid "New recruit arrived:"
+msgid "New transfer arrived:"
+msgstr "Dorazil nový transfer:"
+
+#: game/state/gameevent.cpp:211
+#| msgid "Building under attack:"
+msgid "Building under attack :"
+msgstr "Napadená budova:"
+
+#: game/state/gameevent.cpp:216
+msgid "Cargo expires soon:"
+msgstr "Náklad brzy expiruje:"
+
+#: game/state/gameevent.cpp:235 game/state/gameevent.cpp:239
+#: game/state/gameevent.cpp:245
+#| msgid "Cargo arrived:"
+msgid "Cargo expired:"
+msgstr "Expirovaný náklad:"
+
+#: game/state/gameevent.cpp:235
+#| msgid "Return to base"
+msgid "Returned to base"
+msgstr "Návrat na základnu"
+
+#: game/state/gameevent.cpp:240
+msgid "Refunded by supplier: "
+msgstr "Refundováno dodavatelem:"
+
+#: game/state/gameevent.cpp:249
+#| msgid "Cargo arrived:"
+msgid "Cargo seized:"
+msgstr "Zabavený náklad:"
+
+#: game/state/gameevent.cpp:249
+#| msgid "View hostile organizations"
+msgid "By hostile organisation: "
+msgstr "Nepřátelskou organizací:"
+
+#: game/state/gameevent.cpp:255
+#| msgid "Supplier:"
+msgid "Supplier: "
+msgstr "Dodavatel:"
+
+#: game/state/gameevent.cpp:363
+#| msgid "Unit has died:"
+msgid "Agent has died:"
+msgstr "Zemřel agent:"
+
+#: game/state/gameevent.cpp:388
+msgid "Scrapped vehicle recovered in irreparable condition:"
+msgstr "Vyřazené vozidlo se zotavilo v nenapravitelném stavu:"
+
+#: game/state/gametime.cpp:77 game/state/gametime.cpp:113
+#| msgid "January,"
+msgid "January"
+msgstr "Leden"
+
+#: game/state/gametime.cpp:77 game/state/gametime.cpp:113
+#| msgid "February,"
+msgid "February"
+msgstr "Únor"
+
+#: game/state/gametime.cpp:77 game/state/gametime.cpp:113
+#| msgid "March,"
+msgid "March"
+msgstr "Březen"
+
+#: game/state/gametime.cpp:78 game/state/gametime.cpp:114
+#| msgid "April,"
+msgid "April"
+msgstr "Duben"
+
+#: game/state/gametime.cpp:78 game/state/gametime.cpp:114
+#| msgid "May,"
+msgid "May"
+msgstr "Květen"
+
+#: game/state/gametime.cpp:78 game/state/gametime.cpp:114
+#| msgid "June,"
+msgid "June"
+msgstr "Červen"
+
+#: game/state/gametime.cpp:79 game/state/gametime.cpp:115
+#| msgid "July,"
+msgid "July"
+msgstr "Červenec"
+
+#: game/state/gametime.cpp:79 game/state/gametime.cpp:115
+#| msgid "August,"
+msgid "August"
+msgstr "Srpen"
+
+#: game/state/gametime.cpp:79 game/state/gametime.cpp:115
+#| msgid "September,"
+msgid "September"
+msgstr "Září"
+
+#: game/state/gametime.cpp:80 game/state/gametime.cpp:116
+#| msgid "October,"
+msgid "October"
+msgstr "Říjen"
+
+#: game/state/gametime.cpp:80 game/state/gametime.cpp:116
+#| msgid "November,"
+msgid "November"
+msgstr "Listopad"
+
+#: game/state/gametime.cpp:80 game/state/gametime.cpp:116
+#| msgid "December,"
+msgid "December"
+msgstr "Prosinec"
+
+#: game/ui/base/buyandsellscreen.cpp:170
+#| msgid "Storage space exceeded"
+msgid "Storage space exceeded. Sell off more items!"
+msgstr "Místo ve skladišti přesaženo. Prodejte víc předmětů!  "
+
+#: game/ui/base/buyandsellscreen.cpp:270 game/ui/base/buyandsellscreen.cpp:300
+#| msgid "ile organization refuses to carry out the requested transfer."
+msgid ""
+"Hostile organization refuses to carry out the requested transportation for "
+"this company."
+msgstr "Nepřátelská organizace odmítá provést požadovanou přepravu pro tuto společnost."
+
+#: game/ui/base/buyandsellscreen.cpp:272 game/ui/base/buyandsellscreen.cpp:275
+#: game/ui/base/buyandsellscreen.cpp:288 game/ui/base/buyandsellscreen.cpp:376
+#: game/ui/base/buyandsellscreen.cpp:379 game/ui/base/buyandsellscreen.cpp:392
+#: game/ui/base/transferscreen.cpp:420 game/ui/base/transferscreen.cpp:423
+#: game/ui/base/transferscreen.cpp:436
+msgid "Proceed?"
+msgstr "Pokračovat?"
+
+#: game/ui/base/buyandsellscreen.cpp:273 game/ui/base/buyandsellscreen.cpp:286
+#: game/ui/base/buyandsellscreen.cpp:377 game/ui/base/buyandsellscreen.cpp:390
+#: game/ui/base/transferscreen.cpp:421 game/ui/base/transferscreen.cpp:434
+msgid ""
+"No free transport to carry out the requested transportation detected in the "
+"city."
+msgstr "Ve městě nebyla zjištěna žádná bezplatná doprava k provedení požadované dopravy."
+
+#: game/ui/base/recruitscreen.cpp:121 game/ui/base/recruitscreen.cpp:632
+#: game/ui/base/transferscreen.cpp:317
+#| msgid "Accommodation exceeded"
+msgid "Accomodation exceeded"
+msgstr "Ubytování překročeno"
+
+#: game/ui/base/recruitscreen.cpp:411 game/ui/base/researchscreen.cpp:507
+#, c-format
+msgid "%d"
+msgstr "%d"
+
+#: game/ui/base/recruitscreen.cpp:480
+#| msgid "unit(s) fired."
+msgid "units(s) transferred"
+msgstr "jednotek přemístěno "
+
+#: game/ui/base/researchscreen.cpp:330 game/ui/base/researchscreen.cpp:413
+#, c-format
+#| msgid "Total Skill:"
+msgid "Total Skill: %d"
+msgstr "Celkem Dovedností: %d "
+
+#: game/ui/base/researchscreen.cpp:476
+#, c-format
+msgid "%d%%"
+msgstr "%d%%"
+
+#: game/ui/base/researchselect.cpp:46
+#| msgid "Biochemistry research at:"
+msgid "Select Biochemistry Project"
+msgstr "Vyberte Biochemický Projekt"
+
+#: game/ui/base/researchselect.cpp:51
+#| msgid "Select project:"
+msgid "Select Physics Project"
+msgstr "Vyberte Fyzický Projekt"
+
+#: game/ui/base/researchselect.cpp:56
+#| msgid "Manufacturing halted"
+msgid "Select Manufacturing Project"
+msgstr "Vyberte Výrobní Projekt"
+
+#: game/ui/base/researchselect.cpp:61
+#| msgid "Select project:"
+msgid "Select Unknown Project"
+msgstr "Vyberte Neznámý Projekt\n "
+
+#: game/ui/base/researchselect.cpp:83
+msgid "PROJECT COMPLETE"
+msgstr "PROJEKT HOTOV "
+
+#: game/ui/base/researchselect.cpp:93
+msgid "PROJECT TOO LARGE"
+msgstr "PROJEKT PŘÍLIŠ VELKÝ"
+
+#: game/ui/base/researchselect.cpp:102
+msgid "FUNDS EXCEEDED"
+msgstr "REZERVY PŘESAŽENY "
+
+#: game/ui/base/researchselect.cpp:303
+msgid "UNKNOWN"
+msgstr "NEZNÁMÝ"
+
+#: game/ui/battle/battledebriefing.cpp:49
+msgid "promoted to"
+msgstr "povýšen na"
+
+#: game/ui/city/bribescreen.cpp:79
+#| msgid ""
+#| "nization is under Alien control. The Alien race will not enter ations h "
+#| "X-COM."
+msgid ""
+"This organization is under Alien control.The Alien race will not enter "
+"negotiations with X-COM."
+msgstr "Tato organizace je pod mimozemskou kontrolou. Mimozemská rasa nevstoupí do jednání s X-COM."
+
+#: game/ui/city/buildingscreen.cpp:219
+#| msgid "No buyers found for this building."
+msgid "You have not found any hostile forces in this building."
+msgstr "V této budově jste nenašli žádné nepřátelské síly."
+
+#: game/ui/city/scorescreen.cpp:163
+#| msgid "Remaining funds>"
+msgid "Remaining finds>"
+msgstr "Zbývající nalezení>"
+
+#: game/ui/components/controlgenerator.cpp:536
+#, c-format
+#| msgid "Skill"
+msgid "Skill %s"
+msgstr "Dovednost %s"
+
+#: game/ui/general/aequipmentsheet.cpp:179
+#| msgid "Alien Gas"
+msgid "Alien Organism"
+msgstr "Mimozemský Organismus"
+
+#: game/ui/general/aequipscreen.cpp:580 game/ui/general/aequipscreen.cpp:650
+msgid "NOT ENOUGH TU'S"
+msgstr "NEDOSTATEK ČJ"
+
+#: game/ui/general/aequipscreen.cpp:1887
+#| msgid "WARNING!"
+msgid "WARNING"
+msgstr "VAROVÁNÍ"
+
+#: game/ui/general/agentsheet.cpp:94
+#| msgid "Psi-defense"
+msgid "Psi-defence"
+msgstr "Psi-obrana"
+
+#: game/ui/general/ingameoptions.cpp:318
+#| msgid "Abort mission?"
+msgid "Abort Mission"
+msgstr "Zrušit Misi "
+
+#: game/ui/tileview/cityview.cpp:3609
+msgid "RESEARCH COMPLETE"
+msgstr "VÝZKUM DOKONČEN"
+
+#: game/ui/tileview/cityview.cpp:3680
+msgid "MANUFACTURE COMPLETED"
+msgstr "VÝROBA DOKONČENA"
+
+#: game/ui/tileview/cityview.cpp:3682
+#| msgid "Do you wish to reassign the Workshop?"
+msgid "Do you wish to reasign the Workshop?"
+msgstr "Přejete si dílnu znovu přihlásit?"
+
+#: game/ui/tileview/cityview.cpp:3739
+#| msgid "SELECT MANUFACTURING PROJECT"
+msgid "MANUFACTURING HALTED"
+msgstr "VÝROBA POZASTAVENA "
+
+#: game/ui/tileview/cityview.cpp:3757
+msgid "FACILITY COMPLETED"
+msgstr "ZAŘÍZENÍ DOKONČENO"
+
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:282
+#| msgid ": neutral towards:"
+msgid ": allied towards:"
+msgstr ": spojenec k:"
+
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:285
+#| msgid ": unfriendly towards:"
+msgid ": friendly towards:"
+msgstr ": přátelský k: "
+
+msgid "Casualty penalty"
+msgstr "Penalta za ztráty"
+
+msgid "Leadership bonus"
+msgstr "Bonus za velení "
+
+msgid "Live Aliens captured"
+msgstr "Živý Mimozemšťani zajati "
+
+msgid "Equipment captured"
+msgstr "Zajatá zbroj "
+
+msgid "Equipment lost"
+msgstr "Ztracená zbroj "
+
+msgid "Mission performance"
+msgstr "Výkon mise"
+
+msgid "ITEM"
+msgstr "PŘEDMĚT "
+
+msgid "Time ="
+msgstr "Čas ="
+
+msgid "Date ="
+msgstr "Datum ="
+
+msgid "Agent has died"
+msgstr "Agent zemřel"
+
+msgid "Agent arrived at base"
+msgstr "Agent dorazil na základnu"
+
+msgid "More options"
+msgstr "Víc možností "
+
+msgid "Cheats"
+msgstr "Cheaty"
+
+msgid "Exec. rem. order"
+msgstr "Provést zbývající rozkaz"
+
+msgid "Auto Scroll"
+msgstr "Automatické Scrollování"
+
+msgid "OpenApoc Features"
+msgstr "OpenApoc Funkce"
+
+msgid "Exit Battle"
+msgstr "Opustit Boj "
+
+msgid "Skirmish Mode"
+msgstr "Mód Bitky "
+
+msgid "Give all research"
+msgstr "Dát všechen výzkum"
+
+msgid "Utopia"
+msgstr "Utopie"
+
+msgid "All orgs. friendly"
+msgstr "Všechny organizace přátelský "
+
+msgid "All orgs. hostile"
+msgstr "Všechny organizace nepřátelský"
+
+msgid "Chaos"
+msgstr "Chaos"
+
+msgid "Infinite ammo"
+msgstr "Nekonečná munice"
+
+msgid "Modify funds"
+msgstr "Modifikovat finance"
+
+msgid "Damage Inflicted"
+msgstr "Poškození Způsobené"
+
+msgid "Damage Received"
+msgstr "Poškození Přijato"
+
+msgid "Hostiles multiplier"
+msgstr "Násobitel nepřátel"
+
+msgid "Agent Stat Growth"
+msgstr "Statistky Růstu Agentů"
+
+msgid "Transfer arrived at base"
+msgstr "Převod dorazil na základnu"
+
+msgid "Crash recovery arrived at base"
+msgstr "Havarijní zotavení dorazilo na základnu"
+
+msgid "DEBRIEFING"
+msgstr "PODÁNÍ HLÁŠENÍ "
+
+msgid "Combat rating"
+msgstr "Bojové hodnocení "
+
+msgid "Unit Brainsucked"
+msgstr "Jednotka Mozkově vysáta "

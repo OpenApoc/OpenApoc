@@ -2,20 +2,23 @@
 # Translators:
 # Translators:
 # Translators:
-# Gonta Ultra (Ulgon), 2017
+# Translators:
+# Translators:
+# Gonta Ultra, 2017
+# Gonta Ultra, 2020
 msgid ""
 msgstr ""
-"Project-Id-Version: Apocalypse\n"
+"Project-Id-Version: OpenApoc\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-10-22 09:34+0000\n"
-"Last-Translator: Gonta Ultra (Ulgon)\n"
+"PO-Revision-Date: 2020-06-29 01:14+0000\n"
+"Last-Translator: Gonta Ultra\n"
 "Language-Team: Japanese (Japan) (http://www.transifex.com/x-com-apocalypse/apocalypse/language/ja_JP/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ja_JP\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 2.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Click left mouse button or press a key when done"
@@ -4232,10 +4235,10 @@ msgid ": formerly neutral towards:"
 msgstr ": 以前は以下に対し中立:"
 
 msgid ": unfriendly towards:"
-msgstr ": 以下に対し不遜な態度:"
+msgstr ": 以下に対し不遜:"
 
 msgid ": formerly unfriendly towards:"
-msgstr ": 以前は以下に対し不遜な態度:"
+msgstr ": 以下に対し元不遜:"
 
 msgid ": hostile towards:"
 msgstr ": 以下に対し敵対:"
@@ -5330,7 +5333,7 @@ msgid "View neutral organizations"
 msgstr "中立の組織の表示"
 
 msgid "View unfriendly organizations"
-msgstr "不遜な態度の組織を表示"
+msgstr "不遜な組織を表示"
 
 msgid "View hostile organizations"
 msgstr "敵対組織を表示"
@@ -5791,8 +5794,8 @@ msgstr "UFO発見"
 msgid "Vehicle lightly damaged"
 msgstr "乗り物が微損"
 
-msgid "Vehicle moderately damage"
-msgstr "乗り物が破損"
+msgid "Vehicle moderately damaged"
+msgstr "乗り物に中程度の破損"
 
 msgid "Vehicle heavily damaged"
 msgstr "乗り物が激しく損傷"
@@ -8861,3 +8864,419 @@ msgid ""
 "The Car Factory produces many of the smaller vehicles that are part of "
 "everyday life in Mega-Primus."
 msgstr "自動車工場ではメガプリムスの日常生活の一部である小型の乗り物を数多く製造している。"
+
+#: forms/transactioncontrol.cpp:111
+msgid ""
+"Manufacturer has no intact buildings in this city to deliver goods from."
+msgstr "この市には製造元が製品を収めるビルが残っていない"
+
+#: game/state/gameevent.cpp:92
+#| msgid "Vehicle refuelled"
+msgid "Vehicle successfully recovered:"
+msgstr "回収された乗り物:"
+
+#: game/state/gameevent.cpp:112
+#| msgid "Vehicle Repaired:"
+msgid "Vehicle Rearmed:"
+msgstr "武器の換装完了:"
+
+#: game/state/gameevent.cpp:114
+#| msgid "Vehicle refuelled"
+msgid "Vehicle Refuelled:"
+msgstr "燃料の補給完了:"
+
+#: game/state/gameevent.cpp:127
+#| msgid "Not enough ammo to rearm vehicle"
+msgid "Not enough ammo to rearm vehicle:"
+msgstr "武器換装の為の弾薬不足:"
+
+#: game/state/gameevent.cpp:144
+#| msgid "New recruit arrived:"
+msgid "New transfer arrived:"
+msgstr "新しい品が到着:"
+
+#: game/state/gameevent.cpp:211
+#| msgid "Building under attack:"
+msgid "Building under attack :"
+msgstr "目下攻撃を受けている建物 :"
+
+#: game/state/gameevent.cpp:216
+msgid "Cargo expires soon:"
+msgstr "間もなく貨物の使用期限終了:"
+
+#: game/state/gameevent.cpp:235 game/state/gameevent.cpp:239
+#: game/state/gameevent.cpp:245
+#| msgid "Cargo arrived:"
+msgid "Cargo expired:"
+msgstr "貨物の使用期限終了:"
+
+#: game/state/gameevent.cpp:235
+#| msgid "Return to base"
+msgid "Returned to base"
+msgstr "基地へ帰還"
+
+#: game/state/gameevent.cpp:240
+msgid "Refunded by supplier: "
+msgstr "出資元から入金: "
+
+#: game/state/gameevent.cpp:249
+#| msgid "Cargo arrived:"
+msgid "Cargo seized:"
+msgstr "貨物の使用開始:"
+
+#: game/state/gameevent.cpp:249
+#| msgid "View hostile organizations"
+msgid "By hostile organisation: "
+msgstr "以下の敵対組織による: "
+
+#: game/state/gameevent.cpp:255
+#| msgid "Supplier:"
+msgid "Supplier: "
+msgstr "出資者: "
+
+#: game/state/gameevent.cpp:363
+#| msgid "Unit has died:"
+msgid "Agent has died:"
+msgstr "エージェントが死亡:"
+
+#: game/state/gameevent.cpp:388
+msgid "Scrapped vehicle recovered in irreparable condition:"
+msgstr "乗り物の残骸(修理不可)を回収:"
+
+#: game/state/gametime.cpp:77 game/state/gametime.cpp:113
+#| msgid "January,"
+msgid "January"
+msgstr "一月"
+
+#: game/state/gametime.cpp:77 game/state/gametime.cpp:113
+#| msgid "February,"
+msgid "February"
+msgstr "二月"
+
+#: game/state/gametime.cpp:77 game/state/gametime.cpp:113
+#| msgid "March,"
+msgid "March"
+msgstr "三月"
+
+#: game/state/gametime.cpp:78 game/state/gametime.cpp:114
+#| msgid "April,"
+msgid "April"
+msgstr "四月"
+
+#: game/state/gametime.cpp:78 game/state/gametime.cpp:114
+#| msgid "May,"
+msgid "May"
+msgstr "五月"
+
+#: game/state/gametime.cpp:78 game/state/gametime.cpp:114
+#| msgid "June,"
+msgid "June"
+msgstr "六月"
+
+#: game/state/gametime.cpp:79 game/state/gametime.cpp:115
+#| msgid "July,"
+msgid "July"
+msgstr "七月"
+
+#: game/state/gametime.cpp:79 game/state/gametime.cpp:115
+#| msgid "August,"
+msgid "August"
+msgstr "八月"
+
+#: game/state/gametime.cpp:79 game/state/gametime.cpp:115
+#| msgid "September,"
+msgid "September"
+msgstr "九月"
+
+#: game/state/gametime.cpp:80 game/state/gametime.cpp:116
+#| msgid "October,"
+msgid "October"
+msgstr "十月"
+
+#: game/state/gametime.cpp:80 game/state/gametime.cpp:116
+#| msgid "November,"
+msgid "November"
+msgstr "十一月"
+
+#: game/state/gametime.cpp:80 game/state/gametime.cpp:116
+#| msgid "December,"
+msgid "December"
+msgstr "十二月"
+
+#: game/ui/base/buyandsellscreen.cpp:170
+#| msgid "Storage space exceeded"
+msgid "Storage space exceeded. Sell off more items!"
+msgstr "倉庫スペースが不足。何かを売却せよ"
+
+#: game/ui/base/buyandsellscreen.cpp:270 game/ui/base/buyandsellscreen.cpp:300
+#| msgid "ile organization refuses to carry out the requested transfer."
+msgid ""
+"Hostile organization refuses to carry out the requested transportation for "
+"this company."
+msgstr "敵対的な組織がこの会社の輸送の依頼を拒否。"
+
+#: game/ui/base/buyandsellscreen.cpp:272 game/ui/base/buyandsellscreen.cpp:275
+#: game/ui/base/buyandsellscreen.cpp:288 game/ui/base/buyandsellscreen.cpp:376
+#: game/ui/base/buyandsellscreen.cpp:379 game/ui/base/buyandsellscreen.cpp:392
+#: game/ui/base/transferscreen.cpp:420 game/ui/base/transferscreen.cpp:423
+#: game/ui/base/transferscreen.cpp:436
+msgid "Proceed?"
+msgstr "進めますか？"
+
+#: game/ui/base/buyandsellscreen.cpp:273 game/ui/base/buyandsellscreen.cpp:286
+#: game/ui/base/buyandsellscreen.cpp:377 game/ui/base/buyandsellscreen.cpp:390
+#: game/ui/base/transferscreen.cpp:421 game/ui/base/transferscreen.cpp:434
+msgid ""
+"No free transport to carry out the requested transportation detected in the "
+"city."
+msgstr "市内には輸送手段の空きがありません"
+
+#: game/ui/base/recruitscreen.cpp:121 game/ui/base/recruitscreen.cpp:632
+#: game/ui/base/transferscreen.cpp:317
+#| msgid "Accommodation exceeded"
+msgid "Accomodation exceeded"
+msgstr "宿泊施設が不足"
+
+#: game/ui/base/recruitscreen.cpp:411 game/ui/base/researchscreen.cpp:507
+#, c-format
+msgid "%d"
+msgstr "%d"
+
+#: game/ui/base/recruitscreen.cpp:480
+#| msgid "unit(s) fired."
+msgid "units(s) transferred"
+msgstr "ユニットを移動しました"
+
+#: game/ui/base/researchscreen.cpp:330 game/ui/base/researchscreen.cpp:413
+#, c-format
+#| msgid "Total Skill:"
+msgid "Total Skill: %d"
+msgstr "スキル総合: %d"
+
+#: game/ui/base/researchscreen.cpp:476
+#, c-format
+msgid "%d%%"
+msgstr "%d%%"
+
+#: game/ui/base/researchselect.cpp:46
+#| msgid "Biochemistry research at:"
+msgid "Select Biochemistry Project"
+msgstr "生化学のプロジェクトを選択"
+
+#: game/ui/base/researchselect.cpp:51
+#| msgid "Select project:"
+msgid "Select Physics Project"
+msgstr "物理学のプロジェクトを選択"
+
+#: game/ui/base/researchselect.cpp:56
+#| msgid "Manufacturing halted"
+msgid "Select Manufacturing Project"
+msgstr "製造プロジェクトを選択"
+
+#: game/ui/base/researchselect.cpp:61
+#| msgid "Select project:"
+msgid "Select Unknown Project"
+msgstr "未知のプロジェクトを選択"
+
+#: game/ui/base/researchselect.cpp:83
+msgid "PROJECT COMPLETE"
+msgstr "プロジェクト完成"
+
+#: game/ui/base/researchselect.cpp:93
+msgid "PROJECT TOO LARGE"
+msgstr "プロジェクトが巨大すぎます"
+
+#: game/ui/base/researchselect.cpp:102
+msgid "FUNDS EXCEEDED"
+msgstr "資金不足"
+
+#: game/ui/base/researchselect.cpp:303
+msgid "UNKNOWN"
+msgstr "不明"
+
+#: game/ui/battle/battledebriefing.cpp:49
+msgid "promoted to"
+msgstr "昇進>>"
+
+#: game/ui/city/bribescreen.cpp:79
+#| msgid ""
+#| "nization is under Alien control. The Alien race will not enter ations h "
+#| "X-COM."
+msgid ""
+"This organization is under Alien control.The Alien race will not enter "
+"negotiations with X-COM."
+msgstr "この組織はエイリアンの支配下にあります。エイリアン種族はX-Comとの交渉には応じません。"
+
+#: game/ui/city/buildingscreen.cpp:219
+#| msgid "No buyers found for this building."
+msgid "You have not found any hostile forces in this building."
+msgstr "このビルには敵対勢力が存在しません"
+
+#: game/ui/city/scorescreen.cpp:163
+#| msgid "Remaining funds>"
+msgid "Remaining finds>"
+msgstr "資金の残額>"
+
+#: game/ui/components/controlgenerator.cpp:536
+#, c-format
+#| msgid "Skill"
+msgid "Skill %s"
+msgstr "スキル %s"
+
+#: game/ui/general/aequipmentsheet.cpp:179
+#| msgid "Alien Gas"
+msgid "Alien Organism"
+msgstr "エイリアン生命体"
+
+#: game/ui/general/aequipscreen.cpp:580 game/ui/general/aequipscreen.cpp:650
+msgid "NOT ENOUGH TU'S"
+msgstr "TU不足"
+
+#: game/ui/general/aequipscreen.cpp:1887
+#| msgid "WARNING!"
+msgid "WARNING"
+msgstr "警告"
+
+#: game/ui/general/agentsheet.cpp:94
+#| msgid "Psi-defense"
+msgid "Psi-defence"
+msgstr "Psi防御"
+
+#: game/ui/general/ingameoptions.cpp:318
+#| msgid "Abort mission?"
+msgid "Abort Mission"
+msgstr "ミッション放棄"
+
+#: game/ui/tileview/cityview.cpp:3609
+msgid "RESEARCH COMPLETE"
+msgstr "研究完了"
+
+#: game/ui/tileview/cityview.cpp:3680
+msgid "MANUFACTURE COMPLETED"
+msgstr "製造完了"
+
+#: game/ui/tileview/cityview.cpp:3682
+#| msgid "Do you wish to reassign the Workshop?"
+msgid "Do you wish to reasign the Workshop?"
+msgstr "製造の再指示をしますか？"
+
+#: game/ui/tileview/cityview.cpp:3739
+#| msgid "SELECT MANUFACTURING PROJECT"
+msgid "MANUFACTURING HALTED"
+msgstr "製造を一時中断"
+
+#: game/ui/tileview/cityview.cpp:3757
+msgid "FACILITY COMPLETED"
+msgstr "施設の建造完了"
+
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:282
+#| msgid ": neutral towards:"
+msgid ": allied towards:"
+msgstr ": 以下に対し同盟:"
+
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:285
+#| msgid ": unfriendly towards:"
+msgid ": friendly towards:"
+msgstr ": 以下に対し有効:"
+
+msgid "Casualty penalty"
+msgstr "死傷者ペナルティ"
+
+msgid "Leadership bonus"
+msgstr "指揮ボーナス"
+
+msgid "Live Aliens captured"
+msgstr "生け捕りにしたエイリアン"
+
+msgid "Equipment captured"
+msgstr "押収した装備品"
+
+msgid "Equipment lost"
+msgstr "失った装備品"
+
+msgid "Mission performance"
+msgstr "ミッション効率"
+
+msgid "ITEM"
+msgstr "アイテム"
+
+msgid "Time ="
+msgstr "時間 ="
+
+msgid "Date ="
+msgstr "日付 ="
+
+msgid "Agent has died"
+msgstr "エージェントが死亡"
+
+msgid "Agent arrived at base"
+msgstr "エージェントが基地に到着"
+
+msgid "More options"
+msgstr "更なるオプション"
+
+msgid "Cheats"
+msgstr "チート"
+
+msgid "Exec. rem. order"
+msgstr "Exec. rem. order"
+
+msgid "Auto Scroll"
+msgstr "自動スクロール"
+
+msgid "OpenApoc Features"
+msgstr "OpenApocの独自機能"
+
+msgid "Exit Battle"
+msgstr "戦闘放棄"
+
+msgid "Skirmish Mode"
+msgstr "スカーミッシュモード"
+
+msgid "Give all research"
+msgstr "全ての研究を完了"
+
+msgid "Utopia"
+msgstr "ユートピア"
+
+msgid "All orgs. friendly"
+msgstr "全組織が友好化"
+
+msgid "All orgs. hostile"
+msgstr "全組織が敵対化"
+
+msgid "Chaos"
+msgstr "カオス"
+
+msgid "Infinite ammo"
+msgstr "弾数無限"
+
+msgid "Modify funds"
+msgstr "資金の改ざん"
+
+msgid "Damage Inflicted"
+msgstr "与ダメ調整"
+
+msgid "Damage Received"
+msgstr "被ダメ調整"
+
+msgid "Hostiles multiplier"
+msgstr "敵対勢力の数(倍数)"
+
+msgid "Agent Stat Growth"
+msgstr "隊員の能力の伸び"
+
+msgid "Transfer arrived at base"
+msgstr "基地に移動完了"
+
+msgid "Crash recovery arrived at base"
+msgstr "基地に残骸が到着"
+
+msgid "DEBRIEFING"
+msgstr "結果報告"
+
+msgid "Combat rating"
+msgstr "戦闘評価"
+
+msgid "Unit Brainsucked"
+msgstr "脳を吸われたユニット"

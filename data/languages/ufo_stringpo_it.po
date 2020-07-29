@@ -2,21 +2,24 @@
 # Translators:
 # Translators:
 # Translators:
+# Translators:
+# Translators:
+# Marcello Santambrogio <gnegno@gmail.com>, 2019
 # Maxim Megalinski <kammerer001@yandex.ru>, 2015
 # Skin36, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Apocalypse\n"
+"Project-Id-Version: OpenApoc\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-10-22 09:34+0000\n"
-"Last-Translator: Skin36\n"
+"PO-Revision-Date: 2019-08-22 15:44+0000\n"
+"Last-Translator: Marcello Santambrogio <gnegno@gmail.com>\n"
 "Language-Team: Italian (http://www.transifex.com/x-com-apocalypse/apocalypse/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 2.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Click left mouse button or press a key when done"
@@ -5792,7 +5795,7 @@ msgstr "UFO individuato"
 msgid "Vehicle lightly damaged"
 msgstr "Veicolo scarsamente danneggiato"
 
-msgid "Vehicle moderately damage"
+msgid "Vehicle moderately damaged"
 msgstr "Veicolo moderatamente danneggiato"
 
 msgid "Vehicle heavily damaged"
@@ -8862,3 +8865,419 @@ msgid ""
 "The Car Factory produces many of the smaller vehicles that are part of "
 "everyday life in Mega-Primus."
 msgstr "La fabbrica di automobili produce molti dei piccoli veicoli utilizzati dagli abitanti di Mega-Primus nella vita di ogni giorno."
+
+#: forms/transactioncontrol.cpp:111
+msgid ""
+"Manufacturer has no intact buildings in this city to deliver goods from."
+msgstr "Il produttore non ha edifici integri in questa città da cui poter effettuare la consegna "
+
+#: game/state/gameevent.cpp:92
+#| msgid "Vehicle refuelled"
+msgid "Vehicle successfully recovered:"
+msgstr "Veicolo recuperato con successo:"
+
+#: game/state/gameevent.cpp:112
+#| msgid "Vehicle Repaired:"
+msgid "Vehicle Rearmed:"
+msgstr "Veicolo riarmato:"
+
+#: game/state/gameevent.cpp:114
+#| msgid "Vehicle refuelled"
+msgid "Vehicle Refuelled:"
+msgstr "Veicolo rifornito:"
+
+#: game/state/gameevent.cpp:127
+#| msgid "Not enough ammo to rearm vehicle"
+msgid "Not enough ammo to rearm vehicle:"
+msgstr "Munizioni insufficienti per riarmare il veicolo:"
+
+#: game/state/gameevent.cpp:144
+#| msgid "New recruit arrived:"
+msgid "New transfer arrived:"
+msgstr ""
+
+#: game/state/gameevent.cpp:211
+#| msgid "Building under attack:"
+msgid "Building under attack :"
+msgstr "Edificio sotto attacco:"
+
+#: game/state/gameevent.cpp:216
+msgid "Cargo expires soon:"
+msgstr ""
+
+#: game/state/gameevent.cpp:235 game/state/gameevent.cpp:239
+#: game/state/gameevent.cpp:245
+#| msgid "Cargo arrived:"
+msgid "Cargo expired:"
+msgstr ""
+
+#: game/state/gameevent.cpp:235
+#| msgid "Return to base"
+msgid "Returned to base"
+msgstr "Tornato alla base"
+
+#: game/state/gameevent.cpp:240
+msgid "Refunded by supplier: "
+msgstr "Rimborsato dal fornitore:"
+
+#: game/state/gameevent.cpp:249
+#| msgid "Cargo arrived:"
+msgid "Cargo seized:"
+msgstr "Carico sequestrato:"
+
+#: game/state/gameevent.cpp:249
+#| msgid "View hostile organizations"
+msgid "By hostile organisation: "
+msgstr "Da organizzazione nemica:"
+
+#: game/state/gameevent.cpp:255
+#| msgid "Supplier:"
+msgid "Supplier: "
+msgstr "Fornitore:"
+
+#: game/state/gameevent.cpp:363
+#| msgid "Unit has died:"
+msgid "Agent has died:"
+msgstr "L'agente è morto:"
+
+#: game/state/gameevent.cpp:388
+msgid "Scrapped vehicle recovered in irreparable condition:"
+msgstr "Veicolo demolito recuperato in condizioni irreparabili:"
+
+#: game/state/gametime.cpp:77 game/state/gametime.cpp:113
+#| msgid "January,"
+msgid "January"
+msgstr "Gennaio"
+
+#: game/state/gametime.cpp:77 game/state/gametime.cpp:113
+#| msgid "February,"
+msgid "February"
+msgstr "Febbraio"
+
+#: game/state/gametime.cpp:77 game/state/gametime.cpp:113
+#| msgid "March,"
+msgid "March"
+msgstr "Marzo"
+
+#: game/state/gametime.cpp:78 game/state/gametime.cpp:114
+#| msgid "April,"
+msgid "April"
+msgstr "Aprile"
+
+#: game/state/gametime.cpp:78 game/state/gametime.cpp:114
+#| msgid "May,"
+msgid "May"
+msgstr "Maggio"
+
+#: game/state/gametime.cpp:78 game/state/gametime.cpp:114
+#| msgid "June,"
+msgid "June"
+msgstr "Giugno"
+
+#: game/state/gametime.cpp:79 game/state/gametime.cpp:115
+#| msgid "July,"
+msgid "July"
+msgstr "Luglio"
+
+#: game/state/gametime.cpp:79 game/state/gametime.cpp:115
+#| msgid "August,"
+msgid "August"
+msgstr "Agosto"
+
+#: game/state/gametime.cpp:79 game/state/gametime.cpp:115
+#| msgid "September,"
+msgid "September"
+msgstr "Settembre"
+
+#: game/state/gametime.cpp:80 game/state/gametime.cpp:116
+#| msgid "October,"
+msgid "October"
+msgstr "Ottobre"
+
+#: game/state/gametime.cpp:80 game/state/gametime.cpp:116
+#| msgid "November,"
+msgid "November"
+msgstr "Novembre"
+
+#: game/state/gametime.cpp:80 game/state/gametime.cpp:116
+#| msgid "December,"
+msgid "December"
+msgstr "Dicembre"
+
+#: game/ui/base/buyandsellscreen.cpp:170
+#| msgid "Storage space exceeded"
+msgid "Storage space exceeded. Sell off more items!"
+msgstr "Superato il limite di spazio del magazzino. Vendi più oggetti!"
+
+#: game/ui/base/buyandsellscreen.cpp:270 game/ui/base/buyandsellscreen.cpp:300
+#| msgid "ile organization refuses to carry out the requested transfer."
+msgid ""
+"Hostile organization refuses to carry out the requested transportation for "
+"this company."
+msgstr ""
+
+#: game/ui/base/buyandsellscreen.cpp:272 game/ui/base/buyandsellscreen.cpp:275
+#: game/ui/base/buyandsellscreen.cpp:288 game/ui/base/buyandsellscreen.cpp:376
+#: game/ui/base/buyandsellscreen.cpp:379 game/ui/base/buyandsellscreen.cpp:392
+#: game/ui/base/transferscreen.cpp:420 game/ui/base/transferscreen.cpp:423
+#: game/ui/base/transferscreen.cpp:436
+msgid "Proceed?"
+msgstr "Procedere?"
+
+#: game/ui/base/buyandsellscreen.cpp:273 game/ui/base/buyandsellscreen.cpp:286
+#: game/ui/base/buyandsellscreen.cpp:377 game/ui/base/buyandsellscreen.cpp:390
+#: game/ui/base/transferscreen.cpp:421 game/ui/base/transferscreen.cpp:434
+msgid ""
+"No free transport to carry out the requested transportation detected in the "
+"city."
+msgstr "In questa città non sono stati rilevati trasporti disponibili per effettuare la consegna"
+
+#: game/ui/base/recruitscreen.cpp:121 game/ui/base/recruitscreen.cpp:632
+#: game/ui/base/transferscreen.cpp:317
+#| msgid "Accommodation exceeded"
+msgid "Accomodation exceeded"
+msgstr ""
+
+#: game/ui/base/recruitscreen.cpp:411 game/ui/base/researchscreen.cpp:507
+#, c-format
+msgid "%d"
+msgstr "%d"
+
+#: game/ui/base/recruitscreen.cpp:480
+#| msgid "unit(s) fired."
+msgid "units(s) transferred"
+msgstr "unità trasferita/e"
+
+#: game/ui/base/researchscreen.cpp:330 game/ui/base/researchscreen.cpp:413
+#, c-format
+#| msgid "Total Skill:"
+msgid "Total Skill: %d"
+msgstr "Abilità totale: %d"
+
+#: game/ui/base/researchscreen.cpp:476
+#, c-format
+msgid "%d%%"
+msgstr "%d%% "
+
+#: game/ui/base/researchselect.cpp:46
+#| msgid "Biochemistry research at:"
+msgid "Select Biochemistry Project"
+msgstr "Scegli il progetto di biochimica"
+
+#: game/ui/base/researchselect.cpp:51
+#| msgid "Select project:"
+msgid "Select Physics Project"
+msgstr "Scegli il progetto di fisica"
+
+#: game/ui/base/researchselect.cpp:56
+#| msgid "Manufacturing halted"
+msgid "Select Manufacturing Project"
+msgstr "Scegli il progetto di produzione"
+
+#: game/ui/base/researchselect.cpp:61
+#| msgid "Select project:"
+msgid "Select Unknown Project"
+msgstr "Scegli il progetto sconosciuto"
+
+#: game/ui/base/researchselect.cpp:83
+msgid "PROJECT COMPLETE"
+msgstr "PROGETTO COMPLETATO"
+
+#: game/ui/base/researchselect.cpp:93
+msgid "PROJECT TOO LARGE"
+msgstr "PROGETTO TROPPO GRANDE"
+
+#: game/ui/base/researchselect.cpp:102
+msgid "FUNDS EXCEEDED"
+msgstr "SUPERATI I LIMITI DI SPESA"
+
+#: game/ui/base/researchselect.cpp:303
+msgid "UNKNOWN"
+msgstr "SCONOSCIUTO"
+
+#: game/ui/battle/battledebriefing.cpp:49
+msgid "promoted to"
+msgstr "promosso a"
+
+#: game/ui/city/bribescreen.cpp:79
+#| msgid ""
+#| "nization is under Alien control. The Alien race will not enter ations h "
+#| "X-COM."
+msgid ""
+"This organization is under Alien control.The Alien race will not enter "
+"negotiations with X-COM."
+msgstr "Questa organizzazione è sotto il controllo Alieno. La razza Aliena non negozierà con la X-COM"
+
+#: game/ui/city/buildingscreen.cpp:219
+#| msgid "No buyers found for this building."
+msgid "You have not found any hostile forces in this building."
+msgstr "Non hai trovato alcuna forza ostile in questo edificio"
+
+#: game/ui/city/scorescreen.cpp:163
+#| msgid "Remaining funds>"
+msgid "Remaining finds>"
+msgstr "Fondi rimanenti >"
+
+#: game/ui/components/controlgenerator.cpp:536
+#, c-format
+#| msgid "Skill"
+msgid "Skill %s"
+msgstr "Abilità %s"
+
+#: game/ui/general/aequipmentsheet.cpp:179
+#| msgid "Alien Gas"
+msgid "Alien Organism"
+msgstr "Organismo alieno"
+
+#: game/ui/general/aequipscreen.cpp:580 game/ui/general/aequipscreen.cpp:650
+msgid "NOT ENOUGH TU'S"
+msgstr "NON HAI ABBASTANZA UT"
+
+#: game/ui/general/aequipscreen.cpp:1887
+#| msgid "WARNING!"
+msgid "WARNING"
+msgstr "ATTENZIONE"
+
+#: game/ui/general/agentsheet.cpp:94
+#| msgid "Psi-defense"
+msgid "Psi-defence"
+msgstr "Difesa Psi"
+
+#: game/ui/general/ingameoptions.cpp:318
+#| msgid "Abort mission?"
+msgid "Abort Mission"
+msgstr "Annulla missione"
+
+#: game/ui/tileview/cityview.cpp:3609
+msgid "RESEARCH COMPLETE"
+msgstr "RICERCA COMPLETATA"
+
+#: game/ui/tileview/cityview.cpp:3680
+msgid "MANUFACTURE COMPLETED"
+msgstr "PRODUZIONE COMPLETATA"
+
+#: game/ui/tileview/cityview.cpp:3682
+#| msgid "Do you wish to reassign the Workshop?"
+msgid "Do you wish to reasign the Workshop?"
+msgstr "Vuoi riassegnare il lavoro in officina?"
+
+#: game/ui/tileview/cityview.cpp:3739
+#| msgid "SELECT MANUFACTURING PROJECT"
+msgid "MANUFACTURING HALTED"
+msgstr "PRODUZIONE BLOCCATA"
+
+#: game/ui/tileview/cityview.cpp:3757
+msgid "FACILITY COMPLETED"
+msgstr "STRUTTURA COMPLETATA"
+
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:282
+#| msgid ": neutral towards:"
+msgid ": allied towards:"
+msgstr ": alleato di: "
+
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:285
+#| msgid ": unfriendly towards:"
+msgid ": friendly towards:"
+msgstr ": amichevole verso: "
+
+msgid "Casualty penalty"
+msgstr "Penalità per le vittime"
+
+msgid "Leadership bonus"
+msgstr "Bonus Leadership"
+
+msgid "Live Aliens captured"
+msgstr "Catturato alieno vivo"
+
+msgid "Equipment captured"
+msgstr "Recuperato equipaggiamento"
+
+msgid "Equipment lost"
+msgstr "Perso equipaggiamento"
+
+msgid "Mission performance"
+msgstr "Performance di missione"
+
+msgid "ITEM"
+msgstr "OGGETTO"
+
+msgid "Time ="
+msgstr "Tempo = "
+
+msgid "Date ="
+msgstr "Data = "
+
+msgid "Agent has died"
+msgstr "L'agente è morto"
+
+msgid "Agent arrived at base"
+msgstr "Agente arrivato alla base"
+
+msgid "More options"
+msgstr "Altre opzioni"
+
+msgid "Cheats"
+msgstr "Trucchi"
+
+msgid "Exec. rem. order"
+msgstr "Es. ordine rim."
+
+msgid "Auto Scroll"
+msgstr "Scorrimento automatico"
+
+msgid "OpenApoc Features"
+msgstr "Feature di OpenApoc"
+
+msgid "Exit Battle"
+msgstr "Esci dal campo di battaglia"
+
+msgid "Skirmish Mode"
+msgstr "Modalità Skirmish"
+
+msgid "Give all research"
+msgstr ""
+
+msgid "Utopia"
+msgstr "Utopia"
+
+msgid "All orgs. friendly"
+msgstr "Tutte org. amichevoli"
+
+msgid "All orgs. hostile"
+msgstr "Tutte org. nemiche"
+
+msgid "Chaos"
+msgstr "Caos"
+
+msgid "Infinite ammo"
+msgstr "Munizioni infinite"
+
+msgid "Modify funds"
+msgstr "Modifica i fondi"
+
+msgid "Damage Inflicted"
+msgstr "Danno inflitto"
+
+msgid "Damage Received"
+msgstr "Ricevuto Danno"
+
+msgid "Hostiles multiplier"
+msgstr "Moltiplicatore ostili"
+
+msgid "Agent Stat Growth"
+msgstr "Migliorate caratteristiche agente"
+
+msgid "Transfer arrived at base"
+msgstr "Trasporto arrivato alla base"
+
+msgid "Crash recovery arrived at base"
+msgstr "Veicolo recuperato arrivato alla base"
+
+msgid "DEBRIEFING"
+msgstr "DEBRIEFING"
+
+msgid "Combat rating"
+msgstr ""
+
+msgid "Unit Brainsucked"
+msgstr "Unità catturata da Succhiacervelli"
