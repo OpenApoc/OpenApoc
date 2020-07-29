@@ -324,7 +324,7 @@ void City::dailyLoop(GameState &state)
 	if (state.cities["CITYMAP_ALIEN"] != shared_from_this())
 	{
 		repairScenery(state);
-		// recalculate building economy
+		// check if employment situation changes in the building
 		for (auto &b : buildings)
 		{
 			b.second->updateWorkforce();

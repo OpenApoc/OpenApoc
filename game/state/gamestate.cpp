@@ -1241,7 +1241,7 @@ void GameState::updateEndOfWeek()
 	humanCity->averageWage =
 	    (humanCity->populationWorking) ? totalCivilianIncome / humanCity->populationWorking : 0;
 
-	// Step 2. Government gets 10% of civilian income as taxes
+	// Step 2. Government additionally gets 10% of civilian income as taxes
 	organisations["ORG_GOVERNMENT"]->balance += totalCivilianIncome / 10;
 
 	// Step 3. Calculate civilians leaving work because of the low wage
@@ -1271,14 +1271,71 @@ void GameState::updateEndOfWeek()
 		for (auto &pair : humanCity->buildings)
 		{
 			const auto build = pair.second;
+			if (build->currentWage > expectedWage)
+			{
+				int workersJoining = humanCity->populationUnemployed;
+				if (build->currentWage < 20)
+				{
+					workersJoining = 0;
+				}
+				else if (build->currentWage < 50)
+				{
+					// std::min so we can't overflow here
+					workersJoining *= std::min(build->currentWage, 100) / 100;
+					// fall-through was intended
+					if (build->currentWage < 40)
+						workersJoining /= 10;
+					if (build->currentWage < 30)
+						workersJoining /= 20;
+				}
+
+				// make sure there's room for everybody
+				workersJoining =
+				    std::min(workersJoining, build->maximumWorkforce - build->currentWorkforce);
+
+				if (workersJoining)
+				{
+					build->currentWorkforce += workersJoining;
+					humanCity->populationWorking += workersJoining;
+					humanCity->populationUnemployed -= workersJoining;
+				}
+			}
 		}
 		// Reduce demands by 10%
 		expectedWage -= humanCity->averageWage / 10;
 	}
 
-	// Step 5. Organizations will adjust the wages to attract new workers
+	// Step 5. Adjust the building wages to attract new workers
+	for (auto &pair : humanCity->buildings)
+	{
+		const auto build = pair.second;
+		const int maximum = build->maximumWorkforce;
+		const int current = build->currentWorkforce;
+		const int profitabilityLimit = build->incomePerCapita - build->maintenanceCosts / maximum;
+		int wage = build->currentWage;
 
-	// Step 6. Organizations will fire people to save the money if balance is negative
+		if (current < maximum * 60 / 100)
+		{
+			// severely understaffed, biggest salary bump
+			wage *= 120 / 100;
+		}
+		else if (current < maximum * 80 / 100)
+		{
+			wage *= 110 / 100;
+		}
+		else if (current < maximum * 90 / 100)
+		{
+			wage *= 105 / 100;
+		}
+		else if (current == maximum)
+		{
+			// if we're at 100% capacity reduce the salary
+			wage *= 95 / 100;
+		}
+
+		// make sure we're not losing money
+		build->currentWage = std::min(wage, profitabilityLimit);
+	}
 
 	luaGameState.callHook("updateEndOfWeek", 0, 0);
 }
