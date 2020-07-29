@@ -37,7 +37,7 @@ inline ThreadPool::ThreadPool(size_t threads) : stop(false)
 	// Having a zero-sized threadpool really doesn't make sense
 	LogAssert(threads > 0);
 	for (size_t i = 0; i < threads; ++i)
-		workers.emplace_back([this, i] {
+		workers.emplace_back([this] {
 			for (;;)
 			{
 				std::function<void()> task;
