@@ -7,7 +7,6 @@
 #include "framework/framework.h"
 #include "framework/fs.h"
 #include "framework/logger.h"
-#include "framework/trace.h"
 #include <physfs.h>
 
 #ifdef _WIN32
@@ -279,7 +278,6 @@ FileSystem::~FileSystem() = default;
 
 IFile FileSystem::open(const UString &path) const
 {
-	TRACE_FN_ARGS1("PATH", path);
 	IFile f;
 
 	auto lowerPath = path.toLower();

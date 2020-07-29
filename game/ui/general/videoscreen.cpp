@@ -9,7 +9,6 @@
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
-#include "framework/trace.h"
 #include "framework/video.h"
 #include <chrono>
 #include <cmath>
@@ -88,7 +87,6 @@ void VideoScreen::update()
 
 void VideoScreen::render()
 {
-	TRACE_FN;
 	if (this->video)
 	{
 		auto time_now = std::chrono::high_resolution_clock::now();

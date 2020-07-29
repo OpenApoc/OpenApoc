@@ -5,7 +5,6 @@
 #include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/framework.h"
-#include "framework/trace.h"
 #include "library/sp.h"
 #include <stdexcept>
 

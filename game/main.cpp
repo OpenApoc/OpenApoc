@@ -1,7 +1,6 @@
 #include "forms/ui.h"
 #include "framework/configfile.h"
 #include "framework/framework.h"
-#include "framework/trace.h"
 #include "game/ui/boot.h"
 #include "game/ui/tileview/cityview.h"
 #include "version.h"
@@ -18,9 +17,6 @@ int main(int argc, char *argv[])
 	LogInfo("Starting OpenApoc \"%s\"", OPENAPOC_VERSION);
 
 	{
-		Trace::setThreadName("main");
-
-		TraceObj obj("main");
 		up<Framework> fw(new Framework(UString(argv[0]), true));
 
 		fw->run(mksp<BootUp>());
@@ -30,8 +26,6 @@ int main(int argc, char *argv[])
 		dumpStrings();
 #endif
 	}
-
-	Trace::disable();
 
 	return 0;
 }

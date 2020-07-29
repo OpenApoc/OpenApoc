@@ -18,7 +18,6 @@
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
-#include "framework/trace.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlehazard.h"
@@ -1260,8 +1259,6 @@ void BattleView::resume()
 
 void BattleView::render()
 {
-	TRACE_FN;
-
 	BattleTileView::render();
 	if (hideDisplay)
 	{

@@ -1,6 +1,7 @@
 #ifndef THREAD_POOL_H
 #define THREAD_POOL_H
 
+#include "framework/logger.h"
 #include <condition_variable>
 #include <functional>
 #include <future>
@@ -10,8 +11,6 @@
 #include <stdexcept>
 #include <thread>
 #include <vector>
-
-#include "framework/trace.h"
 
 class ThreadPool
 {
@@ -38,9 +37,7 @@ inline ThreadPool::ThreadPool(size_t threads) : stop(false)
 	// Having a zero-sized threadpool really doesn't make sense
 	LogAssert(threads > 0);
 	for (size_t i = 0; i < threads; ++i)
-		workers.emplace_back([this, i] {
-			OpenApoc::Trace::setThreadName("ThreadPool " +
-			                               OpenApoc::Strings::fromInteger(static_cast<int>(i)));
+		workers.emplace_back([this] {
 			for (;;)
 			{
 				std::function<void()> task;

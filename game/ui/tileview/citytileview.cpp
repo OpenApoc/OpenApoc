@@ -6,7 +6,6 @@
 #include "framework/keycodes.h"
 #include "framework/palette.h"
 #include "framework/renderer.h"
-#include "framework/trace.h"
 #include "game/state/city/agentmission.h"
 #include "game/state/city/base.h"
 #include "game/state/city/building.h"
@@ -296,7 +295,6 @@ void CityTileView::eventOccurred(Event *e)
 
 void CityTileView::render()
 {
-	TRACE_FN;
 	Renderer &r = *fw().renderer;
 	r.clear();
 

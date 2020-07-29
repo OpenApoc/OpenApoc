@@ -1,7 +1,6 @@
 #include "game/state/city/city.h"
 #include "framework/framework.h"
 #include "framework/sound.h"
-#include "framework/trace.h"
 #include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/scenery.h"
@@ -38,7 +37,6 @@ static std::vector<std::set<TileObject::Type>> layerMap = {
 
 City::~City()
 {
-	TRACE_FN;
 	// Note due to backrefs to Tile*s etc. we need to destroy all tile objects
 	// before the TileMap
 	for (auto &p : this->projectiles)
@@ -223,7 +221,6 @@ void City::handleProjectileHit(GameState &state, sp<Projectile> projectile, bool
 
 void City::update(GameState &state, unsigned int ticks)
 {
-	TRACE_FN_ARGS1("ticks", Strings::fromInteger(static_cast<int>(ticks)));
 	/* FIXME: Temporary 'get something working' HACK
 	 * Every now and then give a landed vehicle a new 'goto random building' mission, so there's
 	 * some activity in the city*/
@@ -232,7 +229,6 @@ void City::update(GameState &state, unsigned int ticks)
 	// Need to use a 'safe' iterator method (IE keep the next it before calling ->update)
 	// as update() calls can erase it's object from the lists
 
-	Trace::start("City::update::projectiles->update");
 	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
 	{
 		auto p = *it++;
@@ -282,14 +278,10 @@ void City::update(GameState &state, unsigned int ticks)
 		std::get<0>(p)->die(state, std::get<1>(p), std::get<2>(p));
 	}
 
-	Trace::end("City::update::projectiles->update");
-	Trace::start("City::update::scenery->update");
 	for (auto &s : this->scenery)
 	{
 		s->update(state, ticks);
 	}
-	Trace::end("City::update::scenery->update");
-	Trace::start("City::update::doodads->update");
 	for (auto it = this->doodads.begin(); it != this->doodads.end();)
 	{
 		auto d = *it++;
@@ -301,7 +293,6 @@ void City::update(GameState &state, unsigned int ticks)
 		auto p = *it++;
 		p->update(state, ticks);
 	}
-	Trace::end("City::update::doodads->update");
 }
 
 void City::hourlyLoop(GameState &state)

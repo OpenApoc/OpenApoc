@@ -2,7 +2,6 @@
 #include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/sound.h"
-#include "framework/trace.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battledoor.h"
 #include "game/state/battle/battleexplosion.h"
@@ -63,7 +62,6 @@ static std::vector<std::set<TileObject::Type>> layerMap = {
 
 Battle::~Battle()
 {
-	TRACE_FN;
 	// Note due to backrefs to Tile*s etc. we need to destroy all tile objects
 	// before the TileMap
 	if (map)
@@ -1624,7 +1622,6 @@ void Battle::updatePathfinding(GameState &, unsigned int ticks)
 
 void Battle::update(GameState &state, unsigned int ticks)
 {
-	TRACE_FN_ARGS1("ticks", Strings::fromInteger(static_cast<int>(ticks)));
 
 	if (missionEndTimer > 0)
 	{
@@ -1639,36 +1636,25 @@ void Battle::update(GameState &state, unsigned int ticks)
 	{
 		case Mode::TurnBased:
 		{
-			Trace::start("Battle::updateTB");
 			updateTB(state);
-			Trace::end("Battle::updateTB");
 			break;
 		}
 		case Mode::RealTime:
 		{
-			Trace::start("Battle::updateRT");
 			updateRT(state, ticks);
-			Trace::end("Battle::updateRT");
 			break;
 		}
 	}
-	Trace::start("Battle::update::projectiles->update");
 	updateProjectiles(state, ticks);
-	Trace::end("Battle::update::projectiles->update");
-	Trace::start("Battle::update::doors->update");
 	for (auto &o : this->doors)
 	{
 		o.second->update(state, ticks);
 	}
-	Trace::end("Battle::update::doors->update");
-	Trace::start("Battle::update::doodads->update");
 	for (auto it = this->doodads.begin(); it != this->doodads.end();)
 	{
 		auto d = *it++;
 		d->update(state, ticks);
 	}
-	Trace::end("Battle::update::doodads->update");
-	Trace::start("Battle::update::hazards->update");
 	for (auto it = this->hazards.begin(); it != this->hazards.end();)
 	{
 		if ((*it)->update(state, ticks))
@@ -1676,40 +1662,28 @@ void Battle::update(GameState &state, unsigned int ticks)
 		else
 			++it;
 	}
-	Trace::end("Battle::update::hazards->update");
-	Trace::start("Battle::update::explosions->update");
 	for (auto it = this->explosions.begin(); it != this->explosions.end();)
 	{
 		auto d = *it++;
 		d->update(state, ticks);
 	}
-	Trace::end("Battle::update::explosions->update");
-	Trace::start("Battle::update::map_parts->update");
 	for (auto &o : this->map_parts)
 	{
 		o->update(state, ticks);
 	}
-	Trace::end("Battle::update::map_parts->update");
-	Trace::start("Battle::update::items->update");
 	for (auto it = this->items.begin(); it != this->items.end();)
 	{
 		auto p = *it++;
 		p->update(state, ticks);
 	}
-	Trace::end("Battle::update::items->update");
-	Trace::start("Battle::update::scanners->update");
 	for (auto &o : this->scanners)
 	{
 		o.second->update(state, ticks);
 	}
-	Trace::end("Battle::update::scanners->update");
-	Trace::start("Battle::update::units->update");
 	for (auto &o : this->units)
 	{
 		o.second->update(state, ticks);
 	}
-	Trace::end("Battle::update::units->update");
-	Trace::start("Battle::update::ai->think");
 	{
 		auto result = aiBlock.think(state);
 		for (auto &entry : result)
@@ -1717,17 +1691,12 @@ void Battle::update(GameState &state, unsigned int ticks)
 			BattleUnit::executeGroupAIDecision(state, entry.second, entry.first);
 		}
 	}
-	Trace::end("Battle::update::ai->think");
 
 	// Now after we called update() for everything, we update what needs to be updated last
 
 	// Update unit vision for units that see changes in terrain or hazards
-	Trace::start("Battle::update::vision");
 	updateVision(state);
-	Trace::end("Battle::update::vision");
-	Trace::start("Battle::update::pathfinding");
 	updatePathfinding(state, ticks);
-	Trace::end("Battle::update::pathfinding");
 }
 
 void Battle::updateTB(GameState &state)
@@ -1830,7 +1799,6 @@ void Battle::updateTBBegin(GameState &state)
 		}
 	}
 
-	Trace::start("Battle::updateTBBegin::units->update");
 	for (auto &o : this->units)
 	{
 		if (o.second->owner == currentActiveOrganisation)
@@ -1838,12 +1806,10 @@ void Battle::updateTBBegin(GameState &state)
 			o.second->updateTB(state);
 		}
 	}
-	Trace::end("Battle::updateTBBegin::units->update");
 }
 
 void Battle::updateTBEnd(GameState &state)
 {
-	Trace::start("Battle::updateTBEnd::hazards->update");
 	for (auto it = this->hazards.begin(); it != this->hazards.end();)
 	{
 		if ((*it)->ownerOrganisation == currentActiveOrganisation && (*it)->updateTB(state))
@@ -1851,8 +1817,6 @@ void Battle::updateTBEnd(GameState &state)
 		else
 			++it;
 	}
-	Trace::end("Battle::updateTBEnd::hazards->update");
-	Trace::start("Battle::updateTBEnd::items->update");
 	for (auto it = this->items.begin(); it != this->items.end();)
 	{
 		auto p = *it++;
@@ -1861,7 +1825,6 @@ void Battle::updateTBEnd(GameState &state)
 			p->updateTB(state);
 		}
 	}
-	Trace::end("Battle::updateTBEnd::items->update");
 }
 
 int Battle::getLosBlockID(int x, int y, int z) const

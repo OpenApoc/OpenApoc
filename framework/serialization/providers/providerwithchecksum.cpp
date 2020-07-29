@@ -3,7 +3,6 @@
 #include "framework/configfile.h"
 #include "framework/logger.h"
 #include "framework/options.h"
-#include "framework/trace.h"
 #include "library/strings.h"
 #include "library/strings_format.h"
 #include <sstream>
@@ -24,7 +23,6 @@ namespace OpenApoc
 
 static UString calculateSHA1Checksum(const std::string &str)
 {
-	TRACE_FN;
 	UString hashString;
 
 	boost::uuids::detail::sha1 sha;
@@ -48,7 +46,6 @@ static UString calculateSHA1Checksum(const std::string &str)
 }
 static UString calculateCRCChecksum(const std::string &str)
 {
-	TRACE_FN;
 	UString hashString;
 
 	boost::crc_32_type crc;

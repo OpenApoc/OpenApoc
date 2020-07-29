@@ -4,7 +4,6 @@
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
-#include "framework/trace.h"
 #include "library/sp.h"
 
 #include <boost/locale.hpp>
@@ -14,7 +13,6 @@ namespace OpenApoc
 
 sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 {
-	TRACE_FN_ARGS1("Font", fontDescPath);
 	auto file = fw().data->fs.open(fontDescPath);
 	if (!file)
 	{
