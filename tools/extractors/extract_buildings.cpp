@@ -21,6 +21,10 @@ void InitialGameStateExtractor::extractBuildingFunctions(GameState &state) const
 	{
 		auto f = mksp<BuildingFunction>();
 		f->name = data.building_functions->get(i);
+		if (i < buildingInitCoreData.size())
+		{
+			f->initializationData = buildingInitCoreData[i];
+		}
 		if (i < data.infiltration_speed_building->count())
 		{
 			f->infiltrationSpeed = data.infiltration_speed_building->get(i).speed;

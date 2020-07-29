@@ -101,24 +101,26 @@ void Building::initBuilding(GameState &state)
 {
 	// Initialize economy data, done in the map/city editor or when game starts for the first time
 	// Not on save/load, that's why values are serialized
-	// BuildingInitilizationData initData = function->initData;
+	BuildingInitilizationData initData = function->initializationData;
 
-	// unsigned relevantTiles = 0;
-	// for (auto &p : buildingParts)
-	//{
-	//	auto tile = city->map->getTile(p);
-	//	if (tile->presentScenery && tile->presentScenery->type->value > 5)
-	//	{
-	//		relevantTiles++;
-	//	}
-	//}
-	// currentWage = 65;
-	// maximumWorkforce = relevantTiles * initData.workers * 50 / 100;
-	// currentWorkforce = maximumWorkforce * 70 / 100;
-	// maintenanceCosts = randBoundsInclusive(state.rng, 90, 110) * initData.cost / 100;
-	// incomePerCapita = randBoundsInclusive(state.rng, 90, 110) * initData.income / 100;
-	// investment = initData.investmentValue;
-	// prestige = initData.prestige;
+	unsigned relevantTiles = 0;
+	for (auto &p : buildingParts)
+	{
+		auto tile = city->map->getTile(p);
+		if (tile->presentScenery && tile->presentScenery->type->value > 5)
+		{
+			relevantTiles++;
+		}
+	}
+	currentWage = 65;
+	maximumWorkforce = relevantTiles * function->initializationData.workers * 50 / 100;
+	currentWorkforce = maximumWorkforce * 70 / 100;
+	maintenanceCosts =
+	    randBoundsInclusive(state.rng, 90, 110) * function->initializationData.cost / 100;
+	incomePerCapita =
+	    randBoundsInclusive(state.rng, 90, 110) * function->initializationData.income / 100;
+	investment = initData.investmentValue;
+	prestige = initData.prestige;
 }
 
 void Building::weeklyUpdate(GameState &state)

@@ -40,6 +40,7 @@ class BuildingInitilizationData
 	unsigned cost = 0;
 	unsigned income = 0;
 	unsigned workers = 0;
+	unsigned agentSpawnType = 0;
 	int investmentValue = 0;
 	int prestige = 0;
 };
@@ -51,6 +52,7 @@ class BuildingFunction : public StateObject<BuildingFunction>
 	int infiltrationSpeed = 0;
 	int detectionWeight = 0;
 	StateRef<UfopaediaEntry> ufopaedia_entry;
+	BuildingInitilizationData initializationData;
 };
 
 class Building : public StateObject<Building>, public std::enable_shared_from_this<Building>
