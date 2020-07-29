@@ -9,6 +9,7 @@ option(BUILD_DUMPEVERYTHING "Tool that dumps all known images" OFF)
 option(BUILD_SERIALIZATIONTOOL "Tool to work with serialized gamestate
 archives" ON)
 option(BUILD_LAUNCHER "Build the launcher" ON)
+option(BUILD_EXTRACTFORMTRANSLATIONS "Build the form translation string extraction tool" ON)
 
 if(BUILD_EXTRACTOR)
 		add_subdirectory(extractors)
@@ -32,6 +33,10 @@ endif()
 
 if (BUILD_LAUNCHER)
 		add_subdirectory(launcher)
+endif()
+
+if (BUILD_EXTRACTFORMTRANSLATIONS)
+	add_subdirectory(extract_form_translations)
 endif()
 
 # GameState serialization code generator isn't optional

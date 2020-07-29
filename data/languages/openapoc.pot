@@ -1,1524 +1,2665 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# OpenApoc form translations
+# Copyright (C) YEAR The OpenApoc team
+# This file is distributed under the same license as the OpenApoc package.
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-28 23:14-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Project-Id-Version: OpenApoc 0.1\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: /home/jonny/code/projects/OpenApoc/game/state/battle/battle.cpp:3746
+#: data/forms/cheatoptions.form
+msgid "+99k"
+msgstr ""
+
+#: data/forms/battle/debriefing.form data/forms/selectforces.form
+#: data/forms/skirmish.form
+msgid "0"
+msgstr ""
+
+#: data/forms/researchscreen.form
+msgid "0%"
+msgstr ""
+
+#: data/forms/savemenu.form
+msgid "00:00:00"
+msgstr ""
+
+#: data/forms/battle/hidden.form
+msgid "1"
+msgstr ""
+
+#: data/forms/savemenu.form
+msgid "12/12/2016 12:12:31"
+msgstr ""
+
+#: data/forms/cheatoptions.form
+msgid "123%"
+msgstr ""
+
+#: data/forms/battle/battle_rt_tab2.form data/forms/battle/battle_tb_tab2.form
+msgid "223"
+msgstr ""
+
+#: data/forms/sheet_agent_stats.form data/forms/sheet_personnel_stats.form
+msgid "AGENT NAME GOES HERE"
+msgstr ""
+
+#: data/forms/city/infiltration.form
+msgid "ALIEN INFILTRATION"
+msgstr ""
+
+#: data/forms/selectforces.form
+msgid "ALIENS"
+msgstr ""
+
+#: data/forms/ingameoptions.form
+msgid "Abandon and Restart Game"
+msgstr ""
+
+#: data/forms/sheet_agent_stats.form
+msgid "Accuracy"
+msgstr ""
+
+#: data/forms/ingameoptions.form
+msgid "Action music"
+msgstr ""
+
+#: data/forms/cheatoptions.form
+msgid "Agent Stat Growth"
+msgstr ""
+
+#: data/forms/transactionscreen.form
+msgid "Agent equipment"
+msgstr ""
+
+#: data/forms/city/city.form
+msgid "Agent tab"
+msgstr ""
+
+#: data/forms/city/sheet_finance.form
+msgid "Agents"
+msgstr ""
+
+#: data/forms/city/tab2.form
+msgid "Aggressive"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Aggressive mode"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Aimed shot"
+msgstr ""
+
+#: data/forms/transactionscreen.form
+msgid "Airborne vehicle equipment/fuel"
+msgstr ""
+
+#: data/forms/basescreen.form
+msgid "Alien Containment"
+msgstr ""
+
+#: data/forms/ufopaediatitle.form
+msgid "Alien Craft"
+msgstr ""
+
+#: data/forms/city/sheet_score.form
+msgid "Alien Incidents in City"
+msgstr ""
+
+#: data/forms/skirmish.form
+msgid "Alien Score Level"
+msgstr ""
+
+#: data/forms/city/city.form
+msgid "Alien infiltration graph"
+msgstr ""
+
+#: data/forms/battle/hidden.form data/forms/transactionscreen.form
+#: data/forms/ufopaediatitle.form
+msgid "Aliens"
+msgstr ""
+
+#: data/forms/cheatoptions.form
+msgid "All orgs. friendly"
+msgstr ""
+
+#: data/forms/cheatoptions.form
+msgid "All orgs. hostile"
+msgstr ""
+
+#: data/forms/notification.form
+msgid "Always pause to display this message?"
+msgstr ""
+
+#: data/forms/selectforces.form
+msgid "Anthropod"
+msgstr ""
+
+#: data/forms/researchscreen.form
+msgid "Assign project"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Assign units to squad"
+msgstr ""
+
+#: data/forms/city/tab2.form
+msgid "Attack building"
+msgstr ""
+
+#: data/forms/city/tab2.form
+msgid "Attack hostile unit"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Auto shot"
+msgstr ""
+
+#: data/forms/ingameoptions.form
+msgid "Auto-scroll"
+msgstr ""
+
+#: data/forms/city/basedefense.form
+msgid "BASE ATTACK"
+msgstr ""
+
+#: data/forms/basescreen.form data/forms/city/sheet_finance.form
+msgid "BASES"
+msgstr ""
+
+#: data/forms/city/basebuy.form data/forms/city/baseselect.form
+msgid "BUY NEW BASE"
+msgstr ""
+
+#: data/forms/ufopaediatitle.form
+msgid "Base Facilities"
+msgstr ""
+
+#: data/forms/city/tab1.form
+msgid "Bases"
+msgstr ""
+
+#: data/forms/city/city.form
+msgid "Bases tab"
+msgstr ""
+
+#: data/forms/city/city.form
+msgid "Biochemistry tab"
+msgstr ""
+
+#: data/forms/city/sheet_finance.form data/forms/recruitscreen.form
+#: data/forms/transactionscreen.form
+msgid "Biochemists"
+msgstr ""
+
+#: data/forms/selectforces.form
+msgid "Brainsucker"
+msgstr ""
+
+#: data/forms/sheet_agent_stats.form
+msgid "Bravery"
+msgstr ""
+
+#: data/forms/ufopaediatitle.form
+msgid "Buildings"
+msgstr ""
+
+#: data/forms/city/basebuy.form
+msgid "Buy This Building"
+msgstr ""
+
+#: data/forms/city/tab1.form
+msgid "Buy new base"
+msgstr ""
+
+#: data/forms/basescreen.form
+msgid "Buy/Sell"
+msgstr ""
+
+#: data/forms/city/sheet_score.form
+msgid "CATEGORY"
+msgstr ""
+
+#: data/forms/cheatoptions.form
+msgid "CHEATS"
+msgstr ""
+
+#: data/forms/selectforces.form
+msgid "CUSTOMIZE FORCES"
+msgstr ""
+
+#: data/forms/battle/debriefing.form
+msgid "Casualty penalty"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Cautious mode"
+msgstr ""
+
+#: data/forms/notification.form
+msgid "Center and pause game"
+msgstr ""
+
+#: data/forms/battle/battle.form data/forms/city/city.form
+msgid "Center on message"
+msgstr ""
+
+#: data/forms/cheatoptions.form
+msgid "Chaos"
+msgstr ""
+
+#: data/forms/ingameoptions.form
+msgid "Cheats"
+msgstr ""
+
+#: data/forms/selectforces.form
+msgid "Chrysalis"
+msgstr ""
+
+#: data/forms/recruitscreen.form
+msgid "Civilian"
+msgstr ""
+
+#: data/forms/selectforces.form
+msgid "Civilians"
+msgstr ""
+
+#: data/forms/city/baseselect.form
+msgid "Click on building to buy"
+msgstr ""
+
+#: data/forms/city/tab3.form
+msgid "Combat Training"
+msgstr ""
+
+#: data/forms/battle/debriefing.form
+msgid "Combat rating"
+msgstr ""
+
+#: data/forms/battle/hidden.form
+msgid "Computer"
+msgstr ""
+
+#: data/forms/notification.form
+msgid "Continue"
+msgstr ""
+
+#: data/forms/battle/battle_rt_tab2.form data/forms/battle/battle_tb_tab2.form
+msgid "Control body"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Crawl"
+msgstr ""
+
+#: data/forms/researchscreen.form
+msgid "Current Project"
+msgstr ""
+
+#: data/forms/skirmish.form
+msgid "Customize forces"
+msgstr ""
+
+#: data/forms/battle/debriefing.form
+msgid "DEBRIEFING"
+msgstr ""
+
+#: data/forms/savemenu.form
+msgid "DELETE OLD SAVED GAME"
+msgstr ""
+
+#: data/forms/cheatoptions.form
+msgid "Damage Inflicted"
+msgstr ""
+
+#: data/forms/cheatoptions.form
+msgid "Damage Received"
+msgstr ""
+
+#: data/forms/city/sheet_score.form
+msgid "Damage to City"
+msgstr ""
+
+#: data/forms/savemenu.form
+msgid "Day 00000"
+msgstr ""
+
+#: data/forms/skirmish.form
+msgid "Days of Physical Gym Training"
+msgstr ""
+
+#: data/forms/skirmish.form
+msgid "Days of Psi Gym Training"
+msgstr ""
+
+#: data/forms/mainmenu.form
+msgid "Debug Menu"
+msgstr ""
+
+#: data/forms/selectforces.form
+msgid "Default"
+msgstr ""
+
+#: data/forms/skirmish.form
+msgid "Default equipment tech level"
+msgstr ""
+
+#: data/forms/skirmish.form
+msgid "Default equipped armor"
+msgstr ""
+
+#: data/forms/city/tab2.form
+msgid "Defensive"
+msgstr ""
+
+#: data/forms/ingameoptions.form
+msgid "Delete Old Saved Game"
+msgstr ""
+
+#: data/forms/battle/battle.form data/forms/city/city.form
+msgid "Double speed"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Down"
+msgstr ""
+
+#: data/forms/battle/battle_rt_tab1.form data/forms/battle/battle_tb_tab1.form
+msgid "Drop object"
+msgstr ""
+
+#: data/forms/debugmenu.form
+msgid "Dump PCKs"
+msgstr ""
+
+#: data/forms/city/sheet_finance.form
+msgid "EMPLOYEE TYPE"
+msgstr ""
+
+#: data/forms/vequipscreen.form
+msgid "EQUIP VEHICLE"
+msgstr ""
+
+#: data/forms/difficultymenu.form
+msgid "Easy"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "End turn"
+msgstr ""
+
+#: data/forms/city/city.form
+msgid "Engineering tab"
+msgstr ""
+
+#: data/forms/city/sheet_finance.form data/forms/recruitscreen.form
+#: data/forms/transactionscreen.form
+msgid "Engineers"
+msgstr ""
+
+#: data/forms/vequipscreen.form
+msgid "Engines"
+msgstr ""
+
+#: data/forms/basescreen.form data/forms/battle/battle_rt_tab1.form
+#: data/forms/battle/battle_tb_tab1.form data/forms/battle/prestart.form
+#: data/forms/city/alert.form data/forms/city/basedefense.form
+#: data/forms/city/building.form data/forms/city/location.form
+#: data/forms/city/tab3.form
+msgid "Equip agent"
+msgstr ""
+
+#: data/forms/basescreen.form data/forms/city/alert.form
+#: data/forms/city/building.form data/forms/city/location.form
+#: data/forms/city/tab2.form
+msgid "Equip vehicle"
+msgstr ""
+
+#: data/forms/ufopaediatitle.form data/forms/vequipscreen.form
+msgid "Equipment"
+msgstr ""
+
+#: data/forms/battle/debriefing.form
+msgid "Equipment captured"
+msgstr ""
+
+#: data/forms/battle/debriefing.form
+msgid "Equipment lost"
+msgstr ""
+
+#: data/forms/city/tab2.form
+msgid "Evasive"
+msgstr ""
+
+#: data/forms/battle/debriefing.form
+msgid "Excellent"
+msgstr ""
+
+#: data/forms/ingameoptions.form
+msgid "Exec. rem. orders"
+msgstr ""
+
+#: data/forms/ingameoptions.form
+msgid "Exit Battle"
+msgstr ""
+
+#: data/forms/battle/battle_rt_tab2.form data/forms/battle/battle_tb_tab2.form
+msgid "Exit Psionics"
+msgstr ""
+
+#: data/forms/city/score.form
+msgid "Finance"
+msgstr ""
+
+#: data/forms/debugmenu.form
+msgid "Form Preview"
+msgstr ""
+
+#: data/forms/city/alert.form data/forms/city/building.form
+msgid "Function>"
+msgstr ""
+
+#: data/forms/battle/hidden.form
+msgid "Game Turn:"
+msgstr ""
+
+#: data/forms/cheatoptions.form
+msgid "Give all research"
+msgstr ""
+
+#: data/forms/cheatoptions.form
+msgid "Go forward 1 day"
+msgstr ""
+
+#: data/forms/cheatoptions.form
+msgid "Go forward 1 week"
+msgstr ""
+
+#: data/forms/city/tab2.form data/forms/city/tab3.form
+msgid "Go to building"
+msgstr ""
+
+#: data/forms/city/tab2.form
+msgid "Go to map point"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Group formation"
+msgstr ""
+
+#: data/forms/selectforces.form
+msgid "Guards"
+msgstr ""
+
+#: data/forms/recruitscreen.form
+msgid "HIRE AND FIRE"
+msgstr ""
+
+#: data/forms/difficultymenu.form
+msgid "Hard"
+msgstr ""
+
+#: data/forms/sheet_agent_stats.form
+msgid "Health"
+msgstr ""
+
+#: data/forms/battle/hidden.form
+msgid "Hidden Movement"
+msgstr ""
+
+#: data/forms/city/tab2.form
+msgid "High altitude"
+msgstr ""
+
+#: data/forms/city/tab2.form
+msgid "Highest altitude"
+msgstr ""
+
+#: data/forms/basescreen.form
+msgid "Hire/Fire staff"
+msgstr ""
+
+#: data/forms/city/basedefense.form
+msgid "Hostile forces have invaded your base. Equip your Agents before battle."
+msgstr ""
+
+#: data/forms/city/city.form
+msgid "Hostile vehicles tab"
+msgstr ""
+
+#: data/forms/cheatoptions.form
+msgid "Hostiles multiplier"
+msgstr ""
+
+#: data/forms/skirmish.form
+msgid "Hotseat multiplayer"
+msgstr ""
+
+#: data/forms/selectforces.form
+msgid "Hyperworm"
+msgstr ""
+
+#: data/forms/battle/debriefing.form
+msgid "ITEM"
+msgstr ""
+
+#: data/forms/sheet_agent_item.form data/forms/sheet_vehicle_item.form
+msgid "ITEM NAME GOES HERE"
+msgstr ""
+
+#: data/forms/debugmenu.form
+msgid "Image Preview"
+msgstr ""
+
+#: data/forms/cheatoptions.form
+msgid "Infinite ammo"
+msgstr ""
+
+#: data/forms/city/sheet_finance.form
+msgid "Initial finds>"
+msgstr ""
+
+#: data/forms/city/building.form
+msgid "Investigate building for Alien activity"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Kneel down"
+msgstr ""
+
+#: data/forms/sheet_agent_item.form data/forms/sheet_vehicle_item.form
+#: data/forms/ufopaedia.form
+msgid "LABEL_1"
+msgstr ""
+
+#: data/forms/sheet_agent_item.form data/forms/sheet_vehicle_item.form
+msgid "LABEL_10"
+msgstr ""
+
+#: data/forms/sheet_agent_item.form data/forms/sheet_vehicle_item.form
+#: data/forms/ufopaedia.form
+msgid "LABEL_2"
+msgstr ""
+
+#: data/forms/sheet_agent_item.form data/forms/sheet_vehicle_item.form
+#: data/forms/ufopaedia.form
+msgid "LABEL_3"
+msgstr ""
+
+#: data/forms/sheet_agent_item.form data/forms/sheet_vehicle_item.form
+#: data/forms/ufopaedia.form
+msgid "LABEL_4"
+msgstr ""
+
+#: data/forms/sheet_agent_item.form data/forms/sheet_vehicle_item.form
+#: data/forms/ufopaedia.form
+msgid "LABEL_5"
+msgstr ""
+
+#: data/forms/sheet_agent_item.form data/forms/sheet_vehicle_item.form
+#: data/forms/ufopaedia.form
+msgid "LABEL_6"
+msgstr ""
+
+#: data/forms/sheet_agent_item.form data/forms/sheet_vehicle_item.form
+#: data/forms/ufopaedia.form
+msgid "LABEL_7"
+msgstr ""
+
+#: data/forms/sheet_agent_item.form data/forms/sheet_vehicle_item.form
+#: data/forms/ufopaedia.form
+msgid "LABEL_8"
+msgstr ""
+
+#: data/forms/sheet_agent_item.form data/forms/sheet_vehicle_item.form
+#: data/forms/ufopaedia.form
+msgid "LABEL_9"
+msgstr ""
+
+#: data/forms/savemenu.form
+msgid "LOAD GAME"
+msgstr ""
+
+#: data/forms/researchselect.form
+msgid "Lab Size Needed"
+msgstr ""
+
+#: data/forms/researchscreen.form
+msgid "Lab Type"
+msgstr ""
+
+#: data/forms/battle/debriefing.form
+msgid "Leadership bonus"
+msgstr ""
+
+#: data/forms/battle/battle_rt_tab1.form data/forms/battle/battle_tb_tab1.form
+#: data/forms/battle/battle_tb_tab4.form
+msgid "Level indicator"
+msgstr ""
+
+#: data/forms/battle/debriefing.form
+msgid "Live Aliens captured"
+msgstr ""
+
+#: data/forms/ingameoptions.form
+msgid "Load Game"
+msgstr ""
+
+#: data/forms/mainmenu.form
+msgid "Load Saved Game"
+msgstr ""
+
+#: data/forms/ingameoptions.form
+msgid "Louder"
+msgstr ""
+
+#: data/forms/city/tab2.form
+msgid "Low altitude"
+msgstr ""
+
+#: data/forms/city/sheet_finance.form
+msgid "MAINTENANCE"
+msgstr ""
+
+#: data/forms/messagelog.form
+msgid "MESSAGE HISTORY"
+msgstr ""
+
+#: data/forms/battle/briefing.form
+msgid "MISSION BRIEFING"
+msgstr ""
+
+#: data/forms/difficultymenu.form
+msgid "Medium"
+msgstr ""
+
+#: data/forms/city/tab2.form
+msgid "Medium altitude"
+msgstr ""
+
+#: data/forms/selectforces.form
+msgid "Megaspawn"
+msgstr ""
+
+#: data/forms/battle/battle.form data/forms/city/city.form
+msgid "Message history"
+msgstr ""
+
+#: data/forms/selectforces.form
+msgid "Micronoid"
+msgstr ""
+
+#: data/forms/battle/debriefing.form
+msgid "Mission performance"
+msgstr ""
+
+#: data/forms/cheatoptions.form
+msgid "Modify funds"
+msgstr ""
+
+#: data/forms/ingameoptions.form
+msgid "More options"
+msgstr ""
+
+#: data/forms/selectforces.form
+msgid "Multiworm"
+msgstr ""
+
+#: data/forms/selectforces.form
+msgid "Multiworm Egg"
+msgstr ""
+
+#: data/forms/savemenu.form
+msgid "New save slot"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "No shot"
+msgstr ""
+
+#: data/forms/battle/battle_rt_tab3.form data/forms/battle/battle_tb_tab3.form
+msgid "No, cancel operation"
+msgstr ""
+
+#: data/forms/battle/battle.form data/forms/city/city.form
+msgid "Normal speed"
+msgstr ""
+
+#: data/forms/difficultymenu.form
+msgid "Novice"
+msgstr ""
+
+#: data/forms/skirmish.form
+msgid "Number of Android Agents"
+msgstr ""
+
+#: data/forms/skirmish.form
+msgid "Number of Human Agents"
+msgstr ""
+
+#: data/forms/skirmish.form
+msgid "Number of Hybrid Agents"
+msgstr ""
+
+#: data/forms/researchscreen.form
+msgid "Number to make"
+msgstr ""
+
+#: data/forms/city/bribe.form
+msgid "OFFER CASH SETTLEMENT"
+msgstr ""
+
+#: data/forms/ingameoptions.form data/forms/options.form
+msgid "OPTIONS"
+msgstr ""
+
+#: data/forms/city/tab8.form
+msgid "Offer settlement"
+msgstr ""
+
+#: data/forms/difficultymenu.form data/forms/mainmenu.form
+msgid "OpenApocalypse"
+msgstr ""
+
+#: data/forms/battle/battle.form data/forms/city/city.form
+#: data/forms/ingameoptions.form data/forms/mainmenu.form
+msgid "Options"
+msgstr ""
+
+#: data/forms/skirmish.form
+msgid "Organisation Tech Level"
+msgstr ""
+
+#: data/forms/ufopaediatitle.form
+msgid "Organizations"
+msgstr ""
+
+#: data/forms/city/city.form
+msgid "Organizations tab"
+msgstr ""
+
+#: data/forms/city/alert.form data/forms/city/building.form
+#: data/forms/city/location.form
+msgid "Owner>"
+msgstr ""
+
+#: data/forms/skirmish.form
+msgid "PLAYER / TECH LEVEL / SCORE SETTINGS"
+msgstr ""
+
+#: data/forms/battle/battle_rt_tab2.form data/forms/battle/battle_tb_tab2.form
+msgid "Panic unit"
+msgstr ""
+
+#: data/forms/battle/battle.form data/forms/city/city.form
+msgid "Pause"
+msgstr ""
+
+#: data/forms/city/bribe.form
+msgid "Pay organization"
+msgstr ""
+
+#: data/forms/city/city.form data/forms/city/score.form
+msgid "Performance log"
+msgstr ""
+
+#: data/forms/battle/hidden.form
+msgid "Player:"
+msgstr ""
+
+#: data/forms/selectforces.form
+msgid "Popper"
+msgstr ""
+
+#: data/forms/battle/battle_rt_tab2.form data/forms/battle/battle_tb_tab2.form
+msgid "Probe unit"
+msgstr ""
+
+#: data/forms/researchselect.form
+msgid "Progress"
+msgstr ""
+
+#: data/forms/researchselect.form
+msgid "Project"
+msgstr ""
+
+#: data/forms/city/tab3.form
+msgid "Psi-Training"
+msgstr ""
+
+#: data/forms/sheet_agent_stats.form
+msgid "Psi-attack"
+msgstr ""
+
+#: data/forms/sheet_agent_stats.form
+msgid "Psi-defence"
+msgstr ""
+
+#: data/forms/sheet_agent_stats.form
+msgid "Psi-energy"
+msgstr ""
+
+#: data/forms/selectforces.form
+msgid "Psimorph"
+msgstr ""
+
+#: data/forms/city/sheet_finance.form
+msgid "QUANTITY"
+msgstr ""
+
+#: data/forms/city/city.form
+msgid "Quadruple speed"
+msgstr ""
+
+#: data/forms/city/sheet_finance.form data/forms/recruitscreen.form
+#: data/forms/transactionscreen.form
+msgid "Quantum Physicists"
+msgstr ""
+
+#: data/forms/city/city.form
+msgid "Quantum physics tab"
+msgstr ""
+
+#: data/forms/selectforces.form
+msgid "Queenspawn"
+msgstr ""
+
+#: data/forms/debugmenu.form data/forms/mainmenu.form
+msgid "Quit"
+msgstr ""
+
+#: data/forms/ingameoptions.form
+msgid "Quit X-COM Apocalypse"
+msgstr ""
+
+#: data/forms/researchscreen.form
+msgid "RESEARCH AND MANUFACTURE"
+msgstr ""
+
+#: data/forms/city/building.form
+msgid "Raid building"
+msgstr ""
+
+#: data/forms/skirmish.form
+msgid "Raid mode"
+msgstr ""
+
+#: data/forms/sheet_agent_stats.form
+msgid "Reactions"
+msgstr ""
+
+#: data/forms/city/sheet_finance.form
+msgid "Remaining finds>"
+msgstr ""
+
+#: data/forms/city/sheet_score.form
+msgid "Research Completed"
+msgstr ""
+
+#: data/forms/basescreen.form data/forms/city/tab4.form
+#: data/forms/city/tab5.form data/forms/city/tab6.form
+msgid "Research and manufacture"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Reserve TUs for aimed shot"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Reserve TUs for auto shot"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Reserve TUs for kneel"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Reserve TUs for snap shot"
+msgstr ""
+
+#: data/forms/city/tab2.form data/forms/city/tab3.form
+msgid "Return to base"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Review briefing"
+msgstr ""
+
+#: data/forms/transactionscreen.form
+msgid "Road vehicle equipment/fuel"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Run"
+msgstr ""
+
+#: data/forms/savemenu.form
+msgid "SAVE GAME"
+msgstr ""
+
+#: data/forms/battle/debriefing.form
+msgid "SCORE"
+msgstr ""
+
+#: data/forms/researchselect.form
+msgid "SELECT PROJECT"
+msgstr ""
+
+#: data/forms/mapselector.form
+msgid "SELECT SKIRMISH LOCATION"
+msgstr ""
+
+#: data/forms/skirmish.form
+msgid "SKIRMISH"
+msgstr ""
+
+#: data/forms/battle/prestart.form
+msgid "SQUAD ASSIGNMENT"
+msgstr ""
+
+#: data/forms/savemenu.form
+msgid "SUPERHUMAN"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Safe mode"
+msgstr ""
+
+#: data/forms/ingameoptions.form
+msgid "Save Game"
+msgstr ""
+
+#: data/forms/aequipscreen.form data/forms/city/agentassignment.form
+#: data/forms/ingameoptions.form data/forms/mapselector.form
+#: data/forms/messagelog.form data/forms/options.form
+#: data/forms/recruitscreen.form data/forms/researchscreen.form
+#: data/forms/researchselect.form data/forms/transactionscreen.form
+#: data/forms/vequipscreen.form
+msgid "Scroll Down"
+msgstr ""
+
+#: data/forms/aequipscreen.form data/forms/basescreen.form
+#: data/forms/city/tab2.form data/forms/city/tab3.form
+#: data/forms/city/tab4.form data/forms/city/tab5.form
+#: data/forms/city/tab6.form data/forms/city/tab7.form
+#: data/forms/city/tab8.form
+msgid "Scroll Left"
+msgstr ""
+
+#: data/forms/aequipscreen.form data/forms/basescreen.form
+#: data/forms/city/tab2.form data/forms/city/tab3.form
+#: data/forms/city/tab4.form data/forms/city/tab5.form
+#: data/forms/city/tab6.form data/forms/city/tab7.form
+#: data/forms/city/tab8.form
+msgid "Scroll Right"
+msgstr ""
+
+#: data/forms/aequipscreen.form data/forms/city/agentassignment.form
+#: data/forms/ingameoptions.form data/forms/mapselector.form
+#: data/forms/messagelog.form data/forms/options.form
+#: data/forms/recruitscreen.form data/forms/researchscreen.form
+#: data/forms/researchselect.form data/forms/transactionscreen.form
+#: data/forms/vequipscreen.form
+msgid "Scroll Up"
+msgstr ""
+
+#: data/forms/skirmish.form
+msgid "Select"
+msgstr ""
+
+#: data/forms/city/alert.form
+msgid "Send selected units to investigate incident"
+msgstr ""
+
+#: data/forms/aequipscreen.form
+msgid "Show available armor"
+msgstr ""
+
+#: data/forms/aequipscreen.form
+msgid "Show available equipment"
+msgstr ""
+
+#: data/forms/city/infiltration.form
+msgid "Show ten most infiltrated organizations not under Alien control."
+msgstr ""
+
+#: data/forms/battle/hidden.form
+msgid "Side:"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Single file"
+msgstr ""
+
+#: data/forms/selectforces.form
+msgid "Skeletoid"
+msgstr ""
+
+#: data/forms/researchselect.form data/forms/sheet_personnel_stats.form
+msgid "Skill"
+msgstr ""
+
+#: data/forms/ingameoptions.form
+msgid "Skirmish Mode"
+msgstr ""
+
+#: data/forms/battle/battle.form data/forms/city/city.form
+msgid "Slow speed"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Snap shot"
+msgstr ""
+
+#: data/forms/ingameoptions.form
+msgid "Softer"
+msgstr ""
+
+#: data/forms/sheet_agent_stats.form
+msgid "Speed"
+msgstr ""
+
+#: data/forms/selectforces.form
+msgid "Spitters"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Squad icons"
+msgstr ""
+
+#: data/forms/sheet_agent_stats.form
+msgid "Stamina"
+msgstr ""
+
+#: data/forms/city/tab2.form
+msgid "Standard"
+msgstr ""
+
+#: data/forms/mainmenu.form
+msgid "Start Campaign Game"
+msgstr ""
+
+#: data/forms/battle/briefing.form
+msgid "Start real time game"
+msgstr ""
+
+#: data/forms/battle/briefing.form
+msgid "Start turn-based game"
+msgstr ""
+
+#: data/forms/researchscreen.form
+msgid "Stop project"
+msgstr ""
+
+#: data/forms/sheet_agent_stats.form
+msgid "Strength"
+msgstr ""
+
+#: data/forms/battle/battle_rt_tab2.form data/forms/battle/battle_tb_tab2.form
+msgid "Stun unit"
+msgstr ""
+
+#: data/forms/difficultymenu.form
+msgid "Superhuman"
+msgstr ""
+
+#: data/forms/city/city.form
+msgid "Switch camera mode"
+msgstr ""
+
+#: data/forms/battle/battle.form data/forms/city/city.form
+msgid "Switch map view"
+msgstr ""
+
+#: data/forms/battle/battle.form data/forms/city/city.form
+msgid "TICK TOCK"
+msgstr ""
+
+#: data/forms/city/sheet_finance.form data/forms/city/sheet_score.form
+msgid "TOTAL"
+msgstr ""
+
+#: data/forms/city/sheet_finance.form
+msgid "TOTAL OVERHEADS>"
+msgstr ""
+
+#: data/forms/city/sheet_score.form
+msgid "Tactical Missions"
+msgstr ""
+
+#: data/forms/ufopaediatitle.form
+msgid "The Alien Dimension"
+msgstr ""
+
+#: data/forms/battle/battle_rt_tab1.form data/forms/battle/battle_tb_tab1.form
+msgid "Throw object"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Toggle camera mode"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Toggle map level display mode"
+msgstr ""
+
+#: data/forms/ingameoptions.form
+msgid "Tool tips"
+msgstr ""
+
+#: data/forms/battle/debriefing.form data/forms/city/sheet_score.form
+msgid "Total"
+msgstr ""
+
+#: data/forms/researchscreen.form
+msgid "Total Skill: 0"
+msgstr ""
+
+#: data/forms/basescreen.form
+msgid "Transfer"
+msgstr ""
+
+#: data/forms/city/sheet_score.form
+msgid "UFO Incursions"
+msgstr ""
+
+#: data/forms/city/sheet_score.form
+msgid "UFOs Shot Down"
+msgstr ""
+
+#: data/forms/city/city.form data/forms/ufopaediatitle.form
+msgid "Ufopaedia"
+msgstr ""
+
+#: data/forms/city/city.form
+msgid "Ultra fast"
+msgstr ""
+
+#: data/forms/city/agentassignment.form
+msgid "Unassigned Agents"
+msgstr ""
+
+#: data/forms/city/tab3.form
+msgid "Unit location"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Up"
+msgstr ""
+
+#: data/forms/cheatoptions.form
+msgid "Utopia"
+msgstr ""
+
+#: data/forms/sheet_vehicle_item.form data/forms/ufopaedia.form
+msgid "VALUE_1"
+msgstr ""
+
+#: data/forms/sheet_vehicle_item.form
+msgid "VALUE_10"
+msgstr ""
+
+#: data/forms/sheet_vehicle_item.form data/forms/ufopaedia.form
+msgid "VALUE_2"
+msgstr ""
+
+#: data/forms/sheet_vehicle_item.form data/forms/ufopaedia.form
+msgid "VALUE_3"
+msgstr ""
+
+#: data/forms/sheet_vehicle_item.form data/forms/ufopaedia.form
+msgid "VALUE_4"
+msgstr ""
+
+#: data/forms/sheet_vehicle_item.form data/forms/ufopaedia.form
+msgid "VALUE_5"
+msgstr ""
+
+#: data/forms/sheet_vehicle_item.form data/forms/ufopaedia.form
+msgid "VALUE_6"
+msgstr ""
+
+#: data/forms/sheet_vehicle_item.form data/forms/ufopaedia.form
+msgid "VALUE_7"
+msgstr ""
+
+#: data/forms/sheet_vehicle_item.form data/forms/ufopaedia.form
+msgid "VALUE_8"
+msgstr ""
+
+#: data/forms/sheet_vehicle_item.form data/forms/ufopaedia.form
+msgid "VALUE_9"
+msgstr ""
+
+#: data/forms/sheet_vehicle_item.form
+msgid "VEHICLE NAME GOES HERE"
+msgstr ""
+
+#: data/forms/city/agentassignment.form
+msgid "Vehicle Assignments"
+msgstr ""
+
+#: data/forms/ufopaediatitle.form
+msgid "Vehicle Equipment"
+msgstr ""
+
+#: data/forms/city/tab2.form
+msgid "Vehicle location / passengers"
+msgstr ""
+
+#: data/forms/transactionscreen.form data/forms/ufopaediatitle.form
+msgid "Vehicles"
+msgstr ""
+
+#: data/forms/mainmenu.form
+msgid "Version"
+msgstr ""
+
+#: data/forms/city/tab8.form
+msgid "View all organizations"
+msgstr ""
+
+#: data/forms/city/tab8.form
+msgid "View allied organizations"
+msgstr ""
+
+#: data/forms/city/tab8.form
+msgid "View friendly organizations"
+msgstr ""
+
+#: data/forms/city/tab8.form
+msgid "View hostile organizations"
+msgstr ""
+
+#: data/forms/city/tab8.form
+msgid "View neutral organizations"
+msgstr ""
+
+#: data/forms/city/tab8.form
+msgid "View unfriendly organizations"
+msgstr ""
+
+#: data/forms/city/sheet_finance.form
+msgid "WAGES"
+msgstr ""
+
+#: data/forms/city/sheet_score.form
+msgid "WEEK"
+msgstr ""
+
+#: data/forms/battle/battle.form
+msgid "Walk"
+msgstr ""
+
+#: data/forms/vequipscreen.form
+msgid "Weapons"
+msgstr ""
+
+#: data/forms/recruitscreen.form data/forms/transactionscreen.form
+msgid "X-COM Agents"
+msgstr ""
+
+#: data/forms/city/sheet_score.form
+msgid "X-COM Craft Shot Down"
+msgstr ""
+
+#: data/forms/city/city.form
+msgid "X-COM Vehicles tab"
+msgstr ""
+
+#: data/forms/battle/battle_rt_tab3.form data/forms/battle/battle_tb_tab3.form
+msgid "Yes, prime grenade"
+msgstr ""
+
+#: data/forms/selectforces.form data/forms/skirmish.form
+msgid "_____________________________________________________"
+msgstr ""
+
+#: data/forms/savemenu.form
+msgid "existing save slot template"
+msgstr ""
+
+#: game/state/battle/battle.cpp:3709
 msgid "Very Good"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/battle/battle.cpp:3750
+#: game/state/battle/battle.cpp:3713
 msgid "Good"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/battle/battle.cpp:3754
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/messagebox.cpp:47
+#: game/state/battle/battle.cpp:3717 game/ui/general/messagebox.cpp:47
 msgid "OK"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/battle/battle.cpp:3758
+#: game/state/battle/battle.cpp:3721
 msgid "Poor"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/battle/battle.cpp:3762
+#: game/state/battle/battle.cpp:3725
 msgid "Very Poor"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:72
+#: game/state/gameevent.cpp:72
 msgid "Mission completed in Alien building."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:74
+#: game/state/gameevent.cpp:74
 msgid "X-COM returning from UFO mission."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:76
+#: game/state/gameevent.cpp:76
 msgid "Building has been disabled"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:88
+#: game/state/gameevent.cpp:88
 msgid "UFO spotted."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:90
+#: game/state/gameevent.cpp:90
 msgid "UFO crash landed: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:92
+#: game/state/gameevent.cpp:92
 msgid "Unmanned UFO recovered: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:94
+#: game/state/gameevent.cpp:94
 msgid "Vehicle successfully recovered: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:96
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:393
+#: game/state/gameevent.cpp:96 game/state/gameevent.cpp:393
 msgid "Vehicle out of fuel: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:100
+#: game/state/gameevent.cpp:100
 msgid "Vehicle lightly damaged: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:102
+#: game/state/gameevent.cpp:102
 msgid "Vehicle moderately damaged: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:104
+#: game/state/gameevent.cpp:104
 msgid "Vehicle heavily damaged: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:106
+#: game/state/gameevent.cpp:106
 msgid "Vehicle returning to base as damaged: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:108
+#: game/state/gameevent.cpp:108
 msgid "{1}: Weapon out of ammo"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:110
+#: game/state/gameevent.cpp:110
 msgid "Vehicle low on fuel: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:112
+#: game/state/gameevent.cpp:112
 msgid "Vehicle Repaired: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:114
+#: game/state/gameevent.cpp:114
 msgid "Vehicle Rearmed: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:116
+#: game/state/gameevent.cpp:116
 msgid "Vehicle Refuelled: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:118
+#: game/state/gameevent.cpp:118
 msgid "Vehicle has no engine: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:122
+#: game/state/gameevent.cpp:122
 msgid "An illegal road vehicle has been detected."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:126
+#: game/state/gameevent.cpp:126
 msgid "An illegal flyer has been detected."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:129
+#: game/state/gameevent.cpp:129
 msgid "Not enough ammo to rearm vehicle: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:131
+#: game/state/gameevent.cpp:131
 msgid "Not enough fuel to refuel vehicle {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:146
+#: game/state/gameevent.cpp:146
 msgid "New transfer arrived: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:150
+#: game/state/gameevent.cpp:150
 msgid "New recruit arrived: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:154
+#: game/state/gameevent.cpp:154
 msgid ""
 "{1}: Unable to reach destination due to damaged people tube network and / or "
 "poor diplomatic relations with Transtellar."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:158
+#: game/state/gameevent.cpp:158
 msgid "Hostile unit spotted"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:160
+#: game/state/gameevent.cpp:160
 msgid "Unit Brainsucked: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:162
+#: game/state/gameevent.cpp:162
 msgid "Unit has died: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:164
+#: game/state/gameevent.cpp:164
 msgid "Hostile unit has died {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:166
+#: game/state/gameevent.cpp:166
 msgid "Unknown Unit has died"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:168
+#: game/state/gameevent.cpp:168
 msgid "Unit critically wounded {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:170
+#: game/state/gameevent.cpp:170
 msgid "Unit badly injured: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:172
+#: game/state/gameevent.cpp:172
 msgid "Unit injured: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:174
+#: game/state/gameevent.cpp:174
 msgid "Unit under fire: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:176
+#: game/state/gameevent.cpp:176
 msgid "Unit has lost consciousness: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:178
+#: game/state/gameevent.cpp:178
 msgid "Unit has left combat zone: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:180
+#: game/state/gameevent.cpp:180
 msgid "Unit has frozen: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:182
+#: game/state/gameevent.cpp:182
 msgid "Unit has gone berserk: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:184
+#: game/state/gameevent.cpp:184
 msgid "Unit has panicked: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:186
+#: game/state/gameevent.cpp:186
 msgid "Unit has stopped panicking: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:188
+#: game/state/gameevent.cpp:188
 msgid "Psionic attack on unit: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:190
+#: game/state/gameevent.cpp:190
 msgid "Unit under Psionic control: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:192
+#: game/state/gameevent.cpp:192
 msgid "Unit freed from Psionic control: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:194
+#: game/state/gameevent.cpp:194
 msgid "No line of fire"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:209
+#: game/state/gameevent.cpp:209
 msgid "X-COM returning from mission at: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:211
+#: game/state/gameevent.cpp:211
 msgid "X-COM returning from raid at: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:213
+#: game/state/gameevent.cpp:213
 msgid "Building under attack: {1} Attacked by: {2}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:216
+#: game/state/gameevent.cpp:216
 msgid "Live Alien spotted."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:218
+#: game/state/gameevent.cpp:218
 msgid "Cargo expires soon: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:233
+#: game/state/gameevent.cpp:233
 msgid "Agent(s) rearmed: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:239
+#: game/state/gameevent.cpp:239
 msgid "Cargo expired: {1} Returned to base"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:243
+#: game/state/gameevent.cpp:243
 msgid "Cargo expired: {1} Refunded by supplier: {2}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:249
+#: game/state/gameevent.cpp:249
 msgid "Cargo expired: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:253
+#: game/state/gameevent.cpp:253
 msgid "Cargo seized: {1} By hostile organisation: {2}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:259
+#: game/state/gameevent.cpp:259
 msgid "Cargo arrived: {1} Supplier: {2}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:263
+#: game/state/gameevent.cpp:263
 msgid "Cargo arrived: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:268
+#: game/state/gameevent.cpp:268
 msgid "Transferred Alien specimens have arrived: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:272
+#: game/state/gameevent.cpp:272
 msgid "Transferred goods have arrived: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:275
+#: game/state/gameevent.cpp:275
 msgid "Items from tactical combat zone have arrived: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:277
+#: game/state/gameevent.cpp:277
 msgid "Base mission completed at: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:291
+#: game/state/gameevent.cpp:291
 msgid "Turn: {1}   Side: {2}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:366
+#: game/state/gameevent.cpp:366
 msgid "Agent has died: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:371
+#: game/state/gameevent.cpp:371
 msgid "X-COM base destroyed by hostile forces."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:375
+#: game/state/gameevent.cpp:375
 msgid "X-COM Base destroyed due to collapsing building."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:381
+#: game/state/gameevent.cpp:381
 msgid "Vehicle destroyed: {1} destroyed by {2}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:385
+#: game/state/gameevent.cpp:385
 msgid "Vehicle destroyed: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gameevent.cpp:390
+#: game/state/gameevent.cpp:390
 msgid "Scrapped vehicle recovered in irreparable condition: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:75
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:109
+#: game/state/gametime.cpp:75 game/state/gametime.cpp:109
 msgid "January"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:75
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:109
+#: game/state/gametime.cpp:75 game/state/gametime.cpp:109
 msgid "February"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:75
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:109
+#: game/state/gametime.cpp:75 game/state/gametime.cpp:109
 msgid "March"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:75
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:109
+#: game/state/gametime.cpp:75 game/state/gametime.cpp:109
 msgid "April"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:76
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:110
+#: game/state/gametime.cpp:76 game/state/gametime.cpp:110
 msgid "May"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:76
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:110
+#: game/state/gametime.cpp:76 game/state/gametime.cpp:110
 msgid "June"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:76
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:110
+#: game/state/gametime.cpp:76 game/state/gametime.cpp:110
 msgid "July"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:76
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:110
+#: game/state/gametime.cpp:76 game/state/gametime.cpp:110
 msgid "August"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:77
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:111
+#: game/state/gametime.cpp:77 game/state/gametime.cpp:111
 msgid "September"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:77
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:111
+#: game/state/gametime.cpp:77 game/state/gametime.cpp:111
 msgid "October"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:77
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:111
+#: game/state/gametime.cpp:77 game/state/gametime.cpp:111
 msgid "November"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:77
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:111
+#: game/state/gametime.cpp:77 game/state/gametime.cpp:111
 msgid "December"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:81
+#: game/state/gametime.cpp:81
 msgid "Sunday"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:81
+#: game/state/gametime.cpp:81
 msgid "Monday"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:81
+#: game/state/gametime.cpp:81
 msgid "Tuesday"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:81
+#: game/state/gametime.cpp:81
 msgid "Wednesday"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:82
+#: game/state/gametime.cpp:82
 msgid "Thursday"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:82
+#: game/state/gametime.cpp:82
 msgid "Friday"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:82
+#: game/state/gametime.cpp:82
 msgid "Saturday"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:86
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:115
+#: game/state/gametime.cpp:86 game/state/gametime.cpp:115
 msgid "1st"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:86
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:115
+#: game/state/gametime.cpp:86 game/state/gametime.cpp:115
 msgid "2nd"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:86
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:115
+#: game/state/gametime.cpp:86 game/state/gametime.cpp:115
 msgid "3rd"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:86
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:115
+#: game/state/gametime.cpp:86 game/state/gametime.cpp:115
 msgid "4th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:86
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:115
+#: game/state/gametime.cpp:86 game/state/gametime.cpp:115
 msgid "5th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:87
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:116
+#: game/state/gametime.cpp:87 game/state/gametime.cpp:116
 msgid "6th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:87
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:116
+#: game/state/gametime.cpp:87 game/state/gametime.cpp:116
 msgid "7th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:87
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:116
+#: game/state/gametime.cpp:87 game/state/gametime.cpp:116
 msgid "8th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:87
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:116
+#: game/state/gametime.cpp:87 game/state/gametime.cpp:116
 msgid "9th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:87
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:116
+#: game/state/gametime.cpp:87 game/state/gametime.cpp:116
 msgid "10th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:88
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:117
+#: game/state/gametime.cpp:88 game/state/gametime.cpp:117
 msgid "11th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:88
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:117
+#: game/state/gametime.cpp:88 game/state/gametime.cpp:117
 msgid "12th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:88
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:117
+#: game/state/gametime.cpp:88 game/state/gametime.cpp:117
 msgid "13th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:88
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:117
+#: game/state/gametime.cpp:88 game/state/gametime.cpp:117
 msgid "14th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:88
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:117
+#: game/state/gametime.cpp:88 game/state/gametime.cpp:117
 msgid "15th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:89
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:118
+#: game/state/gametime.cpp:89 game/state/gametime.cpp:118
 msgid "16th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:89
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:118
+#: game/state/gametime.cpp:89 game/state/gametime.cpp:118
 msgid "17th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:89
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:118
+#: game/state/gametime.cpp:89 game/state/gametime.cpp:118
 msgid "18th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:89
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:118
+#: game/state/gametime.cpp:89 game/state/gametime.cpp:118
 msgid "19th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:89
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:118
+#: game/state/gametime.cpp:89 game/state/gametime.cpp:118
 msgid "20th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:90
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:119
+#: game/state/gametime.cpp:90 game/state/gametime.cpp:119
 msgid "21st"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:90
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:119
+#: game/state/gametime.cpp:90 game/state/gametime.cpp:119
 msgid "22nd"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:90
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:119
+#: game/state/gametime.cpp:90 game/state/gametime.cpp:119
 msgid "23rd"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:90
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:119
+#: game/state/gametime.cpp:90 game/state/gametime.cpp:119
 msgid "24th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:90
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:119
+#: game/state/gametime.cpp:90 game/state/gametime.cpp:119
 msgid "25th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:91
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:120
+#: game/state/gametime.cpp:91 game/state/gametime.cpp:120
 msgid "26th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:91
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:120
+#: game/state/gametime.cpp:91 game/state/gametime.cpp:120
 msgid "27th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:91
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:120
+#: game/state/gametime.cpp:91 game/state/gametime.cpp:120
 msgid "28th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:91
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:120
+#: game/state/gametime.cpp:91 game/state/gametime.cpp:120
 msgid "29th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:91
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:120
+#: game/state/gametime.cpp:91 game/state/gametime.cpp:120
 msgid "30th"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:92
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:121
+#: game/state/gametime.cpp:92 game/state/gametime.cpp:121
 msgid "31st"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/gametime.cpp:129
+#: game/state/gametime.cpp:129
 msgid "Week"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/shared/agent.cpp:271
+#: game/state/shared/agent.cpp:271
 msgid "Rookie"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/shared/agent.cpp:273
+#: game/state/shared/agent.cpp:273
 msgid "Squaddie"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/shared/agent.cpp:275
+#: game/state/shared/agent.cpp:275
 msgid "Squad leader"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/shared/agent.cpp:277
+#: game/state/shared/agent.cpp:277
 msgid "Sergeant"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/shared/agent.cpp:279
+#: game/state/shared/agent.cpp:279
 msgid "Captain"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/shared/agent.cpp:281
+#: game/state/shared/agent.cpp:281
 msgid "Colonel"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/state/shared/agent.cpp:283
+#: game/state/shared/agent.cpp:283
 msgid "Commander"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/aliencontainmentscreen.cpp:29
+#: game/ui/base/aliencontainmentscreen.cpp:29
 msgid "ALIEN CONTAINMENT"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/aliencontainmentscreen.cpp:47
+#: game/ui/base/aliencontainmentscreen.cpp:47
 msgid "Confirm Alien Containment Orders"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/aliencontainmentscreen.cpp:107
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:337
+#: game/ui/base/aliencontainmentscreen.cpp:107
+#: game/ui/base/transferscreen.cpp:337
 msgid "Alien Containment space exceeded"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/aliencontainmentscreen.cpp:108
+#: game/ui/base/aliencontainmentscreen.cpp:108
 msgid "Alien Containment space exceeded. Destroy more Aliens!"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:112
-msgid "Transfer"
-msgstr ""
-
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:114
+#: game/ui/base/basescreen.cpp:114
 msgid "At least two bases are required before transfers become possible."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:316
+#: game/ui/base/basescreen.cpp:316
 msgid "Area Occupied By Existing Facility"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:317
+#: game/ui/base/basescreen.cpp:317
 msgid ""
 "Existing facilities in this area of the base must be destroyed before "
 "construction work can begin."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:326
+#: game/ui/base/basescreen.cpp:326
 msgid "Planning Permission Denied"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:328
+#: game/ui/base/basescreen.cpp:328
 msgid ""
 "Planning permission is denied for this proposed extension to the base, on "
 "the grounds that the additional excavations required would seriously weaken "
 "the foundations of the building."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:339
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:111
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:613
+#: game/ui/base/basescreen.cpp:339 game/ui/base/buyandsellscreen.cpp:111
+#: game/ui/base/recruitscreen.cpp:613
 msgid "Funds exceeded"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:340
+#: game/ui/base/basescreen.cpp:340
 msgid ""
 "The proposed construction work is not possible with your available funds."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:365
+#: game/ui/base/basescreen.cpp:365
 msgid "Destroy facility"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:366
+#: game/ui/base/basescreen.cpp:366
 msgid "Are you sure?"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:376
+#: game/ui/base/basescreen.cpp:376
 msgid "Facility in use"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:401
+#: game/ui/base/basescreen.cpp:401
 msgid "Cost to build"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:403
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:511
+#: game/ui/base/basescreen.cpp:403
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:511
 msgid "Days to build"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:405
+#: game/ui/base/basescreen.cpp:405
 msgid "Maintenance cost"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:414
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:517
+#: game/ui/base/basescreen.cpp:414
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:517
 msgid "Capacity"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:416
+#: game/ui/base/basescreen.cpp:416
 msgid "Usage"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:428
+#: game/ui/base/basescreen.cpp:428
 msgid "Corridor"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/basescreen.cpp:432
+#: game/ui/base/basescreen.cpp:432
 msgid "Earth"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:32
+#: game/ui/base/buyandsellscreen.cpp:32
 msgid "BUY AND SELL"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:70
+#: game/ui/base/buyandsellscreen.cpp:70
 msgid "Confirm Sales/Purchases"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:112
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:614
+#: game/ui/base/buyandsellscreen.cpp:112 game/ui/base/recruitscreen.cpp:614
 msgid "Order limited by your available funds."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:164
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:331
+#: game/ui/base/buyandsellscreen.cpp:164 game/ui/base/transferscreen.cpp:331
 msgid "Storage space exceeded"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:167
+#: game/ui/base/buyandsellscreen.cpp:167
 msgid "Storage space exceeded. Sell off more items!"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:168
+#: game/ui/base/buyandsellscreen.cpp:168
 msgid "Order limited by the available storage space at this base."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:263
+#: game/ui/base/buyandsellscreen.cpp:263
 msgid ""
 "Hostile organization refuses to carry out the requested transportation for "
 "this company. Proceed?"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:265
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:277
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:368
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:380
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:429
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:441
+#: game/ui/base/buyandsellscreen.cpp:265 game/ui/base/buyandsellscreen.cpp:277
+#: game/ui/base/buyandsellscreen.cpp:368 game/ui/base/buyandsellscreen.cpp:380
+#: game/ui/base/transferscreen.cpp:429 game/ui/base/transferscreen.cpp:441
 msgid ""
 "No free transport to carry out the requested transportation detected in the "
 "city. Proceed?"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:291
+#: game/ui/base/buyandsellscreen.cpp:291
 msgid ""
 "Hostile organization refuses to carry out the requested transportation for "
 "this company."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:359
+#: game/ui/base/buyandsellscreen.cpp:359
 msgid "{1} & others"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:366
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:427
+#: game/ui/base/buyandsellscreen.cpp:366 game/ui/base/transferscreen.cpp:427
 msgid ""
 "This hostile organization refuses to carry out the requested transfer. "
 "Proceed?"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/buyandsellscreen.cpp:394
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:455
+#: game/ui/base/buyandsellscreen.cpp:394 game/ui/base/transferscreen.cpp:455
 msgid "This hostile organization refuses to carry out the requested transfer."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:123
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:637
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:325
+#: game/ui/base/recruitscreen.cpp:123 game/ui/base/recruitscreen.cpp:637
+#: game/ui/base/transferscreen.cpp:325
 msgid "Accomodation exceeded"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:124
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:638
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:326
+#: game/ui/base/recruitscreen.cpp:124 game/ui/base/recruitscreen.cpp:638
+#: game/ui/base/transferscreen.cpp:326
 msgid "Transfer limited by available accommodation."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:239
-msgid "X-COM Agents"
-msgstr ""
-
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:242
-msgid "Biochemists"
-msgstr ""
-
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:245
-msgid "Quantum Physicists"
-msgstr ""
-
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:248
-msgid "Engineers"
-msgstr ""
-
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:480
+#: game/ui/base/recruitscreen.cpp:480
 msgid ""
 "{1} unit(s) hired\n"
 "{2} unit(s) fired"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:484
+#: game/ui/base/recruitscreen.cpp:484
 msgid ""
 "{1} unit(s) hired\n"
 "{2} unit(s) fired\n"
 "{3} unit(s) transferred"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/recruitscreen.cpp:490
+#: game/ui/base/recruitscreen.cpp:490
 msgid "Confirm Orders"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchscreen.cpp:327
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchscreen.cpp:411
+#: game/ui/base/researchscreen.cpp:327 game/ui/base/researchscreen.cpp:411
 msgid "Total Skill: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchscreen.cpp:339
+#: game/ui/base/researchscreen.cpp:339
 msgid "Biochemistry"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchscreen.cpp:344
+#: game/ui/base/researchscreen.cpp:344
 msgid "Quantum Physics"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchscreen.cpp:349
+#: game/ui/base/researchscreen.cpp:349
 msgid "Engineering"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchscreen.cpp:485
+#: game/ui/base/researchscreen.cpp:485
 msgid "No Project"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:47
+#: game/ui/base/researchselect.cpp:47
 msgid "Select Biochemistry Project"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:48
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:53
-msgid "Progress"
-msgstr ""
-
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:49
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:54
-msgid "Skill"
-msgstr ""
-
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:52
+#: game/ui/base/researchselect.cpp:52
 msgid "Select Physics Project"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:57
+#: game/ui/base/researchselect.cpp:57
 msgid "Select Manufacturing Project"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:58
+#: game/ui/base/researchselect.cpp:58
 msgid "Unit Cost"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:59
+#: game/ui/base/researchselect.cpp:59
 msgid "Skill Hours"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:62
+#: game/ui/base/researchselect.cpp:62
 msgid "Select Unknown Project"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:83
+#: game/ui/base/researchselect.cpp:83
 msgid "PROJECT COMPLETE"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:84
+#: game/ui/base/researchselect.cpp:84
 msgid "This project is already complete."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:96
+#: game/ui/base/researchselect.cpp:96
 msgid "PROJECT TOO LARGE"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:97
+#: game/ui/base/researchselect.cpp:97
 msgid "This project requires an advanced lab or workshop."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:109
+#: game/ui/base/researchselect.cpp:109
 msgid "FUNDS EXCEEDED"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:110
+#: game/ui/base/researchselect.cpp:110
 msgid "Production costs exceed your available funds."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:252
+#: game/ui/base/researchselect.cpp:252
 msgid "Complete"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:311
+#: game/ui/base/researchselect.cpp:311
 msgid "Small"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:314
+#: game/ui/base/researchselect.cpp:314
 msgid "Large"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/researchselect.cpp:317
+#: game/ui/base/researchselect.cpp:317
 msgid "UNKNOWN"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:36
+#: game/ui/base/transferscreen.cpp:36
 msgid "TRANSFER"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:104
+#: game/ui/base/transferscreen.cpp:104
 msgid "Confirm Transfers"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:332
+#: game/ui/base/transferscreen.cpp:332
 msgid "Transfer limited by available storage space."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/base/transferscreen.cpp:338
+#: game/ui/base/transferscreen.cpp:338
 msgid "Transfer limited by available Alien Containment space."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/battle/battledebriefing.cpp:49
+#: game/ui/battle/battledebriefing.cpp:49
 msgid "{1} promoted to {2}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/alertscreen.cpp:76
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:137
+#: game/ui/city/alertscreen.cpp:76 game/ui/city/buildingscreen.cpp:137
 msgid "No Agents Selected"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/alertscreen.cpp:77
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:138
+#: game/ui/city/alertscreen.cpp:77 game/ui/city/buildingscreen.cpp:138
 msgid ""
 "You need to select the agents you want to become active within the building."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/basebuyscreen.cpp:44
+#: game/ui/city/basebuyscreen.cpp:44
 msgid "This Building will cost ${1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/basebuyscreen.cpp:158
+#: game/ui/city/basebuyscreen.cpp:158
 msgid "No Sale"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/basebuyscreen.cpp:158
+#: game/ui/city/basebuyscreen.cpp:158
 msgid "Not enough money to buy this building."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:37
+#: game/ui/city/bribescreen.cpp:37
 msgid "{1}: allied with: {2}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:39
+#: game/ui/city/bribescreen.cpp:39
 msgid ""
 "{1} is ALLIED with this organization. The relationship cannot be improved."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:45
+#: game/ui/city/bribescreen.cpp:45
 msgid "{1}: friendly with: {2}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:46
+#: game/ui/city/bribescreen.cpp:46
 msgid "ALLIED"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:50
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:293
+#: game/ui/city/bribescreen.cpp:50
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:293
 msgid "{1}: neutral towards: {2}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:51
+#: game/ui/city/bribescreen.cpp:51
 msgid "FRIENDLY"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:55
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:297
+#: game/ui/city/bribescreen.cpp:55
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:297
 msgid "{1}: unfriendly towards: {2}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:56
+#: game/ui/city/bribescreen.cpp:56
 msgid "NEUTRAL"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:60
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:301
+#: game/ui/city/bribescreen.cpp:60
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:301
 msgid "{1}: hostile towards: {2}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:63
+#: game/ui/city/bribescreen.cpp:63
 msgid ""
 "Whilst {1} continue to oppose our Alien friends we will remain hostile. "
 "Negotiations are impossible."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:70
+#: game/ui/city/bribescreen.cpp:70
 msgid "UNFRIENDLY"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:76
+#: game/ui/city/bribescreen.cpp:76
 msgid "{1}: Attitude unknown towards: {2}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:77
+#: game/ui/city/bribescreen.cpp:77
 msgid "Unconventional relations"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:84
+#: game/ui/city/bribescreen.cpp:84
 msgid ""
 "This organization is under Alien control.The Alien race will not enter "
 "negotiations with {1}."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/bribescreen.cpp:103
+#: game/ui/city/bribescreen.cpp:103
 msgid "It will cost: ${1} to improve relations to: {2}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:107
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:117
+#: game/ui/city/buildingscreen.cpp:107 game/ui/city/buildingscreen.cpp:117
 msgid "No Entrance"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:108
+#: game/ui/city/buildingscreen.cpp:108
 msgid "Cannot raid as building destroyed"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:118
+#: game/ui/city/buildingscreen.cpp:118
 msgid ""
 "Our Agents are unable to find an entrance to this building. Our Scientists "
 "back at HQ must complete their research."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:159
+#: game/ui/city/buildingscreen.cpp:159
 msgid "You have not found any Aliens in this building."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:171
+#: game/ui/city/buildingscreen.cpp:171
 msgid ""
 "You have not found any Aliens in this building. As a consequence of your "
 "unwelcome intrusion the owner of the building has now become unfriendly "
 "towards X-Com."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:181
+#: game/ui/city/buildingscreen.cpp:181
 msgid ""
 "You have not found any Aliens in this building. As a consequence of your "
 "unwelcome intrusion the owner of the building has now become hostile towards "
 "X-Com."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:190
+#: game/ui/city/buildingscreen.cpp:190
 msgid ""
 "You have not found any Aliens in this building. As a consequence of your "
 "unwelcome intrusion the owner of the building is less favorably disposed "
 "towards X-Com."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:199
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:224
+#: game/ui/city/buildingscreen.cpp:199 game/ui/city/buildingscreen.cpp:224
 msgid "No Hostile Forces Discovered"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/buildingscreen.cpp:225
+#: game/ui/city/buildingscreen.cpp:225
 msgid "You have not found any hostile forces in this building."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/scorescreen.cpp:90
-msgid "SCORE"
-msgstr ""
-
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/scorescreen.cpp:161
+#: game/ui/city/scorescreen.cpp:161
 msgid "Initial funds> ${1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/scorescreen.cpp:163
+#: game/ui/city/scorescreen.cpp:163
 msgid "Remaining funds> ${1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/city/scorescreen.cpp:166
+#: game/ui/city/scorescreen.cpp:166
 msgid "FINANCE"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/components/controlgenerator.cpp:538
+#: game/ui/components/controlgenerator.cpp:538
 msgid "Skill {0}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/components/locationscreen.cpp:31
+#: game/ui/components/locationscreen.cpp:31
 msgid "AGENT LOCATION"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/components/locationscreen.cpp:43
+#: game/ui/components/locationscreen.cpp:43
 msgid "VEHICLE LOCATION"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:59
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:188
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:79
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:128
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:244
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:324
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:364
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:450
+#: game/ui/general/aequipmentsheet.cpp:59
+#: game/ui/general/aequipmentsheet.cpp:188 game/ui/general/vehiclesheet.cpp:79
+#: game/ui/general/vehiclesheet.cpp:128 game/ui/general/vehiclesheet.cpp:244
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:324
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:364
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:450
 msgid "Weight"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:105
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:124
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:153
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:372
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:458
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:469
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:478
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:491
+#: game/ui/general/aequipmentsheet.cpp:105
+#: game/ui/general/aequipmentsheet.cpp:124 game/ui/general/vehiclesheet.cpp:153
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:372
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:458
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:469
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:478
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:491
 msgid "Power"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:111
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:147
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:50
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:76
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:163
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:182
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:380
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:403
-msgid "Accuracy"
-msgstr ""
-
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:114
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:150
+#: game/ui/general/aequipmentsheet.cpp:114
+#: game/ui/general/aequipmentsheet.cpp:150
 msgid "Fire rate"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:118
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:154
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:161
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:382
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:462
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:482
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:495
+#: game/ui/general/aequipmentsheet.cpp:118
+#: game/ui/general/aequipmentsheet.cpp:154 game/ui/general/vehiclesheet.cpp:161
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:382
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:462
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:482
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:495
 msgid "Range"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:121
+#: game/ui/general/aequipmentsheet.cpp:121
 msgid "Ammo Type:"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:127
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:169
+#: game/ui/general/aequipmentsheet.cpp:127 game/ui/general/vehiclesheet.cpp:169
 msgid "Rounds"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:133
+#: game/ui/general/aequipmentsheet.cpp:133
 msgid "(Recharges)"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:157
+#: game/ui/general/aequipmentsheet.cpp:157
 msgid "Ammo types:"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:171
+#: game/ui/general/aequipmentsheet.cpp:171
 msgid "Protection"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:185
+#: game/ui/general/aequipmentsheet.cpp:185
 msgid "Alien Organism"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipmentsheet.cpp:185
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:520
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:544
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:593
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/transactioncontrol.cpp:617
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:242
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:2468
+#: game/ui/general/aequipmentsheet.cpp:185 game/ui/general/aequipscreen.cpp:520
+#: game/ui/general/aequipscreen.cpp:544 game/ui/general/aequipscreen.cpp:593
+#: game/ui/general/transactioncontrol.cpp:617
+#: game/ui/general/vehiclesheet.cpp:242 game/ui/tileview/battleview.cpp:2465
 msgid "Alien Artifact"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:165
+#: game/ui/general/aequipscreen.cpp:165
 msgid "MIND PROBE"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:169
+#: game/ui/general/aequipscreen.cpp:169
 msgid "EQUIP AGENT"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:521
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:545
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:594
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:2469
+#: game/ui/general/aequipscreen.cpp:521 game/ui/general/aequipscreen.cpp:545
+#: game/ui/general/aequipscreen.cpp:594 game/ui/tileview/battleview.cpp:2466
 msgid "You must research Alien technology before you can use it."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:585
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:656
+#: game/ui/general/aequipscreen.cpp:585 game/ui/general/aequipscreen.cpp:656
 msgid "NOT ENOUGH TU'S"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:586
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:657
+#: game/ui/general/aequipscreen.cpp:586 game/ui/general/aequipscreen.cpp:657
 msgid "TU cost per item picked up: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:1884
+#: game/ui/general/aequipscreen.cpp:1884
 msgid "WARNING"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/aequipscreen.cpp:1885
+#: game/ui/general/aequipscreen.cpp:1885
 msgid ""
 "You will lose any equipment left on the floor. Are you sure you wish to "
 "leave this agent?"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:42
-msgid "Health"
-msgstr ""
-
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:58
-msgid "Reactions"
-msgstr ""
-
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:66
+#: game/ui/general/agentsheet.cpp:66
 msgid "Time Units"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:67
-msgid "Speed"
-msgstr ""
-
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:88
-msgid "Stamina"
-msgstr ""
-
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:97
-msgid "Bravery"
-msgstr ""
-
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:105
-msgid "Strength"
-msgstr ""
-
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:113
-msgid "Psi-energy"
-msgstr ""
-
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:121
-msgid "Psi-attack"
-msgstr ""
-
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/agentsheet.cpp:129
-msgid "Psi-defence"
-msgstr ""
-
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/ingameoptions.cpp:119
+#: game/ui/general/ingameoptions.cpp:119
 msgid "Message Toggles"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/ingameoptions.cpp:119
+#: game/ui/general/ingameoptions.cpp:119
 msgid "OpenApoc Features"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/ingameoptions.cpp:313
+#: game/ui/general/ingameoptions.cpp:313
 msgid "Abort Mission"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/ingameoptions.cpp:313
+#: game/ui/general/ingameoptions.cpp:313
 msgid "Units Lost : {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/messagebox.cpp:59
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/messagebox.cpp:78
+#: game/ui/general/messagebox.cpp:59 game/ui/general/messagebox.cpp:78
 msgid "Yes"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/messagebox.cpp:66
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/messagebox.cpp:85
+#: game/ui/general/messagebox.cpp:66 game/ui/general/messagebox.cpp:85
 msgid "No"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/messagebox.cpp:92
+#: game/ui/general/messagebox.cpp:92
 msgid "Cancel"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/transactioncontrol.cpp:112
+#: game/ui/general/transactioncontrol.cpp:112
 msgid "Order canceled by the hostile manufacturer."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/transactioncontrol.cpp:113
+#: game/ui/general/transactioncontrol.cpp:113
 msgid ""
 "Manufacturer has no intact buildings in this city to deliver goods from."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:74
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:315
+#: game/ui/general/vehiclesheet.cpp:74
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:315
 msgid "Constitution"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:75
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:322
+#: game/ui/general/vehiclesheet.cpp:75
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:322
 msgid "Armor"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:77
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:151
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:374
+#: game/ui/general/vehiclesheet.cpp:77 game/ui/general/vehiclesheet.cpp:151
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:374
 msgid "Top Speed"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:78
+#: game/ui/general/vehiclesheet.cpp:78
 msgid "Acceleration"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:80
+#: game/ui/general/vehiclesheet.cpp:80
 msgid "Fuel"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:81
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:197
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:326
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:414
+#: game/ui/general/vehiclesheet.cpp:81 game/ui/general/vehiclesheet.cpp:197
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:326
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:414
 msgid "Passengers"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:82
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:189
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:409
+#: game/ui/general/vehiclesheet.cpp:82 game/ui/general/vehiclesheet.cpp:189
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:409
 msgid "Cargo"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:159
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:378
+#: game/ui/general/vehiclesheet.cpp:159
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:378
 msgid "Damage"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:205
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:419
+#: game/ui/general/vehiclesheet.cpp:205
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:419
 msgid "Aliens Held"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:213
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:424
+#: game/ui/general/vehiclesheet.cpp:213
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:424
 msgid "Jamming"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:221
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:429
+#: game/ui/general/vehiclesheet.cpp:221
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:429
 msgid "Shielding"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:229
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:434
+#: game/ui/general/vehiclesheet.cpp:229
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:434
 msgid "Cloaks Craft"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/general/vehiclesheet.cpp:235
+#: game/ui/general/vehiclesheet.cpp:235
 msgid "Teleports"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battletileview.cpp:322
+#: game/ui/tileview/battletileview.cpp:321
 msgid "Too Far"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battletileview.cpp:323
+#: game/ui/tileview/battletileview.cpp:322
 msgid "Blocked"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battletileview.cpp:324
+#: game/ui/tileview/battletileview.cpp:323
 msgid "Out of range"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battletileview.cpp:325
+#: game/ui/tileview/battletileview.cpp:324
 msgid "No arc of throw"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:176
+#: game/ui/tileview/battleview.cpp:175
 msgid "Execute remaining movement orders for this unit?"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:1676
+#: game/ui/tileview/battleview.cpp:1673
 msgid "All hostile units have fled the combat zone. You win."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:1682
+#: game/ui/tileview/battleview.cpp:1679
 msgid "All your units have fled the combat zone. You win."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:1686
+#: game/ui/tileview/battleview.cpp:1683
 msgid "All hostile units are dead or unconscious. You win."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:1691
+#: game/ui/tileview/battleview.cpp:1688
 msgid "All your units have fled the combat zone. You lose."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:1695
+#: game/ui/tileview/battleview.cpp:1692
 msgid "All hostile units have fled the combat zone. You lose."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:1699
+#: game/ui/tileview/battleview.cpp:1696
 msgid "All your units are unconscious or dead. You lose."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:2120
+#: game/ui/tileview/battleview.cpp:2117
 msgid "Activates now."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:2128
+#: game/ui/tileview/battleview.cpp:2125
 msgid "Activates at end of turn."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:2137
+#: game/ui/tileview/battleview.cpp:2134
 msgid "Delay = {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:2148
+#: game/ui/tileview/battleview.cpp:2145
 msgid "Range = {1,width=2,precision=1}m."
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:4030
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:4040
+#: game/ui/tileview/battleview.cpp:4027 game/ui/tileview/battleview.cpp:4037
 msgid "None"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/battleview.cpp:4037
+#: game/ui/tileview/battleview.cpp:4034
 msgid "Empty"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:1537
+#: game/ui/tileview/cityview.cpp:1536
 msgid "Welcome to X-COM Apocalypse"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2079
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2082
+#: game/ui/tileview/cityview.cpp:2076 game/ui/tileview/cityview.cpp:2079
 msgid "At {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2087
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2100
+#: game/ui/tileview/cityview.cpp:2084 game/ui/tileview/cityview.cpp:2097
 msgid "Returning to base"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2091
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2103
+#: game/ui/tileview/cityview.cpp:2088 game/ui/tileview/cityview.cpp:2100
 msgid "Traveling to: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2107
+#: game/ui/tileview/cityview.cpp:2104
 msgid "Traveling to: map point"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2110
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2278
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2404
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2527
+#: game/ui/tileview/cityview.cpp:2107 game/ui/tileview/cityview.cpp:2275
+#: game/ui/tileview/cityview.cpp:2401 game/ui/tileview/cityview.cpp:2524
 msgid "Reporting to base"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2123
+#: game/ui/tileview/cityview.cpp:2120
 msgid "Wounded"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2129
+#: game/ui/tileview/cityview.cpp:2126
 msgid "Not assigned to training"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2132
+#: game/ui/tileview/cityview.cpp:2129
 msgid "(Android training not possible)"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2138
+#: game/ui/tileview/cityview.cpp:2135
 msgid "Combat training (efficiency={1})"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2147
+#: game/ui/tileview/cityview.cpp:2144
 msgid "Psionic training (efficiency={1})"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2268
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2394
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2517
+#: game/ui/tileview/cityview.cpp:2265 game/ui/tileview/cityview.cpp:2391
+#: game/ui/tileview/cityview.cpp:2514
 msgid "No project assigned"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2276
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2525
+#: game/ui/tileview/cityview.cpp:2273 game/ui/tileview/cityview.cpp:2522
 msgid "Not assigned to lab"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2402
+#: game/ui/tileview/cityview.cpp:2399
 msgid "Not assigned to workshop"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2727
+#: game/ui/tileview/cityview.cpp:2724
 msgid ": allied with: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2730
+#: game/ui/tileview/cityview.cpp:2727
 msgid ": friendly with: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2733
+#: game/ui/tileview/cityview.cpp:2730
 msgid ": neutral towards: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2736
+#: game/ui/tileview/cityview.cpp:2733
 msgid ": unfriendly towards: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:2739
+#: game/ui/tileview/cityview.cpp:2736
 msgid ": hostile towards: {1}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3644
+#: game/ui/tileview/cityview.cpp:3641
 msgid "Commence investigation"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3645
+#: game/ui/tileview/cityview.cpp:3642
 msgid ""
 "All selected units and crafts have arrived at {1}. Proceed with "
 "investigation? ({2} units)"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3712
+#: game/ui/tileview/cityview.cpp:3709
 msgid "RESEARCH COMPLETE"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3714
+#: game/ui/tileview/cityview.cpp:3711
 msgid ""
 "Research project completed:\n"
 "{1}\n"
 "Do you wish to view the UFOPaedia report?"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3784
+#: game/ui/tileview/cityview.cpp:3781
 msgid "MANUFACTURE COMPLETED"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3785
+#: game/ui/tileview/cityview.cpp:3782
 msgid ""
 "{1}\n"
 "{2}\n"
@@ -1526,11 +2667,11 @@ msgid ""
 "Do you wish to reassign the Workshop?"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3843
+#: game/ui/tileview/cityview.cpp:3840
 msgid "MANUFACTURING HALTED"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3844
+#: game/ui/tileview/cityview.cpp:3841
 msgid ""
 "{1}\n"
 "{2}\n"
@@ -1538,120 +2679,120 @@ msgid ""
 "Production costs exceed your availalble funds"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3861
+#: game/ui/tileview/cityview.cpp:3858
 msgid "FACILITY COMPLETED"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3987
+#: game/ui/tileview/cityview.cpp:3984
 msgid "Click on building for selected vehicle to attack"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:3994
+#: game/ui/tileview/cityview.cpp:3991
 msgid "Click on target vehicle for selected vehicle"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:4005
+#: game/ui/tileview/cityview.cpp:4002
 msgid "Click on destination building for selected vehicles"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:4009
+#: game/ui/tileview/cityview.cpp:4006
 msgid "Click on destination building for selected vehicle"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:4016
+#: game/ui/tileview/cityview.cpp:4013
 msgid "Click on destination building for selected people"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:4020
+#: game/ui/tileview/cityview.cpp:4017
 msgid "Click on destination building for selected person"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:4030
+#: game/ui/tileview/cityview.cpp:4027
 msgid "Click on destination map point for selected vehicle"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/tileview/cityview.cpp:4036
+#: game/ui/tileview/cityview.cpp:4033
 msgid "Manual control"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:274
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:274
 msgid "Balance"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:276
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:276
 msgid "Income"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:285
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:285
 msgid "{1}: allied towards: {2}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:289
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:289
 msgid "{1}: friendly towards: {2}"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:306
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:306
 msgid "Alien Infiltration"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:351
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:351
 msgid "Weapons space"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:353
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:353
 msgid "Weapons slots"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:355
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:355
 msgid "Engine size"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:357
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:357
 msgid "Equipment space"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:366
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:452
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:366
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:452
 msgid "Size"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:384
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:464
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:484
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:497
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:384
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:464
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:484
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:497
 msgid "Fire Rate"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:389
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:389
 msgid "Ammo type"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:391
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:391
 msgid "Ammo capacity"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:396
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:396
 msgid "Turn Rate"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:460
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:471
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:480
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:493
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:460
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:471
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:480
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:493
 msgid "Damage Type"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:492
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:494
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:496
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:498
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:492
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:494
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:496
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:498
 msgid "Depends on clip"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:509
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:509
 msgid "Construction cost"
 msgstr ""
 
-#: /home/jonny/code/projects/OpenApoc/game/ui/ufopaedia/ufopaediacategoryview.cpp:513
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:513
 msgid "Weekly cost"
 msgstr ""
