@@ -219,7 +219,6 @@ void GameState::initState()
 		a.second->rightHandItem = a.second->getFirstItemInSlot(EquipmentSlotType::RightHand, false);
 	}
 
-	
 	if (newGame)
 	{
 		// Initialize organization funding by running throught two-week funding
