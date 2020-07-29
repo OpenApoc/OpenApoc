@@ -273,9 +273,30 @@ if (GETTEXT_FOUND)
 		endforeach()
 endif(GETTEXT_FOUND)
 
-set (XGETTEXT_ARGS --keyword=tformat -L c++)
+set (XGETTEXT_ARGS --keyword=tformat -L c++ --from-code=UTF-8 --copyright-holder="The OpenApoc team" --package-name=OpenApoc --package-version=0.1)
+set (MSGCAT_ARGS --use-first)
 
+ 
 FIND_PROGRAM(XGETTEXT_EXECUTABLE xgettext)
-if (XGETTEXT_EXECUTABLE)
-	add_custom_target(generate-pot ${XGETTEXT_EXECUTABLE} -o ${CMAKE_SOURCE_DIR}/data/languages/openapoc.pot ${XGETTEXT_ARGS} ${FORMAT_SOURCES})
-endif(XGETTEXT_EXECUTABLE)
+FIND_PROGRAM(MSGCAT_EXECUTABLE msgcat)
+if (XGETTEXT_EXECUTABLE AND MSGCAT_EXECUTABLE)
+
+	foreach (XGETTEXT_INPUT_FILE ${FORMAT_SOURCES})
+		file(RELATIVE_PATH RELATIVE_FILE_PATH ${CMAKE_SOURCE_DIR} ${XGETTEXT_INPUT_FILE})
+		LIST(APPEND XGETTEXT_INPUT_FILES ${RELATIVE_FILE_PATH})
+	endforeach()
+
+	add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/openapoc_sources.pot COMMAND ${XGETTEXT_EXECUTABLE} -o ${CMAKE_BINARY_DIR}/openapoc_sources.pot ${XGETTEXT_ARGS} ${XGETTEXT_INPUT_FILES} DEPENDS ${FORMAT_SOURCES} WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+
+	foreach (FORM_INPUT_FILE ${FORM_FILES})
+		file(RELATIVE_PATH RELATIVE_FILE_PATH ${CMAKE_SOURCE_DIR} ${FORM_INPUT_FILE})
+		LIST(APPEND FORM_TRANSLATION_INPUT_FILES ${RELATIVE_FILE_PATH})
+	endforeach()
+	
+	add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/openapoc_forms.pot COMMAND OpenApoc_ExtractFormTranslations -o ${CMAKE_BINARY_DIR}/openapoc_forms.pot ${FORM_TRANSLATION_INPUT_FILES} DEPENDS ${FORM_FILES} WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+
+	add_custom_target(generate-openapoc-pot COMMAND ${MSGCAT_EXECUTABLE} ${MSGCAT_ARGS} ${CMAKE_BINARY_DIR}/openapoc_forms.pot ${CMAKE_BINARY_DIR}/openapoc_sources.pot -o data/languages/openapoc.pot DEPENDS ${CMAKE_BINARY_DIR}/openapoc_forms.pot ${CMAKE_BINARY_DIR}/openapoc_sources.pot WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+
+else(XGETTEXT_EXECUTABLE AND MSGCAT_EXECUTABLE)
+	message(INFO Translation generation disabled as we need both msgcat and xgettext)
+endif(XGETTEXT_EXECUTABLE AND MSGCAT_EXECUTABLE)
