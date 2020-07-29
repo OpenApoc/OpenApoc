@@ -1243,6 +1243,8 @@ void GameState::updateHumanEconomy()
 	auto humanCity = cities["CITYMAP_HUMAN"];
 
 	humanCity->populationWorking = 0;
+	// Game resets only Government income, it's not right logically but will keep it to match OG
+	organisations["ORG_GOVERNMENT"]->income = 0;
 
 	// Step 1. Everybody gets paid according to the current rates
 	int totalCivilianIncome = 0;
@@ -1286,7 +1288,7 @@ void GameState::updateHumanEconomy()
 
 	// Step 4. Civilians will try to apply for a new job (up to 5 times)
 	// Workforce initially expect 20% higher wages to be re-hired, but will reduce demands
-	int expectedWage = minimumWage * 12 / 10;
+	int expectedWage = humanCity->averageWage * 12 / 10;
 	for (int attempt = 0; attempt < 5; ++attempt)
 	{
 		// Check if there's still civilians without work
@@ -1359,7 +1361,7 @@ void GameState::updateHumanEconomy()
 		}
 
 		// make sure we're not losing money
-		build->currentWage = (wage < profitabilityLimit) ? profitabilityLimit : wage;
+		build->currentWage = (wage < profitabilityLimit) ? wage : profitabilityLimit;
 	}
 }
 
