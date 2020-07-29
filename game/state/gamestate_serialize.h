@@ -4,7 +4,6 @@
 #include "framework/image.h"
 #include "framework/serialization/serialize.h"
 #include "framework/sound.h"
-#include "framework/trace.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/ai/tacticalaivanilla.h"
 #include "game/state/battle/ai/unitaibehavior.h"

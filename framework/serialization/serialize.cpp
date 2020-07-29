@@ -5,7 +5,6 @@
 #include "framework/serialization/providers/filedataprovider.h"
 #include "framework/serialization/providers/providerwithchecksum.h"
 #include "framework/serialization/providers/zipdataprovider.h"
-#include "framework/trace.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/strings_format.h"
@@ -198,13 +197,11 @@ SerializationNode *XMLSerializationArchive::getRoot(const UString &prefix, const
 	auto it = this->docRoots.find(path);
 	if (it == this->docRoots.end())
 	{
-		TraceObj trace("Reading archive", {{"path", path}});
 		UString content;
 		if (dataProvider->readDocument(path, content))
 		{
 			// FIXME: Make this actually read from the root and load the xinclude tags properly?
 			auto &doc = this->docRoots[path];
-			TraceObj traceParse("Parsing archive", {{"path", path}});
 			auto parse_result = doc.load_string(content.cStr());
 			if (!parse_result)
 			{
@@ -233,7 +230,6 @@ SerializationNode *XMLSerializationArchive::getRoot(const UString &prefix, const
 
 bool XMLSerializationArchive::write(const UString &path, bool pack, bool pretty)
 {
-	TraceObj trace("Writing archive", {{"path", path}});
 	// warning! data provider must be freed when this method ends,
 	// so code calling this method may override archive
 	auto dataProvider = getProvider(pack);
@@ -245,7 +241,6 @@ bool XMLSerializationArchive::write(const UString &path, bool pack, bool pretty)
 
 	for (auto &root : this->docRoots)
 	{
-		TraceObj traceSave("Saving root", {{"root", root.first}});
 		std::stringstream ss;
 		unsigned int flags = pugi::format_default;
 		const char *indent = "  ";
@@ -255,7 +250,6 @@ bool XMLSerializationArchive::write(const UString &path, bool pack, bool pretty)
 			indent = "";
 		}
 		root.second.save(ss, indent, flags);
-		TraceObj traceSaveData("Saving root data", {{"root", root.first}});
 		if (!dataProvider->saveDocument(root.first, ss.str()))
 		{
 			return false;

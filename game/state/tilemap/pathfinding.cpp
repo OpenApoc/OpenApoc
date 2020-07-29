@@ -1,4 +1,3 @@
-#include "framework/trace.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/battle/battleunitmission.h"
@@ -143,7 +142,6 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 		t.pathfindingDebugFlag = false;
 #endif
 
-	TRACE_FN;
 	maxCost /= canEnterTileHelper.pathOverheadAlloawnce();
 	// Faster than looking up in a set
 	std::vector<bool> visitedTiles = std::vector<bool>(size.x * size.y * size.z, false);

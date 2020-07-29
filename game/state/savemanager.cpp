@@ -4,7 +4,6 @@
 #include "framework/framework.h"
 #include "framework/options.h"
 #include "framework/serialization/serialize.h"
-#include "framework/trace.h"
 #include "game/state/gamestate.h"
 #include "version.h"
 #include <algorithm>
@@ -223,7 +222,6 @@ bool SaveManager::saveGame(const SaveMetadata &metadata, const sp<GameState> gam
 {
 	bool pack = Options::packSaveOption.get();
 	const UString path = metadata.getFile();
-	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
 	if (gameState->serialize(archive.get()) && metadata.serializeManifest(archive.get()))
 	{

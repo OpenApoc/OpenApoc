@@ -11,7 +11,6 @@
 #include "framework/palette.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
-#include "framework/trace.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlehazard.h"
 #include "game/state/battle/battleitem.h"
@@ -413,7 +412,6 @@ void BattleTileView::eventOccurred(Event *e)
 
 void BattleTileView::render()
 {
-	TRACE_FN;
 	Renderer &r = *fw().renderer;
 	r.clear();
 	r.setPalette(this->pal);

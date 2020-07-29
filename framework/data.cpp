@@ -13,7 +13,6 @@
 #include "framework/options.h"
 #include "framework/palette.h"
 #include "framework/sampleloader_interface.h"
-#include "framework/trace.h"
 #include "framework/video.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -212,7 +211,6 @@ sp<VoxelSlice> DataImpl::loadVoxelSlice(const UString &path)
 		sp<LOFTemps> lofTemps = this->LOFVoxelCache[cacheKey].lock();
 		if (!lofTemps)
 		{
-			TRACE_FN_ARGS1("path", path);
 			auto datFile = this->fs.open(splitString[1]);
 			if (!datFile)
 			{
@@ -286,7 +284,6 @@ sp<ImageSet> DataImpl::loadImageSet(const UString &path)
 	{
 		return imgSet;
 	}
-	TRACE_FN_ARGS1("path", path);
 	// Raw resources come in the format:
 	//"RAW:PATH:WIDTH:HEIGHT[:optional/ignored]"
 	if (path.substr(0, 4) == "RAW:")
@@ -343,7 +340,6 @@ sp<Sample> DataImpl::loadSample(UString path)
 	if (sample)
 		return sample;
 
-	TRACE_FN_ARGS1("path", path);
 	for (auto &loader : this->sampleLoaders)
 	{
 		sample = loader->loadSample(path);
@@ -363,7 +359,6 @@ sp<Sample> DataImpl::loadSample(UString path)
 sp<MusicTrack> DataImpl::loadMusic(const UString &path)
 {
 	std::lock_guard<std::recursive_mutex> l(this->musicCacheLock);
-	TRACE_FN_ARGS1("path", path);
 	auto alias = this->musicAliases.find(path);
 	if (alias != this->musicAliases.end())
 	{
@@ -416,7 +411,6 @@ sp<Image> DataImpl::loadImage(const UString &path, bool lazy)
 	}
 
 	// Only trace stuff that misses the cache
-	TRACE_FN_ARGS1("path", path);
 
 	if (lazy)
 	{

@@ -14,7 +14,6 @@
 #include "framework/renderer_interface.h"
 #include "framework/sound_interface.h"
 #include "framework/stagestack.h"
-#include "framework/trace.h"
 #include "library/sp.h"
 #include "library/xorshift.h"
 #include <SDL.h>
@@ -223,7 +222,6 @@ class FrameworkPrivate
 Framework::Framework(const UString programName, bool createWindow)
     : p(new FrameworkPrivate), programName(programName), createWindow(createWindow)
 {
-	TRACE_FN;
 	LogInfo("Starting framework");
 
 	if (this->instance)
@@ -371,7 +369,6 @@ Framework::Framework(const UString programName, bool createWindow)
 
 Framework::~Framework()
 {
-	TRACE_FN;
 	LogInfo("Destroying framework");
 	// Stop any audio first, as if you've got ongoing music/samples it could call back into the
 	// framework for the threadpool/data read/all kinda of stuff it shouldn't do on a
@@ -418,7 +415,6 @@ void Framework::run(sp<Stage> initialStage)
 		return;
 	}
 	size_t frame = 0;
-	TRACE_FN;
 	LogInfo("Program loop started");
 
 	auto target_frame_duration =
@@ -436,7 +432,6 @@ void Framework::run(sp<Stage> initialStage)
 		auto frame_time_now = std::chrono::steady_clock::now();
 		if (expected_frame_time > frame_time_now)
 		{
-			TraceObj sleepTrace{"Sleep"};
 			auto time_to_sleep = expected_frame_time - frame_time_now;
 			auto time_to_sleep_us =
 			    std::chrono::duration_cast<std::chrono::microseconds>(time_to_sleep);
@@ -446,7 +441,6 @@ void Framework::run(sp<Stage> initialStage)
 		}
 		expected_frame_time += target_frame_duration;
 		frame++;
-		TraceObj obj{"Frame", {{"frame", Strings::fromInteger(frame)}}};
 
 		if (!frame_time_limited_warning_shown &&
 		    frame_time_now > expected_frame_time + 5 * target_frame_duration)
@@ -462,7 +456,6 @@ void Framework::run(sp<Stage> initialStage)
 			break;
 		}
 		{
-			TraceObj updateObj("Update");
 			p->ProgramStages.current()->update();
 		}
 
@@ -501,12 +494,10 @@ void Framework::run(sp<Stage> initialStage)
 		auto surface = p->scaleSurface ? p->scaleSurface : p->defaultSurface;
 		RendererSurfaceBinding b(*this->renderer, surface);
 		{
-			TraceObj objClear{"clear"};
 			this->renderer->clear();
 		}
 		if (!p->ProgramStages.isEmpty())
 		{
-			TraceObj updateObj("Render");
 			p->ProgramStages.current()->render();
 			if (p->toolTipImage)
 			{
@@ -516,12 +507,10 @@ void Framework::run(sp<Stage> initialStage)
 			if (p->scaleSurface)
 			{
 				RendererSurfaceBinding scaleBind(*this->renderer, p->defaultSurface);
-				TraceObj objClear{"clear scale"};
 				this->renderer->clear();
 				this->renderer->drawScaled(p->scaleSurface, {0, 0}, p->windowSize);
 			}
 			{
-				TraceObj flipObj("Flip");
 				this->renderer->flush();
 				this->renderer->newFrame();
 				SDL_GL_SwapWindow(p->window);
@@ -537,7 +526,6 @@ void Framework::run(sp<Stage> initialStage)
 
 void Framework::processEvents()
 {
-	TRACE_FN;
 	if (p->ProgramStages.isEmpty())
 	{
 		p->quitProgram = true;
@@ -839,7 +827,6 @@ void Framework::displayInitialise()
 	{
 		return;
 	}
-	TRACE_FN;
 	LogInfo("Init display");
 	int display_flags = SDL_WINDOW_OPENGL;
 #ifdef OPENAPOC_GLES
@@ -1008,7 +995,6 @@ void Framework::displayShutdown()
 	{
 		return;
 	}
-	TRACE_FN;
 	LogInfo("Shutdown Display");
 	p->defaultSurface.reset();
 	renderer.reset();
@@ -1066,7 +1052,6 @@ void Framework::displaySetIcon(sp<RGBImage> image)
 
 void Framework::audioInitialise()
 {
-	TRACE_FN;
 	LogInfo("Initialise Audio");
 
 	p->registeredSoundBackends["SDLRaw"].reset(getSDLSoundBackend());
@@ -1107,7 +1092,6 @@ void Framework::audioInitialise()
 
 void Framework::audioShutdown()
 {
-	TRACE_FN;
 	LogInfo("Shutdown Audio");
 	this->jukebox.reset();
 	this->soundBackend.reset();
