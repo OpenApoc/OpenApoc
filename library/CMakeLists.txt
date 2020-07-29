@@ -37,7 +37,7 @@ add_library(OpenApoc_Library STATIC ${LIBRARY_SOURCE_FILES}
 		${LIBRARY_HEADER_FILES})
 
 target_link_libraries(OpenApoc_Library PUBLIC ${Boost_LIBRARIES}
-		Threads::Threads)
+		Threads::Threads fmt::fmt)
 
 target_include_directories(OpenApoc_Library PUBLIC ${CMAKE_SOURCE_DIR})
 target_include_directories(OpenApoc_Library PUBLIC ${GLM_INCLUDE_DIR})

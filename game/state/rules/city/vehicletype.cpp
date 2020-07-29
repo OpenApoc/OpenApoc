@@ -77,7 +77,7 @@ const UString &StateObject<VehicleType>::getId(const GameState &state, const sp<
 		if (v.second == ptr)
 			return v.first;
 	}
-	LogError("No vehicle type matching pointer %p", ptr.get());
+	LogError("No vehicle type matching pointer %p", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 

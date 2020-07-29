@@ -8,7 +8,7 @@
 namespace OpenApoc
 {
 
-typedef char32_t UniChar;
+typedef uint32_t UniChar;
 
 class UString
 {

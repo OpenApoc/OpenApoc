@@ -40,7 +40,7 @@ const UString &StateObject<BattleUnitImagePack>::getId(const GameState &state,
 		if (a.second == ptr)
 			return a.first;
 	}
-	LogError("No BattleUnitImagePack matching pointer %p", ptr.get());
+	LogError("No BattleUnitImagePack matching pointer %p", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 

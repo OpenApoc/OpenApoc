@@ -172,7 +172,7 @@ UString win32_backtrace::symbolicate(const void *ip)
 	sym->SizeOfStruct = sizeof(SYMBOL_INFO);
 
 	SymFromAddr(process, (DWORD64)(ip), 0, sym);
-	str = format("  0x%p %s+0x%Ix\n", ip, sym->Name, (uintptr_t)ip - (uintptr_t)sym->Address);
+	str = format("  0x%p %s+0x%x\n", ip, sym->Name, (uintptr_t)ip - (uintptr_t)sym->Address);
 
 	free(sym);
 	return str;

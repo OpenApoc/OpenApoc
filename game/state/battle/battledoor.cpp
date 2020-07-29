@@ -44,7 +44,7 @@ const UString &StateObject<BattleDoor>::getId(const GameState &state, const sp<B
 		if (a.second == ptr)
 			return a.first;
 	}
-	LogError("No BattleDoor matching pointer %p", ptr.get());
+	LogError("No BattleDoor matching pointer %p", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 

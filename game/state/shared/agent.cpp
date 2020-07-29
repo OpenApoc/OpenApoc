@@ -55,7 +55,7 @@ template <> const UString &StateObject<Agent>::getId(const GameState &state, con
 		if (a.second == ptr)
 			return a.first;
 	}
-	LogError("No agent matching pointer %p", ptr.get());
+	LogError("No agent matching pointer %p", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 
