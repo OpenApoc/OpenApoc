@@ -103,17 +103,8 @@ void Building::initBuilding(GameState &state)
 	// Not on save/load, that's why values are serialized
 	BuildingInitilizationData initData = function->initializationData;
 
-	unsigned relevantTiles = 0;
-	for (auto &p : buildingParts)
-	{
-		auto tile = city->map->getTile(p);
-		if (tile->presentScenery && tile->presentScenery->type->value > 5)
-		{
-			relevantTiles++;
-		}
-	}
 	currentWage = 65;
-	maximumWorkforce = relevantTiles * function->initializationData.workers * 50 / 100;
+	maximumWorkforce = countActiveTiles() * function->initializationData.workers * 50 / 100;
 	currentWorkforce = maximumWorkforce * 70 / 100;
 	maintenanceCosts =
 	    randBoundsInclusive(state.rng, 90, 110) * function->initializationData.cost / 100;
@@ -130,6 +121,20 @@ void Building::weeklyUpdate(GameState &state)
 		city->populationUnemployed -= currentWorkforce - maximumWorkforce;
 		currentWorkforce = maximumWorkforce;
 	}
+}
+
+unsigned Building::countActiveTiles() const
+{
+	unsigned relevantTiles = 0;
+	for (auto &p : buildingParts)
+	{
+		auto tile = city->map->getTile(p);
+		if (tile->presentScenery && tile->presentScenery->type->value > 5)
+		{
+			relevantTiles++;
+		}
+	}
+	return relevantTiles;
 }
 
 void Building::updateDetection(GameState &state, unsigned int ticks)
@@ -1006,9 +1011,6 @@ void Building::buildingPartChange(GameState &state, Vec3<int> part, bool intact)
 	}
 	else
 	{
-		// Skin36 had some code figured out about this
-		// which counted score of parts and when it was below certain value
-		// building was considered dead
 		buildingParts.erase(part);
 		if (buildingParts.find(crewQuarters) == buildingParts.end())
 		{
@@ -1020,7 +1022,7 @@ void Building::buildingPartChange(GameState &state, Vec3<int> part, bool intact)
 				agent->die(state, true);
 			}
 		}
-		if (!isAlive(state))
+		if (!isAlive())
 		{
 			if (base)
 			{
@@ -1045,6 +1047,6 @@ void Building::decreasePendingInvestigatorCount(GameState &state)
 	}
 }
 
-bool Building::isAlive(GameState &state [[maybe_unused]]) const { return !buildingParts.empty(); }
+bool Building::isAlive() const { return countActiveTiles() > 0; }
 
 } // namespace OpenApoc

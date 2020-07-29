@@ -106,12 +106,13 @@ class Building : public StateObject<Building>, public std::enable_shared_from_th
 	void alienMovement(GameState &state);
 	void initBuilding(GameState &state);
 	void weeklyUpdate(GameState &state);
+	unsigned countActiveTiles() const;
 
 	void underAttack(GameState &state, StateRef<Organisation> attacker);
 
 	void collapse(GameState &state);
 	void buildingPartChange(GameState &state, Vec3<int> part, bool intact);
-	bool isAlive(GameState &state) const;
+	bool isAlive() const;
 
 	// Following members are not serialized, but rather are set in City::initCity method
 
