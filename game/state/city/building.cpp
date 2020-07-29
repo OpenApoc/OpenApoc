@@ -10,6 +10,7 @@
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/shared/organisation.h"
+#include "game/state/rules/city/scenerytiletype.h"
 
 // Uncomment to make cargo system output warnings
 #define DEBUG_VERBOSE_CARGO_SYSTEM
@@ -94,6 +95,30 @@ bool Building::hasAliens() const
 		}
 	}
 	return false;
+}
+
+void Building::initBuilding(GameState & state)
+{
+	// Initialize economy data, done in the map/city editor or when game starts for the first time
+	// Not on save/load, that's why values are serialized
+	// BuildingInitilizationData initData = function->initData;
+
+	// unsigned relevantTiles = 0;
+	// for (auto &p : buildingParts)
+	//{
+	//	auto tile = city->map->getTile(p);
+	//	if (tile->presentScenery && tile->presentScenery->type->value > 5)
+	//	{
+	//		relevantTiles++;
+	//	}
+	//}
+	// currentWage = 65;
+	// maximumWorkforce = relevantTiles * initData.workers * 50 / 100;
+	// currentWorkforce = maximumWorkforce * 70 / 100;
+	// maintenanceCosts = randBoundsInclusive(state.rng, 90, 110) * initData.cost / 100;
+	// incomePerCapita = randBoundsInclusive(state.rng, 90, 110) * initData.income / 100;
+	// investment = initData.investmentValue;
+	// prestige = initData.prestige;
 }
 
 void Building::updateDetection(GameState &state, unsigned int ticks)

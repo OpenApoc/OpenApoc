@@ -145,13 +145,6 @@ void City::initCity(GameState &state)
 		}
 		b.second->owner->buildings.emplace_back(&state, b.first);
 
-		// Initialize economy data
-		//b.second->maintenanceCosts = randBoundsInclusive(state.rng, 90, 110) *
-		//                             bld_cost_struc[b.second->function->getId()].cost_value /
-		//                             100;
-
-		//populationWorking += b.second->maximumWorkforce * 70 / 100;
-		//populationUnemployed += b.second->maximumWorkforce * 30 / 100;
 		populationWorking += b.second->currentWage;
 		populationUnemployed += b.second->currentWage;
 		subtotalIncome += b.second->currentWage;

@@ -33,6 +33,16 @@ class Cargo;
 class UfopaediaEntry;
 class ResearchTopic;
 
+class BuildingInitilizationData
+{
+  public:
+	unsigned cost = 0;
+	unsigned income = 0;
+	unsigned workers = 0;
+	int investmentValue = 0;
+	int prestige = 0;
+};
+
 class BuildingFunction : public StateObject<BuildingFunction>
 {
   public:
@@ -91,6 +101,7 @@ class Building : public StateObject<Building>, public std::enable_shared_from_th
 	void detect(GameState &state, bool forced = false);
 	void alienGrowth(GameState &state);
 	void alienMovement(GameState &state);
+	void initBuilding(GameState &state);
 
 	void underAttack(GameState &state, StateRef<Organisation> attacker);
 
