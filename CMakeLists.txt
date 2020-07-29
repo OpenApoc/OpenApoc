@@ -262,14 +262,14 @@ find_package(Gettext)
 if (GETTEXT_FOUND)
 		foreach(LANG ${LANGUAGES})
 				GETTEXT_PROCESS_PO_FILES(${LANG} PO_FILES
-						${CMAKE_SOURCE_DIR}/data/languages/ufo_string_${LANG}.po)
+						${CMAKE_SOURCE_DIR}/data/languages/openapoc_${LANG}.po)
 		endforeach()
 		add_custom_target(update-translations DEPENDS pofiles)
 		foreach (LANG ${LANGUAGES})
 				add_custom_command(TARGET update-translations DEPENDS pofiles
 						COMMAND ${CMAKE_COMMAND} -E copy
-						${CMAKE_BINARY_DIR}/ufo_string_${LANG}.gmo
-						${CMAKE_SOURCE_DIR}/data/languages/${LANG}/LC_MESSAGES/ufo_string.mo)
+						${CMAKE_BINARY_DIR}/openapoc_${LANG}.gmo
+						${CMAKE_SOURCE_DIR}/data/languages/${LANG}/LC_MESSAGES/openapoc.mo)
 		endforeach()
 endif(GETTEXT_FOUND)
 
