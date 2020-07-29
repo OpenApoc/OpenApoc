@@ -150,6 +150,7 @@ void City::initCity(GameState &state)
 		subtotalIncome += b.second->currentWage;
 	}
 	averageWage = (populationWorking) ? subtotalIncome / populationWorking : 0;
+	populationUnemployed += 500; // original adjustment
 
 	for (auto &p : this->projectiles)
 	{

@@ -213,6 +213,11 @@ void GameState::initState()
 		a.second->leftHandItem = a.second->getFirstItemInSlot(EquipmentSlotType::LeftHand, false);
 		a.second->rightHandItem = a.second->getFirstItemInSlot(EquipmentSlotType::RightHand, false);
 	}
+
+	// Initialize organization funding
+	if (newGame)
+		updateHumanEconomy();
+
 	// Run necessary methods for different types
 	research.updateTopicList();
 	// Apply mods (Stub until we actually have mods)
@@ -1217,6 +1222,14 @@ void GameState::updateEndOfDay()
 
 void GameState::updateEndOfWeek()
 {
+	updateHumanEconomy();
+
+	luaGameState.callHook("updateEndOfWeek", 0, 0);
+}
+
+// Recalculates AI organization and civilian finances, updating budgets and salaries
+void GameState::updateHumanEconomy()
+{
 	// TODO: remove hardcoded references
 	auto humanCity = cities["CITYMAP_HUMAN"];
 
@@ -1336,8 +1349,6 @@ void GameState::updateEndOfWeek()
 		// make sure we're not losing money
 		build->currentWage = std::min(wage, profitabilityLimit);
 	}
-
-	luaGameState.callHook("updateEndOfWeek", 0, 0);
 }
 
 void GameState::updateTurbo()
