@@ -1215,7 +1215,17 @@ void GameState::updateEndOfDay()
 	Trace::end("GameState::updateEndOfDay::cities");
 }
 
-void GameState::updateEndOfWeek() { luaGameState.callHook("updateEndOfWeek", 0, 0); }
+void GameState::updateEndOfWeek()
+{
+	Trace::start("GameState::updateEndOfWeek::cities");
+	for (auto &c : this->cities)
+	{
+		c.second->weeklyLoop(*this);
+	}
+	Trace::end("GameState::updateEndOfWeek::cities");
+
+	luaGameState.callHook("updateEndOfWeek", 0, 0);
+}
 
 void GameState::updateTurbo()
 {

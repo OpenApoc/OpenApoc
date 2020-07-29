@@ -9,8 +9,8 @@
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
-#include "game/state/shared/organisation.h"
 #include "game/state/rules/city/scenerytiletype.h"
+#include "game/state/shared/organisation.h"
 
 // Uncomment to make cargo system output warnings
 #define DEBUG_VERBOSE_CARGO_SYSTEM
@@ -97,7 +97,7 @@ bool Building::hasAliens() const
 	return false;
 }
 
-void Building::initBuilding(GameState & state)
+void Building::initBuilding(GameState &state)
 {
 	// Initialize economy data, done in the map/city editor or when game starts for the first time
 	// Not on save/load, that's why values are serialized
@@ -119,6 +119,15 @@ void Building::initBuilding(GameState & state)
 	// incomePerCapita = randBoundsInclusive(state.rng, 90, 110) * initData.income / 100;
 	// investment = initData.investmentValue;
 	// prestige = initData.prestige;
+}
+
+void Building::weeklyUpdate(GameState &state)
+{
+	if (maximumWorkforce < currentWorkforce)
+	{
+		city->populationUnemployed -= currentWorkforce - maximumWorkforce;
+		currentWorkforce = maximumWorkforce;
+	}
 }
 
 void Building::updateDetection(GameState &state, unsigned int ticks)

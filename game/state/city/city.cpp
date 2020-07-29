@@ -328,6 +328,14 @@ void City::dailyLoop(GameState &state)
 	generatePortals(state);
 }
 
+void City::weeklyLoop(GameState &state)
+{
+	for (auto &b : buildings)
+	{
+		b.second->weeklyUpdate(state);
+	}
+}
+
 void City::generatePortals(GameState &state)
 {
 	if (portals.empty())

@@ -33,6 +33,7 @@ class Cargo;
 class UfopaediaEntry;
 class ResearchTopic;
 
+// struct that defines features of building type at the start of the game
 class BuildingInitilizationData
 {
   public:
@@ -102,6 +103,7 @@ class Building : public StateObject<Building>, public std::enable_shared_from_th
 	void alienGrowth(GameState &state);
 	void alienMovement(GameState &state);
 	void initBuilding(GameState &state);
+	void weeklyUpdate(GameState &state);
 
 	void underAttack(GameState &state, StateRef<Organisation> attacker);
 

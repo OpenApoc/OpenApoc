@@ -123,6 +123,7 @@ class City : public StateObject<City>, public std::enable_shared_from_this<City>
 	void update(GameState &state, unsigned int ticks);
 	void hourlyLoop(GameState &state);
 	void dailyLoop(GameState &state);
+	void weeklyLoop(GameState &state);
 
 	void generatePortals(GameState &state);
 	void updateInfiltration(GameState &state);
