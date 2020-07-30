@@ -1,6 +1,5 @@
 #include "game/state/tilemap/tile.h"
 #include "framework/image.h"
-#include "framework/trace.h"
 #include "game/state/battle/battledoor.h"
 #include "game/state/battle/battlehazard.h"
 #include "game/state/battle/battleitem.h"

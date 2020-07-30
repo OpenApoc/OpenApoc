@@ -3,7 +3,6 @@
 #include "framework/configfile.h"
 #include "framework/logger.h"
 #include "framework/options.h"
-#include "framework/trace.h"
 #include "library/strings.h"
 #include "library/strings_format.h"
 #include <sstream>
@@ -24,7 +23,6 @@ namespace OpenApoc
 
 static UString calculateSHA1Checksum(const std::string &str)
 {
-	TRACE_FN;
 	UString hashString;
 
 	boost::uuids::detail::sha1 sha;
@@ -39,7 +37,7 @@ static UString calculateSHA1Checksum(const std::string &str)
 			// FIXME: Probably need to do the reverse for big endian?
 			unsigned int byteHex = v & 0xff000000;
 			byteHex >>= 24;
-			hashString += format("%02x", byteHex).str();
+			hashString += format("%02x", byteHex);
 			v <<= 8;
 		}
 	}
@@ -48,7 +46,6 @@ static UString calculateSHA1Checksum(const std::string &str)
 }
 static UString calculateCRCChecksum(const std::string &str)
 {
-	TRACE_FN;
 	UString hashString;
 
 	boost::crc_32_type crc;
@@ -87,12 +84,12 @@ std::string ProviderWithChecksum::serializeManifest()
 	{
 		auto node = root.append_child();
 		node.set_name("file");
-		node.text().set(p.first.cStr());
+		node.text().set(p.first.c_str());
 		for (auto &csum : p.second)
 		{
 			auto checksumNode = node.append_child();
-			checksumNode.set_name(csum.first.cStr());
-			checksumNode.text().set(csum.second.cStr());
+			checksumNode.set_name(csum.first.c_str());
+			checksumNode.text().set(csum.second.c_str());
 		}
 	}
 	std::stringstream ss;
@@ -160,7 +157,7 @@ bool ProviderWithChecksum::openArchive(const UString &path, bool write)
 			LogInfo("Missing manifest file in \"%s\"", path);
 			return true;
 		}
-		parseManifest(result.str());
+		parseManifest(result);
 	}
 	return true;
 }
@@ -168,10 +165,10 @@ bool ProviderWithChecksum::readDocument(const UString &path, UString &result)
 {
 	if (inner->readDocument(path, result))
 	{
-		for (auto &csum : checksums[path.str()])
+		for (auto &csum : checksums[path])
 		{
 			auto expectedCSum = csum.second;
-			auto calculatedCSum = calculateChecksum(csum.first, result.str());
+			auto calculatedCSum = calculateChecksum(csum.first, result);
 			if (expectedCSum != calculatedCSum)
 			{
 				LogWarning("File \"%s\" has incorrect \"%s\" checksum \"%s\", expected \"%s\"",
@@ -197,11 +194,11 @@ bool ProviderWithChecksum::saveDocument(const UString &path, const UString &cont
 		{
 			LogWarning("Multiple document entries for path \"%s\"", path);
 		}
-		this->checksums[path.str()] = {};
+		this->checksums[path] = {};
 		if (Options::useCRCChecksum.get())
-			this->checksums[path.str()]["CRC"] = calculateChecksum("CRC", contents.str()).str();
+			this->checksums[path]["CRC"] = calculateChecksum("CRC", contents);
 		if (Options::useSHA1Checksum.get())
-			this->checksums[path.str()]["SHA1"] = calculateChecksum("SHA1", contents.str()).str();
+			this->checksums[path]["SHA1"] = calculateChecksum("SHA1", contents);
 		return true;
 	}
 	return false;

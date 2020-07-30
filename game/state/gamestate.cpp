@@ -5,7 +5,6 @@
 #include "framework/modinfo.h"
 #include "framework/options.h"
 #include "framework/sound.h"
-#include "framework/trace.h"
 #include "game/state/battle/battle.h"
 #include "game/state/city/base.h"
 #include "game/state/city/building.h"
@@ -982,9 +981,7 @@ void GameState::update(unsigned int ticks)
 {
 	if (this->current_battle)
 	{
-		Trace::start("GameState::update::battles");
 		this->current_battle->update(*this, ticks);
-		Trace::end("GameState::update::battles");
 		gameTime.addTicks(ticks);
 	}
 	else
@@ -995,18 +992,13 @@ void GameState::update(unsigned int ticks)
 			updateAfterBattle();
 		}
 
-		Trace::start("GameState::update::cities");
 		current_city->update(*this, ticks);
-		Trace::end("GameState::update::cities");
 
-		Trace::start("GameState::update::organisations");
 		for (auto &o : this->organisations)
 		{
 			o.second->updateMissions(*this);
 		}
-		Trace::end("GameState::update::organisations");
 
-		Trace::start("GameState::update::vehicles");
 		for (auto &v : this->vehicles)
 		{
 			if (v.second->city == current_city)
@@ -1015,9 +1007,7 @@ void GameState::update(unsigned int ticks)
 			}
 		}
 		cleanUpDeathNote();
-		Trace::end("GameState::update::vehicles");
 
-		Trace::start("GameState::update::agents");
 		for (auto &a : this->agents)
 		{
 			if (a.second->city == current_city)
@@ -1025,7 +1015,6 @@ void GameState::update(unsigned int ticks)
 				a.second->update(*this, ticks);
 			}
 		}
-		Trace::end("GameState::update::agents");
 
 		gameTime.addTicks(ticks);
 
@@ -1059,7 +1048,6 @@ void GameState::update(unsigned int ticks)
 
 void GameState::updateEndOfSecond()
 {
-	Trace::start("GameState::updateEachSecond::buildings");
 	for (auto &b : current_city->buildings)
 	{
 		b.second->updateCargo(*this);
@@ -1103,8 +1091,6 @@ void GameState::updateEndOfSecond()
 			}
 		}
 	}
-	Trace::end("GameState::updateEachSecond::buildings");
-	Trace::start("GameState::updateEachSecond::vehicles");
 	for (auto &v : vehicles)
 	{
 		if (v.second->city == current_city)
@@ -1112,8 +1098,6 @@ void GameState::updateEndOfSecond()
 			v.second->updateEachSecond(*this);
 		}
 	}
-	Trace::end("GameState::updateEachSecond::vehicles");
-	Trace::start("GameState::updateEachSecond::agents");
 	for (auto &a : this->agents)
 	{
 		if (a.second->city == current_city)
@@ -1121,13 +1105,11 @@ void GameState::updateEndOfSecond()
 			a.second->updateEachSecond(*this);
 		}
 	}
-	Trace::end("GameState::updateEachSecond::agents");
 }
 
 void GameState::updateEndOfFiveMinutes()
 {
 	// TakeOver calculation stops when org is taken over
-	Trace::start("GameState::updateEndOfFiveMinutes::organisations");
 	for (auto &o : this->organisations)
 	{
 		if (o.second->takenOver)
@@ -1140,10 +1122,8 @@ void GameState::updateEndOfFiveMinutes()
 			break;
 		}
 	}
-	Trace::end("GameState::updateEndOfFiveMinutes::organisations");
 
 	// Detection calculation stops when detection happens
-	Trace::start("GameState::updateEndOfFiveMinutes::buildings");
 	for (auto &b : current_city->buildings)
 	{
 		bool detected = b.second->ticksDetectionTimeOut > 0;
@@ -1157,40 +1137,30 @@ void GameState::updateEndOfFiveMinutes()
 	{
 		b.second->updateCargo(*this);
 	}
-	Trace::end("GameState::updateEndOfFiveMinutes::buildings");
 }
 
 void GameState::updateEndOfHour()
 {
-	Trace::start("GameState::updateEndOfHour::agents");
 	for (auto &a : this->agents)
 	{
 		a.second->updateHourly(*this);
 	}
-	Trace::end("GameState::updateEndOfHour::agents");
-	Trace::start("GameState::updateEndOfHour::labs");
 	for (auto &lab : this->research.labs)
 	{
 		Lab::update(TICKS_PER_HOUR, {this, lab.second}, shared_from_this());
 	}
-	Trace::end("GameState::updateEndOfHour::labs");
-	Trace::start("GameState::updateEndOfHour::cities");
 	for (auto &c : this->cities)
 	{
 		c.second->hourlyLoop(*this);
 	}
-	Trace::end("GameState::updateEndOfHour::cities");
-	Trace::start("GameState::updateEndOfHour::organisations");
 	for (auto &o : this->organisations)
 	{
 		o.second->updateInfiltration(*this);
 	}
-	Trace::end("GameState::updateEndOfHour::organisations");
 }
 
 void GameState::updateEndOfDay()
 {
-	Trace::start("GameState::updateEndOfDay::bases");
 	for (auto &b : this->player_bases)
 	{
 		for (auto &f : b.second->facilities)
@@ -1206,27 +1176,20 @@ void GameState::updateEndOfDay()
 			}
 		}
 	}
-	Trace::end("GameState::updateEndOfDay::bases");
-	Trace::start("GameState::updateEndOfDay::organisations");
 	for (auto &o : this->organisations)
 	{
 		o.second->updateVehicleAgentPark(*this);
 		o.second->updateHirableAgents(*this);
 		o.second->updateDailyInfiltrationHistory();
 	}
-	Trace::end("GameState::updateEndOfDay::organisations");
-	Trace::start("GameState::updateEndOfDay::agents");
 	for (auto &a : this->agents)
 	{
 		a.second->updateDaily(*this);
 	}
-	Trace::end("GameState::updateEndOfDay::agents");
-	Trace::start("GameState::updateEndOfDay::cities");
 	for (auto &c : this->cities)
 	{
 		c.second->dailyLoop(*this);
 	}
-	Trace::end("GameState::updateEndOfDay::cities");
 }
 
 void GameState::updateEndOfWeek()
@@ -1384,7 +1347,6 @@ void GameState::updateTurbo()
 
 void GameState::updateAfterTurbo()
 {
-	Trace::start("GameState::updateAfterTurbo::vehicles");
 	for (auto &v : this->vehicles)
 	{
 		if (v.second->city != current_city)
@@ -1397,7 +1359,6 @@ void GameState::updateAfterTurbo()
 		}
 		v.second->update(*this, randBoundsExclusive(rng, (unsigned)0, 20 * TICKS_PER_SECOND));
 	}
-	Trace::end("GameState::updateAfterTurbo::vehicles");
 }
 
 void GameState::updateBeforeBattle()
@@ -1504,7 +1465,7 @@ int GameScore::getTotal()
 
 void GameState::loadMods()
 {
-	auto mods = Options::modList.get().split(":");
+	auto mods = split(Options::modList.get(), ":");
 	for (const auto &modString : mods)
 	{
 		LogWarning("loading mod \"%s\"", modString);

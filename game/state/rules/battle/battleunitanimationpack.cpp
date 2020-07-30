@@ -42,7 +42,7 @@ const UString &StateObject<BattleUnitAnimationPack>::getId(const GameState &stat
 		if (a.second == ptr)
 			return a.first;
 	}
-	LogError("No BattleUnitAnimationPack matching pointer %p", ptr.get());
+	LogError("No BattleUnitAnimationPack matching pointer %p", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 

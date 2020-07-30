@@ -130,7 +130,7 @@ class RawMusicLoader : public MusicLoader
 
 	sp<MusicTrack> loadMusic(UString path) override
 	{
-		auto strings = path.split(':');
+		auto strings = split(path, ":");
 		if (strings.size() != 2)
 		{
 			LogInfo("Invalid raw music path string \"%s\"", path);

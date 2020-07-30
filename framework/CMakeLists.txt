@@ -25,7 +25,6 @@ set (FRAMEWORK_SOURCE_FILES
 	serialization/providers/zipdataprovider.cpp
 	sound.cpp
 	stagestack.cpp
-	trace.cpp
 	video/smk.cpp
 	logger_sdldialog.cpp
 	logger_file.cpp
@@ -62,7 +61,6 @@ set (FRAMEWORK_HEADER_FILES
 	sound_interface.h
 	stage.h
 	stagestack.h
-	trace.h
 	ThreadPool/ThreadPool.h
 	video.h
 	logger_sdldialog.h

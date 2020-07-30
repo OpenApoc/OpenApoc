@@ -75,7 +75,7 @@ class CueParser
 	{
 		// Waiting for "FILE" command
 		UString cmd(command);
-		if (cmd.toUpper() != "FILE")
+		if (to_upper(cmd) != "FILE")
 		{
 			LogInfo("Encountered unexpected command: \"%s\", ignoring", cmd);
 			return false;
@@ -141,7 +141,7 @@ class CueParser
 
 		UString fileTypeStr(std::string(arg, first_char, last_char - first_char + 1));
 
-		if (fileTypeStr.toUpper() != "BINARY")
+		if (to_upper(fileTypeStr) != "BINARY")
 		{
 			LogError("Unsupported file type: \"%s\"", fileTypeStr);
 			parserState = PARSER_ERROR;
@@ -156,7 +156,7 @@ class CueParser
 	{
 		// Waiting for the "TRACK" command
 		UString cmd(command);
-		if (cmd.toUpper() != "TRACK")
+		if (to_upper(cmd) != "TRACK")
 		{
 			// According to
 			// https://www.gnu.org/software/ccd2cue/manual/html_node/FILE-_0028CUE-Command_0029.html#FILE-_0028CUE-Command_0029
@@ -198,7 +198,7 @@ class CueParser
 		}
 		UString modeStr(std::string(arg, first_char, last_char - first_char + 1));
 		trackMode = CueTrackMode::MODE_UNDEFINED;
-		modeStr = modeStr.toUpper();
+		modeStr = to_upper(modeStr);
 		if (modeStr == "MODE1/2048")
 			trackMode = CueTrackMode::MODE1_2048;
 		else if (modeStr == "MODE1/2352")
@@ -226,7 +226,7 @@ class CueParser
 		UString cmd(command);
 		// TODO: check for possible commands, put parser into an "error" state if command is not
 		// valid
-		if (cmd.toUpper() != "INDEX")
+		if (to_upper(cmd) != "INDEX")
 		{
 			LogInfo("Encountered unexpected/unknown command: \"%s\", ignoring", cmd);
 			return false;
@@ -237,9 +237,9 @@ class CueParser
 
 	bool parse(UString cueFilename)
 	{
-		fs::path cueFilePath(cueFilename.cStr());
+		fs::path cueFilePath(cueFilename.c_str());
 
-		std::ifstream cueFile(cueFilename.str(), std::ios::in);
+		std::ifstream cueFile(cueFilename, std::ios::in);
 		if (!cueFile)
 		{
 			// Stream is unusable, bail out
@@ -465,7 +465,7 @@ class CueIO
 	    : imageFile(fileName), lbaStart(lbaStart), lbaCurrent(lbaStart), posInLba(0),
 	      length(length), fileType(fileType), trackMode(trackMode)
 	{
-		fileStream.open(fileName.str(), std::ios::in | std::ios::binary);
+		fileStream.open(fileName, std::ios::in | std::ios::binary);
 		fileStream.seekg(lbaToByteOffset(lbaStart));
 	}
 
@@ -654,7 +654,7 @@ class CueIO
 	      posInLba(other.posInLba), length(other.length), fileType(other.fileType),
 	      trackMode(other.trackMode)
 	{
-		fileStream.open(imageFile.str(), std::ios::in | std::ios::binary);
+		fileStream.open(imageFile, std::ios::in | std::ios::binary);
 		fileStream.seekg(lbaToByteOffset(lbaStart) + posInLba);
 	}
 
@@ -872,7 +872,7 @@ class CueArchiver
 		} // Ignore the semicolon and everything after it
 		parent.name = dirRecord.fileName;
 		// As of commit 07a2fe9, we only use lower-case names
-		parent.name = parent.name.toLower();
+		parent.name = to_lower(parent.name);
 		parent.length = length;
 		parent.offset = location;
 		parent.timestamp = d_datetime.toUnixTime();
@@ -955,7 +955,7 @@ class CueArchiver
 	    : imageFile(fileName), fileType(ftype), trackMode(tmode)
 	{
 		// "Hey, a .cue-.bin file pair should be really easy to read!" - sfalexrog, 15.04.2016
-		fs::path filePath(fileName.cStr());
+		fs::path filePath(fileName.c_str());
 		// FIXME: This fsize is completely and utterly wrong - unless you're reading an actual iso
 		// (mode1_2048)
 		uint64_t fsize = fs::file_size(filePath);
@@ -991,7 +991,7 @@ class CueArchiver
 		UString dname = name;
 		if (dname.length() > 0)
 		{
-			auto pathParts = dname.split("/");
+			auto pathParts = split(dname, "/");
 			for (auto ppart = pathParts.begin(); ppart != pathParts.end(); ppart++)
 			{
 				auto subdir = current->children.find(*ppart);
@@ -1018,7 +1018,7 @@ class CueArchiver
 		{
 			for (auto entry = current->children.begin(); entry != current->children.end(); entry++)
 			{
-				auto ret = cb(callbackdata, origdir, entry->first.cStr());
+				auto ret = cb(callbackdata, origdir, entry->first.c_str());
 				switch (ret)
 				{
 					case PHYSFS_ENUM_ERROR:
@@ -1106,7 +1106,7 @@ class CueArchiver
 		fs::path cueFilePath(filename);
 
 		fs::path dataFilePath(cueFilePath.parent_path()); // parser.getDataFileName());
-		dataFilePath /= parser.getDataFileName().cStr();
+		dataFilePath /= parser.getDataFileName().c_str();
 
 		if (!fs::exists(dataFilePath))
 		{
@@ -1114,7 +1114,7 @@ class CueArchiver
 			           parser.getDataFileName());
 			LogWarning("Trying case-insensitive search...");
 			UString ucBin(parser.getDataFileName());
-			ucBin = ucBin.toLower();
+			ucBin = to_lower(ucBin);
 			// for (fs::directory_entry &dirent :
 			// fs::directory_iterator(cueFilePath.parent_path()))
 			for (auto dirent_it = fs::directory_iterator(cueFilePath.parent_path());
@@ -1123,7 +1123,7 @@ class CueArchiver
 				auto dirent = *dirent_it;
 				LogInfo("Trying %s", dirent.path().string());
 				UString ucDirent(dirent.path().filename().string());
-				ucDirent = ucDirent.toLower();
+				ucDirent = to_lower(ucDirent);
 				if (ucDirent == ucBin)
 				{
 					dataFilePath = cueFilePath.parent_path();

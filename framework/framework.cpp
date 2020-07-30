@@ -14,7 +14,6 @@
 #include "framework/renderer_interface.h"
 #include "framework/sound_interface.h"
 #include "framework/stagestack.h"
-#include "framework/trace.h"
 #include "library/sp.h"
 #include "library/xorshift.h"
 #include <SDL.h>
@@ -223,7 +222,6 @@ class FrameworkPrivate
 Framework::Framework(const UString programName, bool createWindow)
     : p(new FrameworkPrivate), programName(programName), createWindow(createWindow)
 {
-	TRACE_FN;
 	LogInfo("Starting framework");
 
 	if (this->instance)
@@ -255,7 +253,7 @@ Framework::Framework(const UString programName, bool createWindow)
 
 	if (!PHYSFS_isInit())
 	{
-		if (PHYSFS_init(programName.cStr()) == 0)
+		if (PHYSFS_init(programName.c_str()) == 0)
 		{
 			PHYSFS_ErrorCode error = PHYSFS_getLastErrorCode();
 			LogError("Failed to init code %i PHYSFS: %s", (int)error, PHYSFS_getErrorByCode(error));
@@ -295,7 +293,7 @@ Framework::Framework(const UString programName, bool createWindow)
 
 	logPath += "/log.txt";
 
-	enableFileLogger(logPath.cStr());
+	enableFileLogger(logPath.c_str());
 
 	Options::dumpOptionsToLog();
 
@@ -319,17 +317,17 @@ Framework::Framework(const UString programName, bool createWindow)
 	{
 		auto langPath = path + "/languages";
 		LogInfo("Adding \"%s\" to language path", langPath);
-		gen.add_messages_path(langPath.str());
+		gen.add_messages_path(langPath);
 	}
 
 	std::vector<UString> translationDomains = {"paedia_string", "ufo_string"};
 	for (auto &domain : translationDomains)
 	{
 		LogInfo("Adding \"%s\" to translation domains", domain);
-		gen.add_messages_domain(domain.str());
+		gen.add_messages_domain(domain);
 	}
 
-	std::locale loc = gen(desiredLanguageName.str());
+	std::locale loc = gen(desiredLanguageName);
 	std::locale::global(loc);
 
 	auto localeName = std::use_facet<boost::locale::info>(loc).name();
@@ -371,7 +369,6 @@ Framework::Framework(const UString programName, bool createWindow)
 
 Framework::~Framework()
 {
-	TRACE_FN;
 	LogInfo("Destroying framework");
 	// Stop any audio first, as if you've got ongoing music/samples it could call back into the
 	// framework for the threadpool/data read/all kinda of stuff it shouldn't do on a
@@ -418,7 +415,6 @@ void Framework::run(sp<Stage> initialStage)
 		return;
 	}
 	size_t frame = 0;
-	TRACE_FN;
 	LogInfo("Program loop started");
 
 	auto target_frame_duration =
@@ -436,7 +432,6 @@ void Framework::run(sp<Stage> initialStage)
 		auto frame_time_now = std::chrono::steady_clock::now();
 		if (expected_frame_time > frame_time_now)
 		{
-			TraceObj sleepTrace{"Sleep"};
 			auto time_to_sleep = expected_frame_time - frame_time_now;
 			auto time_to_sleep_us =
 			    std::chrono::duration_cast<std::chrono::microseconds>(time_to_sleep);
@@ -446,7 +441,6 @@ void Framework::run(sp<Stage> initialStage)
 		}
 		expected_frame_time += target_frame_duration;
 		frame++;
-		TraceObj obj{"Frame", {{"frame", Strings::fromInteger(frame)}}};
 
 		if (!frame_time_limited_warning_shown &&
 		    frame_time_now > expected_frame_time + 5 * target_frame_duration)
@@ -462,7 +456,6 @@ void Framework::run(sp<Stage> initialStage)
 			break;
 		}
 		{
-			TraceObj updateObj("Update");
 			p->ProgramStages.current()->update();
 		}
 
@@ -501,12 +494,10 @@ void Framework::run(sp<Stage> initialStage)
 		auto surface = p->scaleSurface ? p->scaleSurface : p->defaultSurface;
 		RendererSurfaceBinding b(*this->renderer, surface);
 		{
-			TraceObj objClear{"clear"};
 			this->renderer->clear();
 		}
 		if (!p->ProgramStages.isEmpty())
 		{
-			TraceObj updateObj("Render");
 			p->ProgramStages.current()->render();
 			if (p->toolTipImage)
 			{
@@ -516,12 +507,10 @@ void Framework::run(sp<Stage> initialStage)
 			if (p->scaleSurface)
 			{
 				RendererSurfaceBinding scaleBind(*this->renderer, p->defaultSurface);
-				TraceObj objClear{"clear scale"};
 				this->renderer->clear();
 				this->renderer->drawScaled(p->scaleSurface, {0, 0}, p->windowSize);
 			}
 			{
-				TraceObj flipObj("Flip");
 				this->renderer->flush();
 				this->renderer->newFrame();
 				SDL_GL_SwapWindow(p->window);
@@ -537,7 +526,6 @@ void Framework::run(sp<Stage> initialStage)
 
 void Framework::processEvents()
 {
-	TRACE_FN;
 	if (p->ProgramStages.isEmpty())
 	{
 		p->quitProgram = true;
@@ -571,7 +559,7 @@ void Framework::processEvents()
 				{
 					screenshotName = format("screenshot%03d.png", screenshotId);
 					screenshotId++;
-				} while (fs::exists(fs::path(screenshotName.str())));
+				} while (fs::exists(fs::path(screenshotName)));
 				LogWarning("Writing screenshot to \"%s\"", screenshotName);
 				if (!p->defaultSurface->rendererPrivateData)
 				{
@@ -839,7 +827,6 @@ void Framework::displayInitialise()
 	{
 		return;
 	}
-	TRACE_FN;
 	LogInfo("Init display");
 	int display_flags = SDL_WINDOW_OPENGL;
 #ifdef OPENAPOC_GLES
@@ -943,7 +930,7 @@ void Framework::displayInitialise()
 	p->registeredRenderers["GL_2_0"].reset(getGL20RendererFactory());
 #endif
 
-	for (auto &rendererName : Options::renderersOption.get().split(':'))
+	for (auto &rendererName : split(Options::renderersOption.get(), ":"))
 	{
 		auto rendererFactory = p->registeredRenderers.find(rendererName);
 		if (rendererFactory == p->registeredRenderers.end())
@@ -1008,7 +995,6 @@ void Framework::displayShutdown()
 	{
 		return;
 	}
-	TRACE_FN;
 	LogInfo("Shutdown Display");
 	p->defaultSurface.reset();
 	renderer.reset();
@@ -1036,7 +1022,7 @@ void Framework::displaySetTitle(UString NewTitle)
 {
 	if (p->window)
 	{
-		SDL_SetWindowTitle(p->window, NewTitle.cStr());
+		SDL_SetWindowTitle(p->window, NewTitle.c_str());
 	}
 }
 
@@ -1066,13 +1052,12 @@ void Framework::displaySetIcon(sp<RGBImage> image)
 
 void Framework::audioInitialise()
 {
-	TRACE_FN;
 	LogInfo("Initialise Audio");
 
 	p->registeredSoundBackends["SDLRaw"].reset(getSDLSoundBackend());
 	p->registeredSoundBackends["null"].reset(getNullSoundBackend());
 
-	for (auto &soundBackendName : Options::audioBackendsOption.get().split(':'))
+	for (auto &soundBackendName : split(Options::audioBackendsOption.get(), ":"))
 	{
 		auto backendFactory = p->registeredSoundBackends.find(soundBackendName);
 		if (backendFactory == p->registeredSoundBackends.end())
@@ -1107,7 +1092,6 @@ void Framework::audioInitialise()
 
 void Framework::audioShutdown()
 {
-	TRACE_FN;
 	LogInfo("Shutdown Audio");
 	this->jukebox.reset();
 	this->soundBackend.reset();
@@ -1190,7 +1174,7 @@ void *Framework::getWindowHandle() const { return static_cast<void *>(p->window)
 
 void Framework::setupModDataPaths()
 {
-	auto mods = Options::modList.get().split(":");
+	auto mods = split(Options::modList.get(), ":");
 	for (const auto &modString : mods)
 	{
 		LogWarning("loading mod \"%s\"", modString);

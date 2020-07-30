@@ -27,12 +27,6 @@ void getFromLua(lua_State *L, int argNum, UString &v)
 	const char *buf = luaL_checklstring(L, argNum, &len);
 	v = UString(buf, len);
 }
-void getFromLua(lua_State *L, int argNum, std::string &v)
-{
-	size_t len;
-	const char *buf = luaL_checklstring(L, argNum, &len);
-	v = std::string(buf, len);
-}
 // note: constructing a new sp from the underlying object type is UB
 // so we get these resources from lua through a string
 void getFromLua(lua_State *L, int argNum, sp<Image> &v)
@@ -48,9 +42,8 @@ void getFromLua(lua_State *L, int argNum, sp<Sample> &v)
 	v = fw().data->loadSample(path);
 }
 
-void pushToLua(lua_State *L, const UString &v) { lua_pushlstring(L, v.cStr(), v.cStrLength()); }
+void pushToLua(lua_State *L, const UString &v) { lua_pushlstring(L, v.c_str(), v.length()); }
 void pushToLua(lua_State *L, const char *v) { lua_pushstring(L, v); }
-void pushToLua(lua_State *L, const std::string &v) { lua_pushlstring(L, v.c_str(), v.size()); }
 void pushToLua(lua_State *L, bool v) { lua_pushboolean(L, v); }
 void pushToLua(lua_State *L, int v) { lua_pushinteger(L, v); }
 void pushToLua(lua_State *L, unsigned int v) { lua_pushinteger(L, v); }

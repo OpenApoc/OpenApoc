@@ -77,7 +77,7 @@ const UString &StateObject<Building>::getId(const GameState &state, const sp<Bui
 				return b.first;
 		}
 	}
-	LogError("No building matching pointer %p", ptr.get());
+	LogError("No building matching pointer %p", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 

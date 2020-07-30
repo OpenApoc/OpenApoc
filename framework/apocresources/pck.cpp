@@ -3,7 +3,6 @@
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "framework/logger.h"
-#include "framework/trace.h"
 #include "library/sp.h"
 #include <istream>
 #include <vector>
@@ -460,7 +459,6 @@ static sp<PaletteImage> loadShadowImage(IFile &file, uint8_t shadedIdx)
 sp<ImageSet> PCKLoader::loadShadow(Data &data, UString PckFilename, UString TabFilename,
                                    unsigned shadedIdx)
 {
-	TRACE_FN;
 	auto imageSet = mksp<ImageSet>();
 	auto tabFile = data.fs.open(TabFilename);
 	if (!tabFile)

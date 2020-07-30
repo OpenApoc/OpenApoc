@@ -8,13 +8,14 @@
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
 #include "library/sp.h"
+#include "library/strings.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc
 {
 
 TextEdit::TextEdit(const UString &Text, sp<BitmapFont> font)
-    : Control(), caretDraw(false), caretTimer(0), text(Text), cursor("*"), font(font),
+    : Control(), caretDraw(false), caretTimer(0), text(to_u32string(Text)), cursor("*"), font(font),
       editing(false), SelectionStart(Text.length()), TextHAlign(HorizontalAlignment::Left),
       TextVAlign(VerticalAlignment::Centre)
 {
@@ -80,7 +81,7 @@ void TextEdit::eventOccured(Event *e)
 					case SDLK_BACKSPACE:
 						if (SelectionStart > 0)
 						{
-							text.remove(SelectionStart - 1, 1);
+							text = remove(text, SelectionStart - 1, 1);
 							SelectionStart--;
 							raiseEvent(FormEventType::TextChanged);
 						}
@@ -89,7 +90,7 @@ void TextEdit::eventOccured(Event *e)
 					case SDLK_DELETE:
 						if (SelectionStart < text.length())
 						{
-							text.remove(SelectionStart, 1);
+							text = remove(text, SelectionStart, 1);
 							raiseEvent(FormEventType::TextChanged);
 						}
 						e->Handled = true;
@@ -130,7 +131,7 @@ void TextEdit::eventOccured(Event *e)
 					case SDLK_v: // CTRL+V
 						if (e->forms().KeyInfo.Modifiers & KMOD_CTRL)
 						{
-							UString clipboard = fw().textGetClipboard();
+							U32String clipboard = to_u32string(fw().textGetClipboard());
 
 							if (text.length() + clipboard.length() >= this->textMaxLength)
 							{
@@ -153,9 +154,9 @@ void TextEdit::eventOccured(Event *e)
 					return;
 				}
 
-				UString inputCharacter = e->forms().Input.Input;
+				U32String inputCharacter = to_u32string(e->forms().Input.Input);
 				if (allowedCharacters.empty() ||
-				    allowedCharacters.str().find(inputCharacter.str()) != std::string::npos)
+				    allowedCharacters.find(inputCharacter) != std::string::npos)
 				{
 					text.insert(SelectionStart, inputCharacter);
 					SelectionStart += inputCharacter.length();
@@ -170,22 +171,24 @@ void TextEdit::onRender()
 {
 	Control::onRender();
 
-	int xpos = align(TextHAlign, Size.x, font->getFontWidth(text));
+	auto u8str = to_ustring(text);
+
+	int xpos = align(TextHAlign, Size.x, font->getFontWidth(u8str));
 	int ypos = align(TextVAlign, Size.y, font->getFontHeight());
 
 	if (editing)
 	{
-		int cxpos = xpos + font->getFontWidth(text.substr(0, SelectionStart)) + 1;
+		int cxpos = xpos + font->getFontWidth(to_ustring(text.substr(0, SelectionStart))) + 1;
 
 		if (cxpos < 0)
 		{
 			xpos += cxpos;
-			cxpos = xpos + font->getFontWidth(text.substr(0, SelectionStart)) + 1;
+			cxpos = xpos + font->getFontWidth(to_ustring(text.substr(0, SelectionStart))) + 1;
 		}
 		if (cxpos > Size.x)
 		{
 			xpos -= cxpos - Size.x;
-			cxpos = xpos + font->getFontWidth(text.substr(0, SelectionStart)) + 1;
+			cxpos = xpos + font->getFontWidth(to_ustring(text.substr(0, SelectionStart))) + 1;
 		}
 
 		if (caretDraw)
@@ -195,7 +198,7 @@ void TextEdit::onRender()
 		}
 	}
 
-	auto textImage = font->getString(text);
+	auto textImage = font->getString(u8str);
 	fw().renderer->draw(textImage, Vec2<float>{xpos, ypos});
 }
 
@@ -214,11 +217,11 @@ void TextEdit::update()
 
 void TextEdit::unloadResources() {}
 
-UString TextEdit::getText() const { return text; }
+UString TextEdit::getText() const { return to_ustring(text); }
 
 void TextEdit::setText(const UString &Text)
 {
-	text = Text;
+	text = to_u32string(Text);
 	SelectionStart = text.length();
 	raiseEvent(FormEventType::TextChanged);
 }
@@ -237,7 +240,7 @@ void TextEdit::setTextMaxSize(size_t length)
 
 void TextEdit::setAllowedCharacters(const UString &allowedCharacters)
 {
-	this->allowedCharacters = allowedCharacters;
+	this->allowedCharacters = to_u32string(allowedCharacters);
 	this->setDirty();
 }
 
@@ -261,11 +264,11 @@ sp<Control> TextEdit::copyTo(sp<Control> CopyParent)
 	sp<TextEdit> copy;
 	if (CopyParent)
 	{
-		copy = CopyParent->createChild<TextEdit>(this->text, this->font);
+		copy = CopyParent->createChild<TextEdit>(to_ustring(this->text), this->font);
 	}
 	else
 	{
-		copy = mksp<TextEdit>(this->text, this->font);
+		copy = mksp<TextEdit>(to_ustring(this->text), this->font);
 	}
 	copy->TextHAlign = this->TextHAlign;
 	copy->TextVAlign = this->TextVAlign;
@@ -279,7 +282,7 @@ void TextEdit::configureSelfFromXml(pugi::xml_node *node)
 
 	if (node->attribute("text"))
 	{
-		text = tr(node->attribute("text").as_string());
+		text = to_u32string(tr(node->attribute("text").as_string()));
 	}
 	auto fontNode = node->child("font");
 	if (fontNode)

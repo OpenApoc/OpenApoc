@@ -7,7 +7,6 @@
 #include "framework/framework.h"
 #include "framework/fs.h"
 #include "framework/logger.h"
-#include "framework/trace.h"
 #include <physfs.h>
 
 #ifdef _WIN32
@@ -51,14 +50,14 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 	PhysfsIFileImpl(const UString &path, size_t bufferSize = 512)
 	    : bufferSize(bufferSize), buffer(new char[bufferSize]), suppliedPath(path)
 	{
-		file = PHYSFS_openRead(path.cStr());
+		file = PHYSFS_openRead(path.c_str());
 		if (!file)
 		{
 			LogError("Failed to open file \"%s\" : \"%s\"", path,
 			         PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 			return;
 		}
-		systemPath = PHYSFS_getRealDir(path.cStr());
+		systemPath = PHYSFS_getRealDir(path.c_str());
 		systemPath += "/" + path;
 	}
 	~PhysfsIFileImpl() override
@@ -223,7 +222,7 @@ IFile::~IFile() = default;
 
 bool FileSystem::addPath(const UString &newPath)
 {
-	if (!PHYSFS_mount(newPath.cStr(), "/", 0))
+	if (!PHYSFS_mount(newPath.c_str(), "/", 0))
 	{
 		LogInfo("Failed to add resource dir \"%s\", error: %s", newPath,
 		        PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
@@ -232,7 +231,7 @@ bool FileSystem::addPath(const UString &newPath)
 	else
 	{
 		LogInfo("Resource dir \"%s\" mounted to \"%s\"", newPath,
-		        PHYSFS_getMountPoint(newPath.cStr()));
+		        PHYSFS_getMountPoint(newPath.c_str()));
 		return true;
 	}
 }
@@ -246,14 +245,14 @@ FileSystem::FileSystem(std::vector<UString> paths)
 	// searched)
 	for (auto &p : paths)
 	{
-		if (!PHYSFS_mount(p.cStr(), "/", 0))
+		if (!PHYSFS_mount(p.c_str(), "/", 0))
 		{
 			LogInfo("Failed to add resource dir \"%s\", error: %s", p,
 			        PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 			continue;
 		}
 		else
-			LogInfo("Resource dir \"%s\" mounted to \"%s\"", p, PHYSFS_getMountPoint(p.cStr()));
+			LogInfo("Resource dir \"%s\" mounted to \"%s\"", p, PHYSFS_getMountPoint(p.c_str()));
 	}
 	auto current_path = fs::current_path();
 	auto canonical_current_path = fs::canonical(current_path);
@@ -270,25 +269,24 @@ FileSystem::FileSystem(std::vector<UString> paths)
 
 	this->writeDir = PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME);
 	LogInfo("Setting write directory to \"%s\"", this->writeDir);
-	PHYSFS_setWriteDir(this->writeDir.cStr());
+	PHYSFS_setWriteDir(this->writeDir.c_str());
 	// Finally, the write directory trumps all
-	PHYSFS_mount(this->writeDir.cStr(), "/", 0);
+	PHYSFS_mount(this->writeDir.c_str(), "/", 0);
 }
 
 FileSystem::~FileSystem() = default;
 
 IFile FileSystem::open(const UString &path) const
 {
-	TRACE_FN_ARGS1("PATH", path);
 	IFile f;
 
-	auto lowerPath = path.toLower();
+	auto lowerPath = to_lower(path);
 	if (path != lowerPath)
 	{
 		LogError("Path \"%s\" contains CAPITAL - cut it out!", path);
 	}
 
-	if (!PHYSFS_exists(path.cStr()))
+	if (!PHYSFS_exists(path.c_str()))
 	{
 		LogInfo("Failed to find \"%s\"", path);
 		LogAssert(!f);
@@ -306,7 +304,7 @@ std::list<UString> FileSystem::enumerateDirectory(const UString &basePath,
 	std::list<UString> result;
 	bool filterByExtension = !extension.empty();
 
-	char **elements = PHYSFS_enumerateFiles(basePath.cStr());
+	char **elements = PHYSFS_enumerateFiles(basePath.c_str());
 	for (char **element = elements; *element != NULL; element++)
 	{
 		if (!filterByExtension)
@@ -316,7 +314,7 @@ std::list<UString> FileSystem::enumerateDirectory(const UString &basePath,
 		else
 		{
 			const UString elementString = (*element);
-			if (elementString.endsWith(extension))
+			if (ends_with(elementString, extension))
 			{
 				result.push_back(elementString);
 			}
@@ -333,7 +331,7 @@ static std::list<UString> recursiveFindFilesInDirectory(const FileSystem &fs, US
 	auto list = fs.enumerateDirectory(path, "");
 	for (auto &entry : list)
 	{
-		if (entry.endsWith(extension))
+		if (ends_with(entry, extension))
 		{
 			foundFiles.push_back(path + "/" + entry);
 		}
@@ -354,7 +352,7 @@ std::list<UString> FileSystem::enumerateDirectoryRecursive(const UString &basePa
 
 UString FileSystem::resolvePath(const UString &path) const
 {
-	UString realDir = PHYSFS_getRealDir(path.cStr());
+	UString realDir = PHYSFS_getRealDir(path.c_str());
 	return realDir + "/" + path;
 }
 

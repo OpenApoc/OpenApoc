@@ -18,7 +18,6 @@
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
-#include "framework/trace.h"
 #include "game/state/battle/battle.h"
 #include "game/state/city/agentmission.h"
 #include "game/state/city/base.h"
@@ -1610,8 +1609,6 @@ void CityView::refreshBaseView()
 
 void CityView::render()
 {
-	TRACE_FN;
-
 	if (!this->surface)
 	{
 		this->drawCity = true;

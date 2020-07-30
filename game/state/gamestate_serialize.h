@@ -4,7 +4,6 @@
 #include "framework/image.h"
 #include "framework/serialization/serialize.h"
 #include "framework/sound.h"
-#include "framework/trace.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/ai/tacticalaivanilla.h"
 #include "game/state/battle/ai/unitaibehavior.h"
@@ -276,7 +275,7 @@ void serializeInSectionMap(const GameState *state, SerializationNode *node,
 			map.erase(key);
 		}
 
-		const auto sectionNode = entry->getSectionOpt(key.cStr());
+		const auto sectionNode = entry->getSectionOpt(key.c_str());
 		if (sectionNode)
 		{
 
@@ -612,7 +611,7 @@ void serializeOutSectionMap(SerializationNode *node, const std::map<UString, Val
 			{
 				auto entry = node->addNode("entry");
 				serializeOut(entry->addNode("key"), pair.first, defaultKey);
-				serializeOut(entry->addSection(pair.first.cStr()), pair.second, refIt->second);
+				serializeOut(entry->addSection(pair.first.c_str()), pair.second, refIt->second);
 			}
 			else
 			{
@@ -623,7 +622,7 @@ void serializeOutSectionMap(SerializationNode *node, const std::map<UString, Val
 		{
 			auto entry = node->addNode("entry");
 			serializeOut(entry->addNode("key"), pair.first, defaultKey);
-			serializeOut(entry->addSection(pair.first.cStr()), pair.second, defaultValue);
+			serializeOut(entry->addSection(pair.first.c_str()), pair.second, defaultValue);
 		}
 	}
 	// Find any removed entries

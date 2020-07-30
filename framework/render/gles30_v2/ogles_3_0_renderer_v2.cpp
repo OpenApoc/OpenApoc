@@ -3,7 +3,6 @@
 #include "framework/palette.h"
 #include "framework/renderer.h"
 #include "framework/renderer_interface.h"
-#include "framework/trace.h"
 #include <algorithm>
 #include <atomic>
 #include <cstdint>
@@ -46,7 +45,7 @@ static const auto SCRATCH_TEX_SLOT = GL::TEXTURE3;
 GL::GLuint CreateShader(GL::GLenum type, const UString &source)
 {
 	GL::GLuint shader = gl->CreateShader(type);
-	auto sourceString = source.str();
+	auto sourceString = source;
 	const GL::GLchar *string = sourceString.c_str();
 	GL::GLint stringLength = sourceString.length();
 	gl->ShaderSource(shader, 1, &string, &stringLength);
@@ -223,7 +222,6 @@ class Spritesheet
 	}
 	void reuploadTextures()
 	{
-		TRACE_FN;
 		if (tex_id)
 			gl->DeleteTextures(1, &this->tex_id);
 		gl->GenTextures(1, &this->tex_id);
@@ -262,7 +260,6 @@ class Spritesheet
 	}
 	void upload(sp<SpritesheetEntry> entry)
 	{
-		TRACE_FN;
 		LogAssert(entry->page >= 0);
 		LogAssert(entry->page < (int)this->pages.size());
 		auto image = entry->parent.lock();
@@ -298,7 +295,6 @@ class Spritesheet
 	}
 	void repack()
 	{
-		TRACE_FN;
 		std::vector<sp<SpritesheetEntry>> validEntries;
 		for (auto &page : this->pages)
 		{
@@ -335,7 +331,6 @@ class Spritesheet
 	}
 	void addSprite(sp<SpritesheetEntry> entry)
 	{
-		TRACE_FN;
 		LogAssert(entry->page == -1);
 		LogAssert(entry->size.x < page_size.x);
 		LogAssert(entry->size.y < page_size.y);
@@ -381,7 +376,6 @@ class SpriteBuffer
 	    : sprite_buffer_id(0), vertex_buffer_id(0), vao_id(0), buffer_contents(0),
 	      buffer(buffer_size)
 	{
-		TRACE_FN;
 		LogAssert(buffer_size > 0);
 		gl->GenVertexArrays(1, &this->vao_id);
 		gl->BindVertexArray(vao_id);
@@ -497,7 +491,6 @@ class SpriteBuffer
 			LogWarning("Calling draw with no sprites stored?");
 			return;
 		}
-		TRACE_FN_ARGS1("buffer_contents", Strings::fromInteger(this->buffer_contents));
 		gl->BindBuffer(GL::ARRAY_BUFFER, this->sprite_buffer_id);
 		gl->BufferSubData(GL::ARRAY_BUFFER, 0, this->buffer_contents * sizeof(SpriteDescription),
 		                  this->buffer.data());
@@ -597,7 +590,6 @@ class SpriteDrawMachine
 	    : current_buffer(0), palette_spritesheet(spritesheet_page_size, GL::R8UI),
 	      rgb_spritesheet(spritesheet_page_size, GL::RGBA8)
 	{
-		TRACE_FN;
 		LogAssert(bufferSize > 0);
 		LogAssert(bufferCount > 0);
 		this->sprite_program_id =
@@ -634,7 +626,6 @@ class SpriteDrawMachine
 	{
 		if (this->buffers[this->current_buffer]->isEmpty())
 			return;
-		TRACE_FN;
 		gl->UseProgram(this->sprite_program_id);
 		gl->ActiveTexture(PALETTE_IMAGE_TEX_SLOT);
 		gl->BindTexture(GL::TEXTURE_2D_ARRAY, this->palette_spritesheet.tex_id);
@@ -689,7 +680,6 @@ class GLRGBTexture final : public RendererImageData
 	OGLES30Renderer *owner;
 	GLRGBTexture(sp<RGBImage> i, OGLES30Renderer *owner) : size(i->size), owner(owner)
 	{
-		TRACE_FN;
 		RGBImageLock l(i);
 		gl->GenTextures(1, &this->tex_id);
 		gl->ActiveTexture(SCRATCH_TEX_SLOT);
@@ -712,7 +702,6 @@ class GLPaletteTexture final : public RendererImageData
 	OGLES30Renderer *owner;
 	GLPaletteTexture(sp<PaletteImage> i, OGLES30Renderer *owner) : size(i->size), owner(owner)
 	{
-		TRACE_FN;
 		PaletteImageLock l(i);
 		gl->GenTextures(1, &this->tex_id);
 		gl->ActiveTexture(SCRATCH_TEX_SLOT);
@@ -766,7 +755,6 @@ class GLSurface final : public RendererImageData
 	GLSurface(Vec2<unsigned int> size, OGLES30Renderer *owner) : size(size), owner(owner)
 	{
 		LogAssert(size.x > 0 && size.y > 0);
-		TRACE_FN;
 		gl->GenTextures(1, &this->tex_id);
 		gl->ActiveTexture(SCRATCH_TEX_SLOT);
 		gl->BindTexture(GL::TEXTURE_2D, this->tex_id);
@@ -899,7 +887,6 @@ class TexturedDrawMachine
 	                    GL::GLuint tint_attr = 2)
 	    : current_buffer(0), tex_program_id(0), owner(owner)
 	{
-		TRACE_FN;
 		LogAssert(bufferCount > 0);
 		this->tex_program_id = CompileProgram(TexProgram_vertexSource, TexProgram_fragmentSource);
 
@@ -968,7 +955,6 @@ class TexturedDrawMachine
 	          Vec2<float> rotationCenter, float rotationAngleRadians,
 	          Vec2<unsigned int> viewport_size, bool flip_y, Colour tint)
 	{
-		TRACE_FN;
 		static const Vec2<float> identity_quad[4] = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
 
 		PositionVertices v;
@@ -1186,7 +1172,6 @@ class ColouredDrawMachine
 	void drawQuad(Vec2<float> positions[4], Colour colours[4], Vec2<unsigned int> viewport_size,
 	              bool flip_y)
 	{
-		TRACE_FN;
 		auto &buf = this->buffers[this->current_buffer];
 
 		for (int i = 0; i < 4; i++)
@@ -1211,7 +1196,6 @@ class ColouredDrawMachine
 	void drawLine(Vec2<float> positions[2], Colour colours[2], Vec2<float> viewport_size,
 	              bool flip_y, float thickness)
 	{
-		TRACE_FN;
 		auto &buf = this->buffers[this->current_buffer];
 
 		for (unsigned int i = 0; i < 2; i++)
@@ -1252,7 +1236,6 @@ class GLPalette final : public RendererImageData
 	GL::GLuint tex_id;
 	GLPalette(sp<Palette> parent) : tex_id(0)
 	{
-		TRACE_FN;
 		gl->GenTextures(1, &this->tex_id);
 		gl->ActiveTexture(SCRATCH_TEX_SLOT);
 		gl->BindTexture(GL::TEXTURE_2D, this->tex_id);
@@ -1355,14 +1338,12 @@ class OGLES30Renderer final : public Renderer
 
 	void clear(Colour c) override
 	{
-		TRACE_FN;
 		this->flush();
 		gl->ClearColor(c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, c.a / 255.0f);
 		gl->Clear(GL::COLOR_BUFFER_BIT);
 	}
 	void setPalette(sp<Palette> p) override
 	{
-		TRACE_FN;
 		this->flush();
 		this->current_palette = p;
 		if (p == nullptr)
@@ -1714,7 +1695,6 @@ void GLESWRAP_APIENTRY debug_message_proc(GL::KhrDebug::GLenum, GL::KhrDebug::GL
 
 OGLES30Renderer::OGLES30Renderer() : state(State::Idle)
 {
-	TRACE_FN;
 	this->bound_thread = std::this_thread::get_id();
 	this->spriteMachine.reset(
 	    new SpriteDrawMachine{spriteBufferSize, spriteBufferCount, spritesheetPageSize});

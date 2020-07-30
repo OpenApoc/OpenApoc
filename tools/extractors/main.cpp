@@ -1,7 +1,6 @@
 #include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/framework.h"
-#include "framework/trace.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/battle/battlemapsector.h"
 #include "game/state/rules/battle/battlemaptileset.h"
@@ -282,7 +281,7 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		auto list = extractListString.split(",");
+		auto list = split(extractListString, ",");
 		for (auto &extractorName : list)
 		{
 			auto extractor = thingsToExtract.find(extractorName);
@@ -297,13 +296,11 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
-	TraceObj mainTrace("main");
 	Framework fw(UString(argv[0]), false);
 	InitialGameStateExtractor initialGameStateExtractor;
 	for (auto &ePair : extractorsToRun)
 	{
 		LogWarning("Running %s", ePair.first);
-		TraceObj exTrace(ePair.first);
 		ePair.second(initialGameStateExtractor);
 	}
 

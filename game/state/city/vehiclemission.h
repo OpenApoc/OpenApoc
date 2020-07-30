@@ -25,7 +25,6 @@ class Vehicle;
 class Tile;
 class TileMap;
 class Building;
-class UString;
 class City;
 
 class FlyingVehicleTileHelper : public CanEnterTileHelper

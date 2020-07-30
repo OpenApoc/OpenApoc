@@ -360,7 +360,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state) const
 		memcpy((void *)&equipment_screen_filename[0], (void *)&v.equipment_screen_name[0], 8);
 		equipment_screen_filename[8] = '\0';
 		std::string equipment_screen_image =
-		    "xcom3/ufodata/" + UString(equipment_screen_filename).toLower().str() + ".pcx";
+		    "xcom3/ufodata/" + to_lower(UString(equipment_screen_filename)) + ".pcx";
 		// If it's all NULLs skip (as it might be an alien ship or something and therefore no
 		// equipment screen)
 		if (equipment_screen_filename[0] != '\0')

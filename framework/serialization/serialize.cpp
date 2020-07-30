@@ -5,7 +5,6 @@
 #include "framework/serialization/providers/filedataprovider.h"
 #include "framework/serialization/providers/providerwithchecksum.h"
 #include "framework/serialization/providers/zipdataprovider.h"
-#include "framework/trace.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/strings_format.h"
@@ -163,7 +162,7 @@ up<SerializationDataProvider> getProvider(bool pack)
 
 up<SerializationArchive> SerializationArchive::readArchive(const UString &path)
 {
-	up<SerializationDataProvider> dataProvider = getProvider(!fs::is_directory(path.str()));
+	up<SerializationDataProvider> dataProvider = getProvider(!fs::is_directory(path));
 	if (!dataProvider->openArchive(path, false))
 	{
 		LogWarning("Failed to open archive at \"%s\"", path);
@@ -198,14 +197,12 @@ SerializationNode *XMLSerializationArchive::getRoot(const UString &prefix, const
 	auto it = this->docRoots.find(path);
 	if (it == this->docRoots.end())
 	{
-		TraceObj trace("Reading archive", {{"path", path}});
 		UString content;
 		if (dataProvider->readDocument(path, content))
 		{
 			// FIXME: Make this actually read from the root and load the xinclude tags properly?
 			auto &doc = this->docRoots[path];
-			TraceObj traceParse("Parsing archive", {{"path", path}});
-			auto parse_result = doc.load_string(content.cStr());
+			auto parse_result = doc.load_string(content.c_str());
 			if (!parse_result)
 			{
 				LogInfo("Failed to parse \"%s\" : \"%s\" at \"%llu\"", path,
@@ -233,7 +230,6 @@ SerializationNode *XMLSerializationArchive::getRoot(const UString &prefix, const
 
 bool XMLSerializationArchive::write(const UString &path, bool pack, bool pretty)
 {
-	TraceObj trace("Writing archive", {{"path", path}});
 	// warning! data provider must be freed when this method ends,
 	// so code calling this method may override archive
 	auto dataProvider = getProvider(pack);
@@ -245,7 +241,6 @@ bool XMLSerializationArchive::write(const UString &path, bool pack, bool pretty)
 
 	for (auto &root : this->docRoots)
 	{
-		TraceObj traceSave("Saving root", {{"root", root.first}});
 		std::stringstream ss;
 		unsigned int flags = pugi::format_default;
 		const char *indent = "  ";
@@ -255,7 +250,6 @@ bool XMLSerializationArchive::write(const UString &path, bool pack, bool pretty)
 			indent = "";
 		}
 		root.second.save(ss, indent, flags);
-		TraceObj traceSaveData("Saving root data", {{"root", root.first}});
 		if (!dataProvider->saveDocument(root.first, ss.str()))
 		{
 			return false;
@@ -269,7 +263,7 @@ SerializationNode *XMLSerializationNode::addNode(const char *name, const UString
 {
 	auto newNode = this->node.append_child();
 	newNode.set_name(name);
-	newNode.text().set(value.cStr());
+	newNode.text().set(value.c_str());
 	return &this->archive->nodes.emplace_back(this->archive, newNode, this);
 }
 
@@ -300,7 +294,7 @@ SerializationNode *XMLSerializationNode::addSection(const char *name)
 	auto nsAttribute = includeNode->node.append_attribute("xmlns:xi");
 	nsAttribute.set_value("http://www.w3.org/2001/XInclude");
 	auto attribute = includeNode->node.append_attribute("href");
-	attribute.set_value(path.cStr());
+	attribute.set_value(path.c_str());
 	return this->archive->newRoot(this->getPrefix(), name);
 }
 
@@ -311,20 +305,20 @@ SerializationNode *XMLSerializationNode::getSectionOpt(const char *name)
 
 UString XMLSerializationNode::getName() { return node.name(); }
 
-void XMLSerializationNode::setName(const UString &str) { node.set_name(str.cStr()); }
+void XMLSerializationNode::setName(const UString &str) { node.set_name(str.c_str()); }
 
 UString XMLSerializationNode::getValue() { return node.text().get(); }
 
-void XMLSerializationNode::setValue(const UString &str) { node.text().set(str.cStr()); }
+void XMLSerializationNode::setValue(const UString &str) { node.text().set(str.c_str()); }
 
 UString XMLSerializationNode::getAttribute(const UString &attribute)
 {
-	return node.attribute(attribute.cStr()).value();
+	return node.attribute(attribute.c_str()).value();
 }
 
 void XMLSerializationNode::setAttribute(const UString &attribute, const UString &value)
 {
-	node.attribute(attribute.cStr()).set_value(value.cStr());
+	node.attribute(attribute.c_str()).set_value(value.c_str());
 }
 
 unsigned int XMLSerializationNode::getValueUInt() { return node.text().as_uint(); }
@@ -367,7 +361,7 @@ void XMLSerializationNode::setValueBool(bool b) { node.text().set(b); }
 std::vector<bool> XMLSerializationNode::getValueBoolVector()
 {
 	std::vector<bool> vec;
-	auto string = this->getValue().str();
+	auto string = this->getValue();
 
 	vec.resize(string.length());
 	for (size_t i = 0; i < string.length(); i++)

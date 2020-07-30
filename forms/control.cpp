@@ -11,7 +11,6 @@
 #include "framework/options.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
-#include "framework/trace.h"
 #include "library/sp.h"
 
 namespace OpenApoc
@@ -346,8 +345,6 @@ void Control::eventOccured(Event *e)
 
 void Control::render()
 {
-	TRACE_FN_ARGS1("Name", this->Name);
-
 	if (!Visible || Size.x == 0 || Size.y == 0)
 	{
 		return;
@@ -654,7 +651,7 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 
 			UString widthAttr = child.attribute("width").as_string();
 			// if size ends with % this means that it is special (percentage) size
-			if (Strings::isInteger(widthAttr) && !widthAttr.endsWith("%"))
+			if (Strings::isInteger(widthAttr) && !ends_with(widthAttr, "%"))
 			{
 				Size.x = child.attribute("width").as_int();
 			}
@@ -664,7 +661,7 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 			}
 			UString heightAttr = child.attribute("height").as_string();
 			// if size ends with % this means that it is special (percentage) size
-			if (Strings::isInteger(heightAttr) && !heightAttr.endsWith("%"))
+			if (Strings::isInteger(heightAttr) && !ends_with(heightAttr, "%"))
 			{
 				Size.y = child.attribute("height").as_int();
 			}
@@ -675,7 +672,7 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 
 			if (specialsizex != "")
 			{
-				if (specialsizex.str().back() == '%')
+				if (specialsizex.back() == '%')
 				{
 					// Skip % sign at the end
 					auto sizeRatio = Strings::toFloat(specialsizex) / 100.0f;
@@ -690,7 +687,7 @@ void Control::configureSelfFromXml(pugi::xml_node *node)
 
 			if (specialsizey != "")
 			{
-				if (specialsizey.str().back() == '%')
+				if (specialsizey.back() == '%')
 				{
 					auto sizeRatio = Strings::toFloat(specialsizey) / 100.0f;
 					setRelativeHeight(sizeRatio);

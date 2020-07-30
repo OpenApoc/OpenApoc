@@ -18,7 +18,6 @@
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
-#include "framework/trace.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlehazard.h"
@@ -1260,8 +1259,6 @@ void BattleView::resume()
 
 void BattleView::render()
 {
-	TRACE_FN;
-
 	BattleTileView::render();
 	if (hideDisplay)
 	{
@@ -3709,7 +3706,7 @@ bool BattleView::handleMouseDown(Event *e)
 					if (uto)
 					{
 						auto u = uto->getUnit();
-						debug += format("\nContains unit %s.", u->id.cStr());
+						debug += format("\nContains unit %s.", u->id.c_str());
 						debug += format("\nMorale state: %d", (int)u->moraleState);
 						debug += format("\nPosition: %f, %f, %f", u->position.x, u->position.y,
 						                u->position.z);

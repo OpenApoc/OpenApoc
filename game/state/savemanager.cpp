@@ -4,7 +4,6 @@
 #include "framework/framework.h"
 #include "framework/options.h"
 #include "framework/serialization/serialize.h"
-#include "framework/trace.h"
 #include "game/state/gamestate.h"
 #include "version.h"
 #include <algorithm>
@@ -85,7 +84,7 @@ std::shared_future<void> SaveManager::loadSpecialSave(const SaveType type,
 
 bool writeArchiveWithBackup(SerializationArchive *archive, const UString &path, bool pack)
 {
-	fs::path savePath = path.str();
+	fs::path savePath = path;
 	fs::path tempPath;
 	bool shouldCleanup = false;
 	try
@@ -163,12 +162,12 @@ bool writeArchiveWithBackup(SerializationArchive *archive, const UString &path, 
 bool SaveManager::findFreePath(UString &path, const UString &name) const
 {
 	path = createSavePath("save_" + name);
-	if (fs::exists(path.str()))
+	if (fs::exists(path))
 	{
 		for (int retries = 5; retries > 0; retries--)
 		{
 			path = createSavePath("save_" + name + std::to_string(rand()));
-			if (!fs::exists(path.str()))
+			if (!fs::exists(path))
 			{
 				return true;
 			}
@@ -199,7 +198,7 @@ bool SaveManager::overrideGame(const SaveMetadata &metadata, const UString &newN
 	SaveMetadata updatedMetadata(newName, metadata.getFile(), time(nullptr), metadata.getType(),
 	                             gameState);
 	bool result = saveGame(updatedMetadata, gameState);
-	if (result && newName != metadata.getName().str())
+	if (result && newName != metadata.getName())
 	{
 		// if renamed file move to path with new name
 		UString newFile;
@@ -207,7 +206,7 @@ bool SaveManager::overrideGame(const SaveMetadata &metadata, const UString &newN
 		{
 			try
 			{
-				fs::rename(metadata.getFile().str(), newFile.str());
+				fs::rename(metadata.getFile(), newFile);
 			}
 			catch (fs::filesystem_error &error)
 			{
@@ -223,7 +222,6 @@ bool SaveManager::saveGame(const SaveMetadata &metadata, const sp<GameState> gam
 {
 	bool pack = Options::packSaveOption.get();
 	const UString path = metadata.getFile();
-	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
 	if (gameState->serialize(archive.get()) && metadata.serializeManifest(archive.get()))
 	{
@@ -259,7 +257,7 @@ bool SaveManager::specialSaveGame(SaveType type, const sp<GameState> gameState) 
 std::vector<SaveMetadata> SaveManager::getSaveList() const
 {
 	auto dirString = Options::saveDirOption.get();
-	fs::path saveDirectory = dirString.str();
+	fs::path saveDirectory = dirString;
 	std::vector<SaveMetadata> saveList;
 	try
 	{
@@ -271,7 +269,7 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 
 		for (auto i = fs::directory_iterator(saveDirectory); i != fs::directory_iterator(); ++i)
 		{
-			if (i->path().extension().string() != saveFileExtension.str())
+			if (i->path().extension().string() != saveFileExtension)
 			{
 				continue;
 			}
@@ -310,13 +308,13 @@ bool SaveManager::deleteGame(const sp<SaveMetadata> &slot) const
 {
 	try
 	{
-		if (!fs::exists(slot->getFile().str()))
+		if (!fs::exists(slot->getFile()))
 		{
 			LogWarning("Attempt to delete not existing file");
 			return false;
 		}
 
-		fs::remove_all(slot->getFile().str());
+		fs::remove_all(slot->getFile());
 		return true;
 	}
 	catch (fs::filesystem_error &exception)
@@ -328,7 +326,7 @@ bool SaveManager::deleteGame(const sp<SaveMetadata> &slot) const
 
 bool SaveMetadata::deserializeManifest(SerializationArchive *archive, const UString &saveFileName)
 {
-	auto root = archive->getRoot("", saveManifestName.cStr());
+	auto root = archive->getRoot("", saveManifestName.c_str());
 	if (!root)
 	{
 		return false;
@@ -350,7 +348,7 @@ bool SaveMetadata::deserializeManifest(SerializationArchive *archive, const UStr
 	auto saveDateNode = root->getNodeOpt("save_date");
 	if (saveDateNode)
 	{
-		std::istringstream stream(saveDateNode->getValue().str());
+		std::istringstream stream(saveDateNode->getValue());
 		time_t timestamp;
 		stream >> timestamp;
 		this->creationDate = timestamp;
@@ -378,7 +376,7 @@ bool SaveMetadata::deserializeManifest(SerializationArchive *archive, const UStr
 
 bool SaveMetadata::serializeManifest(SerializationArchive *archive) const
 {
-	auto root = archive->newRoot("", saveManifestName.cStr());
+	auto root = archive->newRoot("", saveManifestName.c_str());
 	if (!root)
 	{
 		return false;

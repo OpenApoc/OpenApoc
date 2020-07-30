@@ -2,6 +2,7 @@
 
 #include "framework/fs.h"
 #include "library/sp.h"
+#include "library/strings.h"
 #include <vector>
 
 namespace OpenApoc
@@ -16,7 +17,6 @@ class Palette;
 class VoxelSlice;
 class Video;
 class PaletteImage;
-class UString;
 
 class Data
 {

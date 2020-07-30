@@ -123,12 +123,12 @@ template <typename T, bool conservative> class LineSegmentIterator
 		return *this;
 	}
 
-	bool operator==(const LineSegmentIterator &other)
+	bool operator==(const LineSegmentIterator &other) const
 	{
 		return (this->point * step == other.point * step);
 	}
 
-	bool operator!=(const LineSegmentIterator &other) { return !(*this == other); }
+	bool operator!=(const LineSegmentIterator &other) const { return !(*this == other); }
 
 	Vec3<T> &operator*() { return point; }
 };

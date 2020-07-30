@@ -3,7 +3,6 @@
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "framework/serialization/serialize.h"
-#include "framework/trace.h"
 #include "game/state/battle/battlemappart.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
@@ -433,7 +432,6 @@ bool operator!=(const TacticalAI &a, const TacticalAI &b) { return !(a == b); }
 
 bool GameState::saveGame(const UString &path, bool pack, bool pretty)
 {
-	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
 	if (serialize(archive.get()))
 	{
@@ -446,7 +444,6 @@ bool GameState::saveGame(const UString &path, bool pack, bool pretty)
 bool GameState::saveGameDelta(const UString &path, const GameState &reference, bool pack,
                               bool pretty)
 {
-	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
 	if (serialize(archive.get(), reference))
 	{
@@ -459,7 +456,6 @@ bool GameState::saveGameDelta(const UString &path, const GameState &reference, b
 bool GameState::loadGame(const UString &path)
 {
 
-	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::readArchive(path);
 	if (!archive)
 	{
@@ -549,7 +545,6 @@ static bool deserialize(BattleMapTileset &tileSet, const GameState &state,
 
 bool BattleMapTileset::saveTileset(const UString &path, bool pack, bool pretty)
 {
-	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
 	if (serialize(*this, archive.get()))
 	{
@@ -562,7 +557,6 @@ bool BattleMapTileset::saveTileset(const UString &path, bool pack, bool pretty)
 bool BattleMapTileset::loadTileset(GameState &state, const UString &path)
 {
 
-	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::readArchive(path);
 	if (!archive)
 	{
@@ -605,7 +599,6 @@ static bool deserialize(BattleUnitImagePack &imagePack, const GameState &state,
 
 bool BattleUnitImagePack::saveImagePack(const UString &path, bool pack, bool pretty)
 {
-	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
 	if (serialize(*this, archive.get()))
 	{
@@ -626,7 +619,6 @@ bool BattleUnitImagePack::loadImagePack(GameState &state, const UString &path)
 	}
 	auto fullPath = file.systemPath();
 
-	TRACE_FN_ARGS1("path", fullPath);
 	auto archive = SerializationArchive::readArchive(fullPath);
 	if (!archive)
 	{
@@ -669,7 +661,6 @@ static bool deserialize(BattleUnitAnimationPack &animationPack, const GameState 
 
 bool BattleUnitAnimationPack::saveAnimationPack(const UString &path, bool pack, bool pretty)
 {
-	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
 	if (serialize(*this, archive.get()))
 	{
@@ -688,7 +679,6 @@ bool BattleUnitAnimationPack::loadAnimationPack(GameState &state, const UString 
 	}
 	const auto fullPath = file.systemPath();
 
-	TRACE_FN_ARGS1("path", fullPath);
 	auto archive = SerializationArchive::readArchive(fullPath);
 	if (!archive)
 	{
@@ -731,7 +721,6 @@ static bool deserialize(BattleMapSectorTiles &mapSector, const GameState &state,
 
 bool BattleMapSectorTiles::saveSector(const UString &path, bool pack, bool pretty)
 {
-	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
 	if (serialize(*this, archive.get()))
 	{
@@ -744,7 +733,6 @@ bool BattleMapSectorTiles::saveSector(const UString &path, bool pack, bool prett
 bool BattleMapSectorTiles::loadSector(GameState &state, const UString &path)
 {
 
-	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::readArchive(path);
 	if (!archive)
 	{

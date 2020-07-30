@@ -1,13 +1,13 @@
 #pragma once
 
 #include "library/sp.h"
+#include "library/strings.h"
 
 namespace OpenApoc
 {
 
 class Data;
 class ImageSet;
-class UString;
 
 class PCKLoader
 {

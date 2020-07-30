@@ -81,7 +81,7 @@ class ConfigFileImpl
 		if (optionSections.find(sectionName) != optionSections.end())
 			return;
 		UString sectionDescription = sectionName + " options";
-		optionSections.emplace(sectionName, sectionDescription.str());
+		optionSections.emplace(sectionName, sectionDescription);
 	}
 
 	template <typename T> void set(const UString &key, const T value)
@@ -99,13 +99,13 @@ class ConfigFileImpl
 		fs::path programPath(argv[0]);
 		// Remove extension (if any) and path
 		programName = programPath.filename().string();
-		if (programName.endsWith(".exe"))
+		if (ends_with(programName, ".exe"))
 		{
 			programName = programName.substr(0, programName.length() - 4);
 		}
 		if (!PHYSFS_isInit())
 		{
-			PHYSFS_init(programName.cStr());
+			PHYSFS_init(programName.c_str());
 		}
 		UString settingsPath;
 		// If a file called 'portable.txt' exists in $(PWD), use a local config folder instead of a
@@ -120,7 +120,7 @@ class ConfigFileImpl
 		}
 		else
 		{
-			settingsPath = PHYSFS_getPrefDir("OpenApoc", programName.cStr());
+			settingsPath = PHYSFS_getPrefDir("OpenApoc", programName.c_str());
 		}
 		settingsPath += "settings.conf";
 		// Setup some config-related options
@@ -162,7 +162,7 @@ class ConfigFileImpl
 			// write them back to the config again at save()
 			po::variables_map configFileVM;
 			auto configPath = this->getTyped<UString>("Config.File");
-			std::ifstream inConfig(configPath.str());
+			std::ifstream inConfig(configPath);
 			if (inConfig)
 			{
 				try
@@ -213,10 +213,10 @@ class ConfigFileImpl
 
 		for (auto &optionPair : this->modifiedOptions)
 		{
-			auto splitString = optionPair.first.split(".");
+			auto splitString = split(optionPair.first, ".");
 			if (splitString.size() < 1)
 			{
-				LogError("Invalid option string \"%s\"", optionPair.first.cStr());
+				LogError("Invalid option string \"%s\"", optionPair.first);
 				continue;
 			}
 			UString sectionName;
@@ -227,16 +227,15 @@ class ConfigFileImpl
 				sectionName += splitString[i];
 			}
 
-			UString optionName = splitString[splitString.size() - 1];
+			auto optionName = splitString[splitString.size() - 1];
 			UString configFileLine =
-			    optionName + "=" + std::visit(ToStringVisitor(), optionPair.second);
+			    format("%s=%s", optionName, std::visit(ToStringVisitor(), optionPair.second));
 			configFileContents[sectionName].push_back(configFileLine);
 		}
 
 		try
 		{
-			std::string str = configPathString.str();
-			fs::path configPath(str);
+			fs::path configPath(configPathString);
 			auto dir = configPath.parent_path();
 			if (!dir.empty())
 				fs::create_directories(dir);
@@ -249,7 +248,7 @@ class ConfigFileImpl
 			for (auto &section : configFileContents)
 			{
 				auto &sectionName = section.first;
-				outFile << "[" << sectionName.str() << "]\n";
+				outFile << "[" << sectionName << "]\n";
 				for (auto &line : section.second)
 				{
 					outFile << line << "\n";
@@ -258,7 +257,7 @@ class ConfigFileImpl
 		}
 		catch (fs::filesystem_error &e)
 		{
-			std::cerr << "Failed to write config file \"" << configPathString.str() << "\" : \""
+			std::cerr << "Failed to write config file \"" << configPathString << "\" : \""
 			          << e.what() << "\"\n";
 			return false;
 		}
@@ -278,7 +277,7 @@ class ConfigFileImpl
 		{
 			return true;
 		}
-		return vm.count(name.str());
+		return vm.count(name);
 	}
 	template <typename T> const T &getTyped(const UString &key)
 	{
@@ -289,7 +288,7 @@ class ConfigFileImpl
 		}
 		if (!this->get(key))
 		{
-			LogError("Option \"%s\" not set", key.cStr());
+			LogError("Option \"%s\" not set", key);
 			throw std::exception();
 		}
 		auto it = this->modifiedOptions.find(key);
@@ -297,7 +296,7 @@ class ConfigFileImpl
 		{
 			return std::get<T>(it->second);
 		}
-		return vm[key.str()].as<T>();
+		return vm[key].as<T>();
 	}
 
 	UString describe(const UString section, const UString name)
@@ -312,7 +311,7 @@ class ConfigFileImpl
 			combinedOption = name;
 		else
 			combinedOption = section + "." + name;
-		return optionSections[section].find(combinedOption.str(), true).description();
+		return optionSections[section].find(combinedOption, true).description();
 	}
 
 	void addOption(const UString section, const UString longName, const UString shortName,
@@ -330,7 +329,7 @@ class ConfigFileImpl
 			combinedOption = section + "." + longName;
 		if (!shortName.empty())
 			combinedOption += "," + shortName;
-		this->optionSections[section].add_options()(combinedOption.cStr(), description.cStr());
+		this->optionSections[section].add_options()(combinedOption.c_str(), description.c_str());
 	}
 	template <typename T>
 	void addOptionTyped(const UString section, const UString longName, const UString shortName,
@@ -348,8 +347,9 @@ class ConfigFileImpl
 			combinedOption = section + "." + longName;
 		if (!shortName.empty())
 			combinedOption += "," + shortName;
-		this->optionSections[section].add_options()(
-		    combinedOption.cStr(), po::value<T>()->default_value(defaultValue), description.cStr());
+		this->optionSections[section].add_options()(combinedOption.c_str(),
+		                                            po::value<T>()->default_value(defaultValue),
+		                                            description.c_str());
 	}
 	void addPositionalArgument(const UString name, const UString description)
 	{
@@ -358,7 +358,7 @@ class ConfigFileImpl
 			LogError("Adding option when already parsed");
 		}
 		this->positionalArgNames.push_back(name);
-		this->posDesc.add(name.cStr(), 1);
+		this->posDesc.add(name.c_str(), 1);
 		this->addOptionTyped<UString>("", name, "", description, "");
 	}
 

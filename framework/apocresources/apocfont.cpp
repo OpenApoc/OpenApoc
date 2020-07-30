@@ -4,7 +4,6 @@
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
-#include "framework/trace.h"
 #include "library/sp.h"
 
 #include <boost/locale.hpp>
@@ -14,7 +13,6 @@ namespace OpenApoc
 
 sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 {
-	TRACE_FN_ARGS1("Font", fontDescPath);
 	auto file = fw().data->fs.open(fontDescPath);
 	if (!file)
 	{
@@ -60,7 +58,7 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 	int kerning = 0;
 	UString fontName;
 
-	std::map<UniChar, UString> charMap;
+	std::map<char32_t, UString> charMap;
 
 	fontName = fontNode.attribute("name").value();
 	if (fontName.empty())
@@ -106,7 +104,7 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 			continue;
 		}
 
-		auto pointString = boost::locale::conv::utf_to_utf<UniChar>(glyphString.cStr());
+		auto pointString = boost::locale::conv::utf_to_utf<char32_t>(glyphString.c_str());
 
 		if (pointString.length() != 1)
 		{
@@ -115,7 +113,7 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 			         fontName, glyphString, pointString.length());
 			continue;
 		}
-		UniChar c = pointString[0];
+		char32_t c = pointString[0];
 
 		if (charMap.find(c) != charMap.end())
 		{

@@ -1,7 +1,6 @@
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "framework/sound_interface.h"
-#include "framework/trace.h"
 #include "library/sp.h"
 #include "library/vec.h"
 #include <SDL.h>
@@ -131,7 +130,6 @@ class SDLRawBackend : public SoundBackend
 
 	void getMoreMusic()
 	{
-		TRACE_FN;
 		std::lock_guard<std::recursive_mutex> lock(this->audio_lock);
 		if (!this->music_playing)
 		{
@@ -191,7 +189,6 @@ class SDLRawBackend : public SoundBackend
   public:
 	void mixingCallback(Uint8 *stream, int len)
 	{
-		TRACE_FN;
 		// initialize stream buffer
 		memset(stream, 0, len);
 		std::lock_guard<std::recursive_mutex> lock(this->audio_lock);
@@ -324,7 +321,7 @@ class SDLRawBackend : public SoundBackend
 			std::lock_guard<std::recursive_mutex> l(this->audio_lock);
 			this->live_samples.emplace_back(sample, gain);
 		}
-		LogInfo("Placed sound %p on queue", sample.get());
+		LogInfo("Placed sound %s on queue", sample->path);
 	}
 
 	void playMusic(std::function<void(void *)> finishedCallback, void *callbackData) override
@@ -343,7 +340,7 @@ class SDLRawBackend : public SoundBackend
 	void setTrack(sp<MusicTrack> track) override
 	{
 		std::lock_guard<std::recursive_mutex> l(this->audio_lock);
-		LogInfo("Setting track to %p", track.get());
+		LogInfo("Setting track to %s", track->path);
 		this->track = track;
 		while (!music_queue.empty())
 			music_queue.pop();
