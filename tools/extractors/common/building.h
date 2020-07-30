@@ -40,6 +40,23 @@ struct BldFileEntry
 
 static_assert(sizeof(struct BldFileEntry) == 226, "Unexpected bld_file_entry size");
 
+#pragma pack(push, 1)
+struct BuildingCostData
+{
+	uint16_t cost;
+	uint16_t workers;
+	uint16_t income;
+	uint16_t agentSpawnType;
+	uint16_t investmentValue;
+	uint16_t respectValue;
+};
+#pragma pack(pop)
+
+static_assert(sizeof(struct BuildingCostData) == 12, "Unexpected bld_cost_struc size");
+
+#define BUILDING_COST_STRUCT_OFFSET_START 0x1405C0
+#define BUILDING_COST_STRUCT_OFFSET_END 0x14080C
+
 #define BUILDING_NAME_STRTAB_OFFSET_START 0x149DD2
 #define BUILDING_NAME_STRTAB_OFFSET_END 0x14A66A
 
@@ -48,16 +65,6 @@ static_assert(sizeof(struct BldFileEntry) == 226, "Unexpected bld_file_entry siz
 
 #define ALIEN_BUILDING_NAME_STRTAB_OFFSET_START 0x14AD23
 #define ALIEN_BUILDING_NAME_STRTAB_OFFSET_END 0x14ADCB
-
-struct BuildingCostData
-{
-	uint32_t cost;
-	uint16_t workers;
-	uint16_t income;
-	uint8_t agentSpawnType;
-	uint8_t investmentValue;
-	uint8_t respectValue;
-};
 
 struct BuildingInfiltrationSpeed
 {

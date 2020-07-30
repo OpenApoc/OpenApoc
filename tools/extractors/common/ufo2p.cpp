@@ -142,6 +142,8 @@ UFO2P::UFO2P(std::string file_name)
 	    file, AGENT_INFILTRATION_SPEED_OFFSET_START, AGENT_INFILTRATION_SPEED_OFFSET_END));
 	this->infiltration_speed_building.reset(new DataChunk<BuildingInfiltrationSpeed>(
 	    file, BUILDING_INFILTRATION_SPEED_OFFSET_START, BUILDING_INFILTRATION_SPEED_OFFSET_END));
+	this->building_cost_data.reset(new DataChunk<BuildingCostData>(
+	    file, BUILDING_COST_STRUCT_OFFSET_START, BUILDING_COST_STRUCT_OFFSET_END));
 }
 
 void UFO2P::fillCrew(GameState &state, CrewData crew,

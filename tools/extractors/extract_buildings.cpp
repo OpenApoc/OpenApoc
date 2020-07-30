@@ -22,15 +22,16 @@ void InitialGameStateExtractor::extractBuildingFunctions(GameState &state) const
 	{
 		auto f = mksp<BuildingFunction>();
 		f->name = data.building_functions->get(i);
-		if (i < buildingInitCoreData.size())
+		if (i < data.building_cost_data->count())
 		{
+			auto costEntry = data.building_cost_data->get(i);
 			// convert all values to signed integers to simplify calculations in-game
-			f->baseCost = static_cast<int>(buildingInitCoreData[i].cost);
-			f->baseIncome = static_cast<int>(buildingInitCoreData[i].income);
-			f->workersPerTile = static_cast<int>(buildingInitCoreData[i].workers);
-			f->agentSpawnType = static_cast<int>(buildingInitCoreData[i].agentSpawnType);
-			f->investmentValue = static_cast<int>(buildingInitCoreData[i].investmentValue);
-			f->prestige = static_cast<int>(buildingInitCoreData[i].respectValue);
+			f->baseCost = static_cast<int>(costEntry.cost);
+			f->baseIncome = static_cast<int>(costEntry.income);
+			f->workersPerTile = static_cast<int>(costEntry.workers);
+			f->agentSpawnType = static_cast<int>(costEntry.agentSpawnType);
+			f->investmentValue = static_cast<int>(costEntry.investmentValue);
+			f->prestige = static_cast<int>(costEntry.respectValue);
 		}
 		if (i < data.infiltration_speed_building->count())
 		{
