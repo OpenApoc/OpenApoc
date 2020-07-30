@@ -217,6 +217,10 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				break;
 			}
 		}
+		if (tile->value > 5)
+		{
+			tile->isBuildingPart = true;
+		}
 		// Correct walk modes
 		if (tile->height < 8 && tile->walk_mode == SceneryTileType::WalkMode::Onto)
 		{

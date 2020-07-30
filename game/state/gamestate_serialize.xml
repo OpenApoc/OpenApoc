@@ -1136,6 +1136,7 @@
 		<member>height</member>
 		<member>overlayHeight</member>
 		<member>basement</member>
+		<member>isBuildingPart</member>
 		<member>commonProperty</member>
 		<member>isHill</member>
 	</object>

@@ -102,7 +102,7 @@ void Building::initBuilding(GameState &state)
 	// Initialize economy data, done in the map/city editor or when game starts for the first time
 	// Not on save/load, that's why values are serialized
 	currentWage = 65;
-	maximumWorkforce = countActiveTiles() * function->workersPerTile * 50 / 100;
+	maximumWorkforce = countActiveTiles() * function->workersPerTile / 2;
 	currentWorkforce = maximumWorkforce * 70 / 100;
 	maintenanceCosts = randBoundsInclusive(state.rng, 90, 110) * function->baseCost / 100;
 	incomePerCapita = randBoundsInclusive(state.rng, 90, 110) * function->baseIncome / 100;
@@ -112,7 +112,7 @@ void Building::initBuilding(GameState &state)
 
 void Building::updateWorkforce()
 {
-	maximumWorkforce = countActiveTiles() * function->workersPerTile * 50 / 100;
+	maximumWorkforce = countActiveTiles() * function->workersPerTile / 2;
 	if (maximumWorkforce < currentWorkforce)
 	{
 		city->populationUnemployed -= currentWorkforce - maximumWorkforce;
@@ -131,7 +131,7 @@ unsigned Building::countActiveTiles() const
 	for (auto &p : buildingParts)
 	{
 		auto tile = city->map->getTile(p);
-		if (tile->presentScenery && tile->presentScenery->type->value > 5)
+		if (tile->presentScenery && tile->presentScenery->type->isBuildingPart)
 		{
 			relevantTiles++;
 		}
