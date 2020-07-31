@@ -1251,6 +1251,7 @@ void GameState::updateHumanEconomy()
 	// Step 4. Civilians will try to apply for a new job (up to 5 times)
 	// Workforce initially expect 20% higher wages to be re-hired, but will reduce demands
 	int expectedWage = humanCity->averageWage * 12 / 10;
+	const int defaultSalary = humanCity->civilianSalary;
 	for (int attempt = 0; attempt < 5; ++attempt)
 	{
 		// Check if there's still civilians without work
@@ -1262,18 +1263,18 @@ void GameState::updateHumanEconomy()
 			if (build->currentWage > expectedWage)
 			{
 				int workersJoining = humanCity->populationUnemployed;
-				if (build->currentWage < 20)
+				if (build->currentWage < defaultSalary * 30 / 100)
 				{
 					workersJoining = 0;
 				}
-				else if (build->currentWage < 50)
+				else if (build->currentWage < defaultSalary * 75 / 100)
 				{
 					// std::min so we can't overflow here
 					workersJoining = workersJoining * std::min(build->currentWage, 100) / 100;
 					// fall-through was intended
-					if (build->currentWage < 40)
+					if (build->currentWage < defaultSalary * 60 / 100)
 						workersJoining /= 10;
-					if (build->currentWage < 30)
+					if (build->currentWage < defaultSalary * 45 / 100)
 						workersJoining /= 20;
 				}
 

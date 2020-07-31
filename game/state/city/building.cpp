@@ -101,7 +101,7 @@ void Building::initBuilding(GameState &state)
 {
 	// Initialize economy data, done in the map/city editor or when game starts for the first time
 	// Not on save/load, that's why values are serialized
-	currentWage = 65;
+	currentWage = city->civilianSalary;
 	maximumWorkforce = countActiveTiles() * function->workersPerTile / 2;
 	currentWorkforce = maximumWorkforce * 70 / 100;
 	maintenanceCosts = randBoundsInclusive(state.rng, 90, 110) * function->baseCost / 100;

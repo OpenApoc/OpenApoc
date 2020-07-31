@@ -961,6 +961,7 @@
 		<member>initial_portals</member>
 		<member>tileToRoadSegmentMap</member>
 		<member>roadSegments</member>
+		<member>civilianSalary</member>
 		<member>researchUnlock</member>
 		<member>cityViewScreenCenter</member>
 		<member>cityViewPageIndex</member>

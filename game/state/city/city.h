@@ -96,6 +96,9 @@ class City : public StateObject<City>, public std::enable_shared_from_this<City>
 
 	up<TileMap> map;
 
+	// Economy: default civilian salary that setting their expectations
+	int civilianSalary = 0;
+
 	// Unlocks when visiting this
 	std::list<StateRef<ResearchTopic>> researchUnlock;
 
