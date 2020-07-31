@@ -102,14 +102,14 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 			                      canon_string(data.building_functions->get(entry.function_idx)))};
 
 			b->isPurchesable = entry.is_purchaseable;
-			b->purchasePrice = entry.price * 2000;
-			b->maintenanceCosts = entry.maintenance_costs;
-			b->currentWorkforce = entry.current_workforce;
-			b->maximumWorkforce = entry.maximum_workforce;
-			b->incomePerCapita = entry.income_per_capita;
-			b->currentWage = entry.current_wage;
-			b->investment = entry.investment_value;
-			b->prestige = entry.respect_value;
+			b->purchasePrice = static_cast<int>(entry.price) * 2000;
+			b->maintenanceCosts = static_cast<int>(entry.maintenance_costs);
+			b->currentWorkforce = static_cast<int>(entry.current_workforce);
+			b->maximumWorkforce = static_cast<int>(entry.maximum_workforce);
+			b->incomePerCapita = static_cast<int>(entry.income_per_capita);
+			b->currentWage = static_cast<int>(entry.current_wage);
+			b->investment = static_cast<int>(entry.investment_value);
+			b->prestige = static_cast<int>(entry.respect_value);
 		}
 		int battle_map_index = entry.function_idx - 1 + (alienBuilding ? 39 : 0);
 		// Fix battle index for buildings that use other maps

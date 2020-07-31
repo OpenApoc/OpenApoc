@@ -174,7 +174,9 @@ void GameState::initState()
 
 				for (auto &b : c.second->buildings)
 				{
-					b.second->initBuilding(*this);
+					// Use values provided with original maps for now
+					// Uncomment this if algoritm improves
+					// b.second->initBuilding(*this);
 				}
 			}
 		}
