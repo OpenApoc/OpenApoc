@@ -1211,21 +1211,21 @@ void GameState::updateHumanEconomy()
 
 	// Step 1. Everybody gets paid according to the current rates
 	int totalCivilianIncome = 0;
-	for (auto &org : organisations)
+	for (auto &[id, org] : organisations)
 	{
-		if (org.first != player.id && org.first != aliens.id)
+		if (id != player.id && id != aliens.id)
 		{
-			for (auto &b : org.second->buildings)
+			for (auto &b : org->buildings)
 			{
 				// validate the original data
 				if (b->currentWage < 0)
 					b->currentWage = 0;
 
-				org.second->income += b->calculateIncome();
+				org->income += b->calculateIncome();
 				humanCity->populationWorking += b->currentWorkforce;
 				totalCivilianIncome += b->currentWage * b->currentWorkforce;
 			}
-			org.second->balance += org.second->income;
+			org->balance += org->income;
 		}
 	}
 	humanCity->averageWage =
@@ -1236,9 +1236,8 @@ void GameState::updateHumanEconomy()
 
 	// Step 3. Calculate civilians leaving work because of the low wage
 	const int minimumWage = std::max(humanCity->averageWage, 30);
-	for (auto &pair : humanCity->buildings)
+	for (auto &[id, build] : humanCity->buildings)
 	{
-		const auto build = pair.second;
 		if (build->currentWage < minimumWage)
 		{
 			const int satisfiedWorkers = build->currentWorkforce * build->currentWage / minimumWage;
@@ -1258,9 +1257,8 @@ void GameState::updateHumanEconomy()
 		if (humanCity->populationUnemployed <= 0)
 			break;
 
-		for (auto &pair : humanCity->buildings)
+		for (auto &[id, build] : humanCity->buildings)
 		{
-			const auto build = pair.second;
 			if (build->currentWage > expectedWage)
 			{
 				int workersJoining = humanCity->populationUnemployed;
@@ -1296,9 +1294,8 @@ void GameState::updateHumanEconomy()
 	}
 
 	// Step 5. Adjust the building wages to attract new workers
-	for (auto &pair : humanCity->buildings)
+	for (auto &[id, build] : humanCity->buildings)
 	{
-		const auto build = pair.second;
 		const int maximum = build->maximumWorkforce;
 		const int current = build->currentWorkforce;
 		const int profitabilityLimit = build->incomePerCapita - build->maintenanceCosts / maximum;

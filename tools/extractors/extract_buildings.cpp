@@ -24,7 +24,7 @@ void InitialGameStateExtractor::extractBuildingFunctions(GameState &state) const
 		f->name = data.building_functions->get(i);
 		if (i < data.building_cost_data->count())
 		{
-			auto costEntry = data.building_cost_data->get(i);
+			const auto costEntry = data.building_cost_data->get(i);
 			// convert all values to signed integers to simplify calculations in-game
 			f->baseCost = static_cast<int>(costEntry.cost);
 			f->baseIncome = static_cast<int>(costEntry.income);

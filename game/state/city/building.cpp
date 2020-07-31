@@ -32,12 +32,12 @@ sp<BuildingFunction> StateObject<BuildingFunction>::get(const GameState &state, 
 
 template <> const UString &StateObject<BuildingFunction>::getPrefix()
 {
-	static UString prefix = "BUILDINGFUNCTION_";
+	static const UString prefix = "BUILDINGFUNCTION_";
 	return prefix;
 }
 template <> const UString &StateObject<BuildingFunction>::getTypeName()
 {
-	static UString name = "BuildingFunction";
+	static const UString name = "BuildingFunction";
 	return name;
 }
 
@@ -128,9 +128,9 @@ int Building::calculateIncome() const
 unsigned Building::countActiveTiles() const
 {
 	unsigned relevantTiles = 0;
-	for (auto &p : buildingParts)
+	for (const auto &p : buildingParts)
 	{
-		auto tile = city->map->getTile(p);
+		const auto tile = city->map->getTile(p);
 		if (tile->presentScenery && tile->presentScenery->type->isBuildingPart)
 		{
 			relevantTiles++;
