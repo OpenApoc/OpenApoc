@@ -164,13 +164,20 @@ void GameState::initState()
 	for (auto &c : this->cities)
 	{
 		auto &city = c.second;
-		city->initMap(*this);
+		city->initCity(*this);
 		if (newGame)
 		{
 			// if (c.first == "CITYMAP_HUMAN")
 			{
 				city->fillRoadSegmentMap(*this);
 				city->initialSceneryLinkUp();
+
+				// Use values provided with original maps for now
+				// Uncomment this if algoritm improves
+				// for (auto &b : c.second->buildings)
+				//{
+				//	b.second->initBuilding(*this);
+				//}
 			}
 		}
 		// Add vehicles to map
@@ -212,6 +219,15 @@ void GameState::initState()
 		a.second->leftHandItem = a.second->getFirstItemInSlot(EquipmentSlotType::LeftHand, false);
 		a.second->rightHandItem = a.second->getFirstItemInSlot(EquipmentSlotType::RightHand, false);
 	}
+
+	if (newGame)
+	{
+		// Initialize organization funding by running throught two-week funding
+		// This lets workers to move around
+		updateHumanEconomy();
+		updateHumanEconomy();
+	}
+
 	// Run necessary methods for different types
 	research.updateTopicList();
 	// Apply mods (Stub until we actually have mods)
@@ -1178,7 +1194,139 @@ void GameState::updateEndOfDay()
 	}
 }
 
-void GameState::updateEndOfWeek() { luaGameState.callHook("updateEndOfWeek", 0, 0); }
+void GameState::updateEndOfWeek()
+{
+	updateHumanEconomy();
+
+	luaGameState.callHook("updateEndOfWeek", 0, 0);
+}
+
+// Recalculates AI organization and civilian finances, updating budgets and salaries
+void GameState::updateHumanEconomy()
+{
+	// TODO: remove hardcoded references
+	auto humanCity = cities["CITYMAP_HUMAN"];
+
+	humanCity->populationWorking = 0;
+	// Game resets only Government income, it's not right logically but will keep it to match OG
+	government->income = 0;
+
+	// Step 1. Everybody gets paid according to the current rates
+	int totalCivilianIncome = 0;
+	for (auto &[id, org] : organisations)
+	{
+		if (id != player.id && id != aliens.id)
+		{
+			for (auto &b : org->buildings)
+			{
+				// validate the original data
+				if (b->currentWage < 0)
+					b->currentWage = 0;
+
+				org->income += b->calculateIncome();
+				humanCity->populationWorking += b->currentWorkforce;
+				totalCivilianIncome += b->currentWage * b->currentWorkforce;
+			}
+			org->balance += org->income;
+		}
+	}
+	humanCity->averageWage =
+	    (humanCity->populationWorking) ? totalCivilianIncome / humanCity->populationWorking : 0;
+
+	// Step 2. Government additionally gets 10% of civilian income as taxes
+	government->balance += totalCivilianIncome / 10;
+
+	// Step 3. Calculate civilians leaving work because of the low wage
+	const int minimumWage = std::max(humanCity->averageWage, 30);
+	for (auto &[id, build] : humanCity->buildings)
+	{
+		if (build->currentWage < minimumWage)
+		{
+			const int satisfiedWorkers = build->currentWorkforce * build->currentWage / minimumWage;
+			const int workersLeaving = build->currentWorkforce - satisfiedWorkers;
+			build->currentWorkforce = satisfiedWorkers;
+			humanCity->populationWorking -= workersLeaving;
+			humanCity->populationUnemployed += workersLeaving;
+		}
+	}
+
+	// Step 4. Civilians will try to apply for a new job (up to 5 times)
+	// Workforce initially expect 20% higher wages to be re-hired, but will reduce demands
+	int expectedWage = humanCity->averageWage * 12 / 10;
+	const int defaultSalary = humanCity->civilianSalary;
+	for (int attempt = 0; attempt < 5; ++attempt)
+	{
+		// Check if there's still civilians without work
+		if (humanCity->populationUnemployed <= 0)
+			break;
+
+		for (auto &[id, build] : humanCity->buildings)
+		{
+			if (build->currentWage > expectedWage)
+			{
+				int workersJoining = humanCity->populationUnemployed;
+				if (build->currentWage < defaultSalary * 30 / 100)
+				{
+					workersJoining = 0;
+				}
+				else if (build->currentWage < defaultSalary * 75 / 100)
+				{
+					// std::min so we can't overflow here
+					workersJoining = workersJoining * std::min(build->currentWage, 100) / 100;
+					// fall-through was intended
+					if (build->currentWage < defaultSalary * 60 / 100)
+						workersJoining /= 10;
+					if (build->currentWage < defaultSalary * 45 / 100)
+						workersJoining /= 20;
+				}
+
+				// make sure there's room for everybody
+				workersJoining =
+				    std::min(workersJoining, build->maximumWorkforce - build->currentWorkforce);
+
+				if (workersJoining)
+				{
+					build->currentWorkforce += workersJoining;
+					humanCity->populationWorking += workersJoining;
+					humanCity->populationUnemployed -= workersJoining;
+				}
+			}
+		}
+		// Reduce demands by 10%
+		expectedWage -= humanCity->averageWage / 10;
+	}
+
+	// Step 5. Adjust the building wages to attract new workers
+	for (auto &[id, build] : humanCity->buildings)
+	{
+		const int maximum = build->maximumWorkforce;
+		const int current = build->currentWorkforce;
+		const int profitabilityLimit = build->incomePerCapita - build->maintenanceCosts / maximum;
+		double wage = build->currentWage;
+
+		if (current < maximum * 60 / 100)
+		{
+			// severely understaffed, biggest salary bump
+			wage *= 1.2;
+		}
+		else if (current < maximum * 80 / 100)
+		{
+			wage *= 1.1;
+		}
+		else if (current < maximum * 90 / 100)
+		{
+			wage *= 1.05;
+		}
+		else if (current == maximum)
+		{
+			// if we're at 100% capacity reduce the salary
+			wage *= 0.95;
+		}
+
+		// make sure we're not losing money
+		build->currentWage = (wage < profitabilityLimit) ? wage : profitabilityLimit;
+	}
+}
 
 void GameState::updateTurbo()
 {

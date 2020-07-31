@@ -91,6 +91,7 @@ class UFO2P
 	std::unique_ptr<DataChunk<CrewData>> crew_ufo_deposit;
 	std::unique_ptr<DataChunk<CrewData>> crew_alien_building;
 
+	std::unique_ptr<DataChunk<BuildingCostData>> building_cost_data;
 	std::unique_ptr<DataChunk<OrgInfiltrationSpeed>> infiltration_speed_org;
 	std::unique_ptr<DataChunk<AgentInfiltrationSpeed>> infiltration_speed_agent;
 	std::unique_ptr<DataChunk<BuildingInfiltrationSpeed>> infiltration_speed_building;

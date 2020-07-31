@@ -79,7 +79,7 @@ class City : public StateObject<City>, public std::enable_shared_from_this<City>
 	City() = default;
 	~City() override;
 
-	void initMap(GameState &state);
+	void initCity(GameState &state);
 
 	UString id;
 	Vec3<int> size = {0, 0, 0};
@@ -95,6 +95,9 @@ class City : public StateObject<City>, public std::enable_shared_from_this<City>
 	std::set<sp<Projectile>> projectiles;
 
 	up<TileMap> map;
+
+	// Economy: default civilian salary that setting their expectations
+	int civilianSalary = 0;
 
 	// Unlocks when visiting this
 	std::list<StateRef<ResearchTopic>> researchUnlock;
@@ -161,8 +164,10 @@ class City : public StateObject<City>, public std::enable_shared_from_this<City>
 	                                  Vec3<float> &target, int accuracy, bool cloaked);
 
 	// Following members are not serialized, but rather are set in initCity method
-
 	std::list<StateRef<Building>> spaceports;
+	int populationUnemployed = 0;
+	int populationWorking = 0;
+	int averageWage = 0;
 };
 
 }; // namespace OpenApoc

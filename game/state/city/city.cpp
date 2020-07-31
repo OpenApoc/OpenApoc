@@ -70,7 +70,7 @@ City::~City()
 	}
 }
 
-void City::initMap(GameState &state)
+void City::initCity(GameState &state)
 {
 	if (this->map)
 	{
@@ -115,6 +115,8 @@ void City::initMap(GameState &state)
 			}
 		}
 	}
+
+	int subtotalIncome = 0;
 	for (auto &b : this->buildings)
 	{
 		if (b.second->landingPadLocations.empty())
@@ -140,7 +142,14 @@ void City::initMap(GameState &state)
 			spaceports.emplace_back(&state, b.first);
 		}
 		b.second->owner->buildings.emplace_back(&state, b.first);
+
+		populationWorking += b.second->currentWorkforce;
+		populationUnemployed += b.second->maximumWorkforce - b.second->currentWorkforce;
+		subtotalIncome += b.second->currentWage;
 	}
+	averageWage = (populationWorking) ? subtotalIncome / populationWorking : 0;
+	populationUnemployed += 500; // original adjustment
+
 	for (auto &p : this->projectiles)
 	{
 		this->map->addObjectToMap(p);
@@ -307,6 +316,11 @@ void City::dailyLoop(GameState &state)
 	if (state.cities["CITYMAP_ALIEN"] != shared_from_this())
 	{
 		repairScenery(state);
+		// check if employment situation changes in the building
+		for (auto &b : buildings)
+		{
+			b.second->updateWorkforce();
+		}
 	}
 	generatePortals(state);
 }

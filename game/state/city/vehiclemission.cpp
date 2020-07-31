@@ -1566,7 +1566,7 @@ bool VehicleMission::isFinishedInternal(GameState &state, Vehicle &v)
 		case MissionType::Teleport:
 			return true;
 		case MissionType::AttackBuilding:
-			return targetBuilding && !targetBuilding->isAlive(state);
+			return targetBuilding && !targetBuilding->isAlive();
 		default:
 			LogWarning("TODO: Implement isFinishedInternal");
 			return false;
@@ -2982,7 +2982,7 @@ bool VehicleMission::acquireTargetBuilding(GameState &state, Vehicle &v)
 	std::list<StateRef<Building>> availableBuildings;
 	for (auto &b : v.city->buildings)
 	{
-		if (!b.second->isAlive(state))
+		if (!b.second->isAlive())
 		{
 			continue;
 		}

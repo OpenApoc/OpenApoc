@@ -100,7 +100,7 @@ void BuildingScreen::eventOccurred(Event *e)
 		if (e->forms().RaisedBy->Name == "BUTTON_EXTERMINATE" ||
 		    e->forms().RaisedBy->Name == "BUTTON_RAID")
 		{
-			if (!building->isAlive(*state))
+			if (!building->isAlive())
 			{
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,

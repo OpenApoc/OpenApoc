@@ -9,6 +9,7 @@
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/city/scenerytiletype.h"
 #include "game/state/shared/organisation.h"
 
 // Uncomment to make cargo system output warnings
@@ -31,12 +32,12 @@ sp<BuildingFunction> StateObject<BuildingFunction>::get(const GameState &state, 
 
 template <> const UString &StateObject<BuildingFunction>::getPrefix()
 {
-	static UString prefix = "BUILDINGFUNCTION_";
+	static const UString prefix = "BUILDINGFUNCTION_";
 	return prefix;
 }
 template <> const UString &StateObject<BuildingFunction>::getTypeName()
 {
-	static UString name = "AgentType";
+	static const UString name = "BuildingFunction";
 	return name;
 }
 
@@ -94,6 +95,48 @@ bool Building::hasAliens() const
 		}
 	}
 	return false;
+}
+
+void Building::initBuilding(GameState &state)
+{
+	// Initialize economy data, done in the map/city editor or when game starts for the first time
+	// Not on save/load, that's why values are serialized
+	currentWage = city->civilianSalary;
+	maximumWorkforce = countActiveTiles() * function->workersPerTile / 2;
+	currentWorkforce = maximumWorkforce * 70 / 100;
+	maintenanceCosts = randBoundsInclusive(state.rng, 90, 110) * function->baseCost / 100;
+	incomePerCapita = randBoundsInclusive(state.rng, 90, 110) * function->baseIncome / 100;
+	investment = function->investmentValue;
+	prestige = function->prestige;
+}
+
+void Building::updateWorkforce()
+{
+	maximumWorkforce = countActiveTiles() * function->workersPerTile / 2;
+	if (maximumWorkforce < currentWorkforce)
+	{
+		city->populationUnemployed -= currentWorkforce - maximumWorkforce;
+		currentWorkforce = maximumWorkforce;
+	}
+}
+
+int Building::calculateIncome() const
+{
+	return currentWorkforce * (incomePerCapita - currentWage) - maintenanceCosts;
+}
+
+unsigned Building::countActiveTiles() const
+{
+	unsigned relevantTiles = 0;
+	for (const auto &p : buildingParts)
+	{
+		const auto tile = city->map->getTile(p);
+		if (tile->presentScenery && tile->presentScenery->type->isBuildingPart)
+		{
+			relevantTiles++;
+		}
+	}
+	return relevantTiles;
 }
 
 void Building::updateDetection(GameState &state, unsigned int ticks)
@@ -970,9 +1013,6 @@ void Building::buildingPartChange(GameState &state, Vec3<int> part, bool intact)
 	}
 	else
 	{
-		// Skin36 had some code figured out about this
-		// which counted score of parts and when it was below certain value
-		// building was considered dead
 		buildingParts.erase(part);
 		if (buildingParts.find(crewQuarters) == buildingParts.end())
 		{
@@ -984,7 +1024,7 @@ void Building::buildingPartChange(GameState &state, Vec3<int> part, bool intact)
 				agent->die(state, true);
 			}
 		}
-		if (!isAlive(state))
+		if (!isAlive())
 		{
 			if (base)
 			{
@@ -1009,6 +1049,6 @@ void Building::decreasePendingInvestigatorCount(GameState &state)
 	}
 }
 
-bool Building::isAlive(GameState &state [[maybe_unused]]) const { return !buildingParts.empty(); }
+bool Building::isAlive() const { return countActiveTiles() > 0; }
 
 } // namespace OpenApoc

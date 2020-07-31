@@ -68,6 +68,8 @@ class SceneryTileType : public StateObject<SceneryTileType>
 	// Max value 16
 	int overlayHeight = 0;
 	bool basement = false;
+	// Only tiles with value over certain threshold are considered to be core to the building
+	bool isBuildingPart = false;
 	// Does not receive attacks and is not considered hostile action if receives stray shots
 	bool commonProperty = false;
 

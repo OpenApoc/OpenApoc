@@ -129,7 +129,7 @@ StateRef<Building> Organisation::getPurchaseBuilding(GameState &state,
 	std::list<StateRef<Building>> purchaseBuildings;
 	for (auto &b : buildings)
 	{
-		if (b->city == buyer->city && b != buyer && b->isAlive(state))
+		if (b->city == buyer->city && b != buyer && b->isAlive())
 		{
 			purchaseBuildings.push_back(b);
 		}
@@ -820,7 +820,7 @@ void Organisation::Mission::execute(GameState &state, StateRef<City> city,
 		std::list<StateRef<Building>> spaceports;
 		for (auto &b : city->spaceports)
 		{
-			if (b->isAlive(state))
+			if (b->isAlive())
 			{
 				bool intactPad = false;
 				for (auto &p : b->landingPadLocations)

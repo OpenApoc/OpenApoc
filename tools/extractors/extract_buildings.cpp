@@ -7,6 +7,7 @@
 #include "game/state/rules/battle/battlemap.h"
 #include "game/state/rules/city/ufopaedia.h"
 #include "library/strings_format.h"
+#include "tools/extractors/common/building.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
 
@@ -21,6 +22,17 @@ void InitialGameStateExtractor::extractBuildingFunctions(GameState &state) const
 	{
 		auto f = mksp<BuildingFunction>();
 		f->name = data.building_functions->get(i);
+		if (i < data.building_cost_data->count())
+		{
+			const auto costEntry = data.building_cost_data->get(i);
+			// convert all values to signed integers to simplify calculations in-game
+			f->baseCost = static_cast<int>(costEntry.cost);
+			f->baseIncome = static_cast<int>(costEntry.income);
+			f->workersPerTile = static_cast<int>(costEntry.workers);
+			f->agentSpawnType = static_cast<int>(costEntry.agentSpawnType);
+			f->investmentValue = static_cast<int>(costEntry.investmentValue);
+			f->prestige = static_cast<int>(costEntry.respectValue);
+		}
 		if (i < data.infiltration_speed_building->count())
 		{
 			f->infiltrationSpeed = data.infiltration_speed_building->get(i).speed;
@@ -88,6 +100,16 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 			b->function = {&state,
 			               format("%s%s", BuildingFunction::getPrefix(),
 			                      canon_string(data.building_functions->get(entry.function_idx)))};
+
+			b->isPurchesable = entry.is_purchaseable;
+			b->purchasePrice = static_cast<int>(entry.price) * 2000;
+			b->maintenanceCosts = static_cast<int>(entry.maintenance_costs);
+			b->currentWorkforce = static_cast<int>(entry.current_workforce);
+			b->maximumWorkforce = static_cast<int>(entry.maximum_workforce);
+			b->incomePerCapita = static_cast<int>(entry.income_per_capita);
+			b->currentWage = static_cast<int>(entry.current_wage);
+			b->investment = static_cast<int>(entry.investment_value);
+			b->prestige = static_cast<int>(entry.respect_value);
 		}
 		int battle_map_index = entry.function_idx - 1 + (alienBuilding ? 39 : 0);
 		// Fix battle index for buildings that use other maps

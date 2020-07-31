@@ -43,6 +43,7 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 		o->income = odata.starting_funding;
 		o->tech_level = odata.starting_tech_level + 1;
 		o->average_guards = odata.average_guards;
+		o->rebuildingRate = odata.rebuilding_rate;
 
 		// "Civilian" organisation has no loot entry and icon
 		if (i == ORG_CIVILIAN)

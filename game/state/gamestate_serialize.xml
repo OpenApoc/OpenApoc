@@ -961,6 +961,7 @@
 		<member>initial_portals</member>
 		<member>tileToRoadSegmentMap</member>
 		<member>roadSegments</member>
+		<member>civilianSalary</member>
 		<member>researchUnlock</member>
 		<member>cityViewScreenCenter</member>
 		<member>cityViewPageIndex</member>
@@ -1046,6 +1047,12 @@
 	<object>
 		<name>BuildingFunction</name>
 		<member>name</member>
+		<member>baseCost</member>
+		<member>baseIncome</member>
+		<member>workersPerTile</member>
+		<member>agentSpawnType</member>
+		<member>investmentValue</member>
+		<member>prestige</member>
 		<member>infiltrationSpeed</member>
 		<member>detectionWeight</member>
 		<member>ufopaedia_entry</member>
@@ -1066,6 +1073,15 @@
 		<member>currentVehicles</member>
 		<member>currentAgents</member>
 		<member>cargo</member>
+		<member>isPurchesable</member>
+		<member>purchasePrice</member>
+		<member>maintenanceCosts</member>
+		<member>maximumWorkforce</member>
+		<member>currentWorkforce</member>
+		<member>incomePerCapita</member>
+		<member>currentWage</member>
+		<member>investment</member>
+		<member>prestige</member>
 		<member>ticksDetectionTimeOut</member>
 		<member>ticksDetectionAttemptAccumulated</member>
 		<member>detected</member>
@@ -1121,6 +1137,7 @@
 		<member>height</member>
 		<member>overlayHeight</member>
 		<member>basement</member>
+		<member>isBuildingPart</member>
 		<member>commonProperty</member>
 		<member>isHill</member>
 	</object>
@@ -1328,6 +1345,7 @@
 		<member>name</member>
 		<member>balance</member>
 		<member>income</member>
+		<member>rebuildingRate</member>
 		<member>infiltrationValue</member>
 		<member>infiltrationHistory</member>
 		<member>infiltrationSpeed</member>
