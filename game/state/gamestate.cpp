@@ -172,12 +172,12 @@ void GameState::initState()
 				city->fillRoadSegmentMap(*this);
 				city->initialSceneryLinkUp();
 
-				for (auto &b : c.second->buildings)
-				{
-					// Use values provided with original maps for now
-					// Uncomment this if algoritm improves
-					// b.second->initBuilding(*this);
-				}
+				// Use values provided with original maps for now
+				// Uncomment this if algoritm improves
+				// for (auto &b : c.second->buildings)
+				//{
+				//	b.second->initBuilding(*this);
+				//}
 			}
 		}
 		// Add vehicles to map
