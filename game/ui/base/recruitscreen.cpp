@@ -351,7 +351,7 @@ void RecruitScreen::updateBaseHighlight()
 	int usage = state->current_base->getUsage(*state, FacilityType::Capacity::Quarters, lqDelta);
 	fillBaseBar(usage);
 	auto facilityLabel = form->findControlTyped<Label>("FACILITY_FIRST_TEXT");
-	facilityLabel->setText(format("%s%%", usage));
+	facilityLabel->setText(format("%i%%", usage));
 }
 
 void RecruitScreen::fillBaseBar(int percent)
