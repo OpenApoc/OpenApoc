@@ -2367,7 +2367,7 @@ void Battle::giveInterruptChanceToUnit(GameState &state, StateRef<BattleUnit> gi
                                        StateRef<BattleUnit> receiver, int reactionValue)
 {
 	if (mode != Mode::TurnBased || receiver->owner == currentActiveOrganisation ||
-	    receiver->getAIType() == AIType::None ||
+	    receiver->getAIType() == AIType::None || receiver->getAIType() == AIType::Civilian ||
 	    interruptQueue.find(receiver) != interruptQueue.end())
 	{
 		return;
