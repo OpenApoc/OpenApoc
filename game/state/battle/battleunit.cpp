@@ -617,8 +617,9 @@ void BattleUnit::refreshUnitVision(GameState &state, bool forceBlind,
 				state.current_battle->notifyAction(vu->position, vu);
 			}
 		}
-		// battle and units's visible enemies list
-		if (owner->isRelatedTo(vu->owner) == Organisation::Relation::Hostile)
+		// battle and units's visible enemies list (Do not count civilians as enemy)
+		if (owner->isRelatedTo(vu->owner) == Organisation::Relation::Hostile &&
+		    vu->getAIType() != AIType::Civilian)
 		{
 			visibleEnemies.insert(vu);
 			battle.visibleEnemies[owner].insert(vu);
