@@ -918,8 +918,16 @@ bool Agent::getNewGoal(GameState &state)
 void Agent::die(GameState &state, bool silent)
 {
 	auto thisRef = StateRef<Agent>{&state, shared_from_this()};
-	// Actually die
+
+	// Set health to zero so agent will die on next update
 	modified_stats.health = 0;
+
+	// Remove from vehicle
+	if (currentVehicle)
+	{
+		currentVehicle->currentAgents.erase(thisRef);
+	}
+
 	// Remove from lab
 	if (assigned_to_lab)
 	{
@@ -939,26 +947,12 @@ void Agent::die(GameState &state, bool silent)
 			}
 		}
 	}
-	// Remove from building
-	if (currentBuilding)
+
+	// In city (if not died in a vehicle) we make an event
+	if (!silent && !state.current_battle && owner == state.getPlayer())
 	{
-		currentBuilding->currentAgents.erase(thisRef);
-	}
-	// Remove from vehicle
-	if (currentVehicle)
-	{
-		currentVehicle->currentAgents.erase(thisRef);
-	}
-	// In city we remove agent
-	if (!state.current_battle)
-	{
-		// In city (if not died in a vehicle) we make an event
-		if (!silent && owner == state.getPlayer())
-		{
-			fw().pushEvent(
-			    new GameSomethingDiedEvent(GameEventType::AgentDiedCity, name, "", position));
-		}
-		state.agents.erase(getId(state, shared_from_this()));
+		fw().pushEvent(
+		    new GameSomethingDiedEvent(GameEventType::AgentDiedCity, name, "", position));
 	}
 }
 
@@ -966,6 +960,27 @@ bool Agent::isDead() const { return getHealth() <= 0; }
 
 void Agent::update(GameState &state, unsigned ticks)
 {
+	if (isDead() && status == AgentStatus::Alive)
+	{
+		status = AgentStatus::Dead;
+
+		const auto thisRef = StateRef<Agent>{&state, shared_from_this()};
+
+		// Remove from building
+		if (currentBuilding && !state.current_battle)
+		{
+			currentBuilding->currentAgents.erase(thisRef);
+		}
+
+		// In city we remove agent
+		if (!state.current_battle)
+		{
+			state.agents.erase(getId(state, shared_from_this()));
+		}
+
+		return;
+	}
+
 	if (isDead() || !city)
 	{
 		return;

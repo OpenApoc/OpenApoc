@@ -174,6 +174,14 @@ class Vehicle : public StateObject<Vehicle>,
 		Low = 3
 	};
 	Altitude altitude = Altitude::Standard;
+
+	enum class VehicleStatus
+	{
+		Operational,
+		Destroyed
+	};
+	VehicleStatus status = VehicleStatus::Operational;
+
 	// Adjusts position by altitude preference
 	Vec3<int> getPreferredPosition(Vec3<int> position) const;
 	Vec3<int> getPreferredPosition(int x, int y, int z = 0) const;
