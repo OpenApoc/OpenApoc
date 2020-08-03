@@ -121,14 +121,11 @@ void Base::die(GameState &state, bool collapse)
 	}
 	for (auto a : building->currentAgents)
 	{
-		auto agent = a;
-		agent->die(state, true);
+		a->die(state, true);
 	}
-	auto vehicles = building->currentVehicles;
-	for (auto v : vehicles)
+	for (auto v : building->currentVehicles)
 	{
-		auto vehicle = v;
-		vehicle->die(state, true);
+		v->die(state, true);
 	}
 	building->base.clear();
 	building->owner = state.getGovernment();

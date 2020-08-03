@@ -1851,17 +1851,10 @@ void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 	}
 	removeFromMap(state);
 
-	while (!currentAgents.empty())
+	// Dying will remove agent from current agents list
+	for (auto agent : currentAgents)
 	{
-		// For some reason need to assign first before calling die()
-		auto agent = *currentAgents.begin();
-		// Dying will remove agent from current agents list
 		agent->die(state, true);
-	}
-	// Remove from building
-	if (currentBuilding)
-	{
-		currentBuilding->currentVehicles.erase({&state, shared_from_this()});
 	}
 
 	// Adjust relationships
@@ -2030,6 +2023,22 @@ Vec3<float> Vehicle::getMuzzleLocation() const
 
 void Vehicle::update(GameState &state, unsigned int ticks)
 {
+	if (isDead() && status == VehicleStatus::Operational)
+	{
+		status = VehicleStatus::Destroyed;
+
+		// Remove from building
+		if (currentBuilding)
+		{
+			currentBuilding->currentVehicles.erase({&state, shared_from_this()});
+		}
+	}
+
+	if (isDead())
+	{
+		return;
+	}
+
 	bool turbo = ticks > TICKS_PER_SECOND;
 	bool IsIdle;
 

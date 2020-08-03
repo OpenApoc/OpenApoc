@@ -1016,11 +1016,8 @@ void Building::buildingPartChange(GameState &state, Vec3<int> part, bool intact)
 		buildingParts.erase(part);
 		if (buildingParts.find(crewQuarters) == buildingParts.end())
 		{
-			while (!currentAgents.empty())
+			for (auto agent : currentAgents)
 			{
-				// For some reason need to assign first before calling die()
-				auto agent = *currentAgents.begin();
-				// Dying will remove agent from current agents list
 				agent->die(state, true);
 			}
 		}

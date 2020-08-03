@@ -55,6 +55,12 @@ enum class TrainingAssignment
 	Psi
 };
 
+enum class AgentStatus
+{
+	Alive,
+	Dead
+};
+
 class Agent : public StateObject<Agent>,
               public std::enable_shared_from_this<Agent>,
               public EquippableObject
@@ -78,6 +84,7 @@ class Agent : public StateObject<Agent>,
 	                           // to equipment weight, used stamina etc)
 	bool overEncumbred = false;
 	Rank rank = Rank::Rookie;
+	AgentStatus status = AgentStatus::Alive;
 
 	unsigned int teleportTicksAccumulated = 0;
 	bool canTeleport() const;
