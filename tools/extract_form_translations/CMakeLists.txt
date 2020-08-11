@@ -25,4 +25,4 @@ add_executable(OpenApoc_ExtractFormTranslations ${EXTRACT_FORM_TRANSLATIONS_SOUR
 set( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
 
 target_link_libraries(OpenApoc_ExtractFormTranslations OpenApoc_LibPugixml ${Boost_LIBRARIES} fmt::fmt)
-target_include_directories(OpenApoc_ExtractFormTranslations PUBLIC ${CMAKE_SOURCE_DIR})
+target_include_directories(OpenApoc_ExtractFormTranslations PUBLIC ${CMAKE_SOURCE_DIR} ${Boost_INCLUDE_DIRS})
