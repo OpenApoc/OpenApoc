@@ -75,11 +75,11 @@ struct VorbisMusicTrack : public MusicTrack
 	}
 
   public:
+	UString _name;
 	IFile _file;
 	OggVorbis_File _vorbis_file;
 	bool _valid = false;
 	int _bitstream = 0;
-	UString _name;
 	VorbisMusicTrack(const UString &name, IFile file) : _name(name), _file(std::move(file))
 	{
 		this->callback = fillMusicData;
