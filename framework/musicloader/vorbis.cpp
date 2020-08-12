@@ -12,10 +12,6 @@ namespace OpenApoc
 namespace detail
 {
 
-static MusicTrack::MusicCallbackReturn fillMusicData(sp<MusicTrack> thisTrack,
-                                                     unsigned int maxSamples, void *sampleBuffer,
-                                                     unsigned int *returnedSamples);
-
 struct VorbisMusicTrack : public MusicTrack
 {
 
