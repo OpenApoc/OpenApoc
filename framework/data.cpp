@@ -154,6 +154,7 @@ DataImpl::DataImpl(std::vector<UString> paths) : Data(paths)
 	}
 
 	registeredMusicLoaders["raw"].reset(getRAWMusicLoaderFactory());
+	registeredMusicLoaders["vorbis"].reset(getVorbisMusicLoaderFactory());
 	for (auto &musicLoader : registeredMusicLoaders)
 	{
 		auto t = musicLoader.first;

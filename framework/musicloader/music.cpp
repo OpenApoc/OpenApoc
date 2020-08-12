@@ -35,6 +35,7 @@ class RawMusicTrack : public MusicTrack
 	IFile file;
 	unsigned int samplePosition;
 	unsigned int startingPosition;
+	unsigned int sampleCount = 0;
 	bool valid;
 	UString name;
 

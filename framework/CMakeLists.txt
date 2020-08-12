@@ -126,7 +126,8 @@ source_group(framework\\sampleloader\\headers FILES
 list(APPEND ALL_HEADER_FILES ${SAMPLELOADER_HEADER_FILES})
 
 set (MUSICLOADER_SOURCE_FILES
-	musicloader/music.cpp)
+	musicloader/music.cpp
+	musicloader/vorbis.cpp)
 
 source_group(framework\\musicloader\\sources FILES
 		${MUSICLOADER_SOURCE_FILES})
@@ -276,6 +277,12 @@ else()
 	endforeach()
 	target_include_directories(OpenApoc_Framework PUBLIC ${PC_SDL2_INCLUDE_DIRS})
 endif()
+
+find_path(VORBIS_INCLUDE_DIR vorbis/vorbisfile.h)
+find_library(VORBISFILE_LIBRARY vorbisfile)
+
+target_include_directories(OpenApoc_Framework PRIVATE ${VORBIS_INCLUDE_DIR})
+target_link_libraries(OpenApoc_Framework PRIVATE ${VORBISFILE_LIBRARY})
 
 # Dialog is handled by SDL2
 if(DIALOG_ON_ERROR)

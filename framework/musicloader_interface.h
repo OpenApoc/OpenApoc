@@ -25,5 +25,6 @@ class MusicLoaderFactory
 };
 
 MusicLoaderFactory *getRAWMusicLoaderFactory();
+MusicLoaderFactory *getVorbisMusicLoaderFactory();
 
 }; // namespace OpenApoc

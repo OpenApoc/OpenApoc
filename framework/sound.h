@@ -65,7 +65,7 @@ class Sample : public ResObject
 class MusicTrack : public ResObject
 {
   public:
-	unsigned int sampleCount; // may be estimated? Or 0 if we just don't know?
+	// unsigned int sampleCount; // may be estimated? Or 0 if we just don't know?
 	unsigned int requestedSampleBufferSize;
 	AudioFormat format;
 
