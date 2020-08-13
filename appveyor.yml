@@ -36,8 +36,8 @@ before_build:
   - 7z e temp\cd.iso.xz -odata\
 # nsis 3.5.0-20200106 from choco 10.15 hardcodes a sourceforge mirror (astuteinternet.dl.sourceforge.net) - which at time of writing (2020/08/13) has an expired ssl cert
 # so override it with a modified version that uses sourceforge's mirror selector
-  - Get-ChildItem -file tools\chocolatey\nsis\nsis-sourceforge-mirror-chocolateyInstall.ps1
-  - Get-ChildItem -file C:\ProgramData\chocolatey\lib\nsis.install\tools\chocolateyInstall.ps1
+  - dir tools\chocolatey\nsis\nsis-sourceforge-mirror-chocolateyInstall.ps1
+  - dir C:\ProgramData\chocolatey\lib\nsis.install\tools\chocolateyInstall.ps1
   - copy tools\chocolatey\nsis\nsis-sourceforge-mirror-chocolateyInstall.ps1 C:\ProgramData\chocolatey\lib\nsis.install\tools\chocolateyInstall.ps1
   - choco install nsis -pre
   - choco install ninja
