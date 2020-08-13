@@ -38,8 +38,9 @@ before_build:
 # so override it with a modified version that uses sourceforge's mirror selector
   - dir tools\chocolatey\nsis\nsis-sourceforge-mirror-chocolateyInstall.ps1
   - dir C:\ProgramData\chocolatey\lib\nsis.install\tools\chocolateyInstall.ps1
-  - copy tools\chocolatey\nsis\nsis-sourceforge-mirror-chocolateyInstall.ps1 C:\ProgramData\chocolatey\lib\nsis.install\tools\chocolateyInstall.ps1
-  - choco install nsis -pre
+  - mkdir choco-download-cache
+  - curl http://sourceforge.net/projects/nsis/files/NSIS%203/3.05/nsis-3.05-setup.exe -o choco-download-cache/nsis-3.05-setup.exe
+  - choco install nsis -pre -c choco-download-cache
   - choco install ninja
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" %VCVARS_ARCH%
 build_script:
