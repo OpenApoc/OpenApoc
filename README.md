@@ -2,8 +2,8 @@
 
 > OpenApoc is an open-source re-implementation of the original [X-COM: Apocalypse](https://www.ufopaedia.org/index.php/Apocalypse), that requires the original files to run, licensed under the GPL3 and written in C++ / SDL2. It was originally founded by PmProg in July 2014, and has since grown in [community](https://www.ufopaedia.org/index.php/Credits_(OpenApoc)).
 
-[![Linux Build Status](https://img.shields.io/travis/OpenApoc/OpenApoc.svg?label=LinuxTravis)](https://travis-ci.org/OpenApoc/OpenApoc)
-[![Windows Build Status](https://img.shields.io/appveyor/ci/OpenApoc/openapoc.svg?label=WindowsAppveyor)](https://ci.appveyor.com/project/OpenApoc/openapoc)
+[![Linux Build Status](https://img.shields.io/travis/OpenApoc/OpenApoc/master.svg?label=LinuxTravis)](https://travis-ci.com/github/OpenApoc/OpenApoc)
+[![Windows Build Status](https://img.shields.io/appveyor/build/OpenApoc/openapoc/master.svg?label=WindowsAppveyor)](https://ci.appveyor.com/project/openapoc/openapoc/branch/master)
 [![Openapoc issues](https://img.shields.io/github/issues/openapoc/openapoc.svg)](https://github.com/openapoc/openapoc/issues)
 [![See our Trello TO-DO list for more info](https://img.shields.io/badge/See%20our-Trello%20TO--DO%20list-blue.svg)](https://trello.com/b/lX5Y3DwR/openapoc)
 [![Translate OpenApoc to your language](https://img.shields.io/badge/Translate-Openapoc-blue.svg)](https://www.transifex.com/x-com-apocalypse/apocalypse/)
@@ -208,7 +208,7 @@ make -j4
 
 ## How to setup OpenApoc
 
-* Download OpenApoc: [![Windows Build Status](https://img.shields.io/appveyor/ci/OpenApoc/openapoc.svg?label=WindowsAppveyor)](https://ci.appveyor.com/project/openapoc/openapoc/branch/master)
+* Download OpenApoc: [![Windows Build Status](https://img.shields.io/appveyor/build/OpenApoc/openapoc/master.svg?label=WindowsAppveyor)](https://ci.appveyor.com/project/openapoc/openapoc/branch/master)
   * If you see a green latest build then you can get it, if it's not then go to HISTORY at the top and click another build from *master* branch that's green (look for a title beginning with "Merge pull request #")
   * Click Platform x64 (or Win32 if you need 32bit binaries)
   * Click ARTIFACTS
