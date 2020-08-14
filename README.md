@@ -26,6 +26,9 @@
 * [How to setup OpenApoc](#how-to-setup-openapoc)
 * [Contact us](#contact-us)
 
+## Copyright
+All rights for the original game and its resources belong to their respective owners. We do not encourage and do not support any form of illegal usage of the original game. We strongly advise to purchase the original game on GOG or Steam Store platforms.
+
 ## Key Features
 
 * Unlimited modding capabilities, which was not possible in the original
@@ -41,43 +44,12 @@
 
 ## What's left?
 
-* In order to have a playable game, we need:
-  * Aliens moving from building to building
-  * Funding for X-Com and orgs
-  * Agent Training
-  * Bribes
-
-That will be a game which has all of its main mechanics implemented. We still have a long way to go, but that's a point at which you can really play Apocalypse in OpenApoc and do everything you need.
-
-* And then, to reach a mostly complete state, we also require:
-  * Proper portal location in alien dimension
-  * Proper portal movement
-  * Alien Takeover screen
-  * Score screen and graphs
-  * Proper collapse algorithm for alien tubes
-  * Victory & Defeat screens
-  * UFO growth halting when relevant building is destroyed
-  * Organisations properly buying their vehicles
-  * Organisations making treaties, raiding each other and x-com, sending illegal flyers
-  * Proper Music (not just 3 looped tracks)
-  * Overspawn
-* Then, to be fully vanilla feature complete, we also need:
-  * Better battle AI (behavior, taking cover, more intelligent attack patterns)
-  * Better city AI (craft retreat when damaged, other stuff)
-  * Proper ground vehicles (occupying lanes, blocking, overtaking etc.)
-  * Proper location screen (assigning agents to vehicles)
-  * Some fixes to Ufopaedia display
-  * Proper transferring agents
-  * UI Tooltips
-  * Controls for editing text (naming soldiers and other property)
-  * Agent medals and statistics
-  * Agent name generator (more than 10 names and surnames)
-  * Colored text support
-* And then, to be a full 1.0 OpenApoc release, we also need:
-  * Different file format than xml for storing save files (at least), so that save/loading takes reasonable amount of time
-  * Different handling of game data (separation of "rules" and "gamestate", so that for example you can modify a research project in a mod, add that mod to your playthrough midgame, and not have to lose all progress made on that project, or later remove the project mod, and have the changes reversed but research state persist)
-  * Close all issues
-  * Maybe something else that didn't come up to mind immediately
+TO HAVE A TRULY PLAYABLE ALPHA STATE #1:
+https://github.com/OpenApoc/OpenApoc/issues/263
+TO REACH A BETA STATE #2 (All features implemented):
+https://github.com/OpenApoc/OpenApoc/issues/264
+TO REACH OPENAPOC RELEASE 1.0 #3:
+https://github.com/OpenApoc/OpenApoc/issues/265
 
 ## Building
 
