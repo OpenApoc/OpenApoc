@@ -44,11 +44,11 @@ All rights for the original game and its resources belong to their respective ow
 
 ## What's left?
 
-TO HAVE A TRULY PLAYABLE ALPHA STATE #1:
+* TO HAVE A TRULY PLAYABLE ALPHA STATE #1:
 https://github.com/OpenApoc/OpenApoc/issues/263
-TO REACH A BETA STATE #2 (All features implemented):
+* TO REACH A BETA STATE #2 (All features implemented):
 https://github.com/OpenApoc/OpenApoc/issues/264
-TO REACH OPENAPOC RELEASE 1.0 #3:
+* TO REACH OPENAPOC RELEASE 1.0 #3:
 https://github.com/OpenApoc/OpenApoc/issues/265
 
 ## Building
