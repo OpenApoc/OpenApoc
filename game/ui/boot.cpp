@@ -6,6 +6,7 @@
 #include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/framework.h"
+#include "framework/jukebox.h"
 #include "framework/modinfo.h"
 #include "framework/options.h"
 #include "game/state/gamestate.h"
@@ -38,6 +39,7 @@ void BootUp::update()
 	bool loadGame = false;
 
 	fw().setupModDataPaths();
+	fw().jukebox->loadPlaylists();
 
 	if (Options::loadGameOption.get().empty())
 	{

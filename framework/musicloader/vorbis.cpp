@@ -125,10 +125,17 @@ class VorbisMusicLoader : public MusicLoader
 
 	sp<MusicTrack> loadMusic(UString path) override
 	{
-		auto file = _data.fs.open(path);
+		auto strings = split(path, ":");
+		// expected format: "ogg:file.ogg"
+		if (strings.size() != 2 || strings[0] != "ogg")
+		{
+			LogInfo("VorbisFile: Not valid vorbis string \"%s\"", path);
+			return nullptr;
+		}
+		auto file = _data.fs.open(strings[1]);
 		if (!file)
 		{
-			LogInfo("VorbisMusic: Failed to open \"%s\"", path);
+			LogInfo("VorbisMusic: Failed to open \"%s\"", strings[1]);
 			return nullptr;
 		}
 

@@ -30,6 +30,7 @@ class JukeBox
 	virtual void play(PlayList list, PlayMode mode = PlayMode::Shuffle) = 0;
 	virtual void play(const std::vector<UString> &tracks, PlayMode mode = PlayMode::Shuffle) = 0;
 	virtual void stop() = 0;
+	virtual void loadPlaylists() = 0;
 };
 
 up<JukeBox> createJukebox(Framework &fw);
