@@ -104,11 +104,10 @@ struct VorbisMusicTrack : public MusicTrack
 	const UString &getName() const override { return _name; }
 
 	static constexpr ov_callbacks callbacks = {
-	    .read_func = vorbis_read_func,
-	    .seek_func = nullptr,
-	    .close_func = nullptr,
-	    .tell_func = nullptr,
-
+	    /*read_func = */ vorbis_read_func,
+	    /*seek_func = */ nullptr,
+	    /*close_func = */ nullptr,
+	    /*tell_func = */ nullptr,
 	};
 };
 
