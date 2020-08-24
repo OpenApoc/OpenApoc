@@ -146,15 +146,13 @@ namespace OpenApoc
 {
 
 IFile::IFile() : std::istream(nullptr) {}
-// FIXME: MSVC needs this, GCC fails with it?
-#ifdef _WIN32
-IFile::IFile(IFile &&other) : std::istream(std::move(other))
+
+IFile::IFile(IFile &&other) noexcept : std::istream(std::move(other))
 {
 	this->f = std::move(other.f);
 	rdbuf(other.rdbuf());
 	other.rdbuf(nullptr);
 }
-#endif
 
 IFileImpl::~IFileImpl() = default;
 

@@ -32,7 +32,7 @@ class IFile : public std::istream
 	bool readule32(uint32_t &val);
 	const UString &fileName() const;
 	const UString &systemPath() const;
-	IFile(IFile &&other);
+	IFile(IFile &&other) noexcept;
 };
 
 class FileSystem

@@ -7,6 +7,7 @@
 #include "framework/filesystem.h"
 #include "framework/font.h"
 #include "framework/image.h"
+#include "framework/jukebox.h"
 #include "framework/logger_file.h"
 #include "framework/logger_sdldialog.h"
 #include "framework/options.h"
@@ -54,118 +55,6 @@ UString Framework::getDataDir() const { return Options::dataPathOption.get(); }
 UString Framework::getCDPath() const { return Options::cdPathOption.get(); }
 
 Framework *Framework::instance = nullptr;
-
-// TODO: Make this moddable
-const std::vector<std::vector<UString>> playlists = {
-    // None
-    {},
-    // Cityscape Ambient
-    {"music:0", "music:1", "music:2", "music:3", "music:4", "music:5", "music:6", "music:7",
-     "music:8", "music:9"},
-    // Tactical Ambient (also Cityscape Action)
-    {"music:10", "music:11", "music:12", "music:13", "music:14", "music:15", "music:16", "music:17",
-     "music:18", "music:19"},
-    // Tactical Action
-    {"music:20", "music:21", "music:22", "music:23", "music:24", "music:25", "music:26",
-     "music:27"},
-    // Alien Dimension
-    {"music:28", "music:29", "music:30", "music:31", "music:32"}};
-
-class JukeBoxImpl : public JukeBox
-{
-	Framework &fw;
-	unsigned int position;
-	std::vector<sp<MusicTrack>> trackList;
-	PlayMode mode;
-	PlayList list;
-	Xorshift128Plus<uint64_t> rng;
-
-  public:
-	JukeBoxImpl(Framework &fw) : fw(fw), position(0), mode(PlayMode::Shuffle), list(PlayList::None)
-	{
-		// Use the time to give a little initial randomness to the shuffle rng
-		auto time_now = std::chrono::system_clock::now();
-		uint64_t time_seconds =
-		    std::chrono::duration_cast<std::chrono::seconds>(time_now.time_since_epoch()).count();
-		rng.seed(time_seconds);
-	}
-	~JukeBoxImpl() override { this->stop(); }
-
-	void shuffle() { std::shuffle(trackList.begin(), trackList.end(), rng); }
-
-	void play(PlayList list, PlayMode mode) override
-	{
-		if (this->list == list)
-			return;
-		this->list = list;
-		if (this->list == PlayList::None)
-		{
-			this->stop();
-		}
-		else
-		{
-			this->play(playlists[(int)list], mode);
-		}
-	}
-
-	void play(const std::vector<UString> &tracks, PlayMode mode) override
-	{
-		this->trackList.clear();
-		this->position = 0;
-		this->mode = mode;
-		for (auto &track : tracks)
-		{
-			auto musicTrack = fw.data->loadMusic(track);
-			if (!musicTrack)
-				LogError("Failed to load music track \"%s\" - skipping", track);
-			else
-				this->trackList.push_back(musicTrack);
-		}
-		if (mode == PlayMode::Shuffle)
-			shuffle();
-		this->progressTrack(this);
-		this->fw.soundBackend->playMusic(progressTrack, this);
-	}
-
-	static void progressTrack(void *data)
-	{
-		JukeBoxImpl *jukebox = static_cast<JukeBoxImpl *>(data);
-		if (jukebox->trackList.empty())
-		{
-			LogWarning("Trying to play empty jukebox");
-			return;
-		}
-		if (jukebox->position >= jukebox->trackList.size())
-		{
-			LogInfo("End of jukebox playlist");
-			return;
-		}
-		LogInfo("Playing track %u (%s)", jukebox->position,
-		        jukebox->trackList[jukebox->position]->getName());
-		jukebox->fw.soundBackend->setTrack(jukebox->trackList[jukebox->position]);
-
-		jukebox->position++;
-		if (jukebox->position >= jukebox->trackList.size())
-		{
-			if (jukebox->mode == PlayMode::Loop)
-			{
-				jukebox->position = 0;
-			}
-			else if (jukebox->mode == PlayMode::Shuffle)
-			{
-				jukebox->position = 0;
-				jukebox->shuffle();
-			}
-		}
-	}
-
-	void stop() override
-	{
-		this->list = PlayList::None;
-		fw.soundBackend->stopMusic();
-	}
-};
-
 class FrameworkPrivate
 {
   private:
@@ -1079,7 +968,7 @@ void Framework::audioInitialise()
 	{
 		LogError("No functional sound backend found");
 	}
-	this->jukebox.reset(new JukeBoxImpl(*this));
+	this->jukebox = createJukebox(*this);
 
 	/* Setup initial gain */
 	this->soundBackend->setGain(SoundBackend::Gain::Global,

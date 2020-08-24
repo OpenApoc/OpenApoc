@@ -88,6 +88,7 @@ Note: The following libraries will be fetched and built with vcpkg in a later st
 * [Boost](https://boost.org) - We specifially use the 'locale' library, used for localisation, 'program-options' for settings management, and 'filesystem'.
 * [Qt](https://www.qt.io/) - needed for the launcher, can be disabled with 'BUILD_LAUNCHER'.
 * [Libunwind](https://nongnu.org/libunwind/download.html) - debug backtracing on linux - not needed on windows.
+* [LibVorbis](https://xiph.org/vorbis/) - Ogg vorbis music decoder library
 
 The following libraries are also used, but are shipped as submodules in the repository and directly included in the build, so you don't need to install these dependencies to build or use openapoc.
 
@@ -116,13 +117,13 @@ git submodule update --init --recursive
   * For x64 builds:
 
 ```cmd
-vcpkg --triplet x64-windows install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-base
+vcpkg --triplet x64-windows install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-base libvorbis
 ```
 
   * For x86 builds:
 
 ```cmd
-vcpkg --triplet x86-windows install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-base
+vcpkg --triplet x86-windows install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-base libvorbis
 ```
 
   * For list of all supported by Vcpkg architectures: `vcpkg help triplet`
@@ -155,20 +156,20 @@ vcpkg --triplet x86-windows install sdl2 boost-locale boost-program-options boos
 * On Ubuntu, install the following packages:
 
 ```sh
-sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-program-options-dev qtbase5-dev
+sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-program-options-dev qtbase5-dev libvorbis-dev
 ```
 
 * On Mageia, install the following packages as root:
 
 ```sh
-urpmi "cmake(sdl2)" libstdc++-static-devel boost-devel boost unwind-devel task-c++-devel cmake git qtbase5-devel
+urpmi "cmake(sdl2)" libstdc++-static-devel boost-devel boost unwind-devel task-c++-devel cmake git qtbase5-devel libvorbis-devel
 ```
 
 * On Fedora or other RedHat distro, install the folowing packages as root:
 
 ```sh
 yum groupinstall "Development Tools" "Development Libraries"
-yum install git SDL2-devel cmake libunwind-devel qt5-qtbase-devel
+yum install git SDL2-devel cmake libunwind-devel qt5-qtbase-devel libvorbis-devel
 ```
 
 * Checkout OpenApoc from GitHub.
