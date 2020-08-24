@@ -132,26 +132,34 @@ class RawMusicLoader : public MusicLoader
 	sp<MusicTrack> loadMusic(UString path) override
 	{
 		auto strings = split(path, ":");
-		if (strings.size() != 2)
+		// Expected format: "rawmusic:file:start_byte_offset:byte_size"
+		if (strings.size() != 4)
 		{
 			LogInfo("Invalid raw music path string \"%s\"", path);
 			return nullptr;
 		}
-
-		if (!Strings::isInteger(strings[1]))
+		if (strings[0] != "rawmusic")
 		{
-			LogInfo("Raw music track \"%s\" doesn't look like a number", strings[1]);
+			LogInfo("Not rawmusic path: \"%s\"", path);
+			return nullptr;
+		}
+		if (!Strings::isInteger(strings[2]))
+		{
+			LogInfo("Raw music track \"%s\" start offset \"%s\" doesn't look like a number", path,
+			        strings[2]);
+			return nullptr;
+		}
+		if (!Strings::isInteger(strings[3]))
+		{
+			LogInfo("Raw music track \"%s\" length \"%s\" doesn't look like a number", path,
+			        strings[3]);
 			return nullptr;
 		}
 
-		unsigned int track = Strings::toInteger(strings[1]);
-		if (track > lengths.size())
-		{
-			LogInfo("Raw music track %d out of bounds", track);
-			return nullptr;
-		}
-		return mksp<RawMusicTrack>(data, path, strings[0], offsets[track],
-		                           lengths[track] / (MusicChannels * MusicBytesPerSample));
+		unsigned int offset = Strings::toInteger(strings[2]);
+		unsigned int length = Strings::toInteger(strings[3]);
+		return mksp<RawMusicTrack>(data, path, strings[1], offset,
+		                           length / (MusicChannels * MusicBytesPerSample));
 	}
 };
 

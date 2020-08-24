@@ -60,16 +60,27 @@ const std::vector<std::vector<UString>> playlists = {
     // None
     {},
     // Cityscape Ambient
-    {"music:0", "music:1", "music:2", "music:3", "music:4", "music:5", "music:6", "music:7",
-     "music:8", "music:9"},
+    {"rawmusic:music:0:8413184", "rawmusic:music:8413184:11223040",
+     "rawmusic:music:19636224:16293888", "rawmusic:music:35930112:10682368",
+     "rawmusic:music:46612480:11309056", "rawmusic:music:57921536:14200832",
+     "rawmusic:music:72122368:11974656", "rawmusic:music:84097024:8519680",
+     "rawmusic:music:92616704:11448320", "rawmusic:music:104065024:3692544"},
     // Tactical Ambient (also Cityscape Action)
-    {"music:10", "music:11", "music:12", "music:13", "music:14", "music:15", "music:16", "music:17",
-     "music:18", "music:19"},
+    {"rawmusic:music:107757568:10749952", "rawmusic:music:118507520:12140544",
+     "rawmusic:music:130648064:11474944", "rawmusic:music:142123008:11921408",
+     "rawmusic:music:154044416:11878400", "rawmusic:music:165922816:10727424",
+     "rawmusic:music:176650240:10563584", "rawmusic:music:187213824:9541632",
+     "rawmusic:music:196755456:10473472", "rawmusic:music:207228928:11307008"},
     // Tactical Action
-    {"music:20", "music:21", "music:22", "music:23", "music:24", "music:25", "music:26",
-     "music:27"},
+    {"rawmusic:music:218535936:12933120", "rawmusic:music:231469056:2646016",
+     "rawmusic:music:234115072:3076096", "rawmusic:music:237191168:2646016",
+     "rawmusic:music:239837184:2639872", "rawmusic:music:242477056:2650112",
+     "rawmusic:music:245127168:2732032", "rawmusic:music:247859200:2646016"},
+
     // Alien Dimension
-    {"music:28", "music:29", "music:30", "music:31", "music:32"}};
+    {"rawmusic:music:250505216:12849152", "rawmusic:music:263354368:12408832",
+     "rawmusic:music:275763200:12054528", "rawmusic:music:287817728:11036672",
+     "rawmusic:music:298854400:12834816"}};
 
 class JukeBoxImpl : public JukeBox
 {
