@@ -172,8 +172,6 @@ class SDLRawBackend : public SoundBackend
 				LogWarning("Failed to convert music data");
 			}
 
-			data->samples.resize(output_size);
-
 			if (ret == MusicTrack::MusicCallbackReturn::End)
 			{
 				this->track = nullptr;
