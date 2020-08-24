@@ -14,6 +14,7 @@ set (FRAMEWORK_SOURCE_FILES
 	font.cpp
 	framework.cpp
 	image.cpp
+	jukebox.cpp
 	logger.cpp
 	luaframework.cpp
 	palette.cpp
@@ -44,6 +45,7 @@ set (FRAMEWORK_HEADER_FILES
 	fs.h
 	image.h
 	imageloader_interface.h
+	jukebox.h
 	keycodes.h
 	logger.h
 	luaframework.h

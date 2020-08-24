@@ -120,26 +120,4 @@ class SoundBackend
 	virtual void setListenerPosition(Vec3<float> position);
 };
 
-class JukeBox
-{
-  public:
-	enum class PlayMode
-	{
-		Once,
-		Loop,
-		Shuffle
-	};
-	enum class PlayList
-	{
-		None,
-		City,
-		Tactical,
-		Action,
-		Alien
-	};
-	virtual ~JukeBox() = default;
-	virtual void play(PlayList list, PlayMode mode = PlayMode::Shuffle) = 0;
-	virtual void play(const std::vector<UString> &tracks, PlayMode mode = PlayMode::Shuffle) = 0;
-	virtual void stop() = 0;
-};
 }; // namespace OpenApoc

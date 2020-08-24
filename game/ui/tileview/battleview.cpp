@@ -15,6 +15,7 @@
 #include "framework/event.h"
 #include "framework/font.h"
 #include "framework/framework.h"
+#include "framework/jukebox.h"
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
