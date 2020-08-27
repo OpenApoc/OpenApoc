@@ -350,8 +350,15 @@ std::list<UString> FileSystem::enumerateDirectoryRecursive(const UString &basePa
 
 UString FileSystem::resolvePath(const UString &path) const
 {
-	UString realDir = PHYSFS_getRealDir(path.c_str());
-	return realDir + "/" + path;
+	auto dir = PHYSFS_getRealDir(path.c_str());
+	if (dir == nullptr)
+	{
+		return "";
+	}
+	else
+	{
+		return UString(dir) + "/" + path;
+	}
 }
 
 } // namespace OpenApoc
