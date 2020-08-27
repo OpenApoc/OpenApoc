@@ -274,6 +274,18 @@ void pushLuaFramework(lua_State *L)
 	});
 	lua_setfield(L, -2, "LogError");
 
+	lua_pushcfunction(L, [](lua_State *L) {
+		pushToLua(L, fw().getLanguage());
+		return 1;
+	});
+	lua_setfield(L, -2, "getLanguage");
+
+	lua_pushcfunction(L, [](lua_State *L) {
+		pushToLua(L, fw().getLanguageCountry());
+		return 1;
+	});
+	lua_setfield(L, -2, "getLanguageCountry");
+
 	// config table
 	lua_createtable(L, 0, 2);
 
