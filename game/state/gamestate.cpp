@@ -1503,6 +1503,12 @@ bool GameState::appendGameState(const UString &gamestatePath)
 {
 	LogInfo("Appending gamestate \"%s\"", gamestatePath);
 	auto systemPath = fw().data->fs.resolvePath(gamestatePath);
+	if (systemPath == "")
+	{
+		LogInfo("Failed to open gamestate at \"%s\"", gamestatePath);
+		return false;
+	}
+	LogInfo("system path: \"%s\"", systemPath);
 	return this->loadGame(systemPath);
 }
 

@@ -455,11 +455,12 @@ bool GameState::saveGameDelta(const UString &path, const GameState &reference, b
 
 bool GameState::loadGame(const UString &path)
 {
+	LogInfo("Loading %s", path);
 
 	auto archive = SerializationArchive::readArchive(path);
 	if (!archive)
 	{
-		LogError("Failed to read \"%s\"", path);
+		LogWarning("Failed to read \"%s\"", path);
 		return false;
 	}
 
