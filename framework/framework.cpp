@@ -85,6 +85,9 @@ class FrameworkPrivate
 	sp<Image> toolTipImage;
 	Vec2<int> toolTipPosition;
 
+	UString language;
+	UString languageCountry;
+
 	FrameworkPrivate()
 	    : quitProgram(false), window(nullptr), context(0), displaySize(0, 0), windowSize(0, 0)
 	{
@@ -230,6 +233,16 @@ Framework::Framework(const UString programName, bool createWindow)
 	        "\"%s\" utf8:%s",
 	        localeName.c_str(), localeLang.c_str(), localeCountry.c_str(), localeVariant.c_str(),
 	        localeEncoding.c_str(), isUTF8 ? "true" : "false");
+
+	p->language = localeLang;
+	if (localeCountry.empty())
+	{
+		p->languageCountry = format("%s_%s", localeLang, localeCountry);
+	}
+	else
+	{
+		p->languageCountry = p->language;
+	}
 
 	this->data.reset(Data::createData(resourcePaths));
 
@@ -1083,5 +1096,9 @@ void Framework::setupModDataPaths()
 		}
 	}
 }
+
+UString Framework::getLanguage() const { return p->language; }
+
+UString Framework::getLanguageCountry() const { return p->languageCountry; }
 
 }; // namespace OpenApoc

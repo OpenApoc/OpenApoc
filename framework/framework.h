@@ -118,6 +118,11 @@ class Framework
 	UString getCDPath() const;
 
 	void setupModDataPaths();
+
+	// returns the language_country string (e.g "en_GB" or "en_US" "fr_FR")
+	UString getLanguageCountry() const;
+	// returns the language string (e.g. "en" or "fr")
+	UString getLanguage() const;
 };
 
 static inline Framework &fw() { return Framework::getInstance(); }
