@@ -305,7 +305,7 @@ void Control::eventOccured(Event *e)
 			{
 				Vec2<int> pos = {e->forms().MouseInfo.X, e->forms().MouseInfo.Y};
 				e->Handled = true;
-				
+
 				auto lines = split(ToolTipText, "\n");
 				std::list<sp<Image>> textImages;
 				unsigned maxTextWidth = 0;
@@ -316,14 +316,15 @@ void Control::eventOccured(Event *e)
 						maxTextWidth = textImage->size.x;
 					textImages.push_back(textImage);
 				}
-				
+
 				unsigned totalBorder = 0;
 				for (const auto &b : ToolTipBorders)
 					totalBorder += b.first;
 
 				auto totalTextHeight = ToolTipFont->getFontHeight() * textImages.size();
-				sp<Surface> surface = mksp<Surface>(
-					Vec2<unsigned int>{maxTextWidth, totalTextHeight} + Vec2<unsigned int>{totalBorder * 2, totalBorder * 2});
+				sp<Surface> surface =
+				    mksp<Surface>(Vec2<unsigned int>{maxTextWidth, totalTextHeight} +
+				                  Vec2<unsigned int>{totalBorder * 2, totalBorder * 2});
 
 				RendererSurfaceBinding b(*fw().renderer, surface);
 
@@ -336,14 +337,14 @@ void Control::eventOccured(Event *e)
 					                        b.second, b.first);
 					i += b.first;
 				}
-				
+
 				unsigned ypos = totalBorder;
-				for (auto &textImage : textImages )
+				for (auto &textImage : textImages)
 				{
 					fw().renderer->draw(textImage, {totalBorder, ypos});
 					ypos += textImage->size.y;
 				}
-				
+
 				fw().showToolTip(surface, pos + resolvedLocation -
 				                              Vec2<int>{surface->size.x / 2, surface->size.y});
 			}
