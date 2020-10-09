@@ -3780,7 +3780,7 @@ bool CityView::handleGameStateEvent(Event *e)
 			setUpdateSpeed(CityUpdateSpeed::Pause);
 			auto message_box = mksp<MessageBox>(
 			    tr("MANUFACTURE COMPLETED"),
-			    format("%s\n%s\n%s %d\n%d", lab_base->name, tr(item_name), tr("Quantity:"),
+			    format("%s\n%s\n%s %d\n%s", lab_base->name, tr(item_name), tr("Quantity:"),
 			           ev->goal, tr("Do you wish to reasign the Workshop?")),
 			    MessageBox::ButtonOptions::YesNo,
 			    // Yes callback
