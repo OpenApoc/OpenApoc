@@ -3839,7 +3839,7 @@ bool CityView::handleGameStateEvent(Event *e)
 			setUpdateSpeed(CityUpdateSpeed::Pause);
 			auto message_box =
 			    mksp<MessageBox>(tr("MANUFACTURING HALTED"),
-			                     format("%s\n%s\n%s %d/%d\n%d", lab_base->name, tr(item_name),
+			                     format("%s\n%s\n%s %d/%d\n%s", lab_base->name, tr(item_name),
 			                            tr("Completion status:"), ev->done, ev->goal,
 			                            tr("Production costs exceed your available funds.")),
 			                     MessageBox::ButtonOptions::Ok);
