@@ -3953,6 +3953,20 @@ bool BattleView::handleGameStateEvent(Event *e)
 			{
 				updatePathPreview();
 			}
+			break;
+		case GameEventType::HostileSpotted:
+			if (battle.mode == Battle::Mode::TurnBased)
+			{
+				for (const auto &o : battle.units)
+				{
+					if (o.second->owner == state->getPlayer() && !o.second->missions.empty() &&
+					    o.second->missions.front()->type == BattleUnitMission::Type::GotoLocation)
+					{
+						o.second->addMission(*state, BattleUnitMission::acquireTU(*o.second, true));
+					}
+				}
+			}
+			break;
 		default:
 			break;
 	}
