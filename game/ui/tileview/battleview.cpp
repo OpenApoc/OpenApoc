@@ -2050,17 +2050,21 @@ void BattleView::updateSoldierButtons()
 	    (selectionState == BattleSelectionState::FireLeft ||
 	     selectionState == BattleSelectionState::FireRight))
 	{
-		auto selectedUnit = battle.battleViewSelectedUnits.front();
-		auto weapon = selectionState == BattleSelectionState::FireLeft
-		                  ? selectedUnit->agent->getFirstItemInSlot(EquipmentSlotType::LeftHand)
-		                  : selectedUnit->agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
-		if (weapon)
+		const auto &selectedUnit = battle.battleViewSelectedUnits.front();
+		const auto weapon =
+		    selectionState == BattleSelectionState::FireLeft
+		        ? selectedUnit->agent->getFirstItemInSlot(EquipmentSlotType::LeftHand)
+		        : selectedUnit->agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
+		if (weapon && weapon->canFire(*state))
 		{
-			int aimedCost = weapon->getFireCost(WeaponAimingMode::Aimed, selectedUnit->initialTU);
+			const int aimedCost =
+			    weapon->getFireCost(WeaponAimingMode::Aimed, selectedUnit->initialTU);
 			aimedTooltip = format("%s\n%s %d", aimedTooltip, tr("TU cost per shot:"), aimedCost);
-			int snapCost = weapon->getFireCost(WeaponAimingMode::Snap, selectedUnit->initialTU);
+			const int snapCost =
+			    weapon->getFireCost(WeaponAimingMode::Snap, selectedUnit->initialTU);
 			snapTooltip = format("%s\n%s %d", snapTooltip, tr("TU cost per shot:"), snapCost);
-			int autoCost = weapon->getFireCost(WeaponAimingMode::Auto, selectedUnit->initialTU);
+			const int autoCost =
+			    weapon->getFireCost(WeaponAimingMode::Auto, selectedUnit->initialTU);
 			autoTooltip = format("%s\n%s %d", autoTooltip, tr("TU cost per shot:"), autoCost);
 		}
 	}
