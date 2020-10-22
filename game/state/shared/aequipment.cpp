@@ -354,6 +354,10 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 	// No ammo was found in the inventory
 	if (!ammoItem)
 	{
+		if (ownerAgent->unit)
+		{
+			ownerAgent->unit->sendAgentEvent(state, GameEventType::AgentOutOfAmmo, true);
+		}
 		return;
 	}
 

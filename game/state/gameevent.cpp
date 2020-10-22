@@ -193,6 +193,8 @@ UString GameAgentEvent::message()
 			return format("%s", tr("No line of fire"));
 		case GameEventType::AgentPsiProbed:
 			return "";
+		case GameEventType::AgentOutOfAmmo:
+			return format("%s %s", agent->name, tr(": Out of ammo"));
 		default:
 			LogError("Invalid agent event type");
 			break;
