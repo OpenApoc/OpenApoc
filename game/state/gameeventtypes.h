@@ -82,6 +82,7 @@ enum class GameEventType
 	AgentPsiControlled,
 	AgentPsiOver,
 	NoLOF,
+	AgentOutOfAmmo,
 
 	// Battle events
 

@@ -330,9 +330,20 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 	{
 		return;
 	}
-	// If no ammoItem is supplied then look in the agent's inventory
-	if (!ammoItem)
+	if (ammoItem)
 	{
+		// Check if supplied ammo is of correct type
+		if (ammoItem->type->type != AEquipmentType::Type::Ammo ||
+		    std::find(type->ammo_types.begin(), type->ammo_types.end(), ammoItem->type) ==
+		        type->ammo_types.end())
+		{
+			LogError("Incorrect ammo type \"%s\" for \"%s\"", ammoItem->type->name, type->name);
+			return;
+		}
+	}
+	else
+	{
+		// If no ammoItem is supplied then look in the agent's inventory
 		if (!ownerAgent)
 		{
 			LogError("Trying to auto-reload a weapon not in agent inventory!?");
@@ -340,17 +351,16 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 		}
 		ammoItem = getAutoreloadAmmoType(*this);
 	}
-	// Cannot load non-ammo or if no ammo was found in the inventory
-	if (!ammoItem || ammoItem->type->type != AEquipmentType::Type::Ammo)
+	// No ammo was found in the inventory
+	if (!ammoItem)
 	{
+		if (ownerAgent->unit)
+		{
+			ownerAgent->unit->sendAgentEvent(state, GameEventType::AgentOutOfAmmo, true);
+		}
 		return;
 	}
-	// Cannot load if inappropriate type
-	if (std::find(type->ammo_types.begin(), type->ammo_types.end(), ammoItem->type) ==
-	    type->ammo_types.end())
-	{
-		return;
-	}
+
 	// Store the loaded ammo type for autoreload
 	lastLoadedAmmoType = ammoItem->type;
 

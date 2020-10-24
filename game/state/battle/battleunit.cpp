@@ -824,6 +824,29 @@ bool BattleUnit::startAttacking(GameState &state, WeaponStatus status)
 			{
 				status = WeaponStatus::FiringBothHands;
 			}
+
+			// Do not start an attack if unit's weapon(s) can't fire
+			auto const leftHandWeapon = agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
+			auto const rightHandWeapon = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
+			if (status == WeaponStatus::FiringLeftHand &&
+			    (!leftHandWeapon || !leftHandWeapon->canFire(state, targetTile)))
+			{
+				return false;
+			}
+
+			if (status == WeaponStatus::FiringRightHand &&
+			    (!rightHandWeapon || !rightHandWeapon->canFire(state, targetTile)))
+			{
+				return false;
+			}
+
+			if (status == WeaponStatus::FiringBothHands &&
+			    (!leftHandWeapon || !leftHandWeapon->canFire(state, targetTile)) &&
+			    (!rightHandWeapon || !rightHandWeapon->canFire(state, targetTile)))
+			{
+				return false;
+			}
+
 			break;
 		}
 	}
