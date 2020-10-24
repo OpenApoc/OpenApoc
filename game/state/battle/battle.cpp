@@ -1825,6 +1825,33 @@ void Battle::updateTBEnd(GameState &state)
 			p->updateTB(state);
 		}
 	}
+
+	// Hide units no one in our organisation sees anymore.
+	for (auto it = visibleUnits[currentActiveOrganisation].begin();
+	     it != visibleUnits[currentActiveOrganisation].end();)
+	{
+		bool someoneSees = false;
+
+		for (const auto &u : this->units)
+		{
+			const auto &unit = u.second;
+			if ((unit->owner == currentActiveOrganisation) &&
+			    (unit->visibleUnits.find(*it) != unit->visibleUnits.end()))
+			{
+				someoneSees = true;
+				break;
+			}
+		}
+		if (!someoneSees)
+		{
+			visibleEnemies[currentActiveOrganisation].erase(*it);
+			it = visibleUnits[currentActiveOrganisation].erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
 }
 
 int Battle::getLosBlockID(int x, int y, int z) const

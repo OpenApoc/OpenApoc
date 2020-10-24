@@ -626,29 +626,34 @@ void BattleUnit::refreshUnitVision(GameState &state, bool forceBlind,
 		}
 	}
 
-	// See if someone else sees a unit we stopped seeing
-	for (auto &lvu : lastVisibleUnits)
+	// In turn-based mode during player turn spotted units remain visible until the end of the turn
+	if ((battle.mode == Battle::Mode::RealTime) ||
+	    (battle.currentActiveOrganisation != state.getPlayer()))
 	{
-		if (visibleUnits.find(lvu) == visibleUnits.end())
+		// See if someone else sees a unit we stopped seeing
+		for (auto &lvu : lastVisibleUnits)
 		{
-			bool someoneElseSees = false;
-			for (auto &u : state.current_battle->units)
+			if (visibleUnits.find(lvu) == visibleUnits.end())
 			{
-				if (u.second->owner != owner)
+				bool someoneElseSees = false;
+				for (auto &u : state.current_battle->units)
 				{
-					continue;
+					if (u.second->owner != owner)
+					{
+						continue;
+					}
+					if (u.second->visibleUnits.find(lvu) != u.second->visibleUnits.end())
+					{
+						someoneElseSees = true;
+						break;
+					}
 				}
-				if (u.second->visibleUnits.find(lvu) != u.second->visibleUnits.end())
+				if (!someoneElseSees)
 				{
-					someoneElseSees = true;
-					break;
+					battle.visibleUnits[owner].erase(lvu);
+					battle.visibleEnemies[owner].erase(lvu);
+					battle.lastVisibleTime[owner][lvu] = ticks;
 				}
-			}
-			if (!someoneElseSees)
-			{
-				battle.visibleUnits[owner].erase(lvu);
-				battle.visibleEnemies[owner].erase(lvu);
-				battle.lastVisibleTime[owner][lvu] = ticks;
 			}
 		}
 	}
