@@ -134,3 +134,7 @@ OpenApoc_settings.conf
 openapoc.trace
 # My personal dataz
 tools/extractors/docs/video.txt
+
+# CLion temp files
+.idea
+cmake-build-*
