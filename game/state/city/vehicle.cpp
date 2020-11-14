@@ -1851,6 +1851,11 @@ void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 	}
 	removeFromMap(state);
 
+	if (currentBuilding)
+	{
+		currentBuilding->currentVehicles.erase(StateRef<Vehicle>(&state, shared_from_this()));
+	}
+
 	// Dying will remove agent from current agents list
 	for (auto agent : currentAgents)
 	{
