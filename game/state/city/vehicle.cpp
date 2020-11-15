@@ -1669,12 +1669,12 @@ void Vehicle::provideServicePassengers(GameState &state, bool otherOrg)
 			}
 			// Agent doesn't want pickup
 			if (a->missions.empty() ||
-			    a->missions.front()->type != AgentMission::MissionType::AwaitPickup)
+			    a->missions.front().type != AgentMission::MissionType::AwaitPickup)
 			{
 				continue;
 			}
 			// Won't ferry other orgs
-			if (a->missions.front()->targetBuilding->owner != owner && !otherOrg)
+			if (a->missions.front().targetBuilding->owner != owner && !otherOrg)
 			{
 				continue;
 			}
@@ -1684,14 +1684,14 @@ void Vehicle::provideServicePassengers(GameState &state, bool otherOrg)
 				continue;
 			}
 			// Won't ferry if already picked destination and doesn't match
-			if (destination && a->missions.front()->targetBuilding != destination)
+			if (destination && a->missions.front().targetBuilding != destination)
 			{
 				continue;
 			}
 			// Here's where we're going
 			if (!destination)
 			{
-				destination = a->missions.front()->targetBuilding;
+				destination = a->missions.front().targetBuilding;
 			}
 			// Load up
 			a->enterVehicle(state, {&state, shared_from_this()});
@@ -1742,18 +1742,18 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 		}
 		// Skip agents that are just on this craft without a mission
 		if (a->missions.empty() ||
-		    a->missions.front()->type != AgentMission::MissionType::AwaitPickup)
+		    a->missions.front().type != AgentMission::MissionType::AwaitPickup)
 		{
 			continue;
 		}
-		if (a->missions.front()->targetBuilding == currentBuilding)
+		if (a->missions.front().targetBuilding == currentBuilding)
 		{
 			agentsToRemove.push_back(a);
 			continue;
 		}
 		if (!destination)
 		{
-			destination = a->missions.front()->targetBuilding;
+			destination = a->missions.front().targetBuilding;
 		}
 	}
 	for (auto &a : agentsToRemove)
@@ -2354,7 +2354,7 @@ void Vehicle::updateCargo(GameState &state)
 		for (auto &a : currentAgents)
 		{
 			if (!a->missions.empty() &&
-			    a->missions.front()->type == AgentMission::MissionType::AwaitPickup)
+			    a->missions.front().type == AgentMission::MissionType::AwaitPickup)
 			{
 				needFerry = true;
 				break;

@@ -208,58 +208,58 @@ bool AgentTileHelper::isMoveAllowed(Scenery &scenery, int dir) const
 	return false;
 }
 
-AgentMission *AgentMission::gotoBuilding(GameState &, Agent &a, StateRef<Building> target,
+AgentMission AgentMission::gotoBuilding(GameState &, Agent &a, StateRef<Building> target,
                                          bool allowTeleporter, bool allowTaxi)
 {
-	auto *mission = new AgentMission();
-	mission->type = MissionType::GotoBuilding;
-	mission->targetBuilding = target ? target : a.homeBuilding;
-	mission->allowTeleporter = allowTeleporter && a.type->role == AgentType::Role::Soldier;
-	mission->allowTaxi = allowTaxi || a.type->role != AgentType::Role::Soldier;
+	AgentMission mission;
+	mission.type = MissionType::GotoBuilding;
+	mission.targetBuilding = target ? target : a.homeBuilding;
+	mission.allowTeleporter = allowTeleporter && a.type->role == AgentType::Role::Soldier;
+	mission.allowTaxi = allowTaxi || a.type->role != AgentType::Role::Soldier;
 	return mission;
 }
 
-AgentMission *AgentMission::snooze(GameState &, Agent &, unsigned int snoozeTicks)
+AgentMission AgentMission::snooze(GameState &, Agent &, unsigned int snoozeTicks)
 {
-	auto *mission = new AgentMission();
-	mission->type = MissionType::Snooze;
-	mission->timeToSnooze = snoozeTicks;
+	AgentMission mission;
+	mission.type = MissionType::Snooze;
+	mission.timeToSnooze = snoozeTicks;
 	return mission;
 }
 
-AgentMission *AgentMission::restartNextMission(GameState &, Agent &)
+AgentMission AgentMission::restartNextMission(GameState &, Agent &)
 {
-	auto *mission = new AgentMission();
-	mission->type = MissionType::RestartNextMission;
+	AgentMission mission;
+	mission.type = MissionType::RestartNextMission;
 	return mission;
 }
 
-AgentMission *AgentMission::awaitPickup(GameState &, Agent &, StateRef<Building> target)
+AgentMission AgentMission::awaitPickup(GameState &, Agent &, StateRef<Building> target)
 {
-	auto *mission = new AgentMission();
-	mission->type = MissionType::AwaitPickup;
-	mission->timeToSnooze = PICKUP_TIMEOUT;
-	mission->targetBuilding = target;
+	AgentMission mission;
+	mission.type = MissionType::AwaitPickup;
+	mission.timeToSnooze = PICKUP_TIMEOUT;
+	mission.targetBuilding = target;
 	return mission;
 }
 
-AgentMission *AgentMission::teleport(GameState &state [[maybe_unused]], Agent &a [[maybe_unused]],
+AgentMission AgentMission::teleport(GameState &state [[maybe_unused]], Agent &a [[maybe_unused]],
                                      StateRef<Building> b)
 {
-	auto *mission = new AgentMission();
-	mission->type = MissionType::Teleport;
-	mission->targetBuilding = b;
+	AgentMission mission;
+	mission.type = MissionType::Teleport;
+	mission.targetBuilding = b;
 	return mission;
 }
 
-AgentMission *AgentMission::investigateBuilding(GameState &, Agent &a, StateRef<Building> target,
+AgentMission AgentMission::investigateBuilding(GameState &, Agent &a, StateRef<Building> target,
                                                 bool allowTeleporter, bool allowTaxi)
 {
-	auto *mission = new AgentMission();
-	mission->type = MissionType::InvestigateBuilding;
-	mission->targetBuilding = target;
-	mission->allowTeleporter = allowTeleporter && a.type->role == AgentType::Role::Soldier;
-	mission->allowTaxi = allowTaxi || a.type->role != AgentType::Role::Soldier;
+	AgentMission mission;
+	mission.type = MissionType::InvestigateBuilding;
+	mission.targetBuilding = target;
+	mission.allowTeleporter = allowTeleporter && a.type->role == AgentType::Role::Soldier;
+	mission.allowTaxi = allowTaxi || a.type->role != AgentType::Role::Soldier;
 	return mission;
 }
 
@@ -267,9 +267,9 @@ bool AgentMission::teleportCheck(GameState &state, Agent &a)
 {
 	if (allowTeleporter && a.canTeleport())
 	{
-		auto *teleportMission = AgentMission::teleport(state, a, targetBuilding);
+		auto teleportMission = AgentMission::teleport(state, a, targetBuilding);
 		a.missions.emplace_front(teleportMission);
-		teleportMission->start(state, a);
+		teleportMission.start(state, a);
 		return true;
 	}
 	return false;

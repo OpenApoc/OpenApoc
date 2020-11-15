@@ -694,9 +694,9 @@ void CityTileView::render()
 				}
 				for (auto &m : a.second->missions)
 				{
-					if (m->type == AgentMission::MissionType::GotoBuilding)
+					if (m.type == AgentMission::MissionType::GotoBuilding)
 					{
-						targetLocationsToDraw.emplace_back(m->targetBuilding->crewQuarters,
+						targetLocationsToDraw.emplace_back(m.targetBuilding->crewQuarters,
 						                                   a.second->position, true, false);
 						break;
 					}

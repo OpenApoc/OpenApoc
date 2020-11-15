@@ -222,7 +222,7 @@ void Building::updateCargo(GameState &state)
 				for (auto &a : currentAgents)
 				{
 					if (a->missions.empty() ||
-					    a->missions.front()->type != AgentMission::MissionType::AwaitPickup)
+					    a->missions.front().type != AgentMission::MissionType::AwaitPickup)
 					{
 						continue;
 					}
@@ -296,7 +296,7 @@ void Building::updateCargo(GameState &state)
 			for (auto &a : currentAgents)
 			{
 				if (a->missions.empty() ||
-				    a->missions.front()->type != AgentMission::MissionType::AwaitPickup)
+				    a->missions.front().type != AgentMission::MissionType::AwaitPickup)
 				{
 					continue;
 				}
@@ -396,16 +396,16 @@ void Building::updateCargo(GameState &state)
 	for (auto &a : currentAgents)
 	{
 		if (a->missions.empty() ||
-		    a->missions.front()->type != AgentMission::MissionType::AwaitPickup)
+		    a->missions.front().type != AgentMission::MissionType::AwaitPickup)
 		{
 			continue;
 		}
 #ifdef DEBUG_VERBOSE_CARGO_SYSTEM
 		LogWarning("AGENT: %s needs to deliver to %s", thisRef.id,
-		           a->missions.front()->targetBuilding.id);
+		           a->missions.front().targetBuilding.id);
 #endif
-		spaceNeeded[a->missions.front()->targetBuilding][a->owner].resize(3);
-		spaceNeeded[a->missions.front()->targetBuilding][a->owner][2]++;
+		spaceNeeded[a->missions.front().targetBuilding][a->owner].resize(3);
+		spaceNeeded[a->missions.front().targetBuilding][a->owner][2]++;
 	}
 
 	// Step 04: Find if carrying capacity is satisfied by incoming ferries
