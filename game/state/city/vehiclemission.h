@@ -195,38 +195,38 @@ class VehicleMission
 	// Methods to create new missions
 
 	static VehicleMission gotoLocation(GameState &state, Vehicle &v, Vec3<int> target,
-	                                    bool allowTeleporter = false, bool pickNearest = false,
-	                                    int attemptsToGiveUpAfter = 20);
+	                                   bool allowTeleporter = false, bool pickNearest = false,
+	                                   int attemptsToGiveUpAfter = 20);
 	static VehicleMission gotoPortal(GameState &state, Vehicle &v);
 	static VehicleMission gotoPortal(GameState &state, Vehicle &v, Vec3<int> target);
 	static VehicleMission departToSpace(GameState &state, Vehicle &v);
 	// With now building goes home
 	static VehicleMission gotoBuilding(GameState &state, Vehicle &v,
-	                                    StateRef<Building> target = nullptr,
-	                                    bool allowTeleporter = false);
+	                                   StateRef<Building> target = nullptr,
+	                                   bool allowTeleporter = false);
 	static VehicleMission infiltrateOrSubvertBuilding(GameState &state, Vehicle &v,
-	                                                   bool subvert = false,
-	                                                   StateRef<Building> target = nullptr);
+	                                                  bool subvert = false,
+	                                                  StateRef<Building> target = nullptr);
 	static VehicleMission attackVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission attackBuilding(GameState &state, Vehicle &v,
-	                                      StateRef<Building> target = nullptr);
+	                                     StateRef<Building> target = nullptr);
 	static VehicleMission followVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission followVehicle(GameState &state, Vehicle &v,
-	                                     std::list<StateRef<Vehicle>> &targets);
+	                                    std::list<StateRef<Vehicle>> &targets);
 	static VehicleMission recoverVehicle(GameState &state, Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission offerService(GameState &state, Vehicle &v,
-	                                    StateRef<Building> target = nullptr);
+	                                   StateRef<Building> target = nullptr);
 	static VehicleMission snooze(GameState &state, Vehicle &v, unsigned int ticks);
 	static VehicleMission selfDestruct(GameState &state, Vehicle &v);
 	static VehicleMission arriveFromDimensionGate(GameState &state, Vehicle &v, int ticks = 0);
 	static VehicleMission restartNextMission(GameState &state, Vehicle &v);
 	static VehicleMission crashLand(GameState &state, Vehicle &v);
 	static VehicleMission patrol(GameState &state, Vehicle &v, bool home = false,
-	                              unsigned int counter = 10);
+	                             unsigned int counter = 10);
 	static VehicleMission teleport(GameState &state, Vehicle &v, Vec3<int> target = {-1, -1, -1});
 	static VehicleMission investigateBuilding(GameState &state, Vehicle &v,
-	                                           StateRef<Building> target,
-	                                           bool allowTeleporter = false);
+	                                          StateRef<Building> target,
+	                                          bool allowTeleporter = false);
 	UString getName();
 
 	enum class MissionType

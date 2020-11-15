@@ -347,8 +347,8 @@ Vec3<float> FlyingVehicleTileHelper::findSidestep(GameState &state, sp<TileObjec
 }
 
 VehicleMission VehicleMission::gotoLocation(GameState &state, Vehicle &v, Vec3<int> target,
-                                             bool allowTeleporter, bool pickNearest,
-                                             int attemptsToGiveUpAfter)
+                                            bool allowTeleporter, bool pickNearest,
+                                            int attemptsToGiveUpAfter)
 {
 	// TODO
 	// Pseudocode:
@@ -412,7 +412,7 @@ VehicleMission VehicleMission::departToSpace(GameState &state, Vehicle &v)
 }
 
 VehicleMission VehicleMission::gotoBuilding(GameState &, Vehicle &v, StateRef<Building> target,
-                                             bool allowTeleporter)
+                                            bool allowTeleporter)
 {
 	// TODO
 	// Pseudocode:
@@ -436,7 +436,7 @@ VehicleMission VehicleMission::gotoBuilding(GameState &, Vehicle &v, StateRef<Bu
 }
 
 VehicleMission VehicleMission::infiltrateOrSubvertBuilding(GameState &, Vehicle &, bool subvert,
-                                                            StateRef<Building> target)
+                                                           StateRef<Building> target)
 {
 	VehicleMission mission;
 	mission.type = MissionType::InfiltrateSubvert;
@@ -455,8 +455,8 @@ VehicleMission VehicleMission::attackVehicle(GameState &, Vehicle &, StateRef<Ve
 }
 
 VehicleMission VehicleMission::attackBuilding(GameState &state [[maybe_unused]],
-                                               Vehicle &v [[maybe_unused]],
-                                               StateRef<Building> target)
+                                              Vehicle &v [[maybe_unused]],
+                                              StateRef<Building> target)
 {
 	VehicleMission mission;
 	mission.type = MissionType::AttackBuilding;
@@ -473,7 +473,7 @@ VehicleMission VehicleMission::followVehicle(GameState &, Vehicle &, StateRef<Ve
 }
 
 VehicleMission VehicleMission::followVehicle(GameState &, Vehicle &,
-                                              std::list<StateRef<Vehicle>> &targets)
+                                             std::list<StateRef<Vehicle>> &targets)
 {
 	VehicleMission mission;
 	mission.type = MissionType::FollowVehicle;
@@ -487,8 +487,7 @@ VehicleMission VehicleMission::followVehicle(GameState &, Vehicle &,
 }
 
 VehicleMission VehicleMission::recoverVehicle(GameState &state [[maybe_unused]],
-                                               Vehicle &v [[maybe_unused]],
-                                               StateRef<Vehicle> target)
+                                              Vehicle &v [[maybe_unused]], StateRef<Vehicle> target)
 {
 	VehicleMission mission;
 	mission.type = MissionType::RecoverVehicle;
@@ -497,7 +496,7 @@ VehicleMission VehicleMission::recoverVehicle(GameState &state [[maybe_unused]],
 }
 
 VehicleMission VehicleMission::offerService(GameState &state [[maybe_unused]],
-                                             Vehicle &v [[maybe_unused]], StateRef<Building> target)
+                                            Vehicle &v [[maybe_unused]], StateRef<Building> target)
 {
 	VehicleMission mission;
 	mission.type = MissionType::OfferService;
@@ -586,7 +585,7 @@ VehicleMission VehicleMission::patrol(GameState &, Vehicle &, bool home, unsigne
 }
 
 VehicleMission VehicleMission::teleport(GameState &state [[maybe_unused]],
-                                         Vehicle &v [[maybe_unused]], Vec3<int> target)
+                                        Vehicle &v [[maybe_unused]], Vec3<int> target)
 {
 	VehicleMission mission;
 	mission.type = MissionType::Teleport;
@@ -614,7 +613,7 @@ VehicleMission VehicleMission::land(Vehicle &, StateRef<Building> b)
 }
 
 VehicleMission VehicleMission::investigateBuilding(GameState &, Vehicle &v [[maybe_unused]],
-                                                    StateRef<Building> target, bool allowTeleporter)
+                                                   StateRef<Building> target, bool allowTeleporter)
 {
 	VehicleMission mission;
 	mission.type = MissionType::InvestigateBuilding;

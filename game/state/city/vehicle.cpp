@@ -2172,8 +2172,8 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 						sp<TileObjectVehicle> enemy;
 						if (!missions.empty() &&
 						    missions.front().type == VehicleMission::MissionType::AttackVehicle &&
-						    tileObject->getDistanceTo(
-						        missions.front().targetVehicle->tileObject) <= firingRange)
+						    tileObject->getDistanceTo(missions.front().targetVehicle->tileObject) <=
+						        firingRange)
 						{
 							enemy = missions.front().targetVehicle->tileObject;
 							if (enemy)
@@ -3278,7 +3278,7 @@ bool Vehicle::getNewGoal(GameState &state, int &turboTiles)
 		if (!missions.empty())
 		{
 			acquired = missions.front().getNextDestination(state, *this, goalPosition, goalFacing,
-			                                                turboTiles);
+			                                               turboTiles);
 		}
 		// Pop finished missions if present
 		popped = popFinishedMissions(state);

@@ -2078,8 +2078,7 @@ void CityView::update()
 							agentAssignment->setText(
 							    tr("At") + UString(" ") +
 							    tr(agent->currentVehicle->currentBuilding->name));
-						else if (!agent->missions.empty() &&
-						         agent->missions.front().targetBuilding)
+						else if (!agent->missions.empty() && agent->missions.front().targetBuilding)
 						{
 							if (agent->missions.front().targetBuilding == agent->homeBuilding)
 								agentAssignment->setText(tr("Returning to base"));
