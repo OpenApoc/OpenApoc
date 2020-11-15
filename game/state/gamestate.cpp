@@ -935,8 +935,8 @@ bool GameState::canTurbo() const
 			}
 			for (auto &m : v.second->missions)
 			{
-				if (m->type == VehicleMission::MissionType::AttackBuilding ||
-				    m->type == VehicleMission::MissionType::AttackVehicle)
+				if (m.type == VehicleMission::MissionType::AttackBuilding ||
+				    m.type == VehicleMission::MissionType::AttackVehicle)
 				{
 					return false;
 				}

@@ -1638,7 +1638,7 @@ void CityView::render()
 				{
 					continue;
 				}
-				auto &path = v->missions.front()->currentPlannedPath;
+				auto &path = v->missions.front().currentPlannedPath;
 				Vec3<float> prevPos = vTile->getPosition();
 				for (auto &pos : path)
 				{
@@ -2090,15 +2090,15 @@ void CityView::update()
 						}
 						else if (agent->currentVehicle &&
 						         !agent->currentVehicle->missions.empty() &&
-						         agent->currentVehicle->missions.front()->targetBuilding)
+						         agent->currentVehicle->missions.front().targetBuilding)
 						{
-							if (agent->currentVehicle->missions.front()->targetBuilding ==
+							if (agent->currentVehicle->missions.front().targetBuilding ==
 							    agent->homeBuilding)
 								agentAssignment->setText(tr("Returning to base"));
 							else
 								agentAssignment->setText(tr("Traveling to:") + UString(" ") +
 								                         tr(agent->currentVehicle->missions.front()
-								                                ->targetBuilding->name));
+								                                .targetBuilding->name));
 						}
 						else
 							agentAssignment->setText(tr("Traveling to:") + UString(" ") +
@@ -3336,7 +3336,7 @@ bool CityView::handleMouseDown(Event *e)
 					LogWarning("CLICKED VEHICLE %s at %s", vehicle->name, vehicle->position);
 					for (auto &m : vehicle->missions)
 					{
-						LogWarning("Mission %s", m->getName());
+						LogWarning("Mission %s", m.getName());
 					}
 					for (auto &c : vehicle->cargo)
 					{
@@ -3385,7 +3385,7 @@ bool CityView::handleMouseDown(Event *e)
 					           vehicle->position);
 					for (auto &m : vehicle->missions)
 					{
-						LogWarning("Mission %s", m->getName());
+						LogWarning("Mission %s", m.getName());
 					}
 					for (auto &c : vehicle->cargo)
 					{

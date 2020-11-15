@@ -420,8 +420,8 @@ void Building::updateCargo(GameState &state)
 			}
 			// Check if is a ferry
 			if (v.second->missions.empty() ||
-			    v.second->missions.back()->type != VehicleMission::MissionType::OfferService ||
-			    v.second->missions.back()->missionCounter > 0)
+			    v.second->missions.back().type != VehicleMission::MissionType::OfferService ||
+			    v.second->missions.back().missionCounter > 0)
 			{
 				continue;
 			}
@@ -434,7 +434,7 @@ void Building::updateCargo(GameState &state)
 					continue;
 				}
 				// Not bound for this building
-				if (v.second->missions.back()->targetBuilding != thisRef)
+				if (v.second->missions.back().targetBuilding != thisRef)
 				{
 					continue;
 				}

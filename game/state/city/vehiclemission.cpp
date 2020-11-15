@@ -346,7 +346,7 @@ Vec3<float> FlyingVehicleTileHelper::findSidestep(GameState &state, sp<TileObjec
 	return bestPosition;
 }
 
-VehicleMission *VehicleMission::gotoLocation(GameState &state, Vehicle &v, Vec3<int> target,
+VehicleMission VehicleMission::gotoLocation(GameState &state, Vehicle &v, Vec3<int> target,
                                              bool allowTeleporter, bool pickNearest,
                                              int attemptsToGiveUpAfter)
 {
@@ -355,22 +355,22 @@ VehicleMission *VehicleMission::gotoLocation(GameState &state, Vehicle &v, Vec3<
 	// if (in building)
 	// 	prepend(TakeOff)
 	// routeClosestICanTo(target);
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::GotoLocation;
-	mission->pickNearest = pickNearest;
-	mission->reRouteAttempts = attemptsToGiveUpAfter;
-	mission->allowTeleporter = allowTeleporter;
+	VehicleMission mission;
+	mission.type = MissionType::GotoLocation;
+	mission.pickNearest = pickNearest;
+	mission.reRouteAttempts = attemptsToGiveUpAfter;
+	mission.allowTeleporter = allowTeleporter;
 	if (!VehicleTargetHelper::adjustTargetToClosest(state, v, target, VehicleAvoidance::Ignore,
 	                                                true)
 	         .foundSuitableTarget)
 	{
-		mission->cancelled = true;
+		mission.cancelled = true;
 	}
-	mission->targetLocation = target;
+	mission.targetLocation = target;
 	return mission;
 }
 
-VehicleMission *VehicleMission::gotoPortal(GameState &state, Vehicle &v)
+VehicleMission VehicleMission::gotoPortal(GameState &state, Vehicle &v)
 {
 	Vec3<int> target = {0, 0, 0};
 	auto vTile = v.tileObject;
@@ -394,24 +394,24 @@ VehicleMission *VehicleMission::gotoPortal(GameState &state, Vehicle &v)
 	return gotoPortal(state, v, target);
 }
 
-VehicleMission *VehicleMission::gotoPortal(GameState &, Vehicle &, Vec3<int> target)
+VehicleMission VehicleMission::gotoPortal(GameState &, Vehicle &, Vec3<int> target)
 {
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::GotoPortal;
-	mission->targetLocation = target;
+	VehicleMission mission;
+	mission.type = MissionType::GotoPortal;
+	mission.targetLocation = target;
 	return mission;
 }
 
-VehicleMission *VehicleMission::departToSpace(GameState &state, Vehicle &v)
+VehicleMission VehicleMission::departToSpace(GameState &state, Vehicle &v)
 {
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::DepartToSpace;
-	mission->pickNearest = true;
-	mission->targetLocation = getRandomMapEdgeCoordinates(state, v.city);
+	VehicleMission mission;
+	mission.type = MissionType::DepartToSpace;
+	mission.pickNearest = true;
+	mission.targetLocation = getRandomMapEdgeCoordinates(state, v.city);
 	return mission;
 }
 
-VehicleMission *VehicleMission::gotoBuilding(GameState &, Vehicle &v, StateRef<Building> target,
+VehicleMission VehicleMission::gotoBuilding(GameState &, Vehicle &v, StateRef<Building> target,
                                              bool allowTeleporter)
 {
 	// TODO
@@ -428,99 +428,99 @@ VehicleMission *VehicleMission::gotoBuilding(GameState &, Vehicle &v, StateRef<B
 	//     queue(gotoLocation(lowest cost of routes + estimated distance to closest pad))
 	//  }
 	//  queue(Land)
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::GotoBuilding;
-	mission->targetBuilding = target ? target : v.homeBuilding;
-	mission->allowTeleporter = allowTeleporter;
+	VehicleMission mission;
+	mission.type = MissionType::GotoBuilding;
+	mission.targetBuilding = target ? target : v.homeBuilding;
+	mission.allowTeleporter = allowTeleporter;
 	return mission;
 }
 
-VehicleMission *VehicleMission::infiltrateOrSubvertBuilding(GameState &, Vehicle &, bool subvert,
+VehicleMission VehicleMission::infiltrateOrSubvertBuilding(GameState &, Vehicle &, bool subvert,
                                                             StateRef<Building> target)
 {
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::InfiltrateSubvert;
-	mission->targetBuilding = target;
-	mission->subvert = subvert;
+	VehicleMission mission;
+	mission.type = MissionType::InfiltrateSubvert;
+	mission.targetBuilding = target;
+	mission.subvert = subvert;
 	return mission;
 }
 
-VehicleMission *VehicleMission::attackVehicle(GameState &, Vehicle &, StateRef<Vehicle> target)
+VehicleMission VehicleMission::attackVehicle(GameState &, Vehicle &, StateRef<Vehicle> target)
 {
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::AttackVehicle;
-	mission->targetVehicle = target;
-	mission->attackCrashed = target->crashed;
+	VehicleMission mission;
+	mission.type = MissionType::AttackVehicle;
+	mission.targetVehicle = target;
+	mission.attackCrashed = target->crashed;
 	return mission;
 }
 
-VehicleMission *VehicleMission::attackBuilding(GameState &state [[maybe_unused]],
+VehicleMission VehicleMission::attackBuilding(GameState &state [[maybe_unused]],
                                                Vehicle &v [[maybe_unused]],
                                                StateRef<Building> target)
 {
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::AttackBuilding;
-	mission->targetBuilding = target;
+	VehicleMission mission;
+	mission.type = MissionType::AttackBuilding;
+	mission.targetBuilding = target;
 	return mission;
 }
 
-VehicleMission *VehicleMission::followVehicle(GameState &, Vehicle &, StateRef<Vehicle> target)
+VehicleMission VehicleMission::followVehicle(GameState &, Vehicle &, StateRef<Vehicle> target)
 {
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::FollowVehicle;
-	mission->targetVehicle = target;
+	VehicleMission mission;
+	mission.type = MissionType::FollowVehicle;
+	mission.targetVehicle = target;
 	return mission;
 }
 
-VehicleMission *VehicleMission::followVehicle(GameState &, Vehicle &,
+VehicleMission VehicleMission::followVehicle(GameState &, Vehicle &,
                                               std::list<StateRef<Vehicle>> &targets)
 {
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::FollowVehicle;
+	VehicleMission mission;
+	mission.type = MissionType::FollowVehicle;
 	if (!targets.empty())
 	{
-		mission->targetVehicle = targets.front();
-		mission->targets = targets;
-		mission->targets.pop_front();
+		mission.targetVehicle = targets.front();
+		mission.targets = targets;
+		mission.targets.pop_front();
 	}
 	return mission;
 }
 
-VehicleMission *VehicleMission::recoverVehicle(GameState &state [[maybe_unused]],
+VehicleMission VehicleMission::recoverVehicle(GameState &state [[maybe_unused]],
                                                Vehicle &v [[maybe_unused]],
                                                StateRef<Vehicle> target)
 {
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::RecoverVehicle;
-	mission->targetVehicle = target;
+	VehicleMission mission;
+	mission.type = MissionType::RecoverVehicle;
+	mission.targetVehicle = target;
 	return mission;
 }
 
-VehicleMission *VehicleMission::offerService(GameState &state [[maybe_unused]],
+VehicleMission VehicleMission::offerService(GameState &state [[maybe_unused]],
                                              Vehicle &v [[maybe_unused]], StateRef<Building> target)
 {
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::OfferService;
+	VehicleMission mission;
+	mission.type = MissionType::OfferService;
 	if (target)
 	{
-		mission->targetBuilding = target;
+		mission.targetBuilding = target;
 	}
 	else
 	{
-		mission->missionCounter = 1;
+		mission.missionCounter = 1;
 	}
 	return mission;
 }
 
-VehicleMission *VehicleMission::snooze(GameState &, Vehicle &, unsigned int snoozeTicks)
+VehicleMission VehicleMission::snooze(GameState &, Vehicle &, unsigned int snoozeTicks)
 {
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::Snooze;
-	mission->timeToSnooze = snoozeTicks;
+	VehicleMission mission;
+	mission.type = MissionType::Snooze;
+	mission.timeToSnooze = snoozeTicks;
 	return mission;
 }
 
-VehicleMission *VehicleMission::selfDestruct(GameState &state, Vehicle &v)
+VehicleMission VehicleMission::selfDestruct(GameState &state, Vehicle &v)
 {
 	unsigned timer = TICKS_PER_HOUR;
 	auto timerUFO = selfDestructTimer.find(v.type.id);
@@ -529,16 +529,16 @@ VehicleMission *VehicleMission::selfDestruct(GameState &state, Vehicle &v)
 		timer = 5 * std::uniform_int_distribution<unsigned>(timerUFO->second.first,
 		                                                    timerUFO->second.second)(state.rng);
 	}
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::SelfDestruct;
-	mission->timeToSnooze = timer;
+	VehicleMission mission;
+	mission.type = MissionType::SelfDestruct;
+	mission.timeToSnooze = timer;
 	return mission;
 }
 
-VehicleMission *VehicleMission::arriveFromDimensionGate(GameState &state, Vehicle &v, int ticks)
+VehicleMission VehicleMission::arriveFromDimensionGate(GameState &state, Vehicle &v, int ticks)
 {
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::ArriveFromDimensionGate;
+	VehicleMission mission;
+	mission.type = MissionType::ArriveFromDimensionGate;
 	// find max delay arrival and increment
 	int lastTicks = -DIMENSION_GATE_DELAY;
 	for (auto &v2 : state.vehicles)
@@ -547,9 +547,9 @@ VehicleMission *VehicleMission::arriveFromDimensionGate(GameState &state, Vehicl
 		{
 			for (auto &m : v2.second->missions)
 			{
-				if (m->type == MissionType::ArriveFromDimensionGate)
+				if (m.type == MissionType::ArriveFromDimensionGate)
 				{
-					lastTicks = std::max(lastTicks, (int)m->timeToSnooze);
+					lastTicks = std::max(lastTicks, (int)m.timeToSnooze);
 				}
 			}
 		}
@@ -558,69 +558,68 @@ VehicleMission *VehicleMission::arriveFromDimensionGate(GameState &state, Vehicl
 	{
 		lastTicks += ticks;
 	}
-	mission->timeToSnooze = lastTicks + DIMENSION_GATE_DELAY;
+	mission.timeToSnooze = lastTicks + DIMENSION_GATE_DELAY;
 	return mission;
 }
 
-VehicleMission *VehicleMission::restartNextMission(GameState &, Vehicle &)
+VehicleMission VehicleMission::restartNextMission(GameState &, Vehicle &)
 {
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::RestartNextMission;
+	VehicleMission mission;
+	mission.type = MissionType::RestartNextMission;
 	return mission;
 }
 
-VehicleMission *VehicleMission::crashLand(GameState &, Vehicle &)
+VehicleMission VehicleMission::crashLand(GameState &, Vehicle &)
 {
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::Crash;
+	VehicleMission mission;
+	mission.type = MissionType::Crash;
 	return mission;
 }
 
-VehicleMission *VehicleMission::patrol(GameState &, Vehicle &, bool home, unsigned int counter)
+VehicleMission VehicleMission::patrol(GameState &, Vehicle &, bool home, unsigned int counter)
 {
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::Patrol;
-	mission->missionCounter = counter;
-	mission->patrolHome = home;
+	VehicleMission mission;
+	mission.type = MissionType::Patrol;
+	mission.missionCounter = counter;
+	mission.patrolHome = home;
 	return mission;
 }
 
-VehicleMission *VehicleMission::teleport(GameState &state [[maybe_unused]],
+VehicleMission VehicleMission::teleport(GameState &state [[maybe_unused]],
                                          Vehicle &v [[maybe_unused]], Vec3<int> target)
 {
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::Teleport;
-	mission->targetLocation = target;
+	VehicleMission mission;
+	mission.type = MissionType::Teleport;
+	mission.targetLocation = target;
 	return mission;
 }
 
-VehicleMission *VehicleMission::takeOff(Vehicle &v)
+VehicleMission VehicleMission::takeOff(Vehicle &v)
 {
 	if (!v.currentBuilding)
 	{
 		LogError("Trying to take off while not in a building");
-		return nullptr;
 	}
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::TakeOff;
+	VehicleMission mission;
+	mission.type = MissionType::TakeOff;
 	return mission;
 }
 
-VehicleMission *VehicleMission::land(Vehicle &, StateRef<Building> b)
+VehicleMission VehicleMission::land(Vehicle &, StateRef<Building> b)
 {
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::Land;
-	mission->targetBuilding = b;
+	VehicleMission mission;
+	mission.type = MissionType::Land;
+	mission.targetBuilding = b;
 	return mission;
 }
 
-VehicleMission *VehicleMission::investigateBuilding(GameState &, Vehicle &v [[maybe_unused]],
+VehicleMission VehicleMission::investigateBuilding(GameState &, Vehicle &v [[maybe_unused]],
                                                     StateRef<Building> target, bool allowTeleporter)
 {
-	auto *mission = new VehicleMission();
-	mission->type = MissionType::InvestigateBuilding;
-	mission->targetBuilding = target;
-	mission->allowTeleporter = allowTeleporter;
+	VehicleMission mission;
+	mission.type = MissionType::InvestigateBuilding;
+	mission.targetBuilding = target;
+	mission.allowTeleporter = allowTeleporter;
 	return mission;
 }
 
@@ -2108,8 +2107,8 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				                                                 allowTeleporter, false, 1));
 				// If we can't path to building then cancel
 				auto &gotoMission = v.missions.front();
-				if (gotoMission->cancelled || gotoMission->currentPlannedPath.empty() ||
-				    gotoMission->currentPlannedPath.back() == position)
+				if (gotoMission.cancelled || gotoMission.currentPlannedPath.empty() ||
+				    gotoMission.currentPlannedPath.back() == position)
 				{
 					cancelled = true;
 				}
@@ -2205,8 +2204,8 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					                                                 allowTeleporter, false, 1));
 					// If we can't path to building's pad then snooze
 					auto &gotoMission = v.missions.front();
-					if (gotoMission->cancelled || gotoMission->currentPlannedPath.empty() ||
-					    gotoMission->currentPlannedPath.back() == position)
+					if (gotoMission.cancelled || gotoMission.currentPlannedPath.empty() ||
+					    gotoMission.currentPlannedPath.back() == position)
 					{
 						v.addMission(state, VehicleMission::snooze(state, v, TICKS_PER_SECOND));
 					}
