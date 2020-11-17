@@ -2039,6 +2039,39 @@ void BattleView::updateSoldierButtons()
 	baseForm->findControlTyped<CheckBox>("BUTTON_AIMED")->setChecked(aimed);
 	baseForm->findControlTyped<CheckBox>("BUTTON_SNAP")->setChecked(snap);
 	baseForm->findControlTyped<CheckBox>("BUTTON_AUTO")->setChecked(auto_fire);
+
+	UString aimedTooltip = tr("Aimed shot");
+	UString snapTooltip = tr("Snap shot");
+	UString autoTooltip = tr("Auto shot");
+
+	// In turnbased : If a single unit is selected and it has active weapon - show TU cost for aim
+	// types in tooltips
+	if ((battle.mode == Battle::Mode::TurnBased) && (battle.battleViewSelectedUnits.size() == 1) &&
+	    (selectionState == BattleSelectionState::FireLeft ||
+	     selectionState == BattleSelectionState::FireRight))
+	{
+		const auto &selectedUnit = battle.battleViewSelectedUnits.front();
+		const auto weapon =
+		    selectionState == BattleSelectionState::FireLeft
+		        ? selectedUnit->agent->getFirstItemInSlot(EquipmentSlotType::LeftHand)
+		        : selectedUnit->agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
+		if (weapon && weapon->canFire(*state))
+		{
+			const int aimedCost =
+			    weapon->getFireCost(WeaponAimingMode::Aimed, selectedUnit->initialTU);
+			aimedTooltip = format("%s\n%s %d", aimedTooltip, tr("TU cost per shot:"), aimedCost);
+			const int snapCost =
+			    weapon->getFireCost(WeaponAimingMode::Snap, selectedUnit->initialTU);
+			snapTooltip = format("%s\n%s %d", snapTooltip, tr("TU cost per shot:"), snapCost);
+			const int autoCost =
+			    weapon->getFireCost(WeaponAimingMode::Auto, selectedUnit->initialTU);
+			autoTooltip = format("%s\n%s %d", autoTooltip, tr("TU cost per shot:"), autoCost);
+		}
+	}
+	baseForm->findControlTyped<CheckBox>("BUTTON_AIMED")->ToolTipText = aimedTooltip;
+	baseForm->findControlTyped<CheckBox>("BUTTON_SNAP")->ToolTipText = snapTooltip;
+	baseForm->findControlTyped<CheckBox>("BUTTON_AUTO")->ToolTipText = autoTooltip;
+
 	baseForm->findControlTyped<TriStateBox>("BUTTON_KNEEL")
 	    ->setState(kneeling && not_kneeling ? 3 : (kneeling ? 2 : 1));
 	baseForm->findControlTyped<CheckBox>("BUTTON_PRONE")->setChecked(prone);

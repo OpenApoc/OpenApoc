@@ -11,6 +11,12 @@ BitmapFont::~BitmapFont() = default;
 
 sp<PaletteImage> BitmapFont::getString(const UString &Text)
 {
+	if (Text.find('\n') != std::string::npos)
+	{
+		LogWarning(
+		    "Multiline text not supported. Newline characters will be ignored. Text : \"%s\"",
+		    Text);
+	}
 	int height = this->getFontHeight();
 	int width = this->getFontWidth(Text);
 	int pos = 0;
