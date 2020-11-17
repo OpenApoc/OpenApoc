@@ -106,8 +106,8 @@ class FlyingVehicleMover : public VehicleMover
 		// Vehicles on take off mission don't do anything
 		if (!vehicle.missions.empty())
 		{
-			if (vehicle.missions.front()->type == VehicleMission::MissionType::TakeOff ||
-			    vehicle.missions.front()->type == VehicleMission::MissionType::Land)
+			if (vehicle.missions.front().type == VehicleMission::MissionType::TakeOff ||
+			    vehicle.missions.front().type == VehicleMission::MissionType::Land)
 			{
 				return;
 			}
@@ -149,11 +149,11 @@ class FlyingVehicleMover : public VehicleMover
 				if (!vehicle.missions.empty())
 				{
 					// Will need new path after moving
-					vehicle.missions.front()->currentPlannedPath.clear();
+					vehicle.missions.front().currentPlannedPath.clear();
 				}
 				auto adjustHeightMission = VehicleMission::gotoLocation(state, vehicle, targetPos);
-				adjustHeightMission->currentPlannedPath.emplace_front(targetPos);
-				adjustHeightMission->currentPlannedPath.emplace_front(vehicle.position);
+				adjustHeightMission.currentPlannedPath.emplace_front(targetPos);
+				adjustHeightMission.currentPlannedPath.emplace_front(vehicle.position);
 				vehicle.addMission(state, adjustHeightMission);
 				return;
 			}
@@ -348,11 +348,11 @@ class FlyingVehicleMover : public VehicleMover
 					if (!vehicle.missions.empty())
 					{
 						// Will need new path after moving
-						vehicle.missions.front()->currentPlannedPath.clear();
+						vehicle.missions.front().currentPlannedPath.clear();
 					}
 					auto dodgeMission = VehicleMission::gotoLocation(state, vehicle, targetPos);
-					dodgeMission->currentPlannedPath.emplace_front(targetPos);
-					dodgeMission->currentPlannedPath.emplace_front(vehicle.position);
+					dodgeMission.currentPlannedPath.emplace_front(targetPos);
+					dodgeMission.currentPlannedPath.emplace_front(vehicle.position);
 					vehicle.addMission(state, dodgeMission);
 					return;
 				}
@@ -1669,12 +1669,12 @@ void Vehicle::provideServicePassengers(GameState &state, bool otherOrg)
 			}
 			// Agent doesn't want pickup
 			if (a->missions.empty() ||
-			    a->missions.front()->type != AgentMission::MissionType::AwaitPickup)
+			    a->missions.front().type != AgentMission::MissionType::AwaitPickup)
 			{
 				continue;
 			}
 			// Won't ferry other orgs
-			if (a->missions.front()->targetBuilding->owner != owner && !otherOrg)
+			if (a->missions.front().targetBuilding->owner != owner && !otherOrg)
 			{
 				continue;
 			}
@@ -1684,14 +1684,14 @@ void Vehicle::provideServicePassengers(GameState &state, bool otherOrg)
 				continue;
 			}
 			// Won't ferry if already picked destination and doesn't match
-			if (destination && a->missions.front()->targetBuilding != destination)
+			if (destination && a->missions.front().targetBuilding != destination)
 			{
 				continue;
 			}
 			// Here's where we're going
 			if (!destination)
 			{
-				destination = a->missions.front()->targetBuilding;
+				destination = a->missions.front().targetBuilding;
 			}
 			// Load up
 			a->enterVehicle(state, {&state, shared_from_this()});
@@ -1742,18 +1742,18 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 		}
 		// Skip agents that are just on this craft without a mission
 		if (a->missions.empty() ||
-		    a->missions.front()->type != AgentMission::MissionType::AwaitPickup)
+		    a->missions.front().type != AgentMission::MissionType::AwaitPickup)
 		{
 			continue;
 		}
-		if (a->missions.front()->targetBuilding == currentBuilding)
+		if (a->missions.front().targetBuilding == currentBuilding)
 		{
 			agentsToRemove.push_back(a);
 			continue;
 		}
 		if (!destination)
 		{
-			destination = a->missions.front()->targetBuilding;
+			destination = a->missions.front().targetBuilding;
 		}
 	}
 	for (auto &a : agentsToRemove)
@@ -1832,15 +1832,15 @@ void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 	{
 		for (auto &m : v.second->missions)
 		{
-			if (m->targetVehicle.id == id)
+			if (m.targetVehicle.id == id)
 			{
-				m->targetVehicle.clear();
+				m.targetVehicle.clear();
 			}
-			for (auto it = m->targets.begin(); it != m->targets.end();)
+			for (auto it = m.targets.begin(); it != m.targets.end();)
 			{
 				if ((*it).id == id)
 				{
-					it = m->targets.erase(it);
+					it = m.targets.erase(it);
 				}
 				else
 				{
@@ -1906,7 +1906,7 @@ void Vehicle::crash(GameState &state, StateRef<Vehicle> attacker)
 			bool found = false;
 			for (auto &m : missions)
 			{
-				if (m->type == VehicleMission::MissionType::SelfDestruct)
+				if (m.type == VehicleMission::MissionType::SelfDestruct)
 				{
 					found = true;
 					break;
@@ -2078,7 +2078,7 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	IsIdle = this->missions.empty();
 	if (!IsIdle)
 	{
-		this->missions.front()->update(state, *this, ticks);
+		this->missions.front().update(state, *this, ticks);
 	}
 
 	popFinishedMissions(state);
@@ -2117,8 +2117,8 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 		bool attemptFire = true;
 		if (!type->isGround() && !missions.empty())
 		{
-			if (missions.front()->type == VehicleMission::MissionType::TakeOff ||
-			    missions.front()->type == VehicleMission::MissionType::Land)
+			if (missions.front().type == VehicleMission::MissionType::TakeOff ||
+			    missions.front().type == VehicleMission::MissionType::Land)
 			{
 				attemptFire = false;
 			}
@@ -2171,11 +2171,11 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 						auto firingRange = getFiringRange();
 						sp<TileObjectVehicle> enemy;
 						if (!missions.empty() &&
-						    missions.front()->type == VehicleMission::MissionType::AttackVehicle &&
-						    tileObject->getDistanceTo(
-						        missions.front()->targetVehicle->tileObject) <= firingRange)
+						    missions.front().type == VehicleMission::MissionType::AttackVehicle &&
+						    tileObject->getDistanceTo(missions.front().targetVehicle->tileObject) <=
+						        firingRange)
 						{
-							enemy = missions.front()->targetVehicle->tileObject;
+							enemy = missions.front().targetVehicle->tileObject;
 							if (enemy)
 							{
 								attackTarget(state, enemy);
@@ -2332,7 +2332,7 @@ void Vehicle::updateCargo(GameState &state)
 		return;
 	}
 	// Already ferrying
-	if (!missions.empty() && missions.back()->type == VehicleMission::MissionType::OfferService)
+	if (!missions.empty() && missions.back().type == VehicleMission::MissionType::OfferService)
 	{
 		return;
 	}
@@ -2354,7 +2354,7 @@ void Vehicle::updateCargo(GameState &state)
 		for (auto &a : currentAgents)
 		{
 			if (!a->missions.empty() &&
-			    a->missions.front()->type == AgentMission::MissionType::AwaitPickup)
+			    a->missions.front().type == AgentMission::MissionType::AwaitPickup)
 			{
 				needFerry = true;
 				break;
@@ -2771,9 +2771,9 @@ bool Vehicle::fireAtBuilding(
 	auto firingRange = getFiringRange();
 
 	// Attack buildings
-	if (!missions.empty() && missions.front()->type == VehicleMission::MissionType::AttackBuilding)
+	if (!missions.empty() && missions.front().type == VehicleMission::MissionType::AttackBuilding)
 	{
-		auto target = missions.front()->targetBuilding;
+		auto target = missions.front().targetBuilding;
 		if (!target->buildingParts.empty())
 		{
 			bool inRange = target->bounds.within(Vec2<int>{position.x, position.y});
@@ -3076,7 +3076,7 @@ void Vehicle::setManualFirePosition(const Vec3<float> &pos)
 }
 
 typename decltype(Vehicle::missions)::iterator
-Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
+Vehicle::addMission(GameState &state, VehicleMission mission, bool toBack)
 {
 	if (!hasEngine())
 	{
@@ -3085,11 +3085,10 @@ Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 			fw().pushEvent(
 			    new GameVehicleEvent(GameEventType::VehicleNoEngine, {&state, shared_from_this()}));
 		}
-		delete mission;
 		return missions.end();
 	}
 	bool canPlaceInFront = false;
-	switch (mission->type)
+	switch (mission.type)
 	{
 		// - Can place in front
 		// - Can place on crashed vehicles
@@ -3111,7 +3110,6 @@ Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 		case VehicleMission::MissionType::Land:
 			if (crashed || sliding || falling)
 			{
-				delete mission;
 				return missions.end();
 			}
 			break;
@@ -3134,21 +3132,20 @@ Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 		case VehicleMission::MissionType::ArriveFromDimensionGate:
 			if (crashed || sliding || falling || carriedVehicle)
 			{
-				delete mission;
 				return missions.end();
 			}
 			break;
 	}
 	if (!toBack && !canPlaceInFront && !missions.empty() &&
-	    (missions.front()->type == VehicleMission::MissionType::Land ||
-	     missions.front()->type == VehicleMission::MissionType::TakeOff))
+	    (missions.front().type == VehicleMission::MissionType::Land ||
+	     missions.front().type == VehicleMission::MissionType::TakeOff))
 	{
 		return missions.emplace(++missions.begin(), mission);
 	}
 	else if (!toBack || missions.empty())
 	{
 		missions.emplace_front(mission);
-		missions.front()->start(state, *this);
+		missions.front().start(state, *this);
 		return missions.begin();
 	}
 	else
@@ -3158,7 +3155,7 @@ Vehicle::addMission(GameState &state, VehicleMission *mission, bool toBack)
 	}
 }
 
-bool Vehicle::setMission(GameState &state, VehicleMission *mission)
+bool Vehicle::setMission(GameState &state, VehicleMission mission)
 {
 	if (!hasEngine())
 	{
@@ -3167,12 +3164,11 @@ bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 			fw().pushEvent(
 			    new GameVehicleEvent(GameEventType::VehicleNoEngine, {&state, shared_from_this()}));
 		}
-		delete mission;
 		return false;
 	}
 
 	bool forceClear = false;
-	switch (mission->type)
+	switch (mission.type)
 	{
 		case VehicleMission::MissionType::Crash:
 			forceClear = true;
@@ -3199,7 +3195,6 @@ bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 		case VehicleMission::MissionType::ArriveFromDimensionGate:
 			if (crashed || sliding || falling || carriedVehicle)
 			{
-				delete mission;
 				return false;
 			}
 			break;
@@ -3210,7 +3205,7 @@ bool Vehicle::setMission(GameState &state, VehicleMission *mission)
 	{
 		// A mission couldn't be cleared and the new mission was inserted behind it
 		// need to manually start the mission at the front
-		missions.front()->start(state, *this);
+		missions.front().start(state, *this);
 	}
 	return true;
 }
@@ -3219,8 +3214,8 @@ bool Vehicle::clearMissions(GameState &state, bool forced)
 {
 	for (auto it = missions.begin(); it != missions.end();)
 	{
-		if (((*it)->type == VehicleMission::MissionType::Land ||
-		     (*it)->type == VehicleMission::MissionType::TakeOff) &&
+		if (((*it).type == VehicleMission::MissionType::Land ||
+		     (*it).type == VehicleMission::MissionType::TakeOff) &&
 		    !forced)
 		{
 			it++;
@@ -3229,11 +3224,11 @@ bool Vehicle::clearMissions(GameState &state, bool forced)
 		{
 			// if we're removing an InvestigateBuilding mission
 			// decrease the investigate count so the other investigating vehicles won't dangle
-			if ((*it)->type == VehicleMission::MissionType::InvestigateBuilding)
+			if ((*it).type == VehicleMission::MissionType::InvestigateBuilding)
 			{
-				if (!(*it)->isFinished(state, *this))
+				if (!(*it).isFinished(state, *this))
 				{
-					(*it)->targetBuilding->decreasePendingInvestigatorCount(state);
+					(*it).targetBuilding->decreasePendingInvestigatorCount(state);
 				}
 			}
 			it = missions.erase(it);
@@ -3245,19 +3240,19 @@ bool Vehicle::clearMissions(GameState &state, bool forced)
 bool Vehicle::popFinishedMissions(GameState &state)
 {
 	bool popped = false;
-	while (missions.size() > 0 && missions.front()->isFinished(state, *this))
+	while (missions.size() > 0 && missions.front().isFinished(state, *this))
 	{
 		if (isDead())
 		{
 			return false;
 		}
-		LogInfo("Vehicle %s mission \"%s\" finished", name, missions.front()->getName());
+		LogInfo("Vehicle %s mission \"%s\" finished", name, missions.front().getName());
 		missions.pop_front();
 		popped = true;
 		if (!missions.empty())
 		{
-			LogInfo("Vehicle %s mission \"%s\" starting", name, missions.front()->getName());
-			missions.front()->start(state, *this);
+			LogInfo("Vehicle %s mission \"%s\" starting", name, missions.front().getName());
+			missions.front().start(state, *this);
 			continue;
 		}
 		else
@@ -3282,8 +3277,8 @@ bool Vehicle::getNewGoal(GameState &state, int &turboTiles)
 		// Try to get new destination
 		if (!missions.empty())
 		{
-			acquired = missions.front()->getNextDestination(state, *this, goalPosition, goalFacing,
-			                                                turboTiles);
+			acquired = missions.front().getNextDestination(state, *this, goalPosition, goalFacing,
+			                                               turboTiles);
 		}
 		// Pop finished missions if present
 		popped = popFinishedMissions(state);
@@ -3293,7 +3288,7 @@ bool Vehicle::getNewGoal(GameState &state, int &turboTiles)
 		LogWarning("Vehicle %s at %s", name, position);
 		for (auto &m : missions)
 		{
-			LogWarning("Mission %s", m->getName());
+			LogWarning("Mission %s", m.getName());
 		}
 		LogError("Vehicle %s deadlocked, please send log to developers. Vehicle will self-destruct "
 		         "now...",

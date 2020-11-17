@@ -339,21 +339,21 @@ void CityTileView::render()
 				}
 				for (auto &m : vehicle->missions)
 				{
-					if (m->type == VehicleMission::MissionType::AttackVehicle ||
-					    m->type == VehicleMission::MissionType::RecoverVehicle)
+					if (m.type == VehicleMission::MissionType::AttackVehicle ||
+					    m.type == VehicleMission::MissionType::RecoverVehicle)
 					{
-						if (m->targetVehicle)
+						if (m.targetVehicle)
 						{
-							vehiclesToDrawBrackets.insert(m->targetVehicle);
-							vehiclesBracketsIndex[m->targetVehicle] = 2;
+							vehiclesToDrawBrackets.insert(m.targetVehicle);
+							vehiclesBracketsIndex[m.targetVehicle] = 2;
 						}
 					}
-					else if (m->type == VehicleMission::MissionType::FollowVehicle)
+					else if (m.type == VehicleMission::MissionType::FollowVehicle)
 					{
-						if (m->targetVehicle)
+						if (m.targetVehicle)
 						{
-							vehiclesToDrawBrackets.insert(m->targetVehicle);
-							vehiclesBracketsIndex[m->targetVehicle] = 3;
+							vehiclesToDrawBrackets.insert(m.targetVehicle);
+							vehiclesBracketsIndex[m.targetVehicle] = 3;
 						}
 					}
 				}
@@ -694,9 +694,9 @@ void CityTileView::render()
 				}
 				for (auto &m : a.second->missions)
 				{
-					if (m->type == AgentMission::MissionType::GotoBuilding)
+					if (m.type == AgentMission::MissionType::GotoBuilding)
 					{
-						targetLocationsToDraw.emplace_back(m->targetBuilding->crewQuarters,
+						targetLocationsToDraw.emplace_back(m.targetBuilding->crewQuarters,
 						                                   a.second->position, true, false);
 						break;
 					}
@@ -729,23 +729,23 @@ void CityTileView::render()
 				// Destinations
 				for (auto &m : v.second->missions)
 				{
-					switch (m->type)
+					switch (m.type)
 					{
 						case VehicleMission::MissionType::AttackVehicle:
 						case VehicleMission::MissionType::RecoverVehicle:
 						{
-							if (!m->targetVehicle)
+							if (!m.targetVehicle)
 								break;
-							vehiclesUnderAttack.insert(m->targetVehicle);
-							targetLocationsToDraw.emplace_back(m->targetVehicle->position,
+							vehiclesUnderAttack.insert(m.targetVehicle);
+							targetLocationsToDraw.emplace_back(m.targetVehicle->position,
 							                                   v.second->position, false, true);
 							break;
 						}
 						case VehicleMission::MissionType::FollowVehicle:
 						{
-							if (!m->targetVehicle)
+							if (!m.targetVehicle)
 								break;
-							targetLocationsToDraw.emplace_back(m->targetVehicle->position,
+							targetLocationsToDraw.emplace_back(m.targetVehicle->position,
 							                                   v.second->position, false, false);
 							break;
 						}
@@ -754,17 +754,17 @@ void CityTileView::render()
 						case VehicleMission::MissionType::Land:
 						case VehicleMission::MissionType::OfferService:
 						case VehicleMission::MissionType::InvestigateBuilding:
-							if (m->targetBuilding)
+							if (m.targetBuilding)
 							{
-								buildingsSelected.insert(m->targetBuilding);
+								buildingsSelected.insert(m.targetBuilding);
 							}
 							[[fallthrough]];
 						case VehicleMission::MissionType::Crash:
 						{
-							if (!m->currentPlannedPath.empty())
+							if (!m.currentPlannedPath.empty())
 							{
 								targetLocationsToDraw.emplace_back(
-								    (Vec3<float>)m->currentPlannedPath.back() +
+								    (Vec3<float>)m.currentPlannedPath.back() +
 								        Vec3<float>{0.5f, 0.5f, 0.0f},
 								    v.second->position, true, false);
 							}
@@ -777,7 +777,7 @@ void CityTileView::render()
 						case VehicleMission::MissionType::Teleport:
 						case VehicleMission::MissionType::DepartToSpace:
 						{
-							targetLocationsToDraw.emplace_back((Vec3<float>)m->targetLocation +
+							targetLocationsToDraw.emplace_back((Vec3<float>)m.targetLocation +
 							                                       Vec3<float>{0.5f, 0.5f, 0.0f},
 							                                   v.second->position, true, false);
 							break;

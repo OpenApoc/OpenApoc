@@ -839,12 +839,12 @@ void Agent::updateIsBrainsucker()
 	}
 }
 
-bool Agent::addMission(GameState &state, AgentMission *mission, bool toBack)
+bool Agent::addMission(GameState &state, AgentMission mission, bool toBack)
 {
 	if (missions.empty() || !toBack)
 	{
 		missions.emplace_front(mission);
-		missions.front()->start(state, *this);
+		missions.front().start(state, *this);
 	}
 	else
 	{
@@ -853,38 +853,38 @@ bool Agent::addMission(GameState &state, AgentMission *mission, bool toBack)
 	return true;
 }
 
-bool Agent::setMission(GameState &state, AgentMission *mission)
+bool Agent::setMission(GameState &state, AgentMission mission)
 {
 	for (auto &m : this->missions)
 	{
 		// if we're removing an InvestigateBuilding mission
 		// decrease the investigate count so the other investigating vehicles won't dangle
-		if (m->type == AgentMission::MissionType::InvestigateBuilding)
+		if (m.type == AgentMission::MissionType::InvestigateBuilding)
 		{
-			if (!m->isFinished(state, *this))
+			if (!m.isFinished(state, *this))
 			{
-				m->targetBuilding->decreasePendingInvestigatorCount(state);
+				m.targetBuilding->decreasePendingInvestigatorCount(state);
 			}
 		}
 	}
 	missions.clear();
 	missions.emplace_front(mission);
-	missions.front()->start(state, *this);
+	missions.front().start(state, *this);
 	return true;
 }
 
 bool Agent::popFinishedMissions(GameState &state)
 {
 	bool popped = false;
-	while (missions.size() > 0 && missions.front()->isFinished(state, *this))
+	while (missions.size() > 0 && missions.front().isFinished(state, *this))
 	{
-		LogWarning("Agent %s mission \"%s\" finished", name, missions.front()->getName());
+		LogWarning("Agent %s mission \"%s\" finished", name, missions.front().getName());
 		missions.pop_front();
 		popped = true;
 		if (!missions.empty())
 		{
-			LogWarning("Agent %s mission \"%s\" starting", name, missions.front()->getName());
-			missions.front()->start(state, *this);
+			LogWarning("Agent %s mission \"%s\" starting", name, missions.front().getName());
+			missions.front().start(state, *this);
 			continue;
 		}
 		else
@@ -907,7 +907,7 @@ bool Agent::getNewGoal(GameState &state)
 		// Try to get new destination
 		if (!missions.empty())
 		{
-			acquired = missions.front()->getNextDestination(state, *this, goalPosition);
+			acquired = missions.front().getNextDestination(state, *this, goalPosition);
 		}
 		// Pop finished missions if present
 		popped = popFinishedMissions(state);
@@ -1000,7 +1000,7 @@ void Agent::update(GameState &state, unsigned ticks)
 	{
 		if (!this->missions.empty())
 		{
-			this->missions.front()->update(state, *this, ticks);
+			this->missions.front().update(state, *this, ticks);
 		}
 		popFinishedMissions(state);
 		updateMovement(state, ticks);

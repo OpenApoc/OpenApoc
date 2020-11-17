@@ -337,8 +337,8 @@ void Organisation::updateMissions(GameState &state)
 					{
 						for (auto &m : r.second->missions)
 						{
-							if (m->type == VehicleMission::MissionType::RecoverVehicle &&
-							    m->targetVehicle.id == v.first)
+							if (m.type == VehicleMission::MissionType::RecoverVehicle &&
+							    m.targetVehicle.id == v.first)
 							{
 								foundRescuer = true;
 								break;
@@ -371,8 +371,8 @@ void Organisation::updateMissions(GameState &state)
 					{
 						for (auto &m : r.second->missions)
 						{
-							if (m->type == VehicleMission::MissionType::RecoverVehicle &&
-							    m->targetVehicle.id == v.first)
+							if (m.type == VehicleMission::MissionType::RecoverVehicle &&
+							    m.targetVehicle.id == v.first)
 							{
 								foundRescuer = true;
 								break;

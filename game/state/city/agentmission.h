@@ -68,15 +68,15 @@ class AgentMission
 	// Methods to create new missions
 
 	// With no building goes home, allowTaxi auto set to true for non-soldiers
-	static AgentMission *gotoBuilding(GameState &state, Agent &a,
-	                                  StateRef<Building> target = nullptr,
-	                                  bool allowTeleporter = false, bool allowTaxi = false);
-	static AgentMission *awaitPickup(GameState &state, Agent &a, StateRef<Building> target);
-	static AgentMission *snooze(GameState &state, Agent &a, unsigned int ticks);
-	static AgentMission *restartNextMission(GameState &state, Agent &a);
-	static AgentMission *teleport(GameState &state, Agent &a, StateRef<Building> b);
-	static AgentMission *investigateBuilding(GameState &state, Agent &a, StateRef<Building> target,
-	                                         bool allowTeleporter = false, bool allowTaxi = false);
+	static AgentMission gotoBuilding(GameState &state, Agent &a,
+	                                 StateRef<Building> target = nullptr,
+	                                 bool allowTeleporter = false, bool allowTaxi = false);
+	static AgentMission awaitPickup(GameState &state, Agent &a, StateRef<Building> target);
+	static AgentMission snooze(GameState &state, Agent &a, unsigned int ticks);
+	static AgentMission restartNextMission(GameState &state, Agent &a);
+	static AgentMission teleport(GameState &state, Agent &a, StateRef<Building> b);
+	static AgentMission investigateBuilding(GameState &state, Agent &a, StateRef<Building> target,
+	                                        bool allowTeleporter = false, bool allowTaxi = false);
 	UString getName();
 
 	enum class MissionType

@@ -222,7 +222,7 @@ void Building::updateCargo(GameState &state)
 				for (auto &a : currentAgents)
 				{
 					if (a->missions.empty() ||
-					    a->missions.front()->type != AgentMission::MissionType::AwaitPickup)
+					    a->missions.front().type != AgentMission::MissionType::AwaitPickup)
 					{
 						continue;
 					}
@@ -296,7 +296,7 @@ void Building::updateCargo(GameState &state)
 			for (auto &a : currentAgents)
 			{
 				if (a->missions.empty() ||
-				    a->missions.front()->type != AgentMission::MissionType::AwaitPickup)
+				    a->missions.front().type != AgentMission::MissionType::AwaitPickup)
 				{
 					continue;
 				}
@@ -396,16 +396,16 @@ void Building::updateCargo(GameState &state)
 	for (auto &a : currentAgents)
 	{
 		if (a->missions.empty() ||
-		    a->missions.front()->type != AgentMission::MissionType::AwaitPickup)
+		    a->missions.front().type != AgentMission::MissionType::AwaitPickup)
 		{
 			continue;
 		}
 #ifdef DEBUG_VERBOSE_CARGO_SYSTEM
 		LogWarning("AGENT: %s needs to deliver to %s", thisRef.id,
-		           a->missions.front()->targetBuilding.id);
+		           a->missions.front().targetBuilding.id);
 #endif
-		spaceNeeded[a->missions.front()->targetBuilding][a->owner].resize(3);
-		spaceNeeded[a->missions.front()->targetBuilding][a->owner][2]++;
+		spaceNeeded[a->missions.front().targetBuilding][a->owner].resize(3);
+		spaceNeeded[a->missions.front().targetBuilding][a->owner][2]++;
 	}
 
 	// Step 04: Find if carrying capacity is satisfied by incoming ferries
@@ -420,8 +420,8 @@ void Building::updateCargo(GameState &state)
 			}
 			// Check if is a ferry
 			if (v.second->missions.empty() ||
-			    v.second->missions.back()->type != VehicleMission::MissionType::OfferService ||
-			    v.second->missions.back()->missionCounter > 0)
+			    v.second->missions.back().type != VehicleMission::MissionType::OfferService ||
+			    v.second->missions.back().missionCounter > 0)
 			{
 				continue;
 			}
@@ -434,7 +434,7 @@ void Building::updateCargo(GameState &state)
 					continue;
 				}
 				// Not bound for this building
-				if (v.second->missions.back()->targetBuilding != thisRef)
+				if (v.second->missions.back().targetBuilding != thisRef)
 				{
 					continue;
 				}

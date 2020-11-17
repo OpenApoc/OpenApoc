@@ -144,7 +144,7 @@ class Agent : public StateObject<Agent>,
 
 	StateRef<BattleUnit> unit;
 
-	std::list<up<AgentMission>> missions;
+	std::list<AgentMission> missions;
 	std::list<sp<AEquipment>> equipment;
 	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> equipmentType,
 	                     EquipmentSlotType &slotType) const;
@@ -178,9 +178,9 @@ class Agent : public StateObject<Agent>,
 	bool isBrainsucker = false;
 
 	// Adds mission to list of missions, returns true if successful
-	bool addMission(GameState &state, AgentMission *mission, bool toBack = false);
+	bool addMission(GameState &state, AgentMission mission, bool toBack = false);
 	// Replaces all missions with provided mission, returns true if successful
-	bool setMission(GameState &state, AgentMission *mission);
+	bool setMission(GameState &state, AgentMission mission);
 
 	// Pops all finished missions, returns true if popped
 	bool popFinishedMissions(GameState &state);

@@ -277,7 +277,7 @@ void TileObjectVehicle::addToDrawnTiles(Tile *tile)
 	}
 	// Vehicles are also never drawn below level 1, so that when they take off they're drawn above
 	// landing pad's scenery
-	if (!v->missions.empty() && v->missions.front()->isTakingOff(*v))
+	if (!v->missions.empty() && v->missions.front().isTakingOff(*v))
 	{
 		tile = map.getTile(tile->position.x, tile->position.y, tile->position.z + 1);
 	}

@@ -191,7 +191,7 @@ class Vehicle : public StateObject<Vehicle>,
 	StateRef<VehicleType> type;
 	StateRef<Organisation> owner;
 	UString name;
-	std::list<up<VehicleMission>> missions;
+	std::list<VehicleMission> missions;
 	std::list<sp<VEquipment>> equipment;
 	std::list<StateRef<VEquipmentType>> loot;
 	StateRef<City> city;
@@ -351,10 +351,10 @@ class Vehicle : public StateObject<Vehicle>,
 
 	// Adds mission to list of missions, returns iterator to mission if successful, missions.end()
 	// otherwise
-	typename decltype(missions)::iterator addMission(GameState &state, VehicleMission *mission,
+	typename decltype(missions)::iterator addMission(GameState &state, VehicleMission mission,
 	                                                 bool toBack = false);
 	// Replaces all missions with provided mission, returns true if successful
-	bool setMission(GameState &state, VehicleMission *mission);
+	bool setMission(GameState &state, VehicleMission mission);
 	bool clearMissions(GameState &state, bool forced = false);
 
 	// Pops all finished missions, returns true if popped

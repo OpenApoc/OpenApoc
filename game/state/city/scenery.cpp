@@ -1196,7 +1196,7 @@ bool Scenery::handleCollision(GameState &state, Collision &c)
 		updateRelationWithAttacker(state, attackerOrg, false);
 		bool intentional =
 		    c.projectile->manualFire || (!c.projectile->firerVehicle->missions.empty() &&
-		                                 c.projectile->firerVehicle->missions.front()->type ==
+		                                 c.projectile->firerVehicle->missions.front().type ==
 		                                     VehicleMission::MissionType::AttackBuilding);
 		if (intentional || config().getBool("OpenApoc.NewFeature.ScrambleOnUnintentionalHit"))
 		{
