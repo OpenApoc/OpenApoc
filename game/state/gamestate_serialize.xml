@@ -1287,6 +1287,7 @@
 		<member>teleporting</member>
 		<member>dimensionShifting</member>
 		<member>scoreRequirement</member>
+		<member>research_dependency</member>
 	</object>
 	<object>
 		<name>DoodadFrame</name>
