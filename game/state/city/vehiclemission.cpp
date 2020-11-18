@@ -2511,7 +2511,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						}
 						if (targetBuilding->base)
 						{
-							// Destroy empty base without security stations
+							// Destroy empty base
 							if (targetBuilding->base->building->currentAgents.empty())
 							{
 								targetBuilding->base->die(state, false);
