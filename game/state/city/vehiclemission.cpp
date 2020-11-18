@@ -2509,8 +2509,16 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						}
 						if (targetBuilding->base)
 						{
-							fw().pushEvent(new GameDefenseEvent(GameEventType::DefendTheBase,
-							                                    targetBuilding->base, v.owner));
+							// Destroy empty base
+							if (targetBuilding->base->building->currentAgents.empty())
+							{
+								targetBuilding->base->die(state, false);
+							}
+							else
+							{
+								fw().pushEvent(new GameDefenseEvent(GameEventType::DefendTheBase,
+								                                    targetBuilding->base, v.owner));
+							}
 						}
 						else
 						{

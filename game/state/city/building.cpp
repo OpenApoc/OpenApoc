@@ -959,8 +959,16 @@ void Building::alienMovement(GameState &state)
 	}
 	if (bld->base)
 	{
-		fw().pushEvent(
-		    new GameDefenseEvent(GameEventType::DefendTheBase, bld->base, state.getAliens()));
+		// Destroy base if its empty
+		if (bld->currentAgents.empty())
+		{
+			bld->base->die(state, false);
+		}
+		else
+		{
+			fw().pushEvent(
+			    new GameDefenseEvent(GameEventType::DefendTheBase, bld->base, state.getAliens()));
+		}
 	}
 }
 
