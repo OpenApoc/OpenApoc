@@ -7,7 +7,7 @@ local CFG = OpenApoc.Framework.Config
 function pickRandom(t)
 	return t[GS.rng:randBoundsInclusive(1, #t)]
 end
-function math.clamp(v, max, min)
+function math.clamp(v, min, max)
 	return math.min(math.max(v, min), max)
 end
 function math.round(v)
