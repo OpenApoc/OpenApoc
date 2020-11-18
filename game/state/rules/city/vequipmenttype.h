@@ -1,5 +1,6 @@
 #pragma once
 
+#include "game/state/city/research.h"
 #include "game/state/shared/equipment.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
@@ -93,6 +94,8 @@ class VEquipmentType : public StateObject<VEquipmentType>
 
 	// Score requirement
 	int scoreRequirement = 0;
+
+	ResearchDependency research_dependency;
 
 	int getRangeInTiles() const;
 	int getRangeInMetres() const;
