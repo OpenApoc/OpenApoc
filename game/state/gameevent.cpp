@@ -370,11 +370,11 @@ GameSomethingDiedEvent::GameSomethingDiedEvent(GameEventType type, UString name,
 		case GameEventType::BaseDestroyed:
 			if (actor.length() > 0)
 			{
-				messageInner = tr("X-COM base destroyed by hostile forces.");
+				messageInner = tr("X-COM " + name + " destroyed by hostile forces.");
 			}
 			else
 			{
-				messageInner = tr("X-COM Base destroyed due to collapsing building.");
+				messageInner = tr("X-COM " + name + " destroyed due to collapsing building.");
 			}
 			break;
 		case GameEventType::VehicleDestroyed:
