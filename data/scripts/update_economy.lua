@@ -27,11 +27,11 @@ function updateEconomy()
 			end
 
 			if soldThisWeek > 2 * eco.maxStock then
-				eco.currentPrice = math.round(eco.currentPrice * GS.rng:randBoundsReal(0.85, 0.95))
+				eco.currentPrice = math.round(eco.currentPrice * GS.rng:randBoundsInclusive(math.round(85), math.round(95)) / 100)
 			elseif soldThisWeek > eco.maxStock then
-				eco.currentPrice = math.round(eco.currentPrice * GS.rng:randBoundsReal(0.9, 0.95))
+				eco.currentPrice = math.round(eco.currentPrice * GS.rng:randBoundsInclusive(math.round(9), math.round(95)) / 100)
 			elseif soldThisWeek > eco.maxStock/2 then
-				eco.currentPrice = math.round(eco.currentPrice * GS.rng:randBoundsReal(0.95, 0.97))
+				eco.currentPrice = math.round(eco.currentPrice * GS.rng:randBoundsInclusive(math.round(95), math.round(97)) / 100)
 			end
 			eco.currentPrice = math.round(math.clamp(eco.currentPrice, eco.basePrice / 2, eco.basePrice))
 		elseif eco.weekAvailable ~= 0 then
@@ -39,11 +39,11 @@ function updateEconomy()
 			eco.currentStock = math.clamp(GS.rng:randBoundsInclusive(0, averageStock + eco.lastStock), eco.minStock, eco.maxStock)
 			if week > 1 then
 				if eco.currentStock > averageStock then
-					eco.currentPrice = eco.currentPrice * GS.rng:randBoundsReal(0.97, 1.0)
+					eco.currentPrice = math.round(eco.currentPrice * GS.rng:randBoundsInclusive(math.round(97), math.round(100)) / 100)
 				elseif eco.currentStock < averageStock then
-					eco.currentPrice = eco.currentPrice * GS.rng:randBoundsReal(1.0, 1.03)
+					eco.currentPrice = math.round(eco.currentPrice * GS.rng:randBoundsInclusive(math.round(100), math.round(103)) / 100)
 				end
-				eco.currentPrice = math.round(math.clamp(eco.currentPrice, eco.basePrice / 2, eco.basePrice * 2))
+				eco.currentPrice = math.round(math.clamp(eco.currentPrice, eco.basePrice * 0.5, eco.basePrice * 2.0))
 			end
 		end
 		return week ~= 1 and week == eco.weekAvailable

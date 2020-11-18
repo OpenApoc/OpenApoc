@@ -5,14 +5,14 @@
 
 namespace OpenApoc
 {
-bool EconomyInfo::update(GameState &state, bool xcom)
+bool EconomyInfo::update(GameState &state, const bool xcom)
 {
 	if (currentPrice == 0)
 	{
 		currentPrice = basePrice;
 	}
 	// According to Wong's Guide, let's hope he's not wong here as he often is, lol
-	int week = state.gameTime.getWeek();
+	const int week = static_cast<int>(state.gameTime.getWeek());
 	if (weekAvailable > week)
 	{
 		return false;
@@ -21,9 +21,9 @@ bool EconomyInfo::update(GameState &state, bool xcom)
 	if (xcom)
 	{
 		// Stock update
-		int soldThisWeek = std::max(0, currentStock - lastStock);
+		const int soldThisWeek = std::max(0, currentStock - lastStock);
 		lastStock = currentStock;
-		int rnd = randBoundsExclusive(state.rng, 0, 100);
+		const int rnd = randBoundsExclusive(state.rng, 0, 100);
 		if (rnd < 30)
 		{
 			currentStock = lastStock * 80 / 100;
@@ -35,7 +35,7 @@ bool EconomyInfo::update(GameState &state, bool xcom)
 		// Price update
 		if (soldThisWeek > 2 * maxStock)
 		{
-			currentPrice = currentPrice * randBoundsInclusive(state.rng, 85, 5);
+			currentPrice = currentPrice * randBoundsInclusive(state.rng, 85, 95);
 		}
 		else if (soldThisWeek > maxStock)
 		{
@@ -52,7 +52,7 @@ bool EconomyInfo::update(GameState &state, bool xcom)
 	{
 		// Stock update
 		lastStock = currentStock;
-		int averageStock = (minStock + maxStock) / 2;
+		const int averageStock = (minStock + maxStock) / 2;
 		currentStock =
 		    clamp(randBoundsInclusive(state.rng, 0, averageStock + lastStock), minStock, maxStock);
 		// Price update
