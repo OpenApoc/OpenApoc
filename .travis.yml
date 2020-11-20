@@ -12,12 +12,15 @@ cache: ccache
 jobs:
   include:
     - os: linux
+      compiler: gcc
       env:
         - MATRIX_ENV="PASS=build CXX='g++-10' CC='gcc-10' BUILD_TYPE=Quick"
     - os: linux
+      compiler: clang
       env:
         - MATRIX_ENV="PASS=build CXX='clang++-10' CC='clang-10' BUILD_TYPE=sanitize"
     - os: linux
+      compiler: clang
       env:
         - MATRIX_ENV="PASS=lint CLANG_FORMAT=clang-format-10 CLANG_TIDY=clang-tidy-10"
 
