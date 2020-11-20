@@ -1,5 +1,6 @@
 language: cpp
-sudo: required
+os: linux
+arch: amd64
 dist: focal
 
 cache: ccache
@@ -8,7 +9,7 @@ cache: ccache
 #  - gcc
 #  - clang
 
-matrix:
+jobs:
   include:
     - os: linux
       env:
@@ -26,13 +27,9 @@ matrix:
 #  - linux static analysis (clang-tidy?)
 
 before_install:
-#  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-#  - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
-#  - sudo add-apt-repository 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-8 main' -y
   - sudo apt-get update -q
   - sudo apt-get install g++ clang clang-format clang-tidy ninja-build -y
   - eval "${MATRIX_ENV}"
-  - env
   - ./tools/travis-scripts/build_prepare_linux.sh
   - ${CXX} --version
   - ${CC} --version
