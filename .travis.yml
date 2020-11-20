@@ -28,6 +28,9 @@ jobs:
 
 before_install:
   - sudo apt-get install ninja-build -y
+  - if [ "$PASS" = "lint" ]; then sudo apt-get install clang-tidy-10 clang-format-10; fi
+  - if [ "$CXX" = "g++-10" ]; then sudo apt-get install g++-10; fi
+  - if [ "$CXX" = "clang++-10" ]; then sudo apt-get install clang-10; fi
   - eval "${MATRIX_ENV}"
   - ./tools/travis-scripts/build_prepare_linux.sh
   - ${CXX} --version
