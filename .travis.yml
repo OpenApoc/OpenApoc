@@ -27,8 +27,7 @@ jobs:
 #  - linux static analysis (clang-tidy?)
 
 before_install:
-  - sudo apt-get update -q
-  - sudo apt-get install g++-10 clang clang-format clang-tidy ninja-build -y
+  - sudo apt-get install ninja-build -y
   - eval "${MATRIX_ENV}"
   - ./tools/travis-scripts/build_prepare_linux.sh
   - ${CXX} --version
