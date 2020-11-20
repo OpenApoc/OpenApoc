@@ -1,6 +1,6 @@
 language: cpp
 sudo: required
-dist: bionic
+dist: focal
 
 cache: ccache
 
@@ -12,13 +12,13 @@ matrix:
   include:
     - os: linux
       env:
-        - MATRIX_ENV="PASS=build CXX='g++-9' CC='gcc-9' BUILD_TYPE=Quick"
+        - MATRIX_ENV="PASS=build CXX='g++' CC='gcc' BUILD_TYPE=Quick"
     - os: linux
       env:
-        - MATRIX_ENV="PASS=build CXX='clang++-8' CC='clang-8' BUILD_TYPE=sanitize"
+        - MATRIX_ENV="PASS=build CXX='clang++' CC='clang' BUILD_TYPE=sanitize"
     - os: linux
       env:
-        - MATRIX_ENV="PASS=lint CLANG_FORMAT=clang-format-8"
+        - MATRIX_ENV="PASS=lint CLANG_FORMAT=clang-format"
 
 # Passes todo:
 #  - osx
@@ -26,11 +26,11 @@ matrix:
 #  - linux static analysis (clang-tidy?)
 
 before_install:
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
-  - sudo add-apt-repository 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-8 main' -y
+#  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+#  - wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+#  - sudo add-apt-repository 'deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-8 main' -y
   - sudo apt-get update -q
-  - sudo apt-get install g++-9 clang-8 clang-format-8 clang-tidy-8 ninja-build -y
+  - sudo apt-get install g++ clang clang-format clang-tidy ninja-build -y
   - eval "${MATRIX_ENV}"
   - env
   - ./tools/travis-scripts/build_prepare_linux.sh
@@ -40,7 +40,7 @@ before_install:
 
 before_script:
   - export CFLAGS="-Wall" CXXFLAGS="-Wall -Werror -Wno-error=sign-compare"
-  - $(which time) cmake . -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCLANG_TIDY=clang-tidy-8 -DCLANG_FORMAT=clang-format-8 -DENABLE_TESTS=ON -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}" -GNinja
+  - $(which time) cmake . -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCLANG_TIDY=clang-tidy -DCLANG_FORMAT=clang-format -DENABLE_TESTS=ON -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}" -GNinja
 
 
 script:
