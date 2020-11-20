@@ -13,7 +13,7 @@ jobs:
   include:
     - os: linux
       env:
-        - MATRIX_ENV="PASS=build CXX='g++-9' CC='gcc-9' BUILD_TYPE=Quick"
+        - MATRIX_ENV="PASS=build CXX='g++-10' CC='gcc-10' BUILD_TYPE=Quick"
     - os: linux
       env:
         - MATRIX_ENV="PASS=build CXX='clang++-10' CC='clang-10' BUILD_TYPE=sanitize"
@@ -28,7 +28,7 @@ jobs:
 
 before_install:
   - sudo apt-get update -q
-  - sudo apt-get install g++ clang clang-format clang-tidy ninja-build -y
+  - sudo apt-get install g++-10 clang clang-format clang-tidy ninja-build -y
   - eval "${MATRIX_ENV}"
   - ./tools/travis-scripts/build_prepare_linux.sh
   - ${CXX} --version
