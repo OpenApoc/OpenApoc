@@ -15,6 +15,9 @@ if [ -z "$(command -v ${CLANG_FORMAT})" ]; then
   exit 1;
 fi;
 
+echo "Clang-format version:"
+${CLANG_FORMAT} --version
+
 # Default to 'cached', or the revision passed as an argument
 GIT_REVISION=${1:---cached}
 
