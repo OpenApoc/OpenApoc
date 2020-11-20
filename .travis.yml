@@ -13,13 +13,13 @@ jobs:
   include:
     - os: linux
       env:
-        - MATRIX_ENV="PASS=build CXX='g++' CC='gcc' BUILD_TYPE=Quick"
+        - MATRIX_ENV="PASS=build CXX='g++-9' CC='gcc-9' BUILD_TYPE=Quick"
     - os: linux
       env:
-        - MATRIX_ENV="PASS=build CXX='clang++' CC='clang' BUILD_TYPE=sanitize"
+        - MATRIX_ENV="PASS=build CXX='clang++-10' CC='clang-10' BUILD_TYPE=sanitize"
     - os: linux
       env:
-        - MATRIX_ENV="PASS=lint CLANG_FORMAT=clang-format"
+        - MATRIX_ENV="PASS=lint CLANG_FORMAT=clang-format-10 CLANG_TIDY=clang-tidy-10"
 
 # Passes todo:
 #  - osx
@@ -37,7 +37,7 @@ before_install:
 
 before_script:
   - export CFLAGS="-Wall" CXXFLAGS="-Wall -Werror -Wno-error=sign-compare"
-  - $(which time) cmake . -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCLANG_TIDY=clang-tidy -DCLANG_FORMAT=clang-format -DENABLE_TESTS=ON -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}" -GNinja
+  - $(which time) cmake . -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCLANG_TIDY=${CLANG_TIDY} -DCLANG_FORMAT=${CLANG_FORMAT} -DENABLE_TESTS=ON -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}" -GNinja
 
 
 script:
