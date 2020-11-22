@@ -22,6 +22,12 @@ jobs:
       # We'll use this as our working directory for all subsequent commands
       run: cmake -E make_directory ${{runner.workspace}}/build
 
+    - name: Download minimal cd image
+      run: wget http://s2.jonnyh.net/pub/cd_minimal.iso.xz -O $GITHUB_WORKSPACE/data/cd.iso.xz
+    
+    - name: Extract minimal cd image
+      run: xz -d $GITHUB_WORKSPACE/data/cd.iso.xz
+
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
