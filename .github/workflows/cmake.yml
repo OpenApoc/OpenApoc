@@ -28,6 +28,9 @@ jobs:
     - name: Extract minimal cd image
       run: xz -d $GITHUB_WORKSPACE/data/cd.iso.xz
 
+    - name: Update apt-get repo
+      run: sudo apt-get update
+
     - name: Install dependencies
       run: sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-program-options-dev qtbase5-dev libvorbis-dev 
 
