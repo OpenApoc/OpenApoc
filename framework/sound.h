@@ -84,6 +84,9 @@ class MusicTrack : public ResObject
 
 class SoundBackend
 {
+  protected:
+	int concurrent_samples = 0;
+
   public:
 	virtual ~SoundBackend() = default;
 	virtual void playSample(sp<Sample> sample, float gain = 1.0f) = 0;
@@ -92,6 +95,8 @@ class SoundBackend
 	virtual void stopMusic() = 0;
 
 	virtual void setTrack(sp<MusicTrack> track) = 0;
+
+	virtual void setConcurrentSamples(int count) { this->concurrent_samples = count; }
 
 	/* Gain - a float scale (from 1.0 to 0.0) in 'linear intensity' (IE samples
 	 * are simply multiplied by the 'volume')

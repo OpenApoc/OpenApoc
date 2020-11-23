@@ -317,6 +317,12 @@ class SDLRawBackend : public SoundBackend
 		}
 		{
 			std::lock_guard<std::recursive_mutex> l(this->audio_lock);
+			if (this->live_samples.size() > this->concurrent_samples)
+			{
+				LogInfo("Skipping sound %s as we already have %d on queue", sample->path,
+				        this->live_samples.size());
+				return;
+			}
 			this->live_samples.emplace_back(sample, gain);
 		}
 		LogInfo("Placed sound %s on queue", sample->path);

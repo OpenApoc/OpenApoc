@@ -961,6 +961,7 @@ void Framework::audioInitialise()
 			continue;
 		}
 		this->soundBackend.reset(backend);
+		this->soundBackend->setConcurrentSamples(Options::audioConcurrentSampleCount.get());
 		LogInfo("Using sound backend %s", soundBackendName);
 		break;
 	}

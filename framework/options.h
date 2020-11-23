@@ -13,6 +13,7 @@ extern ConfigOptionString audioBackendsOption;
 extern ConfigOptionInt audioGlobalGainOption;
 extern ConfigOptionInt audioSampleGainOption;
 extern ConfigOptionInt audioMusicGainOption;
+extern ConfigOptionInt audioConcurrentSampleCount;
 extern ConfigOptionInt screenWidthOption;
 extern ConfigOptionInt screenHeightOption;
 extern ConfigOptionBool screenFullscreenOption;
