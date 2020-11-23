@@ -264,9 +264,10 @@ class SDLRawBackend : public SoundBackend
 		}
 	}
 
-	SDLRawBackend()
-	    : overall_volume(1.0f), music_volume(1.0f), sound_volume(1.0f), music_playing(false),
-	      music_callback_data(nullptr), music_queue_size(2)
+	SDLRawBackend(int concurrent_sample_count)
+	    : SoundBackend(concurrent_sample_count), overall_volume(1.0f), music_volume(1.0f),
+	      sound_volume(1.0f), music_playing(false), music_callback_data(nullptr),
+	      music_queue_size(2)
 	{
 		SDL_Init(SDL_INIT_AUDIO);
 		preferred_format.channels = 2;
@@ -425,7 +426,7 @@ void unwrap_callback(void *userdata, Uint8 *stream, int len)
 class SDLRawBackendFactory : public SoundBackendFactory
 {
   public:
-	SoundBackend *create() override
+	SoundBackend *create(int concurrent_sample_count) override
 	{
 		LogWarning("Creating SDLRaw sound backend (Might have issues!)");
 		int ret = SDL_InitSubSystem(SDL_INIT_AUDIO);
@@ -434,7 +435,9 @@ class SDLRawBackendFactory : public SoundBackendFactory
 			LogWarning("Failed to init SDL_AUDIO (%d) - %s", ret, SDL_GetError());
 			return nullptr;
 		}
-		return new SDLRawBackend();
+		// We do sw mixing so can support "any" concurrent sample count (though realistically
+		// limited by cpu performance)
+		return new SDLRawBackend(concurrent_sample_count);
 	}
 
 	~SDLRawBackendFactory() override = default;

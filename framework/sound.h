@@ -88,6 +88,7 @@ class SoundBackend
 	int concurrent_samples = 0;
 
   public:
+	SoundBackend(int concurrent_sample_count) : concurrent_samples(concurrent_sample_count) {}
 	virtual ~SoundBackend() = default;
 	virtual void playSample(sp<Sample> sample, float gain = 1.0f) = 0;
 	virtual void playMusic(std::function<void(void *)> finishedCallback,
