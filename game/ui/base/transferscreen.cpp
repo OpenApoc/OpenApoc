@@ -509,7 +509,7 @@ void TransferScreen::executeOrders()
 						if (agent->lab_assigned)
 						{
 							StateRef<Lab> lab{state.get(), agent->lab_assigned};
-							agent->lab_assigned->removeAgent(lab, agent);
+							removeAgentFromLab(lab, agent);
 						}
 						agent->transfer(*state, newBase->building);
 						break;

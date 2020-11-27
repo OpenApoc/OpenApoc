@@ -79,8 +79,10 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	auto agent = mksp<Agent>();
 
 	agent->owner = org;
+	agent->oldOwner = org;
 	agent->type = type;
 	agent->gender = probabilityMapRandomizer(state.rng, type->gender_chance);
+	agent->oldOwner = org;
 
 	if (type->playable)
 	{
@@ -387,10 +389,65 @@ void Agent::assignTraining(TrainingAssignment assignment)
 
 void Agent::hire(GameState &state, StateRef<Building> newHome)
 {
+	if (owner == state.getPlayer())
+	{
+		LogError("Agent is already owned by x-com");
+	}
+
+	oldOwner = owner;
 	owner = newHome->owner;
 	homeBuilding = newHome;
 	recentlyHired = true;
 	setMission(state, AgentMission::gotoBuilding(state, *this, newHome, false, true));
+}
+
+void Agent::fire(GameState &state)
+{
+	if (owner != state.getPlayer())
+	{
+		LogError("Cannot fire agents from other organizations");
+	}
+
+	if (currentVehicle)
+	{
+		LogError("Should not be able to fire people inside a vehicle");
+	}
+
+	removeFromLab(state);
+
+	if (oldOwner == owner)
+	{
+		// If agent home org is x-com default new owner to government (for starting agents)
+		owner = state.getGovernment();
+	}
+	else
+	{
+		owner = oldOwner;
+	}
+
+	if (!owner->buildings.empty())
+	{
+		homeBuilding = owner->buildings.front();
+	}
+	else
+	{
+		LogError("No home building for fired agent");
+	}
+
+	recentlyHired = false;
+
+	setMission(state, AgentMission::gotoBuilding(state, *this, homeBuilding, true, true));
+}
+
+void Agent::removeFromLab(const GameState &state)
+{
+	if (assigned_to_lab)
+	{
+		auto thisRef = StateRef<Agent>{&state, shared_from_this()};
+		lab_assigned->removeAgent(thisRef);
+		lab_assigned = nullptr;
+		assigned_to_lab = false;
+	}
 }
 
 void Agent::transfer(GameState &state, StateRef<Building> newHome)
@@ -917,7 +974,7 @@ bool Agent::getNewGoal(GameState &state)
 
 void Agent::die(GameState &state, bool silent)
 {
-	auto thisRef = StateRef<Agent>{&state, shared_from_this()};
+	const auto thisRef = StateRef<Agent>{&state, shared_from_this()};
 
 	// Set health to zero so agent will die on next update
 	modified_stats.health = 0;
@@ -928,25 +985,7 @@ void Agent::die(GameState &state, bool silent)
 		currentVehicle->currentAgents.erase(thisRef);
 	}
 
-	// Remove from lab
-	if (assigned_to_lab)
-	{
-		for (auto &fac : homeBuilding->base->facilities)
-		{
-			if (!fac->lab)
-			{
-				continue;
-			}
-			auto it = std::find(fac->lab->assigned_agents.begin(), fac->lab->assigned_agents.end(),
-			                    thisRef);
-			if (it != fac->lab->assigned_agents.end())
-			{
-				fac->lab->assigned_agents.erase(it);
-				assigned_to_lab = false;
-				break;
-			}
-		}
-	}
+	removeFromLab(state);
 
 	// In city (if not died in a vehicle) we make an event
 	if (!silent && !state.current_battle && owner == state.getPlayer())
@@ -1046,7 +1085,7 @@ void Agent::updateHourly(GameState &state)
 		{
 			usage = std::max(100, usage);
 			// As per Roger Wong's guide, healing is 0.8 points an hour
-			healingProgress += 80.0f / (float)usage;
+			healingProgress += 80.0f / static_cast<float>(usage);
 			if (healingProgress > 1.0f)
 			{
 				healingProgress -= 1.0f;

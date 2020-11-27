@@ -127,7 +127,7 @@ class Lab : public StateObject<Lab>
 
 	int getTotalSkill() const;
 	unsigned getQuantity() const;
-	static void removeAgent(StateRef<Lab> lab, StateRef<Agent> &agent);
+	void removeAgent(StateRef<Agent> &agent);
 
 	// We keep a count of ticks since the last point of progress to accurately accumulate over
 	// periods of ticks smaller than what is required to progress a single 'progress' point.
@@ -139,6 +139,8 @@ class Lab : public StateObject<Lab>
 	unsigned manufacture_done = 0;
 	unsigned int manufacture_man_hours_invested = 0;
 };
+
+void removeAgentFromLab(StateRef<Lab> &lab, StateRef<Agent> &agent);
 
 class ResearchCompleteData
 {

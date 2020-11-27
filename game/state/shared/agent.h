@@ -66,16 +66,12 @@ class Agent : public StateObject<Agent>,
               public EquippableObject
 {
   public:
-	Agent() = default;
-
-	StateRef<AgentType> type;
-
-	UString name;
+	StateRef<AgentType> type = nullptr;
+	UString name = "";
 
 	// Appearance that this specific agent chose from available list of its type
 	int appearance = 0;
 	int portrait = 0;
-	const AgentPortrait &getPortrait() const { return type->portraits.at(gender).at(portrait); }
 	AgentType::Gender gender = AgentType::Gender::Male;
 
 	AgentStats initial_stats;  // Stats at agent creation
@@ -87,8 +83,6 @@ class Agent : public StateObject<Agent>,
 	AgentStatus status = AgentStatus::Alive;
 
 	unsigned int teleportTicksAccumulated = 0;
-	bool canTeleport() const;
-	bool hasTeleporter() const;
 
 	// Training
 	unsigned trainingPhysicalTicksAccumulated = 0;
@@ -100,10 +94,43 @@ class Agent : public StateObject<Agent>,
 	bool recentlyFought = false;
 	float healingProgress = 0.0f;
 
-	void assignTraining(TrainingAssignment assignment);
+	StateRef<Organisation> owner = nullptr;
+	StateRef<Organisation> oldOwner = nullptr;
+	StateRef<City> city = nullptr;
+	StateRef<Building> homeBuilding = nullptr;
+	// Building the agent is currently stored inside, nullptr if it's in the city or a vehicle
+	StateRef<Building> currentBuilding = nullptr;
+	// Vehicle the agent is currently stored inside, nullptr if it's in the city in a building
+	StateRef<Vehicle> currentVehicle = nullptr;
+	// Agent's position in the city
+	Vec3<float> position = {0, 0, 0};
+	// Position agent is moving towards
+	Vec3<float> goalPosition = {0, 0, 0};
+	StateRef<Lab> lab_assigned = nullptr;
+	bool assigned_to_lab = false;
+	StateRef<BattleUnit> unit = nullptr;
+	std::list<AgentMission> missions;
+	std::list<sp<AEquipment>> equipment;
+	bool isBrainsucker = false;
+	// for agents spawned specifically for the current battle, like turrets
+	bool destroyAfterBattle = false;
+	// Following members are not serialized, but rather are set up in the initBattle method
 
+	sp<AEquipment> leftHandItem = nullptr;
+	// Left hand item, frequently accessed so will be stored here
+	sp<AEquipment> rightHandItem = nullptr;
+	// Right hand item, frequently accessed so will be stored here
+
+	Agent() = default;
+	const AgentPortrait &getPortrait() const { return type->portraits.at(gender).at(portrait); }
+	void assignTraining(TrainingAssignment assignment);
 	void hire(GameState &state, StateRef<Building> newHome);
+	void fire(GameState &state);
+	void removeFromLab(const GameState &state);
 	void transfer(GameState &state, StateRef<Building> newHome);
+
+	bool canTeleport() const;
+	bool hasTeleporter() const;
 
 	sp<AEquipment> getArmor(BodyPart bodyPart) const;
 	bool isBodyStateAllowed(BodyState bodyState) const;
@@ -117,15 +144,6 @@ class Agent : public StateObject<Agent>,
 	// Get relevant skill
 	int getSkill() const;
 
-	StateRef<Organisation> owner;
-
-	StateRef<City> city;
-	StateRef<Building> homeBuilding;
-	// Building the agent is currently stored inside, nullptr if it's in the city or a vehicle
-	StateRef<Building> currentBuilding;
-	// Vehicle the agent is currently stored inside, nullptr if it's in the city in a building
-	StateRef<Vehicle> currentVehicle;
-
 	/* leave the building and put agent into the city */
 	void leaveBuilding(GameState &state, Vec3<float> initialPosition);
 	/* 'enter' the agent in a building from city or vehicle*/
@@ -134,18 +152,6 @@ class Agent : public StateObject<Agent>,
 	void enterVehicle(GameState &state, StateRef<Vehicle> v);
 	// Note that agent cannot ever leave vehicle into city, or enter vehicle from city
 
-	// Agent's position in the city
-	Vec3<float> position = {0, 0, 0};
-	// Position agent is moving towards
-	Vec3<float> goalPosition = {0, 0, 0};
-
-	StateRef<Lab> lab_assigned = nullptr;
-	bool assigned_to_lab = false;
-
-	StateRef<BattleUnit> unit;
-
-	std::list<AgentMission> missions;
-	std::list<sp<AEquipment>> equipment;
 	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> equipmentType,
 	                     EquipmentSlotType &slotType) const;
 	bool canAddEquipment(Vec2<int> pos, StateRef<AEquipmentType> equipmentType) const;
@@ -175,7 +181,6 @@ class Agent : public StateObject<Agent>,
 	bool canRun() { return modified_stats.canRun(); }
 
 	void updateIsBrainsucker();
-	bool isBrainsucker = false;
 
 	// Adds mission to list of missions, returns true if successful
 	bool addMission(GameState &state, AgentMission mission, bool toBack = false);
@@ -189,9 +194,6 @@ class Agent : public StateObject<Agent>,
 
 	void die(GameState &state, bool silent = false);
 	bool isDead() const;
-
-	// for agents spawned specifically for the current battle, like turrets
-	bool destroyAfterBattle = false;
 
 	// Update agent in city
 	void update(GameState &state, unsigned ticks);
@@ -226,11 +228,6 @@ class Agent : public StateObject<Agent>,
 
 	int getMaxShield(GameState &state) const;
 	int getShield(GameState &state) const;
-
-	// Following members are not serialized, but rather are set up in the initBattle method
-
-	sp<AEquipment> leftHandItem;  // Left hand item, frequently accessed so will be stored here
-	sp<AEquipment> rightHandItem; // Right hand item, frequently accessed so will be stored here
 
 	void destroy() override;
 };

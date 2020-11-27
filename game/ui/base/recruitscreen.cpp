@@ -546,7 +546,7 @@ void RecruitScreen::executeOrders()
 				agent->homeBuilding->base->inventoryAgentEquipment[e->type.id] +=
 				    e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1;
 			}
-			agent->die(*state, true);
+			agent->fire(*state);
 		}
 	}
 }

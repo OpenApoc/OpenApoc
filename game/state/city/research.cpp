@@ -243,7 +243,9 @@ Lab::~Lab()
 	for (auto &agent : assigned_agents)
 	{
 		agent->assigned_to_lab = false;
+		agent->lab_assigned = nullptr;
 	}
+	assigned_agents.clear();
 }
 
 void Lab::setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic, sp<GameState> state)
@@ -325,10 +327,7 @@ void Lab::setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic, sp<GameS
 
 unsigned Lab::getQuantity() const { return manufacture_goal - manufacture_done; }
 
-void Lab::removeAgent(StateRef<Lab> lab, StateRef<Agent> &agent)
-{
-	lab->assigned_agents.remove(agent);
-}
+void Lab::removeAgent(StateRef<Agent> &agent) { assigned_agents.remove(agent); }
 
 void Lab::setQuantity(StateRef<Lab> lab, unsigned quantity)
 {
@@ -547,6 +546,11 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 				LogError("Unexpected lab type");
 		}
 	}
+}
+
+void removeAgentFromLab(StateRef<Lab> &lab, StateRef<Agent> &agent)
+{
+	lab->assigned_agents.remove(agent);
 }
 
 } // namespace OpenApoc
