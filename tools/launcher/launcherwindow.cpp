@@ -219,7 +219,7 @@ void LauncherWindow::play()
 #endif
 
 	LogWarning("Running \"%s\"", path.toStdString());
-	const auto ret = QProcess::startDetached(path);
+	const auto ret = QProcess::startDetached(path, {});
 	if (!ret)
 	{
 		LogError("Failed to start OpenApoc process");
