@@ -10,18 +10,18 @@
         <image>RAW:xcom3/ufodata/isobord5.dat:640:128:xcom3/ufodata/pal_01.dat</image>
       </graphic>
 
-      <scroll id="OWNED_AGENT_LIST_SCROLL" visible="N" largepercent = "20">
+      <scroll id="OWNED_AGENT_LIST_SCROLL" visible="N" scrollpercent="20">
         <position x="105" y="66"/>
         <size width="431" height="16"/>
       </scroll>
-      <graphicbutton id="AGENT_SCROLL_LEFT" scrollprev="OWNED_AGENT_LIST_SCROLL" scrolllarge="Y">
+      <graphicbutton id="AGENT_SCROLL_LEFT" scrollprev="OWNED_AGENT_LIST_SCROLL">
         <tooltip text="Scroll Left" font="smallset"/>
         <position x="88" y="45"/>
         <size width="17" height="23"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:15:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
-      <graphicbutton id="AGENT_SCROLL_RIGHT" scrollnext="OWNED_AGENT_LIST_SCROLL" scrolllarge="Y">
+      <graphicbutton id="AGENT_SCROLL_RIGHT" scrollnext="OWNED_AGENT_LIST_SCROLL">
         <tooltip text="Scroll Right" font="smallset"/>
         <position x="534" y="45"/>
         <size width="18" height="22"/>

@@ -107,7 +107,7 @@ void ListBox::onRender()
 			scroller->setMaximum(std::max(controlOffset.x - this->Size.x, scroller->getMinimum()));
 			break;
 	}
-	scroller->updateLargeChangeValue();
+	scroller->updateScrollChangeValue();
 }
 
 void ListBox::postRender()

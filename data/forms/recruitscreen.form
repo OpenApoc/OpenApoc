@@ -136,14 +136,14 @@
         <position x="381" y="72"/>
         <size width="26" height="374"/>
       </scroll>
-      <graphicbutton id="LIST1_SCROLL_UP" scrollprev="LIST1_SCROLL" scrolllarge="true">
+      <graphicbutton id="LIST1_SCROLL_UP" scrollprev="LIST1_SCROLL">
         <tooltip text="Scroll Up" font="smallset"/>
         <position x="383" y="48"/>
         <size width="22" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <graphicbutton id="LIST1_SCROLL_DOWN" scrollnext="LIST1_SCROLL" scrolllarge="true">
+      <graphicbutton id="LIST1_SCROLL_DOWN" scrollnext="LIST1_SCROLL">
         <tooltip text="Scroll Down" font="smallset"/>
         <position x="383" y="449"/>
         <size width="22" height="21"/>
@@ -162,14 +162,14 @@
         <position x="567" y="72"/>
         <size width="26" height="374"/>
       </scroll>
-      <graphicbutton id="LIST2_SCROLL_UP" scrollprev="LIST2_SCROLL" scrolllarge="true">
+      <graphicbutton id="LIST2_SCROLL_UP" scrollprev="LIST2_SCROLL">
         <tooltip text="Scroll Up" font="smallset"/>
         <position x="569" y="48"/>
         <size width="22" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <graphicbutton id="LIST2_SCROLL_DOWN" scrollnext="LIST2_SCROLL" scrolllarge="true">
+      <graphicbutton id="LIST2_SCROLL_DOWN" scrollnext="LIST2_SCROLL">
         <tooltip text="Scroll Down" font="smallset"/>
         <position x="569" y="449"/>
         <size width="22" height="21"/>

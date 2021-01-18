@@ -55,12 +55,12 @@ void GraphicButton::eventOccured(Event *e)
 
 		if (ScrollBarPrev != nullptr)
 		{
-			ScrollBarPrev->scrollPrev(!scrollLarge);
+			ScrollBarPrev->scrollPrev();
 		}
 
 		if (ScrollBarNext != nullptr)
 		{
-			ScrollBarNext->scrollNext(!scrollLarge);
+			ScrollBarNext->scrollNext();
 		}
 	}
 }
@@ -167,7 +167,6 @@ sp<Control> GraphicButton::copyTo(sp<Control> CopyParent)
 		copy->ScrollBarNext =
 		    std::dynamic_pointer_cast<ScrollBar>(ScrollBarNext->lastCopiedTo.lock());
 	}
-	copy->scrollLarge = scrollLarge;
 	copyControlData(copy);
 	return copy;
 }
@@ -176,10 +175,6 @@ void GraphicButton::configureSelfFromXml(pugi::xml_node *node)
 {
 	Control::configureSelfFromXml(node);
 
-	if (auto scrollLarge = node->attribute("scrolllarge"))
-	{
-		this->scrollLarge = scrollLarge.as_bool();
-	}
 	auto imageNode = node->child("image");
 	if (imageNode)
 	{

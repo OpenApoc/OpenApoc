@@ -202,14 +202,14 @@
         <position x="567" y="202"/>
         <size width="26" height="244"/>
       </scroll>
-      <graphicbutton id="LIST_SCROLL_UP" scrollprev="LIST_SCROLL" scrolllarge="true">
+      <graphicbutton id="LIST_SCROLL_UP" scrollprev="LIST_SCROLL">
         <tooltip text="Scroll Up" font="smallset"/>
         <position x="569" y="178"/>
         <size width="22" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <graphicbutton id="LIST_SCROLL_DOWN" scrollnext="LIST_SCROLL" scrolllarge="true">
+      <graphicbutton id="LIST_SCROLL_DOWN" scrollnext="LIST_SCROLL">
         <tooltip text="Scroll Down" font="smallset"/>
         <position x="569" y="449"/>
         <size width="22" height="21"/>

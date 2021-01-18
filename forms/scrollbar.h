@@ -38,10 +38,10 @@ class ScrollBar : public Control
 
 	ScrollBarRenderStyle RenderStyle;
 	Colour GripperColour;
-	int LargeChange;
-	int LargePercent;
+	int ScrollChange;
+	int ScrollPercent;
 
-	void updateLargeChangeValue();
+	void updateScrollChangeValue();
 
 	ScrollBar(sp<Image> gripperImage = nullptr);
 	~ScrollBar() override;
@@ -55,8 +55,8 @@ class ScrollBar : public Control
 	virtual bool setValue(int newValue);
 	virtual bool setMinimum(int newMininum);
 	virtual bool setMaximum(int newMaximum);
-	virtual void scrollPrev(bool small = false);
-	virtual void scrollNext(bool small = false);
+	virtual void scrollPrev(int amount = 0);
+	virtual void scrollNext(int amount = 0);
 
 	sp<Control> copyTo(sp<Control> CopyParent) override;
 	void configureSelfFromXml(pugi::xml_node *node) override;
