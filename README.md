@@ -112,7 +112,7 @@ The following libraries are also used, but are shipped as submodules in the repo
 git submodule update --init --recursive
 ```
 
-* All the other dependencies (Boost, SDL2, Qt) need to be supplied separately. Install [Vcpkg](https://github.com/Microsoft/vcpkg) and run the following command:
+* All the other dependencies (Boost, SDL2, Qt) need to be supplied separately. Install [Vcpkg](https://github.com/Microsoft/vcpkg) and integrate with Visual Studio. If you'd rather install them manually, run the following command:
 
   * For x64 builds:
 
@@ -129,7 +129,6 @@ vcpkg --triplet x86-windows install sdl2 boost-locale boost-program-options boos
   * For list of all supported by Vcpkg architectures: `vcpkg help triplet`
 
 * Copy the original XCom:Apocalypse .iso file into the "data/" directory. This could also be a directory containing all the extracted files from the CD, and it should be named the same (IE the directory should be data/cd.iso/). This is used during the build to extract some data tables.
-* If you do not have Visual Studio (community edition works fine) already, install it and make sure to enable c++ support (Check "Desktop development with C++" in the VS setup)
 * Open the OpenApoc directory in Visual Studio (if you don't have an Open Folder option, generate a project with [CMake](https://cmake.org/)).
 * Set your configuration to x64-Release or x86-Release (must match your Vcpkg dependencies). Release is recommended as Debug is very slow.
 
@@ -146,8 +145,8 @@ vcpkg --triplet x86-windows install sdl2 boost-locale boost-program-options boos
 ```
   * Visual Studio 2019: Build > CMake Settings > Toolchain file > `<path to vcpkg>\\scripts\\buildsystems\\vcpkg.cmake`
 
-* Build OpenApoc. If you get errors, clear your cache from the CMake menu and generate again.
-* When running from the Visual Studio UI, the working directory is set to the root of the project, so the data folder should already be in the right place. If you want to run outside of Visual Studio, you need to copy the whole 'data' folder (including the cd.iso file) into the folder openapoc.exe resides in.
+* Build OpenApoc. This will take a while on the first build, especially if Vcpkg hasn't installed all the dependencies yet. If you get errors, clear your cache from the Project/CMake menu and try again.
+* When running OpenApoc from the Visual Studio UI, the working directory is set to the root of the project, so the data folder should already be in the right place. If you want to run outside of Visual Studio, you need to copy the whole 'data' folder (including the cd.iso file) into the folder openapoc.exe resides in.
 
 ### Building on Linux
 

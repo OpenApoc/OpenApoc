@@ -1,0 +1,13 @@
+{
+  "name": "openapoc",
+  "version-string": "0.1.0-dev",
+  "dependencies": [
+    "sdl2",
+    "boost-locale",
+    "boost-program-options",
+    "boost-uuid",
+    "boost-crc",
+    "qt5-base",
+    "libvorbis"
+  ]
+}
