@@ -3,6 +3,7 @@
 #include "forms/graphicbutton.h"
 #include "forms/label.h"
 #include "forms/listbox.h"
+#include "forms/scrollbar.h"
 #include "forms/ui.h"
 #include "framework/data.h"
 #include "framework/event.h"
@@ -24,6 +25,7 @@ MessageLogScreen::MessageLogScreen(sp<GameState> state, CityView &cityView)
 	{
 		listbox->addItem(createMessageRow(message, state, cityView));
 	}
+	listbox->scroller->scrollMax();
 }
 
 MessageLogScreen::MessageLogScreen(sp<GameState> state, BattleView &battleView)
@@ -34,6 +36,7 @@ MessageLogScreen::MessageLogScreen(sp<GameState> state, BattleView &battleView)
 	{
 		listbox->addItem(createMessageRow(message, state, battleView));
 	}
+	listbox->scroller->scrollMax();
 }
 
 MessageLogScreen::~MessageLogScreen() = default;
