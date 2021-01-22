@@ -178,20 +178,9 @@ void MultilistBox::eventOccured(Event *e)
 		switch (e->forms().EventFlag)
 		{
 			case FormEventType::MouseMove:
-				// FIXME: Scrolling amount should match wheel amount
-				// Should wheel orientation match as well? Who has horizontal scrolls??
 				if (scroller && (ctrl == shared_from_this() || child != nullptr))
 				{
-					int wheelDelta =
-					    e->forms().MouseInfo.WheelVertical + e->forms().MouseInfo.WheelHorizontal;
-					if (wheelDelta > 0)
-					{
-						scroller->scrollPrev();
-					}
-					else if (wheelDelta < 0)
-					{
-						scroller->scrollNext();
-					}
+					scroller->scrollWheel(e);
 				}
 
 				// check hover

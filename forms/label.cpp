@@ -1,6 +1,8 @@
 #include "forms/label.h"
 #include "dependencies/pugixml/src/pugixml.hpp"
+#include "forms/scrollbar.h"
 #include "forms/ui.h"
+#include "framework/event.h"
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/image.h"
@@ -12,7 +14,7 @@ namespace OpenApoc
 {
 
 Label::Label(const UString &Text, sp<BitmapFont> font)
-    : Control(), text(Text), font(font), TextHAlign(HorizontalAlignment::Left),
+    : Control(), text(Text), font(font), scrollOffset(0), TextHAlign(HorizontalAlignment::Left),
       TextVAlign(VerticalAlignment::Top), WordWrap(true)
 {
 	if (font)
@@ -23,33 +25,56 @@ Label::Label(const UString &Text, sp<BitmapFont> font)
 
 Label::~Label() = default;
 
-void Label::eventOccured(Event *e) { Control::eventOccured(e); }
+void Label::eventOccured(Event *e)
+{
+	Control::eventOccured(e);
+	if (scroller && e->type() == EVENT_FORM_INTERACTION &&
+	    e->forms().EventFlag == FormEventType::MouseMove &&
+	    e->forms().RaisedBy == shared_from_this())
+	{
+		scroller->scrollWheel(e);
+	}
+}
 
 void Label::onRender()
 {
 	Control::onRender();
 
-	int xpos;
-	int ypos;
 	std::list<UString> lines = font->wordWrapText(text, Size.x);
 
-	ypos = align(TextVAlign, Size.y, font->getFontHeight(text, Size.x));
-
-	while (lines.size() > 0)
+	int ysize = font->getFontHeight(text, Size.x);
+	if (scroller)
 	{
-		xpos = align(TextHAlign, Size.x, font->getFontWidth(lines.front()));
+		scroller->setVisible(ysize > this->Size.y && lines.size() > 1);
+		scroller->setMaximum(ysize - this->Size.y);
+	}
 
-		auto textImage = font->getString(lines.front());
+	int ypos = align(TextVAlign, Size.y, ysize);
+	if (scroller && scroller->isVisible())
+	{
+		ypos = -scrollOffset;
+	}
+
+	for (const auto &line : lines)
+	{
+		int xpos = align(TextHAlign, Size.x, font->getFontWidth(line));
+
+		auto textImage = font->getString(line);
 		fw().renderer->drawTinted(textImage, Vec2<float>{xpos, ypos}, Tint);
 
-		lines.pop_front();
 		ypos += font->getFontHeight();
 	}
 }
 
 void Label::update()
 {
-	// No "updates"
+	Control::update();
+
+	if (scroller && scroller->getValue() != this->scrollOffset)
+	{
+		this->scrollOffset = scroller->getValue();
+		this->setDirty();
+	}
 }
 
 void Label::unloadResources() {}
@@ -61,6 +86,10 @@ void Label::setText(const UString &Text)
 	if (text == Text)
 		return;
 	text = Text;
+	if (scroller)
+	{
+		scroller->setValue(0);
+	}
 	this->setDirty();
 }
 
@@ -77,6 +106,12 @@ void Label::setFont(sp<BitmapFont> NewFont)
 sp<Control> Label::copyTo(sp<Control> CopyParent)
 {
 	sp<Label> copy;
+	sp<ScrollBar> scrollCopy;
+	if (scroller)
+	{
+		scrollCopy = std::dynamic_pointer_cast<ScrollBar>(scroller->lastCopiedTo.lock());
+	}
+
 	if (CopyParent)
 	{
 		copy = CopyParent->createChild<Label>(this->text, this->font);
@@ -85,6 +120,7 @@ sp<Control> Label::copyTo(sp<Control> CopyParent)
 	{
 		copy = mksp<Label>(this->text, this->font);
 	}
+	copy->scroller = scrollCopy;
 	copy->Tint = this->Tint;
 	copy->TextHAlign = this->TextHAlign;
 	copy->TextVAlign = this->TextVAlign;
@@ -143,4 +179,5 @@ void Label::configureSelfFromXml(pugi::xml_node *node)
 		}
 	}
 }
+
 }; // namespace OpenApoc

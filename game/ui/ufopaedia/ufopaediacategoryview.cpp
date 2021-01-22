@@ -3,6 +3,7 @@
 #include "forms/graphic.h"
 #include "forms/label.h"
 #include "forms/listbox.h"
+#include "forms/scrollbar.h"
 #include "forms/textbutton.h"
 #include "forms/ui.h"
 #include "framework/event.h"
@@ -25,7 +26,7 @@ namespace OpenApoc
 
 UfopaediaCategoryView::UfopaediaCategoryView(sp<GameState> state, sp<UfopaediaCategory> cat,
                                              sp<UfopaediaEntry> entry)
-    : Stage(), menuform(ui().getForm("ufopaedia")), state(state), category(cat)
+    : Stage(), menuform(ui().getForm("ufopaedia")), state(state), category(cat), baseY(0), baseH(0)
 {
 	// Start with the intro page
 	this->position_iterator = this->category->entries.end();
@@ -74,6 +75,7 @@ void UfopaediaCategoryView::begin()
 		entryList->addItem(entryControl);
 	}
 	baseY = infoLabel->Location.y;
+	baseH = infoLabel->Size.y;
 	for (int i = 0; i < 9; i++)
 	{
 		auto labelName = format("LABEL_%d", i + 1);
@@ -531,11 +533,17 @@ void UfopaediaCategoryView::setFormStats()
 		int y = statsLabels[row]->Location.y;
 		y += statsLabels[row]->Size.y * 2;
 		menuform->findControlTyped<Label>("TEXT_INFO")->Location.y = y;
+		menuform->findControlTyped<Label>("TEXT_INFO")->Size.y = baseH - (y - baseY);
 	}
 	else
 	{
 		menuform->findControlTyped<Label>("TEXT_INFO")->Location.y = baseY;
+		menuform->findControlTyped<Label>("TEXT_INFO")->Size.y = baseH;
 	}
+	menuform->findControlTyped<ScrollBar>("SCROLL_INFO")->Location.y =
+	    menuform->findControlTyped<Label>("TEXT_INFO")->Location.y;
+	menuform->findControlTyped<ScrollBar>("SCROLL_INFO")->Size.y =
+	    menuform->findControlTyped<Label>("TEXT_INFO")->Size.y;
 }
 
 void UfopaediaCategoryView::setNextTopic()

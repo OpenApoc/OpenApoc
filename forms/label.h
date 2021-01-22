@@ -9,6 +9,7 @@ namespace OpenApoc
 {
 
 class BitmapFont;
+class ScrollBar;
 
 class Label : public Control
 {
@@ -16,11 +17,13 @@ class Label : public Control
   private:
 	UString text;
 	sp<BitmapFont> font;
+	int scrollOffset;
 
   protected:
 	void onRender() override;
 
   public:
+	sp<ScrollBar> scroller;
 	HorizontalAlignment TextHAlign;
 	VerticalAlignment TextVAlign;
 	bool WordWrap;

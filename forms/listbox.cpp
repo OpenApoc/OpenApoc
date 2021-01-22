@@ -157,20 +157,9 @@ void ListBox::eventOccured(Event *e)
 		sp<Control> child = ctrl->getAncestor(shared_from_this());
 		if (e->forms().EventFlag == FormEventType::MouseMove)
 		{
-			// FIXME: Scrolling amount should match wheel amount
-			// Should wheel orientation match as well? Who has horizontal scrolls??
-			if (ctrl == shared_from_this() || child != nullptr)
+			if (scroller && (ctrl == shared_from_this() || child != nullptr))
 			{
-				int wheelDelta =
-				    e->forms().MouseInfo.WheelVertical + e->forms().MouseInfo.WheelHorizontal;
-				if (wheelDelta > 0)
-				{
-					scroller->scrollPrev();
-				}
-				else if (wheelDelta < 0)
-				{
-					scroller->scrollNext();
-				}
+				scroller->scrollWheel(e);
 			}
 			if (ctrl == shared_from_this() || ctrl == scroller)
 			{

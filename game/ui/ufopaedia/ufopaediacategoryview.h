@@ -22,7 +22,7 @@ class UfopaediaCategoryView : public Stage
 	sp<UfopaediaCategory> category;
 	std::vector<sp<Label>> orgLabels, orgValues;
 	std::vector<sp<Label>> statsLabels, statsValues;
-	int baseY;
+	int baseY, baseH;
 
 	// The iterator showing the current position of the entry within the category.
 	// When equal to category->entries.end() it will show the category description.

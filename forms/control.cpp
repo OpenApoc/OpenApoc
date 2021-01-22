@@ -472,8 +472,16 @@ void Control::configureChildrenFromXml(pugi::xml_node *parent)
 		}
 		else if (nodename == "label")
 		{
+			sp<ScrollBar> sb = nullptr;
+			UString scrollBarID = node.attribute("scrollbarid").as_string();
+
+			if (!scrollBarID.empty())
+			{
+				sb = this->findControlTyped<ScrollBar>(scrollBarID);
+			}
 			auto l = this->createChild<Label>();
 			l->configureFromXml(&node);
+			l->scroller = sb;
 		}
 		else if (nodename == "graphic")
 		{

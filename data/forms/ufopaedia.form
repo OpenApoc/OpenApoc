@@ -21,9 +21,13 @@
           <alignment horizontal="left" vertical="top"/>
           <font>smalfont</font>
         </label>
-        <label id="TEXT_INFO" text="">
+        <scroll id="SCROLL_INFO" text="" visible="false">
+          <position x="620" y="66"/>
+          <size width="16" height="345"/>
+        </scroll>
+        <label id="TEXT_INFO" text="" scrollbarid="SCROLL_INFO">
           <position x="340" y="66"/>
-          <size width="270" height="400"/>
+          <size width="270" height="345"/>
           <alignment horizontal="left" vertical="top"/>
           <font>smalfont</font>
         </label>

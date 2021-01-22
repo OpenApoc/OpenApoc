@@ -51,6 +51,7 @@ bool ScrollBar::setMinimum(int newMininum)
 	}
 	Minimum = newMininum;
 	setValue(Value);
+	updateScrollChangeValue();
 	setDirty();
 	return true;
 }
@@ -63,6 +64,7 @@ bool ScrollBar::setMaximum(int newMaximum)
 	}
 	Maximum = newMaximum;
 	setValue(Value);
+	updateScrollChangeValue();
 	setDirty();
 	return true;
 }
@@ -103,36 +105,41 @@ void ScrollBar::eventOccured(Event *e)
 				                e->forms().RaisedBy->getLocationOnScreen().x - resolvedLocation.x;
 				break;
 		}
-	}
 
-	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
-	    e->forms().EventFlag == FormEventType::MouseDown)
-	{
-		if (mousePosition >= (segmentsize * (Value - Minimum)) + grippersize)
+		int pos = static_cast<int>(segmentsize * (Value - Minimum));
+		if (e->forms().RaisedBy == shared_from_this() &&
+		    e->forms().EventFlag == FormEventType::MouseDown)
 		{
-			scrollNext();
+			if (mousePosition >= pos + grippersize)
+			{
+				scrollNext();
+			}
+			else if (mousePosition <= pos)
+			{
+				scrollPrev();
+			}
+			else
+			{
+				capture = true;
+			}
 		}
-		else if (mousePosition <= segmentsize * (Value - Minimum))
-		{
-			scrollPrev();
-		}
-		else
-		{
-			capture = true;
-		}
-	}
 
-	if (e->type() == EVENT_FORM_INTERACTION &&
-	    (capture || e->forms().RaisedBy == shared_from_this()) &&
-	    e->forms().EventFlag == FormEventType::MouseUp)
-	{
-		capture = false;
-	}
+		if ((capture || e->forms().RaisedBy == shared_from_this()) &&
+		    e->forms().EventFlag == FormEventType::MouseUp)
+		{
+			capture = false;
+		}
 
-	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::MouseMove &&
-	    capture)
-	{
-		this->setValue(static_cast<int>(mousePosition / segmentsize) + Minimum);
+		if (e->forms().EventFlag == FormEventType::MouseMove && capture)
+		{
+			this->setValue(static_cast<int>(mousePosition / segmentsize) + Minimum);
+		}
+
+		if (e->forms().EventFlag == FormEventType::MouseMove &&
+		    e->forms().RaisedBy == shared_from_this())
+		{
+			scrollWheel(e);
+		}
 	}
 }
 
@@ -176,8 +183,6 @@ void ScrollBar::onRender()
 			fw().renderer->draw(gripperbutton, newpos);
 			break;
 	}
-
-	updateScrollChangeValue();
 }
 
 void ScrollBar::updateScrollChangeValue()
@@ -281,4 +286,20 @@ void ScrollBar::configureSelfFromXml(pugi::xml_node *node)
 		}
 	}
 }
+
+void ScrollBar::scrollWheel(Event *e)
+{
+	// FIXME: Scrolling amount should match wheel amount
+	// Should wheel orientation match as well? Who has horizontal scrolls??
+	int wheelDelta = e->forms().MouseInfo.WheelVertical + e->forms().MouseInfo.WheelHorizontal;
+	if (wheelDelta > 0)
+	{
+		scrollPrev();
+	}
+	else if (wheelDelta < 0)
+	{
+		scrollNext();
+	}
+}
+
 }; // namespace OpenApoc

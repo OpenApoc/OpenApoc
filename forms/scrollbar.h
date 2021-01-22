@@ -59,6 +59,7 @@ class ScrollBar : public Control
 	virtual void scrollNext(int amount = 0);
 	void scrollMin() { setValue(Minimum); }
 	void scrollMax() { setValue(Maximum); }
+	void scrollWheel(Event *e);
 
 	sp<Control> copyTo(sp<Control> CopyParent) override;
 	void configureSelfFromXml(pugi::xml_node *node) override;
