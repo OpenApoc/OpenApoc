@@ -542,7 +542,7 @@ sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, const Ag
 
 		if (skill == UnitSkillState::Horizontal)
 		{
-			skillLabel->Size.x = 45;
+			skillLabel->Size = {45, singleton.labelFont->getFontHeight() * 2};
 			nameLabel->Size.x -= 50;
 			skillLabel->Location = {baseControl->Size.x - 45, 0};
 		}
