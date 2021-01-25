@@ -1231,7 +1231,7 @@ void GameState::updateHumanEconomy()
 		}
 	}
 	humanCity->averageWage =
-	    (humanCity->populationWorking) ? totalCivilianIncome / humanCity->populationWorking : 0;
+	    (humanCity->populationWorking) ? totalCivilianIncome / humanCity->populationWorking : 1;
 
 	// Step 2. Government additionally gets 10% of civilian income as taxes
 	government->balance += totalCivilianIncome / 10;
@@ -1299,6 +1299,12 @@ void GameState::updateHumanEconomy()
 	// Step 5. Adjust the building wages to attract new workers
 	for (auto &[id, build] : humanCity->buildings)
 	{
+		// Skip calculations if building has no space for workers (e.g. destroyed)
+		if (build->maximumWorkforce == 0)
+		{
+			continue;
+		}
+
 		const int maximum = build->maximumWorkforce;
 		const int current = build->currentWorkforce;
 		const int profitabilityLimit = build->incomePerCapita - build->maintenanceCosts / maximum;
