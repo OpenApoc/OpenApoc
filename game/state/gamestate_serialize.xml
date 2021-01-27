@@ -1351,6 +1351,7 @@
 		<member>infiltrationHistory</member>
 		<member>infiltrationSpeed</member>
 		<member>takenOver</member>
+		<member>militarized</member>
 		<member>ticksTakeOverAttemptAccumulated</member>
 		<member>tech_level</member>
 		<member>average_guards</member>

@@ -10,6 +10,9 @@
 #define ORG_ALIENS 1
 #define ORG_MEGAPOL 3
 #define ORG_TRANSTELLAR 9
+#define ORG_PSYKE 20
+#define ORG_DIABLO 21
+#define ORG_OSIRON 22
 #define ORG_CIVILIAN 27
 
 namespace OpenApoc
@@ -119,6 +122,12 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 			StateRef<Organisation> o2 = {&state, data.getOrgId(j)};
 
 			o->current_relations[o2] = (float)rdata.relationships[j];
+		}
+
+		// Following organizations use special table when determining raids
+		if (i == ORG_MEGAPOL || i == ORG_PSYKE || i == ORG_DIABLO || i == ORG_OSIRON)
+		{
+			o->militarized = true;
 		}
 
 		// Done in common xml patch

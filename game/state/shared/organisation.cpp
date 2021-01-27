@@ -32,6 +32,7 @@ void Organisation::takeOver(GameState &state, bool forced)
 		return;
 	}
 	takenOver = true;
+	militarized = true;
 	infiltrationValue = 200;
 	StateRef<Organisation> org = {&state, id};
 	current_relations[state.getPlayer()] = -100.0f;

@@ -107,6 +107,7 @@ class Organisation : public StateObject<Organisation>
 	// Modified for all infiltration attempts at this org
 	int infiltrationSpeed = 0;
 	bool takenOver = false;
+	bool militarized = false;
 	unsigned int ticksTakeOverAttemptAccumulated = 0;
 
 	sp<Image> icon;
