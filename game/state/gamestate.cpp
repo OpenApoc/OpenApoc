@@ -1206,6 +1206,7 @@ void GameState::updateEndOfWeek()
 
 void GameState::weeklyPlayerUpdate()
 {
+	// Player government income
 	if (!fundingTerminated)
 	{
 		if (government->isRelatedTo(player) == Organisation::Relation::Hostile ||
@@ -1226,6 +1227,42 @@ void GameState::weeklyPlayerUpdate()
 			}
 		}
 	}
+
+	// Player overheads: salary and base upkeep
+	int totalSalary = 0;
+	for (auto &a : agents)
+	{
+		if (a.second->owner == player)
+		{
+			switch (a.second->type->role)
+			{
+				case AgentType::Role::BioChemist:
+					totalSalary += HIRE_COST_BIO;
+					break;
+				case AgentType::Role::Engineer:
+					totalSalary += HIRE_COST_ENGI;
+					break;
+				case AgentType::Role::Physicist:
+					totalSalary += HIRE_COST_PHYSIC;
+					break;
+				case AgentType::Role::Soldier:
+					totalSalary += HIRE_COST_SOLDIER;
+					break;
+			}
+		}
+	}
+
+	int basesCosts = 0;
+	for (auto &b : player_bases)
+	{
+		for (auto &f : b.second->facilities)
+		{
+			basesCosts += f->type->weeklyCost;
+		}
+	}
+	player->balance = player->balance - totalSalary - basesCosts;
+
+	weekScore.reset();
 }
 
 // Recalculates AI organization and civilian finances, updating budgets and salaries
@@ -1494,6 +1531,17 @@ int GameScore::getTotal() const
 {
 	return tacticalMissions + researchCompleted + alienIncidents + craftShotDownUFO +
 	       craftShotDownXCom + incursions + cityDamage;
+}
+
+void GameScore::reset()
+{
+	tacticalMissions = 0;
+	researchCompleted = 0;
+	alienIncidents = 0;
+	craftShotDownUFO = 0;
+	craftShotDownXCom = 0;
+	incursions = 0;
+	cityDamage = 0;
 }
 
 void GameState::loadMods()

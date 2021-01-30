@@ -61,7 +61,9 @@ class GameScore
 	int craftShotDownXCom = 0;
 	int incursions = 0;
 	int cityDamage = 0;
+
 	int getTotal() const;
+	void reset();
 	//	UString getText();
 };
 

@@ -14,6 +14,15 @@
 namespace OpenApoc
 {
 
+static const int HIRE_COST_SOLDIER = 600;
+static const int HIRE_COST_BIO = 800;
+static const int HIRE_COST_PHYSIC = 800;
+static const int HIRE_COST_ENGI = 800;
+static const int FIRE_COST_SOLDIER = 0;
+static const int FIRE_COST_BIO = 0;
+static const int FIRE_COST_PHYSIC = 0;
+static const int FIRE_COST_ENGI = 0;
+
 class Organisation;
 class AEquipment;
 class BattleUnitAnimationPack;
