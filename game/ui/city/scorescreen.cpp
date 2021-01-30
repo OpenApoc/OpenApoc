@@ -160,7 +160,7 @@ void ScoreScreen::setFinanceMode()
 		    format("%s $%d", tr("Initial funds>"), balance));
 		formFinance->findControlTyped<Label>("REMAINING")
 		    ->setText(
-		        format("%s $%d", tr("Remaining finds>"), balance - agentsSalary - basesCosts));
+		        format("%s $%d", tr("Remaining funds>"), balance - agentsSalary - basesCosts));
 	}
 
 	title->setText(tr("FINANCE"));
