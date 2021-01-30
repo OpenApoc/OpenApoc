@@ -1465,7 +1465,7 @@ uint64_t getNextObjectID(GameState &state, const UString &objectPrefix)
 	return state.objectIdCount[objectPrefix]++;
 }
 
-int GameScore::getTotal()
+int GameScore::getTotal() const
 {
 	return tacticalMissions + researchCompleted + alienIncidents + craftShotDownUFO +
 	       craftShotDownXCom + incursions + cityDamage;

@@ -71,6 +71,7 @@ set (GAMESTATE_SOURCE_FILES
 	rules/agenttype.cpp
 	rules/doodadtype.cpp
 	rules/supportedmappart.cpp
+	rules/weeklyrating.cpp
 
 	shared/aequipment.cpp
 	shared/agent.cpp
@@ -166,6 +167,7 @@ set (GAMESTATE_HEADER_FILES
 	rules/agenttype.h
 	rules/doodadtype.h
 	rules/supportedmappart.h
+	rules/weeklyrating.h
 
 	shared/aequipment.h
 	shared/agent.h
