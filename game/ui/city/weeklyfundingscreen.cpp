@@ -9,6 +9,7 @@
 #include "game/state/gamestate.h"
 #include "game/state/rules/weeklyrating.h"
 #include "game/state/shared/organisation.h"
+#include "game/ui/city/scorescreen.h"
 
 namespace OpenApoc
 {
@@ -104,7 +105,11 @@ void WeeklyFundingScreen::pause() {}
 
 void WeeklyFundingScreen::resume() {}
 
-void WeeklyFundingScreen::finish() { state->weeklyPlayerUpdate(); }
+void WeeklyFundingScreen::finish()
+{
+	state->weeklyPlayerUpdate();
+	fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<ScoreScreen>(this->state, true)});
+}
 
 void WeeklyFundingScreen::eventOccurred(Event *e)
 {

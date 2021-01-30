@@ -16,12 +16,13 @@
 
 namespace OpenApoc
 {
-ScoreScreen::ScoreScreen(sp<GameState> state)
-    : Stage(), menuform(ui().getForm("city/score")), state(state)
+ScoreScreen::ScoreScreen(sp<GameState> state, bool isFinanceMode)
+    : Stage(), menuform(ui().getForm("city/score")), state(state), isFinanceMode(isFinanceMode)
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 	menuform->findControlTyped<Label>("TEXT_DATE")->setText(state->gameTime.getLongDateString());
 	menuform->findControlTyped<Label>("TEXT_WEEK")->setText(state->gameTime.getWeekString());
+
 	formScore = menuform->findControlTyped<Form>("SCORE_VIEW");
 	formFinance = menuform->findControlTyped<Form>("FINANCE_VIEW");
 	title = menuform->findControlTyped<Label>("TITLE");
@@ -37,7 +38,14 @@ ScoreScreen::ScoreScreen(sp<GameState> state)
 	buttonOK->addCallback(FormEventType::ButtonClick,
 	                      [](Event *) { fw().stageQueueCommand({StageCmd::Command::POP}); });
 
-	buttonScore->setChecked(true);
+	if (isFinanceMode)
+	{
+		buttonFinance->setChecked(true);
+	}
+	else
+	{
+		buttonScore->setChecked(true);
+	}
 }
 
 ScoreScreen::~ScoreScreen() = default;
