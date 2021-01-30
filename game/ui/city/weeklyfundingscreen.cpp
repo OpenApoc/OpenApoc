@@ -7,6 +7,7 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "game/state/gamestate.h"
+#include "game/state/shared/organisation.h"
 
 namespace OpenApoc
 {
@@ -31,6 +32,19 @@ void WeeklyFundingScreen::begin()
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 	menuform->findControlTyped<Label>("TEXT_DATE")->setText(state->gameTime.getLongDateString());
 	menuform->findControlTyped<Label>("TEXT_WEEK")->setText(state->gameTime.getWeekString());
+
+	menuform->findControlTyped<Label>("TITLE")->setText(tr("WEEKLY FUNDING ASSESSMENT"));
+
+	auto player = state->getPlayer();
+	labelCurrentIncome->setText(format("%s $%d", tr("Current income>"), player->income));
+	labelAdjustment->setText(format("%s $%d", tr("Funding adjustment>"), 7500));
+	labelNextWeekIncome->setText(
+	    format("%s $%d", tr("Income for next week>"), player->income + 7500));
+
+	UString ratingDescription;
+	ratingDescription =
+	    tr("The Senate has a favorable attitude to X-COM and has increased funding accordingly.");
+	labelRatingDescription->setText(ratingDescription);
 }
 
 void WeeklyFundingScreen::pause() {}

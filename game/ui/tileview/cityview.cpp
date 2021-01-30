@@ -61,6 +61,7 @@
 #include "game/ui/city/buildingscreen.h"
 #include "game/ui/city/infiltrationscreen.h"
 #include "game/ui/city/scorescreen.h"
+#include "game/ui/city/weeklyfundingscreen.h"
 #include "game/ui/components/basegraphics.h"
 #include "game/ui/components/controlgenerator.h"
 #include "game/ui/components/locationscreen.h"
@@ -419,6 +420,11 @@ bool CityView::handleClickedOrganisation(StateRef<Organisation> organisation, bo
 		}
 	}
 	return true;
+}
+
+void CityView::showWeeklyFundingReport()
+{
+	fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<WeeklyFundingScreen>(this->state)});
 }
 
 void CityView::tryOpenUfopaediaEntry(StateRef<UfopaediaEntry> ufopaediaEntry)
@@ -3859,6 +3865,11 @@ bool CityView::handleGameStateEvent(Event *e)
 			                     format("%s\n%s", ev->base->name, tr(ev->facility->type->name)),
 			                     MessageBox::ButtonOptions::Ok);
 			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+		}
+		break;
+		case GameEventType::WeeklyReport:
+		{
+			showWeeklyFundingReport();
 		}
 		break;
 		default:

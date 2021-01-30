@@ -1199,6 +1199,8 @@ void GameState::updateEndOfWeek()
 	updateHumanEconomy();
 
 	luaGameState.callHook("updateEndOfWeek", 0, 0);
+
+	fw().pushEvent(new GameEvent(GameEventType::WeeklyReport));
 }
 
 // Recalculates AI organization and civilian finances, updating budgets and salaries

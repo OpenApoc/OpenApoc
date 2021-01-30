@@ -5,7 +5,7 @@
       <position x="centre" y="centre"/>
       <size width="640" height="480"/>
       <graphic>
-        <image>xcom3/ufodata/plainbak.pcx</image>
+        <image>xcom3/ufodata/fundadj.pcx</image>
         <position x="0" y="0"/>
         <size width="640" height="480"/>
       </graphic>
@@ -37,25 +37,25 @@
 	  
       <label id="FUNDING_CURRENT" text="Current income>">
         <position x="77" y="140"/>
-        <size width="200" height="15"/>
+        <size width="300" height="15"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="SENATE_RATING">
         <position x="77" y="160"/>
-        <size width="200" height="15"/>
+        <size width="490" height="45"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="FUNDING_ADJUSTMENT" text="Funding adjustment>">
-        <position x="77" y="180"/>
-        <size width="200" height="15"/>
+        <position x="77" y="212"/>
+        <size width="300" height="15"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="FUNDING_NEW" text="Income for next week>">
-        <position x="77" y="206"/>
-        <size width="200" height="15"/>
+        <position x="77" y="240"/>
+        <size width="300" height="15"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>

@@ -103,6 +103,7 @@ class CityView : public CityTileView
 	bool handleClickedOrganisation(StateRef<Organisation> organisation, bool rightClick,
 	                               CitySelectionState selState);
 
+	void showWeeklyFundingReport();
 	void tryOpenUfopaediaEntry(StateRef<UfopaediaEntry> ufopaediaEntry);
 
 	// Orders
