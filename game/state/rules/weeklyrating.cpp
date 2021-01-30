@@ -22,29 +22,29 @@ WeeklyRating::Type WeeklyRating::getRating(int score)
 	{
 		return WeeklyRating::Type::Questionable;
 	}
-	else if (score > 400)
+	else if (score > 12800)
 	{
-		return WeeklyRating::Type::Acceptable;
-	}
-	else if (score > 800)
-	{
-		return WeeklyRating::Type::Satisfying;
-	}
-	else if (score > 1600)
-	{
-		return WeeklyRating::Type::Good;
-	}
-	else if (score > 3200)
-	{
-		return WeeklyRating::Type::Great;
+		return WeeklyRating::Type::Outstanding;
 	}
 	else if (score > 6400)
 	{
 		return WeeklyRating::Type::Excellent;
 	}
-	else if (score > 12800)
+	else if (score > 3200)
 	{
-		return WeeklyRating::Type::Outstanding;
+		return WeeklyRating::Type::Great;
+	}
+	else if (score > 1600)
+	{
+		return WeeklyRating::Type::Good;
+	}
+	else if (score > 800)
+	{
+		return WeeklyRating::Type::Satisfying;
+	}
+	else if (score > 400)
+	{
+		return WeeklyRating::Type::Acceptable;
 	}
 	return WeeklyRating::Type::Neutral;
 }

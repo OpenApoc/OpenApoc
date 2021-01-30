@@ -7,8 +7,8 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "game/state/gamestate.h"
-#include "game/state/shared/organisation.h"
 #include "game/state/rules/weeklyrating.h"
+#include "game/state/shared/organisation.h"
 
 namespace OpenApoc
 {
@@ -41,13 +41,13 @@ void WeeklyFundingScreen::begin()
 
 	const auto player = state->getPlayer();
 	const auto government = state->getGovernment();
-	const int score = state->weekScore.getTotal();
-	int adjustment = 0;
 
 	if (government->isRelatedTo(player) == Organisation::Relation::Hostile)
 	{
-		ratingDescription = tr(
-		    "The Senate has declared total hostility to X-COM and there will be no further funding. Furthermore, the Senate will take any steps necessary to destroy the X-COM organization if it refuses to cease operation.");
+		ratingDescription =
+		    tr("The Senate has declared total hostility to X-COM and there will be no further "
+		       "funding. Furthermore, the Senate will take any steps necessary to destroy the "
+		       "X-COM organization if it refuses to cease operation.");
 
 		labelAdjustment->setText(emptyString);
 		labelNextWeekIncome->setText(emptyString);
@@ -61,24 +61,30 @@ void WeeklyFundingScreen::begin()
 	}
 	else
 	{
-		const auto rating = WeeklyRating::getRating(score);
+		const auto rating = WeeklyRating::getRating(state->weekScore.getTotal());
+		const int mod = WeeklyRating::getRatingModifier(rating);
+		int adjustment = (mod == 0) ? 0 : player->income / mod;
 
-		if (rating < WeeklyRating::Type::Neutral)
+		if (government->balance / 2 < player->income)
 		{
-			adjustment = player->income / WeeklyRating::getRatingModifier(rating);
+			ratingDescription = tr("Unfortunately the Senate has to limit X-COM funding due to the "
+			                       "poor state of government finances.");
+		}
+		else if (rating < WeeklyRating::Type::Neutral)
+		{
 			ratingDescription = tr("The Senate is not pleased with the performance of X-COM and "
 			                       "has reduced funding accordingly.");
 		}
 		else if (rating > WeeklyRating::Type::Neutral)
 		{
-			adjustment = player->income / WeeklyRating::getRatingModifier(rating);
 			ratingDescription = tr("The Senate has a favorable attitude to X-COM and has increased "
 			                       "funding accordingly.");
 		}
-
-		if (government->balance / 2 < player->income)
+		else
 		{
-			ratingDescription = tr("Unfortunately the Senate has to limit X-COM funding due to the poor state of government finances.");
+			// Neutral rating, no rating message. Move up next week income line.
+			labelAdjustment->Location.y -= 44;
+			labelNextWeekIncome->Location.y -= 44;
 		}
 
 		labelAdjustment->setText(format("%s $%d", tr("Funding adjustment>"), adjustment));
