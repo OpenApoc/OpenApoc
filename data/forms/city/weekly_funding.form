@@ -47,13 +47,13 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>
-      <label id="FUNDING_ADJUSTMENT" text="Funding adjustment>">
+      <label id="FUNDING_ADJUSTMENT">
         <position x="52" y="212"/>
         <size width="400" height="15"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>
-      <label id="FUNDING_NEW" text="Income for next week>">
+      <label id="FUNDING_NEW">
         <position x="52" y="240"/>
         <size width="400" height="15"/>
         <alignment horizontal="left" vertical="centre"/>

@@ -37,7 +37,6 @@ void WeeklyFundingScreen::begin()
 
 	menuform->findControlTyped<Label>("TITLE")->setText(tr("WEEKLY FUNDING ASSESSMENT"));
 
-	const UString emptyString;
 	UString ratingDescription;
 
 	const auto player = state->getPlayer();
@@ -52,8 +51,6 @@ void WeeklyFundingScreen::begin()
 		       "X-COM organization if it refuses to cease operation.");
 
 		currentIncome = 0;
-		labelAdjustment->setText(emptyString);
-		labelNextWeekIncome->setText(emptyString);
 	}
 	else if (state->totalScore.getTotal() < -2400)
 	{
@@ -61,8 +58,6 @@ void WeeklyFundingScreen::begin()
 		                       "that it will cease funding from now on.");
 
 		currentIncome = 0;
-		labelAdjustment->setText(emptyString);
-		labelNextWeekIncome->setText(emptyString);
 	}
 	else
 	{
@@ -97,7 +92,7 @@ void WeeklyFundingScreen::begin()
 		}
 
 		// Income adjustment is still based on base player funding, not current one
-		int adjustment = (mod == 0) ? 0 : player->income / mod;
+		const int adjustment = (mod == 0) ? 0 : player->income / mod;
 
 		labelAdjustment->setText(format("%s $%d", tr("Funding adjustment>"), adjustment));
 		labelNextWeekIncome->setText(

@@ -64,6 +64,7 @@
 		<member>messages</member>
 		<member>baseIndex</member>
 		<member>difficulty</member>
+		<member>fundingTerminated</member>
 		<member>firstDetection</member>
 		<member>nextInvasion</member>
 	</object>

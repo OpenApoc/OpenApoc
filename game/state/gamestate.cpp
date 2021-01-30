@@ -1241,7 +1241,7 @@ void GameState::weeklyPlayerUpdate()
 
 	// Player overheads: salary and base upkeep
 	int totalSalary = 0;
-	for (auto &a : agents)
+	for (const auto &a : agents)
 	{
 		if (a.second->owner == player)
 		{
@@ -1264,9 +1264,9 @@ void GameState::weeklyPlayerUpdate()
 	}
 
 	int basesCosts = 0;
-	for (auto &b : player_bases)
+	for (const auto &b : player_bases)
 	{
-		for (auto &f : b.second->facilities)
+		for (const auto &f : b.second->facilities)
 		{
 			basesCosts += f->type->weeklyCost;
 		}
