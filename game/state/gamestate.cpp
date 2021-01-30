@@ -35,6 +35,7 @@
 #include "game/state/rules/city/vammotype.h"
 #include "game/state/rules/city/vehicletype.h"
 #include "game/state/rules/doodadtype.h"
+#include "game/state/rules/weeklyrating.h"
 #include "game/state/shared/aequipment.h"
 #include "game/state/shared/doodad.h"
 #include "game/state/shared/organisation.h"
@@ -1201,6 +1202,30 @@ void GameState::updateEndOfWeek()
 	luaGameState.callHook("updateEndOfWeek", 0, 0);
 
 	fw().pushEvent(new GameEvent(GameEventType::WeeklyReport));
+}
+
+void GameState::weeklyPlayerUpdate()
+{
+	if (!fundingTerminated)
+	{
+		if (government->isRelatedTo(player) == Organisation::Relation::Hostile ||
+		    totalScore.getTotal() < -2400)
+		{
+			fundingTerminated = true;
+			player->income = 0;
+		}
+		else
+		{
+			auto rating = WeeklyRating::getRating(weekScore.getTotal());
+			const int fundingMod = WeeklyRating::getRatingModifier(rating);
+
+			player->balance += player->income;
+			if (fundingMod != 0)
+			{
+				player->income += player->income / fundingMod;
+			}
+		}
+	}
 }
 
 // Recalculates AI organization and civilian finances, updating budgets and salaries

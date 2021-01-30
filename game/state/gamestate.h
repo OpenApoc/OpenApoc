@@ -107,6 +107,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	int baseIndex = 1;
 	int difficulty = 0;
+	bool fundingTerminated = false;
 	bool firstDetection = false;
 	uint64_t nextInvasion = 0;
 
@@ -244,6 +245,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	void updateEndOfWeek();
 
 	void updateHumanEconomy();
+	void weeklyPlayerUpdate();
 
 	void logEvent(GameEvent *ev);
 

@@ -41,6 +41,7 @@ void WeeklyFundingScreen::begin()
 
 	const auto player = state->getPlayer();
 	const auto government = state->getGovernment();
+	int currentIncome = player->income;
 
 	if (government->isRelatedTo(player) == Organisation::Relation::Hostile)
 	{
@@ -49,6 +50,7 @@ void WeeklyFundingScreen::begin()
 		       "funding. Furthermore, the Senate will take any steps necessary to destroy the "
 		       "X-COM organization if it refuses to cease operation.");
 
+		currentIncome = 0;
 		labelAdjustment->setText(emptyString);
 		labelNextWeekIncome->setText(emptyString);
 	}
@@ -56,6 +58,8 @@ void WeeklyFundingScreen::begin()
 	{
 		ratingDescription = tr("The Senate considers the performance of X-COM to be so abysmal "
 		                       "that it will cease funding from now on.");
+
+		currentIncome = 0;
 		labelAdjustment->setText(emptyString);
 		labelNextWeekIncome->setText(emptyString);
 	}
@@ -82,17 +86,17 @@ void WeeklyFundingScreen::begin()
 		}
 		else
 		{
-			// Neutral rating, no rating message. Move up next week income line.
+			// Neutral rating, no rating message. Move up the labels.
 			labelAdjustment->Location.y -= 44;
 			labelNextWeekIncome->Location.y -= 44;
 		}
 
 		labelAdjustment->setText(format("%s $%d", tr("Funding adjustment>"), adjustment));
 		labelNextWeekIncome->setText(
-		    format("%s $%d", tr("Income for next week>"), player->income + adjustment));
+		    format("%s $%d", tr("Income for next week>"), currentIncome + adjustment));
 	}
 
-	labelCurrentIncome->setText(format("%s $%d", tr("Current income>"), player->income));
+	labelCurrentIncome->setText(format("%s $%d", tr("Current income>"), currentIncome));
 	labelRatingDescription->setText(ratingDescription);
 }
 
@@ -100,7 +104,7 @@ void WeeklyFundingScreen::pause() {}
 
 void WeeklyFundingScreen::resume() {}
 
-void WeeklyFundingScreen::finish() {}
+void WeeklyFundingScreen::finish() { state->weeklyPlayerUpdate(); }
 
 void WeeklyFundingScreen::eventOccurred(Event *e)
 {
