@@ -68,10 +68,14 @@ void WeeklyFundingScreen::begin()
 	{
 		const auto rating = WeeklyRating::getRating(state->weekScore.getTotal());
 		const int mod = WeeklyRating::getRatingModifier(rating);
-		int adjustment = (mod == 0) ? 0 : player->income / mod;
 
-		if (government->balance / 2 < player->income)
+		const int availableGovFunds = government->balance / 2;
+
+		if (availableGovFunds < currentIncome)
 		{
+			// Reduce this week's income if government doesn't have enough funds
+			currentIncome = (availableGovFunds < 0) ? 0 : availableGovFunds;
+
 			ratingDescription = tr("Unfortunately the Senate has to limit X-COM funding due to the "
 			                       "poor state of government finances.");
 		}
@@ -91,6 +95,9 @@ void WeeklyFundingScreen::begin()
 			labelAdjustment->Location.y -= 44;
 			labelNextWeekIncome->Location.y -= 44;
 		}
+
+		// Income adjustment is still based on base player funding, not current one
+		int adjustment = (mod == 0) ? 0 : player->income / mod;
 
 		labelAdjustment->setText(format("%s $%d", tr("Funding adjustment>"), adjustment));
 		labelNextWeekIncome->setText(

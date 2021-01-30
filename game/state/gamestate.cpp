@@ -1217,10 +1217,21 @@ void GameState::weeklyPlayerUpdate()
 		}
 		else
 		{
-			auto rating = WeeklyRating::getRating(weekScore.getTotal());
-			const int fundingMod = WeeklyRating::getRatingModifier(rating);
+			int income = player->income;
 
-			player->balance += player->income;
+			// Reduce this week's income if government doesn't have enough funds
+			const int availableGovFunds = government->balance / 2;
+			if (availableGovFunds < income)
+			{
+				income = (availableGovFunds < 0) ? 0 : availableGovFunds;
+			}
+
+			// Actual money transfer
+			player->balance += income;
+			government->balance -= income;
+
+			const auto rating = WeeklyRating::getRating(weekScore.getTotal());
+			const int fundingMod = WeeklyRating::getRatingModifier(rating);
 			if (fundingMod != 0)
 			{
 				player->income += player->income / fundingMod;

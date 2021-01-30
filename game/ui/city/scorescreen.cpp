@@ -164,8 +164,8 @@ void ScoreScreen::setFinanceMode()
 		    ->setText(format("$%d", agentsSalary + basesCosts));
 
 		int balance = state->getPlayer()->balance;
-		
-		// Special case: when shown during weekly upkeep balance was already adjusted by the game loop
+
+		// Special case: during weekly upkeep balance was already adjusted by the game loop
 		if (isWeeklyUpkeep)
 		{
 			// revert balance value to original for display
