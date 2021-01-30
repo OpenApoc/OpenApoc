@@ -21,7 +21,7 @@ class ScoreScreen : public Stage
 	sp<GameState> state;
 
 	// Default form state
-	bool isFinanceMode = false;
+	bool isWeeklyUpkeep = false;
 
 	// The form filling status.
 	bool formScoreFilled = false;
@@ -33,7 +33,7 @@ class ScoreScreen : public Stage
 	void setFinanceMode();
 
   public:
-	ScoreScreen(sp<GameState> state, bool isFinanceMode = false);
+	ScoreScreen(sp<GameState> state, bool showWeeklyUpkeep = false);
 	~ScoreScreen() override;
 
 	// Stage control

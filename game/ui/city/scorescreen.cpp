@@ -16,8 +16,8 @@
 
 namespace OpenApoc
 {
-ScoreScreen::ScoreScreen(sp<GameState> state, bool isFinanceMode)
-    : Stage(), menuform(ui().getForm("city/score")), state(state), isFinanceMode(isFinanceMode)
+ScoreScreen::ScoreScreen(sp<GameState> state, bool showWeeklyUpkeep)
+    : Stage(), menuform(ui().getForm("city/score")), state(state), isWeeklyUpkeep(showWeeklyUpkeep)
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 	menuform->findControlTyped<Label>("TEXT_DATE")->setText(state->gameTime.getLongDateString());
@@ -38,7 +38,7 @@ ScoreScreen::ScoreScreen(sp<GameState> state, bool isFinanceMode)
 	buttonOK->addCallback(FormEventType::ButtonClick,
 	                      [](Event *) { fw().stageQueueCommand({StageCmd::Command::POP}); });
 
-	if (isFinanceMode)
+	if (isWeeklyUpkeep)
 	{
 		buttonFinance->setChecked(true);
 	}
@@ -164,6 +164,14 @@ void ScoreScreen::setFinanceMode()
 		    ->setText(format("$%d", agentsSalary + basesCosts));
 
 		int balance = state->getPlayer()->balance;
+		
+		// Special case: when shown during weekly upkeep balance was already adjusted by the game loop
+		if (isWeeklyUpkeep)
+		{
+			// revert balance value to original for display
+			balance += agentsSalary + basesCosts;
+		}
+
 		formFinance->findControlTyped<Label>("INITIAL")->setText(
 		    format("%s $%d", tr("Initial funds>"), balance));
 		formFinance->findControlTyped<Label>("REMAINING")
