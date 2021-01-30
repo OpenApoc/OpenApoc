@@ -176,7 +176,8 @@ void GameTime::addTicks(uint64_t ticks)
 			{
 				uint64_t days = this->ticks / TICKS_PER_DAY;
 				dayPassedFlag = true;
-				if (days % 7 == 0)
+				// game starts on Tuesday, so week rolls on day 6
+				if (days % 7 == 6)
 				{
 					weekPassedFlag = true;
 				}
