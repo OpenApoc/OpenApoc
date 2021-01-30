@@ -31,7 +31,8 @@ namespace OpenApoc
 
 TileMap::TileMap(Vec3<int> size, Vec3<float> velocityScale, Vec3<int> voxelMapSize,
                  std::vector<std::set<TileObject::Type>> layerMap)
-    : layerMap(layerMap), size(size), voxelMapSize(voxelMapSize), velocityScale(velocityScale)
+    : layerMap(layerMap), strategyViewCache(std::vector<std::vector<sp<Surface>>>(size.z)),
+      size(size), voxelMapSize(voxelMapSize), velocityScale(velocityScale)
 {
 	tiles.reserve(size.x * size.y * size.z);
 	for (int z = 0; z < size.z; z++)
@@ -56,6 +57,15 @@ TileMap::TileMap(Vec3<int> size, Vec3<float> velocityScale, Vec3<int> voxelMapSi
 				LogError("Type %d appears in multiple layers", static_cast<int>(type));
 			}
 			seenTypes.insert(type);
+		}
+	}
+
+	for (size_t z = 0; z < size.z; z++)
+	{
+		for (size_t b = 0; b < STRATEGY_VIEW_BELTS; b++)
+		{
+			// Set a fake surface. Real surface will be on demand.
+			strategyViewCache[z].push_back(mksp<Surface>(Vec2<unsigned>{1, 1}));
 		}
 	}
 }
@@ -307,5 +317,34 @@ void TileMap::updateAllCityInfo()
 }
 
 void TileMap::clearPathCaches() { agentPathCache.clear(); }
+
+sp<Surface> TileMap::getViewSurface(size_t z, size_t belt) const
+{
+	return strategyViewCache.at(z)[belt];
+}
+
+void TileMap::setViewSurface(size_t z, size_t belt, sp<Surface> surface)
+{
+	strategyViewCache.at(z)[belt] = surface;
+}
+
+bool TileMap::isViewSurfaceDirty(size_t z, size_t belt) const
+{
+	return strategyViewCache.at(z)[belt]->dirty;
+}
+
+void TileMap::setViewSurfaceDirty(size_t z, size_t belt, bool dirty)
+{
+	if (dirty)
+	{
+		// +1 level just in case (it need sometimes)
+		for (size_t i = z; i < std::min(z + 2, strategyViewCache.size()); i++)
+			strategyViewCache.at(i)[belt]->dirty = dirty;
+	}
+	else
+	{
+		strategyViewCache.at(z)[belt]->dirty = dirty;
+	}
+}
 
 }; // namespace OpenApoc

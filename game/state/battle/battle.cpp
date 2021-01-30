@@ -1866,7 +1866,12 @@ bool Battle::getVisible(StateRef<Organisation> org, int x, int y, int z) const
 
 void Battle::setVisible(StateRef<Organisation> org, int x, int y, int z, bool val)
 {
-	visibleTiles[org][z * size.x * size.y + y * size.x + x] = val;
+	int block = z * size.x * size.y + y * size.x + x;
+	if (visibleTiles.at(org).at(block) != val)
+	{
+		map->setViewSurfaceDirty(x, y, z);
+		visibleTiles[org][block] = val;
+	}
 }
 
 void Battle::queueVisionRefresh(Vec3<int> tile) { tilesChangedForVision.insert(tile); }

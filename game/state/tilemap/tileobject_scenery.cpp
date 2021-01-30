@@ -115,6 +115,10 @@ float TileObjectScenery::getZOrder() const
 
 void TileObjectScenery::setPosition(Vec3<float> newPosition)
 {
+	if (static_cast<int>(newPosition.z) != static_cast<int>(getPosition().z))
+	{
+		map.setViewSurfaceDirty(newPosition);
+	}
 	TileObject::setPosition(newPosition);
 	map.clearPathCaches();
 	owningTile->updateCityscapeParameters();
@@ -129,6 +133,7 @@ void TileObjectScenery::removeFromMap()
 
 	if (requireRecalc)
 	{
+		map.setViewSurfaceDirty(prevOwningTile->position);
 		prevOwningTile->updateCityscapeParameters();
 	}
 }
@@ -153,6 +158,7 @@ void TileObjectScenery::addToDrawnTiles(Tile *tile)
 		}
 	}
 	TileObject::addToDrawnTiles(tile);
+	map.setViewSurfaceDirty(tile->position);
 }
 
 } // namespace OpenApoc
