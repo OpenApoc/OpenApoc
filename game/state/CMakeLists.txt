@@ -153,6 +153,7 @@ set (GAMESTATE_HEADER_FILES
 	rules/city/citycommonimagelist.h
 	rules/city/citycommonsamplelist.h
 	rules/city/facilitytype.h
+	rules/city/organisationraid.h
 	rules/city/scenerytiletype.h
 	rules/city/ufogrowth.h
 	rules/city/ufomissionpreference.h

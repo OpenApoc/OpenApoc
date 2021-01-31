@@ -22,6 +22,7 @@
 		<member type="Section">agent_body_types</member>
 		<member type="Section">agent_equipment_layouts</member>
 		<member type="Section">agent_generator</member>
+		<member type="Section">organisation_raid_rules</member>
 		<member>initial_agents</member>
 		<member>initial_facilities</member>
 		<member>initial_agent_equipment</member>
@@ -1308,6 +1309,24 @@
 		<member>dependency</member>
 		<member>ufopaedia_entry</member>
 		<member>sector</member>
+	</object>
+	<enum>
+		<name>OrganisationRaid::Type</name>
+		<value>None</value>
+		<value>Attack</value>
+		<value>Raid</value>
+		<value>Storm</value>
+		<value>IllegalFlyer</value>
+		<value>Treaty</value>
+	</enum>
+	<object>
+		<name>OrganisationRaid</name>
+		<member>neutral_low_manpower</member>
+		<member>neutral_normal</member>
+		<member>neutral_high_manpower</member>
+		<member>military_low_manpower</member>
+		<member>military_normal</member>
+		<member>military_high_manpower</member>
 	</object>
 	<enum>
 		<name>Organisation::MissionPattern::Target</name>
