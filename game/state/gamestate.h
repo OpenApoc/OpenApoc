@@ -119,6 +119,10 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<Agent> agents;
 	AgentGenerator agent_generator;
 
+	std::vector<std::pair<int, int>> weekly_rating_rules;
+	std::map<AgentType::Role, int> agent_salary;
+	std::map<AgentType::Role, int> agent_fired_penalty;
+
 	std::map<AgentType::Role, unsigned> initial_agents;
 	std::map<UString, unsigned> initial_facilities;
 	std::list<std::list<StateRef<AEquipmentType>>> initial_agent_equipment;

@@ -221,6 +221,29 @@ void GameState::initState()
 		a.second->rightHandItem = a.second->getFirstItemInSlot(EquipmentSlotType::RightHand, false);
 	}
 
+	// In case this is an older savegame, check that all critical data is there
+	if (this->agent_salary.empty())
+	{
+		this->agent_salary = {{AgentType::Role::Soldier, 600},
+		                      {AgentType::Role::BioChemist, 800},
+		                      {AgentType::Role::Physicist, 800},
+		                      {AgentType::Role::Engineer, 800}};
+	}
+	if (this->agent_fired_penalty.empty())
+	{
+		this->agent_fired_penalty = {{AgentType::Role::Soldier, 0},
+		                             {AgentType::Role::BioChemist, 0},
+		                             {AgentType::Role::Physicist, 0},
+		                             {AgentType::Role::Engineer, 0}};
+	}
+	if (this->weekly_rating_rules.empty())
+	{
+		this->weekly_rating_rules = {
+		    {-1600, -4}, {-800, -5}, {-400, -10}, {0, -15},  {400, 20},
+		    {800, 16},   {1600, 12}, {3200, 8},   {6400, 5}, {12800, 4},
+		};
+	}
+
 	if (newGame)
 	{
 		// Initialize organization funding by running throught two-week funding

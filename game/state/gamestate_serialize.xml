@@ -22,6 +22,9 @@
 		<member type="Section">agent_body_types</member>
 		<member type="Section">agent_equipment_layouts</member>
 		<member type="Section">agent_generator</member>
+		<member>weekly_rating_rules</member>
+		<member>agent_salary</member>
+		<member>agent_fired_penalty</member>
 		<member>initial_agents</member>
 		<member>initial_facilities</member>
 		<member>initial_agent_equipment</member>
