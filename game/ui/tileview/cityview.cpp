@@ -3869,6 +3869,7 @@ bool CityView::handleGameStateEvent(Event *e)
 		break;
 		case GameEventType::WeeklyReport:
 		{
+			setUpdateSpeed(CityUpdateSpeed::Pause);
 			showWeeklyFundingReport();
 		}
 		break;

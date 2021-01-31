@@ -238,10 +238,8 @@ void GameState::initState()
 	}
 	if (this->weekly_rating_rules.empty())
 	{
-		this->weekly_rating_rules = {
-		    {-1600, -4}, {-800, -5}, {-400, -10}, {0, -15},  {400, 20},
-		    {800, 16},   {1600, 12}, {3200, 8},   {6400, 5}, {12800, 4},
-		};
+		this->weekly_rating_rules = {{-1600, -4}, {-800, -5}, {-400, -10}, {0, -15},  {12800, 4},
+		                             {6400, 5},   {3200, 8},  {1600, 12},  {800, 16}, {400, 20}};
 	}
 
 	if (newGame)
@@ -1253,11 +1251,26 @@ void GameState::weeklyPlayerUpdate()
 			player->balance += income;
 			government->balance -= income;
 
-			const auto rating = WeeklyRating::getRating(weekScore.getTotal());
-			const int fundingMod = WeeklyRating::getRatingModifier(rating);
-			if (fundingMod != 0)
+			int fundingModifier = 0;
+			const int totalRating = weekScore.getTotal();
+			for (const auto &threshold : weekly_rating_rules)
 			{
-				player->income += player->income / fundingMod;
+				// If score threshold is negative or 0, then use it if our value is smaller
+				// (i.e. -2400 rating uses -1600 threshold)
+
+				// If score threshold is positive, then score has to be higher
+				// (i.e. 10000 rating uses 6400's value)
+				if ((threshold.first > 0 && totalRating > threshold.second) ||
+				    (threshold.first <= 0 && totalRating < threshold.first))
+				{
+					fundingModifier = threshold.second;
+					break;
+				}
+			}
+
+			if (fundingModifier != 0)
+			{
+				player->income += player->income / fundingModifier;
 			}
 		}
 	}
@@ -1268,20 +1281,10 @@ void GameState::weeklyPlayerUpdate()
 	{
 		if (a.second->owner == player)
 		{
-			switch (a.second->type->role)
+			auto it = agent_salary.find(a.second->type->role);
+			if (it != agent_salary.end())
 			{
-				case AgentType::Role::BioChemist:
-					totalSalary += HIRE_COST_BIO;
-					break;
-				case AgentType::Role::Engineer:
-					totalSalary += HIRE_COST_ENGI;
-					break;
-				case AgentType::Role::Physicist:
-					totalSalary += HIRE_COST_PHYSIC;
-					break;
-				case AgentType::Role::Soldier:
-					totalSalary += HIRE_COST_SOLDIER;
-					break;
+				totalSalary += it->second;
 			}
 		}
 	}
