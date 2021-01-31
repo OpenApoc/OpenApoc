@@ -139,10 +139,19 @@ void ScoreScreen::setFinanceMode()
 		formFinance->findControlTyped<Label>("BASES_TOTAL_Q")
 		    ->setText(format("%d", state->player_bases.size()));
 
-		soldiers *= HIRE_COST_SOLDIER;
-		biochemists *= HIRE_COST_BIO;
-		engineers *= HIRE_COST_ENGI;
-		physicists *= HIRE_COST_PHYSIC;
+		auto getSalary = [this](AgentType::Role role) {
+			auto it = state->agent_salary.find(role);
+			if (it != state->agent_salary.end())
+			{
+				return it->second;
+			}
+			return 0;
+		};
+
+		soldiers *= getSalary(AgentType::Role::Soldier);
+		biochemists *= getSalary(AgentType::Role::BioChemist);
+		engineers *= getSalary(AgentType::Role::Engineer);
+		physicists *= getSalary(AgentType::Role::Physicist);
 		int agentsSalary = soldiers + biochemists + engineers + physicists;
 
 		formFinance->findControlTyped<Label>("AGENTS_W")->setText(format("$%d", soldiers));

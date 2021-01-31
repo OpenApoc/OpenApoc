@@ -31,20 +31,6 @@
 namespace OpenApoc
 {
 
-namespace
-{
-static const std::map<AgentType::Role, int> hireCost = {
-    {AgentType::Role::Soldier, HIRE_COST_SOLDIER},
-    {AgentType::Role::BioChemist, HIRE_COST_BIO},
-    {AgentType::Role::Physicist, HIRE_COST_PHYSIC},
-    {AgentType::Role::Engineer, HIRE_COST_ENGI}};
-static const std::map<AgentType::Role, int> fireCost = {
-    {AgentType::Role::Soldier, FIRE_COST_SOLDIER},
-    {AgentType::Role::BioChemist, FIRE_COST_BIO},
-    {AgentType::Role::Physicist, FIRE_COST_PHYSIC},
-    {AgentType::Role::Engineer, FIRE_COST_ENGI}};
-} // namespace
-
 RecruitScreen::RecruitScreen(sp<GameState> state)
     : BaseStage(state), bigUnitRanks(getBigUnitRanks())
 {
@@ -289,7 +275,7 @@ void RecruitScreen::updateFormValues()
 		if (agent->owner != player)
 		{
 			lqDelta++;
-			moneyDelta -= hireCost.at(agent->type->role);
+			moneyDelta -= state->agent_salary.at(agent->type->role);
 		}
 		// Transferred to this
 		else if (bases[agent->homeBuilding->base.id] != leftIndex)
@@ -311,7 +297,7 @@ void RecruitScreen::updateFormValues()
 			// Hired to other
 			if (agent->owner != player)
 			{
-				moneyDelta -= hireCost.at(agent->type->role);
+				moneyDelta -= state->agent_salary.at(agent->type->role);
 			}
 			// Transferred to other
 			else if (bases[agent->homeBuilding->base.id] == leftIndex)
@@ -328,7 +314,7 @@ void RecruitScreen::updateFormValues()
 		if (agent->owner == player)
 		{
 			// Fired from any base
-			moneyDelta -= fireCost.at(agent->type->role);
+			moneyDelta -= state->agent_fired_penalty.at(agent->type->role);
 			// Fired from this base in particular
 			if (bases[agent->homeBuilding->base.id] == leftIndex)
 			{
@@ -515,7 +501,7 @@ void RecruitScreen::executeOrders()
 				if (agent->owner != player)
 				{
 					agent->hire(*state, bases[i]->building);
-					player->balance -= hireCost.at(agent->type->role);
+					player->balance -= state->agent_salary.at(agent->type->role);
 				}
 				else
 				{
@@ -530,7 +516,7 @@ void RecruitScreen::executeOrders()
 		auto agent = a->getData<Agent>();
 		if (agent->owner == state->getPlayer())
 		{
-			player->balance -= fireCost.at(agent->type->role);
+			player->balance -= state->agent_fired_penalty.at(agent->type->role);
 			std::list<sp<AEquipment>> equipmentToStrip;
 			for (auto &e : agent->equipment)
 			{
@@ -583,7 +569,7 @@ void RecruitScreen::closeScreen(bool confirmed)
 			if (agent->owner != player)
 			{
 				vecLqDelta[i]++;
-				moneyDelta -= hireCost.at(agent->type->role);
+				moneyDelta -= state->agent_salary.at(agent->type->role);
 			}
 			// Moved away from his base to this base
 			else if (bases[agent->homeBuilding->base.id] != i)
@@ -600,7 +586,7 @@ void RecruitScreen::closeScreen(bool confirmed)
 		if (agent->owner == player)
 		{
 			vecLqDelta[bases[agent->homeBuilding->base.id]]--;
-			moneyDelta -= fireCost.at(agent->type->role);
+			moneyDelta -= state->agent_fired_penalty.at(agent->type->role);
 		}
 	}
 

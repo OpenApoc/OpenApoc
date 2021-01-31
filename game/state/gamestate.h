@@ -252,6 +252,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	void updateHumanEconomy();
 	void weeklyPlayerUpdate();
+	int calculateFundingModifier() const;
 
 	void logEvent(GameEvent *ev);
 

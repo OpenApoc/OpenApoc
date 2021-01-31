@@ -7,7 +7,6 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/weeklyrating.h"
 #include "game/state/shared/organisation.h"
 #include "game/ui/city/scorescreen.h"
 
@@ -31,6 +30,13 @@ WeeklyFundingScreen::~WeeklyFundingScreen() = default;
 
 void WeeklyFundingScreen::begin()
 {
+	// Validate that we can recieve funding
+	if (state->fundingTerminated)
+	{
+		fw().stageQueueCommand({StageCmd::Command::POP});
+		return;
+	}
+
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 	menuform->findControlTyped<Label>("TEXT_DATE")->setText(state->gameTime.getLongDateString());
 	menuform->findControlTyped<Label>("TEXT_WEEK")->setText(state->gameTime.getWeekString());
@@ -61,8 +67,15 @@ void WeeklyFundingScreen::begin()
 	}
 	else
 	{
-		const auto rating = WeeklyRating::getRating(state->weekScore.getTotal());
-		const int mod = WeeklyRating::getRatingModifier(rating);
+		const int rating = state->weekScore.getTotal();
+		const int modifier = state->calculateFundingModifier();
+
+		int neutralRatingThreshold = 0;
+		if (!state->weekly_rating_rules.empty())
+		{
+			// last entry should be smallest positive value that gives funding increase
+			neutralRatingThreshold = state->weekly_rating_rules.back().first;
+		}
 
 		const int availableGovFunds = government->balance / 2;
 
@@ -74,12 +87,12 @@ void WeeklyFundingScreen::begin()
 			ratingDescription = tr("Unfortunately the Senate has to limit X-COM funding due to the "
 			                       "poor state of government finances.");
 		}
-		else if (rating < WeeklyRating::Type::Neutral)
+		else if (rating < 0)
 		{
 			ratingDescription = tr("The Senate is not pleased with the performance of X-COM and "
 			                       "has reduced funding accordingly.");
 		}
-		else if (rating > WeeklyRating::Type::Neutral)
+		else if (rating > neutralRatingThreshold)
 		{
 			ratingDescription = tr("The Senate has a favorable attitude to X-COM and has increased "
 			                       "funding accordingly.");
@@ -92,7 +105,7 @@ void WeeklyFundingScreen::begin()
 		}
 
 		// Income adjustment is still based on base player funding, not current one
-		const int adjustment = (mod == 0) ? 0 : player->income / mod;
+		const int adjustment = (modifier == 0) ? 0 : player->income / modifier;
 
 		labelAdjustment->setText(format("%s $%d", tr("Funding adjustment>"), adjustment));
 		labelNextWeekIncome->setText(

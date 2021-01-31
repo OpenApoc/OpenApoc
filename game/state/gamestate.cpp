@@ -35,7 +35,6 @@
 #include "game/state/rules/city/vammotype.h"
 #include "game/state/rules/city/vehicletype.h"
 #include "game/state/rules/doodadtype.h"
-#include "game/state/rules/weeklyrating.h"
 #include "game/state/shared/aequipment.h"
 #include "game/state/shared/doodad.h"
 #include "game/state/shared/organisation.h"
@@ -1251,23 +1250,7 @@ void GameState::weeklyPlayerUpdate()
 			player->balance += income;
 			government->balance -= income;
 
-			int fundingModifier = 0;
-			const int totalRating = weekScore.getTotal();
-			for (const auto &threshold : weekly_rating_rules)
-			{
-				// If score threshold is negative or 0, then use it if our value is smaller
-				// (i.e. -2400 rating uses -1600 threshold)
-
-				// If score threshold is positive, then score has to be higher
-				// (i.e. 10000 rating uses 6400's value)
-				if ((threshold.first > 0 && totalRating > threshold.second) ||
-				    (threshold.first <= 0 && totalRating < threshold.first))
-				{
-					fundingModifier = threshold.second;
-					break;
-				}
-			}
-
+			const int fundingModifier = calculateFundingModifier();
 			if (fundingModifier != 0)
 			{
 				player->income += player->income / fundingModifier;
@@ -1433,6 +1416,27 @@ void GameState::updateHumanEconomy()
 		// make sure we're not losing money
 		build->currentWage = (wage < profitabilityLimit) ? wage : profitabilityLimit;
 	}
+}
+
+int GameState::calculateFundingModifier() const
+{
+	int fundingModifier = 0;
+	const int totalRating = weekScore.getTotal();
+	for (const auto &threshold : weekly_rating_rules)
+	{
+		// If score threshold is negative or 0, then use it if our value is smaller
+		// (i.e. -2400 rating uses -1600 threshold)
+
+		// If score threshold is positive, then score has to be higher
+		// (i.e. 10000 rating uses 6400's value)
+		if ((threshold.first > 0 && totalRating > threshold.second) ||
+		    (threshold.first <= 0 && totalRating < threshold.first))
+		{
+			fundingModifier = threshold.second;
+			break;
+		}
+	}
+	return fundingModifier;
 }
 
 void GameState::updateTurbo()
