@@ -483,6 +483,21 @@ void Framework::processEvents()
 			case EVENT_WINDOW_CLOSED:
 				shutdownFramework();
 				return;
+			case EVENT_GAME_STATE:
+			{
+				auto currentStage = p->ProgramStages.current();
+				while (currentStage != nullptr)
+				{
+					currentStage->eventOccurred(e.get());
+
+					if (e->Handled)
+					{
+						break;
+					}
+					currentStage = p->ProgramStages.previous(currentStage);
+				}
+			}
+			break;
 			default:
 				p->ProgramStages.current()->eventOccurred(e.get());
 				break;

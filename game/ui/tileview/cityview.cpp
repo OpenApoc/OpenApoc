@@ -3864,6 +3864,7 @@ bool CityView::handleGameStateEvent(Event *e)
 		default:
 			break;
 	}
+	e->Handled = true;
 	return true;
 }
 

@@ -4003,6 +4003,7 @@ bool BattleView::handleGameStateEvent(Event *e)
 		default:
 			break;
 	}
+	e->Handled = true;
 	return true;
 }
 
