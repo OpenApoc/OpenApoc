@@ -122,7 +122,6 @@ void WeeklyFundingScreen::resume() {}
 
 void WeeklyFundingScreen::finish()
 {
-	state->weeklyPlayerUpdate();
 	fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<ScoreScreen>(this->state, true)});
 }
 

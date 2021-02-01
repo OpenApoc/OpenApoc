@@ -1222,6 +1222,7 @@ void GameState::updateEndOfWeek()
 	luaGameState.callHook("updateEndOfWeek", 0, 0);
 
 	fw().pushEvent(new GameEvent(GameEventType::WeeklyReport));
+	weeklyPlayerUpdate();
 }
 
 void GameState::weeklyPlayerUpdate()
