@@ -127,6 +127,66 @@ std::shared_future<void> loadBattleVehicle(sp<GameState> state, StateRef<Vehicle
 	return loadTask;
 }
 
+sp<Facility> findCurrentResearchFacility(sp<GameState> state, AgentType::Role role,
+                                         FacilityType::Capacity capacity)
+{
+	sp<Facility> lab;
+	for (auto &a : state->current_city->cityViewSelectedAgents)
+	{
+		if (a && a->type->role == role)
+		{
+			state->current_base = a->homeBuilding->base;
+			if (a->assigned_to_lab)
+			{
+				auto thisRef = StateRef<Agent>{state.get(), a};
+				for (auto &fac : state->current_base->facilities)
+				{
+					if (!fac->lab)
+					{
+						continue;
+					}
+					auto it = std::find(fac->lab->assigned_agents.begin(),
+					                    fac->lab->assigned_agents.end(), thisRef);
+					if (it != fac->lab->assigned_agents.end())
+					{
+						lab = fac;
+						break;
+					}
+				}
+			}
+			else
+			{
+				for (auto &f : state->current_base->facilities)
+				{
+					if (f->type->capacityType == capacity)
+					{
+						lab = f;
+						break;
+					}
+				}
+			}
+			break;
+		}
+	}
+	if (lab == nullptr)
+	{
+		for (auto &base : state->player_bases)
+		{
+			for (auto &facility : base.second->facilities)
+			{
+				if (facility->type->capacityType == capacity)
+				{
+					lab = facility;
+					break;
+				}
+			}
+			if (lab)
+				break;
+		}
+	}
+	return lab;
+}
+
 constexpr size_t NUM_TABS = 8;
 
 } // anonymous namespace
@@ -1330,135 +1390,28 @@ CityView::CityView(sp<GameState> state)
 			    }
 		    }
 	    });
+
 	this->uiTabs[3]
 	    ->findControl("BUTTON_RESEARCH")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    sp<Facility> lab;
-		    for (auto &a : this->state->current_city->cityViewSelectedAgents)
-		    {
-			    if (a && a->type->role == AgentType::Role::BioChemist)
-			    {
-				    this->state->current_base = a->homeBuilding->base;
-				    if (a->assigned_to_lab)
-				    {
-					    auto thisRef = StateRef<Agent>{this->state.get(), a};
-					    for (auto &fac : this->state->current_base->facilities)
-					    {
-						    if (!fac->lab)
-						    {
-							    continue;
-						    }
-						    auto it = std::find(fac->lab->assigned_agents.begin(),
-						                        fac->lab->assigned_agents.end(), thisRef);
-						    if (it != fac->lab->assigned_agents.end())
-						    {
-							    lab = fac;
-							    break;
-						    }
-					    }
-				    }
-				    else
-				    {
-					    for (auto &f : this->state->current_base->facilities)
-					    {
-						    if (f->type->capacityType == FacilityType::Capacity::Chemistry)
-						    {
-							    lab = f;
-							    break;
-						    }
-					    }
-				    }
-				    break;
-			    }
-		    }
+		    sp<Facility> lab = findCurrentResearchFacility(this->state, AgentType::Role::BioChemist,
+		                                                   FacilityType::Capacity::Chemistry);
 		    fw().stageQueueCommand(
 		        {StageCmd::Command::PUSH, mksp<ResearchScreen>(this->state, lab)});
 	    });
 	this->uiTabs[4]
 	    ->findControl("BUTTON_RESEARCH")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    sp<Facility> lab;
-		    for (auto &a : this->state->current_city->cityViewSelectedAgents)
-		    {
-			    if (a && a->type->role == AgentType::Role::Engineer)
-			    {
-				    this->state->current_base = a->homeBuilding->base;
-				    if (a->assigned_to_lab)
-				    {
-					    auto thisRef = StateRef<Agent>{this->state.get(), a};
-					    for (auto &fac : this->state->current_base->facilities)
-					    {
-						    if (!fac->lab)
-						    {
-							    continue;
-						    }
-						    auto it = std::find(fac->lab->assigned_agents.begin(),
-						                        fac->lab->assigned_agents.end(), thisRef);
-						    if (it != fac->lab->assigned_agents.end())
-						    {
-							    lab = fac;
-							    break;
-						    }
-					    }
-				    }
-				    else
-				    {
-					    for (auto &f : this->state->current_base->facilities)
-					    {
-						    if (f->type->capacityType == FacilityType::Capacity::Workshop)
-						    {
-							    lab = f;
-							    break;
-						    }
-					    }
-				    }
-				    break;
-			    }
-		    }
+		    sp<Facility> lab = findCurrentResearchFacility(this->state, AgentType::Role::Engineer,
+		                                                   FacilityType::Capacity::Workshop);
 		    fw().stageQueueCommand(
 		        {StageCmd::Command::PUSH, mksp<ResearchScreen>(this->state, lab)});
 	    });
 	this->uiTabs[5]
 	    ->findControl("BUTTON_RESEARCH")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    sp<Facility> lab;
-		    for (auto &a : this->state->current_city->cityViewSelectedAgents)
-		    {
-			    if (a && a->type->role == AgentType::Role::Physicist)
-			    {
-				    this->state->current_base = a->homeBuilding->base;
-				    if (a->assigned_to_lab)
-				    {
-					    auto thisRef = StateRef<Agent>{this->state.get(), a};
-					    for (auto &fac : this->state->current_base->facilities)
-					    {
-						    if (!fac->lab)
-						    {
-							    continue;
-						    }
-						    auto it = std::find(fac->lab->assigned_agents.begin(),
-						                        fac->lab->assigned_agents.end(), thisRef);
-						    if (it != fac->lab->assigned_agents.end())
-						    {
-							    lab = fac;
-							    break;
-						    }
-					    }
-				    }
-				    else
-				    {
-					    for (auto &f : this->state->current_base->facilities)
-					    {
-						    if (f->type->capacityType == FacilityType::Capacity::Physics)
-						    {
-							    lab = f;
-							    break;
-						    }
-					    }
-				    }
-				    break;
-			    }
-		    }
+		    sp<Facility> lab = findCurrentResearchFacility(this->state, AgentType::Role::Physicist,
+		                                                   FacilityType::Capacity::Physics);
 		    fw().stageQueueCommand(
 		        {StageCmd::Command::PUSH, mksp<ResearchScreen>(this->state, lab)});
 	    });
