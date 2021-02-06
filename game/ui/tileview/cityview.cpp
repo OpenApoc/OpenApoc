@@ -3298,7 +3298,7 @@ bool CityView::handleMouseDown(Event *e)
 					}
 					for (auto &c : vehicle->cargo)
 					{
-						LogWarning("Cargo %dx%s", c.id, c.count);
+						LogInfo("Cargo %sx%d", c.id, c.count);
 					}
 					if (modifierLAlt && modifierLCtrl && modifierLShift)
 					{
@@ -3347,7 +3347,7 @@ bool CityView::handleMouseDown(Event *e)
 					}
 					for (auto &c : vehicle->cargo)
 					{
-						LogWarning("Cargo %dx%s", c.id, c.count);
+						LogInfo("Cargo %sx%d", c.id, c.count);
 					}
 				}
 			}
