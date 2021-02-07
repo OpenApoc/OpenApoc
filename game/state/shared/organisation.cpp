@@ -25,6 +25,19 @@ int Organisation::getGuardCount(GameState &state) const
 	    20, randBoundsInclusive(state.rng, average_guards * 75 / 100, average_guards * 125 / 100));
 }
 
+sp<Building> Organisation::pickRandomBuilding(GameState &state, StateRef<City> city) const
+{
+	std::list<sp<Building>> ownedBuildingsList;
+	for (auto &b : buildings)
+	{
+		if (b->city == city)
+		{
+			ownedBuildingsList.push_back(b);
+		}
+	}
+	return (ownedBuildingsList.empty()) ? nullptr : pickRandom(state.rng, ownedBuildingsList);
+}
+
 void Organisation::takeOver(GameState &state, bool forced)
 {
 	if (!forced && randBoundsExclusive(state.rng, 0, 200) >= infiltrationValue)
@@ -293,6 +306,98 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 	           building.id, buyer.id);
 	auto owner = buyer->owner;
 	owner->balance -= count * price;
+}
+
+void Organisation::setRaidMissions(GameState &state, StateRef<City> city)
+{
+	OrganisationRaid &rules = state.organisation_raid_rules;
+
+	std::list<sp<Building>> ownedBuildingsList;
+	for (const auto &b : buildings)
+	{
+		if (b->city == city)
+		{
+			ownedBuildingsList.push_back(b);
+		}
+	}
+
+	for (const auto &org : state.organisations)
+	{
+		const StateRef<Organisation> otherOrg{&state, org.first};
+		if (isRelatedTo(otherOrg) == Relation::Hostile)
+		{
+			// every time (for every hostile org) pick a new building
+			const auto sourceBuilding = pickRandom(state.rng, ownedBuildingsList);
+			if (!sourceBuilding)
+			{
+				continue;
+			}
+
+			if (std::fabs(current_relations[otherOrg]) >
+			    randBoundsInclusive(state.rng, 0, rules.nextRaidTimer))
+			{
+				rules.nextRaidTimer = 80 - 2 * state.difficulty;
+
+				const auto targetBuilding = otherOrg->pickRandomBuilding(state, city);
+				if (!targetBuilding)
+				{
+					continue;
+				}
+
+				// calculate manpower available and probability of raid success
+				const float targetGuards = otherOrg->average_guards * otherOrg->average_guards *
+				                           targetBuilding->currentWorkforce;
+
+				float guardRatio =
+				    average_guards * average_guards * sourceBuilding->currentWorkforce;
+				// make sure it's not 0 (in case of X-Com)
+				if (targetGuards > 0)
+				{
+					guardRatio /= targetGuards;
+				}
+
+				auto &raidMissionChance = rules.neutral_low_manpower;
+				if (guardRatio > 2)
+				{
+					raidMissionChance =
+					    (militarized) ? rules.military_high_manpower : rules.neutral_high_manpower;
+				}
+				else if (guardRatio > 1)
+				{
+					raidMissionChance =
+					    (militarized) ? rules.military_normal : rules.neutral_normal;
+				}
+				else if (militarized)
+				{
+					raidMissionChance = rules.military_low_manpower;
+				}
+
+				const OrganisationRaid::Type mission =
+				    probabilityMapRandomizer(state.rng, raidMissionChance);
+				switch (mission)
+				{
+					case OrganisationRaid::Type::Attack:
+					case OrganisationRaid::Type::Raid:
+					case OrganisationRaid::Type::Storm:
+						LogWarning("Organisation %s is raiding %s!", id, otherOrg.id);
+						break;
+					case OrganisationRaid::Type::IllegalFlyer:
+						LogWarning("%s: Illegal flyer is attacking %s!", id, otherOrg.id);
+						break;
+					case OrganisationRaid::Type::Treaty:
+						LogWarning("%s: Treaty signed with %s.", id, otherOrg.id);
+						break;
+					default: // skip if None or Unknown
+						break;
+				}
+			}
+			else
+			{
+				// timer didn't trigger, increase the chance
+				rules.nextRaidTimer--;
+			}
+		}
+	}
 }
 
 void Organisation::updateMissions(GameState &state)

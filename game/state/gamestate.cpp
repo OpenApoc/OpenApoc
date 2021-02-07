@@ -1183,6 +1183,11 @@ void GameState::updateEndOfDay()
 		o.second->updateVehicleAgentPark(*this);
 		o.second->updateHirableAgents(*this);
 		o.second->updateDailyInfiltrationHistory();
+
+		if (o.first != player.id && o.first != aliens.id)
+		{
+			o.second->setRaidMissions(*this, current_city);
+		}
 	}
 	for (auto &a : this->agents)
 	{

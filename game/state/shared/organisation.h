@@ -131,6 +131,7 @@ class Organisation : public StateObject<Organisation>
 
 	Organisation() = default;
 
+	void setRaidMissions(GameState &state, StateRef<City> city);
 	void updateMissions(GameState &state);
 	void updateHirableAgents(GameState &state);
 	void updateInfiltration(GameState &state);
@@ -139,6 +140,7 @@ class Organisation : public StateObject<Organisation>
 	void updateDailyInfiltrationHistory();
 
 	int getGuardCount(GameState &state) const;
+	sp<Building> pickRandomBuilding(GameState &state, StateRef<City> city) const;
 
 	void takeOver(GameState &state, bool forced = false);
 

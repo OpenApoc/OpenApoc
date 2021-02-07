@@ -18,6 +18,8 @@ class OrganisationRaid
 		Treaty = 5
 	};
 
+	int nextRaidTimer = 0;
+
 	std::map<Type, float> neutral_low_manpower;
 	std::map<Type, float> neutral_normal;
 	std::map<Type, float> neutral_high_manpower;

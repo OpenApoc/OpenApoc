@@ -1321,6 +1321,7 @@
 	</enum>
 	<object>
 		<name>OrganisationRaid</name>
+		<member>nextRaidTimer</member>
 		<member>neutral_low_manpower</member>
 		<member>neutral_normal</member>
 		<member>neutral_high_manpower</member>
