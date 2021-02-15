@@ -27,7 +27,7 @@ void BribeScreen::updateInfo()
 {
 	UString relationship;
 	UString offer;
-	bribe = organisation->costOfBribeBy(state->getPlayer());
+	bribe = organisation->costOfBribeBy(*state, state->getPlayer());
 
 	switch (organisation->isRelatedTo(state->getPlayer()))
 	{

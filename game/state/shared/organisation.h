@@ -157,7 +157,8 @@ class Organisation : public StateObject<Organisation>
 	bool isPositiveTo(const StateRef<Organisation> &other) const;
 	bool isNegativeTo(const StateRef<Organisation> &other) const;
 	// Calculate the cost of a bribe.
-	int costOfBribeBy(const StateRef<Organisation> &other) const;
+	int costOfBribeBy(GameState &state, const StateRef<Organisation> &other) const;
+	int diplomaticRiftOffer(GameState &state, const StateRef<Organisation> &other) const;
 	// The organisation is bribed by other org.
 	bool bribedBy(GameState &state, StateRef<Organisation> other, int bribe);
 	float getRelationTo(const StateRef<Organisation> &other) const;

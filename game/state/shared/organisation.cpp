@@ -691,10 +691,11 @@ bool Organisation::isNegativeTo(const StateRef<Organisation> &other) const
 
 /**
  * Calculate the cost of a bribe
+ * @param state - GameState
  * @param other - other organisation
  * @return - minimum sum of the bribe
  */
-int Organisation::costOfBribeBy(const StateRef<Organisation> &other) const
+int Organisation::costOfBribeBy(GameState &state, const StateRef<Organisation> &other) const
 {
 	float improvement;
 	float x = this->getRelationTo(other);
@@ -719,12 +720,31 @@ int Organisation::costOfBribeBy(const StateRef<Organisation> &other) const
 		return 0;
 	}
 
-	// The best approximation is 2030 * improvement + 19573
-	// but vanilla X-Com:
-	// 1. fond of numbers with 7 (27000, 37000 etc up to 127000)
-	// 2. often, for unknown reason, reduces the sum
-	// TODO: implement a more relevant formula
-	return 2000 * std::max((int)improvement, 1) + 25000;
+	return (state.difficulty + 1) * std::max((int)improvement, 1) * clamp(balance / 1000, 1, 400) +
+	       state.difficulty * 3000 + 5000;
+}
+
+/**
+ * Calculate the diplomatic rift offer amount
+ * @param state - GameState
+ * @param other - other organisation
+ * @return - sum offered
+ */
+int Organisation::diplomaticRiftOffer(GameState &state, const StateRef<Organisation> &other) const
+{
+	float relationship = this->getRelationTo(other);
+
+	// Organization won't offer this if relationship is good already
+	if (relationship > 25)
+	{
+		return 0;
+	}
+
+	const int difficultyMod = state.difficulty + 1;
+	const int randomValue = randBoundsInclusive(state.rng, 0, (difficultyMod + 1) * 2000);
+
+	return std::max((int)-relationship / 2, 1) * difficultyMod * clamp(balance / 1000, 1, 400) +
+	       difficultyMod * 1000 + randomValue;
 }
 
 /**
@@ -736,7 +756,7 @@ int Organisation::costOfBribeBy(const StateRef<Organisation> &other) const
  */
 bool Organisation::bribedBy(GameState &state, StateRef<Organisation> other, int bribe)
 {
-	if (bribe <= 0 || other->balance < bribe || bribe < costOfBribeBy(other))
+	if (bribe <= 0 || other->balance < bribe || bribe < costOfBribeBy(state, other))
 	{
 		return false;
 	}
