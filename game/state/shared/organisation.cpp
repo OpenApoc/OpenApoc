@@ -784,6 +784,7 @@ bool Organisation::bribedBy(GameState &state, StateRef<Organisation> other, int 
 		return false;
 	}
 
+	balance += bribe;
 	other->balance -= bribe;
 	adjustRelationTo(state, other, improvement);
 	return true;
