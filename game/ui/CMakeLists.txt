@@ -27,6 +27,7 @@ set (GAMEUI_SOURCE_FILES
 	city/basebuyscreen.cpp
 	city/baseselectscreen.cpp
 	city/bribescreen.cpp
+	city/diplomatictreatyscreen.cpp
 	city/buildingscreen.cpp
 	city/alertscreen.cpp
 	city/infiltrationscreen.cpp
@@ -97,6 +98,7 @@ set (GAMEUI_HEADER_FILES
 	city/basebuyscreen.h
 	city/baseselectscreen.h
 	city/bribescreen.h
+	city/diplomatictreatyscreen.h
 	city/buildingscreen.h
 	city/alertscreen.h
 	city/infiltrationscreen.h

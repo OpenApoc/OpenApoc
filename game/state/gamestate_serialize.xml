@@ -366,7 +366,8 @@
 		<value>OrganizationAttack</value>
 		<value>OrganizationRaid</value>
 		<value>OrganizationTreaty</value>
-		<value>OrganizationBribe</value>
+		<value>OrganizationRequestBribe</value>
+		<value>OrganizationRequestAlliance</value>
 		<value>AgentArrived</value>
 		<value>AgentUnableToReach</value>
 		<value>HostileSpotted</value>
@@ -1364,6 +1365,7 @@
 		<member>loot</member>
 		<member>icon</member>
 		<member>current_relations</member>
+		<member>long_term_relations</member>
 		<member>ufopaedia_entry</member>
 		<member>missions</member>
 		<member>vehiclePark</member>

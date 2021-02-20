@@ -27,7 +27,7 @@ void BribeScreen::updateInfo()
 {
 	UString relationship;
 	UString offer;
-	bribe = organisation->costOfBribeBy(state->getPlayer());
+	bribe = organisation->costOfBribeBy(*state, state->getPlayer());
 
 	switch (organisation->isRelatedTo(state->getPlayer()))
 	{
@@ -55,16 +55,7 @@ void BribeScreen::updateInfo()
 
 		case Organisation::Relation::Hostile:
 			relationship = ": hostile towards:";
-			if (organisation->isRelatedTo(state->getAliens()) == Organisation::Relation::Allied)
-			{
-				offer = tr("Whilst X-COM continue to oppose our Alien friends we will remain "
-				           "hostile. Negotiations are impossible.");
-				bribe = 0;
-			}
-			else
-			{
-				offer = getOfferString(bribe, tr("UNFRIENDLY"));
-			}
+			offer = getOfferString(bribe, tr("UNFRIENDLY"));
 			break;
 
 		default:
@@ -78,6 +69,12 @@ void BribeScreen::updateInfo()
 	{
 		offer = tr("This organization is under Alien control.The Alien race will not enter "
 		           "negotiations with X-COM.");
+		bribe = 0;
+	}
+	else if (organisation->isRelatedTo(state->getAliens()) == Organisation::Relation::Allied)
+	{
+		offer = tr("Whilst X-COM continue to oppose our Alien friends we will remain "
+		           "hostile. Negotiations are impossible.");
 		bribe = 0;
 	}
 

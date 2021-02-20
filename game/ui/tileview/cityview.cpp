@@ -59,6 +59,7 @@
 #include "game/ui/city/baseselectscreen.h"
 #include "game/ui/city/bribescreen.h"
 #include "game/ui/city/buildingscreen.h"
+#include "game/ui/city/diplomatictreatyscreen.h"
 #include "game/ui/city/infiltrationscreen.h"
 #include "game/ui/city/scorescreen.h"
 #include "game/ui/city/weeklyfundingscreen.h"
@@ -3818,6 +3819,14 @@ bool CityView::handleGameStateEvent(Event *e)
 			                     format("%s\n%s", ev->base->name, tr(ev->facility->type->name)),
 			                     MessageBox::ButtonOptions::Ok);
 			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+		}
+		break;
+		case GameEventType::OrganizationRequestBribe:
+		{
+			auto gameOrgEvent = dynamic_cast<GameOrganisationEvent *>(e);
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH,
+			     mksp<DiplomaticTreatyScreen>(this->state, gameOrgEvent->organisation)});
 		}
 		break;
 		case GameEventType::WeeklyReport:

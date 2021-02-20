@@ -57,7 +57,8 @@ enum class GameEventType
 	OrganizationAttack,
 	OrganizationRaid,
 	OrganizationTreaty,
-	OrganizationBribe,
+	OrganizationRequestBribe,
+	OrganizationRequestAlliance,
 
 	// Agent events
 	AgentArrived,
