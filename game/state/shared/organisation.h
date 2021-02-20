@@ -136,6 +136,7 @@ class Organisation : public StateObject<Organisation>
 	void updateTakeOver(GameState &state, unsigned int ticks);
 	void updateVehicleAgentPark(GameState &state);
 	void updateDailyInfiltrationHistory();
+	float updateRelations(StateRef<Organisation> &playerOrg);
 
 	int getGuardCount(GameState &state) const;
 
@@ -164,6 +165,7 @@ class Organisation : public StateObject<Organisation>
 	float getRelationTo(const StateRef<Organisation> &other) const;
 	void adjustRelationTo(GameState &state, StateRef<Organisation> other, float value);
 	std::map<StateRef<Organisation>, float> current_relations;
+	std::map<StateRef<Organisation>, float> long_term_relations;
 
 	// Following members are not serialized, but rather are set in initCity method
 

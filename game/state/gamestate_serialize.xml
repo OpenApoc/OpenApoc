@@ -1364,6 +1364,7 @@
 		<member>loot</member>
 		<member>icon</member>
 		<member>current_relations</member>
+		<member>long_term_relations</member>
 		<member>ufopaedia_entry</member>
 		<member>missions</member>
 		<member>vehiclePark</member>

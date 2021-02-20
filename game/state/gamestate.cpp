@@ -1204,6 +1204,12 @@ void GameState::updateEndOfDay()
 		o.second->updateVehicleAgentPark(*this);
 		o.second->updateHirableAgents(*this);
 		o.second->updateDailyInfiltrationHistory();
+
+		const float relationshipDelta = o.second->updateRelations(player);
+		if (relationshipDelta < -15)
+		{
+			fw().pushEvent(new GameEvent(GameEventType::OrganizationRequestBribe));
+		}
 	}
 	for (auto &a : this->agents)
 	{

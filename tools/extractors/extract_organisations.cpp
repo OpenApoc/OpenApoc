@@ -119,6 +119,7 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 			StateRef<Organisation> o2 = {&state, data.getOrgId(j)};
 
 			o->current_relations[o2] = (float)rdata.relationships[j];
+			o->long_term_relations[o2] = (float)rdata.relationships[j];
 		}
 
 		// Done in common xml patch

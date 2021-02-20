@@ -496,6 +496,22 @@ void Organisation::updateInfiltration(GameState &state)
 	org->infiltrationValue = clamp(org->infiltrationValue + infiltrationModifier, 0, 200);
 }
 
+float Organisation::updateRelations(StateRef<Organisation> &playerOrg)
+{
+	float playerRelationshipDelta = 0.0;
+	for (auto &pair : current_relations)
+	{
+		const float long_term_value = long_term_relations[pair.first];
+
+		if (pair.first == playerOrg)
+		{
+			playerRelationshipDelta = pair.second - long_term_value;
+		}
+		long_term_relations[pair.first] = pair.second;
+	}
+	return playerRelationshipDelta;
+}
+
 void Organisation::updateDailyInfiltrationHistory()
 {
 	infiltrationHistory.push_front(this->infiltrationValue);
