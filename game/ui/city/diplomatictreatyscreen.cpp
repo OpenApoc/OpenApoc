@@ -31,7 +31,7 @@ void DiplomaticTreatyScreen::begin()
 	labelOffer->setText(tr("We are unhappy with the recent activity of your organization and "
 	                       "request compensation to restore normal diplomatic relations. If you do "
 	                       "not comply your craft and Agents may be subject to hostile actions."));
-	labelBribe->setText(format("Pay: $%d ?", bribeAmount));
+	labelBribe->setText(format("Pay: $ %d ?", bribeAmount));
 }
 
 void DiplomaticTreatyScreen::pause() {}
@@ -62,7 +62,7 @@ void DiplomaticTreatyScreen::eventOccurred(Event *e)
 		{
 			if (bribeAmount > 0 && state->getPlayer()->balance > bribeAmount)
 			{
-				organisation->bribedBy(*state, state->getPlayer(), bribeAmount);
+				organisation->signTreatyWith(*state, state->getPlayer(), bribeAmount, false);
 				fw().stageQueueCommand({StageCmd::Command::POP});
 			}
 			return;

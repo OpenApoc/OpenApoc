@@ -162,6 +162,8 @@ class Organisation : public StateObject<Organisation>
 	int diplomaticRiftOffer(GameState &state, const StateRef<Organisation> &other) const;
 	// The organisation is bribed by other org.
 	bool bribedBy(GameState &state, StateRef<Organisation> other, int bribe);
+	void signTreatyWith(GameState &state, StateRef<Organisation> other, int bribe,
+	                    bool forceAlliance = false);
 	float getRelationTo(const StateRef<Organisation> &other) const;
 	void adjustRelationTo(GameState &state, StateRef<Organisation> other, float value);
 	std::map<StateRef<Organisation>, float> current_relations;

@@ -366,7 +366,8 @@
 		<value>OrganizationAttack</value>
 		<value>OrganizationRaid</value>
 		<value>OrganizationTreaty</value>
-		<value>OrganizationBribe</value>
+		<value>OrganizationRequestBribe</value>
+		<value>OrganizationRequestAlliance</value>
 		<value>AgentArrived</value>
 		<value>AgentUnableToReach</value>
 		<value>HostileSpotted</value>

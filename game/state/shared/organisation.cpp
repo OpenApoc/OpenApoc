@@ -806,6 +806,33 @@ bool Organisation::bribedBy(GameState &state, StateRef<Organisation> other, int 
 	return true;
 }
 
+/**
+ * The organisation signs a diplomatic rift treaty (either to neutral or alliance state)
+ * @param other - other organisation
+ * @param bribe - sum of the bribe by other org
+ * @param forceAlliance - whenether relationships go straight to maximum
+ */
+void Organisation::signTreatyWith(GameState &state, StateRef<Organisation> other, int bribe,
+                                  bool forceAlliance)
+{
+	// it's either an alliance offer or we have some sort of bribe
+	if (bribe <= 0 && !forceAlliance)
+	{
+		return;
+	}
+
+	StateRef<Organisation> currentOrg{&state, id};
+	const float myRelation = this->getRelationTo(other);
+	const float newValue =
+	    (forceAlliance) ? 100.0f : (myRelation > 0) ? std::max(myRelation + 25, 100.0f) : 0;
+
+	current_relations[other] = newValue;
+	other->current_relations[currentOrg] = std::max(newValue, other->getRelationTo(currentOrg));
+
+	balance += bribe;
+	other->balance -= bribe;
+}
+
 template <>
 sp<Organisation> StateObject<Organisation>::get(const GameState &state, const UString &id)
 {

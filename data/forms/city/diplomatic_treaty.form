@@ -35,13 +35,13 @@
       </label>
       <label id="TEXT_OFFER">
         <position x="27" y="127"/>
-        <size width="400" height="80"/>
+        <size width="510" height="80"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
       <label id="TEXT_RIFT_BRIBE">
         <position x="27" y="227"/>
-        <size width="400" height="30"/>
+        <size width="300" height="30"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>

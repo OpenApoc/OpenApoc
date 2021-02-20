@@ -1206,9 +1206,10 @@ void GameState::updateEndOfDay()
 		o.second->updateDailyInfiltrationHistory();
 
 		const float relationshipDelta = o.second->updateRelations(player);
-		if (relationshipDelta < -15)
+		if (relationshipDelta < -15 && !o.second->takenOver)
 		{
-			fw().pushEvent(new GameEvent(GameEventType::OrganizationRequestBribe));
+			fw().pushEvent(
+			    new GameOrganisationEvent(GameEventType::OrganizationRequestBribe, {this, o.first}));
 		}
 	}
 	for (auto &a : this->agents)
