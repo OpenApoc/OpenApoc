@@ -501,13 +501,13 @@ float Organisation::updateRelations(StateRef<Organisation> &playerOrg)
 	float playerRelationshipDelta = 0.0;
 	for (auto &pair : current_relations)
 	{
-		const float long_term_value = long_term_relations[pair.first];
+		float & long_term_value = long_term_relations[pair.first];
 
 		if (pair.first == playerOrg)
 		{
 			playerRelationshipDelta = pair.second - long_term_value;
 		}
-		long_term_relations[pair.first] = pair.second;
+		long_term_value = pair.second;
 	}
 	return playerRelationshipDelta;
 }

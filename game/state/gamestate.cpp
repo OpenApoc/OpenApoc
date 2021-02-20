@@ -1206,10 +1206,12 @@ void GameState::updateEndOfDay()
 		o.second->updateDailyInfiltrationHistory();
 
 		const float relationshipDelta = o.second->updateRelations(player);
-		if (relationshipDelta < -15 && !o.second->takenOver)
+		;
+		if (relationshipDelta < -15 && !o.second->takenOver &&
+		    randBoundsInclusive(rng, 0, 100) > std::fabs(relationshipDelta))
 		{
-			fw().pushEvent(
-			    new GameOrganisationEvent(GameEventType::OrganizationRequestBribe, {this, o.first}));
+			fw().pushEvent(new GameOrganisationEvent(GameEventType::OrganizationRequestBribe,
+			                                         {this, o.first}));
 		}
 	}
 	for (auto &a : this->agents)

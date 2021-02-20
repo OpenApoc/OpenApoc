@@ -3825,7 +3825,8 @@ bool CityView::handleGameStateEvent(Event *e)
 		{
 			auto gameOrgEvent = dynamic_cast<GameOrganisationEvent *>(e);
 			fw().stageQueueCommand(
-			    {StageCmd::Command::PUSH, mksp<DiplomaticTreatyScreen>(this->state, gameOrgEvent->organisation)});
+			    {StageCmd::Command::PUSH,
+			     mksp<DiplomaticTreatyScreen>(this->state, gameOrgEvent->organisation)});
 		}
 		break;
 		case GameEventType::WeeklyReport:
