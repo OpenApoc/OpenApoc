@@ -220,6 +220,27 @@ void GameState::initState()
 		a.second->rightHandItem = a.second->getFirstItemInSlot(EquipmentSlotType::RightHand, false);
 	}
 
+	// In case this is an older savegame, check that all critical data is there
+	if (this->agent_salary.empty())
+	{
+		this->agent_salary = {{AgentType::Role::Soldier, 600},
+		                      {AgentType::Role::BioChemist, 800},
+		                      {AgentType::Role::Physicist, 800},
+		                      {AgentType::Role::Engineer, 800}};
+	}
+	if (this->agent_fired_penalty.empty())
+	{
+		this->agent_fired_penalty = {{AgentType::Role::Soldier, 0},
+		                             {AgentType::Role::BioChemist, 0},
+		                             {AgentType::Role::Physicist, 0},
+		                             {AgentType::Role::Engineer, 0}};
+	}
+	if (this->weekly_rating_rules.empty())
+	{
+		this->weekly_rating_rules = {{-1600, -4}, {-800, -5}, {-400, -10}, {0, -15},  {12800, 4},
+		                             {6400, 5},   {3200, 8},  {1600, 12},  {800, 16}, {400, 20}};
+	}
+
 	if (newGame)
 	{
 		// Initialize organization funding by running throught two-week funding
@@ -1183,8 +1204,15 @@ void GameState::updateEndOfDay()
 		o.second->updateVehicleAgentPark(*this);
 		o.second->updateHirableAgents(*this);
 		o.second->updateDailyInfiltrationHistory();
+		const float relationshipDelta = o.second->updateRelations(player);
 
-		if (o.first != player.id && o.first != aliens.id)
+		if (relationshipDelta < -15 && !o.second->takenOver &&
+		    randBoundsInclusive(rng, 0, 100) > std::fabs(relationshipDelta))
+		{
+			fw().pushEvent(new GameOrganisationEvent(GameEventType::OrganizationRequestBribe,
+			                                         {this, o.first}));
+		}
+		else if (o.first != player.id && o.first != aliens.id)
 		{
 			o.second->setRaidMissions(*this, current_city);
 		}
@@ -1204,6 +1232,70 @@ void GameState::updateEndOfWeek()
 	updateHumanEconomy();
 
 	luaGameState.callHook("updateEndOfWeek", 0, 0);
+
+	fw().pushEvent(new GameEvent(GameEventType::WeeklyReport));
+	weeklyPlayerUpdate();
+}
+
+void GameState::weeklyPlayerUpdate()
+{
+	// Player government income
+	if (!fundingTerminated)
+	{
+		if (government->isRelatedTo(player) == Organisation::Relation::Hostile ||
+		    totalScore.getTotal() < -2400)
+		{
+			fundingTerminated = true;
+			player->income = 0;
+		}
+		else
+		{
+			int income = player->income;
+
+			// Reduce this week's income if government doesn't have enough funds
+			const int availableGovFunds = government->balance / 2;
+			if (availableGovFunds < income)
+			{
+				income = (availableGovFunds < 0) ? 0 : availableGovFunds;
+			}
+
+			// Actual money transfer
+			player->balance += income;
+			government->balance -= income;
+
+			const int fundingModifier = calculateFundingModifier();
+			if (fundingModifier != 0)
+			{
+				player->income += player->income / fundingModifier;
+			}
+		}
+	}
+
+	// Player overheads: salary and base upkeep
+	int totalSalary = 0;
+	for (const auto &a : agents)
+	{
+		if (a.second->owner == player)
+		{
+			auto it = agent_salary.find(a.second->type->role);
+			if (it != agent_salary.end())
+			{
+				totalSalary += it->second;
+			}
+		}
+	}
+
+	int basesCosts = 0;
+	for (const auto &b : player_bases)
+	{
+		for (const auto &f : b.second->facilities)
+		{
+			basesCosts += f->type->weeklyCost;
+		}
+	}
+	player->balance = player->balance - totalSalary - basesCosts;
+
+	weekScore.reset();
 }
 
 // Recalculates AI organization and civilian finances, updating budgets and salaries
@@ -1339,6 +1431,27 @@ void GameState::updateHumanEconomy()
 	}
 }
 
+int GameState::calculateFundingModifier() const
+{
+	int fundingModifier = 0;
+	const int totalRating = weekScore.getTotal();
+	for (const auto &threshold : weekly_rating_rules)
+	{
+		// If score threshold is negative or 0, then use it if our value is smaller
+		// (i.e. -2400 rating uses -1600 threshold)
+
+		// If score threshold is positive, then score has to be higher
+		// (i.e. 10000 rating uses 6400's value)
+		if ((threshold.first > 0 && totalRating > threshold.second) ||
+		    (threshold.first <= 0 && totalRating < threshold.first))
+		{
+			fundingModifier = threshold.second;
+			break;
+		}
+	}
+	return fundingModifier;
+}
+
 void GameState::updateTurbo()
 {
 	if (!this->canTurbo())
@@ -1468,10 +1581,21 @@ uint64_t getNextObjectID(GameState &state, const UString &objectPrefix)
 	return state.objectIdCount[objectPrefix]++;
 }
 
-int GameScore::getTotal()
+int GameScore::getTotal() const
 {
 	return tacticalMissions + researchCompleted + alienIncidents + craftShotDownUFO +
 	       craftShotDownXCom + incursions + cityDamage;
+}
+
+void GameScore::reset()
+{
+	tacticalMissions = 0;
+	researchCompleted = 0;
+	alienIncidents = 0;
+	craftShotDownUFO = 0;
+	craftShotDownXCom = 0;
+	incursions = 0;
+	cityDamage = 0;
 }
 
 void GameState::loadMods()

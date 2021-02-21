@@ -62,7 +62,9 @@ class GameScore
 	int craftShotDownXCom = 0;
 	int incursions = 0;
 	int cityDamage = 0;
-	int getTotal();
+
+	int getTotal() const;
+	void reset();
 	//	UString getText();
 };
 
@@ -108,6 +110,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	int baseIndex = 1;
 	int difficulty = 0;
+	bool fundingTerminated = false;
 	bool firstDetection = false;
 	uint64_t nextInvasion = 0;
 
@@ -117,6 +120,10 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<Agent> agents;
 	AgentGenerator agent_generator;
 	OrganisationRaid organisation_raid_rules;
+
+	std::vector<std::pair<int, int>> weekly_rating_rules;
+	std::map<AgentType::Role, int> agent_salary;
+	std::map<AgentType::Role, int> agent_fired_penalty;
 
 	std::map<AgentType::Role, unsigned> initial_agents;
 	std::map<UString, unsigned> initial_facilities;
@@ -246,6 +253,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	void updateEndOfWeek();
 
 	void updateHumanEconomy();
+	void weeklyPlayerUpdate();
+	int calculateFundingModifier() const;
 
 	void logEvent(GameEvent *ev);
 

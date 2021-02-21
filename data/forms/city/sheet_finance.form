@@ -5,7 +5,7 @@
       <position x="centre" y="centre"/>
       <size width="440" height="280"/>
 
-      <label id="INITIAL" text="Initial finds>">
+      <label id="INITIAL" text="Initial funds>">
         <position x="0" y="0"/>
         <size width="200" height="15"/>
         <alignment horizontal="left" vertical="centre"/>
@@ -63,7 +63,7 @@
         <font>smalfont</font>
       </label>
 
-      <label id="REMAINING" text="Remaining finds>">
+      <label id="REMAINING" text="Remaining funds>">
         <position x="0" y="248"/>
         <size width="200" height="15"/>
         <alignment horizontal="left" vertical="centre"/>

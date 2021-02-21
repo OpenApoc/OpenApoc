@@ -16,12 +16,13 @@
 
 namespace OpenApoc
 {
-ScoreScreen::ScoreScreen(sp<GameState> state)
-    : Stage(), menuform(ui().getForm("city/score")), state(state)
+ScoreScreen::ScoreScreen(sp<GameState> state, bool showWeeklyUpkeep)
+    : Stage(), menuform(ui().getForm("city/score")), state(state), isWeeklyUpkeep(showWeeklyUpkeep)
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 	menuform->findControlTyped<Label>("TEXT_DATE")->setText(state->gameTime.getLongDateString());
 	menuform->findControlTyped<Label>("TEXT_WEEK")->setText(state->gameTime.getWeekString());
+
 	formScore = menuform->findControlTyped<Form>("SCORE_VIEW");
 	formFinance = menuform->findControlTyped<Form>("FINANCE_VIEW");
 	title = menuform->findControlTyped<Label>("TITLE");
@@ -37,7 +38,14 @@ ScoreScreen::ScoreScreen(sp<GameState> state)
 	buttonOK->addCallback(FormEventType::ButtonClick,
 	                      [](Event *) { fw().stageQueueCommand({StageCmd::Command::POP}); });
 
-	buttonScore->setChecked(true);
+	if (isWeeklyUpkeep)
+	{
+		buttonFinance->setChecked(true);
+	}
+	else
+	{
+		buttonScore->setChecked(true);
+	}
 }
 
 ScoreScreen::~ScoreScreen() = default;
@@ -131,10 +139,19 @@ void ScoreScreen::setFinanceMode()
 		formFinance->findControlTyped<Label>("BASES_TOTAL_Q")
 		    ->setText(format("%d", state->player_bases.size()));
 
-		soldiers *= HIRE_COST_SOLDIER;
-		biochemists *= HIRE_COST_BIO;
-		engineers *= HIRE_COST_ENGI;
-		physicists *= HIRE_COST_PHYSIC;
+		auto getSalary = [this](AgentType::Role role) {
+			auto it = state->agent_salary.find(role);
+			if (it != state->agent_salary.end())
+			{
+				return it->second;
+			}
+			return 0;
+		};
+
+		soldiers *= getSalary(AgentType::Role::Soldier);
+		biochemists *= getSalary(AgentType::Role::BioChemist);
+		engineers *= getSalary(AgentType::Role::Engineer);
+		physicists *= getSalary(AgentType::Role::Physicist);
 		int agentsSalary = soldiers + biochemists + engineers + physicists;
 
 		formFinance->findControlTyped<Label>("AGENTS_W")->setText(format("$%d", soldiers));
@@ -156,11 +173,19 @@ void ScoreScreen::setFinanceMode()
 		    ->setText(format("$%d", agentsSalary + basesCosts));
 
 		int balance = state->getPlayer()->balance;
+
+		// Special case: during weekly upkeep balance was already adjusted by the game loop
+		if (isWeeklyUpkeep)
+		{
+			// revert balance value to original for display
+			balance += agentsSalary + basesCosts;
+		}
+
 		formFinance->findControlTyped<Label>("INITIAL")->setText(
 		    format("%s $%d", tr("Initial funds>"), balance));
 		formFinance->findControlTyped<Label>("REMAINING")
 		    ->setText(
-		        format("%s $%d", tr("Remaining finds>"), balance - agentsSalary - basesCosts));
+		        format("%s $%d", tr("Remaining funds>"), balance - agentsSalary - basesCosts));
 	}
 
 	title->setText(tr("FINANCE"));

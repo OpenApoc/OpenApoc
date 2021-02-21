@@ -1,6 +1,7 @@
 #pragma once
 
 #include "framework/stage.h"
+#include "game/state/stateobject.h"
 #include "library/sp.h"
 
 namespace OpenApoc
@@ -9,33 +10,23 @@ namespace OpenApoc
 class GameState;
 class Form;
 class Label;
+class Organisation;
 
-class ScoreScreen : public Stage
+class DiplomaticTreatyScreen : public Stage
 {
   private:
 	sp<Form> menuform;
-	sp<Form> formScore;
-	sp<Form> formFinance;
-	sp<Label> title;
-
 	sp<GameState> state;
 
-	// Default form state
-	bool isWeeklyUpkeep = false;
+	sp<Label> labelOffer;
+	sp<Label> labelBribe;
 
-	// The form filling status.
-	bool formScoreFilled = false;
-	bool formFinanceFilled = false;
-
-	// Setup the score mode.
-	void setScoreMode();
-	// Setup the finance mode.
-	void setFinanceMode();
+	StateRef<Organisation> organisation;
+	int bribeAmount = 0;
 
   public:
-	ScoreScreen(sp<GameState> state, bool showWeeklyUpkeep = false);
-	~ScoreScreen() override;
-
+	DiplomaticTreatyScreen(sp<GameState> state, StateRef<Organisation> org);
+	~DiplomaticTreatyScreen() override;
 	// Stage control
 	void begin() override;
 	void pause() override;

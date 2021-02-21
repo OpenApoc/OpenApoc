@@ -59,8 +59,10 @@
 #include "game/ui/city/baseselectscreen.h"
 #include "game/ui/city/bribescreen.h"
 #include "game/ui/city/buildingscreen.h"
+#include "game/ui/city/diplomatictreatyscreen.h"
 #include "game/ui/city/infiltrationscreen.h"
 #include "game/ui/city/scorescreen.h"
+#include "game/ui/city/weeklyfundingscreen.h"
 #include "game/ui/components/basegraphics.h"
 #include "game/ui/components/controlgenerator.h"
 #include "game/ui/components/locationscreen.h"
@@ -124,6 +126,66 @@ std::shared_future<void> loadBattleVehicle(sp<GameState> state, StateRef<Vehicle
 	});
 
 	return loadTask;
+}
+
+sp<Facility> findCurrentResearchFacility(sp<GameState> state, AgentType::Role role,
+                                         FacilityType::Capacity capacity)
+{
+	sp<Facility> lab;
+	for (auto &a : state->current_city->cityViewSelectedAgents)
+	{
+		if (a && a->type->role == role)
+		{
+			state->current_base = a->homeBuilding->base;
+			if (a->assigned_to_lab)
+			{
+				auto thisRef = StateRef<Agent>{state.get(), a};
+				for (auto &fac : state->current_base->facilities)
+				{
+					if (!fac->lab)
+					{
+						continue;
+					}
+					auto it = std::find(fac->lab->assigned_agents.begin(),
+					                    fac->lab->assigned_agents.end(), thisRef);
+					if (it != fac->lab->assigned_agents.end())
+					{
+						lab = fac;
+						break;
+					}
+				}
+			}
+			else
+			{
+				for (auto &f : state->current_base->facilities)
+				{
+					if (f->type->capacityType == capacity)
+					{
+						lab = f;
+						break;
+					}
+				}
+			}
+			break;
+		}
+	}
+	if (lab == nullptr)
+	{
+		for (auto &base : state->player_bases)
+		{
+			for (auto &facility : base.second->facilities)
+			{
+				if (facility->type->capacityType == capacity)
+				{
+					lab = facility;
+					break;
+				}
+			}
+			if (lab)
+				break;
+		}
+	}
+	return lab;
 }
 
 constexpr size_t NUM_TABS = 8;
@@ -419,6 +481,11 @@ bool CityView::handleClickedOrganisation(StateRef<Organisation> organisation, bo
 		}
 	}
 	return true;
+}
+
+void CityView::showWeeklyFundingReport()
+{
+	fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<WeeklyFundingScreen>(this->state)});
 }
 
 void CityView::tryOpenUfopaediaEntry(StateRef<UfopaediaEntry> ufopaediaEntry)
@@ -1324,135 +1391,28 @@ CityView::CityView(sp<GameState> state)
 			    }
 		    }
 	    });
+
 	this->uiTabs[3]
 	    ->findControl("BUTTON_RESEARCH")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    sp<Facility> lab;
-		    for (auto &a : this->state->current_city->cityViewSelectedAgents)
-		    {
-			    if (a && a->type->role == AgentType::Role::BioChemist)
-			    {
-				    this->state->current_base = a->homeBuilding->base;
-				    if (a->assigned_to_lab)
-				    {
-					    auto thisRef = StateRef<Agent>{this->state.get(), a};
-					    for (auto &fac : this->state->current_base->facilities)
-					    {
-						    if (!fac->lab)
-						    {
-							    continue;
-						    }
-						    auto it = std::find(fac->lab->assigned_agents.begin(),
-						                        fac->lab->assigned_agents.end(), thisRef);
-						    if (it != fac->lab->assigned_agents.end())
-						    {
-							    lab = fac;
-							    break;
-						    }
-					    }
-				    }
-				    else
-				    {
-					    for (auto &f : this->state->current_base->facilities)
-					    {
-						    if (f->type->capacityType == FacilityType::Capacity::Chemistry)
-						    {
-							    lab = f;
-							    break;
-						    }
-					    }
-				    }
-				    break;
-			    }
-		    }
+		    sp<Facility> lab = findCurrentResearchFacility(this->state, AgentType::Role::BioChemist,
+		                                                   FacilityType::Capacity::Chemistry);
 		    fw().stageQueueCommand(
 		        {StageCmd::Command::PUSH, mksp<ResearchScreen>(this->state, lab)});
 	    });
 	this->uiTabs[4]
 	    ->findControl("BUTTON_RESEARCH")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    sp<Facility> lab;
-		    for (auto &a : this->state->current_city->cityViewSelectedAgents)
-		    {
-			    if (a && a->type->role == AgentType::Role::Engineer)
-			    {
-				    this->state->current_base = a->homeBuilding->base;
-				    if (a->assigned_to_lab)
-				    {
-					    auto thisRef = StateRef<Agent>{this->state.get(), a};
-					    for (auto &fac : this->state->current_base->facilities)
-					    {
-						    if (!fac->lab)
-						    {
-							    continue;
-						    }
-						    auto it = std::find(fac->lab->assigned_agents.begin(),
-						                        fac->lab->assigned_agents.end(), thisRef);
-						    if (it != fac->lab->assigned_agents.end())
-						    {
-							    lab = fac;
-							    break;
-						    }
-					    }
-				    }
-				    else
-				    {
-					    for (auto &f : this->state->current_base->facilities)
-					    {
-						    if (f->type->capacityType == FacilityType::Capacity::Workshop)
-						    {
-							    lab = f;
-							    break;
-						    }
-					    }
-				    }
-				    break;
-			    }
-		    }
+		    sp<Facility> lab = findCurrentResearchFacility(this->state, AgentType::Role::Engineer,
+		                                                   FacilityType::Capacity::Workshop);
 		    fw().stageQueueCommand(
 		        {StageCmd::Command::PUSH, mksp<ResearchScreen>(this->state, lab)});
 	    });
 	this->uiTabs[5]
 	    ->findControl("BUTTON_RESEARCH")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    sp<Facility> lab;
-		    for (auto &a : this->state->current_city->cityViewSelectedAgents)
-		    {
-			    if (a && a->type->role == AgentType::Role::Physicist)
-			    {
-				    this->state->current_base = a->homeBuilding->base;
-				    if (a->assigned_to_lab)
-				    {
-					    auto thisRef = StateRef<Agent>{this->state.get(), a};
-					    for (auto &fac : this->state->current_base->facilities)
-					    {
-						    if (!fac->lab)
-						    {
-							    continue;
-						    }
-						    auto it = std::find(fac->lab->assigned_agents.begin(),
-						                        fac->lab->assigned_agents.end(), thisRef);
-						    if (it != fac->lab->assigned_agents.end())
-						    {
-							    lab = fac;
-							    break;
-						    }
-					    }
-				    }
-				    else
-				    {
-					    for (auto &f : this->state->current_base->facilities)
-					    {
-						    if (f->type->capacityType == FacilityType::Capacity::Physics)
-						    {
-							    lab = f;
-							    break;
-						    }
-					    }
-				    }
-				    break;
-			    }
-		    }
+		    sp<Facility> lab = findCurrentResearchFacility(this->state, AgentType::Role::Physicist,
+		                                                   FacilityType::Capacity::Physics);
 		    fw().stageQueueCommand(
 		        {StageCmd::Command::PUSH, mksp<ResearchScreen>(this->state, lab)});
 	    });
@@ -3339,7 +3299,7 @@ bool CityView::handleMouseDown(Event *e)
 					}
 					for (auto &c : vehicle->cargo)
 					{
-						LogWarning("Cargo %dx%s", c.id, c.count);
+						LogInfo("Cargo %sx%d", c.id, c.count);
 					}
 					if (modifierLAlt && modifierLCtrl && modifierLShift)
 					{
@@ -3388,7 +3348,7 @@ bool CityView::handleMouseDown(Event *e)
 					}
 					for (auto &c : vehicle->cargo)
 					{
-						LogWarning("Cargo %dx%s", c.id, c.count);
+						LogInfo("Cargo %sx%d", c.id, c.count);
 					}
 				}
 			}
@@ -3859,6 +3819,20 @@ bool CityView::handleGameStateEvent(Event *e)
 			                     format("%s\n%s", ev->base->name, tr(ev->facility->type->name)),
 			                     MessageBox::ButtonOptions::Ok);
 			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+		}
+		break;
+		case GameEventType::OrganizationRequestBribe:
+		{
+			auto gameOrgEvent = dynamic_cast<GameOrganisationEvent *>(e);
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH,
+			     mksp<DiplomaticTreatyScreen>(this->state, gameOrgEvent->organisation)});
+		}
+		break;
+		case GameEventType::WeeklyReport:
+		{
+			setUpdateSpeed(CityUpdateSpeed::Pause);
+			showWeeklyFundingReport();
 		}
 		break;
 		default:

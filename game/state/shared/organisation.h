@@ -138,6 +138,7 @@ class Organisation : public StateObject<Organisation>
 	void updateTakeOver(GameState &state, unsigned int ticks);
 	void updateVehicleAgentPark(GameState &state);
 	void updateDailyInfiltrationHistory();
+	float updateRelations(StateRef<Organisation> &playerOrg);
 
 	int getGuardCount(GameState &state) const;
 	sp<Building> pickRandomBuilding(GameState &state, StateRef<City> city) const;
@@ -160,12 +161,16 @@ class Organisation : public StateObject<Organisation>
 	bool isPositiveTo(const StateRef<Organisation> &other) const;
 	bool isNegativeTo(const StateRef<Organisation> &other) const;
 	// Calculate the cost of a bribe.
-	int costOfBribeBy(const StateRef<Organisation> &other) const;
+	int costOfBribeBy(GameState &state, const StateRef<Organisation> &other) const;
+	int diplomaticRiftOffer(GameState &state, const StateRef<Organisation> &other) const;
 	// The organisation is bribed by other org.
 	bool bribedBy(GameState &state, StateRef<Organisation> other, int bribe);
+	void signTreatyWith(GameState &state, StateRef<Organisation> other, int bribe,
+	                    bool forceAlliance = false);
 	float getRelationTo(const StateRef<Organisation> &other) const;
 	void adjustRelationTo(GameState &state, StateRef<Organisation> other, float value);
 	std::map<StateRef<Organisation>, float> current_relations;
+	std::map<StateRef<Organisation>, float> long_term_relations;
 
 	// Following members are not serialized, but rather are set in initCity method
 

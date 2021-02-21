@@ -602,6 +602,22 @@ void Organisation::updateInfiltration(GameState &state)
 	org->infiltrationValue = clamp(org->infiltrationValue + infiltrationModifier, 0, 200);
 }
 
+float Organisation::updateRelations(StateRef<Organisation> &playerOrg)
+{
+	float playerRelationshipDelta = 0.0;
+	for (auto &pair : current_relations)
+	{
+		float &long_term_value = long_term_relations[pair.first];
+
+		if (pair.first == playerOrg)
+		{
+			playerRelationshipDelta = pair.second - long_term_value;
+		}
+		long_term_value = pair.second;
+	}
+	return playerRelationshipDelta;
+}
+
 void Organisation::updateDailyInfiltrationHistory()
 {
 	infiltrationHistory.push_front(this->infiltrationValue);
@@ -797,10 +813,11 @@ bool Organisation::isNegativeTo(const StateRef<Organisation> &other) const
 
 /**
  * Calculate the cost of a bribe
+ * @param state - GameState
  * @param other - other organisation
  * @return - minimum sum of the bribe
  */
-int Organisation::costOfBribeBy(const StateRef<Organisation> &other) const
+int Organisation::costOfBribeBy(GameState &state, const StateRef<Organisation> &other) const
 {
 	float improvement;
 	float x = this->getRelationTo(other);
@@ -825,12 +842,31 @@ int Organisation::costOfBribeBy(const StateRef<Organisation> &other) const
 		return 0;
 	}
 
-	// The best approximation is 2030 * improvement + 19573
-	// but vanilla X-Com:
-	// 1. fond of numbers with 7 (27000, 37000 etc up to 127000)
-	// 2. often, for unknown reason, reduces the sum
-	// TODO: implement a more relevant formula
-	return 2000 * std::max((int)improvement, 1) + 25000;
+	return (state.difficulty + 1) * std::max((int)improvement, 1) * clamp(balance / 1000, 1, 400) +
+	       state.difficulty * 3000 + 5000;
+}
+
+/**
+ * Calculate the diplomatic rift offer amount
+ * @param state - GameState
+ * @param other - other organisation
+ * @return - sum offered
+ */
+int Organisation::diplomaticRiftOffer(GameState &state, const StateRef<Organisation> &other) const
+{
+	float relationship = this->getRelationTo(other);
+
+	// Organization won't offer this if relationship is good already
+	if (relationship > 25)
+	{
+		return 0;
+	}
+
+	const int difficultyMod = state.difficulty + 1;
+	const int randomValue = randBoundsInclusive(state.rng, 0, (difficultyMod + 1) * 2000);
+
+	return std::max((int)-relationship / 2, 1) * difficultyMod * clamp(balance / 1000, 1, 400) +
+	       difficultyMod * 1000 + randomValue;
 }
 
 /**
@@ -842,7 +878,7 @@ int Organisation::costOfBribeBy(const StateRef<Organisation> &other) const
  */
 bool Organisation::bribedBy(GameState &state, StateRef<Organisation> other, int bribe)
 {
-	if (bribe <= 0 || other->balance < bribe || bribe < costOfBribeBy(other))
+	if (bribe <= 0 || other->balance < bribe || bribe < costOfBribeBy(state, other))
 	{
 		return false;
 	}
@@ -870,9 +906,37 @@ bool Organisation::bribedBy(GameState &state, StateRef<Organisation> other, int 
 		return false;
 	}
 
+	balance += bribe;
 	other->balance -= bribe;
 	adjustRelationTo(state, other, improvement);
 	return true;
+}
+
+/**
+ * The organisation signs a diplomatic rift treaty (either to neutral or alliance state)
+ * @param other - other organisation
+ * @param bribe - sum of the bribe by other org
+ * @param forceAlliance - whenether relationships go straight to maximum
+ */
+void Organisation::signTreatyWith(GameState &state, StateRef<Organisation> other, int bribe,
+                                  bool forceAlliance)
+{
+	// it's either an alliance offer or we have some sort of bribe
+	if (bribe <= 0 && !forceAlliance)
+	{
+		return;
+	}
+
+	StateRef<Organisation> currentOrg{&state, id};
+	const float myRelation = this->getRelationTo(other);
+	const float newValue =
+	    (forceAlliance) ? 100.0f : (myRelation > 0) ? std::max(myRelation + 25, 100.0f) : 0;
+
+	current_relations[other] = newValue;
+	other->current_relations[currentOrg] = std::max(newValue, other->getRelationTo(currentOrg));
+
+	balance += bribe;
+	other->balance -= bribe;
 }
 
 template <>
