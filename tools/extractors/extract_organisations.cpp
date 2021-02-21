@@ -265,7 +265,7 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 			std::set<Organisation::Relation> UnfriendlyMinus = {Organisation::Relation::Unfriendly,
 			                                                    Organisation::Relation::Hostile};
 
-			auto &missions = o->missions[{&state, "CITYMAP_HUMAN"}];
+			auto &missions = o->recurring_missions[{&state, "CITYMAP_HUMAN"}];
 			// Agents
 			/*missions.emplace_back(m, 7 * m, 13 * m, 1, 1, std::set<StateRef<VehicleType>>{{}},
 			                         Organisation::MissionPattern::Target::Other);*/
@@ -376,15 +376,21 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 	    {OrganisationRaid::Type::Treaty, 30.0f},
 	    {OrganisationRaid::Type::Attack, 10.0f},
 	    {OrganisationRaid::Type::Raid, 20.0f},
-	    {OrganisationRaid::Type::IllegalFlyer, 10.0f}};
+	    {OrganisationRaid::Type::UnauthorizedVehicle, 10.0f}};
 	state.organisation_raid_rules.military_normal = {
-	    {OrganisationRaid::Type::None, 20.0f},   {OrganisationRaid::Type::Treaty, 10.0f},
-	    {OrganisationRaid::Type::Attack, 30.0f}, {OrganisationRaid::Type::Raid, 20.0f},
-	    {OrganisationRaid::Type::Storm, 10.0f},  {OrganisationRaid::Type::IllegalFlyer, 10.0f}};
+	    {OrganisationRaid::Type::None, 20.0f},
+	    {OrganisationRaid::Type::Treaty, 10.0f},
+	    {OrganisationRaid::Type::Attack, 30.0f},
+	    {OrganisationRaid::Type::Raid, 20.0f},
+	    {OrganisationRaid::Type::Storm, 10.0f},
+	    {OrganisationRaid::Type::UnauthorizedVehicle, 10.0f}};
 	state.organisation_raid_rules.military_high_manpower = {
-	    {OrganisationRaid::Type::None, 10.0f},   {OrganisationRaid::Type::Treaty, 10.0f},
-	    {OrganisationRaid::Type::Attack, 10.0f}, {OrganisationRaid::Type::Raid, 30.0f},
-	    {OrganisationRaid::Type::Storm, 10.0f},  {OrganisationRaid::Type::IllegalFlyer, 30.0f}};
+	    {OrganisationRaid::Type::None, 10.0f},
+	    {OrganisationRaid::Type::Treaty, 10.0f},
+	    {OrganisationRaid::Type::Attack, 10.0f},
+	    {OrganisationRaid::Type::Raid, 30.0f},
+	    {OrganisationRaid::Type::Storm, 10.0f},
+	    {OrganisationRaid::Type::UnauthorizedVehicle, 30.0f}};
 }
 
 } // namespace OpenApoc

@@ -14,7 +14,7 @@ class OrganisationRaid
 		Attack = 1,
 		Raid = 2,
 		Storm = 3,
-		IllegalFlyer = 4,
+		UnauthorizedVehicle = 4,
 		Treaty = 5
 	};
 

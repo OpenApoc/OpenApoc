@@ -510,9 +510,9 @@ void GameState::fillOrgStartingProperty()
 	{
 		o.second->updateVehicleAgentPark(*this);
 		o.second->updateHirableAgents(*this);
-		for (auto &m : o.second->missions[{this, "CITYMAP_HUMAN"}])
+		for (auto &m : o.second->recurring_missions[{this, "CITYMAP_HUMAN"}])
 		{
-			m.next +=
+			m.time +=
 			    gameTime.getTicks() +
 			    randBoundsInclusive(rng, (uint64_t)0,
 			                        m.pattern.maxIntervalRepeat - m.pattern.minIntervalRepeat) -
@@ -1214,7 +1214,7 @@ void GameState::updateEndOfDay()
 			    o.second->getRelationTo(player) > 25 &&
 			    randBoundsInclusive(rng, 0, 100) > (difficulty + 1) * 10)
 			{
-				fw().pushEvent(new GameOrganisationEvent(GameEventType::OrganizationRequestBribe,
+				fw().pushEvent(new GameOrganisationEvent(GameEventType::OrganisationRequestBribe,
 				                                         {this, o.first}));
 			}
 

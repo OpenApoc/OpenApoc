@@ -363,12 +363,13 @@
 		<value>CargoExpiresSoon</value>
 		<value>MissionCompletedBuildingRaid</value>
 		<value>MissionCompletedBuildingNormal</value>
+		<value>OrganisationAttackBuilding</value>
+		<value>OrganisationRaidBuilding</value>
+		<value>OrganisationStormBuilding</value>
+		<value>OrganisationTreatySigned</value>
 		<value>AlienTakeover</value>
-		<value>OrganizationAttack</value>
-		<value>OrganizationRaid</value>
-		<value>OrganizationTreaty</value>
-		<value>OrganizationRequestBribe</value>
-		<value>OrganizationRequestAlliance</value>
+		<value>OrganisationRequestBribe</value>
+		<value>OrganisationRequestAlliance</value>
 		<value>AgentArrived</value>
 		<value>AgentUnableToReach</value>
 		<value>HostileSpotted</value>
@@ -1321,7 +1322,7 @@
 		<value>Attack</value>
 		<value>Raid</value>
 		<value>Storm</value>
-		<value>IllegalFlyer</value>
+		<value>UnauthorizedVehicle</value>
 		<value>Treaty</value>
 	</enum>
 	<object>
@@ -1351,9 +1352,16 @@
 		<value>Hostile</value>
 	</enum>
 	<object>
-		<name>Organisation::Mission</name>
-		<member>next</member>
+		<name>Organisation::RecurringMission</name>
+		<member>time</member>
 		<member>pattern</member>
+	</object>
+	<object>
+		<name>Organisation::RaidMission</name>
+		<member>time</member>
+		<member>type</member>
+		<member>target</member>
+		<member>allowedTypes</member>
 	</object>
 	<object>
 		<name>Organisation::MissionPattern</name>
@@ -1388,7 +1396,8 @@
 		<member>current_relations</member>
 		<member>long_term_relations</member>
 		<member>ufopaedia_entry</member>
-		<member>missions</member>
+		<member>raid_missions</member>
+		<member>recurring_missions</member>
 		<member>vehiclePark</member>
 		<member>providesTransportationServices</member>
 		<member>hirableAgentTypes</member>

@@ -86,7 +86,7 @@ class Organisation : public StateObject<Organisation>
 	class RecurringMission
 	{
 	  public:
-		uint64_t next = 0;
+		uint64_t time = 0;
 		MissionPattern pattern;
 
 		void execute(GameState &state, StateRef<City> city, StateRef<Organisation> owner);
@@ -107,7 +107,7 @@ class Organisation : public StateObject<Organisation>
 
 		RaidMission() = default;
 		RaidMission(uint64_t when, OrganisationRaid::Type type, StateRef<Building> building);
-		bool execute(GameState &state, StateRef<City> city, StateRef<Organisation> owner);
+		void execute(GameState &state, StateRef<City> city, StateRef<Organisation> owner);
 	};
 
 	UString id;
@@ -136,7 +136,8 @@ class Organisation : public StateObject<Organisation>
 
 	StateRef<UfopaediaEntry> ufopaedia_entry;
 
-	std::map<StateRef<City>, std::list<RecurringMission>> missions;
+	std::map<StateRef<City>, std::list<RaidMission>> raid_missions;
+	std::map<StateRef<City>, std::list<RecurringMission>> recurring_missions;
 	std::map<StateRef<VehicleType>, int> vehiclePark;
 	bool providesTransportationServices = false;
 	// Hirable agent types, min and max growth per day

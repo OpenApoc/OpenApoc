@@ -345,8 +345,8 @@ void Organisation::setRaidMissions(GameState &state, StateRef<City> city)
 				}
 
 				const uint64_t missionTime =
-				    state.gameTime.getTicks() +
-				    randBoundsInclusive(state.rng, 50, 1250) * TICKS_PER_MINUTE;
+				    state.gameTime.getTicks() + randBoundsInclusive(state.rng, 50, 1250) *
+				                                    static_cast<uint64_t>(TICKS_PER_MINUTE);
 
 				// calculate manpower available and probability of raid success
 				const float targetGuards = otherOrg->average_guards * otherOrg->average_guards *
@@ -355,7 +355,7 @@ void Organisation::setRaidMissions(GameState &state, StateRef<City> city)
 				// make sure it's not 0 (in case of X-Com)
 				const float guardRatio = average_guards * average_guards *
 				                         sourceBuilding->currentWorkforce /
-				                         std::min(1.0f, targetGuards);
+				                         std::max(1.0f, targetGuards);
 
 				auto &raidMissionChance = rules.neutral_low_manpower;
 				if (guardRatio > 2)
@@ -378,7 +378,7 @@ void Organisation::setRaidMissions(GameState &state, StateRef<City> city)
 
 				if (mission != OrganisationRaid::Type::None)
 				{
-					missions[city].emplace_back(missionTime, targetBuilding);
+					raid_missions[city].emplace_back(missionTime, mission, targetBuilding);
 				}
 			}
 			else
@@ -392,18 +392,34 @@ void Organisation::setRaidMissions(GameState &state, StateRef<City> city)
 
 void Organisation::updateMissions(GameState &state)
 {
-#ifdef DEBUG_TURN_OFF_ORG_MISSIONS
-	return;
-#endif
 	if (state.getPlayer().id == id)
 	{
 		return;
 	}
-	for (auto &m : missions[state.current_city])
+	StateRef<Organisation> currentOrg{&state, id};
+	auto &raidMissions = raid_missions[state.current_city];
+	auto it = raidMissions.begin();
+	while (it != raidMissions.end())
 	{
-		if (m.next < state.gameTime.getTicks())
+		if (it->time < state.gameTime.getTicks())
 		{
-			m.execute(state, state.current_city, {&state, id});
+			// Raid missions are one-time only, erase if triggered
+			it->execute(state, state.current_city, currentOrg);
+			it = raidMissions.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+#ifdef DEBUG_TURN_OFF_ORG_MISSIONS
+	return;
+#endif
+	for (auto &m : recurring_missions[state.current_city])
+	{
+		if (m.time < state.gameTime.getTicks())
+		{
+			m.execute(state, state.current_city, currentOrg);
 		}
 	}
 	// Find rescue-capable craft
@@ -684,7 +700,7 @@ void Organisation::updateVehicleAgentPark(GameState &state)
 			}
 		}
 		bool spaceLiner = false;
-		for (auto &m : missions[{&state, "CITYMAP_HUMAN"}])
+		for (auto m : recurring_missions[{&state, "CITYMAP_HUMAN"}])
 		{
 			if (m.pattern.target == MissionPattern::Target::ArriveFromSpace ||
 			    m.pattern.target == MissionPattern::Target::DepartToSpace)
@@ -957,7 +973,7 @@ Organisation::RaidMission::RaidMission(uint64_t when, OrganisationRaid::Type typ
 {
 }
 
-bool Organisation::RaidMission::execute(GameState &state, StateRef<City> city,
+void Organisation::RaidMission::execute(GameState &state, StateRef<City> city,
                                         StateRef<Organisation> owner)
 {
 	switch (type)
@@ -986,7 +1002,7 @@ bool Organisation::RaidMission::execute(GameState &state, StateRef<City> city,
 			    new GameBuildingEvent(GameEventType::OrganisationStormBuilding, target, owner));
 		}
 		break;
-		case OrganisationRaid::Type::IllegalFlyer:
+		case OrganisationRaid::Type::UnauthorizedVehicle:
 		{
 			std::list<StateRef<Vehicle>> availableVehicles;
 			for (auto &b : owner->buildings)
@@ -1030,7 +1046,7 @@ bool Organisation::RaidMission::execute(GameState &state, StateRef<City> city,
 		default: // skip if None or Unknown
 			break;
 	}
-	return true;
+	return;
 }
 
 Organisation::MissionPattern::MissionPattern(uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat,
@@ -1046,7 +1062,7 @@ Organisation::MissionPattern::MissionPattern(uint64_t minIntervalRepeat, uint64_
 void Organisation::RecurringMission::execute(GameState &state, StateRef<City> city,
                                              StateRef<Organisation> owner)
 {
-	next = state.gameTime.getTicks() +
+	time = state.gameTime.getTicks() +
 	       randBoundsInclusive(state.rng, pattern.minIntervalRepeat, pattern.maxIntervalRepeat);
 
 	int count = randBoundsInclusive(state.rng, pattern.minAmount, pattern.maxAmount);
@@ -1222,6 +1238,7 @@ void Organisation::RecurringMission::execute(GameState &state, StateRef<City> ci
 			              true);
 		}
 	}
+	return;
 }
 
 Organisation::RecurringMission::RecurringMission(uint64_t next, uint64_t minIntervalRepeat,
@@ -1230,7 +1247,7 @@ Organisation::RecurringMission::RecurringMission(uint64_t next, uint64_t minInte
                                                  std::set<StateRef<VehicleType>> allowedTypes,
                                                  MissionPattern::Target target,
                                                  std::set<Relation> relation)
-    : next(next)
+    : time(next)
 {
 	pattern = {minIntervalRepeat, maxIntervalRepeat, minAmount, maxAmount, allowedTypes, target,
 	           relation};
