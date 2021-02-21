@@ -1328,6 +1328,7 @@
 	<object>
 		<name>OrganisationRaid</name>
 		<member>nextRaidTimer</member>
+		<member>attack_vehicle_types</member>
 		<member>neutral_low_manpower</member>
 		<member>neutral_normal</member>
 		<member>neutral_high_manpower</member>
@@ -1361,7 +1362,6 @@
 		<member>time</member>
 		<member>type</member>
 		<member>target</member>
-		<member>allowedTypes</member>
 	</object>
 	<object>
 		<name>Organisation::MissionPattern</name>

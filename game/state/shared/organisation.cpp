@@ -1014,7 +1014,9 @@ void Organisation::RaidMission::execute(GameState &state, StateRef<City> city,
 
 				for (auto &v : b->currentVehicles)
 				{
-					if (v->owner == owner && allowedTypes.find(v->type) != allowedTypes.end())
+					if (v->owner == owner &&
+					    state.organisation_raid_rules.attack_vehicle_types.find(v->type) !=
+					        state.organisation_raid_rules.attack_vehicle_types.end())
 					{
 						availableVehicles.push_back(v);
 					}
@@ -1025,7 +1027,7 @@ void Organisation::RaidMission::execute(GameState &state, StateRef<City> city,
 				auto v = availableVehicles.front();
 				availableVehicles.pop_front();
 
-				v->setMission(state, VehicleMission::gotoBuilding(state, *v, target, false));
+				v->setMission(state, VehicleMission::attackBuilding(state, *v, target));
 				v->addMission(state, VehicleMission::snooze(state, *v, 10 * TICKS_PER_SECOND),
 				              true);
 				v->addMission(state, VehicleMission::gotoBuilding(state, *v, v->currentBuilding),
@@ -1036,13 +1038,18 @@ void Organisation::RaidMission::execute(GameState &state, StateRef<City> city,
 		}
 		break;
 		case OrganisationRaid::Type::Treaty:
-			target->owner->adjustRelationTo(state, owner,
-			                                -50.0f - target->owner->getRelationTo(owner));
-			owner->adjustRelationTo(state, target->owner,
-			                        -50.0f - owner->getRelationTo(target->owner));
-			fw().pushEvent(
-			    new GameBuildingEvent(GameEventType::OrganisationTreatySigned, target, owner));
-			break;
+		{
+			if (target->owner != state.player && target->owner != state.aliens)
+			{
+				target->owner->adjustRelationTo(state, owner,
+				                                -50.0f - target->owner->getRelationTo(owner));
+				owner->adjustRelationTo(state, target->owner,
+				                        -50.0f - owner->getRelationTo(target->owner));
+				fw().pushEvent(
+				    new GameBuildingEvent(GameEventType::OrganisationTreatySigned, target, owner));
+			}
+		}
+		break;
 		default: // skip if None or Unknown
 			break;
 	}

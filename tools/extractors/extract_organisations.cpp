@@ -187,9 +187,6 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 					o->vehiclePark[{&state, "VEHICLETYPE_VALKYRIE_INTERCEPTOR"}] = 1;
 					break;
 				// Miscellaneous (many orgs have this value)
-				default:
-					LogError("Modded game? Found unexpected vehiclePark value of %d",
-					         (int)vdata.vehiclePark);
 				case 4:
 					o->vehiclePark[{&state, "VEHICLETYPE_PHOENIX_HOVERCAR"}] = 2;
 					o->vehiclePark[{&state, "VEHICLETYPE_HOVERBIKE"}] = 1;
@@ -250,6 +247,9 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 					o->vehiclePark[{&state, "VEHICLETYPE_VALKYRIE_INTERCEPTOR"}] = 15;
 					o->vehiclePark[{&state, "VEHICLETYPE_HAWK_AIR_WARRIOR"}] = 15;
 					break;
+				default:
+					LogError("Modded game? Found unexpected vehiclePark value of %d",
+					         (int)vdata.vehiclePark);
 			}
 
 			// Missions
@@ -391,6 +391,12 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 	    {OrganisationRaid::Type::Raid, 30.0f},
 	    {OrganisationRaid::Type::Storm, 10.0f},
 	    {OrganisationRaid::Type::UnauthorizedVehicle, 30.0f}};
+
+	state.organisation_raid_rules.attack_vehicle_types = {
+	    {&state, "VEHICLETYPE_PHOENIX_HOVERCAR"},
+	    {&state, "VEHICLETYPE_HOVERBIKE"},
+	    {&state, "VEHICLETYPE_VALKYRIE_INTERCEPTOR"},
+	    {&state, "VEHICLETYPE_HAWK_AIR_WARRIOR"}};
 }
 
 } // namespace OpenApoc

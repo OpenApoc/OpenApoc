@@ -103,7 +103,6 @@ class Organisation : public StateObject<Organisation>
 		uint64_t time = 0;
 		OrganisationRaid::Type type;
 		StateRef<Building> target;
-		std::set<StateRef<VehicleType>> allowedTypes;
 
 		RaidMission() = default;
 		RaidMission(uint64_t when, OrganisationRaid::Type type, StateRef<Building> building);
