@@ -572,6 +572,8 @@ void GameState::startGame()
 
 			// Finally stay in bounds
 			entry.second = clamp(entry.second, -100.0f, 100.0f);
+			// Sync up long-term value for initial relationships
+			pair.second->long_term_relations[entry.first] = entry.second;
 
 			// Set player reverse relationships
 			if (entry.first == getPlayer())
@@ -1206,14 +1208,16 @@ void GameState::updateEndOfDay()
 		o.second->updateDailyInfiltrationHistory();
 		const float relationshipDelta = o.second->updateRelations(player);
 
-		if (relationshipDelta < -15 && !o.second->takenOver &&
-		    randBoundsInclusive(rng, 0, 100) > std::fabs(relationshipDelta))
+		if (o.first != player.id && o.first != aliens.id)
 		{
-			fw().pushEvent(new GameOrganisationEvent(GameEventType::OrganizationRequestBribe,
-			                                         {this, o.first}));
-		}
-		else if (o.first != player.id && o.first != aliens.id)
-		{
+			if (relationshipDelta < -15 && !o.second->takenOver &&
+			    o.second->getRelationTo(player) > 25 &&
+			    randBoundsInclusive(rng, 0, 100) > (difficulty + 1) * 10)
+			{
+				fw().pushEvent(new GameOrganisationEvent(GameEventType::OrganizationRequestBribe,
+				                                         {this, o.first}));
+			}
+
 			o.second->setRaidMissions(*this, current_city);
 		}
 	}

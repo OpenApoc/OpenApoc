@@ -86,11 +86,14 @@ class Organisation : public StateObject<Organisation>
 	{
 	  public:
 		uint64_t next = 0;
+		bool recurring = true;
 		MissionPattern pattern;
+		StateRef<Building> target;
 
 		void execute(GameState &state, StateRef<City> city, StateRef<Organisation> owner);
 
 		Mission() = default;
+		Mission(uint64_t next, StateRef<Building> building);
 		Mission(uint64_t next, uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat,
 		        unsigned minAmount, unsigned maxAmount,
 		        std::set<StateRef<VehicleType>> allowedTypes, MissionPattern::Target target,
