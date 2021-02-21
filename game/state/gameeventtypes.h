@@ -51,14 +51,15 @@ enum class GameEventType
 	CargoExpiresSoon,
 	MissionCompletedBuildingRaid,
 	MissionCompletedBuildingNormal,
+	OrganisationAttackBuilding,
+	OrganisationRaidBuilding,
+	OrganisationStormBuilding,
+	OrganisationTreatySigned,
 
-	// Organization events
+	// Organisation events
 	AlienTakeover,
-	OrganizationAttack,
-	OrganizationRaid,
-	OrganizationTreaty,
-	OrganizationRequestBribe,
-	OrganizationRequestAlliance,
+	OrganisationRequestBribe,
+	OrganisationRequestAlliance,
 
 	// Agent events
 	AgentArrived,

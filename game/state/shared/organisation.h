@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game/state/gametime.h"
+#include "game/state/rules/city/organisationraid.h"
 #include "game/state/stateobject.h"
 #include "library/strings.h"
 #include <list>
@@ -82,22 +83,31 @@ class Organisation : public StateObject<Organisation>
 		               unsigned maxAmount, std::set<StateRef<VehicleType>> allowedTypes,
 		               Target target, std::set<Relation> relation = {});
 	};
-	class Mission
+	class RecurringMission
 	{
 	  public:
 		uint64_t next = 0;
-		bool recurring = true;
 		MissionPattern pattern;
-		StateRef<Building> target;
 
 		void execute(GameState &state, StateRef<City> city, StateRef<Organisation> owner);
 
-		Mission() = default;
-		Mission(uint64_t next, StateRef<Building> building);
-		Mission(uint64_t next, uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat,
-		        unsigned minAmount, unsigned maxAmount,
-		        std::set<StateRef<VehicleType>> allowedTypes, MissionPattern::Target target,
-		        std::set<Relation> relation = {});
+		RecurringMission() = default;
+		RecurringMission(uint64_t next, uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat,
+		                 unsigned minAmount, unsigned maxAmount,
+		                 std::set<StateRef<VehicleType>> allowedTypes,
+		                 MissionPattern::Target target, std::set<Relation> relation = {});
+	};
+	class RaidMission
+	{
+	  public:
+		uint64_t time = 0;
+		OrganisationRaid::Type type;
+		StateRef<Building> target;
+		std::set<StateRef<VehicleType>> allowedTypes;
+
+		RaidMission() = default;
+		RaidMission(uint64_t when, OrganisationRaid::Type type, StateRef<Building> building);
+		bool execute(GameState &state, StateRef<City> city, StateRef<Organisation> owner);
 	};
 
 	UString id;
@@ -126,7 +136,7 @@ class Organisation : public StateObject<Organisation>
 
 	StateRef<UfopaediaEntry> ufopaedia_entry;
 
-	std::map<StateRef<City>, std::list<Mission>> missions;
+	std::map<StateRef<City>, std::list<RecurringMission>> missions;
 	std::map<StateRef<VehicleType>, int> vehiclePark;
 	bool providesTransportationServices = false;
 	// Hirable agent types, min and max growth per day
@@ -144,7 +154,7 @@ class Organisation : public StateObject<Organisation>
 	float updateRelations(StateRef<Organisation> &playerOrg);
 
 	int getGuardCount(GameState &state) const;
-	sp<Building> pickRandomBuilding(GameState &state, StateRef<City> city) const;
+	StateRef<Building> pickRandomBuilding(GameState &state, StateRef<City> city) const;
 
 	void takeOver(GameState &state, bool forced = false);
 

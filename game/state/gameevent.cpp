@@ -213,6 +213,17 @@ UString GameBuildingEvent::message()
 		case GameEventType::BuildingAttacked:
 			return format("%s %s %s %s", tr("Building under attack :"), building->name,
 			              tr("Attacked by:"), actor->name);
+		case GameEventType::OrganisationAttackBuilding:
+			return format("%s %s %s %s", tr("Organization attacked:"), building->owner->name,
+			              tr("Attacked by:"), actor->name);
+		case GameEventType::OrganisationRaidBuilding:
+			return format("%s %s %s %s", tr("Organization raided:"), building->owner->name,
+			              tr("Raided by:"), actor->name);
+		case GameEventType::OrganisationStormBuilding:
+			return format("%s %s %s %s", tr("Organization stormed:"), building->owner->name,
+			              tr("Stormed by:"), actor->name);
+		case GameEventType::OrganisationTreatySigned:
+			return format("%s %s, %s", tr("Treaty signed:"), building->owner->name, actor->name);
 		case GameEventType::AlienSpotted:
 			return tr("Live Alien spotted.");
 		case GameEventType::CargoExpiresSoon:
