@@ -360,20 +360,20 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 	state.government = {&state, "ORG_GOVERNMENT"};
 
 	// Chance to trigger one of the Raid missions is based on organisation's manpower
-	state.organisation_raid_rules.neutral_low_manpower = {{OrganisationRaid::Type::None, 50.0f},
-	                                                      {OrganisationRaid::Type::Treaty, 40.0f},
+	state.organisation_raid_rules.neutral_low_manpower = {{OrganisationRaid::Type::None, 70.0f},
+	                                                      {OrganisationRaid::Type::Treaty, 20.0f},
 	                                                      {OrganisationRaid::Type::Attack, 10.0f}};
-	state.organisation_raid_rules.neutral_normal = {{OrganisationRaid::Type::None, 50.0f},
-	                                                {OrganisationRaid::Type::Treaty, 40.0f},
+	state.organisation_raid_rules.neutral_normal = {{OrganisationRaid::Type::None, 70.0f},
+	                                                {OrganisationRaid::Type::Treaty, 20.0f},
 	                                                {OrganisationRaid::Type::Raid, 10.0f}};
-	state.organisation_raid_rules.neutral_high_manpower = {{OrganisationRaid::Type::None, 40.0f},
-	                                                       {OrganisationRaid::Type::Treaty, 40.0f},
+	state.organisation_raid_rules.neutral_high_manpower = {{OrganisationRaid::Type::None, 70.0f},
+	                                                       {OrganisationRaid::Type::Treaty, 10.0f},
 	                                                       {OrganisationRaid::Type::Attack, 10.0f},
 	                                                       {OrganisationRaid::Type::Raid, 10.0f}};
 
 	state.organisation_raid_rules.military_low_manpower = {
-	    {OrganisationRaid::Type::None, 30.0f},
-	    {OrganisationRaid::Type::Treaty, 30.0f},
+	    {OrganisationRaid::Type::None, 40.0f},
+	    {OrganisationRaid::Type::Treaty, 20.0f},
 	    {OrganisationRaid::Type::Attack, 10.0f},
 	    {OrganisationRaid::Type::Raid, 20.0f},
 	    {OrganisationRaid::Type::UnauthorizedVehicle, 10.0f}};

@@ -312,13 +312,18 @@ void Organisation::setRaidMissions(GameState &state, StateRef<City> city)
 {
 	OrganisationRaid &rules = state.organisation_raid_rules;
 
-	std::list<sp<Building>> ownedBuildingsList;
+	std::list<StateRef<Building>> ownedBuildingsList;
 	for (const auto &b : buildings)
 	{
 		if (b->city == city)
 		{
 			ownedBuildingsList.push_back(b);
 		}
+	}
+
+	if (ownedBuildingsList.empty())
+	{
+		return;
 	}
 
 	for (const auto &org : state.organisations)
@@ -1004,7 +1009,10 @@ void Organisation::RaidMission::execute(GameState &state, StateRef<City> city,
 		break;
 		case OrganisationRaid::Type::UnauthorizedVehicle:
 		{
-			std::list<StateRef<Vehicle>> availableVehicles;
+			// Initialize the map
+			std::map<StateRef<VehicleType>, std::list<StateRef<Vehicle>>> availableVehicles;
+
+			// Search for available vehicles
 			for (auto &b : owner->buildings)
 			{
 				if (b->city != city)
@@ -1014,26 +1022,60 @@ void Organisation::RaidMission::execute(GameState &state, StateRef<City> city,
 
 				for (auto &v : b->currentVehicles)
 				{
-					if (v->owner == owner &&
-					    state.organisation_raid_rules.attack_vehicle_types.find(v->type) !=
-					        state.organisation_raid_rules.attack_vehicle_types.end())
+					if (v->owner == owner)
 					{
-						availableVehicles.push_back(v);
+						auto mapIterator = availableVehicles.find(v->type);
+						if (mapIterator != availableVehicles.end())
+						{
+							mapIterator->second.emplace_back(v);
+						}
+						else
+						{
+							std::list<StateRef<Vehicle>> newList{{v}};
+							availableVehicles.emplace(v->type, std::move(newList));
+						}
 					}
 				}
 			}
-			if (!availableVehicles.empty())
+
+			StateRef<Vehicle> firstVehicleSent;
+			int requiredVehicleCount = state.organisation_raid_rules.attack_vehicle_count;
+
+			// Send vehicles on mission
+			for (auto &type : state.organisation_raid_rules.attack_vehicle_types)
 			{
-				auto v = availableVehicles.front();
-				availableVehicles.pop_front();
+				auto it = availableVehicles.find(type);
+				if (it != availableVehicles.end())
+				{
+					while (!it->second.empty() && requiredVehicleCount > 0)
+					{
+						auto v = it->second.front();
+						it->second.pop_front();
+						if (!firstVehicleSent)
+						{
+							firstVehicleSent = v;
+						}
 
-				v->setMission(state, VehicleMission::attackBuilding(state, *v, target));
-				v->addMission(state, VehicleMission::snooze(state, *v, 10 * TICKS_PER_SECOND),
-				              true);
-				v->addMission(state, VehicleMission::gotoBuilding(state, *v, v->currentBuilding),
-				              true);
+						v->altitude = Vehicle::Altitude::Highest;
+						v->setMission(state, VehicleMission::attackBuilding(state, *v, target));
+						v->addMission(
+						    state, VehicleMission::snooze(state, *v, 10 * TICKS_PER_SECOND), true);
+						v->addMission(state,
+						              VehicleMission::gotoBuilding(state, *v, v->currentBuilding),
+						              true);
 
-				fw().pushEvent(new GameVehicleEvent(GameEventType::UnauthorizedVehicle, v));
+						--requiredVehicleCount;
+					}
+				}
+
+				if (requiredVehicleCount <= 0)
+					break;
+			}
+
+			if (firstVehicleSent)
+			{
+				fw().pushEvent(
+				    new GameVehicleEvent(GameEventType::UnauthorizedVehicle, firstVehicleSent));
 			}
 		}
 		break;
