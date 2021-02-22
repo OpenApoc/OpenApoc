@@ -1056,7 +1056,7 @@ void Organisation::RaidMission::execute(GameState &state, StateRef<City> city,
 							firstVehicleSent = v;
 						}
 
-						v->altitude = Vehicle::Altitude::Highest;
+						v->altitude = Vehicle::Altitude::High;
 						v->setMission(state, VehicleMission::attackBuilding(state, *v, target));
 						v->addMission(
 						    state, VehicleMission::snooze(state, *v, 10 * TICKS_PER_SECOND), true);

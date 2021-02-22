@@ -3412,6 +3412,21 @@ bool Vehicle::hasDimensionShifter() const
 	return false;
 }
 
+bool Vehicle::canDamageBuilding(StateRef<Building> target) const
+{
+	const int averageConstitution = target->getAverageConstitution();
+
+	for (auto &eq : equipment)
+	{
+		if (eq->type->type == EquipmentSlotType::VehicleWeapon &&
+		    (!eq->type->max_ammo || eq->ammo) && eq->type->damage * 1.5 > averageConstitution)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 bool Vehicle::isIdle() const { return this->goalWaypoints.empty(); }
 
 std::list<sp<VEquipmentType>> Vehicle::getEquipmentTypes() const
