@@ -28,7 +28,7 @@ int Organisation::getGuardCount(GameState &state) const
 StateRef<Building> Organisation::pickRandomBuilding(GameState &state, StateRef<City> city) const
 {
 	std::list<StateRef<Building>> ownedBuildingsList;
-	for (auto &b : buildings)
+	for (const auto &b : buildings)
 	{
 		if (b->city == city)
 		{

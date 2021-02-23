@@ -1211,7 +1211,7 @@ void GameState::updateEndOfDay()
 		if (o.first != player.id && o.first != aliens.id)
 		{
 			if (relationshipDelta < -15 && !o.second->takenOver &&
-			    o.second->getRelationTo(player) > 25 &&
+			    o.second->getRelationTo(player) < 25 &&
 			    randBoundsInclusive(rng, 0, 100) > (difficulty + 1) * 10)
 			{
 				fw().pushEvent(new GameOrganisationEvent(GameEventType::OrganisationRequestBribe,
