@@ -1,6 +1,7 @@
 #include "game/state/shared/organisation.h"
 #include "framework/configfile.h"
 #include "framework/framework.h"
+#include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/scenery.h"
@@ -993,18 +994,50 @@ void Organisation::RaidMission::execute(GameState &state, StateRef<City> city,
 		break;
 		case OrganisationRaid::Type::Raid:
 		{
-			target->owner->adjustRelationTo(state, owner, -15.0f);
-			owner->adjustRelationTo(state, target->owner, +7.0f);
-			fw().pushEvent(
-			    new GameBuildingEvent(GameEventType::OrganisationRaidBuilding, target, owner));
+			if (target->owner == state.player && target->base)
+			{
+				// Destroy base if its empty
+				if (target->currentAgents.empty())
+				{
+					target->base->die(state, false);
+				}
+				else
+				{
+					fw().pushEvent(
+					    new GameDefenseEvent(GameEventType::DefendTheBase, target->base, owner));
+				}
+			}
+			else
+			{
+				target->owner->adjustRelationTo(state, owner, -15.0f);
+				owner->adjustRelationTo(state, target->owner, +7.0f);
+				fw().pushEvent(
+				    new GameBuildingEvent(GameEventType::OrganisationRaidBuilding, target, owner));
+			}
 		}
 		break;
 		case OrganisationRaid::Type::Storm:
 		{
-			target->owner->adjustRelationTo(state, owner, -25.0f);
-			owner->adjustRelationTo(state, target->owner, +12.0f);
-			fw().pushEvent(
-			    new GameBuildingEvent(GameEventType::OrganisationStormBuilding, target, owner));
+			if (target->owner == state.player && target->base)
+			{
+				// Destroy base if its empty
+				if (target->currentAgents.empty())
+				{
+					target->base->die(state, false);
+				}
+				else
+				{
+					fw().pushEvent(
+					    new GameDefenseEvent(GameEventType::DefendTheBase, target->base, owner));
+				}
+			}
+			else
+			{
+				target->owner->adjustRelationTo(state, owner, -25.0f);
+				owner->adjustRelationTo(state, target->owner, +12.0f);
+				fw().pushEvent(
+				    new GameBuildingEvent(GameEventType::OrganisationStormBuilding, target, owner));
+			}
 		}
 		break;
 		case OrganisationRaid::Type::UnauthorizedVehicle:
