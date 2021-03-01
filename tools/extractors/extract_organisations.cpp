@@ -150,6 +150,9 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 
 		if (i != ORG_CIVILIAN && i != ORG_XCOM && i != ORG_ALIENS)
 		{
+			// Everyone except Player, Aliens and Civilians can initiate diplomacy/raids
+			o->initiatesDiplomacy = true;
+
 			auto vdata = data.vehicle_park->get(i);
 
 			// Give all orgs some service vehicles

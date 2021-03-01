@@ -1384,9 +1384,11 @@
 		<member>infiltrationValue</member>
 		<member>infiltrationHistory</member>
 		<member>infiltrationSpeed</member>
+		<member>ticksTakeOverAttemptAccumulated</member>
 		<member>takenOver</member>
 		<member>militarized</member>
-		<member>ticksTakeOverAttemptAccumulated</member>
+		<member>initiatesDiplomacy</member>
+		<member>providesTransportationServices</member>
 		<member>tech_level</member>
 		<member>average_guards</member>
 		<member>guard_types_reinforcements</member>
@@ -1400,7 +1402,6 @@
 		<member>raid_missions</member>
 		<member>recurring_missions</member>
 		<member>vehiclePark</member>
-		<member>providesTransportationServices</member>
 		<member>hirableAgentTypes</member>
 	</object>
 	<object>

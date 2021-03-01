@@ -118,9 +118,11 @@ class Organisation : public StateObject<Organisation>
 	std::list<int> infiltrationHistory;
 	// Modified for all infiltration attempts at this org
 	int infiltrationSpeed = 0;
+	unsigned int ticksTakeOverAttemptAccumulated = 0;
 	bool takenOver = false;
 	bool militarized = false;
-	unsigned int ticksTakeOverAttemptAccumulated = 0;
+	bool initiatesDiplomacy = false;
+	bool providesTransportationServices = false;
 
 	sp<Image> icon;
 
@@ -138,7 +140,6 @@ class Organisation : public StateObject<Organisation>
 	std::map<StateRef<City>, std::list<RaidMission>> raid_missions;
 	std::map<StateRef<City>, std::list<RecurringMission>> recurring_missions;
 	std::map<StateRef<VehicleType>, int> vehiclePark;
-	bool providesTransportationServices = false;
 	// Hirable agent types, min and max growth per day
 	std::map<StateRef<AgentType>, std::pair<int, int>> hirableAgentTypes;
 

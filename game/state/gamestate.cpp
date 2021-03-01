@@ -1208,7 +1208,7 @@ void GameState::updateEndOfDay()
 		o.second->updateDailyInfiltrationHistory();
 		const float relationshipDelta = o.second->updateRelations(player);
 
-		if (o.first != player.id && o.first != aliens.id)
+		if (o.second->initiatesDiplomacy)
 		{
 			if (relationshipDelta < -15 && !o.second->takenOver &&
 			    o.second->getRelationTo(player) < 25 &&
