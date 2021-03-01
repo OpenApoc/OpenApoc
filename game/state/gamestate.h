@@ -5,6 +5,7 @@
 #include "game/state/gameeventtypes.h"
 #include "game/state/gametime.h"
 #include "game/state/luagamestate.h"
+#include "game/state/rules/city/organisationraid.h"
 #include "game/state/shared/agent.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
@@ -118,6 +119,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<AgentEquipmentLayout> agent_equipment_layouts;
 	StateRefMap<Agent> agents;
 	AgentGenerator agent_generator;
+	OrganisationRaid organisation_raid_rules;
 
 	std::vector<std::pair<int, int>> weekly_rating_rules;
 	std::map<AgentType::Role, int> agent_salary;

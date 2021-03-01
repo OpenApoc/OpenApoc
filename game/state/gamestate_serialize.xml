@@ -22,6 +22,7 @@
 		<member type="Section">agent_body_types</member>
 		<member type="Section">agent_equipment_layouts</member>
 		<member type="Section">agent_generator</member>
+		<member type="Section">organisation_raid_rules</member>
 		<member>weekly_rating_rules</member>
 		<member>agent_salary</member>
 		<member>agent_fired_penalty</member>
@@ -362,12 +363,13 @@
 		<value>CargoExpiresSoon</value>
 		<value>MissionCompletedBuildingRaid</value>
 		<value>MissionCompletedBuildingNormal</value>
+		<value>OrganisationAttackBuilding</value>
+		<value>OrganisationRaidBuilding</value>
+		<value>OrganisationStormBuilding</value>
+		<value>OrganisationTreatySigned</value>
 		<value>AlienTakeover</value>
-		<value>OrganizationAttack</value>
-		<value>OrganizationRaid</value>
-		<value>OrganizationTreaty</value>
-		<value>OrganizationRequestBribe</value>
-		<value>OrganizationRequestAlliance</value>
+		<value>OrganisationRequestBribe</value>
+		<value>OrganisationRequestAlliance</value>
 		<value>AgentArrived</value>
 		<value>AgentUnableToReach</value>
 		<value>HostileSpotted</value>
@@ -1315,6 +1317,27 @@
 		<member>sector</member>
 	</object>
 	<enum>
+		<name>OrganisationRaid::Type</name>
+		<value>None</value>
+		<value>Attack</value>
+		<value>Raid</value>
+		<value>Storm</value>
+		<value>UnauthorizedVehicle</value>
+		<value>Treaty</value>
+	</enum>
+	<object>
+		<name>OrganisationRaid</name>
+		<member>nextRaidTimer</member>
+		<member>attack_vehicle_count</member>
+		<member>attack_vehicle_types</member>
+		<member>neutral_low_manpower</member>
+		<member>neutral_normal</member>
+		<member>neutral_high_manpower</member>
+		<member>military_low_manpower</member>
+		<member>military_normal</member>
+		<member>military_high_manpower</member>
+	</object>
+	<enum>
 		<name>Organisation::MissionPattern::Target</name>
 		<value>Owned</value>
 		<value>OwnedOrOther</value>
@@ -1331,9 +1354,15 @@
 		<value>Hostile</value>
 	</enum>
 	<object>
-		<name>Organisation::Mission</name>
-		<member>next</member>
+		<name>Organisation::RecurringMission</name>
+		<member>time</member>
 		<member>pattern</member>
+	</object>
+	<object>
+		<name>Organisation::RaidMission</name>
+		<member>time</member>
+		<member>type</member>
+		<member>target</member>
 	</object>
 	<object>
 		<name>Organisation::MissionPattern</name>
@@ -1355,8 +1384,11 @@
 		<member>infiltrationValue</member>
 		<member>infiltrationHistory</member>
 		<member>infiltrationSpeed</member>
-		<member>takenOver</member>
 		<member>ticksTakeOverAttemptAccumulated</member>
+		<member>takenOver</member>
+		<member>militarized</member>
+		<member>initiatesDiplomacy</member>
+		<member>providesTransportationServices</member>
 		<member>tech_level</member>
 		<member>average_guards</member>
 		<member>guard_types_reinforcements</member>
@@ -1367,9 +1399,9 @@
 		<member>current_relations</member>
 		<member>long_term_relations</member>
 		<member>ufopaedia_entry</member>
-		<member>missions</member>
+		<member>raid_missions</member>
+		<member>recurring_missions</member>
 		<member>vehiclePark</member>
-		<member>providesTransportationServices</member>
 		<member>hirableAgentTypes</member>
 	</object>
 	<object>

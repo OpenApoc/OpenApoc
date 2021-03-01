@@ -510,9 +510,9 @@ void GameState::fillOrgStartingProperty()
 	{
 		o.second->updateVehicleAgentPark(*this);
 		o.second->updateHirableAgents(*this);
-		for (auto &m : o.second->missions[{this, "CITYMAP_HUMAN"}])
+		for (auto &m : o.second->recurring_missions[{this, "CITYMAP_HUMAN"}])
 		{
-			m.next +=
+			m.time +=
 			    gameTime.getTicks() +
 			    randBoundsInclusive(rng, (uint64_t)0,
 			                        m.pattern.maxIntervalRepeat - m.pattern.minIntervalRepeat) -
@@ -572,6 +572,8 @@ void GameState::startGame()
 
 			// Finally stay in bounds
 			entry.second = clamp(entry.second, -100.0f, 100.0f);
+			// Sync up long-term value for initial relationships
+			pair.second->long_term_relations[entry.first] = entry.second;
 
 			// Set player reverse relationships
 			if (entry.first == getPlayer())
@@ -1204,14 +1206,19 @@ void GameState::updateEndOfDay()
 		o.second->updateVehicleAgentPark(*this);
 		o.second->updateHirableAgents(*this);
 		o.second->updateDailyInfiltrationHistory();
-
 		const float relationshipDelta = o.second->updateRelations(player);
-		;
-		if (relationshipDelta < -15 && !o.second->takenOver &&
-		    randBoundsInclusive(rng, 0, 100) > std::fabs(relationshipDelta))
+
+		if (o.second->initiatesDiplomacy)
 		{
-			fw().pushEvent(new GameOrganisationEvent(GameEventType::OrganizationRequestBribe,
-			                                         {this, o.first}));
+			if (relationshipDelta < -15 && !o.second->takenOver &&
+			    o.second->getRelationTo(player) < 25 &&
+			    randBoundsInclusive(rng, 0, 100) > (difficulty + 1) * 10)
+			{
+				fw().pushEvent(new GameOrganisationEvent(GameEventType::OrganisationRequestBribe,
+				                                         {this, o.first}));
+			}
+
+			o.second->setRaidMissions(*this, current_city);
 		}
 	}
 	for (auto &a : this->agents)

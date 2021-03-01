@@ -324,6 +324,7 @@ class Vehicle : public StateObject<Vehicle>,
 	bool canTeleport() const;
 	bool hasTeleporter() const;
 	bool hasDimensionShifter() const;
+	bool canDamageBuilding(StateRef<Building> target) const;
 	bool isIdle() const;
 
 	// This is the 'sum' of all armors?

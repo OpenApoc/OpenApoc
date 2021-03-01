@@ -131,7 +131,7 @@ unsigned Building::countActiveTiles() const
 	for (const auto &p : buildingParts)
 	{
 		const auto tile = city->map->getTile(p);
-		if (tile->presentScenery && tile->presentScenery->type->isBuildingPart)
+		if (tile && tile->presentScenery && tile->presentScenery->type->isBuildingPart)
 		{
 			relevantTiles++;
 		}
@@ -1052,6 +1052,22 @@ void Building::decreasePendingInvestigatorCount(GameState &state)
 		LogError("Building investigate count < 0?");
 		this->pendingInvestigatorCount = 0;
 	}
+}
+
+int Building::getAverageConstitution() const
+{
+	int totalConst = 0;
+	unsigned relevantTiles = 0;
+	for (const auto &p : buildingParts)
+	{
+		const auto tile = city->map->getTile(p);
+		if (tile && tile->presentScenery && tile->presentScenery->type->isBuildingPart)
+		{
+			totalConst += tile->presentScenery->type->constitution;
+			relevantTiles++;
+		}
+	}
+	return (relevantTiles > 0) ? totalConst / relevantTiles : 0;
 }
 
 bool Building::isAlive() const { return countActiveTiles() > 0; }

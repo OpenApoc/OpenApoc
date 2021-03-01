@@ -1,6 +1,7 @@
 #include "game/state/shared/organisation.h"
 #include "framework/configfile.h"
 #include "framework/framework.h"
+#include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/scenery.h"
@@ -25,6 +26,19 @@ int Organisation::getGuardCount(GameState &state) const
 	    20, randBoundsInclusive(state.rng, average_guards * 75 / 100, average_guards * 125 / 100));
 }
 
+StateRef<Building> Organisation::pickRandomBuilding(GameState &state, StateRef<City> city) const
+{
+	std::list<StateRef<Building>> ownedBuildingsList;
+	for (const auto &b : buildings)
+	{
+		if (b->city == city)
+		{
+			ownedBuildingsList.push_back(b);
+		}
+	}
+	return (ownedBuildingsList.empty()) ? nullptr : pickRandom(state.rng, ownedBuildingsList);
+}
+
 void Organisation::takeOver(GameState &state, bool forced)
 {
 	if (!forced && randBoundsExclusive(state.rng, 0, 200) >= infiltrationValue)
@@ -32,6 +46,7 @@ void Organisation::takeOver(GameState &state, bool forced)
 		return;
 	}
 	takenOver = true;
+	militarized = true;
 	infiltrationValue = 200;
 	StateRef<Organisation> org = {&state, id};
 	current_relations[state.getPlayer()] = -100.0f;
@@ -294,20 +309,123 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 	owner->balance -= count * price;
 }
 
+void Organisation::setRaidMissions(GameState &state, StateRef<City> city)
+{
+	OrganisationRaid &rules = state.organisation_raid_rules;
+
+	std::list<StateRef<Building>> ownedBuildingsList;
+	for (const auto &b : buildings)
+	{
+		if (b->city == city)
+		{
+			ownedBuildingsList.push_back(b);
+		}
+	}
+
+	if (ownedBuildingsList.empty())
+	{
+		return;
+	}
+
+	for (const auto &org : state.organisations)
+	{
+		const StateRef<Organisation> otherOrg{&state, org.first};
+		if (isRelatedTo(otherOrg) == Relation::Hostile)
+		{
+			// every time (for every hostile org) pick a new building
+			const auto sourceBuilding = pickRandom(state.rng, ownedBuildingsList);
+			if (!sourceBuilding)
+			{
+				continue;
+			}
+
+			if (std::max(1.0f, long_term_relations[otherOrg] - current_relations[otherOrg]) >
+			    randBoundsInclusive(state.rng, 0, rules.nextRaidTimer))
+			{
+				rules.nextRaidTimer = 80 - 2 * state.difficulty;
+
+				const StateRef<Building> targetBuilding = otherOrg->pickRandomBuilding(state, city);
+				if (!targetBuilding)
+				{
+					continue;
+				}
+
+				const uint64_t missionTime =
+				    state.gameTime.getTicks() + randBoundsInclusive(state.rng, 50, 1250) *
+				                                    static_cast<uint64_t>(TICKS_PER_MINUTE);
+
+				// calculate manpower available and probability of raid success
+				const float targetGuards = otherOrg->average_guards * otherOrg->average_guards *
+				                           targetBuilding->currentWorkforce;
+
+				// make sure it's not 0 (in case of X-Com)
+				const float guardRatio = average_guards * average_guards *
+				                         sourceBuilding->currentWorkforce /
+				                         std::max(1.0f, targetGuards);
+
+				auto &raidMissionChance = rules.neutral_low_manpower;
+				if (guardRatio > 2)
+				{
+					raidMissionChance =
+					    (militarized) ? rules.military_high_manpower : rules.neutral_high_manpower;
+				}
+				else if (guardRatio > 1)
+				{
+					raidMissionChance =
+					    (militarized) ? rules.military_normal : rules.neutral_normal;
+				}
+				else if (militarized)
+				{
+					raidMissionChance = rules.military_low_manpower;
+				}
+
+				const OrganisationRaid::Type mission =
+				    probabilityMapRandomizer(state.rng, raidMissionChance);
+
+				if (mission != OrganisationRaid::Type::None)
+				{
+					raid_missions[city].emplace_back(missionTime, mission, targetBuilding);
+				}
+			}
+			else
+			{
+				// timer didn't trigger, increase the chance
+				rules.nextRaidTimer--;
+			}
+		}
+	}
+}
+
 void Organisation::updateMissions(GameState &state)
 {
-#ifdef DEBUG_TURN_OFF_ORG_MISSIONS
-	return;
-#endif
 	if (state.getPlayer().id == id)
 	{
 		return;
 	}
-	for (auto &m : missions[state.current_city])
+	StateRef<Organisation> currentOrg{&state, id};
+	auto &raidMissions = raid_missions[state.current_city];
+	auto it = raidMissions.begin();
+	while (it != raidMissions.end())
 	{
-		if (m.next < state.gameTime.getTicks())
+		if (it->time < state.gameTime.getTicks())
 		{
-			m.execute(state, state.current_city, {&state, id});
+			// Raid missions are one-time only, erase if triggered
+			it->execute(state, state.current_city, currentOrg);
+			it = raidMissions.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+#ifdef DEBUG_TURN_OFF_ORG_MISSIONS
+	return;
+#endif
+	for (auto &m : recurring_missions[state.current_city])
+	{
+		if (m.time < state.gameTime.getTicks())
+		{
+			m.execute(state, state.current_city, currentOrg);
 		}
 	}
 	// Find rescue-capable craft
@@ -588,7 +706,7 @@ void Organisation::updateVehicleAgentPark(GameState &state)
 			}
 		}
 		bool spaceLiner = false;
-		for (auto &m : missions[{&state, "CITYMAP_HUMAN"}])
+		for (auto m : recurring_missions[{&state, "CITYMAP_HUMAN"}])
 		{
 			if (m.pattern.target == MissionPattern::Target::ArriveFromSpace ||
 			    m.pattern.target == MissionPattern::Target::DepartToSpace)
@@ -855,6 +973,164 @@ template <> const UString &StateObject<Organisation>::getTypeName()
 	static UString name = "Organisation";
 	return name;
 }
+Organisation::RaidMission::RaidMission(uint64_t when, OrganisationRaid::Type type,
+                                       StateRef<Building> building)
+    : time(when), type(type), target(building)
+{
+}
+
+void Organisation::RaidMission::execute(GameState &state, StateRef<City> city,
+                                        StateRef<Organisation> owner)
+{
+	switch (type)
+	{
+		case OrganisationRaid::Type::Attack:
+		{
+			target->owner->adjustRelationTo(state, owner, -5.0f);
+			owner->adjustRelationTo(state, target->owner, +2.0f);
+			fw().pushEvent(
+			    new GameBuildingEvent(GameEventType::OrganisationAttackBuilding, target, owner));
+		}
+		break;
+		case OrganisationRaid::Type::Raid:
+		{
+			if (target->owner == state.player && target->base)
+			{
+				// Destroy base if its empty
+				if (target->currentAgents.empty())
+				{
+					target->base->die(state, false);
+				}
+				else
+				{
+					fw().pushEvent(
+					    new GameDefenseEvent(GameEventType::DefendTheBase, target->base, owner));
+				}
+			}
+			else
+			{
+				target->owner->adjustRelationTo(state, owner, -15.0f);
+				owner->adjustRelationTo(state, target->owner, +7.0f);
+				fw().pushEvent(
+				    new GameBuildingEvent(GameEventType::OrganisationRaidBuilding, target, owner));
+			}
+		}
+		break;
+		case OrganisationRaid::Type::Storm:
+		{
+			if (target->owner == state.player && target->base)
+			{
+				// Destroy base if its empty
+				if (target->currentAgents.empty())
+				{
+					target->base->die(state, false);
+				}
+				else
+				{
+					fw().pushEvent(
+					    new GameDefenseEvent(GameEventType::DefendTheBase, target->base, owner));
+				}
+			}
+			else
+			{
+				target->owner->adjustRelationTo(state, owner, -25.0f);
+				owner->adjustRelationTo(state, target->owner, +12.0f);
+				fw().pushEvent(
+				    new GameBuildingEvent(GameEventType::OrganisationStormBuilding, target, owner));
+			}
+		}
+		break;
+		case OrganisationRaid::Type::UnauthorizedVehicle:
+		{
+			// Initialize the map
+			std::map<StateRef<VehicleType>, std::list<StateRef<Vehicle>>> availableVehicles;
+
+			// Search for available vehicles
+			for (auto &b : owner->buildings)
+			{
+				if (b->city != city)
+				{
+					continue;
+				}
+
+				for (auto &v : b->currentVehicles)
+				{
+					if (v->owner == owner)
+					{
+						auto mapIterator = availableVehicles.find(v->type);
+						if (mapIterator != availableVehicles.end())
+						{
+							mapIterator->second.emplace_back(v);
+						}
+						else
+						{
+							std::list<StateRef<Vehicle>> newList{{v}};
+							availableVehicles.emplace(v->type, std::move(newList));
+						}
+					}
+				}
+			}
+
+			StateRef<Vehicle> firstVehicleSent;
+			int requiredVehicleCount = state.organisation_raid_rules.attack_vehicle_count;
+
+			// Send vehicles on mission
+			for (auto &type : state.organisation_raid_rules.attack_vehicle_types)
+			{
+				auto it = availableVehicles.find(type);
+				if (it != availableVehicles.end())
+				{
+					while (!it->second.empty() && requiredVehicleCount > 0)
+					{
+						auto v = it->second.front();
+						it->second.pop_front();
+						if (!firstVehicleSent)
+						{
+							firstVehicleSent = v;
+						}
+
+						v->altitude = Vehicle::Altitude::High;
+						v->setMission(state, VehicleMission::attackBuilding(state, *v, target));
+						v->addMission(
+						    state, VehicleMission::snooze(state, *v, 10 * TICKS_PER_SECOND), true);
+						v->addMission(state,
+						              VehicleMission::gotoBuilding(state, *v, v->currentBuilding),
+						              true);
+
+						--requiredVehicleCount;
+					}
+				}
+
+				if (requiredVehicleCount <= 0)
+					break;
+			}
+
+			if (firstVehicleSent)
+			{
+				fw().pushEvent(
+				    new GameVehicleEvent(GameEventType::UnauthorizedVehicle, firstVehicleSent));
+			}
+		}
+		break;
+		case OrganisationRaid::Type::Treaty:
+		{
+			if (target->owner != state.player && target->owner != state.aliens)
+			{
+				target->owner->adjustRelationTo(state, owner,
+				                                -50.0f - target->owner->getRelationTo(owner));
+				owner->adjustRelationTo(state, target->owner,
+				                        -50.0f - owner->getRelationTo(target->owner));
+				fw().pushEvent(
+				    new GameBuildingEvent(GameEventType::OrganisationTreatySigned, target, owner));
+			}
+		}
+		break;
+		default: // skip if None or Unknown
+			break;
+	}
+	return;
+}
+
 Organisation::MissionPattern::MissionPattern(uint64_t minIntervalRepeat, uint64_t maxIntervalRepeat,
                                              unsigned minAmount, unsigned maxAmount,
                                              std::set<StateRef<VehicleType>> allowedTypes,
@@ -865,10 +1141,10 @@ Organisation::MissionPattern::MissionPattern(uint64_t minIntervalRepeat, uint64_
 {
 }
 
-void Organisation::Mission::execute(GameState &state, StateRef<City> city,
-                                    StateRef<Organisation> owner)
+void Organisation::RecurringMission::execute(GameState &state, StateRef<City> city,
+                                             StateRef<Organisation> owner)
 {
-	next = state.gameTime.getTicks() +
+	time = state.gameTime.getTicks() +
 	       randBoundsInclusive(state.rng, pattern.minIntervalRepeat, pattern.maxIntervalRepeat);
 
 	int count = randBoundsInclusive(state.rng, pattern.minAmount, pattern.maxAmount);
@@ -1044,13 +1320,16 @@ void Organisation::Mission::execute(GameState &state, StateRef<City> city,
 			              true);
 		}
 	}
+	return;
 }
 
-Organisation::Mission::Mission(uint64_t next, uint64_t minIntervalRepeat,
-                               uint64_t maxIntervalRepeat, unsigned minAmount, unsigned maxAmount,
-                               std::set<StateRef<VehicleType>> allowedTypes,
-                               MissionPattern::Target target, std::set<Relation> relation)
-    : next(next)
+Organisation::RecurringMission::RecurringMission(uint64_t next, uint64_t minIntervalRepeat,
+                                                 uint64_t maxIntervalRepeat, unsigned minAmount,
+                                                 unsigned maxAmount,
+                                                 std::set<StateRef<VehicleType>> allowedTypes,
+                                                 MissionPattern::Target target,
+                                                 std::set<Relation> relation)
+    : time(next)
 {
 	pattern = {minIntervalRepeat, maxIntervalRepeat, minAmount, maxAmount, allowedTypes, target,
 	           relation};

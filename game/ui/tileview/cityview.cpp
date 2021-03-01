@@ -3821,7 +3821,7 @@ bool CityView::handleGameStateEvent(Event *e)
 			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 		}
 		break;
-		case GameEventType::OrganizationRequestBribe:
+		case GameEventType::OrganisationRequestBribe:
 		{
 			auto gameOrgEvent = dynamic_cast<GameOrganisationEvent *>(e);
 			fw().stageQueueCommand(

@@ -1564,7 +1564,8 @@ bool VehicleMission::isFinishedInternal(GameState &state, Vehicle &v)
 		case MissionType::Teleport:
 			return true;
 		case MissionType::AttackBuilding:
-			return targetBuilding && !targetBuilding->isAlive();
+			return targetBuilding &&
+			       (!targetBuilding->isAlive() || !v.canDamageBuilding(targetBuilding));
 		default:
 			LogWarning("TODO: Implement isFinishedInternal");
 			return false;

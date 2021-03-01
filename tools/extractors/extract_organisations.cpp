@@ -10,6 +10,9 @@
 #define ORG_ALIENS 1
 #define ORG_MEGAPOL 3
 #define ORG_TRANSTELLAR 9
+#define ORG_PSYKE 20
+#define ORG_DIABLO 21
+#define ORG_OSIRON 22
 #define ORG_CIVILIAN 27
 
 namespace OpenApoc
@@ -122,6 +125,12 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 			o->long_term_relations[o2] = (float)rdata.relationships[j];
 		}
 
+		// Following organizations use special table when determining raids
+		if (i == ORG_MEGAPOL || i == ORG_PSYKE || i == ORG_DIABLO || i == ORG_OSIRON)
+		{
+			o->militarized = true;
+		}
+
 		// Done in common xml patch
 		/*if (i == ORG_CIVILIAN)
 		{
@@ -141,6 +150,9 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 
 		if (i != ORG_CIVILIAN && i != ORG_XCOM && i != ORG_ALIENS)
 		{
+			// Everyone except Player, Aliens and Civilians can initiate diplomacy/raids
+			o->initiatesDiplomacy = true;
+
 			auto vdata = data.vehicle_park->get(i);
 
 			// Give all orgs some service vehicles
@@ -178,9 +190,6 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 					o->vehiclePark[{&state, "VEHICLETYPE_VALKYRIE_INTERCEPTOR"}] = 1;
 					break;
 				// Miscellaneous (many orgs have this value)
-				default:
-					LogError("Modded game? Found unexpected vehiclePark value of %d",
-					         (int)vdata.vehiclePark);
 				case 4:
 					o->vehiclePark[{&state, "VEHICLETYPE_PHOENIX_HOVERCAR"}] = 2;
 					o->vehiclePark[{&state, "VEHICLETYPE_HOVERBIKE"}] = 1;
@@ -241,6 +250,9 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 					o->vehiclePark[{&state, "VEHICLETYPE_VALKYRIE_INTERCEPTOR"}] = 15;
 					o->vehiclePark[{&state, "VEHICLETYPE_HAWK_AIR_WARRIOR"}] = 15;
 					break;
+				default:
+					LogError("Modded game? Found unexpected vehiclePark value of %d",
+					         (int)vdata.vehiclePark);
 			}
 
 			// Missions
@@ -256,7 +268,7 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 			std::set<Organisation::Relation> UnfriendlyMinus = {Organisation::Relation::Unfriendly,
 			                                                    Organisation::Relation::Hostile};
 
-			auto &missions = o->missions[{&state, "CITYMAP_HUMAN"}];
+			auto &missions = o->recurring_missions[{&state, "CITYMAP_HUMAN"}];
 			// Agents
 			/*missions.emplace_back(m, 7 * m, 13 * m, 1, 1, std::set<StateRef<VehicleType>>{{}},
 			                         Organisation::MissionPattern::Target::Other);*/
@@ -349,6 +361,45 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 	state.aliens = {&state, "ORG_ALIEN"};
 	state.civilian = {&state, "ORG_CIVILIAN"};
 	state.government = {&state, "ORG_GOVERNMENT"};
+
+	// Chance to trigger one of the Raid missions is based on organisation's manpower
+	state.organisation_raid_rules.neutral_low_manpower = {{OrganisationRaid::Type::None, 70.0f},
+	                                                      {OrganisationRaid::Type::Treaty, 20.0f},
+	                                                      {OrganisationRaid::Type::Attack, 10.0f}};
+	state.organisation_raid_rules.neutral_normal = {{OrganisationRaid::Type::None, 70.0f},
+	                                                {OrganisationRaid::Type::Treaty, 20.0f},
+	                                                {OrganisationRaid::Type::Raid, 10.0f}};
+	state.organisation_raid_rules.neutral_high_manpower = {{OrganisationRaid::Type::None, 70.0f},
+	                                                       {OrganisationRaid::Type::Treaty, 10.0f},
+	                                                       {OrganisationRaid::Type::Attack, 10.0f},
+	                                                       {OrganisationRaid::Type::Raid, 10.0f}};
+
+	state.organisation_raid_rules.military_low_manpower = {
+	    {OrganisationRaid::Type::None, 40.0f},
+	    {OrganisationRaid::Type::Treaty, 20.0f},
+	    {OrganisationRaid::Type::Attack, 10.0f},
+	    {OrganisationRaid::Type::Raid, 20.0f},
+	    {OrganisationRaid::Type::UnauthorizedVehicle, 10.0f}};
+	state.organisation_raid_rules.military_normal = {
+	    {OrganisationRaid::Type::None, 20.0f},
+	    {OrganisationRaid::Type::Treaty, 10.0f},
+	    {OrganisationRaid::Type::Attack, 30.0f},
+	    {OrganisationRaid::Type::Raid, 20.0f},
+	    {OrganisationRaid::Type::Storm, 10.0f},
+	    {OrganisationRaid::Type::UnauthorizedVehicle, 10.0f}};
+	state.organisation_raid_rules.military_high_manpower = {
+	    {OrganisationRaid::Type::None, 10.0f},
+	    {OrganisationRaid::Type::Treaty, 10.0f},
+	    {OrganisationRaid::Type::Attack, 10.0f},
+	    {OrganisationRaid::Type::Raid, 30.0f},
+	    {OrganisationRaid::Type::Storm, 10.0f},
+	    {OrganisationRaid::Type::UnauthorizedVehicle, 30.0f}};
+
+	state.organisation_raid_rules.attack_vehicle_types = {
+	    {&state, "VEHICLETYPE_PHOENIX_HOVERCAR"},
+	    {&state, "VEHICLETYPE_HOVERBIKE"},
+	    {&state, "VEHICLETYPE_VALKYRIE_INTERCEPTOR"},
+	    {&state, "VEHICLETYPE_HAWK_AIR_WARRIOR"}};
 }
 
 } // namespace OpenApoc
