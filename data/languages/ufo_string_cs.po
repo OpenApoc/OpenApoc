@@ -2,25 +2,30 @@
 # Translators:
 # Translators:
 # Translators:
+# Translators:
+# Translators:
+# John Millan <PlayMann.CZ@seznam.cz>, 2018-2020
 # Maxim Megalinski <kammerer001@yandex.ru>, 2015
+# Michal Breškovec <michal@breskovec.cz>, 2019
+# Petr Schönmann <pschonmann@gmail.com>, 2017
 # Skin36, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Apocalypse\n"
+"Project-Id-Version: OpenApoc\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2016-03-18 10:11+0000\n"
-"Last-Translator: Skin36\n"
+"PO-Revision-Date: 2020-06-23 21:52+0000\n"
+"Last-Translator: John Millan <PlayMann.CZ@seznam.cz>\n"
 "Language-Team: Czech (http://www.transifex.com/x-com-apocalypse/apocalypse/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Poedit 1.8.6\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"X-Generator: Poedit 2.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 msgid "Click left mouse button or press a key when done"
-msgstr ""
+msgstr "Zmáčkni levé tlačítko myši nebo jakékoliv tlačítko až budeš hotov"
 
 msgid "Brown"
 msgstr "Brown"
@@ -841,79 +846,79 @@ msgid "Click on vehicle to select target"
 msgstr "Kliknutím na vozidlo urči cíl"
 
 msgid "Alien Probe"
-msgstr "Průzkumník"
+msgstr "Cizácká Sonda"
 
 msgid "Alien Scout"
-msgstr "Vyzvědač"
+msgstr "Cizácký Zvěd"
 
 msgid "Alien Transporter"
-msgstr "Transportér"
+msgstr "Cizácký Transportér"
 
 msgid "Alien Fast Attack Ship"
-msgstr "Malý útočný člun"
+msgstr "Cizácká Rychle Útočná loď"
 
 msgid "Alien Destroyer"
-msgstr "Ničitel"
+msgstr "Cizácký Ničitel"
 
 msgid "Alien Assault Ship"
-msgstr "Velký útočný člun"
+msgstr "Cizácká Útočná loď"
 
 msgid "Alien Bomber"
-msgstr "Bombardér"
+msgstr "Cizácký Bombardér"
 
 msgid "Alien Escort"
-msgstr "Výsadková loď"
+msgstr "Cizácká Výsadková loď"
 
 msgid "Alien Battleship"
-msgstr "Cizácká válečná loď"
+msgstr "Cizácká Válečná loď"
 
 msgid "Alien Mothership"
-msgstr "Cizácká mateřská loď"
+msgstr "Cizácká Mateřská loď"
 
 msgid "Police Hovercar"
-msgstr "Policejní vznášedlo"
+msgstr "Policejní Vznášedlo"
 
 msgid "Airtaxi"
 msgstr "Aerotaxi"
 
 msgid "Rescue Transport"
-msgstr "Záchranný transportér"
+msgstr "Záchranný Transport"
 
 msgid "Construction Vehicle"
-msgstr "Konstrukční vozidlo"
+msgstr "Konstrukční Vozidlo"
 
 msgid "Airtrans"
 msgstr "Aerotrans"
 
 msgid "Space Liner"
-msgstr "Vesmírná loď"
+msgstr "Vesmírná Loď"
 
 msgid "Phoenix Hovercar"
 msgstr "Vznášedlo Fénix"
 
 msgid "Hoverbike"
-msgstr "Vzdušný skůtr"
+msgstr "Vzdušný Skůtr"
 
 msgid "Valkyrie Interceptor"
-msgstr "Valkýra stíhač"
+msgstr "Valkýra Stíhač"
 
 msgid "Hawk Air Warrior"
-msgstr "Sokol bojovník"
+msgstr "Sokol Bojovník"
 
 msgid "Dimension Probe"
-msgstr "Interdimenzní sonda"
+msgstr "Interdimenzní Sonda"
 
 msgid "Biotrans"
 msgstr "Biotrans"
 
 msgid "Explorer"
-msgstr "Explorer"
+msgstr "Objevitel"
 
 msgid "Retaliator"
 msgstr "Retaliátor"
 
 msgid "Annihilator"
-msgstr "Anihilátor"
+msgstr "Anihilátor "
 
 msgid "Autotaxi"
 msgstr "Autotaxi"
@@ -1972,70 +1977,70 @@ msgid "Dimension Gate Generator"
 msgstr "Generátor Dimenzní brány"
 
 msgid "Transporter"
-msgstr ""
+msgstr "Transportér"
 
 msgid "Fast Attack ship"
-msgstr ""
+msgstr "Rychlá Útočná Loď"
 
 msgid "Destroyer"
-msgstr ""
+msgstr "Ničitel"
 
 msgid "Assault craft"
-msgstr ""
+msgstr "Útočné plavidlo"
 
 msgid "Bomber"
-msgstr ""
+msgstr "Bombardér"
 
 msgid "Escort"
-msgstr ""
+msgstr "Eskorta"
 
 msgid "Battleship"
-msgstr ""
+msgstr "Bitevník"
 
 msgid "Mothership"
-msgstr ""
+msgstr "Mateřská loď"
 
 msgid "Property"
-msgstr ""
+msgstr "Majetek"
 
 msgid "Financial services"
-msgstr ""
+msgstr "Finanční služby"
 
 msgid "Import/Export"
-msgstr ""
+msgstr "Import/Export"
 
 msgid "Security services"
-msgstr ""
+msgstr "Ochranné služby"
 
 msgid "Transport services"
-msgstr ""
+msgstr "Transportní Služby"
 
 msgid "Administration"
-msgstr ""
+msgstr "Administrace"
 
 msgid "Genetics"
-msgstr ""
+msgstr "Genetika"
 
 msgid "Construction"
-msgstr ""
+msgstr "Konstrukce"
 
 msgid "Vehicle manufacture"
-msgstr ""
+msgstr "Manufaktura vozidel"
 
 msgid "Nanotechnology"
-msgstr ""
+msgstr "Nanotechnologie"
 
 msgid "Personal armaments"
-msgstr ""
+msgstr "Osobní výzbroj"
 
 msgid "Security systems droids"
-msgstr ""
+msgstr "Ochranní systémoví droidi"
 
 msgid "Power cells"
-msgstr ""
+msgstr "Energetické články"
 
 msgid "Furniture"
-msgstr ""
+msgstr "Nábytek"
 
 msgid "X-COM"
 msgstr "X-COM"
@@ -2322,73 +2327,73 @@ msgstr "#Zásob.sled.pist."
 msgid ""
 "#The applicants were given a variety of agility and speed tests; the "
 "combined result is shown."
-msgstr ""
+msgstr "#Žadatelům byl dán výběr testů hbitosti a rychlosti; zkombinovaný odpovědi jsou ukázány."
 
 msgid "#Stamina was tested with an 'until you drop' style assault course."
-msgstr ""
+msgstr "#Výdrž byla testována s 'dokud nepadneš' stylem útočného kurzu."
 
 msgid ""
 "#Reaction times were carefully tested, using both electronic and traditional"
 " methods."
-msgstr ""
+msgstr "#Reakční časy byly opatrně testovány, s používáním elektronické a tradiční metody."
 
 msgid ""
 "#A selection of exercises were monitored to obtain the strength rating of "
 "the applicants."
-msgstr ""
+msgstr "#Výběry tréninků byly monitorovány aby se získala hodnocení síly žadatelů."
 
 msgid "#This is an initial estimate of the applicants' psychic abilities."
-msgstr ""
+msgstr "#Toto je počáteční odhad psychických zkušeností žadatelů"
 
 msgid ""
 "#The applicants were tested with a selection of traditional firearms to see "
 "how they would fare in a basic sniper situation."
-msgstr ""
+msgstr "#Žadatelé byli testováni s výběrem tradičních zbraní aby se ukázalo jak se zachovají při základní odstřelovací situaci."
 
 msgid ""
 "#The applicants were tested using advanced simulator technologies; a "
 "combined result is shown for on road/off road/flying vehicles."
-msgstr ""
+msgstr "#Žadatelé byli testováni v používaní vylepšených simulačních technologií; zkombinovaný výsledky jsou ukázány na cestě/v terénu/v vzdušných vozidel."
 
 msgid ""
 "#Perception is the ability to spot small, but occasionally vital, details "
 "that others may miss; it was tested using an extensive observation test."
-msgstr ""
+msgstr "#Vnímání je schopnost najít malé, ale občas vitální, detaily kteří ostatní mohou minout; bylo to testováno v rozsáhlým testu pozorování."
 
 msgid ""
 "#Biochemistry - the ability to perform research furthering understanding of "
 "the chemistry of living organisms. The values shown below were obtained from"
 " the governing body for Biochemistry."
-msgstr ""
+msgstr "#Biochemie - schopnost vykonat výzkum který vysvětluje chemii žijících organizmů. Hodnoty ukázány dole byly získány z vládnoucího těla pro biochemii. "
 
 msgid ""
 "#Quantum Physics - the ability to perform research leading to a greater "
 "understanding of the area of physics exploited by Alien technologies. The "
 "values shown below were obtained from the governing body for physics."
-msgstr ""
+msgstr "#Kvantová Fyzika - schopnost vykonat výzkum který vede k většímu porozumění oblasti fyziky zneužívaná Cizáckou technologií. Hodnoty ukázány dole byly získány z vládnoucího těla pro fyziku."
 
 msgid ""
 "#Engineering skills - repairing cars/flying vehicles, as well as the "
 "production of weapons or devices."
-msgstr ""
+msgstr "#Inženýrský zkušenosti - opravování vozidel/látajících aut, také produkce zbraní a zařízení."
 
 msgid "#Weapons for vehicles"
-msgstr ""
+msgstr "#Zbraně pro vozidla"
 
 msgid "#Engines for vehicles"
-msgstr ""
+msgstr "#Motory pro vozidla"
 
 msgid "#Equipment for vehicles"
-msgstr ""
+msgstr "#Vybavení pro vozidla"
 
 msgid "#Prefab vehicles"
-msgstr ""
+msgstr "#Předem vyrobená vozidla"
 
 msgid "#Armor for personnel"
-msgstr ""
+msgstr "#Zbroj pro personál"
 
 msgid "#Equipment for personnel"
-msgstr ""
+msgstr "#Vybavení pro personál"
 
 msgid "Help Window"
 msgstr "Nápověda"
@@ -2442,170 +2447,170 @@ msgid "Engineering"
 msgstr "Výroba"
 
 msgid "UFOpaedia tool bar: '<<<<'"
-msgstr ""
+msgstr "UFOpédie panel nástrojů: '<<<<'"
 
 msgid "UFOpaedia tool bar: '<<'"
-msgstr ""
+msgstr "UFOpédie panel nástrojů: '<<'"
 
 msgid "UFOpaedia tool bar: '>>'"
-msgstr ""
+msgstr "UFOpédie panel nástrojů: '>>'"
 
 msgid "UFOpaedia tool bar: '>>>>'"
-msgstr ""
+msgstr "UFOpédie panel nástrojů: '>>>>'"
 
 msgid "UFOpaedia tool bar: 'OK'"
-msgstr ""
+msgstr "UFOpédie panel nástrojů: 'OK'"
 
 msgid "#There is no help available for this item."
 msgstr "#K tomuto předmětu není dostupná nápověda."
 
 msgid "#Keeps the changes you have made and returns to the previous screen."
-msgstr ""
+msgstr "#Zanechá změny které jsi udělal a vrátí se do předešlé obrazovky."
 
 msgid ""
 "#Cancels (forgets) any changes you have made on this screen and returns to "
 "the previous screen."
-msgstr ""
+msgstr "#Zruší (zapomene) jakékoliv změny které jsi udělal na téhle obrazovce a vrátí se do předešle obrazovky. "
 
 msgid ""
 "#This displays a list of agents available for recruitment, or currently "
 "employed at the selected base."
-msgstr ""
+msgstr "#Toto ukazuje list dostupných agentů k najmutí, nebo právě zaměstnaný ve vybrané základně."
 
 msgid ""
 "#This displays a list of engineers available for recruitment, or currently "
 "employed at the selected base."
-msgstr ""
+msgstr "#Toto ukazuje list dostupných inženýrů k najmutí, nebo právě zaměstnaný ve vybrané základně."
 
 msgid ""
 "#This displays a list of Bio-Scientists available for recruitment, or "
 "currently employed at the selected base."
-msgstr ""
+msgstr "#Toto ukazuje list dostupných Bio-Chemiků k najmutí, nebo právě zaměstnaný ve vybrané základně."
 
 msgid ""
 "#This displays a list of Quantum-Scientists available for recruitment, or "
 "currently employed at the selected base."
-msgstr ""
+msgstr "#Toto ukazuje list dostupných Kvantových-Vědců k najmutí, nebo právě zaměstnaný ve vybrané základně."
 
 msgid ""
 "#When the agility button is set the bar graphs show the relative agility of "
 "the listed agents."
-msgstr ""
+msgstr "#Když tlačítko hbitosti je nastaveno tabulka grafů ukazuje relativní hbitost agentů v seznamu."
 
 msgid ""
 "#When the stamina button is set the bar graphs show the relative stamina of "
 "the listed agents."
-msgstr ""
+msgstr "#Když tlačítko výdrže je nastaveno tabulka grafů ukazuje relativní výdrž agentů v seznamu."
 
 msgid ""
 "#When the reactions button is set the bar graphs show the relative reaction "
 "ratings of the listed agents."
-msgstr ""
+msgstr "#Když tlačítko reakce je nastaveno tabulka grafů ukazuje relativní reakční hodnocení agentů v seznamu."
 
 msgid ""
 "#When the strength button is set the bar graphs show the relative strengths "
 "of the listed agents."
-msgstr ""
+msgstr "#Když tlačítko síly je nastaveno tabulka grafů ukazuje relativní síly agentů v seznamu."
 
 msgid ""
 "#When the Psi button is set the bar graphs show the relative Psionic ability"
 " of the listed agents."
-msgstr ""
+msgstr "#Když tlačítko Psioniky je nastaveno tabulka grafů ukazuje relativní psionické schopnosti agentů v seznamu."
 
 msgid ""
 "#When the accuracy button is set the bar graphs show the relative ability to"
 " use ranged weapons for the listed agents."
-msgstr ""
+msgstr "#Když tlačítko přesnosti je nastaveno tabulka grafů ukazuje relativní schopnost používat zbraně na dálku pro agenty v seznamu."
 
 msgid ""
 "#When the piloting button is set the bar graphs show the relative "
 "driving/flying skills of the listed agents."
-msgstr ""
+msgstr "#Když tlačítko pilotování je nastaveno tabulka grafů ukazuje relativní řídicí/látací schopnosti agentů v seznamu."
 
 msgid ""
 "#When this button is set, the graph shows the relative perception levels of "
 "the listed scientists."
-msgstr ""
+msgstr "#Když toto tlačítko je nastaveno, graf ukáže relativní úrovně vnímaní vědců v seznamu."
 
 msgid ""
 "#When this button is set, the graph shows the Biochemistry competency level "
 "of the listed scientists."
-msgstr ""
+msgstr "#Když toto tlačítko je nastaveno, graf ukáže úrovně kompetence Biochemických vědců v seznamu."
 
 msgid ""
 "#When this button is set, the graph shows the Quantum mechanics competency "
 "levels of the listed scientists."
-msgstr ""
+msgstr "#Když toto tlačítko je nastaveno, graf ukáže úrovně kompetence Kvantových mechaniků v seznamu."
 
 msgid ""
 "#When this button is set, the graph shows the engineering skill level of the"
 " listed scientists."
-msgstr ""
+msgstr "#Když toto tlačítko je nastaveno, graf ukáže inženýrské úrovně zkušeností vědců v seznamu. "
 
 msgid "This button skips to the previous UFOpaedia section."
-msgstr ""
+msgstr "Toto tlačítko přeskočí předešlou sekci UFOpédie."
 
 msgid "This button skips to the previous UFOpaedia page."
-msgstr ""
+msgstr "Toto tlačítko přeskočí předešlou stránku UFOpédie."
 
 msgid "This button skips to the next UFOpaedia page."
-msgstr ""
+msgstr "Toto tlačítko přeskočí další stránku UFOpédie."
 
 msgid "This button skips to the next UFOpaedia section."
-msgstr ""
+msgstr "Toto tlačítko přeskočí do další sekce UFOpédie."
 
 msgid ""
 "This button exits the UFOpaedia and returns you to what you where doing "
 "before."
-msgstr ""
+msgstr "Toto tlačítko odejde od UFOpédie a vrátí vás k tomu co jste předtím dělali."
 
 msgid "Error"
-msgstr "CHYBA"
+msgstr "Chyba"
 
 msgid "No living space"
-msgstr "CHYBÍ UBYTOVÁNÍ"
+msgstr "Žádné ubytovací místo"
 
 msgid "Not enough money"
-msgstr "NEDOSTATEK PENĆZ"
+msgstr "Nedostatek peněz"
 
 msgid "Base already selected"
-msgstr "BÁZE JE JIŽ VYBRÁNA"
+msgstr "Báze je již vybraná"
 
 msgid "No Transports available"
-msgstr "NENÍ VOLNÝ TRANSPORTÉR"
+msgstr "Žádný dostupný transport"
 
 msgid "No Transport space available"
-msgstr "SCHÁZÍ TRANSPORTNÍ PROSTOR"
+msgstr "Žádný transportní prostor"
 
 msgid "No room"
-msgstr "NENÍ MÍSTO"
+msgstr "Není místo"
 
 msgid "Not enough parts"
-msgstr "CHYBÍ ČÁSTI"
+msgstr "Nedostatek částí"
 
 msgid "Not enough space"
 msgstr "Málo prostoru"
 
 msgid "No Agents Selected"
-msgstr "NENÍ VYBRÁN AGENT"
+msgstr "Žádní Agenti Vybráni"
 
 msgid "Out of money"
-msgstr "CHYBÍ PENÍZE"
+msgstr "Bez peněz"
 
 msgid "File not found"
-msgstr "SCHÁZÍ SOUBOR"
+msgstr "Soubor nenalezen"
 
 msgid "Equipment in use"
-msgstr "VYBAVENÍ POUŽÍVÁNO"
+msgstr "Vybavení se používá"
 
 msgid "Cannot create scenario"
 msgstr "Nelze vytvořit scénář"
 
 msgid "Alien artifact"
-msgstr "CIZÁCKÝ ARTEFAKT"
+msgstr "Cizácký artefakt "
 
 msgid "Map too small"
-msgstr "Malá mapa"
+msgstr "Mapa příliš malá"
 
 msgid "An unlisted error has occured."
 msgstr "Zjištěna neuvedená chyba."
@@ -2655,7 +2660,7 @@ msgid "You do not have available funds to make the requested purchases."
 msgstr "Nemáte dostatek peněz, na zaplacení objednaných nákupů."
 
 msgid "No scenario files could be found."
-msgstr ""
+msgstr "Žádný soubor scénáře nebyl nalezen."
 
 msgid "You cannot afford to pay off this organization."
 msgstr "Nemáto na to, abyste uplatil tuto organizaci."
@@ -2665,45 +2670,45 @@ msgstr "Pasažérský modul nemůže být odebrán, neboť je právě obsazen."
 
 msgid ""
 "The scenario must have at least two organizations containing units to play."
-msgstr ""
+msgstr "Tento scénář musí mít alespoň dvě organizace s jednotkami ke hraní."
 
 msgid "You must research Alien technology before you can use it."
 msgstr "Používat je možné pouze prozkoumanou cizáckou technologii"
 
 msgid "This map may be to small to deploy all the units, continue anyway?"
-msgstr ""
+msgstr "Tahle mapa může být příliš malá abys vyložil všechny jednotky, pokračovat tak jako tak?"
 
 msgid ""
 "#First you select the base that you wish to recruit some staff to, this base"
 " must have some spare living space. You select a base by clicking on the "
 "desired mini-base icon (shown)."
-msgstr ""
+msgstr "#Jako první vybereš bázi ke které si přeješ najmout zaměstnance, tato základna musí mít nějaké volné žijící místo. Musíš vybrat základnu kliknutím na požadovanou mini-báze ikonu (ukázáno)."
 
 msgid ""
 "#The second thing to do is click on the button for the type of person you "
 "wish to recruit, here we have agents selected."
-msgstr ""
+msgstr "#Druhá věc kterou uděláš je kliknutí na tlačítko typu osoby kterou si přeješ naverbovat, tady máme vybraný agenty."
 
 msgid ""
 "#Depending on which type of person you selected a bar of skill buttons is "
 "shown, from which a number of relative bar graphs is be displayed. (see "
 "point 4)"
-msgstr ""
+msgstr "#Závisí na typu osoby kterou sis vybral, tabulka tlačítek zkušeností je ukázána, ze které číslo relativní tabulky grafů je ukázáno. (podívejte se na bod 4)"
 
 msgid ""
 "#This is the list of people up for selection, there ability at the selected "
 "skill is shown as a bar, your current staff are shown as blue, and the "
 "applicants are shown in yellow. By clicking you can sack or hire "
 "respectively."
-msgstr ""
+msgstr "#Toto je seznam lidí pro výběr, tady schopnost vybrané zkušenosti je ukázána jako tabulka, tvoji aktuální zaměstnanci jsou ukázáni jako modrá, a žadatelé žlutou. Kliknutím můžeš vyhodit nebo najmout příslušně. "
 
 msgid "#Don't forget to take there wages into account!!!"
-msgstr ""
+msgstr "#Nezapomeň tady brát mzdy do účtu!!!"
 
 msgid ""
 "#Once you are happy with your selection, click OK, otherwise, click Cancel "
 "and everything will go back to normal."
-msgstr ""
+msgstr "#Až budeš spokojen se svým výběrem, klikni OK, v opačném případě klikni Storno a všechno se vrátí do normálu."
 
 msgid "Buying and Selling"
 msgstr "Nákupy a prodeje"
@@ -2751,13 +2756,13 @@ msgid "Sell:"
 msgstr "Prodej:"
 
 msgid "AT>"
-msgstr "V>"
+msgstr "U>"
 
 msgid "PERSONNEL RECRUITMENT"
 msgstr "NÁBOR PERSONÁLU"
 
 msgid "Living space:"
-msgstr "Počet lůžek:"
+msgstr "Životní prostor:"
 
 msgid "Total>"
 msgstr "Celkem>"
@@ -2766,7 +2771,7 @@ msgid "Remaining>"
 msgstr "Zbývá>"
 
 msgid "##Psi"
-msgstr "##PSI"
+msgstr "##Psi"
 
 msgid "Sack"
 msgstr "Propustit"
@@ -2778,13 +2783,13 @@ msgid "NAME"
 msgstr "JMÉNO"
 
 msgid "TEST RESULT"
-msgstr "VÝSLEDKY TESTĺ"
+msgstr "VÝSLEDKY TESTU"
 
 msgid "MONTHLY SALARY"
-msgstr "MĆSÍČNÍ PLAT"
+msgstr "MĚSÍČNÍ PLAT"
 
 msgid "EMPLOY"
-msgstr "ZAMĆSTNAT"
+msgstr "ZAMĚSTNANEC"
 
 msgid "No avoidance"
 msgstr "Nevyhýbat se"
@@ -2865,7 +2870,7 @@ msgid "Order canceled by the hostile manufacturer."
 msgstr "Objednávka odmítnuta nepřátelským výrobcem."
 
 msgid "Industrial Action"
-msgstr ""
+msgstr "Industriální Akce"
 
 msgid ""
 "Industrial action by the Air Transport and General Workers Union has "
@@ -2873,10 +2878,10 @@ msgid ""
 "backlog of orders building up, the organization(s) concerned have canceled "
 "your order(s) and refunded your money. They apologize for the inconvenience "
 "caused."
-msgstr ""
+msgstr "Industriální akce od Letecké Dopravy a Generální Pracovní Unie zabránila okamžitému doručení z některých předmětů které sis objednal. Aby se zabránilo hromadění nevyřízených objednávek, organizace znepokojením zrušili tvojí(je) objednávku(ky) a vrátili tvoje peníze. Omlouvají se za potíž kterou způsobily. "
 
 msgid "Vehicle Licensing Problem"
-msgstr ""
+msgstr "Problém s licencování vozidla."
 
 msgid ""
 "An unprecedented workload at the Vehicle Licensing Center has prevented "
@@ -2884,16 +2889,16 @@ msgid ""
 "backlog of orders building up, the organization(s) concerned have canceled "
 "your order(s) and refunded your money. They apologize for the inconvenience "
 "caused."
-msgstr ""
+msgstr "Bezprecedentní pracovní zátěž u Centra Licencování Vozidel zabránila okamžité registraci alespoň z jednoho tvých vozidel které sis objednal. Aby se zabránilo hromadění nevyřízených objednávek, organizace znepokojením zrušily tvojí(je) objednávku(ky) a vrátily tvoje peníze. Omlouvají se za potíž kterou způsobily. "
 
 msgid "Cancel Buy and Sell"
 msgstr "Zrušit nákup a prodej"
 
 msgid "Are you sure?"
-msgstr "Opravdu?"
+msgstr "Seš si jistej?"
 
 msgid "Pay:"
-msgstr "Zaplať:"
+msgstr "Zaplatit:"
 
 msgid "ALIEN TAKEOVER"
 msgstr "CIZÁCKÁ ANEXE"
@@ -2915,7 +2920,7 @@ msgid "HIRE AND FIRE"
 msgstr "NÁBOR-VÝPOVĚĎ"
 
 msgid "FIRE"
-msgstr "VÝPOVĚĎ"
+msgstr "VYHODIT"
 
 msgid "X-COM Agents"
 msgstr "Agenti X-COM"
@@ -2930,7 +2935,7 @@ msgid "Quantum Physicists"
 msgstr "Kvantoví fyzici"
 
 msgid "Accommodation exceeded"
-msgstr "UBYTOVACÍ KAPACITY VYČERPÁNY"
+msgstr "Ubytování vyčerpáno"
 
 msgid "Hiring not possible due to lack of available accommodation."
 msgstr "Nábor není možný, pro nedostatečnou ubytovací kapacitu."
@@ -2939,7 +2944,7 @@ msgid "Hiring not possible due to lack of funds."
 msgstr "Nedostatek financí pro další nábor."
 
 msgid "Weekly Salary"
-msgstr "Týdenní plat"
+msgstr "Týdenní Plat"
 
 msgid "Health"
 msgstr "Zdraví"
@@ -2951,19 +2956,19 @@ msgid "Bravery"
 msgstr "Odvaha"
 
 msgid "Psi-energy"
-msgstr "PSI-energie"
+msgstr "Psi-energie"
 
 msgid "Psi-attack"
-msgstr "PSI-útok"
+msgstr "Psi-útok"
 
 msgid "Psi-defense"
-msgstr "PSI-odolnost"
+msgstr "Psi-odolnost"
 
 msgid "Biochemistry skill"
 msgstr "Úroveň v biochemii"
 
 msgid "Engineering skill"
-msgstr "Úroveň kvalifikace"
+msgstr "Úroveň v inženýrství"
 
 msgid "Quantum physics skill"
 msgstr "Úroveň v kvant.fyzice"
@@ -2981,10 +2986,10 @@ msgid "Returning to city"
 msgstr "Návrat zpět do města"
 
 msgid "Confirm Sales/Purchases"
-msgstr "POVOLIT PRODEJ / NÁKUP?"
+msgstr "Povolit Prodej/Objednávky"
 
 msgid "Confirm Orders"
-msgstr "POVOLIT ZMĆNY ?"
+msgstr "Povolit Rozkazy"
 
 msgid "unit(s) hired"
 msgstr "osob najato"
@@ -3040,14 +3045,14 @@ msgid "Pay organization"
 msgstr "Zaplať organizaci"
 
 msgid "Show ten most infiltrated organizations not under Alien control."
-msgstr "Ukaž nejvíce infiltrované organizace,ale neovládnuté Cizáky."
+msgstr "Ukaž deset organizací nejvíce infiltrovány né pod Cizáckou kontrolou."
 
 msgid "BASE ATTACK"
 msgstr "ÚTOK NA BÁZI"
 
 msgid ""
 "Hostile forces have invaded your base. Equip your Agents before battle."
-msgstr "Nepřátelské síly vnikly do Báze. Vybav své agenty před začátkem boje !"
+msgstr "Nepřátelské síly napadly tvojí základnu. Vybav své agenty před bojem."
 
 msgid "Dimension Gates"
 msgstr "Dimenzní brány"
@@ -3056,7 +3061,7 @@ msgid "The Alien Dimension"
 msgstr "Cizácká dimenze"
 
 msgid "One Way To Win"
-msgstr "Cesta k vítězství"
+msgstr "Jediná cesta k vítězství."
 
 msgid "UFO spotted."
 msgstr "Objeveno UFO"
@@ -3077,7 +3082,7 @@ msgid "The owner does not wish to sell this building."
 msgstr "Vlastník této budovy si ji nepřeje odprodat."
 
 msgid "There has been an explosion."
-msgstr "Tam to právě vybuchlo."
+msgstr "Byla tady exploze."
 
 msgid "Building under attack:"
 msgstr "Napadena budova:"
@@ -3232,7 +3237,7 @@ msgid ""
 "prevented immediate execution of some of your transfer instructions. To "
 "prevent a backlog of work building up, Transtellar have canceled the "
 "affected transfers. They apologize for the inconvenience caused."
-msgstr ""
+msgstr "Industriální akce od Leteckého Transportu a Generální Pracovní Unie zabránila okamžité exekuci z nějaké tvé instruktáži k přemístění. Aby se zabránilo hromadění nevyřízené práce, Transtellar zrušil postižené přemístění. Omlouvají se za způsobenou potíž. "
 
 msgid "Cancel Transfer"
 msgstr "ZRUŠIT PŘESUN"
@@ -3379,10 +3384,10 @@ msgid "Biological Warfare"
 msgstr "Biologické zbraně"
 
 msgid "Toxin Type B"
-msgstr "Toxin Typ B"
+msgstr "Toxin Typu B"
 
 msgid "Toxin Type C"
-msgstr "Toxin typ C"
+msgstr "Toxin typu C"
 
 msgid "Alien Gas"
 msgstr "Cizácký plyn"
@@ -3442,7 +3447,7 @@ msgid "Alien building"
 msgstr "Cizácká budova"
 
 msgid "One way to win"
-msgstr "Vítězná cesta"
+msgstr "Jediná cesta k vítězství. "
 
 msgid ""
 "The mysterious atmospheric phenomenon from which the UFOs are emerging "
@@ -3734,7 +3739,7 @@ msgid "Disruptor Multi-Bomb launcher"
 msgstr "Odpalovač Multiraket"
 
 msgid "Toxin Type A"
-msgstr "Toxin typ A"
+msgstr "Toxin typu A"
 
 msgid "Heavy Launcher Alien Gas Missile"
 msgstr "Raketa s anticizáckým plynem"
@@ -3816,7 +3821,7 @@ msgid "Medi-Kit"
 msgstr "Medi-Kit"
 
 msgid "BLANK"
-msgstr ""
+msgstr "PRÁZDNÝ"
 
 msgid "1st"
 msgstr "1."
@@ -3933,13 +3938,13 @@ msgid "Sunday"
 msgstr "Neděle"
 
 msgid "Click on building to buy"
-msgstr "Klikni na budovu ke koupi"
+msgstr "Klikni na budovu abys jí koupil."
 
 msgid "Money = $"
-msgstr "Finance="
+msgstr "Finance = $"
 
 msgid "This Building will cost $%d"
-msgstr "Tato budova by stála  $%d"
+msgstr "Tato budova bude stát $%d"
 
 msgid "Enter Name>"
 msgstr "Vlož název>"
@@ -3948,13 +3953,13 @@ msgid "Cost to build"
 msgstr "Cena výstavby"
 
 msgid "Days to build"
-msgstr "Staví se dnů"
+msgstr "Dny do výstavby"
 
 msgid "Maintenance cost"
 msgstr "Cena za údržbu"
 
 msgid "Facility:"
-msgstr "Vybavení:"
+msgstr "Zařízení:"
 
 msgid "Number in base"
 msgstr "Počet v bázi"
@@ -3972,7 +3977,7 @@ msgid "-> Fraction of accommodation in use"
 msgstr "-> Ubytování částečně obsazeno"
 
 msgid "Can't destroy: storage in use."
-msgstr "Nelze odstranit: používají se."
+msgstr "Nelze odstranit: sklad se používá"
 
 msgid "= Storage space in base"
 msgstr "= Skladový prostor v bázi"
@@ -3981,7 +3986,7 @@ msgid "Storage space used"
 msgstr "Využitý prostor"
 
 msgid "-> Fraction of storage space used"
-msgstr ""
+msgstr "-> Frakce místa skladu v použití"
 
 msgid "= Number of beds"
 msgstr "= Počet lůžek"
@@ -3996,10 +4001,10 @@ msgid "= Number of places"
 msgstr "= Počet míst"
 
 msgid "Number using the facilities"
-msgstr ""
+msgstr "Číslo používající zařízení"
 
 msgid "-> Efficiency per user"
-msgstr ""
+msgstr "-> Účinost za uživatele"
 
 msgid "Bio-lab space in base"
 msgstr "Laboratorních míst"
@@ -4017,7 +4022,7 @@ msgid "Not assigned to workshop"
 msgstr "Nepřiřazen do dílen"
 
 msgid "-> Fraction of Quantum lab space assigned"
-msgstr ""
+msgstr "-> Frakce Kvantového laboratorního místa přiděleno"
 
 msgid "Can't destroy: containment space in use."
 msgstr "Nelze odstranit: Kóje jsou používány."
@@ -4029,28 +4034,28 @@ msgid "Containment space used"
 msgstr "Využitý prostor kójí"
 
 msgid "-> Fraction of containment space used"
-msgstr ""
+msgstr "-> Frakce kontaminačního místa použita "
 
 msgid "Can't destroy: advanced containment space in use."
 msgstr "Nelze odstranit: rozšířené cizácké kóje používány"
 
 msgid "= Advanced Alien Containment space"
-msgstr ""
+msgstr "= Vyspělý Cizácký Kontaminační místo"
 
 msgid "Advanced containment space used"
-msgstr ""
+msgstr "Pokročilý kontaminační místo použito"
 
 msgid "-> Fraction of advanced containment space used"
-msgstr ""
+msgstr "-> Frakce vyspělého kontaminačního místa použita "
 
 msgid "Workshop space in base"
-msgstr ""
+msgstr "Místo dílny v bázi"
 
 msgid "Workshop space assigned to projects"
-msgstr ""
+msgstr "Místo dílny přiřazeno k projektům"
 
 msgid "-> Fraction of Workshop space assigned"
-msgstr ""
+msgstr "-> Frakce místa Dílny přiřazeno"
 
 msgid "Destroy facility"
 msgstr "ODSTRANIT VYBAVENÍ"
@@ -4101,94 +4106,94 @@ msgid "ALIEN STRUCTURE"
 msgstr "CIZÁCKÁ STAVBA"
 
 msgid "Adjust Wage"
-msgstr ""
+msgstr "Upravit mzdu"
 
 msgid "No advice at this time."
-msgstr ""
+msgstr "Prozatím žádné doporučení"
 
 msgid "You have to reduce wages to become profitable."
-msgstr ""
+msgstr "Musíš snížit mzdy aby ses stal výnosným."
 
 msgid "You should take on more staff if you wish to be productive."
-msgstr ""
+msgstr "Měl bys najmout více zaměstnanců abys byl produktivní. "
 
 msgid "Increase wages to attract more staff."
-msgstr ""
+msgstr "Zvýšit mzdy pro nalákání více pracovníků"
 
 msgid "Cut wages to improve your profit margin."
-msgstr ""
+msgstr "Sniž mzdy abys vylepšil svůj okraj profitu."
 
 msgid "Economic Information"
-msgstr ""
+msgstr "Ekonomické ukazatele"
 
 msgid "Current mean wage"
-msgstr ""
+msgstr "Aktuální průměrná mzda"
 
 msgid "Mean income per head:"
-msgstr ""
+msgstr "Průměrný příjem na hlavu:"
 
 msgid "Fixed costs at building:"
-msgstr ""
+msgstr "Fixní náklady pro budovu:"
 
 msgid "Weekly revenue generated:"
-msgstr ""
+msgstr "Týdenní výnosy:"
 
 msgid "Current staff level:"
-msgstr ""
+msgstr "Aktuální úroveň zaměstnanců:"
 
 msgid "Aliens in building"
-msgstr ""
+msgstr "Cizáci v budově"
 
 msgid "Dimension:"
-msgstr ""
+msgstr "Dimenze:"
 
 msgid "Charted Gates:"
-msgstr ""
+msgstr "Zmapované brány:"
 
 msgid "Uncharted Gates:"
-msgstr ""
+msgstr "Nezmapované brány:"
 
 msgid "Total Gate count:"
-msgstr ""
+msgstr "Totální počet brán:"
 
 msgid "Buildings:"
-msgstr ""
+msgstr "Budovy:"
 
 msgid "UFOs:"
-msgstr ""
+msgstr "UFA:"
 
 msgid "Weight:"
-msgstr ""
+msgstr "Hmotnost:"
 
 msgid "Protection rating:"
-msgstr ""
+msgstr "Hodnocení ochrany:"
 
 msgid "Reload time:"
-msgstr ""
+msgstr "Čas nabíjení:"
 
 msgid "n/a"
-msgstr ""
+msgstr "n/a"
 
 msgid "Blast radius:"
-msgstr ""
+msgstr "Poloměr výbuchu:"
 
 msgid "Laser guided"
-msgstr ""
+msgstr "Laser vedený"
 
 msgid "Accuracy:"
-msgstr ""
+msgstr "Přesnost:"
 
 msgid "Power:"
-msgstr ""
+msgstr "Energie:"
 
 msgid "Recharge rate:"
-msgstr ""
+msgstr "Rychlost nabíjení:"
 
 msgid "Location :"
-msgstr ""
+msgstr "Lokace :"
 
 msgid "Base :"
-msgstr ""
+msgstr "Báze :"
 
 msgid "Traveling by people tube"
 msgstr "Cestuje pěším tunelem"
@@ -4197,10 +4202,10 @@ msgid "Traveling by vehicle"
 msgstr "Cestuje vozidlem"
 
 msgid "WARNING!"
-msgstr "VAROVÁNÍ !"
+msgstr "VAROVÁNÍ!"
 
 msgid "Illegal vehicle"
-msgstr "Ilegální letoun"
+msgstr "Ilegální vozidlo"
 
 msgid "Enter defensive diplomatic negotiations with:"
 msgstr "Vešel do obranných diplomatických jednání s:"
@@ -4209,7 +4214,7 @@ msgid "Diplomacy"
 msgstr "Diplomacie"
 
 msgid "Enter aggressive diplomatic negotiations with:"
-msgstr ""
+msgstr "Vstoupit do agresivního diplomatického vyjednávání s:"
 
 msgid "Against:"
 msgstr "Proti:"
@@ -4257,82 +4262,82 @@ msgid "Function:"
 msgstr "Funkce:"
 
 msgid "Current workforce:"
-msgstr ""
+msgstr "Aktuální pracovní síla:"
 
 msgid "Current wage:"
-msgstr ""
+msgstr "Aktuální mzda:"
 
 msgid "Maximum workforce:"
-msgstr ""
+msgstr "Maximální pracovní síla:"
 
 msgid "Fixed costs:"
-msgstr ""
+msgstr "Fixní náklady:"
 
 msgid "Current income:"
-msgstr ""
+msgstr "Aktuální příjem:"
 
 msgid "Potential income:"
-msgstr ""
+msgstr "Potenciální příjem:"
 
 msgid "Bidding"
-msgstr ""
+msgstr "Nabídka"
 
 msgid "Would you like to take part in this auction?"
-msgstr ""
+msgstr "Chtěli byste se zúčastnit této aukce?"
 
 msgid "Building up for auction:"
-msgstr ""
+msgstr "Vybudování dražby:"
 
 msgid "Auctioned by:"
-msgstr ""
+msgstr "Vydraženo: "
 
 msgid "Bidding begins at: $"
-msgstr ""
+msgstr "Nabídka začíná na: $"
 
 msgid "Going..."
-msgstr ""
+msgstr "Chystáte se ..."
 
 msgid "Last chance to bid..."
-msgstr ""
+msgstr "Poslední šance příhozu..."
 
 msgid "Gone!!"
-msgstr ""
+msgstr "Pryč!!"
 
 msgid ": sold to:"
-msgstr ""
+msgstr ": Prodáno:"
 
 msgid "for: $"
-msgstr ""
+msgstr "za: $"
 
 msgid "Sold!"
-msgstr ""
+msgstr "Prodáno!"
 
 msgid "No buyers"
-msgstr ""
+msgstr "Žádný kupec"
 
 msgid "No buyers found for this building."
-msgstr ""
+msgstr "Žádní kupci nenalezeni pro tuto budovu."
 
 msgid "General recruitment"
-msgstr ""
+msgstr "Hlavní rekrutování"
 
 msgid "Income per capita:"
-msgstr ""
+msgstr "Příjem na obyvatele:"
 
 msgid "Mean wage in building:"
-msgstr ""
+msgstr "Průměrná mzda v budově:"
 
 msgid "Mean wage in city:"
-msgstr ""
+msgstr "Průměrná mzda ve městě:"
 
 msgid "Number of applicants:"
-msgstr ""
+msgstr "Počet žadatelů:"
 
 msgid "Cost per applicant:"
-msgstr ""
+msgstr "Náklady na žadatele:"
 
 msgid "Cost to recruit all applicants:"
-msgstr ""
+msgstr "Náklady na nábor všech žadatelů:"
 
 msgid "X-COM balance:"
 msgstr "X-COM zůstatek:"
@@ -4344,7 +4349,7 @@ msgid "An alliance with X-COM has been requested by:"
 msgstr "Spojenectví s X-COMem žádá organizace:"
 
 msgid "SCORE"
-msgstr "SKORE"
+msgstr "SKÓRE"
 
 msgid "CATEGORY"
 msgstr "OBLAST"
@@ -4475,7 +4480,7 @@ msgid "Buildings"
 msgstr "Budovy"
 
 msgid "Head:"
-msgstr ""
+msgstr "Hlava: "
 
 msgid "Income"
 msgstr "Příjmy"
@@ -4595,19 +4600,19 @@ msgid "Do you wish to tail this VIP?"
 msgstr "Cchete sledovat tohoto VIP ?"
 
 msgid "VIP spotted"
-msgstr ""
+msgstr "VIP spatřen"
 
 msgid "Diplomatic relations for:"
-msgstr ""
+msgstr "Diplomatické vztahy k:"
 
 msgid "Espionage by Agent:"
-msgstr ""
+msgstr "Špionáž od agenta: "
 
 msgid "Do you wish to continue espionage?"
-msgstr ""
+msgstr "Přejete si pokračovat se špionáží?"
 
 msgid "Diplomatic relations determined"
-msgstr ""
+msgstr "Diplomatické vztahy odhodlaný"
 
 msgid "You do not have enough:"
 msgstr "Schází vám potřebné:"
@@ -4625,10 +4630,10 @@ msgid "Total Skill:"
 msgstr "Úroveň:"
 
 msgid "Which screen?"
-msgstr ""
+msgstr "Jaká obrazovka?"
 
 msgid "Which screen would you like to go to?"
-msgstr ""
+msgstr "Do jaké obrazovky byste rádi šli?"
 
 msgid "Number to make"
 msgstr "Kolik vyrobit"
@@ -4637,13 +4642,13 @@ msgid "Number made:"
 msgstr "Již vyrobeno:"
 
 msgid "Biochemistry research at:"
-msgstr ""
+msgstr "Biochemický výzkum u:"
 
 msgid "Quantum physics research at:"
-msgstr ""
+msgstr "Kvantová fyzika zkoumána u: "
 
 msgid "Engineering at:"
-msgstr ""
+msgstr "Inženýring u: "
 
 msgid "Select project:"
 msgstr "Zadej projekt:"
@@ -4652,16 +4657,16 @@ msgid "Select product to make:"
 msgstr "Urči položku k výrobě:"
 
 msgid "Lots"
-msgstr ""
+msgstr "Mnoho"
 
 msgid "Item required:"
-msgstr ""
+msgstr "Předmětů vyžadováno:"
 
 msgid "Amount required"
-msgstr ""
+msgstr "Počet vyžadován"
 
 msgid "Amount in stores"
-msgstr ""
+msgstr "Počet ve skladech "
 
 msgid "Cost"
 msgstr "Cena"
@@ -4679,10 +4684,10 @@ msgid "Do you wish to reassign the Workshop?"
 msgstr "Chcete dílnám zadat nový výrobní program ?"
 
 msgid "Response range (radius):"
-msgstr ""
+msgstr "Rozsah odezvy (rádius):"
 
 msgid "Preservation level:"
-msgstr ""
+msgstr "Úroveň uchovávání:"
 
 msgid "Altitude:"
 msgstr "Výška:"
@@ -5310,10 +5315,10 @@ msgid "Sell"
 msgstr "Prodej"
 
 msgid "Softer"
-msgstr ""
+msgstr "Měkčí"
 
 msgid "Louder"
-msgstr ""
+msgstr "Hlasitější"
 
 msgid "Organizations tab"
 msgstr "Organizace"
@@ -5397,16 +5402,16 @@ msgid "-<Not implemented (selmode==8)(plural)>-"
 msgstr "-<Not implemented (selmode==8)(plural)>-"
 
 msgid "Manual control of vehicles"
-msgstr ""
+msgstr "Manuální kontrola vozidel"
 
 msgid "Select target vehicle for vehicles to fire at"
-msgstr ""
+msgstr "Vyberte cíl vozidla pro vozidla k palbě: "
 
 msgid "Click on destination building for selected person"
-msgstr ""
+msgstr "Klikni na destinaci budovy pro vybranou osobu"
 
 msgid "Click on destination building for selected people"
-msgstr ""
+msgstr "Klikni na destinaci budovy pro vybraný lidi"
 
 msgid "WEEKLY FUNDING ASSESSMENT"
 msgstr "STANOVENÍ TÝDENNÍ DOTACE"
@@ -5484,136 +5489,136 @@ msgid "QUIT"
 msgstr "UKONČIT"
 
 msgid "Scenario Loaded >"
-msgstr ""
+msgstr "Scénář Načten >"
 
 msgid "New scenario"
-msgstr ""
+msgstr "Nový scénář"
 
 msgid "Load Scenario Generator Set-up"
-msgstr ""
+msgstr "Načíst Generátor Scénáře Založení"
 
 msgid "Save Scenario Generator Set-up"
-msgstr ""
+msgstr "Uložit Generátor Scénáře Založení"
 
 msgid "Play scenario"
-msgstr ""
+msgstr "Hrát scénář"
 
 msgid "Return to main menu"
-msgstr ""
+msgstr "Návrat do hlavního menu"
 
 msgid "Select map type"
-msgstr ""
+msgstr "Zvol typ mapy"
 
 msgid "Seed"
-msgstr ""
+msgstr "Seed"
 
 msgid "Toggle map size"
-msgstr ""
+msgstr "Přepnout velikost mapy"
 
 msgid "Medium"
-msgstr ""
+msgstr "Střední"
 
 msgid "Deployment"
-msgstr ""
+msgstr "Vyložení"
 
 msgid "Raid"
-msgstr ""
+msgstr "Přepad"
 
 msgid "Defend"
-msgstr ""
+msgstr "Obránit"
 
 msgid "Units"
-msgstr ""
+msgstr "Jednotky"
 
 msgid "Select Units"
-msgstr ""
+msgstr "Vybrat jednotky"
 
 msgid "Select Equipment"
-msgstr ""
+msgstr "Vybrat vybavení"
 
 msgid "Enter filename to save as:"
-msgstr ""
+msgstr "Zvol jméno pro uložení:"
 
 msgid "Select file to load:"
-msgstr ""
+msgstr "Zvol soubor pro nahrání:"
 
 msgid "Enter description of scenario:"
-msgstr ""
+msgstr "Vlož popis scénáře:"
 
 msgid "Select tactical area:"
-msgstr ""
+msgstr "Vyber taktickou oblast:"
 
 msgid "X-COM Agent"
-msgstr ""
+msgstr "X-COM Agent"
 
 msgid "X-COM Biochemist"
-msgstr ""
+msgstr "X-COM Biochemik"
 
 msgid "X-COM Mechanic"
-msgstr ""
+msgstr "X-COM Mechanik"
 
 msgid "X-COM Quantum Physicist"
-msgstr ""
+msgstr "X-COM Kvantový fyzik"
 
 msgid "Gang leader"
-msgstr ""
+msgstr "Vůdce gangu"
 
 msgid "Corporate Boss"
-msgstr ""
+msgstr "Podnikový Šéf"
 
 msgid "Cult Leader"
-msgstr ""
+msgstr "Vůdce Sekty"
 
 msgid "Politician"
-msgstr ""
+msgstr "Politik"
 
 msgid "Chief of Police"
-msgstr ""
+msgstr "Šéf policie"
 
 msgid "Corporate hood"
-msgstr ""
+msgstr "Firemní kapuce"
 
 msgid "Police"
-msgstr ""
+msgstr "Policie"
 
 msgid "Gangster"
-msgstr ""
+msgstr "Gangster"
 
 msgid "Cultist"
-msgstr ""
+msgstr "Sektář"
 
 msgid "Building security"
-msgstr ""
+msgstr "Ostraha budovy"
 
 msgid "Android"
-msgstr ""
+msgstr "Android"
 
 msgid "Alien Grey"
-msgstr ""
+msgstr "Šedivák"
 
 msgid "Upper Class Female"
-msgstr ""
+msgstr "Žena Vyšší Třídy"
 
 msgid "Upper Class Male"
-msgstr ""
+msgstr "Muž Vyšší Třídy"
 
 msgid "Civilian Female"
-msgstr ""
+msgstr "Civilistka"
 
 msgid "Civilian Male"
-msgstr ""
+msgstr "Civilista"
 
 msgid "Lower Class Male"
-msgstr ""
+msgstr "Muž Nižší Třídy"
 
 msgid "Lower Class Female"
-msgstr ""
+msgstr "Žena Nižší Třídy"
 
 msgid "Multiworm egg"
-msgstr ""
+msgstr "Vejce multiworma"
 
 msgid "FINANCE"
-msgstr ""
+msgstr "FINANCE"
 
 msgid "Initial funds>"
 msgstr "Výchozí suma>"
@@ -5649,10 +5654,10 @@ msgid "Building Name>"
 msgstr "Název budovy>"
 
 msgid "X-COM IS DEFEATED"
-msgstr "X-COM JE PORAŽ EN"
+msgstr "X-COM JE PORAŽEN"
 
 msgid "THE ALIENS ARE DEFEATED"
-msgstr "CIZÁCI JSOU PORAŽ ENI"
+msgstr "CIZÁCI JSOU PORAŽENI"
 
 msgid "Final Score>"
 msgstr "Celkové skóre>"
@@ -5792,7 +5797,7 @@ msgstr "Objeveno UFO"
 msgid "Vehicle lightly damaged"
 msgstr "Vozidlo lehce poškozeno"
 
-msgid "Vehicle moderately damage"
+msgid "Vehicle moderately damaged"
 msgstr "Vozidlo středně poškozeno"
 
 msgid "Vehicle heavily damaged"
@@ -6213,22 +6218,22 @@ msgid "Unit Healing:"
 msgstr "Uzdravuje se:"
 
 msgid "All your units have fled the combat zone. You lose."
-msgstr "Všechny tvé jednotky odešly z bojové zóny. Prohráls."
+msgstr "Všechny tvé jednotky utekli z bojové zóný. Prohrál jsi."
 
 msgid "All hostile units have fled the combat zone. You win."
-msgstr "Všechny nepřátelské jednotky utekly z boje. Vyhráls."
+msgstr "Všechny nepřátelské jednotky utekly z bojové zóny. Vyhrál jsi."
 
 msgid "Unit Brainsucked:"
-msgstr "Mozek pozměněn u:"
+msgstr "Jednotka mozkově vysáta:"
 
 msgid "All your units have fled the combat zone. You win."
-msgstr "Všechny tvé jednotky odešly ze zóny boje. Vyhráls."
+msgstr "Všechny tvé jednotky utekli z bojové oblasti. Vyhrál jsi."
 
 msgid "All hostile units have fled the combat zone. You lose."
-msgstr "Všichni nepřátelé utekli z bojové oblasti. Prohráls."
+msgstr "Všechny nepřátelské jednoty utekli z bojové oblasti. Prohrál jsi."
 
 msgid ": Out of ammo"
-msgstr "Chybí munice"
+msgstr ": Bez munice"
 
 msgid "Psi-drain"
 msgstr "Unavit"
@@ -6270,7 +6275,7 @@ msgid "Alien detector"
 msgstr "Detektor Cizáků"
 
 msgid "Personal disruption shield"
-msgstr "Osobní ochranný štít"
+msgstr "Osobní štít rozbíječe"
 
 msgid "Personal teleporter"
 msgstr "Osobní teleporter"
@@ -6294,7 +6299,7 @@ msgid "Initializing"
 msgstr "Inicializace"
 
 msgid "(debug) Validating Map"
-msgstr "(debug) Validating Map"
+msgstr "(debug) Ověření Mapy"
 
 msgid "Deploying Units"
 msgstr "Umísťuji agenty"
@@ -6315,7 +6320,7 @@ msgid "Enter Your Name"
 msgstr "Vložte své jméno"
 
 msgid "Pick Organization:"
-msgstr "Pick Organization:"
+msgstr "Zvol Organizaci: "
 
 msgid "Master volume:"
 msgstr "Hlasitost:"
@@ -6336,34 +6341,34 @@ msgid "Too Far"
 msgstr "Daleko"
 
 msgid "Blocked"
-msgstr "Blokován"
+msgstr "Blokováno"
 
 msgid "Game Turn:"
-msgstr "Kolo:"
+msgstr "Tah:"
 
 msgid "Start Turn"
-msgstr "Začátek kola"
+msgstr "Začít tah"
 
 msgid "Enter password:"
 msgstr "Vlož heslo:"
 
 msgid "Incorrect password!"
-msgstr "Nesprávné heslo !"
+msgstr "Nesprávné heslo!"
 
 msgid "Hot Seat Game"
-msgstr "Hot Seat Game"
+msgstr "Hra Horkého Křesla"
 
 msgid "Enter number of players:"
-msgstr "Enter number of players:"
+msgstr "Vlož počet hráčů: "
 
 msgid "Player"
-msgstr "Player"
+msgstr "Hráč"
 
 msgid "Enter your name:"
-msgstr "Enter your name:"
+msgstr "Vlož svoje jméno:"
 
 msgid "Confirm password:"
-msgstr "Confirm password:"
+msgstr "Potvrdit heslo:"
 
 msgid "Examine and reassign units by clicking on players' names"
 msgstr "Examine and reassign units by clicking on players' names"
@@ -6378,7 +6383,7 @@ msgid "Activates now."
 msgstr "Aktivovat hned."
 
 msgid "Activates at end of turn."
-msgstr "Aktivovat na konci kola."
+msgstr "Aktivovat na konci tahu."
 
 msgid "Turns before activation:"
 msgstr "Počet kol před aktivací:"
@@ -6405,7 +6410,7 @@ msgid ": TUs reserved for kneeling and auto fire"
 msgstr ": ČJ vyhrazeno pro poklek a rychlou střelbu"
 
 msgid "ABORT MISSION"
-msgstr "UKONČIT MISI ?"
+msgstr "UKONČIT MISI "
 
 msgid "Units Lost :"
 msgstr "Jednotek ztraceno :"
@@ -6420,10 +6425,10 @@ msgid "Very Good"
 msgstr "Vynikající"
 
 msgid "Out of turn activity paused"
-msgstr "Aktivita během kola pozastavena"
+msgstr "Aktivita během tahu pozastavena"
 
 msgid "Out of turn activity restarted"
-msgstr "Aktivita kola pokračuje"
+msgstr "Aktivita tahu pokračuje"
 
 msgid "Not Enough TU's"
 msgstr "Nedostatek času"
@@ -6438,7 +6443,7 @@ msgid "Not enough TU's - TU cost per throw:"
 msgstr "Schází čas.jednotky. K hodu je třeba:"
 
 msgid "Too far to throw"
-msgstr "Až sem nedohodí"
+msgstr "Příliš daleko na hod "
 
 msgid "No arc of throw"
 msgstr "Překážka v hodu"
@@ -6501,7 +6506,7 @@ msgid "Snap shot"
 msgstr "Výstřel"
 
 msgid "Auto shot"
-msgstr "Rychlá střelba"
+msgstr "Automatická střelba"
 
 msgid "Stand up"
 msgstr "Zůstat"
@@ -6516,10 +6521,10 @@ msgid "Cannot throw"
 msgstr "Nelze hodit"
 
 msgid "Drop object"
-msgstr "Pusť objekt"
+msgstr "Položit objekt"
 
 msgid "Yes, prime grenade"
-msgstr "Ano, načasovat granát"
+msgstr "Ano, odjistit granát"
 
 msgid "No, cancel operation"
 msgstr "Ne, zrušit akci"
@@ -6555,19 +6560,19 @@ msgid "Panic unit"
 msgstr "Zpanikařit"
 
 msgid "Squad icons"
-msgstr "Ikona skupiny"
+msgstr "Ikony skupin"
 
 msgid "Level indicator"
 msgstr "Indikátor úrovně"
 
 msgid "Create a hotseat game"
-msgstr "Create a hotseat game"
+msgstr "Vytvořit hru horkého křesla"
 
 msgid "Create a network game"
-msgstr "Create a network game"
+msgstr "Vytvořit hru pro více hráčů"
 
 msgid "Join a network game"
-msgstr "Join a network game"
+msgstr "Připojit se do hry"
 
 msgid "Start game"
 msgstr "Začít hru"
@@ -6591,7 +6596,7 @@ msgid "Single file"
 msgstr "Výstřel"
 
 msgid "Start turn"
-msgstr "Start kola"
+msgstr "Start tahu."
 
 msgid "Return to start game screen"
 msgstr "Návrat na počáteční obraz"
@@ -6606,13 +6611,13 @@ msgid "Start real time game"
 msgstr "Start hry v reálném čase"
 
 msgid "Start turn-based game"
-msgstr "Start hry na kola"
+msgstr "Start hry na tahy"
 
 msgid "Multiplayer game"
-msgstr "Multiplayer game"
+msgstr "Hra pro více hráčů"
 
 msgid "End turn"
-msgstr "Konec kola"
+msgstr "Konec tahu"
 
 msgid "Reserve TUs for auto shot"
 msgstr "Vyhradit ČJ pro střelbu"
@@ -6636,7 +6641,7 @@ msgid "TU cost per wound:"
 msgstr "ČJ třeba k léčbě :"
 
 msgid "Deployment Failed"
-msgstr "Vylodění selhalo!"
+msgstr "Vylodění Selhalo"
 
 msgid "Due to a lack of space some units were not placed on the map."
 msgstr "Vzhledem k nedostatku místa nešlo umístit některé jednotky."
@@ -6659,7 +6664,7 @@ msgid "Review briefing"
 msgstr "Ukaž instuktáž"
 
 msgid "Assign units to squad"
-msgstr "Obsaď agenty do skupin"
+msgstr "Zařaď agenty do skupin"
 
 msgid "The following units will be lost if left in combat zone:"
 msgstr "Při přerušení mise budou trvale ztraceny tyto jednotky :"
@@ -6713,10 +6718,10 @@ msgid "Psionic attack on unit"
 msgstr "Psionický útok"
 
 msgid "Unit under Psionic control"
-msgstr "Jednotka pod psionickou kontolou"
+msgstr "Jednotka pod psionickou kontrolou"
 
 msgid "Unit freed from Psionic control"
-msgstr "Psionická kontrola ustala"
+msgstr "Psionická kontrola ustála"
 
 msgid ""
 "Search the building for Alien life forms or other hostile forces. Engage the"
@@ -6885,7 +6890,7 @@ msgid "MISSION BRIEFING"
 msgstr "INSTRUKTÁŽ"
 
 msgid "TACTICAL SCENARIO"
-msgstr ""
+msgstr "TAKTICKÝ SCÉNÁŘ"
 
 msgid "Multi-worm"
 msgstr "Multiworm"
@@ -6930,7 +6935,7 @@ msgid ""
 msgstr "Organizace, působící v Mega-Primu lze zhruba rozdělit na společnosti, politické strany, kriminální gangy a vládu.  Každá z nich je ohrožena cizáckou infiltrací, i když některé z nich jsou více odolné než jiné."
 
 msgid "!!!Blank - Unused (WAS VIP TITLE PAGE)"
-msgstr "!!!Blank - Unused (WAS VIP TITLE PAGE)"
+msgstr "!!!Slepý - Nepoužito (BYLA TITULNÍ STRÁNKA VIP)"
 
 msgid ""
 "All results of Alien research are recorded here, including results of "
@@ -6960,7 +6965,7 @@ msgid ""
 msgstr "Struktura tohoto cizáckého vozidla naznačuje organický původ. Kůže je složena z mimořádně silných a neznámých komponentů, jež tomuto plavidlu umožňují cestu skrz Dimenzní bránu bez poškození. Toto bezpilotní plavidlo je vybaveno neznámým typem paprskové zbraně. Jeho omezené schopnosti naznačují, že je předurčen výlučně ke shromažďování informací a posléze k návratu do Cizácké dimenze."
 
 msgid "Alien Scout Ship"
-msgstr "Vyzvědač"
+msgstr "Cizácký Zvěd"
 
 msgid ""
 "This vessel appears to be a surveillance craft. Its structure is very "
@@ -7007,7 +7012,7 @@ msgid ""
 msgstr "Bombardér je vybaven zvláštním typem raket, které se po odpálení rozdělí na několik samostatně naváděných hlavic. Také je vybaven lehkou paprskovou zbraní pro boj na krátkou vzdálenost. Počet členů posádky je omezen."
 
 msgid "Alien Escort Ship"
-msgstr "Výsadková loď"
+msgstr "Cizácká Výsadková loď"
 
 msgid ""
 "This craft is fast and nimble. On its own it represents no threat, but is "
@@ -7220,7 +7225,7 @@ msgid ""
 msgstr "Všechno vybavení a suroviny musí být bezpečně uloženy. Dbejte, abyste vždy měli dostatek místa pro uskladnění objednaných nákupů, nebo přesunů z jiných Bází."
 
 msgid "NOT USED"
-msgstr "NOT USED"
+msgstr "NEPOUŽITO"
 
 msgid ""
 "The highest quality medical care is available only from a dedicated medical "
@@ -8573,7 +8578,7 @@ msgid ""
 msgstr "Naše počáteční výzkumy ukazují, že rozdílné cizácké životní formy jsou vlastně součástí jednoho cizáckého životního cyklu."
 
 msgid "The Alien life cycle"
-msgstr "CIZÁCKÝ ŽIVOTNÍ CYKLUS"
+msgstr "Cizácký Životní Cyklus"
 
 msgid ""
 "It is clear that the Alien life cycle is an extremely rapid sequence of "
@@ -8862,3 +8867,419 @@ msgid ""
 "The Car Factory produces many of the smaller vehicles that are part of "
 "everyday life in Mega-Primus."
 msgstr "Automobilka vyrábí mnoho druhů malých vozidel, jež se staly nedílnou součástí života v Mega-Primu."
+
+#: forms/transactioncontrol.cpp:111
+msgid ""
+"Manufacturer has no intact buildings in this city to deliver goods from."
+msgstr "Výrobce nemá v tomto městě žádné nedotčené budovy, ze kterých by mohl dodávat zboží."
+
+#: game/state/gameevent.cpp:92
+#| msgid "Vehicle refuelled"
+msgid "Vehicle successfully recovered:"
+msgstr "Úspěšně opravené vozidlo:"
+
+#: game/state/gameevent.cpp:112
+#| msgid "Vehicle Repaired:"
+msgid "Vehicle Rearmed:"
+msgstr "Dozbrojené vozidlo:"
+
+#: game/state/gameevent.cpp:114
+#| msgid "Vehicle refuelled"
+msgid "Vehicle Refuelled:"
+msgstr "Dotankované vozidlo:"
+
+#: game/state/gameevent.cpp:127
+#| msgid "Not enough ammo to rearm vehicle"
+msgid "Not enough ammo to rearm vehicle:"
+msgstr "Chybí munice k dozbrojení vozidla:"
+
+#: game/state/gameevent.cpp:144
+#| msgid "New recruit arrived:"
+msgid "New transfer arrived:"
+msgstr "Dorazil nový transfer:"
+
+#: game/state/gameevent.cpp:211
+#| msgid "Building under attack:"
+msgid "Building under attack :"
+msgstr "Napadená budova:"
+
+#: game/state/gameevent.cpp:216
+msgid "Cargo expires soon:"
+msgstr "Náklad brzy expiruje:"
+
+#: game/state/gameevent.cpp:235 game/state/gameevent.cpp:239
+#: game/state/gameevent.cpp:245
+#| msgid "Cargo arrived:"
+msgid "Cargo expired:"
+msgstr "Expirovaný náklad:"
+
+#: game/state/gameevent.cpp:235
+#| msgid "Return to base"
+msgid "Returned to base"
+msgstr "Návrat na základnu"
+
+#: game/state/gameevent.cpp:240
+msgid "Refunded by supplier: "
+msgstr "Refundováno dodavatelem:"
+
+#: game/state/gameevent.cpp:249
+#| msgid "Cargo arrived:"
+msgid "Cargo seized:"
+msgstr "Zabavený náklad:"
+
+#: game/state/gameevent.cpp:249
+#| msgid "View hostile organizations"
+msgid "By hostile organisation: "
+msgstr "Nepřátelskou organizací:"
+
+#: game/state/gameevent.cpp:255
+#| msgid "Supplier:"
+msgid "Supplier: "
+msgstr "Dodavatel:"
+
+#: game/state/gameevent.cpp:363
+#| msgid "Unit has died:"
+msgid "Agent has died:"
+msgstr "Zemřel agent:"
+
+#: game/state/gameevent.cpp:388
+msgid "Scrapped vehicle recovered in irreparable condition:"
+msgstr "Vyřazené vozidlo se zotavilo v nenapravitelném stavu:"
+
+#: game/state/gametime.cpp:77 game/state/gametime.cpp:113
+#| msgid "January,"
+msgid "January"
+msgstr "Leden"
+
+#: game/state/gametime.cpp:77 game/state/gametime.cpp:113
+#| msgid "February,"
+msgid "February"
+msgstr "Únor"
+
+#: game/state/gametime.cpp:77 game/state/gametime.cpp:113
+#| msgid "March,"
+msgid "March"
+msgstr "Březen"
+
+#: game/state/gametime.cpp:78 game/state/gametime.cpp:114
+#| msgid "April,"
+msgid "April"
+msgstr "Duben"
+
+#: game/state/gametime.cpp:78 game/state/gametime.cpp:114
+#| msgid "May,"
+msgid "May"
+msgstr "Květen"
+
+#: game/state/gametime.cpp:78 game/state/gametime.cpp:114
+#| msgid "June,"
+msgid "June"
+msgstr "Červen"
+
+#: game/state/gametime.cpp:79 game/state/gametime.cpp:115
+#| msgid "July,"
+msgid "July"
+msgstr "Červenec"
+
+#: game/state/gametime.cpp:79 game/state/gametime.cpp:115
+#| msgid "August,"
+msgid "August"
+msgstr "Srpen"
+
+#: game/state/gametime.cpp:79 game/state/gametime.cpp:115
+#| msgid "September,"
+msgid "September"
+msgstr "Září"
+
+#: game/state/gametime.cpp:80 game/state/gametime.cpp:116
+#| msgid "October,"
+msgid "October"
+msgstr "Říjen"
+
+#: game/state/gametime.cpp:80 game/state/gametime.cpp:116
+#| msgid "November,"
+msgid "November"
+msgstr "Listopad"
+
+#: game/state/gametime.cpp:80 game/state/gametime.cpp:116
+#| msgid "December,"
+msgid "December"
+msgstr "Prosinec"
+
+#: game/ui/base/buyandsellscreen.cpp:170
+#| msgid "Storage space exceeded"
+msgid "Storage space exceeded. Sell off more items!"
+msgstr "Místo ve skladišti přesaženo. Prodejte víc předmětů!  "
+
+#: game/ui/base/buyandsellscreen.cpp:270 game/ui/base/buyandsellscreen.cpp:300
+#| msgid "ile organization refuses to carry out the requested transfer."
+msgid ""
+"Hostile organization refuses to carry out the requested transportation for "
+"this company."
+msgstr "Nepřátelská organizace odmítá provést požadovanou přepravu pro tuto společnost."
+
+#: game/ui/base/buyandsellscreen.cpp:272 game/ui/base/buyandsellscreen.cpp:275
+#: game/ui/base/buyandsellscreen.cpp:288 game/ui/base/buyandsellscreen.cpp:376
+#: game/ui/base/buyandsellscreen.cpp:379 game/ui/base/buyandsellscreen.cpp:392
+#: game/ui/base/transferscreen.cpp:420 game/ui/base/transferscreen.cpp:423
+#: game/ui/base/transferscreen.cpp:436
+msgid "Proceed?"
+msgstr "Pokračovat?"
+
+#: game/ui/base/buyandsellscreen.cpp:273 game/ui/base/buyandsellscreen.cpp:286
+#: game/ui/base/buyandsellscreen.cpp:377 game/ui/base/buyandsellscreen.cpp:390
+#: game/ui/base/transferscreen.cpp:421 game/ui/base/transferscreen.cpp:434
+msgid ""
+"No free transport to carry out the requested transportation detected in the "
+"city."
+msgstr "Ve městě nebyla zjištěna žádná bezplatná doprava k provedení požadované dopravy."
+
+#: game/ui/base/recruitscreen.cpp:121 game/ui/base/recruitscreen.cpp:632
+#: game/ui/base/transferscreen.cpp:317
+#| msgid "Accommodation exceeded"
+msgid "Accomodation exceeded"
+msgstr "Ubytování překročeno"
+
+#: game/ui/base/recruitscreen.cpp:411 game/ui/base/researchscreen.cpp:507
+#, c-format
+msgid "%d"
+msgstr "%d"
+
+#: game/ui/base/recruitscreen.cpp:480
+#| msgid "unit(s) fired."
+msgid "units(s) transferred"
+msgstr "jednotek přemístěno "
+
+#: game/ui/base/researchscreen.cpp:330 game/ui/base/researchscreen.cpp:413
+#, c-format
+#| msgid "Total Skill:"
+msgid "Total Skill: %d"
+msgstr "Celkem Dovedností: %d "
+
+#: game/ui/base/researchscreen.cpp:476
+#, c-format
+msgid "%d%%"
+msgstr "%d%%"
+
+#: game/ui/base/researchselect.cpp:46
+#| msgid "Biochemistry research at:"
+msgid "Select Biochemistry Project"
+msgstr "Vyberte Biochemický Projekt"
+
+#: game/ui/base/researchselect.cpp:51
+#| msgid "Select project:"
+msgid "Select Physics Project"
+msgstr "Vyberte Fyzický Projekt"
+
+#: game/ui/base/researchselect.cpp:56
+#| msgid "Manufacturing halted"
+msgid "Select Manufacturing Project"
+msgstr "Vyberte Výrobní Projekt"
+
+#: game/ui/base/researchselect.cpp:61
+#| msgid "Select project:"
+msgid "Select Unknown Project"
+msgstr "Vyberte Neznámý Projekt\n "
+
+#: game/ui/base/researchselect.cpp:83
+msgid "PROJECT COMPLETE"
+msgstr "PROJEKT HOTOV "
+
+#: game/ui/base/researchselect.cpp:93
+msgid "PROJECT TOO LARGE"
+msgstr "PROJEKT PŘÍLIŠ VELKÝ"
+
+#: game/ui/base/researchselect.cpp:102
+msgid "FUNDS EXCEEDED"
+msgstr "REZERVY PŘESAŽENY "
+
+#: game/ui/base/researchselect.cpp:303
+msgid "UNKNOWN"
+msgstr "NEZNÁMÝ"
+
+#: game/ui/battle/battledebriefing.cpp:49
+msgid "promoted to"
+msgstr "povýšen na"
+
+#: game/ui/city/bribescreen.cpp:79
+#| msgid ""
+#| "nization is under Alien control. The Alien race will not enter ations h "
+#| "X-COM."
+msgid ""
+"This organization is under Alien control.The Alien race will not enter "
+"negotiations with X-COM."
+msgstr "Tato organizace je pod mimozemskou kontrolou. Mimozemská rasa nevstoupí do jednání s X-COM."
+
+#: game/ui/city/buildingscreen.cpp:219
+#| msgid "No buyers found for this building."
+msgid "You have not found any hostile forces in this building."
+msgstr "V této budově jste nenašli žádné nepřátelské síly."
+
+#: game/ui/city/scorescreen.cpp:163
+#| msgid "Remaining funds>"
+msgid "Remaining finds>"
+msgstr "Zbývající nalezení>"
+
+#: game/ui/components/controlgenerator.cpp:536
+#, c-format
+#| msgid "Skill"
+msgid "Skill %s"
+msgstr "Dovednost %s"
+
+#: game/ui/general/aequipmentsheet.cpp:179
+#| msgid "Alien Gas"
+msgid "Alien Organism"
+msgstr "Mimozemský Organismus"
+
+#: game/ui/general/aequipscreen.cpp:580 game/ui/general/aequipscreen.cpp:650
+msgid "NOT ENOUGH TU'S"
+msgstr "NEDOSTATEK ČJ"
+
+#: game/ui/general/aequipscreen.cpp:1887
+#| msgid "WARNING!"
+msgid "WARNING"
+msgstr "VAROVÁNÍ"
+
+#: game/ui/general/agentsheet.cpp:94
+#| msgid "Psi-defense"
+msgid "Psi-defence"
+msgstr "Psi-obrana"
+
+#: game/ui/general/ingameoptions.cpp:318
+#| msgid "Abort mission?"
+msgid "Abort Mission"
+msgstr "Zrušit Misi "
+
+#: game/ui/tileview/cityview.cpp:3609
+msgid "RESEARCH COMPLETE"
+msgstr "VÝZKUM DOKONČEN"
+
+#: game/ui/tileview/cityview.cpp:3680
+msgid "MANUFACTURE COMPLETED"
+msgstr "VÝROBA DOKONČENA"
+
+#: game/ui/tileview/cityview.cpp:3682
+#| msgid "Do you wish to reassign the Workshop?"
+msgid "Do you wish to reasign the Workshop?"
+msgstr "Přejete si dílnu znovu přihlásit?"
+
+#: game/ui/tileview/cityview.cpp:3739
+#| msgid "SELECT MANUFACTURING PROJECT"
+msgid "MANUFACTURING HALTED"
+msgstr "VÝROBA POZASTAVENA "
+
+#: game/ui/tileview/cityview.cpp:3757
+msgid "FACILITY COMPLETED"
+msgstr "ZAŘÍZENÍ DOKONČENO"
+
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:282
+#| msgid ": neutral towards:"
+msgid ": allied towards:"
+msgstr ": spojenec k:"
+
+#: game/ui/ufopaedia/ufopaediacategoryview.cpp:285
+#| msgid ": unfriendly towards:"
+msgid ": friendly towards:"
+msgstr ": přátelský k: "
+
+msgid "Casualty penalty"
+msgstr "Penalta za ztráty"
+
+msgid "Leadership bonus"
+msgstr "Bonus za velení "
+
+msgid "Live Aliens captured"
+msgstr "Živý Mimozemšťani zajati "
+
+msgid "Equipment captured"
+msgstr "Zajatá zbroj "
+
+msgid "Equipment lost"
+msgstr "Ztracená zbroj "
+
+msgid "Mission performance"
+msgstr "Výkon mise"
+
+msgid "ITEM"
+msgstr "PŘEDMĚT "
+
+msgid "Time ="
+msgstr "Čas ="
+
+msgid "Date ="
+msgstr "Datum ="
+
+msgid "Agent has died"
+msgstr "Agent zemřel"
+
+msgid "Agent arrived at base"
+msgstr "Agent dorazil na základnu"
+
+msgid "More options"
+msgstr "Víc možností "
+
+msgid "Cheats"
+msgstr "Cheaty"
+
+msgid "Exec. rem. order"
+msgstr "Provést zbývající rozkaz"
+
+msgid "Auto Scroll"
+msgstr "Automatické Scrollování"
+
+msgid "OpenApoc Features"
+msgstr "OpenApoc Funkce"
+
+msgid "Exit Battle"
+msgstr "Opustit Boj "
+
+msgid "Skirmish Mode"
+msgstr "Mód Bitky "
+
+msgid "Give all research"
+msgstr "Dát všechen výzkum"
+
+msgid "Utopia"
+msgstr "Utopie"
+
+msgid "All orgs. friendly"
+msgstr "Všechny organizace přátelský "
+
+msgid "All orgs. hostile"
+msgstr "Všechny organizace nepřátelský"
+
+msgid "Chaos"
+msgstr "Chaos"
+
+msgid "Infinite ammo"
+msgstr "Nekonečná munice"
+
+msgid "Modify funds"
+msgstr "Modifikovat finance"
+
+msgid "Damage Inflicted"
+msgstr "Poškození Způsobené"
+
+msgid "Damage Received"
+msgstr "Poškození Přijato"
+
+msgid "Hostiles multiplier"
+msgstr "Násobitel nepřátel"
+
+msgid "Agent Stat Growth"
+msgstr "Statistky Růstu Agentů"
+
+msgid "Transfer arrived at base"
+msgstr "Převod dorazil na základnu"
+
+msgid "Crash recovery arrived at base"
+msgstr "Havarijní zotavení dorazilo na základnu"
+
+msgid "DEBRIEFING"
+msgstr "PODÁNÍ HLÁŠENÍ "
+
+msgid "Combat rating"
+msgstr "Bojové hodnocení "
+
+msgid "Unit Brainsucked"
+msgstr "Jednotka Mozkově vysáta "
