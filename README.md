@@ -23,8 +23,8 @@
 * [Building](#building)
   * [Building on Windows](#building-on-windows)
   * [Building on Linux](#building-on-linux)
-* [How to setup OpenApoc](#how-to-setup-openapoc)
 * [OpenApoc Coding Style](#openapoc-coding-style)
+* [How to setup OpenApoc](#how-to-setup-openapoc)
 * [Contact us](#contact-us)
 
 ## Key Features
@@ -206,6 +206,9 @@ make -j4
 ```sh
 ./build/bin/OpenApoc
 ```
+## OpenApoc Coding Style
+
+https://www.ufopaedia.org/index.php/Coding_Style_(OpenApoc)
 
 ## How to setup OpenApoc
 
@@ -225,9 +228,6 @@ make -j4
 * Run and enjoy!
   * If you find bug report it [here](https://github.com/openapoc/openapoc/issues) (upload also openapoc_log.txt from game folder)
 
-## OpenApoc Coding Style
-
-https://www.ufopaedia.org/index.php/Coding_Style_(OpenApoc)
 
 ## Contact us
 
