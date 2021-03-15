@@ -24,6 +24,7 @@
   * [Building on Windows](#building-on-windows)
   * [Building on Linux](#building-on-linux)
 * [How to setup OpenApoc](#how-to-setup-openapoc)
+* [OpenApoc Coding Style](#openapoc-coding-style)
 * [Contact us](#contact-us)
 
 ## Key Features
