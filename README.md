@@ -224,6 +224,10 @@ make -j4
 * Run and enjoy!
   * If you find bug report it [here](https://github.com/openapoc/openapoc/issues) (upload also openapoc_log.txt from game folder)
 
+## OpenApoc Coding Style
+
+https://www.ufopaedia.org/index.php/Coding_Style_(OpenApoc)
+
 ## Contact us
 
 If you're interested, please visit our [website](http://openapoc.org).
