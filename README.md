@@ -60,12 +60,16 @@ All rights for the original game and its resources belong to their respective ow
 * Modding Functions, Extra Features, Enhancements and Quality of Life Updates #4
 * https://github.com/OpenApoc/OpenApoc/issues/941
 
+
 ## Contribute
 
-* http://openapoc.org/#contribute
->By this link you can find news, details how you can participate in project. 
-How you can support profect, testing, modding etc
->Also you find there detailed FAQ
+http://openapoc.org/#contribute
+>Here you find news, details how you can participate in project. 
+How you can support profect, testing, modding, drawing, modeling, concepting etc..
+
+http://openapoc.org/#faq
+>Here you find detailed FAQ (frequently asked questions)
+
 
 ## Building
 
@@ -88,6 +92,7 @@ The following libraries are also used, but are shipped as submodules in the repo
 * [physfs](https://icculus.org/physfs/) - Library for reading data from .iso files or directory trees (Note: We use a patched version, available on [GitHub](https://github.com/JonnyH/physfs-hg-import/tree/fix-iso) - required to read the .iso files we use).
 * [pugixml](https://pugixml.org) - XML library used for reading/writing the game data files.
 * [fmtlib](https://github.com/fmtlib/fmt) - A c++ string formatting library - proposed for c++20 standard.
+
 
 ### Building on Windows
 
@@ -135,6 +140,7 @@ vcpkg --triplet x86-windows install sdl2 boost-locale boost-program-options boos
 
 * Build OpenApoc. This will take a while on the first build, especially if Vcpkg hasn't installed all the dependencies yet. If you get errors, clear your cache from the Project/CMake menu and try again.
 * When running OpenApoc from the Visual Studio UI, the working directory is set to the root of the project, so the data folder should already be in the right place. If you want to run outside of Visual Studio, you need to copy the whole 'data' folder (including the cd.iso file) into the folder openapoc.exe resides in.
+
 
 ### Building on Linux
 
@@ -194,9 +200,11 @@ make -j4
 ./build/bin/OpenApoc
 ```
 
+
 ## OpenApoc Coding Style
 
 https://www.ufopaedia.org/index.php/Coding_Style_(OpenApoc)
+>This document specifies the guidelines for writing and formatting the c++ code that forms the core of OpenApoc.
 
 
 ## How to setup OpenApoc
@@ -216,6 +224,7 @@ https://www.ufopaedia.org/index.php/Coding_Style_(OpenApoc)
 
 * Run and enjoy!
   * If you find bug report it [here](https://github.com/openapoc/openapoc/issues) (upload also openapoc_log.txt from game folder)
+
 
 ## Contact us
 
