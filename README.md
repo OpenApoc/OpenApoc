@@ -21,7 +21,7 @@
 * [Copyright](#copyright)
 * [Key Features](#key-features)
 * [What's left to finish?](#whats-left)
-* [Testing and Bug Reporting](#testing and bug reporting)
+* [Contribute](#contribute)
 * [Building](#building)
   * [Building on Windows](#building-on-windows)
   * [Building on Linux](#building-on-linux)
