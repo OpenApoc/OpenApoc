@@ -45,8 +45,14 @@ All rights for the original game and its resources belong to their respective ow
 * The new engine have ample opportunities for expansion and changes
   * High FPS, smooth sound during the game without bugs from original
   * No limitations which were in vanilla
-* After Release, We can bring, in mods, Julian Gollop cut ideas into the game
+  * Modern formats
+* After release, we can add Julian Gollop's cut ideas to the game through mods. Many have already been added but they need functionality and balance.
 * [![Julian Gollop](https://img.shields.io/reddit/user-karma/combined/JulianGollop?style=social)](https://www.reddit.com/user/JulianGollop/) "Yes, I am aware of the openApoc project and I very much do support it." 
+* Fans creating Big Apoc Concept, for modders, thats should make OpenApoc more balanced, to provide
+  * a variety of interesting gameplay solutions, 
+  * and to make the game more complex and diverse, 
+  * L.O.R.E more fulfilling, deep and mysterious, intertwined with real history and others games 
+  * and ending the game more interesting and not predictable.
 
 ## What's left?
 
@@ -219,6 +225,7 @@ https://www.ufopaedia.org/index.php/Coding_Style_(OpenApoc)
 
 * Run and enjoy!
   * If you find bug report it [here](https://github.com/openapoc/openapoc/issues) (upload also openapoc_log.txt from game folder)
+  * You can configure the game in the config file in [details here](http://openapoc.org/#faq)
 
 
 ## Contact us
