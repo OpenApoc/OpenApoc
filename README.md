@@ -21,7 +21,7 @@
 * [Copyright](#copyright)
 * [Key Features](#key-features)
 * [What's left to finish?](#whats-left)
-* [Contribute](#contribute)
+* [Contribute and FAQ](#contribute-and-faq)
 * [Building](#building)
   * [Building on Windows](#building-on-windows)
   * [Building on Linux](#building-on-linux)
@@ -48,24 +48,17 @@ All rights for the original game and its resources belong to their respective ow
 
 ## What's left?
 
-* TO HAVE A TRULY PLAYABLE ALPHA STATE #1 (DONE):
-* https://github.com/OpenApoc/OpenApoc/issues/263
-
-* TO REACH A BETA STATE #2 (When All features implemented):
-* https://github.com/OpenApoc/OpenApoc/issues/264
-
-* TO REACH OPENAPOC RELEASE 1.0 #3:
-* https://github.com/OpenApoc/OpenApoc/issues/265
-
-* Modding Functions, Extra Features, Enhancements and Quality of Life Updates #4
-* https://github.com/OpenApoc/OpenApoc/issues/941
+[#1 TO HAVE A TRULY PLAYABLE ALPHA STATE (DONE)](https://github.com/OpenApoc/OpenApoc/issues/263)
+[#2 TO REACH A BETA STATE (When All features implemented)](https://github.com/OpenApoc/OpenApoc/issues/264)
+[#3 TO REACH OPENAPOC RELEASE 1.0](https://github.com/OpenApoc/OpenApoc/issues/265)
+[#4 Modding Functions, Extra Features, Enhancements and Quality of Life Updates](https://github.com/OpenApoc/OpenApoc/issues/941)
 
 
-## Contribute
+## Contribute and FAQ
 
 http://openapoc.org/#contribute
 >Here you find news, details how you can participate in project. 
-How you can support profect, testing, modding, drawing, modeling, concepting etc..
+How you can support project, testing, translating, modding, drawing, modeling, concepting etc..
 
 http://openapoc.org/#faq
 >Here you find detailed FAQ (frequently asked questions)
