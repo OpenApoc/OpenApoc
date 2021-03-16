@@ -18,13 +18,20 @@
 
 ## Table of Contents
 
+* [Copyright](#copyright)
 * [Key Features](#key-features)
 * [What's left to finish?](#whats-left)
+* [Contribute and FAQ](#contribute-and-faq)
 * [Building](#building)
   * [Building on Windows](#building-on-windows)
   * [Building on Linux](#building-on-linux)
+* [OpenApoc Coding Style](#openapoc-coding-style)
 * [How to setup OpenApoc](#how-to-setup-openapoc)
 * [Contact us](#contact-us)
+
+
+## Copyright
+All rights for the original game and its resources belong to their respective owners. We do not encourage and do not support any form of illegal usage of the original game. We strongly advise to purchase the original game on GOG or other platforms. Pirate ISOs are not supported and will cause issues such as crashes and map problems with OpenApoc.
 
 ## Key Features
 
@@ -41,43 +48,21 @@
 
 ## What's left?
 
-* In order to have a playable game, we need:
-  * Aliens moving from building to building
-  * Funding for X-Com and orgs
-  * Agent Training
-  * Bribes
+1. [TO HAVE A TRULY PLAYABLE ALPHA STATE (DONE)](https://github.com/OpenApoc/OpenApoc/issues/263)
+2. [TO REACH A BETA STATE (When All features implemented)](https://github.com/OpenApoc/OpenApoc/issues/264)
+3. [TO REACH OPENAPOC RELEASE 1.0](https://github.com/OpenApoc/OpenApoc/issues/265)
+4. [Modding Functions, Extra Features, Enhancements and Quality of Life Updates](https://github.com/OpenApoc/OpenApoc/issues/941)
 
-That will be a game which has all of its main mechanics implemented. We still have a long way to go, but that's a point at which you can really play Apocalypse in OpenApoc and do everything you need.
 
-* And then, to reach a mostly complete state, we also require:
-  * Proper portal location in alien dimension
-  * Proper portal movement
-  * Alien Takeover screen
-  * Score screen and graphs
-  * Proper collapse algorithm for alien tubes
-  * Victory & Defeat screens
-  * UFO growth halting when relevant building is destroyed
-  * Organisations properly buying their vehicles
-  * Organisations making treaties, raiding each other and x-com, sending illegal flyers
-  * Proper Music (not just 3 looped tracks)
-  * Overspawn
-* Then, to be fully vanilla feature complete, we also need:
-  * Better battle AI (behavior, taking cover, more intelligent attack patterns)
-  * Better city AI (craft retreat when damaged, other stuff)
-  * Proper ground vehicles (occupying lanes, blocking, overtaking etc.)
-  * Proper location screen (assigning agents to vehicles)
-  * Some fixes to Ufopaedia display
-  * Proper transferring agents
-  * UI Tooltips
-  * Controls for editing text (naming soldiers and other property)
-  * Agent medals and statistics
-  * Agent name generator (more than 10 names and surnames)
-  * Colored text support
-* And then, to be a full 1.0 OpenApoc release, we also need:
-  * Different file format than xml for storing save files (at least), so that save/loading takes reasonable amount of time
-  * Different handling of game data (separation of "rules" and "gamestate", so that for example you can modify a research project in a mod, add that mod to your playthrough midgame, and not have to lose all progress made on that project, or later remove the project mod, and have the changes reversed but research state persist)
-  * Close all issues
-  * Maybe something else that didn't come up to mind immediately
+## Contribute and FAQ
+
+http://openapoc.org/#contribute
+>Here you find news, details how you can participate in project. 
+How you can support project, testing, translating, modding, drawing, modeling, concepting etc..
+
+http://openapoc.org/#faq
+>Here you find detailed FAQ (frequently asked questions)
+
 
 ## Building
 
@@ -100,6 +85,7 @@ The following libraries are also used, but are shipped as submodules in the repo
 * [physfs](https://icculus.org/physfs/) - Library for reading data from .iso files or directory trees (Note: We use a patched version, available on [GitHub](https://github.com/JonnyH/physfs-hg-import/tree/fix-iso) - required to read the .iso files we use).
 * [pugixml](https://pugixml.org) - XML library used for reading/writing the game data files.
 * [fmtlib](https://github.com/fmtlib/fmt) - A c++ string formatting library - proposed for c++20 standard.
+
 
 ### Building on Windows
 
@@ -147,6 +133,7 @@ vcpkg --triplet x86-windows install sdl2 boost-locale boost-program-options boos
 
 * Build OpenApoc. This will take a while on the first build, especially if Vcpkg hasn't installed all the dependencies yet. If you get errors, clear your cache from the Project/CMake menu and try again.
 * When running OpenApoc from the Visual Studio UI, the working directory is set to the root of the project, so the data folder should already be in the right place. If you want to run outside of Visual Studio, you need to copy the whole 'data' folder (including the cd.iso file) into the folder openapoc.exe resides in.
+
 
 ### Building on Linux
 
@@ -206,9 +193,16 @@ make -j4
 ./build/bin/OpenApoc
 ```
 
+
+## OpenApoc Coding Style
+
+https://www.ufopaedia.org/index.php/Coding_Style_(OpenApoc)
+>This document specifies the guidelines for writing and formatting the c++ code that forms the core of OpenApoc.
+
+
 ## How to setup OpenApoc
 
-* Download OpenApoc: [![Windows Build Status](https://img.shields.io/appveyor/build/OpenApoc/openapoc/master.svg?label=WindowsAppveyor)](https://ci.appveyor.com/project/openapoc/openapoc/branch/master)
+* Download OpenApoc: [![Windows Build Status](https://img.shields.io/appveyor/build/OpenApoc/openapoc/master.svg?label=WindowsAppveyor)](https://ci.appveyor.com/project/openapoc/openapoc/branch/master)  (Latest master build)
   * If you see a green latest build then you can get it, if it's not then go to HISTORY at the top and click another build from *master* branch that's green (look for a title beginning with "Merge pull request #")
   * Click Platform x64 (or Win32 if you need 32bit binaries)
   * Click ARTIFACTS
@@ -224,9 +218,13 @@ make -j4
 * Run and enjoy!
   * If you find bug report it [here](https://github.com/openapoc/openapoc/issues) (upload also openapoc_log.txt from game folder)
 
+
 ## Contact us
 
 If you're interested, please visit our [website](http://openapoc.org).
-We have [forums](http://openapoc.org/forums/) - please pop by and introduce yourself!
-We have an IRC channel on [Freenode](http://webchat.freenode.net/?channels=openapoc) - [#openapoc](irc://irc.freenode.net/#openapoc).
-We have a [Facebook](https://www.facebook.com/openapoc) page.
+* We have [forums](http://openapoc.org/forum/) - please pop by and introduce yourself!
+* We have an [Discord](https://discord.gg/f8Rayre) channel
+* We have an IRC channel on [Freenode](http://webchat.freenode.net/?channels=openapoc) - [#openapoc](irc://irc.freenode.net/#openapoc).
+* We have a [Facebook](https://www.facebook.com/openapoc) page.
+* We have a [Vkontakte](https://vk.com/openapoc) page.
+* We have a [Reddit](https://reddit.com/r/openapoc) page.
