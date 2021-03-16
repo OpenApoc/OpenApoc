@@ -63,9 +63,9 @@ All rights for the original game and its resources belong to their respective ow
 ## Contribute
 
 * http://openapoc.org/#contribute
-* By this link you can find news, details how you can participate in project. 
+>By this link you can find news, details how you can participate in project. 
 How you can support profect, testing, modding etc
-* Also you find there detailed FAQ
+>Also you find there detailed FAQ
 
 ## Building
 
