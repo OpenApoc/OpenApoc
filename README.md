@@ -48,10 +48,10 @@ All rights for the original game and its resources belong to their respective ow
 
 ## What's left?
 
-[#1 TO HAVE A TRULY PLAYABLE ALPHA STATE (DONE)](https://github.com/OpenApoc/OpenApoc/issues/263)
-[#2 TO REACH A BETA STATE (When All features implemented)](https://github.com/OpenApoc/OpenApoc/issues/264)
-[#3 TO REACH OPENAPOC RELEASE 1.0](https://github.com/OpenApoc/OpenApoc/issues/265)
-[#4 Modding Functions, Extra Features, Enhancements and Quality of Life Updates](https://github.com/OpenApoc/OpenApoc/issues/941)
+1. [TO HAVE A TRULY PLAYABLE ALPHA STATE (DONE)](https://github.com/OpenApoc/OpenApoc/issues/263)
+2. [TO REACH A BETA STATE (When All features implemented)](https://github.com/OpenApoc/OpenApoc/issues/264)
+3. [TO REACH OPENAPOC RELEASE 1.0](https://github.com/OpenApoc/OpenApoc/issues/265)
+4. [Modding Functions, Extra Features, Enhancements and Quality of Life Updates](https://github.com/OpenApoc/OpenApoc/issues/941)
 
 
 ## Contribute and FAQ
