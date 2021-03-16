@@ -2,17 +2,18 @@
 
 > OpenApoc is an open-source re-implementation of the original [X-COM: Apocalypse](https://www.ufopaedia.org/index.php/Apocalypse), that requires the original files to run, licensed under the GPL3 and written in C++ / SDL2. It was originally founded by PmProg in July 2014, and has since grown in [community](https://www.ufopaedia.org/index.php/Credits_(OpenApoc)).
 
-[![Linux Build Status](https://img.shields.io/travis/OpenApoc/OpenApoc/master.svg?label=LinuxTravis)](https://travis-ci.com/github/OpenApoc/OpenApoc)
-[![Windows Build Status](https://img.shields.io/appveyor/build/OpenApoc/openapoc/master.svg?label=WindowsAppveyor)](https://ci.appveyor.com/project/openapoc/openapoc/branch/master)
-[![Openapoc issues](https://img.shields.io/github/issues/openapoc/openapoc.svg)](https://github.com/openapoc/openapoc/issues)
-[![See our Trello TO-DO list for more info](https://img.shields.io/badge/See%20our-Trello%20TO--DO%20list-blue.svg)](https://trello.com/b/lX5Y3DwR/openapoc)
-[![Translate OpenApoc to your language](https://img.shields.io/badge/Translate-Openapoc-blue.svg)](https://www.transifex.com/x-com-apocalypse/apocalypse/)
+[![Linux Build Status](https://img.shields.io/travis/OpenApoc/OpenApoc?branch=master&label=Travis%20Linux&logo=Travis%20CI&logoColor=ffffff&labelColor=282828)](https://travis-ci.com/github/OpenApoc/OpenApoc)
+[![Windows Build Status](https://img.shields.io/appveyor/build/OpenApoc/openapoc?branch=master&label=AppVeyor%20Windows&logo=appveyor&logoColor=ffffff&labelColor=282828)](https://ci.appveyor.com/project/openapoc/openapoc/branch/master)
+[![Openapoc issues](https://img.shields.io/github/issues-raw/OpenApoc/OpenApoc?color=1182c3&logo=GitHub&labelColor=282828)](https://github.com/openapoc/openapoc/issues)
+[![Translate OpenApoc](https://img.shields.io/badge/Translate-Openapoc-blue.svg)](https://www.transifex.com/x-com-apocalypse/apocalypse/)
 [![OpenApoc GPL3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/OpenApoc/OpenApoc/blob/master/LICENSE)\
 [![Openapoc forum](https://img.shields.io/badge/Visit%20our-forum-orange.svg)](http://openapoc.org)
 [![Openapoc IRC chat](https://img.shields.io/badge/IRC-devs%20chat-brightgreen.svg)](http://webchat.freenode.net/?channels=openapoc)
-[![Openapoc Discord](https://img.shields.io/discord/142798944970211328.svg?label=discord)](https://discord.gg/d6DAHEb)
-[![Openapoc Facebook](https://img.shields.io/badge/Join%20our-Facebook-blue.svg)](https://fb.com/openapoc)
-[![Openapoc Vkontakte](https://img.shields.io/badge/Join%20our-Vkontakte-blue.svg)](https://vk.com/openapoc)
+[![Openapoc Discord](https://img.shields.io/discord/142798944970211328?label=Discord&logo=discord&logoColor=ffffff&labelColor=7289DA&color=2c2f33)](https://discord.gg/d6DAHEb) 
+[![Openapoc Facebook](https://img.shields.io/static/v1?label=FB&logo=Facebook&logoColor=ffffff&message=Subscribe%20|%20755&color=282828&labelColor=1877f2)](https://fb.com/openapoc)
+[![Openapoc Vkontakte](https://img.shields.io/static/v1?label=VK&logo=vk&logoColor=ffffff&message=Vstupaj%20|%20447&color=282828&labelColor=2787f5)](https://vk.com/openapoc)
+[![Openapoc Reddit](https://img.shields.io/reddit/subreddit-subscribers/OpenApoc?color=orange&logo=Reddit&logoColor=ffffff&labelColor=282828)](https://reddit.com/r/openapoc)
+[![Openapoc Youtube](https://img.shields.io/static/v1?label=Youtube&logo=Youtube&logoColor=ffffff&message=Subscribe%20|%20365&color=282828&labelColor=FF0000)](https://www.youtube.com/c/openapoc)
 
 <p align="center"><img src="https://i.imgur.com/XxudxVj.jpg"/></p>
 
@@ -39,12 +40,19 @@ All rights for the original game and its resources belong to their respective ow
 * Port the game to any platform you like (windows, linux, android etc)
 * Support for modern screen resolutions
 * Added a full debug system ([hot keys](https://github.com/OpenApoc/OpenApoc/blob/master/README_HOTKEYS.txt), etc.)
-* Added 'more options' menu (which many improvements)
+* Added 'more options' menu (which more than 40 improvements)
 * Added skirmish module (fast fight)
-* We can bring, in mods, Julian Gollop cut ideas into the game
 * The new engine have ample opportunities for expansion and changes
   * High FPS, smooth sound during the game without bugs from original
   * No limitations which were in vanilla
+  * Modern formats
+* After release, we can add Julian Gollop's cut ideas to the game through mods. Many have already been added but they need functionality and balance.
+* [![Julian Gollop](https://img.shields.io/reddit/user-karma/combined/JulianGollop?style=social)](https://www.reddit.com/user/JulianGollop/) "Yes, I am aware of the openApoc project and I very much do support it." 
+* Fans creating Big Apoc Concept, for modders, thats should make OpenApoc more balanced, to provide
+  * a variety of interesting gameplay solutions, 
+  * and to make the game more complex and diverse, 
+  * L.O.R.E more fulfilling, deep and mysterious, intertwined with real history and others games 
+  * and ending the game more interesting and not predictable.
 
 ## What's left?
 
@@ -202,7 +210,7 @@ https://www.ufopaedia.org/index.php/Coding_Style_(OpenApoc)
 
 ## How to setup OpenApoc
 
-* Download OpenApoc: [![Windows Build Status](https://img.shields.io/appveyor/build/OpenApoc/openapoc/master.svg?label=WindowsAppveyor)](https://ci.appveyor.com/project/openapoc/openapoc/branch/master)  (Latest master build)
+* Download OpenApoc: [![Windows Build Status](https://img.shields.io/appveyor/build/OpenApoc/openapoc?branch=master&label=AppVeyor%20Windows&logo=appveyor&logoColor=ffffff&labelColor=282828)](https://ci.appveyor.com/project/openapoc/openapoc/branch/master)  (Latest master build)
   * If you see a green latest build then you can get it, if it's not then go to HISTORY at the top and click another build from *master* branch that's green (look for a title beginning with "Merge pull request #")
   * Click Platform x64 (or Win32 if you need 32bit binaries)
   * Click ARTIFACTS
@@ -211,12 +219,13 @@ https://www.ufopaedia.org/index.php/Coding_Style_(OpenApoc)
 
 * Put original X-Com Apocalypse CD into data folder inside OpenApoc folder:
   * if you have disc, copy contents to 'cd.iso' subfolder in data.
-  * if you have [Steam](https://store.steampowered.com/app/7660/) version, copy 'cd.iso' file to data.
+  * if you have [Steam](https://store.steampowered.com/app/7660/) version (have very bad dosbox setup), copy 'cd.iso' file to data.
   * if you have [GOG](https://www.gog.com/game/xcom_apocalypse) version, copy 'xcom.bin' and 'xcom.cue' to data, and rename 'xcom.cue' to 'cd.iso'.
   * pirated versions will not work!
 
 * Run and enjoy!
   * If you find bug report it [here](https://github.com/openapoc/openapoc/issues) (upload also openapoc_log.txt from game folder)
+  * You can configure the game in the config file in [details here](http://openapoc.org/#faq)
 
 
 ## Contact us
@@ -225,6 +234,7 @@ If you're interested, please visit our [website](http://openapoc.org).
 * We have [forums](http://openapoc.org/forum/) - please pop by and introduce yourself!
 * We have an [Discord](https://discord.gg/f8Rayre) channel
 * We have an IRC channel on [Freenode](http://webchat.freenode.net/?channels=openapoc) - [#openapoc](irc://irc.freenode.net/#openapoc).
+* We have a [Youtube](https://www.youtube.com/c/OpenApoc) channel.
 * We have a [Facebook](https://www.facebook.com/openapoc) page.
 * We have a [Vkontakte](https://vk.com/openapoc) page.
 * We have a [Reddit](https://reddit.com/r/openapoc) page.
