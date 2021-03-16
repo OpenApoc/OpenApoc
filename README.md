@@ -21,6 +21,7 @@
 * [Copyright](#copyright)
 * [Key Features](#key-features)
 * [What's left to finish?](#whats-left)
+* [Testing and Bug Reporting](#testing and bug reporting)
 * [Building](#building)
   * [Building on Windows](#building-on-windows)
   * [Building on Linux](#building-on-linux)
@@ -48,16 +49,23 @@ All rights for the original game and its resources belong to their respective ow
 ## What's left?
 
 * TO HAVE A TRULY PLAYABLE ALPHA STATE #1 (DONE):
-https://github.com/OpenApoc/OpenApoc/issues/263
+* https://github.com/OpenApoc/OpenApoc/issues/263
 
 * TO REACH A BETA STATE #2 (When All features implemented):
-https://github.com/OpenApoc/OpenApoc/issues/264
+* https://github.com/OpenApoc/OpenApoc/issues/264
 
 * TO REACH OPENAPOC RELEASE 1.0 #3:
-https://github.com/OpenApoc/OpenApoc/issues/265
+* https://github.com/OpenApoc/OpenApoc/issues/265
 
 * Modding Functions, Extra Features, Enhancements and Quality of Life Updates #4
-https://github.com/OpenApoc/OpenApoc/issues/941
+* https://github.com/OpenApoc/OpenApoc/issues/941
+
+## Contribute
+
+* http://openapoc.org/#contribute
+* By this link you can find news, details how you can participate in project. 
+How you can support profect, testing, modding etc
+* Also you find there detailed FAQ
 
 ## Building
 
@@ -212,9 +220,9 @@ https://www.ufopaedia.org/index.php/Coding_Style_(OpenApoc)
 ## Contact us
 
 If you're interested, please visit our [website](http://openapoc.org).
-We have [forums](http://openapoc.org/forum/) - please pop by and introduce yourself!
-We have an [Discord](https://discord.gg/f8Rayre) channel
-We have an IRC channel on [Freenode](http://webchat.freenode.net/?channels=openapoc) - [#openapoc](irc://irc.freenode.net/#openapoc).
-We have a [Facebook](https://www.facebook.com/openapoc) page.
-We have a [Vkontakte](https://vk.com/openapoc) page.
-We have a [Reddit](https://reddit.com/r/openapoc) page.
+* We have [forums](http://openapoc.org/forum/) - please pop by and introduce yourself!
+* We have an [Discord](https://discord.gg/f8Rayre) channel
+* We have an IRC channel on [Freenode](http://webchat.freenode.net/?channels=openapoc) - [#openapoc](irc://irc.freenode.net/#openapoc).
+* We have a [Facebook](https://www.facebook.com/openapoc) page.
+* We have a [Vkontakte](https://vk.com/openapoc) page.
+* We have a [Reddit](https://reddit.com/r/openapoc) page.
