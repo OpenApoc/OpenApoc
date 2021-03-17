@@ -68,9 +68,15 @@ endif(LTO)
 # MSVC has default flags that CMake doesn't set
 if (MSVC)
 	add_definitions(-DUNICODE -D_UNICODE)
+	
 	if (MSVC_VERSION GREATER_EQUAL 1910)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /permissive-")
-		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /permissive-")
+	    if (MSVC_VERSION EQUAL 1928)
+		    # HACK - MSVC++ compiler 19.28 (shipped with visual studio 16.9) cause errors in <optional> and constexpr Colour with /permissive-
+	        # See https://developercommunity2.visualstudio.com/t/Unexpected-error-C2131:-expression-did/1343697?entry=problem&ref=native&refTime=1615948128399&refUserId=1a6b34b3-01a5-4b5d-972d-b81d902f1e66
+		else()
+		    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /permissive-")
+		    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /permissive-")
+		endif()
 	endif()
 	if (MSVC_PDB)
 		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Zi")
