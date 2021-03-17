@@ -29,7 +29,7 @@ before_build:
   - .\bootstrap-vcpkg.bat
   - cd %APPVEYOR_BUILD_FOLDER%
     #  - vcpkg install sdl2 boost-locale boost-program-options boost-uuid boost-crc libvorbis
-  - vcpkg upgrade --no-dry-run
+    #  - vcpkg upgrade --no-dry-run
   - vcpkg remove --outdated
   - git submodule update --init --recursive
   - curl http://s2.jonnyh.net/pub/cd_minimal.iso.xz -o temp\cd.iso.xz
