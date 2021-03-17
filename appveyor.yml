@@ -25,7 +25,7 @@ cache: c:\tools\vcpkg\installed
 before_build:
   - cd c:\tools\vcpkg
   - git pull
-  - git checkout 2019.12
+  - git checkout 2020.11
   - .\bootstrap-vcpkg.bat
   - cd %APPVEYOR_BUILD_FOLDER%
   - vcpkg install sdl2 boost-locale boost-program-options boost-uuid boost-crc libvorbis
@@ -66,7 +66,7 @@ before_test:
   - 7z e temp\cd.iso.xz -odata\
 test_script:
   - ctest -T Test -V --no-compress-output -C %CONFIGURATION%
-on_finish:
+after_test:
   - ps: |
       $testFile = ".\Testing\$(Get-Content Testing\TAG -TotalCount 1)\Test.xml"
       $XSLInputElement = New-Object System.Xml.Xsl.XslCompiledTransform

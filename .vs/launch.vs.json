@@ -22,7 +22,10 @@
       "projectTarget": "OpenApoc_DataExtractor.exe (bin\\OpenApoc_DataExtractor.exe)",
       "name": "OpenApoc_DataExtractor.exe (bin\\OpenApoc_DataExtractor.exe)",
       "currentDir": "${workspaceRoot}",
-      "args": [ "--Framework.CD=.\\data\\cd.iso", "--Framework.Data=.\\data" ]
+      "args": [
+        "--Framework.CD=.\\data\\cd.iso",
+        "--Framework.Data=.\\data"
+      ]
     }
   ]
 }
