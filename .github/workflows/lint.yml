@@ -52,8 +52,13 @@ jobs:
       shell: bash
       run: |
         cd $GITHUB_WORKSPACE
-        echo '$GITHUB_WORKSPACE/tools/lint.sh ${{ github.event.before }}..${{ github.event.after }}'
-        $GITHUB_WORKSPACE/tools/lint.sh ${{ github.event.before }}..${{ github.event.after }}
+        if [ -z ${{ github.event.before }} ] then;
+          echo '$GITHUB_WORKSPACE/tools/lint.sh ${{ github.sha }}'
+          $GITHUB_WORKSPACE/tools/lint.sh ${{ github.sha }}
+        else
+          echo '$GITHUB_WORKSPACE/tools/lint.sh ${{ github.event.before }}..${{ github.event.after }}'
+          $GITHUB_WORKSPACE/tools/lint.sh ${{ github.event.before }}..${{ github.event.after }}
+        fi
         
 
     - name: clang-tidy lint
@@ -61,5 +66,11 @@ jobs:
       shell: bash
       run: |
         cd $GITHUB_WORKSPACE
-        echo 'CLANG_TIDY=clang-tidy-10 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.event.before }}..${{ github.event.after }} || true;'
-        CLANG_TIDY=clang-tidy-10 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.event.before }}..${{ github.event.after }} || true;
+        if [ -z ${{ github.event.before }} ] then;
+          echo 'CLANG_TIDY=clang-tidy-10 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.sha }} || true;'
+          CLANG_TIDY=clang-tidy-10 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.sha }} || true;
+        else
+          echo 'CLANG_TIDY=clang-tidy-10 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.event.before }}..${{ github.event.after }} || true;'
+          CLANG_TIDY=clang-tidy-10 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.event.before }}..${{ github.event.after }} || true;
+        fi
+        
