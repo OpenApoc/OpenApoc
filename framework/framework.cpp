@@ -58,7 +58,6 @@ Framework *Framework::instance = nullptr;
 class FrameworkPrivate
 {
   private:
-	int quick_test_to_pass_lint;
 	friend class Framework;
 	bool quitProgram;
 
