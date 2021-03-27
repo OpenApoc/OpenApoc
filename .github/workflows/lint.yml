@@ -61,5 +61,5 @@ jobs:
       shell: bash
       run: |
         cd $GITHUB_WORKSPACE
-        echo 'cmake -B ${{runner.workspace}}/build --build . --config=$BUILD_TYPE --target=generated-source && $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.event.before }}..${{ github.event.after }} || true;'
-        cmake -B ${{runner.workspace}}/build --build . --config=$BUILD_TYPE --target=generated-source && $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.event.before }}..${{ github.event.after }} || true;
+        echo 'cmake -B ${{runner.workspace}}/build --build . --config $BUILD_TYPE --target generated-source && $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.event.before }}..${{ github.event.after }} || true;'
+        cmake -B ${{runner.workspace}}/build --build . --config $BUILD_TYPE --target generated-source && $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.event.before }}..${{ github.event.after }} || true;
