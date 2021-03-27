@@ -50,7 +50,7 @@ jobs:
       working-directory: $GITHUB_WORKSPACE
       shell: bash
       run: |
-        echo 'GITHUB_WORKSPACE/tools/lint.sh ${{ github.event.before }}..${{ github.event.after }}'
+        echo '$GITHUB_WORKSPACE/tools/lint.sh ${{ github.event.before }}..${{ github.event.after }}'
         $GITHUB_WORKSPACE/tools/lint.sh ${{ github.event.before }}..${{ github.event.after }}
         
 
