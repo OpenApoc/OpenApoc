@@ -50,9 +50,8 @@ jobs:
       working-directory: ${{runner.workspace}}
       shell: bash
       run: |
+        cd $GITHUB_WORKSPACE
         echo '$GITHUB_WORKSPACE/tools/lint.sh ${{ github.event.before }}..${{ github.event.after }}'
-        echo "where are we? $GITHUB_WORKSPACE"
-        ls -l $GITHUB_WORKSPACE
         $GITHUB_WORKSPACE/tools/lint.sh ${{ github.event.before }}..${{ github.event.after }}
         
 
@@ -60,5 +59,6 @@ jobs:
       working-directory: ${{runner.workspace}}
       shell: bash
       run: |
+        cd $GITHUB_WORKSPACE
         echo 'cmake -B ${{runner.workspace}}/build --build . --config=$BUILD_TYPE --target=generated-source && $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.event.before }}..${{ github.event.after }} || true;'
         cmake -B ${{runner.workspace}}/build --build . --config=$BUILD_TYPE --target=generated-source && $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.event.before }}..${{ github.event.after }} || true;
