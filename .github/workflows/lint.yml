@@ -52,7 +52,8 @@ jobs:
       shell: bash
       run: |
         cd $GITHUB_WORKSPACE
-        if [ -z ${{ github.event.before }} ] then;
+        if [[ -z ${{ github.event.before }} ]]
+        then
           echo '$GITHUB_WORKSPACE/tools/lint.sh ${{ github.sha }}'
           $GITHUB_WORKSPACE/tools/lint.sh ${{ github.sha }}
         else
@@ -66,7 +67,8 @@ jobs:
       shell: bash
       run: |
         cd $GITHUB_WORKSPACE
-        if [ -z ${{ github.event.before }} ] then;
+        if [[ -z ${{ github.event.before }} ]]
+        then
           echo 'CLANG_TIDY=clang-tidy-10 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.sha }} || true;'
           CLANG_TIDY=clang-tidy-10 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.sha }} || true;
         else
