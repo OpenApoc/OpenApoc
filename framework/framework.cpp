@@ -58,6 +58,7 @@ Framework *Framework::instance = nullptr;
 class FrameworkPrivate
 {
   private:
+	int dummy;
 	friend class Framework;
 	bool quitProgram;
 
