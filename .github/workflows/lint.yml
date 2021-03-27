@@ -61,5 +61,5 @@ jobs:
       shell: bash
       run: |
         cd $GITHUB_WORKSPACE
-        echo 'BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.event.before }}..${{ github.event.after }} || true;'
-        BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.event.before }}..${{ github.event.after }} || true;
+        echo 'CLANG_TIDY=clang-tidy-10 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.event.before }}..${{ github.event.after }} || true;'
+        CLANG_TIDY=clang-tidy-10 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.event.before }}..${{ github.event.after }} || true;
