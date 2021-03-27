@@ -8,7 +8,7 @@ option(BUILD_EDITOR "Build the gamestate editor tool" OFF)
 option(BUILD_DUMPEVERYTHING "Tool that dumps all known images" OFF)
 option(BUILD_SERIALIZATIONTOOL "Tool to work with serialized gamestate
 archives" ON)
-option(BUILD_LAUNCHER "Build the launcher" ON)
+
 
 if(BUILD_EXTRACTOR)
 		add_subdirectory(extractors)
@@ -32,7 +32,6 @@ endif()
 
 if (BUILD_LAUNCHER)
 		add_subdirectory(launcher)
-		list(APPEND VCPKG_MANIFEST_FEATURES "launcher")
 endif()
 
 # GameState serialization code generator isn't optional
