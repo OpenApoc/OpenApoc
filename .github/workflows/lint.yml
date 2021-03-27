@@ -47,7 +47,7 @@ jobs:
       run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -GNinja -DCLANG_FORMAT=clang-format=10 -DCLANG_TIDY=clang-tidy-10
 
     - name: format lint
-      working-directory: $GITHUB_WORKSPACE
+      working-directory: ${{runner.workspace}}
       shell: bash
       run: |
         echo '$GITHUB_WORKSPACE/tools/lint.sh ${{ github.event.before }}..${{ github.event.after }}'
@@ -57,7 +57,7 @@ jobs:
         
 
     - name: clang-tidy lint
-      working-directory: $GITHUB_WORKSPACE
+      working-directory: ${{runner.workspace}}
       shell: bash
       run: |
         echo 'cmake -B ${{runner.workspace}}/build --build . --config=$BUILD_TYPE --target=generated-source && $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.event.before }}..${{ github.event.after }} || true;'
