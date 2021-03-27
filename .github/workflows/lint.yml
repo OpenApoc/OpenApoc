@@ -51,6 +51,8 @@ jobs:
       shell: bash
       run: |
         echo '$GITHUB_WORKSPACE/tools/lint.sh ${{ github.event.before }}..${{ github.event.after }}'
+        echo "where are we? $GITHUB_WORKSPACE"
+        ls -l $GITHUB_WORKSPACE
         $GITHUB_WORKSPACE/tools/lint.sh ${{ github.event.before }}..${{ github.event.after }}
         
 
