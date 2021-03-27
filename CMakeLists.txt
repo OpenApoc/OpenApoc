@@ -1,6 +1,12 @@
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.9)
 
+# This changes the vcpkg features, so needs to be set before the first PROJECT() call
+option(BUILD_LAUNCHER "Build the launcher" ON)
+if (BUILD_LAUNCHER)
+		list(APPEND VCPKG_MANIFEST_FEATURES "launcher")
+endif()
+
 # project name, and type
 PROJECT(OpenApoc CXX C)
 
