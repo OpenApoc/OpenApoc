@@ -32,6 +32,7 @@ endif()
 
 if (BUILD_LAUNCHER)
 		add_subdirectory(launcher)
+		list(APPEND VCPKG_MANIFEST_FEATURES "launcher")
 endif()
 
 # GameState serialization code generator isn't optional
