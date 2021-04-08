@@ -123,6 +123,15 @@ UString GameTime::getShortDateString() const
 
 UString GameTime::getWeekString() const { return format("%s %d", tr("Week"), getWeek()); }
 
+unsigned int GameTime::getMonth() const
+{
+	date currentDate = getPtime(this->ticks).date();
+
+	int months = (currentDate.year() - GAME_START.date().year()) * 12 + currentDate.month() -
+	             GAME_START.date().month();
+	return months;
+}
+
 unsigned int GameTime::getWeek() const
 {
 	date firstMonday = previous_weekday(GAME_START.date(), greg_weekday(Monday));
@@ -131,11 +140,48 @@ unsigned int GameTime::getWeek() const
 	return duration.days() / 7 + 1;
 }
 
+unsigned int GameTime::getLastDayOfCurrentWeek() const {
+	unsigned int daysBeforeWeekEnd = 7 - getPtime(this->ticks).date().day_of_week();
+	return getPtime(this->ticks + (daysBeforeWeekEnd * TICKS_PER_DAY)).date().year_month_day().day;
+}
+
+unsigned int GameTime::getLastDayOfCurrentMonth() const
+{
+	return getPtime(this->ticks).date().end_of_month().year_month_day().day;
+}
+
 unsigned int GameTime::getDay() const { return (this->ticks + TICKS_PER_DAY - 1) / TICKS_PER_DAY; }
+
+unsigned int GameTime::getMonthDay() const
+{
+	return getPtime(this->ticks).date().year_month_day().day;
+}
 
 unsigned int GameTime::getHours() const { return getPtime(this->ticks).time_of_day().hours(); }
 
 unsigned int GameTime::getMinutes() const { return getPtime(this->ticks).time_of_day().minutes(); }
+
+unsigned int GameTime::getSeconds() const { return getPtime(this->ticks).time_of_day().seconds(); }
+
+unsigned int GameTime::getTicksBetween(unsigned int fromDays, unsigned int fromHours,
+                                       unsigned int fromMinutes, unsigned int fromSeconds,
+                                       unsigned int toDays, unsigned int toHours,
+                                       unsigned int toMinutes, unsigned int toSeconds) const
+{
+	if (fromDays <= toDays && fromHours <= toHours && fromMinutes <= toMinutes &&
+	    fromSeconds < toSeconds)
+	{
+		unsigned int days_diff_in_ticks = (toDays - fromDays) * TICKS_PER_DAY;
+		unsigned int hours_diff_in_ticks = (toHours - fromHours) * TICKS_PER_HOUR;
+		unsigned int minutes_diff_in_ticks = (toMinutes - fromMinutes) * TICKS_PER_MINUTE;
+		unsigned int seconds_diff_in_ticks = (toSeconds - fromSeconds) * TICKS_PER_SECOND;
+
+		return days_diff_in_ticks + hours_diff_in_ticks + minutes_diff_in_ticks +
+		       seconds_diff_in_ticks;
+	}
+	else
+		return 0;
+}
 
 uint64_t GameTime::getTicks() const { return ticks; }
 

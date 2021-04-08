@@ -34,10 +34,24 @@ class GameTime
 
 	unsigned int getMinutes() const;
 
+	unsigned int getSeconds() const;
+
+	unsigned int getMonthDay() const;
+
 	unsigned int getDay() const;
 
 	unsigned int getWeek() const;
 
+	unsigned int getMonth() const;
+
+	unsigned int getLastDayOfCurrentWeek() const;
+
+	unsigned int getLastDayOfCurrentMonth() const;
+
+	unsigned int getTicksBetween(unsigned int fromDays, unsigned int fromHours,
+	                             unsigned int fromMinutes, unsigned int fromSeconds,
+	                             unsigned int toDays, unsigned int toHours, unsigned int toMinutes,
+	                             unsigned int toSeconds) const;
 	uint64_t getTicks() const;
 
 	// returns week with prefix
