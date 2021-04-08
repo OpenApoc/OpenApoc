@@ -181,6 +181,27 @@ void CheatOptions::eventOccurred(Event *e)
 			    menuform->findControlTyped<ScrollBar>("MODIFY_FUNDS")->getValue() * 1000;
 			menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 		}
+		else if (e->forms().RaisedBy->Name == "BUTTON_SET_TIME_BEFORE_MIDNIGHT")
+		{
+			GameTime gt = state->gameTime;
+			state->gameTime.addTicks(gt.getTicksBetween(gt.getMonthDay(), gt.getHours(),
+			                                            gt.getMinutes(), gt.getSeconds(),
+			                                            gt.getMonthDay(), 23, 59, 59));
+		}
+		else if (e->forms().RaisedBy->Name == "BUTTON_FAST_FORWARD_END_WEEK")
+		{
+			GameTime gt = state->gameTime;
+			state->gameTime.addTicks(gt.getTicksBetween(gt.getMonthDay(), gt.getHours(),
+			                                            gt.getMinutes(), gt.getSeconds(),
+			                                            gt.getLastDayOfCurrentWeek(), 23, 59, 59));
+		}
+		else if (e->forms().RaisedBy->Name == "BUTTON_FAST_FORWARD_END_MONTH")
+		{
+			GameTime gt = state->gameTime;
+			state->gameTime.addTicks(gt.getTicksBetween(
+			    gt.getMonthDay(), gt.getHours(), gt.getMinutes(),gt.getSeconds(), 
+				gt.getLastDayOfCurrentMonth(), 23, 59, 59));
+		}
 		else if (e->forms().RaisedBy->Name == "BUTTON_FAST_FORWARD_DAY")
 		{
 			state->gameTime.addTicks(TICKS_PER_DAY);

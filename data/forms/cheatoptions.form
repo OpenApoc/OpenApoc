@@ -55,6 +55,21 @@
           <position x="290" y="282"/>
           <size width="140" height="28"/>
         </textbutton>
+        <textbutton text="Go to end of day" id="BUTTON_SET_TIME_BEFORE_MIDNIGHT">
+          <font>smalfont</font>
+          <position x="290" y="320"/>
+          <size width="140" height="28"/>
+        </textbutton>
+        <textbutton text="Go to end of week" id="BUTTON_FAST_FORWARD_END_WEEK">
+          <font>smalfont</font>
+          <position x="290" y="350"/>
+          <size width="140" height="28"/>
+        </textbutton>
+        <textbutton text="Go to end of month" id="BUTTON_FAST_FORWARD_END_MONTH">
+          <font>smalfont</font>
+          <position x="290" y="380"/>
+          <size width="140" height="28"/>
+        </textbutton>
         <checkbox id="CHECKBOX_INFINITE_AMMO">
           <position x="440" y="100"/>
           <size width="150" height="16"/>
