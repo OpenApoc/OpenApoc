@@ -483,6 +483,11 @@ bool CityView::handleClickedOrganisation(StateRef<Organisation> organisation, bo
 	return true;
 }
 
+void CityView::showDailyReport()
+{
+	fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<ScoreScreen>(this->state)});
+}
+
 void CityView::showWeeklyFundingReport()
 {
 	fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<WeeklyFundingScreen>(this->state)});
@@ -3827,6 +3832,12 @@ bool CityView::handleGameStateEvent(Event *e)
 			fw().stageQueueCommand(
 			    {StageCmd::Command::PUSH,
 			     mksp<DiplomaticTreatyScreen>(this->state, gameOrgEvent->organisation)});
+		}
+		break;
+		case GameEventType::DailyReport:
+		{
+			setUpdateSpeed(CityUpdateSpeed::Pause);
+			showDailyReport();
 		}
 		break;
 		case GameEventType::WeeklyReport:
