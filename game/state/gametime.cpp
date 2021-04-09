@@ -140,7 +140,8 @@ unsigned int GameTime::getWeek() const
 	return duration.days() / 7 + 1;
 }
 
-unsigned int GameTime::getLastDayOfCurrentWeek() const {
+unsigned int GameTime::getLastDayOfCurrentWeek() const
+{
 	unsigned int daysBeforeWeekEnd = 7 - getPtime(this->ticks).date().day_of_week();
 	return getPtime(this->ticks + (daysBeforeWeekEnd * TICKS_PER_DAY)).date().year_month_day().day;
 }

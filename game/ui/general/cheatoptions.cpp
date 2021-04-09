@@ -198,9 +198,9 @@ void CheatOptions::eventOccurred(Event *e)
 		else if (e->forms().RaisedBy->Name == "BUTTON_FAST_FORWARD_END_MONTH")
 		{
 			GameTime gt = state->gameTime;
-			state->gameTime.addTicks(gt.getTicksBetween(
-			    gt.getMonthDay(), gt.getHours(), gt.getMinutes(),gt.getSeconds(), 
-				gt.getLastDayOfCurrentMonth(), 23, 59, 59));
+			state->gameTime.addTicks(gt.getTicksBetween(gt.getMonthDay(), gt.getHours(),
+			                                            gt.getMinutes(), gt.getSeconds(),
+			                                            gt.getLastDayOfCurrentMonth(), 23, 59, 59));
 		}
 		else if (e->forms().RaisedBy->Name == "BUTTON_FAST_FORWARD_DAY")
 		{
