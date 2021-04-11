@@ -44,6 +44,8 @@ class GameTime
 
 	unsigned int getMonth() const;
 
+	unsigned int getFirstDayOfCurrentWeek() const;
+
 	unsigned int getLastDayOfCurrentWeek() const;
 
 	unsigned int getLastDayOfCurrentMonth() const;

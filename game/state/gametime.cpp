@@ -140,9 +140,32 @@ unsigned int GameTime::getWeek() const
 	return duration.days() / 7 + 1;
 }
 
+unsigned int GameTime::getFirstDayOfCurrentWeek() const
+{
+	date today = getPtime(this->ticks).date();
+	
+	// The boost library calculates the first day of the week as Sunday (day_of_week = 0)
+	// The game instead consider it as Monday (day_of_week = 1)
+	if (today.day_of_week() == 1) // Monday
+		return today.year_month_day().day;
+	else
+	{
+		unsigned short days_to_monday = today.day_of_week() -1;
+		if (today.day_of_week() == 0) // Sunday
+			days_to_monday = 6;
+
+		date first_day_of_week = today - days(days_to_monday);
+		return first_day_of_week.year_month_day().day;
+	}
+}
+
 unsigned int GameTime::getLastDayOfCurrentWeek() const
 {
-	unsigned int daysBeforeWeekEnd = 7 - getPtime(this->ticks).date().day_of_week();
+	unsigned short dayOfWeek = getPtime(this->ticks).date().day_of_week();
+	unsigned int daysBeforeWeekEnd = 7 - dayOfWeek;
+	if (dayOfWeek == 0) // Already sunday
+		daysBeforeWeekEnd = 0;
+
 	return getPtime(this->ticks + (daysBeforeWeekEnd * TICKS_PER_DAY)).date().year_month_day().day;
 }
 
