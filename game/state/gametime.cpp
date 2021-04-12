@@ -125,24 +125,24 @@ UString GameTime::getWeekString() const { return format("%s %d", tr("Week"), get
 
 unsigned int GameTime::getMonth() const
 {
-	date currentDate = getPtime(this->ticks).date();
+	const date currentDate = getPtime(this->ticks).date();
 
-	int months = (currentDate.year() - GAME_START.date().year()) * 12 + currentDate.month() -
+	const int months = (currentDate.year() - GAME_START.date().year()) * 12 + currentDate.month() -
 	             GAME_START.date().month();
 	return months;
 }
 
 unsigned int GameTime::getWeek() const
 {
-	date firstMonday = previous_weekday(GAME_START.date(), greg_weekday(Monday));
-	date lastMonday = previous_weekday(getPtime(this->ticks).date(), greg_weekday(Monday));
-	date_duration duration = lastMonday - firstMonday;
+	const date firstMonday = previous_weekday(GAME_START.date(), greg_weekday(Monday));
+	const date lastMonday = previous_weekday(getPtime(this->ticks).date(), greg_weekday(Monday));
+	const date_duration duration = lastMonday - firstMonday;
 	return duration.days() / 7 + 1;
 }
 
 unsigned int GameTime::getFirstDayOfCurrentWeek() const
 {
-	date today = getPtime(this->ticks).date();
+	const date today = getPtime(this->ticks).date();
 	
 	// The boost library calculates the first day of the week as Sunday (day_of_week = 0)
 	// The game instead consider it as Monday (day_of_week = 1)
@@ -154,14 +154,14 @@ unsigned int GameTime::getFirstDayOfCurrentWeek() const
 		if (today.day_of_week() == 0) // Sunday
 			days_to_monday = 6;
 
-		date first_day_of_week = today - days(days_to_monday);
+		const date first_day_of_week = today - days(days_to_monday);
 		return first_day_of_week.year_month_day().day;
 	}
 }
 
 unsigned int GameTime::getLastDayOfCurrentWeek() const
 {
-	unsigned short dayOfWeek = getPtime(this->ticks).date().day_of_week();
+	const unsigned short dayOfWeek = getPtime(this->ticks).date().day_of_week();
 	unsigned int daysBeforeWeekEnd = 7 - dayOfWeek;
 	if (dayOfWeek == 0) // Already sunday
 		daysBeforeWeekEnd = 0;
