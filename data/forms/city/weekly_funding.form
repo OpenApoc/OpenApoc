@@ -55,7 +55,7 @@
       </label>
       <label id="FUNDING_ADJUSTMENT">
         <position x="52" y="212"/>
-        <size width="200" height="15"/>
+        <size width="0" height="15"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>

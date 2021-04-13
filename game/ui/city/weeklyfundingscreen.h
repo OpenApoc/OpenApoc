@@ -3,6 +3,7 @@
 #include "framework/stage.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
+#include "library/colour.h"
 
 namespace OpenApoc
 {
@@ -18,9 +19,19 @@ class WeeklyFundingScreen : public Stage
 	sp<GameState> state;
 
 	sp<Label> labelCurrentIncome;
+	sp<Label> valueCurrentIncome;
+
 	sp<Label> labelRatingDescription;
+
 	sp<Label> labelAdjustment;
+	sp<Label> valueAdjustment;
+
 	sp<Label> labelNextWeekIncome;
+	sp<Label> valueNextWeekIncome;
+
+	void setLabel(sp<Label> label, UString text, const Colour color);
+	void setValueField(sp<Label> valueField, sp<Label> labelField, unsigned int amount,
+	                  const Colour color);
 
   public:
 	WeeklyFundingScreen(sp<GameState> state);

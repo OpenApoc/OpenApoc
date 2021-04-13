@@ -4,6 +4,7 @@
 #include "forms/label.h"
 #include "forms/ui.h"
 #include "framework/event.h"
+#include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "game/state/gamestate.h"
@@ -17,9 +18,15 @@ WeeklyFundingScreen::WeeklyFundingScreen(sp<GameState> state)
     : Stage(), menuform(ui().getForm("city/weekly_funding")), state(state)
 {
 	labelCurrentIncome = menuform->findControlTyped<Label>("FUNDING_CURRENT");
+	valueCurrentIncome = menuform->findControlTyped<Label>("FUNDING_CURRENT_VALUE");
+
 	labelRatingDescription = menuform->findControlTyped<Label>("SENATE_RATING");
+
 	labelAdjustment = menuform->findControlTyped<Label>("FUNDING_ADJUSTMENT");
+	valueAdjustment = menuform->findControlTyped<Label>("FUNDING_ADJUSTMENT_VALUE");
+
 	labelNextWeekIncome = menuform->findControlTyped<Label>("FUNDING_NEW");
+	valueNextWeekIncome = menuform->findControlTyped<Label>("FUNDING_NEW_VALUE");
 
 	auto buttonOK = menuform->findControlTyped<GraphicButton>("BUTTON_OK");
 	buttonOK->addCallback(FormEventType::ButtonClick,
@@ -44,6 +51,8 @@ void WeeklyFundingScreen::begin()
 	menuform->findControlTyped<Label>("TITLE")->setText(tr("WEEKLY FUNDING ASSESSMENT"));
 
 	UString ratingDescription;
+	const Colour deepBlueColor = {4, 73, 130, 255};
+	const Colour cyanColor = {113, 219, 255, 255};
 
 	const auto player = state->getPlayer();
 	const auto government = state->getGovernment();
@@ -107,12 +116,17 @@ void WeeklyFundingScreen::begin()
 		// Income adjustment is still based on base player funding, not current one
 		const int adjustment = (modifier == 0) ? 0 : player->income / modifier;
 
-		labelAdjustment->setText(format("%s $%d", tr("Funding adjustment>"), adjustment));
-		labelNextWeekIncome->setText(
-		    format("%s $%d", tr("Income for next week>"), currentIncome + adjustment));
+		setLabel(labelAdjustment, tr("Funding adjustment>"), deepBlueColor);
+		setValueField(valueAdjustment, labelAdjustment, adjustment, cyanColor);
+
+		setLabel(labelNextWeekIncome, tr("Income for next week>"), deepBlueColor);
+		setValueField(valueNextWeekIncome, labelNextWeekIncome, currentIncome + adjustment,
+		              cyanColor);
 	}
 
-	labelCurrentIncome->setText(format("%s $%d", tr("Current income>"), currentIncome));
+	setLabel(labelCurrentIncome, tr("Current income>"), deepBlueColor);
+	setValueField(valueCurrentIncome, labelCurrentIncome, currentIncome, cyanColor);
+
 	labelRatingDescription->setText(ratingDescription);
 }
 
@@ -152,4 +166,22 @@ void WeeklyFundingScreen::render()
 
 bool WeeklyFundingScreen::isTransition() { return false; }
 
+void WeeklyFundingScreen::setValueField(sp<Label> valueField, sp<Label> labelField,
+                                        const unsigned int amount, const Colour color)
+{
+	const UString valueText = format("$%d", amount);
+	valueField->setText(valueText);
+	valueField->Tint = color;
+	valueField->Location.x = labelField->Location.x + labelField->Size.x;
+	valueField->Location.y = labelField->Location.y;
+	valueField->Size.x = valueField->getFont().get()->getFontWidth(valueText);
+}
+
+void WeeklyFundingScreen::setLabel(sp<Label> label, UString text, const Colour color)
+{
+	text = text + " ";
+	label->setText(text);
+	label->Tint = color;
+	label->Size.x = label->getFont().get()->getFontWidth(text);
+}
 }; // namespace OpenApoc
