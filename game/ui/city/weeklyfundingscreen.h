@@ -2,7 +2,9 @@
 
 #include "framework/stage.h"
 #include "game/state/stateobject.h"
+#include "game/state/playerstatesnapshot.h"
 #include "library/sp.h"
+#include "library/colour.h"
 
 namespace OpenApoc
 {
@@ -15,15 +17,25 @@ class WeeklyFundingScreen : public Stage
 {
   private:
 	sp<Form> menuform;
-	sp<GameState> state;
+	PlayerStateSnapshot state;
 
 	sp<Label> labelCurrentIncome;
+	sp<Label> valueCurrentIncome;
+
 	sp<Label> labelRatingDescription;
+
 	sp<Label> labelAdjustment;
+	sp<Label> valueAdjustment;
+
 	sp<Label> labelNextWeekIncome;
+	sp<Label> valueNextWeekIncome;
+
+	void setLabel(sp<Label> label, UString text, const Colour color);
+	void setValueField(sp<Label> valueField, sp<Label> labelField, unsigned int amount,
+	                  const Colour color);
 
   public:
-	WeeklyFundingScreen(sp<GameState> state);
+	WeeklyFundingScreen(PlayerStateSnapshot state);
 	~WeeklyFundingScreen() override;
 	// Stage control
 	void begin() override;

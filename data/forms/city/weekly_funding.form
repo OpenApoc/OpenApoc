@@ -37,7 +37,13 @@
 	  
       <label id="FUNDING_CURRENT" text="Current income>">
         <position x="52" y="140"/>
-        <size width="400" height="15"/>
+        <size width="0" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="FUNDING_CURRENT_VALUE">
+        <position x="0" y="0"/>
+        <size width="0" height="15"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>
@@ -49,17 +55,29 @@
       </label>
       <label id="FUNDING_ADJUSTMENT">
         <position x="52" y="212"/>
-        <size width="400" height="15"/>
+        <size width="0" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      <label id="FUNDING_ADJUSTMENT_VALUE">
+        <position x="0" y="0"/>
+        <size width="0" height="15"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>
       <label id="FUNDING_NEW">
         <position x="52" y="240"/>
-        <size width="400" height="15"/>
+        <size width="0" height="15"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>
-
+      <label id="FUNDING_NEW_VALUE">
+        <position x="0" y="0"/>
+        <size width="0" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+      
       <graphicbutton id="BUTTON_OK">
         <position x="602" y="443"/>
         <size width="35" height="34"/>

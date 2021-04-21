@@ -253,7 +253,11 @@ class GameState : public std::enable_shared_from_this<GameState>
 	void updateEndOfWeek();
 
 	void updateHumanEconomy();
-	void weeklyPlayerUpdate();
+
+	void updateFundingModifier();
+	void governmentPaysPlayer();
+	void playerPaysTheBills();
+
 	int calculateFundingModifier() const;
 
 	void logEvent(GameEvent *ev);

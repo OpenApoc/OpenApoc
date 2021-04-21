@@ -2,6 +2,7 @@
 
 #include "framework/event.h"
 #include "game/state/gameeventtypes.h"
+#include "game/state/playerstatesnapshot.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -163,5 +164,14 @@ class GameLocationEvent : public GameEvent
 
 	GameLocationEvent(GameEventType type, Vec3<int> location);
 	~GameLocationEvent() override = default;
+};
+
+class GameStatusUpdateEvent : public GameEvent
+{
+  public:
+	PlayerStateSnapshot state;
+
+	GameStatusUpdateEvent(GameEventType type, PlayerStateSnapshot state);
+	~GameStatusUpdateEvent() override = default;
 };
 } // namespace OpenApoc

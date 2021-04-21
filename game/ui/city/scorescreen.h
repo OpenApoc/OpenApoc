@@ -2,6 +2,7 @@
 
 #include "framework/stage.h"
 #include "library/sp.h"
+#include "game/state/playerstatesnapshot.h"
 
 namespace OpenApoc
 {
@@ -18,7 +19,7 @@ class ScoreScreen : public Stage
 	sp<Form> formFinance;
 	sp<Label> title;
 
-	sp<GameState> state;
+	PlayerStateSnapshot state;
 
 	// Default form state
 	bool isWeeklyUpkeep = false;
@@ -33,7 +34,7 @@ class ScoreScreen : public Stage
 	void setFinanceMode();
 
   public:
-	ScoreScreen(sp<GameState> state, bool showWeeklyUpkeep = false);
+	ScoreScreen(PlayerStateSnapshot state, bool showWeeklyUpkeep = false);
 	~ScoreScreen() override;
 
 	// Stage control

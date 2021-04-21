@@ -1237,22 +1237,24 @@ void GameState::updateEndOfWeek()
 
 	luaGameState.callHook("updateEndOfWeek", 0, 0);
 
-	fw().pushEvent(new GameEvent(GameEventType::WeeklyReport));
-	weeklyPlayerUpdate();
+	governmentPaysPlayer();
+
+	fw().pushEvent(new GameStatusUpdateEvent(GameEventType::WeeklyReport,
+	                                         PlayerStateSnapshot(this->shared_from_this())));
+
+	updateFundingModifier();
+	playerPaysTheBills();
+
+	weekScore.reset();
 }
 
-void GameState::weeklyPlayerUpdate()
+void GameState::governmentPaysPlayer()
 {
 	// Player government income
 	if (!fundingTerminated)
 	{
-		if (government->isRelatedTo(player) == Organisation::Relation::Hostile ||
-		    totalScore.getTotal() < -2400)
-		{
-			fundingTerminated = true;
-			player->income = 0;
-		}
-		else
+		if (government->isRelatedTo(player) != Organisation::Relation::Hostile &&
+		    totalScore.getTotal() > -2400)
 		{
 			int income = player->income;
 
@@ -1266,7 +1268,23 @@ void GameState::weeklyPlayerUpdate()
 			// Actual money transfer
 			player->balance += income;
 			government->balance -= income;
+		}
+	}
+}
 
+void GameState::updateFundingModifier()
+{
+	// Player government income
+	if (!fundingTerminated)
+	{
+		if (government->isRelatedTo(player) == Organisation::Relation::Hostile ||
+		    totalScore.getTotal() < -2400)
+		{
+			fundingTerminated = true;
+			player->income = 0;
+		}
+		else
+		{
 			const int fundingModifier = calculateFundingModifier();
 			if (fundingModifier != 0)
 			{
@@ -1274,7 +1292,10 @@ void GameState::weeklyPlayerUpdate()
 			}
 		}
 	}
+}
 
+void GameState::playerPaysTheBills()
+{
 	// Player overheads: salary and base upkeep
 	int totalSalary = 0;
 	for (const auto &a : agents)
@@ -1298,8 +1319,6 @@ void GameState::weeklyPlayerUpdate()
 		}
 	}
 	player->balance = player->balance - totalSalary - basesCosts;
-
-	weekScore.reset();
 }
 
 // Recalculates AI organization and civilian finances, updating budgets and salaries
