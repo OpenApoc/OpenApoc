@@ -10,18 +10,19 @@
 #include "game/state/city/base.h"
 #include "game/state/city/facility.h"
 #include "game/state/gamestate.h"
+#include "game/state/playerstatesnapshot.h"
 #include "game/state/shared/agent.h"
 #include "game/state/shared/organisation.h"
 #include "game/ui/base/recruitscreen.h"
 
 namespace OpenApoc
 {
-ScoreScreen::ScoreScreen(sp<GameState> state, bool showWeeklyUpkeep)
+ScoreScreen::ScoreScreen(PlayerStateSnapshot state, bool showWeeklyUpkeep)
     : Stage(), menuform(ui().getForm("city/score")), state(state), isWeeklyUpkeep(showWeeklyUpkeep)
 {
-	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
-	menuform->findControlTyped<Label>("TEXT_DATE")->setText(state->gameTime.getLongDateString());
-	menuform->findControlTyped<Label>("TEXT_WEEK")->setText(state->gameTime.getWeekString());
+	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state.getPlayerBalance());
+	menuform->findControlTyped<Label>("TEXT_DATE")->setText(state.gameTime.getLongDateString());
+	menuform->findControlTyped<Label>("TEXT_WEEK")->setText(state.gameTime.getWeekString());
 
 	formScore = menuform->findControlTyped<Form>("SCORE_VIEW");
 	formFinance = menuform->findControlTyped<Form>("FINANCE_VIEW");
@@ -60,38 +61,38 @@ void ScoreScreen::setScoreMode()
 		formScoreFilled = true;
 
 		formScore->findControlTyped<Label>("TACTICAL_W")
-		    ->setText(format("%d", state->weekScore.tacticalMissions));
+		    ->setText(format("%d", state.weekScore.tacticalMissions));
 		formScore->findControlTyped<Label>("RESEARCH_W")
-		    ->setText(format("%d", state->weekScore.researchCompleted));
+		    ->setText(format("%d", state.weekScore.researchCompleted));
 		formScore->findControlTyped<Label>("ALIEN_W")->setText(
-		    format("%d", state->weekScore.alienIncidents));
+		    format("%d", state.weekScore.alienIncidents));
 		formScore->findControlTyped<Label>("UFO_SHOTDOWN_W")
-		    ->setText(format("%d", state->weekScore.craftShotDownUFO));
+		    ->setText(format("%d", state.weekScore.craftShotDownUFO));
 		formScore->findControlTyped<Label>("CRAFT_SHOTDOWN_W")
-		    ->setText(format("%d", state->weekScore.craftShotDownXCom));
+		    ->setText(format("%d", state.weekScore.craftShotDownXCom));
 		formScore->findControlTyped<Label>("INCURSIONS_W")
-		    ->setText(format("%d", state->weekScore.incursions));
+		    ->setText(format("%d", state.weekScore.incursions));
 		formScore->findControlTyped<Label>("DAMAGE_W")
-		    ->setText(format("%d", state->weekScore.cityDamage));
+		    ->setText(format("%d", state.weekScore.cityDamage));
 		formScore->findControlTyped<Label>("TOTAL_W")->setText(
-		    format("%d", state->weekScore.getTotal()));
+		    format("%d", state.weekScore.getTotal()));
 
 		formScore->findControlTyped<Label>("TACTICAL_T")
-		    ->setText(format("%d", state->totalScore.tacticalMissions));
+		    ->setText(format("%d", state.totalScore.tacticalMissions));
 		formScore->findControlTyped<Label>("RESEARCH_T")
-		    ->setText(format("%d", state->totalScore.researchCompleted));
+		    ->setText(format("%d", state.totalScore.researchCompleted));
 		formScore->findControlTyped<Label>("ALIEN_T")->setText(
-		    format("%d", state->totalScore.alienIncidents));
+		    format("%d", state.totalScore.alienIncidents));
 		formScore->findControlTyped<Label>("UFO_SHOTDOWN_T")
-		    ->setText(format("%d", state->totalScore.craftShotDownUFO));
+		    ->setText(format("%d", state.totalScore.craftShotDownUFO));
 		formScore->findControlTyped<Label>("CRAFT_SHOTDOWN_T")
-		    ->setText(format("%d", state->totalScore.craftShotDownXCom));
+		    ->setText(format("%d", state.totalScore.craftShotDownXCom));
 		formScore->findControlTyped<Label>("INCURSIONS_T")
-		    ->setText(format("%d", state->totalScore.incursions));
+		    ->setText(format("%d", state.totalScore.incursions));
 		formScore->findControlTyped<Label>("DAMAGE_T")
-		    ->setText(format("%d", state->totalScore.cityDamage));
+		    ->setText(format("%d", state.totalScore.cityDamage));
 		formScore->findControlTyped<Label>("TOTAL_T")->setText(
-		    format("%d", state->totalScore.getTotal()));
+		    format("%d", state.totalScore.getTotal()));
 	}
 
 	title->setText(tr("SCORE"));
@@ -108,50 +109,40 @@ void ScoreScreen::setFinanceMode()
 	{
 		formFinanceFilled = true;
 
-		int soldiers = 0, biochemists = 0, engineers = 0, physicists = 0;
-		for (auto &a : state->agents)
-		{
-			if (a.second->owner == state->getPlayer())
-			{
-				switch (a.second->type->role)
-				{
-					case AgentType::Role::BioChemist:
-						biochemists++;
-						break;
-					case AgentType::Role::Engineer:
-						engineers++;
-						break;
-					case AgentType::Role::Physicist:
-						physicists++;
-						break;
-					case AgentType::Role::Soldier:
-						soldiers++;
-						break;
-				}
-			}
-		}
-		formFinance->findControlTyped<Label>("AGENTS_Q")->setText(format("%d", soldiers));
-		formFinance->findControlTyped<Label>("BIOCHEMISTS_Q")->setText(format("%d", biochemists));
-		formFinance->findControlTyped<Label>("ENGINEERS_Q")->setText(format("%d", engineers));
-		formFinance->findControlTyped<Label>("PHYSICISTS_Q")->setText(format("%d", physicists));
-		formFinance->findControlTyped<Label>("TOTAL_Q")->setText(
-		    format("%d", soldiers + biochemists + engineers + physicists));
-		formFinance->findControlTyped<Label>("BASES_TOTAL_Q")
-		    ->setText(format("%d", state->player_bases.size()));
-
 		auto getSalary = [this](AgentType::Role role) {
-			auto it = state->agent_salary.find(role);
-			if (it != state->agent_salary.end())
+			auto it = state.agent_salary.find(role);
+			if (it != state.agent_salary.end())
 			{
 				return it->second;
 			}
 			return 0;
 		};
 
-		soldiers *= getSalary(AgentType::Role::Soldier);
-		biochemists *= getSalary(AgentType::Role::BioChemist);
-		engineers *= getSalary(AgentType::Role::Engineer);
-		physicists *= getSalary(AgentType::Role::Physicist);
+		formFinance->findControlTyped<Label>("AGENTS_Q")
+		    ->setText(format("%d", state.agent_qty[AgentType::Role::Soldier]));
+		formFinance->findControlTyped<Label>("BIOCHEMISTS_Q")
+		    ->setText(format("%d", state.agent_qty[AgentType::Role::BioChemist]));
+		formFinance->findControlTyped<Label>("ENGINEERS_Q")
+		    ->setText(format("%d", state.agent_qty[AgentType::Role::Engineer]));
+		formFinance->findControlTyped<Label>("PHYSICISTS_Q")
+		    ->setText(format("%d", state.agent_qty[AgentType::Role::Physicist]));
+		formFinance->findControlTyped<Label>("TOTAL_Q")->setText(
+		    format("%d", state.agent_qty[AgentType::Role::Soldier] +
+		                     state.agent_qty[AgentType::Role::BioChemist] +
+		                     state.agent_qty[AgentType::Role::Engineer] +
+		                     state.agent_qty[AgentType::Role::Physicist]));
+		formFinance->findControlTyped<Label>("BASES_TOTAL_Q")
+		    ->setText(format("%d", state.playerBasesWeeklyCosts.size()));
+
+		int soldiers =
+		    getSalary(AgentType::Role::Soldier) * state.agent_qty[AgentType::Role::Soldier];
+		int biochemists =
+		    getSalary(AgentType::Role::BioChemist) * state.agent_qty[AgentType::Role::BioChemist];
+		int engineers =
+		    getSalary(AgentType::Role::Engineer) * state.agent_qty[AgentType::Role::Engineer];
+		int physicists =
+		    getSalary(AgentType::Role::Physicist) * state.agent_qty[AgentType::Role::Physicist];
+
 		int agentsSalary = soldiers + biochemists + engineers + physicists;
 
 		formFinance->findControlTyped<Label>("AGENTS_W")->setText(format("$%d", soldiers));
@@ -161,25 +152,17 @@ void ScoreScreen::setFinanceMode()
 		formFinance->findControlTyped<Label>("TOTAL_W")->setText(format("$%d", agentsSalary));
 
 		int basesCosts = 0;
-		for (auto &b : state->player_bases)
+
+		for (const auto &[key, value] : state.playerBasesWeeklyCosts)
 		{
-			for (auto &f : b.second->facilities)
-			{
-				basesCosts += f->type->weeklyCost;
-			}
+			basesCosts += value;
 		}
+
 		formFinance->findControlTyped<Label>("BASES_TOTAL_W")->setText(format("$%d", basesCosts));
 		formFinance->findControlTyped<Label>("OVERHEADS_W")
 		    ->setText(format("$%d", agentsSalary + basesCosts));
 
-		int balance = state->getPlayer()->balance;
-
-		// Special case: during weekly upkeep balance was already adjusted by the game loop
-		if (isWeeklyUpkeep)
-		{
-			// revert balance value to original for display
-			balance += agentsSalary + basesCosts;
-		}
+		int balance = state.playerBalance;
 
 		formFinance->findControlTyped<Label>("INITIAL")->setText(
 		    format("%s $%d", tr("Initial funds>"), balance));
