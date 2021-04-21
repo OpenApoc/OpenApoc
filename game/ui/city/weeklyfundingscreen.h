@@ -2,6 +2,7 @@
 
 #include "framework/stage.h"
 #include "game/state/stateobject.h"
+#include "game/state/playerstatesnapshot.h"
 #include "library/sp.h"
 #include "library/colour.h"
 
@@ -16,7 +17,7 @@ class WeeklyFundingScreen : public Stage
 {
   private:
 	sp<Form> menuform;
-	sp<GameState> state;
+	PlayerStateSnapshot state;
 
 	sp<Label> labelCurrentIncome;
 	sp<Label> valueCurrentIncome;
@@ -34,7 +35,7 @@ class WeeklyFundingScreen : public Stage
 	                  const Colour color);
 
   public:
-	WeeklyFundingScreen(sp<GameState> state);
+	WeeklyFundingScreen(PlayerStateSnapshot state);
 	~WeeklyFundingScreen() override;
 	// Stage control
 	void begin() override;

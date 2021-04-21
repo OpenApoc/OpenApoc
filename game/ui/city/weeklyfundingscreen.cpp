@@ -7,14 +7,14 @@
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
-#include "game/state/gamestate.h"
+#include "game/state/playerstatesnapshot.h"
 #include "game/state/shared/organisation.h"
 #include "game/ui/city/scorescreen.h"
 
 namespace OpenApoc
 {
 
-WeeklyFundingScreen::WeeklyFundingScreen(sp<GameState> state)
+WeeklyFundingScreen::WeeklyFundingScreen(PlayerStateSnapshot state)
     : Stage(), menuform(ui().getForm("city/weekly_funding")), state(state)
 {
 	labelCurrentIncome = menuform->findControlTyped<Label>("FUNDING_CURRENT");
@@ -38,15 +38,15 @@ WeeklyFundingScreen::~WeeklyFundingScreen() = default;
 void WeeklyFundingScreen::begin()
 {
 	// Validate that we can recieve funding
-	if (state->fundingTerminated)
+	if (state.fundingTerminated)
 	{
 		fw().stageQueueCommand({StageCmd::Command::POP});
 		return;
 	}
 
-	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
-	menuform->findControlTyped<Label>("TEXT_DATE")->setText(state->gameTime.getLongDateString());
-	menuform->findControlTyped<Label>("TEXT_WEEK")->setText(state->gameTime.getWeekString());
+	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state.getPlayerBalance());
+	menuform->findControlTyped<Label>("TEXT_DATE")->setText(state.gameTime.getLongDateString());
+	menuform->findControlTyped<Label>("TEXT_WEEK")->setText(state.gameTime.getWeekString());
 
 	menuform->findControlTyped<Label>("TITLE")->setText(tr("WEEKLY FUNDING ASSESSMENT"));
 
@@ -54,11 +54,9 @@ void WeeklyFundingScreen::begin()
 	const Colour deepBlueColor = {4, 73, 130, 255};
 	const Colour cyanColor = {113, 219, 255, 255};
 
-	const auto player = state->getPlayer();
-	const auto government = state->getGovernment();
-	int currentIncome = player->income;
+	int currentIncome = state.playerIncome;
 
-	if (government->isRelatedTo(player) == Organisation::Relation::Hostile)
+	if (state.government_player_relationship == Organisation::Relation::Hostile)
 	{
 		ratingDescription =
 		    tr("The Senate has declared total hostility to X-COM and there will be no further "
@@ -67,7 +65,7 @@ void WeeklyFundingScreen::begin()
 
 		currentIncome = 0;
 	}
-	else if (state->totalScore.getTotal() < -2400)
+	else if (state.totalScore.getTotal() < -2400)
 	{
 		ratingDescription = tr("The Senate considers the performance of X-COM to be so abysmal "
 		                       "that it will cease funding from now on.");
@@ -76,17 +74,17 @@ void WeeklyFundingScreen::begin()
 	}
 	else
 	{
-		const int rating = state->weekScore.getTotal();
-		const int modifier = state->calculateFundingModifier();
+		const int rating = state.weekScore.getTotal();
+		const int modifier = state.fundingModifier;
 
 		int neutralRatingThreshold = 0;
-		if (!state->weekly_rating_rules.empty())
+		if (!state.weekly_rating_rules.empty())
 		{
 			// last entry should be smallest positive value that gives funding increase
-			neutralRatingThreshold = state->weekly_rating_rules.back().first;
+			neutralRatingThreshold = state.weekly_rating_rules.back().first;
 		}
 
-		const int availableGovFunds = government->balance / 2;
+		const int availableGovFunds = state.governmentBalance / 2;
 
 		if (availableGovFunds < currentIncome)
 		{
@@ -114,7 +112,7 @@ void WeeklyFundingScreen::begin()
 		}
 
 		// Income adjustment is still based on base player funding, not current one
-		const int adjustment = (modifier == 0) ? 0 : player->income / modifier;
+		const int adjustment = (modifier == 0) ? 0 : state.playerIncome / modifier;
 
 		setLabel(labelAdjustment, tr("Funding adjustment>"), deepBlueColor);
 		setValueField(valueAdjustment, labelAdjustment, adjustment, cyanColor);
@@ -136,7 +134,7 @@ void WeeklyFundingScreen::resume() {}
 
 void WeeklyFundingScreen::finish()
 {
-	fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<ScoreScreen>(this->state, true)});
+	fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<ScoreScreen>(state, true)});
 }
 
 void WeeklyFundingScreen::eventOccurred(Event *e)
