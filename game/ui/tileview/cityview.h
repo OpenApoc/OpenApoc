@@ -1,5 +1,6 @@
 #pragma once
 
+#include "game/state/playerstatesnapshot.h"
 #include "game/state/stateobject.h"
 #include "game/ui/tileview/citytileview.h"
 #include "library/sp.h"
@@ -103,7 +104,7 @@ class CityView : public CityTileView
 	bool handleClickedOrganisation(StateRef<Organisation> organisation, bool rightClick,
 	                               CitySelectionState selState);
 
-	void showWeeklyFundingReport();
+	void showWeeklyFundingReport(PlayerStateSnapshot state_snapshot);
 	void tryOpenUfopaediaEntry(StateRef<UfopaediaEntry> ufopaediaEntry);
 
 	// Orders

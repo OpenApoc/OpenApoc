@@ -483,9 +483,9 @@ bool CityView::handleClickedOrganisation(StateRef<Organisation> organisation, bo
 	return true;
 }
 
-void CityView::showWeeklyFundingReport()
+void CityView::showWeeklyFundingReport(PlayerStateSnapshot state_snapshot)
 {
-	fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<WeeklyFundingScreen>(this->state)});
+	fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<WeeklyFundingScreen>(state_snapshot)});
 }
 
 void CityView::tryOpenUfopaediaEntry(StateRef<UfopaediaEntry> ufopaediaEntry)
@@ -1052,7 +1052,7 @@ CityView::CityView(sp<GameState> state)
 	    });
 	this->baseForm->findControl("BUTTON_SHOW_SCORE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<ScoreScreen>(this->state)});
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<ScoreScreen>(PlayerStateSnapshot(this->state))});
 	    });
 	this->baseForm->findControl("BUTTON_SHOW_UFOPAEDIA")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
@@ -3831,8 +3831,13 @@ bool CityView::handleGameStateEvent(Event *e)
 		break;
 		case GameEventType::WeeklyReport:
 		{
+			auto ev = dynamic_cast<GameStatusUpdateEvent *>(e);
+			if (!ev)
+			{
+				LogError("Invalid GameStatusUpdateEvent event");
+			}
 			setUpdateSpeed(CityUpdateSpeed::Pause);
-			showWeeklyFundingReport();
+			showWeeklyFundingReport(ev->state);
 		}
 		break;
 		default:
