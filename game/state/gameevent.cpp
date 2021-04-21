@@ -4,6 +4,7 @@
 #include "game/state/battle/battle.h"
 #include "game/state/city/base.h"
 #include "game/state/city/building.h"
+#include "game/state/playerstatesnapshot.h"
 #include "game/state/rules/city/vehicletype.h"
 #include "game/state/shared/agent.h"
 #include "game/state/shared/organisation.h"
@@ -412,5 +413,11 @@ GameSomethingDiedEvent::GameSomethingDiedEvent(GameEventType type, UString name,
 			break;
 	}
 }
+
+GameStatusUpdateEvent::GameStatusUpdateEvent(GameEventType type, PlayerStateSnapshot state)
+    : GameEvent(type), state(PlayerStateSnapshot(state))
+{
+}
+
 UString GameSomethingDiedEvent::message() { return messageInner; }
 } // namespace OpenApoc
