@@ -128,7 +128,7 @@ unsigned int GameTime::getMonth() const
 	const date currentDate = getPtime(this->ticks).date();
 
 	const int months = (currentDate.year() - GAME_START.date().year()) * 12 + currentDate.month() -
-	             GAME_START.date().month();
+	                   GAME_START.date().month();
 	return months;
 }
 
@@ -143,14 +143,14 @@ unsigned int GameTime::getWeek() const
 unsigned int GameTime::getFirstDayOfCurrentWeek() const
 {
 	const date today = getPtime(this->ticks).date();
-	
+
 	// The boost library calculates the first day of the week as Sunday (day_of_week = 0)
 	// The game instead consider it as Monday (day_of_week = 1)
 	if (today.day_of_week() == 1) // Monday
 		return today.year_month_day().day;
 	else
 	{
-		unsigned short days_to_monday = today.day_of_week() -1;
+		unsigned short days_to_monday = today.day_of_week() - 1;
 		if (today.day_of_week() == 0) // Sunday
 			days_to_monday = 6;
 
