@@ -88,6 +88,7 @@ set (GAMESTATE_SOURCE_FILES
 	luagamestate_support_generated.cpp
 	message.cpp
 	savemanager.cpp
+	playerstatesnapshot.cpp
 
 	tilemap/collision.cpp
 	tilemap/pathfinding.cpp
@@ -188,6 +189,7 @@ set (GAMESTATE_HEADER_FILES
 	message.h
 	savemanager.h
 	stateobject.h
+	playerstatesnapshot.h
 
 	tilemap/collision.h
 	tilemap/tile.h
