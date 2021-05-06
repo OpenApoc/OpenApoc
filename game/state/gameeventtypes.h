@@ -105,6 +105,7 @@ enum class GameEventType
 
 	// Misc
 	MarketUpdate,
+	DailyReport,
 	WeeklyReport,
 	EnterAlienDimension,
 	LeaveAlienDimension,

@@ -187,6 +187,10 @@ void CheatOptions::eventOccurred(Event *e)
 			state->gameTime.addTicks(gt.getTicksBetween(gt.getMonthDay(), gt.getHours(),
 			                                            gt.getMinutes(), gt.getSeconds(),
 			                                            gt.getMonthDay(), 23, 59, 59));
+
+			// Clear the time flags in order to avoid side effects due to
+			// "out of game scope" ticks amount added (e.g: flag that a day/week has passed)
+			state->gameTime.clearFlags();
 		}
 		else if (e->forms().RaisedBy->Name == "BUTTON_FAST_FORWARD_END_WEEK")
 		{
@@ -194,6 +198,10 @@ void CheatOptions::eventOccurred(Event *e)
 			state->gameTime.addTicks(gt.getTicksBetween(gt.getMonthDay(), gt.getHours(),
 			                                            gt.getMinutes(), gt.getSeconds(),
 			                                            gt.getLastDayOfCurrentWeek(), 23, 59, 59));
+
+			// Clear the time flags in order to avoid side effects due to
+			// "out of game scope" ticks amount added (e.g: flag that a day/week has passed)
+			state->gameTime.clearFlags();
 		}
 		else if (e->forms().RaisedBy->Name == "BUTTON_FAST_FORWARD_END_MONTH")
 		{
@@ -201,6 +209,10 @@ void CheatOptions::eventOccurred(Event *e)
 			state->gameTime.addTicks(gt.getTicksBetween(gt.getMonthDay(), gt.getHours(),
 			                                            gt.getMinutes(), gt.getSeconds(),
 			                                            gt.getLastDayOfCurrentMonth(), 23, 59, 59));
+
+			// Clear the time flags in order to avoid side effects due to
+			// "out of game scope" ticks amount added (e.g: flag that a day/week has passed)
+			state->gameTime.clearFlags();
 		}
 		else if (e->forms().RaisedBy->Name == "BUTTON_FAST_FORWARD_DAY")
 		{
