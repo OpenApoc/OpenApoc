@@ -70,6 +70,9 @@ LauncherWindow::LauncherWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui
 	connect(ui->resolutionBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this,
 	        &LauncherWindow::setResolutionSelection);
 
+	connect(ui->languageBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this,
+	        &LauncherWindow::setLanguageSelection);
+
 	connect(ui->enabledModsList, &QListWidget::currentTextChanged, this,
 	        &LauncherWindow::enabledModSelected);
 	connect(ui->disabledModsList, &QListWidget::currentTextChanged, this,
@@ -91,6 +94,7 @@ LauncherWindow::LauncherWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui
 	ui->dataPath->setText(QString::fromStdString(OpenApoc::Options::dataPathOption.get()));
 
 	setupModList();
+	updateAvailableLanguages();
 }
 
 LauncherWindow::~LauncherWindow() {}
@@ -178,6 +182,12 @@ void LauncherWindow::setResolutionSelection(int index)
 	}
 }
 
+void LauncherWindow::setLanguageSelection(int index)
+{
+	selectedLanguageID = ui->languageBox->itemData(index).toString().toStdString();
+	LogWarning("Set selected language to %s", selectedLanguageID);
+}
+
 void LauncherWindow::saveConfig()
 {
 	const auto &comboBox = *ui->resolutionBox;
@@ -203,6 +213,7 @@ void LauncherWindow::saveConfig()
 	                                              Qt::CheckState::Checked);
 	OpenApoc::Options::cdPathOption.set(ui->cdPath->text().toStdString());
 	OpenApoc::Options::dataPathOption.set(ui->dataPath->text().toStdString());
+	OpenApoc::Options::languageOption.set(selectedLanguageID);
 	OpenApoc::config().save();
 	this->rebuildModList();
 }
@@ -313,6 +324,8 @@ void LauncherWindow::setupModList()
 		if (!enabled)
 			ui->disabledModsList->addItem(QString::fromStdString(modName));
 	}
+
+	updateAvailableLanguages();
 }
 
 void LauncherWindow::enabledModSelected(const QString &itemName)
@@ -329,6 +342,7 @@ void LauncherWindow::enabledModSelected(const QString &itemName)
 			return;
 		}
 	}
+	updateAvailableLanguages();
 }
 
 void LauncherWindow::disabledModSelected(const QString &itemName)
@@ -345,6 +359,7 @@ void LauncherWindow::disabledModSelected(const QString &itemName)
 			return;
 		}
 	}
+	updateAvailableLanguages();
 }
 
 void LauncherWindow::showModInfo(const ModInfo &info)
@@ -445,4 +460,49 @@ void LauncherWindow::disableModClicked()
 	}
 
 	this->rebuildModList();
+}
+
+static QString getLanguageName(const std::string id)
+{
+	QLocale locale(QString::fromStdString(id));
+	return locale.nativeLanguageName();
+}
+
+void LauncherWindow::updateAvailableLanguages()
+{
+	if (selectedLanguageID.empty())
+	{
+		selectedLanguageID = Options::languageOption.get();
+		if (selectedLanguageID.empty())
+		{
+			// Just default to american english if not set
+			selectedLanguageID = "en";
+		}
+	}
+
+	ui->languageBox->clear();
+
+	// FIXME: Currently just returns all supported languages of the first mod
+
+	auto foundMods = enumerateMods();
+	auto enabledMods = split(Options::modList.get(), ":");
+
+	for (const auto &enabledModName : enabledMods)
+	{
+		for (const auto &[modDir, modInfo] : foundMods)
+		{
+			if (modDir == enabledModName)
+			{
+				for (const auto &languageID : modInfo.getSupportedLanguages())
+				{
+					ui->languageBox->addItem(getLanguageName(languageID),
+					                         QString::fromStdString(languageID));
+					if (selectedLanguageID == languageID)
+					{
+						ui->languageBox->setCurrentIndex(ui->languageBox->count() - 1);
+					}
+				}
+			}
+		}
+	}
 }

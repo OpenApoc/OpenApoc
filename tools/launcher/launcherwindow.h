@@ -27,6 +27,7 @@ class LauncherWindow : public QMainWindow
 	void exit();
 	void play();
 	void setResolutionSelection(int index);
+	void setLanguageSelection(int index);
 
 	void browseCDFile();
 	void browseCDDir();
@@ -43,9 +44,11 @@ class LauncherWindow : public QMainWindow
 	void setupModList();
 	void showModInfo(const OpenApoc::ModInfo &info);
 	void rebuildModList();
+	void updateAvailableLanguages();
 
 	std::unique_ptr<OpenApoc::Framework> currentFramework;
 	std::unique_ptr<Ui::LauncherWindow> ui;
 
 	OpenApoc::UString selectedModName;
+	OpenApoc::UString selectedLanguageID;
 };
