@@ -185,7 +185,6 @@ void LauncherWindow::setResolutionSelection(int index)
 void LauncherWindow::setLanguageSelection(int index)
 {
 	selectedLanguageID = ui->languageBox->itemData(index).toString().toStdString();
-	LogWarning("Set selected language to %s", selectedLanguageID);
 }
 
 void LauncherWindow::saveConfig()
