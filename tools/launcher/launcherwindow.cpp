@@ -476,7 +476,7 @@ void LauncherWindow::updateAvailableLanguages()
 		if (selectedLanguageID.empty())
 		{
 			// Just default to american english if not set
-			selectedLanguageID = "en";
+			selectedLanguageID = "en.UTF-8";
 		}
 	}
 
