@@ -12,6 +12,15 @@
 
 using namespace OpenApoc;
 
+// FIXME: Make this dynamic?
+
+std::vector<UString> supported_languages = {
+    "cs.UTF-8",    "de_DE.UTF-8", "en.UTF-8",     "en_GB.UTF-8", "es.UTF-8",
+    "et_EE.UTF-8", "fi.UTF-8",    "fil_PH.UTF-8", "fr_FR.UTF-8", "hu_HU.UTF-8",
+    "it.UTF-8",    "ja.UTF-8",    "ja_JP.UTF-8",  "lt.UTF-8",    "nb_NO.UTF-8",
+    "pl.UTF-8",    "pt_BR.UTF-8", "pt_PT.UTF-8",  "ro_RO.UTF-8", "ru_RU.UTF-8",
+    "sk.UTF-8",    "sl_SI.UTF-8", "tr_TR.UTF-8",  "uk.UTF-8",    "zh_TW.UTF-8"};
+
 static ConfigOptionString outputPath("Extractor", "output",
                                      "Path to the extractor output directory", "./data");
 
@@ -76,6 +85,13 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     info.setStatePath("base_gamestate");
 	     info.setDataPath("data");
 	     info.setModLoadScript("scripts/org.openapoc.base/onload.lua");
+
+	     std::list<UString> languages;
+	     for (const auto &name : supported_languages)
+	     {
+		     languages.push_back(name);
+	     }
+	     info.setSupportedLanguage(languages);
 
 	     info.writeInfo(outputPath.get() + "/mods/base");
      }},
