@@ -858,10 +858,10 @@ void Framework::displayInitialise()
 	{
 		float scaleXFloat = (float)scaleX / 100.0f;
 		float scaleYFloat = (float)scaleY / 100.0f;
-		if (autoScale) {
-			constexpr Vec2<int> referenceSize(1280,720); 
-			scaleXFloat = (float)referenceSize.x / p->windowSize.x;
-			scaleYFloat = (float)referenceSize.y / p->windowSize.y;
+		if (autoScale)
+		{
+			constexpr int referenceWidth = 1280;
+			scaleYFloat = scaleXFloat = (float)referenceWidth / p->windowSize.x;
 			LogInfo("Autoscaling enabled, scaling by (%f,%f)", scaleXFloat, scaleYFloat);
 		}
 
@@ -916,7 +916,7 @@ int Framework::coordWindowToDisplayY(int y) const
 	return (float)y / p->windowSize.y * p->displaySize.y;
 }
 
-Vec2<int> Framework::coordWindowsToDisplay(const Vec2<int>& coord) const
+Vec2<int> Framework::coordWindowsToDisplay(const Vec2<int> &coord) const
 {
 	return Vec2<int>(coordWindowToDisplayX(coord.x), coordWindowToDisplayY(coord.y));
 }

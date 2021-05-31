@@ -40,6 +40,8 @@ class LauncherWindow : public QMainWindow
 
   private:
 	void setupResolutionDisplay();
+	void setupScaling();
+	void saveScalingOptions();
 	void saveConfig();
 	void setupModList();
 	void showModInfo(const OpenApoc::ModInfo &info);

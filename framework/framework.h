@@ -73,11 +73,11 @@ class Framework
 	bool displayHasWindow() const;
 	void *getWindowHandle() const;
 
-	//Map coordinates from window to display, for scaled displays
+	// Map coordinates from window to display, for scaled displays
 	int coordWindowToDisplayX(int x) const;
 	int coordWindowToDisplayY(int y) const;
-	Vec2<int> coordWindowsToDisplay(const Vec2<int>& coord) const;
-	
+	Vec2<int> coordWindowsToDisplay(const Vec2<int> &coord) const;
+
 	bool isSlowMode();
 	void setSlowMode(bool SlowEnabled);
 
