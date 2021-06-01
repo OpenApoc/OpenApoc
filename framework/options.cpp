@@ -220,8 +220,7 @@ ConfigOptionInt screenScaleYOption("Framework.Screen", "ScaleY",
                                    "Scale screen in Y direction by (percent)", 100);
 ConfigOptionBool screenAutoScale(
     "Framework.Screen", "AutoScale",
-    "Scale game proportionally to screen size in windowed mode (overrides ScaleX and ScaleY)",
-    true);
+    "Automatically scale up game viewport for modern screens (overrides ScaleX and ScaleY)", true);
 ConfigOptionString languageOption("Framework", "Language",
                                   "The language used ingame (empty for system default)", "");
 

@@ -129,8 +129,7 @@
        <item row="3" column="1">
         <widget class="QComboBox" name="scaleBox">
          <property name="toolTip">
-          <string>Scale up game assets to accomidate modern screen resolution.
-"Auto" applies to windowed mode only.</string>
+          <string>Scale up game viewport to accomidate modern screen resolution.</string>
          </property>
         </widget>
        </item>

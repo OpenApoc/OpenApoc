@@ -852,7 +852,7 @@ void Framework::displayInitialise()
 	// size)
 	int scaleX = Options::screenScaleXOption.get();
 	int scaleY = Options::screenScaleYOption.get();
-	const bool autoScale = !Options::screenFullscreenOption.get() && Options::screenAutoScale.get();
+	const bool autoScale = Options::screenAutoScale.get();
 
 	if (scaleX != 100 || scaleY != 100 || autoScale)
 	{
@@ -869,7 +869,7 @@ void Framework::displayInitialise()
 		p->displaySize.y = (int)((float)p->windowSize.y * scaleYFloat);
 		if (p->displaySize.x < 640 || p->displaySize.y < 480)
 		{
-			LogWarning("Requested scaled size of %s is lower than {640,480} and probably "
+			LogWarning("Requested scaled size of %d is lower than {640,480} and probably "
 			           "won't work, so forcing 640x480",
 			           p->displaySize.x);
 			p->displaySize.x = std::max(640, p->displaySize.x);
