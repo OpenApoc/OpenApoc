@@ -18,6 +18,7 @@ extern ConfigOptionInt screenHeightOption;
 extern ConfigOptionBool screenFullscreenOption;
 extern ConfigOptionInt screenScaleXOption;
 extern ConfigOptionInt screenScaleYOption;
+extern ConfigOptionBool screenAutoScale;
 extern ConfigOptionString languageOption;
 
 extern ConfigOptionInt frameLimit;

@@ -40,6 +40,7 @@ void dumpOptionsToLog()
 	dumpOption(screenFullscreenOption);
 	dumpOption(screenScaleXOption);
 	dumpOption(screenScaleYOption);
+	dumpOption(screenAutoScale);
 	dumpOption(languageOption);
 
 	dumpOption(targetFPS);
@@ -217,6 +218,9 @@ ConfigOptionInt screenScaleXOption("Framework.Screen", "ScaleX",
                                    "Scale screen in X direction by (percent)", 100);
 ConfigOptionInt screenScaleYOption("Framework.Screen", "ScaleY",
                                    "Scale screen in Y direction by (percent)", 100);
+ConfigOptionBool screenAutoScale(
+    "Framework.Screen", "AutoScale",
+    "Automatically scale up game viewport for modern screens (overrides ScaleX and ScaleY)", true);
 ConfigOptionString languageOption("Framework", "Language",
                                   "The language used ingame (empty for system default)", "");
 

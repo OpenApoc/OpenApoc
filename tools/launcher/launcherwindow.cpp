@@ -3,6 +3,7 @@
 #include <QProcess>
 #include <QSize>
 #include <array>
+#include <string_view>
 #include <utility>
 
 #include "launcherwindow.h"
@@ -45,10 +46,11 @@ static std::list<std::pair<UString, ModInfo>> enumerateMods()
 	return foundMods;
 }
 
-constexpr std::array<QSize, 4> default_resolutions = {
+constexpr std::array<QSize, 6> default_resolutions = {
 
     // Use {0,0} as a placeholder for 'custom', expected to be the first index
-    QSize{0, 0}, QSize{640, 480}, QSize{1280, 720}, QSize{1920, 1080}};
+    QSize{0, 0},       QSize{640, 480},   QSize{1280, 720},
+    QSize{1920, 1080}, QSize{2560, 1440}, QSize{3200, 1800}};
 
 constexpr QSize MINIMUM_RESOLUTION = {640, 480};
 constexpr QSize MAXIMUM_RESOLUTION = {100000, 100000};
@@ -89,6 +91,7 @@ LauncherWindow::LauncherWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui
 	                                          ? Qt::CheckState::Checked
 	                                          : Qt::CheckState::Unchecked);
 	setupResolutionDisplay();
+	setupScaling();
 
 	ui->cdPath->setText(QString::fromStdString(OpenApoc::Options::cdPathOption.get()));
 	ui->dataPath->setText(QString::fromStdString(OpenApoc::Options::dataPathOption.get()));
@@ -182,6 +185,95 @@ void LauncherWindow::setResolutionSelection(int index)
 	}
 }
 
+enum class ScalingType
+{
+	Auto = 0,
+	None,
+	Scale_150,
+	Scale_200,
+	Scale_300,
+	Scale_400,
+	Custom, // Fallback value: if combination of options does not match any predefined option, just
+	        // show 'custom' which, until changed to something else, won't modify stored options.
+	_count
+};
+
+struct ScalingOption
+{
+	const ScalingType type;
+	const std::string_view label;
+	const int scale_value; // Corresponding screen scale values from options
+
+	constexpr ScalingOption(ScalingType type, std::string_view label, int scale_value)
+	    : type(type), label(label), scale_value(scale_value)
+	{
+	}
+};
+
+constexpr std::array<ScalingOption, static_cast<int>(ScalingType::_count)> scaling_options = {
+    ScalingOption{ScalingType::Auto, "Auto", -1},
+    ScalingOption{ScalingType::None, "None", 100},
+    ScalingOption{ScalingType::Scale_150, "150%", 66},
+    ScalingOption{ScalingType::Scale_200, "200%", 50},
+    ScalingOption{ScalingType::Scale_300, "300%", 33},
+    ScalingOption{ScalingType::Scale_400, "400%", 25},
+    ScalingOption{ScalingType::Custom, "Custom", -1}};
+
+void LauncherWindow::setupScaling()
+{
+	auto &comboBox = *ui->scaleBox;
+	comboBox.clear();
+	for (const auto &option : scaling_options)
+	{
+		comboBox.addItem(option.label.data());
+	}
+
+	const bool autoScale = OpenApoc::Options::screenAutoScale.get();
+	ScalingType currentType = ScalingType::Custom;
+	if (autoScale)
+	{
+		currentType = ScalingType::Auto;
+	}
+	else
+	{
+		const QSize screenScale = {OpenApoc::Options::screenScaleXOption.get(),
+		                           OpenApoc::Options::screenScaleYOption.get()};
+
+		for (const auto &option : scaling_options)
+		{
+			if (option.scale_value == screenScale.width() &&
+			    option.scale_value == screenScale.height())
+			{
+				currentType = option.type;
+				break;
+			}
+		}
+	}
+
+	comboBox.setCurrentIndex(static_cast<int>(currentType));
+}
+
+void LauncherWindow::saveScalingOptions()
+{
+	int index = ui->scaleBox->currentIndex();
+	LogAssert(index >= 0 && index < scaling_options.size());
+
+	if (scaling_options[index].type == ScalingType::Auto)
+	{
+		OpenApoc::Options::screenAutoScale.set(true);
+	}
+	else if (scaling_options[index].type == ScalingType::Custom)
+	{
+		// Do nothing - keep previous settings
+	}
+	else
+	{
+		OpenApoc::Options::screenAutoScale.set(false);
+		OpenApoc::Options::screenScaleXOption.set(scaling_options[index].scale_value);
+		OpenApoc::Options::screenScaleYOption.set(scaling_options[index].scale_value);
+	}
+}
+
 void LauncherWindow::setLanguageSelection(int index)
 {
 	selectedLanguageID = ui->languageBox->itemData(index).toString().toStdString();
@@ -189,6 +281,8 @@ void LauncherWindow::setLanguageSelection(int index)
 
 void LauncherWindow::saveConfig()
 {
+	saveScalingOptions();
+
 	const auto &comboBox = *ui->resolutionBox;
 	// Index 0 is always custom resolution
 	if (comboBox.currentIndex() == 0)
