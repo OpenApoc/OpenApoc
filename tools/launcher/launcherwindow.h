@@ -41,6 +41,8 @@ class LauncherWindow : public QMainWindow
   private:
 	void setupResolutionDisplay();
 	void setupScaling();
+	void setupScreenModes();
+	void setupDisplayNum();
 	void saveScalingOptions();
 	void saveConfig();
 	void setupModList();

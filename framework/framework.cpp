@@ -710,6 +710,32 @@ void Framework::shutdownFramework()
 	p->quitProgram = true;
 }
 
+enum class ScreenMode
+{
+	Unknown,
+	Windowed,
+	FullScreen,
+	Borderless
+};
+static ScreenMode optionsScreenMode();
+
+static ScreenMode optionsScreenMode()
+{
+	constexpr std::array<std::pair<std::string_view, ScreenMode>, 3> mode_names = {
+	    {{"windowed", ScreenMode::Windowed},
+	     {"fullscreen", ScreenMode::FullScreen},
+	     {"borderless", ScreenMode::Borderless}}};
+
+	for (const auto &mode_name : mode_names)
+	{
+		if (Options::screenModeOption.get() == mode_name.first)
+		{
+			return mode_name.second;
+		}
+	}
+	return ScreenMode::Unknown;
+}
+
 void Framework::displayInitialise()
 {
 	if (!this->createWindow)
@@ -741,9 +767,27 @@ void Framework::displayInitialise()
 
 	SDL_GL_SetSwapInterval(Options::swapInterval.get());
 
+	ScreenMode mode = optionsScreenMode();
+	if (mode == ScreenMode::Unknown)
+	{
+		LogError("Unknown screen mode specified: {%s}", Options::screenModeOption.get());
+		mode = ScreenMode::Windowed;
+	}
+
+	if (mode == ScreenMode::FullScreen)
+		display_flags |= SDL_WINDOW_FULLSCREEN;
+	else if (mode == ScreenMode::Borderless)
+		display_flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+
+	int displayNumber = Options::screenDisplayNumberOption.get();
+	if (displayNumber >= SDL_GetNumVideoDisplays())
+	{
+		LogWarning("Requested display number (%d) does not exist. Using display 0", displayNumber);
+		displayNumber = 0;
+	}
+
 	int scrW = Options::screenWidthOption.get();
 	int scrH = Options::screenHeightOption.get();
-	bool scrFS = Options::screenFullscreenOption.get();
 
 	if (scrW < 640 || scrH < 480)
 	{
@@ -752,13 +796,9 @@ void Framework::displayInitialise()
 		    scrW, scrH);
 	}
 
-	if (scrFS)
-	{
-		display_flags |= SDL_WINDOW_FULLSCREEN;
-	}
-
-	p->window = SDL_CreateWindow("OpenApoc", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, scrW,
-	                             scrH, display_flags);
+	p->window =
+	    SDL_CreateWindow("OpenApoc", SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayNumber),
+	                     SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayNumber), scrW, scrH, display_flags);
 
 	if (!p->window)
 	{
