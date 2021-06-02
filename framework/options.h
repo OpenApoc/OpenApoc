@@ -16,6 +16,8 @@ extern ConfigOptionInt audioMusicGainOption;
 extern ConfigOptionInt screenWidthOption;
 extern ConfigOptionInt screenHeightOption;
 extern ConfigOptionBool screenFullscreenOption;
+extern ConfigOptionString screenModeOption;
+extern ConfigOptionInt screenDisplayNumberOption;
 extern ConfigOptionInt screenScaleXOption;
 extern ConfigOptionInt screenScaleYOption;
 extern ConfigOptionBool screenAutoScale;

@@ -38,6 +38,8 @@ void dumpOptionsToLog()
 	dumpOption(screenWidthOption);
 	dumpOption(screenHeightOption);
 	dumpOption(screenFullscreenOption);
+	dumpOption(screenModeOption);
+	dumpOption(screenDisplayNumberOption);
 	dumpOption(screenScaleXOption);
 	dumpOption(screenScaleYOption);
 	dumpOption(screenAutoScale);
@@ -212,8 +214,12 @@ ConfigOptionInt screenWidthOption("Framework.Screen", "Width", "Initial screen w
                                   1280);
 ConfigOptionInt screenHeightOption("Framework.Screen", "Height",
                                    "Initial screen height (in pixels)", 720);
-ConfigOptionBool screenFullscreenOption("Framework.Screen", "Fullscreen", "Enable fullscreen mode",
-                                        false);
+ConfigOptionBool screenFullscreenOption("Framework.Screen", "Fullscreen",
+                                        "Deprecated: use ScreenMode instead", false);
+ConfigOptionString screenModeOption("Framework.Screen", "Mode",
+                                    "Mode: {windowed,fullscreen,borderless}", "windowed");
+ConfigOptionInt screenDisplayNumberOption("Framework.Screen", "Display",
+                                          "Display number in multi-monitor setup (0..n)", 0);
 ConfigOptionInt screenScaleXOption("Framework.Screen", "ScaleX",
                                    "Scale screen in X direction by (percent)", 100);
 ConfigOptionInt screenScaleYOption("Framework.Screen", "ScaleY",

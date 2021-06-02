@@ -87,11 +87,10 @@ LauncherWindow::LauncherWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui
 	ui->customResolutionY->setValidator(
 	    new QIntValidator(MINIMUM_RESOLUTION.height(), MAXIMUM_RESOLUTION.height(), this));
 
-	ui->fullscreenCheckBox->setCheckState(OpenApoc::Options::screenFullscreenOption.get()
-	                                          ? Qt::CheckState::Checked
-	                                          : Qt::CheckState::Unchecked);
 	setupResolutionDisplay();
 	setupScaling();
+	setupScreenModes();
+	setupDisplayNum();
 
 	ui->cdPath->setText(QString::fromStdString(OpenApoc::Options::cdPathOption.get()));
 	ui->dataPath->setText(QString::fromStdString(OpenApoc::Options::dataPathOption.get()));
@@ -182,6 +181,43 @@ void LauncherWindow::setResolutionSelection(int index)
 	{
 		widthBox.setEnabled(false);
 		heightBox.setEnabled(false);
+	}
+}
+
+void LauncherWindow::setupScreenModes()
+{
+	constexpr std::array<std::string_view, 3> screen_modes = {"windowed", "fullscreen",
+	                                                          "borderless"};
+
+	auto &comboBox = *ui->screenModeBox;
+	comboBox.clear();
+	int index = 0;
+	for (const auto &option : screen_modes)
+	{
+		comboBox.addItem(option.data());
+		if (option == Options::screenModeOption.get())
+		{
+			comboBox.setCurrentIndex(index);
+		}
+		++index;
+	}
+};
+
+void LauncherWindow::setupDisplayNum()
+{
+	constexpr int MAX_DISPLAYS = 4;
+	auto &comboBox = *ui->displayNumBox;
+	comboBox.clear();
+
+	for (int i = 0; i < MAX_DISPLAYS; ++i)
+	{
+		comboBox.addItem(QString("Display #%1").arg(i));
+	}
+
+	int curDisplayValue = Options::screenDisplayNumberOption.get();
+	if (curDisplayValue < MAX_DISPLAYS)
+	{
+		comboBox.setCurrentIndex(curDisplayValue);
 	}
 }
 
@@ -302,8 +338,8 @@ void LauncherWindow::saveConfig()
 		OpenApoc::Options::screenHeightOption.set(size.height());
 	}
 
-	OpenApoc::Options::screenFullscreenOption.set(ui->fullscreenCheckBox->checkState() ==
-	                                              Qt::CheckState::Checked);
+	OpenApoc::Options::screenModeOption.set(ui->screenModeBox->currentText().toStdString());
+	OpenApoc::Options::screenDisplayNumberOption.set(ui->displayNumBox->currentIndex());
 	OpenApoc::Options::cdPathOption.set(ui->cdPath->text().toStdString());
 	OpenApoc::Options::dataPathOption.set(ui->dataPath->text().toStdString());
 	OpenApoc::Options::languageOption.set(selectedLanguageID);
