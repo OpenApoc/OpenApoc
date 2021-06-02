@@ -19,13 +19,13 @@
 #include "library/xorshift.h"
 #include <SDL.h>
 #include <algorithm>
+#include <array>
 #include <chrono>
 #include <fstream>
 #include <list>
 #include <map>
-#include <vector>
-#include <array>
 #include <string_view>
+#include <vector>
 
 #ifdef __APPLE__
 // Used for NASTY chdir() app bundle hacks
