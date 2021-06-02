@@ -24,6 +24,8 @@
 #include <list>
 #include <map>
 #include <vector>
+#include <array>
+#include <string_view>
 
 #ifdef __APPLE__
 // Used for NASTY chdir() app bundle hacks
@@ -717,7 +719,6 @@ enum class ScreenMode
 	FullScreen,
 	Borderless
 };
-static ScreenMode optionsScreenMode();
 
 static ScreenMode optionsScreenMode()
 {
