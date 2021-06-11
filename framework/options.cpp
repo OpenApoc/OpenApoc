@@ -35,6 +35,7 @@ void dumpOptionsToLog()
 	dumpOption(audioGlobalGainOption);
 	dumpOption(audioSampleGainOption);
 	dumpOption(audioMusicGainOption);
+	dumpOption(audioConcurrentSampleCount);
 	dumpOption(screenWidthOption);
 	dumpOption(screenHeightOption);
 	dumpOption(screenFullscreenOption);
@@ -210,6 +211,9 @@ ConfigOptionInt audioGlobalGainOption("Framework.Audio", "GlobalGain", "Global a
 ConfigOptionInt audioSampleGainOption("Framework.Audio", "SampleGain", "Sample audio gain (0-20)",
                                       20);
 ConfigOptionInt audioMusicGainOption("Framework.Audio", "MusicGain", "Music audio gain (0-20)", 20);
+ConfigOptionInt audioConcurrentSampleCount("Framework.Audio", "ConcurrentSamples",
+                                           "The number of concurrent samples to play at one time",
+                                           10);
 ConfigOptionInt screenWidthOption("Framework.Screen", "Width", "Initial screen width (in pixels)",
                                   1280);
 ConfigOptionInt screenHeightOption("Framework.Screen", "Height",

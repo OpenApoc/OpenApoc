@@ -1010,6 +1010,8 @@ void Framework::audioInitialise()
 	p->registeredSoundBackends["SDLRaw"].reset(getSDLSoundBackend());
 	p->registeredSoundBackends["null"].reset(getNullSoundBackend());
 
+	auto concurrent_sample_count = Options::audioConcurrentSampleCount.get();
+
 	for (auto &soundBackendName : split(Options::audioBackendsOption.get(), ":"))
 	{
 		auto backendFactory = p->registeredSoundBackends.find(soundBackendName);
@@ -1018,7 +1020,7 @@ void Framework::audioInitialise()
 			LogInfo("Sound backend %s not in supported list", soundBackendName);
 			continue;
 		}
-		SoundBackend *backend = backendFactory->second->create();
+		SoundBackend *backend = backendFactory->second->create(concurrent_sample_count);
 		if (!backend)
 		{
 			LogInfo("Sound backend %s failed to init", soundBackendName);

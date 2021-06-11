@@ -7,7 +7,7 @@ namespace OpenApoc
 class SoundBackendFactory
 {
   public:
-	virtual SoundBackend *create() = 0;
+	virtual SoundBackend *create(int concurrent_sample_count) = 0;
 	virtual ~SoundBackendFactory() = default;
 };
 
