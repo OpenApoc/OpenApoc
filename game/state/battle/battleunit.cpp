@@ -4425,7 +4425,9 @@ void BattleUnit::dropDown(GameState &state)
 	cloakTicksAccumulated = 0;
 	stopAttacking();
 	stopAttackPsi(state);
-	for (auto &a : psiAttackers)
+	//Iterate over copy as stopAttackPsi will modify the map.
+	auto psiAttackersCopy = psiAttackers;
+	for (auto &a : psiAttackersCopy)
 	{
 		auto attacker = StateRef<BattleUnit>(&state, a.first);
 		if (attacker->psiStatus != PsiStatus::Stun)
@@ -4433,6 +4435,7 @@ void BattleUnit::dropDown(GameState &state)
 			attacker->stopAttackPsi(state);
 		}
 	}
+
 	aiList.reset(state, *this);
 	resetGoal();
 	setHandState(HandState::AtEase);
