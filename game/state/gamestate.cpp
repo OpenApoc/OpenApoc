@@ -1000,6 +1000,15 @@ void OpenApoc::GameState::cleanUpDeathNote()
 		}
 		vehiclesDeathNote.clear();
 	}
+
+	if (!agentsDeathNote.empty())
+	{
+		for (auto &name : this->agentsDeathNote)
+		{
+			agents.erase(name);
+		}
+		agentsDeathNote.clear();
+	}
 }
 
 void GameState::update(unsigned int ticks)
@@ -1031,7 +1040,6 @@ void GameState::update(unsigned int ticks)
 				v.second->update(*this, ticks);
 			}
 		}
-		cleanUpDeathNote();
 
 		for (auto &a : this->agents)
 		{
@@ -1040,6 +1048,8 @@ void GameState::update(unsigned int ticks)
 				a.second->update(*this, ticks);
 			}
 		}
+
+		cleanUpDeathNote();
 
 		gameTime.addTicks(ticks);
 
