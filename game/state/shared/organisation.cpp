@@ -556,6 +556,7 @@ void Organisation::updateHirableAgents(GameState &state)
 	for (auto &a : agentsToRemove)
 	{
 		a->die(state, true);
+		a->handleDeath(state);
 	}
 	for (auto &entry : hirableAgentTypes)
 	{

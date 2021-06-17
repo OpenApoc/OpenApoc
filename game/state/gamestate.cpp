@@ -1078,6 +1078,10 @@ void GameState::update(unsigned int ticks)
 			this->updateEndOfWeek();
 		}
 		gameTime.clearFlags();
+
+		//Call again in case any of periodic updates added items to death note list
+		//TBD: unify mark-and-sweep StateObject into singe system
+		cleanUpDeathNote();
 	}
 }
 
