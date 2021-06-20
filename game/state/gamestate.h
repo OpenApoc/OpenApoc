@@ -118,6 +118,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<AgentBodyType> agent_body_types;
 	StateRefMap<AgentEquipmentLayout> agent_equipment_layouts;
 	StateRefMap<Agent> agents;
+	std::set<UString> agentsDeathNote;
 	AgentGenerator agent_generator;
 	OrganisationRaid organisation_raid_rules;
 

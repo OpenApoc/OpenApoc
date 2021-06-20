@@ -975,7 +975,7 @@ void Agent::update(GameState &state, unsigned ticks)
 		// In city we remove agent
 		if (!state.current_battle)
 		{
-			state.agents.erase(getId(state, shared_from_this()));
+			state.agentsDeathNote.insert(getId(state, shared_from_this()));
 		}
 
 		return;
