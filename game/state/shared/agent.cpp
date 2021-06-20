@@ -958,8 +958,7 @@ void Agent::die(GameState &state, bool silent)
 
 bool Agent::isDead() const { return getHealth() <= 0; }
 
-void Agent::update(GameState &state, unsigned ticks)
-{
+void Agent::handleDeath(GameState &state) {
 	if (isDead() && status == AgentStatus::Alive)
 	{
 		status = AgentStatus::Dead;
@@ -977,7 +976,14 @@ void Agent::update(GameState &state, unsigned ticks)
 		{
 			state.agentsDeathNote.insert(getId(state, shared_from_this()));
 		}
+	}
+}
 
+void Agent::update(GameState &state, unsigned ticks)
+{
+	if (isDead() && status == AgentStatus::Alive)
+	{
+		handleDeath(state);
 		return;
 	}
 
