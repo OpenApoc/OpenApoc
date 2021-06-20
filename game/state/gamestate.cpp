@@ -1079,8 +1079,8 @@ void GameState::update(unsigned int ticks)
 		}
 		gameTime.clearFlags();
 
-		//Call again in case any of periodic updates added items to death note list
-		//TBD: unify mark-and-sweep StateObject into singe system
+		// Call again in case any of periodic updates added items to death note list
+		// TBD: unify mark-and-sweep StateObject into singe system
 		cleanUpDeathNote();
 	}
 }
