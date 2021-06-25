@@ -7,6 +7,9 @@ assignees: ''
 
 ---
 
+**BEFORE POSTING, HAVE YOU SEARCHED THE TRACKER FOR EXISTING COPIES OF THE PROBLEM?**
+If so, please add the following details to those existing reports. Use broad phrases and keywords when searching for maximal results - not all related issues may use the same terminology as you
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
