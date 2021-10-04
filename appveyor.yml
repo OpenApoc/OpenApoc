@@ -23,9 +23,6 @@ init:
 #clone_depth: 10
 cache: c:\tools\vcpkg\installed
 before_build:
-  - echo "Using QT %QTPATH%"
-  - dir c:\Qt\
-  - dir %QTPATH%
   - cd c:\tools\vcpkg
   - git pull
   - git checkout 2020.11
