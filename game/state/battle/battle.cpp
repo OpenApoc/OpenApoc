@@ -552,20 +552,22 @@ void Battle::initialMapPartLinkUp()
 	LogWarning("Link up finished!");
 }
 
+enum class UnitSize
+{
+	Small,
+	Large,
+	Any
+};
+enum class UnitMovement
+{
+	Walking,
+	Flying,
+	Any
+};
+
+
 void Battle::initialUnitSpawn(GameState &state)
 {
-	enum class UnitSize
-	{
-		Small,
-		Large,
-		Any
-	};
-	enum class UnitMovement
-	{
-		Walking,
-		Flying,
-		Any
-	};
 	class SpawnBlock
 	{
 	  public:
