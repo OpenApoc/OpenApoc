@@ -54,8 +54,8 @@ jobs:
         cd $GITHUB_WORKSPACE
         if [[ -n "${{ github.base_ref}}" ]]
         then
-          echo '$GITHUB_WORKSPACE/tools/lint.sh ${{ github.base_ref }}'
-          $GITHUB_WORKSPACE/tools/lint.sh ${{ github.base_ref }}
+          echo '$GITHUB_WORKSPACE/tools/lint.sh origin/${{ github.base_ref }}'
+          $GITHUB_WORKSPACE/tools/lint.sh origin/${{ github.base_ref }}
         fi
         
 
