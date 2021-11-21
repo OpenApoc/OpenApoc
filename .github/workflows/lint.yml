@@ -52,13 +52,10 @@ jobs:
       shell: bash
       run: |
         cd $GITHUB_WORKSPACE
-        if [[ -z "${{ github.event.before }}" ]]
+        if [[ -n "${{ github.base_ref}}" ]]
         then
-          echo '$GITHUB_WORKSPACE/tools/lint.sh ${{ github.sha }}'
-          $GITHUB_WORKSPACE/tools/lint.sh ${{ github.sha }}
-        else
-          echo '$GITHUB_WORKSPACE/tools/lint.sh ${{ github.event.before }}..${{ github.event.after }}'
-          $GITHUB_WORKSPACE/tools/lint.sh ${{ github.event.before }}..${{ github.event.after }}
+          echo '$GITHUB_WORKSPACE/tools/lint.sh ${{ github.base_ref }}'
+          $GITHUB_WORKSPACE/tools/lint.sh ${{ github.base_ref }}
         fi
         
 
