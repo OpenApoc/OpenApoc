@@ -4425,7 +4425,7 @@ void BattleUnit::dropDown(GameState &state)
 	cloakTicksAccumulated = 0;
 	stopAttacking();
 	stopAttackPsi(state);
-	//Iterate over copy as stopAttackPsi will modify the map.
+	// Iterate over copy as stopAttackPsi will modify the map.
 	auto psiAttackersCopy = psiAttackers;
 	for (auto &a : psiAttackersCopy)
 	{
