@@ -740,11 +740,14 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 	auto unit = ownerAgent->unit;
 	auto payload = getPayloadType();
 	Vec3<float> originalTarget = targetPosition;
+	int number_of_shots;
 
 	if (payload->fire_sfx)
 	{
 		fw().soundBackend->playSample(payload->fire_sfx, unit->position);
 	}
+
+	number_of_shots = std::min(this->type->burst, this->ammo);
 
 	if (type->launcher)
 	{
@@ -768,7 +771,11 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 			return;
 		}
 		// Throw item (accuracy applied inside)
-		item->throwItem(state, targetPosition, velocityXY, velocityZ, true);
+
+		for (int shot_number = 0; shot_number < number_of_shots; shot_number++)
+		{
+			item->throwItem(state, targetPosition, velocityXY, velocityZ, true);
+		}
 	}
 	else
 	{
@@ -776,34 +783,42 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 
 		auto fromPos = unitPos * VELOCITY_SCALE_BATTLE;
 		auto toPos = targetPosition * VELOCITY_SCALE_BATTLE;
-		// Apply accuracy algorithm
-		Battle::accuracyAlgorithmBattle(state, fromPos, toPos,
-		                                getAccuracy(unit->current_body_state,
-		                                            unit->current_movement_state,
-		                                            unit->fire_aiming_mode),
-		                                targetUnit && targetUnit->isCloaked());
-		// Fire
-		Vec3<float> velocity = toPos - fromPos;
-		velocity = glm::normalize(velocity);
-		// Move projectile a little bit forward so that it does not shoot from inside our chest
-		// We are protecting firer from collision for first frames anyway, so this is redundant
-		// for all cases except when a unit fires with a brainsucker on it's head!
-		// But this also looks better since it does visually fire from the muzzle, not from inside
-		// the soldier
-		unitPos += velocity * 3.5f / 8.0f;
-		// Scale velocity according to speed
-		velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;
 
-		if (state.current_battle->map->tileIsValid(unitPos))
+		for (int shot_number = 0; shot_number < number_of_shots; shot_number++)
 		{
-			auto p = mksp<Projectile>(
-			    payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam, unit,
-			    targetUnit, originalTarget, unitPos, velocity, payload->turn_rate, payload->ttl,
-			    payload->damage, payload->projectile_delay, payload->explosion_depletion_rate,
-			    payload->tail_size, payload->projectile_sprites, payload->impact_sfx,
-			    payload->explosion_graphic, payload->damage_type);
-			state.current_battle->map->addObjectToMap(p);
-			state.current_battle->projectiles.insert(p);
+			// Apply accuracy algorithm
+			Battle::accuracyAlgorithmBattle(state, fromPos, toPos,
+			                                getAccuracy(unit->current_body_state,
+			                                            unit->current_movement_state,
+			                                            unit->fire_aiming_mode),
+			                                targetUnit && targetUnit->isCloaked());
+			// Fire
+			Vec3<float> velocity = toPos - fromPos;
+			velocity = glm::normalize(velocity);
+			// Move projectile a little bit forward so that it does not shoot from inside our chest
+			// We are protecting firer from collisison for first frames anyway, so this is redundant
+			// for all cases except when a unit fires with a brainsucker on it's head!
+			// But this also looks better since it does visually fire from the muzzle, not from
+			// inside
+			// the soldier
+			unitPos += velocity * 3.5f / 8.0f;
+			// Scale velocity according to speed
+			velocity *= payload->speed * PROJECTILE_VELOCITY_MULTIPLIER;
+
+			if (state.current_battle->map->tileIsValid(unitPos))
+			{
+				const auto projectile_type =
+				    payload->guided ? Projectile::Type::Missile : Projectile::Type::Beam;
+
+				auto projectile = mksp<Projectile>(
+				    projectile_type, unit, targetUnit, originalTarget, unitPos, velocity,
+				    payload->turn_rate, payload->ttl, payload->damage, payload->projectile_delay,
+				    payload->explosion_depletion_rate, payload->tail_size,
+				    payload->projectile_sprites, payload->impact_sfx, payload->explosion_graphic,
+				    payload->damage_type);
+				state.current_battle->map->addObjectToMap(projectile);
+				state.current_battle->projectiles.insert(projectile);
+			}
 		}
 	}
 
@@ -811,7 +826,11 @@ void AEquipment::fire(GameState &state, Vec3<float> targetPosition, StateRef<Bat
 	if (!config().getBool("OpenApoc.Cheat.InfiniteAmmo") ||
 	    this->ownerAgent->owner != state.getPlayer())
 	{
-		ammo--;
+		if (this->ammo < number_of_shots)
+		{
+			number_of_shots = this->ammo;
+		}
+		this->ammo -= number_of_shots;
 	}
 	if (ammo == 0 && payloadType)
 	{

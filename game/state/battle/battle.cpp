@@ -565,7 +565,6 @@ enum class UnitMovement
 	Any
 };
 
-
 void Battle::initialUnitSpawn(GameState &state)
 {
 	class SpawnBlock

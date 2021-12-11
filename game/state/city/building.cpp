@@ -365,7 +365,7 @@ void Building::updateCargo(GameState &state)
 	{
 		if (c.count == 0)
 		{
-			//Cargo expired
+			// Cargo expired
 			continue;
 		}
 		auto sourceOrg = (!c.originalOwner || c.destination->owner == c.originalOwner)
