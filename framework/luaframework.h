@@ -208,8 +208,10 @@ template <typename C>
 using LuaIteratorState = std::pair<typename C::iterator, typename C::iterator>;
 template <typename C> int advanceIpairsIterator(lua_State *L);
 template <typename C> int generateIpairsIterator(lua_State *L);
+template <typename C> int destroyIPairsIterator(lua_State *L);
 template <typename C> int advancePairsIterator(lua_State *L);
 template <typename C> int generatePairsIterator(lua_State *L);
+template <typename C> int destroyPairsIterator(lua_State *L);
 template <typename C> int containerIndexInteger(lua_State *L);
 template <typename C> int containerIndexMap(lua_State *L);
 
@@ -347,8 +349,21 @@ template <typename C> int generateIpairsIterator(lua_State *L)
 	LuaIteratorState<C> *it =
 	    (LuaIteratorState<C> *)lua_newuserdata(L, sizeof(LuaIteratorState<C>));
 	new (it) LuaIteratorState<C>((*v)->begin(), (*v)->end());
+	lua_createtable(L, 0, 1);
+
+	lua_pushcfunction(L, (destroyIPairsIterator<C>));
+	lua_setfield(L, -2, "__gc");
+	lua_setmetatable(L, -2);
 	lua_pushinteger(L, 0);
 	return 2;
+}
+
+template <typename C> int destroyIPairsIterator(lua_State *L)
+{
+	LuaIteratorState<C> *v = reinterpret_cast<LuaIteratorState<C> *>(lua_touserdata(L, 1));
+	luaL_argcheck(L, v != nullptr, 1, "Invalid argument to iterator GC function");
+	v->~LuaIteratorState<C>();
+	return 0;
 }
 
 template <typename C> int advancePairsIterator(lua_State *L)
@@ -372,7 +387,22 @@ template <typename C> int generatePairsIterator(lua_State *L)
 	LuaIteratorState<C> *it =
 	    (LuaIteratorState<C> *)lua_newuserdata(L, sizeof(LuaIteratorState<C>));
 	new (it) LuaIteratorState<C>((*v)->begin(), (*v)->end());
+
+	lua_createtable(L, 0, 1);
+
+	lua_pushcfunction(L, (destroyPairsIterator<C>));
+	lua_setfield(L, -2, "__gc");
+	lua_setmetatable(L, -2);
+
 	return 2;
+}
+
+template <typename C> int destroyPairsIterator(lua_State *L)
+{
+	LuaIteratorState<C> *v = reinterpret_cast<LuaIteratorState<C> *>(lua_touserdata(L, 1));
+	luaL_argcheck(L, v != nullptr, 1, "Invalid argument to iterator GC function");
+	v->~LuaIteratorState<C>();
+	return 0;
 }
 
 template <typename C> int containerIndexInteger(lua_State *L)

@@ -556,6 +556,7 @@ void Organisation::updateHirableAgents(GameState &state)
 	for (auto &a : agentsToRemove)
 	{
 		a->die(state, true);
+		a->handleDeath(state);
 	}
 	for (auto &entry : hirableAgentTypes)
 	{
@@ -941,8 +942,9 @@ void Organisation::signTreatyWith(GameState &state, StateRef<Organisation> other
 
 	StateRef<Organisation> currentOrg{&state, id};
 	const float myRelation = this->getRelationTo(other);
-	const float newValue =
-	    (forceAlliance) ? 100.0f : (myRelation > 0) ? std::max(myRelation + 25, 100.0f) : 0;
+	const float newValue = (forceAlliance)    ? 100.0f
+	                       : (myRelation > 0) ? std::max(myRelation + 25, 100.0f)
+	                                          : 0;
 
 	current_relations[other] = newValue;
 	other->current_relations[currentOrg] = std::max(newValue, other->getRelationTo(currentOrg));

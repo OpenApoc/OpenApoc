@@ -552,20 +552,22 @@ void Battle::initialMapPartLinkUp()
 	LogWarning("Link up finished!");
 }
 
+enum class UnitSize
+{
+	Small,
+	Large,
+	Any
+};
+enum class UnitMovement
+{
+	Walking,
+	Flying,
+	Any
+};
+
+
 void Battle::initialUnitSpawn(GameState &state)
 {
-	enum class UnitSize
-	{
-		Small,
-		Large,
-		Any
-	};
-	enum class UnitMovement
-	{
-		Walking,
-		Flying,
-		Any
-	};
 	class SpawnBlock
 	{
 	  public:
@@ -2834,7 +2836,7 @@ void Battle::finishBattle(GameState &state)
 	{
 		u->agent->die(state, true);
 		u->agent->destroy();
-		state.agents.erase(u->agent.id);
+		state.agentsDeathNote.insert(u->agent.id);
 		u->destroy();
 		state.current_battle->units.erase(u->id);
 	}
@@ -2937,7 +2939,6 @@ void Battle::exitBattle(GameState &state)
 	if (state.current_battle->skirmish)
 	{
 		// Erase agents
-		std::list<UString> agentsToRemove;
 		for (auto &a : state.agents)
 		{
 			if (!a.second->city)
@@ -2950,12 +2951,8 @@ void Battle::exitBattle(GameState &state)
 				{
 					a.second->currentVehicle->currentAgents.erase({&state, a.first});
 				}
-				agentsToRemove.push_back(a.first);
+				state.agentsDeathNote.insert(a.first);
 			}
-		}
-		for (auto &a : agentsToRemove)
-		{
-			state.agents.erase(a);
 		}
 
 		// Erase base and building

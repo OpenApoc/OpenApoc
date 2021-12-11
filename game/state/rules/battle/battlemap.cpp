@@ -1290,7 +1290,7 @@ void BattleMap::fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state,
 		if (!spawnCivilians && a->owner == state.getCivilian())
 		{
 			// Delete agent
-			state.agents.erase(a.id);
+			state.agentsDeathNote.insert(a.id);
 			a->destroy();
 			continue;
 		}
@@ -1391,6 +1391,7 @@ void BattleMap::fillSquads(sp<Battle> b, bool spawnCivilians, GameState &state,
 			}
 		}
 	}
+	state.cleanUpDeathNote();
 }
 
 void BattleMap::initNewMap(sp<Battle> b)

@@ -189,6 +189,7 @@ class Agent : public StateObject<Agent>,
 
 	void die(GameState &state, bool silent = false);
 	bool isDead() const;
+	void handleDeath(GameState &state);
 
 	// for agents spawned specifically for the current battle, like turrets
 	bool destroyAfterBattle = false;

@@ -19,10 +19,12 @@
 #include "library/xorshift.h"
 #include <SDL.h>
 #include <algorithm>
+#include <array>
 #include <chrono>
 #include <fstream>
 #include <list>
 #include <map>
+#include <string_view>
 #include <vector>
 
 #ifdef __APPLE__
@@ -557,8 +559,8 @@ void Framework::translateSdlEvents()
 				break;
 			case SDL_MOUSEMOTION:
 				fwE = new MouseEvent(EVENT_MOUSE_MOVE);
-				fwE->mouse().X = e.motion.x;
-				fwE->mouse().Y = e.motion.y;
+				fwE->mouse().X = coordWindowToDisplayX(e.motion.x);
+				fwE->mouse().Y = coordWindowToDisplayY(e.motion.y);
 				fwE->mouse().DeltaX = e.motion.xrel;
 				fwE->mouse().DeltaY = e.motion.yrel;
 				fwE->mouse().WheelVertical = 0;   // These should be handled
@@ -574,8 +576,8 @@ void Framework::translateSdlEvents()
 				{
 					int mx, my;
 					fwE->mouse().Button = SDL_GetMouseState(&mx, &my);
-					fwE->mouse().X = mx;
-					fwE->mouse().Y = my;
+					fwE->mouse().X = coordWindowToDisplayX(mx);
+					fwE->mouse().Y = coordWindowToDisplayY(my);
 					fwE->mouse().DeltaX = 0; // FIXME: This might cause problems?
 					fwE->mouse().DeltaY = 0;
 					fwE->mouse().WheelVertical = e.wheel.y;
@@ -585,8 +587,8 @@ void Framework::translateSdlEvents()
 				break;
 			case SDL_MOUSEBUTTONDOWN:
 				fwE = new MouseEvent(EVENT_MOUSE_DOWN);
-				fwE->mouse().X = e.button.x;
-				fwE->mouse().Y = e.button.y;
+				fwE->mouse().X = coordWindowToDisplayX(e.button.x);
+				fwE->mouse().Y = coordWindowToDisplayY(e.button.y);
 				fwE->mouse().DeltaX = 0; // FIXME: This might cause problems?
 				fwE->mouse().DeltaY = 0;
 				fwE->mouse().WheelVertical = 0;
@@ -596,8 +598,8 @@ void Framework::translateSdlEvents()
 				break;
 			case SDL_MOUSEBUTTONUP:
 				fwE = new MouseEvent(EVENT_MOUSE_UP);
-				fwE->mouse().X = e.button.x;
-				fwE->mouse().Y = e.button.y;
+				fwE->mouse().X = coordWindowToDisplayX(e.button.x);
+				fwE->mouse().Y = coordWindowToDisplayY(e.button.y);
 				fwE->mouse().DeltaX = 0; // FIXME: This might cause problems?
 				fwE->mouse().DeltaY = 0;
 				fwE->mouse().WheelVertical = 0;
@@ -710,6 +712,31 @@ void Framework::shutdownFramework()
 	p->quitProgram = true;
 }
 
+enum class ScreenMode
+{
+	Unknown,
+	Windowed,
+	FullScreen,
+	Borderless
+};
+
+static ScreenMode optionsScreenMode()
+{
+	constexpr std::array<std::pair<std::string_view, ScreenMode>, 3> mode_names = {
+	    {{"windowed", ScreenMode::Windowed},
+	     {"fullscreen", ScreenMode::FullScreen},
+	     {"borderless", ScreenMode::Borderless}}};
+
+	for (const auto &mode_name : mode_names)
+	{
+		if (Options::screenModeOption.get() == mode_name.first)
+		{
+			return mode_name.second;
+		}
+	}
+	return ScreenMode::Unknown;
+}
+
 void Framework::displayInitialise()
 {
 	if (!this->createWindow)
@@ -741,9 +768,27 @@ void Framework::displayInitialise()
 
 	SDL_GL_SetSwapInterval(Options::swapInterval.get());
 
+	ScreenMode mode = optionsScreenMode();
+	if (mode == ScreenMode::Unknown)
+	{
+		LogError("Unknown screen mode specified: {%s}", Options::screenModeOption.get());
+		mode = ScreenMode::Windowed;
+	}
+
+	if (mode == ScreenMode::FullScreen)
+		display_flags |= SDL_WINDOW_FULLSCREEN;
+	else if (mode == ScreenMode::Borderless)
+		display_flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+
+	int displayNumber = Options::screenDisplayNumberOption.get();
+	if (displayNumber >= SDL_GetNumVideoDisplays())
+	{
+		LogWarning("Requested display number (%d) does not exist. Using display 0", displayNumber);
+		displayNumber = 0;
+	}
+
 	int scrW = Options::screenWidthOption.get();
 	int scrH = Options::screenHeightOption.get();
-	bool scrFS = Options::screenFullscreenOption.get();
 
 	if (scrW < 640 || scrH < 480)
 	{
@@ -752,13 +797,9 @@ void Framework::displayInitialise()
 		    scrW, scrH);
 	}
 
-	if (scrFS)
-	{
-		display_flags |= SDL_WINDOW_FULLSCREEN;
-	}
-
-	p->window = SDL_CreateWindow("OpenApoc", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, scrW,
-	                             scrH, display_flags);
+	p->window =
+	    SDL_CreateWindow("OpenApoc", SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayNumber),
+	                     SDL_WINDOWPOS_UNDEFINED_DISPLAY(displayNumber), scrW, scrH, display_flags);
 
 	if (!p->window)
 	{
@@ -852,16 +893,24 @@ void Framework::displayInitialise()
 	// size)
 	int scaleX = Options::screenScaleXOption.get();
 	int scaleY = Options::screenScaleYOption.get();
+	const bool autoScale = Options::screenAutoScale.get();
 
-	if (scaleX != 100 || scaleY != 100)
+	if (scaleX != 100 || scaleY != 100 || autoScale)
 	{
 		float scaleXFloat = (float)scaleX / 100.0f;
 		float scaleYFloat = (float)scaleY / 100.0f;
+		if (autoScale)
+		{
+			constexpr int referenceWidth = 1280;
+			scaleYFloat = scaleXFloat = (float)referenceWidth / p->windowSize.x;
+			LogInfo("Autoscaling enabled, scaling by (%f,%f)", scaleXFloat, scaleYFloat);
+		}
+
 		p->displaySize.x = (int)((float)p->windowSize.x * scaleXFloat);
 		p->displaySize.y = (int)((float)p->windowSize.y * scaleYFloat);
 		if (p->displaySize.x < 640 || p->displaySize.y < 480)
 		{
-			LogWarning("Requested scaled size of %s is lower than {640,480} and probably "
+			LogWarning("Requested scaled size of %d is lower than {640,480} and probably "
 			           "won't work, so forcing 640x480",
 			           p->displaySize.x);
 			p->displaySize.x = std::max(640, p->displaySize.x);
@@ -897,6 +946,21 @@ int Framework::displayGetWidth() { return p->displaySize.x; }
 int Framework::displayGetHeight() { return p->displaySize.y; }
 
 Vec2<int> Framework::displayGetSize() { return p->displaySize; }
+
+int Framework::coordWindowToDisplayX(int x) const
+{
+	return (float)x / p->windowSize.x * p->displaySize.x;
+}
+
+int Framework::coordWindowToDisplayY(int y) const
+{
+	return (float)y / p->windowSize.y * p->displaySize.y;
+}
+
+Vec2<int> Framework::coordWindowsToDisplay(const Vec2<int> &coord) const
+{
+	return Vec2<int>(coordWindowToDisplayX(coord.x), coordWindowToDisplayY(coord.y));
+}
 
 bool Framework::displayHasWindow() const
 {

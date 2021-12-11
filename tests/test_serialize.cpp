@@ -6,6 +6,7 @@
 #include "game/state/gamestate_serialize.h"
 #include <iostream>
 #include <sstream>
+#include <thread>
 
 // We can't just use 'using namespace OpenApoc;' as:
 // On windows VS it says

@@ -958,7 +958,7 @@ void Agent::die(GameState &state, bool silent)
 
 bool Agent::isDead() const { return getHealth() <= 0; }
 
-void Agent::update(GameState &state, unsigned ticks)
+void Agent::handleDeath(GameState &state)
 {
 	if (isDead() && status == AgentStatus::Alive)
 	{
@@ -975,9 +975,16 @@ void Agent::update(GameState &state, unsigned ticks)
 		// In city we remove agent
 		if (!state.current_battle)
 		{
-			state.agents.erase(getId(state, shared_from_this()));
+			state.agentsDeathNote.insert(getId(state, shared_from_this()));
 		}
+	}
+}
 
+void Agent::update(GameState &state, unsigned ticks)
+{
+	if (isDead() && status == AgentStatus::Alive)
+	{
+		handleDeath(state);
 		return;
 	}
 
@@ -1241,29 +1248,27 @@ StateRef<AEquipmentType> Agent::getDominantItemInHands(GameState &state,
 	int e1Priority =
 	    e1->isFiring()
 	        ? 1440 - e1->weapon_fire_ticks_remaining
-	        : (e1->canFire(state) ? 4
-	                              : (e1->type->two_handed
-	                                     ? 3
-	                                     : (e1->type->type == AEquipmentType::Type::Weapon
-	                                            ? 2
-	                                            : (e1->type->type != AEquipmentType::Type::Ammo &&
-	                                               e1->type->type != AEquipmentType::Type::Armor &&
-	                                               e1->type->type != AEquipmentType::Type::Loot)
-	                                                  ? 1
-	                                                  : 0)));
+	        : (e1->canFire(state)
+	               ? 4
+	               : (e1->type->two_handed ? 3
+	                                       : (e1->type->type == AEquipmentType::Type::Weapon ? 2
+	                                          : (e1->type->type != AEquipmentType::Type::Ammo &&
+	                                             e1->type->type != AEquipmentType::Type::Armor &&
+	                                             e1->type->type != AEquipmentType::Type::Loot)
+	                                              ? 1
+	                                              : 0)));
 	int e2Priority =
 	    e2->isFiring()
 	        ? 1440 - e2->weapon_fire_ticks_remaining
-	        : (e2->canFire(state) ? 4
-	                              : (e2->type->two_handed
-	                                     ? 3
-	                                     : (e2->type->type == AEquipmentType::Type::Weapon
-	                                            ? 2
-	                                            : (e2->type->type != AEquipmentType::Type::Ammo &&
-	                                               e2->type->type != AEquipmentType::Type::Armor &&
-	                                               e2->type->type != AEquipmentType::Type::Loot)
-	                                                  ? 1
-	                                                  : 0)));
+	        : (e2->canFire(state)
+	               ? 4
+	               : (e2->type->two_handed ? 3
+	                                       : (e2->type->type == AEquipmentType::Type::Weapon ? 2
+	                                          : (e2->type->type != AEquipmentType::Type::Ammo &&
+	                                             e2->type->type != AEquipmentType::Type::Armor &&
+	                                             e2->type->type != AEquipmentType::Type::Loot)
+	                                              ? 1
+	                                              : 0)));
 	// Right hand has priority in case of a tie
 	if (e1Priority >= e2Priority)
 		return e1->type;

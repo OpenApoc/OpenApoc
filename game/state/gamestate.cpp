@@ -1000,6 +1000,15 @@ void OpenApoc::GameState::cleanUpDeathNote()
 		}
 		vehiclesDeathNote.clear();
 	}
+
+	if (!agentsDeathNote.empty())
+	{
+		for (auto &name : this->agentsDeathNote)
+		{
+			agents.erase(name);
+		}
+		agentsDeathNote.clear();
+	}
 }
 
 void GameState::update(unsigned int ticks)
@@ -1031,7 +1040,6 @@ void GameState::update(unsigned int ticks)
 				v.second->update(*this, ticks);
 			}
 		}
-		cleanUpDeathNote();
 
 		for (auto &a : this->agents)
 		{
@@ -1040,6 +1048,8 @@ void GameState::update(unsigned int ticks)
 				a.second->update(*this, ticks);
 			}
 		}
+
+		cleanUpDeathNote();
 
 		gameTime.addTicks(ticks);
 
@@ -1068,6 +1078,10 @@ void GameState::update(unsigned int ticks)
 			this->updateEndOfWeek();
 		}
 		gameTime.clearFlags();
+
+		// Call again in case any of periodic updates added items to death note list
+		// TBD: unify mark-and-sweep StateObject into singe system
+		cleanUpDeathNote();
 	}
 }
 
@@ -1231,7 +1245,7 @@ void GameState::updateEndOfDay()
 	}
 
 	luaGameState.callHook("updateEndOfDay", 0, 0);
-	// Check if today is the first day of the week (monday). 
+	// Check if today is the first day of the week (monday).
 	// In that case, do not show the daily report as it's already part of the weekly report event
 	if (this->gameTime.getMonthDay() != this->gameTime.getFirstDayOfCurrentWeek())
 		fw().pushEvent(new GameEvent(GameEventType::DailyReport));

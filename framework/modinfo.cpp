@@ -65,6 +65,15 @@ std::optional<ModInfo> ModInfo::getInfo(const UString &path)
 			info.conflicts().push_back(node.value());
 		}
 	}
+
+	auto languagesNode = infoNode.child("languages");
+	if (languagesNode)
+	{
+		for (const auto node : languagesNode.children("entry"))
+		{
+			info.supported_languages.push_back(node.text().get());
+		}
+	}
 	return info;
 }
 
@@ -92,6 +101,12 @@ bool ModInfo::writeInfo(const UString &path)
 	for (const auto &conflict : _conflicts)
 	{
 		conflictsNode.append_child("entry").text() = conflict.c_str();
+	}
+
+	auto languagesNode = infoNode.append_child("languages");
+	for (const auto &language : supported_languages)
+	{
+		languagesNode.append_child("entry").text() = language.c_str();
 	}
 
 	auto filePath = path + "/modinfo.xml";
