@@ -3365,7 +3365,7 @@ bool CityView::handleMouseDown(Event *e)
 		{
 			projectile =
 			    std::dynamic_pointer_cast<TileObjectProjectile>(projCollision.obj)->getProjectile();
-			LogInfo("CLICKED PROJECTILE %s at %s", projectile->damage, projectile->position);
+			LogInfo("CLICKED PROJECTILE %d at %s", projectile->damage, projectile->position);
 
 			if (!vehicle && !scenery && !portal)
 			{

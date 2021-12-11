@@ -68,7 +68,7 @@ set (FRAMEWORK_HEADER_FILES
 	logger_sdldialog.h
 	logger_file.h
 	options.h
-	modinfo.h)
+	modinfo.h translation.h)
 
 source_group(framework\\headers FILES ${FRAMEWORK_HEADER_FILES})
 list(APPEND ALL_HEADER_FILES ${FRAMEWORK_HEADER_FILES})

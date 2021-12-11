@@ -365,7 +365,7 @@ void Building::updateCargo(GameState &state)
 	{
 		if (c.count == 0)
 		{
-			LogError("Should not be possible to have zero cargo at this point?");
+			//Cargo expired
 			continue;
 		}
 		auto sourceOrg = (!c.originalOwner || c.destination->owner == c.originalOwner)

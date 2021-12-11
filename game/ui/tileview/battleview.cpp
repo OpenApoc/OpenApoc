@@ -3680,7 +3680,7 @@ bool BattleView::handleMouseDown(Event *e)
 							auto mp =
 							    std::static_pointer_cast<TileObjectBattleMapPart>(o)->getOwner();
 							debug += format(
-							    "\n[%s] SBT %d STATUS %s\nFIRE Res=%d Tim=%d Burned=%D",
+							    "\n[%s] SBT %d STATUS %s\nFIRE Res=%d Tim=%d Burned=%d",
 							    mp->type.id, mp->type->getVanillaSupportedById(),
 							    !mp->isAlive()
 							        ? "DEAD "

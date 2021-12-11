@@ -3,6 +3,7 @@
 #include <QProcess>
 #include <QSize>
 #include <array>
+#include <string_view>
 #include <utility>
 
 #include "launcherwindow.h"
@@ -45,10 +46,11 @@ static std::list<std::pair<UString, ModInfo>> enumerateMods()
 	return foundMods;
 }
 
-constexpr std::array<QSize, 4> default_resolutions = {
+constexpr std::array<QSize, 6> default_resolutions = {
 
     // Use {0,0} as a placeholder for 'custom', expected to be the first index
-    QSize{0, 0}, QSize{640, 480}, QSize{1280, 720}, QSize{1920, 1080}};
+    QSize{0, 0},       QSize{640, 480},   QSize{1280, 720},
+    QSize{1920, 1080}, QSize{2560, 1440}, QSize{3200, 1800}};
 
 constexpr QSize MINIMUM_RESOLUTION = {640, 480};
 constexpr QSize MAXIMUM_RESOLUTION = {100000, 100000};
@@ -70,6 +72,9 @@ LauncherWindow::LauncherWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui
 	connect(ui->resolutionBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this,
 	        &LauncherWindow::setResolutionSelection);
 
+	connect(ui->languageBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this,
+	        &LauncherWindow::setLanguageSelection);
+
 	connect(ui->enabledModsList, &QListWidget::currentTextChanged, this,
 	        &LauncherWindow::enabledModSelected);
 	connect(ui->disabledModsList, &QListWidget::currentTextChanged, this,
@@ -82,15 +87,16 @@ LauncherWindow::LauncherWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui
 	ui->customResolutionY->setValidator(
 	    new QIntValidator(MINIMUM_RESOLUTION.height(), MAXIMUM_RESOLUTION.height(), this));
 
-	ui->fullscreenCheckBox->setCheckState(OpenApoc::Options::screenFullscreenOption.get()
-	                                          ? Qt::CheckState::Checked
-	                                          : Qt::CheckState::Unchecked);
 	setupResolutionDisplay();
+	setupScaling();
+	setupScreenModes();
+	setupDisplayNum();
 
 	ui->cdPath->setText(QString::fromStdString(OpenApoc::Options::cdPathOption.get()));
 	ui->dataPath->setText(QString::fromStdString(OpenApoc::Options::dataPathOption.get()));
 
 	setupModList();
+	updateAvailableLanguages();
 }
 
 LauncherWindow::~LauncherWindow() {}
@@ -178,8 +184,141 @@ void LauncherWindow::setResolutionSelection(int index)
 	}
 }
 
+void LauncherWindow::setupScreenModes()
+{
+	constexpr std::array<std::string_view, 3> screen_modes = {"windowed", "fullscreen",
+	                                                          "borderless"};
+
+	auto &comboBox = *ui->screenModeBox;
+	comboBox.clear();
+	int index = 0;
+	for (const auto &option : screen_modes)
+	{
+		comboBox.addItem(option.data());
+		if (option == Options::screenModeOption.get())
+		{
+			comboBox.setCurrentIndex(index);
+		}
+		++index;
+	}
+};
+
+void LauncherWindow::setupDisplayNum()
+{
+	constexpr int MAX_DISPLAYS = 4;
+	auto &comboBox = *ui->displayNumBox;
+	comboBox.clear();
+
+	for (int i = 0; i < MAX_DISPLAYS; ++i)
+	{
+		comboBox.addItem(QString("Display #%1").arg(i));
+	}
+
+	int curDisplayValue = Options::screenDisplayNumberOption.get();
+	if (curDisplayValue < MAX_DISPLAYS)
+	{
+		comboBox.setCurrentIndex(curDisplayValue);
+	}
+}
+
+enum class ScalingType
+{
+	Auto = 0,
+	None,
+	Scale_150,
+	Scale_200,
+	Scale_300,
+	Scale_400,
+	Custom, // Fallback value: if combination of options does not match any predefined option, just
+	        // show 'custom' which, until changed to something else, won't modify stored options.
+	_count
+};
+
+struct ScalingOption
+{
+	const ScalingType type;
+	const std::string_view label;
+	const int scale_value; // Corresponding screen scale values from options
+
+	constexpr ScalingOption(ScalingType type, std::string_view label, int scale_value)
+	    : type(type), label(label), scale_value(scale_value)
+	{
+	}
+};
+
+constexpr std::array<ScalingOption, static_cast<int>(ScalingType::_count)> scaling_options = {
+    ScalingOption{ScalingType::Auto, "Auto", -1},
+    ScalingOption{ScalingType::None, "None", 100},
+    ScalingOption{ScalingType::Scale_150, "150%", 66},
+    ScalingOption{ScalingType::Scale_200, "200%", 50},
+    ScalingOption{ScalingType::Scale_300, "300%", 33},
+    ScalingOption{ScalingType::Scale_400, "400%", 25},
+    ScalingOption{ScalingType::Custom, "Custom", -1}};
+
+void LauncherWindow::setupScaling()
+{
+	auto &comboBox = *ui->scaleBox;
+	comboBox.clear();
+	for (const auto &option : scaling_options)
+	{
+		comboBox.addItem(option.label.data());
+	}
+
+	const bool autoScale = OpenApoc::Options::screenAutoScale.get();
+	ScalingType currentType = ScalingType::Custom;
+	if (autoScale)
+	{
+		currentType = ScalingType::Auto;
+	}
+	else
+	{
+		const QSize screenScale = {OpenApoc::Options::screenScaleXOption.get(),
+		                           OpenApoc::Options::screenScaleYOption.get()};
+
+		for (const auto &option : scaling_options)
+		{
+			if (option.scale_value == screenScale.width() &&
+			    option.scale_value == screenScale.height())
+			{
+				currentType = option.type;
+				break;
+			}
+		}
+	}
+
+	comboBox.setCurrentIndex(static_cast<int>(currentType));
+}
+
+void LauncherWindow::saveScalingOptions()
+{
+	int index = ui->scaleBox->currentIndex();
+	LogAssert(index >= 0 && index < scaling_options.size());
+
+	if (scaling_options[index].type == ScalingType::Auto)
+	{
+		OpenApoc::Options::screenAutoScale.set(true);
+	}
+	else if (scaling_options[index].type == ScalingType::Custom)
+	{
+		// Do nothing - keep previous settings
+	}
+	else
+	{
+		OpenApoc::Options::screenAutoScale.set(false);
+		OpenApoc::Options::screenScaleXOption.set(scaling_options[index].scale_value);
+		OpenApoc::Options::screenScaleYOption.set(scaling_options[index].scale_value);
+	}
+}
+
+void LauncherWindow::setLanguageSelection(int index)
+{
+	selectedLanguageID = ui->languageBox->itemData(index).toString().toStdString();
+}
+
 void LauncherWindow::saveConfig()
 {
+	saveScalingOptions();
+
 	const auto &comboBox = *ui->resolutionBox;
 	// Index 0 is always custom resolution
 	if (comboBox.currentIndex() == 0)
@@ -199,10 +338,11 @@ void LauncherWindow::saveConfig()
 		OpenApoc::Options::screenHeightOption.set(size.height());
 	}
 
-	OpenApoc::Options::screenFullscreenOption.set(ui->fullscreenCheckBox->checkState() ==
-	                                              Qt::CheckState::Checked);
+	OpenApoc::Options::screenModeOption.set(ui->screenModeBox->currentText().toStdString());
+	OpenApoc::Options::screenDisplayNumberOption.set(ui->displayNumBox->currentIndex());
 	OpenApoc::Options::cdPathOption.set(ui->cdPath->text().toStdString());
 	OpenApoc::Options::dataPathOption.set(ui->dataPath->text().toStdString());
+	OpenApoc::Options::languageOption.set(selectedLanguageID);
 	OpenApoc::config().save();
 	this->rebuildModList();
 }
@@ -313,6 +453,8 @@ void LauncherWindow::setupModList()
 		if (!enabled)
 			ui->disabledModsList->addItem(QString::fromStdString(modName));
 	}
+
+	updateAvailableLanguages();
 }
 
 void LauncherWindow::enabledModSelected(const QString &itemName)
@@ -329,6 +471,7 @@ void LauncherWindow::enabledModSelected(const QString &itemName)
 			return;
 		}
 	}
+	updateAvailableLanguages();
 }
 
 void LauncherWindow::disabledModSelected(const QString &itemName)
@@ -345,6 +488,7 @@ void LauncherWindow::disabledModSelected(const QString &itemName)
 			return;
 		}
 	}
+	updateAvailableLanguages();
 }
 
 void LauncherWindow::showModInfo(const ModInfo &info)
@@ -445,4 +589,49 @@ void LauncherWindow::disableModClicked()
 	}
 
 	this->rebuildModList();
+}
+
+static QString getLanguageName(const std::string id)
+{
+	QLocale locale(QString::fromStdString(id));
+	return locale.nativeLanguageName();
+}
+
+void LauncherWindow::updateAvailableLanguages()
+{
+	if (selectedLanguageID.empty())
+	{
+		selectedLanguageID = Options::languageOption.get();
+		if (selectedLanguageID.empty())
+		{
+			// Just default to american english if not set
+			selectedLanguageID = "en.UTF-8";
+		}
+	}
+
+	ui->languageBox->clear();
+
+	// FIXME: Currently just returns all supported languages of the first mod
+
+	auto foundMods = enumerateMods();
+	auto enabledMods = split(Options::modList.get(), ":");
+
+	for (const auto &enabledModName : enabledMods)
+	{
+		for (const auto &[modDir, modInfo] : foundMods)
+		{
+			if (modDir == enabledModName)
+			{
+				for (const auto &languageID : modInfo.getSupportedLanguages())
+				{
+					ui->languageBox->addItem(getLanguageName(languageID),
+					                         QString::fromStdString(languageID));
+					if (selectedLanguageID == languageID)
+					{
+						ui->languageBox->setCurrentIndex(ui->languageBox->count() - 1);
+					}
+				}
+			}
+		}
+	}
 }
