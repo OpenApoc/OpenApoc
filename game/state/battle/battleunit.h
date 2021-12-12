@@ -140,6 +140,11 @@ static const std::list<BattleUnitType> BattleUnitTypeList = {
     BattleUnitType::LargeFlyer, BattleUnitType::LargeWalker, BattleUnitType::SmallFlyer,
     BattleUnitType::SmallWalker};
 
+// Get cost of psi attack or upkeep
+static int getPsiCost(PsiStatus status, bool attack = true);
+// Get chance of psi attack going through psi defence
+static int getPsiAttackChance(int psiAttack, int psiDefense, PsiStatus status, bool attack = true);
+
 class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_from_this<BattleUnit>
 {
   public:
@@ -406,11 +411,9 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	bool hasLineToPosition(Vec3<float> targetPosition, bool useLOS = false) const;
 
 	// Psi
-
-	// Get cost of psi attack or upkeep
-	int getPsiCost(PsiStatus status, bool attack = true);
 	// Get chance of psi attack to succeed
-	int getPsiChance(StateRef<BattleUnit> target, PsiStatus status, StateRef<AEquipmentType> item);
+	int getPsiChanceForEquipment(StateRef<BattleUnit> target, PsiStatus status,
+	                             StateRef<AEquipmentType> item);
 	// Starts attacking target, returns if attack successful
 	bool startAttackPsi(GameState &state, StateRef<BattleUnit> target, PsiStatus status,
 	                    StateRef<AEquipmentType> item);
@@ -832,4 +835,5 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Update both this unit's vision and other unit's vision of this unit
 	void refreshUnitVisibilityAndVision(GameState &state);
 };
+
 } // namespace OpenApoc

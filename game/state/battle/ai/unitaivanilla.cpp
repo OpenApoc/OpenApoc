@@ -160,20 +160,20 @@ UnitAIVanilla::getWeaponDecision(GameState &state, BattleUnit &u, sp<AEquipment>
 
 std::tuple<AIDecision, float, unsigned>
 UnitAIVanilla::getPsiDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
-                              StateRef<BattleUnit> target, PsiStatus status)
+                              StateRef<BattleUnit> target, PsiStatus status) const
 {
 #ifdef VANILLA_AI_DEBUG_OUTPUT
 	LogWarning("VANILLA AI %s: getPsiDecision()", u.id);
 #endif
 	std::ignore = state;
 
-	int chance = u.getPsiChance(target, status, e->type);
+	const int chance = u.getPsiChanceForEquipment(target, status, e->type);
 	if (chance == 0)
 	{
 		return NULLTUPLE3;
 	}
 	unsigned reThinkDelay = TICKS_PER_SECOND / 2;
-	float time = (float)reThinkDelay / (float)TICKS_PER_SECOND;
+	const float time = (float)reThinkDelay / (float)TICKS_PER_SECOND;
 	float priority = (float)chance / time;
 
 	auto action = mksp<AIAction>();
