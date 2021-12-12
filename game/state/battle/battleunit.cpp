@@ -1702,7 +1702,7 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 		const int random = randBoundsExclusive(state.rng, 0, 100);
 		const int chance =
 		    getPsiAttackChance(damage, agent->modified_stats.psi_defence, PsiStatus::Panic);
-		if (chance > random)
+		if (random < chance)
 		{
 			agent->modified_stats.loseMorale(damage);
 		}
