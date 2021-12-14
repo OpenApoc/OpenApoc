@@ -90,7 +90,10 @@ class DamageType : public StateObject<DamageType>
 		return blockType != BlockType::Gas && blockType != BlockType::Psionic;
 	}
 	// True if this damage type deals damage on initial impact
-	bool doesImpactDamage() const { return blockType != BlockType::Gas; }
+	bool doesImpactDamage() const
+	{
+		return blockType != BlockType::Gas && blockType != BlockType::Psionic;
+	}
 	// True if this always impacts unit's head
 	bool alwaysImpactsHead() const { return blockType == BlockType::Gas; }
 	// True if this ignores armor value
