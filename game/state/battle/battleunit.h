@@ -676,6 +676,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Determine body part hit
 	BodyPart determineBodyPartHit(StateRef<DamageType> damageType, Vec3<float> cposition,
 	                              Vec3<float> direction);
+
 	// Returns true if sound and doodad were handled by it
 	bool applyDamage(GameState &state, int power, StateRef<DamageType> damageType,
 	                 BodyPart bodyPart, DamageSource source,
@@ -684,6 +685,8 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	void applyDamageDirect(GameState &state, int damage, bool generateFatalWounds,
 	                       BodyPart fatalWoundPart, int stunPower,
 	                       StateRef<BattleUnit> attacker = nullptr, bool violent = true);
+	// Calculate chance of resisting psi-damage and apply damage to morale
+	void applyMoraleDamage(int moraleDamage, int psiAttackPower, GameState &state);
 
 	// Returns true if sound and doodad were handled by it
 	bool handleCollision(GameState &state, Collision &c);
@@ -835,5 +838,4 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Update both this unit's vision and other unit's vision of this unit
 	void refreshUnitVisibilityAndVision(GameState &state);
 };
-
 } // namespace OpenApoc
