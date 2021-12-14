@@ -1561,6 +1561,7 @@ void BattleUnit::applyDamageDirect(GameState &state, int damage, bool generateFa
                                    BodyPart fatalWoundPart, int stunPower,
                                    StateRef<BattleUnit> attacker, bool violent)
 {
+
 	// Just a blank value for checks (if equal to this means no event)
 	static auto NO_EVENT = GameEventType::AgentArrived;
 
@@ -1696,18 +1697,6 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 		damage = randDamage050150(state.rng, power);
 	}
 
-	if (damageType->effectType == DamageType::EffectType::Psionic)
-	{
-		damage = power;
-		const int random = randBoundsExclusive(state.rng, 0, 100);
-		const int chance =
-		    getPsiAttackChance(damage, agent->modified_stats.psi_defence, PsiStatus::Panic);
-		if (random < chance)
-		{
-			agent->modified_stats.loseMorale(damage);
-		}
-	}
-
 	// Hit shield if present
 	if (!damageType->ignore_shield)
 	{
@@ -1748,6 +1737,13 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 	{
 		armorValue = agent->type->armor.at(bodyPart);
 		damageModifier = agent->type->damage_modifier;
+	}
+
+	if (damageType->effectType == DamageType::EffectType::Psionic)
+	{
+		applyMoraleDamage(damage, power, state);
+		// Deal only damage to morale
+		damage = 0;
 	}
 
 	// Catch on fire
@@ -1813,11 +1809,29 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 		applyDamageDirect(state, stunDamage, false, bodyPart, power, attacker);
 		damage -= stunDamage;
 	}
+
 	applyDamageDirect(state, damage, damageType->dealsFatalWounds(), bodyPart,
 	                  damageType->dealsStunDamage() ? power : 0, attacker,
 	                  !damageType->non_violent);
 
 	return false;
+}
+
+void BattleUnit::applyMoraleDamage(int moraleDamage, int psiAttackPower, const GameState &state)
+{
+	LogWarning("Psionic damageType");
+	const int random = randBoundsExclusive(state.rng, 0, 100);
+	const int chance =
+	    getPsiAttackChance(psiAttackPower, agent->modified_stats.psi_defence, PsiStatus::Panic);
+
+	LogWarning("Chance: %i  Random: %i", chance, random);
+
+	if (random < chance)
+	{
+		LogWarning("Psionic damage passed the defence of %s", agent->name);
+		agent->modified_stats.loseMorale(moraleDamage);
+		LogWarning("morale: %d", agent->modified_stats.bravery);
+	}
 }
 
 BodyPart BattleUnit::determineBodyPartHit(StateRef<DamageType> damageType, Vec3<float> cposition,
