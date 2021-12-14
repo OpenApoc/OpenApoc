@@ -762,8 +762,7 @@ class CueArchiver
 		uint8_t _padding; // This field is here to avoid alignment issues.
 		                  // It's only used in the boot volume descriptor, and
 		                  // therefore not interesting to us.
-		union
-		{
+		union {
 			// Better not even try this one
 			/*struct
 			{

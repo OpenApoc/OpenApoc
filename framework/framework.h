@@ -102,7 +102,7 @@ class Framework
 	void threadPoolTaskEnqueue(std::function<void()> task);
 	// add new work item to the pool
 	template <class F, class... Args>
-	auto threadPoolEnqueue(F &&f, Args &&...args)
+	auto threadPoolEnqueue(F &&f, Args &&... args)
 	    -> std::shared_future<typename std::result_of<F(Args...)>::type>
 	{
 		using return_type = typename std::result_of<F(Args...)>::type;
