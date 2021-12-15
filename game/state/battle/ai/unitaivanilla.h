@@ -73,7 +73,7 @@ class UnitAIVanilla : public UnitAI
 	std::tuple<AIDecision, float, unsigned> getPsiDecision(GameState &state, BattleUnit &u,
 	                                                       sp<AEquipment> e,
 	                                                       StateRef<BattleUnit> target,
-	                                                       PsiStatus status);
+	                                                       PsiStatus status) const;
 	std::tuple<AIDecision, float, unsigned> getGrenadeDecision(GameState &state, BattleUnit &u,
 	                                                           sp<AEquipment> e,
 	                                                           StateRef<BattleUnit> target);

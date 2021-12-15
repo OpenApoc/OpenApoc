@@ -1183,6 +1183,7 @@
 		<value>Fire</value>
 		<value>Enzyme</value>
 		<value>Brainsucker</value>
+		<value>Psionic</value>
 	</enum>
 	<object>
 		<name>DamageType</name>
@@ -2101,4 +2102,3 @@
 		<member>cityDamage</member>
 	</object>
 </openapoc_gamestate>
-

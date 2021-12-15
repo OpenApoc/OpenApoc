@@ -162,7 +162,7 @@ class Control : public std::enable_shared_from_this<Control>
 	bool eventIsWithin(const Event *e) const;
 	bool isPointInsideControlBounds(Event *e, sp<Control> c) const;
 
-	template <typename T, typename... Args> sp<T> createChild(Args &&... args)
+	template <typename T, typename... Args> sp<T> createChild(Args &&...args)
 	{
 		sp<T> newControl = mksp<T>(std::forward<Args>(args)...);
 		newControl->setParent(shared_from_this());

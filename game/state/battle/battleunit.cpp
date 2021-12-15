@@ -29,6 +29,55 @@
 namespace OpenApoc
 {
 
+static int getPsiCost(PsiStatus status, bool isAttack)
+{
+	switch (status)
+	{
+		case PsiStatus::NotEngaged:
+			LogError("Invalid value NotEngaged for psiStatus in getPsiCost()");
+			return 0;
+		case PsiStatus::Control:
+			return isAttack ? 32 : 4;
+		case PsiStatus::Panic:
+			return isAttack ? 10 : 3;
+		case PsiStatus::Stun:
+			return isAttack ? 16 : 5;
+		case PsiStatus::Probe:
+			return isAttack ? 8 : 3;
+	}
+	LogError("Unexpected Psi Status in getPsiCost()");
+	return 0;
+}
+
+static int getPsiAttackChance(int psiAttack, int psiDefense, PsiStatus status, bool isAttack)
+{
+	// Psi chance as per Wong's Guide, confirmed by Mell
+	/*
+	                     100*attack*(100-defense)
+	success rate = --------------------------------------
+	                 attack*(100-defense) + 100*defense
+
+	           psiattack rating * 40
+	attack = ---------------------------
+	          initiation cost of action
+
+	Note: As tested by Mell, Probe is min 20%
+	*/
+	int cost = getPsiCost(status, isAttack);
+	int attack = psiAttack * 40 / cost;
+	int defense = psiDefense;
+	int chance = 0;
+	if (attack != 0 || defense != 0)
+	{
+		chance = (100 * attack * (100 - defense)) / (attack * (100 - defense) + 100 * defense);
+	}
+	if (status == PsiStatus::Probe && attack != 0)
+	{
+		chance = std::max(20, chance);
+	}
+	return chance;
+}
+
 namespace
 {
 static const std::set<TileObject::Type> mapPartSet = {
@@ -974,28 +1023,8 @@ bool BattleUnit::hasLineToPosition(Vec3<float> targetPosition, bool useLOS) cons
 	           || cUnit->brainSucker);
 }
 
-int BattleUnit::getPsiCost(PsiStatus status, bool attack)
-{
-	switch (status)
-	{
-		case PsiStatus::NotEngaged:
-			LogError("Invalid value NotEngaged for psiStatus in getPsiCost()");
-			return 0;
-		case PsiStatus::Control:
-			return attack ? 32 : 4;
-		case PsiStatus::Panic:
-			return attack ? 10 : 3;
-		case PsiStatus::Stun:
-			return attack ? 16 : 5;
-		case PsiStatus::Probe:
-			return attack ? 8 : 3;
-	}
-	LogError("Unexpected Psi Status in getPsiCost()");
-	return 0;
-}
-
-int BattleUnit::getPsiChance(StateRef<BattleUnit> target, PsiStatus status,
-                             StateRef<AEquipmentType> item)
+int BattleUnit::getPsiChanceForEquipment(StateRef<BattleUnit> target, PsiStatus status,
+                                         StateRef<AEquipmentType> item)
 {
 	if (status == PsiStatus::NotEngaged)
 	{
@@ -1013,36 +1042,15 @@ int BattleUnit::getPsiChance(StateRef<BattleUnit> target, PsiStatus status,
 		e2 = nullptr;
 	}
 	auto bender = e1 ? e1 : e2;
+
 	auto cost = getPsiCost(status);
 	if (!bender || agent->modified_stats.psi_energy < cost || !hasLineToUnit(target, true))
 	{
 		return 0;
 	}
 
-	// Psi chance as per Wong's Guide, confirmed by Mell
-	/*
-	                     100*attack*(100-defense)
-	success rate = --------------------------------------
-	                 attack*(100-defense) + 100*defense
-
-	           psiattack rating * 40
-	attack = ---------------------------
-	          initiation cost of action
-
-	Note: As tested by Mell, Probe is min 20%
-	*/
-	int attack = agent->modified_stats.psi_attack * 40 / cost;
-	int defense = target->agent->modified_stats.psi_defence;
-	int chance = 0;
-	if (attack != 0 || defense != 0)
-	{
-		chance = (100 * attack * (100 - defense)) / (attack * (100 - defense) + 100 * defense);
-	}
-	if (status == PsiStatus::Probe && attack != 0)
-	{
-		chance = std::max(20, chance);
-	}
-	return chance;
+	return getPsiAttackChance(agent->modified_stats.psi_attack,
+	                          target->agent->modified_stats.psi_defence, status);
 }
 
 bool BattleUnit::startAttackPsi(GameState &state, StateRef<BattleUnit> target, PsiStatus status,
@@ -1082,7 +1090,7 @@ bool BattleUnit::startAttackPsiInternal(GameState &state, StateRef<BattleUnit> t
 	{
 		setHandState(HandState::Firing);
 	}
-	int chance = getPsiChance(target, status, item);
+	int chance = getPsiChanceForEquipment(target, status, item);
 	int roll = randBoundsExclusive(state.rng, 0, 100);
 	experiencePoints.psi_attack++;
 	experiencePoints.psi_energy++;
@@ -1553,6 +1561,7 @@ void BattleUnit::applyDamageDirect(GameState &state, int damage, bool generateFa
                                    BodyPart fatalWoundPart, int stunPower,
                                    StateRef<BattleUnit> attacker, bool violent)
 {
+
 	// Just a blank value for checks (if equal to this means no event)
 	static auto NO_EVENT = GameEventType::AgentArrived;
 
@@ -1730,6 +1739,13 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 		damageModifier = agent->type->damage_modifier;
 	}
 
+	if (damageType->effectType == DamageType::EffectType::Psionic)
+	{
+		applyMoraleDamage(damage, power, state);
+		// Deal only damage to morale
+		damage = 0;
+	}
+
 	// Catch on fire
 	if (damageType->effectType == DamageType::EffectType::Fire)
 	{
@@ -1793,11 +1809,29 @@ bool BattleUnit::applyDamage(GameState &state, int power, StateRef<DamageType> d
 		applyDamageDirect(state, stunDamage, false, bodyPart, power, attacker);
 		damage -= stunDamage;
 	}
+
 	applyDamageDirect(state, damage, damageType->dealsFatalWounds(), bodyPart,
 	                  damageType->dealsStunDamage() ? power : 0, attacker,
 	                  !damageType->non_violent);
 
 	return false;
+}
+
+void BattleUnit::applyMoraleDamage(int moraleDamage, int psiAttackPower, GameState &state)
+{
+	LogWarning("Psionic damageType");
+	const int random = randBoundsExclusive(state.rng, 0, 100);
+	const int chance =
+	    getPsiAttackChance(psiAttackPower, agent->modified_stats.psi_defence, PsiStatus::Panic);
+
+	LogWarning("Chance: %i  Random: %i", chance, random);
+
+	if (random < chance)
+	{
+		LogWarning("Psionic damage passed the defence of %s", agent->name);
+		agent->modified_stats.loseMorale(moraleDamage);
+		LogWarning("morale: %d", agent->modified_stats.bravery);
+	}
 }
 
 BodyPart BattleUnit::determineBodyPartHit(StateRef<DamageType> damageType, Vec3<float> cposition,

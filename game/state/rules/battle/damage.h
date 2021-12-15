@@ -64,7 +64,8 @@ class DamageType : public StateObject<DamageType>
 		Smoke,
 		Fire,
 		Enzyme,
-		Brainsucker
+		Brainsucker,
+		Psionic
 	};
 
 	UString name;
@@ -84,9 +85,15 @@ class DamageType : public StateObject<DamageType>
 	StateRef<HazardType> hazardType;
 
 	// True if explosive damage should reduce with distance (gas deals full damage everywhere)
-	bool hasDamageDissipation() const { return blockType != BlockType::Gas; }
+	bool hasDamageDissipation() const
+	{
+		return blockType != BlockType::Gas && blockType != BlockType::Psionic;
+	}
 	// True if this damage type deals damage on initial impact
-	bool doesImpactDamage() const { return blockType != BlockType::Gas; }
+	bool doesImpactDamage() const
+	{
+		return blockType != BlockType::Gas && blockType != BlockType::Psionic;
+	}
 	// True if this always impacts unit's head
 	bool alwaysImpactsHead() const { return blockType == BlockType::Gas; }
 	// True if this ignores armor value
@@ -95,12 +102,13 @@ class DamageType : public StateObject<DamageType>
 	bool dealsArmorDamage() const
 	{
 		return effectType != EffectType::Stun && effectType != EffectType::Smoke &&
-		       effectType != EffectType::Fire;
+		       effectType != EffectType::Fire && effectType != EffectType::Psionic;
 	}
 	// True if this damage type deals fatal wounds
 	bool dealsFatalWounds() const
 	{
-		return effectType != EffectType::Stun && effectType != EffectType::Smoke;
+		return effectType != EffectType::Stun && effectType != EffectType::Smoke &&
+		       effectType != EffectType::Psionic;
 	}
 	// True if this deals stun damage instead of health damage
 	bool dealsStunDamage() const
