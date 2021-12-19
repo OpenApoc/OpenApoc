@@ -14,7 +14,7 @@ ScrollBar::ScrollBar(sp<Image> gripperImage)
     : Control(), capture(false), grippersize(1), segmentsize(1), gripperbutton(gripperImage),
       buttonerror(fw().data->loadSample("RAWSOUND:xcom3/rawsound/extra/textbeep.raw:22050")),
       Value(0), BarOrientation(Orientation::Vertical), Minimum(0), Maximum(10),
-      RenderStyle(ScrollBarRenderStyle::Menu), GripperColour(220, 192, 192), ScrollChange(2),
+      RenderStyle(ScrollBarRenderStyle::Menu), GripperColour(220, 192, 192), ScrollChange(1),
       ScrollPercent(10)
 {
 	isClickable = true;
@@ -138,7 +138,10 @@ void ScrollBar::eventOccured(Event *e)
 		if (e->forms().EventFlag == FormEventType::MouseMove &&
 		    e->forms().RaisedBy == shared_from_this())
 		{
-			scrollWheel(e);
+			if (BarOrientation == Orientation::Vertical)
+			{
+				scrollWheel(e);
+			}
 		}
 	}
 }
@@ -188,7 +191,7 @@ void ScrollBar::onRender()
 void ScrollBar::updateScrollChangeValue()
 {
 	ScrollChange =
-	    static_cast<int>(std::max((Maximum - Minimum + 2) * (float)ScrollPercent / 100.0f, 2.0f));
+	    static_cast<int>(std::max((Maximum - Minimum + 2) * (float)ScrollPercent / 100.0f, 1.0f));
 }
 
 void ScrollBar::update()
