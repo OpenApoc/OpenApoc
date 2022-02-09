@@ -21,7 +21,7 @@ init:
   - if "%PLATFORM%"=="Win32" (set VCVARS_ARCH=amd64_x86)
   - if "%PLATFORM%"=="Win32" (set QTPATH=C:\Qt\5.15\msvc2019)
 #clone_depth: 10
-cache: c:\tools\vcpkg\installed
+cache: C:\Users\appveyor\AppData\Local\vcpkg\archives -> appveyor-dev.yml
 before_build:
   - cd c:\tools\vcpkg
   - git pull
