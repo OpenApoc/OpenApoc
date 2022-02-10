@@ -707,18 +707,18 @@ void extractAnimationPackUnitInternal(sp<BattleUnitAnimationPack> p,
 		// Hand Aiming -> Ease standing overlay strafing animation: 79, 83
 		p->hand_state_animations[{ItemWieldMode::OneHanded, HandState::Aiming, HandState::AtEase,
 		                          MovementState::Strafing, BodyState::Standing}][{x, y}] =
-		    e.getAnimationEntry(dataAD, dataUA, dataUF, 79, {x, y}, true, sFrames);
+		    e.getAnimationEntry(dataAD, dataUA, dataUF, 79, {x, y}, sFrames, true);
 		p->hand_state_animations[{ItemWieldMode::TwoHanded, HandState::Aiming, HandState::AtEase,
 		                          MovementState::Strafing, BodyState::Standing}][{x, y}] =
-		    e.getAnimationEntry(dataAD, dataUA, dataUF, 83, {x, y}, true, sFrames);
+		    e.getAnimationEntry(dataAD, dataUA, dataUF, 83, {x, y}, sFrames, true);
 
 		// Hand Ease -> Aiming standing overlay strafing animation: 76, 80
 		p->hand_state_animations[{ItemWieldMode::OneHanded, HandState::AtEase, HandState::Aiming,
 		                          MovementState::Strafing, BodyState::Standing}][{x, y}] =
-		    e.getAnimationEntry(dataAD, dataUA, dataUF, 76, {x, y}, true, sFrames);
+		    e.getAnimationEntry(dataAD, dataUA, dataUF, 76, {x, y}, sFrames, true);
 		p->hand_state_animations[{ItemWieldMode::TwoHanded, HandState::AtEase, HandState::Aiming,
 		                          MovementState::Strafing, BodyState::Standing}][{x, y}] =
-		    e.getAnimationEntry(dataAD, dataUA, dataUF, 80, {x, y}, true, sFrames);
+		    e.getAnimationEntry(dataAD, dataUA, dataUF, 80, {x, y}, sFrames, true);
 	}
 }
 
