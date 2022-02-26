@@ -72,6 +72,11 @@ bool VEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> 
 
 	number_of_shots = std::min(this->type->burst, this->ammo);
 
+	if (number_of_shots <= 0)
+	{
+		number_of_shots = 1;
+	}
+
 	if (this->type->max_ammo != 0)
 	{
 		if (!config().getBool("OpenApoc.Cheat.InfiniteAmmo") ||
