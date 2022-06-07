@@ -68,7 +68,7 @@ if(ENABLE_BACKTRACE)
 			#HACK - this assumes the library path is already searched?
 		else()
 			find_path(UNWIND_INCLUDE_DIR libunwind.h HINTS ${PC_UNWIND_INCLUDEDIR})
-			target_link_libraries(OpenApoc_Library PUBLIC ${PC_UNWIND_LIBRARIES} dl)
+			target_link_libraries(OpenApoc_Library PUBLIC ${PC_UNWIND_LIBRARIES} ${CMAKE_DL_LIBS})
 		endif()
 		target_compile_definitions(OpenApoc_Library PUBLIC -DBACKTRACE_LIBUNWIND)
 		target_include_directories(OpenApoc_Library PUBLIC ${UNWIND_INCLUDE_DIR})
