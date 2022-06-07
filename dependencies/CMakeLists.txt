@@ -92,12 +92,12 @@ endif()
 set (LIBLODEPNG_SOURCE_FILES
 		lodepng/lodepng.cpp)
 
-source_group(libpugixml\\sources FILES ${LIBLODEPNG_SOURCE_FILES})
+source_group(lodepng\\sources FILES ${LIBLODEPNG_SOURCE_FILES})
 
 set (LIBLODEPNG_HEADER_FILES
 		lodepng/lodepng.h)
 
-source_group(libpugixml\\headers FILES ${LIBLODEPNG_HEADER_FILES})
+source_group(lodepng\\headers FILES ${LIBLODEPNG_HEADER_FILES})
 
 list(APPEND ALL_SOURCE_FILES ${LIBLODEPNG_SOURCE_FILES})
 list(APPEND ALL_HEADER_FILES ${LIBLODEPNG_HEADER_FILES})
