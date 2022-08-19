@@ -1104,16 +1104,30 @@ CityView::CityView(sp<GameState> state)
 	}
 	vehicleForm->findControl("BUTTON_EQUIP_VEHICLE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    auto equipScreen = mksp<VEquipScreen>(this->state);
-		    for (auto &v : this->state->current_city->cityViewSelectedVehicles)
+		    bool playerHasVehicles = false;
+		    for (auto &v : this->state->vehicles)
 		    {
-			    if (v && v->owner == this->state->getPlayer())
+			    auto vehicle = v.second;
+			    if (vehicle->owner == this->state->getPlayer())
 			    {
-				    equipScreen->setSelectedVehicle(v);
+				    playerHasVehicles = true;
 				    break;
 			    }
 		    }
-		    fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
+		    // avoid attempting to open vehicle equip screen if player has no vehicles
+		    if (playerHasVehicles)
+		    {
+			    auto equipScreen = mksp<VEquipScreen>(this->state);
+			    for (auto &v : this->state->current_city->cityViewSelectedVehicles)
+			    {
+				    if (v && v->owner == this->state->getPlayer())
+				    {
+					    equipScreen->setSelectedVehicle(v);
+					    break;
+				    }
+			    }
+			    fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
+		    }
 	    });
 	vehicleForm->findControl("BUTTON_VEHICLE_BUILDING")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
