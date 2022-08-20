@@ -124,18 +124,18 @@ void BaseScreen::begin()
 	    });
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_EQUIPAGENT")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    bool playerHasAgents = false;
+		    bool playerHasSoldiers = false;
 		    for (auto &a : this->state->agents)
 		    {
 			    auto agent = a.second;
 			    if (agent->owner == this->state->getPlayer() &&
 			        agent->type->role == AgentType::Role::Soldier)
 			    {
-				    playerHasAgents = true;
+				    playerHasSoldiers = true;
 				    break;
 			    }
 		    }
-		    if (playerHasAgents)
+		    if (playerHasSoldiers)
 		    {
 			    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<AEquipScreen>(state)});
 		    }
