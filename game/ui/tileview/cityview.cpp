@@ -1281,6 +1281,28 @@ CityView::CityView(sp<GameState> state)
 	    });
 	agentForm->findControl("BUTTON_EQUIP_AGENT")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    bool playerHasAgents = false;
+		    for (auto &a : this->state->agents)
+		    {
+			    auto agent = a.second;
+			    if (agent->owner == this->state->getPlayer() &&
+			        agent->type->role == AgentType::Role::Soldier)
+			    {
+				    playerHasAgents = true;
+				    break;
+			    }
+		    }
+		    // avoid attempting to open agent equip screen if player has no agents
+		    if (playerHasAgents)
+		    {
+			    fw().stageQueueCommand(
+			        {StageCmd::Command::PUSH,
+			         mksp<AEquipScreen>(
+			             this->state,
+			             !this->state->current_city->cityViewSelectedAgents.empty()
+			                 ? this->state->current_city->cityViewSelectedAgents.front()
+			                 : nullptr)});
+		    }
 		    fw().stageQueueCommand(
 		        {StageCmd::Command::PUSH,
 		         mksp<AEquipScreen>(this->state,
