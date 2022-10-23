@@ -26,6 +26,7 @@
 * [Building](#building)
   * [Building on Windows](#building-on-windows)
   * [Building on Linux](#building-on-linux)
+  * [Building on macOS](#building-on-macos)  
 * [OpenApoc Coding Style](#openapoc-coding-style)
 * [How to setup OpenApoc](#how-to-setup-openapoc)
 * [Contact us](#contact-us)
@@ -199,6 +200,66 @@ make -j4
 
 ```sh
 ./build/bin/OpenApoc
+```
+
+
+### Building on macOS
+
+(Tested on macOS Ventura 13.0 (22A380)
+
+* On macOS, install the [Homebrew](https://brew.sh):
+
+```sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+* Checkout OpenApoc from GitHub:
+
+```sh
+git clone https://github.com/OpenApoc/OpenApoc.git
+```
+
+* Fetch the dependencies from git with the following terminal command (run from the just-created OpenApoc folder):
+
+```sh
+cd /path/to/OpenApoc
+git submodule update --init --recursive
+```
+
+* Use the homebrew install the following dependencies:
+
+```sh
+brew install cmake boost pkg-config sdl2 qt@5 libvorbis
+echo 'export PATH="/opt/homebrew/opt/qt@5/bin:$PATH"' >> ~/.bashrc
+```
+
+* Copy the cd.iso file to the 'data' directory under the repository root (Note - despite dosbox having good linux support, the steam version of X-Com Apocalypse will only install if Steam Play is enabled).
+
+```sh
+cp /path/to/cd.iso data/
+```
+
+* Create a subdirectory ('build' in this example) in the OpenApoc checkout directory, and from that use cmake to configure OpenApoc.
+
+```sh
+cd /path/to/OpenApoc
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+```
+
+* This cmake command will fail if we're missing a dependency, or your system is for some other reason unable to build - if you have any issues please contact us (see above for links).
+* Build the project with the following command:
+
+```sh
+make -j4
+```
+
+* This should create a directory 'bin' under the build directory, with the 'OpenApoc' executable file. OpenApoc by default expects the data folder to be in the current working directory, so running the executable from the root of the git checkout should work.
+
+```sh
+cd ..
+open ./build/bin/OpenApoc.app
 ```
 
 
