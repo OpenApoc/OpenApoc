@@ -1104,16 +1104,30 @@ CityView::CityView(sp<GameState> state)
 	}
 	vehicleForm->findControl("BUTTON_EQUIP_VEHICLE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    auto equipScreen = mksp<VEquipScreen>(this->state);
-		    for (auto &v : this->state->current_city->cityViewSelectedVehicles)
+		    bool playerHasVehicles = false;
+		    for (auto &v : this->state->vehicles)
 		    {
-			    if (v && v->owner == this->state->getPlayer())
+			    auto vehicle = v.second;
+			    if (vehicle->owner == this->state->getPlayer())
 			    {
-				    equipScreen->setSelectedVehicle(v);
+				    playerHasVehicles = true;
 				    break;
 			    }
 		    }
-		    fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
+		    // avoid attempting to open vehicle equip screen if player has no vehicles
+		    if (playerHasVehicles)
+		    {
+			    auto equipScreen = mksp<VEquipScreen>(this->state);
+			    for (auto &v : this->state->current_city->cityViewSelectedVehicles)
+			    {
+				    if (v && v->owner == this->state->getPlayer())
+				    {
+					    equipScreen->setSelectedVehicle(v);
+					    break;
+				    }
+			    }
+			    fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
+		    }
 	    });
 	vehicleForm->findControl("BUTTON_VEHICLE_BUILDING")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
@@ -1267,6 +1281,28 @@ CityView::CityView(sp<GameState> state)
 	    });
 	agentForm->findControl("BUTTON_EQUIP_AGENT")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    bool playerHasSoldiers = false;
+		    for (auto &a : this->state->agents)
+		    {
+			    auto agent = a.second;
+			    if (agent->owner == this->state->getPlayer() &&
+			        agent->type->role == AgentType::Role::Soldier)
+			    {
+				    playerHasSoldiers = true;
+				    break;
+			    }
+		    }
+		    // avoid attempting to open agent equip screen if player has no agents
+		    if (playerHasSoldiers)
+		    {
+			    fw().stageQueueCommand(
+			        {StageCmd::Command::PUSH,
+			         mksp<AEquipScreen>(
+			             this->state,
+			             !this->state->current_city->cityViewSelectedAgents.empty()
+			                 ? this->state->current_city->cityViewSelectedAgents.front()
+			                 : nullptr)});
+		    }
 		    fw().stageQueueCommand(
 		        {StageCmd::Command::PUSH,
 		         mksp<AEquipScreen>(this->state,

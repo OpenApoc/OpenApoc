@@ -15,6 +15,7 @@
 #include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/facility.h"
+#include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/city/ufopaedia.h"
 #include "game/ui/base/aliencontainmentscreen.h"
@@ -123,13 +124,38 @@ void BaseScreen::begin()
 	    });
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_EQUIPAGENT")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    // FIXME: If you don't have any vehicles this button should do nothing
-		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<AEquipScreen>(state)});
+		    bool playerHasSoldiers = false;
+		    for (auto &a : this->state->agents)
+		    {
+			    auto agent = a.second;
+			    if (agent->owner == this->state->getPlayer() &&
+			        agent->type->role == AgentType::Role::Soldier)
+			    {
+				    playerHasSoldiers = true;
+				    break;
+			    }
+		    }
+		    if (playerHasSoldiers)
+		    {
+			    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<AEquipScreen>(state)});
+		    }
 	    });
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_EQUIPVEHICLE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    // FIXME: If you don't have any vehicles this button should do nothing
-		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<VEquipScreen>(state)});
+		    bool playerHasVehicles = false;
+		    for (auto &v : this->state->vehicles)
+		    {
+			    auto vehicle = v.second;
+			    if (vehicle->owner == this->state->getPlayer())
+			    {
+				    playerHasVehicles = true;
+				    break;
+			    }
+		    }
+		    if (playerHasVehicles)
+		    {
+			    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<VEquipScreen>(state)});
+		    }
 	    });
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_RES_AND_MANUF")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {

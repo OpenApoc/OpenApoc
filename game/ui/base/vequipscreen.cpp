@@ -65,10 +65,6 @@ VEquipScreen::VEquipScreen(sp<GameState> state)
 		VehicleSheet(formVehicleItem).display(vehicle);
 		break;
 	}
-	if (!this->selected)
-	{
-		LogError("No vehicles found - the original apoc didn't open the equip screen in this case");
-	}
 
 	// Vehicle name edit
 	form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")
