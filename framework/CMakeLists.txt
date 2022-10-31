@@ -306,7 +306,11 @@ target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibLodepng)
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_Miniz)
 target_link_libraries(OpenApoc_Framework PUBLIC ${CMAKE_DL_LIBS})
 
-target_link_libraries(OpenApoc_Framework PUBLIC physfs-static)
+if(USE_SYSTEM_PHYSFS)
+	target_link_libraries(OpenApoc_Framework PUBLIC ${PHYSFS_LIBRARY})
+else()
+	target_link_libraries(OpenApoc_Framework PUBLIC physfs-static)
+endif()
 
 target_include_directories(OpenApoc_Framework PRIVATE
 		${CMAKE_SOURCE_DIR}/dependencies/physfs/src)
