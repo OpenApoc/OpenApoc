@@ -8,6 +8,13 @@
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
 
+extern "C"
+{
+#include "dependencies/lua/lua.h"
+#include "dependencies/lua/lualib.h"
+#include "dependencies/lua/lauxlib.h"
+}
+
 namespace OpenApoc
 {
 
@@ -31,6 +38,28 @@ const UString UnitAI::getName()
 	LogError("Unimplemented getName for Unit AI Type %d", (int)type);
 	return "";
 }
+
+std::tuple<AIDecision, bool> UnitAI::luaThink(GameState &state, BattleUnit &u, bool interrupt)
+{
+	lua_createtable(luaEngine, 0, 4);
+
+	lua_pushstring(luaEngine, u.id.c_str());
+	lua_setfield(luaEngine, -2, "id");
+	lua_pushstring(luaEngine, u.agent.get()->name.c_str());
+	lua_setfield(luaEngine, -2, "agent_name");
+
+	lua_setglobal(luaEngine, "battle_unit");
+
+	lua_getglobal(luaEngine, this->getName().c_str());
+	lua_pushnumber(luaEngine, 0);
+
+	lua_call(luaEngine, 1, 1);
+	lua_pop(luaEngine, 1); /* pop returned value */
+
+	return {};
+}
+
+
 
 void AIBlockUnit::init(GameState &state, BattleUnit &u)
 {
@@ -90,6 +119,21 @@ void AIBlockUnit::beginTurnRoutine(GameState &state, BattleUnit &u)
 	}
 }
 
+AIBlockUnit::AIBlockUnit()
+{
+	luaEngine = luaL_newstate();
+	luaL_openlibs(luaEngine);
+
+	if (luaL_dofile(luaEngine, "data/scripts/unitai.lua") == LUA_OK) {
+		lua_pop(luaEngine, lua_gettop(luaEngine));
+	}
+}
+
+AIBlockUnit::~AIBlockUnit()
+{
+	lua_close(luaEngine);
+}
+
 AIDecision AIBlockUnit::think(GameState &state, BattleUnit &u, bool forceInterrupt)
 {
 	auto curTicks = state.gameTime.getTicks();
@@ -128,12 +172,15 @@ AIDecision AIBlockUnit::think(GameState &state, BattleUnit &u, bool forceInterru
 	ticksUntilReThink = UNIT_AI_THINK_INTERVAL;
 
 	AIDecision decision = {};
+
 	for (auto &ai : aiList)
 	{
 		if (forceInterrupt)
 		{
 			ai->reset(state, u);
 		}
+		ai->setLuaEngine(luaEngine);
+		ai->luaThink(state, u, interrupt);
 		auto result = ai->think(state, u, interrupt);
 		auto newDecision = std::get<0>(result);
 		auto halt = std::get<1>(result);
