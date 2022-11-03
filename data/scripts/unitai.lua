@@ -1,15 +1,15 @@
 function common(n)
-    print("LUA : [" .. battle_unit.id .. "] in " .. n)
-    print("LUA : [" .. battle_unit.agent_name .. "] in " .. n)
+    print("LUA : [" .. battle_unit.id .. "] [" .. battle_unit.agent_name .. "] in " .. n)
 end
 
 function UnitAILowMorale (x)
     common("UnitAILowMorale")
+    print("LUA : [" .. battle_unit.ai_type .. "]")
 end
 
-function UnitAIDefault (x)
-    common("UnitAIDefault")
-end
+--function UnitAIDefault (x)
+--    common("UnitAIDefault")
+--end
 
 function UnitAIBehavior (x)
     common("UnitAIBehavior")

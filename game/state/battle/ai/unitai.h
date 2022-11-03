@@ -48,10 +48,12 @@ class UnitAI
 	virtual void notifyHit(Vec3<int>){};
 	virtual void notifyEnemySpotted(Vec3<int>){};
 
-	void setLuaEngine(struct lua_State *luaEngine){ this->luaEngine = luaEngine; };
+	// Setting the LuaEngine, and returns if it is configured for this UnitAIxxx
+	bool setLuaEngine(struct lua_State *luaEngine);
 
 	private:
 		struct lua_State *luaEngine;
+		bool isLuaEngineConfigured = false;
 };
 
 class AIBlockUnit

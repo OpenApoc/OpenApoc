@@ -39,14 +39,30 @@ const UString UnitAI::getName()
 	return "";
 }
 
+static const char *getString(AIType t) {
+	return (const char *[]) {
+		"None",        // Chrysalises
+		"Civilian",    // Civilians
+		"Loner",       // Poppers, Large units
+		"Group",       // Majority of the units
+		"PanicFreeze", // During Panic (the one that makes you freeze in place)
+		"PanicRun",    // During Panic (the one that makes you drop weapon and run)
+		"Berserk",     // During Berserk
+	}[(int) t];
+}
+
 std::tuple<AIDecision, bool> UnitAI::luaThink(GameState &state, BattleUnit &u, bool interrupt)
 {
+	if (! this->isLuaEngineConfigured) return {}; // Not configured, do nothing.
+
 	lua_createtable(luaEngine, 0, 4);
 
 	lua_pushstring(luaEngine, u.id.c_str());
 	lua_setfield(luaEngine, -2, "id");
 	lua_pushstring(luaEngine, u.agent.get()->name.c_str());
 	lua_setfield(luaEngine, -2, "agent_name");
+	lua_pushstring(luaEngine, getString(u.getAIType()));
+	lua_setfield(luaEngine, -2, "ai_type");
 
 	lua_setglobal(luaEngine, "battle_unit");
 
@@ -59,7 +75,16 @@ std::tuple<AIDecision, bool> UnitAI::luaThink(GameState &state, BattleUnit &u, b
 	return {};
 }
 
+bool UnitAI::setLuaEngine(struct lua_State *luaEngine)
+{
+	this->luaEngine = luaEngine;
+	lua_getglobal(luaEngine, this->getName().c_str());
 
+	this->isLuaEngineConfigured = lua_isfunction(luaEngine, -1);
+	lua_pop(luaEngine, lua_gettop(luaEngine));
+
+	return this->isLuaEngineConfigured;
+}
 
 void AIBlockUnit::init(GameState &state, BattleUnit &u)
 {
