@@ -534,9 +534,10 @@ void RecruitScreen::executeOrders()
 			}
 			agent->die(*state, true);
 			agent->handleDeath(*state);
-			state->cleanUpDeathNote();
 		}
 	}
+
+	state->cleanUpDeathNote();
 }
 
 void RecruitScreen::closeScreen(bool confirmed)
