@@ -495,7 +495,7 @@ void RecruitScreen::executeOrders()
 	{
 		for (auto &a : agentLists[i])
 		{
-			auto agent = a->getData<Agent>();
+			StateRef<Agent> agent{state.get(), a->getData<Agent>()};
 			if (bases[i] != agent->homeBuilding->base)
 			{
 				if (agent->owner != player)
@@ -505,7 +505,22 @@ void RecruitScreen::executeOrders()
 				}
 				else
 				{
-					agent->transfer(*state, bases[i]->building);
+					switch (agent->type->role)
+					{
+						case AgentType::Role::Physicist:
+						case AgentType::Role::BioChemist:
+						case AgentType::Role::Engineer:
+						{
+							agent->lab_assigned->removeAgent(agent->lab_assigned, agent);
+							agent->transfer(*state, bases[i]->building);
+							break;
+						}
+						case AgentType::Role::Soldier:
+						{
+							agent->transfer(*state, bases[i]->building);
+							break;
+						}
+					}
 				}
 			}
 		}
