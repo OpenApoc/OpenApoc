@@ -511,7 +511,11 @@ void RecruitScreen::executeOrders()
 						case AgentType::Role::BioChemist:
 						case AgentType::Role::Engineer:
 						{
-							agent->lab_assigned->removeAgent(agent->lab_assigned, agent);
+							if (agent->lab_assigned)
+							{
+								StateRef<Lab> lab{state.get(), agent->lab_assigned};
+								agent->lab_assigned->removeAgent(lab, agent);
+							}
 							agent->transfer(*state, bases[i]->building);
 							break;
 						}
