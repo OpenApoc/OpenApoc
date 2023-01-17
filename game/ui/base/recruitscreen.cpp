@@ -552,8 +552,11 @@ void RecruitScreen::executeOrders()
 				    e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1;
 			}
 			agent->die(*state, true);
+			agent->handleDeath(*state);
 		}
 	}
+
+	state->cleanUpDeathNote();
 }
 
 void RecruitScreen::closeScreen(bool confirmed)
