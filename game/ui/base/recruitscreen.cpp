@@ -42,7 +42,8 @@ RecruitScreen::RecruitScreen(sp<GameState> state)
 	formPersonnelStats->setVisible(false);
 
 	// Assign event handlers
-	onHover = [this](FormsEvent *e) {
+	onHover = [this](FormsEvent *e)
+	{
 		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
 		auto agent = list->getHoveredData<Agent>();
 		if (agent)
@@ -83,44 +84,49 @@ RecruitScreen::RecruitScreen(sp<GameState> state)
 		for (auto &control : list)
 		{
 			// MouseClick - move an agent to opposite list
-			control->addCallback(FormEventType::MouseClick, [this](FormsEvent *e) {
-				int leftIndex = getLeftIndex();
-				int rightIndex = 8;
+			control->addCallback(
+			    FormEventType::MouseClick,
+			    [this](FormsEvent *e)
+			    {
+				    int leftIndex = getLeftIndex();
+				    int rightIndex = 8;
 
-				auto listLeft = form->findControlTyped<ListBox>("LIST1");
-				auto listRight = form->findControlTyped<ListBox>("LIST2");
+				    auto listLeft = form->findControlTyped<ListBox>("LIST1");
+				    auto listRight = form->findControlTyped<ListBox>("LIST2");
 
-				auto agentControl = e->forms().RaisedBy;
-				if (std::find(agentLists[leftIndex].begin(), agentLists[leftIndex].end(),
-				              agentControl) != agentLists[leftIndex].end())
-				{
-					listLeft->removeItem(agentControl);
-					listRight->addItem(agentControl);
-					agentLists[leftIndex].erase(std::find(
-					    agentLists[leftIndex].begin(), agentLists[leftIndex].end(), agentControl));
-					agentLists[rightIndex].push_back(agentControl);
-				}
-				else if (this->state->current_base->getUsage(
-				             *(this->state), FacilityType::Capacity::Quarters, lqDelta + 1) > 100)
-				{
-					fw().stageQueueCommand(
-					    {StageCmd::Command::PUSH,
-					     mksp<MessageBox>(tr("Accomodation exceeded"),
-					                      tr("Transfer limited by available accommodation."),
-					                      MessageBox::ButtonOptions::Ok)});
-				}
-				else
-				{
-					listRight->removeItem(agentControl);
-					listLeft->addItem(agentControl);
-					agentLists[rightIndex].erase(std::find(agentLists[rightIndex].begin(),
-					                                       agentLists[rightIndex].end(),
-					                                       agentControl));
-					agentLists[leftIndex].push_back(agentControl);
-				}
+				    auto agentControl = e->forms().RaisedBy;
+				    if (std::find(agentLists[leftIndex].begin(), agentLists[leftIndex].end(),
+				                  agentControl) != agentLists[leftIndex].end())
+				    {
+					    listLeft->removeItem(agentControl);
+					    listRight->addItem(agentControl);
+					    agentLists[leftIndex].erase(std::find(agentLists[leftIndex].begin(),
+					                                          agentLists[leftIndex].end(),
+					                                          agentControl));
+					    agentLists[rightIndex].push_back(agentControl);
+				    }
+				    else if (this->state->current_base->getUsage(*(this->state),
+				                                                 FacilityType::Capacity::Quarters,
+				                                                 lqDelta + 1) > 100)
+				    {
+					    fw().stageQueueCommand(
+					        {StageCmd::Command::PUSH,
+					         mksp<MessageBox>(tr("Accomodation exceeded"),
+					                          tr("Transfer limited by available accommodation."),
+					                          MessageBox::ButtonOptions::Ok)});
+				    }
+				    else
+				    {
+					    listRight->removeItem(agentControl);
+					    listLeft->addItem(agentControl);
+					    agentLists[rightIndex].erase(std::find(agentLists[rightIndex].begin(),
+					                                           agentLists[rightIndex].end(),
+					                                           agentControl));
+					    agentLists[leftIndex].push_back(agentControl);
+				    }
 
-				updateFormValues();
-			});
+				    updateFormValues();
+			    });
 		}
 	}
 }
