@@ -24,7 +24,6 @@ init:
 cache: C:\Users\appveyor\AppData\Local\vcpkg\archives -> appveyor.yml
 before_build:
   - cd c:\tools\vcpkg
-  - git checkout master
   - git pull
   - .\bootstrap-vcpkg.bat
   - cd %APPVEYOR_BUILD_FOLDER%
