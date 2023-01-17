@@ -1303,12 +1303,6 @@ CityView::CityView(sp<GameState> state)
 			                 ? this->state->current_city->cityViewSelectedAgents.front()
 			                 : nullptr)});
 		    }
-		    fw().stageQueueCommand(
-		        {StageCmd::Command::PUSH,
-		         mksp<AEquipScreen>(this->state,
-		                            !this->state->current_city->cityViewSelectedAgents.empty()
-		                                ? this->state->current_city->cityViewSelectedAgents.front()
-		                                : nullptr)});
 	    });
 
 	agentForm->findControl("BUTTON_GOTO_BUILDING")
