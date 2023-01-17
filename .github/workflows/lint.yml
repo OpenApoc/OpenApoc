@@ -57,7 +57,7 @@ jobs:
       if: ${{ github.event_name == 'push' }}  
       shell: bash  
       run: |  
-        echo "LAST_COMMIT_SHA=${{ github.sha }}" >> ${GITHUB_ENV}
+        echo "LAST_COMMIT_SHA=${{ github.event.after }}" >> ${GITHUB_ENV}
 
     - name: format lint
       working-directory: ${{runner.workspace}}
