@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@main
       with:
         submodules: recursive
         fetch-depth: 0
@@ -51,26 +51,28 @@ jobs:
       if: ${{ github.event_name == 'pull_request' }}  
       shell: bash  
       run: |  
-        echo "LAST_COMMIT_SHA=${{ github.event.pull_request.head.sha }}" >> ${GITHUB_ENV}  
+        echo "AFTER_COMMIT_SHA=${{ github.event.pull_request.head.sha }}" >> ${GITHUB_ENV}  
+        echo "BEFORE_COMMIT_SHA=${{ github.event.pull_request.base.sha }}" >> ${GITHUB_ENV}  
 
     - name: Setup Environment (Push)  
       if: ${{ github.event_name == 'push' }}  
       shell: bash  
       run: |  
-        echo "LAST_COMMIT_SHA=${{ github.event.after }}" >> ${GITHUB_ENV}
+        echo "AFTER_COMMIT_SHA=${{ github.event.after }}" >> ${GITHUB_ENV}
+        echo "BEFORE_COMMIT_SHA=${{ github.event.before }}" >> ${GITHUB_ENV}
 
     - name: format lint
       working-directory: ${{runner.workspace}}
       shell: bash
       run: |
         cd $GITHUB_WORKSPACE
-        if [[ -z "${{ github.event.before }}" ]]
+        if [ "${{env.BEFORE_COMMIT_SHA}}" == "0000000000000000000000000000000000000000" ]
         then
-          echo '$GITHUB_WORKSPACE/tools/lint.sh ${LAST_COMMIT_SHA}'
-          $GITHUB_WORKSPACE/tools/lint.sh ${LAST_COMMIT_SHA}
+          echo '$GITHUB_WORKSPACE/tools/lint.sh ${{env.AFTER_COMMIT_SHA}}'
+          $GITHUB_WORKSPACE/tools/lint.sh ${{env.AFTER_COMMIT_SHA}}
         else
-          echo '$GITHUB_WORKSPACE/tools/lint.sh ${{ github.event.before }}..${{ github.event.after }}'
-          $GITHUB_WORKSPACE/tools/lint.sh ${{ github.event.before }}..${{ github.event.after }}
+          echo '$GITHUB_WORKSPACE/tools/lint.sh ${{env.BEFORE_COMMIT_SHA}}..${{env.AFTER_COMMIT_SHA}}'
+          $GITHUB_WORKSPACE/tools/lint.sh ${{env.BEFORE_COMMIT_SHA}}..${{env.AFTER_COMMIT_SHA}}
         fi
         
 
@@ -79,12 +81,12 @@ jobs:
       shell: bash
       run: |
         cd $GITHUB_WORKSPACE
-        if [[ -z "${{ github.event.before }}" ]]
+        if [ "${{env.BEFORE_COMMIT_SHA}}" == "0000000000000000000000000000000000000000" ]
         then
-          echo 'CLANG_TIDY=clang-tidy-14 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${LAST_COMMIT_SHA} || true;'
-          CLANG_TIDY=clang-tidy-14 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${LAST_COMMIT_SHA} || true;
+          echo 'CLANG_TIDY=clang-tidy-14 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{env.AFTER_COMMIT_SHA}} || true;'
+          CLANG_TIDY=clang-tidy-14 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{env.AFTER_COMMIT_SHA}} || true;
         else
-          echo 'CLANG_TIDY=clang-tidy-14 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.event.before }}..${{ github.event.after }} || true;'
-          CLANG_TIDY=clang-tidy-14 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{ github.event.before }}..${{ github.event.after }} || true;
+          echo 'CLANG_TIDY=clang-tidy-14 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{env.BEFORE_COMMIT_SHA}}..${{env.AFTER_COMMIT_SHA}} || true;'
+          CLANG_TIDY=clang-tidy-14 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{env.BEFORE_COMMIT_SHA}}..${{env.AFTER_COMMIT_SHA}} || true;
         fi
         
