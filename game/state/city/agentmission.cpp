@@ -386,11 +386,11 @@ void AgentMission::start(GameState &state, Agent &a)
 					                                  {&state, a.shared_from_this()}));
 					a.recentlyHired = false;
 				}
-				if (a.recentryTransferred)
+				if (a.recentlyTransferred)
 				{
 					fw().pushEvent(new GameAgentEvent(GameEventType::AgentArrived,
 					                                  {&state, a.shared_from_this()}, true));
-					a.recentryTransferred = false;
+					a.recentlyTransferred = false;
 				}
 				return;
 			}
