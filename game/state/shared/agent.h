@@ -96,7 +96,7 @@ class Agent : public StateObject<Agent>,
 	TrainingAssignment trainingAssignment = TrainingAssignment::None;
 
 	bool recentlyHired = false;
-	bool recentryTransferred = false;
+	bool recentlyTransferred = false;
 	bool recentlyFought = false;
 	float healingProgress = 0.0f;
 

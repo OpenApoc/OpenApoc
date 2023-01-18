@@ -397,7 +397,7 @@ void Agent::transfer(GameState &state, StateRef<Building> newHome)
 {
 	homeBuilding = newHome;
 	recentlyHired = false;
-	recentryTransferred = true;
+	recentlyTransferred = true;
 	assigned_to_lab = false;
 	setMission(state, AgentMission::gotoBuilding(state, *this, newHome, false, true));
 }
