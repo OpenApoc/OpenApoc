@@ -244,7 +244,7 @@
 		<member>trainingPsiTicksAccumulated</member>
 		<member>trainingAssignment</member>
 		<member>recentlyHired</member>
-		<member>recentryTransferred</member>
+		<member>recentlyTransferred</member>
 		<member>recentlyFought</member>
 		<member>healingProgress</member>
 		<member>owner</member>
