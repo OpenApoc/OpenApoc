@@ -252,7 +252,7 @@ sp<Control> ControlGenerator::createVehicleControl(GameState &state, const Vehic
 		{
 			passengerGraphic->AutoSize = true;
 		}
-		passengerGraphic->Location = {0, 0};
+		passengerGraphic->Location = {-1, 0};
 		passengerGraphic->Name = "OWNED_VEHICLE_PASSENGERS_" + info.vehicle->name;
 	}
 
