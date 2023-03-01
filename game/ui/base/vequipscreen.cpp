@@ -171,10 +171,15 @@ void VEquipScreen::eventOccurred(Event *e)
 			return;
 		if (e->keyboard().KeyCode == SDLK_ESCAPE || e->keyboard().KeyCode == SDLK_RETURN ||
 		    e->keyboard().KeyCode == SDLK_KP_ENTER)
-		{
-			form->findControl("BUTTON_OK")->click();
-			return;
-		}
+			if (EVENT_MOUSE_DOWN && draggedEquipment)
+			{
+				return;
+			}
+			else
+			{
+				form->findControl("BUTTON_OK")->click();
+				return;
+			}
 	}
 	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::MouseDown)
 	{

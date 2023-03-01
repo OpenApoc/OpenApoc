@@ -299,8 +299,16 @@ void AEquipScreen::eventOccurred(Event *e)
 		switch (e->keyboard().KeyCode)
 		{
 			case SDLK_ESCAPE:
-				attemptCloseScreen();
-				return;
+				if (EVENT_MOUSE_DOWN && draggedEquipment)
+				{
+					return;
+				}
+				else
+				{
+					attemptCloseScreen();
+					return;
+				}
+
 			case SDLK_RETURN:
 			case SDLK_KP_ENTER:
 				formMain->findControl("BUTTON_OK")->click();
