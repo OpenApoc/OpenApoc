@@ -24,6 +24,7 @@
 #include "game/ui/general/vehiclesheet.h"
 #include "library/strings_format.h"
 #include <cmath>
+#include <game/ui/general/messagebox.h>
 
 namespace OpenApoc
 {
@@ -277,6 +278,20 @@ void VEquipScreen::eventOccurred(Event *e)
 		    std::dynamic_pointer_cast<VEquipment>(this->selected->getEquipmentAt(mouseSlotPos));
 		if (equipment)
 		{
+			// Check if a passenger module can be removed
+			if (this->highlightedVehicle->getPassengers() >
+			    (this->highlightedVehicle->getMaxPassengers() - 4))
+			{
+				UString title(tr("EQUIPMENT IN USE"));
+				UString message(tr("Passenger module cannot be removed as it is currently in use."));
+
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::Ok)});
+
+				return;
+			}
+
 			// FIXME: base->addBackToInventory(item); vehicle->unequip(item);
 			this->draggedEquipment = equipment->type;
 			this->draggedEquipmentOffset = {0, 0};
