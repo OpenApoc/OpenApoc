@@ -280,7 +280,7 @@ void VEquipScreen::eventOccurred(Event *e)
 		{
 			// Check if a passenger module can be removed
 			if (this->highlightedVehicle->getPassengers() >
-			    (this->highlightedVehicle->getMaxPassengers() - 4))
+			    (this->highlightedVehicle->getMaxPassengers() - equipment->type->passengers))
 			{
 				UString title(tr("EQUIPMENT IN USE"));
 				UString message(tr("Passenger module cannot be removed as it is currently in use."));
