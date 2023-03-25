@@ -33,7 +33,7 @@
 
 
 ## Copyright
-All rights for the original game and its resources belong to their respective owners. We do not encourage and do not support any form of illegal usage of the original game. We strongly advise to purchase the original game on GOG or other platforms. Pirate ISOs are not supported and will cause issues such as crashes and map problems with OpenApoc.
+All rights for the original game and its resources belong to their respective owners. We do not encourage and do not support any form of illegal usage of the original game. We strongly advise to purchase the original game on GOG or other platforms. Pirated ISOs are not supported and will cause issues such as crashes and map problems with OpenApoc.
 
 ## Key Features
 
@@ -41,19 +41,19 @@ All rights for the original game and its resources belong to their respective ow
 * Port the game to any platform you like (windows, linux, android etc)
 * Support for modern screen resolutions
 * Added a full debug system ([hot keys](https://github.com/OpenApoc/OpenApoc/blob/master/README_HOTKEYS.txt), etc.)
-* Added 'more options' menu (which more than 40 improvements)
+* Added 'more options' menu (with more than 40 improvements)
 * Added skirmish module (fast fight)
-* The new engine have ample opportunities for expansion and changes
+* The new engine has ample opportunities for expansion and changes:
   * High FPS, smooth sound during the game without bugs from original
   * No limitations which were in vanilla
   * Modern formats
 * After release, we can add Julian Gollop's cut ideas to the game through mods. Many have already been added but they need functionality and balance.
 * [![Julian Gollop](https://img.shields.io/reddit/user-karma/combined/JulianGollop?style=social)](https://www.reddit.com/user/JulianGollop/) "Yes, I am aware of the openApoc project and I very much do support it." 
-* Fans creating Big Apoc Concept, for modders, thats should make OpenApoc more balanced, to provide
-  * a variety of interesting gameplay solutions, 
-  * and to make the game more complex and diverse, 
-  * L.O.R.E more fulfilling, deep and mysterious, intertwined with real history and others games 
-  * and ending the game more interesting and not predictable.
+* Fans creating Big Apoc Concept, for modders, thats should make OpenApoc more balanced, to provide:
+  * A variety of interesting gameplay solutions
+  * Make the game more complex and diverse
+  * L.O.R.E more fulfilling, deep and mysterious, intertwined with real history and other games 
+  * Ending the game can be more interesting and less predictable
 
 ## What's left?
 
@@ -66,25 +66,25 @@ All rights for the original game and its resources belong to their respective ow
 ## Contribute and FAQ
 
 http://openapoc.org/#contribute
->Here you find news, details how you can participate in project. 
-How you can support project, testing, translating, modding, drawing, modeling, concepting etc..
+>Here you find news, detailing how you can participate in project. 
+You can support the project by testing, translating, modding, drawing, modeling, concepting etc..
 
 http://openapoc.org/#faq
->Here you find detailed FAQ (frequently asked questions)
+>Here you find the detailed FAQ (frequently asked questions)
 
 
 ## Building
 
-OpenApocalypse is built leveraging a number of libraries - to provide needed functionality (and save us the time of implementing it ourselves badly). 
-Note: The following libraries will be fetched and built with vcpkg in a later step, ensuring you get the correct version
+OpenApocalypse is built leveraging a number of libraries - to provide needed functionality (and save us the time of implementing it badly ourselves). 
+Note: The following libraries will be fetched and built with vcpkg in a later step, ensuring you get the correct version.
 
 * [SDL2](https://www.libsdl.org)
 * [Boost](https://boost.org) - We specifially use the 'locale' library, used for localisation, 'program-options' for settings management, and 'filesystem'.
 * [Qt](https://www.qt.io/) - needed for the launcher, can be disabled with 'BUILD_LAUNCHER'.
 * [Libunwind](https://nongnu.org/libunwind/download.html) - debug backtracing on linux - not needed on windows.
-* [LibVorbis](https://xiph.org/vorbis/) - Ogg vorbis music decoder library
+* [LibVorbis](https://xiph.org/vorbis/) - Ogg vorbis music decoder library.
 
-The following libraries are also used, but are shipped as submodules in the repository and directly included in the build, so you don't need to install these dependencies to build or use openapoc.
+The following libraries are also used, but are shipped as submodules in the repository and directly included in the build, so you don't need to install these dependencies to build or use OpenApoc.
 
 * [GLM](https://glm.g-truc.net) - Math library.
 * [libsmacker](https://sourceforge.net/projects/libsmacker/) - Decoder for .smk video files.

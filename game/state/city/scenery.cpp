@@ -1641,6 +1641,7 @@ void Scenery::repair(GameState &state)
 	}
 	damaged = false;
 	falling = false;
+	destroyed = false;
 	if (tileObject)
 	{
 		tileObject->removeFromMap();
