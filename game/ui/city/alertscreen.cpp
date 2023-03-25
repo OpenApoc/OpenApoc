@@ -86,12 +86,13 @@ void AlertScreen::eventOccurred(Event *e)
 
 			// send a vehicle fleet
 			for (auto &vehicle : agentAssignment->getSelectedVehicles())
-			{				
+			{
 
 				vehicle->wasAlreadyAtTgtBuilding = false;
 
-				//check if vehicle already at tgt building
-				if (Building::getId(*state, vehicle->currentBuilding).compare(Building::getId(*state, this->building)) == 0)
+				// check if vehicle already at tgt building
+				if (Building::getId(*state, vehicle->currentBuilding)
+				        .compare(Building::getId(*state, this->building)) == 0)
 				{
 					vehicle->wasAlreadyAtTgtBuilding = true;
 				}

@@ -1427,7 +1427,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 		}
 		case MissionType::InvestigateBuilding:
 		{
-			//prevent double update when vehicle was already at tgt building at time of alert
+			// prevent double update when vehicle was already at tgt building at time of alert
 			if (v.wasAlreadyAtTgtBuilding)
 			{
 				v.wasAlreadyAtTgtBuilding = false;
