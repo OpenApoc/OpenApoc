@@ -105,6 +105,8 @@ class VehicleTargetHelper
 		Reachable,
 		BlockedByVehicle, // We only check for this if VehicleAvoidance is not Ignore.
 		BlockedByScenery,
+		BlockedByBuilding // Specificaly so AI can recover vehicle at any position of the map which
+		                  // is not inside a building
 	};
 
 	// Desired target adjustment behavior when the given target tile is BlockedByVehicle.
@@ -143,6 +145,11 @@ class VehicleTargetHelper
 	//   target: Location to be checked for reachability.
 	// Returns: Reachability, see above for details.
 	static Reachability isReachableTarget(const Vehicle &v, Vec3<int> target);
+
+	// Checks for reachability to recover AI vehicles, specificaly as seperate function since Target
+	// Tile is will always be blocked by vehicle to be rescued and mostly has no landing pad Returns
+	// reachable for recovery as long as tgt tile is not part of building
+	static Reachability isReachableForRecovery(const Vehicle &v, Vec3<int> target);
 
   private:
 	static AdjustTargetResult adjustTargetToClosestFlying(GameState &state, Vehicle &v,
