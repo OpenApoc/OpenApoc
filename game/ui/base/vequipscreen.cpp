@@ -51,10 +51,12 @@ VEquipScreen::VEquipScreen(sp<GameState> state)
 	    paperDollPlaceholder->Location, paperDollPlaceholder->Size, EQUIP_GRID_SLOT_SIZE);
 
 	// when hovering the paperdoll, display the selected vehicle stats
-	paperDoll->addCallback(FormEventType::MouseEnter, [this](FormsEvent *e [[maybe_unused]]) {
-		highlightedVehicle = selected;
-		VehicleSheet(formVehicleItem).display(selected);
-	});
+	paperDoll->addCallback(FormEventType::MouseEnter,
+	                       [this](FormsEvent *e [[maybe_unused]])
+	                       {
+		                       highlightedVehicle = selected;
+		                       VehicleSheet(formVehicleItem).display(selected);
+	                       });
 
 	for (auto &v : state->vehicles)
 	{
@@ -69,21 +71,26 @@ VEquipScreen::VEquipScreen(sp<GameState> state)
 
 	// Vehicle name edit
 	form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")
-	    ->addCallback(FormEventType::TextEditFinish, [this](FormsEvent *e) {
-		    if (this->selected)
-		    {
-			    this->selected->name =
-			        std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)->getText();
-		    }
-	    });
+	    ->addCallback(
+	        FormEventType::TextEditFinish,
+	        [this](FormsEvent *e)
+	        {
+		        if (this->selected)
+		        {
+			        this->selected->name =
+			            std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)->getText();
+		        }
+	        });
 	form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")
-	    ->addCallback(FormEventType::TextEditCancel, [this](FormsEvent *e) {
-		    if (this->selected)
-		    {
-			    std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)
-			        ->setText(this->selected->name);
-		    }
-	    });
+	    ->addCallback(FormEventType::TextEditCancel,
+	                  [this](FormsEvent *e)
+	                  {
+		                  if (this->selected)
+		                  {
+			                  std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)
+			                      ->setText(this->selected->name);
+		                  }
+	                  });
 
 	this->paperDoll->setNonHighlightColour(EQUIP_GRID_COLOUR);
 	this->setHighlightedSlotType(EquipmentSlotType::VehicleWeapon);
@@ -106,12 +113,14 @@ void VEquipScreen::begin()
 
 		// when entering a selectbox item, display that vehicle's stats
 		graphic->addCallback(FormEventType::MouseEnter,
-		                     [this, vehicle](FormsEvent *e [[maybe_unused]]) {
+		                     [this, vehicle](FormsEvent *e [[maybe_unused]])
+		                     {
 			                     highlightedVehicle = vehicle;
 			                     VehicleSheet(formVehicleItem).display(vehicle);
 		                     });
 		vehicleSelectBox->addCallback(FormEventType::MouseLeave,
-		                              [this](FormsEvent *e [[maybe_unused]]) {
+		                              [this](FormsEvent *e [[maybe_unused]])
+		                              {
 			                              highlightedVehicle = selected;
 			                              VehicleSheet(formVehicleItem).display(selected);
 		                              });
@@ -283,7 +292,8 @@ void VEquipScreen::eventOccurred(Event *e)
 			    (this->highlightedVehicle->getMaxPassengers() - equipment->type->passengers))
 			{
 				UString title(tr("EQUIPMENT IN USE"));
-				UString message(tr("Passenger module cannot be removed as it is currently in use."));
+				UString message(
+				    tr("Passenger module cannot be removed as it is currently in use."));
 
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
