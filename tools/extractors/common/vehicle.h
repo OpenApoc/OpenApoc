@@ -71,7 +71,7 @@ struct VehicleEquipmentLayoutSlot
 #define VEHICLE_EQUIPMENT_LAYOUT_SLOT_ALIGN_RIGHT 0x02
 	uint8_t alignment_x;
 #define VEHICLE_EQUIPMENT_LAYOUT_SLOT_ALIGN_TOP 0x00
-//#define VEHICLE_EQUIPMENT_LAYOUT_SLOT_ALIGN_CENTRE 0x01 same as above
+// #define VEHICLE_EQUIPMENT_LAYOUT_SLOT_ALIGN_CENTRE 0x01 same as above
 #define VEHICLE_EQUIPMENT_LAYOUT_SLOT_ALIGN_BOTTOM 0x02
 	uint8_t alignment_y;
 };

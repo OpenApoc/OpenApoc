@@ -327,6 +327,8 @@ class Vehicle : public StateObject<Vehicle>,
 	bool canDamageBuilding(StateRef<Building> target) const;
 	bool isIdle() const;
 
+	bool wasAlreadyAtTgtBuilding;
+
 	// This is the 'sum' of all armors?
 	int getArmor() const;
 	int getAccuracy() const;
