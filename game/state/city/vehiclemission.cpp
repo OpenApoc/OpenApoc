@@ -927,8 +927,9 @@ Reachability VehicleTargetHelper::isReachableTarget(const Vehicle &v, Vec3<int> 
 	}
 }
 
-Reachability VehicleTargetHelper::isReachableForRecovery(const Vehicle& v, Vec3<int> target) {
-	
+Reachability VehicleTargetHelper::isReachableForRecovery(const Vehicle &v, Vec3<int> target)
+{
+
 	auto &map = *v.city->map;
 	auto targetTile = map.getTile(target);
 
@@ -944,7 +945,6 @@ Reachability VehicleTargetHelper::isReachableForRecovery(const Vehicle& v, Vec3<
 			}
 		}
 	}
-
 }
 
 Reachability VehicleTargetHelper::isReachableTargetFlying(const Vehicle &v, Vec3<int> target)
@@ -2263,8 +2263,8 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					// For now Disregard the Alt Value
 					Vec3<int> rescuerPosition = v.position;
 					Vec3<int> targetPosition = targetVehicle->position;
-					if (targetVehicle->crashed &&
-					    rescuerPosition.x == targetPosition.x && rescuerPosition.y == targetPosition.y)
+					if (targetVehicle->crashed && rescuerPosition.x == targetPosition.x &&
+					    rescuerPosition.y == targetPosition.y)
 					{
 						missionCounter++;
 
