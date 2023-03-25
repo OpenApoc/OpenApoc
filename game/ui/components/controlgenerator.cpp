@@ -594,16 +594,18 @@ sp<Control> ControlGenerator::createDoubleListControl(const int controlLength)
 {
 	auto rubberItem = mksp<Control>();
 	rubberItem->Size = Vec2<int>{controlLength, 1};
-	rubberItem->setFuncPreRender([](sp<Control> control) {
-		int sizeY = 1;
-		for (auto &c : control->Controls)
-		{
-			if (!c->isVisible())
-				continue;
-			sizeY = std::max(sizeY, c->Location.y + c->Size.y);
-		}
-		control->Size.y = sizeY;
-	});
+	rubberItem->setFuncPreRender(
+	    [](sp<Control> control)
+	    {
+		    int sizeY = 1;
+		    for (auto &c : control->Controls)
+		    {
+			    if (!c->isVisible())
+				    continue;
+			    sizeY = std::max(sizeY, c->Location.y + c->Size.y);
+		    }
+		    control->Size.y = sizeY;
+	    });
 
 	auto leftList = rubberItem->createChild<MultilistBox>();
 	leftList->Name = LEFT_LIST_NAME;
