@@ -233,6 +233,7 @@ class BattleView : public BattleTileView
 	BattleView(sp<GameState> gameState);
 	~BattleView() override;
 	void begin() override;
+	void refresh();
 	void resume() override;
 	void update() override;
 	void render() override;

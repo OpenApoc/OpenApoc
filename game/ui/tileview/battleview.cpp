@@ -1322,16 +1322,21 @@ void BattleView::begin()
 	}
 }
 
-void BattleView::resume()
+void BattleView::refresh()
 {
-	state->skipTurboCalculations = config().getBool("OpenApoc.NewFeature.SkipTurboMovement");
-	BattleTileView::resume();
 	modifierLAlt = false;
 	modifierLCtrl = false;
 	modifierLShift = false;
 	modifierRAlt = false;
 	modifierRCtrl = false;
 	modifierRShift = false;
+}
+
+void BattleView::resume()
+{
+	state->skipTurboCalculations = config().getBool("OpenApoc.NewFeature.SkipTurboMovement");
+	BattleTileView::resume();
+	BattleView::refresh();
 }
 
 void BattleView::render()
@@ -3033,6 +3038,8 @@ bool BattleView::handleKeyDown(Event *e)
 		case SDLK_ESCAPE:
 			if (activeTab != notMyTurnTab)
 			{
+				selectionState = BattleSelectionState::Normal;
+				this->refresh();
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH, mksp<InGameOptions>(state->shared_from_this())});
 			}
