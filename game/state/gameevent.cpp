@@ -391,8 +391,7 @@ GameSomethingDiedEvent::GameSomethingDiedEvent(GameEventType type, UString name,
 		case GameEventType::VehicleDestroyed:
 			if (actor.length() > 0)
 			{
-				messageInner = format("%s %s %s: %s", tr("Vehicle destroyed:"), name,
-				                      tr("destroyed by"), actor);
+				messageInner = format("%s %s: %s", name, tr("destroyed by"), actor);
 			}
 			else
 			{
