@@ -135,6 +135,7 @@ class VehicleTileInfo
 	float healthProportion;
 	bool shield;
 	bool faded;     // Faded when they enter the alien dimension?
+	bool headedHome;
 	int passengers; // 0-13, 0-12 having numbers, 13+ being '+'
 	CityUnitState state;
 	bool operator==(const VehicleTileInfo &other) const;

@@ -149,6 +149,7 @@ VehicleTileInfo ControlGenerator::createVehicleInfo(GameState &state, sp<Vehicle
 	t.passengers = std::min(13, v->getPassengers());
 	// Faded if in other dimension or if haven't left dimension gate yet
 	t.faded = v->city != state.current_city || (!v->tileObject && !v->currentBuilding);
+	t.headedHome = v->missions.back().targetBuilding.id == v->homeBuilding.id;
 
 	auto b = v->currentBuilding;
 	if (b)
@@ -240,6 +241,23 @@ sp<Control> ControlGenerator::createVehicleControl(GameState &state, const Vehic
 		}
 		fadeIcon->Location = {1, 1};
 	}
+
+	sp<Graphic> baseGraphic;
+
+	if (info.headedHome)
+	{
+		baseGraphic = baseControl->createChild<Graphic>(singleton.icons[0]);
+		if (baseGraphic->getImage())
+		{
+			baseGraphic->Size = baseGraphic->getImage()->size;
+		}
+		else
+		{
+			baseGraphic->AutoSize = true;
+		}
+		baseGraphic->Location = {-5, 0};
+	}
+
 	if (info.passengers)
 	{
 		auto passengerGraphic = vehicleIcon->createChild<Graphic>(
