@@ -65,41 +65,51 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 
 	// Agent list functionality
 	auto agentList = formMain->findControlTyped<ListBox>("AGENT_SELECT_BOX");
-	agentList->addCallback(FormEventType::ListBoxChangeSelected, [this](FormsEvent *e) {
-		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
-		auto agent = list->getSelectedData<Agent>();
-		if (!agent)
-		{
-			LogError("No agent in selected data");
-			return;
-		}
-		if (agent->unit && !agent->unit->isConscious())
-		{
-			return;
-		}
-		selectAgent(agent, Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
-		            modifierLCtrl || modifierRCtrl);
-	});
+	agentList->addCallback(
+	    FormEventType::ListBoxChangeSelected,
+	    [this](FormsEvent *e)
+	    {
+		    auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
+		    auto agent = list->getSelectedData<Agent>();
+		    if (!agent)
+		    {
+			    LogError("No agent in selected data");
+			    return;
+		    }
+		    if (agent->unit && !agent->unit->isConscious())
+		    {
+			    return;
+		    }
+		    selectAgent(agent,
+		                Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
+		                modifierLCtrl || modifierRCtrl);
+	    });
 
 	// Agent name edit
 	formAgentStats->findControlTyped<TextEdit>("AGENT_NAME")
-	    ->addCallback(FormEventType::TextEditFinish, [this](FormsEvent *e) {
-		    auto currentAgent = selectedAgents.empty() ? nullptr : selectedAgents.front();
-		    if (currentAgent)
-		    {
-			    currentAgent->name =
-			        std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)->getText();
-		    }
-	    });
+	    ->addCallback(
+	        FormEventType::TextEditFinish,
+	        [this](FormsEvent *e)
+	        {
+		        auto currentAgent = selectedAgents.empty() ? nullptr : selectedAgents.front();
+		        if (currentAgent)
+		        {
+			        currentAgent->name =
+			            std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)->getText();
+		        }
+	        });
 	formAgentStats->findControlTyped<TextEdit>("AGENT_NAME")
-	    ->addCallback(FormEventType::TextEditCancel, [this](FormsEvent *e) {
-		    auto currentAgent = selectedAgents.empty() ? nullptr : selectedAgents.front();
-		    if (currentAgent)
-		    {
-			    std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)
-			        ->setText(currentAgent->name);
-		    }
-	    });
+	    ->addCallback(FormEventType::TextEditCancel,
+	                  [this](FormsEvent *e)
+	                  {
+		                  auto currentAgent =
+		                      selectedAgents.empty() ? nullptr : selectedAgents.front();
+		                  if (currentAgent)
+		                  {
+			                  std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)
+			                      ->setText(currentAgent->name);
+		                  }
+	                  });
 
 	woundImage = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
 	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
@@ -299,8 +309,16 @@ void AEquipScreen::eventOccurred(Event *e)
 		switch (e->keyboard().KeyCode)
 		{
 			case SDLK_ESCAPE:
-				attemptCloseScreen();
-				return;
+				if (EVENT_MOUSE_DOWN && draggedEquipment)
+				{
+					return;
+				}
+				else
+				{
+					attemptCloseScreen();
+					return;
+				}
+
 			case SDLK_RETURN:
 			case SDLK_KP_ENTER:
 				formMain->findControl("BUTTON_OK")->click();
@@ -1972,16 +1990,22 @@ void AEquipScreen::updateAgentControl(sp<Agent> agent)
 	auto agentList = formMain->findControlTyped<ListBox>("AGENT_SELECT_BOX");
 	auto control = ControlGenerator::createLargeAgentControl(
 	    *state, agent, agentList->Size.x, UnitSkillState::Hidden, selstate, !isInVicinity(agent));
-	control->addCallback(FormEventType::MouseEnter, [this, agent](FormsEvent *e [[maybe_unused]]) {
-		AgentSheet(formAgentStats).display(*agent, bigUnitRanks, isTurnBased());
-		formAgentStats->setVisible(true);
-		formAgentItem->setVisible(false);
-	});
-	control->addCallback(FormEventType::MouseLeave, [this](FormsEvent *e [[maybe_unused]]) {
-		AgentSheet(formAgentStats).display(*selectedAgents.front(), bigUnitRanks, isTurnBased());
-		formAgentStats->setVisible(true);
-		formAgentItem->setVisible(false);
-	});
+	control->addCallback(
+	    FormEventType::MouseEnter,
+	    [this, agent](FormsEvent *e [[maybe_unused]])
+	    {
+		    AgentSheet(formAgentStats).display(*agent, bigUnitRanks, isTurnBased());
+		    formAgentStats->setVisible(true);
+		    formAgentItem->setVisible(false);
+	    });
+	control->addCallback(FormEventType::MouseLeave,
+	                     [this](FormsEvent *e [[maybe_unused]])
+	                     {
+		                     AgentSheet(formAgentStats)
+		                         .display(*selectedAgents.front(), bigUnitRanks, isTurnBased());
+		                     formAgentStats->setVisible(true);
+		                     formAgentItem->setVisible(false);
+	                     });
 	agentList->replaceItem(control);
 }
 

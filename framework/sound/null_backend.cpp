@@ -12,7 +12,7 @@ class NullSoundBackend : public SoundBackend
 	AudioFormat preferredFormat;
 
   public:
-	NullSoundBackend()
+	NullSoundBackend(int concurrent_sample_count) : SoundBackend(concurrent_sample_count)
 	{
 		preferredFormat.channels = 2;
 		preferredFormat.format = AudioFormat::SampleFormat::PCM_SINT16;
@@ -59,10 +59,10 @@ class NullSoundBackend : public SoundBackend
 class NullSoundBackendFactory : public SoundBackendFactory
 {
   public:
-	SoundBackend *create() override
+	SoundBackend *create(int concurrent_sample_count) override
 	{
 		LogWarning("Creating NULL sound backend (Sound disabled)");
-		return new NullSoundBackend();
+		return new NullSoundBackend(concurrent_sample_count);
 	}
 
 	~NullSoundBackendFactory() override = default;

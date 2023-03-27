@@ -870,12 +870,13 @@ void AEquipment::throwItem(GameState &state, Vec3<int> targetPosition, float vel
 	velocityZ *= targetVectorDifference;
 
 	auto bi = state.current_battle->placeItem(state, shared_from_this(), position);
-
-	bi->velocity =
-	    (glm::normalize(Vec3<float>{targetVectorModified.x, targetVectorModified.y, 0.0f}) *
-	         velocityXY +
-	     Vec3<float>{0.0f, 0.0f, velocityZ}) *
-	    VELOCITY_SCALE_BATTLE;
+	// prevent normalizing of 0 vector throwing exception
+	Vec3<float> norm = {0.0f, 0.0f, 0.0f};
+	if (targetVectorModified.x != 0.0f && targetVectorModified.y != 0.0f)
+	{
+		norm = glm::normalize(Vec3<float>{targetVectorModified.x, targetVectorModified.y, 0.0f});
+	}
+	bi->velocity = (norm * velocityXY + Vec3<float>{0.0f, 0.0f, velocityZ}) * VELOCITY_SCALE_BATTLE;
 	bi->falling = true;
 	// 36 / (velocity length) = enough ticks to pass 1 whole tile
 	bi->ownerInvulnerableTicks =

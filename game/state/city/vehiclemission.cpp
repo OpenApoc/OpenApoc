@@ -927,6 +927,26 @@ Reachability VehicleTargetHelper::isReachableTarget(const Vehicle &v, Vec3<int> 
 	}
 }
 
+Reachability VehicleTargetHelper::isReachableForRecovery(const Vehicle &v, Vec3<int> target)
+{
+
+	auto &map = *v.city->map;
+	auto targetTile = map.getTile(target);
+
+	// Check if target tile has no building parts permanently blocking it
+	for (auto &obj : targetTile->ownedObjects)
+	{
+		if (obj->getType() == TileObject::Type::Scenery)
+		{
+			auto sceneryTile = std::static_pointer_cast<TileObjectScenery>(obj);
+			if (sceneryTile->scenery.lock()->type->isBuildingPart)
+			{
+				return Reachability::BlockedByBuilding;
+			}
+		}
+	}
+}
+
 Reachability VehicleTargetHelper::isReachableTargetFlying(const Vehicle &v, Vec3<int> target)
 {
 	auto &map = *v.city->map;
@@ -1427,6 +1447,12 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks, bo
 		}
 		case MissionType::InvestigateBuilding:
 		{
+			// prevent double update when vehicle was already at tgt building at time of alert
+			if (v.wasAlreadyAtTgtBuilding)
+			{
+				v.wasAlreadyAtTgtBuilding = false;
+				return;
+			}
 			if (finished && v.owner == state.getPlayer() && v.currentBuilding->detected)
 			{
 				v.currentBuilding->decreasePendingInvestigatorCount(state);
@@ -2240,8 +2266,11 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				case 0:
 				{
 					// Vehicle has crashed successfully and we're on top of it
-					if (targetVehicle->crashed &&
-					    (Vec3<int>)v.position == (Vec3<int>)targetVehicle->position)
+					// For now Disregard the Alt Value
+					Vec3<int> rescuerPosition = v.position;
+					Vec3<int> targetPosition = targetVehicle->position;
+					if (targetVehicle->crashed && rescuerPosition.x == targetPosition.x &&
+					    rescuerPosition.y == targetPosition.y)
 					{
 						missionCounter++;
 
@@ -2668,10 +2697,11 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 		// If target was close enough to reach
 		if (maxIterations > (int)distance)
 		{
-			// If told to give up - cancel mission
+			// If told to give up - cancel mission and crash vehicle so recovery can be initiated
 			if (giveUpIfInvalid)
 			{
 				cancelled = true;
+				v.setCrashed(state);
 				return;
 			}
 			// If not told to give up - subtract attempt
@@ -3070,8 +3100,8 @@ bool VehicleMission::canRecoverVehicle(const GameState &state, const Vehicle &v,
 		return false;
 	}
 	// Don't attempt to rescue permanently unreachable craft
-	if (VehicleTargetHelper::isReachableTarget(v, target.position) ==
-	    Reachability::BlockedByScenery)
+	if (VehicleTargetHelper::isReachableForRecovery(v, target.position) ==
+	    Reachability::BlockedByBuilding)
 	{
 		return false;
 	}
