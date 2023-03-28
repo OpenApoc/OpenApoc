@@ -2921,10 +2921,10 @@ void CityView::update()
 					                     //		{
 					                     //			// Equipscreen for owner vehicles
 					                     //			auto equipScreen =
-					                     //mksp<VEquipScreen>(this->state);
+					                     // mksp<VEquipScreen>(this->state);
 					                     //			equipScreen->setSelectedVehicle(vehicle);
-					                     //			fw().stageQueueCommand({ StageCmd::Command::PUSH,
-					                     //equipScreen }); 			return;
+					                     //			fw().stageQueueCommand({
+					                     //StageCmd::Command::PUSH, equipScreen }); return;
 					                     //		}
 					                     //		// [Shift] opens location
 					                     //		if (modifierLShift || modifierRShift)
