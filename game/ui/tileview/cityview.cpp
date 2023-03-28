@@ -2924,7 +2924,7 @@ void CityView::update()
 					                     // mksp<VEquipScreen>(this->state);
 					                     //			equipScreen->setSelectedVehicle(vehicle);
 					                     //			fw().stageQueueCommand({
-					                     //StageCmd::Command::PUSH, equipScreen }); return;
+					                     // StageCmd::Command::PUSH, equipScreen }); return;
 					                     //		}
 					                     //		// [Shift] opens location
 					                     //		if (modifierLShift || modifierRShift)
