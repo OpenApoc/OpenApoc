@@ -128,6 +128,7 @@ void dumpOptionsToLog()
 	dumpOption(optionRunAndKneel);
 	dumpOption(optionSeedRng);
 	dumpOption(optionAutoReload);
+	dumpOption(optionLeftClickIcon);
 
 	dumpOption(optionStunHostileAction);
 	dumpOption(optionRaidHostileAction);
@@ -402,6 +403,8 @@ ConfigOptionBool optionRunAndKneel("OpenApoc.NewFeature", "RunAndKneel",
 ConfigOptionBool optionSeedRng("OpenApoc.NewFeature", "SeedRng", "Seed RNG on game start", true);
 ConfigOptionBool optionAutoReload("OpenApoc.NewFeature", "AutoReload",
                                   "Automatically reload weapons when empty", true);
+ConfigOptionBool optionLeftClickIcon("OpenApoc.NewFeature", "LeftClickIconEquip",
+                                     "Left clicking icon opens equip menu", false);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);

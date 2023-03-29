@@ -23,6 +23,7 @@
 #include "game/ui/components/controlgenerator.h"
 #include "game/ui/general/aequipscreen.h"
 #include <cmath>
+#include <framework/configfile.h>
 
 namespace OpenApoc
 {
@@ -42,7 +43,8 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 	draggedList->setVisible(false);
 
 	// update the vehicle's icon
-	funcVehicleUpdate = [this](sp<Control> c) {
+	funcVehicleUpdate = [this](sp<Control> c)
+	{
 		if (auto vehicle = c->getData<Vehicle>())
 		{
 			auto icon = c->findControl(ControlGenerator::VEHICLE_ICON_NAME);
@@ -55,7 +57,8 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 	};
 
 	// update the agent's icon
-	funcAgentUpdate = [this](sp<Control> c) {
+	funcAgentUpdate = [this](sp<Control> c)
+	{
 		if (!c->isVisible())
 		{
 			return;
@@ -74,7 +77,8 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 	};
 
 	// select/deselect individual agent
-	funcHandleAgentSelection = [this](Event *e, sp<Control> c, bool select) {
+	funcHandleAgentSelection = [this](Event *e, sp<Control> c, bool select)
+	{
 		if (!e)
 			return select;
 
@@ -84,6 +88,19 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 			this->currentAgent = agent;
 		}
 		auto icon = c->findControl(ControlGenerator::AGENT_ICON_NAME);
+		if (config().getBool("OpenApoc.NewFeature.LeftClickIconEquip"))
+		{
+			if (agent && icon && c->isPointInsideControlBounds(e, icon) &&
+			    Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Left))
+			{
+				this->isDragged = false;
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH, mksp<AEquipScreen>(this->state, agent)});
+
+				return !select;
+			}
+		}
+
 		if (agent && icon && c->isPointInsideControlBounds(e, icon) &&
 		    Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right))
 		{
@@ -98,12 +115,27 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 	};
 
 	// select/deselect agents inside vehicle
-	funcHandleVehicleSelection = [this](Event *e, sp<Control> c, bool select) {
+	funcHandleVehicleSelection = [this](Event *e, sp<Control> c, bool select)
+	{
 		if (!e)
 			return select;
 
 		auto vehicle = c->getData<Vehicle>();
 		auto icon = c->findControl(ControlGenerator::VEHICLE_ICON_NAME);
+		if (config().getBool("OpenApoc.NewFeature.LeftClickIconEquip"))
+		{
+			if (vehicle && icon && c->isPointInsideControlBounds(e, icon) &&
+			    Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Left))
+			{
+				this->isDragged = false;
+
+				auto equipScreen = mksp<VEquipScreen>(this->state);
+				equipScreen->setSelectedVehicle(vehicle);
+				fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
+
+				return !select;
+			}
+		}
 		if (vehicle && icon && c->isPointInsideControlBounds(e, icon) &&
 		    Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right))
 		{
@@ -131,13 +163,15 @@ void AgentAssignment::init(sp<Form> form, Vec2<int> location, Vec2<int> size)
 	};
 
 	// Selection render
-	funcSelectionItemRender = [this](sp<Control> c) {
+	funcSelectionItemRender = [this](sp<Control> c)
+	{
 		fw().renderer->drawRect(c->Location + renderOffset, c->SelectionSize - renderOffset,
 		                        SelectedColour);
 	};
 
 	// Hover render
-	funcHoverItemRender = [this](sp<Control> c) {
+	funcHoverItemRender = [this](sp<Control> c)
+	{
 		fw().renderer->drawRect(c->Location + renderOffset, c->SelectionSize - renderOffset,
 		                        HoverColour);
 	};
@@ -333,7 +367,9 @@ void AgentAssignment::updateLocation()
 		auto buildingLeftControl = ControlGenerator::createBuildingAssignmentControl(*state, b);
 		// MouseUp - drop dragged list
 		buildingLeftControl->addCallback(
-		    FormEventType::MouseUp, [buildingLeftControl, this](FormsEvent *e) {
+		    FormEventType::MouseUp,
+		    [buildingLeftControl, this](FormsEvent *e)
+		    {
 			    if (!isDragged || e->forms().RaisedBy == sourceRaisedBy)
 				    return;
 
@@ -369,14 +405,16 @@ void AgentAssignment::updateLocation()
 		    buildingLeftControl->SelectionSize.y + agentSelectBox->ItemSpacing;
 		agentLeftList->ItemSpacing = agentSelectBox->ItemSpacing;
 		// set visibility filter
-		agentLeftList->setFuncIsVisibleItem([](sp<Control> c) {
-			auto agent = c->getData<Agent>();
-			bool visible =
-			    !agent->currentVehicle &&
-			    agent->currentBuilding == c->getParent()->getParent()->getData<Building>();
-			c->setVisible(visible);
-			return visible;
-		});
+		agentLeftList->setFuncIsVisibleItem(
+		    [](sp<Control> c)
+		    {
+			    auto agent = c->getData<Agent>();
+			    bool visible =
+			        !agent->currentVehicle &&
+			        agent->currentBuilding == c->getParent()->getParent()->getData<Building>();
+			    c->setVisible(visible);
+			    return visible;
+		    });
 		// set selection behaviour
 		agentLeftList->setFuncHandleSelection(funcHandleAgentSelection);
 		// set selection render
@@ -384,41 +422,47 @@ void AgentAssignment::updateLocation()
 		// set hover render
 		agentLeftList->setFuncHoverItemRender(funcHoverItemRender);
 		// MouseDown - ready for drag
-		agentLeftList->addCallback(FormEventType::MouseDown, [agentLeftList, this](FormsEvent *e) {
-			if (e->forms().RaisedBy == agentLeftList)
-			{
-				this->sourceRaisedBy = agentLeftList;
-				this->isDragged = true;
-			}
-		});
+		agentLeftList->addCallback(FormEventType::MouseDown,
+		                           [agentLeftList, this](FormsEvent *e)
+		                           {
+			                           if (e->forms().RaisedBy == agentLeftList)
+			                           {
+				                           this->sourceRaisedBy = agentLeftList;
+				                           this->isDragged = true;
+			                           }
+		                           });
 		// MouseUp - drop dragged list
-		agentLeftList->addCallback(FormEventType::MouseUp, [agentLeftList, this](FormsEvent *e) {
-			if (!isDragged || e->forms().RaisedBy == sourceRaisedBy)
-				return;
+		agentLeftList->addCallback(FormEventType::MouseUp,
+		                           [agentLeftList, this](FormsEvent *e)
+		                           {
+			                           if (!isDragged || e->forms().RaisedBy == sourceRaisedBy)
+				                           return;
 
-			isDragged = false;
-			draggedList->setVisible(false);
+			                           isDragged = false;
+			                           draggedList->setVisible(false);
 
-			auto building = agentLeftList->getParent()->getData<Building>();
-			bool success = false;
-			for (auto &agentControl : draggedList->Controls)
-			{
-				auto agent = agentControl->getData<Agent>();
-				auto currentBuilding = agent->currentVehicle
-				                           ? agent->currentVehicle->currentBuilding
-				                           : agent->currentBuilding;
-				success = building == (sp<Building>)currentBuilding;
-				if (!success)
-					break;
-				agent->enterBuilding(*state, currentBuilding);
-			}
+			                           auto building =
+			                               agentLeftList->getParent()->getData<Building>();
+			                           bool success = false;
+			                           for (auto &agentControl : draggedList->Controls)
+			                           {
+				                           auto agent = agentControl->getData<Agent>();
+				                           auto currentBuilding =
+				                               agent->currentVehicle
+				                                   ? agent->currentVehicle->currentBuilding
+				                                   : agent->currentBuilding;
+				                           success = building == (sp<Building>)currentBuilding;
+				                           if (!success)
+					                           break;
+				                           agent->enterBuilding(*state, currentBuilding);
+			                           }
 
-			if (success)
-			{
-				agentLeftList->setDirty();
-				sourceRaisedBy->clearSelection();
-			}
-		});
+			                           if (success)
+			                           {
+				                           agentLeftList->setDirty();
+				                           sourceRaisedBy->clearSelection();
+			                           }
+		                           });
 
 		addAgentsToList(agentLeftList, offset);
 
@@ -471,34 +515,37 @@ void AgentAssignment::addVehiclesToList(sp<MultilistBox> list, const int listOff
 		vehicleControl->Size.x -= listOffset;
 		vehicleControl->SelectionSize.x -= listOffset;
 		// MouseUp - drop dragged list
-		vehicleControl->addCallback(FormEventType::MouseUp, [vehicleControl, this](FormsEvent *e) {
-			if (!isDragged || e->forms().RaisedBy == sourceRaisedBy)
-				return;
+		vehicleControl->addCallback(
+		    FormEventType::MouseUp,
+		    [vehicleControl, this](FormsEvent *e)
+		    {
+			    if (!isDragged || e->forms().RaisedBy == sourceRaisedBy)
+				    return;
 
-			isDragged = false;
-			draggedList->setVisible(false);
+			    isDragged = false;
+			    draggedList->setVisible(false);
 
-			auto vehicle = vehicleControl->getData<Vehicle>();
-			bool success = false;
-			for (auto &agentControl : draggedList->Controls)
-			{
-				auto agent = agentControl->getData<Agent>();
-				auto currentBuilding = agent->currentVehicle
-				                           ? agent->currentVehicle->currentBuilding
-				                           : agent->currentBuilding;
-				success =
-				    vehicle->currentBuilding == currentBuilding && agent->currentVehicle != vehicle;
-				if (!success)
-					break;
-				agent->enterVehicle(*state, {state.get(), vehicle});
-			}
+			    auto vehicle = vehicleControl->getData<Vehicle>();
+			    bool success = false;
+			    for (auto &agentControl : draggedList->Controls)
+			    {
+				    auto agent = agentControl->getData<Agent>();
+				    auto currentBuilding = agent->currentVehicle
+				                               ? agent->currentVehicle->currentBuilding
+				                               : agent->currentBuilding;
+				    success = vehicle->currentBuilding == currentBuilding &&
+				              agent->currentVehicle != vehicle;
+				    if (!success)
+					    break;
+				    agent->enterVehicle(*state, {state.get(), vehicle});
+			    }
 
-			if (success)
-			{
-				vehicleControl->findControl(AGENT_LIST_NAME)->setDirty();
-				sourceRaisedBy->clearSelection();
-			}
-		});
+			    if (success)
+			    {
+				    vehicleControl->findControl(AGENT_LIST_NAME)->setDirty();
+				    sourceRaisedBy->clearSelection();
+			    }
+		    });
 		list->addItem(vehicleControl);
 
 		auto agentRightList = vehicleControl->createChild<MultilistBox>();
@@ -507,12 +554,15 @@ void AgentAssignment::addVehiclesToList(sp<MultilistBox> list, const int listOff
 		agentRightList->Location.y = vehicleControl->SelectionSize.y + list->ItemSpacing;
 		agentRightList->ItemSpacing = list->ItemSpacing;
 		// set visibility filter
-		agentRightList->setFuncIsVisibleItem([](sp<Control> c) {
-			auto agent = c->getData<Agent>();
-			bool visible = agent->currentVehicle == c->getParent()->getParent()->getData<Vehicle>();
-			c->setVisible(visible);
-			return visible;
-		});
+		agentRightList->setFuncIsVisibleItem(
+		    [](sp<Control> c)
+		    {
+			    auto agent = c->getData<Agent>();
+			    bool visible =
+			        agent->currentVehicle == c->getParent()->getParent()->getData<Vehicle>();
+			    c->setVisible(visible);
+			    return visible;
+		    });
 		// set selection behaviour
 		agentRightList->setFuncHandleSelection(funcHandleAgentSelection);
 		// set selection render
@@ -521,7 +571,8 @@ void AgentAssignment::addVehiclesToList(sp<MultilistBox> list, const int listOff
 		agentRightList->setFuncHoverItemRender(funcHoverItemRender);
 		// MouseDown - ready for drag
 		agentRightList->addCallback(FormEventType::MouseDown,
-		                            [agentRightList, this](FormsEvent *e) {
+		                            [agentRightList, this](FormsEvent *e)
+		                            {
 			                            if (e->forms().RaisedBy == agentRightList)
 			                            {
 				                            this->sourceRaisedBy = agentRightList;
@@ -549,12 +600,15 @@ void AgentAssignment::addBuildingToRightList(sp<Building> building, sp<Multilist
 	vehicleRightList->Location.y = buildingControl->SelectionSize.y + list->ItemSpacing;
 	vehicleRightList->ItemSpacing = list->ItemSpacing;
 	// set visibility filter
-	vehicleRightList->setFuncIsVisibleItem([](sp<Control> c) {
-		auto vehicle = c->getData<Vehicle>();
-		bool visible = vehicle->currentBuilding == c->getParent()->getParent()->getData<Building>();
-		c->setVisible(visible);
-		return visible;
-	});
+	vehicleRightList->setFuncIsVisibleItem(
+	    [](sp<Control> c)
+	    {
+		    auto vehicle = c->getData<Vehicle>();
+		    bool visible =
+		        vehicle->currentBuilding == c->getParent()->getParent()->getData<Building>();
+		    c->setVisible(visible);
+		    return visible;
+	    });
 	// set selection behaviour
 	vehicleRightList->setFuncHandleSelection(funcHandleVehicleSelection);
 	// set selection render
