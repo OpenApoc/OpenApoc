@@ -405,7 +405,7 @@ ConfigOptionBool optionAutoReload("OpenApoc.NewFeature", "AutoReload",
                                   "Automatically reload weapons when empty", true);
 ConfigOptionBool optionBattlescapeVertScroll("OpenApoc.NewFeature", "BattlescapeVertScroll",
                                              "Mousewheel changes vertical level in battlescape",
-                                             false);
+                                             true);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);
