@@ -113,13 +113,13 @@ void Control::eventOccured(Event *e)
 	}
 
 	if (e->type() == EVENT_MOUSE_MOVE || e->type() == EVENT_MOUSE_DOWN ||
-	    e->type() == EVENT_MOUSE_UP)
+	    e->type() == EVENT_MOUSE_UP || e->type() == EVENT_MOUSE_SCROLL)
 	{
 		bool newInside = isPointInsideControlBounds(e->mouse().X, e->mouse().Y);
 		// (e->mouse().X >= resolvedLocation.x && e->mouse().X < resolvedLocation.x + Size.x &&
 		// e->mouse().Y >= resolvedLocation.y && e->mouse().Y < resolvedLocation.y + Size.y);
 
-		if (e->type() == EVENT_MOUSE_MOVE)
+		if (e->type() == EVENT_MOUSE_MOVE || e->type() == EVENT_MOUSE_SCROLL)
 		{
 			if (newInside)
 			{

@@ -2999,6 +2999,9 @@ void BattleView::eventOccurred(Event *e)
 				return;
 			}
 			break;
+		case EVENT_MOUSE_SCROLL:
+			handleMouseScroll(e);
+			break;
 		case EVENT_GAME_STATE:
 			if (handleGameStateEvent(e))
 			{
@@ -3501,6 +3504,28 @@ bool BattleView::handleKeyDown(Event *e)
 		}
 	}
 	return false;
+}
+
+void BattleView::handleMouseScroll(Event *e)
+{
+	if (config().getBool("OpenApoc.NewFeature.BattlescapeVertScroll"))
+	{
+		int wheelDelta = e->mouse().WheelVertical;
+		if (wheelDelta > 0)
+		{
+			setZLevel(getZLevel() + 1);
+			setSelectedTilePosition(
+			    {selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z + 1});
+			updateLayerButtons();
+		}
+		else if (wheelDelta < 0)
+		{
+			setZLevel(getZLevel() - 1);
+			setSelectedTilePosition(
+			    {selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z - 1});
+			updateLayerButtons();
+		}
+	}
 }
 
 bool BattleView::handleKeyUp(Event *e)
