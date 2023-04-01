@@ -33,18 +33,19 @@
         <size width="300" height="32"/>
         <font>smalfont</font>
       </textbutton>
-      <textbutton id="BUTTON_OPTIONS" text="Options">
+  <!-- Options menu commented out until useful -->
+	<!-- <textbutton id="BUTTON_OPTIONS" text="Options">
+        <position x="centre" y="290"/>
+        <size width="300" height="32"/>
+        <font>smalfont</font>
+      </textbutton> -->
+      <textbutton id="BUTTON_QUIT" text="Quit">
         <position x="centre" y="290"/>
         <size width="300" height="32"/>
         <font>smalfont</font>
       </textbutton>
-      <textbutton id="BUTTON_QUIT" text="Quit">
-        <position x="centre" y="340"/>
-        <size width="300" height="32"/>
-        <font>smalfont</font>
-      </textbutton>
       <textbutton id="BUTTON_DEBUG" text="Debug Menu" visible="N">
-        <position x="centre" y="390"/>
+        <position x="centre" y="340"/>
         <size width="300" height="32"/>
         <font>smalfont</font>
       </textbutton>
