@@ -129,6 +129,7 @@ void dumpOptionsToLog()
 	dumpOption(optionSeedRng);
 	dumpOption(optionAutoReload);
 	dumpOption(optionLeftClickIcon);
+	dumpOption(optionBattlescapeVertScroll);
 
 	dumpOption(optionStunHostileAction);
 	dumpOption(optionRaidHostileAction);
@@ -405,6 +406,9 @@ ConfigOptionBool optionAutoReload("OpenApoc.NewFeature", "AutoReload",
                                   "Automatically reload weapons when empty", true);
 ConfigOptionBool optionLeftClickIcon("OpenApoc.NewFeature", "LeftClickIconEquip",
                                      "Left clicking icon opens equip menu", false);
+ConfigOptionBool optionBattlescapeVertScroll("OpenApoc.NewFeature", "BattlescapeVertScroll",
+                                             "Mousewheel changes vertical level in battlescape",
+                                             true);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);
