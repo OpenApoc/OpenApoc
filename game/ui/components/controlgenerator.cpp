@@ -149,7 +149,8 @@ VehicleTileInfo ControlGenerator::createVehicleInfo(GameState &state, sp<Vehicle
 	t.passengers = std::min(13, v->getPassengers());
 	// Faded if in other dimension or if haven't left dimension gate yet
 	t.faded = v->city != state.current_city || (!v->tileObject && !v->currentBuilding);
-	t.headedHome = v->missions.back().targetBuilding.id == v->homeBuilding.id;
+	// Headed home if we have a mission and it's to our home building
+	t.headedHome = v->missions.back().targetBuilding == v->homeBuilding;
 
 	auto b = v->currentBuilding;
 	if (b)
@@ -793,7 +794,7 @@ bool VehicleTileInfo::operator==(const VehicleTileInfo &other) const
 	return (this->vehicle == other.vehicle && this->selected == other.selected &&
 	        this->healthProportion == other.healthProportion && this->shield == other.shield &&
 	        this->passengers == other.passengers && this->state == other.state &&
-	        this->faded == other.faded);
+	        this->faded == other.faded && this->headedHome == other.headedHome);
 }
 
 bool VehicleTileInfo::operator!=(const VehicleTileInfo &other) const { return !(*this == other); }
