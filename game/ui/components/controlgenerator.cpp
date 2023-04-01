@@ -149,6 +149,8 @@ VehicleTileInfo ControlGenerator::createVehicleInfo(GameState &state, sp<Vehicle
 	t.passengers = std::min(13, v->getPassengers());
 	// Faded if in other dimension or if haven't left dimension gate yet
 	t.faded = v->city != state.current_city || (!v->tileObject && !v->currentBuilding);
+	// Headed home if we have a mission and it's to our home building
+	t.headedHome = v->missions.back().targetBuilding == v->homeBuilding;
 
 	auto b = v->currentBuilding;
 	if (b)
@@ -240,6 +242,23 @@ sp<Control> ControlGenerator::createVehicleControl(GameState &state, const Vehic
 		}
 		fadeIcon->Location = {1, 1};
 	}
+
+	sp<Graphic> baseGraphic;
+
+	if (info.headedHome)
+	{
+		baseGraphic = baseControl->createChild<Graphic>(singleton.icons[0]);
+		if (baseGraphic->getImage())
+		{
+			baseGraphic->Size = baseGraphic->getImage()->size;
+		}
+		else
+		{
+			baseGraphic->AutoSize = true;
+		}
+		baseGraphic->Location = {-5, 0};
+	}
+
 	if (info.passengers)
 	{
 		auto passengerGraphic = vehicleIcon->createChild<Graphic>(
@@ -775,7 +794,7 @@ bool VehicleTileInfo::operator==(const VehicleTileInfo &other) const
 	return (this->vehicle == other.vehicle && this->selected == other.selected &&
 	        this->healthProportion == other.healthProportion && this->shield == other.shield &&
 	        this->passengers == other.passengers && this->state == other.state &&
-	        this->faded == other.faded);
+	        this->faded == other.faded && this->headedHome == other.headedHome);
 }
 
 bool VehicleTileInfo::operator!=(const VehicleTileInfo &other) const { return !(*this == other); }
