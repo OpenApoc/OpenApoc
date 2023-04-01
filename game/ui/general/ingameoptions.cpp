@@ -166,6 +166,8 @@ void InGameOptions::loadList(int id)
 		auto label = checkBox->createChild<Label>(tr(config().describe(p.first, p.second)), font);
 		label->Size = {216, listControl->ItemSize};
 		label->Location = {24, 0};
+		label->ToolTipText = tr(config().describe(p.first, p.second));
+		label->ToolTipFont = font;
 		listControl->addItem(checkBox);
 	}
 }
