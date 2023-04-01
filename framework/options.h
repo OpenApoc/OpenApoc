@@ -106,6 +106,7 @@ extern ConfigOptionBool optionSkipTurbo;
 extern ConfigOptionBool optionRunAndKneel;
 extern ConfigOptionBool optionSeedRng;
 extern ConfigOptionBool optionAutoReload;
+extern ConfigOptionBool optionLeftClickIcon;
 extern ConfigOptionBool optionBattlescapeVertScroll;
 
 extern ConfigOptionBool optionStunHostileAction;

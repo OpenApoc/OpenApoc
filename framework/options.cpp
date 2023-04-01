@@ -128,6 +128,7 @@ void dumpOptionsToLog()
 	dumpOption(optionRunAndKneel);
 	dumpOption(optionSeedRng);
 	dumpOption(optionAutoReload);
+	dumpOption(optionLeftClickIcon);
 	dumpOption(optionBattlescapeVertScroll);
 
 	dumpOption(optionStunHostileAction);
@@ -403,6 +404,8 @@ ConfigOptionBool optionRunAndKneel("OpenApoc.NewFeature", "RunAndKneel",
 ConfigOptionBool optionSeedRng("OpenApoc.NewFeature", "SeedRng", "Seed RNG on game start", true);
 ConfigOptionBool optionAutoReload("OpenApoc.NewFeature", "AutoReload",
                                   "Automatically reload weapons when empty", true);
+ConfigOptionBool optionLeftClickIcon("OpenApoc.NewFeature", "LeftClickIconEquip",
+                                     "Left clicking icon opens equip menu", false);
 ConfigOptionBool optionBattlescapeVertScroll("OpenApoc.NewFeature", "BattlescapeVertScroll",
                                              "Mousewheel changes vertical level in battlescape",
                                              true);
