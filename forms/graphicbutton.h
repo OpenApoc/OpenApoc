@@ -24,7 +24,7 @@ class GraphicButton : public Control
 	void onRender() override;
 
   public:
-	sp<ScrollBar> ScrollBarPrev, ScrollBarNext;
+	sp<ScrollBar> ScrollBarPrev, ScrollBarNext, ScrollBarPrevHorizontal, ScrollBarNextHorizontal;
 
 	GraphicButton(sp<Image> image = nullptr, sp<Image> imageDepressed = nullptr,
 	              sp<Image> imageHover = nullptr);

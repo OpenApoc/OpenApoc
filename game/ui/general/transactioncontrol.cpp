@@ -675,11 +675,11 @@ TransactionControl::createControl(const UString &id, Type type, const UString &n
 	auto buttonScrollLeft = control->createChild<GraphicButton>(nullptr, scrollLeft);
 	buttonScrollLeft->Size = scrollLeft->size;
 	buttonScrollLeft->Location = {87, 24};
-	buttonScrollLeft->ScrollBarPrev = control->scrollBar;
+	buttonScrollLeft->ScrollBarPrevHorizontal = control->scrollBar;
 	auto buttonScrollRight = control->createChild<GraphicButton>(nullptr, scrollRight);
 	buttonScrollRight->Size = scrollRight->size;
 	buttonScrollRight->Location = {247, 24};
-	buttonScrollRight->ScrollBarNext = control->scrollBar;
+	buttonScrollRight->ScrollBarNextHorizontal = control->scrollBar;
 	// Callback
 	control->setupCallbacks();
 	// Finally set the values
@@ -690,7 +690,8 @@ TransactionControl::createControl(const UString &id, Type type, const UString &n
 
 void TransactionControl::setupCallbacks()
 {
-	std::function<void(FormsEvent * e)> onScrollChange = [this](FormsEvent *) {
+	std::function<void(FormsEvent * e)> onScrollChange = [this](FormsEvent *)
+	{
 		if (!this->suspendUpdates)
 		{
 			this->updateValues();
