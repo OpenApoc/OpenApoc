@@ -426,6 +426,21 @@ void Base::destroyFacility(GameState &state, Vec2<int> pos)
 	}
 }
 
+bool Base::containmentEmpty(GameState &state)
+{
+	for (auto &f : facilities)
+	{
+		if (f->type->capacityType == FacilityType::Capacity::Aliens)
+		{
+			if (getCapacityUsed(state, f->type->capacityType) != 0)
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
 int Base::getCapacityUsed(GameState &state, FacilityType::Capacity type) const
 {
 	int total = 0;
