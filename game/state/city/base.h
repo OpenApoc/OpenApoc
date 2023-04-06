@@ -55,6 +55,7 @@ class Base : public StateObject<Base>, public std::enable_shared_from_this<Base>
 	                   bool free = false);
 	BuildError canDestroyFacility(GameState &state, Vec2<int> pos) const;
 	void destroyFacility(GameState &state, Vec2<int> pos);
+	bool containmentEmpty(GameState &state);
 	int getCapacityUsed(GameState &state, FacilityType::Capacity type) const;
 	int getCapacityTotal(FacilityType::Capacity type) const;
 	int getUsage(GameState &state, sp<Facility> facility, int delta = 0) const;
