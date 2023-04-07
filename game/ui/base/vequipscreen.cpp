@@ -460,7 +460,8 @@ void VEquipScreen::render()
 
 			Vec2<int> countLabelPosition = inventoryPosition;
 			countLabelPosition.y += INVENTORY_COUNT_Y_GAP + equipmentImage->size.y;
-			// FIXME: Center in X?
+			countLabelPosition.x += equipmentImage->size.x / 2 - countImage->size.x / 2;
+
 			fw().renderer->draw(countImage, countLabelPosition);
 
 			Vec2<int> inventoryEndPosition = inventoryPosition;
