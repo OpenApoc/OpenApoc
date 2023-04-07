@@ -1633,11 +1633,15 @@ void Vehicle::provideServiceCargo(GameState &state, bool bio, bool otherOrg)
 			continue;
 		}
 		// How much can we pick up
-		int maxAmount = std::min(spaceRemaining / c.space * c.divisor, c.count);
+		int maxAmount = (!config().getBool("OpenApoc.NewFeature.EnforceCargoLimits") && this->owner == state.getPlayer())
+		                    ? c.count
+		                    : std::min(spaceRemaining / c.space * c.divisor, c.count);
+
 		if (maxAmount == 0)
 		{
 			continue;
 		}
+
 		// Here's where we're going
 		if (!destination)
 		{
