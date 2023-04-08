@@ -5,6 +5,7 @@
 #include "game/state/gamestate.h"
 #include "game/state/rules/battle/damage.h"
 #include "game/state/tilemap/tilemap.h"
+#include <framework/configfile.h>
 #include <list>
 
 namespace OpenApoc
@@ -113,9 +114,18 @@ void VehicleSheet::displayImplementation(sp<Vehicle> vehicle, sp<VehicleType> ve
 	form->findControlTyped<Label>("LABEL_8_R")
 	    ->setText(vehicle ? format("%d / %d", vehicle->getPassengers(), vehicle->getMaxPassengers())
 	                      : format("%d", vehicleType->getMaxPassengers(it1, it2)));
-	form->findControlTyped<Label>("LABEL_9_R")
-	    ->setText(vehicle ? format("%d / %d", vehicle->getCargo(), vehicle->getMaxCargo())
-	                      : format("%d", vehicleType->getMaxCargo(it1, it2)));
+	if (!config().getBool("OpenApoc.NewFeature.EnforceCargoLimits"))
+	{
+		form->findControlTyped<Label>("LABEL_9_R")
+		    ->setText(vehicle ? format("%d", vehicle->getCargo())
+		                      : format("%d", vehicleType->getMaxCargo(it1, it2)));
+	}
+	else
+	{
+		form->findControlTyped<Label>("LABEL_9_R")
+		    ->setText(vehicle ? format("%d / %d", vehicle->getCargo(), vehicle->getMaxCargo())
+		                      : format("%d", vehicleType->getMaxCargo(it1, it2)));
+	}
 }
 
 void VehicleSheet::displayEquipImplementation(sp<VEquipment> item, sp<VEquipmentType> type)

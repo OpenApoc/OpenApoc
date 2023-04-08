@@ -763,29 +763,29 @@ class GroundVehicleMover : public VehicleMover
 								vehicle.goalPosition.z = vehicle.position.z;
 							}
 							else
-							    // If we're on flat surface then first move to midpoint then start
-							    // to
-							    // change Z
-							    if (fromFlat)
-							{
-								vehicle.goalWaypoints.push_back(vehicle.goalPosition);
-								// Add midpoint waypoint at target z level
-								vehicle.goalPosition.x =
-								    (vehicle.position.x + vehicle.goalPosition.x) / 2.0f;
-								vehicle.goalPosition.y =
-								    (vehicle.position.y + vehicle.goalPosition.y) / 2.0f;
-								vehicle.goalPosition.z = vehicle.position.z;
-							}
-							// Else if we end on flat surface first change Z then move flat
-							else if (toFlat)
-							{
-								vehicle.goalWaypoints.push_back(vehicle.goalPosition);
-								// Add midpoint waypoint at current z level
-								vehicle.goalPosition.x =
-								    (vehicle.position.x + vehicle.goalPosition.x) / 2.0f;
-								vehicle.goalPosition.y =
-								    (vehicle.position.y + vehicle.goalPosition.y) / 2.0f;
-							}
+								// If we're on flat surface then first move to midpoint then start
+								// to
+								// change Z
+								if (fromFlat)
+								{
+									vehicle.goalWaypoints.push_back(vehicle.goalPosition);
+									// Add midpoint waypoint at target z level
+									vehicle.goalPosition.x =
+									    (vehicle.position.x + vehicle.goalPosition.x) / 2.0f;
+									vehicle.goalPosition.y =
+									    (vehicle.position.y + vehicle.goalPosition.y) / 2.0f;
+									vehicle.goalPosition.z = vehicle.position.z;
+								}
+								// Else if we end on flat surface first change Z then move flat
+								else if (toFlat)
+								{
+									vehicle.goalWaypoints.push_back(vehicle.goalPosition);
+									// Add midpoint waypoint at current z level
+									vehicle.goalPosition.x =
+									    (vehicle.position.x + vehicle.goalPosition.x) / 2.0f;
+									vehicle.goalPosition.y =
+									    (vehicle.position.y + vehicle.goalPosition.y) / 2.0f;
+								}
 							// If we're moving from nonflat to nonflat then we need no midpoint at
 							// all
 						}
@@ -1633,7 +1633,10 @@ void Vehicle::provideServiceCargo(GameState &state, bool bio, bool otherOrg)
 			continue;
 		}
 		// How much can we pick up
-		int maxAmount = std::min(spaceRemaining / c.space * c.divisor, c.count);
+		int maxAmount = (!config().getBool("OpenApoc.NewFeature.EnforceCargoLimits") &&
+		                 this->owner == state.getPlayer())
+		                    ? c.count
+		                    : std::min(spaceRemaining / c.space * c.divisor, c.count);
 		if (maxAmount == 0)
 		{
 			continue;
