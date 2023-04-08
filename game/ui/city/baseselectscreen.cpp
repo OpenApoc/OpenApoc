@@ -15,6 +15,7 @@
 #include "game/state/tilemap/tilemap.h"
 #include "game/state/tilemap/tileobject_scenery.h"
 #include "game/ui/city/basebuyscreen.h"
+#include <framework/configfile.h>
 
 namespace OpenApoc
 {
@@ -26,9 +27,9 @@ BaseSelectScreen::BaseSelectScreen(sp<GameState> state, Vec3<float> centerPos)
       menuform(ui().getForm("city/baseselect")), state(state)
 {
 	this->centerPos = centerPos;
-	this->menuform->findControl("BUTTON_OK")->addCallback(FormEventType::ButtonClick, [](Event *) {
-		fw().stageQueueCommand({StageCmd::Command::POP});
-	});
+	this->menuform->findControl("BUTTON_OK")
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [](Event *) { fw().stageQueueCommand({StageCmd::Command::POP}); });
 }
 
 BaseSelectScreen::~BaseSelectScreen() = default;
@@ -36,6 +37,7 @@ BaseSelectScreen::~BaseSelectScreen() = default;
 void BaseSelectScreen::begin()
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
+	autoScroll = config().getBool("Options.Misc.AutoScroll");
 }
 
 void BaseSelectScreen::pause() {}
@@ -48,7 +50,7 @@ void BaseSelectScreen::eventOccurred(Event *e)
 {
 	menuform->eventOccured(e);
 
-	if (menuform->eventIsWithin(e))
+	if (menuform->eventIsWithin(e) && e->type() != EVENT_MOUSE_MOVE)
 	{
 		return;
 	}
