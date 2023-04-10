@@ -6,14 +6,6 @@
 namespace OpenApoc
 {
 
-static constexpr unsigned VANILLA_TICKS_PER_SECOND = 36;
-static constexpr unsigned TICKS_MULTIPLIER = 4;
-static constexpr unsigned TICKS_PER_SECOND = VANILLA_TICKS_PER_SECOND * TICKS_MULTIPLIER;
-static constexpr unsigned TICKS_PER_MINUTE = TICKS_PER_SECOND * 60;
-static constexpr unsigned TICKS_PER_HOUR = TICKS_PER_MINUTE * 60;
-static constexpr unsigned TICKS_PER_DAY = TICKS_PER_HOUR * 24;
-static constexpr unsigned TURBO_TICKS = 5 * 60 * TICKS_PER_SECOND;
-
 class GameTime
 {
   private:

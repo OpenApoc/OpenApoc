@@ -4,6 +4,7 @@
 #include "game/state/stateobject.h"
 #include "library/rect.h"
 #include "library/vec.h"
+#include "framework/framework.h"
 #include <set>
 #include <vector>
 

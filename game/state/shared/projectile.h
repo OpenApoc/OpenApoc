@@ -19,7 +19,7 @@
 // For some reason, advancing projectiles using their speed produces improper results
 // With a multiplier of four, it seems to match.
 // Tests with cityscape shown this to work similar to vanilla
-#define PROJECTILE_VELOCITY_MULTIPLIER 4.0f
+#define PROJECTILE_VELOCITY_MULTIPLIER 1.0f
 
 namespace OpenApoc
 {

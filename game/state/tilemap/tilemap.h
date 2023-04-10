@@ -1,6 +1,7 @@
 #pragma once
 
 #include "framework/logger.h"
+#include "framework/framework.h"
 #include "game/state/gametime.h"
 #include "game/state/stateobject.h"
 #include "game/state/tilemap/tile.h"

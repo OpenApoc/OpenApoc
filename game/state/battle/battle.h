@@ -9,6 +9,7 @@
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
+#include "framework/framework.h"
 #include <list>
 #include <map>
 #include <set>

@@ -4,6 +4,7 @@
 #include "game/state/rules/city/organisationraid.h"
 #include "game/state/stateobject.h"
 #include "library/strings.h"
+#include "framework/framework.h"
 #include <list>
 #include <map>
 #include <set>
