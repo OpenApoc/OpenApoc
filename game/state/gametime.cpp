@@ -1,7 +1,7 @@
 #include "game/state/gametime.h"
+#include "framework/framework.h"
 #include "game/state/gametime_facet.h"
 #include "library/strings_format.h"
-#include "framework/framework.h"
 #include <locale>
 #include <sstream>
 

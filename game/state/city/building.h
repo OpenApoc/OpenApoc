@@ -1,10 +1,10 @@
 #pragma once
 
+#include "framework/framework.h"
 #include "game/state/gametime.h"
 #include "game/state/stateobject.h"
 #include "library/rect.h"
 #include "library/vec.h"
-#include "framework/framework.h"
 #include <set>
 #include <vector>
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "framework/image.h"
 #include "framework/framework.h"
+#include "framework/image.h"
 #include "game/state/gametime.h"
 #include "game/state/rules/aequipmenttype.h"
 #include "game/state/rules/agenttype.h"

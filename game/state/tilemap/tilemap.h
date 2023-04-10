@@ -1,7 +1,7 @@
 #pragma once
 
-#include "framework/logger.h"
 #include "framework/framework.h"
+#include "framework/logger.h"
 #include "game/state/gametime.h"
 #include "game/state/stateobject.h"
 #include "game/state/tilemap/tile.h"
@@ -12,7 +12,6 @@
 #include <map>
 #include <set>
 #include <vector>
-
 
 static constexpr float VELOCITY_SCALE_CITY_X = 32.0f;
 static constexpr float VELOCITY_SCALE_CITY_Y = 32.0f;
@@ -25,7 +24,6 @@ static constexpr float VELOCITY_SCALE_BATTLE_Y = 24;
 static constexpr float VELOCITY_SCALE_BATTLE_Z = 20;
 static const OpenApoc::Vec3<float> VELOCITY_SCALE_BATTLE{
     VELOCITY_SCALE_BATTLE_X, VELOCITY_SCALE_BATTLE_Y, VELOCITY_SCALE_BATTLE_Z};
-
 
 namespace OpenApoc
 {

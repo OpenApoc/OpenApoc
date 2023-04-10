@@ -1,5 +1,6 @@
 #pragma once
 
+#include "framework/framework.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/ai/tacticalai.h"
 #include "game/state/battle/battleforces.h"
@@ -9,7 +10,6 @@
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
-#include "framework/framework.h"
 #include <list>
 #include <map>
 #include <set>

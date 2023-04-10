@@ -1,8 +1,8 @@
 #include "game/state/battle/ai/tacticalai.h"
+#include "framework/framework.h"
 #include "game/state/battle/ai/tacticalaivanilla.h"
 #include "game/state/battle/battle.h"
 #include "game/state/gamestate.h"
-#include "framework/framework.h"
 
 namespace OpenApoc
 {

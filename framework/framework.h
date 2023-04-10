@@ -14,8 +14,8 @@ static constexpr unsigned VANILLA_TICKS_PER_SECOND = 36;
 static constexpr unsigned VANILLA_ANIMATION_FRAMES_PER_SECOND = 18;
 static constexpr unsigned TICKS_MULTIPLIER = 1;
 static constexpr unsigned TICKS_PER_SECOND = VANILLA_TICKS_PER_SECOND * TICKS_MULTIPLIER;
-static constexpr unsigned ANIMATION_FRAMES_MULTIPLIER = TICKS_PER_SECOND / 
-							  (VANILLA_ANIMATION_FRAMES_PER_SECOND * TICKS_MULTIPLIER);
+static constexpr unsigned ANIMATION_FRAMES_MULTIPLIER =
+    TICKS_PER_SECOND / (VANILLA_ANIMATION_FRAMES_PER_SECOND * TICKS_MULTIPLIER);
 static constexpr unsigned TICKS_PER_MINUTE = TICKS_PER_SECOND * 60;
 static constexpr unsigned TICKS_PER_HOUR = TICKS_PER_MINUTE * 60;
 static constexpr unsigned TICKS_PER_DAY = TICKS_PER_HOUR * 24;
@@ -34,8 +34,6 @@ class JukeBox;
 class StageCmd;
 class Stage;
 class RGBImage;
-
-
 
 class Framework
 {
@@ -122,11 +120,13 @@ class Framework
 		    std::bind(std::forward<F>(f), std::forward<Args>(args)...));
 
 		std::shared_future<return_type> res = task->get_future().share();
-		this->threadPoolTaskEnqueue([task, res]() {
-			(*task)();
-			// Without a future.get() any exceptions are dropped on the floor
-			res.get();
-		});
+		this->threadPoolTaskEnqueue(
+		    [task, res]()
+		    {
+			    (*task)();
+			    // Without a future.get() any exceptions are dropped on the floor
+			    res.get();
+		    });
 		return res;
 	}
 
