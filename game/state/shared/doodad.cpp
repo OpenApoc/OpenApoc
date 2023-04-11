@@ -17,10 +17,10 @@ Doodad::Doodad(Vec3<float> position, Vec2<int> imageOffset, bool temporary, int 
       lifetime(lifetime), sprite(image)
 {
 }
-// FIXME: MOVED FROM TICKS MULTIPLIER TO 4 FOR CORRECTNESS, NOT SURE THIS IS WHAT IT SHOULD BE
+
 Doodad::Doodad(Vec3<float> position, StateRef<DoodadType> type)
     : position(position), imageOffset(type->imageOffset), temporary(true), age(0),
-      lifetime(type->lifetime * 4), type(type)
+      lifetime(type->lifetime * DOODAD_LIFETIME_TICK_MULTIPLIER), type(type)
 {
 }
 
