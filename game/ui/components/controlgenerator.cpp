@@ -150,8 +150,15 @@ VehicleTileInfo ControlGenerator::createVehicleInfo(GameState &state, sp<Vehicle
 	// Faded if in other dimension or if haven't left dimension gate yet
 	t.faded = v->city != state.current_city || (!v->tileObject && !v->currentBuilding);
 	// Headed home if we have a mission and it's to our home building
-	t.headedHome = v->missions.back().targetBuilding == v->homeBuilding ||
-	               v->missions.back().type == VehicleMission::MissionType::OfferService;
+	if (!v->missions.empty())
+	{
+		t.headedHome = v->missions.back().targetBuilding == v->homeBuilding ||
+		               v->missions.back().type == VehicleMission::MissionType::OfferService;
+	}
+	else
+	{
+		t.headedHome = false;
+	}
 
 	auto b = v->currentBuilding;
 	if (b)
