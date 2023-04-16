@@ -763,29 +763,29 @@ class GroundVehicleMover : public VehicleMover
 								vehicle.goalPosition.z = vehicle.position.z;
 							}
 							else
-							    // If we're on flat surface then first move to midpoint then start
-							    // to
-							    // change Z
-							    if (fromFlat)
-							{
-								vehicle.goalWaypoints.push_back(vehicle.goalPosition);
-								// Add midpoint waypoint at target z level
-								vehicle.goalPosition.x =
-								    (vehicle.position.x + vehicle.goalPosition.x) / 2.0f;
-								vehicle.goalPosition.y =
-								    (vehicle.position.y + vehicle.goalPosition.y) / 2.0f;
-								vehicle.goalPosition.z = vehicle.position.z;
-							}
-							// Else if we end on flat surface first change Z then move flat
-							else if (toFlat)
-							{
-								vehicle.goalWaypoints.push_back(vehicle.goalPosition);
-								// Add midpoint waypoint at current z level
-								vehicle.goalPosition.x =
-								    (vehicle.position.x + vehicle.goalPosition.x) / 2.0f;
-								vehicle.goalPosition.y =
-								    (vehicle.position.y + vehicle.goalPosition.y) / 2.0f;
-							}
+								// If we're on flat surface then first move to midpoint then start
+								// to
+								// change Z
+								if (fromFlat)
+								{
+									vehicle.goalWaypoints.push_back(vehicle.goalPosition);
+									// Add midpoint waypoint at target z level
+									vehicle.goalPosition.x =
+									    (vehicle.position.x + vehicle.goalPosition.x) / 2.0f;
+									vehicle.goalPosition.y =
+									    (vehicle.position.y + vehicle.goalPosition.y) / 2.0f;
+									vehicle.goalPosition.z = vehicle.position.z;
+								}
+								// Else if we end on flat surface first change Z then move flat
+								else if (toFlat)
+								{
+									vehicle.goalWaypoints.push_back(vehicle.goalPosition);
+									// Add midpoint waypoint at current z level
+									vehicle.goalPosition.x =
+									    (vehicle.position.x + vehicle.goalPosition.x) / 2.0f;
+									vehicle.goalPosition.y =
+									    (vehicle.position.y + vehicle.goalPosition.y) / 2.0f;
+								}
 							// If we're moving from nonflat to nonflat then we need no midpoint at
 							// all
 						}
@@ -1362,8 +1362,19 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 	crashed = false;
 	if (this->currentBuilding)
 	{
-		LogError("Vehicle already in a building?");
-		return;
+		// eveluate if tgt building is same as building currently located
+		if (this->currentBuilding.id.compare(b.id) == 0)
+		{
+			LogError("Vehicle already in a building?");
+			return;
+		}
+		// if not create mission to send vehicle to actual tgt building
+		else
+		{
+			this->addMission(state, VehicleMission::gotoBuilding(state, *this, b));
+			LogWarning("Vehicle was already in a building, rerouting");
+			return;
+		}
 	}
 	this->currentBuilding = b;
 	b->currentVehicles.insert({&state, shared_from_this()});
