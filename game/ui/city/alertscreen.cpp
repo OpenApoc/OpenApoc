@@ -11,6 +11,7 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gamestate.h"
+#include "game/state/gameevent.h"
 #include "game/state/shared/organisation.h"
 #include "game/ui/base/vequipscreen.h"
 #include "game/ui/components/agentassignment.h"
@@ -139,6 +140,23 @@ void AlertScreen::eventOccurred(Event *e)
 		{
 			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
+		}
+	}
+
+	if (e->type() == EVENT_GAME_STATE)
+	{
+		auto gameEvent = dynamic_cast<GameEvent *>(e);
+		switch (gameEvent->type)
+		{
+			// Let the user know the Investigation can not be commenced without a Vehicle
+			case GameEventType::AgentUnableToReach:
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<MessageBox>(tr("Unable to Reach"),
+				                      tr("The Agent is unable to reach the Target Building by "
+				                         "Foot. Canceling Mission!"),
+				                      MessageBox::ButtonOptions::Ok)});
+				break;
 		}
 	}
 }
