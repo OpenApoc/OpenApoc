@@ -876,8 +876,23 @@ bool Agent::setMission(GameState &state, AgentMission mission)
 bool Agent::popFinishedMissions(GameState &state)
 {
 	bool popped = false;
-	while (missions.size() > 0 && missions.front().isFinished(state, *this))
+	while (missions.size() > 0)
 	{
+		// Prevent Building Investigator Count < 0
+		if (missions.front().type == AgentMission::MissionType::InvestigateBuilding)
+		{
+			if (!missions.front().isFinished(state, *this, false))
+			{
+				break;
+			}
+		}
+		else
+		{
+			if (!missions.front().isFinished(state, *this))
+			{
+				break;
+			}
+		}
 		LogWarning("Agent %s mission \"%s\" finished", name, missions.front().getName());
 		missions.pop_front();
 		popped = true;
