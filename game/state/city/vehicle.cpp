@@ -1362,19 +1362,8 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 	crashed = false;
 	if (this->currentBuilding)
 	{
-		// eveluate if tgt building is same as building currently located
-		if (this->currentBuilding.id.compare(b.id) == 0)
-		{
-			LogError("Vehicle already in a building?");
-			return;
-		}
-		// if not create mission to send vehicle to actual tgt building
-		else
-		{
-			this->addMission(state, VehicleMission::gotoBuilding(state, *this, b));
-			LogWarning("Vehicle was already in a building, rerouting");
-			return;
-		}
+		LogError("Vehicle already in a building?");
+		return;
 	}
 	this->currentBuilding = b;
 	b->currentVehicles.insert({&state, shared_from_this()});
