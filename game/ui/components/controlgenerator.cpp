@@ -155,6 +155,10 @@ VehicleTileInfo ControlGenerator::createVehicleInfo(GameState &state, sp<Vehicle
 		t.headedHome = v->missions.back().targetBuilding == v->homeBuilding ||
 		               v->missions.back().type == VehicleMission::MissionType::OfferService;
 	}
+	else
+	{
+		t.headedHome = false;
+	}
 
 	auto b = v->currentBuilding;
 	if (b)
