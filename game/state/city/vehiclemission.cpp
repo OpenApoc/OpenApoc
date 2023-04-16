@@ -2290,7 +2290,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						// Recovering crashed non-ufo
 						else
 						{
-							if (targetVehicle->homeBuilding)
+							if (targetVehicle->homeBuilding && !targetVehicle->currentBuilding && targetVehicle->tileObject)
 							{
 								auto target = targetVehicle;
 								v.addMission(state, VehicleMission::gotoBuilding(
