@@ -95,8 +95,7 @@
   <initial_agents>
     <entry>
       <key>Soldier</key>
-      <!-- Should be 10 -->
-      <value>12</value>
+      <value>10</value>
     </entry>
     <entry>
       <key>Physicist</key>
