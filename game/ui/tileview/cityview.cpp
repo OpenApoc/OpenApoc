@@ -1374,11 +1374,15 @@ CityView::CityView(sp<GameState> state)
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *)
 	                  {
-		                  auto a = this->state->current_city->cityViewSelectedAgents.front();
-		                  // Don't return to base if in a vehicle
-		                  if (!a->currentVehicle)
+		                  if (!this->state->current_city->cityViewSelectedAgents.empty())
 		                  {
-			                  orderGoToBase();
+
+			                  auto a = this->state->current_city->cityViewSelectedAgents.front();
+			                  // Don't return to base if in a vehicle
+			                  if (!a->currentVehicle)
+			                  {
+				                  orderGoToBase();
+			                  }
 		                  }
 	                  });
 	agentForm->findControl("BUTTON_AGENT_PHYSICAL")
