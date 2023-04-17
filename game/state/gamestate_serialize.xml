@@ -138,6 +138,7 @@
 		<member>improvementPercentagePsi</member>
 		<member>canTrain</member>
 		<member>playable</member>
+		<member>availableAtTheGameStart</member>
 		<member>allowsDirectControl</member>
 		<member>aiType</member>
 		<member>immuneToFatalWounds</member>

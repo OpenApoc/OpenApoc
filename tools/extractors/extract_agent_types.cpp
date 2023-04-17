@@ -165,14 +165,17 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			case UNIT_TYPE_BIOCHEMIST:
 				a->role = AgentType::Role::BioChemist;
 				a->playable = true;
+				a->availableAtTheGameStart = true;
 				break;
 			case UNIT_TYPE_ENGINEER:
 				a->role = AgentType::Role::Engineer;
 				a->playable = true;
+				a->availableAtTheGameStart = true;
 				break;
 			case UNIT_TYPE_QUANTUM_PHYSIST:
 				a->role = AgentType::Role::Physicist;
 				a->playable = true;
+				a->availableAtTheGameStart = true;
 				break;
 			default:
 				a->role = AgentType::Role::Soldier;

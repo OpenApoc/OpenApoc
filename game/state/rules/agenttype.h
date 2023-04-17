@@ -191,6 +191,7 @@ class AgentType : public StateObject<AgentType>
 	bool immuneToBrainsuckers = false;
 	// Can this be generated for the player
 	bool playable = false;
+	bool availableAtTheGameStart = false;
 	// Can this be controlled by a player (if false, even when control is gained, AI will act)
 	// For example, X-Com base turrets behave this way (yours, give you sight, but can't control)
 	bool allowsDirectControl = false;
