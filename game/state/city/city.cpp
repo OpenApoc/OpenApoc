@@ -482,6 +482,7 @@ void City::repairScenery(GameState &state)
 			}
 		}
 
+
 		// check if sufficient funds are available
 		auto initialType = initial_tiles[lowestLevel.get()->initialPosition];
 		auto owner = lowestLevel->building && !initialType->commonProperty
