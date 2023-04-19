@@ -717,7 +717,7 @@ void GameState::fillPlayerStartingProperty()
 		auto it = initial_agent_equipment.begin();
 		while (count > 0)
 		{
-			auto agent = this->agent_generator.createAgent(*this, this->getPlayer(), type);
+			auto agent = this->agent_generator.createInitAgent(*this, this->getPlayer(), type);
 			if (agent->type->canTrain)
 			{
 				agent->trainingAssignment = agent->initial_stats.psi_energy > 30

@@ -59,6 +59,18 @@ template <> const UString &StateObject<Agent>::getId(const GameState &state, con
 	return emptyString;
 }
 
+StateRef<Agent> AgentGenerator::createInitAgent(GameState &state, StateRef<Organisation> org,
+                                                AgentType::Role role) const
+{
+	std::list<sp<AgentType>> types;
+	for (auto &t : state.agent_types)
+		if (t.second->role == role && t.second->playable && t.second->availableAtTheGameStart)
+			types.insert(types.begin(), t.second);
+	auto type = pickRandom(state.rng, types);
+
+	return createAgent(state, org, {&state, AgentType::getId(state, type)});
+}
+
 StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisation> org,
                                             AgentType::Role role) const
 {

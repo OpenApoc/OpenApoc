@@ -537,6 +537,7 @@
 	  <canTrain>true</canTrain>
       <immuneToBrainsuckers>false</immuneToBrainsuckers>
       <playable>true</playable>
+      <availableAtTheGameStart>true</availableAtTheGameStart>
       <allowsDirectControl>true</allowsDirectControl>
       <aiType>Group</aiType>
       <equipment_layout>AGENTEQUIPMENTLAYOUT_FULL</equipment_layout>

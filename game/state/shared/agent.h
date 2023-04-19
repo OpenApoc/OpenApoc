@@ -244,6 +244,9 @@ class AgentGenerator
 	std::map<AgentType::Gender, std::list<UString>> first_names;
 	std::list<UString> second_names;
 
+	// Create an agent of specified role available at the beginning of the game
+	StateRef<Agent> createInitAgent(GameState &state, StateRef<Organisation> org,
+	                                AgentType::Role role) const;
 	// Create an agent of specified role
 	StateRef<Agent> createAgent(GameState &state, StateRef<Organisation> org,
 	                            AgentType::Role role) const;
