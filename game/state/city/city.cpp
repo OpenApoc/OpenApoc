@@ -471,44 +471,37 @@ void City::repairScenery(GameState &state)
 				} // for every supportedBy position
 			}     // for every repairedTogether scenery
 		} while (addedMore);
-		// Try to repair all or none
-		std::map<StateRef<Organisation>, int> repairCost;
-		for (auto &deadScenery : repairedTogether)
+
+		// find lowest part of scenery column which needs to be repaired
+		sp<OpenApoc::Scenery> lowestLevel = NULL;
+		for (auto &s : repairedTogether)
 		{
-			auto initialType = initial_tiles[deadScenery->initialPosition];
-			auto owner = deadScenery->building && !initialType->commonProperty
-			                 ? deadScenery->building->owner
-			                 : state.getGovernment();
-			repairCost[owner] += initialType->value;
-		}
-		bool canAfford = true;
-		for (auto &entry : repairCost)
-		{
-			if (entry.first->balance < entry.second)
+			if (lowestLevel == NULL || lowestLevel->currentPosition.z > s->currentPosition.z)
 			{
-				canAfford = false;
-				break;
+				lowestLevel = s;
 			}
 		}
-		if (canAfford)
+
+
+		// check if sufficient funds are available
+		auto initialType = initial_tiles[lowestLevel.get()->initialPosition];
+		auto owner = lowestLevel->building && !initialType->commonProperty
+		                 ? lowestLevel.get()->building->owner
+		                 : state.getGovernment();
+		if (owner->balance < initialType->value)
+		{
+			break;
+		}
+		else
 		{
 			// pay
-			for (auto &entry : repairCost)
-			{
-				auto org = entry.first;
-				org->balance -= entry.second;
-			}
+			owner->balance -= initialType->value;
 			// repair
-			for (auto &deadScenery : repairedTogether)
-			{
-				// remove from scenery to repair
-				if (sceneryToRepair.find(deadScenery) != sceneryToRepair.end())
-				{
-					sceneryToRepair.erase(deadScenery);
-				}
-				// repair actually
-				deadScenery->repair(state);
-			}
+			lowestLevel->repair(state);
+			// delete out of list to prevent repairing again
+			auto pointer = sceneryToRepair.find(lowestLevel);
+			if (sceneryToRepair.end() != pointer)
+				sceneryToRepair.erase(pointer);
 		}
 	}
 }
