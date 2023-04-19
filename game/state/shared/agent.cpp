@@ -60,7 +60,7 @@ template <> const UString &StateObject<Agent>::getId(const GameState &state, con
 }
 
 StateRef<Agent> AgentGenerator::createInitAgent(GameState &state, StateRef<Organisation> org,
-                                            AgentType::Role role) const
+                                                AgentType::Role role) const
 {
 	std::list<sp<AgentType>> types;
 	for (auto &t : state.agent_types)

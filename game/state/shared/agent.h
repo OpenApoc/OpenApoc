@@ -246,7 +246,7 @@ class AgentGenerator
 
 	// Create an agent of specified role available at the beginning of the game
 	StateRef<Agent> createInitAgent(GameState &state, StateRef<Organisation> org,
-	                            AgentType::Role role) const;
+	                                AgentType::Role role) const;
 	// Create an agent of specified role
 	StateRef<Agent> createAgent(GameState &state, StateRef<Organisation> org,
 	                            AgentType::Role role) const;
