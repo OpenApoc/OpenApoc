@@ -71,7 +71,7 @@ sp<Control> MessageLogScreen::createMessageRow(EventMessage message,
 {
 	auto control = mksp<Control>();
 
-	const int HEIGHT = 21;
+	int HEIGHT = message.text.size() > 55 ? 44 : 21;
 
 	auto date =
 	    control->createChild<Label>(message.time.getShortDateString(), ui().getFont("smalfont"));
@@ -95,11 +95,14 @@ sp<Control> MessageLogScreen::createMessageRow(EventMessage message,
 		auto btnImage = fw().data->loadImage(
 		    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:57:ui/menuopt.pal");
 		auto btnLocation = control->createChild<GraphicButton>(btnImage, btnImage);
-		btnLocation->Location = text->Location + Vec2<int>{text->Size.x, 0};
-		btnLocation->Size = {22, HEIGHT};
+		btnLocation->Location = message.text.size() > 55
+		                            ? text->Location + Vec2<int>{text->Size.x, HEIGHT / 4}
+		                            : text->Location + Vec2<int>{text->Size.x, 0};
+		btnLocation->Size = {22, 21};
 		btnLocation->addCallback(FormEventType::ButtonClick, callback);
 	}
 
+	control->Size.y = HEIGHT;
 	return control;
 }
 
