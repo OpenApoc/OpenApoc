@@ -10,6 +10,11 @@ assignees: ''
 **BEFORE POSTING, HAVE YOU SEARCHED THE TRACKER FOR EXISTING COPIES OF THE PROBLEM?**
 If so, please add the following details to those existing reports. Use broad phrases and keywords when searching for maximal results - not all related issues may use the same terminology as you
 
+**Desktop (please complete the following information):**
+ - OS: [e.g. Windows 10 x64 2020H2]
+ - OpenApoc Version [e.g. 0.386-42 - the number attached to the AppVeyor build]
+ - List of Mod files in use *and their version* separated by commas [e.g. Extended Weapons Mod v9.0I PREVIEW, Falcon LWP Mod v1.4]
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
@@ -29,10 +34,6 @@ Save's can be found under the appropriate directory of the route folder where yo
 
 **Screenshots**
 If applicable, add screenshots to help explain your problem. GitHub supports direct pasting if necessary.
-
-**Desktop (please complete the following information):**
- - OS: [e.g. Windows 10 x64 2020H2]
- - OpenApoc Version [e.g. 0.386-42 - the number attached to the AppVeyor build]
 
 **Additional context**
 Add any other context about the problem here.
