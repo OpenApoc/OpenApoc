@@ -2230,8 +2230,8 @@ void BattleView::refreshDelayText()
 	UString text;
 	if (delay == 0)
 	{
-		// FIXME: This will need to be translated
-		text = format(tr("Detonates now."));
+		// FIXME Change to Detonates now?
+		text = format(tr("Activates now."));
 	}
 	else
 	{
