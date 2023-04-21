@@ -73,12 +73,15 @@ sp<Control> MapSelector::createMapRowBuilding(StateRef<Building> building, sp<Ga
 		auto btnLocation = control->createChild<GraphicButton>(btnImage, btnImage);
 		btnLocation->Location = text->Location + Vec2<int>{text->Size.x, 0};
 		btnLocation->Size = {22, HEIGHT};
-		btnLocation->addCallback(FormEventType::ButtonClick, [building, state, this](Event *) {
-			skirmish.setLocation(building);
-			fw().stageQueueCommand({StageCmd::Command::POP});
-		});
+		btnLocation->addCallback(FormEventType::ButtonClick,
+		                         [building, state, this](Event *)
+		                         {
+			                         skirmish.setLocation(building);
+			                         fw().stageQueueCommand({StageCmd::Command::POP});
+		                         });
 	}
 
+	control->Size.y = HEIGHT;
 	return control;
 }
 
@@ -100,12 +103,15 @@ sp<Control> MapSelector::createMapRowVehicle(StateRef<VehicleType> vehicle, sp<G
 		auto btnLocation = control->createChild<GraphicButton>(btnImage, btnImage);
 		btnLocation->Location = text->Location + Vec2<int>{text->Size.x, 0};
 		btnLocation->Size = {22, HEIGHT};
-		btnLocation->addCallback(FormEventType::ButtonClick, [vehicle, state, this](Event *) {
-			skirmish.setLocation(vehicle);
-			fw().stageQueueCommand({StageCmd::Command::POP});
-		});
+		btnLocation->addCallback(FormEventType::ButtonClick,
+		                         [vehicle, state, this](Event *)
+		                         {
+			                         skirmish.setLocation(vehicle);
+			                         fw().stageQueueCommand({StageCmd::Command::POP});
+		                         });
 	}
 
+	control->Size.y = HEIGHT;
 	return control;
 }
 
@@ -127,12 +133,15 @@ sp<Control> MapSelector::createMapRowBase(StateRef<Base> base, sp<GameState> sta
 		auto btnLocation = control->createChild<GraphicButton>(btnImage, btnImage);
 		btnLocation->Location = text->Location + Vec2<int>{text->Size.x, 0};
 		btnLocation->Size = {22, HEIGHT};
-		btnLocation->addCallback(FormEventType::ButtonClick, [base, state, this](Event *) {
-			skirmish.setLocation(base);
-			fw().stageQueueCommand({StageCmd::Command::POP});
-		});
+		btnLocation->addCallback(FormEventType::ButtonClick,
+		                         [base, state, this](Event *)
+		                         {
+			                         skirmish.setLocation(base);
+			                         fw().stageQueueCommand({StageCmd::Command::POP});
+		                         });
 	}
 
+	control->Size.y = HEIGHT;
 	return control;
 }
 

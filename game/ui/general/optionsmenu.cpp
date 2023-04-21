@@ -54,6 +54,7 @@ sp<Control> OptionsMenu::createOptionRow(const ConfigOption &option)
 	control->ToolTipText = option.getDescription();
 	control->ToolTipFont = ui().getFont("smallset");
 
+	control->Size.y = HEIGHT;
 	return control;
 }
 
