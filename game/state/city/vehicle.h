@@ -57,6 +57,8 @@ static const int FV_SCRAPPED_COST_PERCENT = 25;
 static const int FUEL_TICKS_PER_SECOND = 144;
 // How much ticks is required to spend one unit of fuel
 static const int FUEL_TICKS_PER_UNIT = 40000;
+// How much tiles can one construction vehicle repair at one single night
+static const int MAX_TILE_REPAIR = 20;
 
 class Image;
 class TileObjectVehicle;
@@ -235,6 +237,9 @@ class Vehicle : public StateObject<Vehicle>,
 
 	StateRef<Vehicle> carriedVehicle;
 	StateRef<Vehicle> carriedByVehicle;
+
+	// How Many Tiles have already been repaired this night by this perticular vehicle
+	int tilesRepaired = 0;
 
 	sp<TileObjectVehicle> tileObject;
 	sp<TileObjectShadow> shadowObject;

@@ -32,7 +32,6 @@ extern ConfigOptionBool autoScrollOption;
 extern ConfigOptionBool actionMusicOption;
 extern ConfigOptionBool autoExecuteOption;
 extern ConfigOptionInt toolTipDelay;
-extern ConfigOptionBool vanillaToggle;
 
 extern ConfigOptionBool optionPauseOnUfoSpotted;
 extern ConfigOptionBool optionPauseOnVehicleLightDamage;
@@ -53,7 +52,6 @@ extern ConfigOptionBool optionPauseOnNotEnoughAmmo;
 extern ConfigOptionBool optionPauseOnVehicleRefuelled;
 extern ConfigOptionBool optionPauseOnNotEnoughFuel;
 extern ConfigOptionBool optionPauseOnUnauthorizedVehicle;
-extern ConfigOptionBool optionPauseOnBaseDestroyed;
 extern ConfigOptionBool optionPauseOnHostileSpotted;
 extern ConfigOptionBool optionPauseOnHostileDied;
 extern ConfigOptionBool optionPauseOnUnknownDied;
@@ -73,11 +71,9 @@ extern ConfigOptionBool optionPauseOnAgentPsiAttacked;
 extern ConfigOptionBool optionPauseOnAgentPsiControlled;
 extern ConfigOptionBool optionPauseOnAgentPsiOver;
 
-extern ConfigOptionBool optionDebugCommandsVisible;
 extern ConfigOptionBool optionUFODamageModel;
 extern ConfigOptionBool optionInstantExplosionDamage;
 extern ConfigOptionBool optionGravliftSounds;
-extern ConfigOptionBool optionNoScrollSounds;
 extern ConfigOptionBool optionNoInstantThrows;
 extern ConfigOptionBool optionFerryChecksRelationshipWhenBuying;
 extern ConfigOptionBool optionAllowManualCityTeleporters;
@@ -112,8 +108,7 @@ extern ConfigOptionBool optionSeedRng;
 extern ConfigOptionBool optionAutoReload;
 extern ConfigOptionBool optionLeftClickIcon;
 extern ConfigOptionBool optionBattlescapeVertScroll;
-extern ConfigOptionBool optionSingleSquadSelect;
-extern ConfigOptionBool optionATVUFOMission;
+extern ConfigOptionBool optionRepairWithConstructionVehicles;
 
 extern ConfigOptionBool optionStunHostileAction;
 extern ConfigOptionBool optionRaidHostileAction;

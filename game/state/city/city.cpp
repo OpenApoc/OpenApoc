@@ -1,4 +1,5 @@
 #include "game/state/city/city.h"
+#include "framework/configfile.h";
 #include "framework/framework.h"
 #include "framework/sound.h"
 #include "game/state/city/base.h"
@@ -432,7 +433,11 @@ void City::repairScenery(GameState &state)
 			sceneryToRepair.insert(s);
 		}
 	}
-	// Pick one scenery, add all scenery that must be repaired together, try to repair them
+
+	std::queue<sp<Scenery>> repairQueue;
+	// Find all scenery which should be repaired this night and add them to the repair Queue
+	// Pick one scenery, add all scenery that must be repaired together, then find the lowest of
+	// them
 	while (!sceneryToRepair.empty())
 	{
 		std::set<sp<Scenery>> repairedTogether;
@@ -482,25 +487,71 @@ void City::repairScenery(GameState &state)
 			}
 		}
 
-		// check if sufficient funds are available
-		auto initialType = initial_tiles[lowestLevel.get()->initialPosition];
-		auto owner = lowestLevel->building && !initialType->commonProperty
-		                 ? lowestLevel.get()->building->owner
-		                 : state.getGovernment();
-		if (owner->balance < initialType->value)
+		repairQueue.push(lowestLevel);
+	}
+
+	std::set<sp<OpenApoc::Vehicle>> constructionVehicles;
+	// find available construction vehicles
+	for (auto &v : state.vehicles)
+	{
+		if (v.second->name.find("Construction") != std::string::npos && !v.second->crashed)
 		{
-			break;
+			constructionVehicles.insert(v.second);
+		}
+	}
+
+	// Actually start repairing as long as enought funds and construction vehicles are available
+	// this night
+	while (!repairQueue.empty())
+	{
+		auto &s = repairQueue.front();
+		auto initialType = initial_tiles[s->initialPosition];
+		auto buildingOwner = s->building && !initialType->commonProperty ? s.get()->building->owner
+		                                                                 : state.getGovernment();
+
+		// search for available construction vehicles
+		sp<OpenApoc::Vehicle> currentVehicle = NULL;
+		for (auto &v : constructionVehicles)
+		{
+			if (v->owner == buildingOwner)
+			{
+				currentVehicle = v;
+				break;
+			}
+		}
+
+		// if no own vehicles found look for allied vehicles
+		if (currentVehicle == NULL)
+			for (auto &v : constructionVehicles)
+			{
+				// if relation is friendly or allied, help them bros out
+				if (buildingOwner->getRelationTo(v->owner) > +24.0f)
+				{
+					currentVehicle = v;
+					break;
+				}
+			}
+
+		// check if sufficient funds are available, the tile is still dead and a construction
+		// vehicle is available (when enabled)
+		if (buildingOwner->balance < initialType->value || s->isAlive() ||
+		    (currentVehicle == NULL &&
+		     config().getBool("OpenApoc.NewFeature.RepairWithConstructionVehicles")))
+		{
+			repairQueue.pop();
+			continue;
 		}
 		else
 		{
 			// pay
-			owner->balance -= initialType->value;
+			buildingOwner->balance -= initialType->value;
 			// repair
-			lowestLevel->repair(state);
+			s->repair(state);
 			// delete out of list to prevent repairing again
-			auto pointer = sceneryToRepair.find(lowestLevel);
-			if (sceneryToRepair.end() != pointer)
-				sceneryToRepair.erase(pointer);
+			repairQueue.pop();
+			if (config().getBool("OpenApoc.NewFeature.RepairWithConstructionVehicles") &&
+			    currentVehicle->tilesRepaired++ > OpenApoc::MAX_TILE_REPAIR)
+				constructionVehicles.erase(currentVehicle);
 		}
 	}
 }
