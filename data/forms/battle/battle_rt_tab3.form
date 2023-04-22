@@ -62,7 +62,7 @@
       <scroll id="DELAY_SLIDER">
         <position x="263" y="75"/>
         <size width="116" height="15"/>
-        <range min="0" max="29"/>
+        <range min="0" max="30"/>
         <gripperimage>PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/icons.tab:84:xcom3/tacdata/tactical.pal</gripperimage>
       </scroll>
       <graphic id="RANGE_SLIDER_LEFT">

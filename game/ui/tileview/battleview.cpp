@@ -2230,6 +2230,7 @@ void BattleView::refreshDelayText()
 	UString text;
 	if (delay == 0)
 	{
+		// FIXME Change to Detonates now?
 		text = format(tr("Activates now."));
 	}
 	else
@@ -2247,7 +2248,15 @@ void BattleView::refreshDelayText()
 		}
 		else
 		{
-			text = format(tr("Delay = %i"), (int)((float)delay / 4.0f));
+			// Check if number is whole, if so don't show decimal places
+			if ((delay & 3) == 0)
+			{
+				text = format("Delay = %d%s", (delay / 4), "s");
+			}
+			else
+			{
+				text = format(tr("Delay = %.3g%s"), ((float)delay / 4.0f), "s");
+			}
 		}
 	}
 	primingTab->findControlTyped<Label>("DELAY_TEXT")->setText(text);
