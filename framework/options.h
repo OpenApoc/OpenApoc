@@ -52,6 +52,7 @@ extern ConfigOptionBool optionPauseOnNotEnoughAmmo;
 extern ConfigOptionBool optionPauseOnVehicleRefuelled;
 extern ConfigOptionBool optionPauseOnNotEnoughFuel;
 extern ConfigOptionBool optionPauseOnUnauthorizedVehicle;
+extern ConfigOptionBool optionPauseOnBaseDestroyed;
 extern ConfigOptionBool optionPauseOnHostileSpotted;
 extern ConfigOptionBool optionPauseOnHostileDied;
 extern ConfigOptionBool optionPauseOnUnknownDied;

@@ -33,6 +33,7 @@ const std::map<GameEventType, UString> GameEvent::optionsMap = {
     {GameEventType::NotEnoughFuel, "Notifications.City.NotEnoughFuel"},
     {GameEventType::CommenceInvestigation, "Notifications.City.CommenceInvestigation"},
     {GameEventType::UnauthorizedVehicle, "Notifications.City.UnauthorizedVehicle"},
+    {GameEventType::BaseDestroyed, "Notifications.City.BaseDestroyed"},
 
     {GameEventType::HostileSpotted, "Notifications.Battle.HostileSpotted"},
     {GameEventType::HostileDied, "Notifications.Battle.HostileDied"},

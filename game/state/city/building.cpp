@@ -817,7 +817,15 @@ void Building::detect(GameState &state, bool forced)
 	ticksDetectionTimeOut = TICKS_DETECTION_TIMEOUT;
 	if (base)
 	{
-		fw().pushEvent(new GameDefenseEvent(GameEventType::DefendTheBase, base, state.getAliens()));
+		if (base->building->currentAgents.empty())
+		{
+			base->die(state, false);
+		}
+		else
+		{
+			fw().pushEvent(
+			    new GameDefenseEvent(GameEventType::DefendTheBase, base, state.getAliens()));
+		}
 	}
 	else
 	{
