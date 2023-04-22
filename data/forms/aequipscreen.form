@@ -84,7 +84,7 @@
       </scroll>
       <listbox id="AGENT_SELECT_BOX" scrollbarid="AGENT_SELECT_SCROLL">
         <position x="463" y="70"/>
-        <size width="98" height="260"/>
+        <size width="96" height="260"/>
         <item size="0" spacing="5"/>
         <hovercolour r="255" g="255" b="255" a="0"/>
         <selcolour r="255" g="255" b="255" a="0"/>
