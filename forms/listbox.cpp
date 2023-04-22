@@ -62,7 +62,7 @@ void ListBox::onRender()
 				{
 					case Orientation::Vertical:
 						ctrl->Size.x = (scroller_is_internal ? scroller->Location.x : this->Size.x);
-						ctrl->Size.y = ItemSize;
+						ctrl->Size.y;
 						break;
 					case Orientation::Horizontal:
 						ctrl->Size.x = ItemSize;
