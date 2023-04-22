@@ -345,8 +345,24 @@ void Control::eventOccured(Event *e)
 					ypos += textImage->size.y;
 				}
 
-				fw().showToolTip(surface, pos + resolvedLocation -
-				                              Vec2<int>{surface->size.x / 2, surface->size.y});
+				int screenWidth = fw().displayGetWidth();
+
+				Vec2<int> tooltipPos =
+				    pos + resolvedLocation - Vec2<int>{surface->size.x / 2, surface->size.y};
+
+				// Check if the tooltip is off the screen
+				if (tooltipPos.x < 0)
+				{
+					tooltipPos =
+					    Vec2<int>{0, pos.y} + Vec2<int>{0, resolvedLocation.y - surface->size.y};
+				}
+				if (surface->size.x + tooltipPos.x > screenWidth)
+				{
+					tooltipPos = Vec2<int>{screenWidth - surface->size.x, pos.y} +
+					             Vec2<int>{0, resolvedLocation.y - surface->size.y};
+				}
+
+				fw().showToolTip(surface, tooltipPos);
 			}
 		}
 		else if (e->forms().EventFlag == FormEventType::MouseClick ||
