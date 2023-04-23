@@ -817,7 +817,7 @@ void Building::detect(GameState &state, bool forced)
 	ticksDetectionTimeOut = TICKS_DETECTION_TIMEOUT;
 	if (base)
 	{
-		if (base->building->currentAgents.empty())
+		if (!base->building->occupied())
 		{
 			base->die(state, false);
 		}
@@ -968,7 +968,7 @@ void Building::alienMovement(GameState &state)
 	if (bld->base)
 	{
 		// Destroy base if its empty
-		if (bld->currentAgents.empty())
+		if (!bld->occupied())
 		{
 			bld->base->die(state, false);
 		}
@@ -1076,6 +1076,25 @@ int Building::getAverageConstitution() const
 		}
 	}
 	return (relevantTiles > 0) ? totalConst / relevantTiles : 0;
+}
+
+bool Building::occupied() const
+{
+	if (!this->currentAgents.empty())
+	{
+		return true;
+	}
+	if (!this->currentVehicles.empty())
+	{
+		for (auto &v : this->currentVehicles)
+		{
+			if (!v->currentAgents.empty())
+			{
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 bool Building::isAlive() const { return countActiveTiles() > 0; }

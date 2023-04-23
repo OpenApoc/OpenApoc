@@ -204,9 +204,21 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 
 		// Add combat personnel
 		int playerAgentsCount = 0;
+
+		for (auto &v : base->building->currentVehicles)
+		{
+			for (auto &agent : v->currentAgents)
+			{
+				player_agents.emplace_back(&state, agent);
+				if (++playerAgentsCount >= MAX_UNITS_PER_SIDE)
+				{
+					break;
+				}
+			}
+		}
 		for (auto &agent : state.agents)
 		{
-			if (agent.second->homeBuilding->base != base)
+			if (agent.second->currentBuilding != base->building)
 			{
 				continue;
 			}

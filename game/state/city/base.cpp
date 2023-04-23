@@ -13,6 +13,7 @@
 #include "game/state/rules/city/vequipmenttype.h"
 #include "game/state/shared/organisation.h"
 #include "library/strings_format.h"
+#include <game/ui/general/messagebox.h>
 #include <random>
 
 namespace OpenApoc
@@ -82,6 +83,12 @@ void Base::die(GameState &state, bool collapse)
 	fw().pushEvent(new GameSomethingDiedEvent(
 	    GameEventType::BaseDestroyed, name,
 	    collapse ? /*by collapsing building*/ "" : "byEnemyForces", building->crewQuarters));
+
+	auto message_box =
+	    mksp<MessageBox>(format("%s", name), tr("X-COM base destroyed by hostile forces."),
+	                     MessageBox::ButtonOptions::Ok);
+	fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+
 	for (auto &b : building->city->buildings)
 	{
 		for (auto &c : b.second->cargo)

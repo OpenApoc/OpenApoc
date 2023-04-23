@@ -74,7 +74,6 @@ void dumpOptionsToLog()
 	dumpOption(optionPauseOnVehicleRefuelled);
 	dumpOption(optionPauseOnNotEnoughFuel);
 	dumpOption(optionPauseOnUnauthorizedVehicle);
-	dumpOption(optionPauseOnBaseDestroyed);
 	dumpOption(optionPauseOnHostileSpotted);
 	dumpOption(optionPauseOnHostileDied);
 	dumpOption(optionPauseOnUnknownDied);
@@ -292,9 +291,6 @@ ConfigOptionBool optionPauseOnNotEnoughFuel("Notifications.City", "NotEnoughFuel
                                             "Not enough fuel to refuel vehicle", true);
 ConfigOptionBool optionPauseOnUnauthorizedVehicle("Notifications.City", "UnauthorizedVehicle",
                                                   "Unauthorized vehicle detected", true);
-ConfigOptionBool optionPauseOnBaseDestroyed("Notifications.City", "BaseDestroyed",
-                                            "X-COM base destroyed by hostile forces.", true);
-
 ConfigOptionBool optionPauseOnHostileSpotted("Notifications.Battle", "HostileSpotted",
                                              "Hostile unit spotted", true);
 ConfigOptionBool optionPauseOnHostileDied("Notifications.Battle", "HostileDied",
