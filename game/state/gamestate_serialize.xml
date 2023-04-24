@@ -1331,7 +1331,6 @@
 	<object>
 		<name>OrganisationRaid</name>
 		<member>nextRaidTimer</member>
-		<member>attack_vehicle_count</member>
 		<member>attack_vehicle_types</member>
 		<member>neutral_low_manpower</member>
 		<member>neutral_normal</member>
