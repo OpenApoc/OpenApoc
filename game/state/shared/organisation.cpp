@@ -14,7 +14,7 @@
 #include "library/strings.h"
 
 // Uncomment to turn off org missions
-//#define DEBUG_TURN_OFF_ORG_MISSIONS
+// #define DEBUG_TURN_OFF_ORG_MISSIONS
 
 namespace OpenApoc
 {
@@ -1074,7 +1074,14 @@ void Organisation::RaidMission::execute(GameState &state, StateRef<City> city,
 			}
 
 			StateRef<Vehicle> firstVehicleSent;
-			int requiredVehicleCount = state.organisation_raid_rules.attack_vehicle_count;
+
+			int requiredVehicleCount =
+			    (owner->buildings.size() + availableVehicles.size() - 1) / owner->buildings.size();
+
+			if (requiredVehicleCount > state.organisation_raid_rules.max_attack_vehicles)
+			{
+				requiredVehicleCount = state.organisation_raid_rules.max_attack_vehicles;
+			}
 
 			// Send vehicles on mission
 			for (auto &type : state.organisation_raid_rules.attack_vehicle_types)
