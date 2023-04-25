@@ -616,7 +616,7 @@ void CityView::orderMove(StateRef<Building> building, bool alternative)
 	}
 	if (activeTab == uiTabs[2])
 	{
-		bool useTaxi = alternative && config().getBool("OpenApoc.NewFeature.AllowSoldierTaxiUse");
+		bool useTaxi = !alternative && config().getBool("OpenApoc.NewFeature.AllowSoldierTaxiUse");
 		for (auto &a : this->state->current_city->cityViewSelectedAgents)
 		{
 			if (a->type->role != AgentType::Role::Soldier)
