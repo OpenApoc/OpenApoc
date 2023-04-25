@@ -3,6 +3,7 @@
 #include "forms/graphic.h"
 #include "forms/label.h"
 #include "forms/ui.h"
+#include "framework/configfile.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
@@ -103,13 +104,15 @@ void AlertScreen::eventOccurred(Event *e)
 			}
 
 			// send agents on foot
+			bool useTaxi = config().getBool("OpenApoc.NewFeature.AllowSoldierTaxiUse");
 			for (auto &agent : agentAssignment->getSelectedAgents())
 			{
 				if (!agent->currentVehicle)
 				{
 					++building->pendingInvestigatorCount;
-					agent->setMission(*state, AgentMission::investigateBuilding(
-					                              *state, *agent, {state.get(), building}));
+					agent->setMission(*state,
+					                  AgentMission::investigateBuilding(
+					                      *state, *agent, {state.get(), building}, false, useTaxi));
 				}
 			}
 
