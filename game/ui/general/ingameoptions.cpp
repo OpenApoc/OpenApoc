@@ -68,6 +68,7 @@ std::list<std::pair<UString, UString>> cityNotificationList = {
     {"Notifications.City", "VehicleRefuelled"},
     {"Notifications.City", "NotEnoughFuel"},
     {"Notifications.City", "UnauthorizedVehicle"},
+    {"Notifications.City", "BaseDestroyed"},
 };
 
 std::list<std::pair<UString, UString>> openApocList = {

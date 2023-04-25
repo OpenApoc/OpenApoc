@@ -82,6 +82,7 @@ void Base::die(GameState &state, bool collapse)
 	fw().pushEvent(new GameSomethingDiedEvent(
 	    GameEventType::BaseDestroyed, name,
 	    collapse ? /*by collapsing building*/ "" : "byEnemyForces", building->crewQuarters));
+
 	for (auto &b : building->city->buildings)
 	{
 		for (auto &c : b.second->cargo)
