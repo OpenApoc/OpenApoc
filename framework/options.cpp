@@ -96,6 +96,7 @@ void dumpOptionsToLog()
 	dumpOption(optionUFODamageModel);
 	dumpOption(optionInstantExplosionDamage);
 	dumpOption(optionGravliftSounds);
+	dumpOption(optionNoScrollSounds);
 	dumpOption(optionNoInstantThrows);
 	dumpOption(optionFerryChecksRelationshipWhenBuying);
 	dumpOption(optionAllowManualCityTeleporters);
@@ -335,6 +336,8 @@ ConfigOptionBool optionInstantExplosionDamage("OpenApoc.NewFeature", "InstantExp
                                               "Explosions damage instantly", false);
 ConfigOptionBool optionGravliftSounds("OpenApoc.NewFeature", "GravliftSounds", "Gravlift sounds",
                                       true);
+ConfigOptionBool optionNoScrollSounds("OpenApoc.NewFeature", "NoScrollSounds",
+                                      "Disable scrolling sounds", false);
 ConfigOptionBool optionNoInstantThrows("OpenApoc.NewFeature", "NoInstantThrows",
                                        "Throwing requires proper facing and pose", true);
 ConfigOptionBool optionFerryChecksRelationshipWhenBuying(
