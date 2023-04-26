@@ -1,5 +1,6 @@
 #include "forms/scrollbar.h"
 #include "dependencies/pugixml/src/pugixml.hpp"
+#include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
@@ -73,7 +74,10 @@ void ScrollBar::scrollPrev(int amount)
 {
 	if (!setValue(Value - (amount != 0 ? amount : ScrollChange)))
 	{
-		fw().soundBackend->playSample(buttonerror);
+		if (!config().getBool("OpenApoc.NewFeature.NoScrollSounds"))
+		{
+			fw().soundBackend->playSample(buttonerror);
+		}
 	}
 }
 
@@ -81,7 +85,10 @@ void ScrollBar::scrollNext(int amount)
 {
 	if (!setValue(Value + (amount != 0 ? amount : ScrollChange)))
 	{
-		fw().soundBackend->playSample(buttonerror);
+		if (!config().getBool("OpenApoc.NewFeature.NoScrollSounds"))
+		{
+			fw().soundBackend->playSample(buttonerror);
+		}
 	}
 }
 

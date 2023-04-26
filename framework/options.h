@@ -75,6 +75,7 @@ extern ConfigOptionBool optionPauseOnAgentPsiOver;
 extern ConfigOptionBool optionUFODamageModel;
 extern ConfigOptionBool optionInstantExplosionDamage;
 extern ConfigOptionBool optionGravliftSounds;
+extern ConfigOptionBool optionNoScrollSounds;
 extern ConfigOptionBool optionNoInstantThrows;
 extern ConfigOptionBool optionFerryChecksRelationshipWhenBuying;
 extern ConfigOptionBool optionAllowManualCityTeleporters;
