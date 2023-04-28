@@ -519,7 +519,7 @@ void Organisation::updateHirableAgents(GameState &state)
 		return;
 	}
 	StateRef<Building> hireeLocation;
-	if (state.getCivilian().id == id)
+	if (state.getCivilian().id == this->id)
 	{
 		std::vector<StateRef<Building>> buildingsWithoutBases;
 		for (auto &b : state.cities["CITYMAP_HUMAN"]->buildings)
@@ -537,6 +537,7 @@ void Organisation::updateHirableAgents(GameState &state)
 	{
 		if (buildings.empty())
 		{
+			LogDebug("Organization %s has no buildings. No agents generated.", this->name);
 			return;
 		}
 		hireeLocation = pickRandom(state.rng, buildings);
@@ -544,7 +545,7 @@ void Organisation::updateHirableAgents(GameState &state)
 	std::set<sp<Agent>> agentsToRemove;
 	for (auto &a : state.agents)
 	{
-		if (a.second->owner.id == id &&
+		if (a.second->owner.id == this->id &&
 		    hirableAgentTypes.find(a.second->type) != hirableAgentTypes.end())
 		{
 			if (randBoundsExclusive(state.rng, 0, 100) < CHANGE_HIREE_GONE)
@@ -560,7 +561,33 @@ void Organisation::updateHirableAgents(GameState &state)
 	}
 	for (auto &entry : hirableAgentTypes)
 	{
-		int newAgents = randBoundsInclusive(state.rng, entry.second.first, entry.second.second);
+		int newAgents{0};
+		auto orgRelationToPlayer = this->isRelatedTo(state.getPlayer());
+		if (orgRelationToPlayer != Relation::Hostile)
+		{
+			const float relation = this->getRelationTo(state.getPlayer());
+			float chanceForNewAgent{0.0f};
+			if (relation < 0.0f)
+			{
+				chanceForNewAgent = (50.0f + relation) * 0.5f;
+			}
+			else
+			{
+				chanceForNewAgent = 25.0f + relation;
+			}
+			LogWarning("%s: Relation: %f, chance %f", this->name, relation, chanceForNewAgent);
+			for (int i = 0; i < entry.second.second; i++)
+			{
+				const auto versusRoll = static_cast<float>(randBoundsInclusive(state.rng, 0, 100));
+				if (versusRoll <= chanceForNewAgent)
+				{
+					newAgents++;
+				}
+			}
+			LogDebug("%s has positive relations, generated %d extra hirable agents (out of %d) of "
+			         "type %s",
+			         this->name, newAgents, entry.second.second, entry.first->name);
+		}
 		for (int i = 0; i < newAgents; i++)
 		{
 			auto a = state.agent_generator.createAgent(state, {&state, id}, entry.first);
