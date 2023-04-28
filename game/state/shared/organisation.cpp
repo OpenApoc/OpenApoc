@@ -575,7 +575,7 @@ void Organisation::updateHirableAgents(GameState &state)
 			{
 				chanceForNewAgent = 25.0f + relation;
 			}
-			LogWarning("%s: Relation: %f, chance %f", this->name, relation, chanceForNewAgent);
+			LogDebug("%s: Relation: %f, chance %f", this->name, relation, chanceForNewAgent);
 			for (int i = 0; i < entry.second.second; i++)
 			{
 				const auto versusRoll = static_cast<float>(randBoundsInclusive(state.rng, 0, 100));
