@@ -561,34 +561,30 @@ void Organisation::updateHirableAgents(GameState &state)
 	}
 	for (auto &entry : hirableAgentTypes)
 	{
-		int newAgents{0};
+		int newAgentsCount{0};
 		auto orgRelationToPlayer = this->isRelatedTo(state.getPlayer());
 		if (orgRelationToPlayer != Relation::Hostile)
 		{
-			const float relation = this->getRelationTo(state.getPlayer());
+			const float relationToXcom = this->getRelationTo(state.getPlayer());
 			float chanceForNewAgent{0.0f};
-			if (relation < 0.0f)
+			if (relationToXcom < 0.0f)
 			{
-				chanceForNewAgent = (50.0f + relation) * 0.5f;
+				chanceForNewAgent = (50.0f + relationToXcom) * 0.5f;
 			}
 			else
 			{
-				chanceForNewAgent = 25.0f + relation;
+				chanceForNewAgent = 25.0f + relationToXcom;
 			}
-			LogDebug("%s: Relation: %f, chance %f", this->name, relation, chanceForNewAgent);
 			for (int i = 0; i < entry.second.second; i++)
 			{
 				const auto versusRoll = static_cast<float>(randBoundsInclusive(state.rng, 0, 100));
 				if (versusRoll <= chanceForNewAgent)
 				{
-					newAgents++;
+					newAgentsCount++;
 				}
 			}
-			LogDebug("%s has positive relations, generated %d extra hirable agents (out of %d) of "
-			         "type %s",
-			         this->name, newAgents, entry.second.second, entry.first->name);
 		}
-		for (int i = 0; i < newAgents; i++)
+		for (int i = 0; i < newAgentsCount; i++)
 		{
 			auto a = state.agent_generator.createAgent(state, {&state, id}, entry.first);
 			// Strip them of default equipment
