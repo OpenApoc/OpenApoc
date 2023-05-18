@@ -519,7 +519,7 @@ void Organisation::updateHirableAgents(GameState &state)
 		return;
 	}
 	StateRef<Building> hireeLocation;
-	if (state.getCivilian().id == id)
+	if (state.getCivilian().id == this->id)
 	{
 		std::vector<StateRef<Building>> buildingsWithoutBases;
 		for (auto &b : state.cities["CITYMAP_HUMAN"]->buildings)
@@ -537,6 +537,7 @@ void Organisation::updateHirableAgents(GameState &state)
 	{
 		if (buildings.empty())
 		{
+			LogDebug("Organization %s has no buildings. No agents generated.", this->name);
 			return;
 		}
 		hireeLocation = pickRandom(state.rng, buildings);
@@ -544,7 +545,7 @@ void Organisation::updateHirableAgents(GameState &state)
 	std::set<sp<Agent>> agentsToRemove;
 	for (auto &a : state.agents)
 	{
-		if (a.second->owner.id == id &&
+		if (a.second->owner.id == this->id &&
 		    hirableAgentTypes.find(a.second->type) != hirableAgentTypes.end())
 		{
 			if (randBoundsExclusive(state.rng, 0, 100) < CHANGE_HIREE_GONE)
@@ -560,8 +561,30 @@ void Organisation::updateHirableAgents(GameState &state)
 	}
 	for (auto &entry : hirableAgentTypes)
 	{
-		int newAgents = randBoundsInclusive(state.rng, entry.second.first, entry.second.second);
-		for (int i = 0; i < newAgents; i++)
+		int newAgentsCount{0};
+		auto orgRelationToPlayer = this->isRelatedTo(state.getPlayer());
+		if (orgRelationToPlayer != Relation::Hostile)
+		{
+			const float relationToXcom = this->getRelationTo(state.getPlayer());
+			float chanceForNewAgent{0.0f};
+			if (relationToXcom < 0.0f)
+			{
+				chanceForNewAgent = (50.0f + relationToXcom) * 0.5f;
+			}
+			else
+			{
+				chanceForNewAgent = 25.0f + relationToXcom;
+			}
+			for (int i = 0; i < entry.second.second; i++)
+			{
+				const auto versusRoll = static_cast<float>(randBoundsInclusive(state.rng, 0, 100));
+				if (versusRoll <= chanceForNewAgent)
+				{
+					newAgentsCount++;
+				}
+			}
+		}
+		for (int i = 0; i < newAgentsCount; i++)
 		{
 			auto a = state.agent_generator.createAgent(state, {&state, id}, entry.first);
 			// Strip them of default equipment

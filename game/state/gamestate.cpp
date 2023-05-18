@@ -519,8 +519,6 @@ void GameState::fillOrgStartingProperty()
 			    m.pattern.minIntervalRepeat / 2;
 		}
 	}
-
-	luaGameState.callHook("newGamePostInit", 0, 0);
 }
 
 void GameState::startGame()
