@@ -109,6 +109,7 @@ std::list<std::pair<UString, UString>> openApocList = {
     {"OpenApoc.NewFeature", "AutoReload"},
     {"OpenApoc.NewFeature", "LeftClickIconEquip"},
     {"OpenApoc.NewFeature", "BattlescapeVertScroll"},
+    {"OpenApoc.NewFeature", "SingleSquadSelect"},
 
     {"OpenApoc.Mod", "StunHostileAction"},
     {"OpenApoc.Mod", "RaidHostileAction"},
