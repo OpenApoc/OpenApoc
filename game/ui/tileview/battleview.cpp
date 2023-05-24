@@ -633,6 +633,10 @@ BattleView::BattleView(sp<GameState> gameState)
 				}
 			}
 		}
+		if (config().getBool("OpenApoc.NewFeature.SingleSquadSelect"))
+		{
+			this->battle.battleViewSquadIndex = index;
+		}
 		if (this->battle.battleViewSquadIndex != index)
 		{
 			this->battle.battleViewSquadIndex = index;

@@ -132,6 +132,7 @@ void dumpOptionsToLog()
 	dumpOption(optionAutoReload);
 	dumpOption(optionLeftClickIcon);
 	dumpOption(optionBattlescapeVertScroll);
+	dumpOption(optionSingleSquadSelect);
 
 	dumpOption(optionStunHostileAction);
 	dumpOption(optionRaidHostileAction);
@@ -415,6 +416,8 @@ ConfigOptionBool optionLeftClickIcon("OpenApoc.NewFeature", "LeftClickIconEquip"
 ConfigOptionBool optionBattlescapeVertScroll("OpenApoc.NewFeature", "BattlescapeVertScroll",
                                              "Mousewheel changes vertical level in battlescape",
                                              true);
+ConfigOptionBool optionSingleSquadSelect("OpenApoc.NewFeature", "SingleSquadSelect",
+                                         "Select squad with single click", false);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);
