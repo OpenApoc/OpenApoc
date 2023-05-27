@@ -958,6 +958,8 @@ BattleView::BattleView(sp<GameState> gameState)
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *)
 	                  {
+		                  selectionState = BattleSelectionState::Normal;
+		                  this->refresh();
 		                  fw().stageQueueCommand(
 		                      {StageCmd::Command::PUSH,
 		                       mksp<InGameOptions>(this->state->shared_from_this())});
@@ -2697,6 +2699,8 @@ void BattleView::openAgentInventory()
 	{
 		return;
 	}
+	selectionState = BattleSelectionState::Normal;
+	this->refresh();
 	fw().stageQueueCommand(
 	    {StageCmd::Command::PUSH,
 	     mksp<AEquipScreen>(state, battle.battleViewSelectedUnits.front()->agent)});
