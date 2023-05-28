@@ -2546,12 +2546,14 @@ void Battle::finishBattle(GameState &state)
 	state.current_battle->unloadResources(state);
 
 	// Remove active battle scanners and deactivate medikits and motion scanners
+	// and unprime any grenades or proximity mines
 	for (auto &u : state.current_battle->units)
 	{
 		for (auto &e : u.second->agent->equipment)
 		{
 			e->battleScanner.clear();
 			e->inUse = false;
+			e->primed = false;
 		}
 	}
 
