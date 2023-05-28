@@ -1930,7 +1930,8 @@ void BattleUnit::update(GameState &state, unsigned int ticks)
 
 	// Update Items
 	bool updatedShield = false;
-	for (auto &item : agent->equipment)
+	auto equipmentCopy = agent->equipment;
+	for (auto &item : equipmentCopy)
 	{
 		if (item->type->type == AEquipmentType::Type::DisruptorShield &&
 		    item->ammo < item->getPayloadType()->max_ammo)
