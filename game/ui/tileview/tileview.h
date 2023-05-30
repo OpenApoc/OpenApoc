@@ -61,6 +61,7 @@ class TileView : public Stage, public TileTransform
 	Vec2<float> stratScrollSpeed;
 
 	sp<Palette> pal;
+	bool debugVisible = false;
 
 	TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
 	         TileViewMode initialMode);

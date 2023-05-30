@@ -54,6 +54,7 @@ class CityView : public CityTileView
 	sp<Form> activeTab, baseForm;
 	std::vector<sp<Form>> uiTabs;
 	sp<Form> overlayTab;
+	sp<Form> debugOverlay;
 	std::vector<sp<GraphicButton>> miniViews;
 	CityUpdateSpeed updateSpeed;
 	CityUpdateSpeed lastSpeed;
