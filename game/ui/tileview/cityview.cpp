@@ -996,14 +996,14 @@ CityView::CityView(sp<GameState> state)
                    Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric,
                    state->current_city->cityViewScreenCenter, *state),
       baseForm(ui().getForm("city/city")), overlayTab(ui().getForm("city/overlay")),
-      debugOverlay(ui().getForm("city/debugcityoverlay")),
-      updateSpeed(CityUpdateSpeed::Speed1), lastSpeed(CityUpdateSpeed::Pause), state(state),
-      followVehicle(false), selectionState(CitySelectionState::Normal)
+      debugOverlay(ui().getForm("city/debugcityoverlay")), updateSpeed(CityUpdateSpeed::Speed1),
+      lastSpeed(CityUpdateSpeed::Pause), state(state), followVehicle(false),
+      selectionState(CitySelectionState::Normal)
 {
 	weaponType.resize(3);
 	weaponDisabled.resize(3, false);
 	weaponAmmo.resize(3, -1);
-	
+
 	overlayTab->setVisible(false);
 	overlayTab->findControlTyped<GraphicButton>("BUTTON_CLOSE")
 	    ->addCallback(FormEventType::ButtonClick,

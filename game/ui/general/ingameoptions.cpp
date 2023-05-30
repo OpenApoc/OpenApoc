@@ -72,6 +72,7 @@ std::list<std::pair<UString, UString>> cityNotificationList = {
 };
 
 std::list<std::pair<UString, UString>> openApocList = {
+    {"OpenApoc.NewFeature", "DebugCommandsVisible"},
     {"OpenApoc.NewFeature", "UFODamageModel"},
     {"OpenApoc.NewFeature", "InstantExplosionDamage"},
     {"OpenApoc.NewFeature", "GravliftSounds"},

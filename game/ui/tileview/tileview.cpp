@@ -39,7 +39,10 @@ void TileView::eventOccurred(Event *e)
 		{
 			case SDLK_F1:
 				debugHotkeyMode = !debugHotkeyMode;
-				debugVisible = !debugVisible;
+				if (config().getBool("OpenApoc.NewFeature.DebugCommandsVisible"))
+				{
+					debugVisible = !debugVisible;
+				}
 				LogWarning("DEBUG MODE %s", debugHotkeyMode);
 				break;
 			case SDLK_UP:
