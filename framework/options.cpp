@@ -94,7 +94,7 @@ void dumpOptionsToLog()
 	dumpOption(optionPauseOnAgentPsiControlled);
 	dumpOption(optionPauseOnAgentPsiOver);
 
-    dumpOption(optionDebugCommandsVisible);
+	dumpOption(optionDebugCommandsVisible);
 	dumpOption(optionUFODamageModel);
 	dumpOption(optionInstantExplosionDamage);
 	dumpOption(optionGravliftSounds);

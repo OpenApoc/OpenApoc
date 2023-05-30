@@ -2,9 +2,9 @@
 <openapoc>
   <!-- Debug Overlay -->
   <form id="FORM_CITY_DEBUG_OVERLAY">
-    <style minwidth="640" minheight="90">
+    <style minwidth="640" minheight="105">
       <position x="left" y="top"/>
-      <size width="640" height="90"/>
+      <size width="640" height="105"/>
       <label id="TEXT" text="F1=Toggle Debug Ctrl+Alt+Shift+LeftClick=Destroy Scenery Ctrl+Alt+Shift+RightClick=Collapse Building 
       A=Give Ammo W=Warp  R=Repair Scenery B=Spawn UFO on Assualt U=Spawn Three Crashed UFOs X=Crash All Vehicles 
       PgUp/PgDown=Display One Map Layer F2=Show Road Pathfinding F3=Highlight Walkmode, Collapsing Tiles, Basement Tiles 
@@ -12,7 +12,7 @@
       F10=Highlight Tubes F11=Highlight Roads F12=Highlight Hills Num1379=Show Outgoing Roads/Tubes Directional 
       Num28=Show Outgoing Roads/Tubes Up/Down Num0=Show All Roads/Tubes Again">
         <position x="left" y="top"/>
-        <size width="640" height="90"/>
+        <size width="640" height="105"/>
         <alignment horizontal="left" vertical="top"/>
         <font>smalfont</font>
       </label>
