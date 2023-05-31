@@ -79,8 +79,9 @@ BattleView::BattleView(sp<GameState> gameState)
                      Vec3<int>{TILE_X_BATTLE, TILE_Y_BATTLE, TILE_Z_BATTLE},
                      Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric,
                      gameState->current_battle->battleViewScreenCenter, *gameState),
-      baseForm(ui().getForm("battle/battle")), state(gameState), battle(*state->current_battle),
-      followAgent(false), selectionState(BattleSelectionState::Normal)
+      baseForm(ui().getForm("battle/battle")), debugOverlay(ui().getForm("debugoverlay")),
+      state(gameState), battle(*state->current_battle), followAgent(false),
+      selectionState(BattleSelectionState::Normal)
 {
 	motionScannerDirectionIcons.push_back(
 	    fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
@@ -150,6 +151,10 @@ BattleView::BattleView(sp<GameState> gameState)
 	                                                   12)));
 
 	lastClickedHostile.resize(6);
+
+	debugOverlay->findControlTyped<Label>("CITY")->setVisible(false);
+	debugOverlay->findControlTyped<Label>("BASE")->setVisible(false);
+	debugOverlay->findControlTyped<Label>("RESEARCH")->setVisible(false);
 
 	auto font = ui().getFont("smallset");
 	squadNumber.emplace_back();
@@ -1354,6 +1359,7 @@ void BattleView::render()
 	}
 
 	baseForm->render();
+	debugOverlay->render();
 
 	int pauseIconOffsetX = 0;
 
@@ -1428,6 +1434,7 @@ void BattleView::update()
 
 	// Parent update
 	BattleTileView::update();
+	debugOverlay->findControlTyped<Label>("BATTLE")->setVisible(debugVisible);
 
 	// Update turn based stuff
 	if (!realTime)
@@ -3085,6 +3092,11 @@ bool BattleView::handleKeyDown(Event *e)
 			else
 				setUpdateSpeed(lastSpeed);
 			return true;
+		case SDLK_F1:
+			if (config().getBool("OpenApoc.NewFeature.DebugCommandsVisible"))
+			{
+				debugVisible = !debugVisible;
+			}
 		default:
 			break;
 	}

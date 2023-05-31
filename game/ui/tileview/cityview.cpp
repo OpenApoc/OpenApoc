@@ -996,13 +996,15 @@ CityView::CityView(sp<GameState> state)
                    Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric,
                    state->current_city->cityViewScreenCenter, *state),
       baseForm(ui().getForm("city/city")), overlayTab(ui().getForm("city/overlay")),
-      debugOverlay(ui().getForm("city/debugcityoverlay")), updateSpeed(CityUpdateSpeed::Speed1),
+      debugOverlay(ui().getForm("debugoverlay")), updateSpeed(CityUpdateSpeed::Speed1),
       lastSpeed(CityUpdateSpeed::Pause), state(state), followVehicle(false),
       selectionState(CitySelectionState::Normal)
 {
 	weaponType.resize(3);
 	weaponDisabled.resize(3, false);
 	weaponAmmo.resize(3, -1);
+
+	debugOverlay->findControlTyped<Label>("BATTLE")->setVisible(false);
 
 	overlayTab->setVisible(false);
 	overlayTab->findControlTyped<GraphicButton>("BUTTON_CLOSE")
@@ -1950,7 +1952,12 @@ void CityView::update()
 	CityTileView::update();
 
 	// Update debug menu
-	debugOverlay->setVisible(debugVisible);
+	auto debugLabel = debugOverlay->findControlTyped<Label>("CITY");
+	auto debugBaseLabel = debugOverlay->findControlTyped<Label>("BASE");
+	auto debugResearchLabel = debugOverlay->findControlTyped<Label>("RESEARCH");
+	debugLabel->setVisible(debugVisible);
+	debugBaseLabel->setVisible(debugVisible);
+	debugResearchLabel->setVisible(debugVisible);
 
 	updateSelectedUnits();
 
@@ -3110,6 +3117,11 @@ bool CityView::handleKeyDown(Event *e)
 		case SDLK_LCTRL:
 			modifierLCtrl = true;
 			return true;
+		case SDLK_F1:
+			if (config().getBool("OpenApoc.NewFeature.DebugCommandsVisible"))
+			{
+				debugVisible = !debugVisible;
+			}
 	}
 
 	if (e->type() == EVENT_KEY_DOWN)

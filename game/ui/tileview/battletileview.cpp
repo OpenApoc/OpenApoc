@@ -1580,7 +1580,8 @@ void BattleTileView::render()
 	{
 		auto font = ui().getFont("smallset");
 		auto cursorPositionString = font->getString(format("Cursor at %s", selectedTilePosition));
-		r.draw(cursorPositionString, {0, 0});
+		int ypos = (config().getBool("OpenApoc.NewFeature.DebugCommandsVisible")) ? 60 : 0;
+		r.draw(cursorPositionString, {0, ypos});
 	}
 }
 
