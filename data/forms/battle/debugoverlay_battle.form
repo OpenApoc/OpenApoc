@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <!-- Debug Overlay -->
+  <form id="DEBUGOVERLAY_BATTLE">
+    <style minwidth="250" minheight="480">
+      <position x="left" y="top"/>
+      <size width="250" height="480"/>
+      <label id="F1" text="F1 = Toggle Debug Mode">
+        <position x="left" y="0"/>
+        <size width="250" height="14"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="MidClick" text="MidClick = Teleportation Mode">
+        <position x="left" y="14"/>
+        <size width="250" height="14"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="E" text="E = End Turn">
+        <position x="left" y="28"/>
+        <size width="250" height="14"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="R" text="R = Reveal Map">
+        <position x="left" y="42"/>
+        <size width="250" height="14"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="S" text="S = Stun Mode">
+        <position x="left" y="56"/>
+        <size width="250" height="14"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="K" text="K = Remove Units">
+        <position x="left" y="70"/>
+        <size width="250" height="14"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="P" text="P = Lower Morale">
+        <position x="left" y="84"/>
+        <size width="250" height="14"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="Shift+P" text="Shift+P = Give 0 Psi Defense and 100 Psi Attack">
+        <position x="left" y="98"/>
+        <size width="250" height="14"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="H" text="H = Heal Units">
+        <position x="left" y="112"/>
+        <size width="250" height="14"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="T" text="T = Restore Time Units">
+        <position x="left" y="126"/>
+        <size width="250" height="14"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="F" text="F = Re-link Support Lines">
+        <position x="left" y="140"/>
+        <size width="250" height="14"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="Num0" text="Num0 = Spawn Vortex Mine Explosion">
+        <position x="left" y="154"/>
+        <size width="250" height="14"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="Num19" text="Num1-9 = Spawn Shot in Specified Direction">
+        <position x="left" y="168"/>
+        <size width="250" height="14"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="F6" text="F6 = Dump Voxelmap LOS">
+        <position x="left" y="182"/>
+        <size width="250" height="14"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="F7" text="F7 = Dump Voxelmap LOS(Fast)">
+        <position x="left" y="196"/>
+        <size width="250" height="14"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+      <label id="F8" text="F8 = Dump Voxelmap LOF">
+        <position x="left" y="210"/>
+        <size width="250" height="14"/>
+        <alignment horizontal="left" vertical="top"/>
+        <font>smalfont</font>
+      </label>
+    </style>
+  </form>
+</openapoc>

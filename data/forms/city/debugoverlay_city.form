@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <!-- Debug Overlay -->
+  <form id="DEBUGOVERLAY_CITY">
+    <style minwidth="640" minheight="480">
+      <position x="left" y="top"/>
+      <size width="640" height="480"/>
+	  <label id="F1" text="F1 = Toggle Debug Mode">
+		<position x="left" y="0"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="CtrlAltShiftLeft" text="Ctrl+Alt+Shift+LeftClick = Destroy Scenery">
+		<position x="left" y="14"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+		<label id="CtrlAltShiftRight" text="Ctrl+Alt+Shift+RightClick = Collapse Building">
+		<position x="left" y="28"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="A" text="A = Gives Every Vehicle Ammo">
+		<position x="left" y="42"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="W" text="W = Warp to Alien Dimension and Back">
+		<position x="left" y="56"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="R" text="R = Repair All Scenery">
+		<position x="left" y="70"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="B" text="B = Spawn UFO on Assualt Mission">
+		<position x="left" y="84"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="U" text="U = Spawn Three Crashed UFOs">
+		<position x="left" y="98"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="X" text="X = Crash All Vehicles">
+		<position x="left" y="112"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="PgUpPgDn" text="PgUp / PgDown = Display One Map Layer">
+		<position x="left" y="126"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="F2" text="F2 = Show Road Pathfinding">
+		<position x="left" y="140"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="F3" text="F3 = Highlight Walkmode, Collapsing Tiles, Basement Tiles">
+		<position x="left" y="154"/>
+		<size width="400" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="F4" text="F4 = Show Aliens on Strategy Map">
+		<position x="left" y="168"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="F5" text="F5 = Show Vehicles Paths">
+		<position x="left" y="182"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="F6" text="F6 = Dump Voxelmap LOS">
+		<position x="left" y="196"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="F7" text="F7 = Dump Voxelmap LOS (Fast)">
+		<position x="left" y="210"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="F8" text="F8 = Dump Voxelmap LOF">
+		<position x="left" y="224"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="F9" text="F9 = Dump Voxelmap LOF (Fast)">
+		<position x="left" y="238"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="F10" text="F10 = Highlight Tubes">
+		<position x="left" y="252"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="F11" text="F11 = Highlight Roads">
+		<position x="left" y="266"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="F12" text="F12 = Highlight Hills">
+		<position x="left" y="280"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="Num" text="Show Roads / Tubes Num1379 = Direction, Num28 = Up / Down, Num0 = Show All, Num5 = Switch Views">
+		<position x="left" y="294"/>
+		<size width="640" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+      </label>
+	  <label id="Base" text="Base Screen - F10 = Finish All Facilities">
+		<position x="left" y="308"/>
+		<size width="250" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+	  <label id="Research" text="Research Screen - F10 = Complete Project at Next Update (With at least two Scientists Assigned)">
+		<position x="left" y="322"/>
+		<size width="640" height="14"/>
+		<alignment horizontal="left" vertical="top"/>
+		<font>smalfont</font>
+	  </label>
+    </style>
+  </form>
+</openapoc>

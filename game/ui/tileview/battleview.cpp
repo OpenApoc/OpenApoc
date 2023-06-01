@@ -79,8 +79,9 @@ BattleView::BattleView(sp<GameState> gameState)
                      Vec3<int>{TILE_X_BATTLE, TILE_Y_BATTLE, TILE_Z_BATTLE},
                      Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric,
                      gameState->current_battle->battleViewScreenCenter, *gameState),
-      baseForm(ui().getForm("battle/battle")), debugOverlay(ui().getForm("debugoverlay")),
-      state(gameState), battle(*state->current_battle), followAgent(false),
+      baseForm(ui().getForm("battle/battle")),
+      debugOverlay(ui().getForm("battle/debugoverlay_battle")), state(gameState),
+      battle(*state->current_battle), followAgent(false),
       selectionState(BattleSelectionState::Normal)
 {
 	motionScannerDirectionIcons.push_back(
@@ -151,10 +152,6 @@ BattleView::BattleView(sp<GameState> gameState)
 	                                                   12)));
 
 	lastClickedHostile.resize(6);
-
-	debugOverlay->findControlTyped<Label>("CITY")->setVisible(false);
-	debugOverlay->findControlTyped<Label>("BASE")->setVisible(false);
-	debugOverlay->findControlTyped<Label>("RESEARCH")->setVisible(false);
 
 	auto font = ui().getFont("smallset");
 	squadNumber.emplace_back();
@@ -1434,7 +1431,17 @@ void BattleView::update()
 
 	// Parent update
 	BattleTileView::update();
-	debugOverlay->findControlTyped<Label>("BATTLE")->setVisible(debugVisible);
+
+	// Update debug menu
+	if (!config().getBool("OpenApoc.NewFeature.DebugCommandsVisible"))
+	{
+		debugVisible = false;
+	}
+	else if (debugHotkeyMode)
+	{
+		debugVisible = true;
+	}
+	debugOverlay->setVisible(debugVisible);
 
 	// Update turn based stuff
 	if (!realTime)
