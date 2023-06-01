@@ -996,8 +996,9 @@ CityView::CityView(sp<GameState> state)
                    Vec2<int>{STRAT_TILE_X, STRAT_TILE_Y}, TileViewMode::Isometric,
                    state->current_city->cityViewScreenCenter, *state),
       baseForm(ui().getForm("city/city")), overlayTab(ui().getForm("city/overlay")),
-      updateSpeed(CityUpdateSpeed::Speed1), lastSpeed(CityUpdateSpeed::Pause), state(state),
-      followVehicle(false), selectionState(CitySelectionState::Normal)
+      debugOverlay(ui().getForm("city/debugoverlay_city")), updateSpeed(CityUpdateSpeed::Speed1),
+      lastSpeed(CityUpdateSpeed::Pause), state(state), followVehicle(false),
+      selectionState(CitySelectionState::Normal)
 {
 	weaponType.resize(3);
 	weaponDisabled.resize(3, false);
@@ -1805,6 +1806,7 @@ void CityView::render()
 
 		baseForm->render();
 		overlayTab->render();
+		debugOverlay->render();
 		if (activeTab == uiTabs[0])
 		{
 			// Highlight selected base
@@ -1946,6 +1948,17 @@ void CityView::update()
 
 	this->drawCity = true;
 	CityTileView::update();
+
+	// Update debug menu
+	if (!config().getBool("OpenApoc.NewFeature.DebugCommandsVisible"))
+	{
+		debugVisible = false;
+	}
+	else if (debugHotkeyMode)
+	{
+		debugVisible = true;
+	}
+	debugOverlay->setVisible(debugVisible);
 
 	updateSelectedUnits();
 
@@ -3105,6 +3118,11 @@ bool CityView::handleKeyDown(Event *e)
 		case SDLK_LCTRL:
 			modifierLCtrl = true;
 			return true;
+		case SDLK_F1:
+			if (config().getBool("OpenApoc.NewFeature.DebugCommandsVisible"))
+			{
+				debugVisible = !debugVisible;
+			}
 	}
 
 	if (e->type() == EVENT_KEY_DOWN)

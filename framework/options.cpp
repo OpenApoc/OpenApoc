@@ -94,6 +94,7 @@ void dumpOptionsToLog()
 	dumpOption(optionPauseOnAgentPsiControlled);
 	dumpOption(optionPauseOnAgentPsiOver);
 
+	dumpOption(optionDebugCommandsVisible);
 	dumpOption(optionUFODamageModel);
 	dumpOption(optionInstantExplosionDamage);
 	dumpOption(optionGravliftSounds);
@@ -334,6 +335,8 @@ ConfigOptionBool optionPauseOnAgentPsiControlled("Notifications.Battle", "AgentP
 ConfigOptionBool optionPauseOnAgentPsiOver("Notifications.Battle", "AgentPsiOver",
                                            "Unit freed from Psionic control", true);
 
+ConfigOptionBool optionDebugCommandsVisible("OpenApoc.NewFeature", "DebugCommandsVisible",
+                                            "Show the debug commands on screen", true);
 ConfigOptionBool optionUFODamageModel("OpenApoc.NewFeature", "UFODamageModel",
                                       "X-Com 1 Damage model (0-200%)", false);
 ConfigOptionBool optionInstantExplosionDamage("OpenApoc.NewFeature", "InstantExplosionDamage",
