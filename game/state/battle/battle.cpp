@@ -2503,6 +2503,8 @@ void Battle::enterBattle(GameState &state)
 	for (auto &u : state.current_battle->units)
 	{
 		u.second->updateCheckBeginFalling(state);
+		// Reload empty weapons at start of battle if needed
+		u.second->reloadWeapons(state);
 	}
 
 	// Find first player unit
