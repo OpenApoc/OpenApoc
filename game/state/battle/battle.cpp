@@ -2504,7 +2504,10 @@ void Battle::enterBattle(GameState &state)
 	{
 		u.second->updateCheckBeginFalling(state);
 		// Reload empty weapons at start of battle if needed
-		u.second->reloadWeapons(state);
+		if (config().getBool("OpenApoc.NewFeature.AutoReload"))
+		{
+			u.second->reloadWeapons(state);
+		}
 	}
 
 	// Find first player unit
