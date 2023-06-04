@@ -2556,6 +2556,16 @@ void Battle::finishBattle(GameState &state)
 			e->battleScanner.clear();
 			e->inUse = false;
 			e->primed = false;
+
+			// Recharge all equipment
+			auto payload = e->getPayloadType();
+			if (payload->recharge)
+			{
+				if (e->ammo < payload->max_ammo)
+				{
+					e->ammo = payload->max_ammo;
+				}
+			}
 		}
 	}
 
