@@ -2503,6 +2503,11 @@ void Battle::enterBattle(GameState &state)
 	for (auto &u : state.current_battle->units)
 	{
 		u.second->updateCheckBeginFalling(state);
+		// Reload empty weapons at start of battle if needed
+		if (config().getBool("OpenApoc.NewFeature.AutoReload"))
+		{
+			u.second->reloadWeapons(state);
+		}
 	}
 
 	// Find first player unit
@@ -2554,6 +2559,16 @@ void Battle::finishBattle(GameState &state)
 			e->battleScanner.clear();
 			e->inUse = false;
 			e->primed = false;
+
+			// Recharge all equipment
+			auto payload = e->getPayloadType();
+			if (payload->recharge)
+			{
+				if (e->ammo < payload->max_ammo)
+				{
+					e->ammo = payload->max_ammo;
+				}
+			}
 		}
 	}
 

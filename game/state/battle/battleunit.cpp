@@ -213,6 +213,24 @@ bool BattleUnit::isFatallyWounded()
 	return false;
 }
 
+void BattleUnit::reloadWeapons(GameState &state)
+{
+	// FIXME: Only reload player agents?
+	if (agent->owner == state.getPlayer())
+	{
+		auto weaponRight = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
+		auto weaponLeft = agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
+		if (weaponRight && weaponRight->needsReload())
+		{
+			weaponRight->loadAmmo(state);
+		}
+		if (weaponLeft && weaponLeft->needsReload())
+		{
+			weaponLeft->loadAmmo(state);
+		}
+	}
+}
+
 void BattleUnit::setPosition(GameState &state, const Vec3<float> &pos, bool goal)
 {
 	auto oldPosition = position;
