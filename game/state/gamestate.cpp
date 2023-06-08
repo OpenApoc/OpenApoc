@@ -1593,6 +1593,10 @@ void GameState::logEvent(GameEvent *ev)
 		              gbe->base->building->bounds.p0.y + gbe->base->building->bounds.p1.y, 1) /
 		    2;
 	}
+	else if (GameSomethingDiedEvent *gsde = dynamic_cast<GameSomethingDiedEvent *>(ev))
+	{
+		location = gsde->location;
+	}
 	// TODO: Other event types
 	messages.emplace_back(EventMessage{gameTime, ev->message(), location});
 }
