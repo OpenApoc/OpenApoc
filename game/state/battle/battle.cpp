@@ -2562,11 +2562,14 @@ void Battle::finishBattle(GameState &state)
 
 			// Recharge all equipment
 			auto payload = e->getPayloadType();
-			if (payload->recharge)
+			if (payload)
 			{
-				if (e->ammo < payload->max_ammo)
+				if (payload->recharge)
 				{
-					e->ammo = payload->max_ammo;
+					if (e->ammo < payload->max_ammo)
+					{
+						e->ammo = payload->max_ammo;
+					}
 				}
 			}
 		}
