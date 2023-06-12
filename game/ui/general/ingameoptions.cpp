@@ -22,6 +22,7 @@
 #include "game/ui/skirmish/skirmish.h"
 #include "game/ui/tileview/cityview.h"
 #include <list>
+#include "moreoptions.h"
 
 namespace OpenApoc
 {
@@ -303,7 +304,8 @@ void InGameOptions::eventOccurred(Event *e)
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_NEXT_LIST")
 		{
-			loadNextList();
+			//loadNextList();
+			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<MoreOptions>(state)});
 			return;
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_CHEATS")
