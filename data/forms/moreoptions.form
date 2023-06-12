@@ -1,26 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc>
-  <form id="FORM_MOREOPTIONS">
-    <style minwidth="640" minheight="480">
-      <position x="centre" y="centre"/>
-      <size width="640" height="480"/>
-      <graphic>
-        <image>xcom3/ufodata/fundadj.pcx</image>
-        <position x="0" y="0"/>
-        <size width="640" height="480"/>
-        <label text="MORE OPTIONS">
-          <position x="113" y="0"/>
-          <size width="420" height="32"/>
-          <alignment horizontal="centre" vertical="centre"/>
-          <font>bigfont</font>
-        </label>
-        <graphicbutton id="BUTTON_OK">
-          <position x="602" y="443"/>
-          <size width="35" height="34"/>
-          <image/>
-          <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
-        </graphicbutton>
-      </graphic>
-    </style>
-  </form>
+	<form id="FORM_MOREOPTIONS">
+		<style minwidth="640" minheight="480">
+			<position x="centre" y="centre"/>
+			<size width="640" height="480"/>
+			<graphic>
+				<image>xcom3/ufodata/fundadj.pcx</image>
+				<position x="0" y="0"/>
+				<size width="640" height="480"/>
+				<label text="MORE OPTIONS">
+					<position x="113" y="0"/>
+					<size width="420" height="32"/>
+					<alignment horizontal="centre" vertical="centre"/>
+					<font>bigfont</font>
+				</label>
+				<label id="TEXT_FUNDS">
+					<position x="572" y="11"/>
+					<size width="60" height="10"/>
+					<alignment horizontal="left" vertical="centre"/>
+					<font>smalfont</font>
+				</label>
+				<graphicbutton id="BUTTON_OK">
+					<position x="602" y="443"/>
+					<size width="35" height="34"/>
+					<image/>
+					<imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
+				</graphicbutton>
+				<label id="LIST_NAME" text="OpenApoc Features">
+					<position x="305" y="70"/>
+					<font>smalfont</font>
+					<size width="270" height="16"/>
+					<alignment horizontal="centre" vertical="centre"/>
+				</label>
+				<checkbox id="VANILLA_TOGGLE">
+					<position x="42" y="96"/>
+					<size width="120" height="16"/>
+					<image>BUTTON_CHECKBOX_FALSE</image>
+					<imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+					<label text="Vanilla Toggle">
+						<position x="24" y="0"/>
+						<font>smalfont</font>
+						<size width="90" height="16"/>
+					</label>
+				</checkbox>
+				<scroll id="NOTIFICATIONS_SCROLL">
+					<position x="550" y="116"/>
+					<size width="16" height="290"/>
+				</scroll>
+				<listbox id="NOTIFICATIONS_LIST" scrollbarid="NOTIFICATIONS_SCROLL">
+					<position x="311" y="96"/>
+					<size width="240" height="330"/>
+					<item size="16" spacing="4"/>
+					<hovercolour r="255" g="255" b="255" a="0"/>
+					<selcolour r="255" g="255" b="255" a="0"/>
+				</listbox>
+				<graphicbutton id="NOTIFICATIONS_SCROLL_UP" scrollprev="NOTIFICATIONS_SCROLL">
+					<tooltip text="Scroll Up" font="smallset"/>
+					<position x="550" y="96"/>
+					<size width="17" height="16"/>
+					<image>PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:13:ui/menuopt.pal</image>
+					<imagedepressed>PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:14:ui/menuopt.pal</imagedepressed>
+				</graphicbutton>
+				<graphicbutton id="NOTIFICATIONS_SCROLL_DOWN" scrollnext="NOTIFICATIONS_SCROLL">
+					<tooltip text="Scroll Down" font="smallset"/>
+					<position x="550" y="410"/>
+					<size width="17" height="16"/>
+					<image>PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:15:ui/menuopt.pal</image>
+					<imagedepressed>PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:16:ui/menuopt.pal</imagedepressed>
+				</graphicbutton>
+				<label text="Map Scroll Speed">
+					<position x="56" y="166"/>
+					<font>smalfont</font>
+					<size width="148" height="16"/>
+					<alignment horizontal="left" vertical="centre"/>
+				</label>
+				<graphic>
+					<position x="42" y="182"/>
+					<size width="224" height="18"/>
+					<image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
+					<scroll id="MAP_SCROLL_SPEED">
+						<position x="14" y="2"/>
+						<size width="148" height="15"/>
+						<range min="0" max="50"/>
+					</scroll>
+					<graphicbutton scrollprev="MAP_SCROLL_SPEED">
+						<position x="0" y="0"/>
+						<size width="16" height="20"/>
+						<image/>
+						<imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+					</graphicbutton>
+					<graphicbutton scrollnext="MAP_SCROLL_SPEED">
+						<position x="161" y="0"/>
+						<size width="17" height="20"/>
+						<image/>
+						<imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+					</graphicbutton>
+					<label id="TEXT_MAP_SCROLL_SPEED" text="1">
+						<position x="184" y="2"/>
+						<size width="36" height="14"/>
+						<alignment horizontal="centre" vertical="centre"/>
+						<font>smalfont</font>
+					</label>
+				</graphic>
+			</graphic>
+		</style>
+	</form>
 </openapoc>

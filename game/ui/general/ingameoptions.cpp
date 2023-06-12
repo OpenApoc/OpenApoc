@@ -21,8 +21,8 @@
 #include "game/ui/general/savemenu.h"
 #include "game/ui/skirmish/skirmish.h"
 #include "game/ui/tileview/cityview.h"
-#include <list>
 #include "moreoptions.h"
+#include <list>
 
 namespace OpenApoc
 {
@@ -304,7 +304,6 @@ void InGameOptions::eventOccurred(Event *e)
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_NEXT_LIST")
 		{
-			//loadNextList();
 			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<MoreOptions>(state)});
 			return;
 		}
