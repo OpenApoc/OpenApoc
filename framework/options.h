@@ -32,6 +32,7 @@ extern ConfigOptionBool autoScrollOption;
 extern ConfigOptionBool actionMusicOption;
 extern ConfigOptionBool autoExecuteOption;
 extern ConfigOptionInt toolTipDelay;
+extern ConfigOptionBool vanillaToggle;
 
 extern ConfigOptionBool optionPauseOnUfoSpotted;
 extern ConfigOptionBool optionPauseOnVehicleLightDamage;

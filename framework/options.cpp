@@ -54,6 +54,7 @@ void dumpOptionsToLog()
 	dumpOption(actionMusicOption);
 	dumpOption(autoExecuteOption);
 	dumpOption(toolTipDelay);
+	dumpOption(vanillaToggle);
 
 	dumpOption(optionPauseOnUfoSpotted);
 	dumpOption(optionPauseOnVehicleLightDamage);
@@ -257,6 +258,7 @@ ConfigOptionBool autoExecuteOption("Options.Misc", "AutoExecute",
 ConfigOptionInt toolTipDelay("Options.Misc", "ToolTipDelay",
                              "Delay in milliseconds before showing tooltips (<= 0 to disable)",
                              500);
+ConfigOptionBool vanillaToggle("Options.Misc", "VanillaToggle", "Toggle vanilla mode", false);
 
 ConfigOptionBool optionPauseOnUfoSpotted("Notifications.City", "UfoSpotted", "UFO spotted", true);
 ConfigOptionBool optionPauseOnVehicleLightDamage("Notifications.City", "VehicleLightDamage",

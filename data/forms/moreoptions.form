@@ -68,40 +68,6 @@
 					<image>PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:15:ui/menuopt.pal</image>
 					<imagedepressed>PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:16:ui/menuopt.pal</imagedepressed>
 				</graphicbutton>
-				<label text="Map Scroll Speed">
-					<position x="56" y="166"/>
-					<font>smalfont</font>
-					<size width="148" height="16"/>
-					<alignment horizontal="left" vertical="centre"/>
-				</label>
-				<graphic>
-					<position x="42" y="182"/>
-					<size width="224" height="18"/>
-					<image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:61:xcom3/ufodata/research.pcx</image>
-					<scroll id="MAP_SCROLL_SPEED">
-						<position x="14" y="2"/>
-						<size width="148" height="15"/>
-						<range min="0" max="50"/>
-					</scroll>
-					<graphicbutton scrollprev="MAP_SCROLL_SPEED">
-						<position x="0" y="0"/>
-						<size width="16" height="20"/>
-						<image/>
-						<imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
-					</graphicbutton>
-					<graphicbutton scrollnext="MAP_SCROLL_SPEED">
-						<position x="161" y="0"/>
-						<size width="17" height="20"/>
-						<image/>
-						<imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
-					</graphicbutton>
-					<label id="TEXT_MAP_SCROLL_SPEED" text="1">
-						<position x="184" y="2"/>
-						<size width="36" height="14"/>
-						<alignment horizontal="centre" vertical="centre"/>
-						<font>smalfont</font>
-					</label>
-				</graphic>
 			</graphic>
 		</style>
 	</form>

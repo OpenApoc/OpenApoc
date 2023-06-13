@@ -120,13 +120,20 @@ void MoreOptions::begin()
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 	loadList();
+	menuform->findControlTyped<CheckBox>("VANILLA_TOGGLE")
+	    ->setChecked(config().getBool("Options.Misc.VanillaToggle"));
 }
 
 void MoreOptions::pause() {}
 
 void MoreOptions::resume() {}
 
-void MoreOptions::finish() {}
+void MoreOptions::finish()
+{
+		config().set("Options.Misc.VanillaToggle",
+	             menuform->findControlTyped<CheckBox>("VANILLA_TOGGLE")->isChecked());
+	saveList();
+}
 
 void MoreOptions::eventOccurred(Event *e)
 {

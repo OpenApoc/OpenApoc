@@ -21,9 +21,7 @@ class InGameOptions : public Stage
 	~InGameOptions() override;
 
 	void saveList();
-	void loadList(int id);
-	void loadNextList();
-	int curId = 0;
+	void loadList();
 
 	// Stage control
 	void begin() override;
