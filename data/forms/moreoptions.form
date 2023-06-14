@@ -27,9 +27,9 @@
 					<imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
 				</graphicbutton>
 				<label id="GENERAL_TEXT" text="General Options">
-					<position x="centre" y="270"/>
+					<position x="200" y="270"/>
 					<font>smalfont</font>
-					<size width="600" height="16"/>
+					<size width="200" height="16"/>
 					<alignment horizontal="centre" vertical="centre"/>
 				</label>
 				<graphic>
@@ -44,6 +44,7 @@
 					<size width="280" height="1"/>
 					<alignment horizontal="centre"/>
 				</graphic>
+				<!-- TODO: Add this option
 				<checkbox id="VANILLA_TOGGLE">
 					<position x="40" y="296"/>
 					<size width="250" height="16"/>
@@ -54,7 +55,7 @@
 						<font>smalfont</font>
 						<size width="250" height="16"/>
 					</label>
-				</checkbox>
+				</checkbox> -->
 				<checkbox id="DEBUGVIS_TOGGLE">
 					<position x="40" y="316"/>
 					<size width="270" height="16"/>

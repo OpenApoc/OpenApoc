@@ -123,6 +123,7 @@ void MoreOptions::loadLists()
 	battlelistControl->clear();
 	auto font = ui().getFont("smalfont");
 
+	// FIXME: Can this be optimized?
 	for (auto &p : *citynotificationList)
 	{
 		auto checkBox = mksp<CheckBox>(fw().data->loadImage("BUTTON_CHECKBOX_TRUE"),
@@ -164,8 +165,8 @@ void MoreOptions::begin()
 	loadLists();
 
 	// TODO: Implement vanilla mode
-	menuform->findControlTyped<CheckBox>("VANILLA_TOGGLE")
-	    ->setChecked(config().getBool("Options.Misc.VanillaToggle"));
+	// menuform->findControlTyped<CheckBox>("VANILLA_TOGGLE")
+	//    ->setChecked(config().getBool("Options.Misc.VanillaToggle"));
 	menuform->findControlTyped<CheckBox>("DEBUGVIS_TOGGLE")
 	    ->setChecked(config().getBool("OpenApoc.NewFeature.DebugCommandsVisible"));
 	menuform->findControlTyped<CheckBox>("SCROLLSOUND_TOGGLE")
@@ -187,8 +188,8 @@ void MoreOptions::resume() {}
 void MoreOptions::finish()
 {
 	// TODO: Implement vanilla mode
-	config().set("Options.Misc.VanillaToggle",
-	             menuform->findControlTyped<CheckBox>("VANILLA_TOGGLE")->isChecked());
+	// config().set("Options.Misc.VanillaToggle",
+	//             menuform->findControlTyped<CheckBox>("VANILLA_TOGGLE")->isChecked());
 	config().set("OpenApoc.NewFeature.DebugCommandsVisible",
 	             menuform->findControlTyped<CheckBox>("DEBUGVIS_TOGGLE")->isChecked());
 	config().set("OpenApoc.NewFeature.NoScrollSounds",
