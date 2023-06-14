@@ -19,8 +19,8 @@ class MoreOptions : public Stage
 	MoreOptions(sp<GameState> state);
 	~MoreOptions() override;
 
-	void saveList();
-	void loadList();
+	void saveLists();
+	void loadLists();
 
 	// Stage control
 	void begin() override;

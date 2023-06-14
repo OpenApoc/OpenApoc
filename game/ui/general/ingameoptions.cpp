@@ -94,7 +94,7 @@ void InGameOptions::saveList()
 void InGameOptions::loadList()
 {
 	saveList();
-	menuform->findControlTyped<Label>("LIST_NAME")->setText("Message Toggles");
+	menuform->findControlTyped<Label>("LIST_NAME")->setText(tr("Message Toggles"));
 	std::list<std::pair<UString, UString>> *notificationList = nullptr;
 
 	notificationList = state->current_battle ? &battleNotificationList : &cityNotificationList;
