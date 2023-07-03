@@ -163,7 +163,7 @@ void CityTileView::eventOccurred(Event *e)
 						DEBUG_SHOW_ALIEN_CREW = false;
 						DEBUG_LAYER = -1;
 					}
-					LogWarning("Debug walk type display set to %s", DEBUG_SHOW_MISC_TYPE);
+					LogWarning("Debug walk type display set to %d", DEBUG_SHOW_MISC_TYPE);
 					return;
 				}
 				case SDLK_F5:
