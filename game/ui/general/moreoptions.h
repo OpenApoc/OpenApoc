@@ -9,19 +9,18 @@ namespace OpenApoc
 class GameState;
 class Form;
 
-class InGameOptions : public Stage
+class MoreOptions : public Stage
 {
   private:
 	sp<Form> menuform;
-
 	sp<GameState> state;
 
   public:
-	InGameOptions(sp<GameState> state);
-	~InGameOptions() override;
+	MoreOptions(sp<GameState> state);
+	~MoreOptions() override;
 
-	void saveList();
-	void loadList();
+	void saveLists();
+	void loadLists();
 
 	// Stage control
 	void begin() override;
@@ -33,4 +32,4 @@ class InGameOptions : public Stage
 	void render() override;
 	bool isTransition() override;
 };
-}; // namespace OpenApoc
+} // namespace OpenApoc

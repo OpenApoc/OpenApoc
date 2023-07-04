@@ -50,6 +50,7 @@ set (GAMEUI_SOURCE_FILES
 	general/agentsheet.cpp
 	general/difficultymenu.cpp
 	general/ingameoptions.cpp
+	general/moreoptions.cpp
 	general/cheatoptions.cpp
 	general/loadingscreen.cpp
 	general/mainmenu.cpp
@@ -121,6 +122,7 @@ set (GAMEUI_HEADER_FILES
 	general/agentsheet.h
 	general/difficultymenu.h
 	general/ingameoptions.h
+	general/moreoptions.h
 	general/cheatoptions.h
 	general/loadingscreen.h
 	general/mainmenu.h

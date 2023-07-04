@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+	<form id="FORM_MOREOPTIONS">
+		<style minwidth="640" minheight="480">
+			<position x="centre" y="centre"/>
+			<size width="640" height="480"/>
+			<graphic>
+				<image>xcom3/ufodata/fundadj.pcx</image>
+				<position x="0" y="0"/>
+				<size width="640" height="480"/>
+				<label text="MORE OPTIONS">
+					<position x="113" y="0"/>
+					<size width="420" height="32"/>
+					<alignment horizontal="centre" vertical="centre"/>
+					<font>bigfont</font>
+				</label>
+				<label id="TEXT_FUNDS">
+					<position x="572" y="11"/>
+					<size width="60" height="10"/>
+					<alignment horizontal="left" vertical="centre"/>
+					<font>smalfont</font>
+				</label>
+				<graphicbutton id="BUTTON_OK">
+					<position x="602" y="443"/>
+					<size width="35" height="34"/>
+					<image/>
+					<imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
+				</graphicbutton>
+				<label id="GENERAL_TEXT" text="General Options">
+					<position x="200" y="270"/>
+					<font>smalfont</font>
+					<size width="200" height="16"/>
+					<alignment horizontal="centre" vertical="centre"/>
+				</label>
+				<graphic>
+					<image>city/menu-hr.png</image>
+					<position x="30" y="288"/>
+					<size width="280" height="1"/>
+					<alignment horizontal="centre"/>
+				</graphic>
+				<graphic>
+					<image>city/menu-hr.png</image>
+					<position x="280" y="288"/>
+					<size width="280" height="1"/>
+					<alignment horizontal="centre"/>
+				</graphic>
+				<!-- TODO: Add this option
+				<checkbox id="VANILLA_TOGGLE">
+					<position x="40" y="296"/>
+					<size width="250" height="16"/>
+					<image>BUTTON_CHECKBOX_FALSE</image>
+					<imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+					<label text="Toggle vanilla mode">
+						<position x="24" y="0"/>
+						<font>smalfont</font>
+						<size width="250" height="16"/>
+					</label>
+				</checkbox> -->
+				<checkbox id="DEBUGVIS_TOGGLE">
+					<position x="40" y="316"/>
+					<size width="270" height="16"/>
+					<image>BUTTON_CHECKBOX_FALSE</image>
+					<imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+					<label text="Show debug menu">
+						<position x="24" y="0"/>
+						<font>smalfont</font>
+						<size width="270" height="16"/>
+					</label>
+				</checkbox>
+				<checkbox id="SCROLLSOUND_TOGGLE">
+					<position x="40" y="336"/>
+					<size width="250" height="16"/>
+					<image>BUTTON_CHECKBOX_FALSE</image>
+					<imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+					<label text="Disable scrolling sounds">
+						<position x="24" y="0"/>
+						<font>smalfont</font>
+						<size width="250" height="16"/>
+					</label>
+				</checkbox>
+				<checkbox id="MOREICONS_TOGGLE">
+					<position x="40" y="356"/>
+					<size width="250" height="16"/>
+					<image>BUTTON_CHECKBOX_FALSE</image>
+					<imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+					<label text="Display additional unit icons (fatal, psi)">
+						<position x="24" y="0"/>
+						<font>smalfont</font>
+						<size width="250" height="16"/>
+					</label>
+				</checkbox>
+				<checkbox id="ADVINVENTORY_TOGGLE">
+					<position x="40" y="376"/>
+					<size width="250" height="16"/>
+					<image>BUTTON_CHECKBOX_FALSE</image>
+					<imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+					<label text="Allow unloading clips and quick equip">
+						<position x="24" y="0"/>
+						<font>smalfont</font>
+						<size width="250" height="16"/>
+					</label>
+				</checkbox>
+				<checkbox id="TEMPLATES_TOGGLE">
+					<position x="40" y="396"/>
+					<size width="250" height="16"/>
+					<image>BUTTON_CHECKBOX_FALSE</image>
+					<imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+					<label text="Enable agent equipment templates">
+						<position x="24" y="0"/>
+						<font>smalfont</font>
+						<size width="250" height="16"/>
+					</label>
+				</checkbox>
+				<checkbox id="SEEDRNG_TOGGLE">
+					<position x="40" y="416"/>
+					<size width="250" height="16"/>
+					<image>BUTTON_CHECKBOX_FALSE</image>
+					<imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+					<label text="Seed RNG on game start">
+						<position x="24" y="0"/>
+						<font>smalfont</font>
+						<size width="250" height="16"/>
+					</label>
+				</checkbox>
+				<label id="CITYLIST_NAME">
+					<position x="305" y="70"/>
+					<font>smalfont</font>
+					<size width="270" height="16"/>
+					<alignment horizontal="centre" vertical="centre"/>
+				</label>
+				<graphic>
+					<image>city/menu-hr.png</image>
+					<position x="315" y="88"/>
+					<size width="245" height="1"/>
+				</graphic>
+				<scroll id="CITY_NOTIFICATIONS_SCROLL">
+					<position x="550" y="116"/>
+					<size width="16" height="131"/>
+				</scroll>
+				<listbox id="CITY_NOTIFICATIONS_LIST" scrollbarid="CITY_NOTIFICATIONS_SCROLL">
+					<position x="311" y="96"/>
+					<size width="240" height="170"/>
+					<item size="16" spacing="4"/>
+					<hovercolour r="255" g="255" b="255" a="0"/>
+					<selcolour r="255" g="255" b="255" a="0"/>
+				</listbox>
+				<graphicbutton id="CITY_NOTIFICATIONS_SCROLL_UP" scrollprev="CITY_NOTIFICATIONS_SCROLL">
+					<tooltip text="Scroll Up" font="smallset"/>
+					<position x="550" y="96"/>
+					<size width="17" height="16"/>
+					<image>PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:13:ui/menuopt.pal</image>
+					<imagedepressed>PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:14:ui/menuopt.pal</imagedepressed>
+				</graphicbutton>
+				<graphicbutton id="CITY_NOTIFICATIONS_SCROLL_DOWN" scrollnext="CITY_NOTIFICATIONS_SCROLL">
+					<tooltip text="Scroll Down" font="smallset"/>
+					<position x="550" y="250"/>
+					<size width="17" height="16"/>
+					<image>PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:15:ui/menuopt.pal</image>
+					<imagedepressed>PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:16:ui/menuopt.pal</imagedepressed>
+				</graphicbutton>
+				<label id="BATTLELIST_NAME">
+					<position x="30" y="70"/>
+					<font>smalfont</font>
+					<size width="270" height="16"/>
+					<alignment horizontal="centre" vertical="centre"/>
+				</label>
+				<graphic>
+					<image>city/menu-hr.png</image>
+					<position x="46" y="88"/>
+					<size width="245" height="1"/>
+				</graphic>
+				<scroll id="BATTLE_NOTIFICATIONS_SCROLL">
+					<position x="280" y="116"/>
+					<size width="16" height="131"/>
+				</scroll>
+				<listbox id="BATTLE_NOTIFICATIONS_LIST" scrollbarid="BATTLE_NOTIFICATIONS_SCROLL">
+					<position x="40" y="96"/>
+					<size width="240" height="170"/>
+					<item size="16" spacing="4"/>
+					<hovercolour r="255" g="255" b="255" a="0"/>
+					<selcolour r="255" g="255" b="255" a="0"/>
+				</listbox>
+				<graphicbutton id="BATTLE_NOTIFICATIONS_SCROLL_UP" scrollprev="BATTLE_NOTIFICATIONS_SCROLL">
+					<tooltip text="Scroll Up" font="smallset"/>
+					<position x="280" y="96"/>
+					<size width="17" height="16"/>
+					<image>PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:13:ui/menuopt.pal</image>
+					<imagedepressed>PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:14:ui/menuopt.pal</imagedepressed>
+				</graphicbutton>
+				<graphicbutton id="BATTLE_NOTIFICATIONS_SCROLL_DOWN" scrollnext="BATTLE_NOTIFICATIONS_SCROLL">
+					<tooltip text="Scroll Down" font="smallset"/>
+					<position x="280" y="250"/>
+					<size width="17" height="16"/>
+					<image>PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:15:ui/menuopt.pal</image>
+					<imagedepressed>PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:16:ui/menuopt.pal</imagedepressed>
+				</graphicbutton>
+			</graphic>
+		</style>
+	</form>
+</openapoc>
