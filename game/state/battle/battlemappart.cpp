@@ -1166,6 +1166,8 @@ void BattleMapPart::updateFalling(GameState &state, unsigned int ticks)
 {
 	auto fallTicksRemaining = ticks;
 	auto newPosition = position;
+	bool toDestroy = false;
+
 	while (fallTicksRemaining-- > 0)
 	{
 		fallingSpeed += FALLING_ACCELERATION_MAP_PART;
@@ -1173,7 +1175,7 @@ void BattleMapPart::updateFalling(GameState &state, unsigned int ticks)
 	}
 
 	// Collision with this tile happens when map part moves from this tile to the next
-	if (newPosition.z < 0 || floorf(newPosition.z) != floorf(position.z))
+	if (floorf(newPosition.z) != floorf(position.z))
 	{
 		sp<BattleMapPart> rubble;
 		// we may kill a unit by applying fall damage, this will trigger a stance change which will
@@ -1203,7 +1205,7 @@ void BattleMapPart::updateFalling(GameState &state, unsigned int ticks)
 					{
 						if (tileObject && mp->isAlive())
 						{
-							destroyed = true;
+							toDestroy = true;
 						}
 					}
 
@@ -1235,6 +1237,23 @@ void BattleMapPart::updateFalling(GameState &state, unsigned int ticks)
 					break;
 			}
 		}
+
+		if (newPosition.z < 0)
+		{
+			// This can happen on some bugged map sections that are missing ground tiles on level 0
+			// so that can let tiles fall through into the abyss. Stop the ground tiles from falling
+			// further and let die() convert them to destroyed level 0 ground to close the gap.
+			if (!toDestroy && type->type == BattleMapPartType::Type::Ground)
+			{
+				position = Vec3<int>(position);
+				position += Vec3<float>(0.5f, 0.5f, 0.0f);
+				falling = false;
+			}
+
+			// Do not let the tiles fall through regardless of type or collisions
+			toDestroy = true;
+		}
+
 		// Spawn smoke, more intense if we land here
 		{
 			StateRef<DamageType> dtSmoke = {&state, "DAMAGETYPE_SMOKE"};
@@ -1247,14 +1266,14 @@ void BattleMapPart::updateFalling(GameState &state, unsigned int ticks)
 			}
 		}
 		// Cease to exist if destroyed
-		if (destroyed)
+		if (toDestroy)
 		{
 			if (!type->rubble.empty())
 			{
 				if (!rubble)
 				{
 					// If no rubble present - spawn rubble
-					auto rubble = mksp<BattleMapPart>();
+					rubble = mksp<BattleMapPart>();
 					Vec3<int> initialPosition = position;
 					rubble->damaged = true;
 					rubble->owner = owner;
