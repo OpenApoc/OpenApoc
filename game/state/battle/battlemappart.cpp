@@ -230,14 +230,14 @@ void BattleMapPart::ceaseDoorFunction()
 	// Remove from door's map parts
 	wp<BattleMapPart> sft = shared_from_this();
 	door->mapParts.remove_if(
-		[sft](wp<BattleMapPart> p)
-		{
-			auto swp = sft.lock();
-			auto sp = p.lock();
-			if (swp && sp)
-				return swp == sp;
-			return false;
-		});
+	    [sft](wp<BattleMapPart> p)
+	    {
+		    auto swp = sft.lock();
+		    auto sp = p.lock();
+		    if (swp && sp)
+			    return swp == sp;
+		    return false;
+	    });
 	door.clear();
 }
 
