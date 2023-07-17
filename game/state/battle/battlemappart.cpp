@@ -1168,8 +1168,6 @@ void BattleMapPart::updateFalling(GameState &state, unsigned int ticks)
 {
 	auto fallTicksRemaining = ticks;
 	auto newPosition = position;
-	bool toDestroy = false;
-
 	while (fallTicksRemaining-- > 0)
 	{
 		fallingSpeed += FALLING_ACCELERATION_MAP_PART;
@@ -1207,7 +1205,7 @@ void BattleMapPart::updateFalling(GameState &state, unsigned int ticks)
 					{
 						if (tileObject && mp->isAlive())
 						{
-							toDestroy = true;
+							destroyed = true;
 						}
 					}
 
@@ -1242,18 +1240,12 @@ void BattleMapPart::updateFalling(GameState &state, unsigned int ticks)
 
 		if (newPosition.z < 0)
 		{
-			// This can happen on some bugged map sections that are missing ground tiles on level 0
-			// so that can let tiles fall through into the abyss. Stop the ground tiles from falling
-			// further and let die() convert them to destroyed level 0 ground to close the gap.
-			if (!toDestroy && type->type == BattleMapPartType::Type::Ground)
+			// Do not let the tiles fall through the level 0 regardless of type or collisions
+			if (!destroyed)
 			{
-				position = Vec3<int>(position);
-				position += Vec3<float>(0.5f, 0.5f, 0.0f);
-				falling = false;
+				LogError("Tile at %f, %f fell through the ground", position.x, position.y);
 			}
-
-			// Do not let the tiles fall through regardless of type or collisions
-			toDestroy = true;
+			destroyed = true;
 		}
 
 		// Spawn smoke, more intense if we land here
@@ -1268,7 +1260,7 @@ void BattleMapPart::updateFalling(GameState &state, unsigned int ticks)
 			}
 		}
 		// Cease to exist if destroyed
-		if (toDestroy)
+		if (destroyed)
 		{
 			if (!type->rubble.empty())
 			{
