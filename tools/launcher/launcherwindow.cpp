@@ -205,17 +205,17 @@ void LauncherWindow::setupScreenModes()
 
 void LauncherWindow::setupDisplayNum()
 {
-	constexpr int MAX_DISPLAYS = 4;
+	const auto displays = QGuiApplication::screens();
 	auto &comboBox = *ui->displayNumBox;
 	comboBox.clear();
 
-	for (int i = 0; i < MAX_DISPLAYS; ++i)
+	for (int i = 0; i < displays.count(); ++i)
 	{
 		comboBox.addItem(QString("Display #%1").arg(i));
 	}
 
 	int curDisplayValue = Options::screenDisplayNumberOption.get();
-	if (curDisplayValue < MAX_DISPLAYS)
+	if (curDisplayValue < displays.count())
 	{
 		comboBox.setCurrentIndex(curDisplayValue);
 	}
