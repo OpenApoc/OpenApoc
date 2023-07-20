@@ -113,6 +113,7 @@ extern ConfigOptionBool optionAutoReload;
 extern ConfigOptionBool optionLeftClickIcon;
 extern ConfigOptionBool optionBattlescapeVertScroll;
 extern ConfigOptionBool optionSingleSquadSelect;
+extern ConfigOptionBool optionATVUFOMission;
 
 extern ConfigOptionBool optionStunHostileAction;
 extern ConfigOptionBool optionRaidHostileAction;
