@@ -424,8 +424,10 @@ ConfigOptionBool optionBattlescapeVertScroll("OpenApoc.NewFeature", "Battlescape
                                              true);
 ConfigOptionBool optionSingleSquadSelect("OpenApoc.NewFeature", "SingleSquadSelect",
                                          "Select squad with single click", false);
-ConfigOptionBool optionATVUFOMission("OpenApoc.NewFeature", "ATVUFOMission",
-                                     "Allow ATV vehicles to initiate UFO missions", false);
+ConfigOptionBool
+    optionATVUFOMission("OpenApoc.NewFeature", "ATVUFOMission",
+                        "Allow ATV vehicles to initiate UFO missions (and recover vehicles)",
+                        false);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);

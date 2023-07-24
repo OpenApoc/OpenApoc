@@ -3716,21 +3716,12 @@ bool CityView::handleGameStateEvent(Event *e)
 			}
 			else
 			{
-				// Ground vehicles can't recover UFOs
-				if (!gameRecoveryEvent->actor->type->isGround())
+				fw().pushEvent(new GameVehicleEvent(GameEventType::UfoRecoveryUnmanned,
+				                                    gameRecoveryEvent->vehicle,
+				                                    gameRecoveryEvent->actor));
+				for (auto &u : gameRecoveryEvent->vehicle->type->researchUnlock)
 				{
-					fw().pushEvent(new GameVehicleEvent(GameEventType::UfoRecoveryUnmanned,
-					                                    gameRecoveryEvent->vehicle,
-					                                    gameRecoveryEvent->actor));
-					for (auto &u : gameRecoveryEvent->vehicle->type->researchUnlock)
-					{
-						u->forceComplete();
-					}
-				}
-				else
-				{
-					gameRecoveryEvent->actor->setMission(
-					    *state, VehicleMission::gotoBuilding(*state, *gameRecoveryEvent->actor));
+					u->forceComplete();
 				}
 			}
 			break;
