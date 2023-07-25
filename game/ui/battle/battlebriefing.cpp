@@ -43,43 +43,72 @@ BattleBriefing::BattleBriefing(sp<GameState> state,
 
 	// FIXME: Read and store briefing text and image properly
 	UString briefing = "";
+	// Determine the type of mission and load appropriate briefing text and image.
 	if (!isBuilding)
 	{
+		// Not a building: UFO assault.
 		menuform->findControlTyped<Graphic>("BRIEFING_IMAGE")
 		    ->setImage(fw().data->loadImage("xcom3/tacdata/brief3.pcx"));
-		briefing = "You must lorem ipisum etc. (Here be briefing text) (Text: UFO Assault)";
+		briefing = tr(""
+			"You must attempt to capture the crashed UFO by eliminating the defending "
+			"Alien forces. There is only one chance to succeed in this mission because "
+			"failure will mean that the surviving Aliens will attempt to destroy their "
+			"craft. They would rather die than allow us to recover their advanced "
+			"technology. Your priority is to eliminate the enemy with maximum force.");
 	}
 	else
 	{
 		auto building = StateRef<Building>(&*state, location);
 		if (building->base && building->owner == state->getPlayer())
 		{
+			// Building owned by the player: base defence.
 			menuform->findControlTyped<Graphic>("BRIEFING_IMAGE")
 			    ->setImage(fw().data->loadImage("xcom3/tacdata/brief4.pcx"));
 			bool lastBase = state->player_bases.size() == 1;
-			briefing = lastBase ? "You must lorem ipisum etc. (Here be briefing text) (Text: "
-			                      "Building Last Base Assault)"
-			                    : "You must lorem ipisum etc. (Here be briefing text) (Text: "
-			                      "Building Non-Last Base Assault)";
+			briefing = lastBase ? tr(""
+									"Hostile troops have located your base and have launched an attack. Defend "
+									"the base from costly damage. If all hostile forces are eliminated X-COM will"
+									" be saved. If you are defeated then X-COM will be wiped out, leaving the "
+									"world open to Alien domination. The fate of humanity will be determined by "
+									"this conflict. Good luck.")
+			                    : tr(""
+									"Hostile troops have located your base and have launched an attack. Defend "
+									"the base from costly damage by eliminating all invading forces. You must "
+									"also safeguard your Scientists and Engineers, either by defending them or "
+									"exiting them from the combat zone. You can retreat from the base to cut your"
+									" losses, but the base will be lost.");
 		}
 		else if (!isRaid && building->owner != state->getAliens())
 		{
+			// Not a raid, building not owned by aliens: alien extermination/investigation.
 			menuform->findControlTyped<Graphic>("BRIEFING_IMAGE")
 			    ->setImage(fw().data->loadImage("xcom3/tacdata/brief.pcx"));
-			briefing = "You must lorem ipisum etc. (Here be briefing text) (Text: Building Alien "
-			           "Extermination)";
+			briefing = tr(""
+				"Search the building for Alien life forms or other hostile forces. Engage the"
+				" enemy, but where possible stun Aliens using a Stun Grapple, Stun Grenade, "
+				"or Psionic power. Live Aliens are essential for our research. If all hostile"
+				" units are eliminated or stunned then we can recover any equipment and Alien"
+				" artifacts. A Bio-Transport module must be at the investigation site to "
+				"enable the recovery of unconscious or dead Aliens. Be careful to avoid "
+				"endangering any civilians and remember that the organization which owns the "
+			    "building will not be pleased if there is extensive damage to the structure.");
 		}
 		else
 		{
 			if (building->owner != state->getAliens())
 			{
+				// Raid against a human organisation.
 				menuform->findControlTyped<Graphic>("BRIEFING_IMAGE")
 				    ->setImage(fw().data->loadImage("xcom3/tacdata/brief2.pcx"));
-				briefing =
-				    "You must lorem ipisum etc. (Here be briefing text) (Text: Building Raid)";
+				briefing = tr(""
+					"Raiding forces must eliminate all other forces, whether they are raiders or "
+					"defenders. Raiders are deployed on the edge of the combat zone. All "
+					"defending forces are allied with each other and must repel any raiders. "
+					"Defenders are deployed in the center of the combat zone");
 			}
 			else
 			{
+				// Raid against an alien building: unique briefing for each building.
 				int briefingID = alienFunctionMap.at(building->function->name);
 				menuform->findControlTyped<Graphic>("BRIEFING_IMAGE")
 				    ->setImage(
@@ -87,44 +116,130 @@ BattleBriefing::BattleBriefing(sp<GameState> state,
 				switch (briefingID)
 				{
 					case 1:
-						briefing = "You must lorem ipisum etc. (Here be briefing text) (Text: "
-						           "Alien Building Megapod Chamber)";
+						briefing = tr(""
+						    "The Megapods are the means by which the Aliens create new structures. "
+						    "The "
+						    "small Egg-like objects are eventually replanted and grow into massive "
+						    "organic structures. Our discoveries are shocking; this building is "
+						    "practically overflowing with Pods. Our Scientists fear that the "
+						    "Aliens are "
+						    "planning a massive expansion and who knows how we could stop them "
+						    "then. All "
+						    "Megapods must be destroyed thus preventing the Aliens building any "
+						    "new "
+						    "structures.");
 						break;
 					case 2:
-						briefing = "You must lorem ipisum etc. (Here be briefing text) (Text: "
-						           "Alien Building Control Chamber)";
+						briefing = tr(""
+						              "The Control Chamber houses giant organic brains which "
+						              "control the operation "
+						              "of Alien entities within the Alien dimension. The "
+						              "destruction of these "
+						              "organic brains will make any remaining Aliens more "
+						              "desperate, as their "
+						              "ultimate defeat becomes an imminent reality.");
 						break;
 					case 3:
-						briefing = "You must lorem ipisum etc. (Here be briefing text) (Text: "
-						           "Alien Building Alien Farm)";
+						briefing = tr(""
+							"The destruction of the Food Chambers leads us to the Alien Farm. This "
+							"contains a number of strange white blocks. Our Scientists believe that these"
+							" curious objects influence the atmospheric conditions of the Alien "
+							"Dimension, although it has been impossible to prove this. Whatever the "
+							"purpose of these blocks, their destruction can only hinder the Alien cause. "
+							"Research indicates that the blocks are located in multiple locations, "
+							"although only this site has been photographed. Destroy all of the blocks to "
+							"disable the building.");
 						break;
 					case 4:
-						briefing = "You must lorem ipisum etc. (Here be briefing text) (Text: "
-						           "Alien Building Food Chamber)";
+						briefing = tr(""
+						    "The Food Chamber contains the Aliens' food source in the form of "
+						    "plants. "
+						    "These plants require organic heat and light sources to prevent them "
+						    "from "
+						    "decaying. The Mutant alliance also informs us that a number of "
+						    "Sectoids are "
+						    "held captive within the Food Chamber. Our old enemy has apparently "
+						    "become an"
+						    " Alien delicacy. Whilst the rescue of any Sectoids will guarantee an "
+						    "Alliance with the Mutants, the primary objective is to destroy the "
+						    "Alien "
+						    "heat and light sources as indicated here.");
 						break;
 					case 5:
-						briefing = "You must lorem ipisum etc. (Here be briefing text) (Text: "
-						           "Alien Building Dimension Gate Generator)";
+						briefing = tr(""
+						    "The destruction of the Dimension Gates is our ultimate goal. From "
+						    "evidence "
+						    "collected at previous Alien buildings, we have managed to composite "
+						    "this "
+						    "picture of our objectives. The Alien Generators must be destroyed, "
+						    "simultaneously disabling the protective laser web. Destroy all of the "
+						    "generators to disable the building. Upon disabling the building it is "
+						    "imperative that all Agents evacuate as a matter of urgency. Our "
+						    "forces must "
+						    "return to the Earth dimension before the final Dimension Gate closes "
+						    "forever.Victory is in our sights - Good Luck!");
 						break;
 					case 6:
-						briefing = "You must lorem ipisum etc. (Here be briefing text) (Text: "
-						           "Alien Building Incubator Chamber)";
+						briefing = tr(""
+							"The Incubator Chamber contains Alien Eggs. These Eggs are "
+							"held at an exact "
+							"temperature inside Incubators providing an environment for "
+							"the Eggs to hatch"
+							" at an optimum rate. Research reveals that a number of "
+							"Incubators exist, "
+							"they must all be destroyed.");
 						break;
 					case 7:
-						briefing = "You must lorem ipisum etc. (Here be briefing text) (Text: "
-						           "Alien Building Maintenance Factory)";
+						briefing = tr(""
+						    "The Maintenance Factory appears to contain a number of sacred Alien "
+						    "structures. We believe that the Alien Dimension is fueled by the "
+						    "structures "
+						    "pictured here. These heart units must be destroyed in order to weaken "
+						    "the "
+						    "remaining structures. Our success here will indeed be a severe blow "
+						    "to the "
+						    "Aliens as exactly half of the Alien Dimension will lie in "
+						    "ruins.");
 						break;
 					case 8:
-						briefing = "You must lorem ipisum etc. (Here be briefing text) (Text: "
-						           "Alien Building Organic Factory)";
+						briefing = tr(""
+						    "The Organic Factory provides a construction center for "
+						    "Alien UFOs. In their "
+						    "initial stage of development the UFOs resemble small "
+						    "mushroom-like objects. "
+						    "These objects increase in size until they reach the "
+						    "colossal sizes of the "
+						    "UFOs we have encountered. When fully grown the UFOs detach "
+						    "themselves from "
+						    "their stem and become fully functional Alien attack "
+						    "vessels. All embryonic "
+						    "UFOs must be destroyed.");
 						break;
 					case 9:
-						briefing = "You must lorem ipisum etc. (Here be briefing text) (Text: "
-						           "Alien Building Sleeping Chamber)";
+						briefing = tr(""
+							"The Alien Dimension contains many structures linked by an "
+							"irregular snaking "
+							"chain. The Sleeping Chamber lies at the start of the chain "
+							"and allows the "
+							"Aliens to rejuvenate nocturnally. The Aliens regularly "
+							"connect themselves to"
+							" sleeping units, which appears to be a necessary operation "
+							"in order for them"
+							" to stay alive. Explore the area with caution and destroy "
+							"all sleeping units"
+							" as pictured here. After disabling the building, all Agents "
+							"must exit the as"
+							" soon as possible.");
 						break;
 					case 10:
-						briefing = "You must lorem ipisum etc. (Here be briefing text) (Text: "
-						           "Alien Building Spawning Chamber)";
+						briefing = tr(""
+							"The Spawning Chamber appears to be a very special structure. Very few Aliens"
+							" enter this structure although vast numbers of Aliens regularly leave the "
+							"building. Our research indicates that this building is the lair for some "
+							"kind of Alien queen. We believe this Alien to be the sole producer of Alien "
+							"Eggs from which all Aliens hatch. Whilst the primary objective is the "
+							"destruction of the Queen and all Alien Eggs, the live capture of the Alien "
+							"Queen would be a vicious insult to the Aliens.");
 						break;
 				}
 			}
