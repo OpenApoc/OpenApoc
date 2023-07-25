@@ -3060,8 +3060,14 @@ void VehicleMission::takePositionNearPortal(GameState &state, Vehicle &v)
 bool VehicleMission::canRecoverVehicle(const GameState &state, const Vehicle &v,
                                        const Vehicle &target)
 {
-	// Ground can't recover
-	if (v.type->isGround())
+	// Non ATV vehicles can't initiate UFO missions
+	if (v.type->type == VehicleType::Type::Road)
+	{
+		return false;
+	}
+	// ATV vehicles can initiate UFO missions (if enabled)
+	if (v.type->type == VehicleType::Type::ATV &&
+	    !config().getBool("OpenApoc.NewFeature.ATVUFOMission"))
 	{
 		return false;
 	}
