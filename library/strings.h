@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <iterator>
 #include <list>
 #include <string>
@@ -9,15 +10,15 @@
 namespace OpenApoc
 {
 
-//#ifdef __cpp_char8_t__not_in_this_castle
-//#warning Using char8_t
-// using UString = std::basic_string<char8_t>;
-// using ustring_view = std::basic_string_view<char8_t>;
-//#else
-//#warning Using char
+// #ifdef __cpp_char8_t__not_in_this_castle
+// #warning Using char8_t
+//  using UString = std::basic_string<char8_t>;
+//  using ustring_view = std::basic_string_view<char8_t>;
+// #else
+// #warning Using char
 using UString = std::basic_string<char>;
 using UStringView = std::basic_string_view<char>;
-//#endif
+// #endif
 
 using U32String = std::basic_string<char32_t>;
 using U32StringView = std::basic_string_view<char32_t>;
