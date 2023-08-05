@@ -402,6 +402,7 @@ void Agent::hire(GameState &state, StateRef<Building> newHome)
 	owner = newHome->owner;
 	homeBuilding = newHome;
 	recentlyHired = true;
+	hiredOn = state.gameTime;
 	setMission(state, AgentMission::gotoBuilding(state, *this, newHome, false, true));
 }
 
@@ -1464,4 +1465,25 @@ void Agent::destroy()
 	}
 }
 
-} // namespace OpenApoc
+unsigned int Agent::getDaysInService(const GameState &state) const {
+	return state.gameTime.getDay() - hiredOn.getDay();
+}
+
+unsigned int Agent::getKills() const {
+	return killCount;
+}
+
+unsigned int Agent::getMissions() const {
+	return missionCount;
+}
+
+void Agent::incrementMissionCount() {
+	missionCount++;
+}
+
+void Agent::incrementKillCount() {
+	killCount++;
+}
+
+
+} // namespace OpggApoc

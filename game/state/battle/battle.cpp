@@ -131,6 +131,7 @@ void Battle::initBattle(GameState &state, bool first)
 		o.second->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
 		o.second->psiSuccessSounds = state.battle_common_sample_list->psiSuccessSounds;
 		o.second->psiFailSounds = state.battle_common_sample_list->psiFailSounds;
+		o.second->activatedInSquad();
 	}
 	if (forces.empty())
 	{

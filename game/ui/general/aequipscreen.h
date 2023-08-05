@@ -47,6 +47,8 @@ class AEquipScreen : public Stage
 	sp<Form> formMain;
 	sp<Form> formAgentStats;
 	sp<Form> formAgentItem;
+	sp<Form> formAgentProfile;
+	sp<Form> formAgentHistory;
 
 	sp<Palette> pal;
 	sp<GameState> state;

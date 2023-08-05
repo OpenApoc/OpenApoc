@@ -4675,6 +4675,7 @@ bool BattleUnit::useSpawner(GameState &state, const AEquipmentType &item)
 void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool violently)
 {
 	auto attackerOrg = attacker ? attacker->agent->owner : nullptr;
+	attacker->recordKill();
 	auto ourOrg = agent->owner;
 	bool destroy = false;
 	// Violent deaths (spawn stuff, blow up)
@@ -5946,4 +5947,13 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool t
 	}
 	return !mission->cancelled;
 }
+
+void BattleUnit::activatedInSquad() {
+	agent->incrementMissionCount();
+}
+
+void BattleUnit::recordKill() {
+	agent->incrementKillCount();
+}
+
 } // namespace OpenApoc

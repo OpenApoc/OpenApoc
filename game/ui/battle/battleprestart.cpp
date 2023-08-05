@@ -39,9 +39,10 @@ void BattlePreStart::displayAgent(sp<Agent> agent)
 		return;
 	}
 
-	AgentSheet(formAgentStats)
+	AgentSheet(formAgentProfile, formAgentStats)
 	    .display(*agent, bigUnitRanks, state->current_battle->mode == Battle::Mode::TurnBased);
 	formAgentStats->setVisible(true);
+	formAgentProfile->setVisible(true);
 
 	auto rHand = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
 	auto lHand = agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
@@ -59,7 +60,9 @@ BattlePreStart::BattlePreStart(sp<GameState> state)
 		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<AEquipScreen>(state)});
 	    });
 	formAgentStats = menuform->findControlTyped<Form>("AGENT_STATS_VIEW");
+	formAgentProfile = menuform->findControlTyped<Form>("AGENT_PROFILE_VIEW");
 	formAgentStats->setVisible(false);
+	formAgentProfile->setVisible(false);
 	menuform->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick, [this, state](Event *) {
 		    auto gameState = this->state;

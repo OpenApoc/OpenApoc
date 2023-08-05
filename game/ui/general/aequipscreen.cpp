@@ -46,6 +46,9 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 {
 	this->state = state;
 	formAgentStats = formMain->findControlTyped<Form>("AGENT_STATS_VIEW");
+	formAgentProfile = formMain->findControlTyped<Form>("AGENT_PROFILE_VIEW");
+	formAgentHistory = formMain->findControlTyped<Form>("AGENT_HISTORY_VIEW");
+	formAgentHistory->setVisible(false);
 	formAgentItem = formMain->findControlTyped<Form>("AGENT_ITEM_VIEW");
 
 	auto paperDollPlaceholder = formMain->findControlTyped<Graphic>("PAPER_DOLL");
@@ -86,7 +89,7 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 	    });
 
 	// Agent name edit
-	formAgentStats->findControlTyped<TextEdit>("AGENT_NAME")
+	formAgentProfile->findControlTyped<TextEdit>("AGENT_NAME")
 	    ->addCallback(
 	        FormEventType::TextEditFinish,
 	        [this](FormsEvent *e)
@@ -98,7 +101,8 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 			            std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)->getText();
 		        }
 	        });
-	formAgentStats->findControlTyped<TextEdit>("AGENT_NAME")
+
+	formAgentProfile->findControlTyped<TextEdit>("AGENT_NAME")
 	    ->addCallback(FormEventType::TextEditCancel,
 	                  [this](FormsEvent *e)
 	                  {
@@ -110,6 +114,26 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 			                      ->setText(currentAgent->name);
 		                  }
 	                  });
+
+	formMain->findControlTyped<CheckBox>("BUTTON_TOGGLE_STATS")
+		->addCallback(FormEventType::CheckBoxChange,
+				[this](FormsEvent *e)
+				{
+					auto shouldDisplayHistory = formMain
+						->findControlTyped<CheckBox>("BUTTON_TOGGLE_STATS")
+						->isChecked();
+
+					if (shouldDisplayHistory) {
+						formAgentHistory->setVisible(true);
+						formAgentStats->setVisible(false);
+					} else {
+						formAgentStats->setVisible(true);
+						formAgentHistory->setVisible(false);
+					}
+
+					formAgentProfile->setVisible(true);
+
+				});
 
 	woundImage = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
 	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
@@ -241,7 +265,7 @@ void AEquipScreen::eventOccurred(Event *e)
 	{
 		// Templates:
 		if (config().getBool("OpenApoc.NewFeature.EnableAgentTemplates") &&
-		    !formAgentStats->findControlTyped<TextEdit>("AGENT_NAME")->isFocused())
+		    !formAgentProfile->findControlTyped<TextEdit>("AGENT_NAME")->isFocused())
 		{
 			switch (e->keyboard().KeyCode)
 			{
@@ -304,7 +328,7 @@ void AEquipScreen::eventOccurred(Event *e)
 	// Form keyboard controls
 	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (formAgentStats->findControlTyped<TextEdit>("AGENT_NAME")->isFocused())
+		if (formAgentProfile->findControlTyped<TextEdit>("AGENT_NAME")->isFocused())
 			return;
 		switch (e->keyboard().KeyCode)
 		{
@@ -396,7 +420,19 @@ void AEquipScreen::eventOccurred(Event *e)
 		}
 		else
 		{
-			formAgentStats->setVisible(true);
+			auto shouldDisplayHistory = formMain
+				->findControlTyped<CheckBox>("BUTTON_TOGGLE_STATS")
+				->isChecked();
+
+			if (shouldDisplayHistory) {
+				formAgentHistory->setVisible(true);
+				formAgentStats->setVisible(false);
+			} else {
+				formAgentStats->setVisible(true);
+				formAgentHistory->setVisible(false);
+			}
+
+			formAgentProfile->setVisible(true);
 			formAgentItem->setVisible(false);
 		}
 	}
@@ -788,6 +824,8 @@ void AEquipScreen::displayItem(sp<AEquipment> item)
 	AEquipmentSheet(formAgentItem).display(item, researched);
 	formAgentItem->setVisible(true);
 	formAgentStats->setVisible(false);
+	formAgentProfile->setVisible(false);
+	formAgentHistory->setVisible(false);
 }
 
 AEquipScreen::Mode AEquipScreen::getMode()
@@ -1910,9 +1948,22 @@ void AEquipScreen::displayAgent(sp<Agent> agent)
 {
 	formMain->findControlTyped<Graphic>("BACKGROUND")->setImage(agent->type->inventoryBackground);
 
-	AgentSheet(formAgentStats).display(*agent, bigUnitRanks, isTurnBased());
+	AgentSheet(state, formAgentProfile, formAgentStats, formAgentHistory)
+		.display(*agent, bigUnitRanks, isTurnBased());
 
-	formAgentStats->setVisible(true);
+	auto shouldDisplayHistory = formMain
+		->findControlTyped<CheckBox>("BUTTON_TOGGLE_STATS")
+		->isChecked();
+
+	if (shouldDisplayHistory) {
+		formAgentHistory->setVisible(true);
+		formAgentStats->setVisible(false);
+	} else {
+		formAgentStats->setVisible(true);
+		formAgentHistory->setVisible(false);
+	}
+
+	formAgentProfile->setVisible(true);
 	formAgentItem->setVisible(false);
 }
 
@@ -1990,22 +2041,51 @@ void AEquipScreen::updateAgentControl(sp<Agent> agent)
 	auto agentList = formMain->findControlTyped<ListBox>("AGENT_SELECT_BOX");
 	auto control = ControlGenerator::createLargeAgentControl(
 	    *state, agent, agentList->Size.x, UnitSkillState::Hidden, selstate, !isInVicinity(agent));
-	control->addCallback(
-	    FormEventType::MouseEnter,
+
+	control->addCallback(FormEventType::MouseEnter,
 	    [this, agent](FormsEvent *e [[maybe_unused]])
 	    {
-		    AgentSheet(formAgentStats).display(*agent, bigUnitRanks, isTurnBased());
-		    formAgentStats->setVisible(true);
+		    AgentSheet(state, formAgentProfile, formAgentStats, formAgentHistory)
+				.display(*agent, bigUnitRanks, isTurnBased());
+
+			auto shouldDisplayHistory = formMain
+				->findControlTyped<CheckBox>("BUTTON_TOGGLE_STATS")
+				->isChecked();
+
+			if (shouldDisplayHistory) {
+				formAgentHistory->setVisible(true);
+				formAgentStats->setVisible(false);
+			} else {
+				formAgentStats->setVisible(true);
+				formAgentHistory->setVisible(false);
+			}
+
+		    formAgentProfile->setVisible(true);
 		    formAgentItem->setVisible(false);
 	    });
+
 	control->addCallback(FormEventType::MouseLeave,
-	                     [this](FormsEvent *e [[maybe_unused]])
-	                     {
-		                     AgentSheet(formAgentStats)
-		                         .display(*selectedAgents.front(), bigUnitRanks, isTurnBased());
-		                     formAgentStats->setVisible(true);
-		                     formAgentItem->setVisible(false);
-	                     });
+		[this](FormsEvent *e [[maybe_unused]])
+		{
+			AgentSheet(state, formAgentProfile, formAgentStats, formAgentHistory)
+				.display(*selectedAgents.front(), bigUnitRanks, isTurnBased());
+
+			auto shouldDisplayHistory = formMain
+				->findControlTyped<CheckBox>("BUTTON_TOGGLE_STATS")
+				->isChecked();
+
+			if (shouldDisplayHistory) {
+				formAgentHistory->setVisible(true);
+				formAgentStats->setVisible(false);
+			} else {
+				formAgentStats->setVisible(true);
+				formAgentHistory->setVisible(false);
+			}
+
+		    formAgentProfile->setVisible(true);
+			formAgentItem->setVisible(false);
+		});
+
 	agentList->replaceItem(control);
 }
 

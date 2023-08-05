@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_AEQUIPSCREEN_AGENT_HISTORY">
+    <style minwidth="160" minheight="280">
+      <position x="centre" y="centre"/>
+      <size width="160" height="280"/>
+
+      <label id="VALUE_DAYS_IN_SERVICE" text="">
+		<position x="15" y="105"/>
+        <size width="25" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="LABEL_DAYS_IN_SERVICE" text="">
+        <position x="50" y="105"/>
+        <size width="142" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="VALUE_MISSION_COUNT" text="">
+        <position x="15" y="121"/>
+        <size width="25" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="LABEL_MISSION_COUNT" text="">
+        <position x="50" y="121"/>
+        <size width="142" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="VALUE_KILL_COUNT" text="">
+        <position x="15" y="137"/>
+        <size width="25" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="LABEL_KILL_COUNT" text="">
+        <position x="50" y="137"/>
+        <size width="142" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+    </style>
+  </form>
+</openapoc>
