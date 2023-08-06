@@ -46,7 +46,7 @@ class BattleExplosion : public std::enable_shared_from_this<BattleExplosion>
 	void grow(GameState &state);
 	void damage(GameState &state, const TileMap &map, Vec3<int> pos, int power);
 	void expand(GameState &state, const TileMap &map, const Vec3<int> &from, const Vec3<int> &to,
-	            int power);
+	            float power);
 	void die(GameState &state);
 
 	void update(GameState &state, unsigned int ticks);
