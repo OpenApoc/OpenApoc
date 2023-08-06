@@ -1921,6 +1921,17 @@ void CityView::update()
 				switchDimension = false;
 				break;
 			}
+			// Don't switch if UFOs crashing
+			if (v.second->owner == state->getAliens() && v.second->falling)
+			{
+				switchDimension = false;
+				break;
+			}
+		}
+		// Don't switch if any projectiles exist
+		if (!state->current_city->projectiles.empty())
+		{
+			switchDimension = false;
 		}
 	}
 	if (DEBUG_SHOW_ALIEN ? state->current_city.id != "CITYMAP_ALIEN" : switchDimension)
