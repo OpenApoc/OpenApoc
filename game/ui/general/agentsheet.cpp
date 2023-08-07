@@ -28,21 +28,28 @@ const std::pair<Colour, Colour> psiAttackColour{{192, 56, 144}, {255, 120, 208}}
 const std::pair<Colour, Colour> psiDefenceColour{{192, 56, 144}, {255, 120, 208}};
 const Colour bkgColour{36, 36, 36};
 
-AgentSheet::AgentSheet(sp<Form> profileForm, sp<Form> statsForm) : 
-	profileForm(profileForm), statsForm(statsForm) {}
+AgentSheet::AgentSheet(sp<Form> profileForm, sp<Form> statsForm)
+    : profileForm(profileForm), statsForm(statsForm)
+{
+}
 
-AgentSheet::AgentSheet(sp<GameState> state, sp<Form> profileForm, sp<Form> statsForm, sp<Form> historyForm) : 
-	profileForm(profileForm), statsForm(statsForm), historyForm(historyForm), state(state) {}
+AgentSheet::AgentSheet(sp<GameState> state, sp<Form> profileForm, sp<Form> statsForm,
+                       sp<Form> historyForm)
+    : profileForm(profileForm), statsForm(statsForm), historyForm(historyForm), state(state)
+{
+}
 
-void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool turnBased) {
+void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool turnBased)
+{
 	clear();
 	displayProfile(item, ranks);
 	displayStats(item, ranks, turnBased);
 	if (historyForm)
-		displayHistory (item);
+		displayHistory(item);
 }
 
-void AgentSheet::displayProfile(const Agent &item, std::vector<sp<Image>> &ranks) {
+void AgentSheet::displayProfile(const Agent &item, std::vector<sp<Image>> &ranks)
+{
 	profileForm->findControlTyped<TextEdit>("AGENT_NAME")->setText(item.name);
 	profileForm->findControlTyped<Graphic>("SELECTED_PORTRAIT")->setImage(item.getPortrait().photo);
 
@@ -50,7 +57,8 @@ void AgentSheet::displayProfile(const Agent &item, std::vector<sp<Image>> &ranks
 	    ->setImage(item.type->displayRank ? ranks[(int)item.rank] : nullptr);
 }
 
-void AgentSheet::displayHistory(const Agent &item) {
+void AgentSheet::displayHistory(const Agent &item)
+{
 
 	historyForm->findControlTyped<Label>("LABEL_DAYS_IN_SERVICE")->setText(tr("Days In Service"));
 	std::stringstream daysInService;
@@ -95,7 +103,8 @@ void AgentSheet::displayStats(const Agent &item, std::vector<sp<Image>> &ranks, 
 	    statsForm->findControlTyped<Label>("LABEL_3")->getText() +
 	    format(": %d/%d", item.modified_stats.reactions, item.current_stats.reactions);
 
-	statsForm->findControlTyped<Label>("LABEL_4")->setText(turnBased ? tr("Time Units") : tr("Speed"));
+	statsForm->findControlTyped<Label>("LABEL_4")->setText(turnBased ? tr("Time Units")
+	                                                                 : tr("Speed"));
 	statsForm->findControlTyped<Graphic>("VALUE_4")->ToolTipText =
 	    statsForm->findControlTyped<Label>("LABEL_4")->getText();
 	if (turnBased)
@@ -165,7 +174,6 @@ void AgentSheet::displayStats(const Agent &item, std::vector<sp<Image>> &ranks, 
 	    statsForm->findControlTyped<Label>("LABEL_10")->getText() +
 	    format(": %d/%d", item.modified_stats.psi_defence, item.current_stats.psi_defence);
 }
-
 
 void AgentSheet::clear()
 {

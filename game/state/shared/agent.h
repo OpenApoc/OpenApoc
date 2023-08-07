@@ -235,7 +235,7 @@ class Agent : public StateObject<Agent>,
 
 	sp<AEquipment> leftHandItem;  // Left hand item, frequently accessed so will be stored here
 	sp<AEquipment> rightHandItem; // Right hand item, frequently accessed so will be stored here
-	
+
 	unsigned int getDaysInService(const GameState &state) const;
 	unsigned int getKills() const;
 	unsigned int getMissions() const;
@@ -244,7 +244,6 @@ class Agent : public StateObject<Agent>,
 	void incrementKillCount();
 
 	void destroy() override;
-	
 };
 
 class AgentGenerator

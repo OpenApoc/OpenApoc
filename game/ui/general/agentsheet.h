@@ -13,7 +13,7 @@ class AgentSheet
 {
   public:
 	AgentSheet(sp<Form> profileForm, sp<Form> statsForm);
-	AgentSheet(sp<GameState> state, sp<Form> profileForm, sp<Form> statsForm,  sp<Form> historyFrom);
+	AgentSheet(sp<GameState> state, sp<Form> profileForm, sp<Form> statsForm, sp<Form> historyFrom);
 	void display(const Agent &item, std::vector<sp<Image>> &ranks, bool turnBased = true);
 	void clear();
 

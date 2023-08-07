@@ -1465,25 +1465,17 @@ void Agent::destroy()
 	}
 }
 
-unsigned int Agent::getDaysInService(const GameState &state) const {
+unsigned int Agent::getDaysInService(const GameState &state) const
+{
 	return state.gameTime.getDay() - hiredOn.getDay();
 }
 
-unsigned int Agent::getKills() const {
-	return killCount;
-}
+unsigned int Agent::getKills() const { return killCount; }
 
-unsigned int Agent::getMissions() const {
-	return missionCount;
-}
+unsigned int Agent::getMissions() const { return missionCount; }
 
-void Agent::incrementMissionCount() {
-	missionCount++;
-}
+void Agent::incrementMissionCount() { missionCount++; }
 
-void Agent::incrementKillCount() {
-	killCount++;
-}
+void Agent::incrementKillCount() { killCount++; }
 
-
-} // namespace OpggApoc
+} // namespace OpenApoc
