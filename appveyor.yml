@@ -4,7 +4,7 @@ branches:
   - master
   - /release.*/
 # skip_tags: true
-os: Visual Studio 2019
+os: Visual Studio 2022
 configuration:
   - Release
 #  - Debug
@@ -33,7 +33,7 @@ before_build:
   - curl http://s2.jonnyh.net/pub/cd_minimal.iso.xz -o temp\cd.iso.xz
   - 7z e temp\cd.iso.xz -odata\
   - choco install nsis -pre
-  - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" %VCVARS_ARCH%
+  - call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" %VCVARS_ARCH%
 build_script:
   - cmake -DMSVC_PDB=ON . -GNinja -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE="%CONFIGURATION%" -DCMAKE_PREFIX_PATH=%QTPATH% -DUSE_SYSTEM_QT=ON
   - cmake --build .
