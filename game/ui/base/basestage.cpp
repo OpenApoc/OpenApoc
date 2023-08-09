@@ -61,23 +61,29 @@ void BaseStage::begin()
 		view->setImage(viewImage);
 		view->setDepressedImage(viewImage);
 		wp<GraphicButton> weakView(view);
-		view->addCallback(FormEventType::ButtonClick, [this, weakView](FormsEvent *e) {
-			auto base = e->forms().RaisedBy->getData<Base>();
-			if (this->state->current_base != base)
-			{
-				this->changeBase(base);
-				this->currentView = weakView.lock();
-			}
-		});
-		view->addCallback(FormEventType::MouseEnter, [this](FormsEvent *e) {
-			auto base = e->forms().RaisedBy->getData<Base>();
-			this->textViewBase->setVisible(true);
-			this->textViewBase->setText(base->name);
-		});
-		view->addCallback(FormEventType::MouseLeave, [this](FormsEvent *) {
-			this->textViewBase->setText("");
-			this->textViewBase->setVisible(false);
-		});
+		view->addCallback(FormEventType::ButtonClick,
+		                  [this, weakView](FormsEvent *e)
+		                  {
+			                  auto base = e->forms().RaisedBy->getData<Base>();
+			                  if (this->state->current_base != base)
+			                  {
+				                  this->changeBase(base);
+				                  this->currentView = weakView.lock();
+			                  }
+		                  });
+		view->addCallback(FormEventType::MouseEnter,
+		                  [this](FormsEvent *e)
+		                  {
+			                  auto base = e->forms().RaisedBy->getData<Base>();
+			                  this->textViewBase->setVisible(true);
+			                  this->textViewBase->setText(base->name);
+		                  });
+		view->addCallback(FormEventType::MouseLeave,
+		                  [this](FormsEvent *)
+		                  {
+			                  this->textViewBase->setText("");
+			                  this->textViewBase->setVisible(false);
+		                  });
 		miniViews.push_back(view);
 	}
 	textViewBase = form->findControlTyped<Label>("TEXT_BUTTON_BASE");

@@ -41,18 +41,24 @@ ResearchScreen::ResearchScreen(sp<GameState> state, sp<Facility> selected_lab) :
 	uiListSmallLabs->scroller->setVisible(false);
 	uiListLargeLabs->scroller->setVisible(false);
 
-	uiListSmallLabs->addCallback(FormEventType::ListBoxChangeSelected, [this](FormsEvent *e) {
-		form->findControlTyped<ListBox>("LIST_LARGE_LABS")->setSelected(nullptr);
-		viewFacility =
-		    std::static_pointer_cast<ListBox>(e->forms().RaisedBy)->getSelectedData<Facility>();
-		setCurrentLabInfo();
-	});
-	uiListLargeLabs->addCallback(FormEventType::ListBoxChangeSelected, [this](FormsEvent *e) {
-		form->findControlTyped<ListBox>("LIST_SMALL_LABS")->setSelected(nullptr);
-		viewFacility =
-		    std::static_pointer_cast<ListBox>(e->forms().RaisedBy)->getSelectedData<Facility>();
-		setCurrentLabInfo();
-	});
+	uiListSmallLabs->addCallback(
+	    FormEventType::ListBoxChangeSelected,
+	    [this](FormsEvent *e)
+	    {
+		    form->findControlTyped<ListBox>("LIST_LARGE_LABS")->setSelected(nullptr);
+		    viewFacility =
+		        std::static_pointer_cast<ListBox>(e->forms().RaisedBy)->getSelectedData<Facility>();
+		    setCurrentLabInfo();
+	    });
+	uiListLargeLabs->addCallback(
+	    FormEventType::ListBoxChangeSelected,
+	    [this](FormsEvent *e)
+	    {
+		    form->findControlTyped<ListBox>("LIST_SMALL_LABS")->setSelected(nullptr);
+		    viewFacility =
+		        std::static_pointer_cast<ListBox>(e->forms().RaisedBy)->getSelectedData<Facility>();
+		    setCurrentLabInfo();
+	    });
 }
 
 ResearchScreen::~ResearchScreen() = default;
@@ -113,30 +119,34 @@ void ResearchScreen::begin()
 	}
 
 	auto unassignedAgentList = form->findControlTyped<ListBox>("LIST_UNASSIGNED");
-	unassignedAgentList->addCallback(FormEventType::ListBoxChangeSelected, [this](FormsEvent *e) {
-		LogWarning("unassigned agent selected");
-		if (this->assigned_agent_count >= this->viewFacility->type->capacityAmount)
-		{
-			LogWarning("no free space in lab");
-			return;
-		}
-		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
-		auto agent = list->getSelectedData<Agent>();
-		if (!agent)
-		{
-			LogError("No agent in selected data");
-			return;
-		}
-		if (agent->assigned_to_lab)
-		{
-			LogError("Agent \"%s\" already assigned to a lab?", agent->name);
-			return;
-		}
-		agent->assigned_to_lab = true;
-		this->viewFacility->lab->assigned_agents.push_back({state.get(), agent});
-		this->setCurrentLabInfo();
-	});
-	auto removeFn = [this](FormsEvent *e) {
+	unassignedAgentList->addCallback(
+	    FormEventType::ListBoxChangeSelected,
+	    [this](FormsEvent *e)
+	    {
+		    LogWarning("unassigned agent selected");
+		    if (this->assigned_agent_count >= this->viewFacility->type->capacityAmount)
+		    {
+			    LogWarning("no free space in lab");
+			    return;
+		    }
+		    auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
+		    auto agent = list->getSelectedData<Agent>();
+		    if (!agent)
+		    {
+			    LogError("No agent in selected data");
+			    return;
+		    }
+		    if (agent->assigned_to_lab)
+		    {
+			    LogError("Agent \"%s\" already assigned to a lab?", agent->name);
+			    return;
+		    }
+		    agent->assigned_to_lab = true;
+		    this->viewFacility->lab->assigned_agents.push_back({state.get(), agent});
+		    this->setCurrentLabInfo();
+	    });
+	auto removeFn = [this](FormsEvent *e)
+	{
 		LogWarning("assigned agent selected");
 		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
 		auto agent = list->getSelectedData<Agent>();

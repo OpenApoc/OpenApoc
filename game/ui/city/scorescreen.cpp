@@ -139,7 +139,8 @@ void ScoreScreen::setFinanceMode()
 		formFinance->findControlTyped<Label>("BASES_TOTAL_Q")
 		    ->setText(format("%d", state->player_bases.size()));
 
-		auto getSalary = [this](AgentType::Role role) {
+		auto getSalary = [this](AgentType::Role role)
+		{
 			auto it = state->agent_salary.find(role);
 			if (it != state->agent_salary.end())
 			{

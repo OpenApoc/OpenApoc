@@ -36,50 +36,51 @@ std::shared_future<void> loadBattleBuilding(bool hotseat, sp<Building> building,
 {
 	std::map<StateRef<AgentType>, int> aliensLocal;
 
-	auto loadTask = fw().threadPoolEnqueue([hotseat, building, state, raid, aliensLocal, guards,
-	                                        civilians, aliens, customAliens, customGuards,
-	                                        customCivilians, playerBase, score]() -> void {
-		std::list<StateRef<Agent>> agents;
-		if (playerBase->building == building)
-		{
-			// No agents for base defense! Auto-chosen
-		}
-		else
-		{
-			for (auto &a : state->agents)
-			{
-				if (a.second->type->role == AgentType::Role::Soldier &&
-				    a.second->homeBuilding == playerBase->building)
-				{
-					a.second->enterBuilding(*state, {state, building});
-					agents.emplace_back(state, a.second);
-				}
-			}
-		}
-		StateRef<Organisation> org = raid ? building->owner : state->getAliens();
-		StateRef<Building> bld = {state, building};
-		StateRef<Vehicle> veh = {};
+	auto loadTask = fw().threadPoolEnqueue(
+	    [hotseat, building, state, raid, aliensLocal, guards, civilians, aliens, customAliens,
+	     customGuards, customCivilians, playerBase, score]() -> void
+	    {
+		    std::list<StateRef<Agent>> agents;
+		    if (playerBase->building == building)
+		    {
+			    // No agents for base defense! Auto-chosen
+		    }
+		    else
+		    {
+			    for (auto &a : state->agents)
+			    {
+				    if (a.second->type->role == AgentType::Role::Soldier &&
+				        a.second->homeBuilding == playerBase->building)
+				    {
+					    a.second->enterBuilding(*state, {state, building});
+					    agents.emplace_back(state, a.second);
+				    }
+			    }
+		    }
+		    StateRef<Organisation> org = raid ? building->owner : state->getAliens();
+		    StateRef<Building> bld = {state, building};
+		    StateRef<Vehicle> veh = {};
 
-		const std::map<StateRef<AgentType>, int> *aliensRef = customAliens ? &aliens : nullptr;
-		const int *guardsRef = customGuards ? &guards : nullptr;
-		const int *civiliansRef = customCivilians ? &civilians : nullptr;
+		    const std::map<StateRef<AgentType>, int> *aliensRef = customAliens ? &aliens : nullptr;
+		    const int *guardsRef = customGuards ? &guards : nullptr;
+		    const int *civiliansRef = customCivilians ? &civilians : nullptr;
 
-		Battle::beginBattle(*state, hotseat, org, agents, aliensRef, guardsRef, civiliansRef, veh,
-		                    bld);
-		// Skirmish settings
-		state->current_battle->skirmish = true;
-		state->current_battle->scoreBeforeSkirmish = state->totalScore.tacticalMissions;
-		state->totalScore.tacticalMissions = score;
-		for (auto &o : state->organisations)
-		{
-			if (o.first == state->getPlayer().id)
-			{
-				continue;
-			}
-			state->current_battle->relationshipsBeforeSkirmish[{state, o.first}] =
-			    o.second->getRelationTo(state->getPlayer());
-		}
-	});
+		    Battle::beginBattle(*state, hotseat, org, agents, aliensRef, guardsRef, civiliansRef,
+		                        veh, bld);
+		    // Skirmish settings
+		    state->current_battle->skirmish = true;
+		    state->current_battle->scoreBeforeSkirmish = state->totalScore.tacticalMissions;
+		    state->totalScore.tacticalMissions = score;
+		    for (auto &o : state->organisations)
+		    {
+			    if (o.first == state->getPlayer().id)
+			    {
+				    continue;
+			    }
+			    state->current_battle->relationshipsBeforeSkirmish[{state, o.first}] =
+			        o.second->getRelationTo(state->getPlayer());
+		    }
+	    });
 	return loadTask;
 }
 
@@ -89,7 +90,8 @@ std::shared_future<void> loadBattleVehicle(bool hotseat, sp<VehicleType> vehicle
 {
 
 	auto loadTask = fw().threadPoolEnqueue(
-	    [hotseat, vehicle, state, customAliens, aliens, playerBase, score]() -> void {
+	    [hotseat, vehicle, state, customAliens, aliens, playerBase, score]() -> void
+	    {
 		    std::list<StateRef<Agent>> agents;
 		    for (auto &a : state->agents)
 			    if (a.second->type->role == AgentType::Role::Soldier &&
@@ -144,87 +146,118 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 	updateLocationLabel();
 	menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
-		    menuform->findControlTyped<Label>("NUM_HUMANS")
-		        ->setText(format(
-		            "%d", menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")->getValue()));
-	    });
+	    ->addCallback(
+	        FormEventType::ScrollBarChange,
+	        [this](Event *)
+	        {
+		        menuform->findControlTyped<Label>("NUM_HUMANS")
+		            ->setText(format(
+		                "%d",
+		                menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")->getValue()));
+	        });
 	menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
-		    menuform->findControlTyped<Label>("NUM_HYBRIDS")
-		        ->setText(format(
-		            "%d", menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")->getValue()));
-	    });
+	    ->addCallback(
+	        FormEventType::ScrollBarChange,
+	        [this](Event *)
+	        {
+		        menuform->findControlTyped<Label>("NUM_HYBRIDS")
+		            ->setText(format(
+		                "%d",
+		                menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")->getValue()));
+	        });
 	menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
-		    menuform->findControlTyped<Label>("NUM_ANDROIDS")
-		        ->setText(format(
-		            "%d",
-		            menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")->getValue()));
-	    });
+	    ->addCallback(
+	        FormEventType::ScrollBarChange,
+	        [this](Event *)
+	        {
+		        menuform->findControlTyped<Label>("NUM_ANDROIDS")
+		            ->setText(format(
+		                "%d",
+		                menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")->getValue()));
+	        });
 	menuform->findControlTyped<ScrollBar>("DAYS_PHYSICAL_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
-		    menuform->findControlTyped<Label>("DAYS_PHYSICAL")
-		        ->setText(format(
-		            "%d",
-		            menuform->findControlTyped<ScrollBar>("DAYS_PHYSICAL_SLIDER")->getValue()));
-	    });
+	    ->addCallback(
+	        FormEventType::ScrollBarChange,
+	        [this](Event *)
+	        {
+		        menuform->findControlTyped<Label>("DAYS_PHYSICAL")
+		            ->setText(format(
+		                "%d",
+		                menuform->findControlTyped<ScrollBar>("DAYS_PHYSICAL_SLIDER")->getValue()));
+	        });
 	menuform->findControlTyped<ScrollBar>("DAYS_PSI_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
-		    menuform->findControlTyped<Label>("DAYS_PSI")
-		        ->setText(format(
-		            "%d", menuform->findControlTyped<ScrollBar>("DAYS_PSI_SLIDER")->getValue()));
-	    });
+	    ->addCallback(
+	        FormEventType::ScrollBarChange,
+	        [this](Event *)
+	        {
+		        menuform->findControlTyped<Label>("DAYS_PSI")
+		            ->setText(format(
+		                "%d",
+		                menuform->findControlTyped<ScrollBar>("DAYS_PSI_SLIDER")->getValue()));
+	        });
 	menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
-		    menuform->findControlTyped<Label>("PLAYER_TECH")
-		        ->setText(
-		            menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->getValue() == 0
-		                ? "NO"
-		                : format("%d", menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
-		                                   ->getValue()));
-	    });
+	    ->addCallback(
+	        FormEventType::ScrollBarChange,
+	        [this](Event *)
+	        {
+		        menuform->findControlTyped<Label>("PLAYER_TECH")
+		            ->setText(
+		                menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->getValue() == 0
+		                    ? "NO"
+		                    : format("%d",
+		                             menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
+		                                 ->getValue()));
+	        });
 	menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
-		    menuform->findControlTyped<Label>("ALIEN_SCORE")
-		        ->setText(format(
-		            "%dK",
-		            menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")->getValue()));
-	    });
+	    ->addCallback(
+	        FormEventType::ScrollBarChange,
+	        [this](Event *)
+	        {
+		        menuform->findControlTyped<Label>("ALIEN_SCORE")
+		            ->setText(format(
+		                "%dK",
+		                menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")->getValue()));
+	        });
 	menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
-		    menuform->findControlTyped<Label>("ORG_SCORE")
-		        ->setText(format(
-		            "%d", menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")->getValue()));
-	    });
+	    ->addCallback(
+	        FormEventType::ScrollBarChange,
+	        [this](Event *)
+	        {
+		        menuform->findControlTyped<Label>("ORG_SCORE")
+		            ->setText(format(
+		                "%d",
+		                menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")->getValue()));
+	        });
 	menuform->findControlTyped<ScrollBar>("ARMOR_SLIDER")
-	    ->addCallback(FormEventType::ScrollBarChange, [this](Event *) {
-		    UString armor = "";
-		    switch (menuform->findControlTyped<ScrollBar>("ARMOR_SLIDER")->getValue())
-		    {
-			    case 0:
-				    armor = "NONE";
-				    break;
-			    case 1:
-				    armor = "MEGAPOL";
-				    break;
-			    case 2:
-				    armor = "MEGAPOL+MB";
-				    break;
-			    case 3:
-				    armor = "MARSEC";
-				    break;
-			    case 4:
-				    armor = "X-COM+MB";
-				    break;
-			    case 5:
-				    armor = "X-COM";
-				    break;
-			    default:
-				    break;
-		    }
-		    menuform->findControlTyped<Label>("ARMOR")->setText(armor);
-	    });
+	    ->addCallback(FormEventType::ScrollBarChange,
+	                  [this](Event *)
+	                  {
+		                  UString armor = "";
+		                  switch (menuform->findControlTyped<ScrollBar>("ARMOR_SLIDER")->getValue())
+		                  {
+			                  case 0:
+				                  armor = "NONE";
+				                  break;
+			                  case 1:
+				                  armor = "MEGAPOL";
+				                  break;
+			                  case 2:
+				                  armor = "MEGAPOL+MB";
+				                  break;
+			                  case 3:
+				                  armor = "MARSEC";
+				                  break;
+			                  case 4:
+				                  armor = "X-COM+MB";
+				                  break;
+			                  case 5:
+				                  armor = "X-COM";
+				                  break;
+			                  default:
+				                  break;
+		                  }
+		                  menuform->findControlTyped<Label>("ARMOR")->setText(armor);
+	                  });
 
 	menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")->setValue(8);
 	menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")->setValue(2);
@@ -497,7 +530,8 @@ void Skirmish::goToBattle(bool customAliens, std::map<StateRef<AgentType>, int> 
 	bool hotseat = menuform->findControlTyped<CheckBox>("HOTSEAT")->isChecked();
 
 	loadBattle = [this, score, hotseat, playerBase, customAliens, aliens, customGuards, guards,
-	              customCivilians, civilians]() {
+	              customCivilians, civilians]()
+	{
 		if (locBuilding)
 		{
 			bool raid = menuform->findControlTyped<CheckBox>("ALTERNATIVE_ATTACK")->isChecked();

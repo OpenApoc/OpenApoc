@@ -40,37 +40,43 @@ static void extractDifficulty(const InitialGameStateExtractor &e, UString output
 
 std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thingsToExtract = {
     {"difficulty0",
-     [](const InitialGameStateExtractor &e) {
+     [](const InitialGameStateExtractor &e)
+     {
 	     extractDifficulty(
 	         e, outputPath.get() + "/mods/base/data/submods/org.openapoc.base/difficulty0",
 	         InitialGameStateExtractor::Difficulty::DIFFICULTY_1, "data/difficulty0_patch");
      }},
     {"difficulty1",
-     [](const InitialGameStateExtractor &e) {
+     [](const InitialGameStateExtractor &e)
+     {
 	     extractDifficulty(
 	         e, outputPath.get() + "/mods/base/data/submods/org.openapoc.base/difficulty1",
 	         InitialGameStateExtractor::Difficulty::DIFFICULTY_2, "data/difficulty1_patch");
      }},
     {"difficulty2",
-     [](const InitialGameStateExtractor &e) {
+     [](const InitialGameStateExtractor &e)
+     {
 	     extractDifficulty(
 	         e, outputPath.get() + "/mods/base/data/submods/org.openapoc.base/difficulty2",
 	         InitialGameStateExtractor::Difficulty::DIFFICULTY_3, "data/difficulty2_patch");
      }},
     {"difficulty3",
-     [](const InitialGameStateExtractor &e) {
+     [](const InitialGameStateExtractor &e)
+     {
 	     extractDifficulty(
 	         e, outputPath.get() + "/mods/base/data/submods/org.openapoc.base/difficulty3",
 	         InitialGameStateExtractor::Difficulty::DIFFICULTY_4, "data/difficulty3_patch");
      }},
     {"difficulty4",
-     [](const InitialGameStateExtractor &e) {
+     [](const InitialGameStateExtractor &e)
+     {
 	     extractDifficulty(
 	         e, outputPath.get() + "/mods/base/data/submods/org.openapoc.base/difficulty4",
 	         InitialGameStateExtractor::Difficulty::DIFFICULTY_5, "data/difficulty4_patch");
      }},
     {"common_gamestate",
-     [](const InitialGameStateExtractor &e) {
+     [](const InitialGameStateExtractor &e)
+     {
 	     GameState s;
 	     e.extractCommon(s);
 	     s.loadGame("data/common_patch");
@@ -96,7 +102,8 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     info.writeInfo(outputPath.get() + "/mods/base");
      }},
     {"city_bullet_sprites",
-     [](const InitialGameStateExtractor &e) {
+     [](const InitialGameStateExtractor &e)
+     {
 	     auto bullet_sprites = e.extractBulletSpritesCity();
 
 	     for (auto &sprite_pair : bullet_sprites)
@@ -106,7 +113,8 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     }
      }},
     {"battle_bullet_sprites",
-     [](const InitialGameStateExtractor &e) {
+     [](const InitialGameStateExtractor &e)
+     {
 	     auto bullet_sprites = e.extractBulletSpritesBattle();
 
 	     for (auto &sprite_pair : bullet_sprites)
@@ -117,7 +125,8 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     }
      }},
     {"unit_image_packs",
-     [](const InitialGameStateExtractor &e) {
+     [](const InitialGameStateExtractor &e)
+     {
 	     for (auto &imagePackStrings : e.unitImagePackPaths)
 	     {
 		     GameState s;
@@ -141,7 +150,8 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     }
      }},
     {"item_image_packs",
-     [](const InitialGameStateExtractor &e) {
+     [](const InitialGameStateExtractor &e)
+     {
 	     int itemImagePacksCount = e.getItemImagePacksCount();
 	     for (int i = 0; i < itemImagePacksCount; i++)
 	     {
@@ -167,7 +177,8 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     }
      }},
     {"unit_shadow_packs",
-     [](const InitialGameStateExtractor &e) {
+     [](const InitialGameStateExtractor &e)
+     {
 	     for (auto &imagePackStrings : e.unitShadowPackPaths)
 	     {
 		     GameState s;
@@ -191,7 +202,8 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     }
      }},
     {"unit_animation_packs",
-     [](const InitialGameStateExtractor &e) {
+     [](const InitialGameStateExtractor &e)
+     {
 	     for (auto &animationPackStrings : e.unitAnimationPackPaths)
 	     {
 		     GameState s;
@@ -217,7 +229,8 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
      }},
 
     {"battle_map_tilesets",
-     [](const InitialGameStateExtractor &e) {
+     [](const InitialGameStateExtractor &e)
+     {
 	     for (auto &tileSetName : e.battleMapPaths)
 	     {
 		     // Some indices are empty?
@@ -242,7 +255,8 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     }
      }},
     {"battle_map_sectors",
-     [](const InitialGameStateExtractor &e) {
+     [](const InitialGameStateExtractor &e)
+     {
 	     for (auto &mapName : e.battleMapPaths)
 	     {
 		     // Some indices are empty?

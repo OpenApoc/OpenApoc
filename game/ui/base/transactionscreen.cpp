@@ -47,7 +47,8 @@ TransactionScreen::TransactionScreen(sp<GameState> state, bool forceLimits)
 
 	// Assign event handlers
 	onScrollChange = [this](FormsEvent *) { this->updateFormValues(); };
-	onHover = [this](FormsEvent *e) {
+	onHover = [this](FormsEvent *e)
+	{
 		auto tctrl = std::dynamic_pointer_cast<TransactionControl>(e->forms().RaisedBy);
 		if (!tctrl)
 		{
@@ -750,9 +751,9 @@ sp<TransactionControl> TransactionScreen::findControlById(const UString &itemId)
 		auto it = transactionControls.find(type);
 		if (it != transactionControls.end())
 		{
-			auto it2 = std::find_if(
-			    it->second.begin(), it->second.end(),
-			    [itemId](const sp<TransactionControl> &c) { return c->itemId == itemId; });
+			auto it2 = std::find_if(it->second.begin(), it->second.end(),
+			                        [itemId](const sp<TransactionControl> &c)
+			                        { return c->itemId == itemId; });
 			if (it2 != it->second.end())
 			{
 				return *it2;

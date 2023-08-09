@@ -9,7 +9,7 @@
 #include <map>
 
 // TUBE DEBUG OUTPUT
-//#define TUBE_DEBUG_OUTPUT
+// #define TUBE_DEBUG_OUTPUT
 
 namespace OpenApoc
 {
