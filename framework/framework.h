@@ -111,11 +111,13 @@ class Framework
 		    std::bind(std::forward<F>(f), std::forward<Args>(args)...));
 
 		std::shared_future<return_type> res = task->get_future().share();
-		this->threadPoolTaskEnqueue([task, res]() {
-			(*task)();
-			// Without a future.get() any exceptions are dropped on the floor
-			res.get();
-		});
+		this->threadPoolTaskEnqueue(
+		    [task, res]()
+		    {
+			    (*task)();
+			    // Without a future.get() any exceptions are dropped on the floor
+			    res.get();
+		    });
 		return res;
 	}
 

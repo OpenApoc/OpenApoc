@@ -233,7 +233,8 @@ void writeSource(std::ofstream &out, const StateDefinition &state,
 
 	iterateDepthFirstByNames(
 	    state.enums.begin(), state.enums.end(), out, &SerializeEnum::name,
-	    [&out](auto &e) {
+	    [&out](auto &e)
+	    {
 		    for (auto &v : e.values)
 		    {
 			    out << "\tlua_pushinteger(L, static_cast<int>(" << e.name << "::" << v << "));\n"
@@ -321,12 +322,12 @@ int main(int argc, char **argv)
 	}
 
 	// sort the items by name so they are ordered like a DFS iteration in a trie
-	std::sort(
-	    state.enums.begin(), state.enums.end(),
-	    [](const SerializeEnum &lhs, const SerializeEnum &rhs) { return lhs.name < rhs.name; });
-	std::sort(
-	    state.objects.begin(), state.objects.end(),
-	    [](const SerializeObject &lhs, const SerializeObject &rhs) { return lhs.name < rhs.name; });
+	std::sort(state.enums.begin(), state.enums.end(),
+	          [](const SerializeEnum &lhs, const SerializeEnum &rhs)
+	          { return lhs.name < rhs.name; });
+	std::sort(state.objects.begin(), state.objects.end(),
+	          [](const SerializeObject &lhs, const SerializeObject &rhs)
+	          { return lhs.name < rhs.name; });
 
 	writeHeader(outputHeaderFile, state);
 	writeSource(outputSourceFile, state, outputHeaderPath);

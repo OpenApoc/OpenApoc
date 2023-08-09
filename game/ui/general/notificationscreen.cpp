@@ -22,11 +22,13 @@ NotificationScreen::NotificationScreen(sp<GameState> state, CityView &cityView,
 	menuform->findControlTyped<Label>("TEXT_NOTIFICATION")->setText(message);
 
 	menuform->findControl("BUTTON_PAUSE")
-	    ->addCallback(FormEventType::ButtonClick, [&cityView](Event *) {
-		    cityView.zoomLastEvent();
-		    cityView.setUpdateSpeed(CityUpdateSpeed::Pause);
-		    fw().stageQueueCommand({StageCmd::Command::POP});
-	    });
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [&cityView](Event *)
+	                  {
+		                  cityView.zoomLastEvent();
+		                  cityView.setUpdateSpeed(CityUpdateSpeed::Pause);
+		                  fw().stageQueueCommand({StageCmd::Command::POP});
+	                  });
 }
 
 NotificationScreen::NotificationScreen(sp<GameState> state, BattleView &battleView,
@@ -36,20 +38,22 @@ NotificationScreen::NotificationScreen(sp<GameState> state, BattleView &battleVi
 	menuform->findControlTyped<Label>("TEXT_NOTIFICATION")->setText(message);
 
 	menuform->findControl("BUTTON_PAUSE")
-	    ->addCallback(FormEventType::ButtonClick, [&battleView](Event *) {
-		    battleView.zoomLastEvent();
-		    battleView.setUpdateSpeed(BattleUpdateSpeed::Pause);
-		    fw().stageQueueCommand({StageCmd::Command::POP});
-	    });
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [&battleView](Event *)
+	                  {
+		                  battleView.zoomLastEvent();
+		                  battleView.setUpdateSpeed(BattleUpdateSpeed::Pause);
+		                  fw().stageQueueCommand({StageCmd::Command::POP});
+	                  });
 }
 
 NotificationScreen::~NotificationScreen() = default;
 
 void NotificationScreen::begin()
 {
-	menuform->findControl("BUTTON_RESUME")->addCallback(FormEventType::ButtonClick, [](Event *) {
-		fw().stageQueueCommand({StageCmd::Command::POP});
-	});
+	menuform->findControl("BUTTON_RESUME")
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [](Event *) { fw().stageQueueCommand({StageCmd::Command::POP}); });
 
 	menuform->findControlTyped<CheckBox>("CHECKBOX_ALWAYS_PAUSE")->setChecked(true);
 }

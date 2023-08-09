@@ -33,14 +33,16 @@ void DifficultyMenu::finish() {}
 
 std::shared_future<void> loadGame(sp<GameState> state)
 {
-	auto loadTask = fw().threadPoolEnqueue([state]() -> void {
-		state->loadMods();
-		state->startGame();
-		state->initState();
-		state->fillPlayerStartingProperty();
-		state->fillOrgStartingProperty();
-		return;
-	});
+	auto loadTask = fw().threadPoolEnqueue(
+	    [state]() -> void
+	    {
+		    state->loadMods();
+		    state->startGame();
+		    state->initState();
+		    state->fillPlayerStartingProperty();
+		    state->fillOrgStartingProperty();
+		    return;
+	    });
 
 	return loadTask;
 }

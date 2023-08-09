@@ -31,7 +31,8 @@ std::shared_future<void> loadBattleBuilding(sp<GameState> state, sp<Building> bu
                                             StateRef<Vehicle> playerVehicle)
 {
 	auto loadTask = fw().threadPoolEnqueue(
-	    [hotseat, building, state, raid, playerAgents, playerVehicle]() mutable -> void {
+	    [hotseat, building, state, raid, playerAgents, playerVehicle]() mutable -> void
+	    {
 		    StateRef<Organisation> org = raid ? building->owner : state->getAliens();
 		    StateRef<Building> bld = {state.get(), building};
 

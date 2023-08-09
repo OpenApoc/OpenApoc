@@ -143,9 +143,8 @@ void InfiltrationScreen::reset_shown_orgs()
 		orgs.push_back(org.second.get());
 	}
 
-	auto infiltration_comparer = [](const Organisation *org1, const Organisation *org2) {
-		return org1->infiltrationValue > org2->infiltrationValue;
-	};
+	auto infiltration_comparer = [](const Organisation *org1, const Organisation *org2)
+	{ return org1->infiltrationValue > org2->infiltrationValue; };
 	std::sort(orgs.begin(), orgs.end(), infiltration_comparer);
 
 	for (int i = 0; i < 10; i++)

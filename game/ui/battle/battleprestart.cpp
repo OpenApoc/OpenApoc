@@ -55,21 +55,26 @@ BattlePreStart::BattlePreStart(sp<GameState> state)
 {
 
 	menuform->findControlTyped<GraphicButton>("BUTTON_EQUIP")
-	    ->addCallback(FormEventType::ButtonClick, [state](Event *) {
-		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<AEquipScreen>(state)});
-	    });
+	    ->addCallback(
+	        FormEventType::ButtonClick,
+	        [state](Event *) {
+		        fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<AEquipScreen>(state)});
+	        });
 	formAgentStats = menuform->findControlTyped<Form>("AGENT_STATS_VIEW");
 	formAgentStats->setVisible(false);
 	menuform->findControlTyped<GraphicButton>("BUTTON_OK")
-	    ->addCallback(FormEventType::ButtonClick, [this, state](Event *) {
-		    auto gameState = this->state;
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this, state](Event *)
+	                  {
+		                  auto gameState = this->state;
 
-		    fw().stageQueueCommand({StageCmd::Command::PUSH,
-		                            mksp<LoadingScreen>(
-		                                gameState, enterBattle(gameState),
-		                                [gameState]() { return mksp<BattleView>(gameState); },
-		                                this->state->battle_common_image_list->loadingImage, 1)});
-	    });
+		                  fw().stageQueueCommand(
+		                      {StageCmd::Command::PUSH,
+		                       mksp<LoadingScreen>(
+		                           gameState, enterBattle(gameState),
+		                           [gameState]() { return mksp<BattleView>(gameState); },
+		                           this->state->battle_common_image_list->loadingImage, 1)});
+	                  });
 
 	for (int i = 12; i <= 18; i++)
 	{

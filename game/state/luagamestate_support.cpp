@@ -41,7 +41,8 @@ void pushToLua(lua_State *L, const UnitAI &v) { pushToLua(L, v.type); }
 template <> lua_CFunction getLuaObjectMethods<GameState>(const std::string &key)
 {
 	if (key == "loadGame")
-		return [](lua_State *L) {
+		return [](lua_State *L)
+		{
 			GameState **obj = (GameState **)lua_touserdata(L, 1);
 			UString path;
 			getFromLua(L, 2, path);
@@ -50,7 +51,8 @@ template <> lua_CFunction getLuaObjectMethods<GameState>(const std::string &key)
 			return 0;
 		};
 	else if (key == "appendGameState")
-		return [](lua_State *L) {
+		return [](lua_State *L)
+		{
 			GameState **obj = (GameState **)lua_touserdata(L, 1);
 			UString path;
 			getFromLua(L, 2, path);
@@ -64,7 +66,8 @@ template <> lua_CFunction getLuaObjectMethods<GameState>(const std::string &key)
 template <> lua_CFunction getLuaObjectMethods<Agent>(const std::string &key)
 {
 	if (key == "enterBuilding")
-		return [](lua_State *L) {
+		return [](lua_State *L)
+		{
 			Agent **obj = (Agent **)lua_touserdata(L, 1);
 			StateRef<Building> building;
 			getFromLua(L, 2, building);
@@ -79,7 +82,8 @@ template <> lua_CFunction getLuaObjectMethods<Agent>(const std::string &key)
 template <> lua_CFunction getLuaObjectMethods<City>(const std::string &key)
 {
 	if (key == "placeVehicle")
-		return [](lua_State *L) {
+		return [](lua_State *L)
+		{
 			City **obj = (City **)lua_touserdata(L, 1);
 			StateRef<VehicleType> vehicleType;
 			getFromLua(L, 2, vehicleType);
@@ -90,7 +94,8 @@ template <> lua_CFunction getLuaObjectMethods<City>(const std::string &key)
 			return 1;
 		};
 	else if (key == "placeVehicleInBuilding")
-		return [](lua_State *L) {
+		return [](lua_State *L)
+		{
 			City **obj = (City **)lua_touserdata(L, 1);
 			StateRef<VehicleType> vehicleType;
 			getFromLua(L, 2, vehicleType);
@@ -104,7 +109,8 @@ template <> lua_CFunction getLuaObjectMethods<City>(const std::string &key)
 			return 1;
 		};
 	else if (key == "placeVehicleAtPosition")
-		return [](lua_State *L) {
+		return [](lua_State *L)
+		{
 			City **obj = (City **)lua_touserdata(L, 1);
 			StateRef<VehicleType> vehicleType;
 			getFromLua(L, 2, vehicleType);
@@ -124,7 +130,8 @@ template <> lua_CFunction getLuaObjectMethods<City>(const std::string &key)
 template <> lua_CFunction getLuaObjectConstMethods<AgentGenerator>(const std::string &key)
 {
 	if (key == "createAgent")
-		return [](lua_State *L) {
+		return [](lua_State *L)
+		{
 			const AgentGenerator **obj = (const AgentGenerator **)lua_touserdata(L, 1);
 			StateRef<Organisation> organisation;
 			getFromLua(L, 2, organisation);
@@ -143,28 +150,32 @@ template <> lua_CFunction getLuaObjectConstMethods<AgentGenerator>(const std::st
 template <> lua_CFunction getLuaObjectConstMethods<GameTime>(const std::string &key)
 {
 	if (key == "getHours")
-		return [](lua_State *L) {
+		return [](lua_State *L)
+		{
 			const GameTime **obj = (const GameTime **)lua_touserdata(L, 1);
 			lua_settop(L, 0);
 			lua_pushinteger(L, (*obj)->getHours());
 			return 1;
 		};
 	else if (key == "getMinutes")
-		return [](lua_State *L) {
+		return [](lua_State *L)
+		{
 			const GameTime **obj = (const GameTime **)lua_touserdata(L, 1);
 			lua_settop(L, 0);
 			lua_pushinteger(L, (*obj)->getMinutes());
 			return 1;
 		};
 	else if (key == "getDay")
-		return [](lua_State *L) {
+		return [](lua_State *L)
+		{
 			const GameTime **obj = (const GameTime **)lua_touserdata(L, 1);
 			lua_settop(L, 0);
 			lua_pushinteger(L, (*obj)->getDay());
 			return 1;
 		};
 	else if (key == "getWeek")
-		return [](lua_State *L) {
+		return [](lua_State *L)
+		{
 			const GameTime **obj = (const GameTime **)lua_touserdata(L, 1);
 			lua_settop(L, 0);
 			lua_pushinteger(L, (*obj)->getWeek());
