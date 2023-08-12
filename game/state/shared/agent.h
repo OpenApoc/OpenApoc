@@ -85,6 +85,9 @@ class Agent : public StateObject<Agent>,
 	bool overEncumbred = false;
 	Rank rank = Rank::Rookie;
 	AgentStatus status = AgentStatus::Alive;
+	GameTime hiredOn;
+	unsigned int missionCount = 0;
+	unsigned int killCount = 0;
 
 	unsigned int teleportTicksAccumulated = 0;
 	bool canTeleport() const;
@@ -232,6 +235,13 @@ class Agent : public StateObject<Agent>,
 
 	sp<AEquipment> leftHandItem;  // Left hand item, frequently accessed so will be stored here
 	sp<AEquipment> rightHandItem; // Right hand item, frequently accessed so will be stored here
+
+	unsigned int getDaysInService(const GameState &state) const;
+	unsigned int getKills() const;
+	unsigned int getMissions() const;
+
+	void incrementMissionCount();
+	void incrementKillCount();
 
 	void destroy() override;
 };

@@ -62,6 +62,7 @@ class TransactionScreen : public BaseStage
 	sp<Form> formItemAgent;
 	sp<Form> formItemVehicle;
 	sp<Form> formAgentStats;
+	sp<Form> formAgentProfile;
 	sp<Form> formPersonnelStats;
 
 	sp<Label> textViewBaseStatic;

@@ -37,6 +37,7 @@ RecruitScreen::RecruitScreen(sp<GameState> state)
 	// Load resources
 	form = ui().getForm("recruitscreen");
 	formAgentStats = form->findControlTyped<Form>("AGENT_STATS_VIEW");
+	formAgentProfile = form->findControlTyped<Form>("AGENT_PROFILE_VIEW");
 	formPersonnelStats = form->findControlTyped<Form>("PERSONNEL_STATS_VIEW");
 	formAgentStats->setVisible(false);
 	formPersonnelStats->setVisible(false);
@@ -381,7 +382,7 @@ void RecruitScreen::displayAgentStats(const Agent &agent)
 	switch (agent.type->role)
 	{
 		case AgentType::Role::Soldier:
-			AgentSheet(formAgentStats).display(agent, bigUnitRanks, false);
+			AgentSheet(formAgentProfile, formAgentStats).display(agent, bigUnitRanks, false);
 			formAgentStats->setVisible(true);
 			formPersonnelStats->setVisible(false);
 			break;

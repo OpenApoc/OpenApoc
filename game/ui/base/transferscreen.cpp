@@ -226,7 +226,7 @@ void TransferScreen::displayItem(sp<TransactionControl> control)
 		}
 		case TransactionControl::Type::Soldier:
 		{
-			AgentSheet(formAgentStats)
+			AgentSheet(formAgentProfile, formAgentStats)
 			    .display(*state->agents[control->itemId], bigUnitRanks, false);
 			formAgentStats->setVisible(true);
 			break;
