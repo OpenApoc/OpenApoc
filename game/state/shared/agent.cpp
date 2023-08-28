@@ -1474,6 +1474,8 @@ unsigned int Agent::getKills() const { return killCount; }
 
 unsigned int Agent::getMissions() const { return missionCount; }
 
+unsigned int Agent::getMedalTier() const { return 0; }
+
 void Agent::incrementMissionCount() { missionCount++; }
 
 void Agent::incrementKillCount() { killCount++; }

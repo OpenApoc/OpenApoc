@@ -7,9 +7,8 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "framework/renderer.h"
-#include "game/state/gamestate.h"
 #include "game/state/rules/battle/damage.h"
-#include <sstream>
+#include "game/ui/general/agenthistorysheet.h"
 
 namespace OpenApoc
 {
@@ -33,19 +32,11 @@ AgentSheet::AgentSheet(sp<Form> profileForm, sp<Form> statsForm)
 {
 }
 
-AgentSheet::AgentSheet(sp<GameState> state, sp<Form> profileForm, sp<Form> statsForm,
-                       sp<Form> historyForm)
-    : profileForm(profileForm), statsForm(statsForm), historyForm(historyForm), state(state)
-{
-}
-
 void AgentSheet::display(const Agent &item, std::vector<sp<Image>> &ranks, bool turnBased)
 {
 	clear();
 	displayProfile(item, ranks);
-	displayStats(item, ranks, turnBased);
-	if (historyForm)
-		displayHistory(item);
+	displayStats(item, turnBased);
 }
 
 void AgentSheet::displayProfile(const Agent &item, std::vector<sp<Image>> &ranks)
@@ -57,28 +48,8 @@ void AgentSheet::displayProfile(const Agent &item, std::vector<sp<Image>> &ranks
 	    ->setImage(item.type->displayRank ? ranks[(int)item.rank] : nullptr);
 }
 
-void AgentSheet::displayHistory(const Agent &item)
+void AgentSheet::displayStats(const Agent &item, bool turnBased)
 {
-
-	historyForm->findControlTyped<Label>("LABEL_DAYS_IN_SERVICE")->setText(tr("Days In Service"));
-	std::stringstream daysInService;
-	daysInService << item.getDaysInService(*state);
-	historyForm->findControlTyped<Label>("VALUE_DAYS_IN_SERVICE")->setText(daysInService.str());
-
-	historyForm->findControlTyped<Label>("LABEL_MISSION_COUNT")->setText(tr("Missions"));
-	std::stringstream missionsCount;
-	missionsCount << item.getMissions();
-	historyForm->findControlTyped<Label>("VALUE_MISSION_COUNT")->setText(missionsCount.str());
-
-	historyForm->findControlTyped<Label>("LABEL_KILL_COUNT")->setText(tr("Kills"));
-	std::stringstream killCount;
-	killCount << item.getKills();
-	historyForm->findControlTyped<Label>("VALUE_KILL_COUNT")->setText(killCount.str());
-}
-
-void AgentSheet::displayStats(const Agent &item, std::vector<sp<Image>> &ranks, bool turnBased)
-{
-
 	statsForm->findControlTyped<Label>("LABEL_1")->setText(tr("Health"));
 	statsForm->findControlTyped<Graphic>("VALUE_1")->setImage(
 	    createStatsBar(item.initial_stats.health, item.current_stats.health,

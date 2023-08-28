@@ -48,6 +48,7 @@ set (GAMEUI_SOURCE_FILES
 	general/aequipscreen.cpp
 	general/aequipmentsheet.cpp
 	general/agentsheet.cpp
+	general/agenthistorysheet.cpp
 	general/difficultymenu.cpp
 	general/ingameoptions.cpp
 	general/moreoptions.cpp
@@ -120,6 +121,7 @@ set (GAMEUI_HEADER_FILES
 	general/aequipscreen.h
 	general/aequipmentsheet.h
 	general/agentsheet.h
+	general/agenthistorysheet.h
 	general/difficultymenu.h
 	general/ingameoptions.h
 	general/moreoptions.h

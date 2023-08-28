@@ -30,6 +30,7 @@
 #include "game/ui/components/controlgenerator.h"
 #include "game/ui/components/equipscreen.h"
 #include "game/ui/general/aequipmentsheet.h"
+#include "game/ui/general/agenthistorysheet.h"
 #include "game/ui/general/agentsheet.h"
 #include "game/ui/general/messagebox.h"
 
@@ -1952,8 +1953,8 @@ void AEquipScreen::displayAgent(sp<Agent> agent)
 {
 	formMain->findControlTyped<Graphic>("BACKGROUND")->setImage(agent->type->inventoryBackground);
 
-	AgentSheet(state, formAgentProfile, formAgentStats, formAgentHistory)
-	    .display(*agent, bigUnitRanks, isTurnBased());
+	AgentHistorySheet(formAgentHistory, state).display(*agent);
+	AgentSheet(formAgentProfile, formAgentStats).display(*agent, bigUnitRanks, isTurnBased());
 
 	auto shouldDisplayHistory =
 	    formMain->findControlTyped<CheckBox>("BUTTON_TOGGLE_STATS")->isChecked();
@@ -2052,9 +2053,9 @@ void AEquipScreen::updateAgentControl(sp<Agent> agent)
 	    FormEventType::MouseEnter,
 	    [this, agent](FormsEvent *e [[maybe_unused]])
 	    {
-		    AgentSheet(state, formAgentProfile, formAgentStats, formAgentHistory)
+		    AgentHistorySheet(formAgentHistory, state).display(*agent);
+		    AgentSheet(formAgentProfile, formAgentStats)
 		        .display(*agent, bigUnitRanks, isTurnBased());
-
 		    auto shouldDisplayHistory =
 		        formMain->findControlTyped<CheckBox>("BUTTON_TOGGLE_STATS")->isChecked();
 
@@ -2077,9 +2078,9 @@ void AEquipScreen::updateAgentControl(sp<Agent> agent)
 	    FormEventType::MouseLeave,
 	    [this](FormsEvent *e [[maybe_unused]])
 	    {
-		    AgentSheet(state, formAgentProfile, formAgentStats, formAgentHistory)
+		    AgentHistorySheet(formAgentHistory, state).display(*selectedAgents.front());
+		    AgentSheet(formAgentProfile, formAgentStats)
 		        .display(*selectedAgents.front(), bigUnitRanks, isTurnBased());
-
 		    auto shouldDisplayHistory =
 		        formMain->findControlTyped<CheckBox>("BUTTON_TOGGLE_STATS")->isChecked();
 
