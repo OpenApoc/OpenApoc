@@ -38,7 +38,6 @@ TransactionScreen::TransactionScreen(sp<GameState> state, bool forceLimits)
 	formItemAgent = form->findControlTyped<Form>("AGENT_ITEM_VIEW");
 	formItemVehicle = form->findControlTyped<Form>("VEHICLE_ITEM_VIEW");
 	formAgentStats = form->findControlTyped<Form>("AGENT_STATS_VIEW");
-	formAgentProfile = form->findControlTyped<Form>("AGENT_PROFILE_VIEW");
 	formPersonnelStats = form->findControlTyped<Form>("PERSONNEL_STATS_VIEW");
 
 	formItemAgent->setVisible(false);
