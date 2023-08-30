@@ -197,6 +197,9 @@
         <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:50:xcom3/ufodata/base.pcx</image>
       </graphic>
 
+      <subform id="AGENT_PROFILE_VIEW" src="sheet_agent_profile">
+        <position x="17" y="187"/>
+      </subform>
       <subform id="AGENT_STATS_VIEW" src="sheet_agent_stats">
         <position x="17" y="187"/>
       </subform>
