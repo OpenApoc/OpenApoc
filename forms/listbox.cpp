@@ -324,7 +324,7 @@ sp<Control> ListBox::removeItem(sp<Control> Item)
 	{
 		if (*i == Item)
 		{
-			Controls.erase(i);
+			Item->setRemoved();
 			resolveLocation();
 			Item->setParent(nullptr);
 			return Item;

@@ -222,6 +222,7 @@ void TransferScreen::displayItem(sp<TransactionControl> control)
 		{
 			RecruitScreen::personnelSheet(*state->agents[control->itemId], formPersonnelStats);
 			formPersonnelStats->setVisible(true);
+			formAgentProfile->setVisible(false);
 			break;
 		}
 		case TransactionControl::Type::Soldier:
@@ -229,6 +230,7 @@ void TransferScreen::displayItem(sp<TransactionControl> control)
 			AgentSheet(formAgentProfile, formAgentStats)
 			    .display(*state->agents[control->itemId], bigUnitRanks, false);
 			formAgentStats->setVisible(true);
+			formAgentProfile->setVisible(true);
 			break;
 		}
 		default:

@@ -5948,8 +5948,20 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool t
 	return !mission->cancelled;
 }
 
-void BattleUnit::activatedInSquad() { agent->incrementMissionCount(); }
+void BattleUnit::activatedInSquad()
+{
+	if (agent)
+	{
+		agent->incrementMissionCount();
+	}
+}
 
-void BattleUnit::recordKill() { agent->incrementKillCount(); }
+void BattleUnit::recordKill()
+{
+	if (agent)
+	{
+		agent->incrementKillCount();
+	}
+}
 
 } // namespace OpenApoc
