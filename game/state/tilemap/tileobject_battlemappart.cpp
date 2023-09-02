@@ -72,6 +72,10 @@ TileObject::Type TileObjectBattleMapPart::convertType(BattleMapPartType::Type ty
 
 void TileObjectBattleMapPart::setPosition(Vec3<float> newPosition)
 {
+	if (static_cast<int>(newPosition.z) != static_cast<int>(getPosition().z))
+	{
+		map.setViewSurfaceDirty(newPosition);
+	}
 	TileObject::setPosition(newPosition);
 
 	owningTile->updateBattlescapeParameters();
@@ -88,6 +92,7 @@ void TileObjectBattleMapPart::removeFromMap()
 
 	if (requireRecalc)
 	{
+		map.setViewSurfaceDirty(prevOwningTile->position);
 		prevOwningTile->updateBattlescapeParameters();
 		prevDrawOnTile->updateBattlescapeUIDrawOrder();
 	}
@@ -165,5 +170,6 @@ void TileObjectBattleMapPart::addToDrawnTiles(Tile *tile)
 		}
 	}
 	TileObject::addToDrawnTiles(tile);
+	map.setViewSurfaceDirty(tile->position);
 }
 } // namespace OpenApoc

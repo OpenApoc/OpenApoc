@@ -20,6 +20,7 @@
 #include "game/state/shared/agent.h"
 #include "game/state/shared/doodad.h"
 #include "game/state/shared/organisation.h"
+#include "game/state/shared/projectile.h"
 #include "game/state/tilemap/tileobject_scenery.h"
 #include "game/state/tilemap/tileobject_vehicle.h"
 
@@ -551,62 +552,89 @@ void CityTileView::render()
 			std::set<sp<Building>> buildingsSelected;
 			// Lines to draw between unit and destination, bool is whether target x is drawn
 			std::list<std::tuple<Vec3<float>, Vec3<float>, bool, bool>> targetLocationsToDraw;
+			Vec3<float> zeroPos{0, 0, 0};
+
+			// Offset of the cache areas
+			std::vector<Vec2<float>> beltOffset;
+			for (size_t belt = 0; belt < STRATEGY_VIEW_BELTS; belt++)
+			{
+				beltOffset.emplace_back(0.0f, belt * map.size.y / STRATEGY_VIEW_BELTS);
+			}
 
 			for (int z = 0; z < maxZDraw; z++)
 			{
-				for (unsigned int layer = 0; layer < map.getLayerCount(); layer++)
+				for (size_t belt = 0; belt < STRATEGY_VIEW_BELTS; belt++)
 				{
-					for (int y = minY; y < maxY; y++)
+				lets_try_again:
+
+					bool itsFakeSurface = map.getViewSurface(z, belt)->size.x < STRAT_TILE_X;
+					if (map.isViewSurfaceDirty(z, belt))
 					{
-						for (int x = minX; x < maxX; x++)
+						// draw an image to the cache
+						RendererSurfaceBinding b(r, map.getViewSurface(z, belt));
+						r.clear();
+
+						unsigned layer = map.getLayer(TileObject::Type::Scenery);
+
+						int yMin = belt * map.size.y / STRATEGY_VIEW_BELTS;
+						int yMax = (belt + 1) * map.size.y / STRATEGY_VIEW_BELTS;
+						for (int y = yMin; y < yMax; y++)
 						{
-							auto tile = map.getTile(x, y, z);
-							auto object_count = tile->drawnObjects[layer].size();
-							for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+							for (int x = 0; x < map.size.x; x++)
 							{
-								bool friendly = false;
-								bool hostile = false;
-								auto &obj = tile->drawnObjects[layer][obj_id];
-								Vec2<float> pos = tileToOffsetScreenCoords(obj->getCenter());
-
-								switch (obj->getType())
+								auto tile = map.getTile(x, y, z);
+								auto object_count = tile->drawnObjects[layer].size();
+								for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 								{
-									case TileObject::Type::Vehicle:
+									auto &obj = tile->drawnObjects[layer][obj_id];
+									if (obj->getType() == TileObject::Type::Scenery)
 									{
-										auto v = std::static_pointer_cast<TileObjectVehicle>(obj)
-										             ->getVehicle();
-										friendly = v->owner == state.getPlayer();
-										hostile = state.getPlayer()->isRelatedTo(v->owner) ==
-										          Organisation::Relation::Hostile;
-										bool selected =
-										    std::find(
-										        state.current_city->cityViewSelectedVehicles
-										            .begin(),
-										        state.current_city->cityViewSelectedVehicles.end(),
-										        v) !=
-										    state.current_city->cityViewSelectedVehicles.end();
-
-										if (friendly)
+										if (itsFakeSurface)
 										{
+											// looks like we need a real surface
+											map.setViewSurface(z, belt,
+											                   mksp<Surface>(Vec2<unsigned>{
+											                       map.size.x * STRAT_TILE_X,
+											                       map.size.y * STRAT_TILE_Y}));
+											goto lets_try_again;
 										}
-										vehiclesToDraw.emplace_back(
-										    v, friendly, hostile,
-										    selected
-										        ? (v->type->mapIconType ==
-										                   VehicleType::MapIconType::LargeCircle
-										               ? 2
-										               : 1)
-										        : 0);
-										// Do not draw vehicle yet
-										continue;
+										Vec2<float> pos =
+										    tileToScreenCoords(obj->getCenter(), this->viewMode) -
+										    beltOffset[belt];
+										obj->draw(r, *this, pos, this->viewMode, true, 0, false,
+										          false);
 									}
-									break;
-									default:
-										break;
 								}
+							}
+						}
+						map.setViewSurfaceDirty((size_t)z, belt, false);
+					}
+					if (!itsFakeSurface)
+					{
+						// get the image from the cache
+						r.draw(map.getViewSurface(z, belt),
+						       tileToOffsetScreenCoords(zeroPos) + beltOffset[belt]);
+					}
+				}
 
-								obj->draw(r, *this, pos, this->viewMode, true, 0, friendly,
-								          hostile);
+				// draw projectiles to the current level
+				auto &projectiles = state.current_city->projectiles;
+				for (auto &p : projectiles)
+				{
+					const auto &pos = p->getPosition();
+					if (static_cast<int>(pos.z) == z)
+					{
+						auto tile = map.getTile(pos);
+						unsigned int layer = map.getLayer(TileObject::Type::Projectile);
+						auto object_count = tile->drawnObjects[layer].size();
+						for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+						{
+							auto &obj = tile->drawnObjects[layer][obj_id];
+							if (obj->getType() == TileObject::Type::Projectile)
+							{
+								Vec2<float> pos =
+								    tileToOffsetScreenCoords(obj->getCenter(), this->viewMode);
+								obj->draw(r, *this, pos, this->viewMode, true, 0, false, false);
 							}
 						}
 					}
@@ -705,25 +733,32 @@ void CityTileView::render()
 			// Compile list of vehicle destinations and add to draw for those that are in buildings
 			for (auto &v : state.vehicles)
 			{
-				if (v.second->owner != state.getPlayer() || v.second->city != state.current_city)
+				if (v.second->city != state.current_city)
 				{
 					continue;
 				}
+				bool friendly = v.second->owner == state.getPlayer();
+				bool hostile = state.getPlayer()->isRelatedTo(v.second->owner) ==
+				               Organisation::Relation::Hostile;
 				bool selected =
 				    std::find(state.current_city->cityViewSelectedVehicles.begin(),
 				              state.current_city->cityViewSelectedVehicles.end(),
 				              v.second) != state.current_city->cityViewSelectedVehicles.end();
 
-				// Draw those in buildings
-				if (v.second->currentBuilding)
+				// Draw only frendly vehicles in buildings
+				if (!v.second->currentBuilding || friendly)
 				{
 					vehiclesToDraw.emplace_back(
-					    v.second, true, false,
+					    v.second, friendly, hostile,
 					    selected
 					        ? (v.second->type->mapIconType == VehicleType::MapIconType::LargeCircle
 					               ? 2
 					               : 1)
 					        : 0);
+				}
+				if (!friendly)
+				{
+					continue;
 				}
 
 				// Destinations
