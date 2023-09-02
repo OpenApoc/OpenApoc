@@ -72,6 +72,7 @@ class Control : public std::enable_shared_from_this<Control>
 
 	bool Visible;
 	bool isClickable;
+	bool Removed;
 
   public:
 	UString Name;
@@ -175,6 +176,7 @@ class Control : public std::enable_shared_from_this<Control>
 	virtual bool click();
 	// Setter for funcPreRender
 	void setFuncPreRender(std::function<void(sp<Control>)> func) { funcPreRender = func; }
+	void setRemoved() { Removed = true; }
 };
 
 }; // namespace OpenApoc
