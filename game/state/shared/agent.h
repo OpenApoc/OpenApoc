@@ -239,6 +239,7 @@ class Agent : public StateObject<Agent>,
 	unsigned int getDaysInService(const GameState &state) const;
 	unsigned int getKills() const;
 	unsigned int getMissions() const;
+	unsigned int getMedalTier() const;
 
 	void incrementMissionCount();
 	void incrementKillCount();
