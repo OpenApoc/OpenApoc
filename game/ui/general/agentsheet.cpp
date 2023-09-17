@@ -74,6 +74,13 @@ void AgentSheet::displayHistory(const Agent &item)
 	std::stringstream killCount;
 	killCount << item.getKills();
 	historyForm->findControlTyped<Label>("VALUE_KILL_COUNT")->setText(killCount.str());
+
+	for (unsigned int i = 5; i > item.getMedalTier(); i--)
+	{
+		auto formLabel = format("MEDAL_%d", i);
+		auto medalFormElement = historyForm->findControlTyped<Graphic>(formLabel);
+		medalFormElement->setVisible(false);
+	}
 }
 
 void AgentSheet::displayStats(const Agent &item, std::vector<sp<Image>> &ranks, bool turnBased)
