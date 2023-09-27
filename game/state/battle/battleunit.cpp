@@ -4675,7 +4675,10 @@ bool BattleUnit::useSpawner(GameState &state, const AEquipmentType &item)
 void BattleUnit::die(GameState &state, StateRef<BattleUnit> attacker, bool violently)
 {
 	auto attackerOrg = attacker ? attacker->agent->owner : nullptr;
-	attacker->recordKill();
+	if (attacker)
+	{
+		attacker->recordKill();
+	}
 	auto ourOrg = agent->owner;
 	bool destroy = false;
 	// Violent deaths (spawn stuff, blow up)
