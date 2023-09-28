@@ -28,6 +28,7 @@ before_build:
   - git checkout master
   - .\bootstrap-vcpkg.bat
   - vcpkg upgrade
+  - vcpkg integrate install
   - cd %APPVEYOR_BUILD_FOLDER%
   - where vcpkg
   - vcpkg install
