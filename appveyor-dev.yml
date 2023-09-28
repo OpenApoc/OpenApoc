@@ -28,6 +28,7 @@ before_build:
   - git checkout master
   - .\bootstrap-vcpkg.bat
   - cd %APPVEYOR_BUILD_FOLDER%
+  - where vcpkg
   - vcpkg install
   - git submodule update --init --recursive
   - curl http://s2.jonnyh.net/pub/cd_minimal.iso.xz -o temp\cd.iso.xz
