@@ -263,6 +263,9 @@
 		<member>teleportTicksAccumulated</member>
 		<member>equipment</member>
 		<member>destroyAfterBattle</member>
+		<member>hiredOn</member>
+		<member>killCount</member>
+		<member>missionCount</member>
 	</object>
 	<object>
 		<name>AgentPortrait</name>
