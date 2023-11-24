@@ -3513,6 +3513,10 @@ bool CityView::handleMouseDown(Event *e)
 					{
 						LogInfo("Cargo %sx%d", c.id, c.count);
 					}
+					if (debugHotkeyMode && (modifierLShift || modifierRShift))
+					{
+						vehicle->ticksToTurn += 1;
+					}
 					if (modifierLAlt && modifierLCtrl && modifierLShift)
 					{
 						if (buttonPressed == Event::MouseButton::Right)
