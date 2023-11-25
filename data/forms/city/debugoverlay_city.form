@@ -151,7 +151,13 @@
 			</label>
 			<label id="ShiftLeft" text="Shift+LeftClick = Fix Stuck Vehicle in CityScape">
 				<position x="left" y="336"/>
-				<size width="250" height="14"/>
+				<size width="350" height="14"/>
+				<alignment horizontal="left" vertical="top"/>
+				<font>smalfont</font>
+			</label>
+			<label id="P" text="P = Show Vehicle Targets">
+				<position x="left" y="350"/>
+				<size width="350" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
