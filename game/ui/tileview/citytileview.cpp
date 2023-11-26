@@ -126,6 +126,11 @@ void CityTileView::eventOccurred(Event *e)
 					DEBUG_SHOW_ALIEN = !DEBUG_SHOW_ALIEN;
 					return;
 				}
+				case SDLK_p:
+				{
+					DEBUG_SHOW_VEHICLE_TARGETS = !DEBUG_SHOW_VEHICLE_TARGETS;
+					return;
+				}
 				case SDLK_F2:
 				{
 					DEBUG_SHOW_ROAD_PATHFINDING = !DEBUG_SHOW_ROAD_PATHFINDING;

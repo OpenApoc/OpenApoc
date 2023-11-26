@@ -64,6 +64,7 @@ class CityTileView : public TileView
 	int DEBUG_DIRECTION = -1;
 	int DEBUG_LAYER = -1;
 	bool DEBUG_SHOW_ALIEN = false;
+	bool DEBUG_SHOW_VEHICLE_TARGETS = false;
 
   private:
 	GameState &state;
