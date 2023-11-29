@@ -17,31 +17,31 @@
         <font>bigfont</font>
       </label>
       <!-- List of contributors -->
-      <scroll id="LISTBOX_SCROLL">
-        <position x="553" y="82"/>
+      <scroll id="LISTBOX_SCROLL" scrollpercent = "5">
+        <position x="555" y="84"/>
         <size width="26" height="356"/>
       </scroll>
       <listbox id="LISTBOX_CREDITS" scrollbarid="LISTBOX_SCROLL">
-        <position x="centre" y="74"/>
-        <size width="510" height="375"/>
+        <position x="32" y="65"/>
+        <size width="510" height="392"/>
         <item size="16" spacing="4"/>
       </listbox>
       <graphicbutton id="LISTBOX_SCROLL_UP" scrollprev="LISTBOX_SCROLL">
         <tooltip text="Scroll Up" font="smallset"/>
-        <position x="555" y="58"/>
+        <position x="557" y="60"/>
         <size width="22" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton id="LISTBOX_SCROLL_DOWN" scrollnext="LISTBOX_SCROLL">
         <tooltip text="Scroll Down" font="smallset"/>
-        <position x="555" y="441"/>
+        <position x="557" y="443"/>
         <size width="22" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_OK">
-        <position x="602" y="443"/>
+        <position x="604" y="445"/>
         <size width="40" height="40"/>
         <image/>
         <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>

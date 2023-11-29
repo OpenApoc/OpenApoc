@@ -18,36 +18,77 @@ namespace OpenApoc
 {
 namespace
 {
-// If adding to these lists, don't remove the space at the end...
+// Contributor lists, if adding to these keep the blank entry at the end!
 std::list<UString> developerList = {
-    "__________", "pmprog", "redv",       "Andrey", "empty'void", "Flacko", "Flacko the 2nd",
-    "istrebitel", "JonnyH", "shellstorm", "skin36", "SupSuper",   "Warboy", "",
+    "pmprog",         "Andrey",     "redv",   "empty'void", "Flacko",
+    "Flacko the 2nd", "Istrebitel", "JonnyH", "shellstorm", "skin36",
+    "SupSuper",       "Warboy",     "",
 };
 std::list<UString> traineeList = {
-    "__________",
     "FilmBoy84",
     "Jari",
     "",
 };
 std::list<UString> programmerList = {
-    "__________", "Andy51",   "Atrosha",        "Bluddy", "clowds",  "Cristi Popa",
-    "Drosan",     "gnegno",   "Kurtsley",       "Leon",   "letwolf", "luiscamara",
-    "Stewart",    "TheSnide", "TreacherousOne", "Zigmar", "",
+    "Andy51",  "Atrosha",  "Bluddy",         "clowds",            /*"Cristi Popa",*/
+    "Drosan",  "gnegno",   "Kurtsley",       "Leon",   "letwolf", /*"luiscamara",*/
+    "Stewart", "TheSnide", "TreacherousOne", "Zigmar", "",
 };
 std::list<UString> testerList = {
-    "__________", "Filmboy84",       "Atrosha",   "Beorn",         "CidDaBird",
-    "empty'void", "Flacko the 2nd",  "Hyton",     "Jigoku-Panzer", "laurieblakesdr",
-    "MadHaTr",    "makus",           "Quickmind", "RoadhogsButt",  "Sergi4UA",
-    "TimboF5",    "Yataka Shimaoka", "",
+    "Filmboy84",
+    "Atrosha",
+    "Beorn",
+    "CidDaBird",
+    "empty'void",
+    "Flacko the 2nd",
+    "Hyton",
+    "Jigoku-Panzer",
+    "laurieblakesdr",
+    "MadHaTr",
+    "makus",
+    "Quickmind",
+    "RoadhogsButt",
+    "Sergi4UA",
+    "TimboF5",
+    /*"Yataka Shimaoka",*/ "",
 };
 std::list<UString> translatorList = {
-    "__________", "Filmboy84", "Confederate Ghost", "IFoldlyGo",       "Kammerer", "makus",
-    "PlayMann",   "PPeti66x",  "SAlex_UT",          "Sergi4UA",        "skin36",   "Slitchy",
-    "TaoQiBao",   "TimboF5",   "Xcom commander",    "Yataka Shimaoka", "",
+    "Filmboy84", "Confederate Ghost", "IFoldlyGo", "Kammerer",       "makus",
+    "PlayMann",  "PPeti66x",          "SAlex_UT",  "Sergi4UA",       "skin36",
+    "Slitchy",   "TaoQiBao",          "TimboF5",   "Xcom commander", /*"Yataka Shimaoka",*/ "",
 };
 std::list<UString> githubContribList = {
-    "__________",
-    "etc...",
+    "FranciscoDA",
+    "idshibanov",
+    "superusercode",
+    "kgd192",
+    "sfalexrog",
+    "ShadowDancer",
+    "Xracer",
+    /*"steveschnepp",*/
+    /*"stewartmatheson",*/
+    "RedRobin84",
+    "SiemensSchuckert",
+    "sparkstar",
+    "dl471",
+    "5thAvenue",
+    "killermosi",
+    "BabyWolf",
+    "AMDmi3",
+    "AndyCreator",
+    "BlackWolf-Kuzoku",
+    "andersand",
+    "Andy51",
+    "Hambones82",
+    /*"MartinCervenka",*/
+    "h3xx",
+    "ashenomo",
+    "kaja47",
+    "solbu",
+    "pkubaj",
+    "DoxaLogosGit",
+    "Sonicelo",
+    "SolariusScorch",
     "",
 };
 } // namespace
@@ -62,9 +103,14 @@ void CreditsMenu::loadlist()
 	contributorListControl->clear();
 	auto font = ui().getFont("smalfont");
 
+	// Need this because new line doesn't work at the beginning of a label
+	auto spacer = mksp<Label>("", font);
+	spacer->Size = {100, contributorListControl->ItemSize};
+	contributorListControl->addItem(spacer);
+
 	// Developers
-	auto devLabel = mksp<Label>("- Developers -", font);
-	devLabel->Size = {100, contributorListControl->ItemSize};
+	auto devLabel = mksp<Label>("- Developers -\n__________", font);
+	devLabel->Size = {100, contributorListControl->ItemSize * 2};
 	devLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(devLabel);
 
@@ -78,8 +124,8 @@ void CreditsMenu::loadlist()
 	}
 
 	// Trainee developers
-	auto trainLabel = mksp<Label>("- Trainee Developers -", font);
-	trainLabel->Size = {140, contributorListControl->ItemSize};
+	auto trainLabel = mksp<Label>("- Trainee Developers -\n__________", font);
+	trainLabel->Size = {140, contributorListControl->ItemSize * 2};
 	trainLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(trainLabel);
 
@@ -93,8 +139,8 @@ void CreditsMenu::loadlist()
 	}
 
 	// Programmers
-	auto progLabel = mksp<Label>("- Programmers -", font);
-	progLabel->Size = {140, contributorListControl->ItemSize};
+	auto progLabel = mksp<Label>("- Programmers -\n__________", font);
+	progLabel->Size = {140, contributorListControl->ItemSize * 2};
 	progLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(progLabel);
 
@@ -108,8 +154,8 @@ void CreditsMenu::loadlist()
 	}
 
 	// Testers
-	auto testLabel = mksp<Label>("- Testers -", font);
-	testLabel->Size = {140, contributorListControl->ItemSize};
+	auto testLabel = mksp<Label>("- Testers -\n__________", font);
+	testLabel->Size = {140, contributorListControl->ItemSize * 2};
 	testLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(testLabel);
 
@@ -123,8 +169,8 @@ void CreditsMenu::loadlist()
 	}
 
 	// Translators
-	auto translateLabel = mksp<Label>("- Translators -", font);
-	translateLabel->Size = {140, contributorListControl->ItemSize};
+	auto translateLabel = mksp<Label>("- Translators -\n__________", font);
+	translateLabel->Size = {140, contributorListControl->ItemSize * 2};
 	translateLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(translateLabel);
 
@@ -138,8 +184,8 @@ void CreditsMenu::loadlist()
 	}
 
 	// Github contributors if not already in list
-	auto githubLabel = mksp<Label>("- GitHub Contributors -", font);
-	githubLabel->Size = {140, contributorListControl->ItemSize};
+	auto githubLabel = mksp<Label>("- GitHub Contributors -\n__________", font);
+	githubLabel->Size = {140, contributorListControl->ItemSize * 2};
 	githubLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(githubLabel);
 
@@ -153,8 +199,9 @@ void CreditsMenu::loadlist()
 	}
 
 	// Memorial
-	auto memLabel = mksp<Label>("- In Memory of Atrosha -", font);
-	memLabel->Size = {140, contributorListControl->ItemSize};
+	auto memLabel =
+	    mksp<Label>("- In Memory of -\nPanasenko Vasiliy Sergeevich / 'Atrosha' 1980-2021\n", font);
+	memLabel->Size = {140, contributorListControl->ItemSize * 3};
 	memLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(memLabel);
 }
