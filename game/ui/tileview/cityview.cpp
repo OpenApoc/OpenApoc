@@ -1547,6 +1547,7 @@ CityView::CityView(sp<GameState> state)
 	        {
 		        this->state->current_city->cityViewOrgButtonIndex = 0;
 		        uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST")->scroller->setValue(0);
+		        this->update();
 	        });
 	this->uiTabs[7]
 	    ->findControl("BUTTON_SHOW_ALLIED")
@@ -1556,6 +1557,7 @@ CityView::CityView(sp<GameState> state)
 	        {
 		        this->state->current_city->cityViewOrgButtonIndex = 1;
 		        uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST")->scroller->setValue(0);
+		        this->update();
 	        });
 	this->uiTabs[7]
 	    ->findControl("BUTTON_SHOW_FRIENDLY")
@@ -1565,6 +1567,7 @@ CityView::CityView(sp<GameState> state)
 	        {
 		        this->state->current_city->cityViewOrgButtonIndex = 2;
 		        uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST")->scroller->setValue(0);
+		        this->update();
 	        });
 	this->uiTabs[7]
 	    ->findControl("BUTTON_SHOW_NEUTRAL")
@@ -1574,6 +1577,7 @@ CityView::CityView(sp<GameState> state)
 	        {
 		        this->state->current_city->cityViewOrgButtonIndex = 3;
 		        uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST")->scroller->setValue(0);
+		        this->update();
 	        });
 	this->uiTabs[7]
 	    ->findControl("BUTTON_SHOW_UNFRIENDLY")
@@ -1583,6 +1587,7 @@ CityView::CityView(sp<GameState> state)
 	        {
 		        this->state->current_city->cityViewOrgButtonIndex = 4;
 		        uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST")->scroller->setValue(0);
+		        this->update();
 	        });
 	this->uiTabs[7]
 	    ->findControl("BUTTON_SHOW_HOSTILE")
@@ -1592,6 +1597,7 @@ CityView::CityView(sp<GameState> state)
 	        {
 		        this->state->current_city->cityViewOrgButtonIndex = 5;
 		        uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST")->scroller->setValue(0);
+		        this->update();
 	        });
 	this->uiTabs[7]
 	    ->findControl("BUTTON_BRIBE")
