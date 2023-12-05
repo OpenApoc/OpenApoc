@@ -82,6 +82,7 @@ class CityView : public CityTileView
 	bool modifierRAlt = false;
 	bool modifierLCtrl = false;
 	bool modifierRCtrl = false;
+	bool modifierV = false;
 
 	bool vanillaControls = false;
 

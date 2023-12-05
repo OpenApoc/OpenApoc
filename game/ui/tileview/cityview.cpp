@@ -3164,6 +3164,9 @@ bool CityView::handleKeyDown(Event *e)
 		case SDLK_LCTRL:
 			modifierLCtrl = true;
 			return true;
+		case SDLK_v:
+			modifierV = true;
+			return true;
 		case SDLK_F1:
 			if (config().getBool("OpenApoc.NewFeature.DebugCommandsVisible"))
 			{
@@ -3379,6 +3382,9 @@ bool CityView::handleKeyUp(Event *e)
 		case SDLK_LCTRL:
 			modifierLCtrl = false;
 			return true;
+		case SDLK_v:
+			modifierV = false;
+			return true;
 	}
 	return false;
 }
@@ -3548,8 +3554,9 @@ bool CityView::handleMouseDown(Event *e)
 					{
 						LogInfo("Cargo %sx%d", c.id, c.count);
 					}
-					if (debugHotkeyMode && (modifierLShift || modifierRShift))
+					if (modifierV)
 					{
+						// Unfreeze vehicles (hopefully useless except old saves)
 						vehicle->ticksToTurn += 1;
 					}
 					if (modifierLAlt && modifierLCtrl && modifierLShift)
