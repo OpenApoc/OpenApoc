@@ -11,15 +11,15 @@
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="CtrlAltShiftLeft" text="Ctrl+Alt+Shift+LeftClick = Destroy Scenery">
+			<label id="CtrlAltShiftLeft" text="Ctrl+Alt+Shift+LeftClick = Destroy Scenery or Crash Vehicle">
 				<position x="left" y="14"/>
-				<size width="250" height="14"/>
+				<size width="450" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="CtrlAltShiftRight" text="Ctrl+Alt+Shift+RightClick = Collapse Building">
+			<label id="CtrlAltShiftRight" text="Ctrl+Alt+Shift+RightClick = Collapse Building or Destroy Vehicle">
 				<position x="left" y="28"/>
-				<size width="250" height="14"/>
+				<size width="450" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
@@ -137,27 +137,27 @@
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="Base" text="Base Screen - F10 = Finish All Facilities">
+			<label id="VClick" text="V+LeftClick = Fix Stuck Vehicle in CityScape (Deprecated)">
 				<position x="left" y="308"/>
-				<size width="250" height="14"/>
-				<alignment horizontal="left" vertical="top"/>
-				<font>smalfont</font>
-			</label>
-			<label id="Research" text="Research Screen - F10 = Complete Project at Next Update (With at least two Scientists Assigned)">
-				<position x="left" y="322"/>
-				<size width="640" height="14"/>
-				<alignment horizontal="left" vertical="top"/>
-				<font>smalfont</font>
-			</label>
-			<label id="ShiftLeft" text="Shift+LeftClick = Fix Stuck Vehicle in CityScape">
-				<position x="left" y="336"/>
 				<size width="350" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
 			<label id="P" text="P = Show Vehicle Targets">
-				<position x="left" y="350"/>
+				<position x="left" y="322"/>
 				<size width="350" height="14"/>
+				<alignment horizontal="left" vertical="top"/>
+				<font>smalfont</font>
+			</label>
+			<label id="Base" text="Base Screen - F10 = Finish All Facilities">
+				<position x="left" y="336"/>
+				<size width="250" height="14"/>
+				<alignment horizontal="left" vertical="top"/>
+				<font>smalfont</font>
+			</label>
+			<label id="Research" text="Research Screen - F10 = Complete Project at Next Update (With at least two Scientists Assigned)">
+				<position x="left" y="350"/>
+				<size width="640" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
