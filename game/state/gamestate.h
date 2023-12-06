@@ -107,6 +107,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<BattleMapPartType> battleMapTiles;
 
 	std::list<EventMessage> messages;
+	std::list<EventMessage> cityMessages;
 
 	int baseIndex = 1;
 	int difficulty = 0;
