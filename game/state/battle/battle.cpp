@@ -110,6 +110,7 @@ void Battle::initBattle(GameState &state, bool first)
 	common_image_list = state.battle_common_image_list;
 	common_sample_list = state.battle_common_sample_list;
 	loadResources(state);
+	saveMessages(state);
 	auto stt = shared_from_this();
 	for (auto &s : this->map_parts)
 	{
@@ -2957,6 +2958,8 @@ void Battle::exitBattle(GameState &state)
 		LogError("Battle::ExitBattle called with no battle!");
 		return;
 	}
+	// Load cityscape messages
+	state.current_battle->loadMessages(state);
 
 	// Fake battle, remove fake stuff, restore relationships
 	if (state.current_battle->skirmish)
@@ -3734,6 +3737,32 @@ void Battle::unloadAnimationPacks(GameState &state)
 {
 	state.battle_unit_animation_packs.clear();
 	LogInfo("Unloaded all animation packs.");
+}
+
+void Battle::saveMessages(GameState &state)
+{
+	if (!state.messages.empty())
+	{
+		state.cityMessages.clear();
+		for (auto &m : state.messages)
+		{
+			state.cityMessages.push_back(m);
+		}
+		state.messages.clear();
+	}
+}
+
+void Battle::loadMessages(GameState &state)
+{
+	state.messages.clear();
+	if (!state.cityMessages.empty())
+	{
+		for (auto &m : state.cityMessages)
+		{
+			state.messages.push_back(m);
+		}
+		state.cityMessages.clear();
+	}
 }
 
 int BattleScore::getLeadershipBonus()
