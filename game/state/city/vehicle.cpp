@@ -179,6 +179,13 @@ class FlyingVehicleMover : public VehicleMover
 				dodge = 100;
 				break;
 		}
+		// Don't dodge if running away
+		if (vehicle.attackMode == Vehicle::AttackMode::Defensive ||
+		    vehicle.attackMode == Vehicle::AttackMode::Evasive &&
+		        vehicle.missions.front().targetBuilding == vehicle.homeBuilding)
+		{
+			return;
+		}
 		if (vehicle.type->aggressiveness > 0 && randBoundsExclusive(state.rng, 0, 100) < dodge)
 		{
 			for (auto &p : state.current_city->projectiles)
