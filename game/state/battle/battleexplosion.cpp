@@ -83,6 +83,14 @@ void BattleExplosion::update(GameState &state, unsigned int ticks)
 void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos, int damage)
 {
 	auto tile = map.getTile(pos);
+	// Explosions with no hazard spawn smoke with half ttl
+	if (!damageType->hazardType)
+	{
+		StateRef<DamageType> dtSmoke = {&state, "DAMAGETYPE_SMOKE"};
+		state.current_battle->placeHazard(state, ownerOrganisation, ownerUnit, dtSmoke, pos,
+		                                  dtSmoke->hazardType->getLifetime(state), damage, 30,
+		                                  false);
+	}
 	// Explosions with no custom explosion doodad spawn hazards when dealing damage
 	if (damageType->hazardType && !damageType->explosionDoodad)
 	{
@@ -170,7 +178,7 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 }
 
 void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<int> &from,
-                             const Vec3<int> &to, float nextPower)
+                             const Vec3<int> &to, int nextPower)
 {
 	// list of coordinates to check
 	static const std::map<Vec3<int>, std::list<std::pair<Vec3<int>, std::set<TileObject::Type>>>>
@@ -272,7 +280,7 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 	}
 	// FIXME: Actually read this option
 	int distance = (1 + (dir.x != 0 ? 1 : 0) + (dir.y != 0 ? 1 : 0) + (dir.z != 0 ? 2 : 0));
-	nextPower -= (float)depletionRate * (float)distance / 1.5f;
+	nextPower -= depletionRate * distance / 1.5;
 
 	// If we reach the tile, and our type has no range dissipation, just apply power
 	int thisPower = nextPower - depletionThis;

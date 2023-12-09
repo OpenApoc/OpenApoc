@@ -28,7 +28,7 @@ namespace OpenApoc
 {
 
 // FIXME: Alexey Andronov: Does anyone know why we divide by 4 here?
-static const unsigned TICK_SCALE = TICKS_PER_SECOND / 10;
+static const unsigned TICK_SCALE = TICKS_PER_SECOND / 5;
 
 class Image;
 class TileMap;
