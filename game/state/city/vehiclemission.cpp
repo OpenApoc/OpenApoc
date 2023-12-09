@@ -1149,7 +1149,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 							// Bring angle to one of directional alignments
 							int angleToTargetInt = angleToTarget / (float)M_PI * 4.0f + 0.5f;
 							angleToTarget = (float)angleToTargetInt * (float)M_PI / 4.0f;
-							if (destFacing != angleToTarget)
+							if (destFacing != angleToTarget && v.ticksToTurn > 0)
 							{
 								LogWarning("Vehicle %s facing target", v.name);
 								destFacing = angleToTarget;
@@ -1239,7 +1239,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 								// Bring angle to one of directional alignments
 								int angleToTargetInt = angleToTarget / (float)M_PI * 4.0f + 0.5f;
 								angleToTarget = (float)angleToTargetInt * (float)M_PI / 4.0f;
-								if (destFacing != angleToTarget)
+								if (destFacing != angleToTarget && v.ticksToTurn > 0)
 								{
 									LogWarning("Vehicle %s facing target", v.name);
 									destFacing = angleToTarget;

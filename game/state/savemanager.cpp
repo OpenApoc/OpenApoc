@@ -45,15 +45,17 @@ std::shared_future<void> SaveManager::loadGame(const SaveMetadata &metadata,
 std::shared_future<void> SaveManager::loadGame(const UString &savePath, sp<GameState> state) const
 {
 	UString saveArchiveLocation = savePath;
-	auto loadTask = fw().threadPoolEnqueue([saveArchiveLocation, state]() -> void {
-		if (!state->loadGame(saveArchiveLocation))
-		{
-			LogError("Failed to load '%s'", saveArchiveLocation);
-			return;
-		}
-		state->initState();
-		return;
-	});
+	auto loadTask = fw().threadPoolEnqueue(
+	    [saveArchiveLocation, state]() -> void
+	    {
+		    if (!state->loadGame(saveArchiveLocation))
+		    {
+			    LogError("Failed to load '%s'", saveArchiveLocation);
+			    return;
+		    }
+		    state->initState();
+		    return;
+	    });
 
 	return loadTask;
 }
@@ -297,9 +299,9 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 		LogError("Error while enumerating directory: \"%s\"", er.what());
 	}
 
-	sort(saveList.begin(), saveList.end(), [](const SaveMetadata &lhs, const SaveMetadata &rhs) {
-		return lhs.getCreationDate() > rhs.getCreationDate();
-	});
+	sort(saveList.begin(), saveList.end(),
+	     [](const SaveMetadata &lhs, const SaveMetadata &rhs)
+	     { return lhs.getCreationDate() > rhs.getCreationDate(); });
 
 	return saveList;
 }

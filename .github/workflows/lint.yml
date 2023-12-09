@@ -35,7 +35,7 @@ jobs:
       run: sudo apt-get update
 
     - name: Install dependencies
-      run: sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-program-options-dev qtbase5-dev libvorbis-dev ninja-build clang-format-14 clang-tidy-14
+      run: sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-program-options-dev qtbase5-dev libvorbis-dev ninja-build clang-format-15 clang-tidy-15
 
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
@@ -45,7 +45,7 @@ jobs:
       # Note the current convention is to use the -S and -B options here to specify source 
       # and build directories, but this is only available with CMake 3.13 and higher.  
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -GNinja -DCLANG_FORMAT=clang-format-14 -DCLANG_TIDY=clang-tidy-14
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -GNinja -DCLANG_FORMAT=clang-format-15 -DCLANG_TIDY=clang-tidy-15
 
     - name: Setup Environment (PR)  
       if: ${{ github.event_name == 'pull_request' }}  
@@ -83,10 +83,10 @@ jobs:
         cd $GITHUB_WORKSPACE
         if [ "${{env.BEFORE_COMMIT_SHA}}" == "0000000000000000000000000000000000000000" ]
         then
-          echo 'CLANG_TIDY=clang-tidy-14 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{env.AFTER_COMMIT_SHA}} || true;'
-          CLANG_TIDY=clang-tidy-14 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{env.AFTER_COMMIT_SHA}} || true;
+          echo 'CLANG_TIDY=clang-tidy-15 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{env.AFTER_COMMIT_SHA}} || true;'
+          CLANG_TIDY=clang-tidy-15 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{env.AFTER_COMMIT_SHA}} || true;
         else
-          echo 'CLANG_TIDY=clang-tidy-14 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{env.BEFORE_COMMIT_SHA}}..${{env.AFTER_COMMIT_SHA}} || true;'
-          CLANG_TIDY=clang-tidy-14 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{env.BEFORE_COMMIT_SHA}}..${{env.AFTER_COMMIT_SHA}} || true;
+          echo 'CLANG_TIDY=clang-tidy-15 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{env.BEFORE_COMMIT_SHA}}..${{env.AFTER_COMMIT_SHA}} || true;'
+          CLANG_TIDY=clang-tidy-15 BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{env.BEFORE_COMMIT_SHA}}..${{env.AFTER_COMMIT_SHA}} || true;
         fi
         

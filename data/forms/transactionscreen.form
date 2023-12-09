@@ -312,6 +312,9 @@
       <subform id="PERSONNEL_STATS_VIEW" src="sheet_personnel_stats">
         <position x="17" y="183"/>
       </subform>
+      <subform id="AGENT_PROFILE_VIEW" src="sheet_agent_profile">
+        <position x="17" y="183"/>
+      </subform>
 
       <graphicbutton id="BUTTON_OK">
         <position x="602" y="443"/>

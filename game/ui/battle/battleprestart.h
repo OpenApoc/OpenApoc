@@ -41,6 +41,7 @@ class BattlePreStart : public Stage
 
 	sp<Form> menuform;
 	sp<Form> formAgentStats;
+	sp<Form> formAgentProfile;
 
 	sp<GameState> state;
 

@@ -56,7 +56,6 @@ void UfopaediaCategoryView::begin()
 	auto infoLabel = menuform->findControlTyped<Label>("TEXT_INFO");
 	auto entryList = menuform->findControlTyped<ListBox>("LISTBOX_SHORTCUTS");
 	entryList->clear();
-	entryList->ItemSize = infoLabel->getFont()->getFontHeight() + 2;
 	for (auto &pair : this->category->entries)
 	{
 		auto entry = pair.second;
@@ -71,6 +70,7 @@ void UfopaediaCategoryView::begin()
 		entryControl->RenderStyle = TextButton::ButtonRenderStyle::Flat;
 		entryControl->TextHAlign = HorizontalAlignment::Left;
 		entryControl->TextVAlign = VerticalAlignment::Centre;
+		entryControl->Size.y = infoLabel->getFont()->getFontHeight() + 2;
 		entryControl->setData(entry);
 		entryList->addItem(entryControl);
 	}

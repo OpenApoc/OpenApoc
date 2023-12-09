@@ -19,10 +19,13 @@ BattleDebriefing::BattleDebriefing(sp<GameState> state)
     : Stage(), menuform(ui().getForm("battle/debriefing")), state(state)
 {
 	menuform->findControlTyped<GraphicButton>("BUTTON_OK")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    Battle::exitBattle(*this->state);
-		    fw().stageQueueCommand({StageCmd::Command::REPLACEALL, mksp<CityView>(this->state)});
-	    });
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this](Event *)
+	                  {
+		                  Battle::exitBattle(*this->state);
+		                  fw().stageQueueCommand(
+		                      {StageCmd::Command::REPLACEALL, mksp<CityView>(this->state)});
+	                  });
 
 	menuform->findControlTyped<Label>("TEXT_SCORE_COMBAT_RATING")
 	    ->setText(format("%d", state->current_battle->score.combatRating));

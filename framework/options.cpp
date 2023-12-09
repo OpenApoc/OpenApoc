@@ -448,7 +448,7 @@ ConfigOptionBool optionCrashingVehicles("OpenApoc.Mod", "CrashingVehicles",
 
 ConfigOptionString optionScriptsList("OpenApoc.Mod", "ScriptsList",
                                      "Semicolon-separated list of scripts to load",
-                                     "data/scripts/openapoc_base.lua;");
+                                     "scripts/openapoc_base.lua;");
 
 ConfigOptionBool optionInfiniteAmmoCheat("OpenApoc.Cheat", "InfiniteAmmo",
                                          "Infinite ammo for X-Com agents and vehicles", false);

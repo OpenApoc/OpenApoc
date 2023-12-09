@@ -1806,8 +1806,8 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 
 				// Teleport unit
 				// Remove all other missions
-				u.missions.remove_if(
-				    [this](const up<BattleUnitMission> &mission) { return mission.get() != this; });
+				u.missions.remove_if([this](const up<BattleUnitMission> &mission)
+				                     { return mission.get() != this; });
 				u.stopAttacking();
 				u.setPosition(state, t->getRestingPosition(u.isLarge()), true);
 				u.resetGoal();

@@ -66,132 +66,141 @@ void ResearchSelect::begin()
 
 	auto research_list = form->findControlTyped<ListBox>("LIST");
 
-	research_list->addCallback(FormEventType::ListBoxChangeSelected, [this](FormsEvent *e) {
-		LogInfo("Research selection change");
-		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
-		auto topic = list->getSelectedData<ResearchTopic>();
-		if (topic->current_lab)
-		{
-			LogInfo("Topic already in progress");
-		}
-		else
-		{
-			if (topic->isComplete())
-			{
-				LogInfo("Topic already complete");
-				auto message_box = mksp<MessageBox>(tr("PROJECT COMPLETE"),
-				                                    tr("This project is already complete."),
-				                                    MessageBox::ButtonOptions::Ok);
-				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
-				// Restore previous selection
-				list->setSelected(current_topic ? control_map[current_topic] : nullptr);
-				return;
-			}
-			if (topic->required_lab_size == ResearchTopic::LabSize::Large &&
-			    this->lab->size == ResearchTopic::LabSize::Small)
-			{
-				LogInfo("Topic is large and lab is small");
-				auto message_box =
-				    mksp<MessageBox>(tr("PROJECT TOO LARGE"),
-				                     tr("This project requires an advanced lab or workshop."),
-				                     MessageBox::ButtonOptions::Ok);
-				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
-				// Restore previous selection
-				list->setSelected(current_topic ? control_map[current_topic] : nullptr);
-				return;
-			}
-			if (this->lab->type == ResearchTopic::Type::Engineering &&
-			    topic->cost > state->player->balance)
-			{
-				LogInfo("Cannot afford to manufacture");
-				auto message_box = mksp<MessageBox>(
-				    tr("FUNDS EXCEEDED"), tr("Production costs exceed your available funds."),
-				    MessageBox::ButtonOptions::Ok);
-				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
-				// Restore previous selection
-				list->setSelected(current_topic ? control_map[current_topic] : nullptr);
-				return;
-			}
-		}
-		if (current_topic && topic != current_topic)
-		{
-			control_map[current_topic]->setDirty();
-		}
-		current_topic = topic;
-		this->redrawResearchList();
-	});
+	research_list->addCallback(
+	    FormEventType::ListBoxChangeSelected,
+	    [this](FormsEvent *e)
+	    {
+		    LogInfo("Research selection change");
+		    auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
+		    auto topic = list->getSelectedData<ResearchTopic>();
+		    if (topic->current_lab)
+		    {
+			    LogInfo("Topic already in progress");
+		    }
+		    else
+		    {
+			    if (topic->isComplete())
+			    {
+				    LogInfo("Topic already complete");
+				    auto message_box = mksp<MessageBox>(tr("PROJECT COMPLETE"),
+				                                        tr("This project is already complete."),
+				                                        MessageBox::ButtonOptions::Ok);
+				    fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+				    // Restore previous selection
+				    list->setSelected(current_topic ? control_map[current_topic] : nullptr);
+				    return;
+			    }
+			    if (topic->required_lab_size == ResearchTopic::LabSize::Large &&
+			        this->lab->size == ResearchTopic::LabSize::Small)
+			    {
+				    LogInfo("Topic is large and lab is small");
+				    auto message_box =
+				        mksp<MessageBox>(tr("PROJECT TOO LARGE"),
+				                         tr("This project requires an advanced lab or workshop."),
+				                         MessageBox::ButtonOptions::Ok);
+				    fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+				    // Restore previous selection
+				    list->setSelected(current_topic ? control_map[current_topic] : nullptr);
+				    return;
+			    }
+			    if (this->lab->type == ResearchTopic::Type::Engineering &&
+			        topic->cost > state->player->balance)
+			    {
+				    LogInfo("Cannot afford to manufacture");
+				    auto message_box = mksp<MessageBox>(
+				        tr("FUNDS EXCEEDED"), tr("Production costs exceed your available funds."),
+				        MessageBox::ButtonOptions::Ok);
+				    fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+				    // Restore previous selection
+				    list->setSelected(current_topic ? control_map[current_topic] : nullptr);
+				    return;
+			    }
+		    }
+		    if (current_topic && topic != current_topic)
+		    {
+			    control_map[current_topic]->setDirty();
+		    }
+		    current_topic = topic;
+		    this->redrawResearchList();
+	    });
 
-	research_list->addCallback(FormEventType::ListBoxChangeHover, [this](FormsEvent *e) {
-		LogInfo("Research display on hover change");
-		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
-		auto topic = list->getHoveredData<ResearchTopic>();
-		auto title = this->form->findControlTyped<Label>("TEXT_SELECTED_TITLE");
-		auto description = this->form->findControlTyped<Label>("TEXT_SELECTED_DESCRIPTION");
-		auto pic = this->form->findControlTyped<Graphic>("GRAPHIC_SELECTED");
-		if (topic)
-		{
-			title->setText(tr(topic->name));
-			description->setText(tr(topic->description));
-			if (topic->picture)
-			{
-				pic->setImage(topic->picture);
-			}
-			else
-			{
-				if (topic->type == ResearchTopic::Type::Engineering)
-				{
-					switch (topic->item_type)
-					{
-						case ResearchTopic::ItemType::VehicleEquipment:
-							pic->setImage(
-							    this->state->vehicle_equipment[topic->itemId]->equipscreen_sprite);
-							break;
-						case ResearchTopic::ItemType::VehicleEquipmentAmmo:
-							pic->setImage(nullptr);
-							break;
-						case ResearchTopic::ItemType::AgentEquipment:
-							pic->setImage(
-							    this->state->agent_equipment[topic->itemId]->equipscreen_sprite);
-							break;
-						case ResearchTopic::ItemType::Craft:
-							pic->setImage(
-							    this->state->vehicle_types[topic->itemId]->equip_icon_small);
-							break;
-					}
-				}
-				else
-				{
-					if (!topic->dependencies.items.agentItemsRequired.empty())
-					{
-						pic->setImage(topic->dependencies.items.agentItemsRequired.begin()
-						                  ->first->equipscreen_sprite);
-					}
-					else if (!topic->dependencies.items.vehicleItemsRequired.empty())
-					{
-						pic->setImage(topic->dependencies.items.vehicleItemsRequired.begin()
-						                  ->first->equipscreen_sprite);
-					}
-					else
-					{
-						pic->setImage(nullptr);
-					}
-				}
-			}
-		}
-		else
-		{
-			title->setText("");
-			description->setText("");
-			pic->setImage(nullptr);
-		}
-		this->redrawResearchList();
-	});
+	research_list->addCallback(
+	    FormEventType::ListBoxChangeHover,
+	    [this](FormsEvent *e)
+	    {
+		    LogInfo("Research display on hover change");
+		    auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
+		    auto topic = list->getHoveredData<ResearchTopic>();
+		    auto title = this->form->findControlTyped<Label>("TEXT_SELECTED_TITLE");
+		    auto description = this->form->findControlTyped<Label>("TEXT_SELECTED_DESCRIPTION");
+		    auto pic = this->form->findControlTyped<Graphic>("GRAPHIC_SELECTED");
+		    if (topic)
+		    {
+			    title->setText(tr(topic->name));
+			    description->setText(tr(topic->description));
+			    if (topic->picture)
+			    {
+				    pic->setImage(topic->picture);
+			    }
+			    else
+			    {
+				    if (topic->type == ResearchTopic::Type::Engineering)
+				    {
+					    switch (topic->item_type)
+					    {
+						    case ResearchTopic::ItemType::VehicleEquipment:
+							    pic->setImage(this->state->vehicle_equipment[topic->itemId]
+							                      ->equipscreen_sprite);
+							    break;
+						    case ResearchTopic::ItemType::VehicleEquipmentAmmo:
+							    pic->setImage(nullptr);
+							    break;
+						    case ResearchTopic::ItemType::AgentEquipment:
+							    pic->setImage(this->state->agent_equipment[topic->itemId]
+							                      ->equipscreen_sprite);
+							    break;
+						    case ResearchTopic::ItemType::Craft:
+							    pic->setImage(
+							        this->state->vehicle_types[topic->itemId]->equip_icon_small);
+							    break;
+					    }
+				    }
+				    else
+				    {
+					    if (!topic->dependencies.items.agentItemsRequired.empty())
+					    {
+						    pic->setImage(topic->dependencies.items.agentItemsRequired.begin()
+						                      ->first->equipscreen_sprite);
+					    }
+					    else if (!topic->dependencies.items.vehicleItemsRequired.empty())
+					    {
+						    pic->setImage(topic->dependencies.items.vehicleItemsRequired.begin()
+						                      ->first->equipscreen_sprite);
+					    }
+					    else
+					    {
+						    pic->setImage(nullptr);
+					    }
+				    }
+			    }
+		    }
+		    else
+		    {
+			    title->setText("");
+			    description->setText("");
+			    pic->setImage(nullptr);
+		    }
+		    this->redrawResearchList();
+	    });
 
 	auto ok_button = form->findControlTyped<GraphicButton>("BUTTON_OK");
-	ok_button->addCallback(FormEventType::ButtonClick, [this](FormsEvent *) {
-		LogInfo("Research selection OK pressed, applying selection");
-		Lab::setResearch({state.get(), this->lab}, {state.get(), current_topic}, state);
-	});
+	ok_button->addCallback(
+	    FormEventType::ButtonClick,
+	    [this](FormsEvent *)
+	    {
+		    LogInfo("Research selection OK pressed, applying selection");
+		    Lab::setResearch({state.get(), this->lab}, {state.get(), current_topic}, state);
+	    });
 }
 
 void ResearchSelect::redrawResearchList()

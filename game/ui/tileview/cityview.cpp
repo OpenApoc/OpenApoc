@@ -1547,6 +1547,7 @@ CityView::CityView(sp<GameState> state)
 	        {
 		        this->state->current_city->cityViewOrgButtonIndex = 0;
 		        uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST")->scroller->setValue(0);
+		        this->update();
 	        });
 	this->uiTabs[7]
 	    ->findControl("BUTTON_SHOW_ALLIED")
@@ -1556,6 +1557,7 @@ CityView::CityView(sp<GameState> state)
 	        {
 		        this->state->current_city->cityViewOrgButtonIndex = 1;
 		        uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST")->scroller->setValue(0);
+		        this->update();
 	        });
 	this->uiTabs[7]
 	    ->findControl("BUTTON_SHOW_FRIENDLY")
@@ -1565,6 +1567,7 @@ CityView::CityView(sp<GameState> state)
 	        {
 		        this->state->current_city->cityViewOrgButtonIndex = 2;
 		        uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST")->scroller->setValue(0);
+		        this->update();
 	        });
 	this->uiTabs[7]
 	    ->findControl("BUTTON_SHOW_NEUTRAL")
@@ -1574,6 +1577,7 @@ CityView::CityView(sp<GameState> state)
 	        {
 		        this->state->current_city->cityViewOrgButtonIndex = 3;
 		        uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST")->scroller->setValue(0);
+		        this->update();
 	        });
 	this->uiTabs[7]
 	    ->findControl("BUTTON_SHOW_UNFRIENDLY")
@@ -1583,6 +1587,7 @@ CityView::CityView(sp<GameState> state)
 	        {
 		        this->state->current_city->cityViewOrgButtonIndex = 4;
 		        uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST")->scroller->setValue(0);
+		        this->update();
 	        });
 	this->uiTabs[7]
 	    ->findControl("BUTTON_SHOW_HOSTILE")
@@ -1592,6 +1597,7 @@ CityView::CityView(sp<GameState> state)
 	        {
 		        this->state->current_city->cityViewOrgButtonIndex = 5;
 		        uiTabs[7]->findControlTyped<ListBox>("ORGANISATION_LIST")->scroller->setValue(0);
+		        this->update();
 	        });
 	this->uiTabs[7]
 	    ->findControl("BUTTON_BRIBE")
@@ -1727,35 +1733,64 @@ void CityView::render()
 		RendererSurfaceBinding b(*fw().renderer, this->surface);
 
 		CityTileView::render();
-		if (DEBUG_SHOW_VEHICLE_PATH)
+		if (DEBUG_SHOW_VEHICLE_PATH || DEBUG_SHOW_VEHICLE_TARGETS)
 		{
 			static const Colour groundColor = {255, 255, 64, 255};
 			static const Colour flyingColor = {64, 255, 255, 255};
+			static const Colour targetXCOMColor = {0, 255, 0, 255};
+			static const Colour targetOtherColor = {255, 0, 0, 255};
+			static const Colour targetMutualColor = {255, 240, 0, 255};
 			for (auto &pair : state->vehicles)
 			{
 				auto v = pair.second;
-				if (v->city != state->current_city)
-					continue;
-				auto vTile = v->tileObject;
-				if (!vTile)
-					continue;
-				if (v->missions.empty())
+				if (DEBUG_SHOW_VEHICLE_PATH)
 				{
-					continue;
+					auto vTile = v->tileObject;
+					if (v->city != state->current_city)
+						continue;
+					if (!vTile)
+						continue;
+					if (v->missions.empty())
+					{
+						continue;
+					}
+					auto &path = v->missions.front().currentPlannedPath;
+					Vec3<float> prevPos = vTile->getPosition();
+					for (auto &pos : path)
+					{
+						Vec3<float> posf = pos;
+						posf += Vec3<float>{0.5f, 0.5f, 0.5f};
+						Vec2<float> screenPosA = this->tileToOffsetScreenCoords(prevPos);
+						Vec2<float> screenPosB = this->tileToOffsetScreenCoords(posf);
+
+						fw().renderer->drawLine(screenPosA, screenPosB,
+						                        v->type->isGround() ? groundColor : flyingColor);
+
+						prevPos = posf;
+					}
 				}
-				auto &path = v->missions.front().currentPlannedPath;
-				Vec3<float> prevPos = vTile->getPosition();
-				for (auto &pos : path)
+				if (DEBUG_SHOW_VEHICLE_TARGETS)
 				{
-					Vec3<float> posf = pos;
-					posf += Vec3<float>{0.5f, 0.5f, 0.5f};
-					Vec2<float> screenPosA = this->tileToOffsetScreenCoords(prevPos);
-					Vec2<float> screenPosB = this->tileToOffsetScreenCoords(posf);
+					if (v->city != state->current_city)
+						continue;
+					if (v->missions.empty())
+					{
+						continue;
+					}
+					StateRef<Vehicle> targetVehicle = v->missions.front().targetVehicle;
+					if (targetVehicle)
+					{
+						auto &targetPos = targetVehicle->position;
+						auto &attackerPos = v->position;
+						Vec2<float> targetScreenPos = this->tileToOffsetScreenCoords(targetPos);
+						Vec2<float> attackerScreenPos = this->tileToOffsetScreenCoords(attackerPos);
 
-					fw().renderer->drawLine(screenPosA, screenPosB,
-					                        v->type->isGround() ? groundColor : flyingColor);
-
-					prevPos = posf;
+						fw().renderer->drawLine(
+						    attackerScreenPos, targetScreenPos,
+						    targetVehicle->missions.front().targetVehicle == v ? targetMutualColor
+						    : v->owner == state->getPlayer()                   ? targetXCOMColor
+						                                                       : targetOtherColor);
+					}
 				}
 			}
 		}
@@ -1921,6 +1956,17 @@ void CityView::update()
 				switchDimension = false;
 				break;
 			}
+			// Don't switch if UFOs crashing
+			if (v.second->owner == state->getAliens() && v.second->falling)
+			{
+				switchDimension = false;
+				break;
+			}
+		}
+		// Don't switch if any projectiles exist
+		if (!state->current_city->projectiles.empty())
+		{
+			switchDimension = false;
 		}
 	}
 	if (DEBUG_SHOW_ALIEN ? state->current_city.id != "CITYMAP_ALIEN" : switchDimension)
@@ -3118,6 +3164,9 @@ bool CityView::handleKeyDown(Event *e)
 		case SDLK_LCTRL:
 			modifierLCtrl = true;
 			return true;
+		case SDLK_v:
+			modifierV = true;
+			return true;
 		case SDLK_F1:
 			if (config().getBool("OpenApoc.NewFeature.DebugCommandsVisible"))
 			{
@@ -3333,6 +3382,9 @@ bool CityView::handleKeyUp(Event *e)
 		case SDLK_LCTRL:
 			modifierLCtrl = false;
 			return true;
+		case SDLK_v:
+			modifierV = false;
+			return true;
 	}
 	return false;
 }
@@ -3501,6 +3553,11 @@ bool CityView::handleMouseDown(Event *e)
 					for (auto &c : vehicle->cargo)
 					{
 						LogInfo("Cargo %sx%d", c.id, c.count);
+					}
+					if (modifierV)
+					{
+						// Unfreeze vehicles (hopefully useless except old saves)
+						vehicle->ticksToTurn += 1;
 					}
 					if (modifierLAlt && modifierLCtrl && modifierLShift)
 					{

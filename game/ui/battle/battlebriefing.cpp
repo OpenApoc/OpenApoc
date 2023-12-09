@@ -138,18 +138,22 @@ BattleBriefing::BattleBriefing(sp<GameState> state,
 	menuform->findControlTyped<GraphicButton>("BUTTON_TURN_BASED")->setVisible(false);
 
 	menuform->findControlTyped<GraphicButton>("BUTTON_REAL_TIME")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->state->current_battle->setMode(Battle::Mode::RealTime);
-		    fw().stageQueueCommand(
-		        {StageCmd::Command::REPLACEALL, mksp<BattlePreStart>(this->state)});
-	    });
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this](Event *)
+	                  {
+		                  this->state->current_battle->setMode(Battle::Mode::RealTime);
+		                  fw().stageQueueCommand(
+		                      {StageCmd::Command::REPLACEALL, mksp<BattlePreStart>(this->state)});
+	                  });
 
 	menuform->findControlTyped<GraphicButton>("BUTTON_TURN_BASED")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->state->current_battle->setMode(Battle::Mode::TurnBased);
-		    fw().stageQueueCommand(
-		        {StageCmd::Command::REPLACEALL, mksp<BattlePreStart>(this->state)});
-	    });
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this](Event *)
+	                  {
+		                  this->state->current_battle->setMode(Battle::Mode::TurnBased);
+		                  fw().stageQueueCommand(
+		                      {StageCmd::Command::REPLACEALL, mksp<BattlePreStart>(this->state)});
+	                  });
 }
 
 void BattleBriefing::begin() {}

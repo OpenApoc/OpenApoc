@@ -37,8 +37,10 @@ RecruitScreen::RecruitScreen(sp<GameState> state)
 	// Load resources
 	form = ui().getForm("recruitscreen");
 	formAgentStats = form->findControlTyped<Form>("AGENT_STATS_VIEW");
+	formAgentProfile = form->findControlTyped<Form>("AGENT_PROFILE_VIEW");
 	formPersonnelStats = form->findControlTyped<Form>("PERSONNEL_STATS_VIEW");
 	formAgentStats->setVisible(false);
+	formAgentProfile->setVisible(false);
 	formPersonnelStats->setVisible(false);
 
 	// Assign event handlers
@@ -119,6 +121,7 @@ RecruitScreen::RecruitScreen(sp<GameState> state)
 				    {
 					    listRight->removeItem(agentControl);
 					    listLeft->addItem(agentControl);
+
 					    agentLists[rightIndex].erase(std::find(agentLists[rightIndex].begin(),
 					                                           agentLists[rightIndex].end(),
 					                                           agentControl));
@@ -182,6 +185,7 @@ void RecruitScreen::changeBase(sp<Base> newBase)
 	textViewBaseStatic->setText(state->current_base->name);
 
 	formAgentStats->setVisible(false);
+	formAgentProfile->setVisible(false);
 	formPersonnelStats->setVisible(false);
 
 	// Apply display type and base highlight
@@ -193,6 +197,7 @@ void RecruitScreen::setDisplayType(const AgentType::Role role)
 	if (this->type != role)
 	{
 		formAgentStats->setVisible(false);
+		formAgentProfile->setVisible(false);
 		formPersonnelStats->setVisible(false);
 		this->type = role;
 	}
@@ -381,13 +386,15 @@ void RecruitScreen::displayAgentStats(const Agent &agent)
 	switch (agent.type->role)
 	{
 		case AgentType::Role::Soldier:
-			AgentSheet(formAgentStats).display(agent, bigUnitRanks, false);
+			AgentSheet(formAgentProfile, formAgentStats).display(agent, bigUnitRanks, false);
 			formAgentStats->setVisible(true);
+			formAgentProfile->setVisible(true);
 			formPersonnelStats->setVisible(false);
 			break;
 		default:
 			personnelSheet(agent, formPersonnelStats);
 			formAgentStats->setVisible(false);
+			formAgentProfile->setVisible(false);
 			formPersonnelStats->setVisible(true);
 	}
 }

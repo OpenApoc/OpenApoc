@@ -230,12 +230,14 @@ void ResearchState::updateTopicList()
 
 void ResearchState::resortTopicList()
 {
-	topic_list.sort([](sp<ResearchTopic> a, sp<ResearchTopic> b) {
-		if (a->isComplete() != b->isComplete())
-			return b->isComplete();
-		else
-			return a->order < b->order;
-	});
+	topic_list.sort(
+	    [](sp<ResearchTopic> a, sp<ResearchTopic> b)
+	    {
+		    if (a->isComplete() != b->isComplete())
+			    return b->isComplete();
+		    else
+			    return a->order < b->order;
+	    });
 }
 
 Lab::~Lab()

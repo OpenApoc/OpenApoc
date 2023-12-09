@@ -38,6 +38,7 @@ class RecruitScreen : public BaseStage
 	std::vector<sp<Image>> bigUnitRanks;
 
 	sp<Form> formAgentStats;
+	sp<Form> formAgentProfile;
 	sp<Form> formPersonnelStats;
 
 	AgentType::Role type;

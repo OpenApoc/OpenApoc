@@ -6,7 +6,7 @@
 // Vanilla did not use voxel map centres properly, just used
 // voxelmap centre without checking bits
 // Therefore, we should not do it
-//#define CHECK_VOXELMAP_CENTRE
+// #define CHECK_VOXELMAP_CENTRE
 
 using namespace OpenApoc;
 

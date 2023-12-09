@@ -39,9 +39,10 @@ void BattlePreStart::displayAgent(sp<Agent> agent)
 		return;
 	}
 
-	AgentSheet(formAgentStats)
+	AgentSheet(formAgentProfile, formAgentStats)
 	    .display(*agent, bigUnitRanks, state->current_battle->mode == Battle::Mode::TurnBased);
 	formAgentStats->setVisible(true);
+	formAgentProfile->setVisible(true);
 
 	auto rHand = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
 	auto lHand = agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
@@ -55,21 +56,28 @@ BattlePreStart::BattlePreStart(sp<GameState> state)
 {
 
 	menuform->findControlTyped<GraphicButton>("BUTTON_EQUIP")
-	    ->addCallback(FormEventType::ButtonClick, [state](Event *) {
-		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<AEquipScreen>(state)});
-	    });
+	    ->addCallback(
+	        FormEventType::ButtonClick,
+	        [state](Event *) {
+		        fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<AEquipScreen>(state)});
+	        });
 	formAgentStats = menuform->findControlTyped<Form>("AGENT_STATS_VIEW");
+	formAgentProfile = menuform->findControlTyped<Form>("AGENT_PROFILE_VIEW");
 	formAgentStats->setVisible(false);
+	formAgentProfile->setVisible(false);
 	menuform->findControlTyped<GraphicButton>("BUTTON_OK")
-	    ->addCallback(FormEventType::ButtonClick, [this, state](Event *) {
-		    auto gameState = this->state;
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this, state](Event *)
+	                  {
+		                  auto gameState = this->state;
 
-		    fw().stageQueueCommand({StageCmd::Command::PUSH,
-		                            mksp<LoadingScreen>(
-		                                gameState, enterBattle(gameState),
-		                                [gameState]() { return mksp<BattleView>(gameState); },
-		                                this->state->battle_common_image_list->loadingImage, 1)});
-	    });
+		                  fw().stageQueueCommand(
+		                      {StageCmd::Command::PUSH,
+		                       mksp<LoadingScreen>(
+		                           gameState, enterBattle(gameState),
+		                           [gameState]() { return mksp<BattleView>(gameState); },
+		                           this->state->battle_common_image_list->loadingImage, 1)});
+	                  });
 
 	for (int i = 12; i <= 18; i++)
 	{

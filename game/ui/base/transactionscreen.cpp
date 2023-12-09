@@ -38,16 +38,19 @@ TransactionScreen::TransactionScreen(sp<GameState> state, bool forceLimits)
 	formItemAgent = form->findControlTyped<Form>("AGENT_ITEM_VIEW");
 	formItemVehicle = form->findControlTyped<Form>("VEHICLE_ITEM_VIEW");
 	formAgentStats = form->findControlTyped<Form>("AGENT_STATS_VIEW");
+	formAgentProfile = form->findControlTyped<Form>("AGENT_PROFILE_VIEW");
 	formPersonnelStats = form->findControlTyped<Form>("PERSONNEL_STATS_VIEW");
 
 	formItemAgent->setVisible(false);
 	formItemVehicle->setVisible(false);
 	formAgentStats->setVisible(false);
 	formPersonnelStats->setVisible(false);
+	formAgentProfile->setVisible(false);
 
 	// Assign event handlers
 	onScrollChange = [this](FormsEvent *) { this->updateFormValues(); };
-	onHover = [this](FormsEvent *e) {
+	onHover = [this](FormsEvent *e)
+	{
 		auto tctrl = std::dynamic_pointer_cast<TransactionControl>(e->forms().RaisedBy);
 		if (!tctrl)
 		{
@@ -750,9 +753,9 @@ sp<TransactionControl> TransactionScreen::findControlById(const UString &itemId)
 		auto it = transactionControls.find(type);
 		if (it != transactionControls.end())
 		{
-			auto it2 = std::find_if(
-			    it->second.begin(), it->second.end(),
-			    [itemId](const sp<TransactionControl> &c) { return c->itemId == itemId; });
+			auto it2 = std::find_if(it->second.begin(), it->second.end(),
+			                        [itemId](const sp<TransactionControl> &c)
+			                        { return c->itemId == itemId; });
 			if (it2 != it->second.end())
 			{
 				return *it2;

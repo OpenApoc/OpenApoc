@@ -43,43 +43,48 @@ void BootUp::update()
 
 	if (Options::loadGameOption.get().empty())
 	{
-		loadTask = fw().threadPoolEnqueue([]() {
-			auto &ui_instance = ui();
-			std::ignore = ui_instance;
-		});
+		loadTask = fw().threadPoolEnqueue(
+		    []()
+		    {
+			    auto &ui_instance = ui();
+			    std::ignore = ui_instance;
+		    });
 	}
 	else
 	{
 		loadGame = true;
 		auto path = Options::loadGameOption.get();
 		loadedState = mksp<GameState>();
-		loadTask = fw().threadPoolEnqueue([loadedState, path]() {
-			auto &ui_instance = ui();
-			std::ignore = ui_instance;
-			LogWarning("Loading save \"%s\"", path);
+		loadTask = fw().threadPoolEnqueue(
+		    [loadedState, path]()
+		    {
+			    auto &ui_instance = ui();
+			    std::ignore = ui_instance;
+			    LogWarning("Loading save \"%s\"", path);
 
-			if (!loadedState->loadGame(path))
-			{
-				LogError("Failed to load supplied game \"%s\"", path);
-			}
-			loadedState->initState();
-		});
+			    if (!loadedState->loadGame(path))
+			    {
+				    LogError("Failed to load supplied game \"%s\"", path);
+			    }
+			    loadedState->initState();
+		    });
 	}
 
 	sp<Stage> nextScreen;
 	if (loadGame == true)
 	{
-		nextScreen =
-		    mksp<LoadingScreen>(nullptr, std::move(loadTask), [loadedState]() -> sp<Stage> {
-			    if (loadedState->current_battle)
-			    {
-				    return mksp<BattleView>(loadedState);
-			    }
-			    else
-			    {
-				    return mksp<CityView>(loadedState);
-			    }
-		    });
+		nextScreen = mksp<LoadingScreen>(nullptr, std::move(loadTask),
+		                                 [loadedState]() -> sp<Stage>
+		                                 {
+			                                 if (loadedState->current_battle)
+			                                 {
+				                                 return mksp<BattleView>(loadedState);
+			                                 }
+			                                 else
+			                                 {
+				                                 return mksp<CityView>(loadedState);
+			                                 }
+		                                 });
 	}
 	else
 	{

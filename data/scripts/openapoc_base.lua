@@ -34,8 +34,8 @@ end
 --table.dump(OpenApoc, 1)
 --print("}")
 
-dofile('data/scripts/update_economy.lua')
-dofile('data/scripts/update_ufo_growth.lua')
+dofile('scripts/update_economy.lua')
+dofile('scripts/update_ufo_growth.lua')
 
 local oldNewGameHook = OpenApoc.hook.newGame
 OA.hook.newGame = function()

@@ -1,7 +1,7 @@
 #pragma once
 #include "game/state/battle/ai/unitai.h"
 
-//#define VANILLA_AI_DEBUG_OUTPUT
+// #define VANILLA_AI_DEBUG_OUTPUT
 
 namespace OpenApoc
 {

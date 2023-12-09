@@ -31,6 +31,9 @@
       <subform id="AGENT_STATS_VIEW" src="sheet_agent_stats">
         <position x="17" y="64"/>
       </subform>
+      <subform id="AGENT_PROFILE_VIEW" src="sheet_agent_profile">
+        <position x="17" y="64"/>
+      </subform>
 
       <!-- Items -->
       <graphic id="RIGHT_HAND">

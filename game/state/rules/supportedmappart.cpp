@@ -5,7 +5,7 @@
 #include "game/state/tilemap/tileobject_scenery.h"
 
 // Uncomment to have verbose map part link up output
-//#define MAP_PART_LINK_DEBUG_OUTPUT
+// #define MAP_PART_LINK_DEBUG_OUTPUT
 
 namespace OpenApoc
 {

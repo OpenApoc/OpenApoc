@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_AEQUIPSCREEN_AGENT_HISTORY">
+    <style minwidth="160" minheight="280">
+      <position x="centre" y="centre"/>
+      <size width="160" height="280"/>
+
+      <label id="VALUE_DAYS_IN_SERVICE" text="">
+		<position x="15" y="105"/>
+        <size width="25" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="LABEL_DAYS_IN_SERVICE" text="">
+        <position x="50" y="105"/>
+        <size width="142" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="VALUE_MISSION_COUNT" text="">
+        <position x="15" y="121"/>
+        <size width="25" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="LABEL_MISSION_COUNT" text="">
+        <position x="50" y="121"/>
+        <size width="142" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="VALUE_KILL_COUNT" text="">
+        <position x="15" y="137"/>
+        <size width="25" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <label id="LABEL_KILL_COUNT" text="">
+        <position x="50" y="137"/>
+        <size width="142" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+      </label>
+
+      <graphic id="MEDAL_1">
+        <position x="11" y="155"/>
+        <size width="33" height="47"/>
+        <imageposition>fit</imageposition>
+        <alignment horizontal="center" vertical="centre"/>
+        <image>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:7:xcom3/tacdata/tactical.pal</image>
+      </graphic>
+
+      <graphic id="MEDAL_2">
+        <position x="38" y="155"/>
+        <size width="32" height="48"/>
+        <image>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:8:xcom3/tacdata/tactical.pal</image>
+        <imageposition>fit</imageposition>
+        <alignment horizontal="center" vertical="centre"/>
+      </graphic>
+
+      <graphic id="MEDAL_3">
+        <position x="65" y="155"/>
+        <size width="31" height="48"/>
+        <image>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:9:xcom3/tacdata/tactical.pal</image>
+        <imageposition>fit</imageposition>
+        <alignment horizontal="center" vertical="centre"/>
+      </graphic>
+
+      <graphic id="MEDAL_4">
+        <position x="92" y="155"/>
+        <size width="33" height="48"/>
+        <image>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:10:xcom3/tacdata/tactical.pal</image>
+        <imageposition>fit</imageposition>
+        <alignment horizontal="center" vertical="centre"/>
+      </graphic>
+
+      <graphic id="MEDAL_5">
+        <position x="119" y="155"/>
+        <size width="33" height="48"/>
+        <image>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:11:xcom3/tacdata/tactical.pal</image>
+        <imageposition>fit</imageposition>
+        <alignment horizontal="center" vertical="centre"/>
+      </graphic>
+    </style>
+  </form>
+</openapoc>

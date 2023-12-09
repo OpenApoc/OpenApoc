@@ -8,12 +8,15 @@
     "boost-uuid",
     "boost-crc",
     "libvorbis",
-	"gettext"
+    "gettext"
   ],
   "features": {
     "launcher": {
       "description": "Build Launcher",
-      "dependencies": [ "qt5-base" ]
+      "dependencies": [
+        "qt5-base"
+      ]
     }
-  }
+  },
+  "builtin-baseline": "9edb1b8e590cc086563301d735cae4b6e732d2d2"
 }

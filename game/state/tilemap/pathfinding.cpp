@@ -16,7 +16,7 @@
 #include <glm/glm.hpp>
 
 // Show debug pathfinding output
-//#define PATHFINDING_DEBUG
+// #define PATHFINDING_DEBUG
 
 namespace OpenApoc
 {
@@ -968,12 +968,14 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 	// Sort units based on proximity to target and speed
 
 	auto localUnits = selectedUnits;
-	localUnits.sort([targetLocation](const StateRef<BattleUnit> &a, const StateRef<BattleUnit> &b) {
-		return BattleUnitTileHelper::getDistanceStatic((Vec3<int>)a->position, targetLocation) /
-		           a->agent->modified_stats.getActualSpeedValue() <
-		       BattleUnitTileHelper::getDistanceStatic((Vec3<int>)b->position, targetLocation) /
-		           b->agent->modified_stats.getActualSpeedValue();
-	});
+	localUnits.sort(
+	    [targetLocation](const StateRef<BattleUnit> &a, const StateRef<BattleUnit> &b)
+	    {
+		    return BattleUnitTileHelper::getDistanceStatic((Vec3<int>)a->position, targetLocation) /
+		               a->agent->modified_stats.getActualSpeedValue() <
+		           BattleUnitTileHelper::getDistanceStatic((Vec3<int>)b->position, targetLocation) /
+		               b->agent->modified_stats.getActualSpeedValue();
+	    });
 
 	// Find the unit that will lead the group
 
@@ -1070,7 +1072,8 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 	// Sort remaining units based on proximity to target and speed
 	auto h = BattleUnitTileHelper(*map, *leadUnit);
 	localUnits.sort(
-	    [h, targetLocation](const StateRef<BattleUnit> &a, const StateRef<BattleUnit> &b) {
+	    [h, targetLocation](const StateRef<BattleUnit> &a, const StateRef<BattleUnit> &b)
+	    {
 		    return h.getDistance((Vec3<int>)a->position, targetLocation) /
 		               a->agent->modified_stats.getActualSpeedValue() <
 		           h.getDistance((Vec3<int>)b->position, targetLocation) /

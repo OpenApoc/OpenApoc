@@ -19,18 +19,20 @@ namespace
 std::shared_future<void> loadBattleBase(sp<GameState> state, StateRef<Base> base,
                                         StateRef<Organisation> attacker)
 {
-	auto loadTask = fw().threadPoolEnqueue([base, state, attacker]() -> void {
-		std::list<StateRef<Agent>> agents;
-		StateRef<Vehicle> veh = {};
+	auto loadTask = fw().threadPoolEnqueue(
+	    [base, state, attacker]() -> void
+	    {
+		    std::list<StateRef<Agent>> agents;
+		    StateRef<Vehicle> veh = {};
 
-		bool hotseat = false;
-		const std::map<StateRef<AgentType>, int> *aliens = nullptr;
-		const int *guards = nullptr;
-		const int *civilians = nullptr;
+		    bool hotseat = false;
+		    const std::map<StateRef<AgentType>, int> *aliens = nullptr;
+		    const int *guards = nullptr;
+		    const int *civilians = nullptr;
 
-		Battle::beginBattle(*state, hotseat, attacker, agents, aliens, guards, civilians, veh,
-		                    base->building);
-	});
+		    Battle::beginBattle(*state, hotseat, attacker, agents, aliens, guards, civilians, veh,
+		                        base->building);
+	    });
 
 	return loadTask;
 }

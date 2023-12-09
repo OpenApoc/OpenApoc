@@ -212,6 +212,10 @@ class Battle : public std::enable_shared_from_this<Battle>
 	void initialMapPartRemoval(GameState &state);
 	void initialMapPartLinkUp();
 
+	// Save and load messages from cityscape
+	void saveMessages(GameState &state);
+	void loadMessages(GameState &state);
+
 	void initialUnitSpawn(GameState &state);
 
 	void setMode(Mode mode);
