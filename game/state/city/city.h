@@ -115,8 +115,12 @@ class City : public StateObject<City>, public std::enable_shared_from_this<City>
 
 	Vec3<float> cityViewScreenCenter = {0.0f, 0.0f, 0.0f};
 	int cityViewPageIndex = 0;
-	std::list<StateRef<Vehicle>> cityViewSelectedVehicles;
-	std::list<StateRef<Agent>> cityViewSelectedAgents;
+	std::list<StateRef<Vehicle>> cityViewSelectedOwnedVehicles;
+	std::list<StateRef<Vehicle>> cityViewSelectedOtherVehicles;
+	std::list<StateRef<Agent>> cityViewSelectedSoldiers;
+	std::list<StateRef<Agent>> cityViewSelectedBios;
+	std::list<StateRef<Agent>> cityViewSelectedPhysics;
+	std::list<StateRef<Agent>> cityViewSelectedEngineers;
 	StateRef<Organisation> cityViewSelectedOrganisation;
 	int cityViewOrgButtonIndex = 0;
 

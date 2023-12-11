@@ -976,8 +976,12 @@
 		<member>researchUnlock</member>
 		<member>cityViewScreenCenter</member>
 		<member>cityViewPageIndex</member>
-		<member>cityViewSelectedVehicles</member>
-		<member>cityViewSelectedAgents</member>
+		<member>cityViewSelectedOwnedVehicles</member>
+		<member>cityViewSelectedOtherVehicles</member>
+		<member>cityViewSelectedSoldiers</member>
+		<member>cityViewSelectedBios</member>
+		<member>cityViewSelectedPhysics</member>
+		<member>cityViewSelectedEngineers</member>
 		<member>cityViewSelectedOrganisation</member>
 		<member>cityViewOrgButtonIndex</member>
 	</object>

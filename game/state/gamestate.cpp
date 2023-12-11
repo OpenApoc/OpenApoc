@@ -982,12 +982,24 @@ void OpenApoc::GameState::cleanUpDeathNote()
 			// Remove vehicle from selection
 			for (const auto &[cityId, city] : cities)
 			{
-				for (auto it = city->cityViewSelectedVehicles.begin();
-				     it != city->cityViewSelectedVehicles.end();)
+				for (auto it = city->cityViewSelectedOwnedVehicles.begin();
+				     it != city->cityViewSelectedOwnedVehicles.end();)
+				{
+				    if (it->id == name)
+				    {
+				        it = city->cityViewSelectedOwnedVehicles.erase(it);
+				    }
+				    else
+				    {
+				        ++it;
+				    }
+				}
+				for (auto it = city->cityViewSelectedOtherVehicles.begin();
+				     it != city->cityViewSelectedOtherVehicles.end();)
 				{
 					if (it->id == name)
 					{
-						it = city->cityViewSelectedVehicles.erase(it);
+						it = city->cityViewSelectedOtherVehicles.erase(it);
 					}
 					else
 					{
