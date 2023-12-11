@@ -334,8 +334,6 @@ void CityTileView::render()
 			// List of vehicles that require drawing of brackets
 			std::set<sp<Vehicle>> vehiclesToDrawBrackets;
 			std::map<sp<Vehicle>, int> vehiclesBracketsIndex;
-			state.current_city->cityViewSelectedOwnedVehicles.merge(
-			    state.current_city->cityViewSelectedOtherVehicles);
 			// Go through every selected vehicle and add target to list of bracket draws
 			for (auto &vehicle : state.current_city->cityViewSelectedOwnedVehicles)
 			{
@@ -388,12 +386,14 @@ void CityTileView::render()
 										auto v = std::static_pointer_cast<TileObjectVehicle>(obj)
 										             ->getVehicle();
 
-										if (!state.current_city->cityViewSelectedOwnedVehicles.empty())
+										if (!state.current_city->cityViewSelectedOwnedVehicles
+										         .empty())
 										{
 											auto selectedPos = std::find(
 											    state.current_city->cityViewSelectedOwnedVehicles
 											        .begin(),
-											    state.current_city->cityViewSelectedOwnedVehicles.end(),
+											    state.current_city->cityViewSelectedOwnedVehicles
+											        .end(),
 											    v);
 
 											if (selectedPos ==
@@ -407,8 +407,8 @@ void CityTileView::render()
 												}
 											}
 											else if (selectedPos !=
-											         state.current_city->cityViewSelectedOwnedVehicles
-											             .end())
+											         state.current_city
+											             ->cityViewSelectedOwnedVehicles.end())
 											{
 												vehiclesToDrawBrackets.insert(v);
 												vehiclesBracketsIndex[v] = 1;
@@ -585,11 +585,11 @@ void CityTileView::render()
 										hostile = state.getPlayer()->isRelatedTo(v->owner) ==
 										          Organisation::Relation::Hostile;
 										bool selected =
-										    std::find(
-										        state.current_city->cityViewSelectedOwnedVehicles
-										            .begin(),
-										        state.current_city->cityViewSelectedOwnedVehicles.end(),
-										        v) !=
+										    std::find(state.current_city
+										                  ->cityViewSelectedOwnedVehicles.begin(),
+										              state.current_city
+										                  ->cityViewSelectedOwnedVehicles.end(),
+										              v) !=
 										    state.current_city->cityViewSelectedOwnedVehicles.end();
 
 										if (friendly)

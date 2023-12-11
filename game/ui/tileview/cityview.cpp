@@ -591,7 +591,8 @@ void CityView::orderMove(Vec3<float> position, bool alternative, bool portal)
 		}
 		else
 		{
-			state->current_city->groupMove(*state, state->current_city->cityViewSelectedOwnedVehicles,
+			state->current_city->groupMove(*state,
+			                               state->current_city->cityViewSelectedOwnedVehicles,
 			                               position, useTeleporter);
 		}
 		return;
@@ -632,88 +633,163 @@ void CityView::orderMove(StateRef<Building> building, bool alternative)
 		}
 	}
 }
-
+/* if (agent->type->role == AgentType::Role::Soldier)
+{
+    auto pos = std::find(state->current_city->cityViewSelectedSoldiers.begin(),
+                         state->current_city->cityViewSelectedSoldiers.end(), agent);
+    if (inverse)
+    {
+        // Agent in selection => remove
+        if (pos != state->current_city->cityViewSelectedSoldiers.end())
+        {
+            state->current_city->cityViewSelectedSoldiers.erase(pos);
+        }
+    }
+    else
+    {
+        // Agent not selected
+        if (pos == state->current_city->cityViewSelectedSoldiers.end())
+        {
+            // If additive add
+            if (additive)
+            {
+                state->current_city->cityViewSelectedSoldiers.push_front(agent);
+            }
+            else
+            {
+                // Agent not in selection => replace selection with agent
+                state->current_city->cityViewSelectedSoldiers.clear();
+                state->current_city->cityViewSelectedSoldiers.push_back(agent);
+            }
+        }
+        // Agent is selected
+        else
+        {
+            // First move vehicle to front
+            state->current_city->cityViewSelectedSoldiers.erase(pos);
+            state->current_city->cityViewSelectedSoldiers.push_front(agent);
+            // Then if not additive then zoom to agent
+            if (!additive)
+            {
+                if (agent->currentVehicle)
+                {
+                    this->setScreenCenterTile(agent->currentVehicle->position);
+                }
+                else
+                {
+                    this->setScreenCenterTile(agent->position);
+                }
+            }
+        }
+    }*/
 void CityView::orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additive)
 {
-	auto pos = std::find(state->current_city->cityViewSelectedOwnedVehicles.begin(),
-	                     state->current_city->cityViewSelectedOwnedVehicles.end(), vehicle);
+	if (vehicle->owner == state->getPlayer())
+	{
+		auto pos = std::find(state->current_city->cityViewSelectedOwnedVehicles.begin(),
+		                     state->current_city->cityViewSelectedOwnedVehicles.end(), vehicle);
 
-	if (vehicle->city != state->current_city)
-	{
-		return;
-	}
-	if (inverse)
-	{
-		// Vehicle in selection => remove
-		if (pos != state->current_city->cityViewSelectedOwnedVehicles.end())
+		if (vehicle->city != state->current_city)
 		{
-			state->current_city->cityViewSelectedOwnedVehicles.erase(pos);
+			return;
+		}
+		if (inverse)
+		{
+			// Vehicle in selection => remove
+			if (pos != state->current_city->cityViewSelectedOwnedVehicles.end())
+			{
+				state->current_city->cityViewSelectedOwnedVehicles.erase(pos);
+			}
+		}
+		else
+		{
+			// Vehicle not selected
+			if (pos == state->current_city->cityViewSelectedOwnedVehicles.end())
+			{
+				// Selecting non-owned vehicles is always additive to current selection
+				if (additive)
+				{
+					state->current_city->cityViewSelectedOwnedVehicles.push_front(vehicle);
+				}
+				else
+				{
+					// Vehicle not in selection => replace selection with vehicle
+					state->current_city->cityViewSelectedOwnedVehicles.clear();
+					state->current_city->cityViewSelectedOwnedVehicles.push_back(vehicle);
+				}
+			}
+			// Vehicle is selected
+			else
+			{
+				// First move vehicle to front
+				state->current_city->cityViewSelectedOwnedVehicles.erase(pos);
+				state->current_city->cityViewSelectedOwnedVehicles.push_front(vehicle);
+
+				// Then if not additive then zoom to vehicle
+				if (!additive)
+				{
+					this->setScreenCenterTile(vehicle->position);
+					setSelectedTab(1);
+				}
+			}
 		}
 	}
 	else
 	{
-		// Vehicle not selected
-		if (pos == state->current_city->cityViewSelectedOwnedVehicles.end())
+		auto pos = std::find(state->current_city->cityViewSelectedOtherVehicles.begin(),
+		                     state->current_city->cityViewSelectedOtherVehicles.end(), vehicle);
+
+		if (vehicle->city != state->current_city)
 		{
-			// Selecting non-owned vehicles is always additive to current selection
-			if (additive || vehicle->owner != state->getPlayer())
+			return;
+		}
+		if (inverse)
+		{
+			// Vehicle in selection => remove
+			if (pos != state->current_city->cityViewSelectedOtherVehicles.end())
 			{
-				// Whenever adding clear any non-player vehicles from selection
-				if (!state->current_city->cityViewSelectedOwnedVehicles.empty() &&
-				    state->current_city->cityViewSelectedOwnedVehicles.front()->owner !=
-				        state->getPlayer())
-				{
-					state->current_city->cityViewSelectedOwnedVehicles.pop_front();
-				}
-				state->current_city->cityViewSelectedOwnedVehicles.push_front(vehicle);
-			}
-			else
-			{
-				// Vehicle not in selection => replace selection with vehicle
-				state->current_city->cityViewSelectedOwnedVehicles.clear();
-				state->current_city->cityViewSelectedOwnedVehicles.push_back(vehicle);
+				state->current_city->cityViewSelectedOtherVehicles.erase(pos);
 			}
 		}
-		// Vehicle is selected
 		else
 		{
-			// First move vehicle to front
-			state->current_city->cityViewSelectedOwnedVehicles.erase(pos);
-			// If moving vehicle to front, deselect any non-owned vehicle, unless it's that one
-			if (!state->current_city->cityViewSelectedOwnedVehicles.empty() &&
-			    state->current_city->cityViewSelectedOwnedVehicles.front()->owner != state->getPlayer())
+			// Vehicle not selected
+			if (pos == state->current_city->cityViewSelectedOtherVehicles.end())
 			{
-				state->current_city->cityViewSelectedOwnedVehicles.pop_front();
-			}
-			state->current_city->cityViewSelectedOwnedVehicles.push_front(vehicle);
-			// Then if not additive then zoom to vehicle
-			if (!additive)
-			{
-				this->setScreenCenterTile(vehicle->position);
-				if (vehicle->owner == state->getPlayer())
+				// Selecting non-owned vehicles is always additive to current selection
+				if (additive)
 				{
-					setSelectedTab(1);
+					state->current_city->cityViewSelectedOtherVehicles.push_front(vehicle);
 				}
 				else
 				{
+					// Vehicle not in selection => replace selection with vehicle
+					state->current_city->cityViewSelectedOtherVehicles.clear();
+					state->current_city->cityViewSelectedOtherVehicles.push_back(vehicle);
+				}
+			}
+			// Vehicle is selected
+			else
+			{
+				// First move vehicle to front
+				state->current_city->cityViewSelectedOtherVehicles.erase(pos);
+				state->current_city->cityViewSelectedOtherVehicles.push_front(vehicle);
+
+				// Then if not additive then zoom to vehicle
+				if (!additive)
+				{
+					this->setScreenCenterTile(vehicle->position);
 					setSelectedTab(6);
 				}
 			}
 		}
 	}
-	if (state->current_city->cityViewSelectedOwnedVehicles.empty() ||
-	    state->current_city->cityViewSelectedOwnedVehicles.front()->owner != state->getPlayer())
+	if (state->current_city->cityViewSelectedOwnedVehicles.empty())
 	{
 		return;
 	}
 	vehicle = state->current_city->cityViewSelectedOwnedVehicles.front();
-	if (vehicle->owner != state->getPlayer())
-	{
-		vehicle = *++state->current_city->cityViewSelectedOwnedVehicles.begin();
-	}
 	auto vehicleForm = this->uiTabs[1];
-	// FIXME: Proper multiselect handle for vehicle controls
-	LogWarning("FIX: Proper multiselect handle for vehicle controls");
 	switch (vehicle->altitude)
 	{
 		case Vehicle::Altitude::Highest:
@@ -809,7 +885,6 @@ void CityView::orderSelect(StateRef<Agent> agent, bool inverse, bool additive)
 			return;
 		}
 		agent = state->current_city->cityViewSelectedSoldiers.front();
-		LogWarning("FIX: Proper multiselect handle for agent controls");
 		switch (agent->trainingAssignment)
 		{
 			case TrainingAssignment::None:
@@ -1291,7 +1366,8 @@ CityView::CityView(sp<GameState> state)
 		                  if (playerHasVehicles)
 		                  {
 			                  auto equipScreen = mksp<VEquipScreen>(this->state);
-			                  for (auto &v : this->state->current_city->cityViewSelectedOwnedVehicles)
+			                  for (auto &v :
+			                       this->state->current_city->cityViewSelectedOwnedVehicles)
 			                  {
 				                  if (v && v->owner == this->state->getPlayer())
 				                  {
@@ -2935,9 +3011,9 @@ void CityView::update()
 	{
 		auto hostileVehicleList = uiTabs[6]->findControlTyped<ListBox>("HOSTILE_VEHICLE_LIST");
 
-		if (!state->current_city->cityViewSelectedOwnedVehicles.empty())
+		if (!state->current_city->cityViewSelectedOtherVehicles.empty())
 		{
-			auto selectedVehicle = state->current_city->cityViewSelectedOwnedVehicles.front();
+			auto selectedVehicle = state->current_city->cityViewSelectedOtherVehicles.front();
 			if (selectedVehicle->owner == state->getPlayer())
 			{
 				uiTabs[6]->findControlTyped<Label>("TEXT_VEHICLE_NAME")->setText("");
@@ -3185,7 +3261,7 @@ void CityView::update()
 	// this frame
 	if (this->followVehicle && this->updateSpeed != CityUpdateSpeed::Pause)
 	{
-		if (!state->current_city->cityViewSelectedOwnedVehicles.empty())
+		if (activeTab == uiTabs[1] && !state->current_city->cityViewSelectedOwnedVehicles.empty())
 		{
 			auto v = state->current_city->cityViewSelectedOwnedVehicles.front();
 			if (v->city == state->current_city)
@@ -3197,7 +3273,7 @@ void CityView::update()
 				}
 			}
 		}
-		else if (!state->current_city->cityViewSelectedSoldiers.empty())
+		else if (activeTab == uiTabs[2] && !state->current_city->cityViewSelectedSoldiers.empty())
 		{
 			auto a = state->current_city->cityViewSelectedSoldiers.front();
 
@@ -3210,6 +3286,19 @@ void CityView::update()
 					{
 						this->setScreenCenterTile(a->currentVehicle->position);
 					}
+				}
+			}
+		}
+		else if (!state->current_city->cityViewSelectedOtherVehicles.empty() &&
+		         activeTab == uiTabs[6])
+		{
+			auto v = state->current_city->cityViewSelectedOtherVehicles.front();
+			if (v->city == state->current_city)
+			{
+				// Don't follow if vehicle is in building
+				if (!v->currentBuilding)
+				{
+					this->setScreenCenterTile(v->position);
 				}
 			}
 		}

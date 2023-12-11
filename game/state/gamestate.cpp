@@ -985,14 +985,14 @@ void OpenApoc::GameState::cleanUpDeathNote()
 				for (auto it = city->cityViewSelectedOwnedVehicles.begin();
 				     it != city->cityViewSelectedOwnedVehicles.end();)
 				{
-				    if (it->id == name)
-				    {
-				        it = city->cityViewSelectedOwnedVehicles.erase(it);
-				    }
-				    else
-				    {
-				        ++it;
-				    }
+					if (it->id == name)
+					{
+						it = city->cityViewSelectedOwnedVehicles.erase(it);
+					}
+					else
+					{
+						++it;
+					}
 				}
 				for (auto it = city->cityViewSelectedOtherVehicles.begin();
 				     it != city->cityViewSelectedOtherVehicles.end();)
