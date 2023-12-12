@@ -62,6 +62,7 @@ set (GAMEUI_SOURCE_FILES
 	general/notificationscreen.cpp
 	general/vehiclesheet.cpp
 	general/transactioncontrol.cpp
+	general/creditsmenu.cpp
 
 	skirmish/skirmish.cpp
 	skirmish/selectforces.cpp
@@ -134,6 +135,7 @@ set (GAMEUI_HEADER_FILES
 	general/notificationscreen.h
 	general/vehiclesheet.h
 	general/transactioncontrol.h
+	general/creditsmenu.h
 
 	skirmish/skirmish.h
 	skirmish/selectforces.h
