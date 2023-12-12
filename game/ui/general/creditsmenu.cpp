@@ -20,76 +20,80 @@ namespace
 {
 // Contributor lists, if adding to these keep the blank entry at the end!
 std::list<UString> developerList = {
-    "pmprog",         "Andrey",     "redv",   "empty'void", "Flacko",
-    "Flacko the 2nd", "Istrebitel", "JonnyH", "shellstorm", "skin36",
-    "SupSuper",       "Warboy",     "",
-};
-std::list<UString> traineeList = {
-    "FilmBoy84",
-    "Jari",
+    "PmProg - Marq Watkin",
+    "redv",
+    "SupSuper - Daniel Albano",
+    "JonnyH - Jonathan Hamilton",
+    "Istrebitel",
+    "Skin36",
+    "FilmBoy84 - Jacob Deuchar",
+    "Makus / Makus82 Shellstorm - Ivan Shibanov",
+    "FranciscoDA / Flacko empty`void / Empty Void Jarskih - Jari Hanski",
+    "Kurtsley - Brian Beard",
+    "Atrosha - Panasenko Vasiliy Sergeevich",
     "",
 };
-std::list<UString> programmerList = {
-    "Andy51",  "Atrosha",  "Bluddy",         "clowds",            /*"Cristi Popa",*/
-    "Drosan",  "gnegno",   "Kurtsley",       "Leon",   "letwolf", /*"luiscamara",*/
-    "Stewart", "TheSnide", "TreacherousOne", "Zigmar", "",
-};
-std::list<UString> testerList = {
-    "Filmboy84",
-    "Atrosha",
-    "Beorn",
-    "CidDaBird",
-    "empty'void",
-    "Flacko the 2nd",
-    "Hyton",
-    "Jigoku-Panzer",
-    "laurieblakesdr",
-    "MadHaTr",
-    "makus",
-    "Quickmind",
-    "RoadhogsButt",
-    "Sergi4UA",
-    "TimboF5",
-    /*"Yataka Shimaoka",*/ "",
-};
-std::list<UString> translatorList = {
-    "Filmboy84", "Confederate Ghost", "IFoldlyGo", "Kammerer",       "makus",
-    "PlayMann",  "PPeti66x",          "SAlex_UT",  "Sergi4UA",       "skin36",
-    "Slitchy",   "TaoQiBao",          "TimboF5",   "Xcom commander", /*"Yataka Shimaoka",*/ "",
-};
-std::list<UString> githubContribList = {
-    "FranciscoDA",
-    "idshibanov",
-    "superusercode",
-    "kgd192",
-    "sfalexrog",
+std::list<UString> otherGitList = {
+    "Luis Camara",
+    "SuperUserCode",
+    "KGD192",
+    "sfalexrog - Alexey Rogachevskiy",
+    "zigmar / zigmar - ems - Pavel Antokolsky",
     "ShadowDancer",
-    "Xracer",
-    /*"steveschnepp",*/
-    /*"stewartmatheson",*/
-    "RedRobin84",
+    "TreacherousOne - Kirill Mishustin",
+    "steveschnepp - Steve Schnepp",
+    "StewartM",
+    "RedRobin84 - Martin Cervenka",
     "SiemensSchuckert",
     "sparkstar",
     "dl471",
     "5thAvenue",
-    "killermosi",
-    "BabyWolf",
-    "AMDmi3",
-    "AndyCreator",
-    "BlackWolf-Kuzoku",
+    "gnegno84 - Marcello Santambrogio",
+    "killermosi - Silviu Ghita",
+    "BabyWolf - Volkov Semjon",
+    "AMDmi3 - Dmitry Marakasov",
+    "AndreyCreator",
+    "Blackwolf - Kuzoku",
     "andersand",
-    "Andy51",
+    "Andy51 - Andrey Isakov",
     "Hambones82",
-    /*"MartinCervenka",*/
-    "h3xx",
+    "h3xx - Dan Church",
     "ashenomo",
     "kaja47",
-    "solbu",
+    "solbu - Johnny Solbu",
     "pkubaj",
-    "DoxaLogosGit",
-    "Sonicelo",
-    "SolariusScorch",
+    "DoxaLogosGit - Jay Atkinson",
+    "Sonicelo - Gregor Sušanj",
+    "kkmic",
+    "Przemyslaw",
+    "Onak",
+    "Roger",
     "",
+};
+std::list<UString> testingList = {
+    "FilmBoy84 - Jacob Deuchar",
+    "Quickmind / Quickmind01",
+    "HeadGrowsBack",
+    "RoadHogsButt",
+    "Yataka Shimaoka",
+    "EmperorLol - Laurie Blake",
+    "Jigoku - Panzer - Dean Martin",
+    "",
+};
+std::list<UString> moddingList = {
+    "JonnyH - Jonathan Hamilton",
+    "FilmBoy84 - Jacob Deuchar",
+    "Istrebitel",
+    "Voiddweller",
+    "Skin36",
+    "",
+};
+std::list<UString> reversingList = {
+    "Skin36",
+    "",
+};
+std::list<UString> translationList = {
+    "5thAvenue", "Blackwolf - Kuzoku", "Skin36", "SolariusScorch", "Xracer", "",
 };
 } // namespace
 
@@ -108,8 +112,8 @@ void CreditsMenu::loadlist()
 	spacer->Size = {100, contributorListControl->ItemSize};
 	contributorListControl->addItem(spacer);
 
-	// Developers
-	auto devLabel = mksp<Label>("- Developers -\n__________", font);
+	// Lead Team, Developers and Programming
+	auto devLabel = mksp<Label>("- Lead Team, Developers and Programming -\n--==--", font);
 	devLabel->Size = {100, contributorListControl->ItemSize * 2};
 	devLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(devLabel);
@@ -123,13 +127,13 @@ void CreditsMenu::loadlist()
 		contributorListControl->addItem(label);
 	}
 
-	// Trainee developers
-	auto trainLabel = mksp<Label>("- Trainee Developers -\n__________", font);
+	// Other GitHub contributors
+	auto trainLabel = mksp<Label>("- Other GitHub Contributors -\n--==--", font);
 	trainLabel->Size = {140, contributorListControl->ItemSize * 2};
 	trainLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(trainLabel);
 
-	for (auto &l : traineeList)
+	for (auto &l : otherGitList)
 	{
 		auto label = mksp<Label>(l, font);
 
@@ -138,13 +142,13 @@ void CreditsMenu::loadlist()
 		contributorListControl->addItem(label);
 	}
 
-	// Programmers
-	auto progLabel = mksp<Label>("- Programmers -\n__________", font);
+	// Testers
+	auto progLabel = mksp<Label>("- Testing -\n--==--", font);
 	progLabel->Size = {140, contributorListControl->ItemSize * 2};
 	progLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(progLabel);
 
-	for (auto &l : programmerList)
+	for (auto &l : testingList)
 	{
 		auto label = mksp<Label>(l, font);
 
@@ -153,13 +157,13 @@ void CreditsMenu::loadlist()
 		contributorListControl->addItem(label);
 	}
 
-	// Testers
-	auto testLabel = mksp<Label>("- Testers -\n__________", font);
+	// Modding Structure
+	auto testLabel = mksp<Label>("- Modding Structure -\n--==--", font);
 	testLabel->Size = {140, contributorListControl->ItemSize * 2};
 	testLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(testLabel);
 
-	for (auto &l : testerList)
+	for (auto &l : moddingList)
 	{
 		auto label = mksp<Label>(l, font);
 
@@ -168,13 +172,13 @@ void CreditsMenu::loadlist()
 		contributorListControl->addItem(label);
 	}
 
-	// Translators
-	auto translateLabel = mksp<Label>("- Translators -\n__________", font);
+	// Reversing and Research
+	auto translateLabel = mksp<Label>("- Reversing and Research -\n--==--", font);
 	translateLabel->Size = {140, contributorListControl->ItemSize * 2};
 	translateLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(translateLabel);
 
-	for (auto &l : translatorList)
+	for (auto &l : reversingList)
 	{
 		auto label = mksp<Label>(l, font);
 
@@ -183,13 +187,13 @@ void CreditsMenu::loadlist()
 		contributorListControl->addItem(label);
 	}
 
-	// Github contributors if not already in list
-	auto githubLabel = mksp<Label>("- GitHub Contributors -\n__________", font);
+	// Translation
+	auto githubLabel = mksp<Label>("- Translation -\n--==--", font);
 	githubLabel->Size = {140, contributorListControl->ItemSize * 2};
 	githubLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(githubLabel);
 
-	for (auto &l : githubContribList)
+	for (auto &l : translationList)
 	{
 		auto label = mksp<Label>(l, font);
 
@@ -199,8 +203,9 @@ void CreditsMenu::loadlist()
 	}
 
 	// Memorial
-	auto memLabel =
-	    mksp<Label>("- In Memory of -\nPanasenko Vasiliy Sergeevich / 'Atrosha' 1980-2021\n", font);
+	auto memLabel = mksp<Label>(
+	    "--==--\nIn Memory of Panasenko Vasiliy Sergeevich / \"Atrosha\" (1980-2021)\n--==--",
+	    font);
 	memLabel->Size = {140, contributorListControl->ItemSize * 3};
 	memLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(memLabel);
