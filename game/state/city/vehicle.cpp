@@ -180,9 +180,8 @@ class FlyingVehicleMover : public VehicleMover
 				break;
 		}
 		// Don't dodge if running away
-		if (vehicle.attackMode == Vehicle::AttackMode::Defensive ||
-		    vehicle.attackMode == Vehicle::AttackMode::Evasive &&
-		        vehicle.missions.front().targetBuilding == vehicle.homeBuilding)
+		if (vehicle.attackMode == Vehicle::AttackMode::Aggressive &&
+		    vehicle.missions.front().targetBuilding == vehicle.homeBuilding)
 		{
 			return;
 		}
