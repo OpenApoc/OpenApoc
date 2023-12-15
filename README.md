@@ -79,7 +79,7 @@ OpenApocalypse is built leveraging a number of libraries - to provide needed fun
 Note: The following libraries will be fetched and built with vcpkg in a later step, ensuring you get the correct version.
 
 * [SDL2](https://www.libsdl.org)
-* [Boost](https://boost.org) - We specifially use the 'locale' library, used for localisation, 'program-options' for settings management, and 'filesystem'.
+* [Boost](https://boost.org) - We specifially use the 'locale' library, used for localisation, 'algorithm' for some small stuff in string handling, 'program-options' for settings management, 'date-time' for some formatting, and parts of 'UUID' and 'CRC' for their hash functions and some temporary filename stuff.
 * [Qt](https://www.qt.io/) - needed for the launcher, can be disabled with 'BUILD_LAUNCHER'.
 * [Libunwind](https://nongnu.org/libunwind/download.html) - debug backtracing on linux - not needed on windows.
 * [LibVorbis](https://xiph.org/vorbis/) - Ogg vorbis music decoder library.
@@ -146,12 +146,12 @@ vcpkg --triplet x86-windows install sdl2 boost-locale boost-program-options boos
 
 ### Building on Linux
 
-(Tested on Ubuntu 16.04, Mageia 6 and Fedora 31)
+(Tested on Ubuntu 22.04)
 
 * On Ubuntu, install the following packages:
 
 ```sh
-sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-program-options-dev qtbase5-dev libvorbis-dev
+sudo apt-get install sdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-program-options-dev qtbase5-dev libvorbis-dev
 ```
 
 * On Mageia, install the following packages as root:
