@@ -118,6 +118,7 @@ class City : public StateObject<City>, public std::enable_shared_from_this<City>
 	std::list<StateRef<Vehicle>> cityViewSelectedOwnedVehicles;
 	std::list<StateRef<Vehicle>> cityViewSelectedOtherVehicles;
 	std::list<StateRef<Agent>> cityViewSelectedSoldiers;
+	std::list<StateRef<Agent>> cityViewSelectedCivilians;
 	std::list<StateRef<Agent>> cityViewSelectedBios;
 	std::list<StateRef<Agent>> cityViewSelectedPhysics;
 	std::list<StateRef<Agent>> cityViewSelectedEngineers;

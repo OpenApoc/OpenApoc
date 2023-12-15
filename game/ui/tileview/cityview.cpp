@@ -135,9 +135,7 @@ sp<Facility> findCurrentResearchFacility(sp<GameState> state, AgentType::Role ro
                                          FacilityType::Capacity capacity)
 {
 	sp<Facility> lab;
-	for (auto &a : state->current_city->cityViewSelectedBios,
-	     state->current_city->cityViewSelectedEngineers,
-	     state->current_city->cityViewSelectedPhysics)
+	for (auto &a : state->current_city->cityViewSelectedCivilians)
 	{
 		if (a && a->type->role == role)
 		{
@@ -419,6 +417,7 @@ bool CityView::handleClickedAgent(StateRef<Agent> agent, bool rightClick,
                                   CitySelectionState selState [[maybe_unused]])
 {
 	orderSelect(agent, rightClick, modifierLCtrl || modifierRCtrl);
+	LogWarning("%d", state->current_city->cityViewSelectedCivilians.size());
 	return true;
 }
 
@@ -905,8 +904,7 @@ void CityView::orderSelect(StateRef<Agent> agent, bool inverse, bool additive)
 			}
 		}
 	}
-
-	// Biochem dudes
+	// Biochem
 	if (agent->type->role == AgentType::Role::BioChemist)
 	{
 		auto pos = std::find(state->current_city->cityViewSelectedBios.begin(),
@@ -949,13 +947,8 @@ void CityView::orderSelect(StateRef<Agent> agent, bool inverse, bool additive)
 				}
 			}
 		}
-		if (state->current_city->cityViewSelectedBios.empty())
-		{
-			return;
-		}
 	}
-
-	// Physics guys
+	// Physics
 	if (agent->type->role == AgentType::Role::Physicist)
 	{
 		auto pos = std::find(state->current_city->cityViewSelectedPhysics.begin(),
@@ -998,12 +991,7 @@ void CityView::orderSelect(StateRef<Agent> agent, bool inverse, bool additive)
 				}
 			}
 		}
-		if (state->current_city->cityViewSelectedPhysics.empty())
-		{
-			return;
-		}
 	}
-
 	// Engineers
 	if (agent->type->role == AgentType::Role::Engineer)
 	{
@@ -1047,10 +1035,21 @@ void CityView::orderSelect(StateRef<Agent> agent, bool inverse, bool additive)
 				}
 			}
 		}
-		if (state->current_city->cityViewSelectedEngineers.empty())
-		{
-			return;
-		}
+	}
+	// Build civilian list
+	state->current_city->cityViewSelectedCivilians.clear();
+
+	for (auto &a : state->current_city->cityViewSelectedBios)
+	{
+		state->current_city->cityViewSelectedCivilians.push_back(a);
+	}
+	for (auto &a : state->current_city->cityViewSelectedPhysics)
+	{
+		state->current_city->cityViewSelectedCivilians.push_back(a);
+	}
+	for (auto &a : state->current_city->cityViewSelectedEngineers)
+	{
+		state->current_city->cityViewSelectedCivilians.push_back(a);
 	}
 }
 

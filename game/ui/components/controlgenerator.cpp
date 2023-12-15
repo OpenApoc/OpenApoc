@@ -128,6 +128,16 @@ VehicleTileInfo ControlGenerator::createVehicleInfo(GameState &state, sp<Vehicle
 			break;
 		}
 	}
+	for (auto &veh : state.current_city->cityViewSelectedOtherVehicles)
+	{
+		if (veh == v)
+		{
+			t.selected = (veh == state.current_city->cityViewSelectedOtherVehicles.front())
+			                 ? UnitSelectionState::FirstSelected
+			                 : UnitSelectionState::Selected;
+			break;
+		}
+	}
 
 	float maxHealth;
 	float currentHealth;
