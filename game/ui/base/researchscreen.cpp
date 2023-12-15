@@ -377,6 +377,9 @@ void ResearchScreen::setCurrentLabInfo()
 		if (agent.second->homeBuilding->base != this->state->current_base)
 			continue;
 
+		if (agent.second->currentBuilding != agent.second->homeBuilding)
+			continue;
+
 		if (agent.second->type->role != listedAgentType)
 			continue;
 
