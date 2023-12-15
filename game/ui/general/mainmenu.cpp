@@ -1,4 +1,5 @@
 #include "game/ui/general/mainmenu.h"
+#include "creditsmenu.h"
 #include "forms/form.h"
 #include "forms/label.h"
 #include "forms/ui.h"
@@ -63,6 +64,11 @@ void MainMenu::eventOccurred(Event *e)
 		*	fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<OptionsMenu>()});
 		*	return;
 		} */
+		if (e->forms().RaisedBy->Name == "BUTTON_CREDITS")
+		{
+			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<CreditsMenu>()});
+			return;
+		}
 		if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
 			fw().stageQueueCommand({StageCmd::Command::QUIT});

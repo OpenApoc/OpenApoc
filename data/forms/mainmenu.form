@@ -1,54 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc>
-  <form id="FORM_MAINMENU">
-    <style minwidth="640" minheight="480">
-      <position x="centre" y="centre"/>
-      <size width="644" height="484"/>
-      <backcolour r="128" g="80" b="80"/>
-      <graphic>
-        <image>xcom3/ufodata/titles.pcx</image>
-        <position x="2" y="2"/>
-        <size width="640" height="480"/>
-        <label text="OpenApocalypse">
-          <backcolour r="255" g="255" b="255" a="192"/>
-          <position x="0" y="0"/>
-          <size width="640" height="32"/>
-          <alignment horizontal="centre" vertical="centre"/>
-          <font>bigfont</font>
-        </label>
-        <label text="Version" id="VERSION_LABEL">
-          <position x="0" y="0"/>
-          <size width="640" height="16"/>
-          <alignment horizontal="left" vertical="centre"/>
-          <font>smallset</font>
-        </label>
-      </graphic>
-      <textbutton id="BUTTON_NEWGAME" text="Start Campaign Game">
-        <position x="centre" y="190"/>
-        <size width="300" height="32"/>
-        <font>smalfont</font>
-      </textbutton>
-      <textbutton id="BUTTON_LOADGAME" text="Load Saved Game">
-        <position x="centre" y="240"/>
-        <size width="300" height="32"/>
-        <font>smalfont</font>
-      </textbutton>
-  <!-- Options menu commented out until useful -->
-	<!-- <textbutton id="BUTTON_OPTIONS" text="Options">
-        <position x="centre" y="290"/>
-        <size width="300" height="32"/>
-        <font>smalfont</font>
-      </textbutton> -->
-      <textbutton id="BUTTON_QUIT" text="Quit">
-        <position x="centre" y="290"/>
-        <size width="300" height="32"/>
-        <font>smalfont</font>
-      </textbutton>
-      <textbutton id="BUTTON_DEBUG" text="Debug Menu" visible="N">
-        <position x="centre" y="340"/>
-        <size width="300" height="32"/>
-        <font>smalfont</font>
-      </textbutton>
-    </style>
-  </form>
+	<form id="FORM_MAINMENU">
+		<style minwidth="640" minheight="480">
+			<position x="centre" y="centre"/>
+			<size width="644" height="484"/>
+			<backcolour r="128" g="80" b="80"/>
+			<graphic>
+				<image>xcom3/ufodata/titles.pcx</image>
+				<position x="2" y="2"/>
+				<size width="640" height="480"/>
+				<label text="OpenApocalypse">
+					<backcolour r="255" g="255" b="255" a="192"/>
+					<position x="0" y="0"/>
+					<size width="640" height="32"/>
+					<alignment horizontal="centre" vertical="centre"/>
+					<font>bigfont</font>
+				</label>
+				<label text="Version" id="VERSION_LABEL">
+					<position x="0" y="0"/>
+					<size width="640" height="16"/>
+					<alignment horizontal="left" vertical="centre"/>
+					<font>smallset</font>
+				</label>
+			</graphic>
+			<textbutton id="BUTTON_NEWGAME" text="Start Campaign Game">
+				<position x="centre" y="190"/>
+				<size width="300" height="32"/>
+				<font>smalfont</font>
+			</textbutton>
+			<textbutton id="BUTTON_LOADGAME" text="Load Saved Game">
+				<position x="centre" y="240"/>
+				<size width="300" height="32"/>
+				<font>smalfont</font>
+			</textbutton>
+			<!-- Options menu commented out until useful -->
+			<!-- <textbutton id="BUTTON_OPTIONS" text="Options">
+				<position x="centre" y="290"/>
+				<size width="300" height="32"/>
+				<font>smalfont</font>
+			</textbutton> -->
+			<textbutton id="BUTTON_CREDITS" text="Credits">
+				<position x="centre" y="290"/>
+				<size width="300" height="32"/>
+				<font>smalfont</font>
+			</textbutton>
+			<textbutton id="BUTTON_QUIT" text="Quit">
+				<position x="centre" y="340"/>
+				<size width="300" height="32"/>
+				<font>smalfont</font>
+			</textbutton>
+			<textbutton id="BUTTON_DEBUG" text="Debug Menu" visible="N">
+				<position x="centre" y="390"/>
+				<size width="300" height="32"/>
+				<font>smalfont</font>
+			</textbutton>
+		</style>
+	</form>
 </openapoc>

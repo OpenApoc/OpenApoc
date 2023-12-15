@@ -134,13 +134,14 @@ class FlyingVehicleMover : public VehicleMover
 		if (vehicle.missions.empty() && (int)vehicle.position.z != (int)vehicle.altitude)
 		{
 			auto targetPos = vehicle.position;
+			float diff = std::abs((int)vehicle.position.z - (int)vehicle.altitude);
 			if (vehicle.position.z < (int)vehicle.altitude)
 			{
-				targetPos.z += 1.0f;
+				targetPos.z += diff;
 			}
 			else
 			{
-				targetPos.z -= 1.0f;
+				targetPos.z -= diff;
 			}
 			auto tFrom = vehicle.tileObject->getOwningTile();
 			auto tTo = tFrom->map.getTile(targetPos);
