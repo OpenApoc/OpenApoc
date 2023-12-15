@@ -180,6 +180,10 @@ class FlyingVehicleMover : public VehicleMover
 				dodge = 100;
 				break;
 		}
+		if (vehicle.missions.front().targetBuilding == vehicle.homeBuilding)
+		{
+			return;
+		}
 		if (vehicle.type->aggressiveness > 0 && randBoundsExclusive(state.rng, 0, 100) < dodge)
 		{
 			for (auto &p : state.current_city->projectiles)
