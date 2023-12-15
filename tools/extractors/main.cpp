@@ -276,6 +276,9 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 			     auto &sectorName = sectorPair.first;
 			     auto &sector = sectorPair.second;
 			     auto path = BattleMapSectorTiles::getMapSectorPath();
+
+			     sector->loadSector(s, "data/resource_patch/maps/" + sectorName);
+
 			     if (!sector->saveSector(path + "/" + sectorName, true))
 			     {
 				     LogError("Failed to save map sector \"%s\"", sectorName);
