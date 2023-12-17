@@ -118,11 +118,21 @@ VehicleTileInfo ControlGenerator::createVehicleInfo(GameState &state, sp<Vehicle
 	t.vehicle = v;
 	t.selected = UnitSelectionState::Unselected;
 
-	for (auto &veh : state.current_city->cityViewSelectedVehicles)
+	for (auto &veh : state.current_city->cityViewSelectedOwnedVehicles)
 	{
 		if (veh == v)
 		{
-			t.selected = (veh == state.current_city->cityViewSelectedVehicles.front())
+			t.selected = (veh == state.current_city->cityViewSelectedOwnedVehicles.front())
+			                 ? UnitSelectionState::FirstSelected
+			                 : UnitSelectionState::Selected;
+			break;
+		}
+	}
+	for (auto &veh : state.current_city->cityViewSelectedOtherVehicles)
+	{
+		if (veh == v)
+		{
+			t.selected = (veh == state.current_city->cityViewSelectedOtherVehicles.front())
 			                 ? UnitSelectionState::FirstSelected
 			                 : UnitSelectionState::Selected;
 			break;
@@ -435,11 +445,41 @@ AgentInfo ControlGenerator::createAgentInfo(GameState &state, sp<Agent> a,
 		// Select according to city state
 		else
 		{
-			for (auto &ag : state.current_city->cityViewSelectedAgents)
+			for (auto &ag : state.current_city->cityViewSelectedSoldiers)
 			{
 				if (ag == a)
 				{
-					i.selected = (ag == state.current_city->cityViewSelectedAgents.front())
+					i.selected = (ag == state.current_city->cityViewSelectedSoldiers.front())
+					                 ? UnitSelectionState::FirstSelected
+					                 : UnitSelectionState::Selected;
+					break;
+				}
+			}
+			for (auto &ag : state.current_city->cityViewSelectedBios)
+			{
+				if (ag == a)
+				{
+					i.selected = (ag == state.current_city->cityViewSelectedBios.front())
+					                 ? UnitSelectionState::FirstSelected
+					                 : UnitSelectionState::Selected;
+					break;
+				}
+			}
+			for (auto &ag : state.current_city->cityViewSelectedPhysics)
+			{
+				if (ag == a)
+				{
+					i.selected = (ag == state.current_city->cityViewSelectedPhysics.front())
+					                 ? UnitSelectionState::FirstSelected
+					                 : UnitSelectionState::Selected;
+					break;
+				}
+			}
+			for (auto &ag : state.current_city->cityViewSelectedEngineers)
+			{
+				if (ag == a)
+				{
+					i.selected = (ag == state.current_city->cityViewSelectedEngineers.front())
 					                 ? UnitSelectionState::FirstSelected
 					                 : UnitSelectionState::Selected;
 					break;
