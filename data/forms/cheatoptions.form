@@ -107,7 +107,7 @@
             <image/>
             <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
           </graphicbutton>
-          <label id="TEXT_MODIFY_FUNDS" text="+99k">
+          <label id="TEXT_MODIFY_FUNDS" text="+0k">
             <position x="184" y="2"/>
             <size width="36" height="14"/>
             <alignment horizontal="centre" vertical="centre"/>
