@@ -113,7 +113,7 @@ void CreditsMenu::loadlist()
 	contributorListControl->addItem(spacer);
 
 	// Lead Team, Developers and Programming
-	auto devLabel = mksp<Label>("- Lead Team, Developers and Programming -\n--==--", font);
+	auto devLabel = mksp<Label>("- Lead Team, Developers and Programming -\n", font);
 	devLabel->Size = {100, contributorListControl->ItemSize * 2};
 	devLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(devLabel);
@@ -128,7 +128,7 @@ void CreditsMenu::loadlist()
 	}
 
 	// Other GitHub contributors
-	auto trainLabel = mksp<Label>("- Other GitHub Contributors -\n--==--", font);
+	auto trainLabel = mksp<Label>("- Other GitHub Contributors -\n", font);
 	trainLabel->Size = {140, contributorListControl->ItemSize * 2};
 	trainLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(trainLabel);
@@ -143,7 +143,7 @@ void CreditsMenu::loadlist()
 	}
 
 	// Testers
-	auto progLabel = mksp<Label>("- Testing -\n--==--", font);
+	auto progLabel = mksp<Label>("- Testing -\n", font);
 	progLabel->Size = {140, contributorListControl->ItemSize * 2};
 	progLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(progLabel);
@@ -158,7 +158,7 @@ void CreditsMenu::loadlist()
 	}
 
 	// Modding Structure
-	auto testLabel = mksp<Label>("- Modding Structure -\n--==--", font);
+	auto testLabel = mksp<Label>("- Modding Structure -\n", font);
 	testLabel->Size = {140, contributorListControl->ItemSize * 2};
 	testLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(testLabel);
@@ -173,7 +173,7 @@ void CreditsMenu::loadlist()
 	}
 
 	// Reversing and Research
-	auto translateLabel = mksp<Label>("- Reversing and Research -\n--==--", font);
+	auto translateLabel = mksp<Label>("- Reversing and Research -\n", font);
 	translateLabel->Size = {140, contributorListControl->ItemSize * 2};
 	translateLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(translateLabel);
@@ -188,7 +188,7 @@ void CreditsMenu::loadlist()
 	}
 
 	// Translation
-	auto githubLabel = mksp<Label>("- Translation -\n--==--", font);
+	auto githubLabel = mksp<Label>("- Translation -\n", font);
 	githubLabel->Size = {140, contributorListControl->ItemSize * 2};
 	githubLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(githubLabel);
@@ -204,8 +204,7 @@ void CreditsMenu::loadlist()
 
 	// Memorial
 	auto memLabel = mksp<Label>(
-	    "--==--\nIn Memory of Panasenko Vasiliy Sergeevich / \"Atrosha\" (1980-2021)\n--==--",
-	    font);
+	    "\nIn Memory of Panasenko Vasiliy Sergeevich / \"Atrosha\" (1980-2021)\n", font);
 	memLabel->Size = {140, contributorListControl->ItemSize * 3};
 	memLabel->TextHAlign = HorizontalAlignment::Centre;
 	contributorListControl->addItem(memLabel);
