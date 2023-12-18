@@ -1016,6 +1016,47 @@ void OpenApoc::GameState::cleanUpDeathNote()
 		for (auto &name : this->agentsDeathNote)
 		{
 			agents.erase(name);
+
+			// Remove from selection
+			for (const auto &[cityId, city] : cities)
+			{
+				for (auto it = city->cityViewSelectedBios.begin();
+				     it != city->cityViewSelectedBios.end();)
+				{
+					if (it->id == name)
+					{
+						it = city->cityViewSelectedBios.erase(it);
+					}
+					else
+					{
+						++it;
+					}
+				}
+				for (auto it = city->cityViewSelectedPhysics.begin();
+				     it != city->cityViewSelectedPhysics.end();)
+				{
+					if (it->id == name)
+					{
+						it = city->cityViewSelectedPhysics.erase(it);
+					}
+					else
+					{
+						++it;
+					}
+				}
+				for (auto it = city->cityViewSelectedEngineers.begin();
+				     it != city->cityViewSelectedEngineers.end();)
+				{
+					if (it->id == name)
+					{
+						it = city->cityViewSelectedEngineers.erase(it);
+					}
+					else
+					{
+						++it;
+					}
+				}
+			}
 		}
 		agentsDeathNote.clear();
 	}
@@ -1256,7 +1297,8 @@ void GameState::updateEndOfDay()
 
 	luaGameState.callHook("updateEndOfDay", 0, 0);
 	// Check if today is the first day of the week (monday).
-	// In that case, do not show the daily report as it's already part of the weekly report event
+	// In that case, do not show the daily report as it's already part of the weekly report
+	// event
 	if (this->gameTime.getMonthDay() != this->gameTime.getFirstDayOfCurrentWeek())
 		fw().pushEvent(new GameEvent(GameEventType::DailyReport));
 }
@@ -1678,5 +1720,4 @@ bool GameState::appendGameState(const UString &gamestatePath)
 	auto systemPath = fw().data->fs.resolvePath(gamestatePath);
 	return this->loadGame(systemPath);
 }
-
 }; // namespace OpenApoc

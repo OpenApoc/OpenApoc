@@ -417,7 +417,6 @@ bool CityView::handleClickedAgent(StateRef<Agent> agent, bool rightClick,
                                   CitySelectionState selState [[maybe_unused]])
 {
 	orderSelect(agent, rightClick, modifierLCtrl || modifierRCtrl);
-	LogWarning("%d", state->current_city->cityViewSelectedCivilians.size());
 	return true;
 }
 
