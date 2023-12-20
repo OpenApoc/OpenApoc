@@ -2025,6 +2025,19 @@ void Vehicle::adjustRelationshipOnDowned(GameState &state, StateRef<Vehicle> att
 
 bool Vehicle::isDead() const { return health <= 0; }
 
+bool Vehicle::canDefend() const
+{
+	bool hasWeapons = false;
+	for (auto &e : this->equipment)
+	{
+		if (e->type->type == EquipmentSlotType::VehicleWeapon)
+		{
+			hasWeapons = true;
+		}
+	}
+	return hasWeapons;
+}
+
 Vec3<float> Vehicle::getMuzzleLocation() const
 {
 	return type->isGround()

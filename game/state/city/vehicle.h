@@ -275,6 +275,7 @@ class Vehicle : public StateObject<Vehicle>,
 	void startFalling(GameState &state, StateRef<Vehicle> attacker = nullptr);
 	void adjustRelationshipOnDowned(GameState &state, StateRef<Vehicle> attacker);
 	bool isDead() const;
+	bool canDefend() const;
 
 	bool canAddEquipment(Vec2<int> pos, StateRef<VEquipmentType> type) const;
 	sp<VEquipment> addEquipment(GameState &state, Vec2<int> pos,
