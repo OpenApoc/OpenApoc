@@ -82,7 +82,7 @@ class FrameworkPrivate
 	sp<Surface> scaleSurface;
 	up<ThreadPool> threadPool;
 
-	int toolTipTimerId = 0;
+	std::atomic<int> toolTipTimerId = 0;
 	up<Event> toolTipTimerEvent;
 	sp<Image> toolTipImage;
 	Vec2<int> toolTipPosition;

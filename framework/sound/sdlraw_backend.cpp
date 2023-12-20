@@ -105,9 +105,9 @@ class SDLRawBackend : public SoundBackend
 {
 	std::recursive_mutex audio_lock;
 
-	float overall_volume;
-	float music_volume;
-	float sound_volume;
+	std::atomic<float> overall_volume;
+	std::atomic<float> music_volume;
+	std::atomic<float> sound_volume;
 
 	sp<MusicTrack> track;
 	bool music_playing;
