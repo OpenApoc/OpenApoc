@@ -4371,13 +4371,13 @@ void CityView::updateSelectedUnits()
 	}
 	// Agents
 	{
-		auto it = state->current_city->cityViewSelectedSoldiers.begin();
-		while (it != state->current_city->cityViewSelectedSoldiers.end())
+		auto itSold = state->current_city->cityViewSelectedSoldiers.begin();
+		while (itSold != state->current_city->cityViewSelectedSoldiers.end())
 		{
-			auto a = *it;
+			auto a = *itSold;
 			if (!a || a->isDead())
 			{
-				it = state->current_city->cityViewSelectedSoldiers.erase(it);
+				itSold = state->current_city->cityViewSelectedSoldiers.erase(itSold);
 			}
 			else
 			{
@@ -4385,10 +4385,62 @@ void CityView::updateSelectedUnits()
 				{
 					foundOwned = true;
 				}
-				it++;
+				itSold++;
+			}
+		}
+		auto itBio = state->current_city->cityViewSelectedBios.begin();
+		while (itBio != state->current_city->cityViewSelectedBios.end())
+		{
+			auto a = *itBio;
+			if (!a || a->isDead())
+			{
+				itBio = state->current_city->cityViewSelectedBios.erase(itBio);
+			}
+			else
+			{
+				if (a->owner == o)
+				{
+					foundOwned = true;
+				}
+				itBio++;
+			}
+		}
+		auto itPhy = state->current_city->cityViewSelectedPhysics.begin();
+		while (itPhy != state->current_city->cityViewSelectedPhysics.end())
+		{
+			auto a = *itPhy;
+			if (!a || a->isDead())
+			{
+				itPhy = state->current_city->cityViewSelectedPhysics.erase(itPhy);
+			}
+			else
+			{
+				if (a->owner == o)
+				{
+					foundOwned = true;
+				}
+				itPhy++;
+			}
+		}
+		auto itEng = state->current_city->cityViewSelectedEngineers.begin();
+		while (itEng != state->current_city->cityViewSelectedEngineers.end())
+		{
+			auto a = *itEng;
+			if (!a || a->isDead())
+			{
+				itEng = state->current_city->cityViewSelectedEngineers.erase(itEng);
+			}
+			else
+			{
+				if (a->owner == o)
+				{
+					foundOwned = true;
+				}
+				itEng++;
 			}
 		}
 	}
+
 	if (!foundOwned && selectionState != CitySelectionState::Normal)
 	{
 		setSelectionState(CitySelectionState::Normal);
