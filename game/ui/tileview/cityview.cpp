@@ -881,6 +881,8 @@ void CityView::orderSelect(StateRef<Agent> agent, bool inverse, bool additive)
 		auto agentForm = this->uiTabs[2];
 		if (state->current_city->cityViewSelectedSoldiers.empty())
 		{
+			agentForm->findControlTyped<CheckBox>("BUTTON_AGENT_PHYSICAL")->setChecked(false);
+			agentForm->findControlTyped<CheckBox>("BUTTON_AGENT_PSI")->setChecked(false);
 			return;
 		}
 		agent = state->current_city->cityViewSelectedSoldiers.front();
