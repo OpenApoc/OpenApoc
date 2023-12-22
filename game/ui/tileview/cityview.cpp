@@ -785,6 +785,19 @@ void CityView::orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additiv
 	}
 	if (state->current_city->cityViewSelectedOwnedVehicles.empty())
 	{
+		auto vehicleForm = this->uiTabs[1];
+		vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGHEST")->setChecked(false);
+		vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGH")->setChecked(false);
+		vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_STANDARD")->setChecked(false);
+		vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_LOW")->setChecked(false);
+
+		vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_AGGRESSIVE")
+		    ->setChecked(false);
+		vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_STANDARD")
+		    ->setChecked(false);
+		vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_DEFENSIVE")
+		    ->setChecked(false);
+		vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_EVASIVE")->setChecked(false);
 		return;
 	}
 	vehicle = state->current_city->cityViewSelectedOwnedVehicles.front();
@@ -1248,7 +1261,11 @@ CityView::CityView(sp<GameState> state)
 	{
 		this->baseForm->findControl(format("BUTTON_TAB_%d", i + 1))
 		    ->addCallback(FormEventType::ButtonClick,
-		                  [this, i](Event *) { this->setSelectedTab(i); });
+		                  [this, i](Event *)
+		                  {
+			                  this->setSelectedTab(i);
+			                  this->update();
+		                  });
 	}
 	this->baseForm->findControl("BUTTON_FOLLOW_VEHICLE")
 	    ->addCallback(FormEventType::CheckBoxChange,
