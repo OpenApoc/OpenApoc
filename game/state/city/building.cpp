@@ -985,11 +985,14 @@ void Building::underAttack(GameState &state, StateRef<Organisation> attacker)
 	if (owner->isRelatedTo(attacker) == Organisation::Relation::Hostile)
 	{
 		std::list<StateRef<Vehicle>> toLaunch;
-		for (auto v : currentVehicles)
+		for (auto &v : currentVehicles)
 		{
-			toLaunch.push_back(v);
+			if (v->canDefend())
+			{
+				toLaunch.push_back(v);
+			}
 		}
-		for (auto v : toLaunch)
+		for (auto &v : toLaunch)
 		{
 			v->setMission(state, VehicleMission::patrol(state, *v, true, 5));
 		}
