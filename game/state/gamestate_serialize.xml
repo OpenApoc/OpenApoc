@@ -1105,6 +1105,7 @@
 		<member>accessTopic</member>
 		<member>victory</member>
 		<member>pendingInvestigatorCount</member>
+		<member>integrityPercentage</member>
 	</object>
 	<object>
 		<name>UFOIncursion</name>
@@ -1339,6 +1340,7 @@
 	<object>
 		<name>OrganisationRaid</name>
 		<member>nextRaidTimer</member>
+		<member>max_attack_vehicles</member>
 		<member>attack_vehicle_types</member>
 		<member>neutral_low_manpower</member>
 		<member>neutral_normal</member>

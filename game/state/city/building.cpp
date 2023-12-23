@@ -1102,4 +1102,13 @@ bool Building::occupied() const
 
 bool Building::isAlive() const { return countActiveTiles() > 0; }
 
+bool Building::isStable() const
+{
+	if ((float)this->buildingParts.size() / this->initialParts * 100.0 < this->integrityPercentage)
+	{
+		return false;
+	}
+	return true;
+}
+
 } // namespace OpenApoc

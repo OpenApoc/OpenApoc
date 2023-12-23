@@ -23,7 +23,7 @@ class OrganisationRaid
 
 	int nextRaidTimer = 0;
 
-	int max_attack_vehicles = 5;
+	int max_attack_vehicles;
 	std::vector<StateRef<VehicleType>> attack_vehicle_types;
 	std::map<Type, float> neutral_low_manpower;
 	std::map<Type, float> neutral_normal;

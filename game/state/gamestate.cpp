@@ -149,12 +149,14 @@ void GameState::initState()
 			{
 				auto &building = b.second;
 				Vec2<int> pos2d{s->initialPosition.x, s->initialPosition.y};
+				building->integrityPercentage = 50.0;
 				if (building->bounds.within(pos2d))
 				{
 					s->building = {this, building};
 					if (s->isAlive() && !s->type->commonProperty)
 					{
 						s->building->buildingParts.insert(s->initialPosition);
+						building->initialParts = s->building->buildingParts.size();
 					}
 					break;
 				}
@@ -202,6 +204,7 @@ void GameState::initState()
 			city->generatePortals(*this);
 		}
 	}
+	this->organisation_raid_rules.max_attack_vehicles = 5;
 	// Fill links for weapon's ammo
 	for (auto &t : this->agent_equipment)
 	{
@@ -1100,6 +1103,10 @@ void GameState::updateEndOfSecond()
 	for (auto &b : current_city->buildings)
 	{
 		b.second->updateCargo(*this);
+		if (!b.second->isStable())
+		{
+			b.second->collapse(*this);
+		}
 	}
 	for (auto &v : vehicles)
 	{

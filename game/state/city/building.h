@@ -88,6 +88,8 @@ class Building : public StateObject<Building>, public std::enable_shared_from_th
 	StateRef<ResearchTopic> accessTopic;
 	// Victory when successful at raiding this
 	bool victory = false;
+	// Percentage of tiles destroyed before collapse
+	float integrityPercentage;
 
 	// may fire a 'commence investigation' event
 	void decreasePendingInvestigatorCount(GameState &state);
@@ -109,6 +111,7 @@ class Building : public StateObject<Building>, public std::enable_shared_from_th
 	int getAverageConstitution() const;
 	bool isAlive() const;
 	bool occupied() const;
+	bool isStable() const;
 
 	// Following members are not serialized, but rather are set in City::initCity method
 
@@ -116,6 +119,7 @@ class Building : public StateObject<Building>, public std::enable_shared_from_th
 	Vec3<int> carEntranceLocation = {-1, -1, -1};
 	std::set<Vec3<int>> landingPadLocations;
 	std::set<Vec3<int>> buildingParts;
+	int initialParts;
 };
 
 }; // namespace OpenApoc
