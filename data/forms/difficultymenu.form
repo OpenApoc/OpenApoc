@@ -3,13 +3,13 @@
   <form id="FORM_DIFFICULTYMENU">
     <style minwidth="640" minheight="480">
       <position x="centre" y="centre"/>
-      <size width="644" height="484"/>
+      <size width="640" height="480"/>
       <backcolour r="128" g="80" b="80"/>
       <graphic>
         <image>xcom3/ufodata/titles.pcx</image>
-        <position x="2" y="2"/>
+        <position x="0" y="0"/>
         <size width="640" height="480"/>
-        <label text="OpenApocalypse">
+        <label text="OpenApoc">
           <backcolour r="255" g="255" b="255" a="192"/>
           <position x="0" y="0"/>
           <size width="640" height="32"/>
