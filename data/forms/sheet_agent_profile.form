@@ -3,7 +3,7 @@
   <form id="FORM_AEQUIPSCREEN_AGENT_PROFILE">
     <style minwidth="160" minheight="280">
       <position x="centre" y="centre"/>
-      <size width="160" height="280"/>
+      <size width="160" height="101"/>
       <textedit id="AGENT_NAME" text="AGENT NAME GOES HERE">
         <position x="0" y="86"/>
         <size width="160" height="15"/>
