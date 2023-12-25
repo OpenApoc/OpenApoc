@@ -628,6 +628,7 @@ void GameState::startGame()
 		buildingIt->second->current_crew[l.first] =
 		    randBoundsExclusive(rng, l.second.x, l.second.y);
 	}
+	buildingIt->second->initialInfiltration = true;
 
 	gameTime = GameTime::midday();
 
@@ -650,7 +651,7 @@ void GameState::fillPlayerStartingProperty()
 	std::vector<sp<Building>> buildingsWithBases;
 	for (auto &b : humanCity->buildings)
 	{
-		if (b.second->base_layout)
+		if (b.second->base_layout && !b.second->initialInfiltration)
 			buildingsWithBases.push_back(b.second);
 	}
 

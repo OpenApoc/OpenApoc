@@ -88,6 +88,8 @@ class Building : public StateObject<Building>, public std::enable_shared_from_th
 	StateRef<ResearchTopic> accessTopic;
 	// Victory when successful at raiding this
 	bool victory = false;
+	// Initial alien building
+	bool initialInfiltration = false;
 
 	// may fire a 'commence investigation' event
 	void decreasePendingInvestigatorCount(GameState &state);
