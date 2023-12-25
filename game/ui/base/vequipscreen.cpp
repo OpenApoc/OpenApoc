@@ -338,6 +338,16 @@ void VEquipScreen::eventOccurred(Event *e)
 				if ((modifierLShift || modifierRShift) &&
 				    config().getBool("OpenApoc.NewFeature.AdvancedInventoryControls"))
 				{
+					if (!draggedEquipment->research_dependency.satisfied())
+					{
+						auto message_box = mksp<MessageBox>(
+						    tr("Alien Artifact"),
+						    tr("You must research Alien technology before you can use it."),
+						    MessageBox::ButtonOptions::Ok);
+						fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+						this->draggedEquipment = nullptr;
+						return;
+					}
 					auto e = this->selected->addEquipment(*state, this->draggedEquipment);
 					if (e)
 					{
@@ -364,6 +374,16 @@ void VEquipScreen::eventOccurred(Event *e)
 			equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
 			if (this->selected->canAddEquipment(equipmentGridPos, this->draggedEquipment))
 			{
+				if (!draggedEquipment->research_dependency.satisfied())
+				{
+					auto message_box = mksp<MessageBox>(
+					    tr("Alien Artifact"),
+					    tr("You must research Alien technology before you can use it."),
+					    MessageBox::ButtonOptions::Ok);
+					fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
+					this->draggedEquipment = nullptr;
+					return;
+				}
 				if (base->inventoryVehicleEquipment[draggedEquipment->id] <= 0)
 				{
 					LogError("Trying to equip item \"%s\" with zero inventory",
@@ -375,7 +395,7 @@ void VEquipScreen::eventOccurred(Event *e)
 				this->paperDoll->updateEquipment();
 				// FIXME: Add ammo to equipment
 			}
-			this->draggedEquipment = "";
+			this->draggedEquipment = nullptr;
 		}
 	}
 }
