@@ -785,58 +785,7 @@ void CityView::orderSelect(StateRef<Vehicle> vehicle, bool inverse, bool additiv
 	}
 	if (state->current_city->cityViewSelectedOwnedVehicles.empty())
 	{
-		auto vehicleForm = this->uiTabs[1];
-		vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGHEST")->setChecked(false);
-		vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGH")->setChecked(false);
-		vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_STANDARD")->setChecked(false);
-		vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_LOW")->setChecked(false);
-
-		vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_AGGRESSIVE")
-		    ->setChecked(false);
-		vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_STANDARD")
-		    ->setChecked(false);
-		vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_DEFENSIVE")
-		    ->setChecked(false);
-		vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_EVASIVE")->setChecked(false);
 		return;
-	}
-	vehicle = state->current_city->cityViewSelectedOwnedVehicles.front();
-	auto vehicleForm = this->uiTabs[1];
-	switch (vehicle->altitude)
-	{
-		case Vehicle::Altitude::Highest:
-			vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGHEST")->setChecked(true);
-			break;
-		case Vehicle::Altitude::High:
-			vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGH")->setChecked(true);
-			break;
-		case Vehicle::Altitude::Standard:
-			vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_STANDARD")
-			    ->setChecked(true);
-			break;
-		case Vehicle::Altitude::Low:
-			vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_LOW")->setChecked(true);
-			break;
-	}
-
-	switch (vehicle->attackMode)
-	{
-		case Vehicle::AttackMode::Aggressive:
-			vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_AGGRESSIVE")
-			    ->setChecked(true);
-			break;
-		case Vehicle::AttackMode::Standard:
-			vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_STANDARD")
-			    ->setChecked(true);
-			break;
-		case Vehicle::AttackMode::Defensive:
-			vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_DEFENSIVE")
-			    ->setChecked(true);
-			break;
-		case Vehicle::AttackMode::Evasive:
-			vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_EVASIVE")
-			    ->setChecked(true);
-			break;
 	}
 }
 
@@ -2341,11 +2290,12 @@ void CityView::update()
 		}
 		ownedVehicleInfoList.resize(currentVehicleIndex + 1);
 
-		// Update weapon controls
+		// Update weapon controls and vehicle stance
 		std::vector<sp<VEquipment>> currentWeapons;
 		if (!state->current_city->cityViewSelectedOwnedVehicles.empty())
 		{
 			auto vehicle = state->current_city->cityViewSelectedOwnedVehicles.front();
+			auto vehicleForm = this->uiTabs[1];
 			if (vehicle->owner != state->getPlayer())
 			{
 				if (state->current_city->cityViewSelectedOwnedVehicles.size() > 1)
@@ -2359,6 +2309,44 @@ void CityView::update()
 			}
 			if (vehicle)
 			{
+				switch (vehicle->altitude)
+				{
+					case Vehicle::Altitude::Highest:
+						vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGHEST")
+						    ->setChecked(true);
+						break;
+					case Vehicle::Altitude::High:
+						vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGH")
+						    ->setChecked(true);
+						break;
+					case Vehicle::Altitude::Standard:
+						vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_STANDARD")
+						    ->setChecked(true);
+						break;
+					case Vehicle::Altitude::Low:
+						vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_LOW")
+						    ->setChecked(true);
+						break;
+				}
+				switch (vehicle->attackMode)
+				{
+					case Vehicle::AttackMode::Aggressive:
+						vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_AGGRESSIVE")
+						    ->setChecked(true);
+						break;
+					case Vehicle::AttackMode::Standard:
+						vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_STANDARD")
+						    ->setChecked(true);
+						break;
+					case Vehicle::AttackMode::Defensive:
+						vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_DEFENSIVE")
+						    ->setChecked(true);
+						break;
+					case Vehicle::AttackMode::Evasive:
+						vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_EVASIVE")
+						    ->setChecked(true);
+						break;
+				}
 				for (auto &e : vehicle->equipment)
 				{
 					if (e->type->type == EquipmentSlotType::VehicleWeapon)
@@ -2367,6 +2355,24 @@ void CityView::update()
 					}
 				}
 			}
+		}
+		else
+		{
+			auto vehicleForm = this->uiTabs[1];
+			vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGHEST")
+			    ->setChecked(false);
+			vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGH")->setChecked(false);
+			vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_STANDARD")
+			    ->setChecked(false);
+			vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_LOW")->setChecked(false);
+			vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_AGGRESSIVE")
+			    ->setChecked(false);
+			vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_STANDARD")
+			    ->setChecked(false);
+			vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_DEFENSIVE")
+			    ->setChecked(false);
+			vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_EVASIVE")
+			    ->setChecked(false);
 		}
 		for (int i = 0; i < weaponType.size(); i++)
 		{
