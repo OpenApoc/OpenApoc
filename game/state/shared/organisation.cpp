@@ -1190,6 +1190,7 @@ void Organisation::RecurringMission::execute(GameState &state, StateRef<City> ci
 		}
 		// Make list of functional spaceports
 		std::list<StateRef<Building>> spaceports;
+		std::list<sp<Vehicle>> linerList;
 		for (auto &b : city->spaceports)
 		{
 			if (b->isAlive())
@@ -1208,9 +1209,26 @@ void Organisation::RecurringMission::execute(GameState &state, StateRef<City> ci
 				{
 					spaceports.push_back(b);
 				}
+				for (auto &v : b->currentVehicles)
+				{
+					if (pattern.allowedTypes.find(v->type) != pattern.allowedTypes.end())
+					{
+						linerList.push_back(v);
+					}
+				}
 			}
 		}
 		if (spaceports.empty())
+		{
+			return;
+		}
+		/* FIXME:
+		 *  This limits the total number of space liners that can be
+		 *  sent from space. This should be removed when the proper economy
+		 *  is working as this would limit the amount of raw materials that
+		 *  come into the city.
+		 */
+		if (linerList.size() > maxLiners)
 		{
 			return;
 		}
