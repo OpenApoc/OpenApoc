@@ -88,6 +88,7 @@ class Organisation : public StateObject<Organisation>
 	  public:
 		uint64_t time = 0;
 		MissionPattern pattern;
+		int maxLiners = 16;
 
 		void execute(GameState &state, StateRef<City> city, StateRef<Organisation> owner);
 
