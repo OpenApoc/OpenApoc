@@ -90,6 +90,7 @@ void TransactionScreen::setDisplayType(Type type)
 	formItemVehicle->setVisible(false);
 	formAgentStats->setVisible(false);
 	formPersonnelStats->setVisible(false);
+	formAgentProfile->setVisible(false);
 
 	form->findControlTyped<ScrollBar>("LIST_SCROLL")->setValue(0);
 	auto list = form->findControlTyped<ListBox>("LIST");
