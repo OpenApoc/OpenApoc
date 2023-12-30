@@ -135,54 +135,70 @@ sp<Facility> findCurrentResearchFacility(sp<GameState> state, AgentType::Role ro
                                          FacilityType::Capacity capacity)
 {
 	sp<Facility> lab;
-	for (auto &a : state->current_city->cityViewSelectedCivilians)
+	if (!state->current_city->cityViewSelectedCivilians.empty())
 	{
-		if (a && a->type->role == role)
+		for (auto &a : state->current_city->cityViewSelectedCivilians)
 		{
-			state->current_base = a->homeBuilding->base;
-			if (a->assigned_to_lab)
+			if (a && a->type->role == role)
 			{
-				auto thisRef = StateRef<Agent>{state.get(), a};
-				for (auto &fac : state->current_base->facilities)
+				state->current_base = a->homeBuilding->base;
+				if (a->assigned_to_lab)
 				{
-					if (!fac->lab)
+					auto thisRef = StateRef<Agent>{state.get(), a};
+					for (auto &fac : state->current_base->facilities)
 					{
-						continue;
+						if (!fac->lab)
+						{
+							continue;
+						}
+						auto it = std::find(fac->lab->assigned_agents.begin(),
+						                    fac->lab->assigned_agents.end(), thisRef);
+						if (it != fac->lab->assigned_agents.end())
+						{
+							lab = fac;
+							break;
+						}
 					}
-					auto it = std::find(fac->lab->assigned_agents.begin(),
-					                    fac->lab->assigned_agents.end(), thisRef);
-					if (it != fac->lab->assigned_agents.end())
+				}
+				else
+				{
+					for (auto &f : state->current_base->facilities)
 					{
-						lab = fac;
+						if (f->type->capacityType == capacity)
+						{
+							lab = f;
+							break;
+						}
+					}
+				}
+				break;
+			}
+		}
+		if (lab == nullptr)
+		{
+			for (auto &base : state->player_bases)
+			{
+				for (auto &facility : base.second->facilities)
+				{
+					if (facility->type->capacityType == capacity)
+					{
+						lab = facility;
 						break;
 					}
 				}
+				if (lab)
+					break;
 			}
-			else
-			{
-				for (auto &f : state->current_base->facilities)
-				{
-					if (f->type->capacityType == capacity)
-					{
-						lab = f;
-						break;
-					}
-				}
-			}
-			break;
 		}
 	}
-	if (lab == nullptr)
+	else
 	{
-		for (auto &base : state->player_bases)
+		for (auto &f : state->current_base->facilities)
 		{
-			for (auto &facility : base.second->facilities)
+			if (f->type->capacityType == capacity)
 			{
-				if (facility->type->capacityType == capacity)
-				{
-					lab = facility;
-					break;
-				}
+				lab = f;
+				break;
 			}
 			if (lab)
 				break;
