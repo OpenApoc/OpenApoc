@@ -3547,6 +3547,25 @@ bool CityView::handleKeyDown(Event *e)
 					                          *state, *v, false, state->current_base->building));
 					return true;
 				}
+				case SDLK_MINUS:
+				{
+					LogWarning("Clearing Space Liners...");
+					for (auto &v : state->vehicles)
+					{
+						if (v.second->type.id == "VEHICLETYPE_SPACE_LINER")
+						{
+							if (v.second->tileObject)
+							{
+								v.second->die(*state);
+							}
+							else
+							{
+								state->vehiclesDeathNote.insert(v.first);
+							}
+						}
+					}
+					return true;
+				}
 			}
 		}
 	}
