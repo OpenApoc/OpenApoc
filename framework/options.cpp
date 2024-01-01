@@ -54,6 +54,7 @@ void dumpOptionsToLog()
 	dumpOption(actionMusicOption);
 	dumpOption(autoExecuteOption);
 	dumpOption(toolTipDelay);
+	dumpOption(vanillaToggle);
 
 	dumpOption(optionPauseOnUfoSpotted);
 	dumpOption(optionPauseOnVehicleLightDamage);
@@ -74,6 +75,7 @@ void dumpOptionsToLog()
 	dumpOption(optionPauseOnVehicleRefuelled);
 	dumpOption(optionPauseOnNotEnoughFuel);
 	dumpOption(optionPauseOnUnauthorizedVehicle);
+	dumpOption(optionPauseOnBaseDestroyed);
 	dumpOption(optionPauseOnHostileSpotted);
 	dumpOption(optionPauseOnHostileDied);
 	dumpOption(optionPauseOnUnknownDied);
@@ -93,9 +95,11 @@ void dumpOptionsToLog()
 	dumpOption(optionPauseOnAgentPsiControlled);
 	dumpOption(optionPauseOnAgentPsiOver);
 
+	dumpOption(optionDebugCommandsVisible);
 	dumpOption(optionUFODamageModel);
 	dumpOption(optionInstantExplosionDamage);
 	dumpOption(optionGravliftSounds);
+	dumpOption(optionNoScrollSounds);
 	dumpOption(optionNoInstantThrows);
 	dumpOption(optionFerryChecksRelationshipWhenBuying);
 	dumpOption(optionAllowManualCityTeleporters);
@@ -130,6 +134,8 @@ void dumpOptionsToLog()
 	dumpOption(optionAutoReload);
 	dumpOption(optionLeftClickIcon);
 	dumpOption(optionBattlescapeVertScroll);
+	dumpOption(optionSingleSquadSelect);
+	dumpOption(optionATVUFOMission);
 	dumpOption(optionRepairWithConstructionVehicles);
 
 	dumpOption(optionStunHostileAction);
@@ -254,6 +260,7 @@ ConfigOptionBool autoExecuteOption("Options.Misc", "AutoExecute",
 ConfigOptionInt toolTipDelay("Options.Misc", "ToolTipDelay",
                              "Delay in milliseconds before showing tooltips (<= 0 to disable)",
                              500);
+ConfigOptionBool vanillaToggle("Options.Misc", "VanillaToggle", "Toggle vanilla mode", false);
 
 ConfigOptionBool optionPauseOnUfoSpotted("Notifications.City", "UfoSpotted", "UFO spotted", true);
 ConfigOptionBool optionPauseOnVehicleLightDamage("Notifications.City", "VehicleLightDamage",
@@ -292,6 +299,8 @@ ConfigOptionBool optionPauseOnNotEnoughFuel("Notifications.City", "NotEnoughFuel
                                             "Not enough fuel to refuel vehicle", true);
 ConfigOptionBool optionPauseOnUnauthorizedVehicle("Notifications.City", "UnauthorizedVehicle",
                                                   "Unauthorized vehicle detected", true);
+ConfigOptionBool optionPauseOnBaseDestroyed("Notifications.City", "BaseDestroyed",
+                                            "X-COM base destroyed by hostile forces.", true);
 ConfigOptionBool optionPauseOnHostileSpotted("Notifications.Battle", "HostileSpotted",
                                              "Hostile unit spotted", true);
 ConfigOptionBool optionPauseOnHostileDied("Notifications.Battle", "HostileDied",
@@ -329,13 +338,16 @@ ConfigOptionBool optionPauseOnAgentPsiControlled("Notifications.Battle", "AgentP
                                                  "Unit under Psionic control", true);
 ConfigOptionBool optionPauseOnAgentPsiOver("Notifications.Battle", "AgentPsiOver",
                                            "Unit freed from Psionic control", true);
-
+ConfigOptionBool optionDebugCommandsVisible("OpenApoc.NewFeature", "DebugCommandsVisible",
+                                            "Show the debug commands on screen", true);
 ConfigOptionBool optionUFODamageModel("OpenApoc.NewFeature", "UFODamageModel",
                                       "X-Com 1 Damage model (0-200%)", false);
 ConfigOptionBool optionInstantExplosionDamage("OpenApoc.NewFeature", "InstantExplosionDamage",
                                               "Explosions damage instantly", false);
 ConfigOptionBool optionGravliftSounds("OpenApoc.NewFeature", "GravliftSounds", "Gravlift sounds",
                                       true);
+ConfigOptionBool optionNoScrollSounds("OpenApoc.NewFeature", "NoScrollSounds",
+                                      "Disable scrolling sounds", false);
 ConfigOptionBool optionNoInstantThrows("OpenApoc.NewFeature", "NoInstantThrows",
                                        "Throwing requires proper facing and pose", true);
 ConfigOptionBool optionFerryChecksRelationshipWhenBuying(
@@ -410,6 +422,12 @@ ConfigOptionBool optionLeftClickIcon("OpenApoc.NewFeature", "LeftClickIconEquip"
 ConfigOptionBool optionBattlescapeVertScroll("OpenApoc.NewFeature", "BattlescapeVertScroll",
                                              "Mousewheel changes vertical level in battlescape",
                                              true);
+ConfigOptionBool optionSingleSquadSelect("OpenApoc.NewFeature", "SingleSquadSelect",
+                                         "Select squad with single click", false);
+ConfigOptionBool
+    optionATVUFOMission("OpenApoc.NewFeature", "ATVUFOMission",
+                        "Allow ATV vehicles to initiate UFO missions (and recover vehicles)",
+                        false);
 ConfigOptionBool optionRepairWithConstructionVehicles(
     "OpenApoc.NewFeature", "RepairWithConstructionVehicles",
     "Repair Buildings depending on the availability of Construction Vehicles", false);
@@ -433,7 +451,7 @@ ConfigOptionBool optionCrashingVehicles("OpenApoc.Mod", "CrashingVehicles",
 
 ConfigOptionString optionScriptsList("OpenApoc.Mod", "ScriptsList",
                                      "Semicolon-separated list of scripts to load",
-                                     "data/scripts/openapoc_base.lua;");
+                                     "scripts/openapoc_base.lua;");
 
 ConfigOptionBool optionInfiniteAmmoCheat("OpenApoc.Cheat", "InfiniteAmmo",
                                          "Infinite ammo for X-Com agents and vehicles", false);
