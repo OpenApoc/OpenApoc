@@ -3564,6 +3564,16 @@ bool CityView::handleKeyDown(Event *e)
 							}
 						}
 					}
+					for (auto &b : state->current_city->spaceports)
+					{
+						for (auto &v : b->currentVehicles)
+						{
+							if (v->type.id == "VEHICLETYPE_SPACE_LINER")
+							{
+								b->currentVehicles.erase(v);
+							}
+						}
+					}
 					return true;
 				}
 			}
