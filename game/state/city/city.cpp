@@ -425,6 +425,7 @@ void City::repairScenery(GameState &state)
 		}
 	}
 	// Step 02: Repair destroyed scenery
+	LogWarning("Repair Cycle starting");
 	std::set<sp<Scenery>> sceneryToRepair;
 	for (auto &s : scenery)
 	{
@@ -435,9 +436,9 @@ void City::repairScenery(GameState &state)
 	}
 
 	std::queue<sp<Scenery>> repairQueue;
+	std::set<sp<Scenery>> alreadyProcessed;
 	// Find all scenery which should be repaired this night and add them to the repair Queue
-	// Pick one scenery, add all scenery that must be repaired together, then find the lowest of
-	// them
+	// Allows repair for all Scenery which does not need support or has valid support below
 	while (!sceneryToRepair.empty())
 	{
 		std::set<sp<Scenery>> repairedTogether;
@@ -445,49 +446,34 @@ void City::repairScenery(GameState &state)
 		auto nextScenery = *sceneryToRepair.begin();
 		repairedTogether.insert(nextScenery);
 		sceneryToRepair.erase(nextScenery);
-		// Keep adding until we added everything
-		bool addedMore = false;
-		do
-		{
-			addedMore = false;
-			for (auto &s : repairedTogether)
-			{
-				// Check if all supportedBy scenery is intact or added
-				for (auto &p : s->supportedBy)
-				{
-					// If no scenery or dead
-					auto support = map->getTile(p)->presentScenery;
-					if (!support || !support->isAlive())
-					{
-						// If we haven't added it already
-						if (addedPositions.find(p) == addedPositions.end())
-						{
-							// Need to find it by its initial position
-							for (auto &deadScenery : scenery)
-							{
-								if (deadScenery->initialPosition == p)
-								{
-									repairedTogether.insert(deadScenery);
-									break;
-								}
-							}
-						}
-					}
-				} // for every supportedBy position
-			}     // for every repairedTogether scenery
-		} while (addedMore);
 
-		// find lowest part of scenery column which needs to be repaired
-		sp<OpenApoc::Scenery> lowestLevel = NULL;
-		for (auto &s : repairedTogether)
+		std::string pos = std::to_string(nextScenery->initialPosition.x) + ", " +
+		                  std::to_string(nextScenery->initialPosition.y) + ", " +
+		                  std::to_string(nextScenery->initialPosition.z);
+		LogWarning("Currently Processing Tile: " + pos);
+
+		if (nextScenery->supportedBy.empty())
 		{
-			if (lowestLevel == NULL || lowestLevel->currentPosition.z > s->currentPosition.z)
+			LogWarning("Tile at " + pos + " is has no support requirement, adding to repair queue");
+			repairQueue.push(nextScenery);
+		}
+		else
+		{
+			for (auto &p : nextScenery->supportedBy)
 			{
-				lowestLevel = s;
+				auto &support = map->getTile(p)->presentScenery;
+
+				if (!support || !support->isAlive())
+				{
+					LogWarning("Tile at " + pos + " has no support due to destroyed tile below");
+				}
+				else
+				{
+					LogWarning("Tile at " + pos + " has support below, adding to repair queue");
+					repairQueue.push(nextScenery);
+				}
 			}
 		}
-
-		repairQueue.push(lowestLevel);
 	}
 
 	std::set<sp<OpenApoc::Vehicle>> constructionVehicles;
@@ -552,6 +538,8 @@ void City::repairScenery(GameState &state)
 			if (config().getBool("OpenApoc.NewFeature.RepairWithConstructionVehicles") &&
 			    currentVehicle->tilesRepaired++ > OpenApoc::MAX_TILE_REPAIR)
 				constructionVehicles.erase(currentVehicle);
+			// reset repair counter for follow on Night
+			currentVehicle->tilesRepaired = 0;
 		}
 	}
 }
