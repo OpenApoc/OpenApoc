@@ -26,7 +26,7 @@ extern ConfigOptionString languageOption;
 
 extern ConfigOptionInt frameLimit;
 extern ConfigOptionInt targetFPS;
-extern ConfigOptionInt swapInterval; 
+extern ConfigOptionInt swapInterval;
 
 extern ConfigOptionBool autoScrollOption;
 extern ConfigOptionBool actionMusicOption;
@@ -115,7 +115,6 @@ extern ConfigOptionBool optionLeftClickIcon;
 extern ConfigOptionBool optionBattlescapeVertScroll;
 extern ConfigOptionBool optionSingleSquadSelect;
 extern ConfigOptionBool optionATVUFOMission;
-
 
 extern ConfigOptionBool optionStunHostileAction;
 extern ConfigOptionBool optionRaidHostileAction;

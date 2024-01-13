@@ -428,9 +428,9 @@ ConfigOptionBool
     optionATVUFOMission("OpenApoc.NewFeature", "ATVUFOMission",
                         "Allow ATV vehicles to initiate UFO missions (and recover vehicles)",
                         false);
-ConfigOptionInt optionMaxTileRepair(
-    "OpenApoc.NewFeature", "MaxTileRepair",
-    "Construction Vehicles will repair a maximum of X Tiles per night", 5);
+ConfigOptionInt
+    optionMaxTileRepair("OpenApoc.NewFeature", "MaxTileRepair",
+                        "Construction Vehicles will repair a maximum of X Tiles per night", 5);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);

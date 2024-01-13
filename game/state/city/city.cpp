@@ -518,7 +518,8 @@ void City::repairScenery(GameState &state)
 
 			// check if sufficient funds are available, the tile is still dead and a construction
 			// vehicle is available
-			if (buildingOwner->balance < initialType->value || s->isAlive() || currentVehicle == NULL)
+			if (buildingOwner->balance < initialType->value || s->isAlive() ||
+			    currentVehicle == NULL)
 			{
 				repairQueue.pop();
 				continue;
@@ -532,20 +533,21 @@ void City::repairScenery(GameState &state)
 				// delete out of list to prevent repairing again
 				repairQueue.pop();
 				tilesRepaired++;
-				if (currentVehicle->tilesRepaired++ > config().getInt("OpenApoc.NewFeature.MaxTileRepair"))
+				if (currentVehicle->tilesRepaired++ >
+				    config().getInt("OpenApoc.NewFeature.MaxTileRepair"))
 				{
 					constructionVehicles.erase(currentVehicle);
 				}
 			}
 		}
-		//No Tiles repaired in last iteration due to no funds or vehicle match
+		// No Tiles repaired in last iteration due to no funds or vehicle match
 		if (tilesRepaired <= 0)
 		{
 			break;
 		}
 	}
 
-	//Reset Vehicles to be ready for the next repair cycle
+	// Reset Vehicles to be ready for the next repair cycle
 	constructionVehicles = findConstructionVehicles(state);
 	for (auto &v : constructionVehicles)
 	{
