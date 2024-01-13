@@ -42,7 +42,6 @@ std::list<std::pair<UString, UString>> cityscapeList = {
     {"OpenApoc.NewFeature", "SkipTurboMovement"},
     {"OpenApoc.NewFeature", "CrashingOutOfFuel"},
     {"OpenApoc.NewFeature", "ATVUFOMission"},
-    {"OpenApoc.NewFeature", "RepairWithConstructionVehicles"},
     {"OpenApoc.Mod", "RaidHostileAction"},
     {"OpenApoc.Mod", "CrashingVehicles"},
     {"OpenApoc.Mod", "InvulnerableRoads"},

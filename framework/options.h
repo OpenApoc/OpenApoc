@@ -26,7 +26,7 @@ extern ConfigOptionString languageOption;
 
 extern ConfigOptionInt frameLimit;
 extern ConfigOptionInt targetFPS;
-extern ConfigOptionInt swapInterval;
+extern ConfigOptionInt swapInterval; 
 
 extern ConfigOptionBool autoScrollOption;
 extern ConfigOptionBool actionMusicOption;
@@ -95,6 +95,7 @@ extern ConfigOptionBool optionAlternateVehicleShieldSound;
 extern ConfigOptionBool optionEnableAgentTemplates;
 extern ConfigOptionBool optionStoreDroppedEquipment;
 extern ConfigOptionBool optionFallingGroundVehicles;
+extern ConfigOptionInt optionMaxTileRepair;
 
 extern ConfigOptionBool optionEnforceCargoLimits;
 extern ConfigOptionBool optionAllowNearbyVehicleLootPickup;
@@ -114,7 +115,7 @@ extern ConfigOptionBool optionLeftClickIcon;
 extern ConfigOptionBool optionBattlescapeVertScroll;
 extern ConfigOptionBool optionSingleSquadSelect;
 extern ConfigOptionBool optionATVUFOMission;
-extern ConfigOptionBool optionRepairWithConstructionVehicles;
+
 
 extern ConfigOptionBool optionStunHostileAction;
 extern ConfigOptionBool optionRaidHostileAction;

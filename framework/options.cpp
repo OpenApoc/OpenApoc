@@ -117,6 +117,7 @@ void dumpOptionsToLog()
 	dumpOption(optionEnableAgentTemplates);
 	dumpOption(optionStoreDroppedEquipment);
 	dumpOption(optionFallingGroundVehicles);
+	dumpOption(optionMaxTileRepair);
 
 	dumpOption(optionEnforceCargoLimits);
 	dumpOption(optionAllowNearbyVehicleLootPickup);
@@ -136,7 +137,6 @@ void dumpOptionsToLog()
 	dumpOption(optionBattlescapeVertScroll);
 	dumpOption(optionSingleSquadSelect);
 	dumpOption(optionATVUFOMission);
-	dumpOption(optionRepairWithConstructionVehicles);
 
 	dumpOption(optionStunHostileAction);
 	dumpOption(optionRaidHostileAction);
@@ -428,9 +428,9 @@ ConfigOptionBool
     optionATVUFOMission("OpenApoc.NewFeature", "ATVUFOMission",
                         "Allow ATV vehicles to initiate UFO missions (and recover vehicles)",
                         false);
-ConfigOptionBool optionRepairWithConstructionVehicles(
-    "OpenApoc.NewFeature", "RepairWithConstructionVehicles",
-    "Repair Buildings depending on the availability of Construction Vehicles", false);
+ConfigOptionInt optionMaxTileRepair(
+    "OpenApoc.NewFeature", "MaxTileRepair",
+    "Construction Vehicles will repair a maximum of X Tiles per night", 5);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);

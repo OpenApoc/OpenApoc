@@ -424,58 +424,137 @@ void City::repairScenery(GameState &state)
 			}
 		}
 	}
-	// Step 02: Repair destroyed scenery
-	LogWarning("Repair Cycle starting");
-	std::set<sp<Scenery>> sceneryToRepair;
-	for (auto &s : scenery)
+
+	std::set<sp<OpenApoc::Vehicle>> constructionVehicles = findConstructionVehicles(state);
+
+	while (!constructionVehicles.empty())
 	{
-		if (!s->isAlive())
+		// Step 02: Repair destroyed scenery
+		LogWarning("Repair Cycle starting");
+		std::set<sp<Scenery>> sceneryToRepair;
+		for (auto &s : scenery)
 		{
-			sceneryToRepair.insert(s);
-		}
-	}
-
-	std::queue<sp<Scenery>> repairQueue;
-	std::set<sp<Scenery>> alreadyProcessed;
-	// Find all scenery which should be repaired this night and add them to the repair Queue
-	// Allows repair for all Scenery which does not need support or has valid support below
-	while (!sceneryToRepair.empty())
-	{
-		std::set<sp<Scenery>> repairedTogether;
-		std::set<Vec3<int>> addedPositions;
-		auto nextScenery = *sceneryToRepair.begin();
-		repairedTogether.insert(nextScenery);
-		sceneryToRepair.erase(nextScenery);
-
-		std::string pos = std::to_string(nextScenery->initialPosition.x) + ", " +
-		                  std::to_string(nextScenery->initialPosition.y) + ", " +
-		                  std::to_string(nextScenery->initialPosition.z);
-		LogWarning("Currently Processing Tile: " + pos);
-
-		if (nextScenery->supportedBy.empty())
-		{
-			LogWarning("Tile at " + pos + " is has no support requirement, adding to repair queue");
-			repairQueue.push(nextScenery);
-		}
-		else
-		{
-			for (auto &p : nextScenery->supportedBy)
+			if (!s->isAlive())
 			{
-				auto &support = map->getTile(p)->presentScenery;
+				sceneryToRepair.insert(s);
+			}
+		}
 
-				if (!support || !support->isAlive())
+		std::queue<sp<Scenery>> repairQueue;
+		// Find all scenery which should be repaired this night and add them to the repair Queue
+		// Allows repair for all Scenery which does not need support or has valid support below
+		while (!sceneryToRepair.empty())
+		{
+			std::set<sp<Scenery>> repairedTogether;
+			std::set<Vec3<int>> addedPositions;
+			auto nextScenery = *sceneryToRepair.begin();
+			repairedTogether.insert(nextScenery);
+			sceneryToRepair.erase(nextScenery);
+
+			std::string pos = std::to_string(nextScenery->initialPosition.x) + ", " +
+			                  std::to_string(nextScenery->initialPosition.y) + ", " +
+			                  std::to_string(nextScenery->initialPosition.z);
+			LogWarning("Currently Processing Tile: " + pos);
+
+			if (nextScenery->supportedBy.empty())
+			{
+				LogWarning("Tile at " + pos +
+				           " is has no support requirement, adding to repair queue");
+				repairQueue.push(nextScenery);
+			}
+			else
+			{
+				for (auto &p : nextScenery->supportedBy)
 				{
-					LogWarning("Tile at " + pos + " has no support due to destroyed tile below");
-				}
-				else
-				{
-					LogWarning("Tile at " + pos + " has support below, adding to repair queue");
-					repairQueue.push(nextScenery);
+					auto &support = map->getTile(p)->presentScenery;
+
+					if (!support || !support->isAlive())
+					{
+						LogWarning("Tile at " + pos +
+						           " has no support due to destroyed tile below");
+					}
+					else
+					{
+						LogWarning("Tile at " + pos + " has support below, adding to repair queue");
+						repairQueue.push(nextScenery);
+					}
 				}
 			}
 		}
+
+		int tilesRepaired = 0;
+		// Actually start repairing as long as enought funds and construction vehicles are available
+		// this night
+		while (!repairQueue.empty())
+		{
+			auto &s = repairQueue.front();
+			auto initialType = initial_tiles[s->initialPosition];
+			auto buildingOwner = s->building && !initialType->commonProperty
+			                         ? s.get()->building->owner
+			                         : state.getGovernment();
+
+			// search for available construction vehicles
+			sp<OpenApoc::Vehicle> currentVehicle = NULL;
+			for (auto &v : constructionVehicles)
+			{
+				if (v->owner == buildingOwner)
+				{
+					currentVehicle = v;
+					break;
+				}
+			}
+
+			// if no own vehicles found look for allied vehicles
+			if (currentVehicle == NULL)
+				for (auto &v : constructionVehicles)
+				{
+					// if relation is friendly or allied, help them bros out
+					if (buildingOwner->getRelationTo(v->owner) > +24.0f)
+					{
+						currentVehicle = v;
+						break;
+					}
+				}
+
+			// check if sufficient funds are available, the tile is still dead and a construction
+			// vehicle is available
+			if (buildingOwner->balance < initialType->value || s->isAlive() || currentVehicle == NULL)
+			{
+				repairQueue.pop();
+				continue;
+			}
+			else
+			{
+				// pay
+				buildingOwner->balance -= initialType->value;
+				// repair
+				s->repair(state);
+				// delete out of list to prevent repairing again
+				repairQueue.pop();
+				tilesRepaired++;
+				if (currentVehicle->tilesRepaired++ > config().getInt("OpenApoc.NewFeature.MaxTileRepair"))
+				{
+					constructionVehicles.erase(currentVehicle);
+				}
+			}
+		}
+		//No Tiles repaired in last iteration due to no funds or vehicle match
+		if (tilesRepaired <= 0)
+		{
+			break;
+		}
 	}
 
+	//Reset Vehicles to be ready for the next repair cycle
+	constructionVehicles = findConstructionVehicles(state);
+	for (auto &v : constructionVehicles)
+	{
+		v->tilesRepaired = 0;
+	}
+}
+
+std::set<sp<OpenApoc::Vehicle>> City::findConstructionVehicles(GameState &state)
+{
 	std::set<sp<OpenApoc::Vehicle>> constructionVehicles;
 	// find available construction vehicles
 	for (auto &v : state.vehicles)
@@ -486,62 +565,7 @@ void City::repairScenery(GameState &state)
 		}
 	}
 
-	// Actually start repairing as long as enought funds and construction vehicles are available
-	// this night
-	while (!repairQueue.empty())
-	{
-		auto &s = repairQueue.front();
-		auto initialType = initial_tiles[s->initialPosition];
-		auto buildingOwner = s->building && !initialType->commonProperty ? s.get()->building->owner
-		                                                                 : state.getGovernment();
-
-		// search for available construction vehicles
-		sp<OpenApoc::Vehicle> currentVehicle = NULL;
-		for (auto &v : constructionVehicles)
-		{
-			if (v->owner == buildingOwner)
-			{
-				currentVehicle = v;
-				break;
-			}
-		}
-
-		// if no own vehicles found look for allied vehicles
-		if (currentVehicle == NULL)
-			for (auto &v : constructionVehicles)
-			{
-				// if relation is friendly or allied, help them bros out
-				if (buildingOwner->getRelationTo(v->owner) > +24.0f)
-				{
-					currentVehicle = v;
-					break;
-				}
-			}
-
-		// check if sufficient funds are available, the tile is still dead and a construction
-		// vehicle is available (when enabled)
-		if (buildingOwner->balance < initialType->value || s->isAlive() ||
-		    (currentVehicle == NULL &&
-		     config().getBool("OpenApoc.NewFeature.RepairWithConstructionVehicles")))
-		{
-			repairQueue.pop();
-			continue;
-		}
-		else
-		{
-			// pay
-			buildingOwner->balance -= initialType->value;
-			// repair
-			s->repair(state);
-			// delete out of list to prevent repairing again
-			repairQueue.pop();
-			if (config().getBool("OpenApoc.NewFeature.RepairWithConstructionVehicles") &&
-			    currentVehicle->tilesRepaired++ > OpenApoc::MAX_TILE_REPAIR)
-				constructionVehicles.erase(currentVehicle);
-			// reset repair counter for follow on Night
-			currentVehicle->tilesRepaired = 0;
-		}
-	}
+	return constructionVehicles;
 }
 
 void City::repairVehicles(GameState &state [[maybe_unused]])

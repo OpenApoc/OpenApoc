@@ -58,7 +58,7 @@ static const int FUEL_TICKS_PER_SECOND = 144;
 // How much ticks is required to spend one unit of fuel
 static const int FUEL_TICKS_PER_UNIT = 40000;
 // How much tiles can one construction vehicle repair at one single night
-static const int MAX_TILE_REPAIR = 20;
+static const int MAX_TILE_REPAIR = 5;
 
 class Image;
 class TileObjectVehicle;
