@@ -135,7 +135,7 @@ class City : public StateObject<City>, public std::enable_shared_from_this<City>
 	void generatePortals(GameState &state);
 	void updateInfiltration(GameState &state);
 	void repairVehicles(GameState &state);
-	void repairScenery(GameState &state);
+	void repairScenery(GameState &state, bool debugRepair = false);
 	std::set<sp<OpenApoc::Vehicle>> findConstructionVehicles(GameState &state);
 
 	void initialSceneryLinkUp();

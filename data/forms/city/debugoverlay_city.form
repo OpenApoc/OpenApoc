@@ -41,128 +41,134 @@
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="B" text="B = Spawn UFO on Assualt Mission">
+			<label id="ShiftR" text="Shift+R = Repair Scenery (Single Story Mode)">
 				<position x="left" y="84"/>
 				<size width="250" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="U" text="U = Spawn Three Crashed UFOs">
+			<label id="B" text="B = Spawn UFO on Assualt Mission">
 				<position x="left" y="98"/>
 				<size width="250" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="X" text="X = Crash All Vehicles">
+			<label id="U" text="U = Spawn Three Crashed UFOs">
 				<position x="left" y="112"/>
 				<size width="250" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="PgUpPgDn" text="PgUp / PgDown = Display One Map Layer">
+			<label id="X" text="X = Crash All Vehicles">
 				<position x="left" y="126"/>
 				<size width="250" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="F2" text="F2 = Show Road Pathfinding">
+			<label id="PgUpPgDn" text="PgUp / PgDown = Display One Map Layer">
 				<position x="left" y="140"/>
 				<size width="250" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="F3" text="F3 = Highlight Walkmode, Collapsing Tiles, Basement Tiles">
+			<label id="F2" text="F2 = Show Road Pathfinding">
 				<position x="left" y="154"/>
+				<size width="250" height="14"/>
+				<alignment horizontal="left" vertical="top"/>
+				<font>smalfont</font>
+			</label>
+			<label id="F3" text="F3 = Highlight Walkmode, Collapsing Tiles, Basement Tiles">
+				<position x="left" y="168"/>
 				<size width="400" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
 			<label id="F4" text="F4 = Show Aliens on Strategy Map">
-				<position x="left" y="168"/>
-				<size width="250" height="14"/>
-				<alignment horizontal="left" vertical="top"/>
-				<font>smalfont</font>
-			</label>
-			<label id="F5" text="F5 = Show Vehicles Paths">
 				<position x="left" y="182"/>
 				<size width="250" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="F6" text="F6 = Dump Voxelmap LOS">
+			<label id="F5" text="F5 = Show Vehicles Paths">
 				<position x="left" y="196"/>
 				<size width="250" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="F7" text="F7 = Dump Voxelmap LOS (Fast)">
+			<label id="F6" text="F6 = Dump Voxelmap LOS">
 				<position x="left" y="210"/>
 				<size width="250" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="F8" text="F8 = Dump Voxelmap LOF">
+			<label id="F7" text="F7 = Dump Voxelmap LOS (Fast)">
 				<position x="left" y="224"/>
 				<size width="250" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="F9" text="F9 = Dump Voxelmap LOF (Fast)">
+			<label id="F8" text="F8 = Dump Voxelmap LOF">
 				<position x="left" y="238"/>
 				<size width="250" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="F10" text="F10 = Highlight Tubes">
+			<label id="F9" text="F9 = Dump Voxelmap LOF (Fast)">
 				<position x="left" y="252"/>
 				<size width="250" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="F11" text="F11 = Highlight Roads">
+			<label id="F10" text="F10 = Highlight Tubes">
 				<position x="left" y="266"/>
 				<size width="250" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="F12" text="F12 = Highlight Hills">
+			<label id="F11" text="F11 = Highlight Roads">
 				<position x="left" y="280"/>
 				<size width="250" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="Num" text="Show Roads / Tubes Num1379 = Direction, Num28 = Up / Down, Num0 = Show All, Num5 = Switch Views">
+			<label id="F12" text="F12 = Highlight Hills">
 				<position x="left" y="294"/>
+				<size width="250" height="14"/>
+				<alignment horizontal="left" vertical="top"/>
+				<font>smalfont</font>
+			</label>
+			<label id="Num" text="Show Roads / Tubes Num1379 = Direction, Num28 = Up / Down, Num0 = Show All, Num5 = Switch Views">
+				<position x="left" y="308"/>
 				<size width="640" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
 			<label id="VClick" text="V+LeftClick = Fix Stuck Vehicle in CityScape (Deprecated)">
-				<position x="left" y="308"/>
-				<size width="350" height="14"/>
-				<alignment horizontal="left" vertical="top"/>
-				<font>smalfont</font>
-			</label>
-			<label id="P" text="P = Show Vehicle Targets">
 				<position x="left" y="322"/>
 				<size width="350" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="MINUS" text="MINUS = Clear Space Liners (If game is running slowly)">
+			<label id="P" text="P = Show Vehicle Targets">
 				<position x="left" y="336"/>
 				<size width="350" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="Base" text="Base Screen - F10 = Finish All Facilities">
+			<label id="MINUS" text="MINUS = Clear Space Liners (If game is running slowly)">
 				<position x="left" y="350"/>
+				<size width="350" height="14"/>
+				<alignment horizontal="left" vertical="top"/>
+				<font>smalfont</font>
+			</label>
+			<label id="Base" text="Base Screen - F10 = Finish All Facilities">
+				<position x="left" y="364"/>
 				<size width="250" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
 			<label id="Research" text="Research Screen - F10 = Complete Project at Next Update (With at least two Scientists Assigned)">
-				<position x="left" y="364"/>
+				<position x="left" y="378"/>
 				<size width="640" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
