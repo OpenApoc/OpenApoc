@@ -426,6 +426,7 @@ void City::repairScenery(GameState &state, bool debugRepair)
 	}
 
 	std::set<sp<OpenApoc::Vehicle>> constructionVehicles = findConstructionVehicles(state);
+	bool ownBuildingsOnly = true;
 
 	while (!constructionVehicles.empty() || debugRepair)
 	{
@@ -494,17 +495,19 @@ void City::repairScenery(GameState &state, bool debugRepair)
 
 			// search for available construction vehicles
 			sp<OpenApoc::Vehicle> currentVehicle = NULL;
-			for (auto &v : constructionVehicles)
+			if (ownBuildingsOnly)
 			{
-				if (v->owner == buildingOwner)
+				for (auto &v : constructionVehicles)
 				{
-					currentVehicle = v;
-					break;
+					if (v->owner == buildingOwner)
+					{
+						currentVehicle = v;
+						break;
+					}
 				}
 			}
-
-			// if no own vehicles found look for allied vehicles
-			if (currentVehicle == NULL)
+			else
+			{
 				for (auto &v : constructionVehicles)
 				{
 					// if relation is friendly or allied, help them bros out
@@ -514,7 +517,7 @@ void City::repairScenery(GameState &state, bool debugRepair)
 						break;
 					}
 				}
-
+			}
 			// check if sufficient funds are available, the tile is still dead and a construction
 			// vehicle is available
 			if (buildingOwner->balance < initialType->value || s->isAlive() ||
@@ -526,23 +529,33 @@ void City::repairScenery(GameState &state, bool debugRepair)
 			else
 			{
 				// pay
-				buildingOwner->balance -= initialType->value;
+				buildingOwner->balance -=
+				    initialType->value * config().getFloat("OpenApoc.Mod.SceneryRepairCostFactor");
 				// repair
 				s->repair(state);
 				// delete out of list to prevent repairing again
 				repairQueue.pop();
 				tilesRepaired++;
-				if (currentVehicle && currentVehicle->tilesRepaired++ >
-				                          config().getInt("OpenApoc.NewFeature.MaxTileRepair"))
+				if (currentVehicle &&
+				    currentVehicle->tilesRepaired++ > config().getInt("OpenApoc.Mod.MaxTileRepair"))
 				{
 					constructionVehicles.erase(currentVehicle);
 				}
 			}
 		}
-		// No Tiles repaired in last iteration due to no funds or vehicle match
+		// No Tiles repaired in last iteration due to no funds or vehicle match, look to help
+		// allies, otherwise break
 		if (tilesRepaired <= 0 || debugRepair)
 		{
-			break;
+			if (ownBuildingsOnly)
+			{
+				ownBuildingsOnly = false;
+				continue;
+			}
+			else
+			{
+				break;
+			}
 		}
 	}
 

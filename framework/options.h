@@ -95,7 +95,6 @@ extern ConfigOptionBool optionAlternateVehicleShieldSound;
 extern ConfigOptionBool optionEnableAgentTemplates;
 extern ConfigOptionBool optionStoreDroppedEquipment;
 extern ConfigOptionBool optionFallingGroundVehicles;
-extern ConfigOptionInt optionMaxTileRepair;
 
 extern ConfigOptionBool optionEnforceCargoLimits;
 extern ConfigOptionBool optionAllowNearbyVehicleLootPickup;
@@ -115,6 +114,8 @@ extern ConfigOptionBool optionLeftClickIcon;
 extern ConfigOptionBool optionBattlescapeVertScroll;
 extern ConfigOptionBool optionSingleSquadSelect;
 extern ConfigOptionBool optionATVUFOMission;
+extern ConfigOptionInt optionMaxTileRepair;
+extern ConfigOptionFloat optionSceneryRepairCostFactor;
 
 extern ConfigOptionBool optionStunHostileAction;
 extern ConfigOptionBool optionRaidHostileAction;

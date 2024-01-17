@@ -117,7 +117,6 @@ void dumpOptionsToLog()
 	dumpOption(optionEnableAgentTemplates);
 	dumpOption(optionStoreDroppedEquipment);
 	dumpOption(optionFallingGroundVehicles);
-	dumpOption(optionMaxTileRepair);
 
 	dumpOption(optionEnforceCargoLimits);
 	dumpOption(optionAllowNearbyVehicleLootPickup);
@@ -137,6 +136,8 @@ void dumpOptionsToLog()
 	dumpOption(optionBattlescapeVertScroll);
 	dumpOption(optionSingleSquadSelect);
 	dumpOption(optionATVUFOMission);
+	dumpOption(optionMaxTileRepair);
+	dumpOption(optionSceneryRepairCostFactor);
 
 	dumpOption(optionStunHostileAction);
 	dumpOption(optionRaidHostileAction);
@@ -429,8 +430,13 @@ ConfigOptionBool
                         "Allow ATV vehicles to initiate UFO missions (and recover vehicles)",
                         false);
 ConfigOptionInt
-    optionMaxTileRepair("OpenApoc.NewFeature", "MaxTileRepair",
+    optionMaxTileRepair("OpenApoc.Mod", "MaxTileRepair",
                         "Construction Vehicles will repair a maximum of X Tiles per night", 5);
+ConfigOptionFloat
+    optionSceneryRepairCostFactor("OpenApoc.Mod", "SceneryRepairCostFactor",
+                                  "Determines the percentage of the original Price ORGs have to "
+                                  "pay for a Scenery Tile to be repaired",
+                                  1.0f);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);
