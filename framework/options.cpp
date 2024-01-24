@@ -436,7 +436,7 @@ ConfigOptionFloat
     optionSceneryRepairCostFactor("OpenApoc.Mod", "SceneryRepairCostFactor",
                                   "Determines the percentage of the original Price ORGs have to "
                                   "pay for a Scenery Tile to be repaired",
-                                  1.0f);
+                                  10.0f);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);

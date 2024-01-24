@@ -399,6 +399,13 @@ void City::updateInfiltration(GameState &state)
 
 void City::repairScenery(GameState &state, bool debugRepair)
 {
+	// Work Around to Save Cost Modifier and max Tile Repair to .conf File w/o user Input to enable
+	// Manual Editing
+	// TODO: Remove this once These Settings are available in the more Options Menu
+	config().set("OpenApoc.Mod.SceneryRepairCostFactor",
+	             config().getFloat("OpenApoc.Mod.SceneryRepairCostFactor"));
+	config().set("OpenApoc.Mod.MaxTileRepair", config().getInt("OpenApoc.Mod.MaxTileRepair"));
+
 	// Step 01: Repair damaged scenery one by one
 	std::list<sp<Scenery>> sceneryToUndamage;
 	for (auto &s : scenery)
@@ -547,7 +554,7 @@ void City::repairScenery(GameState &state, bool debugRepair)
 		// allies, otherwise break
 		if (tilesRepaired <= 0 || debugRepair)
 		{
-			if (ownBuildingsOnly)
+			if (ownBuildingsOnly && !debugRepair)
 			{
 				ownBuildingsOnly = false;
 				continue;
