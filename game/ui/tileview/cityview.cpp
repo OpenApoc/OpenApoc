@@ -3460,24 +3460,33 @@ bool CityView::handleKeyDown(Event *e)
 			{
 				case SDLK_r:
 				{
-					LogInfo("Repairing...");
-					std::set<sp<Scenery>> stuffToRepair;
-					for (auto &s : state->current_city->scenery)
+					if (modifierLShift)
 					{
-						if (s->damaged || !s->isAlive())
+						LogInfo("Single Level Debug Repair");
+						state->current_city->repairScenery(*state, true);
+						return true;
+					}
+					else
+					{
+						LogInfo("Debug Repair");
+						std::set<sp<Scenery>> stuffToRepair;
+						for (auto &s : state->current_city->scenery)
 						{
-							stuffToRepair.insert(s);
+							if (s->damaged || !s->isAlive())
+							{
+								stuffToRepair.insert(s);
+							}
 						}
-					}
-					LogInfo("Repairing %u tiles out of %u",
-					        static_cast<unsigned>(stuffToRepair.size()),
-					        static_cast<unsigned>(state->current_city->scenery.size()));
+						LogInfo("Repairing %u tiles out of %u",
+						        static_cast<unsigned>(stuffToRepair.size()),
+						        static_cast<unsigned>(state->current_city->scenery.size()));
 
-					for (auto &s : stuffToRepair)
-					{
-						s->repair(*state);
+						for (auto &s : stuffToRepair)
+						{
+							s->repair(*state);
+						}
+						return true;
 					}
-					return true;
 				}
 				case SDLK_x:
 				{

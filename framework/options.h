@@ -114,6 +114,8 @@ extern ConfigOptionBool optionLeftClickIcon;
 extern ConfigOptionBool optionBattlescapeVertScroll;
 extern ConfigOptionBool optionSingleSquadSelect;
 extern ConfigOptionBool optionATVUFOMission;
+extern ConfigOptionInt optionMaxTileRepair;
+extern ConfigOptionFloat optionSceneryRepairCostFactor;
 
 extern ConfigOptionBool optionStunHostileAction;
 extern ConfigOptionBool optionRaidHostileAction;

@@ -1665,6 +1665,10 @@ void Scenery::repair(GameState &state)
 	{
 		building->buildingPartChange(state, initialPosition, true);
 	}
+	if (this->type && this->type->tile_type == SceneryTileType::TileType::Road)
+	{
+		state.current_city->notifyRoadChange(this->getPosition(), true);
+	}
 	map.clearPathCaches();
 }
 

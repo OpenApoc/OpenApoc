@@ -1,4 +1,5 @@
 #include "game/state/city/city.h"
+#include "framework/configfile.h";
 #include "framework/framework.h"
 #include "framework/sound.h"
 #include "game/state/city/base.h"
@@ -396,8 +397,15 @@ void City::updateInfiltration(GameState &state)
 	}
 }
 
-void City::repairScenery(GameState &state)
+void City::repairScenery(GameState &state, bool debugRepair)
 {
+	// Work Around to Save Cost Modifier and max Tile Repair to .conf File w/o user Input to enable
+	// Manual Editing
+	// TODO: Remove this once These Settings are available in the more Options Menu
+	config().set("OpenApoc.Mod.SceneryRepairCostFactor",
+	             config().getFloat("OpenApoc.Mod.SceneryRepairCostFactor"));
+	config().set("OpenApoc.Mod.MaxTileRepair", config().getInt("OpenApoc.Mod.MaxTileRepair"));
+
 	// Step 01: Repair damaged scenery one by one
 	std::list<sp<Scenery>> sceneryToUndamage;
 	for (auto &s : scenery)
@@ -423,94 +431,164 @@ void City::repairScenery(GameState &state)
 			}
 		}
 	}
-	// Step 02: Repair destroyed scenery
-	std::set<sp<Scenery>> sceneryToRepair;
-	for (auto &s : scenery)
+
+	std::set<sp<OpenApoc::Vehicle>> constructionVehicles = findConstructionVehicles(state);
+	bool ownBuildingsOnly = true;
+
+	while (!constructionVehicles.empty() || debugRepair)
 	{
-		if (!s->isAlive())
+		// Step 02: Repair destroyed scenery
+		LogInfo("Repair Cycle starting");
+		std::set<sp<Scenery>> sceneryToRepair;
+		for (auto &s : scenery)
 		{
-			sceneryToRepair.insert(s);
-		}
-	}
-	// Pick one scenery, add all scenery that must be repaired together, try to repair them
-	while (!sceneryToRepair.empty())
-	{
-		std::set<sp<Scenery>> repairedTogether;
-		std::set<Vec3<int>> addedPositions;
-		auto nextScenery = *sceneryToRepair.begin();
-		repairedTogether.insert(nextScenery);
-		sceneryToRepair.erase(nextScenery);
-		// Keep adding until we added everything
-		bool addedMore = false;
-		do
-		{
-			addedMore = false;
-			for (auto &s : repairedTogether)
+			if (!s->isAlive())
 			{
-				// Check if all supportedBy scenery is intact or added
-				for (auto &p : s->supportedBy)
+				sceneryToRepair.insert(s);
+			}
+		}
+
+		std::queue<sp<Scenery>> repairQueue;
+		// Find all scenery which should be repaired this night and add them to the repair Queue
+		// Allows repair for all Scenery which does not need support or has valid support below
+		while (!sceneryToRepair.empty())
+		{
+			std::set<sp<Scenery>> repairedTogether;
+			std::set<Vec3<int>> addedPositions;
+			auto nextScenery = *sceneryToRepair.begin();
+			repairedTogether.insert(nextScenery);
+			sceneryToRepair.erase(nextScenery);
+
+			std::string pos = std::to_string(nextScenery->initialPosition.x) + ", " +
+			                  std::to_string(nextScenery->initialPosition.y) + ", " +
+			                  std::to_string(nextScenery->initialPosition.z);
+			LogInfo("Currently Processing Tile: " + pos);
+
+			if (nextScenery->supportedBy.empty())
+			{
+				LogInfo("Tile at " + pos +
+				        " is has no support requirement, adding to repair queue");
+				repairQueue.push(nextScenery);
+			}
+			else
+			{
+				for (auto &p : nextScenery->supportedBy)
 				{
-					// If no scenery or dead
-					auto support = map->getTile(p)->presentScenery;
+					auto &support = map->getTile(p)->presentScenery;
+
 					if (!support || !support->isAlive())
 					{
-						// If we haven't added it already
-						if (addedPositions.find(p) == addedPositions.end())
-						{
-							// Need to find it by its initial position
-							for (auto &deadScenery : scenery)
-							{
-								if (deadScenery->initialPosition == p)
-								{
-									repairedTogether.insert(deadScenery);
-									break;
-								}
-							}
-						}
+						LogInfo("Tile at " + pos + " has no support due to destroyed tile below");
 					}
-				} // for every supportedBy position
-			}     // for every repairedTogether scenery
-		} while (addedMore);
-		// Try to repair all or none
-		std::map<StateRef<Organisation>, int> repairCost;
-		for (auto &deadScenery : repairedTogether)
-		{
-			auto initialType = initial_tiles[deadScenery->initialPosition];
-			auto owner = deadScenery->building && !initialType->commonProperty
-			                 ? deadScenery->building->owner
-			                 : state.getGovernment();
-			repairCost[owner] += initialType->value;
+					else
+					{
+						LogInfo("Tile at " + pos + " has support below, adding to repair queue");
+						repairQueue.push(nextScenery);
+					}
+				}
+			}
 		}
-		bool canAfford = true;
-		for (auto &entry : repairCost)
+
+		int tilesRepaired = 0;
+		// Actually start repairing as long as enought funds and construction vehicles are available
+		// this night
+		while (!repairQueue.empty())
 		{
-			if (entry.first->balance < entry.second)
+			auto &s = repairQueue.front();
+			auto initialType = initial_tiles[s->initialPosition];
+			auto buildingOwner = s->building && !initialType->commonProperty
+			                         ? s.get()->building->owner
+			                         : state.getGovernment();
+
+			// search for available construction vehicles
+			sp<OpenApoc::Vehicle> currentVehicle = NULL;
+			if (ownBuildingsOnly)
 			{
-				canAfford = false;
+				for (auto &v : constructionVehicles)
+				{
+					if (v->owner == buildingOwner)
+					{
+						currentVehicle = v;
+						break;
+					}
+				}
+			}
+			else
+			{
+				for (auto &v : constructionVehicles)
+				{
+					// if relation is friendly or allied, help them bros out
+					if (buildingOwner->getRelationTo(v->owner) > +24.0f)
+					{
+						currentVehicle = v;
+						break;
+					}
+				}
+			}
+			// check if sufficient funds are available, the tile is still dead and a construction
+			// vehicle is available
+			if (buildingOwner->balance < initialType->value || s->isAlive() ||
+			    (currentVehicle == NULL && !debugRepair))
+			{
+				repairQueue.pop();
+				continue;
+			}
+			else
+			{
+				// pay
+				buildingOwner->balance -=
+				    initialType->value * config().getFloat("OpenApoc.Mod.SceneryRepairCostFactor");
+				// repair
+				s->repair(state);
+				// delete out of list to prevent repairing again
+				repairQueue.pop();
+				tilesRepaired++;
+				if (currentVehicle &&
+				    currentVehicle->tilesRepaired++ > config().getInt("OpenApoc.Mod.MaxTileRepair"))
+				{
+					constructionVehicles.erase(currentVehicle);
+				}
+			}
+		}
+		// No Tiles repaired in last iteration due to no funds or vehicle match, look to help
+		// allies, otherwise break
+		if (tilesRepaired <= 0 || debugRepair)
+		{
+			if (ownBuildingsOnly && !debugRepair)
+			{
+				ownBuildingsOnly = false;
+				continue;
+			}
+			else
+			{
 				break;
 			}
 		}
-		if (canAfford)
+	}
+
+	// Reset Vehicles to be ready for the next repair cycle
+	constructionVehicles = findConstructionVehicles(state);
+	for (auto &v : constructionVehicles)
+	{
+		v->tilesRepaired = 0;
+	}
+
+	LogInfo("Repair Cycle Complete");
+}
+
+std::set<sp<OpenApoc::Vehicle>> City::findConstructionVehicles(GameState &state)
+{
+	std::set<sp<OpenApoc::Vehicle>> constructionVehicles;
+	// find available construction vehicles
+	for (auto &v : state.vehicles)
+	{
+		if (v.second->name.find("Construction") != std::string::npos && !v.second->crashed)
 		{
-			// pay
-			for (auto &entry : repairCost)
-			{
-				auto org = entry.first;
-				org->balance -= entry.second;
-			}
-			// repair
-			for (auto &deadScenery : repairedTogether)
-			{
-				// remove from scenery to repair
-				if (sceneryToRepair.find(deadScenery) != sceneryToRepair.end())
-				{
-					sceneryToRepair.erase(deadScenery);
-				}
-				// repair actually
-				deadScenery->repair(state);
-			}
+			constructionVehicles.insert(v.second);
 		}
 	}
+
+	return constructionVehicles;
 }
 
 void City::repairVehicles(GameState &state [[maybe_unused]])

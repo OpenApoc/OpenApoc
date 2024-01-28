@@ -236,6 +236,9 @@ class Vehicle : public StateObject<Vehicle>,
 	StateRef<Vehicle> carriedVehicle;
 	StateRef<Vehicle> carriedByVehicle;
 
+	// How Many Tiles have already been repaired this night by this perticular vehicle
+	int tilesRepaired = 0;
+
 	sp<TileObjectVehicle> tileObject;
 	sp<TileObjectShadow> shadowObject;
 

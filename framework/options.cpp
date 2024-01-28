@@ -136,6 +136,8 @@ void dumpOptionsToLog()
 	dumpOption(optionBattlescapeVertScroll);
 	dumpOption(optionSingleSquadSelect);
 	dumpOption(optionATVUFOMission);
+	dumpOption(optionMaxTileRepair);
+	dumpOption(optionSceneryRepairCostFactor);
 
 	dumpOption(optionStunHostileAction);
 	dumpOption(optionRaidHostileAction);
@@ -337,7 +339,6 @@ ConfigOptionBool optionPauseOnAgentPsiControlled("Notifications.Battle", "AgentP
                                                  "Unit under Psionic control", true);
 ConfigOptionBool optionPauseOnAgentPsiOver("Notifications.Battle", "AgentPsiOver",
                                            "Unit freed from Psionic control", true);
-
 ConfigOptionBool optionDebugCommandsVisible("OpenApoc.NewFeature", "DebugCommandsVisible",
                                             "Show the debug commands on screen", true);
 ConfigOptionBool optionUFODamageModel("OpenApoc.NewFeature", "UFODamageModel",
@@ -428,6 +429,14 @@ ConfigOptionBool
     optionATVUFOMission("OpenApoc.NewFeature", "ATVUFOMission",
                         "Allow ATV vehicles to initiate UFO missions (and recover vehicles)",
                         false);
+ConfigOptionInt
+    optionMaxTileRepair("OpenApoc.Mod", "MaxTileRepair",
+                        "Construction Vehicles will repair a maximum of X Tiles per night", 5);
+ConfigOptionFloat
+    optionSceneryRepairCostFactor("OpenApoc.Mod", "SceneryRepairCostFactor",
+                                  "Determines the percentage of the original Price ORGs have to "
+                                  "pay for a Scenery Tile to be repaired",
+                                  10.0f);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);
