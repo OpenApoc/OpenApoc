@@ -88,6 +88,8 @@ class Building : public StateObject<Building>, public std::enable_shared_from_th
 	StateRef<ResearchTopic> accessTopic;
 	// Victory when successful at raiding this
 	bool victory = false;
+	// Percentage of tiles destroyed before collapse
+	float integrityPercentage;
 	// Initial alien building
 	bool initialInfiltration = false;
 
@@ -110,6 +112,7 @@ class Building : public StateObject<Building>, public std::enable_shared_from_th
 	void buildingPartChange(GameState &state, Vec3<int> part, bool intact);
 	int getAverageConstitution() const;
 	bool isAlive() const;
+	bool isStable() const;
 	bool occupied() const;
 
 	// Following members are not serialized, but rather are set in City::initCity method
@@ -117,6 +120,7 @@ class Building : public StateObject<Building>, public std::enable_shared_from_th
 	Vec3<int> crewQuarters = {-1, -1, -1};
 	Vec3<int> carEntranceLocation = {-1, -1, -1};
 	std::set<Vec3<int>> landingPadLocations;
+	int initialParts;
 	std::set<Vec3<int>> buildingParts;
 };
 
