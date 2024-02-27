@@ -138,6 +138,7 @@ void dumpOptionsToLog()
 	dumpOption(optionATVUFOMission);
 	dumpOption(optionMaxTileRepair);
 	dumpOption(optionSceneryRepairCostFactor);
+	dumpOption(optionLoadSameAmmo);
 
 	dumpOption(optionStunHostileAction);
 	dumpOption(optionRaidHostileAction);
@@ -437,6 +438,8 @@ ConfigOptionFloat
                                   "Determines the percentage of the original Price ORGs have to "
                                   "pay for a Scenery Tile to be repaired",
                                   10.0f);
+ConfigOptionBool optionLoadSameAmmo("OpenApoc.NewFeature", "LoadSameAmmo",
+                                    "Weapons autoreload only same ammo type", false);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);

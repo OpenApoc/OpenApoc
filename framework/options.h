@@ -116,6 +116,7 @@ extern ConfigOptionBool optionSingleSquadSelect;
 extern ConfigOptionBool optionATVUFOMission;
 extern ConfigOptionInt optionMaxTileRepair;
 extern ConfigOptionFloat optionSceneryRepairCostFactor;
+extern ConfigOptionBool optionLoadSameAmmo;
 
 extern ConfigOptionBool optionStunHostileAction;
 extern ConfigOptionBool optionRaidHostileAction;

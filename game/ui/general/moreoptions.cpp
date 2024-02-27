@@ -63,6 +63,7 @@ std::list<std::pair<UString, UString>> battlescapeList = {
     {"OpenApoc.NewFeature", "AutoReload"},
     {"OpenApoc.NewFeature", "BattlescapeVertScroll"},
     {"OpenApoc.NewFeature", "SingleSquadSelect"},
+    {"OpenApoc.NewFeature", "LoadSameAmmo"},
     {"OpenApoc.Mod", "StunHostileAction"},
     {"OpenApoc.Mod", "BSKLauncherSound"},
 };

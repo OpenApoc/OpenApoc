@@ -310,13 +310,16 @@ static sp<AEquipment> getAutoreloadAmmoType(const AEquipment &weapon)
 		}
 	}
 	// Otherwise find any possible ammo on the agent
-	for (const auto &ammoType : weapon.type->ammo_types)
+	if (!config().getBool("OpenApoc.NewFeature.LoadSameAmmo"))
 	{
-		auto equippedAmmo = weapon.ownerAgent->getFirstItemByType(ammoType);
-		if (equippedAmmo)
+		for (const auto &ammoType : weapon.type->ammo_types)
 		{
-			LogAssert(equippedAmmo->type->type == AEquipmentType::Type::Ammo);
-			return equippedAmmo;
+			auto equippedAmmo = weapon.ownerAgent->getFirstItemByType(ammoType);
+			if (equippedAmmo)
+			{
+				LogAssert(equippedAmmo->type->type == AEquipmentType::Type::Ammo);
+				return equippedAmmo;
+			}
 		}
 	}
 	// No ammo found
