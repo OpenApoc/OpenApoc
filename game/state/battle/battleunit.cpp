@@ -220,13 +220,28 @@ void BattleUnit::reloadWeapons(GameState &state)
 	{
 		auto weaponRight = agent->getFirstItemInSlot(EquipmentSlotType::RightHand);
 		auto weaponLeft = agent->getFirstItemInSlot(EquipmentSlotType::LeftHand);
-		if (weaponRight && weaponRight->needsReload())
+		if (weaponRight)
 		{
-			weaponRight->loadAmmo(state);
+
+			if (weaponRight->needsReload())
+			{
+				weaponRight->loadAmmo(state);
+			}
+			else
+			{
+				weaponRight->lastLoadedAmmoType = weaponRight->payloadType;
+			}
 		}
-		if (weaponLeft && weaponLeft->needsReload())
+		if (weaponLeft)
 		{
-			weaponLeft->loadAmmo(state);
+			if (weaponLeft->needsReload())
+			{
+				weaponLeft->loadAmmo(state);
+			}
+			else
+			{
+				weaponLeft->lastLoadedAmmoType = weaponLeft->payloadType;
+			}
 		}
 	}
 }
