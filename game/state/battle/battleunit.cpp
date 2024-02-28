@@ -677,6 +677,7 @@ void BattleUnit::refreshUnitVision(GameState &state, bool forceBlind,
 			battle.visibleUnits[owner].insert(vu);
 			if (owner == state.current_battle->currentPlayer &&
 			    owner->isRelatedTo(vu->owner) == Organisation::Relation::Hostile &&
+			    vu->owner != state.getCivilian() &&
 			    (battle.lastVisibleTime[owner].find(vu) == battle.lastVisibleTime[owner].end() ||
 			     battle.lastVisibleTime[owner][vu] + TICKS_SUPPRESS_SPOTTED_MESSAGES <= ticks))
 			{
@@ -686,7 +687,7 @@ void BattleUnit::refreshUnitVision(GameState &state, bool forceBlind,
 		}
 		// battle and units's visible enemies list (Do not count civilians as enemy)
 		if (owner->isRelatedTo(vu->owner) == Organisation::Relation::Hostile &&
-		    vu->getAIType() != AIType::Civilian)
+		    vu->owner != state.getCivilian())
 		{
 			visibleEnemies.insert(vu);
 			battle.visibleEnemies[owner].insert(vu);

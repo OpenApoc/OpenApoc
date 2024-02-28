@@ -616,7 +616,8 @@ void BattleTileView::render()
 						         battle.visibleUnits[battle.currentPlayer].end()))
 						{
 							if (battle.currentPlayer->isRelatedTo(unit->owner) ==
-							    Organisation::Relation::Hostile)
+							        Organisation::Relation::Hostile &&
+							    unit->owner != state.getCivilian())
 							{
 								selectionImageBack = selectedTileFireImageBack;
 								selectionImageFront = selectedTileFireImageFront;
