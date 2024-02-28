@@ -3657,9 +3657,11 @@ sp<VEquipment> Vehicle::addEquipment(GameState &state, Vec2<int> pos,
 	{
 		case EquipmentSlotType::VehicleEngine:
 		{
+			auto thisRef = StateRef<Vehicle>(&state, shared_from_this());
 			auto engine = mksp<VEquipment>();
 			engine->type = equipmentType;
 			this->equipment.emplace_back(engine);
+			engine->owner = thisRef;
 			engine->equippedPosition = slotOrigin;
 			LogInfo("Equipped \"%s\" with engine \"%s\"", this->name, equipmentType->name);
 			return engine;
