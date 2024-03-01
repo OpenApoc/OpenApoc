@@ -1414,6 +1414,8 @@ bool AEquipScreen::tryPlaceItem(sp<Agent> agent, Vec2<int> slotPos, bool *insuff
 			{
 				canAdd = true;
 				slotPos = offsetPosition;
+				equipmentUnderCursor =
+				    std::dynamic_pointer_cast<AEquipment>(agent->getEquipmentAt(slotPos));
 				break;
 			}
 		}
@@ -1442,6 +1444,7 @@ bool AEquipScreen::tryPlaceItem(sp<Agent> agent, Vec2<int> slotPos, bool *insuff
 		else
 		{
 			equipmentUnderCursor->loadAmmo(*state, draggedEquipment);
+
 			if (draggedEquipment->ammo > 0)
 			{
 				if (draggedEquipmentOrigin.x != -1 && draggedEquipmentOrigin.y != -1 &&
