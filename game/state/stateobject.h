@@ -120,7 +120,7 @@ template <typename T> class StateRef
 			resolve();
 		return obj;
 	}
-	operator const sp<T>() const
+	operator sp<T>() const
 	{
 		if (!obj)
 			resolve();
