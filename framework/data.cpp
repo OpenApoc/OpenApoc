@@ -458,7 +458,13 @@ sp<Image> DataImpl::loadImage(const UString &path, bool lazy)
 		}
 		if (splitString.size() > palettePos)
 		{
+			// The palette may be an Image, so call that without the lock
+			// If something else loads this same image in the meantime, then we may have multiple
+			// entries in the ImageCache actually referring to the same on-disk image, but that's
+			// just an inefficiency rather than a failure
+			this->imageCacheLock.unlock();
 			auto pal = this->loadPalette(splitString[palettePos]);
+			this->imageCacheLock.lock();
 			if (!pal)
 			{
 				LogError("Failed to load palette for RAW image: \"%s\"", path);
@@ -507,7 +513,9 @@ sp<Image> DataImpl::loadImage(const UString &path, bool lazy)
 				if (!pImg)
 					return nullptr;
 				LogAssert(pImg);
+				this->imageCacheLock.unlock();
 				auto pal = this->loadPalette(splitString[4]);
+				this->imageCacheLock.lock();
 				LogAssert(pal);
 				img = pImg->toRGBImage(pal);
 				break;
@@ -547,7 +555,10 @@ sp<Image> DataImpl::loadImage(const UString &path, bool lazy)
 				sp<PaletteImage> pImg = std::dynamic_pointer_cast<PaletteImage>(this->loadImage(
 				    "PCKSTRAT:" + splitString[1] + ":" + splitString[2] + ":" + splitString[3]));
 				LogAssert(pImg);
+				this->imageCacheLock.unlock();
 				auto pal = this->loadPalette(splitString[4]);
+				this->imageCacheLock.lock();
+
 				LogAssert(pal);
 				img = pImg->toRGBImage(pal);
 				break;
@@ -587,7 +598,9 @@ sp<Image> DataImpl::loadImage(const UString &path, bool lazy)
 				sp<PaletteImage> pImg = std::dynamic_pointer_cast<PaletteImage>(this->loadImage(
 				    "PCKSHADOW:" + splitString[1] + ":" + splitString[2] + ":" + splitString[3]));
 				LogAssert(pImg);
+				this->imageCacheLock.unlock();
 				auto pal = this->loadPalette(splitString[4]);
+				this->imageCacheLock.lock();
 				LogAssert(pal);
 				img = pImg->toRGBImage(pal);
 				break;
@@ -702,7 +715,9 @@ sp<Palette> DataImpl::loadPalette(const UString &path)
 		return pal;
 	}
 
+	this->paletteCacheLock.unlock();
 	sp<RGBImage> img = std::dynamic_pointer_cast<RGBImage>(this->loadImage(path));
+	this->paletteCacheLock.lock();
 	if (img)
 	{
 		unsigned int idx = 0;
