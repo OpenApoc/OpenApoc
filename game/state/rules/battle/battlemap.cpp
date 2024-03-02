@@ -20,6 +20,7 @@
 #include "game/state/shared/agent.h"
 #include "game/state/shared/organisation.h"
 #include <algorithm>
+#include <array>
 #include <unordered_map>
 
 namespace OpenApoc
@@ -49,12 +50,7 @@ int getCorridorSectorID(const Base &base, Vec2<int> pos)
 	{
 		// We need to cap any facilities
 		// For that we need to find where facilities are
-		std::vector<std::vector<bool>> facilities;
-		facilities.resize(Base::SIZE);
-		for (int i = 0; i < Base::SIZE; i++)
-		{
-			facilities[i].resize(Base::SIZE);
-		}
+		std::array<std::array<bool, Base::SIZE>, Base::SIZE> facilities;
 		for (auto &facility : base.facilities)
 		{
 			if (facility->buildTime > 0)
@@ -65,6 +61,11 @@ int getCorridorSectorID(const Base &base, Vec2<int> pos)
 			{
 				for (int y = 0; y < facility->type->size; y++)
 				{
+					if (facility->pos.x + x >= Base::SIZE || facility->pos.y + y >= Base::SIZE)
+					{
+						LogError("Facility at \"%s\" out of bounds", facility->pos);
+						continue;
+					}
 					facilities[facility->pos.x + x][facility->pos.y + y] = true;
 				}
 			}
