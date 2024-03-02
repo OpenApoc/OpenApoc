@@ -1,5 +1,5 @@
 #include "game/state/city/city.h"
-#include "framework/configfile.h";
+#include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/sound.h"
 #include "game/state/city/base.h"
