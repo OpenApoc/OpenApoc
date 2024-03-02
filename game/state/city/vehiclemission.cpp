@@ -945,6 +945,7 @@ Reachability VehicleTargetHelper::isReachableForRecovery(const Vehicle &v, Vec3<
 			}
 		}
 	}
+	return Reachability::Reachable;
 }
 
 Reachability VehicleTargetHelper::isReachableTargetFlying(const Vehicle &v, Vec3<int> target)
