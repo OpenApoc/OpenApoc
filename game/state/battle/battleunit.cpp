@@ -2392,8 +2392,8 @@ void BattleUnit::updateEvents(GameState &state)
 	{
 		// our target has a priority over others if enemy
 		auto lastSeenEnemyPosition =
-		    (targetUnit &&
-		     state.current_battle->visibleEnemies[owner].find(targetUnit) != visibleEnemies.end())
+		    (targetUnit && state.current_battle->visibleEnemies[owner].find(targetUnit) !=
+		                       state.current_battle->visibleEnemies[owner].end())
 		        ? targetUnit->position
 		        : (*visibleEnemies.begin())->position;
 
