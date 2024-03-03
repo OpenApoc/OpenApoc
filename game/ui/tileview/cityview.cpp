@@ -3441,9 +3441,6 @@ bool CityView::handleKeyDown(Event *e)
 		case SDLK_LCTRL:
 			modifierLCtrl = true;
 			return true;
-		case SDLK_v:
-			modifierV = true;
-			return true;
 		case SDLK_F1:
 			if (config().getBool("OpenApoc.NewFeature.DebugCommandsVisible"))
 			{
@@ -3574,31 +3571,16 @@ bool CityView::handleKeyDown(Event *e)
 				}
 				case SDLK_MINUS:
 				{
-					LogWarning("Clearing Space Liners...");
-					for (auto &v : state->vehicles)
+					LogWarning("Destroying selected vehicles...");
+					for (auto &v : state->current_city->cityViewSelectedOwnedVehicles)
 					{
-						if (v.second->type.id == "VEHICLETYPE_SPACE_LINER")
-						{
-							if (v.second->tileObject)
-							{
-								v.second->die(*state);
-							}
-							else
-							{
-								state->vehiclesDeathNote.insert(v.first);
-							}
-						}
+						v->die(*state);
 					}
-					for (auto &b : state->current_city->spaceports)
+					for (auto &o : state->current_city->cityViewSelectedOtherVehicles)
 					{
-						for (auto &v : b->currentVehicles)
-						{
-							if (v->type.id == "VEHICLETYPE_SPACE_LINER")
-							{
-								b->currentVehicles.erase(v);
-							}
-						}
+						o->die(*state);
 					}
+
 					return true;
 				}
 			}
@@ -3696,9 +3678,6 @@ bool CityView::handleKeyUp(Event *e)
 			return true;
 		case SDLK_LCTRL:
 			modifierLCtrl = false;
-			return true;
-		case SDLK_v:
-			modifierV = false;
 			return true;
 	}
 	return false;
@@ -3868,11 +3847,6 @@ bool CityView::handleMouseDown(Event *e)
 					for (auto &c : vehicle->cargo)
 					{
 						LogInfo("Cargo %sx%d", c.id, c.count);
-					}
-					if (modifierV)
-					{
-						// Unfreeze vehicles (hopefully useless except old saves)
-						vehicle->ticksToTurn += 1;
 					}
 					if (modifierLAlt && modifierLCtrl && modifierLShift)
 					{
