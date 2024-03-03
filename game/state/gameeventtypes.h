@@ -21,6 +21,7 @@ enum class GameEventType
 	VehicleRefuelled,
 	VehicleNoEngine,
 	VehicleRecovered,
+	VehicleModuleScrapped,
 	UnauthorizedVehicle,
 	NotEnoughAmmo,
 	NotEnoughFuel,

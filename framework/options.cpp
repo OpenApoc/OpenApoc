@@ -387,8 +387,9 @@ ConfigOptionBool optionEnableAgentTemplates("OpenApoc.NewFeature", "EnableAgentT
 ConfigOptionBool optionStoreDroppedEquipment("OpenApoc.NewFeature", "StoreDroppedEquipment",
                                              "Attempt to recover agent equipment dropped in city",
                                              true);
-ConfigOptionBool optionFallingGroundVehicles("OpenApoc.NewFeature", "CrashingGroundVehicles",
-                                             "Unsupported ground vehicles crash", true);
+ConfigOptionBool optionFallingGroundVehicles(
+    "OpenApoc.NewFeature", "CrashingGroundVehicles",
+    "Unsupported ground vehicles crash (Weapons and Modules may be lost in crash)", true);
 
 ConfigOptionBool optionEnforceCargoLimits("OpenApoc.NewFeature", "EnforceCargoLimits",
                                           "Enforce vehicle cargo limits", false);
@@ -407,10 +408,13 @@ ConfigOptionBool
                                      "Any hit on hostile building provokes retaliation", false);
 ConfigOptionBool optionMarketRight("OpenApoc.NewFeature", "MarketOnRight",
                                    "Put market stock on the right side", true);
-ConfigOptionBool optionDGCrashingVehicles("OpenApoc.NewFeature", "CrashingDimensionGate",
-                                          "Uncapable vehicles crash when entering gates", true);
-ConfigOptionBool optionFuelCrashingVehicles("OpenApoc.NewFeature", "CrashingOutOfFuel",
-                                            "Vehicles crash when out of fuel", true);
+ConfigOptionBool optionDGCrashingVehicles(
+    "OpenApoc.NewFeature", "CrashingDimensionGate",
+    "Uncapable vehicles crash when entering gates (Weapons and Modules may be lost in crash)",
+    true);
+ConfigOptionBool optionFuelCrashingVehicles(
+    "OpenApoc.NewFeature", "CrashingOutOfFuel",
+    "Vehicles crash when out of fuel (Weapons and Modules may be lost in crash)", true);
 ConfigOptionBool optionSkipTurbo("OpenApoc.NewFeature", "SkipTurboMovement",
                                  "Skip turbo movement calculations", false);
 ConfigOptionBool optionRunAndKneel("OpenApoc.NewFeature", "RunAndKneel",
@@ -452,8 +456,10 @@ ConfigOptionBool optionATVTank("OpenApoc.Mod", "ATVTank", "(MOD) Griffon becomes
 ConfigOptionBool optionATVAPC("OpenApoc.Mod", "ATVAPC", "(MOD) Wolfhound APC becomes All-Terrain",
                               true);
 
-ConfigOptionBool optionCrashingVehicles("OpenApoc.Mod", "CrashingVehicles",
-                                        "Vehicles crash on low HP", false);
+ConfigOptionBool
+    optionCrashingVehicles("OpenApoc.Mod", "CrashingVehicles",
+                           "Vehicles crash on low HP (Weapons and Modules may be lost in crash)",
+                           false);
 
 ConfigOptionString optionScriptsList("OpenApoc.Mod", "ScriptsList",
                                      "Semicolon-separated list of scripts to load",
