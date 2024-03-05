@@ -143,32 +143,26 @@
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="VClick" text="V+LeftClick = Fix Stuck Vehicle in CityScape (Deprecated)">
+			<label id="P" text="P = Show Vehicle Targets">
 				<position x="left" y="322"/>
 				<size width="350" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="P" text="P = Show Vehicle Targets">
+			<label id="MINUS" text="MINUS = Destroy Selected Vehicles">
 				<position x="left" y="336"/>
 				<size width="350" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="MINUS" text="MINUS = Clear Space Liners (If game is running slowly)">
-				<position x="left" y="350"/>
-				<size width="350" height="14"/>
-				<alignment horizontal="left" vertical="top"/>
-				<font>smalfont</font>
-			</label>
 			<label id="Base" text="Base Screen - F10 = Finish All Facilities">
-				<position x="left" y="364"/>
+				<position x="left" y="350"/>
 				<size width="250" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
 			<label id="Research" text="Research Screen - F10 = Complete Project at Next Update (With at least two Scientists Assigned)">
-				<position x="left" y="378"/>
+				<position x="left" y="364"/>
 				<size width="640" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
