@@ -174,7 +174,7 @@ unsigned int GameTime::getLastDayOfCurrentMonth() const
 	return getPtime(this->ticks).date().end_of_month().year_month_day().day;
 }
 
-unsigned int GameTime::getDay() const { return (this->ticks + TICKS_PER_DAY - 1) / TICKS_PER_DAY; }
+unsigned int GameTime::getDay() const { return (this->ticks + TICKS_PER_DAY) / TICKS_PER_DAY; }
 
 unsigned int GameTime::getMonthDay() const
 {
