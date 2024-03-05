@@ -1482,6 +1482,12 @@ void Vehicle::processRecoveredVehicle(GameState &state)
 			auto &economy = state.economy[e->type->ammo_type.id];
 			owner->balance += e->ammo * economy.currentPrice * FV_SCRAPPED_COST_PERCENT / 100;
 		}
+		if (owner == state.getPlayer())
+		{
+			fw().pushEvent(new GameSomethingDiedEvent(GameEventType::VehicleModuleScrapped,
+			                                          format("%s - %s", name, e->type->name),
+			                                          position));
+		}
 	}
 	if (randBoundsExclusive(state.rng, 0, 100) > FV_CHANCE_TO_RECOVER_VEHICLE)
 	{

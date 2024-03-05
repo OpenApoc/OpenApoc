@@ -406,6 +406,9 @@ GameSomethingDiedEvent::GameSomethingDiedEvent(GameEventType type, UString name,
 		case GameEventType::VehicleNoFuel:
 			messageInner = format("%s %s", tr("Vehicle out of fuel:"), name);
 			break;
+		case GameEventType::VehicleModuleScrapped:
+			messageInner = format("%s %s", tr("Module lost during recovery:"), name);
+			break;
 		default:
 			LogWarning("GameSomethingDiedEvent %s called on non-death event %d", name,
 			           static_cast<int>(type));
