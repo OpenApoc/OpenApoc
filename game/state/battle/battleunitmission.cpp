@@ -121,10 +121,10 @@ BattleUnitType BattleUnitTileHelper::getType() const
 bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool ignoreStaticUnits,
                                         bool ignoreMovingUnits, bool ignoreAllUnits) const
 {
-	float nothing;
-	bool none1;
-	bool none2;
-	return canEnterTile(from, to, false, none1, nothing, none2, ignoreStaticUnits,
+	float cost = 0.0;
+	bool jumped = false;
+	bool doorInTheWay = false;
+	return canEnterTile(from, to, false, jumped, cost, doorInTheWay, ignoreStaticUnits,
 	                    ignoreMovingUnits, ignoreAllUnits);
 }
 
