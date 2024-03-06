@@ -21,9 +21,9 @@ function updateEconomy()
 			--update stock
 			local r = GS.rng:randBoundsInclusive(0, 100)
 			if r < 30 then
-				eco.currentStock = eco.lastStock * 80 / 100
+				eco.currentStock = math.floor(eco.lastStock * 80 / 100)
 			elseif r < 60 then
-				eco.currentStock = eco.lastStock * 66 / 100
+				eco.currentStock = math.floor(eco.lastStock * 66 / 100)
 			end
 
 			if soldThisWeek > 2 * eco.maxStock then
