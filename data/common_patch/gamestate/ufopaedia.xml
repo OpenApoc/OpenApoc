@@ -3168,7 +3168,7 @@
           <value>
             <title>Plasma Turret Cannon</title>
             <description>The Plasma Turret Cannon is a powerful weapon, but lacks the ability to track and hit fast airborne vehicles.</description>
-            <background>xcom3/ufopaedi/23tank2.pcx</background>
+            <background>xcom3/ufopaedi/23tank4.pcx</background>
             <data_id>VEQUIPMENTTYPE_PLASMA_TURRET_CANNON</data_id>
             <data_type>VehicleEquipment</data_type>
             <required_research/>
@@ -3212,7 +3212,7 @@
           <value>
             <title>Rumble Cannon</title>
             <description>A powerful cannon which fires explosive shells over large distances. Its effectiveness is limited to static or slow moving targets.</description>
-            <background>xcom3/ufopaedi/23tank4.pcx</background>
+            <background>xcom3/ufopaedi/23tank2.pcx</background>
             <data_id>VEQUIPMENTTYPE_RUMBLE_CANNON</data_id>
             <data_type>VehicleEquipment</data_type>
             <required_research/>
