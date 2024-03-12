@@ -163,23 +163,27 @@ bool writeArchiveWithBackup(SerializationArchive *archive, const UString &path, 
 
 bool SaveManager::findFreePath(UString &path, const UString &name) const
 {
-	path = createSavePath("save_" + name);
-	if (fs::exists(path))
-	{
-		for (int retries = 5; retries > 0; retries--)
-		{
-			path = createSavePath("save_" + name + std::to_string(rand()));
-			if (!fs::exists(path))
-			{
-				return true;
-			}
-		}
+	path = createSavePath(name);
+	bool pathExists = fs::exists(path);
 
-		LogError("Unable to generate filename for save %s", name);
-		return false;
+	return !pathExists;
+}
+
+SaveMetadata SaveManager::getSaveGameIfExists(const UString &name) const
+{
+	auto saveList = getSaveList();
+	auto it = std::find_if(saveList.begin(), saveList.end(),
+	                       [&name](SaveMetadata *obj) { return obj->getName() == name; });
+
+	if (it != saveList.end())
+	{
+		return *it;
 	}
 
-	return true;
+	//UString path;
+	//return !findFreePath(path, name);
+
+	return {};
 }
 
 bool SaveManager::newSaveGame(const UString &name, const sp<GameState> gameState) const

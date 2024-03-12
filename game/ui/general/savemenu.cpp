@@ -284,40 +284,65 @@ void SaveMenu::tryToLoadGame(sp<Control> slotControl)
 
 void SaveMenu::tryToSaveGame(const UString &saveName, sp<Control> parent)
 {
+	// If saving new item from first row
 	if (parent->Name == newSaveItemId)
 	{
-		if (saveManager.newSaveGame(saveName, currentState))
+		auto saveGameMetadata = saveManager.getSaveGameIfExists(saveName);
+
+		// If no game with same name exists in folder
+		if (true)
 		{
-			fw().stageQueueCommand({StageCmd::Command::POP});
+			if (saveManager.newSaveGame(saveName, currentState))
+			{
+				fw().stageQueueCommand({StageCmd::Command::POP});
+			}
+			else
+			{
+				clearTextEdit(activeTextEdit);
+			}
 		}
+		// If the user use the first row but wrote the name of an already existing save game
 		else
 		{
-			clearTextEdit(activeTextEdit);
+			//SaveMenu::askUserIfWantToOverrideSavedGame(saveGameMetadata);
 		}
 	}
+
+	// If saving item using row for existing item
 	else
 	{
-		sp<SaveMetadata> slot = parent->getData<SaveMetadata>();
-		std::function<void()> onSuccess = std::function<void()>(
-		    [this, slot, saveName]
-		    {
-			    if (saveManager.overrideGame(*slot, saveName, currentState))
-			    {
-				    fw().stageQueueCommand({StageCmd::Command::POP});
-			    }
-			    else
-			    {
-				    clearTextEdit(activeTextEdit);
-			    }
-		    });
-		std::function<void()> onCancel =
-		    std::function<void()>([this] { clearTextEdit(activeTextEdit); });
-		sp<MessageBox> messageBox = mksp<MessageBox>(MessageBox(
-		    "Override saved game", "Do you really want to override " + slot->getName() + "?",
-		    MessageBox::ButtonOptions::YesNo, std::move(onSuccess), std::move(onCancel)));
-
-		fw().stageQueueCommand({StageCmd::Command::PUSH, messageBox});
+		auto slot = parent->getData<SaveMetadata>();
+		SaveMenu::askUserIfWantToOverrideSavedGame(slot);
 	}
+}
+
+void SaveMenu::askUserIfWantToOverrideSavedGame(sp<SaveMetadata> saveMetadata)
+{
+	auto saveName = saveMetadata->getName();
+	auto messageBoxTitle = "Override saved game";
+	auto messageBoxContent = "Do you really want to override " + saveName + "?";
+
+	std::function<void()> onYes = std::function<void()>(
+	    [this, saveMetadata, saveName]
+	    {
+		    if (saveManager.overrideGame(*saveMetadata, saveName, currentState))
+		    {
+			    fw().stageQueueCommand({StageCmd::Command::POP});
+		    }
+		    else
+		    {
+			    clearTextEdit(activeTextEdit);
+		    }
+	    });
+
+	std::function<void()> onNo =
+	    std::function<void()>([this] { clearTextEdit(activeTextEdit); });
+
+	sp<MessageBox> messageBox = mksp<MessageBox>(
+	    MessageBox(messageBoxTitle, messageBoxContent,
+	               MessageBox::ButtonOptions::YesNo, std::move(onYes), std::move(onNo)));
+
+	fw().stageQueueCommand({StageCmd::Command::PUSH, messageBox});
 }
 
 void SaveMenu::tryToDeleteSavedGame(sp<Control> &slotControl)
