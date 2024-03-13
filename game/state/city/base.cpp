@@ -537,12 +537,24 @@ int Base::getCapacityUsed(GameState &state, FacilityType::Capacity type) const
 			}
 			break;
 		case FacilityType::Capacity::Aliens:
-			for (auto &e : inventoryBioEquipment)
+		{
+			UString brainSuckerPodName = "AEQUIPMENTTYPE_BRAINSUCKER_POD";
+
+			// Brainsucker pod SHOULD NOT be in alien containment math!
+			std::vector<std::pair<UString, unsigned>> containmentBioEquipment = {};
+			std::remove_copy_if(
+			    inventoryBioEquipment.begin(), inventoryBioEquipment.end(),
+			    std::back_inserter(containmentBioEquipment),
+			    [&brainSuckerPodName](const std::pair<UString, unsigned> &bioEquipmentItem)
+			    { return bioEquipmentItem.first == brainSuckerPodName; });
+
+			for (auto &e : containmentBioEquipment)
 			{
 				StateRef<AEquipmentType> ae = {&state, e.first};
 				total += ae->store_space * e.second;
 			}
-			break;
+		}
+		break;
 		case FacilityType::Capacity::Nothing:
 			// Nothing needs to be handled
 			break;
