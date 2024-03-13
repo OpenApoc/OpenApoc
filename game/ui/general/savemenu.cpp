@@ -290,7 +290,7 @@ void SaveMenu::tryToSaveGame(const UString &saveName, sp<Control> parent)
 		auto saveGameMetadata = saveManager.getSaveGameIfExists(saveName);
 
 		// If no game with same name exists in folder
-		if (true)
+		if (!saveGameMetadata)
 		{
 			if (saveManager.newSaveGame(saveName, currentState))
 			{
@@ -304,7 +304,7 @@ void SaveMenu::tryToSaveGame(const UString &saveName, sp<Control> parent)
 		// If the user use the first row but wrote the name of an already existing save game
 		else
 		{
-			//SaveMenu::askUserIfWantToOverrideSavedGame(saveGameMetadata);
+			SaveMenu::askUserIfWantToOverrideSavedGame(saveGameMetadata);
 		}
 	}
 

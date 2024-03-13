@@ -169,21 +169,19 @@ bool SaveManager::findFreePath(UString &path, const UString &name) const
 	return !pathExists;
 }
 
-SaveMetadata SaveManager::getSaveGameIfExists(const UString &name) const
+sp<SaveMetadata> SaveManager::getSaveGameIfExists(const UString &name) const
 {
 	auto saveList = getSaveList();
 	auto it = std::find_if(saveList.begin(), saveList.end(),
-	                       [&name](SaveMetadata *obj) { return obj->getName() == name; });
+	                       [&name](SaveMetadata &obj) { return obj.getName() == name; });
 
 	if (it != saveList.end())
 	{
-		return *it;
+		auto sp_save = mksp<SaveMetadata>(*it);
+		return sp_save;
 	}
 
-	//UString path;
-	//return !findFreePath(path, name);
-
-	return {};
+	return nullptr;
 }
 
 bool SaveManager::newSaveGame(const UString &name, const sp<GameState> gameState) const
