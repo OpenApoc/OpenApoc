@@ -335,12 +335,11 @@ void SaveMenu::askUserIfWantToOverrideSavedGame(sp<SaveMetadata> saveMetadata)
 		    }
 	    });
 
-	std::function<void()> onNo =
-	    std::function<void()>([this] { clearTextEdit(activeTextEdit); });
+	std::function<void()> onNo = std::function<void()>([this] { clearTextEdit(activeTextEdit); });
 
-	sp<MessageBox> messageBox = mksp<MessageBox>(
-	    MessageBox(messageBoxTitle, messageBoxContent,
-	               MessageBox::ButtonOptions::YesNo, std::move(onYes), std::move(onNo)));
+	sp<MessageBox> messageBox = mksp<MessageBox>(MessageBox(messageBoxTitle, messageBoxContent,
+	                                                        MessageBox::ButtonOptions::YesNo,
+	                                                        std::move(onYes), std::move(onNo)));
 
 	fw().stageQueueCommand({StageCmd::Command::PUSH, messageBox});
 }
