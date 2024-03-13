@@ -39,7 +39,7 @@ class SaveMenu : public Stage
 	void tryToSaveGame(const UString &textEdit, sp<Control> parent);
 	void tryToDeleteSavedGame(sp<Control> &control);
 
-	// opens pop-up asking the user if wants to override existing saved game
+	// Opens pop-up asking the user if wants to override existing saved game
 	void askUserIfWantToOverrideSavedGame(sp<SaveMetadata> saveMetadata);
 
   public:
