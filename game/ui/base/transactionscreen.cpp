@@ -384,6 +384,8 @@ void TransactionScreen::populateControlsVehicleEquipment()
 
 void TransactionScreen::populateControlsAlien()
 {
+	// TODO: Fix why aliens are being shown twice
+	// TODO: Show only rows for aliens that exists in this base!
 	int leftIndex = getLeftIndex();
 	int rightIndex = getRightIndex();
 	for (auto &ae : state->agent_equipment)

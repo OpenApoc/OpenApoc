@@ -540,16 +540,12 @@ int Base::getCapacityUsed(GameState &state, FacilityType::Capacity type) const
 		{
 			UString brainSuckerPodName = "AEQUIPMENTTYPE_BRAINSUCKER_POD";
 
-			// Brainsucker pod SHOULD NOT be in alien containment math!
-			std::vector<std::pair<UString, unsigned>> containmentBioEquipment = {};
-			std::remove_copy_if(
-			    inventoryBioEquipment.begin(), inventoryBioEquipment.end(),
-			    std::back_inserter(containmentBioEquipment),
-			    [&brainSuckerPodName](const std::pair<UString, unsigned> &bioEquipmentItem)
-			    { return bioEquipmentItem.first == brainSuckerPodName; });
-
-			for (auto &e : containmentBioEquipment)
+			for (auto &e : inventoryBioEquipment)
 			{
+				// Brainsucker pod SHOULD NOT be in alien containment math!
+				if (e.first == brainSuckerPodName || e.second == 0)
+					continue;
+
 				StateRef<AEquipmentType> ae = {&state, e.first};
 				total += ae->store_space * e.second;
 			}
@@ -607,7 +603,9 @@ int Base::getUsage(GameState &state, FacilityType::Capacity type, int delta) con
 		return used > 0 ? 999 : 0;
 	}
 
-	// + total / 2  due to rounding
-	return std::min(999, (100 * used + total / 2) / total);
+	double usageValue = (double) used / total * 100;
+	int usage = std::min(999, (int) std::round(usageValue));
+
+	return usage;
 }
 }; // namespace OpenApoc
