@@ -537,12 +537,18 @@ int Base::getCapacityUsed(GameState &state, FacilityType::Capacity type) const
 			}
 			break;
 		case FacilityType::Capacity::Aliens:
+		{
 			for (auto &e : inventoryBioEquipment)
 			{
+				// Brainsucker pod SHOULD NOT be in alien containment math!
+				if (e.first == "AEQUIPMENTTYPE_BRAINSUCKER_POD" || e.second == 0)
+					continue;
+
 				StateRef<AEquipmentType> ae = {&state, e.first};
 				total += ae->store_space * e.second;
 			}
-			break;
+		}
+		break;
 		case FacilityType::Capacity::Nothing:
 			// Nothing needs to be handled
 			break;
@@ -595,7 +601,9 @@ int Base::getUsage(GameState &state, FacilityType::Capacity type, int delta) con
 		return used > 0 ? 999 : 0;
 	}
 
-	// + total / 2  due to rounding
-	return std::min(999, (100 * used + total / 2) / total);
+	double usageValue = (double)used / total * 100;
+	int usage = std::min(999, (int)std::round(usageValue));
+
+	return usage;
 }
 }; // namespace OpenApoc

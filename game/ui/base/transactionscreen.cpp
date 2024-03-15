@@ -395,7 +395,9 @@ void TransactionScreen::populateControlsAlien()
 		// Add alien
 		for (auto &b : state->player_bases)
 		{
-			if (b.second->inventoryBioEquipment[ae.first] > 0)
+			// Removing brainsucker pod from alien containment list
+			if (b.second->inventoryBioEquipment[ae.first] > 0 &&
+			    ae.first != "AEQUIPMENTTYPE_BRAINSUCKER_POD")
 			{
 				auto control = TransactionControl::createControl(
 				    *state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);
