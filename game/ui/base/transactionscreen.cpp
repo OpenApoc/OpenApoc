@@ -384,9 +384,6 @@ void TransactionScreen::populateControlsVehicleEquipment()
 
 void TransactionScreen::populateControlsAlien()
 {
-	// TODO: Fix why aliens are being shown twice
-	// TODO: Show only rows for aliens that exists in this base!
-
 	int leftIndex = getLeftIndex();
 	int rightIndex = getRightIndex();
 	for (auto &ae : state->agent_equipment)
@@ -398,7 +395,8 @@ void TransactionScreen::populateControlsAlien()
 		// Add alien
 		for (auto &b : state->player_bases)
 		{
-			if (b.second->inventoryBioEquipment[ae.first] > 0 && ae.first != "AEQUIPMENTTYPE_BRAINSUCKER_POD")
+			if (b.second->inventoryBioEquipment[ae.first] > 0 &&
+			    ae.first != "AEQUIPMENTTYPE_BRAINSUCKER_POD")
 			{
 				auto control = TransactionControl::createControl(
 				    *state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);
