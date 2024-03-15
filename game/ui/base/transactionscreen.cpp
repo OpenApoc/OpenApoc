@@ -386,7 +386,6 @@ void TransactionScreen::populateControlsAlien()
 {
 	int leftIndex = getLeftIndex();
 	int rightIndex = getRightIndex();
-	auto &alienTransactionControls = transactionControls[type];
 
 	for (auto &ae : state->agent_equipment)
 	{
@@ -399,16 +398,15 @@ void TransactionScreen::populateControlsAlien()
 		// Add alien
 		for (auto &b : state->player_bases)
 		{
+			auto alienTypeExistingControl = findControlById(alienTypeName);
 
-			auto it =
-			    std::find_if(alienTransactionControls.begin(), alienTransactionControls.end(),
-			                 [&alienTypeName](const sp<TransactionControl> &transactionControl)
-			                 { return transactionControl->itemId == alienTypeName; });
-
-			// Removing brainsucker pod from alien containment list
 			if (b.second->inventoryBioEquipment[ae.first] > 0 &&
+
+			    // Removing brainsucker pod from alien containment list
 			    alienTypeName != "AEQUIPMENTTYPE_BRAINSUCKER_POD" &&
-			    it == alienTransactionControls.end())
+
+			    // Don't add an alien type if it's already added in transaction controls
+			    alienTypeExistingControl)
 			{
 				auto control = TransactionControl::createControl(
 				    *state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);
@@ -416,7 +414,7 @@ void TransactionScreen::populateControlsAlien()
 				{
 					control->addCallback(FormEventType::ScrollBarChange, onScrollChange);
 					control->addCallback(FormEventType::MouseMove, onHover);
-					alienTransactionControls.push_back(control);
+					transactionControls[type].push_back(control);
 				}
 			}
 		}
