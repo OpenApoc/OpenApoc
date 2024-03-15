@@ -96,5 +96,8 @@ class SaveManager
 	std::vector<SaveMetadata> getSaveList() const;
 
 	bool deleteGame(const sp<SaveMetadata> &slot) const;
+
+	// Search savefile in folder via file name
+	sp<SaveMetadata> getSaveGameIfExists(const UString &name) const;
 };
 } // namespace OpenApoc
