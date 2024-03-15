@@ -171,9 +171,9 @@ bool SaveManager::findFreePath(UString &path, const UString &name) const
 
 sp<SaveMetadata> SaveManager::getSaveGameIfExists(const UString &name) const
 {
-	auto saveList = getSaveList();
+	const auto saveList = getSaveList();
 	auto it = std::find_if(saveList.begin(), saveList.end(),
-	                       [&name](SaveMetadata &obj) { return obj.getName() == name; });
+	                       [&name](const SaveMetadata &obj) { return obj.getName() == name; });
 
 	if (it != saveList.end())
 	{

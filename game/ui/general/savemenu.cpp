@@ -282,12 +282,12 @@ void SaveMenu::tryToLoadGame(sp<Control> slotControl)
 	}
 }
 
-void SaveMenu::tryToSaveGame(const UString &saveName, sp<Control> parent)
+void SaveMenu::tryToSaveGame(const UString &saveName, const sp<Control> parent)
 {
 	// If saving new item from first row
 	if (parent->Name == newSaveItemId)
 	{
-		auto saveGameMetadata = saveManager.getSaveGameIfExists(saveName);
+		const auto saveGameMetadata = saveManager.getSaveGameIfExists(saveName);
 
 		// If no game with same name exists in folder
 		if (!saveGameMetadata)
@@ -316,13 +316,13 @@ void SaveMenu::tryToSaveGame(const UString &saveName, sp<Control> parent)
 	}
 }
 
-void SaveMenu::askUserIfWantToOverrideSavedGame(sp<SaveMetadata> saveMetadata)
+void SaveMenu::askUserIfWantToOverrideSavedGame(const sp<SaveMetadata> saveMetadata)
 {
-	auto saveName = saveMetadata->getName();
-	auto messageBoxTitle = "Override saved game";
-	auto messageBoxContent = "Do you really want to override " + saveName + "?";
+	const auto &saveName = saveMetadata->getName();
+	const auto messageBoxTitle = "Override saved game";
+	const auto messageBoxContent = "Do you really want to override " + saveName + "?";
 
-	std::function<void()> onYes = std::function<void()>(
+	auto onYes = std::function<void()>(
 	    [this, saveMetadata, saveName]
 	    {
 		    if (saveManager.overrideGame(*saveMetadata, saveName, currentState))
@@ -335,7 +335,7 @@ void SaveMenu::askUserIfWantToOverrideSavedGame(sp<SaveMetadata> saveMetadata)
 		    }
 	    });
 
-	std::function<void()> onNo = std::function<void()>([this] { clearTextEdit(activeTextEdit); });
+	auto onNo = std::function<void()>([this] { clearTextEdit(activeTextEdit); });
 
 	sp<MessageBox> messageBox = mksp<MessageBox>(MessageBox(messageBoxTitle, messageBoxContent,
 	                                                        MessageBox::ButtonOptions::YesNo,
