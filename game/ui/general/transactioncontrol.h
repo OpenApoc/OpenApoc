@@ -94,6 +94,18 @@ class TransactionControl : public Control
 		int getBalance() const { return getRightStock(true); }
 		// ScrollBar support. Set current value.
 		int setBalance(const int balance);
+
+		/// <summary>
+		/// Checks if trade is active or not. Can be used to determine to draw shades, remove from
+		/// item list, etc.
+		/// </summary>
+		/// <returns>If trade is active or not.</returns>
+		bool isActive() const
+		{
+			auto isActive = (getLeftIndex() == getRightIndex() ||
+			                 (getLeftStock() == 0 && getRightStock() == 0)) == false;
+			return isActive;
+		}
 	};
 
   private:
