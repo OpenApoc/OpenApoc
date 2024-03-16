@@ -406,7 +406,7 @@ void TransactionScreen::populateControlsAlien()
 			    alienTypeName != "AEQUIPMENTTYPE_BRAINSUCKER_POD" &&
 
 			    // Don't add an alien type if it's already added in transaction controls
-			    alienTypeExistingControl)
+			    !alienTypeExistingControl)
 			{
 				auto control = TransactionControl::createControl(
 				    *state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);
