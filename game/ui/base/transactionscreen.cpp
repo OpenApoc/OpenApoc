@@ -398,7 +398,7 @@ void TransactionScreen::populateControlsAlien()
 		// Add alien
 		for (auto &b : state->player_bases)
 		{
-			auto alienTypeExistingControl = findControlById(alienTypeName);
+			auto alienTypeExistingControl = findControlById(type, alienTypeName);
 
 			if (b.second->inventoryBioEquipment[ae.first] > 0 &&
 
