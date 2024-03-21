@@ -783,8 +783,7 @@ void TransactionControl::postRender()
 
 	// Draw shade if inactive
 	static Vec2<int> shadePos = {0, 0};
-	if (tradeState.getLeftIndex() == tradeState.getRightIndex() ||
-	    (tradeState.getLeftStock() == 0 && tradeState.getRightStock() == 0))
+	if (!tradeState.isActive())
 	{
 		fw().renderer->draw(transactionShade, shadePos);
 	}

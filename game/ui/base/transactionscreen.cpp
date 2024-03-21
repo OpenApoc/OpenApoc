@@ -152,9 +152,13 @@ void TransactionScreen::setDisplayType(Type type)
 			viewHighlight = BaseGraphics::FacilityHighlight::Aliens;
 			break;
 	}
-	// Finally add all controls
+
+	// After all controls are loaded, check their visibility, and add them
 	for (auto &c : transactionControls[type])
 	{
+		// If control is not set to show, remove its visibility
+		c->setVisible(c->tradeState.isActive());
+
 		list->addItem(c);
 	}
 	// Update display for bases
