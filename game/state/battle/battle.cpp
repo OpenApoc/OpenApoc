@@ -3366,7 +3366,7 @@ void Battle::exitBattle(GameState &state)
 	}
 
 	// Give player vehicle a null cargo just so it comes back to base once
-	for (auto v : returningVehicles)
+	for (auto v : playerVehicles)
 	{
 		v->cargo.emplace_front(
 		    state, StateRef<AEquipmentType>(&state, state.agent_equipment.begin()->first), 0, 0,
