@@ -4341,7 +4341,7 @@ bool CityView::handleGameStateEvent(Event *e)
 					item_name = game_state->agent_equipment[ev->topic->itemId]->name;
 					break;
 				case ResearchTopic::ItemType::Craft:
-					item_name = game_state->vehicles[ev->topic->itemId]->name;
+					item_name = game_state->vehicle_types[ev->topic->itemId]->name;
 					break;
 			}
 			setUpdateSpeed(CityUpdateSpeed::Pause);
