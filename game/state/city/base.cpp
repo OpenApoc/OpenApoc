@@ -540,8 +540,7 @@ int Base::getCapacityUsed(GameState &state, FacilityType::Capacity type) const
 		{
 			for (auto &e : inventoryBioEquipment)
 			{
-				// Brainsucker pod SHOULD NOT be in alien containment math!
-				if (e.first == "AEQUIPMENTTYPE_BRAINSUCKER_POD" || e.second == 0)
+				if (e.second == 0)
 					continue;
 
 				StateRef<AEquipmentType> ae = {&state, e.first};
