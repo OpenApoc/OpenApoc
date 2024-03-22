@@ -398,15 +398,10 @@ void TransactionScreen::populateControlsAlien()
 		// Add alien
 		for (auto &b : state->player_bases)
 		{
+			// Don't add an alien type if it's already added in transaction controls
 			auto alienTypeExistingControl = findControlById(type, alienTypeName);
 
-			if (b.second->inventoryBioEquipment[ae.first] > 0 &&
-
-			    // Removing brainsucker pod from alien containment list
-			    alienTypeName != "AEQUIPMENTTYPE_BRAINSUCKER_POD" &&
-
-			    // Don't add an alien type if it's already added in transaction controls
-			    !alienTypeExistingControl)
+			if (b.second->inventoryBioEquipment[ae.first] > 0 && !alienTypeExistingControl)
 			{
 				auto control = TransactionControl::createControl(
 				    *state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);
