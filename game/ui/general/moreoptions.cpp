@@ -129,59 +129,56 @@ void MoreOptions::loadLists()
 
 	// By default, city options list treat all options as boolean values
 	// But we have some exceptions with different value types that needs to be checked
-	const std::list<UString> cityNotificationsIntList = {"MaxTileRepair"};
-	const std::list<UString> cityNotificationsFloatList = {"SceneryRepairCostFactor"};
+	const std::list<UString> intNotificationsList = {"MaxTileRepair"};
+	const std::list<UString> floatNotificationsList = {"SceneryRepairCostFactor"};
 
-	// FIXME: Can this be optimized?
-	for (auto &p : *citynotificationList)
+	// Unifying options treatment at both city notification and battle notification
+	const std::list<std::pair<std::list<std::pair<UString, UString>>, sp<ListBox>>>
+	    notificationControlPairList = {
+	        {*citynotificationList, citylistControl},
+	        {*battlenotificationList, battlelistControl},
+	    };
+
+	for (const auto &notificationControlPair : notificationControlPairList)
 	{
-		const UString full_name = p.first + "." + p.second;
+		const auto &notificationList = notificationControlPair.first;
+		const auto &listControl = notificationControlPair.second;
 
-		const auto isOptionInt =
-		    std::find(cityNotificationsIntList.begin(), cityNotificationsIntList.end(), p.second) !=
-		    cityNotificationsIntList.end();
-
-		if (isOptionInt)
+		for (const auto &notification : notificationList)
 		{
-			continue;
+			const UString fullName = notification.first + "." + notification.second;
+
+			const auto isOptionInt =
+			    std::find(intNotificationsList.begin(), intNotificationsList.end(),
+			              notification.second) != intNotificationsList.end();
+
+			if (isOptionInt)
+			{
+				continue;
+			}
+
+			const auto isOptionFloat =
+			    std::find(floatNotificationsList.begin(), floatNotificationsList.end(),
+			              notification.second) != floatNotificationsList.end();
+
+			if (isOptionFloat)
+			{
+				continue;
+			}
+
+			auto checkBox = mksp<CheckBox>(fw().data->loadImage("BUTTON_CHECKBOX_TRUE"),
+			                               fw().data->loadImage("BUTTON_CHECKBOX_FALSE"));
+			checkBox->Size = {240, listControl->ItemSize};
+			checkBox->setData(mksp<UString>(fullName));
+			checkBox->setChecked(config().getBool(fullName));
+			auto label = checkBox->createChild<Label>(
+			    tr(config().describe(notification.first, notification.second)), font);
+			label->Size = {216, listControl->ItemSize};
+			label->Location = {24, 0};
+			label->ToolTipText = tr(config().describe(notification.first, notification.second));
+			label->ToolTipFont = font;
+			listControl->addItem(checkBox);
 		}
-
-		const auto isOptionFloat =
-		    std::find(cityNotificationsFloatList.begin(), cityNotificationsFloatList.end(),
-		              p.second) != cityNotificationsFloatList.end();
-
-		if (isOptionFloat)
-		{
-			continue;
-		}
-
-		auto checkBox = mksp<CheckBox>(fw().data->loadImage("BUTTON_CHECKBOX_TRUE"),
-		                               fw().data->loadImage("BUTTON_CHECKBOX_FALSE"));
-		checkBox->Size = {240, citylistControl->ItemSize};
-		checkBox->setData(mksp<UString>(full_name));
-		checkBox->setChecked(config().getBool(full_name));
-		auto label = checkBox->createChild<Label>(tr(config().describe(p.first, p.second)), font);
-		label->Size = {216, citylistControl->ItemSize};
-		label->Location = {24, 0};
-		label->ToolTipText = tr(config().describe(p.first, p.second));
-		label->ToolTipFont = font;
-		citylistControl->addItem(checkBox);
-	}
-
-	for (auto &p : *battlenotificationList)
-	{
-		auto checkBox = mksp<CheckBox>(fw().data->loadImage("BUTTON_CHECKBOX_TRUE"),
-		                               fw().data->loadImage("BUTTON_CHECKBOX_FALSE"));
-		checkBox->Size = {240, battlelistControl->ItemSize};
-		UString full_name = p.first + "." + p.second;
-		checkBox->setData(mksp<UString>(full_name));
-		checkBox->setChecked(config().getBool(full_name));
-		auto label = checkBox->createChild<Label>(tr(config().describe(p.first, p.second)), font);
-		label->Size = {216, battlelistControl->ItemSize};
-		label->Location = {24, 0};
-		label->ToolTipText = tr(config().describe(p.first, p.second));
-		label->ToolTipFont = font;
-		battlelistControl->addItem(checkBox);
 	}
 }
 
