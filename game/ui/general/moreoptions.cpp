@@ -42,6 +42,8 @@ std::list<std::pair<UString, UString>> cityscapeList = {
     {"OpenApoc.NewFeature", "SkipTurboMovement"},
     {"OpenApoc.NewFeature", "CrashingOutOfFuel"},
     {"OpenApoc.NewFeature", "ATVUFOMission"},
+    {"OpenApoc.Mod", "MaxTileRepair"},
+    {"OpenApoc.Mod", "SceneryRepairCostFactor"},
     {"OpenApoc.Mod", "RaidHostileAction"},
     {"OpenApoc.Mod", "CrashingVehicles"},
     {"OpenApoc.Mod", "InvulnerableRoads"},
@@ -125,13 +127,37 @@ void MoreOptions::loadLists()
 	battlelistControl->clear();
 	auto font = ui().getFont("smalfont");
 
+	// By default, city options list treat all options as boolean values
+	// But we have some exceptions with different value types that needs to be checked
+	const std::list<UString> cityNotificationsIntList = {"MaxTileRepair"};
+	const std::list<UString> cityNotificationsFloatList = {"SceneryRepairCostFactor"};
+
 	// FIXME: Can this be optimized?
 	for (auto &p : *citynotificationList)
 	{
+		const UString full_name = p.first + "." + p.second;
+
+		const auto isOptionInt =
+		    std::find(cityNotificationsIntList.begin(), cityNotificationsIntList.end(), p.second) !=
+		    cityNotificationsIntList.end();
+
+		if (isOptionInt)
+		{
+			continue;
+		}
+
+		const auto isOptionFloat =
+		    std::find(cityNotificationsFloatList.begin(), cityNotificationsFloatList.end(),
+		              p.second) != cityNotificationsFloatList.end();
+
+		if (isOptionFloat)
+		{
+			continue;
+		}
+
 		auto checkBox = mksp<CheckBox>(fw().data->loadImage("BUTTON_CHECKBOX_TRUE"),
 		                               fw().data->loadImage("BUTTON_CHECKBOX_FALSE"));
 		checkBox->Size = {240, citylistControl->ItemSize};
-		UString full_name = p.first + "." + p.second;
 		checkBox->setData(mksp<UString>(full_name));
 		checkBox->setChecked(config().getBool(full_name));
 		auto label = checkBox->createChild<Label>(tr(config().describe(p.first, p.second)), font);
