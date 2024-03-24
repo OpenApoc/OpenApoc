@@ -71,7 +71,7 @@ void BattleExplosion::update(GameState &state, unsigned int ticks)
 	ticksUntilExpansion -= ticks;
 	while (ticksUntilExpansion <= 0)
 	{
-		ticksUntilExpansion += TICKS_MULTIPLIER * 2;
+		ticksUntilExpansion += TICKS_PER_EXPLOSION_EXPANSION;
 		grow(state);
 		if (locationsToExpand[0].empty() && locationsToExpand[1].empty() &&
 		    locationsToExpand[2].empty())

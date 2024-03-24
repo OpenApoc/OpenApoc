@@ -19,6 +19,9 @@
 // For some reason, advancing projectiles using their speed produces improper results
 // With a multiplier of four, it seems to match.
 // Tests with cityscape shown this to work similar to vanilla
+// Hambones|Josh: On the assumption that this reflected the old 144:36 tick speed ratio, i changed
+// this to 1.0f but that does not work.  The manner in which this value controls projectile speed is
+// not straightforward and needs to be further investigated.
 #define PROJECTILE_VELOCITY_MULTIPLIER 4.0f
 
 namespace OpenApoc
