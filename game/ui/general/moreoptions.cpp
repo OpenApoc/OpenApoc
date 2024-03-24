@@ -90,8 +90,8 @@ std::list<std::pair<UString, UString>> vanillaList = {
 
 // By default, cityscape and battlescape options list treat all options as boolean values
 // But we have some exceptions with different value types that needs to be properly checked
-const std::list<UString> intNotificationsList = {"OpenApoc.Mod.MaxTileRepair"};
-const std::list<UString> floatNotificationsList = {"OpenApoc.Mod.SceneryRepairCostFactor"};
+const auto intNotificationsList = {"OpenApoc.Mod.MaxTileRepair"};
+const auto floatNotificationsList = {"OpenApoc.Mod.SceneryRepairCostFactor"};
 
 } // namespace
 MoreOptions::MoreOptions(sp<GameState> state)
