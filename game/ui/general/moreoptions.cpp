@@ -1,10 +1,12 @@
 #include "game/ui/general/moreoptions.h"
 #include "forms/checkbox.h"
 #include "forms/form.h"
+#include "forms/graphicbutton.h"
 #include "forms/label.h"
 #include "forms/listbox.h"
 #include "forms/scrollbar.h"
 #include "forms/textbutton.h"
+#include "forms/textedit.h"
 #include "forms/ui.h"
 #include "framework/configfile.h"
 #include "framework/data.h"
@@ -156,7 +158,8 @@ void MoreOptions::saveLists()
 
 			if (isOptionInt)
 			{
-				const auto value = std::stoi(std::dynamic_pointer_cast<Label>(control)->getText());
+				const auto value =
+				    std::stoi(std::dynamic_pointer_cast<TextEdit>(control)->getText());
 				config().set(*name, value);
 				continue;
 			}
@@ -165,7 +168,8 @@ void MoreOptions::saveLists()
 
 			if (isOptionFloat)
 			{
-				const auto value = std::stof(std::dynamic_pointer_cast<Label>(control)->getText());
+				const auto value =
+				    std::stof(std::dynamic_pointer_cast<TextEdit>(control)->getText());
 				config().set(*name, value);
 				continue;
 			}
@@ -219,13 +223,48 @@ void MoreOptions::loadLists()
 
 			if (isOptionInt)
 			{
-				const auto label = mksp<Label>(
+				const auto textEdit = mksp<TextEdit>(
 				    tr(config().describe(notification.first, notification.second)), font);
 				const auto labelText = std::to_string(config().getInt(fullName));
-				label->setText(labelText);
+				textEdit->setText(labelText);
 
-				configureOptionControlAndAddToControlListBox(
-				    label, notification.first, notification.second, font, listControl);
+				// configureOptionControlAndAddToControlListBox(
+				//    textEdit, notification.first, notification.second, font, listControl);
+
+				textEdit->Size = {240, listControl->ItemSize};
+				textEdit->setData(mksp<UString>(fullName));
+
+				const auto buttonUp = textEdit->createChild<GraphicButton>(
+				    fw().data->loadImage(
+				        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:13:ui/menuopt.pal"),
+				    fw().data->loadImage(
+				        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:14:ui/menuopt.pal"));
+
+				buttonUp->Size = {20, listControl->ItemSize};
+				buttonUp->Location = {27, 0};
+
+				const auto buttonDown = textEdit->createChild<GraphicButton>(
+				    fw().data->loadImage(
+				        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:15:ui/menuopt.pal"),
+				    fw().data->loadImage(
+				        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:16:ui/menuopt.pal"));
+
+				buttonDown->Size = {20, listControl->ItemSize};
+				// buttonDown->SelectionSize = {216, listControl->ItemSize};
+				buttonDown->Location = {45, 0};
+
+				const auto chidlLabel = textEdit->createChild<Label>(
+				    tr(config().describe(notification.first, notification.second)), font);
+				chidlLabel->Size = {216, listControl->ItemSize};
+				chidlLabel->Location = {65, 0};
+				chidlLabel->ToolTipText =
+				    tr(config().describe(notification.first, notification.second));
+				chidlLabel->ToolTipFont = font;
+
+				// chidlLabel->ToolTipText = tr(config().describe(notification.first,
+				// notification.second)); chidlLabel->ToolTipFont = font;
+
+				listControl->addItem(textEdit);
 
 				continue;
 			}
@@ -234,17 +273,45 @@ void MoreOptions::loadLists()
 
 			if (isOptionFloat)
 			{
-				auto label = mksp<Label>(
+				auto textEdit = mksp<TextEdit>(
 				    tr(config().describe(notification.first, notification.second)), font);
 
 				std::stringstream stream;
 				stream << std::fixed << std::setprecision(2) << config().getFloat(fullName);
 				const auto labelText = stream.str();
 
-				label->setText(labelText);
+				textEdit->setText(labelText);
 
-				configureOptionControlAndAddToControlListBox(
-				    label, notification.first, notification.second, font, listControl);
+				textEdit->Size = {240, listControl->ItemSize};
+				textEdit->setData(mksp<UString>(fullName));
+
+				const auto buttonUp = textEdit->createChild<GraphicButton>(
+				    fw().data->loadImage(
+				        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:13:ui/menuopt.pal"),
+				    fw().data->loadImage(
+				        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:14:ui/menuopt.pal"));
+
+				buttonUp->Size = {216, 0};
+				buttonUp->Location = {27, 0};
+
+				const auto buttonDown = textEdit->createChild<GraphicButton>(
+				    fw().data->loadImage(
+				        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:15:ui/menuopt.pal"),
+				    fw().data->loadImage(
+				        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:16:ui/menuopt.pal"));
+
+				buttonDown->Size = {216, 0};
+				buttonDown->Location = {45, 0};
+
+				const auto chidlLabel = textEdit->createChild<Label>(
+				    tr(config().describe(notification.first, notification.second)), font);
+				chidlLabel->Size = {216, listControl->ItemSize};
+				chidlLabel->Location = {65, 0};
+				chidlLabel->ToolTipText =
+				    tr(config().describe(notification.first, notification.second));
+				chidlLabel->ToolTipFont = font;
+
+				listControl->addItem(textEdit);
 
 				continue;
 			}

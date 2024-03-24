@@ -39,5 +39,6 @@ struct ColourArgB8888Le
 
 static constexpr Colour COLOUR_BLACK{0, 0, 0};
 static constexpr Colour COLOUR_RED{255, 0, 0};
+static constexpr Colour COLOUR_WHITE{255, 255, 255};
 
 }; // namespace OpenApoc
