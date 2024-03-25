@@ -18,7 +18,7 @@ namespace uuids = boost::uuids;
 namespace OpenApoc
 {
 const UString saveManifestName = "save_manifest";
-const UString saveFileExtension = ".save";
+const UString saveFileExtension = ".zip";
 
 SaveManager::SaveManager() : saveDirectory(Options::saveDirOption.get()) {}
 
@@ -109,7 +109,7 @@ bool writeArchiveWithBackup(SerializationArchive *archive, const UString &path, 
 		{
 			{
 				tempPath = saveDirectory /
-				           (boost::uuids::to_string(uuids::random_generator()()) + ".save");
+				           (boost::uuids::to_string(uuids::random_generator()()) + saveFileExtension);
 				if (!fs::exists(tempPath))
 				{
 					haveNewName = true;
