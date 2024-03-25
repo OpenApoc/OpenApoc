@@ -16,8 +16,10 @@
 #include "game/state/gamestate.h"
 #include "game/state/shared/organisation.h"
 #include <forms/graphic.h>
+#include <functional>
 #include <iomanip>
 #include <limits>
+#include <regex>
 #include <sstream>
 
 namespace OpenApoc
@@ -95,6 +97,9 @@ std::list<std::pair<UString, UString>> vanillaList = {
 const auto intNotificationsList = {"OpenApoc.Mod.MaxTileRepair"};
 const auto floatNotificationsList = {"OpenApoc.Mod.SceneryRepairCostFactor"};
 
+const std::regex numericCharsRegex("[^0-9.]");
+sp<BitmapFont> font = nullptr;
+
 } // namespace
 MoreOptions::MoreOptions(sp<GameState> state)
     : Stage(), menuform(ui().getForm("moreoptions")), state(state)
@@ -109,7 +114,7 @@ UString MoreOptions::getOptionFullName(const UString &optionSection,
 	return fullName;
 }
 
-bool MoreOptions::GetIfOptionInt(const UString &optionFullName) const
+bool MoreOptions::getIfOptionInt(const UString &optionFullName) const
 {
 	const auto isOptionInt = std::find(intNotificationsList.begin(), intNotificationsList.end(),
 	                                   optionFullName) != intNotificationsList.end();
@@ -117,15 +122,15 @@ bool MoreOptions::GetIfOptionInt(const UString &optionFullName) const
 	return isOptionInt;
 }
 
-bool MoreOptions::GetIfOptionInt(const UString &optionSection, const UString &optionName) const
+bool MoreOptions::getIfOptionInt(const UString &optionSection, const UString &optionName) const
 {
 	const auto optionFullName = getOptionFullName(optionSection, optionName);
-	const auto isOptionInt = GetIfOptionInt(optionFullName);
+	const auto isOptionInt = getIfOptionInt(optionFullName);
 
 	return isOptionInt;
 }
 
-bool MoreOptions::GetIfOptionFloat(const UString &optionFullName) const
+bool MoreOptions::getIfOptionFloat(const UString &optionFullName) const
 {
 	const auto isOptionFloat =
 	    std::find(floatNotificationsList.begin(), floatNotificationsList.end(), optionFullName) !=
@@ -134,10 +139,10 @@ bool MoreOptions::GetIfOptionFloat(const UString &optionFullName) const
 	return isOptionFloat;
 }
 
-bool MoreOptions::GetIfOptionFloat(const UString &optionSection, const UString &optionName) const
+bool MoreOptions::getIfOptionFloat(const UString &optionSection, const UString &optionName) const
 {
 	const auto optionFullName = getOptionFullName(optionSection, optionName);
-	const auto isOptionFloat = GetIfOptionFloat(optionFullName);
+	const auto isOptionFloat = getIfOptionFloat(optionFullName);
 
 	return isOptionFloat;
 }
@@ -154,22 +159,40 @@ void MoreOptions::saveLists()
 		{
 			const auto name = control->getData<UString>();
 
-			const auto isOptionInt = GetIfOptionInt(*name);
+			const auto isOptionInt = getIfOptionInt(*name);
 
 			if (isOptionInt)
 			{
-				const auto value =
-				    std::stoi(std::dynamic_pointer_cast<TextEdit>(control)->getText());
+				// Using default value if getInt fails
+				auto value = config().getInt(*name);
+
+				try
+				{
+					value = std::stoi(std::dynamic_pointer_cast<TextEdit>(control)->getText());
+				}
+				catch (const std::exception &)
+				{
+				}
+
 				config().set(*name, value);
 				continue;
 			}
 
-			const auto isOptionFloat = GetIfOptionFloat(*name);
+			const auto isOptionFloat = getIfOptionFloat(*name);
 
 			if (isOptionFloat)
 			{
-				const auto value =
-				    std::stof(std::dynamic_pointer_cast<TextEdit>(control)->getText());
+				// Using default value if getFloat fails
+				auto value = config().getFloat(*name);
+
+				try
+				{
+					value = std::stof(std::dynamic_pointer_cast<TextEdit>(control)->getText());
+				}
+				catch (const std::exception &)
+				{
+				}
+
 				config().set(*name, value);
 				continue;
 			}
@@ -182,8 +205,6 @@ void MoreOptions::saveLists()
 void MoreOptions::loadLists()
 {
 	saveLists();
-
-	const auto font = ui().getFont("smalfont");
 
 	// Unifying options treatment at both city notification and battle notification
 	const auto optionTupleList = {std::make_tuple("CITYLIST_NAME", "Cityscape Options",
@@ -210,6 +231,8 @@ void MoreOptions::loadLists()
 		notificationControlPairList.push_back({*notificationList, listControl});
 	}
 
+	font = ui().getFont("smalfont");
+
 	for (const auto &notificationControlPair : notificationControlPairList)
 	{
 		const auto &notificationList = notificationControlPair.first;
@@ -219,97 +242,119 @@ void MoreOptions::loadLists()
 		{
 			const auto fullName = getOptionFullName(notification.first, notification.second);
 
-			const auto isOptionInt = GetIfOptionInt(fullName);
+			const auto isOptionInt = getIfOptionInt(fullName);
 
 			if (isOptionInt)
 			{
-				const auto textEdit = mksp<TextEdit>(
-				    tr(config().describe(notification.first, notification.second)), font);
-				const auto labelText = std::to_string(config().getInt(fullName));
-				textEdit->setText(labelText);
+				const auto configValue = config().getInt(fullName);
+				const auto labelText = std::to_string(configValue);
 
-				// configureOptionControlAndAddToControlListBox(
-				//    textEdit, notification.first, notification.second, font, listControl);
+				const auto textEdit = createTextEditForNumericOptions(
+				    notification.first, notification.second, listControl, labelText);
 
-				textEdit->Size = {240, listControl->ItemSize};
-				textEdit->setData(mksp<UString>(fullName));
+				auto buttonUpCallback = [this, textEdit, fullName](Event *)
+				{
+					int value = config().getInt(fullName);
 
-				const auto buttonUp = textEdit->createChild<GraphicButton>(
-				    fw().data->loadImage(
-				        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:13:ui/menuopt.pal"),
-				    fw().data->loadImage(
-				        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:14:ui/menuopt.pal"));
+					try
+					{
+						value = std::stoi(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+						value += 1;
+					}
+					catch (const std::exception &)
+					{
+					}
 
-				buttonUp->Size = {20, listControl->ItemSize};
-				buttonUp->Location = {27, 0};
+					const auto labelText = std::to_string(value);
+					textEdit->setText(labelText);
+				};
 
-				const auto buttonDown = textEdit->createChild<GraphicButton>(
-				    fw().data->loadImage(
-				        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:15:ui/menuopt.pal"),
-				    fw().data->loadImage(
-				        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:16:ui/menuopt.pal"));
+				auto buttonDownCallback = [this, textEdit, fullName](Event *)
+				{
+					int value = config().getInt(fullName);
 
-				buttonDown->Size = {20, listControl->ItemSize};
-				// buttonDown->SelectionSize = {216, listControl->ItemSize};
-				buttonDown->Location = {45, 0};
+					try
+					{
+						value = std::stoi(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+						value -= 1;
+					}
+					catch (const std::exception &)
+					{
+					}
 
-				const auto chidlLabel = textEdit->createChild<Label>(
-				    tr(config().describe(notification.first, notification.second)), font);
-				chidlLabel->Size = {216, listControl->ItemSize};
-				chidlLabel->Location = {65, 0};
-				chidlLabel->ToolTipText =
-				    tr(config().describe(notification.first, notification.second));
-				chidlLabel->ToolTipFont = font;
+					const auto labelText = std::to_string(value);
+					textEdit->setText(labelText);
+				};
 
-				// chidlLabel->ToolTipText = tr(config().describe(notification.first,
-				// notification.second)); chidlLabel->ToolTipFont = font;
+				addButtonsToNumericOption(textEdit, listControl, buttonUpCallback,
+				                          buttonDownCallback);
+
+				addChildLabelToControl(textEdit, notification.first, notification.second,
+				                       listControl, 65);
 
 				listControl->addItem(textEdit);
 
 				continue;
 			}
 
-			const auto isOptionFloat = GetIfOptionFloat(fullName);
+			const auto isOptionFloat = getIfOptionFloat(fullName);
 
 			if (isOptionFloat)
 			{
-				auto textEdit = mksp<TextEdit>(
-				    tr(config().describe(notification.first, notification.second)), font);
+				const auto configValue = config().getFloat(fullName);
 
 				std::stringstream stream;
-				stream << std::fixed << std::setprecision(2) << config().getFloat(fullName);
+				stream << std::fixed << std::setprecision(1) << configValue;
 				const auto labelText = stream.str();
 
-				textEdit->setText(labelText);
+				const auto textEdit = createTextEditForNumericOptions(
+				    notification.first, notification.second, listControl, labelText);
 
-				textEdit->Size = {240, listControl->ItemSize};
-				textEdit->setData(mksp<UString>(fullName));
+				auto buttonUpCallback = [this, textEdit, fullName](Event *)
+				{
+					float value = config().getFloat(fullName);
 
-				const auto buttonUp = textEdit->createChild<GraphicButton>(
-				    fw().data->loadImage(
-				        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:13:ui/menuopt.pal"),
-				    fw().data->loadImage(
-				        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:14:ui/menuopt.pal"));
+					try
+					{
+						value = std::stof(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+						value += (float)0.1;
+					}
+					catch (const std::exception &)
+					{
+					}
 
-				buttonUp->Size = {216, 0};
-				buttonUp->Location = {27, 0};
+					std::stringstream stream;
+					stream << std::fixed << std::setprecision(1) << value;
+					const auto labelText = stream.str();
 
-				const auto buttonDown = textEdit->createChild<GraphicButton>(
-				    fw().data->loadImage(
-				        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:15:ui/menuopt.pal"),
-				    fw().data->loadImage(
-				        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:16:ui/menuopt.pal"));
+					textEdit->setText(labelText);
+				};
 
-				buttonDown->Size = {216, 0};
-				buttonDown->Location = {45, 0};
+				auto buttonDownCallback = [this, textEdit, fullName](Event *)
+				{
+					float value = config().getFloat(fullName);
 
-				const auto chidlLabel = textEdit->createChild<Label>(
-				    tr(config().describe(notification.first, notification.second)), font);
-				chidlLabel->Size = {216, listControl->ItemSize};
-				chidlLabel->Location = {65, 0};
-				chidlLabel->ToolTipText =
-				    tr(config().describe(notification.first, notification.second));
-				chidlLabel->ToolTipFont = font;
+					try
+					{
+						value = std::stof(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+						value -= (float)0.1;
+					}
+					catch (const std::exception &)
+					{
+					}
+
+					std::stringstream stream;
+					stream << std::fixed << std::setprecision(1) << value;
+					const auto labelText = stream.str();
+
+					textEdit->setText(labelText);
+				};
+
+				addButtonsToNumericOption(textEdit, listControl, buttonUpCallback,
+				                          buttonDownCallback);
+
+				addChildLabelToControl(textEdit, notification.first, notification.second,
+				                       listControl, 65);
 
 				listControl->addItem(textEdit);
 
@@ -321,7 +366,7 @@ void MoreOptions::loadLists()
 			checkBox->setChecked(config().getBool(fullName));
 
 			configureOptionControlAndAddToControlListBox(checkBox, notification.first,
-			                                             notification.second, font, listControl);
+			                                             notification.second, listControl, 24);
 		}
 	}
 }
@@ -329,25 +374,133 @@ void MoreOptions::loadLists()
 void MoreOptions::configureOptionControlAndAddToControlListBox(const sp<Control> &control,
                                                                const UString &optionSection,
                                                                const UString &optionName,
-                                                               const sp<BitmapFont> &font,
-                                                               const sp<ListBox> &listControl)
+                                                               const sp<ListBox> &listControl,
+                                                               const int &labelLocationHeight)
 {
 	const auto optionFullName = getOptionFullName(optionSection, optionName);
 
 	control->Size = {240, listControl->ItemSize};
 	control->setData(mksp<UString>(optionFullName));
-	addChildLabelToControl(control, optionSection, optionName, font, listControl);
+	addChildLabelToControl(control, optionSection, optionName, listControl, labelLocationHeight);
 	listControl->addItem(control);
 }
 
+sp<TextEdit> MoreOptions::createTextEditForNumericOptions(const UString &optionSection,
+                                                          const UString &optionName,
+                                                          const sp<ListBox> &listControl,
+                                                          const UString &labelText) const
+{
+	const auto optionFullName = getOptionFullName(optionSection, optionName);
+
+	// Create textEdit
+	const auto textEdit = mksp<TextEdit>(tr(config().describe(optionSection, optionName)), font);
+
+	textEdit->setText(labelText);
+
+	textEdit->Size = {25, listControl->ItemSize};
+	textEdit->setData(mksp<UString>(optionFullName));
+
+	// Add common callbacks
+
+	// Validating if text changed and removing any non-numeric value if it was added
+	textEdit->addCallback(FormEventType::TextChanged,
+	                      [textEdit](Event *e)
+	                      {
+		                      try
+		                      {
+			                      const auto textValue = textEdit->getText();
+
+			                      if (textValue.length() == 0)
+			                      {
+				                      return;
+			                      }
+
+			                      const char *lastChar = &textValue[textValue.length() - 1];
+
+			                      std::cmatch results;
+
+			                      if (std::regex_search(lastChar, results, numericCharsRegex))
+			                      {
+				                      textEdit->setText(
+				                          textValue.substr(0, textValue.length() - 1));
+				                      return;
+			                      }
+		                      }
+		                      catch (const std::exception &)
+		                      {
+			                      textEdit->setText(std::to_string(0));
+		                      }
+	                      });
+
+	// Callbacks to validate if textEdit content is a numeric value, update with config values
+	// otherwise
+	textEdit->addCallback(FormEventType::TextEditCancel,
+	                      [textEdit](Event *e)
+	                      {
+		                      try
+		                      {
+			                      const auto textValue = textEdit->getText();
+			                      std::stof(textValue);
+		                      }
+		                      catch (const std::exception &)
+		                      {
+			                      textEdit->setText(std::to_string(0));
+		                      }
+	                      });
+
+	textEdit->addCallback(FormEventType::TextEditFinish,
+	                      [textEdit](Event *e)
+	                      {
+		                      try
+		                      {
+			                      const auto textValue = textEdit->getText();
+			                      std::stof(textValue);
+		                      }
+		                      catch (const std::exception &)
+		                      {
+			                      textEdit->setText(std::to_string(0));
+		                      }
+	                      });
+
+	return textEdit;
+}
+
+void MoreOptions::addButtonsToNumericOption(
+    const sp<Control> &control, const sp<ListBox> &listControl,
+    const std::function<void(FormsEvent *e)> &buttonUpClickCallback,
+    const std::function<void(FormsEvent *e)> &buttonDownClickCallback)
+{
+	const auto buttonUp = control->createChild<GraphicButton>(
+	    fw().data->loadImage(
+	        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:13:ui/menuopt.pal"),
+	    fw().data->loadImage(
+	        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:14:ui/menuopt.pal"));
+
+	buttonUp->Size = {20, listControl->ItemSize};
+	buttonUp->Location = {27, 0};
+
+	buttonUp->addCallback(FormEventType::ButtonClick, buttonUpClickCallback);
+
+	const auto buttonDown = control->createChild<GraphicButton>(
+	    fw().data->loadImage(
+	        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:15:ui/menuopt.pal"),
+	    fw().data->loadImage(
+	        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:16:ui/menuopt.pal"));
+
+	buttonDown->Size = {20, listControl->ItemSize};
+	buttonDown->Location = {45, 0};
+
+	buttonDown->addCallback(FormEventType::ButtonClick, buttonDownClickCallback);
+}
+
 void MoreOptions::addChildLabelToControl(const sp<Control> &control, const UString &optionSection,
-                                         const UString &optionName, const sp<BitmapFont> &font,
-                                         const sp<ListBox> &listControl)
+                                         const UString &optionName, const sp<ListBox> &listControl,
+                                         const int &labelLocationHeight)
 {
 	const auto chidlLabel =
 	    control->createChild<Label>(tr(config().describe(optionSection, optionName)), font);
 	chidlLabel->Size = {216, listControl->ItemSize};
-	chidlLabel->Location = {24, 0};
+	chidlLabel->Location = {labelLocationHeight, 0};
 	chidlLabel->ToolTipText = tr(config().describe(optionSection, optionName));
 	chidlLabel->ToolTipFont = font;
 }

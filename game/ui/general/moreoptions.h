@@ -1,6 +1,7 @@
 #pragma once
 
 #include "forms/listbox.h"
+#include "forms/textedit.h"
 #include "framework/stage.h"
 #include "library/sp.h"
 
@@ -18,21 +19,31 @@ class MoreOptions : public Stage
 
 	UString getOptionFullName(const UString &optionSection, const UString &optionName) const;
 
-	bool GetIfOptionInt(const UString &optionFullName) const;
-	bool GetIfOptionInt(const UString &optionSection, const UString &optionName) const;
+	bool getIfOptionInt(const UString &optionFullName) const;
+	bool getIfOptionInt(const UString &optionSection, const UString &optionName) const;
 
-	bool GetIfOptionFloat(const UString &optionFullName) const;
-	bool GetIfOptionFloat(const UString &optionSection, const UString &optionName) const;
+	bool getIfOptionFloat(const UString &optionFullName) const;
+	bool getIfOptionFloat(const UString &optionSection, const UString &optionName) const;
 
 	void configureOptionControlAndAddToControlListBox(const sp<Control> &control,
 	                                                  const UString &optionSection,
 	                                                  const UString &optionName,
-	                                                  const sp<BitmapFont> &font,
-	                                                  const sp<ListBox> &listControl);
+	                                                  const sp<ListBox> &listControl,
+	                                                  const int &labelLocationHeight);
 
 	void addChildLabelToControl(const sp<Control> &control, const UString &optionSection,
-	                            const UString &optionName, const sp<BitmapFont> &font,
-	                            const sp<ListBox> &listControl);
+	                            const UString &optionName, const sp<ListBox> &listControl,
+	                            const int &labelLocationHeight);
+
+	sp<TextEdit> createTextEditForNumericOptions(const UString &optionSection,
+	                                             const UString &optionName,
+	                                             const sp<ListBox> &listControl,
+	                                             const UString &labelText) const;
+
+	void
+	addButtonsToNumericOption(const sp<Control> &control, const sp<ListBox> &listControl,
+	                          const std::function<void(FormsEvent *e)> &buttonUpClickCallback,
+	                          const std::function<void(FormsEvent *e)> &buttonDownClickCallback);
 
   public:
 	MoreOptions(sp<GameState> state);
