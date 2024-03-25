@@ -26,7 +26,7 @@ namespace OpenApoc
 {
 namespace
 {
-std::list<std::pair<UString, UString>> cityscapeList = {
+static const std::list<std::pair<UString, UString>> cityscapeList = {
     {"OpenApoc.NewFeature", "FerryChecksRelationshipWhenBuying"},
     {"OpenApoc.NewFeature", "AllowManualCityTeleporters"},
     {"OpenApoc.NewFeature", "AllowManualCargoFerry"},
@@ -57,7 +57,7 @@ std::list<std::pair<UString, UString>> cityscapeList = {
     {"OpenApoc.Mod", "ATVAPC"},
 };
 
-std::list<std::pair<UString, UString>> battlescapeList = {
+static const std::list<std::pair<UString, UString>> battlescapeList = {
     {"OpenApoc.NewFeature", "InstantExplosionDamage"},
     {"OpenApoc.NewFeature", "UFODamageModel"},
     {"OpenApoc.NewFeature", "GravliftSounds"},
@@ -77,7 +77,7 @@ std::list<std::pair<UString, UString>> battlescapeList = {
 };
 
 // TODO: Implement vanilla mode
-std::list<std::pair<UString, UString>> vanillaList = {
+static const std::list<std::pair<UString, UString>> vanillaList = {
     {"OpenApoc.NewFeature", "PayloadExplosion"},
     {"OpenApoc.NewFeature", "DisplayUnitPaths"},
     {"OpenApoc.NewFeature", "AdditionalUnitIcons"},
@@ -94,11 +94,14 @@ std::list<std::pair<UString, UString>> vanillaList = {
 
 // By default, cityscape and battlescape options list treat all options as boolean values
 // But we have some exceptions with different value types that needs to be properly checked
-const auto intNotificationsList = {"OpenApoc.Mod.MaxTileRepair"};
-const auto floatNotificationsList = {"OpenApoc.Mod.SceneryRepairCostFactor"};
+static const auto INT_NOTIFICATIONS_LIST = {"OpenApoc.Mod.MaxTileRepair"};
+static const auto FLOAT_NOTIFICATIONS_LIST = {"OpenApoc.Mod.SceneryRepairCostFactor"};
 
-const std::regex numericCharsRegex("[^0-9.]");
+static const std::regex NUMERIC_CHARS_REGEX("[^0-9.]");
 sp<BitmapFont> font = nullptr;
+
+static const auto NUMERIC_OPTION_MAX_LIMIT = (float)100.0;
+static const auto NUMERIC_OPTION_MIN_LIMIT = (float)0;
 
 } // namespace
 MoreOptions::MoreOptions(sp<GameState> state)
@@ -116,8 +119,8 @@ UString MoreOptions::getOptionFullName(const UString &optionSection,
 
 bool MoreOptions::getIfOptionInt(const UString &optionFullName) const
 {
-	const auto isOptionInt = std::find(intNotificationsList.begin(), intNotificationsList.end(),
-	                                   optionFullName) != intNotificationsList.end();
+	const auto isOptionInt = std::find(INT_NOTIFICATIONS_LIST.begin(), INT_NOTIFICATIONS_LIST.end(),
+	                                   optionFullName) != INT_NOTIFICATIONS_LIST.end();
 
 	return isOptionInt;
 }
@@ -133,8 +136,8 @@ bool MoreOptions::getIfOptionInt(const UString &optionSection, const UString &op
 bool MoreOptions::getIfOptionFloat(const UString &optionFullName) const
 {
 	const auto isOptionFloat =
-	    std::find(floatNotificationsList.begin(), floatNotificationsList.end(), optionFullName) !=
-	    floatNotificationsList.end();
+	    std::find(FLOAT_NOTIFICATIONS_LIST.begin(), FLOAT_NOTIFICATIONS_LIST.end(), optionFullName) !=
+	    FLOAT_NOTIFICATIONS_LIST.end();
 
 	return isOptionFloat;
 }
@@ -169,6 +172,11 @@ void MoreOptions::saveLists()
 				try
 				{
 					value = std::stoi(std::dynamic_pointer_cast<TextEdit>(control)->getText());
+
+					if (value > NUMERIC_OPTION_MAX_LIMIT)
+						value = (int)NUMERIC_OPTION_MAX_LIMIT;
+					else if (value < NUMERIC_OPTION_MIN_LIMIT)
+						value = (int)NUMERIC_OPTION_MIN_LIMIT;
 				}
 				catch (const std::exception &)
 				{
@@ -188,6 +196,11 @@ void MoreOptions::saveLists()
 				try
 				{
 					value = std::stof(std::dynamic_pointer_cast<TextEdit>(control)->getText());
+
+					if (value > NUMERIC_OPTION_MAX_LIMIT)
+						value = NUMERIC_OPTION_MAX_LIMIT;
+					else if (value < NUMERIC_OPTION_MIN_LIMIT)
+						value = NUMERIC_OPTION_MIN_LIMIT;
 				}
 				catch (const std::exception &)
 				{
@@ -254,36 +267,40 @@ void MoreOptions::loadLists()
 
 				auto buttonUpCallback = [this, textEdit, fullName](Event *)
 				{
-					int value = config().getInt(fullName);
-
 					try
 					{
-						value = std::stoi(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+						int value = std::stoi(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+
+						if (value >= NUMERIC_OPTION_MAX_LIMIT)
+							return;						
+							
 						value += 1;
+
+						const auto labelText = std::to_string(value);
+						textEdit->setText(labelText);
 					}
 					catch (const std::exception &)
 					{
 					}
-
-					const auto labelText = std::to_string(value);
-					textEdit->setText(labelText);
 				};
 
 				auto buttonDownCallback = [this, textEdit, fullName](Event *)
 				{
-					int value = config().getInt(fullName);
-
 					try
 					{
-						value = std::stoi(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+						int value = std::stoi(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+
+						if (value <= NUMERIC_OPTION_MIN_LIMIT)
+							return;
+
 						value -= 1;
+
+						const auto labelText = std::to_string(value);
+						textEdit->setText(labelText);
 					}
 					catch (const std::exception &)
 					{
 					}
-
-					const auto labelText = std::to_string(value);
-					textEdit->setText(labelText);
 				};
 
 				addButtonsToNumericOption(textEdit, listControl, buttonUpCallback,
@@ -312,42 +329,46 @@ void MoreOptions::loadLists()
 
 				auto buttonUpCallback = [this, textEdit, fullName](Event *)
 				{
-					float value = config().getFloat(fullName);
-
 					try
 					{
-						value = std::stof(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+						float value = std::stof(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+
+						if (value >= NUMERIC_OPTION_MAX_LIMIT)
+							return;
+
 						value += (float)0.1;
+
+						std::stringstream stream;
+						stream << std::fixed << std::setprecision(1) << value;
+						const auto labelText = stream.str();
+
+						textEdit->setText(labelText);
 					}
 					catch (const std::exception &)
 					{
 					}
-
-					std::stringstream stream;
-					stream << std::fixed << std::setprecision(1) << value;
-					const auto labelText = stream.str();
-
-					textEdit->setText(labelText);
 				};
 
 				auto buttonDownCallback = [this, textEdit, fullName](Event *)
 				{
-					float value = config().getFloat(fullName);
-
 					try
 					{
-						value = std::stof(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+						float value = std::stof(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+
+						if (value <= NUMERIC_OPTION_MIN_LIMIT)
+							return;
+
 						value -= (float)0.1;
+
+						std::stringstream stream;
+						stream << std::fixed << std::setprecision(1) << value;
+						const auto labelText = stream.str();
+
+						textEdit->setText(labelText);
 					}
 					catch (const std::exception &)
 					{
 					}
-
-					std::stringstream stream;
-					stream << std::fixed << std::setprecision(1) << value;
-					const auto labelText = stream.str();
-
-					textEdit->setText(labelText);
 				};
 
 				addButtonsToNumericOption(textEdit, listControl, buttonUpCallback,
@@ -419,7 +440,7 @@ sp<TextEdit> MoreOptions::createTextEditForNumericOptions(const UString &optionS
 
 			                      std::cmatch results;
 
-			                      if (std::regex_search(lastChar, results, numericCharsRegex))
+			                      if (std::regex_search(lastChar, results, NUMERIC_CHARS_REGEX))
 			                      {
 				                      textEdit->setText(
 				                          textValue.substr(0, textValue.length() - 1));
