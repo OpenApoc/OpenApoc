@@ -136,8 +136,8 @@ bool MoreOptions::getIfOptionInt(const UString &optionSection, const UString &op
 bool MoreOptions::getIfOptionFloat(const UString &optionFullName) const
 {
 	const auto isOptionFloat =
-	    std::find(FLOAT_NOTIFICATIONS_LIST.begin(), FLOAT_NOTIFICATIONS_LIST.end(), optionFullName) !=
-	    FLOAT_NOTIFICATIONS_LIST.end();
+	    std::find(FLOAT_NOTIFICATIONS_LIST.begin(), FLOAT_NOTIFICATIONS_LIST.end(),
+	              optionFullName) != FLOAT_NOTIFICATIONS_LIST.end();
 
 	return isOptionFloat;
 }
@@ -265,15 +265,16 @@ void MoreOptions::loadLists()
 				const auto textEdit = createTextEditForNumericOptions(
 				    notification.first, notification.second, listControl, labelText);
 
-				auto buttonUpCallback = [this, textEdit, fullName](Event *)
+				const auto buttonUpCallback = [this, textEdit, fullName](const Event *)
 				{
 					try
 					{
-						int value = std::stoi(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+						auto value =
+						    std::stoi(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
 
 						if (value >= NUMERIC_OPTION_MAX_LIMIT)
-							return;						
-							
+							return;
+
 						value += 1;
 
 						const auto labelText = std::to_string(value);
@@ -284,11 +285,12 @@ void MoreOptions::loadLists()
 					}
 				};
 
-				auto buttonDownCallback = [this, textEdit, fullName](Event *)
+				const auto buttonDownCallback = [this, textEdit, fullName](const Event *)
 				{
 					try
 					{
-						int value = std::stoi(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+						auto value =
+						    std::stoi(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
 
 						if (value <= NUMERIC_OPTION_MIN_LIMIT)
 							return;
@@ -327,11 +329,12 @@ void MoreOptions::loadLists()
 				const auto textEdit = createTextEditForNumericOptions(
 				    notification.first, notification.second, listControl, labelText);
 
-				auto buttonUpCallback = [this, textEdit, fullName](Event *)
+				const auto buttonUpCallback = [this, textEdit, fullName](const Event *)
 				{
 					try
 					{
-						float value = std::stof(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+						auto value =
+						    std::stof(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
 
 						if (value >= NUMERIC_OPTION_MAX_LIMIT)
 							return;
@@ -349,11 +352,12 @@ void MoreOptions::loadLists()
 					}
 				};
 
-				auto buttonDownCallback = [this, textEdit, fullName](Event *)
+				const auto buttonDownCallback = [this, textEdit, fullName](const Event *)
 				{
 					try
 					{
-						float value = std::stof(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+						auto value =
+						    std::stof(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
 
 						if (value <= NUMERIC_OPTION_MIN_LIMIT)
 							return;
