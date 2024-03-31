@@ -14,7 +14,9 @@
 #include "game/state/gamestate.h"
 #include "game/state/shared/organisation.h"
 #include <forms/graphic.h>
+#include <iomanip>
 #include <limits>
+#include <sstream>
 
 namespace OpenApoc
 {
@@ -42,6 +44,8 @@ std::list<std::pair<UString, UString>> cityscapeList = {
     {"OpenApoc.NewFeature", "SkipTurboMovement"},
     {"OpenApoc.NewFeature", "CrashingOutOfFuel"},
     {"OpenApoc.NewFeature", "ATVUFOMission"},
+    {"OpenApoc.Mod", "MaxTileRepair"},
+    {"OpenApoc.Mod", "SceneryRepairCostFactor"},
     {"OpenApoc.Mod", "RaidHostileAction"},
     {"OpenApoc.Mod", "CrashingVehicles"},
     {"OpenApoc.Mod", "InvulnerableRoads"},
@@ -84,6 +88,11 @@ std::list<std::pair<UString, UString>> vanillaList = {
     {"OpenApoc.Mod", "RaidHostileAction"},
 };
 
+// By default, cityscape and battlescape options list treat all options as boolean values
+// But we have some exceptions with different value types that needs to be properly checked
+const auto intNotificationsList = {"OpenApoc.Mod.MaxTileRepair"};
+const auto floatNotificationsList = {"OpenApoc.Mod.SceneryRepairCostFactor"};
+
 } // namespace
 MoreOptions::MoreOptions(sp<GameState> state)
     : Stage(), menuform(ui().getForm("moreoptions")), state(state)
@@ -91,72 +100,189 @@ MoreOptions::MoreOptions(sp<GameState> state)
 }
 MoreOptions::~MoreOptions() {}
 
+UString MoreOptions::getOptionFullName(const UString &optionSection,
+                                       const UString &optionName) const
+{
+	const UString fullName = optionSection + "." + optionName;
+	return fullName;
+}
+
+bool MoreOptions::GetIfOptionInt(const UString &optionFullName) const
+{
+	const auto isOptionInt = std::find(intNotificationsList.begin(), intNotificationsList.end(),
+	                                   optionFullName) != intNotificationsList.end();
+
+	return isOptionInt;
+}
+
+bool MoreOptions::GetIfOptionInt(const UString &optionSection, const UString &optionName) const
+{
+	const auto optionFullName = getOptionFullName(optionSection, optionName);
+	const auto isOptionInt = GetIfOptionInt(optionFullName);
+
+	return isOptionInt;
+}
+
+bool MoreOptions::GetIfOptionFloat(const UString &optionFullName) const
+{
+	const auto isOptionFloat =
+	    std::find(floatNotificationsList.begin(), floatNotificationsList.end(), optionFullName) !=
+	    floatNotificationsList.end();
+
+	return isOptionFloat;
+}
+
+bool MoreOptions::GetIfOptionFloat(const UString &optionSection, const UString &optionName) const
+{
+	const auto optionFullName = getOptionFullName(optionSection, optionName);
+	const auto isOptionFloat = GetIfOptionFloat(optionFullName);
+
+	return isOptionFloat;
+}
+
 void MoreOptions::saveLists()
 {
-	auto citylistControl = menuform->findControlTyped<ListBox>("CITY_NOTIFICATIONS_LIST");
-	for (auto &c : citylistControl->Controls)
-	{
-		auto name = c->getData<UString>();
-		config().set(*name, std::dynamic_pointer_cast<CheckBox>(c)->isChecked());
-	}
+	const std::list<UString> notificationsList = {"CITY_NOTIFICATIONS_LIST",
+	                                              "BATTLE_NOTIFICATIONS_LIST"};
 
-	auto battlelistControl = menuform->findControlTyped<ListBox>("BATTLE_NOTIFICATIONS_LIST");
-	for (auto &b : battlelistControl->Controls)
+	for (const auto &notification : notificationsList)
 	{
-		auto name = b->getData<UString>();
-		config().set(*name, std::dynamic_pointer_cast<CheckBox>(b)->isChecked());
+		const auto listbox = menuform->findControlTyped<ListBox>(notification);
+		for (const auto &control : listbox->Controls)
+		{
+			const auto name = control->getData<UString>();
+
+			const auto isOptionInt = GetIfOptionInt(*name);
+
+			if (isOptionInt)
+			{
+				const auto value = std::stoi(std::dynamic_pointer_cast<Label>(control)->getText());
+				config().set(*name, value);
+				continue;
+			}
+
+			const auto isOptionFloat = GetIfOptionFloat(*name);
+
+			if (isOptionFloat)
+			{
+				const auto value = std::stof(std::dynamic_pointer_cast<Label>(control)->getText());
+				config().set(*name, value);
+				continue;
+			}
+
+			config().set(*name, std::dynamic_pointer_cast<CheckBox>(control)->isChecked());
+		}
 	}
 }
 
 void MoreOptions::loadLists()
 {
 	saveLists();
-	menuform->findControlTyped<Label>("CITYLIST_NAME")->setText("Cityscape Options");
-	menuform->findControlTyped<Label>("BATTLELIST_NAME")->setText("Battlescape Options");
-	std::list<std::pair<UString, UString>> *citynotificationList = nullptr;
-	std::list<std::pair<UString, UString>> *battlenotificationList = nullptr;
 
-	citynotificationList = &cityscapeList;
-	battlenotificationList = &battlescapeList;
+	const auto font = ui().getFont("smalfont");
 
-	auto citylistControl = menuform->findControlTyped<ListBox>("CITY_NOTIFICATIONS_LIST");
-	auto battlelistControl = menuform->findControlTyped<ListBox>("BATTLE_NOTIFICATIONS_LIST");
-	citylistControl->clear();
-	battlelistControl->clear();
-	auto font = ui().getFont("smalfont");
+	// Unifying options treatment at both city notification and battle notification
+	const auto optionTupleList = {std::make_tuple("CITYLIST_NAME", "Cityscape Options",
+	                                              "CITY_NOTIFICATIONS_LIST", &cityscapeList),
+	                              std::make_tuple("BATTLELIST_NAME", "Battlescape Options",
+	                                              "BATTLE_NOTIFICATIONS_LIST", &battlescapeList)};
 
-	// FIXME: Can this be optimized?
-	for (auto &p : *citynotificationList)
+	std::list<std::pair<std::list<std::pair<UString, UString>>, sp<ListBox>>>
+	    notificationControlPairList = {};
+
+	for (const auto &optionTuple : optionTupleList)
 	{
-		auto checkBox = mksp<CheckBox>(fw().data->loadImage("BUTTON_CHECKBOX_TRUE"),
-		                               fw().data->loadImage("BUTTON_CHECKBOX_FALSE"));
-		checkBox->Size = {240, citylistControl->ItemSize};
-		UString full_name = p.first + "." + p.second;
-		checkBox->setData(mksp<UString>(full_name));
-		checkBox->setChecked(config().getBool(full_name));
-		auto label = checkBox->createChild<Label>(tr(config().describe(p.first, p.second)), font);
-		label->Size = {216, citylistControl->ItemSize};
-		label->Location = {24, 0};
-		label->ToolTipText = tr(config().describe(p.first, p.second));
-		label->ToolTipFont = font;
-		citylistControl->addItem(checkBox);
+		const auto listNameString = std::get<0>(optionTuple);
+		const auto scapeOptionsString = std::get<1>(optionTuple);
+		const auto notificationsListString = std::get<2>(optionTuple);
+		const auto scapeList = std::get<3>(optionTuple);
+
+		menuform->findControlTyped<Label>(listNameString)->setText(scapeOptionsString);
+		const auto *notificationList = scapeList;
+
+		const auto listControl = menuform->findControlTyped<ListBox>(notificationsListString);
+		listControl->clear();
+
+		notificationControlPairList.push_back({*notificationList, listControl});
 	}
 
-	for (auto &p : *battlenotificationList)
+	for (const auto &notificationControlPair : notificationControlPairList)
 	{
-		auto checkBox = mksp<CheckBox>(fw().data->loadImage("BUTTON_CHECKBOX_TRUE"),
-		                               fw().data->loadImage("BUTTON_CHECKBOX_FALSE"));
-		checkBox->Size = {240, battlelistControl->ItemSize};
-		UString full_name = p.first + "." + p.second;
-		checkBox->setData(mksp<UString>(full_name));
-		checkBox->setChecked(config().getBool(full_name));
-		auto label = checkBox->createChild<Label>(tr(config().describe(p.first, p.second)), font);
-		label->Size = {216, battlelistControl->ItemSize};
-		label->Location = {24, 0};
-		label->ToolTipText = tr(config().describe(p.first, p.second));
-		label->ToolTipFont = font;
-		battlelistControl->addItem(checkBox);
+		const auto &notificationList = notificationControlPair.first;
+		const auto &listControl = notificationControlPair.second;
+
+		for (const auto &notification : notificationList)
+		{
+			const auto fullName = getOptionFullName(notification.first, notification.second);
+
+			const auto isOptionInt = GetIfOptionInt(fullName);
+
+			if (isOptionInt)
+			{
+				const auto label = mksp<Label>(
+				    tr(config().describe(notification.first, notification.second)), font);
+				const auto labelText = std::to_string(config().getInt(fullName));
+				label->setText(labelText);
+
+				configureOptionControlAndAddToControlListBox(
+				    label, notification.first, notification.second, font, listControl);
+
+				continue;
+			}
+
+			const auto isOptionFloat = GetIfOptionFloat(fullName);
+
+			if (isOptionFloat)
+			{
+				auto label = mksp<Label>(
+				    tr(config().describe(notification.first, notification.second)), font);
+
+				std::stringstream stream;
+				stream << std::fixed << std::setprecision(2) << config().getFloat(fullName);
+				const auto labelText = stream.str();
+
+				label->setText(labelText);
+
+				configureOptionControlAndAddToControlListBox(
+				    label, notification.first, notification.second, font, listControl);
+
+				continue;
+			}
+
+			const auto checkBox = mksp<CheckBox>(fw().data->loadImage("BUTTON_CHECKBOX_TRUE"),
+			                                     fw().data->loadImage("BUTTON_CHECKBOX_FALSE"));
+			checkBox->setChecked(config().getBool(fullName));
+
+			configureOptionControlAndAddToControlListBox(checkBox, notification.first,
+			                                             notification.second, font, listControl);
+		}
 	}
+}
+
+void MoreOptions::configureOptionControlAndAddToControlListBox(const sp<Control> &control,
+                                                               const UString &optionSection,
+                                                               const UString &optionName,
+                                                               const sp<BitmapFont> &font,
+                                                               const sp<ListBox> &listControl)
+{
+	const auto optionFullName = getOptionFullName(optionSection, optionName);
+
+	control->Size = {240, listControl->ItemSize};
+	control->setData(mksp<UString>(optionFullName));
+	addChildLabelToControl(control, optionSection, optionName, font, listControl);
+	listControl->addItem(control);
+}
+
+void MoreOptions::addChildLabelToControl(const sp<Control> &control, const UString &optionSection,
+                                         const UString &optionName, const sp<BitmapFont> &font,
+                                         const sp<ListBox> &listControl)
+{
+	const auto chidlLabel =
+	    control->createChild<Label>(tr(config().describe(optionSection, optionName)), font);
+	chidlLabel->Size = {216, listControl->ItemSize};
+	chidlLabel->Location = {24, 0};
+	chidlLabel->ToolTipText = tr(config().describe(optionSection, optionName));
+	chidlLabel->ToolTipFont = font;
 }
 
 bool MoreOptions::isTransition() { return false; }
