@@ -102,9 +102,13 @@ class TransactionControl : public Control
 		/// <returns>If trade is active or not.</returns>
 		bool isActive() const
 		{
-			auto isActive = (getLeftIndex() == getRightIndex() ||
-			                 (getLeftStock() == 0 && getRightStock() == 0)) == false;
-			return isActive;
+			if (getLeftIndex() == getRightIndex())
+				return false;
+
+			if (getLeftStock() == 0 && getRightStock() == 0)
+				return false;
+
+			return true;
 		}
 	};
 
