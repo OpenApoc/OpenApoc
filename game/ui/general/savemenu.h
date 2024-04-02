@@ -36,11 +36,12 @@ class SaveMenu : public Stage
 	void loadWithWarning(sp<Control> parent);
 	// these functions will display prompt to execute action
 	void tryToLoadGame(sp<Control> slotControl);
-	void tryToSaveGame(const UString &textEdit, sp<Control> parent);
+	void tryToSaveGame(const UString &textEdit, const sp<Control> parent);
 	void tryToDeleteSavedGame(sp<Control> &control);
 
 	// Opens pop-up asking the user if wants to override existing saved game
-	void askUserIfWantToOverrideSavedGame(sp<SaveMetadata> saveMetadata);
+	void askUserIfWantToOverrideSavedGame(const sp<SaveMetadata> saveMetadata,
+	                                      const bool deleteOlderSaveGame = false);
 
   public:
 	SaveMenu(SaveMenuAction saveMenuAction, sp<GameState> gameState);
