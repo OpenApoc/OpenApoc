@@ -41,7 +41,7 @@ class SaveMenu : public Stage
 
 	// Opens pop-up asking the user if wants to override existing saved game
 	void askUserIfWantToOverrideSavedGame(const sp<SaveMetadata> saveMetadata,
-	                                      const bool deleteOlderSaveGame = false);
+	                                      const UString &saveName);
 
   public:
 	SaveMenu(SaveMenuAction saveMenuAction, sp<GameState> gameState);

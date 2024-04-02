@@ -223,19 +223,6 @@ bool SaveManager::overrideGame(const SaveMetadata &metadata, const UString &newN
 	return result;
 }
 
-bool SaveManager::saveGameViaView(const sp<SaveMetadata> saveMetadata,
-                                  const sp<GameState> currentState,
-                                  const bool deleteOlderSaveGame) const
-{
-	const auto &saveName = saveMetadata->getName();
-
-	const auto savingResult = deleteOlderSaveGame
-	                              ? overrideGame(*saveMetadata, saveName, currentState)
-	                              : newSaveGame(saveName, currentState);
-
-	return savingResult;
-}
-
 bool SaveManager::saveGame(const SaveMetadata &metadata, const sp<GameState> gameState) const
 {
 	bool pack = Options::packSaveOption.get();

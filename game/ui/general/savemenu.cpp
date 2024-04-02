@@ -304,7 +304,7 @@ void SaveMenu::tryToSaveGame(const UString &saveName, const sp<Control> parent)
 		// If the user use the first row but wrote the name of an already existing save game
 		else
 		{
-			SaveMenu::askUserIfWantToOverrideSavedGame(saveGameMetadata);
+			SaveMenu::askUserIfWantToOverrideSavedGame(saveGameMetadata, saveName);
 		}
 	}
 
@@ -312,23 +312,25 @@ void SaveMenu::tryToSaveGame(const UString &saveName, const sp<Control> parent)
 	else
 	{
 		const auto slot = parent->getData<SaveMetadata>();
-		SaveMenu::askUserIfWantToOverrideSavedGame(slot, true);
+		SaveMenu::askUserIfWantToOverrideSavedGame(slot, saveName);
 	}
 }
 
 void SaveMenu::askUserIfWantToOverrideSavedGame(const sp<SaveMetadata> saveMetadata,
-                                                const bool deleteOlderSaveGame)
+                                                const UString &saveName)
 {
-	const auto &saveName = saveMetadata->getName();
+	const auto &metadataSaveName = saveMetadata->getName();
 	const auto messageBoxTitle = "Override saved game";
-	const auto messageBoxContent = "Do you really want to override " + saveName + "?";
+	const auto messageBoxContent = "Do you really want to override " + metadataSaveName + "?";
 
 	auto onYes = std::function<void()>(
-	    [this, saveMetadata, saveName, deleteOlderSaveGame]
+	    [this, saveMetadata, saveName]
 	    {
-		    const auto savingResult = saveManager.saveGameViaView(saveMetadata, currentState, deleteOlderSaveGame);
+		    const auto savingResult =
+		        saveManager.overrideGame(*saveMetadata, saveName, currentState);
 
-		    savingResult ? fw().stageQueueCommand({StageCmd::Command::POP}) : clearTextEdit(activeTextEdit);
+		    savingResult ? fw().stageQueueCommand({StageCmd::Command::POP})
+		                 : clearTextEdit(activeTextEdit);
 	    });
 
 	auto onNo = std::function<void()>([this] { clearTextEdit(activeTextEdit); });
