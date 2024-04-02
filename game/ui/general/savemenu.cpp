@@ -311,7 +311,7 @@ void SaveMenu::tryToSaveGame(const UString &saveName, const sp<Control> parent)
 	// If saving item using row for existing item
 	else
 	{
-		auto slot = parent->getData<SaveMetadata>();
+		const auto slot = parent->getData<SaveMetadata>();
 		SaveMenu::askUserIfWantToOverrideSavedGame(slot);
 	}
 }

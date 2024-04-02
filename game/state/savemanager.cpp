@@ -164,7 +164,7 @@ bool writeArchiveWithBackup(SerializationArchive *archive, const UString &path, 
 bool SaveManager::findFreePath(UString &path, const UString &name) const
 {
 	path = createSavePath(name);
-	bool pathExists = fs::exists(path);
+	const auto pathExists = fs::exists(path);
 
 	return !pathExists;
 }
@@ -172,12 +172,13 @@ bool SaveManager::findFreePath(UString &path, const UString &name) const
 sp<SaveMetadata> SaveManager::getSaveGameIfExists(const UString &name) const
 {
 	const auto saveList = getSaveList();
-	auto it = std::find_if(saveList.begin(), saveList.end(),
-	                       [&name](const SaveMetadata &obj) { return obj.getName() == name; });
+	const auto it =
+	    std::find_if(saveList.begin(), saveList.end(),
+	                 [&name](const SaveMetadata &obj) { return obj.getName() == name; });
 
 	if (it != saveList.end())
 	{
-		auto sp_save = mksp<SaveMetadata>(*it);
+		const auto sp_save = mksp<SaveMetadata>(*it);
 		return sp_save;
 	}
 
