@@ -326,11 +326,14 @@ void SaveMenu::askUserIfWantToOverrideSavedGame(const sp<SaveMetadata> saveMetad
 	auto onYes = std::function<void()>(
 	    [this, saveMetadata, saveName]
 	    {
-		    const auto savingResult =
-		        saveManager.overrideGame(*saveMetadata, saveName, currentState);
-
-		    savingResult ? fw().stageQueueCommand({StageCmd::Command::POP})
-		                 : clearTextEdit(activeTextEdit);
+		    if (saveManager.overrideGame(*saveMetadata, saveName, currentState))
+		    {
+			    fw().stageQueueCommand({StageCmd::Command::POP});
+		    }
+		    else
+		    {
+			    clearTextEdit(activeTextEdit);
+		    }
 	    });
 
 	auto onNo = std::function<void()>([this] { clearTextEdit(activeTextEdit); });
