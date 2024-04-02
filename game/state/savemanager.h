@@ -69,6 +69,10 @@ class SaveManager
 
 	bool saveGame(const SaveMetadata &metadata, const sp<GameState> gameState) const;
 
+	// saves game to location pointed by metadata, also updates metadata from gamestate
+	bool overrideGame(const SaveMetadata &metadata, const UString &newFile,
+	                  const sp<GameState> gameState) const;
+
   public:
 	SaveManager();
 
@@ -85,10 +89,6 @@ class SaveManager
 	// WARNING! Name MUST NOT contain invalid filename characters!
 	bool newSaveGame(const UString &name, const sp<GameState> gameState) const;
 
-	// saves game to location pointed by metadata, also updates metadata from gamestate
-	bool overrideGame(const SaveMetadata &metadata, const UString &newFile,
-	                  const sp<GameState> gameState) const;
-
 	// can be used for autosaves, quicksaves etc.
 	bool specialSaveGame(SaveType type, const sp<GameState> gameState) const;
 
@@ -99,5 +99,9 @@ class SaveManager
 
 	// Search savefile in folder via file name
 	sp<SaveMetadata> getSaveGameIfExists(const UString &name) const;
+
+	// Save game via Options->Save Game view
+	bool saveGameViaView(const sp<SaveMetadata> saveMetadata, const sp<GameState> currentState,
+	                     const bool deleteOlderSaveGame = false) const;
 };
 } // namespace OpenApoc
