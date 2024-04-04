@@ -169,7 +169,7 @@ bool SaveManager::findFreePath(UString &path, const UString &name) const
 	return !pathExists;
 }
 
-sp<SaveMetadata> SaveManager::getSaveGameIfExists(const UString &name) const
+std::optional<SaveMetadata> SaveManager::getSaveGameIfExists(const UString &name) const
 {
 	const auto saveList = getSaveList();
 	const auto it =
@@ -178,11 +178,10 @@ sp<SaveMetadata> SaveManager::getSaveGameIfExists(const UString &name) const
 
 	if (it != saveList.end())
 	{
-		const auto sp_save = mksp<SaveMetadata>(*it);
-		return sp_save;
+		return *it;
 	}
 
-	return nullptr;
+	return {};
 }
 
 bool SaveManager::newSaveGame(const UString &name, const sp<GameState> gameState) const

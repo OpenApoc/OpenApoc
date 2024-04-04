@@ -40,7 +40,7 @@ class SaveMenu : public Stage
 	void tryToDeleteSavedGame(sp<Control> &control);
 
 	// Opens pop-up asking the user if wants to override existing saved game
-	void askUserIfWantToOverrideSavedGame(const sp<SaveMetadata> saveMetadata,
+	void askUserIfWantToOverrideSavedGame(const SaveMetadata &saveMetadata,
 	                                      const UString &saveName);
 
   public:
