@@ -320,8 +320,8 @@ void SaveMenu::askUserIfWantToOverrideSavedGame(const sp<SaveMetadata> saveMetad
                                                 const UString &saveName)
 {
 	const auto &metadataSaveName = saveMetadata->getName();
-	const auto messageBoxTitle = "Override saved game";
-	const auto messageBoxContent = "Do you really want to override " + metadataSaveName + "?";
+	const auto messageBoxTitle = tr("Override saved game");
+	const auto messageBoxContent = tr("Do you really want to override " + metadataSaveName + "?");
 
 	auto onYes = std::function<void()>(
 	    [this, saveMetadata, saveName]
