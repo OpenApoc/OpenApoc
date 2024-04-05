@@ -246,6 +246,9 @@ void MoreOptions::loadLists()
 
 	font = ui().getFont("smalfont");
 
+	// This text edit list will be used to remove focus from a text edit when another one is clicked
+	std::list<sp<TextEdit>> textEditList = {};
+
 	for (const auto &notificationControlPair : notificationControlPairList)
 	{
 		const auto &notificationList = notificationControlPair.first;
@@ -312,6 +315,7 @@ void MoreOptions::loadLists()
 				                       listControl, 65);
 
 				listControl->addItem(textEdit);
+				textEditList.push_back(textEdit);
 
 				continue;
 			}
@@ -382,6 +386,7 @@ void MoreOptions::loadLists()
 				                       listControl, 65);
 
 				listControl->addItem(textEdit);
+				textEditList.push_back(textEdit);
 
 				continue;
 			}
@@ -394,6 +399,8 @@ void MoreOptions::loadLists()
 			                                             notification.second, listControl, 24);
 		}
 	}
+
+	addFocusControlCallbackToNumberTextEdit(textEditList);
 }
 
 void MoreOptions::configureOptionControlAndAddToControlListBox(const sp<Control> &control,
@@ -528,6 +535,28 @@ void MoreOptions::addChildLabelToControl(const sp<Control> &control, const UStri
 	chidlLabel->Location = {labelLocationHeight, 0};
 	chidlLabel->ToolTipText = tr(config().describe(optionSection, optionName));
 	chidlLabel->ToolTipFont = font;
+}
+
+void MoreOptions::addFocusControlCallbackToNumberTextEdit(
+    const std::list<sp<TextEdit>> &textEditList)
+{
+	for (const auto &textEdit : textEditList)
+	{
+		textEdit->addCallback(FormEventType::MouseClick,
+		                      [textEditList, textEdit](Event *e)
+		                      {
+			                      for (auto &textEditItem : textEditList)
+			                      {
+				                      // When the user clicks on a text edit, every other text edit
+				                      // with focus will lose it
+				                      // That way, only the last clicked text edit will have focus
+				                      if (textEditItem != textEdit && textEditItem->isFocused())
+				                      {
+					                      // TODO: find a way to remove focus
+				                      }
+			                      }
+		                      });
+	}
 }
 
 bool MoreOptions::isTransition() { return false; }

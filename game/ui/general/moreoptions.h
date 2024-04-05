@@ -35,6 +35,8 @@ class MoreOptions : public Stage
 	                            const UString &optionName, const sp<ListBox> &listControl,
 	                            const int &labelLocationHeight);
 
+	void addFocusControlCallbackToNumberTextEdit(const std::list<sp<TextEdit>> &textEditList);
+
 	sp<TextEdit> createTextEditForNumericOptions(const UString &optionSection,
 	                                             const UString &optionName,
 	                                             const sp<ListBox> &listControl,
