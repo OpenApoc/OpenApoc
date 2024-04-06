@@ -100,8 +100,8 @@ static const auto FLOAT_NOTIFICATIONS_LIST = {"OpenApoc.Mod.SceneryRepairCostFac
 static const std::regex NUMERIC_CHARS_REGEX("[^0-9.]");
 sp<BitmapFont> font = nullptr;
 
-static const auto NUMERIC_OPTION_MAX_LIMIT = (float)100.0;
-static const auto NUMERIC_OPTION_MIN_LIMIT = (float)0;
+static const float NUMERIC_OPTION_MAX_LIMIT = 100.0;
+static const float NUMERIC_OPTION_MIN_LIMIT = 0;
 
 } // namespace
 MoreOptions::MoreOptions(sp<GameState> state)
