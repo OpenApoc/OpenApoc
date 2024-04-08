@@ -432,7 +432,7 @@ ConfigOptionBool optionSingleSquadSelect("OpenApoc.NewFeature", "SingleSquadSele
                                          "Select squad with single click", false);
 ConfigOptionBool
     optionATVUFOMission("OpenApoc.NewFeature", "ATVUFOMission",
-                        "Allow ATV vehicles to initiate UFO missions (and recover vehicles)",
+                        tr("Allow All Terrain Vehicles (ATV) to initiate UFO recovery missions"),
                         false);
 ConfigOptionInt
     optionMaxTileRepair("OpenApoc.Mod", "MaxTileRepair",
