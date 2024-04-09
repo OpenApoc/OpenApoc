@@ -1,10 +1,12 @@
 #include "game/ui/general/moreoptions.h"
 #include "forms/checkbox.h"
 #include "forms/form.h"
+#include "forms/graphicbutton.h"
 #include "forms/label.h"
 #include "forms/listbox.h"
 #include "forms/scrollbar.h"
 #include "forms/textbutton.h"
+#include "forms/textedit.h"
 #include "forms/ui.h"
 #include "framework/configfile.h"
 #include "framework/data.h"
@@ -14,15 +16,17 @@
 #include "game/state/gamestate.h"
 #include "game/state/shared/organisation.h"
 #include <forms/graphic.h>
+#include <functional>
 #include <iomanip>
 #include <limits>
+#include <regex>
 #include <sstream>
 
 namespace OpenApoc
 {
 namespace
 {
-std::list<std::pair<UString, UString>> cityscapeList = {
+static const std::list<std::pair<UString, UString>> cityscapeList = {
     {"OpenApoc.NewFeature", "FerryChecksRelationshipWhenBuying"},
     {"OpenApoc.NewFeature", "AllowManualCityTeleporters"},
     {"OpenApoc.NewFeature", "AllowManualCargoFerry"},
@@ -53,7 +57,7 @@ std::list<std::pair<UString, UString>> cityscapeList = {
     {"OpenApoc.Mod", "ATVAPC"},
 };
 
-std::list<std::pair<UString, UString>> battlescapeList = {
+static const std::list<std::pair<UString, UString>> battlescapeList = {
     {"OpenApoc.NewFeature", "InstantExplosionDamage"},
     {"OpenApoc.NewFeature", "UFODamageModel"},
     {"OpenApoc.NewFeature", "GravliftSounds"},
@@ -73,7 +77,7 @@ std::list<std::pair<UString, UString>> battlescapeList = {
 };
 
 // TODO: Implement vanilla mode
-std::list<std::pair<UString, UString>> vanillaList = {
+static const std::list<std::pair<UString, UString>> vanillaList = {
     {"OpenApoc.NewFeature", "PayloadExplosion"},
     {"OpenApoc.NewFeature", "DisplayUnitPaths"},
     {"OpenApoc.NewFeature", "AdditionalUnitIcons"},
@@ -90,8 +94,14 @@ std::list<std::pair<UString, UString>> vanillaList = {
 
 // By default, cityscape and battlescape options list treat all options as boolean values
 // But we have some exceptions with different value types that needs to be properly checked
-const auto intNotificationsList = {"OpenApoc.Mod.MaxTileRepair"};
-const auto floatNotificationsList = {"OpenApoc.Mod.SceneryRepairCostFactor"};
+static const auto INT_NOTIFICATIONS_LIST = {"OpenApoc.Mod.MaxTileRepair"};
+static const auto FLOAT_NOTIFICATIONS_LIST = {"OpenApoc.Mod.SceneryRepairCostFactor"};
+
+static const std::regex NUMERIC_CHARS_REGEX("[^0-9.]");
+sp<BitmapFont> font = nullptr;
+
+static const float NUMERIC_OPTION_MAX_LIMIT = 100.0;
+static const float NUMERIC_OPTION_MIN_LIMIT = 0;
 
 } // namespace
 MoreOptions::MoreOptions(sp<GameState> state)
@@ -107,35 +117,35 @@ UString MoreOptions::getOptionFullName(const UString &optionSection,
 	return fullName;
 }
 
-bool MoreOptions::GetIfOptionInt(const UString &optionFullName) const
+bool MoreOptions::getIfOptionInt(const UString &optionFullName) const
 {
-	const auto isOptionInt = std::find(intNotificationsList.begin(), intNotificationsList.end(),
-	                                   optionFullName) != intNotificationsList.end();
+	const auto isOptionInt = std::find(INT_NOTIFICATIONS_LIST.begin(), INT_NOTIFICATIONS_LIST.end(),
+	                                   optionFullName) != INT_NOTIFICATIONS_LIST.end();
 
 	return isOptionInt;
 }
 
-bool MoreOptions::GetIfOptionInt(const UString &optionSection, const UString &optionName) const
+bool MoreOptions::getIfOptionInt(const UString &optionSection, const UString &optionName) const
 {
 	const auto optionFullName = getOptionFullName(optionSection, optionName);
-	const auto isOptionInt = GetIfOptionInt(optionFullName);
+	const auto isOptionInt = getIfOptionInt(optionFullName);
 
 	return isOptionInt;
 }
 
-bool MoreOptions::GetIfOptionFloat(const UString &optionFullName) const
+bool MoreOptions::getIfOptionFloat(const UString &optionFullName) const
 {
 	const auto isOptionFloat =
-	    std::find(floatNotificationsList.begin(), floatNotificationsList.end(), optionFullName) !=
-	    floatNotificationsList.end();
+	    std::find(FLOAT_NOTIFICATIONS_LIST.begin(), FLOAT_NOTIFICATIONS_LIST.end(),
+	              optionFullName) != FLOAT_NOTIFICATIONS_LIST.end();
 
 	return isOptionFloat;
 }
 
-bool MoreOptions::GetIfOptionFloat(const UString &optionSection, const UString &optionName) const
+bool MoreOptions::getIfOptionFloat(const UString &optionSection, const UString &optionName) const
 {
 	const auto optionFullName = getOptionFullName(optionSection, optionName);
-	const auto isOptionFloat = GetIfOptionFloat(optionFullName);
+	const auto isOptionFloat = getIfOptionFloat(optionFullName);
 
 	return isOptionFloat;
 }
@@ -152,20 +162,50 @@ void MoreOptions::saveLists()
 		{
 			const auto name = control->getData<UString>();
 
-			const auto isOptionInt = GetIfOptionInt(*name);
+			const auto isOptionInt = getIfOptionInt(*name);
 
 			if (isOptionInt)
 			{
-				const auto value = std::stoi(std::dynamic_pointer_cast<Label>(control)->getText());
+				// Using default value if getInt fails
+				auto value = config().getInt(*name);
+
+				try
+				{
+					value = std::stoi(std::dynamic_pointer_cast<TextEdit>(control)->getText());
+
+					if (value > NUMERIC_OPTION_MAX_LIMIT)
+						value = (int)NUMERIC_OPTION_MAX_LIMIT;
+					else if (value < NUMERIC_OPTION_MIN_LIMIT)
+						value = (int)NUMERIC_OPTION_MIN_LIMIT;
+				}
+				catch (const std::exception &)
+				{
+				}
+
 				config().set(*name, value);
 				continue;
 			}
 
-			const auto isOptionFloat = GetIfOptionFloat(*name);
+			const auto isOptionFloat = getIfOptionFloat(*name);
 
 			if (isOptionFloat)
 			{
-				const auto value = std::stof(std::dynamic_pointer_cast<Label>(control)->getText());
+				// Using default value if getFloat fails
+				auto value = config().getFloat(*name);
+
+				try
+				{
+					value = std::stof(std::dynamic_pointer_cast<TextEdit>(control)->getText());
+
+					if (value > NUMERIC_OPTION_MAX_LIMIT)
+						value = NUMERIC_OPTION_MAX_LIMIT;
+					else if (value < NUMERIC_OPTION_MIN_LIMIT)
+						value = NUMERIC_OPTION_MIN_LIMIT;
+				}
+				catch (const std::exception &)
+				{
+				}
+
 				config().set(*name, value);
 				continue;
 			}
@@ -178,8 +218,6 @@ void MoreOptions::saveLists()
 void MoreOptions::loadLists()
 {
 	saveLists();
-
-	const auto font = ui().getFont("smalfont");
 
 	// Unifying options treatment at both city notification and battle notification
 	const auto optionTupleList = {std::make_tuple("CITYLIST_NAME", "Cityscape Options",
@@ -206,6 +244,11 @@ void MoreOptions::loadLists()
 		notificationControlPairList.push_back({*notificationList, listControl});
 	}
 
+	font = ui().getFont("smalfont");
+
+	// This text edit list will be used to remove focus from a text edit when another one is clicked
+	std::list<sp<TextEdit>> textEditList = {};
+
 	for (const auto &notificationControlPair : notificationControlPairList)
 	{
 		const auto &notificationList = notificationControlPair.first;
@@ -215,36 +258,135 @@ void MoreOptions::loadLists()
 		{
 			const auto fullName = getOptionFullName(notification.first, notification.second);
 
-			const auto isOptionInt = GetIfOptionInt(fullName);
+			const auto isOptionInt = getIfOptionInt(fullName);
 
 			if (isOptionInt)
 			{
-				const auto label = mksp<Label>(
-				    tr(config().describe(notification.first, notification.second)), font);
-				const auto labelText = std::to_string(config().getInt(fullName));
-				label->setText(labelText);
+				const auto configValue = config().getInt(fullName);
+				const auto labelText = std::to_string(configValue);
 
-				configureOptionControlAndAddToControlListBox(
-				    label, notification.first, notification.second, font, listControl);
+				const auto textEdit = createTextEditForNumericOptions(
+				    notification.first, notification.second, listControl, labelText);
+
+				const auto buttonUpCallback = [this, textEdit, fullName](const Event *)
+				{
+					try
+					{
+						auto value =
+						    std::stoi(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+
+						if (value >= NUMERIC_OPTION_MAX_LIMIT)
+							return;
+
+						value += 1;
+
+						const auto labelText = std::to_string(value);
+						textEdit->setText(labelText);
+					}
+					catch (const std::exception &)
+					{
+					}
+				};
+
+				const auto buttonDownCallback = [this, textEdit, fullName](const Event *)
+				{
+					try
+					{
+						auto value =
+						    std::stoi(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+
+						if (value <= NUMERIC_OPTION_MIN_LIMIT)
+							return;
+
+						value -= 1;
+
+						const auto labelText = std::to_string(value);
+						textEdit->setText(labelText);
+					}
+					catch (const std::exception &)
+					{
+					}
+				};
+
+				addButtonsToNumericOption(textEdit, listControl, buttonUpCallback,
+				                          buttonDownCallback);
+
+				addChildLabelToControl(textEdit, notification.first, notification.second,
+				                       listControl, 65);
+
+				listControl->addItem(textEdit);
+				textEditList.push_back(textEdit);
 
 				continue;
 			}
 
-			const auto isOptionFloat = GetIfOptionFloat(fullName);
+			const auto isOptionFloat = getIfOptionFloat(fullName);
 
 			if (isOptionFloat)
 			{
-				auto label = mksp<Label>(
-				    tr(config().describe(notification.first, notification.second)), font);
+				const auto configValue = config().getFloat(fullName);
 
 				std::stringstream stream;
-				stream << std::fixed << std::setprecision(2) << config().getFloat(fullName);
+				stream << std::fixed << std::setprecision(1) << configValue;
 				const auto labelText = stream.str();
 
-				label->setText(labelText);
+				const auto textEdit = createTextEditForNumericOptions(
+				    notification.first, notification.second, listControl, labelText);
 
-				configureOptionControlAndAddToControlListBox(
-				    label, notification.first, notification.second, font, listControl);
+				const auto buttonUpCallback = [this, textEdit, fullName](const Event *)
+				{
+					try
+					{
+						auto value =
+						    std::stof(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+
+						if (value >= NUMERIC_OPTION_MAX_LIMIT)
+							return;
+
+						value += (float)0.1;
+
+						std::stringstream stream;
+						stream << std::fixed << std::setprecision(1) << value;
+						const auto labelText = stream.str();
+
+						textEdit->setText(labelText);
+					}
+					catch (const std::exception &)
+					{
+					}
+				};
+
+				const auto buttonDownCallback = [this, textEdit, fullName](const Event *)
+				{
+					try
+					{
+						auto value =
+						    std::stof(std::dynamic_pointer_cast<TextEdit>(textEdit)->getText());
+
+						if (value <= NUMERIC_OPTION_MIN_LIMIT)
+							return;
+
+						value -= (float)0.1;
+
+						std::stringstream stream;
+						stream << std::fixed << std::setprecision(1) << value;
+						const auto labelText = stream.str();
+
+						textEdit->setText(labelText);
+					}
+					catch (const std::exception &)
+					{
+					}
+				};
+
+				addButtonsToNumericOption(textEdit, listControl, buttonUpCallback,
+				                          buttonDownCallback);
+
+				addChildLabelToControl(textEdit, notification.first, notification.second,
+				                       listControl, 65);
+
+				listControl->addItem(textEdit);
+				textEditList.push_back(textEdit);
 
 				continue;
 			}
@@ -254,35 +396,167 @@ void MoreOptions::loadLists()
 			checkBox->setChecked(config().getBool(fullName));
 
 			configureOptionControlAndAddToControlListBox(checkBox, notification.first,
-			                                             notification.second, font, listControl);
+			                                             notification.second, listControl, 24);
 		}
 	}
+
+	addFocusControlCallbackToNumberTextEdit(textEditList);
 }
 
 void MoreOptions::configureOptionControlAndAddToControlListBox(const sp<Control> &control,
                                                                const UString &optionSection,
                                                                const UString &optionName,
-                                                               const sp<BitmapFont> &font,
-                                                               const sp<ListBox> &listControl)
+                                                               const sp<ListBox> &listControl,
+                                                               const int &labelLocationHeight)
 {
 	const auto optionFullName = getOptionFullName(optionSection, optionName);
 
 	control->Size = {240, listControl->ItemSize};
 	control->setData(mksp<UString>(optionFullName));
-	addChildLabelToControl(control, optionSection, optionName, font, listControl);
+	addChildLabelToControl(control, optionSection, optionName, listControl, labelLocationHeight);
 	listControl->addItem(control);
 }
 
+sp<TextEdit> MoreOptions::createTextEditForNumericOptions(const UString &optionSection,
+                                                          const UString &optionName,
+                                                          const sp<ListBox> &listControl,
+                                                          const UString &labelText) const
+{
+	const auto optionFullName = getOptionFullName(optionSection, optionName);
+
+	// Create textEdit
+	const auto textEdit = mksp<TextEdit>(tr(config().describe(optionSection, optionName)), font);
+
+	textEdit->setText(labelText);
+
+	textEdit->Size = {25, listControl->ItemSize};
+	textEdit->setData(mksp<UString>(optionFullName));
+
+	// Add common callbacks
+
+	// Validating if text changed and removing any non-numeric value if it was added
+	textEdit->addCallback(FormEventType::TextChanged,
+	                      [textEdit](Event *e)
+	                      {
+		                      try
+		                      {
+			                      const auto textValue = textEdit->getText();
+
+			                      if (textValue.length() == 0)
+			                      {
+				                      return;
+			                      }
+
+			                      const char *lastChar = &textValue[textValue.length() - 1];
+
+			                      std::cmatch results;
+
+			                      if (std::regex_search(lastChar, results, NUMERIC_CHARS_REGEX))
+			                      {
+				                      textEdit->setText(
+				                          textValue.substr(0, textValue.length() - 1));
+				                      return;
+			                      }
+		                      }
+		                      catch (const std::exception &)
+		                      {
+			                      textEdit->setText(std::to_string(0));
+		                      }
+	                      });
+
+	// Callbacks to validate if textEdit content is a numeric value, update with config values
+	// otherwise
+	textEdit->addCallback(FormEventType::TextEditCancel,
+	                      [textEdit](Event *e)
+	                      {
+		                      try
+		                      {
+			                      const auto textValue = textEdit->getText();
+			                      std::stof(textValue);
+		                      }
+		                      catch (const std::exception &)
+		                      {
+			                      textEdit->setText(std::to_string(0));
+		                      }
+	                      });
+
+	textEdit->addCallback(FormEventType::TextEditFinish,
+	                      [textEdit](Event *e)
+	                      {
+		                      try
+		                      {
+			                      const auto textValue = textEdit->getText();
+			                      std::stof(textValue);
+		                      }
+		                      catch (const std::exception &)
+		                      {
+			                      textEdit->setText(std::to_string(0));
+		                      }
+	                      });
+
+	return textEdit;
+}
+
+void MoreOptions::addButtonsToNumericOption(
+    const sp<Control> &control, const sp<ListBox> &listControl,
+    const std::function<void(FormsEvent *e)> &buttonUpClickCallback,
+    const std::function<void(FormsEvent *e)> &buttonDownClickCallback)
+{
+	const auto buttonUp = control->createChild<GraphicButton>(
+	    fw().data->loadImage(
+	        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:13:ui/menuopt.pal"),
+	    fw().data->loadImage(
+	        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:14:ui/menuopt.pal"));
+
+	buttonUp->Size = {20, listControl->ItemSize};
+	buttonUp->Location = {27, 0};
+
+	buttonUp->addCallback(FormEventType::ButtonClick, buttonUpClickCallback);
+
+	const auto buttonDown = control->createChild<GraphicButton>(
+	    fw().data->loadImage(
+	        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:15:ui/menuopt.pal"),
+	    fw().data->loadImage(
+	        "PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:16:ui/menuopt.pal"));
+
+	buttonDown->Size = {20, listControl->ItemSize};
+	buttonDown->Location = {45, 0};
+
+	buttonDown->addCallback(FormEventType::ButtonClick, buttonDownClickCallback);
+}
+
 void MoreOptions::addChildLabelToControl(const sp<Control> &control, const UString &optionSection,
-                                         const UString &optionName, const sp<BitmapFont> &font,
-                                         const sp<ListBox> &listControl)
+                                         const UString &optionName, const sp<ListBox> &listControl,
+                                         const int &labelLocationHeight)
 {
 	const auto chidlLabel =
 	    control->createChild<Label>(tr(config().describe(optionSection, optionName)), font);
 	chidlLabel->Size = {216, listControl->ItemSize};
-	chidlLabel->Location = {24, 0};
+	chidlLabel->Location = {labelLocationHeight, 0};
 	chidlLabel->ToolTipText = tr(config().describe(optionSection, optionName));
 	chidlLabel->ToolTipFont = font;
+}
+
+void MoreOptions::addFocusControlCallbackToNumberTextEdit(
+    const std::list<sp<TextEdit>> &textEditList)
+{
+	for (const auto &textEdit : textEditList)
+	{
+		textEdit->addCallback(FormEventType::MouseClick,
+		                      [textEditList, textEdit](Event *e)
+		                      {
+			                      for (auto &textEditItem : textEditList)
+			                      {
+				                      // When the user clicks on a text edit, every other text edit
+				                      // with focus will lose it
+				                      // That way, only the last clicked text edit will have focus
+				                      if (textEditItem != textEdit && textEditItem->isFocused())
+				                      {
+					                      // TODO: find a way to remove focus
+				                      }
+			                      }
+		                      });
+	}
 }
 
 bool MoreOptions::isTransition() { return false; }
