@@ -462,7 +462,7 @@ void BuyAndSellScreen::executeOrders()
 							case TransactionControl::Type::AgentEquipmentBio:
 							{
 								// kill aliens
-								b.second->inventoryAgentEquipment[c->itemId] -= order;
+								b.second->inventoryBioEquipment[c->itemId] -= order;
 								break;
 							}
 							case TransactionControl::Type::AgentEquipmentCargo:
