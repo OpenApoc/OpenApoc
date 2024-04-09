@@ -4,6 +4,7 @@
 #include "library/strings.h"
 #include <cstdint>
 #include <future>
+#include <optional>
 #include <vector>
 
 namespace OpenApoc
@@ -98,6 +99,6 @@ class SaveManager
 	bool deleteGame(const sp<SaveMetadata> &slot) const;
 
 	// Search savefile in folder via file name
-	sp<SaveMetadata> getSaveGameIfExists(const UString &name) const;
+	std::optional<SaveMetadata> getSaveGameIfExists(const UString &name) const;
 };
 } // namespace OpenApoc
