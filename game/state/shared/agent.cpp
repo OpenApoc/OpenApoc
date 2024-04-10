@@ -955,6 +955,11 @@ void Agent::die(GameState &state, bool silent)
 	{
 		currentVehicle->currentAgents.erase(thisRef);
 	}
+	// Remove from building
+	if (currentBuilding)
+	{
+		currentBuilding->currentAgents.erase(thisRef);
+	}
 
 	// Remove from lab
 	if (assigned_to_lab)

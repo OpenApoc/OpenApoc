@@ -2540,6 +2540,7 @@ void Battle::enterBattle(GameState &state)
 
 	// Clear selected units in case they die
 	state.current_city->cityViewSelectedSoldiers.clear();
+	state.current_city->cityViewSelectedCivilians.clear();
 }
 
 // To be called when battle must be finished and before showing score screen
