@@ -390,8 +390,11 @@ void TransactionScreen::populateControlsAlien()
 {
 	int leftIndex = getLeftIndex();
 	int rightIndex = getRightIndex();
+
 	for (auto &ae : state->agent_equipment)
 	{
+		const auto &alienTypeName = ae.first;
+
 		if (!ae.second->bioStorage)
 		{
 			continue;
@@ -399,16 +402,20 @@ void TransactionScreen::populateControlsAlien()
 		// Add alien
 		for (auto &b : state->player_bases)
 		{
-			if (b.second->inventoryBioEquipment[ae.first] > 0)
+			const auto alienTypeControl = findControlById(type, alienTypeName);
+
+			// Don't add an alien type if its count is zero or if it's already added in transaction
+			// controls
+			if (b.second->inventoryBioEquipment[ae.first] == 0 || alienTypeControl)
+				continue;
+
+			auto control = TransactionControl::createControl(
+			    *state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);
+			if (control)
 			{
-				auto control = TransactionControl::createControl(
-				    *state, StateRef<AEquipmentType>{state.get(), ae.first}, leftIndex, rightIndex);
-				if (control)
-				{
-					control->addCallback(FormEventType::ScrollBarChange, onScrollChange);
-					control->addCallback(FormEventType::MouseMove, onHover);
-					transactionControls[type].push_back(control);
-				}
+				control->addCallback(FormEventType::ScrollBarChange, onScrollChange);
+				control->addCallback(FormEventType::MouseMove, onHover);
+				transactionControls[type].push_back(control);
 			}
 		}
 	}
