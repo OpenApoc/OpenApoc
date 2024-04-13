@@ -132,7 +132,6 @@ void Battle::initBattle(GameState &state, bool first)
 		o.second->genericHitSounds = state.battle_common_sample_list->genericHitSounds;
 		o.second->psiSuccessSounds = state.battle_common_sample_list->psiSuccessSounds;
 		o.second->psiFailSounds = state.battle_common_sample_list->psiFailSounds;
-		o.second->activatedInSquad();
 	}
 	if (forces.empty())
 	{
@@ -2875,6 +2874,7 @@ void Battle::finishBattle(GameState &state)
 			continue;
 		}
 		u.second->processExperience(state);
+		u.second->completedMission();
 		unitsByRating[-u.second->combatRating].push_back(u.second);
 	}
 	// Create count of ranks

@@ -5967,7 +5967,7 @@ bool BattleUnit::addMission(GameState &state, BattleUnitMission *mission, bool t
 	return !mission->cancelled;
 }
 
-void BattleUnit::activatedInSquad()
+void BattleUnit::completedMission()
 {
 	if (agent)
 	{
