@@ -2239,7 +2239,9 @@ void CityView::update()
 		for (auto &v : state->vehicles)
 		{
 			auto vehicle = v.second;
-			if (vehicle->owner != state->getPlayer() || v.second->isDead())
+			if (vehicle->owner != state->getPlayer() || v.second->isDead() ||
+			    (config().getBool("OpenApoc.NewFeature.ShowCurrentDimensionVehicles") &&
+			     vehicle->city != state->current_city && !vehicle->betweenDimensions))
 			{
 				continue;
 			}
