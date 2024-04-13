@@ -139,6 +139,7 @@ void dumpOptionsToLog()
 	dumpOption(optionMaxTileRepair);
 	dumpOption(optionSceneryRepairCostFactor);
 	dumpOption(optionLoadSameAmmo);
+	dumpOption(optionShowCurrentDimensionVehicles);
 
 	dumpOption(optionStunHostileAction);
 	dumpOption(optionRaidHostileAction);
@@ -444,6 +445,10 @@ ConfigOptionFloat
                                   10.0f);
 ConfigOptionBool optionLoadSameAmmo("OpenApoc.NewFeature", "LoadSameAmmo",
                                     "Weapons autoreload only same ammo type", false);
+ConfigOptionBool
+    optionShowCurrentDimensionVehicles("OpenApoc.NewFeature", "ShowCurrentDimensionVehicles",
+                                       "Show vehicles in current dimension (or entering / leaving)",
+                                       true);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);
