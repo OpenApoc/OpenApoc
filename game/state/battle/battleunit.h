@@ -840,7 +840,9 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Update both this unit's vision and other unit's vision of this unit
 	void refreshUnitVisibilityAndVision(GameState &state);
 
-	void activatedInSquad();
+	// Increment mission count if agent survives battle
+	void completedMission();
+	// Increment agent kill count
 	void recordKill();
 };
 } // namespace OpenApoc
