@@ -63,18 +63,24 @@ void TransactionControl::initResources()
 
 void TransactionControl::setScrollbarValues()
 {
-	if (tradeState.getLeftIndex() == tradeState.getRightIndex())
+	auto leftStock = 0;
+	auto rightStock = 0;
+	auto balance = 0;
+
+	if (tradeState.getLeftIndex() != tradeState.getRightIndex())
 	{
-		scrollBar->setMinimum(0);
-		scrollBar->setMaximum(0);
-		scrollBar->setValue(0);
+		leftStock = tradeState.getLeftStock();
+		rightStock = tradeState.getRightStock();
+		balance = tradeState.getBalance();
 	}
-	else
-	{
-		scrollBar->setMinimum(0);
-		scrollBar->setMaximum(tradeState.getLeftStock() + tradeState.getRightStock());
-		scrollBar->setValue(tradeState.getBalance());
-	}
+
+	const auto minimum = 0;
+	const auto maximum = leftStock + rightStock;
+
+	scrollBar->setMinimum(minimum);
+	scrollBar->setMaximum(maximum);
+	scrollBar->setValue(balance);
+
 	updateValues();
 }
 
