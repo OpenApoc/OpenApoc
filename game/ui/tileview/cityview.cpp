@@ -2228,83 +2228,102 @@ void CityView::update()
 	// Update owned vehicle controls
 	if (activeTab == uiTabs[1])
 	{
-		auto ownedVehicleList = uiTabs[1]->findControlTyped<ListBox>("OWNED_VEHICLE_LIST");
+		const auto ownedVehicleList = uiTabs[1]->findControlTyped<ListBox>("OWNED_VEHICLE_LIST");
+		const auto showCurrentDimensionVehicles =
+		    config().getBool("OpenApoc.NewFeature.ShowCurrentDimensionVehicles");
 
 		int currentVehicleIndex = -1;
 		std::set<sp<Vehicle>> vehiclesMIA;
-		for (auto &i : ownedVehicleInfoList)
+
+		for (const auto &i : ownedVehicleInfoList)
 		{
 			vehiclesMIA.insert(i.vehicle);
 		}
-		for (auto &v : state->vehicles)
+
+		for (const auto &v : state->vehicles)
 		{
-			auto vehicle = v.second;
-			if (vehicle->owner != state->getPlayer() || v.second->isDead() ||
-			    (config().getBool("OpenApoc.NewFeature.ShowCurrentDimensionVehicles") &&
-			     vehicle->city != state->current_city && !vehicle->betweenDimensions))
+			const auto &vehicle = v.second;
+
+			const auto vehicleOwnerIsNotPlayer = vehicle->owner != state->getPlayer();
+			const auto vehicleIsDead = v.second->isDead();
+
+			const auto vehicleIsFromAnotherDimensionAndMustBeIgnored =
+			    showCurrentDimensionVehicles && vehicle->city != state->current_city &&
+			    !vehicle->betweenDimensions;
+
+			if (vehicleOwnerIsNotPlayer || vehicleIsDead ||
+			    vehicleIsFromAnotherDimensionAndMustBeIgnored)
 			{
 				continue;
 			}
+
 			currentVehicleIndex++;
-			auto info = ControlGenerator::createVehicleInfo(*state, vehicle);
+
+			const auto info = ControlGenerator::createVehicleInfo(*state, vehicle);
 			vehiclesMIA.erase(info.vehicle);
-			bool redo = currentVehicleIndex >= ownedVehicleInfoList.size() ||
-			            ownedVehicleInfoList[currentVehicleIndex] != info;
-			if (redo)
+
+			const bool redo = currentVehicleIndex >= ownedVehicleInfoList.size() ||
+			                  ownedVehicleInfoList[currentVehicleIndex] != info;
+
+			if (!redo)
 			{
-				auto control = ControlGenerator::createVehicleControl(*state, info);
-				control->addCallback(
-				    FormEventType::MouseDown,
-				    [this, vehicle](FormsEvent *e)
+				continue;
+			}
+
+			const auto control = ControlGenerator::createVehicleControl(*state, info);
+			control->addCallback(
+			    FormEventType::MouseDown,
+			    [this, vehicle](FormsEvent *e)
+			    {
+				    if (!this->vanillaControls)
 				    {
-					    if (!this->vanillaControls)
+					    if (Event::isPressed(e->forms().MouseInfo.Button,
+					                         Event::MouseButton::Right))
 					    {
-						    if (Event::isPressed(e->forms().MouseInfo.Button,
-						                         Event::MouseButton::Right))
+						    // [Alt/Ctrl] + [Shift] opens equipment
+						    if ((modifierLShift || modifierRShift) &&
+						        (modifierLAlt || modifierRAlt || modifierLCtrl || modifierRCtrl))
 						    {
-							    // [Alt/Ctrl] + [Shift] opens equipment
-							    if ((modifierLShift || modifierRShift) &&
-							        (modifierLAlt || modifierRAlt || modifierLCtrl ||
-							         modifierRCtrl))
-							    {
-								    // Equipscreen for owner vehicles
-								    auto equipScreen = mksp<VEquipScreen>(this->state);
-								    equipScreen->setSelectedVehicle(vehicle);
-								    fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
-								    return;
-							    }
-							    // [Shift] opens location
-							    if (modifierLShift || modifierRShift)
-							    {
-								    // Location screen
-								    fw().stageQueueCommand(
-								        {StageCmd::Command::PUSH,
-								         mksp<LocationScreen>(this->state, vehicle)});
-								    return;
-							    }
+							    // Equipscreen for owner vehicles
+							    auto equipScreen = mksp<VEquipScreen>(this->state);
+							    equipScreen->setSelectedVehicle(vehicle);
+							    fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
+							    return;
+						    }
+						    // [Shift] opens location
+						    if (modifierLShift || modifierRShift)
+						    {
+							    // Location screen
+							    fw().stageQueueCommand(
+							        {StageCmd::Command::PUSH,
+							         mksp<LocationScreen>(this->state, vehicle)});
+							    return;
 						    }
 					    }
-					    handleClickedVehicle(
-					        StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)},
-					        Event::isPressed(e->forms().MouseInfo.Button,
-					                         Event::MouseButton::Right),
-					        CitySelectionState::Normal);
-				    });
-				if (currentVehicleIndex >= ownedVehicleInfoList.size())
-				{
-					ownedVehicleInfoList.push_back(info);
-				}
-				else
-				{
-					ownedVehicleInfoList[currentVehicleIndex] = info;
-				}
-				ownedVehicleList->replaceItem(control);
+				    }
+				    handleClickedVehicle(
+				        StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)},
+				        Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
+				        CitySelectionState::Normal);
+			    });
+
+			if (currentVehicleIndex >= ownedVehicleInfoList.size())
+			{
+				ownedVehicleInfoList.push_back(info);
 			}
+			else
+			{
+				ownedVehicleInfoList[currentVehicleIndex] = info;
+			}
+
+			ownedVehicleList->replaceItem(control);
 		}
-		for (auto &v : vehiclesMIA)
+
+		for (const auto &v : vehiclesMIA)
 		{
 			ownedVehicleList->removeByData<Vehicle>(v);
 		}
+
 		ownedVehicleInfoList.resize(currentVehicleIndex + 1);
 
 		// Update weapon controls and vehicle stance
