@@ -1175,16 +1175,6 @@ void GameState::updateEndOfFiveMinutes()
 		}
 	}
 
-	// Detection calculation stops when detection happens
-	for (auto &b : current_city->buildings)
-	{
-		bool detected = b.second->ticksDetectionTimeOut > 0;
-		b.second->updateDetection(*this, TICKS_PER_MINUTE * 5);
-		if (b.second->ticksDetectionTimeOut > 0 && !detected)
-		{
-			break;
-		}
-	}
 	for (auto &b : current_city->buildings)
 	{
 		if (!b.second->base || b.second->owner != getPlayer())
@@ -1225,6 +1215,17 @@ void GameState::updateEndOfFiveMinutes()
 					}
 				}
 			}
+		}
+	}
+
+	// Detection calculation stops when detection happens
+	for (auto &b : current_city->buildings)
+	{
+		bool detected = b.second->ticksDetectionTimeOut > 0;
+		b.second->updateDetection(*this, TICKS_PER_MINUTE * 5);
+		if (b.second->ticksDetectionTimeOut > 0 && !detected)
+		{
+			break;
 		}
 	}
 }
