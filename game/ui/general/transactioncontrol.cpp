@@ -4,6 +4,7 @@
 #include "forms/listbox.h"
 #include "forms/scrollbar.h"
 #include "forms/ui.h"
+#include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
@@ -672,13 +673,39 @@ TransactionControl::createControl(const UString &id, Type type, const UString &n
 	control->scrollBar->setMinimum(0);
 	control->scrollBar->setMaximum(0);
 	// ScrollBar buttons
+
+	// Set tooltip text for buttons
+	UString buttonTooltipLeftText;
+	UString buttonTooltipRightText;
+	bool marketOnRight = config().getBool("OpenApoc.NewFeature.MarketOnRight");
+	switch (control->itemType)
+	{
+		case Type::AgentEquipmentBio:
+			buttonTooltipLeftText = "Contain";
+			buttonTooltipRightText = "Destroy";
+			break;
+		case Type::BioChemist:
+		case Type::Engineer:
+		case Type::Physicist:
+		case Type::Soldier:
+			buttonTooltipLeftText = "Transfer";
+			buttonTooltipRightText = "Transfer";
+			break;
+		default:
+			buttonTooltipLeftText = marketOnRight ? "Buy" : "Sell";
+			buttonTooltipRightText = marketOnRight ? "Sell" : "Buy";
+			break;
+	}
 	auto buttonScrollLeft = control->createChild<GraphicButton>(nullptr, scrollLeft);
 	buttonScrollLeft->Size = scrollLeft->size;
 	buttonScrollLeft->Location = {87, 24};
+	buttonScrollLeft->ToolTipText = buttonTooltipLeftText;
 	buttonScrollLeft->ScrollBarPrevHorizontal = control->scrollBar;
+
 	auto buttonScrollRight = control->createChild<GraphicButton>(nullptr, scrollRight);
 	buttonScrollRight->Size = scrollRight->size;
 	buttonScrollRight->Location = {247, 24};
+	buttonScrollRight->ToolTipText = buttonTooltipRightText;
 	buttonScrollRight->ScrollBarNextHorizontal = control->scrollBar;
 	// Callback
 	control->setupCallbacks();
