@@ -3084,7 +3084,7 @@ void CityView::update()
 		{
 			auto vehicle = v.second;
 			if (!v.second->tileObject || v.second->city != state->current_city ||
-			    v.second->isDead() || !v.second->tileObject)
+			    v.second->isDead())
 			{
 				continue;
 			}
@@ -3093,8 +3093,8 @@ void CityView::update()
 			if (state->getPlayer()->isRelatedTo(vehicle->owner) != Organisation::Relation::Hostile)
 			{
 				if (vehicle->owner == state->getPlayer() ||
-				    state->current_city->cityViewSelectedOwnedVehicles.empty() ||
-				    state->current_city->cityViewSelectedOwnedVehicles.front() != v.second)
+				    state->current_city->cityViewSelectedOtherVehicles.empty() ||
+				    state->current_city->cityViewSelectedOtherVehicles.front() != v.second)
 				{
 					continue;
 				}
