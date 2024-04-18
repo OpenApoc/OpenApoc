@@ -1463,9 +1463,12 @@ void Vehicle::processRecoveredVehicle(GameState &state)
 	std::list<sp<VEquipment>> scrappedEquipment;
 	for (auto &e : equipment)
 	{
-		if (randBoundsExclusive(state.rng, 0, 100) >= FV_CHANCE_TO_RECOVER_EQUIPMENT)
+		if (!moduleInUse(e))
 		{
-			scrappedEquipment.push_back(e);
+			if (randBoundsExclusive(state.rng, 0, 100) >= FV_CHANCE_TO_RECOVER_EQUIPMENT)
+			{
+				scrappedEquipment.push_back(e);
+			}
 		}
 	}
 	for (auto &e : scrappedEquipment)
@@ -3781,6 +3784,21 @@ void Vehicle::nextFrame(int ticks)
 			animationFrame = type->animation_sprites.begin();
 		}
 	}
+}
+
+bool Vehicle::moduleInUse(sp<VEquipment> &e)
+{
+	if (e->type->passengers &&
+	    this->getPassengers() > (this->getMaxPassengers() - e->type->passengers))
+	{
+		return true;
+	}
+	if (e->type->cargo_space && this->getCargo() > 0)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 template <> sp<Vehicle> StateObject<Vehicle>::get(const GameState &state, const UString &id)
