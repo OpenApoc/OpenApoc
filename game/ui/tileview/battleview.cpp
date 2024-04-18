@@ -2450,9 +2450,12 @@ void BattleView::updateAttackCost()
 	}
 	else if (!weapon->canFire(*state, target))
 	{
-		calculatedAttackCost =
-		    static_cast<int>(weapon->type->launcher ? CalculatedAttackCostSpecial::NO_ARC
-		                                            : CalculatedAttackCostSpecial::OUT_OF_RANGE);
+		if (!weapon->needsReload())
+		{
+			calculatedAttackCost = static_cast<int>(
+			    weapon->type->launcher ? CalculatedAttackCostSpecial::NO_ARC
+			                           : CalculatedAttackCostSpecial::OUT_OF_RANGE);
+		}
 	}
 	else
 	{
