@@ -352,6 +352,8 @@ class Vehicle : public StateObject<Vehicle>,
 
 	void nextFrame(int ticks);
 
+	bool moduleInUse(sp<VEquipment> &e);
+
 	void setPosition(const Vec3<float> &pos);
 
 	void setManualFirePosition(const Vec3<float> &pos);
