@@ -55,6 +55,7 @@ void AgentSheet::displayProfile(const Agent &item, std::vector<sp<Image>> &ranks
 
 	profileForm->findControlTyped<Graphic>("SELECTED_RANK")
 	    ->setImage(item.type->displayRank ? ranks[(int)item.rank] : nullptr);
+	profileForm->findControlTyped<Graphic>("SELECTED_RANK")->ToolTipText = item.getRankName();
 }
 
 void AgentSheet::displayHistory(const Agent &item)
