@@ -157,8 +157,10 @@ void TransactionScreen::setDisplayType(Type type)
 	for (auto &c : transactionControls[type])
 	{
 		// If control is not set to show, remove its visibility
-		c->setVisible(c->tradeState.isActive());
-
+		if (c->isBio)
+		{
+			c->setVisible(c->tradeState.isActive());
+		}
 		list->addItem(c);
 	}
 	// Update display for bases
