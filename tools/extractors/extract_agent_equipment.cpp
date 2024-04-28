@@ -487,7 +487,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 		}
 
 		// Mark brainsucker launcher
-		if (edata.sprite_idx == 44)
+		if (edata.sprite_idx == IT_BRAINSUCKERLAUNCHER)
 		{
 			e->launcher = true;
 		}
