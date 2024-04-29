@@ -209,7 +209,14 @@ void GameState::initState()
 		{
 			w->ammo_types.emplace(this, t.first);
 		}
+
+		// Fixing brainsucker pod store space for older saves
+		if (t.first == "AEQUIPMENTTYPE_BRAINSUCKER_POD")
+		{
+			t.second->store_space = 1;
+		}
 	}
+
 	for (auto &a : this->agent_types)
 	{
 		a.second->gravLiftSfx = battle_common_sample_list->gravlift;
