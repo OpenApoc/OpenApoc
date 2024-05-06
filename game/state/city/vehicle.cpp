@@ -3855,16 +3855,10 @@ std::list<std::pair<Vec2<int>, sp<Equipment>>> Vehicle::getEquipment() const
 
 const UString Vehicle::getFormattedVehicleNameForEventMessage(GameState &state) const
 {
-	auto prefix = "";
+	if (config().getBool("OpenApoc.NewFeature.VehiclesPrefix") && owner != state.getPlayer())
+		return "*" + name;
 
-	if (config().getBool("OpenApoc.NewFeature.VehiclesPrefix") && owner == state.getPlayer())
-	{
-		prefix = "* ";
-	}
-
-	auto formattedName = format("%s%s", prefix, name);
-
-	return formattedName;
+	return name;
 }
 
 Cargo::Cargo(GameState &state, StateRef<AEquipmentType> equipment, int count, int price,
