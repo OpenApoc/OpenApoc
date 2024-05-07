@@ -1490,7 +1490,7 @@ void Vehicle::processRecoveredVehicle(GameState &state)
 			fw().pushEvent(new GameSomethingDiedEvent(
 			    GameEventType::VehicleModuleScrapped,
 			    format("%s - %s", getFormattedVehicleNameForEventMessage(state), e->type->name),
-			                                          position));
+			    position));
 		}
 	}
 	if (randBoundsExclusive(state.rng, 0, 100) > FV_CHANCE_TO_RECOVER_VEHICLE)
@@ -1889,8 +1889,8 @@ void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 
 	if (!silent && city == state.current_city)
 	{
-		fw().pushEvent(new GameSomethingDiedEvent(GameEventType::VehicleDestroyed,
-		                                          getFormattedVehicleNameForEventMessage(state),
+		fw().pushEvent(new GameSomethingDiedEvent(
+		    GameEventType::VehicleDestroyed, getFormattedVehicleNameForEventMessage(state),
 		    attacker ? attacker->getFormattedVehicleNameForEventMessage(state) : "", position));
 	}
 	state.vehiclesDeathNote.insert(id);
