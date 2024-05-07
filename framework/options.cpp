@@ -140,6 +140,7 @@ void dumpOptionsToLog()
 	dumpOption(optionSceneryRepairCostFactor);
 	dumpOption(optionLoadSameAmmo);
 	dumpOption(optionShowCurrentDimensionVehicles);
+	dumpOption(optionShowNonXCOMVehiclesPrefix);
 
 	dumpOption(optionStunHostileAction);
 	dumpOption(optionRaidHostileAction);
@@ -449,6 +450,8 @@ ConfigOptionBool
     optionShowCurrentDimensionVehicles("OpenApoc.NewFeature", "ShowCurrentDimensionVehicles",
                                        "Show vehicles in current dimension (or entering / leaving)",
                                        true);
+ConfigOptionBool optionShowNonXCOMVehiclesPrefix("OpenApoc.NewFeature", "ShowNonXCOMVehiclesPrefix",
+                                                 tr("Add prefix to non-X-COM vehicles"), true);
 
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);

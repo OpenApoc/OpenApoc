@@ -1488,9 +1488,10 @@ void Vehicle::processRecoveredVehicle(GameState &state)
 		}
 		if (owner == state.getPlayer())
 		{
-			fw().pushEvent(new GameSomethingDiedEvent(GameEventType::VehicleModuleScrapped,
-			                                          format("%s - %s", name, e->type->name),
-			                                          position));
+			fw().pushEvent(new GameSomethingDiedEvent(
+			    GameEventType::VehicleModuleScrapped,
+			    format("%s - %s", getFormattedVehicleNameForEventMessage(state), e->type->name),
+			    position));
 		}
 	}
 	if (randBoundsExclusive(state.rng, 0, 100) > FV_CHANCE_TO_RECOVER_VEHICLE)
@@ -1541,8 +1542,9 @@ void Vehicle::processRecoveredVehicle(GameState &state)
 		owner->balance += price * FV_SCRAPPED_COST_PERCENT / 100;
 		if (owner == state.getPlayer())
 		{
-			fw().pushEvent(
-			    new GameSomethingDiedEvent(GameEventType::VehicleRecovered, name, "", position));
+			fw().pushEvent(new GameSomethingDiedEvent(GameEventType::VehicleRecovered,
+			                                          getFormattedVehicleNameForEventMessage(state),
+			                                          "", position));
 		}
 		die(state, true);
 	}
@@ -1888,8 +1890,9 @@ void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 
 	if (!silent && city == state.current_city)
 	{
-		fw().pushEvent(new GameSomethingDiedEvent(GameEventType::VehicleDestroyed, name,
-		                                          attacker ? attacker->name : "", position));
+		fw().pushEvent(new GameSomethingDiedEvent(
+		    GameEventType::VehicleDestroyed, getFormattedVehicleNameForEventMessage(state),
+		    attacker ? attacker->getFormattedVehicleNameForEventMessage(state) : "", position));
 	}
 	state.vehiclesDeathNote.insert(id);
 }
@@ -2319,8 +2322,9 @@ void Vehicle::updateEachSecond(GameState &state)
 					{
 						if (owner == state.getPlayer())
 						{
-							fw().pushEvent(new GameSomethingDiedEvent(GameEventType::VehicleNoFuel,
-							                                          name, "", position));
+							fw().pushEvent(new GameSomethingDiedEvent(
+							    GameEventType::VehicleNoFuel,
+							    getFormattedVehicleNameForEventMessage(state), "", position));
 						}
 						die(state, true);
 					}
@@ -3850,6 +3854,15 @@ std::list<std::pair<Vec2<int>, sp<Equipment>>> Vehicle::getEquipment() const
 	}
 
 	return equipmentList;
+}
+
+const UString Vehicle::getFormattedVehicleNameForEventMessage(GameState &state) const
+{
+	if (config().getBool("OpenApoc.NewFeature.ShowNonXCOMVehiclesPrefix") &&
+	    owner != state.getPlayer())
+		return format("%s %s", tr("*"), name);
+
+	return name;
 }
 
 Cargo::Cargo(GameState &state, StateRef<AEquipmentType> equipment, int count, int price,

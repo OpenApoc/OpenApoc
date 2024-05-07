@@ -384,6 +384,8 @@ class Vehicle : public StateObject<Vehicle>,
 	const std::list<EquipmentLayoutSlot> &getSlots() const override;
 	std::list<std::pair<Vec2<int>, sp<Equipment>>> getEquipment() const override;
 
+	const UString getFormattedVehicleNameForEventMessage(GameState &state) const;
+
 	// Following members are not serialized, but rather setup during game
 
 	up<VehicleMover> mover;
