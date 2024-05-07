@@ -130,7 +130,8 @@ void VehicleSheet::displayEquipImplementation(sp<VEquipment> item, sp<VEquipment
 	form->findControlTyped<Label>("LABEL_1_R")->setText(format("%d", type->weight));
 
 	form->findControlTyped<Label>("LABEL_2_L")->setText(tr("Storage"));
-	form->findControlTyped<Label>("LABEL_2_R")->setText(format("%d", 99));
+	form->findControlTyped<Label>("LABEL_2_R")
+	    ->setText(format("%d (%.2g%%)", type->store_space, (double)type->store_space / 20 * 100));
 
 	if (!isResearched)
 	{
