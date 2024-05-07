@@ -118,7 +118,7 @@ extern ConfigOptionInt optionMaxTileRepair;
 extern ConfigOptionFloat optionSceneryRepairCostFactor;
 extern ConfigOptionBool optionLoadSameAmmo;
 extern ConfigOptionBool optionShowCurrentDimensionVehicles;
-extern ConfigOptionBool optionVehiclesPrefix;
+extern ConfigOptionBool optionShowNonXCOMVehiclesPrefix;
 
 extern ConfigOptionBool optionStunHostileAction;
 extern ConfigOptionBool optionRaidHostileAction;

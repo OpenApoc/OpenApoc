@@ -1487,7 +1487,8 @@ void Vehicle::processRecoveredVehicle(GameState &state)
 		}
 		if (owner == state.getPlayer())
 		{
-			fw().pushEvent(new GameSomethingDiedEvent(GameEventType::VehicleModuleScrapped,
+			fw().pushEvent(new GameSomethingDiedEvent(
+			    GameEventType::VehicleModuleScrapped,
 			    format("%s - %s", getFormattedVehicleNameForEventMessage(state), e->type->name),
 			                                          position));
 		}
@@ -1890,7 +1891,7 @@ void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 	{
 		fw().pushEvent(new GameSomethingDiedEvent(GameEventType::VehicleDestroyed,
 		                                          getFormattedVehicleNameForEventMessage(state),
-		                                          attacker ? attacker->name : "", position));
+		    attacker ? attacker->getFormattedVehicleNameForEventMessage(state) : "", position));
 	}
 	state.vehiclesDeathNote.insert(id);
 }
@@ -2320,7 +2321,8 @@ void Vehicle::updateEachSecond(GameState &state)
 					{
 						if (owner == state.getPlayer())
 						{
-							fw().pushEvent(new GameSomethingDiedEvent(GameEventType::VehicleNoFuel,
+							fw().pushEvent(new GameSomethingDiedEvent(
+							    GameEventType::VehicleNoFuel,
 							    getFormattedVehicleNameForEventMessage(state), "", position));
 						}
 						die(state, true);
@@ -3855,8 +3857,9 @@ std::list<std::pair<Vec2<int>, sp<Equipment>>> Vehicle::getEquipment() const
 
 const UString Vehicle::getFormattedVehicleNameForEventMessage(GameState &state) const
 {
-	if (config().getBool("OpenApoc.NewFeature.VehiclesPrefix") && owner != state.getPlayer())
-		return "*" + name;
+	if (config().getBool("OpenApoc.NewFeature.ShowNonXCOMVehiclesPrefix") &&
+	    owner != state.getPlayer())
+		return format("%s %s", tr("*"), name);
 
 	return name;
 }
