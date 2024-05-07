@@ -599,7 +599,7 @@ float Base::getUsage(GameState &state, const FacilityType::Capacity type, const 
 	}
 
 	auto usage = (float)used / total * 100;
-	usage = std::min(999.f, std::round(usage));
+	usage = std::min(999.f, usage);
 
 	return usage;
 }
