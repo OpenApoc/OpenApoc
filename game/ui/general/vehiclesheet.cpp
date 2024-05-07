@@ -122,12 +122,15 @@ void VehicleSheet::displayImplementation(sp<Vehicle> vehicle, sp<VehicleType> ve
 }
 
 void VehicleSheet::displayEquipImplementation(sp<VEquipment> item, sp<VEquipmentType> type,
-                                              const bool isResearched = true)
+                                              const bool isResearched)
 {
 	form->findControlTyped<Graphic>("SELECTED_IMAGE")->setImage(type->equipscreen_sprite);
 
 	form->findControlTyped<Label>("LABEL_1_L")->setText(tr("Weight"));
 	form->findControlTyped<Label>("LABEL_1_R")->setText(format("%d", type->weight));
+
+	form->findControlTyped<Label>("LABEL_2_L")->setText(tr("Storage"));
+	form->findControlTyped<Label>("LABEL_2_R")->setText(format("%d", 99));
 
 	if (!isResearched)
 	{
@@ -158,20 +161,20 @@ void VehicleSheet::displayEquipImplementation(sp<VEquipment> item, sp<VEquipment
 
 void VehicleSheet::displayEngine(sp<VEquipment> item [[maybe_unused]], sp<VEquipmentType> type)
 {
-	form->findControlTyped<Label>("LABEL_2_L")->setText(tr("Top Speed"));
-	form->findControlTyped<Label>("LABEL_2_R")->setText(format("%d", type->top_speed));
-	form->findControlTyped<Label>("LABEL_3_L")->setText(tr("Power"));
-	form->findControlTyped<Label>("LABEL_3_R")->setText(format("%d", type->power));
+	form->findControlTyped<Label>("LABEL_3_L")->setText(tr("Top Speed"));
+	form->findControlTyped<Label>("LABEL_3_R")->setText(format("%d", type->top_speed));
+	form->findControlTyped<Label>("LABEL_4_L")->setText(tr("Power"));
+	form->findControlTyped<Label>("LABEL_4_R")->setText(format("%d", type->power));
 }
 
 void VehicleSheet::displayWeapon(sp<VEquipment> item, sp<VEquipmentType> type)
 {
-	form->findControlTyped<Label>("LABEL_2_L")->setText(tr("Damage"));
-	form->findControlTyped<Label>("LABEL_2_R")->setText(format("%d", type->damage));
-	form->findControlTyped<Label>("LABEL_3_L")->setText(tr("Range"));
-	form->findControlTyped<Label>("LABEL_3_R")->setText(format("%d", type->getRangeInTiles()));
-	form->findControlTyped<Label>("LABEL_4_L")->setText(tr("Accuracy"));
-	form->findControlTyped<Label>("LABEL_4_R")->setText(format("%d%%", type->accuracy));
+	form->findControlTyped<Label>("LABEL_3_L")->setText(tr("Damage"));
+	form->findControlTyped<Label>("LABEL_3_R")->setText(format("%d", type->damage));
+	form->findControlTyped<Label>("LABEL_4_L")->setText(tr("Range"));
+	form->findControlTyped<Label>("LABEL_4_R")->setText(format("%d", type->getRangeInTiles()));
+	form->findControlTyped<Label>("LABEL_5_L")->setText(tr("Accuracy"));
+	form->findControlTyped<Label>("LABEL_5_R")->setText(format("%d%%", type->accuracy));
 
 	// Only show rounds if non-zero (IE not infinite ammo)
 	if (type->max_ammo != 0)
@@ -185,7 +188,7 @@ void VehicleSheet::displayWeapon(sp<VEquipment> item, sp<VEquipmentType> type)
 
 void VehicleSheet::displayGeneral(sp<VEquipment> item [[maybe_unused]], sp<VEquipmentType> type)
 {
-	int statsCount = 2;
+	int statsCount = 3;
 	if (type->accuracy_modifier)
 	{
 		form->findControlTyped<Label>(format("LABEL_%d_L", statsCount))->setText(tr("Accuracy"));
