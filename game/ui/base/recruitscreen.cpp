@@ -109,7 +109,7 @@ RecruitScreen::RecruitScreen(sp<GameState> state)
 				    }
 				    else if (this->state->current_base->getUsage(*(this->state),
 				                                                 FacilityType::Capacity::Quarters,
-				                                                 lqDelta + 1) > 100)
+				                                                 lqDelta + 1) > 100.f)
 				    {
 					    fw().stageQueueCommand(
 					        {StageCmd::Command::PUSH,
@@ -345,10 +345,11 @@ void RecruitScreen::updateFormValues()
 
 void RecruitScreen::updateBaseHighlight()
 {
-	int usage = state->current_base->getUsage(*state, FacilityType::Capacity::Quarters, lqDelta);
+	const auto usage =
+	    state->current_base->getUsage(*state, FacilityType::Capacity::Quarters, lqDelta);
 	fillBaseBar(usage);
 	auto facilityLabel = form->findControlTyped<Label>("FACILITY_FIRST_TEXT");
-	facilityLabel->setText(format("%i%%", usage));
+	facilityLabel->setText(format("%.2g%%", usage));
 }
 
 void RecruitScreen::fillBaseBar(int percent)
@@ -641,7 +642,8 @@ void RecruitScreen::closeScreen(bool confirmed)
 	StateRef<Base> bad_base;
 	for (auto &b : state->player_bases)
 	{
-		if (b.second->getUsage(*state, FacilityType::Capacity::Quarters, vecLqDelta[bindex]) > 100)
+		if (b.second->getUsage(*state, FacilityType::Capacity::Quarters, vecLqDelta[bindex]) >
+		    100.f)
 		{
 			bad_base = b.second->building->base;
 			break;

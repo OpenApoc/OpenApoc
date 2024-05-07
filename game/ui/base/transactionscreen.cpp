@@ -493,12 +493,12 @@ void TransactionScreen::updateBaseHighlight()
 			facilityPic->setVisible(true);
 			facilityPic->setImage(state->facility_types["FACILITYTYPE_LIVING_QUARTERS"]->sprite);
 			form->findControlTyped<Graphic>("FACILITY_FIRST_BAR")->setVisible(true);
-			int usage =
+			const auto usage =
 			    state->current_base->getUsage(*state, FacilityType::Capacity::Quarters, lqDelta);
 			fillBaseBar(true, usage);
 			auto facilityLabel = form->findControlTyped<Label>("FACILITY_FIRST_TEXT");
 			facilityLabel->setVisible(true);
-			facilityLabel->setText(format("%d%%", usage));
+			facilityLabel->setText(format("%.2g%%", usage));
 			break;
 		}
 		case BaseGraphics::FacilityHighlight::Stores:
@@ -507,12 +507,12 @@ void TransactionScreen::updateBaseHighlight()
 			facilityPic->setVisible(true);
 			facilityPic->setImage(state->facility_types["FACILITYTYPE_STORES"]->sprite);
 			form->findControlTyped<Graphic>("FACILITY_FIRST_BAR")->setVisible(true);
-			int usage =
+			const auto usage =
 			    state->current_base->getUsage(*state, FacilityType::Capacity::Stores, cargoDelta);
 			fillBaseBar(true, usage);
 			auto facilityLabel = form->findControlTyped<Label>("FACILITY_FIRST_TEXT");
 			facilityLabel->setVisible(true);
-			facilityLabel->setText(format("%d%%", usage));
+			facilityLabel->setText(format("%.2g%%", usage));
 			break;
 		}
 		case BaseGraphics::FacilityHighlight::Aliens:
@@ -521,12 +521,12 @@ void TransactionScreen::updateBaseHighlight()
 			facilityPic->setVisible(true);
 			facilityPic->setImage(state->facility_types["FACILITYTYPE_ALIEN_CONTAINMENT"]->sprite);
 			form->findControlTyped<Graphic>("FACILITY_FIRST_BAR")->setVisible(true);
-			int usage =
+			const auto usage =
 			    state->current_base->getUsage(*state, FacilityType::Capacity::Aliens, bioDelta);
 			fillBaseBar(true, usage);
 			auto facilityLabel = form->findControlTyped<Label>("FACILITY_FIRST_TEXT");
 			facilityLabel->setVisible(true);
-			facilityLabel->setText(format("%d%%", usage));
+			facilityLabel->setText(format("%.2g%%", usage));
 			break;
 		}
 		default:

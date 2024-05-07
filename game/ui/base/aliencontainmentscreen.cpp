@@ -92,7 +92,7 @@ void AlienContainmentScreen::closeScreen()
 		for (auto &b : state->player_bases)
 		{
 			if ((vecChanged[i] || forceLimits) &&
-			    b.second->getUsage(*state, FacilityType::Capacity::Aliens, vecBioDelta[i]) > 100)
+			    b.second->getUsage(*state, FacilityType::Capacity::Aliens, vecBioDelta[i]) > 100.f)
 			{
 				bad_base = b.second->building->base;
 				break;
