@@ -180,7 +180,8 @@ class FlyingVehicleMover : public VehicleMover
 				dodge = 100;
 				break;
 		}
-		if (vehicle.missions.front().targetBuilding == vehicle.homeBuilding)
+		if (not vehicle.missions.empty() &&
+		    vehicle.missions.front().targetBuilding == vehicle.homeBuilding)
 		{
 			return;
 		}
