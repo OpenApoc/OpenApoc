@@ -42,22 +42,25 @@ void AEquipmentSheet::clear()
 }
 
 void AEquipmentSheet::displayImplementation(sp<AEquipment> item, const AEquipmentType &itemType,
-                                            bool researched)
+                                            const bool researched)
 {
-	if (!researched)
-	{
-		displayAlien(item, itemType);
-		return;
-	}
+	const auto itemName = researched
+	                          ? itemType.name
+	                          : (itemType.bioStorage ? tr("Alien Organism") : tr("Alien Artifact"));
 
-	form->findControlTyped<Label>("ITEM_NAME")->setText(itemType.name);
-	form->findControlTyped<Graphic>("SELECTED_IMAGE")
-	    ->setImage(item ? item->getEquipmentImage() : itemType.equipscreen_sprite);
+	const auto selectedImage =
+	    researched && item ? item->getEquipmentImage() : itemType.equipscreen_sprite;
+
+	form->findControlTyped<Label>("ITEM_NAME")->setText(itemName);
+	form->findControlTyped<Graphic>("SELECTED_IMAGE")->setImage(selectedImage);
 
 	// when possible, the actual item's weight takes precedence
 	form->findControlTyped<Label>("LABEL_1_L")->setText(tr("Weight"));
 	form->findControlTyped<Label>("LABEL_1_R")
 	    ->setText(format("%d", item ? item->getWeight() : itemType.weight));
+
+	if (!researched)
+		return;
 
 	switch (itemType.type)
 	{
@@ -176,17 +179,6 @@ void AEquipmentSheet::displayArmor(sp<AEquipment> item, const AEquipmentType &it
 void AEquipmentSheet::displayOther(sp<AEquipment> item [[maybe_unused]],
                                    const AEquipmentType &itemType [[maybe_unused]])
 {
-}
-
-void AEquipmentSheet::displayAlien(sp<AEquipment> item, const AEquipmentType &itemType)
-{
-	form->findControlTyped<Label>("ITEM_NAME")
-	    ->setText(itemType.bioStorage ? tr("Alien Organism") : tr("Alien Artifact"));
-	form->findControlTyped<Graphic>("SELECTED_IMAGE")->setImage(itemType.equipscreen_sprite);
-
-	form->findControlTyped<Label>("LABEL_1_L")->setText(tr("Weight"));
-	form->findControlTyped<Label>("LABEL_1_R")
-	    ->setText(format("%d", item ? item->getWeight() : itemType.weight));
 }
 
 }; // namespace OpenApoc

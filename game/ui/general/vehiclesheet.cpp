@@ -34,14 +34,7 @@ void VehicleSheet::display(sp<VEquipment> item)
 void VehicleSheet::display(sp<VEquipmentType> itemType, bool researched)
 {
 	clear();
-	if (researched)
-	{
-		displayEquipImplementation(nullptr, itemType);
-	}
-	else
-	{
-		displayAlien(itemType);
-	}
+	displayEquipImplementation(nullptr, itemType, researched);
 }
 
 void VehicleSheet::clear()
@@ -128,14 +121,22 @@ void VehicleSheet::displayImplementation(sp<Vehicle> vehicle, sp<VehicleType> ve
 	}
 }
 
-void VehicleSheet::displayEquipImplementation(sp<VEquipment> item, sp<VEquipmentType> type)
+void VehicleSheet::displayEquipImplementation(sp<VEquipment> item, sp<VEquipmentType> type,
+                                              const bool isResearched = true)
 {
-	form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")->setText("");
-	form->findControlTyped<Label>("ITEM_NAME")->setText(item ? item->type->name : type->name);
 	form->findControlTyped<Graphic>("SELECTED_IMAGE")->setImage(type->equipscreen_sprite);
 
 	form->findControlTyped<Label>("LABEL_1_L")->setText(tr("Weight"));
 	form->findControlTyped<Label>("LABEL_1_R")->setText(format("%d", type->weight));
+
+	if (!isResearched)
+	{
+		form->findControlTyped<Label>("ITEM_NAME")->setText(tr("Alien Artifact"));
+		return;
+	}
+
+	form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")->setText("");
+	form->findControlTyped<Label>("ITEM_NAME")->setText(item ? item->type->name : type->name);
 
 	// Draw equipment stats
 	switch (type->type)
@@ -238,14 +239,6 @@ void VehicleSheet::displayGeneral(sp<VEquipment> item [[maybe_unused]], sp<VEqui
 		form->findControlTyped<Label>(format("LABEL_%d_L", statsCount))->setText(tr("Teleports"));
 		statsCount++;
 	}
-}
-
-void VehicleSheet::displayAlien(sp<VEquipmentType> type)
-{
-	form->findControlTyped<Label>("ITEM_NAME")->setText(tr("Alien Artifact"));
-	form->findControlTyped<Graphic>("SELECTED_IMAGE")->setImage(type->equipscreen_sprite);
-	form->findControlTyped<Label>("LABEL_1_L")->setText(tr("Weight"));
-	form->findControlTyped<Label>("LABEL_1_R")->setText(format("%d", type->weight));
 }
 
 }; // namespace OpenApoc

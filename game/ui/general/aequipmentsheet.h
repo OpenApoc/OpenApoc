@@ -22,13 +22,12 @@ class AEquipmentSheet
 
   private:
 	void displayImplementation(sp<AEquipment> item, const AEquipmentType &itemType,
-	                           bool researched);
+	                           const bool researched);
 	void displayGrenade(sp<AEquipment> item, const AEquipmentType &itemType);
 	void displayWeapon(sp<AEquipment> item, const AEquipmentType &itemType);
 	void displayAmmo(sp<AEquipment> item, const AEquipmentType &itemType);
 	void displayArmor(sp<AEquipment> item, const AEquipmentType &itemType);
 	void displayOther(sp<AEquipment> item, const AEquipmentType &itemType);
-	void displayAlien(sp<AEquipment> item, const AEquipmentType &itemType);
 	sp<Form> form;
 };
 

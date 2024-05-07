@@ -26,11 +26,11 @@ class VehicleSheet
   private:
 	void displayImplementation(sp<Vehicle> vehicle, sp<VehicleType> vehicleType);
 
-	void displayEquipImplementation(sp<VEquipment> item, sp<VEquipmentType> itemType);
+	void displayEquipImplementation(sp<VEquipment> item, sp<VEquipmentType> itemType,
+	                                const bool isResearched = true);
 	void displayEngine(sp<VEquipment> item, sp<VEquipmentType> type);
 	void displayWeapon(sp<VEquipment> item, sp<VEquipmentType> type);
 	void displayGeneral(sp<VEquipment> item, sp<VEquipmentType> type);
-	void displayAlien(sp<VEquipmentType> type);
 
 	sp<Form> form;
 };
