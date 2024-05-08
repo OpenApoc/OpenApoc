@@ -60,9 +60,7 @@ void AEquipmentSheet::displayImplementation(sp<AEquipment> item, const AEquipmen
 	    ->setText(format("%d", item ? item->getWeight() : itemType.weight));
 
 	form->findControlTyped<Label>("LABEL_2_L")->setText(tr("Storage"));
-	form->findControlTyped<Label>("LABEL_2_R")
-	    ->setText(
-	        format("%d (%.2g%%)", itemType.store_space, (double)itemType.store_space / 40 * 100));
+	form->findControlTyped<Label>("LABEL_2_R")->setText(format("%d", itemType.store_space));
 
 	if (!researched)
 		return;
