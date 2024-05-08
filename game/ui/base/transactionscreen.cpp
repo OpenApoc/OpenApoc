@@ -498,7 +498,7 @@ void TransactionScreen::updateBaseHighlight()
 			fillBaseBar(true, usage);
 			auto facilityLabel = form->findControlTyped<Label>("FACILITY_FIRST_TEXT");
 			facilityLabel->setVisible(true);
-			facilityLabel->setText(format("%.4g%%", usage));
+			facilityLabel->setText(format("%d%%", usage));
 			break;
 		}
 		case BaseGraphics::FacilityHighlight::Stores:
@@ -512,7 +512,7 @@ void TransactionScreen::updateBaseHighlight()
 			fillBaseBar(true, usage);
 			auto facilityLabel = form->findControlTyped<Label>("FACILITY_FIRST_TEXT");
 			facilityLabel->setVisible(true);
-			facilityLabel->setText(format("%.4g%%", usage));
+			facilityLabel->setText(format("%d%%", usage));
 			break;
 		}
 		case BaseGraphics::FacilityHighlight::Aliens:
@@ -526,7 +526,7 @@ void TransactionScreen::updateBaseHighlight()
 			fillBaseBar(true, usage);
 			auto facilityLabel = form->findControlTyped<Label>("FACILITY_FIRST_TEXT");
 			facilityLabel->setVisible(true);
-			facilityLabel->setText(format("%.4g%%", usage));
+			facilityLabel->setText(format("%d%%", usage));
 			break;
 		}
 		default:
