@@ -472,7 +472,7 @@ void BaseScreen::eventOccurred(Event *e)
 			statsValues[0]->setText(format("%d", selFacility->type->capacityAmount));
 			statsLabels[1]->setText(tr("Usage"));
 			statsValues[1]->setText(
-			    format("%d%%", state->current_base->getUsage(*state, selFacility)));
+			    format("%.f%%", state->current_base->getUsage(*state, selFacility)));
 		}
 	}
 	else if (selection != NO_SELECTION)

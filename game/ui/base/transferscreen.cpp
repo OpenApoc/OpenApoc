@@ -171,7 +171,7 @@ void TransferScreen::updateBaseHighlight()
 			fillBaseBar(false, usage);
 			auto facilityLabel = form->findControlTyped<Label>("FACILITY_SECOND_TEXT");
 			facilityLabel->setVisible(true);
-			facilityLabel->setText(format("%d%%", usage));
+			facilityLabel->setText(format("%.f%%", usage));
 			break;
 		}
 		case BaseGraphics::FacilityHighlight::Stores:
@@ -185,7 +185,7 @@ void TransferScreen::updateBaseHighlight()
 			fillBaseBar(false, usage);
 			auto facilityLabel = form->findControlTyped<Label>("FACILITY_SECOND_TEXT");
 			facilityLabel->setVisible(true);
-			facilityLabel->setText(format("%d%%", usage));
+			facilityLabel->setText(format("%.f%%", usage));
 			break;
 		}
 		case BaseGraphics::FacilityHighlight::Aliens:
@@ -199,7 +199,7 @@ void TransferScreen::updateBaseHighlight()
 			fillBaseBar(false, usage);
 			auto facilityLabel = form->findControlTyped<Label>("FACILITY_SECOND_TEXT");
 			facilityLabel->setVisible(true);
-			facilityLabel->setText(format("%d%%", usage));
+			facilityLabel->setText(format("%.f%%", usage));
 			break;
 		}
 		default:

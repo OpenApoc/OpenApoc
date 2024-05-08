@@ -2585,7 +2585,7 @@ void CityView::update()
 							UString efficiency = tr("Combat training (efficiency=");
 							auto usage = base->getUsage(*state, FacilityType::Capacity::Training);
 							usage = (100.0f / std::max(100.f, usage)) * 100;
-							efficiency += format("%d%%", usage) + UString(")");
+							efficiency += format("%.f%%", usage) + UString(")");
 							agentAssignment->setText(efficiency);
 							break;
 						}
@@ -2594,7 +2594,7 @@ void CityView::update()
 							UString efficiency = tr("Psionic training (efficiency=");
 							auto usage = base->getUsage(*state, FacilityType::Capacity::Psi);
 							usage = (100.0f / std::max(100.f, usage)) * 100;
-							efficiency += format("%d%%", usage) + UString(")");
+							efficiency += format("%.f%%", usage) + UString(")");
 							agentAssignment->setText(efficiency);
 							break;
 						}
