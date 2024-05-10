@@ -58,8 +58,8 @@ class Base : public StateObject<Base>, public std::enable_shared_from_this<Base>
 	bool containmentEmpty(GameState &state);
 	int getCapacityUsed(GameState &state, FacilityType::Capacity type) const;
 	int getCapacityTotal(FacilityType::Capacity type) const;
-	int getUsage(GameState &state, sp<Facility> facility, int delta = 0) const;
-	int getUsage(GameState &state, FacilityType::Capacity type, int delta = 0) const;
+	float getUsage(GameState &state, const sp<Facility> facility, const int delta = 0) const;
+	float getUsage(GameState &state, const FacilityType::Capacity type, const int delta = 0) const;
 };
 
 }; // namespace OpenApoc

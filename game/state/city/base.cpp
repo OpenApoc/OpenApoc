@@ -569,39 +569,37 @@ int Base::getCapacityTotal(FacilityType::Capacity type) const
 	return total;
 }
 
-int Base::getUsage(GameState &state, sp<Facility> facility, int delta) const
+float Base::getUsage(GameState &state, const sp<Facility> facility, const int delta) const
 {
-	if (facility->lab)
-	{
-		float usage = 0.0f;
-		if (delta != 0)
-		{
-			LogError("Delta is only supposed to be used with stores, alien containment and LQ!");
-		}
-		if (facility->lab->current_project)
-		{
-			usage = (float)facility->lab->assigned_agents.size();
-			usage /= facility->type->capacityAmount;
-		}
-		return static_cast<int>(ceilf(usage * 100.0f));
-	}
-	else
-	{
+	if (!facility->lab)
 		return getUsage(state, facility->type->capacityType, delta);
+
+	float usage = 0.0f;
+	if (delta != 0)
+	{
+		LogError("Delta is only supposed to be used with stores, alien containment and LQ!");
 	}
+
+	if (facility->lab->current_project)
+	{
+		usage = (float)facility->lab->assigned_agents.size();
+		usage /= facility->type->capacityAmount;
+	}
+
+	return static_cast<float>(ceilf(usage * 100.0f));
 }
 
-int Base::getUsage(GameState &state, FacilityType::Capacity type, int delta) const
+float Base::getUsage(GameState &state, const FacilityType::Capacity type, const int delta) const
 {
-	int used = getCapacityUsed(state, type) + delta;
-	int total = getCapacityTotal(type);
+	const auto used = getCapacityUsed(state, type) + delta;
+	const auto total = getCapacityTotal(type);
 	if (total == 0)
 	{
 		return used > 0 ? 999 : 0;
 	}
 
-	double usageValue = (double)used / total * 100;
-	int usage = std::min(999, (int)std::round(usageValue));
+	auto usage = (float)used / total * 100;
+	usage = std::min(999.f, usage);
 
 	return usage;
 }

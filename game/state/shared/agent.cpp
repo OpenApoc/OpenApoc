@@ -1081,12 +1081,12 @@ void Agent::updateHourly(GameState &state)
 	// Heal
 	if (modified_stats.health < current_stats.health && !recentlyFought)
 	{
-		int usage = base->getUsage(state, FacilityType::Capacity::Medical);
-		if (usage < 999)
+		auto usage = base->getUsage(state, FacilityType::Capacity::Medical);
+		if (usage < 999.f)
 		{
-			usage = std::max(100, usage);
+			usage = std::max(100.f, usage);
 			// As per Roger Wong's guide, healing is 0.8 points an hour
-			healingProgress += 80.0f / (float)usage;
+			healingProgress += 80.0f / usage;
 			if (healingProgress > 1.0f)
 			{
 				healingProgress -= 1.0f;
@@ -1097,14 +1097,14 @@ void Agent::updateHourly(GameState &state)
 	// Train
 	if (trainingAssignment != TrainingAssignment::None)
 	{
-		int usage = base->getUsage(state, trainingAssignment == TrainingAssignment::Physical
-		                                      ? FacilityType::Capacity::Training
-		                                      : FacilityType::Capacity::Psi);
-		if (usage < 999)
+		auto usage = base->getUsage(state, trainingAssignment == TrainingAssignment::Physical
+		                                       ? FacilityType::Capacity::Training
+		                                       : FacilityType::Capacity::Psi);
+		if (usage < 999.f)
 		{
-			usage = std::max(100, usage);
+			usage = std::max(100.f, usage);
 			// As per Roger Wong's guide
-			float mult = config().getFloat("OpenApoc.Cheat.StatGrowthMultiplier");
+			auto mult = config().getFloat("OpenApoc.Cheat.StatGrowthMultiplier");
 			if (trainingAssignment == TrainingAssignment::Physical)
 			{
 				trainPhysical(state, TICKS_PER_HOUR * 100 / usage * mult);

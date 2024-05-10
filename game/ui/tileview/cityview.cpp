@@ -2583,18 +2583,18 @@ void CityView::update()
 						case TrainingAssignment::Physical:
 						{
 							UString efficiency = tr("Combat training (efficiency=");
-							int usage = base->getUsage(*state, FacilityType::Capacity::Training);
-							usage = (100.0f / std::max(100, usage)) * 100;
-							efficiency += format("%d%%", usage) + UString(")");
+							auto usage = base->getUsage(*state, FacilityType::Capacity::Training);
+							usage = (100.0f / std::max(100.f, usage)) * 100;
+							efficiency += format("%.f%%", usage) + UString(")");
 							agentAssignment->setText(efficiency);
 							break;
 						}
 						case TrainingAssignment::Psi:
 						{
 							UString efficiency = tr("Psionic training (efficiency=");
-							int usage = base->getUsage(*state, FacilityType::Capacity::Psi);
-							usage = (100.0f / std::max(100, usage)) * 100;
-							efficiency += format("%d%%", usage) + UString(")");
+							auto usage = base->getUsage(*state, FacilityType::Capacity::Psi);
+							usage = (100.0f / std::max(100.f, usage)) * 100;
+							efficiency += format("%.f%%", usage) + UString(")");
 							agentAssignment->setText(efficiency);
 							break;
 						}
