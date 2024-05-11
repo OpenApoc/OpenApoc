@@ -1037,19 +1037,11 @@ Reachability VehicleTargetHelper::isReachableTargetGround(const Vehicle &v, Vec3
 
 bool VehicleMission::takeOffCheck(GameState &state, Vehicle &v)
 {
-	if (!v.tileObject)
-	{
-		if (v.currentBuilding)
-		{
-			v.addMission(state, VehicleMission::takeOff(v));
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	return false;
+	if (v.tileObject || !v.currentBuilding)
+		return false;
+
+	v.addMission(state, VehicleMission::takeOff(v));
+	return true;
 }
 
 bool VehicleMission::teleportCheck(GameState &state, Vehicle &v)
@@ -1992,30 +1984,27 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		}
 		case MissionType::AttackBuilding:
 		{
-			if (!targetBuilding)
+			if (!targetBuilding && !acquireTargetBuilding(state, v))
 			{
-				if (!acquireTargetBuilding(state, v))
-				{
-					cancelled = true;
-					return;
-				}
+				cancelled = true;
+				return;
 			}
+
 			if (takeOffCheck(state, v))
 			{
 				return;
 			}
-			else
+
+			if (this->currentPlannedPath.empty())
 			{
-				if (this->currentPlannedPath.empty())
-				{
-					std::uniform_int_distribution<int> xPos(targetBuilding->bounds.p0.x - 5,
-					                                        targetBuilding->bounds.p1.x + 5);
-					std::uniform_int_distribution<int> yPos(targetBuilding->bounds.p0.y - 5,
-					                                        targetBuilding->bounds.p1.y + 5);
-					setPathTo(state, v, v.getPreferredPosition(xPos(state.rng), yPos(state.rng)),
-					          getDefaultIterationCount(v));
-				}
+				std::uniform_int_distribution<int> xPos(targetBuilding->bounds.p0.x - 5,
+				                                        targetBuilding->bounds.p1.x + 5);
+				std::uniform_int_distribution<int> yPos(targetBuilding->bounds.p0.y - 5,
+				                                        targetBuilding->bounds.p1.y + 5);
+				setPathTo(state, v, v.getPreferredPosition(xPos(state.rng), yPos(state.rng)),
+				          getDefaultIterationCount(v));
 			}
+
 			return;
 		}
 		case MissionType::Crash:
