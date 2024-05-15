@@ -3148,6 +3148,7 @@ void Battle::exitBattle(GameState &state)
 	if (!leftoverBioLoot.empty())
 	{
 		// Bio loot is wasted if can't be loaded on player craft
+		LogWarning("Bio loot remaining");
 	}
 
 	// Cargo loot remaining?
@@ -3158,6 +3159,7 @@ void Battle::exitBattle(GameState &state)
 			if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
 			{
 				// Still can't do anything if we're recovering UFO
+				LogWarning("AllowBuildingLootDeposit and UfoRecovery mission type");
 			}
 			else
 			{
