@@ -14,6 +14,7 @@
 #include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/city/facility.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gameevent.h"
@@ -2567,15 +2568,9 @@ void Battle::finishBattle(GameState &state)
 
 			// Recharge all equipment
 			auto payload = e->getPayloadType();
-			if (payload)
+			if (payload && payload->recharge && e->ammo < payload->max_ammo)
 			{
-				if (payload->recharge)
-				{
-					if (e->ammo < payload->max_ammo)
-					{
-						e->ammo = payload->max_ammo;
-					}
-				}
+				e->ammo = payload->max_ammo;
 			}
 		}
 	}
@@ -2689,14 +2684,40 @@ void Battle::finishBattle(GameState &state)
 	// - give him alien remains
 	if (state.current_battle->playerWon && !state.current_battle->winnerHasRetreated)
 	{
-		bool playerHasBioStorage = state.current_battle->player_craft &&
-		                           state.current_battle->player_craft->getMaxBio() > 0;
+
+		// Check if mission is base defense, and defended base has alien containment facility to
+		// store live aliens from battle
+		auto playerHasBaseAlienStorage = false;
+
+		if (state.current_battle->mission_type == Battle::MissionType::BaseDefense)
+		{
+			for (const auto &base : state.player_bases)
+			{
+				if (base.first != state.current_base.id)
+					continue;
+
+				for (const auto &facility : base.second->facilities)
+				{
+					if (facility->type->capacityType == FacilityType::Capacity::Aliens)
+					{
+						playerHasBaseAlienStorage = true;
+						break;
+					}
+				}
+			}
+		}
+
+		const auto playerHasCraftBioStorage = state.current_battle->player_craft &&
+		                                      state.current_battle->player_craft->getMaxBio() > 0;
+
+		const auto playerHasAlienStorage = playerHasCraftBioStorage || playerHasBaseAlienStorage;
+
 		// Live alien loot
 		for (auto &u : liveAliens)
 		{
 			if (u->agent->type->liveSpeciesItem)
 			{
-				if (playerHasBioStorage)
+				if (playerHasAlienStorage)
 				{
 					state.current_battle->score.liveAlienCaptured +=
 					    u->agent->type->liveSpeciesItem->score;
