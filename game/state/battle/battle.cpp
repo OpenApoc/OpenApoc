@@ -46,6 +46,7 @@
 #include <algorithm>
 #include <glm/glm.hpp>
 #include <limits>
+#include <optional>
 
 namespace OpenApoc
 {
@@ -2684,28 +2685,7 @@ void Battle::finishBattle(GameState &state)
 	// - give him alien remains
 	if (state.current_battle->playerWon && !state.current_battle->winnerHasRetreated)
 	{
-
-		// Check if mission is base defense, and defended base has alien containment facility to
-		// store live aliens from battle
-		auto playerHasBaseAlienStorage = false;
-
-		if (state.current_battle->mission_type == Battle::MissionType::BaseDefense)
-		{
-			for (const auto &base : state.player_bases)
-			{
-				if (base.first != state.current_base.id)
-					continue;
-
-				for (const auto &facility : base.second->facilities)
-				{
-					if (facility->type->capacityType == FacilityType::Capacity::Aliens)
-					{
-						playerHasBaseAlienStorage = true;
-						break;
-					}
-				}
-			}
-		}
+		auto playerHasBaseAlienStorage = getIfPlayerHasBaseAlienStorage(state);
 
 		const auto playerHasCraftBioStorage = state.current_battle->player_craft &&
 		                                      state.current_battle->player_craft->getMaxBio() > 0;
@@ -3131,8 +3111,9 @@ void Battle::exitBattle(GameState &state)
 	// If player has vehicle with bio capacity then all bio loot goes to leftover loot
 	// This is regardless of "enforce limits" which only makes us enforce it
 	// on vehicles that have capacity in the first place
-	bool bioCarrierPresent = false;
-	bool cargoCarrierPresent = false;
+	auto cargoCarrierPresent = false;
+	auto bioCarrierPresent = false;
+	auto playerHasBaseAlienStorage = getIfPlayerHasBaseAlienStorage(state);
 	for (auto &v : playerVehicles)
 	{
 		if (v->getMaxCargo() > 0)
@@ -3143,6 +3124,10 @@ void Battle::exitBattle(GameState &state)
 		{
 			bioCarrierPresent = true;
 		}
+
+		// If both variables are true, there is no reason to keep going with this loop
+		if (cargoCarrierPresent && bioCarrierPresent)
+			break;
 	}
 	if (!cargoCarrierPresent)
 	{
@@ -3156,7 +3141,7 @@ void Battle::exitBattle(GameState &state)
 		}
 		state.current_battle->cargoLoot.clear();
 	}
-	if (!bioCarrierPresent)
+	if (!bioCarrierPresent && !playerHasBaseAlienStorage)
 	{
 		for (auto &e : state.current_battle->bioLoot)
 		{
@@ -3173,43 +3158,57 @@ void Battle::exitBattle(GameState &state)
 	}
 
 	// Cargo loot remaining?
-	if (leftoverCargoLoot.empty())
+	if (leftoverCargoLoot.empty() && config().getBool("OpenApoc.NewFeature.AllowBuildingLootDeposit"))
 	{
-		if (config().getBool("OpenApoc.NewFeature.AllowBuildingLootDeposit"))
+		if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
 		{
-			if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
+			// Still can't do anything if we're recovering UFO
+			LogWarning("AllowBuildingLootDeposit and UfoRecovery mission type");
+		}
+		else
+		{
+			// Deposit loot into building, call for pickup
+			StateRef<Building> location = {&state, state.current_battle->mission_location_id};
+			auto homeBuilding =
+				playerVehicles.empty() ? nullptr : playerVehicles.front()->homeBuilding;
+			if (!homeBuilding)
 			{
-				// Still can't do anything if we're recovering UFO
-				LogWarning("AllowBuildingLootDeposit and UfoRecovery mission type");
+				homeBuilding = state.player_bases.begin()->second->building;
 			}
-			else
+
+			// Main loop only starts with leftoverCargoLoot.empty()
+			// This means that the following inner loop will NEVER be executed!
+			// TODO: check if this can be removed
+			for (auto &e : leftoverCargoLoot) 
 			{
-				// Deposit loot into building, call for pickup
-				StateRef<Building> location = {&state, state.current_battle->mission_location_id};
-				auto homeBuilding =
-				    playerVehicles.empty() ? nullptr : playerVehicles.front()->homeBuilding;
-				if (!homeBuilding)
-				{
-					homeBuilding = state.player_bases.begin()->second->building;
-				}
-				for (auto &e : leftoverCargoLoot)
-				{
-					int price = 0;
-					location->cargo.emplace_back(state, e.first, e.second, price, nullptr,
-					                             homeBuilding);
-				}
-				for (auto &e : leftoverVehicleLoot)
-				{
-					int price = 0;
-					location->cargo.emplace_back(state, e.first, e.second, price, nullptr,
-					                             homeBuilding);
-				}
+				int price = 0;
+				location->cargo.emplace_back(state, e.first, e.second, price, nullptr,
+					                            homeBuilding);
+			}
+			for (auto &e : leftoverVehicleLoot)
+			{
+				int price = 0;
+				location->cargo.emplace_back(state, e.first, e.second, price, nullptr,
+					                            homeBuilding);
 			}
 		}
 	}
 
+	// Base defense missions don't check for vehicles
+	if (state.current_battle->mission_type == Battle::MissionType::BaseDefense)
+	{
+		auto defendedBase = getCurrentDefendedBase(state);
+
+		for (auto& e : state.current_battle->bioLoot)
+		{
+			for (auto &facility : defendedBase.value()->facilities)
+			{
+				// TODO: insert alien into alien containment at base
+			}
+		}
+	}
 	// Load cargo/bio into vehicles
-	if (!playerVehicles.empty())
+	else if (!playerVehicles.empty())
 	{
 		// Go through every vehicle loot position
 		// Try to load into every vehicle until amount remaining is zero
@@ -3504,6 +3503,40 @@ void Battle::exitBattle(GameState &state)
 	state.cleanUpDeathNote();
 }
 
+std::optional<sp<Base>> Battle::getCurrentDefendedBase(GameState &state)
+{
+	if (state.current_battle->mission_type != Battle::MissionType::BaseDefense)
+		return {};
+
+	for (const auto& base : state.player_bases)
+	{
+		if (base.first == state.current_base.id)
+			return base.second;
+	}
+
+	return {};
+}
+
+bool Battle::getIfPlayerHasBaseAlienStorage(GameState &state)
+{
+	// Check if mission is base defense, and defended base has alien containment facility to store live aliens from battle
+	if (state.current_battle->mission_type != Battle::MissionType::BaseDefense)
+		return false;
+
+	auto defendedBase = getCurrentDefendedBase(state);
+
+	// If base not found
+	if (!defendedBase)
+		return false;
+
+	for (const auto &facility : defendedBase.value()->facilities)
+	{
+		if (facility->type->capacityType == FacilityType::Capacity::Aliens)
+			return true;
+	}
+
+	return false;
+}
 void Battle::loadResources(GameState &state)
 {
 	battle_map->loadTilesets(state);

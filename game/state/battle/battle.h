@@ -13,6 +13,7 @@
 #include <map>
 #include <set>
 #include <vector>
+#include <optional>
 
 namespace OpenApoc
 {
@@ -350,6 +351,9 @@ class Battle : public std::enable_shared_from_this<Battle>
 	    Vec3<int> origin, Vec3<int> destination, const BattleUnitTileHelper &canEnterTile,
 	    bool approachOnly = false, bool ignoreStaticUnits = false, bool ignoreMovingUnits = true,
 	    bool ignoreAllUnits = false, float *cost = nullptr, float maxCost = 0.0f);
+
+	static bool getIfPlayerHasBaseAlienStorage(GameState &state);
+	static std::optional<sp<Base>> getCurrentDefendedBase(GameState &state);
 
   private:
 	void loadResources(GameState &state);
