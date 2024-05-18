@@ -3203,6 +3203,9 @@ void Battle::exitBattle(GameState &state)
 		{
 			for (auto &facility : defendedBase.value()->facilities)
 			{
+				if (facility->type->capacityType != FacilityType::Capacity::Aliens)
+					continue;
+
 				// TODO: insert alien into alien containment at base
 			}
 		}
