@@ -14,6 +14,7 @@
 #include <set>
 #include <vector>
 #include <optional>
+#include <game/state/city/base.h>
 
 namespace OpenApoc
 {
@@ -352,8 +353,8 @@ class Battle : public std::enable_shared_from_this<Battle>
 	    bool approachOnly = false, bool ignoreStaticUnits = false, bool ignoreMovingUnits = true,
 	    bool ignoreAllUnits = false, float *cost = nullptr, float maxCost = 0.0f);
 
-	static bool getIfPlayerHasBaseAlienStorage(GameState &state);
 	static std::optional<sp<Base>> getCurrentDefendedBase(GameState &state);
+	static bool getIfPlayerHasBaseAlienStorage(GameState &state);
 
   private:
 	void loadResources(GameState &state);
