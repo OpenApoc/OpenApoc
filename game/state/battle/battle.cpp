@@ -2684,7 +2684,7 @@ void Battle::finishBattle(GameState &state)
 	// - give him alien remains
 	if (state.current_battle->playerWon && !state.current_battle->winnerHasRetreated)
 	{
-		auto playerHasBaseAlienStorage = isBaseDefenseWithAlienStorage(state);
+		const auto playerHasBaseAlienStorage = isBaseDefenseWithAlienStorage(state);
 
 		const auto playerHasCraftBioStorage = state.current_battle->player_craft &&
 		                                      state.current_battle->player_craft->getMaxBio() > 0;
@@ -3112,7 +3112,7 @@ void Battle::exitBattle(GameState &state)
 	// on vehicles that have capacity in the first place
 	auto cargoCarrierPresent = false;
 	auto bioCarrierPresent = false;
-	auto playerHasBaseAlienStorage = isBaseDefenseWithAlienStorage(state);
+	const auto playerHasBaseAlienStorage = isBaseDefenseWithAlienStorage(state);
 	for (auto &v : playerVehicles)
 	{
 		if (v->getMaxCargo() > 0)
@@ -3198,7 +3198,7 @@ void Battle::exitBattle(GameState &state)
 	if (state.current_battle->mission_type == Battle::MissionType::BaseDefense &&
 	    isBaseDefenseWithAlienStorage(state))
 	{
-		auto defendedBase = getCurrentDefendedBase(state);
+		const auto defendedBase = getCurrentDefendedBase(state);
 
 		for (auto &bio : state.current_battle->bioLoot)
 		{
@@ -3394,7 +3394,7 @@ void Battle::exitBattle(GameState &state)
 		}
 
 		// Give player vehicle a null cargo just so it comes back to base once
-		for (auto v : playerVehicles)
+		for (auto &v : playerVehicles)
 		{
 			v->cargo.emplace_front(
 			    state, StateRef<AEquipmentType>(&state, state.agent_equipment.begin()->first), 0, 0,
@@ -3530,13 +3530,13 @@ bool Battle::isBaseDefenseWithAlienStorage(GameState &state)
 	if (state.current_battle->mission_type != Battle::MissionType::BaseDefense)
 		return false;
 
-	auto defendedBase = getCurrentDefendedBase(state);
+	const auto defendedBase = getCurrentDefendedBase(state);
 
 	// If base not found
 	if (!defendedBase)
 		return false;
 
-	auto availableAlienStorageAtBase =
+	const auto availableAlienStorageAtBase =
 	    defendedBase->getCapacityTotal(FacilityType::Capacity::Aliens) > 0;
 
 	return availableAlienStorageAtBase;
