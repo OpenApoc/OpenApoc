@@ -3200,7 +3200,7 @@ void Battle::exitBattle(GameState &state)
 	{
 		const auto defendedBase = getCurrentDefendedBase(state);
 
-		for (auto &bio : state.current_battle->bioLoot)
+		for (const auto &bio : state.current_battle->bioLoot)
 		{
 			if (bio.second == 0)
 				continue;
