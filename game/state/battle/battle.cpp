@@ -2685,7 +2685,7 @@ void Battle::finishBattle(GameState &state)
 	// - give him alien remains
 	if (state.current_battle->playerWon && !state.current_battle->winnerHasRetreated)
 	{
-		auto playerHasBaseAlienStorage = getIfPlayerHasBaseAlienStorage(state);
+		auto playerHasBaseAlienStorage = isBaseDefenseWithAlienStorage(state);
 
 		const auto playerHasCraftBioStorage = state.current_battle->player_craft &&
 		                                      state.current_battle->player_craft->getMaxBio() > 0;
@@ -3113,7 +3113,7 @@ void Battle::exitBattle(GameState &state)
 	// on vehicles that have capacity in the first place
 	auto cargoCarrierPresent = false;
 	auto bioCarrierPresent = false;
-	auto playerHasBaseAlienStorage = getIfPlayerHasBaseAlienStorage(state);
+	auto playerHasBaseAlienStorage = isBaseDefenseWithAlienStorage(state);
 	for (auto &v : playerVehicles)
 	{
 		if (v->getMaxCargo() > 0)
@@ -3195,19 +3195,16 @@ void Battle::exitBattle(GameState &state)
 	}
 
 	// Base defense missions don't check for vehicles
-	if (state.current_battle->mission_type == Battle::MissionType::BaseDefense)
+	if (state.current_battle->mission_type == Battle::MissionType::BaseDefense && isBaseDefenseWithAlienStorage(state))
 	{
 		auto defendedBase = getCurrentDefendedBase(state);
 
-		for (auto &e : state.current_battle->bioLoot)
+		for (auto &bio : state.current_battle->bioLoot)
 		{
-			for (auto &facility : defendedBase.value()->facilities)
-			{
-				if (facility->type->capacityType != FacilityType::Capacity::Aliens)
-					continue;
+			if (bio.second == 0)
+				continue;
 
-				// TODO: insert alien into alien containment at base
-			}
+			defendedBase.value()->inventoryBioEquipment[bio.first.id] += bio.second;
 		}
 	}
 	else
@@ -3525,7 +3522,7 @@ std::optional<sp<Base>> Battle::getCurrentDefendedBase(GameState &state)
 	return {};
 }
 
-bool Battle::getIfPlayerHasBaseAlienStorage(GameState &state)
+bool Battle::isBaseDefenseWithAlienStorage(GameState &state)
 {
 	// Check if mission is base defense, and defended base has alien containment facility to store live aliens from battle
 	if (state.current_battle->mission_type != Battle::MissionType::BaseDefense)
@@ -3537,13 +3534,10 @@ bool Battle::getIfPlayerHasBaseAlienStorage(GameState &state)
 	if (!defendedBase)
 		return false;
 
-	for (const auto &facility : defendedBase.value()->facilities)
-	{
-		if (facility->type->capacityType == FacilityType::Capacity::Aliens)
-			return true;
-	}
+	auto availableAlienStorageAtBase =
+	    defendedBase.value()->getCapacityTotal(FacilityType::Capacity::Aliens) > 0;
 
-	return false;
+	return availableAlienStorageAtBase;
 }
 void Battle::loadResources(GameState &state)
 {
