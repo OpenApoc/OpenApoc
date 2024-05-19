@@ -367,8 +367,8 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 	// Store the loaded ammo type for autoreload
 	lastLoadedAmmoType = ammoItem->type;
 
-	// If this has ammo then swap
-	if (payloadType)
+	// If this has ammo, swap if clip can't be refilled
+	if (payloadType && (ammoItem->ammo + ammo > payloadType->max_ammo))
 	{
 		auto ejectedType = payloadType;
 		auto ejectedAmmo = ammo;
@@ -380,7 +380,8 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 	else
 	{
 		payloadType = ammoItem->type;
-		ammo = ammoItem->ammo;
+		// Fill partial clip
+		ammo = ammoItem->ammo + ammo;
 		// Spend ammo
 		ammoItem->ammo = 0;
 		// Remove item from battle/agent
