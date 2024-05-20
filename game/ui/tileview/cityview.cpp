@@ -3082,10 +3082,12 @@ void CityView::update()
 			}
 			else
 			{
-				const auto researched =
-				    selectedVehicle->type->ufopaedia_entry->dependency.satisfied();
+				const auto selectedVehicleIsUnresearchedUfo =
+				    selectedVehicle->owner == state->getAliens() &&
+				    !selectedVehicle->type->ufopaedia_entry->dependency.satisfied();
 
-				const auto vehicleDisplayName = researched ? selectedVehicle->name : tr("UFO");
+				const auto vehicleDisplayName =
+				    selectedVehicleIsUnresearchedUfo ? tr("UFO") : selectedVehicle->name;
 
 				uiTabs[6]
 				    ->findControlTyped<Label>("TEXT_VEHICLE_NAME")
