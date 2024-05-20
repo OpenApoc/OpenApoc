@@ -2684,7 +2684,8 @@ void Battle::finishBattle(GameState &state)
 	// - give him alien remains
 	if (state.current_battle->playerWon && !state.current_battle->winnerHasRetreated)
 	{
-		const auto playerHasBaseAlienStorage = isBaseDefenseWithAlienStorage(state);
+		const auto playerHasBaseAlienStorage =
+		    isBaseDefenseWithStorage(state, FacilityType::Capacity::Aliens);
 
 		const auto playerHasCraftBioStorage = state.current_battle->player_craft &&
 		                                      state.current_battle->player_craft->getMaxBio() > 0;
@@ -3112,7 +3113,10 @@ void Battle::exitBattle(GameState &state)
 	// on vehicles that have capacity in the first place
 	auto cargoCarrierPresent = false;
 	auto bioCarrierPresent = false;
-	const auto playerHasBaseAlienStorage = isBaseDefenseWithAlienStorage(state);
+	const auto playerHasBaseItemStorage =
+	    isBaseDefenseWithStorage(state, FacilityType::Capacity::Stores);
+	const auto playerHasBaseAlienStorage =
+	    isBaseDefenseWithStorage(state, FacilityType::Capacity::Aliens);
 	for (auto &v : playerVehicles)
 	{
 		if (v->getMaxCargo() > 0)
@@ -3128,7 +3132,7 @@ void Battle::exitBattle(GameState &state)
 		if (cargoCarrierPresent && bioCarrierPresent)
 			break;
 	}
-	if (!cargoCarrierPresent)
+	if (!cargoCarrierPresent && !playerHasBaseItemStorage)
 	{
 		for (auto &e : state.current_battle->cargoLoot)
 		{
@@ -3195,17 +3199,30 @@ void Battle::exitBattle(GameState &state)
 	}
 
 	// Base defense missions only check for vehicles if no storage is available
-	if (state.current_battle->mission_type == Battle::MissionType::BaseDefense &&
-	    isBaseDefenseWithAlienStorage(state))
+	if (state.current_battle->mission_type == Battle::MissionType::BaseDefense)
 	{
 		const auto defendedBase = getCurrentDefendedBase(state);
 
-		for (const auto &bio : state.current_battle->bioLoot)
+		if (isBaseDefenseWithStorage(state, FacilityType::Capacity::Stores))
 		{
-			if (bio.second == 0)
-				continue;
+			for (const auto &cargo : state.current_battle->cargoLoot)
+			{
+				if (cargo.second == 0)
+					continue;
 
-			defendedBase->inventoryBioEquipment[bio.first.id] += bio.second;
+				defendedBase->inventoryAgentEquipment[cargo.first.id] += cargo.second;
+			}
+		}
+
+		if (isBaseDefenseWithStorage(state, FacilityType::Capacity::Aliens))
+		{
+			for (const auto &bio : state.current_battle->bioLoot)
+			{
+				if (bio.second == 0)
+					continue;
+
+				defendedBase->inventoryBioEquipment[bio.first.id] += bio.second;
+			}
 		}
 	}
 	else
@@ -3523,7 +3540,7 @@ sp<Base> Battle::getCurrentDefendedBase(GameState &state)
 	return {};
 }
 
-bool Battle::isBaseDefenseWithAlienStorage(GameState &state)
+bool Battle::isBaseDefenseWithStorage(GameState &state, const FacilityType::Capacity capacityType)
 {
 	// Check if mission is base defense, and defended base has alien containment facility to store
 	// live aliens from battle
@@ -3536,11 +3553,11 @@ bool Battle::isBaseDefenseWithAlienStorage(GameState &state)
 	if (!defendedBase)
 		return false;
 
-	const auto availableAlienStorageAtBase =
-	    defendedBase->getCapacityTotal(FacilityType::Capacity::Aliens) > 0;
+	const auto availableStorageAtBase = defendedBase->getCapacityTotal(capacityType) > 0;
 
-	return availableAlienStorageAtBase;
+	return availableStorageAtBase;
 }
+
 void Battle::loadResources(GameState &state)
 {
 	battle_map->loadTilesets(state);

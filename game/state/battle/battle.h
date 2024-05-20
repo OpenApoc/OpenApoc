@@ -353,7 +353,8 @@ class Battle : public std::enable_shared_from_this<Battle>
 	    bool ignoreAllUnits = false, float *cost = nullptr, float maxCost = 0.0f);
 
 	static sp<Base> getCurrentDefendedBase(GameState &state);
-	static bool isBaseDefenseWithAlienStorage(GameState &state);
+	static bool isBaseDefenseWithStorage(GameState &state,
+	                                     const FacilityType::Capacity capacityType);
 
   private:
 	void loadResources(GameState &state);
