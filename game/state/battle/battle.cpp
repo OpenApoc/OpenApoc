@@ -3194,7 +3194,7 @@ void Battle::exitBattle(GameState &state)
 		}
 	}
 
-	// Base defense missions don't check for vehicles
+	// Base defense missions only check for vehicles if no storage is available
 	if (state.current_battle->mission_type == Battle::MissionType::BaseDefense &&
 	    isBaseDefenseWithAlienStorage(state))
 	{
