@@ -47,7 +47,7 @@
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="B" text="B = Spawn UFO on Assualt Mission">
+			<label id="B" text="B = Spawn UFO on Assault Mission">
 				<position x="left" y="98"/>
 				<size width="250" height="14"/>
 				<alignment horizontal="left" vertical="top"/>

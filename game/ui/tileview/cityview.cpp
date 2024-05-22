@@ -3073,7 +3073,8 @@ void CityView::update()
 
 		if (!state->current_city->cityViewSelectedOtherVehicles.empty())
 		{
-			auto selectedVehicle = state->current_city->cityViewSelectedOtherVehicles.front();
+			const auto &selectedVehicle =
+			    state->current_city->cityViewSelectedOtherVehicles.front();
 			if (selectedVehicle->owner == state->getPlayer())
 			{
 				uiTabs[6]->findControlTyped<Label>("TEXT_VEHICLE_NAME")->setText("");
@@ -3081,9 +3082,16 @@ void CityView::update()
 			}
 			else
 			{
+				const auto selectedVehicleIsUnresearchedUfo =
+				    selectedVehicle->owner == state->getAliens() &&
+				    !selectedVehicle->type->ufopaedia_entry->dependency.satisfied();
+
+				const auto vehicleDisplayName =
+				    selectedVehicleIsUnresearchedUfo ? tr("UFO") : selectedVehicle->name;
+
 				uiTabs[6]
 				    ->findControlTyped<Label>("TEXT_VEHICLE_NAME")
-				    ->setText(selectedVehicle->name);
+				    ->setText(vehicleDisplayName);
 				uiTabs[6]
 				    ->findControlTyped<Label>("TEXT_VEHICLE_OWNER")
 				    ->setText(selectedVehicle->owner->name);
@@ -3097,13 +3105,13 @@ void CityView::update()
 
 		int currentVehicleIndex = -1;
 		std::set<sp<Vehicle>> vehiclesMIA;
-		for (auto &i : hostileVehicleInfoList)
+		for (const auto &i : hostileVehicleInfoList)
 		{
 			vehiclesMIA.insert(i.vehicle);
 		}
-		for (auto &v : state->vehicles)
+		for (const auto &v : state->vehicles)
 		{
-			auto vehicle = v.second;
+			const auto &vehicle = v.second;
 			if (!v.second->tileObject || v.second->city != state->current_city ||
 			    v.second->isDead())
 			{
@@ -3111,73 +3119,74 @@ void CityView::update()
 			}
 
 			// Show selected non-player vehicle in list of hostile vehicles
-			if (state->getPlayer()->isRelatedTo(vehicle->owner) != Organisation::Relation::Hostile)
+			if (state->getPlayer()->isRelatedTo(vehicle->owner) !=
+			        Organisation::Relation::Hostile &&
+			    (vehicle->owner == state->getPlayer() ||
+			     state->current_city->cityViewSelectedOtherVehicles.empty() ||
+			     state->current_city->cityViewSelectedOtherVehicles.front() != v.second))
 			{
-				if (vehicle->owner == state->getPlayer() ||
-				    state->current_city->cityViewSelectedOtherVehicles.empty() ||
-				    state->current_city->cityViewSelectedOtherVehicles.front() != v.second)
-				{
-					continue;
-				}
+				continue;
 			}
 
 			currentVehicleIndex++;
-			auto info = ControlGenerator::createVehicleInfo(*state, vehicle);
+			const auto info = ControlGenerator::createVehicleInfo(*state, vehicle);
 			vehiclesMIA.erase(info.vehicle);
-			bool redo = currentVehicleIndex >= hostileVehicleInfoList.size() ||
-			            hostileVehicleInfoList[currentVehicleIndex] != info;
-			if (redo)
+			const auto redo = currentVehicleIndex >= hostileVehicleInfoList.size() ||
+			                  hostileVehicleInfoList[currentVehicleIndex] != info;
+
+			if (!redo)
+				continue;
+
+			auto control = ControlGenerator::createVehicleControl(*state, info);
+			control->addCallback(
+			    FormEventType::MouseDown,
+			    [this, vehicle](FormsEvent *e)
+			    {
+				    // if (!this->vanillaControls)
+				    //{
+				    //	if (Event::isPressed(e->forms().MouseInfo.Button,
+				    //		Event::MouseButton::Right))
+				    //	{
+				    //		// [Alt/Ctrl] + [Shift] opens equipment
+				    //		if ((modifierLShift || modifierRShift) &&
+				    //			(modifierLAlt || modifierRAlt || modifierLCtrl ||
+				    //				modifierRCtrl))
+				    //		{
+				    //			// Equipscreen for owner vehicles
+				    //			auto equipScreen = mksp<VEquipScreen>(this->state);
+				    //			equipScreen->setSelectedVehicle(vehicle);
+				    //			fw().stageQueueCommand({ StageCmd::Command::PUSH, equipScreen
+				    //}); 			return;
+				    //		}
+				    //		// [Shift] opens location
+				    //		if (modifierLShift || modifierRShift)
+				    //		{
+				    //			// Location screen
+				    //			fw().stageQueueCommand(
+				    //			{ StageCmd::Command::PUSH,
+				    //				mksp<LocationScreen>(this->state, vehicle) });
+				    //			return;
+				    //		}
+				    //	}
+				    //}
+				    handleClickedVehicle(
+				        StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)},
+				        Event::isPressed(e->forms().MouseInfo.Button, Event::MouseButton::Right),
+				        CitySelectionState::Normal);
+			    });
+
+			if (currentVehicleIndex >= hostileVehicleInfoList.size())
 			{
-				auto control = ControlGenerator::createVehicleControl(*state, info);
-				control->addCallback(
-				    FormEventType::MouseDown,
-				    [this, vehicle](FormsEvent *e)
-				    {
-					    // if (!this->vanillaControls)
-					    //{
-					    //	if (Event::isPressed(e->forms().MouseInfo.Button,
-					    //		Event::MouseButton::Right))
-					    //	{
-					    //		// [Alt/Ctrl] + [Shift] opens equipment
-					    //		if ((modifierLShift || modifierRShift) &&
-					    //			(modifierLAlt || modifierRAlt || modifierLCtrl ||
-					    //				modifierRCtrl))
-					    //		{
-					    //			// Equipscreen for owner vehicles
-					    //			auto equipScreen = mksp<VEquipScreen>(this->state);
-					    //			equipScreen->setSelectedVehicle(vehicle);
-					    //			fw().stageQueueCommand({ StageCmd::Command::PUSH, equipScreen
-					    //}); 			return;
-					    //		}
-					    //		// [Shift] opens location
-					    //		if (modifierLShift || modifierRShift)
-					    //		{
-					    //			// Location screen
-					    //			fw().stageQueueCommand(
-					    //			{ StageCmd::Command::PUSH,
-					    //				mksp<LocationScreen>(this->state, vehicle) });
-					    //			return;
-					    //		}
-					    //	}
-					    //}
-					    handleClickedVehicle(
-					        StateRef<Vehicle>{state.get(), Vehicle::getId(*state, vehicle)},
-					        Event::isPressed(e->forms().MouseInfo.Button,
-					                         Event::MouseButton::Right),
-					        CitySelectionState::Normal);
-				    });
-				if (currentVehicleIndex >= hostileVehicleInfoList.size())
-				{
-					hostileVehicleInfoList.push_back(info);
-				}
-				else
-				{
-					hostileVehicleInfoList[currentVehicleIndex] = info;
-				}
-				hostileVehicleList->replaceItem(control);
+				hostileVehicleInfoList.push_back(info);
 			}
+			else
+			{
+				hostileVehicleInfoList[currentVehicleIndex] = info;
+			}
+
+			hostileVehicleList->replaceItem(control);
 		}
-		for (auto &v : vehiclesMIA)
+		for (const auto &v : vehiclesMIA)
 		{
 			hostileVehicleList->removeByData<Vehicle>(v);
 		}
