@@ -3216,22 +3216,22 @@ void Battle::exitBattle(GameState &state)
 			auto &lootList = *std::get<1>(lootType);
 			auto &inventoryEquipment = *std::get<2>(lootType);
 
-			if (isBaseDefenseWithStorage(state, facilityTypeEnum))
+			if (!isBaseDefenseWithStorage(state, facilityTypeEnum))
+				continue;
+
+			std::list<StateRef<AEquipmentType>> lootToRemove = {};
+
+			for (const auto &loot : lootList)
 			{
-				std::list<StateRef<AEquipmentType>> lootToRemove = {};
+				if (loot.second > 0)
+					inventoryEquipment[loot.first.id] += loot.second;
 
-				for (const auto &loot : lootList)
-				{
-					if (loot.second > 0)
-						inventoryEquipment[loot.first.id] += loot.second;
+				lootToRemove.push_back(loot.first);
+			}
 
-					lootToRemove.push_back(loot.first);
-				}
-
-				for (const auto &loot : lootToRemove)
-				{
-					lootList.erase(loot);
-				}
+			for (const auto &loot : lootToRemove)
+			{
+				lootList.erase(loot);
 			}
 		}
 	}
