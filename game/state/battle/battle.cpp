@@ -3199,232 +3199,238 @@ void Battle::exitBattle(GameState &state)
 	}
 
 	// Base defense missions only check for vehicles if no storage is available
+	// Items saved in this condition must NOT be saved again into vehicles!
 	if (state.current_battle->mission_type == Battle::MissionType::BaseDefense)
 	{
 		const auto defendedBase = getCurrentDefendedBase(state);
 
-		if (isBaseDefenseWithStorage(state, FacilityType::Capacity::Stores))
+		const auto lootTypeList = {
+		    std::tuple(FacilityType::Capacity::Stores, &state.current_battle->cargoLoot,
+		               &defendedBase->inventoryAgentEquipment),
+		    std::tuple(FacilityType::Capacity::Aliens, &state.current_battle->bioLoot,
+		               &defendedBase->inventoryBioEquipment)};
+
+		for (const auto &lootType : lootTypeList)
 		{
-			for (const auto &cargo : state.current_battle->cargoLoot)
+			const auto facilityTypeEnum = std::get<0>(lootType);
+			auto &lootList = *std::get<1>(lootType);
+			auto &inventoryEquipment = *std::get<2>(lootType);
+
+			if (isBaseDefenseWithStorage(state, facilityTypeEnum))
 			{
-				if (cargo.second == 0)
-					continue;
+				std::list<StateRef<AEquipmentType>> lootToRemove = {};
 
-				defendedBase->inventoryAgentEquipment[cargo.first.id] += cargo.second;
-			}
-		}
+				for (const auto &loot : lootList)
+				{
+					if (loot.second > 0)
+						inventoryEquipment[loot.first.id] += loot.second;
 
-		if (isBaseDefenseWithStorage(state, FacilityType::Capacity::Aliens))
-		{
-			for (const auto &bio : state.current_battle->bioLoot)
-			{
-				if (bio.second == 0)
-					continue;
+					lootToRemove.push_back(loot.first);
+				}
 
-				defendedBase->inventoryBioEquipment[bio.first.id] += bio.second;
+				for (const auto &loot : lootToRemove)
+				{
+					lootList.erase(loot);
+				}
 			}
 		}
 	}
-	else
+
+	// Load cargo/bio into vehicles
+	if (!playerVehicles.empty())
 	{
-		// Load cargo/bio into vehicles
-		if (!playerVehicles.empty())
+		// Go through every vehicle loot position
+		// Try to load into every vehicle until amount remaining is zero
+		std::list<StateRef<VEquipmentType>> vehicleLootToRemove;
+		for (auto &e : vehicleLoot)
 		{
-			// Go through every vehicle loot position
-			// Try to load into every vehicle until amount remaining is zero
-			std::list<StateRef<VEquipmentType>> vehicleLootToRemove;
-			for (auto &e : vehicleLoot)
+			for (auto &v : playerVehicles)
 			{
-				for (auto &v : playerVehicles)
+				if (v->getMaxCargo() == 0)
 				{
-					if (v->getMaxCargo() == 0)
-					{
-						continue;
-					}
-					if (e.second == 0)
-					{
-						continue;
-					}
-					int maxAmount = config().getBool("OpenApoc.NewFeature.EnforceCargoLimits")
-					                    ? std::min(e.second, (v->getMaxCargo() - v->getCargo()) /
-					                                             e.first->store_space)
-					                    : e.second;
-					if (maxAmount > 0)
-					{
-						e.second -= maxAmount;
-						int price = 0;
-						v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
-						                      v->homeBuilding);
-						returningVehicles.insert(v);
-					}
+					continue;
 				}
 				if (e.second == 0)
 				{
-					vehicleLootToRemove.push_back(e.first);
+					continue;
+				}
+				int maxAmount = config().getBool("OpenApoc.NewFeature.EnforceCargoLimits")
+				                    ? std::min(e.second, (v->getMaxCargo() - v->getCargo()) /
+				                                             e.first->store_space)
+				                    : e.second;
+				if (maxAmount > 0)
+				{
+					e.second -= maxAmount;
+					int price = 0;
+					v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
+					                      v->homeBuilding);
+					returningVehicles.insert(v);
 				}
 			}
-			// Remove stored loot
-			for (auto &e : vehicleLootToRemove)
+			if (e.second == 0)
 			{
-				vehicleLoot.erase(e);
+				vehicleLootToRemove.push_back(e.first);
 			}
-			// Put remainder on first vehicle
-			for (auto &e : vehicleLoot)
+		}
+		// Remove stored loot
+		for (auto &e : vehicleLootToRemove)
+		{
+			vehicleLoot.erase(e);
+		}
+		// Put remainder on first vehicle
+		for (auto &e : vehicleLoot)
+		{
+			for (auto &v : playerVehicles)
 			{
-				for (auto &v : playerVehicles)
+				if (v->getMaxCargo() == 0)
 				{
-					if (v->getMaxCargo() == 0)
-					{
-						continue;
-					}
-					int maxAmount = e.second;
-					if (maxAmount > 0)
-					{
-						e.second -= maxAmount;
-						int price = 0;
-						v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
-						                      v->homeBuilding);
-						returningVehicles.insert(v);
-					}
+					continue;
 				}
-			}
-			// Go through every loot position
-			// Try to load into every vehicle until amount remaining is zero
-			std::list<StateRef<AEquipmentType>> cargoLootToRemove;
-			for (auto &e : state.current_battle->cargoLoot)
-			{
-				for (auto &v : playerVehicles)
+				int maxAmount = e.second;
+				if (maxAmount > 0)
 				{
-					if (v->getMaxCargo() == 0)
-					{
-						continue;
-					}
-					if (e.second == 0)
-					{
-						continue;
-					}
-					int divisor =
-					    e.first->type == AEquipmentType::Type::Ammo ? e.first->max_ammo : 1;
-					int maxAmount = config().getBool("OpenApoc.NewFeature.EnforceCargoLimits")
-					                    ? std::min(e.second, (v->getMaxCargo() - v->getCargo()) /
-					                                             e.first->store_space * divisor)
-					                    : e.second;
-					if (maxAmount > 0)
-					{
-						e.second -= maxAmount;
-						int price = 0;
-						v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
-						                      v->homeBuilding);
-						returningVehicles.insert(v);
-					}
-				}
-				if (e.second == 0)
-				{
-					cargoLootToRemove.push_back(e.first);
-				}
-			}
-			// Remove stored loot
-			for (auto &e : cargoLootToRemove)
-			{
-				state.current_battle->cargoLoot.erase(e);
-			}
-			// Put remainder on first vehicle
-			for (auto &e : state.current_battle->cargoLoot)
-			{
-				for (auto &v : playerVehicles)
-				{
-					if (v->getMaxCargo() == 0)
-					{
-						continue;
-					}
-					int maxAmount = e.second;
-					if (maxAmount > 0)
-					{
-						e.second -= maxAmount;
-						int price = 0;
-						v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
-						                      v->homeBuilding);
-						returningVehicles.insert(v);
-					}
-				}
-			}
-			// Go through every bio loot position
-			// Try to load into every vehicle until amount remaining is zero
-			std::list<StateRef<AEquipmentType>> bioLootToRemove;
-			for (auto &e : state.current_battle->bioLoot)
-			{
-				for (auto &v : playerVehicles)
-				{
-					if (v->getMaxBio() == 0)
-					{
-						continue;
-					}
-					if (e.second == 0)
-					{
-						continue;
-					}
-					int divisor =
-					    e.first->type == AEquipmentType::Type::Ammo ? e.first->max_ammo : 1;
-					int maxAmount = config().getBool("OpenApoc.NewFeature.EnforceCargoLimits")
-					                    ? std::min(e.second, (v->getMaxBio() - v->getBio()) /
-					                                             e.first->store_space * divisor)
-					                    : e.second;
-					if (maxAmount > 0)
-					{
-						e.second -= maxAmount;
-						int price = 0;
-						v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
-						                      v->homeBuilding);
-						returningVehicles.insert(v);
-					}
-				}
-				if (e.second == 0)
-				{
-					bioLootToRemove.push_back(e.first);
-				}
-			}
-			// Remove stored loot
-			for (auto &e : bioLootToRemove)
-			{
-				state.current_battle->bioLoot.erase(e);
-			}
-			// Put remainder on first vehicle
-			for (auto &e : state.current_battle->bioLoot)
-			{
-				for (auto &v : playerVehicles)
-				{
-					if (v->getMaxCargo() == 0)
-					{
-						continue;
-					}
-					int maxAmount = e.second;
-					if (maxAmount > 0)
-					{
-						e.second -= maxAmount;
-						int price = 0;
-						v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
-						                      v->homeBuilding);
-						returningVehicles.insert(v);
-					}
+					e.second -= maxAmount;
+					int price = 0;
+					v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
+					                      v->homeBuilding);
+					returningVehicles.insert(v);
 				}
 			}
 		}
-
-		// Give player vehicle a null cargo just so it comes back to base once
-		for (auto &v : playerVehicles)
+		// Go through every loot position
+		// Try to load into every vehicle until amount remaining is zero
+		std::list<StateRef<AEquipmentType>> cargoLootToRemove;
+		for (auto &e : state.current_battle->cargoLoot)
 		{
-			v->cargo.emplace_front(
-			    state, StateRef<AEquipmentType>(&state, state.agent_equipment.begin()->first), 0, 0,
-			    nullptr, v->homeBuilding);
-			if (v->city.id == "CITYMAP_HUMAN")
+			for (auto &v : playerVehicles)
 			{
-				v->setMission(state, VehicleMission::gotoBuilding(state, *v));
-				v->addMission(state, VehicleMission::offerService(state, *v), true);
+				if (v->getMaxCargo() == 0)
+				{
+					continue;
+				}
+				if (e.second == 0)
+				{
+					continue;
+				}
+				int divisor = e.first->type == AEquipmentType::Type::Ammo ? e.first->max_ammo : 1;
+				int maxAmount = config().getBool("OpenApoc.NewFeature.EnforceCargoLimits")
+				                    ? std::min(e.second, (v->getMaxCargo() - v->getCargo()) /
+				                                             e.first->store_space * divisor)
+				                    : e.second;
+				if (maxAmount > 0)
+				{
+					e.second -= maxAmount;
+					int price = 0;
+					v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
+					                      v->homeBuilding);
+					returningVehicles.insert(v);
+				}
 			}
-			else
+			if (e.second == 0)
 			{
-				v->setMission(state, VehicleMission::gotoPortal(state, *v));
+				cargoLootToRemove.push_back(e.first);
 			}
+		}
+		// Remove stored loot
+		for (auto &e : cargoLootToRemove)
+		{
+			state.current_battle->cargoLoot.erase(e);
+		}
+		// Put remainder on first vehicle
+		for (auto &e : state.current_battle->cargoLoot)
+		{
+			for (auto &v : playerVehicles)
+			{
+				if (v->getMaxCargo() == 0)
+				{
+					continue;
+				}
+				int maxAmount = e.second;
+				if (maxAmount > 0)
+				{
+					e.second -= maxAmount;
+					int price = 0;
+					v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
+					                      v->homeBuilding);
+					returningVehicles.insert(v);
+				}
+			}
+		}
+		// Go through every bio loot position
+		// Try to load into every vehicle until amount remaining is zero
+		std::list<StateRef<AEquipmentType>> bioLootToRemove;
+		for (auto &e : state.current_battle->bioLoot)
+		{
+			for (auto &v : playerVehicles)
+			{
+				if (v->getMaxBio() == 0)
+				{
+					continue;
+				}
+				if (e.second == 0)
+				{
+					continue;
+				}
+				int divisor = e.first->type == AEquipmentType::Type::Ammo ? e.first->max_ammo : 1;
+				int maxAmount = config().getBool("OpenApoc.NewFeature.EnforceCargoLimits")
+				                    ? std::min(e.second, (v->getMaxBio() - v->getBio()) /
+				                                             e.first->store_space * divisor)
+				                    : e.second;
+				if (maxAmount > 0)
+				{
+					e.second -= maxAmount;
+					int price = 0;
+					v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
+					                      v->homeBuilding);
+					returningVehicles.insert(v);
+				}
+			}
+			if (e.second == 0)
+			{
+				bioLootToRemove.push_back(e.first);
+			}
+		}
+		// Remove stored loot
+		for (auto &e : bioLootToRemove)
+		{
+			state.current_battle->bioLoot.erase(e);
+		}
+		// Put remainder on first vehicle
+		for (auto &e : state.current_battle->bioLoot)
+		{
+			for (auto &v : playerVehicles)
+			{
+				if (v->getMaxCargo() == 0)
+				{
+					continue;
+				}
+				int maxAmount = e.second;
+				if (maxAmount > 0)
+				{
+					e.second -= maxAmount;
+					int price = 0;
+					v->cargo.emplace_back(state, e.first, maxAmount, price, nullptr,
+					                      v->homeBuilding);
+					returningVehicles.insert(v);
+				}
+			}
+		}
+	}
+
+	// Give player vehicle a null cargo just so it comes back to base once
+	for (auto &v : playerVehicles)
+	{
+		v->cargo.emplace_front(
+		    state, StateRef<AEquipmentType>(&state, state.agent_equipment.begin()->first), 0, 0,
+		    nullptr, v->homeBuilding);
+		if (v->city.id == "CITYMAP_HUMAN")
+		{
+			v->setMission(state, VehicleMission::gotoBuilding(state, *v));
+			v->addMission(state, VehicleMission::offerService(state, *v), true);
+		}
+		else
+		{
+			v->setMission(state, VehicleMission::gotoPortal(state, *v));
 		}
 	}
 
