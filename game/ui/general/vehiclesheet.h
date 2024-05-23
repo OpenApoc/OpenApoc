@@ -20,14 +20,15 @@ class VehicleSheet
 	void display(sp<Vehicle> vehicle);
 	void display(sp<VehicleType> vehicleType);
 	void display(sp<VEquipment> item);
-	void display(sp<VEquipmentType> itemType, bool researched = true);
+	void display(sp<VEquipmentType> itemType);
+	void display(sp<VEquipmentType> itemType, const bool isResearched);
 	void clear();
 
   private:
 	void displayImplementation(sp<Vehicle> vehicle, sp<VehicleType> vehicleType);
 
 	void displayEquipImplementation(sp<VEquipment> item, sp<VEquipmentType> itemType,
-	                                const bool isResearched = true);
+	                                const bool isResearched);
 	void displayEngine(sp<VEquipment> item, sp<VEquipmentType> type);
 	void displayWeapon(sp<VEquipment> item, sp<VEquipmentType> type);
 	void displayGeneral(sp<VEquipment> item, sp<VEquipmentType> type);
