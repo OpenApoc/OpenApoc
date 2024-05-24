@@ -616,15 +616,17 @@ void AEquipScreen::handleItemPickup(Vec2<int> mousePos)
 
 				if (ammoTypeNameList.size() == 1)
 				{
-					message =
-					    tr("You must research this weapon and its ammo before you can use it:") +
-					    " " + ammoTypeNameList[0] + ".";
+					message = format(
+					    "%s: %s.",
+					    tr("You must research this weapon and its ammo before you can use it"),
+					    ammoTypeNameList[0]);
 				}
 				else if (ammoTypeNameList.size() > 1)
 				{
-					message = tr("You must research this weapon and all its ammo types before you "
-					             "can use it:") +
-					          " " + boost::algorithm::join(ammoTypeNameList, ", ") + ".";
+					message = format("%s: %s.",
+					                 tr("You must research this weapon and all its ammo types "
+					                    "before you can use it"),
+					                 boost::algorithm::join(ammoTypeNameList, ", "));
 				}
 			}
 
