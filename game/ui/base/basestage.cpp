@@ -88,6 +88,7 @@ void BaseStage::begin()
 	}
 	textViewBase = form->findControlTyped<Label>("TEXT_BUTTON_BASE");
 	this->textViewBase->setVisible(false);
+	this->update();
 }
 
 void BaseStage::render()
