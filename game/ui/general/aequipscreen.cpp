@@ -612,8 +612,6 @@ void AEquipScreen::handleItemPickup(Vec2<int> mousePos)
 					ammoTypeNameList.push_back(ammoType->name);
 				}
 
-				// ammoTypeNameList = {"Ammo #A", "Ammo #B", "Ammo #C" };
-
 				if (ammoTypeNameList.size() == 1)
 				{
 					message = format(
@@ -1358,25 +1356,27 @@ std::pair<sp<AEquipment>, bool> AEquipScreen::tryPickUpItem(Vec2<int> inventoryP
 	{
 		auto &rect = std::get<0>(tuple);
 
-		if (rect.within(inventoryPos))
-		{
-			const auto &item = std::get<2>(tuple);
+		if (!rect.within(inventoryPos))
+			continue;
 
-			if (!item->type->canBeUsed(*state, state->getPlayer()) && getMode() != Mode::Battle)
+		const auto &item = std::get<2>(tuple);
+
+		if (!item->type->canBeUsed(*state, state->getPlayer()) && getMode() != Mode::Battle)
+		{
+			if (alienArtifact)
 			{
-				if (alienArtifact)
-				{
-					*alienArtifact = true;
-				}
-				return {item, false};
+				*alienArtifact = true;
 			}
 
-			pickUpItem(item);
-			draggedEquipmentOffset = rect.p0 - inventoryPos;
-
-			return {item, true};
+			return {item, false};
 		}
+
+		pickUpItem(item);
+		draggedEquipmentOffset = rect.p0 - inventoryPos;
+
+		return {item, true};
 	}
+
 	return {nullptr, false};
 }
 
