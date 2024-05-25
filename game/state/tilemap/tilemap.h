@@ -85,6 +85,7 @@ class TileMap
 	std::vector<std::set<TileObject::Type>> layerMap;
 
   public:
+	const static int MAX_ITERATION_LIMIT_DIRECT_FOR_BATTLE = 1000;
 	const bool isTileInBounds(int x, int y, int z) const
 	{
 		if (x < 0 || x >= size.x)
