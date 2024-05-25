@@ -3251,7 +3251,7 @@ void CityView::update()
 			        ? (Organisation::Relation)0
 			        : (Organisation::Relation)(state->current_city->cityViewOrgButtonIndex - 1);
 			if (state->current_city->cityViewOrgButtonIndex != 0 &&
-			    state->getPlayer()->isRelatedTo({state.get(), o.first}) != rel)
+			    o.second->isRelatedTo(state->getPlayer()) != rel)
 			{
 				continue;
 			}
