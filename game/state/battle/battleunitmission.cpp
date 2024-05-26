@@ -2054,7 +2054,7 @@ void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> tar
 
 		auto path = state.current_battle->findShortestPath(
 		    u.goalPosition, target, BattleUnitTileHelper{map, u}, approachOnly, demandGiveWay,
-		    !blockedByMovingUnit);
+		    !blockedByMovingUnit, TileMap::MAX_ITERATION_LIMIT_DIRECT_FOR_BATTLE);
 
 		// Cancel movement if the closest path ends at the current position
 		if (path.size() == 1 && path.back() == Vec3<int>{u.position})
