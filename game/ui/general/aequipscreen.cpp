@@ -32,6 +32,7 @@
 #include "game/ui/general/aequipmentsheet.h"
 #include "game/ui/general/agentsheet.h"
 #include "game/ui/general/messagebox.h"
+#include <boost/algorithm/string/join.hpp>
 
 namespace OpenApoc
 {
@@ -582,7 +583,10 @@ void AEquipScreen::handleItemPickup(Vec2<int> mousePos)
 		// Check if we're over any equipment in the list at the bottom
 		auto posWithinInventory = mousePos;
 		posWithinInventory.x += inventoryPage * inventoryControl->Size.x;
-		if (tryPickUpItem(posWithinInventory, &alienArtifact))
+
+		const auto tryPickUpItemResult = tryPickUpItem(posWithinInventory, &alienArtifact);
+
+		if (tryPickUpItemResult.second)
 		{
 			refreshInventoryItems();
 
@@ -595,10 +599,37 @@ void AEquipScreen::handleItemPickup(Vec2<int> mousePos)
 		}
 		else if (alienArtifact)
 		{
+			const auto &itemType = tryPickUpItemResult.first->type;
+
+			auto message = tr("You must research Alien technology before you can use it.");
+
+			if (itemType->type == AEquipmentType::Type::Weapon)
+			{
+				std::vector<UString> ammoTypeNameList = {};
+
+				for (const auto &ammoType : itemType->ammo_types)
+				{
+					ammoTypeNameList.push_back(ammoType->name);
+				}
+
+				if (ammoTypeNameList.size() == 1)
+				{
+					message = format(
+					    "%s: %s.",
+					    tr("You must research this weapon and its ammo before you can use it"),
+					    ammoTypeNameList[0]);
+				}
+				else if (ammoTypeNameList.size() > 1)
+				{
+					message = format("%s: %s.",
+					                 tr("You must research this weapon and all its ammo types "
+					                    "before you can use it"),
+					                 boost::algorithm::join(ammoTypeNameList, ", "));
+				}
+			}
+
 			auto message_box =
-			    mksp<MessageBox>(tr("Alien Artifact"),
-			                     tr("You must research Alien technology before you can use it."),
-			                     MessageBox::ButtonOptions::Ok);
+			    mksp<MessageBox>(tr("Alien Artifact"), message, MessageBox::ButtonOptions::Ok);
 			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 		}
 	}
@@ -1318,29 +1349,35 @@ bool AEquipScreen::tryPickUpItem(sp<Agent> agent, Vec2<int> slotPos, bool altern
 	return true;
 }
 
-bool AEquipScreen::tryPickUpItem(Vec2<int> inventoryPos, bool *alienArtifact)
+std::pair<sp<AEquipment>, bool> AEquipScreen::tryPickUpItem(Vec2<int> inventoryPos,
+                                                            bool *alienArtifact)
 {
-	for (auto &tuple : inventoryItems)
+	for (const auto &tuple : inventoryItems)
 	{
-		auto rect = std::get<0>(tuple);
-		if (rect.within(inventoryPos))
+		auto &rect = std::get<0>(tuple);
+
+		if (!rect.within(inventoryPos))
+			continue;
+
+		const auto &item = std::get<2>(tuple);
+
+		if (!item->type->canBeUsed(*state, state->getPlayer()) && getMode() != Mode::Battle)
 		{
-			if (!std::get<2>(tuple)->type->canBeUsed(*state, state->getPlayer()) &&
-			    getMode() != Mode::Battle)
+			if (alienArtifact)
 			{
-				if (alienArtifact)
-				{
-					*alienArtifact = true;
-				}
-				return false;
+				*alienArtifact = true;
 			}
 
-			pickUpItem(std::get<2>(tuple));
-			draggedEquipmentOffset = rect.p0 - inventoryPos;
-			return true;
+			return {item, false};
 		}
+
+		pickUpItem(item);
+		draggedEquipmentOffset = rect.p0 - inventoryPos;
+
+		return {item, true};
 	}
-	return false;
+
+	return {nullptr, false};
 }
 
 bool AEquipScreen::tryPickUpItem(const AEquipmentType &item)
