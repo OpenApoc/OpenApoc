@@ -114,9 +114,14 @@ GameState::~GameState()
 }
 
 // Just a handy shortcut since it's shown on every single screen
-UString GameState::getPlayerBalance() const
+UString GameState::getPlayerBalance(const bool formatAsCurrency) const
 {
-	return Strings::fromInteger(this->getPlayer()->balance);
+	auto playerBalance = Strings::fromInteger(this->getPlayer()->balance);
+
+	if (formatAsCurrency)
+		playerBalance = Strings::formatTextAsCurrency(playerBalance);
+
+	return playerBalance;
 }
 
 StateRef<Organisation> GameState::getOrganisation(const UString &orgID)

@@ -51,10 +51,12 @@ class Strings
 	[[nodiscard]] static int toInteger(const UStringView s);
 	[[nodiscard]] static uint8_t toU8(const UStringView s);
 	[[nodiscard]] static float toFloat(const UStringView s);
-	[[nodiscard]] static UString fromInteger(int i);
-	[[nodiscard]] static UString fromU64(uint64_t i);
-	[[nodiscard]] static UString fromFloat(float f);
+	[[nodiscard]] static UString fromInteger(int i, const bool formatAsCurrency = false);
+	[[nodiscard]] static UString fromU64(uint64_t i, const bool formatAsCurrency = false);
+	[[nodiscard]] static UString fromFloat(float f, const bool formatAsCurrency = false);
 	[[nodiscard]] static bool isWhiteSpace(char32_t c);
+
+	static UString formatTextAsCurrency(const UString &Text);
 };
 
 }; // namespace OpenApoc
