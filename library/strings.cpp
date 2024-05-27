@@ -183,7 +183,8 @@ UString Strings::formatTextAsCurrency(const UString &Text)
 
 		for (const auto &ch : Text)
 		{
-			if (!std::isdigit(ch) && ch != '.' && ch != ',')
+			// Allowed chars in strings containing monetary values
+			if (!std::isdigit(ch) && ch != '.' && ch != ',' && ch != '-')
 			{
 				isNumber = false;
 				break;
@@ -195,8 +196,11 @@ UString Strings::formatTextAsCurrency(const UString &Text)
 
 		auto formattedText = Text; // copy text for formatting
 
-		for (auto x = textLenght - 3; x > 0; x -= 3)
-			formattedText.insert(x, ",");
+		for (auto i = textLenght - 1; i > 0; i--)
+		{
+			if ((textLenght - i) % 3 == 0 && formattedText[i - 1] != '-')
+				formattedText.insert(i, ",");
+		}
 
 		return formattedText;
 	}
