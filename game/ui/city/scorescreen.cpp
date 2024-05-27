@@ -155,11 +155,16 @@ void ScoreScreen::setFinanceMode()
 		physicists *= getSalary(AgentType::Role::Physicist);
 		int agentsSalary = soldiers + biochemists + engineers + physicists;
 
-		formFinance->findControlTyped<Label>("AGENTS_W")->setText(format("$%d", soldiers));
-		formFinance->findControlTyped<Label>("BIOCHEMISTS_W")->setText(format("$%d", biochemists));
-		formFinance->findControlTyped<Label>("ENGINEERS_W")->setText(format("$%d", engineers));
-		formFinance->findControlTyped<Label>("PHYSICISTS_W")->setText(format("$%d", physicists));
-		formFinance->findControlTyped<Label>("TOTAL_W")->setText(format("$%d", agentsSalary));
+		formFinance->findControlTyped<Label>("AGENTS_W")
+		    ->setText(format("$%s", Strings::fromInteger(soldiers, true)));
+		formFinance->findControlTyped<Label>("BIOCHEMISTS_W")
+		    ->setText(format("$%s", Strings::fromInteger(biochemists, true)));
+		formFinance->findControlTyped<Label>("ENGINEERS_W")
+		    ->setText(format("$%s", Strings::fromInteger(engineers, true)));
+		formFinance->findControlTyped<Label>("PHYSICISTS_W")
+		    ->setText(format("$%s", Strings::fromInteger(physicists, true)));
+		formFinance->findControlTyped<Label>("TOTAL_W")->setText(
+		    format("$%s", Strings::fromInteger(agentsSalary, true)));
 
 		int basesCosts = 0;
 		for (auto &b : state->player_bases)
@@ -169,9 +174,10 @@ void ScoreScreen::setFinanceMode()
 				basesCosts += f->type->weeklyCost;
 			}
 		}
-		formFinance->findControlTyped<Label>("BASES_TOTAL_W")->setText(format("$%d", basesCosts));
+		formFinance->findControlTyped<Label>("BASES_TOTAL_W")
+		    ->setText(format("$%s", Strings::fromInteger(basesCosts, true)));
 		formFinance->findControlTyped<Label>("OVERHEADS_W")
-		    ->setText(format("$%d", agentsSalary + basesCosts));
+		    ->setText(format("$%s", Strings::fromInteger(agentsSalary + basesCosts, true)));
 
 		int balance = state->getPlayer()->balance;
 
@@ -183,10 +189,10 @@ void ScoreScreen::setFinanceMode()
 		}
 
 		formFinance->findControlTyped<Label>("INITIAL")->setText(
-		    format("%s $%d", tr("Initial funds>"), balance));
+		    format("%s $%s", tr("Initial funds>"), Strings::fromInteger(balance, true)));
 		formFinance->findControlTyped<Label>("REMAINING")
-		    ->setText(
-		        format("%s $%d", tr("Remaining funds>"), balance - agentsSalary - basesCosts));
+		    ->setText(format("%s $%s", tr("Remaining funds>"),
+		                     Strings::fromInteger(balance - agentsSalary - basesCosts, true)));
 	}
 
 	title->setText(tr("FINANCE"));
