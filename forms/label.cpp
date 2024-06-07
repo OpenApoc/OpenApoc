@@ -85,11 +85,12 @@ void Label::setText(const UString &Text)
 {
 	if (text == Text)
 		return;
+
 	text = Text;
+
 	if (scroller)
-	{
 		scroller->setValue(0);
-	}
+
 	this->setDirty();
 }
 
