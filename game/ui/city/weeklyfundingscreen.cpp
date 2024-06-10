@@ -107,12 +107,15 @@ void WeeklyFundingScreen::begin()
 		// Income adjustment is still based on base player funding, not current one
 		const int adjustment = (modifier == 0) ? 0 : player->income / modifier;
 
-		labelAdjustment->setText(format("%s $%d", tr("Funding adjustment>"), adjustment));
+		labelAdjustment->setText(
+		    format("%s $%s", tr("Funding adjustment>"), Strings::fromInteger(adjustment, true)));
 		labelNextWeekIncome->setText(
-		    format("%s $%d", tr("Income for next week>"), currentIncome + adjustment));
+		    format("%s $%s", tr("Income for next week>"),
+		           Strings::fromInteger(currentIncome + adjustment, true)));
 	}
 
-	labelCurrentIncome->setText(format("%s $%d", tr("Current income>"), currentIncome));
+	labelCurrentIncome->setText(
+	    format("%s $%s", tr("Current income>"), Strings::fromInteger(currentIncome, true)));
 	labelRatingDescription->setText(ratingDescription);
 }
 
