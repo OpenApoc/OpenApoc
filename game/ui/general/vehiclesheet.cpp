@@ -219,7 +219,8 @@ void VehicleSheet::displayGeneral(sp<VEquipment> item [[maybe_unused]], sp<VEqui
 	}
 	if (type->alien_space)
 	{
-		form->findControlTyped<Label>(format("LABEL_%d_L", statsCount))->setText(tr("Aliens Held"));
+		form->findControlTyped<Label>(format("LABEL_%d_L", statsCount))
+		    ->setText(tr("Max Lifeforms"));
 		form->findControlTyped<Label>(format("LABEL_%d_R", statsCount))
 		    ->setText(format("%d", type->alien_space));
 		statsCount++;

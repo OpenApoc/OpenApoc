@@ -415,7 +415,7 @@ void UfopaediaCategoryView::setFormStats()
 							}
 							if (ref->alien_space > 0)
 							{
-								statsLabels[row]->setText(tr("Aliens Held"));
+								statsLabels[row]->setText(tr("Max Lifeforms"));
 								statsValues[row++]->setText(Strings::fromInteger(ref->alien_space));
 							}
 							if (ref->missile_jamming > 0)
