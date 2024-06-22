@@ -262,20 +262,7 @@ TransactionControl::createControl(GameState &state, StateRef<AEquipmentType> age
 	int price = 0;
 	int storeSpace = agentEquipmentType->store_space;
 
-	StateRef<ResearchTopic> equipmentTopic;
-
-	for (auto &topic : agentEquipmentType->research_dependency.topics)
-	{
-		if (topic->name == agentEquipmentType->name)
-		{
-			equipmentTopic = topic;
-			break;
-		}
-	}
-
-	const bool researched =
-	    isBio || (equipmentTopic ? equipmentTopic->man_hours_progress >= equipmentTopic->man_hours
-	                             : agentEquipmentType->research_dependency.satisfied());
+	const bool researched = isBio || agentEquipmentType->isResearched();
 
 	std::vector<int> initialStock;
 	bool hasStock = false;

@@ -127,6 +127,26 @@ bool AEquipmentType::canBeUsed(GameState &state, StateRef<Organisation> owner) c
 	return true;
 }
 
+bool AEquipmentType::isResearched() const
+{
+	StateRef<ResearchTopic> equipmentTopic;
+
+	for (auto &dependencyTopic : research_dependency.topics)
+	{
+		if (dependencyTopic->name == name)
+		{
+			equipmentTopic = dependencyTopic;
+			break;
+		}
+	}
+
+	// If no research topic is found with same name as type, then we use "satisfied()" instead
+	// This is not the prefered method since it will consider not only specific topic but all
+	// children topics as well
+
+	return equipmentTopic ? equipmentTopic->isComplete() : research_dependency.satisfied();
+}
+
 float AEquipmentType::getRoundsPerSecond() const
 {
 	return (float)TICKS_PER_SECOND / (float)fire_delay;
