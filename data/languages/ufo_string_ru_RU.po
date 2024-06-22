@@ -4455,7 +4455,7 @@ msgstr "Боезапас"
 msgid "Cargo"
 msgstr "Груз"
 
-msgid "Max Lifeforms"
+msgid "Max Samples"
 msgstr "Пришельцев удерживается"
 
 msgid "Jamming"

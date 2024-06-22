@@ -4448,8 +4448,8 @@ msgstr "Ammo capacity"
 msgid "Cargo"
 msgstr "Cargo"
 
-msgid "Max Lifeforms"
-msgstr "Max Lifeforms"
+msgid "Max Samples"
+msgstr "Max Samples"
 
 msgid "Jamming"
 msgstr "Jamming"

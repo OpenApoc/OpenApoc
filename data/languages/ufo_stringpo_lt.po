@@ -4449,7 +4449,7 @@ msgstr ""
 msgid "Cargo"
 msgstr ""
 
-msgid "Max Lifeforms"
+msgid "Max Samples"
 msgstr ""
 
 msgid "Jamming"
