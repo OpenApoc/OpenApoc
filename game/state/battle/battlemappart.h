@@ -8,12 +8,14 @@
 #include <list>
 #include <set>
 
-#define TICKS_PER_FRAME_MAP_PART 8
+//#define TICKS_PER_FRAME_MAP_PART 8
 #define FALLING_ACCELERATION_MAP_PART 0.16666667f // 1/6th
 #define FALLING_MAP_PART_DAMAGE_TO_UNIT 50
 
 namespace OpenApoc
 {
+static constexpr unsigned TICKS_PER_FRAME_MAP_PART = ANIMATION_FRAMES_MULTIPLIER;
+
 class Battle;
 class Collision;
 class TileObjectBattleMapPart;
