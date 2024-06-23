@@ -176,6 +176,17 @@ class AEquipmentType : public StateObject<AEquipmentType>
 	std::map<StateRef<AgentType>, int> spawnList;
 
 	bool canBeUsed(GameState &state, StateRef<Organisation> user) const;
+
+	/// <summary>
+	/// Get if type is researched.
+	///
+	/// By default it will search through dependency topics via topic name.
+	/// If no topic with same name is found, then method will call "research_dependency.satisfied()"
+	/// instead, which unfortunately considers not only topic research, but children research status
+	/// as well.
+	/// </summary>
+	/// <returns>Returns if type is already researched.</returns>
+	bool isResearched() const;
 };
 
 class EquipmentSet : public StateObject<EquipmentSet>

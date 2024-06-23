@@ -855,23 +855,7 @@ void AEquipScreen::selectAgent(sp<Agent> agent, bool inverse, bool additive)
 
 void AEquipScreen::displayItem(sp<AEquipment> item)
 {
-	StateRef<ResearchTopic> equipmentTopic;
-
-	for (auto &topic : item->type->research_dependency.topics)
-	{
-		if (topic->name == item->type->name)
-		{
-			equipmentTopic = topic;
-			break;
-		}
-	}
-
-	// If no research topic is found with same name as equipment, then we use "canBeUsed" function
-	// This is not the prefered method since it will consider not only specific topic but all child
-	// topics as well
-	const bool researched = equipmentTopic
-	                            ? equipmentTopic->man_hours_progress >= equipmentTopic->man_hours
-	                            : item->type->canBeUsed(*state, state->getPlayer());
+	const bool researched = item->type->isResearched();
 
 	AEquipmentSheet(formAgentItem).display(item, researched);
 	formAgentItem->setVisible(true);
