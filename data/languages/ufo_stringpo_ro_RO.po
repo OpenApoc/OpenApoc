@@ -4449,7 +4449,7 @@ msgstr ""
 msgid "Cargo"
 msgstr ""
 
-msgid "Aliens Held"
+msgid "Max Samples"
 msgstr ""
 
 msgid "Jamming"

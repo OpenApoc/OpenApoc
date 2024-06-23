@@ -365,6 +365,8 @@ void UfopaediaCategoryView::setFormStats()
 					statsLabels[row]->setText(tr("Size"));
 					statsValues[row++]->setText(
 					    format("%dx%d", ref->equipscreen_size.x, ref->equipscreen_size.y));
+					statsLabels[row]->setText(tr("Storage"));
+					statsValues[row++]->setText(Strings::fromInteger(ref->store_space));
 					switch (ref->type)
 					{
 						case EquipmentSlotType::VehicleEngine:
@@ -415,7 +417,7 @@ void UfopaediaCategoryView::setFormStats()
 							}
 							if (ref->alien_space > 0)
 							{
-								statsLabels[row]->setText(tr("Aliens Held"));
+								statsLabels[row]->setText(tr("Max Samples"));
 								statsValues[row++]->setText(Strings::fromInteger(ref->alien_space));
 							}
 							if (ref->missile_jamming > 0)
@@ -451,6 +453,8 @@ void UfopaediaCategoryView::setFormStats()
 					statsLabels[row]->setText(tr("Size"));
 					statsValues[row++]->setText(
 					    format("%dx%d", ref->equipscreen_size.x, ref->equipscreen_size.y));
+					statsLabels[row]->setText(tr("Storage"));
+					statsValues[row++]->setText(Strings::fromInteger(ref->store_space));
 					if (ref->type == AEquipmentType::Type::Ammo ||
 					    (ref->type == AEquipmentType::Type::Weapon && ref->ammo_types.empty()))
 					{

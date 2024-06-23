@@ -4454,7 +4454,7 @@ msgstr "Pojemność amunicji"
 msgid "Cargo"
 msgstr "Ładunek"
 
-msgid "Aliens Held"
+msgid "Max Samples"
 msgstr "Pod kontrolą obcych"
 
 msgid "Jamming"

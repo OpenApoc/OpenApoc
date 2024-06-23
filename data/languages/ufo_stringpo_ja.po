@@ -4448,7 +4448,7 @@ msgstr "装弾数"
 msgid "Cargo"
 msgstr "貨物"
 
-msgid "Aliens Held"
+msgid "Max Samples"
 msgstr "捕獲中のエイリアン"
 
 msgid "Jamming"

@@ -4449,7 +4449,7 @@ msgstr "Capacidad de Munición"
 msgid "Cargo"
 msgstr "Carga"
 
-msgid "Aliens Held"
+msgid "Max Samples"
 msgstr "Alienígenas"
 
 msgid "Jamming"

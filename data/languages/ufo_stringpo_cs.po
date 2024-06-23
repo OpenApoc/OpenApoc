@@ -4452,7 +4452,7 @@ msgstr "Zásoba munice"
 msgid "Cargo"
 msgstr "Náklad"
 
-msgid "Aliens Held"
+msgid "Max Samples"
 msgstr "Cizác. náklad"
 
 msgid "Jamming"

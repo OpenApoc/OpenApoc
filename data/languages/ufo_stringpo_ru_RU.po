@@ -4453,7 +4453,7 @@ msgstr "Боезапас"
 msgid "Cargo"
 msgstr "Груз"
 
-msgid "Aliens Held"
+msgid "Max Samples"
 msgstr "Пришельцев удерживается"
 
 msgid "Jamming"
