@@ -3026,7 +3026,7 @@ void Battle::exitBattle(GameState &state)
 
 	// LOOT!
 
-	auto playerVehicles = Battle::getPlayerVehicles(state);
+	const auto playerVehicles = Battle::getPlayerVehicles(state);
 	std::set<StateRef<Vehicle>> returningVehicles;
 
 	if (state.current_battle->player_craft)
