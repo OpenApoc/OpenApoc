@@ -3809,7 +3809,7 @@ const std::list<StateRef<Vehicle>> Battle::getPlayerVehicles(GameState &state)
 			StateRef<Vehicle> location = {&state, state.current_battle->mission_location_id};
 			city = location->city;
 
-			for (auto &v : state.vehicles)
+			for (const auto &v : state.vehicles)
 			{
 				// Check every player owned vehicle located in city
 				if (v.second->owner != state.player || v.second->city != city ||
@@ -3828,7 +3828,7 @@ const std::list<StateRef<Vehicle>> Battle::getPlayerVehicles(GameState &state)
 		else
 		{
 			StateRef<Building> location = {&state, state.current_battle->mission_location_id};
-			for (auto &v : location->currentVehicles)
+			for (const auto &v : location->currentVehicles)
 			{
 				// Player's vehicle was already added and has priority
 				if (v->owner == state.player && v != state.current_battle->player_craft)
@@ -3844,7 +3844,7 @@ const std::list<StateRef<Vehicle>> Battle::getPlayerVehicles(GameState &state)
 
 const bool Battle::isCargoCarrierPresent(const std::list<StateRef<Vehicle>> &playerVehicles)
 {
-	for (auto &v : playerVehicles)
+	for (const auto &v : playerVehicles)
 	{
 		if (v->getMaxCargo() > 0)
 		{
@@ -3857,7 +3857,7 @@ const bool Battle::isCargoCarrierPresent(const std::list<StateRef<Vehicle>> &pla
 
 const bool Battle::isBioCarrierPresent(const std::list<StateRef<Vehicle>> &playerVehicles)
 {
-	for (auto &v : playerVehicles)
+	for (const auto &v : playerVehicles)
 	{
 		if (v->getMaxBio() > 0)
 		{
