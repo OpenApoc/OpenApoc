@@ -2687,7 +2687,6 @@ void Battle::finishBattle(GameState &state)
 		const auto baseDefenseWithAlienStorage =
 		    isBaseDefenseWithStorage(state, FacilityType::Capacity::Aliens);
 
-		// Compile list of player vehicles
 		const auto playerVehicles = Battle::getPlayerVehicles(state);
 		const auto playerHasCraftBioStorage = Battle::isBioCarrierPresent(playerVehicles);
 
@@ -3027,6 +3026,7 @@ void Battle::exitBattle(GameState &state)
 
 	// LOOT!
 
+	// Compile list of player vehicles
 	const auto playerVehicles = Battle::getPlayerVehicles(state);
 	std::set<StateRef<Vehicle>> returningVehicles;
 
