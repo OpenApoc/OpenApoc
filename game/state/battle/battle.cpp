@@ -3814,10 +3814,14 @@ const std::list<StateRef<Vehicle>> Battle::getPlayerVehicles(GameState &state)
 			for (const auto &v : state.vehicles)
 			{
 				// Check every player owned vehicle located in city
-				if (v.second->owner != state.player || v.second->city != city ||
-				    v.second->currentBuilding
-				    // Player's vehicle was already added and has priority
-				    || v.first == playerCraft->id)
+				const auto isVehiclePlayerOwned = v.second->owner == state.player;
+				const auto isVehicleInTheCity =
+				    v.second->city == city && !v.second->currentBuilding;
+
+				// Player's vehicle was already added and has priority
+				const auto isVehiclePlayerCraft = v.first == playerCraft->id;
+
+				if (!isVehiclePlayerOwned || !isVehicleInTheCity || isVehiclePlayerCraft)
 				{
 					continue;
 				}
