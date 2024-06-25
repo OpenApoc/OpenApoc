@@ -130,7 +130,15 @@ void BaseScreen::begin()
 	        FormEventType::ButtonClick,
 	        [this](Event *)
 	        {
-		        if (this->state->current_base->containmentEmpty(*state))
+		        if (this->state->current_base->alienContainmentExists(*state))
+		        {
+			        fw().stageQueueCommand(
+			            {StageCmd::Command::PUSH,
+			             mksp<MessageBox>(tr("Alien Containment"),
+			                              tr("Alien Containment does not exist at this base."),
+			                              MessageBox::ButtonOptions::Ok)});
+		        }
+		        else if (this->state->current_base->alienContainmentIsEmpty(*state))
 		        {
 			        fw().stageQueueCommand(
 			            {StageCmd::Command::PUSH,

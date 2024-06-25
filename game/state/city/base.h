@@ -55,7 +55,12 @@ class Base : public StateObject<Base>, public std::enable_shared_from_this<Base>
 	                   bool free = false);
 	BuildError canDestroyFacility(GameState &state, Vec2<int> pos) const;
 	void destroyFacility(GameState &state, Vec2<int> pos);
-	bool containmentEmpty(GameState &state);
+
+	// Returns if an Alien Containment module exists at base
+	bool alienContainmentExists(GameState &state);
+
+	// Returns if Alien Containment capacity is empty at base
+	bool alienContainmentIsEmpty(GameState &state);
 	int getCapacityUsed(GameState &state, FacilityType::Capacity type) const;
 	int getCapacityTotal(FacilityType::Capacity type) const;
 	float getUsage(GameState &state, const sp<Facility> facility, const int delta = 0) const;
