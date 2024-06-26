@@ -375,6 +375,7 @@ Base::BuildError Base::canDestroyFacility(GameState &state, Vec2<int> pos) const
 		case FacilityType::Capacity::Quarters:
 		case FacilityType::Capacity::Stores:
 		case FacilityType::Capacity::Aliens:
+		{
 			const auto capacityUsed = getCapacityUsed(state, facility->type->capacityType);
 			const auto capacityTotal = getCapacityTotal(facility->type->capacityType);
 			const auto capacityAmount = facility->type->capacityAmount;
@@ -384,6 +385,7 @@ Base::BuildError Base::canDestroyFacility(GameState &state, Vec2<int> pos) const
 				return BuildError::Occupied;
 			}
 			break;
+		}
 		case FacilityType::Capacity::Physics:
 		case FacilityType::Capacity::Chemistry:
 		case FacilityType::Capacity::Workshop:
