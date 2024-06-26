@@ -283,7 +283,10 @@ Base::BuildError Base::canBuildFacility(StateRef<FacilityType> type, Vec2<int> p
 void Base::buildFacility(GameState &state, StateRef<FacilityType> type, Vec2<int> pos, bool free)
 {
 	if (canBuildFacility(type, pos, free) != BuildError::NoError)
+	{
+		LogError("Error when trying to build facility!");
 		return;
+	}
 
 	auto facility = mksp<Facility>(type);
 	facilities.push_back(facility);
@@ -403,7 +406,10 @@ Base::BuildError Base::canDestroyFacility(GameState &state, Vec2<int> pos) const
 void Base::destroyFacility(GameState &state, Vec2<int> pos)
 {
 	if (canDestroyFacility(state, pos) != BuildError::NoError)
+	{
+		LogError("Error when trying to destroy facility!");
 		return;
+	}
 
 	const auto facility = getFacility(pos);
 
@@ -414,14 +420,13 @@ void Base::destroyFacility(GameState &state, Vec2<int> pos)
 
 		if (facility->lab)
 		{
-			const auto &id = facility->lab.id;
 			if (facility->lab->current_project)
 			{
 				facility->lab->current_project->current_lab = "";
 				facility->lab->current_project = "";
 			}
 			facility->lab = "";
-			state.research.labs.erase(id);
+			state.research.labs.erase(facility->lab.id);
 		}
 
 		if (facility->type->buildTime > 0)
