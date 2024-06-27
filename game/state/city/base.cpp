@@ -282,86 +282,92 @@ Base::BuildError Base::canBuildFacility(StateRef<FacilityType> type, Vec2<int> p
 
 void Base::buildFacility(GameState &state, StateRef<FacilityType> type, Vec2<int> pos, bool free)
 {
-	if (canBuildFacility(type, pos, free) == BuildError::NoError)
+	if (canBuildFacility(type, pos, free) != BuildError::NoError)
 	{
-		auto facility = mksp<Facility>(type);
-		facilities.push_back(facility);
-		facility->pos = pos;
-		if (!free)
+		LogError("Error when trying to build facility!");
+		return;
+	}
+
+	auto facility = mksp<Facility>(type);
+	facilities.push_back(facility);
+	facility->pos = pos;
+	if (!free)
+	{
+		if (!building)
 		{
-			if (!building)
-			{
-				LogError("Building disappeared");
-			}
-			else
-			{
-				building->owner->balance -= type->buildCost;
-			}
-			facility->buildTime = type->buildTime;
+			LogError("Building disappeared");
 		}
-		if (type->capacityAmount > 0)
+		else
 		{
-			ResearchTopic::LabSize size;
-			// FIXME: Make LabSize set-able outside of the facility size?
-			if (type->size > 1)
+			building->owner->balance -= type->buildCost;
+		}
+		facility->buildTime = type->buildTime;
+	}
+	if (type->capacityAmount > 0)
+	{
+		ResearchTopic::LabSize size;
+		// FIXME: Make LabSize set-able outside of the facility size?
+		if (type->size > 1)
+		{
+			size = ResearchTopic::LabSize::Large;
+		}
+		else
+		{
+			size = ResearchTopic::LabSize::Small;
+		}
+		switch (type->capacityType)
+		{
+			case FacilityType::Capacity::Chemistry:
 			{
-				size = ResearchTopic::LabSize::Large;
+				auto lab = mksp<Lab>();
+				lab->size = size;
+				lab->type = ResearchTopic::Type::BioChem;
+				auto id = Lab::generateObjectID(state);
+				state.research.labs[id] = lab;
+				facility->lab = {&state, id};
+				break;
 			}
-			else
+			case FacilityType::Capacity::Physics:
 			{
-				size = ResearchTopic::LabSize::Small;
+				auto lab = mksp<Lab>();
+				lab->size = size;
+				lab->type = ResearchTopic::Type::Physics;
+				auto id = Lab::generateObjectID(state);
+				state.research.labs[id] = lab;
+				facility->lab = {&state, id};
+				break;
 			}
-			switch (type->capacityType)
+			case FacilityType::Capacity::Workshop:
 			{
-				case FacilityType::Capacity::Chemistry:
-				{
-					auto lab = mksp<Lab>();
-					lab->size = size;
-					lab->type = ResearchTopic::Type::BioChem;
-					auto id = Lab::generateObjectID(state);
-					state.research.labs[id] = lab;
-					facility->lab = {&state, id};
-					break;
-				}
-				case FacilityType::Capacity::Physics:
-				{
-					auto lab = mksp<Lab>();
-					lab->size = size;
-					lab->type = ResearchTopic::Type::Physics;
-					auto id = Lab::generateObjectID(state);
-					state.research.labs[id] = lab;
-					facility->lab = {&state, id};
-					break;
-				}
-				case FacilityType::Capacity::Workshop:
-				{
-					auto lab = mksp<Lab>();
-					lab->size = size;
-					lab->type = ResearchTopic::Type::Engineering;
-					auto id = Lab::generateObjectID(state);
-					state.research.labs[id] = lab;
-					facility->lab = {&state, id};
-					break;
-				}
-				default:
-					// Non-lab modules don't need special handling
-					break;
+				auto lab = mksp<Lab>();
+				lab->size = size;
+				lab->type = ResearchTopic::Type::Engineering;
+				auto id = Lab::generateObjectID(state);
+				state.research.labs[id] = lab;
+				facility->lab = {&state, id};
+				break;
 			}
+			default:
+				// Non-lab modules don't need special handling
+				break;
 		}
 	}
 }
 
 Base::BuildError Base::canDestroyFacility(GameState &state, Vec2<int> pos) const
 {
-	auto facility = getFacility(pos);
+	const auto facility = getFacility(pos);
+
 	if (facility == nullptr)
 	{
 		return BuildError::OutOfBounds;
 	}
+
 	if (facility->type->fixed)
 	{
 		return BuildError::Indestructible;
 	}
+
 	if (facility->buildTime > 0)
 	{
 		return BuildError::NoError;
@@ -372,21 +378,23 @@ Base::BuildError Base::canDestroyFacility(GameState &state, Vec2<int> pos) const
 		case FacilityType::Capacity::Quarters:
 		case FacilityType::Capacity::Stores:
 		case FacilityType::Capacity::Aliens:
-			if (getCapacityUsed(state, facility->type->capacityType) >
-			    getCapacityTotal(facility->type->capacityType) - facility->type->capacityAmount)
+		{
+			const auto capacityUsed = getCapacityUsed(state, facility->type->capacityType);
+			const auto capacityTotal = getCapacityTotal(facility->type->capacityType);
+			const auto capacityAmount = facility->type->capacityAmount;
+
+			if (capacityUsed > capacityTotal - capacityAmount)
 			{
 				return BuildError::Occupied;
 			}
 			break;
+		}
 		case FacilityType::Capacity::Physics:
 		case FacilityType::Capacity::Chemistry:
 		case FacilityType::Capacity::Workshop:
-			if (facility->lab)
+			if (facility->lab && facility->lab->current_project)
 			{
-				if (facility->lab->current_project)
-				{
-					return BuildError::Occupied;
-				}
+				return BuildError::Occupied;
 			}
 			break;
 		default:
@@ -397,46 +405,54 @@ Base::BuildError Base::canDestroyFacility(GameState &state, Vec2<int> pos) const
 
 void Base::destroyFacility(GameState &state, Vec2<int> pos)
 {
-	if (canDestroyFacility(state, pos) == BuildError::NoError)
+	if (canDestroyFacility(state, pos) != BuildError::NoError)
 	{
-		auto facility = getFacility(pos);
-		for (auto f = facilities.begin(); f != facilities.end(); ++f)
+		LogError("Error when trying to destroy facility!");
+		return;
+	}
+
+	const auto facility = getFacility(pos);
+
+	for (auto f = facilities.begin(); f != facilities.end(); ++f)
+	{
+		if (*f != facility)
+			continue;
+
+		if (facility->lab)
 		{
-			if (*f == facility)
+			if (facility->lab->current_project)
 			{
-				if (facility->lab)
-				{
-					auto id = facility->lab.id;
-					if (facility->lab->current_project)
-					{
-						facility->lab->current_project->current_lab = "";
-						facility->lab->current_project = "";
-					}
-					facility->lab = "";
-					state.research.labs.erase(id);
-				}
-				if (facility->type->buildTime > 0)
-				{
-					building->owner->balance +=
-					    facility->type->buildCost * facility->buildTime / facility->type->buildTime;
-				}
-				facilities.erase(f);
-				break;
+				facility->lab->current_project->current_lab = "";
+				facility->lab->current_project = "";
 			}
+			facility->lab = "";
+			state.research.labs.erase(facility->lab.id);
 		}
+
+		if (facility->type->buildTime > 0)
+		{
+			building->owner->balance +=
+			    facility->type->buildCost * facility->buildTime / facility->type->buildTime;
+		}
+
+		facilities.erase(f);
+		break;
 	}
 }
 
-bool Base::containmentEmpty(GameState &state)
+bool Base::alienContainmentExists(GameState &state)
 {
-	for (auto &f : facilities)
+	return state.current_base->getCapacityTotal(FacilityType::Capacity::Aliens) == 0;
+}
+
+bool Base::alienContainmentIsEmpty(GameState &state)
+{
+	for (const auto &f : facilities)
 	{
-		if (f->type->capacityType == FacilityType::Capacity::Aliens)
+		if (f->type->capacityType == FacilityType::Capacity::Aliens &&
+		    getCapacityUsed(state, f->type->capacityType) != 0)
 		{
-			if (getCapacityUsed(state, f->type->capacityType) != 0)
-			{
-				return false;
-			}
+			return false;
 		}
 	}
 	return true;
@@ -448,35 +464,35 @@ int Base::getCapacityUsed(GameState &state, FacilityType::Capacity type) const
 	switch (type)
 	{
 		case FacilityType::Capacity::Repair:
-			for (auto &v : state.vehicles)
+			for (const auto &v : state.vehicles)
 			{
-				if (v.second->homeBuilding == building &&
-				    v.second->getMaxHealth() > v.second->getHealth())
+				const auto maxHealth = v.second->getMaxHealth();
+				const auto health = v.second->getHealth();
+
+				if (v.second->homeBuilding == building && maxHealth > health)
 				{
-					total += v.second->getMaxHealth() - v.second->getHealth();
+					total += maxHealth - health;
 				}
 			}
 			// Show percentage of repair bay used if it can repair in one hour, or 100% if can't
 			if (total > 0)
 			{
-				int max = getCapacityTotal(type);
+				const auto max = getCapacityTotal(type);
 				return std::min(total, max);
 			}
 			break;
 		case FacilityType::Capacity::Medical:
-			for (auto &a : state.agents)
+			for (const auto &a : state.agents)
 			{
-				if (a.second->homeBuilding == building)
+				if (a.second->homeBuilding == building &&
+				    a.second->modified_stats.health < a.second->current_stats.health)
 				{
-					if (a.second->modified_stats.health < a.second->current_stats.health)
-					{
-						total++;
-					}
+					total++;
 				}
 			}
 			break;
 		case FacilityType::Capacity::Training:
-			for (auto &a : state.agents)
+			for (const auto &a : state.agents)
 			{
 				if (a.second->homeBuilding == building &&
 				    a.second->trainingAssignment == TrainingAssignment::Physical)
@@ -486,7 +502,7 @@ int Base::getCapacityUsed(GameState &state, FacilityType::Capacity type) const
 			}
 			break;
 		case FacilityType::Capacity::Psi:
-			for (auto &a : state.agents)
+			for (const auto &a : state.agents)
 			{
 				if (a.second->homeBuilding == building &&
 				    a.second->trainingAssignment == TrainingAssignment::Psi)
@@ -500,16 +516,16 @@ int Base::getCapacityUsed(GameState &state, FacilityType::Capacity type) const
 		case FacilityType::Capacity::Physics:
 			[[fallthrough]];
 		case FacilityType::Capacity::Workshop:
-			for (auto f = facilities.begin(); f != facilities.end(); ++f)
+			for (const auto &f : facilities)
 			{
-				if ((*f)->type->capacityType == type && (*f)->lab)
+				if (f->type->capacityType == type && f->lab)
 				{
-					total += (int)(*f)->lab->assigned_agents.size();
+					total += (int)f->lab->assigned_agents.size();
 				}
 			}
 			break;
 		case FacilityType::Capacity::Quarters:
-			for (auto &a : state.agents)
+			for (const auto &a : state.agents)
 			{
 				if (a.second->homeBuilding == building)
 				{
@@ -518,19 +534,19 @@ int Base::getCapacityUsed(GameState &state, FacilityType::Capacity type) const
 			}
 			break;
 		case FacilityType::Capacity::Stores:
-			for (auto &e : inventoryAgentEquipment)
+			for (const auto &e : inventoryAgentEquipment)
 			{
 				StateRef<AEquipmentType> ae = {&state, e.first};
 				total += ae->type == AEquipmentType::Type::Ammo
 				             ? ae->store_space * ((e.second + ae->max_ammo - 1) / ae->max_ammo)
 				             : ae->store_space * e.second;
 			}
-			for (auto &e : inventoryVehicleEquipment)
+			for (const auto &e : inventoryVehicleEquipment)
 			{
 				StateRef<VEquipmentType> ve = {&state, e.first};
 				total += ve->store_space * e.second;
 			}
-			for (auto &e : inventoryVehicleAmmo)
+			for (const auto &e : inventoryVehicleAmmo)
 			{
 				StateRef<VAmmoType> va = {&state, e.first};
 				total += va->store_space * e.second;
@@ -538,7 +554,7 @@ int Base::getCapacityUsed(GameState &state, FacilityType::Capacity type) const
 			break;
 		case FacilityType::Capacity::Aliens:
 		{
-			for (auto &e : inventoryBioEquipment)
+			for (const auto &e : inventoryBioEquipment)
 			{
 				if (e.second == 0)
 					continue;
@@ -559,11 +575,11 @@ int Base::getCapacityUsed(GameState &state, FacilityType::Capacity type) const
 int Base::getCapacityTotal(FacilityType::Capacity type) const
 {
 	int total = 0;
-	for (auto f = facilities.begin(); f != facilities.end(); ++f)
+	for (const auto &f : facilities)
 	{
-		if ((*f)->type->capacityType == type && (*f)->buildTime == 0)
+		if (f->type->capacityType == type && f->buildTime == 0)
 		{
-			total += (*f)->type->capacityAmount;
+			total += f->type->capacityAmount;
 		}
 	}
 	return total;
