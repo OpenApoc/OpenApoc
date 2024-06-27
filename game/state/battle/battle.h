@@ -329,6 +329,15 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// To be called after battle was finished and before returning to cityscape
 	static void exitBattle(GameState &state);
 
+	// Get list of player vehicles in battle
+	static const std::list<StateRef<Vehicle>> getPlayerVehicles(GameState &state);
+
+	// Check if cargo carrier is present at player vehicles list
+	static const bool isCargoCarrierPresent(const std::list<StateRef<Vehicle>> &playerVehicles);
+
+	// Check if bio carrier is present at player vehicles list
+	static const bool isBioCarrierPresent(const std::list<StateRef<Vehicle>> &playerVehicles);
+
 	// Pathfinding functions
 
   public:
@@ -352,7 +361,10 @@ class Battle : public std::enable_shared_from_this<Battle>
 	    bool approachOnly = false, bool ignoreStaticUnits = false, bool ignoreMovingUnits = true,
 	    bool ignoreAllUnits = false, float *cost = nullptr, float maxCost = 0.0f);
 
+	// Returns defended base if mission is base defense, returns null otherwise
 	static sp<Base> getCurrentDefendedBase(GameState &state);
+
+	// Check if mission is base defense and has storage for specified capacity type
 	static bool isBaseDefenseWithStorage(GameState &state,
 	                                     const FacilityType::Capacity capacityType);
 

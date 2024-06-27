@@ -2684,13 +2684,13 @@ void Battle::finishBattle(GameState &state)
 	// - give him alien remains
 	if (state.current_battle->playerWon && !state.current_battle->winnerHasRetreated)
 	{
-		const auto playerHasBaseAlienStorage =
+		const auto baseDefenseWithAlienStorage =
 		    isBaseDefenseWithStorage(state, FacilityType::Capacity::Aliens);
 
-		const auto playerHasCraftBioStorage = state.current_battle->player_craft &&
-		                                      state.current_battle->player_craft->getMaxBio() > 0;
+		const auto playerVehicles = Battle::getPlayerVehicles(state);
+		const auto playerHasCraftBioStorage = Battle::isBioCarrierPresent(playerVehicles);
 
-		const auto playerHasAlienStorage = playerHasCraftBioStorage || playerHasBaseAlienStorage;
+		const auto playerHasAlienStorage = playerHasCraftBioStorage || baseDefenseWithAlienStorage;
 
 		// Live alien loot
 		for (auto &u : liveAliens)
@@ -2702,15 +2702,14 @@ void Battle::finishBattle(GameState &state)
 					state.current_battle->score.liveAlienCaptured +=
 					    u->agent->type->liveSpeciesItem->score;
 				}
+
 				if (u->agent->type->liveSpeciesItem->bioStorage)
 				{
-					state.current_battle->bioLoot[u->agent->type->liveSpeciesItem] =
-					    state.current_battle->bioLoot[u->agent->type->liveSpeciesItem] + 1;
+					state.current_battle->bioLoot[u->agent->type->liveSpeciesItem] += 1;
 				}
 				else
 				{
-					state.current_battle->cargoLoot[u->agent->type->liveSpeciesItem] =
-					    state.current_battle->cargoLoot[u->agent->type->liveSpeciesItem] + 1;
+					state.current_battle->cargoLoot[u->agent->type->liveSpeciesItem] += 1;
 				}
 			}
 			else
@@ -2726,13 +2725,11 @@ void Battle::finishBattle(GameState &state)
 			{
 				if (u->agent->type->deadSpeciesItem->bioStorage)
 				{
-					state.current_battle->bioLoot[u->agent->type->deadSpeciesItem] =
-					    state.current_battle->bioLoot[u->agent->type->deadSpeciesItem] + 1;
+					state.current_battle->bioLoot[u->agent->type->deadSpeciesItem] += 1;
 				}
 				else
 				{
-					state.current_battle->cargoLoot[u->agent->type->deadSpeciesItem] =
-					    state.current_battle->cargoLoot[u->agent->type->deadSpeciesItem] + 1;
+					state.current_battle->cargoLoot[u->agent->type->deadSpeciesItem] += 1;
 				}
 			}
 		}
@@ -2775,8 +2772,7 @@ void Battle::finishBattle(GameState &state)
 			{
 				for (auto &a : liveAliens)
 				{
-					location->current_crew[a->agent->type] =
-					    location->current_crew[a->agent->type] + 1;
+					location->current_crew[a->agent->type] += 1;
 				}
 			}
 			else
@@ -2794,15 +2790,15 @@ void Battle::finishBattle(GameState &state)
 		{
 			state.current_battle->score.equipmentCaptured += e->type->score;
 		}
+
 		int mult = e->type->type == AEquipmentType::Type::Ammo ? e->ammo : 1;
 		if (e->type->bioStorage)
 		{
-			state.current_battle->bioLoot[e->type] = state.current_battle->bioLoot[e->type] + mult;
+			state.current_battle->bioLoot[e->type] += mult;
 		}
 		else
 		{
-			state.current_battle->cargoLoot[e->type] =
-			    state.current_battle->cargoLoot[e->type] + mult;
+			state.current_battle->cargoLoot[e->type] += mult;
 		}
 	}
 	// Regardless of what happened, retreated aliens go to a nearby building
@@ -2844,8 +2840,7 @@ void Battle::finishBattle(GameState &state)
 		}
 		for (auto &a : retreatedAliens)
 		{
-			closestBuilding->current_crew[a->agent->type] =
-			    closestBuilding->current_crew[a->agent->type] + 1;
+			closestBuilding->current_crew[a->agent->type] += 1;
 		}
 	}
 	// Remove dead player agents and all enemy agents from the game and from vehicles
@@ -3032,49 +3027,12 @@ void Battle::exitBattle(GameState &state)
 	// LOOT!
 
 	// Compile list of player vehicles
-	std::list<StateRef<Vehicle>> playerVehicles;
+	auto playerVehicles = Battle::getPlayerVehicles(state);
 	std::set<StateRef<Vehicle>> returningVehicles;
+
 	if (state.current_battle->player_craft)
 	{
-		playerVehicles.push_back(state.current_battle->player_craft);
 		returningVehicles.insert(state.current_battle->player_craft);
-	}
-	if (config().getBool("OpenApoc.NewFeature.AllowNearbyVehicleLootPickup"))
-	{
-		if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
-		{
-			StateRef<City> city;
-			StateRef<Vehicle> location = {&state, state.current_battle->mission_location_id};
-			city = location->city;
-
-			for (auto &v : state.vehicles)
-			{
-				// Check every player owned vehicle located in city
-				if (v.second->owner != player || v.second->city != city ||
-				    v.second->currentBuilding
-				    // Player's vehicle was already added and has priority
-				    || v.first == state.current_battle->player_craft.id)
-				{
-					continue;
-				}
-				if (glm::length(location->position - v.second->position) < VEHICLE_NEARBY_THRESHOLD)
-				{
-					playerVehicles.emplace_back(&state, v.first);
-				}
-			}
-		}
-		else
-		{
-			StateRef<Building> location = {&state, state.current_battle->mission_location_id};
-			for (auto &v : location->currentVehicles)
-			{
-				// Player's vehicle was already added and has priority
-				if (v->owner == player && v != state.current_battle->player_craft)
-				{
-					playerVehicles.push_back(v);
-				}
-			}
-		}
 	}
 
 	// List of vehicle loot
@@ -3111,28 +3069,14 @@ void Battle::exitBattle(GameState &state)
 	// If player has vehicle with bio capacity then all bio loot goes to leftover loot
 	// This is regardless of "enforce limits" which only makes us enforce it
 	// on vehicles that have capacity in the first place
-	auto cargoCarrierPresent = false;
-	auto bioCarrierPresent = false;
-	const auto playerHasBaseItemStorage =
+	const auto cargoCarrierPresent = Battle::isCargoCarrierPresent(playerVehicles);
+	const auto bioCarrierPresent = Battle::isBioCarrierPresent(playerVehicles);
+	const auto baseDefenseWithItemStorage =
 	    isBaseDefenseWithStorage(state, FacilityType::Capacity::Stores);
-	const auto playerHasBaseAlienStorage =
+	const auto baseDefenseWithAlienStorage =
 	    isBaseDefenseWithStorage(state, FacilityType::Capacity::Aliens);
-	for (auto &v : playerVehicles)
-	{
-		if (v->getMaxCargo() > 0)
-		{
-			cargoCarrierPresent = true;
-		}
-		if (v->getMaxBio() > 0)
-		{
-			bioCarrierPresent = true;
-		}
 
-		// If both variables are true, there is no reason to keep going with this loop
-		if (cargoCarrierPresent && bioCarrierPresent)
-			break;
-	}
-	if (!cargoCarrierPresent && !playerHasBaseItemStorage)
+	if (!cargoCarrierPresent && !baseDefenseWithItemStorage)
 	{
 		for (auto &e : state.current_battle->cargoLoot)
 		{
@@ -3144,7 +3088,7 @@ void Battle::exitBattle(GameState &state)
 		}
 		state.current_battle->cargoLoot.clear();
 	}
-	if (!bioCarrierPresent && !playerHasBaseAlienStorage)
+	if (!bioCarrierPresent && !baseDefenseWithAlienStorage)
 	{
 		for (auto &e : state.current_battle->bioLoot)
 		{
@@ -3847,6 +3791,88 @@ void Battle::loadMessages(GameState &state)
 		}
 		state.cityMessages.clear();
 	}
+}
+
+const std::list<StateRef<Vehicle>> Battle::getPlayerVehicles(GameState &state)
+{
+	std::list<StateRef<Vehicle>> playerVehicles;
+	const auto playerCraft = &state.current_battle->player_craft;
+
+	if (playerCraft)
+	{
+		playerVehicles.push_back(*playerCraft);
+	}
+
+	if (config().getBool("OpenApoc.NewFeature.AllowNearbyVehicleLootPickup"))
+	{
+		if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
+		{
+			StateRef<City> city;
+			StateRef<Vehicle> location = {&state, state.current_battle->mission_location_id};
+			city = location->city;
+
+			for (const auto &v : state.vehicles)
+			{
+				// Check every player owned vehicle located in city
+				const auto isVehiclePlayerOwned = v.second->owner == state.player;
+				const auto isVehicleInTheCity =
+				    v.second->city == city && !v.second->currentBuilding;
+
+				// Player's vehicle was already added and has priority
+				const auto isVehiclePlayerCraft = v.first == playerCraft->id;
+
+				if (!isVehiclePlayerOwned || !isVehicleInTheCity || isVehiclePlayerCraft)
+				{
+					continue;
+				}
+
+				if (glm::length(location->position - v.second->position) < VEHICLE_NEARBY_THRESHOLD)
+				{
+					playerVehicles.emplace_back(&state, v.first);
+				}
+			}
+		}
+		else
+		{
+			StateRef<Building> location = {&state, state.current_battle->mission_location_id};
+			for (const auto &v : location->currentVehicles)
+			{
+				// Player's vehicle was already added and has priority
+				if (v->owner == state.player && v != *playerCraft)
+				{
+					playerVehicles.push_back(v);
+				}
+			}
+		}
+	}
+
+	return playerVehicles;
+}
+
+const bool Battle::isCargoCarrierPresent(const std::list<StateRef<Vehicle>> &playerVehicles)
+{
+	for (const auto &v : playerVehicles)
+	{
+		if (v->getMaxCargo() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+const bool Battle::isBioCarrierPresent(const std::list<StateRef<Vehicle>> &playerVehicles)
+{
+	for (const auto &v : playerVehicles)
+	{
+		if (v->getMaxBio() > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 int BattleScore::getLeadershipBonus()
