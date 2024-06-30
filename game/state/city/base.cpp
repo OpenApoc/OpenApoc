@@ -284,7 +284,7 @@ void Base::buildFacility(GameState &state, StateRef<FacilityType> type, Vec2<int
 {
 	if (canBuildFacility(type, pos, free) != BuildError::NoError)
 	{
-		LogError("Error when trying to build facility!");
+		LogWarning("Error when trying to build facility!");
 		return;
 	}
 
@@ -407,7 +407,7 @@ void Base::destroyFacility(GameState &state, Vec2<int> pos)
 {
 	if (canDestroyFacility(state, pos) != BuildError::NoError)
 	{
-		LogError("Error when trying to destroy facility!");
+		LogWarning("Error when trying to destroy facility!");
 		return;
 	}
 
