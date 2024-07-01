@@ -3361,12 +3361,9 @@ void Battle::exitBattle(GameState &state)
 		}
 	}
 
-	// Give player vehicle a null cargo just so it comes back to base once
+	// Sending vehicles back to base
 	for (auto &v : playerVehicles)
 	{
-		v->cargo.emplace_front(
-		    state, StateRef<AEquipmentType>(&state, state.agent_equipment.begin()->first), 0, 0,
-		    nullptr, v->homeBuilding);
 		if (v->city.id == "CITYMAP_HUMAN")
 		{
 			v->setMission(state, VehicleMission::gotoBuilding(state, *v));
