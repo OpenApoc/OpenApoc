@@ -94,6 +94,7 @@ The following libraries are also used, but are shipped as submodules in the repo
 * [physfs](https://icculus.org/physfs/) - Library for reading data from .iso files or directory trees (Note: We use a patched version, available on [GitHub](https://github.com/JonnyH/physfs-hg-import/tree/fix-iso) - required to read the .iso files we use).
 * [pugixml](https://pugixml.org) - XML library used for reading/writing the game data files.
 * [fmtlib](https://github.com/fmtlib/fmt) - A c++ string formatting library - proposed for c++20 standard.
+* [magic_enum](https://github.com/Neargye/magic_enum) - Header-only C++17 library provides static reflection for enums, work with any enum type without any macro or boilerplate code.
 
 
 ### Building on Windows

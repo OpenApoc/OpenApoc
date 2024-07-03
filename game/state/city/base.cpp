@@ -1,4 +1,5 @@
 #include "game/state/city/base.h"
+#include "dependencies/magic_enum/include/magic_enum/magic_enum.hpp"
 #include "framework/framework.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
@@ -282,9 +283,14 @@ Base::BuildError Base::canBuildFacility(StateRef<FacilityType> type, Vec2<int> p
 
 void Base::buildFacility(GameState &state, StateRef<FacilityType> type, Vec2<int> pos, bool free)
 {
-	if (canBuildFacility(type, pos, free) != BuildError::NoError)
+	const auto canBuildFacilityResult = canBuildFacility(type, pos, free);
+
+	if (canBuildFacilityResult != BuildError::NoError)
 	{
-		LogWarning("Error when trying to build facility!");
+		const auto canBuildFacilityEnum = magic_enum::enum_name(canBuildFacilityResult);
+		const auto logMessage =
+		    format("Error when trying to build facility: %s", canBuildFacilityEnum);
+		LogWarning(logMessage);
 		return;
 	}
 
@@ -405,9 +411,14 @@ Base::BuildError Base::canDestroyFacility(GameState &state, Vec2<int> pos) const
 
 void Base::destroyFacility(GameState &state, Vec2<int> pos)
 {
-	if (canDestroyFacility(state, pos) != BuildError::NoError)
+	const auto canDestroyFacilityResult = canDestroyFacility(state, pos);
+
+	if (canDestroyFacilityResult != BuildError::NoError)
 	{
-		LogWarning("Error when trying to destroy facility!");
+		const auto canDestroyFacilityEnum = magic_enum::enum_name(canDestroyFacilityResult);
+		const auto logMessage =
+		    format("Error when trying to destroy facility: %s", canDestroyFacilityEnum);
+		LogWarning(logMessage);
 		return;
 	}
 
