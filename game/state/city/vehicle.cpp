@@ -29,6 +29,7 @@
 #include "game/state/tilemap/tileobject_projectile.h"
 #include "game/state/tilemap/tileobject_shadow.h"
 #include "game/state/tilemap/tileobject_vehicle.h"
+#include "game/ui/general/messagebox.h"
 #include "library/sp.h"
 #include <glm/glm.hpp>
 #include <glm/gtx/vector_angle.hpp>
@@ -3989,7 +3990,20 @@ void Cargo::arrive(GameState &state, bool &cargoArrived, bool &bioArrived, bool 
 		switch (type)
 		{
 			case Type::Bio:
-				destination->base->inventoryBioEquipment[id] += count;
+				const auto alienContainmentExists =
+				    destination->base->alienContainmentExists(state);
+
+				if (alienContainmentExists)
+				{
+					destination->base->inventoryBioEquipment[id] += count;
+				}
+				else
+				{
+					sp<MessageBox> messageBox = mksp<MessageBox>(
+					    MessageBox("Load game", "Unsaved progress will be lost. Continue?",
+					               MessageBox::ButtonOptions::Custom, nullptr, nullptr, nullptr,
+					               {"Keep on board", "Destroy"}));
+				}
 				break;
 			case Type::Agent:
 				destination->base->inventoryAgentEquipment[id] += count;

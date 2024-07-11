@@ -23,13 +23,15 @@ class MessageBox : public Stage
 	{
 		Ok,
 		YesNo,
-		YesNoCancel
+		YesNoCancel,
+		Custom
 	};
 
 	MessageBox(const UString &title, const UString &text, ButtonOptions buttons,
 	           std::function<void()> callbackYes = std::function<void()>(),
 	           std::function<void()> callbackNo = std::function<void()>(),
-	           std::function<void()> callbackCancel = std::function<void()>());
+	           std::function<void()> callbackCancel = std::function<void()>(),
+	           std::vector<UString> buttonLabelList = {});
 	~MessageBox() override;
 	// Stage control
 	void begin() override;

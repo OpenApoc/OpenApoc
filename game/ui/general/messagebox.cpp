@@ -15,7 +15,7 @@ namespace OpenApoc
 
 MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions buttons,
                        std::function<void()> callbackYes, std::function<void()> callbackNo,
-                       std::function<void()> callbackCancel)
+                       std::function<void()> callbackCancel, std::vector<UString> buttonLabelList)
     : Stage(), callbackYes(callbackYes), callbackNo(callbackNo), callbackCancel(callbackCancel)
 {
 	form = mksp<Form>();
@@ -96,6 +96,50 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 			bCan->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
 			form->Size.y = bYes->Location.y + bYes->Size.y + MARGIN;
+			break;
+		}
+		case ButtonOptions::Custom:
+		{
+			sp<TextButton> b_one = {};
+
+			if (callbackYes)
+			{
+				b_one =
+				    form->createChild<TextButton>(tr(buttonLabelList[0]), ui().getFont("smallset"));
+				b_one->Name = "BUTTON_YES";
+				b_one->Size = BUTTON_SIZE_2;
+				b_one->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
+				b_one->Location.x = MARGIN;
+				b_one->Location.y = lText->Location.y + lText->Size.y + MARGIN;
+			}
+
+			if (callbackNo)
+			{
+				auto b_two =
+				    form->createChild<TextButton>(tr(buttonLabelList[1]), ui().getFont("smallset"));
+				b_two->Name = "BUTTON_NO2";
+				b_two->Size = BUTTON_SIZE_2;
+				b_two->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
+				b_two->Location.x = form->Size.x / 2 - b_two->Size.x / 2;
+				b_two->Location.y = lText->Location.y + lText->Size.y + MARGIN;
+			}
+
+			if (callbackCancel)
+			{
+				auto b_three =
+				    form->createChild<TextButton>(tr(buttonLabelList[2]), ui().getFont("smallset"));
+				b_three->Name = "BUTTON_CANCEL";
+				b_three->Size = BUTTON_SIZE_2;
+				b_three->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
+				b_three->Location.x = form->Size.x - b_three->Size.x - MARGIN;
+				b_three->Location.y = lText->Location.y + lText->Size.y + MARGIN;
+			}
+
+			if (callbackYes)
+			{
+				form->Size.y = b_one->Location.y + b_one->Size.y + MARGIN;
+			}
+
 			break;
 		}
 	}
