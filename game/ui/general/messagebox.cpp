@@ -100,20 +100,17 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 		}
 		case ButtonOptions::Custom:
 		{
-			sp<TextButton> b_one = {};
+			auto b_one =
+				form->createChild<TextButton>(tr(buttonLabelList.size() >= 1 ? buttonLabelList[0] : "Ok"
+				), ui().getFont("smallset"));
+			b_one->Name = "BUTTON_YES";
+			b_one->Size = BUTTON_SIZE_2;
+			b_one->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
+			b_one->Location.x = MARGIN;
+			b_one->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
-			if (callbackYes)
-			{
-				b_one =
-				    form->createChild<TextButton>(tr(buttonLabelList[0]), ui().getFont("smallset"));
-				b_one->Name = "BUTTON_YES";
-				b_one->Size = BUTTON_SIZE_2;
-				b_one->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
-				b_one->Location.x = MARGIN;
-				b_one->Location.y = lText->Location.y + lText->Size.y + MARGIN;
-			}
-
-			if (callbackNo)
+			// Buttons #2 and #3 will only show up if callback and label are provided for each one
+			if (callbackNo && buttonLabelList.size() >= 2)
 			{
 				auto b_two =
 				    form->createChild<TextButton>(tr(buttonLabelList[1]), ui().getFont("smallset"));
@@ -124,7 +121,7 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 				b_two->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 			}
 
-			if (callbackCancel)
+			if (callbackCancel && buttonLabelList.size() >= 3)
 			{
 				auto b_three =
 				    form->createChild<TextButton>(tr(buttonLabelList[2]), ui().getFont("smallset"));
@@ -135,10 +132,7 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 				b_three->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 			}
 
-			if (callbackYes)
-			{
-				form->Size.y = b_one->Location.y + b_one->Size.y + MARGIN;
-			}
+			form->Size.y = b_one->Location.y + b_one->Size.y + MARGIN;
 
 			break;
 		}
