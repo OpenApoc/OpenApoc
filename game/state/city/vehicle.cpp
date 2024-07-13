@@ -1728,11 +1728,39 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 	std::set<StateRef<Organisation>> suppliers;
 	StateRef<Building> destination;
 
+	// Only add aliens if alien containment is available at base
+	const auto alienContainmentExists = destination->base->alienContainmentExists(state);
+
+	if (!alienContainmentExists)
+	{
+		const auto keepOnBoardOption = std::function<void()>(
+		    [this]
+		    {
+			    // Do nothing to keep aliens on board
+		    });
+
+		const auto destroyOption = std::function<void()>(
+		    [this] {
+
+		    });
+
+		sp<MessageBox> messageBox = mksp<MessageBox>(
+		    MessageBox("No Alien Containment Facility",
+		               format("Alien specimens from tactical combat zone have arrived: %s",
+		                      destination->base->name),
+		               MessageBox::ButtonOptions::Custom, keepOnBoardOption, destroyOption, nullptr,
+		               {"Keep on board", "Destroy"}));
+	}
+
 	// Step 01: Find first cargo destination and remove arrived cargo
 	for (auto it = cargo.begin(); it != cargo.end();)
 	{
 		if (it->destination == currentBuilding)
 		{
+			// Aliens are delivered to base only if alien containment is available
+			if (it->type == Cargo::Type::Bio && !alienContainmentExists)
+				continue;
+
 			it->arrive(state, cargoArrived, bioArrived, recoveryArrived, transferArrived,
 			           suppliers);
 			it = cargo.erase(it);
@@ -3990,20 +4018,7 @@ void Cargo::arrive(GameState &state, bool &cargoArrived, bool &bioArrived, bool 
 		switch (type)
 		{
 			case Type::Bio:
-				const auto alienContainmentExists =
-				    destination->base->alienContainmentExists(state);
-
-				if (alienContainmentExists)
-				{
-					destination->base->inventoryBioEquipment[id] += count;
-				}
-				else
-				{
-					sp<MessageBox> messageBox = mksp<MessageBox>(
-					    MessageBox("Load game", "Unsaved progress will be lost. Continue?",
-					               MessageBox::ButtonOptions::Custom, nullptr, nullptr, nullptr,
-					               {"Keep on board", "Destroy"}));
-				}
+				destination->base->inventoryBioEquipment[id] += count;
 				break;
 			case Type::Agent:
 				destination->base->inventoryAgentEquipment[id] += count;
