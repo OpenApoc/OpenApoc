@@ -386,6 +386,8 @@ class Vehicle : public StateObject<Vehicle>,
 
 	const UString getFormattedVehicleNameForEventMessage(GameState &state) const;
 
+	const bool cargoContainsAlienLoot() const;
+
 	// Following members are not serialized, but rather setup during game
 
 	up<VehicleMover> mover;

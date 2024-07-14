@@ -1729,27 +1729,37 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 	StateRef<Building> destination;
 
 	// Only add aliens if alien containment is available at base
+	const auto vehicleContainsAlienLoot = cargoContainsAlienLoot();
 	const auto alienContainmentExists = destination->base->alienContainmentExists(state);
 
-	if (!alienContainmentExists)
+	if (vehicleContainsAlienLoot && !alienContainmentExists)
 	{
-		const auto keepOnBoardOption = std::function<void()>(
+		std::function<void()> keepOnBoardOption = std::function<void()>(
 		    [this]
 		    {
 			    // Do nothing to keep aliens on board
 		    });
 
-		const auto destroyOption = std::function<void()>(
-		    [this] {
-
+		std::function<void()> destroyOption = std::function<void()>(
+		    [this]
+		    {
+			    for (auto it = cargo.begin(); it != cargo.end();)
+			    {
+				    if (it->type == Cargo::Type::Bio)
+				    {
+					    it = cargo.erase(it);
+				    }
+			    }
 		    });
 
 		sp<MessageBox> messageBox = mksp<MessageBox>(
 		    MessageBox("No Alien Containment Facility",
 		               format("Alien specimens from tactical combat zone have arrived: %s",
 		                      destination->base->name),
-		               MessageBox::ButtonOptions::Custom, keepOnBoardOption, destroyOption, nullptr,
-		               {"Keep on board", "Destroy"}));
+		               MessageBox::ButtonOptions::Custom, std::move(keepOnBoardOption),
+		               std::move(destroyOption), nullptr, {"Keep on board", "Destroy"}));
+
+		fw().stageQueueCommand({StageCmd::Command::PUSH, messageBox});
 	}
 
 	// Step 01: Find first cargo destination and remove arrived cargo
@@ -1757,10 +1767,6 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 	{
 		if (it->destination == currentBuilding)
 		{
-			// Aliens are delivered to base only if alien containment is available
-			if (it->type == Cargo::Type::Bio && !alienContainmentExists)
-				continue;
-
 			it->arrive(state, cargoArrived, bioArrived, recoveryArrived, transferArrived,
 			           suppliers);
 			it = cargo.erase(it);
@@ -3888,6 +3894,19 @@ const UString Vehicle::getFormattedVehicleNameForEventMessage(GameState &state) 
 		return format("%s %s", tr("*"), name);
 
 	return name;
+}
+
+const bool Vehicle::cargoContainsAlienLoot() const
+{
+	for (const auto &cargoItem : cargo)
+	{
+		if (cargoItem.type == Cargo::Type::Bio)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 Cargo::Cargo(GameState &state, StateRef<AEquipmentType> equipment, int count, int price,
