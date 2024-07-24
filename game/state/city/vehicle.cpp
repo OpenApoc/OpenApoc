@@ -1127,12 +1127,8 @@ void VehicleMover::updateCrashed(GameState &state, unsigned int ticks [[maybe_un
 	if (vehicle.tileObject && vehicle.tileObject->getOwningTile() &&
 	    vehicle.tileObject->getOwningTile()->presentScenery)
 	{
-		auto presentScenery = vehicle.tileObject->getOwningTile()->presentScenery;
-		if (!presentScenery)
-		{
-			vehicle.setCrashed(state, false);
-			vehicle.startFalling(state);
-		}
+		vehicle.setCrashed(state, false);
+		vehicle.startFalling(state);
 	}
 }
 
