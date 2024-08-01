@@ -15,7 +15,7 @@
 
 namespace OpenApoc
 {
-static const unsigned TICKS_PER_HAZARD_UPDATE = TICKS_PER_TURN / 2;
+static const unsigned TICKS_PER_HAZARD_UPDATE = TICKS_PER_TURN;
 
 class TileObjectBattleHazard;
 class DamageType;

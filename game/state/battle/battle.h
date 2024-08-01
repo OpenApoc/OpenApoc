@@ -1,5 +1,6 @@
 #pragma once
 
+#include "framework/framework.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/ai/tacticalai.h"
 #include "game/state/battle/battleforces.h"
