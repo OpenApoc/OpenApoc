@@ -1730,36 +1730,13 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 
 	// Only add aliens if alien containment is available at base
 	const auto vehicleContainsAlienLoot = cargoContainsAlienLoot();
-	const auto alienContainmentExists = destination->base->alienContainmentExists(state);
+	const auto alienContainmentExists = currentBuilding->base->alienContainmentExists(state);
 
 	if (vehicleContainsAlienLoot && !alienContainmentExists)
 	{
-		std::function<void()> keepOnBoardOption = std::function<void()>(
-		    [this]
-		    {
-			    // Do nothing to keep aliens on board
-		    });
-
-		std::function<void()> destroyOption = std::function<void()>(
-		    [this]
-		    {
-			    for (auto it = cargo.begin(); it != cargo.end();)
-			    {
-				    if (it->type == Cargo::Type::Bio)
-				    {
-					    it = cargo.erase(it);
-				    }
-			    }
-		    });
-
-		sp<MessageBox> messageBox = mksp<MessageBox>(
-		    MessageBox("No Alien Containment Facility",
-		               format("Alien specimens from tactical combat zone have arrived: %s",
-		                      destination->base->name),
-		               MessageBox::ButtonOptions::Custom, std::move(keepOnBoardOption),
-		               std::move(destroyOption), nullptr, {"Keep on board", "Destroy"}));
-
-		fw().stageQueueCommand({StageCmd::Command::PUSH, messageBox});
+		fw().pushEvent(
+		    new GameVehicleEvent(GameEventType::VehicleWithAlienLootInBaseWithNoContainment,
+		                         {&state, shared_from_this()}));
 	}
 
 	// Step 01: Find first cargo destination and remove arrived cargo

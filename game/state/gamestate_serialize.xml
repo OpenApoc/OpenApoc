@@ -349,6 +349,7 @@
 		<value>UnauthorizedVehicle</value>
 		<value>NotEnoughAmmo</value>
 		<value>NotEnoughFuel</value>
+    <value>VehicleWithAlienLootInBaseWithNoContainment</value>
 		<value>UfoRecoveryBegin</value>
 		<value>DefendTheBase</value>
 		<value>AgentRearmed</value>

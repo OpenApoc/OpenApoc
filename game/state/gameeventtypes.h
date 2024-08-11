@@ -25,6 +25,7 @@ enum class GameEventType
 	UnauthorizedVehicle,
 	NotEnoughAmmo,
 	NotEnoughFuel,
+	VehicleWithAlienLootInBaseWithNoContainment,
 	// Vehicle event that starts recovery mission
 	UfoRecoveryBegin,
 

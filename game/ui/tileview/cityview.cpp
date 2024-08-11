@@ -4049,6 +4049,41 @@ bool CityView::handleGameStateEvent(Event *e)
 				// Never pause for these
 				break;
 			}
+			case GameEventType::VehicleWithAlienLootInBaseWithNoContainment:
+			{
+				const auto vehicleEvent = dynamic_cast<GameVehicleEvent *>(e);
+				auto &cargo = vehicleEvent->vehicle->cargo;
+				const auto &currentBase = vehicleEvent->vehicle->currentBuilding->base;
+
+				std::function<void()> keepOnBoardOption = std::function<void()>(
+				    [this]
+				    {
+					    // Do nothing to keep aliens on board
+				    });
+
+				std::function<void()> destroyOption = std::function<void()>(
+				    [&]
+				    {
+					    for (auto it = cargo.begin(); it != cargo.end();)
+					    {
+						    if (it->type == Cargo::Type::Bio)
+						    {
+							    it = cargo.erase(it);
+						    }
+					    }
+				    });
+
+				sp<MessageBox> messageBox = mksp<MessageBox>(
+				    MessageBox("No Alien Containment Facility",
+				               format("Alien specimens from tactical combat zone have arrived: %s",
+				                      currentBase->name),
+				               MessageBox::ButtonOptions::Custom, std::move(keepOnBoardOption),
+				               std::move(destroyOption), nullptr, {"Keep on board", "Destroy"}));
+
+				fw().stageQueueCommand({StageCmd::Command::PUSH, messageBox});
+
+				break;
+			}
 			default:
 			{
 				bool pause = false;
