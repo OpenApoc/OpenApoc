@@ -130,7 +130,7 @@ void BaseScreen::begin()
 	        FormEventType::ButtonClick,
 	        [this](Event *)
 	        {
-		        if (this->state->current_base->alienContainmentExists(*state))
+		        if (!this->state->current_base->alienContainmentExists(*state))
 		        {
 			        fw().stageQueueCommand(
 			            {StageCmd::Command::PUSH,
