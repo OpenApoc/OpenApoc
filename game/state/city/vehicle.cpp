@@ -567,7 +567,7 @@ class FlyingVehicleMover : public VehicleMover
 						    std::max(floorf(glm::length(vectorToGoal) /
 						                    glm::length(vehicle.velocity) * (float)TICK_SCALE) -
 						                 5.0f,
-						             1.0f);
+						             2.0f);
 						if (ticksToMove < vehicle.ticksToTurn)
 						{
 							vehicle.velocity *= (float)ticksToMove / (float)vehicle.ticksToTurn;
