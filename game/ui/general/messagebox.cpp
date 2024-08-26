@@ -15,7 +15,8 @@ namespace OpenApoc
 
 MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions buttons,
                        std::function<void()> callbackYes, std::function<void()> callbackNo,
-                       std::function<void()> callbackCancel, std::vector<UString> buttonLabelList)
+                       std::function<void()> callbackCancel,
+                       std::map<UString, UString> customLabelDict)
     : Stage(), callbackYes(callbackYes), callbackNo(callbackNo), callbackCancel(callbackCancel)
 {
 	form = mksp<Form>();
@@ -39,6 +40,10 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 	lText->Location.y += lTitle->Size.y + MARGIN * 2;
 	lText->TextHAlign = HorizontalAlignment::Centre;
 
+	const auto &yesLabel = customLabelDict["yes"];
+	const auto &noLabel = customLabelDict["no"];
+	const auto &cancelLabel = customLabelDict["cancel"];
+
 	switch (buttons)
 	{
 		case ButtonOptions::Ok:
@@ -55,14 +60,16 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 		}
 		case ButtonOptions::YesNo:
 		{
-			auto bYes = form->createChild<TextButton>(tr("Yes"), ui().getFont("smallset"));
+			auto bYes = form->createChild<TextButton>(tr(!yesLabel.empty() ? yesLabel : "Yes"),
+			                                          ui().getFont("smallset"));
 			bYes->Name = "BUTTON_YES";
 			bYes->Size = BUTTON_SIZE;
 			bYes->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
 			bYes->Location.x = MARGIN;
 			bYes->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
-			auto bNo = form->createChild<TextButton>(tr("No"), ui().getFont("smallset"));
+			auto bNo = form->createChild<TextButton>(tr(!noLabel.empty() ? noLabel : "No"),
+			                                         ui().getFont("smallset"));
 			bNo->Name = "BUTTON_NO";
 			bNo->Size = BUTTON_SIZE;
 			bNo->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
@@ -74,21 +81,24 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 		}
 		case ButtonOptions::YesNoCancel:
 		{
-			auto bYes = form->createChild<TextButton>(tr("Yes"), ui().getFont("smallset"));
+			auto bYes = form->createChild<TextButton>(tr(!yesLabel.empty() ? yesLabel : "Yes"),
+			                                          ui().getFont("smallset"));
 			bYes->Name = "BUTTON_YES";
 			bYes->Size = BUTTON_SIZE_2;
 			bYes->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
 			bYes->Location.x = MARGIN;
 			bYes->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
-			auto bNo = form->createChild<TextButton>(tr("No"), ui().getFont("smallset"));
+			auto bNo = form->createChild<TextButton>(tr(!noLabel.empty() ? noLabel : "No"),
+			                                         ui().getFont("smallset"));
 			bNo->Name = "BUTTON_NO2";
 			bNo->Size = BUTTON_SIZE_2;
 			bNo->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
 			bNo->Location.x = form->Size.x / 2 - bNo->Size.x / 2;
 			bNo->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
-			auto bCan = form->createChild<TextButton>(tr("Cancel"), ui().getFont("smallset"));
+			auto bCan = form->createChild<TextButton>(
+			    tr(!cancelLabel.empty() ? cancelLabel : "Cancel"), ui().getFont("smallset"));
 			bCan->Name = "BUTTON_CANCEL";
 			bCan->Size = BUTTON_SIZE_2;
 			bCan->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
@@ -96,44 +106,6 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 			bCan->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
 			form->Size.y = bYes->Location.y + bYes->Size.y + MARGIN;
-			break;
-		}
-		case ButtonOptions::Custom:
-		{
-			auto b_one =
-				form->createChild<TextButton>(tr(buttonLabelList.size() >= 1 ? buttonLabelList[0] : "Ok"
-				), ui().getFont("smallset"));
-			b_one->Name = "BUTTON_YES";
-			b_one->Size = BUTTON_SIZE_2;
-			b_one->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
-			b_one->Location.x = MARGIN;
-			b_one->Location.y = lText->Location.y + lText->Size.y + MARGIN;
-
-			// Buttons #2 and #3 will only show up if callback and label are provided for each one
-			if (callbackNo && buttonLabelList.size() >= 2)
-			{
-				auto b_two =
-				    form->createChild<TextButton>(tr(buttonLabelList[1]), ui().getFont("smallset"));
-				b_two->Name = "BUTTON_NO2";
-				b_two->Size = BUTTON_SIZE_2;
-				b_two->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
-				b_two->Location.x = form->Size.x / 2 - b_two->Size.x / 2;
-				b_two->Location.y = lText->Location.y + lText->Size.y + MARGIN;
-			}
-
-			if (callbackCancel && buttonLabelList.size() >= 3)
-			{
-				auto b_three =
-				    form->createChild<TextButton>(tr(buttonLabelList[2]), ui().getFont("smallset"));
-				b_three->Name = "BUTTON_CANCEL";
-				b_three->Size = BUTTON_SIZE_2;
-				b_three->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
-				b_three->Location.x = form->Size.x - b_three->Size.x - MARGIN;
-				b_three->Location.y = lText->Location.y + lText->Size.y + MARGIN;
-			}
-
-			form->Size.y = b_one->Location.y + b_one->Size.y + MARGIN;
-
 			break;
 		}
 	}

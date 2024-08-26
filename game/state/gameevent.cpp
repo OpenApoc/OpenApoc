@@ -130,7 +130,7 @@ UString GameVehicleEvent::message()
 		case GameEventType::NotEnoughFuel:
 			return format("%s %s", tr("Not enough fuel to refuel vehicle"), vehicle->name);
 		case GameEventType::VehicleWithAlienLootInBaseWithNoContainment:
-			return "";
+			return format("%s %s", tr("Vehicle landed with alien loot in base with no alien containment"), vehicle->name);
 		default:
 			LogError("Invalid vehicle event type");
 			break;

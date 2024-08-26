@@ -4052,15 +4052,31 @@ bool CityView::handleGameStateEvent(Event *e)
 			case GameEventType::VehicleWithAlienLootInBaseWithNoContainment:
 			{
 				const auto vehicleEvent = dynamic_cast<GameVehicleEvent *>(e);
-				auto &cargo = vehicleEvent->vehicle->cargo;
-				const auto &currentBase = vehicleEvent->vehicle->currentBuilding->base;
+				auto &vehicle = vehicleEvent->vehicle;
+				auto &cargo = vehicle->cargo;
+				auto &missions = vehicle->missions;
+				const auto &currentBuilding = vehicle->currentBuilding;
+				const auto &currentBase = currentBuilding->base;
 
+				// Do nothing to keep aliens on board
+				// Aliens are not destroyed and not stored into base
 				std::function<void()> keepOnBoardOption = std::function<void()>(
-				    [this]
+				    [&]
 				    {
-					    // Do nothing to keep aliens on board
+					    // We are not allowed to call vehicle->clearMissions from here since it will
+					    // raise an exception.
+					    // We also need to add an offerService mission, otherwise
+					    // Vehicle::updateCargo will try to ferry this alien cargo again.
+					    // To solve this, we clear manually the vehicle mission list and add an
+					    // offerService mission that won't conclude at the end of this event
+					    // When Vehicle::updateCargo runs, it will detect this offerService mission
+					    // pending and will not try to ferry this alien cargo again.
+					    missions.clear();
+					    missions.push_back(
+					        VehicleMission::offerService(*state, *vehicle, currentBuilding));
 				    });
 
+				// Destroy all aliens in vehicle
 				std::function<void()> destroyOption = std::function<void()>(
 				    [&]
 				    {
@@ -4077,8 +4093,9 @@ bool CityView::handleGameStateEvent(Event *e)
 				    MessageBox("No Alien Containment Facility",
 				               format("Alien specimens from tactical combat zone have arrived: %s",
 				                      currentBase->name),
-				               MessageBox::ButtonOptions::Custom, std::move(keepOnBoardOption),
-				               std::move(destroyOption), nullptr, {"Keep on board", "Destroy"}));
+				               MessageBox::ButtonOptions::YesNo, std::move(keepOnBoardOption),
+				               std::move(destroyOption), nullptr,
+				               {{"yes", "Keep on board"}, {"no", "Destroy"}}));
 
 				fw().stageQueueCommand({StageCmd::Command::PUSH, messageBox});
 

@@ -4,6 +4,7 @@
 #include "library/sp.h"
 #include "library/strings.h"
 #include <functional>
+#include <map>
 
 namespace OpenApoc
 {
@@ -23,15 +24,15 @@ class MessageBox : public Stage
 	{
 		Ok,
 		YesNo,
-		YesNoCancel,
-		Custom
+		YesNoCancel
 	};
 
 	MessageBox(const UString &title, const UString &text, ButtonOptions buttons,
 	           std::function<void()> callbackYes = std::function<void()>(),
 	           std::function<void()> callbackNo = std::function<void()>(),
 	           std::function<void()> callbackCancel = std::function<void()>(),
-	           std::vector<UString> buttonLabelList = {});
+	           std::map<UString, UString> customLabelDict = {
+	               {"yes", ""}, {"no", ""}, {"cancel", ""}});
 	~MessageBox() override;
 	// Stage control
 	void begin() override;
