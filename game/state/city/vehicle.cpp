@@ -1731,9 +1731,11 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 	// Only add aliens if alien containment is available at base
 	const auto vehicleContainsAlienLoot = cargoContainsAlienLoot();
 	const auto alienContainmentExists = currentBuilding->base->alienContainmentExists();
-	
-	// Vehicle must be stopped from unloading alien cargo when vehicle has alien loot but base has no alien containment
-	const auto isVehicleAllowedToUnloadAlienCargo = !(vehicleContainsAlienLoot && !alienContainmentExists);
+
+	// Vehicle must be stopped from unloading alien cargo when vehicle has alien loot but base has
+	// no alien containment
+	const auto isVehicleAllowedToUnloadAlienCargo =
+	    !(vehicleContainsAlienLoot && !alienContainmentExists);
 
 	if (!isVehicleAllowedToUnloadAlienCargo)
 	{
@@ -1754,7 +1756,8 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 				continue;
 			}
 
-			it->arrive(state, cargoArrived, bioArrived, recoveryArrived, transferArrived, suppliers);
+			it->arrive(state, cargoArrived, bioArrived, recoveryArrived, transferArrived,
+			           suppliers);
 			it = cargo.erase(it);
 		}
 		else
