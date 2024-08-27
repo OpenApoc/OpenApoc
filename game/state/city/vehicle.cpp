@@ -36,6 +36,8 @@
 #include <limits>
 #include <queue>
 #include <random>
+#include <fstream>
+#include <iostream>
 
 namespace OpenApoc
 {
@@ -573,6 +575,19 @@ class FlyingVehicleMover : public VehicleMover
 						{
 							vehicle.velocity *= (float)ticksToMove / (float)vehicle.ticksToTurn;
 						}
+
+						//@kgd192 log velocity data in relation to angular velocity for research
+						std::ofstream velocityLog("velocitylog.csv", std::ios_base::app);
+						velocityLog << ("angular, " + std::to_string(vehicle.angularVelocity) + "\n");
+						velocityLog << ("old velocity," + std::to_string(vehicle.velocity.x) +
+						           "," + std::to_string(vehicle.velocity.y) + "," +
+						                std::to_string(vehicle.velocity.z) + "\n");
+						// Slow down in relation to angular Velocity
+						auto turningV = vehicle.velocity;
+						turningV = vehicle.velocity * std::abs(vehicle.angularVelocity);
+						velocityLog << ("new velocity," + std::to_string(turningV.x) +
+						           "," + std::to_string(turningV.y) + "," +
+						                std::to_string(turningV.z) + "\n");
 					}
 				}
 			}
