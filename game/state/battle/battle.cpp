@@ -3793,11 +3793,11 @@ void Battle::loadMessages(GameState &state)
 const std::list<StateRef<Vehicle>> Battle::getPlayerVehicles(GameState &state)
 {
 	std::list<StateRef<Vehicle>> playerVehicles;
-	const auto playerCraft = &state.current_battle->player_craft;
+	const auto playerCraft = state.current_battle->player_craft;
 
 	if (playerCraft)
 	{
-		playerVehicles.push_back(*playerCraft);
+		playerVehicles.push_back(playerCraft);
 	}
 
 	if (config().getBool("OpenApoc.NewFeature.AllowNearbyVehicleLootPickup"))
@@ -3816,7 +3816,7 @@ const std::list<StateRef<Vehicle>> Battle::getPlayerVehicles(GameState &state)
 				    v.second->city == city && !v.second->currentBuilding;
 
 				// Player's vehicle was already added and has priority
-				const auto isVehiclePlayerCraft = v.first == playerCraft->id;
+				const auto isVehiclePlayerCraft = v.first == playerCraft.id;
 
 				if (!isVehiclePlayerOwned || !isVehicleInTheCity || isVehiclePlayerCraft)
 				{
@@ -3835,7 +3835,7 @@ const std::list<StateRef<Vehicle>> Battle::getPlayerVehicles(GameState &state)
 			for (const auto &v : location->currentVehicles)
 			{
 				// Player's vehicle was already added and has priority
-				if (v->owner == state.player && v != *playerCraft)
+				if (v->owner == state.player && v != playerCraft)
 				{
 					playerVehicles.push_back(v);
 				}
