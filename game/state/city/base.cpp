@@ -451,9 +451,9 @@ void Base::destroyFacility(GameState &state, Vec2<int> pos)
 	}
 }
 
-bool Base::alienContainmentExists(GameState &state)
+bool Base::alienContainmentExists() const
 {
-	return state.current_base->getCapacityTotal(FacilityType::Capacity::Aliens) > 0;
+	return getCapacityTotal(FacilityType::Capacity::Aliens) > 0;
 }
 
 bool Base::alienContainmentIsEmpty(GameState &state)

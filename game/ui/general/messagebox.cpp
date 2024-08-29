@@ -15,7 +15,8 @@ namespace OpenApoc
 
 MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions buttons,
                        std::function<void()> callbackYes, std::function<void()> callbackNo,
-                       std::function<void()> callbackCancel)
+                       std::function<void()> callbackCancel,
+                       std::map<UString, UString> customLabelDict)
     : Stage(), callbackYes(callbackYes), callbackNo(callbackNo), callbackCancel(callbackCancel)
 {
 	form = mksp<Form>();
@@ -39,6 +40,10 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 	lText->Location.y += lTitle->Size.y + MARGIN * 2;
 	lText->TextHAlign = HorizontalAlignment::Centre;
 
+	const auto &yesLabel = customLabelDict["yes"];
+	const auto &noLabel = customLabelDict["no"];
+	const auto &cancelLabel = customLabelDict["cancel"];
+
 	switch (buttons)
 	{
 		case ButtonOptions::Ok:
@@ -55,14 +60,16 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 		}
 		case ButtonOptions::YesNo:
 		{
-			auto bYes = form->createChild<TextButton>(tr("Yes"), ui().getFont("smallset"));
+			auto bYes = form->createChild<TextButton>(tr(!yesLabel.empty() ? yesLabel : "Yes"),
+			                                          ui().getFont("smallset"));
 			bYes->Name = "BUTTON_YES";
 			bYes->Size = BUTTON_SIZE;
 			bYes->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
 			bYes->Location.x = MARGIN;
 			bYes->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
-			auto bNo = form->createChild<TextButton>(tr("No"), ui().getFont("smallset"));
+			auto bNo = form->createChild<TextButton>(tr(!noLabel.empty() ? noLabel : "No"),
+			                                         ui().getFont("smallset"));
 			bNo->Name = "BUTTON_NO";
 			bNo->Size = BUTTON_SIZE;
 			bNo->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
@@ -74,21 +81,24 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 		}
 		case ButtonOptions::YesNoCancel:
 		{
-			auto bYes = form->createChild<TextButton>(tr("Yes"), ui().getFont("smallset"));
+			auto bYes = form->createChild<TextButton>(tr(!yesLabel.empty() ? yesLabel : "Yes"),
+			                                          ui().getFont("smallset"));
 			bYes->Name = "BUTTON_YES";
 			bYes->Size = BUTTON_SIZE_2;
 			bYes->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
 			bYes->Location.x = MARGIN;
 			bYes->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
-			auto bNo = form->createChild<TextButton>(tr("No"), ui().getFont("smallset"));
+			auto bNo = form->createChild<TextButton>(tr(!noLabel.empty() ? noLabel : "No"),
+			                                         ui().getFont("smallset"));
 			bNo->Name = "BUTTON_NO2";
 			bNo->Size = BUTTON_SIZE_2;
 			bNo->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
 			bNo->Location.x = form->Size.x / 2 - bNo->Size.x / 2;
 			bNo->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
-			auto bCan = form->createChild<TextButton>(tr("Cancel"), ui().getFont("smallset"));
+			auto bCan = form->createChild<TextButton>(
+			    tr(!cancelLabel.empty() ? cancelLabel : "Cancel"), ui().getFont("smallset"));
 			bCan->Name = "BUTTON_CANCEL";
 			bCan->Size = BUTTON_SIZE_2;
 			bCan->RenderStyle = TextButton::ButtonRenderStyle::Bevel;

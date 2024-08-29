@@ -29,6 +29,7 @@
 #include "game/state/tilemap/tileobject_projectile.h"
 #include "game/state/tilemap/tileobject_shadow.h"
 #include "game/state/tilemap/tileobject_vehicle.h"
+#include "game/ui/general/messagebox.h"
 #include "library/sp.h"
 #include <glm/glm.hpp>
 #include <glm/gtx/vector_angle.hpp>
@@ -1727,11 +1728,34 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 	std::set<StateRef<Organisation>> suppliers;
 	StateRef<Building> destination;
 
+	// Only add aliens if alien containment is available at base
+	const auto vehicleContainsAlienLoot = cargoContainsAlienLoot();
+	const auto alienContainmentExists = currentBuilding->base->alienContainmentExists();
+
+	// Vehicle must be stopped from unloading alien cargo when vehicle has alien loot but base has
+	// no alien containment
+	const auto isVehicleAllowedToUnloadAlienCargo =
+	    !(vehicleContainsAlienLoot && !alienContainmentExists);
+
+	if (!isVehicleAllowedToUnloadAlienCargo)
+	{
+		fw().pushEvent(
+		    new GameVehicleEvent(GameEventType::VehicleWithAlienLootInBaseWithNoContainment,
+		                         {&state, shared_from_this()}));
+	}
+
 	// Step 01: Find first cargo destination and remove arrived cargo
 	for (auto it = cargo.begin(); it != cargo.end();)
 	{
 		if (it->destination == currentBuilding)
 		{
+			// Only unload alien cargo when base has alien containment
+			if (it->type == Cargo::Type::Bio && !isVehicleAllowedToUnloadAlienCargo)
+			{
+				it++;
+				continue;
+			}
+
 			it->arrive(state, cargoArrived, bioArrived, recoveryArrived, transferArrived,
 			           suppliers);
 			it = cargo.erase(it);
@@ -3859,6 +3883,19 @@ const UString Vehicle::getFormattedVehicleNameForEventMessage(GameState &state) 
 		return format("%s %s", tr("*"), name);
 
 	return name;
+}
+
+const bool Vehicle::cargoContainsAlienLoot() const
+{
+	for (const auto &cargoItem : cargo)
+	{
+		if (cargoItem.type == Cargo::Type::Bio)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
 
 Cargo::Cargo(GameState &state, StateRef<AEquipmentType> equipment, int count, int price,

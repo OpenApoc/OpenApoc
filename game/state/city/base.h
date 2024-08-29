@@ -57,7 +57,7 @@ class Base : public StateObject<Base>, public std::enable_shared_from_this<Base>
 	void destroyFacility(GameState &state, Vec2<int> pos);
 
 	// Returns if an Alien Containment module exists at base
-	bool alienContainmentExists(GameState &state);
+	bool alienContainmentExists() const;
 
 	// Returns if Alien Containment capacity is empty at base
 	bool alienContainmentIsEmpty(GameState &state);
