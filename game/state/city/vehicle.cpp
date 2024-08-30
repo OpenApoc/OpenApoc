@@ -1,7 +1,8 @@
 #ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
+#include "game/state/gametime.h"
+#include <cstdlib>
 #endif
-#include "game/state/city/vehicle.h"
 #include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
@@ -11,6 +12,7 @@
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/scenery.h"
+#include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/city/vequipment.h"
 #include "game/state/gameevent.h"
@@ -31,13 +33,13 @@
 #include "game/state/tilemap/tileobject_vehicle.h"
 #include "game/ui/general/messagebox.h"
 #include "library/sp.h"
+#include <fstream>
 #include <glm/glm.hpp>
 #include <glm/gtx/vector_angle.hpp>
+#include <iostream>
 #include <limits>
 #include <queue>
 #include <random>
-#include <fstream>
-#include <iostream>
 
 namespace OpenApoc
 {
@@ -560,7 +562,6 @@ class FlyingVehicleMover : public VehicleMover
 					// d += 0.12f * (float)M_PI;
 					vehicle.ticksToTurn = floorf(d / vehicle.angularVelocity);
 
-					// FIXME: Introduce proper turning speed
 					// Here we just slow down velocity if we're moving too quickly
 					if (vehicle.position != vehicle.goalPosition)
 					{
@@ -573,21 +574,9 @@ class FlyingVehicleMover : public VehicleMover
 						             2.0f);
 						if (ticksToMove < vehicle.ticksToTurn)
 						{
-							vehicle.velocity *= (float)ticksToMove / (float)vehicle.ticksToTurn;
+							vehicle.velocity *=
+							    std::abs(vehicle.angularVelocity) * TURNING_SLOW_DOWN_CORRECTION;
 						}
-
-						//@kgd192 log velocity data in relation to angular velocity for research
-						std::ofstream velocityLog("velocitylog.csv", std::ios_base::app);
-						velocityLog << ("angular, " + std::to_string(vehicle.angularVelocity) + "\n");
-						velocityLog << ("old velocity," + std::to_string(vehicle.velocity.x) +
-						           "," + std::to_string(vehicle.velocity.y) + "," +
-						                std::to_string(vehicle.velocity.z) + "\n");
-						// Slow down in relation to angular Velocity
-						auto turningV = vehicle.velocity;
-						turningV = vehicle.velocity * std::abs(vehicle.angularVelocity);
-						velocityLog << ("new velocity," + std::to_string(turningV.x) +
-						           "," + std::to_string(turningV.y) + "," +
-						                std::to_string(turningV.z) + "\n");
 					}
 				}
 			}
