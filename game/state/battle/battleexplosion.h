@@ -7,6 +7,8 @@
 
 namespace OpenApoc
 {
+static constexpr unsigned TICKS_PER_EXPLOSION_EXPANSION = 4;
+
 class GameState;
 class TileMap;
 class Battle;
