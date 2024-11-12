@@ -1734,7 +1734,8 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 
 	// Only add aliens if alien containment is available at base
 	const auto vehicleContainsAlienLoot = cargoContainsAlienLoot();
-	const auto alienContainmentExists = currentBuilding->base->alienContainmentExists();
+	const auto alienContainmentExists =
+	    currentBuilding->base ? currentBuilding->base->alienContainmentExists() : false;
 
 	// Vehicle must be stopped from unloading alien cargo when vehicle has alien loot but base has
 	// no alien containment
