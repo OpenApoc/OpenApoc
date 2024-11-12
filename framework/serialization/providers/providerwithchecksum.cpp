@@ -33,7 +33,7 @@ static UString calculateSHA1Checksum(const std::string &str)
 	unsigned int hash[5];
 #endif
 	sha.get_digest(hash);
-	std::array<uint32_t,5> hashu32;
+	std::array<uint32_t, 5> hashu32;
 	memcpy(hashu32.data(), hash, sizeof(hashu32));
 	for (int i = 0; i < 5; i++)
 	{
