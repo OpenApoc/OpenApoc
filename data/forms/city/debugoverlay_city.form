@@ -155,20 +155,14 @@
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="CTRLSHIFTV" text="Ctrl+Shift+V = Fix vehicles stuck in slow motion">
-				<position x="left" y="350"/>
-				<size width="350" height="14"/>
-				<alignment horizontal="left" vertical="top"/>
-				<font>smalfont</font>
-			</label>
 			<label id="Base" text="Base Screen - F10 = Finish All Facilities">
-				<position x="left" y="364"/>
+				<position x="left" y="350"/>
 				<size width="250" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
 			<label id="Research" text="Research Screen - F10 = Complete Project at Next Update (With at least two Scientists Assigned)">
-				<position x="left" y="378"/>
+				<position x="left" y="364"/>
 				<size width="640" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
