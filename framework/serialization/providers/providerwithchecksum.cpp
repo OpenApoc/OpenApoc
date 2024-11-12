@@ -27,11 +27,17 @@ static UString calculateSHA1Checksum(const std::string &str)
 
 	boost::uuids::detail::sha1 sha;
 	sha.process_bytes(str.c_str(), str.size());
+#if BOOST_VERSION >= 108600
+	boost::uuids::detail::sha1::digest_type hash;
+#else
 	unsigned int hash[5];
+#endif
 	sha.get_digest(hash);
+	std::array<uint32_t, 5> hashu32;
+	memcpy(hashu32.data(), hash, sizeof(hashu32));
 	for (int i = 0; i < 5; i++)
 	{
-		unsigned int v = hash[i];
+		unsigned int v = hashu32[i];
 		for (int j = 0; j < 4; j++)
 		{
 			// FIXME: Probably need to do the reverse for big endian?
