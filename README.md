@@ -37,23 +37,22 @@ All rights for the original game and its resources belong to their respective ow
 
 ## Key Features
 
-* Unlimited modding capabilities, which was not possible in the original
+* Full modding capability, which was not possible in the original
 * Port the game to any platform you like (windows, linux, android etc)
-* Support for modern screen resolutions
-* Added a full debug system ([hot keys](https://github.com/OpenApoc/OpenApoc/blob/master/README_HOTKEYS.txt), etc.)
-* Added 'more options' menu (with more than 40 improvements)
-* Added skirmish module (fast fight)
+* Support for modern screen resolutions at a silky smooth 60fps
+* Added a full debug system ([Hot Keys](https://github.com/OpenApoc/OpenApoc/blob/master/README_HOTKEYS.txt), etc.)
+* Added a 'More Options' menu that allows players to select dozens of new optional improvements and enhancements
+* Added a Skirmish Mode for quick fights and custom battles (Experimental)
 * The new engine has ample opportunities for expansion and changes:
-  * High FPS, smooth sound during the game without bugs from original
-  * No limitations which were in vanilla
-  * Modern formats
-* After release, we can add Julian Gollop's cut ideas to the game through mods. Many have already been added but they need functionality and balance.
+  * High FPS
+  * Smooth sound playback with none of the pop/clicks/stutters of the original game
+  * Human-Readable Savegame editing - It's all XML in a ZIP archvive so you can edit/tweak in progress games to your liking!
+* The potential to add cut and missing features from the Original Game - some of these are already included even at Alpha state or with the handful of mods already available!
 * [![Julian Gollop](https://img.shields.io/reddit/user-karma/combined/JulianGollop?style=social)](https://www.reddit.com/user/JulianGollop/) "Yes, I am aware of the openApoc project and I very much do support it." 
-* Fans creating Big Apoc Concept, for modders, thats should make OpenApoc more balanced, to provide:
-  * A variety of interesting gameplay solutions
-  * Make the game more complex and diverse
-  * L.O.R.E more fulfilling, deep and mysterious, intertwined with real history and other games 
-  * Ending the game can be more interesting and less predictable
+* Tool for modders that allow opportunity to make OpenApoc:
+  * More balanced
+  * More diverse
+  * More immersive
 
 ## What's left?
 
@@ -277,13 +276,13 @@ OPENGL 2.0 SUPPORTIVE VIDEO CARDS ARE REQUIRED
 WINDOWS USERS: You will require the LATEST Visual C++ Libraries obtained from windows update to run OpenApoc
 https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170
 
-(Keep in mind that OpenApoc is ALPHA STATE - this means bugs, crushes and not all features implemented, use our bug-tracker at https://github.com/OpenApoc/OpenApoc/issues to report bugs and navigate known ones)
+Simple steps to play OpenApoc on Windows right now
+(Keep in mind that it is ALPHA - this means bugs, crushes and not all features implemented, use our bug-tracker at https://github.com/OpenApoc/OpenApoc/issues to report bugs and navigate known ones)
 
-1) Download the OpenApoc core files: [![Windows Build Status](https://img.shields.io/appveyor/build/OpenApoc/openapoc?branch=master&label=AppVeyor%20Windows&logo=appveyor&logoColor=ffffff&labelColor=282828)](https://ci.appveyor.com/project/openapoc/openapoc/branch/master)  (Latest master build)
-- If the build link above doesn't work, visit  https://ci.appveyor.com/project/OpenApoc/openapoc/history
+1) Download the OpenApoc core files from https://github.com/OpenApoc/OpenApoc/releases
+- For experimental builds visit  https://ci.appveyor.com/project/OpenApoc/openapoc/history
 - If you see a green bar next to the latest build then you can download it, click a build that is green, or use "Show More" to list all builds
 - Click ARTIFACTS (Currently only Windows x64)
-- If there are no artifacts use https://github.com/OpenApoc/OpenApoc/releases for the latest Winx64 compile
 - Download the option that ends with a ".exe" (and without "debug" in it)
 - Run the downloaded exe installer, this will guide you through the installation
 - Use "portable install" if you want saves and settings to remain in the install directory
@@ -294,7 +293,7 @@ https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msv
 - If the disc image is in .iso format, rename it to "cd.iso"
 - We also support the GOG .cue / .bin files!
 
-3) Put cd.iso (image or folder) into the data folder under the specified OpenApoc install folder
+3) Put cd.iso (image or folder) into the "data" folder under the specified OpenApoc install folder
 - If you have already specified the "cd.iso" location in the installer, you don't need to do this step
 - To use GOG .cue/.bin you rename the XCOM.cue file to "cd.iso", put that in the OpenApoc data folder, then put the XCOM.BIN, without renaming it, into the data folder too
 
@@ -303,11 +302,14 @@ https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msv
 
 ## Contact us
 
-If you're interested, please visit our [website](http://openapoc.org).
-* We have [forums](http://openapoc.org/forum/) - please pop by and introduce yourself!
-* We have an [Discord](https://discord.gg/f8Rayre) channel
-* We have an IRC channel on [Freenode](http://webchat.freenode.net/?channels=openapoc) - [#openapoc](irc://irc.freenode.net/#openapoc).
+If you're interested, please visit our [website](http://openapoc.org) (Currently Offline).
+* We have a [Discord](https://discord.gg/f8Rayre) - MOST ACTIVE PLACE FOR ALL THINGS OPENAPOC!
 * We have a [Youtube](https://www.youtube.com/c/OpenApoc) channel.
+* We have a [forum](http://openapoc.org/forum/) (Currently Offline)
+
+## Unnofficial and Community Contacts
+
 * We have a [Facebook](https://www.facebook.com/openapoc) page.
-* We have a [Vkontakte](https://vk.com/openapoc) page.
 * We have a [Reddit](https://reddit.com/r/openapoc) page.
+* All VK Presence is currently unofficial
+* We have an IRC channel on [Freenode](http://webchat.freenode.net/?channels=openapoc) - [#openapoc](irc://irc.freenode.net/#openapoc).
