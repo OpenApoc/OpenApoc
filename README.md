@@ -33,7 +33,10 @@
 
 
 ## Copyright
-All rights for the original game and its resources belong to their respective owners. We do not encourage and do not support any form of illegal usage of the original game. We strongly advise to purchase the original game on GOG or other platforms. Pirated ISOs are not supported and will cause issues such as crashes and map problems with OpenApoc.
+All rights for the original game and its resources belong to their respective owners.
+We do not encourage and do not support any form of illegal usage of the original game.
+We strongly advise to purchase the original game on STEAM or another platform of your choosing.
+Pirated disc images and archives are not supported and will cause issues such as crashes and map problems with OpenApoc.
 
 ## Key Features
 
@@ -56,20 +59,20 @@ All rights for the original game and its resources belong to their respective ow
 
 ## What's left?
 
-1. [TO HAVE A TRULY PLAYABLE ALPHA STATE (DONE)](https://github.com/OpenApoc/OpenApoc/issues/263)
-2. [TO REACH A BETA STATE (When All features implemented)](https://github.com/OpenApoc/OpenApoc/issues/264)
-3. [TO REACH OPENAPOC RELEASE 1.0](https://github.com/OpenApoc/OpenApoc/issues/265)
+1. [TO HAVE A TRULY PLAYABLE ALPHA STATE](https://github.com/OpenApoc/OpenApoc/issues/263)
+2. [TO REACH A BETA STATE (All core Original Game features implemented)](https://github.com/OpenApoc/OpenApoc/issues/264)
+3. [TO REACH OPENAPOC RELEASE 1.0 (Final polishing and testing to match or exceed Original Game state)](https://github.com/OpenApoc/OpenApoc/issues/265)
 4. [Modding Functions, Extra Features, Enhancements and Quality of Life Updates](https://github.com/OpenApoc/OpenApoc/issues/941)
 
 
 ## Contribute and FAQ
 
-http://openapoc.org/#contribute
+http://openapoc.org/#contribute  - Currently Offline
 >Here you find news, detailing how you can participate in project. 
 You can support the project by testing, translating, modding, drawing, modeling, concepting etc..
 
 http://openapoc.org/#faq
->Here you find the detailed FAQ (frequently asked questions)
+>Here you find the detailed FAQ (Frequently Asked Questions) - Currently Offline
 
 
 ## Building
