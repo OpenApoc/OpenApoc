@@ -1,6 +1,6 @@
 # OpenApocalypse [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Are%20you%20a%20fan%20of%20X-Com%20Apocalypse?%20OpenApoc%20is%20a%20clone%20of%20this%20great%20game%20-%20contribute!%20https://github.com/OpenApoc/OpenApoc&hashtags=games,openapoc,xcom)
 
-> OpenApoc is an open-source re-implementation of the original [X-COM: Apocalypse](https://www.ufopaedia.org/index.php/Apocalypse), that requires the original files to run, licensed under the GPL3 and written in C++ / SDL2. It was originally founded by PmProg in July 2014, and has since grown in [community](https://www.ufopaedia.org/index.php/Credits_(OpenApoc)).
+> OpenApoc is an open-source re-implementation of the original [X-COM: Apocalypse](https://www.ufopaedia.org/index.php/Apocalypse), that requires the original files to run, licensed under the GPL3 and written in C++ / SDL2. It was originally founded by PmProg in July 2014, and has since grown a significant [community](https://www.ufopaedia.org/index.php/Credits_(OpenApoc)).
 
 [![Linux Build Status](https://img.shields.io/travis/OpenApoc/OpenApoc?branch=master&label=Travis%20Linux&logo=Travis%20CI&logoColor=ffffff&labelColor=282828)](https://travis-ci.com/github/OpenApoc/OpenApoc)
 [![Windows Build Status](https://img.shields.io/appveyor/build/OpenApoc/openapoc?branch=master&label=AppVeyor%20Windows&logo=appveyor&logoColor=ffffff&labelColor=282828)](https://ci.appveyor.com/project/openapoc/openapoc/branch/master)
@@ -40,22 +40,22 @@ Pirated disc images and archives are not supported and will cause issues such as
 
 ## Key Features
 
-* Full modding capability, which was not possible in the original
-* Port the game to any platform you like (windows, linux, android etc)
-* Support for modern screen resolutions at a silky smooth 60fps
-* Added a full debug system ([Hot Keys](https://github.com/OpenApoc/OpenApoc/blob/master/README_HOTKEYS.txt), etc.)
-* Added a 'More Options' menu that allows players to select dozens of new optional improvements and enhancements
-* Added a Skirmish Mode for quick fights and custom battles (Experimental)
-* The new engine has ample opportunities for expansion and changes:
-  * High FPS
-  * Smooth sound playback with none of the pop/clicks/stutters of the original game
-  * Human-Readable Savegame editing - It's all XML in a ZIP archvive so you can edit/tweak in progress games to your liking!
-* The potential to add cut and missing features from the Original Game - some of these are already included even at Alpha state or with the handful of mods already available!
 * [![Julian Gollop](https://img.shields.io/reddit/user-karma/combined/JulianGollop?style=social)](https://www.reddit.com/user/JulianGollop/) "Yes, I am aware of the openApoc project and I very much do support it." 
-* Tool for modders that allow opportunity to make OpenApoc:
+* Full modding capability - You can add or change almost anything!
+* Options for modding that allow opportunity to make OpenApoc:
   * More balanced
   * More diverse
   * More immersive
+* Human-Readable Savegame editing - It's all XML in a ZIP archvive so you can edit/tweak in progress games to your liking!
+* Support for modern screen resolutions and display scaling at a silky smooth 60fps
+* Added a 'More Options' menu that allows players to select dozens of new optional improvements and enhancements
+* Added a full debug system ([Hot Keys](https://github.com/OpenApoc/OpenApoc/blob/master/README_HOTKEYS.txt), etc.)
+* Port the game to any platform you like (Windows, Linux, Etc.)
+* Added a Skirmish Mode for quick fights and custom battles (Experimental)
+* The new engine has ample opportunities for expansion and refinements including:
+  * High FPS
+  * Smooth sound playback with none of the pop/clicks/stutters of the original game
+* The potential to add cut and missing features from the Original Game - some of these are already included even at current Alpha state or with the handful of mods already available!
 
 ## What's left?
 
@@ -67,12 +67,12 @@ Pirated disc images and archives are not supported and will cause issues such as
 
 ## Contribute and FAQ
 
-http://openapoc.org/#contribute  - Currently Offline
+http://openapoc.org/#contribute  - Currently Offline, please use [Discord](https://discord.gg/f8Rayre)
 >Here you find news, detailing how you can participate in project. 
 You can support the project by testing, translating, modding, drawing, modeling, concepting etc..
 
-http://openapoc.org/#faq
->Here you find the detailed FAQ (Frequently Asked Questions) - Currently Offline
+http://openapoc.org/#faq  - Currently Offline, please use [Discord](https://discord.gg/f8Rayre)
+>Here you find the detailed FAQ (Frequently Asked Questions)
 
 
 ## Building
@@ -305,10 +305,10 @@ Simple steps to play OpenApoc on Windows right now
 
 ## Contact us
 
-If you're interested, please visit our [website](http://openapoc.org) (Currently Offline).
+If you're interested, please visit our [website](http://openapoc.org) (Currently Offline, please use [Discord](https://discord.gg/f8Rayre)).
 * We have a [Discord](https://discord.gg/f8Rayre) - MOST ACTIVE PLACE FOR ALL THINGS OPENAPOC!
 * We have a [Youtube](https://www.youtube.com/c/OpenApoc) channel.
-* We have a [forum](http://openapoc.org/forum/) (Currently Offline)
+* We have a [forum](http://openapoc.org/forum/) (Currently Offline, please use [Discord](https://discord.gg/f8Rayre))
 
 ## Unnofficial and Community Contacts
 
