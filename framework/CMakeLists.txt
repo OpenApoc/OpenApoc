@@ -30,7 +30,7 @@ set (FRAMEWORK_SOURCE_FILES
 	logger_sdldialog.cpp
 	logger_file.cpp
 	options.cpp
-	modinfo.cpp)
+	modinfo.cpp "timer.cpp")
 
 source_group(framework\\sources FILES ${FRAMEWORK_SOURCE_FILES})
 list(APPEND ALL_SOURCE_FILES ${FRAMEWORK_SOURCE_FILES})
@@ -68,7 +68,8 @@ set (FRAMEWORK_HEADER_FILES
 	logger_sdldialog.h
 	logger_file.h
 	options.h
-	modinfo.h translation.h)
+	modinfo.h translation.h
+	locked_queue.h "timer.h")
 
 source_group(framework\\headers FILES ${FRAMEWORK_HEADER_FILES})
 list(APPEND ALL_HEADER_FILES ${FRAMEWORK_HEADER_FILES})
@@ -196,7 +197,7 @@ add_library(OpenApoc_Framework STATIC
 	${MUSICLOADER_SOURCE_FILES} ${MUSICLOADER_HEADER_FILES}
 	${SOUND_SOURCE_FILES} ${SOUND_HEADER_FILES}
 	${RENDERER_SOURCE_FILES} ${RENDERER_HEADER_FILES}
-	${FILESYSTEM_SOURCE_FILES} ${FILESYSTEM_HEADER_FILES})
+	${FILESYSTEM_SOURCE_FILES} ${FILESYSTEM_HEADER_FILES} "timer.cpp")
 
 target_compile_definitions(OpenApoc_Framework PUBLIC
 		"-DRENDERERS=\"GLES_3_0:GL_2_0\"")
