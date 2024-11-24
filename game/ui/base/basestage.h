@@ -23,6 +23,7 @@ class BaseStage : public Stage
 	std::vector<sp<GraphicButton>> miniViews;
 	sp<Label> textFunds, textViewBase;
 
+	sp<Base> prevBase;
 	sp<GraphicButton> currentView;
 	BaseGraphics::FacilityHighlight viewHighlight;
 	sp<Facility> viewFacility;
