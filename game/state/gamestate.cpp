@@ -1203,9 +1203,19 @@ void GameState::updateEndOfFiveMinutes()
 		{
 			continue;
 		}
+
 		auto base = b.second->base;
-		for (auto v : b.second->currentVehicles)
+		for (auto it = b.second->currentVehicles.begin(); it != b.second->currentVehicles.end();)
 		{
+			auto v = *it;
+			if (this->vehicles.find(v.id) == this->vehicles.end())
+			{
+				LogWarning("%s not found, but removal was successful..", v.id);
+				v.clear();
+				it = b.second->currentVehicles.erase(it);
+				continue;
+			}
+
 			for (auto &e : v->equipment)
 			{
 				// We only can reload VehicleWeapon and VehicleEngine(?)
@@ -1237,6 +1247,8 @@ void GameState::updateEndOfFiveMinutes()
 					}
 				}
 			}
+
+			++it;
 		}
 	}
 
