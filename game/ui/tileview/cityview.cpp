@@ -76,6 +76,7 @@
 #include "library/sp.h"
 #include "library/strings_format.h"
 #include <glm/glm.hpp>
+#include <game/ui/vehiclecargobriefing.h>
 
 // Uncomment to start with paused
 #define DEBUG_START_PAUSE
@@ -2299,10 +2300,8 @@ void CityView::update()
 					    else if (Event::isPressed(e->forms().MouseInfo.Button,
 					                              Event::MouseButton::Middle))
 						{
-						    LogWarning("Middle button");
-						    //fw().stageQueueCommand({StageCmd::Command::PUSH,
-						    //                        mksp<LocationScreen>(this->state, vehicle)});
-						    //return;
+							// Cargo briefing
+						    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<Vehiclecargobriefing>(vehicle)});
 						}
 				    }
 				    handleClickedVehicle(
