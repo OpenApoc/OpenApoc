@@ -1101,6 +1101,16 @@ void GameState::update(unsigned int ticks)
 		{
 			if (v.second->city == current_city)
 			{
+				auto vehicleMission = v.second->missions;
+				if (!vehicleMission.empty() &&
+				    vehicleMission.back().type == VehicleMission::MissionType::AttackVehicle &&
+				    (vehicleMission.back().targetVehicle == nullptr ||
+				     vehicleMission.back().targetVehicle->city != current_city))
+				{
+					v.second->clearMissions(*this);
+					v.second->addMission(*this, VehicleMission::gotoBuilding(
+					                                *this, *v.second, v.second->homeBuilding));
+				}
 				v.second->update(*this, ticks);
 			}
 		}
