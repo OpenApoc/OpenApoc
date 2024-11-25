@@ -55,6 +55,7 @@ void BaseStage::begin()
 		if (state->current_base == viewBase)
 		{
 			currentView = view;
+			prevBase = viewBase;
 		}
 		view->setData(viewBase);
 		auto viewImage = drawMiniBase(*viewBase, viewHighlight, viewFacility);

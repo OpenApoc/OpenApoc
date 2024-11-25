@@ -82,6 +82,14 @@ void TransactionScreen::changeBase(sp<Base> newBase)
 	setDisplayType(type);
 }
 
+void TransactionScreen::restoreBase()
+{
+	if (state->current_base != prevBase)
+	{
+		this->changeBase(prevBase);
+	}
+}
+
 void TransactionScreen::setDisplayType(Type type)
 {
 	this->type = type;
@@ -643,6 +651,7 @@ void TransactionScreen::attemptCloseScreen()
 {
 	if (isClosable())
 	{
+		restoreBase();
 		fw().stageQueueCommand({StageCmd::Command::POP});
 	}
 	else
@@ -650,8 +659,16 @@ void TransactionScreen::attemptCloseScreen()
 		fw().stageQueueCommand({StageCmd::Command::PUSH,
 		                        mksp<MessageBox>(
 		                            confirmClosureText, "", MessageBox::ButtonOptions::YesNoCancel,
-		                            [this] { closeScreen(); },
-		                            [] { fw().stageQueueCommand({StageCmd::Command::POP}); })});
+		                            [this]
+		                            {
+			                            restoreBase();
+			                            closeScreen();
+		                            },
+		                            [this]
+		                            {
+			                            restoreBase();
+			                            fw().stageQueueCommand({StageCmd::Command::POP});
+		                            })});
 	}
 }
 
@@ -660,6 +677,7 @@ void TransactionScreen::forcedCloseScreen()
 	// Forced means we already asked player to confirm some secondary thing
 	// (like there being no free ferries right now)
 	executeOrders();
+	restoreBase();
 	fw().stageQueueCommand({StageCmd::Command::POP});
 }
 

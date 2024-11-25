@@ -220,7 +220,11 @@ void BaseScreen::begin()
 
 void BaseScreen::pause() {}
 
-void BaseScreen::resume() { textFunds->setText(state->getPlayerBalance()); }
+void BaseScreen::resume()
+{
+	BaseStage::begin();
+	textFunds->setText(state->getPlayerBalance());
+}
 
 void BaseScreen::finish() {}
 
