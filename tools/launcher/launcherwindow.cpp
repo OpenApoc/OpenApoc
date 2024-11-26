@@ -64,6 +64,10 @@ LauncherWindow::LauncherWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui
 	this->currentFramework = mkup<OpenApoc::Framework>("OpenApoc_Launcher", false);
 	ui->setupUi(this);
 
+	QIcon icon;
+	icon.addFile("apocicon.ico");
+	this->setWindowIcon(icon);
+
 	connect(ui->exitButton, &QPushButton::clicked, this, &LauncherWindow::exit);
 	connect(ui->playButton, &QPushButton::clicked, this, &LauncherWindow::play);
 	connect(ui->browseCDFile, &QPushButton::clicked, this, &LauncherWindow::browseCDFile);
