@@ -90,6 +90,7 @@ void BaseScreen::begin()
 		graphic->Name = "FACILITY_BUILD_TILE";
 		facilities->addItem(graphic);
 	}
+	facilities->update();
 
 	form->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick,
