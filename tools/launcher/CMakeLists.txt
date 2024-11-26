@@ -16,9 +16,11 @@ set (LAUNCHER_SOURCE_FILES
 	launcherwindow.cpp
 	launcherwindow.ui)
 
+set(sources ${sources} "apocicon.rc")
+
 list(APPEND ALL_SOURCE_FILES ${LAUNCHER_SOURCE_FILES})
 
-add_executable(OpenApoc_Launcher WIN32 ${LAUNCHER_SOURCE_FILES})
+add_executable(OpenApoc_Launcher WIN32 ${LAUNCHER_SOURCE_FILES} ${sources})
 
 target_link_libraries(OpenApoc_Launcher Qt5::Widgets)
 
