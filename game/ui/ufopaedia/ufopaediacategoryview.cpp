@@ -76,7 +76,7 @@ void UfopaediaCategoryView::begin()
 	}
 	baseY = infoLabel->Location.y;
 	baseH = infoLabel->Size.y;
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		auto labelName = format("LABEL_%d", i + 1);
 		auto label = menuform->findControlTyped<Label>(labelName);
