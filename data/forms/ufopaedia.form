@@ -85,6 +85,12 @@
           <alignment horizontal="left" vertical="centre"/>
           <font>smalfont</font>
         </label>
+        <label id="LABEL_10" text="LABEL_10">
+          <position x="340" y="210"/>
+          <size width="260" height="15"/>
+          <alignment horizontal="left" vertical="centre"/>
+        <font>smalfont</font>
+        </label>        
         <label id="VALUE_1" text="VALUE_1">
           <position x="360" y="66"/>
           <size width="250" height="15"/>
@@ -135,6 +141,12 @@
         </label>
         <label id="VALUE_9" text="VALUE_9">
           <position x="360" y="194"/>
+          <size width="250" height="15"/>
+          <alignment horizontal="right" vertical="centre"/>
+          <font>smalfont</font>
+        </label>
+        <label id="VALUE_10" text="VALUE_10">
+          <position x="360" y="210"/>
           <size width="250" height="15"/>
           <alignment horizontal="right" vertical="centre"/>
           <font>smalfont</font>
