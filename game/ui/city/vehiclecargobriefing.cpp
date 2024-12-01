@@ -1,5 +1,4 @@
-#include "game/ui/vehiclecargobriefing.h"
-#include <SDL_keycode.h>
+#include "game/ui/city/vehiclecargobriefing.h"
 #include <forms/form.h>
 #include <forms/label.h>
 #include <forms/listbox.h>
@@ -7,12 +6,6 @@
 #include <forms/ui.h>
 #include <framework/event.h>
 #include <framework/framework.h>
-#include <functional>
-#include <game/state/city/vehicle.h>
-#include <ranges>
-#include <sstream>
-#include <string>
-#include <vector>
 
 namespace OpenApoc
 {

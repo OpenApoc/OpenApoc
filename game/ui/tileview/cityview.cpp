@@ -75,7 +75,7 @@
 #include "game/ui/ufopaedia/ufopaediaview.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
-#include <game/ui/vehiclecargobriefing.h>
+#include <game/ui/city/vehiclecargobriefing.h>
 #include <glm/glm.hpp>
 
 // Uncomment to start with paused

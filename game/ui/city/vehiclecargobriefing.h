@@ -2,6 +2,7 @@
 
 #include "framework/stage.h"
 #include "library/sp.h"
+#include <game/state/city/vehicle.h>
 
 namespace OpenApoc
 {
@@ -9,7 +10,6 @@ namespace OpenApoc
 class Form;
 class Control;
 class FormsEvent;
-class EventMessage;
 
 class VehicleCargoBriefing : public Stage
 {
