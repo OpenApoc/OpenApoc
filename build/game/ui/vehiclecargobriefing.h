@@ -1,17 +1,11 @@
 #pragma once
 
-#include <string>
-#include <vector>
-#include <ranges>
-#include <sstream>
 #include "framework/stage.h"
 #include "library/sp.h"
-#include <functional>
-#include <game/state/city/vehicle.h>
-#include <game/state/message.h>
 
 namespace OpenApoc
 {
+
 class Form;
 class Control;
 class FormsEvent;
@@ -20,9 +14,9 @@ class EventMessage;
 class VehicleCargoBriefing : public Stage
 {
   private:
+	sp<Form> menuform;
+	std::list<Cargo> vehicleCargo;
 	bool asc;
-	std::list<Cargo> _vehicleCargo;
-	sp<Form> _menuform;
 
 	void refreshListBoxes();
 	void sortItems(std::list<Cargo> &list, bool byName = true, bool asc = true);
@@ -42,6 +36,7 @@ class VehicleCargoBriefing : public Stage
 	void update() override;
 	void render() override;
 	bool isTransition() override;
+
 };
 
 }; // namespace OpenApoc

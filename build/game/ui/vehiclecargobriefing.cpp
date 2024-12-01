@@ -1,35 +1,40 @@
-#include "game/ui/vehiclecargobriefing.h"
-#include "forms/form.h"
-#include "forms/ui.h"
-#include <SDL_keycode.h>
-#include <forms/graphicbutton.h>
+#include <forms/form.h>
 #include <forms/label.h>
 #include <forms/listbox.h>
 #include <forms/scrollbar.h>
+#include <forms/ui.h>
 #include <framework/event.h>
 #include <framework/framework.h>
+#include <game/state/city/vehicle.h>
+#include "game/ui/vehiclecargobriefing.h"
+#include <SDL_keycode.h>
+#include <functional>
+#include <ranges>
+#include <sstream>
+#include <string>
+#include <vector>
 
 namespace OpenApoc
 {
 
 VehicleCargoBriefing::VehicleCargoBriefing(sp<Vehicle> vehicle)
-    : Stage(), _menuform(ui().getForm("city/vehicle_cargo"))
+    : Stage(), menuform(ui().getForm("city/vehicle_cargo"))
 {
-	this->_vehicleCargo = vehicle->cargo;
-	removeZeroCountItems(this->_vehicleCargo);
-	sortItems(this->_vehicleCargo);
+	this->vehicleCargo = vehicle->cargo;
+	removeZeroCountItems(this->vehicleCargo);
+	sortItems(this->vehicleCargo);
 }
 
 VehicleCargoBriefing::~VehicleCargoBriefing() = default;
 
 void VehicleCargoBriefing::refreshListBoxes()
 {
-	auto listboxCargo = _menuform->findControlTyped<ListBox>("cargoList");
-	auto listboxPiece = _menuform->findControlTyped<ListBox>("pieceList");
+	auto listboxCargo = menuform->findControlTyped<ListBox>("cargoList");
+	auto listboxPiece = menuform->findControlTyped<ListBox>("pieceList");
 	listboxCargo->clear();
 	listboxPiece->clear();
 
-	for (const auto &item : this->_vehicleCargo)
+	for (const auto &item : this->vehicleCargo)
 	{
 		// name
 		auto nameOfCargo = mksp<Label>(convertToText(item.id), ui().getFont("smalfont"));
@@ -103,7 +108,7 @@ void VehicleCargoBriefing::resume() {}
 void VehicleCargoBriefing::finish() {}
 void VehicleCargoBriefing::eventOccurred(Event *e)
 {
-	_menuform->eventOccured(e);
+	menuform->eventOccured(e);
 
 	if (e->type() == EVENT_KEY_DOWN)
 	{
@@ -117,11 +122,11 @@ void VehicleCargoBriefing::eventOccurred(Event *e)
 		LogInfo("Cargo briefing button click..");
 		if (e->forms().RaisedBy->Name == "BTN_Cargo_Name")
 		{
-			sortItems(this->_vehicleCargo, true, this->asc ? false : true);
+			sortItems(this->vehicleCargo, true, this->asc ? false : true);
 		}
 		else if (e->forms().RaisedBy->Name == "BTN_Cargo_Piece")
 		{
-			sortItems(this->_vehicleCargo, false, this->asc ? false : true);
+			sortItems(this->vehicleCargo, false, this->asc ? false : true);
 		}
 
 		this->asc = this->asc ? false : true;
@@ -129,11 +134,11 @@ void VehicleCargoBriefing::eventOccurred(Event *e)
 		return;
 	}
 }
-void VehicleCargoBriefing::update() { _menuform->update(); }
+void VehicleCargoBriefing::update() { menuform->update(); }
 void VehicleCargoBriefing::render()
 {
 	fw().stageGetPrevious(this->shared_from_this())->render();
-	_menuform->render();
+	menuform->render();
 }
 bool VehicleCargoBriefing::isTransition() { return false; }
 
