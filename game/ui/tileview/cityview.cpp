@@ -1267,9 +1267,9 @@ CityView::CityView(sp<GameState> state)
 	                  [this](Event *) { this->updateSpeed = CityUpdateSpeed::Speed5; });
 	this->baseForm->findControl("BUTTON_SHOW_ALIEN_INFILTRATION")
 	    ->addCallback(FormEventType::ButtonClick,
-			[this](Event *) {
-				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InfiltrationScreen>(this->state)});
-			});
+						[this](Event *) {
+							fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InfiltrationScreen>(this->state)});
+						});
 	this->baseForm->findControl("BUTTON_SHOW_SCORE")
 	    ->addCallback(
 			FormEventType::ButtonClick,
