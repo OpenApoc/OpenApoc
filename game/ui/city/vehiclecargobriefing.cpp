@@ -1,3 +1,5 @@
+#include "game/ui/vehiclecargobriefing.h"
+#include <SDL_keycode.h>
 #include <forms/form.h>
 #include <forms/label.h>
 #include <forms/listbox.h>
@@ -5,10 +7,8 @@
 #include <forms/ui.h>
 #include <framework/event.h>
 #include <framework/framework.h>
-#include <game/state/city/vehicle.h>
-#include "game/ui/vehiclecargobriefing.h"
-#include <SDL_keycode.h>
 #include <functional>
+#include <game/state/city/vehicle.h>
 #include <ranges>
 #include <sstream>
 #include <string>
@@ -33,7 +33,6 @@ void VehicleCargoBriefing::refreshListBoxes()
 	auto listboxPiece = menuform->findControlTyped<ListBox>("pieceList");
 	listboxCargo->clear();
 	listboxPiece->clear();
-
 	for (const auto &item : this->vehicleCargo)
 	{
 		// name
@@ -115,7 +114,7 @@ void VehicleCargoBriefing::eventOccurred(Event *e)
 		LogInfo("Leave Cargo Briefing form..");
 		fw().stageQueueCommand({StageCmd::Command::POP});
 		return;
-	}	
+	}
 
 	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::ButtonClick)
 	{

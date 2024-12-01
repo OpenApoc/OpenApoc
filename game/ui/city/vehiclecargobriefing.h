@@ -36,7 +36,6 @@ class VehicleCargoBriefing : public Stage
 	void update() override;
 	void render() override;
 	bool isTransition() override;
-
 };
 
 }; // namespace OpenApoc
