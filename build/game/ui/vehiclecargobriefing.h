@@ -1,32 +1,37 @@
 #pragma once
 
+#include <string>
+#include <vector>
+#include <ranges>
+#include <sstream>
 #include "framework/stage.h"
 #include "library/sp.h"
 #include <functional>
 #include <game/state/city/vehicle.h>
+#include <game/state/message.h>
 
 namespace OpenApoc
 {
-
-class GameState;
 class Form;
-class CityView;
-//class EventMessage;
-//class BattleView;
-//class Control;
-//class FormsEvent;
+class Control;
+class FormsEvent;
+class EventMessage;
 
-class Vehiclecargobriefing : public Stage
+class VehicleCargoBriefing : public Stage
 {
   private:
-	sp<Form> menuform;
-	sp<GameState> state;
-	//sp<Control> createCargoRow(sp<GameState> state, CityView &cityView);
+	bool asc;
+	std::list<Cargo> _vehicleCargo;
+	sp<Form> _menuform;
+
+	void refreshListBoxes();
+	void sortItems(std::list<Cargo> &list, bool byName = true, bool asc = true);
+	void removeZeroCountItems(std::list<Cargo> &list);
+	UString convertToText(const UString &item);
 
   public:
-	Vehiclecargobriefing(sp<Vehicle> vehicle);
-	Vehiclecargobriefing(sp<GameState> state, sp<Vehicle> vehicle);
-	~Vehiclecargobriefing() override;
+	VehicleCargoBriefing(sp<Vehicle> vehicle);
+	~VehicleCargoBriefing() override;
 
 	// Stage control
 	void begin() override;

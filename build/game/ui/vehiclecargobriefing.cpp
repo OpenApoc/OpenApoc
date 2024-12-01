@@ -2,78 +2,139 @@
 #include "forms/form.h"
 #include "forms/ui.h"
 #include <SDL_keycode.h>
-#include <framework/event.h>
-#include <framework/framework.h>
+#include <forms/graphicbutton.h>
+#include <forms/label.h>
 #include <forms/listbox.h>
 #include <forms/scrollbar.h>
+#include <framework/event.h>
+#include <framework/framework.h>
 
 namespace OpenApoc
 {
-// VEHICLE_CARGO_BRIEFING
 
-Vehiclecargobriefing::Vehiclecargobriefing(sp<Vehicle> vehicle)
-    : Stage(), menuform(ui().getForm("city/vehicle_cargo")), state(state)
+VehicleCargoBriefing::VehicleCargoBriefing(sp<Vehicle> vehicle)
+    : Stage(), _menuform(ui().getForm("city/vehicle_cargo"))
 {
-	LogWarning("CargoClass..");
+	this->_vehicleCargo = vehicle->cargo;
+	removeZeroCountItems(this->_vehicleCargo);
+	sortItems(this->_vehicleCargo);
+}
 
-	//auto listbox = menuform->findControlTyped<ListBox>("LISTBOX_CARGO");
-	//for (auto cargo : vehicle->missions)
-	//{
-	//	
-	//}
+VehicleCargoBriefing::~VehicleCargoBriefing() = default;
+
+void VehicleCargoBriefing::refreshListBoxes()
+{
+	auto listboxCargo = _menuform->findControlTyped<ListBox>("cargoList");
+	auto listboxPiece = _menuform->findControlTyped<ListBox>("pieceList");
+	listboxCargo->clear();
+	listboxPiece->clear();
+
+	for (const auto &item : this->_vehicleCargo)
+	{
+		// name
+		auto nameOfCargo = mksp<Label>(convertToText(item.id), ui().getFont("smalfont"));
+		nameOfCargo->Size = {150, 15};
+		nameOfCargo->TextHAlign = HorizontalAlignment::Left;
+		nameOfCargo->TextVAlign = VerticalAlignment::Centre;
+
+		// piece
+		auto pieceOfCargo = mksp<Label>(std::to_string(item.count), ui().getFont("smalfont"));
+		pieceOfCargo->Size = {150, 15};
+		pieceOfCargo->TextHAlign = HorizontalAlignment::Centre;
+		pieceOfCargo->TextVAlign = VerticalAlignment::Centre;
+
+		// adding
+		listboxCargo->addItem(nameOfCargo);
+		listboxPiece->addItem(pieceOfCargo);
+	}
 	this->update();
-	//listbox->scroller->scrollMax();
+	listboxCargo->scroller->scrollMin();
 }
-
-Vehiclecargobriefing::Vehiclecargobriefing(sp<GameState> state,
-                                           sp<Vehicle> vehicle)
-    : Stage(), menuform(ui().getForm("city/vehicle_cargo.form")), state(state)
+void VehicleCargoBriefing::sortItems(std::list<Cargo> &list, bool byName, bool asc)
 {
-	// auto listbox = menuform->findControlTyped<ListBox>("LISTBOX_MESSAGES");
-	// for (EventMessage message : state->messages)
-	//{
-	//	listbox->addItem(createMessageRow(message, state, cityView));
-	// }
-	// this->update();
-	// listbox->scroller->scrollMax();
+	list.sort(
+	    [byName, asc](const Cargo &itemA, const Cargo &itemB)
+	    {
+		    if (byName)
+		    {
+			    return asc ? itemA.id < itemB.id : itemA.id > itemB.id;
+		    }
+		    else
+		    {
+			    return asc ? itemA.count < itemB.count : itemA.count > itemB.count;
+		    }
+	    });
 }
+void VehicleCargoBriefing::removeZeroCountItems(std::list<Cargo> &list)
+{
+	list.remove_if(
+	    [](const Cargo &item)
+	    {
+		    return item.count == 0; // Töröljük, ha Count 0
+	    });
+}
+UString VehicleCargoBriefing::convertToText(const UString &item)
+{
+	UString output = "";
+	auto sResult = split(item, "_");
+	for (size_t i = 1; i < sResult.size(); i++)
+	{
+		for (size_t j = 0; j < sResult[i].size(); j++)
+		{
+			if (i == 1 && j == 0)
+			{
+				output += std::toupper(sResult[i][j]);
+			}
+			else
+			{
+				output += std::tolower(sResult[i][j]);
+			}
+		}
+		output += " ";
+	}
 
-Vehiclecargobriefing::~Vehiclecargobriefing() = default;
-
-// sp<Control> Vehiclecargobriefing::createCargoRow(sp<GameState> state, CityView &cityView) {}
+	return output;
+}
 
 // Stage control
-void Vehiclecargobriefing::begin() 
+void VehicleCargoBriefing::begin() { refreshListBoxes(); }
+void VehicleCargoBriefing::pause() {}
+void VehicleCargoBriefing::resume() {}
+void VehicleCargoBriefing::finish() {}
+void VehicleCargoBriefing::eventOccurred(Event *e)
 {
+	_menuform->eventOccured(e);
 
-}
-void Vehiclecargobriefing::pause() {}
-void Vehiclecargobriefing::resume() {}
-void Vehiclecargobriefing::finish() {}
-void Vehiclecargobriefing::eventOccurred(Event *e)
-{
-	menuform->eventOccured(e);
-
-	if (e->type() == EVENT_MOUSE_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		LogWarning("Briefing");
+		LogInfo("Leave Cargo Briefing form..");
 		fw().stageQueueCommand({StageCmd::Command::POP});
 		return;
+	}	
 
-		//if (e->keyboard().KeyCode == SDLK_i)
-		//{
-		//	menuform->findControl("BUTTON_OK")->click();
-		//	return;
-		//}
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::ButtonClick)
+	{
+		LogInfo("Cargo briefing button click..");
+		if (e->forms().RaisedBy->Name == "BTN_Cargo_Name")
+		{
+			sortItems(this->_vehicleCargo, true, this->asc ? false : true);
+		}
+		else if (e->forms().RaisedBy->Name == "BTN_Cargo_Piece")
+		{
+			sortItems(this->_vehicleCargo, false, this->asc ? false : true);
+		}
+
+		this->asc = this->asc ? false : true;
+		refreshListBoxes();
+		return;
 	}
-	return;
 }
-void Vehiclecargobriefing::update() { menuform->update(); }
-void Vehiclecargobriefing::render()
+void VehicleCargoBriefing::update() { _menuform->update(); }
+void VehicleCargoBriefing::render()
 {
 	fw().stageGetPrevious(this->shared_from_this())->render();
-	menuform->render();
+	_menuform->render();
 }
-bool Vehiclecargobriefing::isTransition() { return false; }
+bool VehicleCargoBriefing::isTransition() { return false; }
 
 }; // namespace OpenApoc
