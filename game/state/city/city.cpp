@@ -323,7 +323,35 @@ void City::dailyLoop(GameState &state)
 			b.second->updateWorkforce();
 		}
 	}
-	generatePortals(state);
+}
+
+void City::weeklyLoop(GameState &state) { generatePortals(state); }
+
+bool City::canPlacePortal(Vec3<float> position)
+{
+	if (!map->tileIsValid(position) || !map->getTile(position)->ownedObjects.empty())
+	{
+		return false;
+	}
+
+	for (int i = 1; i < 5; i++)
+	{
+		for (int x = -1; x <= 1; x++)
+		{
+			for (int y = -1; y <= 1; y++)
+			{
+				for (int z = -1; z <= 1; z++)
+				{
+					const auto newTile = position + Vec3<float>(x, y, z) * static_cast<float>(i);
+					if (!map->tileIsValid(newTile) || !map->getTile(newTile)->ownedObjects.empty())
+					{
+						return false;
+					}
+				}
+			}
+		}
+	}
+	return true;
 }
 
 void City::generatePortals(GameState &state)
@@ -345,12 +373,8 @@ void City::generatePortals(GameState &state)
 		}
 		else
 		{
-			// FIXME: Implement proper portals
-			// According to skin36, portals must have empty 4x4x4 around them
-			// and spawn within 100x100 around city center
-
 			// FIXME: Implement portals in alien city staying where they are
-			// and starting where they should
+			// and starting where they should (Need to be linked to portals in human city)
 
 			static const int iterLimit = 1000;
 			for (auto &p : portals)
@@ -367,7 +391,7 @@ void City::generatePortals(GameState &state)
 				{
 					Vec3<float> pos(xyPos(state.rng), xyPos(state.rng), zPos(state.rng));
 
-					if (map->tileIsValid(pos) && map->getTile(pos)->ownedObjects.empty())
+					if (canPlacePortal(pos))
 					{
 						auto doodad =
 						    mksp<Doodad>(pos + Vec3<float>{0.5f, 0.5f, 0.5f},
@@ -383,9 +407,49 @@ void City::generatePortals(GameState &state)
 	}
 	else
 	{
-		// FIXME: Implement moving portals
-		// According to skin36, portal is moved by +-(2*week + 15) on each coordinate
-		// and must stay within -5..105 which means within 15 from map border in our coords
+		if (this->id == "CITYMAP_HUMAN")
+		{
+			curPortalPosList.clear();
+
+			static const int iterLimit = 1000;
+			for (auto &p : portals)
+			{
+				curPortalPosList.push_back(p->position);
+				p->remove(state);
+			}
+			this->portals.clear();
+
+			int week = state.gameTime.getWeek();
+			int offset = (2 * week) + 15;
+			std::uniform_int_distribution<int> newxyOffset(-offset, offset);
+			std::uniform_int_distribution<int> newzPos(2, 8);
+
+			for (int p = 0; p < 3; p++)
+			{
+				for (int i = 0; i < iterLimit; i++)
+				{
+					Vec3<float> newPos(newxyOffset(state.rng) + curPortalPosList.back().x,
+					                   newxyOffset(state.rng) + curPortalPosList.back().y,
+					                   newzPos(state.rng));
+
+					if (canPlacePortal(newPos) &&
+					    std::clamp(newPos.x, static_cast<float>(15), static_cast<float>(105)) ==
+					        newPos.x &&
+					    std::clamp(newPos.y, static_cast<float>(15), static_cast<float>(105)) ==
+					        newPos.y)
+					{
+						auto doodad =
+						    mksp<Doodad>(newPos + Vec3<float>{0.5f, 0.5f, 0.5f},
+						                 StateRef<DoodadType>{&state, "DOODAD_6_DIMENSION_GATE"});
+						doodad->voxelMap = state.city_common_image_list->portalVoxelMap;
+						map->addObjectToMap(doodad);
+						this->portals.push_back(doodad);
+						curPortalPosList.pop_back();
+						break;
+					}
+				}
+			}
+		}
 	}
 }
 
