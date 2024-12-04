@@ -329,7 +329,7 @@ void City::weeklyLoop(GameState &state) { generatePortals(state); }
 
 bool City::canPlacePortal(Vec3<float> position)
 {
-	if (!map->tileIsValid(position) || !map->getTile(position)->ownedObjects.empty())
+	if (!(map->tileIsValid(position) && map->getTile(position)->ownedObjects.empty()))
 	{
 		return false;
 	}
@@ -340,10 +340,11 @@ bool City::canPlacePortal(Vec3<float> position)
 		{
 			for (int y = -1; y <= 1; y++)
 			{
-				for (int z = -1; z <= 1; z++)
+				for (int z = -2; z <= 2; z++)
 				{
-					const auto newTile = position + Vec3<float>(x, y, z) * static_cast<float>(i);
-					if (!map->tileIsValid(newTile) || !map->getTile(newTile)->ownedObjects.empty())
+					const auto newTile = position + Vec3<float>(x * i, y * i, z);
+
+					if (!(map->tileIsValid(newTile) && map->getTile(newTile)->ownedObjects.empty()))
 					{
 						return false;
 					}
@@ -356,6 +357,9 @@ bool City::canPlacePortal(Vec3<float> position)
 
 void City::generatePortals(GameState &state)
 {
+	const static auto zWeight = {1, 1, 3, 4, 6};
+	const static double portalDev = 25.0;
+
 	if (portals.empty())
 	{
 		if (!initial_portals.empty())
@@ -383,14 +387,16 @@ void City::generatePortals(GameState &state)
 			}
 			this->portals.clear();
 
-			std::uniform_int_distribution<int> xyPos(20, 120);
-			std::uniform_int_distribution<int> zPos(2, 8);
+			std::normal_distribution<double> xyPos(70.0, portalDev);
+			std::discrete_distribution<int> zPos(zWeight.begin(), zWeight.end());
+
 			for (int p = 0; p < 3; p++)
 			{
 				for (int i = 0; i < iterLimit; i++)
 				{
-					Vec3<float> pos(xyPos(state.rng), xyPos(state.rng), zPos(state.rng));
-
+					Vec3<float> pos(std::clamp(static_cast<int>(xyPos(state.rng)), 20, 120),
+					                std::clamp(static_cast<int>(xyPos(state.rng)), 20, 120),
+					                zPos(state.rng) + 4);
 					if (canPlacePortal(pos))
 					{
 						auto doodad =
@@ -422,21 +428,22 @@ void City::generatePortals(GameState &state)
 			int week = state.gameTime.getWeek();
 			int offset = (2 * week) + 15;
 			std::uniform_int_distribution<int> newxyOffset(-offset, offset);
-			std::uniform_int_distribution<int> newzPos(2, 8);
+			std::discrete_distribution<int> newzPos(zWeight.begin(), zWeight.end());
 
 			for (int p = 0; p < 3; p++)
 			{
+				bool portalPlaced = false;
 				for (int i = 0; i < iterLimit; i++)
 				{
-					Vec3<float> newPos(newxyOffset(state.rng) + curPortalPosList.back().x,
-					                   newxyOffset(state.rng) + curPortalPosList.back().y,
-					                   newzPos(state.rng));
+					Vec3<float> newPos(std::clamp(newxyOffset(state.rng) +
+					                                  static_cast<int>(curPortalPosList.back().x),
+					                              20, 120),
+					                   std::clamp(newxyOffset(state.rng) +
+					                                  static_cast<int>(curPortalPosList.back().y),
+					                              20, 120),
+					                   newzPos(state.rng) + 4);
 
-					if (canPlacePortal(newPos) &&
-					    std::clamp(newPos.x, static_cast<float>(15), static_cast<float>(105)) ==
-					        newPos.x &&
-					    std::clamp(newPos.y, static_cast<float>(15), static_cast<float>(105)) ==
-					        newPos.y)
+					if (canPlacePortal(newPos))
 					{
 						auto doodad =
 						    mksp<Doodad>(newPos + Vec3<float>{0.5f, 0.5f, 0.5f},
@@ -445,8 +452,21 @@ void City::generatePortals(GameState &state)
 						map->addObjectToMap(doodad);
 						this->portals.push_back(doodad);
 						curPortalPosList.pop_back();
+						portalPlaced = true;
 						break;
 					}
+				}
+				if (!portalPlaced)
+				{
+					auto currentPos = curPortalPosList.back();
+					auto doodad =
+					    mksp<Doodad>(currentPos + Vec3<float>{0.5f, 0.5f, 0.5f},
+					                 StateRef<DoodadType>{&state, "DOODAD_6_DIMENSION_GATE"});
+					doodad->voxelMap = state.city_common_image_list->portalVoxelMap;
+					map->addObjectToMap(doodad);
+					this->portals.push_back(doodad);
+					curPortalPosList.pop_back();
+					// break;
 				}
 			}
 		}
