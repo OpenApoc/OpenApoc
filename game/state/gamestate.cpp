@@ -644,7 +644,7 @@ void GameState::startGame()
 
 	gameTime = GameTime::midday();
 
-	updateEndOfWeek();
+	updateEndOfWeek(true);
 
 	newGame = true;
 	firstDetection = true;
@@ -800,8 +800,6 @@ void GameState::invasion()
 	}
 	nextInvasion = gameTime.getTicks() + 24 * TICKS_PER_HOUR +
 	               randBoundsInclusive(rng, 0, (int)(72 * TICKS_PER_HOUR));
-
-	invadedCity->generatePortals(*this);
 
 	auto invadingCity = StateRef<City>{this, "CITYMAP_ALIEN"};
 	auto invadingOrg = StateRef<Organisation>{this, "ORG_ALIEN"};
@@ -1149,7 +1147,7 @@ void GameState::update(unsigned int ticks)
 		}
 		if (gameTime.weekPassed())
 		{
-			this->updateEndOfWeek();
+			this->updateEndOfWeek(false);
 		}
 		gameTime.clearFlags();
 
@@ -1338,7 +1336,7 @@ void GameState::updateEndOfDay()
 		fw().pushEvent(new GameEvent(GameEventType::DailyReport));
 }
 
-void GameState::updateEndOfWeek()
+void GameState::updateEndOfWeek(bool gameStart)
 {
 	updateHumanEconomy();
 
@@ -1346,6 +1344,14 @@ void GameState::updateEndOfWeek()
 
 	fw().pushEvent(new GameEvent(GameEventType::WeeklyReport));
 	weeklyPlayerUpdate();
+
+	if (!gameStart)
+	{
+		for (auto &c : this->cities)
+		{
+			c.second->weeklyLoop(*this);
+		}
+	}
 }
 
 void GameState::weeklyPlayerUpdate()
