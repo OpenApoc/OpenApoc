@@ -1372,14 +1372,13 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 	crashed = false;
 	if (this->currentBuilding)
 	{
-		LogError("Vehicle already in a building?");
+  		LogError("Vehicle already in a building?");
 		return;
 	}
 	this->currentBuilding = b;
 	b->currentVehicles.insert({&state, shared_from_this()});
 
-	if (carriedVehicle && carriedByVehicle &&
-	    carriedVehicle->position == carriedByVehicle->position)
+	if (carriedVehicle)
 	{
 		carriedVehicle->enterBuilding(state, b);
 		carriedVehicle->processRecoveredVehicle(state);
