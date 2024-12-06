@@ -1370,7 +1370,7 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 {
 	carriedByVehicle.clear();
 	crashed = false;
-	if (this->currentBuilding)
+	if (b->currentVehicles.find(&state) != b->currentVehicles.end())
 	{
   		LogError("Vehicle already in a building?");
 		return;
