@@ -8,6 +8,7 @@
 #include "framework/font.h"
 #include "framework/image.h"
 #include "framework/jukebox.h"
+#include "framework/locked_queue.h"
 #include "framework/logger_file.h"
 #include "framework/logger_sdldialog.h"
 #include "framework/options.h"
@@ -15,6 +16,7 @@
 #include "framework/renderer_interface.h"
 #include "framework/sound_interface.h"
 #include "framework/stagestack.h"
+#include "framework/timer.h"
 #include "library/sp.h"
 #include "library/xorshift.h"
 #include <SDL.h>
@@ -318,94 +320,114 @@ void Framework::run(sp<Stage> initialStage)
 
 	bool frame_time_limited_warning_shown = false;
 
+	enum class EventType
+	{
+
+		Render,
+		GameUpdate,
+		UIUpdate,
+	};
+	constexpr size_t ARBITRARY_EVENT_LIMIT = 32;
+	locked_queue<EventType, ARBITRARY_EVENT_LIMIT> event_queue;
+
+	using namespace std::chrono_literals;
+
+	auto render_interval = 16ms;
+	auto ui_update_interval = 17ms;
+	auto game_update_interval = 8ms;
+
+	auto renderTimer =
+	    start_timer(*this, render_interval, [&] { event_queue.push(EventType::Render); });
+	auto uiTimer =
+	    start_timer(*this, ui_update_interval, [&] { event_queue.push(EventType::UIUpdate); });
+	auto gameUpdateTimer =
+	    start_timer(*this, game_update_interval, [&] { event_queue.push(EventType::GameUpdate); });
+
 	while (!p->quitProgram)
 	{
-		auto frame_time_now = std::chrono::steady_clock::now();
-		if (expected_frame_time > frame_time_now)
-		{
-			auto time_to_sleep = expected_frame_time - frame_time_now;
-			auto time_to_sleep_us =
-			    std::chrono::duration_cast<std::chrono::microseconds>(time_to_sleep);
-			LogDebug("sleeping for %d us", time_to_sleep_us.count());
-			std::this_thread::sleep_for(time_to_sleep);
+		auto event = event_queue.pop();
+		// Should only return empty when quitting?
+		if (!event)
 			continue;
-		}
-		expected_frame_time += target_frame_duration;
-		frame++;
 
-		if (!frame_time_limited_warning_shown &&
-		    frame_time_now > expected_frame_time + 5 * target_frame_duration)
+		switch (*event)
 		{
-			frame_time_limited_warning_shown = true;
-			LogWarning("Over 5 frames behind - likely vsync limited?");
-		}
-
-		processEvents();
-
-		if (p->ProgramStages.isEmpty())
-		{
+			case EventType::Render:
+			{
+				frame++;
+				auto surface = p->scaleSurface ? p->scaleSurface : p->defaultSurface;
+				RendererSurfaceBinding b(*this->renderer, surface);
+				{
+					this->renderer->clear();
+				}
+				if (!p->ProgramStages.isEmpty())
+				{
+					p->ProgramStages.current()->render();
+					if (p->toolTipImage)
+					{
+						renderer->draw(p->toolTipImage, p->toolTipPosition);
+					}
+					this->cursor->render();
+					if (p->scaleSurface)
+					{
+						RendererSurfaceBinding scaleBind(*this->renderer, p->defaultSurface);
+						this->renderer->clear();
+						this->renderer->drawScaled(p->scaleSurface, {0, 0}, p->windowSize);
+					}
+					{
+						this->renderer->flush();
+						this->renderer->newFrame();
+						SDL_GL_SwapWindow(p->window);
+					}
+				}
+			}
 			break;
-		}
-		{
-			p->ProgramStages.current()->update();
-		}
-
-		for (StageCmd cmd : stageCommands)
-		{
-			switch (cmd.cmd)
+			case EventType::GameUpdate:
 			{
-				case StageCmd::Command::CONTINUE:
-					break;
-				case StageCmd::Command::REPLACE:
-					p->ProgramStages.pop();
-					p->ProgramStages.push(cmd.nextStage);
-					break;
-				case StageCmd::Command::REPLACEALL:
-					p->ProgramStages.clear();
-					p->ProgramStages.push(cmd.nextStage);
-					break;
-				case StageCmd::Command::PUSH:
-					p->ProgramStages.push(cmd.nextStage);
-					break;
-				case StageCmd::Command::POP:
-					p->ProgramStages.pop();
-					break;
-				case StageCmd::Command::QUIT:
-					p->quitProgram = true;
-					p->ProgramStages.clear();
-					break;
+				LogWarning("Game Update event still part of UI");
+				// TODO
 			}
-			if (p->quitProgram)
+			break;
+			case EventType::UIUpdate:
 			{
-				break;
+				processEvents();
+				if (!p->ProgramStages.isEmpty())
+				{
+					p->ProgramStages.current()->update();
+				}
+				for (StageCmd cmd : stageCommands)
+				{
+					switch (cmd.cmd)
+					{
+						case StageCmd::Command::CONTINUE:
+							break;
+						case StageCmd::Command::REPLACE:
+							p->ProgramStages.pop();
+							p->ProgramStages.push(cmd.nextStage);
+							break;
+						case StageCmd::Command::REPLACEALL:
+							p->ProgramStages.clear();
+							p->ProgramStages.push(cmd.nextStage);
+							break;
+						case StageCmd::Command::PUSH:
+							p->ProgramStages.push(cmd.nextStage);
+							break;
+						case StageCmd::Command::POP:
+							p->ProgramStages.pop();
+							break;
+						case StageCmd::Command::QUIT:
+							p->quitProgram = true;
+							p->ProgramStages.clear();
+							break;
+					}
+					if (p->quitProgram)
+					{
+						break;
+					}
+				}
+				stageCommands.clear();
 			}
-		}
-		stageCommands.clear();
-
-		auto surface = p->scaleSurface ? p->scaleSurface : p->defaultSurface;
-		RendererSurfaceBinding b(*this->renderer, surface);
-		{
-			this->renderer->clear();
-		}
-		if (!p->ProgramStages.isEmpty())
-		{
-			p->ProgramStages.current()->render();
-			if (p->toolTipImage)
-			{
-				renderer->draw(p->toolTipImage, p->toolTipPosition);
-			}
-			this->cursor->render();
-			if (p->scaleSurface)
-			{
-				RendererSurfaceBinding scaleBind(*this->renderer, p->defaultSurface);
-				this->renderer->clear();
-				this->renderer->drawScaled(p->scaleSurface, {0, 0}, p->windowSize);
-			}
-			{
-				this->renderer->flush();
-				this->renderer->newFrame();
-				SDL_GL_SwapWindow(p->window);
-			}
+			break;
 		}
 		if (frameCount && frame == frameCount)
 		{
@@ -413,6 +435,9 @@ void Framework::run(sp<Stage> initialStage)
 			p->quitProgram = true;
 		}
 	}
+	destroy_timer(*this, renderTimer);
+	destroy_timer(*this, uiTimer);
+	destroy_timer(*this, gameUpdateTimer);
 }
 
 void Framework::processEvents()
