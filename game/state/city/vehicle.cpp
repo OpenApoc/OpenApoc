@@ -1372,7 +1372,7 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 	crashed = false;
 	if (b->currentVehicles.find(&state) != b->currentVehicles.end())
 	{
-  		LogError("Vehicle already in a building?");
+		LogError("Vehicle already in a building?");
 		return;
 	}
 	this->currentBuilding = b;
