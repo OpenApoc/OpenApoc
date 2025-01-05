@@ -1,11 +1,13 @@
 #pragma once
 
 #include "framework/modinfo.h"
+#include "framework/timer.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
 #include <functional>
 #include <future>
+#include <map>
 
 namespace OpenApoc
 {
@@ -23,7 +25,6 @@ class JukeBox;
 class StageCmd;
 class Stage;
 class RGBImage;
-
 #define FRAMES_PER_SECOND 100
 
 class Framework
@@ -46,6 +47,11 @@ class Framework
 	std::unique_ptr<Renderer> renderer;
 	std::unique_ptr<SoundBackend> soundBackend;
 	std::unique_ptr<JukeBox> jukebox;
+	struct sdl_callback_info
+	{
+		std::function<void()> callback;
+	};
+	std::map<TimerID, up<sdl_callback_info>> timer_data;
 
 	Framework(const UString programName, bool createWindow = true);
 	~Framework();
