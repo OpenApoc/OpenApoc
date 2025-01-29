@@ -1,4 +1,5 @@
 #include "game/state/battle/ai/tacticalai.h"
+#include "framework/framework.h"
 #include "game/state/battle/ai/tacticalaivanilla.h"
 #include "game/state/battle/battle.h"
 #include "game/state/gamestate.h"
@@ -6,7 +7,7 @@
 namespace OpenApoc
 {
 
-static const uint64_t TACTICAL_AI_THINK_INTERVAL = TICKS_PER_SECOND / 4;
+static const uint64_t TACTICAL_AI_THINK_INTERVAL = TICKS_PER_SECOND / TICKS_MULTIPLIER;
 
 const UString TacticalAI::getName()
 {

@@ -6,6 +6,8 @@
 
 namespace OpenApoc
 {
+static constexpr unsigned DOODAD_LIFETIME_TICK_MULTIPLIER = 4;
+
 class TileObjectDoodad;
 class TileMap;
 class DoodadType;

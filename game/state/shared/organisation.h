@@ -1,5 +1,6 @@
 #pragma once
 
+#include "framework/framework.h"
 #include "game/state/gametime.h"
 #include "game/state/rules/city/organisationraid.h"
 #include "game/state/stateobject.h"

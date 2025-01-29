@@ -1,5 +1,6 @@
 #pragma once
 
+#include "framework/framework.h"
 #include "framework/logger.h"
 #include "game/state/gametime.h"
 #include "game/state/stateobject.h"
@@ -28,7 +29,7 @@ namespace OpenApoc
 {
 
 // FIXME: Alexey Andronov: Does anyone know why we divide by 4 here?
-static const unsigned TICK_SCALE = TICKS_PER_SECOND / 4;
+static const unsigned TICK_SCALE = TICKS_PER_SECOND / TICKS_MULTIPLIER;
 
 class Image;
 class TileMap;

@@ -20,7 +20,7 @@ Doodad::Doodad(Vec3<float> position, Vec2<int> imageOffset, bool temporary, int 
 
 Doodad::Doodad(Vec3<float> position, StateRef<DoodadType> type)
     : position(position), imageOffset(type->imageOffset), temporary(true), age(0),
-      lifetime(type->lifetime * TICKS_MULTIPLIER), type(type)
+      lifetime(type->lifetime * DOODAD_LIFETIME_TICK_MULTIPLIER), type(type)
 {
 }
 

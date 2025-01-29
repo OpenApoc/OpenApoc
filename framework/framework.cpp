@@ -311,10 +311,14 @@ void Framework::run(sp<Stage> initialStage)
 	auto target_frame_duration =
 	    std::chrono::duration<int64_t, std::micro>(1000000 / Options::targetFPS.get());
 
+	auto target_tick_duration =
+	    std::chrono::duration<int64_t, std::micro>(1000000 / TICKS_PER_SECOND);
+
 	p->ProgramStages.push(initialStage);
 
 	this->renderer->setPalette(this->data->loadPalette("xcom3/ufodata/pal_06.dat"));
 	auto expected_frame_time = std::chrono::steady_clock::now();
+	auto expected_tick_time = std::chrono::steady_clock::now();
 
 	bool frame_time_limited_warning_shown = false;
 
@@ -346,8 +350,19 @@ void Framework::run(sp<Stage> initialStage)
 		{
 			break;
 		}
+		// trying to update this on a different timer than the rest of framework.run()
+		// specifically, trying to update this at 36 hz.
+		// this might not work, depending on exactly the type of work that needs to get done in
+		// stage.update this might also give problems with commands, though it appears commands
+		// occur only in response to events, which will remain at the once per frame rate.
+
+		// algorithm for decoupling this will be: keep a time point of last time we updated.  if
+		// now minus last update is greater than tps, then update and increment last update.  if
+		// not, skip. could be done in a while loop
+		while (expected_tick_time <= frame_time_now)
 		{
 			p->ProgramStages.current()->update();
+			expected_tick_time += target_tick_duration;
 		}
 
 		for (StageCmd cmd : stageCommands)
