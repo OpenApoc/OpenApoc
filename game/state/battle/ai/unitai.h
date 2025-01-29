@@ -4,6 +4,11 @@
 #include "library/strings.h"
 #include "library/vec.h"
 
+extern "C"
+{
+	struct lua_State; // We don't want to include the whole header
+}
+
 namespace OpenApoc
 {
 
@@ -32,6 +37,8 @@ class UnitAI
 	virtual void reset(GameState &, BattleUnit &){};
 	// Returns decision that was made, and whether we should stop going forward on the AI chain
 	virtual std::tuple<AIDecision, bool> think(GameState &, BattleUnit &, bool) { return {}; };
+	virtual std::tuple<AIDecision, bool> luaThink(GameState &, BattleUnit &, bool);
+
 	virtual void routine(GameState &, BattleUnit &){};
 
 	// virtual void reportExecuted(AIAction &action) {};
@@ -40,11 +47,21 @@ class UnitAI
 	virtual void notifyUnderFire(Vec3<int>){};
 	virtual void notifyHit(Vec3<int>){};
 	virtual void notifyEnemySpotted(Vec3<int>){};
+
+	// Setting the LuaEngine, and returns if it is configured for this UnitAIxxx
+	bool setLuaEngine(struct lua_State *luaEngine);
+
+	private:
+		struct lua_State *luaEngine;
+		bool isLuaEngineConfigured = false;
 };
 
 class AIBlockUnit
 {
   public:
+	AIBlockUnit();
+	~AIBlockUnit();
+
 	std::vector<sp<UnitAI>> aiList;
 
 	uint64_t ticksLastThink = 0;
@@ -68,5 +85,9 @@ class AIBlockUnit
 	void notifyUnderFire(Vec3<int> position);
 	void notifyHit(Vec3<int> position);
 	void notifyEnemySpotted(Vec3<int> position);
+
+	private:
+		struct lua_State *luaEngine;
+		bool isLuaReady = false;
 };
 } // namespace OpenApoc
