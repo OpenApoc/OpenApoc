@@ -6,6 +6,7 @@
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/logger.h"
 #include "framework/options.h"
 #include "framework/renderer.h"
 #include "game/state/gameevent.h"

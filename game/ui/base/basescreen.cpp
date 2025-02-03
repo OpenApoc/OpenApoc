@@ -11,6 +11,7 @@
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "framework/keycodes.h"
+#include "framework/logger.h"
 #include "framework/renderer.h"
 #include "game/state/city/base.h"
 #include "game/state/city/building.h"
@@ -60,19 +61,19 @@ void BaseScreen::begin()
 	selGraphic = form->findControlTyped<Graphic>("GRAPHIC_SELECTED_FACILITY");
 	for (int i = 0; i < 3; i++)
 	{
-		auto labelName = format("LABEL_%d", i + 1);
+		auto labelName = fmt::format("LABEL_{}", i + 1);
 		auto label = form->findControlTyped<Label>(labelName);
 		if (!label)
 		{
-			LogError("Failed to find UI control matching \"%s\"", labelName);
+			LogError("Failed to find UI control matching \"{}\"", labelName);
 		}
 		statsLabels.push_back(label);
 
-		auto valueName = format("VALUE_%d", i + 1);
+		auto valueName = fmt::format("VALUE_{}", i + 1);
 		auto value = form->findControlTyped<Label>(valueName);
 		if (!value)
 		{
-			LogError("Failed to find UI control matching \"%s\"", valueName);
+			LogError("Failed to find UI control matching \"{}\"", valueName);
 		}
 		statsValues.push_back(value);
 	}
@@ -351,7 +352,7 @@ void BaseScreen::eventOccurred(Event *e)
 					}
 					if (!ufopaedia_category)
 					{
-						LogError("No UFOPaedia category found for entry %s",
+						LogError("No UFOPaedia category found for entry {}",
 						         ufopaedia_entry->title);
 					}
 					fw().stageQueueCommand(
@@ -465,12 +466,13 @@ void BaseScreen::eventOccurred(Event *e)
 		selText->setText(tr(dragFacility->name));
 		selGraphic->setImage(dragFacility->sprite);
 		statsLabels[0]->setText(tr("Cost to build"));
-		statsValues[0]->setText(format("$%s", Strings::fromInteger(dragFacility->buildCost, true)));
+		statsValues[0]->setText(
+		    fmt::format("${}", Strings::fromInteger(dragFacility->buildCost, true)));
 		statsLabels[1]->setText(tr("Days to build"));
-		statsValues[1]->setText(format("%d", dragFacility->buildTime));
+		statsValues[1]->setText(fmt::format("{}", dragFacility->buildTime));
 		statsLabels[2]->setText(tr("Maintenance cost"));
 		statsValues[2]->setText(
-		    format("$%s", Strings::fromInteger(dragFacility->weeklyCost, true)));
+		    fmt::format("${}", Strings::fromInteger(dragFacility->weeklyCost, true)));
 	}
 	else if (selFacility != nullptr)
 	{
@@ -479,17 +481,17 @@ void BaseScreen::eventOccurred(Event *e)
 		if (selFacility->type->capacityAmount > 0)
 		{
 			statsLabels[0]->setText(tr("Capacity"));
-			statsValues[0]->setText(format("%d", selFacility->type->capacityAmount));
+			statsValues[0]->setText(fmt::format("{}", selFacility->type->capacityAmount));
 			statsLabels[1]->setText(tr("Usage"));
 			statsValues[1]->setText(
-			    format("%.f%%", state->current_base->getUsage(*state, selFacility)));
+			    fmt::format("{:.0f}%", state->current_base->getUsage(*state, selFacility)));
 		}
 	}
 	else if (selection != NO_SELECTION)
 	{
 		int sprite = BaseGraphics::getCorridorSprite(*state->current_base, selection);
-		auto image = format(
-		    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:%d:xcom3/ufodata/base.pcx", sprite);
+		auto image = fmt::format(
+		    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:{}:xcom3/ufodata/base.pcx", sprite);
 		if (sprite != 0)
 		{
 			selText->setText(tr("Corridor"));

@@ -1,4 +1,5 @@
 #include "game/state/battle/ai/unitailowmorale.h"
+#include "framework/logger.h"
 #include "game/state/battle/ai/aidecision.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battleunit.h"
@@ -222,7 +223,7 @@ std::tuple<AIDecision, bool> UnitAILowMorale::think(GameState &state, BattleUnit
 				return std::make_tuple(decision, true);
 			}
 			default:
-				LogError("Unsupported LowMorale AI type %d", (int)u.getAIType());
+				LogError("Unsupported LowMorale AI type {}", (int)u.getAIType());
 				break;
 		}
 	}

@@ -2,6 +2,7 @@
 #include "luaframework.h"
 #include "configfile.h"
 #include "framework.h"
+#include "framework/logger.h"
 
 namespace OpenApoc
 {

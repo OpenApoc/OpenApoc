@@ -8,8 +8,10 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
+#include "framework/logger.h"
 #include "game/state/gamestate.h"
 #include "game/state/shared/organisation.h"
+#include "library/strings_format.h"
 #include <limits>
 
 namespace OpenApoc
@@ -72,9 +74,9 @@ void CheatOptions::updateMultiplierText(UString controlName, float multMin, floa
 	auto bar = menuform->findControlTyped<ScrollBar>(controlName);
 	auto label = menuform->findControlTyped<Label>("TEXT_" + controlName);
 	label->setText(
-	    format("%.0f%%", scaleScrollbarToMultiplier(bar->getValue(), multMin, multMax,
-	                                                bar->getMinimum(), bar->getMaximum()) *
-	                         100));
+	    fmt::format("{:.0f}%", scaleScrollbarToMultiplier(bar->getValue(), multMin, multMax,
+	                                                      bar->getMinimum(), bar->getMaximum()) *
+	                               100));
 }
 
 void CheatOptions::pause() {}
@@ -121,16 +123,16 @@ void CheatOptions::eventOccurred(Event *e)
 		{
 			for (auto &r : this->state->research.topics)
 			{
-				LogWarning("Topic \"%s\"", r.first);
+				LogWarning("Topic \"{}\"", r.first);
 				auto &topic = r.second;
 				if (topic->isComplete())
 				{
-					LogWarning("Topic \"%s\" already complete", r.first);
+					LogWarning("Topic \"{}\" already complete", r.first);
 				}
 				else
 				{
 					topic->forceComplete();
-					LogWarning("Topic \"%s\" marked as complete", r.first);
+					LogWarning("Topic \"{}\" marked as complete", r.first);
 				}
 			}
 			this->state->research.resortTopicList();
@@ -233,11 +235,11 @@ void CheatOptions::eventOccurred(Event *e)
 			auto bar = std::dynamic_pointer_cast<ScrollBar>(e->forms().RaisedBy);
 			if (!bar)
 			{
-				LogError("Failed to cast \"%s\" control to ScrollBar", e->forms().RaisedBy->Name);
+				LogError("Failed to cast \"{}\" control to ScrollBar", e->forms().RaisedBy->Name);
 				return;
 			}
 			menuform->findControlTyped<Label>("TEXT_MODIFY_FUNDS")
-			    ->setText(format("%+dk", bar->getValue()));
+			    ->setText(fmt::format("{:+}k", bar->getValue()));
 		}
 		else
 		{
@@ -248,7 +250,7 @@ void CheatOptions::eventOccurred(Event *e)
 					auto bar = std::dynamic_pointer_cast<ScrollBar>(e->forms().RaisedBy);
 					if (!bar)
 					{
-						LogError("Failed to cast \"%s\" control to ScrollBar",
+						LogError("Failed to cast \"{}\" control to ScrollBar",
 						         e->forms().RaisedBy->Name);
 						return;
 					}

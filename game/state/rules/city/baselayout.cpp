@@ -1,4 +1,5 @@
 #include "game/state/rules/city/baselayout.h"
+#include "framework/logger.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc
@@ -9,7 +10,7 @@ template <> sp<BaseLayout> StateObject<BaseLayout>::get(const GameState &state, 
 	auto it = state.base_layouts.find(id);
 	if (it == state.base_layouts.end())
 	{
-		LogError("No base layout type matching ID \"%s\"", id);
+		LogError("No base layout type matching ID \"{}\"", id);
 		return nullptr;
 	}
 	return it->second;

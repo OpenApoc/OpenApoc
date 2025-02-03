@@ -99,12 +99,12 @@ bool FlyingVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, f
 	Vec3<int> toPos = to->position;
 	if (fromPos == toPos)
 	{
-		LogError("FromPos == ToPos %s", toPos);
+		LogError("FromPos == ToPos {}", toPos);
 		return false;
 	}
 	if (!map.tileIsValid(toPos))
 	{
-		LogError("ToPos %s is not on the map", toPos);
+		LogError("ToPos {} is not on the map", toPos);
 		return false;
 	}
 
@@ -786,7 +786,7 @@ VehicleTargetHelper::adjustTargetToClosestFlying(GameState &state, Vehicle &v, V
 		target.z++;
 		if (target.z >= map.size.z)
 		{
-			LogError("No space in the sky? Reached %d %d %d", target.x, target.y, target.z);
+			LogError("No space in the sky? Reached {} {} {}", target.x, target.y, target.z);
 			return {reachability, false};
 		}
 		reachability = isReachableTargetFlying(v, target);
@@ -843,7 +843,7 @@ VehicleTargetHelper::adjustTargetToClosestFlying(GameState &state, Vehicle &v, V
 		}
 		if (foundNewTarget)
 		{
-			LogWarning("Target %d,%d,%d was unreachable, found new closest target %d,%d,%d",
+			LogWarning("Target {},{},{} was unreachable, found new closest target {},{},{}",
 			           target.x, target.y, target.z, newTarget.x, newTarget.y, newTarget.z);
 			target = newTarget;
 		}
@@ -873,13 +873,13 @@ VehicleTargetHelper::adjustTargetToClosestFlying(GameState &state, Vehicle &v, V
 		if (!sideStepLocations.empty())
 		{
 			auto newTarget = pickRandom(state.rng, sideStepLocations);
-			LogWarning("Target %s was unreachable, side-stepping to  %s.", target, newTarget);
+			LogWarning("Target {} was unreachable, side-stepping to  {}.", target, newTarget);
 			target = newTarget;
 		}
 	}
 	else
 	{
-		LogError("Unknown value for vehicleAvoidance: %d", static_cast<int>(vehicleAvoidance));
+		LogError("Unknown value for vehicleAvoidance: {}", static_cast<int>(vehicleAvoidance));
 	}
 	return {reachability, true};
 }
@@ -896,7 +896,7 @@ VehicleTargetHelper::adjustTargetToClosest(GameState &state, Vehicle &v, Vec3<in
 		case VehicleType::Type::ATV:
 			return adjustTargetToClosestGround(v, target);
 		default:
-			LogError("Vehicle [%s] has unknown type [%s]", v.name, v.type->name);
+			LogError("Vehicle [{}] has unknown type [{}]", v.name, v.type->name);
 			[[fallthrough]];
 		case VehicleType::Type::Flying:
 		case VehicleType::Type::UFO:
@@ -918,7 +918,7 @@ Reachability VehicleTargetHelper::isReachableTarget(const Vehicle &v, Vec3<int> 
 		case VehicleType::Type::ATV:
 			return isReachableTargetGround(v, target);
 		default:
-			LogError("Vehicle [%s] has unknown type [%s]", v.name, v.type->name);
+			LogError("Vehicle [{}] has unknown type [{}]", v.name, v.type->name);
 			[[fallthrough]];
 		case VehicleType::Type::Flying:
 		case VehicleType::Type::UFO:
@@ -1143,7 +1143,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 							angleToTarget = (float)angleToTargetInt * (float)M_PI / 4.0f;
 							if (destFacing != angleToTarget && v.ticksToTurn > 0)
 							{
-								LogWarning("Vehicle %s facing target", v.name);
+								LogWarning("Vehicle {} facing target", v.name);
 								destFacing = angleToTarget;
 								return true;
 							}
@@ -1233,7 +1233,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 								angleToTarget = (float)angleToTargetInt * (float)M_PI / 4.0f;
 								if (destFacing != angleToTarget && v.ticksToTurn > 0)
 								{
-									LogWarning("Vehicle %s facing target", v.name);
+									LogWarning("Vehicle {} facing target", v.name);
 									destFacing = angleToTarget;
 									return true;
 								}
@@ -1276,7 +1276,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 			if (v.currentBuilding != this->targetBuilding)
 			{
 				auto name = this->getName();
-				LogError("Vehicle mission %s: getNextDestination() shouldn't be called unless "
+				LogError("Vehicle mission {}: getNextDestination() shouldn't be called unless "
 				         "you've reached the target?",
 				         name);
 			}
@@ -1688,14 +1688,14 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					auto exitTile = map.getTile(exitLocation);
 					if (!exitTile)
 					{
-						LogError("Invalid entrance location %s - outside map?", exitLocation.x);
+						LogError("Invalid entrance location {} - outside map?", exitLocation.x);
 						snoozeTicks = TICKS_PER_HOUR / 2;
 						continue;
 					}
 					auto scenery = exitTile->presentScenery;
 					if (!scenery)
 					{
-						LogInfo("Tried exit %s - destroyed", exitLocation);
+						LogInfo("Tried exit {} - destroyed", exitLocation);
 						snoozeTicks = TICKS_PER_HOUR / 2;
 						continue;
 					}
@@ -1719,7 +1719,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					{
 						continue;
 					}
-					LogInfo("Launching vehicle from building \"%s\" at exit %s", b.id,
+					LogInfo("Launching vehicle from building \"{}\" at exit {}", b.id,
 					        exitLocation);
 					Vec3<float> leaveLocation = exitTile->getRestingPosition();
 					float facing = 0.0f;
@@ -1744,7 +1744,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						leaveLocation += Vec3<float>{0.49f, 0.0f, 0.0f};
 					}
 					v.leaveBuilding(state, leaveLocation, facing);
-					LogInfo("Launching vehicle from building \"%s\" at pad %s", b.id,
+					LogInfo("Launching vehicle from building \"{}\" at pad {}", b.id,
 					        leaveLocation);
 					this->currentPlannedPath = {exitLocation, exitLocation};
 					return;
@@ -1766,7 +1766,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					auto tileAbovePad = map.getTile(abovePadLocation);
 					if (!padTile || !tileAbovePad)
 					{
-						LogError("Invalid landing pad location %s - outside map?", padLocation.x);
+						LogError("Invalid landing pad location {} - outside map?", padLocation.x);
 						continue;
 					}
 					FlyingVehicleTileHelper tileHelper(map, v);
@@ -1790,14 +1790,14 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					{
 						continue;
 					}
-					LogInfo("Launching vehicle from building \"%s\" at pad %s", b.id, padLocation);
+					LogInfo("Launching vehicle from building \"{}\" at pad {}", b.id, padLocation);
 					this->currentPlannedPath = {belowPadLocation, belowPadLocation, padLocation,
 					                            abovePadLocation};
 					v.leaveBuilding(state, belowPadLocation);
 					return;
 				}
 			}
-			LogInfo("No free exit in building \"%s\" free - waiting", b.id);
+			LogInfo("No free exit in building \"{}\" free - waiting", b.id);
 			v.addMission(state, snooze(state, v, snoozeTicks));
 			return;
 		}
@@ -1825,7 +1825,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						auto vehiclePosition = vehicleTile->getOwningTile()->position;
 						if (vehiclePosition != targetBuilding->carEntranceLocation)
 						{
-							LogError("Vehicle at %s not inside vehicle entrance for building %s",
+							LogError("Vehicle at {} not inside vehicle entrance for building {}",
 							         vehiclePosition, b.id);
 							return;
 						}
@@ -1840,7 +1840,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						auto vehiclePosition = vehicleTile->getOwningTile()->position;
 						if (vehiclePosition.z < 2)
 						{
-							LogError("Vehicle trying to land off bottom of map %s",
+							LogError("Vehicle trying to land off bottom of map {}",
 							         vehiclePosition);
 							cancelled = true;
 							return;
@@ -1859,9 +1859,9 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						}
 						if (!padFound)
 						{
-							LogError("Vehicle at %s not directly above a landing pad for "
-							         "building %s",
-							         vehiclePosition, b.id);
+							LogError(
+							    "Vehicle at {} not directly above a landing pad for building {}",
+							    vehiclePosition, b.id);
 							cancelled = true;
 							return;
 						}
@@ -1885,7 +1885,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				}
 				default:
 				{
-					LogError("Unhandled missionCounter in %s", getName());
+					LogError("Unhandled missionCounter in {}", getName());
 					return;
 				}
 			}
@@ -1909,7 +1909,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			if (!isFinished(state, v))
 			{
-				LogInfo("Vehicle mission %s: Pathing to %s", getName(), targetLocation);
+				LogInfo("Vehicle mission {}: Pathing to {}", getName(), targetLocation);
 				v.addMission(state, VehicleMission::gotoLocation(state, v, targetLocation,
 				                                                 allowTeleporter, pickNearest));
 			}
@@ -2036,9 +2036,9 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				randomNearbyPos.x = clamp(randomNearbyPos.x, 0, map.size.x - 1);
 				randomNearbyPos.y = clamp(randomNearbyPos.y, 0, map.size.y - 1);
 				randomNearbyPos.z = clamp(randomNearbyPos.z, 0, map.size.z - 1);
-				LogInfo("Vehicle mission %s: Can't find place to land, moving to random location "
-				        "at %s",
-				        getName(), randomNearbyPos);
+				LogInfo(
+				    "Vehicle mission {}: Can't find place to land, moving to random location at {}",
+				    getName(), randomNearbyPos);
 				v.addMission(
 				    state, VehicleMission::gotoLocation(state, v, randomNearbyPos, false, true, 1));
 				return;
@@ -2051,16 +2051,16 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		case MissionType::AttackVehicle:
 		{
 			auto name = this->getName();
-			LogInfo("Vehicle mission %s checking state", name);
+			LogInfo("Vehicle mission {} checking state", name);
 			if (isFinished(state, v))
 			{
-				LogInfo("Vehicle mission %s became finished", name);
+				LogInfo("Vehicle mission {} became finished", name);
 				return;
 			}
 			auto t = this->targetVehicle;
 			if (v.shared_from_this() == t.getSp())
 			{
-				LogError("Vehicle mission %s: Targeting itself", name);
+				LogError("Vehicle mission {}: Targeting itself", name);
 				return;
 			}
 			auto vehicleTile = v.tileObject;
@@ -2079,7 +2079,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				return;
 			}
 			auto name = this->getName();
-			LogInfo("Vehicle mission %s checking state", name);
+			LogInfo("Vehicle mission {} checking state", name);
 			auto b = this->targetBuilding;
 			if (!b)
 			{
@@ -2088,7 +2088,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			if (b == v.currentBuilding)
 			{
-				LogInfo("Vehicle mission %s: Already at building", name);
+				LogInfo("Vehicle mission {}: Already at building", name);
 				return;
 			}
 			if (allowTeleporter)
@@ -2114,12 +2114,12 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				auto position = vehicleTile->getOwningTile()->position;
 				if (position == targetBuilding->carEntranceLocation)
 				{
-					LogInfo("Mission %s: Entering depot on entrance %s", name, position);
+					LogInfo("Mission {}: Entering depot on entrance {}", name, position);
 					v.addMission(state, VehicleMission::land(v, b));
 					return;
 				}
 
-				LogInfo("Vehicle mission %s: Pathing to entrance at %s", name,
+				LogInfo("Vehicle mission {}: Pathing to entrance at {}", name,
 				        b->carEntranceLocation);
 				v.addMission(state, VehicleMission::gotoLocation(state, v, b->carEntranceLocation,
 				                                                 allowTeleporter, false, 1));
@@ -2136,7 +2136,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			{
 				/* Am I already above a landing pad? If so land */
 				auto position = vehicleTile->getOwningTile()->position;
-				LogInfo("Vehicle mission %s: at position %s", name, position);
+				LogInfo("Vehicle mission {}: at position {}", name, position);
 				for (auto &padLocation : b->landingPadLocations)
 				{
 					auto padTile = b->city->map->getTile(padLocation);
@@ -2149,7 +2149,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					abovePadLocation.z += 1;
 					if (abovePadLocation == position)
 					{
-						LogInfo("Mission %s: Landing on pad %s", name, padLocation);
+						LogInfo("Mission {}: Landing on pad {}", name, padLocation);
 						v.addMission(state, VehicleMission::land(v, b));
 						return;
 					}
@@ -2217,7 +2217,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				}
 				if (shortestPathCost != FLT_MAX)
 				{
-					LogInfo("Vehicle mission %s: Pathing to pad at %s", name, shortestPathPad);
+					LogInfo("Vehicle mission {}: Pathing to pad at {}", name, shortestPathPad);
 					v.addMission(state, VehicleMission::gotoLocation(state, v, shortestPathPad,
 					                                                 allowTeleporter, false, 1));
 					// If we can't path to building's pad then snooze
@@ -2230,7 +2230,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				}
 				else
 				{
-					LogInfo("Vehicle mission %s: No pads, pathing to random location near building",
+					LogInfo("Vehicle mission {}: No pads, pathing to random location near building",
 					        name);
 					std::uniform_int_distribution<int> xPos(targetBuilding->bounds.p0.x - 2,
 					                                        targetBuilding->bounds.p1.x + 2);
@@ -2388,7 +2388,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				}
 				default:
 				{
-					LogError("Unhandled missionCounter in %s", getName());
+					LogError("Unhandled missionCounter in {}", getName());
 					return;
 				}
 			}
@@ -2479,7 +2479,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						{
 							goodPos.z = glm::min(goodPos.z + 1, map.size.z - 1);
 
-							LogInfo("Vehicle mission %s: Pathing to infiltration spot %s", name,
+							LogInfo("Vehicle mission {}: Pathing to infiltration spot {}", name,
 							        goodPos);
 							v.addMission(state, VehicleMission::gotoLocation(state, v, goodPos,
 							                                                 false, true));
@@ -2492,8 +2492,8 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 						}
 					}
 
-					LogInfo("Vehicle mission %s: Infiltrating from {%f,%f,%f}", name, pos.x, pos.y,
-					        pos.z);
+					LogInfo("Vehicle mission {}: Infiltrating from {{{:f},{:f},{:f}}}", name, pos.x,
+					        pos.y, pos.z);
 
 					// If arrived to a location above building, deposit aliens or subvert
 					// FIXME: Handle subversion
@@ -2561,7 +2561,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				}
 				default:
 				{
-					LogError("Unhandled missionCounter in %s", getName());
+					LogError("Unhandled missionCounter in {}", getName());
 					return;
 				}
 			}
@@ -2596,7 +2596,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				}
 				default:
 				{
-					LogError("Unhandled missionCounter in %s", getName());
+					LogError("Unhandled missionCounter in {}", getName());
 					return;
 				}
 			}
@@ -2618,7 +2618,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			// No setup
 			return;
 		default:
-			LogError("TODO: Implement start %s", getName());
+			LogError("TODO: Implement start {}", getName());
 			return;
 	}
 }
@@ -2630,7 +2630,7 @@ void VehicleMission::setPathTo(GameState &state, Vehicle &v, Vec3<int> target, i
 	auto vehicleTile = v.tileObject;
 	if (!vehicleTile)
 	{
-		LogError("Mission %s: Take off before pathfinding!", this->getName());
+		LogError("Mission {}: Take off before pathfinding!", this->getName());
 		return;
 	}
 	const auto avoidance =
@@ -3146,12 +3146,12 @@ UString VehicleMission::getName()
 		case MissionType::DepartToSpace:
 		case MissionType::Crash:
 		case MissionType::Teleport:
-			name += format(" %s", this->targetLocation);
+			name += fmt::format(" {}", this->targetLocation);
 			break;
 		case MissionType::FollowVehicle:
 		case MissionType::RecoverVehicle:
 		case MissionType::AttackVehicle:
-			name += format(" %s", this->targetVehicle.id);
+			name += fmt::format(" {}", this->targetVehicle.id);
 			break;
 		case MissionType::GotoBuilding:
 		case MissionType::AttackBuilding:
@@ -3163,7 +3163,7 @@ UString VehicleMission::getName()
 		case MissionType::ArriveFromDimensionGate:
 		case MissionType::SelfDestruct:
 		case MissionType::Snooze:
-			name += format(" %u ticks", this->timeToSnooze);
+			name += fmt::format(" {} ticks", this->timeToSnooze);
 			break;
 		case MissionType::InfiltrateSubvert:
 			name += " " + this->targetBuilding.id + " " + (subvert ? "[Subvert]" : "[Infiltrate]");
@@ -3171,8 +3171,8 @@ UString VehicleMission::getName()
 		case MissionType::RestartNextMission:
 			break;
 		case MissionType::OfferService:
-			name += format(" counter: %u, target %s", missionCounter,
-			               targetBuilding ? targetBuilding->name : "null");
+			name += fmt::format(" counter: {}, target {}", missionCounter,
+			                    targetBuilding ? targetBuilding->name : "null");
 			break;
 	}
 	return name;
@@ -3216,12 +3216,12 @@ bool GroundVehicleTileHelper::canEnterTile(Tile *from, Tile *to, bool, bool &, f
 	Vec3<int> toPos = to->position;
 	if (fromPos == toPos)
 	{
-		LogError("FromPos == ToPos %s", toPos);
+		LogError("FromPos == ToPos {}", toPos);
 		return false;
 	}
 	if (!map.tileIsValid(toPos))
 	{
-		LogError("ToPos %s is not on the map", toPos);
+		LogError("ToPos {} is not on the map", toPos);
 		return false;
 	}
 

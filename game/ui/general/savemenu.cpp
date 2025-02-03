@@ -14,6 +14,7 @@
 #include "game/ui/tileview/battleview.h"
 #include "game/ui/tileview/cityview.h"
 #include "library/sp.h"
+#include "library/strings_format.h"
 #include <iomanip>
 #include <sstream>
 
@@ -322,7 +323,7 @@ void SaveMenu::askUserIfWantToOverrideSavedGame(const SaveMetadata &saveMetadata
 	const auto &metadataSaveName = saveMetadata.getName();
 	const auto messageBoxTitle = tr("Override saved game");
 	const auto messageBoxContent =
-	    format(tr("Do you really want to override %s?"), metadataSaveName);
+	    fmt::format("Do you really want to override {}?", metadataSaveName);
 
 	auto onYes = std::function<void()>(
 	    [this, saveMetadata, saveName]

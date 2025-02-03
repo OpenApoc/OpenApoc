@@ -17,6 +17,8 @@
 #include "game/ui/general/agentsheet.h"
 #include "game/ui/general/loadingscreen.h"
 #include "game/ui/tileview/battleview.h"
+#include "library/strings_format.h"
+#include <cmath>
 
 namespace OpenApoc
 {
@@ -76,10 +78,9 @@ BattlePreStart::BattlePreStart(sp<GameState> state)
 
 	for (int i = 12; i <= 18; i++)
 	{
-		bigUnitRanks.push_back(
-		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-		                                i)));
+		bigUnitRanks.push_back(fw().data->loadImage(fmt::format(
+		    "PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:{}:xcom3/tacdata/tactical.pal",
+		    i)));
 	}
 }
 

@@ -12,6 +12,7 @@
 #include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
+#include "framework/logger.h"
 #include "framework/renderer.h"
 #include "game/state/city/base.h"
 #include "game/state/city/building.h"
@@ -386,7 +387,7 @@ void VEquipScreen::eventOccurred(Event *e)
 				}
 				if (base->inventoryVehicleEquipment[draggedEquipment->id] <= 0)
 				{
-					LogError("Trying to equip item \"%s\" with zero inventory",
+					LogError("Trying to equip item \"{}\" with zero inventory",
 					         this->draggedEquipment->id);
 				}
 				auto e =
@@ -429,7 +430,7 @@ void VEquipScreen::render()
 			break;
 		default:
 			LogError(
-			    "Trying to draw equipment screen of unsupported vehicle type for vehicle \"%s\"",
+			    "Trying to draw equipment screen of unsupported vehicle type for vehicle \"{}\"",
 			    this->selected->name);
 			allowedEquipmentUser = VEquipmentType::User::Air;
 			break;
@@ -474,7 +475,7 @@ void VEquipScreen::render()
 				// Not in stock
 				continue;
 			}
-			auto countImage = labelFont->getString(format("%d", count));
+			auto countImage = labelFont->getString(fmt::format("{}", count));
 			auto &equipmentImage = equipmentType->equipscreen_sprite;
 			fw().renderer->draw(equipmentImage, inventoryPosition);
 
@@ -537,12 +538,12 @@ void VEquipScreen::setSelectedVehicle(sp<Vehicle> vehicle)
 		LogError("Trying to set invalid selected vehicle");
 		return;
 	}
-	LogInfo("Selecting vehicle \"%s\"", vehicle->name);
+	LogInfo("Selecting vehicle \"{}\"", vehicle->name);
 	this->selected = vehicle;
 	auto backgroundImage = vehicle->type->equipment_screen;
 	if (!backgroundImage)
 	{
-		LogError("Trying to view equipment screen of vehicle \"%s\" which has no equipment screen "
+		LogError("Trying to view equipment screen of vehicle \"{}\" which has no equipment screen "
 		         "background",
 		         vehicle->type->name);
 	}

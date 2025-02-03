@@ -16,6 +16,7 @@
 #include "framework/image.h"
 #include "framework/jukebox.h"
 #include "framework/keycodes.h"
+#include "framework/logger.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
 #include "game/state/battle/battle.h"
@@ -529,7 +530,7 @@ void CityView::tryOpenUfopaediaEntry(StateRef<UfopaediaEntry> ufopaediaEntry)
 		}
 		if (!ufopaedia_category)
 		{
-			LogError("No UFOPaedia category found for entry %s", ufopaediaEntry->title);
+			LogError("No UFOPaedia category found for entry {}", ufopaediaEntry->title);
 		}
 		fw().stageQueueCommand(
 		    {StageCmd::Command::PUSH,
@@ -545,13 +546,13 @@ void CityView::orderGoToBase()
 		{
 			if (v && v->owner == this->state->getPlayer())
 			{
-				LogInfo("Goto base for vehicle \"%s\"", v->name);
+				LogInfo("Goto base for vehicle \"{}\"", v->name);
 				auto bld = v->homeBuilding;
 				if (!bld)
 				{
-					LogError("Vehicle \"%s\" has no building", v->name);
+					LogError("Vehicle \"{}\" has no building", v->name);
 				}
-				LogInfo("Vehicle \"%s\" goto building \"%s\"", v->name, bld->name);
+				LogInfo("Vehicle \"{}\" goto building \"{}\"", v->name, bld->name);
 				// FIXME: Don't clear missions if not replacing current mission
 				if (v->city.id == "CITYMAP_HUMAN")
 				{
@@ -570,13 +571,13 @@ void CityView::orderGoToBase()
 	{
 		for (auto &a : this->state->current_city->cityViewSelectedSoldiers)
 		{
-			LogInfo("Goto base for vehicle \"%s\"", a->name);
+			LogInfo("Goto base for vehicle \"{}\"", a->name);
 			auto bld = a->homeBuilding;
 			if (!bld)
 			{
-				LogError("Vehicle \"%s\" has no building", a->name);
+				LogError("Vehicle \"{}\" has no building", a->name);
 			}
-			LogInfo("Vehicle \"%s\" goto building \"%s\"", a->name, bld->name);
+			LogInfo("Vehicle \"{}\" goto building \"{}\"", a->name, bld->name);
 			// FIXME: Don't clear missions if not replacing current mission
 			a->setMission(*this->state, AgentMission::gotoBuilding(*this->state, *a, bld));
 		}
@@ -620,7 +621,7 @@ void CityView::orderMove(StateRef<Building> building, bool alternative)
 		{
 			if (v && v->owner == this->state->getPlayer())
 			{
-				LogInfo("Vehicle \"%s\" goto building \"%s\"", v->name, building->name);
+				LogInfo("Vehicle \"{}\" goto building \"{}\"", v->name, building->name);
 				// FIXME: Don't clear missions if not replacing current mission
 				v->setMission(*state,
 				              VehicleMission::gotoBuilding(*state, *v, building, useTeleporter));
@@ -637,7 +638,7 @@ void CityView::orderMove(StateRef<Building> building, bool alternative)
 			{
 				continue;
 			}
-			LogInfo("Agent \"%s\" goto building \"%s\"", a->name, building->name);
+			LogInfo("Agent \"{}\" goto building \"{}\"", a->name, building->name);
 			// FIXME: Don't clear missions if not replacing current mission
 			a->setMission(*state,
 			              AgentMission::gotoBuilding(*state, *a, building, useTeleporter, useTaxi));
@@ -1177,7 +1178,7 @@ void CityView::setSelectedTab(int tabIndex)
 {
 	if (tabIndex < 0 || tabIndex > uiTabs.size())
 	{
-		LogError("Trying to select invalid tab: %d", tabIndex);
+		LogError("Trying to select invalid tab: {}", tabIndex);
 		return;
 	}
 	for (auto tab : uiTabs)
@@ -1209,7 +1210,7 @@ CityView::CityView(sp<GameState> state)
 	baseForm->findControlTyped<RadioButton>("BUTTON_SPEED1")->setChecked(true);
 	for (size_t i = 0; i < NUM_TABS; ++i)
 	{
-		sp<Form> f = baseForm->findControlTyped<Form>(format("SUBFORM_TAB_%d", i + 1));
+		sp<Form> f = baseForm->findControlTyped<Form>(fmt::format("SUBFORM_TAB_{}", i + 1));
 		f->takesFocus = false;
 		this->uiTabs.push_back(f);
 	}
@@ -1220,7 +1221,7 @@ CityView::CityView(sp<GameState> state)
 
 	for (size_t i = 0; i < this->uiTabs.size(); ++i)
 	{
-		this->baseForm->findControl(format("BUTTON_TAB_%d", i + 1))
+		this->baseForm->findControl(fmt::format("BUTTON_TAB_{}", i + 1))
 		    ->addCallback(FormEventType::ButtonClick,
 		                  [this, i](Event *)
 		                  {
@@ -1315,10 +1316,10 @@ CityView::CityView(sp<GameState> state)
 	auto vehicleForm = this->uiTabs[1];
 	for (int i = 0; i < weaponDisabled.size(); i++)
 	{
-		vehicleForm->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_%d_DISABLED", i + 1))
+		vehicleForm->findControlTyped<CheckBox>(fmt::format("VEHICLE_WEAPON_{}_DISABLED", i + 1))
 		    ->addCallback(FormEventType::CheckBoxSelected, [this, i](FormsEvent *e [[maybe_unused]])
 		                  { orderDisableWeapon(i, true); });
-		vehicleForm->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_%d_DISABLED", i + 1))
+		vehicleForm->findControlTyped<CheckBox>(fmt::format("VEHICLE_WEAPON_{}_DISABLED", i + 1))
 		    ->addCallback(FormEventType::CheckBoxDeSelected,
 		                  [this, i](FormsEvent *e [[maybe_unused]])
 		                  { orderDisableWeapon(i, false); });
@@ -1814,8 +1815,8 @@ CityView::CityView(sp<GameState> state)
 	auto font = ui().getFont("smallset");
 	for (int i = 0; i <= state->current_city->roadSegments.size(); i++)
 	{
-		debugLabelsOK.push_back(font->getString(format("%d", i)));
-		debugLabelsDead.push_back(font->getString(format("-%d-", i)));
+		debugLabelsOK.push_back(font->getString(fmt::format("{}", i)));
+		debugLabelsDead.push_back(font->getString(fmt::format("-{}-", i)));
 	}
 
 #ifdef DEBUG_START_PAUSE
@@ -1886,11 +1887,11 @@ void CityView::refreshBaseView()
 	for (auto &pair : state->player_bases)
 	{
 		auto &viewBase = pair.second;
-		auto viewName = format("BUTTON_BASE_%d", ++b);
+		auto viewName = fmt::format("BUTTON_BASE_{}", ++b);
 		auto view = this->uiTabs[0]->findControlTyped<GraphicButton>(viewName);
 		if (!view)
 		{
-			LogError("Failed to find UI control matching \"%s\"", viewName);
+			LogError("Failed to find UI control matching \"{}\"", viewName);
 		}
 		view->setVisible(true);
 		view->setData(viewBase);
@@ -2420,25 +2421,27 @@ void CityView::update()
 				if (weaponType[i])
 				{
 					uiTabs[1]
-					    ->findControlTyped<Graphic>(format("VEHICLE_WEAPON_%d", i + 1))
+					    ->findControlTyped<Graphic>(fmt::format("VEHICLE_WEAPON_{}", i + 1))
 					    ->setImage(weaponType[i]->icon);
 					uiTabs[1]
-					    ->findControlTyped<Graphic>(format("VEHICLE_WEAPON_%d", i + 1))
+					    ->findControlTyped<Graphic>(fmt::format("VEHICLE_WEAPON_{}", i + 1))
 					    ->ToolTipText = tr(weaponType[i]->name);
 					uiTabs[1]
-					    ->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_%d_DISABLED", i + 1))
+					    ->findControlTyped<CheckBox>(
+					        fmt::format("VEHICLE_WEAPON_{}_DISABLED", i + 1))
 					    ->setVisible(true);
 				}
 				else
 				{
 					uiTabs[1]
-					    ->findControlTyped<Graphic>(format("VEHICLE_WEAPON_%d", i + 1))
+					    ->findControlTyped<Graphic>(fmt::format("VEHICLE_WEAPON_{}", i + 1))
 					    ->setImage(nullptr);
 					uiTabs[1]
-					    ->findControlTyped<Graphic>(format("VEHICLE_WEAPON_%d", i + 1))
+					    ->findControlTyped<Graphic>(fmt::format("VEHICLE_WEAPON_{}", i + 1))
 					    ->ToolTipText = "";
 					uiTabs[1]
-					    ->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_%d_DISABLED", i + 1))
+					    ->findControlTyped<CheckBox>(
+					        fmt::format("VEHICLE_WEAPON_{}_DISABLED", i + 1))
 					    ->setVisible(false);
 				}
 			}
@@ -2470,14 +2473,14 @@ void CityView::update()
 					}
 				}
 				uiTabs[1]
-				    ->findControlTyped<Graphic>(format("VEHICLE_WEAPON_%d_AMMO", i + 1))
+				    ->findControlTyped<Graphic>(fmt::format("VEHICLE_WEAPON_{}_AMMO", i + 1))
 				    ->setImage(bar);
 			}
 			if (currentDisabled != weaponDisabled[i])
 			{
 				weaponDisabled[i] = currentDisabled;
 				uiTabs[1]
-				    ->findControlTyped<CheckBox>(format("VEHICLE_WEAPON_%d_DISABLED", i + 1))
+				    ->findControlTyped<CheckBox>(fmt::format("VEHICLE_WEAPON_{}_DISABLED", i + 1))
 				    ->setChecked(currentDisabled);
 			}
 		}
@@ -2578,7 +2581,7 @@ void CityView::update()
 							UString efficiency = tr("Combat training (efficiency=");
 							auto usage = base->getUsage(*state, FacilityType::Capacity::Training);
 							usage = (100.0f / std::max(100.f, usage)) * 100;
-							efficiency += format("%.f%%", usage) + UString(")");
+							efficiency += fmt::format("{:.0f}%", usage) + UString(")");
 							agentAssignment->setText(efficiency);
 							break;
 						}
@@ -2587,7 +2590,7 @@ void CityView::update()
 							UString efficiency = tr("Psionic training (efficiency=");
 							auto usage = base->getUsage(*state, FacilityType::Capacity::Psi);
 							usage = (100.0f / std::max(100.f, usage)) * 100;
-							efficiency += format("%.f%%", usage) + UString(")");
+							efficiency += fmt::format("{:.0f}%", usage) + UString(")");
 							agentAssignment->setText(efficiency);
 							break;
 						}
@@ -2711,7 +2714,7 @@ void CityView::update()
 								                    fac->lab->current_project->man_hours_progress) /
 								                fac->lab->current_project->man_hours) *
 								               100;
-								agentAssignment->setText(pr + format(" (%d%%)", progress));
+								agentAssignment->setText(pr + fmt::format(" ({}%)", progress));
 							}
 							else
 								agentAssignment->setText(tr("No project assigned"));
@@ -2842,7 +2845,7 @@ void CityView::update()
 								     (fac->lab->current_project->man_hours *
 								      fac->lab->manufacture_goal)) *
 								    100;
-								agentAssignment->setText(pr + format(" (%d%%)", progress));
+								agentAssignment->setText(pr + fmt::format(" ({}%)", progress));
 							}
 							else
 								agentAssignment->setText(tr("No project assigned"));
@@ -2970,7 +2973,7 @@ void CityView::update()
 								                    fac->lab->current_project->man_hours_progress) /
 								                fac->lab->current_project->man_hours) *
 								               100;
-								agentAssignment->setText(pr + format(" (%d%%)", progress));
+								agentAssignment->setText(pr + fmt::format(" ({}%)", progress));
 							}
 							else
 								agentAssignment->setText(tr("No project assigned"));
@@ -3501,7 +3504,7 @@ bool CityView::handleKeyDown(Event *e)
 								stuffToRepair.insert(s);
 							}
 						}
-						LogInfo("Repairing %u tiles out of %u",
+						LogInfo("Repairing {} tiles out of {}",
 						        static_cast<unsigned>(stuffToRepair.size()),
 						        static_cast<unsigned>(state->current_city->scenery.size()));
 
@@ -3549,14 +3552,14 @@ bool CityView::handleKeyDown(Event *e)
 						if (type.second->crashed_sprite)
 						{
 							validTypes.emplace_back(state.get(), type.second);
-							LogWarning("Valid UFO type: %s", type.second->name);
+							LogWarning("Valid UFO type: {}", type.second->name);
 						}
 					}
 
 					for (int i = 0; i < 3; i++)
 					{
 						auto type = pickRandom(state->rng, validTypes);
-						LogWarning("Crashing %s", type->name);
+						LogWarning("Crashing {}", type->name);
 						pos.z = 9 + i;
 						auto ufo = state->current_city->placeVehicle(*state, {state.get(), type},
 						                                             state->getAliens(), pos);
@@ -3787,33 +3790,33 @@ bool CityView::handleMouseDown(Event *e)
 
 					Vec3<int> t = scenery->currentPosition;
 					UString debug = "";
-					debug += format("\nCLICKED %s SCENERY %s at %s BUILDING %s",
+					debug +=
+					    fmt::format("\nCLICKED {} SCENERY {} at {} BUILDING {}",
 					                scenery->falling || scenery->willCollapse() ? "FALLING" : "OK",
 					                scenery->type.id, t, building.id);
 					// debug += format("\n LOS BLOCK %d", battle.getLosBlockID(t.x, t.y, t.z));
 
-					debug +=
-					    format("\nHt [%d] Con [%d] Type [%d|%d|%d] Road [%d%d%d%d] Hill [%d%d%d%d] "
-					           "Tube "
-					           "[%d%d%d%d%d%d]",
-					           scenery->type->height, scenery->type->constitution,
-					           (int)scenery->type->tile_type, (int)scenery->type->road_type,
-					           (int)scenery->type->walk_mode, (int)scenery->type->connection[0],
-					           (int)scenery->type->connection[1], (int)scenery->type->connection[2],
-					           (int)scenery->type->connection[3], (int)scenery->type->hill[0],
-					           (int)scenery->type->hill[1], (int)scenery->type->hill[2],
-					           (int)scenery->type->hill[3], (int)scenery->type->tube[0],
-					           (int)scenery->type->tube[1], (int)scenery->type->tube[2],
-					           (int)scenery->type->tube[3], (int)scenery->type->tube[4],
-					           (int)scenery->type->tube[5]);
+					debug += fmt::format(
+					    "\nHt [{}] Con [{}] Type [{}|{}|{}] Road [{}{}{}{}] Hill [{}{}{}{}] Tube "
+					    "[{}{}{}{}{}{}]",
+					    scenery->type->height, scenery->type->constitution,
+					    (int)scenery->type->tile_type, (int)scenery->type->road_type,
+					    (int)scenery->type->walk_mode, (int)scenery->type->connection[0],
+					    (int)scenery->type->connection[1], (int)scenery->type->connection[2],
+					    (int)scenery->type->connection[3], (int)scenery->type->hill[0],
+					    (int)scenery->type->hill[1], (int)scenery->type->hill[2],
+					    (int)scenery->type->hill[3], (int)scenery->type->tube[0],
+					    (int)scenery->type->tube[1], (int)scenery->type->tube[2],
+					    (int)scenery->type->tube[3], (int)scenery->type->tube[4],
+					    (int)scenery->type->tube[5]);
 					auto &map = *state->current_city->map;
 					for (auto &p : scenery->supportedBy)
 					{
-						debug += format("\nCan be supported by %s", p);
+						debug += fmt::format("\nCan be supported by {}", p);
 					}
 					for (auto &p : scenery->supportedParts)
 					{
-						debug += format("\nSupports %s", p);
+						debug += fmt::format("\nSupports {}", p);
 					}
 					for (int x = t.x - 1; x <= t.x + 1; x++)
 					{
@@ -3837,16 +3840,16 @@ bool CityView::handleMouseDown(Event *e)
 										{
 											if (p == t)
 											{
-												debug +=
-												    format("\nActually supported by %s at %d %d %d",
-												           mp2->type.id, x - t.x, y - t.y, z - t.z);
+												debug += fmt::format(
+												    "\nActually supported by {} at {} {} {}",
+												    mp2->type.id, x - t.x, y - t.y, z - t.z);
 											}
 										}
 									}
 								}
 							}
 						}
-						LogWarning("%s", debug);
+						LogWarning("{}", debug);
 					}
 
 					if (modifierLAlt && modifierLCtrl && modifierLShift)
@@ -3867,14 +3870,14 @@ bool CityView::handleMouseDown(Event *e)
 				{
 					vehicle =
 					    std::dynamic_pointer_cast<TileObjectVehicle>(collision.obj)->getVehicle();
-					LogWarning("CLICKED VEHICLE %s at %s", vehicle->name, vehicle->position);
+					LogWarning("CLICKED VEHICLE {} at {}", vehicle->name, vehicle->position);
 					for (auto &m : vehicle->missions)
 					{
-						LogWarning("Mission %s", m.getName());
+						LogWarning("Mission {}", m.getName());
 					}
 					for (auto &c : vehicle->cargo)
 					{
-						LogInfo("Cargo %sx%d", c.id, c.count);
+						LogInfo("Cargo {}x{}", c.id, c.count);
 					}
 					if (modifierLAlt && modifierLCtrl && modifierLShift)
 					{
@@ -3915,15 +3918,15 @@ bool CityView::handleMouseDown(Event *e)
 				{
 					vehicle = std::dynamic_pointer_cast<TileObjectVehicle>(collisionVehicle.obj)
 					              ->getVehicle();
-					LogWarning("SECONDARY CLICK ON VEHICLE %s at %s", vehicle->name,
+					LogWarning("SECONDARY CLICK ON VEHICLE {} at {}", vehicle->name,
 					           vehicle->position);
 					for (auto &m : vehicle->missions)
 					{
-						LogWarning("Mission %s", m.getName());
+						LogWarning("Mission {}", m.getName());
 					}
 					for (auto &c : vehicle->cargo)
 					{
-						LogInfo("Cargo %sx%d", c.id, c.count);
+						LogInfo("Cargo {}x{}", c.id, c.count);
 					}
 				}
 			}
@@ -3935,7 +3938,7 @@ bool CityView::handleMouseDown(Event *e)
 		{
 			projectile =
 			    std::dynamic_pointer_cast<TileObjectProjectile>(projCollision.obj)->getProjectile();
-			LogInfo("CLICKED PROJECTILE %d at %s", projectile->damage, projectile->position);
+			LogInfo("CLICKED PROJECTILE {} at {}", projectile->damage, projectile->position);
 
 			if (!vehicle && !scenery && !portal)
 			{
@@ -4080,13 +4083,13 @@ bool CityView::handleGameStateEvent(Event *e)
 					    }
 				    });
 
-				sp<MessageBox> messageBox = mksp<MessageBox>(
-				    MessageBox("No Alien Containment Facility",
-				               format("Alien specimens from tactical combat zone have arrived: %s",
-				                      currentBase->name),
-				               MessageBox::ButtonOptions::YesNo, std::move(keepOnBoardOption),
-				               std::move(destroyOption), nullptr,
-				               {{"yes", "Keep on board"}, {"no", "Destroy"}}));
+				sp<MessageBox> messageBox = mksp<MessageBox>(MessageBox(
+				    "No Alien Containment Facility",
+				    fmt::format("Alien specimens from tactical combat zone have arrived: {}",
+				                currentBase->name),
+				    MessageBox::ButtonOptions::YesNo, std::move(keepOnBoardOption),
+				    std::move(destroyOption), nullptr,
+				    {{"yes", "Keep on board"}, {"no", "Destroy"}}));
 
 				fw().stageQueueCommand({StageCmd::Command::PUSH, messageBox});
 
@@ -4120,7 +4123,7 @@ bool CityView::handleGameStateEvent(Event *e)
 			    {StageCmd::Command::PUSH,
 			     mksp<NotificationScreen>(
 			         state, *this,
-			         format("Aliens have taken over %s", gameOrgEvent->organisation->name),
+			         fmt::format("Aliens have taken over {}", gameOrgEvent->organisation->name),
 			         gameEvent->type)});
 		}
 		break;
@@ -4227,9 +4230,9 @@ bool CityView::handleGameStateEvent(Event *e)
 			}
 
 			UString title = tr("Commence investigation");
-			UString message = format(tr("All selected units and crafts have arrived at %s. "
-			                            "Proceed with investigation? (%d units)"),
-			                         building->name, agents.size());
+			UString message = fmt::format("All selected units and crafts have arrived at {}. "
+			                              "Proceed with investigation? ({} units)",
+			                              building->name, agents.size());
 			fw().stageQueueCommand({StageCmd::Command::PUSH,
 			                        mksp<MessageBox>(
 			                            title, message, MessageBox::ButtonOptions::YesNo,
@@ -4288,14 +4291,14 @@ bool CityView::handleGameStateEvent(Event *e)
 				}
 				if (!ufopaedia_category)
 				{
-					LogError("No UFOPaedia category found for entry %s", ufopaedia_entry->title);
+					LogError("No UFOPaedia category found for entry {}", ufopaedia_entry->title);
 				}
 			}
 			setUpdateSpeed(CityUpdateSpeed::Pause);
 			auto message_box = mksp<MessageBox>(
 			    tr("RESEARCH COMPLETE"),
-			    format("%s\n%s\n%s", tr("Research project completed:"), ev->topic->name,
-			           tr("Do you wish to view the UFOpaedia report?")),
+			    fmt::format("{}\n{}\n{}", tr("Research project completed:"), ev->topic->name,
+			                tr("Do you wish to view the UFOpaedia report?")),
 			    MessageBox::ButtonOptions::YesNo,
 			    // "Yes" callback
 			    [game_state, lab_facility, ufopaedia_category, ufopaedia_entry]()
@@ -4367,8 +4370,8 @@ bool CityView::handleGameStateEvent(Event *e)
 			setUpdateSpeed(CityUpdateSpeed::Pause);
 			auto message_box = mksp<MessageBox>(
 			    tr("MANUFACTURE COMPLETED"),
-			    format("%s\n%s\n%s %d\n%s", lab_base->name, tr(item_name), tr("Quantity:"),
-			           ev->goal, tr("Do you wish to reasign the Workshop?")),
+			    fmt::format("{}\n{}\n{} {}\n{}", lab_base->name, tr(item_name), tr("Quantity:"),
+			                ev->goal, tr("Do you wish to reasign the Workshop?")),
 			    MessageBox::ButtonOptions::YesNo,
 			    // Yes callback
 			    [game_state, lab_facility]()
@@ -4427,9 +4430,9 @@ bool CityView::handleGameStateEvent(Event *e)
 			setUpdateSpeed(CityUpdateSpeed::Pause);
 			auto message_box =
 			    mksp<MessageBox>(tr("MANUFACTURING HALTED"),
-			                     format("%s\n%s\n%s %d/%d\n%s", lab_base->name, tr(item_name),
-			                            tr("Completion status:"), ev->done, ev->goal,
-			                            tr("Production costs exceed your available funds.")),
+			                     fmt::format("{}\n{}\n{} {}/{}\n{}", lab_base->name, tr(item_name),
+			                                 tr("Completion status:"), ev->done, ev->goal,
+			                                 tr("Production costs exceed your available funds.")),
 			                     MessageBox::ButtonOptions::Ok);
 			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 		}
@@ -4443,10 +4446,10 @@ bool CityView::handleGameStateEvent(Event *e)
 				return true;
 			}
 			setUpdateSpeed(CityUpdateSpeed::Pause);
-			auto message_box =
-			    mksp<MessageBox>(tr("FACILITY COMPLETED"),
-			                     format("%s\n%s", ev->base->name, tr(ev->facility->type->name)),
-			                     MessageBox::ButtonOptions::Ok);
+			auto message_box = mksp<MessageBox>(
+			    tr("FACILITY COMPLETED"),
+			    fmt::format("{}\n{}", ev->base->name, tr(ev->facility->type->name)),
+			    MessageBox::ButtonOptions::Ok);
 			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 		}
 		break;

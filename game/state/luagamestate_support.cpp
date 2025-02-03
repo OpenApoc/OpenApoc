@@ -4,6 +4,7 @@ extern "C"
 #include "dependencies/lua/lua.h"
 #include "dependencies/lua/lualib.h"
 }
+#include "framework/logger.h"
 #include "game/state/luagamestate_support.h"
 #include "game/state/luagamestate_support_generated.h"
 

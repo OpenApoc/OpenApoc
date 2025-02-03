@@ -19,6 +19,7 @@
 #include "game/state/shared/organisation.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/transactioncontrol.h"
+#include "library/strings_format.h"
 #include <array>
 
 namespace OpenApoc
@@ -94,7 +95,7 @@ void BuyAndSellScreen::updateFormValues(bool queueHighlightUpdate)
 	form->findControlTyped<Label>("TEXT_FUNDS")->setText(Strings::fromInteger(balance, true));
 	form->findControlTyped<Label>("TEXT_FUNDS_DELTA")
 	    ->setText(
-	        format("%s%s", moneyDelta > 0 ? "+" : "", Strings::fromInteger(moneyDelta, true)));
+	        fmt::format("{}{}", moneyDelta > 0 ? "+" : "", Strings::fromInteger(moneyDelta, true)));
 }
 
 void BuyAndSellScreen::closeScreen()
@@ -251,20 +252,21 @@ void BuyAndSellScreen::closeScreen()
 		if (!badOrgs.empty())
 		{
 			UString title =
-			    format("%s%s", badOrgs.front()->name, badOrgs.size() > 1 ? " & others" : "");
+			    fmt::format("{}{}", badOrgs.front()->name, badOrgs.size() > 1 ? " & others" : "");
 
 			// If player can ferry themselves then give option
 			if (config().getBool("OpenApoc.NewFeature.AllowManualCargoFerry"))
 			{
-				UString message = transportationHostile
-				                      ? format("%s %s",
-				                               tr("Hostile organization refuses to carry out the "
-				                                  "requested transportation for this company."),
-				                               tr("Proceed?"))
-				                      : format("%s %s",
-				                               tr("No free transport to carry out the requested "
-				                                  "transportation detected in the city."),
-				                               tr("Proceed?"));
+				UString message =
+				    transportationHostile
+				        ? fmt::format("{} {}",
+				                      tr("Hostile organization refuses to carry out the "
+				                         "requested transportation for this company."),
+				                      tr("Proceed?"))
+				        : fmt::format("{} {}",
+				                      tr("No free transport to carry out the requested "
+				                         "transportation detected in the city."),
+				                      tr("Proceed?"));
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
@@ -275,10 +277,10 @@ void BuyAndSellScreen::closeScreen()
 			else if (!transportationHostile)
 			{
 				// FIXME: Different message maybe? Same for now
-				UString message = format("%s %s",
-				                         tr("No free transport to carry out the requested "
-				                            "transportation detected in the city."),
-				                         tr("Proceed?"));
+				UString message = fmt::format("{} {}",
+				                              tr("No free transport to carry out the requested "
+				                                 "transportation detected in the city."),
+				                              tr("Proceed?"));
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
@@ -359,21 +361,21 @@ void BuyAndSellScreen::closeScreen()
 		if (transportationBusy || transportationHostile)
 		{
 			UString title =
-			    format("%s%s", badOrgs.front()->name, badOrgs.size() > 1 ? " & others" : "");
+			    fmt::format("{}{}", badOrgs.front()->name, badOrgs.size() > 1 ? " & others" : "");
 
 			// If player can ferry themselves then give option
 			if (config().getBool("OpenApoc.NewFeature.AllowManualCargoFerry"))
 			{
 				UString message =
 				    transportationHostile
-				        ? format("%s %s",
-				                 tr("This hostile organization refuses to carry out the "
-				                    "requested transfer."),
-				                 tr("Proceed?"))
-				        : format("%s %s",
-				                 tr("No free transport to carry out the requested "
-				                    "transportation detected in the city."),
-				                 tr("Proceed?"));
+				        ? fmt::format("{} {}",
+				                      tr("This hostile organization refuses to carry out the "
+				                         "requested transfer."),
+				                      tr("Proceed?"))
+				        : fmt::format("{} {}",
+				                      tr("No free transport to carry out the requested "
+				                         "transportation detected in the city."),
+				                      tr("Proceed?"));
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
@@ -384,10 +386,10 @@ void BuyAndSellScreen::closeScreen()
 			else if (!transportationHostile)
 			{
 				// FIXME: Different message maybe? Same for now
-				UString message = format("%s %s",
-				                         tr("No free transport to carry out the requested "
-				                            "transportation detected in the city."),
-				                         tr("Proceed?"));
+				UString message = fmt::format("{} {}",
+				                              tr("No free transport to carry out the requested "
+				                                 "transportation detected in the city."),
+				                              tr("Proceed?"));
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
@@ -426,7 +428,7 @@ void BuyAndSellScreen::executeOrders()
 				if (c->itemType != TransactionControl::Type::Vehicle &&
 				    state->economy.find(c->itemId) == state->economy.end())
 				{
-					LogError("Economy not found for %s: How are we selling it then!?", c->itemId);
+					LogError("Economy not found for {}: How are we selling it then!?", c->itemId);
 					continue;
 				}
 
@@ -502,7 +504,7 @@ void BuyAndSellScreen::executeOrders()
 							}
 							case TransactionControl::Type::VehicleType:
 							{
-								LogError("How did we manage to sell a vehicle type %s!?",
+								LogError("How did we manage to sell a vehicle type {}!?",
 								         c->itemId);
 								break;
 							}
@@ -511,7 +513,7 @@ void BuyAndSellScreen::executeOrders()
 							case TransactionControl::Type::Physicist:
 							case TransactionControl::Type::Engineer:
 							{
-								LogError("How did we manage to sell an agent type %s!", c->itemId);
+								LogError("How did we manage to sell an agent type {}!", c->itemId);
 								break;
 							}
 						}
@@ -523,7 +525,7 @@ void BuyAndSellScreen::executeOrders()
 						auto org = c->manufacturer;
 						if (org->isRelatedTo(player) == Organisation::Relation::Hostile)
 						{
-							LogError("How the hell is being bought from a hostile org %s?",
+							LogError("How the hell is being bought from a hostile org {}?",
 							         c->manufacturerName);
 							continue;
 						}
@@ -532,13 +534,13 @@ void BuyAndSellScreen::executeOrders()
 						{
 							case TransactionControl::Type::Vehicle:
 							{
-								LogError("It should be impossible to buy a particular vehicle %s.",
+								LogError("It should be impossible to buy a particular vehicle {}.",
 								         c->itemId);
 								break;
 							}
 							case TransactionControl::Type::AgentEquipmentBio:
 							{
-								LogError("Alien %s: How are we buying it!?", c->itemId);
+								LogError("Alien {}: How are we buying it!?", c->itemId);
 								break;
 							}
 							case TransactionControl::Type::AgentEquipmentCargo:
@@ -570,7 +572,7 @@ void BuyAndSellScreen::executeOrders()
 							case TransactionControl::Type::Physicist:
 							case TransactionControl::Type::Engineer:
 							{
-								LogError("How did we manage to sell an agent type %s!", c->itemId);
+								LogError("How did we manage to sell an agent type {}!", c->itemId);
 								break;
 							}
 						}

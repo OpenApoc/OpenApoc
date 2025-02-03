@@ -1,4 +1,5 @@
 #include "game/state/rules/city/scenerytiletype.h"
+#include "framework/logger.h"
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"
 
@@ -14,7 +15,7 @@ sp<SceneryTileType> StateObject<SceneryTileType>::get(const GameState &state, co
 		if (it != pair.second->tile_types.end())
 			return it->second;
 	}
-	LogError("No scenery tile type matching ID \"%s\"", id);
+	LogError("No scenery tile type matching ID \"{}\"", id);
 	return nullptr;
 }
 

@@ -45,7 +45,7 @@ void BaseStage::begin()
 	for (auto &pair : state->player_bases)
 	{
 		auto &viewBase = pair.second;
-		auto viewName = format("BUTTON_BASE_%d", ++b);
+		auto viewName = fmt::format("BUTTON_BASE_{}", ++b);
 		auto view = form->findControlTyped<GraphicButton>(viewName);
 		if (!view)
 		{

@@ -1,6 +1,8 @@
 #include "framework/logger.h"
 #include "framework/configfile.h"
 #include "library/backtrace.h"
+#include "library/sp.h"
+#include "library/strings_format.h"
 #include <iostream>
 #include <mutex>
 
@@ -46,7 +48,7 @@ void Log(LogLevel level, UString prefix, const UString &text)
 
 void _logAssert(UString prefix, UString string, int line, UString file)
 {
-	Log(LogLevel::Error, prefix, format("%s:%d Assertion failed %s", file, line, string));
+	Log(LogLevel::Error, prefix, fmt::format("{}:{} Assertion failed {}", file, line, string));
 	debug_trap();
 	exit(1);
 }

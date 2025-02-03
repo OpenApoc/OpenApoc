@@ -1,5 +1,6 @@
 #include "game/state/tilemap/tile.h"
 #include "framework/image.h"
+#include "framework/logger.h"
 #include "game/state/battle/battledoor.h"
 #include "game/state/battle/battlehazard.h"
 #include "game/state/battle/battleitem.h"
@@ -33,7 +34,7 @@ Vec3<float> Tile::getRestingPosition(bool large, bool overlay)
 		if (position.x < 1 || position.y < 1)
 		{
 			LogError(
-			    "Trying to get resting position for a large unit when it can't fit! %d, %d, %d",
+			    "Trying to get resting position for a large unit when it can't fit! {}, {}, {}",
 			    position.x, position.y, position.z);
 			return Vec3<float>{position.x + 0.5, position.y + 0.5, position.z};
 		}
@@ -71,7 +72,7 @@ bool Tile::getSolidGround(bool large)
 	{
 		if (position.x < 1 || position.y < 1)
 		{
-			LogError("Trying to get solid ground for a large unit when it can't fit! %d, %d, %d",
+			LogError("Trying to get solid ground for a large unit when it can't fit! {}, {}, {}",
 			         position.x, position.y, position.z);
 			return false;
 		}
@@ -99,7 +100,7 @@ bool Tile::getCanStand(bool large)
 		if (position.x < 1 || position.y < 1)
 		{
 			LogError(
-			    "Trying to get standing ability for a large unit when it can't fit! %d, %d, %d",
+			    "Trying to get standing ability for a large unit when it can't fit! {}, {}, {}",
 			    position.x, position.y, position.z);
 			return false;
 		}
@@ -126,7 +127,7 @@ bool Tile::getHasExit(bool large)
 	{
 		if (position.x < 1 || position.y < 1)
 		{
-			LogError("Trying to get exit for a large unit when it can't fit! %d, %d, %d",
+			LogError("Trying to get exit for a large unit when it can't fit! {}, {}, {}",
 			         position.x, position.y, position.z);
 			return false;
 		}

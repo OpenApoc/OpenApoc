@@ -1,4 +1,5 @@
 #include "game/state/rules/city/ufomissionpreference.h"
+#include "framework/logger.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc
@@ -11,7 +12,7 @@ sp<UFOMissionPreference> StateObject<UFOMissionPreference>::get(const GameState 
 	auto it = state.ufo_mission_preference.find(id);
 	if (it == state.ufo_mission_preference.end())
 	{
-		LogError("No UFOMissionPreference matching ID \"%s\"", id);
+		LogError("No UFOMissionPreference matching ID \"{}\"", id);
 		return nullptr;
 	}
 	return it->second;

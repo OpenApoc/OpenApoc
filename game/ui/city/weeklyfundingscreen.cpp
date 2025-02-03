@@ -9,6 +9,7 @@
 #include "game/state/gamestate.h"
 #include "game/state/shared/organisation.h"
 #include "game/ui/city/scorescreen.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -107,15 +108,15 @@ void WeeklyFundingScreen::begin()
 		// Income adjustment is still based on base player funding, not current one
 		const int adjustment = (modifier == 0) ? 0 : player->income / modifier;
 
-		labelAdjustment->setText(
-		    format("%s $%s", tr("Funding adjustment>"), Strings::fromInteger(adjustment, true)));
+		labelAdjustment->setText(fmt::format("{} ${}", tr("Funding adjustment>"),
+		                                     Strings::fromInteger(adjustment, true)));
 		labelNextWeekIncome->setText(
-		    format("%s $%s", tr("Income for next week>"),
-		           Strings::fromInteger(currentIncome + adjustment, true)));
+		    fmt::format("{} ${}", tr("Income for next week>"),
+		                Strings::fromInteger(currentIncome + adjustment, true)));
 	}
 
 	labelCurrentIncome->setText(
-	    format("%s $%s", tr("Current income>"), Strings::fromInteger(currentIncome, true)));
+	    fmt::format("{} ${}", tr("Current income>"), Strings::fromInteger(currentIncome, true)));
 	labelRatingDescription->setText(ratingDescription);
 }
 

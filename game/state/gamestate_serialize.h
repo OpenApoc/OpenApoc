@@ -211,8 +211,8 @@ void serializeIn(const GameState *, SerializationNode *node, T &val,
 			return;
 		}
 	}
-	throw SerializationException(format("Invalid enum value for %s: \"%s\"", typeid(T).name(), str),
-	                             node);
+	throw SerializationException(
+	    fmt::format("Invalid enum value for {}: \"{}\"", typeid(T).name(), str), node);
 }
 
 template <typename Key, typename Value>

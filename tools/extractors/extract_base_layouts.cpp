@@ -1,4 +1,5 @@
 #include "framework/framework.h"
+#include "framework/logger.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/city/baselayout.h"
 #include "library/strings_format.h"
@@ -13,7 +14,7 @@ void InitialGameStateExtractor::extractBaseLayouts(GameState &state) const
 	auto &data = this->ufo2p;
 	for (unsigned i = 0; i < data.baselayouts->count(); i++)
 	{
-		UString id = format("%s%d", BaseLayout::getPrefix(), i);
+		UString id = fmt::format("{}{}", BaseLayout::getPrefix(), i);
 		auto layout = mksp<BaseLayout>();
 		auto b = data.baselayouts->get(i);
 		bool foundLift = false;
@@ -36,8 +37,8 @@ void InitialGameStateExtractor::extractBaseLayouts(GameState &state) const
 					{
 						if (foundLift)
 						{
-							LogError("Unexpected repeated lift at position {%d,%d} in base %s", row,
-							         col, id);
+							LogError("Unexpected repeated lift at position {{{},{}}} in base {}",
+							         row, col, id);
 						}
 						foundLift = true;
 						layout->baseLift = {col, row};
@@ -48,14 +49,14 @@ void InitialGameStateExtractor::extractBaseLayouts(GameState &state) const
 						break;
 					}
 					default:
-						LogError("Unexpected module id %d at {%d,%d} in base %s",
+						LogError("Unexpected module id {} at {{{},{}}} in base {}",
 						         (int)b.module[row][col], col, row, id);
 				}
 			}
 		}
 		if (!foundLift)
 		{
-			LogError("No lift found in base %s", id);
+			LogError("No lift found in base {}", id);
 		}
 		Rect<int>::compactRectSet(layout->baseCorridors);
 		state.base_layouts[id] = layout;

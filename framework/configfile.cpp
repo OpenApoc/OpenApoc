@@ -5,6 +5,8 @@
 #include "framework/configfile.h"
 #include "framework/filesystem.h"
 #include "framework/logger.h"
+#include "framework/options.h"
+#include "library/strings_format.h"
 #include <fstream>
 #include <iostream>
 #include <list>
@@ -148,7 +150,7 @@ class ConfigFileImpl
 			auto unknown_options = po::collect_unrecognized(parsed.options, po::include_positional);
 			for (const auto &unknown : unknown_options)
 			{
-				LogWarning("Ignoring option \"%s\"", unknown);
+				LogWarning("Ignoring option \"{}\"", unknown);
 			}
 		}
 		catch (po::error &err)
@@ -220,7 +222,7 @@ class ConfigFileImpl
 			auto splitString = split(optionPair.first, ".");
 			if (splitString.size() < 1)
 			{
-				LogError("Invalid option string \"%s\"", optionPair.first);
+				LogError("Invalid option string \"{}\"", optionPair.first);
 				continue;
 			}
 			UString sectionName;
@@ -233,7 +235,7 @@ class ConfigFileImpl
 
 			auto optionName = splitString[splitString.size() - 1];
 			UString configFileLine =
-			    format("%s=%s", optionName, std::visit(ToStringVisitor(), optionPair.second));
+			    fmt::format("{}={}", optionName, std::visit(ToStringVisitor(), optionPair.second));
 			configFileContents[sectionName].push_back(configFileLine);
 		}
 
@@ -292,7 +294,7 @@ class ConfigFileImpl
 		}
 		if (!this->get(key))
 		{
-			LogError("Option \"%s\" not set", key);
+			LogError("Option \"{}\" not set", key);
 			throw std::exception();
 		}
 		auto it = this->modifiedOptions.find(key);

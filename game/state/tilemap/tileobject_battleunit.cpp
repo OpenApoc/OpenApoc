@@ -2,6 +2,7 @@
 #define _USE_MATH_DEFINES
 #endif
 #include "game/state/tilemap/tileobject_battleunit.h"
+#include "framework/logger.h"
 #include "framework/renderer.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/rules/battle/battleunitanimationpack.h"

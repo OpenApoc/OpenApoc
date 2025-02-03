@@ -1,4 +1,5 @@
 #include "game/state/tilemap/tileobject_battleitem.h"
+#include "framework/logger.h"
 #include "framework/renderer.h"
 #include "game/state/battle/battleitem.h"
 #include "game/state/rules/aequipmenttype.h"

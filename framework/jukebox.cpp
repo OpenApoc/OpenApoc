@@ -67,7 +67,7 @@ class JukeBoxImpl : public JukeBox
 		{
 			auto musicTrack = fw.data->loadMusic(track);
 			if (!musicTrack)
-				LogError("Failed to load music track \"%s\" - skipping", track);
+				LogError("Failed to load music track \"{}\" - skipping", track);
 			else
 				this->trackList.push_back(musicTrack);
 		}
@@ -90,7 +90,7 @@ class JukeBoxImpl : public JukeBox
 			LogInfo("End of jukebox playlist");
 			return;
 		}
-		LogInfo("Playing track %u (%s)", jukebox->position,
+		LogInfo("Playing track {} ({})", jukebox->position,
 		        jukebox->trackList[jukebox->position]->getName());
 		jukebox->fw.soundBackend->setTrack(jukebox->trackList[jukebox->position]);
 
@@ -130,13 +130,13 @@ class JukeBoxImpl : public JukeBox
 			auto file = fw.data->fs.open(path);
 			if (!file)
 			{
-				LogWarning("Failed to open playlist file \"%s\"", path);
+				LogWarning("Failed to open playlist file \"{}\"", path);
 				continue;
 			}
 			auto data = file.readAll();
 			if (!data)
 			{
-				LogWarning("Failed to read playlist file \"%s\"", path);
+				LogWarning("Failed to read playlist file \"{}\"", path);
 				continue;
 			}
 
@@ -144,14 +144,14 @@ class JukeBoxImpl : public JukeBox
 			auto result = doc.load_buffer(data.get(), file.size());
 			if (!result)
 			{
-				LogWarning("Failed to parse playlist \"%s\" - \"%s\" at \"%llu\"", path,
+				LogWarning("Failed to parse playlist \"{}\" - \"{}\" at \"{}\"", path,
 				           result.description(), result.offset);
 				continue;
 			}
 			auto node = doc.child("openapoc_playlist");
 			if (!node)
 			{
-				LogWarning("No root \"openapoc_playlist\" element in playlist file \"%s\"", path);
+				LogWarning("No root \"openapoc_playlist\" element in playlist file \"{}\"", path);
 				continue;
 			}
 

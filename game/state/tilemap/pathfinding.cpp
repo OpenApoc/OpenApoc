@@ -1,3 +1,4 @@
+#include "framework/logger.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/battle/battleunitmission.h"
@@ -8,6 +9,9 @@
 #include "game/state/gamestate.h"
 #include "game/state/rules/city/scenerytiletype.h"
 #include "game/state/tilemap/tilemap.h"
+#include "game/state/tilemap/tileobject_battleunit.h"
+#include "game/state/tilemap/tileobject_vehicle.h"
+#include "library/strings_format.h"
 #include "limits.h"
 #include <algorithm>
 #include <glm/glm.hpp>
@@ -154,8 +158,8 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	// Approach Only makes no sense with pathing into a block, but we'll fix it anyway
 	if (approachOnly && !destinationIsSingleTile)
 	{
-		LogWarning("Trying to route from %s to %s-%s in approachOnly mode? Extending destination's "
-		           "xy boundaries by 1.",
+		LogWarning("Trying to route from {} to {}-{} in approachOnly mode? Extending "
+		           "destination's xy boundaries by 1.",
 		           origin, destinationStart, destinationEnd);
 		approachOnly = false;
 		destinationStart -=
@@ -166,28 +170,28 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 
 	if (destinationIsSingleTile)
 	{
-		LogInfo("Trying to route from %s to %s", origin, destinationStart);
+		LogInfo("Trying to route from {} to {}", origin, destinationStart);
 	}
 	else
 	{
-		LogInfo("Trying to route from %s to %s-%s", origin, destinationStart, destinationEnd);
+		LogInfo("Trying to route from {} to {}-{}", origin, destinationStart, destinationEnd);
 	}
 
 	if (!tileIsValid(origin))
 	{
-		LogError("Bad origin %s", origin);
+		LogError("Bad origin {}", origin);
 		return {};
 	}
 	if (!tileIsValid(destinationStart))
 	{
-		LogError("Bad destinationStart %s", destinationStart);
+		LogError("Bad destinationStart {}", destinationStart);
 		return {};
 	}
 	if (destinationEnd.x <= destinationStart.x || destinationEnd.x > this->size.x ||
 	    destinationEnd.y <= destinationStart.y || destinationEnd.y > this->size.y ||
 	    destinationEnd.z <= destinationStart.z || destinationEnd.z > this->size.z)
 	{
-		LogError("Bad destinationEnd %s", destinationEnd);
+		LogError("Bad destinationEnd {}", destinationEnd);
 		return {};
 	}
 
@@ -197,7 +201,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 	Tile *startTile = this->getTile(origin);
 	if (!startTile)
 	{
-		LogError("Failed to get origin tile at %s", origin);
+		LogError("Failed to get origin tile at {}", origin);
 		return {};
 	}
 
@@ -222,7 +226,7 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 		auto first = fringe.begin();
 		if (first == fringe.end())
 		{
-			LogInfo("No more tiles to expand after %d iterations", iterationCount);
+			LogInfo("No more tiles to expand after {} iterations", iterationCount);
 			break;
 		}
 		auto nodeToExpand = *first;
@@ -362,29 +366,29 @@ std::list<Vec3<int>> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> desti
 		}
 		else if (maxCost > 0.0f)
 		{
-			LogInfo("No route from %s to %s-%s found after %d iterations, returning "
-			        "closest path %s",
-			        origin, destinationStart, destinationEnd, iterationCount,
-			        closestNodeSoFar->thisTile->position);
+			LogInfo(
+			    "No route from {} to {}-{} found after {} iterations, returning closest path {}",
+			    origin, destinationStart, destinationEnd, iterationCount,
+			    closestNodeSoFar->thisTile->position);
 		}
 		else
 		{
-			LogInfo("No route from %s to %s-%s found after %d iterations, returning "
-			        "closest path %s",
-			        origin, destinationStart, destinationEnd, iterationCount,
-			        closestNodeSoFar->thisTile->position);
+			LogInfo(
+			    "No route from {} to {}-{} found after {} iterations, returning closest path {}",
+			    origin, destinationStart, destinationEnd, iterationCount,
+			    closestNodeSoFar->thisTile->position);
 		}
 	}
 	else if (closestNodeSoFar->distanceToGoal > 0)
 	{
 		if (maxCost > 0.0f)
 		{
-			LogInfo("Could not find path within maxPath, returning closest path ending at %d",
+			LogInfo("Could not find path within maxPath, returning closest path ending at {}",
 			        closestNodeSoFar->thisTile->position.x);
 		}
 		else
 		{
-			LogInfo("Surprisingly, no nodes to expand! Closest path ends at %s",
+			LogInfo("Surprisingly, no nodes to expand! Closest path ends at {}",
 			        closestNodeSoFar->thisTile->position);
 		}
 	}
@@ -424,16 +428,16 @@ std::list<Vec3<int>> Battle::findShortestPath(Vec3<int> origin, Vec3<int> destin
 	// a minimum number of iterations required to pathfind between two locations
 	static const int PATH_ITERATION_LIMIT_MULTIPLIER = 2;
 
-	LogInfo("Trying to route (battle) from %s to %s", origin, destination);
+	LogInfo("Trying to route (battle) from {} to {}", origin, destination);
 
 	if (!map->tileIsValid(origin))
 	{
-		LogError("Bad origin %s", origin);
+		LogError("Bad origin {}", origin);
 		return {};
 	}
 	if (!map->tileIsValid(destination))
 	{
-		LogError("Bad destination %s", destination);
+		LogError("Bad destination {}", destination);
 		return {};
 	}
 
@@ -733,7 +737,7 @@ std::list<int> Battle::findLosBlockPath(int origin, int destination, BattleUnitT
 	std::list<LosNode *> fringe;
 	int iterationCount = 0;
 
-	LogInfo("Trying to route from lb %d to lb %d", origin, destination);
+	LogInfo("Trying to route from lb {} to lb {}", origin, destination);
 
 	if (origin == destination)
 	{
@@ -768,7 +772,7 @@ std::list<int> Battle::findLosBlockPath(int origin, int destination, BattleUnitT
 		auto first = fringe.begin();
 		if (first == fringe.end())
 		{
-			LogInfo("No more blocks to expand after %d iterations", iterationCount);
+			LogInfo("No more blocks to expand after {} iterations", iterationCount);
 			break;
 		}
 		auto nodeToExpand = *first;
@@ -823,13 +827,13 @@ std::list<int> Battle::findLosBlockPath(int origin, int destination, BattleUnitT
 
 	if (iterationCount > iterationLimit)
 	{
-		LogWarning("No route from lb %d to %d found after %d iterations, returning "
-		           "closest path ending in %d",
+		LogWarning("No route from lb {} to {} found after {} iterations, returning closest path "
+		           "ending in {}",
 		           origin, destination, iterationCount, closestNodeSoFar->block);
 	}
 	else if (closestNodeSoFar->distanceToGoal > 0)
 	{
-		LogInfo("Surprisingly, no nodes to expand! Closest path ends in %d",
+		LogInfo("Surprisingly, no nodes to expand! Closest path ends in {}",
 		        closestNodeSoFar->block);
 	}
 
@@ -958,9 +962,10 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 	}
 
 	UString log = ";";
-	log += format("\nGroup move order issued to %d, %d, %d. Looking for the leader. Total number "
-	              "of units: %d",
-	              targetLocation.x, targetLocation.y, targetLocation.z, (int)selectedUnits.size());
+	log += fmt::format("\nGroup move order issued to {}, {}, {}. Looking for the leader. Total "
+	                   "number of units: {}",
+	                   targetLocation.x, targetLocation.y, targetLocation.z,
+	                   (int)selectedUnits.size());
 
 	// Sort units based on proximity to target and speed
 
@@ -983,7 +988,7 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 	while (itUnit != localUnits.end())
 	{
 		auto curUnit = *itUnit;
-		log += format("\nTrying unit %s for leader", curUnit.id);
+		log += fmt::format("\nTrying unit {} for leader", curUnit.id);
 
 		auto mission = BattleUnitMission::gotoLocation(*curUnit, targetLocation, facingDelta,
 		                                               demandGiveWay, true, 20, false);
@@ -1004,7 +1009,7 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 				int distance = std::max(std::max(absX, absY), absZ) + absX + absY + absZ;
 				if (distance < minDistance)
 				{
-					log += format("\nUnit was the closest to target yet, remembering him.");
+					log += fmt::format("\nUnit was the closest to target yet, remembering him.");
 					// Cancel last leader's mission
 					if (leadMission)
 					{
@@ -1015,7 +1020,7 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 					leadMission = mission;
 					if (distance == 0)
 					{
-						log += format("\nUnit could reach target, chosen to be the leader.");
+						log += fmt::format("\nUnit could reach target, chosen to be the leader.");
 						break;
 					}
 				}
@@ -1027,21 +1032,21 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 		}
 		if (missionAdded)
 		{
-			log += format("\nUnit could not path to target, trying next one.");
+			log += fmt::format("\nUnit could not path to target, trying next one.");
 			// Unit cannot path to target but maybe he can path to something near it, leave him in
 			itUnit++;
 		}
 		else
 		{
-			log += format("\nUnit could not set a goto mission, removing him.");
+			log += fmt::format("\nUnit could not set a goto mission, removing him.");
 			// Unit cannot add a movement mission - remove him
 			itUnit = localUnits.erase(itUnit);
 		}
 	}
 	if (itUnit == localUnits.end() && !leadUnit)
 	{
-		log += format("\nNoone could path to target, aborting");
-		LogWarning("%s", log);
+		log += fmt::format("\nNoone could path to target, aborting");
+		LogWarning("{}", log);
 		return;
 	}
 
@@ -1078,19 +1083,19 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 	    });
 
 	// Path every other unit to areas around target
-	log += format("\nTarget location is now %d, %d, %d. Leader is %s", targetLocation.x,
-	              targetLocation.y, targetLocation.z, leadUnit.id);
+	log += fmt::format("\nTarget location is now {}, {}, {}. Leader is {}", targetLocation.x,
+	                   targetLocation.y, targetLocation.z, leadUnit.id);
 
 	auto itOffset = targetOffsets.begin();
 	for (auto &unit : localUnits)
 	{
 		if (itOffset == targetOffsets.end())
 		{
-			log += format("\nRan out of location offsets, exiting");
-			LogWarning("%s", log);
+			log += fmt::format("\nRan out of location offsets, exiting");
+			LogWarning("{}", log);
 			return;
 		}
-		log += format("\nPathing unit %s", unit.id);
+		log += fmt::format("\nPathing unit {}", unit.id);
 		while (itOffset != targetOffsets.end())
 		{
 			auto offset = rotate(*itOffset, rotation);
@@ -1099,14 +1104,14 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 			    targetLocationOffsetted.y < 0 || targetLocationOffsetted.y >= map->size.y ||
 			    targetLocationOffsetted.z < 0 || targetLocationOffsetted.z >= map->size.z)
 			{
-				log += format("\nLocation was outside map bounds, trying next one");
+				log += fmt::format("\nLocation was outside map bounds, trying next one");
 				itOffset++;
 				continue;
 			}
 
-			log += format("\nTrying location %d, %d, %d at offset %d, %d, %d",
-			              targetLocationOffsetted.x, targetLocationOffsetted.y,
-			              targetLocationOffsetted.z, offset.x, offset.y, offset.z);
+			log += fmt::format("\nTrying location {}, {}, {} at offset {}, {}, {}",
+			                   targetLocationOffsetted.x, targetLocationOffsetted.y,
+			                   targetLocationOffsetted.z, offset.x, offset.y, offset.z);
 			float costLimit = 1.50f * 2.0f *
 			                  (float)(std::max(std::abs(offset.x), std::abs(offset.y)) +
 			                          std::abs(offset.x) + std::abs(offset.y));
@@ -1116,17 +1121,17 @@ void Battle::groupMove(GameState &state, std::list<StateRef<BattleUnit>> &select
 			itOffset++;
 			if (!path.empty() && path.back() == targetLocationOffsetted)
 			{
-				log += format("\nLocation checks out, pathing to it");
+				log += fmt::format("\nLocation checks out, pathing to it");
 				unit->setMission(state, BattleUnitMission::gotoLocation(
 				                            *unit, targetLocationOffsetted, facingDelta,
 				                            demandGiveWay, true, 20, false));
 				break;
 			}
-			log += format("\nLocation was unreachable, trying next one");
+			log += fmt::format("\nLocation was unreachable, trying next one");
 		}
 	}
-	log += format("\nSuccessfully pathed everybody to target");
-	LogWarning("%s", log);
+	log += fmt::format("\nSuccessfully pathed everybody to target");
+	LogWarning("{}", log);
 }
 
 std::list<Vec3<int>> City::findShortestPath(Vec3<int> origin, Vec3<int> destination,
@@ -1170,7 +1175,7 @@ std::list<Vec3<int>> City::findShortestPath(Vec3<int> origin, Vec3<int> destinat
 	std::list<RoadSegmentNode *> fringe;
 	int iterationCount = 0;
 
-	LogInfo("Trying to route from rs %d to rs %d", originID, destinationID);
+	LogInfo("Trying to route from rs {} to rs {}", originID, destinationID);
 
 	auto startNode = new RoadSegmentNode(
 	    0.0f, GroundVehicleTileHelper::getDistanceStatic(origin, destination), nullptr, originID);
@@ -1233,7 +1238,7 @@ std::list<Vec3<int>> City::findShortestPath(Vec3<int> origin, Vec3<int> destinat
 		auto first = fringe.begin();
 		if (first == fringe.end())
 		{
-			LogInfo("No more road segments to expand after %d iterations", iterationCount);
+			LogInfo("No more road segments to expand after {} iterations", iterationCount);
 			break;
 		}
 		auto nodeToExpand = *first;
@@ -1374,13 +1379,13 @@ std::list<Vec3<int>> City::findShortestPath(Vec3<int> origin, Vec3<int> destinat
 
 	if (iterationCount > iterationLimit)
 	{
-		LogWarning("No route from lb %d to %d found after %d iterations, returning "
-		           "closest path ending at %d",
+		LogWarning("No route from lb {:d} to {:d} found after {} iterations, returning closest "
+		           "path ending at {}",
 		           origin, destination, iterationCount, closestNodeSoFar->segment);
 	}
 	else if (closestNodeSoFar->distanceToGoal > 0)
 	{
-		LogInfo("Surprisingly, no nodes to expand! Closest path ends at %d",
+		LogInfo("Surprisingly, no nodes to expand! Closest path ends at {}",
 		        closestNodeSoFar->segment);
 	}
 
@@ -1769,12 +1774,12 @@ void City::fillRoadSegmentMap(GameState &state [[maybe_unused]])
 							{
 								continue;
 							}
-							LogWarning("Pass 2: Tile %s disconnected from some exits network",
+							LogWarning("Pass 2: Tile {} disconnected from some exits network",
 							           tileToTryNext);
 							break;
 						// Anything goes, coming up OOOs!
 						case 3:
-							LogWarning("Pass 3: Tile %s disconnected from main network!",
+							LogWarning("Pass 3: Tile {} disconnected from main network!",
 							           tileToTryNext);
 							break;
 					}
@@ -1790,13 +1795,13 @@ void City::fillRoadSegmentMap(GameState &state [[maybe_unused]])
 					{
 						if (roadSegments[nextSegmentToProcess].empty())
 						{
-							LogWarning("Skipping empty segment %d", nextSegmentToProcess);
+							LogWarning("Skipping empty segment {}", nextSegmentToProcess);
 							nextSegmentToProcess++;
 							continue;
 						}
 						auto initialConnections =
 						    roadSegments[nextSegmentToProcess].connections.size();
-						LogInfo("Segment %d Connections %d First %d", nextSegmentToProcess,
+						LogInfo("Segment {} Connections {} First {}", nextSegmentToProcess,
 						        initialConnections,
 						        initialConnections == 0
 						            ? -1
@@ -1891,13 +1896,13 @@ void City::fillRoadSegmentMap(GameState &state [[maybe_unused]])
 											// Some sanity
 											if (idx == -1)
 											{
-												LogError("Linking from %s to %s: Non road, wtf?",
+												LogError("Linking from {} to {}: Non road, wtf?",
 												         currentPosition, nextPosition);
 												break;
 											}
 											if (roadSegments[idx].tilePosition.size() > 1)
 											{
-												LogWarning("Linking from %s to %s: Existing road "
+												LogWarning("Linking from {} to {}: Existing road "
 												           "segment, wtf?",
 												           currentPosition, nextPosition);
 												// break;

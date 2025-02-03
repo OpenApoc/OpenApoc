@@ -2,6 +2,7 @@
 #define _USE_MATH_DEFINES
 #endif
 #include "game/state/rules/city/vehicletype.h"
+#include "framework/logger.h"
 #include "game/state/gamestate.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -39,7 +40,7 @@ const Vec3<float> &VehicleType::directionToVector(Direction d)
 	auto it = DirectionVectors.find(d);
 	if (it == DirectionVectors.end())
 	{
-		LogError("Failed to find a direction vector for %d", (int)d);
+		LogError("Failed to find a direction vector for {}", (int)d);
 		return fallback;
 	}
 	return it->second;
@@ -52,7 +53,7 @@ template <> sp<VehicleType> StateObject<VehicleType>::get(const GameState &state
 	auto it = state.vehicle_types.find(id);
 	if (it == state.vehicle_types.end())
 	{
-		LogError("No vehicle type matching ID \"%s\"", id);
+		LogError("No vehicle type matching ID \"{}\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -77,7 +78,7 @@ const UString &StateObject<VehicleType>::getId(const GameState &state, const sp<
 		if (v.second == ptr)
 			return v.first;
 	}
-	LogError("No vehicle type matching pointer %p", static_cast<void *>(ptr.get()));
+	LogError("No vehicle type matching pointer {}", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 

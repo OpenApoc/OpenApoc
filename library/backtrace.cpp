@@ -77,20 +77,20 @@ UString libunwind_backtrace::symbolicate(unw_cursor_t frame)
 	dladdr(reinterpret_cast<void *>(ip), &info);
 	if (info.dli_sname)
 	{
-		return format("  0x%zx %s+0x%zx (%s)\n", static_cast<uintptr_t>(ip), info.dli_sname,
-		              static_cast<uintptr_t>(ip) - reinterpret_cast<uintptr_t>(info.dli_saddr),
-		              info.dli_fname);
+		return fmt::format("  0x{:x} {}+0x{:x} ({})\n", static_cast<uintptr_t>(ip), info.dli_sname,
+		                   static_cast<uintptr_t>(ip) - reinterpret_cast<uintptr_t>(info.dli_saddr),
+		                   info.dli_fname);
 	}
 	// If dladdr() failed, try libunwind
 	unw_word_t offsetInFn;
 	char fnName[MAX_SYMBOL_LENGTH];
 	if (!unw_get_proc_name(&frame, fnName, MAX_SYMBOL_LENGTH, &offsetInFn))
 	{
-		return format("  0x%zx %s+0x%zx (%s)\n", static_cast<uintptr_t>(ip), fnName, offsetInFn,
-		              info.dli_fname);
+		return fmt::format("  0x{:x} {}+0x{:x} ({})\n", static_cast<uintptr_t>(ip), fnName,
+		                   offsetInFn, info.dli_fname);
 	}
 	else
-		return format("  0x%zx\n", static_cast<uintptr_t>(ip));
+		return fmt::format("  0x{:x}\n", static_cast<uintptr_t>(ip));
 }
 
 std::ostream &operator<<(std::ostream &lhs, const backtrace &bt)
@@ -172,7 +172,8 @@ UString win32_backtrace::symbolicate(const void *ip)
 	sym->SizeOfStruct = sizeof(SYMBOL_INFO);
 
 	SymFromAddr(process, (DWORD64)(ip), 0, sym);
-	str = format("  0x%p %s+0x%x\n", ip, sym->Name, (uintptr_t)ip - (uintptr_t)sym->Address);
+	str = fmt::format("  0x0x{:x}  {}+0x{:x}\n", reinterpret_cast<uintptr_t>(ip), sym->Name,
+	                  reinterpret_cast<uintptr_t>(ip) - static_cast<uintptr_t>(sym->Address));
 
 	free(sym);
 	return str;

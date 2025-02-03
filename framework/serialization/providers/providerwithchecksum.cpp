@@ -43,7 +43,7 @@ static UString calculateSHA1Checksum(const std::string &str)
 			// FIXME: Probably need to do the reverse for big endian?
 			unsigned int byteHex = v & 0xff000000;
 			byteHex >>= 24;
-			hashString += format("%02x", byteHex);
+			hashString += fmt::format("{:02x}", byteHex);
 			v <<= 8;
 		}
 	}
@@ -57,7 +57,7 @@ static UString calculateCRCChecksum(const std::string &str)
 	boost::crc_32_type crc;
 	crc.process_bytes(str.c_str(), str.size());
 	auto hash = crc.checksum();
-	hashString = format("%08x", hash);
+	hashString = fmt::format("{:08x}", hash);
 	return hashString;
 }
 
@@ -73,7 +73,7 @@ static UString calculateChecksum(const UString &type, const std::string &str)
 	}
 	else
 	{
-		LogWarning("Unknown checksum type \"%s\"", type);
+		LogWarning("Unknown checksum type \"{}\"", type);
 		return "";
 	}
 }
@@ -110,7 +110,7 @@ bool ProviderWithChecksum::parseManifest(const std::string &manifestData)
 	auto parse_result = manifestDoc.load(ss);
 	if (!parse_result)
 	{
-		LogWarning("Failed to parse checksum.xml : \"%s\" at \"%llu\"", parse_result.description(),
+		LogWarning("Failed to parse checksum.xml : \"{}\" at \"{}\"", parse_result.description(),
 		           (unsigned long long)parse_result.offset);
 		return false;
 	}
@@ -127,7 +127,7 @@ bool ProviderWithChecksum::parseManifest(const std::string &manifestData)
 
 		if (this->checksums.find(fileName) != this->checksums.end())
 		{
-			LogWarning("Multiple manifest entries for path \"%s\"", fileName);
+			LogWarning("Multiple manifest entries for path \"{}\"", fileName);
 		}
 
 		this->checksums[fileName] = {};
@@ -160,7 +160,7 @@ bool ProviderWithChecksum::openArchive(const UString &path, bool write)
 		UString result;
 		if (!inner->readDocument("checksum.xml", result))
 		{
-			LogInfo("Missing manifest file in \"%s\"", path);
+			LogInfo("Missing manifest file in \"{}\"", path);
 			return true;
 		}
 		parseManifest(result);
@@ -177,12 +177,12 @@ bool ProviderWithChecksum::readDocument(const UString &path, UString &result)
 			auto calculatedCSum = calculateChecksum(csum.first, result);
 			if (expectedCSum != calculatedCSum)
 			{
-				LogWarning("File \"%s\" has incorrect \"%s\" checksum \"%s\", expected \"%s\"",
+				LogWarning("File \"{}\" has incorrect \"{}\" checksum \"{}\", expected \"{}\"",
 				           path, csum.first, calculatedCSum, expectedCSum);
 			}
 			else
 			{
-				LogDebug("File \"%s\" matches \"%s\" checksum \"%s\"", path, csum.first,
+				LogDebug("File \"{}\" matches \"{}\" checksum \"{}\"", path, csum.first,
 				         calculatedCSum);
 			}
 		}
@@ -198,7 +198,7 @@ bool ProviderWithChecksum::saveDocument(const UString &path, const UString &cont
 	{
 		if (this->checksums.find(path) != this->checksums.end())
 		{
-			LogWarning("Multiple document entries for path \"%s\"", path);
+			LogWarning("Multiple document entries for path \"{}\"", path);
 		}
 		this->checksums[path] = {};
 		if (Options::useCRCChecksum.get())

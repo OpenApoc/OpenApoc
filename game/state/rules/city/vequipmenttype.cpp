@@ -1,4 +1,5 @@
 #include "game/state/rules/city/vequipmenttype.h"
+#include "framework/logger.h"
 #include "game/state/gamestate.h"
 #include "game/state/tilemap/tilemap.h"
 
@@ -23,7 +24,7 @@ sp<VEquipmentType> StateObject<VEquipmentType>::get(const GameState &state, cons
 	auto it = state.vehicle_equipment.find(id);
 	if (it == state.vehicle_equipment.end())
 	{
-		LogError("No vequipement type matching ID \"%s\"", id);
+		LogError("No vequipement type matching ID \"{}\"", id);
 		return nullptr;
 	}
 	return it->second;

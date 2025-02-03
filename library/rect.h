@@ -123,3 +123,13 @@ template <typename T> std::ostream &operator<<(std::ostream &lhs, const OpenApoc
 }
 
 }; // namespace OpenApoc
+template <typename T> struct fmt::formatter<OpenApoc::Rect<T>> : formatter<T>
+{
+
+	auto format(OpenApoc::Rect<T> rect, format_context &ctx) const -> format_context::iterator
+	{
+		auto out = ctx.out();
+		format_to(out, "{{{},{}}}", rect.p0, rect.p1);
+		return out;
+	}
+};

@@ -3,6 +3,7 @@
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/image.h"
+#include "framework/logger.h"
 #include "framework/renderer.h"
 #include "library/sp.h"
 

@@ -1,4 +1,5 @@
 #include "game/state/battle/ai/tacticalai.h"
+#include "framework/logger.h"
 #include "game/state/battle/ai/tacticalaivanilla.h"
 #include "game/state/battle/battle.h"
 #include "game/state/gamestate.h"
@@ -15,7 +16,7 @@ const UString TacticalAI::getName()
 		case Type::Vanilla:
 			return "TacticalAIVanilla";
 	}
-	LogError("Unimplemented getName for Tactical AI Type %d", (int)type);
+	LogError("Unimplemented getName for Tactical AI Type {}", (int)type);
 	return "";
 }
 
