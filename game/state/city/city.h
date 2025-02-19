@@ -91,6 +91,7 @@ class City : public StateObject<City>, public std::enable_shared_from_this<City>
 	std::vector<sp<Scenery>> scenery;
 	std::list<sp<Doodad>> doodads;
 	std::vector<sp<Doodad>> portals;
+	std::list<Vec3<float>> curPortalPosList;
 
 	std::set<sp<Projectile>> projectiles;
 
@@ -131,8 +132,10 @@ class City : public StateObject<City>, public std::enable_shared_from_this<City>
 	void update(GameState &state, unsigned int ticks);
 	void hourlyLoop(GameState &state);
 	void dailyLoop(GameState &state);
+	void weeklyLoop(GameState &state);
 
 	void generatePortals(GameState &state);
+	bool canPlacePortal(Vec3<float> position);
 	void updateInfiltration(GameState &state);
 	void repairVehicles(GameState &state);
 	void repairScenery(GameState &state, bool debugRepair = false);

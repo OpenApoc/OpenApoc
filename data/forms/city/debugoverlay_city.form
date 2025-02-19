@@ -143,7 +143,7 @@
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="P" text="P = Show Vehicle Targets">
+			<label id="T" text="T = Show Vehicle Targets">
 				<position x="left" y="322"/>
 				<size width="350" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
@@ -155,14 +155,20 @@
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
-			<label id="Base" text="Base Screen - F10 = Finish All Facilities">
+			<label id="P" text="P = Move Portals">
 				<position x="left" y="350"/>
+				<size width="350" height="14"/>
+				<alignment horizontal="left" vertical="top"/>
+				<font>smalfont</font>
+			</label>
+			<label id="Base" text="Base Screen - F10 = Finish All Facilities">
+				<position x="left" y="364"/>
 				<size width="250" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
 			</label>
 			<label id="Research" text="Research Screen - F10 = Complete Project at Next Update (With at least two Scientists Assigned)">
-				<position x="left" y="364"/>
+				<position x="left" y="380"/>
 				<size width="640" height="14"/>
 				<alignment horizontal="left" vertical="top"/>
 				<font>smalfont</font>
