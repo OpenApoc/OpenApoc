@@ -385,11 +385,14 @@ class FlyingVehicleMover : public VehicleMover
 		}
 		if (vehicle.carriedByVehicle)
 		{
-			auto newPos = vehicle.carriedByVehicle->position;
-			newPos.z = std::max(0.0f, newPos.z - 0.5f);
-			vehicle.setPosition(newPos);
-			vehicle.facing = vehicle.carriedByVehicle->facing;
-			vehicle.updateSprite(state);
+			if (vehicle.tileObject)
+			{
+				auto newPos = vehicle.carriedByVehicle->position;
+				newPos.z = std::max(0.0f, newPos.z - 0.5f);
+				vehicle.setPosition(newPos);
+				vehicle.facing = vehicle.carriedByVehicle->facing;
+				vehicle.updateSprite(state);
+			}
 			return;
 		}
 		if (vehicle.crashed)
@@ -1367,13 +1370,14 @@ void Vehicle::enterBuilding(GameState &state, StateRef<Building> b)
 {
 	carriedByVehicle.clear();
 	crashed = false;
-	if (this->currentBuilding)
+	if (b->currentVehicles.find(&state) != b->currentVehicles.end())
 	{
 		LogError("Vehicle already in a building?");
 		return;
 	}
 	this->currentBuilding = b;
 	b->currentVehicles.insert({&state, shared_from_this()});
+
 	if (carriedVehicle)
 	{
 		carriedVehicle->enterBuilding(state, b);

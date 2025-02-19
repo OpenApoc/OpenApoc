@@ -1269,6 +1269,9 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 			return false;
 		}
 		case MissionType::GotoBuilding:
+		{
+			return false;
+		}
 		case MissionType::InvestigateBuilding:
 		{
 			if (v.currentBuilding != this->targetBuilding)
