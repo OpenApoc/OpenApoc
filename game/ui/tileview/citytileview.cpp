@@ -126,7 +126,7 @@ void CityTileView::eventOccurred(Event *e)
 					DEBUG_SHOW_ALIEN = !DEBUG_SHOW_ALIEN;
 					return;
 				}
-				case SDLK_p:
+				case SDLK_t:
 				{
 					DEBUG_SHOW_VEHICLE_TARGETS = !DEBUG_SHOW_VEHICLE_TARGETS;
 					return;
