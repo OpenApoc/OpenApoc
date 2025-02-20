@@ -82,8 +82,8 @@
         <font>smalfont</font>
       </label>
       <label id="TEXT_CURRENT_PROJECT" text="Current Project">
-        <position x="277" y="200"/>
-        <size width="264" height="10"/>
+        <position x="277" y="199"/>
+        <size width="264" height="14"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>smalfont</font>
       </label>
