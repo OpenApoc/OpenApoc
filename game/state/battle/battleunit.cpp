@@ -3839,6 +3839,7 @@ void BattleUnit::triggerBrainsuckers(GameState &state)
 				state.current_battle->spawnUnit(state, aliens, {&state, "AGENTTYPE_BRAINSUCKER"},
 				                                i->position, {0, 1}, BodyState::Throwing);
 				i->die(state, false);
+				state.current_battle->checkMissionEnd(state, false, true);
 			}
 		}
 	}
