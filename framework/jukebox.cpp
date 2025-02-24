@@ -7,6 +7,8 @@
 #include "library/xorshift.h"
 #include <array>
 
+// cache test
+
 namespace OpenApoc
 {
 namespace
