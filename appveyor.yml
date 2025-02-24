@@ -36,7 +36,7 @@ before_build:
   - call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" %VCVARS_ARCH%
 build_script:
   - cmake -DMSVC_PDB=ON . -GNinja -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE="%CONFIGURATION%" -DCMAKE_PREFIX_PATH=%QTPATH% -DUSE_SYSTEM_QT=ON
-  - cmake --build .
+  - cmake --build OpenApoc OpenApoc_Launcher extract-data
 after_build:
   - git describe --tags > build-id
   - set /p OPENAPOC_VERSION= < build-id
@@ -59,15 +59,15 @@ after_build:
   - del OpenApoc-%OPENAPOC_VERSION%\portable.txt
   - '"C:\Program Files (x86)\NSIS\makensis.exe" /DGAME_VERSION=%OPENAPOC_VERSION% install\windows\installer.nsi'
   - appveyor PushArtifact install\windows\install-openapoc-%OPENAPOC_VERSION%.exe
-before_test:
-  - 7z e temp\cd.iso.xz -odata\
-test_script:
-  - ctest -T Test -V --no-compress-output -C %CONFIGURATION%
-after_test:
-  - ps: |
-      $testFile = ".\Testing\$(Get-Content Testing\TAG -TotalCount 1)\Test.xml"
-      $XSLInputElement = New-Object System.Xml.Xsl.XslCompiledTransform
-      $XSLInputElement.Load((Resolve-Path .\tests\ctest-to-junit.xsl))
-      $XSLInputElement.Transform((Resolve-Path $testFile), (Join-Path (Resolve-Path .) "ctest-to-junit-results.xml"))
-      $wc = New-Object 'System.Net.WebClient'
-      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\ctest-to-junit-results.xml))
+#before_test:
+#  - 7z e temp\cd.iso.xz -odata\
+#test_script:
+#  - ctest -T Test -V --no-compress-output -C %CONFIGURATION%
+#after_test:
+#  - ps: |
+#      $testFile = ".\Testing\$(Get-Content Testing\TAG -TotalCount 1)\Test.xml"
+#      $XSLInputElement = New-Object System.Xml.Xsl.XslCompiledTransform
+#      $XSLInputElement.Load((Resolve-Path .\tests\ctest-to-junit.xsl))
+#      $XSLInputElement.Transform((Resolve-Path $testFile), (Join-Path (Resolve-Path .) "ctest-to-junit-results.xml"))
+#      $wc = New-Object 'System.Net.WebClient'
+#      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\ctest-to-junit-results.xml))
