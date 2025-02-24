@@ -6,6 +6,7 @@
 #include "framework/sound.h"
 #include "library/xorshift.h"
 #include <array>
+#include <chrono>
 
 namespace OpenApoc
 {
