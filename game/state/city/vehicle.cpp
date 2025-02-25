@@ -1736,28 +1736,27 @@ StateRef<Building> Vehicle::getServiceDestination(GameState &state)
 	std::set<StateRef<Organisation>> suppliers;
 	StateRef<Building> destination;
 
-	// Only add aliens if alien containment is available at base
-	const auto vehicleContainsAlienLoot = cargoContainsAlienLoot();
-	const auto alienContainmentExists =
-	    currentBuilding->base ? currentBuilding->base->alienContainmentExists() : false;
-
-	// Vehicle must be stopped from unloading alien cargo when vehicle has alien loot but base has
-	// no alien containment
-	const auto isVehicleAllowedToUnloadAlienCargo =
-	    !(vehicleContainsAlienLoot && !alienContainmentExists);
-
-	if (!isVehicleAllowedToUnloadAlienCargo)
-	{
-		fw().pushEvent(
-		    new GameVehicleEvent(GameEventType::VehicleWithAlienLootInBaseWithNoContainment,
-		                         {&state, shared_from_this()}));
-	}
-
 	// Step 01: Find first cargo destination and remove arrived cargo
 	for (auto it = cargo.begin(); it != cargo.end();)
 	{
 		if (it->destination == currentBuilding)
 		{
+			// Only add aliens if alien containment is available at base
+			const auto vehicleContainsAlienLoot = cargoContainsAlienLoot();
+			const auto alienContainmentExists =
+			    currentBuilding->base ? currentBuilding->base->alienContainmentExists() : false;
+
+			// Vehicle must be stopped from unloading alien cargo when vehicle has alien loot but
+			// base has no alien containment
+			const auto isVehicleAllowedToUnloadAlienCargo =
+			    !(vehicleContainsAlienLoot && !alienContainmentExists);
+
+			if (!isVehicleAllowedToUnloadAlienCargo)
+			{
+				fw().pushEvent(
+				    new GameVehicleEvent(GameEventType::VehicleWithAlienLootInBaseWithNoContainment,
+				                         {&state, shared_from_this()}));
+			}
 			// Only unload alien cargo when base has alien containment
 			if (it->type == Cargo::Type::Bio && !isVehicleAllowedToUnloadAlienCargo)
 			{
