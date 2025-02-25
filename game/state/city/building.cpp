@@ -354,7 +354,6 @@ void Building::updateCargo(GameState &state)
 				}
 			}
 		} while (spawnedFerry);
-		return;
 	}
 
 	// Step 03.02: Compile list of carrying capacity required
