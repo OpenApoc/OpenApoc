@@ -4,6 +4,7 @@
 #include "library/strings.h"
 #include <cstdint>
 #include <istream>
+#include <list>
 
 #define PROGRAM_NAME "OpenApoc"
 #define PROGRAM_ORGANISATION "OpenApoc"

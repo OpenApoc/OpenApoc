@@ -1,6 +1,8 @@
 #pragma once
 
 #include "library/strings.h"
+
+#include <list>
 #include <optional>
 
 namespace OpenApoc
