@@ -46,6 +46,8 @@ if(NOT WIN32)
 	target_compile_definitions(OpenApoc_Library PUBLIC PTHREADS_AVAILABLE)
 endif()
 
+target_compile_definitions(OpenApoc_Library PUBLIC _USE_MATH_DEFINES)
+
 
 option(ENABLE_BACKTRACE "Enable gathering backtraces on some errors to aid debugging (Requires libunwind on linux, no extra dependencies on windows or macos)" ON)
 
