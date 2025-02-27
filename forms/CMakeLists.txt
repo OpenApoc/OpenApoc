@@ -56,3 +56,7 @@ target_link_libraries(OpenApoc_Forms PUBLIC OpenApoc_Framework
 		OpenApoc_LibPugixml)
 
 target_include_directories(OpenApoc_Forms PUBLIC ${CMAKE_SOURCE_DIR})
+
+if (USE_PCH)
+	target_precompile_headers(OpenApoc_Forms PUBLIC forms_pch.h)
+endif()

@@ -75,3 +75,6 @@ if(ENABLE_BACKTRACE)
 	endif()
 endif()
 
+if (USE_PCH)
+	target_precompile_headers(OpenApoc_Library PUBLIC library_pch.h)
+endif()

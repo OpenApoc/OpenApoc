@@ -257,3 +257,7 @@ add_custom_target(generated-source
 		DEPENDS
 		gamestate_serialize_generated.h gamestate_serialize_generated.cpp
 		luagamestate_support_generated.h luagamestate_support_generated.cpp)
+
+if (USE_PCH)
+	target_precompile_headers(OpenApoc_GameState PUBLIC gamestate_pch.h)
+endif()

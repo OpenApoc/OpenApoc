@@ -25,8 +25,3 @@ add_test(NAME ${TEST}_difficulty0 COMMAND ${TEST}
 		${CMAKE_SOURCE_DIR}/data/mods/base/data/submods/org.openapoc.base/difficulty0
 		${CMAKE_SOURCE_DIR}/data/mods/base/base_gamestate
 		--Framework.CD=${CD_PATH} --Framework.Data=${CMAKE_SOURCE_DIR}/data)
-
-# MSVC is bad at detecting utf8
-if (MSVC)
-	set_source_files_properties(test_unicode.cpp PROPERTIES COMPILE_FLAGS /utf-8)
-endif()

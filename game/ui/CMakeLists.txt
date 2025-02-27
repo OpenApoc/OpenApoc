@@ -166,3 +166,7 @@ target_link_libraries(OpenApoc_GameUI PUBLIC OpenApoc_Forms)
 
 # version.h is used in the main menu, and that's generated in the bin dir
 target_include_directories(OpenApoc_GameUI PRIVATE ${CMAKE_BINARY_DIR})
+
+if (USE_PCH)
+	target_precompile_headers(OpenApoc_GameUI PUBLIC gameui_pch.h)
+endif()
