@@ -1,18 +1,12 @@
 #include "game/ui/general/creditsmenu.h"
-#include "forms/checkbox.h"
 #include "forms/form.h"
 #include "forms/label.h"
 #include "forms/listbox.h"
-#include "forms/scrollbar.h"
 #include "forms/ui.h"
-#include "framework/configfile.h"
-#include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
-#include "framework/image.h"
 #include "framework/keycodes.h"
 #include "game/ui/components/controlgenerator.h"
-#include "stdio.h"
 
 namespace OpenApoc
 {

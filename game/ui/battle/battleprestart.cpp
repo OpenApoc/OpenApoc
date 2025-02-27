@@ -2,12 +2,10 @@
 #include "forms/form.h"
 #include "forms/graphic.h"
 #include "forms/graphicbutton.h"
-#include "forms/label.h"
 #include "forms/ui.h"
 #include "framework/apocresources/cursor.h"
 #include "framework/data.h"
 #include "framework/event.h"
-#include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "game/state/gamestate.h"
@@ -19,7 +17,6 @@
 #include "game/ui/general/agentsheet.h"
 #include "game/ui/general/loadingscreen.h"
 #include "game/ui/tileview/battleview.h"
-#include <cmath>
 
 namespace OpenApoc
 {

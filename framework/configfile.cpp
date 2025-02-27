@@ -5,7 +5,6 @@
 #include "framework/configfile.h"
 #include "framework/filesystem.h"
 #include "framework/logger.h"
-#include "framework/options.h"
 #include <fstream>
 #include <iostream>
 #include <list>

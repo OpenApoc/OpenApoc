@@ -18,10 +18,9 @@
 #include "game/ui/general/cheatoptions.h"
 #include "game/ui/general/mainmenu.h"
 #include "game/ui/general/messagebox.h"
+#include "game/ui/general/moreoptions.h"
 #include "game/ui/general/savemenu.h"
 #include "game/ui/skirmish/skirmish.h"
-#include "game/ui/tileview/cityview.h"
-#include "moreoptions.h"
 #include <list>
 
 namespace OpenApoc

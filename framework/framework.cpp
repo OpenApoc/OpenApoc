@@ -5,7 +5,6 @@
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/filesystem.h"
-#include "framework/font.h"
 #include "framework/image.h"
 #include "framework/jukebox.h"
 #include "framework/logger_file.h"

@@ -9,7 +9,6 @@
 #include "game/state/rules/battle/battlemapparttype.h"
 #include "game/state/tilemap/tilemap.h"
 #include "game/state/tilemap/tileobject_battlemappart.h"
-#include "game/state/tilemap/tileobject_battleunit.h"
 
 namespace OpenApoc
 {

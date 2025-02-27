@@ -9,7 +9,6 @@
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipmenttype.h"
-#include "game/state/rules/city/citycommonimagelist.h"
 #include "game/state/rules/city/vehicletype.h"
 #include "game/state/shared/organisation.h"
 #include "library/strings_format.h"

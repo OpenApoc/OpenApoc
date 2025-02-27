@@ -4,8 +4,6 @@
 #include "forms/graphicbutton.h"
 #include "forms/label.h"
 #include "forms/listbox.h"
-#include "forms/scrollbar.h"
-#include "forms/textbutton.h"
 #include "forms/textedit.h"
 #include "forms/ui.h"
 #include "framework/configfile.h"
@@ -14,11 +12,8 @@
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "game/state/gamestate.h"
-#include "game/state/shared/organisation.h"
-#include <forms/graphic.h>
 #include <functional>
 #include <iomanip>
-#include <limits>
 #include <regex>
 #include <sstream>
 

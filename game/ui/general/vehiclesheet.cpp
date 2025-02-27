@@ -3,8 +3,6 @@
 #include "forms/label.h"
 #include "forms/textedit.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/battle/damage.h"
-#include "game/state/tilemap/tilemap.h"
 #include <framework/configfile.h>
 #include <list>
 

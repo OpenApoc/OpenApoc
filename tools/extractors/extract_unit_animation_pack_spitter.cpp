@@ -1,6 +1,5 @@
 #include "framework/data.h"
 #include "framework/framework.h"
-#include "framework/palette.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/battle/battleunitanimationpack.h"
 #include "game/state/shared/agent.h"
