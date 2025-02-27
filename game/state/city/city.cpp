@@ -6,8 +6,6 @@
 #include "game/state/city/building.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
-#include "game/state/city/vehiclemission.h"
-#include "game/state/city/vequipment.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/city/citycommonimagelist.h"
 #include "game/state/rules/city/scenerytiletype.h"

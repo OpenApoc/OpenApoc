@@ -3,7 +3,6 @@
 #include "forms/label.h"
 #include "forms/listbox.h"
 #include "forms/textbutton.h"
-#include "forms/textedit.h"
 #include "forms/ui.h"
 #include "framework/configfile.h"
 #include "framework/event.h"

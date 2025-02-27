@@ -10,12 +10,7 @@
 #include "game/state/rules/battle/battlecommonsamplelist.h"
 #include "game/state/rules/city/scenerytiletype.h"
 #include "game/state/shared/agent.h"
-#include "game/state/shared/doodad.h"
-#include "game/state/shared/organisation.h"
 #include "game/state/tilemap/tilemap.h"
-#include "game/state/tilemap/tileobject_doodad.h"
-#include "game/state/tilemap/tileobject_scenery.h"
-#include "game/state/tilemap/tileobject_shadow.h"
 #include "library/strings_format.h"
 #include <glm/glm.hpp>
 

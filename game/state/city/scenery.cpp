@@ -3,7 +3,6 @@
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "framework/sound.h"
-#include "game/state/city/agentmission.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/vehicle.h"

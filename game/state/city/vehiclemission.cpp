@@ -22,7 +22,6 @@
 #include "game/state/tilemap/tilemap.h"
 #include "game/state/tilemap/tileobject_doodad.h"
 #include "game/state/tilemap/tileobject_scenery.h"
-#include "game/state/tilemap/tileobject_shadow.h"
 #include "game/state/tilemap/tileobject_vehicle.h"
 #include "library/strings_format.h"
 #include <glm/glm.hpp>

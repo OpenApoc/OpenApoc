@@ -6,26 +6,16 @@
 #include "game/state/battle/battlemappart.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/city/scenery.h"
-#include "game/state/city/vehicle.h"
-#include "game/state/rules/battle/battleunitimagepack.h"
 #include "game/state/rules/city/scenerytiletype.h"
-#include "game/state/shared/doodad.h"
-#include "game/state/shared/projectile.h"
-#include "game/state/tilemap/collision.h"
 #include "game/state/tilemap/tilemap.h"
 #include "game/state/tilemap/tileobject_battlehazard.h"
 #include "game/state/tilemap/tileobject_battleitem.h"
 #include "game/state/tilemap/tileobject_battlemappart.h"
 #include "game/state/tilemap/tileobject_battleunit.h"
-#include "game/state/tilemap/tileobject_doodad.h"
-#include "game/state/tilemap/tileobject_projectile.h"
 #include "game/state/tilemap/tileobject_scenery.h"
-#include "game/state/tilemap/tileobject_shadow.h"
-#include "game/state/tilemap/tileobject_vehicle.h"
 #include "library/sp.h"
 #include <algorithm>
 #include <random>
-#include <unordered_map>
 
 namespace OpenApoc
 {

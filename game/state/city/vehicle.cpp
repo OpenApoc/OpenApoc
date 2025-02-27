@@ -1,8 +1,8 @@
 #ifndef _USE_MATH_DEFINES
 #define _USE_MATH_DEFINES
-#include "game/state/gametime.h"
-#include <cstdlib>
 #endif
+
+#include "game/state/city/vehicle.h"
 #include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
@@ -12,11 +12,11 @@
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/scenery.h"
-#include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/city/vequipment.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
+#include "game/state/gametime.h"
 #include "game/state/rules/aequipmenttype.h"
 #include "game/state/rules/city/citycommonsamplelist.h"
 #include "game/state/rules/city/scenerytiletype.h"
@@ -31,14 +31,13 @@
 #include "game/state/tilemap/tileobject_projectile.h"
 #include "game/state/tilemap/tileobject_shadow.h"
 #include "game/state/tilemap/tileobject_vehicle.h"
-#include "game/ui/general/messagebox.h"
 #include "library/sp.h"
+#include <cstdlib>
 #include <fstream>
 #include <glm/glm.hpp>
 #include <glm/gtx/vector_angle.hpp>
 #include <iostream>
 #include <limits>
-#include <queue>
 #include <random>
 
 namespace OpenApoc

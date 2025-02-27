@@ -6,11 +6,8 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/battle/battlemap.h"
 #include "game/state/rules/city/scenerytiletype.h"
 #include "game/state/tilemap/tilemap.h"
-#include "game/state/tilemap/tileobject_battleunit.h"
-#include "game/state/tilemap/tileobject_vehicle.h"
 #include "limits.h"
 #include <algorithm>
 #include <glm/glm.hpp>

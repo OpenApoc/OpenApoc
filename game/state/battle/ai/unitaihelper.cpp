@@ -3,7 +3,7 @@
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
 #include "game/state/shared/aequipment.h"
-#include <float.h>
+#include <cfloat>
 #include <glm/glm.hpp>
 
 namespace OpenApoc
