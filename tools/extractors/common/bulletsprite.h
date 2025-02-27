@@ -1,4 +1,7 @@
 #pragma once
+
+#include <cstdint>
+
 struct BulletSprite
 {
 	uint8_t sprite[3][3]; // A 3x3 paletted image

@@ -1,4 +1,7 @@
 #pragma once
+
+#include <cstdint>
+
 struct ResearchData
 {
 	uint8_t labSize; // 0 = small, 1 = large

@@ -1,15 +1,10 @@
 #pragma once
 
 #include <cstdint>
-#include <istream>
 #include <limits>
-#include <list>
 #include <map>
-#include <ostream>
 #include <random>
-#include <set>
 #include <stdexcept>
-#include <vector>
 
 namespace OpenApoc
 {

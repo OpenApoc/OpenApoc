@@ -1,6 +1,5 @@
 #pragma once
 
-#include "game/state/stateobject.h"
 #include "library/sp.h"
 #include <vector>
 

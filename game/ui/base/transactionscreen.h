@@ -6,7 +6,6 @@
 #include "library/sp.h"
 #include <functional>
 #include <list>
-#include <vector>
 
 namespace OpenApoc
 {

@@ -2,6 +2,7 @@
 
 #include "game/state/stateobject.h"
 #include "library/strings.h"
+#include <list>
 #include <map>
 
 namespace OpenApoc

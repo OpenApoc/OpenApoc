@@ -1,3 +1,5 @@
+#pragma once
+
 #include "forms/form.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vequipment.h"

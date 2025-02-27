@@ -3,7 +3,6 @@
 #include "game/state/tilemap/tileobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
-#include <list>
 
 namespace OpenApoc
 {

@@ -5,7 +5,6 @@
 #include "library/strings.h"
 #include "library/vec.h"
 #include <functional>
-#include <vector>
 
 namespace OpenApoc
 {
