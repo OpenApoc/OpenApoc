@@ -3,7 +3,6 @@
 #include "game/state/stateobject.h"
 #include "game/ui/tileview/citytileview.h"
 #include "library/sp.h"
-#include <map>
 #include <vector>
 
 namespace OpenApoc

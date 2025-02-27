@@ -5,6 +5,7 @@
 #include "library/rect.h"
 #include "library/sp.h"
 #include "library/vec.h"
+#include <list>
 #include <map>
 
 namespace OpenApoc

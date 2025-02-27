@@ -1,7 +1,6 @@
 #pragma once
 
 #include "game/state/rules/city/facilitytype.h"
-#include "game/state/rules/city/vammotype.h"
 #include "game/state/rules/city/vehicletype.h"
 #include "game/state/rules/city/vequipmenttype.h"
 #include "game/state/shared/organisation.h"

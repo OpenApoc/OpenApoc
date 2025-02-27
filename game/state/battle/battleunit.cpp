@@ -5,6 +5,7 @@
 #include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/sound.h"
+#include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/ai/unitaihelper.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battleitem.h"

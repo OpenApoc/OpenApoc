@@ -1,7 +1,6 @@
 #pragma once
 #include "game/state/stateobject.h"
 #include "library/sp.h"
-#include "library/vec.h"
 #include <vector>
 
 namespace OpenApoc

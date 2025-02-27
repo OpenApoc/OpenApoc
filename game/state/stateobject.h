@@ -4,7 +4,6 @@
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/strings_format.h"
-#include <exception>
 #include <map>
 
 namespace OpenApoc

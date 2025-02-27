@@ -3,9 +3,7 @@
 #include "game/state/shared/equipment.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
-#include "library/strings.h"
 #include "library/vec.h"
-#include <map>
 
 namespace OpenApoc
 {
