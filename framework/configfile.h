@@ -2,7 +2,6 @@
 
 #include "library/sp.h"
 #include "library/strings.h"
-#include <boost/any.hpp>
 #include <map>
 #include <vector>
 
@@ -111,10 +110,5 @@ class ConfigOptionFloat : public ConfigOption
 	float get() const;
 };
 static inline ConfigFile &config() { return ConfigFile::getInstance(); }
-
-// validate overload required by boost::program_options for UString
-// boost should find this through ADL.
-// this is required for string values with spaces
-void validate(boost::any &v, const std::vector<std::string> &values, UString *, int);
 
 }; // namespace OpenApoc
