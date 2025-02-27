@@ -20,6 +20,11 @@ namespace po = boost::program_options;
 namespace OpenApoc
 {
 
+// validate overload required by boost::program_options for UString
+// boost should find this through ADL.
+// this is required for string values with spaces
+void validate(boost::any &v, const std::vector<std::string> &values, UString *, int);
+
 static ConfigFile *configInstance = nullptr;
 
 ConfigFile &ConfigFile::getInstance()
