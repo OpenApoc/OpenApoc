@@ -31,6 +31,7 @@ string(TOLOWER "${CMAKE_BUILD_TYPE}" lower_build_type)
 option(LTO "Build using link-time-optimisations" OFF)
 option(MSVC_PDB "Always generate PDB files" OFF)
 option(ENABLE_TESTS "Build some unit tests" ON)
+option(USE_PCH "Enable precompiled header use during build" OFF)
 option(EXTRACT_DATA "Run the data extractor as part of the default target" ON)
 
 set(CD_PATH ${CMAKE_SOURCE_DIR}/data/cd.iso CACHE STRING "Path to cd.iso (used
@@ -76,6 +77,8 @@ endif(LTO)
 # MSVC has default flags that CMake doesn't set
 if (MSVC)
 	add_definitions(-DUNICODE -D_UNICODE)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /utf-8")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  /utf-8")
 	
 	if (MSVC_VERSION GREATER_EQUAL 1910)
 	    if (MSVC_VERSION EQUAL 1928)
