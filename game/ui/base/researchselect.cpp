@@ -194,13 +194,13 @@ void ResearchSelect::begin()
 	    });
 
 	auto ok_button = form->findControlTyped<GraphicButton>("BUTTON_OK");
-	ok_button->addCallback(
-	    FormEventType::ButtonClick,
-	    [this](FormsEvent *)
-	    {
-		    LogInfo("Research selection OK pressed, applying selection");
-		    Lab::setResearch({state.get(), this->lab}, {state.get(), current_topic}, state);
-	    });
+	ok_button->addCallback(FormEventType::ButtonClick,
+	                       [this](FormsEvent *)
+	                       {
+		                       LogInfo("Research selection OK pressed, applying selection");
+		                       Lab::setResearch({state.get(), this->lab},
+		                                        {state.get(), current_topic}, state);
+	                       });
 }
 
 void ResearchSelect::redrawResearchList()

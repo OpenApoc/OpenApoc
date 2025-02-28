@@ -2030,7 +2030,7 @@ void City::fillRoadSegmentMap(GameState &state [[maybe_unused]])
 				}
 			}
 		} // End of loop for current pass
-	}     // End of first loop
+	} // End of first loop
 
 	for (int i = 0; i < roadSegments.size(); i++)
 	{
