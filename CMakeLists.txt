@@ -31,7 +31,7 @@ string(TOLOWER "${CMAKE_BUILD_TYPE}" lower_build_type)
 option(LTO "Build using link-time-optimisations" OFF)
 option(MSVC_PDB "Always generate PDB files" OFF)
 option(ENABLE_TESTS "Build some unit tests" ON)
-option(USE_PCH "Enable precompiled header use during build" ON)
+option(USE_PCH "Enable precompiled header use during build" OFF)
 option(EXTRACT_DATA "Run the data extractor as part of the default target" ON)
 
 set(CD_PATH ${CMAKE_SOURCE_DIR}/data/cd.iso CACHE STRING "Path to cd.iso (used
