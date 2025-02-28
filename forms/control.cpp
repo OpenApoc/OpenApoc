@@ -23,8 +23,8 @@ Control::Control(bool takesFocus)
       Size(0, 0), SelectionSize(0, 0), BackgroundColour(0, 0, 0, 0), takesFocus(takesFocus),
       showBounds(false), Enabled(true), canCopy(true),
       // Tooltip defaults
-      ToolTipBackground{128, 128, 128}, ToolTipBorders{
-                                            {1, {0, 0, 0}}, {1, {255, 255, 255}}, {1, {0, 0, 0, 0}}}
+      ToolTipBackground{128, 128, 128},
+      ToolTipBorders{{1, {0, 0, 0}}, {1, {255, 255, 255}}, {1, {0, 0, 0, 0}}}
 {
 	this->ToolTipFont = ui().getFont(Options::defaultTooltipFont.get());
 }

@@ -961,8 +961,8 @@ bool Scenery::findSupport(bool allowClinging)
 				} // for every connected way
 				return true;
 			} // if connected to more than one way
-		}     // if more than 2 ways to connect to
-	}         // If road or tube
+		} // if more than 2 ways to connect to
+	} // If road or tube
 
 	// Step 04.02: With generals, we can shoot in x or in y, but connect only to hard support
 	//			   We also do not re-try support when lost
@@ -1092,7 +1092,7 @@ bool Scenery::findSupport(bool allowClinging)
 			} // for every connected way
 			return true;
 		} // for every list of increments (vertical and horizontal)
-	}     // If general
+	} // If general
 
 	// If we didn't succeed, don't clear supportedBy!
 	// supportedBy = lastSupportedBy;

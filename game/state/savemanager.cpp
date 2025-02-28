@@ -172,9 +172,8 @@ bool SaveManager::findFreePath(UString &path, const UString &name) const
 std::optional<SaveMetadata> SaveManager::getSaveGameIfExists(const UString &name) const
 {
 	const auto saveList = getSaveList();
-	const auto it =
-	    std::find_if(saveList.begin(), saveList.end(),
-	                 [&name](const SaveMetadata &obj) { return obj.getName() == name; });
+	const auto it = std::find_if(saveList.begin(), saveList.end(), [&name](const SaveMetadata &obj)
+	                             { return obj.getName() == name; });
 
 	if (it != saveList.end())
 	{
@@ -301,8 +300,7 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 		LogError("Error while enumerating directory: \"%s\"", er.what());
 	}
 
-	sort(saveList.begin(), saveList.end(),
-	     [](const SaveMetadata &lhs, const SaveMetadata &rhs)
+	sort(saveList.begin(), saveList.end(), [](const SaveMetadata &lhs, const SaveMetadata &rhs)
 	     { return lhs.getCreationDate() > rhs.getCreationDate(); });
 
 	return saveList;

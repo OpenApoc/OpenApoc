@@ -1724,7 +1724,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 						    entry.second.y);
 						break;
 				}
-			}    // end of large unit
+			} // end of large unit
 			else // a->large = false
 			{
 				switch (entry.first)
@@ -1807,8 +1807,8 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 					}
 					break;
 				} // end of switch body state
-			}     // end of small unit
-		}         // end of for each voxelInfo entry
+			} // end of small unit
+		} // end of for each voxelInfo entry
 
 		state.agent_body_types[id] = a;
 	}

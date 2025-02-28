@@ -41,7 +41,7 @@ template <typename T> class StateObject
 		return getPrefix() + Strings::fromU64(id);
 	}
 
-	virtual void destroy(){};
+	virtual void destroy() {};
 	// StateObjects are not copy-able
 	StateObject(const StateObject &) = delete;
 	// Move is fine
