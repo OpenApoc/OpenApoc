@@ -2,7 +2,6 @@
 
 #include "game/state/stateobject.h"
 #include <map>
-#include <set>
 
 namespace OpenApoc
 {

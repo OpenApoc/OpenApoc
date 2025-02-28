@@ -2,11 +2,9 @@
 #include "framework/framework.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/doodadtype.h"
-#include "game/state/shared/agent.h"
 #include "library/strings_format.h"
 #include "tools/extractors/common/doodads.h"
 #include "tools/extractors/extractors.h"
-#include <limits>
 
 namespace OpenApoc
 {

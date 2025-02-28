@@ -1,8 +1,5 @@
 #include "game/state/message.h"
 #include "battle/battle.h"
-#include "battle/battleunit.h"
-#include "city/building.h"
-#include "city/vehicle.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc

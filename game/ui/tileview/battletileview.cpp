@@ -11,6 +11,7 @@
 #include "framework/palette.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
+#include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlehazard.h"
 #include "game/state/battle/battleitem.h"

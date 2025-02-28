@@ -4,7 +4,6 @@
 #include "forms/graphicbutton.h"
 #include "forms/label.h"
 #include "forms/radiobutton.h"
-#include "forms/scrollbar.h"
 #include "forms/ui.h"
 #include "framework/configfile.h"
 #include "framework/data.h"

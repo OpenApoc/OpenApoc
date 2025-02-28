@@ -3,7 +3,6 @@
 #include "game/state/battle/battle.h"
 #include "game/state/gametime.h"
 #include "game/state/stateobject.h"
-#include "library/sp.h"
 #include "library/vec.h"
 #include <vector>
 

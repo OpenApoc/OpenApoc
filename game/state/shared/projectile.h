@@ -7,10 +7,8 @@
 #include "game/state/gametime.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
-#include "library/strings.h"
 #include "library/vec.h"
 #include <list>
-#include <map>
 
 // Based on the fact that retribution (tr = 10) turns 90 degrees (PI/2) per second
 #define PROJECTILE_TURN_PER_TICK ((float)(M_PI / 2.0f) / 10.0f / TICKS_PER_SECOND)

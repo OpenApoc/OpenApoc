@@ -2,7 +2,6 @@
 
 #include "framework/logger.h"
 
-#include <cstdlib>
 #include <fstream>
 #include <vector>
 

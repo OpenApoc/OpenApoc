@@ -1,7 +1,4 @@
 #include "forms/form.h"
-#include "game/state/city/vehicle.h"
-#include "game/state/rules/aequipmenttype.h"
-#include "game/state/rules/city/vehicletype.h"
 #include "game/state/shared/aequipment.h"
 #include "library/sp.h"
 

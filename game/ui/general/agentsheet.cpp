@@ -2,13 +2,9 @@
 #include "forms/graphic.h"
 #include "forms/label.h"
 #include "forms/textedit.h"
-#include "framework/event.h"
-#include "framework/font.h"
 #include "framework/framework.h"
-#include "framework/keycodes.h"
 #include "framework/renderer.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/battle/damage.h"
 #include <sstream>
 
 namespace OpenApoc

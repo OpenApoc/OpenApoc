@@ -2,8 +2,6 @@
 
 #include "forms/form.h"
 #include "game/state/stateobject.h"
-#include <array>
-#include <set>
 
 namespace OpenApoc
 {

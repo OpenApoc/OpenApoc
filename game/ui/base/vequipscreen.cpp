@@ -19,12 +19,10 @@
 #include "game/state/city/vequipment.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/city/vehicletype.h"
-#include "game/state/tilemap/tilemap.h"
 #include "game/ui/components/equipscreen.h"
+#include "game/ui/general/messagebox.h"
 #include "game/ui/general/vehiclesheet.h"
 #include "library/strings_format.h"
-#include <cmath>
-#include <game/ui/general/messagebox.h>
 
 namespace OpenApoc
 {

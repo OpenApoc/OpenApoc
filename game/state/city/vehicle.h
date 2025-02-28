@@ -9,7 +9,6 @@
 #include "library/strings.h"
 #include "library/vec.h"
 #include <list>
-#include <map>
 
 // Uncomment to allow projectiles to shoot down friendly projectiles
 // #define DEBUG_ALLOW_PROJECTILE_ON_PROJECTILE_FRIENDLY_FIRE

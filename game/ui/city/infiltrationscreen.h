@@ -3,7 +3,6 @@
 #include "framework/stage.h"
 #include "library/sp.h"
 #include <array>
-#include <optional>
 
 namespace OpenApoc
 {

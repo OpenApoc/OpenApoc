@@ -11,11 +11,8 @@
 #include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/gamestate.h"
-#include "game/state/rules/battle/battlecommonimagelist.h"
 #include "game/ui/battle/battleprestart.h"
 #include "game/ui/tileview/battleview.h"
-#include "game/ui/tileview/cityview.h"
-#include <cmath>
 
 namespace OpenApoc
 {

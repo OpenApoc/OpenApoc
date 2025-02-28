@@ -2,7 +2,6 @@
 #include "game/state/gamestate.h"
 #include "game/state/shared/aequipment.h"
 #include "game/state/tilemap/tilemap.h"
-#include <climits>
 
 namespace OpenApoc
 {

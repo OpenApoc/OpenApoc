@@ -11,14 +11,11 @@
 #include "game/state/city/base.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
-#include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/battle/battlemap.h"
 #include "game/state/rules/city/vehicletype.h"
 #include "game/ui/battle/battlebriefing.h"
 #include "game/ui/skirmish/skirmish.h"
-#include "game/ui/tileview/battleview.h"
-#include "game/ui/tileview/cityview.h"
 #include "library/strings_format.h"
 
 namespace OpenApoc

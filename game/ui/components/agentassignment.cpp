@@ -6,7 +6,7 @@
 #include "forms/label.h"
 #include "forms/listbox.h"
 #include "forms/multilistbox.h"
-#include "forms/ui.h"
+#include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/font.h"
@@ -17,13 +17,10 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/shared/agent.h"
-#include "game/state/shared/organisation.h"
 #include "game/state/stateobject.h"
 #include "game/ui/base/vequipscreen.h"
 #include "game/ui/components/controlgenerator.h"
 #include "game/ui/general/aequipscreen.h"
-#include <cmath>
-#include <framework/configfile.h>
 
 namespace OpenApoc
 {

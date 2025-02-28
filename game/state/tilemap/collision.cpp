@@ -15,7 +15,6 @@
 #include <algorithm>
 #include <glm/glm.hpp>
 #include <glm/gtx/vector_angle.hpp>
-#include <iterator>
 
 namespace OpenApoc
 {

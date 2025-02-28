@@ -1,3 +1,5 @@
+#pragma once
+
 #include "framework/configfile.h"
 
 namespace OpenApoc::Options

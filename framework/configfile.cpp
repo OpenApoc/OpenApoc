@@ -5,7 +5,6 @@
 #include "framework/configfile.h"
 #include "framework/filesystem.h"
 #include "framework/logger.h"
-#include "framework/options.h"
 #include <fstream>
 #include <iostream>
 #include <list>
@@ -19,6 +18,11 @@ namespace po = boost::program_options;
 
 namespace OpenApoc
 {
+
+// validate overload required by boost::program_options for UString
+// boost should find this through ADL.
+// this is required for string values with spaces
+void validate(boost::any &v, const std::vector<std::string> &values, UString *, int);
 
 static ConfigFile *configInstance = nullptr;
 
