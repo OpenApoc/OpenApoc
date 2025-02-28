@@ -42,6 +42,7 @@ class LauncherWindow : public QMainWindow
 	void setupResolutionDisplay();
 	void setupScaling();
 	void setupScreenModes();
+	void setupMouseCapture();
 	void setupDisplayNum();
 	void saveScalingOptions();
 	void saveConfig();

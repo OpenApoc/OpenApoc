@@ -95,6 +95,7 @@ LauncherWindow::LauncherWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui
 	setupScaling();
 	setupScreenModes();
 	setupDisplayNum();
+	setupMouseCapture();
 
 	ui->cdPath->setText(QString::fromStdString(OpenApoc::Options::cdPathOption.get()));
 	ui->dataPath->setText(QString::fromStdString(OpenApoc::Options::dataPathOption.get()));
@@ -319,6 +320,12 @@ void LauncherWindow::setLanguageSelection(int index)
 	selectedLanguageID = ui->languageBox->itemData(index).toString().toStdString();
 }
 
+void LauncherWindow::setupMouseCapture()
+{
+	auto &checkBox = *ui->mouseCaptureCheckBox;
+	checkBox.setChecked(Options::mouseCaptureOption.get());
+}
+
 void LauncherWindow::saveConfig()
 {
 	saveScalingOptions();
@@ -347,6 +354,7 @@ void LauncherWindow::saveConfig()
 	OpenApoc::Options::cdPathOption.set(ui->cdPath->text().toStdString());
 	OpenApoc::Options::dataPathOption.set(ui->dataPath->text().toStdString());
 	OpenApoc::Options::languageOption.set(selectedLanguageID);
+	OpenApoc::Options::mouseCaptureOption.set(ui->mouseCaptureCheckBox->isChecked());
 	OpenApoc::config().save();
 	this->rebuildModList();
 }
