@@ -67,14 +67,9 @@ jobs:
       working-directory: ${{runner.workspace}}
       shell: bash
       run: |
-        cd $GITHUB_WORKSPACE
-        if [ "${{env.BEFORE_COMMIT_SHA}}" == "0000000000000000000000000000000000000000" ]
-        then
-          echo '$GITHUB_WORKSPACE/tools/lint.sh ${{env.AFTER_COMMIT_SHA}}'
-          $GITHUB_WORKSPACE/tools/lint.sh ${{env.AFTER_COMMIT_SHA}}
-        else
-          echo '$GITHUB_WORKSPACE/tools/lint.sh ${{env.BEFORE_COMMIT_SHA}}..${{env.AFTER_COMMIT_SHA}}'
-          $GITHUB_WORKSPACE/tools/lint.sh ${{env.BEFORE_COMMIT_SHA}}..${{env.AFTER_COMMIT_SHA}}
+        cmake --build ${{runner.workspace}}/build -t format-sources
+        if [[ `git -C $GITHUB_WORKSPACE status --porcelain` ]]; then
+          exit 1;
         fi
         
 
