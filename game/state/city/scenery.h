@@ -4,6 +4,7 @@
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
+#include <list>
 #include <set>
 
 #define FALLING_ACCELERATION_MAP_PART 0.16666667f // 1/6th

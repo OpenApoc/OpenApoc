@@ -3,7 +3,6 @@
 #include "framework/stage.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
-#include "library/vec.h"
 #include <map>
 
 namespace OpenApoc

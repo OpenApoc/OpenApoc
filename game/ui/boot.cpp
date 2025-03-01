@@ -4,7 +4,6 @@
 #include "game/ui/boot.h"
 #include "forms/ui.h"
 #include "framework/configfile.h"
-#include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/jukebox.h"
 #include "framework/modinfo.h"
@@ -15,7 +14,6 @@
 #include "game/ui/general/videoscreen.h"
 #include "game/ui/tileview/battleview.h"
 #include "game/ui/tileview/cityview.h"
-#include <cmath>
 
 namespace OpenApoc
 {

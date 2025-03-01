@@ -3,7 +3,6 @@
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/city/scenerytiletype.h"
-#include "game/state/tilemap/tilemap.h"
 
 namespace OpenApoc
 { // clang-format off

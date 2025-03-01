@@ -1,8 +1,6 @@
 #include "game/state/battle/battleexplosion.h"
 #include "framework/configfile.h"
 #include "framework/framework.h"
-#include "framework/logger.h"
-#include "framework/sound.h"
 #include "game/state/battle/battle.h"
 #include "game/state/battle/battlehazard.h"
 #include "game/state/battle/battleitem.h"

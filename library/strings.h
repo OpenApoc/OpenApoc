@@ -1,8 +1,6 @@
 #pragma once
 
 #include <cstdint>
-#include <iterator>
-#include <list>
 #include <string>
 #include <string_view>
 #include <vector>

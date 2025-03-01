@@ -10,9 +10,7 @@
 #include "game/state/tilemap/tileobject_battleunit.h"
 #include "game/state/tilemap/tileobject_projectile.h"
 #include "game/state/tilemap/tileobject_vehicle.h"
-#include <cmath>
 #include <glm/glm.hpp>
-#include <glm/gtx/rotate_vector.hpp>
 #include <glm/gtx/vector_angle.hpp>
 
 namespace OpenApoc

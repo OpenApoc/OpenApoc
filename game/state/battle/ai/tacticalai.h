@@ -1,12 +1,10 @@
 #pragma once
 
-#include "float.h"
 #include "game/state/battle/ai/aidecision.h"
 #include "game/state/gametime.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
-#include "library/vec.h"
 #include <list>
 
 namespace OpenApoc

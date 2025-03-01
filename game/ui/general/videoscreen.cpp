@@ -11,7 +11,6 @@
 #include "framework/sound.h"
 #include "framework/video.h"
 #include <chrono>
-#include <cmath>
 
 namespace OpenApoc
 {

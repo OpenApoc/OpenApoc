@@ -1,6 +1,5 @@
 #include "framework/data.h"
 #include "framework/framework.h"
-#include "framework/palette.h"
 #include "game/state/rules/battle/battlemap.h"
 #include "game/state/rules/battle/battlemaptileset.h"
 #include "game/state/tilemap/tilemap.h"

@@ -7,7 +7,6 @@
 #include "library/strings.h"
 #include "library/vec.h"
 #include <list>
-#include <map>
 #include <set>
 
 namespace OpenApoc

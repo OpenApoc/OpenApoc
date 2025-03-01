@@ -1,8 +1,6 @@
 #include "game/state/rules/supportedmappart.h"
 #include "game/state/battle/battlemappart.h"
-#include "game/state/city/scenery.h"
 #include "game/state/tilemap/tileobject_battlemappart.h"
-#include "game/state/tilemap/tileobject_scenery.h"
 
 // Uncomment to have verbose map part link up output
 // #define MAP_PART_LINK_DEBUG_OUTPUT

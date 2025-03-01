@@ -1,4 +1,5 @@
 #pragma once
+
 #include "game/state/battle/ai/tacticalai.h"
 
 namespace OpenApoc

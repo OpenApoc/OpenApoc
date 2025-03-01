@@ -4,7 +4,6 @@
 #include "game/state/rules/city/vequipmenttype.h"
 #include "game/state/shared/equipment.h"
 #include "game/state/stateobject.h"
-#include "library/rect.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"

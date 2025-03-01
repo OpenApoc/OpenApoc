@@ -7,7 +7,6 @@
 #include "tools/extractors/common/canonstring.h"
 #include "tools/extractors/common/datachunk.h"
 #include "tools/extractors/common/strtab.h"
-#include <algorithm>
 #include <memory>
 #include <string>
 

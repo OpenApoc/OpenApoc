@@ -4,8 +4,8 @@
 #include "game/state/stateobject.h"
 #include "library/rect.h"
 #include "library/vec.h"
+#include <list>
 #include <set>
-#include <vector>
 
 namespace OpenApoc
 {
