@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="VEHICLE_CARGO_BRIEFING">
+    <style minwidth="640" minheight="480">
+      <position x="left" y="centre"/>
+      <size width="640" height="480"/>  
+      <graphic>
+		<image>ui/cargobriefing.png</image>
+		<position x="50" y="100"/>
+        <size width="250" height="350"/>	
+		<label text="CARGO BRIEFING">
+			<position x="4" y="4"/>
+			<size width="242" height="54"/>
+			<alignment horizontal="centre" vertical="centre"/>
+			<font>bigfont</font>
+			<backcolour r="160" g="160" b="160"/>
+		</label>
+		<scroll id="cargoList_Scroll">
+			<position x="232" y="94"/>
+			<size width="15" height="247"/>
+		</scroll>
+		<listbox id="cargoList" scrollbarid="cargoList_Scroll">
+			<position x="7" y="94"/>
+			<size width="170" height="247"/>
+			<item size="170" spacing="6"/><image/>
+			<imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
+		</listbox>
+		<listbox id="pieceList" scrollbarid="cargoList_Scroll">
+			<position x="180" y="94"/>
+			<size width="57" height="247"/>
+			<item size="57" spacing="6"/><image/>
+			<imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
+		</listbox>
+		
+		<textbutton id="BTN_Cargo_Name" text="Name">
+          <font>smalfont</font>
+          <position x="3" y="62"/>
+          <size width="182" height="24"/>
+        </textbutton>
+		<textbutton id="BTN_Cargo_Piece" text="Piece">
+          <font>smalfont</font>
+          <position x="188" y="62"/>
+          <size width="59" height="24"/>
+        </textbutton>
+	  
+	  </graphic>  
+	</style>
+  </form>
+</openapoc>
