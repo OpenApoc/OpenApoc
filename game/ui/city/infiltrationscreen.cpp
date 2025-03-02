@@ -81,8 +81,6 @@ constexpr std::array<Colour, 10> line_colors = {
 InfiltrationScreen::InfiltrationScreen(sp<GameState> state)
     : Stage(), menuform(ui().getForm("city/infiltration")), state(state)
 {
-	updateAll();
-
 	auto orgBox = menuform->findControlTyped<ListBox>(format("ORG_SELECT_BOX"));
 	orgBox->addCallback(FormEventType::MouseClick,
 	                    [this](FormsEvent *e)
@@ -106,7 +104,9 @@ InfiltrationScreen::~InfiltrationScreen() = default;
 void InfiltrationScreen::begin()
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
+	this->updateOrgs();
 	this->update_view();
+	this->update();
 }
 
 void InfiltrationScreen::pause() {}
@@ -139,13 +139,13 @@ void InfiltrationScreen::eventOccurred(Event *e)
 		if (e->forms().RaisedBy->Name == "BUTTON_TOPTEN")
 		{
 			this->reset_shown_orgs();
-			updateAll();
+			updateOrgs();
 			return;
 		}
 	}
 }
 
-void InfiltrationScreen::updateAll()
+void InfiltrationScreen::updateOrgs()
 {
 	// OG organisation order
 	std::vector<std::string> organisationOrder = {
@@ -162,16 +162,15 @@ void InfiltrationScreen::updateAll()
 	auto orgBox = menuform->findControlTyped<ListBox>(format("ORG_SELECT_BOX"));
 	orgBox->clear();
 
-	for (const auto &orgID : organisationOrder)
+	for (const auto &orgId : organisationOrder)
 	{
-		auto orgIt = state->organisations.find(orgID);
+		auto orgIt = state->organisations.find(orgId);
 		if (orgIt != state->organisations.end())
 		{
 			auto org = orgIt->second;
 			org->infiltrationSelected = false;
 
-			auto info = ControlGenerator::createLargeOrganisationInfo(*state, org);
-			auto control = ControlGenerator::createLargeOrganisationControl(*state, info);
+			auto control = ControlGenerator::createLargeOrganisationControl(*state, org);
 			orgBox->replaceItem(control);
 		}
 	}
@@ -183,8 +182,7 @@ void InfiltrationScreen::updateAll()
 			auto org = orgPos->second;
 			org->infiltrationSelected = true;
 
-			auto info = ControlGenerator::createLargeOrganisationInfo(*state, org);
-			auto control = ControlGenerator::createLargeOrganisationControl(*state, info);
+			auto control = ControlGenerator::createLargeOrganisationControl(*state, org);
 			orgBox->replaceItem(control);
 		}
 	}
@@ -194,8 +192,7 @@ void InfiltrationScreen::updateOrgControl(sp<Organisation> org)
 {
 	auto orgBox = menuform->findControlTyped<ListBox>(format("ORG_SELECT_BOX"));
 
-	auto info = ControlGenerator::createLargeOrganisationInfo(*state, org);
-	auto control = ControlGenerator::createLargeOrganisationControl(*state, info);
+	auto control = ControlGenerator::createLargeOrganisationControl(*state, org);
 	orgBox->replaceItem(control);
 }
 

@@ -124,6 +124,7 @@ class ControlGenerator
 	static sp<Control> createLargeOrganisationControl(GameState &state,
 	                                                  const OrganisationInfo &info);
 	static sp<Control> createOrganisationControl(GameState &state, sp<Organisation> org);
+	static sp<Control> createLargeOrganisationControl(GameState &state, sp<Organisation> org);
 
 	static int getFontHeight(GameState &state);
 };

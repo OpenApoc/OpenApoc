@@ -750,6 +750,12 @@ sp<Control> ControlGenerator::createLargeOrganisationControl(GameState &state,
 	return baseControl;
 }
 
+sp<Control> ControlGenerator::createLargeOrganisationControl(GameState &state, sp<Organisation> org)
+{
+	auto i = createLargeOrganisationInfo(state, org);
+	return createLargeOrganisationControl(state, i);
+}
+
 sp<Control> ControlGenerator::createOrganisationControl(GameState &state, sp<Organisation> org)
 {
 	auto i = createOrganisationInfo(state, org);

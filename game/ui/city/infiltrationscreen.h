@@ -24,12 +24,11 @@ class InfiltrationScreen : public Stage
 	std::array<Label *, 10> shown_org_names;
 	std::array<const Organisation *, 10> shown_orgs;
 	std::vector<const Organisation *> selectedOrgs;
-	// std::list<sp<Organisation>> selectedOrgs;
 	void reset_shown_orgs();
 	void update_view();
 	void add_orgs(Organisation &org);
 	void updateOrgControl(sp<Organisation> org);
-	void updateAll();
+	void updateOrgs();
 
   public:
 	InfiltrationScreen(sp<GameState> state);
