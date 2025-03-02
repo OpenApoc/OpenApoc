@@ -234,9 +234,9 @@ void InfiltrationScreen::add_orgs(Organisation &org)
 
 void InfiltrationScreen::reset_shown_orgs()
 {
-	std::vector<Organisation *> orgs;
+	std::vector<const Organisation *> orgs;
 
-	for (auto &org : state->organisations)
+	for (const auto &org : state->organisations)
 	{
 		if (org.second->id == "ORG_ALIEN" || org.second->id == "ORG_X-COM")
 			continue;
@@ -245,7 +245,7 @@ void InfiltrationScreen::reset_shown_orgs()
 		orgs.push_back(org.second.get());
 	}
 
-	auto infiltration_comparer = [](Organisation *org1, Organisation *org2)
+	auto infiltration_comparer = [](const Organisation *org1, const Organisation *org2)
 	{ return org1->infiltrationValue > org2->infiltrationValue; };
 	std::sort(orgs.begin(), orgs.end(), infiltration_comparer);
 
