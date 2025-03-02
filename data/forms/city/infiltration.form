@@ -38,6 +38,30 @@
         <image/>
         <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
       </graphicbutton>
+		<scroll id="ORG_SELECT_SCROLL">
+			<position x="566" y="71"/>
+			<size width="26" height="278"/>
+		</scroll>
+		<listbox id="ORG_SELECT_BOX" scrollbarid="ORG_SELECT_SCROLL">
+			<position x="420" y="60"/>
+			<size width="140" height="298"/>
+			<item size="0" spacing="0"/>
+			<selcolour r="255" g="255" b="255" a="0"/>
+		</listbox>
+		<graphicbutton id="ORG_SCROLL_UP" scrollprev="ORG_SELECT_SCROLL">
+			<tooltip text="Scroll Up" font="smallset"/>
+			<position x="568" y="46"/>
+			<size width="22" height="21"/>
+			<image/>
+			<imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
+		</graphicbutton>
+		<graphicbutton id="ORG_SCROLL_DOWN" scrollnext="ORG_SELECT_SCROLL">
+			<tooltip text="Scroll Down" font="smallset"/>
+			<position x="568" y="352"/>
+			<size width="22" height="21"/>
+			<image/>
+			<imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
+		</graphicbutton>
       <label id="ORG_NAME_0">
         <position x="38" y="386"/>
         <size width="260" height="14"/>

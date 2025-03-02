@@ -693,6 +693,15 @@ OrganisationInfo ControlGenerator::createOrganisationInfo(GameState &state, sp<O
 	return i;
 }
 
+OrganisationInfo ControlGenerator::createLargeOrganisationInfo(GameState &state,
+                                                               sp<Organisation> org)
+{
+	auto i = OrganisationInfo();
+	i.organisation = org;
+	i.selected = org->infiltrationSelected;
+	return i;
+}
+
 sp<Control> ControlGenerator::createOrganisationControl(GameState &state,
                                                         const OrganisationInfo &info)
 {
@@ -714,6 +723,29 @@ sp<Control> ControlGenerator::createOrganisationControl(GameState &state,
 	orgIcon->Location = {1, 1};
 	orgIcon->Name = "ORG_ICON_" + info.organisation->name;
 	orgIcon->ToolTipText = tr(info.organisation->name);
+
+	return baseControl;
+}
+
+sp<Control> ControlGenerator::createLargeOrganisationControl(GameState &state,
+                                                             const OrganisationInfo &info)
+{
+	if (!singleton.initialised)
+	{
+		singleton.init(state);
+	}
+	auto frame = singleton.citySelect[info.selected ? 2 : 0];
+	auto baseControl = mksp<Graphic>(frame);
+	baseControl->setData(info.organisation);
+	baseControl->Size = {140, singleton.labelFont->getFontHeight() * 2};
+
+	auto orgIcon = baseControl->createChild<Graphic>(info.organisation->icon);
+	orgIcon->AutoSize = true;
+	orgIcon->Location = {1, 1};
+
+	auto orgLabel = baseControl->createChild<Label>(info.organisation->name, singleton.labelFont);
+	orgLabel->Location = {40, 3};
+	orgLabel->Size = {baseControl->Size.x, singleton.labelFont->getFontHeight() * 2};
 
 	return baseControl;
 }

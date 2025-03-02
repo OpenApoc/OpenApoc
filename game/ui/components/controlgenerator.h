@@ -119,7 +119,10 @@ class ControlGenerator
 	static sp<Control> createDoubleListControl(const int controlLength);
 
 	static OrganisationInfo createOrganisationInfo(GameState &state, sp<Organisation> org);
+	static OrganisationInfo createLargeOrganisationInfo(GameState &state, sp<Organisation> org);
 	static sp<Control> createOrganisationControl(GameState &state, const OrganisationInfo &info);
+	static sp<Control> createLargeOrganisationControl(GameState &state,
+	                                                  const OrganisationInfo &info);
 	static sp<Control> createOrganisationControl(GameState &state, sp<Organisation> org);
 
 	static int getFontHeight(GameState &state);

@@ -2,12 +2,14 @@
 #include "forms/form.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
+#include "forms/listbox.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "game/state/gamestate.h"
 #include "game/state/shared/organisation.h"
+#include "game/ui/components/controlgenerator.h"
 #include "library/line.h"
 #include <array>
 
@@ -79,6 +81,18 @@ constexpr std::array<Colour, 10> line_colors = {
 InfiltrationScreen::InfiltrationScreen(sp<GameState> state)
     : Stage(), menuform(ui().getForm("city/infiltration")), state(state)
 {
+	updateAll();
+
+	auto orgBox = menuform->findControlTyped<ListBox>(format("ORG_SELECT_BOX"));
+	orgBox->addCallback(FormEventType::MouseClick,
+	                    [this](FormsEvent *e)
+	                    {
+		                    auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
+		                    auto org = list->getSelectedData<Organisation>();
+		                    add_orgs(*org);
+		                    updateOrgControl(org);
+	                    });
+
 	for (int i = 0; i < 10; i++)
 	{
 		shown_org_names[i] = menuform->findControlTyped<Label>(format("ORG_NAME_%d", i)).get();
@@ -125,16 +139,104 @@ void InfiltrationScreen::eventOccurred(Event *e)
 		if (e->forms().RaisedBy->Name == "BUTTON_TOPTEN")
 		{
 			this->reset_shown_orgs();
+			updateAll();
 			return;
 		}
 	}
 }
 
+void InfiltrationScreen::updateAll()
+{
+	// OG organisation order
+	std::vector<std::string> organisationOrder = {
+	    "ORG_GOVERNMENT",    "ORG_MEGAPOL",          "ORG_CULT_OF_SIRIUS",  "ORG_MARSEC",
+	    "ORG_SUPERDYNAMICS", "ORG_GENERAL_METRO",    "ORG_CYBERWEB",        "ORG_TRANSTELLAR",
+	    "ORG_SOLMINE",       "ORG_SENSOVISION",      "ORG_LIFETREE",        "ORG_NUTRIVEND",
+	    "ORG_EVONET",        "ORG_SANCTUARY_CLINIC", "ORG_NANOTECH",        "ORG_ENERGEN",
+	    "ORG_SYNTHEMESH",    "ORG_GRAVBALL_LEAGUE",  "ORG_PSYKE",           "ORG_DIABLO",
+	    "ORG_OSIRON",        "ORG_S_E_L_F_",         "ORG_MUTANT_ALLIANCE", "ORG_EXTROPIANS",
+	    "ORG_TECHNOCRATS",
+	};
+
+	// Populate orgs
+	auto orgBox = menuform->findControlTyped<ListBox>(format("ORG_SELECT_BOX"));
+	orgBox->clear();
+
+	for (const auto &orgID : organisationOrder)
+	{
+		auto orgIt = state->organisations.find(orgID);
+		if (orgIt != state->organisations.end())
+		{
+			auto org = orgIt->second;
+			org->infiltrationSelected = false;
+
+			auto info = ControlGenerator::createLargeOrganisationInfo(*state, org);
+			auto control = ControlGenerator::createLargeOrganisationControl(*state, info);
+			orgBox->replaceItem(control);
+		}
+	}
+	for (auto &o : selectedOrgs)
+	{
+		auto orgPos = state->organisations.find(o->id);
+		if (orgPos != state->organisations.end())
+		{
+			auto org = orgPos->second;
+			org->infiltrationSelected = true;
+
+			auto info = ControlGenerator::createLargeOrganisationInfo(*state, org);
+			auto control = ControlGenerator::createLargeOrganisationControl(*state, info);
+			orgBox->replaceItem(control);
+		}
+	}
+}
+
+void InfiltrationScreen::updateOrgControl(sp<Organisation> org)
+{
+	auto orgBox = menuform->findControlTyped<ListBox>(format("ORG_SELECT_BOX"));
+
+	auto info = ControlGenerator::createLargeOrganisationInfo(*state, org);
+	auto control = ControlGenerator::createLargeOrganisationControl(*state, info);
+	orgBox->replaceItem(control);
+}
+
+void InfiltrationScreen::add_orgs(Organisation &org)
+{
+	auto it = std::find(selectedOrgs.begin(), selectedOrgs.end(), &org);
+	if (it != selectedOrgs.end())
+	{
+		org.infiltrationSelected = false;
+		for (int i = 0; i < 10; i++)
+		{
+			if (shown_orgs[i] == &org)
+			{
+				shown_orgs[i] = nullptr;
+				break;
+			}
+		}
+		selectedOrgs.erase(it);
+	}
+	else if (selectedOrgs.size() < 10)
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			if (shown_orgs[i] == nullptr)
+			{
+				shown_orgs[i] = &org;
+				selectedOrgs.push_back(&org);
+				break;
+			}
+		}
+		org.infiltrationSelected = true;
+	}
+
+	this->update_view();
+}
+
 void InfiltrationScreen::reset_shown_orgs()
 {
-	std::vector<const Organisation *> orgs;
+	std::vector<Organisation *> orgs;
 
-	for (const auto &org : state->organisations)
+	for (auto &org : state->organisations)
 	{
 		if (org.second->id == "ORG_ALIEN" || org.second->id == "ORG_X-COM")
 			continue;
@@ -143,19 +245,23 @@ void InfiltrationScreen::reset_shown_orgs()
 		orgs.push_back(org.second.get());
 	}
 
-	auto infiltration_comparer = [](const Organisation *org1, const Organisation *org2)
+	auto infiltration_comparer = [](Organisation *org1, Organisation *org2)
 	{ return org1->infiltrationValue > org2->infiltrationValue; };
 	std::sort(orgs.begin(), orgs.end(), infiltration_comparer);
+
+	shown_orgs.fill(nullptr);
+	selectedOrgs.clear();
 
 	for (int i = 0; i < 10; i++)
 	{
 		if (i >= orgs.size())
 		{
-			shown_orgs[i] = nullptr;
-			continue;
+			break;
 		}
 		shown_orgs[i] = orgs[i];
+		selectedOrgs.push_back(orgs[i]);
 	}
+
 	this->update_view();
 }
 
