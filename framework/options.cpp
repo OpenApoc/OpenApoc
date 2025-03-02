@@ -45,6 +45,7 @@ void dumpOptionsToLog()
 	dumpOption(screenScaleYOption);
 	dumpOption(screenAutoScale);
 	dumpOption(languageOption);
+	dumpOption(mouseCaptureOption);
 
 	dumpOption(targetFPS);
 	dumpOption(frameLimit);
@@ -246,6 +247,9 @@ ConfigOptionBool screenAutoScale(
     "Automatically scale up game viewport for modern screens (overrides ScaleX and ScaleY)", false);
 ConfigOptionString languageOption("Framework", "Language",
                                   "The language used ingame (empty for system default)", "");
+
+ConfigOptionBool mouseCaptureOption("Framework", "MouseCapture",
+                                    "Enable mouse capture for the window", false);
 
 ConfigOptionInt targetFPS("Framework", "TargetFPS", "The target FPS count - affects game speed!",
                           60);

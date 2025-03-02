@@ -890,6 +890,9 @@ void Framework::displayInitialise()
 	SDL_GetWindowSize(p->window, &width, &height);
 	p->windowSize = {width, height};
 
+	auto mouseCapture = Options::mouseCaptureOption.get();
+	SDL_SetWindowMouseGrab(p->window, mouseCapture ? SDL_TRUE : SDL_FALSE);
+
 	// FIXME: Scale is currently stored as an integer in 1/100 units (ie 100 is 1.0 == same
 	// size)
 	int scaleX = Options::screenScaleXOption.get();

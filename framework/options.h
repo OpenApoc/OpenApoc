@@ -25,6 +25,7 @@ extern ConfigOptionInt screenScaleXOption;
 extern ConfigOptionInt screenScaleYOption;
 extern ConfigOptionBool screenAutoScale;
 extern ConfigOptionString languageOption;
+extern ConfigOptionBool mouseCaptureOption;
 
 extern ConfigOptionInt frameLimit;
 extern ConfigOptionInt targetFPS;
