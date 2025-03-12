@@ -22,7 +22,7 @@ constexpr int num_steps = 6 * 7;
 static void drawOrgLine(sp<RGBImage> image, const Organisation &org, const Colour &colour,
                         int steps)
 {
-	const float step_width = static_cast<float>(image->size.x - 1) / static_cast<float>(steps);
+	const float step_width = static_cast<float>(image->size.x - 1) / static_cast<float>(42);
 	constexpr int max_infiltration_value = 100;
 	float infiltration_y_scale =
 	    static_cast<float>(image->size.y - 1) / static_cast<float>(max_infiltration_value);
@@ -237,7 +237,7 @@ void InfiltrationScreen::reset_shown_orgs()
 	{
 		if (org.second->id == "ORG_ALIEN" || org.second->id == "ORG_X-COM")
 			continue;
-		if (org.second->infiltrationValue == 0)
+		if (org.second->infiltrationValue == 0 || org.second->infiltrationValue == 200)
 			continue;
 		orgs.push_back(org.second.get());
 	}
