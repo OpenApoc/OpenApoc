@@ -1,4 +1,4 @@
-#include "game/ui/city/infiltrationscreen.h"
+﻿#include "game/ui/city/infiltrationscreen.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
@@ -22,7 +22,7 @@ constexpr int num_steps = 6 * 7;
 static void drawOrgLine(sp<RGBImage> image, const Organisation &org, const Colour &colour,
                         int steps)
 {
-	const float step_width = static_cast<float>(image->size.x - 1) / static_cast<float>(42);
+	const float step_width = static_cast<float>(image->size.x - 1) / static_cast<float>(steps);
 	constexpr int max_infiltration_value = 100;
 	float infiltration_y_scale =
 	    static_cast<float>(image->size.y - 1) / static_cast<float>(max_infiltration_value);
@@ -43,16 +43,20 @@ static void drawOrgLine(sp<RGBImage> image, const Organisation &org, const Colou
 
 	auto image_lock = RGBImageLock(image);
 
+	float x_offset = step_width;
+
 	// TODO: Make curved lines
 	for (step = 0; step < steps - 1; step++)
 	{
 		const Vec3<float> start_point = {
-		    static_cast<float>(image->size.x - 1) - static_cast<float>(step) * step_width,
+		    static_cast<float>(image->size.x - 1) - static_cast<float>(step) * step_width -
+		        x_offset,
 		    static_cast<float>(image->size.y - 1) - step_values[step] * infiltration_y_scale, 0};
-		const Vec3<float> end_point = {
-		    static_cast<float>(image->size.x - 1) - static_cast<float>(step + 1) * step_width,
-		    static_cast<float>(image->size.y - 1) - step_values[step + 1] * infiltration_y_scale,
-		    0};
+		const Vec3<float> end_point = {static_cast<float>(image->size.x - 1) -
+		                                   static_cast<float>(step + 1) * step_width - x_offset,
+		                               static_cast<float>(image->size.y - 1) -
+		                                   step_values[step + 1] * infiltration_y_scale,
+		                               0};
 
 		const auto start_point_int = Vec3<int>(start_point);
 		const auto end_point_int = Vec3<int>(end_point);
