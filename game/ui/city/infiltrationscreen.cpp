@@ -1,13 +1,15 @@
-#include "game/ui/city/infiltrationscreen.h"
+﻿#include "game/ui/city/infiltrationscreen.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
+#include "forms/listbox.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
 #include "game/state/gamestate.h"
 #include "game/state/shared/organisation.h"
+#include "game/ui/components/controlgenerator.h"
 #include "library/line.h"
 #include <array>
 
@@ -41,16 +43,20 @@ static void drawOrgLine(sp<RGBImage> image, const Organisation &org, const Colou
 
 	auto image_lock = RGBImageLock(image);
 
+	float x_offset = step_width;
+
 	// TODO: Make curved lines
 	for (step = 0; step < steps - 1; step++)
 	{
 		const Vec3<float> start_point = {
-		    static_cast<float>(image->size.x - 1) - static_cast<float>(step) * step_width,
+		    static_cast<float>(image->size.x - 1) - static_cast<float>(step) * step_width -
+		        x_offset,
 		    static_cast<float>(image->size.y - 1) - step_values[step] * infiltration_y_scale, 0};
-		const Vec3<float> end_point = {
-		    static_cast<float>(image->size.x - 1) - static_cast<float>(step + 1) * step_width,
-		    static_cast<float>(image->size.y - 1) - step_values[step + 1] * infiltration_y_scale,
-		    0};
+		const Vec3<float> end_point = {static_cast<float>(image->size.x - 1) -
+		                                   static_cast<float>(step + 1) * step_width - x_offset,
+		                               static_cast<float>(image->size.y - 1) -
+		                                   step_values[step + 1] * infiltration_y_scale,
+		                               0};
 
 		const auto start_point_int = Vec3<int>(start_point);
 		const auto end_point_int = Vec3<int>(end_point);
@@ -79,6 +85,16 @@ constexpr std::array<Colour, 10> line_colors = {
 InfiltrationScreen::InfiltrationScreen(sp<GameState> state)
     : Stage(), menuform(ui().getForm("city/infiltration")), state(state)
 {
+	auto orgBox = menuform->findControlTyped<ListBox>(format("ORG_SELECT_BOX"));
+	orgBox->addCallback(FormEventType::MouseClick,
+	                    [this](FormsEvent *e)
+	                    {
+		                    auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
+		                    auto org = list->getSelectedData<Organisation>();
+		                    add_orgs(*org);
+		                    updateOrgControl(org);
+	                    });
+
 	for (int i = 0; i < 10; i++)
 	{
 		shown_org_names[i] = menuform->findControlTyped<Label>(format("ORG_NAME_%d", i)).get();
@@ -92,7 +108,10 @@ InfiltrationScreen::~InfiltrationScreen() = default;
 void InfiltrationScreen::begin()
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
+	this->reset_shown_orgs();
+	this->updateOrgs();
 	this->update_view();
+	this->update();
 }
 
 void InfiltrationScreen::pause() {}
@@ -125,9 +144,94 @@ void InfiltrationScreen::eventOccurred(Event *e)
 		if (e->forms().RaisedBy->Name == "BUTTON_TOPTEN")
 		{
 			this->reset_shown_orgs();
+			updateOrgs();
 			return;
 		}
 	}
+}
+
+void InfiltrationScreen::updateOrgs()
+{
+	// OG organisation order
+	std::vector<std::string> organisationOrder = {
+	    "ORG_GOVERNMENT",    "ORG_MEGAPOL",          "ORG_CULT_OF_SIRIUS",  "ORG_MARSEC",
+	    "ORG_SUPERDYNAMICS", "ORG_GENERAL_METRO",    "ORG_CYBERWEB",        "ORG_TRANSTELLAR",
+	    "ORG_SOLMINE",       "ORG_SENSOVISION",      "ORG_LIFETREE",        "ORG_NUTRIVEND",
+	    "ORG_EVONET",        "ORG_SANCTUARY_CLINIC", "ORG_NANOTECH",        "ORG_ENERGEN",
+	    "ORG_SYNTHEMESH",    "ORG_GRAVBALL_LEAGUE",  "ORG_PSYKE",           "ORG_DIABLO",
+	    "ORG_OSIRON",        "ORG_S_E_L_F_",         "ORG_MUTANT_ALLIANCE", "ORG_EXTROPIANS",
+	    "ORG_TECHNOCRATS",
+	};
+
+	// Populate orgs
+	auto orgBox = menuform->findControlTyped<ListBox>(format("ORG_SELECT_BOX"));
+	orgBox->clear();
+
+	for (const auto &orgId : organisationOrder)
+	{
+		auto orgIt = state->organisations.find(orgId);
+		if (orgIt != state->organisations.end())
+		{
+			auto org = orgIt->second;
+			org->infiltrationSelected = false;
+
+			auto control = ControlGenerator::createLargeOrganisationControl(*state, org);
+			orgBox->replaceItem(control);
+		}
+	}
+	for (auto &o : selectedOrgs)
+	{
+		auto orgPos = state->organisations.find(o->id);
+		if (orgPos != state->organisations.end())
+		{
+			auto org = orgPos->second;
+			org->infiltrationSelected = true;
+
+			auto control = ControlGenerator::createLargeOrganisationControl(*state, org);
+			orgBox->replaceItem(control);
+		}
+	}
+}
+
+void InfiltrationScreen::updateOrgControl(sp<Organisation> org)
+{
+	auto orgBox = menuform->findControlTyped<ListBox>(format("ORG_SELECT_BOX"));
+
+	auto control = ControlGenerator::createLargeOrganisationControl(*state, org);
+	orgBox->replaceItem(control);
+}
+
+void InfiltrationScreen::add_orgs(Organisation &org)
+{
+	auto it = std::find(selectedOrgs.begin(), selectedOrgs.end(), &org);
+	if (it != selectedOrgs.end())
+	{
+		org.infiltrationSelected = false;
+		for (int i = 0; i < 10; i++)
+		{
+			if (shown_orgs[i] == &org)
+			{
+				shown_orgs[i] = nullptr;
+				break;
+			}
+		}
+		selectedOrgs.erase(it);
+	}
+	else if (selectedOrgs.size() < 10)
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			if (shown_orgs[i] == nullptr)
+			{
+				shown_orgs[i] = &org;
+				selectedOrgs.push_back(&org);
+				break;
+			}
+		}
+		org.infiltrationSelected = true;
+	}
+
+	this->update_view();
 }
 
 void InfiltrationScreen::reset_shown_orgs()
@@ -138,7 +242,7 @@ void InfiltrationScreen::reset_shown_orgs()
 	{
 		if (org.second->id == "ORG_ALIEN" || org.second->id == "ORG_X-COM")
 			continue;
-		if (org.second->infiltrationValue == 0)
+		if (org.second->infiltrationValue == 0 || org.second->infiltrationValue == 200)
 			continue;
 		orgs.push_back(org.second.get());
 	}
@@ -147,15 +251,19 @@ void InfiltrationScreen::reset_shown_orgs()
 	{ return org1->infiltrationValue > org2->infiltrationValue; };
 	std::sort(orgs.begin(), orgs.end(), infiltration_comparer);
 
+	shown_orgs.fill(nullptr);
+	selectedOrgs.clear();
+
 	for (int i = 0; i < 10; i++)
 	{
 		if (i >= orgs.size())
 		{
-			shown_orgs[i] = nullptr;
-			continue;
+			break;
 		}
 		shown_orgs[i] = orgs[i];
+		selectedOrgs.push_back(orgs[i]);
 	}
+
 	this->update_view();
 }
 

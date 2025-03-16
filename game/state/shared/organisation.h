@@ -124,6 +124,7 @@ class Organisation : public StateObject<Organisation>
 	bool militarized = false;
 	bool initiatesDiplomacy = false;
 	bool providesTransportationServices = false;
+	bool infiltrationSelected = false;
 
 	sp<Image> icon;
 
