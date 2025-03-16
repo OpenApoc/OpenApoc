@@ -142,6 +142,7 @@ void dumpOptionsToLog()
 	dumpOption(optionLoadSameAmmo);
 	dumpOption(optionShowCurrentDimensionVehicles);
 	dumpOption(optionShowNonXCOMVehiclesPrefix);
+	dumpOption(isoOnlyFollow);
 
 	dumpOption(optionStunHostileAction);
 	dumpOption(optionRaidHostileAction);
@@ -456,7 +457,8 @@ ConfigOptionBool
                                        true);
 ConfigOptionBool optionShowNonXCOMVehiclesPrefix("OpenApoc.NewFeature", "ShowNonXCOMVehiclesPrefix",
                                                  tr("Add prefix to non-X-COM vehicles"), true);
-
+ConfigOptionBool isoOnlyFollow("OpenApoc.NewFeature", "IsoOnlyFollow",
+                               tr("Don't follow vehicles in strategy view"), false);
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);
 ConfigOptionBool optionRaidHostileAction("OpenApoc.Mod", "RaidHostileAction",

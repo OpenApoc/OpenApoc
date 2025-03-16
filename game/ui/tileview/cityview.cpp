@@ -3319,9 +3319,12 @@ void CityView::update()
 	baseForm->update();
 	overlayTab->update();
 
+	auto isoFollow =
+	    config().getBool("OpenApoc.NewFeature.IsoOnlyFollow") && viewMode == TileViewMode::Strategy;
+
 	// If we have 'follow vehicle' enabled we clobber any other movement that may have occurred in
 	// this frame
-	if (this->followVehicle && this->updateSpeed != CityUpdateSpeed::Pause)
+	if (this->followVehicle && this->updateSpeed != CityUpdateSpeed::Pause && !isoFollow)
 	{
 		if (activeTab == uiTabs[1] && !state->current_city->cityViewSelectedOwnedVehicles.empty())
 		{
@@ -3335,7 +3338,8 @@ void CityView::update()
 				}
 			}
 		}
-		else if (activeTab == uiTabs[2] && !state->current_city->cityViewSelectedSoldiers.empty())
+		else if (activeTab == uiTabs[2] && !state->current_city->cityViewSelectedSoldiers.empty() &&
+		         !isoFollow)
 		{
 			auto a = state->current_city->cityViewSelectedSoldiers.front();
 

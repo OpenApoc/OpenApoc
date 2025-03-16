@@ -45,6 +45,7 @@ static const std::list<std::pair<UString, UString>> cityscapeList = {
     {"OpenApoc.NewFeature", "ATVUFOMission"},
     {"OpenApoc.NewFeature", "ShowCurrentDimensionVehicles"},
     {"OpenApoc.NewFeature", "ShowNonXCOMVehiclesPrefix"},
+    {"OpenApoc.NewFeature", "IsoOnlyFollow"},
     {"OpenApoc.Mod", "MaxTileRepair"},
     {"OpenApoc.Mod", "SceneryRepairCostFactor"},
     {"OpenApoc.Mod", "RaidHostileAction"},
