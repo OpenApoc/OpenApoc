@@ -3319,23 +3319,27 @@ void CityView::update()
 	baseForm->update();
 	overlayTab->update();
 
+	auto isoFollow =
+	    config().getBool("OpenApoc.NewFeature.IsoOnlyFollow") && viewMode == TileViewMode::Strategy;
+
 	// If we have 'follow vehicle' enabled we clobber any other movement that may have occurred in
 	// this frame
-	if (this->followVehicle && this->updateSpeed != CityUpdateSpeed::Pause)
+	if (this->followVehicle && this->updateSpeed != CityUpdateSpeed::Pause && !isoFollow)
 	{
 		if (activeTab == uiTabs[1] && !state->current_city->cityViewSelectedOwnedVehicles.empty())
 		{
 			auto v = state->current_city->cityViewSelectedOwnedVehicles.front();
 			if (v->city == state->current_city)
 			{
-				// Don't follow if vehicle is in building
-				if (!v->currentBuilding)
+				// Don't follow if vehicle is in building or idle
+				if (!v->currentBuilding && !v->missions.empty())
 				{
 					this->setScreenCenterTile(v->position);
 				}
 			}
 		}
-		else if (activeTab == uiTabs[2] && !state->current_city->cityViewSelectedSoldiers.empty())
+		else if (activeTab == uiTabs[2] && !state->current_city->cityViewSelectedSoldiers.empty() &&
+		         !isoFollow)
 		{
 			auto a = state->current_city->cityViewSelectedSoldiers.front();
 
@@ -3343,8 +3347,8 @@ void CityView::update()
 			{
 				if (a->currentVehicle)
 				{
-					// Don't follow if current vehicle is in building
-					if (!a->currentVehicle->currentBuilding)
+					// Don't follow if current vehicle is in building or idle
+					if (!a->currentVehicle->currentBuilding && !a->currentVehicle->missions.empty())
 					{
 						this->setScreenCenterTile(a->currentVehicle->position);
 					}
