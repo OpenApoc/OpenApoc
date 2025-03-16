@@ -278,15 +278,27 @@ class VehicleType : public StateObject<VehicleType>
 		                           sp<VEquipmentType>>::value,
 		              "iterator must return sp<VehicleEquipmentType>");
 
-		// FIXME: This is somehow modulated by weight?
+		int weight = this->getWeight(first, last);
 		float speed = this->top_speed;
+		bool hasEngine = false;
+		// Light vehicles have +4 speed
+		if (weight < 350)
+		{
+			speed += 4;
+		}
 		while (first != last)
 		{
 			if ((*first)->type == EquipmentSlotType::VehicleEngine)
 			{
 				speed += (*first)->top_speed;
+				hasEngine = true;
 			}
 			++first;
+		}
+		// Vehicle without engine has 0 speed
+		if (!hasEngine)
+		{
+			return 0;
 		}
 		return speed;
 	}
