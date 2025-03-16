@@ -3328,8 +3328,8 @@ void CityView::update()
 			auto v = state->current_city->cityViewSelectedOwnedVehicles.front();
 			if (v->city == state->current_city)
 			{
-				// Don't follow if vehicle is in building
-				if (!v->currentBuilding)
+				// Don't follow if vehicle is in building or idle
+				if (!v->currentBuilding && !v->missions.empty())
 				{
 					this->setScreenCenterTile(v->position);
 				}
@@ -3343,8 +3343,8 @@ void CityView::update()
 			{
 				if (a->currentVehicle)
 				{
-					// Don't follow if current vehicle is in building
-					if (!a->currentVehicle->currentBuilding)
+					// Don't follow if current vehicle is in building or idle
+					if (!a->currentVehicle->currentBuilding && !a->currentVehicle->missions.empty())
 					{
 						this->setScreenCenterTile(a->currentVehicle->position);
 					}
