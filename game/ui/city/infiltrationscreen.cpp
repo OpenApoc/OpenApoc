@@ -108,6 +108,7 @@ InfiltrationScreen::~InfiltrationScreen() = default;
 void InfiltrationScreen::begin()
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
+	this->reset_shown_orgs();
 	this->updateOrgs();
 	this->update_view();
 	this->update();
