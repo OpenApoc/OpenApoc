@@ -281,11 +281,6 @@ class VehicleType : public StateObject<VehicleType>
 		int weight = this->getWeight(first, last);
 		float speed = this->top_speed;
 		bool hasEngine = false;
-		// Light vehicles have +4 speed
-		if (weight < 350)
-		{
-			speed += 4;
-		}
 		while (first != last)
 		{
 			if ((*first)->type == EquipmentSlotType::VehicleEngine)
@@ -295,10 +290,10 @@ class VehicleType : public StateObject<VehicleType>
 			}
 			++first;
 		}
-		// Vehicle without engine has 0 speed
-		if (!hasEngine)
+		// Light vehicles have +4 speed
+		if (weight < 350 && hasEngine)
 		{
-			return 0;
+			speed += 4;
 		}
 		return speed;
 	}
