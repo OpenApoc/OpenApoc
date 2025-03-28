@@ -352,7 +352,7 @@ ConfigOptionBool optionDebugCommandsVisible("OpenApoc.NewFeature", "DebugCommand
 ConfigOptionBool optionUFODamageModel("OpenApoc.NewFeature", "UFODamageModel",
                                       "X-Com 1 Damage model (0-200%)", false);
 ConfigOptionBool optionInstantExplosionDamage("OpenApoc.NewFeature", "InstantExplosionDamage",
-                                              "Explosions damage instantly", false);
+                                              "Explosions damage instantly", true);
 ConfigOptionBool optionGravliftSounds("OpenApoc.NewFeature", "GravliftSounds", "Gravlift sounds",
                                       true);
 ConfigOptionBool optionNoScrollSounds("OpenApoc.NewFeature", "NoScrollSounds",
@@ -381,7 +381,7 @@ ConfigOptionBool optionAdditionalUnitIcons("OpenApoc.NewFeature", "AdditionalUni
 ConfigOptionBool optionAllowForceFiringParallel("OpenApoc.NewFeature", "AllowForceFiringParallel",
                                                 "Allow force-firing parallel to the ground", true);
 ConfigOptionBool optionRequireLOSToMaintainPsi("OpenApoc.NewFeature", "RequireLOSToMaintainPsi",
-                                               "Require LOS to maintain psi attack", true);
+                                               "Require LOS to maintain psi attack", false);
 ConfigOptionBool optionAllowAttackingOwnedVehicles("OpenApoc.NewFeature",
                                                    "AllowAttackingOwnedVehicles",
                                                    "Allow attacking owned vehicles", true);
@@ -410,7 +410,7 @@ ConfigOptionBool optionArmoredRoads("OpenApoc.NewFeature", "ArmoredRoads", "Armo
 ConfigOptionBool optionVanillaCityControls("OpenApoc.NewFeature", "OpenApocCityControls",
                                            "Improved city control scheme", true);
 ConfigOptionBool optionCollapseRaidedBuilding("OpenApoc.NewFeature", "CollapseRaidedBuilding",
-                                              "Successful raid collapses building", true);
+                                              "Successful raid collapses building", false);
 ConfigOptionBool
     optionScrambleOnUnintentionalHit("OpenApoc.NewFeature", "ScrambleOnUnintentionalHit",
                                      "Any hit on hostile building provokes retaliation", false);
@@ -426,7 +426,7 @@ ConfigOptionBool optionFuelCrashingVehicles(
 ConfigOptionBool optionSkipTurbo("OpenApoc.NewFeature", "SkipTurboMovement",
                                  "Skip turbo movement calculations", false);
 ConfigOptionBool optionRunAndKneel("OpenApoc.NewFeature", "RunAndKneel",
-                                   "All units run and kneel by default", false);
+                                   "All units run and kneel by default", true);
 ConfigOptionBool optionSeedRng("OpenApoc.NewFeature", "SeedRng", "Seed RNG on game start", true);
 ConfigOptionBool optionAutoReload("OpenApoc.NewFeature", "AutoReload",
                                   "Automatically reload weapons when empty", true);
@@ -440,7 +440,7 @@ ConfigOptionBool optionSingleSquadSelect("OpenApoc.NewFeature", "SingleSquadSele
 ConfigOptionBool
     optionATVUFOMission("OpenApoc.NewFeature", "ATVUFOMission",
                         tr("Allow All Terrain Vehicles (ATV) to initiate UFO recovery missions"),
-                        false);
+                        true);
 ConfigOptionInt
     optionMaxTileRepair("OpenApoc.Mod", "MaxTileRepair",
                         "Construction Vehicles will repair a maximum of X Tiles per night", 5);
@@ -450,7 +450,7 @@ ConfigOptionFloat
                                   "pay for a Scenery Tile to be repaired",
                                   10.0f);
 ConfigOptionBool optionLoadSameAmmo("OpenApoc.NewFeature", "LoadSameAmmo",
-                                    "Weapons autoreload only same ammo type", false);
+                                    "Weapons autoreload only same ammo type", true);
 ConfigOptionBool
     optionShowCurrentDimensionVehicles("OpenApoc.NewFeature", "ShowCurrentDimensionVehicles",
                                        "Show vehicles in current dimension (or entering / leaving)",
