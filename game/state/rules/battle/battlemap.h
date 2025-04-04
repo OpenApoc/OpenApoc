@@ -83,20 +83,23 @@ class BattleMap : public StateObject<BattleMap>
 	sp<Battle> createBattle(GameState &state, StateRef<Organisation> propertyOwner,
 	                        StateRef<Organisation> opponent, std::list<StateRef<Agent>> &agents,
 	                        StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
-	                        UString mission_location_id);
+	                        StateRef<Building> mission_location_building,
+	                        StateRef<Vehicle> mission_location_vehicle);
 
 	bool generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int> &size, GameState &state,
 	                 GenerationSize genSize);
 
 	bool generateBase(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int> &size, GameState &state,
-	                  UString mission_location_id);
+	                  StateRef<Building> mission_location);
 
 	sp<Battle> fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>> &doors,
 	                   bool &spawnCivilians, std::vector<sp<BattleMapSector>> sec_map,
 	                   Vec3<int> size, GameState &state, StateRef<Organisation> propertyOwner,
 	                   StateRef<Organisation> target_organisation,
 	                   std::list<StateRef<Agent>> &agents, StateRef<Vehicle> player_craft,
-	                   Battle::MissionType mission_type, UString mission_location_id);
+	                   Battle::MissionType mission_type,
+	                   StateRef<Building> mission_location_building,
+	                   StateRef<Vehicle> mission_location_vehicle);
 
 	void linkDoors(sp<Battle> b,
 	               std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>>> doors,

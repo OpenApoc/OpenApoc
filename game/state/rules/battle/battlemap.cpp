@@ -153,7 +153,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 
 	return target_craft->type->battle_map->createBattle(
 	    state, target_craft->owner, opponent, player_agents, player_craft,
-	    Battle::MissionType::UfoRecovery, target_craft.id);
+	    Battle::MissionType::UfoRecovery, nullptr, target_craft);
 }
 
 // Create building battle
@@ -382,7 +382,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> oppo
 	}
 
 	return map->createBattle(state, building->owner, opponent, player_agents, player_craft,
-	                         missionType, building.id);
+	                         missionType, building, nullptr);
 }
 
 namespace
@@ -925,9 +925,9 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 }
 
 bool BattleMap::generateBase(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int> &size,
-                             GameState &state, UString mission_location_id)
+                             GameState &state, StateRef<Building> mission_location)
 {
-	StateRef<Building> building = {&state, mission_location_id};
+	StateRef<Building> building = mission_location;
 	StateRef<Base> base;
 	for (auto &b : state.player_bases)
 	{
@@ -939,7 +939,7 @@ bool BattleMap::generateBase(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int
 	}
 	if (!base)
 	{
-		LogError("Failed to find base in building %s", mission_location_id);
+		LogError("Failed to find base in building %s", mission_location.id);
 		return false;
 	}
 
@@ -990,7 +990,8 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
                    GameState &state, StateRef<Organisation> propertyOwner,
                    StateRef<Organisation> target_organisation, std::list<StateRef<Agent>> &agents,
                    StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
-                   UString mission_location_id)
+                   StateRef<Building> mission_location_building,
+                   StateRef<Vehicle> mission_location_vehicle)
 {
 
 	auto b = mksp<Battle>();
@@ -1001,7 +1002,8 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 	b->size = {chunk_size.x * size.x, chunk_size.y * size.y, chunk_size.z * size.z};
 	b->battle_map = {&state, id};
 	b->mission_type = mission_type;
-	b->mission_location_id = mission_location_id;
+	b->mission_location_building = mission_location_building;
+	b->mission_location_vehicle = mission_location_vehicle;
 	b->player_craft = player_craft;
 	b->loadResources(state);
 	b->reinforcementsInterval = reinforcementsInterval * TICKS_PER_SECOND;
@@ -1464,7 +1466,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> prop
                                    StateRef<Organisation> target_organisation,
                                    std::list<StateRef<Agent>> &agents,
                                    StateRef<Vehicle> player_craft, Battle::MissionType mission_type,
-                                   UString mission_location_id)
+                                   StateRef<Building> mission_location_building,
+                                   StateRef<Vehicle> mission_location_vehicle)
 {
 	std::vector<sp<BattleMapSector>> sec_map;
 	Vec3<int> size;
@@ -1482,7 +1485,7 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> prop
 		genSizeEnum = (GenerationSize)genSize;
 		if (mission_type == Battle::MissionType::BaseDefense)
 		{
-			generateBase(sec_map, size, state, mission_location_id);
+			generateBase(sec_map, size, state, mission_location_building);
 		}
 		else
 		{
@@ -1494,7 +1497,8 @@ sp<Battle> BattleMap::createBattle(GameState &state, StateRef<Organisation> prop
 
 		// Step 02: Fill map with map parts
 		b = fillMap(doors, spawnCivilians, sec_map, size, state, propertyOwner, target_organisation,
-		            agents, player_craft, mission_type, mission_location_id);
+		            agents, player_craft, mission_type, mission_location_building,
+		            mission_location_vehicle);
 
 		// Step 03: Ensure enough space exists
 		if (!b->initialMapCheck(state, agents))

@@ -156,7 +156,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// Used to move events from battle to city and remember time
 
 	GameTime gameTimeBeforeBattle = GameTime(0);
-	UString missionLocationBattle;
+	StateRef<Building> missionLocationBattleBuilding;
 	UString eventFromBattleText;
 	GameEventType eventFromBattle = GameEventType::None;
 

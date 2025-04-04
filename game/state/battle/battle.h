@@ -131,7 +131,8 @@ class Battle : public std::enable_shared_from_this<Battle>
 	// - Map part which is door opening/closing
 	std::set<Vec3<int>> tilesChangedForVision;
 	MissionType mission_type = MissionType::AlienExtermination;
-	UString mission_location_id;
+	StateRef<Building> mission_location_building;
+	StateRef<Vehicle> mission_location_vehicle;
 	Mode mode = Mode::RealTime;
 	BattleScore score = {};
 	unsigned missionEndTimer = 0;
