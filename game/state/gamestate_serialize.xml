@@ -53,7 +53,7 @@
     <member>rng</member>
     <member>gameTime</member>
     <member>gameTimeBeforeBattle</member>
-    <member>missionLocationBattle</member>
+    <member>missionLocationBattleBuilding</member>
     <member>eventFromBattleText</member>
     <member>eventFromBattle</member>
     <member type="SectionMap">battle_maps</member>
@@ -635,7 +635,8 @@
     <member>linkNeedsUpdate</member>
     <member>tilesChangedForVision</member>
     <member>mission_type</member>
-    <member>mission_location_id</member>
+    <member>mission_location_building</member>
+    <member>mission_location_vehicle</member>
     <member>mode</member>
     <member>score</member>
     <member>missionEndTimer</member>
