@@ -135,9 +135,9 @@ class XMLSerializationArchive final : public SerializationArchive
 	SerializationNode *newRoot(const UString &prefix, const char *name) override;
 	SerializationNode *getRoot(const UString &prefix, const char *name) override;
 	bool write(const UString &path, bool pack, bool pretty) override;
-	XMLSerializationArchive() : dataProvider(nullptr), docRoots(){};
+	XMLSerializationArchive() : dataProvider(nullptr), docRoots() {};
 	XMLSerializationArchive(up<SerializationDataProvider> dataProvider)
-	    : dataProvider(std::move(dataProvider)){};
+	    : dataProvider(std::move(dataProvider)) {};
 	~XMLSerializationArchive() override = default;
 };
 

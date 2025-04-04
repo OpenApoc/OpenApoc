@@ -27,7 +27,7 @@ static time_duration ticksToPosix(int64_t ticks)
 	return time_duration(0, 0, 0, tickTotal);
 }
 
-GameTime::GameTime(uint64_t ticks) : ticks(ticks){};
+GameTime::GameTime(uint64_t ticks) : ticks(ticks) {};
 
 static boost::posix_time::ptime getPtime(uint64_t ticks)
 {

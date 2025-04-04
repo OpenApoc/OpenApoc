@@ -1020,7 +1020,7 @@ class RawImage
 	UString suffix;
 
 	RawImage(UString pre, Vec2<unsigned> s, UString pal, UString suf = ".dat")
-	    : prefix(pre), size(s), palette(pal), suffix(suf){};
+	    : prefix(pre), size(s), palette(pal), suffix(suf) {};
 };
 
 std::list<RawImage> rawFiles = {

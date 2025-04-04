@@ -19,7 +19,7 @@ class ProviderWithChecksum : public SerializationDataProvider
 	bool parseManifest(const std::string &manifestData);
 
   public:
-	ProviderWithChecksum(sp<SerializationDataProvider> inner) : inner(inner){};
+	ProviderWithChecksum(sp<SerializationDataProvider> inner) : inner(inner) {};
 	ProviderWithChecksum &operator=(ProviderWithChecksum const &) = delete;
 	bool openArchive(const UString &path, bool write) override;
 	bool readDocument(const UString &path, UString &result) override;
