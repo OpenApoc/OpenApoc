@@ -67,6 +67,7 @@ jobs:
       working-directory: ${{runner.workspace}}
       shell: bash
       run: |
+        ${CLANG_FORMAT} --version
         cmake --build ${{runner.workspace}}/build -t format-sources
         if [[ `git -C $GITHUB_WORKSPACE status --porcelain` ]]; then
           echo "Format mismatch:";
