@@ -36,7 +36,7 @@ static void drawOrgLine(sp<RGBImage> image, const Organisation &org, const Colou
 	for (const auto step_value : org.infiltrationHistory)
 	{
 		if (step > steps)
-			return;
+			break;
 		step_values[step] = static_cast<float>(std::min(max_infiltration_value, step_value));
 		step++;
 	}
