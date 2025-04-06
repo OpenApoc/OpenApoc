@@ -1619,25 +1619,24 @@ void GameState::updateAfterBattle()
 		}
 		case GameEventType::MissionCompletedBuildingNormal:
 		{
-			fw().pushEvent(new GameBuildingEvent(eventFromBattle, {this, missionLocationBattle}));
+			fw().pushEvent(new GameBuildingEvent(eventFromBattle, missionLocationBattleBuilding));
 			break;
 		}
 		case GameEventType::MissionCompletedBase:
 		{
-			fw().pushEvent(new GameBaseEvent(
-			    eventFromBattle, StateRef<Building>(this, missionLocationBattle)->base));
+			fw().pushEvent(new GameBaseEvent(eventFromBattle, missionLocationBattleBuilding->base));
 			break;
 		}
 		case GameEventType::BaseDestroyed:
 		{
-			auto building = StateRef<Building>{this, missionLocationBattle};
+			auto building = missionLocationBattleBuilding;
 			fw().pushEvent(new GameSomethingDiedEvent(eventFromBattle, eventFromBattleText,
 			                                          "bySomeone", building->crewQuarters));
 			break;
 		}
 		case GameEventType::MissionCompletedBuildingRaid:
 		{
-			fw().pushEvent(new GameBuildingEvent(eventFromBattle, {this, missionLocationBattle}));
+			fw().pushEvent(new GameBuildingEvent(eventFromBattle, missionLocationBattleBuilding));
 			break;
 		}
 		case GameEventType::MissionCompletedVehicle:

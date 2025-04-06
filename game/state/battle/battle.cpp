@@ -2673,7 +2673,7 @@ void Battle::finishBattle(GameState &state)
 	// If mission == Alien extermination, remove the red alien spotted circle
 	if (state.current_battle->mission_type == Battle::MissionType::AlienExtermination)
 	{
-		StateRef<Building> location = {&state, state.current_battle->mission_location_id};
+		StateRef<Building> location = state.current_battle->mission_location_building;
 		location->detected = false;
 	}
 
@@ -2765,7 +2765,7 @@ void Battle::finishBattle(GameState &state)
 		// If alien building - all aliens vanish
 		else
 		{
-			StateRef<Building> location = {&state, state.current_battle->mission_location_id};
+			StateRef<Building> location = state.current_battle->mission_location_building;
 			if (location->owner != aliens)
 			{
 				for (auto &a : liveAliens)
@@ -2809,13 +2809,13 @@ void Battle::finishBattle(GameState &state)
 		StateRef<City> city;
 		if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
 		{
-			StateRef<Vehicle> location = {&state, state.current_battle->mission_location_id};
+			StateRef<Vehicle> location = state.current_battle->mission_location_vehicle;
 			city = location->city;
 			battleLocation = {location->position.x, location->position.y};
 		}
 		else
 		{
-			StateRef<Building> location = {&state, state.current_battle->mission_location_id};
+			StateRef<Building> location = state.current_battle->mission_location_building;
 			city = location->city;
 			battleLocation = location->bounds.p0;
 		}
@@ -3038,7 +3038,7 @@ void Battle::exitBattle(GameState &state)
 
 	if (state.current_battle->mission_type == MissionType::UfoRecovery)
 	{
-		auto vehicle = StateRef<Vehicle>(&state, state.current_battle->mission_location_id);
+		auto vehicle = state.current_battle->mission_location_vehicle;
 		for (auto &e : vehicle->loot)
 		{
 			vehicleLoot[e]++;
@@ -3114,7 +3114,7 @@ void Battle::exitBattle(GameState &state)
 		else
 		{
 			// Deposit loot into building, call for pickup
-			StateRef<Building> location = {&state, state.current_battle->mission_location_id};
+			StateRef<Building> location = state.current_battle->mission_location_building;
 			auto homeBuilding =
 			    playerVehicles.empty() ? nullptr : playerVehicles.front()->homeBuilding;
 			if (!homeBuilding)
@@ -3383,8 +3383,7 @@ void Battle::exitBattle(GameState &state)
 			if (state.current_battle->playerWon)
 			{
 				state.eventFromBattle = GameEventType::MissionCompletedBuildingAlien;
-				auto building =
-				    StateRef<Building>(&state, state.current_battle->mission_location_id);
+				auto building = state.current_battle->mission_location_building;
 				for (auto &u : building->researchUnlock)
 				{
 					u->forceComplete();
@@ -3401,7 +3400,7 @@ void Battle::exitBattle(GameState &state)
 		case Battle::MissionType::AlienExtermination:
 		{
 			state.eventFromBattle = GameEventType::MissionCompletedBuildingNormal;
-			state.missionLocationBattle = state.current_battle->mission_location_id;
+			state.missionLocationBattleBuilding = state.current_battle->mission_location_building;
 			break;
 		}
 		case Battle::MissionType::BaseDefense:
@@ -3409,14 +3408,15 @@ void Battle::exitBattle(GameState &state)
 			if (state.current_battle->playerWon)
 			{
 				state.eventFromBattle = GameEventType::MissionCompletedBase;
-				state.missionLocationBattle = state.current_battle->mission_location_id;
+				state.missionLocationBattleBuilding =
+				    state.current_battle->mission_location_building;
 			}
 			else
 			{
-				auto building =
-				    StateRef<Building>{&state, state.current_battle->mission_location_id};
+				auto building = state.current_battle->mission_location_building;
 				state.eventFromBattle = GameEventType::BaseDestroyed;
-				state.missionLocationBattle = state.current_battle->mission_location_id;
+				state.missionLocationBattleBuilding =
+				    state.current_battle->mission_location_building;
 				state.eventFromBattleText = building->base->name;
 				building->base->die(state, false);
 			}
@@ -3425,11 +3425,10 @@ void Battle::exitBattle(GameState &state)
 		case Battle::MissionType::RaidHumans:
 		{
 			state.eventFromBattle = GameEventType::MissionCompletedBuildingRaid;
-			state.missionLocationBattle = state.current_battle->mission_location_id;
+			state.missionLocationBattleBuilding = state.current_battle->mission_location_building;
 			if (state.current_battle->playerWon)
 			{
-				auto building =
-				    StateRef<Building>(&state, state.current_battle->mission_location_id);
+				auto building = state.current_battle->mission_location_building;
 				for (auto &u : building->researchUnlock)
 				{
 					u->forceComplete();
@@ -3450,7 +3449,7 @@ void Battle::exitBattle(GameState &state)
 		case Battle::MissionType::UfoRecovery:
 		{
 			state.eventFromBattle = GameEventType::MissionCompletedVehicle;
-			auto vehicle = StateRef<Vehicle>(&state, state.current_battle->mission_location_id);
+			auto vehicle = state.current_battle->mission_location_vehicle;
 			for (auto &u : vehicle->type->researchUnlock)
 			{
 				u->forceComplete();
@@ -3803,7 +3802,7 @@ const std::list<StateRef<Vehicle>> Battle::getPlayerVehicles(GameState &state)
 		if (state.current_battle->mission_type == Battle::MissionType::UfoRecovery)
 		{
 			StateRef<City> city;
-			StateRef<Vehicle> location = {&state, state.current_battle->mission_location_id};
+			StateRef<Vehicle> location = state.current_battle->mission_location_vehicle;
 			city = location->city;
 
 			for (const auto &v : state.vehicles)
@@ -3829,7 +3828,7 @@ const std::list<StateRef<Vehicle>> Battle::getPlayerVehicles(GameState &state)
 		}
 		else
 		{
-			StateRef<Building> location = {&state, state.current_battle->mission_location_id};
+			StateRef<Building> location = state.current_battle->mission_location_building;
 			for (const auto &v : location->currentVehicles)
 			{
 				// Player's vehicle was already added and has priority
