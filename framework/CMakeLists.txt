@@ -147,7 +147,6 @@ source_group(framework\\sound\\headers FILES
 list(APPEND ALL_HEADER_FILES ${SOUND_HEADER_FILES})
 
 set (RENDERER_SOURCE_FILES
-	render/gl20/ogl_2_0_renderer.cpp
 	render/gles30_v2/ogles_3_0_renderer_v2.cpp
 	render/gles30_v2/gleswrap_gles3.cpp)
 
@@ -156,8 +155,6 @@ source_group(framework\\renderer\\sources FILES
 	list(APPEND ALL_SOURCE_FILES ${RENDERER_SOURCE_FILES})
 
 set (RENDERER_HEADER_FILES
-	render/gl20/gl_2_0.hpp
-	render/gl20/gl_2_0.inl
 	render/gles30_v2/gleswrap_gles3.h
 	render/gles30_v2/gleswrap.h
 	render/gles30_v2/stb_rect_pack.h

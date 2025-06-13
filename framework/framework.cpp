@@ -66,7 +66,6 @@ class FrameworkPrivate
 	SDL_Window *window;
 	SDL_GLContext context;
 
-	std::map<UString, std::unique_ptr<RendererFactory>> registeredRenderers;
 	std::map<UString, std::unique_ptr<SoundBackendFactory>> registeredSoundBackends;
 
 	std::list<up<Event>> eventQueue;
@@ -856,29 +855,7 @@ void Framework::displayInitialise()
 	SDL_GL_MakeCurrent(p->window, p->context); // for good measure?
 	SDL_ShowCursor(SDL_DISABLE);
 
-	p->registeredRenderers["GLES_3_0"].reset(getGLES30RendererFactory());
-#ifndef __ANDROID__ // GL2 is not available on Android
-	p->registeredRenderers["GL_2_0"].reset(getGL20RendererFactory());
-#endif
-
-	for (auto &rendererName : split(Options::renderersOption.get(), ":"))
-	{
-		auto rendererFactory = p->registeredRenderers.find(rendererName);
-		if (rendererFactory == p->registeredRenderers.end())
-		{
-			LogInfo("Renderer \"%s\" not in supported list", rendererName);
-			continue;
-		}
-		Renderer *r = rendererFactory->second->create();
-		if (!r)
-		{
-			LogInfo("Renderer \"%s\" failed to init", rendererName);
-			continue;
-		}
-		this->renderer.reset(r);
-		LogInfo("Using renderer: %s", this->renderer->getName());
-		break;
-	}
+	this->renderer.reset(getGLES30Renderer());
 	if (!this->renderer)
 	{
 		LogError("No functional renderer found");
