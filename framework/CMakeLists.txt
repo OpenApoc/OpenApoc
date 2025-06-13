@@ -16,7 +16,6 @@ set (FRAMEWORK_SOURCE_FILES
 	image.cpp
 	jukebox.cpp
 	logger.cpp
-	luaframework.cpp
 	palette.cpp
 	physfs_fs.cpp
 	renderer.cpp
@@ -48,7 +47,6 @@ set (FRAMEWORK_HEADER_FILES
 	jukebox.h
 	keycodes.h
 	logger.h
-	luaframework.h
 	musicloader_interface.h
 	palette.h
 	renderer.h

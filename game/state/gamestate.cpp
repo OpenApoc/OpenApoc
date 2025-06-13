@@ -42,7 +42,7 @@
 namespace OpenApoc
 {
 
-GameState::GameState() : player(this) { luaGameState.init(*this); }
+GameState::GameState() : player(this) {  }
 
 GameState::~GameState()
 {
@@ -266,7 +266,7 @@ void GameState::initState()
 	skipTurboCalculations = config().getBool("OpenApoc.NewFeature.SkipTurboMovement");
 }
 
-void GameState::applyMods() { luaGameState.callHook("applyMods", 0, 0); }
+void GameState::applyMods() { }
 
 void GameState::setCurrentCity(StateRef<City> city)
 {
@@ -530,8 +530,6 @@ void GameState::fillOrgStartingProperty()
 
 void GameState::startGame()
 {
-	luaGameState.callHook("newGame", 0, 0);
-
 	agentEquipmentTemplates.resize(10);
 
 	// Setup orgs
@@ -1323,7 +1321,6 @@ void GameState::updateEndOfDay()
 		c.second->dailyLoop(*this);
 	}
 
-	luaGameState.callHook("updateEndOfDay", 0, 0);
 	// Check if today is the first day of the week (monday).
 	// In that case, do not show the daily report as it's already part of the weekly report
 	// event
@@ -1334,8 +1331,6 @@ void GameState::updateEndOfDay()
 void GameState::updateEndOfWeek(bool gameStart)
 {
 	updateHumanEconomy();
-
-	luaGameState.callHook("updateEndOfWeek", 0, 0);
 
 	fw().pushEvent(new GameEvent(GameEventType::WeeklyReport));
 	weeklyPlayerUpdate();
@@ -1737,15 +1732,6 @@ void GameState::loadMods()
 			{
 				LogError("Failed to load mod ID \"%s\"", modInfo->getID());
 			}
-		}
-
-		const auto &modLoadScript = modInfo->getModLoadScript();
-
-		if (!modLoadScript.empty())
-		{
-			LogInfo("Executing modLoad script \"%s\" for mod \"%s\"", modLoadScript,
-			        modInfo->getID());
-			this->luaGameState.runScript(modLoadScript);
 		}
 	}
 }

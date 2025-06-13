@@ -4,7 +4,6 @@
 #include "game/state/city/research.h"
 #include "game/state/gameeventtypes.h"
 #include "game/state/gametime.h"
-#include "game/state/luagamestate.h"
 #include "game/state/rules/city/organisationraid.h"
 #include "game/state/shared/agent.h"
 #include "game/state/stateobject.h"
@@ -263,8 +262,6 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// Following members are not serialized
 	bool newGame = false;
 	bool skipTurboCalculations = false;
-
-	LuaGameState luaGameState;
 
 	// Loads all mods set in the options - note this likely requires the mod data directories to
 	// already be added to the filesystem
