@@ -20,7 +20,6 @@
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/moreoptions.h"
 #include "game/ui/general/savemenu.h"
-#include "game/ui/skirmish/skirmish.h"
 #include <list>
 
 namespace OpenApoc
@@ -258,10 +257,6 @@ void InGameOptions::eventOccurred(Event *e)
 				                      fw().stageQueueCommand({StageCmd::Command::REPLACEALL,
 				                                              mksp<BattleDebriefing>(state)});
 			                      })});
-		}
-		else if (e->forms().RaisedBy->Name == "BUTTON_SKIRMISH")
-		{
-			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<Skirmish>(state)});
 		}
 	}
 	if (e->type() == EVENT_FORM_INTERACTION &&

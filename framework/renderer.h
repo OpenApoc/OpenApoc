@@ -52,7 +52,7 @@ class Renderer
 	virtual void flush() = 0;
 	virtual UString getName() = 0;
 
-	virtual void newFrame() {};
+	virtual void newFrame(){};
 
 	virtual sp<Surface> getDefaultSurface() = 0;
 };

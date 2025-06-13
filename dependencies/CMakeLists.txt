@@ -135,21 +135,10 @@ if(NOT USE_SYSTEM_PHYSFS)
 	add_subdirectory(physfs)
 endif()
 
-file (GLOB_RECURSE LUA_SOURCE_FILES lua/*.c)
-file (GLOB_RECURSE LUA_HEADER_FILES lua/*.h)
-add_library(OpenApoc_Lua STATIC ${LUA_SOURCE_FILES})
-list(APPEND ALL_SOURCE_FILES ${LUA_SOURCE_FILES})
-list(APPEND ALL_HEADER_FILES ${LUA_HEADER_FILES})
-
-target_include_directories(OpenApoc_Lua PUBLIC ${CMAKE_SOURCE_DIR})
-target_include_directories(OpenApoc_Lua PRIVATE
-		${CMAKE_SOURCE_DIR}/dependencies/lua)
-
 # we don't care about the coding practices of external dependencies
 target_compile_options(OpenApoc_LibSmacker PRIVATE "-w")
 target_compile_options(OpenApoc_LibPugixml PRIVATE "-w")
 target_compile_options(OpenApoc_LibLodepng PRIVATE "-w")
 target_compile_options(OpenApoc_Miniz PRIVATE "-w")
-target_compile_options(OpenApoc_Lua PRIVATE "-w")
 
 add_subdirectory(fmt)

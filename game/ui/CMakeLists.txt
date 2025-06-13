@@ -63,11 +63,6 @@ set (GAMEUI_SOURCE_FILES
 	general/vehiclesheet.cpp
 	general/transactioncontrol.cpp
 	general/creditsmenu.cpp
-
-	skirmish/skirmish.cpp
-	skirmish/selectforces.cpp
-	skirmish/mapselector.cpp
-
 	tileview/battletileview.cpp
 	tileview/battleview.cpp
 	tileview/citytileview.cpp
@@ -136,10 +131,6 @@ set (GAMEUI_HEADER_FILES
 	general/vehiclesheet.h
 	general/transactioncontrol.h
 	general/creditsmenu.h
-
-	skirmish/skirmish.h
-	skirmish/selectforces.h
-	skirmish/mapselector.h
 
 	tileview/battletileview.h
 	tileview/battleview.h

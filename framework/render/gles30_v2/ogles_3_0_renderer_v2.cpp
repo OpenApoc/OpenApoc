@@ -1740,45 +1740,6 @@ OGLES30Renderer::OGLES30Renderer() : state(State::Idle)
 	renderer_dead = false;
 }
 
-class OGLES30RendererFactory : public RendererFactory
-{
-	bool alreadyInitialised;
-
-  public:
-	OGLES30RendererFactory() : alreadyInitialised(false) {}
-	OpenApoc::Renderer *create() override
-	{
-		if (!alreadyInitialised)
-		{
-			LogAssert(gl == nullptr);
-			alreadyInitialised = true;
-			// First see if we're a direct OpenGL|ES context
-			if (GL::supported(true))
-			{
-				LogInfo("Using OpenGL ES3 compatibility");
-				gl.reset(new GL(true));
-			}
-			// Then check for ES3 compatibility extension on desktop OpenGL
-			else if (GL::supported(false))
-			{
-				LogInfo("Using OpenGL|ES context");
-				gl.reset(new GL(false));
-			}
-			else
-			{
-				LogInfo("Failed to find ES3-compatible device");
-				return nullptr;
-			}
-			return new OGLES30Renderer();
-		}
-		else
-		{
-			LogWarning("Initialisation already attempted");
-			return nullptr;
-		}
-	}
-};
-
 GLRGBTexture::~GLRGBTexture()
 {
 	if (renderer_dead)
@@ -1813,6 +1774,38 @@ GLSurface::~GLSurface()
 
 } // anonymous namespace
 
-RendererFactory *getGLES30RendererFactory() { return new OGLES30RendererFactory(); }
+static bool alreadyInitialised = false;
+
+OpenApoc::Renderer *getGLES30Renderer()
+{
+	if (!alreadyInitialised)
+	{
+		LogAssert(gl == nullptr);
+		alreadyInitialised = true;
+		// First see if we're a direct OpenGL|ES context
+		if (GL::supported(true))
+		{
+			LogInfo("Using OpenGL ES3 compatibility");
+			gl.reset(new GL(true));
+		}
+		// Then check for ES3 compatibility extension on desktop OpenGL
+		else if (GL::supported(false))
+		{
+			LogInfo("Using OpenGL|ES context");
+			gl.reset(new GL(false));
+		}
+		else
+		{
+			LogInfo("Failed to find ES3-compatible device");
+			return nullptr;
+		}
+		return new OGLES30Renderer();
+	}
+	else
+	{
+		LogWarning("Initialisation already attempted");
+		return nullptr;
+	}
+}
 
 } // namespace OpenApoc

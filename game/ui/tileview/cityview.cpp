@@ -1269,20 +1269,22 @@ CityView::CityView(sp<GameState> state)
 	                  });
 	this->baseForm->findControl("BUTTON_SHOW_SCORE")
 	    ->addCallback(
-	        FormEventType::ButtonClick, [this](Event *)
-	        { fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<ScoreScreen>(this->state)}); });
+	        FormEventType::ButtonClick,
+	        [this](Event *) {
+		        fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<ScoreScreen>(this->state)});
+	        });
 	this->baseForm->findControl("BUTTON_SHOW_UFOPAEDIA")
-	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *) {
-		                  fw().stageQueueCommand(
-		                      {StageCmd::Command::PUSH, mksp<UfopaediaView>(this->state)});
-	                  });
+	    ->addCallback(
+	        FormEventType::ButtonClick,
+	        [this](Event *) {
+		        fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<UfopaediaView>(this->state)});
+	        });
 	this->baseForm->findControl("BUTTON_SHOW_OPTIONS")
-	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *) {
-		                  fw().stageQueueCommand(
-		                      {StageCmd::Command::PUSH, mksp<InGameOptions>(this->state)});
-	                  });
+	    ->addCallback(
+	        FormEventType::ButtonClick,
+	        [this](Event *) {
+		        fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InGameOptions>(this->state)});
+	        });
 	this->baseForm->findControl("BUTTON_SHOW_LOG")
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *) {
@@ -1302,8 +1304,10 @@ CityView::CityView(sp<GameState> state)
 	auto baseManagementForm = this->uiTabs[0];
 	baseManagementForm->findControl("BUTTON_SHOW_BASE")
 	    ->addCallback(
-	        FormEventType::ButtonClick, [this](Event *)
-	        { fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BaseScreen>(this->state)}); });
+	        FormEventType::ButtonClick,
+	        [this](Event *) {
+		        fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BaseScreen>(this->state)});
+	        });
 	baseManagementForm->findControl("BUTTON_BUILD_BASE")
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *)

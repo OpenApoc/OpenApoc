@@ -97,12 +97,16 @@ void BaseScreen::begin()
 	                  [](Event *) { fw().stageQueueCommand({StageCmd::Command::POP}); });
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_BUYSELL")
 	    ->addCallback(
-	        FormEventType::ButtonClick, [this](Event *)
-	        { fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BuyAndSellScreen>(state)}); });
+	        FormEventType::ButtonClick,
+	        [this](Event *) {
+		        fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BuyAndSellScreen>(state)});
+	        });
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_HIREFIRESTAFF")
 	    ->addCallback(
-	        FormEventType::ButtonClick, [this](Event *)
-	        { fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<RecruitScreen>(state)}); });
+	        FormEventType::ButtonClick,
+	        [this](Event *) {
+		        fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<RecruitScreen>(state)});
+	        });
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_TRANSFER")
 	    ->addCallback(
 	        FormEventType::ButtonClick,
@@ -150,54 +154,54 @@ void BaseScreen::begin()
 		        }
 	        });
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_EQUIPAGENT")
-	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *)
-	                  {
-		                  bool playerHasSoldiers = false;
-		                  for (auto &a : this->state->agents)
-		                  {
-			                  auto agent = a.second;
-			                  if (agent->owner == this->state->getPlayer() &&
-			                      agent->type->role == AgentType::Role::Soldier)
-			                  {
-				                  playerHasSoldiers = true;
-				                  break;
-			                  }
-		                  }
-		                  if (playerHasSoldiers)
-		                  {
-			                  fw().stageQueueCommand(
-			                      {StageCmd::Command::PUSH, mksp<AEquipScreen>(state)});
-		                  }
-	                  });
+	    ->addCallback(
+	        FormEventType::ButtonClick,
+	        [this](Event *)
+	        {
+		        bool playerHasSoldiers = false;
+		        for (auto &a : this->state->agents)
+		        {
+			        auto agent = a.second;
+			        if (agent->owner == this->state->getPlayer() &&
+			            agent->type->role == AgentType::Role::Soldier)
+			        {
+				        playerHasSoldiers = true;
+				        break;
+			        }
+		        }
+		        if (playerHasSoldiers)
+		        {
+			        fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<AEquipScreen>(state)});
+		        }
+	        });
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_EQUIPVEHICLE")
-	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *)
-	                  {
-		                  bool playerHasVehicles = false;
-		                  for (auto &v : this->state->vehicles)
-		                  {
-			                  auto vehicle = v.second;
-			                  if (vehicle->owner == this->state->getPlayer())
-			                  {
-				                  playerHasVehicles = true;
-				                  break;
-			                  }
-		                  }
-		                  if (playerHasVehicles)
-		                  {
-			                  fw().stageQueueCommand(
-			                      {StageCmd::Command::PUSH, mksp<VEquipScreen>(state)});
-		                  }
-	                  });
+	    ->addCallback(
+	        FormEventType::ButtonClick,
+	        [this](Event *)
+	        {
+		        bool playerHasVehicles = false;
+		        for (auto &v : this->state->vehicles)
+		        {
+			        auto vehicle = v.second;
+			        if (vehicle->owner == this->state->getPlayer())
+			        {
+				        playerHasVehicles = true;
+				        break;
+			        }
+		        }
+		        if (playerHasVehicles)
+		        {
+			        fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<VEquipScreen>(state)});
+		        }
+	        });
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_RES_AND_MANUF")
-	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *)
-	                  {
-		                  // FIXME: If you don't have any facilities this button should do nothing
-		                  fw().stageQueueCommand(
-		                      {StageCmd::Command::PUSH, mksp<ResearchScreen>(state)});
-	                  });
+	    ->addCallback(
+	        FormEventType::ButtonClick,
+	        [this](Event *)
+	        {
+		        // FIXME: If you don't have any facilities this button should do nothing
+		        fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<ResearchScreen>(state)});
+	        });
 	// Base name edit
 	form->findControlTyped<TextEdit>("TEXT_BASE_NAME")
 	    ->addCallback(FormEventType::TextEditFinish,

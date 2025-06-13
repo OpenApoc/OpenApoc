@@ -83,9 +83,6 @@ set (GAMESTATE_SOURCE_FILES
 	gamestate_serialize.cpp
 	gamestate_serialize_generated.cpp
 	gametime.cpp
-	luagamestate.cpp
-	luagamestate_support.cpp
-	luagamestate_support_generated.cpp
 	message.cpp
 	savemanager.cpp
 
@@ -182,9 +179,6 @@ set (GAMESTATE_HEADER_FILES
 	gamestate_serialize_generated.h
 	gametime.h
 	gametime_facet.h
-	luagamestate.h
-	luagamestate_support.h
-	luagamestate_support_generated.h
 	message.h
 	savemanager.h
 	stateobject.h
@@ -223,8 +217,6 @@ if (WIN32)
 	target_link_libraries(OpenApoc_GameState PUBLIC bcrypt)
 endif()
 
-target_link_libraries(OpenApoc_GameState PUBLIC OpenApoc_Lua)
-
 # This needs to be public as gamestate_serialize_generated.h needs to be in
 # the path
 target_include_directories(OpenApoc_GameState PUBLIC ${CMAKE_BINARY_DIR})
@@ -241,22 +233,10 @@ add_custom_command(OUTPUT
 		OpenApoc_GamestateSerializeGen
 		${CMAKE_SOURCE_DIR}/game/state/gamestate_serialize.xml)
 
-add_custom_command(OUTPUT
-		luagamestate_support_generated.h
-		luagamestate_support_generated.cpp
-		COMMAND
-		$<TARGET_FILE:OpenApoc_LuaGamestateSupportGen>
-		-x ${CMAKE_SOURCE_DIR}/game/state/gamestate_serialize.xml
-		-h luagamestate_support_generated.h
-		-o luagamestate_support_generated.cpp
-		DEPENDS
-		OpenApoc_LuaGamestateSupportGen
-		${CMAKE_SOURCE_DIR}/game/state/gamestate_serialize.xml)
 
 add_custom_target(generated-source
 		DEPENDS
-		gamestate_serialize_generated.h gamestate_serialize_generated.cpp
-		luagamestate_support_generated.h luagamestate_support_generated.cpp)
+		gamestate_serialize_generated.h gamestate_serialize_generated.cpp)
 
 if (USE_PCH)
 	target_precompile_headers(OpenApoc_GameState PUBLIC gamestate_pch.h)

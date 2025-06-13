@@ -1022,7 +1022,7 @@ void Battle::initialUnitSpawn(GameState &state)
 							break;
 						offset++;
 					} // end of spawning within a block cycle
-				} // end of if we have a position in a set
+				}     // end of if we have a position in a set
 
 				// If failed to spawn anything, then this block is no longer appropriate
 				if (numSpawned == 0)

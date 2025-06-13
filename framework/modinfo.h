@@ -21,7 +21,6 @@ class ModInfo
 	UString dataPath;
 	UString statePath;
 	UString minVersion;
-	UString modLoadScript;
 	std::list<UString> supported_languages;
 
   public:
@@ -71,9 +70,6 @@ class ModInfo
 
 	static std::optional<ModInfo> getInfo(const UString &path);
 	bool writeInfo(const UString &path);
-
-	const UString &getModLoadScript() const { return modLoadScript; }
-	void setModLoadScript(const UString &newScript) { modLoadScript = newScript; }
 
 	const std::list<UString> getSupportedLanguages() const { return supported_languages; }
 	void setSupportedLanguage(const std::list<UString> &newLanguages)

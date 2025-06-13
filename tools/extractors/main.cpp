@@ -90,7 +90,6 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     info.setID("org.openapoc.base");
 	     info.setStatePath("base_gamestate");
 	     info.setDataPath("data");
-	     info.setModLoadScript("scripts/org.openapoc.base/onload.lua");
 
 	     std::list<UString> languages;
 	     for (const auto &name : supported_languages)
