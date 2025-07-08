@@ -1,5 +1,7 @@
 #include "framework/data.h"
 #include "framework/framework.h"
+#include "framework/logger.h"
+#include "framework/palette.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/battle/battleunitimagepack.h"
 #include "library/strings_format.h"
@@ -15,11 +17,11 @@ sp<BattleUnitImagePack> InitialGameStateExtractor::extractImagePack(GameState &s
 	std::ignore = state;
 	UString dirName = "xcom3/tacdata/";
 
-	auto imageTabFileName = format("%s%s.tab", dirName, path);
+	auto imageTabFileName = fmt::format("{}{}.tab", dirName, path);
 	auto imageTabFile = fw().data->fs.open(imageTabFileName);
 	if (!imageTabFile)
 	{
-		LogError("Failed to open TAB file \"%s\"", imageTabFileName);
+		LogError("Failed to open TAB file \"{}\"", imageTabFileName);
 		return nullptr;
 	}
 	size_t imageTabFileEntryCount = imageTabFile.size() / 4;
@@ -30,9 +32,9 @@ sp<BattleUnitImagePack> InitialGameStateExtractor::extractImagePack(GameState &s
 
 	for (size_t i = 0; i < imageTabFileEntryCount; i++)
 	{
-		p->images.push_back(
-		    fw().data->loadImage(format("%s:%s%s.pck:%s%s.tab:%u", shadow ? "PCKSHADOW" : "PCK",
-		                                dirName, path, dirName, path, (unsigned)i)));
+		p->images.push_back(fw().data->loadImage(fmt::format("{}:{}{}.pck:{}{}.tab:{}",
+		                                                     shadow ? "PCKSHADOW" : "PCK", dirName,
+		                                                     path, dirName, path, (unsigned)i)));
 	}
 
 	return p;
@@ -49,10 +51,8 @@ sp<BattleUnitImagePack> InitialGameStateExtractor::extractItemImagePack(GameStat
 	p->image_offset = BATTLE_IMAGE_OFFSET;
 
 	for (int j = 0; j < 8; j++)
-		p->images.push_back(
-		    fw().data->loadImage(format("PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/"
-		                                "unit/equip.tab:%d",
-		                                item * 8 + j)));
+		p->images.push_back(fw().data->loadImage(fmt::format(
+		    "PCK:xcom3/tacdata/unit/equip.pck:xcom3/tacdata/unit/equip.tab:{}", item * 8 + j)));
 
 	return p;
 }
@@ -63,7 +63,7 @@ int InitialGameStateExtractor::getItemImagePacksCount() const
 	auto heldSpriteTabFile = fw().data->fs.open(heldSpriteTabFileName);
 	if (!heldSpriteTabFile)
 	{
-		LogError("Failed to open held item sprite TAB file \"%s\"", heldSpriteTabFileName);
+		LogError("Failed to open held item sprite TAB file \"{}\"", heldSpriteTabFileName);
 		return -1;
 	}
 	return heldSpriteTabFile.size() / 4 / 8;

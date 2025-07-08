@@ -1,4 +1,5 @@
 #include "game/state/battle/ai/unitaivanilla.h"
+#include "framework/logger.h"
 #include "game/state/battle/ai/aidecision.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/ai/unitaihelper.h"
@@ -197,7 +198,7 @@ UnitAIVanilla::getPsiDecision(GameState &state, BattleUnit &u, sp<AEquipment> e,
 			priority *= 16.0f;
 			break;
 		default:
-			LogError("Invalid psi attack state for getPsiDecision %d", (int)status);
+			LogError("Invalid psi attack state for getPsiDecision {}", (int)status);
 			return NULLTUPLE3;
 	}
 	action->psiEnergySnapshot = u.agent->modified_stats.psi_energy;

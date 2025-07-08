@@ -1,4 +1,5 @@
 #include "game/state/rules/city/ufoincursion.h"
+#include "framework/logger.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc
@@ -10,7 +11,7 @@ sp<UFOIncursion> StateObject<UFOIncursion>::get(const GameState &state, const US
 	auto it = state.ufo_incursions.find(id);
 	if (it == state.ufo_incursions.end())
 	{
-		LogError("No incursion rule matching ID \"%s\"", id);
+		LogError("No incursion rule matching ID \"{}\"", id);
 		return nullptr;
 	}
 	return it->second;

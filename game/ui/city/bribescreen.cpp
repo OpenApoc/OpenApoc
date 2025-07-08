@@ -8,6 +8,7 @@
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"
 #include "game/state/shared/organisation.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -79,7 +80,7 @@ void BribeScreen::updateInfo()
 	}
 
 	labelFunds->setText(state->getPlayerBalance());
-	labelRelation->setText(format("%s%s X-COM", tr(organisation->name), tr(relationship)));
+	labelRelation->setText(fmt::format("{}{} X-COM", tr(organisation->name), tr(relationship)));
 	labelOffer->setText(offer);
 }
 
@@ -91,8 +92,9 @@ void BribeScreen::updateInfo()
  */
 UString BribeScreen::getOfferString(int itWillCost, const UString &newAttitude) const
 {
-	return format("%s %s  %s  %s", tr("It will cost: $"), Strings::fromInteger(itWillCost, true),
-	              tr("to improve relations to:"), newAttitude);
+	return fmt::format("{} {}  {}  {}", tr("It will cost: $"),
+	                   Strings::fromInteger(itWillCost, true), tr("to improve relations to:"),
+	                   newAttitude);
 }
 
 void BribeScreen::begin()

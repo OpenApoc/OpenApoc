@@ -7,10 +7,12 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
+#include "framework/logger.h"
 #include "game/state/gamestate.h"
 #include "game/state/shared/organisation.h"
 #include "game/ui/components/controlgenerator.h"
 #include "library/line.h"
+#include "library/strings_format.h"
 #include <array>
 
 namespace OpenApoc
@@ -66,7 +68,7 @@ static void drawOrgLine(sp<RGBImage> image, const Organisation &org, const Colou
 		{
 			if (point.x < 0 || point.y < 0 || point.x >= image->size.x || point.y >= image->size.y)
 			{
-				LogWarning("Point %s out of bounds for image of size %s", point, image->size);
+				LogWarning("Point {} out of bounds for image of size {}", point, image->size);
 				point.x = clamp(point.x, 0, static_cast<int>(image->size.x - 1));
 				point.y = clamp(point.y, 0, static_cast<int>(image->size.y - 1));
 			}
@@ -85,7 +87,7 @@ constexpr std::array<Colour, 10> line_colors = {
 InfiltrationScreen::InfiltrationScreen(sp<GameState> state)
     : Stage(), menuform(ui().getForm("city/infiltration")), state(state)
 {
-	auto orgBox = menuform->findControlTyped<ListBox>(format("ORG_SELECT_BOX"));
+	auto orgBox = menuform->findControlTyped<ListBox>(fmt::format("ORG_SELECT_BOX"));
 	orgBox->addCallback(FormEventType::MouseClick,
 	                    [this](FormsEvent *e)
 	                    {
@@ -97,7 +99,7 @@ InfiltrationScreen::InfiltrationScreen(sp<GameState> state)
 
 	for (int i = 0; i < 10; i++)
 	{
-		shown_org_names[i] = menuform->findControlTyped<Label>(format("ORG_NAME_%d", i)).get();
+		shown_org_names[i] = menuform->findControlTyped<Label>(fmt::format("ORG_NAME_{}", i)).get();
 		shown_orgs[i] = nullptr;
 	}
 	graph = menuform->findControlTyped<Graphic>("GRAPH");
@@ -164,7 +166,7 @@ void InfiltrationScreen::updateOrgs()
 	};
 
 	// Populate orgs
-	auto orgBox = menuform->findControlTyped<ListBox>(format("ORG_SELECT_BOX"));
+	auto orgBox = menuform->findControlTyped<ListBox>(fmt::format("ORG_SELECT_BOX"));
 	orgBox->clear();
 
 	for (const auto &orgId : organisationOrder)
@@ -195,7 +197,7 @@ void InfiltrationScreen::updateOrgs()
 
 void InfiltrationScreen::updateOrgControl(sp<Organisation> org)
 {
-	auto orgBox = menuform->findControlTyped<ListBox>(format("ORG_SELECT_BOX"));
+	auto orgBox = menuform->findControlTyped<ListBox>(fmt::format("ORG_SELECT_BOX"));
 
 	auto control = ControlGenerator::createLargeOrganisationControl(*state, org);
 	orgBox->replaceItem(control);

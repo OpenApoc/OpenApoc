@@ -340,7 +340,7 @@ void AEquipment::loadAmmo(GameState &state, sp<AEquipment> ammoItem)
 		    std::find(type->ammo_types.begin(), type->ammo_types.end(), ammoItem->type) ==
 		        type->ammo_types.end())
 		{
-			LogError("Incorrect ammo type \"%s\" for \"%s\"", ammoItem->type->name, type->name);
+			LogError("Incorrect ammo type \"{}\" for \"{}\"", ammoItem->type->name, type->name);
 			return;
 		}
 	}

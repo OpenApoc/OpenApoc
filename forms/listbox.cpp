@@ -3,6 +3,7 @@
 #include "forms/scrollbar.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "framework/logger.h"
 #include "framework/renderer.h"
 
 namespace OpenApoc
@@ -221,7 +222,7 @@ void ListBox::update()
 				break;
 			}
 			default:
-				LogWarning("Unknown ListBox::ListOrientation value: %d",
+				LogWarning("Unknown ListBox::ListOrientation value: {}",
 				           static_cast<int>(ListOrientation));
 				break;
 		}

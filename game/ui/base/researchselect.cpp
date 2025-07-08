@@ -9,6 +9,7 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
+#include "framework/logger.h"
 #include "game/state/city/base.h"
 #include "game/state/city/research.h"
 #include "game/state/gamestate.h"
@@ -25,8 +26,8 @@ namespace OpenApoc
 ResearchSelect::ResearchSelect(sp<GameState> state, sp<Lab> lab)
     : Stage(), form(ui().getForm("researchselect")), lab(lab), state(state)
 {
-	progressImage = fw().data->loadImage(format(
-	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 63));
+	progressImage = fw().data->loadImage(fmt::format(
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:{}:xcom3/ufodata/research.pcx", 63));
 }
 
 ResearchSelect::~ResearchSelect() = default;
@@ -253,7 +254,7 @@ void ResearchSelect::populateResearchList()
 		{
 			UString progress_text;
 			if (this->lab->type == ResearchTopic::Type::Engineering)
-				progress_text = format("$%s", Strings::fromInteger(t->cost, true));
+				progress_text = fmt::format("${}", Strings::fromInteger(t->cost, true));
 			else
 				progress_text = tr("Complete");
 			auto progress_label =
@@ -305,7 +306,7 @@ void ResearchSelect::populateResearchList()
 		}
 
 		auto skill_total_label =
-		    control->createChild<Label>(format("%d", skill_total), ui().getFont("smalfont"));
+		    control->createChild<Label>(fmt::format("{}", skill_total), ui().getFont("smalfont"));
 		skill_total_label->Size = {50, 18};
 		skill_total_label->Location = {328, 2};
 		skill_total_label->TextHAlign = HorizontalAlignment::Right;

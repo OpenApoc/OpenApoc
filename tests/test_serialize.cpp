@@ -4,6 +4,7 @@
 #include "framework/logger.h"
 #include "game/state/gamestate.h"
 #include "game/state/gamestate_serialize.h"
+#include "library/strings_format.h"
 #include <iostream>
 #include <sstream>
 #include <thread>
@@ -56,7 +57,7 @@ bool test_gamestate_serialization(OpenApoc::sp<OpenApoc::GameState> state)
 	ss << "openapoc_test_serialize-" << std::this_thread::get_id();
 	auto tempPath = fs::temp_directory_path() / ss.str();
 	OpenApoc::UString pathString(tempPath.string());
-	LogInfo("Writing temp state to \"%s\"", pathString);
+	LogInfo("Writing temp state to \"{}\"", pathString);
 	if (!test_gamestate_serialization_roundtrip(state, pathString))
 	{
 		LogWarning("Packed save test failed");
@@ -95,7 +96,7 @@ int main(int argc, char **argv)
 
 	OpenApoc::Framework fw("OpenApoc", false);
 
-	LogInfo("Loading \"%s\"", gamestate_name);
+	LogInfo("Loading \"{}\"", gamestate_name);
 
 	auto state = OpenApoc::mksp<OpenApoc::GameState>();
 
@@ -171,9 +172,9 @@ int main(int argc, char **argv)
 			LogError("No vehicle with BattleMap found");
 			return EXIT_FAILURE;
 		}
-		LogInfo("Using vehicle map for \"%s\"", vType->name);
+		LogInfo("Using vehicle map for \"{}\"", vType->name);
 		v->type = {state.get(), vType};
-		v->name = OpenApoc::format("%s %d", v->type->name, ++v->type->numCreated);
+		v->name = fmt::format("{} {}", v->type->name, ++v->type->numCreated);
 		state->vehicles[vID] = v;
 
 		OpenApoc::StateRef<OpenApoc::Vehicle> enemyVehicle = {state.get(), vID};

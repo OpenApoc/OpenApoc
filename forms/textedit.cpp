@@ -6,6 +6,7 @@
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "framework/keycodes.h"
+#include "framework/logger.h"
 #include "framework/renderer.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -75,7 +76,7 @@ void TextEdit::eventOccured(Event *e)
 			}
 			if (e->forms().EventFlag == FormEventType::KeyDown)
 			{
-				LogInfo("Key pressed: %d", e->forms().KeyInfo.KeyCode);
+				LogInfo("Key pressed: {}", e->forms().KeyInfo.KeyCode);
 				switch (e->forms().KeyInfo.KeyCode)
 				{
 					case SDLK_BACKSPACE:

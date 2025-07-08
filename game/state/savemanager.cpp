@@ -2,6 +2,7 @@
 #include "framework/configfile.h"
 #include "framework/filesystem.h"
 #include "framework/framework.h"
+#include "framework/logger.h"
 #include "framework/options.h"
 #include "framework/serialization/serialize.h"
 #include "game/state/gamestate.h"
@@ -50,7 +51,7 @@ std::shared_future<void> SaveManager::loadGame(const UString &savePath, sp<GameS
 	    {
 		    if (!state->loadGame(saveArchiveLocation))
 		    {
-			    LogError("Failed to load '%s'", saveArchiveLocation);
+			    LogError("Failed to load '{}'", saveArchiveLocation);
 			    return;
 		    }
 		    state->initState();
@@ -65,7 +66,7 @@ std::shared_future<void> SaveManager::loadSpecialSave(const SaveType type,
 {
 	if (type == SaveType::Manual)
 	{
-		LogError("Cannot load automatic save for type %i", static_cast<int>(type));
+		LogError("Cannot load automatic save for type {}", static_cast<int>(type));
 		return std::async(std::launch::deferred, []() -> void { return; });
 	}
 
@@ -77,7 +78,7 @@ std::shared_future<void> SaveManager::loadSpecialSave(const SaveType type,
 	}
 	catch (std::out_of_range &)
 	{
-		LogError("Cannot find name of save type %i", static_cast<int>(type));
+		LogError("Cannot find name of save type {}", static_cast<int>(type));
 		return std::async(std::launch::deferred, []() -> void { return; });
 	}
 
@@ -120,7 +121,7 @@ bool writeArchiveWithBackup(SerializationArchive *archive, const UString &path, 
 
 		if (!haveNewName)
 		{
-			LogError("Unable to create temporary file at \"%s\"", tempPath.string());
+			LogError("Unable to create temporary file at \"{}\"", tempPath.string());
 			return false;
 		}
 
@@ -155,7 +156,7 @@ bool writeArchiveWithBackup(SerializationArchive *archive, const UString &path, 
 			fs::rename(tempPath, savePath);
 		}
 
-		LogError("Unable to save game: \"%s\"", exception.what());
+		LogError("Unable to save game: \"{}\"", exception.what());
 	}
 
 	return false;
@@ -213,7 +214,7 @@ bool SaveManager::overrideGame(const SaveMetadata &metadata, const UString &newN
 			}
 			catch (fs::filesystem_error &error)
 			{
-				LogWarning("Error while removing renamed save: \"%s\"", error.what());
+				LogWarning("Error while removing renamed save: \"{}\"", error.what());
 			}
 		}
 	}
@@ -238,7 +239,7 @@ bool SaveManager::specialSaveGame(SaveType type, const sp<GameState> gameState) 
 {
 	if (type == SaveType::Manual)
 	{
-		LogError("Cannot create automatic save for type %i", static_cast<int>(type));
+		LogError("Cannot create automatic save for type {}", static_cast<int>(type));
 		return false;
 	}
 
@@ -249,7 +250,7 @@ bool SaveManager::specialSaveGame(SaveType type, const sp<GameState> gameState) 
 	}
 	catch (std::out_of_range &)
 	{
-		LogError("Cannot find name of save type %i", static_cast<int>(type));
+		LogError("Cannot find name of save type {}", static_cast<int>(type));
 		return false;
 	}
 
@@ -266,7 +267,7 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 	{
 		if (!fs::exists(saveDirectory) && !fs::create_directories(saveDirectory))
 		{
-			LogWarning("Save directory \"%s\" not found, and could not be created!", saveDirectory);
+			LogWarning("Save directory \"{}\" not found, and could not be created!", saveDirectory);
 			return saveList;
 		}
 
@@ -297,7 +298,7 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 	}
 	catch (fs::filesystem_error &er)
 	{
-		LogError("Error while enumerating directory: \"%s\"", er.what());
+		LogError("Error while enumerating directory: \"{}\"", er.what());
 	}
 
 	sort(saveList.begin(), saveList.end(), [](const SaveMetadata &lhs, const SaveMetadata &rhs)
@@ -321,7 +322,7 @@ bool SaveManager::deleteGame(const sp<SaveMetadata> &slot) const
 	}
 	catch (fs::filesystem_error &exception)
 	{
-		LogError("Unable to delete saved gane: \"%s\"", exception.what());
+		LogError("Unable to delete saved gane: \"{}\"", exception.what());
 		return false;
 	}
 }

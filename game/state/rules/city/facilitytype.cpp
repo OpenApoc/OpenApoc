@@ -1,4 +1,5 @@
 #include "game/state/rules/city/facilitytype.h"
+#include "framework/logger.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc
@@ -18,7 +19,7 @@ sp<FacilityType> StateObject<FacilityType>::get(const GameState &state, const US
 	auto it = state.facility_types.find(id);
 	if (it == state.facility_types.end())
 	{
-		LogError("No facility type matching ID \"%s\"", id);
+		LogError("No facility type matching ID \"{}\"", id);
 		return nullptr;
 	}
 	return it->second;

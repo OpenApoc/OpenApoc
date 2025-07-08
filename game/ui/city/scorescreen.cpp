@@ -13,6 +13,7 @@
 #include "game/state/shared/agent.h"
 #include "game/state/shared/organisation.h"
 #include "game/ui/base/recruitscreen.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -60,38 +61,38 @@ void ScoreScreen::setScoreMode()
 		formScoreFilled = true;
 
 		formScore->findControlTyped<Label>("TACTICAL_W")
-		    ->setText(format("%d", state->weekScore.tacticalMissions));
+		    ->setText(fmt::format("{}", state->weekScore.tacticalMissions));
 		formScore->findControlTyped<Label>("RESEARCH_W")
-		    ->setText(format("%d", state->weekScore.researchCompleted));
+		    ->setText(fmt::format("{}", state->weekScore.researchCompleted));
 		formScore->findControlTyped<Label>("ALIEN_W")->setText(
-		    format("%d", state->weekScore.alienIncidents));
+		    fmt::format("{}", state->weekScore.alienIncidents));
 		formScore->findControlTyped<Label>("UFO_SHOTDOWN_W")
-		    ->setText(format("%d", state->weekScore.craftShotDownUFO));
+		    ->setText(fmt::format("{}", state->weekScore.craftShotDownUFO));
 		formScore->findControlTyped<Label>("CRAFT_SHOTDOWN_W")
-		    ->setText(format("%d", state->weekScore.craftShotDownXCom));
+		    ->setText(fmt::format("{}", state->weekScore.craftShotDownXCom));
 		formScore->findControlTyped<Label>("INCURSIONS_W")
-		    ->setText(format("%d", state->weekScore.incursions));
+		    ->setText(fmt::format("{}", state->weekScore.incursions));
 		formScore->findControlTyped<Label>("DAMAGE_W")
-		    ->setText(format("%d", state->weekScore.cityDamage));
+		    ->setText(fmt::format("{}", state->weekScore.cityDamage));
 		formScore->findControlTyped<Label>("TOTAL_W")->setText(
-		    format("%d", state->weekScore.getTotal()));
+		    fmt::format("{}", state->weekScore.getTotal()));
 
 		formScore->findControlTyped<Label>("TACTICAL_T")
-		    ->setText(format("%d", state->totalScore.tacticalMissions));
+		    ->setText(fmt::format("{}", state->totalScore.tacticalMissions));
 		formScore->findControlTyped<Label>("RESEARCH_T")
-		    ->setText(format("%d", state->totalScore.researchCompleted));
+		    ->setText(fmt::format("{}", state->totalScore.researchCompleted));
 		formScore->findControlTyped<Label>("ALIEN_T")->setText(
-		    format("%d", state->totalScore.alienIncidents));
+		    fmt::format("{}", state->totalScore.alienIncidents));
 		formScore->findControlTyped<Label>("UFO_SHOTDOWN_T")
-		    ->setText(format("%d", state->totalScore.craftShotDownUFO));
+		    ->setText(fmt::format("{}", state->totalScore.craftShotDownUFO));
 		formScore->findControlTyped<Label>("CRAFT_SHOTDOWN_T")
-		    ->setText(format("%d", state->totalScore.craftShotDownXCom));
+		    ->setText(fmt::format("{}", state->totalScore.craftShotDownXCom));
 		formScore->findControlTyped<Label>("INCURSIONS_T")
-		    ->setText(format("%d", state->totalScore.incursions));
+		    ->setText(fmt::format("{}", state->totalScore.incursions));
 		formScore->findControlTyped<Label>("DAMAGE_T")
-		    ->setText(format("%d", state->totalScore.cityDamage));
+		    ->setText(fmt::format("{}", state->totalScore.cityDamage));
 		formScore->findControlTyped<Label>("TOTAL_T")->setText(
-		    format("%d", state->totalScore.getTotal()));
+		    fmt::format("{}", state->totalScore.getTotal()));
 	}
 
 	title->setText(tr("SCORE"));
@@ -130,14 +131,16 @@ void ScoreScreen::setFinanceMode()
 				}
 			}
 		}
-		formFinance->findControlTyped<Label>("AGENTS_Q")->setText(format("%d", soldiers));
-		formFinance->findControlTyped<Label>("BIOCHEMISTS_Q")->setText(format("%d", biochemists));
-		formFinance->findControlTyped<Label>("ENGINEERS_Q")->setText(format("%d", engineers));
-		formFinance->findControlTyped<Label>("PHYSICISTS_Q")->setText(format("%d", physicists));
+		formFinance->findControlTyped<Label>("AGENTS_Q")->setText(fmt::format("{}", soldiers));
+		formFinance->findControlTyped<Label>("BIOCHEMISTS_Q")
+		    ->setText(fmt::format("{}", biochemists));
+		formFinance->findControlTyped<Label>("ENGINEERS_Q")->setText(fmt::format("{}", engineers));
+		formFinance->findControlTyped<Label>("PHYSICISTS_Q")
+		    ->setText(fmt::format("{}", physicists));
 		formFinance->findControlTyped<Label>("TOTAL_Q")->setText(
-		    format("%d", soldiers + biochemists + engineers + physicists));
+		    fmt::format("{}", soldiers + biochemists + engineers + physicists));
 		formFinance->findControlTyped<Label>("BASES_TOTAL_Q")
-		    ->setText(format("%d", state->player_bases.size()));
+		    ->setText(fmt::format("{}", state->player_bases.size()));
 
 		auto getSalary = [this](AgentType::Role role)
 		{
@@ -156,15 +159,15 @@ void ScoreScreen::setFinanceMode()
 		int agentsSalary = soldiers + biochemists + engineers + physicists;
 
 		formFinance->findControlTyped<Label>("AGENTS_W")
-		    ->setText(format("$%s", Strings::fromInteger(soldiers, true)));
+		    ->setText(fmt::format("${}", Strings::fromInteger(soldiers, true)));
 		formFinance->findControlTyped<Label>("BIOCHEMISTS_W")
-		    ->setText(format("$%s", Strings::fromInteger(biochemists, true)));
+		    ->setText(fmt::format("${}", Strings::fromInteger(biochemists, true)));
 		formFinance->findControlTyped<Label>("ENGINEERS_W")
-		    ->setText(format("$%s", Strings::fromInteger(engineers, true)));
+		    ->setText(fmt::format("${}", Strings::fromInteger(engineers, true)));
 		formFinance->findControlTyped<Label>("PHYSICISTS_W")
-		    ->setText(format("$%s", Strings::fromInteger(physicists, true)));
+		    ->setText(fmt::format("${}", Strings::fromInteger(physicists, true)));
 		formFinance->findControlTyped<Label>("TOTAL_W")->setText(
-		    format("$%s", Strings::fromInteger(agentsSalary, true)));
+		    fmt::format("${}", Strings::fromInteger(agentsSalary, true)));
 
 		int basesCosts = 0;
 		for (auto &b : state->player_bases)
@@ -175,9 +178,9 @@ void ScoreScreen::setFinanceMode()
 			}
 		}
 		formFinance->findControlTyped<Label>("BASES_TOTAL_W")
-		    ->setText(format("$%s", Strings::fromInteger(basesCosts, true)));
+		    ->setText(fmt::format("${}", Strings::fromInteger(basesCosts, true)));
 		formFinance->findControlTyped<Label>("OVERHEADS_W")
-		    ->setText(format("$%s", Strings::fromInteger(agentsSalary + basesCosts, true)));
+		    ->setText(fmt::format("${}", Strings::fromInteger(agentsSalary + basesCosts, true)));
 
 		int balance = state->getPlayer()->balance;
 
@@ -189,10 +192,10 @@ void ScoreScreen::setFinanceMode()
 		}
 
 		formFinance->findControlTyped<Label>("INITIAL")->setText(
-		    format("%s $%s", tr("Initial funds>"), Strings::fromInteger(balance, true)));
+		    fmt::format("{} ${}", tr("Initial funds>"), Strings::fromInteger(balance, true)));
 		formFinance->findControlTyped<Label>("REMAINING")
-		    ->setText(format("%s $%s", tr("Remaining funds>"),
-		                     Strings::fromInteger(balance - agentsSalary - basesCosts, true)));
+		    ->setText(fmt::format("{} ${}", tr("Remaining funds>"),
+		                          Strings::fromInteger(balance - agentsSalary - basesCosts, true)));
 	}
 
 	title->setText(tr("FINANCE"));

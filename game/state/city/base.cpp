@@ -1,6 +1,7 @@
 #include "game/state/city/base.h"
 #include "dependencies/magic_enum/include/magic_enum/magic_enum.hpp"
 #include "framework/framework.h"
+#include "framework/logger.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/facility.h"
@@ -26,7 +27,7 @@ template <> sp<Base> StateObject<Base>::get(const GameState &state, const UStrin
 	auto it = state.player_bases.find(id);
 	if (it == state.player_bases.end())
 	{
-		LogError("No baseas matching ID \"%s\"", id);
+		LogError("No baseas matching ID \"{}\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -50,7 +51,7 @@ template <> const UString &StateObject<Base>::getId(const GameState &state, cons
 		if (b.second == ptr)
 			return b.first;
 	}
-	LogError("No base matching pointer %p", static_cast<void *>(ptr.get()));
+	LogError("No base matching pointer {}", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 
@@ -70,7 +71,7 @@ Base::Base(GameState &state, StateRef<Building> building) : building(building)
 	StateRef<FacilityType> type = {&state, FacilityType::getPrefix() + "ACCESS_LIFT"};
 	if (canBuildFacility(type, building->base_layout->baseLift, true) != BuildError::NoError)
 	{
-		LogError("Building %s has invalid lift location", building->name);
+		LogError("Building {} has invalid lift location", building->name);
 	}
 	else
 	{
@@ -188,7 +189,7 @@ static bool randomlyPlaceFacility(GameState &state, Base &base, StateRef<Facilit
 	}
 	else
 	{
-		LogError("Position %s in base in possible list but failed to build", position);
+		LogError("Position {} in base in possible list but failed to build", position);
 		return false;
 	}
 }
@@ -289,7 +290,7 @@ void Base::buildFacility(GameState &state, StateRef<FacilityType> type, Vec2<int
 	{
 		const auto canBuildFacilityEnum = magic_enum::enum_name(canBuildFacilityResult);
 		const auto logMessage =
-		    format("Error when trying to build facility: %s", canBuildFacilityEnum);
+		    fmt::format("Error when trying to build facility: {}", canBuildFacilityEnum);
 		LogWarning(logMessage);
 		return;
 	}
@@ -417,7 +418,7 @@ void Base::destroyFacility(GameState &state, Vec2<int> pos)
 	{
 		const auto canDestroyFacilityEnum = magic_enum::enum_name(canDestroyFacilityResult);
 		const auto logMessage =
-		    format("Error when trying to destroy facility: %s", canDestroyFacilityEnum);
+		    fmt::format("Error when trying to destroy facility: {}", canDestroyFacilityEnum);
 		LogWarning(logMessage);
 		return;
 	}

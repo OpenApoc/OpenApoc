@@ -1,4 +1,5 @@
 #include "game/state/rules/city/ufopaedia.h"
+#include "framework/logger.h"
 #include "game/state/city/research.h"
 #include "game/state/gamestate.h"
 
@@ -18,7 +19,7 @@ sp<UfopaediaEntry> StateObject<UfopaediaEntry>::get(const GameState &state, cons
 		if (entry != cat.second->entries.end())
 			return entry->second;
 	}
-	LogError("No UFOPaedia entry matching ID \"%s\"", id);
+	LogError("No UFOPaedia entry matching ID \"{}\"", id);
 	return nullptr;
 }
 

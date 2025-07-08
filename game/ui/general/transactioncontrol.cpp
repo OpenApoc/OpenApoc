@@ -19,6 +19,7 @@
 #include "game/state/rules/city/vammotype.h"
 #include "game/state/shared/organisation.h"
 #include "game/ui/general/messagebox.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -38,24 +39,24 @@ bool TransactionControl::resourcesInitialised = false;
 
 void TransactionControl::initResources()
 {
-	bgLeft = fw().data->loadImage(format(
-	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 45));
-	bgRight = fw().data->loadImage(format(
-	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 46));
-	purchaseBoxIcon = fw().data->loadImage(format(
-	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 47));
-	purchaseXComIcon = fw().data->loadImage(format(
-	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 48));
-	purchaseArrow = fw().data->loadImage(format(
-	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 52));
-	alienContainedDetain = fw().data->loadImage(format(
-	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 75));
-	alienContainedKill = fw().data->loadImage(format(
-	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 76));
-	scrollLeft = fw().data->loadImage(format(
-	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 53));
-	scrollRight = fw().data->loadImage(format(
-	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:%d:xcom3/ufodata/research.pcx", 54));
+	bgLeft = fw().data->loadImage(fmt::format(
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:{}:xcom3/ufodata/research.pcx", 45));
+	bgRight = fw().data->loadImage(fmt::format(
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:{}:xcom3/ufodata/research.pcx", 46));
+	purchaseBoxIcon = fw().data->loadImage(fmt::format(
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:{}:xcom3/ufodata/research.pcx", 47));
+	purchaseXComIcon = fw().data->loadImage(fmt::format(
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:{}:xcom3/ufodata/research.pcx", 48));
+	purchaseArrow = fw().data->loadImage(fmt::format(
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:{}:xcom3/ufodata/research.pcx", 52));
+	alienContainedDetain = fw().data->loadImage(fmt::format(
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:{}:xcom3/ufodata/research.pcx", 75));
+	alienContainedKill = fw().data->loadImage(fmt::format(
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:{}:xcom3/ufodata/research.pcx", 76));
+	scrollLeft = fw().data->loadImage(fmt::format(
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:{}:xcom3/ufodata/research.pcx", 53));
+	scrollRight = fw().data->loadImage(fmt::format(
+	    "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:{}:xcom3/ufodata/research.pcx", 54));
 	transactionShade = fw().data->loadImage("city/transaction-shade.png");
 	labelFont = ui().getFont("smalfont");
 
@@ -150,10 +151,10 @@ void TransactionControl::updateValues()
 	int curDeltaRight = tradeState.getLROrder();
 	int curDeltaLeft = -curDeltaRight;
 
-	stockLeft->setText(format("%d", tradeState.getLeftStock(true)));
-	stockRight->setText(format("%d", tradeState.getRightStock(true)));
-	deltaLeft->setText(format("%s%d", curDeltaLeft > 0 ? "+" : "", curDeltaLeft));
-	deltaRight->setText(format("%s%d", curDeltaRight > 0 ? "+" : "", curDeltaRight));
+	stockLeft->setText(fmt::format("{}", tradeState.getLeftStock(true)));
+	stockRight->setText(fmt::format("{}", tradeState.getRightStock(true)));
+	deltaLeft->setText(fmt::format("{}{}", curDeltaLeft > 0 ? "+" : "", curDeltaLeft));
+	deltaRight->setText(fmt::format("{}{}", curDeltaRight > 0 ? "+" : "", curDeltaRight));
 	deltaLeft->setVisible(tradeState.getLeftIndex() != ECONOMY_IDX && curDeltaLeft != 0);
 	deltaRight->setVisible(tradeState.getRightIndex() != ECONOMY_IDX && curDeltaRight != 0);
 	setDirty();
@@ -235,7 +236,7 @@ sp<TransactionControl> TransactionControl::createControl(GameState &state, State
 			type = Type::Soldier;
 			break;
 		default:
-			LogError("Unknown type of agent %s.", agent.id);
+			LogError("Unknown type of agent {}.", agent.id);
 			return nullptr;
 	}
 
@@ -535,7 +536,7 @@ sp<TransactionControl> TransactionControl::createControl(GameState &state,
 			// Nothing, we can still sell it for parts or transfer!
 		}
 	}
-	LogInfo("Vehicle type %s starting price %d", vehicle->type.id, price);
+	LogInfo("Vehicle type {} starting price {}", vehicle->type.id, price);
 	// Add price of ammo and equipment
 	for (auto &e : vehicle->equipment)
 	{
@@ -546,7 +547,7 @@ sp<TransactionControl> TransactionControl::createControl(GameState &state,
 			{
 				price += e->ammo * state.economy[e->type->ammo_type.id].currentPrice;
 			}
-			LogInfo("Vehicle type %s price increased to %d after counting %s", vehicle->type.id,
+			LogInfo("Vehicle type {} price increased to {} after counting {}", vehicle->type.id,
 			        price, e->type.id);
 		}
 	}
@@ -556,11 +557,11 @@ sp<TransactionControl> TransactionControl::createControl(GameState &state,
 		if (state.economy.find(e.second.id) != state.economy.end())
 		{
 			price -= state.economy[e.second.id].currentPrice;
-			LogInfo("Vehicle type %s price decreased to %d after counting %s", vehicle->type.id,
+			LogInfo("Vehicle type {} price decreased to {} after counting {}", vehicle->type.id,
 			        price, e.second.id);
 		}
 	}
-	LogInfo("Vehicle type %s final price %d", vehicle->type.id, price);
+	LogInfo("Vehicle type {} final price {}", vehicle->type.id, price);
 
 	auto manufacturer = vehicle->type->manufacturer;
 	bool isAmmo = false;
@@ -646,7 +647,7 @@ TransactionControl::createControl(const UString &id, Type type, const UString &n
 	if (price != 0 && (indexLeft == ECONOMY_IDX || indexRight == ECONOMY_IDX))
 	{
 		auto label = control->createChild<Label>(
-		    format("$%s", Strings::fromInteger(control->price, true)), labelFont);
+		    fmt::format("${}", Strings::fromInteger(control->price, true)), labelFont);
 		label->Location = {290, 3};
 		label->Size = {47, 16};
 		label->TextHAlign = HorizontalAlignment::Right;

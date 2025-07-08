@@ -2,6 +2,7 @@
 #include "framework/configfile.h"
 #include "framework/logger.h"
 #include "framework/options.h"
+#include "library/strings_format.h"
 
 #include <SDL_messagebox.h>
 #include <atomic>
@@ -24,7 +25,7 @@ void SDLDialogLogFunction(LogLevel level, UString prefix, const UString &text)
 	{
 		return;
 	}
-	auto message = OpenApoc::format("%s: %s", prefix, text);
+	auto message = fmt::format("{}: {}", prefix, text);
 	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "OpenApoc error", message.c_str(), parentWindow);
 }
 

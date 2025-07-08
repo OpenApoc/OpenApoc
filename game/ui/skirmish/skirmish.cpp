@@ -7,6 +7,7 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
+#include "framework/logger.h"
 #include "game/state/battle/battle.h"
 #include "game/state/city/base.h"
 #include "game/state/city/building.h"
@@ -20,6 +21,7 @@
 #include "game/ui/general/aequipscreen.h"
 #include "game/ui/skirmish/mapselector.h"
 #include "game/ui/skirmish/selectforces.h"
+#include "library/strings_format.h"
 namespace OpenApoc
 {
 
@@ -100,7 +102,7 @@ std::shared_future<void> loadBattleVehicle(bool hotseat, sp<VehicleType> vehicle
 		    auto v = mksp<Vehicle>();
 		    auto vID = Vehicle::generateObjectID(*state);
 		    v->type = {state, vehicle};
-		    v->name = format("%s %d", v->type->name, ++v->type->numCreated);
+		    v->name = fmt::format("{} {}", v->type->name, ++v->type->numCreated);
 
 		    state->vehicles[vID] = v;
 		    StateRef<Vehicle> ufo = {state, vID};
@@ -149,8 +151,8 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 	        [this](Event *)
 	        {
 		        menuform->findControlTyped<Label>("NUM_HUMANS")
-		            ->setText(format(
-		                "%d",
+		            ->setText(fmt::format(
+		                "{}",
 		                menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")->getValue()));
 	        });
 	menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")
@@ -159,8 +161,8 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 	        [this](Event *)
 	        {
 		        menuform->findControlTyped<Label>("NUM_HYBRIDS")
-		            ->setText(format(
-		                "%d",
+		            ->setText(fmt::format(
+		                "{}",
 		                menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")->getValue()));
 	        });
 	menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")
@@ -169,8 +171,8 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 	        [this](Event *)
 	        {
 		        menuform->findControlTyped<Label>("NUM_ANDROIDS")
-		            ->setText(format(
-		                "%d",
+		            ->setText(fmt::format(
+		                "{}",
 		                menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")->getValue()));
 	        });
 	menuform->findControlTyped<ScrollBar>("DAYS_PHYSICAL_SLIDER")
@@ -179,8 +181,8 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 	        [this](Event *)
 	        {
 		        menuform->findControlTyped<Label>("DAYS_PHYSICAL")
-		            ->setText(format(
-		                "%d",
+		            ->setText(fmt::format(
+		                "{}",
 		                menuform->findControlTyped<ScrollBar>("DAYS_PHYSICAL_SLIDER")->getValue()));
 	        });
 	menuform->findControlTyped<ScrollBar>("DAYS_PSI_SLIDER")
@@ -189,8 +191,8 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 	        [this](Event *)
 	        {
 		        menuform->findControlTyped<Label>("DAYS_PSI")
-		            ->setText(format(
-		                "%d",
+		            ->setText(fmt::format(
+		                "{}",
 		                menuform->findControlTyped<ScrollBar>("DAYS_PSI_SLIDER")->getValue()));
 	        });
 	menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
@@ -202,9 +204,9 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 		            ->setText(
 		                menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->getValue() == 0
 		                    ? "NO"
-		                    : format("%d",
-		                             menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
-		                                 ->getValue()));
+		                    : fmt::format(
+		                          "{}", menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
+		                                    ->getValue()));
 	        });
 	menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")
 	    ->addCallback(
@@ -212,8 +214,8 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 	        [this](Event *)
 	        {
 		        menuform->findControlTyped<Label>("ALIEN_SCORE")
-		            ->setText(format(
-		                "%dK",
+		            ->setText(fmt::format(
+		                "{}K",
 		                menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")->getValue()));
 	        });
 	menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")
@@ -222,8 +224,8 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 	        [this](Event *)
 	        {
 		        menuform->findControlTyped<Label>("ORG_SCORE")
-		            ->setText(format(
-		                "%d",
+		            ->setText(fmt::format(
+		                "{}",
 		                menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")->getValue()));
 	        });
 	menuform->findControlTyped<ScrollBar>("ARMOR_SLIDER")
@@ -333,7 +335,7 @@ void Skirmish::goToBattle(bool customAliens, std::map<StateRef<AgentType>, int> 
 		f->buildTime = 0;
 	}
 
-	LogWarning("Adding new agents to base %s", playerBase.id);
+	LogWarning("Adding new agents to base {}", playerBase.id);
 	int countHumans = menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")->getValue();
 	int countHybrids = menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")->getValue();
 	int countAndroids = menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")->getValue();
@@ -633,19 +635,19 @@ void Skirmish::updateLocationLabel()
 	UString text = "[No map selected]";
 	if (locBuilding)
 	{
-		text = format("[%s Building] %s [%s]",
-		              locBuilding->owner == state.getAliens() ? "Alien" : "Human",
-		              locBuilding->name, locBuilding->battle_map.id);
+		text = fmt::format("[{} Building] {} [{}]",
+		                   locBuilding->owner == state.getAliens() ? "Alien" : "Human",
+		                   locBuilding->name, locBuilding->battle_map.id);
 	}
 	else if (locVehicle)
 	{
-		text = format("[UFO] %s [%s]", locVehicle->name, locVehicle->battle_map.id);
+		text = fmt::format("[UFO] {} [{}]", locVehicle->name, locVehicle->battle_map.id);
 	}
 	else if (locBase)
 	{
-		text = format("[Base] %s", locBase->name);
+		text = fmt::format("[Base] {}", locBase->name);
 	}
-	menuform->findControlTyped<Label>("LOCATION")->setText(format("LOCATION: %s", text));
+	menuform->findControlTyped<Label>("LOCATION")->setText(fmt::format("LOCATION: {}", text));
 }
 
 void Skirmish::battleInBuilding(bool hotseat, StateRef<Base> playerBase,

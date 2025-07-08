@@ -4,6 +4,7 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
+#include "framework/logger.h"
 #include "game/state/gamestate.h"
 #include "game/ui/ufopaedia/ufopaediacategoryview.h"
 #include "library/sp.h"
@@ -58,7 +59,7 @@ void UfopaediaView::eventOccurred(Event *e)
 				{
 					fw().stageQueueCommand(
 					    {StageCmd::Command::PUSH, mksp<UfopaediaCategoryView>(state, cat.second)});
-					LogInfo("Clicked category \"%s\"", catName);
+					LogInfo("Clicked category \"{}\"", catName);
 					return;
 				}
 			}

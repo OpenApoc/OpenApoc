@@ -1,5 +1,6 @@
 #include "framework/data.h"
 #include "framework/framework.h"
+#include "framework/logger.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/vehicle.h"
@@ -41,8 +42,8 @@ void InitialGameStateExtractor::extractBuildingFunctions(GameState &state) const
 		{
 			f->detectionWeight = buildingFunctionDetectionWeights[i];
 		}
-		auto id = format("%s%s", BuildingFunction::getPrefix(), canon_string(f->name));
-		auto ped = format("%s%s", UfopaediaEntry::getPrefix(), canon_string(f->name));
+		auto id = fmt::format("{}{}", BuildingFunction::getPrefix(), canon_string(f->name));
+		auto ped = fmt::format("{}{}", UfopaediaEntry::getPrefix(), canon_string(f->name));
 		f->ufopaedia_entry = {&state, ped};
 		state.building_functions[id] = f;
 	}
@@ -58,12 +59,12 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 	auto inFile = fw().data->fs.open(fileName);
 	if (!inFile)
 	{
-		LogError("Failed to open \"%s\"", fileName);
+		LogError("Failed to open \"{}\"", fileName);
 	}
 	auto fileSize = inFile.size();
 	auto bldCount = fileSize / sizeof(struct BldFileEntry);
 
-	LogInfo("Loading %lu buildings from %s", (unsigned long)bldCount, fileName);
+	LogInfo("Loading {} buildings from {}", (unsigned long)bldCount, fileName);
 
 	for (unsigned i = 0; i < bldCount; i++)
 	{
@@ -74,16 +75,16 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 		if (alienBuilding)
 		{
 			b->name = data.alien_building_names->get(entry.function_idx);
-			b->function = {&state,
-			               format("%s%s", BuildingFunction::getPrefix(), canon_string(b->name))};
-			LogInfo("Alien bld %d %s func %d %s", entry.name_idx, b->name, entry.function_idx,
+			b->function = {
+			    &state, fmt::format("{}{}", BuildingFunction::getPrefix(), canon_string(b->name))};
+			LogInfo("Alien bld {} {} func {} {}", entry.name_idx, b->name, entry.function_idx,
 			        b->function.id);
 
-			b->accessTopic = {&state, format("RESEARCH_ALIEN_BUILDING_%d", i)};
+			b->accessTopic = {&state, fmt::format("RESEARCH_ALIEN_BUILDING_{}", i)};
 			if (i < 9)
 			{
-				b->researchUnlock.emplace_back(&state,
-				                               format("RESEARCH_UNLOCK_ALIEN_BUILDING_%d", i + 1));
+				b->researchUnlock.emplace_back(
+				    &state, fmt::format("RESEARCH_UNLOCK_ALIEN_BUILDING_{}", i + 1));
 			}
 			else
 			{
@@ -97,9 +98,10 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 		else
 		{
 			b->name = data.building_names->get(entry.name_idx);
-			b->function = {&state,
-			               format("%s%s", BuildingFunction::getPrefix(),
-			                      canon_string(data.building_functions->get(entry.function_idx)))};
+			b->function = {
+			    &state,
+			    fmt::format("{}{}", BuildingFunction::getPrefix(),
+			                canon_string(data.building_functions->get(entry.function_idx)))};
 
 			b->isPurchesable = entry.is_purchaseable;
 			b->purchasePrice = static_cast<int>(entry.price) * 2000;
@@ -152,13 +154,13 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 			default:
 				break;
 		}
-		b->battle_map = {
-		    &state, format("%s%s", BattleMap::getPrefix(), this->battleMapPaths[battle_map_index])};
+		b->battle_map = {&state, fmt::format("{}{}", BattleMap::getPrefix(),
+		                                     this->battleMapPaths[battle_map_index])};
 		b->owner = {&state, data.getOrgId(entry.owner_idx)};
 		// Our rects are exclusive of p2
 		// Shift position by 20 tiles
 		b->bounds = {entry.x0 + 20, entry.y0 + 20, entry.x1 + 21, entry.y1 + 21};
-		auto id = format("%s%s", Building::getPrefix(), canon_string(b->name));
+		auto id = fmt::format("{}{}", Building::getPrefix(), canon_string(b->name));
 		b->city = {&state, city->id};
 		city->buildings[id] = b;
 	}

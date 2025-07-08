@@ -66,8 +66,8 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, const Base &base)
 			if (sprite != 0)
 			{
 				Vec2<int> pos = renderPos + i * TILE_SIZE;
-				auto image = format(
-				    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:%d:xcom3/ufodata/base.pcx",
+				auto image = fmt::format(
+				    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:{}:xcom3/ufodata/base.pcx",
 				    sprite);
 				fw().renderer->draw(fw().data->loadImage(image), pos);
 			}
@@ -157,7 +157,7 @@ sp<RGBImage> BaseGraphics::drawMiniBase(const Base &base, FacilityHighlight high
 			}
 			Vec2<int> pos = i * MINI_SIZE;
 			auto image =
-			    format("RAW:xcom3/ufodata/minibase.dat:4:4:%d:xcom3/ufodata/base.pcx", sprite);
+			    fmt::format("RAW:xcom3/ufodata/minibase.dat:4:4:{}:xcom3/ufodata/base.pcx", sprite);
 			RGBImage::blit(std::dynamic_pointer_cast<RGBImage>(fw().data->loadImage(image)),
 			               minibase, {0, 0}, pos);
 		}

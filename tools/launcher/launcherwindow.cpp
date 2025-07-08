@@ -6,7 +6,9 @@
 #include <string_view>
 #include <utility>
 
+#include "framework/logger.h"
 #include "launcherwindow.h"
+#include "library/strings_format.h"
 #include "ui_launcherwindow.h"
 
 #include "framework/configfile.h"
@@ -23,7 +25,7 @@ static std::list<std::pair<UString, ModInfo>> enumerateMods()
 	fs::path modPath = Options::modPath.get();
 	if (!fs::is_directory(modPath))
 	{
-		LogError("Mod path \"%s\" not a valid directory", modPath.string());
+		LogError("Mod path \"{}\" not a valid directory", modPath.string());
 		return {};
 	}
 
@@ -370,7 +372,7 @@ void LauncherWindow::play()
 	QString path = QCoreApplication::applicationDirPath() + "/OpenApoc";
 #endif
 
-	LogWarning("Running \"%s\"", path.toStdString());
+	LogWarning("Running \"{}\"", path.toStdString());
 	const auto ret = QProcess::startDetached(path, {});
 	if (!ret)
 	{
@@ -510,7 +512,7 @@ void LauncherWindow::showModInfo(const ModInfo &info)
 	ui->modVersion->setText(QString::fromStdString(info.getVersion()));
 	ui->modDescription->setText(QString::fromStdString(info.getDescription()));
 
-	auto linkText = format("<a href=\"%s\">%s</a>", info.getLink(), info.getLink());
+	auto linkText = fmt::format("<a href=\"{}\">{}</a>", info.getLink(), info.getLink());
 
 	ui->modLink->setText(QString::fromStdString(linkText));
 }

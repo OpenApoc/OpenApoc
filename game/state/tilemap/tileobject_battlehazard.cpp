@@ -1,4 +1,5 @@
 #include "game/state/tilemap/tileobject_battlehazard.h"
+#include "framework/logger.h"
 #include "framework/renderer.h"
 #include "game/state/battle/battlehazard.h"
 #include "game/state/rules/battle/damage.h"

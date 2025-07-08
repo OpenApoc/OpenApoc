@@ -1,5 +1,6 @@
 #include "framework/data.h"
 #include "framework/framework.h"
+#include "framework/logger.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/battle/battlemapsector.h"
 #include "library/strings_format.h"
@@ -12,8 +13,8 @@ namespace OpenApoc
 void InitialGameStateExtractor::extractFacilities(GameState &state) const
 {
 	auto &data = this->ufo2p;
-	LogInfo("Number of facility strings: %u", (unsigned)data.facility_names->count());
-	LogInfo("Number of facility data chunks: %u", (unsigned)data.facility_data->count());
+	LogInfo("Number of facility strings: {}", (unsigned)data.facility_names->count());
+	LogInfo("Number of facility data chunks: {}", (unsigned)data.facility_data->count());
 
 	// Start at 2, as 'earth' and 'corridor' are handled specially, this aren't really 'facilities'
 	// in openapoc terms
@@ -23,10 +24,10 @@ void InitialGameStateExtractor::extractFacilities(GameState &state) const
 		auto f = data.facility_data->get(i);
 
 		LogInfo(
-		    "Facility %d: %s cost %d image_offset %d size %d build_time %d maint %d capacity %d", i,
+		    "Facility {}: {} cost {} image_offset {} size {} build_time {} maint {} capacity {}", i,
 		    id, (int)f.cost, (int)f.image_offset, (int)f.size, (int)f.build_time,
 		    (int)f.maintainance_cost, (int)f.capacity);
-		LogInfo("u1 0x%04x u2 0x%04x", (unsigned)f.unknown1, (unsigned)f.unknown2);
+		LogInfo("u1 0x{:04x} u2 0x{:04x}", (unsigned)f.unknown1, (unsigned)f.unknown2);
 
 		auto facilityType = mksp<FacilityType>();
 		facilityType->name = data.facility_names->get(i);
@@ -37,9 +38,9 @@ void InitialGameStateExtractor::extractFacilities(GameState &state) const
 		facilityType->capacityAmount = f.capacity == 1 ? 12 : f.capacity;
 		facilityType->size = f.size;
 		facilityType->sector = i - 2 + 16 + 15;
-		facilityType->sprite = fw().data->loadImage(
-		    format("PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:%d:xcom3/ufodata/base.pcx",
-		           (int)f.image_offset));
+		facilityType->sprite = fw().data->loadImage(fmt::format(
+		    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:{}:xcom3/ufodata/base.pcx",
+		    (int)f.image_offset));
 
 		state.facility_types[id] = facilityType;
 	}

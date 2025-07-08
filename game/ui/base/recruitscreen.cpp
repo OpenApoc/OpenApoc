@@ -334,7 +334,7 @@ void RecruitScreen::updateFormValues()
 	form->findControlTyped<Label>("TEXT_FUNDS")->setText(Strings::fromInteger(balance, true));
 	form->findControlTyped<Label>("TEXT_FUNDS_DELTA")
 	    ->setText(
-	        format("%s%s", moneyDelta > 0 ? "+" : "", Strings::fromInteger(moneyDelta, true)));
+	        fmt::format("{}{}", moneyDelta > 0 ? "+" : "", Strings::fromInteger(moneyDelta, true)));
 
 	updateBaseHighlight();
 }
@@ -345,7 +345,7 @@ void RecruitScreen::updateBaseHighlight()
 	    state->current_base->getUsage(*state, FacilityType::Capacity::Quarters, lqDelta);
 	fillBaseBar(usage);
 	auto facilityLabel = form->findControlTyped<Label>("FACILITY_FIRST_TEXT");
-	facilityLabel->setText(format("%.f%%", usage));
+	facilityLabel->setText(fmt::format("{:.0f}%", usage));
 }
 
 void RecruitScreen::fillBaseBar(int percent)
@@ -407,7 +407,7 @@ void RecruitScreen::personnelSheet(const Agent &agent, sp<Form> formPersonnelSta
 	formPersonnelStats->findControlTyped<Graphic>("SELECTED_PORTRAIT")
 	    ->setImage(agent.getPortrait().photo);
 	formPersonnelStats->findControlTyped<Label>("VALUE_SKILL")
-	    ->setText(format("%d", agent.getSkill()));
+	    ->setText(fmt::format("{}", agent.getSkill()));
 }
 
 /**
@@ -419,10 +419,9 @@ std::vector<sp<Image>> RecruitScreen::getBigUnitRanks()
 
 	for (int i = 12; i <= 18; i++)
 	{
-		bigUnitRanks.push_back(
-		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-		                                i)));
+		bigUnitRanks.push_back(fw().data->loadImage(fmt::format(
+		    "PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:{}:xcom3/tacdata/tactical.pal",
+		    i)));
 	}
 
 	return bigUnitRanks;
@@ -473,10 +472,10 @@ void RecruitScreen::attemptCloseScreen()
 	if (hired != 0 || fired != 0 || transferred != 0)
 	{
 		UString message =
-		    format("%d %s\n%d %s", hired, tr("unit(s) hired"), fired, tr("unit(s) fired."));
+		    fmt::format("{} {}\n{} {}", hired, tr("unit(s) hired"), fired, tr("unit(s) fired."));
 		if (transferred > 0)
 		{
-			message = format("%s\n(%d %s)", message, transferred, tr("units(s) transferred"));
+			message = fmt::format("{}\n({} {})", message, transferred, tr("units(s) transferred"));
 		}
 		fw().stageQueueCommand(
 		    {StageCmd::Command::PUSH,

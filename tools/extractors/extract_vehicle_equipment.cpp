@@ -1,5 +1,6 @@
 #include "framework/data.h"
 #include "framework/framework.h"
+#include "framework/logger.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/city/vequipmenttype.h"
 #include "library/strings_format.h"
@@ -32,9 +33,10 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 		auto edata = data.vehicle_equipment->get(i);
 
 		e->name = data.vehicle_equipment_names->get(i);
-		UString id = format("%s%s", VEquipmentType::getPrefix(), canon_string(e->name));
+		UString id = fmt::format("{}{}", VEquipmentType::getPrefix(), canon_string(e->name));
 
-		UString research_id = format("%s%s", ResearchTopic::getPrefix(), canon_string(e->name));
+		UString research_id =
+		    fmt::format("{}{}", ResearchTopic::getPrefix(), canon_string(e->name));
 
 		auto research_it = state.research.topics.find(research_id);
 		if (research_it != state.research.topics.end())
@@ -62,7 +64,7 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 				e->users.insert(VEquipmentType::User::Ammo);
 				break;
 			default:
-				LogWarning("Unexpected 'usable_by' %d for ID %s", (int)edata.usable_by, id);
+				LogWarning("Unexpected 'usable_by' {} for ID {}", (int)edata.usable_by, id);
 				continue;
 		}
 		e->weight = edata.weight;
@@ -73,8 +75,8 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 		// e->ammo_type = format("%d", (int)edata.ammo_type);
 		// Force all sprites into the correct palette by using A_RANDOM_VEHICLES_BACKGROUND pcx
 		//(I assume the parts of the palette used for this are the same on all?)
-		e->equipscreen_sprite = fw().data->loadImage(format(
-		    "PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:%d:xcom3/ufodata/vhawk.pcx",
+		e->equipscreen_sprite = fw().data->loadImage(fmt::format(
+		    "PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:{}:xcom3/ufodata/vhawk.pcx",
 		    (int)edata.sprite_idx));
 		e->equipscreen_size = {edata.size_x, edata.size_y};
 		e->manufacturer = {&state, data.getOrgId(edata.manufacturer)};
@@ -255,8 +257,8 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 					e->explosion_graphic = {&state, doodad_id};
 				}
 
-				e->icon = fw().data->loadImage(format(
-				    "PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:%d", weapon_count));
+				e->icon = fw().data->loadImage(fmt::format(
+				    "PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:{}", weapon_count));
 
 				auto projectile_sprites = data.projectile_sprites->get(wData.projectile_image);
 				for (int i = 0; i < e->tail_size; i++)
@@ -264,8 +266,8 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 					UString sprite_path = "";
 					if (projectile_sprites.sprites[i] != 255)
 					{
-						sprite_path = format("bulletsprites/city/%02u.png",
-						                     (unsigned)projectile_sprites.sprites[i]);
+						sprite_path = fmt::format("bulletsprites/city/{:02}.png",
+						                          (unsigned)projectile_sprites.sprites[i]);
 					}
 					else
 					{
@@ -307,7 +309,7 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state) const
 				// If we do reach here, however, should we not just log a warning and go on?
 				// Or log an error that we actually got here (which is the actual bug, and
 				// not the fact that we encountered an expected and known id for empty item)
-				LogError("Unexpected vequipment type %d for ID %s", (int)e->type, id);
+				LogError("Unexpected vequipment type {} for ID {}", (int)e->type, id);
 		}
 
 		state.vehicle_equipment[id] = e;

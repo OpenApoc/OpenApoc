@@ -1,4 +1,5 @@
 #include "game/state/battle/ai/aidecision.h"
+#include "framework/logger.h"
 #include "game/state/battle/battleunit.h"
 #include "game/state/shared/aequipment.h"
 #include "library/strings_format.h"
@@ -20,37 +21,38 @@ UString AIAction::getName()
 	switch (type)
 	{
 		case AIAction::Type::AttackGrenade:
-			return format("Attack %s with grenade %s ", targetUnit->id, item->type->id);
+			return fmt::format("Attack {} with grenade {} ", targetUnit->id, item->type->id);
 		case AIAction::Type::AttackWeaponTile:
 			if (item)
 			{
-				return format("Attack %s with weapon %s ", targetLocation, item->type->id);
+				return fmt::format("Attack {} with weapon {} ", targetLocation, item->type->id);
 			}
 			else
 			{
-				return format("Attack %s with weapon(s)", targetLocation);
+				return fmt::format("Attack {} with weapon(s)", targetLocation);
 			}
 		case AIAction::Type::AttackWeaponUnit:
 			if (item)
 			{
-				return format("Attack %s with weapon %s ", targetUnit->id, item->type->id);
+				return fmt::format("Attack {} with weapon {} ", targetUnit->id, item->type->id);
 			}
 			else
 			{
-				return format("Attack %s with weapon(s)", targetUnit->id);
+				return fmt::format("Attack {} with weapon(s)", targetUnit->id);
 			}
 		case AIAction::Type::AttackPsiMC:
-			return format("Attack %s with psi MC using %s ", targetUnit->id, item->type->id);
+			return fmt::format("Attack {} with psi MC using {} ", targetUnit->id, item->type->id);
 		case AIAction::Type::AttackPsiStun:
-			return format("Attack %s with psi stun using %s ", targetUnit->id, item->type->id);
+			return fmt::format("Attack {} with psi stun using {} ", targetUnit->id, item->type->id);
 		case AIAction::Type::AttackPsiPanic:
-			return format("Attack %s with psi panic using %s ", targetUnit->id, item->type->id);
+			return fmt::format("Attack {} with psi panic using {} ", targetUnit->id,
+			                   item->type->id);
 		case AIAction::Type::AttackBrainsucker:
-			return format("Attack %s with brainsucker", targetUnit->id);
+			return fmt::format("Attack {} with brainsucker", targetUnit->id);
 		case AIAction::Type::AttackSuicide:
-			return format("Attack (suicide) %s  ", targetUnit->id);
+			return fmt::format("Attack (suicide) {}  ", targetUnit->id);
 	}
-	LogError("Unimplemented getName for AIAction %d", (int)type);
+	LogError("Unimplemented getName for AIAction {}", (int)type);
 	return "";
 }
 
@@ -105,25 +107,25 @@ UString AIMovement::getName()
 	switch (type)
 	{
 		case AIMovement::Type::Stop:
-			return format("Stop");
+			return fmt::format("Stop");
 		case AIMovement::Type::ChangeStance:
-			return format("Change Stance");
+			return fmt::format("Change Stance");
 		case AIMovement::Type::Patrol:
-			return format("Move to %s", targetLocation);
+			return fmt::format("Move to {}", targetLocation);
 		case AIMovement::Type::Advance:
-			return format("Advance on target to %s", targetLocation);
+			return fmt::format("Advance on target to {}", targetLocation);
 		case AIMovement::Type::Pursue:
-			return format("Pursue target to %s", targetLocation);
+			return fmt::format("Pursue target to {}", targetLocation);
 		case AIMovement::Type::GetInRange:
-			return format("Get in range, moving to %s", targetLocation);
+			return fmt::format("Get in range, moving to {}", targetLocation);
 		case AIMovement::Type::Retreat:
-			return format("Retreat to %s", targetLocation);
+			return fmt::format("Retreat to {}", targetLocation);
 		case AIMovement::Type::TakeCover:
-			return format("Taking cover, moving to %s", targetLocation);
+			return fmt::format("Taking cover, moving to {}", targetLocation);
 		case AIMovement::Type::Turn:
-			return format("Turn to %s", targetLocation);
+			return fmt::format("Turn to {}", targetLocation);
 	}
-	LogError("Unimplemented getName for AIMovement %d", (int)type);
+	LogError("Unimplemented getName for AIMovement {}", (int)type);
 	return "";
 }
 
@@ -198,8 +200,8 @@ bool AIMovement::isFinished(BattleUnit &u) { return !inProgress(u) && executed; 
 
 UString AIDecision::getName()
 {
-	return format("Action: [%s] Movement: [%s]", action ? action->getName() : "NULL",
-	              movement ? movement->getName() : "NULL");
+	return fmt::format("Action: [{}] Movement: [{}]", action ? action->getName() : "NULL",
+	                   movement ? movement->getName() : "NULL");
 }
 
 bool AIDecision::isEmpty() { return !action && !movement; }

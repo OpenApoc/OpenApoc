@@ -23,6 +23,7 @@
 #include "game/ui/general/agentsheet.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/transactioncontrol.h"
+#include "library/strings_format.h"
 #include <array>
 
 namespace OpenApoc
@@ -145,7 +146,7 @@ void TransferScreen::updateBaseHighlight()
 		int i = 0;
 		for (auto &b : state->player_bases)
 		{
-			auto viewName = format("BUTTON_SECOND_BASE_%d", ++i);
+			auto viewName = fmt::format("BUTTON_SECOND_BASE_{}", ++i);
 			auto view = form->findControlTyped<GraphicButton>(viewName);
 			auto viewImage = drawMiniBase(*b.second, viewHighlight, viewFacility);
 			view->setImage(viewImage);
@@ -170,7 +171,7 @@ void TransferScreen::updateBaseHighlight()
 			fillBaseBar(false, usage);
 			auto facilityLabel = form->findControlTyped<Label>("FACILITY_SECOND_TEXT");
 			facilityLabel->setVisible(true);
-			facilityLabel->setText(format("%.f%%", usage));
+			facilityLabel->setText(fmt::format("{:.0f}%", usage));
 			break;
 		}
 		case BaseGraphics::FacilityHighlight::Stores:
@@ -184,7 +185,7 @@ void TransferScreen::updateBaseHighlight()
 			fillBaseBar(false, usage);
 			auto facilityLabel = form->findControlTyped<Label>("FACILITY_SECOND_TEXT");
 			facilityLabel->setVisible(true);
-			facilityLabel->setText(format("%.f%%", usage));
+			facilityLabel->setText(fmt::format("{:.0f}%", usage));
 			break;
 		}
 		case BaseGraphics::FacilityHighlight::Aliens:
@@ -198,7 +199,7 @@ void TransferScreen::updateBaseHighlight()
 			fillBaseBar(false, usage);
 			auto facilityLabel = form->findControlTyped<Label>("FACILITY_SECOND_TEXT");
 			facilityLabel->setVisible(true);
-			facilityLabel->setText(format("%.f%%", usage));
+			facilityLabel->setText(fmt::format("{:.0f}%", usage));
 			break;
 		}
 		default:
@@ -420,21 +421,21 @@ void TransferScreen::closeScreen()
 		if (transportationBusy || transportationHostile)
 		{
 			UString title =
-			    format("%s%s", badOrgs.front()->name, badOrgs.size() > 1 ? " & others" : "");
+			    fmt::format("{}{}", badOrgs.front()->name, badOrgs.size() > 1 ? " & others" : "");
 
 			// If player can ferry themselves then give option
 			if (config().getBool("OpenApoc.NewFeature.AllowManualCargoFerry"))
 			{
 				UString message =
 				    transportationHostile
-				        ? format("%s %s",
-				                 tr("This hostile organization refuses to carry out the "
-				                    "requested transfer."),
-				                 tr("Proceed?"))
-				        : format("%s %s",
-				                 tr("No free transport to carry out the requested "
-				                    "transportation detected in the city."),
-				                 tr("Proceed?"));
+				        ? fmt::format("{} {}",
+				                      tr("This hostile organization refuses to carry out the "
+				                         "requested transfer."),
+				                      tr("Proceed?"))
+				        : fmt::format("{} {}",
+				                      tr("No free transport to carry out the requested "
+				                         "transportation detected in the city."),
+				                      tr("Proceed?"));
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
@@ -445,10 +446,10 @@ void TransferScreen::closeScreen()
 			else if (!transportationHostile)
 			{
 				// FIXME: Different message maybe? Same for now
-				UString message = format("%s %s",
-				                         tr("No free transport to carry out the requested "
-				                            "transportation detected in the city."),
-				                         tr("Proceed?"));
+				UString message = fmt::format("{} {}",
+				                              tr("No free transport to carry out the requested "
+				                                 "transportation detected in the city."),
+				                              tr("Proceed?"));
 				fw().stageQueueCommand(
 				    {StageCmd::Command::PUSH,
 				     mksp<MessageBox>(title, message, MessageBox::ButtonOptions::YesNo,
@@ -627,7 +628,7 @@ void TransferScreen::executeOrders()
 						}
 						default:
 						{
-							LogError("Unhandled TransactionControl::Type %d",
+							LogError("Unhandled TransactionControl::Type {}",
 							         static_cast<int>(c->itemType));
 							break;
 						}
@@ -650,7 +651,7 @@ void TransferScreen::initViewSecondBase()
 	int i = 0;
 	for (auto &b : state->player_bases)
 	{
-		auto viewName = format("BUTTON_SECOND_BASE_%d", ++i);
+		auto viewName = fmt::format("BUTTON_SECOND_BASE_{}", ++i);
 		auto view = form->findControlTyped<GraphicButton>(viewName);
 		view->setVisible(true);
 		if (second_base == b.second)

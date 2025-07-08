@@ -6,6 +6,7 @@
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "framework/keycodes.h"
+#include "framework/logger.h"
 #include "framework/renderer.h"
 #include "game/ui/debugtools/formpreview.h"
 #include "game/ui/debugtools/imagepreview.h"
@@ -138,7 +139,7 @@ void DebugMenu::bulkExportPcks()
 		UString pckloadstr = UString("PCK:") + pckname + UString(":") +
 		                     pckname.substr(0, pckname.length() - 3) + UString("tab");
 
-		LogInfo("Processing %s", pckloadstr);
+		LogInfo("Processing {}", pckloadstr);
 
 		sp<ImageSet> pckset = fw().data->loadImageSet(pckloadstr);
 
@@ -155,7 +156,7 @@ void DebugMenu::bulkExportPcks()
 				if (sp<RGBImage> bi = std::dynamic_pointer_cast<RGBImage>(curimg))
 				{
 
-					LogInfo("Saving %s", outputname);
+					LogInfo("Saving {}", outputname);
 					fw().data->writeImage(outputname, bi);
 				}
 				else if (sp<PaletteImage> pi = std::dynamic_pointer_cast<PaletteImage>(curimg))
@@ -166,7 +167,7 @@ void DebugMenu::bulkExportPcks()
 						outputname = UString("extracted/") + pckname + UString("/") +
 						             Strings::fromInteger(idx) + UString(".#") +
 						             Strings::fromInteger(palidx) + UString(".png");
-						LogInfo("Saving %s", outputname);
+						LogInfo("Saving {}", outputname);
 						fw().data->writeImage(outputname, pi, PaletteList.at(palidx));
 					}
 				}

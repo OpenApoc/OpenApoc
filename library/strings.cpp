@@ -136,7 +136,7 @@ bool Strings::isFloat(const UStringView s)
 
 UString Strings::fromInteger(int i, const bool formatAsCurrency)
 {
-	auto result = format("%d", i);
+	auto result = fmt::format("{}", i);
 
 	if (formatAsCurrency)
 		result = formatTextAsCurrency(result);
@@ -146,7 +146,7 @@ UString Strings::fromInteger(int i, const bool formatAsCurrency)
 
 UString Strings::fromFloat(float f, const bool formatAsCurrency)
 {
-	auto result = format("%f", f);
+	auto result = fmt::format("{:f}", f);
 
 	if (formatAsCurrency)
 		result = formatTextAsCurrency(result);
@@ -162,7 +162,7 @@ bool Strings::isWhiteSpace(char32_t c)
 
 UString Strings::fromU64(uint64_t i, const bool formatAsCurrency)
 {
-	auto result = format("%llu", i);
+	auto result = fmt::format("{}", i);
 
 	if (formatAsCurrency)
 		result = formatTextAsCurrency(result);

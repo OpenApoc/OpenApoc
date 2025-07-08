@@ -10,6 +10,8 @@
 #include "game/state/battle/battleunit.h"
 #include "game/state/gamestate.h"
 #include "game/ui/tileview/cityview.h"
+#include "library/strings_format.h"
+#include <cmath>
 
 namespace OpenApoc
 {
@@ -26,28 +28,28 @@ BattleDebriefing::BattleDebriefing(sp<GameState> state)
 	                  });
 
 	menuform->findControlTyped<Label>("TEXT_SCORE_COMBAT_RATING")
-	    ->setText(format("%d", state->current_battle->score.combatRating));
+	    ->setText(fmt::format("{}", state->current_battle->score.combatRating));
 	menuform->findControlTyped<Label>("TEXT_SCORE_CASUALTY_PENALTY")
-	    ->setText(format("%d", state->current_battle->score.casualtyPenalty));
+	    ->setText(fmt::format("{}", state->current_battle->score.casualtyPenalty));
 	menuform->findControlTyped<Label>("TEXT_SCORE_LEADERSHIP_BONUS")
-	    ->setText(format("%d", state->current_battle->score.getLeadershipBonus()));
+	    ->setText(fmt::format("{}", state->current_battle->score.getLeadershipBonus()));
 	menuform->findControlTyped<Label>("TEXT_SCORE_LIVE_ALIENS_CAPTURED")
-	    ->setText(format("%d", state->current_battle->score.liveAlienCaptured));
+	    ->setText(fmt::format("{}", state->current_battle->score.liveAlienCaptured));
 	menuform->findControlTyped<Label>("TEXT_SCORE_EQUIPMENT_CAPTURED")
-	    ->setText(format("%d", state->current_battle->score.equipmentCaptured));
+	    ->setText(fmt::format("{}", state->current_battle->score.equipmentCaptured));
 	menuform->findControlTyped<Label>("TEXT_SCORE_EQUIPMENT_LOST")
-	    ->setText(format("%d", state->current_battle->score.equipmentLost));
+	    ->setText(fmt::format("{}", state->current_battle->score.equipmentLost));
 	menuform->findControlTyped<Label>("TEXT_SCORE_TOTAL")
-	    ->setText(format("%d", state->current_battle->score.getTotal()));
+	    ->setText(fmt::format("{}", state->current_battle->score.getTotal()));
 	menuform->findControlTyped<Label>("TEXT_MISSION_PERFORMANCE")
-	    ->setText(format("%s", state->current_battle->score.getText()));
+	    ->setText(fmt::format("{}", state->current_battle->score.getText()));
 
 	int idx = 1;
 	for (auto &u : state->current_battle->unitsPromoted)
 	{
-		menuform->findControlTyped<Label>(format("PROMOTION_%d", idx++))
-		    ->setText(
-		        format("%s %s %s", u->agent->name, tr("promoted to"), u->agent->getRankName()));
+		menuform->findControlTyped<Label>(fmt::format("PROMOTION_{}", idx++))
+		    ->setText(fmt::format("{} {} {}", u->agent->name, tr("promoted to"),
+		                          u->agent->getRankName()));
 	}
 }
 

@@ -1,4 +1,5 @@
 #include "game/state/rules/city/ufogrowth.h"
+#include "framework/logger.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc
@@ -9,7 +10,7 @@ template <> sp<UFOGrowth> StateObject<UFOGrowth>::get(const GameState &state, co
 	auto it = state.ufo_growth_lists.find(id);
 	if (it == state.ufo_growth_lists.end())
 	{
-		LogError("No ufo growth matching ID \"%s\"", id);
+		LogError("No ufo growth matching ID \"{}\"", id);
 		return nullptr;
 	}
 	return it->second;

@@ -5,6 +5,7 @@
 #include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/framework.h"
+#include "framework/logger.h"
 #include "library/sp.h"
 #include <stdexcept>
 
@@ -36,11 +37,11 @@ sp<Form> UI::getForm(UString ID)
 	{
 		auto formPath = UString("forms/") + ID + ".form";
 
-		LogInfo("Trying to load form \"%s\" from \"%s\"", ID, formPath);
+		LogInfo("Trying to load form \"{}\" from \"{}\"", ID, formPath);
 		auto form = Form::loadForm(formPath);
 		if (!form)
 		{
-			LogError("Failed to find form \"%s\" at \"%s\"", ID, formPath);
+			LogError("Failed to find form \"{}\" at \"{}\"", ID, formPath);
 			return nullptr;
 		}
 		forms[ID] = form;
@@ -53,11 +54,11 @@ sp<BitmapFont> UI::getFont(UString FontData)
 	if (fonts.find(FontData) == fonts.end())
 	{
 		auto fontPath = UString("fonts/") + FontData + ".font";
-		LogInfo("Trying to load font \"%s\" from \"%s\"", FontData, fontPath);
+		LogInfo("Trying to load font \"{}\" from \"{}\"", FontData, fontPath);
 		auto font = ApocalypseFont::loadFont(fontPath);
 		if (!font)
 		{
-			LogError("Failed to find font \"%s\" at \"%s\"", FontData, fontPath);
+			LogError("Failed to find font \"{}\" at \"{}\"", FontData, fontPath);
 			return nullptr;
 		}
 		fonts[FontData] = font;
@@ -75,12 +76,12 @@ std::vector<UString> UI::getFormIDs()
 	{
 		if (name.substr(0, 6) != "forms/")
 		{
-			LogWarning("Unexpected form file prefix for \"%s\"", name);
+			LogWarning("Unexpected form file prefix for \"{}\"", name);
 			continue;
 		}
 		if (!ends_with(name, ".form"))
 		{
-			LogWarning("Unexpected extension on form file \"%s\"", name);
+			LogWarning("Unexpected extension on form file \"{}\"", name);
 			continue;
 		}
 		else

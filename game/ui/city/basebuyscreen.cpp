@@ -6,6 +6,7 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
+#include "framework/logger.h"
 #include "game/state/city/agentmission.h"
 #include "game/state/city/base.h"
 #include "game/state/city/building.h"
@@ -40,7 +41,7 @@ void BaseBuyScreen::begin()
 	form->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 
 	auto text = form->findControlTyped<Label>("TEXT_PRICE");
-	text->setText(format(tr("This Building will cost $%s"), Strings::fromInteger(price, true)));
+	text->setText(fmt::format("This Building will cost ${}", Strings::fromInteger(price, true)));
 
 	form->findControlTyped<Graphic>("GRAPHIC_MINIMAP")
 	    ->setImage(BaseGraphics::drawMinimap(state, *base->building));
@@ -88,7 +89,7 @@ void BaseBuyScreen::eventOccurred(Event *e)
 				}
 				if (!newBuilding)
 				{
-					LogError("We just bought %s's last building? WTF?",
+					LogError("We just bought {}'s last building? WTF?",
 					         base->building->owner->name);
 				}
 				base->building->owner = state->getPlayer();

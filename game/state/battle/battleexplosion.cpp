@@ -317,8 +317,8 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 						velocity.x = 0;
 				}
 			}
-			doodadType = {&state,
-			              format("DOODAD_BATTLE_EXPLOSION_%d%d", velocity.x + 1, velocity.y + 1)};
+			doodadType = {&state, fmt::format("DOODAD_BATTLE_EXPLOSION_{}{}", velocity.x + 1,
+			                                  velocity.y + 1)};
 		}
 		Vec3<float> doodadPos = to;
 		doodadPos += Vec3<float>{0.5f, 0.5f, 0.5f};

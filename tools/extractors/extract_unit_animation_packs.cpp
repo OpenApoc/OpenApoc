@@ -1,5 +1,7 @@
 #include "framework/data.h"
 #include "framework/framework.h"
+#include "framework/logger.h"
+#include "framework/palette.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/battle/battleunitanimationpack.h"
 #include "library/strings_format.h"
@@ -102,7 +104,7 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimat
 						continue;
 					break;
 				default:
-					LogError("Impossible part index %d found in UF located at entry %d offset %d",
+					LogError("Impossible part index {} found in UF located at entry {} offset {}",
 					         part_idx, offset_uf, j);
 					break;
 			}
@@ -200,7 +202,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 
 	std::vector<AnimationDataAD> dataAD;
 	{
-		auto fileName = format("%s%s%s", dirName, path, ".ad");
+		auto fileName = fmt::format("{}{}{}", dirName, path, ".ad");
 
 		auto inFile = fw().data->fs.open(fileName);
 		if (inFile)
@@ -214,7 +216,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 				inFile.read((char *)&data, sizeof(data));
 				if (!inFile)
 				{
-					LogError("Failed to read entry in \"%s\"", fileName);
+					LogError("Failed to read entry in \"{}\"", fileName);
 					return nullptr;
 				}
 				dataAD.push_back(data);
@@ -224,7 +226,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 
 	std::vector<AnimationDataUA> dataUA;
 	{
-		auto fileName = format("%s%s%s", dirName, path, ".ua");
+		auto fileName = fmt::format("{}{}{}", dirName, path, ".ua");
 
 		auto inFile = fw().data->fs.open(fileName);
 		if (inFile)
@@ -238,7 +240,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 				inFile.read((char *)&data, sizeof(data));
 				if (!inFile)
 				{
-					LogError("Failed to read entry in \"%s\"", fileName);
+					LogError("Failed to read entry in \"{}\"", fileName);
 					return nullptr;
 				}
 				dataUA.push_back(data);
@@ -248,7 +250,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 
 	std::vector<AnimationDataUF> dataUF;
 	{
-		auto fileName = format("%s%s%s", dirName, path, ".uf");
+		auto fileName = fmt::format("{}{}{}", dirName, path, ".uf");
 
 		auto inFile = fw().data->fs.open(fileName);
 		if (inFile)
@@ -262,7 +264,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 				inFile.read((char *)&data, sizeof(data));
 				if (!inFile)
 				{
-					LogError("Failed to read entry in \"%s\"", fileName);
+					LogError("Failed to read entry in \"{}\"", fileName);
 					return nullptr;
 				}
 				dataUF.push_back(data);

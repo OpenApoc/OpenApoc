@@ -13,6 +13,9 @@
 #include "game/state/gamestate.h"
 #include "game/ui/battle/battleprestart.h"
 #include "game/ui/tileview/battleview.h"
+#include "game/ui/tileview/cityview.h"
+#include "library/strings_format.h"
+#include <cmath>
 
 namespace OpenApoc
 {
@@ -35,8 +38,8 @@ BattleBriefing::BattleBriefing(sp<GameState> state,
 {
 
 	menuform->findControlTyped<Label>("TEXT_DATE")
-	    ->setText(format("%s      %s", state->gameTime.getLongDateString(),
-	                     state->gameTime.getShortTimeString()));
+	    ->setText(fmt::format("{}      {}", state->gameTime.getLongDateString(),
+	                          state->gameTime.getShortTimeString()));
 
 	// FIXME: Read and store briefing text and image properly
 	UString briefing = "";
@@ -79,8 +82,8 @@ BattleBriefing::BattleBriefing(sp<GameState> state,
 			{
 				int briefingID = alienFunctionMap.at(building->function->name);
 				menuform->findControlTyped<Graphic>("BRIEFING_IMAGE")
-				    ->setImage(
-				        fw().data->loadImage(format("xcom3/tacdata/alienm%d.pcx", briefingID)));
+				    ->setImage(fw().data->loadImage(
+				        fmt::format("xcom3/tacdata/alienm{}.pcx", briefingID)));
 				switch (briefingID)
 				{
 					case 1:

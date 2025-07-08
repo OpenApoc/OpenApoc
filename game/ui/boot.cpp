@@ -6,6 +6,7 @@
 #include "framework/configfile.h"
 #include "framework/framework.h"
 #include "framework/jukebox.h"
+#include "framework/logger.h"
 #include "framework/modinfo.h"
 #include "framework/options.h"
 #include "game/state/gamestate.h"
@@ -58,11 +59,11 @@ void BootUp::update()
 		    {
 			    auto &ui_instance = ui();
 			    std::ignore = ui_instance;
-			    LogWarning("Loading save \"%s\"", path);
+			    LogWarning("Loading save \"{}\"", path);
 
 			    if (!loadedState->loadGame(path))
 			    {
-				    LogError("Failed to load supplied game \"%s\"", path);
+				    LogError("Failed to load supplied game \"{}\"", path);
 			    }
 			    loadedState->initState();
 		    });

@@ -1,6 +1,7 @@
 #include "forms/ui.h"
 #include "framework/configfile.h"
 #include "framework/framework.h"
+#include "framework/logger.h"
 #include "game/ui/boot.h"
 #include "game/ui/tileview/cityview.h"
 #include "version.h"
@@ -14,7 +15,7 @@ int main(int argc, char *argv[])
 	{
 		return EXIT_FAILURE;
 	}
-	LogInfo("Starting OpenApoc \"%s\"", OPENAPOC_VERSION);
+	LogInfo("Starting OpenApoc \"{}\"", OPENAPOC_VERSION);
 
 	{
 		up<Framework> fw(new Framework(UString(argv[0]), true));

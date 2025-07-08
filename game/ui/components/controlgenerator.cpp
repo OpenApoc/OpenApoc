@@ -19,6 +19,7 @@
 #include "game/state/rules/city/facilitytype.h"
 #include "game/state/rules/city/vehicletype.h"
 #include "game/state/shared/agent.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -33,12 +34,11 @@ void ControlGenerator::init(GameState &state [[maybe_unused]])
 {
 	for (int i = 0; i < 3; i++)
 	{
-		battleSelect.push_back(
-		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-		                                25 + i)));
-		citySelect.push_back(fw().data->loadImage(format(
-		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
+		battleSelect.push_back(fw().data->loadImage(fmt::format(
+		    "PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:{}:xcom3/tacdata/tactical.pal",
+		    25 + i)));
+		citySelect.push_back(fw().data->loadImage(fmt::format(
+		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:{}:xcom3/ufodata/pal_01.dat",
 		    37 + i)));
 	}
 
@@ -48,10 +48,9 @@ void ControlGenerator::init(GameState &state [[maybe_unused]])
 
 	for (int i = 28; i <= 34; i++)
 	{
-		unitRanks.push_back(
-		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
-		                                i)));
+		unitRanks.push_back(fw().data->loadImage(fmt::format(
+		    "PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:{}:xcom3/tacdata/tactical.pal",
+		    i)));
 	}
 
 	auto img = mksp<RGBImage>(Vec2<int>{1, 2});
@@ -79,16 +78,16 @@ void ControlGenerator::init(GameState &state [[maybe_unused]])
 
 	for (int i = 47; i <= 50; i++)
 	{
-		icons.push_back(fw().data->loadImage(format(
-		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
+		icons.push_back(fw().data->loadImage(fmt::format(
+		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:{}:xcom3/ufodata/pal_01.dat",
 		    i)));
 	}
 
 	vehiclePassengerCountIcons.emplace_back();
 	for (int i = 51; i <= 63; i++)
 	{
-		vehiclePassengerCountIcons.push_back(fw().data->loadImage(format(
-		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
+		vehiclePassengerCountIcons.push_back(fw().data->loadImage(fmt::format(
+		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:{}:xcom3/ufodata/pal_01.dat",
 		    i)));
 	}
 	labelFont = ui().getFont("smalfont");
@@ -596,7 +595,7 @@ sp<Control> ControlGenerator::createLargeAgentControl(GameState &state, const Ag
 	if (skill != UnitSkillState::Hidden)
 	{
 		auto skillLabel = baseControl->createChild<Label>(
-		    format(tr("Skill %d"), info.agent->getSkill()), singleton.labelFont);
+		    fmt::format("Skill {}", info.agent->getSkill()), singleton.labelFont);
 		skillLabel->Tint = {192, 192, 192};
 
 		skillLabel->Size = {nameLabel->Size.x, singleton.labelFont->getFontHeight()};

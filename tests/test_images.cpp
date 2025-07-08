@@ -38,7 +38,7 @@ static bool testImage(const UString &imageName, const UString &referenceName)
 
 	if (img->size != reference->size)
 	{
-		LogWarning("Invalid size, %s doesn't match reference %s", img->size, reference->size);
+		LogWarning("Invalid size, {} doesn't match reference {}", img->size, reference->size);
 		return false;
 	}
 
@@ -53,10 +53,10 @@ static bool testImage(const UString &imageName, const UString &referenceName)
 			auto r = refLock.get({x, y});
 			if (i != r)
 			{
-				LogWarning(
-				    "Image mismatch at {%d,%d} (RGBA img {%d,%d,%d,%d} != RGBA ref {%d,%d,%d,%d}",
-				    x, y, (int)i.r, (int)i.g, (int)i.b, (int)i.a, (int)r.r, (int)r.g, (int)r.b,
-				    (int)r.a);
+				LogWarning("Image mismatch at {{{},{}}} (RGBA img {{{},{},{},{}}} != RGBA ref "
+				           "{{{},{},{},{}}}",
+				           x, y, (int)i.r, (int)i.g, (int)i.b, (int)i.a, (int)r.r, (int)r.g,
+				           (int)r.b, (int)r.a);
 
 				return false;
 			}
@@ -112,11 +112,11 @@ int main(int argc, char **argv)
 	{
 		if (!testImage(imagePair.first, imagePair.second))
 		{
-			LogError("Image \"%s\" didn't match reference \"%s\"", imagePair.first,
+			LogError("Image \"{}\" didn't match reference \"{}\"", imagePair.first,
 			         imagePair.second);
 			return EXIT_FAILURE;
 		}
-		LogInfo("Image \"%s\" matches reference \"%s\"", imagePair.first, imagePair.second);
+		LogInfo("Image \"{}\" matches reference \"{}\"", imagePair.first, imagePair.second);
 	}
 
 	return EXIT_SUCCESS;

@@ -3,6 +3,7 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/keycodes.h"
+#include "framework/logger.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
 #include "game/state/battle/battle.h"
@@ -18,7 +19,7 @@ TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
       selectedTilePosition(0, 0, 0), maxZDraw(map.size.z), centerPos(0, 0, 0),
       isoScrollSpeed(0.5, 0.5), stratScrollSpeed(2.0f, 2.0f)
 {
-	LogInfo("dpySize: %s", dpySize);
+	LogInfo("dpySize: {}", dpySize);
 }
 
 TileView::~TileView() = default;
@@ -39,7 +40,7 @@ void TileView::eventOccurred(Event *e)
 		{
 			case SDLK_F1:
 				debugHotkeyMode = !debugHotkeyMode;
-				LogWarning("DEBUG MODE %s", debugHotkeyMode);
+				LogWarning("DEBUG MODE {}", debugHotkeyMode);
 				break;
 			case SDLK_UP:
 				scrollUpKB = true;

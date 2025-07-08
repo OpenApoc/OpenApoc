@@ -1,4 +1,5 @@
 #include "game/state/rules/battle/battlemapparttype.h"
+#include "framework/logger.h"
 #include "game/state/gamestate.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
@@ -13,7 +14,7 @@ sp<BattleMapPartType> StateObject<BattleMapPartType>::get(const GameState &state
 	auto it = state.battleMapTiles.find(id);
 	if (it != state.battleMapTiles.end())
 		return it->second;
-	LogError("No battle map part type matching ID \"%s\"", id);
+	LogError("No battle map part type matching ID \"{}\"", id);
 
 	return nullptr;
 }

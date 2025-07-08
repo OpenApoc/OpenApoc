@@ -1,4 +1,5 @@
 #include "game/state/battle/ai/unitaibehavior.h"
+#include "framework/logger.h"
 #include "game/state/battle/ai/aidecision.h"
 #include "game/state/gamestate.h"
 

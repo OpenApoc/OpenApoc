@@ -4,6 +4,7 @@
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "framework/keycodes.h"
+#include "framework/logger.h"
 #include "framework/palette.h"
 #include "framework/renderer.h"
 #include "game/state/city/agentmission.h"
@@ -22,6 +23,7 @@
 #include "game/state/shared/organisation.h"
 #include "game/state/tilemap/tileobject_scenery.h"
 #include "game/state/tilemap/tileobject_vehicle.h"
+#include "library/strings_format.h"
 
 namespace OpenApoc
 {
@@ -80,25 +82,26 @@ CityTileView::CityTileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratT
 	selectionBrackets.resize(4);
 	for (int i = 72; i < 76; i++)
 	{
-		selectionBrackets[0].push_back(fw().data->loadImage(format(
-		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
+		selectionBrackets[0].push_back(fw().data->loadImage(fmt::format(
+		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:{}:xcom3/ufodata/pal_01.dat",
 		    i)));
 	}
 	for (int i = 76; i < 80; i++)
 	{
-		selectionBrackets[2].push_back(fw().data->loadImage(format(
-		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
+		selectionBrackets[2].push_back(fw().data->loadImage(fmt::format(
+		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:{}:xcom3/ufodata/pal_01.dat",
 		    i)));
 	}
 	for (int i = 80; i < 84; i++)
 	{
-		selectionBrackets[1].push_back(fw().data->loadImage(format(
-		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
+		selectionBrackets[1].push_back(fw().data->loadImage(fmt::format(
+		    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:{}:xcom3/ufodata/pal_01.dat",
 		    i)));
 	}
 	for (int i = 1; i <= 4; i++)
 	{
-		selectionBrackets[3].push_back(fw().data->loadImage(format("city/city-bracket-%d.png", i)));
+		selectionBrackets[3].push_back(
+		    fw().data->loadImage(fmt::format("city/city-bracket-{}.png", i)));
 	}
 
 	selectionImageFriendlySmall = fw().data->loadImage("battle/map-selection-small.png");
@@ -168,7 +171,7 @@ void CityTileView::eventOccurred(Event *e)
 						DEBUG_SHOW_ALIEN_CREW = false;
 						DEBUG_LAYER = -1;
 					}
-					LogWarning("Debug walk type display set to %d", DEBUG_SHOW_MISC_TYPE);
+					LogWarning("Debug walk type display set to {}", DEBUG_SHOW_MISC_TYPE);
 					return;
 				}
 				case SDLK_F5:
@@ -187,7 +190,7 @@ void CityTileView::eventOccurred(Event *e)
 						DEBUG_SHOW_MISC_TYPE = 0;
 						DEBUG_LAYER = -1;
 					}
-					LogWarning("Debug Alien display set to %s", DEBUG_SHOW_ALIEN_CREW);
+					LogWarning("Debug Alien display set to {}", DEBUG_SHOW_ALIEN_CREW);
 					return;
 				}
 				case SDLK_F12:
@@ -201,7 +204,7 @@ void CityTileView::eventOccurred(Event *e)
 						DEBUG_SHOW_MISC_TYPE = 0;
 						DEBUG_LAYER = -1;
 					}
-					LogWarning("Debug slopes display set to %s", DEBUG_SHOW_SLOPES);
+					LogWarning("Debug slopes display set to {}", DEBUG_SHOW_SLOPES);
 					return;
 				}
 				case SDLK_F11:
@@ -215,7 +218,7 @@ void CityTileView::eventOccurred(Event *e)
 						DEBUG_SHOW_MISC_TYPE = 0;
 						DEBUG_LAYER = -1;
 					}
-					LogWarning("Debug roads display set to %s", DEBUG_SHOW_ROADS);
+					LogWarning("Debug roads display set to {}", DEBUG_SHOW_ROADS);
 					return;
 				}
 				case SDLK_F10:
@@ -229,7 +232,7 @@ void CityTileView::eventOccurred(Event *e)
 						DEBUG_SHOW_MISC_TYPE = 0;
 						DEBUG_LAYER = -1;
 					}
-					LogWarning("Debug tube display set to %s", DEBUG_SHOW_TUBE);
+					LogWarning("Debug tube display set to {}", DEBUG_SHOW_TUBE);
 					return;
 				}
 				case SDLK_KP_0:
@@ -438,7 +441,7 @@ void CityTileView::render()
 													          DEBUG_SHOW_MISC_TYPE - 1;
 													break;
 												default:
-													LogError("Unhandled DEBUG_SHOW_WALK_TYPE %d",
+													LogError("Unhandled DEBUG_SHOW_WALK_TYPE {}",
 													         DEBUG_SHOW_MISC_TYPE);
 													DEBUG_SHOW_MISC_TYPE = 0;
 													break;
@@ -1082,7 +1085,7 @@ void CityTileView::update()
 		}
 		else
 		{
-			LogError("Unhandled hoursClamped %d", hour);
+			LogError("Unhandled hoursClamped {}", hour);
 		}
 
 		for (int i = 0; i < 256; i++)

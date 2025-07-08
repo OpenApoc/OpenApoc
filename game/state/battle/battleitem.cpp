@@ -246,7 +246,7 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 				               std::min(newPosition.z, previousPosition.z)};
 				break;
 			default:
-				LogError("What the hell is this item colliding with? Type is %d",
+				LogError("What the hell is this item colliding with? Type is {}",
 				         (int)c.obj->getType());
 				break;
 		}
@@ -277,7 +277,8 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 		// Fell below 0???
 		if (newPosition.z < 0)
 		{
-			LogError("Item at %f %f fell off the end of the world!?", newPosition.x, newPosition.y);
+			LogError("Item at {:f} {:f} fell off the end of the world!?", newPosition.x,
+			         newPosition.y);
 			die(state, false);
 			return;
 		}

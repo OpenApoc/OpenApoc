@@ -1,4 +1,5 @@
 #include "game/state/rules/city/vammotype.h"
+#include "framework/logger.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc
@@ -21,7 +22,7 @@ template <> sp<VAmmoType> StateObject<VAmmoType>::get(const GameState &state, co
 	auto it = state.vehicle_ammo.find(id);
 	if (it == state.vehicle_ammo.end())
 	{
-		LogError("No vammo type matching ID \"%s\"", id);
+		LogError("No vammo type matching ID \"{}\"", id);
 		return nullptr;
 	}
 	return it->second;

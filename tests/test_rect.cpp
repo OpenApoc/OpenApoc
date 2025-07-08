@@ -14,7 +14,7 @@ static bool test_one_rect_compaction(std::set<Rect<T>> rect_set, unsigned expect
 {
 	if (rect_set.size() != expected_start_count)
 	{
-		LogError("Rect set has size %u at start, expected %u", (unsigned)rect_set.size(),
+		LogError("Rect set has size {} at start, expected {}", (unsigned)rect_set.size(),
 		         expected_start_count);
 		return false;
 	}
@@ -27,7 +27,7 @@ static bool test_one_rect_compaction(std::set<Rect<T>> rect_set, unsigned expect
 	}
 	if (num_collapsed && num_collapsed >= expected_start_count)
 	{
-		LogError("Somehow managed to collapse %u rects in a set containing %u rects", num_collapsed,
+		LogError("Somehow managed to collapse {} rects in a set containing {} rects", num_collapsed,
 		         expected_start_count);
 		return false;
 	}
@@ -45,7 +45,7 @@ static bool test_one_rect_compaction(std::set<Rect<T>> rect_set, unsigned expect
 
 	if (expected_end_size && rect_set.size() != expected_end_size)
 	{
-		LogError("Expected to collapse to %u rects but got %u", (unsigned)rect_set.size(),
+		LogError("Expected to collapse to {} rects but got {}", (unsigned)rect_set.size(),
 		         expected_end_size);
 		return false;
 	}
@@ -139,7 +139,7 @@ void test_point_within(Rect<int> r, Vec2<int> p, bool expected)
 {
 	if (r.within(p) != expected)
 	{
-		LogError("Point %s incorrectly %s rect %s", p, expected ? "not within" : "within", r);
+		LogError("Point {} incorrectly {} rect {}", p, expected ? "not within" : "within", r);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -147,7 +147,7 @@ void test_rect_within(Rect<int> r1, Rect<int> r2, bool expected)
 {
 	if (r1.within(r2) != expected)
 	{
-		LogError("Rect %s incorrectly %s rect %s", r2, expected ? "not within" : "within", r1);
+		LogError("Rect {} incorrectly {} rect {}", r2, expected ? "not within" : "within", r1);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -155,7 +155,7 @@ void test_rect_intersects(Rect<int> r1, Rect<int> r2, bool expected)
 {
 	if (r1.intersects(r2) != expected)
 	{
-		LogError("Rect %s incorrectly %s rect %s", r2,
+		LogError("Rect {} incorrectly {} rect {}", r2,
 		         expected ? "does not intersect" : "intersects", r1);
 		exit(EXIT_FAILURE);
 	}

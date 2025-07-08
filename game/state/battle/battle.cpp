@@ -1,6 +1,7 @@
 #include "game/state/battle/battle.h"
 #include "framework/configfile.h"
 #include "framework/framework.h"
+#include "framework/logger.h"
 #include "framework/sound.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/battle/battledoor.h"
@@ -348,7 +349,7 @@ bool Battle::initialMapCheck(GameState &state, std::list<StateRef<Agent>> agents
 			{
 				continue;
 			}
-			LogWarning("Los block center %s visible from %s", ePos, sPos);
+			LogWarning("Los block center {} visible from {}", ePos, sPos);
 			enemySpawn->low_priority = true;
 		}
 	}
@@ -446,7 +447,7 @@ void Battle::initialMapPartRemoval(GameState &state)
 					}
 					for (auto &p : partsToKill)
 					{
-						LogWarning("Removing MP %s at %s as it's blocking unit %s",
+						LogWarning("Removing MP {} at {} as it's blocking unit {}",
 						           p->getOwner()->type.id, p->getPosition(), u.first);
 						auto mp = p->getOwner();
 						mp->destroyed = true;
@@ -508,7 +509,7 @@ void Battle::initialMapPartLinkUp()
 		if (mp->willCollapse())
 		{
 			auto pos = mp->tileObject->getOwningTile()->position;
-			LogWarning("MP %s SBT %d at %s is UNLINKED", mp->type.id,
+			LogWarning("MP {} SBT {} at {} is UNLINKED", mp->type.id,
 			           (int)mp->type->getVanillaSupportedById(), pos);
 		}
 	}
@@ -543,7 +544,7 @@ void Battle::initialMapPartLinkUp()
 		if (mp->willCollapse())
 		{
 			auto pos = mp->tileObject->getOwningTile()->position;
-			LogWarning("MP %s SBT %d at %s is going to fall", mp->type.id,
+			LogWarning("MP {} SBT {} at {} is going to fall", mp->type.id,
 			           (int)mp->type->getVanillaSupportedById(), pos);
 		}
 	}
@@ -2411,7 +2412,7 @@ void Battle::giveInterruptChanceToUnit(GameState &state, StateRef<BattleUnit> gi
 		}
 		else
 		{
-			LogWarning("Interrupting AI %s for unit %s decided to %s", decision.ai, receiver->id,
+			LogWarning("Interrupting AI {} for unit {} decided to {}", decision.ai, receiver->id,
 			           decision.getName());
 			receiver->aiList.reset(state, *receiver);
 			if (interruptQueue.empty())
@@ -3639,16 +3640,16 @@ void Battle::loadImagePacks(GameState &state)
 		if (imagePackName.length() == 0)
 			continue;
 		auto imagePackPath = BattleUnitImagePack::getImagePackPath() + "/" + imagePackName;
-		LogInfo("Loading image pack \"%s\" from \"%s\"", imagePackName, imagePackPath);
+		LogInfo("Loading image pack \"{}\" from \"{}\"", imagePackName, imagePackPath);
 		auto imagePack = mksp<BattleUnitImagePack>();
 		if (!imagePack->loadImagePack(state, imagePackPath))
 		{
-			LogError("Failed to load image pack \"%s\" from \"%s\"", imagePackName, imagePackPath);
+			LogError("Failed to load image pack \"{}\" from \"{}\"", imagePackName, imagePackPath);
 			continue;
 		}
-		state.battle_unit_image_packs[format("%s%s", BattleUnitImagePack::getPrefix(),
-		                                     imagePackName)] = imagePack;
-		LogInfo("Loaded image pack \"%s\" from \"%s\"", imagePackName, imagePackPath);
+		state.battle_unit_image_packs[fmt::format("{}{}", BattleUnitImagePack::getPrefix(),
+		                                          imagePackName)] = imagePack;
+		LogInfo("Loaded image pack \"{}\" from \"{}\"", imagePackName, imagePackPath);
 	}
 }
 
@@ -3742,17 +3743,17 @@ void Battle::loadAnimationPacks(GameState &state)
 	{
 		auto animationPackPath =
 		    BattleUnitAnimationPack::getAnimationPackPath() + "/" + animationPackName;
-		LogInfo("Loading animation pack \"%s\" from \"%s\"", animationPackName, animationPackPath);
+		LogInfo("Loading animation pack \"{}\" from \"{}\"", animationPackName, animationPackPath);
 		auto animationPack = mksp<BattleUnitAnimationPack>();
 		if (!animationPack->loadAnimationPack(state, animationPackPath))
 		{
-			LogError("Failed to load animation pack \"%s\" from \"%s\"", animationPackName,
+			LogError("Failed to load animation pack \"{}\" from \"{}\"", animationPackName,
 			         animationPackPath);
 			continue;
 		}
-		state.battle_unit_animation_packs[format("%s%s", BattleUnitAnimationPack::getPrefix(),
-		                                         animationPackName)] = animationPack;
-		LogInfo("Loaded animation pack \"%s\" from \"%s\"", animationPackName, animationPackPath);
+		state.battle_unit_animation_packs[fmt::format("{}{}", BattleUnitAnimationPack::getPrefix(),
+		                                              animationPackName)] = animationPack;
+		LogInfo("Loaded animation pack \"{}\" from \"{}\"", animationPackName, animationPackPath);
 	}
 }
 

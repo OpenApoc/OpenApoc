@@ -2,6 +2,7 @@
 #define _USE_MATH_DEFINES
 #endif
 #include "game/state/tilemap/tileobject_vehicle.h"
+#include "framework/logger.h"
 #include "framework/renderer.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"

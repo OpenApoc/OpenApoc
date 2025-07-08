@@ -2,6 +2,7 @@
 
 #include "game/ui/components/equipscreen.h"
 #include "framework/framework.h"
+#include "framework/logger.h"
 #include "framework/renderer.h"
 #include <cmath>
 
@@ -149,7 +150,7 @@ void EquipmentPaperDoll::onRender()
 		auto *slot = getSlotAtPosition(pos, slotList);
 		if (!slot)
 		{
-			LogWarning("Equipment at %s not in slot", pos);
+			LogWarning("Equipment at {} not in slot", pos);
 		}
 		auto equipmentSize = equipment->getEquipmentSlotSize();
 		auto alignX = slot->align_x;

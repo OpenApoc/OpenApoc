@@ -2,6 +2,7 @@
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/image.h"
+#include "framework/logger.h"
 #include "library/sp.h"
 
 namespace OpenApoc
@@ -14,7 +15,7 @@ sp<PaletteImage> BitmapFont::getString(const UString &Text)
 	if (Text.find('\n') != std::string::npos)
 	{
 		LogWarning(
-		    "Multiline text not supported. Newline characters will be ignored. Text : \"%s\"",
+		    "Multiline text not supported. Newline characters will be ignored. Text : \"{}\"",
 		    Text);
 	}
 	int height = this->getFontHeight();
@@ -76,7 +77,7 @@ sp<PaletteImage> BitmapFont::getGlyph(char32_t codepoint)
 	{
 		// FIXME: Hack - assume all missing glyphs are spaces
 		// TODO: Fallback fonts?
-		LogWarning("Font %s missing glyph for character \"%s\" (codepoint %u)", this->getName(),
+		LogWarning("Font {} missing glyph for character \"{}\" (codepoint {})", this->getName(),
 		           to_ustring(std::u32string(1, codepoint)), static_cast<uint32_t>(codepoint));
 		auto missingGlyph = this->getGlyph(to_char32(' '));
 		fontbitmaps.emplace(codepoint, missingGlyph);
@@ -106,13 +107,13 @@ sp<BitmapFont> BitmapFont::loadFont(const std::map<char32_t, UString> &glyphMap,
 		auto fontImage = fw().data->loadImage(p.second);
 		if (!fontImage)
 		{
-			LogError("Failed to read glyph image \"%s\"", p.second);
+			LogError("Failed to read glyph image \"{}\"", p.second);
 			continue;
 		}
 		auto paletteImage = std::dynamic_pointer_cast<PaletteImage>(fontImage);
 		if (!paletteImage)
 		{
-			LogError("Glyph image \"%s\" doesn't look like a PaletteImage", p.second);
+			LogError("Glyph image \"{}\" doesn't look like a PaletteImage", p.second);
 			continue;
 		}
 		unsigned int maxWidth = 0;
@@ -188,7 +189,7 @@ std::list<UString> BitmapFont::wordWrapText(const UString &Text, int MaxWidth)
 				{
 					if (currentLine == "")
 					{
-						LogWarning("No break in line \"%s\" found - this will probably overflow "
+						LogWarning("No break in line \"{}\" found - this will probably overflow "
 						           "the control",
 						           currentTestLine);
 						currentLine = currentTestLine;

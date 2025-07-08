@@ -1,5 +1,6 @@
 #include "framework/data.h"
 #include "framework/framework.h"
+#include "framework/logger.h"
 #include "game/state/battle/ai/aitype.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/aequipmenttype.h"
@@ -78,15 +79,15 @@ namespace OpenApoc
 void fillAgentImagePacksByDefault(GameState &state, sp<AgentType> a, UString imagePackName)
 {
 	a->image_packs[a->image_packs.size() - 1][BodyPart::Body] = {
-	    &state, format("%s%s%s", BattleUnitImagePack::getPrefix(), imagePackName, "a")};
+	    &state, fmt::format("{}{}{}", BattleUnitImagePack::getPrefix(), imagePackName, "a")};
 	a->image_packs[a->image_packs.size() - 1][BodyPart::Legs] = {
-	    &state, format("%s%s%s", BattleUnitImagePack::getPrefix(), imagePackName, "b")};
+	    &state, fmt::format("{}{}{}", BattleUnitImagePack::getPrefix(), imagePackName, "b")};
 	a->image_packs[a->image_packs.size() - 1][BodyPart::Helmet] = {
-	    &state, format("%s%s%s", BattleUnitImagePack::getPrefix(), imagePackName, "c")};
+	    &state, fmt::format("{}{}{}", BattleUnitImagePack::getPrefix(), imagePackName, "c")};
 	a->image_packs[a->image_packs.size() - 1][BodyPart::LeftArm] = {
-	    &state, format("%s%s%s", BattleUnitImagePack::getPrefix(), imagePackName, "d")};
+	    &state, fmt::format("{}{}{}", BattleUnitImagePack::getPrefix(), imagePackName, "d")};
 	a->image_packs[a->image_packs.size() - 1][BodyPart::RightArm] = {
-	    &state, format("%s%s%s", BattleUnitImagePack::getPrefix(), imagePackName, "e")};
+	    &state, fmt::format("{}{}{}", BattleUnitImagePack::getPrefix(), imagePackName, "e")};
 }
 
 void pushEquipmentSlot(sp<AgentEquipmentLayout> a, int x, int y, int w = 1, int h = 1,
@@ -115,7 +116,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 	auto portraitSmallTabFile = fw().data->fs.open(portraitSmallTabFileName);
 	if (!portraitSmallTabFile)
 	{
-		LogError("Failed to open small portrait TAB file \"%s\"", portraitSmallTabFileName);
+		LogError("Failed to open small portrait TAB file \"{}\"", portraitSmallTabFileName);
 		return;
 	}
 	size_t portraitSmallCount = portraitSmallTabFile.size() / 4;
@@ -124,7 +125,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 	auto portraitLargeTabFile = fw().data->fs.open(portraitLargeTabFileName);
 	if (!portraitLargeTabFile)
 	{
-		LogError("Failed to open Large portrait TAB file \"%s\"", portraitLargeTabFileName);
+		LogError("Failed to open Large portrait TAB file \"{}\"", portraitLargeTabFileName);
 		return;
 	}
 	size_t portraitLargeCount = portraitLargeTabFile.size() / 4;
@@ -134,12 +135,12 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 	for (unsigned i = 0; i < portraitSmallCount; i++)
 	{
 		auto p = AgentPortrait();
-		p.icon = fw().data->loadImage(format(
-		    "PCK:xcom3/ufodata/agntico.pck:xcom3/ufodata/agntico.tab:%d:xcom3/ufodata/pal_01.dat",
+		p.icon = fw().data->loadImage(fmt::format(
+		    "PCK:xcom3/ufodata/agntico.pck:xcom3/ufodata/agntico.tab:{}:xcom3/ufodata/pal_01.dat",
 		    i));
 		if (i < portraitLargeCount)
-			p.photo = fw().data->loadImage(format(
-			    "PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:%d:xcom3/ufodata/pal_01.dat",
+			p.photo = fw().data->loadImage(fmt::format(
+			    "PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:{}:xcom3/ufodata/pal_01.dat",
 			    i));
 		portraits.push_back(p);
 	}
@@ -155,7 +156,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 		auto data = data_u.agent_types->get(i);
 
 		a->name = data_u.agent_type_names->get(i);
-		UString id = format("%s%s", AgentType::getPrefix(), canon_string(a->name));
+		UString id = fmt::format("{}{}", AgentType::getPrefix(), canon_string(a->name));
 
 		a->id = id;
 
@@ -379,14 +380,14 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 					// They all use same animation and differ in head image sets
 					a->appearance_count = 4;
 					a->animation_packs.emplace_back(
-					    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "civ"));
+					    &state, fmt::format("{}{}", BattleUnitAnimationPack::getPrefix(), "civ"));
 					a->animation_packs.emplace_back(
-					    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "civ"));
+					    &state, fmt::format("{}{}", BattleUnitAnimationPack::getPrefix(), "civ"));
 					a->animation_packs.emplace_back(
-					    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "civ"));
+					    &state, fmt::format("{}{}", BattleUnitAnimationPack::getPrefix(), "civ"));
 				}
 				a->animation_packs.emplace_back(
-				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "civ"));
+				    &state, fmt::format("{}{}", BattleUnitAnimationPack::getPrefix(), "civ"));
 				if (i == UNIT_TYPE_GREY)
 				{
 					bodyTypeName = "GREY";
@@ -401,9 +402,9 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			case UNIT_TYPE_MULTIWORM_EGG:
 				a->appearance_count = 2;
 				a->animation_packs.emplace_back(
-				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "mwegg1"));
+				    &state, fmt::format("{}{}", BattleUnitAnimationPack::getPrefix(), "mwegg1"));
 				a->animation_packs.emplace_back(
-				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "mwegg2"));
+				    &state, fmt::format("{}{}", BattleUnitAnimationPack::getPrefix(), "mwegg2"));
 				bodyTypeName = "MULTIWORM_EGG";
 				infiltrationID = 0;
 				a->growthChance = 20;
@@ -415,9 +416,9 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			case UNIT_TYPE_CHRYSALIS:
 				a->appearance_count = 2;
 				a->animation_packs.emplace_back(
-				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "chrys1"));
+				    &state, fmt::format("{}{}", BattleUnitAnimationPack::getPrefix(), "chrys1"));
 				a->animation_packs.emplace_back(
-				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "chrys2"));
+				    &state, fmt::format("{}{}", BattleUnitAnimationPack::getPrefix(), "chrys2"));
 				bodyTypeName = "CHRYSALIS";
 				infiltrationID = 4;
 				a->growthChance = 12;
@@ -434,7 +435,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				break;
 			case UNIT_TYPE_QUEENSPAWN:
 				a->animation_packs.emplace_back(
-				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "queen"));
+				    &state, fmt::format("{}{}", BattleUnitAnimationPack::getPrefix(), "queen"));
 				bodyTypeName = "QUEENSPAWN";
 				infiltrationID = 11;
 				a->growthChance = 0;
@@ -445,7 +446,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			// Non-humanoid aliens
 			case UNIT_TYPE_BRAINSUCKER:
 				a->animation_packs.emplace_back(
-				    &state, format("%sbsk", BattleUnitAnimationPack::getPrefix()));
+				    &state, fmt::format("{}bsk", BattleUnitAnimationPack::getPrefix()));
 				bodyTypeName = "BRAINSUCKER";
 				infiltrationID = 1;
 				a->growthChance = 20;
@@ -455,7 +456,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				break;
 			case UNIT_TYPE_HYPERWORM:
 				a->animation_packs.emplace_back(
-				    &state, format("%shypr", BattleUnitAnimationPack::getPrefix()));
+				    &state, fmt::format("{}hypr", BattleUnitAnimationPack::getPrefix()));
 				bodyTypeName = "HYPERWORM";
 				infiltrationID = 3;
 				a->growthChance = 12;
@@ -466,7 +467,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				break;
 			case UNIT_TYPE_SPITTER:
 				a->animation_packs.emplace_back(
-				    &state, format("%sspitr", BattleUnitAnimationPack::getPrefix()));
+				    &state, fmt::format("{}spitr", BattleUnitAnimationPack::getPrefix()));
 				bodyTypeName = "SPITTER";
 				infiltrationID = 7;
 				a->growthChance = 2;
@@ -475,7 +476,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				break;
 			case UNIT_TYPE_POPPER:
 				a->animation_packs.emplace_back(
-				    &state, format("%spopper", BattleUnitAnimationPack::getPrefix()));
+				    &state, fmt::format("{}popper", BattleUnitAnimationPack::getPrefix()));
 				bodyTypeName = "POPPER";
 				infiltrationID = 8;
 				a->growthChance = 2;
@@ -484,7 +485,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				break;
 			case UNIT_TYPE_MICRONOID:
 				a->animation_packs.emplace_back(
-				    &state, format("%smicro", BattleUnitAnimationPack::getPrefix()));
+				    &state, fmt::format("{}micro", BattleUnitAnimationPack::getPrefix()));
 				bodyTypeName = "MICRONOID";
 				infiltrationID = 12;
 				a->growthChance = 0;
@@ -494,7 +495,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			// Special case: Multiworm, can only crawl
 			case UNIT_TYPE_MULTIWORM:
 				a->animation_packs.emplace_back(
-				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "multi"));
+				    &state, fmt::format("{}{}", BattleUnitAnimationPack::getPrefix(), "multi"));
 				bodyTypeName = "MULTIWORM";
 				infiltrationID = 2;
 				a->growthChance = 12;
@@ -506,7 +507,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			// Special case: Megaspawn, can strafe
 			case UNIT_TYPE_MEGASPAWN:
 				a->animation_packs.emplace_back(
-				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "mega"));
+				    &state, fmt::format("{}{}", BattleUnitAnimationPack::getPrefix(), "mega"));
 				bodyTypeName = "MEGASPAWN";
 				infiltrationID = 9;
 				a->growthChance = 2;
@@ -517,7 +518,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			// Special case: Psimorph, non-humanoid that can only fly
 			case UNIT_TYPE_PSIMORPH:
 				a->animation_packs.emplace_back(
-				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "psi"));
+				    &state, fmt::format("{}{}", BattleUnitAnimationPack::getPrefix(), "psi"));
 				bodyTypeName = "PSIMORPH";
 				infiltrationID = 10;
 				a->growthChance = 2;
@@ -548,15 +549,15 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				{
 					a->appearance_count = 2;
 					a->animation_packs.emplace_back(
-					    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "unit"));
+					    &state, fmt::format("{}{}", BattleUnitAnimationPack::getPrefix(), "unit"));
 				}
 				a->animation_packs.emplace_back(
-				    &state, format("%s%s", BattleUnitAnimationPack::getPrefix(), "unit"));
+				    &state, fmt::format("{}{}", BattleUnitAnimationPack::getPrefix(), "unit"));
 				break;
 		}
 
 		a->bodyType = {&state,
-		               format("%s%s", AgentBodyType::getPrefix(), canon_string(bodyTypeName))};
+		               fmt::format("{}{}", AgentBodyType::getPrefix(), canon_string(bodyTypeName))};
 
 		if (infiltrationID != -1)
 		{
@@ -570,26 +571,28 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 		{
 			// Aliens with unique shadows
 			case UNIT_TYPE_BRAINSUCKER:
-				a->shadow_pack = {&state, format("%s%s", BattleUnitImagePack::getPrefix(), "bsks")};
+				a->shadow_pack = {&state,
+				                  fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "bsks")};
 				break;
 			case UNIT_TYPE_HYPERWORM:
 				a->shadow_pack = {&state,
-				                  format("%s%s", BattleUnitImagePack::getPrefix(), "hyprs")};
+				                  fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "hyprs")};
 				break;
 			case UNIT_TYPE_SPITTER:
 				a->shadow_pack = {&state,
-				                  format("%s%s", BattleUnitImagePack::getPrefix(), "spitrs")};
+				                  fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "spitrs")};
 				break;
 			case UNIT_TYPE_POPPER:
 				a->shadow_pack = {&state,
-				                  format("%s%s", BattleUnitImagePack::getPrefix(), "poppers")};
+				                  fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "poppers")};
 				break;
 			case UNIT_TYPE_MEGASPAWN:
 				a->shadow_pack = {&state,
-				                  format("%s%s", BattleUnitImagePack::getPrefix(), "megas")};
+				                  fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "megas")};
 				break;
 			case UNIT_TYPE_PSIMORPH:
-				a->shadow_pack = {&state, format("%s%s", BattleUnitImagePack::getPrefix(), "psis")};
+				a->shadow_pack = {&state,
+				                  fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "psis")};
 				break;
 
 			// Aliens with no shadows
@@ -603,7 +606,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			// Humanoid aliens and humans
 			default:
 				a->shadow_pack = {&state,
-				                  format("%s%s", BattleUnitImagePack::getPrefix(), "shadow")};
+				                  fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "shadow")};
 				break;
 		}
 
@@ -617,7 +620,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			case UNIT_TYPE_QUANTUM_PHYSIST:
 				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/scien.pcx");
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "scntst")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "scntst")};
 				break;
 			case UNIT_TYPE_GANG_LEADER:
 				fillAgentImagePacksByDefault(state, a, "gangl");
@@ -626,7 +629,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				// Game has no picture for this unit.
 				// I think rm1 (upper class male) fits him best.
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "rm1")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "rm1")};
 				break;
 			case UNIT_TYPE_CULT_LEADER:
 				fillAgentImagePacksByDefault(state, a, "cultl");
@@ -664,141 +667,141 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				break;
 			case UNIT_TYPE_ANDROID:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robot")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "robot")};
 				a->image_packs[0][BodyPart::Helmet] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robo1")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "robo1")};
 				a->image_packs.push_back(std::map<BodyPart, StateRef<BattleUnitImagePack>>());
 				a->image_packs[1][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robot")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "robot")};
 				a->image_packs[1][BodyPart::Helmet] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robo2")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "robo2")};
 				a->image_packs.push_back(std::map<BodyPart, StateRef<BattleUnitImagePack>>());
 				a->image_packs[2][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robot")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "robot")};
 				a->image_packs[2][BodyPart::Helmet] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robo3")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "robo3")};
 				a->image_packs.push_back(std::map<BodyPart, StateRef<BattleUnitImagePack>>());
 				a->image_packs[3][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robot")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "robot")};
 				a->image_packs[3][BodyPart::Helmet] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "robo4")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "robo4")};
 				break;
 			case UNIT_TYPE_GREY:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "grey")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "grey")};
 				break;
 			case UNIT_TYPE_UPPER_CLASS_FEMALE_1:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "rw1")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "rw1")};
 				break;
 			case UNIT_TYPE_UPPER_CLASS_FEMALE_2:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "rw2")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "rw2")};
 				break;
 			case UNIT_TYPE_UPPER_CLASS_FEMALE_3:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "rw3")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "rw3")};
 				break;
 			case UNIT_TYPE_UPPER_CLASS_MALE_1:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "rm1")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "rm1")};
 				break;
 			case UNIT_TYPE_UPPER_CLASS_MALE_2:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "rm2")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "rm2")};
 				break;
 			case UNIT_TYPE_UPPER_CLASS_MALE_3:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "rm3")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "rm3")};
 				break;
 			case UNIT_TYPE_CIVILIAN_FEMALE_1:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "nw1")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "nw1")};
 				break;
 			case UNIT_TYPE_CIVILIAN_FEMALE_2:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "nw2")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "nw2")};
 				break;
 			case UNIT_TYPE_CIVILIAN_FEMALE_3:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "nw3")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "nw3")};
 				break;
 			case UNIT_TYPE_CIVILIAN_MALE_1:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "nm1")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "nm1")};
 				break;
 			case UNIT_TYPE_CIVILIAN_MALE_2:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "nm2")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "nm2")};
 				break;
 			case UNIT_TYPE_CIVILIAN_MALE_3:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "nm3")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "nm3")};
 				break;
 			case UNIT_TYPE_LOWER_CLASS_MALE_1:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "sm1")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "sm1")};
 				break;
 			case UNIT_TYPE_LOWER_CLASS_MALE_2:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "sm2")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "sm2")};
 				break;
 			case UNIT_TYPE_LOWER_CLASS_MALE_3:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "sm3")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "sm3")};
 				break;
 			case UNIT_TYPE_LOWER_CLASS_FEMALE_1:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "sw1")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "sw1")};
 				break;
 			case UNIT_TYPE_LOWER_CLASS_FEMALE_2:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "sw2")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "sw2")};
 				break;
 			case UNIT_TYPE_LOWER_CLASS_FEMALE_3:
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "sw3")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "sw3")};
 				break;
 			case UNIT_TYPE_MULTIWORM_EGG:
 				a->inventoryBackground =
 				    fw().data->loadImage("xcom3/tacdata/equippic/mwormegg.pcx");
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "mwegga")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "mwegga")};
 				a->image_packs[0][BodyPart::Helmet] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "mweggb")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "mweggb")};
 				a->image_packs.push_back(std::map<BodyPart, StateRef<BattleUnitImagePack>>());
 				a->image_packs[1][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "mwegga")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "mwegga")};
 				a->image_packs[1][BodyPart::Helmet] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "mweggb")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "mweggb")};
 				break;
 			case UNIT_TYPE_BRAINSUCKER:
 				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/sucker.pcx");
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "bsk")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "bsk")};
 				break;
 			case UNIT_TYPE_MULTIWORM:
 				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/mworm.pcx");
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "multi")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "multi")};
 				break;
 			case UNIT_TYPE_HYPERWORM:
 				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/hyperwm.pcx");
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "hypr")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "hypr")};
 				break;
 			case UNIT_TYPE_CHRYSALIS:
 				a->inventoryBackground =
 				    fw().data->loadImage("xcom3/tacdata/equippic/chrysali.pcx");
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "chrysa")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "chrysa")};
 				a->image_packs[0][BodyPart::Helmet] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "chrysb")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "chrysb")};
 				a->image_packs.push_back(std::map<BodyPart, StateRef<BattleUnitImagePack>>());
 				a->image_packs[1][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "chrysa")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "chrysa")};
 				a->image_packs[1][BodyPart::Helmet] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "chrysb")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "chrysb")};
 				break;
 			case UNIT_TYPE_ANTHROPOD:
 				a->inventoryBackground =
@@ -812,12 +815,12 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			case UNIT_TYPE_SPITTER:
 				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/spitter.pcx");
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "spitr")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "spitr")};
 				break;
 			case UNIT_TYPE_POPPER:
 				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/popper.pcx");
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "popper")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "popper")};
 				break;
 			case UNIT_TYPE_MEGASPAWN:
 				a->inventoryBackground =
@@ -829,20 +832,20 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			case UNIT_TYPE_PSIMORPH:
 				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/psi_m.pcx");
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "psi")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "psi")};
 				break;
 			case UNIT_TYPE_QUEENSPAWN:
 				a->inventoryBackground = fw().data->loadImage("xcom3/tacdata/equippic/queen.pcx");
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "queena")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "queena")};
 				a->image_packs[0][BodyPart::Legs] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "queenb")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "queenb")};
 				break;
 			case UNIT_TYPE_MICRONOID:
 				a->inventoryBackground =
 				    fw().data->loadImage("xcom3/tacdata/equippic/agregate.pcx");
 				a->image_packs[0][BodyPart::Body] = {
-				    &state, format("%s%s", BattleUnitImagePack::getPrefix(), "micro")};
+				    &state, fmt::format("{}{}", BattleUnitImagePack::getPrefix(), "micro")};
 				break;
 		}
 
@@ -969,45 +972,45 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			case UNIT_TYPE_MICRONOID:
 				if (walkSfxNumbered)
 					for (int i = 1; i <= walkSfxCount; i++)
-						a->walkSfx.push_back(fw().data->loadSample(format(
-						    "RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/%s%d.raw:22050",
+						a->walkSfx.push_back(fw().data->loadSample(fmt::format(
+						    "RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/{}{}.raw:22050",
 						    walkSfxName, i)));
 				else
 					a->walkSfx.push_back(fw().data->loadSample(
-					    format("RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/%s.raw:22050",
-					           walkSfxName)));
+					    fmt::format("RAWSOUND:xcom3/rawsound/tactical/aliens/movemnts/{}.raw:22050",
+					                walkSfxName)));
 				if (crySfxNumbered)
 					for (int i = 1; i <= crySfxCount; i++)
-						a->crySfx.push_back(fw().data->loadSample(
-						    format("RAWSOUND:xcom3/rawsound/tactical/aliens/cries/%s%d.raw:22050",
-						           crySfxName, i)));
+						a->crySfx.push_back(fw().data->loadSample(fmt::format(
+						    "RAWSOUND:xcom3/rawsound/tactical/aliens/cries/{}{}.raw:22050",
+						    crySfxName, i)));
 				else
-					a->crySfx.push_back(fw().data->loadSample(format(
-					    "RAWSOUND:xcom3/rawsound/tactical/aliens/cries/%s.raw:22050", crySfxName)));
+					a->crySfx.push_back(fw().data->loadSample(fmt::format(
+					    "RAWSOUND:xcom3/rawsound/tactical/aliens/cries/{}.raw:22050", crySfxName)));
 				if (dieSfxName.length() > 0)
 					a->dieSfx[AgentType::Gender::Male].push_back(fw().data->loadSample(
-					    format("RAWSOUND:xcom3/rawsound/tactical/aliens/deaths/%s.raw:22050",
-					           dieSfxName)));
+					    fmt::format("RAWSOUND:xcom3/rawsound/tactical/aliens/deaths/{}.raw:22050",
+					                dieSfxName)));
 				break;
 			default:
 				// Humans have no walk sounds and no cries
 				for (int i = 1; i <= 3; i++)
 				{
 					a->damageSfx[AgentType::Gender::Male].push_back(fw().data->loadSample(
-					    format("RAWSOUND:xcom3/rawsound/extra/hpainm%d.raw:22050", i)));
+					    fmt::format("RAWSOUND:xcom3/rawsound/extra/hpainm{}.raw:22050", i)));
 					a->fatalWoundSfx[AgentType::Gender::Male].push_back(fw().data->loadSample(
-					    format("RAWSOUND:xcom3/rawsound/extra/hdethm%d.raw:22050", i)));
+					    fmt::format("RAWSOUND:xcom3/rawsound/extra/hdethm{}.raw:22050", i)));
 					a->dieSfx[AgentType::Gender::Male].push_back(fw().data->loadSample(
-					    format("RAWSOUND:xcom3/rawsound/extra/hdethm%d.raw:22050", i)));
+					    fmt::format("RAWSOUND:xcom3/rawsound/extra/hdethm{}.raw:22050", i)));
 				}
 				for (int i = 1; i <= 2; i++)
 				{
 					a->damageSfx[AgentType::Gender::Female].push_back(fw().data->loadSample(
-					    format("RAWSOUND:xcom3/rawsound/extra/hpainf%d.raw:22050", i)));
+					    fmt::format("RAWSOUND:xcom3/rawsound/extra/hpainf{}.raw:22050", i)));
 					a->fatalWoundSfx[AgentType::Gender::Female].push_back(fw().data->loadSample(
-					    format("RAWSOUND:xcom3/rawsound/extra/hdethf%d.raw:22050", i)));
+					    fmt::format("RAWSOUND:xcom3/rawsound/extra/hdethf{}.raw:22050", i)));
 					a->dieSfx[AgentType::Gender::Female].push_back(fw().data->loadSample(
-					    format("RAWSOUND:xcom3/rawsound/extra/hdethf%d.raw:22050", i)));
+					    fmt::format("RAWSOUND:xcom3/rawsound/extra/hdethf{}.raw:22050", i)));
 				}
 				break;
 		}
@@ -1046,8 +1049,9 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 		a->armor[BodyPart::Legs] = data.armor_leg;
 		a->armor[BodyPart::RightArm] = data.armor_right;
 		a->damage_modifier = {
-		    &state, format("%s%s", DamageModifier::getPrefix(),
-		                   canon_string(data_t.damage_modifier_names->get(data.damage_modifier)))};
+		    &state,
+		    fmt::format("{}{}", DamageModifier::getPrefix(),
+		                canon_string(data_t.damage_modifier_names->get(data.damage_modifier)))};
 		a->inventory = data.inventory == 1;
 
 		UString name = "";
@@ -1081,18 +1085,18 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 
 				if (es_data.weapons[0].weapon_idx != 0xffffffff)
 					a->built_in_weapon_right = {
-					    &state, format("%s%s", AEquipmentType::getPrefix(),
-					                   canon_string(data_u.agent_equipment_names->get(
-					                       es_data.weapons[0].weapon_idx)))};
+					    &state, fmt::format("{}{}", AEquipmentType::getPrefix(),
+					                        canon_string(data_u.agent_equipment_names->get(
+					                            es_data.weapons[0].weapon_idx)))};
 				if (id == "AGENTTYPE_MULTIWORM")
 				{
 					a->built_in_weapon_left = {&state, "AEQUIPMENTTYPE_MULTIWORM_BURST"};
 				}
 				else if (es_data.weapons[1].weapon_idx != 0xffffffff)
 					a->built_in_weapon_left = {
-					    &state, format("%s%s", AEquipmentType::getPrefix(),
-					                   canon_string(data_u.agent_equipment_names->get(
-					                       es_data.weapons[1].weapon_idx)))};
+					    &state, fmt::format("{}{}", AEquipmentType::getPrefix(),
+					                        canon_string(data_u.agent_equipment_names->get(
+					                            es_data.weapons[1].weapon_idx)))};
 				name = "BUILTIN";
 			}
 		}
@@ -1101,7 +1105,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			name = "FULL";
 		}
 		a->equipment_layout = {
-		    &state, format("%s%s", AgentEquipmentLayout::getPrefix(), canon_string(name))};
+		    &state, fmt::format("{}{}", AgentEquipmentLayout::getPrefix(), canon_string(name))};
 
 		a->score = data.score;
 
@@ -1209,21 +1213,21 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 			case UNIT_TYPE_MICRONOID:
 			{
 				auto liveName =
-				    format("%s%s_ALIVE", AEquipmentType::getPrefix(), canon_string(a->name));
+				    fmt::format("{}{}_ALIVE", AEquipmentType::getPrefix(), canon_string(a->name));
 				auto deadName =
-				    format("%s%s_DEAD", AEquipmentType::getPrefix(), canon_string(a->name));
+				    fmt::format("{}{}_DEAD", AEquipmentType::getPrefix(), canon_string(a->name));
 
 				auto liveItem = mksp<AEquipmentType>();
 				liveItem->bioStorage = true;
 				liveItem->equipscreen_size = {6, 5};
 				liveItem->equipscreen_sprite =
-				    fw().data->loadImage(format("PCK:xcom3/ufodata/contico.pck:xcom3/ufodata/"
-				                                "contico.tab:%d:xcom3/ufodata/research.pcx",
-				                                liveIdx));
+				    fw().data->loadImage(fmt::format("PCK:xcom3/ufodata/contico.pck:xcom3/ufodata/"
+				                                     "contico.tab:{}:xcom3/ufodata/research.pcx",
+				                                     liveIdx));
 				liveItem->store_space = liveSpace;
 				liveItem->type = AEquipmentType::Type::Loot;
 				liveItem->bioRemains = {&state, deadName};
-				liveItem->name = format("Live %s", a->name);
+				liveItem->name = fmt::format("Live {}", a->name);
 				liveItem->score = a->score;
 				state.agent_equipment[liveName] = liveItem;
 				a->liveSpeciesItem = {&state, liveName};
@@ -1232,12 +1236,12 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 				deadItem->bioStorage = true;
 				deadItem->equipscreen_size = {6, 5};
 				deadItem->equipscreen_sprite =
-				    fw().data->loadImage(format("PCK:xcom3/ufodata/contico.pck:xcom3/ufodata/"
-				                                "contico.tab:%d:xcom3/ufodata/research.pcx",
-				                                deadIdx));
+				    fw().data->loadImage(fmt::format("PCK:xcom3/ufodata/contico.pck:xcom3/ufodata/"
+				                                     "contico.tab:{}:xcom3/ufodata/research.pcx",
+				                                     deadIdx));
 				deadItem->store_space = deadSpace;
 				deadItem->type = AEquipmentType::Type::Loot;
-				deadItem->name = format("Dead %s", a->name);
+				deadItem->name = fmt::format("Dead {}", a->name);
 				deadItem->score = 0;
 				state.agent_equipment[deadName] = deadItem;
 				a->deadSpeciesItem = {&state, deadName};
@@ -1254,7 +1258,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 	// None layout slot
 	{
 		UString name = "NONE";
-		UString id = format("%s%s", AgentEquipmentLayout::getPrefix(), canon_string(name));
+		UString id = fmt::format("{}{}", AgentEquipmentLayout::getPrefix(), canon_string(name));
 
 		auto a = mksp<AgentEquipmentLayout>();
 
@@ -1264,7 +1268,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 	// Builtin layout slot
 	{
 		UString name = "BUILTIN";
-		UString id = format("%s%s", AgentEquipmentLayout::getPrefix(), canon_string(name));
+		UString id = fmt::format("{}{}", AgentEquipmentLayout::getPrefix(), canon_string(name));
 
 		auto a = mksp<AgentEquipmentLayout>();
 		// Located off-screen, invisible in inventory
@@ -1279,7 +1283,7 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state) const
 	// FULL layout slot
 	{
 		UString name = "FULL";
-		UString id = format("%s%s", AgentEquipmentLayout::getPrefix(), canon_string(name));
+		UString id = fmt::format("{}{}", AgentEquipmentLayout::getPrefix(), canon_string(name));
 
 		auto a = mksp<AgentEquipmentLayout>();
 		pushEquipmentSlot(a, 1, 6, 3, 5, EquipmentSlotType::RightHand, AlignmentX::Centre,
@@ -1417,7 +1421,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 		a->allowed_movement_states.insert(MovementState::None);
 		a->allowed_body_states.insert(BodyState::Dead);
 
-		UString id = format("%s%s", AgentBodyType::getPrefix(), canon_string(name));
+		UString id = fmt::format("{}{}", AgentBodyType::getPrefix(), canon_string(name));
 
 		// Allowed facings (nothing means everything allowed)
 		switch (i)
@@ -1701,16 +1705,18 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 										    std::max(20, (a->height[entry.first] - 40 * z) / 2);
 										for (int i = 0; i < limit; i++)
 										{
-											a->voxelMaps[entry.first][pair.first]
-											            [z * a->size[entry.first][pair.first].y *
-											                 a->size[entry.first][pair.first].x +
-											             y * a->size[entry.first][pair.first].x + x]
-											                ->setSlice(
-											                    i, fw().data->loadVoxelSlice(format(
-											                           "LOFTEMPS:xcom3/tacdata/"
-											                           "loftemps.dat:xcom3/"
-											                           "tacdata/loftemps.tab:%d",
-											                           pair.second)));
+											a
+											    ->voxelMaps[entry.first][pair.first]
+											               [z * a->size[entry.first][pair.first].y *
+											                    a->size[entry.first][pair.first].x +
+											                y * a->size[entry.first][pair.first].x +
+											                x]
+											    ->setSlice(
+											        i,
+											        fw().data->loadVoxelSlice(fmt::format(
+											            "LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/"
+											            "tacdata/loftemps.tab:{}",
+											            pair.second)));
 										}
 									}
 								}
@@ -1720,7 +1726,7 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 					break;
 					default:
 						LogError(
-						    "Large units cannot have loftemps other than 19 or 20! encountered %d.",
+						    "Large units cannot have loftemps other than 19 or 20! encountered {}.",
 						    entry.second.y);
 						break;
 				}
@@ -1756,9 +1762,9 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 								for (int i = 0; i < (a->height[entry.first]) / 2; i++)
 								{
 									a->voxelMaps[entry.first][facing][0]->setSlice(
-									    i, fw().data->loadVoxelSlice(format(
+									    i, fw().data->loadVoxelSlice(fmt::format(
 									           "LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/"
-									           "loftemps.tab:%d",
+									           "loftemps.tab:{}",
 									           entry.second.y)));
 								}
 							}
@@ -1797,9 +1803,9 @@ void InitialGameStateExtractor::extractAgentBodyTypes(GameState &state) const
 								for (int i = 0; i < a->height[entry.first] / 2; i++)
 								{
 									a->voxelMaps[entry.first][pair.first][j]->setSlice(
-									    i, fw().data->loadVoxelSlice(format(
+									    i, fw().data->loadVoxelSlice(fmt::format(
 									           "LOFTEMPS:xcom3/tacdata/loftemps.dat:xcom3/tacdata/"
-									           "loftemps.tab:%d",
+									           "loftemps.tab:{}",
 									           pair.second[j])));
 								}
 							}
