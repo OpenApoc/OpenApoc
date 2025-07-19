@@ -97,6 +97,8 @@ class Framework
 	void toolTipTimerCallback(unsigned int interval, void *data);
 	void showToolTip(sp<Image> image, const Vec2<int> &position);
 
+	void setMouseGrab();
+
 	UString textGetClipboard();
 
 	void threadPoolTaskEnqueue(std::function<void()> task);

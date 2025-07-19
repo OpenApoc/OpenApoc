@@ -56,6 +56,7 @@
 						<size width="250" height="16"/>
 					</label>
 				</checkbox> -->
+				<!-- Left side -->
 				<checkbox id="DEBUGVIS_TOGGLE">
 					<position x="40" y="316"/>
 					<size width="270" height="16"/>
@@ -120,6 +121,18 @@
 						<position x="24" y="0"/>
 						<font>smalfont</font>
 						<size width="250" height="16"/>
+					</label>
+				</checkbox>
+				<!-- Right side -->
+				<checkbox id="MOUSEGRAB_TOGGLE">
+					<position x="311" y="316"/>
+					<size width="270" height="16"/>
+					<image>BUTTON_CHECKBOX_FALSE</image>
+					<imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
+					<label text="Toggle mouse grab">
+						<position x="24" y="0"/>
+						<font>smalfont</font>
+						<size width="270" height="16"/>
 					</label>
 				</checkbox>
 				<label id="CITYLIST_NAME">
