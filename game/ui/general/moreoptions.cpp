@@ -567,6 +567,7 @@ void MoreOptions::begin()
 	// TODO: Implement vanilla mode
 	// menuform->findControlTyped<CheckBox>("VANILLA_TOGGLE")
 	//    ->setChecked(config().getBool("Options.Misc.VanillaToggle"));
+	// Left side
 	menuform->findControlTyped<CheckBox>("DEBUGVIS_TOGGLE")
 	    ->setChecked(config().getBool("OpenApoc.NewFeature.DebugCommandsVisible"));
 	menuform->findControlTyped<CheckBox>("SCROLLSOUND_TOGGLE")
@@ -579,6 +580,9 @@ void MoreOptions::begin()
 	    ->setChecked(config().getBool("OpenApoc.NewFeature.EnableAgentTemplates"));
 	menuform->findControlTyped<CheckBox>("SEEDRNG_TOGGLE")
 	    ->setChecked(config().getBool("OpenApoc.NewFeature.SeedRng"));
+	// Right side
+	menuform->findControlTyped<CheckBox>("MOUSEGRAB_TOGGLE")
+	    ->setChecked(config().getBool("Framework.MouseCapture"));
 }
 
 void MoreOptions::pause() {}
@@ -602,6 +606,9 @@ void MoreOptions::finish()
 	             menuform->findControlTyped<CheckBox>("TEMPLATES_TOGGLE")->isChecked());
 	config().set("OpenApoc.NewFeature.SeedRng",
 	             menuform->findControlTyped<CheckBox>("SEEDRNG_TOGGLE")->isChecked());
+	config().set("Framework.MouseCapture",
+	             menuform->findControlTyped<CheckBox>("MOUSEGRAB_TOGGLE")->isChecked());
+	fw().setMouseGrab();
 	saveLists();
 }
 
