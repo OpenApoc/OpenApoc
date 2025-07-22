@@ -18,8 +18,8 @@
         <font>bigfont</font>
       </label>
       <label id="TEXT_FUNDS">
-        <position x="572" y="14"/>
-        <size width="60" height="10"/>
+        <position x="572" y="12"/>
+        <size width="60" height="14"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>

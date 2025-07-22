@@ -9,8 +9,8 @@
         <size width="640" height="480"/>
       </graphic>
       <label id="TEXT_FUNDS">
-        <position x="572" y="11"/>
-        <size width="60" height="10"/>
+        <position x="572" y="9"/>
+        <size width="60" height="14"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>smalfont</font>
       </label>
