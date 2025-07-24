@@ -273,11 +273,9 @@ void UfopaediaCategoryView::setFormStats()
 					if (data_id != "ORG_ALIEN")
 					{
 						orgLabels[1]->setText(tr("Balance"));
-						orgValues[1]->setText(
-						    format("$%s", Strings::fromInteger(ref->balance, true)));
+						orgValues[1]->setText(format("$%s", Strings::fromInteger(ref->balance)));
 						orgLabels[2]->setText(tr("Income"));
-						orgValues[2]->setText(
-						    format("$%s", Strings::fromInteger(ref->income, true)));
+						orgValues[2]->setText(format("$%s", Strings::fromInteger(ref->income)));
 
 						if (ref != player)
 						{
@@ -511,12 +509,12 @@ void UfopaediaCategoryView::setFormStats()
 					StateRef<FacilityType> ref = {state.get(), data_id};
 					statsLabels[row]->setText(tr("Construction cost"));
 					statsValues[row++]->setText(
-					    format("$%s", Strings::fromInteger(ref->buildCost, true)));
+					    format("$%s", Strings::fromInteger(ref->buildCost)));
 					statsLabels[row]->setText(tr("Days to build"));
 					statsValues[row++]->setText(Strings::fromInteger(ref->buildTime));
 					statsLabels[row]->setText(tr("Weekly cost"));
 					statsValues[row++]->setText(
-					    format("$%s", Strings::fromInteger(ref->weeklyCost, true)));
+					    format("$%s", Strings::fromInteger(ref->weeklyCost)));
 					if (ref->capacityAmount > 0)
 					{
 						statsLabels[row]->setText(tr("Capacity"));

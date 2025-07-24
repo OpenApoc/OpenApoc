@@ -123,6 +123,7 @@ extern ConfigOptionBool optionLoadSameAmmo;
 extern ConfigOptionBool optionShowCurrentDimensionVehicles;
 extern ConfigOptionBool optionShowNonXCOMVehiclesPrefix;
 extern ConfigOptionBool isoOnlyFollow;
+extern ConfigOptionBool formatAsCurrency;
 
 extern ConfigOptionBool optionStunHostileAction;
 extern ConfigOptionBool optionRaidHostileAction;

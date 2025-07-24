@@ -91,7 +91,7 @@ void BribeScreen::updateInfo()
  */
 UString BribeScreen::getOfferString(int itWillCost, const UString &newAttitude) const
 {
-	return format("%s %s  %s  %s", tr("It will cost: $"), Strings::fromInteger(itWillCost, true),
+	return format("%s %s  %s  %s", tr("It will cost: $"), Strings::fromInteger(itWillCost),
 	              tr("to improve relations to:"), newAttitude);
 }
 

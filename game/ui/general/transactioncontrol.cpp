@@ -646,7 +646,7 @@ TransactionControl::createControl(const UString &id, Type type, const UString &n
 	if (price != 0 && (indexLeft == ECONOMY_IDX || indexRight == ECONOMY_IDX))
 	{
 		auto label = control->createChild<Label>(
-		    format("$%s", Strings::fromInteger(control->price, true)), labelFont);
+		    format("$%s", Strings::fromInteger(control->price)), labelFont);
 		label->Location = {290, 3};
 		label->Size = {47, 16};
 		label->TextHAlign = HorizontalAlignment::Right;

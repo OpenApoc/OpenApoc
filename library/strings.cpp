@@ -134,25 +134,9 @@ bool Strings::isFloat(const UStringView s)
 	return (endpos != u8str.c_str());
 }
 
-UString Strings::fromInteger(int i, const bool formatAsCurrency)
-{
-	auto result = format("%d", i);
+UString Strings::fromInteger(int i) { return format("%d", i); }
 
-	if (formatAsCurrency)
-		result = formatTextAsCurrency(result);
-
-	return result;
-}
-
-UString Strings::fromFloat(float f, const bool formatAsCurrency)
-{
-	auto result = format("%f", f);
-
-	if (formatAsCurrency)
-		result = formatTextAsCurrency(result);
-
-	return result;
-}
+UString Strings::fromFloat(float f) { return format("%f", f); }
 
 bool Strings::isWhiteSpace(char32_t c)
 {
@@ -160,15 +144,7 @@ bool Strings::isWhiteSpace(char32_t c)
 	return isspace(c) != 0;
 }
 
-UString Strings::fromU64(uint64_t i, const bool formatAsCurrency)
-{
-	auto result = format("%llu", i);
-
-	if (formatAsCurrency)
-		result = formatTextAsCurrency(result);
-
-	return result;
-}
+UString Strings::fromU64(uint64_t i) { return format("%llu", i); }
 
 UString Strings::formatTextAsCurrency(const UString &Text)
 {
