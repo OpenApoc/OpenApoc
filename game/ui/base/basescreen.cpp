@@ -469,8 +469,7 @@ void BaseScreen::eventOccurred(Event *e)
 		statsLabels[1]->setText(tr("Days to build"));
 		statsValues[1]->setText(format("%d", dragFacility->buildTime));
 		statsLabels[2]->setText(tr("Maintenance cost"));
-		statsValues[2]->setText(
-		    format("$%s", Strings::fromInteger(dragFacility->weeklyCost)));
+		statsValues[2]->setText(format("$%s", Strings::fromInteger(dragFacility->weeklyCost)));
 	}
 	else if (selFacility != nullptr)
 	{

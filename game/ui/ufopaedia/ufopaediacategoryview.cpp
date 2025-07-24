@@ -273,11 +273,9 @@ void UfopaediaCategoryView::setFormStats()
 					if (data_id != "ORG_ALIEN")
 					{
 						orgLabels[1]->setText(tr("Balance"));
-						orgValues[1]->setText(
-						    format("$%s", Strings::fromInteger(ref->balance)));
+						orgValues[1]->setText(format("$%s", Strings::fromInteger(ref->balance)));
 						orgLabels[2]->setText(tr("Income"));
-						orgValues[2]->setText(
-						    format("$%s", Strings::fromInteger(ref->income)));
+						orgValues[2]->setText(format("$%s", Strings::fromInteger(ref->income)));
 
 						if (ref != player)
 						{

@@ -109,9 +109,8 @@ void WeeklyFundingScreen::begin()
 
 		labelAdjustment->setText(
 		    format("%s $%s", tr("Funding adjustment>"), Strings::fromInteger(adjustment)));
-		labelNextWeekIncome->setText(
-		    format("%s $%s", tr("Income for next week>"),
-		           Strings::fromInteger(currentIncome + adjustment)));
+		labelNextWeekIncome->setText(format("%s $%s", tr("Income for next week>"),
+		                                    Strings::fromInteger(currentIncome + adjustment)));
 	}
 
 	labelCurrentIncome->setText(

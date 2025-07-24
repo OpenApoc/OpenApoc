@@ -461,7 +461,7 @@ ConfigOptionBool optionShowNonXCOMVehiclesPrefix("OpenApoc.NewFeature", "ShowNon
 ConfigOptionBool isoOnlyFollow("OpenApoc.NewFeature", "IsoOnlyFollow",
                                tr("Don't follow vehicles in strategy view"), false);
 ConfigOptionBool formatAsCurrency("OpenApoc.NewFeature", "formatAsCurrency",
-                                    "Use currency formatting", true);
+                                  "Use currency formatting", true);
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);
 ConfigOptionBool optionRaidHostileAction("OpenApoc.Mod", "RaidHostileAction",
