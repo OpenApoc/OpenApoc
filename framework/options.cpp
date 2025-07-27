@@ -143,6 +143,7 @@ void dumpOptionsToLog()
 	dumpOption(optionShowCurrentDimensionVehicles);
 	dumpOption(optionShowNonXCOMVehiclesPrefix);
 	dumpOption(isoOnlyFollow);
+	dumpOption(formatAsCurrency);
 
 	dumpOption(optionStunHostileAction);
 	dumpOption(optionRaidHostileAction);
@@ -459,6 +460,8 @@ ConfigOptionBool optionShowNonXCOMVehiclesPrefix("OpenApoc.NewFeature", "ShowNon
                                                  tr("Add prefix to non-X-COM vehicles"), true);
 ConfigOptionBool isoOnlyFollow("OpenApoc.NewFeature", "IsoOnlyFollow",
                                tr("Don't follow vehicles in strategy view"), false);
+ConfigOptionBool formatAsCurrency("OpenApoc.NewFeature", "formatAsCurrency",
+                                  "Use currency formatting", true);
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          "Stunning hurts relationships", false);
 ConfigOptionBool optionRaidHostileAction("OpenApoc.Mod", "RaidHostileAction",

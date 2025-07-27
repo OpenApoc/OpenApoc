@@ -158,7 +158,10 @@ void InGameOptions::begin()
 
 void InGameOptions::pause() {}
 
-void InGameOptions::resume() {}
+void InGameOptions::resume()
+{
+	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
+}
 
 void InGameOptions::finish()
 {

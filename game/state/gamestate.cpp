@@ -109,11 +109,11 @@ GameState::~GameState()
 }
 
 // Just a handy shortcut since it's shown on every single screen
-UString GameState::getPlayerBalance(const bool formatAsCurrency) const
+UString GameState::getPlayerBalance() const
 {
 	auto playerBalance = Strings::fromInteger(this->getPlayer()->balance);
 
-	if (formatAsCurrency)
+	if (config().getBool("OpenApoc.NewFeature.formatAsCurrency"))
 		playerBalance = Strings::formatTextAsCurrency(playerBalance);
 
 	return playerBalance;
