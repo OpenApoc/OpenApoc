@@ -63,7 +63,10 @@ void VehicleSheet::clear()
 
 void VehicleSheet::displayImplementation(sp<Vehicle> vehicle, sp<VehicleType> vehicleType)
 {
-	form->findControlTyped<Label>("ITEM_NAME")->setText("");
+	auto itemLabel = form->findControlTyped<Label>("ITEM_NAME");
+	itemLabel->WordWrap = true;
+	itemLabel->setText("");
+
 	form->findControlTyped<TextEdit>("TEXT_VEHICLE_NAME")
 	    ->setText(vehicle ? vehicle->name : vehicleType->name);
 	form->findControlTyped<Graphic>("SELECTED_IMAGE")->setImage(vehicleType->equip_icon_small);
@@ -144,7 +147,19 @@ void VehicleSheet::displayEquipImplementation(sp<VEquipment> item, sp<VEquipment
 		return;
 	}
 
-	form->findControlTyped<Label>("ITEM_NAME")->setText(item ? item->type->name : type->name);
+	auto itemLabel = form->findControlTyped<Label>("ITEM_NAME");
+	itemLabel->setText(item ? item->type->name : type->name);
+
+	if (itemLabel->wordWrapped)
+	{
+		itemLabel->Size.y = wrappedYSize;
+		shiftLabels(wrappedBaseY);
+	}
+	else
+	{
+		itemLabel->Size.y = singleYSize;
+		shiftLabels(singleBaseY);
+	}
 
 	// Draw equipment stats
 	switch (type->type)
@@ -246,6 +261,21 @@ void VehicleSheet::displayGeneral(sp<VEquipment> item [[maybe_unused]], sp<VEqui
 	{
 		form->findControlTyped<Label>(format("LABEL_%d_L", statsCount))->setText(tr("Teleports"));
 		statsCount++;
+	}
+}
+
+void VehicleSheet::shiftLabels(const int &baseY)
+{
+	int labelCount = 10;
+	int wrappedOffset = 16;
+
+	for (int i = 1; i <= labelCount; i++)
+	{
+		auto labelLeft = form->findControlTyped<Label>(format("LABEL_%d_L", i));
+		auto labelRight = form->findControlTyped<Label>(format("LABEL_%d_R", i));
+
+		labelLeft->Location.y = baseY + wrappedOffset * (i - 1);
+		labelRight->Location.y = baseY + wrappedOffset * (i - 1);
 	}
 }
 
