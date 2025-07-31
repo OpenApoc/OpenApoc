@@ -51,7 +51,21 @@ void AEquipmentSheet::displayImplementation(sp<AEquipment> item, const AEquipmen
 	const auto selectedImage =
 	    researched && item ? item->getEquipmentImage() : itemType.equipscreen_sprite;
 
-	form->findControlTyped<Label>("ITEM_NAME")->setText(itemName);
+	auto itemLabel = form->findControlTyped<Label>("ITEM_NAME");
+	itemLabel->WordWrap = true;
+	itemLabel->setText(itemName);
+
+	if (itemLabel->wordWrapped)
+	{
+		itemLabel->Size.y = wrappedYSize;
+		shiftLabels(wrappedBaseY);
+	}
+	else
+	{
+		itemLabel->Size.y = singleYSize;
+		shiftLabels(singleBaseY);
+	}
+
 	form->findControlTyped<Graphic>("SELECTED_IMAGE")->setImage(selectedImage);
 
 	// when possible, the actual item's weight takes precedence
@@ -161,9 +175,19 @@ void AEquipmentSheet::displayWeapon(sp<AEquipment> item [[maybe_unused]],
 
 	form->findControlTyped<Label>("LABEL_6_C")->setText(tr("Ammo types:"));
 	int ammoNum = 1;
+	int currentY = label7CPos;
 	for (auto &ammo : itemType.ammo_types)
 	{
-		form->findControlTyped<Label>(format("LABEL_%d_C", 6 + ammoNum))->setText(ammo->name);
+		auto ammoLabel = form->findControlTyped<Label>(format("LABEL_%d_C", 6 + ammoNum));
+		ammoLabel->WordWrap = true;
+		ammoLabel->setText(ammo->name);
+
+		int height = ammoLabel->wordWrapped ? wrappedYSize : singleYSize;
+		ammoLabel->Size.y = height;
+		ammoLabel->Location.y = currentY;
+
+		currentY += height;
+
 		if (++ammoNum >= 4)
 		{
 			break;
@@ -182,6 +206,23 @@ void AEquipmentSheet::displayArmor(sp<AEquipment> item, const AEquipmentType &it
 void AEquipmentSheet::displayOther(sp<AEquipment> item [[maybe_unused]],
                                    const AEquipmentType &itemType [[maybe_unused]])
 {
+}
+
+void AEquipmentSheet::shiftLabels(const int &baseY)
+{
+	int labelCount = 10;
+	int wrappedOffset = 16;
+
+	for (int i = 1; i <= labelCount; i++)
+	{
+		auto labelLeft = form->findControlTyped<Label>(format("LABEL_%d_L", i));
+		auto labelCenter = form->findControlTyped<Label>(format("LABEL_%d_C", i));
+		auto labelRight = form->findControlTyped<Label>(format("LABEL_%d_R", i));
+
+		labelLeft->Location.y = baseY + wrappedOffset * (i - 1);
+		labelCenter->Location.y = baseY + wrappedOffset * (i - 1);
+		labelRight->Location.y = baseY + wrappedOffset * (i - 1);
+	}
 }
 
 }; // namespace OpenApoc

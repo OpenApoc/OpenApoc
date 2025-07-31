@@ -18,6 +18,12 @@ class AEquipmentSheet
 	void clear();
 
   private:
+	static constexpr int wrappedYSize = 30;
+	static constexpr int singleYSize = 15;
+	static constexpr int wrappedBaseY = 118;
+	static constexpr int singleBaseY = 106;
+	static constexpr int label7CPos = 202;
+
 	void displayImplementation(sp<AEquipment> item, const AEquipmentType &itemType,
 	                           const bool researched);
 	void displayGrenade(sp<AEquipment> item, const AEquipmentType &itemType);
@@ -25,6 +31,7 @@ class AEquipmentSheet
 	void displayAmmo(sp<AEquipment> item, const AEquipmentType &itemType);
 	void displayArmor(sp<AEquipment> item, const AEquipmentType &itemType);
 	void displayOther(sp<AEquipment> item, const AEquipmentType &itemType);
+	void shiftLabels(const int &baseY);
 	sp<Form> form;
 };
 

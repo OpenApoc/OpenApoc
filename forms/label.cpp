@@ -15,7 +15,7 @@ namespace OpenApoc
 
 Label::Label(const UString &Text, sp<BitmapFont> font)
     : Control(), text(Text), font(font), scrollOffset(0), TextHAlign(HorizontalAlignment::Left),
-      TextVAlign(VerticalAlignment::Top), WordWrap(true)
+      TextVAlign(VerticalAlignment::Top), WordWrap(false), wordWrapped(false)
 {
 	if (font)
 	{
@@ -43,13 +43,14 @@ void Label::onRender()
 	std::list<UString> lines = font->wordWrapText(text, Size.x);
 
 	int ysize = font->getFontHeight(text, Size.x);
+	int ypos = !WordWrap ? align(TextVAlign, Size.y, ysize) : 0;
+
 	if (scroller)
 	{
 		scroller->setVisible(ysize > this->Size.y && lines.size() > 1);
 		scroller->setMaximum(ysize - this->Size.y);
 	}
 
-	int ypos = align(TextVAlign, Size.y, ysize);
 	if (scroller && scroller->isVisible())
 	{
 		ypos = -scrollOffset;
@@ -90,6 +91,12 @@ void Label::setText(const UString &Text)
 
 	if (scroller)
 		scroller->setValue(0);
+
+	if (WordWrap)
+	{
+		auto lines = font->wordWrapText(text, Size.x);
+		wordWrapped = (lines.size() > 1);
+	}
 
 	this->setDirty();
 }

@@ -27,6 +27,11 @@ class VehicleSheet
 	void clear();
 
   private:
+	static constexpr int wrappedYSize = 30;
+	static constexpr int singleYSize = 15;
+	static constexpr int singleBaseY = 106;
+	static constexpr int wrappedBaseY = 118;
+
 	void displayImplementation(sp<Vehicle> vehicle, sp<VehicleType> vehicleType);
 
 	void displayEquipImplementation(sp<VEquipment> item, sp<VEquipmentType> itemType,
@@ -34,7 +39,7 @@ class VehicleSheet
 	void displayEngine(sp<VEquipment> item, sp<VEquipmentType> type);
 	void displayWeapon(sp<VEquipment> item, sp<VEquipmentType> type);
 	void displayGeneral(sp<VEquipment> item, sp<VEquipmentType> type);
-
+	void shiftLabels(const int &baseY);
 	sp<Form> form;
 };
 
