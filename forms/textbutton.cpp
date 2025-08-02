@@ -48,6 +48,17 @@ void TextButton::onRender()
 {
 	Control::onRender();
 
+	int shaderY1, shaderY2;
+#ifdef __APPLE__
+	// On apple, the shader line on the menu
+	// button is off by one pixel...
+	shaderY1 = 4;
+	shaderY2 = 3;
+#else
+	shaderY1 = 5;
+	shaderY2 = 4;
+#endif
+
 	if (label->getParent() == nullptr)
 	{
 		label->setParent(shared_from_this());
@@ -80,10 +91,12 @@ void TextButton::onRender()
 				fw().renderer->drawFilledRect(Vec2<float>{3, 3}, Size - 6, Colour{160, 160, 160});
 				fw().renderer->drawLine(Vec2<float>{3, 3}, Vec2<float>{Size.x - 3, 3},
 				                        Colour{220, 220, 220});
-				fw().renderer->drawLine(Vec2<float>{3, Size.y - 5},
-				                        Vec2<float>{Size.x - 3, Size.y - 5}, Colour{100, 100, 100});
-				fw().renderer->drawLine(Vec2<float>{3, Size.y - 4},
-				                        Vec2<float>{Size.x - 3, Size.y - 4}, Colour{64, 64, 64});
+				fw().renderer->drawLine(Vec2<float>{3, Size.y - shaderY1},
+				                        Vec2<float>{Size.x - 3, Size.y - shaderY1},
+				                        Colour{100, 100, 100});
+				fw().renderer->drawLine(Vec2<float>{3, Size.y - shaderY2},
+				                        Vec2<float>{Size.x - 3, Size.y - shaderY2},
+				                        Colour{64, 64, 64});
 				break;
 		}
 	}
