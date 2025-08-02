@@ -233,6 +233,16 @@ git submodule update --init --recursive
 
 ```sh
 brew install cmake boost pkg-config sdl2 qt@5 libvorbis
+```
+
+* Add the Qt install to path.
+
+* If using zsh (MacOS default since Catalina 10.15):
+```sh
+echo 'export PATH="/opt/homebrew/opt/qt@5/bin:$PATH"' >> ~/.zprofile
+```
+* Or if using bash:
+```sh
 echo 'export PATH="/opt/homebrew/opt/qt@5/bin:$PATH"' >> ~/.bashrc
 ```
 
