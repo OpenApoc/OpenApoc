@@ -208,7 +208,7 @@ make -j4
 
 ### Building on macOS
 
-(Tested on macOS Ventura 13.0 (22A380)
+(Tested on macOS Sequoia 15.6 (24G84)
 
 * On macOS, install the [Homebrew](https://brew.sh):
 
