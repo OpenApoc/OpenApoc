@@ -1,6 +1,3 @@
-# check cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 3.9)
-
 # project name, and type
 PROJECT(OpenApoc_Launcher CXX C)
 
