@@ -191,7 +191,7 @@ add_dependencies(format format-sources)
 set(CLANG_FORMAT clang-format CACHE STRING "clang-format executable name in PATH")
 
 foreach(FORMAT_SOURCE ${FORMAT_SOURCES})
-	add_custom_command(TARGET format-sources COMMAND ${CLANG_FORMAT} -i ${FORMAT_SOURCE} DEPENDS ${FORMAT_SOURCE} .clang-format)
+	add_custom_command(TARGET format-sources COMMAND ${CLANG_FORMAT} -i ${FORMAT_SOURCE} POST_BUILD)
 endforeach()
 
 file(GLOB_RECURSE XML_FILES ${CMAKE_SOURCE_DIR}/data/*.xml)
