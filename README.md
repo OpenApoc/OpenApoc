@@ -115,13 +115,13 @@ git submodule update --init --recursive
   * For x64 builds:
 
 ```cmd
-vcpkg --triplet x64-windows install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-base libvorbis
+vcpkg --triplet x64-windows install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt-base6-dev libvorbis
 ```
 
   * For x86 builds:
 
 ```cmd
-vcpkg --triplet x86-windows install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt5-base libvorbis
+vcpkg --triplet x86-windows install sdl2 boost-locale boost-program-options boost-uuid boost-crc qt-base6-dev libvorbis
 ```
 
   * For list of all supported by Vcpkg architectures: `vcpkg help triplet`
@@ -160,14 +160,14 @@ sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboo
 * On Mageia, install the following packages as root:
 
 ```sh
-urpmi "cmake(sdl2)" libstdc++-static-devel boost-devel boost unwind-devel task-c++-devel cmake git qtbase5-devel libvorbis-devel
+urpmi "cmake(sdl2)" libstdc++-static-devel boost-devel boost unwind-devel task-c++-devel cmake git qt6-devel libvorbis-devel
 ```
 
 * On Fedora or other RedHat distro, install the folowing packages as root:
 
 ```sh
 yum groupinstall "Development Tools" "Development Libraries"
-yum install git SDL2-devel cmake libunwind-devel qt5-qtbase-devel libvorbis-devel
+yum install git SDL2-devel cmake libunwind-devel qt6-qtbase-devel libvorbis-devel
 ```
 
 * Checkout OpenApoc from GitHub.
@@ -232,18 +232,18 @@ git submodule update --init --recursive
 * Use the homebrew install the following dependencies:
 
 ```sh
-brew install cmake boost pkg-config sdl2 qt@5 libvorbis
+brew install cmake boost pkg-config sdl2 qt@6 libvorbis
 ```
 
 * Add the Qt install to path.
 
 * If using zsh (MacOS default since Catalina 10.15):
 ```sh
-echo 'export PATH="/opt/homebrew/opt/qt@5/bin:$PATH"' >> ~/.zprofile
+echo 'export PATH="/opt/homebrew/opt/qt@6/bin:$PATH"' >> ~/.zprofile
 ```
 * Or if using bash:
 ```sh
-echo 'export PATH="/opt/homebrew/opt/qt@5/bin:$PATH"' >> ~/.bashrc
+echo 'export PATH="/opt/homebrew/opt/qt@6/bin:$PATH"' >> ~/.bashrc
 ```
 
 * Copy the cd.iso file to the 'data' directory under the repository root (Note - despite dosbox having good linux support, the steam version of X-Com Apocalypse will only install if Steam Play is enabled).
