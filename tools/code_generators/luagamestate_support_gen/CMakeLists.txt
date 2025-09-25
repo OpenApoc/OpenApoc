@@ -1,9 +1,6 @@
 # project name, and type
 PROJECT(OpenApoc_LuaGamestateSupportGen CXX C)
 
-# check cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 3.9)
-
 find_package(Boost REQUIRED COMPONENTS program_options)
 
 set (LUAGAMESTATESUPPORTGEN_SOURCE_FILES

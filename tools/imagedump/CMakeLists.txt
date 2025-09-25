@@ -1,9 +1,6 @@
 # project name, and type
 PROJECT(OpenApoc_ImageDump CXX C)
 
-# check cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 3.9)
-
 set (IMAGEDUMP_SOURCE_FILES
 	imagedump.cpp)
 

@@ -7,14 +7,15 @@
     "boost-program-options",
     "boost-uuid",
     "boost-crc",
-    "libvorbis",
-    "gettext"
+    "libvorbis"
   ],
   "features": {
     "launcher": {
       "description": "Build Launcher",
       "dependencies": [
-        "qt5-base"
+        {
+          "name": "qtbase"
+        }
       ]
     }
   }

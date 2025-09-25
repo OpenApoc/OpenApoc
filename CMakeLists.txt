@@ -1,5 +1,5 @@
 # check cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 3.9)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.30)
 
 # This changes the vcpkg features, so needs to be set before the first PROJECT() call
 option(BUILD_LAUNCHER "Build the launcher" ON)
@@ -29,7 +29,7 @@ INCLUDE(CheckCCompilerFlag)
 string(TOLOWER "${CMAKE_BUILD_TYPE}" lower_build_type)
 
 option(LTO "Build using link-time-optimisations" OFF)
-option(MSVC_PDB "Always generate PDB files" OFF)
+option(MSVC_PDB "Always generate PDB files" ON)
 option(ENABLE_TESTS "Build some unit tests" ON)
 option(USE_PCH "Enable precompiled header use during build" OFF)
 option(EXTRACT_DATA "Run the data extractor as part of the default target" ON)
@@ -191,7 +191,7 @@ add_dependencies(format format-sources)
 set(CLANG_FORMAT clang-format CACHE STRING "clang-format executable name in PATH")
 
 foreach(FORMAT_SOURCE ${FORMAT_SOURCES})
-	add_custom_command(TARGET format-sources COMMAND ${CLANG_FORMAT} -i ${FORMAT_SOURCE} DEPENDS ${FORMAT_SOURCE} .clang-format)
+	add_custom_command(TARGET format-sources COMMAND ${CLANG_FORMAT} -i ${FORMAT_SOURCE} POST_BUILD)
 endforeach()
 
 file(GLOB_RECURSE XML_FILES ${CMAKE_SOURCE_DIR}/data/*.xml)
