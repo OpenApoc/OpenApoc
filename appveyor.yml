@@ -53,6 +53,9 @@ after_build:
   - del OpenApoc-%OPENAPOC_VERSION%\portable.txt
   - '"C:\Program Files (x86)\NSIS\makensis.exe" /DGAME_VERSION=%OPENAPOC_VERSION% install\windows\installer.nsi'
   - appveyor PushArtifact install\windows\install-openapoc-%OPENAPOC_VERSION%.exe
+  - copy bin\*.pdb OpenApoc-%OPENAPOC_VERSION%\
+  - 7z a %OPENAPOC_DEBUG_FILENAME% OpenApoc-%OPENAPOC_VERSION%\OpenApoc.pdb OpenApoc-%OPENAPOC_VERSION%\OpenApoc_Launcher.pdb -mx=9 -myx=7
+  - appveyor PushArtifact %OPENAPOC_DEBUG_FILENAME%
 before_test:
   - 7z e temp\cd.iso.xz -odata\
 test_script:
