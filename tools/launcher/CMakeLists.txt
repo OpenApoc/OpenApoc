@@ -9,7 +9,6 @@ find_package(Qt6 COMPONENTS Widgets REQUIRED)
 
 qt_standard_project_setup()
 
-
 set (LAUNCHER_SOURCE_FILES
 	main.cpp
 	launcherwindow.cpp
@@ -23,8 +22,6 @@ qt_add_executable(OpenApoc_Launcher ${LAUNCHER_SOURCE_FILES} ${sources})
 
 target_link_libraries(OpenApoc_Launcher PRIVATE Qt6::Widgets)
 
-set( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
-
 target_link_libraries(OpenApoc_Launcher PRIVATE OpenApoc_Library)
 target_link_libraries(OpenApoc_Launcher PRIVATE OpenApoc_Framework)
 
@@ -32,6 +29,8 @@ set_target_properties(OpenApoc_Launcher PROPERTIES
 		WIN32_EXECUTABLE ON
 		MACOSX_BUNDLE ON
 )
+
+set_target_properties(OpenApoc_Launcher PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 if(WIN32)
 	find_program(WINDEPLOYQT_EXECUTABLE windeployqt HINTS "${_qt_bin_dir}")
