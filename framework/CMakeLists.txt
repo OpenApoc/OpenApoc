@@ -206,7 +206,7 @@ endif()
 # We use boost::locale for utf conversions and boost::filesystem for
 # serialization
 
-set(BOOST_PACKAGES locale system program_options)
+set(BOOST_PACKAGES locale program_options)
 # Arbitrary version that I remember testing previously
 set(BOOST_VERSION 1.50)
 
