@@ -30,6 +30,7 @@ set (GAMEUI_SOURCE_FILES
 	city/infiltrationscreen.cpp
 	city/basedefensescreen.cpp
 	city/scorescreen.cpp
+	city/vehiclecargobriefing.cpp
 	city/weeklyfundingscreen.cpp
 
 	components/agentassignment.cpp
@@ -103,6 +104,7 @@ set (GAMEUI_HEADER_FILES
 	city/infiltrationscreen.h
 	city/basedefensescreen.h
 	city/scorescreen.h
+	city/vehiclecargobriefing.h
 	city/weeklyfundingscreen.h
 
 	components/agentassignment.h
