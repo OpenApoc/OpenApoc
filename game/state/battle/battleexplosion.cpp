@@ -23,7 +23,7 @@ namespace OpenApoc
 BattleExplosion::BattleExplosion(Vec3<int> position, StateRef<DamageType> damageType, int power,
                                  int depletionRate, bool damageInTheEnd,
                                  StateRef<Organisation> ownerOrg, StateRef<BattleUnit> ownerUnit)
-    : position(position), power(power), ticksUntilExpansion(TICKS_MULTIPLIER * 2),
+    : position(position), power(power), ticksUntilExpansion(TICKS_MULTIPLIER),
       locationsToExpand({{{position, {power, power}}}, {}, {}}), damageInTheEnd(damageInTheEnd),
       locationsVisited({position}), damageType(damageType), depletionRate(depletionRate),
       ownerUnit(ownerUnit), ownerOrganisation(ownerOrg)
@@ -69,7 +69,7 @@ void BattleExplosion::update(GameState &state, unsigned int ticks)
 	ticksUntilExpansion -= ticks;
 	while (ticksUntilExpansion <= 0)
 	{
-		ticksUntilExpansion += TICKS_MULTIPLIER * 2;
+		ticksUntilExpansion += TICKS_MULTIPLIER;
 		grow(state);
 		if (locationsToExpand[0].empty() && locationsToExpand[1].empty() &&
 		    locationsToExpand[2].empty())
@@ -88,11 +88,11 @@ void BattleExplosion::damage(GameState &state, const TileMap &map, Vec3<int> pos
 	{
 		StateRef<DamageType> dtSmoke = {&state, "DAMAGETYPE_SMOKE"};
 		state.current_battle->placeHazard(state, ownerOrganisation, ownerUnit, dtSmoke, pos,
-		                                  dtSmoke->hazardType->getLifetime(state), damage, 2,
+		                                  dtSmoke->hazardType->getLifetime(state), damage, 30,
 		                                  false);
 	}
 	// Explosions with no custom explosion doodad spawn hazards when dealing damage
-	else if (!damageType->explosionDoodad)
+	if (damageType->hazardType && !damageType->explosionDoodad)
 	{
 		state.current_battle->placeHazard(state, ownerOrganisation, ownerUnit, damageType, pos,
 		                                  damageType->hazardType->getLifetime(state), damage, 1,
@@ -280,7 +280,7 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 	}
 	// FIXME: Actually read this option
 	int distance = (1 + (dir.x != 0 ? 1 : 0) + (dir.y != 0 ? 1 : 0) + (dir.z != 0 ? 2 : 0));
-	nextPower -= depletionRate * distance / 2;
+	nextPower -= depletionRate * distance / 1.5;
 
 	// If we reach the tile, and our type has no range dissipation, just apply power
 	int thisPower = nextPower - depletionThis;
