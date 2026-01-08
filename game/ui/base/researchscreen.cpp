@@ -123,7 +123,8 @@ void ResearchScreen::begin()
 	    [this](FormsEvent *e)
 	    {
 		    LogWarning("unassigned agent selected");
-		    if (this->assigned_agent_count >= this->viewFacility->type->capacityAmount)
+		    if (this->viewFacility->lab->assigned_agents.size() >=
+		        this->viewFacility->type->capacityAmount)
 		    {
 			    LogWarning("no free space in lab");
 			    return;
@@ -324,6 +325,8 @@ void ResearchScreen::populateUILabList(const UString &listName, std::list<sp<Fac
 
 void ResearchScreen::setCurrentLabInfo()
 {
+	int assigned_agent_count = 0;
+
 	if (!this->viewFacility)
 	{
 		auto unassignedAgentList = form->findControlTyped<ListBox>("LIST_UNASSIGNED");
@@ -337,7 +340,6 @@ void ResearchScreen::setCurrentLabInfo()
 		return;
 	}
 	this->state->current_base->selectedLab = viewFacility;
-	this->assigned_agent_count = 0;
 	auto labType = this->viewFacility->type->capacityType;
 	UString labTypeName = "UNKNOWN";
 	AgentType::Role listedAgentType = AgentType::Role::BioChemist;
@@ -386,11 +388,11 @@ void ResearchScreen::setCurrentLabInfo()
 		{
 			if (agent.second->lab_assigned == this->viewFacility->lab)
 			{
-				this->assigned_agent_count++;
-				if (this->assigned_agent_count > this->viewFacility->type->capacityAmount)
+				assigned_agent_count++;
+				if (assigned_agent_count > this->viewFacility->type->capacityAmount)
 				{
 					LogError("Selected lab has %d assigned agents, but has a capacity of %d",
-					         this->assigned_agent_count, this->viewFacility->type->capacityAmount);
+					         assigned_agent_count, this->viewFacility->type->capacityAmount);
 				}
 				assigned_to_current_lab = true;
 			}
@@ -411,6 +413,8 @@ void ResearchScreen::setCurrentLabInfo()
 			    *state, agent.second, unassignedAgentList->Size.x, UnitSkillState::Vertical));
 		}
 	}
+	LogAssert(assigned_agent_count == this->viewFacility->lab->assigned_agents.size());
+
 	assignedAgentList->ItemSize = agentEntryHeight;
 	unassignedAgentList->ItemSize = agentEntryHeight;
 
