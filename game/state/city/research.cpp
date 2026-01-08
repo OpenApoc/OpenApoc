@@ -243,7 +243,7 @@ Lab::~Lab()
 {
 	for (auto &agent : assigned_agents)
 	{
-		agent->assigned_to_lab = false;
+		agent->lab_assigned = nullptr;
 	}
 }
 
@@ -329,6 +329,7 @@ unsigned Lab::getQuantity() const { return manufacture_goal - manufacture_done; 
 void Lab::removeAgent(StateRef<Lab> lab, StateRef<Agent> &agent)
 {
 	lab->assigned_agents.remove(agent);
+	agent->lab_assigned = nullptr;
 }
 
 void Lab::setQuantity(StateRef<Lab> lab, unsigned quantity)

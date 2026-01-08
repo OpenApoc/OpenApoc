@@ -122,10 +122,11 @@ void ResearchScreen::begin()
 	    FormEventType::ListBoxChangeSelected,
 	    [this](FormsEvent *e)
 	    {
-		    LogWarning("unassigned agent selected");
-		    if (this->assigned_agent_count >= this->viewFacility->type->capacityAmount)
+		    LogInfo("unassigned agent selected");
+		    if (this->viewFacility->lab->assigned_agents.size() >=
+		        this->viewFacility->type->capacityAmount)
 		    {
-			    LogWarning("no free space in lab");
+			    LogInfo("no free space in lab");
 			    return;
 		    }
 		    auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
@@ -135,18 +136,18 @@ void ResearchScreen::begin()
 			    LogError("No agent in selected data");
 			    return;
 		    }
-		    if (agent->assigned_to_lab)
+		    if (agent->isAssignedToLab())
 		    {
 			    LogError("Agent \"%s\" already assigned to a lab?", agent->name);
 			    return;
 		    }
-		    agent->assigned_to_lab = true;
+		    agent->lab_assigned = this->viewFacility->lab;
 		    this->viewFacility->lab->assigned_agents.push_back({state.get(), agent});
 		    this->setCurrentLabInfo();
 	    });
 	auto removeFn = [this](FormsEvent *e)
 	{
-		LogWarning("assigned agent selected");
+		LogInfo("assigned agent selected");
 		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
 		auto agent = list->getSelectedData<Agent>();
 		if (!agent)
@@ -154,12 +155,12 @@ void ResearchScreen::begin()
 			LogError("No agent in selected data");
 			return;
 		}
-		if (!agent->assigned_to_lab)
+		if (!agent->isAssignedToLab())
 		{
 			LogError("Agent \"%s\" not assigned to a lab?", agent->name);
 			return;
 		}
-		agent->assigned_to_lab = false;
+		agent->lab_assigned = nullptr;
 		this->viewFacility->lab->assigned_agents.remove({state.get(), agent});
 		this->setCurrentLabInfo();
 	};
@@ -324,6 +325,8 @@ void ResearchScreen::populateUILabList(const UString &listName, std::list<sp<Fac
 
 void ResearchScreen::setCurrentLabInfo()
 {
+	int assigned_agent_count = 0;
+
 	if (!this->viewFacility)
 	{
 		auto unassignedAgentList = form->findControlTyped<ListBox>("LIST_UNASSIGNED");
@@ -337,7 +340,6 @@ void ResearchScreen::setCurrentLabInfo()
 		return;
 	}
 	this->state->current_base->selectedLab = viewFacility;
-	this->assigned_agent_count = 0;
 	auto labType = this->viewFacility->type->capacityType;
 	UString labTypeName = "UNKNOWN";
 	AgentType::Role listedAgentType = AgentType::Role::BioChemist;
@@ -382,26 +384,23 @@ void ResearchScreen::setCurrentLabInfo()
 		if (agent.second->type->role != listedAgentType)
 			continue;
 
-		if (agent.second->assigned_to_lab)
+		if (agent.second->isAssignedToLab())
 		{
-			for (auto &assigned_agent : this->viewFacility->lab->assigned_agents)
+			if (agent.second->lab_assigned == this->viewFacility->lab)
 			{
-				if (assigned_agent.getSp() == agent.second)
+				assigned_agent_count++;
+				if (assigned_agent_count > this->viewFacility->type->capacityAmount)
 				{
-					this->assigned_agent_count++;
-					if (this->assigned_agent_count > this->viewFacility->type->capacityAmount)
-					{
-						LogError("Selected lab has %d assigned agents, but has a capacity of %d",
-						         this->assigned_agent_count,
-						         this->viewFacility->type->capacityAmount);
-					}
-					agent.second->lab_assigned = this->viewFacility->lab;
-					assigned_to_current_lab = true;
-					break;
+					LogError("Selected lab has %d assigned agents, but has a capacity of %d",
+					         assigned_agent_count, this->viewFacility->type->capacityAmount);
 				}
+				assigned_to_current_lab = true;
 			}
-			if (!assigned_to_current_lab)
+			else
+			{
+				// Agent is assigned to a different lab, skip
 				continue;
+			}
 		}
 		if (assigned_to_current_lab)
 		{
@@ -414,6 +413,8 @@ void ResearchScreen::setCurrentLabInfo()
 			    *state, agent.second, unassignedAgentList->Size.x, UnitSkillState::Vertical));
 		}
 	}
+	LogAssert(assigned_agent_count == this->viewFacility->lab->assigned_agents.size());
+
 	assignedAgentList->ItemSize = agentEntryHeight;
 	unassignedAgentList->ItemSize = agentEntryHeight;
 

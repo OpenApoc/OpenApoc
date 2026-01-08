@@ -142,7 +142,7 @@ class Agent : public StateObject<Agent>,
 	Vec3<float> goalPosition = {0, 0, 0};
 
 	StateRef<Lab> lab_assigned = nullptr;
-	bool assigned_to_lab = false;
+	bool isAssignedToLab() const { return lab_assigned != nullptr; }
 
 	StateRef<BattleUnit> unit;
 

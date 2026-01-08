@@ -433,7 +433,7 @@ void Base::destroyFacility(GameState &state, Vec2<int> pos)
 		{
 			for (auto &a : facility->lab->assigned_agents)
 			{
-				a->assigned_to_lab = false;
+				a->lab_assigned = nullptr;
 			}
 			if (facility->lab->current_project)
 			{
