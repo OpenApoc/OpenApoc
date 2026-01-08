@@ -407,7 +407,12 @@ void Agent::transfer(GameState &state, StateRef<Building> newHome)
 	homeBuilding = newHome;
 	recentlyHired = false;
 	recentlyTransferred = true;
-	assigned_to_lab = false;
+	if (lab_assigned)
+	{
+		auto thisRef = StateRef<Agent>{&state, shared_from_this()};
+		lab_assigned->assigned_agents.remove(thisRef);
+		lab_assigned = nullptr;
+	}
 	setMission(state, AgentMission::gotoBuilding(state, *this, newHome, false, true));
 }
 
@@ -958,23 +963,10 @@ void Agent::die(GameState &state, bool silent)
 	}
 
 	// Remove from lab
-	if (assigned_to_lab)
+	if (lab_assigned)
 	{
-		for (auto &fac : homeBuilding->base->facilities)
-		{
-			if (!fac->lab)
-			{
-				continue;
-			}
-			auto it = std::find(fac->lab->assigned_agents.begin(), fac->lab->assigned_agents.end(),
-			                    thisRef);
-			if (it != fac->lab->assigned_agents.end())
-			{
-				fac->lab->assigned_agents.erase(it);
-				assigned_to_lab = false;
-				break;
-			}
-		}
+		lab_assigned->assigned_agents.remove(thisRef);
+		lab_assigned = nullptr;
 	}
 
 	// In city (if not died in a vehicle) we make an event

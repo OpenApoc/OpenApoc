@@ -139,18 +139,11 @@ sp<Facility> findCurrentResearchFacility(sp<GameState> state, AgentType::Role ro
 			if (a && a->type->role == role)
 			{
 				state->current_base = a->homeBuilding->base;
-				if (a->assigned_to_lab)
+				if (a->isAssignedToLab())
 				{
-					auto thisRef = StateRef<Agent>{state.get(), a};
 					for (auto &fac : state->current_base->facilities)
 					{
-						if (!fac->lab)
-						{
-							continue;
-						}
-						auto it = std::find(fac->lab->assigned_agents.begin(),
-						                    fac->lab->assigned_agents.end(), thisRef);
-						if (it != fac->lab->assigned_agents.end())
+						if (fac->lab == a->lab_assigned)
 						{
 							lab = fac;
 							break;
@@ -2691,33 +2684,20 @@ void CityView::update()
 			if (agent->type->role == AgentType::Role::BioChemist)
 			{
 				agentName->setText(agent->name);
-				if (agent->assigned_to_lab)
+				if (agent->isAssignedToLab())
 				{
-					auto thisRef = StateRef<Agent>{state.get(), agent};
-					for (auto &fac : agent->homeBuilding->base->facilities)
+					if (agent->lab_assigned->current_project)
 					{
-						if (!fac->lab)
-						{
-							continue;
-						}
-						auto it = std::find(fac->lab->assigned_agents.begin(),
-						                    fac->lab->assigned_agents.end(), thisRef);
-						if (it != fac->lab->assigned_agents.end())
-						{
-							if (fac->lab->current_project)
-							{
-								UString pr = tr(fac->lab->current_project->name);
-								int progress = (static_cast<float>(
-								                    fac->lab->current_project->man_hours_progress) /
-								                fac->lab->current_project->man_hours) *
-								               100;
-								agentAssignment->setText(pr + format(" (%d%%)", progress));
-							}
-							else
-								agentAssignment->setText(tr("No project assigned"));
-							break;
-						}
+						UString pr = tr(agent->lab_assigned->current_project->name);
+						int progress =
+						    (static_cast<float>(
+						         agent->lab_assigned->current_project->man_hours_progress) /
+						     agent->lab_assigned->current_project->man_hours) *
+						    100;
+						agentAssignment->setText(pr + format(" (%d%%)", progress));
 					}
+					else
+						agentAssignment->setText(tr("No project assigned"));
 				}
 				else
 				{
@@ -2819,36 +2799,22 @@ void CityView::update()
 			if (agent->type->role == AgentType::Role::Engineer)
 			{
 				agentName->setText(agent->name);
-				if (agent->assigned_to_lab)
+				if (agent->isAssignedToLab())
 				{
-					auto thisRef = StateRef<Agent>{state.get(), agent};
-					for (auto &fac : agent->homeBuilding->base->facilities)
+					if (agent->lab_assigned->current_project)
 					{
-						if (!fac->lab)
-						{
-							continue;
-						}
-						auto it = std::find(fac->lab->assigned_agents.begin(),
-						                    fac->lab->assigned_agents.end(), thisRef);
-						if (it != fac->lab->assigned_agents.end())
-						{
-							if (fac->lab->current_project)
-							{
-								UString pr = tr(fac->lab->current_project->name);
-								int progress =
-								    (static_cast<float>(fac->lab->manufacture_man_hours_invested +
-								                        fac->lab->current_project->man_hours *
-								                            fac->lab->manufacture_done) /
-								     (fac->lab->current_project->man_hours *
-								      fac->lab->manufacture_goal)) *
-								    100;
-								agentAssignment->setText(pr + format(" (%d%%)", progress));
-							}
-							else
-								agentAssignment->setText(tr("No project assigned"));
-							break;
-						}
+						UString pr = tr(agent->lab_assigned->current_project->name);
+						int progress = (static_cast<float>(
+						                    agent->lab_assigned->manufacture_man_hours_invested +
+						                    agent->lab_assigned->current_project->man_hours *
+						                        agent->lab_assigned->manufacture_done) /
+						                (agent->lab_assigned->current_project->man_hours *
+						                 agent->lab_assigned->manufacture_goal)) *
+						               100;
+						agentAssignment->setText(pr + format(" (%d%%)", progress));
 					}
+					else
+						agentAssignment->setText(tr("No project assigned"));
 				}
 				else
 				{
@@ -2950,33 +2916,20 @@ void CityView::update()
 			if (agent->type->role == AgentType::Role::Physicist)
 			{
 				agentName->setText(agent->name);
-				if (agent->assigned_to_lab)
+				if (agent->isAssignedToLab())
 				{
-					auto thisRef = StateRef<Agent>{state.get(), agent};
-					for (auto &fac : agent->homeBuilding->base->facilities)
+					if (agent->lab_assigned->current_project)
 					{
-						if (!fac->lab)
-						{
-							continue;
-						}
-						auto it = std::find(fac->lab->assigned_agents.begin(),
-						                    fac->lab->assigned_agents.end(), thisRef);
-						if (it != fac->lab->assigned_agents.end())
-						{
-							if (fac->lab->current_project)
-							{
-								UString pr = tr(fac->lab->current_project->name);
-								int progress = (static_cast<float>(
-								                    fac->lab->current_project->man_hours_progress) /
-								                fac->lab->current_project->man_hours) *
-								               100;
-								agentAssignment->setText(pr + format(" (%d%%)", progress));
-							}
-							else
-								agentAssignment->setText(tr("No project assigned"));
-							break;
-						}
+						UString pr = tr(agent->lab_assigned->current_project->name);
+						int progress =
+						    (static_cast<float>(
+						         agent->lab_assigned->current_project->man_hours_progress) /
+						     agent->lab_assigned->current_project->man_hours) *
+						    100;
+						agentAssignment->setText(pr + format(" (%d%%)", progress));
 					}
+					else
+						agentAssignment->setText(tr("No project assigned"));
 				}
 				else
 				{

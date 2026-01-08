@@ -135,12 +135,12 @@ void ResearchScreen::begin()
 			    LogError("No agent in selected data");
 			    return;
 		    }
-		    if (agent->assigned_to_lab)
+		    if (agent->isAssignedToLab())
 		    {
 			    LogError("Agent \"%s\" already assigned to a lab?", agent->name);
 			    return;
 		    }
-		    agent->assigned_to_lab = true;
+		    agent->lab_assigned = this->viewFacility->lab;
 		    this->viewFacility->lab->assigned_agents.push_back({state.get(), agent});
 		    this->setCurrentLabInfo();
 	    });
@@ -154,12 +154,12 @@ void ResearchScreen::begin()
 			LogError("No agent in selected data");
 			return;
 		}
-		if (!agent->assigned_to_lab)
+		if (!agent->isAssignedToLab())
 		{
 			LogError("Agent \"%s\" not assigned to a lab?", agent->name);
 			return;
 		}
-		agent->assigned_to_lab = false;
+		agent->lab_assigned = nullptr;
 		this->viewFacility->lab->assigned_agents.remove({state.get(), agent});
 		this->setCurrentLabInfo();
 	};
@@ -382,26 +382,23 @@ void ResearchScreen::setCurrentLabInfo()
 		if (agent.second->type->role != listedAgentType)
 			continue;
 
-		if (agent.second->assigned_to_lab)
+		if (agent.second->isAssignedToLab())
 		{
-			for (auto &assigned_agent : this->viewFacility->lab->assigned_agents)
+			if (agent.second->lab_assigned == this->viewFacility->lab)
 			{
-				if (assigned_agent.getSp() == agent.second)
+				this->assigned_agent_count++;
+				if (this->assigned_agent_count > this->viewFacility->type->capacityAmount)
 				{
-					this->assigned_agent_count++;
-					if (this->assigned_agent_count > this->viewFacility->type->capacityAmount)
-					{
-						LogError("Selected lab has %d assigned agents, but has a capacity of %d",
-						         this->assigned_agent_count,
-						         this->viewFacility->type->capacityAmount);
-					}
-					agent.second->lab_assigned = this->viewFacility->lab;
-					assigned_to_current_lab = true;
-					break;
+					LogError("Selected lab has %d assigned agents, but has a capacity of %d",
+					         this->assigned_agent_count, this->viewFacility->type->capacityAmount);
 				}
+				assigned_to_current_lab = true;
 			}
-			if (!assigned_to_current_lab)
+			else
+			{
+				// Agent is assigned to a different lab, skip
 				continue;
+			}
 		}
 		if (assigned_to_current_lab)
 		{
