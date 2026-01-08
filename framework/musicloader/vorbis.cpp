@@ -56,8 +56,10 @@ struct VorbisMusicTrack : public MusicTrack
 			}
 			if (read_bytes == 0)
 			{
-				// EOF
-				*returnedSamples = total_read_bytes / bytes_per_sample;
+				// EOF - reset to beginning for next playback
+				ov_raw_seek(&music->_vorbis_file, 0);
+				music->_bitstream = 0;
+				*returnedSamples = total_read_bytes / (bytes_per_sample * channels);
 				return MusicTrack::MusicCallbackReturn::End;
 			}
 			LogAssert(read_bytes <= buffer_bytes);
@@ -94,6 +96,33 @@ struct VorbisMusicTrack : public MusicTrack
 		auto read_bytes = file->gcount();
 		return read_bytes;
 	}
+	static int vorbis_seek_func(void *datasource, ogg_int64_t offset, int whence)
+	{
+		auto *file = static_cast<IFile *>(datasource);
+		std::ios_base::seekdir dir;
+		switch (whence)
+		{
+			case SEEK_SET:
+				dir = std::ios_base::beg;
+				break;
+			case SEEK_CUR:
+				dir = std::ios_base::cur;
+				break;
+			case SEEK_END:
+				dir = std::ios_base::end;
+				break;
+			default:
+				return -1;
+		}
+		file->clear();
+		file->seekg(offset, dir);
+		return file->good() ? 0 : -1;
+	}
+	static long vorbis_tell_func(void *datasource)
+	{
+		auto *file = static_cast<IFile *>(datasource);
+		return static_cast<long>(file->tellg());
+	}
 	~VorbisMusicTrack() override
 	{
 		if (_valid)
@@ -105,9 +134,9 @@ struct VorbisMusicTrack : public MusicTrack
 
 	static constexpr ov_callbacks callbacks = {
 	    /*read_func = */ vorbis_read_func,
-	    /*seek_func = */ nullptr,
+	    /*seek_func = */ vorbis_seek_func,
 	    /*close_func = */ nullptr,
-	    /*tell_func = */ nullptr,
+	    /*tell_func = */ vorbis_tell_func,
 	};
 };
 
