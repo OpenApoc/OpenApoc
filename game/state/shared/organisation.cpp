@@ -176,7 +176,7 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 	int price = 0;
 	if (state.economy.find(vehicleEquipment.id) == state.economy.end())
 	{
-		LogError("Economy not found for %s: How are we buying it then!?", vehicleEquipment.id);
+		LogError("Economy not found for {0}: How are we buying it then!?", vehicleEquipment.id);
 	}
 	else
 	{
@@ -187,7 +187,7 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 			economy.currentStock -= count;
 			if (economy.currentStock < 0)
 			{
-				LogInfo("Economy went into negative stock for %s: Was it because we used economy "
+				LogInfo("Economy went into negative stock for {0}: Was it because we used economy "
 				        "to transfer?",
 				        vehicleEquipment.id);
 			}
@@ -198,7 +198,7 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 	auto building = buyer->owner->id == id ? buyer : getPurchaseBuilding(state, buyer);
 	building->cargo.emplace_back(state, vehicleEquipment, count, price,
 	                             StateRef<Organisation>{&state, id}, buyer);
-	LogWarning("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count,
+	LogWarning("PURCHASE: {0} bought {1}x{2} at {3} to {4} ", buyer->owner.id, count,
 	           vehicleEquipment.id, building.id, buyer.id);
 	auto owner = buyer->owner;
 	owner->balance -= count * price;
@@ -210,7 +210,7 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 	int price = 0;
 	if (state.economy.find(vehicleAmmo.id) == state.economy.end())
 	{
-		LogError("Economy not found for %s: How are we buying it then!?", vehicleAmmo.id);
+		LogError("Economy not found for {0}: How are we buying it then!?", vehicleAmmo.id);
 	}
 	else
 	{
@@ -221,7 +221,7 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 			economy.currentStock -= count;
 			if (economy.currentStock < 0)
 			{
-				LogInfo("Economy went into negative stock for %s: Was it because we used economy "
+				LogInfo("Economy went into negative stock for {0}: Was it because we used economy "
 				        "to transfer?",
 				        vehicleAmmo.id);
 			}
@@ -232,8 +232,8 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 	auto building = buyer->owner->id == id ? buyer : getPurchaseBuilding(state, buyer);
 	building->cargo.emplace_back(state, vehicleAmmo, count, price,
 	                             StateRef<Organisation>{&state, id}, buyer);
-	LogWarning("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count, vehicleAmmo.id,
-	           building.id, buyer.id);
+	LogWarning("PURCHASE: {0} bought {1}x{2} at {3} to {4} ", buyer->owner.id, count,
+	           vehicleAmmo.id, building.id, buyer.id);
 	auto owner = buyer->owner;
 	owner->balance -= count * price;
 }
@@ -244,7 +244,7 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 	int price = 0;
 	if (state.economy.find(agentEquipment.id) == state.economy.end())
 	{
-		LogError("Economy not found for %s: How are we buying it then!?", agentEquipment.id);
+		LogError("Economy not found for {0}: How are we buying it then!?", agentEquipment.id);
 	}
 	else
 	{
@@ -255,7 +255,7 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 			economy.currentStock -= count;
 			if (economy.currentStock < 0)
 			{
-				LogInfo("Economy went into negative stock for %s: Was it because we used economy "
+				LogInfo("Economy went into negative stock for {0}: Was it because we used economy "
 				        "to transfer?",
 				        agentEquipment.id);
 			}
@@ -268,8 +268,8 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 	    state, agentEquipment,
 	    count * (agentEquipment->type == AEquipmentType::Type::Ammo ? agentEquipment->max_ammo : 1),
 	    price, StateRef<Organisation>{&state, id}, buyer);
-	LogWarning("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count, agentEquipment.id,
-	           building.id, buyer.id);
+	LogWarning("PURCHASE: {0} bought {1}x{2} at {3} to {4} ", buyer->owner.id, count,
+	           agentEquipment.id, building.id, buyer.id);
 	auto owner = buyer->owner;
 	owner->balance -= count * price;
 }
@@ -280,7 +280,7 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 	int price = 0;
 	if (state.economy.find(vehicleType.id) == state.economy.end())
 	{
-		LogError("Economy not found for %s: How are we buying it then!?", vehicleType.id);
+		LogError("Economy not found for {0}: How are we buying it then!?", vehicleType.id);
 	}
 	else
 	{
@@ -291,7 +291,7 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 			economy.currentStock -= count;
 			if (economy.currentStock < 0)
 			{
-				LogError("Economy went into negative stock for %s: How the hell?", vehicleType.id);
+				LogError("Economy went into negative stock for {0}: How the hell?", vehicleType.id);
 			}
 		}
 	}
@@ -303,8 +303,8 @@ void Organisation::purchase(GameState &state, const StateRef<Building> &buyer,
 		v->homeBuilding = buyer;
 		v->setMission(state, VehicleMission::gotoBuilding(state, *v));
 	}
-	LogWarning("PURCHASE: %s bought %dx%s at %s to %s ", buyer->owner.id, count, vehicleType.id,
-	           building.id, buyer.id);
+	LogWarning("PURCHASE: {0} bought {1}x{2} at {3} to {4} ", buyer->owner.id, count,
+	           vehicleType.id, building.id, buyer.id);
 	auto owner = buyer->owner;
 	owner->balance -= count * price;
 }
@@ -537,7 +537,7 @@ void Organisation::updateHirableAgents(GameState &state)
 	{
 		if (buildings.empty())
 		{
-			LogDebug("Organization %s has no buildings. No agents generated.", this->name);
+			LogDebug("Organization {0} has no buildings. No agents generated.", this->name);
 			return;
 		}
 		hireeLocation = pickRandom(state.rng, buildings);
@@ -982,7 +982,7 @@ sp<Organisation> StateObject<Organisation>::get(const GameState &state, const US
 	auto it = state.organisations.find(id);
 	if (it == state.organisations.end())
 	{
-		LogError("No organisation matching ID \"%s\"", id);
+		LogError("No organisation matching ID \"{0}\"", id);
 		return nullptr;
 	}
 	return it->second;

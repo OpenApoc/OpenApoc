@@ -61,7 +61,7 @@ int getCorridorSectorID(const Base &base, Vec2<int> pos)
 				{
 					if (facility->pos.x + x >= Base::SIZE || facility->pos.y + y >= Base::SIZE)
 					{
-						LogError("Facility at \"%s\" out of bounds", facility->pos);
+						LogError("Facility at \"{0}\" out of bounds", facility->pos);
 						continue;
 					}
 					facilities[facility->pos.x + x][facility->pos.y + y] = true;
@@ -92,7 +92,7 @@ template <> sp<BattleMap> StateObject<BattleMap>::get(const GameState &state, co
 	auto it = state.battle_maps.find(id);
 	if (it == state.battle_maps.end())
 	{
-		LogError("No battle_map matching ID \"%s\"", id);
+		LogError("No battle_map matching ID \"{0}\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -116,7 +116,7 @@ const UString &StateObject<BattleMap>::getId(const GameState &state, const sp<Ba
 		if (a.second == ptr)
 			return a.first;
 	}
-	LogError("No battle_map matching pointer %p", static_cast<void *>(ptr.get()));
+	LogError("No battle_map matching pointer {0:p}", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 
@@ -627,7 +627,7 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 		}
 		else
 		{
-			LogWarning("Cannot generate a map %s with gen size %d since generating large maps is "
+			LogWarning("Cannot generate a map {0} with gen size {1} since generating large maps is "
 			           "disabled",
 			           id, (int)genSize);
 			return false;
@@ -785,8 +785,8 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 		// then we cannot create a map of such size
 		if (mandatorySectorLost && !mandatorySectorRemaining)
 		{
-			LogWarning("Failed to place mandatory sectors for map %s with size %d, %d, %d at "
-			           "attempt %d",
+			LogWarning("Failed to place mandatory sectors for map {0} with size {1}, {2}, {3} at "
+			           "attempt {4}",
 			           id, size.x, size.y, size.z, attempt_make_map);
 			continue;
 		}
@@ -811,8 +811,8 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 		// then we cannot create a map of such size
 		if (failed)
 		{
-			LogWarning("Failed to place mandatory sectors for map %s with size %d, %d, %d at "
-			           "attempt %d",
+			LogWarning("Failed to place mandatory sectors for map {0} with size {1}, {2}, {3} at "
+			           "attempt {4}",
 			           id, size.x, size.y, size.z, attempt_make_map);
 			continue;
 		}
@@ -910,17 +910,17 @@ bool BattleMap::generateMap(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int>
 		// If we failed at filling a map at this point, then there's nothing else we can do
 		if (!isMapComplete(sec_map, size))
 		{
-			LogWarning("Failed to complete map %s with size %d, %d, %d at attempt %d", id, size.x,
-			           size.y, size.z, attempt_make_map);
+			LogWarning("Failed to complete map {0} with size {1}, {2}, {3} at attempt {4}", id,
+			           size.x, size.y, size.z, attempt_make_map);
 			continue;
 		}
 
-		LogWarning("Successfully completed map %s with size %d, %d, %d at attempt %d", id, size.x,
-		           size.y, size.z, attempt_make_map);
+		LogWarning("Successfully completed map {0} with size {1}, {2}, {3} at attempt {4}", id,
+		           size.x, size.y, size.z, attempt_make_map);
 		return true;
 	}
 
-	LogWarning("Failed (totally) to generate a map %s with gen size %d", id, (int)genSize);
+	LogWarning("Failed (totally) to generate a map {0} with gen size {1}", id, (int)genSize);
 	return false;
 }
 
@@ -939,7 +939,7 @@ bool BattleMap::generateBase(std::vector<sp<BattleMapSector>> &sec_map, Vec3<int
 	}
 	if (!base)
 	{
-		LogError("Failed to find base in building %s", mission_location.id);
+		LogError("Failed to find base in building {0}", mission_location.id);
 		return false;
 	}
 
@@ -1020,17 +1020,17 @@ BattleMap::fillMap(std::vector<std::list<std::pair<Vec3<int>, sp<BattleMapPart>>
 					continue;
 				if (!sec->tiles)
 				{
-					LogInfo("Loading sector tiles \"%s\"", sec->sectorTilesName);
+					LogInfo("Loading sector tiles \"{0}\"", sec->sectorTilesName);
 					sec->tiles.reset(new BattleMapSectorTiles());
 					if (!sec->tiles->loadSector(state, BattleMapSectorTiles::getMapSectorPath() +
 					                                       "/" + sec->sectorTilesName))
 					{
-						LogError("Failed to load sector tiles \"%s\"", sec->sectorTilesName);
+						LogError("Failed to load sector tiles \"{0}\"", sec->sectorTilesName);
 					}
 				}
 				else
 				{
-					LogInfo("Using already-loaded sector tiles \"%s\"", sec->sectorTilesName);
+					LogInfo("Using already-loaded sector tiles \"{0}\"", sec->sectorTilesName);
 				}
 				auto &tiles = *sec->tiles;
 				Vec3<int> shift = {x * chunk_size.x, y * chunk_size.y, z * chunk_size.z};
@@ -1550,11 +1550,11 @@ void BattleMap::loadTilesets(GameState &state) const
 	{
 		unsigned count = 0;
 		auto tilesetPath = BattleMapTileset::getTilesetPath() + "/" + tilesetName;
-		LogInfo("Loading tileset \"%s\" from \"%s\"", tilesetName, tilesetPath);
+		LogInfo("Loading tileset \"{0}\" from \"{1}\"", tilesetName, tilesetPath);
 		BattleMapTileset tileset;
 		if (!tileset.loadTileset(state, tilesetPath))
 		{
-			LogError("Failed to load tileset \"%s\" from \"%s\"", tilesetName, tilesetPath);
+			LogError("Failed to load tileset \"{0}\" from \"{1}\"", tilesetName, tilesetPath);
 			continue;
 		}
 
@@ -1590,13 +1590,13 @@ void BattleMap::loadTilesets(GameState &state) const
 			// Sanity check
 			if (state.battleMapTiles.find(tileName) != state.battleMapTiles.end())
 			{
-				LogError("Duplicate tile with ID \"%s\"", tileName);
+				LogError("Duplicate tile with ID \"{0}\"", tileName);
 				continue;
 			}
 			state.battleMapTiles.emplace(tileName, tile);
 			count++;
 		}
-		LogInfo("Loaded %u tiles from tileset \"%s\"", count, tilesetName);
+		LogInfo("Loaded {0} tiles from tileset \"{1}\"", count, tilesetName);
 	}
 }
 

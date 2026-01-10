@@ -149,17 +149,17 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 	Vec3<int> fromPos = from->position;
 	if (fromPos == toPos)
 	{
-		LogError("FromPos == ToPos %s", toPos);
+		LogError("FromPos == ToPos {0}", toPos);
 		return false;
 	}
 	if (!map.tileIsValid(fromPos))
 	{
-		LogError("FromPos %s is not on the map", fromPos);
+		LogError("FromPos {0} is not on the map", fromPos);
 		return false;
 	}
 	if (!map.tileIsValid(toPos))
 	{
-		LogError("ToPos %s is not on the map", toPos);
+		LogError("ToPos {0} is not on the map", toPos);
 		return false;
 	}
 
@@ -1469,7 +1469,7 @@ bool BattleUnitMission::getNextBodyState(GameState &state, BattleUnit &u, BodySt
 				}
 				else
 				{
-					LogError("Unit %s (%s) (%s) lost capability to attain bodyState %d?", u.id,
+					LogError("Unit {0} ({1}) ({2}) lost capability to attain bodyState {3}?", u.id,
 					         u.agent->name, u.agent->type->id, (int)targetBodyState);
 				}
 			}
@@ -1536,7 +1536,7 @@ MovementState BattleUnitMission::getNextMovementState(GameState &, BattleUnit &u
 						break;
 					}
 				default:
-					LogError("Invalid facingDelta %d", facingDelta);
+					LogError("Invalid facingDelta {0}", facingDelta);
 					break;
 			}
 			break;
@@ -1762,7 +1762,7 @@ bool BattleUnitMission::isFinishedInternal(GameState &, BattleUnit &u)
 
 void BattleUnitMission::start(GameState &state, BattleUnit &u)
 {
-	LogWarning("Unit %s mission \"%s\" starting", u.id, getName());
+	LogWarning("Unit {0} mission \"{1}\" starting", u.id, getName());
 
 	switch (this->type)
 	{
@@ -1788,7 +1788,7 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 				}
 				if (item->type->type != AEquipmentType::Type::Teleporter)
 				{
-					LogError("Unit is trying to teleport using non-teleporter item %s!?",
+					LogError("Unit is trying to teleport using non-teleporter item {0}!?",
 					         item->type->name);
 					cancelled = true;
 					return;
@@ -1974,8 +1974,8 @@ void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> tar
 			// If unit cannot move at all - cancel
 			if (!u.canMove())
 			{
-				LogInfo("Cannot move to %d %d %d, unit has no movement ability", target.x, target.y,
-				        target.z);
+				LogInfo("Cannot move to {0} {1} {2}, unit has no movement ability", target.x,
+				        target.y, target.z);
 				cancelled = true;
 				return;
 			}
@@ -2005,7 +2005,7 @@ void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> tar
 							    !targetTile->getUnitIfPresent(true, true, false, u.tileObject,
 							                                  false, u.isLarge()))
 							{
-								LogInfo("Cannot move to %d %d %d, found an adjacent free tile, "
+								LogInfo("Cannot move to {0} {1} {2}, found an adjacent free tile, "
 								        "moving to an adjacent tile",
 								        target.x, target.y, target.z);
 								approachOnly = true;
@@ -2024,7 +2024,7 @@ void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> tar
 				}
 				if (!approachOnly)
 				{
-					LogInfo("Cannot move to %d %d %d, impassable", target.x, target.y, target.z);
+					LogInfo("Cannot move to {0} {1} {2}, impassable", target.x, target.y, target.z);
 					cancelled = true;
 					return;
 				}
@@ -2039,7 +2039,7 @@ void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> tar
 				target.z--;
 				if (target.z == -1)
 				{
-					LogError("Solid ground missing on level 0? Reached %d %d %d", target.x,
+					LogError("Solid ground missing on level 0? Reached {0} {1} {2}", target.x,
 					         target.y, target.z);
 					cancelled = true;
 					return;
@@ -2058,7 +2058,7 @@ void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> tar
 		// Cancel movement if the closest path ends at the current position
 		if (path.size() == 1 && path.back() == Vec3<int>{u.position})
 		{
-			LogInfo("Cannot move to %s, closest path ends at origin", Vec3<int>{u.goalPosition});
+			LogInfo("Cannot move to {0}, closest path ends at origin", Vec3<int>{u.goalPosition});
 			cancelled = true;
 			return;
 		}
@@ -2073,7 +2073,7 @@ void BattleUnitMission::setPathTo(GameState &state, BattleUnit &u, Vec3<int> tar
 	}
 	else
 	{
-		LogError("Mission %s: Unit without tileobject attempted pathfinding!", getName());
+		LogError("Mission {0}: Unit without tileobject attempted pathfinding!", getName());
 		cancelled = true;
 		return;
 	}
@@ -2519,38 +2519,38 @@ UString BattleUnitMission::getName()
 			name = "AcquireTUs";
 			break;
 		case Type::GotoLocation:
-			name = "GotoLocation " + format(" %s", targetLocation);
+			name = "GotoLocation " + format(" {0}", targetLocation);
 			break;
 		case Type::Teleport:
-			name = "Teleport to " + format(" %s", targetLocation);
+			name = "Teleport to " + format(" {0}", targetLocation);
 			break;
 		case Type::RestartNextMission:
 			name = "Restart next mission";
 			break;
 		case Type::Snooze:
-			name = "Snooze " + format(" for %u ticks", timeToSnooze);
+			name = "Snooze " + format(" for {0} ticks", timeToSnooze);
 			break;
 		case Type::ChangeBodyState:
-			name = "ChangeBodyState " + format("%d", (int)this->targetBodyState);
+			name = "ChangeBodyState " + format("{0}", (int)this->targetBodyState);
 			break;
 		case Type::ThrowItem:
 			name = "ThrowItem " +
-			       format("%s at %s", item ? item->type->name : "(item is gone)", targetLocation);
+			       format("{0} at {1}", item ? item->type->name : "(item is gone)", targetLocation);
 			break;
 		case Type::DropItem:
-			name = "DropItem " + format("%s", item ? item->type->name : "(item is gone)");
+			name = "DropItem " + format("{0}", item ? item->type->name : "(item is gone)");
 			break;
 		case Type::ReachGoal:
 			name = "ReachGoal";
 			break;
 		case Type::Turn:
-			name = "Turn " + format(" %s", targetFacing);
+			name = "Turn " + format(" {0}", targetFacing);
 			break;
 		case Type::Brainsuck:
-			name = "Brainsuck " + format(" %s", targetUnit.id);
+			name = "Brainsuck " + format(" {0}", targetUnit.id);
 			break;
 		case Type::Jump:
-			name = "Jump to " + format(" %s", jumpTarget);
+			name = "Jump to " + format(" {0}", jumpTarget);
 			break;
 	}
 	return name;

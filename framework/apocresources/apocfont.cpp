@@ -16,14 +16,14 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 	auto file = fw().data->fs.open(fontDescPath);
 	if (!file)
 	{
-		LogWarning("Failed to open font file at path \"%s\"", fontDescPath);
+		LogWarning("Failed to open font file at path \"{0}\"", fontDescPath);
 		return nullptr;
 	}
 
 	auto data = file.readAll();
 	if (!data)
 	{
-		LogWarning("Failed to read font file at path \"%s\"", fontDescPath);
+		LogWarning("Failed to read font file at path \"{0}\"", fontDescPath);
 		return nullptr;
 	}
 
@@ -33,7 +33,7 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 
 	if (!parseResult)
 	{
-		LogWarning("Failed to parse font file at \"%s\" - \"%s\" at \"%llu\"", fontDescPath,
+		LogWarning("Failed to parse font file at \"{0}\" - \"{1}\" at \"{2}\"", fontDescPath,
 		           parseResult.description(), (unsigned long long)parseResult.offset);
 		return nullptr;
 	}
@@ -41,14 +41,14 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 	auto openapocNode = doc.child("openapoc");
 	if (!openapocNode)
 	{
-		LogWarning("Failed to find \"openapoc\" root node in font file at \"%s\"", fontDescPath);
+		LogWarning("Failed to find \"openapoc\" root node in font file at \"{0}\"", fontDescPath);
 		return nullptr;
 	}
 
 	auto fontNode = openapocNode.child("apocfont");
 	if (!fontNode)
 	{
-		LogWarning("Failed to find \"openapoc::apocfont\" node in font file at \"%s\"",
+		LogWarning("Failed to find \"openapoc::apocfont\" node in font file at \"{0}\"",
 		           fontDescPath);
 		return nullptr;
 	}
@@ -70,19 +70,19 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 	height = fontNode.attribute("height").as_int();
 	if (height <= 0)
 	{
-		LogError("apocfont \"%s\" with invalid \"height\" attribute", fontName);
+		LogError("apocfont \"{0}\" with invalid \"height\" attribute", fontName);
 		return nullptr;
 	}
 	spacewidth = fontNode.attribute("spacewidth").as_int();
 	if (spacewidth <= 0)
 	{
-		LogError("apocfont \"%s\" with invalid \"spacewidth\" attribute", fontName);
+		LogError("apocfont \"{0}\" with invalid \"spacewidth\" attribute", fontName);
 		return nullptr;
 	}
 	kerning = fontNode.attribute("kerning").as_int();
 	if (kerning <= 0)
 	{
-		LogError("apocfont \"%s\" with invalid \"kerning\" attribute", fontName);
+		LogError("apocfont \"{0}\" with invalid \"kerning\" attribute", fontName);
 		return nullptr;
 	}
 
@@ -92,14 +92,14 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 		UString glyphPath = glyphNode.attribute("glyph").value();
 		if (glyphPath.empty())
 		{
-			LogError("Font \"%s\" has glyph with missing string attribute - skipping glyph",
+			LogError("Font \"{0}\" has glyph with missing string attribute - skipping glyph",
 			         fontName);
 			continue;
 		}
 		UString glyphString = glyphNode.attribute("string").value();
 		if (glyphString.empty())
 		{
-			LogError("apocfont \"%s\" has glyph with missing string attribute - skipping glyph",
+			LogError("apocfont \"{0}\" has glyph with missing string attribute - skipping glyph",
 			         fontName);
 			continue;
 		}
@@ -108,7 +108,7 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 
 		if (pointString.length() != 1)
 		{
-			LogError("apocfont \"%s\" glyph \"%s\" has %lu codepoints, expected one - skipping "
+			LogError("apocfont \"{0}\" glyph \"{1}\" has {2} codepoints, expected one - skipping "
 			         "glyph",
 			         fontName, glyphString, pointString.length());
 			continue;
@@ -117,8 +117,8 @@ sp<BitmapFont> ApocalypseFont::loadFont(const UString &fontDescPath)
 
 		if (charMap.find(c) != charMap.end())
 		{
-			LogError("Font \"%s\" has multiple glyphs for string \"%s\" - skipping glyph", fontName,
-			         glyphString);
+			LogError("Font \"{0}\" has multiple glyphs for string \"{1}\" - skipping glyph",
+			         fontName, glyphString);
 			continue;
 		}
 

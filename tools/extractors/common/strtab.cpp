@@ -32,7 +32,7 @@ StrTab::StrTab(std::istream &file, off_t start_offset, off_t end_offset, bool ma
 				std::stringstream ss;
 				ss << s << " " << ++unique_id[s];
 				s = ss.str();
-				LogWarning("Munged string to make unique: \"%s\"", s.c_str());
+				LogWarning("Munged string to make unique: \"{0}\"", s.c_str());
 			}
 			else
 				unique_id.emplace(s, 0);
@@ -47,7 +47,7 @@ std::string StrTab::get(int offset) const
 {
 	if (offset >= (int)readStrings.size())
 	{
-		LogError("Trying to read string table entry %d - table size %zu", offset,
+		LogError("Trying to read string table entry {0} - table size {1}", offset,
 		         readStrings.size());
 	}
 	return readStrings[offset];

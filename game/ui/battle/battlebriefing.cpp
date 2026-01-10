@@ -35,7 +35,7 @@ BattleBriefing::BattleBriefing(sp<GameState> state,
 {
 
 	menuform->findControlTyped<Label>("TEXT_DATE")
-	    ->setText(format("%s      %s", state->gameTime.getLongDateString(),
+	    ->setText(format("{0}      {1}", state->gameTime.getLongDateString(),
 	                     state->gameTime.getShortTimeString()));
 
 	// FIXME: Read and store briefing text and image properly
@@ -80,7 +80,7 @@ BattleBriefing::BattleBriefing(sp<GameState> state,
 				int briefingID = alienFunctionMap.at(building->function->name);
 				menuform->findControlTyped<Graphic>("BRIEFING_IMAGE")
 				    ->setImage(
-				        fw().data->loadImage(format("xcom3/tacdata/alienm%d.pcx", briefingID)));
+				        fw().data->loadImage(format("xcom3/tacdata/alienm{0}.pcx", briefingID)));
 				switch (briefingID)
 				{
 					case 1:

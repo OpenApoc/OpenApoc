@@ -99,7 +99,7 @@ void City::initCity(GameState &state)
 		{
 			if (s->building->carEntranceLocation.x != -1)
 			{
-				LogWarning("Building has multiple car entrances? %s", s->building->name);
+				LogWarning("Building has multiple car entrances? {0}", s->building->name);
 			}
 			s->building->carEntranceLocation = s->initialPosition;
 			// crew quarters is the closest to camera spot with vehicle access
@@ -120,22 +120,22 @@ void City::initCity(GameState &state)
 	{
 		if (b.second->landingPadLocations.empty())
 		{
-			LogError("Building %s has no landing pads", b.first);
+			LogError("Building {0} has no landing pads", b.first);
 		}
-		LogInfo("Building %s has %u landing pads:", b.first,
+		LogInfo("Building {0} has {1} landing pads:", b.first,
 		        (unsigned)b.second->landingPadLocations.size());
 		for (auto &loc : b.second->landingPadLocations)
 		{
-			LogInfo("Pad: %s", loc);
+			LogInfo("Pad: {0}", loc);
 		}
-		LogInfo("Car: %s", b.second->carEntranceLocation);
+		LogInfo("Car: {0}", b.second->carEntranceLocation);
 		if (b.second->crewQuarters == Vec3<int>{-1, -1, -1})
 		{
-			LogWarning("Building %s has no car exit?", b.first);
+			LogWarning("Building {0} has no car exit?", b.first);
 			b.second->crewQuarters = {(b.second->bounds.p0.x + b.second->bounds.p1.x) / 2,
 			                          (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2};
 		}
-		LogInfo("Crew Quarters: %s", b.second->crewQuarters);
+		LogInfo("Crew Quarters: {0}", b.second->crewQuarters);
 		if (b.second->function.id == "BUILDINGFUNCTION_SPACE_PORT")
 		{
 			spaceports.emplace_back(&state, b.first);
@@ -794,7 +794,7 @@ void City::initialSceneryLinkUp()
 		if (mp->willCollapse())
 		{
 			auto pos = mp->tileObject->getOwningTile()->position;
-			LogWarning("SC %s at %s is UNLINKED", mp->type.id, pos);
+			LogWarning("SC {0} at {1} is UNLINKED", mp->type.id, pos);
 		}
 	}
 
@@ -822,7 +822,7 @@ void City::initialSceneryLinkUp()
 		if (mp->willCollapse())
 		{
 			auto pos = mp->tileObject->getOwningTile()->position;
-			LogWarning("SC %s at %s is going to fall", mp->type.id, pos);
+			LogWarning("SC {0} at {1} is going to fall", mp->type.id, pos);
 		}
 	}
 
@@ -843,7 +843,7 @@ sp<Vehicle> City::createVehicle(GameState &state, StateRef<VehicleType> type,
 {
 	auto v = mksp<Vehicle>();
 	v->type = type;
-	v->name = format("%s %d", type->name, ++type->numCreated);
+	v->name = format("{0} {1}", type->name, ++type->numCreated);
 	v->city = {&state, id};
 	v->owner = owner;
 	v->health = type->health;
@@ -911,7 +911,7 @@ template <> sp<City> StateObject<City>::get(const GameState &state, const UStrin
 	auto it = state.cities.find(id);
 	if (it == state.cities.end())
 	{
-		LogError("No citymap matching ID \"%s\"", id);
+		LogError("No citymap matching ID \"{0}\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -938,7 +938,7 @@ template <> const UString &StateObject<City>::getId(const GameState &state, cons
 			return c.first;
 		}
 	}
-	LogError("No city matching pointer %p", static_cast<void *>(ptr.get()));
+	LogError("No city matching pointer {0:p}", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 

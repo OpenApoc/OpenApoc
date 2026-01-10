@@ -44,7 +44,7 @@ void FileLogFunction(LogLevel level, UString prefix, const UString &text)
 				levelPrefix = "U";
 				break;
 		}
-		const auto message = OpenApoc::format("%s %s: %s", levelPrefix, prefix, text);
+		const auto message = OpenApoc::format("{0} {1}: {2}", levelPrefix, prefix, text);
 		logFile << message << std::endl;
 	}
 
@@ -66,7 +66,7 @@ void enableFileLogger(const char *outputFile)
 	logFile.open(outputFile);
 	if (!logFile.good())
 	{
-		LogError("File logger failed to open file \"%s\"", outputFile);
+		LogError("File logger failed to open file \"{0}\"", outputFile);
 	}
 	fileLogLevel = (LogLevel)Options::fileLogLevelOption.get();
 	backtraceLogLevel = (LogLevel)Options::backtraceLogLevelOption.get();

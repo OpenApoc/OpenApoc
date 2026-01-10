@@ -27,7 +27,7 @@ static time_duration ticksToPosix(int64_t ticks)
 	return time_duration(0, 0, 0, tickTotal);
 }
 
-GameTime::GameTime(uint64_t ticks) : ticks(ticks){};
+GameTime::GameTime(uint64_t ticks) : ticks(ticks) {};
 
 static boost::posix_time::ptime getPtime(uint64_t ticks)
 {
@@ -121,7 +121,7 @@ UString GameTime::getShortDateString() const
 	return ss.str();
 }
 
-UString GameTime::getWeekString() const { return format("%s %d", tr("Week"), getWeek()); }
+UString GameTime::getWeekString() const { return format(tr("Week {0}"), getWeek()); }
 
 unsigned int GameTime::getMonth() const
 {

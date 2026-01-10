@@ -50,10 +50,9 @@ BuildingScreen::BuildingScreen(sp<GameState> state, sp<Building> building)
     : Stage(), menuform(ui().getForm("city/building")), state(state), building(building)
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
-	menuform->findControlTyped<Label>("TEXT_BUILDING_NAME")->setText(tr(building->name));
-	menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(tr(building->owner->name));
-	menuform->findControlTyped<Label>("TEXT_BUILDING_FUNCTION")
-	    ->setText(tr(building->function->name));
+	menuform->findControlTyped<Label>("TEXT_BUILDING_NAME")->setText(building->name);
+	menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(building->owner->name);
+	menuform->findControlTyped<Label>("TEXT_BUILDING_FUNCTION")->setText(building->function->name);
 }
 
 BuildingScreen::~BuildingScreen() = default;
@@ -154,7 +153,7 @@ void BuildingScreen::eventOccurred(Event *e)
 					}
 					if (!foundAlien)
 					{
-						UString message = "You have not found any Aliens in this building.";
+						UString message = tr("You have not found any Aliens in this building.");
 						if (building->owner != state->getPlayer())
 						{
 							auto priorRelationship =
@@ -165,33 +164,33 @@ void BuildingScreen::eventOccurred(Event *e)
 							if (newRelationship != priorRelationship &&
 							    newRelationship == Organisation::Relation::Unfriendly)
 							{
-								message = "You have not found any Aliens in this building. As "
-								          "a consequence of your "
-								          "unwelcome intrusion the owner of the building has "
-								          "now become unfriendly "
-								          "towards X-Com.";
+								message = tr("You have not found any Aliens in this building. As "
+								             "a consequence of your "
+								             "unwelcome intrusion the owner of the building has "
+								             "now become unfriendly "
+								             "towards X-Com.");
 							}
 							else if (newRelationship != priorRelationship &&
 							         newRelationship == Organisation::Relation::Hostile)
 							{
-								message = "You have not found any Aliens in this building. As "
-								          "a consequence of your "
-								          "unwelcome intrusion the owner of the building has "
-								          "now become hostile towards"
-								          " X-Com.";
+								message = tr("You have not found any Aliens in this building. As "
+								             "a consequence of your "
+								             "unwelcome intrusion the owner of the building has "
+								             "now become hostile towards"
+								             " X-Com.");
 							}
 							else
 							{
-								message = "You have not found any Aliens in this building. "
-								          "As a consequence of your "
-								          "unwelcome intrusion the owner of the building is "
-								          "less favorably disposed "
-								          "towards X-Com.";
+								message = tr("You have not found any Aliens in this building. "
+								             "As a consequence of your "
+								             "unwelcome intrusion the owner of the building is "
+								             "less favorably disposed "
+								             "towards X-Com.");
 							}
 						}
 						fw().stageQueueCommand(
 						    {StageCmd::Command::PUSH,
-						     mksp<MessageBox>(tr("No Hostile Forces Discovered"), tr(message),
+						     mksp<MessageBox>(tr("No Hostile Forces Discovered"), message,
 						                      MessageBox::ButtonOptions::Ok)});
 					}
 					else

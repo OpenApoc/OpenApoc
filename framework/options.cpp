@@ -1,24 +1,26 @@
 #include "framework/options.h"
 #include "framework/logger.h"
+#include "library/strings_format.h"
 
 namespace
 {
 using namespace OpenApoc;
 void dumpOption(const ConfigOptionInt &opt)
 {
-	LogInfo("OPTION \"%s.%s\" = %d", opt.getSection(), opt.getName(), opt.get());
+	LogInfo("OPTION \"{0}.{1}\" = {2}", opt.getSection(), opt.getName(), opt.get());
 }
 void dumpOption(const ConfigOptionBool &opt)
 {
-	LogInfo("OPTION \"%s.%s\" = %s", opt.getSection(), opt.getName(), opt.get() ? "true" : "false");
+	LogInfo("OPTION \"{0}.{1}\" = {2}", opt.getSection(), opt.getName(),
+	        opt.get() ? "true" : "false");
 }
 void dumpOption(const ConfigOptionFloat &opt)
 {
-	LogInfo("OPTION \"%s.%s\" = %f", opt.getSection(), opt.getName(), opt.get());
+	LogInfo("OPTION \"{0}.{1}\" = {2}", opt.getSection(), opt.getName(), opt.get());
 }
 void dumpOption(const ConfigOptionString &opt)
 {
-	LogInfo("OPTION \"%s.%s\" = \"%s\"", opt.getSection(), opt.getName(), opt.get());
+	LogInfo("OPTION \"{0}.{1}\" = \"{2}\"", opt.getSection(), opt.getName(), opt.get());
 }
 
 } // anonymous namespace
@@ -209,297 +211,306 @@ void dumpOptionsToLog()
 #define RENDERERS "GLES_3_0:GL_2_0"
 #endif
 
-ConfigOptionString dataPathOption("Framework", "Data", "The path containing OpenApoc data",
+ConfigOptionString dataPathOption("Framework", "Data", tr("The path containing OpenApoc data"),
                                   "./data");
-ConfigOptionString cdPathOption("Framework", "CD", "The path to the XCom:Apocalypse CD",
+ConfigOptionString cdPathOption("Framework", "CD", tr("The path to the XCom:Apocalypse CD"),
                                 "./data/cd.iso");
 ConfigOptionInt threadPoolSizeOption(
     "Framework", "ThreadPoolSize",
-    "The number of threads to spawn for the threadpool (0 = queried num_cores)", 0);
-ConfigOptionString renderersOption("Framework", "Renderers",
-                                   "':' separated list of renderer backends (in preference order)",
-                                   RENDERERS);
-ConfigOptionString audioBackendsOption("Framework", "AudioBackends",
-                                       "':' separated list of audio backends (in preference order)",
-                                       "SDLRaw:null");
-ConfigOptionInt audioGlobalGainOption("Framework.Audio", "GlobalGain", "Global audio gain (0-20)",
-                                      20);
-ConfigOptionInt audioSampleGainOption("Framework.Audio", "SampleGain", "Sample audio gain (0-20)",
-                                      20);
-ConfigOptionInt audioMusicGainOption("Framework.Audio", "MusicGain", "Music audio gain (0-20)", 20);
-ConfigOptionInt audioConcurrentSampleCount("Framework.Audio", "ConcurrentSamples",
-                                           "The number of concurrent samples to play at one time",
-                                           10);
-ConfigOptionInt screenWidthOption("Framework.Screen", "Width", "Initial screen width (in pixels)",
-                                  1280);
+    tr("The number of threads to spawn for the threadpool (0 = queried num_cores)"), 0);
+ConfigOptionString
+    renderersOption("Framework", "Renderers",
+                    tr("':' separated list of renderer backends (in preference order)"), RENDERERS);
+ConfigOptionString
+    audioBackendsOption("Framework", "AudioBackends",
+                        tr("':' separated list of audio backends (in preference order)"),
+                        "SDLRaw:null");
+ConfigOptionInt audioGlobalGainOption("Framework.Audio", "GlobalGain",
+                                      tr("Global audio gain (0-20)"), 20);
+ConfigOptionInt audioSampleGainOption("Framework.Audio", "SampleGain",
+                                      tr("Sample audio gain (0-20)"), 20);
+ConfigOptionInt audioMusicGainOption("Framework.Audio", "MusicGain", tr("Music audio gain (0-20)"),
+                                     20);
+ConfigOptionInt
+    audioConcurrentSampleCount("Framework.Audio", "ConcurrentSamples",
+                               tr("The number of concurrent samples to play at one time"), 10);
+ConfigOptionInt screenWidthOption("Framework.Screen", "Width",
+                                  tr("Initial screen width (in pixels)"), 1280);
 ConfigOptionInt screenHeightOption("Framework.Screen", "Height",
-                                   "Initial screen height (in pixels)", 720);
+                                   tr("Initial screen height (in pixels)"), 720);
 ConfigOptionBool screenFullscreenOption("Framework.Screen", "Fullscreen",
-                                        "Deprecated: use ScreenMode instead", false);
+                                        tr("Deprecated: use ScreenMode instead"), false);
 ConfigOptionString screenModeOption("Framework.Screen", "Mode",
-                                    "Mode: {windowed,fullscreen,borderless}", "windowed");
+                                    tr("Mode: {windowed,fullscreen,borderless}"), "windowed");
 ConfigOptionInt screenDisplayNumberOption("Framework.Screen", "Display",
-                                          "Display number in multi-monitor setup (0..n)", 0);
+                                          tr("Display number in multi-monitor setup (0..n)"), 0);
 ConfigOptionInt screenScaleXOption("Framework.Screen", "ScaleX",
-                                   "Scale screen in X direction by (percent)", 100);
+                                   tr("Scale screen in X direction by (percent)"), 100);
 ConfigOptionInt screenScaleYOption("Framework.Screen", "ScaleY",
-                                   "Scale screen in Y direction by (percent)", 100);
+                                   tr("Scale screen in Y direction by (percent)"), 100);
 ConfigOptionBool screenAutoScale(
     "Framework.Screen", "AutoScale",
-    "Automatically scale up game viewport for modern screens (overrides ScaleX and ScaleY)", false);
+    tr("Automatically scale up game viewport for modern screens (overrides ScaleX and ScaleY)"),
+    false);
 ConfigOptionString languageOption("Framework", "Language",
-                                  "The language used ingame (empty for system default)", "");
+                                  tr("The language used ingame (empty for system default)"), "");
 
 ConfigOptionBool mouseCaptureOption("Framework", "MouseCapture",
-                                    "Enable mouse capture for the window", false);
+                                    tr("Enable mouse capture for the window"), false);
 
-ConfigOptionInt targetFPS("Framework", "TargetFPS", "The target FPS count - affects game speed!",
-                          60);
-ConfigOptionInt frameLimit("Framework", "FrameLimit", "Quit after this many frames - 0 = unlimited",
-                           0);
+ConfigOptionInt targetFPS("Framework", "TargetFPS",
+                          tr("The target FPS count - affects game speed!"), 60);
+ConfigOptionInt frameLimit("Framework", "FrameLimit",
+                           tr("Quit after this many frames - 0 = unlimited"), 0);
 ConfigOptionInt swapInterval("Framework", "SwapInterval",
-                             "Swap interval (0 = tear, 1 = wait for vsync", 0);
+                             tr("Swap interval (0 = tear, 1 = wait for vsync"), 0);
 
-ConfigOptionBool autoScrollOption("Options.Misc", "AutoScroll", "Enable scrolling with mouse",
+ConfigOptionBool autoScrollOption("Options.Misc", "AutoScroll", tr("Enable scrolling with mouse"),
                                   true);
 ConfigOptionBool actionMusicOption("Options.Misc", "ActionMusic",
-                                   "Music changes according to action in battle", true);
-ConfigOptionBool autoExecuteOption("Options.Misc", "AutoExecute",
-                                   "Execute remaining orders when player presses end turn button",
-                                   false);
+                                   tr("Music changes according to action in battle"), true);
+ConfigOptionBool
+    autoExecuteOption("Options.Misc", "AutoExecute",
+                      tr("Execute remaining orders when player presses end turn button"), false);
 ConfigOptionInt toolTipDelay("Options.Misc", "ToolTipDelay",
-                             "Delay in milliseconds before showing tooltips (<= 0 to disable)",
+                             tr("Delay in milliseconds before showing tooltips (<= 0 to disable)"),
                              500);
-ConfigOptionBool vanillaToggle("Options.Misc", "VanillaToggle", "Toggle vanilla mode", false);
+ConfigOptionBool vanillaToggle("Options.Misc", "VanillaToggle", tr("Toggle vanilla mode"), false);
 
-ConfigOptionBool optionPauseOnUfoSpotted("Notifications.City", "UfoSpotted", "UFO spotted", true);
+ConfigOptionBool optionPauseOnUfoSpotted("Notifications.City", "UfoSpotted", tr("UFO spotted"),
+                                         true);
 ConfigOptionBool optionPauseOnVehicleLightDamage("Notifications.City", "VehicleLightDamage",
-                                                 "Vehicle lightly damaged", true);
+                                                 tr("Vehicle lightly damaged"), true);
 ConfigOptionBool optionPauseOnVehicleModerateDamage("Notifications.City", "VehicleModerateDamage",
-                                                    "Vehicle moderately damaged", true);
+                                                    tr("Vehicle moderately damaged"), true);
 ConfigOptionBool optionPauseOnVehicleHeavyDamage("Notifications.City", "VehicleHeavyDamage",
-                                                 "Vehicle heavily damaged", true);
+                                                 tr("Vehicle heavily damaged"), true);
 ConfigOptionBool optionPauseOnVehicleDestroyed("Notifications.City", "VehicleDestroyed",
-                                               "Vehicle destroyed", true);
+                                               tr("Vehicle destroyed"), true);
 ConfigOptionBool optionPauseOnVehicleEscaping("Notifications.City", "VehicleEscaping",
-                                              "Vehicle damaged and returning to base", true);
+                                              tr("Vehicle damaged and returning to base"), true);
 ConfigOptionBool optionPauseOnVehicleNoAmmo("Notifications.City", "VehicleNoAmmo",
-                                            "Weapon out of ammo", true);
+                                            tr("Weapon out of ammo"), true);
 ConfigOptionBool optionPauseOnVehicleLowFuel("Notifications.City", "VehicleLowFuel",
-                                             "Vehicle low on fuel", true);
-ConfigOptionBool optionPauseOnAgentDiedCity("Notifications.City", "AgentDiedCity", "Agent has died",
-                                            true);
+                                             tr("Vehicle low on fuel"), true);
+ConfigOptionBool optionPauseOnAgentDiedCity("Notifications.City", "AgentDiedCity",
+                                            tr("Agent has died"), true);
 ConfigOptionBool optionPauseOnAgentArrived("Notifications.City", "AgentArrived",
-                                           "Agent arrived at base", true);
+                                           tr("Agent arrived at base"), true);
 ConfigOptionBool optionPauseOnCargoArrived("Notifications.City", "CargoArrived",
-                                           "Cargo has arrived at base", true);
+                                           tr("Cargo has arrived at base"), true);
 ConfigOptionBool optionPauseOnTransferArrived("Notifications.City", "TransferArrived",
-                                              "Transfer arrived at base", true);
+                                              tr("Transfer arrived at base"), true);
 ConfigOptionBool optionPauseOnRecoveryArrived("Notifications.City", "RecoveryArrived",
-                                              "Crash recovery arrived at base", true);
+                                              tr("Crash recovery arrived at base"), true);
 ConfigOptionBool optionPauseOnVehicleRepaired("Notifications.City", "VehicleRepaired",
-                                              "Vehicle repaired", true);
+                                              tr("Vehicle repaired"), true);
 ConfigOptionBool optionPauseOnVehicleRearmed("Notifications.City", "VehicleRearmed",
-                                             "Vehicle rearmed", true);
+                                             tr("Vehicle rearmed"), true);
 ConfigOptionBool optionPauseOnNotEnoughAmmo("Notifications.City", "NotEnoughAmmo",
-                                            "Not enough ammo to rearm vehicle", true);
+                                            tr("Not enough ammo to rearm vehicle"), true);
 ConfigOptionBool optionPauseOnVehicleRefuelled("Notifications.City", "VehicleRefuelled",
-                                               "Vehicle refuelled", true);
+                                               tr("Vehicle refuelled"), true);
 ConfigOptionBool optionPauseOnNotEnoughFuel("Notifications.City", "NotEnoughFuel",
-                                            "Not enough fuel to refuel vehicle", true);
+                                            tr("Not enough fuel to refuel vehicle"), true);
 ConfigOptionBool optionPauseOnUnauthorizedVehicle("Notifications.City", "UnauthorizedVehicle",
-                                                  "Unauthorized vehicle detected", true);
+                                                  tr("Unauthorized vehicle detected"), true);
 ConfigOptionBool optionPauseOnBaseDestroyed("Notifications.City", "BaseDestroyed",
-                                            "X-COM base destroyed by hostile forces.", true);
+                                            tr("X-COM base destroyed by hostile forces."), true);
 ConfigOptionBool optionPauseOnHostileSpotted("Notifications.Battle", "HostileSpotted",
-                                             "Hostile unit spotted", true);
+                                             tr("Hostile unit spotted"), true);
 ConfigOptionBool optionPauseOnHostileDied("Notifications.Battle", "HostileDied",
-                                          "Hostile unit has died", true);
+                                          tr("Hostile unit has died"), true);
 ConfigOptionBool optionPauseOnUnknownDied("Notifications.Battle", "UnknownDied",
-                                          "Unknown Unit has died", true);
+                                          tr("Unknown Unit has died"), true);
 ConfigOptionBool optionPauseOnAgentDiedBattle("Notifications.Battle", "AgentDiedBattle",
-                                              "Unit has died", true);
+                                              tr("Unit has died"), true);
 ConfigOptionBool optionPauseOnAgentBrainsucked("Notifications.Battle", "AgentBrainsucked",
-                                               "Unit Brainsucked", true);
+                                               tr("Unit Brainsucked"), true);
 ConfigOptionBool optionPauseOnAgentCriticallyWounded("Notifications.Battle",
                                                      "AgentCriticallyWounded",
-                                                     "Unit critically wounded", true);
+                                                     tr("Unit critically wounded"), true);
 ConfigOptionBool optionPauseOnAgentBadlyInjured("Notifications.Battle", "AgentBadlyInjured",
-                                                "Unit badly injured", true);
-ConfigOptionBool optionPauseOnAgentInjured("Notifications.Battle", "AgentInjured", "Unit injured",
-                                           true);
+                                                tr("Unit badly injured"), true);
+ConfigOptionBool optionPauseOnAgentInjured("Notifications.Battle", "AgentInjured",
+                                           tr("Unit injured"), true);
 ConfigOptionBool optionPauseOnAgentUnderFire("Notifications.Battle", "AgentUnderFire",
-                                             "Unit under fire", true);
+                                             tr("Unit under fire"), true);
 ConfigOptionBool optionPauseOnAgentUnconscious("Notifications.Battle", "AgentUnconscious",
-                                               "Unit has lost consciousness", true);
+                                               tr("Unit has lost consciousness"), true);
 ConfigOptionBool optionPauseOnAgentLeftCombat("Notifications.Battle", "AgentLeftCombat",
-                                              "Unit has left combat zone", true);
-ConfigOptionBool optionPauseOnAgentFrozen("Notifications.Battle", "AgentFrozen", "Unit has frozen",
-                                          true);
+                                              tr("Unit has left combat zone"), true);
+ConfigOptionBool optionPauseOnAgentFrozen("Notifications.Battle", "AgentFrozen",
+                                          tr("Unit has frozen"), true);
 ConfigOptionBool optionPauseOnAgentBerserk("Notifications.Battle", "AgentBerserk",
-                                           "Unit has gone beserk", true);
+                                           tr("Unit has gone beserk"), true);
 ConfigOptionBool optionPauseOnAgentPanicked("Notifications.Battle", "AgentPanicked",
-                                            "Unit has panicked", true);
+                                            tr("Unit has panicked"), true);
 ConfigOptionBool optionPauseOnAgentPanicOver("Notifications.Battle", "AgentPanicOver",
-                                             "Unit has stopped panicking", true);
+                                             tr("Unit has stopped panicking"), true);
 ConfigOptionBool optionPauseOnAgentPsiAttacked("Notifications.Battle", "AgentPsiAttacked",
-                                               "Psionic attack on unit", true);
+                                               tr("Psionic attack on unit"), true);
 ConfigOptionBool optionPauseOnAgentPsiControlled("Notifications.Battle", "AgentPsiControlled",
-                                                 "Unit under Psionic control", true);
+                                                 tr("Unit under Psionic control"), true);
 ConfigOptionBool optionPauseOnAgentPsiOver("Notifications.Battle", "AgentPsiOver",
-                                           "Unit freed from Psionic control", true);
+                                           tr("Unit freed from Psionic control"), true);
 ConfigOptionBool optionDebugCommandsVisible("OpenApoc.NewFeature", "DebugCommandsVisible",
-                                            "Show the debug commands on screen", true);
+                                            tr("Show the debug commands on screen"), true);
 ConfigOptionBool optionUFODamageModel("OpenApoc.NewFeature", "UFODamageModel",
-                                      "X-Com 1 Damage model (0-200%)", false);
+                                      tr("X-Com 1 Damage model (0-200%)"), false);
 ConfigOptionBool optionInstantExplosionDamage("OpenApoc.NewFeature", "InstantExplosionDamage",
-                                              "Explosions damage instantly", true);
-ConfigOptionBool optionGravliftSounds("OpenApoc.NewFeature", "GravliftSounds", "Gravlift sounds",
-                                      true);
+                                              tr("Explosions damage instantly"), true);
+ConfigOptionBool optionGravliftSounds("OpenApoc.NewFeature", "GravliftSounds",
+                                      tr("Gravlift sounds"), true);
 ConfigOptionBool optionNoScrollSounds("OpenApoc.NewFeature", "NoScrollSounds",
-                                      "Disable scrolling sounds", false);
+                                      tr("Disable scrolling sounds"), false);
 ConfigOptionBool optionNoInstantThrows("OpenApoc.NewFeature", "NoInstantThrows",
-                                       "Throwing requires proper facing and pose", true);
+                                       tr("Throwing requires proper facing and pose"), true);
 ConfigOptionBool optionFerryChecksRelationshipWhenBuying(
     "OpenApoc.NewFeature", "FerryChecksRelationshipWhenBuying",
-    "Transtellar checks relationship when buying items", true);
+    tr("Transtellar checks relationship when buying items"), true);
 ConfigOptionBool optionAllowManualCityTeleporters("OpenApoc.NewFeature",
                                                   "AllowManualCityTeleporters",
-                                                  "Allow manual use of teleporters in city", true);
-ConfigOptionBool optionAllowManualCargoFerry("OpenApoc.NewFeature", "AllowManualCargoFerry",
-                                             "Allow manual ferrying of cargo and non-combatants",
-                                             true);
+                                                  tr("Allow manual use of teleporters in city"),
+                                                  true);
+ConfigOptionBool
+    optionAllowManualCargoFerry("OpenApoc.NewFeature", "AllowManualCargoFerry",
+                                tr("Allow manual ferrying of cargo and non-combatants"), true);
 ConfigOptionBool optionAllowSoldierTaxiUse("OpenApoc.NewFeature", "AllowSoldierTaxiUse",
-                                           "Allow soldiers to call taxi", true);
+                                           tr("Allow soldiers to call taxi"), true);
 ConfigOptionBool optionAllowUnloadingClips("OpenApoc.NewFeature", "AdvancedInventoryControls",
-                                           "Allow unloading clips and quick equip", true);
+                                           tr("Allow unloading clips and quick equip"), true);
 ConfigOptionBool optionPayloadExplosion("OpenApoc.NewFeature", "PayloadExplosion",
-                                        "Ammunition explodes when blown up", true);
+                                        tr("Ammunition explodes when blown up"), true);
 ConfigOptionBool optionDisplayUnitPaths("OpenApoc.NewFeature", "DisplayUnitPaths",
-                                        "Display unit paths in battle", true);
+                                        tr("Display unit paths in battle"), true);
 ConfigOptionBool optionAdditionalUnitIcons("OpenApoc.NewFeature", "AdditionalUnitIcons",
-                                           "Display additional unit icons (fatal, psi)", true);
+                                           tr("Display additional unit icons (fatal, psi)"), true);
 ConfigOptionBool optionAllowForceFiringParallel("OpenApoc.NewFeature", "AllowForceFiringParallel",
-                                                "Allow force-firing parallel to the ground", true);
+                                                tr("Allow force-firing parallel to the ground"),
+                                                true);
 ConfigOptionBool optionRequireLOSToMaintainPsi("OpenApoc.NewFeature", "RequireLOSToMaintainPsi",
-                                               "Require LOS to maintain psi attack", false);
+                                               tr("Require LOS to maintain psi attack"), false);
 ConfigOptionBool optionAllowAttackingOwnedVehicles("OpenApoc.NewFeature",
                                                    "AllowAttackingOwnedVehicles",
-                                                   "Allow attacking owned vehicles", true);
+                                                   tr("Allow attacking owned vehicles"), true);
 ConfigOptionBool optionCallExistingFerry("OpenApoc.NewFeature", "CallExistingFerry",
-                                         "Call existing transport instead of spawning them", true);
+                                         tr("Call existing transport instead of spawning them"),
+                                         true);
 ConfigOptionBool
     optionAlternateVehicleShieldSound("OpenApoc.NewFeature", "AlternateVehicleShieldSound",
-                                      "Hitting vehicle shield produces alternate sound", true);
+                                      tr("Hitting vehicle shield produces alternate sound"), true);
 ConfigOptionBool optionEnableAgentTemplates("OpenApoc.NewFeature", "EnableAgentTemplates",
-                                            "Enable agent equipment templates", true);
-ConfigOptionBool optionStoreDroppedEquipment("OpenApoc.NewFeature", "StoreDroppedEquipment",
-                                             "Attempt to recover agent equipment dropped in city",
-                                             true);
+                                            tr("Enable agent equipment templates"), true);
+ConfigOptionBool
+    optionStoreDroppedEquipment("OpenApoc.NewFeature", "StoreDroppedEquipment",
+                                tr("Attempt to recover agent equipment dropped in city"), true);
 ConfigOptionBool optionFallingGroundVehicles(
     "OpenApoc.NewFeature", "CrashingGroundVehicles",
-    "Unsupported ground vehicles crash (Weapons and Modules may be lost in crash)", true);
+    tr("Unsupported ground vehicles crash (Weapons and Modules may be lost in crash)"), true);
 
 ConfigOptionBool optionEnforceCargoLimits("OpenApoc.NewFeature", "EnforceCargoLimits",
-                                          "Enforce vehicle cargo limits", false);
+                                          tr("Enforce vehicle cargo limits"), false);
 ConfigOptionBool optionAllowNearbyVehicleLootPickup("OpenApoc.NewFeature",
                                                     "AllowNearbyVehicleLootPickup",
-                                                    "Allow nearby vehicles to pick up loot", true);
+                                                    tr("Allow nearby vehicles to pick up loot"),
+                                                    true);
 ConfigOptionBool optionAllowBuildingLootDeposit("OpenApoc.NewFeature", "AllowBuildingLootDeposit",
-                                                "Allow loot to be stashed in the building", true);
-ConfigOptionBool optionArmoredRoads("OpenApoc.NewFeature", "ArmoredRoads", "Armored roads", true);
+                                                tr("Allow loot to be stashed in the building"),
+                                                true);
+ConfigOptionBool optionArmoredRoads("OpenApoc.NewFeature", "ArmoredRoads", tr("Armored roads"),
+                                    true);
 ConfigOptionBool optionVanillaCityControls("OpenApoc.NewFeature", "OpenApocCityControls",
-                                           "Improved city control scheme", true);
+                                           tr("Improved city control scheme"), true);
 ConfigOptionBool optionCollapseRaidedBuilding("OpenApoc.NewFeature", "CollapseRaidedBuilding",
-                                              "Successful raid collapses building", false);
+                                              tr("Successful raid collapses building"), false);
 ConfigOptionBool
     optionScrambleOnUnintentionalHit("OpenApoc.NewFeature", "ScrambleOnUnintentionalHit",
-                                     "Any hit on hostile building provokes retaliation", false);
+                                     tr("Any hit on hostile building provokes retaliation"), false);
 ConfigOptionBool optionMarketRight("OpenApoc.NewFeature", "MarketOnRight",
-                                   "Put market stock on the right side", true);
+                                   tr("Put market stock on the right side"), true);
 ConfigOptionBool optionDGCrashingVehicles(
     "OpenApoc.NewFeature", "CrashingDimensionGate",
-    "Uncapable vehicles crash when entering gates (Weapons and Modules may be lost in crash)",
+    tr("Uncapable vehicles crash when entering gates (Weapons and Modules may be lost in crash)"),
     true);
 ConfigOptionBool optionFuelCrashingVehicles(
     "OpenApoc.NewFeature", "CrashingOutOfFuel",
-    "Vehicles crash when out of fuel (Weapons and Modules may be lost in crash)", true);
+    tr("Vehicles crash when out of fuel (Weapons and Modules may be lost in crash)"), true);
 ConfigOptionBool optionSkipTurbo("OpenApoc.NewFeature", "SkipTurboMovement",
-                                 "Skip turbo movement calculations", false);
+                                 tr("Skip turbo movement calculations"), false);
 ConfigOptionBool optionRunAndKneel("OpenApoc.NewFeature", "RunAndKneel",
-                                   "All units run and kneel by default", true);
-ConfigOptionBool optionSeedRng("OpenApoc.NewFeature", "SeedRng", "Seed RNG on game start", true);
+                                   tr("All units run and kneel by default"), true);
+ConfigOptionBool optionSeedRng("OpenApoc.NewFeature", "SeedRng", tr("Seed RNG on game start"),
+                               true);
 ConfigOptionBool optionAutoReload("OpenApoc.NewFeature", "AutoReload",
-                                  "Automatically reload weapons when empty", true);
+                                  tr("Automatically reload weapons when empty"), true);
 ConfigOptionBool optionLeftClickIcon("OpenApoc.NewFeature", "LeftClickIconEquip",
-                                     "Left clicking icon opens equip menu", false);
+                                     tr("Left clicking icon opens equip menu"), false);
 ConfigOptionBool optionBattlescapeVertScroll("OpenApoc.NewFeature", "BattlescapeVertScroll",
-                                             "Mousewheel changes vertical level in battlescape",
+                                             tr("Mousewheel changes vertical level in battlescape"),
                                              true);
 ConfigOptionBool optionSingleSquadSelect("OpenApoc.NewFeature", "SingleSquadSelect",
-                                         "Select squad with single click", false);
+                                         tr("Select squad with single click"), false);
 ConfigOptionBool
     optionATVUFOMission("OpenApoc.NewFeature", "ATVUFOMission",
                         tr("Allow All Terrain Vehicles (ATV) to initiate UFO recovery missions"),
                         true);
 ConfigOptionInt
     optionMaxTileRepair("OpenApoc.Mod", "MaxTileRepair",
-                        "Construction Vehicles will repair a maximum of X Tiles per night", 5);
+                        tr("Construction Vehicles will repair a maximum of X Tiles per night"), 5);
 ConfigOptionFloat
     optionSceneryRepairCostFactor("OpenApoc.Mod", "SceneryRepairCostFactor",
-                                  "Determines the percentage of the original Price ORGs have to "
-                                  "pay for a Scenery Tile to be repaired",
+                                  tr("Determines the percentage of the original Price ORGs have to "
+                                     "pay for a Scenery Tile to be repaired"),
                                   10.0f);
 ConfigOptionBool optionLoadSameAmmo("OpenApoc.NewFeature", "LoadSameAmmo",
-                                    "Weapons autoreload only same ammo type", true);
-ConfigOptionBool
-    optionShowCurrentDimensionVehicles("OpenApoc.NewFeature", "ShowCurrentDimensionVehicles",
-                                       "Show vehicles in current dimension (or entering / leaving)",
-                                       true);
+                                    tr("Weapons autoreload only same ammo type"), true);
+ConfigOptionBool optionShowCurrentDimensionVehicles(
+    "OpenApoc.NewFeature", "ShowCurrentDimensionVehicles",
+    tr("Show vehicles in current dimension (or entering / leaving)"), true);
 ConfigOptionBool optionShowNonXCOMVehiclesPrefix("OpenApoc.NewFeature", "ShowNonXCOMVehiclesPrefix",
                                                  tr("Add prefix to non-X-COM vehicles"), true);
 ConfigOptionBool isoOnlyFollow("OpenApoc.NewFeature", "IsoOnlyFollow",
                                tr("Don't follow vehicles in strategy view"), false);
 ConfigOptionBool formatAsCurrency("OpenApoc.NewFeature", "formatAsCurrency",
-                                  "Use currency formatting", true);
+                                  tr("Use currency formatting"), true);
 ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
-                                         "Stunning hurts relationships", false);
+                                         tr("Stunning hurts relationships"), false);
 ConfigOptionBool optionRaidHostileAction("OpenApoc.Mod", "RaidHostileAction",
-                                         "Initiating raid hurts relationships", false);
+                                         tr("Initiating raid hurts relationships"), false);
 ConfigOptionBool optionBSKLauncherSound("OpenApoc.Mod", "BSKLauncherSound",
-                                        "(MOD) Original Brainsucker Launcher SFX", true);
+                                        tr("(MOD) Original Brainsucker Launcher SFX"), true);
 ConfigOptionBool optionInvulnerableRoads("OpenApoc.Mod", "InvulnerableRoads",
-                                         "(MOD) Invulnerable roads", false);
-ConfigOptionBool optionATVTank("OpenApoc.Mod", "ATVTank", "(MOD) Griffon becomes All-Terrain",
+                                         tr("(MOD) Invulnerable roads"), false);
+ConfigOptionBool optionATVTank("OpenApoc.Mod", "ATVTank", tr("(MOD) Griffon becomes All-Terrain"),
                                true);
 
-ConfigOptionBool optionATVAPC("OpenApoc.Mod", "ATVAPC", "(MOD) Wolfhound APC becomes All-Terrain",
-                              true);
+ConfigOptionBool optionATVAPC("OpenApoc.Mod", "ATVAPC",
+                              tr("(MOD) Wolfhound APC becomes All-Terrain"), true);
 
-ConfigOptionBool
-    optionCrashingVehicles("OpenApoc.Mod", "CrashingVehicles",
-                           "Vehicles crash on low HP (Weapons and Modules may be lost in crash)",
-                           false);
+ConfigOptionBool optionCrashingVehicles(
+    "OpenApoc.Mod", "CrashingVehicles",
+    tr("Vehicles crash on low HP (Weapons and Modules may be lost in crash)"), false);
 
 ConfigOptionString optionScriptsList("OpenApoc.Mod", "ScriptsList",
-                                     "Semicolon-separated list of scripts to load",
+                                     tr("Semicolon-separated list of scripts to load"),
                                      "scripts/openapoc_base.lua;");
 
 ConfigOptionBool optionInfiniteAmmoCheat("OpenApoc.Cheat", "InfiniteAmmo",
-                                         "Infinite ammo for X-Com agents and vehicles", false);
-ConfigOptionFloat optionDamageInflictedMultiplierCheat("OpenApoc.Cheat",
-                                                       "DamageInflictedMultiplier",
-                                                       "Multiplier for damage inflicted by X-com",
-                                                       1.0);
+                                         tr("Infinite ammo for X-Com agents and vehicles"), false);
+ConfigOptionFloat
+    optionDamageInflictedMultiplierCheat("OpenApoc.Cheat", "DamageInflictedMultiplier",
+                                         tr("Multiplier for damage inflicted by X-com"), 1.0);
 ConfigOptionFloat optionDamageReceivedMultiplierCheat("OpenApoc.Cheat", "DamageReceivedMultiplier",
-                                                      "Multiplier for damage received by X-com",
+                                                      tr("Multiplier for damage received by X-com"),
                                                       1.0);
 ConfigOptionFloat optionHostilesMultiplierCheat("OpenApoc.Cheat", "HostilesMultiplier",
-                                                "Multiplier for number of hostiles", 1.0f);
+                                                tr("Multiplier for number of hostiles"), 1.0f);
 ConfigOptionFloat optionStatGrowthMultiplierCheat("OpenApoc.Cheat", "StatGrowthMultiplier",
-                                                  "Multiplier for agent stat growth", 1.0f);
+                                                  tr("Multiplier for agent stat growth"), 1.0f);
 
-ConfigOptionBool optionEnableTouchEvents("Framework", "EnableTouchEvents", "Enable touch events",
+ConfigOptionBool optionEnableTouchEvents("Framework", "EnableTouchEvents",
+                                         tr("Enable touch events"),
 #ifdef ANDROID
                                          true
 #else
@@ -508,52 +519,56 @@ ConfigOptionBool optionEnableTouchEvents("Framework", "EnableTouchEvents", "Enab
 );
 
 ConfigOptionInt imageCacheSize("Framework.Data", "ImageCacheSize",
-                               "Number of Images to keep in data cache", 100);
+                               tr("Number of Images to keep in data cache"), 100);
 ConfigOptionInt imageSetCacheSize("Framework.Data", "ImageSetCacheSize",
-                                  "Number of ImageSets to keep in data cache", 10);
+                                  tr("Number of ImageSets to keep in data cache"), 10);
 ConfigOptionInt voxelCacheSize("Framework.Data", "VoxelCacheSize",
-                               "Number of VoxelMaps to keep in data cache", 1);
+                               tr("Number of VoxelMaps to keep in data cache"), 1);
 ConfigOptionInt fontStringCacheSize("Framework.Data", "FontStringCacheSize",
-                                    "Number of rendered font stings to keep in data cache", 100);
+                                    tr("Number of rendered font stings to keep in data cache"),
+                                    100);
 ConfigOptionInt paletteCacheSize("Framework.Data", "PaletteCacheSize",
-                                 "Number of Palettes to keep in data cache", 10);
+                                 tr("Number of Palettes to keep in data cache"), 10);
 
 ConfigOptionInt fileLogLevelOption(
     "Logger", "FileLevel",
-    "Loglevel to output to file (0 = nothing, 1 = error, 2 = warning, 3 = info, 4 = debug)", 3);
+    tr("Loglevel to output to file (0 = nothing, 1 = error, 2 = warning, 3 = info, 4 = debug)"), 3);
 
-ConfigOptionInt backtraceLogLevelOption("Logger", "BacktraceLevel",
-                                        "Loglevel to print a backtrace to file log (0 = nothing, 1 "
-                                        "= error, 2 = warning, 3 = info, 4 = debug)",
-                                        1);
+ConfigOptionInt
+    backtraceLogLevelOption("Logger", "BacktraceLevel",
+                            tr("Loglevel to print a backtrace to file log (0 = nothing, 1 "
+                               "= error, 2 = warning, 3 = info, 4 = debug)"),
+                            1);
 
 ConfigOptionInt dialogLogLevelOption(
     "Logger", "dialogLevel",
-    "Loglevel to pop up a dialog(0 = nothing, 1 = error, 2 = warning, 3 = info, 4 = debug) ", 1);
+    tr("Loglevel to pop up a dialog(0 = nothing, 1 = error, 2 = warning, 3 = info, 4 = debug) "),
+    1);
 
-ConfigOptionString defaultTooltipFont("Forms", "TooltipFont", "The default tooltip font",
+ConfigOptionString defaultTooltipFont("Forms", "TooltipFont", tr("The default tooltip font"),
                                       "smallset");
 ConfigOptionBool useCRCChecksum("Framework.Serialization", "CRC",
-                                "use a CRC checksum when saving files", false);
+                                tr("use a CRC checksum when saving files"), false);
 ConfigOptionBool useSHA1Checksum("Framework.Serialization", "SHA1",
-                                 "use a SHA1 checksum when saving files", false);
+                                 tr("use a SHA1 checksum when saving files"), false);
 
-ConfigOptionBool enableTrace("Trace", "enable", "Enable json call/time tracking");
-ConfigOptionString traceFile("Trace", "outputFile", "File to output trace json to",
+ConfigOptionBool enableTrace("Trace", "enable", tr("Enable json call/time tracking"));
+ConfigOptionString traceFile("Trace", "outputFile", tr("File to output trace json to"),
                              "openapoc.trace");
 
-ConfigOptionString saveDirOption("Game.Save", "Directory", "Directory containing saved games",
+ConfigOptionString saveDirOption("Game.Save", "Directory", tr("Directory containing saved games"),
                                  "./saves");
-ConfigOptionBool packSaveOption("Game.Save", "Pack", "Pack saved games into a zip", true);
+ConfigOptionBool packSaveOption("Game.Save", "Pack", tr("Pack saved games into a zip"), true);
 
-ConfigOptionBool skipIntroOption("Game", "SkipIntro", "Skip intro video", false);
-ConfigOptionString loadGameOption("Game", "Load", "Path to save game to load at startup", "");
+ConfigOptionBool skipIntroOption("Game", "SkipIntro", tr("Skip intro video"), false);
+ConfigOptionString loadGameOption("Game", "Load", tr("Path to save game to load at startup"), "");
 
 ConfigOptionString modList("Game", "Mods",
-                           "A colon-separated list of mods to load (relative to mod directory)",
+                           tr("A colon-separated list of mods to load (relative to mod directory)"),
                            "base");
-ConfigOptionString modPath("Game", "ModPath", "Directory containing mods", "./data/mods");
+ConfigOptionString modPath("Game", "ModPath", tr("Directory containing mods"), "./data/mods");
 ConfigOptionBool asyncLoading("Game", "ASyncLoading",
-                              "Load in background while displaying animated loading screen", true);
+                              tr("Load in background while displaying animated loading screen"),
+                              true);
 
 } // namespace OpenApoc::Options

@@ -211,8 +211,8 @@ void serializeIn(const GameState *, SerializationNode *node, T &val,
 			return;
 		}
 	}
-	throw SerializationException(format("Invalid enum value for %s: \"%s\"", typeid(T).name(), str),
-	                             node);
+	throw SerializationException(
+	    format("Invalid enum value for {0}: \"{1}\"", typeid(T).name(), str), node);
 }
 
 template <typename Key, typename Value>
@@ -413,7 +413,7 @@ void serializeOut(SerializationNode *node, const T &val, const T &,
 	auto it = valueMap.find(val);
 	if (it == valueMap.end())
 	{
-		LogError("Invalid enum value for %s: %d", typeid(T).name(), (int)val);
+		LogError("Invalid enum value for {0}: {1}", typeid(T).name(), (int)val);
 	}
 	node->setValue(it->second);
 }

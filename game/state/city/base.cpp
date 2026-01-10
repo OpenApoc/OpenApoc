@@ -26,7 +26,7 @@ template <> sp<Base> StateObject<Base>::get(const GameState &state, const UStrin
 	auto it = state.player_bases.find(id);
 	if (it == state.player_bases.end())
 	{
-		LogError("No baseas matching ID \"%s\"", id);
+		LogError("No baseas matching ID \"{0}\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -50,7 +50,7 @@ template <> const UString &StateObject<Base>::getId(const GameState &state, cons
 		if (b.second == ptr)
 			return b.first;
 	}
-	LogError("No base matching pointer %p", static_cast<void *>(ptr.get()));
+	LogError("No base matching pointer {0:p}", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 
@@ -70,7 +70,7 @@ Base::Base(GameState &state, StateRef<Building> building) : building(building)
 	StateRef<FacilityType> type = {&state, FacilityType::getPrefix() + "ACCESS_LIFT"};
 	if (canBuildFacility(type, building->base_layout->baseLift, true) != BuildError::NoError)
 	{
-		LogError("Building %s has invalid lift location", building->name);
+		LogError("Building {0} has invalid lift location", building->name);
 	}
 	else
 	{
@@ -188,7 +188,7 @@ static bool randomlyPlaceFacility(GameState &state, Base &base, StateRef<Facilit
 	}
 	else
 	{
-		LogError("Position %s in base in possible list but failed to build", position);
+		LogError("Position {0} in base in possible list but failed to build", position);
 		return false;
 	}
 }
@@ -289,7 +289,7 @@ void Base::buildFacility(GameState &state, StateRef<FacilityType> type, Vec2<int
 	{
 		const auto canBuildFacilityEnum = magic_enum::enum_name(canBuildFacilityResult);
 		const auto logMessage =
-		    format("Error when trying to build facility: %s", canBuildFacilityEnum);
+		    format("Error when trying to build facility: {0}", canBuildFacilityEnum);
 		LogWarning(logMessage);
 		return;
 	}
@@ -417,7 +417,7 @@ void Base::destroyFacility(GameState &state, Vec2<int> pos)
 	{
 		const auto canDestroyFacilityEnum = magic_enum::enum_name(canDestroyFacilityResult);
 		const auto logMessage =
-		    format("Error when trying to destroy facility: %s", canDestroyFacilityEnum);
+		    format("Error when trying to destroy facility: {0}", canDestroyFacilityEnum);
 		LogWarning(logMessage);
 		return;
 	}

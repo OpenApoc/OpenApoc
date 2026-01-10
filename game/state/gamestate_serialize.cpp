@@ -373,7 +373,7 @@ bool operator==(const UnitAI &a, const UnitAI &b)
 			return ca == cb;
 		}
 	}
-	LogError("Unsupported comparison for UserAI type %d", (int)a.type);
+	LogError("Unsupported comparison for UserAI type {0}", (int)a.type);
 	return false;
 }
 bool operator!=(const UnitAI &a, const UnitAI &b) { return !(a == b); }
@@ -410,7 +410,7 @@ bool operator==(const TacticalAI &a, const TacticalAI &b)
 			return ca == cb;
 		}
 	}
-	LogError("Unsupported comparison for Tactical type %d", (int)a.type);
+	LogError("Unsupported comparison for Tactical type {0}", (int)a.type);
 	return false;
 }
 bool operator!=(const TacticalAI &a, const TacticalAI &b) { return !(a == b); }
@@ -444,7 +444,7 @@ bool GameState::loadGame(const UString &path)
 	auto archive = SerializationArchive::readArchive(path);
 	if (!archive)
 	{
-		LogError("Failed to read \"%s\"", path);
+		LogError("Failed to read \"{0}\"", path);
 		return false;
 	}
 
@@ -462,7 +462,7 @@ bool GameState::serialize(SerializationArchive *archive) const
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\"", e.what());
+		LogError("Serialization failed: \"{0}\"", e.what());
 		return false;
 	}
 	return true;
@@ -478,7 +478,7 @@ bool GameState::serialize(SerializationArchive *archive, const GameState &refere
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\"", e.what());
+		LogError("Serialization failed: \"{0}\"", e.what());
 		return false;
 	}
 	return true;
@@ -492,7 +492,7 @@ bool GameState::deserialize(SerializationArchive *archive)
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\"", e.what());
+		LogError("Serialization failed: \"{0}\"", e.what());
 		return false;
 	}
 	return true;
@@ -507,7 +507,7 @@ static bool serialize(const BattleMapTileset &tileSet, SerializationArchive *arc
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\"", e.what());
+		LogError("Serialization failed: \"{0}\"", e.what());
 		return false;
 	}
 	return true;
@@ -522,7 +522,7 @@ static bool deserialize(BattleMapTileset &tileSet, const GameState &state,
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\"", e.what());
+		LogError("Serialization failed: \"{0}\"", e.what());
 		return false;
 	}
 	return true;
@@ -545,7 +545,7 @@ bool BattleMapTileset::loadTileset(GameState &state, const UString &path)
 	auto archive = SerializationArchive::readArchive(path);
 	if (!archive)
 	{
-		LogError("Failed to read \"%s\"", path);
+		LogError("Failed to read \"{0}\"", path);
 		return false;
 	}
 
@@ -561,7 +561,7 @@ static bool serialize(const BattleUnitImagePack &imagePack, SerializationArchive
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\"", e.what());
+		LogError("Serialization failed: \"{0}\"", e.what());
 		return false;
 	}
 	return true;
@@ -576,7 +576,7 @@ static bool deserialize(BattleUnitImagePack &imagePack, const GameState &state,
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\"", e.what());
+		LogError("Serialization failed: \"{0}\"", e.what());
 		return false;
 	}
 	return true;
@@ -599,7 +599,7 @@ bool BattleUnitImagePack::loadImagePack(GameState &state, const UString &path)
 	auto file = fw().data->fs.open(path);
 	if (!file)
 	{
-		LogError("Failed to open image pack \"%s\"", path);
+		LogError("Failed to open image pack \"{0}\"", path);
 		return false;
 	}
 	auto fullPath = file.systemPath();
@@ -607,7 +607,7 @@ bool BattleUnitImagePack::loadImagePack(GameState &state, const UString &path)
 	auto archive = SerializationArchive::readArchive(fullPath);
 	if (!archive)
 	{
-		LogError("Failed to read \"%s\"", fullPath);
+		LogError("Failed to read \"{0}\"", fullPath);
 		return false;
 	}
 
@@ -623,7 +623,7 @@ static bool serialize(const BattleUnitAnimationPack &animationPack, Serializatio
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\"", e.what());
+		LogError("Serialization failed: \"{0}\"", e.what());
 		return false;
 	}
 	return true;
@@ -638,7 +638,7 @@ static bool deserialize(BattleUnitAnimationPack &animationPack, const GameState 
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\"", e.what());
+		LogError("Serialization failed: \"{0}\"", e.what());
 		return false;
 	}
 	return true;
@@ -660,14 +660,14 @@ bool BattleUnitAnimationPack::loadAnimationPack(GameState &state, const UString 
 	auto file = fw().data->fs.open(path);
 	if (!file)
 	{
-		LogError("Failed to open animation pack \"%s\"", path);
+		LogError("Failed to open animation pack \"{0}\"", path);
 	}
 	const auto fullPath = file.systemPath();
 
 	auto archive = SerializationArchive::readArchive(fullPath);
 	if (!archive)
 	{
-		LogError("Failed to read \"%s\"", fullPath);
+		LogError("Failed to read \"{0}\"", fullPath);
 		return false;
 	}
 
@@ -683,7 +683,7 @@ static bool serialize(const BattleMapSectorTiles &mapSector, SerializationArchiv
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\"", e.what());
+		LogError("Serialization failed: \"{0}\"", e.what());
 		return false;
 	}
 	return true;
@@ -698,7 +698,7 @@ static bool deserialize(BattleMapSectorTiles &mapSector, const GameState &state,
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\"", e.what());
+		LogError("Serialization failed: \"{0}\"", e.what());
 		return false;
 	}
 	return true;
@@ -721,7 +721,7 @@ bool BattleMapSectorTiles::loadSector(GameState &state, const UString &path)
 	auto archive = SerializationArchive::readArchive(path);
 	if (!archive)
 	{
-		LogError("Failed to read \"%s\"", path);
+		LogError("Failed to read \"{0}\"", path);
 		return false;
 	}
 

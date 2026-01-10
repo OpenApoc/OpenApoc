@@ -130,12 +130,12 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     for (auto &imagePackStrings : e.unitImagePackPaths)
 	     {
 		     GameState s;
-		     LogInfo("Extracting image pack \"%s\"", imagePackStrings.first);
+		     LogInfo("Extracting image pack \"{0}\"", imagePackStrings.first);
 
 		     auto imagePack = e.extractImagePack(s, imagePackStrings.second, false);
 		     if (!imagePack)
 		     {
-			     LogError("Failed to extract image pack \"%s\"", imagePackStrings.first);
+			     LogError("Failed to extract image pack \"{0}\"", imagePackStrings.first);
 		     }
 		     else
 		     {
@@ -144,7 +144,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 			                                       imagePackStrings.first,
 			                                   true))
 			     {
-				     LogError("Failed to save image pack \"%s\"", imagePackStrings.first);
+				     LogError("Failed to save image pack \"{0}\"", imagePackStrings.first);
 			     }
 		     }
 	     }
@@ -156,22 +156,22 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     for (int i = 0; i < itemImagePacksCount; i++)
 	     {
 		     GameState s;
-		     LogInfo("Extracting item image pack \"%d\"", i);
+		     LogInfo("Extracting item image pack \"{0}\"", i);
 
 		     auto imagePack = e.extractItemImagePack(s, i);
 		     if (!imagePack)
 		     {
-			     LogError("Failed to extract  item image pack \"%d\"", i);
+			     LogError("Failed to extract  item image pack \"{0}\"", i);
 		     }
 		     else
 		     {
 			     if (!imagePack->saveImagePack(
-			             format("%s%s%d",
+			             format("{0}{1}{2}",
 			                    fw().getDataDir() + BattleUnitImagePack::getImagePackPath(),
 			                    "/item", i),
 			             true))
 			     {
-				     LogError("Failed to save  item image pack \"%d\"", i);
+				     LogError("Failed to save  item image pack \"{0}\"", i);
 			     }
 		     }
 	     }
@@ -182,12 +182,12 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     for (auto &imagePackStrings : e.unitShadowPackPaths)
 	     {
 		     GameState s;
-		     LogInfo("Extracting image pack \"%s\"", imagePackStrings.first);
+		     LogInfo("Extracting image pack \"{0}\"", imagePackStrings.first);
 
 		     auto imagePack = e.extractImagePack(s, imagePackStrings.second, true);
 		     if (!imagePack)
 		     {
-			     LogError("Failed to extract image pack \"%s\"", imagePackStrings.first);
+			     LogError("Failed to extract image pack \"{0}\"", imagePackStrings.first);
 		     }
 		     else
 		     {
@@ -196,7 +196,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 			                                       imagePackStrings.first,
 			                                   true))
 			     {
-				     LogError("Failed to save image pack \"%s\"", imagePackStrings.first);
+				     LogError("Failed to save image pack \"{0}\"", imagePackStrings.first);
 			     }
 		     }
 	     }
@@ -207,13 +207,13 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     for (auto &animationPackStrings : e.unitAnimationPackPaths)
 	     {
 		     GameState s;
-		     LogInfo("Extracting animation pack \"%s\"", animationPackStrings.first);
+		     LogInfo("Extracting animation pack \"{0}\"", animationPackStrings.first);
 
 		     auto animationPack =
 		         e.extractAnimationPack(s, animationPackStrings.second, animationPackStrings.first);
 		     if (!animationPack)
 		     {
-			     LogError("Failed to extract animation pack \"%s\"", animationPackStrings.first);
+			     LogError("Failed to extract animation pack \"{0}\"", animationPackStrings.first);
 		     }
 		     else
 		     {
@@ -222,7 +222,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 			                 animationPackStrings.first,
 			             true))
 			     {
-				     LogError("Failed to save animation pack \"%s\"", animationPackStrings.first);
+				     LogError("Failed to save animation pack \"{0}\"", animationPackStrings.first);
 			     }
 		     }
 	     }
@@ -237,19 +237,19 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 		     if (tileSetName.empty())
 			     continue;
 		     GameState s;
-		     LogInfo("Extracting tileset \"%s\"", tileSetName);
+		     LogInfo("Extracting tileset \"{0}\"", tileSetName);
 
 		     auto tileSet = e.extractTileSet(s, tileSetName);
 		     if (!tileSet)
 		     {
-			     LogError("Failed to extract tileset \"%s\"", tileSetName);
+			     LogError("Failed to extract tileset \"{0}\"", tileSetName);
 		     }
 		     else
 		     {
 			     if (!tileSet->saveTileset(BattleMapTileset::getTilesetPath() + "/" + tileSetName,
 			                               true))
 			     {
-				     LogError("Failed to save tileset \"%s\"", tileSetName);
+				     LogError("Failed to save tileset \"{0}\"", tileSetName);
 			     }
 		     }
 	     }
@@ -263,13 +263,13 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 		     if (mapName.empty())
 			     continue;
 		     GameState s;
-		     LogInfo("Extracting map sectors from \"%s\"", mapName);
+		     LogInfo("Extracting map sectors from \"{0}\"", mapName);
 
 		     auto sectors = e.extractMapSectors(s, mapName);
-		     LogInfo("Extracted %u sectors from \"%s\"", (unsigned)sectors.size(), mapName);
+		     LogInfo("Extracted {0} sectors from \"{1}\"", (unsigned)sectors.size(), mapName);
 		     if (sectors.empty())
 		     {
-			     LogError("Failed to sectors from map \"%s\"", mapName);
+			     LogError("Failed to sectors from map \"{0}\"", mapName);
 		     }
 		     for (auto &sectorPair : sectors)
 		     {
@@ -281,7 +281,7 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 
 			     if (!sector->saveSector(path + "/" + sectorName, true))
 			     {
-				     LogError("Failed to save map sector \"%s\"", sectorName);
+				     LogError("Failed to save map sector \"{0}\"", sectorName);
 			     }
 		     }
 	     }
@@ -320,7 +320,7 @@ int main(int argc, char *argv[])
 			auto extractor = thingsToExtract.find(extractorName);
 			if (extractor == thingsToExtract.end())
 			{
-				LogError("Unknown extractor %s", extractorName);
+				LogError("Unknown extractor {0}", extractorName);
 				return EXIT_FAILURE;
 			}
 			else
@@ -333,7 +333,7 @@ int main(int argc, char *argv[])
 	InitialGameStateExtractor initialGameStateExtractor;
 	for (auto &ePair : extractorsToRun)
 	{
-		LogWarning("Running %s", ePair.first);
+		LogWarning("Running {0}", ePair.first);
 		ePair.second(initialGameStateExtractor);
 	}
 

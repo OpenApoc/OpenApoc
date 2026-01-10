@@ -102,7 +102,7 @@ class TileMap
 
 		if (!((x >= 0) && (x < size.x) && (y >= 0) && (y < size.y) && (z >= 0) && (z < size.z)))
 		{
-			LogError("Incorrect tile coordinates (const) %d,%d,%d", x, y, z);
+			LogError("Incorrect tile coordinates (const) {0},{1},{2}", x, y, z);
 			return nullptr;
 		}
 		return &this->tiles[z * size.x * size.y + y * size.x + x];
@@ -111,7 +111,7 @@ class TileMap
 	{
 		if (!((x >= 0) && (x < size.x) && (y >= 0) && (y < size.y) && (z >= 0) && (z < size.z)))
 		{
-			LogError("Incorrect tile coordinates %d,%d,%d", x, y, z);
+			LogError("Incorrect tile coordinates {0},{1},{2}", x, y, z);
 			return nullptr;
 		}
 		return &this->tiles[z * size.x * size.y + y * size.x + x];

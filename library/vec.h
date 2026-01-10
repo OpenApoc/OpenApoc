@@ -4,6 +4,7 @@
 #define GLM_ENABLE_EXPERIMENTAL
 
 #define GLM_FORCE_RADIANS
+#include <fmt/format.h>
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <ostream>
@@ -75,3 +76,25 @@ template <typename T> std::ostream &operator<<(std::ostream &lhs, const OpenApoc
 	return lhs;
 }
 } // namespace glm
+
+template <typename T> struct fmt::formatter<OpenApoc::Vec2<T>>
+{
+	constexpr auto parse(format_parse_context &ctx) -> decltype(ctx.begin()) { return ctx.begin(); }
+
+	template <typename FormatContext>
+	auto format(const OpenApoc::Vec2<T> &v, FormatContext &ctx) const -> decltype(ctx.out())
+	{
+		return fmt::format_to(ctx.out(), "{{{},{}}}", v.x, v.y);
+	}
+};
+
+template <typename T> struct fmt::formatter<OpenApoc::Vec3<T>>
+{
+	constexpr auto parse(format_parse_context &ctx) -> decltype(ctx.begin()) { return ctx.begin(); }
+
+	template <typename FormatContext>
+	auto format(const OpenApoc::Vec3<T> &v, FormatContext &ctx) const -> decltype(ctx.out())
+	{
+		return fmt::format_to(ctx.out(), "{{{},{},{}}}", v.x, v.y, v.z);
+	}
+};

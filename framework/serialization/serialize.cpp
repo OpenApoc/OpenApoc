@@ -20,7 +20,7 @@ SerializationNode *SerializationNode::getNodeReq(const char *name)
 	auto node = this->getNodeOpt(name);
 	if (!node)
 	{
-		throw SerializationException(format("Missing node \"%s\"", name), this);
+		throw SerializationException(format("Missing node \"{0}\"", name), this);
 	}
 	return node;
 }
@@ -30,7 +30,7 @@ SerializationNode *SerializationNode::getSectionReq(const char *name)
 	auto node = this->getSectionOpt(name);
 	if (!node)
 	{
-		throw SerializationException(format("Missing section \"%s\"", name), this);
+		throw SerializationException(format("Missing section \"{0}\"", name), this);
 	}
 	return node;
 }
@@ -40,7 +40,7 @@ SerializationNode *SerializationNode::getNextSiblingReq(const char *name)
 	auto node = this->getNextSiblingOpt(name);
 	if (!node)
 	{
-		throw SerializationException(format("Missing sibling of \"%s\"", name), this);
+		throw SerializationException(format("Missing sibling of \"{0}\"", name), this);
 	}
 	return node;
 }
@@ -135,9 +135,9 @@ class XMLSerializationArchive final : public SerializationArchive
 	SerializationNode *newRoot(const UString &prefix, const char *name) override;
 	SerializationNode *getRoot(const UString &prefix, const char *name) override;
 	bool write(const UString &path, bool pack, bool pretty) override;
-	XMLSerializationArchive() : dataProvider(nullptr), docRoots(){};
+	XMLSerializationArchive() : dataProvider(nullptr), docRoots() {};
 	XMLSerializationArchive(up<SerializationDataProvider> dataProvider)
-	    : dataProvider(std::move(dataProvider)){};
+	    : dataProvider(std::move(dataProvider)) {};
 	~XMLSerializationArchive() override = default;
 };
 
@@ -165,10 +165,10 @@ up<SerializationArchive> SerializationArchive::readArchive(const UString &path)
 	up<SerializationDataProvider> dataProvider = getProvider(!fs::is_directory(path));
 	if (!dataProvider->openArchive(path, false))
 	{
-		LogWarning("Failed to open archive at \"%s\"", path);
+		LogWarning("Failed to open archive at \"{0}\"", path);
 		return nullptr;
 	}
-	LogInfo("Opened archive \"%s\"", path);
+	LogInfo("Opened archive \"{0}\"", path);
 
 	return mkup<XMLSerializationArchive>(std::move(dataProvider));
 }
@@ -190,7 +190,7 @@ SerializationNode *XMLSerializationArchive::getRoot(const UString &prefix, const
 	auto path = prefix + name + ".xml";
 	if (dataProvider == nullptr)
 	{
-		LogWarning("Reading from not opened archive: %s!", path);
+		LogWarning("Reading from not opened archive: {0}!", path);
 		return nullptr;
 	}
 
@@ -205,12 +205,12 @@ SerializationNode *XMLSerializationArchive::getRoot(const UString &prefix, const
 			auto parse_result = doc.load_string(content.c_str());
 			if (!parse_result)
 			{
-				LogInfo("Failed to parse \"%s\" : \"%s\" at \"%llu\"", path,
+				LogInfo("Failed to parse \"{0}\" : \"{1}\" at \"{2}\"", path,
 				        parse_result.description(), (unsigned long long)parse_result.offset);
 				return nullptr;
 			}
 			it = this->docRoots.find(path);
-			LogInfo("Parsed \"%s\"", path);
+			LogInfo("Parsed \"{0}\"", path);
 		}
 	}
 	if (it == this->docRoots.end())
@@ -221,7 +221,7 @@ SerializationNode *XMLSerializationArchive::getRoot(const UString &prefix, const
 	auto root = it->second.child(name);
 	if (!root)
 	{
-		LogWarning("Failed to find root with name \"%s\" in \"%s\"", name, path);
+		LogWarning("Failed to find root with name \"{0}\" in \"{1}\"", name, path);
 		return nullptr;
 	}
 	const UString *newPrefix = &this->prefixes.emplace_back(prefix + name + "/");
@@ -235,7 +235,7 @@ bool XMLSerializationArchive::write(const UString &path, bool pack, bool pretty)
 	auto dataProvider = getProvider(pack);
 	if (!dataProvider->openArchive(path, true))
 	{
-		LogWarning("Failed to open archive at \"%s\"", path);
+		LogWarning("Failed to open archive at \"{0}\"", path);
 		return false;
 	}
 
@@ -330,8 +330,8 @@ unsigned char XMLSerializationNode::getValueUChar()
 	auto uint = node.text().as_uint();
 	if (uint > std::numeric_limits<unsigned char>::max())
 	{
-		throw SerializationException(format("Value %u is out of range of unsigned char type", uint),
-		                             this);
+		throw SerializationException(
+		    format("Value {0} is out of range of unsigned char type", uint), this);
 	}
 	return static_cast<unsigned char>(uint);
 }
@@ -372,7 +372,7 @@ std::vector<bool> XMLSerializationNode::getValueBoolVector()
 		else if (c == '0')
 			vec[i] = false;
 		else
-			throw SerializationException(format("Unknown char '%c' in bool vector", c), this);
+			throw SerializationException(format("Unknown char '{0}' in bool vector", c), this);
 	}
 	return vec;
 }

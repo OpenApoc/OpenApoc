@@ -852,7 +852,7 @@ bool Scenery::findSupport(bool allowClinging)
 								}
 								if (!mp)
 								{
-									LogError("Map part disappeared? %d %d %d", x, y, z);
+									LogError("Map part disappeared? {0} {1} {2}", x, y, z);
 									return false;
 								}
 							}
@@ -909,7 +909,7 @@ bool Scenery::findSupport(bool allowClinging)
 								}
 								if (!mp)
 								{
-									LogError("Map part disappeared? %d %d %d", x, y, z);
+									LogError("Map part disappeared? {0} {1} {2}", x, y, z);
 									return false;
 								}
 							}
@@ -1057,7 +1057,7 @@ bool Scenery::findSupport(bool allowClinging)
 					}
 					if (!mp)
 					{
-						LogError("Map part disappeared? %d %d %d", x, y, z);
+						LogError("Map part disappeared? {0} {1} {2}", x, y, z);
 						return false;
 					}
 					mp->supportedParts.insert(lastMp->currentPosition);
@@ -1141,7 +1141,7 @@ UString Scenery::getId() const { return type.id; }
 
 int Scenery::getType() const { return (int)0; }
 
-UString Scenery::getSupportString() const { return format("%d", supportHardness); }
+UString Scenery::getSupportString() const { return format("{0}", supportHardness); }
 
 void Scenery::setPosition(const Vec3<float> &pos)
 {
@@ -1427,11 +1427,11 @@ void Scenery::collapse(GameState &state)
 	if (this->initialPosition.z <= 1)
 	{
 		this->damaged = true;
-		LogWarning("Scenery at %s  type %s can't fall as below 2", currentPosition, type.id);
+		LogWarning("Scenery at {0}  type {1} can't fall as below 2", currentPosition, type.id);
 	}
 	else
 	{
-		LogWarning("Scenery at %s type %s now falling", currentPosition, type.id);
+		LogWarning("Scenery at {0} type {1} now falling", currentPosition, type.id);
 		falling = true;
 		// state.current_battle->queueVisionRefresh(position);
 		// state.current_battle->queuePathfindingRefresh(position);

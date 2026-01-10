@@ -52,7 +52,7 @@ TileMap::TileMap(Vec3<int> size, Vec3<float> velocityScale, Vec3<int> voxelMapSi
 		{
 			if (seenTypes.find(type) != seenTypes.end())
 			{
-				LogError("Type %d appears in multiple layers", static_cast<int>(type));
+				LogError("Type {0} appears in multiple layers", static_cast<int>(type));
 			}
 			seenTypes.insert(type);
 		}
@@ -215,7 +215,7 @@ unsigned int TileMap::getLayer(TileObject::Type type) const
 			return i;
 		}
 	}
-	LogError("No layer matching object type %d", static_cast<int>(type));
+	LogError("No layer matching object type {0}", static_cast<int>(type));
 	return 0;
 }
 
@@ -250,9 +250,9 @@ sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &
 	int w = viewRect.p1.x - viewRect.p0.x;
 	Vec2<float> offset = {viewRect.p0.x, viewRect.p0.y};
 
-	LogWarning("ViewRect %s", viewRect);
+	LogWarning("ViewRect {0}", viewRect);
 
-	LogWarning("Dumping voxels {%d,%d} voxels w/offset %s", w, h, offset);
+	LogWarning("Dumping voxels {{{0},{1}}} voxels w/offset {2}", w, h, offset);
 
 	int inc = fast ? 2 : 1;
 

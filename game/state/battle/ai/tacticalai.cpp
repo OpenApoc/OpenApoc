@@ -15,7 +15,7 @@ const UString TacticalAI::getName()
 		case Type::Vanilla:
 			return "TacticalAIVanilla";
 	}
-	LogError("Unimplemented getName for Tactical AI Type %d", (int)type);
+	LogError("Unimplemented getName for Tactical AI Type {0}", (int)type);
 	return "";
 }
 

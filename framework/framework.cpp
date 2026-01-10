@@ -92,17 +92,17 @@ class FrameworkPrivate
 		int threadPoolSize = Options::threadPoolSizeOption.get();
 		if (threadPoolSize > 0)
 		{
-			LogInfo("Set thread pool size to %d", threadPoolSize);
+			LogInfo("Set thread pool size to {0}", threadPoolSize);
 		}
 		else if (std::thread::hardware_concurrency() != 0)
 		{
 			threadPoolSize = std::thread::hardware_concurrency();
-			LogInfo("Set thread pool size to reported HW concurrency of %d", threadPoolSize);
+			LogInfo("Set thread pool size to reported HW concurrency of {0}", threadPoolSize);
 		}
 		else
 		{
 			threadPoolSize = 2;
-			LogInfo("Failed to get HW concurrency, falling back to pool size %d", threadPoolSize);
+			LogInfo("Failed to get HW concurrency, falling back to pool size {0}", threadPoolSize);
 		}
 
 		this->threadPool.reset(new ThreadPool(threadPoolSize));
@@ -130,12 +130,12 @@ Framework::Framework(const UString programName, bool createWindow)
 		// which is unlikely in terminal use, so use that?
 		if (fs::current_path() == "/")
 		{
-			LogWarning("Setting working directory to \"%s\"", basePath);
+			LogWarning("Setting working directory to \"{0}\"", basePath);
 			chdir(basePath);
 		}
 		else
 		{
-			LogWarning("Leaving default working directory \"%s\"", fs::current_path());
+			LogWarning("Leaving default working directory \"{0}\"", fs::current_path().string());
 		}
 		SDL_free(basePath);
 	}
@@ -146,7 +146,8 @@ Framework::Framework(const UString programName, bool createWindow)
 		if (PHYSFS_init(programName.c_str()) == 0)
 		{
 			PHYSFS_ErrorCode error = PHYSFS_getLastErrorCode();
-			LogError("Failed to init code %i PHYSFS: %s", (int)error, PHYSFS_getErrorByCode(error));
+			LogError("Failed to init code {0} PHYSFS: {1}", (int)error,
+			         PHYSFS_getErrorByCode(error));
 		}
 	}
 #ifdef ANDROID
@@ -156,7 +157,7 @@ Framework::Framework(const UString programName, bool createWindow)
 	if (SDL_Init(SDL_INIT_EVENTS | SDL_INIT_TIMER) < 0)
 	{
 		LogError("Cannot init SDL2");
-		LogError("SDL error: %s", SDL_GetError());
+		LogError("SDL error: {0}", SDL_GetError());
 		p->quitProgram = true;
 		return;
 	}
@@ -164,7 +165,7 @@ Framework::Framework(const UString programName, bool createWindow)
 	{
 		if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0)
 		{
-			LogError("Cannot init SDL_VIDEO - \"%s\"", SDL_GetError());
+			LogError("Cannot init SDL_VIDEO - \"{0}\"", SDL_GetError());
 			p->quitProgram = true;
 			return;
 		}
@@ -195,7 +196,7 @@ Framework::Framework(const UString programName, bool createWindow)
 		desiredLanguageName = Options::languageOption.get();
 	}
 
-	LogInfo("Setting up locale \"%s\"", desiredLanguageName);
+	LogInfo("Setting up locale \"{0}\"", desiredLanguageName);
 
 	boost::locale::generator gen;
 
@@ -206,14 +207,14 @@ Framework::Framework(const UString programName, bool createWindow)
 	for (auto &path : resourcePaths)
 	{
 		auto langPath = path + "/languages";
-		LogInfo("Adding \"%s\" to language path", langPath);
+		LogInfo("Adding \"{0}\" to language path", langPath);
 		gen.add_messages_path(langPath);
 	}
 
-	std::vector<UString> translationDomains = {"paedia_string", "ufo_string"};
+	std::vector<UString> translationDomains = {"openapoc"};
 	for (auto &domain : translationDomains)
 	{
-		LogInfo("Adding \"%s\" to translation domains", domain);
+		LogInfo("Adding \"{0}\" to translation domains", domain);
 		gen.add_messages_domain(domain);
 	}
 
@@ -227,8 +228,8 @@ Framework::Framework(const UString programName, bool createWindow)
 	auto localeEncoding = std::use_facet<boost::locale::info>(loc).encoding();
 	auto isUTF8 = std::use_facet<boost::locale::info>(loc).utf8();
 
-	LogInfo("Locale info: Name \"%s\" language \"%s\" country \"%s\" variant \"%s\" encoding "
-	        "\"%s\" utf8:%s",
+	LogInfo("Locale info: Name \"{0}\" language \"{1}\" country \"{2}\" variant \"{3}\" encoding "
+	        "\"{4}\" utf8:{5}",
 	        localeName.c_str(), localeLang.c_str(), localeCountry.c_str(), localeVariant.c_str(),
 	        localeEncoding.c_str(), isUTF8 ? "true" : "false");
 
@@ -325,7 +326,7 @@ void Framework::run(sp<Stage> initialStage)
 			auto time_to_sleep = expected_frame_time - frame_time_now;
 			auto time_to_sleep_us =
 			    std::chrono::duration_cast<std::chrono::microseconds>(time_to_sleep);
-			LogDebug("sleeping for %d us", time_to_sleep_us.count());
+			LogDebug("sleeping for {0} us", time_to_sleep_us.count());
 			std::this_thread::sleep_for(time_to_sleep);
 			continue;
 		}
@@ -408,7 +409,7 @@ void Framework::run(sp<Stage> initialStage)
 		}
 		if (frameCount && frame == frameCount)
 		{
-			LogWarning("Quitting hitting frame count limit of %llu", (unsigned long long)frame);
+			LogWarning("Quitting hitting frame count limit of {0}", (unsigned long long)frame);
 			p->quitProgram = true;
 		}
 	}
@@ -447,10 +448,10 @@ void Framework::processEvents()
 				UString screenshotName;
 				do
 				{
-					screenshotName = format("screenshot%03d.png", screenshotId);
+					screenshotName = format("screenshot{0:03}.png", screenshotId);
 					screenshotId++;
 				} while (fs::exists(fs::path(screenshotName)));
-				LogWarning("Writing screenshot to \"%s\"", screenshotName);
+				LogWarning("Writing screenshot to \"{0}\"", screenshotName);
 				if (!p->defaultSurface->rendererPrivateData)
 				{
 					LogWarning("No renderer data on surface - nothing drawn yet?");
@@ -474,7 +475,7 @@ void Framework::processEvents()
 							    }
 							    else
 							    {
-								    LogWarning("Wrote screenshot to \"%s\"", screenshotName);
+								    LogWarning("Wrote screenshot to \"{0}\"", screenshotName);
 							    }
 						    });
 					}
@@ -772,7 +773,7 @@ void Framework::displayInitialise()
 	ScreenMode mode = optionsScreenMode();
 	if (mode == ScreenMode::Unknown)
 	{
-		LogError("Unknown screen mode specified: {%s}", Options::screenModeOption.get());
+		LogError("Unknown screen mode specified: {{{0}}}", Options::screenModeOption.get());
 		mode = ScreenMode::Windowed;
 	}
 
@@ -784,7 +785,7 @@ void Framework::displayInitialise()
 	int displayNumber = Options::screenDisplayNumberOption.get();
 	if (displayNumber >= SDL_GetNumVideoDisplays())
 	{
-		LogWarning("Requested display number (%d) does not exist. Using display 0", displayNumber);
+		LogWarning("Requested display number ({0}) does not exist. Using display 0", displayNumber);
 		displayNumber = 0;
 	}
 
@@ -793,9 +794,9 @@ void Framework::displayInitialise()
 
 	if (scrW < 640 || scrH < 480)
 	{
-		LogError(
-		    "Requested display size of {%d,%d} is lower than {640,480} and probably won't work",
-		    scrW, scrH);
+		LogError("Requested display size of {{{0},{1}}} is lower than {{640,480}} and probably "
+		         "won't work",
+		         scrW, scrH);
 	}
 
 	p->window =
@@ -804,21 +805,21 @@ void Framework::displayInitialise()
 
 	if (!p->window)
 	{
-		LogError("Failed to create window \"%s\"", SDL_GetError());
+		LogError("Failed to create window \"{0}\"", SDL_GetError());
 		exit(1);
 	}
 
 	p->context = SDL_GL_CreateContext(p->window);
 	if (!p->context)
 	{
-		LogWarning("Could not create GL context! [SDLError: %s]", SDL_GetError());
+		LogWarning("Could not create GL context! [SDLError: {0}]", SDL_GetError());
 		LogWarning("Attempting to create context by lowering the requested version");
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 		p->context = SDL_GL_CreateContext(p->window);
 		if (!p->context)
 		{
-			LogError("Failed to create GL context! [SDLerror: %s]", SDL_GetError());
+			LogError("Failed to create GL context! [SDLerror: {0}]", SDL_GetError());
 			SDL_DestroyWindow(p->window);
 			exit(1);
 		}
@@ -842,17 +843,17 @@ void Framework::displayInitialise()
 		default:
 			profileType = "Unknown";
 	}
-	LogInfo("  Context profile: %s", profileType);
+	LogInfo("  Context profile: {0}", profileType);
 	int ctxMajor, ctxMinor;
 	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &ctxMajor);
 	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &ctxMinor);
-	LogInfo("  Context version: %d.%d", ctxMajor, ctxMinor);
+	LogInfo("  Context version: {0}.{1}", ctxMajor, ctxMinor);
 	int bitsRed, bitsGreen, bitsBlue, bitsAlpha;
 	SDL_GL_GetAttribute(SDL_GL_RED_SIZE, &bitsRed);
 	SDL_GL_GetAttribute(SDL_GL_GREEN_SIZE, &bitsGreen);
 	SDL_GL_GetAttribute(SDL_GL_BLUE_SIZE, &bitsBlue);
 	SDL_GL_GetAttribute(SDL_GL_ALPHA_SIZE, &bitsAlpha);
-	LogInfo("  RGBA bits: %d-%d-%d-%d", bitsRed, bitsGreen, bitsBlue, bitsAlpha);
+	LogInfo("  RGBA bits: {0}-{1}-{2}-{3}", bitsRed, bitsGreen, bitsBlue, bitsAlpha);
 	SDL_GL_MakeCurrent(p->window, p->context); // for good measure?
 	SDL_ShowCursor(SDL_DISABLE);
 
@@ -866,17 +867,17 @@ void Framework::displayInitialise()
 		auto rendererFactory = p->registeredRenderers.find(rendererName);
 		if (rendererFactory == p->registeredRenderers.end())
 		{
-			LogInfo("Renderer \"%s\" not in supported list", rendererName);
+			LogInfo("Renderer \"{0}\" not in supported list", rendererName);
 			continue;
 		}
 		Renderer *r = rendererFactory->second->create();
 		if (!r)
 		{
-			LogInfo("Renderer \"%s\" failed to init", rendererName);
+			LogInfo("Renderer \"{0}\" failed to init", rendererName);
 			continue;
 		}
 		this->renderer.reset(r);
-		LogInfo("Using renderer: %s", this->renderer->getName());
+		LogInfo("Using renderer: {0}", this->renderer->getName());
 		break;
 	}
 	if (!this->renderer)
@@ -906,20 +907,20 @@ void Framework::displayInitialise()
 		{
 			constexpr int referenceWidth = 1280;
 			scaleYFloat = scaleXFloat = (float)referenceWidth / p->windowSize.x;
-			LogInfo("Autoscaling enabled, scaling by (%f,%f)", scaleXFloat, scaleYFloat);
+			LogInfo("Autoscaling enabled, scaling by ({0},{1})", scaleXFloat, scaleYFloat);
 		}
 
 		p->displaySize.x = (int)((float)p->windowSize.x * scaleXFloat);
 		p->displaySize.y = (int)((float)p->windowSize.y * scaleYFloat);
 		if (p->displaySize.x < 640 || p->displaySize.y < 480)
 		{
-			LogWarning("Requested scaled size of %d is lower than {640,480} and probably "
+			LogWarning("Requested scaled size of {0} is lower than {{640,480}} and probably "
 			           "won't work, so forcing 640x480",
 			           p->displaySize.x);
 			p->displaySize.x = std::max(640, p->displaySize.x);
 			p->displaySize.y = std::max(480, p->displaySize.y);
 		}
-		LogInfo("Scaling from %s to %s", p->displaySize, p->windowSize);
+		LogInfo("Scaling from {0} to {1}", p->displaySize, p->windowSize);
 		p->scaleSurface = mksp<Surface>(p->displaySize);
 	}
 	else
@@ -1020,17 +1021,17 @@ void Framework::audioInitialise()
 		auto backendFactory = p->registeredSoundBackends.find(soundBackendName);
 		if (backendFactory == p->registeredSoundBackends.end())
 		{
-			LogInfo("Sound backend %s not in supported list", soundBackendName);
+			LogInfo("Sound backend {0} not in supported list", soundBackendName);
 			continue;
 		}
 		SoundBackend *backend = backendFactory->second->create(concurrent_sample_count);
 		if (!backend)
 		{
-			LogInfo("Sound backend %s failed to init", soundBackendName);
+			LogInfo("Sound backend {0} failed to init", soundBackendName);
 			continue;
 		}
 		this->soundBackend.reset(backend);
-		LogInfo("Using sound backend %s", soundBackendName);
+		LogInfo("Using sound backend {0}", soundBackendName);
 		break;
 	}
 	if (!this->soundBackend)
@@ -1143,19 +1144,19 @@ void Framework::setupModDataPaths()
 	auto mods = split(Options::modList.get(), ":");
 	for (const auto &modString : mods)
 	{
-		LogWarning("loading mod \"%s\"", modString);
+		LogWarning("loading mod \"{0}\"", modString);
 		auto modPath = Options::modPath.get() + "/" + modString;
 		auto modInfo = ModInfo::getInfo(modPath);
 		if (!modInfo)
 		{
-			LogError("Failed to load ModInfo for mod \"%s\"", modString);
+			LogError("Failed to load ModInfo for mod \"{0}\"", modString);
 			continue;
 		}
 		auto modDataPath = modPath + "/" + modInfo->getDataPath();
-		LogWarning("Loaded modinfo for mod ID \"%s\"", modInfo->getID());
+		LogWarning("Loaded modinfo for mod ID \"{0}\"", modInfo->getID());
 		if (modInfo->getDataPath() != "")
 		{
-			LogWarning("Appending data path \"%s\"", modDataPath);
+			LogWarning("Appending data path \"{0}\"", modDataPath);
 			this->data->fs.addPath(modDataPath);
 		}
 	}

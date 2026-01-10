@@ -14,7 +14,7 @@ template <> sp<AgentType> StateObject<AgentType>::get(const GameState &state, co
 	auto it = state.agent_types.find(id);
 	if (it == state.agent_types.end())
 	{
-		LogError("No agent_type matching ID \"%s\"", id);
+		LogError("No agent_type matching ID \"{0}\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -40,7 +40,7 @@ const UString &StateObject<AgentType>::getId(const GameState &state, const sp<Ag
 		if (a.second == ptr)
 			return a.first;
 	}
-	LogError("No agent_type matching pointer %p", static_cast<void *>(ptr.get()));
+	LogError("No agent_type matching pointer {0:p}", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 
@@ -50,7 +50,7 @@ sp<AgentBodyType> StateObject<AgentBodyType>::get(const GameState &state, const 
 	auto it = state.agent_body_types.find(id);
 	if (it == state.agent_body_types.end())
 	{
-		LogError("No agent_body_type matching ID \"%s\"", id);
+		LogError("No agent_body_type matching ID \"{0}\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -77,7 +77,7 @@ const UString &StateObject<AgentBodyType>::getId(const GameState &state,
 		if (a.second == ptr)
 			return a.first;
 	}
-	LogError("No agent_type matching pointer %p", static_cast<void *>(ptr.get()));
+	LogError("No agent_type matching pointer {0:p}", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 
@@ -88,7 +88,7 @@ sp<AgentEquipmentLayout> StateObject<AgentEquipmentLayout>::get(const GameState 
 	auto it = state.agent_equipment_layouts.find(id);
 	if (it == state.agent_equipment_layouts.end())
 	{
-		LogError("No agent_body_type matching ID \"%s\"", id);
+		LogError("No agent_body_type matching ID \"{0}\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -115,7 +115,7 @@ const UString &StateObject<AgentEquipmentLayout>::getId(const GameState &state,
 		if (a.second == ptr)
 			return a.first;
 	}
-	LogError("No agent_type matching pointer %p", static_cast<void *>(ptr.get()));
+	LogError("No agent_type matching pointer {0:p}", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 

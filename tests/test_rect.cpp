@@ -14,7 +14,7 @@ static bool test_one_rect_compaction(std::set<Rect<T>> rect_set, unsigned expect
 {
 	if (rect_set.size() != expected_start_count)
 	{
-		LogError("Rect set has size %u at start, expected %u", (unsigned)rect_set.size(),
+		LogError("Rect set has size {0} at start, expected {1}", (unsigned)rect_set.size(),
 		         expected_start_count);
 		return false;
 	}
@@ -27,8 +27,8 @@ static bool test_one_rect_compaction(std::set<Rect<T>> rect_set, unsigned expect
 	}
 	if (num_collapsed && num_collapsed >= expected_start_count)
 	{
-		LogError("Somehow managed to collapse %u rects in a set containing %u rects", num_collapsed,
-		         expected_start_count);
+		LogError("Somehow managed to collapse {0} rects in a set containing {1} rects",
+		         num_collapsed, expected_start_count);
 		return false;
 	}
 	if (Rect<T>::compactRectSet(rect_set) != 0)
@@ -45,7 +45,7 @@ static bool test_one_rect_compaction(std::set<Rect<T>> rect_set, unsigned expect
 
 	if (expected_end_size && rect_set.size() != expected_end_size)
 	{
-		LogError("Expected to collapse to %u rects but got %u", (unsigned)rect_set.size(),
+		LogError("Expected to collapse to {0} rects but got {1}", (unsigned)rect_set.size(),
 		         expected_end_size);
 		return false;
 	}
@@ -139,7 +139,7 @@ void test_point_within(Rect<int> r, Vec2<int> p, bool expected)
 {
 	if (r.within(p) != expected)
 	{
-		LogError("Point %s incorrectly %s rect %s", p, expected ? "not within" : "within", r);
+		LogError("Point {0} incorrectly {1} rect {2}", p, expected ? "not within" : "within", r);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -147,7 +147,7 @@ void test_rect_within(Rect<int> r1, Rect<int> r2, bool expected)
 {
 	if (r1.within(r2) != expected)
 	{
-		LogError("Rect %s incorrectly %s rect %s", r2, expected ? "not within" : "within", r1);
+		LogError("Rect {0} incorrectly {1} rect {2}", r2, expected ? "not within" : "within", r1);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -155,7 +155,7 @@ void test_rect_intersects(Rect<int> r1, Rect<int> r2, bool expected)
 {
 	if (r1.intersects(r2) != expected)
 	{
-		LogError("Rect %s incorrectly %s rect %s", r2,
+		LogError("Rect {0} incorrectly {1} rect {2}", r2,
 		         expected ? "does not intersect" : "intersects", r1);
 		exit(EXIT_FAILURE);
 	}

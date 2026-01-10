@@ -24,7 +24,7 @@ sp<AEquipmentType> StateObject<AEquipmentType>::get(const GameState &state, cons
 	auto it = state.agent_equipment.find(id);
 	if (it == state.agent_equipment.end())
 	{
-		LogError("No aequipement type matching ID \"%s\"", id);
+		LogError("No aequipement type matching ID \"{0}\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -51,7 +51,7 @@ sp<EquipmentSet> StateObject<EquipmentSet>::get(const GameState &state, const US
 		it = state.equipment_sets_by_level.find(id);
 		if (it == state.equipment_sets_by_level.end())
 		{
-			LogError("No equipment set (score) matching ID \"%s\"", id);
+			LogError("No equipment set (score) matching ID \"{0}\"", id);
 			return nullptr;
 		}
 	}
@@ -101,7 +101,7 @@ sp<EquipmentSet> EquipmentSet::getByScore(const GameState &state, const int scor
 		if (es.second->isAppropriate(score))
 			return es.second;
 	}
-	LogError("No equipment set matching score %d", score);
+	LogError("No equipment set matching score {0}", score);
 	return nullptr;
 }
 
@@ -112,7 +112,7 @@ sp<EquipmentSet> EquipmentSet::getByLevel(const GameState &state, const int leve
 		if (es.second->isAppropriate(level))
 			return es.second;
 	}
-	LogError("No equipment set matching level %d", level);
+	LogError("No equipment set matching level {0}", level);
 	return nullptr;
 }
 

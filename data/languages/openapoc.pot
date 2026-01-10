@@ -1,0 +1,1838 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the OpenApoc package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenApoc\n"
+"Report-Msgid-Bugs-To: https://github.com/OpenApoc/OpenApoc/issues\n"
+"POT-Creation-Date: 2026-01-10 17:05-0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "The path containing OpenApoc data"
+msgstr ""
+
+msgid "The path to the XCom:Apocalypse CD"
+msgstr ""
+
+msgid ""
+"The number of threads to spawn for the threadpool (0 = queried num_cores)"
+msgstr ""
+
+msgid "':' separated list of renderer backends (in preference order)"
+msgstr ""
+
+msgid "':' separated list of audio backends (in preference order)"
+msgstr ""
+
+msgid "Global audio gain (0-20)"
+msgstr ""
+
+msgid "Sample audio gain (0-20)"
+msgstr ""
+
+msgid "Music audio gain (0-20)"
+msgstr ""
+
+msgid "The number of concurrent samples to play at one time"
+msgstr ""
+
+msgid "Initial screen width (in pixels)"
+msgstr ""
+
+msgid "Initial screen height (in pixels)"
+msgstr ""
+
+msgid "Deprecated: use ScreenMode instead"
+msgstr ""
+
+msgid "Mode: {windowed,fullscreen,borderless}"
+msgstr ""
+
+msgid "Display number in multi-monitor setup (0..n)"
+msgstr ""
+
+msgid "Scale screen in X direction by (percent)"
+msgstr ""
+
+msgid "Scale screen in Y direction by (percent)"
+msgstr ""
+
+msgid ""
+"Automatically scale up game viewport for modern screens (overrides ScaleX "
+"and ScaleY)"
+msgstr ""
+
+msgid "The language used ingame (empty for system default)"
+msgstr ""
+
+msgid "Enable mouse capture for the window"
+msgstr ""
+
+msgid "The target FPS count - affects game speed!"
+msgstr ""
+
+msgid "Quit after this many frames - 0 = unlimited"
+msgstr ""
+
+msgid "Swap interval (0 = tear, 1 = wait for vsync"
+msgstr ""
+
+msgid "Enable scrolling with mouse"
+msgstr ""
+
+msgid "Music changes according to action in battle"
+msgstr ""
+
+msgid "Execute remaining orders when player presses end turn button"
+msgstr ""
+
+msgid "Delay in milliseconds before showing tooltips (<= 0 to disable)"
+msgstr ""
+
+msgid "Toggle vanilla mode"
+msgstr ""
+
+msgid "UFO spotted"
+msgstr ""
+
+msgid "Vehicle lightly damaged"
+msgstr ""
+
+msgid "Vehicle moderately damaged"
+msgstr ""
+
+msgid "Vehicle heavily damaged"
+msgstr ""
+
+msgid "Vehicle destroyed"
+msgstr ""
+
+msgid "Vehicle damaged and returning to base"
+msgstr ""
+
+msgid "Weapon out of ammo"
+msgstr ""
+
+msgid "Vehicle low on fuel"
+msgstr ""
+
+msgid "Agent has died"
+msgstr ""
+
+msgid "Agent arrived at base"
+msgstr ""
+
+msgid "Cargo has arrived at base"
+msgstr ""
+
+msgid "Transfer arrived at base"
+msgstr ""
+
+msgid "Crash recovery arrived at base"
+msgstr ""
+
+msgid "Vehicle repaired"
+msgstr ""
+
+msgid "Vehicle rearmed"
+msgstr ""
+
+msgid "Not enough ammo to rearm vehicle"
+msgstr ""
+
+msgid "Vehicle refuelled"
+msgstr ""
+
+msgid "Not enough fuel to refuel vehicle"
+msgstr ""
+
+msgid "Unauthorized vehicle detected"
+msgstr ""
+
+msgid "X-COM base destroyed by hostile forces."
+msgstr ""
+
+msgid "Hostile unit spotted"
+msgstr ""
+
+msgid "Hostile unit has died"
+msgstr ""
+
+msgid "Unknown Unit has died"
+msgstr ""
+
+msgid "Unit has died"
+msgstr ""
+
+msgid "Unit Brainsucked"
+msgstr ""
+
+msgid "Unit critically wounded"
+msgstr ""
+
+msgid "Unit badly injured"
+msgstr ""
+
+msgid "Unit injured"
+msgstr ""
+
+msgid "Unit under fire"
+msgstr ""
+
+msgid "Unit has lost consciousness"
+msgstr ""
+
+msgid "Unit has left combat zone"
+msgstr ""
+
+msgid "Unit has frozen"
+msgstr ""
+
+msgid "Unit has gone beserk"
+msgstr ""
+
+msgid "Unit has panicked"
+msgstr ""
+
+msgid "Unit has stopped panicking"
+msgstr ""
+
+msgid "Psionic attack on unit"
+msgstr ""
+
+msgid "Unit under Psionic control"
+msgstr ""
+
+msgid "Unit freed from Psionic control"
+msgstr ""
+
+msgid "Show the debug commands on screen"
+msgstr ""
+
+msgid "X-Com 1 Damage model (0-200%)"
+msgstr ""
+
+msgid "Explosions damage instantly"
+msgstr ""
+
+msgid "Gravlift sounds"
+msgstr ""
+
+msgid "Disable scrolling sounds"
+msgstr ""
+
+msgid "Throwing requires proper facing and pose"
+msgstr ""
+
+msgid "Transtellar checks relationship when buying items"
+msgstr ""
+
+msgid "Allow manual use of teleporters in city"
+msgstr ""
+
+msgid "Allow manual ferrying of cargo and non-combatants"
+msgstr ""
+
+msgid "Allow soldiers to call taxi"
+msgstr ""
+
+msgid "Allow unloading clips and quick equip"
+msgstr ""
+
+msgid "Ammunition explodes when blown up"
+msgstr ""
+
+msgid "Display unit paths in battle"
+msgstr ""
+
+msgid "Display additional unit icons (fatal, psi)"
+msgstr ""
+
+msgid "Allow force-firing parallel to the ground"
+msgstr ""
+
+msgid "Require LOS to maintain psi attack"
+msgstr ""
+
+msgid "Allow attacking owned vehicles"
+msgstr ""
+
+msgid "Call existing transport instead of spawning them"
+msgstr ""
+
+msgid "Hitting vehicle shield produces alternate sound"
+msgstr ""
+
+msgid "Enable agent equipment templates"
+msgstr ""
+
+msgid "Attempt to recover agent equipment dropped in city"
+msgstr ""
+
+msgid ""
+"Unsupported ground vehicles crash (Weapons and Modules may be lost in crash)"
+msgstr ""
+
+msgid "Enforce vehicle cargo limits"
+msgstr ""
+
+msgid "Allow nearby vehicles to pick up loot"
+msgstr ""
+
+msgid "Allow loot to be stashed in the building"
+msgstr ""
+
+msgid "Armored roads"
+msgstr ""
+
+msgid "Improved city control scheme"
+msgstr ""
+
+msgid "Successful raid collapses building"
+msgstr ""
+
+msgid "Any hit on hostile building provokes retaliation"
+msgstr ""
+
+msgid "Put market stock on the right side"
+msgstr ""
+
+msgid ""
+"Uncapable vehicles crash when entering gates (Weapons and Modules may be "
+"lost in crash)"
+msgstr ""
+
+msgid ""
+"Vehicles crash when out of fuel (Weapons and Modules may be lost in crash)"
+msgstr ""
+
+msgid "Skip turbo movement calculations"
+msgstr ""
+
+msgid "All units run and kneel by default"
+msgstr ""
+
+msgid "Seed RNG on game start"
+msgstr ""
+
+msgid "Automatically reload weapons when empty"
+msgstr ""
+
+msgid "Left clicking icon opens equip menu"
+msgstr ""
+
+msgid "Mousewheel changes vertical level in battlescape"
+msgstr ""
+
+msgid "Select squad with single click"
+msgstr ""
+
+msgid "Allow All Terrain Vehicles (ATV) to initiate UFO recovery missions"
+msgstr ""
+
+msgid "Construction Vehicles will repair a maximum of X Tiles per night"
+msgstr ""
+
+msgid ""
+"Determines the percentage of the original Price ORGs have to pay for a "
+"Scenery Tile to be repaired"
+msgstr ""
+
+msgid "Weapons autoreload only same ammo type"
+msgstr ""
+
+msgid "Show vehicles in current dimension (or entering / leaving)"
+msgstr ""
+
+msgid "Add prefix to non-X-COM vehicles"
+msgstr ""
+
+msgid "Don't follow vehicles in strategy view"
+msgstr ""
+
+msgid "Use currency formatting"
+msgstr ""
+
+msgid "Stunning hurts relationships"
+msgstr ""
+
+msgid "Initiating raid hurts relationships"
+msgstr ""
+
+msgid "(MOD) Original Brainsucker Launcher SFX"
+msgstr ""
+
+msgid "(MOD) Invulnerable roads"
+msgstr ""
+
+msgid "(MOD) Griffon becomes All-Terrain"
+msgstr ""
+
+msgid "(MOD) Wolfhound APC becomes All-Terrain"
+msgstr ""
+
+msgid "Vehicles crash on low HP (Weapons and Modules may be lost in crash)"
+msgstr ""
+
+msgid "Semicolon-separated list of scripts to load"
+msgstr ""
+
+msgid "Infinite ammo for X-Com agents and vehicles"
+msgstr ""
+
+msgid "Multiplier for damage inflicted by X-com"
+msgstr ""
+
+msgid "Multiplier for damage received by X-com"
+msgstr ""
+
+msgid "Multiplier for number of hostiles"
+msgstr ""
+
+msgid "Multiplier for agent stat growth"
+msgstr ""
+
+msgid "Enable touch events"
+msgstr ""
+
+msgid "Number of Images to keep in data cache"
+msgstr ""
+
+msgid "Number of ImageSets to keep in data cache"
+msgstr ""
+
+msgid "Number of VoxelMaps to keep in data cache"
+msgstr ""
+
+msgid "Number of rendered font stings to keep in data cache"
+msgstr ""
+
+msgid "Number of Palettes to keep in data cache"
+msgstr ""
+
+msgid ""
+"Loglevel to output to file (0 = nothing, 1 = error, 2 = warning, 3 = info, 4 "
+"= debug)"
+msgstr ""
+
+msgid ""
+"Loglevel to print a backtrace to file log (0 = nothing, 1 = error, 2 = "
+"warning, 3 = info, 4 = debug)"
+msgstr ""
+
+msgid ""
+"Loglevel to pop up a dialog(0 = nothing, 1 = error, 2 = warning, 3 = info, 4 "
+"= debug) "
+msgstr ""
+
+msgid "The default tooltip font"
+msgstr ""
+
+msgid "use a CRC checksum when saving files"
+msgstr ""
+
+msgid "use a SHA1 checksum when saving files"
+msgstr ""
+
+msgid "Enable json call/time tracking"
+msgstr ""
+
+msgid "File to output trace json to"
+msgstr ""
+
+msgid "Directory containing saved games"
+msgstr ""
+
+msgid "Pack saved games into a zip"
+msgstr ""
+
+msgid "Skip intro video"
+msgstr ""
+
+msgid "Path to save game to load at startup"
+msgstr ""
+
+msgid "A colon-separated list of mods to load (relative to mod directory)"
+msgstr ""
+
+msgid "Directory containing mods"
+msgstr ""
+
+msgid "Load in background while displaying animated loading screen"
+msgstr ""
+
+msgid "Very Good"
+msgstr ""
+
+msgid "Good"
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "Poor"
+msgstr ""
+
+msgid "Very Poor"
+msgstr ""
+
+msgid "Mission completed in Alien building."
+msgstr ""
+
+msgid "X-COM returning from UFO mission."
+msgstr ""
+
+msgid "Building has been disabled"
+msgstr ""
+
+msgid "UFO spotted."
+msgstr ""
+
+#, c++-format
+msgid "UFO crash landed: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Unmanned UFO recovered: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Vehicle successfully recovered: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Vehicle out of fuel: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Vehicle lightly damaged: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Vehicle moderately damaged: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Vehicle heavily damaged: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Vehicle returning to base as damaged: {0}"
+msgstr ""
+
+#, c++-format
+msgid "{0}: Weapon out of ammo"
+msgstr ""
+
+#, c++-format
+msgid "Vehicle low on fuel: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Vehicle repaired: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Vehicle rearmed: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Vehicle refuelled: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Vehicle has no engine: {0}"
+msgstr ""
+
+msgid "An illegal road vehicle has been detected."
+msgstr ""
+
+msgid "An illegal flyer has been detected."
+msgstr ""
+
+#, c++-format
+msgid "Not enough ammo to rearm vehicle: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Not enough fuel to refuel vehicle: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Vehicle landed with alien loot in base with no alien containment: {0}"
+msgstr ""
+
+#, c++-format
+msgid "New transfer arrived: {0}"
+msgstr ""
+
+#, c++-format
+msgid "New recruit arrived: {0}"
+msgstr ""
+
+#, c++-format
+msgid ""
+"{0}: Unable to reach destination due to damaged people tube network and / or "
+"poor diplomatic relations with Transtellar."
+msgstr ""
+
+#, c++-format
+msgid "Unit brainsucked: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Unit has died: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Hostile unit has died: {0}"
+msgstr ""
+
+msgid "Unknown unit has died"
+msgstr ""
+
+#, c++-format
+msgid "Unit critically wounded: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Unit badly injured: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Unit injured: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Unit under fire: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Unit has lost consciousness: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Unit has left combat zone: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Unit has frozen: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Unit has gone berserk: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Unit has panicked: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Unit has stopped panicking: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Psionic attack on unit: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Unit under psionic control: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Unit freed from psionic control: {0}"
+msgstr ""
+
+msgid "No line of fire"
+msgstr ""
+
+#, c++-format
+msgid "{0}: Out of ammo"
+msgstr ""
+
+#, c++-format
+msgid "X-COM returning from mission at: {0}"
+msgstr ""
+
+#, c++-format
+msgid "X-COM returning from raid at: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Building under attack: {0}. Attacked by: {1}"
+msgstr ""
+
+#, c++-format
+msgid "Organization attacked: {0}. Attacked by: {1}"
+msgstr ""
+
+#, c++-format
+msgid "Organization raided: {0}. Raided by: {1}"
+msgstr ""
+
+#, c++-format
+msgid "Organization stormed: {0}. Stormed by: {1}"
+msgstr ""
+
+#, c++-format
+msgid "Treaty signed: {0}, {1}"
+msgstr ""
+
+msgid "Live Alien spotted."
+msgstr ""
+
+#, c++-format
+msgid "Cargo expires soon: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Agent(s) rearmed: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Cargo expired: {0}. Returned to base"
+msgstr ""
+
+#, c++-format
+msgid "Cargo expired: {0}. Refunded by supplier: {1}"
+msgstr ""
+
+#, c++-format
+msgid "Cargo expired: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Cargo seized: {0}. By hostile organisation: {1}"
+msgstr ""
+
+#, c++-format
+msgid "Cargo arrived: {0}. Supplier: {1}"
+msgstr ""
+
+#, c++-format
+msgid "Cargo arrived: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Transferred Alien specimens have arrived: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Transferred goods have arrived: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Items from tactical combat zone have arrived: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Base mission completed at: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Turn: {0}   Side: {1}"
+msgstr ""
+
+#, c++-format
+msgid "Agent has died: {0}"
+msgstr ""
+
+#, c++-format
+msgid "X-COM {0} destroyed by hostile forces"
+msgstr ""
+
+#, c++-format
+msgid "X-COM {0} destroyed due to collapsing building."
+msgstr ""
+
+#, c++-format
+msgid "{0} destroyed by: {1}"
+msgstr ""
+
+#, c++-format
+msgid "Vehicle destroyed: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Scrapped vehicle recovered in irreparable condition: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Module lost during recovery: {0}"
+msgstr ""
+
+msgid "January"
+msgstr ""
+
+msgid "February"
+msgstr ""
+
+msgid "March"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "June"
+msgstr ""
+
+msgid "July"
+msgstr ""
+
+msgid "August"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "October"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "December"
+msgstr ""
+
+msgid "Sunday"
+msgstr ""
+
+msgid "Monday"
+msgstr ""
+
+msgid "Tuesday"
+msgstr ""
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "Thursday"
+msgstr ""
+
+msgid "Friday"
+msgstr ""
+
+msgid "Saturday"
+msgstr ""
+
+msgid "1st"
+msgstr ""
+
+msgid "2nd"
+msgstr ""
+
+msgid "3rd"
+msgstr ""
+
+msgid "4th"
+msgstr ""
+
+msgid "5th"
+msgstr ""
+
+msgid "6th"
+msgstr ""
+
+msgid "7th"
+msgstr ""
+
+msgid "8th"
+msgstr ""
+
+msgid "9th"
+msgstr ""
+
+msgid "10th"
+msgstr ""
+
+msgid "11th"
+msgstr ""
+
+msgid "12th"
+msgstr ""
+
+msgid "13th"
+msgstr ""
+
+msgid "14th"
+msgstr ""
+
+msgid "15th"
+msgstr ""
+
+msgid "16th"
+msgstr ""
+
+msgid "17th"
+msgstr ""
+
+msgid "18th"
+msgstr ""
+
+msgid "19th"
+msgstr ""
+
+msgid "20th"
+msgstr ""
+
+msgid "21st"
+msgstr ""
+
+msgid "22nd"
+msgstr ""
+
+msgid "23rd"
+msgstr ""
+
+msgid "24th"
+msgstr ""
+
+msgid "25th"
+msgstr ""
+
+msgid "26th"
+msgstr ""
+
+msgid "27th"
+msgstr ""
+
+msgid "28th"
+msgstr ""
+
+msgid "29th"
+msgstr ""
+
+msgid "30th"
+msgstr ""
+
+msgid "31st"
+msgstr ""
+
+#, c++-format
+msgid "Week {0}"
+msgstr ""
+
+msgid "Rookie"
+msgstr ""
+
+msgid "Squaddie"
+msgstr ""
+
+msgid "Squad leader"
+msgstr ""
+
+msgid "Sergeant"
+msgstr ""
+
+msgid "Captain"
+msgstr ""
+
+msgid "Colonel"
+msgstr ""
+
+msgid "Commander"
+msgstr ""
+
+msgid "ALIEN CONTAINMENT"
+msgstr ""
+
+msgid "Confirm Alien Containment Orders"
+msgstr ""
+
+msgid "Alien Containment space exceeded"
+msgstr ""
+
+msgid "Alien Containment space exceeded. Destroy more Aliens!"
+msgstr ""
+
+msgid "Transfer"
+msgstr ""
+
+msgid "At least two bases are required before transfers become possible."
+msgstr ""
+
+msgid "Alien Containment"
+msgstr ""
+
+msgid "Alien Containment does not exist at this base."
+msgstr ""
+
+msgid "Alien Containment is not in use at this base."
+msgstr ""
+
+msgid "Area Occupied By Existing Facility"
+msgstr ""
+
+msgid ""
+"Existing facilities in this area of the base must be destroyed before "
+"construction work can begin."
+msgstr ""
+
+msgid "Planning Permission Denied"
+msgstr ""
+
+msgid ""
+"Planning permission is denied for this proposed extension to the base, on "
+"the grounds that the additional excavations required would seriously weaken "
+"the foundations of the building."
+msgstr ""
+
+msgid "Funds exceeded"
+msgstr ""
+
+msgid ""
+"The proposed construction work is not possible with your available funds."
+msgstr ""
+
+msgid "Destroy facility"
+msgstr ""
+
+msgid "Are you sure?"
+msgstr ""
+
+msgid "Facility in use"
+msgstr ""
+
+msgid "Cannot demolish this facility."
+msgstr ""
+
+msgid "Cost to build"
+msgstr ""
+
+msgid "Days to build"
+msgstr ""
+
+msgid "Maintenance cost"
+msgstr ""
+
+msgid "Capacity"
+msgstr ""
+
+msgid "Usage"
+msgstr ""
+
+msgid "Corridor"
+msgstr ""
+
+msgid "Earth"
+msgstr ""
+
+msgid "BUY AND SELL"
+msgstr ""
+
+msgid "Confirm Sales/Purchases"
+msgstr ""
+
+msgid "Order limited by your available funds."
+msgstr ""
+
+msgid "Storage space exceeded"
+msgstr ""
+
+msgid "Storage space exceeded. Sell off more items!"
+msgstr ""
+
+msgid "Order limited by the available storage space at this base."
+msgstr ""
+
+msgid ""
+"Hostile organization refuses to carry out the requested transportation for "
+"this company."
+msgstr ""
+
+msgid "Proceed?"
+msgstr ""
+
+msgid ""
+"No free transport to carry out the requested transportation detected in the "
+"city."
+msgstr ""
+
+msgid "This hostile organization refuses to carry out the requested transfer."
+msgstr ""
+
+msgid "Accomodation exceeded"
+msgstr ""
+
+msgid "Transfer limited by available accommodation."
+msgstr ""
+
+msgid "X-COM Agents"
+msgstr ""
+
+msgid "Biochemists"
+msgstr ""
+
+msgid "Quantum Physicists"
+msgstr ""
+
+msgid "Engineers"
+msgstr ""
+
+#, c++-format
+msgid ""
+"{0} unit(s) hired\n"
+"{1} unit(s) fired."
+msgstr ""
+
+#, c++-format
+msgid ""
+"{0}\n"
+"({1} unit(s) transferred)"
+msgstr ""
+
+msgid "Confirm Orders"
+msgstr ""
+
+#, c++-format
+msgid "Total Skill: {0}"
+msgstr ""
+
+msgid "Biochemistry"
+msgstr ""
+
+msgid "Quantum Physics"
+msgstr ""
+
+msgid "Engineering"
+msgstr ""
+
+#, c++-format
+msgid "{0}%"
+msgstr ""
+
+msgid "No Project"
+msgstr ""
+
+msgid "Select Biochemistry Project"
+msgstr ""
+
+msgid "Progress"
+msgstr ""
+
+msgid "Skill"
+msgstr ""
+
+msgid "Select Physics Project"
+msgstr ""
+
+msgid "Select Manufacturing Project"
+msgstr ""
+
+msgid "Unit Cost"
+msgstr ""
+
+msgid "Skill Hours"
+msgstr ""
+
+msgid "Select Unknown Project"
+msgstr ""
+
+msgid "PROJECT COMPLETE"
+msgstr ""
+
+msgid "This project is already complete."
+msgstr ""
+
+msgid "PROJECT TOO LARGE"
+msgstr ""
+
+msgid "This project requires an advanced lab or workshop."
+msgstr ""
+
+msgid "FUNDS EXCEEDED"
+msgstr ""
+
+msgid "Production costs exceed your available funds."
+msgstr ""
+
+msgid "Complete"
+msgstr ""
+
+msgid "Small"
+msgstr ""
+
+msgid "Large"
+msgstr ""
+
+msgid "UNKNOWN"
+msgstr ""
+
+msgid "TRANSFER"
+msgstr ""
+
+msgid "Confirm Transfers"
+msgstr ""
+
+msgid "Transfer limited by available storage space."
+msgstr ""
+
+msgid "Transfer limited by available Alien Containment space."
+msgstr ""
+
+msgid "EQUIPMENT IN USE"
+msgstr ""
+
+msgid "Passenger module cannot be removed as it is currently in use."
+msgstr ""
+
+msgid "Alien Artifact"
+msgstr ""
+
+msgid "You must research Alien technology before you can use it."
+msgstr ""
+
+#, c++-format
+msgid "{0} promoted to {1}"
+msgstr ""
+
+msgid "No Agents Selected"
+msgstr ""
+
+msgid ""
+"You need to select the agents you want to become active within the building."
+msgstr ""
+
+msgid "Unable to Reach"
+msgstr ""
+
+msgid ""
+"The Agent is unable to reach the Target Building by Foot. Canceling Mission!"
+msgstr ""
+
+#, c++-format
+msgid "This Building will cost ${0}"
+msgstr ""
+
+msgid "No Sale"
+msgstr ""
+
+msgid "Not enough money to buy this building."
+msgstr ""
+
+#, c++-format
+msgid "{0}: allied with: X-COM"
+msgstr ""
+
+msgid ""
+"X-COM is ALLIED with this organization. The relationship cannot be improved."
+msgstr ""
+
+#, c++-format
+msgid "{0}: friendly with: X-COM"
+msgstr ""
+
+msgid "ALLIED"
+msgstr ""
+
+#, c++-format
+msgid "{0}: neutral towards: X-COM"
+msgstr ""
+
+msgid "FRIENDLY"
+msgstr ""
+
+#, c++-format
+msgid "{0}: unfriendly towards: X-COM"
+msgstr ""
+
+msgid "NEUTRAL"
+msgstr ""
+
+#, c++-format
+msgid "{0}: hostile towards: X-COM"
+msgstr ""
+
+msgid "UNFRIENDLY"
+msgstr ""
+
+#, c++-format
+msgid "{0}: Attitude unknown towards: X-COM"
+msgstr ""
+
+msgid ""
+"This organization is under Alien control.The Alien race will not enter "
+"negotiations with X-COM."
+msgstr ""
+
+msgid ""
+"Whilst X-COM continue to oppose our Alien friends we will remain hostile. "
+"Negotiations are impossible."
+msgstr ""
+
+#, c++-format
+msgid "It will cost: ${0} to improve relations to: {1}"
+msgstr ""
+
+msgid "No Entrance"
+msgstr ""
+
+msgid "Cannot raid as building destroyed"
+msgstr ""
+
+msgid ""
+"Our Agents are unable to find an entrance to this building. Our Scientists "
+"back at HQ must complete their research."
+msgstr ""
+
+msgid "You have not found any Aliens in this building."
+msgstr ""
+
+msgid ""
+"You have not found any Aliens in this building. As a consequence of your "
+"unwelcome intrusion the owner of the building has now become unfriendly "
+"towards X-Com."
+msgstr ""
+
+msgid ""
+"You have not found any Aliens in this building. As a consequence of your "
+"unwelcome intrusion the owner of the building has now become hostile towards "
+"X-Com."
+msgstr ""
+
+msgid ""
+"You have not found any Aliens in this building. As a consequence of your "
+"unwelcome intrusion the owner of the building is less favorably disposed "
+"towards X-Com."
+msgstr ""
+
+msgid "No Hostile Forces Discovered"
+msgstr ""
+
+msgid "You have not found any hostile forces in this building."
+msgstr ""
+
+msgid ""
+"We are unhappy with the recent activity of your organization and request "
+"compensation to restore normal diplomatic relations. If you do not comply "
+"your craft and Agents may be subject to hostile actions."
+msgstr ""
+
+msgid "SCORE"
+msgstr ""
+
+#, c++-format
+msgid "Initial funds> ${0}"
+msgstr ""
+
+#, c++-format
+msgid "Remaining funds> ${0}"
+msgstr ""
+
+msgid "FINANCE"
+msgstr ""
+
+msgid "WEEKLY FUNDING ASSESSMENT"
+msgstr ""
+
+msgid ""
+"The Senate has declared total hostility to X-COM and there will be no "
+"further funding. Furthermore, the Senate will take any steps necessary to "
+"destroy the X-COM organization if it refuses to cease operation."
+msgstr ""
+
+msgid ""
+"The Senate considers the performance of X-COM to be so abysmal that it will "
+"cease funding from now on."
+msgstr ""
+
+msgid ""
+"Unfortunately the Senate has to limit X-COM funding due to the poor state of "
+"government finances."
+msgstr ""
+
+msgid ""
+"The Senate is not pleased with the performance of X-COM and has reduced "
+"funding accordingly."
+msgstr ""
+
+msgid ""
+"The Senate has a favorable attitude to X-COM and has increased funding "
+"accordingly."
+msgstr ""
+
+#, c++-format
+msgid "Funding adjustment> ${0}"
+msgstr ""
+
+#, c++-format
+msgid "Income for next week> ${0}"
+msgstr ""
+
+#, c++-format
+msgid "Current income> ${0}"
+msgstr ""
+
+#, c++-format
+msgid "Skill {0}"
+msgstr ""
+
+msgid "AGENT LOCATION"
+msgstr ""
+
+msgid "VEHICLE LOCATION"
+msgstr ""
+
+msgid "Alien Organism"
+msgstr ""
+
+msgid "Weight"
+msgstr ""
+
+msgid "Storage"
+msgstr ""
+
+msgid "Power"
+msgstr ""
+
+msgid "Accuracy"
+msgstr ""
+
+msgid "Fire rate"
+msgstr ""
+
+msgid "Range"
+msgstr ""
+
+msgid "Ammo Type:"
+msgstr ""
+
+msgid "Rounds"
+msgstr ""
+
+msgid "(Recharges)"
+msgstr ""
+
+msgid "Ammo types:"
+msgstr ""
+
+msgid "Protection"
+msgstr ""
+
+msgid "MIND PROBE"
+msgstr ""
+
+msgid "EQUIP AGENT"
+msgstr ""
+
+msgid "You must research this weapon and its ammo before you can use it"
+msgstr ""
+
+msgid ""
+"You must research this weapon and all its ammo types before you can use it"
+msgstr ""
+
+msgid "NOT ENOUGH TU'S"
+msgstr ""
+
+#, c++-format
+msgid "TU cost per item picked up: {0}"
+msgstr ""
+
+msgid "WARNING"
+msgstr ""
+
+msgid ""
+"You will lose any equipment left on the floor. Are you sure you wish to "
+"leave this agent?"
+msgstr ""
+
+msgid "Days In Service"
+msgstr ""
+
+msgid "Missions"
+msgstr ""
+
+msgid "Kills"
+msgstr ""
+
+msgid "Health"
+msgstr ""
+
+msgid "Reactions"
+msgstr ""
+
+msgid "Time Units"
+msgstr ""
+
+msgid "Speed"
+msgstr ""
+
+msgid "Stamina"
+msgstr ""
+
+msgid "Bravery"
+msgstr ""
+
+msgid "Strength"
+msgstr ""
+
+msgid "Psi-energy"
+msgstr ""
+
+msgid "Psi-attack"
+msgstr ""
+
+msgid "Psi-defence"
+msgstr ""
+
+msgid "Message Toggles"
+msgstr ""
+
+msgid "Abort Mission"
+msgstr ""
+
+#, c++-format
+msgid "Units Lost: {0}"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Override saved game"
+msgstr ""
+
+#, c++-format
+msgid "Do you really want to override {0}?"
+msgstr ""
+
+msgid "Order canceled by the hostile manufacturer."
+msgstr ""
+
+msgid ""
+"Manufacturer has no intact buildings in this city to deliver goods from."
+msgstr ""
+
+msgid "Constitution"
+msgstr ""
+
+msgid "Armor"
+msgstr ""
+
+msgid "Top Speed"
+msgstr ""
+
+msgid "Acceleration"
+msgstr ""
+
+msgid "Fuel"
+msgstr ""
+
+msgid "Passengers"
+msgstr ""
+
+msgid "Cargo"
+msgstr ""
+
+msgid "Damage"
+msgstr ""
+
+msgid "Max Samples"
+msgstr ""
+
+msgid "Jamming"
+msgstr ""
+
+msgid "Shielding"
+msgstr ""
+
+msgid "Cloaks Craft"
+msgstr ""
+
+msgid "Teleports"
+msgstr ""
+
+msgid "Too Far"
+msgstr ""
+
+msgid "Blocked"
+msgstr ""
+
+msgid "Out of range"
+msgstr ""
+
+msgid "No arc of throw"
+msgstr ""
+
+msgid "Execute remaining movement orders for this unit?"
+msgstr ""
+
+msgid "All hostile units have fled the combat zone. You win."
+msgstr ""
+
+msgid "All your units have fled the combat zone. You win."
+msgstr ""
+
+msgid "All hostile units are dead or unconscious. You win."
+msgstr ""
+
+msgid "All your units have fled the combat zone. You lose."
+msgstr ""
+
+msgid "All hostile units have fled the combat zone. You lose."
+msgstr ""
+
+msgid "All your units are unconscious or dead. You lose."
+msgstr ""
+
+msgid "Aimed shot"
+msgstr ""
+
+msgid "Snap shot"
+msgstr ""
+
+msgid "Auto shot"
+msgstr ""
+
+#, c++-format
+msgid ""
+"{0}\n"
+"TU cost per shot: {1}"
+msgstr ""
+
+msgid "Activates now."
+msgstr ""
+
+msgid "Activates at end of turn."
+msgstr ""
+
+#, c++-format
+msgid "Turns before activation: {0}"
+msgstr ""
+
+#, c++-format
+msgid "Delay = {0}s"
+msgstr ""
+
+#, c++-format
+msgid "Delay = {0:.3g}s"
+msgstr ""
+
+#, c++-format
+msgid "Range = {0:2.1f}m."
+msgstr ""
+
+msgid "None"
+msgstr ""
+
+msgid "Empty"
+msgstr ""
+
+msgid "Welcome to X-COM Apocalypse"
+msgstr ""
+
+#, c++-format
+msgid "{0} {1}"
+msgstr ""
+
+#, c++-format
+msgid "At {0}"
+msgstr ""
+
+msgid "Returning to base"
+msgstr ""
+
+#, c++-format
+msgid "Traveling to: {0}"
+msgstr ""
+
+msgid "Traveling to: map point"
+msgstr ""
+
+msgid "Reporting to base"
+msgstr ""
+
+msgid "Wounded"
+msgstr ""
+
+msgid "Not assigned to training"
+msgstr ""
+
+msgid "(Android training not possible)"
+msgstr ""
+
+#, c++-format
+msgid "Combat training (efficiency={0:.0f}%)"
+msgstr ""
+
+#, c++-format
+msgid "Psionic training (efficiency={0:.0f}%)"
+msgstr ""
+
+msgid "No project assigned"
+msgstr ""
+
+msgid "Not assigned to lab"
+msgstr ""
+
+msgid "Not assigned to workshop"
+msgstr ""
+
+msgid "UFO"
+msgstr ""
+
+#, c++-format
+msgid "allied with: {0}"
+msgstr ""
+
+#, c++-format
+msgid "friendly with: {0}"
+msgstr ""
+
+#, c++-format
+msgid "neutral towards: {0}"
+msgstr ""
+
+#, c++-format
+msgid "unfriendly towards: {0}"
+msgstr ""
+
+#, c++-format
+msgid "hostile towards: {0}"
+msgstr ""
+
+msgid "Commence investigation"
+msgstr ""
+
+#, c++-format
+msgid ""
+"All selected units and crafts have arrived at {0}. Proceed with "
+"investigation? ({1} units)"
+msgstr ""
+
+msgid "RESEARCH COMPLETE"
+msgstr ""
+
+#, c++-format
+msgid ""
+"Research project completed: {0}\n"
+"Do you wish to view the UFOpaedia report?"
+msgstr ""
+
+msgid "MANUFACTURE COMPLETED"
+msgstr ""
+
+msgid "Quantity:"
+msgstr ""
+
+msgid "Do you wish to reasign the Workshop?"
+msgstr ""
+
+msgid "MANUFACTURING HALTED"
+msgstr ""
+
+msgid "Completion status:"
+msgstr ""
+
+msgid "FACILITY COMPLETED"
+msgstr ""
+
+msgid "Click on building for selected vehicle to attack"
+msgstr ""
+
+msgid "Click on target vehicle for selected vehicle"
+msgstr ""
+
+msgid "Click on destination building for selected vehicles"
+msgstr ""
+
+msgid "Click on destination building for selected vehicle"
+msgstr ""
+
+msgid "Click on destination building for selected people"
+msgstr ""
+
+msgid "Click on destination building for selected person"
+msgstr ""
+
+msgid "Click on destination map point for selected vehicle"
+msgstr ""
+
+msgid "Manual control"
+msgstr ""
+
+msgid "Balance"
+msgstr ""
+
+msgid "Income"
+msgstr ""
+
+#, c++-format
+msgid "{0}: allied towards: {1}"
+msgstr ""
+
+#, c++-format
+msgid "{0}: friendly towards: {1}"
+msgstr ""
+
+#, c++-format
+msgid "{0}: neutral towards: {1}"
+msgstr ""
+
+#, c++-format
+msgid "{0}: unfriendly towards: {1}"
+msgstr ""
+
+#, c++-format
+msgid "{0}: hostile towards: {1}"
+msgstr ""
+
+msgid "Alien Infiltration"
+msgstr ""
+
+msgid "Weapons space"
+msgstr ""
+
+msgid "Weapons slots"
+msgstr ""
+
+msgid "Engine size"
+msgstr ""
+
+msgid "Equipment space"
+msgstr ""
+
+msgid "Size"
+msgstr ""
+
+msgid "Fire Rate"
+msgstr ""
+
+msgid "Ammo type"
+msgstr ""
+
+msgid "Ammo capacity"
+msgstr ""
+
+msgid "Turn Rate"
+msgstr ""
+
+msgid "Damage Type"
+msgstr ""
+
+msgid "Depends on clip"
+msgstr ""
+
+msgid "Construction cost"
+msgstr ""
+
+msgid "Weekly cost"
+msgstr ""

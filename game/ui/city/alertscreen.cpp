@@ -27,9 +27,8 @@ AlertScreen::AlertScreen(sp<GameState> state, sp<Building> building)
     : Stage(), menuform(ui().getForm("city/alert")), state(state), building(building)
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
-	menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(tr(building->owner->name));
-	menuform->findControlTyped<Label>("TEXT_BUILDING_FUNCTION")
-	    ->setText(tr(building->function->name));
+	menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(building->owner->name);
+	menuform->findControlTyped<Label>("TEXT_BUILDING_FUNCTION")->setText(building->function->name);
 }
 
 AlertScreen::~AlertScreen() = default;

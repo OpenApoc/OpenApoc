@@ -14,6 +14,7 @@
 #include "library/strings_format.h"
 
 #include <mutex>
+#include <ostream>
 #ifdef BACKTRACE_LIBUNWIND
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE
@@ -77,7 +78,7 @@ UString libunwind_backtrace::symbolicate(unw_cursor_t frame)
 	dladdr(reinterpret_cast<void *>(ip), &info);
 	if (info.dli_sname)
 	{
-		return format("  0x%zx %s+0x%zx (%s)\n", static_cast<uintptr_t>(ip), info.dli_sname,
+		return format("  0x{0:x} {1}+0x{2:x} ({3})\n", static_cast<uintptr_t>(ip), info.dli_sname,
 		              static_cast<uintptr_t>(ip) - reinterpret_cast<uintptr_t>(info.dli_saddr),
 		              info.dli_fname);
 	}
@@ -86,11 +87,11 @@ UString libunwind_backtrace::symbolicate(unw_cursor_t frame)
 	char fnName[MAX_SYMBOL_LENGTH];
 	if (!unw_get_proc_name(&frame, fnName, MAX_SYMBOL_LENGTH, &offsetInFn))
 	{
-		return format("  0x%zx %s+0x%zx (%s)\n", static_cast<uintptr_t>(ip), fnName, offsetInFn,
-		              info.dli_fname);
+		return format("  0x{0:x} {1}+0x{2:x} ({3})\n", static_cast<uintptr_t>(ip), fnName,
+		              offsetInFn, info.dli_fname);
 	}
 	else
-		return format("  0x%zx\n", static_cast<uintptr_t>(ip));
+		return format("  0x{0:x}\n", static_cast<uintptr_t>(ip));
 }
 
 std::ostream &operator<<(std::ostream &lhs, const backtrace &bt)
@@ -104,7 +105,7 @@ std::ostream &operator<<(std::ostream &lhs, const backtrace &bt)
 
 	for (const auto &frame : unwind_backtrace->frames)
 	{
-		lhs << unwind_backtrace->symbolicate(frame) << "\n";
+		lhs << unwind_backtrace->symbolicate(frame).c_str() << "\n";
 	}
 	return lhs;
 }
@@ -172,7 +173,7 @@ UString win32_backtrace::symbolicate(const void *ip)
 	sym->SizeOfStruct = sizeof(SYMBOL_INFO);
 
 	SymFromAddr(process, (DWORD64)(ip), 0, sym);
-	str = format("  0x%p %s+0x%x\n", ip, sym->Name, (uintptr_t)ip - (uintptr_t)sym->Address);
+	str = format("  0x{0:p} {1}+0x{2:x}\n", ip, sym->Name, (uintptr_t)ip - (uintptr_t)sym->Address);
 
 	free(sym);
 	return str;
@@ -189,7 +190,7 @@ std::ostream &operator<<(std::ostream &lhs, const backtrace &bt)
 
 	for (const auto &frame : backtrace_object->ip)
 	{
-		lhs << backtrace_object->symbolicate(frame) << "\n";
+		lhs << backtrace_object->symbolicate(frame).c_str() << "\n";
 	}
 	return lhs;
 }

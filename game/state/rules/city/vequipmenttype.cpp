@@ -23,7 +23,7 @@ sp<VEquipmentType> StateObject<VEquipmentType>::get(const GameState &state, cons
 	auto it = state.vehicle_equipment.find(id);
 	if (it == state.vehicle_equipment.end())
 	{
-		LogError("No vequipement type matching ID \"%s\"", id);
+		LogError("No vequipement type matching ID \"{0}\"", id);
 		return nullptr;
 	}
 	return it->second;

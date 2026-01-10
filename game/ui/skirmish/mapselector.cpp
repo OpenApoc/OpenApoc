@@ -57,8 +57,9 @@ sp<Control> MapSelector::createMapRowBuilding(StateRef<Building> building, sp<Ga
 	const int HEIGHT = 21;
 
 	auto text = control->createChild<Label>(
-	    format("[%s Building] %s [%s]", building->owner == state->getAliens() ? "Alien" : "Human",
-	           building->name, building->battle_map.id),
+	    format("[{0} Building] {1} [{2}]",
+	           building->owner == state->getAliens() ? "Alien" : "Human", building->name,
+	           building->battle_map.id),
 	    ui().getFont("smalfont"));
 	text->Location = {0, 0};
 	text->Size = {488, HEIGHT};
@@ -89,7 +90,7 @@ sp<Control> MapSelector::createMapRowVehicle(StateRef<VehicleType> vehicle, sp<G
 	const int HEIGHT = 21;
 
 	auto text = control->createChild<Label>(
-	    format("[UFO] %s [%s]", vehicle->name, vehicle->battle_map.id), ui().getFont("smalfont"));
+	    format("[UFO] {0} [{1}]", vehicle->name, vehicle->battle_map.id), ui().getFont("smalfont"));
 	text->Location = {0, 0};
 	text->Size = {488, HEIGHT};
 	text->TextVAlign = VerticalAlignment::Centre;
@@ -119,7 +120,7 @@ sp<Control> MapSelector::createMapRowBase(StateRef<Base> base, sp<GameState> sta
 	const int HEIGHT = 21;
 
 	auto text =
-	    control->createChild<Label>(format("[Base] %s", base->name), ui().getFont("smalfont"));
+	    control->createChild<Label>(format("[Base] {0}", base->name), ui().getFont("smalfont"));
 	text->Location = {0, 0};
 	text->Size = {488, HEIGHT};
 	text->TextVAlign = VerticalAlignment::Centre;

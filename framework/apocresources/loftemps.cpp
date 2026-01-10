@@ -27,7 +27,7 @@ LOFTemps::LOFTemps(IFile &datFile, IFile &tabFile)
 		datFile.seekg(offset * 4, std::ios::beg);
 		if (!datFile)
 		{
-			LogError("Seeking beyond end of file reading offset %u", offset * 4);
+			LogError("Seeking beyond end of file reading offset {0}", offset * 4);
 			return;
 		}
 
@@ -46,7 +46,7 @@ LOFTemps::LOFTemps(IFile &datFile, IFile &tabFile)
 
 		if (width % 8)
 		{
-			LogError("Non-8-bit-aligned width: %u", width);
+			LogError("Non-8-bit-aligned width: {0}", width);
 			return;
 		}
 
@@ -61,7 +61,7 @@ LOFTemps::LOFTemps(IFile &datFile, IFile &tabFile)
 				uint32_t bitmask;
 				if (!datFile.readule32(bitmask))
 				{
-					LogError("Failed to read bitmask at {%u,%u}", x, y);
+					LogError("Failed to read bitmask at {{{0},{1}}}", x, y);
 					return;
 				}
 				for (unsigned int bit = 0; bit < 32; bit++)
@@ -78,7 +78,7 @@ LOFTemps::LOFTemps(IFile &datFile, IFile &tabFile)
 				}
 			}
 		}
-		LogInfo("Read voxel slice of size {%u,%u}", width, height);
+		LogInfo("Read voxel slice of size {{{0},{1}}}", width, height);
 		this->slices.push_back(slice);
 	}
 }
@@ -87,7 +87,7 @@ sp<VoxelSlice> LOFTemps::getSlice(unsigned int idx)
 {
 	if (idx >= this->slices.size())
 	{
-		LogError("Requested slice %d - only %zu in file", idx, this->slices.size());
+		LogError("Requested slice {0} - only {1} in file", idx, this->slices.size());
 		return nullptr;
 	}
 	return this->slices[idx];

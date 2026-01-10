@@ -50,7 +50,7 @@ std::shared_future<void> SaveManager::loadGame(const UString &savePath, sp<GameS
 	    {
 		    if (!state->loadGame(saveArchiveLocation))
 		    {
-			    LogError("Failed to load '%s'", saveArchiveLocation);
+			    LogError("Failed to load '{0}'", saveArchiveLocation);
 			    return;
 		    }
 		    state->initState();
@@ -65,7 +65,7 @@ std::shared_future<void> SaveManager::loadSpecialSave(const SaveType type,
 {
 	if (type == SaveType::Manual)
 	{
-		LogError("Cannot load automatic save for type %i", static_cast<int>(type));
+		LogError("Cannot load automatic save for type {0}", static_cast<int>(type));
 		return std::async(std::launch::deferred, []() -> void { return; });
 	}
 
@@ -77,7 +77,7 @@ std::shared_future<void> SaveManager::loadSpecialSave(const SaveType type,
 	}
 	catch (std::out_of_range &)
 	{
-		LogError("Cannot find name of save type %i", static_cast<int>(type));
+		LogError("Cannot find name of save type {0}", static_cast<int>(type));
 		return std::async(std::launch::deferred, []() -> void { return; });
 	}
 
@@ -120,7 +120,7 @@ bool writeArchiveWithBackup(SerializationArchive *archive, const UString &path, 
 
 		if (!haveNewName)
 		{
-			LogError("Unable to create temporary file at \"%s\"", tempPath.string());
+			LogError("Unable to create temporary file at \"{0}\"", tempPath.string());
 			return false;
 		}
 
@@ -155,7 +155,7 @@ bool writeArchiveWithBackup(SerializationArchive *archive, const UString &path, 
 			fs::rename(tempPath, savePath);
 		}
 
-		LogError("Unable to save game: \"%s\"", exception.what());
+		LogError("Unable to save game: \"{0}\"", exception.what());
 	}
 
 	return false;
@@ -213,7 +213,7 @@ bool SaveManager::overrideGame(const SaveMetadata &metadata, const UString &newN
 			}
 			catch (fs::filesystem_error &error)
 			{
-				LogWarning("Error while removing renamed save: \"%s\"", error.what());
+				LogWarning("Error while removing renamed save: \"{0}\"", error.what());
 			}
 		}
 	}
@@ -238,7 +238,7 @@ bool SaveManager::specialSaveGame(SaveType type, const sp<GameState> gameState) 
 {
 	if (type == SaveType::Manual)
 	{
-		LogError("Cannot create automatic save for type %i", static_cast<int>(type));
+		LogError("Cannot create automatic save for type {0}", static_cast<int>(type));
 		return false;
 	}
 
@@ -249,7 +249,7 @@ bool SaveManager::specialSaveGame(SaveType type, const sp<GameState> gameState) 
 	}
 	catch (std::out_of_range &)
 	{
-		LogError("Cannot find name of save type %i", static_cast<int>(type));
+		LogError("Cannot find name of save type {0}", static_cast<int>(type));
 		return false;
 	}
 
@@ -266,7 +266,8 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 	{
 		if (!fs::exists(saveDirectory) && !fs::create_directories(saveDirectory))
 		{
-			LogWarning("Save directory \"%s\" not found, and could not be created!", saveDirectory);
+			LogWarning("Save directory \"{0}\" not found, and could not be created!",
+			           saveDirectory.string());
 			return saveList;
 		}
 
@@ -297,7 +298,7 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 	}
 	catch (fs::filesystem_error &er)
 	{
-		LogError("Error while enumerating directory: \"%s\"", er.what());
+		LogError("Error while enumerating directory: \"{0}\"", er.what());
 	}
 
 	sort(saveList.begin(), saveList.end(), [](const SaveMetadata &lhs, const SaveMetadata &rhs)
@@ -321,7 +322,7 @@ bool SaveManager::deleteGame(const sp<SaveMetadata> &slot) const
 	}
 	catch (fs::filesystem_error &exception)
 	{
-		LogError("Unable to delete saved gane: \"%s\"", exception.what());
+		LogError("Unable to delete saved gane: \"{0}\"", exception.what());
 		return false;
 	}
 }
@@ -409,7 +410,7 @@ bool SaveMetadata::serializeManifest(SerializationArchive *archive) const
 
 time_t SaveMetadata::getCreationDate() const { return creationDate; }
 
-SaveMetadata::SaveMetadata() : creationDate(0), type(), gameTicks(0){};
+SaveMetadata::SaveMetadata() : creationDate(0), type(), gameTicks(0) {};
 SaveMetadata::~SaveMetadata() = default;
 ;
 SaveMetadata::SaveMetadata(UString name, UString file, time_t creationDate, SaveType type,
