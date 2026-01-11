@@ -634,8 +634,9 @@ void LauncherWindow::updateAvailableLanguages()
 		{
 			if (modDir == enabledModName)
 			{
-				for (const auto &languageID : modInfo.getSupportedLanguages())
+				for (const auto &language : modInfo.getSupportedLanguages())
 				{
+					const auto languageID = language.ID;
 					ui->languageBox->addItem(getLanguageName(languageID),
 					                         QString::fromStdString(languageID));
 					if (selectedLanguageID == languageID)

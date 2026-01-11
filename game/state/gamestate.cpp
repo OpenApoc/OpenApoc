@@ -1721,30 +1721,49 @@ void GameState::loadMods()
 	{
 		LogWarning("loading mod \"{0}\"", modString);
 		auto modPath = Options::modPath.get() + "/" + modString;
-		auto modInfo = ModInfo::getInfo(modPath);
-		if (!modInfo)
+		auto _modInfo = ModInfo::getInfo(modPath);
+		if (!_modInfo)
 		{
 			LogError("Failed to load ModInfo for mod \"{0}\"", modString);
 			continue;
 		}
-		LogWarning("Loaded modinfo for mod ID \"{0}\"", modInfo->getID());
-		if (modInfo->getStatePath() != "")
+		const auto &modInfo = *_modInfo;
+		LogInfo("Loaded modinfo for mod ID \"{0}\"", modInfo.getID());
+		if (modInfo.getStatePath() != "")
 		{
-			auto modStatePath = modPath + "/" + modInfo->getStatePath();
-			LogWarning("Loading mod gamestate \"{0}\"", modStatePath);
+			auto modStatePath = modPath + "/" + modInfo.getStatePath();
+			LogInfo("Loading mod gamestate \"{0}\"", modStatePath);
 
 			if (!this->loadGame(modStatePath))
 			{
-				LogError("Failed to load mod ID \"{0}\"", modInfo->getID());
+				LogError("Failed to load mod ID \"{0}\"", modInfo.getID());
 			}
 		}
 
-		const auto &modLoadScript = modInfo->getModLoadScript();
+		const auto &modLoadScript = modInfo.getModLoadScript();
+
+		auto _language = getModLanguageInfo(modInfo);
+		LogInfo("Loading mod language");
+		if (_language)
+		{
+			const auto language = *_language;
+			LogWarning("Loading mod language {0}", language.ID);
+			if (!language.patch.empty())
+			{
+				const auto patchPath = modPath + "/" + language.patch;
+				LogInfo("Loading mod language patch \"{0}\"", patchPath);
+				if (!this->loadGame(patchPath))
+				{
+					LogError("Failed to load mod language patch \"{0}\"", patchPath);
+				}
+			}
+		}
+		LogInfo("Loading mod language complete");
 
 		if (!modLoadScript.empty())
 		{
 			LogInfo("Executing modLoad script \"{0}\" for mod \"{1}\"", modLoadScript,
-			        modInfo->getID());
+			        modInfo.getID());
 			this->luaGameState.runScript(modLoadScript);
 		}
 	}

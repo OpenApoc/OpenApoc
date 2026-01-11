@@ -77,6 +77,8 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
     {"common_gamestate",
      [](const InitialGameStateExtractor &e)
      {
+	     static const UString languageDataPrefix = "lang/data/";
+	     static const UString languagePatchPrefix = "lang/patch/";
 	     GameState s;
 	     e.extractCommon(s);
 	     s.loadGame("data/common_patch");
@@ -92,12 +94,19 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     info.setDataPath("data");
 	     info.setModLoadScript("scripts/org.openapoc.base/onload.lua");
 
-	     std::list<UString> languages;
+	     std::list<ModInfo::ModLanguage> languages;
 	     for (const auto &name : supported_languages)
 	     {
-		     languages.push_back(name);
+		     // Base game does not have a per-language patch, but does have per-language data
+		     // directories
+		     ModInfo::ModLanguage lang;
+		     lang.ID = name;
+		     lang.data = languageDataPrefix + name;
+		     lang.patch = "";
+
+		     languages.push_back(lang);
 	     }
-	     info.setSupportedLanguage(languages);
+	     info.setSupportedLanguages(languages);
 
 	     info.writeInfo(outputPath.get() + "/mods/base");
      }},

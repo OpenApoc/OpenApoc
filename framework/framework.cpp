@@ -233,6 +233,9 @@ Framework::Framework(const UString programName, bool createWindow)
 	        localeName.c_str(), localeLang.c_str(), localeCountry.c_str(), localeVariant.c_str(),
 	        localeEncoding.c_str(), isUTF8 ? "true" : "false");
 
+	this->language = localeLang;
+	this->languageCountry = localeCountry;
+
 	this->data.reset(Data::createData(resourcePaths));
 
 	auto testFile = this->data->fs.open("music");
@@ -1144,21 +1147,37 @@ void Framework::setupModDataPaths()
 	auto mods = split(Options::modList.get(), ":");
 	for (const auto &modString : mods)
 	{
-		LogWarning("loading mod \"{0}\"", modString);
+		LogWarning("Loading mod data \"{0}\"", modString);
 		auto modPath = Options::modPath.get() + "/" + modString;
-		auto modInfo = ModInfo::getInfo(modPath);
-		if (!modInfo)
+		auto _modInfo = ModInfo::getInfo(modPath);
+		if (!_modInfo)
 		{
 			LogError("Failed to load ModInfo for mod \"{0}\"", modString);
 			continue;
 		}
-		auto modDataPath = modPath + "/" + modInfo->getDataPath();
-		LogWarning("Loaded modinfo for mod ID \"{0}\"", modInfo->getID());
-		if (modInfo->getDataPath() != "")
+		const auto modInfo = *_modInfo;
+		auto modDataPath = modPath + "/" + modInfo.getDataPath();
+		LogInfo("Loaded modinfo for mod ID \"{0}\"", modInfo.getID());
+		if (modInfo.getDataPath() != "")
 		{
-			LogWarning("Appending data path \"{0}\"", modDataPath);
+			LogInfo("Appending data path \"{0}\"", modDataPath);
 			this->data->fs.addPath(modDataPath);
 		}
+		LogInfo("Loading FW mod language");
+		auto _language = getModLanguageInfo(modInfo);
+		if (_language)
+		{
+			const auto language = *_language;
+			LogInfo("Loading mod language ID {0}", language.ID);
+			if (!language.data.empty())
+			{
+				const auto dataPath = modPath + "/" + language.data;
+				LogInfo("Appending mod language data path \"{0}\" from \"{1}\"", dataPath,
+				        language.data);
+				this->data->fs.addPath(dataPath);
+			}
+		}
+		LogInfo("Loading FW mod language");
 	}
 }
 
