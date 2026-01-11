@@ -1034,7 +1034,9 @@ void Building::buildingPartChange(GameState &state, Vec3<int> part, bool intact)
 		buildingParts.erase(part);
 		if (buildingParts.find(crewQuarters) == buildingParts.end())
 		{
-			for (auto agent : currentAgents)
+			// Copy the list before iterating since die() modifies currentAgents
+			auto agentsCopy = currentAgents;
+			for (auto agent : agentsCopy)
 			{
 				agent->die(state, true);
 			}

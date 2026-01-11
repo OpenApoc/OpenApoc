@@ -1903,8 +1903,9 @@ void Vehicle::die(GameState &state, bool silent, StateRef<Vehicle> attacker)
 		currentBuilding->currentVehicles.erase(StateRef<Vehicle>(&state, shared_from_this()));
 	}
 
-	// Dying will remove agent from current agents list
-	for (auto agent : currentAgents)
+	// Copy the list before iterating since die() modifies currentAgents
+	auto agentsCopy = currentAgents;
+	for (auto agent : agentsCopy)
 	{
 		agent->die(state, true);
 	}
