@@ -72,6 +72,7 @@
 #include "game/ui/ufopaedia/ufopaediaview.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
+#include <game/ui/city/vehiclecargobriefing.h>
 #include <glm/glm.hpp>
 
 // Uncomment to start with paused
@@ -2285,6 +2286,14 @@ void CityView::update()
 							         mksp<LocationScreen>(this->state, vehicle)});
 							    return;
 						    }
+					    }
+					    else if (Event::isPressed(e->forms().MouseInfo.Button,
+					                              Event::MouseButton::Middle) &&
+					             vehicle->cargo.size() > 0)
+					    {
+						    // Cargo briefing
+						    fw().stageQueueCommand(
+						        {StageCmd::Command::PUSH, mksp<VehicleCargoBriefing>(vehicle)});
 					    }
 				    }
 				    handleClickedVehicle(
