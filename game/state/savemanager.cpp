@@ -410,7 +410,7 @@ bool SaveMetadata::serializeManifest(SerializationArchive *archive) const
 
 time_t SaveMetadata::getCreationDate() const { return creationDate; }
 
-SaveMetadata::SaveMetadata() : creationDate(0), type(), gameTicks(0) {};
+SaveMetadata::SaveMetadata() : creationDate(0), type(), gameTicks(0){};
 SaveMetadata::~SaveMetadata() = default;
 ;
 SaveMetadata::SaveMetadata(UString name, UString file, time_t creationDate, SaveType type,
