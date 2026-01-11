@@ -955,11 +955,18 @@ void Agent::die(GameState &state, bool silent)
 	if (currentVehicle)
 	{
 		currentVehicle->currentAgents.erase(thisRef);
+		currentVehicle = nullptr;
 	}
 	// Remove from building
 	if (currentBuilding)
 	{
 		currentBuilding->currentAgents.erase(thisRef);
+		currentBuilding = nullptr;
+	}
+	// Remove home
+	if (currentBuilding)
+	{
+		homeBuilding = nullptr;
 	}
 
 	// Remove from lab
@@ -1451,11 +1458,12 @@ void Agent::destroy()
 {
 	leftHandItem = nullptr;
 	rightHandItem = nullptr;
-	while (!equipment.empty())
+	// Clear ownerAgent back-references without needing a valid GameState
+	for (auto &item : equipment)
 	{
-		GameState state;
-		this->removeEquipment(state, equipment.front());
+		item->ownerAgent.clear();
 	}
+	equipment.clear();
 }
 
 unsigned int Agent::getDaysInService(const GameState &state) const
