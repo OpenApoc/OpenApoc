@@ -96,7 +96,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 				PHYSFS_seek(file, PHYSFS_fileLength(file) + pos);
 				break;
 			default:
-				LogError("Unknown direction in seekoff ({0})", dir);
+				LogError("Unknown direction in seekoff ({0})", static_cast<int>(dir));
 				LogAssert(0);
 		}
 

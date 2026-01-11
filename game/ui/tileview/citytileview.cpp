@@ -22,6 +22,7 @@
 #include "game/state/shared/organisation.h"
 #include "game/state/tilemap/tileobject_scenery.h"
 #include "game/state/tilemap/tileobject_vehicle.h"
+#include <algorithm>
 
 namespace OpenApoc
 {

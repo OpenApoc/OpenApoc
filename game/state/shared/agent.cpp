@@ -14,6 +14,7 @@
 #include "game/state/shared/aequipment.h"
 #include "game/state/shared/organisation.h"
 #include "library/strings_format.h"
+#include <algorithm>
 #include <glm/glm.hpp>
 
 namespace OpenApoc

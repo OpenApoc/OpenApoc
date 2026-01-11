@@ -238,7 +238,7 @@ class Spritesheet
 		else if (format == GL::R8UI)
 			data_format = GL::RED_INTEGER;
 		else
-			LogError("Unknown GL internal format {0:x}", format);
+			LogError("Unknown GL internal format {0:x}", static_cast<unsigned int>(format));
 
 		gl->TexImage3D(GL::TEXTURE_2D_ARRAY, 0, this->format, this->page_size.x, this->page_size.y,
 		               this->pages.size(), 0, data_format, GL::UNSIGNED_BYTE, nullptr);

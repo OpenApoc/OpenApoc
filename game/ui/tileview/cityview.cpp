@@ -72,6 +72,7 @@
 #include "game/ui/ufopaedia/ufopaediaview.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
+#include <algorithm>
 #include <glm/glm.hpp>
 
 // Uncomment to start with paused

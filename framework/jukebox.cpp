@@ -5,6 +5,7 @@
 #include "framework/logger.h"
 #include "framework/sound.h"
 #include "library/xorshift.h"
+#include <algorithm>
 #include <array>
 #include <chrono>
 

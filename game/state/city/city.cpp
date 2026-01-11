@@ -18,6 +18,7 @@
 #include "game/state/tilemap/tileobject_projectile.h"
 #include "game/state/tilemap/tileobject_scenery.h"
 #include "game/state/tilemap/tileobject_vehicle.h"
+#include <algorithm>
 #include <functional>
 #include <future>
 #include <glm/glm.hpp>

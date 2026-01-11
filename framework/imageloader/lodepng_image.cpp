@@ -94,7 +94,8 @@ class LodepngImageLoader : public OpenApoc::ImageLoader
 		}
 
 		LogInfo("Loading PNG \"{0}\" size {{{1},{2}}} - colour mode {3} depth {4}",
-		        file.systemPath(), width, height, png_state.info_png.color.colortype,
+		        file.systemPath(), width, height,
+		        static_cast<int>(png_state.info_png.color.colortype),
 		        png_state.info_png.color.bitdepth);
 
 		// Just convert to RGBA, as PNG palettes are often reordered/trimmed at every turn by any

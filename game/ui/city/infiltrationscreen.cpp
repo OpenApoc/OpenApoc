@@ -11,6 +11,7 @@
 #include "game/state/shared/organisation.h"
 #include "game/ui/components/controlgenerator.h"
 #include "library/line.h"
+#include <algorithm>
 #include <array>
 
 namespace OpenApoc

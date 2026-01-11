@@ -21,6 +21,7 @@
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/transactioncontrol.h"
 #include "game/ui/general/vehiclesheet.h"
+#include <algorithm>
 #include <array>
 
 namespace OpenApoc

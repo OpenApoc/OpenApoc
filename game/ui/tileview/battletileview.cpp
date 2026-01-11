@@ -27,6 +27,7 @@
 #include "game/state/tilemap/tileobject_battleunit.h"
 #include "game/state/tilemap/tileobject_shadow.h"
 #include "library/strings_format.h"
+#include <algorithm>
 #include <glm/glm.hpp>
 
 namespace OpenApoc

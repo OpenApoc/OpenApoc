@@ -46,6 +46,7 @@
 #include "game/ui/general/savemenu.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
+#include <algorithm>
 #include <cmath>
 #include <glm/glm.hpp>
 

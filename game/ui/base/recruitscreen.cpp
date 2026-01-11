@@ -22,6 +22,7 @@
 #include "game/ui/general/agentsheet.h"
 #include "game/ui/general/messagebox.h"
 #include "library/strings_format.h"
+#include <algorithm>
 
 namespace OpenApoc
 {
