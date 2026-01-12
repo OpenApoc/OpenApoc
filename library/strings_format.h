@@ -6,7 +6,7 @@
 namespace OpenApoc
 {
 
-template <typename... Args> static UString format(const UStringView fmt, Args &&...args)
+template <typename... Args> static UString format(fmt::format_string<Args...> fmt, Args &&...args)
 {
 	return fmt::format(fmt, std::forward<Args>(args)...);
 }
