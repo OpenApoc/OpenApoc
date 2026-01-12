@@ -265,14 +265,16 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 			velocity = {0.0f, 0.0f, 0.0f};
 		}
 		// Collision with map edge
-		if (newPosition.x < 0 || newPosition.y < 0 || newPosition.y >= mapSize.y ||
-		    newPosition.x >= mapSize.x || newPosition.y >= mapSize.y)
+		if (newPosition.x < 0 || newPosition.x >= mapSize.x || newPosition.y < 0 ||
+		    newPosition.y >= mapSize.y)
 		{
 			collision = true;
 			velocity.x = -velocity.x / 4;
 			velocity.y = -velocity.y / 4;
 			velocity.z = 0;
-			newPosition = previousPosition;
+			newPosition.x = glm::clamp(newPosition.x, 0.0f, mapSize.x - 0.01f);
+			newPosition.y = glm::clamp(newPosition.y, 0.0f, mapSize.y - 0.01f);
+			newPosition.z = glm::clamp(newPosition.z, 0.0f, mapSize.z - 0.01f);
 		}
 		// Fell below 0???
 		if (newPosition.z < 0)
