@@ -1056,13 +1056,13 @@ static void dumpLofTemps(fs::path basePath, const UString &prefix)
 	auto tabFileName = prefix + ".tab";
 	auto datFileName = prefix + ".dat";
 
-	LogWarning("Reading LOFTEMPS \"%s\"", prefix);
+	LogWarning("Reading LOFTEMPS \"{0}\"", prefix);
 	size_t tabSize = 0;
 	{
 		auto tabFile = fw().data->fs.open(tabFileName);
 		if (!tabFile)
 		{
-			LogError("Failed to open LOFTEMPS tab \"%s\"", tabFileName);
+			LogError("Failed to open LOFTEMPS tab \"{0}\"", tabFileName);
 			return;
 		}
 		tabSize = tabFile.size();
@@ -1074,14 +1074,14 @@ static void dumpLofTemps(fs::path basePath, const UString &prefix)
 
 	for (size_t i = 0; i < count; i++)
 	{
-		auto imgPath = format("LOFTEMPS:%s:%s:%u", datFileName, tabFileName, (unsigned)i);
+		auto imgPath = format("LOFTEMPS:{0}:{1}:{2}", datFileName, tabFileName, (unsigned)i);
 		auto img = fw().data->loadImage(imgPath);
 		if (!img)
 		{
-			LogError("Failed to load \"%s\"", imgPath);
+			LogError("Failed to load \"{0}\"", imgPath);
 			return;
 		}
-		auto outName = format("%u.png", (unsigned)i);
+		auto outName = format("{0}.png", (unsigned)i);
 		auto filePath = outPath / outName.str();
 		fw().data->writeImage(filePath.native(), img);
 	}
@@ -1092,13 +1092,13 @@ static void dumpRaw(fs::path outDir, const RawImage &i)
 	auto inName = i.prefix + i.suffix;
 	auto fileName = i.prefix + ".png";
 	auto outPath = outDir / fileName.str();
-	auto imageString = format("RAW:%s:%u:%u:%s", inName, i.size.x, i.size.y, i.palette);
-	LogWarning("Reading \"%s\"", imageString);
+	auto imageString = format("RAW:{0}:{1}:{2}:{3}", inName, i.size.x, i.size.y, i.palette);
+	LogWarning("Reading \"{0}\"", imageString);
 
 	auto img = fw().data->loadImage(imageString);
 	if (!img)
 	{
-		LogError("Failed to read \"%s\"", imageString);
+		LogError("Failed to read \"{0}\"", imageString);
 		return;
 	}
 
@@ -1112,17 +1112,17 @@ static void dumpPck(fs::path outDir, const UString &prefix, const UString &palet
 	auto basePath = outDir / prefix.str();
 	fs::create_directories(basePath);
 	auto imageString = type + ":" + prefix + ".pck:" + prefix + ".tab";
-	LogWarning("Reading \"%s\"", imageString);
+	LogWarning("Reading \"{0}\"", imageString);
 	auto imgSet = fw().data->loadImageSet(imageString);
 	if (!imgSet)
 	{
-		LogError("Failed to load image set \"%s\"", prefix);
+		LogError("Failed to load image set \"{0}\"", prefix);
 		return;
 	}
 	auto palette = fw().data->loadPalette(paletteString);
 	if (!palette)
 	{
-		LogError("Failed to load palette \"%s\"", paletteString);
+		LogError("Failed to load palette \"{0}\"", paletteString);
 		return;
 	}
 
@@ -1130,7 +1130,7 @@ static void dumpPck(fs::path outDir, const UString &prefix, const UString &palet
 	for (auto &img : imgSet->images)
 	{
 		auto fullPath = basePath;
-		auto imgName = format("%d.png", count);
+		auto imgName = format("{0}.png", count);
 		fullPath /= imgName.str();
 		if (img)
 			fw().data->writeImage(fullPath.native(), img, palette);
@@ -1144,11 +1144,11 @@ static void dumpPcx(fs::path outDir, const UString &prefix)
 	auto pcxName = prefix + ".pcx";
 	auto path = outDir / outName.str();
 	fs::create_directories(path.parent_path());
-	LogWarning("Reading \"%s\"", pcxName);
+	LogWarning("Reading \"{0}\"", pcxName);
 	auto img = fw().data->loadImage(pcxName);
 	if (!img)
 	{
-		LogError("Failed to load pcx \"%s\"", pcxName);
+		LogError("Failed to load pcx \"{0}\"", pcxName);
 		return;
 	}
 	fw().data->writeImage(path.native(), img);

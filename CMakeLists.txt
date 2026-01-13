@@ -43,8 +43,8 @@ endif()
 
 message("Using CD at \"${CD_PATH}\"")
 
-set(CMAKE_C_FLAGS_SANITIZE "-O1 -g -fsanitize=address")
-set(CMAKE_CXX_FLAGS_SANITIZE "-O1 -g -fsanitize=address")
+set(CMAKE_C_FLAGS_SANITIZE "-Og -g -fsanitize=address")
+set(CMAKE_CXX_FLAGS_SANITIZE "-Og -g -fsanitize=address")
 
 set(CMAKE_C_FLAGS_QUICK "-O1 -g1")
 set(CMAKE_CXX_FLAGS_QUICK "-O1 -g1")
@@ -273,19 +273,46 @@ add_custom_target(tidy ${CLANG_TIDY}
 
 # Localisation
 
-set(LANGUAGES en_GB fr_FR de_DE cs es it pl pt_BR ru_RU uk)
+# set(LANGUAGES en_GB fr_FR de_DE cs es it pl pt_BR ru_RU uk)
+# Add languages supported by gettext PO files - list should match the base mod - "supported_languages" in tools/extractors/main.cpp
+set(LANGUAGES "")
 
 find_package(Gettext)
 if (GETTEXT_FOUND)
 		foreach(LANG ${LANGUAGES})
 				GETTEXT_PROCESS_PO_FILES(${LANG} PO_FILES
-						${CMAKE_SOURCE_DIR}/data/languages/ufo_string_${LANG}.po)
+						${CMAKE_SOURCE_DIR}/data/languages/openapoc_${LANG}.po)
 		endforeach()
 		add_custom_target(update-translations DEPENDS pofiles)
 		foreach (LANG ${LANGUAGES})
 				add_custom_command(TARGET update-translations DEPENDS pofiles
 						COMMAND ${CMAKE_COMMAND} -E copy
-						${CMAKE_BINARY_DIR}/ufo_string_${LANG}.gmo
-						${CMAKE_SOURCE_DIR}/data/languages/${LANG}/LC_MESSAGES/ufo_string.mo)
+						${CMAKE_BINARY_DIR}/openapoc_${LANG}.gmo
+						${CMAKE_SOURCE_DIR}/data/languages/${LANG}/LC_MESSAGES/openapoc.mo)
 		endforeach()
 endif(GETTEXT_FOUND)
+
+# String extraction for translations
+find_program(XGETTEXT_EXECUTABLE xgettext)
+if(XGETTEXT_EXECUTABLE)
+	file(GLOB_RECURSE TRANSLATION_SOURCES RELATIVE ${CMAKE_SOURCE_DIR}
+		game/*.cpp
+		forms/*.cpp
+		framework/*.cpp
+		library/*.cpp)
+
+	add_custom_target(extract-translations
+		COMMAND ${XGETTEXT_EXECUTABLE}
+			--keyword=tr --keyword=tr:1
+			--from-code=UTF-8
+			--no-location
+			--add-comments=TRANSLATORS
+			--package-name=OpenApoc
+			--msgid-bugs-address=https://github.com/OpenApoc/OpenApoc/issues
+			--directory=${CMAKE_SOURCE_DIR}
+			--output=${CMAKE_SOURCE_DIR}/data/languages/openapoc.pot
+			${TRANSLATION_SOURCES}
+		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+		COMMENT "Extracting translatable strings to openapoc.pot"
+	)
+endif()

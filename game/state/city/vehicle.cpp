@@ -91,7 +91,7 @@ const UString &StateObject<Vehicle>::getId(const GameState &state, const sp<Vehi
 		if (v.second == ptr)
 			return v.first;
 	}
-	LogError("No vehicle matching pointer %p", static_cast<void *>(ptr.get()));
+	LogError("No vehicle matching pointer {0:p}", static_cast<void *>(ptr.get()));
 	return emptyString;
 }
 
@@ -1282,7 +1282,7 @@ void Vehicle::leaveDimensionGate(GameState &state)
 	auto initialPosition = (*portal)->getPosition();
 	auto initialFacing = 0.0f;
 
-	LogInfo("Leaving dimension gate %s", this->name);
+	LogInfo("Leaving dimension gate {0}", this->name);
 	LogAssert(this->betweenDimensions == true);
 	if (this->tileObject)
 	{
@@ -1343,7 +1343,7 @@ void Vehicle::enterDimensionGate(GameState &state)
 
 void Vehicle::leaveBuilding(GameState &state, Vec3<float> initialPosition, float initialFacing)
 {
-	LogInfo("Launching %s", this->name);
+	LogInfo("Launching {0}", this->name);
 	if (this->tileObject)
 	{
 		LogError("Trying to launch already-launched vehicle");
@@ -1494,7 +1494,7 @@ void Vehicle::processRecoveredVehicle(GameState &state)
 		{
 			fw().pushEvent(new GameSomethingDiedEvent(
 			    GameEventType::VehicleModuleScrapped,
-			    format("%s - %s", getFormattedVehicleNameForEventMessage(state), e->type->name),
+			    format("{0} - {1}", getFormattedVehicleNameForEventMessage(state), e->type->name),
 			    position));
 		}
 	}
@@ -3309,12 +3309,12 @@ bool Vehicle::popFinishedMissions(GameState &state)
 		{
 			return false;
 		}
-		LogInfo("Vehicle %s mission \"%s\" finished", name, missions.front().getName());
+		LogInfo("Vehicle {0} mission \"{1}\" finished", name, missions.front().getName());
 		missions.pop_front();
 		popped = true;
 		if (!missions.empty())
 		{
-			LogInfo("Vehicle %s mission \"%s\" starting", name, missions.front().getName());
+			LogInfo("Vehicle {0} mission \"{1}\" starting", name, missions.front().getName());
 			missions.front().start(state, *this);
 			continue;
 		}
@@ -3348,14 +3348,15 @@ bool Vehicle::getNewGoal(GameState &state, int &turboTiles)
 	} while (popped && !acquired && debug_deadlock_preventor > 0);
 	if (debug_deadlock_preventor <= 0)
 	{
-		LogWarning("Vehicle %s at %s", name, position);
+		LogWarning("Vehicle {0} at {1}", name, position);
 		for (auto &m : missions)
 		{
-			LogWarning("Mission %s", m.getName());
+			LogWarning("Mission {0}", m.getName());
 		}
-		LogError("Vehicle %s deadlocked, please send log to developers. Vehicle will self-destruct "
-		         "now...",
-		         name);
+		LogError(
+		    "Vehicle {0} deadlocked, please send log to developers. Vehicle will self-destruct "
+		    "now...",
+		    name);
 		die(state);
 		return false;
 	}
@@ -3672,7 +3673,7 @@ sp<VEquipment> Vehicle::addEquipment(GameState &state, Vec2<int> pos,
 	// layouts
 	// if (!this->canAddEquipment(pos, type))
 	//{
-	//	LogError("Trying to add \"%s\" at {%d,%d} on vehicle \"%s\" failed", type.id, pos.x,
+	//	LogError("Trying to add \"{0}\" at {{{1},{2}}} on vehicle \"{3}\" failed", type.id, pos.x,
 	//	         pos.y, this->name);
 	//}
 	Vec2<int> slotOrigin;
@@ -3690,7 +3691,7 @@ sp<VEquipment> Vehicle::addEquipment(GameState &state, Vec2<int> pos,
 	// If this was not within a slow fail
 	if (!slotFound)
 	{
-		LogError("Equipping \"%s\" on \"%s\" at %s failed: No valid slot", equipmentType->name,
+		LogError("Equipping \"{0}\" on \"{1}\" at {2} failed: No valid slot", equipmentType->name,
 		         this->name, pos);
 		return nullptr;
 	}
@@ -3705,7 +3706,7 @@ sp<VEquipment> Vehicle::addEquipment(GameState &state, Vec2<int> pos,
 			this->equipment.emplace_back(engine);
 			engine->owner = thisRef;
 			engine->equippedPosition = slotOrigin;
-			LogInfo("Equipped \"%s\" with engine \"%s\"", this->name, equipmentType->name);
+			LogInfo("Equipped \"{0}\" with engine \"{1}\"", this->name, equipmentType->name);
 			return engine;
 		}
 		case EquipmentSlotType::VehicleWeapon:
@@ -3716,21 +3717,21 @@ sp<VEquipment> Vehicle::addEquipment(GameState &state, Vec2<int> pos,
 			weapon->owner = thisRef;
 			this->equipment.emplace_back(weapon);
 			weapon->equippedPosition = slotOrigin;
-			LogInfo("Equipped \"%s\" with weapon \"%s\"", this->name, equipmentType->name);
+			LogInfo("Equipped \"{0}\" with weapon \"{1}\"", this->name, equipmentType->name);
 			return weapon;
 		}
 		case EquipmentSlotType::VehicleGeneral:
 		{
 			auto equipment = mksp<VEquipment>();
 			equipment->type = equipmentType;
-			LogInfo("Equipped \"%s\" with general equipment \"%s\"", this->name,
+			LogInfo("Equipped \"{0}\" with general equipment \"{1}\"", this->name,
 			        equipmentType->name);
 			equipment->equippedPosition = slotOrigin;
 			this->equipment.emplace_back(equipment);
 			return equipment;
 		}
 		default:
-			LogError("Equipment \"%s\" for \"%s\" at pos (%d,%d} has invalid type",
+			LogError("Equipment \"{0}\" for \"{1}\" at pos ({2},{3}} has invalid type",
 			         equipmentType->name, this->name, pos.x, pos.y);
 			return nullptr;
 	}
@@ -3786,7 +3787,7 @@ void Vehicle::equipDefaultEquipment(GameState &state)
 {
 	equipment.clear();
 	loot.clear();
-	LogInfo("Equipping \"%s\" with default equipment", this->type->name);
+	LogInfo("Equipping \"{0}\" with default equipment", this->type->name);
 	auto alien = owner == state.getAliens();
 	for (auto &pair : this->type->initial_equipment_list)
 	{
@@ -3839,7 +3840,7 @@ template <> sp<Vehicle> StateObject<Vehicle>::get(const GameState &state, const 
 	auto it = state.vehicles.find(id);
 	if (it == state.vehicles.end())
 	{
-		LogError("No vehicle matching ID \"%s\"", id);
+		LogError("No vehicle matching ID \"{0}\"", id);
 		return nullptr;
 	}
 	return it->second;
@@ -3888,7 +3889,7 @@ const UString Vehicle::getFormattedVehicleNameForEventMessage(GameState &state) 
 {
 	if (config().getBool("OpenApoc.NewFeature.ShowNonXCOMVehiclesPrefix") &&
 	    owner != state.getPlayer())
-		return format("%s %s", tr("*"), name);
+		return format("* {0}", name);
 
 	return name;
 }
@@ -3981,7 +3982,7 @@ void Cargo::refund(GameState &state, StateRef<Building> currentBuilding)
 			case Type::Bio:
 				if (state.economy.find(id) != state.economy.end())
 				{
-					LogError("Economy found for bio item!?", id);
+					LogError("Economy found for bio item!? {0}", id);
 				}
 				break;
 			case Type::Agent:
@@ -4081,7 +4082,7 @@ void Cargo::seize(GameState &state, StateRef<Organisation> org [[maybe_unused]])
 		case Type::Bio:
 			if (state.economy.find(id) != state.economy.end())
 			{
-				LogError("Economy found for bio item!?", id);
+				LogError("Economy found for bio item!? {0}", id);
 			}
 			break;
 		case Type::Agent:
@@ -4100,7 +4101,7 @@ void Cargo::seize(GameState &state, StateRef<Organisation> org [[maybe_unused]])
 	}
 	int worth = cost * count / divisor;
 	// FIXME: Adjust relationship accordingly to seized cargo's worth
-	LogWarning("Adjust relationship accordingly to worth: %d", worth);
+	LogWarning("Adjust relationship accordingly to worth: {0}", worth);
 	if (destination->owner == state.getPlayer())
 	{
 		fw().pushEvent(

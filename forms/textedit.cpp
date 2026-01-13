@@ -75,7 +75,7 @@ void TextEdit::eventOccured(Event *e)
 			}
 			if (e->forms().EventFlag == FormEventType::KeyDown)
 			{
-				LogInfo("Key pressed: %d", e->forms().KeyInfo.KeyCode);
+				LogInfo("Key pressed: {0}", e->forms().KeyInfo.KeyCode);
 				switch (e->forms().KeyInfo.KeyCode)
 				{
 					case SDLK_BACKSPACE:
@@ -282,7 +282,7 @@ void TextEdit::configureSelfFromXml(pugi::xml_node *node)
 
 	if (node->attribute("text"))
 	{
-		text = to_u32string(tr(node->attribute("text").as_string()));
+		text = to_u32string(node->attribute("text").as_string());
 	}
 	auto fontNode = node->child("font");
 	if (fontNode)

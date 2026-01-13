@@ -1,4 +1,4 @@
-﻿#include "game/ui/city/infiltrationscreen.h"
+#include "game/ui/city/infiltrationscreen.h"
 #include "forms/form.h"
 #include "forms/graphic.h"
 #include "forms/label.h"
@@ -11,6 +11,7 @@
 #include "game/state/shared/organisation.h"
 #include "game/ui/components/controlgenerator.h"
 #include "library/line.h"
+#include <algorithm>
 #include <array>
 
 namespace OpenApoc
@@ -66,7 +67,7 @@ static void drawOrgLine(sp<RGBImage> image, const Organisation &org, const Colou
 		{
 			if (point.x < 0 || point.y < 0 || point.x >= image->size.x || point.y >= image->size.y)
 			{
-				LogWarning("Point %s out of bounds for image of size %s", point, image->size);
+				LogWarning("Point {0} out of bounds for image of size {1}", point, image->size);
 				point.x = clamp(point.x, 0, static_cast<int>(image->size.x - 1));
 				point.y = clamp(point.y, 0, static_cast<int>(image->size.y - 1));
 			}
@@ -97,7 +98,7 @@ InfiltrationScreen::InfiltrationScreen(sp<GameState> state)
 
 	for (int i = 0; i < 10; i++)
 	{
-		shown_org_names[i] = menuform->findControlTyped<Label>(format("ORG_NAME_%d", i)).get();
+		shown_org_names[i] = menuform->findControlTyped<Label>(format("ORG_NAME_{0}", i)).get();
 		shown_orgs[i] = nullptr;
 	}
 	graph = menuform->findControlTyped<Graphic>("GRAPH");

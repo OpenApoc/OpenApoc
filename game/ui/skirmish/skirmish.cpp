@@ -100,7 +100,7 @@ std::shared_future<void> loadBattleVehicle(bool hotseat, sp<VehicleType> vehicle
 		    auto v = mksp<Vehicle>();
 		    auto vID = Vehicle::generateObjectID(*state);
 		    v->type = {state, vehicle};
-		    v->name = format("%s %d", v->type->name, ++v->type->numCreated);
+		    v->name = format("{0} {1}", v->type->name, ++v->type->numCreated);
 
 		    state->vehicles[vID] = v;
 		    StateRef<Vehicle> ufo = {state, vID};
@@ -150,7 +150,7 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 	        {
 		        menuform->findControlTyped<Label>("NUM_HUMANS")
 		            ->setText(format(
-		                "%d",
+		                "{0}",
 		                menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")->getValue()));
 	        });
 	menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")
@@ -160,7 +160,7 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 	        {
 		        menuform->findControlTyped<Label>("NUM_HYBRIDS")
 		            ->setText(format(
-		                "%d",
+		                "{0}",
 		                menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")->getValue()));
 	        });
 	menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")
@@ -170,7 +170,7 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 	        {
 		        menuform->findControlTyped<Label>("NUM_ANDROIDS")
 		            ->setText(format(
-		                "%d",
+		                "{0}",
 		                menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")->getValue()));
 	        });
 	menuform->findControlTyped<ScrollBar>("DAYS_PHYSICAL_SLIDER")
@@ -180,7 +180,7 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 	        {
 		        menuform->findControlTyped<Label>("DAYS_PHYSICAL")
 		            ->setText(format(
-		                "%d",
+		                "{0}",
 		                menuform->findControlTyped<ScrollBar>("DAYS_PHYSICAL_SLIDER")->getValue()));
 	        });
 	menuform->findControlTyped<ScrollBar>("DAYS_PSI_SLIDER")
@@ -190,7 +190,7 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 	        {
 		        menuform->findControlTyped<Label>("DAYS_PSI")
 		            ->setText(format(
-		                "%d",
+		                "{0}",
 		                menuform->findControlTyped<ScrollBar>("DAYS_PSI_SLIDER")->getValue()));
 	        });
 	menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
@@ -202,7 +202,7 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 		            ->setText(
 		                menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")->getValue() == 0
 		                    ? "NO"
-		                    : format("%d",
+		                    : format("{0}",
 		                             menuform->findControlTyped<ScrollBar>("PLAYER_TECH_SLIDER")
 		                                 ->getValue()));
 	        });
@@ -213,7 +213,7 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 	        {
 		        menuform->findControlTyped<Label>("ALIEN_SCORE")
 		            ->setText(format(
-		                "%dK",
+		                "{0}K",
 		                menuform->findControlTyped<ScrollBar>("ALIEN_SCORE_SLIDER")->getValue()));
 	        });
 	menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")
@@ -223,7 +223,7 @@ Skirmish::Skirmish(sp<GameState> state) : Stage(), menuform(ui().getForm("skirmi
 	        {
 		        menuform->findControlTyped<Label>("ORG_SCORE")
 		            ->setText(format(
-		                "%d",
+		                "{0}",
 		                menuform->findControlTyped<ScrollBar>("ORG_SCORE_SLIDER")->getValue()));
 	        });
 	menuform->findControlTyped<ScrollBar>("ARMOR_SLIDER")
@@ -333,7 +333,7 @@ void Skirmish::goToBattle(bool customAliens, std::map<StateRef<AgentType>, int> 
 		f->buildTime = 0;
 	}
 
-	LogWarning("Adding new agents to base %s", playerBase.id);
+	LogWarning("Adding new agents to base {0}", playerBase.id);
 	int countHumans = menuform->findControlTyped<ScrollBar>("NUM_HUMANS_SLIDER")->getValue();
 	int countHybrids = menuform->findControlTyped<ScrollBar>("NUM_HYBRIDS_SLIDER")->getValue();
 	int countAndroids = menuform->findControlTyped<ScrollBar>("NUM_ANDROIDS_SLIDER")->getValue();
@@ -633,19 +633,19 @@ void Skirmish::updateLocationLabel()
 	UString text = "[No map selected]";
 	if (locBuilding)
 	{
-		text = format("[%s Building] %s [%s]",
+		text = format("[{0} Building] {1} [{2}]",
 		              locBuilding->owner == state.getAliens() ? "Alien" : "Human",
 		              locBuilding->name, locBuilding->battle_map.id);
 	}
 	else if (locVehicle)
 	{
-		text = format("[UFO] %s [%s]", locVehicle->name, locVehicle->battle_map.id);
+		text = format("[UFO] {0} [{1}]", locVehicle->name, locVehicle->battle_map.id);
 	}
 	else if (locBase)
 	{
-		text = format("[Base] %s", locBase->name);
+		text = format("[Base] {0}", locBase->name);
 	}
-	menuform->findControlTyped<Label>("LOCATION")->setText(format("LOCATION: %s", text));
+	menuform->findControlTyped<Label>("LOCATION")->setText(format("LOCATION: {0}", text));
 }
 
 void Skirmish::battleInBuilding(bool hotseat, StateRef<Base> playerBase,

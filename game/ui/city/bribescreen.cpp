@@ -32,34 +32,34 @@ void BribeScreen::updateInfo()
 	switch (organisation->isRelatedTo(state->getPlayer()))
 	{
 		case Organisation::Relation::Allied:
-			relationship = ": allied with:";
+			relationship = format(tr("{0}: allied with: X-COM"), organisation->name);
 			offer =
 			    tr("X-COM is ALLIED with this organization. The relationship cannot be improved.");
 			bribe = 0;
 			break;
 
 		case Organisation::Relation::Friendly:
-			relationship = ": friendly with:";
+			relationship = format(tr("{0}: friendly with: X-COM"), organisation->name);
 			offer = getOfferString(bribe, tr("ALLIED"));
 			break;
 
 		case Organisation::Relation::Neutral:
-			relationship = ": neutral towards:";
+			relationship = format(tr("{0}: neutral towards: X-COM"), organisation->name);
 			offer = getOfferString(bribe, tr("FRIENDLY"));
 			break;
 
 		case Organisation::Relation::Unfriendly:
-			relationship = ": unfriendly towards:";
+			relationship = format(tr("{0}: unfriendly towards: X-COM"), organisation->name);
 			offer = getOfferString(bribe, tr("NEUTRAL"));
 			break;
 
 		case Organisation::Relation::Hostile:
-			relationship = ": hostile towards:";
+			relationship = format(tr("{0}: hostile towards: X-COM"), organisation->name);
 			offer = getOfferString(bribe, tr("UNFRIENDLY"));
 			break;
 
 		default:
-			relationship = ": Attitude unknown towards:";
+			relationship = format(tr("{0}: Attitude unknown towards: X-COM"), organisation->name);
 			offer = "Unconventional relations";
 			bribe = 0;
 			LogError(offer);
@@ -79,7 +79,7 @@ void BribeScreen::updateInfo()
 	}
 
 	labelFunds->setText(state->getPlayerBalance());
-	labelRelation->setText(format("%s%s X-COM", tr(organisation->name), tr(relationship)));
+	labelRelation->setText(relationship);
 	labelOffer->setText(offer);
 }
 
@@ -91,8 +91,8 @@ void BribeScreen::updateInfo()
  */
 UString BribeScreen::getOfferString(int itWillCost, const UString &newAttitude) const
 {
-	return format("%s %s  %s  %s", tr("It will cost: $"), Strings::fromInteger(itWillCost),
-	              tr("to improve relations to:"), newAttitude);
+	return format(tr("It will cost: ${0} to improve relations to: {1}"),
+	              Strings::fromInteger(itWillCost), newAttitude);
 }
 
 void BribeScreen::begin()

@@ -27,11 +27,11 @@ void AEquipmentSheet::clear()
 	{
 		for (char alignment : {'L', 'C', 'R'})
 		{
-			auto labelName = format("LABEL_%d_%c", i + 1, alignment);
+			auto labelName = format("LABEL_{0}_{1}", i + 1, alignment);
 			auto label = form->findControlTyped<Label>(labelName);
 			if (!label)
 			{
-				LogError("Failed to find UI control matching \"%s\"", labelName);
+				LogError("Failed to find UI control matching \"{0}\"", labelName);
 			}
 			else
 			{
@@ -71,10 +71,10 @@ void AEquipmentSheet::displayImplementation(sp<AEquipment> item, const AEquipmen
 	// when possible, the actual item's weight takes precedence
 	form->findControlTyped<Label>("LABEL_1_L")->setText(tr("Weight"));
 	form->findControlTyped<Label>("LABEL_1_R")
-	    ->setText(format("%d", item ? item->getWeight() : itemType.weight));
+	    ->setText(format("{0}", item ? item->getWeight() : itemType.weight));
 
 	form->findControlTyped<Label>("LABEL_2_L")->setText(tr("Storage"));
-	form->findControlTyped<Label>("LABEL_2_R")->setText(format("%d", itemType.store_space));
+	form->findControlTyped<Label>("LABEL_2_R")->setText(format("{0}", itemType.store_space));
 
 	if (!researched)
 		return;
@@ -122,31 +122,31 @@ void AEquipmentSheet::displayGrenade(sp<AEquipment> item [[maybe_unused]],
 	form->findControlTyped<Label>("LABEL_3_C")->setText(itemType.damage_type->name);
 
 	form->findControlTyped<Label>("LABEL_4_L")->setText(tr("Power"));
-	form->findControlTyped<Label>("LABEL_4_R")->setText(format("%d", itemType.damage));
+	form->findControlTyped<Label>("LABEL_4_R")->setText(format("{0}", itemType.damage));
 }
 
 void AEquipmentSheet::displayAmmo(sp<AEquipment> item, const AEquipmentType &itemType)
 {
 	form->findControlTyped<Label>("LABEL_3_L")->setText(tr("Accuracy"));
-	form->findControlTyped<Label>("LABEL_3_R")->setText(format("%d", itemType.accuracy));
+	form->findControlTyped<Label>("LABEL_3_R")->setText(format("{0}", itemType.accuracy));
 
 	form->findControlTyped<Label>("LABEL_4_L")->setText(tr("Fire rate"));
 	form->findControlTyped<Label>("LABEL_4_R")
-	    ->setText(format("%.2f", itemType.getRoundsPerSecond()));
+	    ->setText(format("{0:.2f}", itemType.getRoundsPerSecond()));
 
 	form->findControlTyped<Label>("LABEL_5_L")->setText(tr("Range"));
-	form->findControlTyped<Label>("LABEL_5_R")->setText(format("%d", itemType.getRangeInTiles()));
+	form->findControlTyped<Label>("LABEL_5_R")->setText(format("{0}", itemType.getRangeInTiles()));
 
 	form->findControlTyped<Label>("LABEL_6_C")->setText(tr("Ammo Type:"));
 	form->findControlTyped<Label>("LABEL_7_C")->setText(itemType.damage_type->name);
 
 	form->findControlTyped<Label>("LABEL_8_L")->setText(tr("Power"));
-	form->findControlTyped<Label>("LABEL_8_R")->setText(format("%d", itemType.damage));
+	form->findControlTyped<Label>("LABEL_8_R")->setText(format("{0}", itemType.damage));
 
 	form->findControlTyped<Label>("LABEL_9_L")->setText(tr("Rounds"));
 	form->findControlTyped<Label>("LABEL_9_R")
-	    ->setText(item ? format("%d / %d", item->ammo, itemType.max_ammo)
-	                   : format("%d", itemType.max_ammo));
+	    ->setText(item ? format("{0} / {1}", item->ammo, itemType.max_ammo)
+	                   : format("{0}", itemType.max_ammo));
 	if (itemType.recharge > 0)
 	{
 		form->findControlTyped<Label>("LABEL_10_C")->setText(tr("(Recharges)"));
@@ -164,21 +164,21 @@ void AEquipmentSheet::displayWeapon(sp<AEquipment> item [[maybe_unused]],
 
 	auto &ammoType = *itemType.ammo_types.begin();
 	form->findControlTyped<Label>("LABEL_3_L")->setText(tr("Accuracy"));
-	form->findControlTyped<Label>("LABEL_3_R")->setText(format("%d", ammoType->accuracy));
+	form->findControlTyped<Label>("LABEL_3_R")->setText(format("{0}", ammoType->accuracy));
 
 	form->findControlTyped<Label>("LABEL_4_L")->setText(tr("Fire rate"));
 	form->findControlTyped<Label>("LABEL_4_R")
-	    ->setText(format("%.2f", ammoType->getRoundsPerSecond()));
+	    ->setText(format("{0:.2f}", ammoType->getRoundsPerSecond()));
 
 	form->findControlTyped<Label>("LABEL_5_L")->setText(tr("Range"));
-	form->findControlTyped<Label>("LABEL_5_R")->setText(format("%d", ammoType->getRangeInTiles()));
+	form->findControlTyped<Label>("LABEL_5_R")->setText(format("{0}", ammoType->getRangeInTiles()));
 
 	form->findControlTyped<Label>("LABEL_6_C")->setText(tr("Ammo types:"));
 	int ammoNum = 1;
 	int currentY = label7CPos;
 	for (auto &ammo : itemType.ammo_types)
 	{
-		auto ammoLabel = form->findControlTyped<Label>(format("LABEL_%d_C", 6 + ammoNum));
+		auto ammoLabel = form->findControlTyped<Label>(format("LABEL_{0}_C", 6 + ammoNum));
 		ammoLabel->WordWrap = true;
 		ammoLabel->setText(ammo->name);
 
@@ -199,8 +199,8 @@ void AEquipmentSheet::displayArmor(sp<AEquipment> item, const AEquipmentType &it
 {
 	form->findControlTyped<Label>("LABEL_3_L")->setText(tr("Protection"));
 	form->findControlTyped<Label>("LABEL_3_R")
-	    ->setText(item ? format("%d / %d", item->armor, itemType.armor)
-	                   : format("%d", itemType.armor));
+	    ->setText(item ? format("{0} / {1}", item->armor, itemType.armor)
+	                   : format("{0}", itemType.armor));
 }
 
 void AEquipmentSheet::displayOther(sp<AEquipment> item [[maybe_unused]],
@@ -215,9 +215,9 @@ void AEquipmentSheet::shiftLabels(const int &baseY)
 
 	for (int i = 1; i <= labelCount; i++)
 	{
-		auto labelLeft = form->findControlTyped<Label>(format("LABEL_%d_L", i));
-		auto labelCenter = form->findControlTyped<Label>(format("LABEL_%d_C", i));
-		auto labelRight = form->findControlTyped<Label>(format("LABEL_%d_R", i));
+		auto labelLeft = form->findControlTyped<Label>(format("LABEL_{0}_L", i));
+		auto labelCenter = form->findControlTyped<Label>(format("LABEL_{0}_C", i));
+		auto labelRight = form->findControlTyped<Label>(format("LABEL_{0}_R", i));
 
 		labelLeft->Location.y = baseY + wrappedOffset * (i - 1);
 		labelCenter->Location.y = baseY + wrappedOffset * (i - 1);

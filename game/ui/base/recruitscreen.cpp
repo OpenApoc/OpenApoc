@@ -22,6 +22,7 @@
 #include "game/ui/general/agentsheet.h"
 #include "game/ui/general/messagebox.h"
 #include "library/strings_format.h"
+#include <algorithm>
 
 namespace OpenApoc
 {
@@ -333,7 +334,7 @@ void RecruitScreen::updateFormValues()
 	const auto balance = state->getPlayer()->balance + moneyDelta;
 	form->findControlTyped<Label>("TEXT_FUNDS")->setText(Strings::fromInteger(balance));
 	form->findControlTyped<Label>("TEXT_FUNDS_DELTA")
-	    ->setText(format("%s%s", moneyDelta > 0 ? "+" : "", Strings::fromInteger(moneyDelta)));
+	    ->setText(format("{0}{1}", moneyDelta > 0 ? "+" : "", Strings::fromInteger(moneyDelta)));
 
 	updateBaseHighlight();
 }
@@ -344,7 +345,7 @@ void RecruitScreen::updateBaseHighlight()
 	    state->current_base->getUsage(*state, FacilityType::Capacity::Quarters, lqDelta);
 	fillBaseBar(usage);
 	auto facilityLabel = form->findControlTyped<Label>("FACILITY_FIRST_TEXT");
-	facilityLabel->setText(format("%.f%%", usage));
+	facilityLabel->setText(format("{0:.0f}%", usage));
 }
 
 void RecruitScreen::fillBaseBar(int percent)
@@ -406,7 +407,7 @@ void RecruitScreen::personnelSheet(const Agent &agent, sp<Form> formPersonnelSta
 	formPersonnelStats->findControlTyped<Graphic>("SELECTED_PORTRAIT")
 	    ->setImage(agent.getPortrait().photo);
 	formPersonnelStats->findControlTyped<Label>("VALUE_SKILL")
-	    ->setText(format("%d", agent.getSkill()));
+	    ->setText(format("{0}", agent.getSkill()));
 }
 
 /**
@@ -420,7 +421,7 @@ std::vector<sp<Image>> RecruitScreen::getBigUnitRanks()
 	{
 		bigUnitRanks.push_back(
 		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+		                                "tacbut.tab:{0}:xcom3/tacdata/tactical.pal",
 		                                i)));
 	}
 
@@ -471,11 +472,10 @@ void RecruitScreen::attemptCloseScreen()
 
 	if (hired != 0 || fired != 0 || transferred != 0)
 	{
-		UString message =
-		    format("%d %s\n%d %s", hired, tr("unit(s) hired"), fired, tr("unit(s) fired."));
+		UString message = format(tr("{0} unit(s) hired\n{1} unit(s) fired."), hired, fired);
 		if (transferred > 0)
 		{
-			message = format("%s\n(%d %s)", message, transferred, tr("units(s) transferred"));
+			message = format(tr("{0}\n({1} unit(s) transferred)"), message, transferred);
 		}
 		fw().stageQueueCommand(
 		    {StageCmd::Command::PUSH,

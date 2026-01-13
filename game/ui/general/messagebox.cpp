@@ -60,7 +60,7 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 		}
 		case ButtonOptions::YesNo:
 		{
-			auto bYes = form->createChild<TextButton>(tr(!yesLabel.empty() ? yesLabel : "Yes"),
+			auto bYes = form->createChild<TextButton>(!yesLabel.empty() ? yesLabel : tr("Yes"),
 			                                          ui().getFont("smallset"));
 			bYes->Name = "BUTTON_YES";
 			bYes->Size = BUTTON_SIZE;
@@ -68,7 +68,7 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 			bYes->Location.x = MARGIN;
 			bYes->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
-			auto bNo = form->createChild<TextButton>(tr(!noLabel.empty() ? noLabel : "No"),
+			auto bNo = form->createChild<TextButton>(!noLabel.empty() ? noLabel : tr("No"),
 			                                         ui().getFont("smallset"));
 			bNo->Name = "BUTTON_NO";
 			bNo->Size = BUTTON_SIZE;
@@ -81,7 +81,7 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 		}
 		case ButtonOptions::YesNoCancel:
 		{
-			auto bYes = form->createChild<TextButton>(tr(!yesLabel.empty() ? yesLabel : "Yes"),
+			auto bYes = form->createChild<TextButton>(!yesLabel.empty() ? yesLabel : tr("Yes"),
 			                                          ui().getFont("smallset"));
 			bYes->Name = "BUTTON_YES";
 			bYes->Size = BUTTON_SIZE_2;
@@ -89,7 +89,7 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 			bYes->Location.x = MARGIN;
 			bYes->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
-			auto bNo = form->createChild<TextButton>(tr(!noLabel.empty() ? noLabel : "No"),
+			auto bNo = form->createChild<TextButton>(!noLabel.empty() ? noLabel : tr("No"),
 			                                         ui().getFont("smallset"));
 			bNo->Name = "BUTTON_NO2";
 			bNo->Size = BUTTON_SIZE_2;
@@ -98,7 +98,7 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 			bNo->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
 			auto bCan = form->createChild<TextButton>(
-			    tr(!cancelLabel.empty() ? cancelLabel : "Cancel"), ui().getFont("smallset"));
+			    !cancelLabel.empty() ? cancelLabel : tr("Cancel"), ui().getFont("smallset"));
 			bCan->Name = "BUTTON_CANCEL";
 			bCan->Size = BUTTON_SIZE_2;
 			bCan->RenderStyle = TextButton::ButtonRenderStyle::Bevel;

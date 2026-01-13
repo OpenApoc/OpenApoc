@@ -145,7 +145,7 @@ void TransferScreen::updateBaseHighlight()
 		int i = 0;
 		for (auto &b : state->player_bases)
 		{
-			auto viewName = format("BUTTON_SECOND_BASE_%d", ++i);
+			auto viewName = format("BUTTON_SECOND_BASE_{0}", ++i);
 			auto view = form->findControlTyped<GraphicButton>(viewName);
 			auto viewImage = drawMiniBase(*b.second, viewHighlight, viewFacility);
 			view->setImage(viewImage);
@@ -170,7 +170,7 @@ void TransferScreen::updateBaseHighlight()
 			fillBaseBar(false, usage);
 			auto facilityLabel = form->findControlTyped<Label>("FACILITY_SECOND_TEXT");
 			facilityLabel->setVisible(true);
-			facilityLabel->setText(format("%.f%%", usage));
+			facilityLabel->setText(format("{0:.0f}%", usage));
 			break;
 		}
 		case BaseGraphics::FacilityHighlight::Stores:
@@ -184,7 +184,7 @@ void TransferScreen::updateBaseHighlight()
 			fillBaseBar(false, usage);
 			auto facilityLabel = form->findControlTyped<Label>("FACILITY_SECOND_TEXT");
 			facilityLabel->setVisible(true);
-			facilityLabel->setText(format("%.f%%", usage));
+			facilityLabel->setText(format("{0:.0f}%", usage));
 			break;
 		}
 		case BaseGraphics::FacilityHighlight::Aliens:
@@ -198,7 +198,7 @@ void TransferScreen::updateBaseHighlight()
 			fillBaseBar(false, usage);
 			auto facilityLabel = form->findControlTyped<Label>("FACILITY_SECOND_TEXT");
 			facilityLabel->setVisible(true);
-			facilityLabel->setText(format("%.f%%", usage));
+			facilityLabel->setText(format("{0:.0f}%", usage));
 			break;
 		}
 		default:
@@ -420,18 +420,18 @@ void TransferScreen::closeScreen()
 		if (transportationBusy || transportationHostile)
 		{
 			UString title =
-			    format("%s%s", badOrgs.front()->name, badOrgs.size() > 1 ? " & others" : "");
+			    format("{0}{1}", badOrgs.front()->name, badOrgs.size() > 1 ? " & others" : "");
 
 			// If player can ferry themselves then give option
 			if (config().getBool("OpenApoc.NewFeature.AllowManualCargoFerry"))
 			{
 				UString message =
 				    transportationHostile
-				        ? format("%s %s",
+				        ? format("{0} {1}",
 				                 tr("This hostile organization refuses to carry out the "
 				                    "requested transfer."),
 				                 tr("Proceed?"))
-				        : format("%s %s",
+				        : format("{0} {1}",
 				                 tr("No free transport to carry out the requested "
 				                    "transportation detected in the city."),
 				                 tr("Proceed?"));
@@ -445,7 +445,7 @@ void TransferScreen::closeScreen()
 			else if (!transportationHostile)
 			{
 				// FIXME: Different message maybe? Same for now
-				UString message = format("%s %s",
+				UString message = format("{0} {1}",
 				                         tr("No free transport to carry out the requested "
 				                            "transportation detected in the city."),
 				                         tr("Proceed?"));
@@ -627,7 +627,7 @@ void TransferScreen::executeOrders()
 						}
 						default:
 						{
-							LogError("Unhandled TransactionControl::Type %d",
+							LogError("Unhandled TransactionControl::Type {0}",
 							         static_cast<int>(c->itemType));
 							break;
 						}
@@ -650,7 +650,7 @@ void TransferScreen::initViewSecondBase()
 	int i = 0;
 	for (auto &b : state->player_bases)
 	{
-		auto viewName = format("BUTTON_SECOND_BASE_%d", ++i);
+		auto viewName = format("BUTTON_SECOND_BASE_{0}", ++i);
 		auto view = form->findControlTyped<GraphicButton>(viewName);
 		view->setVisible(true);
 		if (second_base == b.second)

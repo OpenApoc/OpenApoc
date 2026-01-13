@@ -1,8 +1,8 @@
 [main]
 host = https://www.transifex.com
 
-[apocalypse.ufo_stringpo]
-source_file = data/languages/ufo_string.pot
+[apocalypse.openapocpo]
+source_file = data/languages/openapoc.pot
 source_lang = en
 type = PO
-file_filter = data/languages/ufo_string_<lang>.po
+file_filter = data/languages/openapoc_<lang>.po

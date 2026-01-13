@@ -22,7 +22,7 @@ void DiplomaticTreatyScreen::begin()
 {
 	menuform->findControlTyped<Label>("TEXT_DATE")->setText(state->gameTime.getLongDateString());
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
-	menuform->findControlTyped<Label>("TEXT_ORGANISATION")->setText(tr(organisation->name));
+	menuform->findControlTyped<Label>("TEXT_ORGANISATION")->setText(organisation->name);
 	labelOffer = menuform->findControlTyped<Label>("TEXT_OFFER");
 	labelBribe = menuform->findControlTyped<Label>("TEXT_RIFT_BRIBE");
 
@@ -31,7 +31,7 @@ void DiplomaticTreatyScreen::begin()
 	labelOffer->setText(tr("We are unhappy with the recent activity of your organization and "
 	                       "request compensation to restore normal diplomatic relations. If you do "
 	                       "not comply your craft and Agents may be subject to hostile actions."));
-	labelBribe->setText(format("Pay: $ %s ?", Strings::fromInteger(bribeAmount)));
+	labelBribe->setText(format("Pay: $ {0} ?", Strings::fromInteger(bribeAmount)));
 }
 
 void DiplomaticTreatyScreen::pause() {}

@@ -23,7 +23,7 @@ void InitialGameStateExtractor::readBattleMapParts(
 	auto inFile = fw().data->fs.open(datFileName);
 	if (!inFile)
 	{
-		LogError("Failed to open mapunits DAT file at \"%s\"", datFileName);
+		LogError("Failed to open mapunits DAT file at \"{0}\"", datFileName);
 		return;
 	}
 	auto fileSize = inFile.size();
@@ -34,12 +34,12 @@ void InitialGameStateExtractor::readBattleMapParts(
 	auto strategySpriteTabFile = fw().data->fs.open(strategySpriteTabFileName);
 	if (!strategySpriteTabFile)
 	{
-		LogError("Failed to open strategy sprite TAB file \"%s\"", strategySpriteTabFileName);
+		LogError("Failed to open strategy sprite TAB file \"{0}\"", strategySpriteTabFileName);
 		return;
 	}
 	size_t strategySpriteCount = strategySpriteTabFile.size() / 4;
 
-	LogInfo("Loading %zu entries from \"%s\"", objectCount, datFileName);
+	LogInfo("Loading {0} entries from \"{1}\"", objectCount, datFileName);
 
 	for (size_t i = 0; i < objectCount; i++)
 	{
@@ -48,16 +48,16 @@ void InitialGameStateExtractor::readBattleMapParts(
 		inFile.read((char *)&entry, sizeof(entry));
 		if (!inFile)
 		{
-			LogError("Failed to read entry %zu in \"%s\"", i, datFileName);
+			LogError("Failed to read entry {0} in \"{1}\"", i, datFileName);
 			return;
 		}
 
-		UString id = format("%s%u", idPrefix, i);
+		UString id = format("{0}{1}", idPrefix, i);
 		auto object = mksp<BattleMapPartType>();
 		if (entry.alternative_object_idx != 0)
 		{
-			object->alternative_map_part = {&state,
-			                                format("%s%u", idPrefix, entry.alternative_object_idx)};
+			object->alternative_map_part = {
+			    &state, format("{0}{1}", idPrefix, entry.alternative_object_idx)};
 		}
 		object->type = type;
 		object->constitution = entry.constitution;
@@ -78,7 +78,7 @@ void InitialGameStateExtractor::readBattleMapParts(
 		{
 			if ((unsigned int)entry.loftemps_lof[slice] == 0)
 				continue;
-			auto lofString = format("LOFTEMPS:%s:%s:%u", loftempsFile, loftempsTab,
+			auto lofString = format("LOFTEMPS:{0}:{1}:{2}", loftempsFile, loftempsTab,
 			                        (unsigned int)entry.loftemps_lof[slice]);
 			object->voxelMapLOF->slices[slice] = fw().data->loadVoxelSlice(lofString);
 		}
@@ -87,13 +87,13 @@ void InitialGameStateExtractor::readBattleMapParts(
 		{
 			if ((unsigned int)entry.loftemps_los[slice] == 0)
 				continue;
-			auto lofString = format("LOFTEMPS:%s:%s:%u", loftempsFile, loftempsTab,
+			auto lofString = format("LOFTEMPS:{0}:{1}:{2}", loftempsFile, loftempsTab,
 			                        (unsigned int)entry.loftemps_los[slice]);
 			object->voxelMapLOS->slices[slice] = fw().data->loadVoxelSlice(lofString);
 		}
 		if (entry.damaged_idx)
 		{
-			object->damaged_map_part = {&state, format("%s%u", idPrefix, entry.damaged_idx)};
+			object->damaged_map_part = {&state, format("{0}{1}", idPrefix, entry.damaged_idx)};
 		}
 
 		// So far haven't seen an animated object with only 1 frame, but seen objects with 1 in this
@@ -104,33 +104,32 @@ void InitialGameStateExtractor::readBattleMapParts(
 			auto animateTabFile = fw().data->fs.open(animateTabFileName);
 			if (!animateTabFile)
 			{
-				LogError("Failed to open animate sprite TAB file \"%s\"", animateTabFileName);
+				LogError("Failed to open animate sprite TAB file \"{0}\"", animateTabFileName);
 				return;
 			}
 			size_t animateSpriteCount = animateTabFile.size() / 4;
 
 			if (animateSpriteCount < entry.animation_idx + entry.animation_length)
 			{
-				LogWarning("Bogus animation value, animation frames not present for ID %s", id);
+				LogWarning("Bogus animation value, animation frames not present for ID {0}", id);
 			}
 			else
 			{
 				for (int j = 0; j < entry.animation_length; j++)
 				{
-					auto animateString = format("PCK:%s%s.pck:%s%s.tab:%u", dirName, "animate",
-					                            dirName, "animate", entry.animation_idx + j);
+					auto animateString = format("PCK:{0}{1}.pck:{0}{1}.tab:{2}", dirName, "animate",
+					                            entry.animation_idx + j);
 					object->animation_frames.push_back(fw().data->loadImage(animateString));
 				}
 			}
 		}
 
-		auto imageString =
-		    format("PCK:%s%s.pck:%s%s.tab:%u", dirName, pckName, dirName, pckName, i);
+		auto imageString = format("PCK:{0}{1}.pck:{0}{1}.tab:{2}", dirName, pckName, i);
 		object->sprite = fw().data->loadImage(imageString);
 		if (i < strategySpriteCount)
 		{
-			auto stratImageString = format("PCKSTRAT:%s%s.pck:%s%s.tab:%u", dirName, stratPckName,
-			                               dirName, stratPckName, i);
+			auto stratImageString =
+			    format("PCKSTRAT:{0}{1}.pck:{0}{1}.tab:{2}", dirName, stratPckName, i);
 			object->strategySprite = fw().data->loadImage(stratImageString);
 		}
 		// It should be {24,34} I guess, since 48/2=24, but 23 gives a little better visual
@@ -233,7 +232,7 @@ void InitialGameStateExtractor::readBattleMapParts(
 		{
 			if (gets_support_from % 10 < 1 || gets_support_from % 10 > 4)
 			{
-				LogError("Unrecognized support by id %d", (int)entry.gets_support_from);
+				LogError("Unrecognized support by id {0}", (int)entry.gets_support_from);
 				return;
 			}
 			object->supportedByDirections.insert((MapDirection)(gets_support_from % 10));
@@ -259,7 +258,7 @@ void InitialGameStateExtractor::readBattleMapParts(
 					object->supportedByTypes.insert(BattleMapPartType::Type::Feature);
 					break;
 				default:
-					LogError("Unrecognized support by id %d", (int)entry.gets_support_from);
+					LogError("Unrecognized support by id {0}", (int)entry.gets_support_from);
 					return;
 			}
 		}
@@ -305,7 +304,7 @@ void InitialGameStateExtractor::readBattleMapParts(
 sp<BattleMapTileset> InitialGameStateExtractor::extractTileSet(GameState &state,
                                                                const UString &name) const
 {
-	UString tilePrefix = format("%s_", name);
+	UString tilePrefix = format("{0}_", name);
 	UString map_prefix = "xcom3/maps/";
 	UString mapunits_suffix = "/mapunits/";
 	UString spriteFile;

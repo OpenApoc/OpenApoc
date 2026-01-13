@@ -98,7 +98,7 @@ ensureSecondBase(OpenApoc::sp<OpenApoc::GameState> state)
 	targetBuilding->owner = state->getPlayer();
 	targetBuilding->base = {state.get(), base};
 
-	LogInfo("Created second base '%s' in building '%s'", base->name, targetBuilding->name);
+	LogInfo("Created second base '{0}' in building '{1}'", base->name, targetBuilding->name);
 	return buildingRef;
 }
 
@@ -344,7 +344,7 @@ static bool test_lab_assignment_serialization(OpenApoc::sp<OpenApoc::GameState> 
 	auto tempPath = fs::temp_directory_path() / ss.str();
 	OpenApoc::UString pathString(tempPath.string());
 
-	LogInfo("Saving state to \"%s\"", pathString);
+	LogInfo("Saving state to \"{0}\"", pathString);
 	if (!state->saveGame(pathString))
 	{
 		LogError("Failed to save gamestate");
@@ -432,7 +432,7 @@ int main(int argc, char **argv)
 
 	OpenApoc::Framework fw("OpenApoc", false);
 
-	LogInfo("Loading common gamestate \"%s\"", common_name);
+	LogInfo("Loading common gamestate \"{0}\"", common_name);
 
 	auto state = OpenApoc::mksp<OpenApoc::GameState>();
 	if (!state->loadGame(common_name))
@@ -441,7 +441,7 @@ int main(int argc, char **argv)
 		return EXIT_FAILURE;
 	}
 
-	LogInfo("Loading gamestate \"%s\"", gamestate_name);
+	LogInfo("Loading gamestate \"{0}\"", gamestate_name);
 	if (!state->loadGame(gamestate_name))
 	{
 		LogError("Failed to load supplied gamestate");

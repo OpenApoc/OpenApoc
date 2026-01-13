@@ -22,7 +22,17 @@ class ModInfo
 	UString statePath;
 	UString minVersion;
 	UString modLoadScript;
-	std::list<UString> supported_languages;
+
+  public:
+	struct ModLanguage
+	{
+		UString ID;
+		UString data;
+		UString patch;
+	};
+
+  private:
+	std::list<ModLanguage> supported_languages;
 
   public:
 	// The user-visible name of the mod
@@ -75,10 +85,13 @@ class ModInfo
 	const UString &getModLoadScript() const { return modLoadScript; }
 	void setModLoadScript(const UString &newScript) { modLoadScript = newScript; }
 
-	const std::list<UString> getSupportedLanguages() const { return supported_languages; }
-	void setSupportedLanguage(const std::list<UString> &newLanguages)
+	const std::list<ModLanguage> getSupportedLanguages() const { return supported_languages; }
+	void setSupportedLanguages(const std::list<ModLanguage> &newLanguages)
 	{
 		supported_languages = newLanguages;
 	}
 };
+
+// Returns a ModLanguage most applicable to the current locale
+std::optional<ModInfo::ModLanguage> getModLanguageInfo(const ModInfo &modInfo);
 } // namespace OpenApoc

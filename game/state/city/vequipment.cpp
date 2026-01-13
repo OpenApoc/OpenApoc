@@ -59,7 +59,7 @@ bool VEquipment::fire(GameState &state, Vec3<float> targetPosition, Vec3<float> 
 		const auto it = WeaponStateMap.find(this->weaponState);
 		if (it != WeaponStateMap.end())
 			stateName = it->second;
-		LogWarning("Trying to fire weapon in state %s", stateName);
+		LogWarning("Trying to fire weapon in state {0}", stateName);
 		return false;
 	}
 	if (this->ammo <= 0 && this->type->max_ammo != 0)
@@ -172,11 +172,11 @@ void VEquipment::noAmmoToReload(const GameState &state [[maybe_unused]],
 	switch (equipment->type->type)
 	{
 		case EquipmentSlotType::VehicleEngine:
-			LogInfo("Failed to refuel engine: %s", owner->name);
+			LogInfo("Failed to refuel engine: {0}", owner->name);
 			fw().pushEvent(new GameVehicleEvent(GameEventType::NotEnoughFuel, owner));
 			break;
 		case EquipmentSlotType::VehicleWeapon:
-			LogInfo("Failed to rearm weapon: %s", owner->name);
+			LogInfo("Failed to rearm weapon: {0}", owner->name);
 			fw().pushEvent(new GameVehicleEvent(GameEventType::NotEnoughAmmo, owner));
 			break;
 		case EquipmentSlotType::VehicleGeneral:

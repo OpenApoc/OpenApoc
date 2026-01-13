@@ -51,7 +51,7 @@ struct VorbisMusicTrack : public MusicTrack
 			            bytes_per_sample, samples_are_signed, &music->_bitstream);
 			if (read_bytes < 0)
 			{
-				LogError("VorbisMusic: Error %d decoding music", read_bytes);
+				LogError("VorbisMusic: Error {0} decoding music", read_bytes);
 				return MusicTrack::MusicCallbackReturn::End;
 			}
 			if (read_bytes == 0)
@@ -158,13 +158,13 @@ class VorbisMusicLoader : public MusicLoader
 		// expected format: "ogg:file.ogg"
 		if (strings.size() != 2 || strings[0] != "ogg")
 		{
-			LogInfo("VorbisFile: Not valid vorbis string \"%s\"", path);
+			LogInfo("VorbisFile: Not valid vorbis string \"{0}\"", path);
 			return nullptr;
 		}
 		auto file = _data.fs.open(strings[1]);
 		if (!file)
 		{
-			LogInfo("VorbisMusic: Failed to open \"%s\"", strings[1]);
+			LogInfo("VorbisMusic: Failed to open \"{0}\"", strings[1]);
 			return nullptr;
 		}
 
@@ -175,7 +175,7 @@ class VorbisMusicLoader : public MusicLoader
 
 		if (ret < 0)
 		{
-			LogWarning("VorbisMusic: Error %d opening file \"%s\"", ret, path);
+			LogWarning("VorbisMusic: Error {0} opening file \"{1}\"", ret, path);
 			return nullptr;
 		}
 
@@ -184,7 +184,7 @@ class VorbisMusicLoader : public MusicLoader
 		auto *info = ov_info(&music->_vorbis_file, -1);
 		if (!info)
 		{
-			LogWarning("VorbisMusic: Failed to read info for \"%s\"", path);
+			LogWarning("VorbisMusic: Failed to read info for \"{0}\"", path);
 			return nullptr;
 		}
 
@@ -199,7 +199,8 @@ class VorbisMusicLoader : public MusicLoader
 		}
 		if (!valid_sample_rate)
 		{
-			LogWarning("VorbisMusic: \"%s\" has unsupported sample rate \"%d\"", path, info->rate);
+			LogWarning("VorbisMusic: \"{0}\" has unsupported sample rate \"{1}\"", path,
+			           info->rate);
 			return nullptr;
 		}
 
@@ -214,12 +215,12 @@ class VorbisMusicLoader : public MusicLoader
 		}
 		if (!valid_channel_count)
 		{
-			LogWarning("VorbisMusic: \"%s\" has unsupported channel count \"%d\"", path,
+			LogWarning("VorbisMusic: \"{0}\" has unsupported channel count \"{1}\"", path,
 			           info->channels);
 			return nullptr;
 		}
 
-		LogInfo("VorbisMusic: Successfully opened \"%s\" - channels: %d, samplerate: %d", path,
+		LogInfo("VorbisMusic: Successfully opened \"{0}\" - channels: {1}, samplerate: {2}", path,
 		        info->channels, info->rate);
 		music->format.channels = info->channels;
 		music->format.frequency = info->rate;

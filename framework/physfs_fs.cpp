@@ -53,7 +53,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 		file = PHYSFS_openRead(path.c_str());
 		if (!file)
 		{
-			LogError("Failed to open file \"%s\" : \"%s\"", path,
+			LogError("Failed to open file \"{0}\" : \"{1}\"", path,
 			         PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 			return;
 		}
@@ -96,7 +96,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 				PHYSFS_seek(file, PHYSFS_fileLength(file) + pos);
 				break;
 			default:
-				LogError("Unknown direction in seekoff (%d)", dir);
+				LogError("Unknown direction in seekoff ({0})", static_cast<int>(dir));
 				LogAssert(0);
 		}
 
@@ -107,7 +107,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 
 		if (mode & std::ios_base::out)
 		{
-			LogError("ios::out set on read-only IFile \"%s\"", this->systemPath);
+			LogError("ios::out set on read-only IFile \"{0}\"", this->systemPath);
 			LogAssert(0);
 			setp(buffer.get(), buffer.get());
 		}
@@ -125,7 +125,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 
 		if (mode & std::ios_base::out)
 		{
-			LogError("ios::out set on read-only IFile \"%s\"", this->systemPath);
+			LogError("ios::out set on read-only IFile \"{0}\"", this->systemPath);
 			LogAssert(0);
 			setp(buffer.get(), buffer.get());
 		}
@@ -135,7 +135,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 
 	int_type overflow(int_type) override
 	{
-		LogError("overflow called on read-only IFile \"%s\"", this->systemPath);
+		LogError("overflow called on read-only IFile \"{0}\"", this->systemPath);
 		LogAssert(0);
 		return 0;
 	}
@@ -199,7 +199,7 @@ std::unique_ptr<char[]> IFile::readAll()
 	std::unique_ptr<char[]> mem(new char[memsize]);
 	if (!mem)
 	{
-		LogError("Failed to allocate memory for %llu bytes",
+		LogError("Failed to allocate memory for {0} bytes",
 		         static_cast<long long unsigned>(memsize));
 		return nullptr;
 	}
@@ -222,13 +222,13 @@ bool FileSystem::addPath(const UString &newPath)
 {
 	if (!PHYSFS_mount(newPath.c_str(), "/", 0))
 	{
-		LogInfo("Failed to add resource dir \"%s\", error: %s", newPath,
+		LogInfo("Failed to add resource dir \"{0}\", error: {1}", newPath,
 		        PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 		return false;
 	}
 	else
 	{
-		LogInfo("Resource dir \"%s\" mounted to \"%s\"", newPath,
+		LogInfo("Resource dir \"{0}\" mounted to \"{1}\"", newPath,
 		        PHYSFS_getMountPoint(newPath.c_str()));
 		return true;
 	}
@@ -245,28 +245,28 @@ FileSystem::FileSystem(std::vector<UString> paths)
 	{
 		if (!PHYSFS_mount(p.c_str(), "/", 0))
 		{
-			LogInfo("Failed to add resource dir \"%s\", error: %s", p,
+			LogInfo("Failed to add resource dir \"{0}\", error: {1}", p,
 			        PHYSFS_getErrorByCode(PHYSFS_getLastErrorCode()));
 			continue;
 		}
 		else
-			LogInfo("Resource dir \"%s\" mounted to \"%s\"", p, PHYSFS_getMountPoint(p.c_str()));
+			LogInfo("Resource dir \"{0}\" mounted to \"{1}\"", p, PHYSFS_getMountPoint(p.c_str()));
 	}
 	auto current_path = fs::current_path();
 	auto canonical_current_path = fs::canonical(current_path);
 
-	LogInfo("Current path: \"%s\"", canonical_current_path);
+	LogInfo("Current path: \"{0}\"", canonical_current_path.string());
 
 	LogInfo("Physfs search dirs:");
 	char **search_paths = PHYSFS_getSearchPath();
 	int index = 0;
 	for (char **i = search_paths; *i != NULL; i++)
-		LogInfo("%d: \"%s\"", index++, *i);
+		LogInfo("{0}: \"{1}\"", index++, *i);
 
 	PHYSFS_freeList(search_paths);
 
 	this->writeDir = PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME);
-	LogInfo("Setting write directory to \"%s\"", this->writeDir);
+	LogInfo("Setting write directory to \"{0}\"", this->writeDir);
 	PHYSFS_setWriteDir(this->writeDir.c_str());
 	// Finally, the write directory trumps all
 	PHYSFS_mount(this->writeDir.c_str(), "/", 0);
@@ -281,18 +281,18 @@ IFile FileSystem::open(const UString &path) const
 	auto lowerPath = to_lower(path);
 	if (path != lowerPath)
 	{
-		LogError("Path \"%s\" contains CAPITAL - cut it out!", path);
+		LogError("Path \"{0}\" contains CAPITAL - cut it out!", path);
 	}
 
 	if (!PHYSFS_exists(path.c_str()))
 	{
-		LogInfo("Failed to find \"%s\"", path);
+		LogInfo("Failed to find \"{0}\"", path);
 		LogAssert(!f);
 		return f;
 	}
 	f.f.reset(new PhysfsIFileImpl(path));
 	f.rdbuf(dynamic_cast<PhysfsIFileImpl *>(f.f.get()));
-	LogInfo("Loading \"%s\" from \"%s\"", path, f.systemPath());
+	LogInfo("Loading \"{0}\" from \"{1}\"", path, f.systemPath());
 	return f;
 }
 

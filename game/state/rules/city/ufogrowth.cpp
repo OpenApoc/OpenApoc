@@ -9,7 +9,7 @@ template <> sp<UFOGrowth> StateObject<UFOGrowth>::get(const GameState &state, co
 	auto it = state.ufo_growth_lists.find(id);
 	if (it == state.ufo_growth_lists.end())
 	{
-		LogError("No ufo growth matching ID \"%s\"", id);
+		LogError("No ufo growth matching ID \"{0}\"", id);
 		return nullptr;
 	}
 	return it->second;

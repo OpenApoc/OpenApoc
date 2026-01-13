@@ -424,7 +424,7 @@ sp<TextEdit> MoreOptions::createTextEditForNumericOptions(const UString &optionS
 	const auto optionFullName = getOptionFullName(optionSection, optionName);
 
 	// Create textEdit
-	const auto textEdit = mksp<TextEdit>(tr(config().describe(optionSection, optionName)), font);
+	const auto textEdit = mksp<TextEdit>(config().describe(optionSection, optionName), font);
 
 	textEdit->setText(labelText);
 
@@ -529,10 +529,10 @@ void MoreOptions::addChildLabelToControl(const sp<Control> &control, const UStri
                                          const int &labelLocationHeight)
 {
 	const auto chidlLabel =
-	    control->createChild<Label>(tr(config().describe(optionSection, optionName)), font);
+	    control->createChild<Label>(config().describe(optionSection, optionName), font);
 	chidlLabel->Size = {216, listControl->ItemSize};
 	chidlLabel->Location = {labelLocationHeight, 0};
-	chidlLabel->ToolTipText = tr(config().describe(optionSection, optionName));
+	chidlLabel->ToolTipText = config().describe(optionSection, optionName);
 	chidlLabel->ToolTipFont = font;
 }
 

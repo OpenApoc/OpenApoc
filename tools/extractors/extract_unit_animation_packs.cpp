@@ -102,8 +102,9 @@ sp<BattleUnitAnimationPack::AnimationEntry> InitialGameStateExtractor::getAnimat
 						continue;
 					break;
 				default:
-					LogError("Impossible part index %d found in UF located at entry %d offset %d",
-					         part_idx, offset_uf, j);
+					LogError(
+					    "Impossible part index {0} found in UF located at entry {1} offset {2}",
+					    part_idx, offset_uf, j);
 					break;
 			}
 			for (int f = 0; f < (doubleFrames ? 2 : 1); f++)
@@ -200,7 +201,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 
 	std::vector<AnimationDataAD> dataAD;
 	{
-		auto fileName = format("%s%s%s", dirName, path, ".ad");
+		auto fileName = format("{0}{1}{2}", dirName, path, ".ad");
 
 		auto inFile = fw().data->fs.open(fileName);
 		if (inFile)
@@ -214,7 +215,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 				inFile.read((char *)&data, sizeof(data));
 				if (!inFile)
 				{
-					LogError("Failed to read entry in \"%s\"", fileName);
+					LogError("Failed to read entry in \"{0}\"", fileName);
 					return nullptr;
 				}
 				dataAD.push_back(data);
@@ -224,7 +225,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 
 	std::vector<AnimationDataUA> dataUA;
 	{
-		auto fileName = format("%s%s%s", dirName, path, ".ua");
+		auto fileName = format("{0}{1}{2}", dirName, path, ".ua");
 
 		auto inFile = fw().data->fs.open(fileName);
 		if (inFile)
@@ -238,7 +239,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 				inFile.read((char *)&data, sizeof(data));
 				if (!inFile)
 				{
-					LogError("Failed to read entry in \"%s\"", fileName);
+					LogError("Failed to read entry in \"{0}\"", fileName);
 					return nullptr;
 				}
 				dataUA.push_back(data);
@@ -248,7 +249,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 
 	std::vector<AnimationDataUF> dataUF;
 	{
-		auto fileName = format("%s%s%s", dirName, path, ".uf");
+		auto fileName = format("{0}{1}{2}", dirName, path, ".uf");
 
 		auto inFile = fw().data->fs.open(fileName);
 		if (inFile)
@@ -262,7 +263,7 @@ InitialGameStateExtractor::extractAnimationPack(GameState &state, const UString 
 				inFile.read((char *)&data, sizeof(data));
 				if (!inFile)
 				{
-					LogError("Failed to read entry in \"%s\"", fileName);
+					LogError("Failed to read entry in \"{0}\"", fileName);
 					return nullptr;
 				}
 				dataUF.push_back(data);

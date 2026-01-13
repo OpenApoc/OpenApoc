@@ -61,7 +61,7 @@ GL::GLuint CreateShader(GL::GLenum type, const UString &source)
 	std::unique_ptr<char[]> log(new char[logLength]);
 	gl->GetShaderInfoLog(shader, logLength, NULL, log.get());
 
-	LogError("Shader compile error: %s", log.get());
+	LogError("Shader compile error: {0}", log.get());
 
 	gl->DeleteShader(shader);
 	return 0;
@@ -104,7 +104,7 @@ GL::GLuint CompileProgram(const UString &vertexSource, const UString &fragmentSo
 	std::unique_ptr<char[]> log(new char[logLength]);
 	gl->GetProgramInfoLog(prog, logLength, NULL, log.get());
 
-	LogError("Program link error: %s", log.get());
+	LogError("Program link error: {0}", log.get());
 
 	gl->DeleteProgram(prog);
 	return 0;
@@ -238,7 +238,7 @@ class Spritesheet
 		else if (format == GL::R8UI)
 			data_format = GL::RED_INTEGER;
 		else
-			LogError("Unknown GL internal format 0x%x", format);
+			LogError("Unknown GL internal format {0:x}", static_cast<unsigned int>(format));
 
 		gl->TexImage3D(GL::TEXTURE_2D_ARRAY, 0, this->format, this->page_size.x, this->page_size.y,
 		               this->pages.size(), 0, data_format, GL::UNSIGNED_BYTE, nullptr);
@@ -312,7 +312,7 @@ class Spritesheet
 		pages.clear();
 		while (!validEntries.empty())
 		{
-			LogInfo("Repack: creating sheet %d", (int)pages.size());
+			LogInfo("Repack: creating sheet {0}", (int)pages.size());
 			auto page = mksp<SpritesheetPage>((int)pages.size(), page_size, node_count);
 			pages.push_back(page);
 			page->addMultiple(validEntries);
@@ -343,12 +343,12 @@ class Spritesheet
 			}
 		}
 		// Required a new page
-		LogInfo("Creating spritesheet page %d", (int)pages.size());
+		LogInfo("Creating spritesheet page {0}", (int)pages.size());
 		auto page = mksp<SpritesheetPage>((int)pages.size(), page_size, node_count);
 		auto ret = page->addEntry(entry);
 		if (!ret)
 		{
-			LogError("Failed to pack a %s sized sprite in a new page of size %s?", entry->size,
+			LogError("Failed to pack a {0} sized sprite in a new page of size {1}?", entry->size,
 			         page_size);
 		}
 		this->pages.push_back(page);
@@ -1309,7 +1309,7 @@ class OGLES30Renderer final : public Renderer
 	unsigned int maxColouredBuffers = 0;
 	~OGLES30Renderer() override
 	{
-		LogInfo("Max %u sprite buffers %u textured buffers %u coloured buffers",
+		LogInfo("Max {0} sprite buffers {1} textured buffers {2} coloured buffers",
 		        this->maxSpriteBuffers, this->maxTexturedBuffers, this->maxColouredBuffers);
 		renderer_dead = true;
 	}
@@ -1318,17 +1318,17 @@ class OGLES30Renderer final : public Renderer
 	{
 		if (this->spriteMachine->used_buffers > this->maxSpriteBuffers)
 		{
-			LogInfo("New max sprite buffers: %u", this->spriteMachine->used_buffers);
+			LogInfo("New max sprite buffers: {0}", this->spriteMachine->used_buffers);
 			this->maxSpriteBuffers = this->spriteMachine->used_buffers;
 		}
 		if (this->texturedMachine->used_buffers > this->maxTexturedBuffers)
 		{
-			LogInfo("New max textured buffers: %u", this->texturedMachine->used_buffers);
+			LogInfo("New max textured buffers: {0}", this->texturedMachine->used_buffers);
 			this->maxTexturedBuffers = this->texturedMachine->used_buffers;
 		}
 		if (this->colouredDrawMachine->used_buffers > this->maxColouredBuffers)
 		{
-			LogInfo("New max coloured buffers: %u", this->colouredDrawMachine->used_buffers);
+			LogInfo("New max coloured buffers: {0}", this->colouredDrawMachine->used_buffers);
 			this->maxColouredBuffers = this->colouredDrawMachine->used_buffers;
 		}
 		this->spriteMachine->used_buffers = 0;
@@ -1682,12 +1682,12 @@ void GLESWRAP_APIENTRY debug_message_proc(GL::KhrDebug::GLenum, GL::KhrDebug::GL
 		case GL::KhrDebug::DEBUG_SEVERITY_HIGH:
 		case GL::KhrDebug::DEBUG_SEVERITY_MEDIUM:
 		{
-			LogWarning("Debug message: \"%s\"", message);
+			LogWarning("Debug message: \"{0}\"", message);
 			break;
 		}
 		default:
 		{
-			LogInfo("Debug message: \"%s\"", message);
+			LogInfo("Debug message: \"{0}\"", message);
 			break;
 		}
 	}
@@ -1702,7 +1702,7 @@ OGLES30Renderer::OGLES30Renderer() : state(State::Idle)
 	this->colouredDrawMachine.reset(new ColouredDrawMachine{quadBufferCount});
 	GL::GLint viewport[4];
 	gl->GetIntegerv(GL::VIEWPORT, viewport);
-	LogInfo("Viewport {%d,%d,%d,%d}", viewport[0], viewport[1], viewport[2], viewport[3]);
+	LogInfo("Viewport {{{0},{1},{2},{3}}}", viewport[0], viewport[1], viewport[2], viewport[3]);
 	this->default_surface = mksp<Surface>(Vec2<int>{viewport[2], viewport[3]});
 	this->default_surface->rendererPrivateData =
 	    mksp<GLSurface>(0, Vec2<int>{viewport[2], viewport[3]}, this);
@@ -1717,12 +1717,12 @@ OGLES30Renderer::OGLES30Renderer() : state(State::Idle)
 	if (spritesheetPageSize.x > (unsigned int)max_texture_size ||
 	    spritesheetPageSize.y > (unsigned int)max_texture_size)
 	{
-		LogWarning("Default spritesheet size %s larger than HW limit %d - clamping...",
+		LogWarning("Default spritesheet size {0} larger than HW limit {1} - clamping...",
 		           spritesheetPageSize, max_texture_size);
 		spritesheetPageSize.x = std::min(spritesheetPageSize.x, (unsigned int)max_texture_size);
 		spritesheetPageSize.y = std::min(spritesheetPageSize.y, (unsigned int)max_texture_size);
 	}
-	LogInfo("Set spritesheet size to %s", spritesheetPageSize);
+	LogInfo("Set spritesheet size to {0}", spritesheetPageSize);
 
 	bool use_debug = false;
 

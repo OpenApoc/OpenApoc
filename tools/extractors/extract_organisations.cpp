@@ -21,8 +21,8 @@ namespace OpenApoc
 void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 {
 	auto &data = this->ufo2p;
-	LogInfo("Number of org strings: %zu", data.organisation_names->readStrings.size());
-	LogInfo("Number of orgs: %u", (unsigned)data.organisation_data->count());
+	LogInfo("Number of org strings: {0}", data.organisation_names->readStrings.size());
+	LogInfo("Number of orgs: {0}", (unsigned)data.organisation_data->count());
 
 	// Organisations
 
@@ -38,7 +38,7 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 		o->name = data.organisation_names->get(i);
 		o->id = id;
 
-		auto ped = format("%s%s", UfopaediaEntry::getPrefix(),
+		auto ped = format("{0}{1}", UfopaediaEntry::getPrefix(),
 		                  canon_string(data.organisation_names->get(i)));
 		o->ufopaedia_entry = {&state, ped};
 
@@ -75,7 +75,7 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 		else
 		{
 			o->icon = fw().data->loadImage(format("PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/"
-			                                      "vs_icon.tab:%d:xcom3/ufodata/pal_01.dat",
+			                                      "vs_icon.tab:{0}:xcom3/ufodata/pal_01.dat",
 			                                      91 + i));
 
 			auto ldata = data.organisation_raid_loot_data->get(i);
@@ -104,7 +104,7 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 					else
 					{
 						o->loot[priority].emplace_back(
-						    &state, format("%s%s", AEquipmentType::getPrefix(),
+						    &state, format("{0}{1}", AEquipmentType::getPrefix(),
 						                   canon_string(data.agent_equipment_names->get(
 						                       ldata.loot_idx[k][j]))));
 					}
@@ -251,7 +251,7 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state) const
 					o->vehiclePark[{&state, "VEHICLETYPE_HAWK_AIR_WARRIOR"}] = 15;
 					break;
 				default:
-					LogError("Modded game? Found unexpected vehiclePark value of %d",
+					LogError("Modded game? Found unexpected vehiclePark value of {0}",
 					         (int)vdata.vehiclePark);
 			}
 

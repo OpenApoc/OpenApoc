@@ -66,13 +66,13 @@ template <typename T> class StateRef
 		auto idPrefix = id.substr(0, prefix.length());
 		if (prefix != idPrefix)
 		{
-			LogWarning("%s object has invalid prefix - expected \"%s\" ID \"%s\"", T::getTypeName(),
-			           T::getPrefix(), id);
+			LogWarning("{0} object has invalid prefix - expected \"{1}\" ID \"{2}\"",
+			           T::getTypeName(), T::getPrefix(), id);
 		}
 		obj = T::get(*state, id);
 		if (!obj)
 		{
-			LogError("No %s object matching ID \"%s\" found", T::getTypeName(), id);
+			LogError("No {0} object matching ID \"{1}\" found", T::getTypeName(), id);
 		}
 	}
 

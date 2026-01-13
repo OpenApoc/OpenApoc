@@ -50,7 +50,7 @@ class Program
 		std::unique_ptr<char[]> log(new char[logLength]);
 		gl20::GetShaderInfoLog(shader, logLength, NULL, log.get());
 
-		LogError("Shader compile error: %s", log.get());
+		LogError("Shader compile error: {0}", log.get());
 
 		gl20::DeleteShader(shader);
 		return 0;
@@ -91,7 +91,7 @@ class Program
 		std::unique_ptr<char[]> log(new char[logLength]);
 		gl20::GetProgramInfoLog(prog, logLength, NULL, log.get());
 
-		LogError("Program link error: %s", log.get());
+		LogError("Program link error: {0}", log.get());
 
 		gl20::DeleteProgram(prog);
 		prog = 0;
@@ -484,7 +484,7 @@ class BindTexture
 			case gl20::TEXTURE_3D:
 				return gl20::TEXTURE_BINDING_3D;
 			default:
-				LogError("Unknown texture enum %d", static_cast<int>(e));
+				LogError("Unknown texture enum {0}", static_cast<int>(e));
 				return gl20::TEXTURE_BINDING_2D;
 		}
 	}
@@ -711,7 +711,7 @@ class OGL20Renderer : public Renderer
 		this->bound_thread = std::this_thread::get_id();
 		GLint viewport[4];
 		gl20::GetIntegerv(gl20::VIEWPORT, viewport);
-		LogInfo("Viewport {%d,%d,%d,%d}", viewport[0], viewport[1], viewport[2], viewport[3]);
+		LogInfo("Viewport {{{0},{1},{2},{3}}}", viewport[0], viewport[1], viewport[2], viewport[3]);
 		LogAssert(viewport[0] == 0 && viewport[1] == 0);
 		this->defaultSurface = mksp<Surface>(Vec2<int>{viewport[2], viewport[3]});
 		this->defaultSurface->rendererPrivateData.reset(
@@ -720,7 +720,7 @@ class OGL20Renderer : public Renderer
 
 		GLint maxTexUnits;
 		gl20::GetIntegerv(gl20::MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTexUnits);
-		LogInfo("MAX_COMBINED_TEXTURE_IMAGE_UNITS: %d", maxTexUnits);
+		LogInfo("MAX_COMBINED_TEXTURE_IMAGE_UNITS: {0}", maxTexUnits);
 		gl20::Enable(gl20::BLEND);
 		gl20::BlendFuncSeparate(gl20::SRC_ALPHA, gl20::ONE_MINUS_SRC_ALPHA, gl20::SRC_ALPHA,
 		                        gl20::DST_ALPHA);
@@ -1078,12 +1078,12 @@ class OGL20RendererFactory : public OpenApoc::RendererFactory
 			}
 			if (success.GetNumMissing())
 			{
-				LogInfo("GL implementation missing %d functions", success.GetNumMissing());
+				LogInfo("GL implementation missing {0} functions", success.GetNumMissing());
 				return nullptr;
 			}
 			if (!gl20::sys::IsVersionGEQ(2, 0))
 			{
-				LogInfo("GL version not at least 2.0, got %d.%d", gl20::sys::GetMajorVersion(),
+				LogInfo("GL version not at least 2.0, got {0}.{1}", gl20::sys::GetMajorVersion(),
 				        gl20::sys::GetMinorVersion());
 				return nullptr;
 			}

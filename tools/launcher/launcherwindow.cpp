@@ -23,7 +23,7 @@ static std::list<std::pair<UString, ModInfo>> enumerateMods()
 	fs::path modPath = Options::modPath.get();
 	if (!fs::is_directory(modPath))
 	{
-		LogError("Mod path \"%s\" not a valid directory", modPath.string());
+		LogError("Mod path \"{0}\" not a valid directory", modPath.string());
 		return {};
 	}
 
@@ -370,7 +370,7 @@ void LauncherWindow::play()
 	QString path = QCoreApplication::applicationDirPath() + "/OpenApoc";
 #endif
 
-	LogWarning("Running \"%s\"", path.toStdString());
+	LogWarning("Running \"{0}\"", path.toStdString());
 	const auto ret = QProcess::startDetached(path, {});
 	if (!ret)
 	{
@@ -510,7 +510,7 @@ void LauncherWindow::showModInfo(const ModInfo &info)
 	ui->modVersion->setText(QString::fromStdString(info.getVersion()));
 	ui->modDescription->setText(QString::fromStdString(info.getDescription()));
 
-	auto linkText = format("<a href=\"%s\">%s</a>", info.getLink(), info.getLink());
+	auto linkText = format("<a href=\"{0}\">{0}</a>", info.getLink());
 
 	ui->modLink->setText(QString::fromStdString(linkText));
 }
@@ -634,8 +634,9 @@ void LauncherWindow::updateAvailableLanguages()
 		{
 			if (modDir == enabledModName)
 			{
-				for (const auto &languageID : modInfo.getSupportedLanguages())
+				for (const auto &language : modInfo.getSupportedLanguages())
 				{
+					const auto languageID = language.ID;
 					ui->languageBox->addItem(getLanguageName(languageID),
 					                         QString::fromStdString(languageID));
 					if (selectedLanguageID == languageID)

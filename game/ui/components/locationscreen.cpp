@@ -54,17 +54,17 @@ void LocationScreen::begin()
 	                      agentAssignmentPlaceholder->Location, agentAssignmentPlaceholder->Size);
 	if (building)
 	{
-		menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(tr(building->owner->name));
+		menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(building->owner->name);
 		agentAssignment->setLocation(building);
 	}
 	else if (agent)
 	{
-		menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(tr(agent->owner->name));
+		menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(agent->owner->name);
 		agentAssignment->setLocation(agent);
 	}
 	else if (vehicle)
 	{
-		menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(tr(vehicle->owner->name));
+		menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(vehicle->owner->name);
 		agentAssignment->setLocation(vehicle);
 	}
 	else

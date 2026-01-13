@@ -68,14 +68,14 @@ int main(int argc, char **argv)
 	auto state = OpenApoc::mksp<OpenApoc::GameState>();
 	if (!state->loadGame(input1))
 	{
-		LogError("Failed to load input file \"%s\"", input1);
+		LogError("Failed to load input file \"{0}\"", input1);
 		return EXIT_FAILURE;
 	}
 	if (!input2.empty())
 	{
 		if (!state->loadGame(input2))
 		{
-			LogError("Failed to load second input file \"%s\"", input2);
+			LogError("Failed to load second input file \"{0}\"", input2);
 			return EXIT_FAILURE;
 		}
 	}
@@ -86,14 +86,14 @@ int main(int argc, char **argv)
 	{
 		if (!referenceState->loadGame(deltaPath))
 		{
-			LogError("Failed to load delta gamestate \"%s\"", parentGamestate);
+			LogError("Failed to load delta gamestate \"{0}\"", parentGamestate);
 			return EXIT_FAILURE;
 		}
 	}
 
 	if (!state->saveGameDelta(outputPath, *referenceState, pack, pretty))
 	{
-		LogError("Failed to write output gamestate to \"%s\"", outputPath);
+		LogError("Failed to write output gamestate to \"{0}\"", outputPath);
 		return EXIT_FAILURE;
 	}
 

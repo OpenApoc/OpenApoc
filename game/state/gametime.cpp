@@ -121,7 +121,7 @@ UString GameTime::getShortDateString() const
 	return ss.str();
 }
 
-UString GameTime::getWeekString() const { return format("%s %d", tr("Week"), getWeek()); }
+UString GameTime::getWeekString() const { return format(tr("Week {0}"), getWeek()); }
 
 unsigned int GameTime::getMonth() const
 {

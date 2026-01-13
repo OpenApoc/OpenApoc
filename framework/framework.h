@@ -41,6 +41,9 @@ class Framework
 
 	std::list<StageCmd> stageCommands;
 
+	UString language;
+	UString languageCountry;
+
   public:
 	std::unique_ptr<Data> data;
 	std::unique_ptr<Renderer> renderer;
@@ -127,6 +130,8 @@ class Framework
 	UString getCDPath() const;
 
 	void setupModDataPaths();
+	const UString &getLanguage() const { return this->language; };
+	const UString &getLanguageCountry() const { return this->languageCountry; };
 };
 
 static inline Framework &fw() { return Framework::getInstance(); }

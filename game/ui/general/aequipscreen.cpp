@@ -61,7 +61,7 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 	{
 		bigUnitRanks.push_back(
 		    fw().data->loadImage(format("PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/"
-		                                "tacbut.tab:%d:xcom3/tacdata/tactical.pal",
+		                                "tacbut.tab:{0}:xcom3/tacdata/tactical.pal",
 		                                i)));
 	}
 
@@ -137,7 +137,7 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 	        });
 
 	woundImage = fw().data->loadImage(format("PCK:xcom3/tacdata/icons.pck:xcom3/tacdata/"
-	                                         "icons.tab:%d:xcom3/tacdata/tactical.pal",
+	                                         "icons.tab:{0}:xcom3/tacdata/tactical.pal",
 	                                         258));
 	FATAL_WOUND_LOCATIONS[BodyPart::Helmet] = {{310, 130}, {307, 117}, {327, 137},
 	                                           {312, 128}, {309, 118}, {317, 123}};
@@ -486,7 +486,7 @@ void AEquipScreen::render()
 		auto rect = std::get<0>(tuple);
 		auto pos = rect.p0;
 		pos.x -= inventoryPage * inventoryControl->Size.x;
-		auto countImage = count > 0 ? labelFont->getString(format("%d", count)) : nullptr;
+		auto countImage = count > 0 ? labelFont->getString(format("{0}", count)) : nullptr;
 		auto &equipmentImage = item->type->equipscreen_sprite;
 
 		if (pos.x < inventoryControl->Location.x + formMain->Location.x ||
@@ -613,13 +613,13 @@ void AEquipScreen::handleItemPickup(Vec2<int> mousePos)
 				if (ammoTypeNameList.size() == 1)
 				{
 					message = format(
-					    "%s: %s.",
+					    "{0}: {1}.",
 					    tr("You must research this weapon and its ammo before you can use it"),
 					    ammoTypeNameList[0]);
 				}
 				else if (ammoTypeNameList.size() > 1)
 				{
-					message = format("%s: %s.",
+					message = format("{0}: {1}.",
 					                 tr("You must research this weapon and all its ammo types "
 					                    "before you can use it"),
 					                 boost::algorithm::join(ammoTypeNameList, ", "));
@@ -667,7 +667,7 @@ void AEquipScreen::handleItemPlacement(Vec2<int> mousePos)
 	{
 		auto message_box = mksp<MessageBox>(
 		    tr("NOT ENOUGH TU'S"),
-		    format("%s %d", tr("TU cost per item picked up:"), currentAgent->unit->getPickupCost()),
+		    format(tr("TU cost per item picked up: {0}"), currentAgent->unit->getPickupCost()),
 		    MessageBox::ButtonOptions::Ok);
 		fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 	}
@@ -737,7 +737,7 @@ void AEquipScreen::handleItemPlacement(bool toAgent)
 	{
 		auto message_box = mksp<MessageBox>(
 		    tr("NOT ENOUGH TU'S"),
-		    format("%s %d", tr("TU cost per item picked up:"), currentAgent->unit->getPickupCost()),
+		    format(tr("TU cost per item picked up: {0}"), currentAgent->unit->getPickupCost()),
 		    MessageBox::ButtonOptions::Ok);
 		fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 	}
@@ -1666,7 +1666,7 @@ void AEquipScreen::processTemplate(int idx, bool remember)
 				}
 				else
 				{
-					LogError("Agent %s cannot apply template, fail at pos %s item %s",
+					LogError("Agent {0} cannot apply template, fail at pos {1} item {2}",
 					         currentAgent->name, pos, type.id);
 				}
 			}

@@ -348,7 +348,7 @@ bool Battle::initialMapCheck(GameState &state, std::list<StateRef<Agent>> agents
 			{
 				continue;
 			}
-			LogWarning("Los block center %s visible from %s", ePos, sPos);
+			LogWarning("Los block center {0} visible from {1}", ePos, sPos);
 			enemySpawn->low_priority = true;
 		}
 	}
@@ -446,7 +446,7 @@ void Battle::initialMapPartRemoval(GameState &state)
 					}
 					for (auto &p : partsToKill)
 					{
-						LogWarning("Removing MP %s at %s as it's blocking unit %s",
+						LogWarning("Removing MP {0} at {1} as it's blocking unit {2}",
 						           p->getOwner()->type.id, p->getPosition(), u.first);
 						auto mp = p->getOwner();
 						mp->destroyed = true;
@@ -508,7 +508,7 @@ void Battle::initialMapPartLinkUp()
 		if (mp->willCollapse())
 		{
 			auto pos = mp->tileObject->getOwningTile()->position;
-			LogWarning("MP %s SBT %d at %s is UNLINKED", mp->type.id,
+			LogWarning("MP {0} SBT {1} at {2} is UNLINKED", mp->type.id,
 			           (int)mp->type->getVanillaSupportedById(), pos);
 		}
 	}
@@ -543,7 +543,7 @@ void Battle::initialMapPartLinkUp()
 		if (mp->willCollapse())
 		{
 			auto pos = mp->tileObject->getOwningTile()->position;
-			LogWarning("MP %s SBT %d at %s is going to fall", mp->type.id,
+			LogWarning("MP {0} SBT {1} at {2} is going to fall", mp->type.id,
 			           (int)mp->type->getVanillaSupportedById(), pos);
 		}
 	}
@@ -2411,7 +2411,7 @@ void Battle::giveInterruptChanceToUnit(GameState &state, StateRef<BattleUnit> gi
 		}
 		else
 		{
-			LogWarning("Interrupting AI %s for unit %s decided to %s", decision.ai, receiver->id,
+			LogWarning("Interrupting AI {0} for unit {1} decided to {2}", decision.ai, receiver->id,
 			           decision.getName());
 			receiver->aiList.reset(state, *receiver);
 			if (interruptQueue.empty())
@@ -3638,16 +3638,17 @@ void Battle::loadImagePacks(GameState &state)
 		if (imagePackName.length() == 0)
 			continue;
 		auto imagePackPath = BattleUnitImagePack::getImagePackPath() + "/" + imagePackName;
-		LogInfo("Loading image pack \"%s\" from \"%s\"", imagePackName, imagePackPath);
+		LogInfo("Loading image pack \"{0}\" from \"{1}\"", imagePackName, imagePackPath);
 		auto imagePack = mksp<BattleUnitImagePack>();
 		if (!imagePack->loadImagePack(state, imagePackPath))
 		{
-			LogError("Failed to load image pack \"%s\" from \"%s\"", imagePackName, imagePackPath);
+			LogError("Failed to load image pack \"{0}\" from \"{1}\"", imagePackName,
+			         imagePackPath);
 			continue;
 		}
-		state.battle_unit_image_packs[format("%s%s", BattleUnitImagePack::getPrefix(),
+		state.battle_unit_image_packs[format("{0}{1}", BattleUnitImagePack::getPrefix(),
 		                                     imagePackName)] = imagePack;
-		LogInfo("Loaded image pack \"%s\" from \"%s\"", imagePackName, imagePackPath);
+		LogInfo("Loaded image pack \"{0}\" from \"{1}\"", imagePackName, imagePackPath);
 	}
 }
 
@@ -3741,17 +3742,18 @@ void Battle::loadAnimationPacks(GameState &state)
 	{
 		auto animationPackPath =
 		    BattleUnitAnimationPack::getAnimationPackPath() + "/" + animationPackName;
-		LogInfo("Loading animation pack \"%s\" from \"%s\"", animationPackName, animationPackPath);
+		LogInfo("Loading animation pack \"{0}\" from \"{1}\"", animationPackName,
+		        animationPackPath);
 		auto animationPack = mksp<BattleUnitAnimationPack>();
 		if (!animationPack->loadAnimationPack(state, animationPackPath))
 		{
-			LogError("Failed to load animation pack \"%s\" from \"%s\"", animationPackName,
+			LogError("Failed to load animation pack \"{0}\" from \"{1}\"", animationPackName,
 			         animationPackPath);
 			continue;
 		}
-		state.battle_unit_animation_packs[format("%s%s", BattleUnitAnimationPack::getPrefix(),
+		state.battle_unit_animation_packs[format("{0}{1}", BattleUnitAnimationPack::getPrefix(),
 		                                         animationPackName)] = animationPack;
-		LogInfo("Loaded animation pack \"%s\" from \"%s\"", animationPackName, animationPackPath);
+		LogInfo("Loaded animation pack \"{0}\" from \"{1}\"", animationPackName, animationPackPath);
 	}
 }
 

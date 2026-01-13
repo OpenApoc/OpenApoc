@@ -22,7 +22,7 @@ UFO2P::UFO2P(std::string file_name)
 
 	if (!file)
 	{
-		LogError("Failed to open \"%s\"", file_name.c_str());
+		LogError("Failed to open \"{0}\"", file_name.c_str());
 		exit(1);
 	}
 	auto data = file.readAll();
@@ -33,7 +33,7 @@ UFO2P::UFO2P(std::string file_name)
 
 	if (crc32 != expected_ufo2p_crc32)
 	{
-		LogError("File \"%s\"\" has an unknown crc32 value of 0x%08x - expected 0x%08x",
+		LogError("File \"{0}\"\" has an unknown crc32 value of {1:08x} - expected {2:08x}",
 		         file_name.c_str(), crc32, expected_ufo2p_crc32);
 	}
 

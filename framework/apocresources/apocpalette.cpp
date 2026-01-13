@@ -69,14 +69,14 @@ sp<Palette> loadPCXPalette(Data &data, const UString fileName)
 	auto length = fileName.length();
 	if (length < 4 || to_upper(fileName.substr(length - 4, 4)) != ".PCX")
 	{
-		LogInfo("Skipping file \"%s\" as it doesn't look like a .pcx", fileName);
+		LogInfo("Skipping file \"{0}\" as it doesn't look like a .pcx", fileName);
 		return nullptr;
 	}
 
 	auto file = data.fs.open(fileName);
 	if (!file)
 	{
-		LogInfo("File \"%s\" failed to be opened", fileName);
+		LogInfo("File \"{0}\" failed to be opened", fileName);
 		return nullptr;
 	}
 
@@ -84,7 +84,7 @@ sp<Palette> loadPCXPalette(Data &data, const UString fileName)
 	// files will never be smaller than sizeof(header) + sizeof(palette)
 	if (file.size() < sizeof(PcxHeader) + 256 * 3)
 	{
-		LogInfo("File \"%s\" has size %zu - too small for header and palette", fileName,
+		LogInfo("File \"{0}\" has size {1} - too small for header and palette", fileName,
 		        file.size());
 		return nullptr;
 	}
@@ -94,19 +94,19 @@ sp<Palette> loadPCXPalette(Data &data, const UString fileName)
 	file.read(reinterpret_cast<char *>(&header), sizeof(header));
 	if (!file)
 	{
-		LogInfo("File \"%s\" failed to read PCX header", fileName);
+		LogInfo("File \"{0}\" failed to read PCX header", fileName);
 		return nullptr;
 	}
 
 	if (header.Identifier != PcxIdentifier)
 	{
-		LogInfo("File \"%s\" doesn't have PCX header magic", fileName);
+		LogInfo("File \"{0}\" doesn't have PCX header magic", fileName);
 		return nullptr;
 	}
 
 	if (header.BitsPerPixel != 8)
 	{
-		LogInfo("File \"%s\" has non-8-bit image", fileName);
+		LogInfo("File \"{0}\" has non-8-bit image", fileName);
 		return nullptr;
 	}
 
@@ -122,7 +122,7 @@ sp<Palette> loadPCXPalette(Data &data, const UString fileName)
 		file.read(reinterpret_cast<char *>(&colour), 3);
 		if (!file)
 		{
-			LogWarning("Unexpected EOF at index %u", i);
+			LogWarning("Unexpected EOF at index {0}", i);
 			return nullptr;
 		}
 		if (i == 0)
