@@ -33,25 +33,27 @@ build_script:
 after_build:
   - git describe --tags > build-id
   - set /p OPENAPOC_VERSION= < build-id
-  - set OPENAPOC_FILENAME=OpenApoc-%PLATFORM%-%OPENAPOC_VERSION%.7z
-  - set OPENAPOC_DEBUG_FILENAME=OpenApoc-debug-%PLATFORM%-%OPENAPOC_VERSION%.7z
+  - set OPENAPOC_FILENAME=OpenApoc-%PLATFORM%-%OPENAPOC_VERSION%.zip
+  - set OPENAPOC_DEBUG_FILENAME=OpenApoc-debug-%PLATFORM%-%OPENAPOC_VERSION%.zip
+  - 7z a %OPENAPOC_DEBUG_FILENAME% bin\OpenApoc.pdb bin\OpenApoc_Launcher.pdb -mx=9 -myx=7
+  - appveyor PushArtifact %OPENAPOC_DEBUG_FILENAME%
+  - del bin\*.pdb
+  - del bin\*.exp
+  - del bin\*.ilk
+  - del bin\*.lib
   - mkdir OpenApoc-%OPENAPOC_VERSION%
+  - xcopy /E bin OpenApoc-%OPENAPOC_VERSION%\
   - echo %APPVEYOR_REPO_COMMIT% > OpenApoc-%OPENAPOC_VERSION%\git-commit
   - echo %OPENAPOC_VERSION% > OpenApoc-%OPENAPOC_VERSION%\build-id
-  - copy bin\*.dll OpenApoc-%OPENAPOC_VERSION%\
-  - copy bin\openapoc.exe OpenApoc-%OPENAPOC_VERSION%\
-  - copy bin\openapoc_launcher.exe OpenApoc-%OPENAPOC_VERSION%\
-  - start %QTPATH%\bin\windeployqt --no-opengl-sw --no-compiler-runtime OpenApoc-%OPENAPOC_VERSION%\OpenApoc_Launcher.exe
+  - start %QTPATH%\bin\windeployqt ---no-opengl-sw --no-compiler-runtime OpenApoc-%OPENAPOC_VERSION%\OpenApoc_Launcher.exe
   - del data\cd.iso
   - xcopy /E data OpenApoc-%OPENAPOC_VERSION%\data\
   - copy portable.txt OpenApoc-%OPENAPOC_VERSION%\
   - copy README.md OpenApoc-%OPENAPOC_VERSION%\README.txt
   - copy README_HOTKEYS.txt OpenApoc-%OPENAPOC_VERSION%\
-  - 7z a %OPENAPOC_FILENAME% OpenApoc-%OPENAPOC_VERSION% -mx=9 -myx=7
-  - copy bin\OpenApoc.pdb OpenApoc-%OPENAPOC_VERSION%\
-  - 7z a %OPENAPOC_DEBUG_FILENAME% OpenApoc-%OPENAPOC_VERSION%\*.pdb -mx=9 -myx=7
+  - 7z a %OPENAPOC_FILENAME% OpenApoc-%OPENAPOC_VERSION%
   - appveyor PushArtifact %OPENAPOC_FILENAME%
-  - appveyor PushArtifact %OPENAPOC_DEBUG_FILENAME%
+
 before_test:
   - 7z e temp\cd.iso.xz -odata\
 test_script:
