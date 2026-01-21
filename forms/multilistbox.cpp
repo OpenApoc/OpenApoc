@@ -276,6 +276,7 @@ void MultilistBox::addItem(sp<Control> Item)
 {
 	this->setDirty();
 	Item->setParent(shared_from_this());
+	this->update();
 }
 
 void MultilistBox::replaceItem(sp<Control> Item)

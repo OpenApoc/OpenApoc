@@ -1059,6 +1059,7 @@ void Control::copyControlData(sp<Control> CopyOf)
 
 	CopyOf->Name = this->Name;
 	CopyOf->Location = this->Location;
+	CopyOf->resolvedLocation = this->resolvedLocation;
 	CopyOf->Size = this->Size;
 	CopyOf->SelectionSize = this->SelectionSize;
 	CopyOf->BackgroundColour = this->BackgroundColour;
