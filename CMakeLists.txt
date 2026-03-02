@@ -219,28 +219,24 @@ endif()
 
 if (XMLLINT_COMMAND)
 		foreach(XML_FILE ${XML_FILES})
-			add_custom_command(TARGET format-xml COMMAND
+			add_custom_command(TARGET format-xml POST_BUILD COMMAND
 				${XMLLINT_COMMAND} --format --encode UTF-8
-				${XML_FILE}	--output ${XML_FILE}
-				DEPENDS ${XML_FILE})
+				${XML_FILE}	--output ${XML_FILE})
 		endforeach()
 		foreach(FONT_FILE ${FONT_FILES})
-			add_custom_command(TARGET format-fonts COMMAND
+			add_custom_command(TARGET format-fonts POST_BUILD COMMAND
 				${XMLLINT_COMMAND} --format --encode UTF-8
-				${FONT_FILE} --output ${FONT_FILE}
-				DEPENDS ${FONT_FILE})
+				${FONT_FILE} --output ${FONT_FILE})
 		endforeach()
 		foreach(FORM_FILE ${FORM_FILES})
-			add_custom_command(TARGET format-forms COMMAND
+			add_custom_command(TARGET format-forms POST_BUILD COMMAND
 				${XMLLINT_COMMAND} --format --encode UTF-8
-				${FORM_FILE} --output ${FORM_FILE}
-				DEPENDS ${FORM_FILE})
+				${FORM_FILE} --output ${FORM_FILE})
 		endforeach()
 		foreach(ALIAS_FILE ${ALIAS_FILES})
-			add_custom_command(TARGET format-aliases COMMAND
+			add_custom_command(TARGET format-aliases POST_BUILD COMMAND
 				${XMLLINT_COMMAND} --format --encode UTF-8
-				${ALIAS_FILE} --output ${ALIAS_FILE}
-				DEPENDS ${ALIAS_FILE})
+				${ALIAS_FILE} --output ${ALIAS_FILE})
 		endforeach()
 else()
 	message("xmllint not found, disabling format-xml target")
