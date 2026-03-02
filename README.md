@@ -147,7 +147,7 @@ vcpkg --triplet x86-windows install sdl2 boost-locale boost-program-options boos
 * On Ubuntu, install the following packages:
 
 ```sh
-sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-program-options-dev qtbase5-dev libvorbis-dev
+sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-program-options-dev qt6-base-dev libvorbis-dev
 ```
 
 * On Mageia, install the following packages as root:
