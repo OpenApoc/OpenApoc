@@ -2,15 +2,12 @@
 
 > OpenApoc is an open-source re-implementation of the original [X-COM: Apocalypse](https://www.ufopaedia.org/index.php/Apocalypse), that requires the original files to run, licensed under the GPL3 and written in C++ / SDL2. It was originally founded by PmProg in July 2014, and has since grown a significant [community](https://www.ufopaedia.org/index.php/Credits_(OpenApoc)).
 
-[![Linux Build Status](https://img.shields.io/travis/OpenApoc/OpenApoc?branch=master&label=Travis%20Linux&logo=Travis%20CI&logoColor=ffffff&labelColor=282828)](https://travis-ci.com/github/OpenApoc/OpenApoc)
 [![Windows Build Status](https://img.shields.io/appveyor/build/OpenApoc/openapoc?branch=master&label=AppVeyor%20Windows&logo=appveyor&logoColor=ffffff&labelColor=282828)](https://ci.appveyor.com/project/openapoc/openapoc/branch/master)
 [![Openapoc issues](https://img.shields.io/github/issues-raw/OpenApoc/OpenApoc?color=1182c3&logo=GitHub&labelColor=282828)](https://github.com/openapoc/openapoc/issues)
 [![Translate OpenApoc](https://img.shields.io/badge/Translate-Openapoc-blue.svg)](https://www.transifex.com/x-com-apocalypse/apocalypse/)
-[![OpenApoc GPL3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/OpenApoc/OpenApoc/blob/master/LICENSE)\
-[![Openapoc forum](https://img.shields.io/badge/Visit%20our-forum-orange.svg)](http://openapoc.org)
-[![Openapoc IRC chat](https://img.shields.io/badge/IRC-devs%20chat-brightgreen.svg)](http://webchat.freenode.net/?channels=openapoc)
-[![Openapoc Discord](https://img.shields.io/discord/142798944970211328?label=Discord&logo=discord&logoColor=ffffff&labelColor=7289DA&color=2c2f33)](https://discord.gg/d6DAHEb) 
-[![Openapoc Facebook](https://img.shields.io/static/v1?label=FB&logo=Facebook&logoColor=ffffff&message=Subscribe%20|%20755&color=282828&labelColor=1877f2)](https://fb.com/openapoc)
+[![OpenApoc GPL3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/OpenApoc/OpenApoc/blob/master/LICENSE)
+[![Openapoc Discord](https://img.shields.io/discord/142798944970211328?label=Discord&logo=discord&logoColor=ffffff&labelColor=7289DA&color=2c2f33)](https://discord.gg/f8Rayre)
+[![Openapoc Facebook](https://img.shields.io/static/v1?label=FB&logo=Facebook&logoColor=ffffff&message=Subscribe%20|%20755&color=282828&labelColor=1877f2)](https://www.facebook.com/openapoc)
 [![Openapoc Vkontakte](https://img.shields.io/static/v1?label=VK&logo=vk&logoColor=ffffff&message=Vstupaj%20|%20447&color=282828&labelColor=2787f5)](https://vk.com/openapoc)
 [![Openapoc Reddit](https://img.shields.io/reddit/subreddit-subscribers/OpenApoc?color=orange&logo=Reddit&logoColor=ffffff&labelColor=282828)](https://reddit.com/r/openapoc)
 [![Openapoc Youtube](https://img.shields.io/static/v1?label=Youtube&logo=Youtube&logoColor=ffffff&message=Subscribe%20|%20365&color=282828&labelColor=FF0000)](https://www.youtube.com/c/openapoc)
@@ -40,7 +37,7 @@ Pirated disc images and archives are not supported and will cause issues such as
 
 ## Key Features
 
-* [![Julian Gollop](https://img.shields.io/reddit/user-karma/combined/JulianGollop?style=social)](https://www.reddit.com/user/JulianGollop/) "Yes, I am aware of the openApoc project and I very much do support it." 
+* [![Julian Gollop](https://img.shields.io/reddit/user-karma/combined/JulianGollop?style=social)](https://www.reddit.com/user/JulianGollop/) "Yes, I am aware of the openApoc project and I very much do support it." — [Julian Gollop, Reddit AMA (2017)](https://www.reddit.com/r/PhoenixPoint/comments/60tn6x/i_am_the_designer_of_xcom_and_phoenix_point_ask/)
 * Full modding capability - You can add or change almost anything!
 * Options for modding that allow opportunity to make OpenApoc:
   * More balanced
@@ -67,12 +64,8 @@ Pirated disc images and archives are not supported and will cause issues such as
 
 ## Contribute and FAQ
 
-http://openapoc.org/#contribute  - Currently Offline, please use [Discord](https://discord.gg/f8Rayre)
->Here you find news, detailing how you can participate in project. 
-You can support the project by testing, translating, modding, drawing, modeling, concepting etc..
-
-http://openapoc.org/#faq  - Currently Offline, please use [Discord](https://discord.gg/f8Rayre)
->Here you find the detailed FAQ (Frequently Asked Questions)
+Please use [Discord](https://discord.gg/f8Rayre) for contributing and FAQ.
+> You can support the project by testing, translating, modding, drawing, modeling, concepting etc.
 
 
 ## Building
@@ -286,11 +279,11 @@ https://www.ufopaedia.org/index.php/Coding_Style_(OpenApoc)
 
 OPENGL 2.0 SUPPORTIVE VIDEO CARDS ARE REQUIRED
 
-WINDOWS USERS: You will require the LATEST Visual C++ Libraries obtained from windows update to run OpenApoc
+WINDOWS USERS: You will require the LATEST Visual C++ Redistributable obtained from windows update to run OpenApoc
 https://docs.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170
 
 Simple steps to play OpenApoc on Windows right now
-(Keep in mind that it is ALPHA - this means bugs, crushes and not all features implemented, use our bug-tracker at https://github.com/OpenApoc/OpenApoc/issues to report bugs and navigate known ones)
+(Keep in mind that it is ALPHA - this means bugs, crashes and not all features implemented, use our bug-tracker at https://github.com/OpenApoc/OpenApoc/issues to report bugs and navigate known ones)
 
 1) Download the OpenApoc core files from https://github.com/OpenApoc/OpenApoc/releases
 - For experimental builds visit  https://ci.appveyor.com/project/OpenApoc/openapoc/history
@@ -312,15 +305,15 @@ Simple steps to play OpenApoc on Windows right now
 
 4) Run and enjoy!
 
+Linux and macOS users: After compiling (see [Building on Linux](#building-on-linux) or [Building on macOS](#building-on-macos) above), copy `cd.iso` into the `data/` directory and run the executable from the repository root.
+
 
 ## Contact us
 
-If you're interested, please visit our [website](http://openapoc.org) (Currently Offline, please use [Discord](https://discord.gg/f8Rayre)).
-* We have a [Discord](https://discord.gg/f8Rayre) - MOST ACTIVE PLACE FOR ALL THINGS OPENAPOC!
+* We have a [Discord](https://discord.gg/f8Rayre) — MOST ACTIVE PLACE FOR ALL THINGS OPENAPOC!
 * We have a [Youtube](https://www.youtube.com/c/OpenApoc) channel.
-* We have a [forum](http://openapoc.org/forum/) (Currently Offline, please use [Discord](https://discord.gg/f8Rayre))
 
-## Unnofficial and Community Contacts
+## Unofficial and Community Contacts
 
 * We have a [Facebook](https://www.facebook.com/openapoc) page.
 * We have a [Reddit](https://reddit.com/r/openapoc) page.
