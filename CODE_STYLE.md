@@ -13,7 +13,7 @@ GCCIsntMuchBetter
 #endif
 ```
 
-C++11 features are heavily encouraged - patterns from 'older' c++ versions that have been superceded should be avoided.
+C++17 features are heavily encouraged - patterns from 'older' c++ versions that have been superceded should be avoided.
 
 The formatting sections of this document are enforced by the [clang-format tool](https://releases.llvm.org/18.1.1/tools/clang/docs/ClangFormat.html). Currently, version '18.0' of ``clang-format`` is to be used. The configuration file ``.clang-format`` in the root of the OpenApoc source repository should match the formatting guidelines specified below.
 
@@ -35,7 +35,7 @@ When using the ``CMake`` build system (as used on Unix-based platforms), there i
 make format-sources
 ```
 
-In the future, it may be possible to use ``clang-tidy``, also from the clang project, to enforce more of the non-formatting sections of this style guideline. One example of this is an identifier name checking tool.
+``clang-tidy`` is also used (configured via the ``.clang-tidy`` file in the repository root) to enforce additional non-formatting rules, such as const-correctness checks. It is integrated into the CI pipeline and can be run locally with the ``tidy`` make target.
 
 
 Indent:
@@ -252,6 +252,7 @@ struct MyStruct
 void myStructUser(struct MyStruct s)
 ```
 * up<> sp<> wp<> aliases are defined for std::unique_ptr<>, std::shared_ptr<>, std::weak_ptr<> in "library/sp.h". Use them instead of the verbose versions.
+* mksp<T>(args...) and mkup<T>(args...) helper functions are also provided in "library/sp.h" as aliases for std::make_shared<T>() and std::make_unique<T>() respectively. Use these to construct smart pointers.
 * Use anonymous namespaces for 'file-local' stuff (instead of static, as you can wrap classes in it too)
 ```C++
 namespace
@@ -417,14 +418,14 @@ General code:
 ```
   * Note where auto& may be better to avoid a copy
 * sp<> up<> wp<> smart pointers
-  * make_shared() instead of new
+  * Use mksp<>() and mkup<>() to construct them instead of new
 ```C++
-	auto var = std::make_shared<Type>(args);
+	auto var = mksp<Type>(args);
+	auto uniqueVar = mkup<Type>(args);
 ```
-  * make_unique() would be nice, but a c++14 feature (may restrict compiler compatibility?), so you have to wrap
-    * Use std::move to transfer up<> ownership
+  * Use std::move to transfer up<> ownership
 ```C++
-	up<Type> var{new Type{args}};
+	auto var = mkup<Type>(args);
 	functionThatTakesOwnershipOfParam(std::move(var));
 ```
 * Never use a 'naked' new - they should always be packaged immediately in a smart pointer
@@ -490,7 +491,12 @@ end:
 
 Logging:
 --------
-* LogInfo/LogWarning/LogError take 'printf-style' format string. Make sure everything is the correct type, %d for ints, %u for unsigned, %s for "utf8" const char* "strings" or UString objects directly
+* LogInfo/LogWarning/LogError take fmt-style format strings (using the ``fmt`` library). Use ``{0}``, ``{1}``, etc. as positional placeholders, or ``{}`` for sequential arguments.
+```C++
+	LogInfo("Starting OpenApoc \"{0}\"", OPENAPOC_VERSION);
+	LogWarning("Value {0} exceeds limit {1}", value, limit);
+	LogError("Failed to load file \"{0}\"", path);
+```
 * LogInfo is cheap - use it everywhere interesting
 * LogWarning should be something that has gone wrong, but recoverable.
 * LogError is for fatal errors.
