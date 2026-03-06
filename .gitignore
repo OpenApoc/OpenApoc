@@ -138,3 +138,28 @@ tools/extractors/docs/video.txt
 # CLion temp files
 .idea
 cmake-build-*
+
+# CMake/Ninja in-source build artifacts
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+CTestTestfile.cmake
+build.ninja
+.ninja_deps
+.ninja_log
+*.lib
+*.pdb
+*.exp
+
+# vcpkg installed packages
+vcpkg_installed/
+
+# Qt autogen
+*_autogen/
+
+# Qt cache
+.qt/
+
+# Claude Code
+.claude/
