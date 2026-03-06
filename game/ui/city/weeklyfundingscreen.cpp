@@ -116,6 +116,8 @@ void WeeklyFundingScreen::begin()
 	labelCurrentIncome->setText(
 	    format(tr("Current income> ${0}"), Strings::fromInteger(currentIncome)));
 	labelRatingDescription->setText(ratingDescription);
+
+	state->weekScore.reset();
 }
 
 void WeeklyFundingScreen::pause() {}
