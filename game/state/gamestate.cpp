@@ -1407,8 +1407,6 @@ void GameState::weeklyPlayerUpdate()
 		}
 	}
 	player->balance = player->balance - totalSalary - basesCosts;
-
-	weekScore.reset();
 }
 
 // Recalculates AI organization and civilian finances, updating budgets and salaries
@@ -1555,11 +1553,13 @@ int GameState::calculateFundingModifier() const
 
 		// If score threshold is positive, then score has to be higher
 		// (i.e. 10000 rating uses 6400's value)
-		if ((threshold.first > 0 && totalRating > threshold.second) ||
-		    (threshold.first <= 0 && totalRating < threshold.first))
+		int scoreThreshold = threshold.first;
+		int modifier = threshold.second;
+
+		if ((scoreThreshold <= 0 && totalRating < scoreThreshold) ||
+		    (scoreThreshold > 0 && totalRating > scoreThreshold))
 		{
-			fundingModifier = threshold.second;
-			break;
+			fundingModifier = modifier;
 		}
 	}
 	return fundingModifier;
