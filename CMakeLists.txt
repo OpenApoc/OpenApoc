@@ -107,6 +107,7 @@ endif()
 
 set(GLM_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/dependencies/glm)
 MARK_AS_ADVANCED(GLM_INCLUDE_DIR)
+add_compile_definitions(GLM_ENABLE_EXPERIMENTAL)
 
 add_subdirectory(library)
 add_subdirectory(framework)
