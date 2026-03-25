@@ -7,10 +7,6 @@
 [![Translate OpenApoc](https://img.shields.io/badge/Translate-Openapoc-blue.svg)](https://www.transifex.com/x-com-apocalypse/apocalypse/)
 [![OpenApoc GPL3 license](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/OpenApoc/OpenApoc/blob/master/LICENSE)
 [![Openapoc Discord](https://img.shields.io/discord/142798944970211328?label=Discord&logo=discord&logoColor=ffffff&labelColor=7289DA&color=2c2f33)](https://discord.gg/f8Rayre)
-[![Openapoc Facebook](https://img.shields.io/static/v1?label=FB&logo=Facebook&logoColor=ffffff&message=Subscribe%20|%20755&color=282828&labelColor=1877f2)](https://www.facebook.com/openapoc)
-[![Openapoc Vkontakte](https://img.shields.io/static/v1?label=VK&logo=vk&logoColor=ffffff&message=Vstupaj%20|%20447&color=282828&labelColor=2787f5)](https://vk.com/openapoc)
-[![Openapoc Reddit](https://img.shields.io/reddit/subreddit-subscribers/OpenApoc?color=orange&logo=Reddit&logoColor=ffffff&labelColor=282828)](https://reddit.com/r/openapoc)
-[![Openapoc Youtube](https://img.shields.io/static/v1?label=Youtube&logo=Youtube&logoColor=ffffff&message=Subscribe%20|%20365&color=282828&labelColor=FF0000)](https://www.youtube.com/c/openapoc)
 
 <p align="center"><img src="https://i.imgur.com/XxudxVj.jpg"/></p>
 
