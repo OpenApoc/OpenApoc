@@ -257,8 +257,8 @@ Framework::Framework(const UString programName, bool createWindow)
 	{
 		displayInitialise();
 		enableSDLDialogLogger(p->window);
-		audioInitialise();
 	}
+	audioInitialise(!createWindow);
 }
 
 Framework::~Framework()
@@ -1010,11 +1010,14 @@ void Framework::displaySetIcon(sp<RGBImage> image)
 #endif
 }
 
-void Framework::audioInitialise()
+void Framework::audioInitialise(bool headless)
 {
 	LogInfo("Initialise Audio");
 
-	p->registeredSoundBackends["SDLRaw"].reset(getSDLSoundBackend());
+	if (!headless)
+	{
+		p->registeredSoundBackends["SDLRaw"].reset(getSDLSoundBackend());
+	}
 	p->registeredSoundBackends["null"].reset(getNullSoundBackend());
 
 	auto concurrent_sample_count = Options::audioConcurrentSampleCount.get();
