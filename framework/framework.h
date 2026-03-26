@@ -32,7 +32,7 @@ class Framework
 	up<FrameworkPrivate> p;
 	UString programName;
 	bool createWindow;
-	void audioInitialise();
+	void audioInitialise(bool headless);
 	void audioShutdown();
 
 	static Framework *instance;
