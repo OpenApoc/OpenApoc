@@ -1152,17 +1152,62 @@ int BattleUnitMission::getFacingDelta(Vec2<int> curFacing, Vec2<int> tarFacing)
 	return result;
 }
 
-Vec2<int> BattleUnitMission::getFacing(BattleUnit &u, Vec3<int> to, int facingDelta)
+// Data-only: compute facing from direction vector
+Vec2<int> BattleUnitMission::getFacing(Vec3<float> from, Vec3<float> to,
+                                       const std::set<Vec2<int>> *allowedFacings,
+                                       Vec2<int> fallbackFacing, int facingDelta)
 {
-	return getFacing(u, (Vec3<int>)u.position, to, facingDelta);
+	auto isFacingAllowed = [allowedFacings](Vec2<int> f)
+	{ return !allowedFacings || allowedFacings->empty() || allowedFacings->count(f) > 0; };
+
+	float closestAngle = FLT_MAX;
+	Vec3<int> closestVector = {0, 0, 0};
+	Vec3<float> targetFacing = (Vec3<float>)(to - from);
+	if (targetFacing.x == 0.0f && targetFacing.y == 0.0f)
+	{
+		closestVector = {fallbackFacing.x, fallbackFacing.y, 0};
+	}
+	else
+	{
+		targetFacing.z = 0;
+		for (auto &a : angles)
+		{
+			float angle = glm::angle(glm::normalize(targetFacing), glm::normalize(a));
+			if (angle < closestAngle && isFacingAllowed(Vec2<int>{a.x, a.y}))
+			{
+				closestAngle = angle;
+				closestVector = a;
+			}
+		}
+	}
+	if (facingDelta == 0)
+	{
+		return {closestVector.x, closestVector.y};
+	}
+	else
+	{
+		Vec2<int> targetFacing = {closestVector.x, closestVector.y};
+		int tarFacing = facing_dir_map.at(targetFacing) + facingDelta;
+		if (tarFacing > 7)
+			tarFacing -= 8;
+		if (tarFacing < 0)
+			tarFacing += 8;
+		return dir_facing_map.at(tarFacing);
+	}
 }
 
-Vec2<int> BattleUnitMission::getFacingStep(BattleUnit &u, Vec2<int> targetFacing, int facingDelta)
+// Data-only: compute next facing step when turning
+Vec2<int> BattleUnitMission::getFacingStep(Vec2<int> currentFacing, Vec2<int> targetFacing,
+                                           const std::set<Vec2<int>> *allowedFacings,
+                                           int facingDelta)
 {
-	Vec2<int> dest = u.facing;
+	auto isFacingAllowed = [allowedFacings](Vec2<int> f)
+	{ return !allowedFacings || allowedFacings->empty() || allowedFacings->count(f) > 0; };
+
+	Vec2<int> dest = currentFacing;
 
 	// Turn
-	int curFacing = facing_dir_map.at(u.facing);
+	int curFacing = facing_dir_map.at(currentFacing);
 	int tarFacing = facing_dir_map.at(targetFacing) + facingDelta;
 	if (tarFacing > 7)
 		tarFacing -= 8;
@@ -1191,47 +1236,28 @@ Vec2<int> BattleUnitMission::getFacingStep(BattleUnit &u, Vec2<int> targetFacing
 		}
 		dest = dir_facing_map.at(curFacing);
 
-	} while (!u.agent->isFacingAllowed(dest));
+	} while (!isFacingAllowed(dest));
 	return dest;
 }
 
+// Convenience: delegates to data-only version
+Vec2<int> BattleUnitMission::getFacing(BattleUnit &u, Vec3<int> to, int facingDelta)
+{
+	return getFacing((Vec3<float>)(Vec3<int>)u.position, (Vec3<float>)to,
+	                 u.agent->getAllowedFacings(), u.goalFacing, facingDelta);
+}
+
+// Convenience: delegates to data-only version
+Vec2<int> BattleUnitMission::getFacingStep(BattleUnit &u, Vec2<int> targetFacing, int facingDelta)
+{
+	return getFacingStep(u.facing, targetFacing, u.agent->getAllowedFacings(), facingDelta);
+}
+
+// Convenience: delegates to data-only version
 Vec2<int> BattleUnitMission::getFacing(BattleUnit &u, Vec3<float> from, Vec3<float> to,
                                        int facingDelta)
 {
-	float closestAngle = FLT_MAX;
-	Vec3<int> closestVector = {0, 0, 0};
-	Vec3<float> targetFacing = (Vec3<float>)(to - from);
-	if (targetFacing.x == 0.0f && targetFacing.y == 0.0f)
-	{
-		closestVector = {u.goalFacing.x, u.goalFacing.y, 0};
-	}
-	else
-	{
-		targetFacing.z = 0;
-		for (auto &a : angles)
-		{
-			float angle = glm::angle(glm::normalize(targetFacing), glm::normalize(a));
-			if (angle < closestAngle && u.agent->isFacingAllowed(Vec2<int>{a.x, a.y}))
-			{
-				closestAngle = angle;
-				closestVector = a;
-			}
-		}
-	}
-	if (facingDelta == 0)
-	{
-		return {closestVector.x, closestVector.y};
-	}
-	else
-	{
-		Vec2<int> targetFacing = {closestVector.x, closestVector.y};
-		int tarFacing = facing_dir_map.at(targetFacing) + facingDelta;
-		if (tarFacing > 7)
-			tarFacing -= 8;
-		if (tarFacing < 0)
-			tarFacing += 8;
-		return dir_facing_map.at(tarFacing);
-	}
+	return getFacing(from, to, u.agent->getAllowedFacings(), u.goalFacing, facingDelta);
 }
 
 BattleUnitMission *BattleUnitMission::turn(BattleUnit &u, Vec2<int> target, bool free,
