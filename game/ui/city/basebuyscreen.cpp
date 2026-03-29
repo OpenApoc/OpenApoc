@@ -13,6 +13,7 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/city/baselayout.h"
 #include "game/state/shared/agent.h"
 #include "game/state/shared/organisation.h"
 #include "game/ui/components/basegraphics.h"
@@ -24,11 +25,10 @@ namespace OpenApoc
 {
 
 BaseBuyScreen::BaseBuyScreen(sp<GameState> state, sp<Building> building)
-    : Stage(), form(ui().getForm("city/basebuy")), state(state)
+    : Stage(), form(ui().getForm("city/basebuy")), state(state), building(building)
 {
 	Vec2<int> size = building->bounds.size();
 	price = std::min(size.x, 8) * std::min(size.y, 8) * COST_PER_TILE;
-	base = mksp<Base>(*state, StateRef<Building>{state.get(), building});
 }
 
 BaseBuyScreen::~BaseBuyScreen() = default;
@@ -43,7 +43,7 @@ void BaseBuyScreen::begin()
 	text->setText(format(tr("This Building will cost ${0}"), Strings::fromInteger(price)));
 
 	form->findControlTyped<Graphic>("GRAPHIC_MINIMAP")
-	    ->setImage(BaseGraphics::drawMinimap(state, *base->building));
+	    ->setImage(BaseGraphics::drawMinimap(state, *building));
 }
 
 void BaseBuyScreen::pause() {}
@@ -78,9 +78,9 @@ void BaseBuyScreen::eventOccurred(Event *e)
 			{
 				state->getPlayer()->balance -= price;
 				StateRef<Building> newBuilding;
-				for (auto &b : base->building->city->buildings)
+				for (auto &b : building->city->buildings)
 				{
-					if (base->building != b.second && b.second->owner == base->building->owner)
+					if (building != b.second && b.second->owner == building->owner)
 					{
 						newBuilding = {state.get(), b.first};
 						break;
@@ -88,19 +88,19 @@ void BaseBuyScreen::eventOccurred(Event *e)
 				}
 				if (!newBuilding)
 				{
-					LogError("We just bought {0}'s last building? WTF?",
-					         base->building->owner->name);
+					LogError("We just bought {0}'s last building? WTF?", building->owner->name);
 				}
-				base->building->owner = state->getPlayer();
+				building->owner = state->getPlayer();
 				// Boot organisation's vehicles and agents
+				StateRef<Building> buildingRef = {state.get(), building};
 				for (auto &v : state->vehicles)
 				{
-					if (v.second->homeBuilding == base->building)
+					if (v.second->homeBuilding == buildingRef)
 					{
 						if (newBuilding)
 						{
 							v.second->homeBuilding = newBuilding;
-							if (v.second->currentBuilding == base->building)
+							if (v.second->currentBuilding == buildingRef)
 							{
 								v.second->setMission(
 								    *state, VehicleMission::gotoBuilding(*state, *v.second));
@@ -111,7 +111,7 @@ void BaseBuyScreen::eventOccurred(Event *e)
 							v.second->die(*state, true);
 						}
 					}
-					else if (v.second->currentBuilding == base->building &&
+					else if (v.second->currentBuilding == buildingRef &&
 					         v.second->owner != state->getPlayer())
 					{
 						v.second->setMission(*state,
@@ -120,12 +120,12 @@ void BaseBuyScreen::eventOccurred(Event *e)
 				}
 				for (auto &a : state->agents)
 				{
-					if (a.second->homeBuilding == base->building)
+					if (a.second->homeBuilding == buildingRef)
 					{
 						if (newBuilding)
 						{
 							a.second->homeBuilding = newBuilding;
-							if (a.second->currentBuilding == base->building)
+							if (a.second->currentBuilding == buildingRef)
 							{
 								a.second->setMission(*state,
 								                     AgentMission::gotoBuilding(*state, *a.second));
@@ -136,7 +136,7 @@ void BaseBuyScreen::eventOccurred(Event *e)
 							a.second->die(*state, true);
 						}
 					}
-					else if (a.second->currentBuilding == base->building &&
+					else if (a.second->currentBuilding == buildingRef &&
 					         a.second->owner != state->getPlayer())
 					{
 						a.second->setMission(*state, AgentMission::gotoBuilding(*state, *a.second));
@@ -144,10 +144,11 @@ void BaseBuyScreen::eventOccurred(Event *e)
 				}
 
 				state->baseIndex += 1;
+				auto base = mksp<Base>(*state, StateRef<Building>{state.get(), building});
 				base->name = "Base " + Strings::fromInteger(state->baseIndex);
 				state->player_bases[Base::getPrefix() + Strings::fromInteger(state->baseIndex)] =
 				    base;
-				base->building->base = {state.get(), base};
+				building->base = {state.get(), base};
 
 				fw().stageQueueCommand({StageCmd::Command::REPLACE, mksp<CityView>(state)});
 			}
@@ -168,14 +169,14 @@ void BaseBuyScreen::render()
 {
 	fw().stageGetPrevious(this->shared_from_this())->render();
 	form->render();
-	renderBase();
+	renderBaseLayout();
 }
 
 bool BaseBuyScreen::isTransition() { return false; }
 
-void BaseBuyScreen::renderBase()
+void BaseBuyScreen::renderBaseLayout()
 {
-	BaseGraphics::renderBase(baseView->getLocationOnScreen(), *base);
+	BaseGraphics::renderBaseLayout(baseView->getLocationOnScreen(), *building->base_layout);
 }
 
 }; // namespace OpenApoc

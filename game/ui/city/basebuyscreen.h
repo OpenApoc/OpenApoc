@@ -22,8 +22,8 @@ class BaseBuyScreen : public Stage
 	int price;
 
 	sp<GameState> state;
-	sp<Base> base;
-	void renderBase();
+	sp<Building> building;
+	void renderBaseLayout();
 
   public:
 	BaseBuyScreen(sp<GameState> state, sp<Building> building);
