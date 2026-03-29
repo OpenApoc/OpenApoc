@@ -2507,12 +2507,12 @@ void BattleView::orderMove(Vec3<int> target, bool strafe, bool demandGiveWay)
 	bool runAway = map.getTile(target)->getHasExit();
 
 	auto u = battle.battleViewSelectedUnits.front();
-	BattleUnit temp;
-	temp.agent = u->agent;
-	temp.position = u->position;
-	int facingDelta = strafe ? BattleUnitMission::getFacingDelta(
-	                               u->facing, BattleUnitMission::getFacing(temp, target))
-	                         : 0;
+	int facingDelta =
+	    strafe ? BattleUnitMission::getFacingDelta(
+	                 u->facing, BattleUnitMission::getFacing(
+	                                (Vec3<float>)(Vec3<int>)u->position, (Vec3<float>)target,
+	                                u->agent->getAllowedFacings(), u->goalFacing))
+	           : 0;
 
 	if (battle.battleViewGroupMove && battle.battleViewSelectedUnits.size() > 1 && !runAway)
 	{

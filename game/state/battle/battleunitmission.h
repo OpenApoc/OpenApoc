@@ -109,12 +109,19 @@ class BattleUnitMission
 	// Return whether successfully spent TU
 	bool spendAgentTUs(GameState &state, BattleUnit &u, int cost, bool cancel = false,
 	                   bool ignoreKneelReserve = false, bool allowInterrupt = false);
-	// Get next facing step when turning towards target facing
+	// Get next facing step when turning towards target facing (data-only)
+	static Vec2<int> getFacingStep(Vec2<int> currentFacing, Vec2<int> targetFacing,
+	                               const std::set<Vec2<int>> *allowedFacings, int facingDelta = 0);
+	// Compute facing from direction vector (data-only)
+	static Vec2<int> getFacing(Vec3<float> from, Vec3<float> to,
+	                           const std::set<Vec2<int>> *allowedFacings, Vec2<int> fallbackFacing,
+	                           int facingDelta = 0);
+	// Convenience: get facing step from unit data
 	static Vec2<int> getFacingStep(BattleUnit &u, Vec2<int> targetFacing, int facingDelta = 0);
-	// Used to determine target facings
+	// Convenience: get facing from unit position to a point
 	static Vec2<int> getFacing(BattleUnit &u, Vec3<float> from, Vec3<float> to,
 	                           int facingDelta = 0);
-	// Get facing from unit to a 3d point
+	// Convenience: get facing from unit to a 3d point (uses unit position as from)
 	static Vec2<int> getFacing(BattleUnit &u, Vec3<int> to, int facingDelta = 0);
 	// Get facing delta from facing to facing
 	static int getFacingDelta(Vec2<int> curFacing, Vec2<int> tarFacing);
