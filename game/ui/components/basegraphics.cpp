@@ -9,6 +9,7 @@
 #include "game/state/city/city.h"
 #include "game/state/city/facility.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/city/baselayout.h"
 #include "game/state/rules/city/scenerytiletype.h"
 #include "game/state/tilemap/tilemap.h"
 #include "library/strings_format.h"
@@ -134,6 +135,61 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, const Base &base)
 			{
 				Vec2<int> pos = renderPos + tile * TILE_SIZE;
 				fw().renderer->draw(doorBottom, pos - Vec2<int>{0, TILE_SIZE / 2});
+			}
+		}
+	}
+}
+
+void BaseGraphics::renderBaseLayout(Vec2<int> renderPos, const BaseLayout &layout)
+{
+	// Build corridor grid from layout rects
+	std::vector<std::vector<bool>> corridors(Base::SIZE, std::vector<bool>(Base::SIZE, false));
+	for (auto &rect : layout.baseCorridors)
+	{
+		for (int x = rect.p0.x; x < rect.p1.x; ++x)
+		{
+			for (int y = rect.p0.y; y < rect.p1.y; ++y)
+			{
+				corridors[x][y] = true;
+			}
+		}
+	}
+
+	// Draw grid
+	sp<Image> grid = fw().data->loadImage(
+	    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:0:xcom3/ufodata/base.pcx");
+	Vec2<int> i;
+	for (i.x = 0; i.x < Base::SIZE; i.x++)
+	{
+		for (i.y = 0; i.y < Base::SIZE; i.y++)
+		{
+			Vec2<int> pos = renderPos + i * TILE_SIZE;
+			fw().renderer->draw(grid, pos);
+		}
+	}
+
+	// Draw corridors
+	for (i.x = 0; i.x < Base::SIZE; i.x++)
+	{
+		for (i.y = 0; i.y < Base::SIZE; i.y++)
+		{
+			if (i.x < 0 || i.y < 0 || i.x >= Base::SIZE || i.y >= Base::SIZE ||
+			    !corridors[i.x][i.y])
+			{
+				continue;
+			}
+			bool north = i.y > 0 && corridors[i.x][i.y - 1];
+			bool south = i.y < Base::SIZE - 1 && corridors[i.x][i.y + 1];
+			bool west = i.x > 0 && corridors[i.x - 1][i.y];
+			bool east = i.x < Base::SIZE - 1 && corridors[i.x + 1][i.y];
+			int sprite = TILE_CORRIDORS.at({north, south, west, east});
+			if (sprite != 0)
+			{
+				Vec2<int> pos = renderPos + i * TILE_SIZE;
+				auto image = format(
+				    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:{0}:xcom3/ufodata/base.pcx",
+				    sprite);
+				fw().renderer->draw(fw().data->loadImage(image), pos);
 			}
 		}
 	}

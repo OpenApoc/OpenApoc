@@ -7,6 +7,7 @@ namespace OpenApoc
 {
 
 class Base;
+class BaseLayout;
 class Building;
 class Facility;
 class GameState;
@@ -29,6 +30,7 @@ enum class FacilityHighlight
 
 int getCorridorSprite(const Base &base, Vec2<int> pos);
 void renderBase(Vec2<int> renderPos, const Base &base);
+void renderBaseLayout(Vec2<int> renderPos, const BaseLayout &layout);
 sp<RGBImage> drawMiniBase(const Base &base, FacilityHighlight highlight = FacilityHighlight::None,
                           sp<Facility> selected = nullptr);
 sp<RGBImage> drawMinimap(sp<GameState> state, const Building &selected);
