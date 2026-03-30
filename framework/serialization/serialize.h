@@ -72,7 +72,7 @@ class SerializationArchive
 
 	virtual SerializationNode *newRoot(const UString &prefix, const char *name) = 0;
 	virtual SerializationNode *getRoot(const UString &prefix, const char *name) = 0;
-	virtual bool write(const UString &path, bool pack = true, bool pretty = false) = 0;
+	virtual bool write(const UString &path, bool pack = true, bool pretty = true) = 0;
 	virtual ~SerializationArchive() = default;
 };
 
