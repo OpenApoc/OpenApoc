@@ -1046,79 +1046,75 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 		auto data = data_t.agent_equipment_set_score_human->get(0);
 		for (unsigned i = 0; i < 12; i++)
 		{
-			for (unsigned i = 0; i < 12; i++)
+			auto es = mksp<EquipmentSet>();
+
+			UString id = format("{0}HUMAN_{1}", EquipmentSet::getPrefix(), (int)i + 1);
+			es->id = id;
+
+			for (unsigned j = 0; j < 10; j++)
 			{
-				auto es = mksp<EquipmentSet>();
-
-				UString id = format("{0}HUMAN_{1}", EquipmentSet::getPrefix(), (int)i + 1);
-				es->id = id;
-
-				for (unsigned j = 0; j < 10; j++)
+				if (data.weapons[j][i].weapon_idx > 0)
 				{
-					if (data.weapons[j][i].weapon_idx > 0)
+					if (data.weapons[j][i].clip_idx > 0)
 					{
-						if (data.weapons[j][i].clip_idx > 0)
-						{
-							es->weapons.push_back(
-							    {{&state, format("{0}{1}", AEquipmentType::getPrefix(),
-							                     canon_string(data_u.agent_equipment_names->get(
-							                         data.weapons[j][i].weapon_idx)))},
-							     {&state, format("{0}{1}", AEquipmentType::getPrefix(),
-							                     canon_string(data_u.agent_equipment_names->get(
-							                         data.weapons[j][i].clip_idx)))},
-							     std::max((int)data.weapons[j][i].clip_amount, 1)});
-						}
-						else
-						{
-							es->weapons.push_back(
-							    {{&state, format("{0}{1}", AEquipmentType::getPrefix(),
-							                     canon_string(data_u.agent_equipment_names->get(
-							                         data.weapons[j][i].weapon_idx)))}});
-						}
-					}
-					if (data.grenades[j][i].grenade_idx > 0 &&
-					    data.grenades[j][i].grenade_amount > 0)
-					{
-						es->grenades.push_back(
+						es->weapons.push_back(
 						    {{&state, format("{0}{1}", AEquipmentType::getPrefix(),
 						                     canon_string(data_u.agent_equipment_names->get(
-						                         data.grenades[j][i].grenade_idx)))},
-						     data.grenades[j][i].grenade_amount});
+						                         data.weapons[j][i].weapon_idx)))},
+						     {&state, format("{0}{1}", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.weapons[j][i].clip_idx)))},
+						     std::max((int)data.weapons[j][i].clip_amount, 1)});
 					}
-					if (data.equipment[j][i][0] > 0 || data.equipment[j][i][1] > 0)
+					else
 					{
-						if (data.equipment[j][i][0] > 0 && data.equipment[j][i][1] > 0)
-						{
-							es->equipment.push_back(
-							    {{&state, format("{0}{1}", AEquipmentType::getPrefix(),
-							                     canon_string(data_u.agent_equipment_names->get(
-							                         data.equipment[j][i][0])))},
-							     {&state, format("{0}{1}", AEquipmentType::getPrefix(),
-							                     canon_string(data_u.agent_equipment_names->get(
-							                         data.equipment[j][i][1])))}});
-						}
-						else if (data.equipment[j][i][0] > 0)
-						{
-							es->equipment.push_back(
-							    {{&state, format("{0}{1}", AEquipmentType::getPrefix(),
-							                     canon_string(data_u.agent_equipment_names->get(
-							                         data.equipment[j][i][0])))}});
-						}
-						else
-						{
-							es->equipment.push_back(
-							    {{&state, format("{0}{1}", AEquipmentType::getPrefix(),
-							                     canon_string(data_u.agent_equipment_names->get(
-							                         data.equipment[j][i][1])))}});
-						}
+						es->weapons.push_back(
+						    {{&state, format("{0}{1}", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.weapons[j][i].weapon_idx)))}});
 					}
 				}
-
-				es->min_score = i == 0 ? std::numeric_limits<int>::min() : i + 1;
-				es->max_score = i == 11 ? std::numeric_limits<int>::max() : i + 2;
-
-				state.equipment_sets_by_level[id] = es;
+				if (data.grenades[j][i].grenade_idx > 0 && data.grenades[j][i].grenade_amount > 0)
+				{
+					es->grenades.push_back(
+					    {{&state, format("{0}{1}", AEquipmentType::getPrefix(),
+					                     canon_string(data_u.agent_equipment_names->get(
+					                         data.grenades[j][i].grenade_idx)))},
+					     data.grenades[j][i].grenade_amount});
+				}
+				if (data.equipment[j][i][0] > 0 || data.equipment[j][i][1] > 0)
+				{
+					if (data.equipment[j][i][0] > 0 && data.equipment[j][i][1] > 0)
+					{
+						es->equipment.push_back(
+						    {{&state, format("{0}{1}", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.equipment[j][i][0])))},
+						     {&state, format("{0}{1}", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.equipment[j][i][1])))}});
+					}
+					else if (data.equipment[j][i][0] > 0)
+					{
+						es->equipment.push_back(
+						    {{&state, format("{0}{1}", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.equipment[j][i][0])))}});
+					}
+					else
+					{
+						es->equipment.push_back(
+						    {{&state, format("{0}{1}", AEquipmentType::getPrefix(),
+						                     canon_string(data_u.agent_equipment_names->get(
+						                         data.equipment[j][i][1])))}});
+					}
+				}
 			}
+
+			es->min_score = i == 0 ? std::numeric_limits<int>::min() : i + 1;
+			es->max_score = i == 11 ? std::numeric_limits<int>::max() : i + 2;
+
+			state.equipment_sets_by_level[id] = es;
 		}
 	}
 }
