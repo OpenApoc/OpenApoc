@@ -107,6 +107,7 @@ void InitialGameStateExtractor::extractAlienEquipmentSets(GameState &state,
 
 			UString id = format("{0}ALIEN_{1}", EquipmentSet::getPrefix(), (int)i + 1);
 			es->id = id;
+			es->type = EquipmentSet::Type::Alien;
 
 			for (unsigned j = 0; j < 10; j++)
 			{
@@ -194,7 +195,7 @@ void InitialGameStateExtractor::extractAlienEquipmentSets(GameState &state,
 			    i == 0 ? std::numeric_limits<int>::min() : (int)sdata.score[diff][i - 1];
 			es->max_score = i == 7 ? std::numeric_limits<int>::max() : (int)sdata.score[diff][i];
 
-			state.equipment_sets_by_score[id] = es;
+			state.equipment_sets[id] = es;
 		}
 	}
 }
@@ -1050,6 +1051,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 
 			UString id = format("{0}HUMAN_{1}", EquipmentSet::getPrefix(), (int)i + 1);
 			es->id = id;
+			es->type = EquipmentSet::Type::Human;
 
 			for (unsigned j = 0; j < 10; j++)
 			{
@@ -1114,7 +1116,7 @@ void InitialGameStateExtractor::extractAgentEquipment(GameState &state) const
 			es->min_score = i == 0 ? std::numeric_limits<int>::min() : i + 1;
 			es->max_score = i == 11 ? std::numeric_limits<int>::max() : i + 2;
 
-			state.equipment_sets_by_level[id] = es;
+			state.equipment_sets[id] = es;
 		}
 	}
 }

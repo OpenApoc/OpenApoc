@@ -160,14 +160,16 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 		// Aliens get equipment based on player score
 		else if (org == state.getAliens())
 		{
-			initialEquipment = EquipmentSet::getByScore(state, state.totalScore.tacticalMissions)
+			initialEquipment = EquipmentSet::getForType(state, EquipmentSet::Type::Alien,
+			                                            state.totalScore.tacticalMissions)
 			                       ->generateEquipmentList(state);
 		}
 		// Every human org but civilians and player gets equipment based on tech level
 		else if (org != state.getCivilian())
 		{
 			initialEquipment =
-			    EquipmentSet::getByLevel(state, org->tech_level)->generateEquipmentList(state);
+			    EquipmentSet::getForType(state, EquipmentSet::Type::Human, org->tech_level)
+			        ->generateEquipmentList(state);
 		}
 	}
 	else
