@@ -158,9 +158,6 @@ extern ConfigOptionInt dialogLogLevelOption;
 
 extern ConfigOptionString defaultTooltipFont;
 
-extern ConfigOptionBool useCRCChecksum;
-extern ConfigOptionBool useSHA1Checksum;
-
 extern ConfigOptionBool enableTrace;
 extern ConfigOptionString traceFile;
 
