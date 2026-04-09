@@ -92,8 +92,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<DamageModifier> damage_modifiers;
 	StateRefMap<DamageType> damage_types;
 	StateRefMap<AEquipmentType> agent_equipment;
-	StateRefMap<EquipmentSet> equipment_sets_by_score;
-	StateRefMap<EquipmentSet> equipment_sets_by_level;
+	StateRefMap<EquipmentSet> equipment_sets;
 	StateRefMap<BuildingFunction> building_functions;
 	sp<Battle> current_battle;
 	sp<CityCommonImageList> city_common_image_list;

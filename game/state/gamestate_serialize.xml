@@ -62,8 +62,7 @@
     <member type="Section">damage_modifiers</member>
     <member type="Section">damage_types</member>
     <member type="Section">agent_equipment</member>
-    <member type="Section">equipment_sets_by_score</member>
-    <member type="Section">equipment_sets_by_level</member>
+    <member type="Section">equipment_sets</member>
     <member type="Section">building_functions</member>
     <member>messages</member>
     <member>baseIndex</member>
@@ -198,6 +197,7 @@
   <object>
     <name>EquipmentSet</name>
     <member>id</member>
+    <member>type</member>
     <member>min_score</member>
     <member>max_score</member>
     <member>weapons</member>
@@ -1860,6 +1860,11 @@
     <value>Physicist</value>
     <value>BioChemist</value>
     <value>Engineer</value>
+  </enum>
+  <enum>
+    <name>EquipmentSet::Type</name>
+    <value>Human</value>
+    <value>Alien</value>
   </enum>
   <enum>
     <name>AgentType::Gender</name>

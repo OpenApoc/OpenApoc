@@ -45,15 +45,11 @@ template <> const UString &StateObject<EquipmentSet>::getTypeName()
 template <>
 sp<EquipmentSet> StateObject<EquipmentSet>::get(const GameState &state, const UString &id)
 {
-	auto it = state.equipment_sets_by_score.find(id);
-	if (it == state.equipment_sets_by_score.end())
+	auto it = state.equipment_sets.find(id);
+	if (it == state.equipment_sets.end())
 	{
-		it = state.equipment_sets_by_level.find(id);
-		if (it == state.equipment_sets_by_level.end())
-		{
-			LogError("No equipment set (score) matching ID \"{0}\"", id);
-			return nullptr;
-		}
+		LogError("No equipment set matching ID \"{0}\"", id);
+		return nullptr;
 	}
 	return it->second;
 }
@@ -94,25 +90,16 @@ std::list<const AEquipmentType *> EquipmentSet::generateEquipmentList(GameState 
 	return output;
 }
 
-sp<EquipmentSet> EquipmentSet::getByScore(const GameState &state, const int score)
+sp<EquipmentSet> EquipmentSet::getForType(const GameState &state, Type type, int score)
 {
-	for (auto &es : state.equipment_sets_by_score)
+	for (auto &es : state.equipment_sets)
 	{
+		if (es.second->type != type)
+			continue;
 		if (es.second->isAppropriate(score))
 			return es.second;
 	}
-	LogError("No equipment set matching score {0}", score);
-	return nullptr;
-}
-
-sp<EquipmentSet> EquipmentSet::getByLevel(const GameState &state, const int level)
-{
-	for (auto &es : state.equipment_sets_by_level)
-	{
-		if (es.second->isAppropriate(level))
-			return es.second;
-	}
-	LogError("No equipment set matching level {0}", level);
+	LogError("No equipment set of type {0} matching score {1}", static_cast<int>(type), score);
 	return nullptr;
 }
 
