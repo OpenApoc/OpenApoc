@@ -16,32 +16,6 @@ bool readXml(std::istream &in, StateDefinition &state)
 		return false;
 	}
 
-	boost::uuids::detail::sha1 sha;
-	sha.reset();
-	sha.process_bytes(fileData.get(), fileSize);
-#if BOOST_VERSION >= 108600
-	boost::uuids::detail::sha1::digest_type hash;
-#else
-	unsigned int hash[5];
-#endif
-	sha.get_digest(hash);
-	std::array<uint32_t, 5> hashu32;
-	memcpy(hashu32.data(), hash, sizeof(hashu32));
-	for (int i = 0; i < 5; i++)
-	{
-		unsigned int v = hashu32[i];
-		for (int j = 0; j < 4; j++)
-		{
-			// FIXME: Probably need to do the reverse for big endian?
-			char stringBuf[3];
-			unsigned int byteHex = v & 0xff000000;
-			byteHex >>= 24;
-			snprintf(stringBuf, sizeof(stringBuf), "%02x", byteHex);
-			state.hashString += stringBuf;
-			v <<= 8;
-		}
-	}
-
 	auto ret = doc.load_buffer(fileData.get(), fileSize);
 	if (!ret)
 	{

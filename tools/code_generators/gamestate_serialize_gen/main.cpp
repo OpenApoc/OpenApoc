@@ -14,8 +14,6 @@ void writeHeader(std::ofstream &out, const StateDefinition &state)
 	out << "#include \"game/state/gamestate.h\"\n\n";
 	out << "#include \"game/state/gamestate_serialize.h\"\n\n";
 	out << "namespace OpenApoc {\n\n";
-	out << "static constexpr const char* const GAMESTATE_SERIALIZATION_VERSION = \""
-	    << state.hashString << "\";\n";
 	out << "class SerializationNode;\n\n";
 	for (auto &object : state.objects)
 	{

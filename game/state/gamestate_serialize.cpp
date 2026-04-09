@@ -457,7 +457,6 @@ bool GameState::serialize(SerializationArchive *archive) const
 	{
 		GameState defaultState;
 		auto root = archive->newRoot("", "gamestate");
-		root->addNode("serialization_version", GAMESTATE_SERIALIZATION_VERSION);
 		serializeOut(root, *this, defaultState);
 	}
 	catch (SerializationException &e)
@@ -473,7 +472,6 @@ bool GameState::serialize(SerializationArchive *archive, const GameState &refere
 	try
 	{
 		auto root = archive->newRoot("", "gamestate");
-		root->addNode("serialization_version", GAMESTATE_SERIALIZATION_VERSION);
 		serializeOut(root, *this, reference);
 	}
 	catch (SerializationException &e)

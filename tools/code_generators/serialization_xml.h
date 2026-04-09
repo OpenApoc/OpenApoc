@@ -8,12 +8,6 @@
 #include <vector>
 
 #include <boost/program_options.hpp>
-#include <boost/version.hpp>
-#if BOOST_VERSION >= 106600
-#include <boost/uuid/detail/sha1.hpp>
-#else
-#include <boost/uuid/sha1.hpp>
-#endif
 
 enum class NodeType
 {
@@ -53,7 +47,6 @@ class StateDefinition
   public:
 	std::vector<SerializeObject> objects;
 	std::vector<SerializeEnum> enums;
-	std::string hashString;
 };
 
 bool readXml(std::istream &in, StateDefinition &state);
