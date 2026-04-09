@@ -69,8 +69,6 @@ void writeHeader(std::ofstream &out, const StateDefinition &state)
 	    << "#include \"dependencies/lua/lua.h\"\n"
 	    << "}\n\n"
 	    << "namespace OpenApoc {\n\n"
-	    << "static constexpr const char* const LUAGAMESTATE_SUPPORT_VERSION = \""
-	    << state.hashString << "\";\n"
 	    << "class SerializationNode;\n\n";
 	for (auto &object : state.objects)
 	{
