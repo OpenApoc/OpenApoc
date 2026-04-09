@@ -180,9 +180,6 @@ void dumpOptionsToLog()
 
 	dumpOption(defaultTooltipFont);
 
-	dumpOption(useCRCChecksum);
-	dumpOption(useSHA1Checksum);
-
 	dumpOption(enableTrace);
 	dumpOption(traceFile);
 
@@ -547,10 +544,6 @@ ConfigOptionInt dialogLogLevelOption(
 
 ConfigOptionString defaultTooltipFont("Forms", "TooltipFont", tr("The default tooltip font"),
                                       "smallset");
-ConfigOptionBool useCRCChecksum("Framework.Serialization", "CRC",
-                                tr("use a CRC checksum when saving files"), false);
-ConfigOptionBool useSHA1Checksum("Framework.Serialization", "SHA1",
-                                 tr("use a SHA1 checksum when saving files"), false);
 
 ConfigOptionBool enableTrace("Trace", "enable", tr("Enable json call/time tracking"));
 ConfigOptionString traceFile("Trace", "outputFile", tr("File to output trace json to"),
