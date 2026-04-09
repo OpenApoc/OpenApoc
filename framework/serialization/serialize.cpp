@@ -3,7 +3,6 @@
 #include "framework/filesystem.h"
 #include "framework/logger.h"
 #include "framework/serialization/providers/filedataprovider.h"
-#include "framework/serialization/providers/providerwithchecksum.h"
 #include "framework/serialization/providers/zipdataprovider.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -151,12 +150,12 @@ up<SerializationDataProvider> getProvider(bool pack)
 	if (!pack)
 	{
 		// directory loader
-		return mkup<ProviderWithChecksum>(mkup<FileDataProvider>());
+		return mkup<FileDataProvider>();
 	}
 	else
 	{
 		// zip loader
-		return mkup<ProviderWithChecksum>(mkup<ZipDataProvider>());
+		return mkup<ZipDataProvider>();
 	}
 }
 

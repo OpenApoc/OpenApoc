@@ -19,7 +19,6 @@ set (FRAMEWORK_SOURCE_FILES
 	renderer.cpp
 	serialization/serialize.cpp
 	serialization/providers/filedataprovider.cpp
-	serialization/providers/providerwithchecksum.cpp
 	serialization/providers/zipdataprovider.cpp
 	sound.cpp
 	stagestack.cpp
