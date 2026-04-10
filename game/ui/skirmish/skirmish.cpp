@@ -308,7 +308,8 @@ void Skirmish::goToBattle(bool customAliens, std::map<StateRef<AgentType>, int> 
 	auto city = sourceBase->building->city;
 
 	auto newBuilding = mksp<Building>();
-	city->buildings["BUILDING_SKIRMISH"] = newBuilding;
+	state.buildings["BUILDING_SKIRMISH"] = newBuilding;
+	city->buildings.emplace_back(&state, "BUILDING_SKIRMISH");
 
 	auto newBase = mksp<Base>();
 	state.player_bases["BASE_SKIRMISH"] = newBase;

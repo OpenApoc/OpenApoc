@@ -58,10 +58,10 @@ City::~City()
 	}
 	for (auto &b : this->buildings)
 	{
-		b.second->currentVehicles.clear();
-		b.second->currentAgents.clear();
-		b.second->city.clear();
-		b.second->base.clear();
+		b->currentVehicles.clear();
+		b->currentAgents.clear();
+		b->city.clear();
+		b->base.clear();
 	}
 }
 
@@ -114,33 +114,33 @@ void City::initCity(GameState &state)
 	int subtotalIncome = 0;
 	for (auto &b : this->buildings)
 	{
-		if (b.second->landingPadLocations.empty())
+		if (b->landingPadLocations.empty())
 		{
-			LogError("Building {0} has no landing pads", b.first);
+			LogError("Building {0} has no landing pads", b.id);
 		}
-		LogInfo("Building {0} has {1} landing pads:", b.first,
-		        (unsigned)b.second->landingPadLocations.size());
-		for (auto &loc : b.second->landingPadLocations)
+		LogInfo("Building {0} has {1} landing pads:", b.id,
+		        (unsigned)b->landingPadLocations.size());
+		for (auto &loc : b->landingPadLocations)
 		{
 			LogInfo("Pad: {0}", loc);
 		}
-		LogInfo("Car: {0}", b.second->carEntranceLocation);
-		if (b.second->crewQuarters == Vec3<int>{-1, -1, -1})
+		LogInfo("Car: {0}", b->carEntranceLocation);
+		if (b->crewQuarters == Vec3<int>{-1, -1, -1})
 		{
-			LogWarning("Building {0} has no car exit?", b.first);
-			b.second->crewQuarters = {(b.second->bounds.p0.x + b.second->bounds.p1.x) / 2,
-			                          (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2};
+			LogWarning("Building {0} has no car exit?", b.id);
+			b->crewQuarters = {(b->bounds.p0.x + b->bounds.p1.x) / 2,
+			                   (b->bounds.p0.y + b->bounds.p1.y) / 2, 2};
 		}
-		LogInfo("Crew Quarters: {0}", b.second->crewQuarters);
-		if (b.second->function.id == "BUILDINGFUNCTION_SPACE_PORT")
+		LogInfo("Crew Quarters: {0}", b->crewQuarters);
+		if (b->function.id == "BUILDINGFUNCTION_SPACE_PORT")
 		{
-			spaceports.emplace_back(&state, b.first);
+			spaceports.emplace_back(&state, b.id);
 		}
-		b.second->owner->buildings.emplace_back(&state, b.first);
+		b->owner->buildings.emplace_back(&state, b.id);
 
-		populationWorking += b.second->currentWorkforce;
-		populationUnemployed += b.second->maximumWorkforce - b.second->currentWorkforce;
-		subtotalIncome += b.second->currentWage;
+		populationWorking += b->currentWorkforce;
+		populationUnemployed += b->maximumWorkforce - b->currentWorkforce;
+		subtotalIncome += b->currentWage;
 	}
 	averageWage = (populationWorking) ? subtotalIncome / populationWorking : 0;
 	populationUnemployed += 500; // original adjustment
@@ -314,7 +314,7 @@ void City::dailyLoop(GameState &state)
 		// check if employment situation changes in the building
 		for (auto &b : buildings)
 		{
-			b.second->updateWorkforce();
+			b->updateWorkforce();
 		}
 	}
 }
@@ -471,7 +471,7 @@ void City::updateInfiltration(GameState &state)
 {
 	for (auto &b : buildings)
 	{
-		b.second->alienGrowth(state);
+		b->alienGrowth(state);
 	}
 }
 
@@ -674,11 +674,11 @@ void City::repairVehicles(GameState &state [[maybe_unused]])
 	for (auto &b : buildings)
 	{
 		// Players get repaired according to facilities
-		if (b.second->base)
+		if (b->base)
 		{
-			int repairPoints = b.second->base->getCapacityTotal(FacilityType::Capacity::Repair);
+			int repairPoints = b->base->getCapacityTotal(FacilityType::Capacity::Repair);
 			std::list<StateRef<Vehicle>> vehiclesToRepair;
-			for (auto &v : b.second->currentVehicles)
+			for (auto &v : b->currentVehicles)
 			{
 				if (v->homeBuilding == v->currentBuilding && v->getHealth() < v->getMaxHealth())
 				{
@@ -711,7 +711,7 @@ void City::repairVehicles(GameState &state [[maybe_unused]])
 		// Corps get repaired by 12 flat
 		else
 		{
-			for (auto &v : b.second->currentVehicles)
+			for (auto &v : b->currentVehicles)
 			{
 				if (v->homeBuilding == v->currentBuilding)
 				{

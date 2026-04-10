@@ -3016,15 +3016,15 @@ bool VehicleMission::acquireTargetBuilding(GameState &state, Vehicle &v)
 	std::list<StateRef<Building>> availableBuildings;
 	for (auto &b : v.city->buildings)
 	{
-		if (!b.second->isAlive())
+		if (!b->isAlive())
 		{
 			continue;
 		}
-		if (std::abs(b.second->bounds.p0.x / 2 + b.second->bounds.p1.x / 2 - v.position.x) +
-		        std::abs(b.second->bounds.p0.y / 2 + b.second->bounds.p1.y / 2 - v.position.y) <=
+		if (std::abs(b->bounds.p0.x / 2 + b->bounds.p1.x / 2 - v.position.x) +
+		        std::abs(b->bounds.p0.y / 2 + b->bounds.p1.y / 2 - v.position.y) <=
 		    TARGET_BUILDING_DISTANCE_LIMIT)
 		{
-			availableBuildings.emplace_back(&state, b.first);
+			availableBuildings.emplace_back(b);
 		}
 	}
 	if (!availableBuildings.empty())

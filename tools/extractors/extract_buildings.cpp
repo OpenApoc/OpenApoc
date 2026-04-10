@@ -160,7 +160,8 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 		b->bounds = {entry.x0 + 20, entry.y0 + 20, entry.x1 + 21, entry.y1 + 21};
 		auto id = format("{0}{1}", Building::getPrefix(), canon_string(b->name));
 		b->city = {&state, city->id};
-		city->buildings[id] = b;
+		state.buildings[id] = b;
+		city->buildings.emplace_back(&state, id);
 	}
 }
 

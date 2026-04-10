@@ -120,7 +120,7 @@ void BaseSelectScreen::render()
 	static const Colour PLAYER_BASE_AVAILABLE{160, 236, 252};
 	for (auto &b : state->current_city->buildings)
 	{
-		auto building = b.second;
+		auto building = b.getSp();
 		if (building->base_layout && building->owner != state->getPlayer())
 		{
 			Vec3<float> posA = {building->bounds.p0.x, building->bounds.p0.y, 0};

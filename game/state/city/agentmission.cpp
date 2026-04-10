@@ -432,12 +432,11 @@ void AgentMission::start(GameState &state, Agent &a)
 						StateRef<Building> closestBuilding;
 						for (auto &b : a.city->buildings)
 						{
-							auto distance =
-							    glm::length(a.position - (Vec3<float>)b.second->crewQuarters);
+							auto distance = glm::length(a.position - (Vec3<float>)b->crewQuarters);
 							if (distance < closestDistance)
 							{
 								distance = closestDistance;
-								closestBuilding = {&state, b.first};
+								closestBuilding = b;
 							}
 						}
 						a.enterBuilding(state, closestBuilding);

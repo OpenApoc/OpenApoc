@@ -43,15 +43,13 @@ template <> const UString &StateObject<BuildingFunction>::getTypeName()
 
 template <> sp<Building> StateObject<Building>::get(const GameState &state, const UString &id)
 {
-	for (auto &city : state.cities)
+	auto it = state.buildings.find(id);
+	if (it == state.buildings.end())
 	{
-		auto it = city.second->buildings.find(id);
-		if (it != city.second->buildings.end())
-			return it->second;
+		LogError("No building type matching ID \"{0}\"", id);
+		return nullptr;
 	}
-
-	LogError("No building type matching ID \"{0}\"", id);
-	return nullptr;
+	return it->second;
 }
 
 template <> const UString &StateObject<Building>::getPrefix()
@@ -69,13 +67,10 @@ template <>
 const UString &StateObject<Building>::getId(const GameState &state, const sp<Building> ptr)
 {
 	static const UString emptyString = "";
-	for (auto &c : state.cities)
+	for (auto &b : state.buildings)
 	{
-		for (auto &b : c.second->buildings)
-		{
-			if (b.second == ptr)
-				return b.first;
-		}
+		if (b.second == ptr)
+			return b.first;
 	}
 	LogError("No building matching pointer {0:p}", static_cast<void *>(ptr.get()));
 	return emptyString;
@@ -899,12 +894,12 @@ void Building::alienMovement(GameState &state)
 	std::list<StateRef<Building>> neighbours;
 	for (auto &b : city->buildings)
 	{
-		auto distVec = bounds.p0 + bounds.p1 - b.second->bounds.p0 - b.second->bounds.p1;
+		auto distVec = bounds.p0 + bounds.p1 - b->bounds.p0 - b->bounds.p1;
 		distVec /= 2;
 		int distance = std::abs(distVec.x) + std::abs(distVec.y);
 		if (distance > 0 && distance <= 15)
 		{
-			neighbours.emplace_back(&state, b.first);
+			neighbours.emplace_back(b);
 		}
 		if (neighbours.size() >= 15)
 		{
