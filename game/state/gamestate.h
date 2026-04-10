@@ -47,6 +47,7 @@ class BattleCommonSampleList;
 class BattleMapPartType;
 class EventMessage;
 class DamageType;
+class Building;
 class BuildingFunction;
 class UFOMissionPreference;
 
@@ -84,6 +85,10 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<UFOMissionPreference> ufo_mission_preference;
 	StateRefMap<UFOIncursion> ufo_incursions;
 	StateRefMap<Base> player_bases;
+	// buildings must be declared before cities so that buildings outlive
+	// the City::buildings vector<StateRef<Building>> cached sp<> pointers
+	// during GameState destruction (members are destroyed in reverse order).
+	StateRefMap<Building> buildings;
 	StateRefMap<City> cities;
 	StateRefMap<SceneryTileType> scenery_tile_types;
 	StateRefMap<Vehicle> vehicles;

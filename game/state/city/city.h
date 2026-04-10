@@ -86,7 +86,9 @@ class City : public StateObject<City>, public std::enable_shared_from_this<City>
 
 	std::map<Vec3<int>, StateRef<SceneryTileType>> initial_tiles;
 	std::list<Vec3<int>> initial_portals;
-	StateRefMap<Building> buildings;
+	// Ordered list of building references. Buildings themselves are owned by
+	// GameState::buildings; this list tracks per-city membership.
+	std::vector<StateRef<Building>> buildings;
 	std::vector<sp<Scenery>> scenery;
 	std::list<sp<Doodad>> doodads;
 	std::vector<sp<Doodad>> portals;

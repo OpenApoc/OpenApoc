@@ -86,11 +86,11 @@ void Base::die(GameState &state, bool collapse)
 
 	for (auto &b : building->city->buildings)
 	{
-		for (auto &c : b.second->cargo)
+		for (auto &c : b->cargo)
 		{
 			if (c.destination == building)
 			{
-				c.refund(state, {&state, b.first});
+				c.refund(state, b);
 			}
 		}
 	}

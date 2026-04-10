@@ -80,9 +80,9 @@ void BaseBuyScreen::eventOccurred(Event *e)
 				StateRef<Building> newBuilding;
 				for (auto &b : building->city->buildings)
 				{
-					if (building != b.second && b.second->owner == building->owner)
+					if (building != b.getSp() && b->owner == building->owner)
 					{
-						newBuilding = {state.get(), b.first};
+						newBuilding = b;
 						break;
 					}
 				}

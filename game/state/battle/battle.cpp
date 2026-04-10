@@ -2823,12 +2823,12 @@ void Battle::finishBattle(GameState &state)
 		int closestDistance = INT_MAX;
 		for (auto &b : city->buildings)
 		{
-			int distance = std::abs(b.second->bounds.p0.x - battleLocation.x) +
-			               std::abs(b.second->bounds.p0.y - battleLocation.y);
+			int distance = std::abs(b->bounds.p0.x - battleLocation.x) +
+			               std::abs(b->bounds.p0.y - battleLocation.y);
 			if (distance < closestDistance)
 			{
 				closestDistance = distance;
-				closestBuilding = {&state, b.first};
+				closestBuilding = b;
 			}
 		}
 		if (!closestBuilding)
@@ -2982,7 +2982,12 @@ void Battle::exitBattle(GameState &state)
 		fakeBase->building->currentAgents.clear();
 		fakeBase->building->base.clear();
 		fakeBase->building.clear();
-		city->buildings.erase("BUILDING_SKIRMISH");
+		auto &cityBuildings = city->buildings;
+		cityBuildings.erase(std::remove_if(cityBuildings.begin(), cityBuildings.end(),
+		                                   [](const StateRef<Building> &b)
+		                                   { return b.id == "BUILDING_SKIRMISH"; }),
+		                    cityBuildings.end());
+		state.buildings.erase("BUILDING_SKIRMISH");
 		state.player_bases.erase("BASE_SKIRMISH");
 
 		// Erase vehicle

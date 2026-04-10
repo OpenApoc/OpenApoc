@@ -1794,9 +1794,9 @@ void AEquipScreen::closeScreen()
 				Vec2<int> pos = {entry.first.x, entry.first.y};
 				for (auto &b : dropperAgent->city->buildings)
 				{
-					if (b.second->bounds.within(pos))
+					if (b->bounds.within(pos))
 					{
-						buildingToDropTo = {state.get(), b.first};
+						buildingToDropTo = {state.get(), b.id};
 						break;
 					}
 				}

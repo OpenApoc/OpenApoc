@@ -283,10 +283,10 @@ void AgentAssignment::updateLocation()
 			bool foundBuilding = false;
 			for (auto &a : agents)
 			{
-				if (a->currentBuilding == b.second)
+				if (a->currentBuilding == b.getSp())
 				{
 					foundBuilding = true;
-					buildings.emplace_back(b.second);
+					buildings.emplace_back(b.getSp());
 					break;
 				}
 			}
@@ -295,9 +295,9 @@ void AgentAssignment::updateLocation()
 
 			for (auto &v : vehicles)
 			{
-				if (v->currentBuilding == b.second)
+				if (v->currentBuilding == b.getSp())
 				{
-					buildings.emplace_back(b.second);
+					buildings.emplace_back(b.getSp());
 					break;
 				}
 			}

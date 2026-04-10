@@ -71,9 +71,9 @@ ensureSecondBase(OpenApoc::sp<OpenApoc::GameState> state)
 	for (auto &b : state->current_city->buildings)
 	{
 		// Building must have a base layout and not already have a base
-		if (b.second->base_layout && !b.second->base && !b.second->initialInfiltration)
+		if (b->base_layout && !b->base && !b->initialInfiltration)
 		{
-			targetBuilding = b.second;
+			targetBuilding = b.getSp();
 			break;
 		}
 	}

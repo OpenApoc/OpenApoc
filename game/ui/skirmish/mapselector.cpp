@@ -43,7 +43,7 @@ MapSelector::MapSelector(sp<GameState> state, Skirmish &skirmish)
 	{
 		for (auto &b : c.second->buildings)
 		{
-			listbox->addItem(createMapRowBuilding({state.get(), b.first}, state));
+			listbox->addItem(createMapRowBuilding({state.get(), b.id}, state));
 		}
 	}
 }

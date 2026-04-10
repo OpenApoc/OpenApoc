@@ -524,8 +524,8 @@ void Organisation::updateHirableAgents(GameState &state)
 		std::vector<StateRef<Building>> buildingsWithoutBases;
 		for (auto &b : state.cities["CITYMAP_HUMAN"]->buildings)
 		{
-			if (!b.second->base_layout)
-				buildingsWithoutBases.emplace_back(&state, b.second);
+			if (!b->base_layout)
+				buildingsWithoutBases.emplace_back(b);
 		}
 		if (buildingsWithoutBases.empty())
 		{
@@ -700,11 +700,11 @@ void Organisation::updateVehicleAgentPark(GameState &state)
 	//	std::list<sp<Building>> buildingsRandomizer;
 	//	for (auto &b : state.cities["CITYMAP_HUMAN"]->buildings)
 	//	{
-	//		if (b.second->owner.id != id)
+	//		if (b->owner.id != id)
 	//		{
 	//			continue;
 	//		}
-	//		buildingsRandomizer.push_back(b.second);
+	//		buildingsRandomizer.push_back(b.getSp());
 	//	}
 	//	sp<Building> building = pickRandom(state.rng, buildingsRandomizer);
 	//	while (countAgents < agentPark)
@@ -1305,7 +1305,7 @@ void Organisation::RecurringMission::execute(GameState &state, StateRef<City> ci
 	buildingsRandomizer.clear();
 	for (auto &b : city->buildings)
 	{
-		if (b.second == sourceBuilding)
+		if (b.getSp() == sourceBuilding)
 		{
 			continue;
 		}
@@ -1313,14 +1313,14 @@ void Organisation::RecurringMission::execute(GameState &state, StateRef<City> ci
 		switch (pattern.target)
 		{
 			case Organisation::MissionPattern::Target::Owned:
-				if (b.second->owner == owner)
+				if (b->owner == owner)
 				{
 					break;
 				}
 				continue;
 			case Organisation::MissionPattern::Target::OwnedOrOther:
 			case Organisation::MissionPattern::Target::Other:
-				if (b.second->owner == owner)
+				if (b->owner == owner)
 				{
 					if (pattern.target == Organisation::MissionPattern::Target::OwnedOrOther)
 					{
@@ -1335,8 +1335,7 @@ void Organisation::RecurringMission::execute(GameState &state, StateRef<City> ci
 				{
 					break;
 				}
-				if (pattern.relation.find(owner->isRelatedTo(b.second->owner)) !=
-				    pattern.relation.end())
+				if (pattern.relation.find(owner->isRelatedTo(b->owner)) != pattern.relation.end())
 				{
 					break;
 				}
@@ -1346,7 +1345,7 @@ void Organisation::RecurringMission::execute(GameState &state, StateRef<City> ci
 				LogError("Impossible to arrive/depart at this point?");
 				return;
 		}
-		buildingsRandomizer.push_back(b.second);
+		buildingsRandomizer.push_back(b.getSp());
 	}
 	if (buildingsRandomizer.empty())
 	{

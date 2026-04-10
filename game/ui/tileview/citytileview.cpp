@@ -672,13 +672,13 @@ void CityTileView::render()
 
 				for (auto &b : state.current_city->buildings)
 				{
-					if (b.second->owner != state.current_city->cityViewSelectedOrganisation)
+					if (b->owner != state.current_city->cityViewSelectedOrganisation)
 					{
 						continue;
 					}
-					Vec3<float> posA = {b.second->bounds.p0.x, b.second->bounds.p0.y, 0};
+					Vec3<float> posA = {b->bounds.p0.x, b->bounds.p0.y, 0};
 					Vec2<float> screenPosA = this->tileToOffsetScreenCoords(posA);
-					Vec3<float> posB = {b.second->bounds.p1.x, b.second->bounds.p1.y, 0};
+					Vec3<float> posB = {b->bounds.p1.x, b->bounds.p1.y, 0};
 					Vec2<float> screenPosB = this->tileToOffsetScreenCoords(posB);
 
 					// Apply offset to borders every half-second
@@ -901,9 +901,9 @@ void CityTileView::render()
 			{
 				for (auto &b : state.current_city->buildings)
 				{
-					Vec2<float> pos = tileToOffsetScreenCoords(
-					    Vec3<int>{b.second->bounds.p0.x, b.second->bounds.p0.y, 2});
-					for (auto &a : b.second->current_crew)
+					Vec2<float> pos =
+					    tileToOffsetScreenCoords(Vec3<int>{b->bounds.p0.x, b->bounds.p0.y, 2});
+					for (auto &a : b->current_crew)
 					{
 						for (int i = 0; i < a.second; i++)
 						{
@@ -921,19 +921,19 @@ void CityTileView::render()
 			for (auto &b : state.current_city->buildings)
 			{
 				// Detection of aliens
-				if (b.second->detected)
+				if (b->detected)
 				{
 					float initialRadius = std::max(alertImage->size.x, alertImage->size.y);
 					// Eventually scale to 1/2 the size, but start with some bonus time of full
 					// size,
 					// so that it doesn't become distorted immediately, that's why we add extra 0.05
-					float radius = std::min(initialRadius,
-					                        initialRadius * (float)b.second->ticksDetectionTimeOut /
-					                                (float)TICKS_DETECTION_TIMEOUT / 2.0f +
-					                            0.55f);
+					float radius =
+					    std::min(initialRadius, initialRadius * (float)b->ticksDetectionTimeOut /
+					                                    (float)TICKS_DETECTION_TIMEOUT / 2.0f +
+					                                0.55f);
 					Vec2<float> pos = tileToOffsetScreenCoords(
-					    Vec3<int>{(b.second->bounds.p0.x + b.second->bounds.p1.x) / 2,
-					              (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2});
+					    Vec3<int>{(b->bounds.p0.x + b->bounds.p1.x) / 2,
+					              (b->bounds.p0.y + b->bounds.p1.y) / 2, 2});
 					pos -= Vec2<float>{radius / 2.0f, radius / 2.0f};
 
 					if (radius == initialRadius)
@@ -948,7 +948,7 @@ void CityTileView::render()
 				// Cargo for player
 				bool hasCargo = false;
 				uint64_t nearestExpiry = UINT64_MAX;
-				for (auto &c : b.second->cargo)
+				for (auto &c : b->cargo)
 				{
 					if (c.count > 0 && c.destination->owner == state.getPlayer())
 					{
@@ -967,8 +967,8 @@ void CityTileView::render()
 					                                               (float)TICKS_CARGO_TTL / 2.0f +
 					                                           0.55f);
 					Vec2<float> pos = tileToOffsetScreenCoords(
-					    Vec3<int>{(b.second->bounds.p0.x + b.second->bounds.p1.x) / 2,
-					              (b.second->bounds.p0.y + b.second->bounds.p1.y) / 2, 2});
+					    Vec3<int>{(b->bounds.p0.x + b->bounds.p1.x) / 2,
+					              (b->bounds.p0.y + b->bounds.p1.y) / 2, 2});
 					pos -= Vec2<float>{radius / 2.0f, radius / 2.0f};
 
 					if (radius == initialRadius)

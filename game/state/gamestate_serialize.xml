@@ -8,6 +8,7 @@
     <member type="Section">doodad_types</member>
     <member type="Section">vehicle_equipment</member>
     <member type="Section">vehicle_ammo</member>
+    <member type="Section">buildings</member>
     <member type="SectionMap">cities</member>
     <member type="Section">scenery_tile_types</member>
     <member type="Section">ufo_growth_lists</member>
@@ -966,7 +967,7 @@
     <member>id</member>
     <member>size</member>
     <member type="Section">initial_tiles</member>
-    <member type="Section">buildings</member>
+    <member>buildings</member>
     <member type="Section">scenery</member>
     <member type="Section">doodads</member>
     <member type="Section">portals</member>

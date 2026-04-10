@@ -92,24 +92,21 @@ GameState::~GameState()
 		// Some damaged tile links can loop, causing a leak if they're not broken
 		t.second->damagedTile.clear();
 	}
-	for (auto &city : this->cities)
+	for (auto &building : this->buildings)
 	{
-		for (auto &building : city.second->buildings)
-		{
-			auto &bld = building.second;
-			bld->city.clear();
-			bld->function.clear();
-			bld->owner.clear();
-			bld->base_layout.clear();
-			bld->base.clear();
-			bld->battle_map.clear();
-			bld->preset_crew.clear();
-			bld->current_crew.clear();
-			bld->currentVehicles.clear();
-			bld->currentAgents.clear();
-			bld->researchUnlock.clear();
-			bld->accessTopic.clear();
-		}
+		auto &bld = building.second;
+		bld->city.clear();
+		bld->function.clear();
+		bld->owner.clear();
+		bld->base_layout.clear();
+		bld->base.clear();
+		bld->battle_map.clear();
+		bld->preset_crew.clear();
+		bld->current_crew.clear();
+		bld->currentVehicles.clear();
+		bld->currentAgents.clear();
+		bld->researchUnlock.clear();
+		bld->accessTopic.clear();
 	}
 }
 
@@ -152,11 +149,10 @@ void GameState::initState()
 		{
 			for (auto &b : city->buildings)
 			{
-				auto &building = b.second;
 				Vec2<int> pos2d{s->initialPosition.x, s->initialPosition.y};
-				if (building->bounds.within(pos2d))
+				if (b->bounds.within(pos2d))
 				{
-					s->building = {this, building};
+					s->building = b;
 					if (s->isAlive() && !s->type->commonProperty)
 					{
 						s->building->buildingParts.insert(s->initialPosition);
@@ -181,7 +177,7 @@ void GameState::initState()
 				// Uncomment this if algoritm improves
 				// for (auto &b : c.second->buildings)
 				//{
-				//	b.second->initBuilding(*this);
+				//	b->initBuilding(*this);
 				//}
 			}
 		}
@@ -595,7 +591,7 @@ void GameState::startGame()
 	{
 		for (auto &b : pair.second->buildings)
 		{
-			b.second->ticksDetectionAttemptAccumulated =
+			b->ticksDetectionAttemptAccumulated =
 			    randBoundsExclusive(rng, (unsigned)0, TICKS_PER_DETECTION_ATTEMPT[difficulty]);
 		}
 	}
@@ -630,14 +626,13 @@ void GameState::startGame()
 			buildingIt++;
 		}
 		counter++;
-	} while (buildingIt->second->owner->current_relations[player] < 0 || counter >= giveUpCount);
+	} while ((*buildingIt)->owner->current_relations[player] < 0 || counter >= giveUpCount);
 
 	for (auto &l : initial_aliens.at(difficulty))
 	{
-		buildingIt->second->current_crew[l.first] =
-		    randBoundsExclusive(rng, l.second.x, l.second.y);
+		(*buildingIt)->current_crew[l.first] = randBoundsExclusive(rng, l.second.x, l.second.y);
 	}
-	buildingIt->second->initialInfiltration = true;
+	(*buildingIt)->initialInfiltration = true;
 
 	gameTime = GameTime::midday();
 
@@ -660,8 +655,8 @@ void GameState::fillPlayerStartingProperty()
 	std::vector<sp<Building>> buildingsWithBases;
 	for (auto &b : humanCity->buildings)
 	{
-		if (b.second->base_layout && !b.second->initialInfiltration)
-			buildingsWithBases.push_back(b.second);
+		if (b->base_layout && !b->initialInfiltration)
+			buildingsWithBases.push_back(b.getSp());
 	}
 
 	if (buildingsWithBases.empty())
@@ -1158,7 +1153,7 @@ void GameState::updateEndOfSecond()
 {
 	for (auto &b : current_city->buildings)
 	{
-		b.second->updateCargo(*this);
+		b->updateCargo(*this);
 	}
 	for (auto &v : vehicles)
 	{
@@ -1194,20 +1189,20 @@ void GameState::updateEndOfFiveMinutes()
 
 	for (auto &b : current_city->buildings)
 	{
-		if (!b.second->base || b.second->owner != getPlayer())
+		if (!b->base || b->owner != getPlayer())
 		{
 			continue;
 		}
 
-		auto base = b.second->base;
-		for (auto it = b.second->currentVehicles.begin(); it != b.second->currentVehicles.end();)
+		auto base = b->base;
+		for (auto it = b->currentVehicles.begin(); it != b->currentVehicles.end();)
 		{
 			auto v = *it;
 			if (this->vehicles.find(v.id) == this->vehicles.end())
 			{
 				LogWarning("{0} not found, but removal was successful..", v.id);
 				v.clear();
-				it = b.second->currentVehicles.erase(it);
+				it = b->currentVehicles.erase(it);
 				continue;
 			}
 
@@ -1250,9 +1245,9 @@ void GameState::updateEndOfFiveMinutes()
 	// Detection calculation stops when detection happens
 	for (auto &b : current_city->buildings)
 	{
-		bool detected = b.second->ticksDetectionTimeOut > 0;
-		b.second->updateDetection(*this, TICKS_PER_MINUTE * 5);
-		if (b.second->ticksDetectionTimeOut > 0 && !detected)
+		bool detected = b->ticksDetectionTimeOut > 0;
+		b->updateDetection(*this, TICKS_PER_MINUTE * 5);
+		if (b->ticksDetectionTimeOut > 0 && !detected)
 		{
 			break;
 		}
@@ -1447,13 +1442,13 @@ void GameState::updateHumanEconomy()
 
 	// Step 3. Calculate civilians leaving work because of the low wage
 	const int minimumWage = std::max(humanCity->averageWage, 30);
-	for (auto &[id, build] : humanCity->buildings)
+	for (auto &b : humanCity->buildings)
 	{
-		if (build->currentWage < minimumWage)
+		if (b->currentWage < minimumWage)
 		{
-			const int satisfiedWorkers = build->currentWorkforce * build->currentWage / minimumWage;
-			const int workersLeaving = build->currentWorkforce - satisfiedWorkers;
-			build->currentWorkforce = satisfiedWorkers;
+			const int satisfiedWorkers = b->currentWorkforce * b->currentWage / minimumWage;
+			const int workersLeaving = b->currentWorkforce - satisfiedWorkers;
+			b->currentWorkforce = satisfiedWorkers;
 			humanCity->populationWorking -= workersLeaving;
 			humanCity->populationUnemployed += workersLeaving;
 		}
@@ -1469,33 +1464,33 @@ void GameState::updateHumanEconomy()
 		if (humanCity->populationUnemployed <= 0)
 			break;
 
-		for (auto &[id, build] : humanCity->buildings)
+		for (auto &b : humanCity->buildings)
 		{
-			if (build->currentWage > expectedWage)
+			if (b->currentWage > expectedWage)
 			{
 				int workersJoining = humanCity->populationUnemployed;
-				if (build->currentWage < defaultSalary * 30 / 100)
+				if (b->currentWage < defaultSalary * 30 / 100)
 				{
 					workersJoining = 0;
 				}
-				else if (build->currentWage < defaultSalary * 75 / 100)
+				else if (b->currentWage < defaultSalary * 75 / 100)
 				{
 					// std::min so we can't overflow here
-					workersJoining = workersJoining * std::min(build->currentWage, 100) / 100;
+					workersJoining = workersJoining * std::min(b->currentWage, 100) / 100;
 					// fall-through was intended
-					if (build->currentWage < defaultSalary * 60 / 100)
+					if (b->currentWage < defaultSalary * 60 / 100)
 						workersJoining /= 10;
-					if (build->currentWage < defaultSalary * 45 / 100)
+					if (b->currentWage < defaultSalary * 45 / 100)
 						workersJoining /= 20;
 				}
 
 				// make sure there's room for everybody
 				workersJoining =
-				    std::min(workersJoining, build->maximumWorkforce - build->currentWorkforce);
+				    std::min(workersJoining, b->maximumWorkforce - b->currentWorkforce);
 
 				if (workersJoining)
 				{
-					build->currentWorkforce += workersJoining;
+					b->currentWorkforce += workersJoining;
 					humanCity->populationWorking += workersJoining;
 					humanCity->populationUnemployed -= workersJoining;
 				}
@@ -1506,18 +1501,18 @@ void GameState::updateHumanEconomy()
 	}
 
 	// Step 5. Adjust the building wages to attract new workers
-	for (auto &[id, build] : humanCity->buildings)
+	for (auto &b : humanCity->buildings)
 	{
 		// Skip calculations if building has no space for workers (e.g. destroyed)
-		if (build->maximumWorkforce == 0)
+		if (b->maximumWorkforce == 0)
 		{
 			continue;
 		}
 
-		const int maximum = build->maximumWorkforce;
-		const int current = build->currentWorkforce;
-		const int profitabilityLimit = build->incomePerCapita - build->maintenanceCosts / maximum;
-		double wage = build->currentWage;
+		const int maximum = b->maximumWorkforce;
+		const int current = b->currentWorkforce;
+		const int profitabilityLimit = b->incomePerCapita - b->maintenanceCosts / maximum;
+		double wage = b->currentWage;
 
 		if (current < maximum * 60 / 100)
 		{
@@ -1539,7 +1534,7 @@ void GameState::updateHumanEconomy()
 		}
 
 		// make sure we're not losing money
-		build->currentWage = (wage < profitabilityLimit) ? wage : profitabilityLimit;
+		b->currentWage = (wage < profitabilityLimit) ? wage : profitabilityLimit;
 	}
 }
 
