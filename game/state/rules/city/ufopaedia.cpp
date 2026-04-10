@@ -12,14 +12,13 @@ bool UfopaediaEntry::isVisible() const { return this->dependency.satisfied(); }
 template <>
 sp<UfopaediaEntry> StateObject<UfopaediaEntry>::get(const GameState &state, const UString &id)
 {
-	for (auto &cat : state.ufopaedia)
+	auto it = state.ufopaedia_entries.find(id);
+	if (it == state.ufopaedia_entries.end())
 	{
-		auto entry = cat.second->entries.find(id);
-		if (entry != cat.second->entries.end())
-			return entry->second;
+		LogError("No UFOPaedia entry matching ID \"{0}\"", id);
+		return nullptr;
 	}
-	LogError("No UFOPaedia entry matching ID \"{0}\"", id);
-	return nullptr;
+	return it->second;
 }
 
 template <> const UString &StateObject<UfopaediaEntry>::getPrefix()

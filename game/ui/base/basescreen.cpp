@@ -338,9 +338,9 @@ void BaseScreen::eventOccurred(Event *e)
 				{
 					for (auto &cat : this->state->ufopaedia)
 					{
-						for (auto &entry : cat.second->entries)
+						for (auto &entryRef : cat.second->entries)
 						{
-							if (ufopaedia_entry == entry.second)
+							if (ufopaedia_entry == entryRef)
 							{
 								ufopaedia_category = cat.second;
 								break;

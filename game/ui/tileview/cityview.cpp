@@ -510,9 +510,9 @@ void CityView::tryOpenUfopaediaEntry(StateRef<UfopaediaEntry> ufopaediaEntry)
 		sp<UfopaediaCategory> ufopaedia_category;
 		for (auto &cat : this->state->ufopaedia)
 		{
-			for (auto &entry : cat.second->entries)
+			for (auto &entryRef : cat.second->entries)
 			{
-				if (ufopaediaEntry == entry.second)
+				if (ufopaediaEntry == entryRef)
 				{
 					ufopaedia_category = cat.second;
 					break;
@@ -4225,9 +4225,9 @@ bool CityView::handleGameStateEvent(Event *e)
 			{
 				for (auto &cat : this->state->ufopaedia)
 				{
-					for (auto &entry : cat.second->entries)
+					for (auto &entryRef : cat.second->entries)
 					{
-						if (ufopaedia_entry == entry.second)
+						if (ufopaedia_entry == entryRef)
 						{
 							ufopaedia_category = cat.second;
 							break;

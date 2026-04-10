@@ -3,6 +3,7 @@
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="facility_types.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="organisations.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufopaedia.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufopaedia_entries.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_generator.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_types.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="damage_types.xml"/>

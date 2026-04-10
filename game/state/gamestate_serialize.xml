@@ -16,6 +16,7 @@
     <member type="Section">player_bases</member>
     <member type="Section">vehicles</member>
     <member type="Section">ufopaedia</member>
+    <member type="Section">ufopaedia_entries</member>
     <member type="Section">research</member>
     <member type="Section">agents</member>
     <member type="Section">agent_types</member>
