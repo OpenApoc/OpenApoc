@@ -8,14 +8,13 @@ namespace OpenApoc
 template <>
 sp<SceneryTileType> StateObject<SceneryTileType>::get(const GameState &state, const UString &id)
 {
-	for (auto &pair : state.cities)
+	auto it = state.scenery_tile_types.find(id);
+	if (it == state.scenery_tile_types.end())
 	{
-		auto it = pair.second->tile_types.find(id);
-		if (it != pair.second->tile_types.end())
-			return it->second;
+		LogError("No scenery tile type matching ID \"{0}\"", id);
+		return nullptr;
 	}
-	LogError("No scenery tile type matching ID \"{0}\"", id);
-	return nullptr;
+	return it->second;
 }
 
 template <> const UString &StateObject<SceneryTileType>::getPrefix()
