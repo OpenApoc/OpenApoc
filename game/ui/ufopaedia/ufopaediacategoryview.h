@@ -1,8 +1,9 @@
 #pragma once
 
 #include "framework/stage.h"
+#include "game/state/stateobject.h"
 #include "library/sp.h"
-#include <map>
+#include <list>
 #include <vector>
 
 namespace OpenApoc
@@ -26,7 +27,7 @@ class UfopaediaCategoryView : public Stage
 
 	// The iterator showing the current position of the entry within the category.
 	// When equal to category->entries.end() it will show the category description.
-	std::map<UString, sp<UfopaediaEntry>>::iterator position_iterator;
+	std::list<StateRef<UfopaediaEntry>>::iterator position_iterator;
 
 	void setFormData();
 	void setFormStats();

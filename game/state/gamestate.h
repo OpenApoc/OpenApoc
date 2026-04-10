@@ -35,6 +35,7 @@ class UFOGrowth;
 class UFOIncursion;
 class Vehicle;
 class UfopaediaCategory;
+class UfopaediaEntry;
 class BattleMap;
 class EquipmentSet;
 class Battle;
@@ -86,6 +87,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRefMap<Vehicle> vehicles;
 	std::set<UString> vehiclesDeathNote;
 	StateRefMap<UfopaediaCategory> ufopaedia;
+	StateRefMap<UfopaediaEntry> ufopaedia_entries;
 	ResearchState research;
 	StateRefMap<BattleMap> battle_maps;
 	StateRefMap<HazardType> hazard_types;

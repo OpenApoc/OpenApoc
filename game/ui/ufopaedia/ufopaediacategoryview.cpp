@@ -35,7 +35,7 @@ UfopaediaCategoryView::UfopaediaCategoryView(sp<GameState> state, sp<UfopaediaCa
 		auto it = cat->entries.begin();
 		while (it != cat->entries.end())
 		{
-			if (it->second == entry)
+			if (*it == entry)
 			{
 				position_iterator = it;
 				break;
@@ -57,22 +57,21 @@ void UfopaediaCategoryView::begin()
 	auto infoLabel = menuform->findControlTyped<Label>("TEXT_INFO");
 	auto entryList = menuform->findControlTyped<ListBox>("LISTBOX_SHORTCUTS");
 	entryList->clear();
-	for (auto &pair : this->category->entries)
+	for (auto &entryRef : this->category->entries)
 	{
-		auto entry = pair.second;
 		// Skip non-visible entries
-		if (!entry->isVisible())
+		if (!entryRef->isVisible())
 		{
 			continue;
 		}
 
-		auto entryControl = mksp<TextButton>(entry->title, infoLabel->getFont());
+		auto entryControl = mksp<TextButton>(entryRef->title, infoLabel->getFont());
 		entryControl->Name = "ENTRY_SHORTCUT";
 		entryControl->RenderStyle = TextButton::ButtonRenderStyle::Flat;
 		entryControl->TextHAlign = HorizontalAlignment::Left;
 		entryControl->TextVAlign = VerticalAlignment::Centre;
 		entryControl->Size.y = infoLabel->getFont()->getFontHeight() + 2;
-		entryControl->setData(entry);
+		entryControl->setData(entryRef.getSp());
 		entryList->addItem(entryControl);
 	}
 	baseY = infoLabel->Location.y;
@@ -188,7 +187,7 @@ void UfopaediaCategoryView::eventOccurred(Event *e)
 			}
 			auto it = this->category->entries.begin();
 			// Find the entry iterator
-			while (it->second != entry)
+			while (*it != entry)
 			{
 				it++;
 				if (it == this->category->entries.end())
@@ -229,9 +228,9 @@ void UfopaediaCategoryView::setFormData()
 	}
 	else
 	{
-		title = this->position_iterator->second->title;
-		description = this->position_iterator->second->description;
-		background = this->position_iterator->second->background->getRealImage();
+		title = (*this->position_iterator)->title;
+		description = (*this->position_iterator)->description;
+		background = (*this->position_iterator)->background->getRealImage();
 	}
 	menuform->findControlTyped<Graphic>("BACKGROUND_PICTURE")->setImage(background);
 	menuform->findControlTyped<Label>("TEXT_INFO")->setText(description);
@@ -258,8 +257,8 @@ void UfopaediaCategoryView::setFormStats()
 	unsigned int row = 0;
 	if (this->position_iterator != this->category->entries.end())
 	{
-		UString data_id = this->position_iterator->second->data_id;
-		UfopaediaEntry::Data data_type = this->position_iterator->second->data_type;
+		UString data_id = (*this->position_iterator)->data_id;
+		UfopaediaEntry::Data data_type = (*this->position_iterator)->data_type;
 		if (data_id.length() > 0)
 		{
 			switch (data_type)
@@ -571,7 +570,7 @@ void UfopaediaCategoryView::setNextTopic()
 		// Loop until we find the end (which shows the category intro screen)
 		// or a visible entry
 	} while (this->position_iterator != this->category->entries.end() &&
-	         !this->position_iterator->second->isVisible());
+	         !(*this->position_iterator)->isVisible());
 	this->setFormData();
 	return;
 }
@@ -591,7 +590,7 @@ void UfopaediaCategoryView::setPreviousTopic()
 		// Loop until we find the end (which shows the category intro screen)
 		// or a visible entry
 	} while (this->position_iterator != this->category->entries.end() &&
-	         !this->position_iterator->second->isVisible());
+	         !(*this->position_iterator)->isVisible());
 	this->setFormData();
 	return;
 }
