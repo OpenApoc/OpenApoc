@@ -2,6 +2,7 @@
 #include "framework/framework.h"
 #include "framework/palette.h"
 #include "game/state/city/city.h"
+#include "game/state/gamestate.h"
 #include "game/state/rules/city/scenerytiletype.h"
 #include "library/strings_format.h"
 #include "library/voxel.h"
@@ -303,7 +304,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 
 		tile->imageOffset = CITY_IMAGE_OFFSET;
 
-		city->tile_types[id] = tile;
+		state.scenery_tile_types[id] = tile;
 	}
 }
 

@@ -63,11 +63,6 @@ City::~City()
 		b.second->city.clear();
 		b.second->base.clear();
 	}
-	for (auto &t : this->tile_types)
-	{
-		// Some damaged tile links can loop, causing a leak if they're not broken
-		t.second->damagedTile.clear();
-	}
 }
 
 void City::initCity(GameState &state)

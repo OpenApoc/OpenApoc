@@ -84,7 +84,6 @@ class City : public StateObject<City>, public std::enable_shared_from_this<City>
 	UString id;
 	Vec3<int> size = {0, 0, 0};
 
-	StateRefMap<SceneryTileType> tile_types;
 	std::map<Vec3<int>, StateRef<SceneryTileType>> initial_tiles;
 	std::list<Vec3<int>> initial_portals;
 	StateRefMap<Building> buildings;
