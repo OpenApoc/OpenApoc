@@ -719,7 +719,8 @@ bool BattleMapSectorTiles::loadSector(GameState &state, const UString &path)
 	auto archive = SerializationArchive::readArchive(path);
 	if (!archive)
 	{
-		LogError("Failed to read \"{0}\"", path);
+		// Can fail in normal use - e.g. if trying to load an optional  "patch"
+		LogInfo("Failed to read BattleMapSectorTiles \"{0}\"", path);
 		return false;
 	}
 
