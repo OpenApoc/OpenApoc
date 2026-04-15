@@ -1340,6 +1340,7 @@ void GameState::updateUfoGrowth()
 	}
 	if (growthIt == this->ufo_growth_lists.end())
 	{
+		LogWarning("No valid UFO growth lists found");
 		return;
 	}
 	const auto &growth = growthIt->second;
