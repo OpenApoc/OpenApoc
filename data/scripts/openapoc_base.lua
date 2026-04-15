@@ -35,7 +35,6 @@ end
 --print("}")
 
 dofile('scripts/update_economy.lua')
-dofile('scripts/update_ufo_growth.lua')
 
 local oldNewGameHook = OpenApoc.hook.newGame
 OA.hook.newGame = function()
@@ -136,6 +135,5 @@ local oldUpdateEndOfWeekHook = OpenApoc.hook.updateEndOfWeek
 OpenApoc.hook.updateEndOfWeek = function()
 	if oldUpdateEndOfWeekHook then oldUpdateEndOfWeekHook() end
 
-	updateUfoGrowth()
 	updateEconomy()
 end

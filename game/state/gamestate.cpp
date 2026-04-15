@@ -1328,9 +1328,86 @@ void GameState::updateEndOfDay()
 		fw().pushEvent(new GameEvent(GameEventType::DailyReport));
 }
 
+void GameState::updateUfoGrowth()
+{
+	const int week = static_cast<int>(this->gameTime.getWeek());
+
+	// TODO: Make this query the UFOGrowth::week value?
+	auto growthIt = this->ufo_growth_lists.find(format("UFO_GROWTH_{0}", week));
+	if (growthIt == this->ufo_growth_lists.end())
+	{
+		growthIt = this->ufo_growth_lists.find("UFO_GROWTH_DEFAULT");
+	}
+	if (growthIt == this->ufo_growth_lists.end())
+	{
+		return;
+	}
+	const auto &growth = growthIt->second;
+
+	const auto limitIt = this->ufo_growth_lists.find("UFO_GROWTH_LIMIT");
+	if (limitIt == this->ufo_growth_lists.end())
+	{
+		return;
+	}
+	const auto &limit = limitIt->second;
+
+	StateRef<City> alienCity = {this, "CITYMAP_ALIEN"};
+	if (!alienCity)
+	{
+		LogError("updateUfoGrowth: CITYMAP_ALIEN not found");
+		return;
+	}
+	StateRef<Organisation> alienOrg = {this, "ORG_ALIEN"};
+
+	// Start with the per-type cap from UFO_GROWTH_LIMIT, then subtract the alien fleet
+	// already present in CITYMAP_ALIEN to get the remaining spawn allowance.
+	std::map<UString, int> vehicleAllowance;
+	for (const auto &entry : limit->vehicleTypeList)
+	{
+		vehicleAllowance[entry.first] += entry.second;
+	}
+	for (const auto &vp : this->vehicles)
+	{
+		const auto &v = vp.second;
+		if (v->owner == alienOrg && v->city == alienCity)
+		{
+			vehicleAllowance[v->type.id] -= 1;
+		}
+	}
+
+	for (const auto &entry : growth->vehicleTypeList)
+	{
+		const UString &vtId = entry.first;
+		const int requested = entry.second;
+
+		if (this->vehicle_types.find(vtId) == this->vehicle_types.end())
+		{
+			continue;
+		}
+		const int toAdd = std::min(requested, vehicleAllowance[vtId]);
+		if (toAdd <= 0)
+		{
+			continue;
+		}
+
+		StateRef<VehicleType> vt = {this, vtId};
+		for (int i = 0; i < toAdd; i++)
+		{
+			const Vec3<float> pos = {
+			    static_cast<float>(randBoundsExclusive(rng, 20, 120)),
+			    static_cast<float>(randBoundsExclusive(rng, 20, 120)),
+			    static_cast<float>(alienCity->size.z - 1),
+			};
+			alienCity->placeVehicle(*this, vt, alienOrg, pos, 0.0f);
+		}
+	}
+}
+
 void GameState::updateEndOfWeek(bool gameStart)
 {
 	updateHumanEconomy();
+
+	updateUfoGrowth();
 
 	luaGameState.callHook("updateEndOfWeek", 0, 0);
 

@@ -261,6 +261,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	void updateEndOfHour();
 	void updateEndOfDay();
 	void updateEndOfWeek(bool gameStart);
+	void updateUfoGrowth();
 
 	void updateHumanEconomy();
 	void weeklyPlayerUpdate();
