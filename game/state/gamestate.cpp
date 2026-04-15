@@ -254,8 +254,8 @@ void GameState::initState()
 	{
 		// Initialize organization funding by running throught two-week funding
 		// This lets workers to move around
-		updateHumanEconomy();
-		updateHumanEconomy();
+		updateOrgFinances();
+		updateOrgFinances();
 	}
 
 	// Run necessary methods for different types
@@ -1416,7 +1416,7 @@ void GameState::updateUfoGrowth()
 
 // Runs the weekly market simulation across vehicle_types, vehicle_equipment, vehicle_ammo
 // and agent_equipment, updating stock and price per item via EconomyInfo::update.
-void GameState::updateEconomy()
+void GameState::updateItemMarket()
 {
 	std::vector<UString> newItems;
 
@@ -1456,10 +1456,10 @@ void GameState::updateEconomy()
 
 void GameState::updateEndOfWeek(bool gameStart)
 {
-	updateHumanEconomy();
+	updateOrgFinances();
 
 	updateUfoGrowth();
-	updateEconomy();
+	updateItemMarket();
 
 	luaGameState.callHook("updateEndOfWeek", 0, 0);
 
@@ -1535,7 +1535,7 @@ void GameState::weeklyPlayerUpdate()
 }
 
 // Recalculates AI organization and civilian finances, updating budgets and salaries
-void GameState::updateHumanEconomy()
+void GameState::updateOrgFinances()
 {
 	// TODO: remove hardcoded references
 	auto humanCity = cities["CITYMAP_HUMAN"];
