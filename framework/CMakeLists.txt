@@ -249,9 +249,11 @@ endif()
 
 find_path(VORBIS_INCLUDE_DIR vorbis/vorbisfile.h)
 find_library(VORBISFILE_LIBRARY vorbisfile)
+find_library(VORBIS_LIBRARY vorbis)
+find_library(OGG_LIBRARY ogg)
 
 target_include_directories(OpenApoc_Framework PRIVATE ${VORBIS_INCLUDE_DIR})
-target_link_libraries(OpenApoc_Framework PRIVATE ${VORBISFILE_LIBRARY})
+target_link_libraries(OpenApoc_Framework PRIVATE ${VORBISFILE_LIBRARY} ${VORBIS_LIBRARY} ${OGG_LIBRARY})
 
 # Dialog is handled by SDL2
 if(DIALOG_ON_ERROR)
