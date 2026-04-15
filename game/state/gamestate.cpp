@@ -37,12 +37,13 @@
 #include "game/state/tilemap/tilemap.h"
 #include "game/state/tilemap/tileobject_vehicle.h"
 #include "library/strings_format.h"
+#include <ctime>
 #include <random>
 
 namespace OpenApoc
 {
 
-GameState::GameState() : player(this) { luaGameState.init(*this); }
+GameState::GameState() : player(this) {}
 
 GameState::~GameState()
 {
@@ -253,8 +254,8 @@ void GameState::initState()
 	{
 		// Initialize organization funding by running throught two-week funding
 		// This lets workers to move around
-		updateHumanEconomy();
-		updateHumanEconomy();
+		updateOrgFinances();
+		updateOrgFinances();
 	}
 
 	// Run necessary methods for different types
@@ -267,7 +268,7 @@ void GameState::initState()
 	skipTurboCalculations = config().getBool("OpenApoc.NewFeature.SkipTurboMovement");
 }
 
-void GameState::applyMods() { luaGameState.callHook("applyMods", 0, 0); }
+void GameState::applyMods() {}
 
 void GameState::setCurrentCity(StateRef<City> city)
 {
@@ -528,7 +529,12 @@ void GameState::fillOrgStartingProperty()
 
 void GameState::startGame()
 {
-	luaGameState.callHook("newGame", 0, 0);
+	if (config().getBool("OpenApoc.NewFeature.SeedRng"))
+	{
+		const auto seed = static_cast<uint64_t>(std::time(nullptr));
+		LogInfo("Seeding game RNG with {0}", seed);
+		rng.seed(seed);
+	}
 
 	agentEquipmentTemplates.resize(10);
 
@@ -1320,7 +1326,6 @@ void GameState::updateEndOfDay()
 		c.second->dailyLoop(*this);
 	}
 
-	luaGameState.callHook("updateEndOfDay", 0, 0);
 	// Check if today is the first day of the week (monday).
 	// In that case, do not show the daily report as it's already part of the weekly report
 	// event
@@ -1328,11 +1333,130 @@ void GameState::updateEndOfDay()
 		fw().pushEvent(new GameEvent(GameEventType::DailyReport));
 }
 
+// Spawns alien reinforcements in CITYMAP_ALIEN based on the weekly UFO_GROWTH_<week> list,
+// capped by UFO_GROWTH_LIMIT minus the alien fleet already present.
+void GameState::updateUfoGrowth()
+{
+	const int week = static_cast<int>(this->gameTime.getWeek());
+
+	// TODO: Make this query the UFOGrowth::week value?
+	auto growthIt = this->ufo_growth_lists.find(format("UFO_GROWTH_{0}", week));
+	if (growthIt == this->ufo_growth_lists.end())
+	{
+		growthIt = this->ufo_growth_lists.find("UFO_GROWTH_DEFAULT");
+	}
+	if (growthIt == this->ufo_growth_lists.end())
+	{
+		LogWarning("No valid UFO growth lists found");
+		return;
+	}
+	const auto &growth = growthIt->second;
+
+	const auto limitIt = this->ufo_growth_lists.find("UFO_GROWTH_LIMIT");
+	if (limitIt == this->ufo_growth_lists.end())
+	{
+		return;
+	}
+	const auto &limit = limitIt->second;
+
+	StateRef<City> alienCity = {this, "CITYMAP_ALIEN"};
+	if (!alienCity)
+	{
+		LogError("updateUfoGrowth: CITYMAP_ALIEN not found");
+		return;
+	}
+	StateRef<Organisation> alienOrg = {this, "ORG_ALIEN"};
+
+	// Start with the per-type cap from UFO_GROWTH_LIMIT, then subtract the alien fleet
+	// already present in CITYMAP_ALIEN to get the remaining spawn allowance.
+	std::map<UString, int> vehicleAllowance;
+	for (const auto &entry : limit->vehicleTypeList)
+	{
+		vehicleAllowance[entry.first] += entry.second;
+	}
+	for (const auto &vp : this->vehicles)
+	{
+		const auto &v = vp.second;
+		if (v->owner == alienOrg && v->city == alienCity)
+		{
+			vehicleAllowance[v->type.id] -= 1;
+		}
+	}
+
+	for (const auto &entry : growth->vehicleTypeList)
+	{
+		const UString &vtId = entry.first;
+		const int requested = entry.second;
+
+		if (this->vehicle_types.find(vtId) == this->vehicle_types.end())
+		{
+			continue;
+		}
+		const int toAdd = std::min(requested, vehicleAllowance[vtId]);
+		if (toAdd <= 0)
+		{
+			continue;
+		}
+
+		StateRef<VehicleType> vt = {this, vtId};
+		for (int i = 0; i < toAdd; i++)
+		{
+			const Vec3<float> pos = {
+			    static_cast<float>(randBoundsExclusive(rng, 20, 120)),
+			    static_cast<float>(randBoundsExclusive(rng, 20, 120)),
+			    static_cast<float>(alienCity->size.z - 1),
+			};
+			alienCity->placeVehicle(*this, vt, alienOrg, pos, 0.0f);
+		}
+	}
+}
+
+// Runs the weekly market simulation across vehicle_types, vehicle_equipment, vehicle_ammo
+// and agent_equipment, updating stock and price per item via EconomyInfo::update.
+void GameState::updateItemMarket()
+{
+	std::vector<UString> newItems;
+
+	const auto processMap = [this, &newItems](const auto &map)
+	{
+		for (const auto &entry : map)
+		{
+			const UString &id = entry.first;
+			const auto &item = entry.second;
+			const auto econIt = this->economy.find(id);
+			if (econIt == this->economy.end())
+			{
+				continue;
+			}
+			const bool xcom = item->manufacturer == this->player;
+			if (econIt->second.update(*this, xcom))
+			{
+				newItems.push_back(id);
+			}
+		}
+	};
+
+	processMap(this->vehicle_types);
+	processMap(this->vehicle_equipment);
+	processMap(this->vehicle_ammo);
+	processMap(this->agent_equipment);
+
+	if (!newItems.empty())
+	{
+		LogInfo("New items available this week:");
+		for (const auto &id : newItems)
+		{
+			LogInfo("  {0}", id);
+		}
+	}
+}
+
 void GameState::updateEndOfWeek(bool gameStart)
 {
-	updateHumanEconomy();
+	updateOrgFinances();
 
-	luaGameState.callHook("updateEndOfWeek", 0, 0);
+	updateUfoGrowth();
+	updateItemMarket();
 
 	fw().pushEvent(new GameEvent(GameEventType::WeeklyReport));
 	weeklyPlayerUpdate();
@@ -1406,7 +1530,7 @@ void GameState::weeklyPlayerUpdate()
 }
 
 // Recalculates AI organization and civilian finances, updating budgets and salaries
-void GameState::updateHumanEconomy()
+void GameState::updateOrgFinances()
 {
 	// TODO: remove hardcoded references
 	auto humanCity = cities["CITYMAP_HUMAN"];
@@ -1736,8 +1860,6 @@ void GameState::loadMods()
 			}
 		}
 
-		const auto &modLoadScript = modInfo.getModLoadScript();
-
 		auto _language = getModLanguageInfo(modInfo);
 		LogInfo("Loading mod language");
 		if (_language)
@@ -1756,11 +1878,18 @@ void GameState::loadMods()
 		}
 		LogInfo("Loading mod language complete");
 
-		if (!modLoadScript.empty())
+		const auto &difficultySubmods = modInfo.getDifficultySubmods();
+		const auto difficultySubmodIt = difficultySubmods.find(this->difficulty);
+		if (difficultySubmodIt != difficultySubmods.end())
 		{
-			LogInfo("Executing modLoad script \"{0}\" for mod \"{1}\"", modLoadScript,
-			        modInfo.getID());
-			this->luaGameState.runScript(modLoadScript);
+			const auto &difficultySubmodPath = difficultySubmodIt->second;
+			LogInfo("Loading difficulty-{0} submod \"{1}\" for mod \"{2}\"", this->difficulty,
+			        difficultySubmodPath, modInfo.getID());
+			if (!this->appendGameState(difficultySubmodPath))
+			{
+				LogError("Failed to load difficulty-{0} submod \"{1}\" for mod \"{2}\"",
+				         this->difficulty, difficultySubmodPath, modInfo.getID());
+			}
 		}
 	}
 }

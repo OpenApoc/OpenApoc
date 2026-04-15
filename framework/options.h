@@ -127,15 +127,7 @@ extern ConfigOptionBool formatAsCurrency;
 
 extern ConfigOptionBool optionStunHostileAction;
 extern ConfigOptionBool optionRaidHostileAction;
-extern ConfigOptionBool optionBSKLauncherSound;
 extern ConfigOptionBool optionInvulnerableRoads;
-extern ConfigOptionBool optionATVTank;
-
-extern ConfigOptionBool optionATVAPC;
-
-extern ConfigOptionBool optionCrashingVehicles;
-
-extern ConfigOptionString optionScriptsList;
 
 extern ConfigOptionBool optionInfiniteAmmoCheat;
 extern ConfigOptionFloat optionDamageInflictedMultiplierCheat;

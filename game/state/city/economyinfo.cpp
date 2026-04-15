@@ -2,6 +2,14 @@
 #include "game/state/gamestate.h"
 #include "library/xorshift.h"
 #include <algorithm>
+#include <cmath>
+
+namespace
+{
+// Match Lua's `math.round(x) = math.floor(x + 0.5)`: for the non-negative values this
+// code deals with, round-half-away-from-zero (std::lround) is equivalent.
+inline int roundToInt(float v) { return static_cast<int>(std::lround(v)); }
+} // namespace
 
 namespace OpenApoc
 {
@@ -26,33 +34,37 @@ bool EconomyInfo::update(GameState &state, const bool xcom)
 		const int rnd = randBoundsExclusive(state.rng, 0, 100);
 		if (rnd < 30)
 		{
-			currentStock = lastStock * 80 / 100;
+			currentStock = roundToInt(lastStock * 80.0f / 100.0f);
 		}
 		else if (rnd < 60)
 		{
-			currentStock = lastStock * 66 / 100;
+			currentStock = roundToInt(lastStock * 66.0f / 100.0f);
 		}
-		// Price update
+		// Price update: multiplier is a percentage, computed in float to match Lua.
 		if (soldThisWeek > 2 * maxStock)
 		{
-			currentPrice = currentPrice * randBoundsInclusive(state.rng, 85, 95);
+			currentPrice =
+			    roundToInt(currentPrice * randBoundsInclusive(state.rng, 85, 95) / 100.0f);
 		}
 		else if (soldThisWeek > maxStock)
 		{
-			currentPrice = currentPrice * randBoundsInclusive(state.rng, 90, 95);
+			currentPrice =
+			    roundToInt(currentPrice * randBoundsInclusive(state.rng, 90, 95) / 100.0f);
 		}
 		else if (soldThisWeek > maxStock / 2)
 		{
-			currentPrice = currentPrice * randBoundsInclusive(state.rng, 95, 97);
+			currentPrice =
+			    roundToInt(currentPrice * randBoundsInclusive(state.rng, 95, 97) / 100.0f);
 		}
-		currentPrice = clamp(currentPrice, basePrice / 2, basePrice);
+		currentPrice = roundToInt(clamp(static_cast<float>(currentPrice), basePrice / 2.0f,
+		                                static_cast<float>(basePrice)));
 	}
 	// Produced by someone else
 	else if (weekAvailable != 0)
 	{
 		// Stock update
 		lastStock = currentStock;
-		const int averageStock = (minStock + maxStock) / 2;
+		const int averageStock = roundToInt((minStock + maxStock) / 2.0f);
 		currentStock =
 		    clamp(randBoundsInclusive(state.rng, 0, averageStock + lastStock), minStock, maxStock);
 		// Price update
@@ -60,13 +72,16 @@ bool EconomyInfo::update(GameState &state, const bool xcom)
 		{
 			if (currentStock > averageStock)
 			{
-				currentPrice = currentPrice * randBoundsInclusive(state.rng, 97, 100);
+				currentPrice =
+				    roundToInt(currentPrice * randBoundsInclusive(state.rng, 97, 100) / 100.0f);
 			}
 			if (currentStock < averageStock)
 			{
-				currentPrice = currentPrice * randBoundsInclusive(state.rng, 100, 103);
+				currentPrice =
+				    roundToInt(currentPrice * randBoundsInclusive(state.rng, 100, 103) / 100.0f);
 			}
-			currentPrice = clamp(currentPrice, basePrice / 2, basePrice * 2);
+			currentPrice = roundToInt(
+			    clamp(static_cast<float>(currentPrice), basePrice * 0.5f, basePrice * 2.0f));
 		}
 	}
 	return week != 1 && week == weekAvailable;
