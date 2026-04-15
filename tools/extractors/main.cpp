@@ -95,7 +95,14 @@ std::map<UString, std::function<void(const InitialGameStateExtractor &e)>> thing
 	     info.setID("org.openapoc.base");
 	     info.setStatePath("base_gamestate");
 	     info.setDataPath("data");
-	     info.setModLoadScript("scripts/org.openapoc.base/onload.lua");
+
+	     std::map<int, UString> difficultySubmods;
+	     for (int i = 0; i < 5; i++)
+	     {
+		     const auto submodName = format("submods/org.openapoc.base/difficulty{0}", i);
+		     difficultySubmods[i] = submodName;
+	     }
+	     info.setDifficultySubmods(difficultySubmods);
 
 	     std::list<ModInfo::ModLanguage> languages;
 	     for (const auto &name : supported_languages)
