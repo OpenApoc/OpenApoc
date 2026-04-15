@@ -43,8 +43,8 @@ endif()
 
 message("Using CD at \"${CD_PATH}\"")
 
-set(CMAKE_C_FLAGS_SANITIZE "-Og -g -fsanitize=address")
-set(CMAKE_CXX_FLAGS_SANITIZE "-Og -g -fsanitize=address")
+set(CMAKE_C_FLAGS_SANITIZE "-Og -g -fsanitize=address -fno-omit-frame-pointer")
+set(CMAKE_CXX_FLAGS_SANITIZE "-Og -g -fsanitize=address -fno-omit-frame-pointer")
 
 set(CMAKE_C_FLAGS_QUICK "-O1 -g1")
 set(CMAKE_CXX_FLAGS_QUICK "-O1 -g1")
