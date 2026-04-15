@@ -1,2 +1,1 @@
-add_subdirectory(luagamestate_support_gen)
 add_subdirectory(gamestate_serialize_gen)

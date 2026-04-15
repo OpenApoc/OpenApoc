@@ -16,9 +16,6 @@
 [submodule "dependencies/lodepng"]
 	path = dependencies/lodepng
 	url = https://github.com/lvandeve/lodepng.git
-[submodule "dependencies/lua"]
-	path = dependencies/lua
-	url = https://github.com/lua/lua.git
 [submodule "dependencies/fmt"]
 	path = dependencies/fmt
 	url = https://github.com/fmtlib/fmt.git

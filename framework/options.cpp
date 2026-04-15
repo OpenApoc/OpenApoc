@@ -151,8 +151,6 @@ void dumpOptionsToLog()
 	dumpOption(optionRaidHostileAction);
 	dumpOption(optionInvulnerableRoads);
 
-	dumpOption(optionScriptsList);
-
 	dumpOption(optionInfiniteAmmoCheat);
 	dumpOption(optionDamageInflictedMultiplierCheat);
 	dumpOption(optionDamageReceivedMultiplierCheat);
@@ -471,9 +469,6 @@ ConfigOptionBool optionRaidHostileAction("OpenApoc.Mod", "RaidHostileAction",
                                          tr("Initiating raid hurts relationships"), false);
 ConfigOptionBool optionInvulnerableRoads("OpenApoc.Mod", "InvulnerableRoads",
                                          tr("(MOD) Invulnerable roads"), false);
-
-ConfigOptionString optionScriptsList("OpenApoc.Mod", "ScriptsList",
-                                     tr("Semicolon-separated list of scripts to load"), "");
 
 ConfigOptionBool optionInfiniteAmmoCheat("OpenApoc.Cheat", "InfiniteAmmo",
                                          tr("Infinite ammo for X-Com agents and vehicles"), false);

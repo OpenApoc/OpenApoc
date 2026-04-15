@@ -47,8 +47,6 @@ std::optional<ModInfo> ModInfo::getInfo(const UString &path)
 	info.setDataPath(readNode("datapath", infoNode));
 	info.setStatePath(readNode("statepath", infoNode));
 	info.setMinVersion(readNode("minversion", infoNode));
-	info.setModLoadScript(readNode("modloadscript", infoNode));
-
 	auto difficultySubmodsNode = infoNode.child("difficulty_submods");
 	if (difficultySubmodsNode)
 	{
@@ -151,7 +149,6 @@ bool ModInfo::writeInfo(const UString &path)
 	infoNode.append_child("datapath").text() = dataPath.c_str();
 	infoNode.append_child("statepath").text() = statePath.c_str();
 	infoNode.append_child("minversion").text() = minVersion.c_str();
-	infoNode.append_child("modloadscript").text() = modLoadScript.c_str();
 
 	auto difficultySubmodsNode = infoNode.append_child("difficulty_submods");
 	for (const auto &entry : difficultySubmods)

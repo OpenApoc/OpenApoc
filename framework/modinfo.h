@@ -22,7 +22,6 @@ class ModInfo
 	UString dataPath;
 	UString statePath;
 	UString minVersion;
-	UString modLoadScript;
 	std::map<int, UString> difficultySubmods;
 
   public:
@@ -83,9 +82,6 @@ class ModInfo
 
 	static std::optional<ModInfo> getInfo(const UString &path);
 	bool writeInfo(const UString &path);
-
-	const UString &getModLoadScript() const { return modLoadScript; }
-	void setModLoadScript(const UString &newScript) { modLoadScript = newScript; }
 
 	// A map of difficulty level -> gamestate-patch path (physfs-relative, looked up via
 	// fw().data->fs.resolvePath and loaded via GameState::appendGameState). The entry

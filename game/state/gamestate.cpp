@@ -43,7 +43,7 @@
 namespace OpenApoc
 {
 
-GameState::GameState() : player(this) { luaGameState.init(*this); }
+GameState::GameState() : player(this) {}
 
 GameState::~GameState()
 {
@@ -268,7 +268,7 @@ void GameState::initState()
 	skipTurboCalculations = config().getBool("OpenApoc.NewFeature.SkipTurboMovement");
 }
 
-void GameState::applyMods() { luaGameState.callHook("applyMods", 0, 0); }
+void GameState::applyMods() {}
 
 void GameState::setCurrentCity(StateRef<City> city)
 {
@@ -535,8 +535,6 @@ void GameState::startGame()
 		LogInfo("Seeding game RNG with {0}", seed);
 		rng.seed(seed);
 	}
-
-	luaGameState.callHook("newGame", 0, 0);
 
 	agentEquipmentTemplates.resize(10);
 
@@ -1328,7 +1326,6 @@ void GameState::updateEndOfDay()
 		c.second->dailyLoop(*this);
 	}
 
-	luaGameState.callHook("updateEndOfDay", 0, 0);
 	// Check if today is the first day of the week (monday).
 	// In that case, do not show the daily report as it's already part of the weekly report
 	// event
@@ -1460,8 +1457,6 @@ void GameState::updateEndOfWeek(bool gameStart)
 
 	updateUfoGrowth();
 	updateItemMarket();
-
-	luaGameState.callHook("updateEndOfWeek", 0, 0);
 
 	fw().pushEvent(new GameEvent(GameEventType::WeeklyReport));
 	weeklyPlayerUpdate();
@@ -1865,8 +1860,6 @@ void GameState::loadMods()
 			}
 		}
 
-		const auto &modLoadScript = modInfo.getModLoadScript();
-
 		auto _language = getModLanguageInfo(modInfo);
 		LogInfo("Loading mod language");
 		if (_language)
@@ -1897,13 +1890,6 @@ void GameState::loadMods()
 				LogError("Failed to load difficulty-{0} submod \"{1}\" for mod \"{2}\"",
 				         this->difficulty, difficultySubmodPath, modInfo.getID());
 			}
-		}
-
-		if (!modLoadScript.empty())
-		{
-			LogInfo("Executing modLoad script \"{0}\" for mod \"{1}\"", modLoadScript,
-			        modInfo.getID());
-			this->luaGameState.runScript(modLoadScript);
 		}
 	}
 }

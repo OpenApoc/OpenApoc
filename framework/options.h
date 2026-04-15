@@ -129,8 +129,6 @@ extern ConfigOptionBool optionStunHostileAction;
 extern ConfigOptionBool optionRaidHostileAction;
 extern ConfigOptionBool optionInvulnerableRoads;
 
-extern ConfigOptionString optionScriptsList;
-
 extern ConfigOptionBool optionInfiniteAmmoCheat;
 extern ConfigOptionFloat optionDamageInflictedMultiplierCheat;
 extern ConfigOptionFloat optionDamageReceivedMultiplierCheat;
