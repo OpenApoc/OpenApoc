@@ -473,8 +473,7 @@ ConfigOptionBool optionInvulnerableRoads("OpenApoc.Mod", "InvulnerableRoads",
                                          tr("(MOD) Invulnerable roads"), false);
 
 ConfigOptionString optionScriptsList("OpenApoc.Mod", "ScriptsList",
-                                     tr("Semicolon-separated list of scripts to load"),
-                                     "scripts/openapoc_base.lua;");
+                                     tr("Semicolon-separated list of scripts to load"), "");
 
 ConfigOptionBool optionInfiniteAmmoCheat("OpenApoc.Cheat", "InfiniteAmmo",
                                          tr("Infinite ammo for X-Com agents and vehicles"), false);
