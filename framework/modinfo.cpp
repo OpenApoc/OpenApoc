@@ -49,6 +49,46 @@ std::optional<ModInfo> ModInfo::getInfo(const UString &path)
 	info.setMinVersion(readNode("minversion", infoNode));
 	info.setModLoadScript(readNode("modloadscript", infoNode));
 
+	auto difficultySubmodsNode = infoNode.child("difficulty_submods");
+	if (difficultySubmodsNode)
+	{
+		std::map<int, UString> submods;
+		for (const auto &node : difficultySubmodsNode.children("entry"))
+		{
+			auto diffAttr = node.attribute("difficulty");
+			if (!diffAttr)
+			{
+				LogWarning(
+				    "difficulty_submods entry in ModInfo at \"{0}\" missing 'difficulty' attribute",
+				    filePath);
+				continue;
+			}
+			const int difficulty = diffAttr.as_int(-1);
+			if (difficulty < 0)
+			{
+				LogWarning(
+				    "difficulty_submods entry in ModInfo at \"{0}\" has invalid difficulty \"{1}\"",
+				    filePath, diffAttr.value());
+				continue;
+			}
+			const UString path = node.text().get();
+			if (path.empty())
+			{
+				LogWarning("difficulty_submods entry for difficulty {0} in ModInfo at \"{1}\" has "
+				           "empty path",
+				           difficulty, filePath);
+				continue;
+			}
+			if (!submods.emplace(difficulty, path).second)
+			{
+				LogWarning("difficulty_submods in ModInfo at \"{0}\" has duplicate entry for "
+				           "difficulty {1}",
+				           filePath, difficulty);
+			}
+		}
+		info.setDifficultySubmods(std::move(submods));
+	}
+
 	auto requiresNode = infoNode.child("requires");
 	if (requiresNode)
 	{
@@ -112,6 +152,14 @@ bool ModInfo::writeInfo(const UString &path)
 	infoNode.append_child("statepath").text() = statePath.c_str();
 	infoNode.append_child("minversion").text() = minVersion.c_str();
 	infoNode.append_child("modloadscript").text() = modLoadScript.c_str();
+
+	auto difficultySubmodsNode = infoNode.append_child("difficulty_submods");
+	for (const auto &entry : difficultySubmods)
+	{
+		auto entryNode = difficultySubmodsNode.append_child("entry");
+		entryNode.append_attribute("difficulty").set_value(entry.first);
+		entryNode.text() = entry.second.c_str();
+	}
 
 	auto requiresNode = infoNode.append_child("requires");
 	for (const auto &requirement : _requirements)

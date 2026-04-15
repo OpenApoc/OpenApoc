@@ -3,6 +3,7 @@
 #include "library/strings.h"
 
 #include <list>
+#include <map>
 #include <optional>
 
 namespace OpenApoc
@@ -22,6 +23,7 @@ class ModInfo
 	UString statePath;
 	UString minVersion;
 	UString modLoadScript;
+	std::map<int, UString> difficultySubmods;
 
   public:
 	struct ModLanguage
@@ -84,6 +86,16 @@ class ModInfo
 
 	const UString &getModLoadScript() const { return modLoadScript; }
 	void setModLoadScript(const UString &newScript) { modLoadScript = newScript; }
+
+	// A map of difficulty level -> gamestate-patch path (physfs-relative, looked up via
+	// fw().data->fs.resolvePath and loaded via GameState::appendGameState). The entry
+	// matching the chosen difficulty (if any) is applied after the mod's base gamestate
+	// and language patch.
+	const std::map<int, UString> &getDifficultySubmods() const { return difficultySubmods; }
+	void setDifficultySubmods(std::map<int, UString> newMap)
+	{
+		difficultySubmods = std::move(newMap);
+	}
 
 	const std::list<ModLanguage> getSupportedLanguages() const { return supported_languages; }
 	void setSupportedLanguages(const std::list<ModLanguage> &newLanguages)

@@ -1756,6 +1756,20 @@ void GameState::loadMods()
 		}
 		LogInfo("Loading mod language complete");
 
+		const auto &difficultySubmods = modInfo.getDifficultySubmods();
+		const auto difficultySubmodIt = difficultySubmods.find(this->difficulty);
+		if (difficultySubmodIt != difficultySubmods.end())
+		{
+			const auto &difficultySubmodPath = difficultySubmodIt->second;
+			LogInfo("Loading difficulty-{0} submod \"{1}\" for mod \"{2}\"", this->difficulty,
+			        difficultySubmodPath, modInfo.getID());
+			if (!this->appendGameState(difficultySubmodPath))
+			{
+				LogError("Failed to load difficulty-{0} submod \"{1}\" for mod \"{2}\"",
+				         this->difficulty, difficultySubmodPath, modInfo.getID());
+			}
+		}
+
 		if (!modLoadScript.empty())
 		{
 			LogInfo("Executing modLoad script \"{0}\" for mod \"{1}\"", modLoadScript,
