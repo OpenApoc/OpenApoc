@@ -149,13 +149,7 @@ void dumpOptionsToLog()
 
 	dumpOption(optionStunHostileAction);
 	dumpOption(optionRaidHostileAction);
-	dumpOption(optionBSKLauncherSound);
 	dumpOption(optionInvulnerableRoads);
-	dumpOption(optionATVTank);
-
-	dumpOption(optionATVAPC);
-
-	dumpOption(optionCrashingVehicles);
 
 	dumpOption(optionScriptsList);
 
@@ -475,19 +469,8 @@ ConfigOptionBool optionStunHostileAction("OpenApoc.Mod", "StunHostileAction",
                                          tr("Stunning hurts relationships"), false);
 ConfigOptionBool optionRaidHostileAction("OpenApoc.Mod", "RaidHostileAction",
                                          tr("Initiating raid hurts relationships"), false);
-ConfigOptionBool optionBSKLauncherSound("OpenApoc.Mod", "BSKLauncherSound",
-                                        tr("(MOD) Original Brainsucker Launcher SFX"), true);
 ConfigOptionBool optionInvulnerableRoads("OpenApoc.Mod", "InvulnerableRoads",
                                          tr("(MOD) Invulnerable roads"), false);
-ConfigOptionBool optionATVTank("OpenApoc.Mod", "ATVTank", tr("(MOD) Griffon becomes All-Terrain"),
-                               true);
-
-ConfigOptionBool optionATVAPC("OpenApoc.Mod", "ATVAPC",
-                              tr("(MOD) Wolfhound APC becomes All-Terrain"), true);
-
-ConfigOptionBool optionCrashingVehicles(
-    "OpenApoc.Mod", "CrashingVehicles",
-    tr("Vehicles crash on low HP (Weapons and Modules may be lost in crash)"), false);
 
 ConfigOptionString optionScriptsList("OpenApoc.Mod", "ScriptsList",
                                      tr("Semicolon-separated list of scripts to load"),

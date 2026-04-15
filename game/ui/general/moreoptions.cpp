@@ -50,10 +50,7 @@ static const std::list<std::pair<UString, UString>> cityscapeList = {
     {"OpenApoc.Mod", "MaxTileRepair"},
     {"OpenApoc.Mod", "SceneryRepairCostFactor"},
     {"OpenApoc.Mod", "RaidHostileAction"},
-    {"OpenApoc.Mod", "CrashingVehicles"},
     {"OpenApoc.Mod", "InvulnerableRoads"},
-    {"OpenApoc.Mod", "ATVTank"},
-    {"OpenApoc.Mod", "ATVAPC"},
 };
 
 static const std::list<std::pair<UString, UString>> battlescapeList = {
@@ -72,7 +69,6 @@ static const std::list<std::pair<UString, UString>> battlescapeList = {
     {"OpenApoc.NewFeature", "SingleSquadSelect"},
     {"OpenApoc.NewFeature", "LoadSameAmmo"},
     {"OpenApoc.Mod", "StunHostileAction"},
-    {"OpenApoc.Mod", "BSKLauncherSound"},
 };
 
 // TODO: Implement vanilla mode
