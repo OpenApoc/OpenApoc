@@ -1336,6 +1336,8 @@ void GameState::updateEndOfDay()
 		fw().pushEvent(new GameEvent(GameEventType::DailyReport));
 }
 
+// Spawns alien reinforcements in CITYMAP_ALIEN based on the weekly UFO_GROWTH_<week> list,
+// capped by UFO_GROWTH_LIMIT minus the alien fleet already present.
 void GameState::updateUfoGrowth()
 {
 	const int week = static_cast<int>(this->gameTime.getWeek());
@@ -1412,11 +1414,52 @@ void GameState::updateUfoGrowth()
 	}
 }
 
+// Runs the weekly market simulation across vehicle_types, vehicle_equipment, vehicle_ammo
+// and agent_equipment, updating stock and price per item via EconomyInfo::update.
+void GameState::updateEconomy()
+{
+	std::vector<UString> newItems;
+
+	const auto processMap = [this, &newItems](const auto &map)
+	{
+		for (const auto &entry : map)
+		{
+			const UString &id = entry.first;
+			const auto &item = entry.second;
+			const auto econIt = this->economy.find(id);
+			if (econIt == this->economy.end())
+			{
+				continue;
+			}
+			const bool xcom = item->manufacturer == this->player;
+			if (econIt->second.update(*this, xcom))
+			{
+				newItems.push_back(id);
+			}
+		}
+	};
+
+	processMap(this->vehicle_types);
+	processMap(this->vehicle_equipment);
+	processMap(this->vehicle_ammo);
+	processMap(this->agent_equipment);
+
+	if (!newItems.empty())
+	{
+		LogInfo("New items available this week:");
+		for (const auto &id : newItems)
+		{
+			LogInfo("  {0}", id);
+		}
+	}
+}
+
 void GameState::updateEndOfWeek(bool gameStart)
 {
 	updateHumanEconomy();
 
 	updateUfoGrowth();
+	updateEconomy();
 
 	luaGameState.callHook("updateEndOfWeek", 0, 0);
 
