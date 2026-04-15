@@ -37,6 +37,7 @@
 #include "game/state/tilemap/tilemap.h"
 #include "game/state/tilemap/tileobject_vehicle.h"
 #include "library/strings_format.h"
+#include <ctime>
 #include <random>
 
 namespace OpenApoc
@@ -528,6 +529,13 @@ void GameState::fillOrgStartingProperty()
 
 void GameState::startGame()
 {
+	if (config().getBool("OpenApoc.NewFeature.SeedRng"))
+	{
+		const auto seed = static_cast<uint64_t>(std::time(nullptr));
+		LogInfo("Seeding game RNG with {0}", seed);
+		rng.seed(seed);
+	}
+
 	luaGameState.callHook("newGame", 0, 0);
 
 	agentEquipmentTemplates.resize(10);
