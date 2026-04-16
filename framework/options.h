@@ -18,7 +18,6 @@ extern ConfigOptionInt audioMusicGainOption;
 extern ConfigOptionInt audioConcurrentSampleCount;
 extern ConfigOptionInt screenWidthOption;
 extern ConfigOptionInt screenHeightOption;
-extern ConfigOptionBool screenFullscreenOption;
 extern ConfigOptionString screenModeOption;
 extern ConfigOptionInt screenDisplayNumberOption;
 extern ConfigOptionInt screenScaleXOption;
@@ -35,7 +34,6 @@ extern ConfigOptionBool autoScrollOption;
 extern ConfigOptionBool actionMusicOption;
 extern ConfigOptionBool autoExecuteOption;
 extern ConfigOptionInt toolTipDelay;
-extern ConfigOptionBool vanillaToggle;
 
 extern ConfigOptionBool optionPauseOnUfoSpotted;
 extern ConfigOptionBool optionPauseOnVehicleLightDamage;
@@ -91,7 +89,6 @@ extern ConfigOptionBool optionPayloadExplosion;
 extern ConfigOptionBool optionDisplayUnitPaths;
 extern ConfigOptionBool optionAdditionalUnitIcons;
 extern ConfigOptionBool optionAllowForceFiringParallel;
-extern ConfigOptionBool optionRequireLOSToMaintainPsi;
 extern ConfigOptionBool optionAllowAttackingOwnedVehicles;
 extern ConfigOptionBool optionCallExistingFerry;
 extern ConfigOptionBool optionAlternateVehicleShieldSound;
@@ -149,9 +146,6 @@ extern ConfigOptionInt backtraceLogLevelOption;
 extern ConfigOptionInt dialogLogLevelOption;
 
 extern ConfigOptionString defaultTooltipFont;
-
-extern ConfigOptionBool enableTrace;
-extern ConfigOptionString traceFile;
 
 extern ConfigOptionString saveDirOption;
 extern ConfigOptionBool packSaveOption;
