@@ -40,7 +40,6 @@ void dumpOptionsToLog()
 	dumpOption(audioConcurrentSampleCount);
 	dumpOption(screenWidthOption);
 	dumpOption(screenHeightOption);
-	dumpOption(screenFullscreenOption);
 	dumpOption(screenModeOption);
 	dumpOption(screenDisplayNumberOption);
 	dumpOption(screenScaleXOption);
@@ -57,7 +56,6 @@ void dumpOptionsToLog()
 	dumpOption(actionMusicOption);
 	dumpOption(autoExecuteOption);
 	dumpOption(toolTipDelay);
-	dumpOption(vanillaToggle);
 
 	dumpOption(optionPauseOnUfoSpotted);
 	dumpOption(optionPauseOnVehicleLightDamage);
@@ -113,7 +111,6 @@ void dumpOptionsToLog()
 	dumpOption(optionDisplayUnitPaths);
 	dumpOption(optionAdditionalUnitIcons);
 	dumpOption(optionAllowForceFiringParallel);
-	dumpOption(optionRequireLOSToMaintainPsi);
 	dumpOption(optionAllowAttackingOwnedVehicles);
 	dumpOption(optionCallExistingFerry);
 	dumpOption(optionAlternateVehicleShieldSound);
@@ -172,9 +169,6 @@ void dumpOptionsToLog()
 
 	dumpOption(defaultTooltipFont);
 
-	dumpOption(enableTrace);
-	dumpOption(traceFile);
-
 	dumpOption(saveDirOption);
 	dumpOption(packSaveOption);
 
@@ -227,8 +221,6 @@ ConfigOptionInt screenWidthOption("Framework.Screen", "Width",
                                   tr("Initial screen width (in pixels)"), 1280);
 ConfigOptionInt screenHeightOption("Framework.Screen", "Height",
                                    tr("Initial screen height (in pixels)"), 720);
-ConfigOptionBool screenFullscreenOption("Framework.Screen", "Fullscreen",
-                                        tr("Deprecated: use ScreenMode instead"), false);
 ConfigOptionString screenModeOption("Framework.Screen", "Mode",
                                     tr("Mode: {windowed,fullscreen,borderless}"), "windowed");
 ConfigOptionInt screenDisplayNumberOption("Framework.Screen", "Display",
@@ -264,7 +256,6 @@ ConfigOptionBool
 ConfigOptionInt toolTipDelay("Options.Misc", "ToolTipDelay",
                              tr("Delay in milliseconds before showing tooltips (<= 0 to disable)"),
                              500);
-ConfigOptionBool vanillaToggle("Options.Misc", "VanillaToggle", tr("Toggle vanilla mode"), false);
 
 ConfigOptionBool optionPauseOnUfoSpotted("Notifications.City", "UfoSpotted", tr("UFO spotted"),
                                          true);
@@ -378,8 +369,6 @@ ConfigOptionBool optionAdditionalUnitIcons("OpenApoc.NewFeature", "AdditionalUni
 ConfigOptionBool optionAllowForceFiringParallel("OpenApoc.NewFeature", "AllowForceFiringParallel",
                                                 tr("Allow force-firing parallel to the ground"),
                                                 true);
-ConfigOptionBool optionRequireLOSToMaintainPsi("OpenApoc.NewFeature", "RequireLOSToMaintainPsi",
-                                               tr("Require LOS to maintain psi attack"), false);
 ConfigOptionBool optionAllowAttackingOwnedVehicles("OpenApoc.NewFeature",
                                                    "AllowAttackingOwnedVehicles",
                                                    tr("Allow attacking owned vehicles"), true);
@@ -521,10 +510,6 @@ ConfigOptionInt dialogLogLevelOption(
 
 ConfigOptionString defaultTooltipFont("Forms", "TooltipFont", tr("The default tooltip font"),
                                       "smallset");
-
-ConfigOptionBool enableTrace("Trace", "enable", tr("Enable json call/time tracking"));
-ConfigOptionString traceFile("Trace", "outputFile", tr("File to output trace json to"),
-                             "openapoc.trace");
 
 ConfigOptionString saveDirOption("Game.Save", "Directory", tr("Directory containing saved games"),
                                  "./saves");

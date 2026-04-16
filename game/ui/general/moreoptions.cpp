@@ -61,7 +61,6 @@ static const std::list<std::pair<UString, UString>> battlescapeList = {
     {"OpenApoc.NewFeature", "PayloadExplosion"},
     {"OpenApoc.NewFeature", "DisplayUnitPaths"},
     {"OpenApoc.NewFeature", "AllowForceFiringParallel"},
-    {"OpenApoc.NewFeature", "RequireLOSToMaintainPsi"},
     {"OpenApoc.NewFeature", "AlternateVehicleShieldSound"},
     {"OpenApoc.NewFeature", "RunAndKneel"},
     {"OpenApoc.NewFeature", "AutoReload"},
@@ -561,9 +560,6 @@ void MoreOptions::begin()
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 	loadLists();
 
-	// TODO: Implement vanilla mode
-	// menuform->findControlTyped<CheckBox>("VANILLA_TOGGLE")
-	//    ->setChecked(config().getBool("Options.Misc.VanillaToggle"));
 	// Left side
 	menuform->findControlTyped<CheckBox>("DEBUGVIS_TOGGLE")
 	    ->setChecked(config().getBool("OpenApoc.NewFeature.DebugCommandsVisible"));
@@ -588,9 +584,6 @@ void MoreOptions::resume() {}
 
 void MoreOptions::finish()
 {
-	// TODO: Implement vanilla mode
-	// config().set("Options.Misc.VanillaToggle",
-	//             menuform->findControlTyped<CheckBox>("VANILLA_TOGGLE")->isChecked());
 	config().set("OpenApoc.NewFeature.DebugCommandsVisible",
 	             menuform->findControlTyped<CheckBox>("DEBUGVIS_TOGGLE")->isChecked());
 	config().set("OpenApoc.NewFeature.NoScrollSounds",
