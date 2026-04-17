@@ -116,6 +116,7 @@ add_subdirectory(game/state)
 add_subdirectory(game/ui)
 add_subdirectory(tools)
 add_subdirectory(dependencies)
+add_subdirectory(data/mods/crashing_vehicles)
 
 if (WIN32)
 	set(sources ${sources} "apocicon.rc")
