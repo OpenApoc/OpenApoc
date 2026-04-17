@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<openapoc_modinfo>
+	<name>Crashing Vehicles</name>
+	<author>OpenApoc team</author>
+	<version>0.1</version>
+	<description>Non-UFO vehicles (X-COM craft, civilian traffic, road vehicles) no longer vanish when destroyed - they crash-land when their HP drops below roughly 1/7 of their maximum, the same way UFOs already do. Weapons and modules may be lost in the crash.</description>
+	<link>http://www.openapoc.org</link>
+	<id>org.openapoc.crashing_vehicles</id>
+	<datapath></datapath>
+	<statepath>crashing_vehicles_gamestate</statepath>
+	<minversion></minversion>
+	<difficulty_submods />
+	<requires>
+		<entry>org.openapoc.base</entry>
+	</requires>
+	<conflicts />
+	<languages />
+</openapoc_modinfo>
