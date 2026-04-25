@@ -252,8 +252,48 @@ void serializeIn(const GameState *state, SerializationNode *node, std::map<Key, 
 }
 
 template <typename Value>
-void serializeInSectionMap(const GameState *state, SerializationNode *node,
-                           std::map<UString, Value> &map)
+void serializeIn(const GameState *state, SerializationNode *node, StateRefMap<Value> &map)
+{
+	if (!node)
+		return;
+
+	const auto delete_map = (node->getAttribute("op") == DELETE_OP_ATTRIBUTE);
+	if (delete_map)
+	{
+		map.clear();
+	}
+	auto entry = node->getNodeOpt("entry");
+	while (entry)
+	{
+		UString key;
+		const auto keyNode = entry->getNodeReq("key");
+		serializeIn(state, keyNode, key);
+
+		const auto delete_node = (entry->getAttribute("op") == DELETE_OP_ATTRIBUTE);
+
+		if (delete_node)
+		{
+			map.erase(key);
+		}
+
+		const auto valueNode = entry->getNodeOpt("value");
+		if (valueNode)
+		{
+			if (map.find(key) == map.end())
+			{
+				map.insert(std::make_pair(key, mksp<Value>()));
+			}
+			auto &value = map[key];
+			LogAssert(value);
+			serializeIn(state, valueNode, *value);
+		}
+
+		entry = entry->getNextSiblingOpt("entry");
+	}
+}
+
+template <typename Value>
+void serializeInSectionMap(const GameState *state, SerializationNode *node, StateRefMap<Value> &map)
 {
 	if (!node)
 		return;
@@ -278,9 +318,13 @@ void serializeInSectionMap(const GameState *state, SerializationNode *node,
 		const auto sectionNode = entry->getSectionOpt(key.c_str());
 		if (sectionNode)
 		{
-
+			if (map.find(key) == map.end())
+			{
+				map.insert(std::make_pair(key, mksp<Value>()));
+			}
 			auto &value = map[key];
-			serializeIn(state, sectionNode, value);
+			LogAssert(value);
+			serializeIn(state, sectionNode, *value);
 		}
 
 		entry = entry->getNextSiblingOpt("entry");
@@ -549,7 +593,7 @@ template <typename T>
 void serializeOut(SerializationNode *node, const StateRefMap<T> &map, const StateRefMap<T> &ref)
 {
 	const UString defaultKey{};
-	const sp<T> defaultValue{};
+	const T defaultValue{};
 	if (map.empty() && !ref.empty())
 	{
 		node->setAttribute("op", DELETE_OP_ATTRIBUTE);
@@ -560,11 +604,11 @@ void serializeOut(SerializationNode *node, const StateRefMap<T> &map, const Stat
 		auto refIt = ref.find(pair.first);
 		if (refIt != ref.end())
 		{
-			if (refIt->second != pair.second)
+			if (*refIt->second != *pair.second)
 			{
 				auto entry = node->addNode("entry");
 				serializeOut(entry->addNode("key"), pair.first, defaultKey);
-				serializeOut(entry->addNode("value"), pair.second, refIt->second);
+				serializeOut(entry->addNode("value"), *pair.second, *refIt->second);
 			}
 			else
 			{
@@ -575,7 +619,7 @@ void serializeOut(SerializationNode *node, const StateRefMap<T> &map, const Stat
 		{
 			auto entry = node->addNode("entry");
 			serializeOut(entry->addNode("key"), pair.first, defaultKey);
-			serializeOut(entry->addNode("value"), pair.second, defaultValue);
+			serializeOut(entry->addNode("value"), *pair.second, defaultValue);
 		}
 	}
 	// Find any removed entries
@@ -592,8 +636,8 @@ void serializeOut(SerializationNode *node, const StateRefMap<T> &map, const Stat
 }
 
 template <typename Value>
-void serializeOutSectionMap(SerializationNode *node, const std::map<UString, Value> &map,
-                            const std::map<UString, Value> &ref)
+void serializeOutSectionMap(SerializationNode *node, const StateRefMap<Value> &map,
+                            const StateRefMap<Value> &ref)
 {
 	const UString defaultKey{};
 	const Value defaultValue{};
@@ -607,11 +651,11 @@ void serializeOutSectionMap(SerializationNode *node, const std::map<UString, Val
 		auto refIt = ref.find(pair.first);
 		if (refIt != ref.end())
 		{
-			if (refIt->second != pair.second)
+			if (*refIt->second != *pair.second)
 			{
 				auto entry = node->addNode("entry");
 				serializeOut(entry->addNode("key"), pair.first, defaultKey);
-				serializeOut(entry->addSection(pair.first.c_str()), pair.second, refIt->second);
+				serializeOut(entry->addSection(pair.first.c_str()), *pair.second, *refIt->second);
 			}
 			else
 			{
@@ -622,7 +666,7 @@ void serializeOutSectionMap(SerializationNode *node, const std::map<UString, Val
 		{
 			auto entry = node->addNode("entry");
 			serializeOut(entry->addNode("key"), pair.first, defaultKey);
-			serializeOut(entry->addSection(pair.first.c_str()), pair.second, defaultValue);
+			serializeOut(entry->addSection(pair.first.c_str()), *pair.second, defaultValue);
 		}
 	}
 	// Find any removed entries
