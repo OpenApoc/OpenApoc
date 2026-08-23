@@ -90,6 +90,16 @@ function (add_extractor TARGET_LIST EXTRACTOR_NAME)
 			string(REGEX REPLACE "^data/" "" OUTPUT_RELATIVE_NAME "${OUTPUT_NAME}")
 			list(APPEND EXTRACTOR_OUTPUT "${EXTRACTED_DATA_DIR}/${OUTPUT_RELATIVE_NAME}")
 	endforeach()
+	set(BASE_PLAYLIST_SOURCES
+		${CMAKE_SOURCE_DIR}/data/mods/base/data/playlists/action.xml
+		${CMAKE_SOURCE_DIR}/data/mods/base/data/playlists/alien.xml
+		${CMAKE_SOURCE_DIR}/data/mods/base/data/playlists/city.xml
+		${CMAKE_SOURCE_DIR}/data/mods/base/data/playlists/tactical.xml)
+	foreach (PLAYLIST_SOURCE ${BASE_PLAYLIST_SOURCES})
+			get_filename_component(PLAYLIST_NAME ${PLAYLIST_SOURCE} NAME)
+			list(APPEND EXTRACTOR_OUTPUT
+				${EXTRACTED_DATA_DIR}/mods/base/data/playlists/${PLAYLIST_NAME})
+	endforeach()
 	add_custom_command(OUTPUT
 		${EXTRACTOR_OUTPUT}
 		COMMAND
@@ -100,7 +110,11 @@ function (add_extractor TARGET_LIST EXTRACTOR_NAME)
 		--Framework.Data=${CMAKE_SOURCE_DIR}/data
 		--Extractor.output=${EXTRACTED_DATA_DIR}
 		--Extractor.extract=${EXTRACTOR_NAME}
-		DEPENDS OpenApoc_DataExtractor
+		COMMAND
+		${CMAKE_COMMAND} -E copy_directory
+		${CMAKE_SOURCE_DIR}/data/mods/base/data/playlists
+		${EXTRACTED_DATA_DIR}/mods/base/data/playlists
+		DEPENDS OpenApoc_DataExtractor ${BASE_PLAYLIST_SOURCES}
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 		VERBATIM)
 	set(${TARGET_LIST} ${${TARGET_LIST}} ${EXTRACTOR_OUTPUT} PARENT_SCOPE)
