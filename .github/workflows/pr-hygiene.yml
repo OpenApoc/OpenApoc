@@ -1,0 +1,17 @@
+name: PR Hygiene
+
+on: [pull_request]
+
+jobs:
+  fork-local-files:
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Reject fork-local planning files
+      run: |
+        if [ -e plans ]; then
+          echo "::error::plans/ is fork-local and must be removed before opening an upstream PR."
+          exit 1
+        fi
