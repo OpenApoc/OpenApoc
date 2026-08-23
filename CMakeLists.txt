@@ -33,6 +33,8 @@ option(MSVC_PDB "Always generate PDB files" ON)
 option(ENABLE_TESTS "Build some unit tests" ON)
 option(USE_PCH "Enable precompiled header use during build" OFF)
 option(EXTRACT_DATA "Run the data extractor as part of the default target" ON)
+set(EXTRACTED_DATA_DIR ${CMAKE_BINARY_DIR}/data CACHE PATH
+	"Path for data generated during build")
 
 set(CD_PATH ${CMAKE_SOURCE_DIR}/data/cd.iso CACHE STRING "Path to cd.iso (used
 by test and extractor")
@@ -157,7 +159,7 @@ SET( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
 if (NOT APPLE)
 		install(TARGETS ${CMAKE_PROJECT_NAME}
 				RUNTIME DESTINATION bin)
-		install(DIRECTORY ${CMAKE_SOURCE_DIR}data/ DESTINATION share/OpenApoc)
+		install(DIRECTORY ${CMAKE_SOURCE_DIR}/data/ DESTINATION share/OpenApoc)
 endif()
 
 if(ENABLE_TESTS)
@@ -221,28 +223,24 @@ endif()
 
 if (XMLLINT_COMMAND)
 		foreach(XML_FILE ${XML_FILES})
-			add_custom_command(TARGET format-xml COMMAND
+			add_custom_command(TARGET format-xml POST_BUILD COMMAND
 				${XMLLINT_COMMAND} --format --encode UTF-8
-				${XML_FILE}	--output ${XML_FILE}
-				DEPENDS ${XML_FILE})
+				${XML_FILE}	--output ${XML_FILE})
 		endforeach()
 		foreach(FONT_FILE ${FONT_FILES})
-			add_custom_command(TARGET format-fonts COMMAND
+			add_custom_command(TARGET format-fonts POST_BUILD COMMAND
 				${XMLLINT_COMMAND} --format --encode UTF-8
-				${FONT_FILE} --output ${FONT_FILE}
-				DEPENDS ${FONT_FILE})
+				${FONT_FILE} --output ${FONT_FILE})
 		endforeach()
 		foreach(FORM_FILE ${FORM_FILES})
-			add_custom_command(TARGET format-forms COMMAND
+			add_custom_command(TARGET format-forms POST_BUILD COMMAND
 				${XMLLINT_COMMAND} --format --encode UTF-8
-				${FORM_FILE} --output ${FORM_FILE}
-				DEPENDS ${FORM_FILE})
+				${FORM_FILE} --output ${FORM_FILE})
 		endforeach()
 		foreach(ALIAS_FILE ${ALIAS_FILES})
-			add_custom_command(TARGET format-aliases COMMAND
+			add_custom_command(TARGET format-aliases POST_BUILD COMMAND
 				${XMLLINT_COMMAND} --format --encode UTF-8
-				${ALIAS_FILE} --output ${ALIAS_FILE}
-				DEPENDS ${ALIAS_FILE})
+				${ALIAS_FILE} --output ${ALIAS_FILE})
 		endforeach()
 else()
 	message("xmllint not found, disabling format-xml target")
@@ -287,7 +285,7 @@ if (GETTEXT_FOUND)
 		endforeach()
 		add_custom_target(update-translations DEPENDS pofiles)
 		foreach (LANG ${LANGUAGES})
-				add_custom_command(TARGET update-translations DEPENDS pofiles
+				add_custom_command(TARGET update-translations POST_BUILD
 						COMMAND ${CMAKE_COMMAND} -E copy
 						${CMAKE_BINARY_DIR}/openapoc_${LANG}.gmo
 						${CMAKE_SOURCE_DIR}/data/languages/${LANG}/LC_MESSAGES/openapoc.mo)

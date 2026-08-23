@@ -87,14 +87,18 @@ option(EXTRACT_DATA "Run the DataExtractor during build" ON)
 
 function (add_extractor TARGET_LIST EXTRACTOR_NAME)
 	foreach (OUTPUT_NAME ${ARGN})
-			list(APPEND EXTRACTOR_OUTPUT "${CMAKE_SOURCE_DIR}/${OUTPUT_NAME}")
+			string(REGEX REPLACE "^data/" "" OUTPUT_RELATIVE_NAME "${OUTPUT_NAME}")
+			list(APPEND EXTRACTOR_OUTPUT "${EXTRACTED_DATA_DIR}/${OUTPUT_RELATIVE_NAME}")
 	endforeach()
 	add_custom_command(OUTPUT
 		${EXTRACTOR_OUTPUT}
 		COMMAND
+		${CMAKE_COMMAND} -E make_directory ${EXTRACTED_DATA_DIR}
+		COMMAND
 		$<TARGET_FILE:OpenApoc_DataExtractor>
 		--Framework.CD=${CD_PATH}
 		--Framework.Data=${CMAKE_SOURCE_DIR}/data
+		--Extractor.output=${EXTRACTED_DATA_DIR}
 		--Extractor.extract=${EXTRACTOR_NAME}
 		DEPENDS OpenApoc_DataExtractor
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
@@ -115,5 +119,7 @@ add_custom_target(extract-data DEPENDS ${EXTRACTOR_TARGET_LIST})
 endif()
 
 if (APPLE)
-add_custom_command(TARGET extract-data POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/data ${CMAKE_BINARY_DIR}/bin/OpenApoc.app/Contents/Resources/data)
+add_custom_command(TARGET extract-data POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/data ${CMAKE_BINARY_DIR}/bin/OpenApoc.app/Contents/Resources/data
+	COMMAND ${CMAKE_COMMAND} -E copy_directory ${EXTRACTED_DATA_DIR} ${CMAKE_BINARY_DIR}/bin/OpenApoc.app/Contents/Resources/data)
 endif()
