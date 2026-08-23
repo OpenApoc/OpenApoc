@@ -55,6 +55,30 @@ jobs:
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config $BUILD_TYPE
 
+    - name: Check source data tree stays clean
+      shell: bash
+      run: |
+        dirty_generated_data="$(git status --short -- \
+          data/animationpacks \
+          data/bulletsprites \
+          data/gamestate_common \
+          data/imagepacks \
+          data/maps \
+          data/tilesets \
+          data/mods/base/base_gamestate \
+          data/mods/base/data/submods/org.openapoc.base/difficulty0 \
+          data/mods/base/data/submods/org.openapoc.base/difficulty1 \
+          data/mods/base/data/submods/org.openapoc.base/difficulty2 \
+          data/mods/base/data/submods/org.openapoc.base/difficulty3 \
+          data/mods/base/data/submods/org.openapoc.base/difficulty4 \
+          data/mods/base/modinfo.xml \
+          data/mods/crashing_vehicles/crashing_vehicles_gamestate)"
+        if [ -n "$dirty_generated_data" ]; then
+          echo "::error::Build wrote generated data into the source data tree."
+          echo "$dirty_generated_data"
+          exit 1
+        fi
+
     - name: Test
       working-directory: ${{runner.workspace}}/build
       shell: bash
