@@ -1,4 +1,5 @@
 #include "framework/framework.h"
+#include "framework/harness.h"
 #include "framework/ThreadPool/ThreadPool.h"
 #include "framework/apocresources/cursor.h"
 #include "framework/configfile.h"
@@ -80,6 +81,8 @@ class FrameworkPrivate
 
 	sp<Surface> scaleSurface;
 	up<ThreadPool> threadPool;
+	// Localhost command socket for automated play. Null unless Framework.Harness.Enable=1.
+	up<Harness> harness;
 
 	std::atomic<int> toolTipTimerId = 0;
 	up<Event> toolTipTimerEvent;
@@ -256,9 +259,36 @@ Framework::Framework(const UString programName, bool createWindow)
 	if (createWindow)
 	{
 		displayInitialise();
-		enableSDLDialogLogger(p->window);
+		// SDL_ShowSimpleMessageBox is modal and blocks the thread that calls it until somebody
+		// dismisses it, and Logger.dialogLevel defaults to Error -- so under the harness a single
+		// LogError deadlocks the main loop forever, taking the harness (which is polled from that
+		// same loop) down with it. Nobody is there to click OK on an automated run.
+		if (Options::harnessEnable.get())
+		{
+			LogInfo("Harness enabled: not installing the modal SDL dialog logger");
+		}
+		else
+		{
+			enableSDLDialogLogger(p->window);
+		}
 	}
 	audioInitialise(!createWindow);
+
+#if defined(__APPLE__) && TARGET_OS_IPHONE
+	if (Options::harnessEnable.get())
+	{
+		LogWarning("Framework.Harness is disabled on iOS");
+	}
+#else
+	if (Options::harnessEnable.get())
+	{
+		p->harness.reset(new Harness(Options::harnessPort.get()));
+		if (!p->harness->listening())
+		{
+			p->harness.reset();
+		}
+	}
+#endif
 }
 
 Framework::~Framework()
@@ -343,6 +373,11 @@ void Framework::run(sp<Stage> initialStage)
 			LogWarning("Over 5 frames behind - likely vsync limited?");
 		}
 
+		frameNumber++;
+		if (p->harness)
+		{
+			p->harness->poll(*this);
+		}
 		processEvents();
 
 		if (p->ProgramStages.isEmpty())
@@ -975,6 +1010,42 @@ bool Framework::displayHasWindow() const
 		return false;
 	if (!p->window)
 		return false;
+	return true;
+}
+
+void Framework::displaySetSize(Vec2<int> size)
+{
+	if (!p->window)
+	{
+		return;
+	}
+	// 640x480 is the game's own native resolution and the floor everything else is scaled from.
+	SDL_SetWindowSize(p->window, std::max(640, size.x), std::max(480, size.y));
+	// The OS window resizes; the render surface does not follow it yet, because that needs the
+	// resizable-viewport work which is a separate change. The harness RESIZE reply reports the
+	// dimensions actually in effect rather than the ones asked for, so a driver reading the reply
+	// sees the truth instead of a success that did nothing.
+}
+
+bool Framework::writeScreenshot(const UString &path)
+{
+	if (!p->defaultSurface || !p->defaultSurface->rendererPrivateData)
+	{
+		LogWarning("Screenshot requested before anything was drawn");
+		return false;
+	}
+	auto img = p->defaultSurface->rendererPrivateData->readBack();
+	if (!img)
+	{
+		LogWarning("Screenshot readBack returned no image");
+		return false;
+	}
+	if (!this->data->writeImage(path, img))
+	{
+		LogWarning("Failed to write screenshot \"{0}\"", path);
+		return false;
+	}
+	LogInfo("Wrote screenshot to \"{0}\"", path);
 	return true;
 }
 
