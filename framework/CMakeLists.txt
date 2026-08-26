@@ -6,6 +6,7 @@ option(DIALOG_ON_ERROR "Pop up a dialog box showing errors" ON)
 
 set (FRAMEWORK_SOURCE_FILES
 	configfile.cpp
+	harness.cpp
 	data.cpp
 	event.cpp
 	font.cpp
@@ -32,6 +33,7 @@ list(APPEND ALL_SOURCE_FILES ${FRAMEWORK_SOURCE_FILES})
 
 set (FRAMEWORK_HEADER_FILES
 	configfile.h
+	harness.h
 	data.h
 	event.h
 	font.h

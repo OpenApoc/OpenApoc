@@ -45,6 +45,10 @@ class ListBox : public Control
 	void unloadResources() override;
 
 	void setSelected(sp<Control> c);
+	// Select the item at `index` the way a mouse click does, raising ListBoxChangeSelected.
+	// setSelected() only assigns and marks dirty, so screens that react to selection never
+	// hear about it -- see the comment on the definition.
+	bool selectItemByIndex(size_t index);
 	sp<Control> getSelectedItem();
 	sp<Control> getHoveredItem();
 

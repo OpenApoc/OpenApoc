@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "control.h"
 
 namespace OpenApoc
@@ -7,6 +9,11 @@ namespace OpenApoc
 
 class Form : public Control
 {
+  public:
+	// Every Form currently constructed, in creation order. Registered here because there is no
+	// other way for a test harness to find the controls that are actually on screen -- with a
+	// resizable viewport and UI scaling, computing rects from the .form XML is not reliable.
+	static const std::vector<Form *> &liveForms();
 
   protected:
 	void onRender() override;

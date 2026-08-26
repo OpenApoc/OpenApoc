@@ -1,3 +1,4 @@
+#include "forms/harness_ui.h"
 #include "forms/ui.h"
 #include "framework/configfile.h"
 #include "framework/framework.h"
@@ -18,6 +19,9 @@ int main(int argc, char *argv[])
 
 	{
 		up<Framework> fw(new Framework(UString(argv[0]), true));
+
+		// Let the harness see the live control tree rather than guessing layout from XML.
+		registerFormsHarnessUI();
 
 		fw->run(mksp<BootUp>());
 
