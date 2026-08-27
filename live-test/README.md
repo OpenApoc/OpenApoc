@@ -2,7 +2,9 @@
 
 This directory is for running OpenApoc through the actual game executable, not only through unit tests.
 
-The intended harness is a TAS-style runner: a deterministic replay script drives the real SDL/OpenApoc event loop, while read-only probes collect facts from the running game and compare them with assertions. The goal is to catch regressions in UI flow, rendering, save/load, and gameplay state that CTest unit tests cannot exercise.
+The intended harness is an automated, scriptable QA layer for the real game executable. The engine exposes an opt-in local command socket, and an external TAS-style runner drives that socket with scenario scripts while probes, screenshots, logs, and save artifacts provide pass/fail evidence.
+
+The goal is to catch regressions in UI flow, rendering, save/load, and gameplay state that CTest unit tests cannot exercise.
 
 ## Layers
 
@@ -28,7 +30,7 @@ LIBGL_ALWAYS_SOFTWARE=1
 
 ### Game Runner
 
-The runner should execute the real game binary under a virtual display:
+The runner should execute the real game binary under a virtual display with the harness socket enabled:
 
 ```sh
 xvfb-run -s "-screen 0 1280x720x24" \
@@ -39,15 +41,31 @@ xvfb-run -s "-screen 0 1280x720x24" \
   --Framework.FrameLimit=1800 \
   --Game.SkipIntro=true \
   --Game.ASyncLoading=false \
-  --TAS.Script=tests/tas/load-cityscape.json \
-  --TAS.Artifacts=build/tas/load-cityscape
+  --Framework.Harness.Enable=1 \
+  --Framework.Harness.Port=17321
 ```
 
-The `TAS.*` options do not exist yet. They describe the proposed harness interface.
+The runner process owns the script, timeout, assertion, and artifact policy. The game process owns the live command/probe surface.
+
+### Engine Harness Socket
+
+When `Framework.Harness.Enable=1`, OpenApoc listens on a loopback-only command socket. Replies are one line, beginning with `OK` or `ERR`.
+
+Useful commands:
+
+- `STATUS`: current stage, display size, mouse position, port, and stage detail.
+- `CONTROLS` / `CONTROL <id> ...`: list and drive live named UI controls.
+- `UI [filter]`: dump the live control tree with resolved rectangles.
+- `CLICK`, `MOVE`, `DOWN`, `UP`, `SCROLL`, `KEY`, `TEXT`: raw input for nameless widgets.
+- `GS <query>`: read game-state probes through the game-layer query hook.
+- `SCREENSHOT <path>` and `SAVE <path>`: write debugging and state artifacts.
+- `RESIZE`, `HELP`, and `QUIT`.
+
+This is the engine-side control layer. It avoids host-level mouse automation while letting the QA runner address controls by name where possible, then fall back to raw input for map tiles and other nameless runtime widgets.
 
 ### TAS Script
 
-A TAS script should contain fixture setup, an input timeline, and assertions.
+A TAS script should contain fixture setup, socket commands, waits, and assertions.
 
 Example:
 
@@ -64,9 +82,10 @@ Example:
       "Config.Save": false
     }
   },
-  "timeline": [
-    {"frame": 1, "action": "wait_for_stage", "stage": "CityView", "timeout": 600},
-    {"frame": 601, "action": "screenshot", "name": "city-loaded.png"}
+  "steps": [
+    {"send": "STATUS", "until": {"field": "stage", "equals": "CityView"}, "timeout_ms": 10000},
+    {"send": "GS gamestate.current_city.exists", "expect": {"equals": "true"}},
+    {"send": "SCREENSHOT build/tas/load-cityscape/screenshots/city-loaded.png"}
   ],
   "assertions": [
     {"probe": "stage.name", "equals": "CityView"},
@@ -77,15 +96,15 @@ Example:
 }
 ```
 
-### Event Injection
+### Command Injection
 
-The runner should inject events inside the engine instead of using external mouse automation.
+The runner should drive the game through the harness socket instead of using external mouse automation.
 
-OpenApoc already translates SDL input into internal framework events and queues them through `Framework::pushEvent()`. TAS replay should create the same internal `KeyboardEvent`, `MouseEvent`, and `TextEvent` objects at deterministic frames. That keeps tests close to the real game while avoiding host focus and window-manager failures.
+The socket commands create the same internal `KeyboardEvent`, `MouseEvent`, and `TextEvent` objects and queue them through `Framework::pushEvent()`. Named `CONTROL` actions should be preferred for normal UI widgets because they fail loudly when a control is absent. Raw input remains available for map tiles and other nameless widgets.
 
 ### Probes
 
-Assertions should read from a small, stable read-only probe registry rather than from arbitrary object internals.
+Assertions should read from a small, stable probe surface rather than from arbitrary object internals. The current engine hook is `GS <query>`; over time, the query names should become the stable compatibility contract used by scripts.
 
 Useful first probes:
 
