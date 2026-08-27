@@ -1,6 +1,6 @@
 #include "form.h"
-#include "forms/harness_actions.h"
 #include "dependencies/pugixml/src/pugixml.hpp"
+#include "forms/harness_actions.h"
 #include "framework/data.h"
 #include "framework/framework.h"
 #include <algorithm>

@@ -8,9 +8,9 @@
 // framework/ cannot name Control (OpenApoc_Forms links OpenApoc_Framework, never the reverse), so
 // this lives here and installs itself into the framework's UI hook.
 
+#include "forms/harness_ui.h"
 #include "forms/control.h"
 #include "forms/form.h"
-#include "forms/harness_ui.h"
 #include "framework/harness.h"
 #include "library/strings_format.h"
 #include <algorithm>
@@ -72,8 +72,8 @@ UString dumpLiveUI(const UString &filter)
 		const auto pos = form->getLocationInUi();
 		if (filter.empty() || to_lower(form->Name).find(to_lower(filter)) != UString::npos)
 		{
-			const auto key = format("{0},{1},{2},{3},{4}", form->Name, pos.x, pos.y, form->Size.x,
-			                        form->Size.y);
+			const auto key =
+			    format("{0},{1},{2},{3},{4}", form->Name, pos.x, pos.y, form->Size.x, form->Size.y);
 			if (seen.insert(key).second)
 			{
 				if (count++ > 0)
