@@ -508,7 +508,10 @@ void Harness::poll(Framework &fw)
 		if (c.fd >= 0)
 		{
 			FD_SET(static_cast<HarnessSocket>(c.fd), &rfds);
-			maxFd = std::max(maxFd, c.fd);
+			if (c.fd > maxFd)
+			{
+				maxFd = c.fd;
+			}
 		}
 	}
 	timeval tv{};
