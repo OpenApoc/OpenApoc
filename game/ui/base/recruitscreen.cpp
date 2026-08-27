@@ -514,26 +514,7 @@ void RecruitScreen::executeOrders()
 				}
 				else
 				{
-					switch (agent->type->role)
-					{
-						case AgentType::Role::Physicist:
-						case AgentType::Role::BioChemist:
-						case AgentType::Role::Engineer:
-						{
-							if (agent->lab_assigned)
-							{
-								StateRef<Lab> lab{state.get(), agent->lab_assigned};
-								agent->lab_assigned->removeAgent(lab, agent);
-							}
-							agent->transfer(*state, bases[i]->building);
-							break;
-						}
-						case AgentType::Role::Soldier:
-						{
-							agent->transfer(*state, bases[i]->building);
-							break;
-						}
-					}
+					agent->transfer(*state, bases[i]->building);
 				}
 			}
 		}
