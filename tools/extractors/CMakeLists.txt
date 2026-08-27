@@ -90,16 +90,27 @@ function (add_extractor TARGET_LIST EXTRACTOR_NAME)
 			string(REGEX REPLACE "^data/" "" OUTPUT_RELATIVE_NAME "${OUTPUT_NAME}")
 			list(APPEND EXTRACTOR_OUTPUT "${EXTRACTED_DATA_DIR}/${OUTPUT_RELATIVE_NAME}")
 	endforeach()
-	set(BASE_PLAYLIST_SOURCES
-		${CMAKE_SOURCE_DIR}/data/mods/base/data/playlists/action.xml
-		${CMAKE_SOURCE_DIR}/data/mods/base/data/playlists/alien.xml
-		${CMAKE_SOURCE_DIR}/data/mods/base/data/playlists/city.xml
-		${CMAKE_SOURCE_DIR}/data/mods/base/data/playlists/tactical.xml)
-	foreach (PLAYLIST_SOURCE ${BASE_PLAYLIST_SOURCES})
-			get_filename_component(PLAYLIST_NAME ${PLAYLIST_SOURCE} NAME)
-			list(APPEND EXTRACTOR_OUTPUT
-				${EXTRACTED_DATA_DIR}/mods/base/data/playlists/${PLAYLIST_NAME})
-	endforeach()
+	get_filename_component(EXTRACTED_DATA_REALPATH ${EXTRACTED_DATA_DIR} REALPATH)
+	get_filename_component(SOURCE_DATA_REALPATH ${CMAKE_SOURCE_DIR}/data REALPATH)
+	set(BASE_PLAYLIST_SOURCES "")
+	set(PLAYLIST_COPY_COMMAND "")
+	if (NOT EXTRACTED_DATA_REALPATH STREQUAL SOURCE_DATA_REALPATH)
+		set(BASE_PLAYLIST_SOURCES
+			${CMAKE_SOURCE_DIR}/data/mods/base/data/playlists/action.xml
+			${CMAKE_SOURCE_DIR}/data/mods/base/data/playlists/alien.xml
+			${CMAKE_SOURCE_DIR}/data/mods/base/data/playlists/city.xml
+			${CMAKE_SOURCE_DIR}/data/mods/base/data/playlists/tactical.xml)
+		foreach (PLAYLIST_SOURCE ${BASE_PLAYLIST_SOURCES})
+				get_filename_component(PLAYLIST_NAME ${PLAYLIST_SOURCE} NAME)
+				list(APPEND EXTRACTOR_OUTPUT
+					${EXTRACTED_DATA_DIR}/mods/base/data/playlists/${PLAYLIST_NAME})
+		endforeach()
+		set(PLAYLIST_COPY_COMMAND
+			COMMAND
+			${CMAKE_COMMAND} -E copy_directory
+			${CMAKE_SOURCE_DIR}/data/mods/base/data/playlists
+			${EXTRACTED_DATA_DIR}/mods/base/data/playlists)
+	endif()
 	add_custom_command(OUTPUT
 		${EXTRACTOR_OUTPUT}
 		COMMAND
@@ -110,10 +121,7 @@ function (add_extractor TARGET_LIST EXTRACTOR_NAME)
 		--Framework.Data=${CMAKE_SOURCE_DIR}/data
 		--Extractor.output=${EXTRACTED_DATA_DIR}
 		--Extractor.extract=${EXTRACTOR_NAME}
-		COMMAND
-		${CMAKE_COMMAND} -E copy_directory
-		${CMAKE_SOURCE_DIR}/data/mods/base/data/playlists
-		${EXTRACTED_DATA_DIR}/mods/base/data/playlists
+		${PLAYLIST_COPY_COMMAND}
 		DEPENDS OpenApoc_DataExtractor ${BASE_PLAYLIST_SOURCES}
 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 		VERBATIM)
