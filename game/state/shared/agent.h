@@ -143,6 +143,8 @@ class Agent : public StateObject<Agent>,
 
 	StateRef<Lab> lab_assigned = nullptr;
 	bool isAssignedToLab() const { return lab_assigned != nullptr; }
+	/* Clear lab assignment and vehicle roster membership - used before transfer or removal */
+	void leaveLabAndCraft(GameState &state);
 
 	StateRef<BattleUnit> unit;
 

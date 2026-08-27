@@ -7,6 +7,7 @@
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/facility.h"
+#include "game/state/city/research.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gameevent.h"
 #include "game/state/gamestate.h"
@@ -410,13 +411,22 @@ void Agent::transfer(GameState &state, StateRef<Building> newHome)
 	homeBuilding = newHome;
 	recentlyHired = false;
 	recentlyTransferred = true;
+	leaveLabAndCraft(state);
+	setMission(state, AgentMission::gotoBuilding(state, *this, newHome, false, true));
+}
+
+void Agent::leaveLabAndCraft(GameState &state)
+{
+	auto thisRef = StateRef<Agent>{&state, shared_from_this()};
 	if (lab_assigned)
 	{
-		auto thisRef = StateRef<Agent>{&state, shared_from_this()};
-		lab_assigned->assigned_agents.remove(thisRef);
-		lab_assigned = nullptr;
+		Lab::removeAgent(lab_assigned, thisRef);
 	}
-	setMission(state, AgentMission::gotoBuilding(state, *this, newHome, false, true));
+	if (currentVehicle)
+	{
+		currentVehicle->currentAgents.erase(thisRef);
+		currentVehicle = nullptr;
+	}
 }
 
 sp<AEquipment> Agent::getArmor(BodyPart bodyPart) const
@@ -952,12 +962,9 @@ void Agent::die(GameState &state, bool silent)
 	// Set health to zero so agent will die on next update
 	modified_stats.health = 0;
 
-	// Remove from vehicle
-	if (currentVehicle)
-	{
-		currentVehicle->currentAgents.erase(thisRef);
-		currentVehicle = nullptr;
-	}
+	// Remove from lab and any craft roster
+	leaveLabAndCraft(state);
+
 	// Remove from building
 	if (currentBuilding)
 	{
@@ -968,13 +975,6 @@ void Agent::die(GameState &state, bool silent)
 	if (currentBuilding)
 	{
 		homeBuilding = nullptr;
-	}
-
-	// Remove from lab
-	if (lab_assigned)
-	{
-		lab_assigned->assigned_agents.remove(thisRef);
-		lab_assigned = nullptr;
 	}
 
 	// In city (if not died in a vehicle) we make an event
