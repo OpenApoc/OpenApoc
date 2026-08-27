@@ -7,8 +7,10 @@
 #include "game/state/city/city.h"
 #include "game/state/city/facility.h"
 #include "game/state/city/research.h"
+#include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/gamestate_serialize.h"
+#include "game/state/rules/city/vehicletype.h"
 #include "game/state/shared/agent.h"
 #include "library/strings.h"
 #include <iostream>
@@ -28,6 +30,22 @@ static OpenApoc::StateRef<OpenApoc::Agent> findScientist(OpenApoc::sp<OpenApoc::
 		}
 	}
 	LogWarning("No scientist found");
+	return {};
+}
+
+// Find a soldier agent owned by the player that isn't currently in a vehicle
+static OpenApoc::StateRef<OpenApoc::Agent> findFreeSoldier(OpenApoc::sp<OpenApoc::GameState> state)
+{
+	for (auto &agent : state->agents)
+	{
+		if (agent.second->owner == state->getPlayer() &&
+		    agent.second->type->role == OpenApoc::AgentType::Role::Soldier &&
+		    !agent.second->currentVehicle)
+		{
+			return {state.get(), agent.first};
+		}
+	}
+	LogWarning("No free soldier found");
 	return {};
 }
 
@@ -257,6 +275,70 @@ static bool test_transfer_removes_from_lab(OpenApoc::sp<OpenApoc::GameState> sta
 	return true;
 }
 
+// Test that transfer removes an agent from a vehicle's crew roster
+static bool test_transfer_removes_from_vehicle(OpenApoc::sp<OpenApoc::GameState> state)
+{
+	LogInfo("Testing transfer removes from vehicle...");
+
+	auto soldier = findFreeSoldier(state);
+	if (!soldier)
+	{
+		LogError("No free soldier found, skipping transfer-from-vehicle test");
+		return true;
+	}
+
+	auto targetBuilding = ensureSecondBase(state);
+	if (!targetBuilding)
+	{
+		LogError("Failed to create or find second base for transfer-from-vehicle test");
+		return false;
+	}
+
+	if (targetBuilding == soldier->homeBuilding)
+	{
+		LogError("Target building should be different from soldier's home building");
+		return false;
+	}
+
+	auto vehicle = OpenApoc::mksp<OpenApoc::Vehicle>();
+	auto vehicleId = OpenApoc::Vehicle::generateObjectID(*state);
+	if (state->vehicle_types.empty())
+	{
+		LogWarning("No vehicle types found, skipping transfer-from-vehicle test");
+		return true;
+	}
+	vehicle->type = {state.get(), state->vehicle_types.begin()->second};
+	vehicle->owner = state->getPlayer();
+	state->vehicles[vehicleId] = vehicle;
+	OpenApoc::StateRef<OpenApoc::Vehicle> vehicleRef = {state.get(), vehicleId};
+
+	soldier->currentVehicle = vehicleRef;
+	vehicleRef->currentAgents.insert(soldier);
+
+	if (soldier->currentVehicle != vehicleRef)
+	{
+		LogError("Soldier's currentVehicle should point to the vehicle before transfer");
+		return false;
+	}
+
+	soldier->transfer(*state, targetBuilding);
+
+	if (soldier->currentVehicle != nullptr)
+	{
+		LogError("Soldier's currentVehicle should be nullptr after transfer");
+		return false;
+	}
+
+	if (vehicleRef->currentAgents.find(soldier) != vehicleRef->currentAgents.end())
+	{
+		LogError("Soldier should not be in vehicle's currentAgents after transfer");
+		return false;
+	}
+
+	LogInfo("Transfer removes from vehicle test passed");
+	return true;
+}
+
 // Test that death removes agent from any assgigned lab
 static bool test_die_removes_from_lab(OpenApoc::sp<OpenApoc::GameState> state)
 {
@@ -467,6 +549,12 @@ int main(int argc, char **argv)
 	if (!test_transfer_removes_from_lab(state))
 	{
 		LogError("Transfer removes from lab test failed");
+		return EXIT_FAILURE;
+	}
+
+	if (!test_transfer_removes_from_vehicle(state))
+	{
+		LogError("Transfer removes from vehicle test failed");
 		return EXIT_FAILURE;
 	}
 
