@@ -3,6 +3,7 @@
 #include "dependencies/pugixml/src/pugixml.hpp"
 #include "framework/data.h"
 #include "framework/framework.h"
+#include <algorithm>
 
 namespace OpenApoc
 {
