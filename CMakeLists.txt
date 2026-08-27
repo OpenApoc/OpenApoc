@@ -278,7 +278,7 @@ add_custom_target(tidy ${CLANG_TIDY}
 set(LANGUAGES "")
 
 find_package(Gettext)
-if (GETTEXT_FOUND)
+if (GETTEXT_FOUND AND LANGUAGES)
 		foreach(LANG ${LANGUAGES})
 				GETTEXT_PROCESS_PO_FILES(${LANG} PO_FILES
 						${CMAKE_SOURCE_DIR}/data/languages/openapoc_${LANG}.po)
@@ -290,7 +290,7 @@ if (GETTEXT_FOUND)
 						${CMAKE_BINARY_DIR}/openapoc_${LANG}.gmo
 						${CMAKE_SOURCE_DIR}/data/languages/${LANG}/LC_MESSAGES/openapoc.mo)
 		endforeach()
-endif(GETTEXT_FOUND)
+endif(GETTEXT_FOUND AND LANGUAGES)
 
 # String extraction for translations
 find_program(XGETTEXT_EXECUTABLE xgettext)
