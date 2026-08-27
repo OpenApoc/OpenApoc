@@ -89,6 +89,6 @@ int main(int argc, char **argv)
 	    {"parse_key_and_text", test_parse_key_and_text},
 	    {"parse_status_quit_shot", test_parse_status_quit_shot},
 	    {"parse_errors", test_parse_errors},
-    {"parse_named_actions", test_parse_named_actions},
+	    {"parse_named_actions", test_parse_named_actions},
 	});
 }
