@@ -32,6 +32,7 @@ class LauncherWindow : public QMainWindow
 	void browseCDFile();
 	void browseCDDir();
 	void browseDataDir();
+	void onAutodetect();
 
 	void enabledModSelected(const QString &modName);
 	void disabledModSelected(const QString &modName);
