@@ -7,36 +7,6 @@ add_compile_options("-w")
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package (Threads REQUIRED)
 
-set (LIBSMACKER_SOURCE_FILES
-	libsmacker/smacker.c
-	libsmacker/smk_bitstream.c
-	libsmacker/smk_hufftree.c)
-source_group(libsmacker\\sources FILES ${LIBSMACKER_SOURCE_FILES})
-set (LIBSMACKER_HEADER_FILES
-	libsmacker/smacker.h
-	libsmacker/smk_bitstream.h
-	libsmacker/smk_hufftree.h
-	libsmacker/smk_malloc.h)
-source_group(libsmacker\\headers FILES ${LIBSMACKER_HEADER_FILES})
-
-list(APPEND ALL_SOURCE_FILES ${LIBSMACKER_SOURCE_FILES})
-list(APPEND ALL_HEADER_FILES ${LIBSMACKER_HEADER_FILES})
-
-add_library(OpenApoc_LibSmacker STATIC ${LIBSMACKER_SOURCE_FILES}
-		${LIBSMACKER_HEADER_FILES})
-
-target_include_directories(OpenApoc_LibSmacker PUBLIC ${CMAKE_SOURCE_DIR})
-target_include_directories(OpenApoc_LibSmacker PRIVATE
-		${CMAKE_SOURCE_DIR}/dependencies/libsmacker)
-
-if(NOT WIN32)
-	target_compile_definitions(OpenApoc_LibSmacker PUBLIC PTHREADS_AVAILABLE)
-endif()
-
-if (MSVC)
-	target_compile_definitions(OpenApoc_LibSmacker PRIVATE _CRT_SECURE_NO_WARNINGS)
-endif()
-
 set (MINIZ_SOURCE_FILES
 	miniz/miniz.c
 	miniz/miniz_zip.c
@@ -133,7 +103,6 @@ if(NOT USE_SYSTEM_PHYSFS)
 endif()
 
 # we don't care about the coding practices of external dependencies
-target_compile_options(OpenApoc_LibSmacker PRIVATE "-w")
 target_compile_options(OpenApoc_LibPugixml PRIVATE "-w")
 target_compile_options(OpenApoc_LibLodepng PRIVATE "-w")
 target_compile_options(OpenApoc_Miniz PRIVATE "-w")
