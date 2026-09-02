@@ -7,6 +7,9 @@ env:
   BUILD_TYPE: Release
   CLANG_FORMAT: clang-format-18
   CLANG_TIDY: clang-tidy-18
+  # Pinned to the same commit as vcpkg.json's builtin-baseline.
+  VCPKG_SHA: 30ef65cad98f08e7197c9a1656fbd871bcb72f2d
+  VCPKG_ROOT: ${{ github.workspace }}/vcpkg
 
 jobs:
   build:
@@ -38,15 +41,36 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-program-options-dev qt6-base-dev libvorbis-dev ninja-build ${CLANG_FORMAT} ${CLANG_TIDY}
 
+    - name: Checkout vcpkg
+      uses: actions/checkout@v2
+      with:
+        repository: microsoft/vcpkg
+        ref: ${{ env.VCPKG_SHA }}
+        path: vcpkg
+
+    - name: Bootstrap vcpkg
+      shell: bash
+      run: $VCPKG_ROOT/bootstrap-vcpkg.sh -disableMetrics
+
+    - name: Cache vcpkg binary cache
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/vcpkg/archives
+        key: vcpkg-bincache-${{ runner.os }}-${{ env.VCPKG_SHA }}-${{ hashFiles('vcpkg.json') }}
+        restore-keys: |
+          vcpkg-bincache-${{ runner.os }}-${{ env.VCPKG_SHA }}-
+
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
       shell: bash
       working-directory: ${{runner.workspace}}/build
+      env:
+        VCPKG_BINARY_SOURCES: clear;files,~/.cache/vcpkg/archives,readwrite
       # Note the current convention is to use the -S and -B options here to specify source 
       # and build directories, but this is only available with CMake 3.13 and higher.  
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -GNinja -DCLANG_FORMAT=${CLANG_FORMAT} -DCLANG_TIDY=${CLANG_TIDY}
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -GNinja -DCLANG_FORMAT=${CLANG_FORMAT} -DCLANG_TIDY=${CLANG_TIDY} -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
 
     - name: Setup Environment (PR)  
       if: ${{ github.event_name == 'pull_request' }}  
