@@ -56,26 +56,6 @@ if(NOT WIN32)
 	target_compile_definitions(OpenApoc_LibPugixml PUBLIC PTHREADS_AVAILABLE)
 endif()
 
-set (LIBLODEPNG_SOURCE_FILES
-		lodepng/lodepng.cpp)
-
-source_group(lodepng\\sources FILES ${LIBLODEPNG_SOURCE_FILES})
-
-set (LIBLODEPNG_HEADER_FILES
-		lodepng/lodepng.h)
-
-source_group(lodepng\\headers FILES ${LIBLODEPNG_HEADER_FILES})
-
-list(APPEND ALL_SOURCE_FILES ${LIBLODEPNG_SOURCE_FILES})
-list(APPEND ALL_HEADER_FILES ${LIBLODEPNG_HEADER_FILES})
-
-add_library(OpenApoc_LibLodepng STATIC ${LIBLODEPNG_SOURCE_FILES}
-		${LIBLODEPNG_HEADER_FILES})
-
-if(NOT WIN32)
-	target_compile_definitions(OpenApoc_LibLodepng PUBLIC PTHREADS_AVAILABLE)
-endif()
-
 set(USE_SYSTEM_PHYSFS OFF CACHE BOOL "Use preinstalled physfs")
 
 find_package(PhysFS)
@@ -104,5 +84,4 @@ endif()
 
 # we don't care about the coding practices of external dependencies
 target_compile_options(OpenApoc_LibPugixml PRIVATE "-w")
-target_compile_options(OpenApoc_LibLodepng PRIVATE "-w")
 target_compile_options(OpenApoc_Miniz PRIVATE "-w")
