@@ -31,7 +31,7 @@ jobs:
       run: sudo apt-get update
 
     - name: Install dependencies
-      run: sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-program-options-dev qt6-base-dev libvorbis-dev ninja-build ${CLANG_FORMAT} ${CLANG_TIDY}
+      run: sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-program-options-dev qt6-base-dev libvorbis-dev ninja-build libx11-dev libxft-dev libxext-dev libwayland-dev libxkbcommon-dev libegl1-mesa-dev ${CLANG_FORMAT} ${CLANG_TIDY}
 
     - name: Checkout vcpkg
       shell: bash
@@ -54,7 +54,7 @@ jobs:
     - name: Configure CMake
       shell: bash
       working-directory: ${{runner.workspace}}/build
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -GNinja -DCLANG_FORMAT=${CLANG_FORMAT} -DCLANG_TIDY=${CLANG_TIDY} -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -GNinja -DCLANG_FORMAT=${CLANG_FORMAT} -DCLANG_TIDY=${CLANG_TIDY} -DUSE_SYSTEM_QT=ON -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
 
     - name: Setup Environment (PR)
       if: ${{ github.event_name == 'pull_request' }}
