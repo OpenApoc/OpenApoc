@@ -1,5 +1,5 @@
 #include "forms/multilistbox.h"
-#include "dependencies/pugixml/src/pugixml.hpp"
+#include <pugixml.hpp>
 #include "forms/scrollbar.h"
 #include "framework/event.h"
 #include "framework/framework.h"

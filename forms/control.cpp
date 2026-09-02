@@ -1,5 +1,5 @@
 #include "forms/control.h"
-#include "dependencies/pugixml/src/pugixml.hpp"
+#include <pugixml.hpp>
 #include "forms/forms.h"
 #include "forms/ui.h"
 #include "framework/configfile.h"

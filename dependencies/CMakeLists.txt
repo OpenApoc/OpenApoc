@@ -35,27 +35,6 @@ if(NOT WIN32)
 	target_compile_definitions(OpenApoc_Miniz PUBLIC PTHREADS_AVAILABLE)
 endif()
 
-set (LIBPUGIXML_SOURCE_FILES
-		pugixml/src/pugixml.cpp)
-
-source_group(libpugixml\\sources FILES ${LIBPUGIXML_SOURCE_FILES})
-
-set (LIBPUGIXML_HEADER_FILES
-		pugixml/src/pugixml.hpp
-		pugixml/src/pugiconfig.hpp)
-
-source_group(libpugixml\\headers FILES ${LIBPUGIXML_HEADER_FILES})
-
-list(APPEND ALL_SOURCE_FILES ${LIBPUGIXML_SOURCE_FILES})
-list(APPEND ALL_HEADER_FILES ${LIBPUGIXML_HEADER_FILES})
-
-add_library(OpenApoc_LibPugixml STATIC ${LIBPUGIXML_SOURCE_FILES}
-		${LIBPUGIXML_HEADER_FILES})
-
-if(NOT WIN32)
-	target_compile_definitions(OpenApoc_LibPugixml PUBLIC PTHREADS_AVAILABLE)
-endif()
-
 set(USE_SYSTEM_PHYSFS OFF CACHE BOOL "Use preinstalled physfs")
 
 find_package(PhysFS)
@@ -83,5 +62,4 @@ if(NOT USE_SYSTEM_PHYSFS)
 endif()
 
 # we don't care about the coding practices of external dependencies
-target_compile_options(OpenApoc_LibPugixml PRIVATE "-w")
 target_compile_options(OpenApoc_Miniz PRIVATE "-w")

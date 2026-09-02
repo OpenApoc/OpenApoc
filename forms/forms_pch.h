@@ -1,6 +1,6 @@
 #pragma once
 
-#include "dependencies/pugixml/src/pugixml.hpp"
+#include <pugixml.hpp>
 #include "forms/control.h"
 #include "forms/forms_enums.h"
 #include "framework/data.h"

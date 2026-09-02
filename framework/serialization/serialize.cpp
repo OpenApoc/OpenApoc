@@ -1,5 +1,5 @@
 #include "framework/serialization/serialize.h"
-#include "dependencies/pugixml/src/pugixml.hpp"
+#include <pugixml.hpp>
 #include "framework/filesystem.h"
 #include "framework/logger.h"
 #include "framework/serialization/providers/filedataprovider.h"
