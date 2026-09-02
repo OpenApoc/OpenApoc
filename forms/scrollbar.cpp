@@ -1,5 +1,4 @@
 #include "forms/scrollbar.h"
-#include <pugixml.hpp>
 #include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/event.h"
@@ -7,6 +6,7 @@
 #include "framework/image.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
+#include <pugixml.hpp>
 
 namespace OpenApoc
 {

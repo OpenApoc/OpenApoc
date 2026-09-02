@@ -1,6 +1,5 @@
 #pragma once
 
-#include <pugixml.hpp>
 #include "forms/control.h"
 #include "forms/forms_enums.h"
 #include "framework/data.h"
@@ -9,3 +8,4 @@
 #include "framework/image.h"
 #include "framework/renderer.h"
 #include "library/sp.h"
+#include <pugixml.hpp>

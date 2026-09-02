@@ -1,9 +1,9 @@
 #include "forms/listbox.h"
-#include <pugixml.hpp>
 #include "forms/scrollbar.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/renderer.h"
+#include <pugixml.hpp>
 
 namespace OpenApoc
 {

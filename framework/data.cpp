@@ -1,5 +1,4 @@
 #include "framework/data.h"
-#include <pugixml.hpp>
 #include "framework/apocresources/apocpalette.h"
 #include "framework/apocresources/loftemps.h"
 #include "framework/apocresources/pck.h"
@@ -20,6 +19,7 @@
 #include <fstream>
 #include <map>
 #include <mutex>
+#include <pugixml.hpp>
 #include <queue>
 
 using namespace OpenApoc;

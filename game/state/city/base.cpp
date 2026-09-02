@@ -1,5 +1,4 @@
 #include "game/state/city/base.h"
-#include <magic_enum/magic_enum.hpp>
 #include "framework/framework.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
@@ -14,6 +13,7 @@
 #include "game/state/rules/city/vequipmenttype.h"
 #include "game/state/shared/organisation.h"
 #include "library/strings_format.h"
+#include <magic_enum/magic_enum.hpp>
 #include <random>
 
 namespace OpenApoc

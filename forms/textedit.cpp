@@ -1,5 +1,4 @@
 #include "forms/textedit.h"
-#include <pugixml.hpp>
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/font.h"
@@ -10,6 +9,7 @@
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/strings_format.h"
+#include <pugixml.hpp>
 
 namespace OpenApoc
 {

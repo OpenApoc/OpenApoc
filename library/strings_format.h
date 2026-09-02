@@ -1,7 +1,7 @@
 #pragma once
 
-#include <fmt/format.h>
 #include "library/strings.h"
+#include <fmt/format.h>
 
 namespace OpenApoc
 {
