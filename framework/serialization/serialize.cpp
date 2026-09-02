@@ -1,5 +1,4 @@
 #include "framework/serialization/serialize.h"
-#include <pugixml.hpp>
 #include "framework/filesystem.h"
 #include "framework/logger.h"
 #include "framework/serialization/providers/filedataprovider.h"
@@ -9,6 +8,7 @@
 #include "library/strings_format.h"
 #include <deque>
 #include <map>
+#include <pugixml.hpp>
 #include <sstream>
 
 namespace OpenApoc

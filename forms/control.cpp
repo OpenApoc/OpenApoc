@@ -1,5 +1,4 @@
 #include "forms/control.h"
-#include <pugixml.hpp>
 #include "forms/forms.h"
 #include "forms/ui.h"
 #include "framework/configfile.h"
@@ -12,6 +11,7 @@
 #include "framework/renderer.h"
 #include "library/sp.h"
 #include <iterator>
+#include <pugixml.hpp>
 
 namespace OpenApoc
 {

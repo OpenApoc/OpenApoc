@@ -1,5 +1,4 @@
 #include "forms/label.h"
-#include <pugixml.hpp>
 #include "forms/scrollbar.h"
 #include "forms/ui.h"
 #include "framework/event.h"
@@ -9,6 +8,7 @@
 #include "framework/renderer.h"
 #include "library/sp.h"
 #include "library/strings_format.h"
+#include <pugixml.hpp>
 
 namespace OpenApoc
 {

@@ -1,10 +1,10 @@
 #include "forms/graphic.h"
-#include <pugixml.hpp>
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "framework/renderer.h"
 #include "library/sp.h"
+#include <pugixml.hpp>
 
 namespace OpenApoc
 {

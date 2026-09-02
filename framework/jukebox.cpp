@@ -1,5 +1,4 @@
 #include "framework/jukebox.h"
-#include <pugixml.hpp>
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "framework/logger.h"
@@ -8,6 +7,7 @@
 #include <algorithm>
 #include <array>
 #include <chrono>
+#include <pugixml.hpp>
 
 namespace OpenApoc
 {
