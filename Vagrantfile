@@ -93,8 +93,6 @@ Vagrant.configure(2) do |config|
 	export LSAN_OPTIONS="exitcode=0"
 	export NUM_CORES=$(grep '^processor' /proc/cpuinfo|wc -l)
 
-	pushd ./dependencies/glm && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . > /dev/null && make -j2 > /dev/null && make install > /dev/null && popd
-
     # Install X11 + OpenGL
     sudo apt-get install -y mesa-utils xinit i3 x11-xserver-utils
 
@@ -108,12 +106,6 @@ Vagrant.configure(2) do |config|
     unset LC_CTYPE
 
     git clone /vagrant OpenApoc
-    for i in $(cd /vagrant/dependencies && find * -maxdepth 0 -type d)
-    do
-	git clone /vagrant/dependencies/$i OpenApoc/dependencies/$i
-    done
-    ( cd OpenApoc && git submodule init && git submodule update )
-    ( cd OpenApoc/dependencies/glm && cmake . && make && sudo make install)
 
     ( ln -s /vagrant/data/XCOM.* OpenApoc/data )
     ( ln -s XCOM.cue OpenApoc/data/cd.iso )

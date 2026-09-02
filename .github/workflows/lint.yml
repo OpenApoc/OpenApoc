@@ -19,7 +19,6 @@ jobs:
     steps:
     - uses: actions/checkout@main
       with:
-        submodules: recursive
         fetch-depth: 0
 
     - name: Create Build Environment

@@ -4,11 +4,7 @@ This document collects the day-to-day development workflow for OpenApoc. It is a
 
 ## Repository Setup
 
-Clone the repository and initialize submodules before configuring a build:
-
-```sh
-git submodule update --init --recursive
-```
+Clone the repository. Most third-party libraries are fetched and built by vcpkg from `vcpkg.json`, so CMake configuration needs `-DCMAKE_TOOLCHAIN_FILE=<vcpkg>/scripts/buildsystems/vcpkg.cmake`.
 
 OpenApoc needs data from a lawful copy of the original X-COM: Apocalypse release. Place `cd.iso` in `data/`, or set `CD_PATH` during CMake configuration to point at the ISO or extracted CD tree:
 
