@@ -778,7 +778,10 @@ class CueArchiver
 				char volIdentifier[32];
 				uint8_t _unused_8[8];
 				Int32LsbMsb volSpaceSize;
-				uint8_t _unused_32[32];
+				// Unused in the primary volume descriptor; in a supplementary volume
+				// descriptor this is the Escape Sequences field, which for a Joliet
+				// SVD starts with "%/@", "%/C" or "%/E" (UCS-2 levels 1-3).
+				uint8_t escapeSequences[32];
 				Int16LsbMsb volSetSz;
 				Int16LsbMsb volSeqNr;
 				Int16LsbMsb lbs;
@@ -804,7 +807,8 @@ class CueArchiver
 				uint8_t _app_defined__unused[512];
 				uint8_t _reserved[653];
 			} primary;
-			// Supplementary volume descriptor is ignored completely
+			// A supplementary volume descriptor (including Joliet) shares the exact
+			// field layout of the primary one, so `primary` is reused to read it too.
 			struct
 			{
 				uint8_t _padding[2040];
@@ -854,6 +858,45 @@ class CueArchiver
 		int64_t timestamp;
 		std::map<UString, FSEntry> children;
 	} root;
+
+	bool joliet = false;
+
+	// Joliet identifiers are UCS-2BE; decode in place to UTF-8 so the rest of readDir can
+	// keep treating fileName as a C string. "." and ".." stay single raw bytes under Joliet.
+	static void decodeJolietFileName(char *fileName, uint8_t fnLength)
+	{
+		if (fnLength <= 1)
+		{
+			return;
+		}
+		const auto *ucs2 = reinterpret_cast<const unsigned char *>(fileName);
+		std::string utf8;
+		utf8.reserve(fnLength);
+		for (uint8_t i = 0; i + 1 < fnLength; i += 2)
+		{
+			uint16_t codepoint =
+			    static_cast<uint16_t>((uint16_t(ucs2[i]) << 8) | uint16_t(ucs2[i + 1]));
+			if (codepoint < 0x80)
+			{
+				utf8 += static_cast<char>(codepoint);
+			}
+			else if (codepoint < 0x800)
+			{
+				utf8 += static_cast<char>(0xC0 | (codepoint >> 6));
+				utf8 += static_cast<char>(0x80 | (codepoint & 0x3F));
+			}
+			else
+			{
+				utf8 += static_cast<char>(0xE0 | (codepoint >> 12));
+				utf8 += static_cast<char>(0x80 | ((codepoint >> 6) & 0x3F));
+				utf8 += static_cast<char>(0x80 | (codepoint & 0x3F));
+			}
+		}
+		// fileName is 222 bytes; truncate rather than overflow on non-ASCII 3x expansion.
+		size_t copyLen = std::min(utf8.size(), size_t(221));
+		std::memcpy(fileName, utf8.data(), copyLen);
+		fileName[copyLen] = '\0';
+	}
 
 	void readDir(const IsoDirRecord_hdr &dirRecord, FSEntry &parent)
 	{
@@ -926,6 +969,12 @@ class CueArchiver
 			{
 				readpos += cio->read(childDirRecord.fileName, childDirRecord.fnLength);
 				childDirRecord.fileName[childDirRecord.fnLength] = '\0';
+				if (joliet)
+				{
+					// Before the isalnum() filter below: the UCS-2 high byte of an ASCII
+					// name is 0x00.
+					decodeJolietFileName(childDirRecord.fileName, childDirRecord.fnLength);
+				}
 			}
 			else
 			{
@@ -966,22 +1015,67 @@ class CueArchiver
 		{
 			LogError("Could not open file: bad stream!");
 		}
-		cio->seek(cio->blockSize() * 16);
-		LogInfo("Reading ISO volume descriptor");
-		IsoVolumeDescriptor descriptor;
-		cio->read(&descriptor, sizeof(descriptor));
-		LogInfo("CD magic: {0:c}, {1:c}, {2:c}, {3:c}, {4:c}", descriptor.identifier[0],
-		        descriptor.identifier[1], descriptor.identifier[2], descriptor.identifier[3],
-		        descriptor.identifier[4]);
+		LogInfo("Reading ISO volume descriptors");
 		const char magic[] = {'C', 'D', '0', '0', '1'};
-		if (std::memcmp((void *)magic, (void *)descriptor.identifier, 5))
+		const uint8_t VD_TYPE_PRIMARY = 1;
+		const uint8_t VD_TYPE_SUPPLEMENTARY = 2;
+		const uint8_t VD_TYPE_TERMINATOR = 255;
+		// Joliet escape sequences for UCS-2 levels 1 to 3; any other SVD is not Joliet.
+		const char jolietEscapes[3][3] = {
+		    {0x25, 0x2F, 0x40}, {0x25, 0x2F, 0x43}, {0x25, 0x2F, 0x45}};
+		IsoVolumeDescriptor primaryDescriptor;
+		IsoVolumeDescriptor jolietDescriptor;
+		bool havePrimary = false;
+		bool haveJoliet = false;
+		// Descriptors run from sector 16 to a type-255 terminator; cap the scan for
+		// malformed images.
+		for (uint32_t sector = 16; sector < 16 + 32; sector++)
 		{
-			LogError("Bad CD magic!");
+			cio->seek(cio->blockSize() * sector);
+			IsoVolumeDescriptor descriptor;
+			cio->read(&descriptor, sizeof(descriptor));
+			if (std::memcmp((void *)magic, (void *)descriptor.identifier, 5))
+			{
+				LogError("Bad CD magic in volume descriptor at sector {0}!", sector);
+				break;
+			}
+			LogInfo("Descriptor type {0} at sector {1}", (int)descriptor.type, sector);
+			if (descriptor.type == VD_TYPE_TERMINATOR)
+			{
+				break;
+			}
+			if (descriptor.type == VD_TYPE_PRIMARY && !havePrimary)
+			{
+				primaryDescriptor = descriptor;
+				havePrimary = true;
+			}
+			else if (descriptor.type == VD_TYPE_SUPPLEMENTARY && !haveJoliet)
+			{
+				for (const auto &escape : jolietEscapes)
+				{
+					if (!std::memcmp(escape, descriptor.primary.escapeSequences, 3))
+					{
+						jolietDescriptor = descriptor;
+						haveJoliet = true;
+						break;
+					}
+				}
+			}
 		}
-		LogInfo("Descriptor type: {0}", (int)descriptor.type);
+		if (!havePrimary && !haveJoliet)
+		{
+			LogError("No usable ISO9660 volume descriptor found!");
+			return;
+		}
+		joliet = haveJoliet;
+		const IsoVolumeDescriptor &chosen = haveJoliet ? jolietDescriptor : primaryDescriptor;
+		LogInfo("Using {0} volume tree", haveJoliet ? "Joliet" : "primary");
 		IsoDirRecord_hdr rootRecord;
-		std::memcpy(&rootRecord, descriptor.primary.rootDirEnt, 34);
-		LogInfo("Volume ID: {0}", descriptor.primary.volIdentifier);
+		std::memcpy(&rootRecord, chosen.primary.rootDirEnt, 34);
+		if (havePrimary)
+		{
+			LogInfo("Volume ID: {0}", primaryDescriptor.primary.volIdentifier);
+		}
 		LogInfo("Root dirent length: {0}", (int)rootRecord.length);
 		readDir(rootRecord, root);
 	}
@@ -1093,6 +1187,18 @@ class CueArchiver
 		{
 			LogError("Cue files cannot be written to");
 			return nullptr;
+		}
+
+		// A bare .iso has no cuesheet: it is a single MODE1/2048 track covering the whole
+		// file. Handled here rather than by physfs's builtin ISO9660 archiver (deregistered
+		// in physfs_fs.cpp) because this parser already lowercases names, prefers Joliet,
+		// and is first-party code, so any tolerance for odd images lives here.
+		UString ext = fs::path(filename).extension().string();
+		ext = to_lower(ext);
+		if (ext == ".iso")
+		{
+			*claimed = 1;
+			return new CueArchiver(filename, CueFileType::FT_BINARY, CueTrackMode::MODE1_2048);
 		}
 
 		CueParser parser(filename);
