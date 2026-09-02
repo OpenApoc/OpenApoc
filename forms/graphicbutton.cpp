@@ -1,5 +1,5 @@
 #include "forms/graphicbutton.h"
-#include "dependencies/pugixml/src/pugixml.hpp"
+#include <pugixml.hpp>
 #include "forms/scrollbar.h"
 #include "framework/data.h"
 #include "framework/event.h"

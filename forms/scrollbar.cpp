@@ -1,5 +1,5 @@
 #include "forms/scrollbar.h"
-#include "dependencies/pugixml/src/pugixml.hpp"
+#include <pugixml.hpp>
 #include "framework/configfile.h"
 #include "framework/data.h"
 #include "framework/event.h"

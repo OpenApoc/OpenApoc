@@ -1,6 +1,8 @@
 # project name, and type
 PROJECT(OpenApoc_Forms CXX C)
 
+find_package(pugixml CONFIG REQUIRED)
+
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package (Threads REQUIRED)
 
@@ -50,7 +52,7 @@ add_library(OpenApoc_Forms STATIC ${FORMS_SOURCE_FILES}
 		${FORMS_HEADER_FILES})
 
 target_link_libraries(OpenApoc_Forms PUBLIC OpenApoc_Framework
-		OpenApoc_LibPugixml)
+		pugixml::pugixml)
 
 target_include_directories(OpenApoc_Forms PUBLIC ${CMAKE_SOURCE_DIR})
 

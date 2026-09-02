@@ -1,5 +1,5 @@
 #include "forms/textedit.h"
-#include "dependencies/pugixml/src/pugixml.hpp"
+#include <pugixml.hpp>
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/font.h"

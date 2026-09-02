@@ -1,5 +1,5 @@
 #include "forms/label.h"
-#include "dependencies/pugixml/src/pugixml.hpp"
+#include <pugixml.hpp>
 #include "forms/scrollbar.h"
 #include "forms/ui.h"
 #include "framework/event.h"

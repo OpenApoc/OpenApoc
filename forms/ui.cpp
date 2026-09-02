@@ -1,5 +1,5 @@
 #include "forms/ui.h"
-#include "dependencies/pugixml/src/pugixml.hpp"
+#include <pugixml.hpp>
 #include "forms/forms.h"
 #include "framework/apocresources/apocfont.h"
 #include "framework/configfile.h"

@@ -1,5 +1,5 @@
 #include "forms/ticker.h"
-#include "dependencies/pugixml/src/pugixml.hpp"
+#include <pugixml.hpp>
 #include "forms/ui.h"
 #include "framework/font.h"
 #include "framework/framework.h"

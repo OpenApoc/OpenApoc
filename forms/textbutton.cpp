@@ -1,5 +1,5 @@
 #include "forms/textbutton.h"
-#include "dependencies/pugixml/src/pugixml.hpp"
+#include <pugixml.hpp>
 #include "forms/label.h"
 #include "forms/ui.h"
 #include "framework/data.h"

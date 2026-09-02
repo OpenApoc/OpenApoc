@@ -1,5 +1,5 @@
 #include "forms/checkbox.h"
-#include "dependencies/pugixml/src/pugixml.hpp"
+#include <pugixml.hpp>
 #include "framework/data.h"
 #include "framework/event.h"
 #include "framework/framework.h"
