@@ -2,6 +2,7 @@
 PROJECT(OpenApoc_Library CXX C)
 
 find_package(Boost REQUIRED COMPONENTS locale)
+find_package(fmt CONFIG REQUIRED)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package (Threads REQUIRED)
