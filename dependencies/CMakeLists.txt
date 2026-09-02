@@ -7,34 +7,6 @@ add_compile_options("-w")
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package (Threads REQUIRED)
 
-set (MINIZ_SOURCE_FILES
-	miniz/miniz.c
-	miniz/miniz_zip.c
-	miniz/miniz_tdef.c
-	miniz/miniz_tinfl.c)
-source_group(miniz\\sources FILES ${MINIZ_SOURCE_FILES})
-
-list(APPEND ALL_SOURCE_FILES ${MINIZ_SOURCE_FILES})
-
-add_library(OpenApoc_Miniz STATIC ${MINIZ_SOURCE_FILES})
-
-target_compile_definitions(OpenApoc_Miniz PUBLIC MINIZ_NO_TIME)
-# We probably don't support any platforms without the 64-bit offset file
-# ioctls
-# But macos fails to link with this enabled... so guess we can never read >4gb
-# files there?
-if (NOT APPLE)
-	target_compile_definitions(OpenApoc_Miniz PUBLIC _LARGEFILE64_SOURCE=1)
-endif()
-
-target_include_directories(OpenApoc_Miniz PUBLIC ${CMAKE_SOURCE_DIR})
-target_include_directories(OpenApoc_Miniz PRIVATE
-		${CMAKE_SOURCE_DIR}/dependencies/miniz)
-
-if(NOT WIN32)
-	target_compile_definitions(OpenApoc_Miniz PUBLIC PTHREADS_AVAILABLE)
-endif()
-
 set(USE_SYSTEM_PHYSFS OFF CACHE BOOL "Use preinstalled physfs")
 
 find_package(PhysFS)
@@ -60,6 +32,3 @@ if(NOT USE_SYSTEM_PHYSFS)
 
 	add_subdirectory(physfs)
 endif()
-
-# we don't care about the coding practices of external dependencies
-target_compile_options(OpenApoc_Miniz PRIVATE "-w")
