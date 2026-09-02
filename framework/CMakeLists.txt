@@ -296,14 +296,10 @@ find_package(miniz CONFIG REQUIRED)
 target_link_libraries(OpenApoc_Framework PUBLIC miniz::miniz)
 target_link_libraries(OpenApoc_Framework PUBLIC ${CMAKE_DL_LIBS})
 
-if(USE_SYSTEM_PHYSFS)
-	target_link_libraries(OpenApoc_Framework PUBLIC ${PHYSFS_LIBRARY})
-else()
-	target_link_libraries(OpenApoc_Framework PUBLIC physfs-static)
-endif()
+find_package(PhysFS CONFIG REQUIRED)
+target_link_libraries(OpenApoc_Framework PUBLIC
+		$<IF:$<TARGET_EXISTS:PhysFS::PhysFS>,PhysFS::PhysFS,PhysFS::PhysFS-static>)
 
-target_include_directories(OpenApoc_Framework PRIVATE
-		${CMAKE_SOURCE_DIR}/dependencies/physfs/src)
 target_include_directories(OpenApoc_Framework PUBLIC ${CMAKE_SOURCE_DIR})
 
 if (USE_PCH)
