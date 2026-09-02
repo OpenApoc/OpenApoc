@@ -1,5 +1,5 @@
 #include "game/state/city/base.h"
-#include "dependencies/magic_enum/include/magic_enum/magic_enum.hpp"
+#include <magic_enum/magic_enum.hpp>
 #include "framework/framework.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
