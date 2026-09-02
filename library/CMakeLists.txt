@@ -3,6 +3,7 @@ PROJECT(OpenApoc_Library CXX C)
 
 find_package(Boost REQUIRED COMPONENTS locale)
 find_package(fmt CONFIG REQUIRED)
+find_package(glm CONFIG REQUIRED)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package (Threads REQUIRED)
@@ -35,10 +36,9 @@ add_library(OpenApoc_Library STATIC ${LIBRARY_SOURCE_FILES}
 		${LIBRARY_HEADER_FILES})
 
 target_link_libraries(OpenApoc_Library PUBLIC ${Boost_LIBRARIES}
-		Threads::Threads fmt::fmt)
+		Threads::Threads fmt::fmt glm::glm)
 
 target_include_directories(OpenApoc_Library PUBLIC ${CMAKE_SOURCE_DIR})
-target_include_directories(OpenApoc_Library PUBLIC ${GLM_INCLUDE_DIR})
 target_include_directories(OpenApoc_Library PUBLIC ${Boost_INCLUDE_DIRS})
 if(NOT WIN32)
 	target_compile_definitions(OpenApoc_Library PUBLIC PTHREADS_AVAILABLE)

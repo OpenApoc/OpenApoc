@@ -238,8 +238,6 @@ target_include_directories(OpenApoc_Framework PUBLIC ${Boost_INCLUDE_DIRS})
 find_package(Threads)
 target_link_libraries(OpenApoc_Framework PUBLIC ${CMAKE_THREAD_LIBS_INIT})
 
-target_include_directories(OpenApoc_Framework PUBLIC ${GLM_INCLIDE_DIR})
-
 #Require SDL2 for input/graphics/sound/pretty much everything
 if(WIN32)
 	find_package(SDL2 CONFIG REQUIRED)
