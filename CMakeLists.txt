@@ -113,7 +113,6 @@ add_subdirectory(forms)
 add_subdirectory(game/state)
 add_subdirectory(game/ui)
 add_subdirectory(tools)
-add_subdirectory(dependencies)
 add_subdirectory(data/mods/crashing_vehicles)
 
 if (WIN32)
