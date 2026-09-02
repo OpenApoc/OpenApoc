@@ -19,7 +19,7 @@ cache: C:\Users\appveyor\AppData\Local\vcpkg\archives -> appveyor.yml
 before_build:
   - cd c:\tools\vcpkg
   - git pull
-  - git checkout 2025.09.17
+  - git checkout 30ef65cad98f08e7197c9a1656fbd871bcb72f2d
   - .\bootstrap-vcpkg.bat
   - cd %APPVEYOR_BUILD_FOLDER%
   - vcpkg install
