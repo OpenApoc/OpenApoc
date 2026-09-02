@@ -2,7 +2,7 @@
 // Created by Alexey on 20.11.2015.
 //
 
-#include "dependencies/lodepng/lodepng.h"
+#include <lodepng.h>
 #include "framework/apocresources/apocpalette.h"
 #include "framework/data.h"
 #include "framework/image.h"
