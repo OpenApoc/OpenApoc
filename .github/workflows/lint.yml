@@ -3,21 +3,14 @@ name: Lint
 on: [push, pull_request]
 
 env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
   CLANG_FORMAT: clang-format-18
   CLANG_TIDY: clang-tidy-18
-  # Pinned to the same commit as vcpkg.json's builtin-baseline.
   VCPKG_SHA: 30ef65cad98f08e7197c9a1656fbd871bcb72f2d
-  # Sibling of the checkout so it never shows up in the repository's git status.
   VCPKG_ROOT: ${{ github.workspace }}/../vcpkg
 
 jobs:
   build:
-    # The CMake configure and build commands are platform agnostic and should work equally
-    # well on Windows or Mac.  You can convert this to a matrix build if you need
-    # cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     runs-on: ubuntu-latest
 
     steps:
@@ -26,13 +19,11 @@ jobs:
         fetch-depth: 0
 
     - name: Create Build Environment
-      # Some projects don't allow in-source building, so create a separate build directory
-      # We'll use this as our working directory for all subsequent commands
       run: cmake -E make_directory ${{runner.workspace}}/build
 
     - name: Download minimal cd image
       run: wget http://s2.jonnyh.net/pub/cd_minimal.iso.xz -O $GITHUB_WORKSPACE/data/cd.iso.xz
-    
+
     - name: Extract minimal cd image
       run: xz -d $GITHUB_WORKSPACE/data/cd.iso.xz
 
@@ -61,28 +52,21 @@ jobs:
           vcpkg-bincache-${{ runner.os }}-${{ env.VCPKG_SHA }}-
 
     - name: Configure CMake
-      # Use a bash shell so we can use the same syntax for environment variable
-      # access regardless of the host operating system
       shell: bash
       working-directory: ${{runner.workspace}}/build
-      # vcpkg's default binary cache on Linux is ~/.cache/vcpkg/archives, which is what the
-      # cache step above restores and saves.
-      # Note the current convention is to use the -S and -B options here to specify source 
-      # and build directories, but this is only available with CMake 3.13 and higher.  
-      # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
       run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -GNinja -DCLANG_FORMAT=${CLANG_FORMAT} -DCLANG_TIDY=${CLANG_TIDY} -DCMAKE_TOOLCHAIN_FILE=$VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake
 
-    - name: Setup Environment (PR)  
-      if: ${{ github.event_name == 'pull_request' }}  
-      shell: bash  
-      run: |  
-        echo "AFTER_COMMIT_SHA=${{ github.event.pull_request.head.sha }}" >> ${GITHUB_ENV}  
-        echo "BEFORE_COMMIT_SHA=${{ github.event.pull_request.base.sha }}" >> ${GITHUB_ENV}  
+    - name: Setup Environment (PR)
+      if: ${{ github.event_name == 'pull_request' }}
+      shell: bash
+      run: |
+        echo "AFTER_COMMIT_SHA=${{ github.event.pull_request.head.sha }}" >> ${GITHUB_ENV}
+        echo "BEFORE_COMMIT_SHA=${{ github.event.pull_request.base.sha }}" >> ${GITHUB_ENV}
 
-    - name: Setup Environment (Push)  
-      if: ${{ github.event_name == 'push' }}  
-      shell: bash  
-      run: |  
+    - name: Setup Environment (Push)
+      if: ${{ github.event_name == 'push' }}
+      shell: bash
+      run: |
         echo "AFTER_COMMIT_SHA=${{ github.event.after }}" >> ${GITHUB_ENV}
         echo "BEFORE_COMMIT_SHA=${{ github.event.before }}" >> ${GITHUB_ENV}
 
@@ -96,7 +80,6 @@ jobs:
           git -C $GITHUB_WORKSPACE diff;
           exit 1;
         fi
-        
 
     - name: clang-tidy lint
       working-directory: ${{runner.workspace}}
@@ -111,4 +94,3 @@ jobs:
           echo 'BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{env.BEFORE_COMMIT_SHA}}..${{env.AFTER_COMMIT_SHA}} || true;'
           BUILD_DIR=${{runner.workspace}}/build $GITHUB_WORKSPACE/tools/lint-tidy.sh ${{env.BEFORE_COMMIT_SHA}}..${{env.AFTER_COMMIT_SHA}} || true;
         fi
-        
