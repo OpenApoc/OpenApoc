@@ -9,7 +9,8 @@ env:
   CLANG_TIDY: clang-tidy-18
   # Pinned to the same commit as vcpkg.json's builtin-baseline.
   VCPKG_SHA: 30ef65cad98f08e7197c9a1656fbd871bcb72f2d
-  VCPKG_ROOT: ${{ github.workspace }}/vcpkg
+  # Sibling of the checkout so it never shows up in the repository's git status.
+  VCPKG_ROOT: ${{ github.workspace }}/../vcpkg
 
 jobs:
   build:
@@ -42,11 +43,10 @@ jobs:
       run: sudo apt-get install libsdl2-dev cmake build-essential git libunwind8-dev libboost-locale-dev libboost-filesystem-dev libboost-program-options-dev qt6-base-dev libvorbis-dev ninja-build ${CLANG_FORMAT} ${CLANG_TIDY}
 
     - name: Checkout vcpkg
-      uses: actions/checkout@v2
-      with:
-        repository: microsoft/vcpkg
-        ref: ${{ env.VCPKG_SHA }}
-        path: vcpkg
+      shell: bash
+      run: |
+        git clone --no-checkout https://github.com/microsoft/vcpkg.git $VCPKG_ROOT
+        git -C $VCPKG_ROOT checkout $VCPKG_SHA
 
     - name: Bootstrap vcpkg
       shell: bash
@@ -65,8 +65,8 @@ jobs:
       # access regardless of the host operating system
       shell: bash
       working-directory: ${{runner.workspace}}/build
-      env:
-        VCPKG_BINARY_SOURCES: clear;files,~/.cache/vcpkg/archives,readwrite
+      # vcpkg's default binary cache on Linux is ~/.cache/vcpkg/archives, which is what the
+      # cache step above restores and saves.
       # Note the current convention is to use the -S and -B options here to specify source 
       # and build directories, but this is only available with CMake 3.13 and higher.  
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
