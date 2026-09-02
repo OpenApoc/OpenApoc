@@ -182,6 +182,7 @@ file(GLOB_RECURSE FORMAT_SOURCES
 		${CMAKE_SOURCE_DIR}/tests/*.c
 		${CMAKE_SOURCE_DIR}/tests/*.h
 		)
+list(FILTER FORMAT_SOURCES EXCLUDE REGEX "/framework/video/smacker/")
 
 add_custom_target(format)
 add_custom_target(format-sources)

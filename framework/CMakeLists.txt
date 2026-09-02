@@ -304,4 +304,5 @@ target_include_directories(OpenApoc_Framework PUBLIC ${CMAKE_SOURCE_DIR})
 
 if (USE_PCH)
 	target_precompile_headers(OpenApoc_Framework PUBLIC framework_pch.h)
+	set_source_files_properties(${LIBSMACKER_SOURCE_FILES} PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
 endif()
