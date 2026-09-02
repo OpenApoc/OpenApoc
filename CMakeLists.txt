@@ -105,8 +105,6 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Qunused-arguments")
 endif()
 
-set(GLM_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/dependencies/glm)
-MARK_AS_ADVANCED(GLM_INCLUDE_DIR)
 add_compile_definitions(GLM_ENABLE_EXPERIMENTAL)
 
 add_subdirectory(library)
