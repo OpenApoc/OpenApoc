@@ -261,6 +261,10 @@ void BattleExplosion::expand(GameState &state, const TileMap &map, const Vec3<in
 	{
 		auto pos = pair.first + from;
 		auto tile = map.getTile(pos);
+		if (!tile)
+		{
+			continue;
+		}
 		for (auto &obj : tile->ownedObjects)
 		{
 			if (pair.second.find(obj->getType()) != pair.second.end())

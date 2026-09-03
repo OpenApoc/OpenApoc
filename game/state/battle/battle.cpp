@@ -1295,6 +1295,10 @@ sp<BattleHazard> Battle::placeHazard(GameState &state, StateRef<Organisation> ow
 	if (map)
 	{
 		auto tile = map->getTile(position);
+		if (!tile)
+		{
+			return nullptr;
+		}
 		// Cannot add non-fire hazard if tile is blocked or fire hazard if nothing is there to burn
 		// at
 		if ((!fire && tile->height * 40.0f > 38.0f) || (fire && tile->height * 40.0f < 1.0f))
