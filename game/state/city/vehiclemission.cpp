@@ -940,6 +940,10 @@ Reachability VehicleTargetHelper::isReachableForRecovery(const Vehicle &v, Vec3<
 
 	auto &map = *v.city->map;
 	auto targetTile = map.getTile(target);
+	if (!targetTile)
+	{
+		return Reachability::BlockedByBuilding;
+	}
 
 	// Check if target tile has no building parts permanently blocking it
 	for (auto &obj : targetTile->ownedObjects)
@@ -960,6 +964,10 @@ Reachability VehicleTargetHelper::isReachableTargetFlying(const Vehicle &v, Vec3
 {
 	auto &map = *v.city->map;
 	auto targetTile = map.getTile(target);
+	if (!targetTile)
+	{
+		return Reachability::BlockedByScenery;
+	}
 
 	// Check if target tile has no scenery permanently blocking it
 	for (auto &obj : targetTile->ownedObjects)
