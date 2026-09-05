@@ -3172,11 +3172,15 @@ Vehicle::addMission(GameState &state, VehicleMission mission, bool toBack)
 		// - Can place on carrying vehicles
 		case VehicleMission::MissionType::GotoLocation:
 		case VehicleMission::MissionType::Land:
-			if (crashed || sliding || falling)
+		{
+			bool executingCrashMission =
+			    !missions.empty() && missions.front().type == VehicleMission::MissionType::Crash;
+			if ((crashed && !executingCrashMission) || sliding || falling)
 			{
 				return missions.end();
 			}
 			break;
+		}
 		// - Cannot place in front
 		// - Cannot place on crashed vehicles
 		// - Cannot place on carrying vehicles
