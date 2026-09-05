@@ -1465,6 +1465,22 @@ void GameState::updateEndOfWeek(bool gameStart)
 
 	if (!gameStart)
 	{
+		int maxOrgTechLevel = 1;
+		for (auto &es : equipment_sets)
+		{
+			if (es.second->type == EquipmentSet::Type::Human)
+			{
+				maxOrgTechLevel = std::max(maxOrgTechLevel, es.second->min_score);
+			}
+		}
+		for (auto &[id, org] : organisations)
+		{
+			if (id != player.id && id != aliens.id && id != civilian.id)
+			{
+				org->tech_level = std::min(org->tech_level + 1, maxOrgTechLevel);
+			}
+		}
+
 		for (auto &c : this->cities)
 		{
 			c.second->weeklyLoop(*this);
