@@ -32,14 +32,18 @@
         <image/>
         <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <graphicbutton id="BUTTON_LEFT">
+      <scroll id="INVENTORY_SCROLLBAR">
+        <position x="31" y="449"/>
+        <size width="535" height="21"/>
+      </scroll>
+      <graphicbutton id="BUTTON_LEFT" scrollprev="INVENTORY_SCROLLBAR">
         <tooltip text="Scroll Left" font="smallset"/>
         <position x="6" y="449"/>
         <size width="25" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/tacdata/tacbut.pck:xcom3/tacdata/tacbut.tab:2:xcom3/tacdata/tactical.pal</imagedepressed>
       </graphicbutton>
-      <graphicbutton id="BUTTON_RIGHT">
+      <graphicbutton id="BUTTON_RIGHT" scrollnext="INVENTORY_SCROLLBAR">
         <tooltip text="Scroll Right" font="smallset"/>
         <position x="566" y="449"/>
         <size width="25" height="21"/>

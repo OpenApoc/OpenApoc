@@ -26,6 +26,7 @@ class BitmapFont;
 class Graphic;
 class Organisation;
 class Base;
+class ScrollBar;
 enum class BodyPart;
 
 class AEquipScreen : public Stage
@@ -66,8 +67,8 @@ class AEquipScreen : public Stage
 
 	// Items currently on the "ground"
 	std::list<std::tuple<Rect<int>, int, sp<AEquipment>>> inventoryItems;
-	int inventoryPage = 0;
-	void clampInventoryPage();
+	sp<ScrollBar> inventoryScrollBar;
+	void updateInventoryScrollRange();
 
 	// Items temporarily stored inside vehicle (go into vehicle storage when exiting)
 	std::map<sp<Vehicle>, std::list<sp<AEquipment>>> vehicleItems;

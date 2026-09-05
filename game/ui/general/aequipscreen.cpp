@@ -4,6 +4,7 @@
 #include "forms/label.h"
 #include "forms/listbox.h"
 #include "forms/radiobutton.h"
+#include "forms/scrollbar.h"
 #include "forms/textedit.h"
 #include "forms/ui.h"
 #include "framework/apocresources/cursor.h"
@@ -56,6 +57,7 @@ AEquipScreen::AEquipScreen(sp<GameState> state, sp<Agent> firstAgent)
 	    paperDollPlaceholder->Location, paperDollPlaceholder->Size, EQUIP_GRID_SLOT_SIZE);
 
 	inventoryControl = formMain->findControlTyped<Graphic>("INVENTORY");
+	inventoryScrollBar = formMain->findControlTyped<ScrollBar>("INVENTORY_SCROLLBAR");
 
 	for (int i = 12; i <= 18; i++)
 	{
@@ -312,16 +314,23 @@ void AEquipScreen::eventOccurred(Event *e)
 			attemptCloseScreen();
 			return;
 		}
-		if (e->forms().RaisedBy->Name == "BUTTON_LEFT")
+	}
+
+	if (e->type() == EVENT_MOUSE_SCROLL && inventoryScrollBar->isVisible())
+	{
+		Vec2<int> mousePos{e->mouse().X, e->mouse().Y};
+		Vec2<int> inventoryPos = inventoryControl->Location + formMain->Location;
+		if (Rect<int>{inventoryPos, inventoryPos + inventoryControl->Size}.within(mousePos))
 		{
-			inventoryPage--;
-			clampInventoryPage();
-			return;
-		}
-		if (e->forms().RaisedBy->Name == "BUTTON_RIGHT")
-		{
-			inventoryPage++;
-			clampInventoryPage();
+			int wheelDelta = e->mouse().WheelVertical + e->mouse().WheelHorizontal;
+			if (wheelDelta > 0)
+			{
+				inventoryScrollBar->scrollPrev();
+			}
+			else if (wheelDelta < 0)
+			{
+				inventoryScrollBar->scrollNext();
+			}
 			return;
 		}
 	}
@@ -393,7 +402,7 @@ void AEquipScreen::eventOccurred(Event *e)
 
 		// Check if we're over any equipment in the list at the bottom
 		auto posWithinInventory = mousePos;
-		posWithinInventory.x += inventoryPage * inventoryControl->Size.x;
+		posWithinInventory.x += inventoryScrollBar->getValue();
 		for (auto &tuple : this->inventoryItems)
 		{
 			if (std::get<0>(tuple).within(posWithinInventory))
@@ -402,10 +411,10 @@ void AEquipScreen::eventOccurred(Event *e)
 				// Ensure this item is on screen
 				auto rect = std::get<0>(tuple);
 				auto pos = rect.p0;
-				pos.x -= inventoryPage * inventoryControl->Size.x;
+				pos.x -= inventoryScrollBar->getValue();
 				if (pos.x < inventoryControl->Location.x + formMain->Location.x ||
-				    pos.x >= inventoryControl->Location.x + inventoryControl->Size.x +
-				                 formMain->Location.x)
+				    pos.x + rect.getWidth() > inventoryControl->Location.x +
+				                                  inventoryControl->Size.x + formMain->Location.x)
 				{
 					break;
 				}
@@ -485,12 +494,13 @@ void AEquipScreen::render()
 		auto count = std::get<1>(tuple);
 		auto rect = std::get<0>(tuple);
 		auto pos = rect.p0;
-		pos.x -= inventoryPage * inventoryControl->Size.x;
+		pos.x -= inventoryScrollBar->getValue();
 		auto countImage = count > 0 ? labelFont->getString(format("{0}", count)) : nullptr;
 		auto &equipmentImage = item->type->equipscreen_sprite;
 
 		if (pos.x < inventoryControl->Location.x + formMain->Location.x ||
-		    pos.x >= inventoryControl->Location.x + inventoryControl->Size.x + formMain->Location.x)
+		    pos.x + rect.getWidth() >
+		        inventoryControl->Location.x + inventoryControl->Size.x + formMain->Location.x)
 		{
 			continue;
 		}
@@ -580,7 +590,7 @@ void AEquipScreen::handleItemPickup(Vec2<int> mousePos)
 	{
 		// Check if we're over any equipment in the list at the bottom
 		auto posWithinInventory = mousePos;
-		posWithinInventory.x += inventoryPage * inventoryControl->Size.x;
+		posWithinInventory.x += inventoryScrollBar->getValue();
 
 		const auto tryPickUpItemResult = tryPickUpItem(posWithinInventory, &alienArtifact);
 
@@ -938,7 +948,7 @@ void AEquipScreen::refreshInventoryItems()
 		formMain->findControlTyped<RadioButton>("BUTTON_SHOW_ARMOUR")->setVisible(false);
 	}
 
-	clampInventoryPage();
+	updateInventoryScrollRange();
 }
 
 void AEquipScreen::populateInventoryItemsBattle()
@@ -2148,26 +2158,18 @@ void AEquipScreen::updateFirstAgent()
 	refreshInventoryItems();
 }
 
-void AEquipScreen::clampInventoryPage()
+void AEquipScreen::updateInventoryScrollRange()
 {
-	if (inventoryPage < 0)
+	int inventoryLeft = inventoryControl->Location.x + formMain->Location.x;
+	int contentRight = inventoryLeft;
+	for (auto &item : inventoryItems)
 	{
-		inventoryPage = 0;
+		contentRight = std::max(contentRight, std::get<0>(item).p1.x);
 	}
-	if (inventoryPage > 0)
-	{
-		int inventoryLeft = inventoryControl->Location.x + formMain->Location.x;
-		int maxPageSeen = 0;
-		for (auto &item : inventoryItems)
-		{
-			auto rect = std::get<0>(item);
-			maxPageSeen = (rect.p0.x - inventoryLeft) / inventoryControl->Size.x;
-		}
-		if (inventoryPage > maxPageSeen)
-		{
-			inventoryPage = maxPageSeen;
-		}
-	}
+	int maxScroll = std::max(0, contentRight - inventoryLeft - inventoryControl->Size.x);
+	inventoryScrollBar->setMinimum(0);
+	inventoryScrollBar->setMaximum(maxScroll);
+	inventoryScrollBar->setVisible(maxScroll > 0);
 }
 
 bool AEquipScreen::isTurnBased() const
