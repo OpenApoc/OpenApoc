@@ -187,6 +187,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, StateRef<Organisat
 	}
 
 	agent->updateSpeed();
+	agent->updatePsiDefence();
 	agent->modified_stats.restoreTU();
 
 	return {&state, ID};
@@ -780,6 +781,7 @@ void Agent::addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object)
 	}
 	this->equipment.emplace_back(object);
 	updateSpeed();
+	updatePsiDefence();
 	updateIsBrainsucker();
 	if (unit)
 	{
@@ -810,6 +812,7 @@ void Agent::removeEquipment(GameState &state, sp<AEquipment> object)
 	}
 	object->ownerAgent.clear();
 	updateSpeed();
+	updatePsiDefence();
 	updateIsBrainsucker();
 }
 
@@ -839,6 +842,21 @@ void Agent::updateModifiedStats()
 	modified_stats = current_stats;
 	modified_stats.health = health;
 	updateSpeed();
+	updatePsiDefence();
+}
+
+void Agent::updatePsiDefence()
+{
+	int mindShieldsInUse = 0;
+	for (auto &item : equipment)
+	{
+		if (item->type->type == AEquipmentType::Type::MindShield && item->inUse)
+		{
+			mindShieldsInUse++;
+		}
+	}
+	modified_stats.psi_defence =
+	    current_stats.psi_defence + MIND_SHIELD_PSI_DEFENCE_BONUS * mindShieldsInUse;
 }
 
 void Agent::updateIsBrainsucker()

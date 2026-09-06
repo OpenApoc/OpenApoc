@@ -2681,6 +2681,7 @@ void BattleView::orderUse(bool right, bool automatic)
 		// Usable items that have no automatic mode
 		case AEquipmentType::Type::MotionScanner:
 		case AEquipmentType::Type::MediKit:
+		case AEquipmentType::Type::MindShield:
 			if (automatic)
 			{
 				break;
@@ -2701,7 +2702,6 @@ void BattleView::orderUse(bool right, bool automatic)
 		case AEquipmentType::Type::DimensionForceField:
 		case AEquipmentType::Type::DisruptorShield:
 		case AEquipmentType::Type::Loot:
-		case AEquipmentType::Type::MindShield:
 		case AEquipmentType::Type::MultiTracker:
 		case AEquipmentType::Type::StructureProbe:
 		case AEquipmentType::Type::VortexAnalyzer:
