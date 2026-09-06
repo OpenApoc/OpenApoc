@@ -1164,7 +1164,7 @@ void AEquipScreen::removeItemFromInventoryBattle(sp<AEquipment> item)
 		LogError("No battle item object in battle inventory?");
 		return;
 	}
-	battleItem->die(*state, false);
+	battleItem->die(*state, false, false);
 }
 
 void AEquipScreen::removeItemFromInventoryBase(sp<AEquipment> item)
