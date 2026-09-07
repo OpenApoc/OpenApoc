@@ -178,6 +178,10 @@ bool BattleHazard::expand(GameState &state, const TileMap &map, const Vec3<int> 
 	{
 		auto pos = pair.first + (Vec3<int>)position;
 		auto tile = map.getTile(pos);
+		if (!tile)
+		{
+			continue;
+		}
 		for (auto &obj : tile->ownedObjects)
 		{
 			if (pair.second.find(obj->getType()) != pair.second.end())
