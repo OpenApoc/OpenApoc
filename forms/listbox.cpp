@@ -274,6 +274,7 @@ void ListBox::addItem(sp<Control> Item)
 		selected = Item;
 	}
 	this->setDirty();
+	this->update();
 }
 
 void ListBox::replaceItem(sp<Control> Item)
