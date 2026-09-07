@@ -136,6 +136,16 @@ enum class MoraleState
 	Berserk
 };
 
+class BattleUnitExperience
+{
+  public:
+	BattleUnitExperience() = default;
+	int accuracyHits = 0;
+	int reactionHits = 0;
+	int staminaSpent = 0;
+	int killScore = 0;
+};
+
 static const std::list<BattleUnitType> BattleUnitTypeList = {
     BattleUnitType::LargeFlyer, BattleUnitType::LargeWalker, BattleUnitType::SmallFlyer,
     BattleUnitType::SmallWalker};
@@ -223,7 +233,7 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 	// Stats
 
 	// Accumulated xp points for each stat
-	AgentStats experiencePoints;
+	BattleUnitExperience experience;
 	// Points earned for kills
 	int combatRating = 0;
 	// Fatal wounds for each body part
@@ -618,8 +628,6 @@ class BattleUnit : public StateObject<BattleUnit>, public std::enable_shared_fro
 
 	// Experience
 
-	// Returns a roll for primary state increase based on how much experience was acquired
-	int rollForPrimaryStat(GameState &state, int experience);
 	// Process unit experience into stat increases
 	void processExperience(GameState &state);
 

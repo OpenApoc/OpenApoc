@@ -810,6 +810,13 @@
     <member>offset</member>
   </object>
   <object>
+    <name>BattleUnitExperience</name>
+    <member>accuracyHits</member>
+    <member>reactionHits</member>
+    <member>staminaSpent</member>
+    <member>killScore</member>
+  </object>
+  <object>
     <name>BattleUnit</name>
     <member>id</member>
     <member>agent</member>
@@ -830,7 +837,7 @@
     <member>ticksAccumulatedToNextPsiCheck</member>
     <member>psiAttackers</member>
     <member>brainSucker</member>
-    <member>experiencePoints</member>
+    <member>experience</member>
     <member>combatRating</member>
     <member>fatalWounds</member>
     <member>healingBodyPart</member>
