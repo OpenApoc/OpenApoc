@@ -1862,6 +1862,8 @@ void BattleUnitMission::start(GameState &state, BattleUnit &u)
 			if (targetUnit->brainSucker && targetUnit->brainSucker.id != u.id)
 			{
 				cancelled = true;
+				u.resetGoal();
+				u.startFalling(state);
 				return;
 			}
 			targetUnit->brainSucker = {&state, u.id};

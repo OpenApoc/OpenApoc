@@ -2928,7 +2928,7 @@ void BattleUnit::updateFallingIntoUnit(GameState &state, BattleUnit &unit)
 			if (position.z < unit.getMuzzleLocation().z)
 			{
 				StateRef<DamageType> brainsucker = {&state, "DAMAGETYPE_BRAINSUCKER"};
-				if (!unit.brainSucker &&
+				if (unit.brainSucker ||
 				    brainsucker->dealDamage(100, unit.agent->type->damage_modifier) == 0)
 				{
 					// Cannot suck this head, get stunned
