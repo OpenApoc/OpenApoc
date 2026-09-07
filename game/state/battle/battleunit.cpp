@@ -2855,7 +2855,7 @@ void BattleUnit::updateMovementFalling(GameState &state, unsigned int &moveTicks
 			newPosition.z = glm::clamp(newPosition.z, 0.0f, mapSize.z - 0.01f);
 		}
 		// Fell below 0???
-		if (newPosition.z < 0)
+		if (newPosition.z < 0 && !tileObject->map.getTile(newPosition))
 		{
 			LogError("Unit at {0} {1} fell off the end of the world!?", newPosition.x,
 			         newPosition.y);

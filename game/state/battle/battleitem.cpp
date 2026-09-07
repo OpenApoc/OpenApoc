@@ -280,10 +280,14 @@ void BattleItem::update(GameState &state, unsigned int ticks)
 		// Fell below 0???
 		if (newPosition.z < 0)
 		{
-			LogError("Item at {0} {1} fell off the end of the world!?", newPosition.x,
-			         newPosition.y);
-			die(state, false);
-			return;
+			if (!tileObject->map.getTile(newPosition))
+			{
+				LogError("Item at {0} {1} fell off the end of the world!?", newPosition.x,
+				         newPosition.y);
+				die(state, false);
+				return;
+			}
+			collision = true;
 		}
 		setPosition(newPosition);
 	}
