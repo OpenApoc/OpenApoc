@@ -52,10 +52,10 @@ static const int FV_CHANCE_TO_RECOVER_VEHICLE = 100;
 static const int FV_CHANCE_TO_RECOVER_EQUIPMENT = 90;
 // How much percent is "scrapped" sold for
 static const int FV_SCRAPPED_COST_PERCENT = 25;
-// How much ticks is accumulated per second of engine usage
-static const int FUEL_TICKS_PER_SECOND = 144;
-// How much ticks is required to spend one unit of fuel
-static const int FUEL_TICKS_PER_UNIT = 40000;
+// How much fuel spend is accumulated per game second of engine usage
+static const int FUEL_SPENT_PER_SECOND = 144;
+// How much fuel spend is required to consume one unit of fuel
+static const int FUEL_SPENT_PER_UNIT = 40000;
 // Correction factor for turning slowdown mechanic, purely found by data analysis, could not
 // establish any logical conclusion
 static const float TURNING_SLOW_DOWN_CORRECTION = 38.893f;
