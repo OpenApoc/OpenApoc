@@ -446,8 +446,8 @@ void Base::destroyFacility(GameState &state, Vec2<int> pos)
 				facility->lab->current_project->current_lab = "";
 				facility->lab->current_project = "";
 			}
-			facility->lab = "";
 			state.research.labs.erase(facility->lab.id);
+			facility->lab = "";
 		}
 
 		if (facility->type->buildTime > 0)
