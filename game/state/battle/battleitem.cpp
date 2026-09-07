@@ -21,14 +21,15 @@
 namespace OpenApoc
 {
 
-void BattleItem::die(GameState &state, bool violently)
+void BattleItem::die(GameState &state, bool violently, bool scoreAsLost)
 {
 	if (violently)
 	{
 		item->explode(state);
 	}
 	// Lose score if item that dies and it's not a primed grenade
-	if (!item->primed && item->ownerOrganisation && item->ownerOrganisation == state.getPlayer())
+	if (scoreAsLost && !item->primed && item->ownerOrganisation &&
+	    item->ownerOrganisation == state.getPlayer())
 	{
 		state.current_battle->score.equipmentLost -= item->type->score;
 		if (item->payloadType)

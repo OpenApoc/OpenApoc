@@ -2758,7 +2758,7 @@ void BattleView::orderDrop(bool right)
 		auto item = items.front();
 		unit->agent->addEquipment(
 		    *state, item->item, right ? EquipmentSlotType::RightHand : EquipmentSlotType::LeftHand);
-		item->die(*state, false);
+		item->die(*state, false, false);
 	}
 }
 
