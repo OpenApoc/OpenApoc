@@ -19,6 +19,7 @@ namespace OpenApoc
 {
 
 static const unsigned TELEPORT_TICKS_REQUIRED_AGENT = TICKS_PER_SECOND * 30;
+static const int MIND_SHIELD_PSI_DEFENCE_BONUS = 20;
 
 class Organisation;
 class AEquipment;
@@ -172,6 +173,7 @@ class Agent : public StateObject<Agent>,
 	void addEquipment(GameState &state, Vec2<int> pos, sp<AEquipment> object);
 	void removeEquipment(GameState &state, sp<AEquipment> object);
 	void updateSpeed();
+	void updatePsiDefence();
 	// Called when current stats were changed and modified stats need to catch up
 	void updateModifiedStats();
 	bool canRun() { return modified_stats.canRun(); }

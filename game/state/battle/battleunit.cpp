@@ -5132,7 +5132,6 @@ bool BattleUnit::useItem(GameState &state, sp<AEquipment> item)
 		case AEquipmentType::Type::DimensionForceField:
 		case AEquipmentType::Type::DisruptorShield:
 		case AEquipmentType::Type::Loot:
-		case AEquipmentType::Type::MindShield:
 		case AEquipmentType::Type::MultiTracker:
 		case AEquipmentType::Type::StructureProbe:
 		case AEquipmentType::Type::VortexAnalyzer:
@@ -5164,6 +5163,10 @@ bool BattleUnit::useItem(GameState &state, sp<AEquipment> item)
 			// Initial use of medikit just brings up interface, action and TU spent happens
 			// when individual body part is clicked
 			item->inUse = !item->inUse;
+			return true;
+		case AEquipmentType::Type::MindShield:
+			item->inUse = !item->inUse;
+			agent->updatePsiDefence();
 			return true;
 		case AEquipmentType::Type::Brainsucker:
 			useBrainsucker(state);
