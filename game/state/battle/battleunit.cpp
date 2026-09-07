@@ -4431,7 +4431,39 @@ void BattleUnit::tryToRiseUp(GameState &state)
 {
 	// Do not rise up if unit is standing on us
 	if (tileObject->getOwningTile()->getUnitIfPresent(true, true, false, tileObject))
-		return;
+	{
+		if (isLarge())
+		{
+			return;
+		}
+		auto from = tileObject->getOwningTile();
+		auto helper = BattleUnitTileHelper{tileObject->map, *this};
+		Tile *freeTile = nullptr;
+		for (int dir = 0; dir <= 7 && !freeTile; dir++)
+		{
+			auto heading = dir_facing_map.at(dir);
+			for (int dz : {0, -1, 1})
+			{
+				Vec3<int> pos = {position.x + heading.x, position.y + heading.y, position.z + dz};
+				if (!tileObject->map.isTileInBounds(pos))
+				{
+					continue;
+				}
+				auto to = tileObject->map.getTile(pos);
+				if (helper.canEnterTile(from, to))
+				{
+					freeTile = to;
+					break;
+				}
+			}
+		}
+		if (!freeTile)
+		{
+			return;
+		}
+		setPosition(state, freeTile->getRestingPosition(isLarge()), true);
+		resetGoal();
+	}
 
 	// Find state we can rise into (with animation)
 	auto targetState = BodyState::Standing;
