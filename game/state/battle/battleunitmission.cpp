@@ -223,7 +223,8 @@ bool BattleUnitTileHelper::canEnterTile(Tile *from, Tile *to, bool allowJumping,
 	if (large)
 	{
 		// Can we fit?
-		if (toPos.x < 1 || toPos.y < 1 || toPos.z + 1 >= map.size.z)
+		if (toPos.x < 1 || toPos.y < 1 || toPos.z + 1 >= map.size.z || fromPos.x < 1 ||
+		    fromPos.y < 1)
 		{
 			return false;
 		}
