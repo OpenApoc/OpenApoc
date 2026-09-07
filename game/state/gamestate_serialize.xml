@@ -414,6 +414,8 @@
     <value>BuildingDisabled</value>
     <value>MissionCompletedVehicle</value>
     <value>MissionCompletedBuildingAlien</value>
+    <value>GameWon</value>
+    <value>GameLost</value>
     <value>None</value>
   </enum>
   <enum>

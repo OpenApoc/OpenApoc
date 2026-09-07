@@ -74,6 +74,11 @@ UString GameEvent::message()
 			return tr("X-COM returning from UFO mission.");
 		case GameEventType::BuildingDisabled:
 			return tr("Building has been disabled");
+		case GameEventType::GameWon:
+			return tr("The link with the Alien dimension is broken forever. The Aliens are "
+			          "vanquished and victory is ours!");
+		case GameEventType::GameLost:
+			return tr("The last X-COM base has fallen. Earth is lost to the Alien invasion.");
 		default:
 			break;
 	}

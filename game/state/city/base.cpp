@@ -144,7 +144,14 @@ void Base::die(GameState &state, bool collapse)
 	state.current_base.clear();
 	if (state.player_bases.empty())
 	{
-		LogError("Player lost, but we have no screen for that yet!");
+		if (state.current_battle)
+		{
+			state.eventFromBattle = GameEventType::GameLost;
+		}
+		else
+		{
+			fw().pushEvent(new GameEvent(GameEventType::GameLost));
+		}
 		return;
 	}
 	else

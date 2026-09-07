@@ -1780,6 +1780,8 @@ void GameState::updateAfterBattle()
 			break;
 		}
 		case GameEventType::MissionCompletedVehicle:
+		case GameEventType::GameWon:
+		case GameEventType::GameLost:
 		{
 			fw().pushEvent(new GameEvent(eventFromBattle));
 			break;
