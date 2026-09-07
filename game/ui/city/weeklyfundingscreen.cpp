@@ -47,7 +47,7 @@ void WeeklyFundingScreen::begin()
 
 	const auto player = state->getPlayer();
 	const auto government = state->getGovernment();
-	int currentIncome = player->income;
+	int currentIncome = state->previousWeekIncome;
 
 	if (government->isRelatedTo(player) == Organisation::Relation::Hostile)
 	{
@@ -105,7 +105,7 @@ void WeeklyFundingScreen::begin()
 		}
 
 		// Income adjustment is still based on base player funding, not current one
-		const int adjustment = (modifier == 0) ? 0 : player->income / modifier;
+		const int adjustment = (modifier == 0) ? 0 : state->previousWeekIncome / modifier;
 
 		labelAdjustment->setText(
 		    format(tr("Funding adjustment> ${0}"), state->formatCurrency(adjustment)));

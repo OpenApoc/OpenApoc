@@ -158,6 +158,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	GameScore totalScore = {};
 	GameScore weekScore = {};
+	int previousWeekIncome = 0;
 	int micronoidRainChance = 0;
 
 	// Used to move events from battle to city and remember time

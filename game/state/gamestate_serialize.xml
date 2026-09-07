@@ -42,6 +42,7 @@
     <member>agentEquipmentTemplates</member>
     <member>totalScore</member>
     <member>weekScore</member>
+    <member>previousWeekIncome</member>
     <member>micronoidRainChance</member>
     <member>objectIdCount</member>
     <member type="Section">city_common_image_list</member>
